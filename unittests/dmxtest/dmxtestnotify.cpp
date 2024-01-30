@@ -56,7 +56,7 @@ DEFINE_TESTCASE_NOSUITE( DmxNotifyTest )
 		CUndoScopeGuard guard( NOTIFY_SOURCE_APPLICATION, 0, "create" );
 		element = CreateElement< CDmElement >( "test", fileid );
 	}
-	
+
 	Shipping_Assert( test1.m_nTopologyCount == 1 );
 	Shipping_Assert( test1.m_nArrayCount == 0 );
 

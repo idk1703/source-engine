@@ -48,29 +48,29 @@
 	#include <MacTypes.h>
 
 #if !defined(__MACTYPES__)
-    typedef unsigned char           Boolean;
-    typedef unsigned char           UInt8;
-    typedef signed char             SInt8;
-    typedef unsigned short          UInt16;
-    typedef signed short            SInt16;
-    typedef unsigned long           UInt32;
-    typedef signed long             SInt32;
-    typedef uint64_t		        UInt64;
-    typedef int64_t		            SInt64;
-    typedef float                   Float32;
-    typedef double                  Float64;
-    typedef unsigned short          UniChar;
-    typedef unsigned char *         StringPtr;
-    typedef const unsigned char *   ConstStringPtr;
-    typedef unsigned char           Str255[256];
-    typedef const unsigned char *   ConstStr255Param;
-    typedef SInt16                  OSErr;
-    typedef SInt32                  OSStatus;
+	typedef unsigned char           Boolean;
+	typedef unsigned char           UInt8;
+	typedef signed char             SInt8;
+	typedef unsigned short          UInt16;
+	typedef signed short            SInt16;
+	typedef unsigned long           UInt32;
+	typedef signed long             SInt32;
+	typedef uint64_t		        UInt64;
+	typedef int64_t		            SInt64;
+	typedef float                   Float32;
+	typedef double                  Float64;
+	typedef unsigned short          UniChar;
+	typedef unsigned char *         StringPtr;
+	typedef const unsigned char *   ConstStringPtr;
+	typedef unsigned char           Str255[256];
+	typedef const unsigned char *   ConstStr255Param;
+	typedef SInt16                  OSErr;
+	typedef SInt32                  OSStatus;
 #endif
 #if !defined(__MACTYPES__) || (defined(UNIVERSAL_INTERFACES_VERSION) && UNIVERSAL_INTERFACES_VERSION < 0x0340)
-    typedef UInt32                  UTF32Char;
-    typedef UInt16                  UTF16Char;
-    typedef UInt8                   UTF8Char;
+	typedef UInt32                  UTF32Char;
+	typedef UInt16                  UTF16Char;
+	typedef UInt8                   UTF8Char;
 #endif
 
 #if defined(__CYGWIN32__) || defined (D__CYGWIN_)
@@ -82,48 +82,48 @@ extern "C" {
 #endif
 
 #if !defined(NULL)
-    #define NULL	0
+	#define NULL	0
 #endif
 
 #if !defined(TRUE)
-    #define TRUE	1
+	#define TRUE	1
 #endif
 
 #if !defined(FALSE)
-    #define FALSE	0
+	#define FALSE	0
 #endif
 
 #if defined(__WIN32__)
-    #undef CF_EXPORT
+	#undef CF_EXPORT
 	#if defined(CF_BUILDING_CF_AS_LIB)
-    // we're building CF as a library
+	// we're building CF as a library
 	#define CF_EXPORT extern
 	#elif defined(CF_BUILDING_CF)
-    // we're building CF as a DLL
+	// we're building CF as a DLL
 	#define CF_EXPORT __declspec(dllexport) extern
-    #else
+	#else
 	#define CF_EXPORT __declspec(dllimport) extern
-    #endif
+	#endif
 #elif defined(macintosh)
-    #if defined(__MWERKS__)
-        #define CF_EXPORT __declspec(export) extern
-    #endif
+	#if defined(__MWERKS__)
+		#define CF_EXPORT __declspec(export) extern
+	#endif
 #endif
 
 #if !defined(CF_EXPORT)
-    #define CF_EXPORT extern
+	#define CF_EXPORT extern
 #endif
 
 #if !defined(CF_INLINE)
-    #if defined(__GNUC__)
+	#if defined(__GNUC__)
 	#define CF_INLINE static __inline__
-    #elif defined(__MWERKS__) || defined(__cplusplus)
+	#elif defined(__MWERKS__) || defined(__cplusplus)
 	#define CF_INLINE static inline
-    #elif defined(_MSC_VER)
-        #define CF_INLINE static __inline
-    #elif defined(__WIN32__)
+	#elif defined(_MSC_VER)
+		#define CF_INLINE static __inline
+	#elif defined(__WIN32__)
 	#define CF_INLINE static __inline__
-    #endif
+	#endif
 #endif
 
 
@@ -153,17 +153,17 @@ typedef const struct __CFString * CFStringRef;
 typedef struct __CFString * CFMutableStringRef;
 
 /*
-        Type to mean any instance of a property list type;
-        currently, CFString, CFData, CFNumber, CFBoolean, CFDate,
-        CFArray, and CFDictionary.
+		Type to mean any instance of a property list type;
+		currently, CFString, CFData, CFNumber, CFBoolean, CFDate,
+		CFArray, and CFDictionary.
 */
 typedef CFTypeRef CFPropertyListRef;
 
 /* Values returned from comparison functions */
 typedef enum {
-    kCFCompareLessThan = -1,
-    kCFCompareEqualTo = 0,
-    kCFCompareGreaterThan = 1
+	kCFCompareLessThan = -1,
+	kCFCompareEqualTo = 0,
+	kCFCompareGreaterThan = 1
 } CFComparisonResult;
 
 /* A standard comparison function */
@@ -172,7 +172,7 @@ typedef CFComparisonResult (*CFComparatorFunction)(const void *val1, const void 
 /* Constant used by some functions to indicate failed searches. */
 /* This is of type CFIndex. */
 enum {
-    kCFNotFound = -1
+	kCFNotFound = -1
 };
 
 
@@ -183,16 +183,16 @@ void *QTGetCFConstant(const char *cfGlobalConstantKey);
 
 /* Range type */
 typedef struct {
-    CFIndex location;
-    CFIndex length;
+	CFIndex location;
+	CFIndex length;
 } CFRange;
 
 #if defined(CF_INLINE)
 CF_INLINE CFRange CFRangeMake(CFIndex loc, CFIndex len) {
-    CFRange range;
-    range.location = loc;
-    range.length = len;
-    return range;
+	CFRange range;
+	range.location = loc;
+	range.length = len;
+	return range;
 }
 #else
 #define CFRangeMake(LOC, LEN) __CFRangeMake(LOC, LEN)
@@ -223,12 +223,12 @@ const CFNullRef kCFNull;	// the singleton null instance
 
 /* Allocator API
 
-   Most of the time when specifying an allocator to Create functions, the NULL
-   argument indicates "use the default"; this is the same as using kCFAllocatorDefault
-   or the return value from CFAllocatorGetDefault().  This assures that you will use
-   the allocator in effect at that time.
+	Most of the time when specifying an allocator to Create functions, the NULL
+	argument indicates "use the default"; this is the same as using kCFAllocatorDefault
+	or the return value from CFAllocatorGetDefault().  This assures that you will use
+	the allocator in effect at that time.
 
-   You should rarely use kCFAllocatorSystemDefault, the default default allocator.
+	You should rarely use kCFAllocatorSystemDefault, the default default allocator.
 */
 typedef const struct __CFAllocator * CFAllocatorRef;
 
@@ -248,24 +248,24 @@ CF_EXPORT
 const CFAllocatorRef kCFAllocatorSystemDefault;
 
 /* This allocator uses malloc(), realloc(), and free(). This should not be
-   generally used; stick to kCFAllocatorDefault whenever possible. This
-   allocator is useful as the "bytesDeallocator" in CFData or
-   "contentsDeallocator" in CFString where the memory was obtained as a
-   result of malloc() type functions.
+	generally used; stick to kCFAllocatorDefault whenever possible. This
+	allocator is useful as the "bytesDeallocator" in CFData or
+	"contentsDeallocator" in CFString where the memory was obtained as a
+	result of malloc() type functions.
 */
 CF_EXPORT
 const CFAllocatorRef kCFAllocatorMalloc;
 
 /* Null allocator which does nothing and allocates no memory. This allocator
-   is useful as the "bytesDeallocator" in CFData or "contentsDeallocator"
-   in CFString where the memory should not be freed. 
+	is useful as the "bytesDeallocator" in CFData or "contentsDeallocator"
+	in CFString where the memory should not be freed.
 */
 CF_EXPORT
 const CFAllocatorRef kCFAllocatorNull;
 
 /* Special allocator argument to CFAllocatorCreate() which means
-   "use the functions given in the context to allocate the allocator
-   itself as well". 
+	"use the functions given in the context to allocate the allocator
+	itself as well".
 */
 CF_EXPORT
 const CFAllocatorRef kCFAllocatorUseContext;
@@ -279,15 +279,15 @@ typedef void *		(*CFAllocatorReallocateCallBack)(void *ptr, CFIndex newsize, CFO
 typedef void		(*CFAllocatorDeallocateCallBack)(void *ptr, void *info);
 typedef CFIndex		(*CFAllocatorPreferredSizeCallBack)(CFIndex size, CFOptionFlags hint, void *info);
 typedef struct {
-    CFIndex				version;
-    void *				info;
-    CFAllocatorRetainCallBack		retain;
-    CFAllocatorReleaseCallBack		release;        
-    CFAllocatorCopyDescriptionCallBack	copyDescription;
-    CFAllocatorAllocateCallBack		allocate;
-    CFAllocatorReallocateCallBack	reallocate;
-    CFAllocatorDeallocateCallBack	deallocate;
-    CFAllocatorPreferredSizeCallBack	preferredSize;
+	CFIndex				version;
+	void *				info;
+	CFAllocatorRetainCallBack		retain;
+	CFAllocatorReleaseCallBack		release;
+	CFAllocatorCopyDescriptionCallBack	copyDescription;
+	CFAllocatorAllocateCallBack		allocate;
+	CFAllocatorReallocateCallBack	reallocate;
+	CFAllocatorDeallocateCallBack	deallocate;
+	CFAllocatorPreferredSizeCallBack	preferredSize;
 } CFAllocatorContext;
 
 CF_EXPORT
@@ -375,4 +375,3 @@ CFAllocatorRef CFGetAllocator(CFTypeRef cf);
 #endif
 
 #endif /* ! __COREFOUNDATION_CFBASE__ */
-

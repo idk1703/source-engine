@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Deals with singleton  
+// Purpose: Deals with singleton
 //
 // $Revision: $
 // $NoKeywords: $

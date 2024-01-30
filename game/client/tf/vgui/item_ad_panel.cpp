@@ -19,14 +19,14 @@
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseAdPanel::CBaseAdPanel( Panel *parent, const char *panelName )
 	: BaseClass( parent, panelName )
 {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseAdPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -55,7 +55,7 @@ bool CBaseAdPanel::CheckForRequiredSteamComponents( const char* pszSteamRequried
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemAdPanel::CItemAdPanel( Panel *parent, const char *panelName, item_definition_index_t itemDefIndex )
 	: BaseClass( parent, panelName )
@@ -66,7 +66,7 @@ CItemAdPanel::CItemAdPanel( Panel *parent, const char *panelName, item_definitio
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemAdPanel::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -76,7 +76,7 @@ void CItemAdPanel::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemAdPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -111,7 +111,7 @@ void CItemAdPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemAdPanel::PerformLayout()
 {
@@ -142,14 +142,14 @@ void CItemAdPanel::PerformLayout()
 	CExButton* pMarketButton = FindControl< CExButton >( "MarketButton", true );
 	if ( pBuyButton && pMarketButton )
 	{
-		
+
 		pBuyButton->SetVisible( !m_bShowMarketButton );
 		pMarketButton->SetVisible( m_bShowMarketButton );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemAdPanel::OnTick()
 {
@@ -175,7 +175,7 @@ void CItemAdPanel::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const CTFItemDefinition* CItemAdPanel::GetItemDef() const
 {
@@ -183,7 +183,7 @@ const CTFItemDefinition* CItemAdPanel::GetItemDef() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemAdPanel::OnCommand( const char *command )
 {
@@ -204,7 +204,7 @@ void CItemAdPanel::OnCommand( const char *command )
 			}
 		}
 	}
-	else if ( FStrEq( "market", command ) ) 
+	else if ( FStrEq( "market", command ) )
 	{
 		if ( !CheckForRequiredSteamComponents( "#StoreUpdate_SteamRequired", "#MMenu_OverlayRequired" ) )
 			return;
@@ -233,7 +233,7 @@ void CItemAdPanel::OnCommand( const char *command )
 DECLARE_BUILD_FACTORY( CCyclingAdContainerPanel );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCyclingAdContainerPanel::CCyclingAdContainerPanel( Panel *parent, const char *panelName )
 	: BaseClass( parent, panelName )
@@ -254,7 +254,7 @@ CCyclingAdContainerPanel::CCyclingAdContainerPanel( Panel *parent, const char *p
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCyclingAdContainerPanel::~CCyclingAdContainerPanel()
 {
@@ -266,7 +266,7 @@ CCyclingAdContainerPanel::~CCyclingAdContainerPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCyclingAdContainerPanel::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -278,7 +278,7 @@ void CCyclingAdContainerPanel::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCyclingAdContainerPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -292,7 +292,7 @@ void CCyclingAdContainerPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCyclingAdContainerPanel::CreatePanels()
 {
@@ -311,8 +311,8 @@ void CCyclingAdContainerPanel::CreatePanels()
 			adData.m_pAdPanel = new CItemAdPanel( m_pAdsContainer, "ad", pDef->GetDefinitionIndex() );
 
 			adData.m_pAdPanel->InvalidateLayout( true, true );	// Default settings
-			adData.m_pAdPanel->ApplySettings( pKVItem );		
-			adData.m_pAdPanel->InvalidateLayout();		
+			adData.m_pAdPanel->ApplySettings( pKVItem );
+			adData.m_pAdPanel->InvalidateLayout();
 		}
 		else
 		{
@@ -324,7 +324,7 @@ void CCyclingAdContainerPanel::CreatePanels()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCyclingAdContainerPanel::PerformLayout()
 {
@@ -334,9 +334,9 @@ void CCyclingAdContainerPanel::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCyclingAdContainerPanel::OnThink() 
+void CCyclingAdContainerPanel::OnThink()
 {
 	BaseClass::OnThink();
 
@@ -363,7 +363,7 @@ void CCyclingAdContainerPanel::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCyclingAdContainerPanel::SetItemKVs( KeyValues* pKVItems )
 {
@@ -381,7 +381,7 @@ void CCyclingAdContainerPanel::SetItemKVs( KeyValues* pKVItems )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCyclingAdContainerPanel::OnCommand( const char *command )
 {
@@ -396,7 +396,7 @@ void CCyclingAdContainerPanel::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCyclingAdContainerPanel::PresentIndex( int nIndex )
 {
@@ -434,7 +434,7 @@ void CCyclingAdContainerPanel::PresentIndex( int nIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCyclingAdContainerPanel::UpdateAdPanelPositions()
 {

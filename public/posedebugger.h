@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -18,13 +18,13 @@ abstract_class IPoseDebugger
 {
 public:
 	virtual void StartBlending( IClientNetworkable *pEntity, const CStudioHdr *pStudioHdr ) = 0;
-	
+
 	virtual void AccumulatePose(
 		const CStudioHdr *pStudioHdr,
 		CIKContext *pIKContext,
-		Vector pos[], 
-		Quaternion q[], 
-		int sequence, 
+		Vector pos[],
+		Quaternion q[],
+		int sequence,
 		float cycle,
 		const float poseParameter[],
 		int boneMask,

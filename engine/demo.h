@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@ class CUtlBuffer;
 class CDemoFile;
 class ServerClass;
 
-abstract_class IDemoRecorder 
+abstract_class IDemoRecorder
 {
 public:
 	~IDemoRecorder() {}
@@ -33,13 +33,13 @@ public:
 	virtual void	PauseRecording( void ) = 0;
 	virtual void	ResumeRecording( void ) = 0;
 	virtual void	StopRecording( void ) = 0;
-	
+
 	virtual void	RecordCommand( const char *cmdstring ) = 0;  // record a console command
 	virtual void	RecordUserInput( int cmdnumber ) = 0;  // record a user input command
 	virtual void	RecordMessages( bf_read &data, int bits ) = 0; // add messages to current packet
 	virtual void	RecordPacket( void ) = 0; // packet finished, write all recorded stuff to file
 	virtual void	RecordServerClasses( ServerClass *pClasses ) = 0; // packet finished, write all recorded stuff to file
-	virtual void	RecordStringTables() = 0; 
+	virtual void	RecordStringTables() = 0;
 
 	virtual void	ResetDemoInterpolation() = 0;
 };
@@ -53,7 +53,7 @@ public:
 	virtual int		GetPlaybackStartTick( void ) = 0;
 	virtual int		GetPlaybackTick( void ) = 0;
 	virtual int		GetTotalTicks( void ) = 0;
-	
+
 	virtual bool	StartPlayback( const char *filename, bool bAsTimeDemo ) = 0;
 
 	virtual bool	IsPlayingBack( void ) = 0; // true if demo loaded and playing back

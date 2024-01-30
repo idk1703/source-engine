@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -34,7 +34,7 @@ class CTFBat : public CTFWeaponBaseMelee
 {
 public:
 	DECLARE_CLASS( CTFBat, CTFWeaponBaseMelee );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFBat();
@@ -58,7 +58,7 @@ class CTFBat_Fish : public CTFBat
 {
 public:
 	DECLARE_CLASS( CTFBat_Fish, CTFBat );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_BAT_FISH; }
@@ -72,7 +72,7 @@ class CTFBat_Wood : public CTFBat
 {
 public:
 	DECLARE_CLASS( CTFBat_Wood, CTFBat );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFBat_Wood();
@@ -153,7 +153,7 @@ public:
 	virtual void		ApplyBallImpactEffectOnVictim( CBaseEntity *pOther );
 	virtual void		PipebombTouch( CBaseEntity *pOther );
 	virtual void		VPhysicsCollision( int index, gamevcollisionevent_t *pEvent );
-	
+
 	virtual float		GetDamage( void );
 	virtual int			GetDamageType( void )				{ return DMG_CLUB; }
 	virtual Vector		GetDamageForce( void );
@@ -161,7 +161,7 @@ public:
 	virtual float		GetShakeAmplitude( void )			{ return 0.0; }
 	virtual float		GetShakeRadius( void )				{ return 0.0; }
 	void				RemoveBallTrail( void );
-	
+
 	virtual bool		IsDestroyable( void ) OVERRIDE { return false; }
 
 	int					m_iOriginalOwnerID;
@@ -188,7 +188,7 @@ class CTFBat_Giftwrap : public CTFBat_Wood
 {
 public:
 	DECLARE_CLASS( CTFBat_Giftwrap, CTFBat_Wood );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual void		Spawn( void );

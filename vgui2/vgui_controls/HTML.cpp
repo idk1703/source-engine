@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 // This class is a message box that has two buttons, ok and cancel instead of
 // just the ok button of a message box. We use a message box class for the ok button
 // and implement another button here.
@@ -33,9 +33,9 @@ class HTMLInterior : public Panel
 {
 	DECLARE_CLASS_SIMPLE( HTMLInterior, Panel );
 public:
-	HTMLInterior( HTML *parent ) : BaseClass( parent, "HTMLInterior" ) 
-	{ 	
-		m_pHTML = parent; 
+	HTMLInterior( HTML *parent ) : BaseClass( parent, "HTMLInterior" )
+	{
+		m_pHTML = parent;
 		SetPaintBackgroundEnabled( false );
 		SetKeyBoardInputEnabled( false );
 		SetMouseInputEnabled( false );
@@ -110,7 +110,7 @@ private:
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-HTML::HTML(Panel *parent, const char *name, bool allowJavaScript, bool bPopupWindow) : Panel(parent, name), 
+HTML::HTML(Panel *parent, const char *name, bool allowJavaScript, bool bPopupWindow) : Panel(parent, name),
 m_NeedsPaint( this, &HTML::BrowserNeedsPaint ),
 m_StartRequest( this, &HTML::BrowserStartRequest ),
 m_URLChanged( this, &HTML::BrowserURLChanged ),
@@ -159,7 +159,7 @@ m_HideTooltip( this, &HTML::BrowserHideToolTip )
 	}
 	m_iScrollBorderX=m_iScrollBorderY=0;
 	m_bScrollBarEnabled = true;
-	m_bContextMenuEnabled = true; 
+	m_bContextMenuEnabled = true;
 	m_bNewWindowsOnly = false;
 	m_iMouseX = m_iMouseY = 0;
 	m_iDragStartX = m_iDragStartY = 0;
@@ -220,7 +220,7 @@ HTML::~HTML()
 	{
 		m_SteamAPIContext.SteamHTMLSurface()->RemoveBrowser( m_unBrowserHandle );
 	}
-	
+
 	FOR_EACH_VEC( m_vecHCursor, i )
 	{
 		// BR FIXME!
@@ -243,7 +243,7 @@ void HTML::OnSetCursorVGUI( int cursor )
 //-----------------------------------------------------------------------------
 void HTML::ApplySchemeSettings(IScheme *pScheme)
 {
-    BaseClass::ApplySchemeSettings(pScheme);
+	BaseClass::ApplySchemeSettings(pScheme);
 	BrowserResize();
 }
 
@@ -374,7 +374,7 @@ void HTML::PostURL(const char *URL, const char *pchPostData, bool force)
 			char otherName[128];
 			char fileLocation[_MAX_PATH];
 
-			if ( ! g_pFullFileSystem->FileExists( baseDir ) ) 
+			if ( ! g_pFullFileSystem->FileExists( baseDir ) )
 			{
 				Q_snprintf( otherName, sizeof(otherName), "%senglish.html", OFFLINE_FILE );
 				baseDir = otherName;
@@ -383,7 +383,7 @@ void HTML::PostURL(const char *URL, const char *pchPostData, bool force)
 
 			g_pFullFileSystem->GetLocalPath( baseDir, fileLocation, sizeof(fileLocation) );
 			Q_snprintf(htmlLocation, sizeof(htmlLocation), "file://%s", fileLocation);
-	
+
 			if (m_SteamAPIContext.SteamHTMLSurface())
 				m_SteamAPIContext.SteamHTMLSurface()->LoadURL( m_unBrowserHandle, htmlLocation, NULL );
 		}
@@ -402,7 +402,7 @@ void HTML::PostURL(const char *URL, const char *pchPostData, bool force)
 
 		}
 		else
-		{			
+		{
 			if (m_SteamAPIContext.SteamHTMLSurface())
 				m_SteamAPIContext.SteamHTMLSurface()->LoadURL( m_unBrowserHandle, URL, NULL );
 		}
@@ -523,12 +523,12 @@ void HTML::OnMousePressed(MouseCode code)
 	// mouse4 = back button
 	if ( code == MOUSE_4 )
 	{
-        PostActionSignal( new KeyValues( "HTMLBackRequested" ) );
+	PostActionSignal( new KeyValues( "HTMLBackRequested" ) );
 		return;
 	}
 	if ( code == MOUSE_5 )
 	{
-        PostActionSignal( new KeyValues( "HTMLForwardRequested" ) );
+	PostActionSignal( new KeyValues( "HTMLForwardRequested" ) );
 		return;
 	}
 
@@ -750,7 +750,7 @@ bool HTML::FindDialogVisible()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: passes key presses to the browser 
+// Purpose: passes key presses to the browser
 //-----------------------------------------------------------------------------
 void HTML::OnKeyCodeTyped(KeyCode code)
 {
@@ -768,7 +768,7 @@ void HTML::OnKeyCodeTyped(KeyCode code)
 		int val = _vbar->GetValue();
 		val -= 200;
 		_vbar->SetValue(val);
-		break;	
+		break;
 		}
 	case KEY_F5:
 		{
@@ -817,7 +817,7 @@ void HTML::OnKeyCodeTyped(KeyCode code)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void HTML::OnKeyCodeReleased(KeyCode code)
 {
@@ -891,7 +891,7 @@ void HTML::BrowserResize()
 				m_SteamAPIContext.SteamHTMLSurface()->SetSize( m_unBrowserHandle, m_iWideLastHTMLSize, m_iTalLastHTMLSize );
 		}
 
-	
+
 		// webkit forgets the scroll offset when you resize (it saves the scroll in a DC and a resize throws away the DC)
 		// so just tell it after the resize
 		int scrollV = _vbar->GetValue();
@@ -924,7 +924,7 @@ void HTML::OnSliderMoved()
 		if (m_SteamAPIContext.SteamHTMLSurface())
 			m_SteamAPIContext.SteamHTMLSurface()->SetVerticalScroll( m_unBrowserHandle, scrollY );
 	}
-	
+
 	// post a message that the slider has moved
 	PostActionSignal( new KeyValues( "HTMLSliderMoved" ) );
 }
@@ -1009,7 +1009,7 @@ void HTML::AddHeader( const char *pchHeader, const char *pchValue )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void HTML::OnSetFocus()
 {
@@ -1021,7 +1021,7 @@ void HTML::OnSetFocus()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void HTML::OnKillFocus()
 {
@@ -1431,7 +1431,7 @@ void HTML::BrowserSetCursor( HTML_SetCursor_t *pCmd )
 	switch ( pCmd->eMouseCursor )
 	{
 	case ISteamHTMLSurface::dc_user:
-		cursor = dc_user; 
+		cursor = dc_user;
 		break;
 	case ISteamHTMLSurface::dc_none:
 		cursor = dc_none;
@@ -1561,7 +1561,7 @@ void HTML::BrowserSetCursor( HTML_SetCursor_t *pCmd )
 	{
 		cursor = dc_arrow;
 	}
-	
+
 	SetCursor( cursor );
 }
 
@@ -1590,7 +1590,7 @@ void HTML::BrowserFileLoadDialog( HTML_FileOpenDialog_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserShowToolTip( HTML_ShowToolTip_t *pCmd )
 {
-/*	
+/*
 	BR FIXME
 	Tooltip *tip = GetTooltip();
 	tip->SetText( pCmd->text().c_str() );
@@ -1599,7 +1599,7 @@ void HTML::BrowserShowToolTip( HTML_ShowToolTip_t *pCmd )
 	tip->SetMaxToolTipWidth( MAX( 200, GetWide()/2 ) );
 	tip->ShowTooltip( this );
 	*/
-	
+
 }
 
 
@@ -1790,5 +1790,3 @@ void HTML::UpdateSizeAndScrollBars()
 	BrowserResize();
 	InvalidateLayout();
 }
-
-

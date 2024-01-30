@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -29,11 +29,11 @@
 class CWeaponDODBaseGun : public CWeaponDODBase
 {
 public:
-	
+
 	DECLARE_CLASS( CWeaponDODBaseGun, CWeaponDODBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponDODBaseGun();
 
 	virtual void Spawn();
@@ -41,10 +41,10 @@ public:
 	virtual void PrimaryAttack();
 	virtual bool Reload();
 
-	// Derived classes must call this from inside their Spawn() function instead of 
+	// Derived classes must call this from inside their Spawn() function instead of
 	// just chaining the Spawn() call down.
 	void DODBaseGunSpawn( void );
-	
+
 	// Derived classes call this to fire a bullet.
 	bool DODBaseGunFire( void );
 
@@ -61,7 +61,7 @@ public:
 	virtual Activity GetDrawActivity( void );
 
 	virtual bool CanDrop( void ) { return m_pWeaponInfo->m_bCanDrop; }
-	
+
 	void SetZoomed( bool bZoomed ) { m_bZoomed = bZoomed; }
 	bool IsSniperZoomed( void ) { return m_bZoomed; }
 	CNetworkVar( bool, m_bZoomed );

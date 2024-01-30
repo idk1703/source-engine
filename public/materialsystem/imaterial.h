@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -271,7 +271,7 @@ inline int GetVertexElementSize( VertexElement_t element, VertexCompressionType_
 				return ( 2 * sizeof( short ) );
 			case VERTEX_ELEMENT_USERDATA4:
 				return ( 2 * sizeof( short ) );
-#else //( COMPRESSED_NORMALS_TYPE == COMPRESSED_NORMALS_COMBINEDTANGENTS_UBYTE4 ) 
+#else //( COMPRESSED_NORMALS_TYPE == COMPRESSED_NORMALS_COMBINEDTANGENTS_UBYTE4 )
 			// Normals and tangents (userdata4) are combined into a single UBYTE4 vertex element
 			case VERTEX_ELEMENT_NORMAL:
 				return ( 4 * sizeof( unsigned char ) );
@@ -403,9 +403,9 @@ enum MaterialVarFlags2_t
 	MATERIAL_VAR2_LIGHTING_VERTEX_LIT				= (1 << 1),
 	MATERIAL_VAR2_LIGHTING_LIGHTMAP					= (1 << 2),
 	MATERIAL_VAR2_LIGHTING_BUMPED_LIGHTMAP			= (1 << 3),
-	MATERIAL_VAR2_LIGHTING_MASK						= 
-		( MATERIAL_VAR2_LIGHTING_VERTEX_LIT | 
-		  MATERIAL_VAR2_LIGHTING_LIGHTMAP | 
+	MATERIAL_VAR2_LIGHTING_MASK						=
+		( MATERIAL_VAR2_LIGHTING_VERTEX_LIT |
+		  MATERIAL_VAR2_LIGHTING_LIGHTMAP |
 		  MATERIAL_VAR2_LIGHTING_BUMPED_LIGHTMAP ),
 
 	// FIXME: Should this be a part of the above lighting enums?
@@ -446,7 +446,7 @@ enum PreviewImageRetVal_t
 abstract_class IMaterial
 {
 public:
-	// Get the name of the material.  This is a full path to 
+	// Get the name of the material.  This is a full path to
 	// the vmt file starting from "hl2/materials" (or equivalent) without
 	// a file extension.
 	virtual const char *	GetName() const = 0;
@@ -456,16 +456,16 @@ public:
 	// This is the sort of image that you would use for a thumbnail view
 	// of a material, or in WorldCraft until it uses materials to render.
 	// separate this for the tools maybe
-	virtual PreviewImageRetVal_t GetPreviewImageProperties( int *width, int *height, 
+	virtual PreviewImageRetVal_t GetPreviewImageProperties( int *width, int *height,
 				 			ImageFormat *imageFormat, bool* isTranslucent ) const = 0;
-	
+
 	// Get a preview image at the specified width/height and bitDepth.
 	// Will do resampling if necessary.(not yet!!! :) )
 	// Will do color format conversion. (works now.)
-	virtual PreviewImageRetVal_t GetPreviewImage( unsigned char *data, 
+	virtual PreviewImageRetVal_t GetPreviewImage( unsigned char *data,
 												 int width, int height,
 												 ImageFormat imageFormat ) const = 0;
-	// 
+	//
 	virtual int				GetMappingWidth( ) = 0;
 	virtual int				GetMappingHeight( ) = 0;
 
@@ -484,7 +484,7 @@ public:
 	virtual IMaterialVar *	FindVar( const char *varName, bool *found, bool complain = true ) = 0;
 
 	// The user never allocates or deallocates materials.  Reference counting is
-	// used instead.  Garbage collection is done upon a call to 
+	// used instead.  Garbage collection is done upon a call to
 	// IMaterialSystem::UncacheUnusedMaterials.
 	virtual void			IncrementReferenceCount( void ) = 0;
 	virtual void			DecrementReferenceCount( void ) = 0;
@@ -522,11 +522,11 @@ public:
 
 	virtual bool			NeedsPowerOfTwoFrameBufferTexture( bool bCheckSpecificToThisFrame = true ) = 0;
 	virtual bool			NeedsFullFrameBufferTexture( bool bCheckSpecificToThisFrame = true ) = 0;
-	
+
 	// returns true if the shader doesn't do skinning itself and requires
 	// the data that is sent to it to be preskinned.
 	virtual bool			NeedsSoftwareSkinning( void ) = 0;
-	
+
 	// Apply constant color or alpha modulation
 	virtual void			AlphaModulate( float alpha ) = 0;
 	virtual void			ColorModulate( float r, float g, float b ) = 0;
@@ -548,10 +548,10 @@ public:
 	virtual void			SetShader( const char *pShaderName ) = 0;
 
 	// Can't be const because the material might have to precache itself.
-	virtual int				GetNumPasses( void ) = 0; 
+	virtual int				GetNumPasses( void ) = 0;
 
 	// Can't be const because the material might have to precache itself.
-	virtual int				GetTextureMemoryBytes( void ) = 0; 
+	virtual int				GetTextureMemoryBytes( void ) = 0;
 
 	// Meant to be used with materials created using CreateMaterial
 	// It updates the materials to reflect the current values stored in the material vars
@@ -580,7 +580,7 @@ public:
 
 	// Gets the morph format
 	virtual MorphFormat_t	GetMorphFormat() const = 0;
-	
+
 	// fast find that stores the index of the found var in the string table in local cache
 	virtual IMaterialVar *	FindVarFast( char const *pVarName, unsigned int *pToken ) = 0;
 

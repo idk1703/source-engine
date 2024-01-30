@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,5 +16,3 @@ PrototypeEffectLink::PrototypeEffectLink(PrototypeEffectCreateFn fn, const char 
 	m_pNext = g_pPrototypeEffects;
 	g_pPrototypeEffects = this;
 }
-
-

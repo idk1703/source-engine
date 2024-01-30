@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -10,7 +10,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_PhysMagnet : public C_BaseAnimating
 {
@@ -23,7 +23,7 @@ public:
 
 	void	PostDataUpdate( DataUpdateType_t updateType );
 	bool	GetShadowCastDirection( Vector *pDirection, ShadowType_t shadowType ) const;
-	
+
 public:
 	// Data received from the server
 	CUtlVector< int > m_aAttachedObjectsFromServer;
@@ -45,7 +45,7 @@ void RecvProxy_MagnetAttachedObjectList(  const CRecvProxyData *pData, void *pSt
 void RecvProxyArrayLength_MagnetAttachedArray( void *pStruct, int objectID, int currentArrayLength )
 {
 	C_PhysMagnet *pMagnet = (C_PhysMagnet*)pStruct;
-	
+
 	if ( pMagnet->m_aAttachedObjectsFromServer.Size() != currentArrayLength )
 		pMagnet->m_aAttachedObjectsFromServer.SetSize( currentArrayLength );
 }
@@ -54,11 +54,11 @@ IMPLEMENT_CLIENTCLASS_DT(C_PhysMagnet, DT_PhysMagnet, CPhysMagnet)
 
 	// ROBIN: Disabled because we don't need it anymore
 	/*
-	RecvPropArray2( 
+	RecvPropArray2(
 		RecvProxyArrayLength_MagnetAttachedArray,
-		RecvPropInt( "magnetattached_array_element", 0, SIZEOF_IGNORE, 0, RecvProxy_MagnetAttachedObjectList ), 
-		128, 
-		0, 
+		RecvPropInt( "magnetattached_array_element", 0, SIZEOF_IGNORE, 0, RecvProxy_MagnetAttachedObjectList ),
+		128,
+		0,
 		"magnetattached_array"
 		)
 	*/
@@ -66,21 +66,21 @@ IMPLEMENT_CLIENTCLASS_DT(C_PhysMagnet, DT_PhysMagnet, CPhysMagnet)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_PhysMagnet::C_PhysMagnet()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_PhysMagnet::~C_PhysMagnet()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PhysMagnet::PostDataUpdate( DataUpdateType_t updateType )
 {

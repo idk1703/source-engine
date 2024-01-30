@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -110,7 +110,7 @@ void CPortalGameStatsVisualizer::FrameUpdatePostEntityThink()
 		for( int i = m_pCurrentMapStats->m_pUseEvents->Count(); --i >= 0; )
 		{
 			Portal_Gamestats_LevelStats_t::PlayerUse_t &UseEvent = m_pCurrentMapStats->m_pUseEvents->Element( i );
-			
+
 			NDebugOverlay::Box( UseEvent.ptTraceStart, vSmallBoxMins, vSmallBoxMaxs, 0, 0, 255, 100, PORTALSTATSVISUALIZER_DISPLAYTIME );
 			NDebugOverlay::Line( UseEvent.ptTraceStart, UseEvent.ptTraceStart + (UseEvent.vTraceDelta * 100.0f), 0, 0, 255, false, PORTALSTATSVISUALIZER_DISPLAYTIME );
 			NDebugOverlay::Text( UseEvent.ptTraceStart, UseEvent.szUseEntityClassName, true, PORTALSTATSVISUALIZER_DISPLAYTIME );
@@ -134,13 +134,13 @@ void CPortalGameStatsVisualizer::FrameUpdatePostEntityThink()
 		for( int i = m_pCurrentMapStats->m_pPlacements->Count(); --i >= 0; )
 		{
 			Portal_Gamestats_LevelStats_t::PortalPlacement_t &PlacementStat = m_pCurrentMapStats->m_pPlacements->Element( i );
-			
+
 			unsigned char brightnessval;
-			if( PlacementStat.iSuccessCode == 0 ) 
+			if( PlacementStat.iSuccessCode == 0 )
 				 brightnessval = 255;//worked
 			else
 				 brightnessval = 64;//failed
-				
+
 			NDebugOverlay::BoxAngles( PlacementStat.ptPlacementPosition, CProp_Portal_Shared::vLocalMins, CProp_Portal_Shared::vLocalMaxs, m_PortalPlacementAngles[i], 0, brightnessval, brightnessval, 100, PORTALSTATSVISUALIZER_DISPLAYTIME );
 			NDebugOverlay::Box( PlacementStat.ptPlayerFiredFrom, vSmallBoxMins, vSmallBoxMaxs, 0, brightnessval, brightnessval, 100, PORTALSTATSVISUALIZER_DISPLAYTIME );
 			NDebugOverlay::Line( PlacementStat.ptPlayerFiredFrom, PlacementStat.ptPlacementPosition, 0, brightnessval, brightnessval, false, PORTALSTATSVISUALIZER_DISPLAYTIME );
@@ -186,7 +186,7 @@ static int PortalStats_LoadFile_f_CompletionFunc( char const *partial, char comm
 	for( int i = 0; i != iRetCount; ++i )
 	{
 		Q_snprintf( commands[i], COMMAND_COMPLETION_ITEM_LENGTH, "%s %s", partial, s_PortalStatsDataFileList[i].Get() );
-	}	
+	}
 
 	return iRetCount;
 }
@@ -246,7 +246,7 @@ static void PortalStats_LoadNextFile_f( void )
 			NDebugOverlay::ScreenText( 0.3f, 0.5f, "PortalStats_LoadNextFile looping to first file in directory.", 255, 255, 255, 255, 2.0f );
 			i = 0;
 		}
-		
+
 		PortalStats_LoadFileHelper( s_PortalStatsDataFileList[i] );
 	}
 }
@@ -299,4 +299,3 @@ static ConCommand PortalStats_LoadPrevFile("portalstats_loadprevfile", PortalSta
 
 
 #endif //#ifdef PORTAL_GAMESTATS_VERBOSE
-

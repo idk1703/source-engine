@@ -21,12 +21,12 @@
 
 //-----------------------------------------------------------------------------
 // Purpose: Warning/Msg call back through this API
-// Input  : type - 
-//			*pMsg - 
+// Input  : type -
+//			*pMsg -
 // Output : SpewRetval_t
 //-----------------------------------------------------------------------------
 SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
-{	
+{
 	OutputDebugString( pMsg );
 	return SPEW_CONTINUE;
 }
@@ -69,13 +69,13 @@ bool CInputTestApp::Create()
 {
 	SpewOutputFunc( SpewFunc );
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "inputsystem.dll",		INPUTSYSTEM_INTERFACE_VERSION },
 		{ "", "" }	// Required to terminate the list
 	};
 
-	if ( !AddSystems( appSystems ) ) 
+	if ( !AddSystems( appSystems ) )
 		return false;
 
 	return true;
@@ -94,18 +94,18 @@ bool CInputTestApp::CreateAppWindow( char const *pTitle, bool bWindowed, int w, 
 	WNDCLASSEX		wc;
 	memset( &wc, 0, sizeof( wc ) );
 	wc.cbSize		 = sizeof( wc );
-    wc.style         = CS_OWNDC | CS_DBLCLKS;
-    wc.lpfnWndProc   = DefWindowProc;
-    wc.hInstance     = (HINSTANCE)GetAppInstance();
-    wc.lpszClassName = "Valve001";
+	wc.style         = CS_OWNDC | CS_DBLCLKS;
+	wc.lpfnWndProc   = DefWindowProc;
+	wc.hInstance     = (HINSTANCE)GetAppInstance();
+	wc.lpszClassName = "Valve001";
 	wc.hIcon		 = NULL; //LoadIcon( s_HInstance, MAKEINTRESOURCE( IDI_LAUNCHER ) );
 	wc.hIconSm		 = wc.hIcon;
 
-    RegisterClassEx( &wc );
+	RegisterClassEx( &wc );
 
 	// Note, it's hidden
 	DWORD style = WS_POPUP | WS_CLIPSIBLINGS;
-	
+
 	if ( bWindowed )
 	{
 		// Give it a frame
@@ -126,14 +126,14 @@ bool CInputTestApp::CreateAppWindow( char const *pTitle, bool bWindowed, int w, 
 	AdjustWindowRectEx(&windowRect, style, FALSE, 0);
 
 	// Create the window
-	m_HWnd = CreateWindow( wc.lpszClassName, pTitle, style, 0, 0, 
-		windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, 
+	m_HWnd = CreateWindow( wc.lpszClassName, pTitle, style, 0, 0,
+		windowRect.right - windowRect.left, windowRect.bottom - windowRect.top,
 		NULL, NULL, (HINSTANCE)GetAppInstance(), NULL );
 
 	if (!m_HWnd)
 		return false;
 
-    int     CenterX, CenterY;
+	int     CenterX, CenterY;
 
 	CenterX = (GetSystemMetrics(SM_CXSCREEN) - w) / 2;
 	CenterY = (GetSystemMetrics(SM_CYSCREEN) - h) / 2;
@@ -142,7 +142,7 @@ bool CInputTestApp::CreateAppWindow( char const *pTitle, bool bWindowed, int w, 
 
 	// In VCR modes, keep it in the upper left so mouse coordinates are always relative to the window.
 	SetWindowPos (m_HWnd, NULL, CenterX, CenterY, 0, 0,
-				  SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW | SWP_DRAWFRAME);
+				SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW | SWP_DRAWFRAME);
 
 	return true;
 }
@@ -203,7 +203,7 @@ void CInputTestApp::PostShutdown( )
 }
 
 
-	
+
 //-----------------------------------------------------------------------------
 // main application
 //-----------------------------------------------------------------------------
@@ -245,6 +245,3 @@ int CInputTestApp::Main()
 
 	return 1;
 }
-
-
-

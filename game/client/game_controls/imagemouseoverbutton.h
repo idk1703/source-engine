@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ public:
 	virtual void HidePage( void );
 
 private:
-	vgui::IImage *m_pActiveImage;	
+	vgui::IImage *m_pActiveImage;
 	char *m_pszActiveImageName;
 
 	vgui::IImage *m_pInactiveImage;
@@ -224,7 +224,7 @@ void CImageMouseOverButton<T>::Paint()
 			m_pActiveImage->Paint();
 		}
 	}
-	else 
+	else
 	{
 		// draw the inactive image
 		if ( m_pInactiveImage )
@@ -234,7 +234,7 @@ void CImageMouseOverButton<T>::Paint()
 			m_pInactiveImage->Paint();
 		}
 	}
-	
+
 	MouseOverButton<T>::Paint();
 }
 

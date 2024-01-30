@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -82,7 +82,7 @@ LINK_ENTITY_TO_CLASS( trigger_catapult, CTriggerCatapult );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTriggerCatapult::CTriggerCatapult( void )
 {
@@ -92,7 +92,7 @@ CTriggerCatapult::CTriggerCatapult( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerCatapult::DrawDebugGeometryOverlays( void )
 {
@@ -140,7 +140,7 @@ void CTriggerCatapult::DrawDebugGeometryOverlays( void )
 			for( int i = 0; i < 20; i++ )
 			{
 				float flTime = 0.2f*(i+1);
-				
+
 				vecApex = vecSourcePos + vecVelocity*flTime;
 				vecApex.z -= 0.5 * flGravity * (flTime) * (flTime);
 				NDebugOverlay::Box( vecApex, -Vector(2,2,2), Vector(2,2,2), 0, 255, 0, 8.0f, 0.05f );
@@ -181,7 +181,7 @@ void CTriggerCatapult::DrawDebugGeometryOverlays( void )
 			for( int i = 0; i < 20; i++ )
 			{
 				float flTime = 0.2f*(i+1);
-				
+
 				vecApex = vecSourcePos + vecVelocity*flTime;
 				vecApex.z -= 0.5 * flGravity * (flTime) * (flTime);
 				NDebugOverlay::Box( vecApex, -Vector(2,2,2), Vector(2,2,2), 255, 255, 0, 8.0f, 0.05f );
@@ -197,10 +197,10 @@ void CTriggerCatapult::DrawDebugGeometryOverlays( void )
 }
 //---------------------------------------------------------
 //---------------------------------------------------------
-int CTriggerCatapult::DrawDebugTextOverlays(void) 
+int CTriggerCatapult::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 		Q_snprintf(tempstr,sizeof(tempstr), "Launch target: %s", m_strLaunchTarget.ToCStr() );
@@ -208,7 +208,7 @@ int CTriggerCatapult::DrawDebugTextOverlays(void)
 		text_offset++;
 
 		if ( m_bUseThresholdCheck )
-		{		
+		{
 			Q_snprintf(tempstr,sizeof(tempstr), "Lower threshold velocity: %.2f", m_flLowerThreshold );
 			EntityText(text_offset,tempstr,0);
 			text_offset++;
@@ -228,17 +228,17 @@ int CTriggerCatapult::DrawDebugTextOverlays(void)
 
 		// Get the target
 		CBaseEntity *pLaunchTarget = m_hLaunchTarget;
-		
+
 		// See if we're attempting to hit a target
 		if ( pLaunchTarget )
 		{
 			Vector vecSourcePos = GetAbsOrigin();
 			float flGravity = sv_gravity.GetFloat();
-			
+
 			{
 				Vector vecTargetPos = pLaunchTarget->GetAbsOrigin();
-				vecTargetPos.z -= 32.0f;  
-							
+				vecTargetPos.z -= 32.0f;
+
 				Vector vecVelocity = (vecTargetPos - vecSourcePos);
 
 				// throw at a constant time
@@ -268,13 +268,13 @@ int CTriggerCatapult::DrawDebugTextOverlays(void)
 				EntityText(text_offset,tempstr,0);
 				text_offset++;
 			}
-		}				
+		}
 	}
 	return text_offset;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerCatapult::Spawn( void )
 {
@@ -301,7 +301,7 @@ void CTriggerCatapult::Spawn( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerCatapult::InputSetPlayerSpeed( inputdata_t &in )
 {
@@ -309,7 +309,7 @@ void CTriggerCatapult::InputSetPlayerSpeed( inputdata_t &in )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerCatapult::InputSetPhysicsSpeed( inputdata_t &in )
 {
@@ -317,7 +317,7 @@ void CTriggerCatapult::InputSetPhysicsSpeed( inputdata_t &in )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerCatapult::InputSetLaunchTarget( inputdata_t &in )
 {
@@ -327,7 +327,7 @@ void CTriggerCatapult::InputSetLaunchTarget( inputdata_t &in )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerCatapult::InputSetExactVelocityChoiceType( inputdata_t &in )
 {
@@ -335,7 +335,7 @@ void CTriggerCatapult::InputSetExactVelocityChoiceType( inputdata_t &in )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerCatapult::LaunchThink( void )
 {
@@ -404,7 +404,7 @@ void CTriggerCatapult::PlayerPassesTriggerFiltersThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerCatapult::EndTouch( CBaseEntity *pOther )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: The TF Game rules 
+// Purpose: The TF Game rules
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@
 	#define CShield C_Shield
 
 #else
-	
+
 	#include "tf_shield.h"
 	#include "te_effect_dispatch.h"
 	#include "player.h"
@@ -63,7 +63,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 
 
 #else
-   
+
 	#define MAX_OBJECT_COMMAND_DISTANCE 120.0f
 
 	class CVoiceGameMgrHelper : public IVoiceGameMgrHelper
@@ -137,9 +137,9 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 
 		int iBotClient = atoi( args[1) );
 		int iBotEnt = iBotClient + 1;
-		
-		if ( iBotClient < 0 || 
-			iBotClient >= gpGlobals->maxClients || 
+
+		if ( iBotClient < 0 ||
+			iBotClient >= gpGlobals->maxClients ||
 			pPlayer->entindex() == iBotEnt )
 		{
 			Warning( "PossessBot <client index>\n" );
@@ -167,7 +167,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 				// Make the other a bot and make the player not a bot.
 				pPlayerBaseEnt->RemoveFlag( FL_FAKECLIENT );
 				pBotBaseEnt->AddFlag( FL_FAKECLIENT );
-			
+
 				// Point the CBaseEntities at the right players.
 				pPlayerBaseEnt->NetworkProp()->SetEdict( pPlayerData );
 				pBotBaseEnt->NetworkProp()->SetEdict( pBotData );
@@ -195,7 +195,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		// The bot command uses switches like command-line switches.
 		// -count <count> tells how many bots to spawn.
 		// -team <index> selects the bot's team. Default is -1 which chooses randomly.
-		//	Note: if you do -team !, then it 
+		//	Note: if you do -team !, then it
 		// -class <index> selects the bot's class. Default is -1 which chooses randomly.
 		// -frozen prevents the bots from running around when they spawn in.
 
@@ -222,10 +222,10 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		iClass = clamp( iClass, -1, TFCLASS_CLASS_COUNT );
 		if ( iClass == TFCLASS_UNDECIDED )
 			iClass = TFCLASS_RECON;
-		
+
 		// Look at -frozen.
 		bool bFrozen = !!args.FindArg( "-frozen" );
-			
+
 		// Ok, spawn all the bots.
 		while ( --count >= 0 )
 		{
@@ -237,11 +237,11 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 	ConCommand cc_PossessBot( "PossessBot", PossessBot_f, "Toggle. Possess a bot.\n\tArguments: <bot client number>", FCVAR_CHEAT );
 
 
-	Vector MaybeDropToGround( 
-		CBaseEntity *pMainEnt, 
-		bool bDropToGround, 
-		const Vector &vPos, 
-		const Vector &vMins, 
+	Vector MaybeDropToGround(
+		CBaseEntity *pMainEnt,
+		bool bDropToGround,
+		const Vector &vPos,
+		const Vector &vMins,
 		const Vector &vMaxs )
 	{
 		if ( bDropToGround )
@@ -275,13 +275,13 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 	{
 		// This function moves the box out in each dimension in each step trying to find empty space like this:
 		//
-		//											  X  
-		//							   X			  X  
+		//											  X
+		//							   X			  X
 		// Step 1:   X     Step 2:    XXX   Step 3: XXXXX
-		//							   X 			  X  
-		//											  X  
+		//							   X 			  X
+		//											  X
 		//
-			 
+
 		Vector mins, maxs;
 		pMainEnt->CollisionProp()->WorldSpaceAABB( &mins, &maxs );
 		mins -= pMainEnt->GetAbsOrigin();
@@ -305,7 +305,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		// Keep branching out until we get too far.
 		int iCurIteration = 0;
 		int nMaxIterations = 15;
-		
+
 		int offset = 0;
 		do
 		{
@@ -317,7 +317,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 				{
 					Vector vBase = vOrigin;
 					vBase[iDim] += (iSign*2-1) * flCurOffset;
-				
+
 					if ( UTIL_IsSpaceEmpty( pMainEnt, vBase + vTestMins, vBase + vTestMaxs ) )
 					{
 						// Ensure that there is a clear line of sight from the spawnpoint entity to the actual spawn point.
@@ -345,7 +345,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	CBaseEntity *CTeamFortress::GetPlayerSpawnSpot( CBasePlayer *pPlayer )
 	{
@@ -357,7 +357,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		vecTestOrg.z += pPlayer->WorldAlignSize().z * 0.5;
 		Vector origin;
 		EntityPlacementTest( pPlayer, vecTestOrg, origin, true );
-		
+
 		// Move the player to the place it said.
 		pPlayer->Teleport( &origin, NULL, NULL );
 
@@ -365,12 +365,12 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		pPlayer->SetLocalAngles( pSpawnSpot->GetLocalAngles() );
 		pPlayer->m_Local.m_vecPunchAngle = vec3_angle;
 		pPlayer->SnapEyeAngles( pSpawnSpot->GetLocalAngles() );
-		
+
 		return pSpawnSpot;
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	CTeamFortress::CTeamFortress()
 	{
@@ -390,17 +390,17 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	CTeamFortress::~CTeamFortress()
 	{
-		// Note, don't delete each team since they are in the gEntList and will 
+		// Note, don't delete each team since they are in the gEntList and will
 		// automatically be deleted from there, instead.
 		g_Teams.Purge();
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	void CTeamFortress::UpdateClientData( CBasePlayer *player )
 	{
@@ -502,7 +502,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 				{
 					// We have to be relatively close to the object too...
 
-					// FIXME: When I put in a better dismantle solution (namely send the dismantle 
+					// FIXME: When I put in a better dismantle solution (namely send the dismantle
 					// command along with a cancledismantle command), re-enable this.
 					// Also, need to solve the problem of control panels on large objects
 					// For the battering ram, for instance, this distance is too far.
@@ -601,7 +601,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 			{
 				Msg( "usage:  tech <name>\n" );
 			}
-			return true;	   
+			return true;
 		}
 		else if ( FStrEq( pcmd, "techall" ) )
 		{
@@ -621,7 +621,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 			{
 				int team = atoi( args[1] );
 				float flResourceAmount = atof( args[2] );
-				if ( team >= 0 && team < GetNumberOfTeams() ) 
+				if ( team >= 0 && team < GetNumberOfTeams() )
 				{
 					GetGlobalTFTeam( team )->AddTeamResources( flResourceAmount );
 				}
@@ -643,7 +643,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 				int iPrefTechIndex = atoi( args[1] );
 
 				pPlayer->SetPreferredTechnology( pTFTeam->m_pTechnologyTree, iPrefTechIndex );
-				
+
 			}
 			return true;
 		}
@@ -661,16 +661,16 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 
 			int id = UTIL_PrecacheDecal( "decals/tscorch", true );
 			CBroadcastRecipientFilter filter;
-			te->BSPDecal( filter, 0.0, 
+			te->BSPDecal( filter, 0.0,
 				&trace.endpos, entityIndex, id );
 
-			return true; 
+			return true;
 		}
 		else if( FStrEq( pcmd, "killorder" ) )
 		{
 			if( pPlayer->GetTFTeam() )
 				pPlayer->GetTFTeam()->RemoveOrdersToPlayer( pPlayer );
-		
+
 			return true;
 		}
 		else if( BaseClass::ClientCommand( pEdict, args ) )
@@ -694,7 +694,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	bool CTeamFortress::PlayFootstepSounds( CBasePlayer *pl )
 	{
@@ -712,7 +712,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 
 		// only make step sounds in multiplayer if the player is moving fast enough
 		if ( pl->IsOnLadder() || pl->GetAbsVelocity().Length2D() > 100 )
-			return true;  
+			return true;
 
 		return false;
 	}
@@ -762,7 +762,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 	//-----------------------------------------------------------------------------
 	// Traces a line vs a shield, returns damage reduction
 	//-----------------------------------------------------------------------------
-	float CTeamFortress::WeaponTraceEntity( CBaseEntity *pEntity, 
+	float CTeamFortress::WeaponTraceEntity( CBaseEntity *pEntity,
 		const Vector &src, const Vector &end, unsigned int mask, trace_t *pTrace )
 	{
 		int damageType = pEntity->GetDamageType();
@@ -774,7 +774,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		// Trace it baby...
 		float damage = 1.0f;
 		bool done;
-		do 
+		do
 		{
 			// FIXME: Optimize so we don't test the same ray but start at the
 			// previous collision point
@@ -949,7 +949,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 					tr.endpos = vecSrc;
 					tr.fraction = 0.0;
 				}
-				
+
 				// decrease damage for an ent that's farther from the bomb.
 				flAdjustedDamage = ( vecSrc - tr.endpos ).Length() * falloff;
 				flAdjustedDamage = subInfo.GetDamage() - flAdjustedDamage;
@@ -969,7 +969,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 						((CBaseTFPlayer*)pEntity)->KnockDownPlayer( vecForce, flAdjustedDamage * 15.0f, tf_knockdowntime.GetFloat() );
 					}
 					*/
-					
+
 					// Msg( "hit %s\n", pEntity->GetClassname() );
 					subInfo.SetDamage( flAdjustedDamage );
 
@@ -1035,10 +1035,10 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
-	// Input  : *pVictim - 
-	//			*pKiller - 
-	//			*pInflictor - 
+	// Purpose:
+	// Input  : *pVictim -
+	//			*pKiller -
+	//			*pInflictor -
 	//-----------------------------------------------------------------------------
 	void CTeamFortress::DeathNotice( CBasePlayer *pVictim, const CTakeDamageInfo &info )
 	{
@@ -1073,7 +1073,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 			if ( pScorer )
 			{
 				killer_index = pScorer->entindex();
-				
+
 				if ( pInflictor )
 				{
 					if ( pInflictor == pScorer )
@@ -1119,8 +1119,8 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		MessageEnd();
 
 		// Did he kill himself?
-		if ( pVictim == pScorer )  
-		{  
+		if ( pVictim == pScorer )
+		{
 			UTIL_LogPrintf( "\"%s<%i>\" killed self with %s\n",  pVictim->GetPlayerName(), engine->GetPlayerUserId( pVictim->edict() ), killer_weapon_name );
 		}
 		else if ( pScorer )
@@ -1132,7 +1132,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 				killer_weapon_name );
 		}
 		else
-		{  
+		{
 			// killed by the world
 			UTIL_LogPrintf( "\"%s<%i>\" killed by world with %s\n",  pVictim->GetPlayerName(), engine->GetPlayerUserId( pVictim->edict() ), killer_weapon_name );
 		} */
@@ -1163,9 +1163,9 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
-	// Input  : *pListener - 
-	//			*pSpeaker - 
+	// Purpose:
+	// Input  : *pListener -
+	//			*pSpeaker -
 	// Output : Returns true on success, false on failure.
 	//-----------------------------------------------------------------------------
 	bool CTeamFortress::PlayerCanHearChat( CBasePlayer *pListener, CBasePlayer *pSpeaker )
@@ -1216,11 +1216,11 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		// ------------------------------------------------------------
 		//	> CLASS_ANTLION
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_PLAYER,			D_HT, 5);			
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_PLAYER,			D_HT, 5);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_BARNACLE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_BULLSEYE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_CITIZEN_PASSIVE,	D_HT, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_CITIZEN_PASSIVE,	D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_CITIZEN_REBEL,	D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_COMBINE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_CONSCRIPT,		D_HT, 0);
@@ -1230,9 +1230,9 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_METROPOLICE,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_MILITARY,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_MISSILE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_SCANNER,			D_HT, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_STALKER,			D_HT, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_VORTIGAUNT,		D_HT, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_SCANNER,			D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_STALKER,			D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_VORTIGAUNT,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_ZOMBIE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_PROTOSNIPER,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ANTLION,			CLASS_ANTLION,			D_LI, 0);
@@ -1241,12 +1241,12 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		// ------------------------------------------------------------
 		//	> CLASS_BARNACLE
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_PLAYER,			D_HT, 0);			
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_PLAYER,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_ANTLION,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_BARNACLE,			D_LI, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_BULLSEYE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_CITIZEN_PASSIVE,	D_HT, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_CITIZEN_PASSIVE,	D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_CITIZEN_REBEL,	D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_COMBINE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_CONSCRIPT,		D_HT, 0);
@@ -1256,9 +1256,9 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_METROPOLICE,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_MILITARY,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_MISSILE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_SCANNER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_STALKER,			D_HT, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_VORTIGAUNT,		D_HT, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_SCANNER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_STALKER,			D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_VORTIGAUNT,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_ZOMBIE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_PROTOSNIPER,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BARNACLE,			CLASS_EARTH_FAUNA,		D_NU, 0);
@@ -1266,12 +1266,12 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		// ------------------------------------------------------------
 		//	> CLASS_BULLSEYE
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_PLAYER,			D_NU, 0);			
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_PLAYER,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_ANTLION,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_BARNACLE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_BULLSEYE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_CITIZEN_PASSIVE,	D_NU, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_CITIZEN_PASSIVE,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_CITIZEN_REBEL,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_COMBINE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_CONSCRIPT,		D_NU, 0);
@@ -1281,9 +1281,9 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_METROPOLICE,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_MILITARY,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_MISSILE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_SCANNER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_STALKER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_VORTIGAUNT,		D_NU, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_SCANNER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_STALKER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_VORTIGAUNT,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_ZOMBIE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_PROTOSNIPER,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_BULLSEYE,			CLASS_EARTH_FAUNA,		D_NU, 0);
@@ -1291,12 +1291,12 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		// ------------------------------------------------------------
 		//	> CLASS_CITIZEN_PASSIVE
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_PLAYER,			D_NU, 0);			
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_PLAYER,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_ANTLION,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_BARNACLE,			D_FR, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_BULLSEYE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_CITIZEN_PASSIVE,	D_NU, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_CITIZEN_PASSIVE,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_CITIZEN_REBEL,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_COMBINE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_CONSCRIPT,		D_NU, 0);
@@ -1306,9 +1306,9 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_METROPOLICE,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_MILITARY,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_MISSILE,			D_FR, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_SCANNER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_STALKER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_VORTIGAUNT,		D_NU, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_SCANNER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_STALKER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_VORTIGAUNT,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_ZOMBIE,			D_FR, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_PROTOSNIPER,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_PASSIVE,	CLASS_EARTH_FAUNA,		D_NU, 0);
@@ -1316,12 +1316,12 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		// ------------------------------------------------------------
 		//	> CLASS_CITIZEN_REBEL
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_PLAYER,			D_NU, 0);			
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_PLAYER,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_ANTLION,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_BARNACLE,			D_FR, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_BULLSEYE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_CITIZEN_PASSIVE,	D_NU, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_CITIZEN_PASSIVE,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_CITIZEN_REBEL,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_COMBINE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_CONSCRIPT,		D_NU, 0);
@@ -1331,9 +1331,9 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_METROPOLICE,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_MILITARY,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_MISSILE,			D_FR, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_SCANNER,			D_HT, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_STALKER,			D_HT, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_VORTIGAUNT,		D_NU, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_SCANNER,			D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_STALKER,			D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_VORTIGAUNT,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_ZOMBIE,			D_FR, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_PROTOSNIPER,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CITIZEN_REBEL,		CLASS_EARTH_FAUNA,		D_NU, 0);
@@ -1341,12 +1341,12 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		// ------------------------------------------------------------
 		//	> CLASS_COMBINE
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_PLAYER,			D_HT, 0);			
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_PLAYER,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_ANTLION,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_BARNACLE,			D_FR, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_BULLSEYE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_CITIZEN_PASSIVE,	D_NU, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_CITIZEN_PASSIVE,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_CITIZEN_REBEL,	D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_COMBINE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_CONSCRIPT,		D_HT, 0);
@@ -1356,9 +1356,9 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_METROPOLICE,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_MILITARY,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_MISSILE,			D_FR, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_SCANNER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_STALKER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_VORTIGAUNT,		D_HT, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_SCANNER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_STALKER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_VORTIGAUNT,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_ZOMBIE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_PROTOSNIPER,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_EARTH_FAUNA,		D_NU, 0);
@@ -1366,12 +1366,12 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		// ------------------------------------------------------------
 		//	> CLASS_CONSCRIPT
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_PLAYER,			D_NU, 0);			
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_PLAYER,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_ANTLION,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_BARNACLE,			D_FR, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_BULLSEYE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_CITIZEN_PASSIVE,	D_NU, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_CITIZEN_PASSIVE,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_CITIZEN_REBEL,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_COMBINE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_CONSCRIPT,		D_NU, 0);
@@ -1381,22 +1381,22 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_METROPOLICE,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_MILITARY,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_MISSILE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_SCANNER,			D_HT, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_STALKER,			D_HT, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_VORTIGAUNT,		D_NU, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_SCANNER,			D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_STALKER,			D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_VORTIGAUNT,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_ZOMBIE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_PROTOSNIPER,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_CONSCRIPT,			CLASS_EARTH_FAUNA,		D_NU, 0);
-		
+
 		// ------------------------------------------------------------
 		//	> CLASS_FLARE
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_PLAYER,			D_NU, 0);			
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_PLAYER,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_ANTLION,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_BARNACLE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_BULLSEYE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_CITIZEN_PASSIVE,	D_NU, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_CITIZEN_PASSIVE,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_CITIZEN_REBEL,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_COMBINE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_CONSCRIPT,		D_NU, 0);
@@ -1407,9 +1407,9 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_MILITARY,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_MISSILE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_FLARE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_SCANNER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_STALKER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_VORTIGAUNT,		D_NU, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_SCANNER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_STALKER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_VORTIGAUNT,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_ZOMBIE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_PROTOSNIPER,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_FLARE,			CLASS_EARTH_FAUNA,		D_NU, 0);
@@ -1417,12 +1417,12 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		// ------------------------------------------------------------
 		//	> CLASS_HEADCRAB
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_PLAYER,			D_HT, 0);			
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_PLAYER,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_ANTLION,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_BARNACLE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_BULLSEYE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_CITIZEN_PASSIVE,	D_HT, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_CITIZEN_PASSIVE,	D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_CITIZEN_REBEL,	D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_COMBINE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_CONSCRIPT,		D_HT, 0);
@@ -1432,9 +1432,9 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_METROPOLICE,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_MILITARY,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_MISSILE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_SCANNER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_STALKER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_VORTIGAUNT,		D_HT, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_SCANNER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_STALKER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_VORTIGAUNT,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_ZOMBIE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_PROTOSNIPER,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_HEADCRAB,			CLASS_EARTH_FAUNA,		D_NU, 0);
@@ -1443,12 +1443,12 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		// ------------------------------------------------------------
 		//	> CLASS_MANHACK
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_PLAYER,			D_HT, 0);			
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_PLAYER,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_ANTLION,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_BARNACLE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_BULLSEYE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_CITIZEN_PASSIVE,	D_HT, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_CITIZEN_PASSIVE,	D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_CITIZEN_REBEL,	D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_COMBINE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_CONSCRIPT,		D_HT, 0);
@@ -1458,9 +1458,9 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_METROPOLICE,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_MILITARY,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_MISSILE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_SCANNER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_STALKER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_VORTIGAUNT,		D_HT, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_SCANNER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_STALKER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_VORTIGAUNT,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_ZOMBIE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_PROTOSNIPER,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MANHACK,			CLASS_EARTH_FAUNA,		D_NU, 0);
@@ -1468,12 +1468,12 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		// ------------------------------------------------------------
 		//	> CLASS_METROPOLICE
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_PLAYER,			D_HT, 0);			
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_PLAYER,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_ANTLION,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_BARNACLE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_BULLSEYE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_CITIZEN_PASSIVE,	D_NU, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_CITIZEN_PASSIVE,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_CITIZEN_REBEL,	D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_COMBINE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_CONSCRIPT,		D_HT, 0);
@@ -1483,9 +1483,9 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_METROPOLICE,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_MILITARY,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_MISSILE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_SCANNER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_STALKER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_VORTIGAUNT,		D_HT, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_SCANNER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_STALKER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_VORTIGAUNT,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_ZOMBIE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_PROTOSNIPER,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_METROPOLICE,		CLASS_EARTH_FAUNA,		D_NU, 0);
@@ -1493,12 +1493,12 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		// ------------------------------------------------------------
 		//	> CLASS_MILITARY
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_PLAYER,			D_HT, 0);			
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_PLAYER,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_ANTLION,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_BARNACLE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_BULLSEYE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_CITIZEN_PASSIVE,	D_NU, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_CITIZEN_PASSIVE,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_CITIZEN_REBEL,	D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_COMBINE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_CONSCRIPT,		D_HT, 0);
@@ -1508,9 +1508,9 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_METROPOLICE,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_MILITARY,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_MISSILE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_SCANNER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_STALKER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_VORTIGAUNT,		D_HT, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_SCANNER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_STALKER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_VORTIGAUNT,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_ZOMBIE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_PROTOSNIPER,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MILITARY,			CLASS_EARTH_FAUNA,		D_NU, 0);
@@ -1518,12 +1518,12 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		// ------------------------------------------------------------
 		//	> CLASS_MISSILE
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_PLAYER,			D_HT, 0);			
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_PLAYER,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_ANTLION,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_BARNACLE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_BULLSEYE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_CITIZEN_PASSIVE,	D_NU, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_CITIZEN_PASSIVE,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_CITIZEN_REBEL,	D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_COMBINE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_CONSCRIPT,		D_HT, 0);
@@ -1533,9 +1533,9 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_METROPOLICE,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_MILITARY,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_MISSILE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_SCANNER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_STALKER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_VORTIGAUNT,		D_HT, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_SCANNER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_STALKER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_VORTIGAUNT,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_ZOMBIE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_PROTOSNIPER,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_MISSILE,			CLASS_EARTH_FAUNA,		D_NU, 0);
@@ -1543,12 +1543,12 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		// ------------------------------------------------------------
 		//	> CLASS_NONE
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_PLAYER,			D_NU, 0);			
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_PLAYER,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_ANTLION,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_BARNACLE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_BULLSEYE,			D_NU, 0);	
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_CITIZEN_PASSIVE,	D_NU, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_BULLSEYE,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_CITIZEN_PASSIVE,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_CITIZEN_REBEL,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_COMBINE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_CONSCRIPT,		D_NU, 0);
@@ -1557,9 +1557,9 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_MANHACK,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_METROPOLICE,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_MILITARY,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_SCANNER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_STALKER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_VORTIGAUNT,		D_NU, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_SCANNER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_STALKER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_VORTIGAUNT,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_ZOMBIE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_PROTOSNIPER,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_NONE,				CLASS_EARTH_FAUNA,		D_NU, 0);
@@ -1567,12 +1567,12 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		// ------------------------------------------------------------
 		//	> CLASS_PLAYER
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_PLAYER,			D_NU, 0);			
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_PLAYER,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_ANTLION,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_BARNACLE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_BULLSEYE,			D_HT, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_CITIZEN_PASSIVE,	D_NU, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_CITIZEN_PASSIVE,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_CITIZEN_REBEL,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_COMBINE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_CONSCRIPT,		D_NU, 0);
@@ -1582,22 +1582,22 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_METROPOLICE,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_MILITARY,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_MISSILE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_SCANNER,			D_HT, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_STALKER,			D_HT, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_VORTIGAUNT,		D_NU, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_SCANNER,			D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_STALKER,			D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_VORTIGAUNT,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_ZOMBIE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_PROTOSNIPER,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PLAYER,			CLASS_EARTH_FAUNA,		D_NU, 0);
 
 		// ------------------------------------------------------------
 		//	> CLASS_SCANNER
-		// ------------------------------------------------------------	
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_PLAYER,			D_NU, 0);			
+		// ------------------------------------------------------------
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_PLAYER,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_ANTLION,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_BARNACLE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_BULLSEYE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_CITIZEN_PASSIVE,	D_NU, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_CITIZEN_PASSIVE,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_CITIZEN_REBEL,	D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_COMBINE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_CONSCRIPT,		D_HT, 0);
@@ -1607,22 +1607,22 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_METROPOLICE,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_MILITARY,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_MISSILE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_SCANNER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_STALKER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_VORTIGAUNT,		D_HT, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_SCANNER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_STALKER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_VORTIGAUNT,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_ZOMBIE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_PROTOSNIPER,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_SCANNER,			CLASS_EARTH_FAUNA,		D_NU, 0);
 
 		// ------------------------------------------------------------
 		//	> CLASS_STALKER
-		// ------------------------------------------------------------	
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_PLAYER,			D_HT, 0);			
+		// ------------------------------------------------------------
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_PLAYER,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_ANTLION,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_BARNACLE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_BULLSEYE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_CITIZEN_PASSIVE,	D_NU, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_CITIZEN_PASSIVE,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_CITIZEN_REBEL,	D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_COMBINE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_CONSCRIPT,		D_HT, 0);
@@ -1632,22 +1632,22 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_METROPOLICE,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_MILITARY,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_MISSILE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_SCANNER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_STALKER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_VORTIGAUNT,		D_HT, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_SCANNER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_STALKER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_VORTIGAUNT,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_ZOMBIE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_PROTOSNIPER,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_STALKER,			CLASS_EARTH_FAUNA,		D_NU, 0);
 
 		// ------------------------------------------------------------
 		//	> CLASS_VORTIGAUNT
-		// ------------------------------------------------------------	
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_PLAYER,			D_NU, 0);			
+		// ------------------------------------------------------------
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_PLAYER,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_ANTLION,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_BARNACLE,			D_FR, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_BULLSEYE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_CITIZEN_PASSIVE,	D_NU, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_CITIZEN_PASSIVE,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_CITIZEN_REBEL,	D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_COMBINE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_CONSCRIPT,		D_NU, 0);
@@ -1657,22 +1657,22 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_METROPOLICE,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_MILITARY,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_MISSILE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_SCANNER,			D_HT, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_STALKER,			D_HT, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_VORTIGAUNT,		D_NU, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_SCANNER,			D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_STALKER,			D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_VORTIGAUNT,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_ZOMBIE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_PROTOSNIPER,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_VORTIGAUNT,		CLASS_EARTH_FAUNA,		D_NU, 0);
 
 		// ------------------------------------------------------------
 		//	> CLASS_ZOMBIE
-		// ------------------------------------------------------------	
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_PLAYER,			D_HT, 0);			
+		// ------------------------------------------------------------
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_PLAYER,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_ANTLION,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_BARNACLE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_BULLSEYE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_CITIZEN_PASSIVE,	D_HT, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_CITIZEN_PASSIVE,	D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_CITIZEN_REBEL,	D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_COMBINE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_CONSCRIPT,		D_HT, 0);
@@ -1682,22 +1682,22 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_METROPOLICE,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_MILITARY,			D_FR, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_MISSILE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_SCANNER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_STALKER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_VORTIGAUNT,		D_HT, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_SCANNER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_STALKER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_VORTIGAUNT,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_ZOMBIE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_PROTOSNIPER,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_ZOMBIE,			CLASS_EARTH_FAUNA,		D_NU, 0);
 
 		// ------------------------------------------------------------
 		//	> CLASS_PROTOSNIPER
-		// ------------------------------------------------------------	
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_NONE,				D_NU, 0);			
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_PLAYER,			D_HT, 0);			
+		// ------------------------------------------------------------
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_NONE,				D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_PLAYER,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_ANTLION,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_BARNACLE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_BULLSEYE,			D_NU, 0);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_CITIZEN_PASSIVE,	D_HT, 0);	
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_CITIZEN_PASSIVE,	D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_CITIZEN_REBEL,	D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_COMBINE,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_CONSCRIPT,		D_HT, 0);
@@ -1707,9 +1707,9 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_METROPOLICE,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_MILITARY,			D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_MISSILE,			D_NU, 5);
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_SCANNER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_STALKER,			D_NU, 0);		
-		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_VORTIGAUNT,		D_HT, 0);		
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_SCANNER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_STALKER,			D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_VORTIGAUNT,		D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_ZOMBIE,			D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_PROTOSNIPER,		D_NU, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_PROTOSNIPER,			CLASS_EARTH_FAUNA,		D_NU, 0);
@@ -1718,7 +1718,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		//	> CLASS_EARTH_FAUNA
 		//
 		// Fears pretty much everything except other earth fauna:
-		// 
+		//
 		// 5. Fears flares and missiles most of all.
 		// 4. Fears flying machines next.
 		// 3. Fears aliens next.
@@ -1726,7 +1726,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 		// 1. Fears humans next.
 		// 0. Fears the player the least.
 		//
-		// ------------------------------------------------------------	
+		// ------------------------------------------------------------
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_EARTH_FAUNA,			CLASS_NONE,				D_FR, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_EARTH_FAUNA,			CLASS_PLAYER,			D_FR, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_EARTH_FAUNA,			CLASS_ANTLION,			D_FR, 2);
@@ -1775,16 +1775,16 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 			case CLASS_ANTLION:			return "CLASS_ANTLION";
 			case CLASS_BARNACLE:		return "CLASS_BARNACLE";
 			case CLASS_BULLSEYE:		return "CLASS_BULLSEYE";
-			case CLASS_CITIZEN_PASSIVE: return "CLASS_CITIZEN_PASSIVE";		
+			case CLASS_CITIZEN_PASSIVE: return "CLASS_CITIZEN_PASSIVE";
 			case CLASS_CITIZEN_REBEL:	return "CLASS_CITIZEN_REBEL";
 			case CLASS_COMBINE:			return "CLASS_COMBINE";
 			case CLASS_CONSCRIPT:		return "CLASS_CONSCRIPT";
 			case CLASS_HEADCRAB:		return "CLASS_HEADCRAB";
 			case CLASS_MANHACK:			return "CLASS_MANHACK";
 			case CLASS_METROPOLICE:		return "CLASS_METROPOLICE";
-			case CLASS_MILITARY:		return "CLASS_MILITARY";	
-			case CLASS_SCANNER:			return "CLASS_SCANNER";		
-			case CLASS_STALKER:			return "CLASS_STALKER";		
+			case CLASS_MILITARY:		return "CLASS_MILITARY";
+			case CLASS_SCANNER:			return "CLASS_SCANNER";
+			case CLASS_STALKER:			return "CLASS_STALKER";
 			case CLASS_VORTIGAUNT:		return "CLASS_VORTIGAUNT";
 			case CLASS_ZOMBIE:			return "CLASS_ZOMBIE";
 			case CLASS_PROTOSNIPER:		return "CLASS_PROTOSNIPER";
@@ -1799,8 +1799,8 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 	//-----------------------------------------------------------------------------
 	// Purpose: When gaining new technologies in TF, prevent auto switching if we
 	//  receive a weapon during the switch
-	// Input  : *pPlayer - 
-	//			*pWeapon - 
+	// Input  : *pPlayer -
+	//			*pWeapon -
 	// Output : Returns true on success, false on failure.
 	//-----------------------------------------------------------------------------
 	bool CTeamFortress::FShouldSwitchWeapon( CBasePlayer *pPlayer, CBaseCombatWeapon *pWeapon )
@@ -1809,17 +1809,17 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 			return false;
 
 		// Never auto switch to object placement
-		if ( dynamic_cast<CWeaponBuilder*>(pWeapon) ) 
+		if ( dynamic_cast<CWeaponBuilder*>(pWeapon) )
 			return false;
-		if ( dynamic_cast<CWeaponObjectSelection*>(pWeapon) ) 
+		if ( dynamic_cast<CWeaponObjectSelection*>(pWeapon) )
 			return false;
 
 		return BaseClass::FShouldSwitchWeapon( pPlayer, pWeapon );
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
-	// Input  : allow - 
+	// Purpose:
+	// Input  : allow -
 	//-----------------------------------------------------------------------------
 	void CTeamFortress::SetAllowWeaponSwitch( bool allow )
 	{
@@ -1827,7 +1827,7 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	// Output : Returns true on success, false on failure.
 	//-----------------------------------------------------------------------------
 	bool CTeamFortress::GetAllowWeaponSwitch( void )
@@ -1836,8 +1836,8 @@ REGISTER_GAMERULES_CLASS( CTeamFortress );
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
-	// Input  : *pPlayer - 
+	// Purpose:
+	// Input  : *pPlayer -
 	// Output : const char
 	//-----------------------------------------------------------------------------
 	const char *CTeamFortress::SetDefaultPlayerTeam( CBasePlayer *pPlayer )
@@ -1888,7 +1888,7 @@ void WeaponImpact( trace_t *tr, Vector vecDir, bool bHurt, CBaseEntity *pEntity,
 			}
 			else
 			{
-				// Client waits for server version 
+				// Client waits for server version
 #ifndef CLIENT_DLL
 				// Make sure the server sends to us, even though we're predicting
 				CDisablePredictionFiltering dpf;
@@ -1913,7 +1913,7 @@ void WeaponImpact( trace_t *tr, Vector vecDir, bool bHurt, CBaseEntity *pEntity,
 			}
 			else
 			{
-				// Client waits for server version 
+				// Client waits for server version
 #ifndef CLIENT_DLL
 				// Make sure the server sends to us, even though we're predicting
 				CDisablePredictionFiltering dpf;
@@ -2053,22 +2053,22 @@ bool CTeamFortress::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 
 	// Resource chunks don't collide with each other or vehicles
 	if ( collisionGroup1 == TFCOLLISION_GROUP_RESOURCE_CHUNK )
-	{	
+	{
 		if ( collisionGroup0 == TFCOLLISION_GROUP_RESOURCE_CHUNK )
 			return false;
 //		if ( collisionGroup0 == COLLISION_GROUP_VEHICLE )
 //			return false;
 	}
 
-	return BaseClass::ShouldCollide( collisionGroup0, collisionGroup1 ); 
+	return BaseClass::ShouldCollide( collisionGroup0, collisionGroup1 );
 }
 
 
 //-----------------------------------------------------------------------------
 // Purpose: Fire a generic bullet
 //-----------------------------------------------------------------------------
-void CTeamFortress::FireBullets( const CTakeDamageInfo &info, int cShots, const Vector &vecSrc, const Vector &vecDirShooting, 
-								const Vector &vecSpread, float flDistance, int iAmmoType, 
+void CTeamFortress::FireBullets( const CTakeDamageInfo &info, int cShots, const Vector &vecSrc, const Vector &vecDirShooting,
+								const Vector &vecSpread, float flDistance, int iAmmoType,
 								int iTracerFreq, int firingEntID, int attachmentID, const char *sCustomTracer )
 {
 	static int tracerCount;
@@ -2090,8 +2090,8 @@ void CTeamFortress::FireBullets( const CTakeDamageInfo &info, int cShots, const 
 	// --------------------------------------------------
 	Vector vecUp = Vector(0,0,1);
 	Vector vecRight;
-	CrossProduct ( vecDirShooting,  vecUp,		vecRight );	
-	CrossProduct ( vecDirShooting, -vecRight,   vecUp  );	
+	CrossProduct ( vecDirShooting,  vecUp,		vecRight );
+	CrossProduct ( vecDirShooting, -vecRight,   vecUp  );
 
 #ifndef CLIENT_DLL
 	ClearMultiDamage();
@@ -2104,7 +2104,7 @@ void CTeamFortress::FireBullets( const CTakeDamageInfo &info, int cShots, const 
 		// get circular gaussian spread
 		float x, y, z;
 
-		do 
+		do
 		{
 			float x1, x2, y1, y2;
 
@@ -2155,7 +2155,7 @@ void CTeamFortress::FireBullets( const CTakeDamageInfo &info, int cShots, const 
 			{
 				vecTracerSrc = vecSrc;
 			}
-			
+
 			if ( iTracerFreq != 1 )		// guns that always trace also always decal
 				tracer = true;
 
@@ -2185,11 +2185,11 @@ void CTeamFortress::FireBullets( const CTakeDamageInfo &info, int cShots, const 
 				}
 #ifndef CLIENT_DLL
 				subInfo.SetDamagePosition( vecSrc );
-				// Hit the target 
-				pEntity->DispatchTraceAttack( subInfo, vecDir, &tr ); 
+				// Hit the target
+				pEntity->DispatchTraceAttack( subInfo, vecDir, &tr );
 #endif
 			}
- 
+
 			// No decal if we hit a shield
 			if ( pEntity->GetCollisionGroup() != TFCOLLISION_GROUP_SHIELD )
 			{
@@ -2222,7 +2222,7 @@ CAmmoDef *GetAmmoDef()
 	if ( !bInitted )
 	{
 		bInitted = true;
-		
+
 		def.AddAmmoType("Bullets",			DMG_BULLET,	TRACER_LINE, 0,	0, INFINITE_AMMO, 0, 0);
 		def.AddAmmoType("Rockets",			DMG_BLAST,	TRACER_LINE, 0,	0, 6, 0, 0);
 		def.AddAmmoType("Grenades",			DMG_BLAST,	TRACER_LINE, 0,	0, 3, 0, 0);

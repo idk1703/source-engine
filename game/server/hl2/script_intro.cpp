@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -92,7 +92,7 @@ IMPLEMENT_SERVERCLASS_ST( CScriptIntro, DT_ScriptIntro )
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScriptIntro::Spawn( void )
 {
@@ -108,7 +108,7 @@ void CScriptIntro::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScriptIntro::Activate( void )
 {
@@ -137,7 +137,7 @@ int CScriptIntro::UpdateTransmitState()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScriptIntro::InputSetCameraViewEntity( inputdata_t &inputdata )
 {
@@ -181,7 +181,7 @@ static ConVar cl_spewscriptintro( "cl_spewscriptintro", "0" );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScriptIntro::InputSetBlendMode( inputdata_t &inputdata )
 {
@@ -197,7 +197,7 @@ void CScriptIntro::InputSetBlendMode( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScriptIntro::InputSetNextBlendMode( inputdata_t &inputdata )
 {
@@ -210,8 +210,8 @@ void CScriptIntro::InputSetNextBlendMode( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CScriptIntro::InputSetNextFOV( inputdata_t &inputdata )
 {
@@ -219,8 +219,8 @@ void CScriptIntro::InputSetNextFOV( inputdata_t &inputdata )
 }
 
 //------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CScriptIntro::InputSetFOVBlendTime( inputdata_t &inputdata )
 {
@@ -249,7 +249,7 @@ void CScriptIntro::InputSetFOVBlendTime( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScriptIntro::InputSetFOV( inputdata_t &inputdata )
 {
@@ -258,7 +258,7 @@ void CScriptIntro::InputSetFOV( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScriptIntro::InputSetNextBlendTime( inputdata_t &inputdata )
 {
@@ -278,7 +278,7 @@ void CScriptIntro::InputSetNextBlendTime( inputdata_t &inputdata )
 		m_iQueuedNextBlendMode = m_iBlendMode;
 	}
 
-	m_iNextBlendMode = m_iQueuedNextBlendMode; 
+	m_iNextBlendMode = m_iQueuedNextBlendMode;
 	m_iQueuedNextBlendMode = -1;
 	m_iQueuedBlendMode = m_iNextBlendMode;
 
@@ -292,7 +292,7 @@ void CScriptIntro::InputSetNextBlendTime( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScriptIntro::BlendComplete( )
 {
@@ -304,8 +304,8 @@ void CScriptIntro::BlendComplete( )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CScriptIntro::InputActivate( inputdata_t &inputdata )
 {
@@ -314,8 +314,8 @@ void CScriptIntro::InputActivate( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CScriptIntro::InputDeactivate( inputdata_t &inputdata )
 {
@@ -323,8 +323,8 @@ void CScriptIntro::InputDeactivate( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CScriptIntro::InputFadeTo( inputdata_t &inputdata )
 {
@@ -356,8 +356,8 @@ void CScriptIntro::InputFadeTo( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CScriptIntro::InputSetFadeColor( inputdata_t &inputdata )
 {

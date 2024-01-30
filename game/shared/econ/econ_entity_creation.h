@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -35,7 +35,7 @@ public:
 	// Generate an item from the specified item data
 	CBaseEntity *GenerateItemFromScriptData( const CEconItemView *pData, const Vector &vecOrigin, const QAngle &vecAngles, const char *pszOverrideClassName );
 
-	// Generate the base item for a class's loadout slot 
+	// Generate the base item for a class's loadout slot
 	CBaseEntity *GenerateBaseItem( struct baseitemcriteria_t *pCriteria );
 
 private:

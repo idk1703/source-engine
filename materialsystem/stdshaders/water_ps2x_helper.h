@@ -25,7 +25,7 @@ struct DrawWater_params_t
 	float fWaterFogEndMinusStart;
 };
 
-void DrawWater( in DrawWater_params_t i, 
+void DrawWater( in DrawWater_params_t i,
 #if BASETEXTURE
 				in sampler BaseTextureSampler,
 			    in sampler LightmapSampler,
@@ -64,7 +64,7 @@ void DrawWater( in DrawWater_params_t i,
 #if ABOVEWATER
 	float waterFogDepthValue = tex2D( RefractSampler, unwarpedRefractTexCoord ).a;
 #else
-	// We don't actually have valid depth values in alpha when we are underwater looking out, so 
+	// We don't actually have valid depth values in alpha when we are underwater looking out, so
 	// just set to farthest value.
 	float waterFogDepthValue = 1.0f;
 #endif

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmelight.h"
@@ -17,13 +17,13 @@
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeLight, CDmeLight );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeLight::OnConstruction()
 {
@@ -106,7 +106,7 @@ IMPLEMENT_ELEMENT_FACTORY( DmeDirectionalLight, CDmeDirectionalLight );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeDirectionalLight::OnConstruction()
 {
@@ -159,7 +159,7 @@ IMPLEMENT_ELEMENT_FACTORY( DmePointLight, CDmePointLight );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmePointLight::OnConstruction()
 {
@@ -185,7 +185,7 @@ void CDmePointLight::SetAttenuation( float flConstant, float flLinear, float flQ
 	m_flAttenuation2 = flQuadratic;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Sets the maximum range
 //-----------------------------------------------------------------------------
@@ -228,7 +228,7 @@ IMPLEMENT_ELEMENT_FACTORY( DmeSpotLight, CDmeSpotLight );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeSpotLight::OnConstruction()
 {
@@ -299,7 +299,7 @@ IMPLEMENT_ELEMENT_FACTORY( DmeAmbientLight, CDmeAmbientLight );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeAmbientLight::OnConstruction()
 {
@@ -328,4 +328,3 @@ void CDmeAmbientLight::SetupRenderState( int nLightIndex )
 
 	pRenderContext->SetAmbientLightCube( cube );
 }
-

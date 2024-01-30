@@ -1,17 +1,17 @@
 /*
-     File:       CMScriptingPlugin.h
- 
-     Contains:   ColorSync Scripting Plugin API
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1998-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       CMScriptingPlugin.h
+
+		Contains:   ColorSync Scripting Plugin API
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1998-2001 by Apple Computer, Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __FILES__
 #include <Files.h>
@@ -39,14 +39,14 @@ extern "C" {
 #endif
 
 enum {
-                                        /* ColorSync Scripting AppleEvent Errors */
-  cmspInvalidImageFile          = -4220, /* Plugin cannot handle this image file type */
-  cmspInvalidImageSpace         = -4221, /* Plugin cannot create an image file of this colorspace */
-  cmspInvalidProfileEmbed       = -4222, /* Specific invalid profile errors */
-  cmspInvalidProfileSource      = -4223,
-  cmspInvalidProfileDest        = -4224,
-  cmspInvalidProfileProof       = -4225,
-  cmspInvalidProfileLink        = -4226
+																				/* ColorSync Scripting AppleEvent Errors */
+	cmspInvalidImageFile          = -4220, /* Plugin cannot handle this image file type */
+	cmspInvalidImageSpace         = -4221, /* Plugin cannot create an image file of this colorspace */
+	cmspInvalidProfileEmbed       = -4222, /* Specific invalid profile errors */
+	cmspInvalidProfileSource      = -4223,
+	cmspInvalidProfileDest        = -4224,
+	cmspInvalidProfileProof       = -4225,
+	cmspInvalidProfileLink        = -4226
 };
 
 
@@ -55,7 +55,7 @@ enum {
 
 /**** matchFlags field  ****/
 enum {
-  cmspFavorEmbeddedMask         = 0x00000001 /* if bit 0 is 0 then use srcProf profile, if 1 then use profile embedded in image if present*/
+	cmspFavorEmbeddedMask         = 0x00000001 /* if bit 0 is 0 then use srcProf profile, if 1 then use profile embedded in image if present*/
 };
 
 
@@ -73,7 +73,7 @@ typedef CALLBACK_API_C( CMError , SetIndImageProfileProcPtr )(const FSSpec *spec
 
 /*
  *  CMValidImage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CSScriptingLib 2.6 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -85,7 +85,7 @@ CMValidImage(const FSSpec * spec);
 
 /*
  *  CMGetImageSpace()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CSScriptingLib 2.6 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -93,13 +93,13 @@ CMValidImage(const FSSpec * spec);
  */
 EXTERN_API_C( CMError )
 CMGetImageSpace(
-  const FSSpec *  spec,
-  OSType *        space);
+	const FSSpec *  spec,
+	OSType *        space);
 
 
 /*
  *  CMEmbedImage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CSScriptingLib 2.6 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -107,15 +107,15 @@ CMGetImageSpace(
  */
 EXTERN_API_C( CMError )
 CMEmbedImage(
-  const FSSpec *  specFrom,
-  const FSSpec *  specInto,
-  Boolean         repl,
-  CMProfileRef    embProf);
+	const FSSpec *  specFrom,
+	const FSSpec *  specInto,
+	Boolean         repl,
+	CMProfileRef    embProf);
 
 
 /*
  *  CMUnembedImage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CSScriptingLib 2.6 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -123,14 +123,14 @@ CMEmbedImage(
  */
 EXTERN_API_C( CMError )
 CMUnembedImage(
-  const FSSpec *  specFrom,
-  const FSSpec *  specInto,
-  Boolean         repl);
+	const FSSpec *  specFrom,
+	const FSSpec *  specInto,
+	Boolean         repl);
 
 
 /*
  *  CMMatchImage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CSScriptingLib 2.6 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -138,18 +138,18 @@ CMUnembedImage(
  */
 EXTERN_API_C( CMError )
 CMMatchImage(
-  const FSSpec *  specFrom,
-  const FSSpec *  specInto,
-  Boolean         repl,
-  UInt32          qual,
-  CMProfileRef    srcProf,
-  UInt32          srcIntent,
-  CMProfileRef    dstProf);
+	const FSSpec *  specFrom,
+	const FSSpec *  specInto,
+	Boolean         repl,
+	UInt32          qual,
+	CMProfileRef    srcProf,
+	UInt32          srcIntent,
+	CMProfileRef    dstProf);
 
 
 /*
  *  CMProofImage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CSScriptingLib 2.6 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -157,19 +157,19 @@ CMMatchImage(
  */
 EXTERN_API_C( CMError )
 CMProofImage(
-  const FSSpec *  specFrom,
-  const FSSpec *  specInto,
-  Boolean         repl,
-  UInt32          qual,
-  CMProfileRef    srcProf,
-  UInt32          srcIntent,
-  CMProfileRef    dstProf,
-  CMProfileRef    prfProf);
+	const FSSpec *  specFrom,
+	const FSSpec *  specInto,
+	Boolean         repl,
+	UInt32          qual,
+	CMProfileRef    srcProf,
+	UInt32          srcIntent,
+	CMProfileRef    dstProf,
+	CMProfileRef    prfProf);
 
 
 /*
  *  CMLinkImage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CSScriptingLib 2.6 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -177,17 +177,17 @@ CMProofImage(
  */
 EXTERN_API_C( CMError )
 CMLinkImage(
-  const FSSpec *  specFrom,
-  const FSSpec *  specInto,
-  Boolean         repl,
-  UInt32          qual,
-  CMProfileRef    lnkProf,
-  UInt32          lnkIntent);
+	const FSSpec *  specFrom,
+	const FSSpec *  specInto,
+	Boolean         repl,
+	UInt32          qual,
+	CMProfileRef    lnkProf,
+	UInt32          lnkIntent);
 
 
 /*
  *  CMCountImageProfiles()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CSScriptingLib 2.6 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -195,13 +195,13 @@ CMLinkImage(
  */
 EXTERN_API_C( CMError )
 CMCountImageProfiles(
-  const FSSpec *  spec,
-  UInt32 *        count);
+	const FSSpec *  spec,
+	UInt32 *        count);
 
 
 /*
  *  CMGetIndImageProfile()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CSScriptingLib 2.6 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -209,14 +209,14 @@ CMCountImageProfiles(
  */
 EXTERN_API_C( CMError )
 CMGetIndImageProfile(
-  const FSSpec *  spec,
-  UInt32          index,
-  CMProfileRef *  prof);
+	const FSSpec *  spec,
+	UInt32          index,
+	CMProfileRef *  prof);
 
 
 /*
  *  CMSetIndImageProfile()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CSScriptingLib 2.6 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -224,11 +224,11 @@ CMGetIndImageProfile(
  */
 EXTERN_API_C( CMError )
 CMSetIndImageProfile(
-  const FSSpec *  specFrom,
-  const FSSpec *  specInto,
-  Boolean         repl,
-  UInt32          index,
-  CMProfileRef    prof);
+	const FSSpec *  specFrom,
+	const FSSpec *  specInto,
+	Boolean         repl,
+	UInt32          index,
+	CMProfileRef    prof);
 
 
 

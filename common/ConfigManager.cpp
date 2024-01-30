@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -12,8 +12,8 @@
 #include "tier1/utlbuffer.h"
 #include <io.h>
 #include <fcntl.h>
-#include <sys/types.h> 
-#include <sys/stat.h> 
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <stdio.h>
 #include "ConfigManager.h"
 #include "SourceAppInfo.h"
@@ -70,7 +70,7 @@ defaultConfigInfo_t HL2DMInfo =
 };
 
 // Day of Defeat: Source
-defaultConfigInfo_t DODInfo = 
+defaultConfigInfo_t DODInfo =
 {
 	"Day of Defeat: Source",
 	"dod",
@@ -88,7 +88,7 @@ defaultConfigInfo_t Episode1Info =
 	"halflife2.fgd",
 	"info_player_start",
 	"hl2.exe",
-	GetAppSteamAppId( k_App_HL2_EP1 ) 
+	GetAppSteamAppId( k_App_HL2_EP1 )
 };
 
 // Half-Life 2 Episode 2
@@ -99,7 +99,7 @@ defaultConfigInfo_t Episode2Info =
 	"halflife2.fgd",
 	"info_player_start",
 	"hl2.exe",
-	GetAppSteamAppId( k_App_HL2_EP2 ) 
+	GetAppSteamAppId( k_App_HL2_EP2 )
 };
 
 // Team Fortress 2
@@ -189,7 +189,7 @@ bool ReadUtlBufferFromFile( CUtlBuffer &buffer, const char *szPath )
 	if ( nFile == -1 )
 	{
 		return false;
-	} 
+	}
 
 	if ( _read( nFile, buffer.Base(), fileInfo.st_size ) != fileInfo.st_size )
 	{
@@ -213,7 +213,7 @@ bool SaveUtlBufferToFile( CUtlBuffer &buffer, const char *szPath )
 	if ( nFile == -1 )
 	{
 		return false;
-	} 
+	}
 
 	int nSize = buffer.TellMaxPut();
 
@@ -338,7 +338,7 @@ void CGameConfigManager::UpdateConfigsInternal( void )
 			// Advance by one key
 			pNextSubKey = pNextSubKey->GetNextTrueSubKey();
 		}
-		
+
 		// All done
 		pDefaultBlock->deleteThis();
 	}
@@ -454,14 +454,14 @@ const char szDefaultConfigText[] =
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CGameConfigManager::AddDefaultConfig( const defaultConfigInfo_t &info, KeyValues *out, const char *rootDirectory, const char *gameExeDir )
-{	
+{
 	// NOTE: Freed by head keyvalue
 	KeyValues *newConfig = new KeyValues( info.gameName );
 	if ( newConfig->LoadFromBuffer( "defaultcfg.txt", szDefaultConfigText ) == false )
 		return false;
 
 	newConfig->SetName( info.gameName );
-	
+
 	// Game's root directory (with special steam name handling)
 	char rootGameDir[MAX_PATH];
 	GetRootGameDirectory( rootGameDir, sizeof( rootGameDir ), rootDirectory );
@@ -522,7 +522,7 @@ bool CGameConfigManager::AddDefaultConfig( const defaultConfigInfo_t &info, KeyV
 
 	// Get our insertion point
 	KeyValues *insertSpot = out->GetFirstTrueSubKey();
-	
+
 	// Set this as the sub key if there's nothing already there
 	if ( insertSpot == NULL )
 	{
@@ -535,7 +535,7 @@ bool CGameConfigManager::AddDefaultConfig( const defaultConfigInfo_t &info, KeyV
 		{
 			insertSpot = insertSpot->GetNextTrueSubKey();
 		}
-		
+
 		// Become a peer to it
 		insertSpot->SetNextKey( newConfig );
 	}
@@ -580,7 +580,7 @@ bool CGameConfigManager::CreateAllDefaultConfigs( void )
 
 	GetDefaultGameBlock( gameBlock );
 
-	bRetVal = !gameBlock->IsEmpty(); 
+	bRetVal = !gameBlock->IsEmpty();
 
 	// Make a full path name
 	char szPath[MAX_PATH];
@@ -636,24 +636,24 @@ bool CGameConfigManager::ConvertGameConfigsINI( void )
 			subGame->SetName( textBuffer );
 
 			GetPrivateProfileString( szSectionName, "ModDir", "", textBuffer, sizeof(textBuffer), iniFilePath);
-			
+
 			// Add the mod dir
 			subGame->SetString( "GameDir", textBuffer );
-			
+
 			// Start a block for Hammer settings
 			KeyValues *hammerBlock = subGame->CreateNewKey();
 			hammerBlock->SetName( "Hammer" );
-			
+
 			i = 0;
 
-			// Get all FGDs	
+			// Get all FGDs
 			do
 			{
 				char szGameData[MAX_PATH];
 
 				sprintf( szGameData, "GameData%d", i );
 				nStrlen = GetPrivateProfileString( szSectionName, szGameData, "", textBuffer, sizeof(textBuffer), iniFilePath );
-				
+
 				if ( nStrlen > 0 )
 				{
 					hammerBlock->SetString( szGameData, textBuffer );
@@ -663,7 +663,7 @@ bool CGameConfigManager::ConvertGameConfigsINI( void )
 
 			hammerBlock->SetInt( "TextureFormat", GetPrivateProfileInt( szSectionName, "TextureFormat", 5 /*FIXME: tfVMT*/, iniFilePath ) );
 			hammerBlock->SetInt( "MapFormat", GetPrivateProfileInt( szSectionName, "MapFormat", 4 /*FIXME: mfHalfLife2*/, iniFilePath ) );
-			
+
 			// Default texture scale
 			GetPrivateProfileString( szSectionName, "DefaultTextureScale", "1", textBuffer, sizeof(textBuffer), iniFilePath );
 			float defaultTextureScale = (float) atof( textBuffer );
@@ -673,7 +673,7 @@ bool CGameConfigManager::ConvertGameConfigsINI( void )
 			}
 
 			hammerBlock->SetFloat( "DefaultTextureScale", defaultTextureScale );
-			
+
 			hammerBlock->SetInt( "DefaultLightmapScale", GetPrivateProfileInt( szSectionName, "DefaultLightmapScale", 16 /*FIXME: DEFAULT_LIGHTMAP_SCALE*/, iniFilePath ) );
 
 			GetPrivateProfileString( szSectionName, "GameExe", "", textBuffer, sizeof(textBuffer), iniFilePath );
@@ -681,16 +681,16 @@ bool CGameConfigManager::ConvertGameConfigsINI( void )
 
 			GetPrivateProfileString( szSectionName, "DefaultSolidEntity", "", textBuffer, sizeof(textBuffer), iniFilePath );
 			hammerBlock->SetString( "DefaultSolidEntity", textBuffer );
-			
+
 			GetPrivateProfileString( szSectionName, "DefaultPointEntity", "", textBuffer, sizeof(textBuffer), iniFilePath );
 			hammerBlock->SetString( "DefaultPointEntity", textBuffer );
-			
+
 			GetPrivateProfileString( szSectionName, "BSP", "", textBuffer, sizeof(textBuffer), iniFilePath );
 			hammerBlock->SetString( "BSP", textBuffer );
-			
+
 			GetPrivateProfileString( szSectionName, "Vis", "", textBuffer, sizeof(textBuffer), iniFilePath );
 			hammerBlock->SetString( "Vis", textBuffer );
-			
+
 			GetPrivateProfileString( szSectionName, "Light", "", textBuffer, sizeof(textBuffer), iniFilePath );
 			hammerBlock->SetString( "Light", textBuffer );
 
@@ -699,24 +699,24 @@ bool CGameConfigManager::ConvertGameConfigsINI( void )
 
 			GetPrivateProfileString( szSectionName, "MapDir", "", textBuffer, sizeof(textBuffer), iniFilePath );
 			hammerBlock->SetString( "MapDir", textBuffer );
-			
+
 			GetPrivateProfileString( szSectionName, "BSPDir", "", textBuffer, sizeof(textBuffer), iniFilePath );
 			hammerBlock->SetString( "BSPDir", textBuffer );
-			
+
 			GetPrivateProfileString( szSectionName, "CordonTexture", "", textBuffer, sizeof(textBuffer), iniFilePath );
 			hammerBlock->SetString( "CordonTexture", textBuffer );
-			
+
 			GetPrivateProfileString( szSectionName, "MaterialExcludeCount", "0", textBuffer, sizeof(textBuffer), iniFilePath );
 			int materialExcludeCount = atoi( textBuffer );
 			hammerBlock->SetInt( "MaterialExcludeCount", materialExcludeCount );
-			
+
 			char excludeDir[MAX_PATH];
 
 			// Write out all excluded directories
 			for( i = 0; i < materialExcludeCount; i++ )
 			{
 				sprintf( &excludeDir[0], "-MaterialExcludeDir%d", i );
-				GetPrivateProfileString( szSectionName, excludeDir, "", textBuffer, sizeof( textBuffer ), iniFilePath ); 
+				GetPrivateProfileString( szSectionName, excludeDir, "", textBuffer, sizeof( textBuffer ), iniFilePath );
 				hammerBlock->SetString( excludeDir, textBuffer );
 			}
 		}
@@ -761,7 +761,7 @@ bool CGameConfigManager::SaveConfigs( const char *baseDir )
 	Q_strncpy( szPath, GetBaseDirectory(), sizeof(szPath) );
 	Q_AppendSlash( szPath, sizeof(szPath) );
 	Q_strncat( szPath, GAME_CONFIG_FILENAME, sizeof( szPath ), COPY_ALL_CHARACTERS );
-	
+
 	CUtlBuffer buffer;
 	m_pData->RecursiveSaveToFile( buffer, 0 );
 
@@ -864,7 +864,7 @@ bool CGameConfigManager::ResetConfigs( const char *baseDir /*= NULL*/ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGameConfigManager::SetBaseDirectory( const char *pDirectory )
 {

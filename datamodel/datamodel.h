@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -25,7 +25,7 @@
 #include "clipboardmanager.h"
 #include "undomanager.h"
 #include "tier1/convar.h"
-#include "tier0/vprof.h" 
+#include "tier0/vprof.h"
 
 
 //-----------------------------------------------------------------------------
@@ -432,7 +432,7 @@ private:
 	void OnElementReferenceRemoved( DmElementHandle_t hElement, CDmAttribute *pAttribute );
 	void OnElementReferenceAdded  ( DmElementHandle_t hElement, bool bRefCount );
 	void OnElementReferenceRemoved( DmElementHandle_t hElement, bool bRefCount );
-						
+
 private:
 	CUtlVector< IDmSerializer* >		m_Serializers;
 	CUtlVector< IDmLegacyUpdater* >		m_LegacyUpdaters;

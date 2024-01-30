@@ -1,21 +1,21 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 // Information about algorithmic stuff that can occur on both client + server
 //
-// In order to reduce network traffic, it's possible to create a algorithms 
-// that will work on both the client and the server and be totally repeatable. 
-// All we need do is to send down initial conditions and let the algorithm 
-// compute the values at various times. Note that this algorithm will be called 
+// In order to reduce network traffic, it's possible to create a algorithms
+// that will work on both the client and the server and be totally repeatable.
+// All we need do is to send down initial conditions and let the algorithm
+// compute the values at various times. Note that this algorithm will be called
 // at different times with different frequencies on the client and server.
 //
 // The trick here is that in order for it to be repeatable, the algorithm either
-// cannot depend on random numbers, or, if it does, we need to make sure that 
-// the random numbers generated are effectively done at the beginning of time, 
-// so that differences in frame rate on client and server won't matter. It also 
-// is important that the initial state sent across the network is identical 
-// bitwise so that we produce the exact same results. Therefore no compression 
-// should be used in the datatables. 
+// cannot depend on random numbers, or, if it does, we need to make sure that
+// the random numbers generated are effectively done at the beginning of time,
+// so that differences in frame rate on client and server won't matter. It also
+// is important that the initial state sent across the network is identical
+// bitwise so that we produce the exact same results. Therefore no compression
+// should be used in the datatables.
 //
 // Note also that each algorithm must have its own random number stream so that
 // it cannot possibly interact with other code using random numbers that will
@@ -23,20 +23,20 @@
 // CUniformRandomStream class for this.
 //
 // There are two types of client-server neutral code: Code that doesn't interact
-// with player prediction, and code that does. The code that doesn't interact 
-// with player prediction simply has to be able to produce the result f(time) 
+// with player prediction, and code that does. The code that doesn't interact
+// with player prediction simply has to be able to produce the result f(time)
 // where time is monotonically increasing. For prediction, we have to produce
-// the result f(time) where time does *not* monotonically increase (time can be 
+// the result f(time) where time does *not* monotonically increase (time can be
 // anywhere between the "current" time and the prior 10 seconds).
 //
-// Code that is not used by player prediction can maintain state because later 
+// Code that is not used by player prediction can maintain state because later
 // calls will always compute the value at some future time. This computation can
-// use random number generation, but with the following restriction: Your code 
-// must generate exactly the same number of random numbers regardless of how 
+// use random number generation, but with the following restriction: Your code
+// must generate exactly the same number of random numbers regardless of how
 // frequently the code is called.
 //
 // In specific, this means that all random numbers used must either be computed
-// at init time, or must be used in an 'event-based form'. Namely, use random 
+// at init time, or must be used in an 'event-based form'. Namely, use random
 // numbers to compute the time at which events occur and the random inputs for
 // those events.  When simulating forward, you must simulate all intervening
 // time and generate the same number of random numbers.
@@ -45,21 +45,21 @@
 // some sort of stateless computation (where the only states are the initial
 // state and time). Note that random number generators have state implicit in
 // the number of calls made to that random number generator, and therefore you
-// cannot call a random number generator unless you are able to 
+// cannot call a random number generator unless you are able to
 //
 // 1) Use a random number generator that can return the ith random number, namely:
 //
 //	float r = random( i );	// i == the ith number in the random sequence
 //
-// 2) Be able to accurately know at any given time t how many random numbers 
+// 2) Be able to accurately know at any given time t how many random numbers
 //		have already been generated (namely, compute the i in part 1 above).
 //
-// There is another alternative for code meant to be used by player prediction: 
-// you could just store a history of 'events' from which you could completely 
+// There is another alternative for code meant to be used by player prediction:
+// you could just store a history of 'events' from which you could completely
 // determine the value of f(time). That history would need to be at least 10
 // seconds long, which is guaranteed to be longer than the amount of time that
 // prediction would need. I've written a class which I haven't tested yet (but
-// will be using soon) called CTimedEventQueue (currently located in 
+// will be using soon) called CTimedEventQueue (currently located in
 // env_wind_shared.h) which I plan to use to solve my problem (getting wind to
 // blow players).
 //
@@ -93,7 +93,7 @@ CEnvWindShared::~CEnvWindShared()
 	}
 }
 
-void CEnvWindShared::Init( int nEntIndex, int iRandomSeed, float flTime, 
+void CEnvWindShared::Init( int nEntIndex, int iRandomSeed, float flTime,
 						  int iInitialWindYaw, float flInitialWindSpeed )
 {
 	m_iEntIndex = nEntIndex;
@@ -111,7 +111,7 @@ void CEnvWindShared::Init( int nEntIndex, int iRandomSeed, float flTime,
 	if (!g_pEffects->IsServer())
 	{
 		CSoundEnvelopeController &controller = CSoundEnvelopeController::GetController();
-		m_pWindSound = controller.SoundCreate( -1, CHAN_STATIC, 
+		m_pWindSound = controller.SoundCreate( -1, CHAN_STATIC,
 			"EnvWind.Loop", ATTN_NONE );
 		controller.Play( m_pWindSound, 0.0f, 100 );
 	}
@@ -172,7 +172,7 @@ void CEnvWindShared::UpdateWindSound( float flTotalWindSpeed )
 
 float CEnvWindShared::WindThink( float flTime )
 {
-	// NOTE: This algorithm can be client-server neutal because we're using 
+	// NOTE: This algorithm can be client-server neutal because we're using
 	// the random number generator to generate *time* at which the wind changes.
 	// We therefore need to structure the algorithm so that no matter the
 	// frequency of calls to this function we produce the same wind speeds...
@@ -189,7 +189,7 @@ float CEnvWindShared::WindThink( float flTime )
 
 		float flSimDeltaTime = bGotToSwitchTime ? flTimeToSwitch : flMaxDeltaTime;
 
-		// Now that we've chosen 
+		// Now that we've chosen
 		// either ramp up, or sleep till change
 		bool bReachedSteadyState = true;
 		if ( m_flAveWindSpeed > m_flWindSpeed )
@@ -211,7 +211,7 @@ float CEnvWindShared::WindThink( float flTime )
 
 		// Update the sim time
 
-		// If we didn't get to a switch point, then we're done simulating for now 
+		// If we didn't get to a switch point, then we're done simulating for now
 		if (!bGotToSwitchTime)
 		{
 			m_flSimTime = flTime;

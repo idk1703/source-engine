@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,7 +29,7 @@ class CBackpackPanel;
 #define ITEMPICKUP_MODELPANEL_CENTER	2	// Panel that's in the center of the queue
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CItemPickupPanel : public vgui::Frame, public CGameEventListener
 {
@@ -91,7 +91,7 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CItemDiscardPanel : public vgui::Frame, public CGameEventListener
 {

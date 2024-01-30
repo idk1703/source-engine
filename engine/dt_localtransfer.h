@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,8 +21,8 @@ class CBaseEdict;
 
 // This sets up the ability to copy an entity with the specified SendTable directly
 // into an entity with the specified RecvTable, thus avoiding compression overhead.
-void LocalTransfer_InitFastCopy( 
-	const SendTable *pSendTable, 
+void LocalTransfer_InitFastCopy(
+	const SendTable *pSendTable,
 	const CStandardSendProxies *pSendProxies,
 	RecvTable *pRecvTable,
 	const CStandardRecvProxies *pRecvProxies,
@@ -31,11 +31,11 @@ void LocalTransfer_InitFastCopy(
 	);
 
 // Transfer the data from pSrcEnt to pDestEnt using the specified SendTable and RecvTable.
-void LocalTransfer_TransferEntity( 
-	const CBaseEdict *pEdict, 
-	const SendTable *pSendTable, 
-	const void *pSrcEnt, 
-	RecvTable *pRecvTable, 
+void LocalTransfer_TransferEntity(
+	const CBaseEdict *pEdict,
+	const SendTable *pSendTable,
+	const void *pSrcEnt,
+	RecvTable *pRecvTable,
 	void *pDestEnt,
 	bool bNewlyCreated,
 	bool bJustEnteredPVS,

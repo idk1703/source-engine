@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -40,16 +40,16 @@ public:
 	CPortalRenderable_FlatBasic( void );
 
 	//generates a 8x6 tiled set of quads, each clipped to the view frustum. Helps vs11/ps11 portal shaders interpolate correctly. Not necessary for vs20/ps20 portal shaders or stencil mode.
-	virtual void	DrawComplexPortalMesh( const IMaterial *pMaterialOverride = NULL, float fForwardOffsetModifier = 0.25f ); 
-	
+	virtual void	DrawComplexPortalMesh( const IMaterial *pMaterialOverride = NULL, float fForwardOffsetModifier = 0.25f );
+
 	//generates a single quad
-	virtual void	DrawSimplePortalMesh( const IMaterial *pMaterialOverride = NULL, float fForwardOffsetModifier = 0.25f ); 
-	
+	virtual void	DrawSimplePortalMesh( const IMaterial *pMaterialOverride = NULL, float fForwardOffsetModifier = 0.25f );
+
 	//draws a screenspace mesh to replace missing pixels caused by the camera near plane intersecting the portal mesh
-	virtual void	DrawRenderFixMesh( const IMaterial *pMaterialOverride = NULL, float fFrontClipDistance = 0.3f ); 
+	virtual void	DrawRenderFixMesh( const IMaterial *pMaterialOverride = NULL, float fFrontClipDistance = 0.3f );
 
 	//When we're in a configuration that sees through recursive portal views to a depth of 2, we should be able to cheaply approximate even further depth using pixels from previous frames
-	virtual void	DrawDepthDoublerMesh( float fForwardOffsetModifier = 0.25f ); 
+	virtual void	DrawDepthDoublerMesh( float fForwardOffsetModifier = 0.25f );
 
 	virtual void	DrawPortal( void );
 
@@ -114,7 +114,7 @@ public:
 	Vector			m_vForward, m_vUp, m_vRight;
 	float			m_fStaticAmount;
 	float			m_fSecondaryStaticAmount; // used to help kludge the end of our recursive rendering chain
-	float			m_fOpenAmount;	
+	float			m_fOpenAmount;
 	bool			m_bIsPortal2; //for any set of portals, one must be portal 1, and the other portal 2. Uses different render targets
 };
 

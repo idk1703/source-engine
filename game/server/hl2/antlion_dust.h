@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -13,7 +13,7 @@
 class CTEAntlionDust : public CTEParticleSystem
 {
 public:
-	
+
 	DECLARE_CLASS( CTEAntlionDust, CTEParticleSystem );
 	DECLARE_SERVERCLASS();
 

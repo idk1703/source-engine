@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -54,7 +54,7 @@ BEGIN_VS_SHADER_FLAGS( WriteZ_DX9, "Help for WriteZ", SHADER_NOT_EDITABLE )
 				DECLARE_STATIC_PIXEL_SHADER( white_ps20 );
 				SET_STATIC_PIXEL_SHADER( white_ps20 );
 			}
-			
+
 			// Set stream format (note that this shader supports compression)
 			unsigned int flags = VERTEX_POSITION | VERTEX_FORMAT_COMPRESSED;
 			int nTexCoordCount = 1;
@@ -78,4 +78,3 @@ BEGIN_VS_SHADER_FLAGS( WriteZ_DX9, "Help for WriteZ", SHADER_NOT_EDITABLE )
 		Draw();
 	}
 END_SHADER
-

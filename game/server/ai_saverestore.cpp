@@ -41,7 +41,7 @@ public:
 		pSave->StartBlock( "Squads" );
 		short nSquads = (short)g_AI_SquadManager.NumSquads();
 		pSave->WriteShort( &nSquads );
-		
+
 		AISquadsIter_t iter;
 		string_t squadName;
 		CAI_Squad* pSquad = g_AI_SquadManager.GetFirstSquad( &iter );
@@ -52,14 +52,14 @@ public:
 			pSave->WriteAll( pSquad );
 			pSquad = g_AI_SquadManager.GetNextSquad( &iter );
 		}
-		
+
 		pSave->EndBlock();
 
 		//---------------------------------
-		
+
 		pSave->StartBlock( "Enemies" );
 		short nMemories = 0;
-		
+
 		CAI_BaseNPC **ppAIs = g_AI_Manager.AccessAIs();
 		int i;
 
@@ -70,7 +70,7 @@ public:
 		}
 
 		pSave->WriteShort( &nMemories );
-		
+
 		for ( i = 0; i < g_AI_Manager.NumAIs(); i++ )
 		{
 			if ( ppAIs[i]->GetEnemies() )
@@ -89,7 +89,7 @@ public:
 	{
 		pSave->WriteShort( &AI_SAVE_RESTORE_VERSION );
 	}
-	
+
 	//---------------------------------
 
 	void ReadRestoreHeaders( IRestore *pRestore )
@@ -112,7 +112,7 @@ public:
 		{
 			ppAIs[i]->InitSquad();
 		}
-		
+
 		if ( m_fDoLoad )
 		{
 			pRestore->StartBlock();
@@ -121,7 +121,7 @@ public:
 			CAI_Squad *pSquad;
 			string_t   squadName;
 			int 	   nSavedSquads = pRestore->ReadShort();
-			
+
 			while ( nSavedSquads-- )
 			{
 				int sizeData = pRestore->SkipHeader();
@@ -132,29 +132,29 @@ public:
 				pRestore->ReadAll( pSquad );
 			}
 			pRestore->EndBlock();
-			
+
 			//---------------------------------
 			// Now load memories for unsquadded npcs
-			
+
 			pRestore->StartBlock();
 			CAI_Enemies ignoredMem;
 			short nMemories = pRestore->ReadShort();
-			
-			CBaseEntity *pAI; 
-			
+
+			CBaseEntity *pAI;
+
 			while ( nMemories-- )
 			{
 				pRestore->ReadEntityPtr( &pAI );
-				
+
 				if ( pAI )
 					pRestore->ReadAll( ((CAI_BaseNPC *)pAI)->GetEnemies() );
 				else
 					pRestore->ReadAll( &ignoredMem ); // AI probably failed to spawn
 			}
-			
+
 			pRestore->EndBlock();
 		}
-		
+
 		if ( g_AI_Manager.NumAIs() && g_pBigAINet->NumNodes() == 0 && !g_pAINetworkManager->NetworksLoaded() )
 		{
 			Msg( "***\n");

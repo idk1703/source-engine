@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,7 +25,7 @@ class CNewActionButton;
 class CBaseActionEditDialog;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDemoEditorPanel : public vgui::Frame
 {
@@ -71,7 +71,7 @@ protected:
 	vgui::Button	*m_pDelete;
 
 	vgui::ListPanel	*m_pActions;
-	
+
 	vgui::DHANDLE< CBaseActionEditDialog >	m_hCurrentEditor;
 
 };

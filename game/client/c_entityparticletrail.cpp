@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -62,7 +62,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_EntityParticleTrail::C_EntityParticleTrail( void )
 {
@@ -89,9 +89,9 @@ void C_EntityParticleTrail::OnDataChanged( DataUpdateType_t updateType )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParticleMgr - 
-//			*pArgs - 
+// Purpose:
+// Input  : *pParticleMgr -
+//			*pArgs -
 //-----------------------------------------------------------------------------
 void C_EntityParticleTrail::Start( )
 {
@@ -102,13 +102,13 @@ void C_EntityParticleTrail::Start( )
 	if ( !pMaterialName )
 		return;
 
-	m_hMaterial	= ParticleMgr()->GetPMaterial( pMaterialName );	
+	m_hMaterial	= ParticleMgr()->GetPMaterial( pMaterialName );
 	m_teParticleSpawn.Init( 150 );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EntityParticleTrail::AddParticle( float flInitialDeltaTime, const Vector &vecMins, const Vector &vecMaxs, const matrix3x4_t &boxToWorld )
 {
@@ -126,7 +126,7 @@ void C_EntityParticleTrail::AddParticle( float flInitialDeltaTime, const Vector 
 		trace_t tr;
 		ray.Init( vecWorldPosition, vecWorldPosition );
 		enginetrace->ClipRayToEntity( ray, MASK_ALL, m_hConstraintEntity, &tr );
-		
+
 		if ( !tr.startsolid )
 			return;
 	}
@@ -153,13 +153,13 @@ void C_EntityParticleTrail::AddParticle( float flInitialDeltaTime, const Vector 
 	pParticle->m_uchEndSize		= m_Info.m_flEndSize;
 
 	pParticle->m_vecVelocity	= vec3_origin;
-	VectorMA( pParticle->m_Pos, flInitialDeltaTime, pParticle->m_vecVelocity, pParticle->m_Pos );  
+	VectorMA( pParticle->m_Pos, flInitialDeltaTime, pParticle->m_vecVelocity, pParticle->m_Pos );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fTimeDelta - 
+// Purpose:
+// Input  : fTimeDelta -
 //-----------------------------------------------------------------------------
 void C_EntityParticleTrail::Update( float fTimeDelta )
 {
@@ -223,7 +223,7 @@ inline void C_EntityParticleTrail::RenderParticles( CParticleRenderIterator *pIt
 
 		// Render it
 		RenderParticle_ColorSize( pIterator->GetParticleDraw(), tPos, color, alpha, flSize );
-		
+
 		pParticle = (const SimpleParticle*)pIterator->GetNext( sortKey );
 	}
 }
@@ -247,4 +247,3 @@ inline void C_EntityParticleTrail::SimulateParticles( CParticleSimulateIterator 
 		pParticle = (SimpleParticle*)pIterator->GetNext();
 	}
 }
-

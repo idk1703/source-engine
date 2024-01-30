@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -29,11 +29,11 @@ class CMapPoint : public CMapAtom
 
 		virtual void GetOrigin(Vector& pfOrigin);
 		virtual void SetOrigin(Vector& pfOrigin);
-		
+
 	protected:
 
 		void DoTransform(const VMatrix &matrix);
-		
+
 		Vector m_Origin;
 };
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,7 +21,7 @@ class C_BasePlayer;
 class C_Team;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_RecipientFilter : public IRecipientFilter
 {
@@ -43,7 +43,7 @@ public:
 	void			Reset( void );
 
 	void			MakeReliable( void );
-		
+
 	void			AddAllPlayers( void );
 	void			AddRecipientsByPVS( const Vector& origin );
 	void			AddRecipientsByPAS( const Vector& origin );
@@ -121,7 +121,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CPASAttenuationFilter : public CPASFilter
 {

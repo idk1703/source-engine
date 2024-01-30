@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ public:
 	void			MakeInitMessage( void );
 
 	void			MakeReliable( void );
-	
+
 	void			AddAllPlayers( void );
 	void			AddRecipientsByPVS( const Vector& origin );
 	void			RemoveRecipientsByPVS( const Vector& origin );
@@ -68,7 +68,7 @@ private:
 	bool				m_bReliable;
 	bool				m_bInitMessage;
 	CUtlVector< int >	m_Recipients;
-	
+
 	// If using prediction rules, the filter itself suppresses local player
 	bool				m_bUsingPredictionRules;
 	// If ignoring prediction cull, then external systems can determine
@@ -89,7 +89,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: Simple class to create a filter for all players on a given team 
+// Purpose: Simple class to create a filter for all players on a given team
 //-----------------------------------------------------------------------------
 class CTeamRecipientFilter : public CRecipientFilter
 {
@@ -220,7 +220,7 @@ public:
 	}
 
 
-	
+
 
 public:
 	void Filter( const Vector& origin, float attenuation = ATTN_NORM );

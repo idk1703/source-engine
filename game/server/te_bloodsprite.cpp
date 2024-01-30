@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -47,8 +47,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEBloodSprite::CTEBloodSprite( const char *name ) :
 	CBaseTempEntity( name )
@@ -64,16 +64,16 @@ CTEBloodSprite::CTEBloodSprite( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEBloodSprite::~CTEBloodSprite( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEBloodSprite::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -84,10 +84,10 @@ void CTEBloodSprite::Test( const Vector& current_origin, const QAngle& current_a
 	a = 255;
 	m_nSize	= 16;
 	m_vecOrigin = current_origin;
-	
+
 	m_nSprayModel = g_sModelIndexBloodSpray;
 	m_nDropModel = g_sModelIndexBloodDrop;
-	
+
 	Vector forward;
 
 	m_vecOrigin.GetForModify()[2] += 24;
@@ -119,16 +119,16 @@ static CTEBloodSprite g_TEBloodSprite( "Blood Sprite" );
 
 //-----------------------------------------------------------------------------
 // Purpose: Public interface
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//			*org - 
-//			r - 
-//			g - 
-//			b - 
-//			a - 
-//			size - 
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//			*org -
+//			r -
+//			g -
+//			b -
+//			a -
+//			size -
 //-----------------------------------------------------------------------------
 void TE_BloodSprite( IRecipientFilter& filter, float delay,
 	const Vector *org, const Vector *dir, int r, int g, int b, int a, int size )

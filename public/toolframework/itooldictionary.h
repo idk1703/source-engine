@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -23,7 +23,7 @@ class IToolSystem;
 // Purpose: Every tool dll sitting in bin\tools must expose this interface
 //  The engine will load the .dll, get this interface, and then ask for all
 //  tools in the .dll
-// The engine will call CreateTools just before querying for the tools, so you 
+// The engine will call CreateTools just before querying for the tools, so you
 //  can instance any dynamically instanced tools during that call
 //-----------------------------------------------------------------------------
 class IToolDictionary : public IAppSystem

@@ -42,7 +42,7 @@ mxSlider::mxSlider (mxWindow *parent, int x, int y, int w, int h, int id, int st
 	void *handle = (void *) CreateWindowEx (0, TRACKBAR_CLASS, "", dwStyle,
 				x, y, w, h, hwndParent,
 				(HMENU) id, (HINSTANCE) GetModuleHandle (NULL), NULL);
-	
+
 	SendMessage ((HWND) handle, WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_VAR_FONT), MAKELPARAM (TRUE, 0));
 	SetWindowLong ((HWND) handle, GWL_USERDATA, (LONG) this);
 
@@ -66,7 +66,7 @@ mxSlider::setValue (float value)
 	int ivalue = (int)((((value - m_min) / (m_max - m_min)) * m_ticks) + 0.5);
 	SendMessage ((HWND) getHandle (), TBM_SETPOS, (WPARAM) true, (LPARAM) ivalue);
 }
-	
+
 
 
 void

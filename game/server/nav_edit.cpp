@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -184,7 +184,7 @@ void CNavMesh::SetEditMode( EditModeType mode )
 	m_markedLadder = NULL;
 	m_markedArea = NULL;
 	m_markedCorner = NUM_CORNERS;
-	
+
 	m_editMode = mode;
 
 	m_isContinuouslySelecting = false;
@@ -641,7 +641,7 @@ public:
 		m_count = 0;
 		m_shift = shift;
 	}
-	
+
 	bool operator() ( CNavArea *area )
 	{
 		if (TheNavMesh->IsInSelectedSet( area ))
@@ -649,10 +649,10 @@ public:
 			area->DrawSelectedSet( m_shift );
 			++m_count;
 		}
-		
+
 		return (m_count < nav_draw_limit.GetInt());
 	}
-	
+
 	int m_count;
 	Vector m_shift;
 };
@@ -929,7 +929,7 @@ void CNavMesh::DrawEditMode( void )
 		if (m_selectedArea)
 		{
 			m_lastSelectedLadder = NULL;
-	
+
 			// if area changed, print its ID
 			if ( m_selectedArea != m_lastSelectedArea )
 			{
@@ -1012,7 +1012,7 @@ void CNavMesh::DrawEditMode( void )
 					}
 				}
 			}
-			
+
 
 			// do continuous selecting into selected set
 			if ( m_isContinuouslySelecting )
@@ -1070,12 +1070,12 @@ void CNavMesh::DrawEditMode( void )
 				m_selectedArea->DrawConnectedAreas();
 			}
 		}
-		
+
 		// render the selected set
 		if (!IsSelectedSetEmpty())
 		{
 			Vector shift( 0, 0, 0 );
-			
+
 			if (IsEditMode( SHIFTING_XY ))
 			{
 				shift = m_editCursorPos - m_anchor;
@@ -1090,7 +1090,7 @@ void CNavMesh::DrawEditMode( void )
 				FOR_EACH_VEC( m_selectedSet, it )
 				{
 					CNavArea *area = m_selectedSet[ it ];
-					
+
 					draw( area );
 				}
 			}
@@ -1150,8 +1150,8 @@ void CNavMesh::CommandNavDelete( void )
 	if (IsSelectedSetEmpty())
 	{
 		// the old way
-		CNavArea *markedArea = GetMarkedArea(); 
-		CNavLadder *markedLadder = GetMarkedLadder(); 
+		CNavArea *markedArea = GetMarkedArea();
+		CNavLadder *markedLadder = GetMarkedLadder();
 		FindActiveNavArea();
 
 		if( markedArea )
@@ -1167,7 +1167,7 @@ void CNavMesh::CommandNavDelete( void )
 			m_ladders.FindAndRemove( markedLadder );
 			OnEditDestroyNotify( markedLadder );
 			delete markedLadder;
-		} 
+		}
 		else if ( m_selectedArea )
 		{
 			player->EmitSound( "EDIT_DELETE" );
@@ -1189,23 +1189,23 @@ void CNavMesh::CommandNavDelete( void )
 	{
 		// delete all areas in the selected set
 		player->EmitSound( "EDIT_DELETE" );
-		
+
 		FOR_EACH_VEC( m_selectedSet, it )
 		{
 			CNavArea *area = m_selectedSet[ it ];
-			
+
 			TheNavAreas.FindAndRemove( area );
-			
+
 			OnEditDestroyNotify( area );
-			
+
 			TheNavMesh->DestroyArea( area );
 		}
-		
+
 		Msg( "Deleted %d areas\n", m_selectedSet.Count() );
-		
-		ClearSelectedSet();		
+
+		ClearSelectedSet();
 	}
-	
+
 	StripNavigationAreas();
 
 	SetMarkedArea( NULL );			// unmark the mark area
@@ -1221,16 +1221,16 @@ public:
 	{
 		m_count =  0;
 	}
-	
+
 	bool operator() ( CNavArea *area )
 	{
 		// already selected areas terminate flood select
 		if (TheNavMesh->IsInSelectedSet( area ))
-			return false;		
-		
+			return false;
+
 		TheNavMesh->AddToSelectedSet( area );
 		++m_count;
-		
+
 		return true;
 	}
 
@@ -1238,41 +1238,41 @@ public:
 };
 
 
-//-------------------------------------------------------------------------------------------------------------- 
-void CNavMesh::CommandNavDeleteMarked( void ) 
-{ 
-	CBasePlayer *player = UTIL_GetListenServerHost(); 
-	if (player == NULL) 
-		return; 
+//--------------------------------------------------------------------------------------------------------------
+void CNavMesh::CommandNavDeleteMarked( void )
+{
+	CBasePlayer *player = UTIL_GetListenServerHost();
+	if (player == NULL)
+		return;
 
 	if ( !IsEditMode( NORMAL ) )
-		return; 
+		return;
 
-	CNavArea *markedArea = GetMarkedArea(); 
-	if( markedArea ) 
-	{ 
-		player->EmitSound( "EDIT_DELETE" ); 
+	CNavArea *markedArea = GetMarkedArea();
+	if( markedArea )
+	{
+		player->EmitSound( "EDIT_DELETE" );
 		TheNavMesh->OnEditDestroyNotify( markedArea );
-		TheNavAreas.FindAndRemove( markedArea ); 
-		TheNavMesh->DestroyArea( markedArea ); 
-	} 
+		TheNavAreas.FindAndRemove( markedArea );
+		TheNavMesh->DestroyArea( markedArea );
+	}
 
-	CNavLadder *markedLadder = GetMarkedLadder(); 
-	if( markedLadder ) 
-	{ 
+	CNavLadder *markedLadder = GetMarkedLadder();
+	if( markedLadder )
+	{
 		player->EmitSound( "EDIT_DELETE" );
 		m_ladders.FindAndRemove( markedLadder );
-		delete markedLadder; 
-	} 
+		delete markedLadder;
+	}
 
-	StripNavigationAreas(); 
+	StripNavigationAreas();
 
-	ClearSelectedSet();		
+	ClearSelectedSet();
 
-	SetMarkedArea( NULL );				// unmark the mark area 
+	SetMarkedArea( NULL );				// unmark the mark area
 	SetMarkedLadder( NULL );			// unmark the mark ladder
-	m_markedCorner = NUM_CORNERS;		// clear the corner selection 
-} 
+	m_markedCorner = NUM_CORNERS;		// clear the corner selection
+}
 
 
 //--------------------------------------------------------------------------------------------------------------
@@ -1313,7 +1313,7 @@ void CNavMesh::CommandNavFloodSelect( const CCommand &args )
 		// collect all areas connected to this area
 		SelectCollector collector;
 		SearchSurroundingAreas( start, start->GetCenter(), collector, -1, connections );
-		
+
 		Msg( "Selected %d areas.\n", collector.m_count );
 	}
 
@@ -1553,7 +1553,7 @@ void CNavMesh::CommandNavBeginSelecting( void )
 
 	m_isContinuouslySelecting = true;
 	m_isContinuouslyDeselecting = false;
-	
+
 	player->EmitSound( "EDIT_BEGIN_AREA.Creating" );
 }
 
@@ -1599,7 +1599,7 @@ void CNavMesh::CommandNavBeginDragSelecting( void )
 	else
 	{
 		player->EmitSound( "EDIT_BEGIN_AREA.NotCreating" );
-		
+
 		SetEditMode( DRAG_SELECTING );
 
 		// m_anchor starting corner
@@ -1660,7 +1660,7 @@ void CNavMesh::CommandNavBeginDragDeselecting( void )
 	else
 	{
 		player->EmitSound( "EDIT_BEGIN_AREA.NotCreating" );
-		
+
 		SetEditMode( DRAG_SELECTING );
 		m_bIsDragDeselecting = true;
 
@@ -1788,7 +1788,7 @@ void CNavMesh::CommandNavBeginDeselecting( void )
 
 	m_isContinuouslyDeselecting = true;
 	m_isContinuouslySelecting = false;
-	
+
 	player->EmitSound( "EDIT_BEGIN_AREA.Creating" );
 }
 
@@ -1860,10 +1860,10 @@ void CNavMesh::CommandNavSelectHalfSpace( const CCommand &args )
 	{
 		PLUS_X, MINUS_X,
 		PLUS_Y, MINUS_Y,
-		PLUS_Z, MINUS_Z,	
+		PLUS_Z, MINUS_Z,
 	}
 	halfSpace = PLUS_X;
-	
+
 	if (FStrEq( "+x", args[1] ))
 	{
 		halfSpace = PLUS_X;
@@ -1890,13 +1890,13 @@ void CNavMesh::CommandNavSelectHalfSpace( const CCommand &args )
 	}
 
 	float value = atof( args[2] );
-	
+
 	Extent extent;
 	FOR_EACH_VEC( TheNavAreas, it )
 	{
 		CNavArea *area = TheNavAreas[it];
 		area->GetExtent( &extent );
-		
+
 		switch( halfSpace )
 		{
 			case PLUS_X:
@@ -1942,14 +1942,14 @@ void CNavMesh::CommandNavSelectHalfSpace( const CCommand &args )
 				break;
 		}
 
-		// toggle membership		
+		// toggle membership
 		if ( IsInSelectedSet( area ) )
 		{
 			RemoveFromSelectedSet( area );
 		}
 		else
 		{
-			AddToSelectedSet( area );	
+			AddToSelectedSet( area );
 		}
 	}
 
@@ -1978,7 +1978,7 @@ void CNavMesh::CommandNavBeginShiftXY( void )
 		SetEditMode( SHIFTING_XY );
 		player->EmitSound( "EDIT_BEGIN_AREA.Creating" );
 	}
-	
+
 	// m_anchor starting corner
 	m_anchor = m_editCursorPos;
 }
@@ -2564,7 +2564,7 @@ void CNavMesh::CommandNavMark( const CCommand &args )
 
 	if ( !IsEditMode( NORMAL ) )
 		return;
-		
+
 	if (!IsSelectedSetEmpty())
 	{
 		// add or remove areas from the selected set
@@ -2735,7 +2735,7 @@ void CNavMesh::CommandNavBeginArea( void )
 	else if ( m_climbableSurface )
 	{
 		player->EmitSound( "EDIT_BEGIN_AREA.NotCreating" );
-		
+
 		SetEditMode( CREATING_LADDER );
 
 		// m_ladderAnchor starting corner
@@ -2745,7 +2745,7 @@ void CNavMesh::CommandNavBeginArea( void )
 	else
 	{
 		player->EmitSound( "EDIT_BEGIN_AREA.NotCreating" );
-		
+
 		SetEditMode( CREATING_AREA );
 
 		// m_anchor starting corner
@@ -2773,11 +2773,11 @@ void CNavMesh::CommandNavEndArea( void )
 	if ( IsEditMode( CREATING_AREA ) )
 	{
 		SetEditMode( NORMAL );
-		
+
 		// create the new nav area
 		Vector endPos = m_editCursorPos;
 		endPos.z = m_anchor.z;
-		
+
 		// We're a manually-created area, so let's look around to see what's nearby
 		CNavArea *nearby = GetMarkedArea();
 		if ( !nearby )
@@ -2804,7 +2804,7 @@ void CNavMesh::CommandNavEndArea( void )
 			player->EmitSound( "EDIT_END_AREA.NotCreating" );
 			return;
 		}
-		
+
 		newArea->Build( m_anchor, endPos );
 
 		if ( nearby )
@@ -2857,7 +2857,7 @@ void CNavMesh::CommandNavEndArea( void )
 	else if ( IsEditMode( CREATING_LADDER ) )
 	{
 		SetEditMode( NORMAL );
-	
+
 		player->EmitSound( "EDIT_END_AREA.Creating" );
 
 		Vector corner1, corner2, corner3;
@@ -3232,7 +3232,7 @@ void CNavMesh::CommandNavToggleAttribute( NavAttributeType attribute )
 		if ( m_selectedArea )
 		{
 			player->EmitSound( "EDIT.ToggleAttribute" );
-			DoToggleAttribute( m_selectedArea, attribute );			
+			DoToggleAttribute( m_selectedArea, attribute );
 		}
 	}
 	else
@@ -3244,12 +3244,12 @@ void CNavMesh::CommandNavToggleAttribute( NavAttributeType attribute )
 		{
 			CNavArea *area = m_selectedSet[ it ];
 
-			DoToggleAttribute( area, attribute );			
+			DoToggleAttribute( area, attribute );
 		}
 
 		Msg( "Changed attribute in %d areas\n", m_selectedSet.Count() );
 
-		ClearSelectedSet();		
+		ClearSelectedSet();
 	}
 
 	SetMarkedArea( NULL );			// unmark the mark area
@@ -3800,7 +3800,7 @@ void CNavMesh::AddToSelectedSet( CNavArea *area )
 	// make sure area is not already in list
 	if (m_selectedSet.Find( area ) != m_selectedSet.InvalidIndex())
 		return;
-		
+
 	m_selectedSet.AddToTail( area );
 }
 
@@ -3827,7 +3827,7 @@ void CNavMesh::AddToDragSelectionSet( CNavArea *area )
 	// make sure area is not already in list
 	if (m_dragSelectionSet.Find( area ) != m_dragSelectionSet.InvalidIndex())
 		return;
-		
+
 	m_dragSelectionSet.AddToTail( area );
 }
 
@@ -3901,11 +3901,11 @@ bool CNavMesh::IsInSelectedSet( const CNavArea *area ) const
 	FOR_EACH_VEC( m_selectedSet, it )
 	{
 		const CNavArea *setArea = m_selectedSet[ it ];
-		
+
 		if (setArea == area)
 			return true;
 	}
-	
+
 	return false;
 }
 
@@ -3958,7 +3958,3 @@ void CNavMesh::OnEditDestroyNotify( CNavArea *deadArea )
 void CNavMesh::OnEditDestroyNotify( CNavLadder *deadLadder )
 {
 }
-
-
-
-

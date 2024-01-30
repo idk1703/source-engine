@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -60,7 +60,7 @@ public:
 	//}}AFX_DATA
 
 	void AddFileMask( const char *pMask );
-	
+
 	void SetInitialDir( const char *pDir, const char *pPathID = NULL );
 
 	void SetFilterMdlAndJpgFiles( bool bFilter );

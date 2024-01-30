@@ -54,10 +54,10 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj *CTFGrenadeNail::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, 
+CTFWeaponBaseGrenadeProj *CTFGrenadeNail::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel,
 							        AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
 {
-	return CTFGrenadeNailProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse, 
+	return CTFGrenadeNailProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse,
 		                              pPlayer, GetTFWpnData(), flTime );
 }
 
@@ -83,8 +83,8 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_grenade_nail_projectile );
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGrenadeNailProjectile* CTFGrenadeNailProjectile::Create( const Vector &position, const QAngle &angles, 
-																const Vector &velocity, const AngularImpulse &angVelocity, 
+CTFGrenadeNailProjectile* CTFGrenadeNailProjectile::Create( const Vector &position, const QAngle &angles,
+																const Vector &velocity, const AngularImpulse &angVelocity,
 																CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags )
 {
 	// Nail grenades are always thrown like discs
@@ -116,7 +116,7 @@ void CTFGrenadeNailProjectile::Spawn()
 	m_pMotionController = NULL;
 
 	UseClientSideAnimation();
-		
+
 	BaseClass::Spawn();
 }
 
@@ -226,7 +226,7 @@ void CTFGrenadeNailProjectile::EmitNails( void )
 		QAngle angNail( random->RandomFloat( -3, 3 ), m_flNailAngle, 0 );
 
 		// Emit a nail
-		CTFProjectile_Nail *pNail = CTFProjectile_Nail::Create( GetAbsOrigin(), angNail, this, GetThrower() );	
+		CTFProjectile_Nail *pNail = CTFProjectile_Nail::Create( GetAbsOrigin(), angNail, this, GetThrower() );
 		if ( pNail )
 		{
 			pNail->SetDamage( 18 );

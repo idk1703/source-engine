@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -19,7 +19,7 @@
 #include "proto_version.h"
 
 // Flow control bytes per second limits
-#define MAX_RATE		(1024*1024)				
+#define MAX_RATE		(1024*1024)
 #define MIN_RATE		1000
 #define DEFAULT_RATE	80000
 
@@ -31,7 +31,7 @@
 #define MAX_FILE_SIZE		((1<<MAX_FILE_SIZE_BITS)-1)	// maximum transferable size is	64MB
 
 // 0 == regular, 1 == file stream
-#define MAX_STREAMS			2    
+#define MAX_STREAMS			2
 
 #define	FRAG_NORMAL_STREAM	0
 #define FRAG_FILE_STREAM	1
@@ -72,7 +72,7 @@
 
 #define NETMSG_TYPE_BITS	6	// must be 2^NETMSG_TYPE_BITS > SVC_LASTMSG
 
-#define NETMSG_LENGTH_BITS	11	// 256 bytes 
+#define NETMSG_LENGTH_BITS	11	// 256 bytes
 
 // This is the payload plus any header info (excluding UDP header)
 
@@ -107,7 +107,7 @@ enum
 typedef struct netpacket_s
 {
 	netadr_t		from;		// sender IP
-	int				source;		// received source 
+	int				source;		// received source
 	double			received;	// received time
 	unsigned char	*data;		// pointer to raw packet data
 	bf_read			message;	// easy bitbuf data access

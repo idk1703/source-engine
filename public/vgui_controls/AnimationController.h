@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -39,7 +39,7 @@ public:
 
 	// runs a frame of animation (time is passed in so slow motion, etc. works)
 	void UpdateAnimations( float curtime );
-	
+
 	int	 GetNumActiveAnimations( void ) { return m_ActiveAnimations.Count(); }
 
 	// plays all animations to completion instantly
@@ -81,7 +81,7 @@ public:
 
 private:
 	bool UpdateScreenSize();
-	
+
 	bool LoadScriptFile(const char *fileName);
 	bool ParseScriptFile(char *pMem, int length);
 
@@ -210,7 +210,7 @@ private:
 	// posted messages
 	struct PostedMessage_t
 	{
-		AnimCommandType_e commandType; 
+		AnimCommandType_e commandType;
 		UtlSymId_t seqName;
 		UtlSymId_t event;
 		UtlSymId_t variable;
@@ -225,7 +225,7 @@ private:
 	{
 		UtlSymId_t event;
 		Panel *pParent;
-	
+
 		bool operator==( const RanEvent_t &other ) const
 		{
 			return ( event == other.event && pParent == other.pParent );

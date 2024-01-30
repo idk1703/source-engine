@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@
 
 using namespace vgui;
 
-// EditablePanels are panels that can create certain vgui controls 
+// EditablePanels are panels that can create certain vgui controls
 // by using the function createControlByName()
 
 
@@ -26,7 +26,7 @@ class EditablePanelDemo: public DemoPage
 	public:
 		EditablePanelDemo(Panel *parent, const char *name);
 		~EditablePanelDemo();
-	
+
 	private:
 		EditablePanel *m_pEditablePanel;
 		Label *m_pSpeedLabel;
@@ -42,7 +42,7 @@ EditablePanelDemo::EditablePanelDemo(Panel *parent, const char *name) : DemoPage
 	// Create an EditablePanel.
 	m_pEditablePanel = new EditablePanel(this, "AnEditablePanel");
 
-	
+
 	// Set its position and size
 	m_pEditablePanel->SetSize(400, 200);
 	m_pEditablePanel->SetPos(0, 0);
@@ -67,10 +67,10 @@ EditablePanelDemo::EditablePanelDemo(Panel *parent, const char *name) : DemoPage
 	m_pSpeedLabel->SetText("Internet &Speed");
 	// Set its text alignment
 	m_pSpeedLabel->SetContentAlignment(Label::a_east);
-	
+
 	// Add another child panel to the EditablePanel, this time a ComboBox.
-	
-	// This will be the menu items of our combo box menu.	
+
+	// This will be the menu items of our combo box menu.
 	// List of all the different internet speeds
 	char *g_Speeds[] =
 	{
@@ -80,7 +80,7 @@ EditablePanelDemo::EditablePanelDemo(Panel *parent, const char *name) : DemoPage
 		{ "Modem - 56k"},
 		{ "ISDN - 112k"},
 		{ "DSL > 256k"},
-		{ "LAN/T1 > 1M"},		
+		{ "LAN/T1 > 1M"},
 	};
 
 	// Create the combo box using the create function
@@ -141,5 +141,3 @@ Panel* EditablePanelDemo_Create(Panel *parent)
 {
 	return new EditablePanelDemo(parent, "EditablePanelDemo");
 }
-
-

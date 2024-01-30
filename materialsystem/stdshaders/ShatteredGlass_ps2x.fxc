@@ -5,7 +5,7 @@
 // STATIC: "ENVMAPMASK"				"0..1"
 // STATIC: "BASEALPHAENVMAPMASK"	"0..1"
 // STATIC: "HDRTYPE"				"0..2"
-				   
+
 // DYNAMIC: "HDRENABLED" "0..1"
 // DYNAMIC: "PIXELFOGTYPE" "0..1"
 
@@ -27,7 +27,7 @@ const HALF3 g_OverbrightFactor				: register( c6 );
 const HALF4 g_FogParams						: register( c12 );
 
 // CENTROID: TEXCOORD2
-	    
+
 sampler BaseTextureSampler	: register( s0 );
 sampler LightmapSampler		: register( s1 );
 sampler EnvmapSampler		: register( s2 );
@@ -64,7 +64,7 @@ float4 main( PS_INPUT i ) : COLOR
 	HALF3 specularFactor = 1.0f;
 	if( bEnvmapMask )
 	{
-		specularFactor = tex2D( EnvmapMaskSampler, i.detailTexCoord ).xyz;	
+		specularFactor = tex2D( EnvmapMaskSampler, i.detailTexCoord ).xyz;
 	}
 
 	if( bBaseAlphaEnvmapMask )
@@ -107,7 +107,7 @@ float4 main( PS_INPUT i ) : COLOR
 		HALF fresnel = 1.0 - dot( worldSpaceNormal, worldVertToEyeVector );
 		fresnel = pow( fresnel, 5.0 );
 		fresnel = fresnel * g_FresnelReflection.b + g_FresnelReflection.a;
-			 
+
 		specularLighting = texCUBE( EnvmapSampler, reflectVect );
 		specularLighting *= specularFactor;
 
@@ -123,8 +123,7 @@ float4 main( PS_INPUT i ) : COLOR
 
 	// Do it somewhat unlit
 	HALF3 result = albedo*(g_OverbrightFactor.z*diffuseLighting + g_OverbrightFactor.y) + specularLighting;
-	
+
 	float fogFactor = CalcPixelFogFactor( PIXELFOGTYPE, g_FogParams, g_EyePos.z, i.worldPos_projPosZ.z, i.worldPos_projPosZ.w );
 	return FinalOutput( HALF4( result, alpha ), fogFactor, PIXELFOGTYPE, TONEMAP_SCALE_LINEAR );
 }
-

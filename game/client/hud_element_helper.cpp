@@ -15,7 +15,7 @@ CHudElementHelper *CHudElementHelper::m_sHelpers = NULL;
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructs a technology factory
-// Input  : pfnCreate - fn Ptr to the constructor for this element 
+// Input  : pfnCreate - fn Ptr to the constructor for this element
 //			depth - determines position in the creation list, 100 is farthest into the screen
 //					0 is nearest, default is 50
 //
@@ -58,15 +58,15 @@ CHudElementHelper::CHudElementHelper( CHudElement *( *pfnCreate )( void ), int d
 // Output : CHudElementHelper
 //-----------------------------------------------------------------------------
 CHudElementHelper *CHudElementHelper::GetNext( void )
-{ 
+{
 	return m_pNext;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Static class creation factory
-//  Searches list of registered factories for a match and then instances the 
+//  Searches list of registered factories for a match and then instances the
 //  requested technology by name
-// Input  : *name - 
+// Input  : *name -
 // Output : CBaseTFTechnology
 //-----------------------------------------------------------------------------
 void CHudElementHelper::CreateAllElements( void )
@@ -86,4 +86,3 @@ void CHudElementHelper::CreateAllElements( void )
 		p = p->GetNext();
 	}
 }
-

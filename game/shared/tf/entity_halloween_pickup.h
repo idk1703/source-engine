@@ -22,14 +22,14 @@
 #define TF_DUCK_PICKUP_MODEL	"models/workshop/player/items/pyro/eotl_ducky/eotl_bonus_duck.mdl"
 #define TF_GIFT_MODEL			"models/props_halloween/gargoyle_ghost.mdl"; //"models/props_halloween/halloween_gift.mdl";
 #define TF_HALLOWEEN_PICKUP_DEFAULT_SOUND	"AmmoPack.Touch"
-							 
+
 #define BONUS_DUCK_GLOW "superrare_beams1"
 #define BONUS_DUCK_TRAIL_RED "duck_collect_trail_red"
 #define BONUS_DUCK_TRAIL_BLUE "duck_collect_trail_blue"
 #define BONUS_DUCK_TRAIL_SPECIAL_RED "duck_collect_trail_special_red"
 #define BONUS_DUCK_TRAIL_SPECIAL_BLUE "duck_collect_trail_special_blue"
 #define BONUS_DUCK_CREATED_SOUND "Duck.Quack"
-											  
+
 #ifdef CLIENT_DLL
 #define CBonusDuckPickup C_BonusDuckPickup
 #define CHalloweenPickup C_HalloweenPickup
@@ -72,7 +72,7 @@ public:
 	virtual CBaseEntity* Respawn( void );
 
 	virtual const char *GetDefaultPowerupModel( void ) OVERRIDE
-	{ 
+	{
 		return TF_HALLOWEEN_PICKUP_MODEL;
 	}
 
@@ -151,7 +151,7 @@ private:
 	int m_iAssisterId;
 	int m_iVictimId;
 	int m_iFlags;
-#else	
+#else
 	CNewParticleEffect	*pGlowEffect;
 #endif
 
@@ -171,7 +171,7 @@ class CHalloweenGiftSpawnLocation : public CBaseEntity, public IHalloweenGiftSpa
 {
 public:
 	DECLARE_CLASS( CHalloweenGiftSpawnLocation, CBaseEntity );
-	
+
 	CHalloweenGiftSpawnLocation();
 };
 
@@ -227,5 +227,3 @@ public:
 
 
 #endif // ENTITY_HALLOWEEN_PICKUP_H
-
-

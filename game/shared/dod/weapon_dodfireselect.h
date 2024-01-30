@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,7 +20,7 @@ class CDODFireSelectWeapon : public CWeaponDODBaseGun
 {
 public:
 	DECLARE_CLASS( CDODFireSelectWeapon, CWeaponDODBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CDODFireSelectWeapon();

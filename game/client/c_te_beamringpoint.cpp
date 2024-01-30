@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -38,7 +38,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBeamRingPoint::C_TEBeamRingPoint( void )
 {
@@ -48,7 +48,7 @@ C_TEBeamRingPoint::C_TEBeamRingPoint( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBeamRingPoint::~C_TEBeamRingPoint( void )
 {
@@ -59,18 +59,18 @@ void TE_BeamRingPoint( IRecipientFilter& filter, float delay,
 	float life, float width, int spread, float amplitude, int r, int g, int b, int a, int speed, int flags )
 {
 	beams->CreateBeamRingPoint( center, start_radius, end_radius, modelindex, haloindex, 0.0f,
-		life, width, 0.1 * spread, 0.0f, amplitude, a, 0.1 * speed, 
+		life, width, 0.1 * spread, 0.0f, amplitude, a, 0.1 * speed,
 		startframe, 0.1 * framerate, r, g, b, flags );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEBeamRingPoint::PostDataUpdate( DataUpdateType_t updateType )
 {
 	beams->CreateBeamRingPoint( m_vecCenter, m_flStartRadius, m_flEndRadius, m_nModelIndex, m_nHaloIndex, 0.0f,
-		m_fLife, m_fWidth, m_fEndWidth, m_nFadeLength, m_fAmplitude, a, 0.1 * m_nSpeed, 
+		m_fLife, m_fWidth, m_fEndWidth, m_nFadeLength, m_fAmplitude, a, 0.1 * m_nSpeed,
 		m_nStartFrame, 0.1 * m_nFrameRate, r, g, b, m_nFlags );
 }
 

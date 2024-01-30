@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -65,5 +65,3 @@ void EditNav_Precache(void *pUser)
 #ifdef CSTRIKE_DLL
 PRECACHE_REGISTER_FN( EditNav_Precache );
 #endif
-
-

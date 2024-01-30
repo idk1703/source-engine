@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -23,7 +23,7 @@ float CubicBezier( float t, float A, float B, float C, float D )
 	return QuadraticBezier( t, Lerp( t, A, B ), Lerp( t, B, C ), Lerp( t, C, D ) );
 }
 
-BEGIN_SHADER( VortWarp_DX7, 
+BEGIN_SHADER( VortWarp_DX7,
 			  "Help for VortWarp_DX7" )
 
 	BEGIN_SHADER_PARAMS
@@ -87,24 +87,24 @@ BEGIN_SHADER( VortWarp_DX7,
  			pShaderShadow->EnableAlphaTest( IS_FLAG_SET(MATERIAL_VAR_ALPHATEST) );
 
 			pShaderShadow->EnableCustomPixelPipe( true );
-			
+
 			pShaderShadow->CustomTextureStages( 1 );
 
 			if( bUnlit )
 			{
-				pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-					SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_SELECTARG1, 
+				pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+					SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_SELECTARG1,
 					SHADER_TEXARG_TEXTURE, SHADER_TEXARG_NONE );
 			}
 			else
 			{
-				pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-					SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_MODULATE2X, 
+				pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+					SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_MODULATE2X,
 					SHADER_TEXARG_TEXTURE, SHADER_TEXARG_VERTEXCOLOR );
 			}
-		
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-				SHADER_TEXCHANNEL_ALPHA, SHADER_TEXOP_SELECTARG1, 
+
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+				SHADER_TEXCHANNEL_ALPHA, SHADER_TEXOP_SELECTARG1,
 				SHADER_TEXARG_TEXTURE, SHADER_TEXARG_NONE );
 
 			pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
@@ -114,11 +114,11 @@ BEGIN_SHADER( VortWarp_DX7,
 
 			pShaderShadow->CustomTextureStages( 2 );
 
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1, 
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
 				SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_SELECTARG1,
 				SHADER_TEXARG_PREVIOUSSTAGE, SHADER_TEXARG_NONE );
 
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1, 
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
 				SHADER_TEXCHANNEL_ALPHA, SHADER_TEXOP_ADD,
 				SHADER_TEXARG_PREVIOUSSTAGE, SHADER_TEXARG_CONSTANTCOLOR );
 
@@ -190,16 +190,16 @@ BEGIN_SHADER( VortWarp_DX7,
  			s_pShaderShadow->EnableDepthWrites( false );
 
 			pShaderShadow->EnableCustomPixelPipe( true );
-			
+
 			pShaderShadow->CustomTextureStages( 2 );
 
 			// basetexture * selfillumtint
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-				SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_MODULATE, 
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+				SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_MODULATE,
 				SHADER_TEXARG_TEXTURE, SHADER_TEXARG_CONSTANTCOLOR );
 			// previous * selfillummap
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1, 
-				SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_MODULATE, 
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
+				SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_MODULATE,
 				SHADER_TEXARG_TEXTURE, SHADER_TEXARG_PREVIOUSSTAGE );
 
 			// We're always blending

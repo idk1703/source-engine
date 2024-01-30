@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -141,7 +141,7 @@ bool NavAreaBuildPath( CNavArea *startArea, CNavArea *goalArea, const Vector *go
 	/// @todo Cost might work as "manhattan distance"
 	startArea->SetTotalCost( (startArea->GetCenter() - actualGoalPos).Length() );
 
-	float initCost = costFunc( startArea, NULL, NULL, NULL, -1.0f );	
+	float initCost = costFunc( startArea, NULL, NULL, NULL, -1.0f );
 	if (initCost < 0.0f)
 		return false;
 	startArea->SetCostSoFar( initCost );
@@ -197,7 +197,7 @@ bool NavAreaBuildPath( CNavArea *startArea, CNavArea *goalArea, const Vector *go
 		int ladderTopDir = AHEAD;
 		bool bHaveMaxPathLength = ( maxPathLength > 0.0f );
 		float length = -1;
-		
+
 		while( true )
 		{
 			CNavArea *newArea = NULL;
@@ -366,7 +366,7 @@ bool NavAreaBuildPath( CNavArea *startArea, CNavArea *goalArea, const Vector *go
 			// benefit, floating point precision bug, or busted cost functor.
 			float minNewCostSoFar = area->GetCostSoFar() * 1.00001f + 0.00001f;
 			newCostSoFar = Max( newCostSoFar, minNewCostSoFar );
-				
+
 			// stop if path length limit reached
 			if ( bHaveMaxPathLength )
 			{
@@ -375,7 +375,7 @@ bool NavAreaBuildPath( CNavArea *startArea, CNavArea *goalArea, const Vector *go
 				float newLengthSoFar = area->GetPathLengthSoFar() + deltaLength;
 				if ( newLengthSoFar > maxPathLength )
 					continue;
-				
+
 				newArea->SetPathLengthSoFar( newLengthSoFar );
 			}
 
@@ -396,7 +396,7 @@ bool NavAreaBuildPath( CNavArea *startArea, CNavArea *goalArea, const Vector *go
 					*closestArea = newArea;
 					closestAreaDist = newCostRemaining;
 				}
-				
+
 				newArea->SetCostSoFar( newCostSoFar );
 				newArea->SetTotalCost( newCostSoFar + newCostRemaining );
 
@@ -462,7 +462,7 @@ float NavAreaTravelDistance( CNavArea *startArea, CNavArea *endArea, CostFunctor
 //--------------------------------------------------------------------------------------------------------------
 /**
  * Do a breadth-first search, invoking functor on each area.
- * If functor returns 'true', continue searching from this area. 
+ * If functor returns 'true', continue searching from this area.
  * If functor returns 'false', the area's adjacent areas are not explored (dead end).
  * If 'maxRange' is 0 or less, no range check is done (all areas will be examined).
  *
@@ -557,11 +557,11 @@ void SearchSurroundingAreas( CNavArea *startArea, const Vector &startPos, Functo
 							continue;	// skip this outgoing connection
 						}
 					}
-					
+
 					AddAreaToOpenList( adjArea, area, startPos, maxRange );
 				}
 			}
-			
+
 			// potentially include areas that connect TO this area via a one-way link
 			if (options & INCLUDE_INCOMING_CONNECTIONS)
 			{
@@ -571,8 +571,8 @@ void SearchSurroundingAreas( CNavArea *startArea, const Vector &startPos, Functo
 
 					FOR_EACH_VEC( (*list), it )
 					{
-						NavConnect connect = (*list)[ it ];				
-						
+						NavConnect connect = (*list)[ it ];
+
 						AddAreaToOpenList( connect.area, area, startPos, maxRange );
 					}
 				}
@@ -638,7 +638,7 @@ public:
 	virtual bool operator() ( CNavArea *area, CNavArea *priorArea, float travelDistanceSoFar ) = 0;
 
 	// return true if 'adjArea' should be included in the ongoing search
-	virtual bool ShouldSearch( CNavArea *adjArea, CNavArea *currentArea, float travelDistanceSoFar ) 
+	virtual bool ShouldSearch( CNavArea *adjArea, CNavArea *currentArea, float travelDistanceSoFar )
 	{
 		return !adjArea->IsBlocked( TEAM_ANY );
 	}
@@ -646,7 +646,7 @@ public:
 	/**
 	 * Collect adjacent areas to continue the search by calling 'IncludeInSearch' on each
 	 */
-	virtual void IterateAdjacentAreas( CNavArea *area, CNavArea *priorArea, float travelDistanceSoFar ) 
+	virtual void IterateAdjacentAreas( CNavArea *area, CNavArea *priorArea, float travelDistanceSoFar )
 	{
 		// search adjacent outgoing connections
 		for( int dir=0; dir<NUM_DIRECTIONS; ++dir )
@@ -668,7 +668,7 @@ public:
 	virtual void PostSearch( void ) { }
 
 	// consider 'area' in upcoming search steps
-	void IncludeInSearch( CNavArea *area, CNavArea *priorArea ) 
+	void IncludeInSearch( CNavArea *area, CNavArea *priorArea )
 	{
 		if ( area == NULL )
 			return;
@@ -745,7 +745,7 @@ inline void SearchSurroundingAreas( CNavArea *startArea, ISearchSurroundingAreas
 /**
  * Starting from 'startArea', collect adjacent areas via a breadth-first search continuing outward until
  * 'travelDistanceLimit' is reached.
- * Areas in the collection will be "marked", returning true for IsMarked(). 
+ * Areas in the collection will be "marked", returning true for IsMarked().
  * Each area in the collection's GetCostSoFar() will be approximate travel distance from 'startArea'.
  */
 inline void CollectSurroundingAreas( CUtlVector< CNavArea * > *nearbyAreaVector, CNavArea *startArea, float travelDistanceLimit = 1500.0f, float maxStepUpLimit = StepHeight, float maxDropDownLimit = 100.0f )
@@ -841,7 +841,7 @@ public:
  * Functor that returns lowest cost for areas farthest from given position
  * For use with FindMinimumCostArea()
  */
-class FarAwayFromPositionFunctor 
+class FarAwayFromPositionFunctor
 {
 public:
 	FarAwayFromPositionFunctor( const Vector &pos ) : m_pos( pos )
@@ -868,7 +868,7 @@ CNavArea *FindMinimumCostArea( CNavArea *startArea, CostFunctor &costFunc )
 
 	// collect N low-cost areas of a decent size
 	enum { NUM_CHEAP_AREAS = 32 };
-	struct 
+	struct
 	{
 		CNavArea *area;
 		float cost;

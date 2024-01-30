@@ -37,13 +37,13 @@ namespace OptimizedModel
 
 
 //-----------------------------------------------------------------------------
-// Reference to a loaded studiomdl 
+// Reference to a loaded studiomdl
 //-----------------------------------------------------------------------------
 typedef unsigned short MDLHandle_t;
 
 enum
 {
-	MDLHANDLE_INVALID = (MDLHandle_t)~0 
+	MDLHANDLE_INVALID = (MDLHandle_t)~0
 };
 
 
@@ -76,7 +76,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Flags for flushing 
+// Flags for flushing
 //-----------------------------------------------------------------------------
 enum MDLCacheFlush_t
 {
@@ -143,7 +143,7 @@ public:
 	// faster access when you already have the studiohdr
 	virtual virtualmodel_t *GetVirtualModelFast( const studiohdr_t *pStudioHdr, MDLHandle_t handle ) = 0;
 
-	// all cache entries that subsequently allocated or successfully checked 
+	// all cache entries that subsequently allocated or successfully checked
 	// are considered "locked" and will not be freed when additional memory is needed
 	virtual void BeginLock() = 0;
 
@@ -154,7 +154,7 @@ public:
 	virtual int *GetFrameUnlockCounterPtr()  = 0;
 
 	// Finish all pending async operations
-	virtual void FinishPendingLoads() = 0;	
+	virtual void FinishPendingLoads() = 0;
 };
 
 
@@ -162,10 +162,10 @@ public:
 */
 
 //-----------------------------------------------------------------------------
-// The main MDL cacher 
+// The main MDL cacher
 //-----------------------------------------------------------------------------
 #define MDLCACHE_INTERFACE_VERSION "MDLCache004"
- 
+
 abstract_class IMDLCache : public IAppSystem
 {
 public:
@@ -214,7 +214,7 @@ public:
 	// faster access when you already have the studiohdr
 	virtual virtualmodel_t *GetVirtualModelFast( const studiohdr_t *pStudioHdr, MDLHandle_t handle ) = 0;
 
-	// all cache entries that subsequently allocated or successfully checked 
+	// all cache entries that subsequently allocated or successfully checked
 	// are considered "locked" and will not be freed when additional memory is needed
 	virtual void BeginLock() = 0;
 
@@ -294,4 +294,3 @@ private:
 #define MDLCACHE_COARSE_LOCK() MDLCACHE_COARSE_LOCK_(mdlcache)
 
 #endif // IMDLCACHE_H
-

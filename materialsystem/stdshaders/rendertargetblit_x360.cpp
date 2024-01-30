@@ -78,6 +78,6 @@ BEGIN_VS_SHADER_FLAGS( RenderTargetBlit_X360, "", SHADER_NOT_EDITABLE )
 			}
 		}
 
-		Draw();		
+		Draw();
 	}
 END_SHADER

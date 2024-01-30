@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -35,14 +35,14 @@
 
 
 // Defines for the playerclass
-#define PC_UNDEFINED	0 
+#define PC_UNDEFINED	0
 
-#define PC_SCOUT		1 
-#define PC_SNIPER		2 
-#define PC_SOLDIER		3 
-#define PC_DEMOMAN		4 
-#define PC_MEDIC		5 
-#define PC_HWGUY		6 
+#define PC_SCOUT		1
+#define PC_SNIPER		2
+#define PC_SOLDIER		3
+#define PC_DEMOMAN		4
+#define PC_MEDIC		5
+#define PC_HWGUY		6
 #define PC_PYRO			7
 #define PC_SPY			8
 #define PC_ENGINEER		9
@@ -125,7 +125,7 @@ enum GrenadeType_t
 extern int g_nMaxGrenades[NUM_GRENADE_TYPES];
 
 
-// These are the names of the ammo types that go in the CAmmoDefs and that the 
+// These are the names of the ammo types that go in the CAmmoDefs and that the
 // weapon script files reference.
 // These directly correspond to ammo_X in the goldsrc tfc code.
 #define TFC_AMMO_DUMMY			0	// This is a dummy index, to make the CAmmoDef indices correct for the other ammo types.
@@ -183,32 +183,32 @@ extern const char* g_AmmoTypeNames[TFC_NUM_AMMO_TYPES];
 
 // items
 #define IT_SHOTGUN				(1<<0)
-#define IT_SUPER_SHOTGUN		(1<<1) 
-#define IT_NAILGUN				(1<<2) 
-#define IT_SUPER_NAILGUN		(1<<3) 
-#define IT_GRENADE_LAUNCHER		(1<<4) 
-#define IT_ROCKET_LAUNCHER		(1<<5) 
-#define IT_LIGHTNING			(1<<6) 
-#define IT_EXTRA_WEAPON			(1<<7) 
+#define IT_SUPER_SHOTGUN		(1<<1)
+#define IT_NAILGUN				(1<<2)
+#define IT_SUPER_NAILGUN		(1<<3)
+#define IT_GRENADE_LAUNCHER		(1<<4)
+#define IT_ROCKET_LAUNCHER		(1<<5)
+#define IT_LIGHTNING			(1<<6)
+#define IT_EXTRA_WEAPON			(1<<7)
 
-#define IT_SHELLS				(1<<8) 
-#define IT_NAILS				(1<<9) 
-#define IT_ROCKETS				(1<<10) 
-#define IT_CELLS				(1<<11) 
-#define IT_AXE					(1<<12) 
+#define IT_SHELLS				(1<<8)
+#define IT_NAILS				(1<<9)
+#define IT_ROCKETS				(1<<10)
+#define IT_CELLS				(1<<11)
+#define IT_AXE					(1<<12)
 
-#define IT_ARMOR1				(1<<13) 
-#define IT_ARMOR2				(1<<14) 
-#define IT_ARMOR3				(1<<15) 
-#define IT_SUPERHEALTH			(1<<16) 
+#define IT_ARMOR1				(1<<13)
+#define IT_ARMOR2				(1<<14)
+#define IT_ARMOR3				(1<<15)
+#define IT_SUPERHEALTH			(1<<16)
 
-#define IT_KEY1					(1<<17) 
-#define IT_KEY2					(1<<18) 
+#define IT_KEY1					(1<<17)
+#define IT_KEY2					(1<<18)
 
-#define IT_INVISIBILITY			(1<<19) 
-#define IT_INVULNERABILITY		(1<<20) 
+#define IT_INVISIBILITY			(1<<19)
+#define IT_INVULNERABILITY		(1<<20)
 #define IT_SUIT					(1<<21)
-#define IT_QUAD					(1<<22) 
+#define IT_QUAD					(1<<22)
 #define IT_HOOK					(1<<23)
 
 #define IT_KEY3					(1<<24)	// Stomp invisibility
@@ -268,10 +268,10 @@ class CTFCPlayerClassInfo
 public:
 	const char *m_pClassName;
 	const char *m_pModelName;	// What model this class uses.
-	
+
 	float m_flMaxSpeed;
 	int m_iMaxHealth;
-	
+
 	int m_iInitArmor;
 	int m_iMaxArmor;
 	float m_flInitArmorType;
@@ -283,7 +283,7 @@ public:
 	// GR_TYPE_ defines.
 	GrenadeType_t m_iGrenadeType1;
 	GrenadeType_t m_iGrenadeType2;
-	
+
 	int m_InitAmmo[TFC_NUM_AMMO_TYPES]; // These are in the same order as g_AmmoTypeNames.
 	int m_MaxAmmo[TFC_NUM_AMMO_TYPES]; // These are in the same order as g_AmmoTypeNames.
 };
@@ -298,12 +298,12 @@ enum TFCPlayerState
 	// You can't move though if CSGameRules()->IsFreezePeriod() returns true.
 	// This state can jump to a bunch of other states like STATE_PICKINGCLASS or STATE_DEATH_ANIM.
 	STATE_ACTIVE=0,
-	
+
 	// This is the state you're in when you first enter the server.
-	// It's switching between intro cameras every few seconds, and there's a level info 
+	// It's switching between intro cameras every few seconds, and there's a level info
 	// screen up.
 	STATE_WELCOME,			// Show the level intro screen.
-	
+
 	// During these states, you can either be a new player waiting to join, or
 	// you can be a live player in the game who wants to change teams.
 	// Either way, you can't move while choosing team or class (or while any menu is up).

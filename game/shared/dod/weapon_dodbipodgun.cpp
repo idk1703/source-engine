@@ -1,10 +1,10 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
-#include "cbase.h" 
+#include "cbase.h"
 #include "fx_dod_shared.h"
 #include "weapon_dodbipodgun.h"
 #include "dod_gamerules.h"
@@ -121,7 +121,7 @@ void CDODBipodWeapon::SecondaryAttack( void )
 
 	if ( IsDeployed() )
 		UndeployBipod();
-	else 
+	else
 	{
 		if ( CanAttack() )
 		{
@@ -203,7 +203,7 @@ void CDODBipodWeapon::BipodThink( void )
 		}
 
 		m_flNextDeployCheckTime = gpGlobals->curtime + 0.2;
-	}	
+	}
 }
 
 void CDODBipodWeapon::DoFireEffects()
@@ -229,9 +229,9 @@ void CDODBipodWeapon::DeployBipod( float flHeight, CBaseEntity *pDeployedOn, flo
 	m_hDeployedOnEnt = pDeployedOn;
 
 	if ( pDeployedOn )
-        m_DeployedEntOrigin = pDeployedOn->GetAbsOrigin();
+	m_DeployedEntOrigin = pDeployedOn->GetAbsOrigin();
 	else
-		m_DeployedEntOrigin = vec3_origin;	// world ent 
+		m_DeployedEntOrigin = vec3_origin;	// world ent
 
 	SendWeaponAnim( GetDeployActivity() );
 	SetDeployed( true );
@@ -241,7 +241,7 @@ void CDODBipodWeapon::DeployBipod( float flHeight, CBaseEntity *pDeployedOn, flo
 	pPlayer->m_Shared.SetDeployedYawLimits( flYawLimitLeft, flYawLimitRight );
 
 	// Save this off so we do duck checks later, even though we won't be flagged as ducking
-	m_bDuckedWhenDeployed = pPlayer->m_Shared.IsDucking();	
+	m_bDuckedWhenDeployed = pPlayer->m_Shared.IsDucking();
 
 	// More TODO:
 	// recalc our yaw limits if the item we're deployed on has moved or rotated
@@ -305,7 +305,7 @@ bool CDODBipodWeapon::AttemptToDeploy( void )
 				DeployBipod( flDeployedHeight, pDeployedOn, flYawLimitLeft, flYawLimitRight );
 				return true;
 			}
-		}		
+		}
 	}
 
 	return false;
@@ -329,14 +329,14 @@ bool CDODBipodWeapon::CheckDeployEnt( void )
 			TestDeploy( &flDeployedHeight, &pDeployedOn, &flYawLimitLeft, &flYawLimitRight );
 
 			CDODPlayer *pPlayer = ToDODPlayer( GetPlayerOwner() );
-			
+
 			if ( pPlayer )
 				pPlayer->m_Shared.SetDeployedYawLimits( flYawLimitLeft, flYawLimitRight );
 
 			m_DeployedEntOrigin = pDeployedOn->GetAbsOrigin();
 		}
 	}
-	
+
 	// 20 unit tolerance in height
 	if ( abs( m_flDeployedHeight - flDeployedHeight ) > 20 )
 		return false;
@@ -484,7 +484,7 @@ public:
 bool CDODBipodWeapon::TestDeployAngle( CDODPlayer *pPlayer, float *flDeployedHeight, CBaseEntity **pDeployedOn, QAngle angles )
 {
 	// make sure we are deployed on the same entity at the same height
-	trace_t tr;	
+	trace_t tr;
 
 	angles[PITCH] = 0;
 
@@ -503,7 +503,7 @@ bool CDODBipodWeapon::TestDeployAngle( CDODPlayer *pPlayer, float *flDeployedHei
 	{
 		vecStart.z += VEC_PRONE_HULL_MAX[2];
 		flForwardTraceDist = 16;
-	}		
+	}
 	else if ( bDucking )
 	{
 		vecStart.z += VEC_DUCK_HULL_MAX[2];
@@ -551,7 +551,7 @@ bool CDODBipodWeapon::TestDeployAngle( CDODPlayer *pPlayer, float *flDeployedHei
 		vecForwardStart + forward * ( flForwardTraceDist - 2 * vecDeployTraceBoxSize[0] ),
 		-vecDeployTraceBoxSize,
 		vecDeployTraceBoxSize,
-		traceMask,	
+		traceMask,
 		filter,
 		&tr );
 
@@ -606,7 +606,7 @@ bool CDODBipodWeapon::TestDeployAngle( CDODPlayer *pPlayer, float *flDeployedHei
 			vecDownTraceStart + Vector(0,0,iTraceHeight),	// trace forward one box width
 			-vecDeployTraceBoxSize,
 			vecDeployTraceBoxSize,
-			traceMask,	
+			traceMask,
 			filter,
 			&tr );
 
@@ -669,7 +669,7 @@ Activity CDODBipodWeapon::GetPrimaryAttackActivity( void )
 	Activity actPrim;
 
 	if( IsDeployed() )
-		actPrim = ACT_VM_PRIMARYATTACK_DEPLOYED;	
+		actPrim = ACT_VM_PRIMARYATTACK_DEPLOYED;
 	else
 		actPrim = ACT_VM_PRIMARYATTACK;
 
@@ -681,7 +681,7 @@ Activity CDODBipodWeapon::GetReloadActivity( void )
 	Activity actReload;
 
 	if( IsDeployed() )
-		actReload = ACT_VM_RELOAD_DEPLOYED;	
+		actReload = ACT_VM_RELOAD_DEPLOYED;
 	else
 		actReload = ACT_VM_RELOAD;
 
@@ -693,7 +693,7 @@ Activity CDODBipodWeapon::GetIdleActivity( void )
 	Activity actIdle;
 
 	if( IsDeployed() )
-		actIdle = ACT_VM_IDLE_DEPLOYED;	
+		actIdle = ACT_VM_IDLE_DEPLOYED;
 	else
 		actIdle = ACT_VM_IDLE;
 
@@ -704,7 +704,7 @@ Activity CDODBipodWeapon::GetIdleActivity( void )
 float CDODBipodWeapon::GetWeaponAccuracy( float flPlayerSpeed )
 {
 	float flSpread = BaseClass::GetWeaponAccuracy( flPlayerSpeed );
-	
+
 	if( IsDeployed() )
 	{
 		flSpread = m_pWeaponInfo->m_flSecondaryAccuracy;
@@ -722,7 +722,7 @@ float CDODBipodWeapon::GetWeaponAccuracy( float flPlayerSpeed )
 		else if( m_bUseAltWeaponModel )
 			return m_iWorldModelIndex;	//override for hand signals etc
 		else
-            return m_iCurrentWorldModel;
+	return m_iCurrentWorldModel;
 	}
 
 	void CDODBipodWeapon::CheckForAltWeapon( int iCurrentState )
@@ -733,20 +733,20 @@ float CDODBipodWeapon::GetWeaponAccuracy( float flPlayerSpeed )
 
 		if( bReloading )
 		{
-			if( IsDeployed() && iCurrentState & ALTWPN_CRITERIA_PRONE && 
+			if( IsDeployed() && iCurrentState & ALTWPN_CRITERIA_PRONE &&
 				iCriteria & ALTWPN_CRITERIA_PRONE_DEPLOYED_RELOAD )
 			{
-				m_iCurrentWorldModel = m_iProneDeployedReloadModelIndex;		// prone deployed reload	
+				m_iCurrentWorldModel = m_iProneDeployedReloadModelIndex;		// prone deployed reload
 			}
 			else if( IsDeployed() && iCriteria & ALTWPN_CRITERIA_DEPLOYED_RELOAD )
 			{
-				m_iCurrentWorldModel = m_iDeployedReloadModelIndex;		// deployed reload			
+				m_iCurrentWorldModel = m_iDeployedReloadModelIndex;		// deployed reload
 			}
 			else if( iCriteria & ALTWPN_CRITERIA_RELOADING )
 			{
-				m_iCurrentWorldModel = m_iReloadModelIndex;				// left handed reload			
+				m_iCurrentWorldModel = m_iReloadModelIndex;				// left handed reload
 			}
-			else 
+			else
 			{
 				m_iCurrentWorldModel = m_iWorldModelIndex;				// normal weapon reload
 			}
@@ -758,7 +758,7 @@ float CDODBipodWeapon::GetWeaponAccuracy( float flPlayerSpeed )
 		else if( (iCurrentState & iCriteria) & ALTWPN_CRITERIA_FIRING )
 		{
 			// don't think we have any weapons that do this
-			m_iCurrentWorldModel = m_iReloadModelIndex;					// left handed shooting?	
+			m_iCurrentWorldModel = m_iReloadModelIndex;					// left handed shooting?
 		}
 		else
 		{
@@ -775,7 +775,7 @@ float CDODBipodWeapon::GetWeaponAccuracy( float flPlayerSpeed )
 			float flSensitivity = deployed_mg_sensitivity.GetFloat();
 
 			*x *= flSensitivity;
-			*y *= flSensitivity;		
+			*y *= flSensitivity;
 		}
 	}
 

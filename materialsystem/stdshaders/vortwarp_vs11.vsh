@@ -10,7 +10,7 @@ $WARPPARAM = $SHADER_SPECIFIC_CONST_2;
 $ENTITY_ORIGIN = $SHADER_SPECIFIC_CONST_3;
 
 ;------------------------------------------------------------------------------
-; Vertex blending 
+; Vertex blending
 ;------------------------------------------------------------------------------
 &AllocateRegister( \$worldPos );
 &AllocateRegister( \$worldNormal );
@@ -82,4 +82,3 @@ free $tmp2
 mov oT2, $cZero
 
 &FreeRegister( \$worldPos );
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "basetypes.h"
@@ -23,13 +23,13 @@ static InterpolatorNameMap_t g_InterpolatorNameMap[] =
 {
 	{ INTERPOLATE_DEFAULT,						"default",					"Default" },
 	{ INTERPOLATE_CATMULL_ROM_NORMALIZEX,		"catmullrom_normalize_x",	"Catmull-Rom (Norm X)" },
-	{ INTERPOLATE_EASE_IN,						"easein",					"Ease In" },			
+	{ INTERPOLATE_EASE_IN,						"easein",					"Ease In" },
 	{ INTERPOLATE_EASE_OUT,						"easeout",					"Ease Out" },
-	{ INTERPOLATE_EASE_INOUT,					"easeinout",				"Ease In/Out" },			
-	{ INTERPOLATE_BSPLINE,						"bspline",					"B-Spline" },							
-	{ INTERPOLATE_LINEAR_INTERP,				"linear_interp",			"Linear Interp." },			
-	{ INTERPOLATE_KOCHANEK_BARTELS,				"kochanek",					"Kochanek-Bartels" },		
-	{ INTERPOLATE_KOCHANEK_BARTELS_EARLY,		"kochanek_early",			"Kochanek-Bartels Early" },	
+	{ INTERPOLATE_EASE_INOUT,					"easeinout",				"Ease In/Out" },
+	{ INTERPOLATE_BSPLINE,						"bspline",					"B-Spline" },
+	{ INTERPOLATE_LINEAR_INTERP,				"linear_interp",			"Linear Interp." },
+	{ INTERPOLATE_KOCHANEK_BARTELS,				"kochanek",					"Kochanek-Bartels" },
+	{ INTERPOLATE_KOCHANEK_BARTELS_EARLY,		"kochanek_early",			"Kochanek-Bartels Early" },
 	{ INTERPOLATE_KOCHANEK_BARTELS_LATE,		"kochanek_late",			"Kochanek-Bartels Late" },
 	{ INTERPOLATE_SIMPLE_CUBIC,					"simple_cubic",				"Simple Cubic" },
 	{ INTERPOLATE_CATMULL_ROM,					"catmullrom",				"Catmull-Rom" },
@@ -47,7 +47,7 @@ int Interpolator_InterpolatorForName( char const *name )
 		if ( !Q_stricmp( name, slot->name ) )
 			return slot->type;
 	}
-	
+
 	Assert( !"Interpolator_InterpolatorForName failed!!!" );
 	return INTERPOLATE_DEFAULT;
 }
@@ -68,7 +68,7 @@ char const *Interpolator_NameForInterpolator( int type, bool printname )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct CurveNameMap_t
 {
@@ -105,7 +105,7 @@ int Interpolator_CurveTypeForName( const char *name )
 	{
 		char *p = sz + skip;
 		char *second = Q_stristr( p, "_to_curve_" );
-		
+
 		char save = *second;
 		*second = 0;
 
@@ -130,13 +130,13 @@ const char *Interpolator_NameForCurveType( int type, bool printname )
 
 	if ( !printname )
 	{
-		Q_snprintf( outname, sizeof( outname ), "curve_%s_to_curve_%s", 
+		Q_snprintf( outname, sizeof( outname ), "curve_%s_to_curve_%s",
 			Interpolator_NameForInterpolator( leftside, printname ),
 			Interpolator_NameForInterpolator( rightside, printname ) );
 	}
 	else
 	{
-		Q_snprintf( outname, sizeof( outname ), "%s <-> %s", 
+		Q_snprintf( outname, sizeof( outname ), "%s <-> %s",
 			Interpolator_NameForInterpolator( leftside, printname ),
 			Interpolator_NameForInterpolator( rightside, printname ) );
 	}
@@ -174,17 +174,17 @@ void Interpolator_GetKochanekBartelsParams( int interpolationType, float& tensio
 		Assert( 0 );
 		break;
 	case INTERPOLATE_KOCHANEK_BARTELS:
-        tension		= 0.77f;
+	tension		= 0.77f;
 		bias		= 0.0f;
 		continuity	= 0.77f;
 		break;
 	case INTERPOLATE_KOCHANEK_BARTELS_EARLY:
-        tension		= 0.77f;
+	tension		= 0.77f;
 		bias		= -1.0f;
 		continuity	= 0.77f;
 		break;
 	case INTERPOLATE_KOCHANEK_BARTELS_LATE:
-        tension		= 0.77f;
+	tension		= 0.77f;
 		bias		= 1.0f;
 		continuity	= 0.77f;
 		break;
@@ -209,39 +209,39 @@ void Interpolator_CurveInterpolate( int interpolationType,
 		// break; // Fall through and use catmull_rom as default
 	case INTERPOLATE_DEFAULT:
 	case INTERPOLATE_CATMULL_ROM_NORMALIZEX:
-		Catmull_Rom_Spline_NormalizeX( 
+		Catmull_Rom_Spline_NormalizeX(
 			vPre,
 			vStart,
 			vEnd,
 			vNext,
-			f, 
+			f,
 			vOut );
 		break;
 	case INTERPOLATE_CATMULL_ROM:
-		Catmull_Rom_Spline( 
+		Catmull_Rom_Spline(
 			vPre,
 			vStart,
 			vEnd,
 			vNext,
-			f, 
+			f,
 			vOut );
 		break;
 	case INTERPOLATE_CATMULL_ROM_NORMALIZE:
-		Catmull_Rom_Spline_Normalize( 
+		Catmull_Rom_Spline_Normalize(
 			vPre,
 			vStart,
 			vEnd,
 			vNext,
-			f, 
+			f,
 			vOut );
 		break;
 	case INTERPOLATE_CATMULL_ROM_TANGENT:
-		Catmull_Rom_Spline_Tangent( 
+		Catmull_Rom_Spline_Tangent(
 			vPre,
 			vStart,
 			vEnd,
 			vNext,
-			f, 
+			f,
 			vOut );
 		break;
 	case INTERPOLATE_EASE_IN:
@@ -276,33 +276,33 @@ void Interpolator_CurveInterpolate( int interpolationType,
 			float t, b, c;
 			Interpolator_GetKochanekBartelsParams( interpolationType, t, b, c );
 			Kochanek_Bartels_Spline_NormalizeX
-			( 
-				t, b, c, 
+			(
+				t, b, c,
 				vPre,
 				vStart,
 				vEnd,
 				vNext,
-				f, 
-				vOut 
+				f,
+				vOut
 			);
 		}
 		break;
 	case INTERPOLATE_SIMPLE_CUBIC:
-		Cubic_Spline_NormalizeX( 
+		Cubic_Spline_NormalizeX(
 			vPre,
 			vStart,
 			vEnd,
 			vNext,
-			f, 
+			f,
 			vOut );
 		break;
 	case INTERPOLATE_BSPLINE:
-		BSpline( 
+		BSpline(
 			vPre,
 			vStart,
 			vEnd,
 			vNext,
-			f, 
+			f,
 			vOut );
 		break;
 	case INTERPOLATE_EXPONENTIAL_DECAY:
@@ -310,7 +310,7 @@ void Interpolator_CurveInterpolate( int interpolationType,
 			float dt = vEnd.x - vStart.x;
 			if ( dt > 0.0f )
 			{
-				float val = 1.0f - ExponentialDecay( 0.001, dt, f * dt ); 
+				float val = 1.0f - ExponentialDecay( 0.001, dt, f * dt );
 				vOut.y = vStart.y + val * ( vEnd.y - vStart.y );
 			}
 			else
@@ -348,12 +348,12 @@ void Interpolator_CurveInterpolate_NonNormalized( int interpolationType,
 	case INTERPOLATE_CATMULL_ROM:
 	case INTERPOLATE_CATMULL_ROM_NORMALIZE:
 	case INTERPOLATE_CATMULL_ROM_TANGENT:
-		Catmull_Rom_Spline( 
+		Catmull_Rom_Spline(
 			vPre,
 			vStart,
 			vEnd,
 			vNext,
-			f, 
+			f,
 			vOut );
 		break;
 	case INTERPOLATE_EASE_IN:
@@ -388,33 +388,33 @@ void Interpolator_CurveInterpolate_NonNormalized( int interpolationType,
 			float t, b, c;
 			Interpolator_GetKochanekBartelsParams( interpolationType, t, b, c );
 			Kochanek_Bartels_Spline
-			( 
-				t, b, c, 
+			(
+				t, b, c,
 				vPre,
 				vStart,
 				vEnd,
 				vNext,
-				f, 
-				vOut 
+				f,
+				vOut
 			);
 		}
 		break;
 	case INTERPOLATE_SIMPLE_CUBIC:
-		Cubic_Spline( 
+		Cubic_Spline(
 			vPre,
 			vStart,
 			vEnd,
 			vNext,
-			f, 
+			f,
 			vOut );
 		break;
 	case INTERPOLATE_BSPLINE:
-		BSpline( 
+		BSpline(
 			vPre,
 			vStart,
 			vEnd,
 			vNext,
-			f, 
+			f,
 			vOut );
 		break;
 	case INTERPOLATE_EXPONENTIAL_DECAY:
@@ -422,7 +422,7 @@ void Interpolator_CurveInterpolate_NonNormalized( int interpolationType,
 			float dt = vEnd.x - vStart.x;
 			if ( dt > 0.0f )
 			{
-				float val = 1.0f - ExponentialDecay( 0.001, dt, f * dt ); 
+				float val = 1.0f - ExponentialDecay( 0.001, dt, f * dt );
 				vOut.y = vStart.y + val * ( vEnd.y - vStart.y );
 			}
 			else
@@ -441,12 +441,12 @@ void Interpolator_CurveInterpolate_NonNormalized( int interpolationType,
 
 
 void Interpolator_CurveInterpolate_NonNormalized( int interpolationType,
-												 const Quaternion &vPre,
-												 const Quaternion &vStart,
-												 const Quaternion &vEnd,
-												 const Quaternion &vNext,
-												 float f,
-												 Quaternion &vOut )
+												const Quaternion &vPre,
+												const Quaternion &vStart,
+												const Quaternion &vEnd,
+												const Quaternion &vNext,
+												float f,
+												Quaternion &vOut )
 {
 	vOut.Init();
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -86,7 +86,7 @@ public:
 	CBaseNetworkable* GetBaseNetworkable( CBaseHandle hEnt ) const;
 	CBaseEntity* GetBaseEntity( CBaseHandle hEnt ) const;
 	edict_t* GetEdict( CBaseHandle hEnt ) const;
-	
+
 	int NumberOfEntities( void );
 	int NumberOfEdicts( void );
 
@@ -101,7 +101,7 @@ public:
 
 	// Returns true while in the Clear() call.
 	bool	IsClearingEntities()	{return m_bClearingEntities;}
-	
+
 	// add a class that gets notified of entity events
 	void AddListenerEntity( IEntityListener *pListener );
 	void RemoveListenerEntity( IEntityListener *pListener );
@@ -152,12 +152,12 @@ public:
 	CBaseEntity *FindEntityGeneric( CBaseEntity *pStartEntity, const char *szName, CBaseEntity *pSearchingEntity = NULL, CBaseEntity *pActivator = NULL, CBaseEntity *pCaller = NULL );
 	CBaseEntity *FindEntityGenericWithin( CBaseEntity *pStartEntity, const char *szName, const Vector &vecSrc, float flRadius, CBaseEntity *pSearchingEntity = NULL, CBaseEntity *pActivator = NULL, CBaseEntity *pCaller = NULL );
 	CBaseEntity *FindEntityGenericNearest( const char *szName, const Vector &vecSrc, float flRadius, CBaseEntity *pSearchingEntity = NULL, CBaseEntity *pActivator = NULL, CBaseEntity *pCaller = NULL );
-	
+
 	CBaseEntity *FindEntityNearestFacing( const Vector &origin, const Vector &facing, float threshold);
 	CBaseEntity *FindEntityClassNearestFacing( const Vector &origin, const Vector &facing, float threshold, char *classname);
 
 	CBaseEntity *FindEntityProcedural( const char *szName, CBaseEntity *pSearchingEntity = NULL, CBaseEntity *pActivator = NULL, CBaseEntity *pCaller = NULL );
-	
+
 	CGlobalEntityList();
 
 // CBaseEntityList overrides.
@@ -219,7 +219,7 @@ template <class ENT_TYPE>
 inline bool FindEntityByName( const char *pszName, ENT_TYPE **ppResult)
 {
 	CBaseEntity *pBaseEntity = gEntList.FindEntityByName( NULL, pszName );
-	
+
 	if ( pBaseEntity )
 		*ppResult = dynamic_cast<ENT_TYPE *>( pBaseEntity );
 	else
@@ -239,7 +239,7 @@ template <>
 inline bool FindEntityByName<CAI_BaseNPC>( const char *pszName, CAI_BaseNPC **ppResult)
 {
 	CBaseEntity *pBaseEntity = gEntList.FindEntityByName( NULL, pszName );
-	
+
 	if ( pBaseEntity )
 		*ppResult = pBaseEntity->MyNPCPointer();
 	else
@@ -325,7 +325,7 @@ public:
 		notify_destroy_params_t destroy;
 		ReportSystemEvent( pEntity, NOTIFY_EVENT_DESTROY, notify_system_event_params_t(&destroy) );
 	}
-	
+
 	inline void ReportTeleportEvent( CBaseEntity *pEntity, const Vector &prevOrigin, const QAngle &prevAngles, bool physicsRotate )
 	{
 		notify_teleport_params_t teleport;
@@ -334,7 +334,7 @@ public:
 		teleport.physicsRotate = physicsRotate;
 		ReportSystemEvent( pEntity, NOTIFY_EVENT_TELEPORT, notify_system_event_params_t(&teleport) );
 	}
-	
+
 	// Remove this entity from the notify list
 	virtual void ClearEntity( CBaseEntity *pNotify ) = 0;
 };

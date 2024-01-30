@@ -63,7 +63,7 @@ void CViewConeImage::SetColor( int r, int g, int b )
 // NOTE: This function looks for the key values 'material' and 'color'
 // and uses them to set up the material + modulation color of the image
 //-----------------------------------------------------------------------------
-bool InitializeViewConeImage( KeyValues *pInitData, const char* pSectionName, 
+bool InitializeViewConeImage( KeyValues *pInitData, const char* pSectionName,
 	vgui::Panel *pParent, CViewConeImage* pViewConeImage )
 {
 	KeyValues *pViewConeImageSection;
@@ -80,4 +80,3 @@ bool InitializeViewConeImage( KeyValues *pInitData, const char* pSectionName,
 
 	return pViewConeImage->Init( pParent, pViewConeImageSection );
 }
-

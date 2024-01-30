@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -16,7 +16,7 @@
 #include "ivrenderview.h"
 
 
-// These are set as it draws reflections, refractions, etc, so certain effects can avoid 
+// These are set as it draws reflections, refractions, etc, so certain effects can avoid
 // drawing themselves in reflections.
 enum DrawFlags_t
 {
@@ -75,8 +75,8 @@ public:
 	virtual void		Shutdown( void ) = 0;
 
 	// RENDERING
-	// Called right before simulation. It must setup the view model origins and angles here so 
-	// the correct attachment points can be used during simulation.	
+	// Called right before simulation. It must setup the view model origins and angles here so
+	// the correct attachment points can be used during simulation.
 	virtual void		OnRenderStart() = 0;
 
 	// Called to render the entire scene

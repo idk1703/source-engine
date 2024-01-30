@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -53,7 +53,7 @@ ImageBorder::~ImageBorder()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ImageBorder::SetImage(const char *imageName)
 {
@@ -71,11 +71,11 @@ void ImageBorder::SetImage(const char *imageName)
 		Q_snprintf( m_pszImageName, len, "vgui/%s", imageName );
 
 		g_pSurface->DrawSetTextureFile( m_iTextureID, m_pszImageName, true, false);
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ImageBorder::SetInset(int left,int top,int right,int bottom)
 {
@@ -86,7 +86,7 @@ void ImageBorder::SetInset(int left,int top,int right,int bottom)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ImageBorder::GetInset(int& left,int& top,int& right,int& bottom)
 {
@@ -97,7 +97,7 @@ void ImageBorder::GetInset(int& left,int& top,int& right,int& bottom)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ImageBorder::Paint(int x, int y, int wide, int tall)
 {
@@ -141,7 +141,7 @@ void ImageBorder::Paint(int x, int y, int wide, int tall, int breakSide, int bre
 				verts[2].Init( Vector2D( x+imageWide, y+imageTall ), uv22 );
 				verts[3].Init( Vector2D( x, y+imageTall ), uv12  );
 
-				g_pSurface->DrawTexturedPolygon( 4, verts );	
+				g_pSurface->DrawTexturedPolygon( 4, verts );
 
 				x += imageWide;
 			}
@@ -157,14 +157,14 @@ void ImageBorder::Paint(int x, int y, int wide, int tall, int breakSide, int bre
 		verts[2].Init( Vector2D( x+wide, y+tall ), uv22 );
 		verts[3].Init( Vector2D( x, y+tall ), uv12  );
 
-		g_pSurface->DrawTexturedPolygon( 4, verts );	
+		g_pSurface->DrawTexturedPolygon( 4, verts );
 	}
 
 	g_pSurface->DrawSetTexture(0);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ImageBorder::Paint(VPANEL panel)
 {
@@ -175,7 +175,7 @@ void ImageBorder::Paint(VPANEL panel)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ImageBorder::ApplySchemeSettings(IScheme *pScheme, KeyValues *inResourceData)
 {
@@ -214,10 +214,9 @@ void ImageBorder::SetName(const char *name)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 IBorder::backgroundtype_e ImageBorder::GetBackgroundType()
 {
 	return m_eBackgroundType;
 }
-

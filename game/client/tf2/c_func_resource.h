@@ -54,4 +54,3 @@ public:
 };
 
 #endif // C_FUNC_RESOURCE_H
-

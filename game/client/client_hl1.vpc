@@ -25,7 +25,7 @@ $Project "Client (HL1)"
 		-$File	"geiger.cpp"
 		-$File	"history_resource.cpp"
 		-$File	"train.cpp"
-		
+
 		$File	"c_team_objectiveresource.cpp"
 		$File	"c_team_objectiveresource.h"
 		$File	"hud_chat.cpp"

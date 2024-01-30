@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,7 +10,7 @@
 #include "cmdlib.h"
 #include "zip_utils.h"
 
-class CBSPPack : public IBSPPack 
+class CBSPPack : public IBSPPack
 {
 public:
 	void LoadBSPFile( IFileSystem *pFileSystem, char *filename );
@@ -29,10 +29,10 @@ public:
 void CBSPPack::LoadBSPFile( IFileSystem *pFileSystem, char *filename )
 {
 	MathLib_Init( 2.2f, 2.2f, 0.0f, 2.0f );
-	
+
 	// This is shady, but the engine is the only client here and we want the same search paths it has.
 	g_pFileSystem = g_pFullFileSystem = pFileSystem;
-	
+
 	::LoadBSPFile( filename );
 }
 
@@ -65,11 +65,11 @@ void CBSPPack::SetHDRMode( bool bHDR )
 	::SetHDRMode( bHDR );
 }
 
-bool CBSPPack::SwapBSPFile( 
-IFileSystem			*pFileSystem, 
-const char			*filename, 
-const char			*swapFilename, 
-bool				bSwapOnLoad, 
+bool CBSPPack::SwapBSPFile(
+IFileSystem			*pFileSystem,
+const char			*filename,
+const char			*swapFilename,
+bool				bSwapOnLoad,
 VTFConvertFunc_t	pVTFConvertFunc,
 VHVFixupFunc_t		pVHVFixupFunc,
 CompressFunc_t		pCompressFunc )
@@ -109,4 +109,3 @@ bool CBSPPack::GetBSPDependants( IFileSystem *pFileSystem, const char *pBSPFilen
 }
 
 EXPOSE_SINGLE_INTERFACE( CBSPPack, IBSPPack, IBSPPACK_VERSION_STRING );
-

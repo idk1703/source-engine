@@ -21,7 +21,7 @@ struct UpgradeAttribBlock_t
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CUpgrades : public CBaseTrigger, public CGameEventListener
 {

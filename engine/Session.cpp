@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -350,7 +350,7 @@ void CSession::CancelCreateSession()
 // Purpose: Close an existing session
 //-----------------------------------------------------------------------------
 void CSession::DestroySession()
-{	
+{
 	// TODO: Make this async
 	uint ret = g_pXboxSystem->DeleteSession( m_hSession, false );
 	if ( ret != ERROR_SUCCESS )
@@ -494,7 +494,7 @@ void CSession::RunFrame()
  	case SESSION_STATE_CREATING:
 		UpdateCreating();
  		break;
- 
+
 	case SESSION_STATE_REGISTERING:
 		UpdateRegistering();
 		break;
@@ -552,7 +552,7 @@ void CSession::SetSessionSlots(unsigned int nSlot, unsigned int nPlayers)
 }
 unsigned int CSession::GetSessionSlots( unsigned int nSlot )
 {
-	Assert( nSlot < SLOTS_LAST ); 
+	Assert( nSlot < SLOTS_LAST );
 	return m_nPlayerSlots[nSlot];
 }
 void CSession::SetSessionFlags( uint flags )
@@ -608,4 +608,3 @@ double CSession::GetTime()
 {
 	return Plat_FloatTime();
 }
-

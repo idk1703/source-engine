@@ -26,14 +26,14 @@ void RecvProxy_IntToColor32( const CRecvProxyData *pData, void *pStruct, void *p
 void RecvProxy_IntSubOne( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
 	int *pInt = (int *)pOut;
-	
+
 	*pInt = pData->m_Value.m_Int - 1;
 }
 
 void RecvProxy_ShortSubOne( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
 	short *pInt = (short *)pOut;
-	
+
 	*pInt = pData->m_Value.m_Int - 1;
 }
 
@@ -72,15 +72,15 @@ void RecvProxy_IntToModelIndex32_BackCompatible( const CRecvProxyData *pData, vo
 //  packet (except for the world).
 // So instead, we remember which ehandles need to be set and we set them after all network data has
 //  been received.  Sigh.
-// Input  : *pData - 
-//			*pStruct - 
-//			*pOut - 
+// Input  : *pData -
+//			*pStruct -
+//			*pOut -
 //-----------------------------------------------------------------------------
 
 void RecvProxy_IntToEHandle( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
 	CBaseHandle *pEHandle = (CBaseHandle*)pOut;
-	
+
 	if ( pData->m_Value.m_Int == INVALID_NETWORKED_EHANDLE_VALUE )
 	{
 		*pEHandle = INVALID_EHANDLE_INDEX;
@@ -89,14 +89,14 @@ void RecvProxy_IntToEHandle( const CRecvProxyData *pData, void *pStruct, void *p
 	{
 		int iEntity = pData->m_Value.m_Int & ((1 << MAX_EDICT_BITS) - 1);
 		int iSerialNum = pData->m_Value.m_Int >> MAX_EDICT_BITS;
-		
+
 		pEHandle->Init( iEntity, iSerialNum );
 	}
 }
 
 RecvProp RecvPropEHandle(
-	const char *pVarName, 
-	int offset, 
+	const char *pVarName,
+	int offset,
 	int sizeofVar,
 	RecvVarProxyFn proxyFn )
 {
@@ -105,8 +105,8 @@ RecvProp RecvPropEHandle(
 
 
 RecvProp RecvPropBool(
-	const char *pVarName, 
-	int offset, 
+	const char *pVarName,
+	int offset,
 	int sizeofVar )
 {
 	Assert( sizeofVar == sizeof( bool ) );
@@ -153,9 +153,9 @@ void RecvProxy_InterpolationAmountChanged( const CRecvProxyData *pData, void *pS
 //-----------------------------------------------------------------------------
 // Purpose: Decodes a time value
 // Input  : *pStruct - ( C_BaseEntity * ) used to flag animtime is changine
-//			*pVarData - 
-//			*pIn - 
-//			objectID - 
+//			*pVarData -
+//			*pIn -
+//			objectID -
 //-----------------------------------------------------------------------------
 static void RecvProxy_Time( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
@@ -177,14 +177,14 @@ static void RecvProxy_Time( const CRecvProxyData *pData, void *pStruct, void *pO
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pVarName - 
-//			sizeofVar - 
+// Purpose:
+// Input  : *pVarName -
+//			sizeofVar -
 // Output : RecvProp
 //-----------------------------------------------------------------------------
 RecvProp RecvPropTime(
-	const char *pVarName, 
-	int offset, 
+	const char *pVarName,
+	int offset,
 	int sizeofVar/*=SIZEOF_IGNORE*/ )
 {
 //	return RecvPropInt( pVarName, offset, sizeofVar, 0, RecvProxy_Time );
@@ -199,9 +199,9 @@ RecvProp RecvPropTime(
 //  packet (except for the world).
 // So instead, we remember which ehandles need to be set and we set them after all network data has
 //  been received.  Sigh.
-// Input  : *pData - 
-//			*pStruct - 
-//			*pOut - 
+// Input  : *pData -
+//			*pStruct -
+//			*pOut -
 //-----------------------------------------------------------------------------
 #if !defined( NO_ENTITY_PREDICTION )
 static void RecvProxy_IntToPredictableId( const CRecvProxyData *pData, void *pStruct, void *pOut )
@@ -212,14 +212,14 @@ static void RecvProxy_IntToPredictableId( const CRecvProxyData *pData, void *pSt
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pVarName - 
-//			sizeofVar - 
+// Purpose:
+// Input  : *pVarName -
+//			sizeofVar -
 // Output : RecvProp
 //-----------------------------------------------------------------------------
 RecvProp RecvPropPredictableId(
-	const char *pVarName, 
-	int offset, 
+	const char *pVarName,
+	int offset,
 	int sizeofVar/*=SIZEOF_IGNORE*/ )
 {
 	return RecvPropInt( pVarName, offset, sizeofVar, 0, RecvProxy_IntToPredictableId );

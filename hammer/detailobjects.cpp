@@ -41,9 +41,9 @@ bool DetailObjects::s_bBuildDetailObjects = true;
 
 // Defaults to match the parsing defaults in ParseDetailGroup -- code path defaults may/may not execute
 DetailObjects::~DetailObjects()
-{ 
+{
 	m_DetailModels.PurgeAndDeleteElements();
-	m_DetailSprites.PurgeAndDeleteElements(); 
+	m_DetailSprites.PurgeAndDeleteElements();
 }
 
 DetailObjects::DetailModel_t::DetailModel_t() : m_ModelName()
@@ -73,7 +73,7 @@ void DetailObjects::ParseDetailGroup( int detailId, KeyValues* pGroupKeyValues )
 {
 	// Sort the group by alpha
 	float alpha = pGroupKeyValues->GetFloat( "alpha", 1.0f );
-	
+
 	int iGroup = s_DetailObjectDict[detailId].m_Groups.Count();
 	while ( --iGroup >= 0 )
 	{
@@ -122,18 +122,18 @@ void DetailObjects::ParseDetailGroup( int detailId, KeyValues* pGroupKeyValues )
 						}
 						else
 							model.m_Type = DETAIL_PROP_TYPE_SPRITE;
-					}					
+					}
 					else
 					{
 						// card sprite
-                        model.m_Type = DETAIL_PROP_TYPE_SPRITE;
+	model.m_Type = DETAIL_PROP_TYPE_SPRITE;
 					}
 
 					model.m_Tex[0].Init();
 					model.m_Tex[1].Init();
 
 					float x = 0, y = 0, flWidth = 64, flHeight = 64, flTextureSize = 512;
-					int nValid = sscanf( pSpriteData, "%f %f %f %f %f", &x, &y, &flWidth, &flHeight, &flTextureSize ); 
+					int nValid = sscanf( pSpriteData, "%f %f %f %f %f", &x, &y, &flWidth, &flHeight, &flTextureSize );
 					if ( (nValid != 5) || (flTextureSize == 0) )
 					{
 						Error( "Invalid arguments to \"sprite\" in detail.vbsp (model %s)!\n", model.m_ModelName.String() );
@@ -256,7 +256,7 @@ const char *DetailObjects::FindDetailVBSPName( void )
 		if ( !strcmp( pEntity, "worldspawn" ) )
 		{
 			const char *pDetailVBSP = ValueForKey( &entities[i], "detailvbsp" );
-			if ( !pDetailVBSP || !pDetailVBSP[0] ) 
+			if ( !pDetailVBSP || !pDetailVBSP[0] )
 			{
 				pDetailVBSP = "detail.vbsp";
 			}
@@ -360,7 +360,7 @@ void DetailObjects::AddDetailModelToFace( const char* pModelName, const Vector& 
 //-----------------------------------------------------------------------------
 
 void DetailObjects::AddDetailSpriteToFace( const Vector &vecOrigin, const QAngle &vecAngles, DetailModel_t const& model, float flScale )
-{	
+{
 	CSpriteModel	*pSpriteModel = new CSpriteModel;
 	m_DetailSprites.AddToTail(pSpriteModel);
 
@@ -399,7 +399,7 @@ void DetailObjects::PlaceDetail( DetailModel_t const& model, const Vector& pt, c
 	// If it's between min + max, flip a coin...
 	if (cosAngle < model.m_MinCosAngle)
 	{
-		float probability = (cosAngle - model.m_MaxCosAngle) / 
+		float probability = (cosAngle - model.m_MaxCosAngle) /
 			(model.m_MinCosAngle - model.m_MaxCosAngle);
 
 		float t = rand() / (float)VALVE_RAND_MAX;
@@ -457,7 +457,7 @@ void DetailObjects::PlaceDetail( DetailModel_t const& model, const Vector& pt, c
 	default:
 		{
 			float flScale = 1.0f;
-			if ( model.m_flRandomScaleStdDev != 0.0f ) 
+			if ( model.m_flRandomScaleStdDev != 0.0f )
 			{
 				flScale = fabs( RandomGaussianFloat( 1.0f, model.m_flRandomScaleStdDev ) );
 			}
@@ -477,7 +477,7 @@ void DetailObjects::EmitDetailObjectsOnFace( CMapFace *pMapFace, DetailObject_t&
 	// See how many points define this particular face
 	int	nPoints = pMapFace->GetPointCount();
 
-	// Faces with detail props need at least 3 point to form a plane 
+	// Faces with detail props need at least 3 point to form a plane
 	if (nPoints < 3)
 		return;
 
@@ -506,7 +506,7 @@ void DetailObjects::EmitDetailObjectsOnFace( CMapFace *pMapFace, DetailObject_t&
 
 		// Calculate the detail prop density based on the expected density and the tesselated triangle area
 		int numSamples = clamp( area * detail.m_Density * 0.000001, 0, MAX_DETAIL_SPRITES_PER_FACE );
-		
+
 		// For each possible sample, attempt to randomly place a detail object there
 		for (int j = 0; j < numSamples; ++j )
 		{
@@ -575,7 +575,7 @@ float DetailObjects::ComputeDisplacementFaceArea( CMapFace *pMapFace )
 //-----------------------------------------------------------------------------
 // Places Detail Objects on a face
 //-----------------------------------------------------------------------------
-void DetailObjects::EmitDetailObjectsOnDisplacementFace( CMapFace *pMapFace, 
+void DetailObjects::EmitDetailObjectsOnDisplacementFace( CMapFace *pMapFace,
 						DetailObject_t& detail )
 {
 	assert(pMapFace->GetPointCount() == 4);
@@ -636,7 +636,7 @@ void	DetailObjects::BuildAnyDetailObjects(CMapFace *pMapFace)
 	// Ignore this call while loading the VMF or else we'll generate a lot of redundant ones.
 	if ( !s_bBuildDetailObjects )
 		return;
-		
+
 	if ( pMapFace->IsCordonFace() )
 		return;
 
@@ -667,7 +667,7 @@ void	DetailObjects::BuildAnyDetailObjects(CMapFace *pMapFace)
 	if ( pMapFace->m_pDetailObjects )
 	{
 		pDetails->m_DetailModels.PurgeAndDeleteElements();
-		pDetails->m_DetailSprites.PurgeAndDeleteElements(); 
+		pDetails->m_DetailSprites.PurgeAndDeleteElements();
 	}
 	else
 	{

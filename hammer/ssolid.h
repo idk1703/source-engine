@@ -128,7 +128,7 @@ class CSSVertex : public C2DHandle
 		CSSVertex();
 		~CSSVertex();
 		void GetPosition(Vector& Position);
-		
+
 		Vector pos;	// Position.
 
 		DWORD id;
@@ -195,7 +195,7 @@ class CSSolid
 		void DeleteFace(int);
 		void DeleteVertex(int);
 		void DeleteEdge(int);
-		
+
 		SSHANDLE * MergeSameVertices(int& nDeleted);
 		BOOL CanMergeVertices();
 
@@ -204,7 +204,7 @@ class CSSolid
 		CSSEdge* AddEdge(int* = NULL);
 		CSSVertex* AddVertex(int* = NULL);
 
-		// get the index to the vertex at this point - 
+		// get the index to the vertex at this point -
 		//  return -1 if no matching vertex.
 		int GetVertexIndex(const Vector &Point, float fLeniency = 0.0f);
 		// ditto for edge
@@ -215,13 +215,13 @@ class CSSolid
 
 		SSHANDLE GetNewID();
 		void CalcEdgeCenter(CSSEdge *pEdge);
-		CSSEdge ** FindAffectedEdges(SSHANDLE *pHandles, int iNumHandles, 
+		CSSEdge ** FindAffectedEdges(SSHANDLE *pHandles, int iNumHandles,
 								int& iNumEdges);
 		Vector * CreatePointList(CSSFace & face);
 		PINT CreatePointIndexList(CSSFace & face, PINT piPoints = NULL);
 		SSHANDLE* CreatePointHandleList(CSSFace & face, SSHANDLE* phPoints = NULL);
 		void SetVertexPosition(int iVertex, float x, float y, float z);
-		SSHANDLE* CreateNewVertexList(CSSFace *pFace, CSSEdge *pEdge1, 
+		SSHANDLE* CreateNewVertexList(CSSFace *pFace, CSSEdge *pEdge1,
 										   CSSEdge *pEdge2, int& nv1index, int& nv2index,
 										   CSSVertex *pNewVertex1, CSSVertex *pNewVertex2);
 		void ShowHandles(BOOL bShowVertices, BOOL bShowEdges);

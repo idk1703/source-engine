@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -66,7 +66,7 @@ void CWalkerMiniStrider::Precache()
 
 void CWalkerMiniStrider::Spawn()
 {
-	SpawnWalker( 
+	SpawnWalker(
 		WALKER_MINI_STRIDER_MODEL,	// Model name.
 		OBJ_WALKER_MINI_STRIDER,	// Object type.
 		Vector( 0, 0, 140 ) + Vector( -100, -100, -100 ), // Placement dimensions.
@@ -127,7 +127,7 @@ void CWalkerMiniStrider::StartFiringLargeGun()
 
 	// Figure out what we're shooting at.
 	Vector vSrc = GetLargeGunShootOrigin();
-	
+
 	Vector vEyePos = pPlayer->EyePosition();
 	Vector vEyeForward;
 	AngleVectors( pPlayer->LocalEyeAngles(), &vEyeForward );
@@ -148,10 +148,10 @@ void CWalkerMiniStrider::StartFiringLargeGun()
 			m_vLargeGunTargetPos = trace.endpos;
 			m_flLargeGunCountdown = LARGE_GUN_FIRE_TIME;
 			m_bFiringLargeGun = true;
-			
+
 			// Show an energy beam until we actually shoot.
 			m_pEnergyBeam = CBeam::BeamCreate( "sprites/physbeam.vmt", 25 );
-			m_pEnergyBeam->SetColor( 255, 0, 0 ); 
+			m_pEnergyBeam->SetColor( 255, 0, 0 );
 			m_pEnergyBeam->SetBrightness( 100 );
 			m_pEnergyBeam->SetNoise( 4 );
 			m_pEnergyBeam->PointsInit( vSrc, m_vLargeGunTargetPos );
@@ -206,9 +206,9 @@ void CWalkerMiniStrider::UpdateLargeGun()
 
 				CPASFilter filter( vHitPos );
 				te->Explosion( filter, 0.0,
-					&vHitPos, 
+					&vHitPos,
 					g_sModelIndexFireball,
-					2.0, 
+					2.0,
 					15,
 					TE_EXPLFLAG_NONE,
 					flDamageRadius,
@@ -294,15 +294,15 @@ void CWalkerMiniStrider::FireMachineGun()
 		vecAngles[YAW] = GetAbsAngles()[YAW];
 		AngleVectors( vecAngles, &vEyeForward );
 
-		// Trace ahead to find out where the crosshair is aiming 
+		// Trace ahead to find out where the crosshair is aiming
 		trace_t trace;
 		float flMaxRange = tf_skirmisher_machinegun_range.GetFloat();
-		UTIL_TraceLine( 
-			vEyePos, 
+		UTIL_TraceLine(
+			vEyePos,
 			vEyePos + vEyeForward * flMaxRange,
-			MASK_SOLID, 
-			this, 
-			COLLISION_GROUP_NONE, 
+			MASK_SOLID,
+			this,
+			COLLISION_GROUP_NONE,
 			&trace );
 
 		Vector vecDir;
@@ -317,15 +317,15 @@ void CWalkerMiniStrider::FireMachineGun()
 		}
 
 		// Shoot!
-		TFGameRules()->FireBullets( CTakeDamageInfo( this, pDriver, tf_skirmisher_machinegun_damage.GetFloat(), DMG_BULLET ), 
+		TFGameRules()->FireBullets( CTakeDamageInfo( this, pDriver, tf_skirmisher_machinegun_damage.GetFloat(), DMG_BULLET ),
 			1,						// Num shots
-			vAttachmentPos, 
-			vecDir, 
+			vAttachmentPos,
+			vecDir,
 			VECTOR_CONE_3DEGREES,	// Spread
 			flMaxRange,				// Range
 			DMG_BULLET,
 			1,						// Tracer freq
-			entindex(), 
+			entindex(),
 			iAttachment,			// Attachment ID
 			"MinigunTracer" );
 
@@ -396,7 +396,7 @@ void CWalkerMiniStrider::WalkerThink()
 			FireMachineGun();
 		}
 	}
-	
+
 	UpdateLargeGun();
 
 	// Move our torso within range of our feet.
@@ -406,28 +406,28 @@ void CWalkerMiniStrider::WalkerThink()
 
 		//NDebugOverlay::EntityBounds( this, 255, 100, 0, 0 ,0 );
 		//NDebugOverlay::Line( vCenter, vCenter-Vector(0,0,2000), 255,0,0, true, 0 );
-		
+
 		trace_t trace;
-		UTIL_TraceLine( 
-			vCenter, 
+		UTIL_TraceLine(
+			vCenter,
 			vCenter - Vector( 0, 0, 2000 ),
-			MASK_SOLID_BRUSHONLY, 
-			this, 
-			COLLISION_GROUP_NONE, 
+			MASK_SOLID_BRUSHONLY,
+			this,
+			COLLISION_GROUP_NONE,
 			&trace );
 
 		if ( trace.fraction < 1 )
 		{
 			m_flWantedZ = trace.endpos.z + m_flOriginToLowestLegHeight;
 		}
-		
+
 		// Move our Z towards the wanted Z.
 		if ( m_flWantedZ != -1 )
 		{
 			Vector vCur = vCenter;
 			vCur.z = Approach( m_flWantedZ, vCur.z, STRIDER_TORSO_VERTICAL_SLIDE_SPEED * dt );
 			SetAbsOrigin( GetAbsOrigin() + Vector( 0, 0, vCur.z - vCenter.z ) );
-		}		
+		}
 	}
 }
 
@@ -441,7 +441,7 @@ void CWalkerMiniStrider::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE
 	CBaseTFPlayer *pPlayer = dynamic_cast<CBaseTFPlayer*>(pActivator);
 	if ( !pPlayer || !InSameTeam( pPlayer ) )
 		return;
-	
+
 	// Ok, put them in the driver role.
 	AttemptToBoardVehicle( pPlayer );
 }
@@ -467,7 +467,7 @@ Vector CWalkerMiniStrider::GetWalkerLocalMovement()
 	AngleVectors( GetLocalAngles(), &vForward, &vRight, NULL );
 
 	float flSpeed = (tf_skirmisher_speed.GetFloat() / 100) * dt;
-	Vector vMovement = 
+	Vector vMovement =
 		vForward * (GetSteerVelocity().x * flSpeed) +
 		vRight * (GetSteerVelocity().y * flSpeed);
 

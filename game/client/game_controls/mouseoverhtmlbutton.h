@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,7 +37,7 @@ public:
 
 	void SetClass(int pClass, int index) { m_iClass = pClass; m_iIndex = index;}
 	int GetClass() { return m_iClass; }
-	
+
 	void SetAddHotKey( bool state ) { m_bAddShortCut = state; }
 
 	void SetPage( const char *page )
@@ -52,7 +52,7 @@ public:
 		}
 	}
 
-	void SetHTML( vgui::HTML *html) 
+	void SetHTML( vgui::HTML *html)
 	{
 		m_pHTML = html;
 	}
@@ -60,7 +60,7 @@ public:
 
 private:
 
-	virtual void OnCursorEntered() 
+	virtual void OnCursorEntered()
 	{
 		Button::OnCursorEntered();
 		if ( m_pHTML && strlen(m_sPage) > 0 )

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -36,14 +36,14 @@ private:
 	MESSAGE_FUNC( OnOpen, "Open" );
 	MESSAGE_FUNC( OnError, "Error" );
 	MESSAGE_FUNC_PARAMS( OnCompare, "compare", data );
-	MESSAGE_FUNC_CHARPTR( OnFileSelected, "FileSelected", fullpath );		
-	
+	MESSAGE_FUNC_CHARPTR( OnFileSelected, "FileSelected", fullpath );
+
 	void CVGuiTestPanel::MiniDumpCompare( CUtlVector<HANDLE> *pMiniDumpHandles );
 
 	vgui::MenuBar *m_pMenuBar;
 	vgui::Panel *m_pClientArea;
 
-//	void OnFileSelected( const char * filename );	
+//	void OnFileSelected( const char * filename );
 };
 
 
@@ -63,17 +63,17 @@ vgui::Panel *CreateVGuiTestPanel( const char *pName )
 //-----------------------------------------------------------------------------
 CVGuiTestPanel::CVGuiTestPanel( vgui::Panel *pParent, const char *pName ) : BaseClass( NULL, pName )
 {
-	
+
 	// Create the menu bar
 	m_pMenuBar = new vgui::MenuBar( this, "Main Menu Bar" );
 	m_pMenuBar->SetSize( 10, 28 );
 
 	// Create a test menu
- 	Menu *pFileMenu = new Menu(NULL, "File");
+	Menu *pFileMenu = new Menu(NULL, "File");
 	pFileMenu->AddMenuItem( "&Open", new KeyValues( "Open" ), this );
 	m_pMenuBar->AddMenu( "&File", pFileMenu );
 
-    Menu *pErrorMenu = new Menu(NULL, "Error");
+	Menu *pErrorMenu = new Menu(NULL, "Error");
 	pErrorMenu->AddMenuItem( "&Error", new KeyValues("Error"), this);
 	m_pMenuBar->AddMenu( "&Error", pErrorMenu );
 
@@ -101,7 +101,7 @@ void CVGuiTestPanel::OnError()
 	CMDErrorPanel *pPanel = new CMDErrorPanel( this, "MDError Panel" );
 	pPanel->Create();
 	pPanel->AddActionSignalTarget( this );
-	pPanel->DoModal();	
+	pPanel->DoModal();
 }
 
 
@@ -113,7 +113,7 @@ void CVGuiTestPanel::PerformLayout()
 	// Make the editor panel fill the space
 	int iWidth, iHeight;
 
-	vgui::VPANEL parent = GetParent() ? GetParent()->GetVPanel() : vgui::surface()->GetEmbeddedPanel(); 
+	vgui::VPANEL parent = GetParent() ? GetParent()->GetVPanel() : vgui::surface()->GetEmbeddedPanel();
 	vgui::ipanel()->GetSize( parent, iWidth, iHeight );
 	SetSize( iWidth, iHeight );
 	m_pMenuBar->SetSize( iWidth, 28 );
@@ -142,10 +142,9 @@ void CVGuiTestPanel::OnCompare( KeyValues *data )
 	pMiniDumpHandles->RemoveAll();
 }
 
-void CVGuiTestPanel::OnFileSelected( const char *filename ) 
+void CVGuiTestPanel::OnFileSelected( const char *filename )
 {
 	CMDModulePanel *pPanel = new CMDModulePanel( this, "MDModule Panel" );
 	pPanel->Create( filename );
 	pPanel->DoModal();
 }
-

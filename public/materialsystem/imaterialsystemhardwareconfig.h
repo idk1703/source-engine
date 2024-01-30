@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -148,7 +148,7 @@ public:
 	virtual bool SupportsColorOnSecondStream() const = 0;
 	virtual bool SupportsStaticPlusDynamicLighting() const = 0;
 
-	// Does our card have a hard time with fillrate 
+	// Does our card have a hard time with fillrate
 	// relative to other cards w/ the same dx level?
 	virtual bool PreferReducedFillrate() const = 0;
 

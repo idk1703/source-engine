@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -14,7 +14,7 @@
 #include "tier0/dbg.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 TokenReader::TokenReader(void)
 {
@@ -26,8 +26,8 @@ TokenReader::TokenReader(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszFilename - 
+// Purpose:
+// Input  : *pszFilename -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool TokenReader::Open(const char *pszFilename)
@@ -42,7 +42,7 @@ bool TokenReader::Open(const char *pszFilename)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TokenReader::Close()
 {
@@ -51,8 +51,8 @@ void TokenReader::Close()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *error - 
+// Purpose:
+// Input  : *error -
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *TokenReader::Error(char *error, ...)
@@ -66,9 +66,9 @@ const char *TokenReader::Error(char *error, ...)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszStore - 
-//			nSize - 
+// Purpose:
+// Input  : pszStore -
+//			nSize -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 trtoken_t TokenReader::GetString(char *pszStore, int nSize)
@@ -147,7 +147,7 @@ trtoken_t TokenReader::GetString(char *pszStore, int nSize)
 			//
 			ignore(1024, '\"');
 			*pszStore = '\0';
-			return TOKENSTRINGTOOLONG; 
+			return TOKENSTRINGTOOLONG;
 		}
 
 		//
@@ -229,7 +229,7 @@ trtoken_t TokenReader::NextToken(char *pszStore, int nSize)
 		Q_strncpy( pszStore, m_szStuffed, nSize );
 		return m_eStuffed;
 	}
-	
+
 	SkipWhiteSpace();
 
 	if (eof())
@@ -300,7 +300,7 @@ trtoken_t TokenReader::NextToken(char *pszStore, int nSize)
 				return TOKENERROR;
 			}
 		} while (isdigit(ch));
-		
+
 		//
 		// No identifier characters are allowed contiguous with numbers.
 		//
@@ -316,7 +316,7 @@ trtoken_t TokenReader::NextToken(char *pszStore, int nSize)
 		*pszStore = '\0';
 		return INTEGER;
 	}
- 
+
 	//
 	// Identifiers consist of a consecutive string of alphanumeric
 	// characters and underscores.
@@ -342,9 +342,9 @@ trtoken_t TokenReader::NextToken(char *pszStore, int nSize)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : ttype - 
-//			*pszToken - 
+// Purpose:
+// Input  : ttype -
+//			*pszToken -
 //-----------------------------------------------------------------------------
 void TokenReader::IgnoreTill(trtoken_t ttype, const char *pszToken)
 {
@@ -369,9 +369,9 @@ void TokenReader::IgnoreTill(trtoken_t ttype, const char *pszToken)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : ttype - 
-//			pszToken - 
+// Purpose:
+// Input  : ttype -
+//			pszToken -
 //-----------------------------------------------------------------------------
 void TokenReader::Stuff(trtoken_t eType, const char *pszToken)
 {
@@ -382,9 +382,9 @@ void TokenReader::Stuff(trtoken_t eType, const char *pszToken)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : ttype - 
-//			pszToken - 
+// Purpose:
+// Input  : ttype -
+//			pszToken -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool TokenReader::Expecting(trtoken_t ttype, const char *pszToken)
@@ -399,9 +399,9 @@ bool TokenReader::Expecting(trtoken_t ttype, const char *pszToken)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszStore - 
-// Output : 
+// Purpose:
+// Input  : pszStore -
+// Output :
 //-----------------------------------------------------------------------------
 trtoken_t TokenReader::PeekTokenType(char *pszStore, int maxlen )
 {
@@ -410,7 +410,7 @@ trtoken_t TokenReader::PeekTokenType(char *pszStore, int maxlen )
 		m_eStuffed = NextToken(m_szStuffed, sizeof(m_szStuffed));
 		m_bStuffed = true;
 	}
-	
+
 	if (pszStore)
 	{
 		Q_strncpy(pszStore, m_szStuffed, maxlen );
@@ -477,4 +477,3 @@ bool TokenReader::SkipWhiteSpace(void)
 		}
 	}
 }
-

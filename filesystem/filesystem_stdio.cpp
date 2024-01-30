@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -213,7 +213,7 @@ CBaseFileSystem *BaseFileSystem_Stdio( void )
 	return &g_FileSystem_Stdio;
 }
 #endif
- 
+
 #ifdef DEDICATED // "hack" to allow us to not export a stdio version of the FILESYSTEM_INTERFACE_VERSION anywhere
 
 IFileSystem *g_pFileSystem = &g_FileSystem_Stdio;
@@ -258,7 +258,7 @@ CFileSystem_Stdio::CFileSystem_Stdio()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFileSystem_Stdio::~CFileSystem_Stdio()
 {
@@ -276,7 +276,7 @@ CFileSystem_Stdio::~CFileSystem_Stdio()
 
 
 //-----------------------------------------------------------------------------
-// QueryInterface: 
+// QueryInterface:
 //-----------------------------------------------------------------------------
 void *CFileSystem_Stdio::QueryInterface( const char *pInterfaceName )
 {
@@ -293,7 +293,7 @@ void *CFileSystem_Stdio::QueryInterface( const char *pInterfaceName )
 bool CFileSystem_Stdio::GetOptimalIOConstraints( FileHandle_t hFile, unsigned *pOffsetAlign, unsigned *pSizeAlign, unsigned *pBufferAlign )
 {
 	unsigned sectorSize;
-	
+
 	if ( hFile && UseOptimalBufferAllocation() )
 	{
 		CFileHandle *fh = ( CFileHandle *)hFile;
@@ -363,7 +363,7 @@ void *CFileSystem_Stdio::AllocOptimalReadBuffer( FileHandle_t hFile, unsigned nS
 	else
 	{
 		// an invalid handle gets a fake "optimal" but valid buffer
-		// this path is for a caller that isn't doing i/o, 
+		// this path is for a caller that isn't doing i/o,
 		// but needs an "optimal" buffer that can end up passed to FreeOptimalReadBuffer()
 		sectorSize = 4;
 	}
@@ -564,9 +564,9 @@ char *CFileSystem_Stdio::FS_fgets( char *dest, int destSize, FILE *fp )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *path - 
-//			pmode - 
+// Purpose:
+// Input  : *path -
+//			pmode -
 // Output : int
 //-----------------------------------------------------------------------------
 int CFileSystem_Stdio::FS_chmod( const char *pathT, int pmode )
@@ -588,7 +588,7 @@ int CFileSystem_Stdio::FS_chmod( const char *pathT, int pmode )
 		{
 			rt=_chmod( caseFixedName, pmode );
 		}
-	}	
+	}
 #endif
 	return rt;
 }
@@ -683,7 +683,7 @@ int CFileSystem_Stdio::FS_stat( const char *pathT, struct _stat *buf, bool *pbLo
 {
 	if ( pbLoadedFromSteamCache )
 		*pbLoadedFromSteamCache = false;
-		
+
 	if ( !pathT )
 	{
 		return -1;
@@ -716,7 +716,7 @@ int CFileSystem_Stdio::FS_stat( const char *pathT, struct _stat *buf, bool *pbLo
 		{
 			rt = _stat( caseFixedName, buf );
 		}
-	}	
+	}
 #endif
 	return rt;
 }
@@ -754,7 +754,7 @@ bool CFileSystem_Stdio::FS_FindClose(HANDLE handle)
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 int CFileSystem_Stdio::FS_GetSectorSize( FILE *fp )
 {
@@ -818,7 +818,7 @@ void CFileSystem_Stdio::CancelWaitForResources( WaitForResourcesHandle_t handle 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFileSystem_Stdio::GetLocalCopy( const char *pFileName )
 {
@@ -826,7 +826,7 @@ void CFileSystem_Stdio::GetLocalCopy( const char *pFileName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CFileSystem_Stdio::HintResourceNeed( const char *hintlist, int forgetEverything )
 {
@@ -845,7 +845,7 @@ CStdioFile *CStdioFile::FS_fopen( const char *filenameT, const char *options, in
 	struct _stat buf;
 
 	V_strncpy( filename, filenameT, sizeof(filename) );
-	
+
 	// stop newline characters at end of filename
 	p = strchr( filename, '\n' );
 	if ( p )
@@ -858,7 +858,7 @@ CStdioFile *CStdioFile::FS_fopen( const char *filenameT, const char *options, in
 	pFile = fopen(filename, options);
 	if (pFile && size)
 	{
-		// todo: replace with filelength()? 
+		// todo: replace with filelength()?
 		int rt = _stat( filename, &buf );
 		if (rt == 0)
 		{
@@ -872,12 +872,12 @@ CStdioFile *CStdioFile::FS_fopen( const char *filenameT, const char *options, in
 		char caseFixedName[ MAX_PATH ];
 		bool found = findFileInDirCaseInsensitive_safe( filename, caseFixedName );
 		if ( found )
-		{	
+		{
 			pFile = fopen( caseFixedName, options );
 
 			if (pFile && size)
 			{
-				// todo: replace with filelength()? 
+				// todo: replace with filelength()?
 				struct _stat buf;
 				int rt = _stat( caseFixedName, &buf );
 				if (rt == 0)
@@ -894,7 +894,7 @@ CStdioFile *CStdioFile::FS_fopen( const char *filenameT, const char *options, in
 		bool bWriteable = false;
 		if ( strchr(options,'w') || strchr(options,'a') )
 			bWriteable = true;
-		
+
 #if defined POSIX
 		if ( bWriteable )
 		{
@@ -1112,7 +1112,7 @@ char *CStdioFile::FS_fgets( char *dest, int destSize )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 #ifdef _WIN32
 
@@ -1120,7 +1120,7 @@ ConVar filesystem_use_overlapped_io( "filesystem_use_overlapped_io", "1", 0, "" 
 #define UseOverlappedIO() filesystem_use_overlapped_io.GetBool()
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 int GetSectorSize( const char *pszFilename )
 {
@@ -1194,7 +1194,7 @@ int GetSectorSize( const char *pszFilename )
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 
 class CThreadIOEventPool
@@ -1236,7 +1236,7 @@ CThreadIOEventPool g_ThreadIOEvents;
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 bool CWin32ReadOnlyFile::CanOpen( const char *filename, const char *options )
 {
@@ -1244,7 +1244,7 @@ bool CWin32ReadOnlyFile::CanOpen( const char *filename, const char *options )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 
 static HANDLE OpenWin32File( const char *filename, bool bOverlapped, bool bUnbuffered, int64 *pFileSize )
@@ -1252,7 +1252,7 @@ static HANDLE OpenWin32File( const char *filename, bool bOverlapped, bool bUnbuf
 	HANDLE hFile;
 
 	DWORD createFlags = FILE_ATTRIBUTE_NORMAL;
-		
+
 	if ( bOverlapped )
 	{
 		createFlags |= FILE_FLAG_OVERLAPPED;
@@ -1357,7 +1357,7 @@ void CWin32ReadOnlyFile::FS_fseek( int64 pos, int seekType )
 //-----------------------------------------------------------------------------
 long CWin32ReadOnlyFile::FS_ftell()
 {
-	return m_ReadPos;	
+	return m_ReadPos;
 }
 
 //-----------------------------------------------------------------------------
@@ -1365,7 +1365,7 @@ long CWin32ReadOnlyFile::FS_ftell()
 //-----------------------------------------------------------------------------
 int CWin32ReadOnlyFile::FS_feof()
 {
-	return ( m_ReadPos >= m_Size );	
+	return ( m_ReadPos >= m_Size );
 }
 
 // ends up on a thread's stack, don't blindly increase without awareness of that implication
@@ -1435,7 +1435,7 @@ size_t CWin32ReadOnlyFile::FS_fread( void *dest, size_t destSize, size_t size )
 		}
 	}
 
-	OVERLAPPED overlapped = { 0 };	
+	OVERLAPPED overlapped = { 0 };
 	if ( m_bOverlapped )
 	{
 		pEvent = g_ThreadIOEvents.GetEvent();
@@ -1488,7 +1488,7 @@ size_t CWin32ReadOnlyFile::FS_fread( void *dest, size_t destSize, size_t size )
 				{
 					if ( GetLastError() == ERROR_HANDLE_EOF )
 					{
-						nBytesToRead = 0; // we have hit the end of the file					
+						nBytesToRead = 0; // we have hit the end of the file
 					}
 					else
 					{
@@ -1572,8 +1572,8 @@ size_t CWin32ReadOnlyFile::FS_fread( void *dest, size_t destSize, size_t size )
 //-----------------------------------------------------------------------------
 // Purpose: low-level filesystem wrapper
 //-----------------------------------------------------------------------------
-char *CWin32ReadOnlyFile::FS_fgets( char *dest, int destSize ) 
-{  
+char *CWin32ReadOnlyFile::FS_fgets( char *dest, int destSize )
+{
 	if ( FS_feof() )
 	{
 		return NULL;
@@ -1599,7 +1599,7 @@ char *CWin32ReadOnlyFile::FS_fgets( char *dest, int destSize )
 	}
 	m_ReadPos = nStartPos + ( pNewline - dest ) + 1;
 
-	return dest; 
+	return dest;
 }
 
 

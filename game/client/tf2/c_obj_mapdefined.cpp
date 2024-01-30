@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_ObjectMapDefined, DT_ObjectMapDefined, CObjectMapDefi
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectMapDefined::C_ObjectMapDefined()
 {

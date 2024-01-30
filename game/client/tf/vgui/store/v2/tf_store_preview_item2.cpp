@@ -24,7 +24,7 @@
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline float LerpScale( float flIn, float flInMin, float flInMax, float flOutMin, float flOutMax )
 {
@@ -37,7 +37,7 @@ inline float LerpScale( float flIn, float flInMin, float flInMax, float flOutMin
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline float SCurve( float t )
 {
@@ -46,7 +46,7 @@ inline float SCurve( float t )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFullscreenStorePreviewItem::CFullscreenStorePreviewItem( vgui::Panel *pParent, EditablePanel *pOwner )
 :	BaseClass( pParent, "FullscreenStorePreview" ),
@@ -121,7 +121,7 @@ void CFullscreenStorePreviewItem::ExitFullscreen()
 	{
 		m_pPlayerModelPanel->SetParent( m_hOwner.Get() );
 		m_pPlayerModelPanel->SetBounds( m_OldModelState.m_aPlayerModelPanelBounds[0], m_OldModelState.m_aPlayerModelPanelBounds[1], m_OldModelState.m_aPlayerModelPanelBounds[2], m_OldModelState.m_aPlayerModelPanelBounds[3] );
-		
+
 		// Reset the player position to it's pre-fullscreen location, but add on any zoom delta if needed.
 		const Vector vecZoomOffset = m_OldModelState.m_bZoomed != m_pPlayerModelPanel->IsZoomed() ? m_pPlayerModelPanel->GetZoomOffset() : vec3_origin;
 		m_pPlayerModelPanel->m_vecPlayerPos = m_OldModelState.m_vecPlayerPos + vecZoomOffset;
@@ -179,7 +179,7 @@ void CFullscreenStorePreviewItem::OnThink()
 		m_nLastMouseY = nMouseY;
 		m_flLastMouseMoveTime = gpGlobals->realtime;
 	}
-		
+
 	// Fade in the button blocker if the mouse has been idle for some period of time
 	if ( m_pOverlayPanel )
 	{
@@ -232,7 +232,7 @@ void CFullscreenStorePreviewItem::OnThink()
 		const Vector vecFullscreenOrigin( m_flModelPanelOriginX, m_flModelPanelOriginY, m_flModelPanelOriginZ );
 		m_pPlayerModelPanel->m_vecPlayerPos = Lerp( flFade, m_OldModelState.m_vecPlayerPos, vecFullscreenOrigin + vecZoomOffset );
 	}
-		
+
 	if ( m_pZoomButton )
 	{
 		m_pZoomButton->SetEnabled( flFade == 1.0f );
@@ -250,7 +250,7 @@ void CFullscreenStorePreviewItem::OnThink()
 		{
 			flDeltaAngle = gpGlobals->frametime * kScale;
 		}
-		
+
 		m_pPlayerModelPanel->RotateYaw( flDeltaAngle );
 
 		// Accumulate time rotation buttons are being pressed for stat tracking
@@ -289,11 +289,11 @@ void CFullscreenStorePreviewItem::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFStorePreviewItemPanel2::CTFStorePreviewItemPanel2( vgui::Panel *pParent, const char *pResFile, const char *pPanelName, CStorePage *pOwner )
 :	BaseClass( pParent, pResFile, "storepreviewitem", pOwner )
-{								   
+{
 	m_pScrollBar = new ScrollBar( this, "ScrollBar", true );
 	m_pScrollBar->AddActionSignalTarget( this );
 
@@ -312,12 +312,12 @@ CTFStorePreviewItemPanel2::CTFStorePreviewItemPanel2( vgui::Panel *pParent, cons
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::Clear()
 {
 	m_pPlayerModelPanel = NULL;
-	
+
 	m_pPreviewButton = NULL;
 	m_pDialogFrame = NULL;
 	m_pPreviewViewportBg = NULL;
@@ -349,7 +349,7 @@ void CTFStorePreviewItemPanel2::Clear()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -496,13 +496,13 @@ int CTFStorePreviewItemPanel2::PlaceControl( Panel *pParent, const char *pContro
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::PerformLayout( void )
 {
 //	BaseClass::PerformLayout();	// We override completely here
 
-	// center the icons (we need to redo some of the work of CStorePreviewItemPanel, because we 
+	// center the icons (we need to redo some of the work of CStorePreviewItemPanel, because we
 	// center the base item icons along with our TF specific class ones)
 	int iNumItemIcons = 0;
 	FOR_EACH_VEC( m_pItemIcons, i )
@@ -651,7 +651,7 @@ void CTFStorePreviewItemPanel2::PerformLayout( void )
 	m_nViewMaxHeight = 0;
 
 	PlaceControl( m_pDetailsViewChild, NULL, "ItemLevelInfoLabel", m_iSmallVerticalBreakSize, true );
-	
+
 	if ( m_bIsHalloweenOrFullmoonOnlyItem )
 	{
 		PlaceControl( m_pDetailsViewChild, "ItemLevelInfoLabel", "RestrictionsLabel", m_iMediumVerticalBreakSize, true );
@@ -677,9 +677,9 @@ void CTFStorePreviewItemPanel2::PerformLayout( void )
 	{
 		PlaceControl( m_pDetailsViewChild, "PriceLabel", "AttributesLabel", m_iBigVerticalBreakSize, true );
 	}
-	
+
 	PlaceControl( m_pDetailsViewChild, m_nNumAttribLinesAdded == 0 ? "PriceLabel" : "AttributesLabel", "ItemWikiPageButton", m_iBigVerticalBreakSize, true );
-	
+
 	PlaceControl( m_pDetailsViewChild, "ItemWikiPageButton", "TradableLabel", m_iBigVerticalBreakSize, true, false, false );
 	PlaceControl( m_pDetailsViewChild, "TradableLabel", "TradableTextLabel", m_iHorizontalBreakSize, false );
 	PlaceControl( m_pDetailsViewChild, "TradableLabel", "CraftableLabel", m_iSmallVerticalBreakSize, true );
@@ -702,7 +702,7 @@ void CTFStorePreviewItemPanel2::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::UpdateScrollableChild()
 {
@@ -712,7 +712,7 @@ void CTFStorePreviewItemPanel2::UpdateScrollableChild()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::OnCommand( const char *command )
 {
@@ -801,7 +801,7 @@ void CTFStorePreviewItemPanel2::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::OnClassIconSelected( KeyValues *data )
 {
@@ -809,7 +809,7 @@ void CTFStorePreviewItemPanel2::OnClassIconSelected( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::OnHideClassIconMouseover( void )
 {
@@ -817,7 +817,7 @@ void CTFStorePreviewItemPanel2::OnHideClassIconMouseover( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::OnShowClassIconMouseover( KeyValues *data )
 {
@@ -827,7 +827,7 @@ void CTFStorePreviewItemPanel2::OnShowClassIconMouseover( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::PreviewItemCopy( int iClass, CEconItemView *pItem, const econ_store_entry_t* pEntry )
 {
@@ -895,7 +895,7 @@ void CTFStorePreviewItemPanel2::PreviewItem( int iClass, CEconItemView *pItem, c
 			{
 				// Build a list of classes by which this item can be used
 				const CBitVec<LOADOUT_COUNT> *pbvClassUsability = pDef->GetClassUsability();
-				
+
 				const int kClassNamesSize = 512;
 				wchar_t wszClassNames[ kClassNamesSize ] = L"";
 				int nClassAdded = 0;
@@ -1065,12 +1065,12 @@ void CTFStorePreviewItemPanel2::PreviewItem( int iClass, CEconItemView *pItem, c
 			uint32 unCurrentTextStreamIndex = 0;
 			IScheme *pScheme = scheme()->GetIScheme( GetScheme() );
 			int iFontHeight = surface()->GetFontTall( m_pAttributesLabel->GetFont() );
-			
+
 			if ( m_pItemCollectionHighlight )
 			{
 				m_pItemCollectionHighlight->SetVisible( false );
 			}
-			
+
 			iReferenceItemHeight = iFontHeight;
 
 			int iAttributePanelX, iAttributePanelY;
@@ -1181,12 +1181,12 @@ void CTFStorePreviewItemPanel2::PreviewItem( int iClass, CEconItemView *pItem, c
 		const econ_store_entry_t *pStoreEntry = pPriceSheet->GetEntry( m_item.GetItemDefIndex() );
 		m_pPreviewButton->SetVisible( pStoreEntry && pStoreEntry->CanPreview() );
 	}
-	
+
 	m_pItemFullImage->InvalidateLayout();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::SetState( preview_state_t iState )
 {
@@ -1194,7 +1194,7 @@ void CTFStorePreviewItemPanel2::SetState( preview_state_t iState )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::UpdateIcons( void )
 {
@@ -1202,7 +1202,7 @@ void CTFStorePreviewItemPanel2::UpdateIcons( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::UpdatePlayerModelButtons()
 {
@@ -1218,7 +1218,7 @@ void CTFStorePreviewItemPanel2::UpdatePlayerModelButtons()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::SetPlayerModelVisible( bool bVisible )
 {
@@ -1236,7 +1236,7 @@ void CTFStorePreviewItemPanel2::SetPlayerModelVisible( bool bVisible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::SetCycleLabelText( vgui::Label *pTargetLabel, const char *pCycleText )
 {
@@ -1250,7 +1250,7 @@ void CTFStorePreviewItemPanel2::SetCycleLabelText( vgui::Label *pTargetLabel, co
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::OnNavButtonSelected( KeyValues *pData )
 {
@@ -1268,7 +1268,7 @@ void CTFStorePreviewItemPanel2::OnNavButtonSelected( KeyValues *pData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::OnExitFullscreen( KeyValues *pData )
 {
@@ -1283,7 +1283,7 @@ void CTFStorePreviewItemPanel2::OnExitFullscreen( KeyValues *pData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::OnTick( void )
 {
@@ -1291,7 +1291,7 @@ void CTFStorePreviewItemPanel2::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::OnMouseWheeled( int delta )
 {
@@ -1304,7 +1304,7 @@ void CTFStorePreviewItemPanel2::OnMouseWheeled( int delta )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::OnSliderMoved( int position )
 {
@@ -1313,7 +1313,7 @@ void CTFStorePreviewItemPanel2::OnSliderMoved( int position )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::OnThink()
 {
@@ -1324,7 +1324,7 @@ void CTFStorePreviewItemPanel2::OnThink()
 	// If the user clicks outside of the dialog frame, close the preview, like
 	// many web sites do on the internet.
 	bool bMouseDown = vgui::input()->IsMouseDown( MOUSE_LEFT );
-	
+
 	// User just clicked?
 	if ( !m_pFullscreenPanel || !m_pFullscreenPanel->IsFullscreenMode() )
 	{
@@ -1352,7 +1352,7 @@ void CTFStorePreviewItemPanel2::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel2::DoClose()
 {
@@ -1360,7 +1360,7 @@ void CTFStorePreviewItemPanel2::DoClose()
 	{
 		m_pFullscreenPanel->ExitFullscreen();
 	}
-	
+
 	OnClose();
 
 	SetVisible( false );

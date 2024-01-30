@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -33,7 +33,7 @@ class CVoiceTweakDlg : public CDialog
 public:
 				CVoiceTweakDlg(CWnd* pParent = NULL);	// standard constructor
 	virtual		~CVoiceTweakDlg();
-	
+
 	void		SetString(int childControl, int stringID);
 	void		Term();
 
@@ -69,7 +69,7 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
-	afx_msg LONG OnIdle(UINT a, LONG b);	
+	afx_msg LONG OnIdle(UINT a, LONG b);
 	afx_msg void OnDestroy();
 	afx_msg void OnHardwareGain();
 	virtual void OnCancel();

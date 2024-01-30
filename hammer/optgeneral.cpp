@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -31,7 +31,7 @@ END_MESSAGE_MAP()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 COPTGeneral::COPTGeneral(void) : CPropertyPage(COPTGeneral::IDD)
 {
@@ -44,7 +44,7 @@ COPTGeneral::COPTGeneral(void) : CPropertyPage(COPTGeneral::IDD)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 COPTGeneral::~COPTGeneral(void)
 {
@@ -101,8 +101,8 @@ void PASCAL DDV_AutosaveTimer(CDataExchange *pDX, int value)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pDX - 
+// Purpose:
+// Input  : pDX -
 //-----------------------------------------------------------------------------
 void COPTGeneral::DoDataExchange(CDataExchange* pDX)
 {
@@ -111,7 +111,7 @@ void COPTGeneral::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LOADWINPOSITIONS, m_cLoadWinPos);
 	DDX_Control(pDX, IDC_INDEPENDENTWINDOWS, m_cIndependentWin);
 	DDX_Control(pDX, IDC_UNDOSPIN, m_UndoSpin);
-	DDX_Text(pDX, IDC_UNDO, m_iUndoLevels);	
+	DDX_Text(pDX, IDC_UNDO, m_iUndoLevels);
 	DDX_Text(pDX, IDC_MAX_CAMERAS, m_nMaxCameras);
 	DDX_Check(pDX, IDC_STRETCH_ARCH, Options.general.bStretchArches);
 	DDX_Check(pDX, IDC_GROUPWHILEIGNOREGROUPS, Options.general.bGroupWhileIgnore);
@@ -121,9 +121,9 @@ void COPTGeneral::DoDataExchange(CDataExchange* pDX)
 	DDV_MaxCameras( pDX, m_nMaxCameras );
 	DDX_Control(pDX, IDC_ENABLEAUTOSAVE, m_cEnableAutosave);
 	DDX_Check(pDX, IDC_ENABLEAUTOSAVE, Options.general.bEnableAutosave);
-	DDX_Text(pDX, IDC_MAPITERATIONS, m_iMaxAutosavesPerMap);	
-	DDX_Text(pDX, IDC_AUTOSAVESPACE, m_iMaxAutosaveSpace);	
-	DDX_Text(pDX, IDC_SAVETIME, m_iTimeBetweenSaves);	
+	DDX_Text(pDX, IDC_MAPITERATIONS, m_iMaxAutosavesPerMap);
+	DDX_Text(pDX, IDC_AUTOSAVESPACE, m_iMaxAutosaveSpace);
+	DDX_Text(pDX, IDC_SAVETIME, m_iTimeBetweenSaves);
 	DDX_Control(pDX, IDC_AUTOSAVEDIR, m_cAutosaveDir);
 	DDX_Control(pDX, IDC_AUTOSAVETIMELABEL, m_cAutosaveTimeLabel);
 	DDX_Control(pDX, IDC_SAVETIME, m_cAutosaveTime);
@@ -132,19 +132,19 @@ void COPTGeneral::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_AUTOSAVEITERATIONLABEL, m_cAutosaveIterationLabel);
 	DDX_Control(pDX, IDC_MAPITERATIONS,	m_cAutosaveIterations);
 	DDX_Control(pDX, IDC_AUTOSAVEDIRECTORYLABEL, m_cAutosaveDirectoryLabel);
-    DDX_Control(pDX, IDC_BROWSEAUTOSAVEDIR, m_cAutosaveBrowseButton);
-	
+	DDX_Control(pDX, IDC_BROWSEAUTOSAVEDIR, m_cAutosaveBrowseButton);
+
 	DDV_AutosaveSpace( pDX, m_iMaxAutosaveSpace );
 	DDV_NumberAutosaves( pDX, m_iMaxAutosavesPerMap );
 	DDV_AutosaveTimer( pDX, m_iTimeBetweenSaves );
 	DDX_Check(pDX, IDC_VGUI_MODELBROWSER, Options.general.bUseVGUIModelBrowser);
-	//}}AFX_DATA_MAP		
-	
+	//}}AFX_DATA_MAP
+
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL COPTGeneral::OnInitDialog(void)
@@ -157,11 +157,11 @@ BOOL COPTGeneral::OnInitDialog(void)
 	m_iUndoLevels = Options.general.iUndoLevels;
 	m_iMaxAutosavesPerMap = Options.general.iMaxAutosavesPerMap;
 	m_iMaxAutosaveSpace = Options.general.iMaxAutosaveSpace;
-	m_iTimeBetweenSaves = Options.general.iTimeBetweenSaves;	
-	
+	m_iTimeBetweenSaves = Options.general.iTimeBetweenSaves;
+
 	CPropertyPage::OnInitDialog();
 
-   	m_cEnableAutosave.SetCheck( Options.general.bEnableAutosave );
+		m_cEnableAutosave.SetCheck( Options.general.bEnableAutosave );
 
 	m_cAutosaveDir.SetWindowText( str );
 
@@ -175,7 +175,7 @@ BOOL COPTGeneral::OnInitDialog(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL COPTGeneral::OnApply(void)
@@ -192,7 +192,7 @@ BOOL COPTGeneral::OnApply(void)
 	if( ( Options.general.iMaxAutosavesPerMap != 0 && m_iMaxAutosavesPerMap == 0 ) ||
 		( Options.general.iMaxAutosavesPerMap == 0 && m_iMaxAutosavesPerMap != 0 ) )
 	{
-		//if the number of autosaves per map has changed to or away from 0 then 
+		//if the number of autosaves per map has changed to or away from 0 then
 		//the timer needs to be reset
 		bResetTimer = TRUE;
 	}
@@ -205,7 +205,7 @@ BOOL COPTGeneral::OnApply(void)
 	Options.general.bEnableAutosave = m_cEnableAutosave.GetCheck();
 	CString str;
 	m_cAutosaveDir.GetWindowText(str);
-	
+
 	if ( strcmp( Options.general.szAutosaveDir, str ) )
 	{
 		strcpy( Options.general.szAutosaveDir, str );
@@ -213,19 +213,19 @@ BOOL COPTGeneral::OnApply(void)
 	}
 
 	if( bResetTimer == TRUE )
-	{		
-		APP()->ResetAutosaveTimer();		
+	{
+		APP()->ResetAutosaveTimer();
 	}
 
-    Options.PerformChanges(COptions::secGeneral);
+	Options.PerformChanges(COptions::secGeneral);
 
 	if ( Options.general.bEnableAutosave )
-	{		
+	{
 		if ( !APP()->VerifyAutosaveDirectory( Options.general.szAutosaveDir ) )
 		{
 			Options.general.bEnableAutosave = false;
 			m_cEnableAutosave.SetCheck( Options.general.bEnableAutosave );
-			OnEnableAutosave();		
+			OnEnableAutosave();
 			return FALSE;
 		}
 	}
@@ -235,7 +235,7 @@ BOOL COPTGeneral::OnApply(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COPTGeneral::OnIndependentwindows(void)
 {
@@ -247,7 +247,7 @@ void COPTGeneral::OnEnableAutosave(void)
 	int iEnabled = m_cEnableAutosave.GetCheck();
 	m_cAutosaveDir.EnableWindow( iEnabled );
 	m_cAutosaveTime.EnableWindow( iEnabled );
-	m_cAutosaveTimeLabel.EnableWindow( iEnabled );		
+	m_cAutosaveTimeLabel.EnableWindow( iEnabled );
 	m_cAutosaveSpaceLabel.EnableWindow( iEnabled );
 	m_cAutosaveSpace.EnableWindow( iEnabled );
 	m_cAutosaveIterationLabel.EnableWindow( iEnabled );
@@ -291,4 +291,3 @@ BOOL COPTGeneral::BrowseForFolder(char *pszTitle, char *pszDirectory)
 
 	return TRUE;
 }
-

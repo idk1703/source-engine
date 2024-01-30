@@ -146,13 +146,13 @@
 	#else
 		#define IsLinux() false
 	#endif
-	
+
 	#if defined( OSX )
 		#define IsOSX() true
 	#else
 		#define IsOSX() false
 	#endif
-	
+
 	#define IsPosix() true
 	#define IsPlatformOpenGL() true
 #else
@@ -389,7 +389,7 @@ typedef void * HINSTANCE;
 
 #endif // defined(_WIN32) && !defined(WINDED)
 
-#define MAX_FILEPATH 512 
+#define MAX_FILEPATH 512
 
 // Defines MAX_PATH
 #ifndef MAX_PATH
@@ -461,12 +461,12 @@ typedef void * HINSTANCE;
 
 // decls for aligning data
 #ifdef _WIN32
-        #define DECL_ALIGN(x) __declspec(align(x))
+				#define DECL_ALIGN(x) __declspec(align(x))
 
 #elif GNUC
 	#define DECL_ALIGN(x) __attribute__((aligned(x)))
 #else
-        #define DECL_ALIGN(x) /* */
+				#define DECL_ALIGN(x) /* */
 #endif
 
 #ifdef _MSC_VER
@@ -485,7 +485,7 @@ typedef void * HINSTANCE;
 #elif defined( GNUC )
 // gnuc has the align decoration at the end
 #define ALIGN4
-#define ALIGN8 
+#define ALIGN8
 #define ALIGN16
 #define ALIGN32
 #define ALIGN128
@@ -606,7 +606,7 @@ typedef void * HINSTANCE;
 	#define  STDCALL				__stdcall
 	#ifdef FORCEINLINE
 		#undef FORCEINLINE
-#endif 
+#endif
 	#define  FORCEINLINE			__forceinline
 	#define  FORCEINLINE_TEMPLATE		__forceinline
 	#else
@@ -685,17 +685,17 @@ typedef void * HINSTANCE;
 #endif // _WIN32
 
 #if defined( LINUX ) && ((__GNUC__ * 100) + __GNUC_MINOR__) >= 406
-  // based on some Jonathan Wakely macros on the net...
-  #define GCC_DIAG_STR(s) #s
-  #define GCC_DIAG_JOINSTR(x,y) GCC_DIAG_STR(x ## y)
-  #define GCC_DIAG_DO_PRAGMA(x) _Pragma (#x)
-  #define GCC_DIAG_PRAGMA(x)	GCC_DIAG_DO_PRAGMA(GCC diagnostic x)
+	// based on some Jonathan Wakely macros on the net...
+	#define GCC_DIAG_STR(s) #s
+	#define GCC_DIAG_JOINSTR(x,y) GCC_DIAG_STR(x ## y)
+	#define GCC_DIAG_DO_PRAGMA(x) _Pragma (#x)
+	#define GCC_DIAG_PRAGMA(x)	GCC_DIAG_DO_PRAGMA(GCC diagnostic x)
 
-  #define GCC_DIAG_PUSH_OFF(x)	GCC_DIAG_PRAGMA(push) GCC_DIAG_PRAGMA(ignored GCC_DIAG_JOINSTR(-W,x))
-  #define GCC_DIAG_POP()		GCC_DIAG_PRAGMA(pop)
+	#define GCC_DIAG_PUSH_OFF(x)	GCC_DIAG_PRAGMA(push) GCC_DIAG_PRAGMA(ignored GCC_DIAG_JOINSTR(-W,x))
+	#define GCC_DIAG_POP()		GCC_DIAG_PRAGMA(pop)
 #else
-  #define GCC_DIAG_PUSH_OFF(x)
-  #define GCC_DIAG_POP()
+	#define GCC_DIAG_PUSH_OFF(x)
+	#define GCC_DIAG_POP()
 #endif
 
 #ifdef LINUX
@@ -884,32 +884,32 @@ static FORCEINLINE double fsel(double fComparand, double fValGE, double fLT)
 template <typename T>
 inline T WordSwapC( T w )
 {
-   uint16 temp;
+	uint16 temp;
 
-   temp  = ((*((uint16 *)&w) & 0xff00) >> 8);
-   temp |= ((*((uint16 *)&w) & 0x00ff) << 8);
+	temp  = ((*((uint16 *)&w) & 0xff00) >> 8);
+	temp |= ((*((uint16 *)&w) & 0x00ff) << 8);
 
-   return *((T*)&temp);
+	return *((T*)&temp);
 }
 
 template <typename T>
 inline T DWordSwapC( T dw )
 {
-   uint32 temp;
+	uint32 temp;
 
-   temp  =   *((uint32 *)&dw) 				>> 24;
-   temp |= ((*((uint32 *)&dw) & 0x00FF0000) >> 8);
-   temp |= ((*((uint32 *)&dw) & 0x0000FF00) << 8);
-   temp |= ((*((uint32 *)&dw) & 0x000000FF) << 24);
+	temp  =   *((uint32 *)&dw) 				>> 24;
+	temp |= ((*((uint32 *)&dw) & 0x00FF0000) >> 8);
+	temp |= ((*((uint32 *)&dw) & 0x0000FF00) << 8);
+	temp |= ((*((uint32 *)&dw) & 0x000000FF) << 24);
 
-   return *((T*)&temp);
+	return *((T*)&temp);
 }
 
 template <typename T>
 inline T QWordSwapC( T dw )
 {
 	// Assert sizes passed to this are already correct, otherwise
-	// the cast to uint64 * below is unsafe and may have wrong results 
+	// the cast to uint64 * below is unsafe and may have wrong results
 	// or even crash.
 	PLAT_COMPILE_TIME_ASSERT( sizeof( dw ) == sizeof(uint64) );
 
@@ -963,21 +963,21 @@ inline T QWordSwapC( T dw )
 	template <typename T>
 	inline T WordSwapAsm( T w )
 	{
-	   __asm
-	   {
-		  mov ax, w
-		  xchg al, ah
-	   }
+		__asm
+		{
+			mov ax, w
+			xchg al, ah
+		}
 	}
 
 	template <typename T>
 	inline T DWordSwapAsm( T dw )
 	{
-	   __asm
-	   {
-		  mov eax, dw
-		  bswap eax
-	   }
+		__asm
+		{
+			mov eax, dw
+			bswap eax
+		}
 	}
 
 	#pragma warning(pop)
@@ -1127,7 +1127,7 @@ FORCEINLINE void StoreLittleDWord( unsigned long *base, unsigned int dwordIndex,
 //
 // It should not be changed after startup unless you really know what you're doing. The only place
 // that should do this is the benchmark code itself so it can output a legit duration.
-PLATFORM_INTERFACE void				Plat_SetBenchmarkMode( bool bBenchmarkMode );	
+PLATFORM_INTERFACE void				Plat_SetBenchmarkMode( bool bBenchmarkMode );
 PLATFORM_INTERFACE bool				Plat_IsInBenchmarkMode();
 
 
@@ -1165,12 +1165,12 @@ inline uint64 Plat_Rdtsc()
 #elif defined( _WIN64 )
 	return ( uint64 )__rdtsc();
 #elif defined( _WIN32 )
-  #if defined( _MSC_VER ) && ( _MSC_VER >= 1400 )
+	#if defined( _MSC_VER ) && ( _MSC_VER >= 1400 )
 	return ( uint64 )__rdtsc();
-  #else
-    __asm rdtsc;
+	#else
+		__asm rdtsc;
 	__asm ret;
-  #endif
+	#endif
 #elif defined( __i386__ )
 	uint64 val;
 	__asm__ __volatile__ ( "rdtsc" : "=A" (val) );
@@ -1208,22 +1208,22 @@ struct CPUInformation
 	int	 m_Size;		// Size of this structure, for forward compatability.
 
 	bool m_bRDTSC : 1,	// Is RDTSC supported?
-		 m_bCMOV  : 1,  // Is CMOV supported?
-		 m_bFCMOV : 1,  // Is FCMOV supported?
-		 m_bSSE	  : 1,	// Is SSE supported?
-		 m_bSSE2  : 1,	// Is SSE2 Supported?
-		 m_b3DNow : 1,	// Is 3DNow! Supported?
-		 m_bMMX   : 1,	// Is MMX supported?
-		 m_bHT	  : 1;	// Is HyperThreading supported?
+		m_bCMOV  : 1,  // Is CMOV supported?
+		m_bFCMOV : 1,  // Is FCMOV supported?
+		m_bSSE	  : 1,	// Is SSE supported?
+		m_bSSE2  : 1,	// Is SSE2 Supported?
+		m_b3DNow : 1,	// Is 3DNow! Supported?
+		m_bMMX   : 1,	// Is MMX supported?
+		m_bHT	  : 1;	// Is HyperThreading supported?
 
 	uint8 m_nLogicalProcessors;		// Number op logical processors.
 	uint8 m_nPhysicalProcessors;	// Number of physical processors
-	
+
 	bool m_bSSE3 : 1,
-		 m_bSSSE3 : 1,
-		 m_bSSE4a : 1,
-		 m_bSSE41 : 1,
-		 m_bSSE42 : 1;	
+		m_bSSSE3 : 1,
+		m_bSSE4a : 1,
+		m_bSSE41 : 1,
+		m_bSSE42 : 1;
 
 	int64 m_Speed;						// In cycles per second.
 
@@ -1247,7 +1247,7 @@ struct MemoryInformation
 
 	uint m_nPhysicalRamMbTotal;
 	uint m_nPhysicalRamMbAvailable;
-	
+
 	uint m_nVirtualRamMbTotal;
 	uint m_nVirtualRamMbAvailable;
 
@@ -1520,14 +1520,14 @@ inline void Destruct( T (*pMemory)[N] )
 //	};
 
 #define GET_OUTER( OuterType, OuterMember ) \
-   ( ( OuterType * ) ( (uint8 *)this - offsetof( OuterType, OuterMember ) ) )
+	( ( OuterType * ) ( (uint8 *)this - offsetof( OuterType, OuterMember ) ) )
 
 
 /*	TEMPLATE_FUNCTION_TABLE()
 
-    (Note added to platform.h so platforms that correctly support templated
-	 functions can handle portions as templated functions rather than wrapped
-	 functions)
+		(Note added to platform.h so platforms that correctly support templated
+	functions can handle portions as templated functions rather than wrapped
+	functions)
 
 	Helps automate the process of creating an array of function
 	templates that are all specialized by a single integer.
@@ -1610,7 +1610,7 @@ struct __MetaLooper_##NAME<0>											\
 class NAME																\
 {																		\
 private:																\
-    static const __MetaLooper_##NAME<COUNT> m;							\
+		static const __MetaLooper_##NAME<COUNT> m;							\
 public:																	\
 	enum { count = COUNT };												\
 	static const __Type_##NAME* functions;								\

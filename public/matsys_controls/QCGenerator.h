@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -50,12 +50,12 @@ private:
 struct LODInfo
 {
 	char pszFilename[MAX_PATH];
-    int iLOD;	
+	int iLOD;
 };
 
 struct QCInfo
 {
-    CQCGenerator *pQCGenerator;
+	CQCGenerator *pQCGenerator;
 
 	char pszSMDPath[MAX_PATH];
 	char pszCollisionPath[MAX_PATH];
@@ -113,13 +113,13 @@ public:
 
 	virtual void OnCommand( const char *command );
 
-	// Purpose: 
+	// Purpose:
 //	virtual void OnKeyCodeTyped( vgui::KeyCode code );
 
-	MESSAGE_FUNC( OnNewLODText, "TextNewLine" );	
-	MESSAGE_FUNC_PARAMS( OnBrowse, "browse", data );	
-	MESSAGE_FUNC_PARAMS( OnFileSelected, "FileSelected", data );	
-	MESSAGE_FUNC_PARAMS( OnDirectorySelected, "DirectorySelected", data );	
+	MESSAGE_FUNC( OnNewLODText, "TextNewLine" );
+	MESSAGE_FUNC_PARAMS( OnBrowse, "browse", data );
+	MESSAGE_FUNC_PARAMS( OnFileSelected, "FileSelected", data );
+	MESSAGE_FUNC_PARAMS( OnDirectorySelected, "DirectorySelected", data );
 
 	bool GenerateQCFile();
 //	void BrowseDirectory( KeyValues *data );
@@ -129,7 +129,7 @@ public:
 	void EditLOD();
 	virtual void OnKeyCodeTyped( vgui::KeyCode code);
 	void InitializeSMDPaths( const char *pszPath, const char *pszScene );
-	
+
 protected:
 	// Creates standard controls. Allows the derived class to
 	// add these controls to various splitter windows
@@ -137,12 +137,12 @@ protected:
 
 private:
 
-	CBrowseButton *m_pCollisionBrowseButton;	
+	CBrowseButton *m_pCollisionBrowseButton;
 	char m_szTargetField[MAX_PATH];
 	vgui::ListPanel *m_pLODPanel;
 
 	vgui::TextEntry *m_pLODEdit;
-	
+
 	int m_nSelectedSequence;
 	int m_nSelectedColumn;
 

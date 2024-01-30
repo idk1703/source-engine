@@ -45,7 +45,7 @@
 
 
 
- 
+
 #define CSTRIKE_DEFAULT_AVATAR "avatar_default_64"
 #define CSTRIKE_DEFAULT_T_AVATAR "avatar_default-t_64"
 #define CSTRIKE_DEFAULT_CT_AVATAR "avatar_default_64"
@@ -111,15 +111,15 @@ extern CUtlVectorInitialized< const char * > TerroristPlayerModels;
 //=============================================================================
 // HPE_BEGIN:
 // [menglish] CS specific death animation time now that freeze cam is implemented
-//			in order to linger on the players body less 
+//			in order to linger on the players body less
 // [tj] The number of times you must kill a given player to be dominating them
 // [menglish] Flags to use upon player death
 //=============================================================================
 
 // [menglish] CS specific death animation time now that freeze cam is implemented
-//			in order to linger on the players body less 
+//			in order to linger on the players body less
 #define CS_DEATH_ANIMATION_TIME			0.8
- 
+
 // [tj] The number of times you must kill a given player to be dominating them
 // Should always be more than 1
 #define CS_KILLS_FOR_DOMINATION         4
@@ -165,24 +165,24 @@ enum CSPlayerState
 
 enum e_RoundEndReason
 {
-    Invalid_Round_End_Reason = -1,
-    Target_Bombed,
-    VIP_Escaped,						
-    VIP_Assassinated,
-    Terrorists_Escaped,
-    CTs_PreventEscape,
-    Escaping_Terrorists_Neutralized,
-    Bomb_Defused,
-    CTs_Win,
-    Terrorists_Win,
-    Round_Draw,
-    All_Hostages_Rescued,
-    Target_Saved,
-    Hostages_Not_Rescued,
-    Terrorists_Not_Escaped,
-    VIP_Not_Escaped,
-    Game_Commencing,
-    RoundEndReason_Count    
+	Invalid_Round_End_Reason = -1,
+	Target_Bombed,
+	VIP_Escaped,
+	VIP_Assassinated,
+	Terrorists_Escaped,
+	CTs_PreventEscape,
+	Escaping_Terrorists_Neutralized,
+	Bomb_Defused,
+	CTs_Win,
+	Terrorists_Win,
+	Round_Draw,
+	All_Hostages_Rescued,
+	Target_Saved,
+	Hostages_Not_Rescued,
+	Terrorists_Not_Escaped,
+	VIP_Not_Escaped,
+	Game_Commencing,
+	RoundEndReason_Count
 };
 
 #define PUSHAWAY_THINK_INTERVAL		(1.0f / 20.0f)
@@ -209,7 +209,7 @@ enum
 //=============================================================================
 // HPE_BEGIN:
 // [menglish] List of equipment dropped by players with freeze panel callouts
-//============================================================================= 
+//=============================================================================
 enum
 {
 	DROPPED_C4,
@@ -217,7 +217,7 @@ enum
 	DROPPED_WEAPON,
 	DROPPED_GRENADE, // This could be an HE greande, flashbang, or smoke
 	DROPPED_COUNT
-}; 
+};
 //=============================================================================
 // HPE_END
 //=============================================================================

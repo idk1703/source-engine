@@ -70,7 +70,7 @@ CTFKnife::CTFKnife()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFKnife::ResetVars( void )
 {
@@ -94,7 +94,7 @@ void CTFKnife::WeaponRegenerate( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFKnife::WeaponReset( void )
 {
@@ -113,7 +113,7 @@ bool CTFKnife::DoSwingTrace( trace_t &trace )
 
 #ifdef GAME_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFKnife::ApplyOnInjuredAttributes( CTFPlayer *pVictim, CTFPlayer *pAttacker, const CTakeDamageInfo &info )
 {
@@ -152,7 +152,7 @@ void CTFKnife::ApplyOnInjuredAttributes( CTFPlayer *pVictim, CTFPlayer *pAttacke
 				}
 				m_bAllowHolsterBecauseForced = false;
 			}
-		}		
+		}
 	}
 }
 
@@ -162,7 +162,7 @@ bool CTFKnife::DecreaseRegenerationTime( float value, bool bForce )
 	// didn't do anything
 	if ( m_bKnifeExists )
 		return false;
-	
+
 	float flTime = value * 0.005f * m_flKnifeRegenerateDuration;
 	m_flKnifeMeltTimestamp -= flTime;
 	return true;
@@ -209,7 +209,7 @@ void CTFKnife::PrimaryAttack( void )
 					iBackstabVictimHealth = Max( m_hBackstabVictim->GetHealth(), 75 );
 				}
 			}
-		} 
+		}
 	}
 
 #ifndef CLIENT_DLL
@@ -224,7 +224,7 @@ void CTFKnife::PrimaryAttack( void )
 
 	m_bReadyToBackstab = false; // Hand is down.
 
-#if !defined( CLIENT_DLL ) 
+#if !defined( CLIENT_DLL )
 	pPlayer->SpeakWeaponFire();
 	CTF_GameStats.Event_PlayerFiredWeapon( pPlayer, IsCurrentAttackACrit() );
 #endif
@@ -254,7 +254,7 @@ void CTFKnife::PrimaryAttack( void )
 		pPlayer->RemoveDisguise();
 	}
 
-	
+
 #ifdef GAME_DLL
 	int iSanguisuge = 0;
 	CALL_ATTRIB_HOOK_INT( iSanguisuge, sanguisuge );
@@ -328,18 +328,18 @@ float CTFKnife::GetMeleeDamage( CBaseEntity *pTarget, int* piDamageType, int* pi
 				// MvM: Cap damage against bots and check for a damage upgrade
 				float flBonusDmg = 1.f;
 				CALL_ATTRIB_HOOK_FLOAT( flBonusDmg, mult_dmg );
-				flBaseDamage = 250.f * flBonusDmg; 
+				flBaseDamage = 250.f * flBonusDmg;
 
 				// Minibosses:  Adjust damage when backstabbing based on level of armor piercing
 				// Base amount is 25% of normal damage.  Each level adds 25% to a cap of 125%.
 				float flArmorPiercing = 25.f;
 				CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pTFOwner, flArmorPiercing, armor_piercing );
-				flBaseDamage *= clamp( flArmorPiercing / 100.0f, 0.25f, 1.25f );	
+				flBaseDamage *= clamp( flArmorPiercing / 100.0f, 0.25f, 1.25f );
 			}
 			else // Regular game mode, or the attacker is a bot
 			{
 				// Do twice the target's health so that random modification will still kill him.
-				flBaseDamage = pTarget->GetHealth() * 2; 
+				flBaseDamage = pTarget->GetHealth() * 2;
 			}
 
 			// Declare a backstab.
@@ -430,7 +430,7 @@ bool CTFKnife::IsBehindAndFacingTarget( CTFPlayer *pTarget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFKnife::CalcIsAttackCriticalHelper( void )
 {
@@ -439,7 +439,7 @@ bool CTFKnife::CalcIsAttackCriticalHelper( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFKnife::CalcIsAttackCriticalHelperNoCrits( void )
 {
@@ -449,7 +449,7 @@ bool CTFKnife::CalcIsAttackCriticalHelperNoCrits( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Allow melee weapons to send different anim events
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CTFKnife::SendPlayerAnimEvent( CTFPlayer *pPlayer )
 {
@@ -464,7 +464,7 @@ void CTFKnife::SendPlayerAnimEvent( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFKnife::CanDeploy( void )
 {
@@ -480,7 +480,7 @@ bool CTFKnife::CanDeploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFKnife::Deploy( void )
 {
@@ -503,7 +503,7 @@ void CTFKnife::ItemPreFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFKnife::ItemPostFrame( void )
 {
@@ -580,7 +580,7 @@ void CTFKnife::ProcessDisguiseImpulse( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFKnife::BackstabVMThink( void )
 {
@@ -596,7 +596,7 @@ void CTFKnife::BackstabVMThink( void )
 //	if ( (iIdealActivity != ACT_VM_IDLE) && (iIdealActivity != ACT_BACKSTAB_VM_IDLE) )
 //		return;
 	int iActivity = GetActivity();
-	if ( (iActivity != ACT_VM_IDLE) && (iActivity != ACT_BACKSTAB_VM_IDLE) && (iActivity != ACT_MELEE_VM_IDLE) && 
+	if ( (iActivity != ACT_VM_IDLE) && (iActivity != ACT_BACKSTAB_VM_IDLE) && (iActivity != ACT_MELEE_VM_IDLE) &&
 		 (iActivity != ACT_ITEM1_VM_IDLE) && (iActivity != ACT_ITEM1_BACKSTAB_VM_IDLE) &&
 		 (iActivity != ACT_ITEM2_VM_IDLE) && (iActivity != ACT_ITEM2_BACKSTAB_VM_IDLE) )
 		return;
@@ -630,7 +630,7 @@ void CTFKnife::BackstabVMThink( void )
 					m_bReadyToBackstab = false;
 				}
 			}
-		} 
+		}
 	}
 	else if ( m_bReadyToBackstab )
 	{

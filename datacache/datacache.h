@@ -44,7 +44,7 @@ struct DataCacheItemData_t
 
 struct DataCacheItem_t : DataCacheItemData_t
 {
-	DataCacheItem_t( const DataCacheItemData_t &data ) 
+	DataCacheItem_t( const DataCacheItemData_t &data )
 	  : DataCacheItemData_t( data ),
 		hLRU( INVALID_MEMHANDLE )
 	{
@@ -311,21 +311,21 @@ extern CDataCache g_DataCache;
 
 //-----------------------------------------------------------------------------
 
-inline DataCacheItem_t *CDataCache::AccessItem( memhandle_t hCurrent ) 
-{ 
-	return m_LRU.GetResource_NoLockNoLRUTouch( hCurrent ); 
+inline DataCacheItem_t *CDataCache::AccessItem( memhandle_t hCurrent )
+{
+	return m_LRU.GetResource_NoLockNoLRUTouch( hCurrent );
 }
 
 //-----------------------------------------------------------------------------
 
-inline IDataCache *CDataCacheSection::GetSharedCache()	
-{ 
-	return m_pSharedCache; 
+inline IDataCache *CDataCacheSection::GetSharedCache()
+{
+	return m_pSharedCache;
 }
 
-inline DataCacheItem_t *CDataCacheSection::AccessItem( memhandle_t hCurrent ) 
-{ 
-	return m_pSharedCache->AccessItem( hCurrent ); 
+inline DataCacheItem_t *CDataCacheSection::AccessItem( memhandle_t hCurrent )
+{
+	return m_pSharedCache->AccessItem( hCurrent );
 }
 
 // Note: if status updates are moved out of a mutexed section, will need to change these to use interlocked instructions

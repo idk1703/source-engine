@@ -209,7 +209,7 @@ bool CTFFlareGun::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFlareGun::Deploy( void )
 {
@@ -269,7 +269,7 @@ void CTFFlareGun::DispatchMuzzleFlash( const char* effectName, C_BaseEntity* pAt
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlareGun::ClientEffectsThink( void )
 {
@@ -415,7 +415,7 @@ bool CTFFlareGun_Revenge::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFlareGun_Revenge::Deploy( void )
 {
@@ -601,7 +601,7 @@ void CTFFlareGun_Revenge::OnDataChanged( DataUpdateType_t type )
 		{
 			DoAbsorbEffect();
 		}
-		
+
 		m_nOldRevengeCrits = pOwner->m_Shared.GetRevengeCrits();
 	}
 }

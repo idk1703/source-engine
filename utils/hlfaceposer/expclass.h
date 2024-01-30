@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@
 class CExpression;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CExpClass
 {
@@ -40,7 +40,7 @@ public:
 	CExpression			*FindExpression( const char *name );
 	int					FindExpressionIndex( CExpression *exp );
 	void				DeleteExpression( const char *name );
-	
+
 	int					GetNumExpressions( void );
 	CExpression			*GetExpression( int num );
 

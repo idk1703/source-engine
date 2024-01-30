@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -78,10 +78,10 @@ private:
 	CExLabel					*m_pCountdownLabel;
 	CExLabel					*m_pCountdownLabelShadow;
 	vgui::ImagePanel			*m_pModeImage;
-	
+
 	vgui::ScalableImagePanel	*m_pHudTournamentBG;
 	CExLabel					*m_pTournamentConditionLabel;
-	
+
 	CPanelAnimationVarAliasType( int, m_iTeam1PlayerBaseOffsetX, "team1_player_base_offset_x", "0", "proportional_int" );
 	CPanelAnimationVarAliasType( int, m_iTeam1PlayerBaseX, "team1_player_base_x", "0", "proportional_int" );
 	CPanelAnimationVarAliasType( int, m_iTeam1PlayerBaseY, "team1_player_base_y", "0", "proportional_int" );

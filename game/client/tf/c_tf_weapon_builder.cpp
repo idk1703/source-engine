@@ -22,7 +22,7 @@
 STUB_WEAPON_CLASS_IMPLEMENT( tf_weapon_builder, C_TFWeaponBuilder );
 PRECACHE_WEAPON_REGISTER( tf_weapon_builder );
 
-// SUPER HACK TO FIX DEMOS.  For a couple days, we accidently renamed 
+// SUPER HACK TO FIX DEMOS.  For a couple days, we accidently renamed
 // CTFWeaponBuilder to C_TFWeaponBuilder on the server.  This was fine for
 // playing the game but broke all previously recorded demos.  Fixing this and
 // re-renaming the class back to the original name fixed all demos recorded
@@ -82,7 +82,7 @@ END_NETWORK_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFWeaponBuilder::C_TFWeaponBuilder()
 {
@@ -95,14 +95,14 @@ C_TFWeaponBuilder::C_TFWeaponBuilder()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFWeaponBuilder::~C_TFWeaponBuilder()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *C_TFWeaponBuilder::GetCurrentSelectionObjectName( void )
@@ -114,7 +114,7 @@ const char *C_TFWeaponBuilder::GetCurrentSelectionObjectName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_TFWeaponBuilder::Deploy( void )
 {
@@ -138,7 +138,7 @@ bool C_TFWeaponBuilder::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFWeaponBuilder::SecondaryAttack( void )
 {
@@ -228,7 +228,7 @@ void C_TFWeaponBuilder::Redraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_TFWeaponBuilder::IsPlacingObject( void )
@@ -240,7 +240,7 @@ bool C_TFWeaponBuilder::IsPlacingObject( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_TFWeaponBuilder::GetSlot( void ) const
 {
@@ -248,7 +248,7 @@ int C_TFWeaponBuilder::GetSlot( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_TFWeaponBuilder::GetPosition( void ) const
 {
@@ -256,7 +256,7 @@ int C_TFWeaponBuilder::GetPosition( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFWeaponBuilder::SetupObjectSelectionSprite( void )
 {
@@ -285,7 +285,7 @@ void C_TFWeaponBuilder::SetupObjectSelectionSprite( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTexture const *C_TFWeaponBuilder::GetSpriteActive( void ) const
 {
@@ -293,7 +293,7 @@ CHudTexture const *C_TFWeaponBuilder::GetSpriteActive( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTexture const *C_TFWeaponBuilder::GetSpriteInactive( void ) const
 {
@@ -301,7 +301,7 @@ CHudTexture const *C_TFWeaponBuilder::GetSpriteInactive( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *C_TFWeaponBuilder::GetPrintName( void ) const
@@ -310,7 +310,7 @@ const char *C_TFWeaponBuilder::GetPrintName( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	C_TFWeaponBuilder::GetSubType( void )
 {
@@ -401,7 +401,7 @@ const char *C_TFWeaponBuilder::GetViewModel( int iViewModel ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *C_TFWeaponBuilder::GetWorldModel( void ) const
 {
@@ -431,7 +431,7 @@ Activity C_TFWeaponBuilder::GetDrawActivity( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_TFWeaponBuilder::EffectMeterShouldFlash( void )
 {
@@ -451,7 +451,7 @@ const char *C_TFWeaponSapper::GetViewModel( int iViewModel ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *C_TFWeaponSapper::GetWorldModel( void ) const
 {

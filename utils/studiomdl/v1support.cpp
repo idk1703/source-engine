@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -31,8 +31,8 @@
 // The current version of the SMD file being parsed
 // Yes, I know this file is called 'v1support' and there's never actually
 // been a v > 1 but now there is
-// (actually, there was a while when we were using developing progressive mesh 
-// stuff in the middle of HL2 development, but most all that code has long since 
+// (actually, there was a while when we were using developing progressive mesh
+// stuff in the middle of HL2 development, but most all that code has long since
 // been deleted)
 int g_smdVersion = 1;
 
@@ -40,7 +40,7 @@ int lookup_index( s_source_t *psource, int material, Vector& vertex, Vector& nor
 {
 	int i, j;
 
-	for (i = 0; i < numvlist; i++) 
+	for (i = 0; i < numvlist; i++)
 	{
 		if (v_listdata[i].m == material
 			&& DotProduct( g_normal[i], normal ) > normal_blend
@@ -71,7 +71,7 @@ int lookup_index( s_source_t *psource, int material, Vector& vertex, Vector& nor
 	VectorCopy( normal, g_normal[i] );
 	Vector2Copy( texcoord, g_texcoord[i] );
 
-    g_bone[i].numbones = iCount;
+	g_bone[i].numbones = iCount;
 	for ( j = 0; j < iCount; j++)
 	{
 		g_bone[i].bone[j] = bones[j];
@@ -102,11 +102,11 @@ void ParseFaceData( s_source_t *psource, int material, s_face_t *pFace )
 	float   weights[MAXSTUDIOSRCBONES];
 	int bone;
 
-	for (j = 0; j < 3; j++) 
+	for (j = 0; j < 3; j++)
 	{
 		memset( g_szLine, 0, sizeof( g_szLine ) );
 
-		if (!GetLineInput()) 
+		if (!GetLineInput())
 		{
 			MdlError("%s: error on g_szLine %d: %s", g_szFilename, g_iLinecount, g_szLine );
 		}
@@ -114,24 +114,24 @@ void ParseFaceData( s_source_t *psource, int material, s_face_t *pFace )
 		iCount = 0;
 
 		i = sscanf( g_szLine, "%d %f %f %f %f %f %f %f %f %d %d %f %d %f %d %f %d %f",
-			&bone, 
-			&p[0], &p[1], &p[2], 
-			&normal[0], &normal[1], &normal[2], 
+			&bone,
+			&p[0], &p[1], &p[2],
+			&normal[0], &normal[1], &normal[2],
 			&t[0], &t[1],
 			&iCount,
 			&bones[0], &weights[0], &bones[1], &weights[1], &bones[2], &weights[2], &bones[3], &weights[3] );
-			
-		if (i < 9) 
+
+		if (i < 9)
 			continue;
 
-		if (bone < 0 || bone >= psource->numbones) 
+		if (bone < 0 || bone >= psource->numbones)
 		{
 			MdlError("bogus bone index\n%d %s :\n%s", g_iLinecount, g_szFilename, g_szLine );
 		}
 
 		//Scale face pos
 		scale_vertex( p );
-		
+
 		// continue parsing more bones.
 		// FIXME: don't we have a built in parser that'll do this?
 		if (iCount > 4)
@@ -161,7 +161,7 @@ void ParseFaceData( s_source_t *psource, int material, s_face_t *pFace )
 
 				token = strtok( &g_szLine[ctr], " " );
 				ctr += strlen( token ) + 1;
-			
+
 				weights[k] = atof(token);
 			}
 			// printf("%d ", iCount );
@@ -204,7 +204,7 @@ void ParseFaceData( s_source_t *psource, int material, s_face_t *pFace )
 	pFace->a		= index[0];
 	pFace->b		= index[2];
 	pFace->c		= index[1];
-	Assert( ((pFace->a & 0xF0000000) == 0) && ((pFace->b & 0xF0000000) == 0) && 
+	Assert( ((pFace->a & 0xF0000000) == 0) && ((pFace->b & 0xF0000000) == 0) &&
 		((pFace->c & 0xF0000000) == 0) );
 }
 
@@ -218,7 +218,7 @@ void Grab_Triangles( s_source_t *psource )
 
 	g_numfaces = 0;
 	numvlist = 0;
- 
+
 	//
 	// load the base triangles
 	//
@@ -226,13 +226,13 @@ void Grab_Triangles( s_source_t *psource )
 	int material;
 	char texturename[MAX_PATH];
 
-	while (1) 
+	while (1)
 	{
-		if (!GetLineInput()) 
+		if (!GetLineInput())
 			break;
 
 		// check for end
-		if (IsEnd( g_szLine )) 
+		if (IsEnd( g_szLine ))
 			break;
 
 		// Look for extra junk that we may want to avoid...
@@ -251,14 +251,14 @@ void Grab_Triangles( s_source_t *psource )
 		texturename[i + 1] = '\0';
 
 		// funky texture overrides
-		for (i = 0; i < numrep; i++)  
+		for (i = 0; i < numrep; i++)
 		{
-			if (sourcetexture[i][0] == '\0') 
+			if (sourcetexture[i][0] == '\0')
 			{
 				V_strcpy_safe( texturename, defaulttexture[i] );
 				break;
 			}
-			if (stricmp( texturename, sourcetexture[i]) == 0) 
+			if (stricmp( texturename, sourcetexture[i]) == 0)
 			{
 				V_strcpy_safe( texturename, defaulttexture[i] );
 				break;
@@ -296,7 +296,7 @@ void Grab_Triangles( s_source_t *psource )
 			// printf("Degenerate triangle %d %d %d\n", f.a, f.b, f.c );
 			continue;
 		}
-	
+
 		g_src_uface[g_numfaces] = f;
 		g_face[g_numfaces].material = material;
 		g_numfaces++;
@@ -324,7 +324,7 @@ int Load_SMD ( s_source_t *psource )
 
 	g_iLinecount = 0;
 
-	while (GetLineInput()) 
+	while (GetLineInput())
 	{
 		int numRead = sscanf( g_szLine, "%s %d", cmd, &option );
 
@@ -332,27 +332,27 @@ int Load_SMD ( s_source_t *psource )
 		if ((numRead == EOF) || (numRead == 0))
 			continue;
 
-		if (stricmp( cmd, "version" ) == 0) 
+		if (stricmp( cmd, "version" ) == 0)
 		{
-			if (option < 1 || option > 2) 
+			if (option < 1 || option > 2)
 			{
 				MdlError("bad version\n");
 			}
 			g_smdVersion = option;
 		}
-		else if (stricmp( cmd, "nodes" ) == 0) 
+		else if (stricmp( cmd, "nodes" ) == 0)
 		{
 			psource->numbones = Grab_Nodes( psource->localBone );
 		}
-		else if (stricmp( cmd, "skeleton" ) == 0) 
+		else if (stricmp( cmd, "skeleton" ) == 0)
 		{
 			Grab_Animation( psource, "BindPose" );
 		}
-		else if (stricmp( cmd, "triangles" ) == 0) 
+		else if (stricmp( cmd, "triangles" ) == 0)
 		{
 			Grab_Triangles( psource );
 		}
-		else if (stricmp( cmd, "vertexanimation" ) == 0) 
+		else if (stricmp( cmd, "vertexanimation" ) == 0)
 		{
 			Grab_Vertexanimation( psource, "BindPose" );
 		}
@@ -361,7 +361,7 @@ int Load_SMD ( s_source_t *psource )
 			ProcessSourceComment( psource, cmd );
 			continue;
 		}
-		else 
+		else
 		{
 			MdlWarning("unknown studio command \"%s\"\n", cmd );
 		}
@@ -370,24 +370,3 @@ int Load_SMD ( s_source_t *psource )
 
 	return 1;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

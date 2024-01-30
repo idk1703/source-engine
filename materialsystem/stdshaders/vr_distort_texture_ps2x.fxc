@@ -27,7 +27,7 @@ float4 main( PS_INPUT i ) : COLOR
 	vFinal.r = tex2D( BaseTextureSampler, vRead.xy ).r;
 	vFinal.ga = tex2D( BaseTextureSampler, vGreen ).ga;
 	vFinal.b = tex2D( BaseTextureSampler, vRead.zw ).b;
-	
+
 	float fBoundsCheck;
 	#if ( CMBO_USERENDERTARGET )
 	{
@@ -44,6 +44,3 @@ float4 main( PS_INPUT i ) : COLOR
 
 	return vFinal;
 }
-
-
-

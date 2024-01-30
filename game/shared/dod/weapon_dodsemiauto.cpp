@@ -1,10 +1,10 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
-#include "cbase.h" 
+#include "cbase.h"
 #include "weapon_dodsemiauto.h"
 
 IMPLEMENT_NETWORKCLASS_ALIASED( DODSemiAutoWeapon, DT_SemiAutoWeapon )

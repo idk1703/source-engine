@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -53,7 +53,7 @@ public:
 
 	//-----------------------------------------------------------------------------
 	// Purpose: Hook the map parse errors and report brush/ent/texture state
-	// Input  : *pErrorString - 
+	// Input  : *pErrorString -
 	//-----------------------------------------------------------------------------
 	void ReportError( const char *pErrorString )
 	{
@@ -62,7 +62,7 @@ public:
 
 	//-----------------------------------------------------------------------------
 	// Purpose: Hook the map parse errors and report brush/ent/texture state without exiting.
-	// Input  : pWarningString - 
+	// Input  : pWarningString -
 	//-----------------------------------------------------------------------------
 	void ReportWarning( const char *pWarningString )
 	{

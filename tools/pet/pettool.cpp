@@ -128,7 +128,7 @@ CPetDoc *CPetTool::GetDocument()
 	return m_pDoc;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Tool activation/deactivation
 //-----------------------------------------------------------------------------
@@ -165,8 +165,8 @@ void CPetTool::Think( bool finalTick )
 //-----------------------------------------------------------------------------
 // Derived classes can implement this to get a new scheme to be applied to this tool
 //-----------------------------------------------------------------------------
-vgui::HScheme CPetTool::GetToolScheme() 
-{ 
+vgui::HScheme CPetTool::GetToolScheme()
+{
 	return vgui::scheme()->LoadSchemeFromFile( "Resource/BoxRocket.res", "BoxRocket" );
 }
 
@@ -223,7 +223,7 @@ void CPetViewMenuButton::OnShowMenu(vgui::Menu *menu)
 
 		id = m_Items.Find( "browser" );
 		m_pMenu->SetItemEnabled( id, true );
-		
+
 		p = m_pTool->GetParticleSystemDefinitionBrowser();
 		Assert( p );
 		m_pMenu->SetMenuItemChecked( id, ( p && p->GetParent() ) ? true : false );
@@ -280,7 +280,7 @@ void CPetToolMenuButton::OnShowMenu(vgui::Menu *menu)
 //-----------------------------------------------------------------------------
 // Initializes the menu bar
 //-----------------------------------------------------------------------------
-vgui::MenuBar *CPetTool::CreateMenuBar( CBaseToolSystem *pParent ) 
+vgui::MenuBar *CPetTool::CreateMenuBar( CBaseToolSystem *pParent )
 {
 	m_pMenuBar = new CToolFileMenuBar( pParent, "Main Menu Bar" );
 
@@ -460,7 +460,7 @@ void CPetTool::OnDefaultLayout()
 void CPetTool::OnToggleProperties()
 {
 	if ( m_hProperties.Get() )
-	{ 
+	{
 		ToggleToolWindow( m_hProperties.Get(), "#PetProperties" );
 	}
 }
@@ -468,7 +468,7 @@ void CPetTool::OnToggleProperties()
 void CPetTool::OnToggleParticleSystemBrowser()
 {
 	if ( m_hParticleSystemDefinitionBrowser.Get() )
-	{ 
+	{
 		ToggleToolWindow( m_hParticleSystemDefinitionBrowser.Get(), "#PetParticleSystemBrowser" );
 	}
 }
@@ -476,7 +476,7 @@ void CPetTool::OnToggleParticleSystemBrowser()
 void CPetTool::OnToggleParticlePreview()
 {
 	if ( m_hParticlePreview.Get() )
-	{ 
+	{
 		ToggleToolWindow( m_hParticlePreview.Get(), "#PetPreviewer" );
 	}
 }
@@ -632,8 +632,8 @@ bool CPetTool::GetPerforceFileName( char *pFileName, int nMaxLen )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CPetTool::OnExit()
 {
@@ -760,7 +760,7 @@ void CPetTool::SaveAndTest()
 {
 	if ( m_pDoc && m_pDoc->IsDirty() )
 	{
-		SaveFile( m_pDoc->GetFileName(), PET_FILE_FORMAT, FOSM_SHOW_PERFORCE_DIALOGS, 
+		SaveFile( m_pDoc->GetFileName(), PET_FILE_FORMAT, FOSM_SHOW_PERFORCE_DIALOGS,
 			new KeyValues( "RestartLevel" ) );
 	}
 	else
@@ -787,7 +787,7 @@ void CPetTool::OnClose()
 {
 	if ( m_pDoc && m_pDoc->IsDirty() )
 	{
-		SaveFile( m_pDoc->GetFileName(), PET_FILE_FORMAT, FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY, 
+		SaveFile( m_pDoc->GetFileName(), PET_FILE_FORMAT, FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY,
 			new KeyValues( "OnClose" ) );
 		return;
 	}
@@ -931,7 +931,7 @@ bool CPetTool::CanQuit()
 	if ( m_pDoc && m_pDoc->IsDirty() )
 	{
 		// Show Save changes Yes/No/Cancel and re-quit if hit yes/no
-		SaveFile( m_pDoc->GetFileName(), PET_FILE_FORMAT, FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY, 
+		SaveFile( m_pDoc->GetFileName(), PET_FILE_FORMAT, FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY,
 			new KeyValues( "OnQuit" ) );
 		return false;
 	}
@@ -1007,7 +1007,7 @@ void CPetTool::OnDocChanged( const char *pReason, int nNotifySource, int nNotify
 		( ( nNotifyFlags & ( NOTIFY_CHANGE_TOPOLOGICAL | NOTIFY_CHANGE_ATTRIBUTE_ARRAY_SIZE ) ) != 0 );
 	bool bRefreshPropertyValues = ( nNotifySource != NOTIFY_SOURCE_PROPERTIES_TREE ) &&
 		( nNotifyFlags & NOTIFY_CHANGE_ATTRIBUTE_VALUE ) != 0;
-	
+
 	if ( bRefreshProperties || bRefreshPropertyValues )
 	{
 		if ( m_hProperties.Get() )
@@ -1074,5 +1074,3 @@ bool CPetTool::LoadDocument( const char *pDocName )
 	pMessage->deleteThis();
 	return true;
 }
-
-

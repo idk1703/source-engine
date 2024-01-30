@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -39,9 +39,9 @@
 
 enum modtype_t
 {
-	mod_bad = 0, 
-	mod_brush, 
-	mod_sprite, 
+	mod_bad = 0,
+	mod_brush,
+	mod_sprite,
 	mod_studio
 };
 

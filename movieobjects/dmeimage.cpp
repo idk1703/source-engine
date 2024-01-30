@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmeimage.h"
@@ -9,7 +9,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeImage, CDmeImage );
 
@@ -42,4 +42,3 @@ const char *CDmeImage::FormatName() const
 {
 	return ImageLoader::GetName( Format() );
 }
-

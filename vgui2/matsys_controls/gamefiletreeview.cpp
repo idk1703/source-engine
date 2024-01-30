@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -39,10 +39,10 @@ enum
 CGameFileTreeView::CGameFileTreeView( Panel *parent, const char *name, const char *pRootFolderName, const char *pRootDir, const char *pExtension ) : BaseClass(parent, name), m_Images( false )
 {
 	m_RootDir = pRootDir;
-	
+
 	m_Ext = pExtension;
 	m_bUseExt = ( pExtension != NULL );
-	
+
 	m_RootFolderName = pRootFolderName;
 
 	// build our list of images
@@ -71,7 +71,7 @@ void CGameFileTreeView::RefreshFileList()
 	ExpandItem( iRoot, true );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Selects the root folder
 //-----------------------------------------------------------------------------
@@ -144,7 +144,7 @@ bool CGameFileTreeView::DoesDirectoryHaveSubdirectories( const char *pFilePath )
 	return false;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Populate the root node with directories
 //-----------------------------------------------------------------------------
@@ -165,7 +165,7 @@ void CGameFileTreeView::AddDirectoriesOfNode( int itemIndex, const char *pFilePa
 		if ( bIsDirectory && Q_strnicmp( pszFileName, ".", 2 ) && Q_strnicmp( pszFileName, "..", 3 ) )
 		{
 			KeyValues *kv = new KeyValues( "node", "text", pszFileName );
-			 
+
 			char pFullPath[MAX_PATH];
 			Q_snprintf( pFullPath, sizeof(pFullPath), "%s/%s", pFilePath, pszFileName );
 			Q_FixSlashes( pFullPath );
@@ -260,7 +260,7 @@ void CGameFileTreeView::GenerateChildrenOfNode(int itemIndex)
 //-----------------------------------------------------------------------------
 // setup a context menu whenever a directory is clicked on
 //-----------------------------------------------------------------------------
-void CGameFileTreeView::GenerateContextMenu( int itemIndex, int x, int y ) 
+void CGameFileTreeView::GenerateContextMenu( int itemIndex, int x, int y )
 {
 	return;
 
@@ -298,4 +298,3 @@ void CGameFileTreeView::ApplySchemeSettings(IScheme *pScheme)
 	BaseClass::ApplySchemeSettings(pScheme);
 	SetFont( pScheme->GetFont("DefaultSmall") );
 }
-

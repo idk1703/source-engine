@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // Defines the entry point for the application.
 //
@@ -309,7 +309,7 @@ void CResListGenerator::SetupCommandLine()
 			Warning( "Caches:  Setting command line:\n'%s'\n", szCmd );
 
 			CommandLine()->CreateCmdLine( szCmd );
-			
+
 			CommandLine()->RemoveParm( "-norebuildaudio" );
 			CommandLine()->RemoveParm( "-makereslists" );
 
@@ -323,7 +323,7 @@ bool CResListGenerator::ShouldContinue()
 {
 	if ( !m_bActive )
 		return false;
-	
+
 	bool bContinueAdvancing = false;
 	do
 	{
@@ -332,7 +332,7 @@ bool CResListGenerator::ShouldContinue()
 		default:
 			break;
 		case STATE_BUILDINGRESLISTS:
-			{ 
+			{
 				CommandLine()->RemoveParm( "-startmap" );
 
 				// Advance to next time
@@ -357,7 +357,7 @@ bool CResListGenerator::ShouldContinue()
 			break;
 		}
 	} while ( bContinueAdvancing );
-	
+
 	return false;
 }
 
@@ -442,7 +442,7 @@ bool CResListGenerator::InitCommandFile( char const *pchGameDir, char const *pch
 		newMap = pszSolo;
 		m_MapList.AddToTail( newMap );
 	}
-	
+
 	m_nCurrentWorkItem = CommandLine()->ParmValue( "-startstage", 0 );
 
 	char const *pszStartMap = NULL;
@@ -497,7 +497,7 @@ bool CResListGenerator::InitCommandFile( char const *pchGameDir, char const *pch
 	} while ( true );
 
 	m_bActive = m_WorkItems.Count() > 0;
-	
+
 	m_nCurrentWorkItem = clamp( m_nCurrentWorkItem, 0, m_WorkItems.Count() - 1 );
 
 	bool bCollate = CommandLine()->CheckParm( "-collate" ) ? true : false;
@@ -519,5 +519,3 @@ bool CResListGenerator::InitCommandFile( char const *pchGameDir, char const *pch
 	*/
 	return m_bActive;
 }
-
-

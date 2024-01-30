@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -240,7 +240,7 @@ void CWorkspace::SaveToFile()
 	SaveWindowPositions( buf, "workspace", GetWorkspaceManager()->GetBrowser() );
 	SaveWindowPositions( buf, "soundbrowser", GetWorkspaceManager()->GetSoundBrowser() );
 	SaveWindowPositions( buf, "wavebrowser", GetWorkspaceManager()->GetWaveBrowser() );
-	
+
 	buf.Printf( "}\n" );
 
 	if ( filesystem->FileExists( m_szFile ) && !filesystem->IsFileWritable( m_szFile ) )
@@ -359,7 +359,7 @@ char const *CWorkspace::GetVSSUserName() const
 {
 	return m_szVSSUserName;
 }
-	
+
 char const *CWorkspace::GetVSSProject() const
 {
 	return m_szVSSProject;

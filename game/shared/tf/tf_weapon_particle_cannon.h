@@ -29,7 +29,7 @@ class CTFParticleCannon : public CTFRocketLauncher
 {
 public:
 	DECLARE_CLASS( CTFParticleCannon, CTFRocketLauncher );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFParticleCannon();

@@ -458,16 +458,16 @@ CCSPlayer* CWeaponCSBase::GetPlayerOwner() const
 //[dwenger] Accessors for the prior owner list
 void CWeaponCSBase::AddToPriorOwnerList(CCSPlayer* pPlayer)
 {
-    if ( !IsAPriorOwner( pPlayer ) )
-    {
-        // Add player to prior owner list
-        m_PriorOwners.AddToTail( pPlayer );
-    }
+	if ( !IsAPriorOwner( pPlayer ) )
+	{
+		// Add player to prior owner list
+		m_PriorOwners.AddToTail( pPlayer );
+	}
 }
 
 bool CWeaponCSBase::IsAPriorOwner(CCSPlayer* pPlayer)
 {
-    return (m_PriorOwners.Find( pPlayer ) != -1);
+	return (m_PriorOwners.Find( pPlayer ) != -1);
 }
 
 //=============================================================================
@@ -484,15 +484,15 @@ void CWeaponCSBase::SecondaryAttack( void )
 		return;
 
 	if ( pPlayer->HasShield() == false )
-		 BaseClass::SecondaryAttack();
+		BaseClass::SecondaryAttack();
 	else
 	{
 		pPlayer->SetShieldDrawnState( !pPlayer->IsShieldDrawn() );
 
 		if ( pPlayer->IsShieldDrawn() )
-			 SendWeaponAnim( ACT_SHIELD_UP );
+			SendWeaponAnim( ACT_SHIELD_UP );
 		else
-			 SendWeaponAnim( ACT_SHIELD_DOWN );
+			SendWeaponAnim( ACT_SHIELD_DOWN );
 
 		m_flNextSecondaryAttack = gpGlobals->curtime + 0.4;
 		m_flNextPrimaryAttack = gpGlobals->curtime + 0.4;
@@ -570,14 +570,14 @@ void CWeaponCSBase::ItemPostFrame()
 		if ( pPlayer->State_Get() != STATE_ACTIVE )
 			return;
 
-		if ( pPlayer->IsShieldDrawn() ) 
+		if ( pPlayer->IsShieldDrawn() )
 			return;
 
 		// we have to reset the FireOnEmpty flag before we can fire on an empty clip
 		if ( m_iClip1 == 0 && !m_bFireOnEmpty )
 			return;
 
-		// don't repeat fire if this is not a full auto weapon 
+		// don't repeat fire if this is not a full auto weapon
 		if ( pPlayer->m_iShotsFired > 0 && !IsFullAuto() )
 			return;
 
@@ -611,18 +611,18 @@ void CWeaponCSBase::ItemPostFrame()
 
 		if ( !pPlayer->IsShieldDrawn() )
 		{
-			 if ( Reload() )
-			 {
+			if ( Reload() )
+			{
 #ifndef CLIENT_DLL
-				 // allow the bots to react to the reload
-				 IGameEvent * event = gameeventmanager->CreateEvent( "weapon_reload" );
-				 if( event )
-				 {
-					 event->SetInt( "userid", pPlayer->GetUserID() );
-					 gameeventmanager->FireEvent( event );
-				 }
+				// allow the bots to react to the reload
+				IGameEvent * event = gameeventmanager->CreateEvent( "weapon_reload" );
+				if( event )
+				{
+					event->SetInt( "userid", pPlayer->GetUserID() );
+					gameeventmanager->FireEvent( event );
+				}
 #endif
-			 }
+			}
 		}
 	}
 	else if ( !(pPlayer->m_nButtons & (IN_ATTACK|IN_ATTACK2) ) )
@@ -704,9 +704,9 @@ float CWeaponCSBase::GetInaccuracy() const
 	if ( fMaxSpeed == 0.0f )
 		fMaxSpeed = GetCSWpnData().m_flMaxSpeed;
 
-	return m_fAccuracyPenalty + 
-		RemapValClamped(pPlayer->GetAbsVelocity().Length2D(), 
-		fMaxSpeed * CS_PLAYER_SPEED_DUCK_MODIFIER, 
+	return m_fAccuracyPenalty +
+		RemapValClamped(pPlayer->GetAbsVelocity().Length2D(),
+		fMaxSpeed * CS_PLAYER_SPEED_DUCK_MODIFIER,
 		fMaxSpeed * 0.95f,							// max out at 95% of run speed to avoid jitter near max speed
 		0.0f, weaponInfo.m_fInaccuracyMove[m_weaponMode]);
 }
@@ -753,12 +753,12 @@ const char *CWeaponCSBase::GetViewModel( int /*viewmodelindex = 0 -- this is ign
 	CCSPlayer *pOwner = GetPlayerOwner();
 
 	if ( pOwner == NULL )
-		 return BaseClass::GetViewModel();
+		return BaseClass::GetViewModel();
 
 	if ( pOwner->HasShield() && GetCSWpnData().m_bCanUseWithShield )
-		 return GetCSWpnData().m_szShieldViewModel;
+		return GetCSWpnData().m_szShieldViewModel;
 	else
-		 return GetWpnData().szViewModel;
+		return GetWpnData().szViewModel;
 
 	return BaseClass::GetViewModel();
 
@@ -771,7 +771,7 @@ void CWeaponCSBase::Precache( void )
 #ifdef CS_SHIELD_ENABLED
 	if ( GetCSWpnData().m_bCanUseWithShield )
 	{
-		 PrecacheModel( GetCSWpnData().m_szShieldViewModel );
+		PrecacheModel( GetCSWpnData().m_szShieldViewModel );
 	}
 #endif
 
@@ -808,9 +808,9 @@ bool CWeaponCSBase::DefaultDeploy( char *szViewModel, char *szWeaponModel, int i
 	pOwner->SetShieldDrawnState( false );
 
 	if ( pOwner->HasShield() == true )
-		 SetWeaponModelIndex( SHIELD_WORLD_MODEL);
+		SetWeaponModelIndex( SHIELD_WORLD_MODEL);
 	else
-		 SetWeaponModelIndex( szWeaponModel );
+		SetWeaponModelIndex( szWeaponModel );
 
 	return true;
 }
@@ -821,7 +821,7 @@ void CWeaponCSBase::UpdateShieldState( void )
 	CCSPlayer *pOwner = GetPlayerOwner();
 
 	if ( pOwner == NULL )
-		 return;
+		return;
 
 	//ADRIANTODO
 	//Make the hitbox set switches here!!!
@@ -840,7 +840,7 @@ void CWeaponCSBase::UpdateShieldState( void )
 
 void CWeaponCSBase::SetWeaponModelIndex( const char *pName )
 {
- 	 m_iWorldModelIndex = modelinfo->GetModelIndex( pName );
+	m_iWorldModelIndex = modelinfo->GetModelIndex( pName );
 }
 
 bool CWeaponCSBase::CanBeSelected( void )
@@ -858,7 +858,7 @@ bool CWeaponCSBase::CanDeploy( void )
 		return false;
 
 	if ( pPlayer->HasShield() && GetCSWpnData().m_bCanUseWithShield == false )
-		 return false;
+		return false;
 
 	return BaseClass::CanDeploy();
 }
@@ -1071,17 +1071,17 @@ void CWeaponCSBase::DefaultTouch(CBaseEntity *pOther)
 		}
 
 		if ( pPlayer->HasShield() && pPlayer->IsShieldDrawn() == true )
-			 return;
+			return;
 
 		// no crosshair for sniper rifles
 		bool bCrosshairVisible = crosshair.GetBool() && GetCSWpnData().m_WeaponType != WEAPONTYPE_SNIPER_RIFLE;
 
-		if ( !bCrosshairVisible 
+		if ( !bCrosshairVisible
 #if ALLOW_WEAPON_SPREAD_DISPLAY
 			&& !weapon_debug_spread_show.GetBool()
 #endif
 			)
-			 return;
+			return;
 
 		float fHalfFov = DEG2RAD(pPlayer->GetFOV()) * 0.5f;
 
@@ -1392,20 +1392,20 @@ void CWeaponCSBase::DefaultTouch(CBaseEntity *pOther)
 	}
 
 
-    //=============================================================================
-    // HPE_BEGIN:
-    // [dwenger] Handle round restart processing for the weapon.
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [dwenger] Handle round restart processing for the weapon.
+	//=============================================================================
 
-    void CWeaponCSBase::OnRoundRestart()
-    {
-        // Clear out the list of prior owners
-        m_PriorOwners.RemoveAll();
-    }
+	void CWeaponCSBase::OnRoundRestart()
+	{
+		// Clear out the list of prior owners
+		m_PriorOwners.RemoveAll();
+	}
 
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
 	//=========================================================
 	// Materialize - make a CWeaponCSBase visible and tangible
@@ -1491,7 +1491,7 @@ void CWeaponCSBase::DefaultTouch(CBaseEntity *pOther)
 	void CWeaponCSBase::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 	{
 		CBasePlayer *pPlayer = ToBasePlayer( pActivator );
-		
+
 		if ( pPlayer )
 		{
 			m_OnPlayerUse.FireOutput( pActivator, pCaller );
@@ -1528,19 +1528,19 @@ void CWeaponCSBase::DefaultTouch(CBaseEntity *pOther)
 		m_nextPrevOwnerTouchTime = 0.0;
 		m_prevOwner = NULL;
 
-        //=============================================================================
-        // HPE_BEGIN:
-        //=============================================================================
+		//=============================================================================
+		// HPE_BEGIN:
+		//=============================================================================
 
-        // [tj] initialize donor of this weapon
-        m_donor = NULL;
-        m_donated = false;
+		// [tj] initialize donor of this weapon
+		m_donor = NULL;
+		m_donated = false;
 
 		m_weaponMode = Primary_Mode;
 
-        //=============================================================================
-        // HPE_END
-        //=============================================================================
+		//=============================================================================
+		// HPE_END
+		//=============================================================================
 	}
 
 	bool CWeaponCSBase::DefaultReload( int iClipSize1, int iClipSize2, int iActivity )
@@ -1639,10 +1639,10 @@ bool CWeaponCSBase::IsUseable()
 		//NOTENOTE: For now, let this cycle continue when in the air, because it snaps badly without it
 
 		if ( ( !gpGlobals->frametime ) ||
-			 ( player == NULL ) ||
-			 ( cl_bobcycle.GetFloat() <= 0.0f ) ||
-			 ( cl_bobup.GetFloat() <= 0.0f ) ||
-			 ( cl_bobup.GetFloat() >= 1.0f ) )
+			( player == NULL ) ||
+			( cl_bobcycle.GetFloat() <= 0.0f ) ||
+			( cl_bobup.GetFloat() <= 0.0f ) ||
+			( cl_bobup.GetFloat() >= 1.0f ) )
 		{
 			//NOTENOTE: We don't use this return value in our case (need to restructure the calculation function setup!)
 			return 0.0f;// just use old value
@@ -1764,7 +1764,7 @@ bool CWeaponCSBase::PhysicsSplash( const Vector &centerPoint, const Vector &norm
 		size += RemapValClamped( rawSpeed, 0, 400, 0, 3 );
 
 		CEffectData	data;
- 		data.m_vOrigin = centerPoint;
+		data.m_vOrigin = centerPoint;
 		data.m_vNormal = normal;
 		data.m_flScale = random->RandomFloat( size, size + 1.0f );
 
@@ -1853,7 +1853,7 @@ void CWeaponCSBase::UpdateAccuracyPenalty()
 
 	if ( m_bInReload )
 	{
- 		fNewPenalty += weaponInfo.m_fInaccuracyReload;
+		fNewPenalty += weaponInfo.m_fInaccuracyReload;
 	}
 
 	if ( fNewPenalty > m_fAccuracyPenalty )

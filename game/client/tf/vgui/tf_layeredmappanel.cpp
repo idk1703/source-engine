@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -58,8 +58,8 @@ void CLayeredMapToolTip::ShowTooltip( vgui::Panel *currentPanel )
 	// Set Data on visible panel
 	if ( !m_pControlledPanel )
 		return;
-	
-	if ( currentPanel != m_hCurrentPanel.Get() ) 
+
+	if ( currentPanel != m_hCurrentPanel.Get() )
 	{
 		CTFLayeredMapItemPanel *pMapItemPanel = dynamic_cast<CTFLayeredMapItemPanel*>( currentPanel );
 		m_hCurrentPanel.Set( pMapItemPanel );
@@ -73,7 +73,7 @@ void CLayeredMapToolTip::ShowTooltip( vgui::Panel *currentPanel )
 			}
 		}
 	}
-	BaseClass::ShowTooltip( currentPanel );	
+	BaseClass::ShowTooltip( currentPanel );
 }
 
 //=========================================================
@@ -87,10 +87,10 @@ void CLayeredMapToolTip::HideTooltip()
 }
 
 //=========================================================
-void CLayeredMapToolTip::SetupPanels( CTFLayeredMapPanel *pParentPanel, vgui::EditablePanel *pControlledPanel ) 
-{ 
-	m_pParentPanel = pParentPanel; 
-	m_pControlledPanel = pControlledPanel; 
+void CLayeredMapToolTip::SetupPanels( CTFLayeredMapPanel *pParentPanel, vgui::EditablePanel *pControlledPanel )
+{
+	m_pParentPanel = pParentPanel;
+	m_pControlledPanel = pControlledPanel;
 }
 
 //=========================================================
@@ -102,7 +102,7 @@ void CLayeredMapToolTip::GetPosition( itempanel_tooltippos_t iTooltipPosition, C
 		*iXPos = (iItemX - m_pControlledPanel->GetWide() + XRES(18));
 		*iYPos = iItemY - YRES(7);
 		break;
-	case IPTTP_RIGHT: 
+	case IPTTP_RIGHT:
 		*iXPos = (iItemX + pItemPanel->GetWide() - XRES(20));
 		*iYPos = iItemY - YRES(7);
 		break;
@@ -247,7 +247,7 @@ void CTFLayeredMapItemPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFLayeredMapItemPanel::OnCursorEntered( void )
 {
@@ -257,7 +257,7 @@ void CTFLayeredMapItemPanel::OnCursorEntered( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFLayeredMapItemPanel::OnCursorExited( void )
 {
@@ -267,7 +267,7 @@ void CTFLayeredMapItemPanel::OnCursorExited( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFLayeredMapItemPanel::OnMousePressed(vgui::MouseCode code)
 {
@@ -340,4 +340,3 @@ void CTFLayeredMapPanel::ApplySettings( KeyValues *inResourceData )
 		inResourceData->CopySubkeys( m_pLayeredMapKv );
 	}
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -9,7 +9,7 @@
 #include "tier1/utlbuffer.h"
 #include "tier1/strtools.h"
 
-class CUDPSocket::CImpl	
+class CUDPSocket::CImpl
 {
 public:
 	struct sockaddr_in	m_SocketIP;
@@ -62,7 +62,7 @@ void CUDPSocket::Shutdown()
 {
 	if ( m_Socket != INVALID_SOCKET )
 	{
-		closesocket( static_cast<unsigned int>( m_Socket )); 
+		closesocket( static_cast<unsigned int>( m_Socket ));
 	}
 }
 
@@ -103,12 +103,12 @@ bool CUDPSocket::SendTo( const netadr_t &recipient, const byte *data, size_t dat
 	// Send data
 	int bytesSent = sendto
 		(
-		m_Socket, 
-		(const char *)data, 
-		(int)datalength, 
-		0, 
-		reinterpret_cast< const sockaddr * >( &dest ), 
-		sizeof( dest ) 
+		m_Socket,
+		(const char *)data,
+		(int)datalength,
+		0,
+		reinterpret_cast< const sockaddr * >( &dest ),
+		sizeof( dest )
 		);
 
 	if ( SOCKET_ERROR == bytesSent )

@@ -26,7 +26,7 @@ typedef enum
 
 
 CRcon::CRcon(IResponse *target,serveritem_t &server,const char *password) {
-	
+
 	memcpy(&m_Server, &server,sizeof(serveritem_t));
 	m_pResponseTarget=target;
 
@@ -53,7 +53,7 @@ CRcon::~CRcon() {
 //-----------------------------------------------------------------------------
 // Purpose: resets the state of the rcon object back to startup conditions (i.e get challenge again)
 //-----------------------------------------------------------------------------
-void CRcon::Reset() 
+void CRcon::Reset()
 {
 	m_bIsRefreshing	=	false;
 	m_bChallenge	=	false;
@@ -73,7 +73,7 @@ void CRcon::Reset()
 void CRcon::SendRcon(const char *command)
 {
 
-	if(m_bDisable==true) // rcon is disabled because it has failed. 
+	if(m_bDisable==true) // rcon is disabled because it has failed.
 	{
 		m_pResponseTarget->ServerFailedToRespond();
 		return;
@@ -83,7 +83,7 @@ void CRcon::SendRcon(const char *command)
 	{ // we are already processing a request, lets queue this
 		queue_requests_t queue;
 		strncpy(queue.queued,command,1024);
-		
+
 		if(requests.Count()>10)  // to many request already...
 			return;
 
@@ -99,7 +99,7 @@ void CRcon::SendRcon(const char *command)
 		GetChallenge();
 		v_strncpy(m_sCmd,command,1024); // store away the command for later :)
 		m_bChallenge=true; // note that we are requesting a challenge and need to still run this command
-	} 
+	}
 	else
 	{
 		RconRequest(command,m_iChallenge);
@@ -117,7 +117,7 @@ void CRcon::RunFrame()
 	// only the "ping" command has a timeout
 /*	float curtime = CSocket::GetClock();
 	if(m_fQuerySendTime!=0 && (curtime-m_fQuerySendTime)> 10.0f) // 10 seconds
-	{	
+	{
 		m_fQuerySendTime=	0;
 		m_pResponseTarget->ServerFailedToRespond();
 	}
@@ -132,12 +132,12 @@ void CRcon::RunFrame()
 //-----------------------------------------------------------------------------
 // Purpose: emits a challenge request
 //-----------------------------------------------------------------------------
-void CRcon::GetChallenge() 
+void CRcon::GetChallenge()
 {
 	CMsgBuffer *buffer = m_pQuery->GetSendBuffer();
 	assert( buffer );
-	
-	if ( !buffer ) 
+
+	if ( !buffer )
 	{
 		return;
 	}
@@ -167,16 +167,16 @@ void CRcon::GetChallenge()
 //-----------------------------------------------------------------------------
 // Purpose: emits a valid rcon request, the challenge id has already been found
 //-----------------------------------------------------------------------------
-void CRcon::RconRequest(const char *command, int challenge) 
+void CRcon::RconRequest(const char *command, int challenge)
 {
 	CMsgBuffer *buffer = m_pQuery->GetSendBuffer();
 	assert( buffer );
-	
-	if ( !buffer ) 
+
+	if ( !buffer )
 	{
 		return;
 	}
-	
+
 	netadr_t adr;
 	adr.ip[0] = m_Server.ip[0];
 	adr.ip[1] = m_Server.ip[1];
@@ -211,14 +211,14 @@ void CRcon::UpdateServer(netadr_t *adr, int challenge, const char *resp)
 
 	m_fQuerySendTime=	0;
 	if(m_bChallenge==true)  // now send the RCON request itself
-	{ 
+	{
 		m_bChallenge=false; // m_bChallenge is set to say we just requested the challenge value
 		m_iChallenge=challenge;
 		m_bGotChallenge=true;
 		RconRequest(m_sCmd,m_iChallenge);
-	} 
+	}
 	else  // this is the result of the RCON request
-	{ 
+	{
 		m_bNewRcon=true;
 		v_strncpy(m_sRconResponse,resp,2048);
 		m_bIsRefreshing=false;
@@ -229,8 +229,8 @@ void CRcon::UpdateServer(netadr_t *adr, int challenge, const char *resp)
 			SendRcon(requests[0].queued);
 			requests.Remove(0); // now delete this element
 		}
-		
-		
+
+
 		// notify the UI of the new server info
 		m_pResponseTarget->ServerResponded();
 
@@ -241,15 +241,15 @@ void CRcon::UpdateServer(netadr_t *adr, int challenge, const char *resp)
 //-----------------------------------------------------------------------------
 // Purpose: run when a refresh is asked for
 //-----------------------------------------------------------------------------
-void CRcon::Refresh() 
+void CRcon::Refresh()
 {
-	
+
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: returns if a rcon is currently being performed
 //-----------------------------------------------------------------------------
-bool CRcon::IsRefreshing() 
+bool CRcon::IsRefreshing()
 {
 
 	return m_bIsRefreshing;
@@ -258,7 +258,7 @@ bool CRcon::IsRefreshing()
 //-----------------------------------------------------------------------------
 // Purpose: the server to which this rcon class is bound
 //-----------------------------------------------------------------------------
-serveritem_t &CRcon::GetServer() 
+serveritem_t &CRcon::GetServer()
 {
 	return m_Server;
 }
@@ -266,7 +266,7 @@ serveritem_t &CRcon::GetServer()
 //-----------------------------------------------------------------------------
 // Purpose: the challenge id used in rcons
 //-----------------------------------------------------------------------------
-bool CRcon::Challenge() 
+bool CRcon::Challenge()
 {
 	return m_bChallenge;
 }
@@ -304,7 +304,7 @@ bool CRcon::PasswordFail()
 //-----------------------------------------------------------------------------
 // Purpose: called by the rcon message handler to denote a bad password
 //-----------------------------------------------------------------------------
-void CRcon::BadPassword(const char *info) 
+void CRcon::BadPassword(const char *info)
 {
 	strncpy(m_sRconResponse,info,100);
 	m_bPasswordFail=true;
@@ -327,7 +327,7 @@ void CRcon::BadPassword(const char *info)
 //-----------------------------------------------------------------------------
 // Purpose: return whether rcon has been disabled (due to bad passwords)
 //-----------------------------------------------------------------------------
-bool CRcon::Disabled() 
+bool CRcon::Disabled()
 {
 	return m_bDisable;
 }
@@ -335,9 +335,8 @@ bool CRcon::Disabled()
 //-----------------------------------------------------------------------------
 // Purpose: sets the password to use for rcons
 //-----------------------------------------------------------------------------
-void CRcon::SetPassword(const char *newPass) 
+void CRcon::SetPassword(const char *newPass)
 {
 	strncpy(m_sPassword,newPass,100);
 	m_bDisable=false; // new password, so we can try again
 }
-

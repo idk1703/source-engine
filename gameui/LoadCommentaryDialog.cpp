@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -52,7 +52,7 @@ void OpenLoadCommentaryDialog( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CC_LoadCommentary_Test( void )
 {
@@ -158,7 +158,7 @@ private:
 	vgui::Label *m_pDescriptionLabel;
 	CTGAImagePanel *m_pCommentaryScreenshot;
 	ImagePanel *m_pCommentaryScreenshotBackground;
-	
+
 	Color m_TextColor, m_FillColor, m_SelectedColor;
 
 	int m_iListItemID;
@@ -191,7 +191,7 @@ CLoadCommentaryDialog::CLoadCommentaryDialog(vgui::Panel *parent) : BaseClass(pa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadCommentaryDialog::OnCommand( const char *command )
 {
@@ -293,7 +293,7 @@ void CLoadCommentaryDialog::ScanCommentaryFiles()
 			continue;
 		}
 
-		ParseCommentaryFile( szFileName, pFileName );		
+		ParseCommentaryFile( szFileName, pFileName );
 
 		pFileName = g_pFullFileSystem->FindNext( handle );
 	}
@@ -348,7 +348,7 @@ void CLoadCommentaryDialog::ParseCommentaryFile( char const *pszFileName, char c
 		pData->deleteThis();
 		return;
 	}
-	
+
 	// walk the platform menu loading all the interfaces
 	KeyValues *menuKeys = pData->FindKey("trackinfo", false);
 	if ( menuKeys )
@@ -378,7 +378,7 @@ void CLoadCommentaryDialog::ParseCommentaryFile( char const *pszFileName, char c
 		char *ext = strstr( mapname, "_commentary" );
 		if ( !ext )
 			return;
-		
+
 		*ext = '\0';
 		Q_FileBase( mapname, item.szMapName, sizeof(item.szMapName) );
 

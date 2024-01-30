@@ -32,7 +32,7 @@ IMPLEMENT_SERVERCLASS_ST( CWaterBullet, DT_WaterBullet )
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWaterBullet::Precache()
 {
@@ -41,7 +41,7 @@ void CWaterBullet::Precache()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWaterBullet::Spawn( const Vector &vecOrigin, const Vector &vecDir )
 {
@@ -57,7 +57,7 @@ void CWaterBullet::Spawn( const Vector &vecOrigin, const Vector &vecDir )
 
 	QAngle angles;
 	SetAbsOrigin( vecOrigin );
-	
+
 	SetAbsVelocity( vecDir * 1500.0f );
 	VectorAngles( GetAbsVelocity(), angles );
 	SetAbsAngles( angles );
@@ -89,7 +89,7 @@ void CWaterBullet::BulletThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWaterBullet::Touch( CBaseEntity *pOther )
 {

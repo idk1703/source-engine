@@ -10,7 +10,7 @@
 
 #include "appframework/ilaunchermgr.h"
 
-// LINUX path taken from //Steam/main/src/tier0/platform_posix.cpp - Returns installed RAM in MB. 
+// LINUX path taken from //Steam/main/src/tier0/platform_posix.cpp - Returns installed RAM in MB.
 static unsigned long GetInstalledRAM()
 {
 	unsigned long ulTotalRamMB = 2047;
@@ -51,7 +51,7 @@ void GlobalMemoryStatus( MEMORYSTATUS *pOut )
 
 	uint64 ulTotalRam = static_cast<uint64>( nInstalledRamInMB ) * ( 1024 * 1024 );
 	ulTotalRam = MIN( ulTotalRam, 0xFFFFFFFF );
-	
+
 	pOut->dwTotalPhys = static_cast<SIZE_T>( ulTotalRam );
 }
 

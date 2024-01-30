@@ -14,6 +14,6 @@ struct PS_INPUT
 float4 main( PS_INPUT i ) : COLOR
 {
 	float4 result = i.vColor0 * tex2D( TextureSampler, i.vTexCoord0 );
-	
+
 	return FinalOutput( result, 0, PIXEL_FOG_TYPE_NONE, TONEMAP_SCALE_NONE );
 }

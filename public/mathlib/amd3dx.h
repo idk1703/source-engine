@@ -46,32 +46,32 @@
 
 
  1. First argument of macro is a destination and
-    second argument is a source operand.
-      ex) _asm PFCMPEQ (mm3, mm4)
-                         |    |
-                        dst  src
+	second argument is a source operand.
+		ex) _asm PFCMPEQ (mm3, mm4)
+								|    |
+								dst  src
 
  2. The destination operand can be m0 to m7 only.
-    The source operand can be any one of the register
-    m0 to m7 or _eax, _ecx, _edx, _ebx, _esi, or _edi
-    that contains effective address.
-      ex) _asm PFRCP    (MM7, MM6)
-      ex) _asm PFRCPIT2 (mm0, mm4)
-      ex) _asm PFMUL    (mm3, _edi)
+	The source operand can be any one of the register
+	m0 to m7 or _eax, _ecx, _edx, _ebx, _esi, or _edi
+	that contains effective address.
+		ex) _asm PFRCP    (MM7, MM6)
+		ex) _asm PFRCPIT2 (mm0, mm4)
+		ex) _asm PFMUL    (mm3, _edi)
 
-  3. The prefetch(w) takes one src operand _eax, ecx, _edx,
-     _ebx, _esi, or _edi that contains effective address.
-      ex) _asm PREFETCH (_edi)
+	3. The prefetch(w) takes one src operand _eax, ecx, _edx,
+		_ebx, _esi, or _edi that contains effective address.
+		ex) _asm PREFETCH (_edi)
 
- For WATCOM C/C++ users, when using #pragma aux instead if 
- _asm, all macro names should be prefixed by a p_ or P_. 
+ For WATCOM C/C++ users, when using #pragma aux instead if
+ _asm, all macro names should be prefixed by a p_ or P_.
  Macros should not be enclosed in quotes.
-              ex) p_pfrcp (MM7,MM6)
+					ex) p_pfrcp (MM7,MM6)
 
  NOTE: Not all instruction macros, nor all possible
-       combinations of operands have been explicitely
-       tested. If any errors are found, please report
-       them.
+		combinations of operands have been explicitely
+		tested. If any errors are found, please report
+		them.
 
  EXAMPLE
  =======
@@ -88,46 +88,46 @@
 
  void main ()
  {
-      float x = (float)1.25;
-      float y = (float)1.25;
-      float z, zz;
+		float x = (float)1.25;
+		float y = (float)1.25;
+		float z, zz;
 
-     _asm {
-              movd mm1, x
-              movd mm2, y
-              pfmul (mm1, mm2)
-              movd z, mm1
-              femms
-      }
+		_asm {
+					movd mm1, x
+					movd mm2, y
+					pfmul (mm1, mm2)
+					movd z, mm1
+					femms
+		}
 
-      printf ("value of z = %f\n", z);
+		printf ("value of z = %f\n", z);
 
-      //
-      // Demonstration of using the memory instead of
-      // multimedia register
-      //
-      _asm {
-              movd mm3, x
-              lea esi, y   // load effective address of y
-              pfmul (mm3, _esi)
-              movd zz, mm3
-              femms
-      }
+		//
+		// Demonstration of using the memory instead of
+		// multimedia register
+		//
+		_asm {
+					movd mm3, x
+					lea esi, y   // load effective address of y
+					pfmul (mm3, _esi)
+					movd zz, mm3
+					femms
+		}
 
-      printf ("value of zz = %f\n", zz);
-  }
+		printf ("value of zz = %f\n", zz);
+	}
 
  #pragma aux EXAMPLE with WATCOM C/C++ v11.x
  ===========================================
 
-    extern void Add(float *__Dest, float *__A, float *__B);
-    #pragma aux Add =               \
-            p_femms                 \
-            "movd mm6,[esi]"        \
-            p_pfadd(mm6,_edi)       \
-            "movd [ebx],mm6"        \
-            p_femms                 \
-            parm [ebx] [esi] [edi];
+	extern void Add(float *__Dest, float *__A, float *__B);
+	#pragma aux Add =               \
+				p_femms                 \
+				"movd mm6,[esi]"        \
+				p_pfadd(mm6,_edi)       \
+				"movd [ebx],mm6"        \
+				p_femms                 \
+				parm [ebx] [esi] [edi];
 
 *******************************************************************************/
 
@@ -138,7 +138,7 @@
 
 // The WATCOM C/C++ version of the 3DNow! macros.
 //
-// The older, compbined register style for WATCOM C/C++ macros is not 
+// The older, compbined register style for WATCOM C/C++ macros is not
 // supported.
 
 /* Operand defines for instructions two operands */
@@ -655,40 +655,40 @@
 #define _K3D__esi 0x06
 #define _K3D__edi 0x07
 
-// General 3DNow! instruction format that is supported by 
-// these macros. Note that only the most basic form of memory 
-// operands are supported by these macros. 
+// General 3DNow! instruction format that is supported by
+// these macros. Note that only the most basic form of memory
+// operands are supported by these macros.
 
 #define InjK3DOps(dst,src,inst)                         \
 {                                                       \
-   _asm _emit 0x0f                                      \
-   _asm _emit 0x0f                                      \
-   _asm _emit ((_K3D_##dst & 0x3f) << 3) | _K3D_##src   \
-   _asm _emit _3DNowOpcode##inst                        \
+	_asm _emit 0x0f                                      \
+	_asm _emit 0x0f                                      \
+	_asm _emit ((_K3D_##dst & 0x3f) << 3) | _K3D_##src   \
+	_asm _emit _3DNowOpcode##inst                        \
 }
 
 #define InjK3DMOps(dst,src,off,inst)                    \
 {                                                       \
-   _asm _emit 0x0f                                      \
-   _asm _emit 0x0f                                      \
-   _asm _emit (((_K3D_##dst & 0x3f) << 3) | _K3D_##src | 0x40) \
-   _asm _emit off                                       \
-   _asm _emit _3DNowOpcode##inst                        \
+	_asm _emit 0x0f                                      \
+	_asm _emit 0x0f                                      \
+	_asm _emit (((_K3D_##dst & 0x3f) << 3) | _K3D_##src | 0x40) \
+	_asm _emit off                                       \
+	_asm _emit _3DNowOpcode##inst                        \
 }
 
 #define InjMMXOps(dst,src,inst)                         \
 {                                                       \
-   _asm _emit 0x0f                                      \
-   _asm _emit _3DNowOpcode##inst                        \
-   _asm _emit ((_K3D_##dst & 0x3f) << 3) | _K3D_##src   \
+	_asm _emit 0x0f                                      \
+	_asm _emit _3DNowOpcode##inst                        \
+	_asm _emit ((_K3D_##dst & 0x3f) << 3) | _K3D_##src   \
 }
 
 #define InjMMXMOps(dst,src,off,inst)                    \
 {                                                       \
-   _asm _emit 0x0f                                      \
-   _asm _emit _3DNowOpcode##inst                        \
-   _asm _emit (((_K3D_##dst & 0x3f) << 3) | _K3D_##src | 0x40) \
-   _asm _emit off                                       \
+	_asm _emit 0x0f                                      \
+	_asm _emit _3DNowOpcode##inst                        \
+	_asm _emit (((_K3D_##dst & 0x3f) << 3) | _K3D_##src | 0x40) \
+	_asm _emit off                                       \
 }
 
 #define _3DNowOpcodePF2ID    0x1d
@@ -752,81 +752,81 @@
 
 #define FEMMS                                   \
 {                                               \
-   _asm _emit 0x0f                              \
-   _asm _emit 0x0e                              \
+	_asm _emit 0x0f                              \
+	_asm _emit 0x0e                              \
 }
 
 #define PREFETCH(src)                           \
 {                                               \
-   _asm _emit 0x0f                              \
-   _asm _emit 0x0d                              \
-   _asm _emit (_K3D_##src & 0x07)               \
+	_asm _emit 0x0f                              \
+	_asm _emit 0x0d                              \
+	_asm _emit (_K3D_##src & 0x07)               \
 }
 
 /* Prefetch with a short offset, < 127 or > -127
-   Carefull!  Doesn't check for your offset being
-   in range. */
+	Carefull!  Doesn't check for your offset being
+	in range. */
 
 #define PREFETCHM(src,off)					    \
 {                                               \
-   _asm _emit 0x0f                              \
-   _asm _emit 0x0d								\
-   _asm _emit (0x40 | (_K3D_##src & 0x07))		\
-   _asm _emit off								\
+	_asm _emit 0x0f                              \
+	_asm _emit 0x0d								\
+	_asm _emit (0x40 | (_K3D_##src & 0x07))		\
+	_asm _emit off								\
 }
 
 /* Prefetch with a long offset */
 
 #define PREFETCHMLONG(src,off)					\
 {                                               \
-   _asm _emit 0x0f                              \
-   _asm _emit 0x0d								\
-   _asm _emit (0x80 | (_K3D_##src & 0x07))		\
-   _asm _emit (off & 0x000000ff)				\
-   _asm _emit (off & 0x0000ff00) >>	8			\
-   _asm _emit (off & 0x00ff0000) >>	16			\
-   _asm _emit (off & 0xff000000) >>	24			\
+	_asm _emit 0x0f                              \
+	_asm _emit 0x0d								\
+	_asm _emit (0x80 | (_K3D_##src & 0x07))		\
+	_asm _emit (off & 0x000000ff)				\
+	_asm _emit (off & 0x0000ff00) >>	8			\
+	_asm _emit (off & 0x00ff0000) >>	16			\
+	_asm _emit (off & 0xff000000) >>	24			\
 }
 
 #define PREFETCHW(src)                          \
 {                                               \
-   _asm _emit 0x0f                              \
-   _asm _emit 0x0d                              \
-   _asm _emit (0x08 | (_K3D_##src & 0x07))      \
+	_asm _emit 0x0f                              \
+	_asm _emit 0x0d                              \
+	_asm _emit (0x08 | (_K3D_##src & 0x07))      \
 }
 
 #define PREFETCHWM(src,off)                     \
 {                                               \
-   _asm _emit 0x0f                              \
-   _asm _emit 0x0d                              \
-   _asm _emit 0x48 | (_K3D_##src & 0x07)        \
-   _asm	_emit off								\
+	_asm _emit 0x0f                              \
+	_asm _emit 0x0d                              \
+	_asm _emit 0x48 | (_K3D_##src & 0x07)        \
+	_asm	_emit off								\
 }
 
 #define PREFETCHWMLONG(src,off)                 \
 {                                               \
-   _asm _emit 0x0f                              \
-   _asm _emit 0x0d                              \
-   _asm _emit 0x88 | (_K3D_##src & 0x07)        \
-   _asm _emit (off & 0x000000ff)				\
-   _asm _emit (off & 0x0000ff00) >>	8			\
-   _asm _emit (off & 0x00ff0000) >>	16			\
-   _asm _emit (off & 0xff000000) >>	24			\
+	_asm _emit 0x0f                              \
+	_asm _emit 0x0d                              \
+	_asm _emit 0x88 | (_K3D_##src & 0x07)        \
+	_asm _emit (off & 0x000000ff)				\
+	_asm _emit (off & 0x0000ff00) >>	8			\
+	_asm _emit (off & 0x00ff0000) >>	16			\
+	_asm _emit (off & 0xff000000) >>	24			\
 }
 
 #define CPUID                                   \
 {                                               \
-    _asm _emit 0x0f                             \
-    _asm _emit 0xa2                             \
+	_asm _emit 0x0f                             \
+	_asm _emit 0xa2                             \
 }
 
 
 /* Defines for new, K7 opcodes */
 #define SFENCE                                  \
 {                                               \
-    _asm _emit 0x0f                             \
-    _asm _emit 0xae                             \
-    _asm _emit 0xf8                             \
+	_asm _emit 0x0f                             \
+	_asm _emit 0xae                             \
+	_asm _emit 0xf8                             \
 }
 
 #define PFNACC(dst,src)         InjK3DOps(dst,src,PFNACC)
@@ -989,16 +989,16 @@
 #define _K3D_edi 0x07
 
 #define InjK3DOps(dst,src,inst) \
-    db 0x0f, 0x0f, (((_K3D_##dst & 0x3f) << 3) | _K3D_##src), _3DNowOpcode##inst
+	db 0x0f, 0x0f, (((_K3D_##dst & 0x3f) << 3) | _K3D_##src), _3DNowOpcode##inst
 
 #define InjK3DMOps(dst,src,off,inst) \
-    db 0x0f, 0x0f, (((_K3D_##dst & 0x3f) << 3) | _K3D_##src | 0x40), off, _3DNowOpcode##inst
+	db 0x0f, 0x0f, (((_K3D_##dst & 0x3f) << 3) | _K3D_##src | 0x40), off, _3DNowOpcode##inst
 
 #define InjMMXOps(dst,src,inst)                     \
-    db 0x0f, _3DNowOpcode##inst, (((_K3D_##dst & 0x3f) << 3) | _K3D_##src)
+	db 0x0f, _3DNowOpcode##inst, (((_K3D_##dst & 0x3f) << 3) | _K3D_##src)
 
 #define InjMMXMOps(dst,src,off,inst)                \
-    db 0x0f, _3DNowOpcode##inst, (((_K3D_##dst & 0x3f) << 3) | _K3D_##src | 0x40), off
+	db 0x0f, _3DNowOpcode##inst, (((_K3D_##dst & 0x3f) << 3) | _K3D_##src | 0x40), off
 
 #define PFNACC(dst,src)         InjK3DOps(dst,src,PFNACC)
 #define PFPNACC(dst,src)        InjK3DOps(dst,src,PFPNACC)
@@ -1136,9 +1136,9 @@
 #define pshufw(dst,src,msk)     PSHUFW(dst,src,msk)
 #define movntq(dst,src)         MOVNTQ(dst,src)
 #define prefetchnta(mem)        PREFETCHNTA(mem)
-#define prefetcht0(mem)         PREFETCHT0(mem)  
-#define prefetcht1(mem)         PREFETCHT1(mem)  
-#define prefetcht2(mem)         PREFETCHT2(mem)  
+#define prefetcht0(mem)         PREFETCHT0(mem)
+#define prefetcht1(mem)         PREFETCHT1(mem)
+#define prefetcht2(mem)         PREFETCHT2(mem)
 
 
 #define pavgusbm(dst,src,off)   PAVGUSBM(dst,src,off)
@@ -1181,8 +1181,8 @@
 #define pshufwm(dst,src,off,msk)    PSHUFWM(dst,src,off,msk)
 #define movntqm(dst,src,off)    MOVNTQM(dst,src,off)
 #define prefetchntam(mem,off)   PREFETCHNTA(mem,off)
-#define prefetcht0m(mem,off)    PREFETCHT0(mem,off)  
-#define prefetcht1m(mem,off)    PREFETCHT1(mem,off)  
-#define prefetcht2m(mem,off)    PREFETCHT2(mem,off)  
+#define prefetcht0m(mem,off)    PREFETCHT0(mem,off)
+#define prefetcht1m(mem,off)    PREFETCHT1(mem,off)
+#define prefetcht2m(mem,off)    PREFETCHT2(mem,off)
 
 #endif

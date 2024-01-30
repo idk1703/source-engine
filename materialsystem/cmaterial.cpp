@@ -12,7 +12,7 @@
 #include <string.h>
 #include "materialsystem_global.h"
 #include "shaderapi/ishaderapi.h"
-#include "materialsystem/imaterialproxy.h"							   
+#include "materialsystem/imaterialproxy.h"
 #include "shadersystem.h"
 #include "materialsystem/imaterialproxyfactory.h"
 #include "IHardwareConfigInternal.h"
@@ -48,7 +48,7 @@ public:
 	const char  *GetName() const;
 	const char  *GetTextureGroupName() const;
 
-	PreviewImageRetVal_t GetPreviewImageProperties( int *width, int *height, 
+	PreviewImageRetVal_t GetPreviewImageProperties( int *width, int *height,
 				 				ImageFormat *imageFormat, bool* isTranslucent ) const;
 	PreviewImageRetVal_t GetPreviewImage( unsigned char *data, int width, int height,
 								ImageFormat imageFormat ) const;
@@ -66,7 +66,7 @@ public:
 	void		DecrementReferenceCount( );
 	int 		GetEnumerationID( ) const;
 	void		GetLowResColorSample( float s, float t, float *color ) const;
-	
+
 	IMaterialVar *		FindVar( char const *varName, bool *found, bool complain = true );
 	IMaterialVar *		FindVarFast( char const *pVarName, unsigned int *pToken );
 
@@ -83,7 +83,7 @@ public:
 
 	// GR - Is lightmap alpha needed?
 	bool	NeedsLightmapBlendAlpha( void );
-	
+
 	virtual void	AlphaModulate( float alpha );
 	virtual void	ColorModulate( float r, float g, float b );
 	virtual float	GetAlphaModulation();
@@ -137,7 +137,7 @@ public:
 	bool		IsPrecachedVars( ) const;
 	IShader *	GetShader() const;
 	const char *GetShaderName() const;
-	
+
 	virtual void			DeleteIfUnreferenced();
 
 	void					SetEnumerationID( int id );
@@ -153,7 +153,7 @@ public:
 
 	// Gets the vertex format
 	VertexFormat_t GetVertexFormat() const;
-	
+
 	// diffuse bump lightmap?
 	bool IsUsingDiffuseBumpedLighting() const;
 
@@ -171,11 +171,11 @@ public:
 
 	// Do we use fog?
 	bool UseFog( void ) const;
-	
+
 	// Should we draw?
 	void ToggleSuppression();
 	void ToggleDebugTrace();
-	
+
 	// Refresh material based on current var values
 	void Refresh();
 	void RefreshPreservingMaterialVars();
@@ -203,7 +203,7 @@ public:
 	virtual void ArtificialRelease( void );
 
 	virtual void ReportVarChanged( IMaterialVar *pVar )
-	{	
+	{
 		m_ChangeID++;
 	}
 	virtual void ClearContextData( void );
@@ -236,7 +236,7 @@ private:
 		IMaterialVar* pFlagDefinedVar, bool parsingOverrides, int& flagMask, int& overrideMask );
 
 	// Computes the material vars for the shader
-	int ParseMaterialVars( IShader* pShader, KeyValues& keyValues, 
+	int ParseMaterialVars( IShader* pShader, KeyValues& keyValues,
 		KeyValues* pOverride, bool modelDefault, IMaterialVar** ppVars, int nFindContext = MATERIAL_FINDCONTEXT_NONE );
 
 	// Figures out the preview image for worldcraft
@@ -304,13 +304,13 @@ private:
 	};
 
 	int					m_iEnumerationID;
-	
+
 	int					m_minLightmapPageID;
 	int					m_maxLightmapPageID;
 
 	unsigned short		m_MappingWidth;
 	unsigned short		m_MappingHeight;
-	
+
 	IShader				*m_pShader;
 
 	CUtlSymbol			m_Name;
@@ -491,7 +491,7 @@ CMaterial::CMaterial( char const* materialName, const char *pTextureGroupName, K
 	m_pVMTKeyValues = pKeyValues;
 	if (m_pVMTKeyValues)
 	{
-		m_Flags |= MATERIAL_IS_MANUALLY_CREATED; 
+		m_Flags |= MATERIAL_IS_MANUALLY_CREATED;
 	}
 
 	if ( pTemp[0] == '/' && pTemp[1] == '/' && pTemp[2] != '/' )
@@ -503,7 +503,7 @@ CMaterial::CMaterial( char const* materialName, const char *pTextureGroupName, K
 	m_ShaderRenderState.m_Flags = 0;
 	m_ShaderRenderState.m_VertexFormat = m_ShaderRenderState.m_VertexUsage = 0;
 	m_ShaderRenderState.m_MorphFormat = 0;
-	m_ShaderRenderState.m_pSnapshots = CreateRenderPassList(); 
+	m_ShaderRenderState.m_pSnapshots = CreateRenderPassList();
 	m_ChangeID = 0;
 
 	m_QueueFriendlyVersion.SetRealTimeVersion( this );
@@ -526,7 +526,7 @@ CMaterial::~CMaterial()
 		m_pVMTKeyValues = NULL;
 	}
 
-	DestroyRenderPassList( m_ShaderRenderState.m_pSnapshots ); 
+	DestroyRenderPassList( m_ShaderRenderState.m_pSnapshots );
 
 	m_representativeTexture = NULL;
 
@@ -551,7 +551,7 @@ void CMaterial::ClearContextData( void )
 				delete m_ShaderRenderState.m_pSnapshots[i].m_pContextData[j];
 				m_ShaderRenderState.m_pSnapshots[i].m_pContextData[j] = NULL;
 			}
-			
+
 		}
 }
 
@@ -571,7 +571,7 @@ void CMaterial::SetShaderAndParams( KeyValues *pKeyValues )
 	m_pVMTKeyValues = pKeyValues ? pKeyValues->MakeCopy() : NULL;
 	if (m_pVMTKeyValues)
 	{
-		m_Flags |= MATERIAL_IS_MANUALLY_CREATED; 
+		m_Flags |= MATERIAL_IS_MANUALLY_CREATED;
 	}
 
 	// Apply patches
@@ -656,7 +656,7 @@ void CMaterial::DestroyRenderPassList( RenderPassList_t *pPassList )
 				delete pPassList[i].m_pContextData[j];
 				pPassList[i].m_pContextData[j] = NULL;
 			}
-			
+
 		}
 	if ( IsConsole() || !MaterialSystem()->CanUseEditorMaterials() )
 	{
@@ -672,7 +672,7 @@ void CMaterial::DestroyRenderPassList( RenderPassList_t *pPassList )
 #endif
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Gets the renderstate
 //-----------------------------------------------------------------------------
@@ -739,7 +739,7 @@ void CMaterial::CleanUpShaderParams()
 void CMaterial::InitializeMaterialProxy( KeyValues* pFallbackKeyValues )
 {
 	IMaterialProxyFactory *pMaterialProxyFactory;
-	pMaterialProxyFactory = MaterialSystem()->GetMaterialProxyFactory();	
+	pMaterialProxyFactory = MaterialSystem()->GetMaterialProxyFactory();
 	if( !pMaterialProxyFactory )
 		return;
 
@@ -807,7 +807,7 @@ void CMaterial::CleanUpMaterialProxy()
 
 		pMaterialProxyFactory->DeleteProxy( pProxy );
 	}
-	
+
 	m_ProxyInfo.RemoveAll();
 #ifdef PROXY_TRACK_NAMES
 	m_ProxyInfoNames.RemoveAll();
@@ -892,7 +892,7 @@ int ParseVectorFromKeyValueString( KeyValues *pKeyValue, const char *pMaterialNa
 	{
 		Assert( *pScan == '[' );
 	}
-	
+
 	// skip the '['
 	++pScan;
 	int i;
@@ -1010,30 +1010,30 @@ static IMaterialVar* CreateMaterialVarFromKeyValue( IMaterial* pMaterial, KeyVal
 	{
 		case KeyValues::TYPE_INT:
 			return IMaterialVar::Create( pMaterial, pszName, pKeyValue->GetInt() );
-			
+
 		case KeyValues::TYPE_FLOAT:
 			return IMaterialVar::Create( pMaterial, pszName, pKeyValue->GetFloat() );
-			
+
 		case KeyValues::TYPE_STRING:
 		{
 			char const* pString = pKeyValue->GetString();
 			if (!pString || !pString[0])
 				return 0;
-			
+
 			// Look for matrices
 			IMaterialVar *pMatrixVar = CreateMatrixMaterialVarFromKeyValue( pMaterial, pKeyValue );
 			if (pMatrixVar)
 				return pMatrixVar;
-			
+
 			// Look for vectors
 			if (!IsVector(pString))
 				return IMaterialVar::Create( pMaterial, pszName, pString );
-			
+
 			// Parse the string as a vector...
 			return CreateVectorMaterialVarFromKeyValue( pMaterial, pKeyValue );
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -1140,7 +1140,7 @@ bool CMaterial::ParseMaterialFlag( KeyValues* pParseValue, IMaterialVar* pFlagVa
 		PrintMaterialFlags( pFlagVar->GetIntValue(), pFlagDefinedVar->GetIntValue() );
 	}
 */
-	
+
 	return true;
 }
 
@@ -1204,7 +1204,7 @@ bool CMaterial::ShouldSkipVar( KeyValues *pVar, bool *pWasConditional )
 //-----------------------------------------------------------------------------
 // Computes the material vars for the shader
 //-----------------------------------------------------------------------------
-int CMaterial::ParseMaterialVars( IShader* pShader, KeyValues& keyValues, 
+int CMaterial::ParseMaterialVars( IShader* pShader, KeyValues& keyValues,
 			KeyValues* pOverrideKeyValues, bool modelDefault, IMaterialVar** ppVars, int nFindContext )
 {
 	IMaterialVar* pNewVar;
@@ -1238,7 +1238,7 @@ int CMaterial::ParseMaterialVars( IShader* pShader, KeyValues& keyValues,
 		bool bProcessThisOne = true;
 
 		bool bIsConditionalVar;
-		
+
 		const char *pszVarName = GetVarName( pVar );
 
 		if ( (nFindContext == MATERIAL_FINDCONTEXT_ISONAMODEL) && pszVarName && pszVarName[0] )
@@ -1253,7 +1253,7 @@ int CMaterial::ParseMaterialVars( IShader* pShader, KeyValues& keyValues,
 		}
 
 		// See if the var is a flag...
-		if ( 
+		if (
 			ShouldSkipVar( pVar, &bIsConditionalVar ) ||	// should skip?
 			((pVar->GetName()[0] == '%') && (g_pShaderDevice->IsUsingGraphics()) && (!MaterialSystem()->CanUseEditorMaterials() ) ) || // is an editor var?
 			ParseMaterialFlag( pVar, ppVars[FLAGS], ppVars[FLAGS_DEFINED], parsingOverrides, flagMask, overrideMask ) || // is a flag?
@@ -1265,7 +1265,7 @@ int CMaterial::ParseMaterialVars( IShader* pShader, KeyValues& keyValues,
 		{
 			// See if the var is one of the shader params
 			int varIdx = FindMaterialVar( pShader, pszVarName );
-			
+
 			// Check for multiply defined or overridden
 			if (varIdx >= 0)
 			{
@@ -1299,7 +1299,7 @@ int CMaterial::ParseMaterialVars( IShader* pShader, KeyValues& keyValues,
 
 			// Create a material var for this dudely dude; could be zero...
 			pNewVar = CreateMaterialVarFromKeyValue( this, pVar );
-			if (!pNewVar) 
+			if (!pNewVar)
 				goto nextVar;
 
 			if (varIdx < 0)
@@ -1449,7 +1449,7 @@ KeyValues* CMaterial::InitializeShader( KeyValues &keyValues, KeyValues &patchKe
 	char const* pShaderName = pCurrentFallback->GetName();
 	if ( !pShaderName )
 	{
-		// I'm not quite sure how this can happen, but we'll see... 
+		// I'm not quite sure how this can happen, but we'll see...
 		Warning( "Shader not specified in material %s\nUsing wireframe instead...\n", GetName() );
 		Assert( 0 );
 		pShaderName = MissingShaderName();
@@ -1492,7 +1492,7 @@ KeyValues* CMaterial::InitializeShader( KeyValues &keyValues, KeyValues &patchKe
 			}
 
 #ifndef DEDICATED
-			if ( !pShader ) 
+			if ( !pShader )
 	 		{
 #ifdef LINUX
 				// Exit out here. We're running into issues where this material is returned in a horribly broken
@@ -1556,7 +1556,7 @@ KeyValues* CMaterial::InitializeShader( KeyValues &keyValues, KeyValues &patchKe
 		}
 
 		// Try to get the section associated with the fallback shader
-		// Then chain it to the base data so it can override the 
+		// Then chain it to the base data so it can override the
 		// values if it wants to
 		if( !bHasBuiltinFallbackBlock )
 		{
@@ -1576,7 +1576,7 @@ KeyValues* CMaterial::InitializeShader( KeyValues &keyValues, KeyValues &patchKe
 		}
 
 		// Check the KeyValues for '$fallbackmaterial'
-		// Note we have to do this *after* we chain the keyvalues 
+		// Note we have to do this *after* we chain the keyvalues
 		// based on the fallback shader	since the names of the fallback material
 		// must lie within the shader-specific block usually.
 		const char *pFallbackMaterial = pCurrentFallback->GetString( "$fallbackmaterial" );
@@ -1602,7 +1602,7 @@ KeyValues* CMaterial::InitializeShader( KeyValues &keyValues, KeyValues &patchKe
 			pCurrentFallback = &keyValues;
 			pFallbackSection = NULL;
 
-			// I'm not quite sure how this can happen, but we'll see... 
+			// I'm not quite sure how this can happen, but we'll see...
 			pShaderName = pCurrentFallback->GetName();
 			if (!pShaderName)
 			{
@@ -1733,7 +1733,7 @@ void CMaterial::SetupErrorShader()
 	ShaderSystem()->InitShaderInstance( m_pShader, m_pShaderParams, "Error", GetTextureGroupName() );
 
 #ifdef DBGFLAG_ASSERT
-	bool ok = 
+	bool ok =
 #endif
 		InitializeStateSnapshots();
 
@@ -1835,7 +1835,7 @@ inline void CMaterial::SetMaterialVarFlags2( int flags, bool on )
 	if ( m_pShaderParams && m_VarCount > FLAGS_DEFINED2 && m_pShaderParams[FLAGS_DEFINED2] )
 	{
 		// Mark it as being defined...
-		m_pShaderParams[FLAGS_DEFINED2]->SetIntValue( 
+		m_pShaderParams[FLAGS_DEFINED2]->SetIntValue(
 			m_pShaderParams[FLAGS_DEFINED2]->GetIntValueFast() | flags );
 	}
 }
@@ -1890,7 +1890,7 @@ void CMaterial::ToggleSuppression()
 		if ((GetMaterialVarFlags() & MATERIAL_VAR_NO_DEBUG_OVERRIDE) != 0)
 			return;
 
-		SetMaterialVarFlags( MATERIAL_VAR_NO_DRAW, 
+		SetMaterialVarFlags( MATERIAL_VAR_NO_DRAW,
 			(GetMaterialVarFlags() & MATERIAL_VAR_NO_DRAW) == 0 );
 	}
 }
@@ -1899,7 +1899,7 @@ void CMaterial::ToggleDebugTrace()
 {
 	if (IsValidRenderState())
 	{
-		SetMaterialVarFlags( MATERIAL_VAR_DEBUG, 
+		SetMaterialVarFlags( MATERIAL_VAR_DEBUG,
 			(GetMaterialVarFlags() & MATERIAL_VAR_DEBUG) == 0 );
 	}
 }
@@ -2180,7 +2180,7 @@ void CMaterial::ReloadFromWhitelistIfMarked()
 	Precache();
 	if ( !GetShader() )
 	{
-		// We can get in here if we previously loaded this material off disk and now the whitelist 
+		// We can get in here if we previously loaded this material off disk and now the whitelist
 		// says to get it out of Steam but it's not in Steam. So just setup a wireframe thingy
 		// to draw the material with.
 		m_Flags |= MATERIAL_IS_PRECACHED | MATERIAL_VARS_IS_PRECACHED;
@@ -2190,7 +2190,7 @@ void CMaterial::ReloadFromWhitelistIfMarked()
 			printf("\n ##### CMaterial::ReloadFromWhitelistIfMarked: GetShader failed on %s, calling SetupErrorShader", m_pDebugName );
 		}
 		#endif
-		
+
 		SetupErrorShader();
 	}
 }
@@ -2301,7 +2301,7 @@ void CMaterial::Precache()
 	m_Flags |= MATERIAL_IS_PRECACHED;
 
 	// Invokes the SHADER_INIT block in the various shaders,
-	if ( m_pShader ) 
+	if ( m_pShader )
 	{
 		ShaderSystem()->InitShaderInstance( m_pShader, m_pShaderParams, GetName(), GetTextureGroupName() );
 	}
@@ -2378,7 +2378,7 @@ void CMaterial::ReloadTextures( void )
 	IMaterialVar **ppVars = GetShaderParams();
 	for( i = 0; i < nParams; i++ )
 	{
-		if( ppVars[i] )		
+		if( ppVars[i] )
 		{
 			if( ppVars[i]->IsTexture() )
 			{
@@ -2617,7 +2617,7 @@ char const* CMaterial::GetPreviewImageName( void )
 
 	bool found;
 	IMaterialVar *pRepresentativeTextureVar;
-	
+
 	FindVar( "%noToolTexture", &found, false );
 	if (found)
 		return NULL;
@@ -2666,9 +2666,9 @@ char const* CMaterial::GetPreviewImageFileName( void ) const
 	return vtfFilename;
 }
 
-PreviewImageRetVal_t CMaterial::GetPreviewImageProperties( int *width, int *height, 
+PreviewImageRetVal_t CMaterial::GetPreviewImageProperties( int *width, int *height,
 				 		ImageFormat *imageFormat, bool* isTranslucent ) const
-{	
+{
 	char const* pFileName = GetPreviewImageFileName();
 	if ( IsX360() || !pFileName )
 	{
@@ -2686,7 +2686,7 @@ PreviewImageRetVal_t CMaterial::GetPreviewImageProperties( int *width, int *heig
 		Warning( "\"%s\" - \"%s\": cached version doesn't exist\n", GetName(), pFileName );
 		return MATERIAL_PREVIEW_IMAGE_BAD;
 	}
-	
+
 	IVTFTexture *pVTFTexture = CreateVTFTexture();
 	if (!pVTFTexture->Unserialize( buf, true ))
 	{
@@ -2726,23 +2726,23 @@ PreviewImageRetVal_t CMaterial::GetPreviewImage( unsigned char *pData, int width
 
 	nHeaderSize = VTFFileHeaderSize( VTF_MAJOR_VERSION );
 	buf.EnsureCapacity( nHeaderSize );
-	
+
 	// read the header first.. it's faster!!
 	int nBytesRead; // GCC won't let this be initialized right away
 	nBytesRead = g_pFullFileSystem->Read( buf.Base(), nHeaderSize, fileHandle );
 	buf.SeekPut( CUtlBuffer::SEEK_HEAD, nBytesRead );
-		
+
 	// Unserialize the header
 	if (!pVTFTexture->Unserialize( buf, true ))
 	{
 		Warning( "Error reading material \"%s\"\n", pFileName );
 		goto fail;
 	}
-		
+
 	// FIXME: Make sure the preview image size requested is the same
 	// size as mip level 0 of the texture
 	Assert( (width == pVTFTexture->Width()) && (height == pVTFTexture->Height()) );
-		
+
 	// Determine where in the file to start reading (frame 0, face 0, mip 0)
 	pVTFTexture->ImageFileInfo( 0, 0, 0, &nImageOffset, &nImageSize );
 
@@ -2751,18 +2751,18 @@ PreviewImageRetVal_t CMaterial::GetPreviewImage( unsigned char *pData, int width
 		Warning( "Couldn't determine offset and size of material \"%s\"\n", pFileName );
 		goto fail;
 	}
-		
+
 	// Prep the utlbuffer for reading
 	buf.EnsureCapacity( nImageSize );
 	buf.SeekPut( CUtlBuffer::SEEK_HEAD, 0 );
-		
+
 	// Read in the bits at the specified location
 	g_pFullFileSystem->Seek( fileHandle, nImageOffset, FILESYSTEM_SEEK_HEAD );
 	g_pFullFileSystem->Read( buf.Base(), nImageSize, fileHandle );
 	g_pFullFileSystem->Close( fileHandle );
-		
+
 	// Convert from the format read in to the requested format
-	ImageLoader::ConvertImageFormat( (unsigned char*)buf.Base(), pVTFTexture->Format(), 
+	ImageLoader::ConvertImageFormat( (unsigned char*)buf.Base(), pVTFTexture->Format(),
 		pData, imageFormat, width, height );
 
 	DestroyVTFTexture( pVTFTexture );
@@ -2796,7 +2796,7 @@ IMaterialVar *CMaterial::FindVar( char const *pVarName, bool *pFound, bool compl
 			if (m_pShaderParams[i]->GetNameAsSymbol() == sym)
 			{
 				if( pFound )
-					*pFound = true;					  
+					*pFound = true;
 				return m_pShaderParams[i];
 			}
 		}
@@ -2918,7 +2918,7 @@ bool CMaterial::IsTranslucentInternal( float fAlphaModulation ) const
 	{
 		// I have to check for alpha modulation here because it isn't
 		// factored into the shader's notion of whether or not it's transparent
-		return ::IsTranslucent(&m_ShaderRenderState) || 
+		return ::IsTranslucent(&m_ShaderRenderState) ||
 			(fAlphaModulation < 1.0f) ||
 			m_pShader->IsTranslucent( m_pShaderParams );
 	}
@@ -2934,7 +2934,7 @@ bool CMaterial::IsAlphaTested()
 	Precache();
 	if (m_pShader && IsValidRenderState())
 	{
-		return ::IsAlphaTested(&m_ShaderRenderState) || 
+		return ::IsAlphaTested(&m_ShaderRenderState) ||
 				GetMaterialVarFlag( MATERIAL_VAR_ALPHATEST );
 	}
 	return false;
@@ -3111,7 +3111,7 @@ bool CMaterial::IsErrorMaterial() const
 void CMaterial::FindRepresentativeTexture( void )
 {
 	Precache();
-	
+
 	// First try to find the base texture...
 	bool found;
 	IMaterialVar *textureVar = FindVar( "$baseTexture", &found, false );
@@ -3299,7 +3299,7 @@ void InsertKeyValues( KeyValues& dst, KeyValues& src, bool bCheckForExistence, b
 		}
 		pSrcVar = pSrcVar->GetNextKey();
 	}
-	
+
 	if ( bRecursive && !dst.GetFirstSubKey() )
 	{
 		// Insert a dummy key to an empty subkey to make sure it doesn't get removed
@@ -3436,7 +3436,7 @@ bool AccumulateRecursiveVmtPatches( KeyValues &patchKeyValuesOut, KeyValues **pp
 	{
 		// Accumulate the new patch keys from this file
 		AccumulatePatchKeyValues( *pCurrentKeyValues, patchKeyValuesOut );
-		
+
 		// Load the included file
 		const char *pIncludeFileName = pCurrentKeyValues->GetString( "include" );
 

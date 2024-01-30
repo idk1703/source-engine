@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -48,7 +48,7 @@ public:
 
 	virtual GameActionSet_t GetPreferredActionSet() { return GAME_ACTION_SET_IN_GAME_HUD; }
 
-protected:	
+protected:
 	// vgui overrides
 	virtual void OnCommand( const char *command );
 

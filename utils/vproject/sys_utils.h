@@ -24,12 +24,3 @@ extern BOOL		Sys_SetRegistryString( const CHAR *key, const CHAR *value );
 extern BOOL		Sys_GetRegistryString( const CHAR *key, CHAR *value, const CHAR *defValue, int valueLen );
 extern BOOL		Sys_SetRegistryInteger( const CHAR *key, int value );
 extern BOOL		Sys_GetRegistryInteger( const CHAR *key, int defValue, int &value );
-
-
-
-
-
-
-
-
-

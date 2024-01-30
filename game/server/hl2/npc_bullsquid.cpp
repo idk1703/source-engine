@@ -57,7 +57,7 @@ enum
 //=========================================================
 // monster-specific tasks
 //=========================================================
-enum 
+enum
 {
 	TASK_SQUID_HOPTURN = LAST_SHARED_TASK + 1,
 	TASK_SQUID_EAT,
@@ -126,16 +126,16 @@ void CNPC_Bullsquid::Spawn()
 	AddSolidFlags( FSOLID_NOT_STANDABLE );
 	SetMoveType( MOVETYPE_STEP );
 	m_bloodColor		= BLOOD_COLOR_GREEN;
-	
+
 	SetRenderColor( 255, 255, 255, 255 );
-	
+
 	m_iHealth			= sk_bullsquid_health.GetFloat();
 	m_flFieldOfView		= 0.2;// indicates the width of this monster's forward view cone ( as a dotproduct result )
 	m_NPCState			= NPC_STATE_NONE;
-	
+
 	CapabilitiesClear();
 	CapabilitiesAdd( bits_CAP_MOVE_GROUND | bits_CAP_INNATE_RANGE_ATTACK1 | bits_CAP_INNATE_MELEE_ATTACK1 | bits_CAP_INNATE_MELEE_ATTACK2 );
-	
+
 	m_fCanThreatDisplay	= TRUE;
 	m_flNextSpitTime = gpGlobals->curtime;
 
@@ -167,15 +167,15 @@ void CNPC_Bullsquid::Precache()
 
 //-----------------------------------------------------------------------------
 // Purpose: Indicates this monster's place in the relationship table.
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 Class_T	CNPC_Bullsquid::Classify( void )
 {
-	return CLASS_BULLSQUID; 
+	return CLASS_BULLSQUID;
 }
 
 //=========================================================
-// IdleSound 
+// IdleSound
 //=========================================================
 #define SQUID_ATTN_IDLE	(float)1.5
 void CNPC_Bullsquid::IdleSound( void )
@@ -184,7 +184,7 @@ void CNPC_Bullsquid::IdleSound( void )
 }
 
 //=========================================================
-// PainSound 
+// PainSound
 //=========================================================
 void CNPC_Bullsquid::PainSound( const CTakeDamageInfo &info )
 {
@@ -265,7 +265,7 @@ void CNPC_Bullsquid::HandleAnimEvent( animevent_t *pEvent )
 				Vector vSpitPos;
 
 				GetAttachment( "Mouth", vSpitPos );
-				
+
 				Vector			vTarget = GetEnemy()->GetAbsOrigin();
 				Vector			vToss;
 				CBaseEntity*	pBlocker;
@@ -288,9 +288,9 @@ void CNPC_Bullsquid::HandleAnimEvent( animevent_t *pEvent )
 						random->RandomFloat( -100, -500 )
 					)
 				);
-						
+
 				AttackSound();
-			
+
 				CPVSFilter filter( vSpitPos );
 				te->SpriteSpray( filter, 0.0,
 					&vSpitPos, &vToss, m_nSquidSpitSprite, 5, 10, 15 );
@@ -322,14 +322,14 @@ void CNPC_Bullsquid::HandleAnimEvent( animevent_t *pEvent )
 		case BSQUID_AE_TAILWHIP:
 		{
 			CBaseEntity *pHurt = CheckTraceHullAttack( 70, Vector(-16,-16,-16), Vector(16,16,16), sk_bullsquid_dmg_whip.GetFloat(), DMG_SLASH | DMG_ALWAYSGIB );
-			if ( pHurt ) 
+			if ( pHurt )
 			{
 				Vector right, up;
 				AngleVectors( GetAbsAngles(), NULL, &right, &up );
 
 				if ( pHurt->GetFlags() & ( FL_NPC | FL_CLIENT ) )
 					 pHurt->ViewPunch( QAngle( 20, 0, -20 ) );
-			
+
 				pHurt->ApplyAbsVelocityImpulse( 100 * (up+2*right) );
 			}
 		}
@@ -338,7 +338,7 @@ void CNPC_Bullsquid::HandleAnimEvent( animevent_t *pEvent )
 
 		case BSQUID_AE_BLINK:
 		{
-			// close eye. 
+			// close eye.
 			m_nSkin = 1;
 		}
 		break;
@@ -362,14 +362,14 @@ void CNPC_Bullsquid::HandleAnimEvent( animevent_t *pEvent )
 
 		case BSQUID_AE_THROW:
 			{
-				// squid throws its prey IF the prey is a client. 
+				// squid throws its prey IF the prey is a client.
 				CBaseEntity *pHurt = CheckTraceHullAttack( 70, Vector(-16,-16,-16), Vector(16,16,16), 0, 0 );
 
 
 				if ( pHurt )
 				{
 					pHurt->ViewPunch( QAngle(20,0,-20) );
-							
+
 					// screeshake transforms the viewmodel as well as the viewangle. No problems with seeing the ends of the viewmodels.
 					UTIL_ScreenShake( pHurt->GetAbsOrigin(), 25.0, 1.5, 0.7, 2, SHAKE_START );
 
@@ -449,7 +449,7 @@ int CNPC_Bullsquid::MeleeAttack1Conditions( float flDot, float flDist )
 	{
 		return ( COND_CAN_MELEE_ATTACK1 );
 	}
-	
+
 	return( COND_NONE );
 }
 
@@ -461,9 +461,9 @@ int CNPC_Bullsquid::MeleeAttack1Conditions( float flDot, float flDist )
 //=========================================================
 int CNPC_Bullsquid::MeleeAttack2Conditions( float flDot, float flDist )
 {
-	if ( flDist <= 85 && flDot >= 0.7 && !HasCondition( COND_CAN_MELEE_ATTACK1 ) )		// The player & bullsquid can be as much as their bboxes 
+	if ( flDist <= 85 && flDot >= 0.7 && !HasCondition( COND_CAN_MELEE_ATTACK1 ) )		// The player & bullsquid can be as much as their bboxes
 		 return ( COND_CAN_MELEE_ATTACK2 );
-	
+
 	return( COND_NONE );
 }
 
@@ -484,7 +484,7 @@ void CNPC_Bullsquid::RemoveIgnoredConditions( void )
 
 	if ( gpGlobals->curtime - m_flLastHurtTime <= 20 )
 	{
-		// haven't been hurt in 20 seconds, so let the squid care about stink. 
+		// haven't been hurt in 20 seconds, so let the squid care about stink.
 		ClearCondition( COND_SMELL );
 	}
 
@@ -500,8 +500,8 @@ Disposition_t CNPC_Bullsquid::IRelationType( CBaseEntity *pTarget )
 {
 	if ( gpGlobals->curtime - m_flLastHurtTime < 5 && FClassnameIs( pTarget, "monster_headcrab" ) )
 	{
-		// if squid has been hurt in the last 5 seconds, and is getting relationship for a headcrab, 
-		// tell squid to disregard crab. 
+		// if squid has been hurt in the last 5 seconds, and is getting relationship for a headcrab,
+		// tell squid to disregard crab.
 		return D_NU;
 	}
 
@@ -525,14 +525,14 @@ int CNPC_Bullsquid::OnTakeDamage_Alive( const CTakeDamageInfo &inputInfo )
 	if ( GetEnemy() != NULL && IsMoving() && pevAttacker == GetEnemy() && gpGlobals->curtime - m_flLastHurtTime > 3 )
 	{
 		flDist = ( GetAbsOrigin() - GetEnemy()->GetAbsOrigin() ).Length2D();
-		
+
 		if ( flDist > SQUID_SPRINT_DIST )
 		{
 			AI_Waypoint_t*	pRoute = GetNavigator()->GetPath()->Route();
 
 			if ( pRoute )
 			{
-				flDist = ( GetAbsOrigin() - pRoute[ pRoute->iNodeID ].vecLocation ).Length2D();// reusing flDist. 
+				flDist = ( GetAbsOrigin() - pRoute[ pRoute->iNodeID ].vecLocation ).Length2D();// reusing flDist.
 
 				if ( GetNavigator()->GetPath()->BuildTriangulationRoute( GetAbsOrigin(), pRoute[ pRoute->iNodeID ].vecLocation, flDist * 0.5, GetEnemy(), &vecApex, &vOffset, NAV_GROUND ) )
 				{
@@ -574,23 +574,23 @@ int CNPC_Bullsquid::GetSoundInterests( void )
 void CNPC_Bullsquid::OnListened( void )
 {
 	AISoundIter_t iter;
-	
+
 	CSound *pCurrentSound;
 
-	static int conditionsToClear[] = 
+	static int conditionsToClear[] =
 	{
 		COND_SQUID_SMELL_FOOD,
 	};
 
 	ClearConditions( conditionsToClear, ARRAYSIZE( conditionsToClear ) );
-	
+
 	pCurrentSound = GetSenses()->GetFirstHeardSound( &iter );
-	
+
 	while ( pCurrentSound )
 	{
 		// the npc cares about this sound, and it's close enough to hear.
 		int condition = COND_NONE;
-		
+
 		if ( !pCurrentSound->FIsSound() )
 		{
 			// if not a sound, must be a smell - determine if it's just a scent, or if it's a food scent
@@ -600,7 +600,7 @@ void CNPC_Bullsquid::OnListened( void )
 				condition = COND_SQUID_SMELL_FOOD;
 			}
 		}
-		
+
 		if ( condition != COND_NONE )
 			SetCondition( condition );
 
@@ -622,7 +622,7 @@ void CNPC_Bullsquid::RunAI( void )
 	if ( m_nSkin != 0 )
 	{
 		// close eye if it was open.
-		m_nSkin = 0; 
+		m_nSkin = 0;
 	}
 
 	if ( random->RandomInt( 0,39 ) == 0 )
@@ -642,7 +642,7 @@ void CNPC_Bullsquid::RunAI( void )
 }
 
 //=========================================================
-// GetSchedule 
+// GetSchedule
 //=========================================================
 int CNPC_Bullsquid::SelectSchedule( void )
 {
@@ -660,7 +660,7 @@ int CNPC_Bullsquid::SelectSchedule( void )
 				CSound		*pSound;
 
 				pSound = GetBestScent();
-				
+
 				if ( pSound && (!FInViewCone( pSound->GetSoundOrigin() ) || !FVisible( pSound->GetSoundOrigin() )) )
 				{
 					// scent is behind or occluded
@@ -673,7 +673,7 @@ int CNPC_Bullsquid::SelectSchedule( void )
 
 			if ( HasCondition( COND_SMELL ) )
 			{
-				// there's something stinky. 
+				// there's something stinky.
 				CSound		*pSound;
 
 				pSound = GetBestScent();
@@ -711,7 +711,7 @@ int CNPC_Bullsquid::SelectSchedule( void )
 				CSound		*pSound;
 
 				pSound = GetBestScent();
-				
+
 				if ( pSound && (!FInViewCone( pSound->GetSoundOrigin() ) || !FVisible( pSound->GetSoundOrigin() )) )
 				{
 					// scent is behind or occluded
@@ -736,7 +736,7 @@ int CNPC_Bullsquid::SelectSchedule( void )
 			{
 				return SCHED_MELEE_ATTACK2;
 			}
-			
+
 			return SCHED_CHASE_ENEMY;
 
 			break;
@@ -749,7 +749,7 @@ int CNPC_Bullsquid::SelectSchedule( void )
 //=========================================================
 // FInViewCone - returns true is the passed vector is in
 // the caller's forward view cone. The dot product is performed
-// in 2d, making the view cone infinitely tall. 
+// in 2d, making the view cone infinitely tall.
 //=========================================================
 bool CNPC_Bullsquid::FInViewCone( Vector pOrigin )
 {
@@ -795,7 +795,7 @@ void CNPC_Bullsquid::StartTask( const Task_t *pTask )
 	case TASK_SQUID_HOPTURN:
 		{
 			SetActivity( ACT_HOP );
-			
+
 			if ( GetEnemy() )
 			{
 				Vector	vecFacing = ( GetEnemy()->GetAbsOrigin() - GetAbsOrigin() );
@@ -838,7 +838,7 @@ void CNPC_Bullsquid::RunTask( const Task_t *pTask )
 
 			if ( IsSequenceFinished() )
 			{
-				TaskComplete(); 
+				TaskComplete();
 			}
 			break;
 		}
@@ -852,8 +852,8 @@ void CNPC_Bullsquid::RunTask( const Task_t *pTask )
 
 //=========================================================
 // GetIdealState - Overridden for Bullsquid to deal with
-// the feature that makes it lose interest in headcrabs for 
-// a while if something injures it. 
+// the feature that makes it lose interest in headcrabs for
+// a while if something injures it.
 //=========================================================
 NPC_STATE CNPC_Bullsquid::SelectIdealState( void )
 {
@@ -903,7 +903,7 @@ AI_BEGIN_CUSTOM_NPC( npc_bullsquid, CNPC_Bullsquid )
 	DEFINE_SCHEDULE
 	(
 		SCHED_SQUID_HURTHOP,
-	
+
 		"	Tasks"
 		"		TASK_STOP_MOVING			0"
 		"		TASK_SOUND_WAKE				0"
@@ -912,14 +912,14 @@ AI_BEGIN_CUSTOM_NPC( npc_bullsquid, CNPC_Bullsquid )
 		"	"
 		"	Interrupts"
 	)
-	
+
 	//=========================================================
 	// > SCHED_SQUID_SEECRAB
 	//=========================================================
 	DEFINE_SCHEDULE
 	(
 		SCHED_SQUID_SEECRAB,
-	
+
 		"	Tasks"
 		"		TASK_STOP_MOVING			0"
 		"		TASK_SOUND_WAKE				0"
@@ -930,14 +930,14 @@ AI_BEGIN_CUSTOM_NPC( npc_bullsquid, CNPC_Bullsquid )
 		"		COND_LIGHT_DAMAGE"
 		"		COND_HEAVY_DAMAGE"
 	)
-	
+
 	//=========================================================
 	// > SCHED_SQUID_EAT
 	//=========================================================
 	DEFINE_SCHEDULE
 	(
 		SCHED_SQUID_EAT,
-	
+
 		"	Tasks"
 		"		TASK_STOP_MOVING					0"
 		"		TASK_SQUID_EAT						10"
@@ -960,14 +960,14 @@ AI_BEGIN_CUSTOM_NPC( npc_bullsquid, CNPC_Bullsquid )
 		"		COND_NEW_ENEMY"
 		"		COND_SMELL"
 	)
-	
+
 	//=========================================================
 	// > SCHED_SQUID_SNIFF_AND_EAT
 	//=========================================================
 	DEFINE_SCHEDULE
 	(
 		SCHED_SQUID_SNIFF_AND_EAT,
-	
+
 		"	Tasks"
 		"		TASK_STOP_MOVING					0"
 		"		TASK_SQUID_EAT						10"
@@ -991,14 +991,14 @@ AI_BEGIN_CUSTOM_NPC( npc_bullsquid, CNPC_Bullsquid )
 		"		COND_NEW_ENEMY"
 		"		COND_SMELL"
 	)
-	
+
 	//=========================================================
 	// > SCHED_SQUID_WALLOW
 	//=========================================================
 	DEFINE_SCHEDULE
 	(
 		SCHED_SQUID_WALLOW,
-	
+
 		"	Tasks"
 		"		TASK_STOP_MOVING				0"
 		"		TASK_SQUID_EAT					10"
@@ -1018,5 +1018,5 @@ AI_BEGIN_CUSTOM_NPC( npc_bullsquid, CNPC_Bullsquid )
 		"		COND_HEAVY_DAMAGE"
 		"		COND_NEW_ENEMY"
 	)
-	
+
 AI_END_CUSTOM_NPC()

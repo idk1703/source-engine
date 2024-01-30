@@ -47,7 +47,7 @@ long ran1(void)
 	long k;
 	static long iy=0;
 	static long iv[NTAB];
-	
+
 	if (idum <= 0 || !iy)
 	{
 		if (-(idum) < 1) idum=1;
@@ -127,5 +127,3 @@ long RandomLong( long lLow, long lHigh )
 
 	return lLow + (n % x);
 }
-
-

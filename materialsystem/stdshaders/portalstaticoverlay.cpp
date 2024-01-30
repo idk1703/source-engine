@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,7 +12,7 @@
 #include "portalstaticoverlay_ps20b.inc"
 #include "cpp_shader_constant_register_map.h"
 
-BEGIN_VS_SHADER( PortalStaticOverlay, 
+BEGIN_VS_SHADER( PortalStaticOverlay,
 				"Help for PortalStaticOverlay shader" )
 
 				BEGIN_SHADER_PARAMS
@@ -194,5 +194,3 @@ SHADER_DRAW
 }
 
 END_SHADER
-
-

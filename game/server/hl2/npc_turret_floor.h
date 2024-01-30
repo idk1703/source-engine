@@ -70,7 +70,7 @@ public:
 
 #ifdef HL2_EPISODIC
 	// We don't want to be NPCSOLID because we'll collide with NPC clips
-	virtual unsigned int PhysicsSolidMaskForEntity( void ) const { return MASK_SOLID; } 
+	virtual unsigned int PhysicsSolidMaskForEntity( void ) const { return MASK_SOLID; }
 #endif	// HL2_EPISODIC
 
 	// Player pickup
@@ -110,8 +110,8 @@ public:
 	// Use functions
 	void	ToggleUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 
-	int ObjectCaps() 
-	{ 
+	int ObjectCaps()
+	{
 		return BaseClass::ObjectCaps() | FCAP_IMPULSE_USE;
 	}
 
@@ -145,13 +145,13 @@ public:
 	Vector EyePosition( void )
 	{
 		UpdateMuzzleMatrix();
-		
+
 		Vector vecOrigin;
 		MatrixGetColumn( m_muzzleToWorld, 3, vecOrigin );
-		
+
 		Vector vecForward;
 		MatrixGetColumn( m_muzzleToWorld, 0, vecForward );
-		
+
 		// Note: We back up into the model to avoid an edge case where the eyes clip out of the world and
 		//		 cause problems with the PVS calculations -- jdw
 
@@ -174,7 +174,7 @@ public:
 	{
 		// For now, turn green so we can tell who is hacked.
 		SetRenderColor( 0, 255, 0 );
-		m_bHackedByAlyx = true; 
+		m_bHackedByAlyx = true;
 	}
 
 	static float	fMaxTipControllerVelocity;
@@ -185,7 +185,7 @@ protected:
 	virtual bool	PreThink( turretState_e state );
 	virtual void	Shoot( const Vector &vecSrc, const Vector &vecDirToEnemy, bool bStrict = false );
 	virtual void	SetEyeState( eyeState_t state );
-	void			Ping( void );	
+	void			Ping( void );
 	void			Toggle( void );
 	void			Enable( void );
 	void			Disable( void );

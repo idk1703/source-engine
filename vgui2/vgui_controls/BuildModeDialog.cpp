@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -191,7 +191,7 @@ private:
 class CBuildModeDialogMgr
 {
 public:
-	
+
 	void Add( BuildModeDialog *pDlg );
 	void Remove( BuildModeDialog *pDlg );
 
@@ -287,13 +287,13 @@ class CBuildModeNavCombo : public ComboBox
 	DECLARE_CLASS_SIMPLE( CBuildModeNavCombo, ComboBox );
 public:
 
-	CBuildModeNavCombo(Panel *parent, const char *panelName, int numLines, bool allowEdit, bool getParents, Panel *context ) : 
+	CBuildModeNavCombo(Panel *parent, const char *panelName, int numLines, bool allowEdit, bool getParents, Panel *context ) :
 		BaseClass( parent, panelName, numLines, allowEdit ),
 		m_bParents( getParents )
 	{
 		m_hContext = context;
 	}
-	
+
 	virtual void OnShowMenu(Menu *menu)
 	{
 		menu->DeleteAllItems();
@@ -411,7 +411,7 @@ void BuildModeDialog::CreateControls()
 
 	m_pSaveButton = new Button(this, "SaveButton", "&Save");
 	m_pSaveButton->SetSize(64, buttonH);
-	
+
 	m_pApplyButton = new Button(this, "ApplyButton", "&Apply");
 	m_pApplyButton->SetSize(64, buttonH);
 
@@ -430,7 +430,7 @@ void BuildModeDialog::CreateControls()
 	m_pVarsButton = new MenuButton(this, "VarsButton", "Variables");
 	m_pVarsButton->SetSize(72, buttonH);
 	m_pVarsButton->SetOpenDirection(Menu::UP);
-	
+
 	// iterate the vars
 	KeyValues *vars = m_pBuildGroup->GetDialogVariables();
 	if (vars && vars->GetFirstSubKey())
@@ -503,7 +503,7 @@ void BuildModeDialog::PerformLayout()
 
 	int wide, tall;
 	GetSize(wide, tall);
-	
+
 	int xpos = BORDER_GAP;
 	int ypos = BORDER_GAP + TITLE_HEIGHT;
 
@@ -553,7 +553,7 @@ void BuildModeDialog::PerformLayout()
 	m_pReloadLocalization->SetPos( xpos, ypos );
 
 	xpos += ( XGAP ) + m_pReloadLocalization->GetWide();
-	
+
 	m_pPrevChild->SetPos( xpos, ypos );
 	m_pPrevChild->SetSize( 64, m_pReloadLocalization->GetTall() );
 	xpos += ( XGAP ) + m_pPrevChild->GetWide();
@@ -630,7 +630,7 @@ void BuildModeDialog::OnTextKillFocus()
 // Purpose: sets up the current control to edit
 //-----------------------------------------------------------------------------
 void BuildModeDialog::SetActiveControl(Panel *controlToEdit)
-{	
+{
 	if (m_pCurrentPanel == controlToEdit)
 	{
 		// it's already set, so just update the property data and quit
@@ -717,7 +717,7 @@ void BuildModeDialog::SetActiveControl(Panel *controlToEdit)
 			editCombo->AddItem("south-west", NULL);
 			editCombo->AddItem("south", NULL);
 			editCombo->AddItem("south-east", NULL);
-		
+
 			edit = editCombo;
 		}
 		else if (datat == TYPE_AUTORESIZE)
@@ -728,7 +728,7 @@ void BuildModeDialog::SetActiveControl(Panel *controlToEdit)
 			editCombo->AddItem( "1 - resize right", NULL);
 			editCombo->AddItem( "2 - resize down", NULL);
 			editCombo->AddItem( "3 - down & right", NULL);
-		
+
 			edit = editCombo;
 		}
 		else if (datat == TYPE_CORNER)
@@ -739,7 +739,7 @@ void BuildModeDialog::SetActiveControl(Panel *controlToEdit)
 			editCombo->AddItem("1 - top-right", NULL);
 			editCombo->AddItem("2 - bottom-left", NULL);
 			editCombo->AddItem("3 - bottom-right", NULL);
-		
+
 			edit = editCombo;
 		}
 		else if (datat == TYPE_LOCALIZEDSTRING)
@@ -799,19 +799,19 @@ void BuildModeDialog::SetActiveControl(Panel *controlToEdit)
 	}
 
 	// check and see if the current panel is a Label
-	// iterate through the class hierarchy 
+	// iterate through the class hierarchy
 	if ( controlToEdit->IsBuildModeDeletable() )
 	{
 		m_pDeleteButton->SetEnabled(true);
 	}
 	else
 	{
-		m_pDeleteButton->SetEnabled(false);	
+		m_pDeleteButton->SetEnabled(false);
 	}
 
 	// update the property data in the dialog
 	UpdateControlData(m_pCurrentPanel);
-	
+
 	// set our title
 	if ( m_pBuildGroup->GetResourceName() )
 	{
@@ -932,7 +932,7 @@ void BuildModeDialog::OnDeletePanel()
 {
 	if (!m_pCurrentPanel->IsBuildModeEditable())
 	{
-		return; 
+		return;
 	}
 
 	m_pBuildGroup->RemoveSettings();
@@ -1036,7 +1036,7 @@ void BuildModeDialog::StoreUndoSettings()
 		if (_undoSettings)
 			_undoSettings->deleteThis();
 		_undoSettings = NULL;
-		return; 
+		return;
 	}
 
 	if (_undoSettings)
@@ -1055,7 +1055,7 @@ void BuildModeDialog::StoreUndoSettings()
 void BuildModeDialog::DoUndo()
 {
 	if ( _undoSettings )
-	{		
+	{
 		m_pCurrentPanel->ApplySettings( _undoSettings );
 		UpdateControlData(m_pCurrentPanel);
 		_undoSettings->deleteThis();
@@ -1142,7 +1142,7 @@ KeyValues *BuildModeDialog::StoreSettings()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void BuildModeDialog::OnKeyCodeTyped(KeyCode code)
 {
@@ -1181,7 +1181,7 @@ void BuildModeDialog::OnTextChanged( Panel *panel )
 		char buf[40];
 		m_pAddNewControlCombo->GetText(buf, 40);
 		if (stricmp(buf, "None") != 0)
-		{	
+		{
 			OnNewControl(buf);
 			// reset box back to None
 			m_pAddNewControlCombo->ActivateItemByRow( 0 );
@@ -1218,15 +1218,15 @@ void BuildModeDialog::OnTextChanged( Panel *panel )
 	{
 		m_pApplyButton->SetEnabled(true);
 	}
-	
-	if (_autoUpdate) 
+
+	if (_autoUpdate)
 	{
 		ApplyDataToControls();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void BuildModeDialog::ExitBuildMode( void )
 {
@@ -1281,14 +1281,14 @@ void BuildModeDialog::RevertToSaved()
 //-----------------------------------------------------------------------------
 void BuildModeDialog::ShowHelp()
 {
-	char helpText[]= "In the Build Mode Dialog Window:\n" 
+	char helpText[]= "In the Build Mode Dialog Window:\n"
 		"Delete button - deletes the currently selected panel if it is deletable.\n"
 		"Apply button - applies changes to the Context Panel.\n"
 		"Save button - saves all settings to file. \n"
 		"Revert to saved- reloads the last saved file.\n"
 		"Auto Update - any changes apply instantly.\n"
 		"Typing Enter in any text field applies changes.\n"
-		"New Control menu - creates a new panel in the upper left corner.\n\n" 
+		"New Control menu - creates a new panel in the upper left corner.\n\n"
 		"In the Context Panel:\n"
 		"After selecting and moving a panel Ctrl-z will undo the move.\n"
 		"Shift clicking panels allows multiple panels to be selected into a group.\n"
@@ -1299,13 +1299,13 @@ void BuildModeDialog::ShowHelp()
 		"  Panel will be created where the menu was opened.\n"
 		"Delete key deletes the currently selected panel if it is deletable.\n"
 		"  Does nothing to multiple selections.";
-		
+
 	MessageBox *helpDlg = new MessageBox ("Build Mode Help", helpText, this);
 	helpDlg->AddActionSignalTarget(this);
 	helpDlg->DoModal();
 }
 
-	
+
 void BuildModeDialog::ShutdownBuildMode()
 {
 	m_pBuildGroup->SetEnabled(false);

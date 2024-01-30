@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -75,7 +75,7 @@ BOOL CScenePreviewDlg::OnInitDialog()
 
 	m_iLastEventPlayed = -1;
 	m_flStartTime = Plat_FloatTime();
-	
+
 	// Start on the first event..
 	for ( int i = 0; i < m_pScene->GetNumEvents(); i++ )
 	{
@@ -86,12 +86,12 @@ BOOL CScenePreviewDlg::OnInitDialog()
 			break;
 		}
 	}
-	
+
 	// Create our idle thread.
 	m_hExitThreadEvent = CreateEvent( NULL, FALSE, FALSE, NULL );
 	m_hIdleEventHandledEvent = CreateEvent( NULL, FALSE, FALSE, NULL );
 	m_hIdleThread = CreateThread( NULL, 0, &CScenePreviewDlg::StaticIdleThread, this, 0, NULL );
-	
+
 	return TRUE;
 }
 
@@ -104,12 +104,12 @@ DWORD CScenePreviewDlg::StaticIdleThread( LPVOID pParameter )
 DWORD CScenePreviewDlg::IdleThread()
 {
 	HANDLE handles[2] = {m_hExitThreadEvent, m_hIdleEventHandledEvent};
-	
+
 	while ( 1 )
 	{
 		// Send the event to the window.
 		PostMessage( WM_SCENEPREVIEW_IDLE, 0, 0 );
-		
+
 		DWORD ret = WaitForMultipleObjects( ARRAYSIZE( handles ), handles, false, INFINITE );
 		if ( ret == WAIT_OBJECT_0 || ret == WAIT_TIMEOUT )
 			return 0;
@@ -122,7 +122,7 @@ DWORD CScenePreviewDlg::IdleThread()
 void CScenePreviewDlg::OnIdle()
 {
 	double flElapsed = Plat_FloatTime() - m_flStartTime;
-	
+
 	// Find the next sound to play.
 	int iLastSound = -1;
 	for ( int i = 0; i < m_pScene->GetNumEvents(); i++ )
@@ -130,7 +130,7 @@ void CScenePreviewDlg::OnIdle()
 		CChoreoEvent *e = m_pScene->GetEvent( i );
 		if ( !e || e->GetType() != CChoreoEvent::SPEAK )
 			continue;
-		
+
 		if ( flElapsed > e->GetStartTime() )
 			iLastSound = i;
 	}
@@ -143,13 +143,13 @@ void CScenePreviewDlg::OnIdle()
 		// Play the current sound.
 		CChoreoEvent *pChoreoEvent = m_pScene->GetEvent( iLastSound );
 		const char *pSoundName = pChoreoEvent->GetParameters();
-		
+
 		SoundType_t soundType;
 		int nIndex;
 		if ( g_Sounds.FindSoundByName( pSoundName, &soundType, &nIndex ) )
 		{
 			bool bRet = g_Sounds.Play( soundType, nIndex );
-			
+
 			CString curSound = pSoundName;
 			if ( !bRet )
 			{
@@ -187,7 +187,7 @@ LRESULT CScenePreviewDlg::DefWindowProc( UINT message, WPARAM wParam, LPARAM lPa
 		SetEvent( m_hIdleEventHandledEvent );
 		return 0;
 	}
-	
+
 	return CDialog::DefWindowProc( message, wParam, lParam );
 }
 

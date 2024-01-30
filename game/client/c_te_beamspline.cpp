@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -38,7 +38,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBeamSpline::C_TEBeamSpline( void )
 {
@@ -51,7 +51,7 @@ C_TEBeamSpline::C_TEBeamSpline( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBeamSpline::~C_TEBeamSpline( void )
 {
@@ -64,8 +64,8 @@ void TE_BeamSpline( IRecipientFilter& filter, float delay,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEBeamSpline::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -83,4 +83,3 @@ BEGIN_RECV_TABLE_NOBASE(C_TEBeamSpline, DT_TEBeamSpline)
 		RecvPropVector( RECVINFO(m_vecPoints[0])),
 		m_vecPoints)
 END_RECV_TABLE()
-

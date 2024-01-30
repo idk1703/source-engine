@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -164,7 +164,7 @@ private:
 	CUtlHashtable< CUtlConstString, gender_t, CaselessStringHashFunctor, UTLConstStringCaselessStringEqualFunctor<char> > m_ActorGenders;
 	CUtlStableHashtable< CSoundEntry*, empty_t, CSoundEntryHashFunctor, CSoundEntryEqualFunctor, uint16, const char* > m_Sounds;
 
-    CUtlVector< CSoundEntry * >			m_SavedOverrides; 
+	CUtlVector< CSoundEntry * >			m_SavedOverrides;
 	CUtlVector< FileNameHandle_t >				m_OverrideFiles;
 
 	struct CSoundScriptFile

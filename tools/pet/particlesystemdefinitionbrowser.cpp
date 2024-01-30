@@ -28,7 +28,7 @@
 
 using namespace vgui;
 
-	
+
 //-----------------------------------------------------------------------------
 // Sort by particle system definition name
 //-----------------------------------------------------------------------------
@@ -83,7 +83,7 @@ CDmeParticleSystemDefinition* CParticleSystemDefinitionBrowser::GetSelectedParti
 // Purpose: Deletes the marked objects.
 //-----------------------------------------------------------------------------
 void CParticleSystemDefinitionBrowser::DeleteParticleSystems()
-{		
+{
 	int iSel = m_pParticleSystemsDefinitions->GetSelectedItem( 0 );
 	int nRow = m_pParticleSystemsDefinitions->GetItemCurrentRow( iSel ) - 1;
 	{
@@ -118,7 +118,7 @@ void CParticleSystemDefinitionBrowser::DeleteParticleSystems()
 		{
 			nRow = 0;
 		}
-		else if ( nRow >= m_pParticleSystemsDefinitions->GetItemCount() ) 
+		else if ( nRow >= m_pParticleSystemsDefinitions->GetItemCount() )
 		{
 			nRow = m_pParticleSystemsDefinitions->GetItemCount() - 1;
 		}
@@ -183,7 +183,7 @@ CDmeParticleSystemDefinition* CParticleSystemDefinitionBrowser::CreateParticleFr
 		KeyValues *kv = m_pParticleSystemsDefinitions->GetItem( i );
 		if ( !V_strcmp( kv->GetString( "name", "" ), pBaseParticleName ) )
 		{
-			// 
+			//
 			pBaseParticleDef = GetElementKeyValue< CDmeParticleSystemDefinition >( kv, "particleSystem" );
 			break;
 		}
@@ -203,7 +203,7 @@ CDmeParticleSystemDefinition* CParticleSystemDefinitionBrowser::CreateParticleFr
 	pNew->SetName( pszNewParticleName );
 
 	// Overrides
-	// 
+	//
 	//"properties"
 	KeyValues *pProperties = pKeyValue->FindKey( "Properties", NULL );
 	if ( pProperties )
@@ -259,7 +259,7 @@ CDmeParticleSystemDefinition* CParticleSystemDefinitionBrowser::CreateParticleFr
 // Create from KV
 void CParticleSystemDefinitionBrowser::CreateParticleSystemsFromKV( const char *pFileName )
 {
-	// 
+	//
 	//const char * pFileName = "particles\\_weapon_prefab_override_kv.txt";
 
 	CUtlBuffer bufRawData;
@@ -275,7 +275,7 @@ void CParticleSystemDefinitionBrowser::CreateParticleSystemsFromKV( const char *
 
 	KeyValues *pBaseKeyValue = NULL;
 	pBaseKeyValue = new KeyValues( "CCreateParticlesFromKV" );
-	
+
 	if ( !pBaseKeyValue->LoadFromBuffer( NULL, bufText ) )
 	{
 		Warning( "Unable to Read KV file [%s]\n", pFileName );
@@ -290,11 +290,11 @@ void CParticleSystemDefinitionBrowser::CreateParticleSystemsFromKV( const char *
 
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CParticleSystemDefinitionBrowser::OnKeyCodeTyped( vgui::KeyCode code )
 {
-	if ( code == KEY_DELETE ) 
+	if ( code == KEY_DELETE )
 	{
 		DeleteParticleSystems();
 	}
@@ -358,7 +358,7 @@ void CParticleSystemDefinitionBrowser::SelectParticleSystem( CDmeParticleSystemD
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Called when buttons are clicked
 //-----------------------------------------------------------------------------
@@ -368,7 +368,7 @@ void CParticleSystemDefinitionBrowser::OnInputCompleted( KeyValues *pKeyValues )
 	if ( m_pDoc->IsParticleSystemDefined( pText ) )
 	{
 		char pBuf[1024];
-		Q_snprintf( pBuf, sizeof(pBuf), "Particle System \"%s\" already exists!\n", pText ); 
+		Q_snprintf( pBuf, sizeof(pBuf), "Particle System \"%s\" already exists!\n", pText );
 		vgui::MessageBox *pMessageBox = new vgui::MessageBox( "Duplicate Particle System Name!\n", pBuf, g_pPetTool->GetRootPanel() );
 		pMessageBox->DoModal( );
 		return;
@@ -542,7 +542,7 @@ void CParticleSystemDefinitionBrowser::OnCommand( const char *pCommand )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CParticleSystemDefinitionBrowser::UpdateParticleSystemList(void)
 {
@@ -578,7 +578,7 @@ void CParticleSystemDefinitionBrowser::UpdateParticleSystemList(void)
 		}
 
 		KeyValues *kv = new KeyValues( "node" );
-		kv->SetString( "name", pName ); 
+		kv->SetString( "name", pName );
 		SetElementKeyValue( kv, "particleSystem", pParticleSystem );
 
 		int nItemID = m_pParticleSystemsDefinitions->AddItem( kv, 0, false, false );
@@ -596,4 +596,3 @@ void CParticleSystemDefinitionBrowser::UpdateParticleSystemList(void)
 	}
 	m_pParticleSystemsDefinitions->SortList();
 }
-

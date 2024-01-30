@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -34,7 +34,7 @@
 #define FTENT_SPIRAL				0x00000400
 #define FTENT_SPRCYCLE				0x00000800
 #define FTENT_COLLIDEALL			0x00001000 // will collide with world and slideboxes
-#define FTENT_PERSIST				0x00002000 // tent is not removed when unable to draw 
+#define FTENT_PERSIST				0x00002000 // tent is not removed when unable to draw
 #define FTENT_COLLIDEKILL			0x00004000 // tent is removed upon collision with anything
 #define FTENT_PLYRATTACHMENT		0x00008000 // tent is attached to a player (owner)
 #define FTENT_SPRANIMATELOOP		0x00010000 // animating sprite doesn't die when last frame is displayed
@@ -105,11 +105,11 @@ public:
 	int								priority;
 	// if attached, this is the index of the client to stick to
 	// if COLLIDEALL, this is the index of the client to ignore
-	// TENTS with FTENT_PLYRATTACHMENT MUST set the clientindex! 
-	short							clientIndex;	
+	// TENTS with FTENT_PLYRATTACHMENT MUST set the clientindex!
+	short							clientIndex;
 
 	// if attached, client origin + tentOffset = tent origin.
-	Vector							tentOffset;		
+	Vector							tentOffset;
 
 	// Used by temp entities.
 	QAngle							m_vecTempEntAngVelocity;
@@ -119,7 +119,7 @@ public:
 	float							m_flSpriteScale;
 	int								m_nFlickerFrame;
 
-	// 
+	//
 	float							m_flFrameRate;
 	float							m_flFrame;
 

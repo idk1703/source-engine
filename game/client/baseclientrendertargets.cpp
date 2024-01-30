@@ -7,7 +7,7 @@
 //=============================================================================//
 
 #include "cbase.h"
-#include "baseclientrendertargets.h"						// header	
+#include "baseclientrendertargets.h"						// header
 #include "materialsystem/imaterialsystemhardwareconfig.h"	// Hardware config checks
 #include "tier0/icommandline.h"
 
@@ -16,8 +16,8 @@ ITexture* CBaseClientRenderTargets::CreateWaterReflectionTexture( IMaterialSyste
 	return pMaterialSystem->CreateNamedRenderTargetTextureEx2(
 		"_rt_WaterReflection",
 		iSize, iSize, RT_SIZE_PICMIP,
-		pMaterialSystem->GetBackBufferFormat(), 
-		MATERIAL_RT_DEPTH_SHARED, 
+		pMaterialSystem->GetBackBufferFormat(),
+		MATERIAL_RT_DEPTH_SHARED,
 		TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT,
 		CREATERENDERTARGETFLAGS_HDR );
 }
@@ -28,8 +28,8 @@ ITexture* CBaseClientRenderTargets::CreateWaterRefractionTexture( IMaterialSyste
 		"_rt_WaterRefraction",
 		iSize, iSize, RT_SIZE_PICMIP,
 		// This is different than reflection because it has to have alpha for fog factor.
-		IMAGE_FORMAT_RGBA8888, 
-		MATERIAL_RT_DEPTH_SHARED, 
+		IMAGE_FORMAT_RGBA8888,
+		MATERIAL_RT_DEPTH_SHARED,
 		TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT,
 		CREATERENDERTARGETFLAGS_HDR );
 }
@@ -40,7 +40,7 @@ ITexture* CBaseClientRenderTargets::CreateCameraTexture( IMaterialSystem* pMater
 		"_rt_Camera",
 		iSize, iSize, RT_SIZE_DEFAULT,
 		pMaterialSystem->GetBackBufferFormat(),
-		MATERIAL_RT_DEPTH_SHARED, 
+		MATERIAL_RT_DEPTH_SHARED,
 		0,
 		CREATERENDERTARGETFLAGS_HDR );
 }
@@ -65,7 +65,7 @@ void CBaseClientRenderTargets::InitClientRenderTargets( IMaterialSystem* pMateri
 //-----------------------------------------------------------------------------
 // Purpose: Shut down each CTextureReference we created in InitClientRenderTargets.
 //			Called by the engine in material system shutdown.
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CBaseClientRenderTargets::ShutdownClientRenderTargets()
 {

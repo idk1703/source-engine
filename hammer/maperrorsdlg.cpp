@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -49,19 +49,19 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CMapErrorsDlg message handlers
 
-void CMapErrorsDlg::OnClear() 
+void CMapErrorsDlg::OnClear()
 {
 }
 
-void CMapErrorsDlg::OnDblclkErrors() 
+void CMapErrorsDlg::OnDblclkErrors()
 {
 }
 
-void CMapErrorsDlg::OnView() 
+void CMapErrorsDlg::OnView()
 {
 }
 
-BOOL CMapErrorsDlg::OnInitDialog() 
+BOOL CMapErrorsDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
@@ -73,6 +73,6 @@ BOOL CMapErrorsDlg::OnInitDialog()
 		m_cErrors.SetItemDataPtr(m_cErrors.GetCount()-1, PVOID(pError));
 		pError = Enum3dErrors();
 	}
-	
+
 	return TRUE;
 }

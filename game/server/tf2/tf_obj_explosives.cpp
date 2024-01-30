@@ -56,7 +56,7 @@ ConVar	obj_explosives_damage( "obj_explosives_damage","100", FCVAR_NONE, "Explos
 ConVar	obj_explosives_radius( "obj_explosives_radius","256", FCVAR_NONE, "Explosives damage" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectExplosives::CObjectExplosives()
 {
@@ -64,7 +64,7 @@ CObjectExplosives::CObjectExplosives()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectExplosives::Spawn()
 {
@@ -83,7 +83,7 @@ void CObjectExplosives::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectExplosives::Precache()
 {
@@ -107,7 +107,7 @@ void CObjectExplosives::Killed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectExplosives::ExplodeThink( void )
 {

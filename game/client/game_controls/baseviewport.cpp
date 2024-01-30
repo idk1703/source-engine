@@ -83,10 +83,10 @@ CON_COMMAND( showpanel, "Shows a viewport panel <name>" )
 {
 	if ( !gViewPortInterface )
 		return;
-	
+
 	if ( args.ArgC() != 2 )
 		return;
-		
+
 	 gViewPortInterface->ShowPanel( args[ 1 ], true );
 }
 
@@ -94,10 +94,10 @@ CON_COMMAND( hidepanel, "Hides a viewport panel <name>" )
 {
 	if ( !gViewPortInterface )
 		return;
-	
+
 	if ( args.ArgC() != 2 )
 		return;
-		
+
 	 gViewPortInterface->ShowPanel( args[ 1 ], false );
 }
 
@@ -121,7 +121,7 @@ bool Helper_LoadFile( IBaseFileSystem *pFileSystem, const char *pFilename, CUtlV
 } */
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseViewport::LoadHudAnimations( void )
@@ -184,7 +184,7 @@ CBaseViewport::CBaseViewport() : vgui::EditablePanel( NULL, "CBaseViewport")
 	// create our animation controller
 	m_pAnimController->SetScheme(scheme);
 	m_pAnimController->SetProportional(true);
-	
+
 	// Attempt to load all hud animations
 	if ( LoadHudAnimations() == false )
 	{
@@ -207,7 +207,7 @@ void CBaseViewport::OnScreenSizeChanged(int iOldWide, int iOldTall)
 
 	IViewPortPanel* pSpecGuiPanel = FindPanelByName(PANEL_SPECGUI);
 	bool bSpecGuiWasVisible = pSpecGuiPanel && pSpecGuiPanel->IsVisible();
-	
+
 	// reload the script file, so the screen positions in it are correct for the new resolution
 	ReloadScheme( NULL );
 
@@ -215,15 +215,15 @@ void CBaseViewport::OnScreenSizeChanged(int iOldWide, int iOldTall)
 	RemoveAllPanels();
 #ifndef _XBOX
 	m_pBackGround = new CBackGroundPanel( NULL );
-	m_pBackGround->SetZPos( -20 ); // send it to the back 
+	m_pBackGround->SetZPos( -20 ); // send it to the back
 	m_pBackGround->SetVisible( false );
 #endif
 	CreateDefaultPanels();
 #ifndef _XBOX
-	vgui::ipanel()->MoveToBack( m_pBackGround->GetVPanel() ); // really send it to the back 
+	vgui::ipanel()->MoveToBack( m_pBackGround->GetVPanel() ); // really send it to the back
 #endif
 
-	// hide all panels when reconnecting 
+	// hide all panels when reconnecting
 	ShowPanel( PANEL_ALL, false );
 
 	// re-enable the spectator gui if it was previously visible
@@ -340,8 +340,8 @@ IViewPortPanel* CBaseViewport::CreatePanelByName(const char *szPanelName)
 	{
 		newpanel = new CCommentaryModelViewer( this );
 	}
-	
-	return newpanel; 
+
+	return newpanel;
 }
 
 
@@ -362,7 +362,7 @@ bool CBaseViewport::AddNewPanel( IViewPortPanel* pPanel, char const *pchDebugNam
 
 	m_Panels.AddToTail( pPanel );
 	pPanel->SetParent( GetVPanel() );
-	
+
 	return true;
 }
 
@@ -380,7 +380,7 @@ IViewPortPanel* CBaseViewport::FindPanelByName(const char *szPanelName)
 }
 
 void CBaseViewport::PostMessageToPanel( IViewPortPanel* pPanel, KeyValues *pKeyValues )
-{			   
+{
 	PostMessage( pPanel->GetVPanel(), pKeyValues );
 }
 
@@ -436,7 +436,7 @@ void CBaseViewport::ShowPanel( const char *pName, bool state )
 	{
 		panel = FindPanelByName( pName );
 	}
-	
+
 	if ( !panel	)
 		return;
 
@@ -464,7 +464,7 @@ void CBaseViewport::ShowPanel( IViewPortPanel* pPanel, bool state )
 				m_pLastActivePanel = m_pActivePanel;
 				m_pActivePanel->ShowPanel( false );
 			}
-		
+
 			m_pActivePanel = pPanel;
 		}
 	}
@@ -545,13 +545,13 @@ void CBaseViewport::Start( IGameUIFuncs *pGameUIFuncs, IGameEventManager2 * pGam
 	m_GameEventManager = pGameEventManager;
 #ifndef _XBOX
 	m_pBackGround = new CBackGroundPanel( NULL );
-	m_pBackGround->SetZPos( -20 ); // send it to the back 
+	m_pBackGround->SetZPos( -20 ); // send it to the back
 	m_pBackGround->SetVisible( false );
 #endif
 	CreateDefaultPanels();
 
 	m_GameEventManager->AddListener( this, "game_newmap", false );
-	
+
 	m_bInitialized = true;
 }
 
@@ -602,7 +602,7 @@ bool CBaseViewport::AllowedToPrintText( void )
 	// TODO ask every aktive elemet if it allows to draw text while visible
 
 	return ( m_pActivePanel == NULL);
-} 
+}
 
 void CBaseViewport::OnThink()
 {
@@ -661,7 +661,7 @@ void CBaseViewport::SetParent(vgui::VPANEL parent)
 	// parent happened to be non-proportional (such as the vgui root panel), we got
 	// slammed to be nonproportional
 	EditablePanel::SetProportional( true );
-	
+
 #ifndef _XBOX
 	m_pBackGround->SetParent( (vgui::VPANEL)parent );
 #endif
@@ -675,12 +675,12 @@ void CBaseViewport::SetParent(vgui::VPANEL parent)
 //-----------------------------------------------------------------------------
 // Purpose: called when the engine shows the base client VGUI panel (i.e when entering a new level or exiting GameUI )
 //-----------------------------------------------------------------------------
-void CBaseViewport::ActivateClientUI() 
+void CBaseViewport::ActivateClientUI()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: called when the engine hides the base client VGUI panel (i.e when the GameUI is comming up ) 
+// Purpose: called when the engine hides the base client VGUI panel (i.e when the GameUI is comming up )
 //-----------------------------------------------------------------------------
 void CBaseViewport::HideClientUI()
 {
@@ -695,7 +695,7 @@ void CBaseViewport::FireGameEvent( IGameEvent * event)
 
 	if ( Q_strcmp(type, "game_newmap") == 0 )
 	{
-		// hide all panels when reconnecting 
+		// hide all panels when reconnecting
 		ShowPanel( PANEL_ALL, false );
 
 		if ( engine->IsHLTV() )
@@ -706,14 +706,14 @@ void CBaseViewport::FireGameEvent( IGameEvent * event)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseViewport::ReloadScheme(const char *fromFile)
 {
 	CETWScope timer( "CBaseViewport::ReloadScheme" );
 
 	// See if scheme should change
-	
+
 	if ( fromFile != NULL )
 	{
 		// "resource/ClientScheme.res"
@@ -735,7 +735,7 @@ void CBaseViewport::ReloadScheme(const char *fromFile)
 	}
 
 	SetProportional( true );
-	
+
 	KeyValuesAD pConditions( "conditions" );
 	g_pClientMode->ComputeVguiResConditions( pConditions );
 

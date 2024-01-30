@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -89,8 +89,8 @@ static QueryCacheEntry_t *FindOrAllocateCacheEntry( QueryCacheKey_t const &entry
 	}
 	else
 	{
-		if ( sv_disable_querycache.GetInt() || 
-			 ( gpGlobals->curtime - pFound->m_flLastUpdateTime >= 
+		if ( sv_disable_querycache.GetInt() ||
+			 ( gpGlobals->curtime - pFound->m_flLastUpdateTime >=
 			   pFound->m_QueryParams.m_flMinimumUpdateInterval ) )
 		{
 			pFound->m_bSpeculativelyDone = false;
@@ -101,7 +101,7 @@ static QueryCacheEntry_t *FindOrAllocateCacheEntry( QueryCacheKey_t const &entry
 			if ( pFound->m_bSpeculativelyDone )
 				s_SuccessfulSpeculatives++;
 		}
-		
+
 	}
 	return pFound;
 }
@@ -129,7 +129,7 @@ bool QueryCacheKey_t::Matches( QueryCacheKey_t const *pNode ) const
 		( pNode->m_Type != m_Type ) ||
 		( pNode->m_nTraceMask != m_nTraceMask ) ||
 		( pNode->m_pTraceFilterFunction != m_pTraceFilterFunction ) ||
-		( pNode->m_nNumValidPoints != m_nNumValidPoints ) || 
+		( pNode->m_nNumValidPoints != m_nNumValidPoints ) ||
 		( pNode->m_flMinimumUpdateInterval != m_flMinimumUpdateInterval )
 		)
 		return false;
@@ -185,7 +185,7 @@ void ProcessQueryCacheUpdate( QueryCacheUpdateRecord_t &workItem )
 			pNext = pEntry->m_pNext;
 			if ( pEntry->m_bUsedSinceUpdated )
 			{
-				if ( flCurTime - pEntry->m_flLastUpdateTime >= 
+				if ( flCurTime - pEntry->m_flLastUpdateTime >=
 					 pEntry->m_QueryParams.m_flMinimumUpdateInterval )
 				{
 					// don't bother updating if we have recently
@@ -338,6 +338,3 @@ CON_COMMAND( sv_querycache_stats, "Display status of the query cache (client onl
 			 s_nNumCacheQueries, s_nNumCacheMisses, s_VictimList.Count(),
 			 s_SuccessfulSpeculatives, s_WastedSpeculativeUpdates );
 }
-
-
-

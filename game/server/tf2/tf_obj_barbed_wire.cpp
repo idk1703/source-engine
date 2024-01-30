@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -34,7 +34,7 @@ LINK_ENTITY_TO_CLASS( obj_barbed_wire, CObjectBarbedWire );
 PRECACHE_REGISTER( obj_barbed_wire );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectBarbedWire::CObjectBarbedWire()
 {
@@ -42,7 +42,7 @@ CObjectBarbedWire::CObjectBarbedWire()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBarbedWire::Precache()
 {
@@ -51,7 +51,7 @@ void CObjectBarbedWire::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBarbedWire::Spawn()
 {
@@ -72,7 +72,7 @@ void CObjectBarbedWire::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Enumerator 
+// Purpose: Enumerator
 //-----------------------------------------------------------------------------
 class CBarbedWireEnumerator : public IEntityEnumerator
 {
@@ -133,13 +133,13 @@ public:
 private:
 	CObjectBarbedWire		*m_pWire;
 	int						m_ContentsMask;
-	Ray_t		
+	Ray_t
 		*m_pRay;
 	CUtlVector< EHANDLE >	m_aDamagedEntities;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBarbedWire::BarbedWireThink( void )
 {
@@ -152,10 +152,10 @@ void CObjectBarbedWire::BarbedWireThink( void )
 		}
 
 		if ( m_hConnectedTo )
-		{		
+		{
 			Ray_t ray;
 			ray.Init( WorldSpaceCenter(), m_hConnectedTo->WorldSpaceCenter() );
-			
+
 			//NDebugOverlay::Line( WorldSpaceCenter(), m_hConnectedTo->WorldSpaceCenter(), 255,255,255, false, 0.1 );
 			//NDebugOverlay::Box( WorldSpaceCenter(), -Vector(5,5,5), Vector(5,5,5), 0,255,0,8, 0.1 );
 			//NDebugOverlay::Box( m_hConnectedTo->WorldSpaceCenter(), -Vector(6,6,6), Vector(6,6,6), 255,255,255,8, 0.1 );
@@ -165,12 +165,12 @@ void CObjectBarbedWire::BarbedWireThink( void )
 			bwEnum.DamageEntities();
 		}
 	}
-	
+
 	SetContextThink( BarbedWireThink, gpGlobals->curtime + BARBED_WIRE_THINK_INTERVAL, BARBED_WIRE_THINK_CONTEXT );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBarbedWire::StartPlacement( CBaseTFPlayer *pPlayer )
 {
@@ -179,7 +179,7 @@ void CObjectBarbedWire::StartPlacement( CBaseTFPlayer *pPlayer )
 		// Automatically connect to the nearest barbed wire on our team.
 		float flClosest = 1e24;
 		CObjectBarbedWire *pClosest = NULL;
-		
+
 		CBaseEntity *pCur = gEntList.FirstEnt();
 		while ( pCur )
 		{
@@ -210,7 +210,7 @@ void CObjectBarbedWire::StartPlacement( CBaseTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CObjectBarbedWire::PreStartBuilding()
 {
@@ -230,10 +230,9 @@ bool CObjectBarbedWire::PreStartBuilding()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBarbedWire::FinishedBuilding()
 {
 	BaseClass::FinishedBuilding();
 }
-

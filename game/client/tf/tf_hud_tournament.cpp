@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -66,7 +66,7 @@ static const wchar_t* GetSCGlyph( const char* action )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTournament::CHudTournament( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudTournament" )
 {
@@ -101,7 +101,7 @@ CHudTournament::CHudTournament( const char *pElementName ) : CHudElement( pEleme
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTournament::~CHudTournament()
 {
@@ -113,7 +113,7 @@ CHudTournament::~CHudTournament()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTournament::Init( void )
 {
@@ -131,7 +131,7 @@ void CHudTournament::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTournament::PlaySounds( int nTime )
 {
@@ -208,7 +208,7 @@ void CHudTournament::PlaySounds( int nTime )
 				}
 				if( nCurWave == nMaxWaves )
 				{
-					pLocalPlayer->EmitSound( "music.mvm_start_last_wave" );	
+					pLocalPlayer->EmitSound( "music.mvm_start_last_wave" );
 				}
 				else if( bHasTank )
 				{
@@ -216,7 +216,7 @@ void CHudTournament::PlaySounds( int nTime )
 				}
 				else if( nCurWave > ( nMaxWaves / 2 ) )
 				{
-					pLocalPlayer->EmitSound( "music.mvm_start_mid_wave" );	
+					pLocalPlayer->EmitSound( "music.mvm_start_mid_wave" );
 				}
 				else
 				{
@@ -254,7 +254,7 @@ void CHudTournament::PlaySounds( int nTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTournament::PreparePanel( void )
 {
@@ -316,7 +316,7 @@ void CHudTournament::PreparePanel( void )
 		{
 			float flTime = TFGameRules()->GetRoundRestartTime() - gpGlobals->curtime;
 			int nTime = (int)( ceil( flTime ) );
-			
+
 			wchar szCountdown[64];
 			wchar_t wzVal[16];
 
@@ -401,15 +401,15 @@ void CHudTournament::PreparePanel( void )
 			{
 				g_pClientMode->GetViewportAnimationController()->StartAnimationSequence(this, "HudTournament_HideTimer", false);
 			}
-		}	
+		}
 	}
-	
+
 #ifdef WIN32
 #define STRING_FMT L"%s"
 #else
-#define STRING_FMT L"%S"	
+#define STRING_FMT L"%S"
 #endif
-	
+
 	C_TFTeam *pBlueTeam = GetGlobalTFTeam( TF_TEAM_BLUE );
 	SetDialogVariable( "bluenamelabel", pBlueTeam ? pBlueTeam->Get_Localized_Name() : L"BLU" );
 
@@ -418,7 +418,7 @@ void CHudTournament::PreparePanel( void )
 
 	SetDialogVariable( "bluestate", TFGameRules()->IsTeamReady( TF_TEAM_BLUE ) ? g_pVGuiLocalize->Find( "Tournament_TeamReady" ) : g_pVGuiLocalize->Find( "Tournament_TeamNotReady" ) );
 	SetDialogVariable( "redstate", TFGameRules()->IsTeamReady( TF_TEAM_RED ) ? g_pVGuiLocalize->Find( "Tournament_TeamReady" ) : g_pVGuiLocalize->Find( "Tournament_TeamNotReady" ) );
-	
+
 	if ( m_bTeamReady[TF_TEAM_BLUE] != TFGameRules()->IsTeamReady( TF_TEAM_BLUE ) || m_bTeamReady[TF_TEAM_RED] != TFGameRules()->IsTeamReady( TF_TEAM_RED ) )
 	{
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
@@ -434,7 +434,7 @@ void CHudTournament::PreparePanel( void )
 
 	wchar_t szWindConditions[1024];
 	_snwprintf( szWindConditions, ARRAYSIZE( szWindConditions ), STRING_FMT, g_pVGuiLocalize->Find( "Tournament_WinConditions" ) );
-	
+
 	if ( mp_timelimit.GetInt() > 0 || mp_winlimit.GetInt() > 0 || mp_maxrounds.GetInt() )
 	{
 		bool bPrev = false;
@@ -479,7 +479,7 @@ void CHudTournament::PreparePanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTournament::FireGameEvent( IGameEvent * event )
 {
@@ -501,7 +501,7 @@ void CHudTournament::FireGameEvent( IGameEvent * event )
 		int iIndex = event->GetInt("userid");
 
 		const char *pszName = g_TF_PR->GetPlayerName( iIndex );
-	
+
 		wchar_t wszPlayerName[MAX_PLAYER_NAME_LENGTH];
 		g_pVGuiLocalize->ConvertANSIToUnicode( pszName, wszPlayerName, sizeof(wszPlayerName) );
 
@@ -509,7 +509,7 @@ void CHudTournament::FireGameEvent( IGameEvent * event )
 		{
 			wchar_t wszTeam[16];
 			g_pVGuiLocalize->ConvertANSIToUnicode( event->GetString( "newname" ), wszTeam, sizeof(wszTeam) );
-		
+
 			g_pVGuiLocalize->ConstructString_safe( wszLocalized, g_pVGuiLocalize->Find( "#Tournament_TeamName_Change" ), 2, wszPlayerName, wszTeam );
 		}
 		else
@@ -552,8 +552,8 @@ void CHudTournament::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CHudTournament::OnTick( void )
 {
@@ -651,7 +651,7 @@ void CHudTournament::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTournament::LevelInit( void )
 {
@@ -661,7 +661,7 @@ void CHudTournament::LevelInit( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTournament::SetVisible( bool state )
 {
@@ -684,7 +684,7 @@ void CHudTournament::SetVisible( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTournament::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -719,7 +719,7 @@ void CHudTournament::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTournament::ApplySettings( KeyValues *inResourceData )
 {
@@ -738,7 +738,7 @@ void CHudTournament::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTournament::PerformLayout( void )
 {
@@ -776,7 +776,7 @@ void CHudTournament::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTournament::SetPlayerPanelsVisible( bool bVisible )
 {
@@ -832,7 +832,7 @@ void CHudTournament::RecalculatePlayerPanels( void )
 		int iTeam = g_TF_PR->GetTeam( i );
 		if ( iTeam == TEAM_UNASSIGNED && !m_bReadyStatusMode )
 			continue;
-			
+
 		// Spectators see all players, team members only see their team.
 		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && iTeam != iLocalTeam && iLocalTeam != TEAM_SPECTATOR )
 			continue;
@@ -888,7 +888,7 @@ void CHudTournament::RecalculatePlayerPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTournament::UpdatePlayerPanels( void )
 {
@@ -937,8 +937,8 @@ void CHudTournament::UpdatePlayerPanels( void )
 	if ( GTFGCClientSystem()->GetLobby() )
 	{
 		// Everyone's on the same team in MvM, and any other lobby-based game is assumed to be two teams.
-		iTeam1Count = TFGameRules()->IsMannVsMachineMode() ? 
-					  GTFGCClientSystem()->GetLobby()->GetNumMembers() : 
+		iTeam1Count = TFGameRules()->IsMannVsMachineMode() ?
+					  GTFGCClientSystem()->GetLobby()->GetNumMembers() :
 					  GTFGCClientSystem()->GetLobby()->GetNumMembers()>>1;
 	}
 	int iTeam1Processed = 0;
@@ -981,7 +981,7 @@ void CHudTournament::UpdatePlayerPanels( void )
 			m_PlayerPanels[i]->SetSpecIndex( 7 + iTeam2Processed );
 			++iTeam2Processed;
 		}
-		
+
 		m_PlayerPanels[i]->SetPos( iXPos, iYPos );
 	}
 }
@@ -1001,7 +1001,7 @@ bool TournamentHudElementKeyInput( int down, ButtonCode_t keynum, const char *ps
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTournamentSetup::CHudTournamentSetup( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudTournamentSetup" )
 {
@@ -1022,7 +1022,7 @@ CHudTournamentSetup::CHudTournamentSetup( const char *pElementName ) : CHudEleme
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTournamentSetup::Init( void )
 {
@@ -1030,14 +1030,14 @@ void CHudTournamentSetup::Init( void )
 	CHudElement::Init();
 
 	DisableInput();
-	
+
 	m_pNameEntry->SetText( g_pVGuiLocalize->Find( "Tournament_TeamNameNotSet" ) );
 
 	m_flNextThink = gpGlobals->curtime;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTournamentSetup::OnCommand( const char *command )
 {
@@ -1061,7 +1061,7 @@ void CHudTournamentSetup::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudTournamentSetup::ToggleState( ButtonCode_t code )
 {
@@ -1120,7 +1120,7 @@ bool CHudTournamentSetup::ToggleState( ButtonCode_t code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTournamentSetup::FireGameEvent( IGameEvent * event )
 {
@@ -1136,8 +1136,8 @@ void CHudTournamentSetup::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CHudTournamentSetup::OnTick( void )
 {
@@ -1206,7 +1206,7 @@ void CHudTournamentSetup::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTournamentSetup::EnableInput( void )
 {
@@ -1235,7 +1235,7 @@ void CHudTournamentSetup::EnableInput( void )
 	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HudTournamentSetupPanelOpen" );
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTournamentSetup::DisableInput( void )
 {
@@ -1244,14 +1244,14 @@ void CHudTournamentSetup::DisableInput( void )
 
 	m_pNameEntry->SetMouseInputEnabled( false );
 	m_pNameEntry->SetKeyBoardInputEnabled( false );
-	
+
 	engine->ClientCmd_Unrestricted( "gameui_allowescapetoshow\n" );
 
 	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HudTournamentSetupPanelClose" );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTournamentSetup::LevelInit( void )
 {
@@ -1260,7 +1260,7 @@ void CHudTournamentSetup::LevelInit( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudTournamentSetup::ShouldDraw( void )
 {
@@ -1268,7 +1268,7 @@ bool CHudTournamentSetup::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTournamentSetup::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -1285,7 +1285,7 @@ void CHudTournamentSetup::ApplySchemeSettings( IScheme *pScheme )
 DECLARE_HUDELEMENT( CHudStopWatch );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudStopWatch::CHudStopWatch( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudStopWatch" )
 {
@@ -1308,27 +1308,27 @@ CHudStopWatch::CHudStopWatch( const char *pElementName ) : CHudElement( pElement
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudStopWatch::ShouldDraw( void )
-{ 
+{
 	bool bRetVal = m_bShouldBeVisible;
 	if ( bRetVal )
 	{
 		// give the HUD a chance to turn us off when we should be hidden
 		bRetVal = CHudElement::ShouldDraw();
 	}
-	
-	return bRetVal; 
+
+	return bRetVal;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudStopWatch::LevelInit( void )
 {
 	m_bShouldBeVisible = true;
-	
+
 	if ( m_pTimePanel )
 	{
 		m_pTimePanel->SetVisible( true );
@@ -1339,7 +1339,7 @@ void CHudStopWatch::LevelInit( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudStopWatch::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -1364,7 +1364,7 @@ void CHudStopWatch::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudStopWatch::OnTick( void )
 {
@@ -1445,7 +1445,7 @@ void CHudStopWatch::OnTick( void )
 			CTeamRoundTimer *pTimer = dynamic_cast< CTeamRoundTimer* >( ClientEntityList().GetEnt( iActiveTimer ) );
 
 			int iPoints = 0;
-		
+
 			if ( pTimer )
 			{
 				if ( pTimer->IsWatchingTimeStamps() )
@@ -1463,7 +1463,7 @@ void CHudStopWatch::OnTick( void )
 			wchar_t *pszPoints = NULL;
 			_snwprintf( wzScoreVal, ARRAYSIZE( wzScoreVal ), L"%i", iPoints );
 
-			if ( 1 == iPoints ) 
+			if ( 1 == iPoints )
 			{
 				pszPoints = g_pVGuiLocalize->Find( "#Tournament_StopWatch_Point" );
 			}
@@ -1471,7 +1471,7 @@ void CHudStopWatch::OnTick( void )
 			{
 				pszPoints = g_pVGuiLocalize->Find( "#Tournament_StopWatch_Points" );
 			}
-			
+
 			SetDialogVariable( "pointslabel", pszPoints );
 			SetDialogVariable( "scoretobeat", wzScoreVal );
 
@@ -1519,7 +1519,7 @@ void CHudStopWatch::OnTick( void )
 			wchar_t wzVal[16];
 
 			swprintf( wzVal, ARRAYSIZE( wzVal ), L"%x", iPoints );
-			
+
 			if ( pPlayer->GetTeam() == pAttacker )
 			{
 				g_pVGuiLocalize->ConstructString_safe( wzScoreVal, g_pVGuiLocalize->Find( "Tournament_StopWatchPointCaptureAttacker" ), 2, wzVal, iPoints == 1 ? g_pVGuiLocalize->Find( "#Tournament_StopWatch_Point" ) : g_pVGuiLocalize->Find( "#Tournament_StopWatch_Points" )  );
@@ -1533,7 +1533,7 @@ void CHudStopWatch::OnTick( void )
 				g_pVGuiLocalize->ConstructString_safe( wzScoreVal, g_pVGuiLocalize->Find( "Tournament_StopWatchPointCaptureSpectator" ), 2, wzVal, iPoints == 1 ? g_pVGuiLocalize->Find( "#Tournament_StopWatch_Point" ) : g_pVGuiLocalize->Find( "#Tournament_StopWatch_Points" )  );
 			}
 
-			SetDialogVariable( "stopwatchlabel", wzScoreVal );	
+			SetDialogVariable( "stopwatchlabel", wzScoreVal );
 		}
 	}
 }
@@ -1550,7 +1550,7 @@ void CHudStopWatch::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND( player_ready_toggle, "Toggle player ready state" )
 {

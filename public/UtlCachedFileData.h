@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -48,10 +48,10 @@ class CUtlCachedFileData
 {
 public:
 	CUtlCachedFileData
-	( 
-		char const *repositoryFileName, 
-		int version, 
-		PFNCOMPUTECACHEMETACHECKSUM checksumfunc = NULL, 
+	(
+		char const *repositoryFileName,
+		int version,
+		PFNCOMPUTECACHEMETACHECKSUM checksumfunc = NULL,
 		UtlCachedFileDataType_t fileCheckType = UTL_CACHED_FILE_USE_TIMESTAMP,
 		bool nevercheckdisk = false,
 		bool readonly = false,
@@ -277,7 +277,7 @@ T* CUtlCachedFileData<T>::Get( char const *filename )
 		}
 		else
 		{
-			if ( m_fileCheckType == UTL_CACHED_FILE_USE_FILESIZE ) 
+			if ( m_fileCheckType == UTL_CACHED_FILE_USE_FILESIZE )
 			{
 				e.diskfileinfo = g_pFullFileSystem->Size( filename, "GAME" );
 				// Missing files get a disk file size of 0
@@ -432,17 +432,17 @@ void CUtlCachedFileData<T>::InitSmallBuffer( FileHandle_t& fh, int fileSize, boo
 	{
 		// Now parse data from the buffer
 		int version = loadBuf.GetInt();
-		
+
 		if ( version == m_nVersion )
 		{
 			// This is a checksum based on any meta data files which the cache depends on (supplied by a passed in
 			//  meta data function
 			unsigned int cache_meta_checksum = loadBuf.GetInt();
-			
+
 			if ( cache_meta_checksum == m_uCurrentMetaChecksum )
 			{
 				int count = loadBuf.GetInt();
-				
+
 				Assert( count < 2000000 );
 
 				CUtlBuffer buf( 0, 0, 0 );
@@ -454,7 +454,7 @@ void CUtlCachedFileData<T>::InitSmallBuffer( FileHandle_t& fh, int fileSize, boo
 
 					buf.Clear();
 					buf.EnsureCapacity( bufsize );
-					
+
 					loadBuf.Get( buf.Base(), bufsize );
 
 					buf.SeekGet( CUtlBuffer::SEEK_HEAD, 0 );
@@ -519,19 +519,19 @@ void CUtlCachedFileData<T>::InitLargeBuffer( FileHandle_t& fh, bool& deleteFile 
 		// Now parse data from the buffer
 		int version = 0;
 		g_pFullFileSystem->Read( &version, sizeof( version ), fh );
-		
+
 		if ( version == m_nVersion )
 		{
 			// This is a checksum based on any meta data files which the cache depends on (supplied by a passed in
 			//  meta data function
 			unsigned int cache_meta_checksum = 0;
-			
+
 			g_pFullFileSystem->Read( &cache_meta_checksum, sizeof( cache_meta_checksum ), fh );
 
 			if ( cache_meta_checksum == m_uCurrentMetaChecksum )
 			{
 				int count = 0;
-				
+
 				g_pFullFileSystem->Read( &count, sizeof( count ), fh );
 
 				Assert( count < 2000000 );
@@ -554,7 +554,7 @@ void CUtlCachedFileData<T>::InitLargeBuffer( FileHandle_t& fh, bool& deleteFile 
 
 					buf.Clear();
 					buf.EnsureCapacity( bufsize );
-					
+
 					int nBytesRead = g_pFullFileSystem->Read( buf.Base(), bufsize, fh );
 
 					buf.SeekGet( CUtlBuffer::SEEK_HEAD, 0 );
@@ -672,7 +672,7 @@ void CUtlCachedFileData<T>::Save()
 
 	g_pFullFileSystem->CreateDirHierarchy( path, "MOD" );
 
-	if ( g_pFullFileSystem->FileExists( m_sRepositoryFileName, "MOD" ) && 
+	if ( g_pFullFileSystem->FileExists( m_sRepositoryFileName, "MOD" ) &&
 		!g_pFullFileSystem->IsFileWritable( m_sRepositoryFileName, "MOD" ) )
 	{
 		g_pFullFileSystem->SetFileWritable( m_sRepositoryFileName, true, "MOD" );
@@ -797,7 +797,7 @@ void CUtlCachedFileData<T>::SaveManifest()
 
 	Q_SetExtension( manifest_name, ".manifest", sizeof( manifest_name ) );
 
-	if ( g_pFullFileSystem->FileExists( manifest_name, "MOD" ) && 
+	if ( g_pFullFileSystem->FileExists( manifest_name, "MOD" ) &&
 		!g_pFullFileSystem->IsFileWritable( manifest_name, "MOD" ) )
 	{
 		g_pFullFileSystem->SetFileWritable( manifest_name, true, "MOD" );
@@ -837,7 +837,7 @@ T *CUtlCachedFileData<T>::RebuildItem( const char *filename )
 		}
 		else
 		{
-			if ( m_fileCheckType == UTL_CACHED_FILE_USE_FILESIZE ) 
+			if ( m_fileCheckType == UTL_CACHED_FILE_USE_FILESIZE )
 			{
 				e.diskfileinfo = g_pFullFileSystem->Size( filename, "GAME" );
 				// Missing files get a disk file size of 0
@@ -951,12 +951,12 @@ void	CUtlCachedFileData<T>::CheckDiskInfo( bool forcerebuild, long cacheFileTime
 		g_pFullFileSystem->String( m_Elements[list[listStart].index].handle, fn, sizeof( fn ) );
 		Q_StripFilename( fn );
 		bool bCheck = true;
-		
+
 		if ( m_bNeverCheckDisk )
 		{
 			bCheck = false;
 		}
-		else 
+		else
 		{
 			long pathTime = g_pFullFileSystem->GetPathTime( fn, "GAME" );
 			bCheck = (pathTime > cacheFileTime) ? true : false;
@@ -975,7 +975,7 @@ void	CUtlCachedFileData<T>::CheckDiskInfo( bool forcerebuild, long cacheFileTime
 				else
 				{
 					g_pFullFileSystem->String( element.handle, fn, sizeof( fn ) );
-					if ( m_fileCheckType == UTL_CACHED_FILE_USE_FILESIZE ) 
+					if ( m_fileCheckType == UTL_CACHED_FILE_USE_FILESIZE )
 					{
 						element.diskfileinfo = g_pFullFileSystem->Size( fn, "GAME" );
 

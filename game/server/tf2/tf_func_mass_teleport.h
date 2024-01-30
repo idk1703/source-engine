@@ -55,7 +55,7 @@ private:
 
 
 	// Entity to teleport to.
-	EHANDLE		m_hTargetEntity;		
+	EHANDLE		m_hTargetEntity;
 
 	// If true, this teleport's designed to teleport players to MCVs in the field
 	bool		m_bMCV;

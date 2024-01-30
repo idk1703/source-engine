@@ -24,7 +24,7 @@
 //------------------------------------------------------------------------------------------------------
 CEventList* CEventList::readEventList(const char* filename)
 {
-	
+
 	//	ifstream ifs(filename);
 	CEventList* plogfile=new TRACKED CEventList();
 	if (!plogfile)
@@ -32,8 +32,8 @@ CEventList* CEventList::readEventList(const char* filename)
 		printf("TFStats ran out of memory!\n");
 		return NULL;
 	}
-	
-	
+
+
 	FILE* f=fopen(filename,"rt");
 	if (!f)
 		g_pApp->fatalError("Error opening %s, please make sure that the file exists and is not being accessed by other processes",filename);
@@ -42,20 +42,19 @@ CEventList* CEventList::readEventList(const char* filename)
 	{
 		CLogEvent* curr=NULL;
 		curr=new TRACKED CLogEvent(f);
-		
+
 		if (!curr->isValid())
 		{
 			delete curr;
 			break;//eof reached
 		}
 		plogfile->insert(plogfile->end(),curr);
-	}		
+	}
 	fclose(f);
 #ifndef WIN32
 		chmod(filename,PERMIT);
 #endif
 
 	return plogfile;
-	
-}
 
+}

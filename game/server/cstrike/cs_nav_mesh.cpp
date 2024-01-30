@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -66,7 +66,7 @@ unsigned int CSNavMesh::GetSubVersionNumber( void ) const
 }
 
 //-------------------------------------------------------------------------
-/** 
+/**
  * Store custom mesh data for derived classes
  */
 void CSNavMesh::SaveCustomData( CUtlBuffer &fileBuffer ) const

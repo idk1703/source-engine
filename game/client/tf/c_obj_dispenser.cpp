@@ -25,7 +25,7 @@ void RecvProxy_HealingList(  const CRecvProxyData *pData, void *pStruct, void *p
 {
 	C_ObjectDispenser *pDispenser = (C_ObjectDispenser*)pStruct;
 
-	CBaseHandle *pHandle = (CBaseHandle*)(&(pDispenser->m_hHealingTargets[pData->m_iElement])); 
+	CBaseHandle *pHandle = (CBaseHandle*)(&(pDispenser->m_hHealingTargets[pData->m_iElement]));
 	RecvProxy_IntToEHandle( pData, pStruct, pHandle );
 
 	// update the heal beams
@@ -52,17 +52,17 @@ IMPLEMENT_CLIENTCLASS_DT(C_ObjectDispenser, DT_ObjectDispenser, CObjectDispenser
 	RecvPropInt( RECVINFO( m_iAmmoMetal ) ),
 	RecvPropInt( RECVINFO( m_iMiniBombCounter ) ),
 
-	RecvPropArray2( 
+	RecvPropArray2(
 		RecvProxyArrayLength_HealingArray,
-		RecvPropInt( "healing_array_element", 0, SIZEOF_IGNORE, 0, RecvProxy_HealingList ), 
-		MAX_PLAYERS, 
-		0, 
+		RecvPropInt( "healing_array_element", 0, SIZEOF_IGNORE, 0, RecvProxy_HealingList ),
+		MAX_PLAYERS,
+		0,
 		"healing_array"
 		)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectDispenser::C_ObjectDispenser()
 {
@@ -71,7 +71,7 @@ C_ObjectDispenser::C_ObjectDispenser()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectDispenser::~C_ObjectDispenser()
 {
@@ -89,8 +89,8 @@ C_ObjectDispenser::~C_ObjectDispenser()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_ObjectDispenser::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -111,7 +111,7 @@ void C_ObjectDispenser::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectDispenser::ClientThink()
 {
@@ -127,7 +127,7 @@ void C_ObjectDispenser::ClientThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectDispenser::SetInvisibilityLevel( float flValue )
 {
@@ -220,7 +220,7 @@ void C_ObjectDispenser::UpdateEffects( void )
 			}
 
 			ParticleProp()->AddControlPoint( pEffect, 1, pTarget, PATTACH_ABSORIGIN_FOLLOW, NULL, Vector(0,0,50) );
-			
+
 			int iIndex = m_hHealingTargetEffects.AddToTail();
 			m_hHealingTargetEffects[iIndex].pTarget = pTarget;
 			m_hHealingTargetEffects[iIndex].pEffect = pEffect;
@@ -332,7 +332,7 @@ void C_ObjectDispenser::UpdateDamageEffects( BuildingDamageLevel_t damageLevel )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 int C_ObjectDispenser::GetMaxMetal( void )
 {
@@ -340,17 +340,17 @@ int C_ObjectDispenser::GetMaxMetal( void )
 }
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 
 DECLARE_VGUI_SCREEN_FACTORY( CDispenserControlPanel, "screen_obj_dispenser_blue" );
 DECLARE_VGUI_SCREEN_FACTORY( CDispenserControlPanel_Red, "screen_obj_dispenser_red" );
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CDispenserControlPanel::CDispenserControlPanel( vgui::Panel *parent, const char *panelName )
-: BaseClass( parent, "CDispenserControlPanel" ) 
+: BaseClass( parent, "CDispenserControlPanel" )
 {
 	m_pAmmoProgress = new RotatingProgressBar( this, "MeterArrow" );
 }
@@ -371,7 +371,7 @@ void CDispenserControlPanel::OnTickActive( C_BaseObject *pObj, C_TFPlayer *pLoca
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CDispenserControlPanel::IsVisible( void )
 {
@@ -379,7 +379,7 @@ bool CDispenserControlPanel::IsVisible( void )
 	{
 #ifdef STAGING_ONLY
 		if ( m_hDispenser->IsMiniBuilding() )
-			return false; 
+			return false;
 #endif // STAGING_ONLY
 
 		if ( m_hDispenser->GetInvisibilityLevel() == 1.f )

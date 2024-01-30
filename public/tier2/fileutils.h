@@ -121,7 +121,7 @@ public:
 		if (ret != size )
 			Error("failed to read %d bytes\n", size );
 	}
-	
+
 	int Write( void const* pInput, int size)
 	{
 		return g_pFullFileSystem->Write( pInput, size, m_FileHandle );
@@ -267,7 +267,7 @@ public:
 	CInputTextFile( void ) : CBaseFile()
 	{
 	}
-	
+
 
 };
 
@@ -314,4 +314,3 @@ public:
 };
 
 #endif // FILEUTILS_H
-

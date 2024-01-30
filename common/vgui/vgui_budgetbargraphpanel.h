@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -36,7 +36,7 @@ private:
 	void DrawTickAtIndex( int id, float percent, int red, int green, int blue, int alpha );
 
 private:
-	
+
 	CBaseBudgetPanel *m_pBudgetPanel;
 };
 

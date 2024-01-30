@@ -2,7 +2,7 @@
 //
 // Purpose: Filters are outboard entities that hold a set of rules that other
 //			entities can use to determine behaviors.
-//			
+//
 //			For example, triggers can use an activator filter to determine who
 //			activates them. NPCs and breakables can use a damage filter to
 //			determine what can damage them.

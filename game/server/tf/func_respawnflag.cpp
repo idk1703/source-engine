@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -20,14 +20,14 @@ BEGIN_DATADESC( CFuncRespawnFlagZone )
 END_DATADESC();
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFuncRespawnFlagZone::CFuncRespawnFlagZone()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncRespawnFlagZone::Spawn( void )
 {
@@ -40,7 +40,7 @@ void CFuncRespawnFlagZone::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncRespawnFlagZone::Touch( CBaseEntity *pOther )
 {
@@ -52,7 +52,7 @@ void CFuncRespawnFlagZone::Touch( CBaseEntity *pOther )
 			if ( pPlayer && pPlayer->HasTheFlag() )
 			{
 				CCaptureFlag *pFlag = dynamic_cast<CCaptureFlag*>( pPlayer->GetItem() );
-				
+
 				pPlayer->DropFlag();
 
 				if ( pFlag )

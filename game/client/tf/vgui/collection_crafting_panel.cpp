@@ -21,9 +21,9 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CCollectionCraftingPanel::CCollectionCraftingPanel( vgui::Panel *parent, CItemModelPanelToolTip* pTooltip ) 
+CCollectionCraftingPanel::CCollectionCraftingPanel( vgui::Panel *parent, CItemModelPanelToolTip* pTooltip )
 	: BaseClass( parent, "CollectionCraftingPanel" )
 	, m_pKVItemPanels( NULL )
 	, m_pModelPanel( NULL )
@@ -52,7 +52,7 @@ CCollectionCraftingPanel::CCollectionCraftingPanel( vgui::Panel *parent, CItemMo
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCollectionCraftingPanel::~CCollectionCraftingPanel( void )
 {
@@ -98,7 +98,7 @@ void CCollectionCraftingPanel::CreateSelectionPanel()
 	m_hSelectionPanel = new CCollectionCraftingSelectionPanel( this );
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCollectionCraftingPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -122,7 +122,7 @@ void CCollectionCraftingPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCollectionCraftingPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -189,7 +189,7 @@ void CCollectionCraftingPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCollectionCraftingPanel::PerformLayout()
 {
@@ -234,7 +234,7 @@ void CCollectionCraftingPanel::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCollectionCraftingPanel::CreateItemPanels()
 {
@@ -272,7 +272,7 @@ void CCollectionCraftingPanel::CreateItemPanels()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCollectionCraftingPanel::OnCommand( const char *command )
 {
@@ -285,7 +285,7 @@ void CCollectionCraftingPanel::OnCommand( const char *command )
 
 	if ( FStrEq( "doneselectingitems", command ) )
 	{
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_LetterStart" );	
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_LetterStart" );
 		m_bEnvelopeReadyToSend = false;
 
 		if ( m_vecStampNames.Count() )
@@ -323,12 +323,12 @@ void CCollectionCraftingPanel::OnCommand( const char *command )
 		m_bWaitingForGCResponse = true;
 		m_nFoundItemID.Purge();
 		m_timerResponse.Start( 5.f );
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_LetterSend" );	
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_LetterSend" );
 		return;
 	}
 	else if ( FStrEq( "placestamp", command ) )
 	{
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_PlaceStamp" );	
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_PlaceStamp" );
 		return;
 	}
 	else if( Q_strnicmp( "playcratesequence", command, 17 ) == 0 )
@@ -338,10 +338,10 @@ void CCollectionCraftingPanel::OnCommand( const char *command )
 	}
 	else if( FStrEq( "itemget", command ) )
 	{
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_ItemRecieved" );	
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_ItemRecieved" );
 		wchar_t *pszLocalized = NULL;
 
-		// 
+		//
 		if ( m_eEconItemOrigin == kEconItemOrigin_FoundInCrate )
 		{
 			pszLocalized = g_pVGuiLocalize->Find( "#NewItemMethod_FoundInCrate" );
@@ -350,7 +350,7 @@ void CCollectionCraftingPanel::OnCommand( const char *command )
 		{
 			pszLocalized = g_pVGuiLocalize->Find( m_vecResultStrings[ RandomInt( 0, m_vecResultStrings.Count() - 1 ) ] );
 		}
-		
+
 		m_pInspectPanel->SetDialogVariable( "resultstring", pszLocalized );
 		return;
 	}
@@ -438,7 +438,7 @@ void CCollectionCraftingPanel::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCollectionCraftingPanel::OnItemPanelMousePressed( vgui::Panel *panel )
 {
@@ -455,7 +455,7 @@ void CCollectionCraftingPanel::OnItemPanelMousePressed( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCollectionCraftingPanel::OnSelectionReturned( KeyValues *data )
 {
@@ -482,7 +482,7 @@ void CCollectionCraftingPanel::OnSelectionReturned( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCollectionCraftingPanel::UpdateOKButton()
 {
@@ -496,12 +496,12 @@ void CCollectionCraftingPanel::UpdateOKButton()
 
 	if ( bOKEnabled )
 	{
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( m_pOKButton->GetParent(), "CollectionCrafting_OKBlink" );	
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( m_pOKButton->GetParent(), "CollectionCrafting_OKBlink" );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCollectionCraftingPanel::SetVisible( bool bVisible )
 {
@@ -546,7 +546,7 @@ void CCollectionCraftingPanel::SetVisible( bool bVisible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCollectionCraftingPanel::SOCreated( const CSteamID & steamIDOwner, const GCSDK::CSharedObject *pObject, GCSDK::ESOCacheEvent eEvent )
 {
@@ -575,7 +575,7 @@ void CCollectionCraftingPanel::SOCreated( const CSteamID & steamIDOwner, const G
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCollectionCraftingPanel::Show( CUtlVector< const CEconItemView* >& vecStartingItems )
 {
@@ -621,7 +621,7 @@ void CCollectionCraftingPanel::SetWaitingForItem( eEconItemOrigin eOrigin )
 	// reset
 	m_pInspectPanel->SetItemCopy( NULL );
 	m_pCosmeticResultItemModelPanel->SetItem( NULL );
-	
+
 	// Do not use Derived SetVisible since it does extra animations we do not want here
 	BaseClass::SetVisible( true );
 
@@ -630,12 +630,12 @@ void CCollectionCraftingPanel::SetWaitingForItem( eEconItemOrigin eOrigin )
 	m_bWaitingForGCResponse = true;
 	m_nFoundItemID.Purge();
 	m_timerResponse.Start( 5.f );
-	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_WaitForItemsOnly" );	
+	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_WaitForItemsOnly" );
 	return;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCollectionCraftingPanel::SetItem( const CEconItemView* pItem, int nIndex )
 {
@@ -657,7 +657,7 @@ void CCollectionCraftingPanel::SetItem( const CEconItemView* pItem, int nIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCollectionCraftingPanel::OnThink()
 {
@@ -673,8 +673,8 @@ void CCollectionCraftingPanel::OnThink()
 			m_bWaitingForGCResponse = false;
 			m_timerResponse.Invalidate();
 
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_HideWaiting" );	
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_ShowFailure" );	
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_HideWaiting" );
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_ShowFailure" );
 		}
 		else if ( m_timerResponse.GetElapsedTime() > flSoonestAirDropTime || m_bShowImmediately )
 		{
@@ -684,7 +684,7 @@ void CCollectionCraftingPanel::OnThink()
 			{
 				OnCommand( "itemget" );
 				m_timerResponse.Invalidate();
-				g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_HideWaiting" );	
+				g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_HideWaiting" );
 
 				// Setup the item in the panel
 				CEconItemView* pNewEconItemView = InventoryManager()->GetLocalInventory()->GetInventoryItemByItemID( m_nFoundItemID[0] );
@@ -723,11 +723,11 @@ void CCollectionCraftingPanel::OnThink()
 			else
 			{
 				// Say that we're waiting
-				g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_ShowWaiting" );	
+				g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_ShowWaiting" );
 			}
 		}
 	}
-	
+
 	bool bEnvelopReadyToSendThisFrame = true;
 	// They need to have drawn a little bit
 	bEnvelopReadyToSendThisFrame &= m_pDrawingPanel->GetLines( GetLocalPlayerIndex() ).Count() > 10;
@@ -737,7 +737,7 @@ void CCollectionCraftingPanel::OnThink()
 	// Show the send button?
 	if ( bEnvelopReadyToSendThisFrame && !m_bEnvelopeReadyToSend )
 	{
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_ShowSendButton" );	
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_ShowSendButton" );
 	}
 
 	m_bEnvelopeReadyToSend = bEnvelopReadyToSendThisFrame;
@@ -748,7 +748,7 @@ void CCollectionCraftingPanel::OnThink()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCraftCommonStatClockPanel::CCraftCommonStatClockPanel( vgui::Panel *parent, CItemModelPanelToolTip* pTooltip )
 	: BaseClass( parent, pTooltip )
@@ -757,7 +757,7 @@ CCraftCommonStatClockPanel::CCraftCommonStatClockPanel( vgui::Panel *parent, CIt
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCraftCommonStatClockPanel::~CCraftCommonStatClockPanel( void )
 {
@@ -795,7 +795,7 @@ void CCraftCommonStatClockPanel::CreateSelectionPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftCommonStatClockPanel::OnCommand( const char *command )
 {

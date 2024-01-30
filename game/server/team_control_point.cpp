@@ -74,7 +74,7 @@ END_DATADESC();
 LINK_ENTITY_TO_CLASS( team_control_point, CTeamControlPoint );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTeamControlPoint::CTeamControlPoint()
 {
@@ -91,7 +91,7 @@ CTeamControlPoint::CTeamControlPoint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::Spawn( void )
 {
@@ -152,10 +152,10 @@ void CTeamControlPoint::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTeamControlPoint::KeyValue( const char *szKeyName, const char *szValue )
-{	
+{
 	if ( !Q_strncmp( szKeyName, "team_capsound_", 14 ) )
 	{
 		int iTeam = atoi(szKeyName+14);
@@ -216,7 +216,7 @@ bool CTeamControlPoint::KeyValue( const char *szKeyName, const char *szValue )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::Precache( void )
 {
@@ -299,7 +299,7 @@ void CTeamControlPoint::InputReset( inputdata_t &input )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::HandleScoring( int iTeam )
 {
@@ -365,7 +365,7 @@ void CTeamControlPoint::InputSetOwner( inputdata_t &input )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::InputShowModel( inputdata_t &input )
 {
@@ -373,7 +373,7 @@ void CTeamControlPoint::InputShowModel( inputdata_t &input )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::InputHideModel( inputdata_t &input )
 {
@@ -381,7 +381,7 @@ void CTeamControlPoint::InputHideModel( inputdata_t &input )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTeamControlPoint::GetCurrentHudIconIndex( void )
 {
@@ -389,7 +389,7 @@ int CTeamControlPoint::GetCurrentHudIconIndex( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTeamControlPoint::GetHudIconIndexForTeam( int iGameTeam )
 {
@@ -397,7 +397,7 @@ int CTeamControlPoint::GetHudIconIndexForTeam( int iGameTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTeamControlPoint::GetHudOverlayIndexForTeam( int iGameTeam )
 {
@@ -405,7 +405,7 @@ int CTeamControlPoint::GetHudOverlayIndexForTeam( int iGameTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CTeamControlPoint::GetPreviousPointForTeam( int iGameTeam, int iPrevPoint )
 {
@@ -428,7 +428,7 @@ int	CTeamControlPoint::GetPreviousPointForTeam( int iGameTeam, int iPrevPoint )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::ForceOwner( int iTeam )
 {
@@ -438,7 +438,7 @@ void CTeamControlPoint::ForceOwner( int iTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::SetOwner( int iCapTeam, bool bMakeSound, int iNumCappers, int *pCappingPlayers )
 {
@@ -454,7 +454,7 @@ void CTeamControlPoint::SetOwner( int iCapTeam, bool bMakeSound, int iNumCappers
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::CaptureStart( int iCapTeam, int iNumCappingPlayers, int *pCappingPlayers )
 {
@@ -505,7 +505,7 @@ void CTeamControlPoint::CaptureStart( int iCapTeam, int iNumCappingPlayers, int 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::CaptureEnd( void )
 {
@@ -518,7 +518,7 @@ void CTeamControlPoint::CaptureEnd( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::CaptureInterrupted( bool bBlocked )
 {
@@ -555,7 +555,7 @@ void CTeamControlPoint::CaptureInterrupted( bool bBlocked )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::StopLoopingSounds( void )
 {
@@ -622,10 +622,10 @@ void CTeamControlPoint::InternalSetOwner( int iCapTeam, bool bMakeSound, int iNu
 		// Remap team to get first game team = 1
 		switch ( m_iTeam - FIRST_GAME_TEAM+1 )
 		{
-		case 1: 
+		case 1:
 			m_OnCapTeam1.FireOutput( this, this );
 			break;
-		case 2: 
+		case 2:
 			m_OnCapTeam2.FireOutput( this, this );
 			break;
 		default:
@@ -635,7 +635,7 @@ void CTeamControlPoint::InternalSetOwner( int iCapTeam, bool bMakeSound, int iNu
 	}
 
 	// If we're playing a sound, this is a true cap by players.
-	if ( bMakeSound )	
+	if ( bMakeSound )
 	{
 		if ( iOldTeam > LAST_SHARED_TEAM && iOldTeam != m_iTeam )
 		{
@@ -672,10 +672,10 @@ void CTeamControlPoint::InternalSetOwner( int iCapTeam, bool bMakeSound, int iNu
 		// Remap team to get first game team = 1
 		switch ( m_iTeam - FIRST_GAME_TEAM+1 )
 		{
-		case 1: 
+		case 1:
 			m_OnOwnerChangedToTeam1.FireOutput( this, this );
 			break;
-		case 2: 
+		case 2:
 			m_OnOwnerChangedToTeam2.FireOutput( this, this );
 			break;
 		}
@@ -711,7 +711,7 @@ void CTeamControlPoint::InternalSetOwner( int iCapTeam, bool bMakeSound, int iNu
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::SendCapString( int iCapTeam, int iNumCappingPlayers, int *pCappingPlayers )
 {
@@ -751,7 +751,7 @@ void CTeamControlPoint::SendCapString( int iCapTeam, int iNumCappingPlayers, int
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::CaptureBlocked( CBaseMultiplayerPlayer *pPlayer, CBaseMultiplayerPlayer *pVictim )
 {
@@ -778,15 +778,15 @@ void CTeamControlPoint::CaptureBlocked( CBaseMultiplayerPlayer *pPlayer, CBaseMu
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTeamControlPoint::GetOwner( void ) const
-{ 
+{
 	return m_iTeam;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTeamControlPoint::GetDefaultOwner( void ) const
 {
@@ -794,7 +794,7 @@ int CTeamControlPoint::GetDefaultOwner( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTeamControlPoint::GetCPGroup( void )
 {
@@ -813,12 +813,12 @@ int CTeamControlPoint::PointValue( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::SetActive( bool active )
 {
 	m_bActive = active;
-	
+
 	if( active )
 	{
 		RemoveEffects( EF_NODRAW );
@@ -830,7 +830,7 @@ void CTeamControlPoint::SetActive( bool active )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::SetCappersRequiredForTeam( int iGameTeam, int iCappers )
 {
@@ -847,7 +847,7 @@ bool CTeamControlPoint::HasBeenContested( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTeamControlPoint::LastContestedAt( void )
 {
@@ -855,7 +855,7 @@ float CTeamControlPoint::LastContestedAt( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::SetLastContestedAt( float flTime )
 {
@@ -863,7 +863,7 @@ void CTeamControlPoint::SetLastContestedAt( float flTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::UpdateCapPercentage( void )
 {
@@ -883,7 +883,7 @@ void CTeamControlPoint::UpdateCapPercentage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTeamControlPoint::GetTeamCapPercentage( int iTeam )
 {
@@ -907,13 +907,13 @@ float CTeamControlPoint::GetTeamCapPercentage( int iTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int CTeamControlPoint::DrawDebugTextOverlays( void ) 
+int CTeamControlPoint::DrawDebugTextOverlays( void )
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[1024];
 		Q_snprintf(tempstr, sizeof(tempstr), "INDEX: (%d)", GetPointIndex() );
@@ -981,16 +981,16 @@ void CTeamControlPoint::PlayerBlocked( CBaseMultiplayerPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::InputRoundActivate( inputdata_t &inputdata )
 {
 	switch ( m_iTeam - FIRST_GAME_TEAM+1 )
 	{
-	case 1: 
+	case 1:
 		m_OnRoundStartOwnedByTeam1.FireOutput( this, this );
 		break;
-	case 2: 
+	case 2:
 		m_OnRoundStartOwnedByTeam2.FireOutput( this, this );
 		break;
 	}
@@ -999,7 +999,7 @@ void CTeamControlPoint::InputRoundActivate( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::InputSetLocked( inputdata_t &inputdata )
 {
@@ -1010,9 +1010,9 @@ void CTeamControlPoint::InputSetLocked( inputdata_t &inputdata )
 	bool bLocked = inputdata.value.Int() > 0;
 	InternalSetLocked( bLocked );
 }
- 
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::InternalSetLocked( bool bLocked )
 {
@@ -1058,7 +1058,7 @@ void CTeamControlPoint::InternalSetLocked( bool bLocked )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::InputSetUnlockTime( inputdata_t &inputdata )
 {
@@ -1085,12 +1085,12 @@ void CTeamControlPoint::InputSetUnlockTime( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPoint::UnlockThink( void )
 {
-	if ( m_flUnlockTime > 0 && 
-		 m_flUnlockTime < gpGlobals->curtime && 
+	if ( m_flUnlockTime > 0 &&
+		 m_flUnlockTime < gpGlobals->curtime &&
 		 ( TeamplayRoundBasedRules() && TeamplayRoundBasedRules()->State_Get() == GR_STATE_RND_RUNNING ) )
 	{
 		InternalSetLocked( false );

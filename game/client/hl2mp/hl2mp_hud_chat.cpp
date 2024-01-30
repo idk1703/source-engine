@@ -49,7 +49,7 @@ void CHudChatInputLine::ApplySchemeSettings(vgui::IScheme *pScheme)
 
 CHudChat::CHudChat( const char *pElementName ) : BaseClass( pElementName )
 {
-	
+
 }
 
 void CHudChat::CreateChatInputLine( void )
@@ -61,7 +61,7 @@ void CHudChat::CreateChatInputLine( void )
 void CHudChat::CreateChatLines( void )
 {
 	m_ChatLine = new CHudChatLine( this, "ChatLine1" );
-	m_ChatLine->SetVisible( false );	
+	m_ChatLine->SetVisible( false );
 }
 
 void CHudChat::ApplySchemeSettings( vgui::IScheme *pScheme )

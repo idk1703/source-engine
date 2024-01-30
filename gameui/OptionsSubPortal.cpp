@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -23,10 +23,10 @@ using namespace vgui;
 
 COptionsSubPortal::COptionsSubPortal(vgui::Panel *parent) : PropertyPage(parent, NULL)
 {
-	m_pPortalFunnelCheckBox = new CCvarToggleCheckButton( 
-		this, 
-		"PortalFunnel", 
-		"#GameUI_PortalFunnel", 
+	m_pPortalFunnelCheckBox = new CCvarToggleCheckButton(
+		this,
+		"PortalFunnel",
+		"#GameUI_PortalFunnel",
 		"sv_player_funnel_into_portals" );
 
 	m_pPortalDepthCombo = new ComboBox( this, "PortalDepth", 6, false );
@@ -45,14 +45,14 @@ COptionsSubPortal::COptionsSubPortal(vgui::Panel *parent) : PropertyPage(parent,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 COptionsSubPortal::~COptionsSubPortal()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubPortal::OnResetData()
 {
@@ -67,7 +67,7 @@ void COptionsSubPortal::OnResetData()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubPortal::OnApplyChanges()
 {
@@ -90,7 +90,7 @@ void COptionsSubPortal::ApplySchemeSettings(IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubPortal::OnControlModified()
 {

@@ -167,12 +167,12 @@ void CPortalRenderable_Func_LiquidPortal::RenderPortalViewToBackBuffer( CViewRen
 	AngleVectors( cameraView.angles, &vCameraForward, NULL, NULL );
 
 	// Setup fog state for the camera.
-	Vector ptPOVOrigin = m_matrixThisToLinked * cameraView.origin;	
+	Vector ptPOVOrigin = m_matrixThisToLinked * cameraView.origin;
 	Vector vPOVForward = m_matrixThisToLinked.ApplyRotation( vCameraForward );
 
 	CViewSetup portalView = cameraView;
 
-	QAngle qPOVAngles = TransformAnglesToWorldSpace( cameraView.angles, m_matrixThisToLinked.As3x4() );	
+	QAngle qPOVAngles = TransformAnglesToWorldSpace( cameraView.angles, m_matrixThisToLinked.As3x4() );
 
 	portalView.width = cameraView.width;
 	portalView.height = cameraView.height;
@@ -191,7 +191,7 @@ void CPortalRenderable_Func_LiquidPortal::RenderPortalViewToBackBuffer( CViewRen
 	{
 		ViewCustomVisibility_t customVisibility;
 		m_pLinkedPortal->AddToVisAsExitPortal( &customVisibility );
-		render->Push3DView( portalView, 0, NULL, pViewRender->GetFrustum() );		
+		render->Push3DView( portalView, 0, NULL, pViewRender->GetFrustum() );
 		{
 			if( bUseSeeThroughFrustum)
 				memcpy( pViewRender->GetFrustum(), seeThroughFrustum, sizeof( Frustum ) );
@@ -236,7 +236,7 @@ void CPortalRenderable_Func_LiquidPortal::AddToVisAsExitPortal( ViewCustomVisibi
 	Vector vOrigin = (m_vAABBMins + m_vAABBMaxs) * 0.5f;
 
 	visOverride.m_vecVisOrigin = vOrigin;
-	visOverride.m_fDistToAreaPortalTolerance = 64.0f;				
+	visOverride.m_fDistToAreaPortalTolerance = 64.0f;
 
 	// Specify which leaf to use for area portal culling
 	pCustomVisibility->ForceVisOverride( visOverride );
@@ -283,7 +283,7 @@ CPortalRenderable* CPortalRenderable_Func_LiquidPortal::GetLinkedPortal() const
 {
 	return m_pLinkedPortal;
 }
-	
+
 bool CPortalRenderable_Func_LiquidPortal::ShouldUpdateDepthDoublerTexture( const CViewSetup &viewSetup )
 {
 	return false;
@@ -454,7 +454,7 @@ void CPortalRenderable_Func_LiquidPortal::DrawInnerLiquid( bool bClipToBounds, f
 		return;
 
 	PortalMeshPoint_t WorkVertices[4];
-	
+
 	//view->GetViewSetup()->zNear;
 	Vector vForward, vUp, vRight, vOrigin;
 	vForward = CurrentViewForward();
@@ -486,7 +486,7 @@ void CPortalRenderable_Func_LiquidPortal::DrawInnerLiquid( bool bClipToBounds, f
 
 	PortalMeshPoint_t *pInVerts = (PortalMeshPoint_t *)stackalloc( 4 * (6) * 2 * sizeof( PortalMeshPoint_t ) ); //really only should need 2x points, but I'm paranoid
 	PortalMeshPoint_t *pOutVerts = (PortalMeshPoint_t *)stackalloc( 4 * (6) * 2 * sizeof( PortalMeshPoint_t ) );
-	
+
 	PortalMeshPoint_t *pFinalVerts;
 	int iVertCount;
 	if( bClipToBounds )
@@ -558,7 +558,7 @@ void CPortalRenderable_Func_LiquidPortal::DrawInnerLiquid( bool bClipToBounds, f
 		Clip_And_Render_Convex_Polygon( pFinalVerts, iVertCount, pMaterial, this );
 	}
 
-	
+
 }
 
 
@@ -572,7 +572,7 @@ CLiquidPortal_InnerLiquidEffect::CLiquidPortal_InnerLiquidEffect( void )
 	m_pImmersionPortal(NULL),
 	m_bFadeBackToReality(false),
 	m_fFadeBackTimeLeft(0.0f)
-{	
+{
 }
 
 
@@ -601,7 +601,7 @@ void CLiquidPortal_InnerLiquidEffect::Render( int x, int y, int w, int h )
 			CMatRenderContextPtr pRenderContext( materials );
 			pRenderContext->ClearBuffers( false, true, false );
 			pRenderContext->OverrideDepthEnable( true, false );
-			
+
 			m_pImmersionPortal->DrawInnerLiquid( false, fInterp );
 
 			pRenderContext->OverrideDepthEnable( false, true );
@@ -626,5 +626,3 @@ void CLiquidPortal_InnerLiquidEffect::Render( int x, int y, int w, int h )
 		pRenderContext->OverrideDepthEnable( false, true );
 	}
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -64,7 +64,7 @@ CSOTFLadderData *GetLocalPlayerLadderData( EMatchGroup nMatchGroup )
 #endif // !GC
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CSOTFLadderData::CSOTFLadderData()
 {
@@ -74,7 +74,7 @@ CSOTFLadderData::CSOTFLadderData()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CSOTFLadderData::CSOTFLadderData( uint32 unAccountID, EMatchGroup eMatchGroup  )
 {
@@ -212,7 +212,7 @@ void CSOTFLadderData::WriteToRecord( CSchLadderData *pLadderData ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSOTFLadderData::ReadFromRecord( const CSchLadderData &ladderData )
 {
@@ -277,7 +277,7 @@ void GetLocalPlayerMatchHistory( EMatchGroup nMatchGroup, CUtlVector < CSOTFMatc
 }
 #endif // !GC
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CSOTFMatchResultPlayerInfo::CSOTFMatchResultPlayerInfo()
 {
@@ -287,7 +287,7 @@ CSOTFMatchResultPlayerInfo::CSOTFMatchResultPlayerInfo()
 #ifdef GC
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CSOTFMatchResultPlayerInfo::CSOTFMatchResultPlayerInfo( uint32 unAccountID )
 {
@@ -337,7 +337,7 @@ bool CSOTFMatchResultPlayerInfo::BIsKeyLess( const CSharedObject & soRHS ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CSOTFMatchResultPlayerInfo::BYieldingAddInsertToTransaction( GCSDK::CSQLAccess & sqlAccess )
 {
@@ -347,7 +347,7 @@ bool CSOTFMatchResultPlayerInfo::BYieldingAddInsertToTransaction( GCSDK::CSQLAcc
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CSOTFMatchResultPlayerInfo::BYieldingAddWriteToTransaction( GCSDK::CSQLAccess & sqlAccess, const CUtlVector< int > &fields )
 {
@@ -398,7 +398,7 @@ bool CSOTFMatchResultPlayerInfo::BYieldingAddWriteToTransaction( GCSDK::CSQLAcce
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CSOTFMatchResultPlayerInfo::BYieldingAddRemoveToTransaction( GCSDK::CSQLAccess & sqlAccess )
 {
@@ -408,7 +408,7 @@ bool CSOTFMatchResultPlayerInfo::BYieldingAddRemoveToTransaction( GCSDK::CSQLAcc
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSOTFMatchResultPlayerInfo::WriteToRecord( CSchMatchResultPlayerInfo *pMatchInfo ) const
 {
@@ -445,7 +445,7 @@ void CSOTFMatchResultPlayerInfo::WriteToRecord( CSchMatchResultPlayerInfo *pMatc
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSOTFMatchResultPlayerInfo::ReadFromRecord( const CSchMatchResultPlayerInfo &matchInfo )
 {
@@ -483,7 +483,7 @@ void CSOTFMatchResultPlayerInfo::ReadFromRecord( const CSchMatchResultPlayerInfo
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 class CGCMatchHistoryLoad : public CGCEconJob
 {

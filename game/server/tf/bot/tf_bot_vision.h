@@ -21,7 +21,7 @@ public:
 	virtual void Update( void );								// update internal state
 
 	/**
-	 * Populate "potentiallyVisible" with the set of all entities we could potentially see. 
+	 * Populate "potentiallyVisible" with the set of all entities we could potentially see.
 	 * Entities in this set will be tested for visibility/recognition in IVision::Update()
 	 */
 	virtual void CollectPotentiallyVisibleEntities( CUtlVector< CBaseEntity * > *potentiallyVisible );

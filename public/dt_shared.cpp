@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -110,4 +110,3 @@ DataTableProp PropEHandle(
 	return RecvPropEHandle( pVarName, offset, sizeofVar );
 #endif
 }
-

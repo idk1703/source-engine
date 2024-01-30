@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -26,15 +26,15 @@ public:
 	void Activate(const char *cvarName, const char *curValue, const char *type, const char *question);
 
 	/* message returned:
-		"CvarChangeValue" 
+		"CvarChangeValue"
 			"player"
 			"value"
 			"type"
 	*/
-	
+
 	// make the input stars, ala a password entry dialog
 	void MakePassword();
-	
+
 	// set the text in a certain label name
 	void SetLabelText(const char *textEntryName, const char *text);
 

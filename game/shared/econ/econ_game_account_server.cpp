@@ -13,7 +13,7 @@ using namespace GCSDK;
 
 #ifdef GC_DLL
 //---------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //---------------------------------------------------------------------------------
 IMPLEMENT_CLASS_MEMPOOL( CEconGameServerAccount, 100, UTLMEMORYPOOL_GROW_SLOW );
 

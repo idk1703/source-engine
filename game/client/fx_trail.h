@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,7 +24,7 @@ public:
 	virtual		~C_ParticleTrail( void );
 
 	void		GetAimEntOrigin( IClientEntity *pAttachedTo, Vector *pAbsOrigin, QAngle *pAbsAngles );
-	
+
 	void		SetEmit( bool bEmit );
 	bool		ShouldEmit( void ) { return m_bEmit; }
 

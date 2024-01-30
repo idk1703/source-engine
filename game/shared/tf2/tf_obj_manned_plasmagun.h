@@ -45,7 +45,7 @@ public:
 
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -69,7 +69,7 @@ protected:
 
 	// Fire the weapon
 	virtual void Fire( void );
-	
+
 protected:
 	int		m_nMaxAmmoCount;
 	CNetworkVar( float, m_flNextIdleTime );

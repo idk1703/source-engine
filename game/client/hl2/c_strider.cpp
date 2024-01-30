@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -82,8 +82,8 @@ public:
 	}
 
 	virtual int	DrawModel( int flags );
-	virtual void LimitTime( float tmax ) 
-	{ 
+	virtual void LimitTime( float tmax )
+	{
 		float dt = tmax - m_t;
 		if ( dt < 0 )
 		{
@@ -102,7 +102,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_Strider : public C_AI_BaseNPC
 {
@@ -178,7 +178,7 @@ void C_StriderFX::Update( C_BaseEntity *pOwner, const Vector &targetPos )
 	BaseClass::Update();
 
 	m_pOwner = pOwner;
-	
+
 	if ( m_active )
 	{
 		m_targetPosition = targetPos;
@@ -201,7 +201,7 @@ void C_StriderFX::Update( C_BaseEntity *pOwner, const Vector &targetPos )
 // sparkly white streaks
 // pale blue particle steam
 
-enum 
+enum
 {
 	STRIDERFX_WARP_SCALE = 0,
 	STRIDERFX_DARKNESS,
@@ -212,7 +212,7 @@ enum
 
 	STRIDERFX_NARROW_BEAM_COLOR,
 	STRIDERFX_NARROW_BEAM_SIZE,
-	
+
 	STRIDERFX_WIDE_BEAM_COLOR,
 	STRIDERFX_WIDE_BEAM_SIZE,
 
@@ -297,12 +297,12 @@ CStriderFXEnvelope::CStriderFXEnvelope()
 	AddKey( STRIDERFX_NARROW_BEAM_SIZE, CSimpleKeyInterp( 0.5, KEY_ACCELERATE, 1 ) );
 	AddKey( STRIDERFX_NARROW_BEAM_SIZE, CSimpleKeyInterp( 1.25, KEY_LINEAR, 1 ) );
 	AddKey( STRIDERFX_NARROW_BEAM_SIZE, CSimpleKeyInterp( 1.5, KEY_DECELERATE, 2 ) );
-	
+
 	AddKey( STRIDERFX_WIDE_BEAM_COLOR, CSimpleKeyInterp( 1.25, KEY_LINEAR, 0 ) );
 	AddKey( STRIDERFX_WIDE_BEAM_COLOR, CSimpleKeyInterp( 1.5, KEY_SPLINE, 1 ) );
 	AddKey( STRIDERFX_WIDE_BEAM_COLOR, CSimpleKeyInterp( 1.75, KEY_LINEAR, 1 ) );
 	AddKey( STRIDERFX_WIDE_BEAM_COLOR, CSimpleKeyInterp( 2.1, KEY_SPLINE, 0 ) );
-	
+
 	AddKey( STRIDERFX_WIDE_BEAM_SIZE, CSimpleKeyInterp( 1.25, KEY_LINEAR, 1 ) );
 	AddKey( STRIDERFX_WIDE_BEAM_SIZE, CSimpleKeyInterp( 2.1, KEY_LINEAR, 1 ) );
 
@@ -352,7 +352,7 @@ void DrawSpriteTangentSpace( const Vector &vecOrigin, float flWidth, float flHei
 		}
 		else
 		{
-			// In this case, fwd == g_vecVUp, it's right above or 
+			// In this case, fwd == g_vecVUp, it's right above or
 			// below us in screen space
 			CrossProduct( fwd, CurrentViewRight(), up );
 			VectorNormalize( up );
@@ -410,7 +410,7 @@ void DrawSpriteTangentSpace( const Vector &vecOrigin, float flWidth, float flHei
 	meshBuilder.Normal3fv( back.Base() );
 	meshBuilder.Position3fv (point.Base());
 	meshBuilder.AdvanceVertex();
-	
+
 	meshBuilder.End();
 	pMesh->Draw();
 }
@@ -725,10 +725,10 @@ void C_Strider::ClientThink()
 				{
 					// Detach the endpoint.
 					pRope->SetEndEntity( NULL );
-					
+
 					// Make some spark effect here..
 					g_pEffects->Sparks( vPos );
-				}				
+				}
 			}
 		}
 
@@ -780,7 +780,7 @@ void MuzzleFlash_Strider( ClientEntityHandle_t hEntity, int attachmentIndex )
 		offset = (forward * (i*2.0f*flScale));
 
 		pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), pSimple->GetPMaterial( VarArgs( "effects/combinemuzzle%d", random->RandomInt(1,2) ) ), offset );
-			
+
 		if ( pParticle == NULL )
 			return;
 
@@ -801,7 +801,7 @@ void MuzzleFlash_Strider( ClientEntityHandle_t hEntity, int attachmentIndex )
 		pParticle->m_flRoll			= random->RandomInt( 0, 360 );
 		pParticle->m_flRollDelta	= 0.0f;
 	}
-	
+
 	Vector right(0,1,0), up(0,0,1);
 	Vector dir = right - up;
 
@@ -815,7 +815,7 @@ void MuzzleFlash_Strider( ClientEntityHandle_t hEntity, int attachmentIndex )
 		offset = (dir * (i*flScale));
 
 		pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), pSimple->GetPMaterial( VarArgs( "effects/combinemuzzle%d", random->RandomInt(1,2) ) ), offset );
-			
+
 		if ( pParticle == NULL )
 			return;
 
@@ -846,7 +846,7 @@ void MuzzleFlash_Strider( ClientEntityHandle_t hEntity, int attachmentIndex )
 		offset = (-dir * (i*flScale));
 
 		pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), pSimple->GetPMaterial( VarArgs( "effects/combinemuzzle%d", random->RandomInt(1,2) ) ), offset );
-			
+
 		if ( pParticle == NULL )
 			return;
 
@@ -877,7 +877,7 @@ void MuzzleFlash_Strider( ClientEntityHandle_t hEntity, int attachmentIndex )
 		offset = (dir * (i*flScale));
 
 		pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), pSimple->GetPMaterial( VarArgs( "effects/combinemuzzle%d", random->RandomInt(1,2) ) ), offset );
-			
+
 		if ( pParticle == NULL )
 			return;
 
@@ -900,7 +900,7 @@ void MuzzleFlash_Strider( ClientEntityHandle_t hEntity, int attachmentIndex )
 	}
 
 	pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), pSimple->GetPMaterial( "effects/strider_muzzle" ), vec3_origin );
-		
+
 	if ( pParticle == NULL )
 		return;
 
@@ -943,8 +943,8 @@ void MuzzleFlash_Strider( ClientEntityHandle_t hEntity, int attachmentIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &data - 
+// Purpose:
+// Input  : &data -
 //-----------------------------------------------------------------------------
 void StriderMuzzleFlashCallback( const CEffectData &data )
 {
@@ -957,15 +957,15 @@ DECLARE_CLIENT_EFFECT( "StriderMuzzleFlash", StriderMuzzleFlashCallback );
 #define BLOOD_MAX_SPEED 256.0f*8.0f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &origin - 
-//			&normal - 
-//			scale - 
+// Purpose:
+// Input  : &origin -
+//			&normal -
+//			scale -
 //-----------------------------------------------------------------------------
 void StriderBlood( const Vector &origin, const Vector &normal, float scale )
 {
 	VPROF_BUDGET( "StriderBlood", VPROF_BUDGETGROUP_PARTICLE_RENDERING );
-	
+
 	//Find area ambient light color and use it to tint smoke
 	Vector worldLight = WorldGetLightForPoint( origin, true );
 	Vector	tint;
@@ -1036,8 +1036,8 @@ void StriderBlood( const Vector &origin, const Vector &normal, float scale )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &data - 
+// Purpose:
+// Input  : &data -
 //-----------------------------------------------------------------------------
 void StriderBloodCallback( const CEffectData &data )
 {
@@ -1045,4 +1045,3 @@ void StriderBloodCallback( const CEffectData &data )
 }
 
 DECLARE_CLIENT_EFFECT( "StriderBlood", StriderBloodCallback );
-

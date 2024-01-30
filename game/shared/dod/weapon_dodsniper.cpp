@@ -1,10 +1,10 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
-#include "cbase.h" 
+#include "cbase.h"
 #include "fx_dod_shared.h"
 #include "weapon_dodsniper.h"
 
@@ -80,7 +80,7 @@ void CDODSniperWeapon::ResetTimers( void )
 bool CDODSniperWeapon::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
 #ifndef CLIENT_DLL
-	ZoomOut();	
+	ZoomOut();
 
 	ResetTimers();
 #endif
@@ -222,7 +222,7 @@ void CDODSniperWeapon::ItemPostFrame( void )
 		}
 		else if ( gpGlobals->curtime > m_flRezoomTime )
 		{
-            ZoomIn();
+	ZoomIn();
 			m_flRezoomTime = -1;
 		}
 	}
@@ -278,7 +278,7 @@ void CDODSniperWeapon::ToggleZoom( void )
 		{
 			ZoomOut();
 		}
-	}	
+	}
 }
 
 void CDODSniperWeapon::ZoomIn( void )
@@ -310,7 +310,7 @@ void CDODSniperWeapon::ZoomOut( void )
 	SetZoomed( false );
 
 	m_bDoViewAnim = !m_bDoViewAnim;
-#endif	
+#endif
 
 	if ( bWasZoomed )
 	{
@@ -373,7 +373,7 @@ bool CDODSniperWeapon::IsZoomingIn( void )
 
 		if ( m_bDoViewAnim != m_bDoViewAnimCache )
 		{
-			// start the anim timer 
+			// start the anim timer
 			m_flViewAnimTimer = gpGlobals->curtime + DOD_SNIPER_ZOOM_CHANGE_TIME;
 			m_bDoViewAnimCache = m_bDoViewAnim.m_Value;
 		}
@@ -385,7 +385,7 @@ bool CDODSniperWeapon::IsZoomingIn( void )
 		Vector offset = ( flPercent * GetDODWpnData().m_vecViewNormalOffset +
 			( 1.0 - flPercent ) * GetDODWpnData().m_vecViewProneOffset );
 
-		
+
 		// how long since we changed iron sight mode
 		float flZoomAnimPercent = clamp( ( (m_flViewAnimTimer - gpGlobals->curtime) / ( DOD_SNIPER_ZOOM_CHANGE_TIME ) ), 0.0, 1.0 );
 
@@ -394,7 +394,7 @@ bool CDODSniperWeapon::IsZoomingIn( void )
 		//Msg( "(%.1f) zoom %.2f %.2f\n", gpGlobals->curtime, m_flViewAnimTimer - gpGlobals->curtime, m_flZoomPercent );
 
 		// use that percent to interp to iron sight position
-		Vector vecResult = ( m_flZoomPercent * GetDODWpnData().m_vecIronSightOffset + 
+		Vector vecResult = ( m_flZoomPercent * GetDODWpnData().m_vecIronSightOffset +
 			( 1.0 - m_flZoomPercent ) * offset );
 
 		// store this value to use when called in prediction

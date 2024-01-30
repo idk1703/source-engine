@@ -25,7 +25,7 @@ class CTFRevolver : public CTFWeaponBaseGun
 public:
 
 	DECLARE_CLASS( CTFRevolver, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 // Server specific.
@@ -52,7 +52,7 @@ public:
 
 	virtual bool		Holster( CBaseCombatWeapon *pSwitchingTo = NULL );
 	virtual bool		Deploy( void );
-	
+
 	int					GetCount( void );
 	const char*			GetEffectLabelText( void );
 	float				GetProgress( void ) { return 0.f; }

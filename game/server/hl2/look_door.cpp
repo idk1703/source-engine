@@ -32,9 +32,9 @@ public:
 	void InputInvertOff( inputdata_t &inputdata );
 
 	float	m_flProximityDistance;	// How far before I start reacting
-	float	m_flProximityOffset;	
+	float	m_flProximityOffset;
 	float	m_flFieldOfView;
-	
+
 	EHANDLE	m_hLooker;				// Who is looking
 
 	DECLARE_DATADESC();
@@ -48,7 +48,7 @@ public:
 
 	void	LookThink( void );
 	EHANDLE	m_hLookDoor;				// Who owns me
-	
+
 	DECLARE_DATADESC();
 };
 
@@ -234,4 +234,3 @@ void CLookDoor::MoveThink(void)
 	// Move the door
 	SetPosition( flMove );
 }
-

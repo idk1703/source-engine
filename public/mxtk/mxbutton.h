@@ -47,4 +47,3 @@ private:
 
 
 #endif // INCLUDED_MXBUTTON
-

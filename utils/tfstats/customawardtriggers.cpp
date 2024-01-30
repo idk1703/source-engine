@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -38,18 +38,18 @@ using namespace std;
 CCustomAwardTrigger* CCustomAwardTrigger::readTrigger(CTextFile& f)
 {
 	CCustomAwardTrigger* retval=NULL;
-	
+
 	string type="fullsearch";
 	vector<string> keys;
 	int value = 1 ;
 	int teamValue = 1;
-	
-	
+
+
 	f.discard("{");
 	map<string,string> extraProps;
 	const char* token=f.getToken();
-	
-	while (token)	
+
+	while (token)
 	{
 		if (stricmp(token,"value")==0)
 		{
@@ -92,7 +92,7 @@ CCustomAwardTrigger* CCustomAwardTrigger::readTrigger(CTextFile& f)
 			extraProps[lowerbuf2]=lowerbuf;
 			f.discard(";");
 		}
-				
+
 		token=f.getToken();
 	}
 
@@ -104,7 +104,7 @@ CCustomAwardTrigger* CCustomAwardTrigger::readTrigger(CTextFile& f)
 		retval = new TRACKED CFullSearchTrigger(value,teamValue,keys,extraProps);
 	else
 		g_pApp->fatalError("Invalid trigger type while parsing %s:\n\"%s\" is not a valid trigger type, please use \"broadcast\", \"goal\"  or \"fullsearch\"",f.fileName().c_str(),type);
-	
+
 	return retval;
 }
 
@@ -120,7 +120,7 @@ CBroadcastTrigger::CBroadcastTrigger (int value, int teamValue, vector<string>& 
 {
 	//this line works in win32, but not in G++... g++ doesn't seem to have vector::assign
 	//broadcastStrings.assign(keys.begin(),keys.end());
-	
+
 	//make a new temp object, and assign it to broadcastStrings
 	broadcastStrings=vector<string>(keys);
 }
@@ -145,7 +145,7 @@ bool CBroadcastTrigger::matches(const CLogEvent* le)
 			string s=*it;
 			if (BroadID==*it)
 				return true;
-		}	
+		}
 	}
 	return false;
 }
@@ -163,9 +163,9 @@ CGoalTrigger::CGoalTrigger(int value, int teamValue, vector<string>& keys,map<st
 {
 	//this line works in win32, but not in G++... g++ doesn't seem to have vector::assign
 	//goalNames.assign(keys.begin(),keys.end());
-	
+
 	//make a new temp object, and assign it to broadcastStrings
-	//does this introduce a memory leak? 
+	//does this introduce a memory leak?
 
 	goalNames=vector<string>(keys);
 }
@@ -178,7 +178,7 @@ CGoalTrigger::CGoalTrigger(int value, int teamValue, vector<string>& keys,map<st
 //------------------------------------------------------------------------------------------------------
 bool CGoalTrigger::matches(const CLogEvent* le)
 {
-	
+
 	if (le->getType() == CLogEvent::NAMED_GOAL_ACTIVATE)
 	{
 		string n=le->getArgument(1)->getStringValue();
@@ -207,10 +207,10 @@ CFullSearchTrigger::CFullSearchTrigger(int value, int teamValue, vector<string>&
 {
 	//this line works in win32, but not in G++... g++ doesn't seem to have vector::assign
 	//FullSearchNames.assign(keys.begin(),keys.end());
-	
+
 	//make a new temp object, and assign it to broadcastStrings
 	winnerVar=extraProps["winnervar"];
-	
+
 	keys=vector<string>(ks);
 }
 
@@ -236,7 +236,7 @@ int regExprCompare(string sexpr,string scmp)
 		//matched!
 		return 0;
 	}
-	else 
+	else
 		return 1;
 
 
@@ -246,7 +246,7 @@ bool CFullSearchTrigger::compare(string str_msg,string str_key,map<string,string
 {
 	const char* msg=str_msg.c_str();
 	const char* key=str_key.c_str();
-	
+
 	bool match=true;
 	char varbuf[100];
 	char cmpbuf[100];
@@ -287,12 +287,12 @@ bool CFullSearchTrigger::compare(string str_msg,string str_key,map<string,string
 				}
 				cmpbuf[i]=0;
 			}
-			
+
 			string matchexpr=extraProps[varbuf];
 			if (matchexpr=="")
 			{
 				//if blank, match any quote delimited string or space delimited word
-				
+
 				varmatches.insert(pair<string,string>(varbuf,cmpbuf));
 			}
 			else if (matchexpr.at(0)!='!' && matchexpr.at(1)!='!')
@@ -303,7 +303,7 @@ bool CFullSearchTrigger::compare(string str_msg,string str_key,map<string,string
 				else
 					return false;
 			}
-			else 
+			else
 			{
 				//in tfstats, reg expressions start with !! so skip past that
 				const char* rexpr=matchexpr.c_str()+2;
@@ -313,8 +313,8 @@ bool CFullSearchTrigger::compare(string str_msg,string str_key,map<string,string
 				else
 					return false;
 			}
-				
-		
+
+
 		}
 
 		bool movedptr1 = killws(msg);
@@ -323,7 +323,7 @@ bool CFullSearchTrigger::compare(string str_msg,string str_key,map<string,string
 		if (!movedptr1 && !movedptr2)
 		{
 			if (!*msg) break;
-			
+
 			if (*msg!=*key)
 			{
 				match=false;
@@ -341,7 +341,7 @@ bool CFullSearchTrigger::compare(string str_msg,string str_key,map<string,string
 
 //------------------------------------------------------------------------------------------------------
 // Function:	CFullSearchTrigger::matches
-// Purpose:	 
+// Purpose:
 // Input:	le - the event we're testing
 // Output:	Returns true if the given event triggers this trigger
 //------------------------------------------------------------------------------------------------------
@@ -351,7 +351,7 @@ bool CFullSearchTrigger::matches(const CLogEvent* le)
 	//clear out the state from the last match attempt
 	map<string,string> varmatches;
 	bool match=compare(le->getFullMessage(),keys[0],varmatches);
-	
+
 #ifdef _CUSTOMDEBUG
 #ifdef _DEBUG
 	if (match)

@@ -62,11 +62,11 @@ extern Vector		g_vecAttackDir;
 		"item_rpg_round",			// 12
 		"unused (item_smg1_grenade) 13",// 13
 		"item_box_sniper_rounds",	// 14
-		"unused (???"") 15",		// 15 - split into two strings to avoid trigraph warning 
+		"unused (???"") 15",		// 15 - split into two strings to avoid trigraph warning
 		"weapon_stunstick",			// 16
 		"unused (weapon_ar1) 17",	// 17
 		"weapon_ar2",				// 18
-		"unused (???"") 19",		// 19 - split into two strings to avoid trigraph warning 
+		"unused (???"") 19",		// 19 - split into two strings to avoid trigraph warning
 		"weapon_rpg",				// 20
 		"weapon_smg1",				// 21
 		"unused (weapon_smg2) 22",	// 22
@@ -180,7 +180,7 @@ BEGIN_DATADESC( CBreakable )
 	DEFINE_FIELD( m_iInteractions, FIELD_INTEGER ),
 	DEFINE_FIELD( m_explodeRadius, FIELD_FLOAT ),
 	DEFINE_FIELD( m_iszModelName, FIELD_STRING ),
-	
+
 	// Physics Influence
 	DEFINE_FIELD( m_hPhysicsAttacker, FIELD_EHANDLE ),
 	DEFINE_FIELD( m_flLastPhysicsInfluenceTime, FIELD_TIME ),
@@ -188,7 +188,7 @@ BEGIN_DATADESC( CBreakable )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBreakable::KeyValue( const char *szKeyName, const char *szValue )
 {
@@ -246,7 +246,7 @@ bool CBreakable::KeyValue( const char *szKeyName, const char *szValue )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBreakable::Spawn( void )
 {
@@ -257,7 +257,7 @@ void CBreakable::Spawn( void )
 
 	ParsePropData();
 
-    Precache( );    
+	Precache( );
 
 	if ( !m_iHealth || FBitSet( m_spawnflags, SF_BREAK_TRIGGER_ONLY ) )
 	{
@@ -275,14 +275,14 @@ void CBreakable::Spawn( void )
 	}
 
 	m_iMaxHealth = ( m_iHealth > 0 ) ? m_iHealth : 1;
-  
+
 	SetSolid( SOLID_BSP );
-    SetMoveType( MOVETYPE_PUSH );
-	
+	SetMoveType( MOVETYPE_PUSH );
+
 	// this is a hack to shoot the gibs in a specific yaw/direction
 	m_angle = GetLocalAngles().y;
 	SetLocalAngles( vec3_angle );
-	
+
 	SetModel( STRING( GetModelName() ) );//set size and link into world.
 
 	SetTouch( &CBreakable::BreakTouch );
@@ -319,7 +319,7 @@ void CBreakable::ParsePropData( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBreakable::CreateVPhysics( void )
 {
@@ -328,11 +328,11 @@ bool CBreakable::CreateVPhysics( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CBreakable::MaterialSound( Materials precacheMaterial )
 {
-    switch ( precacheMaterial ) 
+	switch ( precacheMaterial )
 	{
 	case matWood:
 		return "Breakable.MatWood";
@@ -387,7 +387,7 @@ void CBreakable::Precache( void )
 {
 	const char *pGibName = "WoodChunks";
 
-    switch (m_Material) 
+	switch (m_Material)
 	{
 	case matWood:
 		pGibName = "WoodChunks";
@@ -433,7 +433,7 @@ void CBreakable::Precache( void )
 		break;
 #endif
 
-#if HL2_EPISODIC 
+#if HL2_EPISODIC
 	case matNone:
 		pGibName = "";
 		break;
@@ -476,7 +476,7 @@ void CBreakable::Precache( void )
 				continue;
 
 			UTIL_PrecacheOther( pSpawnObjects[ i ] );
-		}	
+		}
 	}
 
 	PrecacheScriptSound( "Breakable.MatGlass" );
@@ -570,11 +570,11 @@ void CBreakable::DamageSound( void )
 void CBreakable::BreakTouch( CBaseEntity *pOther )
 {
 	float flDamage;
-	
+
 	// only players can break these right now
 	if ( !pOther->IsPlayer() || !IsBreakable() )
 	{
-        return;
+		return;
 	}
 
 	// can I be broken when run into?
@@ -606,8 +606,8 @@ void CBreakable::BreakTouch( CBaseEntity *pOther )
 
 		SetThink ( &CBreakable::Die );
 		SetTouch( NULL );
-		
-		// Add optional delay 
+
+		// Add optional delay
 		SetNextThink( gpGlobals->curtime + m_flPressureDelay );
 
 	}
@@ -673,8 +673,8 @@ void CBreakable::InputSetMass( inputdata_t &inputdata )
 
 //-----------------------------------------------------------------------------
 // Purpose: Choke point for changes to breakable health. Ensures outputs are fired.
-// Input  : iNewHealth - 
-//			pActivator - 
+// Input  : iNewHealth -
+//			pActivator -
 // Output : Returns true if the breakable survived, false if it died (broke).
 //-----------------------------------------------------------------------------
 bool CBreakable::UpdateHealth( int iNewHealth, CBaseEntity *pActivator )
@@ -747,7 +747,7 @@ void CBreakable::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir,
 				EmitSound( "Breakable.Computer" );
 			}
 			break;
-			
+
 			case matUnbreakableGlass:
 				g_pEffects->Ricochet( ptr->endpos, (vecDir*-1.0f) );
 			break;
@@ -835,7 +835,7 @@ int CBreakable::OnTakeDamage( const CTakeDamageInfo &info )
 
 	float flPropDamage = GetBreakableDamage( subInfo, assert_cast<IBreakableWithPropData*>(this) );
 	subInfo.SetDamage( flPropDamage );
-	
+
 	int iPrevHealth = m_iHealth;
 	BaseClass::OnTakeDamage( subInfo );
 
@@ -921,7 +921,7 @@ void CBreakable::Die( void )
 	char cFlag = 0;
 	int pitch;
 	float fvol;
-	
+
 	pitch = 95 + random->RandomInt(0,29);
 
 	if (pitch > 97 && pitch < 103)
@@ -981,7 +981,7 @@ void CBreakable::Die( void )
 		soundname = "Breakable.Ceiling";
 		break;
 	}
-    
+
 	if ( soundname )
 	{
 		if ( m_hBreaker && m_hBreaker->IsPlayer() )
@@ -1008,10 +1008,10 @@ void CBreakable::Die( void )
 			ep.m_SoundLevel = params.soundlevel;
 			ep.m_nPitch = pitch;
 
-			EmitSound( filter, entindex(), ep );	
+			EmitSound( filter, entindex(), ep );
 		}
 	}
-		
+
 	switch( m_Explosion )
 	{
 	case expDirected:
@@ -1072,7 +1072,7 @@ void CBreakable::Die( void )
 	#ifdef HL1_DLL
 			// Use the passed model instead of the propdata type
 			const char *modelName = STRING( m_iszModelName );
-			
+
 			// if the map specifies a model by name
 			if( strstr( modelName, ".mdl" ) != NULL )
 			{
@@ -1090,8 +1090,8 @@ void CBreakable::Die( void )
 				slaveFlag = BREAK_SLAVE;
 			}
 
-			te->BreakModel( filter2, 0.0, 
-				vecSpot, pCollisionProp->GetCollisionAngles(), vSize, 
+			te->BreakModel( filter2, 0.0,
+				vecSpot, pCollisionProp->GetCollisionAngles(), vSize,
 				vecVelocity, iModelIndex, 100, 1, 2.5, cFlag | slaveFlag );
 		}
 	}
@@ -1102,7 +1102,7 @@ void CBreakable::Die( void )
 	SetName( NULL_STRING );
 
 	AddSolidFlags( FSOLID_NOT_SOLID );
-	
+
 	// Fire targets on break
 	m_OnBreak.FireOutput( m_hBreaker, this );
 
@@ -1124,13 +1124,13 @@ void CBreakable::Die( void )
 //-----------------------------------------------------------------------------
 // Purpose: Returns whether this object can be broken.
 //-----------------------------------------------------------------------------
-bool CBreakable::IsBreakable( void ) 
-{ 
+bool CBreakable::IsBreakable( void )
+{
 	return m_Material != matUnbreakableGlass;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 char const *CBreakable::DamageDecal( int bitsDamageType, int gameMaterial )
 {
@@ -1147,11 +1147,11 @@ char const *CBreakable::DamageDecal( int bitsDamageType, int gameMaterial )
 // Purpose: Draw any debug text overlays
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CBreakable::DrawDebugTextOverlays(void) 
+int CBreakable::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		if ( GetMaxHealth() )
 		{
@@ -1205,7 +1205,7 @@ CBasePlayer *CBreakable::HasPhysicsAttacker( float dt )
 //=============================================================================================================================
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CPushable : public CBreakable
 {
@@ -1314,4 +1314,3 @@ void CPushable::VPhysicsCollision( int index, gamevcollisionevent_t *pEvent )
 
 	BaseClass::VPhysicsCollision( index, pEvent );
 }
-

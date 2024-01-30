@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -50,7 +50,7 @@ void CFireDamageMgr::AddDamage( CBaseEntity *pTarget, CBaseEntity *pAttacker, fl
 
 		if ( pEnt->m_hEnt != pTarget )
 			continue;
-	
+
 		for ( int i=0; i < pEnt->m_nAttackers; i++ )
 		{
 			if ( pEnt->m_Attackers[i].m_hAttacker == pAttacker )
@@ -60,7 +60,7 @@ void CFireDamageMgr::AddDamage( CBaseEntity *pTarget, CBaseEntity *pAttacker, fl
 			}
 		}
 
-		
+
 		if ( pEnt->m_nAttackers < CDamageEnt::MAX_ATTACKERS )
 		{
 			// Add a new attacker.
@@ -101,7 +101,7 @@ void CFireDamageMgr::FrameUpdatePostEntityThink()
 {
 	VPROF( "CFireDamageMgr::FrameUpdatePostEntityThink" );
 	float frametime = gpGlobals->frametime;
-	
+
 	// Update the damage countdown.
 	m_flApplyDamageCountdown -= gpGlobals->frametime;
 	bool bApplyDamageThisFrame = false;
@@ -131,7 +131,7 @@ void CFireDamageMgr::FrameUpdatePostEntityThink()
 			pEnt = NULL;
 			continue;
 		}
-		
+
 		pEnt->m_bWasAlive = pEnt->m_hEnt->IsAlive();
 
 		// Sum up each attacker's velocity.
@@ -144,8 +144,8 @@ void CFireDamageMgr::FrameUpdatePostEntityThink()
 		float flContributionPercent[CDamageEnt::MAX_ATTACKERS];
 		for ( i=0; i < pEnt->m_nAttackers; i++ )
 			flContributionPercent[i] = pEnt->m_Attackers[i].m_flVelocity / flTotalVelocity;
-		
-		
+
+
 		// Decay each attacker's velocity.
 		flTotalVelocity *= flFrameDecay;
 
@@ -169,7 +169,7 @@ void CFireDamageMgr::FrameUpdatePostEntityThink()
 
 				Q_memmove( &pEnt->m_Attackers[i], &pEnt->m_Attackers[i+1], sizeof( pEnt->m_Attackers[0] ) * (pEnt->m_nAttackers-i-1) );
 				Q_memmove( &flContributionPercent[i], &flContributionPercent[i+1], sizeof( flContributionPercent[0] ) * (pEnt->m_nAttackers-i-1) );
-				
+
 				--pEnt->m_nAttackers;
 				if ( pEnt->m_nAttackers == 0 )
 				{
@@ -235,8 +235,8 @@ bool IsBurnableEnt( CBaseEntity *pEntity, int iIgnoreTeam )
 	}
 
 	// Now only allow specific types of objects to be damaged.
-	if ( dynamic_cast< CBasePlayer* >( pEntity ) || 
-		dynamic_cast< CAI_BaseNPC* >( pEntity ) || 
+	if ( dynamic_cast< CBasePlayer* >( pEntity ) ||
+		dynamic_cast< CAI_BaseNPC* >( pEntity ) ||
 		dynamic_cast< CBaseObject* >( pEntity ) )
 	{
 		return true;
@@ -262,11 +262,11 @@ int FindBurnableEntsInSphere(
 	{
 		if ( !IsBurnableEnt( pEntity, pOwner->GetTeamNumber() ) )
 			continue;
-	
+
 		// Make sure it's not blocked.
 		trace_t tr;
 		Vector vCenter = pEntity->WorldSpaceCenter();
-		
+
 		UTIL_TraceLine ( vecCenter, vCenter, MASK_SHOT & (~CONTENTS_HITBOX), NULL, COLLISION_GROUP_NONE, &tr );
 		if ( tr.fraction != 1.0 && tr.m_pEnt != pEntity )
 			continue;
@@ -298,4 +298,3 @@ CFireDamageMgr* GetFireDamageMgr()
 {
 	return &g_FireDamageMgr;
 }
-

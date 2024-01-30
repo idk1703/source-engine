@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,7 +10,7 @@
 #include <Keyvalues.h>
 #include <vgui_controls/MenuBar.h>
 #include <vgui_controls/MenuButton.h>
-#include <vgui_controls/Menu.h> 
+#include <vgui_controls/Menu.h>
 #include "vgui/ISurface.h"
 
 using namespace vgui;
@@ -24,10 +24,10 @@ class MenuBarDemo: public DemoPage
 	public:
 		MenuBarDemo(Panel *parent, const char *name);
 		~MenuBarDemo();
-		
+
 	private:
 		MenuBar *m_pMenuBar;
-		
+
 };
 
 //-----------------------------------------------------------------------------
@@ -40,7 +40,7 @@ MenuBarDemo::MenuBarDemo(Panel *parent, const char *name) : DemoPage(parent, nam
 
 	// Make a couple menus and attach them in.
 
-	// A menu 
+	// A menu
 	MenuButton *pMenuButton = new MenuButton(this, "FileMenuButton", "&File");
 	Menu *pMenu = new Menu(pMenuButton, "AMenu");
 	pMenu->AddMenuItem("&New",  new KeyValues ("NewFile"), this);
@@ -50,7 +50,7 @@ MenuBarDemo::MenuBarDemo(Panel *parent, const char *name) : DemoPage(parent, nam
 
 	m_pMenuBar->AddButton(pMenuButton);
 
-	// A menu 
+	// A menu
 	pMenuButton = new MenuButton(this, "EditMenuButton", "&Edit");
 	pMenu = new Menu(pMenuButton, "AMenu");
 	pMenu->AddMenuItem("&Undo",  new KeyValues ("Undo"), this);
@@ -60,7 +60,7 @@ MenuBarDemo::MenuBarDemo(Panel *parent, const char *name) : DemoPage(parent, nam
 
 	m_pMenuBar->AddButton(pMenuButton);
 
-	// A menu 
+	// A menu
 	pMenuButton = new MenuButton(this, "ViewMenuButton", "&View");
 	pMenu = new Menu(pMenuButton, "AMenu");
 	pMenu->AddMenuItem("&FullScreen",  new KeyValues ("FullScreen"), this);
@@ -71,7 +71,7 @@ MenuBarDemo::MenuBarDemo(Panel *parent, const char *name) : DemoPage(parent, nam
 
 	m_pMenuBar->AddButton(pMenuButton);
 
-	// A menu 
+	// A menu
 	pMenuButton = new MenuButton(this, "Big", "&HugeMenu");
 	pMenu = new Menu(pMenuButton, "HugeMenu");
 	int items = 150;
@@ -80,7 +80,7 @@ MenuBarDemo::MenuBarDemo(Panel *parent, const char *name) : DemoPage(parent, nam
 		char sz[ 32 ];
 		Q_snprintf( sz, sizeof( sz ), "Item %03d", i + 1 );
 
-        int idx = pMenu->AddMenuItem( sz,  new KeyValues ( sz ), this);
+	int idx = pMenu->AddMenuItem( sz,  new KeyValues ( sz ), this);
 
 		if ( !(i % 4 ) )
 		{
@@ -112,7 +112,7 @@ MenuBarDemo::MenuBarDemo(Panel *parent, const char *name) : DemoPage(parent, nam
 		char sz[ 32 ];
 		Q_snprintf( sz, sizeof( sz ), "Item %03d", i + 1 );
 
-        int idx = pMenu->AddMenuItem( sz,  new KeyValues ( sz ), this);
+	int idx = pMenu->AddMenuItem( sz,  new KeyValues ( sz ), this);
 
 		if ( !(i % 4 ) )
 		{
@@ -152,5 +152,3 @@ Panel* MenuBarDemo_Create(Panel *parent)
 {
 	return new MenuBarDemo(parent, "MenuBarDemo");
 }
-
-

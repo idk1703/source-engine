@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -52,7 +52,7 @@ bool CCSBot::HeardInterestingNoise( void )
 		// if we are hiding, only react to noises very nearby, depending on how aggressive we are
 		if (IsAtHidingSpot() && GetNoiseRange() > 100.0f + 400.0f * GetProfile()->GetAggression())
 			return false;
-		
+
 		// chance of investigating is inversely proportional to distance
 		const float maxNoiseDist = 3000.0f;
 		float chance = 100.0f * (1.0f - (GetNoiseRange()/maxNoiseDist));
@@ -227,4 +227,3 @@ bool CCSBot::UpdateLookAtNoise( void )
 
 	return true;
 }
-

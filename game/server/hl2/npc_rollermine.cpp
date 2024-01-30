@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -99,7 +99,7 @@ IMotionEvent::simresult_e CRollerController::Simulate( IPhysicsMotionController 
 
 	linear = m_vecLinear;
 	angular = m_vecAngular;
-	
+
 	return IMotionEvent::SIM_LOCAL_ACCELERATION;
 }
 //-----------------------------------------------------------------------------
@@ -147,7 +147,7 @@ enum
 //=========================================================
 // Custom tasks
 //=========================================================
-enum 
+enum
 {
 	TASK_ROLLERMINE_CHARGE_ENEMY = LAST_SHARED_TASK,
 	TASK_ROLLERMINE_BURIED_WAIT,
@@ -221,7 +221,7 @@ public:
 	void	UpdateEfficiency( bool bInPVS )	{ SetEfficiency( ( GetSleepState() != AISS_AWAKE ) ? AIE_DORMANT : AIE_NORMAL ); SetMoveEfficiency( AIME_NORMAL ); }
 	void	DrawDebugGeometryOverlays()
 	{
-		if (m_debugOverlays & OVERLAY_BBOX_BIT) 
+		if (m_debugOverlays & OVERLAY_BBOX_BIT)
 		{
 			float dist = GetSenses()->GetDistLook();
 			Vector range(dist, dist, 64);
@@ -230,7 +230,7 @@ public:
 		BaseClass::DrawDebugGeometryOverlays();
 	}
 	// UNDONE: Put this in the qc file!
-	Vector EyePosition() 
+	Vector EyePosition()
 	{
 		// This takes advantage of the fact that the system knows
 		// that the abs origin is at the center of the rollermine
@@ -244,8 +244,8 @@ public:
 	int		OnTakeDamage( const CTakeDamageInfo &info );
 	void	TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator );
 
-	Class_T	Classify() 
-	{ 
+	Class_T	Classify()
+	{
 		if( !m_bTurnedOn )
 			return CLASS_NONE;
 
@@ -253,11 +253,11 @@ public:
 		if ( m_bHackedByAlyx && ( m_flPowerDownDetonateTime > 0.0f && m_flPowerDownDetonateTime <= gpGlobals->curtime ) )
 			return CLASS_COMBINE;
 
-		return ( m_bHeld || m_bHackedByAlyx ) ? CLASS_HACKED_ROLLERMINE : CLASS_COMBINE; 
+		return ( m_bHeld || m_bHackedByAlyx ) ? CLASS_HACKED_ROLLERMINE : CLASS_COMBINE;
 	}
 
-	virtual bool ShouldGoToIdleState() 
-	{ 
+	virtual bool ShouldGoToIdleState()
+	{
 		return gpGlobals->curtime > m_flGoIdleTime ? true : false;
 	}
 
@@ -471,7 +471,7 @@ CBaseEntity *NPC_Rollermine_DropFromPoint( const Vector &originStart, CBaseEntit
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CNPC_RollerMine::~CNPC_RollerMine( void )
 {
@@ -553,7 +553,7 @@ void CNPC_RollerMine::Spawn( void )
 	Close();
 
 	m_bPowerDown = false;
-	
+
 	m_flFieldOfView		= -1.0f;
 	m_flForwardSpeed	= -1200;
 	m_bloodColor		= DONT_BLEED;
@@ -608,8 +608,8 @@ void CNPC_RollerMine::Spawn( void )
 //-----------------------------------------------------------------------------
 // Set the contents types that are solid by default to this NPC
 //-----------------------------------------------------------------------------
-unsigned int CNPC_RollerMine::PhysicsSolidMaskForEntity( void ) const 
-{ 
+unsigned int CNPC_RollerMine::PhysicsSolidMaskForEntity( void ) const
+{
 	if ( HasSpawnFlags( SF_ROLLERMINE_PROP_COLLISION ) )
 		return MASK_SOLID;
 
@@ -617,7 +617,7 @@ unsigned int CNPC_RollerMine::PhysicsSolidMaskForEntity( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::Bury( trace_t *tr )
 {
@@ -635,7 +635,7 @@ void CNPC_RollerMine::Bury( trace_t *tr )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNPC_RollerMine::WakeupMine( CAI_BaseNPC *pNPC )
 {
@@ -657,7 +657,7 @@ bool CNPC_RollerMine::WakeupMine( CAI_BaseNPC *pNPC )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::WakeNeighbors()
 {
@@ -694,7 +694,7 @@ void CNPC_RollerMine::WakeNeighbors()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::OnStateChange( NPC_STATE OldState, NPC_STATE NewState )
 {
@@ -711,7 +711,7 @@ void CNPC_RollerMine::OnStateChange( NPC_STATE OldState, NPC_STATE NewState )
 		{
 			m_flSeeVehiclesOnlyBeyond = ROLLERMINE_SEE_VEHICLESONLY_BEYOND_IDLE;
 		}
-		
+
 		m_RollerController.m_vecAngular = vec3_origin;
 		m_wakeUp = true;
 	}
@@ -739,7 +739,7 @@ void CNPC_RollerMine::OnStateChange( NPC_STATE OldState, NPC_STATE NewState )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 NPC_STATE CNPC_RollerMine::SelectIdealState( void )
 {
@@ -761,7 +761,7 @@ NPC_STATE CNPC_RollerMine::SelectIdealState( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_RollerMine::BecomePhysical( void )
@@ -785,7 +785,7 @@ bool CNPC_RollerMine::BecomePhysical( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::OnRestore()
 {
@@ -806,7 +806,7 @@ void CNPC_RollerMine::OnRestore()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNPC_RollerMine::CreateVPhysics()
 {
@@ -819,7 +819,7 @@ bool CNPC_RollerMine::CreateVPhysics()
 	{
 		return BecomePhysical();
 	}
-}	
+}
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -870,7 +870,7 @@ int CNPC_RollerMine::RangeAttack1Conditions( float flDot, float flDist )
 
 	if( flDist > ROLLERMINE_MAX_ATTACK_DIST  )
 		return COND_TOO_FAR_TO_ATTACK;
-	
+
 	if (flDist < ROLLERMINE_MIN_ATTACK_DIST )
 		return COND_TOO_CLOSE_TO_ATTACK;
 
@@ -909,7 +909,7 @@ int CNPC_RollerMine::SelectSchedule( void )
 
 		if ( HasCondition( COND_CAN_RANGE_ATTACK1 ) )
 			return SCHED_ROLLERMINE_RANGE_ATTACK1;
-		
+
 		return SCHED_ROLLERMINE_CHASE_ENEMY;
 		break;
 
@@ -924,7 +924,7 @@ int CNPC_RollerMine::SelectSchedule( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CNPC_RollerMine::GetHackedIdleSchedule( void )
 {
@@ -990,7 +990,7 @@ int CNPC_RollerMine::TranslateSchedule( int scheduleType )
 #if 0
 #define	ROLLERMINE_DETECTION_RADIUS		350
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_RollerMine::DetectedEnemyInProximity( void )
@@ -1005,7 +1005,7 @@ bool CNPC_RollerMine::DetectedEnemyInProximity( void )
 			continue;
 
 		float distance = ( pEnt->GetAbsOrigin() - GetAbsOrigin() ).Length();
-		
+
 		if ( distance >= flBestDist )
 			continue;
 
@@ -1024,8 +1024,8 @@ bool CNPC_RollerMine::DetectedEnemyInProximity( void )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pSightEnt - 
+// Purpose:
+// Input  : *pSightEnt -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_RollerMine::QuerySeeEntity(CBaseEntity *pSightEnt, bool bOnlyHateOrFearIfNPC)
@@ -1065,7 +1065,7 @@ void CNPC_RollerMine::StartTask( const Task_t *pTask )
 		break;
 
 	case TASK_ROLLERMINE_UNBURROW:
-		
+
 		{
 			AddSolidFlags( FSOLID_NOT_SOLID );
 			SetMoveType( MOVETYPE_NOCLIP );
@@ -1077,7 +1077,7 @@ void CNPC_RollerMine::StartTask( const Task_t *pTask )
 
 			if ( tr.fraction < 1.0f )
 			{
-				UTIL_CreateAntlionDust( tr.endpos + Vector(0,0,24), GetLocalAngles() );		
+				UTIL_CreateAntlionDust( tr.endpos + Vector(0,0,24), GetLocalAngles() );
 			}
 		}
 
@@ -1095,7 +1095,7 @@ void CNPC_RollerMine::StartTask( const Task_t *pTask )
 
 		//Stop turning
 		m_RollerController.m_vecAngular = vec3_origin;
-		
+
 		TaskComplete();
 		return;
 		break;
@@ -1128,14 +1128,14 @@ void CNPC_RollerMine::StartTask( const Task_t *pTask )
 	case TASK_ROLLERMINE_RETURN_TO_PLAYER:
 		{
 			IPhysicsObject *pPhysicsObject = VPhysicsGetObject();
-			
+
 			if ( pPhysicsObject == NULL )
 			{
 				assert(0);
 				TaskFail("Roller lost internal physics object?");
 				return;
 			}
-			
+
 			pPhysicsObject->Wake();
 
 			m_flChargeTime = gpGlobals->curtime;
@@ -1155,7 +1155,7 @@ void CNPC_RollerMine::StartTask( const Task_t *pTask )
 				if ( !pEnemy || !pEnemy->IsAlive() )
 					continue;
 				if ( IRelationType( pEnemy ) != D_FR )
-					continue;			
+					continue;
 
 				float flDist = (WorldSpaceCenter() - pEnemy->WorldSpaceCenter()).LengthSqr();
 				if ( flDist < flNearest )
@@ -1231,7 +1231,7 @@ void CNPC_RollerMine::RunTask( const Task_t *pTask )
 	switch( pTask->iTask )
 	{
 	case TASK_ROLLERMINE_UNBURROW:
-		{	
+		{
 			Vector	vCenter = WorldSpaceCenter();
 
 			// Robin: HACK: Bloat the rollermine check to catch the model switch (roller.mdl->roller_spikes.mdl)
@@ -1312,7 +1312,7 @@ void CNPC_RollerMine::RunTask( const Task_t *pTask )
 				return;
 			}
 
-			GetNavigator()->AdvancePath();	
+			GetNavigator()->AdvancePath();
 		}
 
 		{
@@ -1327,14 +1327,14 @@ void CNPC_RollerMine::RunTask( const Task_t *pTask )
 			Vector vecVelocity;
 
 			IPhysicsObject *pPhysicsObject = VPhysicsGetObject();
-			
+
 			if ( pPhysicsObject == NULL )
 			{
 				assert(0);
 				TaskFail("Roller lost internal physics object?");
 				return;
 			}
-			
+
 			pPhysicsObject->GetVelocity( &vecVelocity, NULL );
 
 			VectorNormalize( vecVelocity );
@@ -1360,7 +1360,7 @@ void CNPC_RollerMine::RunTask( const Task_t *pTask )
 
 			if( m_bHackedByAlyx )
 			{
-				// Move faster. 
+				// Move faster.
 				m_RollerController.m_vecAngular += WorldToLocalRotation( SetupMatrixAngles(GetLocalAngles()), vecRight, m_flForwardSpeed * 2.0f );
 			}
 			else
@@ -1403,7 +1403,7 @@ void CNPC_RollerMine::RunTask( const Task_t *pTask )
 
 				CalcClosestPointOnLine2D( vecOrigin2D, vecTargetPosition2D, vecProjected2D, vecIntercept2D, &flT );
 				Vector vecIntercept( vecIntercept2D.x, vecIntercept2D.y, GetAbsOrigin().z );
-				
+
 				//NDebugOverlay::Line( vecTargetPosition, vecProjected, 0,255,0, true, 0.1 );
 
 				// If we're ahead of the line somewhere, try to intercept
@@ -1444,7 +1444,7 @@ void CNPC_RollerMine::RunTask( const Task_t *pTask )
 			float flDot;
 
 			// Figure out whether to continue the charge.
-			// (Have I overrun the target?)			
+			// (Have I overrun the target?)
 			IPhysicsObject *pPhysicsObject = VPhysicsGetObject();
 
 			if ( pPhysicsObject == NULL )
@@ -1466,7 +1466,7 @@ void CNPC_RollerMine::RunTask( const Task_t *pTask )
 			flTorqueFactor = 1 + (gpGlobals->curtime - m_flChargeTime) * 2;
 
 			float flMaxTorque = ROLLERMINE_MAX_TORQUE_FACTOR;
-			
+
 			// Friendly rollermines go a little slower
 			if ( HasSpawnFlags( SF_ROLLERMINE_FRIENDLY ) )
 			{
@@ -1491,7 +1491,7 @@ void CNPC_RollerMine::RunTask( const Task_t *pTask )
 
 			m_RollerController.m_vecAngular = WorldToLocalRotation( SetupMatrixAngles(GetLocalAngles()), vecCompensate, m_flForwardSpeed * -0.75 );
 			m_RollerController.m_vecAngular += WorldToLocalRotation( SetupMatrixAngles(GetLocalAngles()), vecRight, m_flForwardSpeed  * flTorqueFactor );
-		
+
 			// Taunt when I get closer
 			if( !(m_iSoundEventFlags & ROLLERMINE_SE_TAUNT) && UTIL_DistApprox( GetLocalOrigin(), vecTargetPosition ) <= 400 )
 			{
@@ -1508,7 +1508,7 @@ void CNPC_RollerMine::RunTask( const Task_t *pTask )
 			}
 
 			// Open the spikes if i'm close enough to cut the enemy!!
-  			if( ( m_bIsOpen == false ) && ( ( UTIL_DistApprox( GetAbsOrigin(), GetEnemy()->GetAbsOrigin() ) <= flThreshold ) || !IsActive() ) )
+			if( ( m_bIsOpen == false ) && ( ( UTIL_DistApprox( GetAbsOrigin(), GetEnemy()->GetAbsOrigin() ) <= flThreshold ) || !IsActive() ) )
 			{
 				Open();
 			}
@@ -1647,7 +1647,7 @@ void CNPC_RollerMine::RunTask( const Task_t *pTask )
 
 			// No TaskComplete() here, because the task will never complete. The rollermine will explode.
 		}
-		break;	
+		break;
 
 	default:
 		BaseClass::RunTask( pTask );
@@ -1669,7 +1669,7 @@ void CNPC_RollerMine::Open( void )
 	if ( m_bIsOpen == false )
 	{
 		SetModel( "models/roller_spikes.mdl" );
-        SetRollerSkin();
+	SetRollerSkin();
 
 		EmitSound( "NPC_RollerMine.OpenSpikes" );
 
@@ -1770,7 +1770,7 @@ void CNPC_RollerMine::SpikeTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::CloseTouch( CBaseEntity *pOther )
 {
@@ -1798,7 +1798,7 @@ void CNPC_RollerMine::CloseTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::EmbedTouch( CBaseEntity *pOther )
 {
@@ -1830,7 +1830,7 @@ void CNPC_RollerMine::EmbedTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNPC_RollerMine::IsPlayerVehicle( CBaseEntity *pEntity )
 {
@@ -1851,8 +1851,8 @@ bool CNPC_RollerMine::IsPlayerVehicle( CBaseEntity *pEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pVictim - 
+// Purpose:
+// Input  : *pVictim -
 // Output : float
 //-----------------------------------------------------------------------------
 float CNPC_RollerMine::GetAttackDamageScale( CBaseEntity *pVictim )
@@ -1862,7 +1862,7 @@ float CNPC_RollerMine::GetAttackDamageScale( CBaseEntity *pVictim )
 	{
 		if ( pVictim->IsPlayer() )
 			return 0;
-		
+
 		if ( pVictim->MyNPCPointer() )
 		{
 			// If we don't hate the player, we're immune
@@ -1876,8 +1876,8 @@ float CNPC_RollerMine::GetAttackDamageScale( CBaseEntity *pVictim )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOther - 
+// Purpose:
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::ShockTarget( CBaseEntity *pOther )
 {
@@ -1919,14 +1919,14 @@ void CNPC_RollerMine::ShockTarget( CBaseEntity *pOther )
 			pBeam->SetNoise( 16 );
 			pBeam->LiveForTime( 0.5f );
 		}
-		
+
 		pBeam->SetEndAttachment( 1 );
 		pBeam->SetWidth( 1 );
 		pBeam->SetBrightness( 255 );
 		pBeam->SetColor( 255, 255, 255 );
 		pBeam->RelinkBeam();
 	}
-	
+
 	Vector shockPos = pOther->WorldSpaceCenter();
 
 	if ( startAttach > 0 && pAnimating )
@@ -1942,25 +1942,25 @@ void CNPC_RollerMine::ShockTarget( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::NotifyInteraction( CAI_BaseNPC *pUser )
 {
 	// For now, turn green so we can tell who is hacked.
-	m_bHackedByAlyx = true; 
+	m_bHackedByAlyx = true;
 	SetRollerSkin();
 	GetEnemies()->SetFreeKnowledgeDuration( 30.0f );
 
 	// Play the hax0red sound
 	EmitSound( "NPC_RollerMine.Reprogram" );
 
-	// Force the rollermine open here. At very least, this ensures that the 
+	// Force the rollermine open here. At very least, this ensures that the
 	// correct, smaller bounding box is recomputed around it.
 	Open();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::ShockTouch( CBaseEntity *pOther )
 {
@@ -2022,7 +2022,7 @@ void CNPC_RollerMine::ShockTouch( CBaseEntity *pOther )
 
 	if( FClassnameIs( pOther, "npc_combine_s" ) )
 	{
-		if( pOther->GetHealth() <= (pOther->GetMaxHealth() / 2) ) 
+		if( pOther->GetHealth() <= (pOther->GetMaxHealth() / 2) )
 		{
 			// Instant special death for a combine soldier who has less than half health.
 			Vector vecDamageForce = pOther->WorldSpaceCenter() - WorldSpaceCenter();
@@ -2058,7 +2058,7 @@ void CNPC_RollerMine::ShockTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::VPhysicsCollision( int index, gamevcollisionevent_t *pEvent )
 {
@@ -2088,8 +2088,8 @@ void CNPC_RollerMine::VPhysicsCollision( int index, gamevcollisionevent_t *pEven
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOther - 
+// Purpose:
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::StickToVehicle( CBaseEntity *pOther )
 {
@@ -2146,7 +2146,7 @@ void CNPC_RollerMine::StickToVehicle( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CNPC_RollerMine::CountRollersOnMyVehicle( CUtlVector<CNPC_RollerMine*> *pRollerList )
 {
@@ -2176,7 +2176,7 @@ int CNPC_RollerMine::CountRollersOnMyVehicle( CUtlVector<CNPC_RollerMine*> *pRol
 
 //-----------------------------------------------------------------------------
 // Purpose: Tell other rollermines on the vehicle that I've just arrived
-// Input  : *pOther - 
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::AnnounceArrivalToOthers( CBaseEntity *pOther )
 {
@@ -2204,7 +2204,7 @@ void CNPC_RollerMine::AnnounceArrivalToOthers( CBaseEntity *pOther )
 			g_EventQueue.AddEvent( aRollersOnVehicle[i], "RespondToExplodeChirp", RandomFloat(2,5), NULL, NULL );
 		}
 	}
-	else 
+	else
 	{
 	*/
 	// If there's other rollers on the vehicle, talk to them
@@ -2243,7 +2243,7 @@ void CNPC_RollerMine::InputConstraintBroken( inputdata_t &inputdata )
 
 //-----------------------------------------------------------------------------
 // Purpose: Respond to another rollermine that's chirped at us
-// Input  : &inputdata - 
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::InputRespondToChirp( inputdata_t &inputdata )
 {
@@ -2252,7 +2252,7 @@ void CNPC_RollerMine::InputRespondToChirp( inputdata_t &inputdata )
 
 //-----------------------------------------------------------------------------
 // Purpose: Respond to another rollermine's signal to detonate
-// Input  : &inputdata - 
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::InputRespondToExplodeChirp( inputdata_t &inputdata )
 {
@@ -2263,7 +2263,7 @@ void CNPC_RollerMine::InputRespondToExplodeChirp( inputdata_t &inputdata )
 
 //-----------------------------------------------------------------------------
 // Purpose: Apply a physics force to the vehicle we're in
-// Input  : &inputdata - 
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::InputJoltVehicle( inputdata_t &inputdata )
 {
@@ -2320,8 +2320,8 @@ void CNPC_RollerMine::InputJoltVehicle( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::InputTurnOn( inputdata_t &inputdata )
 {
@@ -2330,8 +2330,8 @@ void CNPC_RollerMine::InputTurnOn( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::InputTurnOff( inputdata_t &inputdata )
 {
@@ -2341,8 +2341,8 @@ void CNPC_RollerMine::InputTurnOff( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::InputPowerdown( inputdata_t &inputdata )
 {
@@ -2371,7 +2371,7 @@ void CNPC_RollerMine::UnstickFromVehicle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseEntity *CNPC_RollerMine::GetVehicleStuckTo( void )
 {
@@ -2382,8 +2382,8 @@ CBaseEntity *CNPC_RollerMine::GetVehicleStuckTo( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPhysGunUser - 
+// Purpose:
+// Input  : *pPhysGunUser -
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason )
 {
@@ -2407,15 +2407,15 @@ void CNPC_RollerMine::OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPhysGunUser - 
+// Purpose:
+// Input  : *pPhysGunUser -
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::OnPhysGunDrop( CBasePlayer *pPhysGunUser, PhysGunDrop_t Reason )
 {
 	m_bHeld = false;
 	m_flActiveTime = gpGlobals->curtime + GetStunDelay();
 	m_RollerController.On();
-	
+
 	// explode on contact if launched from the physgun
 	if ( Reason == LAUNCHED_BY_CANNON )
 	{
@@ -2433,8 +2433,8 @@ void CNPC_RollerMine::OnPhysGunDrop( CBasePlayer *pPhysGunUser, PhysGunDrop_t Re
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &info - 
+// Purpose:
+// Input  : &info -
 // Output : float
 //-----------------------------------------------------------------------------
 int CNPC_RollerMine::OnTakeDamage( const CTakeDamageInfo &info )
@@ -2484,7 +2484,7 @@ void CNPC_RollerMine::Hop( float height )
 	{
 		IPhysicsObject *pPhysObj = VPhysicsGetObject();
 		pPhysObj->ApplyForceCenter( Vector(0,0,1) * height * pPhysObj->GetMass() );
-		
+
 		AngularImpulse	angVel;
 		angVel.Random( -400.0f, 400.0f );
 		pPhysObj->AddVelocity( NULL, &angVel );
@@ -2508,7 +2508,7 @@ void CNPC_RollerMine::PreDetonate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::Explode( void )
 {
@@ -2549,7 +2549,7 @@ void CNPC_RollerMine::Explode( void )
 const float MAX_ROLLING_SPEED = 720;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CNPC_RollerMine::RollingSpeed()
 {
@@ -2591,7 +2591,7 @@ void CNPC_RollerMine::EmbedOnGroundImpact()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::PrescheduleThink()
 {
@@ -2613,7 +2613,7 @@ void CNPC_RollerMine::PrescheduleThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::UpdateRollingSound()
 {
@@ -2724,7 +2724,7 @@ void CNPC_RollerMine::StopPingSound()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::StopLoopingSounds( void )
 {
@@ -2734,8 +2734,8 @@ void CNPC_RollerMine::StopLoopingSounds( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEnemy - 
+// Purpose:
+// Input  : *pEnemy -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_RollerMine::IsValidEnemy( CBaseEntity *pEnemy )
@@ -2774,7 +2774,7 @@ bool CNPC_RollerMine::IsValidEnemy( CBaseEntity *pEnemy )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNPC_RollerMine::EnemyInVehicle( void )
 {
@@ -2791,7 +2791,7 @@ bool CNPC_RollerMine::EnemyInVehicle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CNPC_RollerMine::VehicleHeading( CBaseEntity *pVehicle )
 {
@@ -2809,10 +2809,10 @@ float CNPC_RollerMine::VehicleHeading( CBaseEntity *pVehicle )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &info - 
-//			&vecDir - 
-//			*ptr - 
+// Purpose:
+// Input  : &info -
+//			&vecDir -
+//			*ptr -
 //-----------------------------------------------------------------------------
 void CNPC_RollerMine::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator )
 {
@@ -2877,7 +2877,7 @@ AI_BEGIN_CUSTOM_NPC( npc_rollermine, CNPC_RollerMine )
 		"	"
 		"	Interrupts"
 	)
-	
+
 	DEFINE_SCHEDULE
 	(
 	SCHED_ROLLERMINE_RANGE_ATTACK1,
@@ -2892,7 +2892,7 @@ AI_BEGIN_CUSTOM_NPC( npc_rollermine, CNPC_RollerMine )
 		"		COND_ENEMY_OCCLUDED"
 		"		COND_ENEMY_TOO_FAR"
 	)
-	
+
 	DEFINE_SCHEDULE
 	(
 	SCHED_ROLLERMINE_CHASE_ENEMY,

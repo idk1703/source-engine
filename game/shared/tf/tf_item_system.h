@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -31,7 +31,7 @@ struct baseitemcriteria_t
 class CTFItemSystem : public CEconItemSystem
 {
 public:
-	// Select and return the base item definition index for a class's load-out slot 
+	// Select and return the base item definition index for a class's load-out slot
 	virtual item_definition_index_t GenerateBaseItem( baseitemcriteria_t *pCriteria );
 };
 

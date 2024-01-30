@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -17,14 +17,14 @@ END_SEND_TABLE()
 LINK_ENTITY_TO_CLASS( tf_hintmanager, CTFHintManager );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHintManager::CTFHintManager( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHintManager::Spawn( void )
 {
@@ -32,7 +32,7 @@ void CTFHintManager::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHintManager::Think( void )
 {
@@ -40,21 +40,21 @@ void CTFHintManager::Think( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *player - 
-//			hintID - 
+// Purpose:
+// Input  : *player -
+//			hintID -
 //-----------------------------------------------------------------------------
 void CTFHintManager::AddHint( CBaseTFPlayer *player, int hintID, int priority, int entityIndex /*=0*/ )
 {
-	// Send a message to the client side entity 
+	// Send a message to the client side entity
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Always send
-// Input  : **ppSendTable - 
-//			*recipient - 
-//			*pvs - 
-//			clientArea - 
+// Input  : **ppSendTable -
+//			*recipient -
+//			*pvs -
+//			clientArea -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 

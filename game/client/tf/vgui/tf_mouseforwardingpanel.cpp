@@ -14,7 +14,7 @@
 //=============================================================================//
 
 DECLARE_BUILD_FACTORY( CMouseMessageForwardingPanel );
- 
+
 CMouseMessageForwardingPanel::CMouseMessageForwardingPanel( Panel *parent, const char *name ) : BaseClass( parent, name )
 {
 	// don't draw an
@@ -78,4 +78,3 @@ void CMouseMessageForwardingPanel::OnMouseWheeled(int delta)
 		GetParent()->OnMouseWheeled( delta );
 	}
 }
-

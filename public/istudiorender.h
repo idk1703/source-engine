@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -167,7 +167,7 @@ enum
 
 struct DrawModelResults_t
 {
-	int m_ActualTriCount; 
+	int m_ActualTriCount;
 	int m_TextureMemoryBytes;
 	int m_NumHardwareBones;
 	int m_NumBatches;
@@ -242,7 +242,7 @@ struct GetTriangles_Output_t
 };
 
 
-struct model_array_instance_t 
+struct model_array_instance_t
 {
 	matrix3x4_t		modelToWorld;
 
@@ -257,7 +257,7 @@ struct model_array_instance_t
 // virtualModel is member passed in via studiohdr_t and passed back for model identification.
 //-----------------------------------------------------------------------------
 #define STUDIO_DATA_CACHE_INTERFACE_VERSION "VStudioDataCache005"
- 
+
 abstract_class IStudioDataCache : public IAppSystem
 {
 public:
@@ -280,7 +280,7 @@ public:
 	// Used for the mat_stub console command.
 	virtual void Mat_Stub( IMaterialSystem *pMatSys ) = 0;
 
-	// Updates the rendering configuration 
+	// Updates the rendering configuration
 	virtual void UpdateConfig( const StudioRenderConfig_t& config ) = 0;
 	virtual void GetCurrentConfig( StudioRenderConfig_t& config ) = 0;
 
@@ -293,9 +293,9 @@ public:
 
 	// This is needed to do eyeglint and calculate the correct texcoords for the eyes.
 	virtual void SetEyeViewTarget( const studiohdr_t *pStudioHdr, int nBodyIndex, const Vector& worldPosition ) = 0;
-		
+
 	// Methods related to lighting state
-	// NOTE: SetAmbientLightColors assumes that the arraysize is the same as 
+	// NOTE: SetAmbientLightColors assumes that the arraysize is the same as
 	// returned from GetNumAmbientLightSamples
 	virtual int GetNumAmbientLightSamples() = 0;
 	virtual const Vector *GetAmbientLightDirections() = 0;
@@ -304,18 +304,18 @@ public:
 	virtual void SetLocalLights( int numLights, const LightDesc_t *pLights ) = 0;
 
 	// Sets information about the camera location + orientation
-	virtual void SetViewState( const Vector& viewOrigin, const Vector& viewRight, 
+	virtual void SetViewState( const Vector& viewOrigin, const Vector& viewRight,
 		const Vector& viewUp, const Vector& viewPlaneNormal ) = 0;
-	
+
 	// Allocates flex weights for use in rendering
 	// NOTE: Pass in a non-null second parameter to lock delayed flex weights
 	virtual void LockFlexWeights( int nWeightCount, float **ppFlexWeights, float **ppFlexDelayedWeights = NULL ) = 0;
 	virtual void UnlockFlexWeights() = 0;
-	
+
 	// Used to allocate bone matrices to be used to pass into DrawModel
 	virtual matrix3x4_t* LockBoneMatrices( int nBoneCount ) = 0;
 	virtual void UnlockBoneMatrices() = 0;
-	
+
 	// LOD stuff
 	virtual int GetNumLODs( const studiohwdata_t &hardwareData ) const = 0;
 	virtual float GetLODSwitchValue( const studiohwdata_t &hardwareData, int lod ) const = 0;
@@ -324,9 +324,9 @@ public:
 	// Sets the color/alpha modulation
 	virtual void SetColorModulation( float const* pColor ) = 0;
 	virtual void SetAlphaModulation( float flAlpha ) = 0;
-	
+
 	// Draws the model
-	virtual void DrawModel( DrawModelResults_t *pResults, const DrawModelInfo_t& info, 
+	virtual void DrawModel( DrawModelResults_t *pResults, const DrawModelInfo_t& info,
 		matrix3x4_t *pBoneToWorld, float *pFlexWeights, float *pFlexDelayedWeights, const Vector &modelOrigin, int flags = STUDIORENDER_DRAW_ENTIRE_MODEL ) = 0;
 
 	// Methods related to static prop rendering
@@ -343,7 +343,7 @@ public:
 
 	// Add decals to a decal list by doing a planar projection along the ray
 	// The BoneToWorld matrices must be set before this is called
-	virtual void AddDecal( StudioDecalHandle_t handle, studiohdr_t *pStudioHdr, matrix3x4_t *pBoneToWorld, 
+	virtual void AddDecal( StudioDecalHandle_t handle, studiohdr_t *pStudioHdr, matrix3x4_t *pBoneToWorld,
 		const Ray_t & ray, const Vector& decalUp, IMaterial* pDecalMaterial, float radius, int body, bool noPokethru = false, int maxLODToDecal = ADDDECAL_TO_ALL_LODS ) = 0;
 
 	// Compute the lighting at a point and normal
@@ -359,7 +359,7 @@ public:
 	virtual void AddShadow( IMaterial* pMaterial, void* pProxyData, FlashlightState_t *m_pFlashlightState = NULL, VMatrix *pWorldToTexture = NULL, ITexture *pFlashlightDepthTexture = NULL ) = 0;
 	virtual void ClearAllShadows() = 0;
 
-	// Gets the model LOD; pass in the screen size in pixels of a sphere 
+	// Gets the model LOD; pass in the screen size in pixels of a sphere
 	// of radius 1 that has the same origin as the model to get the LOD out...
 	virtual int ComputeModelLod( studiohwdata_t* pHardwareData, float unitSphereSize, float *pMetric = NULL ) = 0;
 

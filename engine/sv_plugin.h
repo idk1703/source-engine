@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -38,10 +38,10 @@ private:
 	void SetName( const char *name );
 	char m_szName[128];
 	bool m_bDisable;
-	
+
 	IServerPluginCallbacks *m_pPlugin;
 	int m_iPluginInterfaceVersion;	// Tells if we got INTERFACEVERSION_ISERVERPLUGINCALLBACKS or an older version.
-	
+
 	CSysModule		*m_pPluginModule;
 };
 
@@ -69,8 +69,8 @@ public:
 	void PrintDetails();
 
 	// multiplex the passthroughs
-	virtual void			LevelInit( char const *pMapName, 
-									char const *pMapEntities, char const *pOldLevel, 
+	virtual void			LevelInit( char const *pMapName,
+									char const *pMapEntities, char const *pOldLevel,
 									char const *pLandmarkName, bool loadGame, bool background );
 	virtual void			ServerActivate( edict_t *pEdictList, int edictCount, int clientMax );
 	virtual void			GameFrame( bool simulating );
@@ -101,7 +101,7 @@ private:
 public:
 	//New plugin interface callbacks
 	virtual void			OnEdictAllocated( edict_t *edict );
-	virtual void			OnEdictFreed( const edict_t *edict  ); 
+	virtual void			OnEdictFreed( const edict_t *edict  );
 };
 
 extern CServerPlugin *g_pServerPluginHandler;

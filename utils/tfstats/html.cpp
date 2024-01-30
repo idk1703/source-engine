@@ -28,10 +28,10 @@ const bool CHTMLFile::dontLinkStyle=false;
 using namespace std;
 //------------------------------------------------------------------------------------------------------
 // Function:	CHTMLFile::CHTMLFile
-// Purpose:	
+// Purpose:
 // Input:	filename - name of the html file that will be written
 //				title -	title of the html document
-//				fPrintBody - true if the <body> tag is to be written. 
+//				fPrintBody - true if the <body> tag is to be written.
 //				bgimage - name of a background image, if desired
 //				leftmarg - pixels on the left margin (if desired)
 //				topmarg - pixels on the top margin (if desired)
@@ -40,8 +40,8 @@ CHTMLFile::CHTMLFile(const char* filenm,const char* title,bool fPrintBody,const 
 {
 	strcpy(filename,filenm);
 	open(filename);
-	
-	
+
+
 	write("<HEAD>\n");
 	write("<TITLE> %s </TITLE>\n",title);
 	string csshttppath(g_pApp->supportHTTPPath);
@@ -49,7 +49,7 @@ CHTMLFile::CHTMLFile(const char* filenm,const char* title,bool fPrintBody,const 
 
 	write("<link rel=\"stylesheet\" href=\"%s\" type=\"text/css\">\n",csshttppath.c_str());
 	write("</HEAD>\n");
-	
+
 	fBody=fPrintBody;
 	if (fBody)
 	{
@@ -60,7 +60,7 @@ CHTMLFile::CHTMLFile(const char* filenm,const char* title,bool fPrintBody,const 
 			write("bgcolor = black");
 		write(">\n");
 	}
-	
+
 }
 
 

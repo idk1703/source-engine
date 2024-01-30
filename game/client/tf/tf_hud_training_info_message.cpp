@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -31,7 +31,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudTrainingInfoMsg : public CHudElement, public EditablePanel
 {
@@ -57,7 +57,7 @@ DECLARE_HUDELEMENT( CHudTrainingInfoMsg );
 DECLARE_HUD_MESSAGE( CHudTrainingInfoMsg, TrainingInfoMsg );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTrainingInfoMsg::CHudTrainingInfoMsg( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudTrainingInfoMsg" )
 {
@@ -70,7 +70,7 @@ CHudTrainingInfoMsg::CHudTrainingInfoMsg( const char *pElementName ) : CHudEleme
 	SetVisible( false );
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTrainingInfoMsg::Reset()
 {
@@ -78,7 +78,7 @@ void CHudTrainingInfoMsg::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTrainingInfoMsg::Init()
 {
@@ -86,7 +86,7 @@ void CHudTrainingInfoMsg::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTrainingInfoMsg::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -100,7 +100,7 @@ void CHudTrainingInfoMsg::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudTrainingInfoMsg::ShouldDraw( void )
 {
@@ -130,8 +130,8 @@ void CHudTrainingInfoMsg::MsgFunc_TrainingInfoMsg( bf_read &msg )
 	SetVisible( true );
 	m_pGoalLabel->SetText( outputText );
 
-	//g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageShow" ); 
-	//g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageHide" ); 
+	//g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageShow" );
+	//g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageHide" );
 
 	C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 	if ( pLocalPlayer )

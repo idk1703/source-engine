@@ -53,7 +53,7 @@ public:
 	// The objects initial parametric conditions.
 	CNetworkVector(	m_vecStartPosition );
 	CNetworkVector(	m_vecEnterWorldPosition );
-	CNetworkVector(	m_vecDirection );	
+	CNetworkVector(	m_vecDirection );
 	CNetworkQAngle( m_vecStartAngles );
 
 	CNetworkVar( float,	m_flFlightTime );
@@ -80,7 +80,7 @@ private:
 	float	m_flLaunchHeight;
 
 	// Calculate the enter time. (called from Init)
-	void CalcEnterTime( const Vector &vecTriggerMins, const Vector &vecTriggerMaxs );			
+	void CalcEnterTime( const Vector &vecTriggerMins, const Vector &vecTriggerMaxs );
 
 	friend class CEnvHeadcrabCanister;
 	friend class C_EnvHeadcrabCanister;
@@ -95,8 +95,8 @@ abstract_class IHeadcrabCanisterFactory
 {
 public:
 
-	virtual void CreateHeadcrabCanister( int nID, int iType, 
-		                       const Vector &vecPosition, const Vector &vecDirection, 
+	virtual void CreateHeadcrabCanister( int nID, int iType,
+		                       const Vector &vecPosition, const Vector &vecDirection,
 		                       float flSpeed, float flStartTime, float flDamageRadius,
 							   const Vector &vecTriggerMins, const Vector &vecTriggerMaxs ) = 0;
 };
@@ -120,7 +120,7 @@ public:
 				  const Vector &vecTriggerMins, const Vector &vecTriggerMaxs );
 
 	//-------------------------------------------------------------------------
-	// Method to generate HeadcrabCanisters. 
+	// Method to generate HeadcrabCanisters.
 	// Time passed in here is global time, not delta time.
 	// The function returns the time at which it must be called again.
 	//-------------------------------------------------------------------------
@@ -165,7 +165,7 @@ public:
 	// Generated data.
 	int								m_nRandomCallCount;		// Debug! Keep track of number steam calls.
 	float							m_flNextSpawnTime;		// Next HeadcrabCanister spawn time (random).
-	CUniformRandomStream			m_NumberStream;			// Used to generate random numbers.	
+	CUniformRandomStream			m_NumberStream;			// Used to generate random numbers.
 
 	// Use "Targets" to determine HeadcrabCanister direction(s).
 	struct HeadcrabCanistertarget_t

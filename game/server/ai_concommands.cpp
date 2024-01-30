@@ -53,7 +53,7 @@ void CC_AI_ShowHints( void )
 {
 	// Eventually this will be done by name when mulitple
 	// networks are used, but for now have one big AINet
-	//static char entName[256];	
+	//static char entName[256];
 	//Q_strncpy( entName, args[1],sizeof(entName) );
 	if ( !g_pAINetworkManager )
 		return;
@@ -70,7 +70,7 @@ void CC_AI_ShowHull( const CCommand &args )
 {
 	// Eventually this will be done by name when mulitple
 	// networks are used, but for now have one big AINet
-	//static char entName[256];	
+	//static char entName[256];
 	//Q_strncpy( entName, args[1),sizeof(entName) );
 
 	g_pAINetworkManager->GetEditOps()->SetDebugBits("BigNet",bits_debugOverlayHulls);
@@ -85,7 +85,7 @@ void CC_AI_ShowConnect( const CCommand &args )
 {
 	// Eventually this will be done by name when mulitple
 	// networks are used, but for now have one big AINet
-	//static char entName[256];	
+	//static char entName[256];
 	//Q_strncpy( entName, args[1],sizeof(entName) );
 	if ( !g_pAINetworkManager )
 		return;
@@ -103,7 +103,7 @@ void CC_AI_ShowJumpConnect( const CCommand &args )
 {
 	// Eventually this will be done by name when mulitple
 	// networks are used, but for now have one big AINet
-	//static char entName[256];	
+	//static char entName[256];
 	//Q_strncpy( entName, args[1],sizeof(entName) );
 	if ( !g_pAINetworkManager )
 		return;
@@ -122,7 +122,7 @@ void CC_AI_ShowFlyConnect( const CCommand &args )
 {
 	// Eventually this will be done by name when mulitple
 	// networks are used, but for now have one big AINet
-	//static char entName[256];	
+	//static char entName[256];
 	//Q_strncpy( entName, args[1],sizeof(entName) );
 	if ( !g_pAINetworkManager )
 		return;
@@ -141,7 +141,7 @@ void CC_AI_ShowGrid( const CCommand &args )
 {
 	// Eventually this will be done by name when mulitple
 	// networks are used, but for now have one big AINet
-	//static char entName[256];	
+	//static char entName[256];
 	//Q_strncpy( entName, args[1],sizeof(entName) );
 	if ( !g_pAINetworkManager )
 		return;
@@ -183,7 +183,7 @@ void CC_AI_NextHull( const CCommand &args )
 {
 	// Eventually this will be done by name when mulitple
 	// networks are used, but for now have one big AINet
-	//static char entName[256];	
+	//static char entName[256];
 	//Q_strncpy( entName, args[1],sizeof(entName) );
 	if ( !g_pAINetworkManager )
 		return;
@@ -205,7 +205,7 @@ void CC_AI_Hull( const CCommand &args )
 	CBaseEntity *pEnt = NULL;
 
 	if ( !args[1] || !args[1][0] )
-	{		
+	{
 		// No arg means the entity under the crosshair.
 		pEnt = FindPickerEntity( UTIL_GetCommandClient() );
 		if ( !pEnt )
@@ -240,7 +240,7 @@ void CC_AI_Hull( const CCommand &args )
 		DevMsg( "Entity %s is not an NPC.\n", pEnt->GetDebugName() );
 		return;
 	}
-	
+
 	Hull_t eHull = pNPC->GetHullType();
 
 	if ( bSpawned )
@@ -262,7 +262,7 @@ void CC_AI_Nodes( const CCommand &args )
 {
 	// Eventually this will be done by name when mulitple
 	// networks are used, but for now have one big AINet
-	//	static char entName[256];	
+	//	static char entName[256];
 	//Q_strncpy( entName, args[1],sizeof(entName) );
 	if ( !g_pAINetworkManager )
 		return;
@@ -293,7 +293,7 @@ void CC_AI_ShowVisibility( const CCommand &args )
 {
 	// Eventually this will be done by name when mulitple
 	// networks are used, but for now have one big AINet
-	// static char entName[256];	
+	// static char entName[256];
 	//Q_strncpy( entName, args[1],sizeof(entName) );
 	if ( !g_pAINetworkManager )
 		return;
@@ -326,7 +326,7 @@ void CC_AI_GraphConnect( const CCommand &args )
 
 	// Eventually this will be done by name when mulitple
 	// networks are used, but for now have one big AINet
-	//static char entName[256];	
+	//static char entName[256];
 	//Q_strncpy( entName, args[1],sizeof(entName) );
 	g_pAINetworkManager->GetEditOps()->SetDebugBits("BigNet",bits_debugOverlayGraphConnect);
 	CAI_Node* pAINode = FindPickerAINode(UTIL_GetCommandClient(), NODE_ANY);
@@ -351,7 +351,7 @@ void CC_NPC_Bipass( const CCommand &args )
 	SetDebugBits( UTIL_GetCommandClient(),args[1],OVERLAY_NPC_TRIANGULATE_BIT);
 }
 static ConCommand npc_bipass("npc_bipass", CC_NPC_Bipass, "Displays the local movement attempts by the given NPC(s) (triangulation detours).  Failed bypass routes are displayed in red, successful bypasses are shown in green.\n\tArguments:   	{entity_name} / {class_name} / no argument picks what player is looking at.", FCVAR_CHEAT);
-	
+
 //------------------------------------------------------------------------------
 // Purpose: Destroy selected NPC
 //------------------------------------------------------------------------------
@@ -419,7 +419,7 @@ void CC_NPC_Create( const CCommand &args )
 		Vector forward;
 		pPlayer->EyeVectors( &forward );
 		AI_TraceLine(pPlayer->EyePosition(),
-			pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,MASK_NPCSOLID, 
+			pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,MASK_NPCSOLID,
 			pPlayer, COLLISION_GROUP_NONE, &tr );
 		if ( tr.fraction != 1.0)
 		{
@@ -440,7 +440,7 @@ void CC_NPC_Create( const CCommand &args )
 			Vector	vUpBit = baseNPC->GetAbsOrigin();
 			vUpBit.z += 1;
 
-			AI_TraceHull( baseNPC->GetAbsOrigin(), vUpBit, baseNPC->GetHullMins(), baseNPC->GetHullMaxs(), 
+			AI_TraceHull( baseNPC->GetAbsOrigin(), vUpBit, baseNPC->GetHullMins(), baseNPC->GetHullMaxs(),
 				MASK_NPCSOLID, baseNPC, COLLISION_GROUP_NONE, &tr );
 			if ( tr.startsolid || (tr.fraction < 1.0) )
 			{
@@ -482,10 +482,10 @@ void CC_NPC_Create_Aimed( const CCommand &args )
 		Vector forward;
 		pPlayer->EyeVectors( &forward );
 		VectorAngles( forward, angles );
-		angles.x = 0; 
+		angles.x = 0;
 		angles.z = 0;
 		AI_TraceLine( pPlayer->EyePosition(),
-			pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,MASK_NPCSOLID, 
+			pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,MASK_NPCSOLID,
 			pPlayer, COLLISION_GROUP_NONE, &tr );
 
 		if ( tr.fraction != 1.0)
@@ -507,7 +507,7 @@ void CC_NPC_Create_Aimed( const CCommand &args )
 			Vector	vUpBit = baseNPC->GetAbsOrigin();
 			vUpBit.z += 1;
 
-			AI_TraceHull( baseNPC->GetAbsOrigin(), vUpBit, baseNPC->GetHullMins(), baseNPC->GetHullMaxs(), 
+			AI_TraceHull( baseNPC->GetAbsOrigin(), vUpBit, baseNPC->GetHullMins(), baseNPC->GetHullMaxs(),
 				MASK_NPCSOLID, baseNPC, COLLISION_GROUP_NONE, &tr );
 			if ( tr.startsolid || (tr.fraction < 1.0) )
 			{
@@ -552,16 +552,16 @@ static ConCommand npc_destroy_unselected("npc_destroy_unselected", CC_NPC_Destro
 //------------------------------------------------------------------------------
 void CC_NPC_Freeze( const CCommand &args )
 {
-	if (FStrEq(args[1], "")) 
+	if (FStrEq(args[1], ""))
 	{
-		//	
+		//
 		// No NPC was specified, try to freeze selected NPCs.
 		//
 		bool bFound = false;
 		CAI_BaseNPC *npc = gEntList.NextEntByClass( (CAI_BaseNPC *)NULL );
 		while (npc)
 		{
-			if (npc->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT) 
+			if (npc->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT)
 			{
 				bFound = true;
 				npc->ToggleFreeze();
@@ -571,7 +571,7 @@ void CC_NPC_Freeze( const CCommand &args )
 
 		if (!bFound)
 		{
-			//	
+			//
 			// No selected NPCs, look for the NPC under the crosshair.
 			//
 			CBaseEntity *pEntity = FindPickerEntity( UTIL_GetCommandClient() );
@@ -636,7 +636,7 @@ void CC_NPC_Teleport( void )
 	Vector forward;
 	pPlayer->EyeVectors( &forward );
 	AI_TraceLine(pPlayer->EyePosition(),
-		pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,MASK_NPCSOLID, 
+		pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,MASK_NPCSOLID,
 		pPlayer, COLLISION_GROUP_NONE, &tr );
 
 	if ( tr.fraction != 1.0)
@@ -646,9 +646,9 @@ void CC_NPC_Teleport( void )
 		while (npc)
 		{
 			//Only Teleport one NPC if more than one is selected.
-			if (npc->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT) 
+			if (npc->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT)
 			{
-                npc->Teleport( &tr.endpos, NULL, NULL );
+	npc->Teleport( &tr.endpos, NULL, NULL );
 				break;
 			}
 
@@ -668,7 +668,7 @@ void CC_NPC_Go( void )
 	Vector forward;
 	pPlayer->EyeVectors( &forward );
 	AI_TraceLine(pPlayer->EyePosition(),
-		pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,MASK_NPCSOLID, 
+		pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,MASK_NPCSOLID,
 		pPlayer, COLLISION_GROUP_NONE, &tr );
 	if ( tr.fraction != 1.0)
 	{
@@ -851,7 +851,7 @@ CON_COMMAND( ai_clear_bad_links, "Clears bits set on nav links indicating link i
 		return;
 
 	CAI_Node *pNode;
-	
+
 	for ( int i = 0; i < g_pBigAINet->NumNodes(); i++ )
 	{
 		pNode = g_pBigAINet->GetNode( i );

@@ -116,7 +116,7 @@ public:
 
 	int m_iMagnitude;// how large is the fireball? how much damage?
 	int m_iRadiusOverride;// For use when m_iMagnitude results in larger radius than designer desires.
-	int m_spriteScale; // what's the exact fireball sprite scale? 
+	int m_spriteScale; // what's the exact fireball sprite scale?
 	float m_flDamageForce;	// How much damage force should we use?
 	string_t m_iszFireballSprite;
 	short m_sFireballSprite;
@@ -177,7 +177,7 @@ void CEnvExplosion::Precache( void )
 }
 
 void CEnvExplosion::Spawn( void )
-{ 
+{
 	Precache();
 
 	SetSolid( SOLID_NONE );
@@ -236,7 +236,7 @@ void CEnvExplosion::Spawn( void )
 // Purpose: Input handler for making the explosion explode.
 //-----------------------------------------------------------------------------
 void CEnvExplosion::InputExplode( inputdata_t &inputdata )
-{ 
+{
 	trace_t tr;
 
 	SetModelName( NULL_STRING );//invisible
@@ -244,7 +244,7 @@ void CEnvExplosion::InputExplode( inputdata_t &inputdata )
 
 	Vector vecSpot = GetAbsOrigin() + Vector( 0 , 0 , 8 );
 	UTIL_TraceLine( vecSpot, vecSpot + Vector( 0, 0, -40 ), (MASK_SOLID_BRUSHONLY | MASK_WATER), this, COLLISION_GROUP_NONE, &tr );
-	
+
 	// Pull out of the wall a bit. We used to move the explosion origin itself, but that seems unnecessary, not to mention a
 	// little weird when you consider that it might be in hierarchy. Instead we just calculate a new virtual position at
 	// which to place the explosion. We don't use that new position to calculate radius damage because according to Steve's
@@ -271,12 +271,12 @@ void CEnvExplosion::InputExplode( inputdata_t &inputdata )
 	{
 		nFlags |= TE_EXPLFLAG_NOFIREBALL;
 	}
-	
+
 	if( m_spawnflags & SF_ENVEXPLOSION_NOSOUND )
 	{
 		nFlags |= TE_EXPLFLAG_NOSOUND;
 	}
-	
+
 	if ( m_spawnflags & SF_ENVEXPLOSION_RND_ORIENT )
 	{
 		nFlags |= TE_EXPLFLAG_ROTATE;
@@ -311,7 +311,7 @@ void CEnvExplosion::InputExplode( inputdata_t &inputdata )
 
 	CPASFilter filter( vecExplodeOrigin );
 	te->Explosion( filter, 0.0,
-		&vecExplodeOrigin, 
+		&vecExplodeOrigin,
 		( m_sFireballSprite < 1 ) ? g_sModelIndexFireball : m_sFireballSprite,
 		!( m_spawnflags & SF_ENVEXPLOSION_NOFIREBALL ) ? ( m_spriteScale / 10.0 ) : 0.0,
 		15,
@@ -380,7 +380,7 @@ void CEnvExplosion::Smoke( void )
 
 
 // HACKHACK -- create one of these and fake a keyvalue to get the right explosion setup
-void ExplosionCreate( const Vector &center, const QAngle &angles, 
+void ExplosionCreate( const Vector &center, const QAngle &angles,
 	CBaseEntity *pOwner, int magnitude, int radius, int nSpawnFlags, float flExplosionForce, CBaseEntity *pInflictor, int iCustomDamageType,
 	const EHANDLE *ignoredEntity , Class_T ignoredClass )
 {
@@ -422,7 +422,7 @@ void ExplosionCreate( const Vector &center, const QAngle &angles,
 }
 
 
-void ExplosionCreate( const Vector &center, const QAngle &angles, 
+void ExplosionCreate( const Vector &center, const QAngle &angles,
 	CBaseEntity *pOwner, int magnitude, int radius, bool doDamage, float flExplosionForce, bool bSurfaceOnly, bool bSilent, int iCustomDamageType )
 {
 	// For E3, no sparks
@@ -446,8 +446,8 @@ void ExplosionCreate( const Vector &center, const QAngle &angles,
 }
 
 // this version lets you specify classes or entities to be ignored
-void ExplosionCreate( const Vector &center, const QAngle &angles, 
-					 CBaseEntity *pOwner, int magnitude, int radius, bool doDamage, 
+void ExplosionCreate( const Vector &center, const QAngle &angles,
+					 CBaseEntity *pOwner, int magnitude, int radius, bool doDamage,
 					 const EHANDLE *ignoredEntity, Class_T ignoredClass,
 					 float flExplosionForce , bool bSurfaceOnly , bool bSilent , int iCustomDamageType )
 {
@@ -475,11 +475,11 @@ void ExplosionCreate( const Vector &center, const QAngle &angles,
 // Purpose: Draw any debug text overlays
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CEnvExplosion::DrawDebugTextOverlays( void ) 
+int CEnvExplosion::DrawDebugTextOverlays( void )
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 

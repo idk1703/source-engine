@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -26,7 +26,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudDemomanChargeMeter : public CHudElement, public EditablePanel
 {
@@ -46,7 +46,7 @@ private:
 DECLARE_HUDELEMENT( CHudDemomanChargeMeter );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudDemomanChargeMeter::CHudDemomanChargeMeter( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudDemomanCharge" )
 {
@@ -63,7 +63,7 @@ CHudDemomanChargeMeter::CHudDemomanChargeMeter( const char *pElementName ) : CHu
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDemomanChargeMeter::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -74,7 +74,7 @@ void CHudDemomanChargeMeter::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudDemomanChargeMeter::ShouldDraw( void )
 {
@@ -88,7 +88,7 @@ bool CHudDemomanChargeMeter::ShouldDraw( void )
 	if ( !pWpn || !pChargeupWeapon || !pChargeupWeapon->CanCharge() )
 		return false;
 
-#ifdef STAGING_ONLY	
+#ifdef STAGING_ONLY
 	int iCustomHUD = 0;
 	CALL_ATTRIB_HOOK_INT_ON_OTHER( pWpn, iCustomHUD, custom_charge_meter );
 	if ( iCustomHUD )
@@ -108,7 +108,7 @@ bool CHudDemomanChargeMeter::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDemomanChargeMeter::OnTick( void )
 {
@@ -118,8 +118,8 @@ void CHudDemomanChargeMeter::OnTick( void )
 		return;
 
 	CTFWeaponBase *pWpn = pPlayer->GetActiveTFWeapon();
-	
-#ifdef STAGING_ONLY		
+
+#ifdef STAGING_ONLY
 	int iCustomHUD = 0;
 	CALL_ATTRIB_HOOK_INT_ON_OTHER( pWpn, iCustomHUD, custom_charge_meter );
 	if ( iCustomHUD )

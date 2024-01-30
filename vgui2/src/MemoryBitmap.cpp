@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,7 @@ using namespace vgui;
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
-// Input  : *filename - image file to load 
+// Input  : *filename - image file to load
 //-----------------------------------------------------------------------------
 MemoryBitmap::MemoryBitmap(unsigned char *texture,int wide, int tall)
 {
@@ -52,7 +52,7 @@ void MemoryBitmap::GetSize(int &wide, int &tall)
 {
 	wide = 0;
 	tall = 0;
-	
+
 	if (!_valid)
 		return;
 
@@ -115,13 +115,13 @@ void MemoryBitmap::Paint()
 	{
 		_id = g_pSurface->CreateNewTextureID( true );
 	}
-	
+
 	// if we have not uploaded yet, lets go ahead and do so
 	if (!_uploaded)
 	{
 		ForceUpload(_texture,_w,_h);
 	}
-	
+
 	//set the texture current, set the color, and draw the biatch
 	g_pSurface->DrawSetTexture(_id);
 	g_pSurface->DrawSetColor(_color[0], _color[1], _color[2], _color[3]);
@@ -149,7 +149,7 @@ void MemoryBitmap::ForceUpload(unsigned char *texture,int wide, int tall)
 
 	if(_w==0 || _h==0)
 		return;
-	
+
 	if (!_id)
 	{
 		_id = g_pSurface->CreateNewTextureID( true );
@@ -171,4 +171,3 @@ HTexture MemoryBitmap::GetID()
 }
 
 #endif // _STATIC_LINKED && _VGUI_DLL
-

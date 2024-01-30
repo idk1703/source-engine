@@ -5,7 +5,7 @@
 //=============================================================================//
 
 // conversion from 'double' to 'float', possible loss of data
-#pragma warning( disable : 4244 ) 
+#pragma warning( disable : 4244 )
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
@@ -92,9 +92,9 @@ bool CBitmapFont::Create( const char *pFontFilename, float scalex, float scaley,
 	if ( !pFontTable )
 	{
 		void *pBuf = NULL;
-		int nLength; 
+		int nLength;
 
-		nLength = FontManager().FileSystem()->ReadFileEx( pFontFilename, "GAME", &pBuf ); 
+		nLength = FontManager().FileSystem()->ReadFileEx( pFontFilename, "GAME", &pBuf );
 		if ( nLength <= 0 || !pBuf )
 		{
 			// not found
@@ -213,7 +213,7 @@ bool CBitmapFont::IsEqualTo( const char *windowsFontName, float scalex, float sc
 	Q_FileBase( windowsFontName, fontname, MAX_PATH );
 
 	if ( !Q_stricmp( fontname, m_szName.String() ) &&
-		m_scalex == scalex && 
+		m_scalex == scalex &&
 		m_scaley == scaley  )
 	{
 		int commonFlags = m_iFlags & flags;

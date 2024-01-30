@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -58,4 +58,3 @@ void CleanupName (char *in, char *out);
 void	NewWad (char *pathname, qboolean bigendien);
 void	AddLump (char *name, void *buffer, int length, int type, int compress);
 void	WriteWad (int wad3);
-

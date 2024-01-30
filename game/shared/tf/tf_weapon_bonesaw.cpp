@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -33,7 +33,7 @@ LINK_ENTITY_TO_CLASS( tf_weapon_bonesaw, CTFBonesaw );
 PRECACHE_WEAPON_REGISTER( tf_weapon_bonesaw );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBonesaw::Activate( void )
 {
@@ -58,7 +58,7 @@ void CTFBonesaw::SecondaryAttack( void )
 	BaseClass::SecondaryAttack();
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFBonesaw::DefaultDeploy( char *szViewModel, char *szWeaponModel, int iActivity, char *szAnimExt )
 {
@@ -79,7 +79,7 @@ void CTFBonesaw::DoMeleeDamage( CBaseEntity* ent, trace_t& trace )
 	// We hit a target, take a head
 	CTFPlayer *pPlayer = ToTFPlayer( GetOwnerEntity() );
 	CTFPlayer *pVictim = ToTFPlayer( ent );
-	
+
 	int iTakeHeads = 0;
 	CALL_ATTRIB_HOOK_INT( iTakeHeads, add_head_on_hit );
 	if ( pPlayer && pVictim && iTakeHeads && (pVictim->GetTeamNumber() != pPlayer->GetTeamNumber() ) )
@@ -93,8 +93,8 @@ void CTFBonesaw::DoMeleeDamage( CBaseEntity* ent, trace_t& trace )
 }
 
 //-----------------------------------------------------------------------------
-float CTFBonesaw::GetBoneSawSpeedMod( void ) 
-{ 
+float CTFBonesaw::GetBoneSawSpeedMod( void )
+{
 	const int MAX_HEADS_FOR_SPEED = 10;
 	// Calculate Speed based on heads
 	CTFPlayer *pPlayer = ToTFPlayer( GetOwnerEntity() );
@@ -106,7 +106,7 @@ float CTFBonesaw::GetBoneSawSpeedMod( void )
 		int iDecaps = Min( MAX_HEADS_FOR_SPEED, pPlayer->m_Shared.GetDecapitations() );
 		return 1.f + (iDecaps * 0.05f);
 	}
-	return 1.f; 
+	return 1.f;
 }
 
 //-----------------------------------------------------------------------------
@@ -121,17 +121,17 @@ int CTFBonesaw::GetCount( void )
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBonesaw::OnDataChanged( DataUpdateType_t updateType )
 {
 	BaseClass::OnDataChanged( updateType );
 
-	UpdateChargePoseParam(); 
+	UpdateChargePoseParam();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBonesaw::UpdateAttachmentModels( void )
 {
@@ -148,7 +148,7 @@ void CTFBonesaw::UpdateAttachmentModels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBonesaw::UpdateChargePoseParam( void )
 {
@@ -173,7 +173,7 @@ void CTFBonesaw::UpdateChargePoseParam( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBonesaw::GetPoseParameters( CStudioHdr *pStudioHdr, float poseParameter[MAXSTUDIOPOSEPARAM] )
 {

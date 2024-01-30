@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -108,7 +108,7 @@ void CDODBaseRocketWeapon::Spawn( )
 	CDODWeaponInfo *pWeaponInfo = dynamic_cast< CDODWeaponInfo* >( GetFileWeaponInfoFromHandle( hWpnInfo ) );
 
 	Assert( pWeaponInfo && "Failed to get CDODWeaponInfo in weapon spawn" );
-		
+
 	m_pWeaponInfo = pWeaponInfo;
 
 	BaseClass::Spawn();
@@ -160,7 +160,7 @@ void CDODBaseRocketWeapon::PrimaryAttack()
 	Assert( m_pWeaponInfo );
 
 	CDODPlayer *pPlayer = ToDODPlayer( GetPlayerOwner() );
-	
+
 	// Out of ammo?
 	if ( m_iClip1 <= 0 )
 	{
@@ -186,12 +186,12 @@ void CDODBaseRocketWeapon::PrimaryAttack()
 		pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
 		SendWeaponAnim( ACT_VM_PRIMARYATTACK );
-		
+
 		FireRocket();
 
 		DoFireEffects();
 
-		m_iClip1--; 
+		m_iClip1--;
 
 #ifdef CLIENT_DLL
 		if ( prediction->IsFirstTimePredicted() )
@@ -235,9 +235,9 @@ void CDODBaseRocketWeapon::FireRocket( void )
 void CDODBaseRocketWeapon::DoFireEffects()
 {
 	CBasePlayer *pPlayer = GetPlayerOwner();
-	
+
 	if ( pPlayer )
-		 pPlayer->DoMuzzleFlash();
+		pPlayer->DoMuzzleFlash();
 
 	//smoke etc
 }
@@ -255,14 +255,14 @@ void CDODBaseRocketWeapon::SecondaryAttack()
 	}
 
 	if( IsDeployed() )
-	{	
+	{
 		Lower();
 	}
 	else
 	{
 		if ( CanAttack() )
-            Raise();
-	}	
+	Raise();
+	}
 }
 
 void CDODBaseRocketWeapon::WeaponIdle()
@@ -306,10 +306,10 @@ bool CDODBaseRocketWeapon::Lower()
 	SendWeaponAnim( GetLowerActivity() );
 
 	m_bDeployed = false;
-	
+
 	CDODPlayer *pPlayer = ToDODPlayer( GetPlayerOwner() );
 	pPlayer->SetBazookaDeployed( m_bDeployed );
-	
+
 	m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration();
 	m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();
 	m_flTimeWeaponIdle = gpGlobals->curtime + SequenceDuration();
@@ -338,7 +338,7 @@ void CDODBaseRocketWeapon::OverrideMouseInput( float *x, float *y )
 		float flSensitivity = deployed_bazooka_sensitivity.GetFloat();
 
 		*x *= flSensitivity;
-		*y *= flSensitivity;		
+		*y *= flSensitivity;
 	}
 }
 

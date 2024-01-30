@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -249,7 +249,7 @@ bool CBotManager::IsInsideSmokeCloud( const Vector *pos )
 			const Vector &smokeOrigin = ag->GetDetonationPosition();
 
 			if ((smokeOrigin - *pos).IsLengthLessThan( ag->GetRadius() ))
-				return true;			
+				return true;
 		}
 	}
 
@@ -259,7 +259,7 @@ bool CBotManager::IsInsideSmokeCloud( const Vector *pos )
 //--------------------------------------------------------------------------------------------------------------
 /**
  * Return true if line intersects smoke volume
- * Determine the length of the line of sight covered by each smoke cloud, 
+ * Determine the length of the line of sight covered by each smoke cloud,
  * and sum them (overlap is additive for obstruction).
  * If the overlap exceeds the threshold, the bot can't see through.
  */
@@ -325,12 +325,12 @@ bool CBotManager::IsLineBlockedBySmoke( const Vector &from, const Vector &to, fl
 						if (alongDist > 0.0f)
 						{
 							// ray goes thru 'close'
-							totalSmokedLength += halfSmokedLength + (close - from).Length();						
+							totalSmokedLength += halfSmokedLength + (close - from).Length();
 						}
 						else
 						{
 							// ray starts after 'close'
-							totalSmokedLength += halfSmokedLength - (close - from).Length();						
+							totalSmokedLength += halfSmokedLength - (close - from).Length();
 						}
 
 					}
@@ -345,7 +345,7 @@ bool CBotManager::IsLineBlockedBySmoke( const Vector &from, const Vector &to, fl
 					if (DotProduct( v, sightDir ) > 0.0f)
 					{
 						// ray goes thru 'close'
-						totalSmokedLength += halfSmokedLength + (close - to).Length();					
+						totalSmokedLength += halfSmokedLength + (close - to).Length();
 					}
 					else
 					{
@@ -354,7 +354,7 @@ bool CBotManager::IsLineBlockedBySmoke( const Vector &from, const Vector &to, fl
 					}
 				}
 				else
-				{			
+				{
 					// 'from' and 'to' lie outside of the cloud - the line of sight completely crosses it
 					// determine the length of the chord that crosses the cloud
 					float smokedLength = 2.0f * (float)sqrt( smokeRadiusSq - lengthSq );

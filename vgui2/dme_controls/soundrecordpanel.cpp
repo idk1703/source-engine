@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -30,7 +30,7 @@ using namespace vgui;
 // Sound Record Dialog
 //
 //-----------------------------------------------------------------------------
-CSoundRecordPanel::CSoundRecordPanel( vgui::Panel *pParent, const char *pTitle ) : 
+CSoundRecordPanel::CSoundRecordPanel( vgui::Panel *pParent, const char *pTitle ) :
 	BaseClass( pParent, "SoundRecordPanel" )
 {
 	m_bIsRecording = false;
@@ -91,7 +91,7 @@ void CSoundRecordPanel::DoModal( const char *pFileName )
 	if ( bBadDirectory )
 	{
 		char pBuf[1024];
-		Q_snprintf( pBuf, sizeof(pBuf), "File %s is in a bad directory!\nAudio must be recorded into your mod's sound/ directory.\n", pFileName ); 
+		Q_snprintf( pBuf, sizeof(pBuf), "File %s is in a bad directory!\nAudio must be recorded into your mod's sound/ directory.\n", pFileName );
 		vgui::MessageBox *pMessageBox = new vgui::MessageBox( "Bad Save Directory!\n", pBuf, GetParent() );
 		pMessageBox->DoModal( );
 		return;
@@ -123,7 +123,7 @@ void CSoundRecordPanel::StopSoundPreview( )
 void CSoundRecordPanel::PlaySoundPreview( )
 {
 	StopSoundPreview();
-	m_nPlayingSound = EngineTool()->StartSound( 0, true, -1, CHAN_STATIC, m_EngineFileName, 
+	m_nPlayingSound = EngineTool()->StartSound( 0, true, -1, CHAN_STATIC, m_EngineFileName,
 		VOL_NORM, SNDLVL_NONE, vec3_origin, vec3_origin, 0, PITCH_NORM, false, 0 );
 }
 
@@ -132,7 +132,7 @@ void CSoundRecordPanel::PlaySoundPreview( )
 // Updates sound record time during recording
 //-----------------------------------------------------------------------------
 void CSoundRecordPanel::UpdateTimeRecorded()
-{ 
+{
 	float flTime = Plat_FloatTime() - m_flRecordStartTime;
 	char pTimeBuf[64];
 	Q_snprintf( pTimeBuf, sizeof(pTimeBuf), "%.3f", flTime );
@@ -151,7 +151,7 @@ void CSoundRecordPanel::OnTick()
 	UpdateTimeRecorded();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // On command
 //-----------------------------------------------------------------------------
@@ -169,7 +169,7 @@ void CSoundRecordPanel::OnCommand( const char *pCommand )
 			m_pOkButton->SetEnabled( false );
 			m_pCancelButton->SetEnabled( true );
 			m_flRecordStartTime = Plat_FloatTime();
-			vgui::ivgui()->AddTickSignal( GetVPanel(), 0 );	
+			vgui::ivgui()->AddTickSignal( GetVPanel(), 0 );
 		}
 		else
 		{
@@ -208,5 +208,3 @@ void CSoundRecordPanel::OnCommand( const char *pCommand )
 
 	BaseClass::OnCommand( pCommand );
 }
-
-	

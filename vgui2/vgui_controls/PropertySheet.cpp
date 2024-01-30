@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -87,7 +87,7 @@ private:
 
 //-----------------------------------------------------------------------------
 // Purpose: Helper for drag drop
-// Input  : msglist - 
+// Input  : msglist -
 // Output : static PropertySheet
 //-----------------------------------------------------------------------------
 static PropertySheet *IsDroppingSheet( CUtlVector< KeyValues * >& msglist )
@@ -128,7 +128,7 @@ private:
 	long			m_dropHoverTime;
 
 public:
-	PageTab(PropertySheet *parent, const char *panelName, const char *text, char const *imageName, int maxTabWidth, Panel *page, bool showContextButton, long hoverActivatePageTime = -1 ) : 
+	PageTab(PropertySheet *parent, const char *panelName, const char *text, char const *imageName, int maxTabWidth, Panel *page, bool showContextButton, long hoverActivatePageTime = -1 ) :
 		Button( (Panel *)parent, panelName, text),
 		m_pParent( parent ),
 		m_pPage( page ),
@@ -261,7 +261,7 @@ public:
 			if ( msglist.Count() == 1 )
 			{
 				KeyValues *data = msglist[ 0 ];
-                int screenx = data->GetInt( "screenx" );
+				int screenx = data->GetInt( "screenx" );
 				int screeny = data->GetInt( "screeny" );
 
 				// m_pParent->ScreenToLocal( screenx, screeny );
@@ -272,7 +272,7 @@ public:
 					char const *title = data->GetString( "tabname", "" );
 					if ( !page || !sheet )
 						return;
-					
+
 					// Can only create if sheet was part of a ToolWindow derived object
 					ToolWindow *tw = dynamic_cast< ToolWindow * >( sheet->GetParent() );
 					if ( tw )
@@ -374,7 +374,7 @@ public:
 			PostActionSignal( kv );
 			return;
 		}
-		BaseClass::OnCommand( cmd );		
+		BaseClass::OnCommand( cmd );
 	}
 
 	IBorder *GetBorder(bool depressed, bool armed, bool selected, bool keyfocus)
@@ -412,21 +412,21 @@ public:
 		InvalidateLayout();
 	}
 
-    virtual bool CanBeDefaultButton(void)
-    {
-        return false;
-    }
+	virtual bool CanBeDefaultButton(void)
+	{
+		return false;
+	}
 
 	//Fire action signal when mouse is pressed down instead  of on release.
-	virtual void OnMousePressed(MouseCode code) 
+	virtual void OnMousePressed(MouseCode code)
 	{
 		// check for context menu open
 		if (!IsEnabled())
 			return;
-		
+
 		if (!IsMouseClickEnabled(code))
 			return;
-		
+
 		if (IsUseCaptureMouseEnabled())
 		{
 			{
@@ -435,7 +435,7 @@ public:
 				SetSelected(true);
 				Repaint();
 			}
-			
+
 			// lock mouse input to going to this button
 			input()->SetMouseCapture(GetVPanel());
 		}
@@ -482,8 +482,8 @@ public:
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
 PropertySheet::PropertySheet(
-	Panel *parent, 
-	const char *panelName, 
+	Panel *parent,
+	const char *panelName,
 	bool draggableTabs /*= false*/ ) : BaseClass(parent, panelName)
 {
 	_activePage = NULL;
@@ -492,14 +492,14 @@ PropertySheet::PropertySheet(
 	_activeTabIndex = 0;
 	_showTabs = true;
 	_combo = NULL;
-    _tabFocus = false;
+	_tabFocus = false;
 	m_flPageTransitionEffectTime = 0.0f;
 	m_bSmallTabs = false;
 	m_tabFont = 0;
 	m_bDraggableTabs = draggableTabs;
 	m_pTabKV = NULL;
 	m_iTabHeight = 0;
-    m_iTabHeightSmall = 0;
+	m_iTabHeightSmall = 0;
 
 	if ( m_bDraggableTabs )
 	{
@@ -521,14 +521,14 @@ PropertySheet::PropertySheet(Panel *parent, const char *panelName, ComboBox *com
 	_combo=combo;
 	_combo->AddActionSignalTarget(this);
 	_showTabs = false;
-    _tabFocus = false;
+	_tabFocus = false;
 	m_flPageTransitionEffectTime = 0.0f;
 	m_bSmallTabs = false;
 	m_tabFont = 0;
 	m_bDraggableTabs = false;
 	m_pTabKV = NULL;
 	m_iTabHeight = 0;
-    m_iTabHeightSmall = 0;
+	m_iTabHeightSmall = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -540,7 +540,7 @@ PropertySheet::~PropertySheet()
 
 //-----------------------------------------------------------------------------
 // Purpose: ToolWindow uses this to drag tools from container to container by dragging the tab
-// Input  :  - 
+// Input  :  -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool PropertySheet::IsDraggableTab() const
@@ -555,7 +555,7 @@ void PropertySheet::SetDraggableTabs( bool state )
 
 //-----------------------------------------------------------------------------
 // Purpose: Lower profile tabs
-// Input  : state - 
+// Input  : state -
 //-----------------------------------------------------------------------------
 void PropertySheet::SetSmallTabs( bool state )
 {
@@ -571,8 +571,8 @@ void PropertySheet::SetSmallTabs( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool PropertySheet::IsSmallTabs() const
@@ -581,8 +581,8 @@ bool PropertySheet::IsSmallTabs() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : state - 
+// Purpose:
+// Input  : state -
 //-----------------------------------------------------------------------------
 void PropertySheet::ShowContextButtons( bool state )
 {
@@ -590,8 +590,8 @@ void PropertySheet::ShowContextButtons( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool PropertySheet::ShouldShowContextButtons() const
@@ -650,7 +650,7 @@ void PropertySheet::AddPage(Panel *page, const char *title, char const *imageNam
 	Page_t info;
 	info.page = page;
 	info.contextMenu = m_bContextButton && bHasContextMenu;
-	
+
 	m_Pages.AddToTail( info );
 
 	page->SetParent(this);
@@ -673,7 +673,7 @@ void PropertySheet::AddPage(Panel *page, const char *title, char const *imageNam
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PropertySheet::SetActivePage(Panel *page)
 {
@@ -686,7 +686,7 @@ void PropertySheet::SetActivePage(Panel *page)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PropertySheet::SetTabWidth(int pixels)
 {
@@ -756,7 +756,7 @@ int PropertySheet::GetNumPages()
 
 //-----------------------------------------------------------------------------
 // Purpose: returns the name contained in the active tab
-// Input  : a text buffer to contain the output 
+// Input  : a text buffer to contain the output
 //-----------------------------------------------------------------------------
 void PropertySheet::GetActiveTabTitle (char *textOut, int bufferLen )
 {
@@ -765,11 +765,11 @@ void PropertySheet::GetActiveTabTitle (char *textOut, int bufferLen )
 
 //-----------------------------------------------------------------------------
 // Purpose: returns the name contained in the active tab
-// Input  : a text buffer to contain the output 
+// Input  : a text buffer to contain the output
 //-----------------------------------------------------------------------------
 bool PropertySheet::GetTabTitle( int i, char *textOut, int bufferLen )
 {
-	if ( i < 0 || i >= m_PageTabs.Count() ) 
+	if ( i < 0 || i >= m_PageTabs.Count() )
 	{
 		return false;
 	}
@@ -780,7 +780,7 @@ bool PropertySheet::GetTabTitle( int i, char *textOut, int bufferLen )
 
 bool PropertySheet::SetTabTitle( int i, char *pchTitle )
 {
-	if ( i < 0 || i >= m_PageTabs.Count() ) 
+	if ( i < 0 || i >= m_PageTabs.Count() )
 	{
 		return false;
 	}
@@ -796,7 +796,7 @@ int PropertySheet::GetActivePageNum()
 {
 	for (int i = 0; i < m_Pages.Count(); i++)
 	{
-		if (m_Pages[i].page == _activePage) 
+		if (m_Pages[i].page == _activePage)
 		{
 			return i;
 		}
@@ -809,27 +809,27 @@ int PropertySheet::GetActivePageNum()
 //-----------------------------------------------------------------------------
 void PropertySheet::RequestFocus(int direction)
 {
-    if (direction == -1 || direction == 0)
-    {
-    	if (_activePage)
-    	{
-    		_activePage->RequestFocus(direction);
-            _tabFocus = false;
-    	}
-    }
-    else 
-    {
-        if (_showTabs && _activeTab)
-        {
-            _activeTab->RequestFocus(direction);
-            _tabFocus = true;
-        }
+	if (direction == -1 || direction == 0)
+	{
+		if (_activePage)
+		{
+			_activePage->RequestFocus(direction);
+			_tabFocus = false;
+		}
+	}
+	else
+	{
+		if (_showTabs && _activeTab)
+		{
+			_activeTab->RequestFocus(direction);
+			_tabFocus = true;
+		}
 		else if (_activePage)
-    	{
-    		_activePage->RequestFocus(direction);
-            _tabFocus = false;
-    	}
-    }
+		{
+			_activePage->RequestFocus(direction);
+			_tabFocus = false;
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -837,21 +837,21 @@ void PropertySheet::RequestFocus(int direction)
 //-----------------------------------------------------------------------------
 bool PropertySheet::RequestFocusPrev(VPANEL panel)
 {
-    if (_tabFocus || !_showTabs || !_activeTab)
-    {
-        _tabFocus = false;
-        return BaseClass::RequestFocusPrev(panel);
-    }
-    else
-    {
-        if (GetVParent())
-        {
-            PostMessage(GetVParent(), new KeyValues("FindDefaultButton"));
-        }
-        _activeTab->RequestFocus(-1);
-        _tabFocus = true;
-        return true;
-    }
+	if (_tabFocus || !_showTabs || !_activeTab)
+	{
+		_tabFocus = false;
+		return BaseClass::RequestFocusPrev(panel);
+	}
+	else
+	{
+		if (GetVParent())
+		{
+			PostMessage(GetVParent(), new KeyValues("FindDefaultButton"));
+		}
+		_activeTab->RequestFocus(-1);
+		_tabFocus = true;
+		return true;
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -859,23 +859,23 @@ bool PropertySheet::RequestFocusPrev(VPANEL panel)
 //-----------------------------------------------------------------------------
 bool PropertySheet::RequestFocusNext(VPANEL panel)
 {
-    if (!_tabFocus || !_activePage)
-    {
-        return BaseClass::RequestFocusNext(panel);
-    }
-    else
-    {
-        if (!_activeTab)
-        {
-            return BaseClass::RequestFocusNext(panel);
-        }
-        else
-        {
-            _activePage->RequestFocus(1);
-            _tabFocus = false;
-            return true;
-        }
-    }
+	if (!_tabFocus || !_activePage)
+	{
+		return BaseClass::RequestFocusNext(panel);
+	}
+	else
+	{
+		if (!_activeTab)
+		{
+			return BaseClass::RequestFocusNext(panel);
+		}
+		else
+		{
+			_activePage->RequestFocus(1);
+			_tabFocus = false;
+			return true;
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -910,7 +910,7 @@ void PropertySheet::ApplySchemeSettings(IScheme *pScheme)
 	//=============================================================================
 	// HPE_BEGIN:
 	// [tj] Here, we used to use a single size variable and overwrite it when we scaled.
-	//		This led to problems when we changes resolutions, so now we recalcuate the absolute 
+	//		This led to problems when we changes resolutions, so now we recalcuate the absolute
 	//      size from the relative size each time (based on proportionality)
 	//=============================================================================
 	if ( IsProportional() )
@@ -929,7 +929,7 @@ void PropertySheet::ApplySchemeSettings(IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PropertySheet::ApplySettings(KeyValues *inResourceData)
 {
@@ -1010,7 +1010,7 @@ void PropertySheet::PerformLayout()
 		_activePage->InvalidateLayout();
 	}
 
-	
+
 	int xtab;
 	int limit = m_PageTabs.Count();
 
@@ -1023,7 +1023,7 @@ void PropertySheet::PerformLayout()
 		{
 			int tabHeight = IsSmallTabs() ? (m_iTabHeightSmall-1) : (m_iTabHeight-1);
 
-            m_PageTabs[i]->GetSize(wide, tall);
+			m_PageTabs[i]->GetSize(wide, tall);
 
 			if ( m_bTabFitText )
 			{
@@ -1088,11 +1088,11 @@ void PropertySheet::OnTabPressed(Panel *panel)
 
 //-----------------------------------------------------------------------------
 // Purpose: returns the panel associated with index i
-// Input  : the index of the panel to return 
+// Input  : the index of the panel to return
 //-----------------------------------------------------------------------------
-Panel *PropertySheet::GetPage(int i) 
+Panel *PropertySheet::GetPage(int i)
 {
-	if(i<0 || i>=m_Pages.Count()) 
+	if(i<0 || i>=m_Pages.Count())
 	{
 		return NULL;
 	}
@@ -1104,7 +1104,7 @@ Panel *PropertySheet::GetPage(int i)
 //-----------------------------------------------------------------------------
 // Purpose: disables page by name
 //-----------------------------------------------------------------------------
-void PropertySheet::DisablePage(const char *title) 
+void PropertySheet::DisablePage(const char *title)
 {
 	SetPageEnabled(title, false);
 }
@@ -1112,7 +1112,7 @@ void PropertySheet::DisablePage(const char *title)
 //-----------------------------------------------------------------------------
 // Purpose: enables page by name
 //-----------------------------------------------------------------------------
-void PropertySheet::EnablePage(const char *title) 
+void PropertySheet::EnablePage(const char *title)
 {
 	SetPageEnabled(title, true);
 }
@@ -1120,7 +1120,7 @@ void PropertySheet::EnablePage(const char *title)
 //-----------------------------------------------------------------------------
 // Purpose: enabled or disables page by name
 //-----------------------------------------------------------------------------
-void PropertySheet::SetPageEnabled(const char *title, bool state) 
+void PropertySheet::SetPageEnabled(const char *title, bool state)
 {
 	for (int i = 0; i < m_PageTabs.Count(); i++)
 	{
@@ -1129,7 +1129,7 @@ void PropertySheet::SetPageEnabled(const char *title, bool state)
 			char tmp[50];
 			m_PageTabs[i]->GetText(tmp,50);
 			if (!strnicmp(title,tmp,strlen(tmp)))
-			{	
+			{
 				m_PageTabs[i]->SetEnabled(state);
 			}
 		}
@@ -1162,7 +1162,7 @@ void PropertySheet::DeleteAllPages()
 // Purpose: deletes the page associated with panel
 // Input  : *panel - the panel of the page to remove
 //-----------------------------------------------------------------------------
-void PropertySheet::RemovePage(Panel *panel) 
+void PropertySheet::RemovePage(Panel *panel)
 {
 	int location = FindPage( panel );
 	if ( location == m_Pages.InvalidIndex() )
@@ -1181,18 +1181,18 @@ void PropertySheet::RemovePage(Panel *panel)
 	PageTab *tab  = m_PageTabs[ location ];
 	m_PageTabs.Remove( location );
 	tab->MarkForDeletion();
-	
+
 	// Remove from page list
 	m_Pages.Remove( location );
 
 	// Unparent
 	panel->SetParent( (Panel *)NULL );
 
-	if ( _activePage == panel ) 
+	if ( _activePage == panel )
 	{
 		_activePage = NULL;
 		// if this page is currently active, backup to the page before this.
-		ChangeActiveTab( max( location - 1, 0 ) ); 
+		ChangeActiveTab( max( location - 1, 0 ) );
 	}
 
 	PerformLayout();
@@ -1202,7 +1202,7 @@ void PropertySheet::RemovePage(Panel *panel)
 // Purpose: deletes the page associated with panel
 // Input  : *panel - the panel of the page to remove
 //-----------------------------------------------------------------------------
-void PropertySheet::DeletePage(Panel *panel) 
+void PropertySheet::DeletePage(Panel *panel)
 {
 	Assert( panel );
 	RemovePage( panel );
@@ -1279,7 +1279,7 @@ void PropertySheet::ChangeActiveTab( int index )
 
 	_activePage->SetVisible(true);
 	_activePage->MoveToFront();
-	
+
 	_activeTab->SetVisible(true);
 	_activeTab->MoveToFront();
 	_activeTab->SetActive(true);
@@ -1356,7 +1356,7 @@ Panel *PropertySheet::HasHotkey(wchar_t key)
 			return hot;
 		}
 	}
-	
+
 	return NULL;
 }
 
@@ -1383,7 +1383,7 @@ void PropertySheet::OnKeyCodePressed(KeyCode code)
 	bool shift = (input()->IsKeyDown(KEY_LSHIFT) || input()->IsKeyDown(KEY_RSHIFT));
 	bool ctrl = (input()->IsKeyDown(KEY_LCONTROL) || input()->IsKeyDown(KEY_RCONTROL));
 	bool alt = (input()->IsKeyDown(KEY_LALT) || input()->IsKeyDown(KEY_RALT));
-	
+
 	if ( ctrl && shift && alt && code == KEY_B )
 	{
 		// enable build mode
@@ -1452,28 +1452,28 @@ void PropertySheet::OnTextChanged(Panel *panel,const wchar_t *wszText)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PropertySheet::OnCommand(const char *command)
 {
-    // propogate the close command to our parent
+	// propogate the close command to our parent
 	if (!stricmp(command, "Close") && GetVParent())
-    {
+	{
 		CallParentFunction(new KeyValues("Command", "command", command));
-    }
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PropertySheet::OnApplyButtonEnable()
 {
 	// tell parent
-	PostActionSignal(new KeyValues("ApplyButtonEnable"));	
+	PostActionSignal(new KeyValues("ApplyButtonEnable"));
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PropertySheet::OnCurrentDefaultButtonSet( vgui::VPANEL defaultButton )
 {
@@ -1487,7 +1487,7 @@ void PropertySheet::OnCurrentDefaultButtonSet( vgui::VPANEL defaultButton )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PropertySheet::OnDefaultButtonSet( VPANEL defaultButton )
 {
@@ -1501,14 +1501,14 @@ void PropertySheet::OnDefaultButtonSet( VPANEL defaultButton )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PropertySheet::OnFindDefaultButton()
 {
-    if (GetVParent())
-    {
-        PostMessage(GetVParent(), new KeyValues("FindDefaultButton"));
-    }
+	if (GetVParent())
+	{
+		PostMessage(GetVParent(), new KeyValues("FindDefaultButton"));
+	}
 }
 
 bool PropertySheet::PageHasContextMenu( Panel *page ) const
@@ -1656,8 +1656,8 @@ void PropertySheet::OnDroppablePanelPaint( CUtlVector< KeyValues * >& msglist, C
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : state - 
+// Purpose:
+// Input  : state -
 //-----------------------------------------------------------------------------
 void PropertySheet::SetKBNavigationEnabled( bool state )
 {
@@ -1665,8 +1665,8 @@ void PropertySheet::SetKBNavigationEnabled( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool PropertySheet::IsKBNavigationEnabled() const

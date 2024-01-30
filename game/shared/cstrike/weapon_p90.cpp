@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,9 +24,9 @@ class CWeaponP90 : public CWeaponCSBaseGun
 {
 public:
 	DECLARE_CLASS( CWeaponP90, CWeaponCSBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponP90();
 
 	virtual void PrimaryAttack();
@@ -64,7 +64,7 @@ float CWeaponP90::GetInaccuracy() const
 		CCSPlayer *pPlayer = GetPlayerOwner();
 		if ( !pPlayer )
 			return 0.0f;
-	
+
 		if ( !FBitSet( pPlayer->GetFlags(), FL_ONGROUND ) )
 			return 0.3f * m_flAccuracy;
 		else if (pPlayer->GetAbsVelocity().Length2D() > 170)
@@ -81,7 +81,7 @@ void CWeaponP90::PrimaryAttack()
 	CCSPlayer *pPlayer = GetPlayerOwner();
 	if ( !pPlayer )
 		return;
-	
+
 	if ( !CSBaseGunFire( GetCSWpnData().m_flCycleTime, Primary_Mode ) )
 		return;
 

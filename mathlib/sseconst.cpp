@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -64,14 +64,14 @@ const uint32 ALIGN16 g_SIMD_SkipTailMask[4][4] ALIGN16_POST =
 // Generally speaking, you want to make sure SIMD math functions
 // are inlined, because that gives the compiler much more latitude
 // in instruction scheduling. It's not that the overhead of calling
-// the function is particularly great; rather, many of the SIMD 
-// opcodes have long latencies, and if you have a sequence of 
-// several dependent ones inside a function call, the latencies 
+// the function is particularly great; rather, many of the SIMD
+// opcodes have long latencies, and if you have a sequence of
+// several dependent ones inside a function call, the latencies
 // stack up to create a big penalty. If the function is inlined,
 // the compiler can interleave its operations with ones from the
 // caller to better hide those latencies. Finally, on the 360,
-// putting parameters or return values on the stack, and then 
-// reading them back within the next forty cycles, is a very 
+// putting parameters or return values on the stack, and then
+// reading them back within the next forty cycles, is a very
 // severe penalty. So, as much as possible, you want to leave your
 // data on the registers.
 
@@ -94,14 +94,14 @@ void FourVectors::RotateManyBy(FourVectors * RESTRICT pVectors, unsigned int num
 
 	// Splat out each of the entries in the matrix to a fltx4. Do this
 	// in the order that we will need them, to hide latency. I'm
-	// avoiding making an array of them, so that they'll remain in 
+	// avoiding making an array of them, so that they'll remain in
 	// registers.
 	fltx4 matSplat00, matSplat01, matSplat02,
 		matSplat10, matSplat11, matSplat12,
 		matSplat20, matSplat21, matSplat22;
 
 	{
-		// Load the matrix into local vectors. Sadly, matrix3x4_ts are 
+		// Load the matrix into local vectors. Sadly, matrix3x4_ts are
 		// often unaligned. The w components will be the tranpose row of
 		// the matrix, but we don't really care about that.
 		fltx4 matCol0 = LoadUnalignedSIMD(rotationMatrix[0]);
@@ -126,10 +126,10 @@ void FourVectors::RotateManyBy(FourVectors * RESTRICT pVectors, unsigned int num
 	// and simplify prefetching. Named variables are deliberately used instead of arrays to
 	// ensure that the variables live on the registers instead of the stack (stack load/store
 	// is a serious penalty on 360).  Nb: for prefetching to be most efficient here, the
-	// loop should be unrolled to 8 FourVectors per iteration; because each FourVectors is 
-	// 48 bytes long, 48 * 8 = 384, its least common multiple with the 128-byte cache line. 
-	// That way you can fetch the next 3 cache lines while you work on these three. 
-	// If you do go this route, be sure to dissassemble and make sure it doesn't spill 
+	// loop should be unrolled to 8 FourVectors per iteration; because each FourVectors is
+	// 48 bytes long, 48 * 8 = 384, its least common multiple with the 128-byte cache line.
+	// That way you can fetch the next 3 cache lines while you work on these three.
+	// If you do go this route, be sure to dissassemble and make sure it doesn't spill
 	// registers to stack as you do this; the cost of that will be excessive. Unroll the loop
 	// a little and just live with the fact that you'll be doing a couple of redundant dbcts
 	// (they don't cost you anything). Be aware that all three cores share L2 and it can only
@@ -154,7 +154,7 @@ void FourVectors::RotateManyBy(FourVectors * RESTRICT pVectors, unsigned int num
 	}
 	else
 	{
-		// even number of total vectors to process; 
+		// even number of total vectors to process;
 		// prime the zero group and jump into the middle of the loop
 		outX0 = AddSIMD( AddSIMD( MulSIMD( pVectors->x, matSplat00 ), MulSIMD( pVectors->y, matSplat01 ) ), MulSIMD( pVectors->z, matSplat02 ) );
 		outY0 = AddSIMD( AddSIMD( MulSIMD( pVectors->x, matSplat10 ), MulSIMD( pVectors->y, matSplat11 ) ), MulSIMD( pVectors->z, matSplat12 ) );
@@ -228,14 +228,14 @@ void FourVectors_TransformManyGroupsOfEightBy(FourVectors * RESTRICT pVectors, u
 
 	// Splat out each of the entries in the matrix to a fltx4. Do this
 	// in the order that we will need them, to hide latency. I'm
-	// avoiding making an array of them, so that they'll remain in 
+	// avoiding making an array of them, so that they'll remain in
 	// registers.
 	fltx4 matSplat00, matSplat01, matSplat02, matSplat03,	// TWELVE REGISTERS
 		  matSplat10, matSplat11, matSplat12, matSplat13,
 		  matSplat20, matSplat21, matSplat22, matSplat23;
 
 	{
-		// Load the matrix into local vectors. Sadly, matrix3x4_ts are 
+		// Load the matrix into local vectors. Sadly, matrix3x4_ts are
 		// often unaligned. The w components will be the tranpose row of
 		// the matrix.
 		fltx4 matCol0 = LoadUnalignedSIMD(rotationMatrix[0]);
@@ -263,7 +263,7 @@ void FourVectors_TransformManyGroupsOfEightBy(FourVectors * RESTRICT pVectors, u
 #define WRITE(term, reg, toptr) toptr->term = reg
 
 	// define result groups (we're going to have an eight-way unroll)
-	
+
 	fltx4 res0X, res0Y, res0Z, res0XTemp, res0YTemp, res0ZTemp;	// 48 REGISTERS
 	fltx4 res1X, res1Y, res1Z, res1XTemp, res1YTemp, res1ZTemp;
 	fltx4 res2X, res2Y, res2Z, res2XTemp, res2YTemp, res2ZTemp;
@@ -272,7 +272,7 @@ void FourVectors_TransformManyGroupsOfEightBy(FourVectors * RESTRICT pVectors, u
 	fltx4 res5X, res5Y, res5Z, res5XTemp, res5YTemp, res5ZTemp;
 	fltx4 res6X, res6Y, res6Z, res6XTemp, res6YTemp, res6ZTemp;
 	fltx4 res7X, res7Y, res7Z, res7XTemp, res7YTemp, res7ZTemp;
-	
+
 
 // #define FROZ(out,in,offset) COMPUTE((out+offset)->x, (in + offset), matSplat00, matSplat01, matSplat02, matSplat03); COMPUTE((out + offset )->y, (in + offset), matSplat10, matSplat11, matSplat12, matSplat13); COMPUTE((out + offset)->z, (in + offset), matSplat20, matSplat21, matSplat22, matSplat23)
 #define COMPUTE_GROUP(resgroup,dataptr) COMPUTE(resgroup ## X, (dataptr), matSplat00, matSplat01, matSplat02, matSplat03); COMPUTE(resgroup ## Y, (dataptr), matSplat10, matSplat11, matSplat12, matSplat13); COMPUTE(resgroup ## Z, (dataptr), matSplat20, matSplat21, matSplat22, matSplat23)
@@ -313,7 +313,7 @@ void FourVectors_TransformManyGroupsOfEightBy(FourVectors * RESTRICT pVectors, u
 	// Note: this loop, while pretty fast, could be faster still -- you'll notice
 	// that it does all of its loads, then all computation, then writes everything
 	// out. If made truly cyclic, such that every line interleaved a stage 1, stage 2,
-	// stage 3, and write, then throughput could be higher (probably by about 50%). 
+	// stage 3, and write, then throughput could be higher (probably by about 50%).
 	while (inData < STOP)
 	{
 		// start prefetching the three cache lines
@@ -354,13 +354,13 @@ void FourVectors_TransformManyGroupsOfEightBy(FourVectors * RESTRICT pVectors, u
 					WRITE_GROUP( outData + 2, res2 );
 				COMPUTE_STAGE3_GROUP(res7, inData + 7);
 					WRITE_GROUP( outData + 3, res3 );
-		
+
 
 					WRITE_GROUP( outData + 4, res4 );
 					WRITE_GROUP( outData + 5, res5 );
 					WRITE_GROUP( outData + 6, res6 );
 					WRITE_GROUP( outData + 7, res7 );
-		
+
 		inData += 8;
 		outData += 8;
 	}
@@ -395,7 +395,7 @@ void FourVectors_TransformManyGroupsOfEightBy_128byteAligned(FourVectors * RESTR
 	AssertMsg((numVectors & 0x07) == 0, "FourVectors_TransformManyGroupsOfEight called with numVectors % 8 != 0!");
 
 	// Assert alignment
-	AssertMsg( ( ( reinterpret_cast<uint32>( pVectors )  & 127 ) == 0) && 
+	AssertMsg( ( ( reinterpret_cast<uint32>( pVectors )  & 127 ) == 0) &&
 			   ( ( reinterpret_cast<uint32>(pOut) & 127 ) == 0),
 			   "FourVectors_Transform..aligned called with non-128-byte-aligned buffers." );
 
@@ -405,11 +405,11 @@ void FourVectors_TransformManyGroupsOfEightBy_128byteAligned(FourVectors * RESTR
 
 		// Here's the plan. 8 four-vecs = 3 cache lines exactly. It takes about 400 cycles to process a group
 		// of eight, and cache latency is 600 cycles, so we try to prefetch two iterations ahead (eg fetch
-		// iteration 3 while working on iteration 1). In the case of the output, we can simply zero-flush 
+		// iteration 3 while working on iteration 1). In the case of the output, we can simply zero-flush
 		// the cache lines since we are sure to write into them. Because we're reading and fetching two ahead,
 		// we want to stop two away from the last iteration.
 
-		// No matter what, we will need to prefetch the first two groups of eight of input (that's the 
+		// No matter what, we will need to prefetch the first two groups of eight of input (that's the
 		// first six cache lines)
 	__dcbt( 0, pVectors );
 	__dcbt( 128, pVectors );
@@ -421,14 +421,14 @@ void FourVectors_TransformManyGroupsOfEightBy_128byteAligned(FourVectors * RESTR
 
 	// Splat out each of the entries in the matrix to a fltx4. Do this
 	// in the order that we will need them, to hide latency. I'm
-	// avoiding making an array of them, so that they'll remain in 
+	// avoiding making an array of them, so that they'll remain in
 	// registers.
 	fltx4 matSplat00, matSplat01, matSplat02, matSplat03,	// TWELVE REGISTERS
 		matSplat10, matSplat11, matSplat12, matSplat13,
 		matSplat20, matSplat21, matSplat22, matSplat23;
 
 	{
-		// Load the matrix into local vectors. Sadly, matrix3x4_ts are 
+		// Load the matrix into local vectors. Sadly, matrix3x4_ts are
 		// often unaligned. The w components will be the tranpose row of
 		// the matrix.
 		fltx4 matCol0 = LoadUnalignedSIMD(rotationMatrix[0]);
@@ -504,7 +504,7 @@ void FourVectors_TransformManyGroupsOfEightBy_128byteAligned(FourVectors * RESTR
 	if (numVectors > 16)
 	{
 		STOP = pVectors + numVectors - 16;
-		// flush the first two blocks we'll write into 
+		// flush the first two blocks we'll write into
 		__dcbz128( 0, outData );
 		__dcbz128( 128, outData );
 		__dcbz128( 256, outData );
@@ -588,11 +588,11 @@ void FourVectors_TransformManyGroupsOfEightBy_128byteAligned(FourVectors * RESTR
 	{
 		AssertMsg(false, "Can't happen!");
 	}
-	
+
 	// deal with the ultimate two groups (or, if we were fed
 	// less than 16 groups, the whole shebang)
 	STOP = pVectors + numVectors - 16;
-	
+
 
 	// Use techniques of loop scheduling to eliminate data hazards; process
 	// eight groups simultaneously so that we never have any operations stalling
@@ -600,7 +600,7 @@ void FourVectors_TransformManyGroupsOfEightBy_128byteAligned(FourVectors * RESTR
 	// Note: this loop, while pretty fast, could be faster still -- you'll notice
 	// that it does all of its loads, then all computation, then writes everything
 	// out. If made truly cyclic, such that every line interleaved a stage 1, stage 2,
-	// stage 3, and write, then throughput could be higher (probably by about 50%). 
+	// stage 3, and write, then throughput could be higher (probably by about 50%).
 	while (inData < STOP)
 	{
 		// synchro
@@ -660,7 +660,7 @@ void FourVectors_TransformManyGroupsOfEightBy_128byteAligned(FourVectors * RESTR
 }
 #endif
 
-// Transform a long array of FourVectors by a given matrix. 
+// Transform a long array of FourVectors by a given matrix.
 void FourVectors::TransformManyBy(FourVectors * RESTRICT pVectors, unsigned int numVectors, const matrix3x4_t& rotationMatrix, FourVectors * RESTRICT pOut )
 {
 	Assert(numVectors > 0);
@@ -695,14 +695,14 @@ void FourVectors::TransformManyBy(FourVectors * RESTRICT pVectors, unsigned int 
 
 		// Splat out each of the entries in the matrix to a fltx4. Do this
 		// in the order that we will need them, to hide latency. I'm
-		// avoiding making an array of them, so that they'll remain in 
+		// avoiding making an array of them, so that they'll remain in
 		// registers.
 		fltx4 matSplat00, matSplat01, matSplat02, matSplat03,	// TWELVE REGISTERS
 			matSplat10, matSplat11, matSplat12, matSplat13,
 			matSplat20, matSplat21, matSplat22, matSplat23;
 
 		{
-			// Load the matrix into local vectors. Sadly, matrix3x4_ts are 
+			// Load the matrix into local vectors. Sadly, matrix3x4_ts are
 			// often unaligned. The w components will be the transpose row of
 			// the matrix.
 			fltx4 matCol0 = LoadUnalignedSIMD(rotationMatrix[0]);
@@ -725,7 +725,7 @@ void FourVectors::TransformManyBy(FourVectors * RESTRICT pVectors, unsigned int 
 			matSplat23 = SplatWSIMD(matCol2);
 		}
 
-		do 
+		do
 		{
 			// Trust in the compiler to schedule these operations correctly:
 			pOut->x = MaddSIMD(pVectors->z, matSplat02, MaddSIMD(pVectors->y, matSplat01, MaddSIMD(pVectors->x, matSplat00, matSplat03)));
@@ -753,14 +753,14 @@ static void FourVectors_TransformManyGroupsOfEightBy_InPlace(FourVectors * RESTR
 
 	// Splat out each of the entries in the matrix to a fltx4. Do this
 	// in the order that we will need them, to hide latency. I'm
-	// avoiding making an array of them, so that they'll remain in 
+	// avoiding making an array of them, so that they'll remain in
 	// registers.
 	fltx4 matSplat00, matSplat01, matSplat02, matSplat03,	// TWELVE REGISTERS
 		matSplat10, matSplat11, matSplat12, matSplat13,
 		matSplat20, matSplat21, matSplat22, matSplat23;
 
 	{
-		// Load the matrix into local vectors. Sadly, matrix3x4_ts are 
+		// Load the matrix into local vectors. Sadly, matrix3x4_ts are
 		// often unaligned. The w components will be the tranpose row of
 		// the matrix.
 		fltx4 matCol0 = LoadUnalignedSIMD(rotationMatrix[0]);
@@ -836,7 +836,7 @@ static void FourVectors_TransformManyGroupsOfEightBy_InPlace(FourVectors * RESTR
 	// Note: this loop, while pretty fast, could be faster still -- you'll notice
 	// that it does all of its loads, then all computation, then writes everything
 	// out. If made truly cyclic, such that every line interleaved a stage 1, stage 2,
-	// stage 3, and write, then throughput could be higher (probably by about 50%). 
+	// stage 3, and write, then throughput could be higher (probably by about 50%).
 	while (pVectors < STOP)
 	{
 		// start prefetching the three cache lines
@@ -901,7 +901,7 @@ static void FourVectors_TransformManyGroupsOfEightBy_InPlace(FourVectors * RESTR
 #endif
 
 // In-place version of above. It's necessary to have this, rather than just allowing pOut and pVectors
-// to equal each other, because of the semantics of RESTRICT: pVectors and pOut must not be allowed 
+// to equal each other, because of the semantics of RESTRICT: pVectors and pOut must not be allowed
 // to alias. (Simply un-restricting the pointers results in very poor scheduling.)
 void FourVectors::TransformManyBy(FourVectors * RESTRICT pVectors, unsigned int numVectors, const matrix3x4_t& rotationMatrix )
 {
@@ -925,14 +925,14 @@ void FourVectors::TransformManyBy(FourVectors * RESTRICT pVectors, unsigned int 
 
 		// Splat out each of the entries in the matrix to a fltx4. Do this
 		// in the order that we will need them, to hide latency. I'm
-		// avoiding making an array of them, so that they'll remain in 
+		// avoiding making an array of them, so that they'll remain in
 		// registers.
 		fltx4 matSplat00, matSplat01, matSplat02, matSplat03,	// TWELVE REGISTERS
 			matSplat10, matSplat11, matSplat12, matSplat13,
 			matSplat20, matSplat21, matSplat22, matSplat23;
 
 		{
-			// Load the matrix into local vectors. Sadly, matrix3x4_ts are 
+			// Load the matrix into local vectors. Sadly, matrix3x4_ts are
 			// often unaligned. The w components will be the transpose row of
 			// the matrix.
 			fltx4 matCol0 = LoadUnalignedSIMD(rotationMatrix[0]);
@@ -955,7 +955,7 @@ void FourVectors::TransformManyBy(FourVectors * RESTRICT pVectors, unsigned int 
 			matSplat23 = SplatWSIMD(matCol2);
 		}
 
-		do 
+		do
 		{
 			fltx4 resultX, resultY, resultZ;
 			// Trust in the compiler to schedule these operations correctly:
@@ -977,9 +977,9 @@ void FourVectors::TransformManyBy(FourVectors * RESTRICT pVectors, unsigned int 
 #endif
 
 // Transform many (horizontal) points in-place by a 3x4 matrix,
-// here already loaded onto three fltx4 registers but not transposed. 
+// here already loaded onto three fltx4 registers but not transposed.
 // The points must be stored as 16-byte aligned. They are points
-// and not vectors because we assume the w-component to be 1. 
+// and not vectors because we assume the w-component to be 1.
 #ifdef _X360
 void TransformManyPointsBy(VectorAligned * RESTRICT pVectors, unsigned int numVectors, FLTX4 mRow0, FLTX4 mRow1, FLTX4 mRow2)
 {
@@ -997,7 +997,7 @@ void TransformManyPointsBy(VectorAligned * RESTRICT pVectors, unsigned int numVe
 	//    C_ASSERT(UnrollCount == 8);
 	//    C_ASSERT(sizeof(XMFLOAT4) == 16);
 	Assert(pVectors);
-	Assert(((UINT_PTR)pVectors & 3) == 0); // assert alignment 
+	Assert(((UINT_PTR)pVectors & 3) == 0); // assert alignment
 
 	UINT GroupIndex;
 
@@ -1007,7 +1007,7 @@ void TransformManyPointsBy(VectorAligned * RESTRICT pVectors, unsigned int numVe
 
 	{
 		// cook up the pointers from integer math. Necessary because otherwise we LHS all over
-		// the place. (Odd that this doesn't happen to the xbox math.) 
+		// the place. (Odd that this doesn't happen to the xbox math.)
 
 		UINT_PTR InputVector = (UINT_PTR)pVectors;
 		UINT_PTR InputStreamEnd = InputVector + numVectors * sizeof(XMFLOAT4);
@@ -1038,7 +1038,7 @@ void TransformManyPointsBy(VectorAligned * RESTRICT pVectors, unsigned int numVe
 		__stvewx(R1[0], vCurrent->Base(), 4);
 		__stvewx(R2[0], vCurrent->Base(), 8);
 
-		vCurrent++; 
+		vCurrent++;
 	}
 
 	while (vCurrent < vStreamGroupEnd)
@@ -1158,7 +1158,7 @@ void TransformManyPointsBy(VectorAligned * RESTRICT pVectors, unsigned int numVe
 
 		vCurrent++;
 	}
-	
+
 
 }
 #endif

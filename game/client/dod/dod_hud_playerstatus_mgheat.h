@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -90,6 +90,6 @@ private:
 	CDoDCutEditablePanel		*m_pBackground;
 	CDoDHudMGHeatIcon			*m_pIcon;
 	CDoDHudMGHeatProgressBar	*m_pProgressBar;
-};	
+};
 
 #endif // DOD_HUD_PLAYERSTATUS_MGHEAT_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -74,9 +74,9 @@ BOOL CModelCheckInDlg::OnInitDialog()
 	//  when the application's main window is not a dialog
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
-	
+
 	// TODO: Add extra initialization here
-	
+
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -84,7 +84,7 @@ BOOL CModelCheckInDlg::OnInitDialog()
 //  to draw the icon.  For MFC applications using the document/view model,
 //  this is automatically done for you by the framework.
 
-void CModelCheckInDlg::OnPaint() 
+void CModelCheckInDlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -140,11 +140,11 @@ void CModelCheckInDlg::ResetDirectoryEntry( CString &fullPath, char *pRegEntry )
 
 void CModelCheckInDlg::StoreStateIntoRegistry( )
 {
-	AfxGetApp()->WriteProfileString( MDL_CHECKOUT_REG_CLASS, 
+	AfxGetApp()->WriteProfileString( MDL_CHECKOUT_REG_CLASS,
 		MDL_CHECKOUT_REG_USER, m_UserName );
-	AfxGetApp()->WriteProfileString( MDL_CHECKOUT_REG_CLASS, 
+	AfxGetApp()->WriteProfileString( MDL_CHECKOUT_REG_CLASS,
 		MDL_CHECKOUT_REG_HL2_PATH, m_HL2GameDirectory );
-	AfxGetApp()->WriteProfileString( MDL_CHECKOUT_REG_CLASS, 
+	AfxGetApp()->WriteProfileString( MDL_CHECKOUT_REG_CLASS,
 		MDL_CHECKOUT_REG_TF2_PATH, m_TF2GameDirectory );
 }
 
@@ -155,11 +155,11 @@ void CModelCheckInDlg::StoreStateIntoRegistry( )
 
 void CModelCheckInDlg::RestoreStateFromRegistry( )
 {
-	m_UserName = AfxGetApp()->GetProfileString( MDL_CHECKOUT_REG_CLASS, 
+	m_UserName = AfxGetApp()->GetProfileString( MDL_CHECKOUT_REG_CLASS,
 		MDL_CHECKOUT_REG_USER, "" );
-	m_HL2GameDirectory = AfxGetApp()->GetProfileString( MDL_CHECKOUT_REG_CLASS, 
+	m_HL2GameDirectory = AfxGetApp()->GetProfileString( MDL_CHECKOUT_REG_CLASS,
 		MDL_CHECKOUT_REG_HL2_PATH, "u:/hl2/hl2" );
-	m_TF2GameDirectory = AfxGetApp()->GetProfileString( MDL_CHECKOUT_REG_CLASS, 
+	m_TF2GameDirectory = AfxGetApp()->GetProfileString( MDL_CHECKOUT_REG_CLASS,
 		MDL_CHECKOUT_REG_TF2_PATH, "u:/hl2/tf2" );
 }
 
@@ -168,7 +168,7 @@ void CModelCheckInDlg::RestoreStateFromRegistry( )
 // Extensions of all files related to the model file
 //-----------------------------------------------------------------------------
 
-static char* s_ppExtensions[] = 
+static char* s_ppExtensions[] =
 {
 	".dx7_2bone.vtx",
 	".dx80.vtx",
@@ -178,7 +178,7 @@ static char* s_ppExtensions[] =
 };
 
 
-static char* s_ppProjectDir[] = 
+static char* s_ppProjectDir[] =
 {
 	"$/HL2/release/dev/hl2/",
 	"$/TF2/release/dev/tf2/"
@@ -188,7 +188,7 @@ static char* s_ppProjectDir[] =
 // Checks it out/ checks it in baby
 //-----------------------------------------------------------------------------
 
-void CModelCheckInDlg::PerformCheckoutCommand( ProjectType_t project, 
+void CModelCheckInDlg::PerformCheckoutCommand( ProjectType_t project,
 	char const* pRelativeDir, char const* pDestPath, char const* pFileName )
 {
 	char error[1024];
@@ -213,14 +213,14 @@ void CModelCheckInDlg::PerformCheckoutCommand( ProjectType_t project,
 		retVal = system( buf );
 		if (retVal > 0)
 		{
-			len += sprintf( &error[len], "*** SourceSafe error attempting to check out \"%s%s\"\n", 
+			len += sprintf( &error[len], "*** SourceSafe error attempting to check out \"%s%s\"\n",
 				pFileName, s_ppExtensions[currExtension] );
 		}
 	}
 
 	if (len > 0)
 	{
-		MessageBox( error, "Error!" );					
+		MessageBox( error, "Error!" );
 	}
 }
 
@@ -228,7 +228,7 @@ void CModelCheckInDlg::PerformCheckoutCommand( ProjectType_t project,
 // Checks it out/ checks it in baby
 //-----------------------------------------------------------------------------
 
-void CModelCheckInDlg::PerformCheckinCommand( ProjectType_t project, 
+void CModelCheckInDlg::PerformCheckinCommand( ProjectType_t project,
 	char const* pRelativeDir, char const* pDestPath, char const* pFileName )
 {
 	char buf[1024];
@@ -259,7 +259,7 @@ void CModelCheckInDlg::PerformCheckinCommand( ProjectType_t project,
 			int retVal = system( buf );
 			if (retVal > 0)
 			{
-				len += sprintf( &error[len], "SourceSafe error attempting to add \"%s%s\"\n", 
+				len += sprintf( &error[len], "SourceSafe error attempting to add \"%s%s\"\n",
 					pFileName, s_ppExtensions[currExtension] );
 			}
 		}
@@ -272,7 +272,7 @@ void CModelCheckInDlg::PerformCheckinCommand( ProjectType_t project,
 			retVal = system( buf );
 			if (retVal > 0)
 			{
-				len += sprintf( &error[len], "SourceSafe error attempting to check in \"%s%s\"\n", 
+				len += sprintf( &error[len], "SourceSafe error attempting to check in \"%s%s\"\n",
 					pFileName, s_ppExtensions[currExtension] );
 			}
 		}
@@ -280,7 +280,7 @@ void CModelCheckInDlg::PerformCheckinCommand( ProjectType_t project,
 
 	if (len > 0)
 	{
-		MessageBox( error, "Error!" );					
+		MessageBox( error, "Error!" );
 	}
 }
 
@@ -296,7 +296,7 @@ static int FixupFileName( char const* pInFile, char* pOutBuf )
 		return 0;
 	}
 
-	int len = strlen(pInFile); 
+	int len = strlen(pInFile);
 	for (int i = 0; i <= len; ++i)
 	{
 		pOutBuf[i] = tolower( pInFile[i] );
@@ -353,7 +353,7 @@ CModelCheckInDlg::ProjectType_t CModelCheckInDlg::ComputeRelativeFileName( char 
 // Have we typed in anything for our user name?
 //-----------------------------------------------------------------------------
 
-bool CModelCheckInDlg::CheckInfo() 
+bool CModelCheckInDlg::CheckInfo()
 {
 	if (m_UserName.IsEmpty())
 	{
@@ -375,8 +375,8 @@ bool CModelCheckInDlg::CheckInfo()
 // Resets our last used directory
 //-----------------------------------------------------------------------------
 
-CModelCheckInDlg::ProjectType_t CModelCheckInDlg::GetFileNames( char const* pTitle, 
-					char*& pRelativePath, char*& pFileName, char*& pDestPath ) 
+CModelCheckInDlg::ProjectType_t CModelCheckInDlg::GetFileNames( char const* pTitle,
+					char*& pRelativePath, char*& pFileName, char*& pDestPath )
 {
 	UpdateData( TRUE );
 
@@ -384,24 +384,24 @@ CModelCheckInDlg::ProjectType_t CModelCheckInDlg::GetFileNames( char const* pTit
 
 	if (!CheckInfo())
 		return PROJECT_ERROR;
-	
-	CFileDialog dlg( TRUE, ".mdl", "*.mdl", OFN_HIDEREADONLY, 
+
+	CFileDialog dlg( TRUE, ".mdl", "*.mdl", OFN_HIDEREADONLY,
 		"Model Files (*.mdl)|*.mdl||" );
-	
+
 	// Set up initial paths
 	char pCwd[MAX_PATH];
 	_getcwd( pCwd, MAX_PATH );
-															   
+
 	// Setup the title and initial directory
-	CString temp = AfxGetApp()->GetProfileString( MDL_CHECKOUT_REG_CLASS, 
+	CString temp = AfxGetApp()->GetProfileString( MDL_CHECKOUT_REG_CLASS,
 		MDL_CHECKOUT_REG_LAST_PATH, pCwd );
 	dlg.m_ofn.lpstrInitialDir = temp;
 	dlg.m_ofn.lpstrTitle = pTitle;
-	
+
 	// Grab the data from the dialog...
-	if (dlg.DoModal() != IDOK) 
+	if (dlg.DoModal() != IDOK)
 		return PROJECT_ERROR;
-	
+
 	// Get the relative file name
 	static char relativeFile[MAX_PATH];
 	ProjectType_t projectType = ComputeRelativeFileName( dlg.GetPathName(), relativeFile );
@@ -412,10 +412,10 @@ CModelCheckInDlg::ProjectType_t CModelCheckInDlg::GetFileNames( char const* pTit
 		MessageBox( buf, "Error!" );
 		return PROJECT_ERROR;
 	}
-	
+
 	// reset the last directory...
 	ResetDirectoryEntry( dlg.GetPathName(), MDL_CHECKOUT_REG_LAST_PATH );
-	
+
 	// Split into relative file + path...
 	char* pSlash = strrchr( relativeFile, '/' );
 	if (pSlash)
@@ -453,7 +453,7 @@ CModelCheckInDlg::ProjectType_t CModelCheckInDlg::GetFileNames( char const* pTit
 // Does checkout and check-in
 //-----------------------------------------------------------------------------
 
-void CModelCheckInDlg::OnFileCheckOut() 
+void CModelCheckInDlg::OnFileCheckOut()
 {
 	char* pRelativePath;
 	char* pFileName;
@@ -464,7 +464,7 @@ void CModelCheckInDlg::OnFileCheckOut()
 
 	if (projectType != PROJECT_ERROR)
 	{
-		PerformCheckoutCommand( projectType, pRelativePath, pDestPath, pFileName ); 
+		PerformCheckoutCommand( projectType, pRelativePath, pDestPath, pFileName );
 	}
 }
 
@@ -480,7 +480,7 @@ void CModelCheckInDlg::OnFileCheckIn()
 
 	if (projectType != PROJECT_ERROR)
 	{
-		PerformCheckinCommand( projectType, pRelativePath, pDestPath, pFileName ); 
+		PerformCheckinCommand( projectType, pRelativePath, pDestPath, pFileName );
 	}
 }
 

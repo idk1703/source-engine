@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,10 +23,10 @@ class ComboBoxDemo: public DemoPage
 public:
 	ComboBoxDemo(Panel *parent, const char *name);
 	~ComboBoxDemo();
-	
+
 private:
 	ComboBox *m_pComboBox;
-	
+
 
 };
 
@@ -75,5 +75,3 @@ Panel* ComboBoxDemo_Create(Panel *parent)
 {
 	return new ComboBoxDemo(parent, "ComboBoxDemo");
 }
-
-

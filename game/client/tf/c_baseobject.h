@@ -30,7 +30,7 @@ extern mstudioevent_t *GetEventIndexForSequence( mstudioseqdesc_t &seqdesc );
 DECLARE_AUTO_LIST( IBaseObjectAutoList );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_BaseObject : public C_BaseCombatCharacter, public IHasBuildPoints, public ITargetIDProvidesHint, public IBaseObjectAutoList
 {
@@ -93,7 +93,7 @@ public:
 	void			ActivateYawPreview( bool enable );
 	void			PreviewYaw( float yaw );
 	bool			IsPreviewingYaw() const;
-	
+
 	virtual void	RecalculateIDString( void );
 
 	int GetType() const { return m_iObjectType; }

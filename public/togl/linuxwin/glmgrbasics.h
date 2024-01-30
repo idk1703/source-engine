@@ -75,10 +75,10 @@ struct	GLMRegion
 
 struct GLMRect	// follows GL convention - if coming from the D3D rect you will need to fiddle the Y's
 {
-    int xmin;	// left
-    int ymin;	// bottom
-    int xmax;	// right
-    int ymax;	// top
+	int xmin;	// left
+	int ymin;	// bottom
+	int xmax;	// right
+	int ymax;	// top
 };
 
 // macros
@@ -107,26 +107,26 @@ typedef enum
 	eD3D_RSTATE,	// render state
 	eD3D_SIO,		// D3D shader bytecode
 	eD3D_VTXDECLUSAGE,
-	
+
 	// CGL codes
 	eCGL_RENDID,
-	
+
 	// OpenGL error codes
 	eGL_ERROR,
-	
+
 	// OpenGL enums
 	eGL_ENUM,
 	eGL_RENDERER
 
 }	GLMThing_t;
 
-// these will look at the string to guess its flavor: <, >, ---, -M-, -S- 
+// these will look at the string to guess its flavor: <, >, ---, -M-, -S-
 #ifdef TOGL_DLL_EXPORT
 	DLL_EXPORT const char* GLMDecode( GLMThing_t type, unsigned long value );		// decode a numeric const
 #else
 	DLL_IMPORT const char* GLMDecode( GLMThing_t type, unsigned long value );		// decode a numeric const
 #endif
-		
+
 const char* GLMDecodeMask( GLMThing_t type, unsigned long value );	// decode a bitmask
 
 FORCEINLINE void GLMStop( void ) { DXABSTRACT_BREAK_ON_ERROR(); }
@@ -161,16 +161,16 @@ public:
 class GLMFuncLogger
 {
 	public:
-	
+
 		// simple function log
 		GLMFuncLogger( const char *funcName )
 		{
 			m_funcName = funcName;
 			m_earlyOut = false;
-			
+
 			GLMPrintf( ">%s", m_funcName );
 		};
-		
+
 		// more advanced version lets you pass args (i.e. called parameters or anything else of interest)
 		// no macro for this one, since no easy way to pass through the args as well as the funcname
 		GLMFuncLogger( const char *funcName, char *fmt, ... )
@@ -181,17 +181,17 @@ class GLMFuncLogger
 			// this acts like GLMPrintf here
 			// all the indent policy is down in GLMPrintfVA
 			// which means we need to inject a ">" at the front of the format string to make this work... sigh.
-			
+
 			char modifiedFmt[2000];
 			modifiedFmt[0] = '>';
 			strcpy( modifiedFmt+1, fmt );
-			
+
 			va_list	vargs;
 			va_start(vargs, fmt);
 			GLMPrintfVA( modifiedFmt, vargs );
 			va_end( vargs );
 		}
-		
+
 		~GLMFuncLogger( )
 		{
 			if (m_earlyOut)
@@ -203,12 +203,12 @@ class GLMFuncLogger
 				GLMPrintf( "<%s", m_funcName );
 			}
 		};
-	
+
 		void EarlyOut( void )
 		{
 			m_earlyOut = true;
 		};
-		
+
 		const char *m_funcName;				// set at construction time
 		bool m_earlyOut;
 };
@@ -227,24 +227,24 @@ public:
 	CGLMFileMirror( char *fullpath );		// just associates mirror with file. if file exists it will be read.
 											//if non existent it will be created with size zero
 	~CGLMFileMirror( );
-	
+
 	bool		HasData( void );								// see if data avail
 	void		GetData( char **dataPtr, uint *dataSizePtr );	// read it out
 	void		SetData( char *data, uint dataSize );			// put data in (and write it to disk)
 	bool		PollForChanges( void );							// check disk copy.  If different, read it back in and return true.
-	
+
 	void		UpdateStatInfo( void );		// make sure stat info is current for our file
 	void		ReadFile( void );
 	void		WriteFile( void );
 
 	void		OpenInEditor( bool foreground=false );			// pass TRUE if you would like the editor to pop to foreground
-	
+
 	/// how about a "wait for change" method..
 
 	char		*m_path;	// fullpath to file
 	bool		m_exists;
 	struct stat	m_stat;		// stat results for the file (last time checked)
-	
+
 	char		*m_data;	// content of file
 	uint		m_size;		// length of content
 
@@ -280,14 +280,14 @@ public:
 	uint			m_origSize;
 	char			*m_origText;						// what was submitted
 	unsigned char	m_origDigest[MD5_DIGEST_LENGTH];	// digest of what was submitted
-	
+
 	// munged
 	uint			m_mungedSize;
 	char			*m_mungedText;						// re-processed edition, initial content submission to the file mirror
 
 	// mirror
 	char			*m_mirrorBaseName;					// generated from the hash of the orig text, plus the label / prefix
-	char			*m_mirrorFullPath;					// base name 
+	char			*m_mirrorFullPath;					// base name
 	CGLMFileMirror	*m_mirror;							// file mirror itself.  holds "official" copy for GetCurrentText to return.
 };
 
@@ -310,15 +310,15 @@ class CGLMTextSectioner
 public:
 					CGLMTextSectioner( char *text, int textSize, const char **markers );		// constructor finds all the sections
 					~CGLMTextSectioner( );
-					
+
 	int				Count( void );			// how many sections found
 	void			GetSection( int index, uint *offsetOut, uint *lengthOut, int *markerIndexOut );
 		// find section, size, what marker
 		// note that more than one section can be marked similarly.
 		// so policy isn't made here, you walk the sections and decide what to do if there are dupes.
-	
+
 	//members
-	
+
 	//section table
 	CUtlVector< GLMTextSection >	m_sectionTable;
 };

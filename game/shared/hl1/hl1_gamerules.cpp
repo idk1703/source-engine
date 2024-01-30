@@ -81,7 +81,7 @@ ConVar sk_mp_dmg_multiplier ( "sk_mp_dmg_multiplier", "2.0" );
 // Damage Queries.
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CHalfLife1::Damage_GetShowOnHud( void )
 {
@@ -128,7 +128,7 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 	//-----------------------------------------------------------------------------
 	// Purpose: called each time a player uses a "cmd" command
 	// Input  : *pEdict - the player who issued the command
-	//			Use engine.Cmd_Argv,  engine.Cmd_Argv, and engine.Cmd_Argc to get 
+	//			Use engine.Cmd_Argv,  engine.Cmd_Argv, and engine.Cmd_Argc to get
 	//			pointers the character string command.
 	//-----------------------------------------------------------------------------
 	bool CHalfLife1::ClientCommand( CBaseEntity *pEdict, const CCommand &args )
@@ -137,10 +137,10 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 			return true;
 
 		CHL1_Player *pPlayer = (CHL1_Player *) pEdict;
-		
+
 		if ( pPlayer->ClientCommand( args ) )
 			return true;
-			
+
 		return false;
 	}
 
@@ -163,7 +163,7 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 
 		DECLARE_SERVERCLASS();
 
-		virtual int ObjectCaps( void ) { return FCAP_DONT_SAVE; }	
+		virtual int ObjectCaps( void ) { return FCAP_DONT_SAVE; }
 
 	public:
 		CNetworkVar( int, m_nReferencePlayer );
@@ -184,7 +184,7 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 		pEntity->AddEFlags( EFL_KEEP_ON_RECREATE_ENTITIES );
 		g_pBodyQueueHead = pEntity;
 		CCorpse *p = g_pBodyQueueHead;
-		
+
 		// Reserve 3 more slots for dead bodies
 		for ( int i = 0; i < 3; i++ )
 		{
@@ -193,7 +193,7 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 			p->SetOwnerEntity( next );
 			p = next;
 		}
-		
+
 		p->SetOwnerEntity( g_pBodyQueueHead );
 	}
 
@@ -201,7 +201,7 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 	// Purpose: make a body que entry for the given ent so the ent can be respawned elsewhere
 	// GLOBALS ASSUMED SET:  g_eoBodyQueueHead
 	//-----------------------------------------------------------------------------
-	void CopyToBodyQue( CBaseAnimating *pCorpse ) 
+	void CopyToBodyQue( CBaseAnimating *pCorpse )
 	{
 		if ( pCorpse->IsEffectActive( EF_NODRAW ) )
 			return;
@@ -250,10 +250,10 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 		// ------------------------------------------------------------
 		//	> CLASS_NONE
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_NONE,				CLASS_NONE,				D_NU, 0 );			
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_NONE,				CLASS_PLAYER,			D_NU, 0 );			
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_NONE,				CLASS_HUMAN_PASSIVE,	D_NU, 0 );		
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_NONE,				CLASS_PLAYER_ALLY,		D_NU, 0 );		
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_NONE,				CLASS_NONE,				D_NU, 0 );
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_NONE,				CLASS_PLAYER,			D_NU, 0 );
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_NONE,				CLASS_HUMAN_PASSIVE,	D_NU, 0 );
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_NONE,				CLASS_PLAYER_ALLY,		D_NU, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_NONE,				CLASS_ALIEN_PREY,		D_NU, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_NONE,				CLASS_ALIEN_MILITARY,	D_NU, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_NONE,				CLASS_ALIEN_MONSTER,	D_NU, 0 );
@@ -263,15 +263,15 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_NONE,				CLASS_ALIEN_BIOWEAPON,	D_NU, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_NONE,				CLASS_PLAYER_BIOWEAPON,	D_NU, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_NONE,				CLASS_INSECT,			D_NU, 0 );
-		
-		
+
+
 		// ------------------------------------------------------------
 		//	> CLASS_HUMAN_PASSIVE
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_PASSIVE,		CLASS_NONE,				D_NU, 0 );			
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_PASSIVE,		CLASS_PLAYER,			D_LI, 0 );	
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_PASSIVE,		CLASS_NONE,				D_NU, 0 );
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_PASSIVE,		CLASS_PLAYER,			D_LI, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_PASSIVE,		CLASS_HUMAN_PASSIVE,	D_LI, 0 );
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_PASSIVE,		CLASS_PLAYER_ALLY,		D_LI, 0 );	
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_PASSIVE,		CLASS_PLAYER_ALLY,		D_LI, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_PASSIVE,		CLASS_ALIEN_PREY,		D_FR, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_PASSIVE,		CLASS_ALIEN_MILITARY,	D_FR, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_PASSIVE,		CLASS_ALIEN_MONSTER,	D_HT, 0 );
@@ -281,16 +281,16 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_PASSIVE,		CLASS_ALIEN_BIOWEAPON,	D_NU, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_PASSIVE,		CLASS_PLAYER_BIOWEAPON,	D_NU, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_PASSIVE,		CLASS_INSECT,			D_NU, 0 );
-		
-		
+
+
 
 		// ------------------------------------------------------------
 		//	> CLASS_PLAYER
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER,				CLASS_NONE,				D_NU, 0 );			
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER,				CLASS_PLAYER,			D_LI, 0 );			
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER,				CLASS_HUMAN_PASSIVE,	D_LI, 0 );	
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER,				CLASS_PLAYER_ALLY,		D_LI, 0 );	
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER,				CLASS_NONE,				D_NU, 0 );
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER,				CLASS_PLAYER,			D_LI, 0 );
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER,				CLASS_HUMAN_PASSIVE,	D_LI, 0 );
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER,				CLASS_PLAYER_ALLY,		D_LI, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER,		  	    CLASS_ALIEN_PREY,		D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER,		  	    CLASS_ALIEN_MILITARY,	D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER,				CLASS_ALIEN_MONSTER,	D_HT, 0 );
@@ -304,10 +304,10 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 		// ------------------------------------------------------------
 		//	> CLASS_PLAYER_ALLY
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_ALLY,		CLASS_NONE,				D_NU, 0 );			
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_ALLY,		CLASS_PLAYER,			D_LI, 0 );			
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_ALLY,		CLASS_HUMAN_PASSIVE,	D_LI, 0 );	
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_ALLY,		CLASS_PLAYER_ALLY,		D_LI, 0 );	
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_ALLY,		CLASS_NONE,				D_NU, 0 );
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_ALLY,		CLASS_PLAYER,			D_LI, 0 );
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_ALLY,		CLASS_HUMAN_PASSIVE,	D_LI, 0 );
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_ALLY,		CLASS_PLAYER_ALLY,		D_LI, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_ALLY,		CLASS_ALIEN_PREY,		D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_ALLY,		CLASS_ALIEN_MILITARY,	D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_ALLY,		CLASS_ALIEN_MONSTER,	D_HT, 0 );
@@ -321,8 +321,8 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 		// ------------------------------------------------------------
 		//	> CLASS_ALIEN_PREY
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_PREY,			CLASS_NONE,				D_NU, 0 );			
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_PREY,			CLASS_PLAYER,			D_HT, 0 );			
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_PREY,			CLASS_NONE,				D_NU, 0 );
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_PREY,			CLASS_PLAYER,			D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_PREY,			CLASS_PLAYER_ALLY,		D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_PREY,			CLASS_HUMAN_PASSIVE,	D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_PREY,			CLASS_ALIEN_PREY,		D_NU, 0 );
@@ -338,8 +338,8 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 		// ------------------------------------------------------------
 		//	> CLASS_ALIEN_MILITARY
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_MILITARY,		CLASS_NONE,				D_NU, 0 );			
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_MILITARY,		CLASS_PLAYER,			D_HT, 0 );			
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_MILITARY,		CLASS_NONE,				D_NU, 0 );
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_MILITARY,		CLASS_PLAYER,			D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_MILITARY,		CLASS_PLAYER_ALLY,		D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_MILITARY,		CLASS_HUMAN_PASSIVE,	D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_MILITARY,		CLASS_ALIEN_PREY,		D_NU, 0 );
@@ -355,8 +355,8 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 		// ------------------------------------------------------------
 		//	> CLASS_ALIEN_MONSTER
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_MONSTER,		CLASS_NONE,				D_NU, 0 );			
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_MONSTER,		CLASS_PLAYER,			D_HT, 0 );			
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_MONSTER,		CLASS_NONE,				D_NU, 0 );
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_MONSTER,		CLASS_PLAYER,			D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_MONSTER,		CLASS_PLAYER_ALLY,		D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_MONSTER,		CLASS_HUMAN_PASSIVE,	D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_MONSTER,		CLASS_ALIEN_PREY,		D_NU, 0 );
@@ -372,8 +372,8 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 		// ------------------------------------------------------------
 		//	> CLASS_ALIEN_PREDATOR
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_PREDATOR,		CLASS_NONE,				D_NU, 0 );			
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_PREDATOR,		CLASS_PLAYER,			D_HT, 0 );			
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_PREDATOR,		CLASS_NONE,				D_NU, 0 );
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_PREDATOR,		CLASS_PLAYER,			D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_PREDATOR,		CLASS_PLAYER_ALLY,		D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_PREDATOR,		CLASS_HUMAN_PASSIVE,	D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_PREDATOR,		CLASS_ALIEN_PREY,		D_HT, 0 );
@@ -389,8 +389,8 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 		// ------------------------------------------------------------
 		//	> CLASS_HUMAN_MILITARY
 		// ------------------------------------------------------------
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_MILITARY,		CLASS_NONE,				D_NU, 0 );			
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_MILITARY,		CLASS_PLAYER,			D_HT, 0 );			
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_MILITARY,		CLASS_NONE,				D_NU, 0 );
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_MILITARY,		CLASS_PLAYER,			D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_MILITARY,		CLASS_PLAYER_ALLY,		D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_MILITARY,		CLASS_HUMAN_PASSIVE,	D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_HUMAN_MILITARY,		CLASS_ALIEN_PREY,		D_HT, 0 );
@@ -408,7 +408,7 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 		// ------------------------------------------------------------
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_MACHINE,			CLASS_NONE,				D_NU, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_MACHINE,			CLASS_MACHINE,			D_NU, 0 );
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_MACHINE,			CLASS_PLAYER,			D_HT, 0 );			
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_MACHINE,			CLASS_PLAYER,			D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_MACHINE,			CLASS_HUMAN_PASSIVE,	D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_MACHINE,			CLASS_HUMAN_MILITARY,	D_NU, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_MACHINE,			CLASS_ALIEN_MILITARY,	D_HT, 0 );
@@ -425,7 +425,7 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 		// ------------------------------------------------------------
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_BIOWEAPON,	CLASS_NONE,				D_NU, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_BIOWEAPON,	CLASS_MACHINE,			D_NU, 0 );
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_BIOWEAPON,	CLASS_PLAYER,			D_HT, 0 );			
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_BIOWEAPON,	CLASS_PLAYER,			D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_BIOWEAPON,	CLASS_HUMAN_PASSIVE,	D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_BIOWEAPON,	CLASS_HUMAN_MILITARY,	D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_ALIEN_BIOWEAPON,	CLASS_ALIEN_MILITARY,	D_LI, 0 );
@@ -442,7 +442,7 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 		// ------------------------------------------------------------
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_BIOWEAPON,	CLASS_NONE,				D_NU, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_BIOWEAPON,	CLASS_MACHINE,			D_NU, 0 );
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_BIOWEAPON,	CLASS_PLAYER,			D_HT, 0 );			
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_BIOWEAPON,	CLASS_PLAYER,			D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_BIOWEAPON,	CLASS_HUMAN_PASSIVE,	D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_BIOWEAPON,	CLASS_HUMAN_MILITARY,	D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_BIOWEAPON,	CLASS_ALIEN_MILITARY,	D_HT, 0 );
@@ -453,14 +453,14 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_BIOWEAPON,	CLASS_ALIEN_BIOWEAPON,	D_HT, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_BIOWEAPON,	CLASS_PLAYER_BIOWEAPON,	D_NU, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_PLAYER_BIOWEAPON,	CLASS_INSECT,			D_NU, 0 );
-		
-		
+
+
 		// ------------------------------------------------------------
 		//	> CLASS_INSECT
 		// ------------------------------------------------------------
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_INSECT,				CLASS_NONE,				D_FR, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_INSECT,				CLASS_MACHINE,			D_FR, 0 );
-		CBaseCombatCharacter::SetDefaultRelationship( CLASS_INSECT,				CLASS_PLAYER,			D_FR, 0 );			
+		CBaseCombatCharacter::SetDefaultRelationship( CLASS_INSECT,				CLASS_PLAYER,			D_FR, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_INSECT,				CLASS_HUMAN_PASSIVE,	D_FR, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_INSECT,				CLASS_HUMAN_MILITARY,	D_FR, 0 );
 		CBaseCombatCharacter::SetDefaultRelationship( CLASS_INSECT,				CLASS_ALIEN_MILITARY,	D_NU, 0 );
@@ -487,14 +487,14 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 			case CLASS_PLAYER_ALLY:		return "CLASS_PLAYER_ALLY";
 			case CLASS_PLAYER:			return "CLASS_PLAYER";
 			case CLASS_ALIEN_PREY:		return "CLASS_ALIEN_PREY";
-			case CLASS_ALIEN_MILITARY:	return "CLASS_ALIEN_MILITARY"; 
+			case CLASS_ALIEN_MILITARY:	return "CLASS_ALIEN_MILITARY";
 			case CLASS_ALIEN_MONSTER:	return "CLASS_ALIEN_MONSTER";
 			case CLASS_ALIEN_PREDATOR:	return "CLASS_ALIEN_PREDATOR";
 			case CLASS_HUMAN_MILITARY:	return "CLASS_HUMAN_MILITARY";
 			case CLASS_MACHINE:			return "CLASS_MACHINE";
 			case CLASS_ALIEN_BIOWEAPON:	return "CLASS_ALIEN_BIOWEAPON";
 			case CLASS_PLAYER_BIOWEAPON: return "CLASS_PLAYER_BIOWEAPON";
-		
+
 			default:					return "MISSING CLASS in ClassifyText()";
 		}
 	}
@@ -522,13 +522,13 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 		return true;
 	}
 
-		
+
 	float CHalfLife1::FlPlayerFallDamage( CBasePlayer *pPlayer )
 	{
 		CBaseEntity *pGroundEntity = pPlayer->GetGroundEntity();
 
 		if( pGroundEntity && pGroundEntity->ClassMatches( "func_breakable" ) )
-		{		
+		{
 			// FIXME touchtrace will be wrong.
 			pGroundEntity->Touch( pPlayer );
 
@@ -555,12 +555,12 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 		}
 
 		bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
-		{ 
+		{
 			if ( m_pPassEnt && ( m_pPassEnt == pServerEntity ) )
 			{
 				return false;
 			}
-		
+
 			return true;
 		}
 
@@ -583,7 +583,7 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 			falloff = 1.0;
 
 		int bInWater = (UTIL_PointContents ( vecSrc ) & MASK_WATER) ? true : false;
-		
+
 		vecSrc.z += 1;// in case grenade is lying on the ground
 
 		// iterate on all entities in the vicinity.
@@ -608,7 +608,7 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 
 				CTraceFilterHitAllExcept traceFilter( info.GetInflictor() );
   				UTIL_TraceLine( vecSrc, vecSpot, CONTENTS_SOLID, &traceFilter, &tr );
-				
+
 				if ( tr.fraction == 1.0 || tr.m_pEnt == pEntity )
 				{// the explosion can 'see' this entity, so hurt them!
 					if (tr.startsolid)
@@ -617,11 +617,11 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 						tr.endpos = vecSrc;
 						tr.fraction = 0.0;
 					}
-					
+
 					// decrease damage for an ent that's farther from the bomb.
 					flAdjustedDamage = ( vecSrc - tr.endpos ).Length() * falloff;
 					flAdjustedDamage = info.GetDamage() - flAdjustedDamage;
-				
+
 					if ( flAdjustedDamage > 0 )
 					{
 						CTakeDamageInfo adjustedInfo = info;
@@ -655,7 +655,7 @@ int	CHalfLife1::Damage_GetShowOnHud( void )
 						{
 							pEntity->TakeDamage( adjustedInfo );
 						}
-						// Now hit all triggers along the way that respond to damage... 
+						// Now hit all triggers along the way that respond to damage...
 						Vector dir = tr.endpos - vecSrc;
 						pEntity->TraceAttackToTriggers( adjustedInfo, vecSrc, tr.endpos, dir );
 					}
@@ -692,7 +692,7 @@ bool CHalfLife1::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 		collisionGroup1 = tmp;
 	}
 
-	return BaseClass::ShouldCollide( collisionGroup0, collisionGroup1 ); 
+	return BaseClass::ShouldCollide( collisionGroup0, collisionGroup1 );
 }
 
 // ------------------------------------------------------------------------------------- //
@@ -718,7 +718,7 @@ CAmmoDef *GetAmmoDef()
 	if ( !bInitted )
 	{
 		bInitted = true;
-		
+
 		def.AddAmmoType( "9mmRound",		DMG_BULLET | DMG_NEVERGIB,	TRACER_LINE, "sk_plr_dmg_9mm_bullet",	"sk_npc_dmg_9mm_bullet","sk_max_9mm_bullet",	BULLET_IMPULSE(500, 1325), 0 );
 		def.AddAmmoType( "357Round",		DMG_BULLET | DMG_NEVERGIB,	TRACER_NONE, "sk_plr_dmg_357_bullet",	NULL,					"sk_max_357_bullet",	BULLET_IMPULSE(650, 6000), 0 );
 		def.AddAmmoType( "Buckshot",		DMG_BULLET | DMG_BUCKSHOT,	TRACER_LINE, "sk_plr_dmg_buckshot",		NULL,					"sk_max_buckshot",		BULLET_IMPULSE(200, 1200), 0 );

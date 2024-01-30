@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -349,7 +349,7 @@ CSNavNode *CSNavNode::GetNode( const Vector &pos )
 
 //--------------------------------------------------------------------------------------------------------------
 /**
- * Return true if this node is bidirectionally linked to 
+ * Return true if this node is bidirectionally linked to
  * another node in the given direction
  */
 BOOL CSNavNode::IsBiLinked( NavDirType dir ) const
@@ -380,4 +380,3 @@ BOOL CSNavNode::IsClosedCell( void ) const
 
 	return false;
 }
-

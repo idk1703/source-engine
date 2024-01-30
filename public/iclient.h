@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -27,7 +27,7 @@ public:
 
 	// set the client in a pending state waiting for a new game
 	virtual void	Inactivate( void ) = 0;
-	
+
 	// Reconnect without dropiing the netchannel
 	virtual	void	Reconnect( void ) = 0;				// froce reconnect
 
@@ -35,7 +35,7 @@ public:
 	virtual void	Disconnect( PRINTF_FORMAT_STRING const char *reason, ... ) = 0;
 
 	virtual int				GetPlayerSlot() const = 0; // returns client slot (usually entity number-1)
-	virtual int				GetUserID() const = 0; // unique ID on this server 
+	virtual int				GetUserID() const = 0; // unique ID on this server
 	virtual const USERID_t	GetNetworkID() const = 0; // network wide ID
 	virtual const char		*GetClientName() const = 0;	// returns client name
 	virtual INetChannel		*GetNetChannel() = 0; // returns client netchannel
@@ -46,17 +46,17 @@ public:
 	// set/get client data rate in bytes/second
 	virtual void	SetRate( int nRate, bool bForce ) = 0;
 	virtual int		GetRate( void ) const = 0;
-	
+
 	// set/get updates/second rate
 	virtual void	SetUpdateRate( int nUpdateRate, bool bForce ) = 0;
-	virtual int		GetUpdateRate( void ) const = 0;	
+	virtual int		GetUpdateRate( void ) const = 0;
 
-	// clear complete object & free all memory 
+	// clear complete object & free all memory
 	virtual void	Clear( void ) = 0;
 
 	// returns the highest world tick number acknowledge by client
 	virtual int		GetMaxAckTickCount() const = 0;
-	
+
 	// execute a client command
 	virtual bool	ExecuteStringCommand( const char *s ) = 0;
 	// send client a network message

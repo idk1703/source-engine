@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,11 +14,11 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Text Entry controls are notepad-like windows that hold text. 
+// Text Entry controls are notepad-like windows that hold text.
 // They have a border around them and typically hold editable text information.
 // In this demo we create a very simple text entry window. It holds one
 // line of text and is editable. Typing more text will fill the window with
-// text and as you hit the end the text will scroll. 
+// text and as you hit the end the text will scroll.
 // The cursor can be moved
 // around with arrow keys or positioned with the mouse. Clicking and dragging
 // will select text. Right clicking in
@@ -33,11 +33,11 @@ class TextEntryDemo: public DemoPage
 	public:
 		TextEntryDemo(Panel *parent, const char *name);
 		~TextEntryDemo();
-		
+
 	private:
 		void SetVisible(bool status);
 
-		TextEntry *m_pTextEntry;				
+		TextEntry *m_pTextEntry;
 };
 
 //-----------------------------------------------------------------------------
@@ -51,15 +51,15 @@ TextEntryDemo::TextEntryDemo(Panel *parent, const char *name) : DemoPage(parent,
 	int wide, tall;
 	m_pTextEntry->GetSize(wide, tall);
 
-	// Position the window and make it nice and wide, but preserve the 
+	// Position the window and make it nice and wide, but preserve the
 	// height to one line.
 	m_pTextEntry->SetBounds(100, 100, 200, tall);
-	
-	// Insert text after you have set the starting 
+
+	// Insert text after you have set the starting
 	// size and position of the window
 	m_pTextEntry->InsertString("Some starting text");
 
-	// We want all the text in the window selected the 
+	// We want all the text in the window selected the
 	// first time the user clicks in the window.
 	m_pTextEntry->SelectAllOnFirstFocus(true);
 
@@ -76,13 +76,13 @@ TextEntryDemo::TextEntryDemo(Panel *parent, const char *name) : DemoPage(parent,
 
 void TextEntryDemo::SetVisible(bool status)
 {
-	// We want all the text in the window selected the 
+	// We want all the text in the window selected the
 	// first time the user clicks in the window.
 	if (status)
 		m_pTextEntry->SelectAllOnFirstFocus(true);;
 
 	DemoPage::SetVisible(status);
-	
+
 }
 
 //-----------------------------------------------------------------------------
@@ -97,5 +97,3 @@ Panel* TextEntryDemo_Create(Panel *parent)
 {
 	return new TextEntryDemo(parent, "TextEntryDemo");
 }
-
-

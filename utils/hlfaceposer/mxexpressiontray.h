@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,7 +37,7 @@ class CChoreoWidgetDrawHelper;
 #include "mxbitmaptools.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class mxExpressionTray : public mxWindow, public IFacePoserToolWindow
 {
@@ -93,7 +93,7 @@ private: // Methods
 	void				SetClickedCell( int cell );
 	void				ShowRightClickMenu( int mx, int my );
 
-	void				DrawThumbNail( CExpClass *active, CExpression *current, CChoreoWidgetDrawHelper& helper, 
+	void				DrawThumbNail( CExpClass *active, CExpression *current, CChoreoWidgetDrawHelper& helper,
 							int rcx, int rcy, int rcw, int rch, int c, int selected, bool updateselection );
 
 	void				DrawDirtyFlag( CChoreoWidgetDrawHelper& helper, CExpression *current, int rcx, int rcy, int rcw, int rch );
@@ -102,13 +102,13 @@ private: // Methods
 
 	void				CreateButtons( void );
 	void				DeleteAllButtons( void );
-	void				AddButton( const char *name, const char *tooltip, const char *bitmap, 
+	void				AddButton( const char *name, const char *tooltip, const char *bitmap,
 							ETMEMBERFUNC pfnCallback, bool active, int x, int y, int w, int h );
 	mxETButton			*GetItemUnderCursor( int x, int y );
 	void				DrawButton( CChoreoWidgetDrawHelper& helper, int cell, mxETButton *btn );
 	void				ActivateButton( const char *name, bool active );
 	mxETButton			*FindButton( const char *name );
-	
+
 	void				ET_Undo( int cell );
 	void				ET_Redo( int cell );
 

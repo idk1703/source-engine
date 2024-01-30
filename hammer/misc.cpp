@@ -42,7 +42,7 @@ void NotifyDuplicates(CMapSolid *pSolid)
 
 	if(DoesContainDuplicates(pSolid))
 	{
-		if(IDNO == AfxMessageBox("Duplicate Plane! Do you want more messages?", 
+		if(IDNO == AfxMessageBox("Duplicate Plane! Do you want more messages?",
 			MB_YESNO))
 		{
 			bCheckDupes = FALSE;
@@ -88,7 +88,7 @@ void WriteDebug(char *pszStr)
 {
 #if 0
 	static BOOL bFirst = TRUE;
-	
+
 	if(bFirst)
 		remove("wcdebug.txt");
 

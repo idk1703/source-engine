@@ -96,7 +96,7 @@ private:
 		}
 
 		SetModelScale( m_flScale );
-		
+
 		SetNextThink( gpGlobals->curtime );
 	}
 
@@ -113,7 +113,7 @@ private:
 		}
 
 		SetModelScale( m_flScale );
-		
+
 		SetNextThink( gpGlobals->curtime );
 	}
 
@@ -142,7 +142,7 @@ ConCommand cc_proc_wheel_effect( "cc_proc_wheel_effect", ProcWheelEffect, "Force
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWheelOfDoom::CWheelOfDoom( void ) :
 	m_EffectManager( this ),
@@ -181,7 +181,7 @@ void CWheelOfDoom::RegisterEffect( WOD_BaseEffect* pEffect, int nFlags )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWheelOfDoom::Precache( void )
 {
@@ -206,7 +206,7 @@ const char* CWheelOfDoom::GetScreenModelName()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWheelOfDoom::Spawn( void )
 {
@@ -254,7 +254,7 @@ void CWheelOfDoom::FireGameEvent( IGameEvent *gameEvent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWheelOfDoom::IdleThink( void )
 {
@@ -366,7 +366,7 @@ void CWheelOfDoom::SpinThink( void )
 
 		m_flNextTickTime = CalcNextTickTime();
 	}
-	
+
 	//Is it time for Merasmus to announce the spin?
 	if (gpGlobals->curtime > m_flNextAnnounceTime && !m_bAnnounced)
 	{
@@ -381,7 +381,7 @@ void CWheelOfDoom::SpinThink( void )
 			TFGameRules()->BroadcastSound(255,"Halloween.MerasmusWheelSpin");
 		}
 	}
-	
+
 	// Next update
 	SetNextThink( gpGlobals->curtime );
 }
@@ -432,15 +432,15 @@ void CWheelOfDoom::StartSpin( void )
 		{
 			if( m_vecOtherWODs[i]->m_bHasSpiral )
 			{
-				m_vecOtherWODs[i]->m_pSpiral->GrowAndBecomeVisible(); 
+				m_vecOtherWODs[i]->m_pSpiral->GrowAndBecomeVisible();
 			}
 		}
 	}
 
 	// Setup spin logic
-	m_flStopSpinTime = gpGlobals->curtime + WHEEL_SPIN_TIME; 
+	m_flStopSpinTime = gpGlobals->curtime + WHEEL_SPIN_TIME;
 	m_flNextTickTime = CalcNextTickTime();
-	m_flNextAnnounceTime = gpGlobals->curtime + 1.6; 
+	m_flNextAnnounceTime = gpGlobals->curtime + 1.6;
 	m_bAnnounced = false;
 
 	m_flFinishBroadcastingEffectTime = m_flStopSpinTime + 10.f;
@@ -480,7 +480,7 @@ CWheelOfDoom::WOD_BaseEffect* CWheelOfDoom::GetRandomEffectWithFlags()
 		{
 			++nNumGoodEffects;
 			vecMatchingEffects.AddToHead( pEffect );
-		}	
+		}
 	}
 
 	// No matching effects.  Return null
@@ -564,7 +564,7 @@ int CWheelOfDoom::EffectManager::AddEffect( WOD_BaseEffect* pEffect, float flDef
 	CollectPlayers( &data.m_vecPlayers );
 	pEffect->InitEffect( flDefaultDuration );
 	pEffect->ActivateEffect( data );
-	
+
 	float flExpireDiff = pEffect->m_flExpireTime - gpGlobals->curtime;
 	DevMsg( "[WHEEL OF DOOM]\t Activating: \"%s\" set to expire in %3.2fs\n", pEffect->m_pszName, flExpireDiff );
 
@@ -614,7 +614,7 @@ void CWheelOfDoom::EffectManager::ClearEffects()
 		EffectData_t data;
 		data.m_pWheel = m_pWheel;
 		CollectPlayers( &data.m_vecPlayers );
-		
+
 		m_vecActiveEffects[i]->DeactivateEffect( data );
 	}
 
@@ -644,7 +644,7 @@ bool CWheelOfDoom::EffectManager::UpdateAndClearExpiredEffects()
 		}
 		else // If it's not expired, then update
 		{
-			pEffect->UpdateEffect( data );	
+			pEffect->UpdateEffect( data );
 		}
 	}
 
@@ -877,7 +877,7 @@ void CWheelOfDoom::WOD_Pee::ActivateEffect( EffectData_t& data )
 	CBaseEntity *pOther = gEntList.FindEntityByName( NULL, "spawn_cloud" );
 	while( pOther )
 	{
-		m_vecClouds.AddToTail( pOther );	
+		m_vecClouds.AddToTail( pOther );
 		pOther = gEntList.FindEntityByName( pOther, "spawn_cloud" );
 	}
 
@@ -894,7 +894,7 @@ void CWheelOfDoom::WOD_Pee::UpdateEffect( EffectData_t& data )
 	// Choose one at random
 	int nRandIndex = RandomInt( 0, m_vecClouds.Count() - 1 );
 	CBaseEntity* pCloud = m_vecClouds[nRandIndex];
-	
+
 	// Get a random point within the brush
 	Vector vWorldMins = pCloud->WorldAlignMins();
 	Vector vWorldMaxs = pCloud->WorldAlignMaxs();
@@ -903,7 +903,7 @@ void CWheelOfDoom::WOD_Pee::UpdateEffect( EffectData_t& data )
 	Vector vRandomPos(	RandomFloat( vBoxMin.x, vBoxMax.x ),
 						RandomFloat( vBoxMin.y, vBoxMax.y ),
 						RandomFloat( vBoxMin.z, vBoxMax.z ) );
-	
+
 	// Drop some pee
 	CTFProjectile_Jar *pGrenade = static_cast<CTFProjectile_Jar*>( CBaseEntity::CreateNoSpawn( "tf_projectile_jar", vRandomPos, QAngle(0,0,0), NULL ) );
 	DispatchSpawn( pGrenade );
@@ -1049,7 +1049,7 @@ void CWheelOfDoom::WOD_Dance::UpdateEffect( EffectData_t& /*data*/ )
 			pPlayer->Taunt();
 
 		}
-			
+
 		if( bShouldSlam )
 		{
 			// Slam them, for the jam

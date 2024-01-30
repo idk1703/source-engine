@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -44,7 +44,7 @@ enum ResupplyReason_t;
 
 // If disguised player fires weapon, suppress disguise for this long
 #define DISGUISE_FIRE_SUPPRESSTIME		4.0f
-// If there are enemies within this radius, then 
+// If there are enemies within this radius, then
 //  firing your weapon will cause you to lose your
 //  disguise for DISGUISE_FIRE_SUPPRESSTIME
 #define DISGUISE_SUPPRESSION_RADIUS		1024.0f
@@ -110,9 +110,9 @@ public:
 	void		RemoveShieldOverlays( void );
 	int			RemoveShieldOverlaysExcept( Activity activity, bool addifnotpresent = true );
 	Activity	ShieldTranslateActivity( Activity activity );
-	void		PickShieldAnimation( Activity& activity, int& overlayindex, 
-					bool moving, bool ducked, 
-					Activity overlay, Activity crouch, Activity normal, 
+	void		PickShieldAnimation( Activity& activity, int& overlayindex,
+					bool moving, bool ducked,
+					Activity overlay, Activity crouch, Activity normal,
 					bool autokill = true, float blendin = 0.0f, float blendout = 0.0f );
 
 	// True if player was moving last time checked (used to switch between shield full body and overlay anims )
@@ -198,11 +198,11 @@ public:
 	virtual void	CheatImpulseCommands( int iImpulse );
 	virtual bool	ClientCommand( const CCommand &args );
 	virtual void	SetAnimation( PLAYER_ANIM playerAnim );
-	
+
 	// Combat
 	void	RecalculateSpeed( void );
 	void	KilledPlayer( CBaseTFPlayer *pVictim );
-	
+
 	int		TakeHealth( float flHealth, int bitsDamageType );
 
 	// Combat
@@ -228,7 +228,7 @@ public:
 	CWeaponCombatShield *GetCombatShield( void );
 	void	OwnedObjectChangeTeam( CBaseObject *pObject, CBaseTFPlayer *pNewOwner );
 	void	RemoveAllObjects( bool bForceAll = false, int iClass = 0, bool bReturnResources = false );
-	
+
 	int		NumPumpsOnResourceZone( CResourceZone *pZone );
 
 	// Deployment
@@ -310,7 +310,7 @@ public:
 
 	bool	ResupplyAmmo( float flFraction, ResupplyReason_t reason );
 
-	// The last time we were damaged by an enemy. 
+	// The last time we were damaged by an enemy.
 	double	LastTimeDamagedByEnemy() const { return m_flLastTimeDamagedByEnemy; }
 
 	// Orders
@@ -319,7 +319,7 @@ public:
 
 	// Count resource zone orders.
 	int		GetNumResourceZoneOrders();
-	
+
 	// Reinforcement
 	bool	IsReadyToReinforce( void );
 	void	Reinforce( void );
@@ -447,7 +447,7 @@ private:
 	// Spawn spot
 	CNetworkHandle( CBaseEntity, m_hSpawnPoint );
 
-	// This player's TF2 specific data that should only be replicated to 
+	// This player's TF2 specific data that should only be replicated to
 	//  the player and not to other players.
 	CNetworkVarEmbedded( CTFPlayerLocalData, m_TFLocal );
 	IMPLEMENT_NETWORK_VAR_FOR_DERIVED( m_iMaxHealth ); // Make sure this ent is marked as changed when m_iMaxHealth changes.
@@ -476,7 +476,7 @@ private:
 
 	// Camouflage
 	CNetworkVar( float, m_flCamouflageAmount );
-	
+
 	// Camouflage state machine
 	float	m_flGoalCamouflageAmount;
 	float	m_flGoalCamouflageChangeRate;
@@ -511,7 +511,7 @@ private:
 	// Tech spending vote preference
 	int		m_nPreferredTechnology;
 
-	// The last time we were damaged by an enemy. 
+	// The last time we were damaged by an enemy.
 	double	m_flLastTimeDamagedByEnemy;
 
 	// Menu Handling
@@ -533,7 +533,7 @@ private:
 	CNetworkVar( bool, m_bDeploying );
 	CNetworkVar( bool, m_bUnDeploying );
 	float	m_flFinishedDeploying;
-	
+
 	CNetworkVar( int, m_iPlayerClass );
 	CAllPlayerClasses			m_PlayerClasses;
 
@@ -545,7 +545,7 @@ private:
 	CHandle< CRagdollShadow >	m_hRagdollShadow;
 	Vector						m_vecLastGoodRagdollPos;
 
-	// Last reinforcment second counter for player ( so we don't spam the player 
+	// Last reinforcment second counter for player ( so we don't spam the player
 	//  with text every frame )
 	int							m_iLastSecondsToGo;
 

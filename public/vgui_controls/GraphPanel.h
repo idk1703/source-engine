@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -26,7 +26,7 @@ class GraphPanel : public Panel
 
 public:
 	GraphPanel(Panel *parent, const char *name);
-	
+
 	// domain settings (x-axis settings)
 	// sets the window of samples to display
 	void SetDisplayDomainSize(float size);

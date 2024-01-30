@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 
 ===== tf_client.cpp ========================================================
 
-  HL1 client/server game specific stuff
+	HL1 client/server game specific stuff
 
 */
 
@@ -44,7 +44,7 @@ void ClientPutInServer( edict_t *pEdict, const char *playername )
 	CHL1_Player *pPlayer = NULL;
 
 	// Allocate a CBasePlayer for pev, and call spawn
-    if ( g_pGameRules->IsMultiplayer() )
+	if ( g_pGameRules->IsMultiplayer() )
 		pPlayer = CHL1_Player::CreatePlayer( "player_mp", pEdict );
 	else
 		pPlayer = CHL1_Player::CreatePlayer( "player", pEdict );
@@ -82,16 +82,16 @@ const char *GetGameDescription()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Given a player and optional name returns the entity of that 
+// Purpose: Given a player and optional name returns the entity of that
 //			classname that the player is nearest facing
-//			
+//
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
 CBaseEntity* FindEntity( edict_t *pEdict, char *classname)
 {
 	// If no name was given set bits based on the picked
-	if (FStrEq(classname,"")) 
+	if (FStrEq(classname,""))
 	{
 		return (FindPickerEntityClass( static_cast<CBasePlayer*>(GetContainingEntity(pEdict)), classname ));
 	}
@@ -103,24 +103,24 @@ CBaseEntity* FindEntity( edict_t *pEdict, char *classname)
 //-----------------------------------------------------------------------------
 void ClientGamePrecache( void )
 {
-    // Multiplayer uses different models, and more of them.
-    if ( g_pGameRules->IsMultiplayer() )
-    {
-        CBaseEntity::PrecacheModel("models/player/mp/barney/barney.mdl");
-        CBaseEntity::PrecacheModel("models/player/mp/gina/gina.mdl");
-        CBaseEntity::PrecacheModel("models/player/mp/gman/gman.mdl");
-        CBaseEntity::PrecacheModel("models/player/mp/gordon/gordon.mdl");
-        CBaseEntity::PrecacheModel("models/player/mp/helmet/helmet.mdl");
-        CBaseEntity::PrecacheModel("models/player/mp/hgrunt/hgrunt.mdl");
-        CBaseEntity::PrecacheModel("models/player/mp/robo/robo.mdl");
-        CBaseEntity::PrecacheModel("models/player/mp/scientist/scientist.mdl");
-        CBaseEntity::PrecacheModel("models/player/mp/zombie/zombie.mdl");
-        CBaseEntity::PrecacheModel("models/player.mdl" );                
-    }
-    else
-    {
-        CBaseEntity::PrecacheModel("models/player.mdl" );
-    }
+	// Multiplayer uses different models, and more of them.
+	if ( g_pGameRules->IsMultiplayer() )
+	{
+		CBaseEntity::PrecacheModel("models/player/mp/barney/barney.mdl");
+		CBaseEntity::PrecacheModel("models/player/mp/gina/gina.mdl");
+		CBaseEntity::PrecacheModel("models/player/mp/gman/gman.mdl");
+		CBaseEntity::PrecacheModel("models/player/mp/gordon/gordon.mdl");
+		CBaseEntity::PrecacheModel("models/player/mp/helmet/helmet.mdl");
+		CBaseEntity::PrecacheModel("models/player/mp/hgrunt/hgrunt.mdl");
+		CBaseEntity::PrecacheModel("models/player/mp/robo/robo.mdl");
+		CBaseEntity::PrecacheModel("models/player/mp/scientist/scientist.mdl");
+		CBaseEntity::PrecacheModel("models/player/mp/zombie/zombie.mdl");
+		CBaseEntity::PrecacheModel("models/player.mdl" );
+	}
+	else
+	{
+		CBaseEntity::PrecacheModel("models/player.mdl" );
+	}
 
 	CBaseEntity::PrecacheModel( "models/gibs/agibs.mdl" );
 
@@ -196,4 +196,3 @@ void InstallGameRules()
 
 	CreateGameRulesObject( "CHalfLife1" );
 }
-

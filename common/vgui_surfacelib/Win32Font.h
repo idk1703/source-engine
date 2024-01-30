@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -129,7 +129,7 @@ private:
 	};
 
 #if !defined( _X360 )
-	// On PC we cache char widths on demand when actually requested to minimize our use of the kernels 
+	// On PC we cache char widths on demand when actually requested to minimize our use of the kernels
 	// paged pool (GDI may cache information about glyphs we have requested and take up lots of paged pool)
 	struct abc_cache_t
 	{

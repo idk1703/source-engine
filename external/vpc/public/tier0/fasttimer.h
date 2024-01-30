@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -62,7 +62,7 @@ public:
 
 	unsigned long	GetMicroseconds() const;
 	uint64			GetUlMicroseconds() const;
-	double			GetMicrosecondsF() const; 	
+	double			GetMicrosecondsF() const;
 	void			SetMicroseconds( unsigned long nMicroseconds );
 
 	unsigned long	GetMilliseconds() const;
@@ -74,7 +74,7 @@ public:
 
 	// dest = rSrc1 + rSrc2
 	static void		Add( CCycleCount const &rSrc1, CCycleCount const &rSrc2, CCycleCount &dest );	// Add two samples together.
-	
+
 	// dest = rSrc1 - rSrc2
 	static void		Sub( CCycleCount const &rSrc1, CCycleCount const &rSrc2, CCycleCount &dest );	// Add two samples together.
 
@@ -144,7 +144,7 @@ public:
 				CTimeScope( CFastTimer *pTimer );
 				~CTimeScope();
 
-private:	
+private:
 	CFastTimer	*m_pTimer;
 };
 
@@ -169,7 +169,7 @@ public:
 
 	void		End();
 
-private:	
+private:
 	CCycleCount	*m_pTotal;
 	CFastTimer	m_Timer;
 };
@@ -197,12 +197,12 @@ inline void CTimeAdder::End()
 
 
 
-// -------------------------------------------------------------------------- // 
+// -------------------------------------------------------------------------- //
 // Simple tool to support timing a block of code, and reporting the results on
 // program exit or at each iteration
 //
 //	Macros used because dbg.h uses this header, thus Msg() is unavailable
-// -------------------------------------------------------------------------- // 
+// -------------------------------------------------------------------------- //
 
 #define PROFILE_SCOPE(name) \
 	class C##name##ACC : public CAverageCycleCounter \
@@ -236,18 +236,18 @@ inline void CTimeAdder::End()
 	} name##_TSM;
 
 
-// -------------------------------------------------------------------------- // 
+// -------------------------------------------------------------------------- //
 
 class CAverageCycleCounter
 {
 public:
 	CAverageCycleCounter();
-	
+
 	void Init();
 	void MarkIter( const CCycleCount &duration );
-	
+
 	unsigned GetIters() const;
-	
+
 	double GetAverageMilliseconds() const;
 	double GetTotalMilliseconds() const;
 	double GetPeakMilliseconds() const;
@@ -260,23 +260,23 @@ private:
 	const tchar *m_pszName;
 };
 
-// -------------------------------------------------------------------------- // 
+// -------------------------------------------------------------------------- //
 
 class CAverageTimeMarker
 {
 public:
 	CAverageTimeMarker( CAverageCycleCounter *pCounter );
 	~CAverageTimeMarker();
-	
+
 private:
 	CAverageCycleCounter *m_pCounter;
 	CFastTimer	m_Timer;
 };
 
 
-// -------------------------------------------------------------------------- // 
+// -------------------------------------------------------------------------- //
 // CCycleCount inlines.
-// -------------------------------------------------------------------------- // 
+// -------------------------------------------------------------------------- //
 
 inline CCycleCount::CCycleCount()
 {
@@ -315,9 +315,9 @@ inline void CCycleCount::Sample()
 {
 #ifdef COMPILER_MSVC64
 	unsigned __int64* pSample = (unsigned __int64*)&m_Int64;
-	*pSample = __rdtsc(); 
-	//		Msg( "Sample = %I64x", pSample ); 
-#elif defined( _X360 ) 
+	*pSample = __rdtsc();
+	//		Msg( "Sample = %I64x", pSample );
+#elif defined( _X360 )
 	// only need lower 32 bits, avoids doc'd read bug and 32 bit rollover is in 85 seconds
 	m_Int64 = (uint64)__mftb32();
 	// scale back up, needs to be viewed as 1 cycle/clock
@@ -326,13 +326,13 @@ inline void CCycleCount::Sample()
 	m_Int64 = (uint64)__mftb();
 	// scale back up, needs to be viewed as 1 cycle/clock
 #elif defined( __GNUC__ )
-	union 
+	union
 	{
 		unsigned long* pSample;
 		uint64 * pInt64;
 	} tmp;
 	tmp.pInt64 = &m_Int64;
-	__asm__ __volatile__ (  
+	__asm__ __volatile__ (
 		"rdtsc\n\t"
 		"movl %%eax,  (%0)\n\t"
 		"movl %%edx, 4(%0)\n\t"
@@ -355,7 +355,7 @@ inline void CCycleCount::Sample()
 	}
 #elif defined( POSIX )
 	unsigned long* pSample = (unsigned long *)&m_Int64;
-    __asm__ __volatile__ (  
+	__asm__ __volatile__ (
 		"rdtsc\n\t"
 		"movl %%eax,  (%0)\n\t"
 		"movl %%edx, 4(%0)\n\t"
@@ -450,9 +450,9 @@ inline double CCycleCount::GetSeconds() const
 }
 
 
-// -------------------------------------------------------------------------- // 
+// -------------------------------------------------------------------------- //
 // CFastTimer inlines.
-// -------------------------------------------------------------------------- // 
+// -------------------------------------------------------------------------- //
 inline void CFastTimer::Start()
 {
 	m_Duration.Sample();
@@ -472,8 +472,8 @@ inline void CFastTimer::End()
 		// more than one overflow should not have occurred, otherwise caller should use a slower timer
 		if ( (uint64)cnt.m_Int64 <= (uint64)m_Duration.m_Int64 )
 		{
-			// rollover occurred	
-			cnt.m_Int64 += 0x100000000LL;	
+			// rollover occurred
+			cnt.m_Int64 += 0x100000000LL;
 		}
 	}
 
@@ -494,14 +494,14 @@ inline CCycleCount CFastTimer::GetDurationInProgress() const
 		// more than one overflow should not have occurred, otherwise caller should use a slower timer
 		if ( (uint64)cnt.m_Int64 <= (uint64)m_Duration.m_Int64 )
 		{
-			// rollover occurred	
-			cnt.m_Int64 += 0x100000000LL;	
+			// rollover occurred
+			cnt.m_Int64 += 0x100000000LL;
 		}
 	}
 
 	CCycleCount result;
 	result.m_Int64 = cnt.m_Int64 - m_Duration.m_Int64;
-	
+
 	return result;
 }
 
@@ -521,7 +521,7 @@ inline CCycleCount const& CFastTimer::GetDuration() const
 }
 
 
-// -------------------------------------------------------------------------- // 
+// -------------------------------------------------------------------------- //
 // CAverageCycleCounter inlines
 
 inline CAverageCycleCounter::CAverageCycleCounter()
@@ -567,7 +567,7 @@ inline double CAverageCycleCounter::GetPeakMilliseconds() const
 	return m_Peak.GetMillisecondsF();
 }
 
-// -------------------------------------------------------------------------- // 
+// -------------------------------------------------------------------------- //
 
 inline CAverageTimeMarker::CAverageTimeMarker( CAverageCycleCounter *pCounter )
 {

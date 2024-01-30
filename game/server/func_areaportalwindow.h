@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,8 +20,8 @@
 class CFuncAreaPortalWindow : public CFuncAreaPortalBase
 {
 public:
-	DECLARE_CLASS( CFuncAreaPortalWindow, CFuncAreaPortalBase );	
-	
+	DECLARE_CLASS( CFuncAreaPortalWindow, CFuncAreaPortalBase );
+
 	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();
 
@@ -47,7 +47,7 @@ public:
 	bool IsWindowOpen( const Vector &vOrigin, float fovDistanceAdjustFactor );
 
 public:
-	
+
 	CNetworkVar( float, m_flFadeStartDist );	// Distance at which it starts fading (when <= this, alpha=m_flTranslucencyLimit).
 	CNetworkVar( float, m_flFadeDist );		// Distance at which it becomes solid.
 

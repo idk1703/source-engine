@@ -58,7 +58,7 @@ public:
 	static float AxisDelta( int flags, const QAngle &angle1, const QAngle &angle2 );
 
 	string_t m_sMaster;		// If this button has a master switch, this is the targetname.
-							// A master switch must be of the multisource type. If all 
+							// A master switch must be of the multisource type. If all
 							// of the switches in the multisource have been triggered, then
 							// the button will be allowed to operate. Otherwise, it will be
 							// deactivated.

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ public:
 	DECLARE_DATADESC();
 
 	CNPC_Assassin( void );
-	
+
 	Class_T		Classify( void )			{ return CLASS_COMBINE;	}
 	int			GetSoundInterests ( void )	{ return (SOUND_WORLD|SOUND_COMBAT|SOUND_PLAYER);	}
 

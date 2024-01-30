@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,10 +41,10 @@ static AnalysisData g_Analysis;
 
 
 SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
-{	
+{
 	printf( "%s", pMsg );
 	OutputDebugString( pMsg );
-	
+
 	if ( type == SPEW_ERROR )
 	{
 		printf( "\n" );
@@ -57,7 +57,7 @@ SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void printusage( void )
 {
@@ -200,7 +200,7 @@ bool AddModelNameFromSource( CUtlDict< ModelFile, int >& models, char const *fil
 
 		vprint_queued( 0, "multiple .qc's build %s\n  %s\n  %s\n",
 			modelname,
-			shortname, 
+			shortname,
 			shortname2 );
 		return false;
 	}
@@ -215,10 +215,10 @@ bool AddModelNameFromSource( CUtlDict< ModelFile, int >& models, char const *fil
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *sourcetreebase - 
-//			*subdir - 
-//			*baseentityclass - 
+// Purpose:
+// Input  : *sourcetreebase -
+//			*subdir -
+//			*baseentityclass -
 //-----------------------------------------------------------------------------
 void ProcessSourceDirectory( char const *basedir )
 {
@@ -437,7 +437,7 @@ void CheckForUnbuiltModels( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CheckLogFile( void )
 {
@@ -449,9 +449,9 @@ void CheckLogFile( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : argc - 
-//			argv[] - 
+// Purpose:
+// Input  : argc -
+//			argv[] -
 // Output : int
 //-----------------------------------------------------------------------------
 int main( int argc, char* argv[] )

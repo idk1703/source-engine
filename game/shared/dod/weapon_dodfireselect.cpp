@@ -1,10 +1,10 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
-#include "cbase.h" 
+#include "cbase.h"
 #include "fx_dod_shared.h"
 #include "weapon_dodfireselect.h"
 
@@ -16,7 +16,7 @@ IMPLEMENT_NETWORKCLASS_ALIASED( DODFireSelectWeapon, DT_FireSelectWeapon )
 
 
 BEGIN_NETWORK_TABLE( CDODFireSelectWeapon, DT_FireSelectWeapon )
-#ifdef CLIENT_DLL	
+#ifdef CLIENT_DLL
 	RecvPropBool( RECVINFO( m_bSemiAuto ) )
 #else
 	SendPropBool( SENDINFO( m_bSemiAuto ) )
@@ -65,7 +65,7 @@ float CDODFireSelectWeapon::GetFireDelay( void )
 	else
 	{
 		return m_pWeaponInfo->m_flFireDelay;
-	}	
+	}
 }
 
 void CDODFireSelectWeapon::SecondaryAttack( void )
@@ -125,7 +125,7 @@ bool CDODFireSelectWeapon::IsSemiAuto( void )
 float CDODFireSelectWeapon::GetWeaponAccuracy( float flPlayerSpeed )
 {
 	float flSpread;
-	
+
 	if ( IsSemiAuto() )
 		flSpread = m_pWeaponInfo->m_flSecondaryAccuracy;
 	else

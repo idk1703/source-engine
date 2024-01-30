@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -63,7 +63,7 @@ void CCriticalSection::Unlock()
 		m_Locks.Remove( index );
 	LeaveCriticalSection( (CRITICAL_SECTION*)&m_DeadlockProtect );
 #endif
-	
+
 	LeaveCriticalSection( (CRITICAL_SECTION*)&m_CS );
 }
 
@@ -151,5 +151,3 @@ bool CEvent::ResetEvent()
 	Assert( m_hEvent );
 	return ::ResetEvent( (HANDLE)m_hEvent ) != 0;
 }
-
-

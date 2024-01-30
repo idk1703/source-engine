@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@ static void RecvProxy_HDRColorScale( const CRecvProxyData *pData, void *pStruct,
 }
 
 IMPLEMENT_CLIENTCLASS_DT_NOBASE( C_Sun, DT_Sun, CSun )
-	
+
 	RecvPropInt( RECVINFO(m_clrRender), 0, RecvProxy_IntToColor32 ),
 	RecvPropInt( RECVINFO(m_clrOverlay), 0, RecvProxy_IntToColor32 ),
 	RecvPropVector( RECVINFO( m_vDirection ) ),
@@ -29,7 +29,7 @@ IMPLEMENT_CLIENTCLASS_DT_NOBASE( C_Sun, DT_Sun, CSun )
 	RecvPropInt( RECVINFO( m_nMaterial ) ),
 	RecvPropInt( RECVINFO( m_nOverlayMaterial ) ),
 	RecvPropFloat("HDRColorScale", 0, SIZEOF_IGNORE, 0, RecvProxy_HDRColorScale),
-	
+
 END_RECV_TABLE()
 
 C_Sun::C_Sun()
@@ -74,7 +74,7 @@ void C_Sun::OnDataChanged( DataUpdateType_t updateType )
 		vMainColor.y = m_clrRender->g / maxComponent;
 		vMainColor.z = m_clrRender->b / maxComponent;
 	}
-	
+
 	// If we're non-zero, use the value (otherwise use the value we calculated above)
 	if ( m_clrOverlay.r != 0 || m_clrOverlay.g != 0 || m_clrOverlay.b != 0 )
 	{
@@ -88,7 +88,7 @@ void C_Sun::OnDataChanged( DataUpdateType_t updateType )
 		vOverlayColor = vMainColor;
 	}
 
-	// 
+	//
 	// Setup the core overlay
 	//
 
@@ -136,6 +136,3 @@ void C_Sun::OnDataChanged( DataUpdateType_t updateType )
 		m_GlowOverlay.Deactivate();
 	}
 }
-
-
-

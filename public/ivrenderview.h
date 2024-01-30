@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -65,7 +65,7 @@ enum ERenderDepthMode
 	DEPTH_MODE_OVERRIDE = 3,
 
 	DEPTH_MODE_MAX
-}; 
+};
 
 typedef VPlane Frustum[FRUSTUM_NUMPLANES];
 
@@ -188,13 +188,13 @@ public:
 	// Draw normal brush model.
 	// If pMaterialOverride is non-null, then all the faces of the bmodel will
 	// set this material rather than their regular material.
-	virtual void			DrawBrushModel( 
-		IClientEntity *baseentity, 
-		model_t *model, 
-		const Vector& origin, 
-		const QAngle& angles, 
+	virtual void			DrawBrushModel(
+		IClientEntity *baseentity,
+		model_t *model,
+		const Vector& origin,
+		const QAngle& angles,
 		bool bUnused ) = 0;
-	
+
 	// Draw brush model that has no origin/angles change ( uses identity transform )
 	// FIXME, Material proxy IClientEntity *baseentity is unused right now, use DrawBrushModel for brushes with
 	//  proxies for now.
@@ -278,7 +278,7 @@ public:
 
 	virtual bool			DoesBoxIntersectWaterVolume( const Vector &mins, const Vector &maxs, int leafWaterDataID ) = 0;
 
-	virtual void			SetAreaState( 
+	virtual void			SetAreaState(
 			unsigned char chAreaBits[MAX_AREA_STATE_BYTES],
 			unsigned char chAreaPortalBits[MAX_AREA_PORTAL_STATE_BYTES] ) = 0;
 

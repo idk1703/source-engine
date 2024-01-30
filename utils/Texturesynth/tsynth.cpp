@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -28,7 +28,7 @@ void SynthesizeTexture(FloatBitMap_t & output, FloatBitMap_t const & input)
 		FloatBitMap_t & output0=*(output_pyramid.Level(level+1));
 		FloatBitMap_t & input=*(input_pyramid.Level(level));
 		FloatBitMap_t & input0=*(input_pyramid.Level(level+1));
-		if ( 
+		if (
 			(input.Width < NEIGHBORHOOD_SIZE*3) ||
 			(input.Height < NEIGHBORHOOD_SIZE*3)
 			)

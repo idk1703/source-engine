@@ -49,7 +49,7 @@
 void CL_NotifyRPTOfDisconnect( );
 #endif // ENABLE_RPT
 
-#if !defined( NO_STEAM ) 
+#if !defined( NO_STEAM )
 void UpdateNameFromSteamID( IConVar *pConVar, CSteamID *pSteamID )
 {
 #ifndef SWDS
@@ -93,7 +93,7 @@ void CL_NameCvarChanged( IConVar *pConVar, const char *pOldString, float flOldVa
 
 		// store off the last known name, that isn't default, in the registry
 		// this is a transition step so it can be used to display in friends
-		if ( 0 != Q_stricmp( var.GetString(), var.GetDefault()  ) 
+		if ( 0 != Q_stricmp( var.GetString(), var.GetDefault()  )
 			&& 0 != Q_stricmp( var.GetString(), "player" ) )
 		{
 			Sys_SetRegKeyValue( "Software\\Valve\\Steam", "LastGameNameUsed", var.GetString() );
@@ -236,8 +236,8 @@ inline static bool CL_DetermineUpdateType( CEntityReadInfo &u )
 // Purpose: When a delta command is received from the server
 //  We need to grab the entity # out of it any the bit settings, too.
 //  Returns -1 if there are no more entities.
-// Input  : &bRemove - 
-//			&bIsNew - 
+// Input  : &bRemove -
+//			&bIsNew -
 // Output : int
 //-----------------------------------------------------------------------------
 static inline void CL_ParseDeltaHeader( CEntityReadInfo &u )
@@ -247,7 +247,7 @@ static inline void CL_ParseDeltaHeader( CEntityReadInfo &u )
 #ifdef DEBUG_NETWORKING
 	int startbit = u.m_pBuf->GetNumBitsRead();
 #endif
-	SyncTag_Read( u.m_pBuf, "Hdr" );	
+	SyncTag_Read( u.m_pBuf, "Hdr" );
 
 	u.m_nNewEntity = u.m_nHeaderBase + 1 + u.m_pBuf->ReadUBitVar();
 
@@ -323,7 +323,7 @@ void CBaseClientState::Clear( void )
 {
 	m_nServerCount = -1;
 	m_nDeltaTick = -1;
-	
+
 	m_ClockDriftMgr.Clear();
 
 	m_nCurrentSequence = 0;
@@ -345,7 +345,7 @@ void CBaseClientState::Clear( void )
 #ifndef SHARED_NET_STRING_TABLES
 		m_StringTableContainer->RemoveAllTables();
 #endif
-	
+
 		m_StringTableContainer = NULL;
 	}
 
@@ -353,9 +353,9 @@ void CBaseClientState::Clear( void )
 
 	RecvTable_Term( false );
 
-	if ( m_NetChannel ) 
+	if ( m_NetChannel )
 		m_NetChannel->Reset();
-	
+
 	m_bPaused = 0;
 	m_flPausedExpireTime = -1.f;
 	m_nViewEntity = 0;
@@ -473,7 +473,7 @@ bool CBaseClientState::SetSignonState ( int state, int count )
 		}
 #endif
 
-		if ( IsX360() && 
+		if ( IsX360() &&
 			g_pMatchmaking->PreventFullServerStartup() )
 		{
 			return true;
@@ -570,7 +570,7 @@ bool CBaseClientState::PrepareSteamConnectResponse( uint64 unGSSteamID, bool bGS
 		return true;
 	}
 
-#if !defined( NO_STEAM ) && !defined( SWDS  ) 
+#if !defined( NO_STEAM ) && !defined( SWDS  )
 	if ( !Steam3Client().SteamUser() )
 	{
 		COM_ExplainDisconnection( true, "#GameUI_ServerRequireSteam" );
@@ -578,7 +578,7 @@ bool CBaseClientState::PrepareSteamConnectResponse( uint64 unGSSteamID, bool bGS
 		return false;
 	}
 #endif
-	
+
 	netadr_t checkAdr = adr;
 	if ( adr.GetType() == NA_LOOPBACK || adr.IsLocalhost() )
 	{
@@ -619,13 +619,13 @@ static ConVar cl_connectmethod( "cl_connectmethod", "", FCVAR_USERINFO | FCVAR_H
 	// redirects and allow it for other types.
 	const char *pConnectMethod = cl_connectmethod.GetString();
 	if ( V_strcmp( pConnectMethod, "serverbrowser_internet" ) == 0 ||
-		 V_strncmp( pConnectMethod, "quickpick", 9 ) == 0 ||
-		 V_strncmp( pConnectMethod, "quickplay", 9 ) == 0 ||
-		 V_strcmp( pConnectMethod, "matchmaking" ) == 0 ||
-		 V_strcmp( pConnectMethod, "coaching" ) == 0 )
-	 {
-		 return false;
-	 }
+		V_strncmp( pConnectMethod, "quickpick", 9 ) == 0 ||
+		V_strncmp( pConnectMethod, "quickplay", 9 ) == 0 ||
+		V_strcmp( pConnectMethod, "matchmaking" ) == 0 ||
+		V_strcmp( pConnectMethod, "coaching" ) == 0 )
+	{
+		return false;
+	}
 	return true;
 }
 
@@ -650,9 +650,9 @@ void CBaseClientState::Connect(const char* adr, const char *pszSourceTag)
 
 	// For the check for resend timer to fire a connection / getchallenge request.
 	SetSignonState( SIGNONSTATE_CHALLENGE, -1 );
-	
+
 	// Force connection request to fire.
-	m_flConnectTime = -FLT_MAX;  
+	m_flConnectTime = -FLT_MAX;
 
 	m_nRetryNumber = 0;
 }
@@ -681,18 +681,18 @@ void CBaseClientState::ForceFullUpdate( void )
 void CBaseClientState::FullConnect( netadr_t &adr )
 {
 	// Initiate the network channel
-	
+
 	COM_TimestampedLog( "CBaseClientState::FullConnect" );
 
 	m_NetChannel = NET_CreateNetChannel( m_Socket, &adr, "CLIENT", this );
 
 	Assert( m_NetChannel );
-	
+
 	m_NetChannel->StartStreaming( m_nChallengeNr );	// open TCP stream
 
 	// Bump connection time to now so we don't resend a connection
-	// Request	
-	m_flConnectTime = net_time; 
+	// Request
+	m_flConnectTime = net_time;
 
 	// We'll request a full delta from the baseline
 	m_nDeltaTick = -1;
@@ -715,7 +715,7 @@ void CBaseClientState::FullConnect( netadr_t &adr )
 		event->SetInt(    "port", m_NetChannel->GetRemoteAddress().GetPort() );
 		g_GameEventManager.FireEventClientSide( event );
 	}
-	
+
 }
 
 void CBaseClientState::ConnectionCrashed(const char *reason)
@@ -745,7 +745,7 @@ void CBaseClientState::Disconnect( const char *pszReason, bool bShowMainMenu )
 	{
 		adr = m_NetChannel->GetRemoteAddress();
 	}
-	else 
+	else
 	{
 		NET_StringToAdr (m_szRetryAddress, &adr);
 	}
@@ -826,7 +826,7 @@ void CBaseClientState::CheckForResend (void)
 		Disconnect( "Connection failed", true );
 		return;
 	}
-	
+
 	// Mark time of this attempt.
 	m_flConnectTime = net_time;	// for retransmit requests
 
@@ -875,7 +875,7 @@ bool CBaseClientState::ProcessConnectionlessPacket( netpacket_t *packet )
 
 	Assert( packet );
 
-	bf_read &msg = packet->message;	// handy shortcut 
+	bf_read &msg = packet->message;	// handy shortcut
 
 	int c = msg.ReadByte();
 
@@ -898,7 +898,7 @@ bool CBaseClientState::ProcessConnectionlessPacket( netpacket_t *packet )
 
 	switch ( c )
 	{
-		
+
 	case S2C_CONNECTION:	if ( m_nSignonState == SIGNONSTATE_CHALLENGE )
 							{
 								int myChallenge = msg.ReadLong();
@@ -912,7 +912,7 @@ bool CBaseClientState::ProcessConnectionlessPacket( netpacket_t *packet )
 								FullConnect( packet->from );
 							}
 							break;
-		
+
 	case S2C_CHALLENGE:		// Response from getchallenge we sent to the server we are connecting to
 							// Blow it off if we are not connected.
 							if ( m_nSignonState == SIGNONSTATE_CHALLENGE )
@@ -944,7 +944,7 @@ bool CBaseClientState::ProcessConnectionlessPacket( netpacket_t *packet )
 										Disconnect( "Invalid Steam key size", true );
 										return false;
 									}
-									if ( msg.GetNumBytesLeft() > sizeof(unGSSteamID) ) 
+									if ( msg.GetNumBytesLeft() > sizeof(unGSSteamID) )
 									{
 										if ( !msg.ReadBytes( &unGSSteamID, sizeof(unGSSteamID) ) )
 										{
@@ -1018,7 +1018,7 @@ bool CBaseClientState::ProcessTick( NET_Tick *msg )
 
 void CBaseClientState::SendStringCmd(const char * command)
 {
-	if ( m_NetChannel) 
+	if ( m_NetChannel)
 	{
 		NET_StringCmd stringCmd( command );
 		m_NetChannel->SendNetMsg( stringCmd );
@@ -1070,7 +1070,7 @@ bool CBaseClientState::ProcessSetConVar( NET_SetConVar *msg )
 		{
 			ConMsg( "SetConVar: No such cvar ( %s set to %s), skipping\n",
 				name, value );
-			continue; 
+			continue;
 		}
 
 		// Make sure server is only setting replicated game ConVars
@@ -1096,7 +1096,7 @@ bool CBaseClientState::ProcessSignonState( NET_SignonState *msg )
 {
 	VPROF( "ProcessSignonState" );
 
-	return SetSignonState( msg->m_nSignonState, msg->m_nSpawnCount ) ;	
+	return SetSignonState( msg->m_nSignonState, msg->m_nSpawnCount ) ;
 }
 
 bool CBaseClientState::ProcessPrint( SVC_Print *msg )
@@ -1112,7 +1112,7 @@ bool CBaseClientState::ProcessMenu( SVC_Menu *msg )
 	VPROF( "ProcessMenu" );
 
 #if !defined(SWDS)
-	PluginHelpers_Menu( msg );	
+	PluginHelpers_Menu( msg );
 #endif
 	return true;
 }
@@ -1126,15 +1126,15 @@ bool CBaseClientState::ProcessServerInfo( SVC_ServerInfo *msg )
 #endif
 
 	COM_TimestampedLog( " CBaseClient::ProcessServerInfo" );
-	
-	if (  msg->m_nProtocol != PROTOCOL_VERSION 
+
+	if (  msg->m_nProtocol != PROTOCOL_VERSION
 #if  defined( DEMO_BACKWARDCOMPATABILITY ) && (! defined( SWDS ) )
 		&& !( demoplayer->IsPlayingBack() && msg->m_nProtocol >= PROTOCOL_VERSION_12 )
 #endif
 		)
 	{
 		ConMsg ( "Server returned version %i, expected %i.\n", msg->m_nProtocol, PROTOCOL_VERSION );
-		return false; 
+		return false;
 	}
 
 	// Parse servercount (i.e., # of servers spawned since server .exe started)
@@ -1145,7 +1145,7 @@ bool CBaseClientState::ProcessServerInfo( SVC_ServerInfo *msg )
 
 	m_nServerClasses	= msg->m_nMaxClasses;
 	m_nServerClassBits	= Q_log2( m_nServerClasses ) + 1;
-	
+
 	if ( m_nMaxClients < 1 || m_nMaxClients > ABSOLUTE_PLAYER_LIMIT )
 	{
 		ConMsg ("Bad maxclients (%u) from server.\n", m_nMaxClients);
@@ -1159,7 +1159,7 @@ bool CBaseClientState::ProcessServerInfo( SVC_ServerInfo *msg )
 	}
 
 #ifndef SWDS
-	if ( !sv.IsActive() && 
+	if ( !sv.IsActive() &&
 		!( m_NetChannel->IsLoopback() || m_NetChannel->IsNull() ) )
 	{
 		// if you are joing a remote server it MUST be multipler and have maxplayer set to more than 1
@@ -1172,7 +1172,7 @@ bool CBaseClientState::ProcessServerInfo( SVC_ServerInfo *msg )
 		}
 
 		// reset server enforced cvars
-		g_pCVar->RevertFlaggedConVars( FCVAR_REPLICATED );	
+		g_pCVar->RevertFlaggedConVars( FCVAR_REPLICATED );
 
 		// Cheats were disabled; revert all cheat cvars to their default values.
 		// This must be done heading into multiplayer games because people can play
@@ -1188,18 +1188,18 @@ bool CBaseClientState::ProcessServerInfo( SVC_ServerInfo *msg )
 
 	// force changed flag to being reset
 	g_GameEventManager.HasClientListenersChanged( true );
-	
+
 	m_nPlayerSlot = msg->m_nPlayerSlot;
-	m_nViewEntity = m_nPlayerSlot + 1; 
-	
+	m_nViewEntity = m_nPlayerSlot + 1;
+
 	if ( msg->m_fTickInterval < MINIMUM_TICK_INTERVAL ||
-		 msg->m_fTickInterval > MAXIMUM_TICK_INTERVAL )
+		msg->m_fTickInterval > MAXIMUM_TICK_INTERVAL )
 	{
 		ConMsg ("Interval_per_tick %f out of range [%f to %f]\n",
 			msg->m_fTickInterval, MINIMUM_TICK_INTERVAL, MAXIMUM_TICK_INTERVAL );
 		return false;
 	}
-	
+
 	if ( !COM_CheckGameDirectory( msg->m_szGameDir ) )
 	{
 		return false;
@@ -1218,7 +1218,7 @@ bool CBaseClientState::ProcessServerInfo( SVC_ServerInfo *msg )
 	}
 
 	m_nDeltaTick = -1;	// no valid snapshot for this game yet
-	
+
 	// fire a client side event about server data
 
 	IGameEvent *event = g_GameEventManager.CreateEvent( "server_spawn" );
@@ -1346,7 +1346,7 @@ bool CBaseClientState::ProcessCreateStringTable( SVC_CreateStringTable *msg )
 	COM_TimestampedLog( " CBaseClient::ProcessCreateStringTable(%s)", msg->m_szTableName );
 	m_StringTableContainer->AllowCreation( true );
 
-    int startbit = msg->m_DataIn.GetNumBitsRead();
+	int startbit = msg->m_DataIn.GetNumBitsRead();
 
 #ifndef SHARED_NET_STRING_TABLES
 
@@ -1369,9 +1369,9 @@ bool CBaseClientState::ProcessCreateStringTable( SVC_CreateStringTable *msg )
 		//              to somewhat reasonable ranges to prevent overflows with less-audited code in the engine.
 		bool bSuccess = false;
 		if ( msg->m_DataIn.TotalBytesAvailable() > 0 &&
-		     msgCompressedSize <= (unsigned int)msg->m_DataIn.TotalBytesAvailable() &&
-		     msgCompressedSize < UINT_MAX/2 &&
-		     msgUncompressedSize < UINT_MAX/2 )
+			msgCompressedSize <= (unsigned int)msg->m_DataIn.TotalBytesAvailable() &&
+			msgCompressedSize < UINT_MAX/2 &&
+			msgUncompressedSize < UINT_MAX/2 )
 		{
 			// allocate buffer for uncompressed data, align to 4 bytes boundary
 			char *uncompressedBuffer = new char[PAD_NUMBER( msgUncompressedSize, 4 )];
@@ -1412,7 +1412,7 @@ bool CBaseClientState::ProcessCreateStringTable( SVC_CreateStringTable *msg )
 
 	COM_TimestampedLog( " CBaseClient::ProcessCreateStringTable(%s)-done", msg->m_szTableName );
 
-	return ( endbit - startbit ) == msg->m_nLength;	
+	return ( endbit - startbit ) == msg->m_nLength;
 }
 
 bool CBaseClientState::ProcessUpdateStringTable( SVC_UpdateStringTable *msg )
@@ -1465,7 +1465,7 @@ bool CBaseClientState::ProcessPacketEntities( SVC_PacketEntities *msg )
 		ConMsg("Received packet entities while connecting!\n");
 		return false;
 	}
-	
+
 	if ( m_nSignonState == SIGNONSTATE_SPAWN )
 	{
 		if ( !msg->m_bIsDelta )
@@ -1495,7 +1495,7 @@ void CBaseClientState::ReadPacketEntities( CEntityReadInfo &u )
 	VPROF( "ReadPacketEntities" );
 
 	// Loop until there are no more entities to read
-	
+
 	u.NextOldEntity();
 
 	while ( u.m_UpdateType < Finished )
@@ -1510,7 +1510,7 @@ void CBaseClientState::ReadPacketEntities( CEntityReadInfo &u )
 		}
 
 		u.m_UpdateType = PreserveEnt;
-		
+
 		while( u.m_UpdateType == PreserveEnt )
 		{
 			// Figure out what kind of an update this is.
@@ -1537,15 +1537,15 @@ void CBaseClientState::ReadPacketEntities( CEntityReadInfo &u )
 		}
 	}
 
-	// Now process explicit deletes 
+	// Now process explicit deletes
 	if ( u.m_bAsDelta && u.m_UpdateType == Finished )
 	{
 		ReadDeletions( u );
 	}
 
 	// Something didn't parse...
-	if ( u.m_pBuf->IsOverflowed() )							
-	{	
+	if ( u.m_pBuf->IsOverflowed() )
+	{
 		Host_Error ( "CL_ParsePacketEntities:  buffer read overflow\n" );
 	}
 
@@ -1556,13 +1556,13 @@ void CBaseClientState::ReadPacketEntities( CEntityReadInfo &u )
 	if ( !u.m_bAsDelta )
 	{
 		m_flNextCmdTime = 0.0; // answer ASAP to confirm full update tick
-	} 
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pHead - 
-//			*pClassName - 
+// Purpose:
+// Input  : *pHead -
+//			*pClassName -
 // Output : static ClientClass*
 //-----------------------------------------------------------------------------
 ClientClass* CBaseClientState::FindClientClass(const char *pClassName)
@@ -1614,7 +1614,7 @@ bool CBaseClientState::LinkClasses()
 			{
 				Host_EndGame( true, "CL_ParseClassInfo_EndClasses: server and client classes for '%s' use different datatables (server: %s, client: %s)",
 					pServerClass->m_ClassName, pServerName, pClientName );
-				
+
 				return false;
 			}
 
@@ -1656,7 +1656,7 @@ void CBaseClientState::SetEntityBaseline(int iBaseline, ClientClass *pClientClas
 	Assert( index >= 0 && index < MAX_EDICTS );
 	Assert( pClientClass );
 	Assert( (iBaseline == 0) || (iBaseline == 1) );
-	
+
 	PackedEntity *entitybl = m_pEntityBaselines[iBaseline][index];
 
 	if ( !entitybl )
@@ -1675,7 +1675,7 @@ void CBaseClientState::SetEntityBaseline(int iBaseline, ClientClass *pClientClas
 void CBaseClientState::CopyEntityBaseline( int iFrom, int iTo )
 {
 	Assert ( iFrom != iTo );
-	
+
 
 	for ( int i=0; i<MAX_EDICTS; i++ )
 	{
@@ -1707,7 +1707,7 @@ void CBaseClientState::CopyEntityBaseline( int iFrom, int iTo )
 		Assert( blfrom->m_nEntityIndex == i );
 		Assert( !blfrom->IsCompressed() );
 
-		blto->m_nEntityIndex	= blfrom->m_nEntityIndex; 
+		blto->m_nEntityIndex	= blfrom->m_nEntityIndex;
 		blto->m_pClientClass	= blfrom->m_pClientClass;
 		blto->m_pServerClass	= blfrom->m_pServerClass;
 		blto->AllocAndCopyPadded( blfrom->GetData(), blfrom->GetNumBytes() );
@@ -1722,8 +1722,8 @@ ClientClass *CBaseClientState::GetClientClass( int index )
 
 bool CBaseClientState::GetClassBaseline( int iClass, void const **pData, int *pDatalen )
 {
-	ErrorIfNot( 
-		iClass >= 0 && iClass < m_nServerClasses, 
+	ErrorIfNot(
+		iClass >= 0 && iClass < m_nServerClasses,
 		("GetDynamicBaseline: invalid class index '%d'", iClass) );
 
 	// We lazily update these because if you connect to a server that's already got some dynamic baselines,
@@ -1752,7 +1752,7 @@ bool CBaseClientState::GetClassBaseline( int iClass, void const **pData, int *pD
 			// Gets a callstack, whereas ErrorIfNot(), does not.
 			Assert( 0 );
 		}
-		ErrorIfNot( 
+		ErrorIfNot(
 			pInfo->m_InstanceBaselineIndex != INVALID_STRING_INDEX,
 			("GetDynamicBaseline: FindStringIndex(%s-%s) failed.", str, pInfo->m_ClassName );
 			);
@@ -1776,14 +1776,14 @@ bool CBaseClientState::ProcessGetCvarValue( SVC_GetCvarValue *msg )
 
 	// Prepare the response.
 	CLC_RespondCvarValue returnMsg;
-	
+
 	returnMsg.m_iCookie = msg->m_iCookie;
 	returnMsg.m_szCvarName = msg->m_szCvarName;
 	returnMsg.m_szCvarValue = "";
 	returnMsg.m_eStatusCode = eQueryCvarValueStatus_CvarNotFound;
 
 	char tempValue[256];
-	
+
 	// Does any ConCommand exist with this name?
 	const ConVar *pVar = g_pCVar->FindVar( msg->m_szCvarName );
 	if ( pVar )
@@ -1796,7 +1796,7 @@ bool CBaseClientState::ProcessGetCvarValue( SVC_GetCvarValue *msg )
 		else
 		{
 			returnMsg.m_eStatusCode = eQueryCvarValueStatus_ValueIntact;
-			
+
 			if ( pVar->IsFlagSet( FCVAR_NEVER_AS_STRING ) )
 			{
 				// The cvar won't store a string, so we have to come up with a string for it ourselves.
@@ -1815,7 +1815,7 @@ bool CBaseClientState::ProcessGetCvarValue( SVC_GetCvarValue *msg )
 				// The easy case..
 				returnMsg.m_szCvarValue = pVar->GetString();
 			}
-		}				
+		}
 	}
 	else
 	{
@@ -1851,5 +1851,3 @@ bool CBaseClientState::IsClientConnectionViaMatchMaking( void )
 {
 	return ( V_strnistr( cl_connectmethod.GetString(), "quickplay", 9 ) || V_strnistr( cl_connectmethod.GetString(), "matchmaking", 11 ) );
 }
-
-

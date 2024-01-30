@@ -28,7 +28,7 @@ $Project "mathlib"
 		$File	"sparse_convolution_noise.cpp"
 		$File	"sseconst.cpp"
 		$File	"sse.cpp"					[$WINDOWS||$POSIX]
-		$File	"ssenoise.cpp"				
+		$File	"ssenoise.cpp"
 		$File	"3dnow.cpp"					[$WINDOWS||$LINUX]
 		$File	"anorms.cpp"
 		$File	"bumpvects.cpp"
@@ -48,9 +48,9 @@ $Project "mathlib"
 
 	$Folder	"Public Header Files"
 	{
-		$File	"$SRCDIR\public\mathlib\amd3dx.h"			[$WINDOWS||$LINUX]		
+		$File	"$SRCDIR\public\mathlib\amd3dx.h"			[$WINDOWS||$LINUX]
 		$File	"$SRCDIR\public\mathlib\anorms.h"
-		$File	"$SRCDIR\public\mathlib\bumpvects.h"		
+		$File	"$SRCDIR\public\mathlib\bumpvects.h"
 		$File	"$SRCDIR\public\mathlib\compressed_3d_unitvec.h"
 		$File	"$SRCDIR\public\mathlib\compressed_light_cube.h"
 		$File	"$SRCDIR\public\mathlib\compressed_vector.h"
@@ -63,9 +63,9 @@ $Project "mathlib"
 		$File	"$SRCDIR\public\mathlib\polyhedron.h"
 		$File	"$SRCDIR\public\mathlib\quantize.h"
 		$File	"$SRCDIR\public\mathlib\simdvectormatrix.h"
-		$File	"$SRCDIR\public\mathlib\spherical_geometry.h"		
-		$File	"$SRCDIR\public\mathlib\ssemath.h"		
-		$File	"$SRCDIR\public\mathlib\ssequaternion.h"		
+		$File	"$SRCDIR\public\mathlib\spherical_geometry.h"
+		$File	"$SRCDIR\public\mathlib\ssemath.h"
+		$File	"$SRCDIR\public\mathlib\ssequaternion.h"
 		$File	"$SRCDIR\public\mathlib\vector.h"
 		$File	"$SRCDIR\public\mathlib\vector2d.h"
 		$File	"$SRCDIR\public\mathlib\vector4d.h"

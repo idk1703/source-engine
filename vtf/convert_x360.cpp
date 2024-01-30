@@ -2,7 +2,7 @@
 //
 //
 //	Purpose: Force pc .VTF to preferred .VTF 360 format conversion
-//	
+//
 //=====================================================================================//
 
 #include "tier1/utlvector.h"
@@ -31,7 +31,7 @@ ImageFormat PreferredFormat( IVTFTexture *pVTFTexture, ImageFormat fmt, int widt
 {
 	switch ( fmt )
 	{
-		case IMAGE_FORMAT_RGBA8888: 
+		case IMAGE_FORMAT_RGBA8888:
 		case IMAGE_FORMAT_ABGR8888:
 		case IMAGE_FORMAT_ARGB8888:
 		case IMAGE_FORMAT_BGRA8888:
@@ -170,14 +170,14 @@ int AlignBuffer( CUtlBuffer &buf, int alignment )
 //-----------------------------------------------------------------------------
 // Convert the x86 image data to 360
 //-----------------------------------------------------------------------------
-bool ConvertImageFormatEx( 
+bool ConvertImageFormatEx(
 	unsigned char	*pSourceImage,
-	int				sourceImageSize, 
+	int				sourceImageSize,
 	ImageFormat		sourceFormat,
 	unsigned char	*pTargetImage,
-	int				targetImageSize, 
+	int				targetImageSize,
 	ImageFormat		targetFormat,
-	int				width, 
+	int				width,
 	int				height,
 	bool			bSrgbGammaConvert )
 {
@@ -185,12 +185,12 @@ bool ConvertImageFormatEx(
 	// but, formats that are >8 bits per channels need to be element pre-swapped
 	ImageLoader::PreConvertSwapImageData( pSourceImage, sourceImageSize, sourceFormat );
 
-	bool bRetVal = ImageLoader::ConvertImageFormat( 
-				pSourceImage, 
-				sourceFormat, 
-				pTargetImage, 
-				targetFormat, 
-				width, 
+	bool bRetVal = ImageLoader::ConvertImageFormat(
+				pSourceImage,
+				sourceFormat,
+				pTargetImage,
+				targetFormat,
+				width,
 				height );
 	if ( !bRetVal )
 	{
@@ -198,7 +198,7 @@ bool ConvertImageFormatEx(
 	}
 
 	// convert to proper channel order for 360 d3dformats
-	ImageLoader::PostConvertSwapImageData( pTargetImage, targetImageSize, targetFormat ); 
+	ImageLoader::PostConvertSwapImageData( pTargetImage, targetImageSize, targetFormat );
 
 	// Convert colors from sRGB gamma space into 360 piecewise linear gamma space
 	if ( bSrgbGammaConvert == true )
@@ -224,7 +224,7 @@ bool ConvertImageFormatEx(
 					pRGB[1] = &( pTargetImage[ ( i * 4 ) + 2 ] ); // Green
 					pRGB[2] = &( pTargetImage[ ( i * 4 ) + 3 ] ); // Blue
 				}
-				
+
 				// Modify RGB data in place
 				for ( int j = 0; j < 3; j++ ) // For red, green, blue
 				{
@@ -401,14 +401,14 @@ bool SerializeImageData( IVTFTexture *pSourceVTF, int frame, int face, int mip, 
 	memset( pTargetImage, 0xFF, targetImageSize );
 
 	// format conversion expects pc oriented data
-	bool bRetVal = ConvertImageFormatEx( 
-				pSourceImage, 
+	bool bRetVal = ConvertImageFormatEx(
+				pSourceImage,
 				sourceImageSize,
-				pSourceVTF->Format(), 
-				pTargetImage, 
+				pSourceVTF->Format(),
+				pTargetImage,
 				targetImageSize,
-				targetFormat, 
-				width, 
+				targetFormat,
+				width,
 				height,
 				( pSourceVTF->Flags() & TEXTUREFLAGS_SRGB ) ? true : false );
 	if ( !bRetVal )
@@ -472,7 +472,7 @@ bool ConvertVTFTo360Format( const char *pDebugName, CUtlBuffer &sourceBuf, CUtlB
 	unsigned int resourceTypes[MAX_RSRC_DICTIONARY_ENTRIES];
 	unsigned char targetLowResSample[4];
 	int numTypes;
-	
+
 	// Only need to byte swap writes if we are running the coversion on the PC, and data will be read from 360
 	byteSwapWriter.ActivateByteSwapping( !IsX360() );
 
@@ -607,7 +607,7 @@ bool ConvertVTFTo360Format( const char *pDebugName, CUtlBuffer &sourceBuf, CUtlB
 	// preload may extend into image
 	targetBuf.EnsureCapacity( sizeof( VTFFileHeaderX360_t ) + targetResources.Count() * sizeof( ResourceEntryInfo ) );
 	targetBuf.SeekPut( CUtlBuffer::SEEK_CURRENT, sizeof( VTFFileHeaderX360_t ) + targetResources.Count() * sizeof( ResourceEntryInfo ) );
-	
+
 	// serialize low res
 	if ( targetLowResWidth && targetLowResHeight )
 	{
@@ -615,21 +615,21 @@ bool ConvertVTFTo360Format( const char *pDebugName, CUtlBuffer &sourceBuf, CUtlB
 
 		int sourceLowResImageSize = ImageLoader::GetMemRequired( pSourceVTF->LowResWidth(), pSourceVTF->LowResHeight(), 1, pSourceVTF->LowResFormat(), false );
 		int targetLowResImageSize = ImageLoader::GetMemRequired( targetLowResWidth, targetLowResHeight, 1, IMAGE_FORMAT_RGB888, false );
-	
+
 		// conversion may skip bytes, ensure all bits initialized
 		targetLowResImage.EnsureCapacity( targetLowResImageSize );
 		byte* pTargetLowResImage = (byte*)targetLowResImage.Base();
 		memset( pTargetLowResImage, 0xFF, targetLowResImageSize );
 
 		// convert and save lowres image in final format
-		bRetVal = ConvertImageFormatEx( 
-					pSourceVTF->LowResImageData(), 
+		bRetVal = ConvertImageFormatEx(
+					pSourceVTF->LowResImageData(),
 					sourceLowResImageSize,
-					pSourceVTF->LowResFormat(), 
-					pTargetLowResImage, 
+					pSourceVTF->LowResFormat(),
+					pTargetLowResImage,
 					targetLowResImageSize,
-					IMAGE_FORMAT_RGB888, 
-					targetLowResWidth, 
+					IMAGE_FORMAT_RGB888,
+					targetLowResWidth,
 					targetLowResHeight,
 					false );
 		if ( !bRetVal )
@@ -684,23 +684,23 @@ bool ConvertVTFTo360Format( const char *pDebugName, CUtlBuffer &sourceBuf, CUtlB
 			{
 				goto cleanUp;
 			}
-	
+
 			// put the data
-			targetBuf.Put( targetResources[i].m_pData, resourceDataLength );	
+			targetBuf.Put( targetResources[i].m_pData, resourceDataLength );
 			if ( !targetBuf.IsValid() )
 			{
 				goto cleanUp;
 			}
 		}
 	}
-	
+
 	// mark end of preload data
 	// preload data might be updated and pushed to extend into the image data mip chain
 	preloadDataSize = targetBuf.TellPut();
 
 	// image starts on an aligned boundary
 	AlignBuffer( targetBuf, 4 );
-	
+
 	// start of image data
 	targetImageDataOffset = targetBuf.TellPut();
 	if ( targetImageDataOffset >= 65536 )
@@ -729,7 +729,7 @@ bool ConvertVTFTo360Format( const char *pDebugName, CUtlBuffer &sourceBuf, CUtlB
 	if ( preloadDataSize < VTFFileHeaderSize( VTF_X360_MAJOR_VERSION, VTF_X360_MINOR_VERSION ) )
 	{
 		// preload size must be at least what game attempts to initially read
-		preloadDataSize = VTFFileHeaderSize( VTF_X360_MAJOR_VERSION, VTF_X360_MINOR_VERSION ); 
+		preloadDataSize = VTFFileHeaderSize( VTF_X360_MAJOR_VERSION, VTF_X360_MINOR_VERSION );
 	}
 
 	if ( targetBuf.TellPut() <= PRELOAD_VTF_THRESHOLD )
@@ -832,7 +832,7 @@ bool ConvertVTFTo360Format( const char *pDebugName, CUtlBuffer &sourceBuf, CUtlB
 				byteSwapWriter.SwapFieldsToTargetEndian( pHeader );
 			}
 
-			pHeader->compressedSize = compressedBuffer.TellPut();			
+			pHeader->compressedSize = compressedBuffer.TellPut();
 
 			if ( !IsX360() )
 			{
@@ -876,8 +876,8 @@ bool GetVTFPreload360Data( const char *pDebugName, CUtlBuffer &fileBufferIn, CUt
 	VTFFileHeaderX360_t	header;
 	fileBufferIn.GetObjects( &header );
 
-	if ( V_strnicmp( header.fileTypeString, "VTFX", 4 ) ||	
-		header.version[0] != VTF_X360_MAJOR_VERSION || 
+	if ( V_strnicmp( header.fileTypeString, "VTFX", 4 ) ||
+		header.version[0] != VTF_X360_MAJOR_VERSION ||
 		header.version[1] != VTF_X360_MINOR_VERSION )
 	{
 		// bad format

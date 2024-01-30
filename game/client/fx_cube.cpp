@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,7 +27,7 @@ public:
 						{
 							if(m_pMaterial)
 								m_pMaterial->DecrementReferenceCount();
-								
+
 						}
 
 	void SetupVec(Vector& v, int dim1, int dim2, int fixedDim, float dim1Val, float dim2Val, float fixedDimVal)
@@ -38,11 +38,11 @@ public:
 	}
 
 	void DrawBoxSide(
-		int dim1, int dim2, int fixedDim, 
-		float minX, float minY, 
-		float maxX, float maxY, 
-		float fixedDimVal, 
-		bool bFlip, 
+		int dim1, int dim2, int fixedDim,
+		float minX, float minY,
+		float maxX, float maxY,
+		float fixedDimVal,
+		bool bFlip,
 		float shade)
 	{
 		Vector v;
@@ -51,7 +51,7 @@ public:
 
 		CMatRenderContextPtr pRenderContext( materials );
 		IMesh *pMesh = pRenderContext->GetDynamicMesh();
-		
+
 		CMeshBuilder builder;
 		builder.Begin(pMesh, MATERIAL_TRIANGLE_STRIP, 2);
 
@@ -84,7 +84,7 @@ public:
 		CMatRenderContextPtr pRenderContext( materials );
 		// Draw it.
 		pRenderContext->Bind( m_pMaterial );
-		
+
 		Vector vLightDir(-1,-2,-3);
 		VectorNormalize( vLightDir );
 
@@ -96,7 +96,7 @@ public:
 
 		DrawBoxSide(0, 1, 2, m_mins[0], m_mins[1], m_maxs[0], m_maxs[1], m_mins[2], false,  vLightDir.z * 0.5f + 0.5f);
 		DrawBoxSide(0, 1, 2, m_mins[0], m_mins[1], m_maxs[0], m_maxs[1], m_maxs[2], true,  -vLightDir.z * 0.5f + 0.5f);
-		
+
 		// Decrease lifetime.
 		m_Life -= frametime;
 	}
@@ -132,5 +132,3 @@ void FX_AddCenteredCube( const Vector &center, float size, const Vector &vColor,
 {
 	FX_AddCube(center-Vector(size,size,size), center+Vector(size,size,size), vColor, life, materialName);
 }
-
-

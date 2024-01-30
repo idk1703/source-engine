@@ -53,7 +53,7 @@ public:
 	CAnchorList( char const *name ) : CAutoGameSystem( name )
 	{
 	}
-	void LevelShutdownPostEntity() 
+	void LevelShutdownPostEntity()
 	{
 		m_list.Purge();
 	}
@@ -132,7 +132,7 @@ private:
 BEGIN_DATADESC( CPhysConstraintSystem )
 	DEFINE_PHYSPTR( m_pMachine ),
 	DEFINE_KEYFIELD( m_additionalIterations, FIELD_INTEGER, "additionaliterations" ),
-	
+
 END_DATADESC()
 
 
@@ -293,7 +293,7 @@ void CPhysConstraint::OnBreak( void )
 				refPos = attachPos;
 			}
 		}
-		
+
 		VectorAdd( refPos, attachPos, origin );
 		origin *= 0.5f;
 
@@ -307,16 +307,16 @@ void CPhysConstraint::OnBreak( void )
 		EmitSound( filter, entindex(), ep );
 	}
 	m_OnBreak.FireOutput( this, this );
-	// queue this up to be deleted at the end of physics 
+	// queue this up to be deleted at the end of physics
 	// The Deactivate() call should make sure we don't get more of these callbacks.
 	PhysCallbackRemove( this->NetworkProp() );
 }
 
 void CPhysConstraint::InputBreak( inputdata_t &inputdata )
 {
-	if ( m_pConstraint ) 
+	if ( m_pConstraint )
 		m_pConstraint->Deactivate();
-	
+
 	OnBreak();
 }
 
@@ -353,7 +353,7 @@ int CPhysConstraint::DrawDebugTextOverlays()
 		constraint_breakableparams_t params;
 		Q_memset(&params,0,sizeof(params));
 		m_pConstraint->GetConstraintParams( &params );
-		
+
 		if ( (params.bodyMassScale[0] != 1.0f && params.bodyMassScale[0] != 0.0f) || (params.bodyMassScale[1] != 1.0f && params.bodyMassScale[1] != 0.0f) )
 		{
 			CFmtStr str("mass ratio %.4f:%.4f\n", params.bodyMassScale[0], params.bodyMassScale[1] );
@@ -689,7 +689,7 @@ void CPhysConstraint::NotifySystemEvent( CBaseEntity *pNotify, notify_system_eve
 		return;
 
 	float distance = (params.pTeleport->prevOrigin - pNotify->GetAbsOrigin()).Length();
-	
+
 	// no need to follow a small teleport
 	if ( distance <= m_minTeleportDistance )
 		return;
@@ -716,7 +716,7 @@ public:
 		m_hinge.constraint.strength = 1.0;
 		// BUGBUG: These numbers are very hard to edit
 		// Scale by 1000 to make things easier
-		// CONSIDER: Unify the units of torque around something other 
+		// CONSIDER: Unify the units of torque around something other
 		// than HL units (kg * in^2 / s ^2)
 		m_hinge.hingeAxis.SetAxisFriction( 0, 0, m_hingeFriction * 1000 );
 
@@ -746,7 +746,7 @@ public:
 	{
 		if ( !m_pConstraint || !m_pConstraint->GetReferenceObject() || !m_pConstraint->GetAttachedObject() )
 			return;
-	
+
 		float speed = inputdata.value.Float();
 		float massLoad = 1;
 		int numMasses = 0;
@@ -766,7 +766,7 @@ public:
 		{
 			massLoad /= (float)numMasses;
 		}
-		
+
 		float loadscale = m_systemLoadScale != 0 ? m_systemLoadScale : 1;
 		m_pConstraint->SetAngularMotor( speed, speed * loadscale * massLoad * loadscale * (1.0/TICK_INTERVAL) );
 	}
@@ -791,12 +791,12 @@ public:
 
 		BaseClass::Deactivate();
 	}
-	
+
 	void NotifyVPhysicsStateChanged( IPhysicsObject *pPhysics, CBaseEntity *pEntity, bool bAwake )
 	{
 #if HINGE_NOTIFY
 		Assert(m_pConstraint);
-		if (!m_pConstraint) 
+		if (!m_pConstraint)
 			return;
 
 		// if something woke up, start thinking. If everything is asleep, stop thinking.
@@ -805,7 +805,7 @@ public:
 			// Did something wake up when I was not thinking?
 			if ( GetNextThink() == TICK_NEVER_THINK )
 			{
-				m_soundInfo.StartThinking(this, 
+				m_soundInfo.StartThinking(this,
 					VelocitySampler::GetRelativeAngularVelocity(m_pConstraint->GetAttachedObject(), m_pConstraint->GetReferenceObject()) ,
 					m_hinge.worldAxisDirection
 					);
@@ -940,7 +940,7 @@ void CPhysHinge::Activate( void )
 	m_soundInfo.OnActivate(this);
 	if (m_pConstraint)
 	{
-		m_soundInfo.StartThinking(this, 
+		m_soundInfo.StartThinking(this,
 			VelocitySampler::GetRelativeAngularVelocity(m_pConstraint->GetAttachedObject(), m_pConstraint->GetReferenceObject()) ,
 			m_hinge.worldAxisDirection
 			);
@@ -1032,9 +1032,9 @@ public:
 	IPhysicsConstraint *CreateConstraint( IPhysicsConstraintGroup *pGroup, const hl_constraint_info_t &info )
 	{
 		constraint_ballsocketparams_t ballsocket;
-	
+
 		ballsocket.Defaults();
-		
+
 		for ( int i = 0; i < 2; i++ )
 		{
 			info.pObjects[i]->WorldToLocal( &ballsocket.constraintPosition[i], GetAbsOrigin() );
@@ -1098,7 +1098,7 @@ public:
 	{
 #if HINGE_NOTIFY
 		Assert(m_pConstraint);
-		if (!m_pConstraint) 
+		if (!m_pConstraint)
 			return;
 
 		// if something woke up, start thinking. If everything is asleep, stop thinking.
@@ -1111,7 +1111,7 @@ public:
 				VectorNormalize( axisDirection );
 				UTIL_SnapDirectionToAxis( axisDirection );
 
-				m_soundInfo.StartThinking(this, 
+				m_soundInfo.StartThinking(this,
 					VelocitySampler::GetRelativeVelocity(m_pConstraint->GetAttachedObject(), m_pConstraint->GetReferenceObject()),
 					axisDirection
 					);
@@ -1274,7 +1274,7 @@ void CPhysSlideConstraint::Activate( void )
 	Vector axisDirection = m_axisEnd - GetAbsOrigin();
 	VectorNormalize( axisDirection );
 	UTIL_SnapDirectionToAxis( axisDirection );
-	m_soundInfo.StartThinking(this, 
+	m_soundInfo.StartThinking(this,
 		VelocitySampler::GetRelativeVelocity(m_pConstraint->GetAttachedObject(), m_pConstraint->GetReferenceObject()),
 		axisDirection
 		);
@@ -1397,9 +1397,9 @@ IPhysicsConstraint *CPhysPulley::CreateConstraint( IPhysicsConstraintGroup *pGro
 		pulley.objectPosition[i] = info.anchorPosition[i];
 		m_offset[i] = info.anchorPosition[i];
 	}
-	
-	pulley.totalLength = m_addLength + 
-		(world[0] - pulley.pulleyPosition[0]).Length() + 
+
+	pulley.totalLength = m_addLength +
+		(world[0] - pulley.pulleyPosition[0]).Length() +
 		((world[1] - pulley.pulleyPosition[1]).Length() * m_gearRatio);
 
 	if ( m_gearRatio != 0 )
@@ -1649,7 +1649,7 @@ bool VelocitySampler::HasReversed(const Vector &relativeVelocity, float threshol
 	if (vDot <= 0) // there is a reversal in direction. compute the magnitude of acceleration.
 	{
 		// find the scalar projection of the relative acceleration this fame onto the previous frame's
-		// velocity, and compare that to the threshold. 
+		// velocity, and compare that to the threshold.
 		Vector accel = relativeVelocity - m_prevSample;
 
 		float prevSampleLength = m_prevSample.Length();
@@ -1678,7 +1678,7 @@ bool VelocitySampler::HasReversed(const Vector &relativeVelocity, float threshol
 #endif
 
 /// Looks at the force of reversal and compares it to a ladder of thresholds.
-/// Returns the index of the highest threshold exceeded by the reversal velocity. 
+/// Returns the index of the highest threshold exceeded by the reversal velocity.
 int VelocitySampler::HasReversed(const Vector &relativeVelocity, const float thresholdAcceleration[], const unsigned short numThresholds)
 {
 	// first, make sure the velocity has reversed (is more than 90deg off) from last time, or is zero now.
@@ -1687,7 +1687,7 @@ int VelocitySampler::HasReversed(const Vector &relativeVelocity, const float thr
 	if (vDot <= 0) // there is a reversal in direction. compute the magnitude of acceleration.
 	{
 		// find the scalar projection of the relative acceleration this fame onto the previous frame's
-		// velocity, and compare that to the threshold. 
+		// velocity, and compare that to the threshold.
 		Vector accel = relativeVelocity - m_prevSample;
 
 		float prevSampleLength = m_prevSample.Length();
@@ -1717,7 +1717,7 @@ int VelocitySampler::HasReversed(const Vector &relativeVelocity, const float thr
 				break;
 		}
 
-		return retval; 
+		return retval;
 	}
 	else
 	{
@@ -1739,7 +1739,7 @@ void ConstraintSoundInfo::OnActivate( CPhysConstraint *pOuter )
 
 	ValidateInternals( pOuter );
 
-	// make sure sound filenames are not empty 
+	// make sure sound filenames are not empty
 	m_bPlayTravelSound   = !IsEmpty(m_iszTravelSoundFwd) || !IsEmpty(m_iszTravelSoundBack);
 	m_bPlayReversalSound = false;
 	for (int i = 0; i < SimpleConstraintSoundProfile::kREVERSAL_SOUND_ARRAY_SIZE ; ++i)
@@ -1778,8 +1778,8 @@ void ConstraintSoundInfo::ValidateInternals( CPhysConstraint *pOuter )
 
 void ConstraintSoundInfo::OnPrecache( CPhysConstraint *pOuter )
 {
-	pOuter->PrecacheScriptSound( m_iszTravelSoundFwd.ToCStr() ); 
-	pOuter->PrecacheScriptSound( m_iszTravelSoundBack.ToCStr() ); 
+	pOuter->PrecacheScriptSound( m_iszTravelSoundFwd.ToCStr() );
+	pOuter->PrecacheScriptSound( m_iszTravelSoundBack.ToCStr() );
 	for (int i = 0 ; i < SimpleConstraintSoundProfile::kREVERSAL_SOUND_ARRAY_SIZE; ++i )
 	{
 		pOuter->PrecacheScriptSound( m_iszReversalSounds[i].ToCStr() );
@@ -1829,7 +1829,7 @@ void ConstraintSoundInfo::OnThink( CPhysConstraint *pOuter, const Vector &relati
 
 				CSoundEnvelopeController &controller = CSoundEnvelopeController::GetController();
 				CPASAttenuationFilter filter( pChildEntity );
-				m_pTravelSound = controller.SoundCreate( filter, pChildEntity->entindex(), 
+				m_pTravelSound = controller.SoundCreate( filter, pChildEntity->entindex(),
 					(travellingForward ? m_iszTravelSoundFwd : m_iszTravelSoundBack).ToCStr() );
 				controller.Play( m_pTravelSound, soundVol, 100 );
 			}
@@ -1851,7 +1851,7 @@ void ConstraintSoundInfo::OnThink( CPhysConstraint *pOuter, const Vector &relati
 	}
 
 	m_vSampler.AddSample( relativeVelocity );
-	
+
 }
 
 

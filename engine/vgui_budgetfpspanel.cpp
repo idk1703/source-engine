@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,10 +20,10 @@ CBudgetFPSPanel::CBudgetFPSPanel( vgui::Panel *pParent, const char *pPanelName )
 	SetProportional( false );
 	SetKeyBoardInputEnabled( false );
 	SetMouseInputEnabled( false );
-	SetSizeable( false ); 
+	SetSizeable( false );
 	SetVisible( true );
 	SetPaintBackgroundEnabled( false );
-	
+
 	// hide the system buttons
 	SetTitleBarVisible( false );
 }
@@ -47,7 +47,7 @@ void CBudgetFPSPanel::DrawBarAtIndex( int id, float percent )
 
 	int red, green, blue, alpha;
 	g_VProfCurrentProfile.GetBudgetGroupColor( id, red, green, blue, alpha );
-										 
+
 	// DrawFilledRect is panel relative
 	vgui::surface()->DrawSetColor( 0, 0, 0, alpha );
 	vgui::surface()->DrawFilledRect( left, top-2, right+2, bottom+2 );
@@ -100,7 +100,7 @@ void CBudgetFPSPanel::DrawTimeLines( void )
 		{
 			alpha = 150;
 		}
-		else if( i % 5 == 0 ) 
+		else if( i % 5 == 0 )
 		{
 			alpha = 100;
 		}
@@ -108,7 +108,7 @@ void CBudgetFPSPanel::DrawTimeLines( void )
 		{
 			alpha = 50;
 		}
-		
+
 		left = -0.5f + panelWidth * ( ( float )i - m_fRangeMin ) / ( m_fRangeMax - m_fRangeMin );
 		right = left + 1;
 

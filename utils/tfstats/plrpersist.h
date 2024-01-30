@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -13,7 +13,7 @@
 // Valve, L.L.C., or in accordance with the terms and conditions stipulated in
 // the agreement/contract under which the contents have been supplied.
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -40,7 +40,7 @@ using namespace std;
 
 //------------------------------------------------------------------------------------------------------
 // Purpose: Represents persistent player data. This class is used to save and load
-//	Player data from the disk.  
+//	Player data from the disk.
 //------------------------------------------------------------------------------------------------------
 class CPlrPersist
 {
@@ -63,20 +63,20 @@ public:
 	list<pair<time_t,time_t> > playtimes;
 
 	time_t lastplayed;
-	
+
 	int matches;
 	int suicides;
 	int faveweapkills;
 	double rank();
-	
-	
+
+
 	CPlrPersist()
 	{
 		kills=deaths=suicides=faveweapkills=matches=0;WONID=-1;
 	}
-	
 
-	
+
+
 	void read(unsigned long WONID);
 	void read(CTextFile& f);
 	void merge(CPlrPersist& cpp,bool mergeOverlaps=false);

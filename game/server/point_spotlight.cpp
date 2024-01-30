@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -17,7 +17,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CPointSpotlight : public CPointEntity
 {
@@ -47,7 +47,7 @@ private:
 	void InputLightOn( inputdata_t &inputdata );
 	void InputLightOff( inputdata_t &inputdata );
 
-	// Creates the efficient spotlight 
+	// Creates the efficient spotlight
 	void CreateEfficientSpotlight();
 
 	// Computes render info for a spotlight
@@ -63,7 +63,7 @@ private:
 	int		m_nHaloSprite;
 	CHandle<CBeam>			m_hSpotlight;
 	CHandle<CSpotlightEnd>	m_hSpotlightTarget;
-	
+
 	float	m_flSpotlightMaxLength;
 	float	m_flSpotlightCurLength;
 	float	m_flSpotlightGoalWidth;
@@ -109,7 +109,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS(point_spotlight, CPointSpotlight);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPointSpotlight::CPointSpotlight()
 {
@@ -125,7 +125,7 @@ CPointSpotlight::CPointSpotlight()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointSpotlight::Precache(void)
 {
@@ -138,7 +138,7 @@ void CPointSpotlight::Precache(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointSpotlight::Spawn(void)
 {
@@ -160,15 +160,15 @@ void CPointSpotlight::Spawn(void)
 		DevMsg("%s (%s) has an invalid spotlight width <= 0, setting to 10\n", GetClassname(), GetDebugName() );
 		m_flSpotlightGoalWidth = 10;
 	}
-	
+
 	if (m_flSpotlightGoalWidth > MAX_BEAM_WIDTH )
 	{
 		DevMsg("%s (%s) has an invalid spotlight width %.1f (max %.1f).\n", GetClassname(), GetDebugName(), m_flSpotlightGoalWidth, MAX_BEAM_WIDTH );
-		m_flSpotlightGoalWidth = MAX_BEAM_WIDTH; 
+		m_flSpotlightGoalWidth = MAX_BEAM_WIDTH;
 	}
 
 	// ------------------------------------
-	//	Init all class vars 
+	//	Init all class vars
 	// ------------------------------------
 	m_vSpotlightTargetPos	= vec3_origin;
 	m_vSpotlightCurrentPos	= vec3_origin;
@@ -189,13 +189,13 @@ void CPointSpotlight::Spawn(void)
 //-----------------------------------------------------------------------------
 void CPointSpotlight::ComputeRenderInfo()
 {
-	// Fade out spotlight end if past max length.  
+	// Fade out spotlight end if past max length.
 	if ( m_flSpotlightCurLength > 2*m_flSpotlightMaxLength )
 	{
 		m_hSpotlightTarget->SetRenderColorA( 0 );
 		m_hSpotlight->SetFadeLength( m_flSpotlightMaxLength );
 	}
-	else if ( m_flSpotlightCurLength > m_flSpotlightMaxLength )		
+	else if ( m_flSpotlightCurLength > m_flSpotlightMaxLength )
 	{
 		m_hSpotlightTarget->SetRenderColorA( (1-((m_flSpotlightCurLength-m_flSpotlightMaxLength)/m_flSpotlightMaxLength)) );
 		m_hSpotlight->SetFadeLength( m_flSpotlightMaxLength );
@@ -211,7 +211,7 @@ void CPointSpotlight::ComputeRenderInfo()
 	flNewWidth = clamp(flNewWidth, 0.f, MAX_BEAM_WIDTH );
 	m_hSpotlight->SetEndWidth(flNewWidth);
 
-	// Adjust width of light on the end.  
+	// Adjust width of light on the end.
 	if ( FBitSet (m_spawnflags, SF_SPOTLIGHT_NO_DYNAMIC_LIGHT) )
 	{
 		m_hSpotlightTarget->m_flLightScale = 0.0;
@@ -225,7 +225,7 @@ void CPointSpotlight::ComputeRenderInfo()
 
 
 //-----------------------------------------------------------------------------
-// Creates the efficient spotlight 
+// Creates the efficient spotlight
 //-----------------------------------------------------------------------------
 void CPointSpotlight::CreateEfficientSpotlight()
 {
@@ -246,7 +246,7 @@ void CPointSpotlight::CreateEfficientSpotlight()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointSpotlight::Activate(void)
 {
@@ -292,7 +292,7 @@ void CPointSpotlight::OnEntityEvent( EntityEvent_t event, void *pEventData )
 	BaseClass::OnEntityEvent( event, pEventData );
 }
 
-	
+
 //-------------------------------------------------------------------------------------
 // Purpose : Send even though we don't have a model so spotlight gets proper position
 // Input   :
@@ -364,7 +364,7 @@ void CPointSpotlight::SpotlightCreate(void)
 	// Set the temporary spawnflag on the beam so it doesn't save (we'll recreate it on restore)
 	m_hSpotlight->SetHDRColorScale( m_flHDRColorScale );
 	m_hSpotlight->AddSpawnFlags( SF_BEAM_TEMPORARY );
-	m_hSpotlight->SetColor( m_clrRender->r, m_clrRender->g, m_clrRender->b ); 
+	m_hSpotlight->SetColor( m_clrRender->r, m_clrRender->g, m_clrRender->b );
 	m_hSpotlight->SetHaloTexture(m_nHaloSprite);
 	m_hSpotlight->SetHaloScale(60);
 	m_hSpotlight->SetEndWidth(m_flSpotlightGoalWidth);
@@ -449,7 +449,7 @@ void CPointSpotlight::SpotlightUpdate(void)
 		SpotlightDestroy();
 		return;
 	}
-	
+
 	if ( !m_hSpotlightTarget )
 	{
 		DevWarning( "**Attempting to update point_spotlight but target ent is NULL\n" );
@@ -501,7 +501,7 @@ void CPointSpotlight::SpotlightUpdate(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointSpotlight::InputLightOn( inputdata_t &inputdata )
 {
@@ -516,7 +516,7 @@ void CPointSpotlight::InputLightOn( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointSpotlight::InputLightOff( inputdata_t &inputdata )
 {

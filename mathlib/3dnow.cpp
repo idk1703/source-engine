@@ -44,16 +44,16 @@ float _3DNow_Sqrt(float x)
 		femms
 	}
 #elif LINUX
- 	__asm __volatile__( "femms" );
- 	__asm __volatile__
+	__asm __volatile__( "femms" );
+	__asm __volatile__
 	(
 		"pfrsqrt    %y0, %y1 \n\t"
 		"punpckldq   %y1, %y1 \n\t"
 		"pfmul      %y1, %y0 \n\t"
 		: "=y" (root), "=y" (x)
- 		:"0" (x)
- 	);
- 	__asm __volatile__( "femms" );
+		:"0" (x)
+	);
+	__asm __volatile__( "femms" );
 #else
 #error
 #endif
@@ -102,38 +102,38 @@ float FASTCALL _3DNow_VectorNormalize (Vector& vec)
 			movd		radius, mm1
 			femms
 		}
-#elif LINUX	
+#elif LINUX
 		long long a,c;
-    		int b,d;
-    		memcpy(&a,&vec[0],sizeof(a));
-    		memcpy(&b,&vec[2],sizeof(b));
-    		memcpy(&c,&vec[0],sizeof(c));
-    		memcpy(&d,&vec[2],sizeof(d));
+		int b,d;
+		memcpy(&a,&vec[0],sizeof(a));
+		memcpy(&b,&vec[2],sizeof(b));
+		memcpy(&c,&vec[0],sizeof(c));
+		memcpy(&d,&vec[2],sizeof(d));
 
-      		__asm __volatile__( "femms" );
-        	__asm __volatile__
-        	(
-        		"pfmul           %y3, %y3\n\t"
-        		"pfmul           %y0, %y0 \n\t"
-        		"pfacc           %y3, %y3 \n\t"
-        		"pfadd           %y3, %y0 \n\t"
-        		"pfrsqrt         %y0, %y3 \n\t"
-        		"punpckldq       %y0, %y0 \n\t"
-        		"pfmul           %y3, %y0 \n\t"
-        		"pfmul           %y3, %y2 \n\t"
-        		"pfmul           %y3, %y1 \n\t"
-        		: "=y" (radius), "=y" (c), "=y" (d)
-        		: "y" (a), "0" (b), "1" (c), "2" (d)
-        	);
-      		memcpy(&vec[0],&c,sizeof(c));
-      		memcpy(&vec[2],&d,sizeof(d));		
-        	__asm __volatile__( "femms" );
+		__asm __volatile__( "femms" );
+	__asm __volatile__
+	(
+		"pfmul           %y3, %y3\n\t"
+		"pfmul           %y0, %y0 \n\t"
+		"pfacc           %y3, %y3 \n\t"
+		"pfadd           %y3, %y0 \n\t"
+		"pfrsqrt         %y0, %y3 \n\t"
+		"punpckldq       %y0, %y0 \n\t"
+		"pfmul           %y3, %y0 \n\t"
+		"pfmul           %y3, %y2 \n\t"
+		"pfmul           %y3, %y1 \n\t"
+		: "=y" (radius), "=y" (c), "=y" (d)
+		: "y" (a), "0" (b), "1" (c), "2" (d)
+	);
+		memcpy(&vec[0],&c,sizeof(c));
+		memcpy(&vec[2],&d,sizeof(d));
+	__asm __volatile__( "femms" );
 
 #else
 #error
 #endif
 	}
-    return radius;
+	return radius;
 }
 
 
@@ -168,25 +168,25 @@ float _3DNow_InvRSquared(const float* v)
 	}
 #elif LINUX
 		long long a,c;
-    		int b;
-    		memcpy(&a,&v[0],sizeof(a));
-    		memcpy(&b,&v[2],sizeof(b));
-    		memcpy(&c,&v[0],sizeof(c));
+		int b;
+		memcpy(&a,&v[0],sizeof(a));
+		memcpy(&b,&v[2],sizeof(b));
+		memcpy(&c,&v[0],sizeof(c));
 
-      		__asm __volatile__( "femms" );
-        	__asm __volatile__
-        	(
+		__asm __volatile__( "femms" );
+	__asm __volatile__
+	(
 			"PFMUL          %y2, %y2 \n\t"
-                        "PFMUL          %y3, %y3 \n\t"
-                        "PFACC          %y2, %y2 \n\t"
-                        "PFADD          %y2, %y3 \n\t"
-                        "PFMAX          %y3, %y4 \n\t"
-                        "PFRCP          %y3, %y2 \n\t"
-                        "movq           %y2, %y0 \n\t"
-        		: "=y" (r2)
-        		: "0" (r2), "y" (a), "y" (b), "y" (c)
-        	);
-        	__asm __volatile__( "femms" );
+	"PFMUL          %y3, %y3 \n\t"
+	"PFACC          %y2, %y2 \n\t"
+	"PFADD          %y2, %y3 \n\t"
+	"PFMAX          %y3, %y4 \n\t"
+	"PFRCP          %y3, %y2 \n\t"
+	"movq           %y2, %y0 \n\t"
+		: "=y" (r2)
+		: "0" (r2), "y" (a), "y" (b), "y" (c)
+	);
+	__asm __volatile__( "femms" );
 #else
 #error
 #endif
@@ -194,4 +194,4 @@ float _3DNow_InvRSquared(const float* v)
 	return r2;
 }
 
-#endif // COMPILER_MSVC64 
+#endif // COMPILER_MSVC64

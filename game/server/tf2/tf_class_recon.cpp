@@ -44,7 +44,7 @@ BEGIN_SEND_TABLE_NOBASE( CPlayerClassRecon, DT_PlayerClassReconData )
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CPlayerClassRecon::GetClassModelString( int nTeam )
@@ -60,12 +60,12 @@ CPlayerClassRecon::CPlayerClassRecon( CBaseTFPlayer *pPlayer, TFClass iClass ) :
 {
 	for (int i = 0; i < MAX_TF_TEAMS; ++i)
 	{
-		SetClassModel( MAKE_STRING(GetClassModelString(i)), i ); 
+		SetClassModel( MAKE_STRING(GetClassModelString(i)), i );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPlayerClassRecon::~CPlayerClassRecon()
 {
@@ -73,7 +73,7 @@ CPlayerClassRecon::~CPlayerClassRecon()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassRecon::ClassActivate( void )
 {
@@ -88,7 +88,7 @@ void CPlayerClassRecon::ClassActivate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassRecon::ClassDeactivate( void )
 {
@@ -96,7 +96,7 @@ void CPlayerClassRecon::ClassDeactivate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CPlayerClassRecon::ResupplyAmmo( float flFraction, ResupplyReason_t reason )
 {
@@ -142,7 +142,7 @@ void CPlayerClassRecon::SetupSizeData( void )
 	// Initially set the player to the base player class standing hull size.
 	m_pPlayer->SetCollisionBounds( RECONCLASS_HULL_STAND_MIN, RECONCLASS_HULL_STAND_MAX );
 	m_pPlayer->SetViewOffset( RECONCLASS_VIEWOFFSET_STAND );
-	m_pPlayer->m_Local.m_flStepSize = RECONCLASS_STEPSIZE;	
+	m_pPlayer->m_Local.m_flStepSize = RECONCLASS_STEPSIZE;
 }
 
 //-----------------------------------------------------------------------------
@@ -154,7 +154,7 @@ int CPlayerClassRecon::CanBuild( int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassRecon::ClassThink()
 {
@@ -164,7 +164,7 @@ void CPlayerClassRecon::ClassThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassRecon::CreatePersonalOrder()
 {
@@ -193,7 +193,7 @@ void CPlayerClassRecon::GainedNewTechnology( CBaseTechnology *pTechnology )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassRecon::SetPlayerHull( void )
 {
@@ -208,7 +208,7 @@ void CPlayerClassRecon::SetPlayerHull( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassRecon::ResetViewOffset( void )
 {
@@ -217,5 +217,3 @@ void CPlayerClassRecon::ResetViewOffset( void )
 		m_pPlayer->SetViewOffset( RECONCLASS_VIEWOFFSET_STAND );
 	}
 }
-
-

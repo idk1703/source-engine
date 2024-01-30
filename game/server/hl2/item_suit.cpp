@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 
 ===== item_suit.cpp ========================================================
 
-  handling for the player's suit.
+	handling for the player's suit.
 */
 
 #include "cbase.h"
@@ -28,11 +28,11 @@ public:
 	DECLARE_CLASS( CItemSuit, CItem );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/items/hevsuit.mdl" );
 		BaseClass::Spawn( );
-		
+
 		CollisionProp()->UseTriggerBounds( false, 0 );
 	}
 	void Precache( void )
@@ -50,7 +50,7 @@ public:
 			UTIL_EmitSoundSuit(pPlayer->edict(), "!HEV_AAx");	// long version of suit logon
 
 		pPlayer->EquipSuit();
-				
+
 		return true;
 	}
 };

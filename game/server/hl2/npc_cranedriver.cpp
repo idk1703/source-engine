@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -47,7 +47,7 @@ enum
 //=========================================================
 // Custom tasks
 //=========================================================
-enum 
+enum
 {
 	TASK_CRANE_GET_POSITION_OVER_ENEMY = LAST_VEHICLEDRIVER_TASK,
 	TASK_CRANE_GET_POSITION_OVER_LASTPOSITION,
@@ -59,7 +59,7 @@ enum
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CNPC_CraneDriver : public CNPC_VehicleDriver
 {
@@ -70,7 +70,7 @@ public:
 
 	void	Spawn( void );
 	void	Activate( void );
-	
+
 	// AI
 	int		RangeAttack1Conditions( float flDot, float flDist );
 	int		TranslateSchedule( int scheduleType );
@@ -149,7 +149,7 @@ void CNPC_CraneDriver::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CraneDriver::Activate( void )
 {
@@ -191,7 +191,7 @@ int CNPC_CraneDriver::RangeAttack1Conditions( float flDot, float flDist )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CNPC_CraneDriver::SelectSchedule( void )
 {
@@ -265,9 +265,9 @@ int CNPC_CraneDriver::SelectSchedule( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int CNPC_CraneDriver::TranslateSchedule( int scheduleType ) 
+int CNPC_CraneDriver::TranslateSchedule( int scheduleType )
 {
 	switch ( scheduleType )
 	{
@@ -290,8 +290,8 @@ int CNPC_CraneDriver::TranslateSchedule( int scheduleType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CNPC_CraneDriver::StartTask( const Task_t *pTask )
 {
@@ -368,13 +368,13 @@ void CNPC_CraneDriver::StartTask( const Task_t *pTask )
 			// Find a large physics object within our reach to pickup
 			float flLargestMass = 0;
 			CBaseEntity *pLargestEntity = NULL;
-			
+
 			CBaseEntity *pList[1024];
 			Vector delta( m_flDistTooFar, m_flDistTooFar, m_flDistTooFar*2 );
 			int count = UTIL_EntitiesInBox( pList, 1024, m_hCrane->GetAbsOrigin() - delta, m_hCrane->GetAbsOrigin() + delta, 0 );
 			for ( int i = 0; i < count; i++ )
 			{
-				if ( !pList[i] ) 
+				if ( !pList[i] )
 					continue;
 				// Ignore the crane & the magnet
 				if ( pList[i] == m_hCrane || pList[i] == m_hCrane->GetMagnet() )
@@ -508,7 +508,7 @@ void CNPC_CraneDriver::RunTask( const Task_t *pTask )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNPC_CraneDriver::OverrideMove( float flInterval )
 {
@@ -516,7 +516,7 @@ bool CNPC_CraneDriver::OverrideMove( float flInterval )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CraneDriver::SetDesiredPosition( const Vector &vecPosition )
 {
@@ -626,7 +626,7 @@ void CNPC_CraneDriver::DriveVehicle( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Force the driver to pickup a specific entity
-// Input  : &inputdata - 
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_CraneDriver::InputForcePickup( inputdata_t &inputdata )
 {
@@ -645,7 +645,7 @@ void CNPC_CraneDriver::InputForcePickup( inputdata_t &inputdata )
 
 //-----------------------------------------------------------------------------
 // Purpose: Force the driver to drop his held entity at a specific point
-// Input  : &inputdata - 
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_CraneDriver::InputForceDrop( inputdata_t &inputdata )
 {
@@ -784,5 +784,5 @@ AI_BEGIN_CUSTOM_NPC( npc_cranedriver, CNPC_CraneDriver )
 		"	"
 		"	Interrupts"
 	)
-	
+
 AI_END_CUSTOM_NPC()

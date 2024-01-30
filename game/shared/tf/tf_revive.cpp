@@ -96,7 +96,7 @@ CTFReviveMarker::CTFReviveMarker()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFReviveMarker::Precache()
 {
@@ -110,12 +110,12 @@ void CTFReviveMarker::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFReviveMarker::Spawn( void )
 {
 	Precache();
-	
+
 	BaseClass::Spawn();
 
 	SetHealth( 1 );
@@ -138,8 +138,8 @@ void CTFReviveMarker::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : collisionGroup - 
+// Purpose:
+// Input  : collisionGroup -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CTFReviveMarker::ShouldCollide( int collisionGroup, int contentsMask ) const
@@ -152,13 +152,13 @@ bool CTFReviveMarker::ShouldCollide( int collisionGroup, int contentsMask ) cons
 
 	if ( collisionGroup == TFCOLLISION_GROUP_ROCKETS )
 		return false;
-	
+
 	return BaseClass::ShouldCollide( collisionGroup, contentsMask );
 }
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFReviveMarker::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -174,13 +174,13 @@ void CTFReviveMarker::OnDataChanged( DataUpdateType_t updateType )
 		{
 			nType = CALLER_TYPE_REVIVE_HARD;
 		}
-		
+
 		Vector vecPos;
 		if ( GetAttachmentLocal( LookupAttachment( "mediccall" ), vecPos ) )
 		{
 			CTFMedicCallerPanel::AddMedicCaller( this, 5.0, vecPos, nType );
 		}
-		
+
 		m_bCalledForMedic = true;
 	}
 
@@ -190,13 +190,13 @@ void CTFReviveMarker::OnDataChanged( DataUpdateType_t updateType )
 
 #ifdef GAME_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFReviveMarker *CTFReviveMarker::Create( CTFPlayer *pOwner )
 {
 	if ( pOwner )
 	{
-		CTFReviveMarker *pMarker = static_cast< CTFReviveMarker* >( CBaseEntity::Create( "entity_revive_marker", pOwner->GetAbsOrigin() + Vector( 0, 0, 50 ), pOwner->GetAbsAngles() ) );		
+		CTFReviveMarker *pMarker = static_cast< CTFReviveMarker* >( CBaseEntity::Create( "entity_revive_marker", pOwner->GetAbsOrigin() + Vector( 0, 0, 50 ), pOwner->GetAbsAngles() ) );
 		if ( pMarker )
 		{
 			pMarker->SetOwner( pOwner );
@@ -226,7 +226,7 @@ int CTFReviveMarker::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFReviveMarker::ReviveThink( void )
 {
@@ -242,7 +242,7 @@ void CTFReviveMarker::ReviveThink( void )
 		float flHealth = m_hOwner->GetMaxHealth() / 2;
 		Assert( flHealth > 0.f );
 		PlayerStats_t *pPlayerStats = CTF_GameStats.FindPlayerStats( m_hOwner );
-		if ( pPlayerStats ) 
+		if ( pPlayerStats )
 		{
 			m_nRevives.Set( pPlayerStats->statsCurrentRound.m_iStat[TFSTAT_REVIVED] );
 			flHealth += ( (float)m_nRevives * 10.f );
@@ -323,7 +323,7 @@ void CTFReviveMarker::SetOwner( CTFPlayer *pPlayer )
 
 	// Determine bodygroup based on class
 	SetBodygroup( 1, m_hOwner->GetPlayerClass()->GetClassIndex() - 1 );
-	
+
 	SetAbsAngles( m_hOwner->GetAbsAngles() );
 #endif // GAME_DLL
 }
@@ -359,7 +359,7 @@ void CTFReviveMarker::AddMarkerHealth( float flAmount )
 	if ( m_iHealth >= GetMaxHealth() )
 	{
 		ReviveOwner();
-	
+
 		// Give points
 		CTF_GameStats.Event_PlayerAwardBonusPoints( pReviver, pOwner, 50 );
 	}
@@ -392,18 +392,18 @@ bool CTFReviveMarker::ReviveOwner( void )
 		return false;
 
 	// See if their marker is clear
-	Vector vecTeleportPos = GetAbsOrigin();			
+	Vector vecTeleportPos = GetAbsOrigin();
 	trace_t tr;
 	CTraceFilterIgnoreTeammatesAndTeamObjects filter( m_hOwner, COLLISION_GROUP_NONE, m_hOwner->GetTeamNumber() );
 	UTIL_TraceHull( vecTeleportPos, vecTeleportPos, VEC_HULL_MIN_SCALED( m_hOwner ), VEC_HULL_MAX_SCALED( m_hOwner ), ( MASK_SOLID | CONTENTS_PLAYERCLIP ), &filter, &tr );
-		
+
 	// If not, try the medic's location
 	if ( tr.fraction < 1.f )
 	{
 		if ( !m_pReviver )
 			// They'll appear in their spawn room.
 			return false;
-			
+
 		vecTeleportPos = m_pReviver->GetAbsOrigin();
 	}
 	else

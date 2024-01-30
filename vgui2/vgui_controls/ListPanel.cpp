@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,7 +37,7 @@
 
 using namespace vgui;
 
-enum 
+enum
 {
 	WINDOW_BORDER_WIDTH=2 // the width of the window's border
 };
@@ -97,17 +97,17 @@ void ColumnButton::OnMousePressed(MouseCode code)
 		OpenColumnChoiceMenu();
 		return;
 	}
-	
+
 	if (!IsMouseClickEnabled(code))
 		return;
-	
+
 	if (IsUseCaptureMouseEnabled())
 	{
 		{
 			SetSelected(true);
 			Repaint();
 		}
-		
+
 		// lock mouse input to going to this button
 		input()->SetMouseCapture(GetVPanel());
 	}
@@ -162,7 +162,7 @@ void Dragger::OnMousePressed(MouseCode code)
 	if (m_bMovable)
 	{
 		input()->SetMouseCapture(GetVPanel());
-		
+
 		int x, y;
 		input()->GetCursorPos(x, y);
 		m_iDragPos = x;
@@ -215,11 +215,11 @@ void Dragger::SetMovable(bool state)
 			// if its not movable we stick with the default arrow
 			// if parent windows Start getting fancy cursors we should probably retrive a parent
 			// cursor and set it to that
-			SetCursor(dc_sizewe); 
+			SetCursor(dc_sizewe);
 		}
-		else 
+		else
 		{
-			SetCursor(dc_arrow); 
+			SetCursor(dc_arrow);
 		}
 	}
 }
@@ -266,7 +266,7 @@ static int __cdecl AscendingSortFunc(const void *elem1, const void *elem2)
 	vgui::ListPanelItem *p1, *p2;
 	p1 = s_pCurrentSortingListPanel->GetItemData(itemID1);
 	p2 = s_pCurrentSortingListPanel->GetItemData(itemID2);
-	
+
 	int result = s_pSortFunc( s_pCurrentSortingListPanel, *p1, *p2 );
 	if (result == 0)
 	{
@@ -309,7 +309,7 @@ static int __cdecl AscendingSortFunc(const void *elem1, const void *elem2)
 //          If images are the same returns 1, else 0
 //-----------------------------------------------------------------------------
 static int __cdecl DefaultSortFunc(
-	ListPanel *pPanel, 
+	ListPanel *pPanel,
 	const ListPanelItem &item1,
 	const ListPanelItem &item2 )
 {
@@ -318,7 +318,7 @@ static int __cdecl DefaultSortFunc(
 
 	if ( !p1 || !p2 )  // No meaningful comparison
 	{
-		return 0;  
+		return 0;
 	}
 
 	const char *col = s_pCurrentSortingColumn;
@@ -351,7 +351,7 @@ static int __cdecl DefaultSortFunc(
 	}
 	else    // its an imagePanel column
 	{
-	   	const ImagePanel *s1 = (const ImagePanel *)p1->kv->GetPtr(col, NULL);
+			const ImagePanel *s1 = (const ImagePanel *)p1->kv->GetPtr(col, NULL);
 		const ImagePanel *s2 = (const ImagePanel *)p2->kv->GetPtr(col, NULL);
 
 		if (s1 < s2)
@@ -371,7 +371,7 @@ static int __cdecl DefaultSortFunc(
 // Purpose: Sorts items by comparing precalculated list values
 //-----------------------------------------------------------------------------
 static int __cdecl FastSortFunc(
-	ListPanel *pPanel, 
+	ListPanel *pPanel,
 	const ListPanelItem &item1,
 	const ListPanelItem &item2 )
 {
@@ -486,7 +486,7 @@ ListPanel::ListPanel(Panel *parent, const char *panelName) : BaseClass(parent, p
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ListPanel::~ListPanel()
 {
@@ -515,7 +515,7 @@ ListPanel::~ListPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::SetImageList(ImageList *imageList, bool deleteImageListWhenDone)
 {
@@ -530,7 +530,7 @@ void ListPanel::SetImageList(ImageList *imageList, bool deleteImageListWhenDone)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::SetColumnHeaderHeight( int height )
 {
@@ -538,7 +538,7 @@ void ListPanel::SetColumnHeaderHeight( int height )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: adds a column header. 
+// Purpose: adds a column header.
 //			this->FindChildByName(columnHeaderName) can be used to retrieve a pointer to a header panel by name
 //
 // if minWidth and maxWidth are BOTH NOTRESIZABLE or RESIZABLE
@@ -546,15 +546,15 @@ void ListPanel::SetColumnHeaderHeight( int height )
 // columns are resizable by default
 // if min and max size are specified column is resizable
 //
-// A small note on passing numbers for minWidth and maxWidth, 
+// A small note on passing numbers for minWidth and maxWidth,
 // If the initial window size is larger than the sum of the original widths of the columns,
 // you can wind up with the columns "snapping" to size after the first window focus
 // This is because the dxPerBar being calculated in PerformLayout()
-// is making resizable bounded headers exceed thier maxWidths at the Start. 
+// is making resizable bounded headers exceed thier maxWidths at the Start.
 // Solution is to either put in support for redistributing the extra dx being truncated and
 // therefore added to the last column on window opening, which is what causes the snapping.
 // OR to
-// ensure the difference between the starting sum of widths is not too much smaller/bigger 
+// ensure the difference between the starting sum of widths is not too much smaller/bigger
 // than the starting window size so the starting dx doesn't cause snapping to occur.
 // The easiest thing is to simply set it so your column widths add up to the starting size of the window on opening.
 //
@@ -616,16 +616,16 @@ void ListPanel::AddColumnHeader(int index, const char *columnName, const char *c
 	dragger->SetParent(this);
 	dragger->AddActionSignalTarget(this);
 	dragger->MoveToFront();
-	if (minWidth == maxWidth || (columnFlags & COLUMN_FIXEDSIZE)) 
+	if (minWidth == maxWidth || (columnFlags & COLUMN_FIXEDSIZE))
 	{
-		// not resizable so disable the slider 
-	   dragger->SetMovable(false);
+		// not resizable so disable the slider
+		dragger->SetMovable(false);
 	}
 	column.m_pResizer = dragger;
 
 	// add default sort function
 	column.m_pSortFunc = NULL;
-	
+
 	// Set the SortedTree less than func to the generic RBTreeLessThanFunc
 	m_ColumnsData[columnDataIndex].m_SortedTree.SetLessFunc((IndexRBTree_t::LessFunc_t)RBTreeLessFunc);
 
@@ -763,7 +763,7 @@ bool ListPanel::GetColumnHeaderText( int index, char *pOut, int maxLen )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::SetColumnSortable(int col, bool sortable)
 {
@@ -806,14 +806,14 @@ void ListPanel::SetColumnVisible(int col, bool visible)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::RemoveColumn(int col)
 {
 	if ( !m_CurrentColumns.IsValidIndex( col ) )
 		return;
 
-	// find the appropriate column data 
+	// find the appropriate column data
 	unsigned char columnDataIndex = m_CurrentColumns[col];
 
 	// remove it from the current columns
@@ -886,7 +886,7 @@ int ListPanel::AddItem( const KeyValues *item, unsigned int userData, bool bScro
 	}
 
 	InvalidateLayout();
-	
+
 	if ( bScrollToItem )
 	{
 		// scroll to last item
@@ -896,7 +896,7 @@ int ListPanel::AddItem( const KeyValues *item, unsigned int userData, bool bScro
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::SetUserData( int itemID, unsigned int userData )
 {
@@ -921,7 +921,7 @@ int ListPanel::GetItemIDFromUserData( unsigned int userData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	ListPanel::GetItemCount( void )
 {
@@ -957,7 +957,7 @@ KeyValues *ListPanel::GetItem(int itemID)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int ListPanel::GetItemCurrentRow(int itemID)
 {
@@ -966,7 +966,7 @@ int ListPanel::GetItemCurrentRow(int itemID)
 
 
 //-----------------------------------------------------------------------------
-// Attaches drag data to a particular item 
+// Attaches drag data to a particular item
 //-----------------------------------------------------------------------------
 void ListPanel::SetItemDragData( int itemID, const KeyValues *data )
 {
@@ -980,7 +980,7 @@ void ListPanel::SetItemDragData( int itemID, const KeyValues *data )
 
 
 //-----------------------------------------------------------------------------
-// Attaches drag data to a particular item 
+// Attaches drag data to a particular item
 //-----------------------------------------------------------------------------
 void ListPanel::OnCreateDragData( KeyValues *msg )
 {
@@ -1011,7 +1011,7 @@ void ListPanel::OnCreateDragData( KeyValues *msg )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int ListPanel::GetItemIDFromRow(int currentRow)
 {
@@ -1035,7 +1035,7 @@ int ListPanel::NextItem( int iItem ) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int ListPanel::InvalidItemID() const
 {
@@ -1043,7 +1043,7 @@ int ListPanel::InvalidItemID() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool ListPanel::IsValidItemID(int itemID)
 {
@@ -1051,13 +1051,13 @@ bool ListPanel::IsValidItemID(int itemID)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ListPanelItem *ListPanel::GetItemData( int itemID )
 {
 	if ( !m_DataItems.IsValidIndex(itemID) )
 		return NULL;
-	
+
 	return m_DataItems[ itemID ];
 }
 
@@ -1127,7 +1127,7 @@ void ListPanel::IndexItem(int itemID)
 		s_pCurrentSortingListPanel = this;
 		s_pCurrentSortingColumn = column.m_pHeader->GetName(); // name of current column for sorting
 		s_currentSortingColumnTypeIsText = column.m_bTypeIsText; // type of data in the column
-		
+
 		SortFunc *sortFunc = column.m_pSortFunc;
 		if (!sortFunc)
 		{
@@ -1137,13 +1137,13 @@ void ListPanel::IndexItem(int itemID)
 		s_bSortAscending = true;
 		s_pSortFuncSecondary = NULL;
 
-		// insert index		
+		// insert index
 		newitem->m_SortedTreeIndexes[i] = rbtree.Insert(item);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::RereadAllItems()
 {
@@ -1267,7 +1267,7 @@ void ListPanel::DeleteAllItems()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::ResetScrollBar()
 {
@@ -1301,7 +1301,7 @@ int ListPanel::GetSelectedItem(int selectionIndex)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int ListPanel::GetSelectedColumn()
 {
@@ -1333,7 +1333,7 @@ bool ListPanel::IsItemSelected( int itemID )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::AddSelectedItem( int itemID )
 {
@@ -1350,7 +1350,7 @@ void ListPanel::AddSelectedItem( int itemID )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::SetSingleSelectedItem( int itemID )
 {
@@ -1360,7 +1360,7 @@ void ListPanel::SetSingleSelectedItem( int itemID )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::SetSelectedCell(int itemID, int col)
 {
@@ -1373,10 +1373,10 @@ void ListPanel::SetSelectedCell(int itemID, int col)
 	// make sure it's a valid cell
 	if ( !m_DataItems.IsValidIndex(itemID) )
 		return;
-	
+
 	if ( !m_CurrentColumns.IsValidIndex(col) )
 		return;
-	
+
 	SetSingleSelectedItem( itemID );
 	m_iSelectedColumn = col;
 }
@@ -1483,14 +1483,14 @@ Panel *ListPanel::GetCellRenderer(int itemID, int col)
 {
 	Assert( m_pTextImage );
 	Assert( m_pImagePanel );
-	
+
 	column_t &column = m_ColumnsData[ m_CurrentColumns[col] ];
 
 	IScheme *pScheme = scheme()->GetIScheme( GetScheme() );
 
 	m_pLabel->SetContentAlignment( (Label::Alignment)column.m_nContentAlignment );
 
-	if ( column.m_bTypeIsText ) 
+	if ( column.m_bTypeIsText )
 	{
 		wchar_t tempText[ 256 ];
 
@@ -1498,53 +1498,53 @@ Panel *ListPanel::GetCellRenderer(int itemID, int col)
 		GetCellText( itemID, col, tempText, 256 );
 		KeyValues *item = GetItem( itemID );
 		m_pTextImage->SetText(tempText);
-        int cw, tall;
-        m_pTextImage->GetContentSize(cw, tall);
+		int cw, tall;
+		m_pTextImage->GetContentSize(cw, tall);
 
 		// set cell size
 		Panel *header = column.m_pHeader;
-	    int wide = header->GetWide();
+		int wide = header->GetWide();
 		m_pTextImage->SetSize( min( cw, wide - 5 ), tall);
 
 		m_pLabel->SetTextImageIndex( 0 );
 		m_pLabel->SetImageAtIndex(0, m_pTextImage, 3);
-			
+
 		bool selected = false;
 		if ( m_SelectedItems.HasElement(itemID) && ( !m_bCanSelectIndividualCells || col == m_iSelectedColumn ) )
 		{
 			selected = true;
-            VPANEL focus = input()->GetFocus();
-            // if one of the children of the SectionedListPanel has focus, then 'we have focus' if we're selected
-            if (HasFocus() || (focus && ipanel()->HasParent(focus, GetVParent())))
-            {
-                m_pLabel->SetBgColor(GetSchemeColor("ListPanel.SelectedBgColor", pScheme));
-    			// selection
-            }
-            else
-            {
-                m_pLabel->SetBgColor(GetSchemeColor("ListPanel.SelectedOutOfFocusBgColor", pScheme));
-            }
+			VPANEL focus = input()->GetFocus();
+			// if one of the children of the SectionedListPanel has focus, then 'we have focus' if we're selected
+			if (HasFocus() || (focus && ipanel()->HasParent(focus, GetVParent())))
+			{
+				m_pLabel->SetBgColor(GetSchemeColor("ListPanel.SelectedBgColor", pScheme));
+				// selection
+			}
+			else
+			{
+				m_pLabel->SetBgColor(GetSchemeColor("ListPanel.SelectedOutOfFocusBgColor", pScheme));
+			}
 
 			if ( item->IsEmpty("cellcolor") == false )
 			{
-	            m_pTextImage->SetColor( item->GetColor( "cellcolor" ) );
+				m_pTextImage->SetColor( item->GetColor( "cellcolor" ) );
 			}
 			else if ( item->GetInt("disabled", 0) == 0 )
 			{
-	            m_pTextImage->SetColor(m_SelectionFgColor);
+				m_pTextImage->SetColor(m_SelectionFgColor);
 			}
-			else 
+			else
 			{
-	            m_pTextImage->SetColor(m_DisabledSelectionFgColor);
+				m_pTextImage->SetColor(m_DisabledSelectionFgColor);
 			}
 
-            m_pLabel->SetPaintBackgroundEnabled(true);
+			m_pLabel->SetPaintBackgroundEnabled(true);
 		}
 		else
 		{
 			if ( item->IsEmpty("cellcolor") == false )
 			{
-	            m_pTextImage->SetColor( item->GetColor( "cellcolor" ) );
+				m_pTextImage->SetColor( item->GetColor( "cellcolor" ) );
 			}
 			else if ( item->GetInt("disabled", 0) == 0 )
 			{
@@ -1582,24 +1582,24 @@ Panel *ListPanel::GetCellRenderer(int itemID, int col)
 				m_pLabel->SetImageAtIndex(1, m_pTextImage, 3);
 			}
 		}
-		
+
 		return m_pLabel;
 	}
 	else 	// if its an Image Panel
 	{
 		if ( m_SelectedItems.HasElement(itemID) && ( !m_bCanSelectIndividualCells || col == m_iSelectedColumn ) )
 		{
-            VPANEL focus = input()->GetFocus();
-            // if one of the children of the SectionedListPanel has focus, then 'we have focus' if we're selected
-            if (HasFocus() || (focus && ipanel()->HasParent(focus, GetVParent())))
-            {
-                m_pLabel->SetBgColor(GetSchemeColor("ListPanel.SelectedBgColor", pScheme));
-    			// selection
-            }
-            else
-            {
-                m_pLabel->SetBgColor(GetSchemeColor("ListPanel.SelectedOutOfFocusBgColor", pScheme));
-            }
+			VPANEL focus = input()->GetFocus();
+			// if one of the children of the SectionedListPanel has focus, then 'we have focus' if we're selected
+			if (HasFocus() || (focus && ipanel()->HasParent(focus, GetVParent())))
+			{
+				m_pLabel->SetBgColor(GetSchemeColor("ListPanel.SelectedBgColor", pScheme));
+				// selection
+			}
+			else
+			{
+				m_pLabel->SetBgColor(GetSchemeColor("ListPanel.SelectedOutOfFocusBgColor", pScheme));
+			}
 			// selection
 			m_pLabel->SetPaintBackgroundEnabled(true);
 		}
@@ -1622,7 +1622,7 @@ void ListPanel::PerformLayout()
 {
 	if ( m_CurrentColumns.Count() == 0 )
 		return;
-	
+
 	if (m_bNeedsSort)
 	{
 		SortList();
@@ -1637,7 +1637,7 @@ void ListPanel::PerformLayout()
 	m_vbar->SetVisible(true);
 	m_vbar->SetEnabled(false);
 	m_vbar->SetRangeWindow( rowsperpage );
-	m_vbar->SetRange( 0, visibleItemCount);	
+	m_vbar->SetRange( 0, visibleItemCount);
 	m_vbar->SetButtonPressedScrollValue( 1 );
 
 	int wide, tall;
@@ -1647,7 +1647,7 @@ void ListPanel::PerformLayout()
 	m_vbar->InvalidateLayout();
 
 	int buttonMaxXPos = wide - (m_vbar->GetWide()+WINDOW_BORDER_WIDTH);
-	
+
 	int nColumns = m_CurrentColumns.Count();
 	// number of bars that can be resized
 	int numToResize=0;
@@ -1660,7 +1660,7 @@ void ListPanel::PerformLayout()
 		for (int i = 0; i < nColumns; i++)
 		{
 			if ( m_ColumnsData[m_CurrentColumns[i]].m_bResizesWithWindow // column is resizable in response to window
-				&& !m_ColumnsData[m_CurrentColumns[i]].m_bHidden) 
+				&& !m_ColumnsData[m_CurrentColumns[i]].m_bHidden)
 			{
 				numToResize++;
 			}
@@ -1668,7 +1668,7 @@ void ListPanel::PerformLayout()
 	}
 
 	int dxPerBar; // zero on window first opening
-	
+
 	// location of the last column resizer
 	int oldSizeX = 0, oldSizeY = 0;
 	int lastColumnIndex = nColumns-1;
@@ -1694,7 +1694,7 @@ void ListPanel::PerformLayout()
 				minWidth += m_ColumnsData[m_CurrentColumns[i]].m_iMinWidth;
 			}
 		}
-		
+
 		// if all the minimum widths cannot fit in the space given, then we will shrink ALL columns an equal amount
 		if (minWidth > buttonMaxXPos)
 		{
@@ -1766,14 +1766,14 @@ void ListPanel::PerformLayout()
 			{
 				break;
 			}
-	
+
 			int hWide = header->GetWide();
 
 			// calculate the column's width
 			// make it so the last column always attaches to the scroll bar
 			if ( i == lastColumnIndex )
 			{
-				hWide = buttonMaxXPos-x; 
+				hWide = buttonMaxXPos-x;
 			}
 			else if (i == m_iColumnDraggerMoved ) // column resizing using dragger
 			{
@@ -1790,7 +1790,7 @@ void ListPanel::PerformLayout()
 			}
 
 			// enforce column mins and max's - unless we're FORCING it to shrink
-			if ( hWide < column.m_iMinWidth && !bForceShrink ) 
+			if ( hWide < column.m_iMinWidth && !bForceShrink )
 			{
 				hWide = column.m_iMinWidth; // adjust width of column
 			}
@@ -1798,10 +1798,10 @@ void ListPanel::PerformLayout()
 			{
 				hWide = column.m_iMaxWidth;
 			}
-	
+
 			header->SetSize(hWide, m_vbar->GetWide());
 			x += hWide;
-	
+
 			// set the resizers
 			Panel *sizer = column.m_pResizer;
 			if ( i == lastColumnIndex )
@@ -1820,7 +1820,7 @@ void ListPanel::PerformLayout()
 		// we made it all the way through
 		if ( i == nColumns )
 			break;
-	
+
 		// we do this AFTER trying first, to let as many columns as possible try and get to their
 		// desired width before we forcing the minimum width on them
 
@@ -1870,7 +1870,7 @@ void ListPanel::PerformLayout()
 	// setup edit mode
 	if ( m_hEditModePanel.Get() )
 	{
-		m_iTableStartX = 0; 
+		m_iTableStartX = 0;
 		m_iTableStartY = m_iHeaderHeight + 1;
 
 		int nTotalRows = m_VisibleItems.Count();
@@ -1892,7 +1892,7 @@ void ListPanel::PerformLayout()
 				continue;
 
 			int itemID = m_VisibleItems[i];
-			
+
 			// iterate the columns
 			for (int j = 0; j < m_CurrentColumns.Count(); j++)
 			{
@@ -1904,7 +1904,7 @@ void ListPanel::PerformLayout()
 				wide = header->GetWide();
 
 				if ( itemID == m_iEditModeItemID &&
-					 j == m_iEditModeColumn )
+					j == m_iEditModeColumn )
 				{
 
 					m_hEditModePanel->SetPos( x + m_iTableStartX + 2, (drawcount * m_iRowHeight) + m_iTableStartY);
@@ -1927,7 +1927,7 @@ void ListPanel::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::OnSizeChanged(int wide, int tall)
 {
@@ -1948,9 +1948,9 @@ void ListPanel::Paint()
 
 	// draw selection areas if any
 	int wide, tall;
-  	GetSize( wide, tall );
+	GetSize( wide, tall );
 
-	m_iTableStartX = 0; 
+	m_iTableStartX = 0;
 	m_iTableStartY = m_iHeaderHeight + 1;
 
 	int nTotalRows = m_VisibleItems.Count();
@@ -1980,7 +1980,7 @@ void ListPanel::Paint()
 			continue;
 
 		int itemID = m_VisibleItems[i];
-		
+
 		// iterate the columns
 		for (int j = 0; j < m_CurrentColumns.Count(); j++)
 		{
@@ -2061,7 +2061,7 @@ void ListPanel::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::PaintBackground()
 {
@@ -2070,7 +2070,7 @@ void ListPanel::PaintBackground()
 
 
 //-----------------------------------------------------------------------------
-// Handles multiselect 
+// Handles multiselect
 //-----------------------------------------------------------------------------
 void ListPanel::HandleMultiSelection( int itemID, int row, int column )
 {
@@ -2111,7 +2111,7 @@ void ListPanel::HandleMultiSelection( int itemID, int row, int column )
 
 
 //-----------------------------------------------------------------------------
-// Handles multiselect 
+// Handles multiselect
 //-----------------------------------------------------------------------------
 void ListPanel::HandleAddSelection( int itemID, int row, int column )
 {
@@ -2132,7 +2132,7 @@ void ListPanel::HandleAddSelection( int itemID, int row, int column )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::UpdateSelection( MouseCode code, int x, int y, int row, int column )
 {
@@ -2176,7 +2176,7 @@ void ListPanel::UpdateSelection( MouseCode code, int x, int y, int row, int colu
 		return;
 	}
 
-	if ( input()->IsKeyDown(KEY_LSHIFT) || input()->IsKeyDown(KEY_RSHIFT) ) 
+	if ( input()->IsKeyDown(KEY_LSHIFT) || input()->IsKeyDown(KEY_RSHIFT) )
 	{
 		// check for multi-select
 		HandleMultiSelection( itemID, row, column );
@@ -2199,7 +2199,7 @@ void ListPanel::UpdateSelection( MouseCode code, int x, int y, int row, int colu
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::OnMousePressed( MouseCode code )
 {
@@ -2290,7 +2290,7 @@ void ListPanel::OnKeyCodePressed(KeyCode code)
 	{
 		nSelectedRow = m_VisibleItems.Find( m_LastItemSelected );
 	}
- 	int nSelectedColumn = m_iSelectedColumn;
+	int nSelectedColumn = m_iSelectedColumn;
 
 	switch(code)
 	{
@@ -2393,7 +2393,7 @@ void ListPanel::OnKeyCodePressed(KeyCode code)
 #else
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::OnKeyCodePressed(KeyCode code)
 {
@@ -2422,7 +2422,7 @@ void ListPanel::OnKeyCodePressed(KeyCode code)
 	{
 		nSelectedRow = m_VisibleItems.Find( m_LastItemSelected );
 	}
- 	int nSelectedColumn = m_iSelectedColumn;
+	int nSelectedColumn = m_iSelectedColumn;
 
 	switch (code)
 	{
@@ -2554,7 +2554,7 @@ void ListPanel::OnKeyCodePressed(KeyCode code)
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool ListPanel::GetCellBounds( int row, int col, int& x, int& y, int& wide, int& tall )
 {
@@ -2603,7 +2603,7 @@ bool ListPanel::GetCellAtPos(int x, int y, int &row, int &col)
 	// make sure it's still in valid area
 	if ( x >= 0 && y >= 0 )
 	{
-		// walk the rows (for when row height is independant each row)  
+		// walk the rows (for when row height is independant each row)
 		// NOTE: if we do height independent rows, we will need to change GetCellBounds as well
 		for ( row = startitem ; row < m_VisibleItems.Count() ; row++ )
 		{
@@ -2634,7 +2634,7 @@ bool ListPanel::GetCellAtPos(int x, int y, int &row, int &col)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::ApplySchemeSettings(IScheme *pScheme)
 {
@@ -2654,13 +2654,13 @@ void ListPanel::ApplySchemeSettings(IScheme *pScheme)
 	m_DisabledSelectionFgColor = GetSchemeColor("ListPanel.DisabledSelectedTextColor", m_LabelFgColor, pScheme);
 
 	m_pEmptyListText->SetColor(GetSchemeColor("ListPanel.EmptyListInfoTextColor", pScheme));
-		
+
 	SetFont( pScheme->GetFont("Default", IsProportional() ) );
 	m_pEmptyListText->SetFont( pScheme->GetFont( "Default", IsProportional() ) );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::SetSortFunc(int col, SortFunc *func)
 {
@@ -2675,11 +2675,11 @@ void ListPanel::SetSortFunc(int col, SortFunc *func)
 	m_ColumnsData[dataColumnIndex].m_pSortFunc = func;
 
 	// resort this column according to new sort func
-    ResortColumnRBTree(col);
+	ResortColumnRBTree(col);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::SetSortColumn(int column)
 {
@@ -2708,7 +2708,7 @@ void ListPanel::GetSortColumnEx( int &iPrimarySortColumn, int &iSecondarySortCol
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::SortList( void )
 {
@@ -2719,7 +2719,7 @@ void ListPanel::SortList( void )
 		return;
 	}
 
-	// check if the last selected item is on the screen - if so, we should try to maintain it on screen 
+	// check if the last selected item is on the screen - if so, we should try to maintain it on screen
 	int startItem = GetStartItem();
 	int rowsperpage = (int) GetRowsPerPage();
 	int screenPosition = -1;
@@ -2824,7 +2824,7 @@ void ListPanel::SortList( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::SetFont(HFont font)
 {
@@ -2837,7 +2837,7 @@ void ListPanel::SetFont(HFont font)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListPanel::OnSliderMoved()
 {
@@ -2846,7 +2846,7 @@ void ListPanel::OnSliderMoved()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : deltax - deltas from current position
 //-----------------------------------------------------------------------------
 void ListPanel::OnColumnResized(int col, int delta)
@@ -2952,7 +2952,7 @@ void ListPanel::SetItemVisible(int itemID, bool state)
 
 		// remove from data
 		m_VisibleItems.FindAndRemove(itemID);
-	
+
 		InvalidateLayout();
 	}
 }
@@ -2970,7 +2970,7 @@ bool ListPanel::IsItemVisible( int itemID )
 	return data->visible;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: sets whether the item is disabled or not (effects item color)
 //-----------------------------------------------------------------------------
@@ -2983,7 +2983,7 @@ void ListPanel::SetItemDisabled(int itemID, bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Calculate number of rows per page 
+// Purpose: Calculate number of rows per page
 //-----------------------------------------------------------------------------
 float ListPanel::GetRowsPerPage()
 {
@@ -3154,7 +3154,7 @@ void ListPanel::ApplyUserConfigSettings(KeyValues *userConfig)
 	//    - In PerformLayout, it thinks the window has grown by 500 (since m_lastBarWidth is 500 and new window width is 1000)
 	//      so it pushes out any COLUMN_RESIZEWITHWINDOW columns to their max extent and shrinks everything else to its min extent.
 	m_lastBarWidth = userConfig->GetInt( "lastBarWidth", 0 );
-	
+
 	// read which columns are hidden
 	for ( int i = 0; i < m_CurrentColumns.Count(); i++ )
 	{
@@ -3265,7 +3265,7 @@ bool ListPanel::IsInEditMode()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #ifdef _X360
 void ListPanel::NavigateTo()

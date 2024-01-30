@@ -25,14 +25,14 @@ class CWeaponMG42 : public CDODBipodWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponMG42, CDODBipodWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
 
 #ifdef GAME_DLL
 	DECLARE_DATADESC();
 #endif
-	
+
 	CWeaponMG42()  {}
 #ifdef CLIENT_DLL
 	virtual ~CWeaponMG42();
@@ -45,7 +45,7 @@ public:
 	{
 		if ( !IsDeployed() )
 			return WEAPON_MG42_UNDEPLOYED;
-		else 
+		else
 			return WEAPON_MG42;
 	}
 
@@ -69,7 +69,7 @@ public:
 	virtual Activity GetPrimaryAttackActivity( void );
 
 	int GetWeaponHeat( void ) { return m_iWeaponHeat; }
-	
+
 	virtual bool ShouldDrawCrosshair( void ) { return IsDeployed(); }
 
 	void Cool( void );
@@ -82,7 +82,7 @@ public:
 	void EmitSmokeParticle( void );
 #else
 	void CoolThink( void );
-#endif 
+#endif
 
 	virtual float GetRecoil( void );
 

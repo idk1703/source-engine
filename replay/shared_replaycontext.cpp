@@ -59,7 +59,7 @@ bool CSharedReplayContext::Init( CreateInterfaceFn fnFactory )
 	// Owning context should have initialized these by now
 	// NOTE: Session manager init must come after block manager init since session manager
 	// assumes all blocks have been loaded.
-	// 
+	//
 	m_pRecordingSessionBlockManager->Init();
 	m_pRecordingSessionManager->Init();
 

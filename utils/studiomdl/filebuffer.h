@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -56,7 +56,7 @@ public:
 		}
 	}
 #endif
-	
+
 	void WriteToFile( const char *fileName, int size )
 	{
 		CPlainAutoPtr< CP4File > spFile( g_p4factory->AccessFile( fileName ) );
@@ -69,11 +69,11 @@ public:
 		}
 
 		fwrite( m_pData, 1, size, fp );
-		
+
 		fclose( fp );
 		spFile->Add();
 	}
-	
+
 	void WriteAt( int offset, void *data, int size, const char *name )
 	{
 //		printf( "WriteAt: \"%s\" offset: %d end: %d size: %d\n", name, offset, offset + size - 1, size );
@@ -126,6 +126,6 @@ private:
 	const char **m_pUsed;
 #endif
 };
-	
+
 
 #endif // FILEBUFFER_H

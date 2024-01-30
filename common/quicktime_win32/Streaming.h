@@ -1,17 +1,17 @@
 /*
-     File:       Streaming.h
- 
-     Contains:   xxx put contents here xxx
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1994, 1996 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       Streaming.h
+
+		Contains:   xxx put contents here xxx
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1994, 1996 by Apple Computer, Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 /*.#endif forMasterInterfaces*/
 
@@ -38,31 +38,31 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=mac68k
+		#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+		#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+		#pragma pack(2)
 #endif
 
 /*  interfaces to streammode for c*/
 
 /* streaming constants for foreground and background streaming*/
 enum {
-  AlphaStream                   = 1,
-  GraphicsStream                = 2
+	AlphaStream                   = 1,
+	GraphicsStream                = 2
 };
 
 /* mode bits*/
 enum {
-  CopyToAlpha                   = 0x0200,
-  CopyToGraphics                = 0x0100
+	CopyToAlpha                   = 0x0200,
+	CopyToGraphics                = 0x0100
 };
 
 #if CALL_NOT_IN_CARBON
 /*
  *  AlphaVersion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -74,7 +74,7 @@ AlphaVersion(void)                                            TWOWORDINLINE(0x70
 
 /*
  *  SetForeStream()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -86,7 +86,7 @@ SetForeStream(long streamID)                                  TWOWORDINLINE(0x70
 
 /*
  *  SetForeTransparency()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -98,7 +98,7 @@ SetForeTransparency(short streamRatio)                        TWOWORDINLINE(0x70
 
 /*
  *  SetBackStream()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -110,7 +110,7 @@ SetBackStream(long streamID)                                  TWOWORDINLINE(0x70
 
 /*
  *  SetBackTransparency()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -122,7 +122,7 @@ SetBackTransparency(short streamRatio)                        TWOWORDINLINE(0x70
 
 /*
  *  GetForeStream()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -134,7 +134,7 @@ GetForeStream(void)                                           TWOWORDINLINE(0x70
 
 /*
  *  GetForeTransparency()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -146,7 +146,7 @@ GetForeTransparency(void)                                     TWOWORDINLINE(0x70
 
 /*
  *  GetBackStream()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -158,7 +158,7 @@ GetBackStream(void)                                           TWOWORDINLINE(0x70
 
 /*
  *  GetBackTransparency()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -170,7 +170,7 @@ GetBackTransparency(void)                                     TWOWORDINLINE(0x70
 
 /*
  *  ResizeGrafVars()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -182,7 +182,7 @@ ResizeGrafVars(void)                                          TWOWORDINLINE(0x70
 
 /*
  *  GetStreamMode()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -195,7 +195,7 @@ GetStreamMode(void)                                           TWOWORDINLINE(0x70
 /* these are thew new ones*/
 /*
  *  SetForeAlpha()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -203,13 +203,13 @@ GetStreamMode(void)                                           TWOWORDINLINE(0x70
  */
 EXTERN_API( short )
 SetForeAlpha(
-  long    streamType,
-  short   value)                                              TWOWORDINLINE(0x700B, 0xABC0);
+	long    streamType,
+	short   value)                                              TWOWORDINLINE(0x700B, 0xABC0);
 
 
 /*
  *  SetBackAlpha()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -217,13 +217,13 @@ SetForeAlpha(
  */
 EXTERN_API( short )
 SetBackAlpha(
-  long    streamType,
-  short   value)                                              TWOWORDINLINE(0x700C, 0xABC0);
+	long    streamType,
+	short   value)                                              TWOWORDINLINE(0x700C, 0xABC0);
 
 
 /*
  *  GetForeAlpha()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -235,7 +235,7 @@ GetForeAlpha(void)                                            TWOWORDINLINE(0x70
 
 /*
  *  GetBackAlpha()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -247,7 +247,7 @@ GetBackAlpha(void)                                            TWOWORDINLINE(0x70
 
 /*
  *  GetForeAlphaMask()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -259,7 +259,7 @@ GetForeAlphaMask(void)                                        TWOWORDINLINE(0x70
 
 /*
  *  GetBackAlphaMask()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -294,11 +294,11 @@ GetBackAlphaMask(void)                                        TWOWORDINLINE(0x70
 
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+		#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+		#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+		#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -312,4 +312,3 @@ GetBackAlphaMask(void)                                        TWOWORDINLINE(0x70
 #endif
 
 #endif /* __STREAMING__ */
-

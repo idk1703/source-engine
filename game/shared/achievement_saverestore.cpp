@@ -7,7 +7,7 @@
 
 #include "cbase.h"
 
-#ifdef GAME_DLL 
+#ifdef GAME_DLL
 
 #include "isaverestore.h"
 #include "saverestore_utlvector.h"
@@ -46,7 +46,7 @@ public:
 		pSave->StartBlock( "Achievements" );
 		int iTotalAchievements = pAchievementMgr->GetAchievementCount();
 		short nSaveCount = 0;
-		// count how many achievements should be saved. 
+		// count how many achievements should be saved.
 		for ( int i = 0; i < iTotalAchievements; i++ )
 		{
 			IAchievement *pAchievement = pAchievementMgr->GetAchievementByIndex( i );
@@ -62,7 +62,7 @@ public:
 		{
 			IAchievement *pAchievement = pAchievementMgr->GetAchievementByIndex( i );
 			if ( pAchievement->ShouldSaveWithGame() )
-			{				
+			{
 				CBaseAchievement *pBaseAchievement = dynamic_cast< CBaseAchievement * >( pAchievement );
 				if ( pBaseAchievement )
 				{
@@ -83,7 +83,7 @@ public:
 	{
 		pSave->WriteShort( &ACHIEVEMENT_SAVE_RESTORE_VERSION );
 	}
-	
+
 	//---------------------------------
 
 	void ReadRestoreHeaders( IRestore *pRestore )
@@ -92,8 +92,8 @@ public:
 		short version;
 		pRestore->ReadShort( &version );
 		// only load if version matches and if we are loading a game, not a transition
-		m_fDoLoad = ( ( version == ACHIEVEMENT_SAVE_RESTORE_VERSION ) && 
-			( ( MapLoad_LoadGame == gpGlobals->eLoadType ) || ( MapLoad_NewGame == gpGlobals->eLoadType )  ) 
+		m_fDoLoad = ( ( version == ACHIEVEMENT_SAVE_RESTORE_VERSION ) &&
+			( ( MapLoad_LoadGame == gpGlobals->eLoadType ) || ( MapLoad_NewGame == gpGlobals->eLoadType )  )
 		);
 	}
 
@@ -112,13 +112,13 @@ public:
 			pRestore->StartBlock();
 			// read # of achievements
 			int nSavedAchievements = pRestore->ReadShort();
-			
+
 			while ( nSavedAchievements-- )
 			{
 				// read achievement ID
 				int iAchievementID = pRestore->ReadShort();
 				// find the corresponding achievement object
-				CBaseAchievement *pAchievement = pAchievementMgr->GetAchievementByID( iAchievementID );				
+				CBaseAchievement *pAchievement = pAchievementMgr->GetAchievementByID( iAchievementID );
 				Assert( pAchievement );		// It's a bug if we don't understand this achievement
 				if ( pAchievement )
 				{

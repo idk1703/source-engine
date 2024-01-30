@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,4 +26,4 @@ public:
 	virtual void Spawn() OVERRIDE;
 };
 
-#endif // FUNC_PASSTIME_NO_BALL_ZONE_H  
+#endif // FUNC_PASSTIME_NO_BALL_ZONE_H

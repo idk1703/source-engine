@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,7 +24,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudStaminaProgressBar::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -37,7 +37,7 @@ void CDoDHudStaminaProgressBar::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudStaminaProgressBar::Paint()
 {
@@ -78,7 +78,7 @@ void CDoDHudStaminaProgressBar::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDoDHudStaminaIcon::CDoDHudStaminaIcon( vgui::Panel *parent, const char *name ) : vgui::ImagePanel( parent, name )
 {
@@ -87,7 +87,7 @@ CDoDHudStaminaIcon::CDoDHudStaminaIcon( vgui::Panel *parent, const char *name ) 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudStaminaIcon::ApplySettings( KeyValues *inResourceData )
 {
@@ -97,7 +97,7 @@ void CDoDHudStaminaIcon::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudStaminaIcon::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -113,7 +113,7 @@ void CDoDHudStaminaIcon::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudStaminaIcon::Paint()
 {
@@ -127,7 +127,7 @@ void CDoDHudStaminaIcon::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDoDHudStamina::CDoDHudStamina( vgui::Panel *parent, const char *name ) : vgui::EditablePanel( parent, name )
 {
@@ -140,7 +140,7 @@ CDoDHudStamina::CDoDHudStamina( vgui::Panel *parent, const char *name ) : vgui::
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudStamina::OnScreenSizeChanged( int iOldWide, int iOldTall )
 {
@@ -148,7 +148,7 @@ void CDoDHudStamina::OnScreenSizeChanged( int iOldWide, int iOldTall )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudStamina::OnThink()
 {

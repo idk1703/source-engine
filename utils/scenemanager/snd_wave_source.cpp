@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -119,8 +119,8 @@ void CAudioSourceWave::Init( const char *pHeaderBuffer, int headerSize )
 	m_channels = pHeader->nChannels;
 
 	m_sampleSize = (m_bits * m_channels) / 8;
-	
-	// this can never be zero -- other functions divide by this. 
+
+	// this can never be zero -- other functions divide by this.
 	// This should never happen, but avoid crashing
 	if ( m_sampleSize <= 0 )
 		m_sampleSize = 1;
@@ -139,7 +139,7 @@ void CAudioSourceWave::Init( const char *pHeaderBuffer, int headerSize )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CAudioSourceWave::TrueSampleSize( void )
@@ -155,7 +155,7 @@ float CAudioSourceWave::TrueSampleSize( void )
 // Purpose: Total number of samples in this source
 // Output : int
 //-----------------------------------------------------------------------------
-int CAudioSourceWave::SampleCount( void ) 
+int CAudioSourceWave::SampleCount( void )
 {
 	if ( m_format == WAVE_FORMAT_ADPCM )
 	{
@@ -165,7 +165,7 @@ int CAudioSourceWave::SampleCount( void )
 
 		int blockCount = m_sampleCount / blockSize;
 		int blockRem = m_sampleCount % blockSize;
-		
+
 		// total samples in complete blocks
 		int sampleCount = blockCount * pFormat->wSamplesPerBlock;
 
@@ -176,7 +176,7 @@ int CAudioSourceWave::SampleCount( void )
 		}
 		return sampleCount;
 	}
-	return m_sampleCount; 
+	return m_sampleCount;
 }
 
 //-----------------------------------------------------------------------------
@@ -205,8 +205,8 @@ void CAudioSourceWave::ConvertSamples( char *pData, int sampleCount )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &walk - 
+// Purpose:
+// Input  : &walk -
 //-----------------------------------------------------------------------------
 void CAudioSourceWave::ParseSentence( IterateRIFF &walk )
 {
@@ -250,7 +250,7 @@ void CAudioSourceWave::ParseChunk( IterateRIFF &walk, int chunkName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CSentence
 //-----------------------------------------------------------------------------
 CSentence *CAudioSourceWave::GetSentence( void )
@@ -309,7 +309,7 @@ public:
 	CWaveDataMemory( CAudioSourceWave &source ) : m_source(source) {}
 	~CWaveDataMemory( void ) {}
 	CAudioSourceWave &Source( void ) { return m_source; }
-	
+
 	// this file is in memory, simply pass along the data request to the source
 	virtual int ReadSourceData( void **pData, int sampleIndex, int sampleCount, bool forward /*= true*/ )
 	{
@@ -372,7 +372,7 @@ void CAudioSourceMemWave::ParseChunk( IterateRIFF &walk, int chunkName )
 void CAudioSourceMemWave::ParseDataChunk( IterateRIFF &walk )
 {
 	int size = walk.ChunkSize();
-	
+
 	// create a buffer for the samples
 	m_pData = new char[size];
 
@@ -409,13 +409,13 @@ int CAudioSourceWave::ParseCueChunk( IterateRIFF &walk )
 {
 	// Cue chunk as specified by RIFF format
 	// see $/research/jay/sound/riffnew.htm
-	struct 
+	struct
 	{
-		unsigned int dwName; 
+		unsigned int dwName;
 		unsigned int dwPosition;
 		unsigned int fccChunk;
 		unsigned int dwChunkStart;
-		unsigned int dwBlockStart; 
+		unsigned int dwBlockStart;
 		unsigned int dwSampleOffset;
 	} cue_chunk;
 
@@ -457,7 +457,7 @@ int CAudioSourceWave::ConvertLoopedPosition( int samplePosition )
 			int loopSize = m_sampleCount - m_loopStart;
 			// subtract off starting bit of the wave
 			samplePosition -= m_loopStart;
-			
+
 			if ( loopSize )
 			{
 				// "real" position in memory (mod off extra loops)
@@ -471,9 +471,9 @@ int CAudioSourceWave::ConvertLoopedPosition( int samplePosition )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : **pData - output pointer to samples
-//			samplePosition - position (in samples not bytes) 
+//			samplePosition - position (in samples not bytes)
 //			sampleCount - number of samples (not bytes)
 // Output : int - number of samples available
 //-----------------------------------------------------------------------------

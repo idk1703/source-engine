@@ -39,7 +39,7 @@ protected:
 	virtual bool IsLogical() { return true; }
 	virtual void OnRenderListDirty();
 
-	// convert client view space to map world coordinates (2D versions for convenience) 
+	// convert client view space to map world coordinates (2D versions for convenience)
 	void WorldToClient( Vector2D &ptClient, const Vector2D &vWorld );
 	void ClientToWorld( Vector2D &vWorld, const Vector2D &vClient );
 	virtual void WorldToClient( Vector2D &ptClient, const Vector &vWorld );
@@ -50,9 +50,9 @@ protected:
 
 private:
 	// timer IDs:
-	enum 
-	{ 
-		TIMER_CONNECTIONUPDATE = 2, 
+	enum
+	{
+		TIMER_CONNECTIONUPDATE = 2,
 	};
 
 	typedef CUtlRBTree<CMapClass*, unsigned short> MapClassDict_t;
@@ -61,7 +61,7 @@ private:
 	void AddToRenderLists( CMapClass *pObject );
 	void PopulateConnectionList( );
 
-	// Purpose: 
+	// Purpose:
 	void RenderConnections(const bool bDrawSelected, const bool bAnySelected);
 
 	// Draws a wire from a particular point to a target

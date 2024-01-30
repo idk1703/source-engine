@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ public:
 	~ImagePanelDemo();
 
 	virtual void ApplySchemeSettings(IScheme *pScheme);
-	
+
 private:
 	IImage *m_pImage;
 	ImagePanel *m_pImagePanel;
@@ -72,4 +72,3 @@ Panel* ImagePanelDemo_Create(Panel *parent)
 {
 	return new ImagePanelDemo(parent, "ImagePanelDemo");
 }
-

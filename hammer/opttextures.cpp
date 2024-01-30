@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -64,10 +64,10 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // COPTTextures message handlers
 
-BOOL COPTTextures::OnInitDialog() 
+BOOL COPTTextures::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
-	
+
 	// load texture file list with options
 	int i;
 	for(i = 0; i < Options.textures.nTextureFiles; i++)
@@ -86,7 +86,7 @@ BOOL COPTTextures::OnInitDialog()
 }
 
 
-void COPTTextures::OnExtract() 
+void COPTTextures::OnExtract()
 {
 	// redo listbox content
 	m_TextureFiles.ResetContent();
@@ -98,8 +98,8 @@ void COPTTextures::OnExtract()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
+// Purpose:
+// Input  :
 //-----------------------------------------------------------------------------
 void COPTTextures::OnAddtexfile(void)
 {
@@ -143,7 +143,7 @@ void COPTTextures::OnAddtexfile(void)
 }
 
 
-void COPTTextures::OnRemovetexfile() 
+void COPTTextures::OnRemovetexfile()
 {
 	int i = m_TextureFiles.GetCount();
 
@@ -156,15 +156,15 @@ void COPTTextures::OnRemovetexfile()
 	m_bDeleted = TRUE;
 }
 
-void COPTTextures::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
+void COPTTextures::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	if(pScrollBar == (CScrollBar*) &m_cBrightness)
 		SetModified();
-	
+
 	CPropertyPage::OnHScroll(nSBCode, nPos, pScrollBar);
 }
 
-BOOL COPTTextures::OnApply() 
+BOOL COPTTextures::OnApply()
 {
 	Options.textures.fBrightness = (float)m_cBrightness.GetPos() / 10.0f;
 
@@ -177,7 +177,7 @@ BOOL COPTTextures::OnApply()
 		m_TextureFiles.GetText(i, str);
 		Options.textures.TextureFiles.Add(str);
 	}
-	
+
 	if(m_bDeleted)
 	{
 		// inform them that deleted files will only be reapplied after
@@ -202,14 +202,14 @@ void GetDirectory(char *pDest, const char *pLongName)
 
 	if (i <= 0)
 		i = 0;
-	
+
 	pDest[i] = 0;
 
 	return;
 }
 
 
-void COPTTextures::OnAddtexfile2() 
+void COPTTextures::OnAddtexfile2()
 {
 	BROWSEINFO bi;
 	char szDisplayName[MAX_PATH];
@@ -221,7 +221,7 @@ void COPTTextures::OnAddtexfile2()
 	bi.ulFlags = BIF_RETURNONLYFSDIRS;
 	bi.lpfn = NULL;
 	bi.lParam = 0;
-	
+
 	LPITEMIDLIST pidlNew = SHBrowseForFolder(&bi);
 
 	if(pidlNew)
@@ -230,8 +230,8 @@ void COPTTextures::OnAddtexfile2()
 		// get path from the id list
 		char szPathName[MAX_PATH];
 		SHGetPathFromIDList(pidlNew, szPathName);
-		
-		
+
+
 		if (AfxMessageBox("Add all subdirectories as separate Texture Groups?", MB_YESNO) == IDYES)
 		//if (!strcmpi("\\textures", &szPathName[strlen(szPathName) - strlen("\\textures")]))
 		{
@@ -288,15 +288,15 @@ static int CALLBACK BrowseCallbackProc( HWND hwnd, UINT uMsg, LPARAM lParam, LPA
 		   break;
 		}
 	}
-         
+
 	return 0;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszTitle - 
-//			*pszDirectory - 
+// Purpose:
+// Input  : *pszTitle -
+//			*pszDirectory -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL COPTTextures::BrowseForFolder( char *pszTitle, char *pszDirectory )
@@ -319,8 +319,8 @@ BOOL COPTTextures::BrowseForFolder( char *pszTitle, char *pszDirectory )
 		ULONG ulEaten;
 		ULONG ulAttributes;
 		pshDesktop->ParseDisplayName( NULL, NULL, A2OLE( s_szStartFolder ), &ulEaten, &pidlStartFolder, &ulAttributes );
-	}	
-	
+	}
+
 	char szTmp[MAX_PATH];
 
 	BROWSEINFO bi;
@@ -341,8 +341,8 @@ BOOL COPTTextures::BrowseForFolder( char *pszTitle, char *pszDirectory )
 
 	SHGetPathFromIDList( idl, pszDirectory );
 
-	// Start in this folder next time.	
-	Q_strncpy( s_szStartFolder, pszDirectory, sizeof( s_szStartFolder ) ); 
+	// Start in this folder next time.
+	Q_strncpy( s_szStartFolder, pszDirectory, sizeof( s_szStartFolder ) );
 
 	CoTaskMemFree( pidlStartFolder );
 	CoTaskMemFree( idl );
@@ -404,7 +404,7 @@ void COPTTextures::MaterialExcludeUpdate( void )
 		if( ( result == LB_ERR ) || ( result == LB_ERRSPACE ) )
 			return;
 	}
-	if (pGD != NULL)	
+	if (pGD != NULL)
 	{
 		for( int i = 0; i < pGD->m_FGDMaterialExclusions.Count(); i++ )
 		{
@@ -468,7 +468,7 @@ void COPTTextures::OnMaterialExcludeAdd( void )
 	m_MaterialExcludeList.SetItemData( result, 1 );
 	if( ( result == LB_ERR ) || ( result == LB_ERRSPACE ) )
 		return;
-	
+
 	//
 	// add name of directory to the global exclusion list
 	//
@@ -538,4 +538,3 @@ void COPTTextures::OnMaterialExcludeListSel( void )
 	DWORD dwData = m_MaterialExcludeList.GetItemData( ndxSel );
 	GetDlgItem( ID_MATERIALEXCLUDE_REM )->EnableWindow( dwData ? TRUE : FALSE );
 }
-

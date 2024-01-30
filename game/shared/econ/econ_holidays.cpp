@@ -143,7 +143,7 @@ private:
 	int m_iMonth;
 	int m_iDay;
 	int m_iExtraWeeks;
-	
+
 	// Filled out from RecalculateTimeActiveInterval().
 	int m_iCachedCalculatedYear;
 

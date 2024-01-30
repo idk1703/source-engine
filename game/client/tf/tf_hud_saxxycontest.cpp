@@ -187,7 +187,7 @@ bool CSaxxyAwardsPanel::CreateFlash()
 	pFlashInfo->m_nCurH = pFlashInfo->m_nMinSize;
 
 	PlaceFlash( pFlashInfo );
-	
+
 	// Setup visibility
 	pPanel->SetAlpha( 0 );
 	pPanel->SetVisible( true );
@@ -197,7 +197,7 @@ bool CSaxxyAwardsPanel::CreateFlash()
 	Assert( iSound >= 1 && iSound <= NUM_FLASH_SOUNDS );
 	CFmtStr fmtSoundFilename( "misc/tf_camera_%02i.wav", iSound );
 	surface()->PlaySound( fmtSoundFilename.Access() );
-	
+
 	return true;
 }
 
@@ -717,7 +717,7 @@ void CSaxxyAwardsPanel::SetupContestPanels()
 		{
 			m_pContestOverLabel->SetVisible( true );
 		}
-	}	
+	}
 }
 
 CSaxxyAwardsSubmitForm::CSaxxyAwardsSubmitForm( Panel *pParent )
@@ -796,7 +796,7 @@ void CSaxxyAwardsSubmitForm::OnCommand( const char *pCommand )
 		// waiting dialog
 		ShowWaitingDialog( new CGenericWaitingDialog( this ), "#Replay_Contest_Waiting", true, true, 30.0f );
 
-		// send the url		
+		// send the url
 		GCSDK::CProtoBufMsg< CMsgReplaySubmitContestEntry > msg( k_EMsgGCReplay_SubmitContestEntry );
 		msg.Body().set_youtube_url( szText );
 		msg.Body().set_category( m_pCategoryCombo->GetActiveItem() - 1 );

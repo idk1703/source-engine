@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -187,13 +187,13 @@ void CAudioDeviceWave::Shutdown( void )
 	CloseWaveOut();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // WAV out device
 //-----------------------------------------------------------------------------
-inline bool CAudioDeviceWave::ValidWaveOut( void ) const 
-{ 
-	return m_waveOutHandle != 0; 
+inline bool CAudioDeviceWave::ValidWaveOut( void ) const
+{
+	return m_waveOutHandle != 0;
 }
 
 
@@ -212,7 +212,7 @@ void CAudioDeviceWave::OpenWaveOut( void )
 	waveFormat.wBitsPerSample = DeviceSampleBits();
 	waveFormat.nSamplesPerSec = DeviceSampleRate();
 	waveFormat.nBlockAlign = waveFormat.nChannels * waveFormat.wBitsPerSample / 8;
-	waveFormat.nAvgBytesPerSec = waveFormat.nSamplesPerSec * waveFormat.nBlockAlign; 
+	waveFormat.nAvgBytesPerSec = waveFormat.nSamplesPerSec * waveFormat.nBlockAlign;
 
 	MMRESULT errorCode = waveOutOpen( &m_waveOutHandle, WAVE_MAPPER, &waveFormat, 0, 0L, CALLBACK_NULL );
 	while ( errorCode != MMSYSERR_NOERROR )
@@ -247,14 +247,14 @@ void CAudioDeviceWave::OpenWaveOut( void )
 //-----------------------------------------------------------------------------
 // Closes the windows wave out device
 //-----------------------------------------------------------------------------
-void CAudioDeviceWave::CloseWaveOut( void ) 
-{ 
+void CAudioDeviceWave::CloseWaveOut( void )
+{
 	if ( ValidWaveOut() )
 	{
 		waveOutReset( m_waveOutHandle );
 		FreeOutputBuffers();
 		waveOutClose( m_waveOutHandle );
-		m_waveOutHandle = NULL; 
+		m_waveOutHandle = NULL;
 	}
 }
 
@@ -264,11 +264,11 @@ void CAudioDeviceWave::CloseWaveOut( void )
 //-----------------------------------------------------------------------------
 void* CAudioDeviceWave::AllocOutputMemory( int nSize, HGLOBAL &hMemory )
 {
-	// Output memory for waveform data+hdrs must be 
+	// Output memory for waveform data+hdrs must be
 	// globally allocated with GMEM_MOVEABLE and GMEM_SHARE flags.
-	hMemory = GlobalAlloc( GMEM_MOVEABLE | GMEM_SHARE, nSize ); 
-	if ( !hMemory ) 
-	{ 
+	hMemory = GlobalAlloc( GMEM_MOVEABLE | GMEM_SHARE, nSize );
+	if ( !hMemory )
+	{
 		DWarning( "soundsystem", 1, "Sound: Out of memory.\n");
 		CloseWaveOut();
 		return NULL;
@@ -276,13 +276,13 @@ void* CAudioDeviceWave::AllocOutputMemory( int nSize, HGLOBAL &hMemory )
 
 	HPSTR lpData = (char *)GlobalLock( hMemory );
 	if ( !lpData )
-	{ 
+	{
 		DWarning( "soundsystem", 1, "Sound: Failed to lock.\n");
 		GlobalFree( hMemory );
 		hMemory = NULL;
 		CloseWaveOut();
 		return NULL;
-	} 
+	}
 	memset( lpData, 0, nSize );
 	return lpData;
 }
@@ -295,7 +295,7 @@ void CAudioDeviceWave::FreeOutputMemory( HGLOBAL &hMemory )
 {
 	if ( hMemory )
 	{
-		GlobalUnlock( hMemory ); 
+		GlobalUnlock( hMemory );
 		GlobalFree( hMemory );
 		hMemory = NULL;
 	}
@@ -307,7 +307,7 @@ void CAudioDeviceWave::FreeOutputMemory( HGLOBAL &hMemory )
 //-----------------------------------------------------------------------------
 void CAudioDeviceWave::AllocateOutputBuffers()
 {
-	// Allocate and lock memory for the waveform data.  
+	// Allocate and lock memory for the waveform data.
 	int nBufferSize = OUTPUT_BUFFER_SIZE_BYTES * OUTPUT_BUFFER_COUNT;
 	HPSTR lpData = (char *)AllocOutputMemory( nBufferSize, m_hWaveData );
 	if ( !lpData )
@@ -323,7 +323,7 @@ void CAudioDeviceWave::AllocateOutputBuffers()
 	for ( int i=0 ; i < OUTPUT_BUFFER_COUNT; i++ )
 	{
 		LPWAVEHDR lpHdr = lpWaveHdr + i;
-		lpHdr->dwBufferLength = OUTPUT_BUFFER_SIZE_BYTES; 
+		lpHdr->dwBufferLength = OUTPUT_BUFFER_SIZE_BYTES;
 		lpHdr->lpData = lpData + (i * OUTPUT_BUFFER_SIZE_BYTES);
 
 		MMRESULT nResult = waveOutPrepareHeader( m_waveOutHandle, lpHdr, sizeof(WAVEHDR) );
@@ -359,38 +359,38 @@ void CAudioDeviceWave::FreeOutputBuffers()
 	FreeOutputMemory( m_hWaveHdr );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Device parameters
 //-----------------------------------------------------------------------------
-const char *CAudioDeviceWave::DeviceName( void ) const			
-{ 
-	return "Windows WAVE"; 
+const char *CAudioDeviceWave::DeviceName( void ) const
+{
+	return "Windows WAVE";
 }
 
-int CAudioDeviceWave::DeviceChannels( void ) const		
-{ 
-	return 2; 
+int CAudioDeviceWave::DeviceChannels( void ) const
+{
+	return 2;
 }
 
-int CAudioDeviceWave::DeviceSampleBits( void ) const	
-{ 
-	return (BYTES_PER_SAMPLE * 8); 
+int CAudioDeviceWave::DeviceSampleBits( void ) const
+{
+	return (BYTES_PER_SAMPLE * 8);
 }
 
-int CAudioDeviceWave::DeviceSampleBytes( void ) const	
-{ 
-	return BYTES_PER_SAMPLE; 
+int CAudioDeviceWave::DeviceSampleBytes( void ) const
+{
+	return BYTES_PER_SAMPLE;
 }
 
-int CAudioDeviceWave::DeviceSampleRate( void ) const		
-{ 
-	return OUTPUT_SAMPLE_RATE; 
+int CAudioDeviceWave::DeviceSampleRate( void ) const
+{
+	return OUTPUT_SAMPLE_RATE;
 }
 
 int CAudioDeviceWave::DeviceSampleCount( void )	const
-{ 
-	return OUTPUT_BUFFER_SAMPLE_COUNT; 
+{
+	return OUTPUT_BUFFER_SAMPLE_COUNT;
 }
 
 int CAudioDeviceWave::PaintBufferSampleCount( void ) const
@@ -613,7 +613,7 @@ CAudioDeviceWave::CAudioBuffer *CAudioDeviceWave::GetEmptyBuffer( void )
 	{
 		for ( int i = 0; i < OUTPUT_BUFFER_COUNT; i++ )
 		{
-			if ( !(m_buffers[ i ].submitted ) || 
+			if ( !(m_buffers[ i ].submitted ) ||
 				m_buffers[i].hdr->dwFlags & WHDR_DONE )
 			{
 				pOutput = &m_buffers[i];
@@ -623,7 +623,7 @@ CAudioDeviceWave::CAudioBuffer *CAudioDeviceWave::GetEmptyBuffer( void )
 			}
 		}
 	}
-	
+
 	return pOutput;
 }
 
@@ -664,7 +664,7 @@ void CAudioDeviceWave::Update( float time )
 	if ( time > m_mixTime )
 	{
 		CAudioBuffer *pBuffer = GetEmptyBuffer();
-		
+
 		// no free buffers, mixing is ahead of the playback!
 		if ( !pBuffer || !pBuffer->hdr )
 		{
@@ -678,7 +678,7 @@ void CAudioDeviceWave::Update( float time )
 		m_mixTime += sampleCount * (1.0f / OUTPUT_SAMPLE_RATE);
 
 		short *pSamples = reinterpret_cast<short *>(pBuffer->hdr->lpData);
-		
+
 		SilenceBuffer( pSamples, sampleCount );
 
 		int tempCount = sampleCount;
@@ -716,8 +716,8 @@ void CAudioDeviceWave::Update( float time )
 					{
 						AddToReferencedList( pSource, pBuffer );
 					}
-				} 
-				else 
+				}
+				else
 				{
 					if ( !IsSourceReferencedByActiveBuffer( pSource ) )
 					{
@@ -896,4 +896,3 @@ int CAudioDeviceWave::GetOutputPosition( void )
 	// Convert time to sample count
 	return ( mmtime.u.sample );
 }
-

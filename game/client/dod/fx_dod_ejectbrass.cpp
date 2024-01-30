@@ -17,14 +17,14 @@
 //-----------------------------------------------------------------------------
 void DOD_EjectBrassCallback( const CEffectData &data )
 {
-	int shelltype = data.m_nHitBox;	
+	int shelltype = data.m_nHitBox;
 
 	Vector vForward, vRight, vUp;
 	AngleVectors( data.m_vAngles, &vForward, &vRight, &vUp );
 
 	QAngle vecShellAngles;
 	VectorAngles( -vUp, vecShellAngles );
-	
+
 	Vector vecVelocity = random->RandomFloat( 130, 180 ) * vForward +
 						 random->RandomFloat( -30, 30 ) * vRight +
 						 random->RandomFloat( -30, 30 ) * vUp;
@@ -44,7 +44,7 @@ void DOD_EjectBrassCallback( const CEffectData &data )
 
 	switch( shelltype )
 	{
-	case EJECTBRASS_PISTOL:	
+	case EJECTBRASS_PISTOL:
 		hitsound = TE_PISTOL_SHELL;
 		pModel = pSmallShell;
 		break;
@@ -67,7 +67,7 @@ void DOD_EjectBrassCallback( const CEffectData &data )
 		break;
 	}
 
-	Assert( pModel );	
+	Assert( pModel );
 
 	C_LocalTempEntity *pTemp = tempents->SpawnTempModel( pModel, data.m_vOrigin, vecShellAngles, vecVelocity, flLifeTime, FTENT_NEVERDIE );
 	if ( pTemp == NULL )

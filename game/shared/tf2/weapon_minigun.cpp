@@ -30,13 +30,13 @@ extern ConVar default_fov;
 #define MINIGUN_WIND_TIME		2
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CWeaponMinigun : public CWeaponCombatUsedWithShieldBase
 {
 	DECLARE_CLASS( CWeaponMinigun, CWeaponCombatUsedWithShieldBase );
 public:
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponMinigun( void );
@@ -54,7 +54,7 @@ public:
 
 	// All predicted weapons need to implement and return true
 	virtual bool	IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -65,7 +65,7 @@ public:
 public:
 	virtual bool	ShouldPredict( void )
 	{
-		if ( GetOwner() && 
+		if ( GetOwner() &&
 			GetOwner() == C_BasePlayer::GetLocalPlayer() )
 			return true;
 
@@ -87,7 +87,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponMinigun::CWeaponMinigun( void )
 {
@@ -119,12 +119,12 @@ void CWeaponMinigun::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponMinigun::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
 	m_flRotationSpeed = 0;
-	
+
 	return BaseClass::Holster( pSwitchingTo );
 }
 
@@ -138,7 +138,7 @@ const Vector& CWeaponMinigun::GetBulletSpread( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMinigun::ItemPostFrame( void )
 {
@@ -178,9 +178,9 @@ void CWeaponMinigun::ItemPostFrame( void )
 	}
 
 	// Reload button (or fire button when we're out of ammo)
-	if ( m_flNextPrimaryAttack <= gpGlobals->curtime ) 
+	if ( m_flNextPrimaryAttack <= gpGlobals->curtime )
 	{
-		if ( pOwner->m_nButtons & IN_RELOAD ) 
+		if ( pOwner->m_nButtons & IN_RELOAD )
 		{
 			AttemptToReload();
 		}
@@ -207,7 +207,7 @@ void CWeaponMinigun::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMinigun::ReduceRotation( void )
 {
@@ -218,7 +218,7 @@ void CWeaponMinigun::ReduceRotation( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMinigun::AttemptToReload( void )
 {
@@ -234,14 +234,14 @@ void CWeaponMinigun::AttemptToReload( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMinigun::PrimaryAttack( void )
 {
 	CBaseTFPlayer *pPlayer = (CBaseTFPlayer*)GetOwner();
 	if (!pPlayer)
 		return;
-	
+
 	// Fire the bullets
 	Vector vecSrc = pPlayer->Weapon_ShootPosition( );
 	Vector vecAiming;
@@ -254,9 +254,9 @@ void CWeaponMinigun::PrimaryAttack( void )
 	Vector vecForce = vecAiming;
 	vecForce.z += 0.7;
 	vecForce *= flForceScale;
-	
+
 	CTakeDamageInfo info( this, pPlayer, vecForce, vec3_origin, weapon_minigun_damage.GetFloat(), DMG_BULLET | DMG_BUCKSHOT);
-	TFGameRules()->FireBullets( info, weapon_minigun_pellets.GetFloat(), 
+	TFGameRules()->FireBullets( info, weapon_minigun_pellets.GetFloat(),
 		vecSrc, vecAiming, GetBulletSpread(), weapon_minigun_range.GetFloat(), m_iPrimaryAmmoType, 0, entindex(), 0 );
 
 	AddViewKick();
@@ -266,7 +266,7 @@ void CWeaponMinigun::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMinigun::AddViewKick( void )
 {
@@ -289,10 +289,10 @@ void CWeaponMinigun::AddViewKick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponMinigun::GetFireRate( void )
-{	
+{
 	float flFireRate = SHARED_RANDOMFLOAT( 0.05, 0.1 );
 
 	CBaseTFPlayer *pPlayer = static_cast<CBaseTFPlayer*>( GetOwner() );
@@ -304,7 +304,7 @@ float CWeaponMinigun::GetFireRate( void )
 			flFireRate *= weapon_minigun_ducking_mod.GetFloat();
 		}
 	}
-	
+
 	return flFireRate;
 }
 
@@ -332,7 +332,7 @@ void CWeaponMinigun::BulletWasFired( const Vector &vecStart, const Vector &vecEn
 
 #if defined ( CLIENT_DLL )
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponMinigun::OnFireEvent( C_BaseViewModel *pViewModel, const Vector& origin, const QAngle& angles, int event, const char *options )
 {
@@ -341,8 +341,8 @@ bool CWeaponMinigun::OnFireEvent( C_BaseViewModel *pViewModel, const Vector& ori
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void CWeaponMinigun::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -355,7 +355,7 @@ void CWeaponMinigun::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMinigun::ClientThink()
 {
@@ -380,7 +380,7 @@ void CWeaponMinigun::ClientThink()
 		// If we have some sounds from the weapon classname.txt file, play a random one of them
 		const char *shootsound = GetShootSound( nSound );
 		if ( !shootsound || !shootsound[0] )
-			return; 
+			return;
 
 		CSoundParameters params;
 		if ( !GetParametersForSound( shootsound, params, NULL ) )
@@ -391,7 +391,7 @@ void CWeaponMinigun::ClientThink()
 
 		CPASAttenuationFilter filter( GetOwner(), params.soundlevel );
 		Vector vecOrigin = GetOwner()->GetAbsOrigin();
-		
+
 		EmitSound_t ep;
 		ep.m_nChannel = CHAN_WEAPON;
 		ep.m_pSoundName = shootsound;
@@ -402,7 +402,7 @@ void CWeaponMinigun::ClientThink()
 		ep.m_pOrigin = &vecOrigin;
 
 
-		EmitSound( filter, GetOwner()->entindex(), ep ); 
+		EmitSound( filter, GetOwner()->entindex(), ep );
 	}
 	else if ( m_bSoundPlaying )
 	{

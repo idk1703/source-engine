@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,9 +20,9 @@ class CSDKWeaponInfo : public FileWeaponInfo_t
 {
 public:
 	DECLARE_CLASS_GAMEROOT( CSDKWeaponInfo, FileWeaponInfo_t );
-	
+
 	CSDKWeaponInfo();
-	
+
 	virtual void Parse( ::KeyValues *pKeyValuesData, const char *szWeaponName );
 
 	char m_szAnimExtension[16];		// string used to generate player animations with this weapon

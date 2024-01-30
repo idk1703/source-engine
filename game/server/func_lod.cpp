@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -112,4 +112,3 @@ bool CFunc_LOD::KeyValue( const char *szKeyName, const char *szValue )
 
 	return true;
 }
-			  

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,7 +25,7 @@ class CExLabel;
 class CReplayDetailsPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CReplayBrowserBasePage : public PropertyPage
 {
@@ -40,7 +40,7 @@ public:
 
 	// Movie-only stuff
 	void FreeDetailsPanelMovieLock();
-	
+
 	virtual void ApplySchemeSettings( IScheme *pScheme );
 	virtual void OnCommand( const char *pCommand );
 	virtual void PerformLayout();

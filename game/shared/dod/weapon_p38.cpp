@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,7 +18,7 @@ class CWeaponP38 : public CDODSemiAutoWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponP38, CDODSemiAutoWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
 
@@ -47,7 +47,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_p38, CWeaponP38 );
 PRECACHE_WEAPON_REGISTER( weapon_p38 );
 
-acttable_t CWeaponP38::m_acttable[] = 
+acttable_t CWeaponP38::m_acttable[] =
 {
 	{ ACT_DOD_STAND_AIM,					ACT_DOD_STAND_AIM_PISTOL,				false },
 	{ ACT_DOD_CROUCH_AIM,					ACT_DOD_CROUCH_AIM_PISTOL,				false },
@@ -83,7 +83,7 @@ Activity CWeaponP38::GetIdleActivity( void )
 	Activity actIdle;
 
 	if( m_iClip1 <= 0 )
-		actIdle = ACT_VM_IDLE_EMPTY;	
+		actIdle = ACT_VM_IDLE_EMPTY;
 	else
 		actIdle = ACT_VM_IDLE;
 
@@ -95,7 +95,7 @@ Activity CWeaponP38::GetPrimaryAttackActivity( void )
 	Activity actPrim;
 
 	if( m_iClip1 <= 0 )
-		actPrim = ACT_VM_PRIMARYATTACK_EMPTY;	
+		actPrim = ACT_VM_PRIMARYATTACK_EMPTY;
 	else
 		actPrim = ACT_VM_PRIMARYATTACK;
 
@@ -107,7 +107,7 @@ Activity CWeaponP38::GetDrawActivity( void )
 	Activity actDraw;
 
 	if( m_iClip1 <= 0 )
-		actDraw = ACT_VM_DRAW_EMPTY;	
+		actDraw = ACT_VM_DRAW_EMPTY;
 	else
 		actDraw = ACT_VM_DRAW;
 

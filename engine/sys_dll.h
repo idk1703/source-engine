@@ -108,4 +108,3 @@ const SteamInfVersionInfo_t& GetSteamInfIDVersionInfo();
 extern CreateInterfaceFn g_ServerFactory;
 
 #endif
-

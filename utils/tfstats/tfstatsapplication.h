@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Interface of the TFStatsApplication class. 
+// Purpose: Interface of the TFStatsApplication class.
 //
 // $Workfile:     $
 // $Date:         $
@@ -23,7 +23,7 @@ using std::string;
 
 //------------------------------------------------------------------------------------------------------
 // Purpose:  Instances of this class contain information that is specific to one run
-//of TFStats.  This serves as the main entry point for the program as well. 
+//of TFStats.  This serves as the main entry point for the program as well.
 //------------------------------------------------------------------------------------------------------
 class CTFStatsApplication
 {
@@ -40,10 +40,10 @@ public:
 	string logFileName;
 
 	bool eliminateOldPlayers;
-	
+
 	int elimDays;
-	time_t getCutoffSeconds();	
-	
+	time_t getCutoffSeconds();
+
 	void makeAndSaveDirectory(string& dir);
 	void makeDirectory(string& dir);
 
@@ -53,7 +53,7 @@ public:
 	std::map<string,string> cmdLineSwitches;
 	void parseCmdLineArg(const char* in, char* var, char* val);
 	void ParseCommandLine(int argc, const char* argv[]);
-	
+
 
 
 	void fatalError(PRINTF_FORMAT_STRING char* fmt,...);
@@ -61,7 +61,7 @@ public:
 
 	void DoAwards(CHTMLFile& MatchResultsPage);
 	void DoMatchResults();
-	
+
 	void printUsage();
 	void main(int argc, const char* argv[]);
 

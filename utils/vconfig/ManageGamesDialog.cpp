@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -51,10 +51,10 @@ CManageGamesDialog::CManageGamesDialog( Panel *parent, const char *name, int con
 	SetMinimumSize(200, 50);
 
 	SetMinimizeButtonVisible( false );
-	
+
 	m_pGameNameEntry= new vgui::TextEntry( this, "GameName" );
 	m_pGameDirEntry = new vgui::TextEntry( this, "GamePath" );
-	
+
 	LoadControlSettings( "ManageGamesDialog.res" );
 
 	SetDeleteSelfOnClose( true );
@@ -64,7 +64,7 @@ CManageGamesDialog::CManageGamesDialog( Panel *parent, const char *name, int con
 }
 
 //-----------------------------------------------------------------------------
-// Destructor 
+// Destructor
 //-----------------------------------------------------------------------------
 CManageGamesDialog::~CManageGamesDialog( void )
 {
@@ -126,7 +126,7 @@ void CManageGamesDialog::OnCommand( const char *command )
 
 		// Save out the data
 		m_pGameNameEntry->GetText( textBuffer, sizeof( textBuffer ) );
-		
+
 		// Make sure we're not setting this to a duplicate
 		if ( IsGameNameUnique( textBuffer ) == false )
 		{
@@ -160,7 +160,7 @@ void CManageGamesDialog::OnCommand( const char *command )
 
 		// Otherwise take the name
 		UtlStrcpy( g_Configs[m_nConfigID]->m_Name, textBuffer );
-		
+
 		// Take the game directory
 		m_pGameDirEntry->GetText( textBuffer, sizeof( textBuffer ) );
 
@@ -168,7 +168,7 @@ void CManageGamesDialog::OnCommand( const char *command )
 		Q_StripTrailingSlash( textBuffer );
 
 		UtlStrcpy( g_Configs[m_nConfigID]->m_ModDir, textBuffer );
-		
+
 		// Tell the parent we altered its data so it can refresh
 		PostActionSignal( actionSignal );
 
@@ -179,10 +179,10 @@ void CManageGamesDialog::OnCommand( const char *command )
 	{
 		// Create a new dialog
 		CModalDirectorySelectDialog *pDlg = vgui::SETUP_PANEL( new CModalDirectorySelectDialog( this, "Select Game Directory" ) );
-		
+
 		char textBuffer[1024];
 		m_pGameDirEntry->GetText( textBuffer, sizeof( textBuffer ) );
-		
+
 		// Get the currently set dir and use that as the start
 		pDlg->ExpandTreeToPath( textBuffer );
 		pDlg->MoveToCenterOfScreen();

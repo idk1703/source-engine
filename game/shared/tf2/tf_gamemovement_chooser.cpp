@@ -39,7 +39,7 @@ void CTFGameMovementChooser::ProcessMovement( CBasePlayer *pPlayer, CMoveData *p
 {
 	// Convert CMoveData to CTFMoveData
 	CTFMoveData *pTFMoveData = static_cast<CTFMoveData*>( pMoveData );
-	
+
 	// Cache the current class id
 	m_nClassID = pTFMoveData->m_nClassID;
 

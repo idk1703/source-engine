@@ -14,7 +14,7 @@
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CConfirmDeleteDialog::CConfirmDeleteDialog( vgui::Panel *parent )
 :	BaseClass(parent)
@@ -22,7 +22,7 @@ CConfirmDeleteDialog::CConfirmDeleteDialog( vgui::Panel *parent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmDeleteDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {

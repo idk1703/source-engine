@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -33,7 +33,7 @@
 
 ConVar r_flashlight_version2( "r_flashlight_version2", "0", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY );
 
-void InitParamsEyes_DX8_DX9( CBaseVSShader *pShader, IMaterialVar** params, const char *pMaterialName, 
+void InitParamsEyes_DX8_DX9( CBaseVSShader *pShader, IMaterialVar** params, const char *pMaterialName,
 							Eyes_DX8_DX9_Vars_t &info )
 {
 	if ( g_pHardwareConfig->SupportsBorderColor() )
@@ -69,7 +69,7 @@ void InitEyes_DX8_DX9( CBaseVSShader *pShader, IMaterialVar** params, Eyes_DX8_D
 	}
 }
 
-static void SetDepthFlashlightParams( CBaseVSShader *pShader, IShaderDynamicAPI *pShaderAPI, const VMatrix& worldToTexture, const FlashlightState_t& flashlightState ) 
+static void SetDepthFlashlightParams( CBaseVSShader *pShader, IShaderDynamicAPI *pShaderAPI, const VMatrix& worldToTexture, const FlashlightState_t& flashlightState )
 {
 	float atten[4], pos[4], tweaks[4];
 	atten[0] = flashlightState.m_fConstantAtten;		// Set the flashlight attenuation factors
@@ -106,14 +106,14 @@ static void SetDepthFlashlightParams( CBaseVSShader *pShader, IShaderDynamicAPI 
 }
 
 
-static void DrawFlashlight( bool bDX9, CBaseVSShader *pShader, IMaterialVar** params, IShaderDynamicAPI *pShaderAPI, 
+static void DrawFlashlight( bool bDX9, CBaseVSShader *pShader, IMaterialVar** params, IShaderDynamicAPI *pShaderAPI,
 						   IShaderShadow* pShaderShadow, Eyes_DX8_DX9_Vars_t &info, VertexCompressionType_t vertexCompression )
 {
 	if( pShaderShadow )
 	{
 		pShaderShadow->EnableDepthWrites( false );
 
-		pShader->EnableAlphaBlending( SHADER_BLEND_ONE, SHADER_BLEND_ONE );	// Write over the eyes that were already there 
+		pShader->EnableAlphaBlending( SHADER_BLEND_ONE, SHADER_BLEND_ONE );	// Write over the eyes that were already there
 
 		pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );			// Spot
 		pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );			// Base
@@ -190,7 +190,7 @@ static void DrawFlashlight( bool bDX9, CBaseVSShader *pShader, IMaterialVar** pa
 			eyes_flashlight_ps11_Static_Index	pshIndex;
 			pShaderShadow->SetPixelShader( "eyes_flashlight_ps11", pshIndex.GetIndex() );
 		}
-		
+
 		pShader->FogToBlack();
 	}
 	else
@@ -202,7 +202,7 @@ static void DrawFlashlight( bool bDX9, CBaseVSShader *pShader, IMaterialVar** pa
 		{
 			pShaderAPI->SetTextureTransformDimension( SHADER_TEXTURE_STAGE0, 0, true );
 		}
-		
+
 		VMatrix worldToTexture;
 		ITexture *pFlashlightDepthTexture;
 		FlashlightState_t flashlightState = pShaderAPI->GetFlashlightStateEx( worldToTexture, &pFlashlightDepthTexture );
@@ -316,7 +316,7 @@ static void DrawFlashlight( bool bDX9, CBaseVSShader *pShader, IMaterialVar** pa
 	pShader->Draw();
 }
 
-static void DrawUsingVertexShader( bool bDX9, CBaseVSShader *pShader, IMaterialVar** params, 
+static void DrawUsingVertexShader( bool bDX9, CBaseVSShader *pShader, IMaterialVar** params,
 								  IShaderDynamicAPI *pShaderAPI, IShaderShadow* pShaderShadow,
 								  Eyes_DX8_DX9_Vars_t &info, VertexCompressionType_t vertexCompression )
 {
@@ -333,7 +333,7 @@ static void DrawUsingVertexShader( bool bDX9, CBaseVSShader *pShader, IMaterialV
 		pShaderShadow->VertexShaderVertexFormat( flags, nTexCoordCount, NULL, userDataSize );
 
 		pShaderShadow->EnableAlphaWrites( true ); //we end up hijacking destination alpha for opaques most of the time.
-		
+
 #ifdef STDSHADER_DX9_DLL_EXPORT
 		if ( bDX9 )
 		{
@@ -546,5 +546,3 @@ void DrawEyes_DX8_DX9( bool bDX9, CBaseVSShader *pShader, IMaterialVar** params,
 	}
 	DrawEyes_DX8_DX9_Internal( bDX9, pShader, params, pShaderAPI, pShaderShadow, bHasFlashlight, info, vertexCompression );
 }
-
-

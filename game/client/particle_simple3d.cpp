@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -20,7 +20,7 @@ float anglemod( float a );
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
-CSmartPtr<CSimple3DEmitter> CSimple3DEmitter::Create( const char *pDebugName )	
+CSmartPtr<CSimple3DEmitter> CSimple3DEmitter::Create( const char *pDebugName )
 {
 	CSimple3DEmitter* pSimple3DEmitter = new CSimple3DEmitter( pDebugName );
 
@@ -130,5 +130,3 @@ void CSimple3DEmitter::RenderParticles( CParticleRenderIterator *pIterator )
 		pParticle = (const Particle3D *)pIterator->GetNext( sortKey );
 	}
 }
-
-

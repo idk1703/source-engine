@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -157,7 +157,7 @@ void CSpriteTrail::Spawn( void )
 //-----------------------------------------------------------------------------
 // Sets parameters of the sprite trail
 //-----------------------------------------------------------------------------
-void CSpriteTrail::Precache( void ) 
+void CSpriteTrail::Precache( void )
 {
 	BaseClass::Precache();
 
@@ -170,32 +170,32 @@ void CSpriteTrail::Precache( void )
 //-----------------------------------------------------------------------------
 // Sets parameters of the sprite trail
 //-----------------------------------------------------------------------------
-void CSpriteTrail::SetLifeTime( float time ) 
-{ 
-	m_flLifeTime = time; 
+void CSpriteTrail::SetLifeTime( float time )
+{
+	m_flLifeTime = time;
 }
 
 void CSpriteTrail::SetStartWidth( float flStartWidth )
-{ 
-	m_flStartWidth = flStartWidth; 
+{
+	m_flStartWidth = flStartWidth;
 	m_flStartWidth /= m_flSkyboxScale;
 }
 
 void CSpriteTrail::SetStartWidthVariance( float flStartWidthVariance )
-{ 
-	m_flStartWidthVariance = flStartWidthVariance; 
+{
+	m_flStartWidthVariance = flStartWidthVariance;
 	m_flStartWidthVariance /= m_flSkyboxScale;
 }
 
 void CSpriteTrail::SetEndWidth( float flEndWidth )
-{ 
-	m_flEndWidth = flEndWidth; 
+{
+	m_flEndWidth = flEndWidth;
 	m_flEndWidth /= m_flSkyboxScale;
 }
 
 void CSpriteTrail::SetTextureResolution( float flTexelsPerInch )
-{ 
-	m_flTextureRes = flTexelsPerInch; 
+{
+	m_flTextureRes = flTexelsPerInch;
 	m_flTextureRes *= m_flSkyboxScale;
 }
 
@@ -224,11 +224,11 @@ void CSpriteTrail::SetSkybox( const Vector &vecSkyboxOrigin, float flSkyboxScale
 
 	if ( IsInSkybox() )
 	{
-		AddEFlags( EFL_IN_SKYBOX ); 
+		AddEFlags( EFL_IN_SKYBOX );
 	}
 	else
 	{
-		RemoveEFlags( EFL_IN_SKYBOX ); 
+		RemoveEFlags( EFL_IN_SKYBOX );
 	}
 }
 
@@ -319,13 +319,13 @@ TrailPoint_t *CSpriteTrail::GetTrailPoint( int n )
 {
 	Assert( n < MAX_SPRITE_TRAIL_POINTS );
 	COMPILE_TIME_ASSERT( (MAX_SPRITE_TRAIL_POINTS & (MAX_SPRITE_TRAIL_POINTS-1)) == 0 );
-	int nIndex = (n + m_nFirstStep) & MAX_SPRITE_TRAIL_MASK; 
+	int nIndex = (n + m_nFirstStep) & MAX_SPRITE_TRAIL_MASK;
 	return &m_vecSteps[nIndex];
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSpriteTrail::ComputeScreenPosition( Vector *pScreenPos )
 {
@@ -363,18 +363,18 @@ void CSpriteTrail::UpdateBoundingBox( void )
 		Vector size( flActualWidth, flActualWidth, flActualWidth );
 		VectorSubtract( pPoint->m_vecScreenPos, size, mins );
 		VectorAdd( pPoint->m_vecScreenPos, size, maxs );
-		
-		VectorMin( m_vecRenderMins, mins, m_vecRenderMins ); 
-		VectorMax( m_vecRenderMaxs, maxs, m_vecRenderMaxs ); 
+
+		VectorMin( m_vecRenderMins, mins, m_vecRenderMins );
+		VectorMax( m_vecRenderMaxs, maxs, m_vecRenderMaxs );
 	}
-	
-	m_vecRenderMins -= vecRenderOrigin; 
+
+	m_vecRenderMins -= vecRenderOrigin;
 	m_vecRenderMaxs -= vecRenderOrigin;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSpriteTrail::UpdateTrail( void )
 {
@@ -417,12 +417,12 @@ void CSpriteTrail::UpdateTrail( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CSpriteTrail::DrawModel( int flags )
 {
 	VPROF_BUDGET( "CSpriteTrail::DrawModel", VPROF_BUDGETGROUP_PARTICLE_RENDERING );
-	
+
 	// Must have at least one point
 	if ( m_nStepCount < 1 )
 		return 1;
@@ -439,7 +439,7 @@ int CSpriteTrail::DrawModel( int flags )
 	CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
 	CBeamSegDraw segDraw;
 	segDraw.Start( pRenderContext, m_nStepCount + 1, pSprite->GetMaterial( GetRenderMode() ) );
-	
+
 	// Setup the first point, always emanating from the attachment point
 	TrailPoint_t *pLast = GetTrailPoint( m_nStepCount-1 );
 	TrailPoint_t currentPoint;
@@ -531,7 +531,7 @@ int CSpriteTrail::DrawModel( int flags )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Vector const&
 //-----------------------------------------------------------------------------
 const Vector &CSpriteTrail::GetRenderOrigin( void )
@@ -562,10 +562,10 @@ const QAngle &CSpriteTrail::GetRenderAngles( void )
 #if !defined( CLIENT_DLL )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pSpriteName - 
-//			&origin - 
-//			animate - 
+// Purpose:
+// Input  : *pSpriteName -
+//			&origin -
+//			animate -
 // Output : CSpriteTrail
 //-----------------------------------------------------------------------------
 CSpriteTrail *CSpriteTrail::SpriteTrailCreate( const char *pSpriteName, const Vector &origin, bool animate )
@@ -575,7 +575,7 @@ CSpriteTrail *CSpriteTrail::SpriteTrailCreate( const char *pSpriteName, const Ve
 	pSprite->SpriteInit( pSpriteName, origin );
 	pSprite->SetSolid( SOLID_NONE );
 	pSprite->SetMoveType( MOVETYPE_NOCLIP );
-	
+
 	UTIL_SetSize( pSprite, vec3_origin, vec3_origin );
 
 	if ( animate )
@@ -587,7 +587,7 @@ CSpriteTrail *CSpriteTrail::SpriteTrailCreate( const char *pSpriteName, const Ve
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 
 int CSpriteTrail::ShouldTransmit( const CCheckTransmitInfo *pInfo )
@@ -611,9 +611,9 @@ int CSpriteTrail::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 		{
 				return FL_EDICT_DONTSEND;
 		}
-		
+
 	}
-	
+
 	return BaseClass::ShouldTransmit( pInfo );
 }
 
@@ -650,7 +650,7 @@ bool CSpriteTrail::ValidateEntityAttachedToPlayer( bool &bShouldRetry )
 				return true;
 		}
 	}
-	
+
 	return false;
 
 #else

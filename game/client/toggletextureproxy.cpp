@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,7 +22,7 @@ void ToolFramework_RecordMaterialParams( IMaterial *pMaterial );
 EXPOSE_INTERFACE( CBaseToggleTextureProxy, IMaterialProxy, "ToggleTexture" IMATERIAL_PROXY_INTERFACE_VERSION );
 
 //-----------------------------------------------------------------------------
-// Constructor, destructor: 
+// Constructor, destructor:
 //-----------------------------------------------------------------------------
 
 CBaseToggleTextureProxy::CBaseToggleTextureProxy()
@@ -62,7 +62,7 @@ bool CBaseToggleTextureProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues 
 	m_TextureFrameNumVar = pMaterial->FindVar( pTextureFrameNumVarName, &foundVar, false );
 	if( !foundVar )
 		return false;
-	
+
 	m_WrapAnimation = !!pKeyValues->GetInt( "toggleShouldWrap", 1 );
 	return true;
 }
@@ -100,18 +100,18 @@ void CBaseToggleTextureProxy::OnBind( void *pC_BaseEntity )
 
 	if ( pEntity == NULL )
 		 return;
-	
+
 	int numFrames = pTexture->GetNumAnimationFrames();
 	int frame = pEntity->GetTextureFrameIndex();
 
-	int intFrame = ((int)frame) % numFrames; 
+	int intFrame = ((int)frame) % numFrames;
 
 	if ( m_WrapAnimation == false )
 	{
 		if ( frame > numFrames )
 			 intFrame = numFrames;
 	}
-		
+
 	m_TextureFrameNumVar->SetIntValue( intFrame );
 
 	if ( ToolsEnabled() )

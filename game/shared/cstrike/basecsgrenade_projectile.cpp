@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -35,7 +35,7 @@ BEGIN_NETWORK_TABLE( CBaseCSGrenadeProjectile, DT_BaseCSGrenadeProjectile )
 	#ifdef CLIENT_DLL
 		RecvPropVector( RECVINFO( m_vInitialVelocity ) )
 	#else
-		SendPropVector( SENDINFO( m_vInitialVelocity ), 
+		SendPropVector( SENDINFO( m_vInitialVelocity ),
 			20,		// nbits
 			0,		// flags
 			-3000,	// low value
@@ -54,9 +54,9 @@ END_NETWORK_TABLE()
 
 		if ( type == DATA_UPDATE_CREATED )
 		{
-			// Now stick our initial velocity into the interpolation history 
+			// Now stick our initial velocity into the interpolation history
 			CInterpolatedVar< Vector > &interpolator = GetOriginInterpolator();
-			
+
 			interpolator.ClearHistory();
 			float changeTime = GetLastChangeTime( LATCH_SIMULATION_VAR );
 
@@ -163,7 +163,7 @@ END_NETWORK_TABLE()
 		}
 
 		// if its breakable glass and we kill it, don't bounce.
-		// give some damage to the glass, and if it breaks, pass 
+		// give some damage to the glass, and if it breaks, pass
 		// through it.
 		bool breakthrough = false;
 
@@ -195,7 +195,7 @@ END_NETWORK_TABLE()
 				return;
 			}
 		}
-		
+
 		float flTotalElasticity = GetElasticity() * flSurfaceElasticity;
 		flTotalElasticity = clamp( flTotalElasticity, 0.0f, 0.9f );
 
@@ -236,17 +236,17 @@ END_NETWORK_TABLE()
 				angle[1] = random->RandomFloat( 0, 360 );
 
 				// TODO: rotate around trace.plane.normal
-				
-				SetAbsAngles( angle );			
+
+				SetAbsAngles( angle );
 			}
 			else
 			{
-				Vector vecDelta = GetBaseVelocity() - vecAbsVelocity;	
+				Vector vecDelta = GetBaseVelocity() - vecAbsVelocity;
 				Vector vecBaseDir = GetBaseVelocity();
 				VectorNormalize( vecBaseDir );
 				float flScale = vecDelta.Dot( vecBaseDir );
 
-				VectorScale( vecAbsVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, vecVelocity ); 
+				VectorScale( vecAbsVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, vecVelocity );
 				VectorMA( vecVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, GetBaseVelocity() * flScale, vecVelocity );
 				PhysicsPushEntity( vecVelocity, &trace );
 			}
@@ -266,7 +266,7 @@ END_NETWORK_TABLE()
 				SetAbsVelocity( vecAbsVelocity );
 			}
 		}
-		
+
 		BounceSound();
 
 		// tell the bots a grenade has bounced

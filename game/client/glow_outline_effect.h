@@ -42,7 +42,7 @@ public:
 			nIndex = m_nFirstFreeSlot;
 			m_nFirstFreeSlot = m_GlowObjectDefinitions[nIndex].m_nNextFreeSlot;
 		}
-		
+
 		m_GlowObjectDefinitions[nIndex].m_hEntity = pEntity;
 		m_GlowObjectDefinitions[nIndex].m_vGlowColor = vGlowColor;
 		m_GlowObjectDefinitions[nIndex].m_flGlowAlpha = flGlowAlpha;
@@ -69,14 +69,14 @@ public:
 		m_GlowObjectDefinitions[nGlowObjectHandle].m_hEntity = pEntity;
 	}
 
-	void SetColor( int nGlowObjectHandle, const Vector &vGlowColor ) 
-	{ 
+	void SetColor( int nGlowObjectHandle, const Vector &vGlowColor )
+	{
 		Assert( !m_GlowObjectDefinitions[nGlowObjectHandle].IsUnused() );
 		m_GlowObjectDefinitions[nGlowObjectHandle].m_vGlowColor = vGlowColor;
 	}
 
-	void SetAlpha( int nGlowObjectHandle, float flAlpha ) 
-	{ 
+	void SetAlpha( int nGlowObjectHandle, float flAlpha )
+	{
 		Assert( !m_GlowObjectDefinitions[nGlowObjectHandle].IsUnused() );
 		m_GlowObjectDefinitions[nGlowObjectHandle].m_flGlowAlpha = flAlpha;
 	}
@@ -93,7 +93,7 @@ public:
 		Assert( !m_GlowObjectDefinitions[nGlowObjectHandle].IsUnused() );
 		return m_GlowObjectDefinitions[nGlowObjectHandle].m_bRenderWhenOccluded;
 	}
-	
+
 	bool IsRenderingWhenUnoccluded( int nGlowObjectHandle ) const
 	{
 		Assert( !m_GlowObjectDefinitions[nGlowObjectHandle].IsUnused() );
@@ -124,10 +124,10 @@ private:
 	{
 		bool ShouldDraw( int nSlot ) const
 		{
-			return m_hEntity.Get() && 
-				   ( m_nSplitScreenSlot == GLOW_FOR_ALL_SPLIT_SCREEN_SLOTS || m_nSplitScreenSlot == nSlot ) && 
-				   ( m_bRenderWhenOccluded || m_bRenderWhenUnoccluded ) && 
-				   m_hEntity->ShouldDraw() && 
+			return m_hEntity.Get() &&
+				   ( m_nSplitScreenSlot == GLOW_FOR_ALL_SPLIT_SCREEN_SLOTS || m_nSplitScreenSlot == nSlot ) &&
+				   ( m_bRenderWhenOccluded || m_bRenderWhenUnoccluded ) &&
+				   m_hEntity->ShouldDraw() &&
 				   !m_hEntity->IsDormant();
 		}
 

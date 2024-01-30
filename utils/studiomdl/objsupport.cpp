@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -94,7 +94,7 @@ const char *FindMtlEntry( const char *pTgaName )
 			return g_MtlLib[i].m_TgaName;
 	}
 	return pTgaName;
-}									 
+}
 
 static bool ParseVertex( CUtlBuffer& bufParse, characterset_t &breakSet, int &v, int &t, int &n )
 {
@@ -176,7 +176,7 @@ int Load_OBJ( s_source_t *psource )
 	strcpy( psource->localBone[0].name, "default" );
 	psource->localBone[0].parent = -1;
 	Assert( psource->m_Animations.Count() == 0 );
-    s_sourceanim_t *pSourceAnim = FindOrAddSourceAnim( psource, "BindPose" );
+	s_sourceanim_t *pSourceAnim = FindOrAddSourceAnim( psource, "BindPose" );
 	pSourceAnim->numframes = 1;
 	pSourceAnim->startframe = 0;
 	pSourceAnim->endframe = 0;
@@ -188,7 +188,7 @@ int Load_OBJ( s_source_t *psource )
 	characterset_t breakSet;
 	CharacterSetBuild( &breakSet, "/\\" );
 
-	while ( GetLineInput() ) 
+	while ( GetLineInput() )
 	{
 		Vector tmp;
 
@@ -202,14 +202,14 @@ int Load_OBJ( s_source_t *psource )
 			g_bone[i].weight[0] = 1.0;
 			continue;
 		}
-		
+
 		if (strncmp( g_szLine, "vn ", 3 ) == 0)
 		{
 			i = g_numnormals++;
 			sscanf( g_szLine, "vn %f %f %f", &g_normal[i].x, &g_normal[i].y, &g_normal[i].z );
 			continue;
 		}
-		
+
 		if (strncmp( g_szLine, "vt ", 3 ) == 0)
 		{
 			i = g_numtexcoords++;
@@ -217,7 +217,7 @@ int Load_OBJ( s_source_t *psource )
 			g_texcoord[i].y = 1.0 - g_texcoord[i].y;
 			continue;
 		}
-		
+
 		if ( !Q_strncmp( g_szLine, "mtllib ", 7 ) )
 		{
 			sscanf( g_szLine, "mtllib %s", &cmd[0] );
@@ -274,7 +274,7 @@ int Load_OBJ( s_source_t *psource )
 					break;
 
 				Assert( v2 <= g_numverts && t2 <= g_numtexcoords && n2 <= g_numnormals );
-	
+
 				i = g_numfaces++;
 				f.material = material;
 				f.a = v0 - 1; f.na = (n0 > 0) ? n0 - 1 : 0, f.ta = (t0 > 0) ? t0 - 1 : 0;
@@ -322,7 +322,7 @@ int AppendVTAtoOBJ( s_source_t *psource, char *filename, int frame )
 
 	g_numverts = g_numnormals = g_numtexcoords = g_numfaces = 0;
 
-	while ( GetLineInput() ) 
+	while ( GetLineInput() )
 	{
 		Vector tmp;
 

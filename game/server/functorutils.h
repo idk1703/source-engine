@@ -12,7 +12,7 @@
 
 //--------------------------------------------------------------------------------------------------------
 /**
- * NOTE: The functors in this file should ideally be game-independent, 
+ * NOTE: The functors in this file should ideally be game-independent,
  * and work for any Source based game
  */
 //--------------------------------------------------------------------------------------------------------
@@ -148,7 +148,7 @@ public:
 		m_team = team;
 		m_includeBots = includeBots;
 		m_close = NULL;
-		
+
 		if ( maxRange > 0.0f )
 		{
 			m_closeRangeSq = maxRange * maxRange;
@@ -157,15 +157,15 @@ public:
 		{
 			m_closeRangeSq = 999999999.9f;
 		}
-		
+
 		m_ignore = ignore;
 	}
-	
+
 	bool operator() ( CBasePlayer *player )
 	{
 		if (player == m_ignore)
 			return true;
-			
+
 		if (player->IsAlive() && (m_team == TEAM_ANY || player->GetTeamNumber() == m_team))
 		{
 			if ( !m_includeBots && player->IsBot() )
@@ -181,12 +181,12 @@ public:
 		}
 		return true;
 	}
-	
+
 	CBasePlayer *GetPlayer( void ) const
 	{
 		return m_close;
 	}
-	
+
 	bool IsCloserThan( float range )
 	{
 		return (m_closeRangeSq < (range * range));
@@ -196,7 +196,7 @@ public:
 	{
 		return (m_closeRangeSq > (range * range));
 	}
-	
+
 	Vector m_spot;
 	int m_team;
 	bool m_includeBots;

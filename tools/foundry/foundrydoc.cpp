@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -43,7 +43,7 @@ void CFoundryDoc::NotifyDataChanged( const char *pReason, int nNotifySource, int
 	OnDataChanged( pReason, nNotifySource, nNotifyFlags );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Gets the file name
 //-----------------------------------------------------------------------------
@@ -146,7 +146,7 @@ void CFoundryDoc::SaveToFile( )
 	SetDirty( false );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the root object
 //-----------------------------------------------------------------------------
@@ -155,7 +155,7 @@ CDmElement *CFoundryDoc::GetRootObject()
 	return m_hRoot;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the entity list
 //-----------------------------------------------------------------------------
@@ -185,7 +185,7 @@ void CFoundryDoc::DeleteEntity( CDmeVMFEntity *pEntity )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Called when data changes
 //-----------------------------------------------------------------------------
@@ -238,14 +238,14 @@ void CFoundryDoc::AddOriginalEntities( CUtlBuffer &entityBuf, const char *pActua
 		int j = 0;
 		while (*pActualEntityData != 0 && *pActualEntityData != '\"' )
 		{
-			pClassName[j++] = *pActualEntityData++;	
+			pClassName[j++] = *pActualEntityData++;
 		}
 		pClassName[j] = 0;
 
 		pActualEntityData = strchr( pActualEntityData, '}' );
 		if ( !pActualEntityData )
 			break;
-		
+
 		// Skip }
 		++pActualEntityData;
 
@@ -342,4 +342,3 @@ const char* CFoundryDoc::GenerateEntityData( const char *pActualEntityData )
 
 	return (const char*)entityBuf.Base();
 }
-

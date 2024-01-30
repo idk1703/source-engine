@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -38,8 +38,8 @@ public:
 static CTEDODExplosion g_TEDODExplosion( "DODExplosion" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEDODExplosion::CTEDODExplosion( const char *name ) : CBaseTempEntity( name )
 {
@@ -80,7 +80,7 @@ void TE_DODExplosion( IRecipientFilter &filter, float flDelay, const Vector &vec
 	{
 
 		// If we have some sounds from the weapon classname.txt file, play a random one of them
-		const char *shootsound = pWeaponInfo->aShootSounds[ sound_type ]; 
+		const char *shootsound = pWeaponInfo->aShootSounds[ sound_type ];
 		if ( !shootsound || !shootsound[0] )
 			return;
 
@@ -88,8 +88,8 @@ void TE_DODExplosion( IRecipientFilter &filter, float flDelay, const Vector &vec
 
 		if ( !te->CanPredict() )
 			return;
-				
-		CBaseEntity::EmitSound( filter, iPlayerIndex, shootsound, &vOrigin ); 
+
+		CBaseEntity::EmitSound( filter, iPlayerIndex, shootsound, &vOrigin );
 	}
 
 	class CGroupedSound
@@ -101,7 +101,7 @@ void TE_DODExplosion( IRecipientFilter &filter, float flDelay, const Vector &vec
 
 	CUtlVector<CGroupedSound> g_GroupedSounds;
 
-	
+
 	// Called by the ImpactSound function.
 	void ShotgunImpactSoundGroup( const char *pSoundName, const Vector &vEndPos )
 	{
@@ -159,7 +159,7 @@ void TE_DODExplosion( IRecipientFilter &filter, float flDelay, const Vector &vec
 // This runs on both the client and the server.
 // On the server, it only does the damage calculations.
 // On the client, it does all the effects.
-void FX_FireBullets( 
+void FX_FireBullets(
 	int	iPlayerIndex,
 	const Vector &vOrigin,
 	const QAngle &vAngles,
@@ -206,15 +206,15 @@ void FX_FireBullets(
 #else
 	if( pPlayer )
 		pPlayer->DoAnimationEvent( PLAYERANIMEVENT_FIRE_GUN );
-#endif	
+#endif
 
 #ifndef CLIENT_DLL
 	// if this is server code, send the effect over to client as temp entity
 	// Dispatch one message for all the bullet impacts and sounds.
-	TE_FireBullets( 
+	TE_FireBullets(
 		iPlayerIndex,
-		vOrigin, 
-		vAngles, 
+		vOrigin,
+		vAngles,
 		iWeaponID,
 		iMode,
 		iSeed,
@@ -227,7 +227,7 @@ void FX_FireBullets(
 	pPlayer->NoteWeaponFired();
 #endif
 
-	
+
 
 	WeaponSound_t sound_type = SINGLE;
 
@@ -239,7 +239,7 @@ void FX_FireBullets(
 	// Fire bullets, calculate impacts & effects
 	if ( !pPlayer )
 		return;
-	
+
 	StartGroupingSounds();
 
 #if !defined (CLIENT_DLL)
@@ -272,9 +272,9 @@ void FX_FireBullets(
 	pPlayer->FireBullets( info );
 
 #ifdef CLIENT_DLL
-	
+
 	{
-		trace_t tr;		
+		trace_t tr;
 		UTIL_TraceLine( vOrigin, vOrigin + vecDirShooting * MAX_COORD_RANGE, MASK_SOLID, pPlayer, COLLISION_GROUP_NONE, &tr );
 
 		// if this is a local player, start at attachment on view model
@@ -283,7 +283,7 @@ void FX_FireBullets(
 		int iEntIndex = pPlayer->entindex();
 		int iAttachment = 1;
 
-		Vector vecStart = tr.startpos; 
+		Vector vecStart = tr.startpos;
 		QAngle angAttachment;
 
 		C_DODPlayer *pLocalPlayer = C_DODPlayer::GetLocalDODPlayer();
@@ -304,7 +304,7 @@ void FX_FireBullets(
 		else if ( pLocalPlayer &&
 					pLocalPlayer->GetObserverTarget() == pPlayer &&
 					pLocalPlayer->GetObserverMode() == OBS_MODE_IN_EYE )
-		{	
+		{
 			// get our observer target's view model
 
 			C_BaseViewModel *pViewModel = pLocalPlayer->GetViewModel(0);
@@ -367,4 +367,3 @@ void FX_FireBullets(
 
 	EndGroupingSounds();
 }
-

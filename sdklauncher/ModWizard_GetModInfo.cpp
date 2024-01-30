@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -45,7 +45,7 @@ public:
 public:
 	vgui::VPANEL m_PrevAppFocusPanel;
 };
-		
+
 
 
 CModWizardSubPanel_GetModInfo::CModWizardSubPanel_GetModInfo( Panel *parent, const char *panelName )
@@ -69,7 +69,7 @@ CModWizardSubPanel_GetModInfo::CModWizardSubPanel_GetModInfo( Panel *parent, con
 		m_pModName->SetEditable( false );
 		m_pModName->SetEnabled( false );
 	}
-}								  
+}
 
 WizardSubPanel *CModWizardSubPanel_GetModInfo::GetNextSubPanel()
 {
@@ -93,14 +93,14 @@ void CModWizardSubPanel_GetModInfo::OnDisplayAsNext()
 
 bool CModWizardSubPanel_GetModInfo::OnNextButton()
 {
-	char modPath[512];	
+	char modPath[512];
 	m_pModPath->GetText( modPath, sizeof( modPath ) );
 	Q_AppendSlash( modPath, sizeof( modPath ) );
 
 	char modName[512];
 	m_pModName->GetText( modName, sizeof( modName ) );
 
-	
+
 	// Validate the path they passed in.
 	if ( modPath[0] == 0 )
 	{
@@ -150,21 +150,21 @@ bool CModWizardSubPanel_GetModInfo::OnNextButton()
 			 if (modName[i] == ' ') continue;
 			 strippedModName[j++] = modName[i];
 		}
-		strippedModName[j] = '\0'; //Null terminate. 
+		strippedModName[j] = '\0'; //Null terminate.
 
 //		Q_strncpy( strippedModName, ModName, sizeof( strippedModName ) );
 		Q_strlower( strippedModName ); //Tony; convert it to lower case
 
 
-		
+
 		// Build the name of the content directory (c:\steam\steamapps\sourcemods\modname).
 		Q_strncpy( outputModGamedirName, GetSDKLauncherBaseDirectory(), sizeof( outputModGamedirName ) );		// steamapps\username\sourcesdk
 
 		Q_StripLastDir( outputModGamedirName, sizeof( outputModGamedirName ) );									// steamapps\username
 		Q_StripLastDir( outputModGamedirName, sizeof( outputModGamedirName ) );									// steamapps
-		Q_AppendSlash( outputModGamedirName, sizeof( outputModGamedirName ) );									
+		Q_AppendSlash( outputModGamedirName, sizeof( outputModGamedirName ) );
 		Q_strncat( outputModGamedirName, "SourceMods", sizeof( outputModGamedirName ), COPY_ALL_CHARACTERS );	// steamapps\sourcemods
-		Q_AppendSlash( outputModGamedirName, sizeof( outputModGamedirName ) );									
+		Q_AppendSlash( outputModGamedirName, sizeof( outputModGamedirName ) );
 		Q_strncat( outputModGamedirName, strippedModName, sizeof( outputModGamedirName ), COPY_ALL_CHARACTERS );		// steamapps\sourcemods\modname
 		Q_AppendSlash( outputModGamedirName, sizeof( outputModGamedirName ) );
 
@@ -181,15 +181,15 @@ bool CModWizardSubPanel_GetModInfo::OnNextButton()
 		}
 	}
 
-	
+
 	// Setup all the data for the copy panel.
 	CModWizardSubPanel_CopyFiles *pCopyPanel = dynamic_cast<CModWizardSubPanel_CopyFiles *>(GetWizardPanel()->FindChildByName("CModWizardSubPanel_CopyFiles"));
 	if ( !pCopyPanel )
 	{
 		VGUIMessageBox( this, "Error", "Can't find copy panel!" );
-		return false;			
+		return false;
 	}
-	
+
 	pCopyPanel->GetReady( modPath, outputModGamedirName, modName );
 	return true;
 }
@@ -216,4 +216,3 @@ void CModWizardSubPanel_GetModInfo::OnChooseDirectory( const char *dir )
 {
 	m_pModPath->SetText( dir );
 }
-

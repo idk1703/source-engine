@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,7 +21,7 @@ CPlane::CPlane ( void )
 
 //=========================================================
 // InitializePlane - Takes a normal for the plane and a
-// point on the plane and 
+// point on the plane and
 //=========================================================
 void CPlane::InitializePlane ( const Vector &vecNormal, const Vector &vecPoint )
 {
@@ -32,8 +32,8 @@ void CPlane::InitializePlane ( const Vector &vecNormal, const Vector &vecPoint )
 
 
 //=========================================================
-// PointInFront - determines whether the given vector is 
-// in front of the plane. 
+// PointInFront - determines whether the given vector is
+// in front of the plane.
 //=========================================================
 bool CPlane::PointInFront ( const Vector &vecPoint )
 {

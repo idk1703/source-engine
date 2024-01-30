@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -152,7 +152,7 @@ void CHudRadar::MsgFunc_UpdateRadar(bf_read &msg )
 		if ( !pPlayer )
 			continue;
 
-		bool bOppositeTeams = (pLocalPlayer->GetTeamNumber() != TEAM_UNASSIGNED && pCSPR->GetTeam( pPlayer->entindex() ) != pLocalPlayer->GetTeamNumber());		
+		bool bOppositeTeams = (pLocalPlayer->GetTeamNumber() != TEAM_UNASSIGNED && pCSPR->GetTeam( pPlayer->entindex() ) != pLocalPlayer->GetTeamNumber());
 
 		//=============================================================================
 		// HPE_BEGIN:
@@ -191,7 +191,7 @@ void CHudRadar::MsgFunc_UpdateRadar(bf_read &msg )
 bool CHudRadar::ShouldDraw()
 {
 	C_CSPlayer *pPlayer = C_CSPlayer::GetLocalCSPlayer();
-	
+
 	//=============================================================================
 	// HPE_BEGIN:
 	// [tj] Added base class call
@@ -209,7 +209,7 @@ void CHudRadar::SetVisible(bool state)
 	if( g_pMapOverview  &&  g_pMapOverview->GetMode() == CCSMapOverview::MAP_MODE_RADAR )
 	{
 		// We are the hud element still, but he is in charge of the new style now.
-		g_pMapOverview->SetVisible( state );		
+		g_pMapOverview->SetVisible( state );
 	}
 }
 
@@ -223,7 +223,7 @@ void CHudRadar::WorldToRadar( const Vector location, const Vector origin, const 
 {
 	float x_diff = location.x - origin.x;
 	float y_diff = location.y - origin.y;
- 
+
 	int iRadarRadius = GetWide();		//width of the panel, it resizes now!
 	float fRange = 16 * iRadarRadius;	// radar's range
 
@@ -271,7 +271,7 @@ void CHudRadar::WorldToRadar( const Vector location, const Vector origin, const 
 void CHudRadar::DrawPlayerOnRadar( int iPlayer, C_CSPlayer *pLocalPlayer )
 {
 	float x, y, z_delta;
-	int iBaseDotSize = ScreenWidth() / 256;	
+	int iBaseDotSize = ScreenWidth() / 256;
 	int r, g, b, a = 235;
 
 	C_CS_PlayerResource *pCSPR = (C_CS_PlayerResource*)GameResources();
@@ -289,7 +289,7 @@ void CHudRadar::DrawPlayerOnRadar( int iPlayer, C_CSPlayer *pLocalPlayer )
 	if ( bOppositeTeams && pPlayer->m_bDetected == false )
 		return;
 
-	
+
 	WorldToRadar( pPlayer->GetAbsOrigin(), pLocalPlayer->GetAbsOrigin(), pLocalPlayer->LocalEyeAngles(), x, y, z_delta );
 
 	if( pCSPR->HasC4( iPlayer ) || pCSPR->IsVIP( iPlayer ) || bOppositeTeams )
@@ -313,7 +313,7 @@ void CHudRadar::DrawPlayerOnRadar( int iPlayer, C_CSPlayer *pLocalPlayer )
 
 	if ( bRadarFlash || GetClientVoiceMgr()->IsPlayerSpeaking( iPlayer ) )
 	{
-		r = 230; g = 110; b = 25; a = 245; 
+		r = 230; g = 110; b = 25; a = 245;
 
 		DrawRadarDot( x, y, z_delta, iBaseDotSize, RADAR_DOT_LARGE_FLASH, r, g, b, a );
 	}
@@ -383,7 +383,7 @@ void CHudRadar::DrawRadarDot( int x, int y, float z_diff, int iBaseDotSize, int 
 		int iBar = (int)( z_diff / 400 ) + 2;
 
 		iBaseDotSize /= 2;
-		
+
 		// Draw a T shape to symbolize the dot is above the player.
 
 		//horiz
@@ -392,7 +392,7 @@ void CHudRadar::DrawRadarDot( int x, int y, float z_diff, int iBaseDotSize, int 
 		//vert
 		FillRect( x, y, iBaseDotSize, iBar*iBaseDotSize );
 	}
-	else 
+	else
 	{
 		if ( flags & RADAR_DOT_HOSTAGE )
 		{
@@ -406,7 +406,7 @@ void CHudRadar::DrawRadarDot( int x, int y, float z_diff, int iBaseDotSize, int 
 				// draw an X for the planted bomb
 				FillRect( x, y, iBaseDotSize, iBaseDotSize );
 				FillRect( x-2, y-2, iBaseDotSize, iBaseDotSize );
-				FillRect( x-2, y+2, iBaseDotSize, iBaseDotSize );	
+				FillRect( x-2, y+2, iBaseDotSize, iBaseDotSize );
 				FillRect( x+2, y-2, iBaseDotSize, iBaseDotSize );
 				FillRect( x+2, y+2, iBaseDotSize, iBaseDotSize );
 			}
@@ -477,7 +477,7 @@ bool CHudLocation::ShouldDraw()
 
 	if( g_pMapOverview && g_pMapOverview->GetMode() == CMapOverview::MAP_MODE_RADAR && pCSMapOverview && pCSMapOverview->ShouldDraw() == true )
 		return true;
-	else if( g_pMapOverview && g_pMapOverview->GetMode() == CMapOverview::MAP_MODE_INSET )	
+	else if( g_pMapOverview && g_pMapOverview->GetMode() == CMapOverview::MAP_MODE_INSET )
 		return true;
 
 	return false;

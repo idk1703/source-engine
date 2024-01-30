@@ -41,10 +41,10 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: A reference counted string pool.  
+// Purpose: A reference counted string pool.
 //
-// Elements are stored more efficiently than in the conventional string pool, 
-// quicker to look up, and storage is tracked via reference counts.  
+// Elements are stored more efficiently than in the conventional string pool,
+// quicker to look up, and storage is tracked via reference counts.
 //
 // At some point this should replace CStringPool
 //-----------------------------------------------------------------------------
@@ -77,12 +77,12 @@ public:
 
 	void			FreeAll();
 
-	char			*FindString( const char* pIntrinsic ); 
+	char			*FindString( const char* pIntrinsic );
 	char			*ReferenceString( const char* pIntrinsic );
 	void			DereferenceString( const char* pIntrinsic );
 
 	// These are only reliable if there are less than 64k strings in your string pool
-	unsigned short	FindStringHandle( const char* pIntrinsic ); 
+	unsigned short	FindStringHandle( const char* pIntrinsic );
 	unsigned short	ReferenceStringHandle( const char* pIntrinsic );
 	char			*HandleToString( unsigned short handle );
 	void			SpewStrings();

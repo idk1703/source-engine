@@ -55,7 +55,7 @@ CMemoryStack::CMemoryStack()
 {
 	m_pszAllocOwner = strdup( "CMemoryStack unattributed" );
 }
-	
+
 //-------------------------------------
 
 CMemoryStack::~CMemoryStack()
@@ -118,7 +118,7 @@ bool CMemoryStack::Init( const char *pszAllocOwner, unsigned maxSize, unsigned c
 	}
 
 	m_maxSize = AlignValue( m_maxSize, m_commitSize );
-	
+
 	Assert( m_maxSize % pageSize == 0 && m_commitSize % pageSize == 0 && m_commitSize <= m_maxSize );
 
 #ifdef _WIN32
@@ -262,12 +262,12 @@ void CMemoryStack::Term()
 //-------------------------------------
 
 int CMemoryStack::GetSize()
-{ 
+{
 	if ( m_bPhysical )
 		return m_maxSize;
 
 #ifdef MEMSTACK_VIRTUAL_MEMORY_AVAILABLE
-	return m_pCommitLimit - m_pBase; 
+	return m_pCommitLimit - m_pBase;
 #else
 	return m_maxSize;
 #endif
@@ -286,7 +286,7 @@ bool CMemoryStack::CommitTo( byte *pNextAlloc ) RESTRICT
 #ifdef MEMSTACK_VIRTUAL_MEMORY_AVAILABLE
 	unsigned char *	pNewCommitLimit = AlignValue( pNextAlloc, m_commitSize );
 	ptrdiff_t 		commitSize 		= pNewCommitLimit - m_pCommitLimit;
-	
+
 	if( m_pCommitLimit + commitSize > m_pAllocLimit )
 	{
 		return false;
@@ -434,7 +434,7 @@ void CMemoryStack::PrintContents()
 	Msg( "Total committed memory: %d\n", GetSize() );
 }
 
-#ifdef _X360 
+#ifdef _X360
 
 //-----------------------------------------------------------------------------
 //
@@ -447,7 +447,7 @@ MEMALLOC_DEFINE_EXTERNAL_TRACKING(CPhysicalMemoryStack);
 //-----------------------------------------------------------------------------
 // Constructor, destructor
 //-----------------------------------------------------------------------------
-CPhysicalMemoryStack::CPhysicalMemoryStack() : 
+CPhysicalMemoryStack::CPhysicalMemoryStack() :
 	m_nAlignment( 16 ), m_nAdditionalFlags( 0 ), m_nUsage( 0 ), m_nPeakUsage( 0 ), m_pLastAllocedChunk( NULL ),
 	m_nFirstAvailableChunk( 0 ), m_nChunkSizeInBytes( 0 ), m_ExtraChunks( 32, 32 ), m_nFramePeakUsage( 0 )
 {
@@ -481,7 +481,7 @@ bool CPhysicalMemoryStack::Init( size_t nChunkSizeInBytes, size_t nAlignment, in
 	size_t nInitMemorySize = nChunkSizeInBytes * nInitialChunkCount;
 	nChunkSizeInBytes = AlignValue( nChunkSizeInBytes, 64 * 1024 );
 	m_nChunkSizeInBytes = nChunkSizeInBytes;
-	
+
 	// Fix up initial chunk count to get at least as much memory as requested
 	// based on changes to the chunk size owing to page alignment issues
 	nInitialChunkCount = ( nInitMemorySize + nChunkSizeInBytes - 1 ) / nChunkSizeInBytes;
@@ -527,7 +527,7 @@ void CPhysicalMemoryStack::Term()
 // Returns the total allocation size
 //-----------------------------------------------------------------------------
 size_t CPhysicalMemoryStack::GetSize() const
-{ 
+{
 	size_t nBaseSize = (intp)m_InitialChunk.m_pAllocLimit - (intp)m_InitialChunk.m_pBase;
 	return nBaseSize + m_nChunkSizeInBytes * m_ExtraChunks.Count();
 }
@@ -592,7 +592,7 @@ void *CPhysicalMemoryStack::AllocFromOverflow( size_t nSizeInBytes )
 
 
 //-----------------------------------------------------------------------------
-// Allows us to free a portion of the previous allocation 
+// Allows us to free a portion of the previous allocation
 //-----------------------------------------------------------------------------
 void CPhysicalMemoryStack::FreeToAllocPoint( MemoryStackMark_t mark, bool bUnused )
 {

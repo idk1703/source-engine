@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -8,7 +8,7 @@
 
 #ifndef ATTRIBUTEFILEPICKERPANEL_H
 #define ATTRIBUTEFILEPICKERPANEL_H
-																												
+
 #ifdef _WIN32
 #pragma once
 #endif

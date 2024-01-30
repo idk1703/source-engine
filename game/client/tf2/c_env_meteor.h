@@ -22,7 +22,7 @@ class C_MeteorFactory : public IMeteorFactory
 {
 public:
 
-	void CreateMeteor( int nID, int iType, const Vector &vecPosition, 
+	void CreateMeteor( int nID, int iType, const Vector &vecPosition,
 		               const Vector &vecDirection, float flSpeed, float flStartTime,
 					   float flDamageRadius,
 					   const Vector &vecTriggerMins, const Vector &vecTriggerMaxs );
@@ -43,7 +43,7 @@ public:
 	C_EnvMeteorSpawner();
 
 	// Will more than likely be used for meteor input(s) later!
-//	void ReceiveMessage( const char *msgname, int length, void *data );   
+//	void ReceiveMessage( const char *msgname, int length, void *data );
 
 	//-------------------------------------------------------------------------
 	// Networking
@@ -124,8 +124,8 @@ public:
 
 //protected:
 
-	void	DrawFragment( ParticleDraw* pDraw, const Vector &vecStart, const Vector &vecDelta, 
-						  const Vector4D &vecStartColor, const Vector4D &vecEndColor, 
+	void	DrawFragment( ParticleDraw* pDraw, const Vector &vecStart, const Vector &vecDelta,
+						  const Vector4D &vecStartColor, const Vector4D &vecEndColor,
 						  float flStartV, float flEndV );
 
 	CParticleMgr		*m_pParticleMgr;
@@ -158,12 +158,12 @@ public:
 	//-------------------------------------------------------------------------
 	C_EnvMeteor();
 	~C_EnvMeteor();
-	static C_EnvMeteor	   *Create( int nID, int iMeteorType, const Vector &vecOrigin, 
+	static C_EnvMeteor	   *Create( int nID, int iMeteorType, const Vector &vecOrigin,
 		                            const Vector &vecDirection, float flSpeed, float flStartTime,
 									float flDamageRadius,
 								    const Vector &vecTriggerMins, const Vector &vecTriggerMaxs );
 	static void				Destroy( C_EnvMeteor *pMeteor );
-	
+
 	//-------------------------------------------------------------------------
 	// Think
 	//-------------------------------------------------------------------------

@@ -13,7 +13,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 // CLogicMirrorMovement
-// This will record the vector offset of an entity's center from a given reference point 
+// This will record the vector offset of an entity's center from a given reference point
 // (most likely the center of a mirror or portal) and place an entity (most likely a point camera)
 // at a the same offset, mirrored about the reference point and orientation.
 //////////////////////////////////////////////////////////////////////////
@@ -45,7 +45,7 @@ private:
 	EHANDLE m_hMirrorTarget;
 	EHANDLE m_hMovementTarget;
 	EHANDLE m_hMirrorRelative;
-	
+
 };
 
 LINK_ENTITY_TO_CLASS( logic_mirror_movement, CLogicMirrorMovement );
@@ -162,10 +162,10 @@ void CLogicMirrorMovement::Think()
 		//BUGBUG: If m_strSetMirrorTarget doesn't exist in ent list, we get per-think searches with no results ever...
 		SetMirrorTarget ( STRING(m_strMirrorTarget) );
 	}
- 
+
 	// Make sure all entities are valid
 	if ( m_hMirrorTarget.Get() && m_hMovementTarget.Get() && m_hRemoteTarget.Get() && m_hMirrorRelative.Get() )
-	{	
+	{
 		// Get our two portal's world transforms transforms
 		VMatrix matPortal1ToWorldInv, matPortal2ToWorld;
 		MatrixInverseGeneral( m_hMirrorRelative->EntityToWorldTransform(), matPortal1ToWorldInv );
@@ -178,7 +178,7 @@ void CLogicMirrorMovement::Think()
 		ptCameraPosition		= m_hMirrorTarget->EyePosition();
 		m_hMirrorTarget->GetVectors ( &vCameraLook, &vCameraRight, &vCameraUp );
 
-        // map this position and orientation to the remote portal, mirrored (invert the result)
+	// map this position and orientation to the remote portal, mirrored (invert the result)
 		Vector ptNewPosition, vNewLook;
 		ptNewPosition	= matPortal1ToWorldInv * ptCameraPosition;
 		ptNewPosition	= matPortal2ToWorld*( Vector( -ptNewPosition.x, -ptNewPosition.y, ptNewPosition.z ) );
@@ -194,5 +194,3 @@ void CLogicMirrorMovement::Think()
 
 	SetNextThink( gpGlobals->curtime + TICK_INTERVAL );
 }
-
-

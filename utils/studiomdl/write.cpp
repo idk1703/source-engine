@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -192,7 +192,7 @@ static void WriteBoneInfo( studiohdr_t *phdr )
 	AddToStringTable( phdr, &phdr->surfacepropindex, pSurfacePropName );
 	phdr->contents = GetDefaultContents();
 
-	for (i = 0; i < g_numbones; i++) 
+	for (i = 0; i < g_numbones; i++)
 	{
 		AddToStringTable( &pbone[i], &pbone[i].sznameindex, g_bonetable[i].name );
 		pbone[i].parent			= g_bonetable[i].parent;
@@ -273,14 +273,14 @@ static void WriteBoneInfo( studiohdr_t *phdr )
 	if (g_numjigglebones)
 	{
 		mstudiojigglebone_t *jiggleInfo = (mstudiojigglebone_t *)pData;
-		
+
 		for (i = 0; i < g_numjigglebones; i++)
 		{
 			j = g_jigglebonemap[i];
 			k = g_jigglebones[j].bone;
 			pbone[k].procindex		= (byte *)&jiggleInfo[i] - (byte *)&pbone[k];
 			pbone[k].proctype		= STUDIO_PROC_JIGGLE;
-			
+
 			jiggleInfo[i] = g_jigglebones[j].data;
 		}
 		pData += g_numjigglebones * sizeof( mstudiojigglebone_t );
@@ -308,15 +308,15 @@ static void WriteBoneInfo( studiohdr_t *phdr )
 	}
 
 	// map g_bonecontroller to bones
-	for (i = 0; i < g_numbones; i++) 
+	for (i = 0; i < g_numbones; i++)
 	{
-		for (j = 0; j < 6; j++)	
+		for (j = 0; j < 6; j++)
 		{
 			pbone[i].bonecontroller[j] = -1;
 		}
 	}
-	
-	for (i = 0; i < g_numbonecontrollers; i++) 
+
+	for (i = 0; i < g_numbonecontrollers; i++)
 	{
 		j = g_bonecontroller[i].bone;
 		switch( g_bonecontroller[i].type & STUDIO_TYPES )
@@ -349,7 +349,7 @@ static void WriteBoneInfo( studiohdr_t *phdr )
 	phdr->numbonecontrollers = g_numbonecontrollers;
 	phdr->bonecontrollerindex = pData - pStart;
 
-	for (i = 0; i < g_numbonecontrollers; i++) 
+	for (i = 0; i < g_numbonecontrollers; i++)
 	{
 		pbonecontroller[i].bone			= g_bonecontroller[i].bone;
 		pbonecontroller[i].inputfield	= g_bonecontroller[i].inputfield;
@@ -365,7 +365,7 @@ static void WriteBoneInfo( studiohdr_t *phdr )
 	phdr->numlocalattachments = g_numattachments;
 	phdr->localattachmentindex = pData - pStart;
 
-	for (i = 0; i < g_numattachments; i++) 
+	for (i = 0; i < g_numattachments; i++)
 	{
 		pattachment[i].localbone			= g_attachment[i].bone;
 		AddToStringTable( &pattachment[i], &pattachment[i].sznameindex, g_attachment[i].name );
@@ -374,7 +374,7 @@ static void WriteBoneInfo( studiohdr_t *phdr )
 	}
 	pData += g_numattachments * sizeof( mstudioattachment_t );
 	ALIGN4( pData );
-	
+
 	// save hitbox sets
 	phdr->numhitboxsets = g_hitboxsets.Size();
 
@@ -396,14 +396,14 @@ static void WriteBoneInfo( studiohdr_t *phdr )
 
 		// save bbox info
 		pbbox = (mstudiobbox_t *)pData;
-		for (i = 0; i < hitboxset->numhitboxes; i++) 
+		for (i = 0; i < hitboxset->numhitboxes; i++)
 		{
 			pbbox[i].bone				= set->hitbox[i].bone;
 			pbbox[i].group				= set->hitbox[i].group;
 			VectorCopy( set->hitbox[i].bmin, pbbox[i].bbmin );
 			VectorCopy( set->hitbox[i].bmax, pbbox[i].bbmax );
 			pbbox[i].szhitboxnameindex = 0;
-			AddToStringTable( &(pbbox[i]), &(pbbox[i].szhitboxnameindex), set->hitbox[i].hitboxname );	
+			AddToStringTable( &(pbbox[i]), &(pbbox[i].szhitboxnameindex), set->hitbox[i].hitboxname );
 		}
 
 		pData += hitboxset->numhitboxes * sizeof( mstudiobbox_t );
@@ -507,7 +507,7 @@ static void WriteSequenceInfo( studiohdr_t *phdr )
 
 		{
 			Msg( "Building sequence index remapping table...\n" );
-			
+
 			CUtlVector<int> vecNewIndices;
 			vecNewIndices.RemoveAll();
 
@@ -529,7 +529,7 @@ static void WriteSequenceInfo( studiohdr_t *phdr )
 					{
 						Msg( "  Found new sequence \"%s\".\n", g_sequence[i].name );
 					}
-					
+
 					vecNewIndices.AddToTail(i);
 				}
 			}
@@ -585,7 +585,7 @@ static void WriteSequenceInfo( studiohdr_t *phdr )
 				Msg( "No re-ordering required.\n" );
 			}
 		}
-	}	
+	}
 
 	// build an inverted remapping table so autolayer sequence indices can find their sources later
 	int nSeqOrderRemappingTableInv[MAXSTUDIOSEQUENCES];
@@ -594,9 +594,9 @@ static void WriteSequenceInfo( studiohdr_t *phdr )
 		for (i=0; i<MAXSTUDIOSEQUENCES; i++)
 			nSeqOrderRemappingTableInv[nSeqOrderRemappingTable[i]] = i;
 	}
-	
+
 	int m;
-	for (m = 0; m < g_sequence.Count(); m++, pseqdesc++) 
+	for (m = 0; m < g_sequence.Count(); m++, pseqdesc++)
 	{
 
 		if ( bUseSeqOrderRemapping )
@@ -664,7 +664,7 @@ static void WriteSequenceInfo( studiohdr_t *phdr )
 		pseqdesc->fadeintime	= g_sequence[i].fadeintime;
 		pseqdesc->fadeouttime	= g_sequence[i].fadeouttime;
 
-		pseqdesc->localentrynode	= g_sequence[i].entrynode; 
+		pseqdesc->localentrynode	= g_sequence[i].entrynode;
 		pseqdesc->localexitnode		= g_sequence[i].exitnode;
 		//pseqdesc->entryphase	= g_sequence[i].entryphase;
 		//pseqdesc->exitphase		= g_sequence[i].exitphase;
@@ -701,8 +701,8 @@ static void WriteSequenceInfo( studiohdr_t *phdr )
 				 AddToStringTable( &pevent[j], &pevent[j].szeventindex, g_sequence[i].event[j].eventname );
 				 pevent[j].type = NEW_EVENT_STYLE;
 			}
-				 						
-			
+
+
 			// printf("%4d : %d %f\n", pevent[j].event, g_sequence[i].event[j].frame, pevent[j].cycle );
 			// AddToStringTable( &pevent[j], &pevent[j].szoptionindex, g_sequence[i].event[j].options );
 			strcpy( pevent[j].options, g_sequence[i].event[j].options );
@@ -883,7 +883,7 @@ static void WriteSequenceInfo( studiohdr_t *phdr )
 
 //-----------------------------------------------------------------------------
 // Purpose: Stub implementation
-// Input  : *group - 
+// Input  : *group -
 //-----------------------------------------------------------------------------
 
 const studiohdr_t *studiohdr_t::FindModel( void **cache, char const *modelname ) const
@@ -1155,8 +1155,8 @@ byte *WriteIkErrors( s_animation_t *srcanim, byte *pData )
 		}
 
 		/*
-		printf("%d %d %d %d : %.2f %.2f %.2f %.2f\n", 
-			srcanim->ikrule[j].start, srcanim->ikrule[j].peak, srcanim->ikrule[j].tail, srcanim->ikrule[j].end, 
+		printf("%d %d %d %d : %.2f %.2f %.2f %.2f\n",
+			srcanim->ikrule[j].start, srcanim->ikrule[j].peak, srcanim->ikrule[j].tail, srcanim->ikrule[j].end,
 			pikrule->start, pikrule->peak, pikrule->tail, pikrule->end );
 		*/
 
@@ -1321,7 +1321,7 @@ static byte *WriteAnimations( byte *pData, byte *pStart, studiohdr_t *phdr )
 		printf("   animation       x       y       ips    angle\n");
 	}
 
-	for (i = 0; i < g_numani; i++) 
+	for (i = 0; i < g_numani; i++)
 	{
 		s_animation_t *srcanim = g_panimation[ i ];
 		mstudioanimdesc_t *destanim = &panimdesc[i];
@@ -1340,17 +1340,17 @@ static byte *WriteAnimations( byte *pData, byte *pStart, studiohdr_t *phdr )
 
 		destanim->numframes	= srcanim->numframes;
 
-		// destanim->motiontype = srcanim->motiontype;	
+		// destanim->motiontype = srcanim->motiontype;
 		// destanim->motionbone = srcanim->motionbone;
 		// VectorCopy( srcanim->linearpos, destanim->linearpos );
 
 		j = srcanim->numpiecewisekeys - 1;
-		if (srcanim->piecewisemove[j].pos[0] != 0 || srcanim->piecewisemove[j].pos[1] != 0) 
+		if (srcanim->piecewisemove[j].pos[0] != 0 || srcanim->piecewisemove[j].pos[1] != 0)
 		{
 			float t = (srcanim->numframes - 1) / srcanim->fps;
 
 			float r = 1 / t;
-			
+
 			float a = atan2( srcanim->piecewisemove[j].pos[1], srcanim->piecewisemove[j].pos[0] ) * (180 / M_PI);
 			float d = sqrt( DotProduct( srcanim->piecewisemove[j].pos, srcanim->piecewisemove[j].pos ) );
 			if( g_verbose )
@@ -1393,7 +1393,7 @@ static byte *WriteAnimations( byte *pData, byte *pStart, studiohdr_t *phdr )
 		{
 			srcanim->isFirstSectionLocal = true;
 		}
-	
+
 		// block zero is relative to me
 		g_animblock[0].start = (byte *)(destanim);
 
@@ -1487,7 +1487,7 @@ static byte *WriteAnimations( byte *pData, byte *pStart, studiohdr_t *phdr )
 	}
 
 	// write movement keys
-	for (i = 0; i < g_numani; i++) 
+	for (i = 0; i < g_numani; i++)
 	{
 		s_animation_t *anim = g_panimation[ i ];
 
@@ -1569,7 +1569,7 @@ static byte *WriteAnimations( byte *pData, byte *pStart, studiohdr_t *phdr )
 	ALIGN4( pData );
 
 	// write zero frames
-	for (i = 0; i < g_numani; i++) 
+	for (i = 0; i < g_numani; i++)
 	{
 		s_animation_t *anim = g_panimation[ i ];
 
@@ -1631,7 +1631,7 @@ static void WriteTextures( studiohdr_t *phdr )
 	phdr->numtextures = g_nummaterials;
 	phdr->textureindex = pData - pStart;
 	pData += g_nummaterials * sizeof( mstudiotexture_t );
-	for (i = 0; i < g_nummaterials; i++) 
+	for (i = 0; i < g_nummaterials; i++)
 	{
 		j = g_material[i];
 		AddToStringTable( &ptexture[i], &ptexture[i].sznameindex, g_texture[j].name );
@@ -1642,7 +1642,7 @@ static void WriteTextures( studiohdr_t *phdr )
 	phdr->numcdtextures = numcdtextures;
 	phdr->cdtextureindex = pData - pStart;
 	pData += numcdtextures * sizeof( int );
-	for (i = 0; i < numcdtextures; i++) 
+	for (i = 0; i < numcdtextures; i++)
 	{
 		AddToStringTable( phdr, &cdtextureoffset[i], cdtextures[i] );
 	}
@@ -1654,9 +1654,9 @@ static void WriteTextures( studiohdr_t *phdr )
 	phdr->numskinfamilies = g_numskinfamilies;
 	pref = (short *)pData;
 
-	for (i = 0; i < phdr->numskinfamilies; i++) 
+	for (i = 0; i < phdr->numskinfamilies; i++)
 	{
-		for (j = 0; j < phdr->numskinref; j++) 
+		for (j = 0; j < phdr->numskinref; j++)
 		{
 			*pref = g_skinref[i][j];
 			pref++;
@@ -1689,7 +1689,7 @@ static void WriteBoneTransforms( studiohdr2_t *phdr, mstudiobone_t *pBone )
 
 		++nTransformCount;
 	}
-	
+
 	// save bone transform info
 	mstudiosrcbonetransform_t *pSrcBoneTransform = (mstudiosrcbonetransform_t *)pData;
 	phdr->numsrcbonetransform = nTransformCount;
@@ -1704,11 +1704,11 @@ static void WriteBoneTransforms( studiohdr2_t *phdr, mstudiobone_t *pBone )
 		if ( MatricesAreEqual( identity, g_bonetable[i].srcRealign ) &&
 			( ( nParent < 0 ) || MatricesAreEqual( identity, g_bonetable[nParent].srcRealign ) ) )
 			continue;
-							   
+
 		// What's going on here?
 		// So, when we realign a bone, we want to do it in a way so that the child bones
 		// have the same bone->world transform. If we take T as the src realignment transform
-		// for the parent, P is the parent to world, and C is the child to parent, we expect 
+		// for the parent, P is the parent to world, and C is the child to parent, we expect
 		// the child->world is constant after realignment:
 		//		CtoW = P * C = ( P * T ) * ( T^-1 * C )
 		// therefore Cnew = ( T^-1 * C )
@@ -1836,9 +1836,9 @@ static void WriteVertices( studiohdr_t *phdr )
 //	{
 //		strcat( fileName, "platform_" );
 //		strcat( fileName, g_pPlatformName );
-//		strcat( fileName, "/" );	
+//		strcat( fileName, "/" );
 //	}
-	V_strcat_safe( fileName, "models/" );	
+	V_strcat_safe( fileName, "models/" );
 	V_strcat_safe( fileName, outname );
 	Q_StripExtension( fileName, fileName, sizeof( fileName ) );
 	V_strcat_safe( fileName, ".vvd" );
@@ -1871,7 +1871,7 @@ static void WriteVertices( studiohdr_t *phdr )
 	// store vertexes grouped by mesh order
 	ALIGN16( pData );
 	fileHeader->vertexDataStart  = pData-pStart;
-	for (i = 0; i < g_nummodelsbeforeLOD; i++) 
+	for (i = 0; i < g_nummodelsbeforeLOD; i++)
 	{
 		s_loddata_t *pLodData = g_model[i]->m_pLodData;
 
@@ -1915,7 +1915,7 @@ static void WriteVertices( studiohdr_t *phdr )
 	// store tangents grouped by mesh order
 	ALIGN4( pData );
 	fileHeader->tangentDataStart = pData-pStart;
-	for (i = 0; i < g_nummodelsbeforeLOD; i++) 
+	for (i = 0; i < g_nummodelsbeforeLOD; i++)
 	{
 		s_loddata_t *pLodData = g_model[i]->m_pLodData;
 
@@ -2184,7 +2184,7 @@ static void WriteModel( studiohdr_t *phdr )
 					pControllerHandled[ remap.m_LeftIndex ] = true;
 
 					Assert( !pControllerHandled[ remap.m_RightIndex ] );
-					pFlexControllerUI->szindex1 = ( 
+					pFlexControllerUI->szindex1 = (
 						phdr->flexcontrollerindex - int( pData - pStart ) +
 						remap.m_RightIndex * sizeof( mstudioflexcontroller_t ) );
 					pControllerHandled[ remap.m_RightIndex ] = true;
@@ -2369,12 +2369,12 @@ static void WriteModel( studiohdr_t *phdr )
 	const float flVertAnimFixedPointScale = ComputeVertAnimFixedPointScale( phdr );
 
 	// write model
-	for (i = 0; i < g_nummodelsbeforeLOD; i++) 
+	for (i = 0; i < g_nummodelsbeforeLOD; i++)
 	{
 		int n = 0;
 
 		byte *pModelStart = (byte *)(&pmodel[i]);
-		
+
 		strcpy( pmodel[i].name, g_model[i]->filename );
 		// AddToStringTable( &pmodel[i], &pmodel[i].sznameindex, g_model[i]->filename );
 
@@ -2383,7 +2383,7 @@ static void WriteModel( studiohdr_t *phdr )
 		// pmodel[i].maxresolution = g_model[i]->maxresolution;
 
 		// save bbox info
-		
+
 		psource = g_model[i]->source;
 		s_loddata_t *pLodData = g_model[i]->m_pLodData;
 
@@ -2402,7 +2402,7 @@ static void WriteModel( studiohdr_t *phdr )
 		{
 			// We have to check this here so that we don't screw up decal
 			// vert caching in the runtime.
-			MdlError( "Too many verts in model. (%d verts, MAXSTUDIOVERTS==%d)\n", 
+			MdlError( "Too many verts in model. (%d verts, MAXSTUDIOVERTS==%d)\n",
 				pmodel[i].numvertices, ( int )MAXSTUDIOVERTS );
 		}
 
@@ -2424,7 +2424,7 @@ static void WriteModel( studiohdr_t *phdr )
 
 		// set expected base offsets to external data
 		ALIGN16( externalVertexIndex );
-		pmodel[i].vertexindex = (int)externalVertexIndex; 
+		pmodel[i].vertexindex = (int)externalVertexIndex;
 		externalVertexIndex += pmodel[i].numvertices * sizeof(mstudiovertex_t);
 
 		// set expected base offsets to external data
@@ -2440,7 +2440,7 @@ static void WriteModel( studiohdr_t *phdr )
 		pmodel[i].numeyeballs		= g_model[i]->numeyeballs;
 		pmodel[i].eyeballindex		= pData - pModelStart;
 		pData += g_model[i]->numeyeballs * sizeof( mstudioeyeball_t );
-			
+
 		ALIGN4( pData );
 		for (j = 0; j < g_model[i]->numeyeballs; j++)
 		{
@@ -2466,7 +2466,7 @@ static void WriteModel( studiohdr_t *phdr )
 
 			peyeball[j].upperlidflexdesc	= g_model[i]->eyeball[j].upperlidflexdesc;
 			peyeball[j].lowerlidflexdesc	= g_model[i]->eyeball[j].lowerlidflexdesc;
-		}	
+		}
 
 		if ( !g_quiet )
 		{
@@ -2540,7 +2540,7 @@ static void WriteModel( studiohdr_t *phdr )
 					pvertanim = (mstudiovertanim_t *)pData;
 					pData += pflex->numverts * nVAnimDeltaSize;
 					ALIGN4( pData );
-				
+
 					for ( k = 0; k < g_flexkey[j].numvanims; k++ )
 					{
 						n = g_flexkey[j].vanim[k].vertex - pmesh[m].vertexoffset;
@@ -2552,7 +2552,7 @@ static void WriteModel( studiohdr_t *phdr )
 
 							pvertanim->SetDeltaFloat( pvanim->pos );
 							pvertanim->SetNDeltaFloat( pvanim->normal );
-							
+
 							if ( bWrinkleVAnim )
 							{
 								( (mstudiovertanim_wrinkle_t*)pvertanim )->SetWrinkleFixed( pvanim->wrinkle, flVertAnimFixedPointScale );
@@ -2562,9 +2562,9 @@ static void WriteModel( studiohdr_t *phdr )
 
 							/*
 							if ((tmp - pvanim->pos).Length() > 0.1)
-							{	
+							{
 								pvertanim->delta.x = pvanim->pos.x;
-								printf("%f %f %f  : %f %f %f\n", 
+								printf("%f %f %f  : %f %f %f\n",
 									pvanim->pos[0], pvanim->pos[1], pvanim->pos[2],
 									tmp.x, tmp.y, tmp.z );
 							}
@@ -2607,7 +2607,7 @@ static void WriteModel( studiohdr_t *phdr )
 	pData += phdr->numanimblocks * sizeof( mstudioanimblock_t );
 	ALIGN4( pData );
 
-	for (i = 1; i < g_numanimblocks; i++) 
+	for (i = 1; i < g_numanimblocks; i++)
 	{
 		panimblock[i].datastart = g_animblock[i].start - pBlockStart;
 		panimblock[i].dataend = g_animblock[i].end - pBlockStart;
@@ -2634,7 +2634,7 @@ static void AssignMeshIDs( studiohdr_t *pStudioHdr )
 		{
 			pStudioModel = pStudioBodyPart->pModel(j);
 			for (m=0; m<pStudioModel->nummeshes; m++)
-			{				
+			{
 				// get each mesh
 				pStudioMesh = pStudioModel->pMesh(m);
 				pStudioMesh->meshid = numMeshes + m;
@@ -2644,7 +2644,7 @@ static void AssignMeshIDs( studiohdr_t *pStudioHdr )
 	}
 }
 
-	
+
 void LoadMaterials( studiohdr_t *phdr )
 {
 	int					i, j;
@@ -2767,14 +2767,14 @@ void WriteModelFiles(void)
 	pBlockStart = NULL;
 
 	Q_StripExtension( outname, outname, sizeof( outname ) );
-		
+
 	if (g_animblocksize != 0)
 	{
 		// write the non-default g_sequence group data to separate files
 		sprintf( g_animblockname, "models/%s.ani", outname );
 
 		V_strcpy_safe( filename, gamedir );
-		V_strcat_safe( filename, g_animblockname );	
+		V_strcat_safe( filename, g_animblockname );
 
 		EnsureFileDirectoryExists( filename );
 
@@ -2784,7 +2784,7 @@ void WriteModelFiles(void)
 			spFileBlockOut->Edit();
 
 			// Create the directory hierarchy for the ANI
-			char parentdir[MAX_PATH];	 
+			char parentdir[MAX_PATH];
 			V_strcpy_safe( parentdir, filename );
 			V_StripFilename( parentdir );
 			g_pFullFileSystem->CreateDirHierarchy( parentdir );
@@ -2799,7 +2799,7 @@ void WriteModelFiles(void)
 		pblockhdr->id = IDSTUDIOANIMGROUPHEADER;
 		pblockhdr->version = STUDIO_VERSION;
 
-		pBlockData += sizeof( *pblockhdr ); 
+		pBlockData += sizeof( *pblockhdr );
 	}
 
 //
@@ -2821,10 +2821,10 @@ void WriteModelFiles(void)
 //		strcat( filename, g_pPlatformName );
 //		strcat( filename, "/" );
 //	}
-	V_strcat_safe( filename, "models/" );	
-	V_strcat_safe( filename, outname );	
+	V_strcat_safe( filename, "models/" );
+	V_strcat_safe( filename, outname );
 
-	
+
 	// Create the directory.
 	EnsureFileDirectoryExists( filename );
 
@@ -2843,7 +2843,7 @@ void WriteModelFiles(void)
 		spFileModelOut->Edit();
 
 		// Create the directory hierarchy for the MDL
-		char parentdir[MAX_PATH];	 
+		char parentdir[MAX_PATH];
 		V_strcpy_safe( parentdir, filename );
 		V_StripFilename( parentdir );
 		g_pFullFileSystem->CreateDirHierarchy( parentdir );
@@ -2869,13 +2869,13 @@ void WriteModelFiles(void)
 		VectorCopy( vec3_origin, cbox[1] );
 	}
 
-	phdr->hull_min = bbox[0]; 
-	phdr->hull_max = bbox[1]; 
-	phdr->view_bbmin = cbox[0]; 
-	phdr->view_bbmax = cbox[1]; 
+	phdr->hull_min = bbox[0];
+	phdr->hull_max = bbox[1];
+	phdr->view_bbmin = cbox[0];
+	phdr->view_bbmax = cbox[1];
 
 	phdr->flags = gflags;
-	phdr->mass = GetCollisionModelMass();	
+	phdr->mass = GetCollisionModelMass();
 	phdr->constdirectionallightdot = g_constdirectionalightdot;
 
 	if ( g_numAllowedRootLODs > 0 )
@@ -3030,7 +3030,7 @@ void WriteModelFiles(void)
 			char outname[ MAX_PATH ];
 			Q_StripExtension( g_animblockname, outname, sizeof( outname ) );
 			Q_strcat( outname, ".360.ani", sizeof( outname ) );
-			
+
 			{
 				CP4AutoEditAddFile autop4( outname );
 				SaveFile( outname, pOutBase, finalSize );
@@ -3103,7 +3103,7 @@ void WriteModelFiles(void)
 	if ( g_bX360 )
 	{
 		// now all files have been finalized and fixed up.
-		// re-open the files once more and swap all little-endian 
+		// re-open the files once more and swap all little-endian
 		// data to big-endian format to produce Xbox360 files.
 		WriteAllSwappedFiles( filename );
 	}
@@ -3141,9 +3141,9 @@ const vertexFileHeader_t * mstudiomodel_t::CacheVertexData( void * pModelData )
 //	{
 //		strcat( filename, "platform_" );
 //		strcat( filename, g_pPlatformName );
-//		strcat( filename, "/" );	
+//		strcat( filename, "/" );
 //	}
-	V_strcat_safe( filename, "models/" );	
+	V_strcat_safe( filename, "models/" );
 	V_strcat_safe( filename, outname );
 	Q_StripExtension( filename, filename, sizeof( filename ) );
 	V_strcat_safe( filename, ".vvd" );
@@ -3192,7 +3192,7 @@ typedef struct
 
 //-----------------------------------------------------------------------------
 // FindVertexOffsets
-// 
+//
 // Iterate sorted vertex list to determine mesh starts and counts.
 //-----------------------------------------------------------------------------
 void FindVertexOffsets(int vertexOffset, int offsets[MAX_NUM_LODS], int counts[MAX_NUM_LODS], int numLods, const usedVertex_t *pVertexList, int numVertexes)
@@ -3236,7 +3236,7 @@ void FindVertexOffsets(int vertexOffset, int offsets[MAX_NUM_LODS], int counts[M
 
 //-----------------------------------------------------------------------------
 // _CompareUsedVertexes
-// 
+//
 // qsort callback
 //-----------------------------------------------------------------------------
 static int _CompareUsedVertexes(const void *a, const void *b)
@@ -3264,7 +3264,7 @@ static int _CompareUsedVertexes(const void *a, const void *b)
 	sort = pVertexA->vertexOffset - pVertexB->vertexOffset;
 	if (sort)
 		return sort;
-	
+
 	// within same mesh, sub sort (ascending) by vertex
 	sort = pVertexA->meshVertID - pVertexB->meshVertID;
 	return sort;
@@ -3272,7 +3272,7 @@ static int _CompareUsedVertexes(const void *a, const void *b)
 
 //-----------------------------------------------------------------------------
 // BuildSortedVertexList
-// 
+//
 // Generates the sorted vertex list. Routine is purposely serial to
 // ensure vertex integrity.
 //-----------------------------------------------------------------------------
@@ -3312,7 +3312,7 @@ bool BuildSortedVertexList(const studiohdr_t *pStudioHdr, const void *pVtxBuff, 
 	*ppVertexList    = NULL;
 	*pNumVertexes    = 0;
 
-	pVtxHdr = (OptimizedModel::FileHeader_t*)pVtxBuff; 
+	pVtxHdr = (OptimizedModel::FileHeader_t*)pVtxBuff;
 
 	// determine number of vertex pools
 	if (pStudioHdr->numbodyparts != pVtxHdr->numBodyParts)
@@ -3325,7 +3325,7 @@ bool BuildSortedVertexList(const studiohdr_t *pStudioHdr, const void *pVtxBuff, 
 		if (pStudioBodyPart->nummodels != pBodyPartHdr->numModels)
 			return false;
 
-		// the model's subordinate lods only reference from a single top level pool 
+		// the model's subordinate lods only reference from a single top level pool
 		// no new verts are created for sub lods
 		// each model's subordinate mesh dictates its own vertex pool
 		for (j=0; j<pBodyPartHdr->numModels; j++)
@@ -3379,7 +3379,7 @@ bool BuildSortedVertexList(const studiohdr_t *pStudioHdr, const void *pVtxBuff, 
 						usedVertexes[n].lodFlags        = 0;
 						pVertexMap[n]                   = n;
 					}
-				
+
 					pVertexPools[numVertexPools].pVertexList = usedVertexes;
 					pVertexPools[numVertexPools].pVertexMap  = pVertexMap;
 				}
@@ -3402,7 +3402,7 @@ bool BuildSortedVertexList(const studiohdr_t *pStudioHdr, const void *pVtxBuff, 
 					for (m=0; m<pMeshHdr->numStripGroups; m++)
 					{
 						pStripGroupHdr = pMeshHdr->pStripGroup(m);
-						
+
 						// sanity check the indexes have 100% coverage of the vertexes
 						pVertexes = (int*)malloc(pStripGroupHdr->numVerts*sizeof(int));
 						memset(pVertexes, 0xFF, pStripGroupHdr->numVerts*sizeof(int));
@@ -3459,7 +3459,7 @@ bool BuildSortedVertexList(const studiohdr_t *pStudioHdr, const void *pVtxBuff, 
 				// don't know how these occur or who references them
 				// cannot cull the orphaned vertexes, otherwise vertex counts are wrong
 				// every vertex must be remapped
-				// force the vertex to belong to the lowest lod 
+				// force the vertex to belong to the lowest lod
 				// lod flags must be nonzero for proper sorted runs
 				pPool->pVertexList[j].lodFlags = 1<<(pVtxHdr->numLODs-1);
 			}
@@ -3473,7 +3473,7 @@ bool BuildSortedVertexList(const studiohdr_t *pStudioHdr, const void *pVtxBuff, 
 	// the sort dictates the linear sequencing of the .vvd data file
 	// the vtx file indexes get remapped to the new sort order
 	qsort(pVertexList, numVertexes, sizeof(usedVertex_t), _CompareUsedVertexes);
-	
+
 	// build a mapping table from mesh relative indexes to the flat lod sorted array
 	vertexOffset = 0;
 	for (i=0; i<numVertexPools; i++)
@@ -3495,7 +3495,7 @@ bool BuildSortedVertexList(const studiohdr_t *pStudioHdr, const void *pVtxBuff, 
 	// build offsets and counts that identifies mesh's distribution across lods
 	// calc final fixed vertex location if vertexes were gathered to mesh order from lod sorted list
 	finalMeshVertID = 0;
-	poolStart = 0; 
+	poolStart = 0;
 	for (i=0; i<pStudioHdr->numbodyparts; i++)
 	{
 		pStudioBodyPart = pStudioHdr->pBodypart(i);
@@ -3566,11 +3566,11 @@ bool BuildSortedVertexList(const studiohdr_t *pStudioHdr, const void *pVtxBuff, 
 
 //-----------------------------------------------------------------------------
 // FixupVVDFile
-// 
+//
 // VVD files get vertexes remapped to a flat lod sorted order.
 //-----------------------------------------------------------------------------
 bool FixupVVDFile(const char *fileName,  const studiohdr_t *pStudioHdr, const void *pVtxBuff, const vertexPool_t *pVertexPools, int numVertexPools, const usedVertex_t *pVertexList, int numVertexes)
-{	
+{
 	OptimizedModel::FileHeader_t	*pVtxHdr;
 	vertexFileHeader_t				*pFileHdr_old;
 	vertexFileHeader_t				*pFileHdr_new;
@@ -3604,7 +3604,7 @@ bool FixupVVDFile(const char *fileName,  const studiohdr_t *pStudioHdr, const vo
 	int								numMeshes;
 	int								numOutFixups;
 
-	pVtxHdr = (OptimizedModel::FileHeader_t*)pVtxBuff; 
+	pVtxHdr = (OptimizedModel::FileHeader_t*)pVtxBuff;
 
 	LoadFile((char*)fileName, &pVvdBuff);
 
@@ -3710,7 +3710,7 @@ bool FixupVVDFile(const char *fileName,  const studiohdr_t *pStudioHdr, const vo
 		// ripple the last valid lod entry all the way down
 		pFileHdr_new->numLODVertexes[n] = pFileHdr_new->numLODVertexes[pVtxHdr->numLODs-1];
 	}
-	
+
 	// build mesh relocation fixup table
 	if (numFixups)
 	{
@@ -3789,7 +3789,7 @@ bool FixupVVDFile(const char *fileName,  const studiohdr_t *pStudioHdr, const vo
 	{
 		// iterate sorted order, remap old vert location to new vert location
 		oldIndex = pVertexList[i].vertexOffset + pVertexList[i].meshVertID;
-		
+
 		memcpy(&pVertex_new[i], pFlatVertexes[oldIndex], sizeof(mstudiovertex_t));
 		memcpy(&pTangent_new[i], pFlatTangents[oldIndex], sizeof(Vector4D));
 	}
@@ -3810,7 +3810,7 @@ bool FixupVVDFile(const char *fileName,  const studiohdr_t *pStudioHdr, const vo
 
 //-----------------------------------------------------------------------------
 // FixupVTXFile
-// 
+//
 // VTX files get their windings remapped.
 //-----------------------------------------------------------------------------
 bool FixupVTXFile(const char *fileName, const studiohdr_t *pStudioHdr, const vertexPool_t *pVertexPools, int numVertexPools, const usedVertex_t *pVertexList, int numVertexes)
@@ -3833,7 +3833,7 @@ bool FixupVTXFile(const char *fileName, const studiohdr_t *pStudioHdr, const ver
 	void								*pVtxBuff;
 
 	VtxLen  = LoadFile((char*)fileName, &pVtxBuff);
-	pVtxHdr = (OptimizedModel::FileHeader_t*)pVtxBuff; 
+	pVtxHdr = (OptimizedModel::FileHeader_t*)pVtxBuff;
 
 	// iterate all lod's windings
 	poolStart = 0;
@@ -3866,7 +3866,7 @@ bool FixupVTXFile(const char *fileName, const studiohdr_t *pStudioHdr, const ver
 					for (m=0; m<pMeshHdr->numStripGroups; m++)
 					{
 						pStripGroupHdr = pMeshHdr->pStripGroup(m);
-						
+
 						for (n=0; n<pStripGroupHdr->numVerts; n++)
 						{
 							pStripVertex = pStripGroupHdr->pVertex(n);
@@ -3878,7 +3878,7 @@ bool FixupVTXFile(const char *fileName, const studiohdr_t *pStudioHdr, const ver
 							// final fixed vertex location is performed by runtime loading code
 							newMeshVertID = pVertexList[newMeshVertID].finalMeshVertID;
 
-							// fixup to expected 
+							// fixup to expected
 							pStripVertex->origMeshVertID = newMeshVertID;
 						}
 					}
@@ -3901,7 +3901,7 @@ bool FixupVTXFile(const char *fileName, const studiohdr_t *pStudioHdr, const ver
 
 //-----------------------------------------------------------------------------
 // FixupMDLFile
-// 
+//
 // MDL files get flexes/vertex/tangent data offsets fixed
 //-----------------------------------------------------------------------------
 bool FixupMDLFile(const char *fileName, studiohdr_t *pStudioHdr, const void *pVtxBuff, const vertexPool_t *pVertexPools, int numVertexPools, const usedVertex_t *pVertexList, int numVertexes)
@@ -3925,7 +3925,7 @@ bool FixupMDLFile(const char *fileName, studiohdr_t *pStudioHdr, const void *pVt
 
 	pVtxHdr = (OptimizedModel::FileHeader_t*)pVtxBuff;
 
-	numLODs = pVtxHdr->numLODs; 
+	numLODs = pVtxHdr->numLODs;
 
 	numMeshes = 0;
 	for (i=0; i<pStudioHdr->numbodyparts; i++)
@@ -3937,7 +3937,7 @@ bool FixupMDLFile(const char *fileName, studiohdr_t *pStudioHdr, const void *pVt
 			pStudioModel = pStudioBodyPart->pModel(j);
 
 			for (m=0; m<pStudioModel->nummeshes; m++)
-			{				
+			{
 				// get each mesh
 				pStudioMesh  = pStudioModel->pMesh(m);
 				pLodMeshInfo = &pVertexPools[numMeshes+m].lodMeshInfo;
@@ -3981,7 +3981,7 @@ bool FixupMDLFile(const char *fileName, studiohdr_t *pStudioHdr, const void *pVt
 						// final fixed vertex location is performed by runtime loading code
 						newMeshVertID = pVertexList[newMeshVertID].finalMeshVertID;
 
-						// fixup to expected 
+						// fixup to expected
 						pStudioVertAnim->index = newMeshVertID;
 					}
 				}
@@ -4001,7 +4001,7 @@ bool FixupMDLFile(const char *fileName, studiohdr_t *pStudioHdr, const void *pVt
 
 //-----------------------------------------------------------------------------
 // FixupToSortedLODVertexes
-// 
+//
 // VVD files get vertexes fixed to a flat sorted order, ascending in lower detail lod usage
 // VTX files get their windings remapped to the sort.
 //-----------------------------------------------------------------------------
@@ -4023,9 +4023,9 @@ bool FixupToSortedLODVertexes(studiohdr_t *pStudioHdr)
 //	{
 //		strcat( filename, "platform_" );
 //		strcat( filename, g_pPlatformName );
-//		strcat( filename, "/" );	
+//		strcat( filename, "/" );
 //	}
-	V_strcat_safe( filename, "models/" );	
+	V_strcat_safe( filename, "models/" );
 	V_strcat_safe( filename, outname );
 	Q_StripExtension( filename, filename, sizeof( filename ) );
 
@@ -4437,7 +4437,7 @@ bool Clamp_VTX_LODS( const char *fileName, int rootLOD, studiohdr_t *pStudioHdr 
 		printf ("writing %s:\n", fileName);
 		printf( "everything (%d bytes)\n", newLen );
 	}
-	
+
 	{
 		CP4AutoEditAddFile autop4( fileName, "binary" );
 		SaveFile( (char *)fileName, pNewVtxHdr, newLen );
@@ -4471,7 +4471,7 @@ bool Clamp_RootLOD( studiohdr_t *phdr )
 	}
 
 	V_strcpy_safe( filename, gamedir );
-	V_strcat_safe( filename, "models/" );	
+	V_strcat_safe( filename, "models/" );
 	V_strcat_safe( filename, outname );
 	Q_StripExtension( filename, filename, sizeof( filename ) );
 

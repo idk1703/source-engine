@@ -19,7 +19,7 @@
 #include "grenade_brickbat.h"
 #include "ammodef.h"
 #include "in_buttons.h"
-#include "game.h"			
+#include "game.h"
 #include "IEffects.h"
 #include "vstdlib/random.h"
 #include "baseviewmodel.h"
@@ -52,7 +52,7 @@ END_SEND_TABLE()
 //LINK_ENTITY_TO_CLASS( weapon_brickbat, CWeaponBrickbat );
 //PRECACHE_WEAPON_REGISTER(weapon_brickbat);
 
-acttable_t	CWeaponBrickbat::m_acttable[] = 
+acttable_t	CWeaponBrickbat::m_acttable[] =
 {
 	{ ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK_THROW, true },
 };
@@ -111,7 +111,7 @@ void CWeaponBrickbat::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CWeaponBrickbat::GetViewModel( int viewmodelindex /*=0*/ )
 {
@@ -119,7 +119,7 @@ const char *CWeaponBrickbat::GetViewModel( int viewmodelindex /*=0*/ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CWeaponBrickbat::GetWorldModel( void )
 {
@@ -182,7 +182,7 @@ void CWeaponBrickbat::BrickbatTouch( CBaseEntity *pOther )
 		//  If already owned weapon of this type remove me
 		// ------------------------------------------------
 		CWeaponBrickbat* oldWeapon = (CWeaponBrickbat*)pBCC->Weapon_OwnsThisType( GetClassname() );
-		
+
 		// Remove physics object if is one
 		VPhysicsDestroyObject();
 
@@ -192,7 +192,7 @@ void CWeaponBrickbat::BrickbatTouch( CBaseEntity *pOther )
 			if (oldWeapon->m_nAmmoCount[m_iCurrentAmmoType] < BrickBatAmmoArray[m_iCurrentAmmoType].m_nMaxCarry)
 			{
 				oldWeapon->m_nAmmoCount[m_iCurrentAmmoType]++;
-				pBCC->GiveAmmo( 1, oldWeapon->m_iPrimaryAmmoType ); 
+				pBCC->GiveAmmo( 1, oldWeapon->m_iPrimaryAmmoType );
 				UTIL_Remove( this );
 			}
 		}
@@ -202,7 +202,7 @@ void CWeaponBrickbat::BrickbatTouch( CBaseEntity *pOther )
 			if (m_nAmmoCount[m_iCurrentAmmoType] < BrickBatAmmoArray[m_iCurrentAmmoType].m_nMaxCarry)
 			{
 				m_nAmmoCount[m_iCurrentAmmoType]++;
-				pBCC->GiveAmmo( 1, m_iPrimaryAmmoType ); 
+				pBCC->GiveAmmo( 1, m_iPrimaryAmmoType );
 
 				SetThink (NULL);
 			}
@@ -254,7 +254,7 @@ void CWeaponBrickbat::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombat
 			// Otherwise just set to in front of the owner
 			else {
 				Vector vFacingDir = pNPC->BodyDirection2D( );
-				vFacingDir = vFacingDir * 60.0; 
+				vFacingDir = vFacingDir * 60.0;
 				launchPos = pNPC->GetLocalOrigin()+vFacingDir;
 			}
 
@@ -292,7 +292,7 @@ bool CWeaponBrickbat::ObjectInWay( void )
 
 	Vector	vecEnd = vecSrc + (vecAiming * 32);
 	UTIL_TraceLine( vecSrc, vecEnd, MASK_SOLID, pOwner, COLLISION_GROUP_NONE, &tr );
-	
+
 	if (tr.fraction < 1.0)
 	{
 		// Don't block on a living creature
@@ -337,16 +337,16 @@ int CWeaponBrickbat::WeaponRangeAttack1Condition( float flDot, float flDist )
 	{
 		return m_iThrowBits;
 	}
-	
-	if ( flDist < m_fMinRange1) 
+
+	if ( flDist < m_fMinRange1)
 	{
 		m_iThrowBits = COND_TOO_CLOSE_TO_ATTACK;
 	}
-	else if (flDist > m_fMaxRange1) 
+	else if (flDist > m_fMaxRange1)
 	{
 		m_iThrowBits = COND_TOO_FAR_TO_ATTACK;
 	}
-	else if (flDot < 0.5) 
+	else if (flDot < 0.5)
 	{
 		m_iThrowBits = COND_NOT_FACING_ATTACK;
 	}
@@ -356,7 +356,7 @@ int CWeaponBrickbat::WeaponRangeAttack1Condition( float flDot, float flDist )
 	{
 		m_iThrowBits = COND_NONE;
 	}
-	else 
+	else
 	{
 		// Ok we should check again as some time has passed
 		// This function is only used by NPC's so we can cast to a Base Monster
@@ -368,7 +368,7 @@ int CWeaponBrickbat::WeaponRangeAttack1Condition( float flDot, float flDist )
 			return COND_NONE;
 		}
 
-		// Get Enemy Position 
+		// Get Enemy Position
 		Vector vecTarget;
 		pEnemy->CollisionProp()->NormalizedToWorldSpace( Vector( 0.5f, 0.5f, 0.0f ), &vecTarget );
 
@@ -377,7 +377,7 @@ int CWeaponBrickbat::WeaponRangeAttack1Condition( float flDot, float flDist )
 		Vector			vecToss;
 		CBaseEntity*	pBlocker	= NULL;
 		float			throwDist	= (throwStart - vecTarget).Length();
-		float			fGravity	= GetCurrentGravity(); 
+		float			fGravity	= GetCurrentGravity();
 		float			throwLimit	= pNPC->ThrowLimit(throwStart, vecTarget, fGravity, 35, WorldAlignMins(), WorldAlignMaxs(), pEnemy, &vecToss, &pBlocker);
 
 		// If I can make the throw (or most of the throw)
@@ -400,7 +400,7 @@ int CWeaponBrickbat::WeaponRangeAttack1Condition( float flDot, float flDist )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -446,7 +446,7 @@ void CWeaponBrickbat::ThrowBrickbat( Vector vecSrc, Vector vecVelocity, float da
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -461,7 +461,7 @@ void CWeaponBrickbat::PrimaryAttack( void )
 	}
 
 	SendWeaponAnim(ACT_VM_PULLBACK);
-	
+
 	// Don't fire again until fire animation has completed
 	float flSequenceEndTime = gpGlobals->curtime + SequenceDuration();
 	pPlayer->m_flNextAttack = m_flNextPrimaryAttack = m_flNextSecondaryAttack = flSequenceEndTime;
@@ -470,7 +470,7 @@ void CWeaponBrickbat::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -503,7 +503,7 @@ void CWeaponBrickbat::Throw( void )
 	pPlayer->RemoveAmmo( 1, m_iPrimaryAmmoType );
 
 	SendWeaponAnim(ACT_VM_THROW);
-	
+
 	// Don't fire again until fire animation has completed
 	float flSequenceEndTime = gpGlobals->curtime + SequenceDuration();
 	pPlayer->m_flNextAttack = m_flNextPrimaryAttack = m_flNextSecondaryAttack = flSequenceEndTime;
@@ -512,7 +512,7 @@ void CWeaponBrickbat::Throw( void )
 	m_bNeedDraw	 = true;
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -535,7 +535,7 @@ void CWeaponBrickbat::SecondaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -644,7 +644,7 @@ void CWeaponBrickbat::TraceAttack( const CTakeDamageInfo &info, const Vector &ve
 		if ( BrickBatAmmoArray[m_iCurrentAmmoType].m_nAmmoType == BRICKBAT_ROCK )
 		{
 			g_pEffects->Ricochet(ptr->endpos,ptr->plane.normal);
-		}	
+		}
 	}
 	BaseClass::TraceAttack( info, vecDir, ptr );
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Used to influence the initial force for a dying NPC's ragdoll. 
+// Purpose: Used to influence the initial force for a dying NPC's ragdoll.
 //			Passive entity. Just represents position in the world, radius, force
 //
 // $NoKeywords: $
@@ -24,7 +24,7 @@ public:
 	float DistToPoint( const Vector &vecPoint );
 
 	bool IsEnabled( void ) { return !m_bDisabled; }
-	
+
 	int IsBarMagnet( void ) { return (m_spawnflags & SF_RAGDOLLMAGNET_BAR); }
 
 	static CRagdollMagnet *FindBestMagnet( CBaseEntity *pNPC );

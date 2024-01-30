@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -22,7 +22,7 @@ enum UpdateType
 
 	DeltaEnt,		// There is a delta for this entity.
 	PreserveEnt,	// Entity stays alive but no delta ( could be LOD, or just unchanged )
-	
+
 	Finished,		// finished parsing entities successfully
 	Failed,			// parsing error occured while reading entities
 };
@@ -99,7 +99,7 @@ enum
 #define	svc_Print			7		// print text to console
 #define	svc_ServerInfo		8		// first message from server about game, map etc
 #define svc_SendTable		9		// sends a sendtable description for a game class
-#define svc_ClassInfo		10		// Info about classes (first byte is a CLASSINFO_ define).							
+#define svc_ClassInfo		10		// Info about classes (first byte is a CLASSINFO_ define).
 #define	svc_SetPause		11		// tells client if server paused or unpaused
 
 
@@ -122,7 +122,7 @@ enum
 //#define	svc_TerrainMod		22		// modification to the terrain/displacement
 
 // Message from server side to client side entity
-#define svc_UserMessage		23	// a game specific message 
+#define svc_UserMessage		23	// a game specific message
 #define svc_EntityMessage	24	// a message for an entity
 #define	svc_GameEvent		25	// global game event fired
 

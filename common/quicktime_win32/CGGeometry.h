@@ -1,17 +1,17 @@
 /*
-     File:       CGGeometry.h
- 
-     Contains:   CoreGraphics geometry
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       CGGeometry.h
+
+		Contains:   CoreGraphics geometry
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef CGGEOMETRY_H_
 #define CGGEOMETRY_H_
@@ -36,52 +36,52 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=mac68k
+		#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+		#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+		#pragma pack(2)
 #endif
 
 #if PRAGMA_ENUM_ALWAYSINT
-    #if defined(__fourbyteints__) && !__fourbyteints__ 
-        #define __CGGEOMETRY__RESTORE_TWOBYTEINTS
-        #pragma fourbyteints on
-    #endif
-    #pragma enumsalwaysint on
+		#if defined(__fourbyteints__) && !__fourbyteints__
+				#define __CGGEOMETRY__RESTORE_TWOBYTEINTS
+				#pragma fourbyteints on
+		#endif
+		#pragma enumsalwaysint on
 #elif PRAGMA_ENUM_OPTIONS
-    #pragma option enum=int
+		#pragma option enum=int
 #elif PRAGMA_ENUM_PACK
-    #if __option(pack_enums)
-        #define __CGGEOMETRY__RESTORE_PACKED_ENUMS
-        #pragma options(!pack_enums)
-    #endif
+		#if __option(pack_enums)
+				#define __CGGEOMETRY__RESTORE_PACKED_ENUMS
+				#pragma options(!pack_enums)
+		#endif
 #endif
 
 /* Points. */
 struct CGPoint {
-  float               x;
-  float               y;
+	float               x;
+	float               y;
 };
 typedef struct CGPoint                  CGPoint;
 /* Sizes. */
 struct CGSize {
-  float               width;
-  float               height;
+	float               width;
+	float               height;
 };
 typedef struct CGSize                   CGSize;
 /* Rectangles. */
 struct CGRect {
-  CGPoint             origin;
-  CGSize              size;
+	CGPoint             origin;
+	CGSize              size;
 };
 typedef struct CGRect                   CGRect;
 /* Rectangle edges. */
 enum CGRectEdge {
-  CGRectMinXEdge                = 0,
-  CGRectMinYEdge                = 1,
-  CGRectMaxXEdge                = 2,
-  CGRectMaxYEdge                = 3
+	CGRectMinXEdge                = 0,
+	CGRectMinYEdge                = 1,
+	CGRectMaxXEdge                = 2,
+	CGRectMaxYEdge                = 3
 };
 typedef enum CGRectEdge CGRectEdge;
 
@@ -90,7 +90,7 @@ typedef enum CGRectEdge CGRectEdge;
 /* The "zero" point -- equivalent to CGPointMake(0, 0). */
 /*
  *  CGPointZero
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -100,7 +100,7 @@ extern const CGPoint CGPointZero;
 /* The "zero" size -- equivalent to CGSizeMake(0, 0). */
 /*
  *  CGSizeZero
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -110,7 +110,7 @@ extern const CGSize CGSizeZero;
 /* The "zero" rectangle -- equivalent to CGRectMake(0, 0, 0, 0). */
 /*
  *  CGRectZero
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -122,7 +122,7 @@ extern const CGRect CGRectZero;
  * same as the zero rect. */
 /*
  *  CGRectNull
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -143,7 +143,7 @@ extern const CGRect CGRectNull;
 /* Make a point from `(x, y)'. */
 /*
  *  CGPointMake()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -151,14 +151,14 @@ extern const CGRect CGRectNull;
  */
 EXTERN_API_C( CGPoint )
 CGPointMake(
-  float   x,
-  float   y);
+	float   x,
+	float   y);
 
 
 /* Make a size from `(width, height)'. */
 /*
  *  CGSizeMake()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -166,14 +166,14 @@ CGPointMake(
  */
 EXTERN_API_C( CGSize )
 CGSizeMake(
-  float   width,
-  float   height);
+	float   width,
+	float   height);
 
 
 /* Make a rect from `(x, y; width, height)'. */
 /*
  *  CGRectMake()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -181,16 +181,16 @@ CGSizeMake(
  */
 EXTERN_API_C( CGRect )
 CGRectMake(
-  float   x,
-  float   y,
-  float   width,
-  float   height);
+	float   x,
+	float   y,
+	float   width,
+	float   height);
 
 
 /* Return the leftmost x-value of `rect'. */
 /*
  *  CGRectGetMinX()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -203,7 +203,7 @@ CGRectGetMinX(CGRect rect);
 /* Return the midpoint x-value of `rect'. */
 /*
  *  CGRectGetMidX()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -216,7 +216,7 @@ CGRectGetMidX(CGRect rect);
 /* Return the rightmost x-value of `rect'. */
 /*
  *  CGRectGetMaxX()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -229,7 +229,7 @@ CGRectGetMaxX(CGRect rect);
 /* Return the bottommost y-value of `rect'. */
 /*
  *  CGRectGetMinY()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -242,7 +242,7 @@ CGRectGetMinY(CGRect rect);
 /* Return the midpoint y-value of `rect'. */
 /*
  *  CGRectGetMidY()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -255,7 +255,7 @@ CGRectGetMidY(CGRect rect);
 /* Return the topmost y-value of `rect'. */
 /*
  *  CGRectGetMaxY()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -268,7 +268,7 @@ CGRectGetMaxY(CGRect rect);
 /* Return the width of `rect'. */
 /*
  *  CGRectGetWidth()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -281,7 +281,7 @@ CGRectGetWidth(CGRect rect);
 /* Return the height of `rect'. */
 /*
  *  CGRectGetHeight()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -294,7 +294,7 @@ CGRectGetHeight(CGRect rect);
 /* Return 1 if `point1' and `point2' are the same, 0 otherwise. */
 /*
  *  CGPointEqualToPoint()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -302,14 +302,14 @@ CGRectGetHeight(CGRect rect);
  */
 EXTERN_API_C( int )
 CGPointEqualToPoint(
-  CGPoint   point1,
-  CGPoint   point2);
+	CGPoint   point1,
+	CGPoint   point2);
 
 
 /* Return 1 if `size1' and `size2' are the same, 0 otherwise. */
 /*
  *  CGSizeEqualToSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -317,14 +317,14 @@ CGPointEqualToPoint(
  */
 EXTERN_API_C( int )
 CGSizeEqualToSize(
-  CGSize   size1,
-  CGSize   size2);
+	CGSize   size1,
+	CGSize   size2);
 
 
 /* Return 1 if `rect1' and `rect2' are the same, 0 otherwise. */
 /*
  *  CGRectEqualToRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -332,15 +332,15 @@ CGSizeEqualToSize(
  */
 EXTERN_API_C( int )
 CGRectEqualToRect(
-  CGRect   rect1,
-  CGRect   rect2);
+	CGRect   rect1,
+	CGRect   rect2);
 
 
 /* Standardize `rect' -- i.e., convert it to an equivalent rect which has
  * positive width and height. */
 /*
  *  CGRectStandardize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -354,7 +354,7 @@ CGRectStandardize(CGRect rect);
  * null rect is defined to be empty. */
 /*
  *  CGRectIsEmpty()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -368,7 +368,7 @@ CGRectIsEmpty(CGRect rect);
  * disjoint rectangles is a null rect. */
 /*
  *  CGRectIsNull()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -382,7 +382,7 @@ CGRectIsNull(CGRect rect);
  * decrease its size by `(2*dx, 2*dy)'. */
 /*
  *  CGRectInset()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -390,16 +390,16 @@ CGRectIsNull(CGRect rect);
  */
 EXTERN_API_C( CGRect )
 CGRectInset(
-  CGRect   rect,
-  float    dx,
-  float    dy);
+	CGRect   rect,
+	float    dx,
+	float    dy);
 
 
 /* Expand `rect' to the smallest rect containing it with integral origin
  * and size. */
 /*
  *  CGRectIntegral()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -412,7 +412,7 @@ CGRectIntegral(CGRect rect);
 /* Return the union of `r1' and `r2'. */
 /*
  *  CGRectUnion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -420,15 +420,15 @@ CGRectIntegral(CGRect rect);
  */
 EXTERN_API_C( CGRect )
 CGRectUnion(
-  CGRect   r1,
-  CGRect   r2);
+	CGRect   r1,
+	CGRect   r2);
 
 
 /* Return the intersection of `r1' and `r2'.  This may return a null
  * rect. */
 /*
  *  CGRectIntersection()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -436,14 +436,14 @@ CGRectUnion(
  */
 EXTERN_API_C( CGRect )
 CGRectIntersection(
-  CGRect   r1,
-  CGRect   r2);
+	CGRect   r1,
+	CGRect   r2);
 
 
 /* Offset `rect' by `(dx, dy)'. */
 /*
  *  CGRectOffset()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -451,9 +451,9 @@ CGRectIntersection(
  */
 EXTERN_API_C( CGRect )
 CGRectOffset(
-  CGRect   rect,
-  float    dx,
-  float    dy);
+	CGRect   rect,
+	float    dx,
+	float    dy);
 
 
 /* Make two new rectangles, `slice' and `remainder', by dividing `rect'
@@ -463,7 +463,7 @@ CGRectOffset(
  * measures the distance from the specified edge. */
 /*
  *  CGRectDivide()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -471,17 +471,17 @@ CGRectOffset(
  */
 EXTERN_API_C( void )
 CGRectDivide(
-  CGRect       rect,
-  CGRect *     slice,
-  CGRect *     remainder,
-  float        amount,
-  CGRectEdge   edge);
+	CGRect       rect,
+	CGRect *     slice,
+	CGRect *     remainder,
+	float        amount,
+	CGRectEdge   edge);
 
 
 /* Return 1 if `point' is contained in `rect', 0 otherwise. */
 /*
  *  CGRectContainsPoint()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -489,8 +489,8 @@ CGRectDivide(
  */
 EXTERN_API_C( int )
 CGRectContainsPoint(
-  CGRect    rect,
-  CGPoint   point);
+	CGRect    rect,
+	CGPoint   point);
 
 
 /* Return 1 if `rect2' is contained in `rect1', 0 otherwise.  `rect2' is
@@ -498,7 +498,7 @@ CGRectContainsPoint(
  * `rect1'. */
 /*
  *  CGRectContainsRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -506,8 +506,8 @@ CGRectContainsPoint(
  */
 EXTERN_API_C( int )
 CGRectContainsRect(
-  CGRect   rect1,
-  CGRect   rect2);
+	CGRect   rect1,
+	CGRect   rect2);
 
 
 /* Return 1 if `rect1' intersects `rect2', 0 otherwise.  `rect1' intersects
@@ -515,7 +515,7 @@ CGRectContainsRect(
  * rect. */
 /*
  *  CGRectIntersectsRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -523,30 +523,30 @@ CGRectContainsRect(
  */
 EXTERN_API_C( int )
 CGRectIntersectsRect(
-  CGRect   rect1,
-  CGRect   rect2);
+	CGRect   rect1,
+	CGRect   rect2);
 
 
 
 
 
 #if PRAGMA_ENUM_ALWAYSINT
-    #pragma enumsalwaysint reset
-    #ifdef __CGGEOMETRY__RESTORE_TWOBYTEINTS
-        #pragma fourbyteints off
-    #endif
+		#pragma enumsalwaysint reset
+		#ifdef __CGGEOMETRY__RESTORE_TWOBYTEINTS
+				#pragma fourbyteints off
+		#endif
 #elif PRAGMA_ENUM_OPTIONS
-    #pragma option enum=reset
+		#pragma option enum=reset
 #elif defined(__CGGEOMETRY__RESTORE_PACKED_ENUMS)
-    #pragma options(pack_enums)
+		#pragma options(pack_enums)
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+		#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+		#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+		#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -560,4 +560,3 @@ CGRectIntersectsRect(
 #endif
 
 #endif /* CGGEOMETRY_H_ */
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -14,7 +14,7 @@
 #include "weapon_csbase.h"
 
 #define CHRISTMAS_MODEL "models/items/cs_gift.mdl"
-												  
+
 LINK_ENTITY_TO_CLASS( holiday_gift, CHolidayGift );
 PRECACHE_WEAPON_REGISTER( holiday_gift );
 
@@ -22,7 +22,7 @@ PRECACHE_WEAPON_REGISTER( holiday_gift );
 CHolidayGift* CHolidayGift::Create( const Vector &position, const QAngle &angles, const QAngle &eyeAngles, const Vector &velocity, CBaseCombatCharacter *pOwner )
 {
 	CHolidayGift *pGift = (CHolidayGift*)CBaseEntity::Create( "holiday_gift", position, angles, pOwner );
-	
+
 	if ( pGift )
 	{
 		pGift->AddSpawnFlags( SF_NORESPAWN );
@@ -71,7 +71,7 @@ void CHolidayGift::Precache()
 
 //-----------------------------------------------------------------------------
 void CHolidayGift::Spawn( void )
-{ 
+{
 	BaseClass::Spawn();
 
 	SetModel( CHRISTMAS_MODEL );

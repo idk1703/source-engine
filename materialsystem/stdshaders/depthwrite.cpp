@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -80,7 +80,7 @@ BEGIN_VS_SHADER_FLAGS( DepthWrite, "Help for Depth Write", SHADER_NOT_EDITABLE )
 				SET_STATIC_VERTEX_SHADER_COMBO( ONLY_PROJECT_POSITION, !bAlphaClip && IsX360() && !nColorDepth ); //360 needs to know if it *shouldn't* output texture coordinates to avoid shader patches
 				SET_STATIC_VERTEX_SHADER_COMBO( COLOR_DEPTH, nColorDepth );
 				SET_STATIC_VERTEX_SHADER( depthwrite_vs20 );
-				
+
 				if ( bAlphaClip || g_pHardwareConfig->PlatformRequiresNonNullPixelShaders() || nColorDepth )
 				{
 					if( bAlphaClip )
@@ -195,7 +195,7 @@ BEGIN_VS_SHADER_FLAGS( DepthWrite, "Help for Depth Write", SHADER_NOT_EDITABLE )
 			// set up arbitrary far planes, as the real ones are too far ( 30,000 )
 //			pShaderAPI->SetPSNearAndFarZ( 1 );
 			vParms.x = 7.0f;		// arbitrary near
-			vParms.y = 4000.0f;		// arbitrary far 
+			vParms.y = 4000.0f;		// arbitrary far
 			vParms.z = 0.0f;
 			vParms.w = 0.0f;
 			pShaderAPI->SetPixelShaderConstant( 1, vParms.Base(), 2 );

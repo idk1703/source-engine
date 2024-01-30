@@ -1073,7 +1073,7 @@ L 07/22/1999 - 19:16:01: "skater[224]<50>" activated the goal "func_door 14"
 L 07/22/1999 - 19:16:04: "Player<53>" changed class to "Spy"
 L 07/22/1999 - 19:16:04: "Player<53>" activated the goal "info_player_teamspawn"
 L 07/22/1999 - 19:16:13: =------= MATCH RESULTS =------=
-L 07/22/1999 - 19:16:13: "blue" defeated "red" 
+L 07/22/1999 - 19:16:13: "blue" defeated "red"
 L 07/22/1999 - 19:16:13: "blue" RESULTS: "1" players. "168" frags, "1" unaccounted for. "110" team score. Allies:
 L 07/22/1999 - 19:16:13: "red" RESULTS: "2" players. "96" frags, "2" unaccounted for. "80" team score. Allies:
 L 07/22/1999 - 19:16:19: Log closed.

@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose: Bullseyes act as targets for other NPC's to attack and to trigger
-//			events 
+//			events
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -112,7 +112,7 @@ BEGIN_DATADESC( CNPC_EnemyFinder )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_EnemyFinder::InitCustomSchedules( void )
 {
@@ -143,7 +143,7 @@ void CNPC_EnemyFinder::InputTurnOff( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_EnemyFinder::Precache( void )
 {
@@ -152,7 +152,7 @@ void CNPC_EnemyFinder::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -168,7 +168,7 @@ void CNPC_EnemyFinder::Spawn( void )
 	SetBloodColor( DONT_BLEED );
 	SetGravity( 0.0 );
 	m_iHealth			= 1;
-	
+
 	AddFlag( FL_NPC );
 
 	SetSolid( SOLID_NONE );
@@ -207,8 +207,8 @@ void CNPC_EnemyFinder::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 int CNPC_EnemyFinder::SelectSchedule( void )
 {
@@ -244,7 +244,7 @@ bool CNPC_EnemyFinder::FVisible( CBaseEntity *pTarget, int traceMask, CBaseEntit
 	if ( !HasSpawnFlags(SF_ENEMY_FINDER_APC_VIS) )
 	{
 		bool bIsVisible = BaseClass::FVisible( pTarget, traceMask, ppBlocker );
-		
+
 		if ( bIsVisible && pTarget == m_PlayerFreePass.GetPassTarget() )
 			bIsVisible = m_PlayerFreePass.ShouldAllowFVisible( bIsVisible );
 
@@ -254,7 +254,7 @@ bool CNPC_EnemyFinder::FVisible( CBaseEntity *pTarget, int traceMask, CBaseEntit
 	// Make sure I can see the target from my position
 	trace_t tr;
 
-	// Trace from launch position to target position.  
+	// Trace from launch position to target position.
 	// Use position above actual barral based on vertical launch speed
 	Vector vStartPos = GetAbsOrigin();
 	Vector vEndPos	 = pTarget->EyePosition();
@@ -307,7 +307,7 @@ bool CNPC_EnemyFinder::IsValidEnemy( CBaseEntity *pTarget )
 	if ( GetSenses()->DidSeeEntity( pTarget ) )
 		return true;
 
-	// Trace from launch position to target position.  
+	// Trace from launch position to target position.
 	// Use position above actual barral based on vertical launch speed
 	Vector vStartPos = GetAbsOrigin();
 	Vector vEndPos	 = pTarget->EyePosition();
@@ -340,7 +340,7 @@ bool CNPC_EnemyFinder::IsValidEnemy( CBaseEntity *pTarget )
 //------------------------------------------------------------------------------
 void CNPC_EnemyFinder::StartNPC ( void )
 {
-	AddSpawnFlags(SF_NPC_FALL_TO_GROUND);	// this prevents CAI_BaseNPC from slamming the finder to 
+	AddSpawnFlags(SF_NPC_FALL_TO_GROUND);	// this prevents CAI_BaseNPC from slamming the finder to
 											// the ground just because it's not MOVETYPE_FLY
 	BaseClass::StartNPC();
 
@@ -369,7 +369,7 @@ void CNPC_EnemyFinder::PrescheduleThink()
 	BaseClass::PrescheduleThink();
 
 	bool bHasEnemies = GetEnemies()->NumEnemies() > 0;
-	
+
 	if ( GetEnemies()->NumEnemies() > 0 )
 	{
 		//If I haven't seen my enemy in half a second then we'll assume he's gone.
@@ -389,7 +389,7 @@ void CNPC_EnemyFinder::PrescheduleThink()
 		{
 			m_OnLostEnemies.FireOutput( this, this );
 		}
-		
+
 		m_bEnemyStatus = bHasEnemies;
 	}
 
@@ -415,7 +415,7 @@ bool CNPC_EnemyFinder::ShouldAlwaysThink()
 {
 	if ( BaseClass::ShouldAlwaysThink() )
 		return true;
-		
+
 	CBasePlayer *pPlayer = AI_GetSinglePlayer();
 	if ( pPlayer && IRelationType( pPlayer ) == D_HT )
 	{
@@ -425,12 +425,12 @@ bool CNPC_EnemyFinder::ShouldAlwaysThink()
 		{
 			if ( !FBitSet( m_spawnflags, SF_ENEMY_FINDER_CHECK_VIS) )
 				return true;
-				
+
 			if ( playerDistSqr <= Square( 50 * 12 ) )
 				return true;
 		}
 	}
-	
+
 	return false;
 }
 
@@ -447,10 +447,10 @@ void CNPC_EnemyFinder::GatherConditions()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 Class_T	CNPC_EnemyFinder::Classify( void )
 {
@@ -494,7 +494,7 @@ ConVar  ai_ef_hate_npc_frequency( "ai_ef_hate_npc_frequency", "5" );
 ConVar  ai_ef_hate_npc_duration( "ai_ef_hate_npc_duration", "1.5" );
 
 //-----------------------------------------------------------------------------
-// Derived class with a few changes that make the Combine Cannon behave the 
+// Derived class with a few changes that make the Combine Cannon behave the
 // way we want.
 //-----------------------------------------------------------------------------
 #define EF_COMBINE_CANNON_HATE_TIME_INVALID -1
@@ -554,7 +554,7 @@ void CNPC_EnemyFinderCombineCannon::Spawn()
 
 		if( pSnapToEnt != NULL )
 		{
-			//!!!HACKHACK - this eight-inch offset puts this enemyfinder perfectly on-bore 
+			//!!!HACKHACK - this eight-inch offset puts this enemyfinder perfectly on-bore
 			// with the prefab for a func_tank_combinecannon
 			UTIL_SetOrigin( this, pSnapToEnt->WorldSpaceCenter() + Vector( 0, 0, 8) );
 		}
@@ -567,7 +567,7 @@ void CNPC_EnemyFinderCombineCannon::Spawn()
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CNPC_EnemyFinderCombineCannon::Activate() 
+void CNPC_EnemyFinderCombineCannon::Activate()
 {
 	BaseClass::Activate();
 
@@ -581,7 +581,7 @@ void CNPC_EnemyFinderCombineCannon::Activate()
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CNPC_EnemyFinderCombineCannon::UpdateOnRemove() 
+void CNPC_EnemyFinderCombineCannon::UpdateOnRemove()
 {
 	BaseClass::UpdateOnRemove();
 
@@ -603,7 +603,7 @@ bool CNPC_EnemyFinderCombineCannon::FVisible( CBaseEntity *pEntity, int traceMas
 
 	if(ppBlocker == NULL)
 	{
-		// Whoever called this didn't care about the blocker, but we do. 
+		// Whoever called this didn't care about the blocker, but we do.
 		// So substitute our local pBlocker pointer and don't disturb ppBlocker
 		result = BaseClass::FVisible( pEntity, traceMask, &pBlocker );
 	}
@@ -617,15 +617,15 @@ bool CNPC_EnemyFinderCombineCannon::FVisible( CBaseEntity *pEntity, int traceMas
 
 	if(pEntity->IsPlayer() && result == false)
 	{
-		// IF we are trying to see the player, but we don't, examine the blocker 
+		// IF we are trying to see the player, but we don't, examine the blocker
 		// and see the player anyway if we can hurt the blocker.
 		if(pBlocker != NULL)
 		{
 			if( pBlocker->m_takedamage >= DAMAGE_YES ) // also DAMAGE_AIM
 			{
 				// Anytime the line of sight is blocked by something I can hurt, I have line of sight.
-				// This will make the func_tank_combinecannon shoot the blocking object. This will 
-				// continue until the gun bores through to the player or clears all interposing breakables 
+				// This will make the func_tank_combinecannon shoot the blocking object. This will
+				// continue until the gun bores through to the player or clears all interposing breakables
 				// and finds its progress impeded by something truly solid. So lie, and say we CAN see the player.
 				result = true;
 			}
@@ -641,7 +641,7 @@ bool CNPC_EnemyFinderCombineCannon::FVisible( CBaseEntity *pEntity, int traceMas
 //			Go through short periods of time where NPCs may distract me
 //
 //			ALSO- ignore NPC's (focus only on the player) when I'm in
-//			wide viewcone mode. 
+//			wide viewcone mode.
 //-----------------------------------------------------------------------------
 bool CNPC_EnemyFinderCombineCannon::IsValidEnemy( CBaseEntity *pTarget )
 {
@@ -690,8 +690,8 @@ bool CNPC_EnemyFinderCombineCannon::IsValidEnemy( CBaseEntity *pTarget )
 		}
 
 		// The base class wants to call this a valid enemy. We may choose to interfere
-		// If the player is in my viewcone. That means that my func_tank could potentially 
-		// harass the player. This means I should meter the time I spend shooting at npcs 
+		// If the player is in my viewcone. That means that my func_tank could potentially
+		// harass the player. This means I should meter the time I spend shooting at npcs
 		// NPCs so that I can focus on the player.
 		if( m_flTimeStopHateNPC != EF_COMBINE_CANNON_HATE_TIME_INVALID )
 		{

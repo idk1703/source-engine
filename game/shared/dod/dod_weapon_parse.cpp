@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -61,13 +61,13 @@ void CDODWeaponInfo::Parse( KeyValues *pKeyValuesData, const char *szWeaponName 
 	m_flIdleInterval		= pKeyValuesData->GetFloat( "IdleInterval", 1.0 );
 	m_bCanDrop				= ( pKeyValuesData->GetInt( "CanDrop", 1 ) > 0 );
 	m_iBulletsPerShot		= pKeyValuesData->GetInt( "BulletsPerShot", 1 );
-	
+
 	m_iHudClipHeight		= pKeyValuesData->GetInt( "HudClipHeight", 0 );
 	m_iHudClipBaseHeight	= pKeyValuesData->GetInt( "HudClipBaseHeight", 0 );
 	m_iHudClipBulletHeight	= pKeyValuesData->GetInt( "HudClipBulletHeight", 0 );
 
 	m_iAmmoPickupClips		= pKeyValuesData->GetInt( "AmmoPickupClips", 2 );
-	
+
 	m_iDefaultAmmoClips		= pKeyValuesData->GetInt( "DefaultAmmoClips", 0 );
 
 	m_flViewModelFOV		= pKeyValuesData->GetFloat( "ViewModelFOV", 90.0f );
@@ -79,12 +79,12 @@ void CDODWeaponInfo::Parse( KeyValues *pKeyValuesData, const char *szWeaponName 
 //	Q_strncpy( m_szReloadAnimPrefix, pKeyValuesData->GetString( "reload_anim_prefix", "" ), MAX_WEAPON_PREFIX );
 
 	m_flBotAudibleRange = pKeyValuesData->GetFloat( "BotAudibleRange", 2000.0f );
-	
+
 	m_iTracerType = pKeyValuesData->GetInt( "Tracer", 0 );
 
 	//Weapon Type
 	const char *pTypeString = pKeyValuesData->GetString( "WeaponType", NULL );
-	
+
 	m_WeaponType = WPN_TYPE_UNKNOWN;
 	if ( !pTypeString )
 	{
@@ -192,4 +192,3 @@ void CDODWeaponInfo::Parse( KeyValues *pKeyValuesData, const char *szWeaponName 
 		}
 	}
 }
-

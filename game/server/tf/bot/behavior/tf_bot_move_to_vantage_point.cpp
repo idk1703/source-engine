@@ -86,5 +86,3 @@ EventDesiredResult< CTFBot > CTFBotMoveToVantagePoint::OnMoveToFailure( CTFBot *
 	m_path.Invalidate();
 	return TryContinue();
 }
-
-

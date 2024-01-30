@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,7 +15,7 @@
 #define NUM_MAX_SLOTS	1
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemSlotPanel::CItemSlotPanel( vgui::Panel *parent )
 	: CBaseLoadoutPanel( parent, "item_slot_panel" )
@@ -27,7 +27,7 @@ CItemSlotPanel::CItemSlotPanel( vgui::Panel *parent )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemSlotPanel::~CItemSlotPanel()
 {
@@ -35,7 +35,7 @@ CItemSlotPanel::~CItemSlotPanel()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSlotPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -46,7 +46,7 @@ void CItemSlotPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSlotPanel::PerformLayout( void )
 {
@@ -73,7 +73,7 @@ void CItemSlotPanel::PerformLayout( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSlotPanel::OnItemPanelMouseReleased( vgui::Panel *panel )
 {
@@ -94,7 +94,7 @@ void CItemSlotPanel::OnItemPanelMouseReleased( vgui::Panel *panel )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSlotPanel::OnSelectionReturned( KeyValues *data )
 {
@@ -145,7 +145,7 @@ void CItemSlotPanel::OnSelectionReturned( KeyValues *data )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSlotPanel::OnCancelSelection( void )
 {
@@ -159,7 +159,7 @@ void CItemSlotPanel::OnCancelSelection( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSlotPanel::OnCommand( const char *command )
 {
@@ -203,7 +203,7 @@ void CItemSlotPanel::OnCommand( const char *command )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSlotPanel::UpdateModelPanels( void )
 {
@@ -217,13 +217,13 @@ void CItemSlotPanel::UpdateModelPanels( void )
 		SetBorderForItem( m_pItemModelPanels[i], false );
 	}
 
-	// Now layout again to position our item buttons 
+	// Now layout again to position our item buttons
 	InvalidateLayout();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CItemSlotPanel::GetNumItemPanels( void )
 {
@@ -232,7 +232,7 @@ int CItemSlotPanel::GetNumItemPanels( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSlotPanel::OnShowPanel( bool bVisible, bool bReturningFromArmory )
 {
@@ -249,7 +249,7 @@ void CItemSlotPanel::OnShowPanel( bool bVisible, bool bReturningFromArmory )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSlotPanel::AddNewItemPanel( int iPanelIndex )
 {
@@ -260,7 +260,7 @@ void CItemSlotPanel::AddNewItemPanel( int iPanelIndex )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSlotPanel::SetItem( CEconItem* pItem )
 {

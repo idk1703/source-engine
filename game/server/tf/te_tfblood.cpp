@@ -33,8 +33,8 @@ public:
 static CTETFBlood g_TETFBlood( "TFBlood" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTETFBlood::CTETFBlood( const char *name ) :
 	CBaseTempEntity( name )

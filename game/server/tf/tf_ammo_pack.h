@@ -13,7 +13,7 @@
 #include "items.h"
 
 typedef enum
-{	
+{
 	AP_NORMAL = 0,
 	AP_HALLOWEEN,
 	AP_CHRISTMAS,
@@ -32,7 +32,7 @@ public:
 	}
 
 	virtual void Spawn();
-	virtual void Precache();		
+	virtual void Precache();
 
 	void EXPORT DropSoundThink( void );
 	void EXPORT FlyThink( void );

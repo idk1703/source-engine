@@ -36,13 +36,13 @@ class INextBotEventResponder
 {
 public:
 	DECLARE_CLASS_NOBASE( INextBotEventResponder );
-	
+
 	virtual ~INextBotEventResponder() { }
-	
+
 	// these methods are used by derived classes to define how events propagate
 	virtual INextBotEventResponder *FirstContainedResponder( void ) const  { return NULL; }
 	virtual INextBotEventResponder *NextContainedResponder( INextBotEventResponder *current ) const { return NULL; }
-	
+
 	//
 	// Events.  All events must be 'extended' by calling the derived class explicitly to ensure propagation.
 	// Each event must implement its propagation in this interface class.
@@ -77,7 +77,7 @@ public:
 
 	virtual void OnNavAreaChanged( CNavArea *newArea, CNavArea *oldArea );	// when bot enters a new navigation area
 
-	virtual void OnModelChanged( void );					// when the entity's model has been changed	
+	virtual void OnModelChanged( void );					// when the entity's model has been changed
 
 	virtual void OnPickUp( CBaseEntity *item, CBaseCombatCharacter *giver );	// when something is added to our inventory
 	virtual void OnDrop( CBaseEntity *item );									// when something is removed from our inventory
@@ -126,7 +126,7 @@ inline void INextBotEventResponder::OnLeaveGround( CBaseEntity *ground )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnLeaveGround( ground );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnLandOnGround( CBaseEntity *ground )
@@ -134,7 +134,7 @@ inline void INextBotEventResponder::OnLandOnGround( CBaseEntity *ground )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnLandOnGround( ground );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnContact( CBaseEntity *other, CGameTrace *result )
@@ -142,7 +142,7 @@ inline void INextBotEventResponder::OnContact( CBaseEntity *other, CGameTrace *r
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnContact( other, result );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnMoveToSuccess( const Path *path )
@@ -150,7 +150,7 @@ inline void INextBotEventResponder::OnMoveToSuccess( const Path *path )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnMoveToSuccess( path );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnMoveToFailure( const Path *path, MoveToFailureType reason )
@@ -158,7 +158,7 @@ inline void INextBotEventResponder::OnMoveToFailure( const Path *path, MoveToFai
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnMoveToFailure( path, reason );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnStuck( void )
@@ -166,7 +166,7 @@ inline void INextBotEventResponder::OnStuck( void )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnStuck();
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnUnStuck( void )
@@ -174,7 +174,7 @@ inline void INextBotEventResponder::OnUnStuck( void )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnUnStuck();
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnPostureChanged( void )
@@ -182,7 +182,7 @@ inline void INextBotEventResponder::OnPostureChanged( void )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnPostureChanged();
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnAnimationActivityComplete( int activity )
@@ -190,7 +190,7 @@ inline void INextBotEventResponder::OnAnimationActivityComplete( int activity )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnAnimationActivityComplete( activity );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnAnimationActivityInterrupted( int activity )
@@ -198,7 +198,7 @@ inline void INextBotEventResponder::OnAnimationActivityInterrupted( int activity
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnAnimationActivityInterrupted( activity );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnAnimationEvent( animevent_t *event )
@@ -206,7 +206,7 @@ inline void INextBotEventResponder::OnAnimationEvent( animevent_t *event )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnAnimationEvent( event );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnIgnite( void )
@@ -214,7 +214,7 @@ inline void INextBotEventResponder::OnIgnite( void )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnIgnite();
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnInjured( const CTakeDamageInfo &info )
@@ -222,7 +222,7 @@ inline void INextBotEventResponder::OnInjured( const CTakeDamageInfo &info )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnInjured( info );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnKilled( const CTakeDamageInfo &info )
@@ -230,7 +230,7 @@ inline void INextBotEventResponder::OnKilled( const CTakeDamageInfo &info )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnKilled( info );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnOtherKilled( CBaseCombatCharacter *victim, const CTakeDamageInfo &info )
@@ -238,7 +238,7 @@ inline void INextBotEventResponder::OnOtherKilled( CBaseCombatCharacter *victim,
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnOtherKilled( victim, info );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnSight( CBaseEntity *subject )
@@ -246,7 +246,7 @@ inline void INextBotEventResponder::OnSight( CBaseEntity *subject )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnSight( subject );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnLostSight( CBaseEntity *subject )
@@ -254,7 +254,7 @@ inline void INextBotEventResponder::OnLostSight( CBaseEntity *subject )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnLostSight( subject );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnSound( CBaseEntity *source, const Vector &pos, KeyValues *keys )
@@ -262,7 +262,7 @@ inline void INextBotEventResponder::OnSound( CBaseEntity *source, const Vector &
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnSound( source, pos, keys );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnSpokeConcept( CBaseCombatCharacter *who, AIConcept_t concept, AI_Response *response )
@@ -270,7 +270,7 @@ inline void INextBotEventResponder::OnSpokeConcept( CBaseCombatCharacter *who, A
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnSpokeConcept( who, concept, response );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnWeaponFired( CBaseCombatCharacter *whoFired, CBaseCombatWeapon *weapon )
@@ -278,7 +278,7 @@ inline void INextBotEventResponder::OnWeaponFired( CBaseCombatCharacter *whoFire
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnWeaponFired( whoFired, weapon );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnNavAreaChanged( CNavArea *newArea, CNavArea *oldArea )
@@ -286,7 +286,7 @@ inline void INextBotEventResponder::OnNavAreaChanged( CNavArea *newArea, CNavAre
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnNavAreaChanged( newArea, oldArea );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnModelChanged( void )
@@ -294,7 +294,7 @@ inline void INextBotEventResponder::OnModelChanged( void )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnModelChanged();
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnPickUp( CBaseEntity *item, CBaseCombatCharacter *giver )
@@ -302,7 +302,7 @@ inline void INextBotEventResponder::OnPickUp( CBaseEntity *item, CBaseCombatChar
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnPickUp( item, giver );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnDrop( CBaseEntity *item )
@@ -310,7 +310,7 @@ inline void INextBotEventResponder::OnDrop( CBaseEntity *item )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnDrop( item );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnActorEmoted( CBaseCombatCharacter *emoter, int emote )
@@ -318,7 +318,7 @@ inline void INextBotEventResponder::OnActorEmoted( CBaseCombatCharacter *emoter,
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnActorEmoted( emoter, emote );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnShoved( CBaseEntity *pusher )
@@ -326,7 +326,7 @@ inline void INextBotEventResponder::OnShoved( CBaseEntity *pusher )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnShoved( pusher );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnBlinded( CBaseEntity *blinder )
@@ -334,7 +334,7 @@ inline void INextBotEventResponder::OnBlinded( CBaseEntity *blinder )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnBlinded( blinder );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnCommandAttack( CBaseEntity *victim )
@@ -342,7 +342,7 @@ inline void INextBotEventResponder::OnCommandAttack( CBaseEntity *victim )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnCommandAttack( victim );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnCommandApproach( const Vector &pos, float range )
@@ -350,7 +350,7 @@ inline void INextBotEventResponder::OnCommandApproach( const Vector &pos, float 
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnCommandApproach( pos, range );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnCommandApproach( CBaseEntity *goal )
@@ -358,7 +358,7 @@ inline void INextBotEventResponder::OnCommandApproach( CBaseEntity *goal )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnCommandApproach( goal );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnCommandRetreat( CBaseEntity *threat, float range )
@@ -366,7 +366,7 @@ inline void INextBotEventResponder::OnCommandRetreat( CBaseEntity *threat, float
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnCommandRetreat( threat, range );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnCommandPause( float duration )
@@ -374,7 +374,7 @@ inline void INextBotEventResponder::OnCommandPause( float duration )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnCommandPause( duration );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnCommandResume( void )
@@ -382,7 +382,7 @@ inline void INextBotEventResponder::OnCommandResume( void )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnCommandResume();
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnCommandString( const char *command )
@@ -390,7 +390,7 @@ inline void INextBotEventResponder::OnCommandString( const char *command )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnCommandString( command );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnTerritoryContested( int territoryID )
@@ -398,7 +398,7 @@ inline void INextBotEventResponder::OnTerritoryContested( int territoryID )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnTerritoryContested( territoryID );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnTerritoryCaptured( int territoryID )
@@ -406,7 +406,7 @@ inline void INextBotEventResponder::OnTerritoryCaptured( int territoryID )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnTerritoryCaptured( territoryID );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnTerritoryLost( int territoryID )
@@ -414,7 +414,7 @@ inline void INextBotEventResponder::OnTerritoryLost( int territoryID )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnTerritoryLost( territoryID );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnWin( void )
@@ -422,7 +422,7 @@ inline void INextBotEventResponder::OnWin( void )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnWin();
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnLose( void )
@@ -430,7 +430,7 @@ inline void INextBotEventResponder::OnLose( void )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnLose();
-	}	
+	}
 }
 
 #ifdef DOTA_SERVER_DLL
@@ -455,7 +455,7 @@ inline void INextBotEventResponder::OnCommandAttack( CBaseEntity *victim, bool b
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnCommandAttack( victim, bDeny );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnCastAbilityNoTarget( CDOTABaseAbility *ability )
@@ -463,7 +463,7 @@ inline void INextBotEventResponder::OnCastAbilityNoTarget( CDOTABaseAbility *abi
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnCastAbilityNoTarget( ability );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnCastAbilityOnPosition( CDOTABaseAbility *ability, const Vector &pos )
@@ -471,7 +471,7 @@ inline void INextBotEventResponder::OnCastAbilityOnPosition( CDOTABaseAbility *a
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnCastAbilityOnPosition( ability, pos );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnCastAbilityOnTarget( CDOTABaseAbility *ability, CBaseEntity *target )
@@ -479,7 +479,7 @@ inline void INextBotEventResponder::OnCastAbilityOnTarget( CDOTABaseAbility *abi
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnCastAbilityOnTarget( ability, target );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnDropItem( const Vector &pos, CBaseEntity *item )
@@ -487,7 +487,7 @@ inline void INextBotEventResponder::OnDropItem( const Vector &pos, CBaseEntity *
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnDropItem( pos, item );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnPickupItem( CBaseEntity *item )
@@ -495,7 +495,7 @@ inline void INextBotEventResponder::OnPickupItem( CBaseEntity *item )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnPickupItem( item );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnPickupRune( CBaseEntity *item )
@@ -503,7 +503,7 @@ inline void INextBotEventResponder::OnPickupRune( CBaseEntity *item )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnPickupRune( item );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnStop()
@@ -511,7 +511,7 @@ inline void INextBotEventResponder::OnStop()
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnStop();
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnFriendThreatened( CBaseEntity *friendly, CBaseEntity *threat )
@@ -519,7 +519,7 @@ inline void INextBotEventResponder::OnFriendThreatened( CBaseEntity *friendly, C
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnFriendThreatened( friendly, threat );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnCancelAttack( CBaseEntity *pTarget )
@@ -527,7 +527,7 @@ inline void INextBotEventResponder::OnCancelAttack( CBaseEntity *pTarget )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnCancelAttack( pTarget );
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnDominated()
@@ -535,7 +535,7 @@ inline void INextBotEventResponder::OnDominated()
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnDominated();
-	}	
+	}
 }
 
 inline void INextBotEventResponder::OnWarped( Vector vStartPos )
@@ -543,7 +543,7 @@ inline void INextBotEventResponder::OnWarped( Vector vStartPos )
 	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 	{
 		sub->OnWarped( vStartPos );
-	}	
+	}
 }
 #endif
 

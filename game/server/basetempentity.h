@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -18,7 +18,7 @@
 
 #include "edict.h"
 
-// This is the base class for TEMP ENTITIES that use the 
+// This is the base class for TEMP ENTITIES that use the
 //  event system to propagate
 class CBaseTempEntity
 {
@@ -57,7 +57,7 @@ private:
 	// Next in chain
 	CBaseTempEntity		*m_pNext;
 
-	// ConVars add themselves to this list for the executable. Then ConVarMgr::Init() runs through 
+	// ConVars add themselves to this list for the executable. Then ConVarMgr::Init() runs through
 	// all the console variables and registers them.
 	static CBaseTempEntity	*s_pTempEntities;
 };

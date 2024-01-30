@@ -113,4 +113,3 @@ void CTFAbuseReportManager::ActivateSubmitReportUI()
 	Assert( g_AbuseReportDlg.Get() != NULL );
 	g_AbuseReportDlg->MakeModal();
 }
-

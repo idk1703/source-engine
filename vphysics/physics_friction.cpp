@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -109,8 +109,8 @@ IPhysicsObject *CFrictionSnapshot::GetObject( int index )
 	return static_cast<IPhysicsObject *>(pFriction->get_object()->client_data);
 }
 
-void CFrictionSnapshot::MarkContactForDelete() 
-{ 
+void CFrictionSnapshot::MarkContactForDelete()
+{
 	IVP_Synapse_Friction *pFriction = m_pContactPoint->get_synapse(!m_synapseIndex);
 	IVP_Real_Object *pObject = pFriction->get_object();
 	Assert(pObject != m_pObject);
@@ -128,8 +128,8 @@ int CFrictionSnapshot::GetMaterial( int index )
 {
 	IVP_Material *ivpMats[2];
 
-    m_pContactPoint->get_material_info(ivpMats);
-	
+	m_pContactPoint->get_material_info(ivpMats);
+
 	// index 1 is the other one
 	index ^= m_synapseIndex;
 
@@ -138,7 +138,7 @@ int CFrictionSnapshot::GetMaterial( int index )
 
 void CFrictionSnapshot::GetContactPoint( Vector &out )
 {
-	ConvertPositionToHL( *m_pContactPoint->get_contact_point_ws(), out ); 
+	ConvertPositionToHL( *m_pContactPoint->get_contact_point_ws(), out );
 }
 
 void CFrictionSnapshot::GetSurfaceNormal( Vector &out )

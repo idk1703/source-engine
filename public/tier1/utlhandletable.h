@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -131,7 +131,7 @@ void CUtlHandleTable<T, HandleBits>::RemoveHandle( UtlHandle_t handle )
 	entry.m_pData = NULL;
 
 
-	// If a handle has been used this many times, then we need to take it out of service, otherwise if the 
+	// If a handle has been used this many times, then we need to take it out of service, otherwise if the
 	//  serial # wraps around we'll possibly revalidate old handles and they'll start to point at the wrong objects.  Unlikely, but possible.
 	bool bStopUsing = ( entry.m_nSerial >= ( (1 << ( 31 - HandleBits ) ) - 1 ) );
 	if ( !bStopUsing )
@@ -200,7 +200,7 @@ bool CUtlHandleTable<T, HandleBits>::IsHandleValid( UtlHandle_t handle ) const
 	return true;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Current max handle
 //-----------------------------------------------------------------------------
@@ -346,12 +346,12 @@ public:
 
 	// Assignment
 	void Set( T *pObject );
-	void Set( UtlHandle_t h );	
+	void Set( UtlHandle_t h );
 	const CUtlHandle<T> &operator=( UtlHandle_t h );
 	const CUtlHandle<T> &operator=( T *pObject );
 
 	// Retrieval
-	T *Get();					
+	T *Get();
 	const T* Get() const;
 
 	// Is the handle valid?
@@ -408,14 +408,14 @@ CUtlHandle<T>::CUtlHandle( const CUtlHandle<T> &h )
 // Assignment
 //-----------------------------------------------------------------------------
 template< class T >
-void CUtlHandle<T>::Set( T *pObject )	
+void CUtlHandle<T>::Set( T *pObject )
 {
 	// Assumes T has a member function GetHandle
 	m_handle = pObject ? pObject->GetHandle() : UTLHANDLE_INVALID;
 }
 
 template< class T >
-void CUtlHandle<T>::Set( UtlHandle_t h )	
+void CUtlHandle<T>::Set( UtlHandle_t h )
 {
 	m_handle = h;
 }
@@ -450,7 +450,7 @@ bool CUtlHandle<T>::IsValid() const
 // Retrieval
 //-----------------------------------------------------------------------------
 template< class T >
-T *CUtlHandle<T>::Get()					
+T *CUtlHandle<T>::Get()
 {
 	// Assumes T has a static member function GetPtrFromHandle
 	return T::GetPtrFromHandle( m_handle );
@@ -480,9 +480,9 @@ CUtlHandle<T>::operator UtlHandle_t()
 }
 
 template< class T >
-T* CUtlHandle<T>::operator->()					
-{ 
-	return Get(); 
+T* CUtlHandle<T>::operator->()
+{
+	return Get();
 }
 
 template< class T >
@@ -492,8 +492,8 @@ const T* CUtlHandle<T>::operator->() const
 }
 
 template< class T >
-CUtlHandle<T>::operator bool()							
-{ 
+CUtlHandle<T>::operator bool()
+{
 	return m_handle != UTLHANDLE_INVALID;
 }
 
@@ -541,7 +541,7 @@ bool CUtlHandle<T>::operator!=( UtlHandle_t h ) const
 
 
 //-----------------------------------------------------------------------------
-// Add this macro to a class definition to hook in handles for it! 
+// Add this macro to a class definition to hook in handles for it!
 //-----------------------------------------------------------------------------
 #define DECLARE_HANDLES( _className, _handleBitCount )						\
 	public:																	\
@@ -560,10 +560,10 @@ bool CUtlHandle<T>::operator!=( UtlHandle_t h ) const
 	private:																\
 		UtlHandle_t m_Handle;												\
 		static CUtlHandleTable< _className, _handleBitCount > m_HandleTable
-																			
+
 
 //-----------------------------------------------------------------------------
-// Add this macro to a .cpp file  to hook in handles for it! 
+// Add this macro to a .cpp file  to hook in handles for it!
 //-----------------------------------------------------------------------------
 #define IMPLEMENT_HANDLES( _className, _handleBitCount )					\
 	CUtlHandleTable< _className, _handleBitCount > _className::m_HandleTable;
@@ -583,4 +583,3 @@ bool CUtlHandle<T>::operator!=( UtlHandle_t h ) const
 
 
 #endif // UTLHANDLETABLE_H
-

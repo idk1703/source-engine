@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 // Purpose: parses in a text file and returns help strings about key words
 //-----------------------------------------------------------------------------
-class CHelpText 
+class CHelpText
 {
 public:
 	CHelpText(const char *mod);

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -21,7 +21,7 @@ static void PopulateScriptList( HWND wnd )
 		return;
 	}
 
-	SendMessage( control, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( control, CB_RESETCONTENT, 0, 0 );
 
 	int c = soundemitter->GetNumSoundScripts();
 	for ( int i = 0; i < c; i++ )
@@ -42,18 +42,18 @@ static void PopulateScriptList( HWND wnd )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
-static BOOL CALLBACK AddSoundPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )  
+static BOOL CALLBACK AddSoundPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	switch(uMsg)
 	{
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		// Insert code here to put the string (to find and replace with)
 		// into the edit controls.
 		// ...
@@ -76,9 +76,9 @@ static BOOL CALLBACK AddSoundPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPAR
 
 			SetFocus( GetDlgItem( hwndDlg, IDC_SOUNDNAME ) );
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -98,7 +98,7 @@ static BOOL CALLBACK AddSoundPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPAR
 				{
 					if ( !g_Params.m_bAllowExistingSound )
 					{
-						mxMessageBox( NULL, va( "Sound '%s' already exists",	
+						mxMessageBox( NULL, va( "Sound '%s' already exists",
 							g_Params.m_szSoundName ), g_appTitle, MX_MB_OK );
 					}
 					else
@@ -127,14 +127,14 @@ static BOOL CALLBACK AddSoundPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPAR
 				CSoundParametersInternal params;
 				params.SetChannel( CHAN_VOICE );
 				params.SetSoundLevel( SNDLVL_TALKING );
-				
+
 				soundemitter->ExpandSoundNameMacros( params, g_Params.m_szWaveFile );
 				soundemitter->AddSound( g_Params.m_szSoundName, g_Params.m_szScriptName, params );
 
 				EndDialog( hwndDlg, 1 );
 			}
 			break;
-        case IDCANCEL:
+		case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		}
@@ -144,16 +144,16 @@ static BOOL CALLBACK AddSoundPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPAR
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int AddSound( CAddSoundParams *params, HWND parent )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_ADDSOUNDENTRY ),
 		parent,
 		(DLGPROC)AddSoundPropertiesDialogProc );

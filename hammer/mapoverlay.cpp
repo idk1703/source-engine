@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -35,7 +35,7 @@ IMPLEMENT_MAPCLASS( CMapOverlay )
 
 #define OVERLAY_BASIS_U					0
 #define OVERLAY_BASIS_V					1
-#define OVERLAY_BASIS_NORMAL			2	
+#define OVERLAY_BASIS_NORMAL			2
 
 #define OVERLAY_HANDLES_COUNT			4
 
@@ -168,14 +168,14 @@ void CMapOverlay::Basis_SetInitialUAxis( Vector const &vecNormal )
 	// Find the major vector component.
 	int nMajorAxis = 0;
 	float flAxisValue = vecNormal[0];
-	if ( FloatMakePositive( vecNormal[1] ) > FloatMakePositive( flAxisValue ) ) 
-	{ 
-		nMajorAxis = 1; 
-		flAxisValue = vecNormal[1]; 
+	if ( FloatMakePositive( vecNormal[1] ) > FloatMakePositive( flAxisValue ) )
+	{
+		nMajorAxis = 1;
+		flAxisValue = vecNormal[1];
 	}
-	if ( FloatMakePositive( vecNormal[2] ) > FloatMakePositive( flAxisValue ) ) 
-	{ 
-		nMajorAxis = 2; 
+	if ( FloatMakePositive( vecNormal[2] ) > FloatMakePositive( flAxisValue ) )
+	{
+		nMajorAxis = 2;
 	}
 
 	if ( ( nMajorAxis == 1 ) || ( nMajorAxis == 2 ) )
@@ -280,7 +280,7 @@ void CMapOverlay::Basis_BuildFromSideList( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //   Input: iAxis - 0, 1, 2 (u, v, n)
 //          iComponet - 0, 1, 2 (x, y, z)
 //-----------------------------------------------------------------------------
@@ -300,7 +300,7 @@ bool CMapOverlay::Basis_IsFlipped( int iAxis, int iComponent )
 {
 	if ( iAxis < 0 || iAxis > 2 || iComponent < 0 || iComponent > 2 )
 		return false;
-	
+
 	int nValue = ( 1 << iComponent );
 	return ( ( m_Basis.m_nAxesFlip[iAxis] & nValue ) != 0 );
 }
@@ -484,20 +484,20 @@ CMapOverlay::ClipFace_t *CMapOverlay::ClipFace_Create( int nSize )
 		{
 			pClipFace->m_aPoints.SetSize( nSize );
 			pClipFace->m_aDispPointUVs.SetSize( nSize );
-			
+
 			for ( int iCoord = 0; iCoord < NUM_CLIPFACE_TEXCOORDS; iCoord++ )
 			{
 				pClipFace->m_aTexCoords[iCoord].SetSize( nSize );
 			}
 
 			pClipFace->m_aBlends.SetSize( nSize );
-			
+
 			for ( int iPoint = 0; iPoint < nSize; iPoint++ )
 			{
 				pClipFace->m_aPoints[iPoint].Init();
 				pClipFace->m_aDispPointUVs[iPoint].Init();
 				pClipFace->m_aBlends[iPoint].Init();
-				
+
 				for ( int iCoord = 0; iCoord < NUM_CLIPFACE_TEXCOORDS; iCoord++ )
 				{
 					pClipFace->m_aTexCoords[iCoord][iPoint].Init();
@@ -556,16 +556,16 @@ void CMapOverlay::ClipFace_GetBounds( ClipFace_t *pClipFace, Vector &vecMin, Vec
 	if ( pClipFace )
 	{
 		vecMin = vecMax = pClipFace->m_aPoints.Element( 0 );
-		
+
 		for ( int iPoints = 1; iPoints < pClipFace->m_nPointCount; iPoints++ )
 		{
 			Vector vecPoint = pClipFace->m_aPoints.Element( iPoints );
-			
+
 			// Min
 			if ( vecMin.x > vecPoint.x ) { vecMin.x = vecPoint.x; }
 			if ( vecMin.y > vecPoint.y ) { vecMin.y = vecPoint.y; }
 			if ( vecMin.z > vecPoint.z ) { vecMin.z = vecPoint.z; }
-			
+
 			// Max
 			if ( vecMax.x < vecPoint.x ) { vecMax.x = vecPoint.x; }
 			if ( vecMax.y < vecPoint.y ) { vecMax.y = vecPoint.y; }
@@ -698,7 +698,7 @@ void CMapOverlay::ClipFace_Clip( ClipFace_t *pClipFace, cplane_t *pClipPlane, fl
 			pFront->m_aTexCoords[iTexCoord][pFront->m_nPointCount] = vecTexCoord;
 			pBack->m_aTexCoords[iTexCoord][pBack->m_nPointCount] = vecTexCoord;
 		}
-	
+
 		pFront->m_aPoints[pFront->m_nPointCount] = vecPoint;
 		pFront->m_nPointCount++;
 
@@ -788,10 +788,10 @@ void CMapOverlay::ClipFace_ClipBarycentric( ClipFace_t *pClipFace, cplane_t *pCl
 		{
 			pFront->m_aPoints[pFront->m_nPointCount] = pClipFace->m_aPoints[iPoint];
 			pFront->m_aDispPointUVs[pFront->m_nPointCount] = pClipFace->m_aDispPointUVs[iPoint];
-			
+
 			for ( int iTexCoord=0; iTexCoord < NUM_CLIPFACE_TEXCOORDS; iTexCoord++ )
 				pFront->m_aTexCoords[iTexCoord][pFront->m_nPointCount] = pClipFace->m_aTexCoords[iTexCoord][iPoint];
-			
+
 			ClipFace_CopyBlendFrom( pFront, &pClipFace->m_aBlends[iPoint] );
 			pFront->m_nPointCount++;
 
@@ -815,7 +815,7 @@ void CMapOverlay::ClipFace_ClipBarycentric( ClipFace_t *pClipFace, cplane_t *pCl
 
 			for ( int iTexCoord=0; iTexCoord < NUM_CLIPFACE_TEXCOORDS; iTexCoord++ )
 				pBack->m_aTexCoords[iTexCoord][pBack->m_nPointCount] = pClipFace->m_aTexCoords[iTexCoord][iPoint];
-			
+
 			ClipFace_CopyBlendFrom( pBack, &pClipFace->m_aBlends[iPoint] );
 			pBack->m_nPointCount++;
 		}
@@ -843,7 +843,7 @@ void CMapOverlay::ClipFace_ClipBarycentric( ClipFace_t *pClipFace, cplane_t *pCl
 		Vector vecDispPointUV = pClipFace->m_aDispPointUVs[iPoint] + ( pClipFace->m_aDispPointUVs[(iPoint+1)%pClipFace->m_nPointCount] - pClipFace->m_aDispPointUVs[iPoint] ) * fraction;
 
 		Vector2D vecUV, vecTexCoord;
-		PointInQuadToBarycentric( m_pOverlayFace->m_aPoints[0], m_pOverlayFace->m_aPoints[3], 
+		PointInQuadToBarycentric( m_pOverlayFace->m_aPoints[0], m_pOverlayFace->m_aPoints[3],
 			                      m_pOverlayFace->m_aPoints[2], m_pOverlayFace->m_aPoints[1],
 								  vecPoint, vecUV );
 
@@ -852,10 +852,10 @@ void CMapOverlay::ClipFace_ClipBarycentric( ClipFace_t *pClipFace, cplane_t *pCl
 
 		for ( int iTexCoord=0; iTexCoord < NUM_CLIPFACE_TEXCOORDS; iTexCoord++ )
 		{
-			TexCoordInQuadFromBarycentric( m_pOverlayFace->m_aTexCoords[iTexCoord][0], m_pOverlayFace->m_aTexCoords[iTexCoord][3], 
+			TexCoordInQuadFromBarycentric( m_pOverlayFace->m_aTexCoords[iTexCoord][0], m_pOverlayFace->m_aTexCoords[iTexCoord][3],
 										m_pOverlayFace->m_aTexCoords[iTexCoord][2], m_pOverlayFace->m_aTexCoords[iTexCoord][1],
 										vecUV, vecTexCoord );
-			
+
 			pFront->m_aTexCoords[iTexCoord][pFront->m_nPointCount] = vecTexCoord;
 			pBack->m_aTexCoords[iTexCoord][pBack->m_nPointCount] = vecTexCoord;
 		}
@@ -887,12 +887,12 @@ void CMapOverlay::ClipFace_PreClipDisp( ClipFace_t *pClipFace, CMapDisp *pDisp )
 	if ( !pClipFace || !pDisp )
 		return;
 
-	// Transform all of the overlay points into disp uv space. 
+	// Transform all of the overlay points into disp uv space.
 	for ( int iPoint = 0; iPoint < pClipFace->m_nPointCount; iPoint++ )
 	{
 		Vector2D vecTmp;
 		pDisp->BaseFacePlaneToDispUV( pClipFace->m_aPoints[iPoint], vecTmp );
-				
+
 		pClipFace->m_aDispPointUVs[iPoint].x = clamp(vecTmp.x, 0.0f, 1.0f);
 		pClipFace->m_aDispPointUVs[iPoint].y = clamp(vecTmp.y, 0.0f, 1.0f);
 		pClipFace->m_aDispPointUVs[iPoint].z = 0.0f;
@@ -925,11 +925,11 @@ void CMapOverlay::ClipFace_PostClipDisp( void )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-bool CMapOverlay::ClipFace_CalcBarycentricCooefs( CMapDisp *pDisp, Vector2D *pVertsUV, 
+bool CMapOverlay::ClipFace_CalcBarycentricCooefs( CMapDisp *pDisp, Vector2D *pVertsUV,
 												  const Vector2D &vecPointUV, float *pCoefs )
 {
 	// Area in disp UV space is always the same.
-	float flTotalArea = 0.5f;		
+	float flTotalArea = 0.5f;
 	float flOOTotalArea = 1.0f / flTotalArea;
 
 	int nInterval = pDisp->GetWidth();
@@ -967,8 +967,8 @@ bool CMapOverlay::ClipFace_CalcBarycentricCooefs( CMapDisp *pDisp, Vector2D *pVe
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CMapOverlay::ClipFace_ResolveBarycentricClip( CMapDisp *pDisp, ClipFace_t *pClipFace, int iClipFacePoint, 
-										           const Vector2D &vecPointUV, float *pCoefs, 
+void CMapOverlay::ClipFace_ResolveBarycentricClip( CMapDisp *pDisp, ClipFace_t *pClipFace, int iClipFacePoint,
+										           const Vector2D &vecPointUV, float *pCoefs,
 										           int *pTris, Vector2D *pVertsUV )
 {
 	int nInterval = pDisp->GetWidth();
@@ -986,7 +986,7 @@ void CMapOverlay::ClipFace_ResolveBarycentricClip( CMapDisp *pDisp, ClipFace_t *
 			bZeroPoint[iVert] = true;
 		}
 	}
-	
+
 	// Check for points - set to a point.
 	if ( nZeroCount == 2 )
 	{
@@ -1000,7 +1000,7 @@ void CMapOverlay::ClipFace_ResolveBarycentricClip( CMapDisp *pDisp, ClipFace_t *
 			}
 		}
 	}
-	
+
 	// Check for edges - setup edge blend.
 	if ( nZeroCount == 1 )
 	{
@@ -1011,7 +1011,7 @@ void CMapOverlay::ClipFace_ResolveBarycentricClip( CMapDisp *pDisp, ClipFace_t *
 				pClipFace->m_aBlends[iClipFacePoint].m_nType = OVERLAY_BLENDTYPE_EDGE;
 				pClipFace->m_aBlends[iClipFacePoint].m_iPoints[0] = pTris[(iVert+1)%3];
 				pClipFace->m_aBlends[iClipFacePoint].m_iPoints[1] = pTris[(iVert+2)%3];
-				
+
 				Vector2D vecLength1, vecLength2;
 				vecLength1 = vecScaledPointUV - pVertsUV[(iVert+1)%3];
 				vecLength2 = pVertsUV[(iVert+2)%3] - pVertsUV[(iVert+1)%3];
@@ -1021,7 +1021,7 @@ void CMapOverlay::ClipFace_ResolveBarycentricClip( CMapDisp *pDisp, ClipFace_t *
 			}
 		}
 	}
-	
+
 	// Lies inside triangles - setup full barycentric blend.
 	pClipFace->m_aBlends[iClipFacePoint].m_nType = OVERLAY_BLENDTYPE_BARY;
 	pClipFace->m_aBlends[iClipFacePoint].m_iPoints[0] = pTris[0];
@@ -1046,8 +1046,8 @@ int CMapOverlay::ClipFace_GetAxisType( cplane_t *pClipPlane )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CMapOverlay::ClipFace_BuildBlend( ClipFace_t *pClipFace, CMapDisp *pDisp, 
-									   cplane_t *pClipPlane, int iClip, 
+void CMapOverlay::ClipFace_BuildBlend( ClipFace_t *pClipFace, CMapDisp *pDisp,
+									   cplane_t *pClipPlane, int iClip,
 									   const Vector &vecUV, const Vector &vecPoint )
 {
 	// Get the displacement space interval.
@@ -1067,7 +1067,7 @@ void CMapOverlay::ClipFace_BuildBlend( ClipFace_t *pClipFace, CMapDisp *pDisp,
 
 	float flFracU = flU - static_cast<float>( nSnapU );
 	float flFracV = flV - static_cast<float>( nSnapV );
-		
+
 	int iAxisType = ClipFace_GetAxisType( pClipPlane );
 	switch( iAxisType )
 	{
@@ -1394,7 +1394,7 @@ void CMapOverlay::Handles_FixOrder()
 		}
 
 		// rebuild handles
-		
+
 		Handles_Build3D();
 
 		s_FixingHandles = false;
@@ -1438,8 +1438,8 @@ void CMapOverlay::OnParentKeyChanged( const char* szKey, const char* szValue )
 	CMapSideList::OnParentKeyChanged( szKey, szValue );
 
 	// Read side data.
-	if ( !stricmp( szKey, "sides" ) )	
-	{ 
+	if ( !stricmp( szKey, "sides" ) )
+	{
 		if ( m_Faces.Count() > 0 )
 		{
 			Basis_SetFace( m_Faces.Element( 0 ) );
@@ -1448,45 +1448,45 @@ void CMapOverlay::OnParentKeyChanged( const char* szKey, const char* szValue )
 
 	// Read geometry data.
 	float flDummy;
-	if ( !stricmp( szKey, "uv0" ) )     
-	{ 
-		sscanf( szValue, "%f %f %f", &m_Handles.m_vecBasisCoords[0].x, &m_Handles.m_vecBasisCoords[0].y, &flDummy ); 
+	if ( !stricmp( szKey, "uv0" ) )
+	{
+		sscanf( szValue, "%f %f %f", &m_Handles.m_vecBasisCoords[0].x, &m_Handles.m_vecBasisCoords[0].y, &flDummy );
 		m_Basis.m_nAxesFlip[0] = ( int )flDummy;
 	}
-	if ( !stricmp( szKey, "uv1" ) )     
-	{ 
-		sscanf( szValue, "%f %f %f", &m_Handles.m_vecBasisCoords[1].x, &m_Handles.m_vecBasisCoords[1].y, &flDummy ); 
-		m_Basis.m_nAxesFlip[1] = ( int )flDummy; 
+	if ( !stricmp( szKey, "uv1" ) )
+	{
+		sscanf( szValue, "%f %f %f", &m_Handles.m_vecBasisCoords[1].x, &m_Handles.m_vecBasisCoords[1].y, &flDummy );
+		m_Basis.m_nAxesFlip[1] = ( int )flDummy;
 	}
-	if ( !stricmp( szKey, "uv2" ) )     
-	{ 
-		sscanf( szValue, "%f %f %f", &m_Handles.m_vecBasisCoords[2].x, &m_Handles.m_vecBasisCoords[2].y, &flDummy ); 
-		m_Basis.m_nAxesFlip[2] = ( int )flDummy; 
+	if ( !stricmp( szKey, "uv2" ) )
+	{
+		sscanf( szValue, "%f %f %f", &m_Handles.m_vecBasisCoords[2].x, &m_Handles.m_vecBasisCoords[2].y, &flDummy );
+		m_Basis.m_nAxesFlip[2] = ( int )flDummy;
 	}
-	if ( !stricmp( szKey, "uv3" ) )     
-	{ 
-		sscanf( szValue, "%f %f %f", &m_Handles.m_vecBasisCoords[3].x, &m_Handles.m_vecBasisCoords[3].y, &flDummy ); 
+	if ( !stricmp( szKey, "uv3" ) )
+	{
+		sscanf( szValue, "%f %f %f", &m_Handles.m_vecBasisCoords[3].x, &m_Handles.m_vecBasisCoords[3].y, &flDummy );
 	}
 
 	// Read basis data.
-	if ( !stricmp( szKey, "BasisOrigin" ) )     
-	{ 
-		sscanf( szValue, "%f %f %f", &m_Basis.m_vecOrigin.x, &m_Basis.m_vecOrigin.y, &m_Basis.m_vecOrigin.z ); 
+	if ( !stricmp( szKey, "BasisOrigin" ) )
+	{
+		sscanf( szValue, "%f %f %f", &m_Basis.m_vecOrigin.x, &m_Basis.m_vecOrigin.y, &m_Basis.m_vecOrigin.z );
 	}
 
-	if ( !stricmp( szKey, "BasisU" ) )     
-	{ 
-		sscanf( szValue, "%f %f %f", &m_Basis.m_vecAxes[OVERLAY_BASIS_U].x, &m_Basis.m_vecAxes[OVERLAY_BASIS_U].y, &m_Basis.m_vecAxes[OVERLAY_BASIS_U].z ); 
+	if ( !stricmp( szKey, "BasisU" ) )
+	{
+		sscanf( szValue, "%f %f %f", &m_Basis.m_vecAxes[OVERLAY_BASIS_U].x, &m_Basis.m_vecAxes[OVERLAY_BASIS_U].y, &m_Basis.m_vecAxes[OVERLAY_BASIS_U].z );
 	}
 
-	if ( !stricmp( szKey, "BasisV" ) )     
-	{ 
-		sscanf( szValue, "%f %f %f", &m_Basis.m_vecAxes[OVERLAY_BASIS_V].x, &m_Basis.m_vecAxes[OVERLAY_BASIS_V].y, &m_Basis.m_vecAxes[OVERLAY_BASIS_V].z ); 
+	if ( !stricmp( szKey, "BasisV" ) )
+	{
+		sscanf( szValue, "%f %f %f", &m_Basis.m_vecAxes[OVERLAY_BASIS_V].x, &m_Basis.m_vecAxes[OVERLAY_BASIS_V].y, &m_Basis.m_vecAxes[OVERLAY_BASIS_V].z );
 	}
 
-	if ( !stricmp( szKey, "BasisNormal" ) )     
-	{ 
-		sscanf( szValue, "%f %f %f", &m_Basis.m_vecAxes[OVERLAY_BASIS_NORMAL].x, &m_Basis.m_vecAxes[OVERLAY_BASIS_NORMAL].y, &m_Basis.m_vecAxes[OVERLAY_BASIS_NORMAL].z ); 
+	if ( !stricmp( szKey, "BasisNormal" ) )
+	{
+		sscanf( szValue, "%f %f %f", &m_Basis.m_vecAxes[OVERLAY_BASIS_NORMAL].x, &m_Basis.m_vecAxes[OVERLAY_BASIS_NORMAL].y, &m_Basis.m_vecAxes[OVERLAY_BASIS_NORMAL].z );
 	}
 
 	// Read material data.
@@ -1501,28 +1501,28 @@ void CMapOverlay::OnParentKeyChanged( const char* szKey, const char* szValue )
 		m_Material.m_pTexture = pTex;
 	}
 
-	if ( !stricmp( szKey, "StartU" ) )	
-	{ 
-		m_Material.m_vecTextureU.x = atof( szValue ); 
+	if ( !stricmp( szKey, "StartU" ) )
+	{
+		m_Material.m_vecTextureU.x = atof( szValue );
 	}
-	if ( !stricmp( szKey, "EndU" ) )	
-	{ 
-		m_Material.m_vecTextureU.y = atof( szValue ); 
+	if ( !stricmp( szKey, "EndU" ) )
+	{
+		m_Material.m_vecTextureU.y = atof( szValue );
 	}
-	if ( !stricmp( szKey, "StartV" ) )	
-	{ 
-		m_Material.m_vecTextureV.x = atof( szValue ); 
+	if ( !stricmp( szKey, "StartV" ) )
+	{
+		m_Material.m_vecTextureV.x = atof( szValue );
 	}
-	if ( !stricmp( szKey, "EndV" ) )	
-	{ 
-		m_Material.m_vecTextureV.y = atof( szValue ); 
+	if ( !stricmp( szKey, "EndV" ) )
+	{
+		m_Material.m_vecTextureV.y = atof( szValue );
 	}
 
 	if ( m_bLoaded )
 	{
 		// Clip - this needs to be done for everything other than a material change, so go ahead.
 		DoClip();
-		
+
 		// Post updated.
 		PostUpdate( Notify_Changed );
 	}
@@ -1591,11 +1591,11 @@ void CMapOverlay::CalcBounds( BOOL bFullUpdate )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapOverlay::PostModified( void )
 {
-	// update face and origin 
+	// update face and origin
 	if ( m_Faces.Count() > 0 )
 	{
 		Basis_SetFace( m_Faces.Element( 0 ) );
@@ -1611,19 +1611,19 @@ void CMapOverlay::PostModified( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pTransBox - 
+// Purpose:
+// Input  : pTransBox -
 //-----------------------------------------------------------------------------
 void CMapOverlay::DoTransform( const VMatrix &matrix )
 {
 	BaseClass::DoTransform( matrix );
 
 	VMatrix tmpMatrix = matrix;
-		
+
 	// erase move component
 	tmpMatrix.SetTranslation( vec3_origin );
 
-	// check if matrix would still change something 
+	// check if matrix would still change something
 	if ( !tmpMatrix.IsIdentity() )
 	{
 		// make sure axes are normalized (they should be anyways)
@@ -1655,15 +1655,15 @@ void CMapOverlay::DoTransform( const VMatrix &matrix )
 		}
 		else
 		{
-			// more complex transformation, move UV coordinates, but leave base axes 
+			// more complex transformation, move UV coordinates, but leave base axes
 			for ( int iHandle=0; iHandle<OVERLAY_HANDLES_COUNT;iHandle++)
 			{
 				Vector2D vecUV = m_Handles.m_vecBasisCoords[iHandle];
 				Vector vecPos = ( vecUV.x * m_Basis.m_vecAxes[OVERLAY_BASIS_U] + vecUV.y * m_Basis.m_vecAxes[OVERLAY_BASIS_V] );
-				
+
 				// to transform in world space
 				TransformPoint( tmpMatrix, vecPos );
-				
+
 				vecUV.x = m_Basis.m_vecAxes[OVERLAY_BASIS_U].Dot( vecPos );
 				vecUV.y = m_Basis.m_vecAxes[OVERLAY_BASIS_V].Dot( vecPos );
 
@@ -1689,7 +1689,7 @@ void CMapOverlay::DoTransform( const VMatrix &matrix )
 //-----------------------------------------------------------------------------
 // Purpose: Notifies us that a copy of ourselves was pasted.
 //-----------------------------------------------------------------------------
-void CMapOverlay::OnPaste( CMapClass *pCopy, CMapWorld *pSourceWorld, CMapWorld *pDestWorld, 
+void CMapOverlay::OnPaste( CMapClass *pCopy, CMapWorld *pSourceWorld, CMapWorld *pDestWorld,
 						   const CMapObjectList &OriginalList, CMapObjectList &NewList)
 {
 	//
@@ -1708,7 +1708,7 @@ void CMapOverlay::OnPaste( CMapClass *pCopy, CMapWorld *pSourceWorld, CMapWorld 
 //-----------------------------------------------------------------------------
 // Purpose: Notifies us that we created a copy of ourselves (a clone).
 //-----------------------------------------------------------------------------
-void CMapOverlay::OnClone( CMapClass *pClone, CMapWorld *pWorld, 
+void CMapOverlay::OnClone( CMapClass *pClone, CMapWorld *pWorld,
 						   const CMapObjectList &OriginalList, CMapObjectList &NewList )
 {
 	CMapSideList::OnClone( pClone, pWorld, OriginalList, NewList );
@@ -1799,20 +1799,20 @@ void CMapOverlay::Render3D( CRender3D *pRender )
 				// Default state.
 				pRender->PushRenderMode( RENDER_MODE_FLAT );
 			}
-			
+
 			for ( int iFace = 0; iFace < nFaceCount; iFace++ )
 			{
 				ClipFace_t *pRenderFace = m_aRenderFaces.Element( iFace );
 				if( !pRenderFace )
 					continue;
-				
+
 				MaterialPrimitiveType_t type = MATERIAL_POLYGON;
-				
+
 				// Get a dynamic mesh.
 				CMeshBuilder meshBuilder;
 				CMatRenderContextPtr pRenderContext( MaterialSystemInterface() );
 				IMesh* pMesh = pRenderContext->GetDynamicMesh();
-				
+
 				meshBuilder.Begin( pMesh, type, pRenderFace->m_nPointCount );
 				for ( int iPoint = 0; iPoint < pRenderFace->m_nPointCount; iPoint++ )
 				{
@@ -1830,13 +1830,13 @@ void CMapOverlay::Render3D( CRender3D *pRender )
 					meshBuilder.AdvanceVertex();
 				}
 				meshBuilder.End();
-				
+
 				pMesh->Draw();
 			}
 
 			pRender->PopRenderMode();
 		}
-		
+
 		// Render wireframe on top when seleted.
 		if ( GetSelectionState() != SELECT_NONE )
 		{
@@ -1846,14 +1846,14 @@ void CMapOverlay::Render3D( CRender3D *pRender )
 				ClipFace_t *pRenderFace = m_aRenderFaces.Element( iFace );
 				if( !pRenderFace )
 					continue;
-				
+
 				MaterialPrimitiveType_t type = MATERIAL_LINE_LOOP;
-				
+
 				// get a dynamic mesh
 				CMeshBuilder meshBuilder;
 				CMatRenderContextPtr pRenderContext( MaterialSystemInterface() );
 				IMesh* pMesh = pRenderContext->GetDynamicMesh();
-				
+
 				meshBuilder.Begin( pMesh, type, pRenderFace->m_nPointCount );
 				for( int iPoint = 0; iPoint < pRenderFace->m_nPointCount; iPoint++ )
 				{
@@ -1862,7 +1862,7 @@ void CMapOverlay::Render3D( CRender3D *pRender )
 					meshBuilder.AdvanceVertex();
 				}
 				meshBuilder.End();
-				
+
 				pMesh->Draw();
 			}
 			pRender->PopRenderMode();
@@ -2041,7 +2041,7 @@ void CMapOverlay::DoClipFace( CMapFace *pFace )
 	for ( int iPoint = 0; iPoint < pClippedFace->m_nPointCount; iPoint++ )
 	{
 		Vector2D vecUV;
-		PointInQuadToBarycentric( m_pOverlayFace->m_aPoints[0], m_pOverlayFace->m_aPoints[3], 
+		PointInQuadToBarycentric( m_pOverlayFace->m_aPoints[0], m_pOverlayFace->m_aPoints[3],
 			                      m_pOverlayFace->m_aPoints[2], m_pOverlayFace->m_aPoints[1],
 								  pClippedFace->m_aPoints[iPoint], vecUV );
 
@@ -2055,7 +2055,7 @@ void CMapOverlay::DoClipFace( CMapFace *pFace )
 			TexCoordInQuadFromBarycentric( m_pOverlayFace->m_aTexCoords[iTexCoord][0], m_pOverlayFace->m_aTexCoords[iTexCoord][3],
 										m_pOverlayFace->m_aTexCoords[iTexCoord][2], m_pOverlayFace->m_aTexCoords[iTexCoord][1],
 										vecUV, vecTexCoord );
-			
+
 			pClippedFace->m_aTexCoords[iTexCoord][iPoint] = vecTexCoord;
 		}
 	}
@@ -2201,7 +2201,7 @@ void CMapOverlay::DoClipDisp( CMapFace *pFace, ClipFace_t *pClippedFace )
 	//
 	int nFaceCount = aCurrentFaces.Count();
 	for( int iFace = 0; iFace < nFaceCount; iFace++ )
-	{	
+	{
 		ClipFace_t *pClipFace = aCurrentFaces[iFace];
 		if ( pClipFace )
 		{
@@ -2231,10 +2231,10 @@ bool CMapOverlay::HandlesHitTest( CMapView *pView, const Vector2D &vPoint )
 
 	for ( int iPoint = 0; iPoint < 4; iPoint++ )
 	{
-		Vector2D vHandle; 
+		Vector2D vHandle;
 
 		pView->WorldToClient( vHandle, m_Handles.m_vec3D[iPoint] );
-		
+
 		if ( vPoint.x < (vHandle.x-handleRadius) || vPoint.x > ( vHandle.x+handleRadius) )
 			continue;
 
@@ -2327,7 +2327,7 @@ void CMapOverlay::UpdateDispBarycentric( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:  
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapOverlay::CenterEntity( void )
 {
@@ -2537,7 +2537,7 @@ void CMapOverlay::OverlayPlaneToSurfFromList( const Vector &vecOverlayPoint, Vec
 
 		// Project the point up to the base face plane (displacement if necessary).
 		OverlayPlaneToWorld( pFace, vecOverlayPoint, vecSurfPoint );
-		
+
 		if( pFace->HasDisp() )
 		{
 			Vector2D vecTmp;
@@ -2569,7 +2569,7 @@ bool CMapOverlay::EntityOnSurfFromListToBaseFacePlane( const Vector &vecWorldPoi
 		CMapFace *pFace = GetFace( iFace );
 		if ( !pFace )
 			continue;
-		
+
 		if ( !pFace->HasDisp() )
 			continue;
 
@@ -2603,7 +2603,7 @@ void CMapOverlay::GetTriVerts( CMapDisp *pDisp, const Vector2D &vecSurfUV, int *
 	if ( nSnapV == ( nHeight - 1 ) ) { --nSnapV; }
 	int nNextU = nSnapU + 1;
 	int nNextV = nSnapV + 1;
-	
+
 	// Fractional portion
 	float flFracU = flU - static_cast<float>( nSnapU );
 	float flFracV = flV - static_cast<float>( nSnapV );
@@ -2656,7 +2656,7 @@ void CMapOverlay::SetMaterial( const char *szMaterialName )
 	IEditorTexture *pTex = g_Textures.FindActiveTexture( szMaterialName );
 	if ( !pTex )
 		return;
-	
+
 	// Save the new material.
 	m_Material.m_pTexture = pTex;
 }
@@ -2721,7 +2721,7 @@ ChunkFileResult_t CMapOverlay::SaveDataToVMF( CChunkFile *pFile, CSaveInfo *pSav
 		Vector vecTmp( m_Handles.m_vecBasisCoords[1].x, m_Handles.m_vecBasisCoords[1].y, ( float )m_Basis.m_nAxesFlip[1] );
 		eResult = pFile->WriteKeyValueVector3( "uv1", vecTmp );
 	}
-	if ( eResult == ChunkFile_Ok ) 
+	if ( eResult == ChunkFile_Ok )
 	{
 		Vector vecTmp( m_Handles.m_vecBasisCoords[2].x, m_Handles.m_vecBasisCoords[2].y, ( float )m_Basis.m_nAxesFlip[2] );
 		eResult = pFile->WriteKeyValueVector3( "uv2", vecTmp );
@@ -2731,7 +2731,7 @@ ChunkFileResult_t CMapOverlay::SaveDataToVMF( CChunkFile *pFile, CSaveInfo *pSav
 		Vector vecTmp( m_Handles.m_vecBasisCoords[3].x, m_Handles.m_vecBasisCoords[3].y, 0.0f );
 		eResult = pFile->WriteKeyValueVector3( "uv3", vecTmp );
 	}
- 
+
 	// Sidelist.
 	if ( eResult == ChunkFile_Ok )
 	{

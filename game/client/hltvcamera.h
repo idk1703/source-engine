@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -32,7 +32,7 @@ public:
 	void ToggleChaseAsFirstPerson();
 	bool IsPVSLocked();
 	void SetAutoDirector( bool bActive );
-	
+
 	int  GetMode();	// returns current camera mode
 	C_BaseEntity *GetPrimaryTarget();  // return primary target
 	void SetPrimaryTarget( int nEntity); // set the primary obs target
@@ -43,7 +43,7 @@ public:
 	void PostEntityPacketReceived();
 	const char* GetTitleText() { return m_szTitleText; }
 	int  GetNumSpectators() { return m_nNumSpectators; }
-			
+
 protected:
 
 	void CalcChaseCamView( Vector& eyeOrigin, QAngle& eyeAngles, float& fov );
@@ -65,7 +65,7 @@ protected:
 	float		m_flOffset;  // z-offset from target origin
 	float		m_flDistance; // distance to traget origin+offset
 	float		m_flLastDistance; // too smooth distance
-	float		m_flTheta; // view angle horizontal 
+	float		m_flTheta; // view angle horizontal
 	float		m_flPhi; // view angle vertical
 	float		m_flInertia; // camera inertia 0..100
 	float		m_flLastAngleUpdateTime;

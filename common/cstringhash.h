@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@
 template <class T> class CStringHash
 {
 public:
-	CStringHash() 
+	CStringHash()
 	{
 		memset( m_HashTable, 0, sizeof( StringHashNode_t * ) * STRING_HASH_TABLE_SIZE );
 	}

@@ -33,7 +33,7 @@ enum FunFactId
 	FUNFACT_BLIND_KILLS,
 	FUNFACT_KILLS_WITH_LAST_ROUND,
 	FUNFACT_DONATED_WEAPONS,
-	FUNFACT_POSTHUMOUS_KILLS_WITH_GRENADE,    
+	FUNFACT_POSTHUMOUS_KILLS_WITH_GRENADE,
 	FUNFACT_KNIFE_IN_GUNFIGHT,
 	FUNFACT_NUM_TIMES_JUMPED,
 	FUNFACT_FALL_DAMAGE,
@@ -62,8 +62,8 @@ enum FunFactId
 	FUNFACT_KILLS_HEADSHOTS,
 	FUNFACT_BROKE_WINDOWS,
 	FUNFACT_NIGHTVISION_DAMAGE,
-    FUNFACT_DEFUSED_WITH_DROPPED_KIT,
-    FUNFACT_KILLED_HALF_OF_ENEMIES,
+	FUNFACT_DEFUSED_WITH_DROPPED_KIT,
+	FUNFACT_KILLED_HALF_OF_ENEMIES,
 };
 
 
@@ -158,8 +158,8 @@ typedef int (*PlayerEvalFunction)(CCSPlayer* pPlayer);
 class CFunFact_PlayerEvalFunction : public FunFactEvaluator
 {
 public:
-	CFunFact_PlayerEvalFunction(FunFactId id, const char* szLocalizationToken, float fCoolness, PlayerEvalFunction pfnEval, 
-		int iMin, int flags ) : 
+	CFunFact_PlayerEvalFunction(FunFactId id, const char* szLocalizationToken, float fCoolness, PlayerEvalFunction pfnEval,
+		int iMin, int flags ) :
 	FunFactEvaluator(id, szLocalizationToken, fCoolness),
 		m_pfnEval(pfnEval),
 		m_min(iMin),
@@ -244,26 +244,26 @@ typedef bool (*TeamEvalFunction)(int iTeam, int &data1, int &data2, int &data3);
 class CFunFact_TeamEvalFunction : public FunFactEvaluator
 {
 public:
-	CFunFact_TeamEvalFunction(FunFactId id, const char* szLocalizationToken, float fCoolness, TeamEvalFunction pfnEval, int iTeam ) : 
-	  FunFactEvaluator(id, szLocalizationToken, fCoolness),
-		  m_pfnEval(pfnEval),
-		  m_team(iTeam)
-	  {}
+	CFunFact_TeamEvalFunction(FunFactId id, const char* szLocalizationToken, float fCoolness, TeamEvalFunction pfnEval, int iTeam ) :
+	FunFactEvaluator(id, szLocalizationToken, fCoolness),
+		m_pfnEval(pfnEval),
+		m_team(iTeam)
+	{}
 
-	  virtual bool Evaluate( FunFactVector& results ) const
-	  {
-		  int iData1, iData2, iData3;
-		  if ( m_pfnEval(m_team, iData1, iData2, iData3) )
-		  {
-			  FunFact funfact;
-			  funfact.id = GetId();
-			  funfact.szLocalizationToken = GetLocalizationToken();
-			  funfact.fMagnitude = 0.0f;
-			  results.AddToTail(funfact);
-			  return true;
-		  }
-		  return false;
-	  }
+	virtual bool Evaluate( FunFactVector& results ) const
+	{
+		int iData1, iData2, iData3;
+		if ( m_pfnEval(m_team, iData1, iData2, iData3) )
+		{
+			FunFact funfact;
+			funfact.id = GetId();
+			funfact.szLocalizationToken = GetLocalizationToken();
+			funfact.fMagnitude = 0.0f;
+			results.AddToTail(funfact);
+			return true;
+		}
+		return false;
+	}
 
 private:
 	TeamEvalFunction m_pfnEval;
@@ -286,52 +286,52 @@ class CFunFact_StatBest : public FunFactEvaluator
 {
 public:
 	CFunFact_StatBest(FunFactId id, const char* szLocalizationToken, float fCoolness, CSStatType_t statId, int iMin, int flags ) :
-	  FunFactEvaluator(id, szLocalizationToken, fCoolness),
-		  m_statId(statId),
-		  m_min(iMin),
-		  m_flags(flags)
-	  {
-		  V_strncpy(m_singularLocalizationToken, szLocalizationToken, sizeof(m_singularLocalizationToken));
-		  if (m_min == 1)
-		  {
-			  V_strncat(m_singularLocalizationToken, "_singular", sizeof(m_singularLocalizationToken));
-		  }
-	  }
+	FunFactEvaluator(id, szLocalizationToken, fCoolness),
+		m_statId(statId),
+		m_min(iMin),
+		m_flags(flags)
+	{
+		V_strncpy(m_singularLocalizationToken, szLocalizationToken, sizeof(m_singularLocalizationToken));
+		if (m_min == 1)
+		{
+			V_strncat(m_singularLocalizationToken, "_singular", sizeof(m_singularLocalizationToken));
+		}
+	}
 
-	  virtual bool Evaluate( FunFactVector& results ) const
-	  {
-		  int iBestValue = 0;
-		  int iBestPlayer = 0;
-		  for ( int i = 1; i <= gpGlobals->maxClients; i++ )
-		  {
-			  CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
-			  if ( pPlayer )
-			  {
-				  if (!PlayerQualifies(pPlayer, m_flags))
-					  continue;
+	virtual bool Evaluate( FunFactVector& results ) const
+	{
+		int iBestValue = 0;
+		int iBestPlayer = 0;
+		for ( int i = 1; i <= gpGlobals->maxClients; i++ )
+		{
+			CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
+			if ( pPlayer )
+			{
+				if (!PlayerQualifies(pPlayer, m_flags))
+					continue;
 
-				  int iValue = CCS_GameStats.FindPlayerStats(pPlayer).statsCurrentRound[m_statId];
-				  if ( iValue > iBestValue )
-				  {
-					  iBestValue = iValue;
-					  iBestPlayer = i;
-				  }
-			  }
-		  }
-		  if ( iBestValue >= m_min )
-		  {
-			  FunFact funfact;
-			  funfact.id = GetId();
-			  funfact.szLocalizationToken = iBestValue == 1 ? m_singularLocalizationToken : GetLocalizationToken();
-			  funfact.iPlayer = iBestPlayer;
-			  funfact.iData1 = iBestValue;
-			  funfact.fMagnitude = 1.0f - ((float)m_min / iBestValue);
+				int iValue = CCS_GameStats.FindPlayerStats(pPlayer).statsCurrentRound[m_statId];
+				if ( iValue > iBestValue )
+				{
+					iBestValue = iValue;
+					iBestPlayer = i;
+				}
+			}
+		}
+		if ( iBestValue >= m_min )
+		{
+			FunFact funfact;
+			funfact.id = GetId();
+			funfact.szLocalizationToken = iBestValue == 1 ? m_singularLocalizationToken : GetLocalizationToken();
+			funfact.iPlayer = iBestPlayer;
+			funfact.iData1 = iBestValue;
+			funfact.fMagnitude = 1.0f - ((float)m_min / iBestValue);
 
-			  results.AddToTail(funfact);
-			  return true;
-		  }
-		  return false;
-	  }
+			results.AddToTail(funfact);
+			return true;
+		}
+		return false;
+	}
 
 private:
 	CSStatType_t	m_statId;
@@ -350,47 +350,47 @@ static CFunFactHelper g_##funfactId##_Helper( CreateFunFact_##funfactId );
 
 //=============================================================================
 // Sum-based Fun Fact
-// This fun fact will add up a stat for all players, and is valid when the 
+// This fun fact will add up a stat for all players, and is valid when the
 // sum exceeds a threshold
 //=============================================================================
 class CFunFact_StatSum : public FunFactEvaluator
 {
 public:
 	CFunFact_StatSum(FunFactId id, const char* szLocalizationToken, float fCoolness, CSStatType_t statId, int iMin, EvalFlags::Type flags ) :
-	  FunFactEvaluator(id, szLocalizationToken, fCoolness),
-		  m_statId(statId),
-		  m_min(iMin),
-		  m_flags(flags)
-	  {}
+	FunFactEvaluator(id, szLocalizationToken, fCoolness),
+		m_statId(statId),
+		m_min(iMin),
+		m_flags(flags)
+	{}
 
-	  virtual bool Evaluate( FunFactVector& results ) const
-	  {
-		  int iSum = 0;
-		  for ( int i = 1; i <= gpGlobals->maxClients; i++ )
-		  {
-			  CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
-			  if ( pPlayer )
-			  {
-				  if (!PlayerQualifies(pPlayer, m_flags))
-					  continue;
+	virtual bool Evaluate( FunFactVector& results ) const
+	{
+		int iSum = 0;
+		for ( int i = 1; i <= gpGlobals->maxClients; i++ )
+		{
+			CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
+			if ( pPlayer )
+			{
+				if (!PlayerQualifies(pPlayer, m_flags))
+					continue;
 
-				  iSum += CCS_GameStats.FindPlayerStats(pPlayer).statsCurrentRound[m_statId];
-			  }
-		  }
-		  if ( iSum >= m_min )
-		  {
-			  FunFact funfact;
-			  funfact.id = GetId();
-			  funfact.szLocalizationToken = GetLocalizationToken();
-			  funfact.iPlayer = 0;
-			  funfact.iData1 = iSum;
-			  funfact.fMagnitude = 1.0f - ((float)m_min / iSum);
+				iSum += CCS_GameStats.FindPlayerStats(pPlayer).statsCurrentRound[m_statId];
+			}
+		}
+		if ( iSum >= m_min )
+		{
+			FunFact funfact;
+			funfact.id = GetId();
+			funfact.szLocalizationToken = GetLocalizationToken();
+			funfact.iPlayer = 0;
+			funfact.iData1 = iSum;
+			funfact.fMagnitude = 1.0f - ((float)m_min / iSum);
 
-			  results.AddToTail(funfact);
-			  return true;
-		  }
-		  return false;
-	  }
+			results.AddToTail(funfact);
+			return true;
+		}
+		return false;
+	}
 
 private:
 	CSStatType_t	m_statId;
@@ -528,7 +528,7 @@ int FFEVAL_ACCURACY( CCSPlayer* pPlayer )
 
 int FFEVAL_KILLED_HALF_OF_ENEMIES( CCSPlayer* pPlayer )
 {
-    return pPlayer->GetPercentageOfEnemyTeamKilled();
+	return pPlayer->GetPercentageOfEnemyTeamKilled();
 }
 
 bool FFEVAL_WON_AS_LAST_MEMBER( int &iPlayer, int &data1, int &data2, int &data3 )
@@ -582,9 +582,9 @@ int FFEVAL_MULTIPLE_ATTACKER_COUNT( CCSPlayer* pPlayer )
 
 int FFEVAL_USED_ALL_AMMO( CCSPlayer* pPlayer )
 {
-    CWeaponCSBase *pRifleWeapon = dynamic_cast< CWeaponCSBase * >(pPlayer->Weapon_GetSlot( WEAPON_SLOT_RIFLE ));
-    CWeaponCSBase *pHandgunWeapon = dynamic_cast< CWeaponCSBase * >(pPlayer->Weapon_GetSlot( WEAPON_SLOT_PISTOL ));
-    if ( pRifleWeapon && !pRifleWeapon->HasAmmo() && pHandgunWeapon && !pHandgunWeapon->HasAmmo() )
+	CWeaponCSBase *pRifleWeapon = dynamic_cast< CWeaponCSBase * >(pPlayer->Weapon_GetSlot( WEAPON_SLOT_RIFLE ));
+	CWeaponCSBase *pHandgunWeapon = dynamic_cast< CWeaponCSBase * >(pPlayer->Weapon_GetSlot( WEAPON_SLOT_PISTOL ));
+	if ( pRifleWeapon && !pRifleWeapon->HasAmmo() && pHandgunWeapon && !pHandgunWeapon->HasAmmo() )
 		return 1;
 	else
 		return 0;
@@ -602,7 +602,7 @@ int FFEVAL_USED_MULTIPLE_WEAPONS( CCSPlayer* pPlayer )
 
 int FFEVAL_DEFUSED_WITH_DROPPED_KIT( CCSPlayer* pPlayer )
 {
-    return pPlayer->GetDefusedWithPickedUpKit() ? 1 : 0;
+	return pPlayer->GetDefusedWithPickedUpKit() ? 1 : 0;
 }
 
 bool FFEVAL_TERRORIST_ACCURACY( int &iPlayer, int &data1, int &data2, int &data3 )
@@ -633,15 +633,15 @@ bool FFEVAL_CT_ACCURACY( int &iPlayer, int &data1, int &data2, int &data3 )
 
 bool FFEVAL_SAME_UNIFORM( int iTeam, int &iData1, int &iData2, int &iData3 )
 {
-    int numberInUniform = 0;
+	int numberInUniform = 0;
 	int iUniform = -1;
 
-    for ( int i = 1; i <= gpGlobals->maxClients; i++ )
-    {
-        CCSPlayer *pCSPlayer = ToCSPlayer(UTIL_PlayerByIndex( i ) );
+	for ( int i = 1; i <= gpGlobals->maxClients; i++ )
+	{
+		CCSPlayer *pCSPlayer = ToCSPlayer(UTIL_PlayerByIndex( i ) );
 		if ( pCSPlayer && pCSPlayer->GetTeamNumber() == iTeam && pCSPlayer->State_Get() != STATE_PICKINGCLASS)
-        {		
-            if (iUniform == -1)
+		{
+			if (iUniform == -1)
 			{
 				iUniform = pCSPlayer->PlayerClass();
 			}
@@ -650,86 +650,86 @@ bool FFEVAL_SAME_UNIFORM( int iTeam, int &iData1, int &iData2, int &iData3 )
 				return false;
 			}
 			++numberInUniform;
-        }
-    }
+		}
+	}
 
 	return numberInUniform >= 3;
 }
 
 bool FFEVAL_BEST_TERRORIST_ACCURACY( int &iPlayer, int &data1, int &data2, int &data3 )
 {
-    float fAccuracy = 0.0f, fBestAccuracy = 0.0f;
-    CBasePlayer *pPlayer = NULL;
-    for ( int i = 1; i <= gpGlobals->maxClients; i++ )
-    {
-        pPlayer = UTIL_PlayerByIndex( i );
+	float fAccuracy = 0.0f, fBestAccuracy = 0.0f;
+	CBasePlayer *pPlayer = NULL;
+	for ( int i = 1; i <= gpGlobals->maxClients; i++ )
+	{
+		pPlayer = UTIL_PlayerByIndex( i );
 
-        // Look only at terrorist players
-        if ( pPlayer && pPlayer->GetTeamNumber() == TEAM_TERRORIST )
-        {
-            // Calculate accuracy the terrorist
-            float shots = CCS_GameStats.FindPlayerStats(pPlayer).statsCurrentRound[CSSTAT_SHOTS_FIRED];
-            float hits = CCS_GameStats.FindPlayerStats(pPlayer).statsCurrentRound[CSSTAT_SHOTS_HIT];
-            if (shots > MIN_SHOTS_FOR_ACCURACY)
-            {
-                fAccuracy = (float)hits / shots;
-            }
+		// Look only at terrorist players
+		if ( pPlayer && pPlayer->GetTeamNumber() == TEAM_TERRORIST )
+		{
+			// Calculate accuracy the terrorist
+			float shots = CCS_GameStats.FindPlayerStats(pPlayer).statsCurrentRound[CSSTAT_SHOTS_FIRED];
+			float hits = CCS_GameStats.FindPlayerStats(pPlayer).statsCurrentRound[CSSTAT_SHOTS_HIT];
+			if (shots > MIN_SHOTS_FOR_ACCURACY)
+			{
+				fAccuracy = (float)hits / shots;
+			}
 
-            // Track the most accurate terrorist
-            if ( fAccuracy > fBestAccuracy )
-            {
-                fBestAccuracy = fAccuracy;
-                iPlayer = i;
-            }
-        }
-    }
+			// Track the most accurate terrorist
+			if ( fAccuracy > fBestAccuracy )
+			{
+				fBestAccuracy = fAccuracy;
+				iPlayer = i;
+			}
+		}
+	}
 
-    if ( fBestAccuracy - GetTeamAccuracy( TEAM_TERRORIST ) >= 0.10f )
-    {
+	if ( fBestAccuracy - GetTeamAccuracy( TEAM_TERRORIST ) >= 0.10f )
+	{
 		data1 = RoundFloatToInt(fBestAccuracy * 100.0f);
-        data2 = RoundFloatToInt(GetTeamAccuracy( TEAM_TERRORIST ) * 100.0f);
-        return true;
-    }
+		data2 = RoundFloatToInt(GetTeamAccuracy( TEAM_TERRORIST ) * 100.0f);
+		return true;
+	}
 
-    return false;
+	return false;
 }
 
 bool FFEVAL_BEST_COUNTERTERRORIST_ACCURACY( int &iPlayer, int &data1, int &data2, int &data3 )
 {
 	float fAccuracy = 0.0f, fBestAccuracy = 0.0f;
-    CBasePlayer *pPlayer = NULL;
-    for ( int i = 1; i <= gpGlobals->maxClients; i++ )
-    {
-        pPlayer = UTIL_PlayerByIndex( i );
+	CBasePlayer *pPlayer = NULL;
+	for ( int i = 1; i <= gpGlobals->maxClients; i++ )
+	{
+		pPlayer = UTIL_PlayerByIndex( i );
 
-        // Look only at counter-terrorist players
-        if ( pPlayer && pPlayer->GetTeamNumber() == TEAM_CT )
-        {
-            // Calculate accuracy the counter-terrorist
-            float shots = CCS_GameStats.FindPlayerStats(pPlayer).statsCurrentRound[CSSTAT_SHOTS_FIRED];
-            float hits = CCS_GameStats.FindPlayerStats(pPlayer).statsCurrentRound[CSSTAT_SHOTS_HIT];
-            if (shots > MIN_SHOTS_FOR_ACCURACY)
-            {
-                fAccuracy = (float)hits / shots;
-            }
+		// Look only at counter-terrorist players
+		if ( pPlayer && pPlayer->GetTeamNumber() == TEAM_CT )
+		{
+			// Calculate accuracy the counter-terrorist
+			float shots = CCS_GameStats.FindPlayerStats(pPlayer).statsCurrentRound[CSSTAT_SHOTS_FIRED];
+			float hits = CCS_GameStats.FindPlayerStats(pPlayer).statsCurrentRound[CSSTAT_SHOTS_HIT];
+			if (shots > MIN_SHOTS_FOR_ACCURACY)
+			{
+				fAccuracy = (float)hits / shots;
+			}
 
-            // Track the most accurate counter-terrorist
-            if ( fAccuracy > fBestAccuracy )
-            {
-                fBestAccuracy = fAccuracy;
-                iPlayer = i;
-            }
-        }
-    }
+			// Track the most accurate counter-terrorist
+			if ( fAccuracy > fBestAccuracy )
+			{
+				fBestAccuracy = fAccuracy;
+				iPlayer = i;
+			}
+		}
+	}
 
 	if ( fBestAccuracy - GetTeamAccuracy( TEAM_CT ) >= 0.10f )
 	{
 		data1 = RoundFloatToInt(fBestAccuracy * 100.0f);
 		data2 = RoundFloatToInt(GetTeamAccuracy( TEAM_CT ) * 100.0f);
-        return true;
-    }
+		return true;
+	}
 
-    return false;
+	return false;
 }
 
 

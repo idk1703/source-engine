@@ -41,7 +41,7 @@ CVguiMatSysApp::CVguiMatSysApp()
 //-----------------------------------------------------------------------------
 bool CVguiMatSysApp::Create()
 {
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "inputsystem.dll",		INPUTSYSTEM_INTERFACE_VERSION },
 		{ "materialsystem.dll",		MATERIAL_SYSTEM_INTERFACE_VERSION },
@@ -54,7 +54,7 @@ bool CVguiMatSysApp::Create()
 		{ "", "" }
 	};
 
-	if ( !AddSystems( appSystems ) ) 
+	if ( !AddSystems( appSystems ) )
 		return false;
 
 	IMaterialSystem *pMaterialSystem = (IMaterialSystem*)FindSystem( MATERIAL_SYSTEM_INTERFACE_VERSION );
@@ -83,18 +83,18 @@ void*CVguiMatSysApp::CreateAppWindow( char const *pTitle, bool bWindowed, int w,
 	WNDCLASSEX		wc;
 	memset( &wc, 0, sizeof( wc ) );
 	wc.cbSize		 = sizeof( wc );
-    wc.style         = CS_OWNDC | CS_DBLCLKS;
-    wc.lpfnWndProc   = DefWindowProc;
-    wc.hInstance     = (HINSTANCE)GetAppInstance();
-    wc.lpszClassName = "Valve001";
+	wc.style         = CS_OWNDC | CS_DBLCLKS;
+	wc.lpfnWndProc   = DefWindowProc;
+	wc.hInstance     = (HINSTANCE)GetAppInstance();
+	wc.lpszClassName = "Valve001";
 	wc.hIcon		 = NULL; //LoadIcon( s_HInstance, MAKEINTRESOURCE( IDI_LAUNCHER ) );
 	wc.hIconSm		 = wc.hIcon;
 
-    RegisterClassEx( &wc );
+	RegisterClassEx( &wc );
 
 	// Note, it's hidden
 	DWORD style = WS_POPUP | WS_CLIPSIBLINGS;
-	
+
 	if ( bWindowed )
 	{
 		// Give it a frame
@@ -115,14 +115,14 @@ void*CVguiMatSysApp::CreateAppWindow( char const *pTitle, bool bWindowed, int w,
 	AdjustWindowRectEx(&windowRect, style, FALSE, 0);
 
 	// Create the window
-	void *hWnd = CreateWindow( wc.lpszClassName, pTitle, style, 0, 0, 
-		windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, 
+	void *hWnd = CreateWindow( wc.lpszClassName, pTitle, style, 0, 0,
+		windowRect.right - windowRect.left, windowRect.bottom - windowRect.top,
 		NULL, NULL, (HINSTANCE)GetAppInstance(), NULL );
 
 	if (!hWnd)
 		return NULL;
 
-    int CenterX, CenterY;
+	int CenterX, CenterY;
 
 	CenterX = (GetSystemMetrics(SM_CXSCREEN) - w) / 2;
 	CenterY = (GetSystemMetrics(SM_CYSCREEN) - h) / 2;
@@ -131,7 +131,7 @@ void*CVguiMatSysApp::CreateAppWindow( char const *pTitle, bool bWindowed, int w,
 
 	// In VCR modes, keep it in the upper left so mouse coordinates are always relative to the window.
 	SetWindowPos( (HWND)hWnd, NULL, CenterX, CenterY, 0, 0,
-				  SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW | SWP_DRAWFRAME);
+				SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW | SWP_DRAWFRAME);
 
 	return hWnd;
 }
@@ -222,7 +222,7 @@ bool CVguiMatSysApp::PreInit( )
 
 	g_pMaterialSystem->SetAdapter( adapter, adapterFlags );
 
-	return true; 
+	return true;
 }
 
 void CVguiMatSysApp::PostShutdown()
@@ -259,7 +259,7 @@ void* CVguiMatSysApp::GetAppWindow()
 	return m_HWnd;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Sets the video mode
 //-----------------------------------------------------------------------------
@@ -305,4 +305,3 @@ bool CVguiMatSysApp::SetVideoMode( )
 }
 
 #endif // _WIN32
-

@@ -1,4 +1,4 @@
-//========== Copyright © 2005, Valve Corporation, All rights reserved. ========
+//========== Copyright ï¿½ 2005, Valve Corporation, All rights reserved. ========
 //
 // Purpose:
 //
@@ -81,7 +81,7 @@ union TSLHead_t
 		// <sergiy> Depth must be in the least significant halfword when atomically loading into register,
 		//          to avoid carrying digits from Sequence. Carrying digits from Depth to Sequence is ok,
 		//          because Sequence can be pretty much random. We could operate on both of them separately,
-		//          but it could perhaps (?) lead to problems with store forwarding. I don't know 'cause I didn't 
+		//          but it could perhaps (?) lead to problems with store forwarding. I don't know 'cause I didn't
 		//          performance-test or design original code, I'm just making it work on PowerPC.
 		#ifdef PLAT_BIG_ENDIAN
 		int16	Sequence;
@@ -157,10 +157,10 @@ public:
 			oldHead.value64 = m_Head.value64;
 			pNode->Next = oldHead.value.Next;
 			newHead.value.Next = pNode;
-			
+
 			newHead.value32.DepthAndSequence = oldHead.value32.DepthAndSequence + 0x10001;
-			
-			
+
+
 			if ( ThreadInterlockedAssignIf64( &m_Head.value64, newHead.value64, oldHead.value64 ) )
 			{
 				break;
@@ -231,7 +231,7 @@ public:
 				return NULL;
 
 			newHead.value.Next = NULL;
-			// <sergiy> the reason for AND'ing it instead of poking a short into memory 
+			// <sergiy> the reason for AND'ing it instead of poking a short into memory
 			//          is probably to avoid store forward issues, but I'm not sure because
 			//          I didn't construct this code. In any case, leaving it as is on big-endian
 			newHead.value32.DepthAndSequence = oldHead.value32.DepthAndSequence & 0xffff0000;
@@ -286,7 +286,7 @@ TSLIST_HEAD_ALIGN_POST;
 // similar to CTSSimpleList except that it allocates it's own pool objects
 // and frees them on destruct.  Also it does not overlay the TSNodeBase_t memory
 // on T's memory
-template< class T > 
+template< class T >
 class TSLIST_HEAD_ALIGN CTSPool : public CTSListBase
 {
 	// packs the node and the item (T) into a single struct and pools those
@@ -509,7 +509,7 @@ private:
 // push item, be aware that the node memory cannot be freed until
 // all threads that might have been popping have completed the pop.
 // The PushItem()/PopItem() for handles this by keeping a persistent
-// free list. Dont mix Push/PushItem. Note also nodes will be freed at the end, 
+// free list. Dont mix Push/PushItem. Note also nodes will be freed at the end,
 // and are expected to have been allocated with operator new.
 //-----------------------------------------------------------------------------
 
@@ -849,7 +849,7 @@ private:
 	NodeLink_t m_Tail;
 
 	CInterlockedInt m_Count;
-	
+
 	CTSListBase m_FreeNodes;
 } TSLIST_HEAD_ALIGN_POST;
 

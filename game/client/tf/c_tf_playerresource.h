@@ -49,7 +49,7 @@ public:
 	void UpdatePlayerScoreStats( void );
 	void ResetPlayerScoreStats( int playerIndex = -1 );
 
-	bool IsArenaSpectator( int iIndex ) 
+	bool IsArenaSpectator( int iIndex )
 	{
 		if ( !IsConnected( iIndex ) )
 		{
@@ -70,7 +70,7 @@ public:
 	int GetPlayerClassWhenKilled( int iIndex ) { return GetArrayValue( iIndex, m_iPlayerClassWhenKilled, TF_CLASS_UNDEFINED ); }
 
 	MM_PlayerConnectionState_t GetPlayerConnectionState( int iIndex ) const;
-	
+
 protected:
 	int GetArrayValue( int iIndex, int *pArray, int defaultVal );
 

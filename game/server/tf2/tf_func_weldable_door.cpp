@@ -17,13 +17,13 @@ LINK_ENTITY_TO_CLASS( func_door_weldable, CWeldableDoor );
 
 BEGIN_DATADESC( CWeldableDoor )
 
-	// keys 
+	// keys
 	DEFINE_KEYFIELD( m_iszWeldPoints, FIELD_STRING, "weldpoints" ),
 
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeldableDoor::Spawn( void )
 {
@@ -35,7 +35,7 @@ void CWeldableDoor::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeldableDoor::Activate( void )
 {
@@ -103,7 +103,7 @@ bool CWeldableDoor::IsWeldable( CBaseTFPlayer *pWeldee )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Return the weld leader. 
+// Purpose: Return the weld leader.
 //			Doors can be made up of multiple door entities, so one of them needs to volunteer to control the welding.
 //-----------------------------------------------------------------------------
 CWeldableDoor *CWeldableDoor::GetWeldLeader( void )
@@ -288,7 +288,7 @@ void CWeldableDoor::UpdateWeld( bool bCutting, float flWeldPercentage )
 		if ( m_aWeldBeams.Size() <= i )
 		{
 			CBeam *pBeam = CBeam::BeamCreate( "sprites/physbeam.vmt", 4.0 );
-			pBeam->SetColor( 128, 128, 128 ); 
+			pBeam->SetColor( 128, 128, 128 );
 			pBeam->SetBrightness( 128 );
 			pBeam->PointsInit( m_aWeldPoints[i]->GetStartPoint(), m_aWeldPoints[i]->GetEndPoint() );
 			m_aWeldBeams.AddToTail( pBeam );
@@ -296,7 +296,7 @@ void CWeldableDoor::UpdateWeld( bool bCutting, float flWeldPercentage )
 		if ( m_aCutBeams.Size() <= i )
 		{
 			CBeam *pBeam = CBeam::BeamCreate( "sprites/physbeam.vmt", 4.0 );
-			pBeam->SetColor( 255, 255, 255 ); 
+			pBeam->SetColor( 255, 255, 255 );
 			pBeam->SetBrightness( 255 );
 			pBeam->PointsInit( m_aWeldPoints[i]->GetStartPoint(), m_aWeldPoints[i]->GetEndPoint() );
 			m_aCutBeams.AddToTail( pBeam );
@@ -368,14 +368,14 @@ Vector CWeldableDoor::GetPlayerWeldPoint( void )
 LINK_ENTITY_TO_CLASS( info_weldpoint, CWeldPoint );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeldPoint::Spawn( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeldPoint::SetEndPoint( const Vector &vecEndPoint )
 {
@@ -383,7 +383,7 @@ void CWeldPoint::SetEndPoint( const Vector &vecEndPoint )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const Vector &CWeldPoint::GetStartPoint( void ) const
 {
@@ -391,7 +391,7 @@ const Vector &CWeldPoint::GetStartPoint( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const Vector &CWeldPoint::GetEndPoint( void ) const
 {

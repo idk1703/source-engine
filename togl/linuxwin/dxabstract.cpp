@@ -114,7 +114,7 @@ inline void GetStackCrawl( CStackCrawlParams *params )
 
 #if defined( WIN32 )
 
-bool D3DMATRIX::operator == ( CONST D3DMATRIX& src) const 
+bool D3DMATRIX::operator == ( CONST D3DMATRIX& src) const
 {
 	return V_memcmp( (void*)this, (void*)&src, sizeof(this) ) == 0;
 }
@@ -137,7 +137,7 @@ D3DMATRIX::operator void* ()
 D3DXMATRIX D3DXMATRIX::operator*( const D3DXMATRIX &o ) const
 {
 	D3DXMATRIX result;
-	
+
 	D3DXMatrixMultiply( &result, this, &o );	// this = lhs    o = rhs    result = this * o
 
 	return result;
@@ -158,7 +158,7 @@ const float& D3DXMATRIX::operator()( int row, int column ) const
 	return m[row][column];
 }
 
-bool D3DXMATRIX::operator != ( CONST D3DXMATRIX& src ) const 
+bool D3DXMATRIX::operator != ( CONST D3DXMATRIX& src ) const
 {
 	return V_memcmp( (void*)this, (void*)&src, sizeof(this) ) != 0;
 }
@@ -286,7 +286,7 @@ IDirect3DBaseTexture9::~IDirect3DBaseTexture9()
 
 		GLMPRINTF(( "-A- ~IDirect3DBaseTexture9 taking normal delete path on %08x, device is %08x ", this, m_device ));
 		m_device->ReleasedTexture( this );
-		
+
 		if (m_tex)
 		{
 			GLMPRINTF(("-A- ~IDirect3DBaseTexture9 deleted '%s' @ %08x (GLM %08x) %s",m_tex->m_layout->m_layoutSummary, this, m_tex, m_tex->m_debugLabel ? m_tex->m_debugLabel : "" ));
@@ -299,7 +299,7 @@ IDirect3DBaseTexture9::~IDirect3DBaseTexture9()
 		else
 		{
 			GLMPRINTF(( "-A- ~IDirect3DBaseTexture9 : whoops, no tex to delete here ?" ));
-		}		
+		}
 		m_device = NULL;	// ** THIS ** is the only place to scrub this.  Don't do it in the subclass destructors.
 	}
 	else
@@ -335,12 +335,12 @@ HRESULT IDirect3DBaseTexture9::GetLevelDesc(UINT Level,D3DSURFACE_DESC *pDesc)
 
 	D3DSURFACE_DESC result = m_descZero;
 	// then mutate it for the level of interest
-	
+
 	GLMTexLayoutSlice *slice = &m_tex->m_layout->m_slices[ m_tex->CalcSliceIndex( 0, Level ) ];
 
 	result.Width = slice->m_xSize;
 	result.Height = slice->m_ySize;
-	
+
 	*pDesc = result;
 
 	return S_OK;
@@ -364,7 +364,7 @@ HRESULT IDirect3DDevice9::CreateTexture(UINT Width,UINT Height,UINT Levels,DWORD
 	GLMPRINTF((">-A-IDirect3DDevice9::CreateTexture"));
 	IDirect3DTexture9	*dxtex = new IDirect3DTexture9;
 	dxtex->m_restype = D3DRTYPE_TEXTURE;
-	
+
 	dxtex->m_device		= this;
 
 	dxtex->m_descZero.Format	= Format;
@@ -376,10 +376,10 @@ HRESULT IDirect3DDevice9::CreateTexture(UINT Width,UINT Height,UINT Levels,DWORD
 	dxtex->m_descZero.MultiSampleQuality	= 0;
 	dxtex->m_descZero.Width		= Width;
 	dxtex->m_descZero.Height	= Height;
-	
+
 	GLMTexLayoutKey key;
 	memset( &key, 0, sizeof(key) );
-	
+
 	key.m_texGLTarget	= GL_TEXTURE_2D;
 	key.m_texFormat		= Format;
 
@@ -389,43 +389,43 @@ HRESULT IDirect3DDevice9::CreateTexture(UINT Width,UINT Height,UINT Levels,DWORD
 	}
 
 	// http://msdn.microsoft.com/en-us/library/bb172625(VS.85).aspx
-	
+
 	// complain if any usage bits come down that I don't know.
 	uint knownUsageBits = (D3DUSAGE_AUTOGENMIPMAP | D3DUSAGE_RENDERTARGET | D3DUSAGE_DYNAMIC | D3DUSAGE_TEXTURE_SRGB | D3DUSAGE_DEPTHSTENCIL);
 	if ( (Usage & knownUsageBits) != Usage )
 	{
 		DXABSTRACT_BREAK_ON_ERROR();
 	}
-	
+
 	if (Usage & D3DUSAGE_AUTOGENMIPMAP)
 	{
 		key.m_texFlags |= kGLMTexMipped | kGLMTexMippedAuto;
 	}
-	
+
 	if (Usage & D3DUSAGE_DYNAMIC)
 	{
 		// GLMPRINTF(("-X- DYNAMIC tex usage ignored.."));	//FIXME
 	}
-	
+
 	if (Usage & D3DUSAGE_TEXTURE_SRGB)
 	{
 		key.m_texFlags |= kGLMTexSRGB;
 	}
-	
+
 	if (Usage & D3DUSAGE_RENDERTARGET)
 	{
 		Assert( !(Usage & D3DUSAGE_DEPTHSTENCIL) );
-		
+
 		m_ObjectStats.m_nTotalRenderTargets++;
-						
+
 		key.m_texFlags |= kGLMTexRenderable;
-		
+
 		const GLMTexFormatDesc *pFmtDesc = GetFormatDesc( key.m_texFormat );
 		if ( pFmtDesc->m_glIntFormatSRGB != 0 )
 		{
 			key.m_texFlags |= kGLMTexSRGB;			// this catches callers of CreateTexture who set the "renderable" option - they get an SRGB tex
 		}
-		
+
 		if (m_ctx->Caps().m_cantAttachSRGB)
 		{
 			// this config can't support SRGB render targets.  quietly turn off the sRGB bit.
@@ -441,11 +441,11 @@ HRESULT IDirect3DDevice9::CreateTexture(UINT Width,UINT Height,UINT Levels,DWORD
 	{
 		key.m_texFlags |= kGLMTexIsStencil;
 	}
-			
+
 	key.m_xSize = Width;
 	key.m_ySize = Height;
 	key.m_zSize = 1;
-	
+
 	CGLMTex *tex = m_ctx->NewTex( &key, Levels, pDebugLabel );
 	if (!tex)
 	{
@@ -458,21 +458,21 @@ HRESULT IDirect3DDevice9::CreateTexture(UINT Width,UINT Height,UINT Levels,DWORD
 	m_ObjectStats.m_nTotalSurfaces++;
 
 	dxtex->m_surfZero = new IDirect3DSurface9;
-	dxtex->m_surfZero->m_restype = (D3DRESOURCETYPE)0;	// this is a ref to a tex, not the owner... 
-	
-	// do not do an AddRef here.	
-	
+	dxtex->m_surfZero->m_restype = (D3DRESOURCETYPE)0;	// this is a ref to a tex, not the owner...
+
+	// do not do an AddRef here.
+
 	dxtex->m_surfZero->m_device = this;
 
 	dxtex->m_surfZero->m_desc	=	dxtex->m_descZero;
 	dxtex->m_surfZero->m_tex	=	tex;
 	dxtex->m_surfZero->m_face	=	0;
 	dxtex->m_surfZero->m_mip	=	0;
-	
+
 	GLMPRINTF(("-A- IDirect3DDevice9::CreateTexture created '%s' @ %08x (GLM %08x) %s",tex->m_layout->m_layoutSummary, dxtex, tex, pDebugLabel ? pDebugLabel : "" ));
-	
+
 	*ppTexture = dxtex;
-	
+
 	GLMPRINTF(("<-A-IDirect3DDevice9::CreateTexture"));
 	return S_OK;
 }
@@ -482,7 +482,7 @@ IDirect3DTexture9::~IDirect3DTexture9()
 {
 	GL_BATCH_PERF_CALL_TIMER;
 	GL_PUBLIC_ENTRYPOINT_CHECKS( m_device );
-	
+
 	GLMPRINTF(( ">-A- IDirect3DTexture9" ));
 
 	// IDirect3DBaseTexture9::~IDirect3DBaseTexture9 frees up m_tex
@@ -533,15 +533,15 @@ HRESULT IDirect3DTexture9::GetSurfaceLevel(UINT Level,IDirect3DSurface9** ppSurf
 
 	// Dicey...higher level code seems to want this and not want this.  Are we missing some AddRef/Release behavior elsewhere?
 	// trying to turn this off - experimental - 26Oct2010 surf->AddRef();
-	
+
 	surf->m_device = this->m_device;
-	
+
 	GLMTexLayoutSlice *slice = &m_tex->m_layout->m_slices[ m_tex->CalcSliceIndex( 0, Level ) ];
-		
+
 	surf->m_desc = m_descZero;
 		surf->m_desc.Width = slice->m_xSize;
 		surf->m_desc.Height = slice->m_ySize;
-		
+
 	surf->m_tex	= m_tex;
 	surf->m_face = 0;
 	surf->m_mip = Level;
@@ -571,7 +571,7 @@ HRESULT IDirect3DDevice9::CreateCubeTexture(UINT EdgeLength,UINT Levels,DWORD Us
 
 	IDirect3DCubeTexture9	*dxtex = new IDirect3DCubeTexture9;
 	dxtex->m_restype = D3DRTYPE_CUBETEXTURE;
-	
+
 	dxtex->m_device			= this;
 
 	dxtex->m_descZero.Format	= Format;
@@ -583,10 +583,10 @@ HRESULT IDirect3DDevice9::CreateCubeTexture(UINT EdgeLength,UINT Levels,DWORD Us
 	dxtex->m_descZero.MultiSampleQuality	= 0;
 	dxtex->m_descZero.Width		= EdgeLength;
 	dxtex->m_descZero.Height	= EdgeLength;
-	
+
 	GLMTexLayoutKey key;
 	memset( &key, 0, sizeof(key) );
-	
+
 	key.m_texGLTarget	= GL_TEXTURE_CUBE_MAP;
 	key.m_texFormat		= Format;
 
@@ -595,47 +595,47 @@ HRESULT IDirect3DDevice9::CreateCubeTexture(UINT EdgeLength,UINT Levels,DWORD Us
 		key.m_texFlags |= kGLMTexMipped;
 	}
 
-	// http://msdn.microsoft.com/en-us/library/bb172625(VS.85).aspx	
+	// http://msdn.microsoft.com/en-us/library/bb172625(VS.85).aspx
 	// complain if any usage bits come down that I don't know.
 	uint knownUsageBits = (D3DUSAGE_AUTOGENMIPMAP | D3DUSAGE_RENDERTARGET | D3DUSAGE_DYNAMIC | D3DUSAGE_TEXTURE_SRGB);
 	if ( (Usage & knownUsageBits) != Usage )
 	{
 		DXABSTRACT_BREAK_ON_ERROR();
 	}
-	
+
 	if (Usage & D3DUSAGE_AUTOGENMIPMAP)
 	{
 		key.m_texFlags |= kGLMTexMipped | kGLMTexMippedAuto;
 	}
-	
+
 	if (Usage & D3DUSAGE_RENDERTARGET)
 	{
 		key.m_texFlags |= kGLMTexRenderable;
-		
+
 		m_ObjectStats.m_nTotalRenderTargets++;
 	}
-		
+
 	if (Usage & D3DUSAGE_DYNAMIC)
 	{
 		//GLMPRINTF(("-X- DYNAMIC tex usage ignored.."));	//FIXME
 	}
-	
+
 	if (Usage & D3DUSAGE_TEXTURE_SRGB)
 	{
 		key.m_texFlags |= kGLMTexSRGB;
 	}
-	
+
 	key.m_xSize = EdgeLength;
 	key.m_ySize = EdgeLength;
 	key.m_zSize = 1;
-	
+
 	CGLMTex *tex = m_ctx->NewTex( &key, Levels, pDebugLabel );
 	if (!tex)
 	{
 		DXABSTRACT_BREAK_ON_ERROR();
 	}
 	dxtex->m_tex = tex;
-	
+
 	dxtex->m_tex->m_srgbFlipCount = 0;
 
 	for( int face = 0; face < 6; face ++)
@@ -644,20 +644,20 @@ HRESULT IDirect3DDevice9::CreateCubeTexture(UINT EdgeLength,UINT Levels,DWORD Us
 
 		dxtex->m_surfZero[face] = new IDirect3DSurface9;
 		dxtex->m_surfZero[face]->m_restype = (D3DRESOURCETYPE)0;	// 0 is special and means this 'surface' does not own its m_tex
-		// do not do an AddRef here.	
-		
+		// do not do an AddRef here.
+
 		dxtex->m_surfZero[face]->m_device = this;
-		
+
 		dxtex->m_surfZero[face]->m_desc	=	dxtex->m_descZero;
 		dxtex->m_surfZero[face]->m_tex	=	tex;
 		dxtex->m_surfZero[face]->m_face	=	face;
 		dxtex->m_surfZero[face]->m_mip	=	0;
 	}
-	
+
 	GLMPRINTF(("-A- IDirect3DDevice9::CreateCubeTexture created '%s' @ %08x (GLM %08x)",tex->m_layout->m_layoutSummary, dxtex, tex ));
-	
+
 	*ppCubeTexture = dxtex;
-	
+
 	GLMPRINTF(("<-A- IDirect3DDevice9::CreateCubeTexture"));
 
 	return S_OK;
@@ -676,7 +676,7 @@ IDirect3DCubeTexture9::~IDirect3DCubeTexture9()
 
 		// let IDirect3DBaseTexture9::~IDirect3DBaseTexture9 free up m_tex
 		// we handle the surfZero array for the faces
-		
+
 		for( int face = 0; face < 6; face ++)
 		{
 			if (m_surfZero[face])
@@ -710,15 +710,15 @@ HRESULT IDirect3DCubeTexture9::GetCubeMapSurface(D3DCUBEMAP_FACES FaceType,UINT 
 
 	IDirect3DSurface9 *surf = new IDirect3DSurface9;
 	surf->m_restype = (D3DRESOURCETYPE)0;	// 0 is special and means this 'surface' does not own its m_tex
-	
+
 	GLMTexLayoutSlice *slice = &m_tex->m_layout->m_slices[ m_tex->CalcSliceIndex( FaceType, Level ) ];
-	
+
 	surf->m_device = this->m_device;
-	
+
 	surf->m_desc = m_descZero;
 		surf->m_desc.Width = slice->m_xSize;
 		surf->m_desc.Height = slice->m_ySize;
-		
+
 	surf->m_tex	= m_tex;
 	surf->m_face = FaceType;
 	surf->m_mip = Level;
@@ -735,7 +735,7 @@ HRESULT IDirect3DCubeTexture9::GetLevelDesc(UINT Level,D3DSURFACE_DESC *pDesc)
 
 	D3DSURFACE_DESC result = m_descZero;
 	// then mutate it for the level of interest
-	
+
 	GLMTexLayoutSlice *slice = &m_tex->m_layout->m_slices[ m_tex->CalcSliceIndex( 0, Level ) ];
 
 	result.Width = slice->m_xSize;
@@ -767,7 +767,7 @@ HRESULT IDirect3DDevice9::CreateVolumeTexture(UINT Width,UINT Height,UINT Depth,
 
 	IDirect3DVolumeTexture9	*dxtex = new IDirect3DVolumeTexture9;
 	dxtex->m_restype = D3DRTYPE_VOLUMETEXTURE;
-	
+
 	dxtex->m_device			= this;
 
 	dxtex->m_descZero.Format	= Format;
@@ -789,10 +789,10 @@ HRESULT IDirect3DDevice9::CreateVolumeTexture(UINT Width,UINT Height,UINT Depth,
 	dxtex->m_volDescZero.Width		= Width;
 	dxtex->m_volDescZero.Height		= Height;
 	dxtex->m_volDescZero.Depth		= Depth;
-	
+
 	GLMTexLayoutKey key;
 	memset( &key, 0, sizeof(key) );
-	
+
 	key.m_texGLTarget	= GL_TEXTURE_3D;
 	key.m_texFormat		= Format;
 
@@ -801,64 +801,64 @@ HRESULT IDirect3DDevice9::CreateVolumeTexture(UINT Width,UINT Height,UINT Depth,
 		key.m_texFlags |= kGLMTexMipped;
 	}
 
-	// http://msdn.microsoft.com/en-us/library/bb172625(VS.85).aspx	
+	// http://msdn.microsoft.com/en-us/library/bb172625(VS.85).aspx
 	// complain if any usage bits come down that I don't know.
 	uint knownUsageBits = (D3DUSAGE_AUTOGENMIPMAP | D3DUSAGE_RENDERTARGET | D3DUSAGE_DYNAMIC | D3DUSAGE_TEXTURE_SRGB);
 	if ( (Usage & knownUsageBits) != Usage )
 	{
 		DXABSTRACT_BREAK_ON_ERROR();
 	}
-	
+
 	if (Usage & D3DUSAGE_AUTOGENMIPMAP)
 	{
 		key.m_texFlags |= kGLMTexMipped | kGLMTexMippedAuto;
 	}
-	
+
 	if (Usage & D3DUSAGE_RENDERTARGET)
 	{
 		key.m_texFlags |= kGLMTexRenderable;
-		
+
 		m_ObjectStats.m_nTotalRenderTargets++;
 	}
-	
+
 	if (Usage & D3DUSAGE_DYNAMIC)
 	{
 		GLMPRINTF(("-X- DYNAMIC tex usage ignored.."));	//FIXME
 	}
-	
+
 	if (Usage & D3DUSAGE_TEXTURE_SRGB)
 	{
 		key.m_texFlags |= kGLMTexSRGB;
 	}
-	
+
 	key.m_xSize = Width;
 	key.m_ySize = Height;
 	key.m_zSize = Depth;
-	
+
 	CGLMTex *tex = m_ctx->NewTex( &key, Levels, pDebugLabel );
 	if (!tex)
 	{
 		DXABSTRACT_BREAK_ON_ERROR();
 	}
 	dxtex->m_tex = tex;
-	
+
 	dxtex->m_tex->m_srgbFlipCount = 0;
 
 	m_ObjectStats.m_nTotalSurfaces++;
 
 	dxtex->m_surfZero = new IDirect3DSurface9;
-	dxtex->m_surfZero->m_restype = (D3DRESOURCETYPE)0;	// this is a ref to a tex, not the owner... 
-	// do not do an AddRef here.	
-	
+	dxtex->m_surfZero->m_restype = (D3DRESOURCETYPE)0;	// this is a ref to a tex, not the owner...
+	// do not do an AddRef here.
+
 	dxtex->m_surfZero->m_device = this;
-	
+
 	dxtex->m_surfZero->m_desc	=	dxtex->m_descZero;
 	dxtex->m_surfZero->m_tex	=	tex;
 	dxtex->m_surfZero->m_face	=	0;
 	dxtex->m_surfZero->m_mip	=	0;
-	
+
 	GLMPRINTF(("-A- IDirect3DDevice9::CreateVolumeTexture created '%s' @ %08x (GLM %08x)",tex->m_layout->m_layoutSummary, dxtex, tex ));
-	
+
 	*ppVolumeTexture = dxtex;
 
 	GLMPRINTF(("<-A-  IDirect3DDevice9::CreateVolumeTexture"));
@@ -877,7 +877,7 @@ IDirect3DVolumeTexture9::~IDirect3DVolumeTexture9()
 
 		// let IDirect3DBaseTexture9::~IDirect3DBaseTexture9 free up m_tex
 		// we handle m_surfZero
-		
+
 		if (m_surfZero)
 		{
 			ULONG refc = m_surfZero->Release( 0, "~IDirect3DVolumeTexture9 public release (surfZero)" ); (void)refc;
@@ -897,7 +897,7 @@ HRESULT IDirect3DVolumeTexture9::LockBox(UINT Level,D3DLOCKED_BOX* pLockedVolume
 
 	GLMTexLockParams lockreq;
 	memset( &lockreq, 0, sizeof(lockreq) );
-	
+
 	lockreq.m_tex		= this->m_tex;
 	lockreq.m_face		= 0;
 	lockreq.m_mip		= Level;
@@ -908,17 +908,17 @@ HRESULT IDirect3DVolumeTexture9::LockBox(UINT Level,D3DLOCKED_BOX* pLockedVolume
 	lockreq.m_region.xmax = pBox->Right;
 	lockreq.m_region.ymax = pBox->Bottom;
 	lockreq.m_region.zmax = pBox->Back;
-	
+
 	char	*lockAddress;
 	int		yStride;
 	int		zStride;
-	
+
 	lockreq.m_tex->Lock( &lockreq, &lockAddress, &yStride, &zStride );
 
 	pLockedVolume->RowPitch = yStride;
 	pLockedVolume->SlicePitch = yStride;
-	pLockedVolume->pBits = lockAddress;	
-	
+	pLockedVolume->pBits = lockAddress;
+
 	return S_OK;
 }
 
@@ -929,13 +929,13 @@ HRESULT IDirect3DVolumeTexture9::UnlockBox(UINT Level)
 
 	GLMTexLockParams lockreq;
 	memset( &lockreq, 0, sizeof(lockreq) );
-	
+
 	lockreq.m_tex		= this->m_tex;
 	lockreq.m_face		= 0;
 	lockreq.m_mip		= Level;
 
 	this->m_tex->Unlock( &lockreq );
-	
+
 	return S_OK;
 }
 
@@ -951,13 +951,13 @@ HRESULT IDirect3DVolumeTexture9::GetLevelDesc( UINT Level, D3DVOLUME_DESC *pDesc
 
 	D3DVOLUME_DESC result = m_volDescZero;
 	// then mutate it for the level of interest
-	
+
 	GLMTexLayoutSlice *slice = &m_tex->m_layout->m_slices[ m_tex->CalcSliceIndex( 0, Level ) ];
 
 	result.Width = slice->m_xSize;
 	result.Height = slice->m_ySize;
 	result.Depth = slice->m_zSize;
-	
+
 	*pDesc = result;
 
 	return S_OK;
@@ -1000,7 +1000,7 @@ IDirect3DSurface9::~IDirect3DSurface9()
 			else
 			{
 				GLMPRINTF(( "-A- ~IDirect3DSurface9 : whoops, no tex to delete here ?" ));
-			}		
+			}
 		}
 		else
 		{
@@ -1008,7 +1008,7 @@ IDirect3DSurface9::~IDirect3DSurface9()
 		}
 
 		m_face = m_mip = 0;
-		
+
 		m_device = NULL;
 	}
 	else
@@ -1023,7 +1023,7 @@ HRESULT IDirect3DSurface9::LockRect(D3DLOCKED_RECT* pLockedRect,CONST RECT* pRec
 	GL_PUBLIC_ENTRYPOINT_CHECKS( m_device );
 	GLMTexLockParams lockreq;
 	memset( &lockreq, 0, sizeof(lockreq) );
-	
+
 	lockreq.m_tex	= this->m_tex;
 	lockreq.m_face	= this->m_face;
 	lockreq.m_mip	= this->m_mip;
@@ -1034,22 +1034,22 @@ HRESULT IDirect3DSurface9::LockRect(D3DLOCKED_RECT* pLockedRect,CONST RECT* pRec
 	lockreq.m_region.xmax = pRect->right;
 	lockreq.m_region.ymax = pRect->bottom;
 	lockreq.m_region.zmax = 1;
-	
+
 	if ((Flags & (D3DLOCK_READONLY | D3DLOCK_NOSYSLOCK)) == (D3DLOCK_READONLY | D3DLOCK_NOSYSLOCK) )
 	{
 		// smells like readback, force texel readout
 		lockreq.m_readback = true;
 	}
-	
+
 	char	*lockAddress;
 	int		yStride;
 	int		zStride;
-	
+
 	lockreq.m_tex->Lock( &lockreq, &lockAddress, &yStride, &zStride );
 
 	pLockedRect->Pitch = yStride;
 	pLockedRect->pBits = lockAddress;
-	
+
 	return S_OK;
 }
 
@@ -1059,7 +1059,7 @@ HRESULT IDirect3DSurface9::UnlockRect()
 	GL_PUBLIC_ENTRYPOINT_CHECKS( m_device );
 	GLMTexLockParams lockreq;
 	memset( &lockreq, 0, sizeof(lockreq) );
-	
+
 	lockreq.m_tex	= this->m_tex;
 	lockreq.m_face	= this->m_face;
 	lockreq.m_mip	= this->m_mip;
@@ -1094,7 +1094,7 @@ IDirect3D9::~IDirect3D9()
 }
 
 UINT IDirect3D9::GetAdapterCount()
-{	
+{
 	GL_BATCH_PERF_CALL_TIMER;
 	GLMgr::NewGLMgr();				// init GL manager
 
@@ -1116,7 +1116,7 @@ static void FillD3DCaps9( const GLMRendererInfoFields &glmRendererInfo, D3DCAPS9
 	/* Caps from DX7 Draw */
 	pCaps->Caps							=	0;									// does anyone look at this ?
 
-	pCaps->Caps2						=	D3DCAPS2_DYNAMICTEXTURES;    
+	pCaps->Caps2						=	D3DCAPS2_DYNAMICTEXTURES;
 	/* Cursor Caps */
 	pCaps->CursorCaps					=	0;									// nobody looks at this
 
@@ -1125,16 +1125,16 @@ static void FillD3DCaps9( const GLMRendererInfoFields &glmRendererInfo, D3DCAPS9
 
 	pCaps->TextureCaps					=	D3DPTEXTURECAPS_CUBEMAP | D3DPTEXTURECAPS_MIPCUBEMAP | D3DPTEXTURECAPS_NONPOW2CONDITIONAL | D3DPTEXTURECAPS_PROJECTED;
 	// D3DPTEXTURECAPS_NOPROJECTEDBUMPENV ?
-	// D3DPTEXTURECAPS_POW2 ? 
+	// D3DPTEXTURECAPS_POW2 ?
 	// caller looks at POT support like this:
-	//		pCaps->m_SupportsNonPow2Textures = 
-	//			( !( caps.TextureCaps & D3DPTEXTURECAPS_POW2 ) || 
+	//		pCaps->m_SupportsNonPow2Textures =
+	//			( !( caps.TextureCaps & D3DPTEXTURECAPS_POW2 ) ||
 	//			( caps.TextureCaps & D3DPTEXTURECAPS_NONPOW2CONDITIONAL ) );
 	// so we should set D3DPTEXTURECAPS_NONPOW2CONDITIONAL bit ?
 
 
 	pCaps->PrimitiveMiscCaps			=	0;									//only the HDR setup looks at this for D3DPMISCCAPS_SEPARATEALPHABLEND.
-	// ? D3DPMISCCAPS_SEPARATEALPHABLEND 
+	// ? D3DPMISCCAPS_SEPARATEALPHABLEND
 	// ? D3DPMISCCAPS_BLENDOP
 	// ? D3DPMISCCAPS_CLIPPLANESCALEDPOINTS
 	// ? D3DPMISCCAPS_CLIPTLVERTS D3DPMISCCAPS_COLORWRITEENABLE D3DPMISCCAPS_MASKZ D3DPMISCCAPS_TSSARGTEMP
@@ -1197,7 +1197,7 @@ static void FillD3DCaps9( const GLMRendererInfoFields &glmRendererInfo, D3DCAPS9
 	//pCaps->m_SupportsPixelShaders_2_b = 1;
 
 	pCaps->NumSimultaneousRTs					=	1;         // Will be at least 1
-	pCaps->MaxVertexShader30InstructionSlots	=	0; 
+	pCaps->MaxVertexShader30InstructionSlots	=	0;
 	pCaps->MaxPixelShader30InstructionSlots		=	0;
 
 #if DX_TO_GL_ABSTRACTION
@@ -1216,10 +1216,10 @@ HRESULT IDirect3D9::GetDeviceCaps(UINT Adapter, D3DDEVTYPE DeviceType, D3DCAPS9*
 	GLMDisplayDB *db = GetDisplayDB();
 	int glmRendererIndex = -1;
 	int glmDisplayIndex = -1;
-	
+
 	GLMRendererInfoFields	glmRendererInfo;
 	GLMDisplayInfoFields	glmDisplayInfo;
-	
+
 	bool result = db->GetFakeAdapterInfo( Adapter, &glmRendererIndex, &glmDisplayIndex, &glmRendererInfo, &glmDisplayInfo ); (void)result;
 	Assert (!result);
 	// just leave glmRendererInfo filled out for subsequent code to look at as needed.
@@ -1235,16 +1235,16 @@ HRESULT IDirect3D9::GetAdapterIdentifier( UINT Adapter, DWORD Flags, D3DADAPTER_
 	// Generally called from "CShaderDeviceMgrDx8::ComputeCapsFromD3D" in ShaderDeviceDX8.cpp
 
 	Assert( Flags == D3DENUM_WHQL_LEVEL );	// we're not handling any other queries than this yet
-	
+
 	Q_memset( pIdentifier, 0, sizeof(*pIdentifier) );
 
 	GLMDisplayDB *db = GetDisplayDB();
 	int glmRendererIndex = -1;
 	int glmDisplayIndex = -1;
-	
+
 	GLMRendererInfoFields	glmRendererInfo;
 	GLMDisplayInfoFields	glmDisplayInfo;
-	
+
 	// the D3D "Adapter" number feeds the fake adapter index
 	bool result = db->GetFakeAdapterInfo( Adapter, &glmRendererIndex, &glmDisplayIndex, &glmRendererInfo, &glmDisplayInfo ); (void)result;
 	Assert (!result);
@@ -1287,7 +1287,7 @@ HRESULT IDirect3D9::GetAdapterIdentifier( UINT Adapter, DWORD Flags, D3DADAPTER_
 	pIdentifier->VideoMemory			= glmRendererInfo.m_vidMemory;		// amount of video memory in bytes
 
 	#if 0
-		// this came from the shaderapigl effort	
+		// this came from the shaderapigl effort
 		Q_strncpy( pIdentifier->Driver, "Fake-Video-Card", MAX_DEVICE_IDENTIFIER_STRING );
 		Q_strncpy( pIdentifier->Description, "Fake-Video-Card", MAX_DEVICE_IDENTIFIER_STRING );
 		pIdentifier->VendorId				= 4318;
@@ -1295,7 +1295,7 @@ HRESULT IDirect3D9::GetAdapterIdentifier( UINT Adapter, DWORD Flags, D3DADAPTER_
 		pIdentifier->SubSysId				= 3358668866;
 		pIdentifier->Revision				= 162;
 	#endif
-	
+
 	return S_OK;
 }
 
@@ -1305,16 +1305,16 @@ HRESULT IDirect3D9::CheckDeviceFormat(UINT Adapter,D3DDEVTYPE DeviceType,D3DFORM
 	if (0)	// hush for now, less spew
 	{
 		GLMPRINTF(("-X- ** IDirect3D9::CheckDeviceFormat:  \n -- Adapter=%d || DeviceType=%4x:%s || AdapterFormat=%8x:%s\n -- RType       %8x: %s\n -- CheckFormat %8x: %s\n -- Usage       %8x: %s",
-			Adapter,													
-			DeviceType,		GLMDecode(eD3D_DEVTYPE, DeviceType),				
+			Adapter,
+			DeviceType,		GLMDecode(eD3D_DEVTYPE, DeviceType),
 			AdapterFormat,	GLMDecode(eD3D_FORMAT, AdapterFormat),
-			RType,			GLMDecode(eD3D_RTYPE, RType),							
+			RType,			GLMDecode(eD3D_RTYPE, RType),
 			CheckFormat,	GLMDecode(eD3D_FORMAT, CheckFormat),
-			Usage,			GLMDecodeMask( eD3D_USAGE, Usage ) ));			
+			Usage,			GLMDecodeMask( eD3D_USAGE, Usage ) ));
 	}
 
 	HRESULT result = D3DERR_NOTAVAILABLE;	// failure
-	
+
 	DWORD	knownUsageMask =	D3DUSAGE_RENDERTARGET | D3DUSAGE_DEPTHSTENCIL | D3DUSAGE_DYNAMIC | D3DUSAGE_AUTOGENMIPMAP
 							|	D3DUSAGE_QUERY_SRGBREAD | D3DUSAGE_QUERY_FILTER | D3DUSAGE_QUERY_SRGBWRITE | D3DUSAGE_QUERY_POSTPIXELSHADER_BLENDING
 							|	D3DUSAGE_QUERY_VERTEXTEXTURE;
@@ -1326,10 +1326,10 @@ HRESULT IDirect3D9::CheckDeviceFormat(UINT Adapter,D3DDEVTYPE DeviceType,D3DFORM
 	GLMDisplayDB *db = GetDisplayDB();
 	int glmRendererIndex = -1;
 	int glmDisplayIndex = -1;
-	
+
 	GLMRendererInfoFields	glmRendererInfo;
 	GLMDisplayInfoFields	glmDisplayInfo;
-	
+
 	bool dbresult = db->GetFakeAdapterInfo( Adapter, &glmRendererIndex, &glmDisplayIndex, &glmRendererInfo, &glmDisplayInfo ); (void)dbresult;
 	Assert (!dbresult);
 
@@ -1349,7 +1349,7 @@ HRESULT IDirect3D9::CheckDeviceFormat(UINT Adapter,D3DDEVTYPE DeviceType,D3DFORM
 						case D3DFMT_DXT5:
 													legalUsage	=	D3DUSAGE_DYNAMIC | D3DUSAGE_AUTOGENMIPMAP | D3DUSAGE_QUERY_FILTER;
 													legalUsage	|=	D3DUSAGE_QUERY_SRGBREAD;
-													
+
 													//open question: is auto gen of mipmaps is allowed or attempted on any DXT textures.
 						break;
 
@@ -1403,7 +1403,7 @@ HRESULT IDirect3D9::CheckDeviceFormat(UINT Adapter,D3DDEVTYPE DeviceType,D3DFORM
 						case D3DFMT_R8G8B8:			legalUsage	=	D3DUSAGE_DYNAMIC | D3DUSAGE_AUTOGENMIPMAP | D3DUSAGE_QUERY_FILTER;
 													legalUsage	|=	D3DUSAGE_QUERY_SRGBREAD;
 						break;
-												
+
 						case D3DFMT_X8R8G8B8:		legalUsage	=	D3DUSAGE_DYNAMIC | D3DUSAGE_AUTOGENMIPMAP | D3DUSAGE_QUERY_FILTER;
 													legalUsage	|=	D3DUSAGE_QUERY_SRGBREAD | D3DUSAGE_QUERY_SRGBWRITE;
 						break;
@@ -1417,17 +1417,17 @@ HRESULT IDirect3D9::CheckDeviceFormat(UINT Adapter,D3DDEVTYPE DeviceType,D3DFORM
 
 						case D3DFMT_A8:				legalUsage	=	D3DUSAGE_DYNAMIC | D3DUSAGE_AUTOGENMIPMAP | D3DUSAGE_QUERY_FILTER;
 						break;
-						
+
 							// going to need to go back and double check all of these..
 						case D3DFMT_X1R5G5B5:		legalUsage	=	D3DUSAGE_DYNAMIC | D3DUSAGE_AUTOGENMIPMAP | D3DUSAGE_QUERY_FILTER;
 						break;
-						
+
 						case D3DFMT_A4R4G4B4:		legalUsage	=	D3DUSAGE_DYNAMIC | D3DUSAGE_AUTOGENMIPMAP | D3DUSAGE_QUERY_FILTER;
 						break;
 
 						case D3DFMT_A1R5G5B5:		legalUsage	=	D3DUSAGE_DYNAMIC | D3DUSAGE_AUTOGENMIPMAP | D3DUSAGE_QUERY_FILTER;
 						break;
-						
+
 						case D3DFMT_V8U8:			legalUsage	=	D3DUSAGE_DYNAMIC | D3DUSAGE_AUTOGENMIPMAP | D3DUSAGE_QUERY_FILTER;
 						break;
 
@@ -1440,7 +1440,7 @@ HRESULT IDirect3D9::CheckDeviceFormat(UINT Adapter,D3DDEVTYPE DeviceType,D3DFORM
 						break;
 
 							// formats with depth...
-							
+
 						case	D3DFMT_D16:			legalUsage =	D3DUSAGE_DYNAMIC | D3DUSAGE_RENDERTARGET | D3DUSAGE_DEPTHSTENCIL;
 							// just a guess on the legal usages
 						break;
@@ -1461,7 +1461,7 @@ HRESULT IDirect3D9::CheckDeviceFormat(UINT Adapter,D3DDEVTYPE DeviceType,D3DFORM
 						break;
 
 						//-----------------------------------------------------------
-												
+
 						default:
 							Assert(!"Unknown check format");
 							result = D3DERR_NOTAVAILABLE;
@@ -1479,8 +1479,8 @@ HRESULT IDirect3D9::CheckDeviceFormat(UINT Adapter,D3DDEVTYPE DeviceType,D3DFORM
 						GLMPRINTF(( "-X- --> NOT OK: flags %8x:%s", unsatBits,GLMDecodeMask( eD3D_USAGE, unsatBits ) ));
 						result = D3DERR_NOTAVAILABLE;
 					}
-				break;				
-				
+				break;
+
 				case	D3DRTYPE_SURFACE:
 					switch( static_cast<uint>(CheckFormat) )
 					{
@@ -1488,7 +1488,7 @@ HRESULT IDirect3D9::CheckDeviceFormat(UINT Adapter,D3DDEVTYPE DeviceType,D3DFORM
 						case	0x41415353:
 							result = D3DERR_NOTAVAILABLE;
 						break;
-							
+
 						case	D3DFMT_D24S8:
 							result = S_OK;
 						break;
@@ -1498,20 +1498,20 @@ HRESULT IDirect3D9::CheckDeviceFormat(UINT Adapter,D3DDEVTYPE DeviceType,D3DFORM
 						//** IDirect3D9::CheckDeviceFormat  adapter=0, DeviceType=   1:D3DDEVTYPE_HAL, AdapterFormat=       5:D3DFMT_X8R8G8B8, RType=   1:D3DRTYPE_SURFACE, CheckFormat=41415353:UNKNOWN
 					}
 				break;
-				
+
 				default:
 					Assert(!"Unknown resource type");
 					result = D3DERR_NOTAVAILABLE;
 				break;
 			}
 		break;
-		
+
 		default:
 			Assert(!"Unknown adapter format");
 			result = D3DERR_NOTAVAILABLE;
 		break;
 	}
-	
+
 	return result;
 }
 
@@ -1521,21 +1521,21 @@ UINT IDirect3D9::GetAdapterModeCount(UINT Adapter,D3DFORMAT Format)
 	GLMPRINTF(( "-X- IDirect3D9::GetAdapterModeCount: Adapter=%d || Format=%8x:%s", Adapter, Format, GLMDecode(eD3D_FORMAT, Format) ));
 
 	uint modeCount=0;
-	
+
 	GLMDisplayDB *db = GetDisplayDB();
 	int glmRendererIndex = -1;
 	int glmDisplayIndex = -1;
-	
+
 	GLMRendererInfoFields	glmRendererInfo;
 	GLMDisplayInfoFields	glmDisplayInfo;
-	
+
 	// the D3D "Adapter" number feeds the fake adapter index
 	bool result = db->GetFakeAdapterInfo( Adapter, &glmRendererIndex, &glmDisplayIndex, &glmRendererInfo, &glmDisplayInfo ); (void)result;
 	Assert (!result);
 
 	modeCount = db->GetModeCount( glmRendererIndex, glmDisplayIndex );
-	GLMPRINTF(( "-X-   --> result is %d", modeCount ));		
-	
+	GLMPRINTF(( "-X-   --> result is %d", modeCount ));
+
 	return modeCount;
 }
 
@@ -1547,14 +1547,14 @@ HRESULT IDirect3D9::EnumAdapterModes(UINT Adapter,D3DFORMAT Format,UINT Mode,D3D
 	Assert(Format==D3DFMT_X8R8G8B8);
 
 	GLMDisplayDB *db = GetDisplayDB();
-	
+
 	int glmRendererIndex = -1;
 	int glmDisplayIndex = -1;
-	
+
 	GLMRendererInfoFields		glmRendererInfo;
 	GLMDisplayInfoFields		glmDisplayInfo;
 	GLMDisplayModeInfoFields	glmModeInfo;
-	
+
 	// the D3D "Adapter" number feeds the fake adapter index
 	bool result = db->GetFakeAdapterInfo( Adapter, &glmRendererIndex, &glmDisplayIndex, &glmRendererInfo, &glmDisplayInfo );
 	Assert (!result);
@@ -1568,9 +1568,9 @@ HRESULT IDirect3D9::EnumAdapterModes(UINT Adapter,D3DFORMAT Format,UINT Mode,D3D
 	pMode->Height		= glmModeInfo.m_modePixelHeight;
 	pMode->RefreshRate	= glmModeInfo.m_modeRefreshHz;		// "adapter default"
 	pMode->Format		= Format;							// whatever you asked for ?
-	
+
 	GLMPRINTF(( "-X- IDirect3D9::EnumAdapterModes returning mode size (%d,%d) and D3DFMT_X8R8G8B8",pMode->Width,pMode->Height ));
-	return S_OK;	
+	return S_OK;
 }
 
 HRESULT IDirect3D9::CheckDeviceType(UINT Adapter,D3DDEVTYPE DevType,D3DFORMAT AdapterFormat,D3DFORMAT BackBufferFormat,BOOL bWindowed)
@@ -1584,7 +1584,7 @@ HRESULT IDirect3D9::CheckDeviceType(UINT Adapter,D3DDEVTYPE DevType,D3DFORMAT Ad
 		AdapterFormat, GLMDecode(eD3D_FORMAT, AdapterFormat),
 		BackBufferFormat, GLMDecode(eD3D_FORMAT, BackBufferFormat),
 		(int) bWindowed ));
-		
+
 	return S_OK;
 }
 
@@ -1598,11 +1598,11 @@ HRESULT IDirect3D9::GetAdapterDisplayMode(UINT Adapter,D3DDISPLAYMODE* pMode)
 
 	int glmRendererIndex = -1;
 	int glmDisplayIndex = -1;
-	
+
 	GLMRendererInfoFields		glmRendererInfo;
 	GLMDisplayInfoFields		glmDisplayInfo;
 	GLMDisplayModeInfoFields	glmModeInfo;
-	
+
 	// the D3D "Adapter" number feeds the fake adapter index
 	bool result = db->GetFakeAdapterInfo( Adapter, &glmRendererIndex, &glmDisplayIndex, &glmRendererInfo, &glmDisplayInfo );
 	Assert(!result);
@@ -1631,13 +1631,13 @@ HRESULT IDirect3D9::CheckDepthStencilMatch(UINT Adapter,D3DDEVTYPE DeviceType,D3
 		AdapterFormat, GLMDecode(eD3D_FORMAT, AdapterFormat),
 		RenderTargetFormat, GLMDecode(eD3D_FORMAT, RenderTargetFormat),
 		DepthStencilFormat, GLMDecode(eD3D_FORMAT, DepthStencilFormat) ));
-	
+
 	// one known request looks like this:
 	// AdapterFormat=5:D3DFMT_X8R8G8B8 || RenderTargetFormat=3:D3DFMT_A8R8G8B8 || DepthStencilFormat=2:D3DFMT_D24S8
-	
+
 	// return S_OK for that one combo, DXABSTRACT_BREAK_ON_ERROR() on anything else
 	HRESULT result = D3DERR_NOTAVAILABLE;	// failure
-	
+
 	switch( AdapterFormat )
 	{
 		case	D3DFMT_X8R8G8B8:
@@ -1649,7 +1649,7 @@ HRESULT IDirect3D9::CheckDepthStencilMatch(UINT Adapter,D3DDEVTYPE DeviceType,D3
 		}
 		break;
 	}
-	
+
 	Assert( result == S_OK );
 
 	return result;
@@ -1662,18 +1662,18 @@ HRESULT IDirect3D9::CheckDeviceMultiSampleType( UINT Adapter,D3DDEVTYPE DeviceTy
 
 	int glmRendererIndex = -1;
 	int glmDisplayIndex = -1;
-	
+
 	GLMRendererInfoFields		glmRendererInfo;
 	GLMDisplayInfoFields		glmDisplayInfo;
 	//GLMDisplayModeInfoFields	glmModeInfo;
-	
+
 	// the D3D "Adapter" number feeds the fake adapter index
 	bool result = db->GetFakeAdapterInfo( Adapter, &glmRendererIndex, &glmDisplayIndex, &glmRendererInfo, &glmDisplayInfo );
 	Assert( !result );
 	if ( result )
 		return D3DERR_INVALIDCALL;
 
-	
+
 	if ( !CommandLine()->FindParm("-glmenabletrustmsaa") )
 	{
 		// These ghetto drivers don't get MSAA
@@ -1715,7 +1715,7 @@ HRESULT IDirect3D9::CheckDeviceMultiSampleType( UINT Adapter,D3DDEVTYPE DeviceTy
 				return D3DERR_NOTAVAILABLE;
 			}
 		break;
-		
+
 		default:
 			if ( pQualityLevels )
 			{
@@ -1735,7 +1735,7 @@ HRESULT IDirect3D9::CreateDevice(UINT Adapter,D3DDEVTYPE DeviceType,VD3DHWND hFo
 	GLMDebugPrintf( "WARNING: GLMEBUG is 1, perf. is going to be low!" );
 	Warning( "WARNING: GLMEBUG is 1, perf. is going to be low!" );
 #endif
-#if !TOGL_SUPPORT_NULL_DEVICE	
+#if !TOGL_SUPPORT_NULL_DEVICE
 	if (DeviceType == D3DDEVTYPE_NULLREF)
 	{
 		Error( "Must define TOGL_SUPPORT_NULL_DEVICE to use the NULL device" );
@@ -1743,33 +1743,33 @@ HRESULT IDirect3D9::CreateDevice(UINT Adapter,D3DDEVTYPE DeviceType,VD3DHWND hFo
 		return E_FAIL;
 	}
 #endif
-	
+
 	// constrain these inputs for the time being
 	// BackBufferFormat			-> A8R8G8B8
 	// BackBufferCount			-> 1;
 	// MultiSampleType			-> D3DMULTISAMPLE_NONE
 	// AutoDepthStencilFormat	-> D3DFMT_D24S8
-	
+
 	// NULL out the return pointer so if we exit early it is not set
 	*ppReturnedDeviceInterface = NULL;
-	
+
 	// assume success unless something is sour
 	HRESULT result = S_OK;
-	
+
 	// relax this check for now
 	//if (pPresentationParameters->BackBufferFormat != D3DFMT_A8R8G8B8)
 	//{
 	//	DXABSTRACT_BREAK_ON_ERROR();
 	//	result = -1;
 	//}
-	
+
 	//rbarris 24Aug10 - relaxing this check - we don't care if the game asks for two backbuffers, it's moot
 	//if ( pPresentationParameters->BackBufferCount != 1 )
 	//{
 	//	DXABSTRACT_BREAK_ON_ERROR();
 	//	result = D3DERR_NOTAVAILABLE;
 	//}
-		
+
 	if ( pPresentationParameters->AutoDepthStencilFormat != D3DFMT_D24S8 )
 	{
 		DXABSTRACT_BREAK_ON_ERROR();
@@ -1783,7 +1783,7 @@ HRESULT IDirect3D9::CreateDevice(UINT Adapter,D3DDEVTYPE DeviceType,VD3DHWND hFo
 
 		IDirect3DDevice9Params	devparams;
 		memset( &devparams, 0, sizeof(devparams) );
-		
+
 		devparams.m_adapter					= Adapter;
 		devparams.m_deviceType				= DeviceType;
 		devparams.m_focusWindow				= hFocusWindow;				// is this meaningful?  is this a WindowRef ?  follow it up the chain..
@@ -1791,14 +1791,14 @@ HRESULT IDirect3D9::CreateDevice(UINT Adapter,D3DDEVTYPE DeviceType,VD3DHWND hFo
 		devparams.m_presentationParameters	= *pPresentationParameters;
 
 		IDirect3DDevice9 *dev = new IDirect3DDevice9;
-		
+
 		result = dev->Create( &devparams );
-		
+
 		if ( result == S_OK )
 		{
 			*ppReturnedDeviceInterface = dev;
 		}
-		
+
 		g_bNullD3DDevice = ( DeviceType == D3DDEVTYPE_NULLREF );
 	}
 	return result;
@@ -1822,14 +1822,14 @@ HRESULT IDirect3DQuery9::Issue(DWORD dwIssueFlags)
 
 	// Make sure calling thread owns the GL context.
 	Assert( m_ctx->m_nCurOwnerThreadId == ThreadGetCurrentId() );
-		
+
 	if (dwIssueFlags & D3DISSUE_BEGIN)
 	{
 		m_nIssueStartThreadID = ThreadGetCurrentId();
 		m_nIssueStartDrawCallIndex = g_nTotalDrawsOrClears;
 		m_nIssueStartFrameIndex = m_ctx->m_nCurFrame;
 		m_nIssueStartQueryCreationCounter = CGLMQuery::s_nTotalOcclusionQueryCreatesOrDeletes;
-						
+
 		switch( m_type )
 		{
 			case	D3DQUERYTYPE_OCCLUSION:
@@ -1841,26 +1841,26 @@ HRESULT IDirect3DQuery9::Issue(DWORD dwIssueFlags)
 			break;
 		}
 	}
-	
+
 	if (dwIssueFlags & D3DISSUE_END)
 	{
 		m_nIssueEndThreadID = ThreadGetCurrentId();
 		m_nIssueEndDrawCallIndex = g_nTotalDrawsOrClears;
 		m_nIssueEndFrameIndex = m_ctx->m_nCurFrame;
 		m_nIssueEndQueryCreationCounter = CGLMQuery::s_nTotalOcclusionQueryCreatesOrDeletes;
-		
+
 		switch( m_type )
 		{
 			case	D3DQUERYTYPE_OCCLUSION:
 				m_query->Stop();	// drop "end counter" call into stream
 			break;
-			
+
 			case	D3DQUERYTYPE_EVENT:
 				m_nIssueStartThreadID = m_nIssueEndThreadID;
 				m_nIssueStartDrawCallIndex = m_nIssueEndDrawCallIndex;
 				m_nIssueStartFrameIndex = m_nIssueEndFrameIndex;
 				m_nIssueStartQueryCreationCounter = m_nIssueEndQueryCreationCounter;
-				
+
 				// End is very weird with respect to Events (fences).
 				// DX9 docs say to use End to put the fence in the stream.  So we map End to GLM's Start.
 				// http://msdn.microsoft.com/en-us/library/ee422167(VS.85).aspx
@@ -1885,15 +1885,15 @@ HRESULT IDirect3DQuery9::GetData(void* pData,DWORD dwSize,DWORD dwGetDataFlags)
 		*(uint*)pData = 0;
 	}
 
-	if ( !m_query->IsStarted() || !m_query->IsStopped() ) 
+	if ( !m_query->IsStarted() || !m_query->IsStopped() )
 	{
 		Assert(!"Can't GetData before issue/start/stop");
 		printf("\n** IDirect3DQuery9::GetData: can't GetData before issue/start/stop");
 		return S_FALSE;
 	}
-					
+
 	// GetData is not always called with the flush bit.
-		
+
 	// if an answer is not yet available - return S_FALSE.
 	// if an answer is available - return S_OK and write the answer into *pData.
 	bool done = false;
@@ -1905,8 +1905,8 @@ HRESULT IDirect3DQuery9::GetData(void* pData,DWORD dwSize,DWORD dwGetDataFlags)
 			// Detect cases that are actually just not supported with the way we're using GL queries. (For example, beginning a query, then creating/deleting any query, the ending the same query is not supported.)
 			// Also extra paranoid to detect/work around various NV/AMD driver issues.
 			if ( ( ( m_nIssueStartThreadID != nCurThreadId ) || ( m_nIssueEndThreadID != nCurThreadId ) ) ||
-				 ( m_nIssueStartDrawCallIndex == m_nIssueEndDrawCallIndex ) || ( m_nIssueStartFrameIndex != m_nIssueEndFrameIndex ) ||
-				 ( m_nIssueStartQueryCreationCounter != m_nIssueEndQueryCreationCounter ) )
+				( m_nIssueStartDrawCallIndex == m_nIssueEndDrawCallIndex ) || ( m_nIssueStartFrameIndex != m_nIssueEndFrameIndex ) ||
+				( m_nIssueStartQueryCreationCounter != m_nIssueEndQueryCreationCounter ) )
 			{
 				// The thread Issue() was called on differs from GetData() - NV's driver doesn't like this, not sure about AMD. Just fake the results if a flush is requested.
 				// There are various ways to properly handle this scenario, but in practice it only seems to occur in non-critical times (during shutdown or when mat_queue_mode is changed in L4D2).
@@ -1930,26 +1930,26 @@ HRESULT IDirect3DQuery9::GetData(void* pData,DWORD dwSize,DWORD dwGetDataFlags)
 				return D3DERR_NOTAVAILABLE;
 			}
 		}
-		
+
 		switch( m_type )
 		{
 			case	D3DQUERYTYPE_OCCLUSION:
 			{
-				
+
 			if ( flush )
 				{
 				uint oqValue = 0;
 					CFastTimer tm;
 					tm.Start();
-										
+
 
 						// Is this flush actually necessary? According to the extension it's not.
 						// It doesn't seem to matter if this is a glFlush() or glFinish() with NVidia's driver (tested in MT mode - not sure if it matters), it still can take several calls to IsDone() before we can stop waiting for the query results.
 						// On AMD, this flush logic fails during shutdown (the query results never become available) - tried a bunch of experiments and checks with no luck.
-																						
+
 				m_query->Complete(&oqValue);
 
-											
+
 				double flTotalTime = tm.GetDurationInProgress().GetSeconds() * 1000.0f;
 				if ( flTotalTime > .5f )
 						{
@@ -1975,7 +1975,7 @@ HRESULT IDirect3DQuery9::GetData(void* pData,DWORD dwSize,DWORD dwGetDataFlags)
 					if (pData)
 					{
 						*(uint*)pData = oqValue;
-					}					
+					}
 					result = S_OK;
 				}
 				else
@@ -1993,7 +1993,7 @@ HRESULT IDirect3DQuery9::GetData(void* pData,DWORD dwSize,DWORD dwGetDataFlags)
 				if ( ( done ) || ( flush ) )
 				{
 					m_query->Complete(NULL);	// this will block on pre-SLGU
-					
+
 					result = S_OK;
 				}
 				else
@@ -2021,32 +2021,32 @@ HRESULT IDirect3DDevice9::CreateVertexBuffer(UINT Length,DWORD Usage,DWORD FVF,D
 	GL_BATCH_PERF_CALL_TIMER;
 	GLMPRINTF(( ">-A- IDirect3DDevice9::CreateVertexBuffer" ));
 	Assert( m_ctx->m_nCurOwnerThreadId == ThreadGetCurrentId() );
-	
+
 	m_ObjectStats.m_nTotalVertexBuffers++;
 
 	IDirect3DVertexBuffer9 *newbuff = new IDirect3DVertexBuffer9;
-	
+
 	newbuff->m_device = this;
-	
+
 	newbuff->m_ctx = m_ctx;
 
 		// FIXME need to find home or use for the Usage, FVF, Pool values passed in
 	uint options = 0;
-	
+
 	if (Usage&D3DUSAGE_DYNAMIC)
 	{
 		options |= GLMBufferOptionDynamic;
 	}
-	
+
 	newbuff->m_vtxBuffer = m_ctx->NewBuffer( kGLMVertexBuffer, Length, options  ) ;
-	
+
 	newbuff->m_vtxDesc.Type		= D3DRTYPE_VERTEXBUFFER;
 	newbuff->m_vtxDesc.Usage	= Usage;
 	newbuff->m_vtxDesc.Pool		= Pool;
 	newbuff->m_vtxDesc.Size		= Length;
 
 	*ppVertexBuffer = newbuff;
-	
+
 	GLMPRINTF(( "<-A- IDirect3DDevice9::CreateVertexBuffer" ));
 
 	return S_OK;
@@ -2057,7 +2057,7 @@ IDirect3DVertexBuffer9::~IDirect3DVertexBuffer9()
 	GL_BATCH_PERF_CALL_TIMER;
 	GL_PUBLIC_ENTRYPOINT_CHECKS( m_device );
 	GLMPRINTF(( ">-A- ~IDirect3DVertexBuffer9" ));
-	
+
 	if (m_device)
 	{
 		m_device->ReleasedVertexBuffer( this );
@@ -2071,7 +2071,7 @@ IDirect3DVertexBuffer9::~IDirect3DVertexBuffer9()
 		}
 		m_device = NULL;
 	}
-	
+
 	GLMPRINTF(( "<-A- ~IDirect3DVertexBuffer9" ));
 }
 
@@ -2085,13 +2085,13 @@ HRESULT IDirect3DVertexBuffer9::Lock(UINT OffsetToLock,UINT SizeToLock,void** pp
 
 	Assert( !(Flags & D3DLOCK_READONLY) );	// not impl'd
 //	Assert( !(Flags & D3DLOCK_NOSYSLOCK) );	// not impl'd - it triggers though
-	
+
 	GLMBuffLockParams lockreq;
 	lockreq.m_nOffset		= OffsetToLock;
 	lockreq.m_nSize			= SizeToLock;
 	lockreq.m_bNoOverwrite	= (Flags & D3DLOCK_NOOVERWRITE) != 0;
 	lockreq.m_bDiscard		= (Flags & D3DLOCK_DISCARD) != 0;
-			
+
 	m_vtxBuffer->Lock( &lockreq, (char**)ppbData );
 
 	GLMPRINTF(("-X- IDirect3DDevice9::Lock on D3D buf %p (GL name %d) offset %d, size %d => address %p", this, this->m_vtxBuffer->m_nHandle, OffsetToLock, SizeToLock, *ppbData));
@@ -2102,7 +2102,7 @@ HRESULT IDirect3DVertexBuffer9::Unlock()
 {
 	GL_BATCH_PERF_CALL_TIMER;
 	GL_PUBLIC_ENTRYPOINT_CHECKS( m_device );
-	
+
 	tmZoneFiltered( TELEMETRY_LEVEL2, 25, TMZF_NONE, "VB Unlock" );
 
 	m_vtxBuffer->Unlock();
@@ -2134,7 +2134,7 @@ HRESULT IDirect3DDevice9::CreateIndexBuffer(UINT Length,DWORD Usage,D3DFORMAT Fo
 	GLMPRINTF(( ">-A- IDirect3DDevice9::CreateIndexBuffer" ));
 
 	// it is important to save all the create info, since GetDesc could get called later to query it
-	
+
 	m_ObjectStats.m_nTotalIndexBuffers++;
 
 	IDirect3DIndexBuffer9 *newbuff = new IDirect3DIndexBuffer9;
@@ -2142,25 +2142,25 @@ HRESULT IDirect3DDevice9::CreateIndexBuffer(UINT Length,DWORD Usage,D3DFORMAT Fo
 	newbuff->m_device = this;
 
 	newbuff->m_restype = D3DRTYPE_INDEXBUFFER;		//	hmmmmmmm why are we not derived from d3dresource..
-		
+
 	newbuff->m_ctx = m_ctx;
-	
+
 		// FIXME need to find home or use for the Usage, Format, Pool values passed in
 	uint options = 0;
-	
+
 	if (Usage&D3DUSAGE_DYNAMIC)
 	{
 		options |= GLMBufferOptionDynamic;
 	}
 
 	newbuff->m_idxBuffer = m_ctx->NewBuffer( kGLMIndexBuffer, Length, options ) ;
-	
+
 	newbuff->m_idxDesc.Format	= Format;
 	newbuff->m_idxDesc.Type		= D3DRTYPE_INDEXBUFFER;
 	newbuff->m_idxDesc.Usage	= Usage;
 	newbuff->m_idxDesc.Pool		= Pool;
 	newbuff->m_idxDesc.Size		= Length;
-		
+
 	*ppIndexBuffer = newbuff;
 
 	GLMPRINTF(( "<-A- IDirect3DDevice9::CreateIndexBuffer" ));
@@ -2173,7 +2173,7 @@ IDirect3DIndexBuffer9::~IDirect3DIndexBuffer9()
 	GL_BATCH_PERF_CALL_TIMER;
 	GL_PUBLIC_ENTRYPOINT_CHECKS( m_device );
 	GLMPRINTF(( ">-A- ~IDirect3DIndexBuffer9" ));
-	
+
 	if (m_device)
 	{
 		m_device->ReleasedIndexBuffer( this );
@@ -2189,7 +2189,7 @@ IDirect3DIndexBuffer9::~IDirect3DIndexBuffer9()
 	else
 	{
 	}
-	
+
 	GLMPRINTF(( "<-A- ~IDirect3DIndexBuffer9" ));
 }
 
@@ -2201,13 +2201,13 @@ HRESULT IDirect3DIndexBuffer9::Lock(UINT OffsetToLock,UINT SizeToLock,void** ppb
 	// FIXME would be good to have "can't lock twice" logic
 
 	tmZoneFiltered( TELEMETRY_LEVEL2, 25, TMZF_NONE, "IB Lock" );
-	
+
 	GLMBuffLockParams lockreq;
 	lockreq.m_nOffset		= OffsetToLock;
 	lockreq.m_nSize			= SizeToLock;
 	lockreq.m_bNoOverwrite	= ( Flags & D3DLOCK_NOOVERWRITE ) != 0;
 	lockreq.m_bDiscard		= ( Flags & D3DLOCK_DISCARD ) != 0;
-	
+
 	m_idxBuffer->Lock( &lockreq, (char**)ppbData );
 
 	return S_OK;
@@ -2226,7 +2226,7 @@ HRESULT IDirect3DIndexBuffer9::Unlock()
 }
 
 void IDirect3DIndexBuffer9::UnlockActualSize( uint nActualSize, const void *pActualData )
-{ 
+{
 	GL_BATCH_PERF_CALL_TIMER;
 	GL_PUBLIC_ENTRYPOINT_CHECKS( m_device );
 	tmZoneFiltered( TELEMETRY_LEVEL2, 25, TMZF_NONE, "IB UnlockActualSize" );
@@ -2268,12 +2268,12 @@ void	ConvertPresentationParamsToGLMDisplayParams( D3DPRESENT_PARAMETERS *d3dp, G
 		case D3DPRESENT_INTERVAL_IMMEDIATE:
 			gldp->m_vsyncEnable					=	false;	// "The runtime updates the window client area immediately and might do so more than once during the adapter refresh period."
 		break;
-		
+
 		default:
 			gldp->m_vsyncEnable					=	true;	// if I don't know it, you're getting vsync enabled.
 		break;
 	}
-	
+
 	gldp->m_backBufferWidth				=	d3dp->BackBufferWidth;
 	gldp->m_backBufferHeight			=	d3dp->BackBufferHeight;
 	gldp->m_backBufferFormat			=	d3dp->BackBufferFormat;
@@ -2283,7 +2283,7 @@ void	ConvertPresentationParamsToGLMDisplayParams( D3DPRESENT_PARAMETERS *d3dp, G
 	gldp->m_autoDepthStencilFormat		=	d3dp->AutoDepthStencilFormat;
 
 	gldp->m_fsRefreshHz					=	d3dp->FullScreen_RefreshRateInHz;
-	
+
 	// some fields in d3d PB we're not acting on yet...
 	//	UINT                BackBufferCount;
 	//	DWORD               MultiSampleQuality;
@@ -2305,12 +2305,12 @@ HRESULT	IDirect3DDevice9::Create( IDirect3DDevice9Params *params )
 		params->m_presentationParameters.BackBufferCount,
 		params->m_presentationParameters.MultiSampleType,
 		params->m_presentationParameters.MultiSampleQuality );
-		
+
 	UnpackD3DRSITable();
-	
+
 	m_ObjectStats.clear();
 	m_PrevObjectStats.clear();
-	
+
 #if GL_BATCH_PERF_ANALYSIS && GL_BATCH_PERF_ANALYSIS_WRITE_PNGS
 	m_pBatch_vis_bitmap = NULL;
 #endif
@@ -2318,19 +2318,19 @@ HRESULT	IDirect3DDevice9::Create( IDirect3DDevice9Params *params )
 	GL_BATCH_PERF_CALL_TIMER;
 	GLMPRINTF((">-X-IDirect3DDevice9::Create"));
 	HRESULT result = S_OK;
-				
+
 	// create an IDirect3DDevice9
 	// make a GLMContext and set up some drawables
 	m_params = *params;
 
 	m_ctx = NULL;
-		
+
 	V_memset( m_pRenderTargets, 0, sizeof( m_pRenderTargets ) );
 	m_pDepthStencil = NULL;
-		
+
 	m_pDefaultColorSurface = NULL;
 	m_pDefaultDepthStencilSurface = NULL;
-	
+
 	memset( m_streams, 0, sizeof(m_streams) );
 	memset( m_vtx_buffers, 0, sizeof( m_vtx_buffers ) );
 	memset( m_textures, 0, sizeof(m_textures) );
@@ -2342,28 +2342,28 @@ HRESULT	IDirect3DDevice9::Create( IDirect3DDevice9Params *params )
 	m_pixelShader = NULL;
 
 	m_pVertDecl = NULL;
-			
+
 	//============================================================================
 	// param block for GLM context create
-	GLMDisplayParams	glmParams;	
+	GLMDisplayParams	glmParams;
 	ConvertPresentationParamsToGLMDisplayParams( &params->m_presentationParameters, &glmParams );
 
 	glmParams.m_mtgl						=	true;	// forget this idea -> (params->m_behaviorFlags & D3DCREATE_MULTITHREADED) != 0;
 	// the call above fills in a bunch of things, but doesn't know about anything outside of the presentation params.
 	// those tend to be the things that do not change after create, so we do those here in Create.
 
-	glmParams.m_focusWindow					=	params->m_focusWindow;	
+	glmParams.m_focusWindow					=	params->m_focusWindow;
 
 		#if 0	//FIXME-HACK
 			// map the D3D "adapter" to a renderer/display pair
 			// (that GPU will have to stay set as-is for any subsequent mode changes)
-		
+
 			int glmRendererIndex = -1;
 			int glmDisplayIndex = -1;
-		
+
 			GLMRendererInfoFields		glmRendererInfo;
 			GLMDisplayInfoFields		glmDisplayInfo;
-		
+
 			// the D3D "Adapter" number feeds the fake adapter index
 			bool adaptResult = GLMgr::aGLMgr()->GetDisplayDB()->GetFakeAdapterInfo( params->m_adapter, &glmRendererIndex, &glmDisplayIndex, &glmRendererInfo, &glmDisplayInfo );
 			Assert(!adaptResult);
@@ -2372,30 +2372,30 @@ HRESULT	IDirect3DDevice9::Create( IDirect3DDevice9Params *params )
 			glmParams.m_displayIndex				=	glmDisplayIndex;
 				// glmParams.m_modeIndex  hmmmmm, client doesn't give us a mode number, just a resolution..
 		#endif
-	
+
 	m_ctx = GLMgr::aGLMgr()->NewContext( this, &glmParams );
 	if (!m_ctx)
 	{
 		GLMPRINTF(("<-X- IDirect3DDevice9::Create (error out)"));
 		return (HRESULT) -1;
 	}
-	
+
 	// make an FBO to draw into and activate it.
-	m_ctx->m_drawingFBO = m_ctx->NewFBO();					
-				
+	m_ctx->m_drawingFBO = m_ctx->NewFBO();
+
 	// bind it to context.  will receive attachments shortly.
 	m_ctx->BindFBOToCtx( m_ctx->m_drawingFBO, GL_FRAMEBUFFER_EXT );
-	
+
 	m_bFBODirty = false;
 
 	m_pFBOs = new CGLMFBOMap();
 	m_pFBOs->SetLessFunc( RenderTargetState_t::LessFunc );
 
 	// we create two IDirect3DSurface9's.  These will be known as the internal render target 0 and the depthstencil.
-	
+
 	GLMPRINTF(("-X- IDirect3DDevice9::Create making color render target..."));
 	// color surface
-	result = this->CreateRenderTarget( 
+	result = this->CreateRenderTarget(
 		m_params.m_presentationParameters.BackBufferWidth,			// width
 		m_params.m_presentationParameters.BackBufferHeight,			// height
 		m_params.m_presentationParameters.BackBufferFormat,			// format
@@ -2428,7 +2428,7 @@ HRESULT	IDirect3DDevice9::Create( IDirect3DDevice9Params *params )
 	Assert (m_params.m_presentationParameters.EnableAutoDepthStencil);
 
 	GLMPRINTF(("-X- IDirect3DDevice9::Create making depth-stencil..."));
-    result = CreateDepthStencilSurface(
+	result = CreateDepthStencilSurface(
 		m_params.m_presentationParameters.BackBufferWidth,			// width
 		m_params.m_presentationParameters.BackBufferHeight,			// height
 		m_params.m_presentationParameters.AutoDepthStencilFormat,	// format
@@ -2467,7 +2467,7 @@ HRESULT	IDirect3DDevice9::Create( IDirect3DDevice9Params *params )
 
 	// this next part really needs to be inside GLMContext.. or replaced with D3D style viewport setup calls.
 	m_ctx->GenDebugFontTex();
-	
+
 	// blast the gl state mirror...
 	memset( &this->gl, 0, sizeof( this->gl ) );
 
@@ -2479,29 +2479,29 @@ HRESULT	IDirect3DDevice9::Create( IDirect3DDevice9Params *params )
 	GLViewportDepthRange_t	defViewportDepthRange	= { 0.1, 1000.0 };
 	GLCullFaceEnable_t		defCullFaceEnable		= { true };
 	GLCullFrontFace_t		defCullFrontFace		= { GL_CCW };
-	
+
 	gl.m_ScissorEnable		=	defScissorEnable;
 	gl.m_ScissorBox			=	defScissorBox;
 	gl.m_ViewportBox		=	defViewportBox;
 	gl.m_ViewportDepthRange	=	defViewportDepthRange;
 	gl.m_CullFaceEnable		=	defCullFaceEnable;
 	gl.m_CullFrontFace		=	defCullFrontFace;
-		
+
 	FullFlushStates();
-	
+
 	GLMPRINTF(("<-X- IDirect3DDevice9::Create complete"));
 
 	// so GetClientRect can return sane answers
-	//uint width, height;		
+	//uint width, height;
 	RenderedSize( m_params.m_presentationParameters.BackBufferWidth, m_params.m_presentationParameters.BackBufferHeight, true );	// true = set
-			
+
 #if GL_TELEMETRY_GPU_ZONES
 	g_TelemetryGPUStats.Clear();
 #endif
 
-	GL_BATCH_PERF( 
-		g_nTotalD3DCalls = 0, g_nTotalD3DCycles = 0, m_nBatchVisY = 0, m_nBatchVisFrameIndex = 0, m_nBatchVisFileIdx = 0, m_nNumProgramChanges = 0, m_flTotalD3DTime = 0, m_nTotalD3DCalls = 0, 
-		m_flTotalD3DTime = 0, m_nTotalGLCalls = 0, m_flTotalGLTime = 0, m_nOverallDraws = 0, m_nOverallPrims = 0, m_nOverallD3DCalls = 0, m_flOverallD3DTime = 0, m_nOverallGLCalls = 0, m_flOverallGLTime = 0, m_nOverallProgramChanges = 0, 
+	GL_BATCH_PERF(
+		g_nTotalD3DCalls = 0, g_nTotalD3DCycles = 0, m_nBatchVisY = 0, m_nBatchVisFrameIndex = 0, m_nBatchVisFileIdx = 0, m_nNumProgramChanges = 0, m_flTotalD3DTime = 0, m_nTotalD3DCalls = 0,
+		m_flTotalD3DTime = 0, m_nTotalGLCalls = 0, m_flTotalGLTime = 0, m_nOverallDraws = 0, m_nOverallPrims = 0, m_nOverallD3DCalls = 0, m_flOverallD3DTime = 0, m_nOverallGLCalls = 0, m_flOverallGLTime = 0, m_nOverallProgramChanges = 0,
 		m_flOverallPresentTime = 0, m_flOverallPresentTimeSquared = 0, m_nOverallPresents = 0, m_flOverallSwapWindowTime = 0, m_flOverallSwapWindowTimeSquared = 0, m_nTotalPrims = 0; );
 
 	g_nTotalDrawsOrClears = 0;
@@ -2514,7 +2514,7 @@ HRESULT	IDirect3DDevice9::Create( IDirect3DDevice9Params *params )
 	m_vtx_buffers[1] = m_pDummy_vtx_buffer;
 	m_vtx_buffers[2] = m_pDummy_vtx_buffer;
 	m_vtx_buffers[3] = m_pDummy_vtx_buffer;
-	
+
 	return result;
 }
 
@@ -2528,22 +2528,22 @@ IDirect3DDevice9::~IDirect3DDevice9()
 #if GL_BATCH_PERF_ANALYSIS && GL_BATCH_PERF_ANALYSIS_WRITE_PNGS
 	delete m_pBatch_vis_bitmap;
 #endif
-	
+
 	delete m_pDummy_vtx_buffer;
 	for ( int i = 0; i < 4; i++ )
 		SetRenderTarget( i, NULL );
 	SetDepthStencilSurface( NULL );
 	if ( m_pDefaultColorSurface )
 	{
-		m_pDefaultColorSurface->Release( 0, "IDirect3DDevice9::~IDirect3DDevice9 release color surface" ); 
+		m_pDefaultColorSurface->Release( 0, "IDirect3DDevice9::~IDirect3DDevice9 release color surface" );
 		m_pDefaultColorSurface = NULL;
 	}
 	if ( m_pDefaultDepthStencilSurface )
 	{
-		m_pDefaultDepthStencilSurface->Release( 0, "IDirect3DDevice9::~IDirect3DDevice9 release depth surface" ); 
+		m_pDefaultDepthStencilSurface->Release( 0, "IDirect3DDevice9::~IDirect3DDevice9 release depth surface" );
 		m_pDefaultDepthStencilSurface = NULL;
 	}
-	
+
 	if ( m_pFBOs )
 	{
 	ResetFBOMap();
@@ -2586,7 +2586,7 @@ HRESULT IDirect3DDevice9::Reset(D3DPRESENT_PARAMETERS* pPresentationParameters)
 	// fix up viewport / scissor..
 	// then pass the new presentation parameters through to GLM.
 	// (it will in turn notify appframework on the next present... which may be very soon, as mode changes are usually spotted inside Present() ).
-	
+
 	// so some of this looks a lot like Create - we're just a subset of what it does.
 	// with a little work you could refactor this to be common code.
 
@@ -2599,9 +2599,9 @@ HRESULT IDirect3DDevice9::Reset(D3DPRESENT_PARAMETERS* pPresentationParameters)
 		pPresentationParameters->MultiSampleQuality );
 
 	//------------------------------------------------------------------------------- absorb new presentation params..
-	
+
 	m_params.m_presentationParameters = *pPresentationParameters;
-	
+
 	//------------------------------------------------------------------------------- color buffer..
 	// release old color surface if it's there..
 	if ( m_pDefaultColorSurface )
@@ -2610,11 +2610,11 @@ HRESULT IDirect3DDevice9::Reset(D3DPRESENT_PARAMETERS* pPresentationParameters)
 		Assert( !refc );
 		m_pDefaultColorSurface = NULL;
 	}
-	
+
 	GLMPRINTF(("-X- IDirect3DDevice9::Reset making new color render target..."));
 
 	// color surface
-	result = this->CreateRenderTarget( 
+	result = this->CreateRenderTarget(
 		m_params.m_presentationParameters.BackBufferWidth,			// width
 		m_params.m_presentationParameters.BackBufferHeight,			// height
 		m_params.m_presentationParameters.BackBufferFormat,			// format
@@ -2635,7 +2635,7 @@ HRESULT IDirect3DDevice9::Reset(D3DPRESENT_PARAMETERS* pPresentationParameters)
 	GLMPRINTF(("-X- IDirect3DDevice9::Reset making color render target complete -> %08x", m_pDefaultColorSurface ));
 
 	GLMPRINTF(("-X- IDirect3DDevice9::Reset setting color render target..."));
-	
+
 	result = this->SetDepthStencilSurface( NULL );
 
 	result = this->SetRenderTarget( 0, m_pDefaultColorSurface );
@@ -2655,11 +2655,11 @@ HRESULT IDirect3DDevice9::Reset(D3DPRESENT_PARAMETERS* pPresentationParameters)
 		Assert(!refc);
 		m_pDefaultDepthStencilSurface = NULL;
 	}
-	
+
 	Assert (m_params.m_presentationParameters.EnableAutoDepthStencil);
 
 	GLMPRINTF(("-X- IDirect3DDevice9::Reset making depth-stencil..."));
-    result = CreateDepthStencilSurface(
+	result = CreateDepthStencilSurface(
 		m_params.m_presentationParameters.BackBufferWidth,			// width
 		m_params.m_presentationParameters.BackBufferHeight,			// height
 		m_params.m_presentationParameters.AutoDepthStencilFormat,	// format
@@ -2706,18 +2706,18 @@ HRESULT IDirect3DDevice9::Reset(D3DPRESENT_PARAMETERS* pPresentationParameters)
 	GLViewportDepthRange_t	defViewportDepthRange	= { 0.1, 1000.0 };
 	GLCullFaceEnable_t		defCullFaceEnable		= { true };
 	GLCullFrontFace_t		defCullFrontFace		= { GL_CCW };
-	
+
 	gl.m_ScissorEnable		=	defScissorEnable;
 	gl.m_ScissorBox			=	defScissorBox;
 	gl.m_ViewportBox		=	defViewportBox;
 	gl.m_ViewportDepthRange	=	defViewportDepthRange;
 	gl.m_CullFaceEnable		=	defCullFaceEnable;
 	gl.m_CullFrontFace		=	defCullFrontFace;
-			
+
 	FullFlushStates();
-	
+
 	//-------------------------------------------------------------------------------finally, propagate new display params to GLM context
-	GLMDisplayParams	glmParams;	
+	GLMDisplayParams	glmParams;
 	ConvertPresentationParamsToGLMDisplayParams( pPresentationParameters, &glmParams );
 
 	// steal back previously sent focus window...
@@ -2725,13 +2725,13 @@ HRESULT IDirect3DDevice9::Reset(D3DPRESENT_PARAMETERS* pPresentationParameters)
 	Assert( glmParams.m_focusWindow != NULL );
 
 	// so GetClientRect can return sane answers
-	//uint width, height;		
+	//uint width, height;
 	RenderedSize( pPresentationParameters->BackBufferWidth, pPresentationParameters->BackBufferHeight, true );	// true = set
 
 	m_ctx->Reset();
-		
+
 	m_ctx->SetDisplayParams( &glmParams );
-	
+
 	return S_OK;
 }
 
@@ -2740,12 +2740,12 @@ HRESULT IDirect3DDevice9::SetViewport(CONST D3DVIEWPORT9* pViewport)
 	GL_BATCH_PERF_CALL_TIMER;
 	GL_PUBLIC_ENTRYPOINT_CHECKS( this );
 	GLMPRINTF(("-X- IDirect3DDevice9::SetViewport : minZ %f, maxZ %f",pViewport->MinZ, pViewport->MaxZ ));
-	
+
 	gl.m_ViewportBox.x		= pViewport->X;
 	gl.m_ViewportBox.width	= pViewport->Width;
 
 	gl.m_ViewportBox.y		= pViewport->Y;
-	gl.m_ViewportBox.height	= pViewport->Height;	
+	gl.m_ViewportBox.height	= pViewport->Height;
 
 	gl.m_ViewportBox.widthheight = pViewport->Width | ( pViewport->Height << 16 );
 
@@ -2769,7 +2769,7 @@ HRESULT IDirect3DDevice9::GetViewport( D3DVIEWPORT9* pViewport )
 	pViewport->Width = gl.m_ViewportBox.width;
 
 	pViewport->Y = gl.m_ViewportBox.y;
-	pViewport->Height = gl.m_ViewportBox.height;	
+	pViewport->Height = gl.m_ViewportBox.height;
 
 	pViewport->MinZ = gl.m_ViewportDepthRange.flNear;
 	pViewport->MaxZ = gl.m_ViewportDepthRange.flFar;
@@ -2799,20 +2799,20 @@ HRESULT IDirect3DDevice9::EndScene()
 
 enum ECarbonModKeyIndex
 {
-  EcmdKeyBit                     = 8,    /* command key down?*/
-  EshiftKeyBit                   = 9,    /* shift key down?*/
-  EalphaLockBit                  = 10,   /* alpha lock down?*/
-  EoptionKeyBit                  = 11,   /* option key down?*/
-  EcontrolKeyBit                 = 12    /* control key down?*/
+	EcmdKeyBit                     = 8,    /* command key down?*/
+	EshiftKeyBit                   = 9,    /* shift key down?*/
+	EalphaLockBit                  = 10,   /* alpha lock down?*/
+	EoptionKeyBit                  = 11,   /* option key down?*/
+	EcontrolKeyBit                 = 12    /* control key down?*/
 };
 
 enum ECarbonModKeyMask
 {
-  EcmdKey                        = 1 << EcmdKeyBit,
-  EshiftKey                      = 1 << EshiftKeyBit,
-  EalphaLock                     = 1 << EalphaLockBit,
-  EoptionKey                     = 1 << EoptionKeyBit,
-  EcontrolKey                    = 1 << EcontrolKeyBit
+	EcmdKey                        = 1 << EcmdKeyBit,
+	EshiftKey                      = 1 << EshiftKeyBit,
+	EalphaLock                     = 1 << EalphaLockBit,
+	EoptionKey                     = 1 << EoptionKeyBit,
+	EcontrolKey                    = 1 << EcontrolKeyBit
 };
 
 void IDirect3DDevice9::PrintObjectStats( const ObjectStats_t &stats )
@@ -2835,7 +2835,7 @@ void IDirect3DDevice9::DumpStatsToConsole( const CCommand *pArgs )
 	ConMsg( "Overall: Batches: %u, Prims: %u, Program Changes: %u\n", m_nOverallDraws, m_nOverallPrims, m_nOverallProgramChanges  );
 	ConMsg( "Overall: D3D Calls: %u D3D Time: %4.3fms, Avg D3D Time Per Call: %4.9fms\n", m_nOverallD3DCalls, m_flOverallD3DTime, m_nOverallD3DCalls ? ( m_flOverallD3DTime / m_nOverallD3DCalls ) : 0.0f );
 	ConMsg( "Overall:  GL Calls: %u  GL Time: %4.3fms, Avg GL Time Per Call: %4.9fms\n", m_nOverallGLCalls, m_flOverallGLTime, m_nOverallGLCalls ? ( m_flOverallGLTime / m_nOverallGLCalls ) : 0.0f );
-	
+
 	ConMsg( "D3DPresent: %u, Overall Time: %4.3fms, Avg: %4.6fms, Std Dev: %4.6fms\n",
 		m_nOverallPresents,
 		m_flOverallPresentTime, m_nOverallPresents ? ( m_flOverallPresentTime / m_nOverallPresents ) : 0.0f,
@@ -2844,7 +2844,7 @@ void IDirect3DDevice9::DumpStatsToConsole( const CCommand *pArgs )
 	ConMsg( "GL SwapWindow(): Overall Time: %4.3fms, Avg: %4.6fms, Std Dev: %4.6fms\n",
 		m_flOverallSwapWindowTime, m_nOverallPresents ? ( m_flOverallSwapWindowTime / m_nOverallPresents ) : 0.0f,
 		m_nOverallPresents ? ( sqrt( ( m_flOverallSwapWindowTimeSquared / m_nOverallPresents ) - ( m_flOverallSwapWindowTime / m_nOverallPresents ) * ( m_flOverallSwapWindowTime / m_nOverallPresents ) ) ) : 0.0f );
-		
+
 	if ( ( pArgs ) && ( pArgs->ArgC() == 2 ) && (pArgs->Arg(1)[0] != '0') )
 	{
 		m_nOverallDraws = 0;
@@ -2895,8 +2895,8 @@ void IDirect3DDevice9::DumpTextures( const CCommand *pArgs )
 	while ( pCurTex )
 	{
 		nNumFound++;
-		ConMsg( "Tex \"%s\", Layout: \"%s\", Size: %u, RT: %u, Depth: %u, Stencil: %u, MSAA: %u\n", 
-			pCurTex->m_debugLabel ? pCurTex->m_debugLabel : "?", 
+		ConMsg( "Tex \"%s\", Layout: \"%s\", Size: %u, RT: %u, Depth: %u, Stencil: %u, MSAA: %u\n",
+			pCurTex->m_debugLabel ? pCurTex->m_debugLabel : "?",
 			pCurTex->m_layout->m_layoutSummary,
 			pCurTex->m_layout->m_storageTotalSize,
 			( pCurTex->m_layout->m_key.m_texFlags & kGLMTexRenderable ) ? 1 : 0,
@@ -2930,30 +2930,30 @@ HRESULT IDirect3DDevice9::Present(CONST RECT* pSourceRect,CONST RECT* pDestRect,
 {
 	GL_BATCH_PERF( g_nTotalD3DCalls++; )
 	GL_PUBLIC_ENTRYPOINT_CHECKS( this );
-			
+
 	TOGL_NULL_DEVICE_CHECK;
 
 	if ( m_bFBODirty )
 	{
 		UpdateBoundFBO();
 	}
-		
+
 	// before attempting to present a tex, make sure it's been resolved if it was MSAA.
 		// if we push that responsibility down to m_ctx->Present, it could probably do it without an extra copy.
 		// i.e. anticipate the blit from the resolvedtex to GL_BACK, and just do that instead.
 
 	// no explicit ResolveTex call first - that got pushed down into GLMContext::Present
-		
+
 #if GL_BATCH_PERF_ANALYSIS
 	uint64 nStartGLCycles = gGL->m_nTotalGLCycles;
 	nStartGLCycles;
-	
+
 	CFastTimer tm;
 	tm.Start();
 #endif
 
 	m_ctx->Present( m_pDefaultColorSurface->m_tex );
-		
+
 #if GL_BATCH_PERF_ANALYSIS
 	double flPresentTime = tm.GetDurationInProgress().GetMillisecondsF();
 	double flGLSwapWindowTime = g_pLauncherMgr->GetPrevGLSwapWindowTime();
@@ -2969,7 +2969,7 @@ HRESULT IDirect3DDevice9::Present(CONST RECT* pSourceRect,CONST RECT* pDestRect,
 
 	m_flTotalD3DTime += flPresentTime + g_nTotalD3DCycles * s_rdtsc_to_ms;
 	m_nTotalD3DCalls += g_nTotalD3DCalls;
-		
+
 	m_flTotalGLTime += gGL->m_nTotalGLCycles * s_rdtsc_to_ms;
 	m_nTotalGLCalls += gGL->m_nTotalGLCalls;
 
@@ -2980,7 +2980,7 @@ HRESULT IDirect3DDevice9::Present(CONST RECT* pSourceRect,CONST RECT* pDestRect,
 	m_flOverallD3DTime += m_flTotalD3DTime;
 	m_nOverallGLCalls += m_nTotalGLCalls;
 	m_flOverallGLTime += m_flTotalGLTime;
-					
+
 	static int nPrevBatchVis = -1;
 
 #if GL_BATCH_PERF_ANALYSIS_WRITE_PNGS
@@ -3000,7 +3000,7 @@ HRESULT IDirect3DDevice9::Present(CONST RECT* pSourceRect,CONST RECT* pDestRect,
 		m_pBatch_vis_bitmap->draw_formatted_text(0, y+8*(l++), 1, 255, 255, 255, "Overall: Batches: %u, Prims: %u, Program Changes: %u", m_nOverallDraws, m_nOverallPrims, m_nOverallProgramChanges  );
 		m_pBatch_vis_bitmap->draw_formatted_text(0, y+8*(l++), 1, 255, 255, 255, "Overall: D3D Calls: %u D3D Time: %4.3fms", m_nOverallD3DCalls, m_flOverallD3DTime );
 		m_pBatch_vis_bitmap->draw_formatted_text(0, y+8*(l++), 1, 255, 255, 255, "Overall:  GL Calls: %u  GL Time: %4.3fms", m_nOverallGLCalls, m_flOverallGLTime );
-		
+
 		size_t png_size = 0;
 		void *pPNG_data = tdefl_write_image_to_png_file_in_memory(m_pBatch_vis_bitmap->get_ptr(), m_pBatch_vis_bitmap->width(), m_pBatch_vis_bitmap->height(), 3, &png_size, true);
 		if (pPNG_data)
@@ -3052,12 +3052,12 @@ HRESULT IDirect3DDevice9::Present(CONST RECT* pSourceRect,CONST RECT* pDestRect,
 		m_flOverallSwapWindowTimeSquared = 0;
 		m_nOverallPresents = 0;
 	}
-	
+
 	g_nTotalD3DCycles = 0;
 	g_nTotalD3DCalls = 0;
 	gGL->m_nTotalGLCycles = 0;
 	gGL->m_nTotalGLCalls = 0;
-		
+
 	m_nNumProgramChanges = 0;
 	m_flTotalD3DTime = 0;
 	m_nTotalD3DCalls = 0;
@@ -3068,13 +3068,13 @@ HRESULT IDirect3DDevice9::Present(CONST RECT* pSourceRect,CONST RECT* pDestRect,
 	if ( gl_batch_vis.GetBool() )
 	{
 		gl_batch_vis.SetValue( false );
-		
+
 		ConMsg( "Must define GL_BATCH_PERF_ANALYSIS to use this feature" );
 	}
 #endif
 
 	g_nTotalDrawsOrClears = 0;
-				
+
 #if GL_TELEMETRY_GPU_ZONES
 	g_TelemetryGPUStats.Clear();
 #endif
@@ -3110,7 +3110,7 @@ HRESULT IDirect3DDevice9::CreateRenderTarget(UINT Width,UINT Height,D3DFORMAT Fo
 	GL_BATCH_PERF_CALL_TIMER;
 	GL_PUBLIC_ENTRYPOINT_CHECKS( this );
 	HRESULT result = S_OK;
-	
+
 	m_ObjectStats.m_nTotalSurfaces++;
 	m_ObjectStats.m_nTotalRenderTargets++;
 
@@ -3118,10 +3118,10 @@ HRESULT IDirect3DDevice9::CreateRenderTarget(UINT Width,UINT Height,D3DFORMAT Fo
 	surf->m_restype = D3DRTYPE_SURFACE;
 
 	surf->m_device		= this;				// always set device on creations!
-	
+
 	GLMTexLayoutKey rtkey;
 	memset( &rtkey, 0, sizeof(rtkey) );
-	
+
 	rtkey.m_texGLTarget	=	GL_TEXTURE_2D;
 	rtkey.m_xSize		=	Width;
 	rtkey.m_ySize		=	Height;
@@ -3136,7 +3136,7 @@ HRESULT IDirect3DDevice9::CreateRenderTarget(UINT Width,UINT Height,D3DFORMAT Fo
 		// this config can't support SRGB render targets.  quietly turn off the sRGB bit.
 		rtkey.m_texFlags &= ~kGLMTexSRGB;
 	}
-	
+
 	if ( (MultiSample !=0) && (!m_ctx->Caps().m_nvG7x) )
 	{
 		rtkey.m_texFlags |= kGLMTexMultisampled;
@@ -3147,26 +3147,26 @@ HRESULT IDirect3DDevice9::CreateRenderTarget(UINT Width,UINT Height,D3DFORMAT Fo
 	surf->m_tex			= m_ctx->NewTex( &rtkey, 1, pDebugLabel );
 	surf->m_face		= 0;
 	surf->m_mip			= 0;
-	
+
 	//desc
 	surf->m_desc.Format				=	Format;
-    surf->m_desc.Type				=	D3DRTYPE_SURFACE;
-    surf->m_desc.Usage				=	0;					//FIXME ???????????
-    surf->m_desc.Pool				=	D3DPOOL_DEFAULT;	//FIXME ???????????
+	surf->m_desc.Type				=	D3DRTYPE_SURFACE;
+	surf->m_desc.Usage				=	0;					//FIXME ???????????
+	surf->m_desc.Pool				=	D3DPOOL_DEFAULT;	//FIXME ???????????
 	surf->m_desc.MultiSampleType	=	MultiSample;
-    surf->m_desc.MultiSampleQuality	=	MultisampleQuality;
-    surf->m_desc.Width				=	Width;
-    surf->m_desc.Height				=	Height;
+	surf->m_desc.MultiSampleQuality	=	MultisampleQuality;
+	surf->m_desc.Width				=	Width;
+	surf->m_desc.Height				=	Height;
 
 	*ppSurface = (result==S_OK) ? surf : NULL;
 
 	#if IUNKNOWN_ALLOC_SPEW
 		char scratch[1024];
 		sprintf(scratch,"RT %s", surf->m_tex->m_layout->m_layoutSummary );
-		surf->SetMark( true, scratch ); 
+		surf->SetMark( true, scratch );
 	#endif
-	
-	
+
+
 	return result;
 }
 
@@ -3183,15 +3183,15 @@ void IDirect3DDevice9::UpdateBoundFBO()
 	if ( m_pFBOs->IsValidIndex( index ) )
 	{
 		Assert( (*m_pFBOs)[index] );
-		
+
 		m_ctx->m_drawingFBO = (*m_pFBOs)[index];
-	} 
-	else 
+	}
+	else
 	{
 		CGLMFBO *newFBO = m_ctx->NewFBO();
 
 		m_pFBOs->Insert( renderTargetState, newFBO );
-		
+
 		uint nNumBound = 0;
 
 		for ( uint i = 0; i < 4; i++ )
@@ -3211,7 +3211,7 @@ void IDirect3DDevice9::UpdateBoundFBO()
 			nNumBound++;
 		}
 
-		if ( m_pDepthStencil ) 
+		if ( m_pDepthStencil )
 		{
 			GLMFBOTexAttachParams	depthParams;
 			memset( &depthParams, 0, sizeof(depthParams) );
@@ -3223,7 +3223,7 @@ void IDirect3DDevice9::UpdateBoundFBO()
 			newFBO->TexAttach( &depthParams, destAttach );
 			nNumBound++;
 		}
-		
+
 		(void)nNumBound;
 
 		Assert( nNumBound );
@@ -3249,7 +3249,7 @@ void IDirect3DDevice9::ResetFBOMap()
 	{
 		const RenderTargetState_t &rtState = m_pFBOs->Key( i ); (void)rtState;
 		CGLMFBO *pFBO = (*m_pFBOs)[i];
-				
+
 		m_ctx->DelFBO( pFBO );
 	}
 
@@ -3264,9 +3264,9 @@ void IDirect3DDevice9::ScrubFBOMap( CGLMTex *pTex )
 
 	if ( !m_pFBOs )
 		return;
-				
+
 	CUtlVectorFixed< RenderTargetState_t, 128 > fbosToRemove;
-	
+
 	FOR_EACH_MAP_FAST( (*m_pFBOs), i )
 	{
 		const RenderTargetState_t &rtState = m_pFBOs->Key( i );
@@ -3289,9 +3289,9 @@ void IDirect3DDevice9::ScrubFBOMap( CGLMTex *pTex )
 			Assert( 0 );
 			continue;
 		}
-		
+
 		CGLMFBO *pFBO = (*m_pFBOs)[index];
-						
+
 		m_ctx->DelFBO( pFBO );
 
 		m_pFBOs->RemoveAt( index );
@@ -3306,7 +3306,7 @@ HRESULT IDirect3DDevice9::SetRenderTarget(DWORD RenderTargetIndex,IDirect3DSurfa
 	GL_BATCH_PERF_CALL_TIMER;
 	GL_PUBLIC_ENTRYPOINT_CHECKS( this );
 	tmZone( TELEMETRY_LEVEL2, TMZF_NONE, "%s", __FUNCTION__ );
-	
+
 	Assert( RenderTargetIndex < 4 );
 
 	HRESULT result = S_OK;
@@ -3319,7 +3319,7 @@ HRESULT IDirect3DDevice9::SetRenderTarget(DWORD RenderTargetIndex,IDirect3DSurfa
 	));
 
 	// note that it is OK to pass NULL for pRenderTarget, it implies that you would like to detach any color buffer from that target index
-	
+
 	// behaviors...
 	// if new surf is same as old surf, no change in refcount, in fact, it's early exit
 	IDirect3DSurface9 *oldTarget = m_pRenderTargets[RenderTargetIndex];
@@ -3329,7 +3329,7 @@ HRESULT IDirect3DDevice9::SetRenderTarget(DWORD RenderTargetIndex,IDirect3DSurfa
 		GLMPRINTF(("-F-             --> no change",RenderTargetIndex));
 		return S_OK;
 	}
-			
+
 
 	// Fix this if porting to x86_64
 	if ( m_pRenderTargets[RenderTargetIndex] )
@@ -3349,7 +3349,7 @@ HRESULT IDirect3DDevice9::SetRenderTarget(DWORD RenderTargetIndex,IDirect3DSurfa
 
 	// we now know that the new surf is not the same as the old surf.
 	// you can't assume either one is non NULL here though.
-	
+
 		m_pRenderTargets[RenderTargetIndex]->Release( 1, "-A  SetRenderTarget private release" );
 	}
 
@@ -3357,13 +3357,13 @@ HRESULT IDirect3DDevice9::SetRenderTarget(DWORD RenderTargetIndex,IDirect3DSurfa
 	{
 		pRenderTarget->AddRef( 1, "+A  SetRenderTarget private addref"  );						// again, private refcount being raised
 	}
-	m_pRenderTargets[RenderTargetIndex] = pRenderTarget;	
-	
+	m_pRenderTargets[RenderTargetIndex] = pRenderTarget;
+
 	m_bFBODirty = true;
 
 /*
 	if (!pRenderTarget)
-	{		
+	{
 		GLMPRINTF(("-F-             --> Setting NULL render target on index=%d ",RenderTargetIndex));
 	}
 	else
@@ -3372,12 +3372,12 @@ HRESULT IDirect3DDevice9::SetRenderTarget(DWORD RenderTargetIndex,IDirect3DSurfa
 		// attach color to FBO
 		GLMFBOTexAttachParams	rtParams;
 		memset( &rtParams, 0, sizeof(rtParams) );
-		
+
 		rtParams.m_tex		= pRenderTarget->m_tex;
 		rtParams.m_face		= pRenderTarget->m_face;
 		rtParams.m_mip		= pRenderTarget->m_mip;
 		rtParams.m_zslice	= 0;	// FIXME if you ever want to be able to render to slices of a 3D tex..
-		
+
 		m_drawableFBO->TexAttach( &rtParams, (EGLMFBOAttachment)(kAttColor0 + RenderTargetIndex) );
 	}
 */
@@ -3400,15 +3400,15 @@ HRESULT IDirect3DDevice9::GetRenderTarget(DWORD RenderTargetIndex,IDirect3DSurfa
 	GL_PUBLIC_ENTRYPOINT_CHECKS( this );
 	if ( !m_pRenderTargets[ RenderTargetIndex ] )
 		return D3DERR_NOTFOUND;
-	
+
 	if ( ( RenderTargetIndex > 4 ) || !ppRenderTarget )
 		return D3DERR_INVALIDCALL;
 
 	// safe because of early exit on NULL above
 	m_pRenderTargets[ RenderTargetIndex ]->AddRef(0, "+B GetRenderTarget public addref");	// per http://msdn.microsoft.com/en-us/library/bb174404(VS.85).aspx
-	
+
 	*ppRenderTarget = m_pRenderTargets[ RenderTargetIndex ];
-	
+
 	return S_OK;
 }
 
@@ -3419,9 +3419,9 @@ HRESULT IDirect3DDevice9::CreateOffscreenPlainSurface( UINT Width,UINT Height,D3
 	// set surf->m_restype to D3DRTYPE_SURFACE...
 
 	// this is almost identical to CreateRenderTarget..
-	
+
 	HRESULT result = S_OK;
-	
+
 	m_ObjectStats.m_nTotalSurfaces++;
 	m_ObjectStats.m_nTotalRenderTargets++;
 
@@ -3432,7 +3432,7 @@ HRESULT IDirect3DDevice9::CreateOffscreenPlainSurface( UINT Width,UINT Height,D3
 
 	GLMTexLayoutKey rtkey;
 	memset( &rtkey, 0, sizeof(rtkey) );
-	
+
 	rtkey.m_texGLTarget	=	GL_TEXTURE_2D;
 	rtkey.m_xSize		=	Width;
 	rtkey.m_ySize		=	Height;
@@ -3444,19 +3444,19 @@ HRESULT IDirect3DDevice9::CreateOffscreenPlainSurface( UINT Width,UINT Height,D3
 	surf->m_tex			=	m_ctx->NewTex( &rtkey, 1, "offscreen plain surface" );
 	surf->m_face		=	0;
 	surf->m_mip			=	0;
-	
+
 	//desc
 	surf->m_desc.Format				=	Format;
-    surf->m_desc.Type				=	D3DRTYPE_SURFACE;
-    surf->m_desc.Usage				=	0;
-    surf->m_desc.Pool				=	D3DPOOL_DEFAULT;
+	surf->m_desc.Type				=	D3DRTYPE_SURFACE;
+	surf->m_desc.Usage				=	0;
+	surf->m_desc.Pool				=	D3DPOOL_DEFAULT;
 	surf->m_desc.MultiSampleType	=	D3DMULTISAMPLE_NONE;
-    surf->m_desc.MultiSampleQuality	=	0;
-    surf->m_desc.Width				=	Width;
-    surf->m_desc.Height				=	Height;
+	surf->m_desc.MultiSampleQuality	=	0;
+	surf->m_desc.Width				=	Width;
+	surf->m_desc.Height				=	Height;
 
 	*ppSurface = (result==S_OK) ? surf : NULL;
-	
+
 	return result;
 }
 
@@ -3466,7 +3466,7 @@ HRESULT IDirect3DDevice9::CreateDepthStencilSurface(UINT Width,UINT Height,D3DFO
 	GL_PUBLIC_ENTRYPOINT_CHECKS( this );
 	Assert( ( Format == D3DFMT_D16 ) || ( Format == D3DFMT_D24X8 ) || ( Format == D3DFMT_D24S8 ) );
 	HRESULT result = S_OK;
-	
+
 	m_ObjectStats.m_nTotalSurfaces++;
 	m_ObjectStats.m_nTotalRenderTargets++;
 
@@ -3474,7 +3474,7 @@ HRESULT IDirect3DDevice9::CreateDepthStencilSurface(UINT Width,UINT Height,D3DFO
 	surf->m_restype = D3DRTYPE_SURFACE;
 
 	surf->m_device = this;				// always set device on creations!
-	
+
 	GLMTexLayoutKey depthkey;
 	memset( &depthkey, 0, sizeof(depthkey) );
 
@@ -3485,7 +3485,7 @@ HRESULT IDirect3DDevice9::CreateDepthStencilSurface(UINT Width,UINT Height,D3DFO
 
 	depthkey.m_texFormat	=	Format;
 	depthkey.m_texFlags		=	kGLMTexRenderable | kGLMTexIsDepth;
-		
+
 	if ( Format == D3DFMT_D24S8 )
 	{
 		depthkey.m_texFlags |= kGLMTexIsStencil;
@@ -3505,16 +3505,16 @@ HRESULT IDirect3DDevice9::CreateDepthStencilSurface(UINT Width,UINT Height,D3DFO
 	//desc
 
 	surf->m_desc.Format				=	Format;
-    surf->m_desc.Type				=	D3DRTYPE_SURFACE;
-    surf->m_desc.Usage				=	0;					//FIXME ???????????
-    surf->m_desc.Pool				=	D3DPOOL_DEFAULT;	//FIXME ???????????
+	surf->m_desc.Type				=	D3DRTYPE_SURFACE;
+	surf->m_desc.Usage				=	0;					//FIXME ???????????
+	surf->m_desc.Pool				=	D3DPOOL_DEFAULT;	//FIXME ???????????
 	surf->m_desc.MultiSampleType	=	MultiSample;
-    surf->m_desc.MultiSampleQuality	=	MultisampleQuality;
-    surf->m_desc.Width				=	Width;
-    surf->m_desc.Height				=	Height;
+	surf->m_desc.MultiSampleQuality	=	MultisampleQuality;
+	surf->m_desc.Width				=	Width;
+	surf->m_desc.Height				=	Height;
 
 	*ppSurface = (result==S_OK) ? surf : NULL;
-	
+
 	return result;
 }
 
@@ -3546,11 +3546,11 @@ HRESULT IDirect3DDevice9::SetDepthStencilSurface( IDirect3DSurface9* pNewZStenci
 		// Note this Release() could cause the surface to be deleted!
 		m_pDepthStencil->Release(1, "-A  SetDepthStencilSurface private release");
 	}
-	
+
 	m_pDepthStencil = pNewZStencil;
 
 	m_bFBODirty = true;
-		
+
 	return result;
 }
 
@@ -3560,9 +3560,9 @@ HRESULT IDirect3DDevice9::GetDepthStencilSurface(IDirect3DSurface9** ppZStencilS
 	GL_PUBLIC_ENTRYPOINT_CHECKS( this );
 	if ( !ppZStencilSurface )
 	{
-		return D3DERR_INVALIDCALL;		
+		return D3DERR_INVALIDCALL;
 	}
-	
+
 	if ( !m_pDepthStencil )
 	{
 		*ppZStencilSurface = NULL;
@@ -3605,7 +3605,7 @@ HRESULT IDirect3DDevice9::StretchRect(IDirect3DSurface9* pSourceSurface,CONST RE
 	{
 		UpdateBoundFBO();
 	}
-		
+
 	CGLMTex	*srcTex = pSourceSurface->m_tex;
 	int srcSliceIndex = srcTex->CalcSliceIndex( pSourceSurface->m_face, pSourceSurface->m_mip );
 	GLMTexLayoutSlice *srcSlice = &srcTex->m_layout->m_slices[ srcSliceIndex ];
@@ -3621,7 +3621,7 @@ HRESULT IDirect3DDevice9::StretchRect(IDirect3DSurface9* pSourceSurface,CONST RE
 	}
 
 	bool useFastBlit = (gl_blitmode.GetInt() != 0);
-	
+
 	if ( !useFastBlit && (srcTex->m_rboName !=0))		// old way, we do a resolve to scratch tex first (necessitating two step blit)
 	{
 		m_ctx->ResolveTex( srcTex, true );
@@ -3650,31 +3650,31 @@ HRESULT IDirect3DDevice9::StretchRect(IDirect3DSurface9* pSourceSurface,CONST RE
 		case	D3DTEXF_POINT:
 			filterGL = GL_NEAREST;
 		break;
-		
+
 		case	D3DTEXF_LINEAR:
 			filterGL = GL_LINEAR;
 		break;
-		
+
 		default:			// D3DTEXF_ANISOTROPIC
 			Assert(!"Impl aniso stretch");
 		break;
 	}
-	
+
 	if (useFastBlit)
 	{
-		m_ctx->Blit2(		srcTex, &srcRect, pSourceSurface->m_face, pSourceSurface->m_mip, 
-							dstTex, &dstRect, pDestSurface->m_face, pDestSurface->m_mip, 
+		m_ctx->Blit2(		srcTex, &srcRect, pSourceSurface->m_face, pSourceSurface->m_mip,
+							dstTex, &dstRect, pDestSurface->m_face, pDestSurface->m_mip,
 							filterGL
 					);
 	}
 	else
 	{
-		m_ctx->BlitTex(		srcTex, &srcRect, pSourceSurface->m_face, pSourceSurface->m_mip, 
-							dstTex, &dstRect, pDestSurface->m_face, pDestSurface->m_mip, 
+		m_ctx->BlitTex(		srcTex, &srcRect, pSourceSurface->m_face, pSourceSurface->m_mip,
+							dstTex, &dstRect, pDestSurface->m_face, pDestSurface->m_mip,
 							filterGL
 					);
 	}
-						
+
 	return S_OK;
 }
 
@@ -3688,7 +3688,7 @@ static uint32 CentroidMaskFromName( bool bPixelShader, const char *pName )
 	// Important note: This code has been customized for TF2 - don't blindly merge it into other branches!
 	if ( !pName )
 		return 0;
-	
+
 	// Important: The centroid bitflags must match between all linked vertex/pixel shaders!
 	if ( bPixelShader )
 	{
@@ -3751,7 +3751,7 @@ static uint32 CentroidMaskFromName( bool bPixelShader, const char *pName )
 			return 0xC;
 		}
 	}
-	
+
 	// This shader doesn't have any centroid iterators
 	return 0;
 }
@@ -3762,8 +3762,8 @@ static uint32 CentroidMaskFromName( bool bPixelShader, const char *pName )
 static int ShadowDepthSamplerMaskFromName( const char *pName )
 {
 	if ( !pName )
-		return 0;	
-	
+		return 0;
+
 	if ( V_stristr( pName, "water_ps" ) )
 	{
 		return (1<<7);
@@ -3792,11 +3792,11 @@ static int ShadowDepthSamplerMaskFromName( const char *pName )
 	{
 		return (1<<4);
 	}
-	else if ( V_stristr( pName, "worldtwotextureblend_ps" ) ) 
+	else if ( V_stristr( pName, "worldtwotextureblend_ps" ) )
 	{
 		return (1<<7);
 	}
-	else if ( V_stristr( pName, "teeth_flashlight_ps" ) ) 
+	else if ( V_stristr( pName, "teeth_flashlight_ps" ) )
 	{
 		return (1<<2);
 	}
@@ -3811,27 +3811,27 @@ static int ShadowDepthSamplerMaskFromName( const char *pName )
 	else if ( V_stristr( pName, "deferred_global_light_ps" ) )
 	{
 		return (1<<14);
-	}	
+	}
 	else if ( V_stristr( pName, "global_lit_simple_ps" ) )
 	{
 		return (1<<14);
-	}	
+	}
 	else if ( V_stristr( pName, "lightshafts_ps" ) )
 	{
 		return (1<<1);
-	}	
+	}
 	else if ( V_stristr( pName, "multiblend_combined_ps" ) )
 	{
 		return (1<<14);
-	}	
+	}
 	else if ( V_stristr( pName, "multiblend_ps" ) )
 	{
 		return (1<<14);
-	}	
+	}
 	else if ( V_stristr( pName, "customhero_ps" ) )
 	{
 		return (1<<14);
-	}	
+	}
 
 	// This shader doesn't have a shadow depth map sampler
 	return 0;
@@ -3849,7 +3849,7 @@ HRESULT IDirect3DDevice9::CreatePixelShader(CONST DWORD* pFunction,IDirect3DPixe
 	GL_PUBLIC_ENTRYPOINT_CHECKS( this );
 	HRESULT	result = D3DERR_INVALIDCALL;
 	*ppShader = NULL;
-	
+
 	int nShadowDepthSamplerMask = ShadowDepthSamplerMaskFromName( pShaderName );
 	uint nCentroidMask = CentroidMaskFromName( true, pShaderName );
 
@@ -3865,14 +3865,14 @@ HRESULT IDirect3DDevice9::CreatePixelShader(CONST DWORD* pFunction,IDirect3DPixe
 
 	{
 		int numTranslations = 1;
-		
+
 		bool bVertexShader = false;
 
 		// we can do one or two translated forms. they go together in a single buffer with some markers to allow GLM to break it up.
 		// this also lets us mirror each set of translations to disk with a single file making it easier to view and edit side by side.
-		
+
 		int maxTranslationSize = 50000;	// size of any one translation
-		
+
 		CUtlBuffer transbuf( 3000, numTranslations * maxTranslationSize, CUtlBuffer::TEXT_BUFFER );
 		CUtlBuffer tempbuf( 3000, maxTranslationSize, CUtlBuffer::TEXT_BUFFER );
 
@@ -3880,9 +3880,9 @@ HRESULT IDirect3DDevice9::CreatePixelShader(CONST DWORD* pFunction,IDirect3DPixe
 
 		// note the GLSL translator wants its own buffer
 		tempbuf.EnsureCapacity( maxTranslationSize );
-			
+
 		uint glslPixelShaderOptions = D3DToGL_OptionUseEnvParams;// | D3DToGL_OptionAllowStaticControlFlow;
-			
+
 
 		// Fake SRGB mode - needed on R500, probably indefinitely.
 		// Do this stuff if caps show m_needsFakeSRGB=true and the sRGBWrite state is true
@@ -3900,10 +3900,10 @@ HRESULT IDirect3DDevice9::CreatePixelShader(CONST DWORD* pFunction,IDirect3DPixe
 		}
 
 		g_D3DToOpenGLTranslatorGLSL.TranslateShader( (uint32 *) pFunction, &tempbuf, &bVertexShader, glslPixelShaderOptions, nShadowDepthSamplerMask, nCentroidMask, pDebugLabel );
-			
+
 		transbuf.PutString( (char*)tempbuf.Base() );
 		transbuf.PutString( "\n\n" );	// whitespace
-				
+
 		if ( bVertexShader )
 		{
 			// don't cross the streams
@@ -3919,19 +3919,19 @@ HRESULT IDirect3DDevice9::CreatePixelShader(CONST DWORD* pFunction,IDirect3DPixe
 			newprog->m_pixHighWater = 0;
 			newprog->m_pixSamplerMask = 0;
 			newprog->m_pixSamplerTypes = 0;
-					
+
 			newprog->m_pixProgram = m_ctx->NewProgram( kGLMFragmentProgram, (char *)transbuf.Base(), pShaderName ? pShaderName : "?" ) ;
 			newprog->m_pixProgram->m_nCentroidMask = nCentroidMask;
 			newprog->m_pixProgram->m_nShadowDepthSamplerMask = nShadowDepthSamplerMask;
-			
+
 			newprog->m_pixProgram->m_bTranslatedProgram = true;
 			newprog->m_pixProgram->m_maxVertexAttrs = 0;
 
 			newprog->m_device = this;
-			
+
 			//------ find the frag program metadata and extract it..
-						
-			
+
+
 			{
 				// find the highwater mark
 				char *highWaterPrefix = "//HIGHWATER-";		// try to arrange this so it can work with pure GLSL if needed
@@ -3939,7 +3939,7 @@ HRESULT IDirect3DDevice9::CreatePixelShader(CONST DWORD* pFunction,IDirect3DPixe
 				if (highWaterStr)
 				{
 					char *highWaterActualData = highWaterStr + strlen( highWaterPrefix );
-				
+
 					int value = -1;
 					sscanf( highWaterActualData, "%d", &value );
 
@@ -3955,18 +3955,18 @@ HRESULT IDirect3DDevice9::CreatePixelShader(CONST DWORD* pFunction,IDirect3DPixe
 			{
 				// find the sampler map
 				char *samplerMaskPrefix = "//SAMPLERMASK-";		// try to arrange this so it can work with pure GLSL if needed
-			
+
 				char *samplerMaskStr = strstr( (char *)transbuf.Base(), samplerMaskPrefix );
 				if (samplerMaskStr)
 				{
 					char *samplerMaskActualData = samplerMaskStr + strlen( samplerMaskPrefix );
-				
+
 					int value = -1;
 					sscanf( samplerMaskActualData, "%04x", &value );
 
 					newprog->m_pixSamplerMask = value;
 					newprog->m_pixProgram->m_samplerMask = value;	// helps GLM maintain a better linked pair cache even when SRGB sampler state changes
-										
+
 					int nMaxReg;
 					for ( nMaxReg = 31; nMaxReg >= 0; --nMaxReg )
 						if ( value & ( 1 << nMaxReg ) )
@@ -4011,7 +4011,7 @@ HRESULT IDirect3DDevice9::CreatePixelShader(CONST DWORD* pFunction,IDirect3DPixe
 				// find the fb outputs used by this shader/combo
 				const GLenum buffers[] = { GL_COLOR_ATTACHMENT0_EXT, GL_COLOR_ATTACHMENT1_EXT, GL_COLOR_ATTACHMENT2_EXT, GL_COLOR_ATTACHMENT3_EXT };
 
-				char *fragDataMaskPrefix = "//FRAGDATAMASK-";		
+				char *fragDataMaskPrefix = "//FRAGDATAMASK-";
 
 				char *fragDataMaskStr = strstr( (char *)transbuf.Base(), fragDataMaskPrefix );
 				if ( fragDataMaskStr )
@@ -4048,9 +4048,9 @@ HRESULT IDirect3DDevice9::CreatePixelShader(CONST DWORD* pFunction,IDirect3DPixe
 				}
 
 			}
-									
+
 			*ppShader = newprog;
-			
+
 			result = S_OK;
 		}
 	}
@@ -4076,7 +4076,7 @@ IDirect3DPixelShader9::~IDirect3DPixelShader9()
 		}
 		m_device = NULL;
 	}
-	
+
 	GLMPRINTF(( "<-A- ~IDirect3DPixelShader9" ));
 }
 
@@ -4085,7 +4085,7 @@ HRESULT IDirect3DDevice9::SetPixelShaderNonInline(IDirect3DPixelShader9* pShader
 {
 	GL_BATCH_PERF_CALL_TIMER;
 	GL_PUBLIC_ENTRYPOINT_CHECKS( this );
-	
+
 	m_ctx->SetFragmentProgram( pShader ? pShader->m_pixProgram : NULL );
 	m_pixelShader = pShader;
 
@@ -4142,15 +4142,15 @@ HRESULT IDirect3DDevice9::CreateVertexShader(CONST DWORD* pFunction, IDirect3DVe
 	*ppShader = NULL;
 
 	uint32 nCentroidMask = CentroidMaskFromName( false, pShaderName );
-			
+
 	{
 		int numTranslations = 1;
-		
+
 		bool bVertexShader = false;
 
 		// we can do one or two translated forms. they go together in a single buffer with some markers to allow GLM to break it up.
 		// this also lets us mirror each set of translations to disk with a single file making it easier to view and edit side by side.
-		
+
 		int maxTranslationSize = 500000;	// size of any one translation
 
 		CUtlBuffer transbuf( 1000, numTranslations * maxTranslationSize, CUtlBuffer::TEXT_BUFFER );
@@ -4160,23 +4160,23 @@ HRESULT IDirect3DDevice9::CreateVertexShader(CONST DWORD* pFunction, IDirect3DVe
 
 		// note the GLSL translator wants its own buffer
 		tempbuf.EnsureCapacity( maxTranslationSize );
-			
+
 		uint glslVertexShaderOptions = D3DToGL_OptionUseEnvParams | D3DToGL_OptionDoFixupZ | D3DToGL_OptionDoFixupY;
 
 		if ( m_ctx->Caps().m_hasNativeClipVertexMode )
 		{
-			// note the matched trickery over in IDirect3DDevice9::FlushStates - 
+			// note the matched trickery over in IDirect3DDevice9::FlushStates -
 			// if on a chipset that does no have native gl_ClipVertex support, then
 			// omit writes to gl_ClipVertex, and instead submit plane equations that have been altered,
 			// and clipping will take place in GL space using gl_Position instead of gl_ClipVertex.
-				
+
 			// note that this is very much a hack to mate up with ATI R5xx hardware constraints, and with older
 			// drivers even for later ATI parts like r6xx/r7xx.   And it doesn't work on NV parts, so you really
 			// do have to choose the right way to go.
-				
-			glslVertexShaderOptions |= D3DToGL_OptionDoUserClipPlanes; 
+
+			glslVertexShaderOptions |= D3DToGL_OptionDoUserClipPlanes;
 		}
-			
+
 		if ( !CommandLine()->CheckParm("-disableboneuniformbuffers") )
 		{
 			// If using GLSL, enabling a uniform buffer specifically for bone registers. (Not currently supported with ARB shaders, which are not optimized at all anyway.)
@@ -4184,10 +4184,10 @@ HRESULT IDirect3DDevice9::CreateVertexShader(CONST DWORD* pFunction, IDirect3DVe
 		}
 
 		g_D3DToOpenGLTranslatorGLSL.TranslateShader( (uint32 *) pFunction, &tempbuf, &bVertexShader, glslVertexShaderOptions, -1, nCentroidMask, pDebugLabel );
-			
+
 		transbuf.PutString( (char*)tempbuf.Base() );
 		transbuf.PutString( "\n\n" );	// whitespace
-				
+
 		if ( !bVertexShader )
 		{
 			// don't cross the streams
@@ -4201,22 +4201,22 @@ HRESULT IDirect3DDevice9::CreateVertexShader(CONST DWORD* pFunction, IDirect3DVe
 			IDirect3DVertexShader9 *newprog = new IDirect3DVertexShader9;
 
 			newprog->m_device = this;
-					
+
 			newprog->m_vtxProgram = m_ctx->NewProgram( kGLMVertexProgram, (char *)transbuf.Base(), pShaderName ? pShaderName : "?" ) ;
 			newprog->m_vtxProgram->m_nCentroidMask = nCentroidMask;
 
 			newprog->m_vtxProgram->m_bTranslatedProgram = true;
 			newprog->m_vtxProgram->m_maxVertexAttrs = 0;
 			newprog->m_maxVertexAttrs = 0;
-						
+
 			// find the highwater mark..
-						
+
 			char *highWaterPrefix = "//HIGHWATER-";		// try to arrange this so it can work with pure GLSL if needed
 			char *highWaterStr = strstr( (char *)transbuf.Base(), highWaterPrefix );
 			if (highWaterStr)
 			{
 				char *highWaterActualData = highWaterStr + strlen( highWaterPrefix );
-				
+
 				int value = -1;
 				sscanf( highWaterActualData, "%d", &value );
 
@@ -4245,11 +4245,11 @@ HRESULT IDirect3DDevice9::CreateVertexShader(CONST DWORD* pFunction, IDirect3DVe
 				newprog->m_vtxHighWaterBone = 0;
 				newprog->m_vtxProgram->m_descs[kGLMGLSL].m_VSHighWaterBone = 0;
 			}
-									
+
 			// find the attrib map..
 			char *attribMapPrefix = "//ATTRIBMAP-";		// try to arrange this so it can work with pure GLSL if needed
 			char *attribMapStr = strstr( (char *)transbuf.Base(), attribMapPrefix );
-			
+
 			if (attribMapStr)
 			{
 				char *attribMapActualData = attribMapStr + strlen( attribMapPrefix );
@@ -4293,9 +4293,9 @@ HRESULT IDirect3DDevice9::CreateVertexShader(CONST DWORD* pFunction, IDirect3DVe
 			{
 				DXABSTRACT_BREAK_ON_ERROR();	// that's bad...
 			}
-									
+
 			*ppShader = newprog;
-			
+
 			result = S_OK;
 		}
 	}
@@ -4324,7 +4324,7 @@ IDirect3DVertexShader9::~IDirect3DVertexShader9()
 	{
 	}
 
-	
+
 	GLMPRINTF(( "<-A- ~IDirect3DVertexShader9" ));
 }
 
@@ -4394,14 +4394,14 @@ HRESULT IDirect3DDevice9::ValidateShaderPair( IDirect3DVertexShader9* vs, IDirec
 }
 
 // callers need to ifdef POSIX this, because this method does not exist on real DX9
-// 
+//
 HRESULT IDirect3DDevice9::QueryShaderPair( int index, GLMShaderPairInfo *infoOut )
 {
 	GL_BATCH_PERF_CALL_TIMER;
 	// these are really GLSL "shaders" not "programs" ...
 
 	m_ctx->QueryShaderPair( index, infoOut );
-	
+
 	return S_OK;
 }
 
@@ -4417,7 +4417,7 @@ HRESULT IDirect3DDevice9::CreateVertexDeclaration(CONST D3DVERTEXELEMENT9* pVert
 	GL_BATCH_PERF_CALL_TIMER;
 	GL_PUBLIC_ENTRYPOINT_CHECKS( this );
 	*ppDecl = NULL;
-	
+
 	// the goal here is to arrive at something which lets us quickly generate GLMVertexSetups.
 
 	// the information we don't have, that must be inferred from the decls, is:
@@ -4427,20 +4427,20 @@ HRESULT IDirect3DDevice9::CreateVertexDeclaration(CONST D3DVERTEXELEMENT9* pVert
 	//	each one is a cursor that gets bumped by decls.
 	uint	streamOffsets[ D3D_MAX_STREAMS ];
 	uint	streamCount = 0;
-	
+
 	uint	attribMap[16];
 	uint	attribMapIndex = 0;
 	memset( attribMap, 0xFF, sizeof( attribMap ) );
-	
+
 	memset( streamOffsets, 0, sizeof( streamOffsets ) );
 
 	m_ObjectStats.m_nTotalVertexDecls++;
 
 	IDirect3DVertexDeclaration9 *decl9 = new IDirect3DVertexDeclaration9;
 	decl9->m_device = this;
-	
+
 	decl9->m_elemCount = 0;
-	
+
 	for (const D3DVERTEXELEMENT9 *src = pVertexElements; (src->Stream != 0xFF); src++)
 	{
 		// element
@@ -4448,16 +4448,16 @@ HRESULT IDirect3DDevice9::CreateVertexDeclaration(CONST D3DVERTEXELEMENT9* pVert
 
 		// copy the D3D decl wholesale.
 		elem->m_dxdecl = *src;
-		
+
 		// latch current offset in this stream.
 		elem->m_gldecl.m_offset = streamOffsets[ elem->m_dxdecl.Stream ];
-		
+
 		// figure out size of this attr and move the cursor
 		// if cursor was on zero, bump the active stream count
-		
+
 		if (!streamOffsets[ elem->m_dxdecl.Stream ])
 			streamCount++;
-		
+
 		int bytes = 0;
 		switch( elem->m_dxdecl.Type )
 		{
@@ -4466,15 +4466,15 @@ HRESULT IDirect3DDevice9::CreateVertexDeclaration(CONST D3DVERTEXELEMENT9* pVert
 
 			//case D3DVSDT_FLOAT3:
 			case D3DDECLTYPE_FLOAT3:	elem->m_gldecl.m_nCompCount = 3; elem->m_gldecl.m_datatype = GL_FLOAT; elem->m_gldecl.m_normalized=0; bytes = 12; break;
-			
+
 			//case D3DVSDT_FLOAT4:
 			case D3DDECLTYPE_FLOAT4:	elem->m_gldecl.m_nCompCount = 4; elem->m_gldecl.m_datatype = GL_FLOAT; elem->m_gldecl.m_normalized=0; bytes = 16; break;
-			
-			// case D3DVSDT_UBYTE4:		
+
+			// case D3DVSDT_UBYTE4:
 			case D3DDECLTYPE_D3DCOLOR:
 			case D3DDECLTYPE_UBYTE4:
 			case D3DDECLTYPE_UBYTE4N:
-				
+
 				// Force this path since we're on 10.6.2 and can't rely on EXT_vertex_array_bgra
 				if ( 1 )
 				{
@@ -4489,10 +4489,10 @@ HRESULT IDirect3DDevice9::CreateVertexDeclaration(CONST D3DVERTEXELEMENT9* pVert
 
 				elem->m_gldecl.m_normalized = ( (elem->m_dxdecl.Type == D3DDECLTYPE_D3DCOLOR) ||
 												(elem->m_dxdecl.Type == D3DDECLTYPE_UBYTE4N) );
-				
+
 				bytes = 4;
 			break;
-			
+
 			case D3DDECLTYPE_SHORT2:
 				// pass 2 US's but we know this is out of order compared to D3DCOLOR data
 				elem->m_gldecl.m_nCompCount = 2; elem->m_gldecl.m_datatype = GL_SHORT;
@@ -4500,7 +4500,7 @@ HRESULT IDirect3DDevice9::CreateVertexDeclaration(CONST D3DVERTEXELEMENT9* pVert
 				elem->m_gldecl.m_normalized = 0;
 				bytes = 4;
 			break;
-			
+
 			default:	DXABSTRACT_BREAK_ON_ERROR(); return D3DERR_INVALIDCALL; break;
 
 			/*
@@ -4511,7 +4511,7 @@ HRESULT IDirect3DDevice9::CreateVertexDeclaration(CONST D3DVERTEXELEMENT9* pVert
 					D3DDECLTYPE_FLOAT3    =  2,  // 3D float expanded to (value, value, value, 1.)
 					D3DDECLTYPE_FLOAT4    =  3,  // 4D float
 					D3DDECLTYPE_D3DCOLOR  =  4,  // 4D packed unsigned bytes mapped to 0. to 1. range
-												 // Input is in D3DCOLOR format (ARGB) expanded to (R, G, B, A)
+												// Input is in D3DCOLOR format (ARGB) expanded to (R, G, B, A)
 					D3DDECLTYPE_UBYTE4    =  5,  // 4D unsigned byte
 					D3DDECLTYPE_SHORT2    =  6,  // 2D signed short expanded to (value, value, 0., 1.)
 					D3DDECLTYPE_SHORT4    =  7,  // 4D signed short
@@ -4532,18 +4532,18 @@ HRESULT IDirect3DDevice9::CreateVertexDeclaration(CONST D3DVERTEXELEMENT9* pVert
 				} D3DDECLTYPE;
 			*/
 		}
-		
+
 		// write the offset and move the cursor
 		elem->m_gldecl.m_offset = streamOffsets[elem->m_dxdecl.Stream];
 		streamOffsets[ elem->m_dxdecl.Stream ] += bytes;
-		
+
 		// cannot write m_stride yet, so zero it
 		elem->m_gldecl.m_stride = 0;
-		
+
 		elem->m_gldecl.m_pBuffer = NULL;	// must be filled in at draw time..
-		
+
 		// elem count was already bumped.
-		
+
 		// update attrib map
 		attribMap[ attribMapIndex++ ] = (elem->m_dxdecl.Usage << 4) | (elem->m_dxdecl.UsageIndex);
 	}
@@ -4554,10 +4554,10 @@ HRESULT IDirect3DDevice9::CreateVertexDeclaration(CONST D3DVERTEXELEMENT9* pVert
 	for( uint j=0; j< decl9->m_elemCount; j++)
 	{
 		D3DVERTEXELEMENT9_GL *elem = &decl9->m_elements[ j ];
-		
+
 		elem->m_gldecl.m_stride = streamOffsets[ elem->m_dxdecl.Stream ];
 	}
-		
+
 	memset( decl9->m_VertexAttribDescToStreamIndex, 0xFF, sizeof( decl9->m_VertexAttribDescToStreamIndex ) );
 	D3DVERTEXELEMENT9_GL *pDeclElem = decl9->m_elements;
 	for( uint j = 0; j < decl9->m_elemCount; j++, pDeclElem++)
@@ -4570,9 +4570,9 @@ HRESULT IDirect3DDevice9::CreateVertexDeclaration(CONST D3DVERTEXELEMENT9* pVert
 		}
 		decl9->m_VertexAttribDescToStreamIndex[ nPackedVertexAttribDesc ] = j;
 	}
-	
+
 	*ppDecl = decl9;
-	
+
 	return S_OK;
 }
 
@@ -4623,19 +4623,19 @@ HRESULT IDirect3DDevice9::SetStreamSourceNonInline(UINT StreamNumber,IDirect3DVe
 	GL_BATCH_PERF_CALL_TIMER;
 	GL_PUBLIC_ENTRYPOINT_CHECKS( this );
 	Assert( StreamNumber < D3D_MAX_STREAMS );
-	Assert( ( Stride & 3 ) == 0 ); // we support non-DWORD aligned strides, but on some drivers (like AMD's) perf goes off a cliff 
+	Assert( ( Stride & 3 ) == 0 ); // we support non-DWORD aligned strides, but on some drivers (like AMD's) perf goes off a cliff
 
 	// perfectly legal to see a vertex buffer of NULL get passed in here.
 	// so we need an array to track these.
 	// OK, we are being given the stride, we don't need to calc it..
-	
+
 	GLMPRINTF(("-X- IDirect3DDevice9::SetStreamSource setting stream #%d to D3D buf %p (GL name %d); offset %d, stride %d", StreamNumber, pStreamData, (pStreamData) ? pStreamData->m_vtxBuffer->m_nHandle: -1, OffsetInBytes, Stride));
 
 	if ( !pStreamData )
 	{
 		OffsetInBytes = 0;
 		Stride = 0;
-		
+
 		m_vtx_buffers[ StreamNumber ] = m_pDummy_vtx_buffer;
 	}
 	else
@@ -4648,7 +4648,7 @@ HRESULT IDirect3DDevice9::SetStreamSourceNonInline(UINT StreamNumber,IDirect3DVe
 	m_streams[ StreamNumber ].m_vtxBuffer = pStreamData;
 	m_streams[ StreamNumber ].m_offset	= OffsetInBytes;
 	m_streams[ StreamNumber ].m_stride	= Stride;
-		
+
 	return S_OK;
 }
 
@@ -4734,13 +4734,13 @@ void IDirect3DDevice9::ReleasedSurface( IDirect3DSurface9 *pSurface )
 		m_bFBODirty = true;
 		GLMPRINTF(( "-A- Scrubbed pSurface %08x from m_pDepthStencil", pSurface ));
 	}
-	
+
 	if ( m_pDefaultColorSurface == pSurface )
 	{
 		m_pDefaultColorSurface = NULL;
 		GLMPRINTF(( "-A- Scrubbed pSurface %08x from m_pDefaultColorSurface", pSurface ));
 	}
-	
+
 	if ( m_pDefaultDepthStencilSurface == pSurface )
 	{
 		m_pDefaultDepthStencilSurface = NULL;
@@ -4759,7 +4759,7 @@ void IDirect3DDevice9::ReleasedPixelShader( IDirect3DPixelShader9 *pixelShader )
 		GLMPRINTF(( "-A- Scrubbed pixel shader %08x from m_pixelShader", pixelShader ));
 	}
 	m_ctx->ReleasedShader();
-	
+
 	Assert( m_ObjectStats.m_nTotalPixelShaders >= 1 );
 	m_ObjectStats.m_nTotalPixelShaders--;
 }
@@ -4773,7 +4773,7 @@ void IDirect3DDevice9::ReleasedVertexShader( IDirect3DVertexShader9 *vertexShade
 	}
 	m_ctx->ClearCurAttribs();
 	m_ctx->ReleasedShader();
-	
+
 	Assert( m_ObjectStats.m_nTotalVertexShaders >= 1 );
 	m_ObjectStats.m_nTotalVertexShaders--;
 }
@@ -4803,7 +4803,7 @@ void IDirect3DDevice9::ReleasedIndexBuffer( IDirect3DIndexBuffer9 *indexBuffer )
 		m_indices.m_idxBuffer = NULL;
 		GLMPRINTF(( "-A- Scrubbed index buffer %08x from m_indices", indexBuffer ));
 	}
-	
+
 	Assert( m_ObjectStats.m_nTotalIndexBuffers >= 1 );
 	m_ObjectStats.m_nTotalIndexBuffers--;
 }
@@ -4834,9 +4834,9 @@ HRESULT IDirect3DDevice9::CreateQuery(D3DQUERYTYPE Type,IDirect3DQuery9** ppQuer
 		m_ObjectStats.m_nTotalQueries++;
 
 		IDirect3DQuery9	*newquery = new IDirect3DQuery9;
-		
+
 		newquery->m_device = this;
-		
+
 		newquery->m_type = Type;
 		newquery->m_ctx = m_ctx;
 		newquery->m_nIssueStartThreadID = 0;
@@ -4846,7 +4846,7 @@ HRESULT IDirect3DDevice9::CreateQuery(D3DQUERYTYPE Type,IDirect3DQuery9** ppQuer
 
 		GLMQueryParams	params;
 		memset( &params, 0, sizeof(params) );
-		
+
 		//bool known = false;
 		switch(newquery->m_type)
 		{
@@ -4854,11 +4854,11 @@ HRESULT IDirect3DDevice9::CreateQuery(D3DQUERYTYPE Type,IDirect3DQuery9** ppQuer
 				// create an occlusion query
 				params.m_type = EOcclusion;
 			break;
-			
+
 			case	D3DQUERYTYPE_EVENT:					/* D3DISSUE_END */
 				params.m_type = EFence;
 			break;
-			
+
 			case	D3DQUERYTYPE_RESOURCEMANAGER:		/* D3DISSUE_END */
 			case	D3DQUERYTYPE_TIMESTAMP:				/* D3DISSUE_END */
 			case	D3DQUERYTYPE_TIMESTAMPFREQ:			/* D3DISSUE_END */
@@ -4867,13 +4867,13 @@ HRESULT IDirect3DDevice9::CreateQuery(D3DQUERYTYPE Type,IDirect3DQuery9** ppQuer
 			case	D3DQUERYTYPE_CACHEUTILIZATION:		/* D3DISSUE_BEGIN, D3DISSUE_END */
 				Assert( !"Un-implemented query type" );
 			break;
-			
+
 			default:
 				Assert( !"Unknown query type" );
 			break;
 		}
 		newquery->m_query = m_ctx->NewQuery( &params );
-		
+
 		*ppQuery = newquery;
 		return S_OK;
 	}
@@ -4898,7 +4898,7 @@ IDirect3DQuery9::~IDirect3DQuery9()
 		if (m_query)
 		{
 			GLMPRINTF((">-A- ~IDirect3DQuery9 freeing m_query"));
-			
+
 			m_query->m_ctx->DelQuery( m_query );
 			m_query = NULL;
 
@@ -4906,7 +4906,7 @@ IDirect3DQuery9::~IDirect3DQuery9()
 		}
 		m_device = NULL;
 	}
-	
+
 	GLMPRINTF(("<-A- ~IDirect3DQuery9"));
 }
 
@@ -4947,7 +4947,7 @@ D3D_RSINFO g_D3DRS_INFO_unpacked[ D3DRS_VALUE_LIMIT+1 ];
 
 // see http://www.toymaker.info/Games/html/render_states.html
 
-D3D_RSINFO	g_D3DRS_INFO_packed[] = 
+D3D_RSINFO	g_D3DRS_INFO_packed[] =
 {
 	// these do not have to be in any particular order.  they get unpacked into the empty array above for direct indexing.
 
@@ -5078,7 +5078,7 @@ D3D_RSINFO	g_D3DRS_INFO_packed[] =
 void	UnpackD3DRSITable( void )
 {
 	memset (g_D3DRS_INFO_unpacked, 0, sizeof(g_D3DRS_INFO_unpacked) );
-	
+
 	for( D3D_RSINFO *packed = g_D3DRS_INFO_packed; packed->m_class >= 0; packed++ )
 	{
 		if ( (packed->m_state <0) || (packed->m_state >= D3DRS_VALUE_LIMIT) )
@@ -5112,7 +5112,7 @@ void IDirect3DDevice9::FlushClipPlaneEquation()
 		// if we don't have native clip vertex support. then munge the plane coeffs
 		// this should engage on ALL ATI PARTS < 10.6.4
 		// and should continue to engage on R5xx forever.
-			
+
 		if ( !m_ctx->Caps().m_hasNativeClipVertexMode )
 		{
 			// hacked coeffs = { src->x, -src->y, 0.5f * src->z, src->w + (0.5f * src->z) };
@@ -5126,7 +5126,7 @@ void IDirect3DDevice9::FlushClipPlaneEquation()
 			temp1.z	=	equ->z * 0.5;
 			temp1.w	=	equ->w + (equ->z * 0.5);
 
-				
+
 			//////////////// temp2
 			VMatrix mat1(	1,	0,	0,	0,
 							0,	-1,	0,	0,
@@ -5134,10 +5134,10 @@ void IDirect3DDevice9::FlushClipPlaneEquation()
 							0,	0,	0,	1
 							);
 			//mat1 = mat1.Transpose();
-								
+
 			VMatrix mat2;
 			bool success = mat1.InverseGeneral( mat2 );
-				
+
 			if (success)
 			{
 				VMatrix mat3;
@@ -5145,11 +5145,11 @@ void IDirect3DDevice9::FlushClipPlaneEquation()
 
 				VPlane origPlane( Vector( equ->x, equ->y, equ->z ), equ->w );
 				VPlane newPlane;
-					
+
 				newPlane = mat3 * origPlane /* * mat3 */;
-					
+
 				VPlane finalPlane = newPlane;
-					
+
 				temp2.x = newPlane.m_Normal.x;
 				temp2.y = newPlane.m_Normal.y;
 				temp2.z = newPlane.m_Normal.z;
@@ -5171,7 +5171,7 @@ void IDirect3DDevice9::FlushClipPlaneEquation()
 		if (1)	//GLMKnob("caps-key",NULL)==0.0)
 		{
 			m_ctx->WriteClipPlaneEquation( &temp1, x );		// no caps lock = Antonio or classic
-				
+
 			/*
 			if (x<1)
 			{
@@ -5220,12 +5220,12 @@ void IDirect3DDevice9::InitStates()
 	m_ctx->m_AlphaToCoverageEnable.Read( &gl.m_AlphaToCoverageEnable, 0 );
 	m_ctx->m_BlendEquation.Read( &gl.m_BlendEquation, 0 );
 	m_ctx->m_BlendColor.Read( &gl.m_BlendColor, 0 );
-	
+
 	for( int x=0; x<kGLMUserClipPlanes; x++)
 		m_ctx->m_ClipPlaneEquation.ReadIndex( &gl.m_ClipPlaneEquation[x], x, 0 );
 
 	m_ctx->m_ColorMaskSingle.Read( &gl.m_ColorMaskSingle, 0 );
-	
+
 	m_ctx->m_BlendEnable.Read( &gl.m_BlendEnable, 0 );
 	m_ctx->m_BlendFactor.Read( &gl.m_BlendFactor, 0 );
 	m_ctx->m_BlendEnableSRGB.Read( &gl.m_BlendEnableSRGB, 0 );
@@ -5257,7 +5257,7 @@ void IDirect3DDevice9::FullFlushStates()
 
 	for( int x=0; x<kGLMUserClipPlanes; x++)
 		m_ctx->WriteClipPlaneEnable( &gl.m_ClipPlaneEnable[x], x );
-	
+
 	m_ctx->WritePolygonMode( &gl.m_PolygonMode );
 	m_ctx->WriteCullFrontFace( &gl.m_CullFrontFace );
 	m_ctx->WriteAlphaToCoverageEnable( &gl.m_AlphaToCoverageEnable );
@@ -5277,7 +5277,7 @@ void IDirect3DDevice9::FullFlushStates()
 
 	m_ctx->WriteStencilOp( &gl.m_StencilOp,0 );
 	m_ctx->WriteStencilOp( &gl.m_StencilOp,1 );		// ********* need to recheck this
-	
+
 	m_ctx->WriteStencilWriteMask( &gl.m_StencilWriteMask );
 	m_ctx->WriteClearColor( &gl.m_ClearColor );
 	m_ctx->WriteClearDepth( &gl.m_ClearDepth );
@@ -5329,7 +5329,7 @@ HRESULT IDirect3DDevice9::DrawIndexedPrimitive( D3DPRIMITIVETYPE Type, INT BaseV
 {
 	tmZone( TELEMETRY_LEVEL2, TMZF_NONE, "%s", __FUNCTION__ );
 	Assert( m_ctx->m_nCurOwnerThreadId == ThreadGetCurrentId() );
-		
+
 	TOGL_NULL_DEVICE_CHECK;
 	if ( m_bFBODirty )
 	{
@@ -5355,10 +5355,10 @@ HRESULT IDirect3DDevice9::DrawIndexedPrimitive( D3DPRIMITIVETYPE Type, INT BaseV
 
 	if ( ( !m_indices.m_idxBuffer ) || ( !m_vertexShader ) )
 		goto draw_failed;
-	
+
 	{
 		GL_BATCH_PERF_CALL_TIMER;
-								
+
 		m_ctx->FlushDrawStates( MinVertexIndex, MinVertexIndex + NumVertices - 1, BaseVertexIndex );
 
 		{
@@ -5372,17 +5372,17 @@ HRESULT IDirect3DDevice9::DrawIndexedPrimitive( D3DPRIMITIVETYPE Type, INT BaseV
 				GLenum m_nType;
 				uint m_nPrimMul;
 				uint m_nPrimAdd;
-			} s_primTypes[6] = 
-			{ 
+			} s_primTypes[6] =
+			{
 				{ 0, 0, 0 },				// 0
 				{ 0, 0, 0 },				// 1
 				{ GL_LINES, 2, 0 },			// 2 D3DPT_LINELIST
-				{ 0, 0, 0 },				// 3 
+				{ 0, 0, 0 },				// 3
 				{ GL_TRIANGLES, 3, 0 },		// 4 D3DPT_TRIANGLELIST
 				{ GL_TRIANGLE_STRIP, 1, 2 }	// 5 D3DPT_TRIANGLESTRIP
 			};
 
-			if ( Type <= D3DPT_TRIANGLESTRIP )	
+			if ( Type <= D3DPT_TRIANGLESTRIP )
 			{
 				const prim_t& p = s_primTypes[Type];
 				Assert( p.m_nType );
@@ -5425,15 +5425,15 @@ HRESULT IDirect3DDevice9::DrawIndexedPrimitive( D3DPRIMITIVETYPE Type, INT BaseV
 
 		// Total total spent processing just DrawIndexedPrimitive() for this batch.
 		m_pBatch_vis_bitmap->fill_box(0, m_nBatchVisY, (uint)(.5f + t / gl_batch_vis_abs_scale.GetFloat() * m_pBatch_vis_bitmap->width()), h, 70, 70, 70);
-		
+
 		double flTotalGLMS = gGL->m_nTotalGLCycles * s_rdtsc_to_ms;
-		
+
 		// Total time spent inside of all OpenGL calls
 		m_pBatch_vis_bitmap->additive_fill_box(0, m_nBatchVisY, (uint)(.5f + flTotalGLMS / gl_batch_vis_abs_scale.GetFloat() * m_pBatch_vis_bitmap->width()), h, 0, 0, 64);
-								
+
 		if (flushStats.m_nNewVS) m_pBatch_vis_bitmap->additive_fill_box(80-16, m_nBatchVisY, 8, h, 0, 110, 0);
 		if (flushStats.m_nNewPS) m_pBatch_vis_bitmap->additive_fill_box(80-8, m_nBatchVisY, 8, h, 110, 0, 110);
-		
+
 		int lm = 80;
 		m_pBatch_vis_bitmap->fill_box(lm+0+flushStats.m_nFirstVSConstant, m_nBatchVisY, flushStats.m_nNumVSConstants, h, 64, 255, 255);
 		m_pBatch_vis_bitmap->fill_box(lm+64, m_nBatchVisY, flushStats.m_nNumVSBoneConstants, h, 255, 64, 64);
@@ -5451,7 +5451,7 @@ HRESULT IDirect3DDevice9::DrawIndexedPrimitive( D3DPRIMITIVETYPE Type, INT BaseV
 		m_nBatchVisY += h;
 	}
 #endif
-	
+
 	m_nNumProgramChanges += ((flushStats.m_nNewVS + flushStats.m_nNewPS) != 0);
 
 	m_flTotalD3DTime += g_nTotalD3DCycles * s_rdtsc_to_ms;
@@ -5462,7 +5462,7 @@ HRESULT IDirect3DDevice9::DrawIndexedPrimitive( D3DPRIMITIVETYPE Type, INT BaseV
 	m_flTotalGLTime += gGL->m_nTotalGLCycles * s_rdtsc_to_ms;
 	m_nTotalGLCalls += gGL->m_nTotalGLCalls;
 	gGL->m_nTotalGLCycles = 0;
-	gGL->m_nTotalGLCalls = 0; 
+	gGL->m_nTotalGLCalls = 0;
 
 	g_nTotalVBLockBytes = 0;
 	g_nTotalIBLockBytes = 0;
@@ -5524,7 +5524,7 @@ HRESULT IDirect3DDevice9::FlushVertexBindings( uint baseVertexIndex )
 					int streamIndex = elem->m_dxdecl.Stream;
 					dstAttr->m_pBuffer = m_streams[ streamIndex ].m_vtxBuffer->m_vtxBuffer;
 					dstAttr->m_stride = m_streams[ streamIndex ].m_stride;
-					dstAttr->m_offset += m_streams[ streamIndex ].m_offset + (baseVertexIndex * dstAttr->m_stride); 
+					dstAttr->m_offset += m_streams[ streamIndex ].m_offset + (baseVertexIndex * dstAttr->m_stride);
 
 					// set mask
 					setup.m_attrMask |= (1 << i);
@@ -5629,7 +5629,7 @@ HRESULT IDirect3DDevice9::DrawIndexedPrimitive( D3DPRIMITIVETYPE Type,INT BaseVe
 #endif
 
 	if ( ( !m_indices.m_idxBuffer ) || ( !m_vertexShader ) )
-		goto draw_failed;    
+		goto draw_failed;
 
 	this->FlushIndexBindings( );
 	this->FlushVertexBindings( BaseVertexIndex );
@@ -5675,7 +5675,7 @@ HRESULT IDirect3DDevice9::DrawIndexedPrimitiveUP(D3DPRIMITIVETYPE PrimitiveType,
 {
 	GL_BATCH_PERF_CALL_TIMER;
 	GL_PUBLIC_ENTRYPOINT_CHECKS( this );
-	
+
 	DXABSTRACT_BREAK_ON_ERROR();
 	return S_OK;
 }
@@ -5707,12 +5707,12 @@ HRESULT IDirect3DDevice9::Clear(DWORD Count,CONST D3DRECT* pRects,DWORD Flags,D3
 	{
 		UpdateBoundFBO();
 	}
-		
+
 	g_nTotalDrawsOrClears++;
 
 	m_ctx->FlushDrawStatesNoShaders();
 
-	
+
 	//debugging Color = (rand() | 0xFF0000FF) & 0xFF3F3FFF;
 	if (!Count)
 	{
@@ -5726,7 +5726,7 @@ HRESULT IDirect3DDevice9::Clear(DWORD Count,CONST D3DRECT* pRects,DWORD Flags,D3
 	else
 	{
 		GLScissorBox_t	tempbox;
-		
+
 		// do the rects one by one and convert each one to GL form
 		for( uint i=0; i<Count; i++)
 		{
@@ -5791,7 +5791,7 @@ HRESULT IDirect3DDevice9::SetScissorRect(CONST RECT* pRect)
 	GL_BATCH_PERF_CALL_TIMER;
 	GL_PUBLIC_ENTRYPOINT_CHECKS( this );
 	//int nSurfaceHeight = m_ctx->m_drawingFBO->m_attach[ kAttColor0 ].m_tex->m_layout->m_key.m_ySize;
-	
+
 	GLScissorBox_t newScissorBox = { pRect->left, pRect->top, pRect->right - pRect->left, pRect->bottom - pRect->top };
 	gl.m_ScissorBox	= newScissorBox;
 	m_ctx->WriteScissorBox( &gl.m_ScissorBox );
@@ -5802,7 +5802,7 @@ HRESULT IDirect3DDevice9::GetDeviceCaps(D3DCAPS9* pCaps)
 {
 	GL_BATCH_PERF_CALL_TIMER;
 	GL_PUBLIC_ENTRYPOINT_CHECKS( this );
-	
+
 	// "Adapter" is used to index amongst the set of fake-adapters maintained in the display DB
 	GLMDisplayDB *db = GetDisplayDB();
 	int glmRendererIndex = -1;
@@ -5841,12 +5841,12 @@ HRESULT IDirect3DDevice9::SetClipPlane(DWORD Index,CONST float* pPlane)
 	// We actually push the clip plane coeffs to two places
 	// - into a shader param for ARB mode
 	// - and into the API defined clip plane slots for GLSL mode.
-	
+
 	// if ARB mode... THIS NEEDS TO GO... it's messing up the dirty ranges..
 	{
 	//	this->SetVertexShaderConstantF( DXABSTRACT_VS_CLIP_PLANE_BASE+Index, pPlane, 1 );	// stash the clip plane values into shader param - translator knows where to look
 	}
-	
+
 	// if GLSL mode... latch it and let FlushStates push it out
 	{
 		GLClipPlaneEquation_t	peq;
@@ -5884,7 +5884,7 @@ void IDirect3DDevice9::SetGammaRamp(UINT iSwapChain,DWORD Flags,CONST D3DGAMMARA
 {
 	GL_BATCH_PERF_CALL_TIMER;
 	Assert( GetCurrentOwnerThreadId() == ThreadGetCurrentId() );
-	
+
 	if ( g_pLauncherMgr )
 	{
 		g_pLauncherMgr->SetGammaRamp( pRamp->red, pRamp->green, pRamp->blue );
@@ -5999,7 +5999,7 @@ HRESULT IDirect3DDevice9::SetRenderState( D3DRENDERSTATETYPE State, DWORD Value 
 			m_ctx->WriteDepthMask( &gl.m_DepthMask );
 			break;
 		}
-		case D3DRS_ZFUNC:	
+		case D3DRS_ZFUNC:
 		{
 			// kGLDepthFunc
 			GLenum func = D3DCompareFuncToGL( Value );
@@ -6011,7 +6011,7 @@ HRESULT IDirect3DDevice9::SetRenderState( D3DRENDERSTATETYPE State, DWORD Value 
 		case D3DRS_COLORWRITEENABLE:		// kGLColorMaskSingle
 		{
 			gl.m_ColorMaskSingle.r	=	((Value & D3DCOLORWRITEENABLE_RED)  != 0) ? 0xFF : 0x00;
-			gl.m_ColorMaskSingle.g	=	((Value & D3DCOLORWRITEENABLE_GREEN)!= 0) ? 0xFF : 0x00;	
+			gl.m_ColorMaskSingle.g	=	((Value & D3DCOLORWRITEENABLE_GREEN)!= 0) ? 0xFF : 0x00;
 			gl.m_ColorMaskSingle.b	=	((Value & D3DCOLORWRITEENABLE_BLUE) != 0) ? 0xFF : 0x00;
 			gl.m_ColorMaskSingle.a	=	((Value & D3DCOLORWRITEENABLE_ALPHA)!= 0) ? 0xFF : 0x00;
 			m_ctx->WriteColorMaskSingle( &gl.m_ColorMaskSingle );
@@ -6025,13 +6025,13 @@ HRESULT IDirect3DDevice9::SetRenderState( D3DRENDERSTATETYPE State, DWORD Value 
 				case D3DCULL_NONE:
 				{
 					gl.m_CullFaceEnable.enable = false;
-					gl.m_CullFrontFace.value = GL_CCW;	//doesn't matter																
+					gl.m_CullFrontFace.value = GL_CCW;	//doesn't matter
 
 					m_ctx->WriteCullFaceEnable( &gl.m_CullFaceEnable );
 					m_ctx->WriteCullFrontFace( &gl.m_CullFrontFace );
 					break;
 				}
-					
+
 				case D3DCULL_CW:
 				{
 					gl.m_CullFaceEnable.enable = true;
@@ -6050,9 +6050,9 @@ HRESULT IDirect3DDevice9::SetRenderState( D3DRENDERSTATETYPE State, DWORD Value 
 					m_ctx->WriteCullFrontFace( &gl.m_CullFrontFace );
 					break;
 				}
-				default:	
+				default:
 				{
-					DXABSTRACT_BREAK_ON_ERROR();	
+					DXABSTRACT_BREAK_ON_ERROR();
 					break;
 				}
 			}
@@ -6097,7 +6097,7 @@ HRESULT IDirect3DDevice9::SetRenderState( D3DRENDERSTATETYPE State, DWORD Value 
 		{
 			gl.m_BlendEnableSRGB.enable = Value;
 			m_ctx->WriteBlendEnableSRGB( &gl.m_BlendEnableSRGB );
-			break;					
+			break;
 		}
 
 		//-------------------------------------------------------------------------------------------- alphatest stuff
@@ -6199,7 +6199,7 @@ HRESULT IDirect3DDevice9::SetRenderState( D3DRENDERSTATETYPE State, DWORD Value 
 			GLMPRINTF(("-D- fogenable = %d",Value ));
 			break;
 		}
-		
+
 		case D3DRS_SCISSORTESTENABLE:	// kGLScissorEnable
 		{
 			gl.m_ScissorEnable.enable = Value;
@@ -6239,7 +6239,7 @@ HRESULT IDirect3DDevice9::SetRenderState( D3DRENDERSTATETYPE State, DWORD Value 
 		case D3DRS_CLIPPLANEENABLE:		// kGLClipPlaneEnable
 		{
 			// d3d packs all the enables into one word.
-			// we break that out so we don't do N glEnable calls to sync - 
+			// we break that out so we don't do N glEnable calls to sync -
 			// GLM is tracking one unique enable per plane.
 			for( int i=0; i<kGLMUserClipPlanes; i++)
 			{
@@ -6263,12 +6263,12 @@ HRESULT IDirect3DDevice9::SetRenderState( D3DRENDERSTATETYPE State, DWORD Value 
 				case D3DFILL_SOLID:			mode = GL_FILL; break;
 				default:					DXABSTRACT_BREAK_ON_ERROR(); break;
 			}
-			gl.m_PolygonMode.values[0] = gl.m_PolygonMode.values[1] = mode;						
+			gl.m_PolygonMode.values[0] = gl.m_PolygonMode.values[1] = mode;
 			m_ctx->WritePolygonMode( &gl.m_PolygonMode );
 			break;
 		}
 
-#if GLMDEBUG					
+#if GLMDEBUG
 		case D3DRS_MULTISAMPLEANTIALIAS:
 		case D3DRS_MULTISAMPLEMASK:
 		case D3DRS_FOGCOLOR:
@@ -6314,7 +6314,7 @@ HRESULT IDirect3DDevice9::SetSamplerStateNonInline( DWORD Sampler, D3DSAMPLERSTA
 {
 	GL_BATCH_PERF_CALL_TIMER;
 	GL_PUBLIC_ENTRYPOINT_CHECKS( this );
-		
+
 	Assert( Sampler < GLM_SAMPLER_COUNT );
 
 	m_ctx->SetSamplerDirty( Sampler );
@@ -6336,26 +6336,26 @@ HRESULT IDirect3DDevice9::SetSamplerStateNonInline( DWORD Sampler, D3DSAMPLERSTA
 	case D3DSAMP_MAGFILTER:
 		m_ctx->SetSamplerMagFilter( Sampler, Value );
 		break;
-	case D3DSAMP_MIPFILTER:	
+	case D3DSAMP_MIPFILTER:
 		m_ctx->SetSamplerMipFilter( Sampler, Value );
 		break;
-	case D3DSAMP_MINFILTER:	
+	case D3DSAMP_MINFILTER:
 		m_ctx->SetSamplerMinFilter( Sampler, Value );
 		break;
-	case D3DSAMP_MIPMAPLODBIAS: 
+	case D3DSAMP_MIPMAPLODBIAS:
 		m_ctx->SetSamplerMipMapLODBias( Sampler, Value );
-		break;		
-	case D3DSAMP_MAXMIPLEVEL: 
+		break;
+	case D3DSAMP_MAXMIPLEVEL:
 		m_ctx->SetSamplerMaxMipLevel( Sampler, Value);
 		break;
-	case D3DSAMP_MAXANISOTROPY: 
+	case D3DSAMP_MAXANISOTROPY:
 		m_ctx->SetSamplerMaxAnisotropy( Sampler, Value);
 		break;
-	case D3DSAMP_SRGBTEXTURE: 
+	case D3DSAMP_SRGBTEXTURE:
 		//m_samplers[ Sampler ].m_srgb = Value;
 		m_ctx->SetSamplerSRGBTexture(Sampler, Value);
 		break;
-	case D3DSAMP_SHADOWFILTER: 
+	case D3DSAMP_SHADOWFILTER:
 		m_ctx->SetShadowFilter(Sampler, Value);
 		break;
 
@@ -6367,12 +6367,12 @@ HRESULT IDirect3DDevice9::SetSamplerStateNonInline( DWORD Sampler, D3DSAMPLERSTA
 
 void IDirect3DDevice9::SetSamplerStatesNonInline(
 	DWORD Sampler, DWORD AddressU, DWORD AddressV, DWORD AddressW,
-	DWORD MinFilter, DWORD MagFilter, DWORD MipFilter, 
+	DWORD MinFilter, DWORD MagFilter, DWORD MipFilter,
 	DWORD MinLod, float LodBias)
 {
 	GL_BATCH_PERF_CALL_TIMER;
 	GL_PUBLIC_ENTRYPOINT_CHECKS( this );
-		
+
 	Assert( Sampler < GLM_SAMPLER_COUNT);
 
 	m_ctx->SetSamplerDirty( Sampler );
@@ -6420,11 +6420,11 @@ DWORD ID3DXBuffer::GetBufferSize()
 
 HRESULT D3DXCreateMatrixStack( DWORD Flags, LPD3DXMATRIXSTACK* ppStack)
 {
-	
+
 	*ppStack = new ID3DXMatrixStack;
-	
+
 	(*ppStack)->Create();
-	
+
 	return S_OK;
 }
 
@@ -6433,27 +6433,27 @@ ID3DXMatrixStack::ID3DXMatrixStack( void )
 	m_refcount[0] = 1;
 	m_refcount[1] = 0;
 };
-		
+
 void ID3DXMatrixStack::AddRef( int which, char *comment )
 {
 	Assert( which >= 0 );
 	Assert( which < 2 );
 	m_refcount[which]++;
 };
-		
+
 ULONG ID3DXMatrixStack::Release( int which, char *comment )
 {
 	Assert( which >= 0 );
 	Assert( which < 2 );
-			
+
 	bool deleting = false;
-			
+
 	m_refcount[which]--;
 	if ( (!m_refcount[0]) && (!m_refcount[1]) )
 	{
 		deleting = true;
 	}
-			
+
 	if (deleting)
 	{
 		if (m_mark)
@@ -6475,9 +6475,9 @@ HRESULT	ID3DXMatrixStack::Create()
 	m_stack.EnsureCapacity( 16 );	// 1KB ish
 	m_stack.AddToTail();
 	m_stackTop = 0;				// top of stack is at index 0 currently
-	
+
 	LoadIdentity();
-	
+
 	return S_OK;
 }
 
@@ -6567,7 +6567,7 @@ HRESULT ID3DXMatrixStack::RotateAxisLocal(CONST D3DXVECTOR3* pV, FLOAT Angle)
 	//	m_stack[m_currentPos] = tmp * m_stack[m_currentPos];
 	//	Because the rotation is left-multiplied to the matrix stack, the rotation
 	//	is relative to the object's local coordinate space.
-	
+
 	DXABSTRACT_BREAK_ON_ERROR();
 	return S_OK;
 }
@@ -6602,7 +6602,7 @@ const char* D3DXGetPixelShaderProfile( IDirect3DDevice9 *pDevice )
 D3DXMATRIX* D3DXMatrixMultiply( D3DXMATRIX *pOut, CONST D3DXMATRIX *pM1, CONST D3DXMATRIX *pM2 )
 {
 	D3DXMATRIX temp;
-	
+
 	for( int i=0; i<4; i++)
 	{
 		for( int j=0; j<4; j++)
@@ -6710,7 +6710,7 @@ D3DXPLANE* D3DXPlaneNormalize( D3DXPLANE *pOut, CONST D3DXPLANE *pP)
 	// make sure that's non zero
 	// then divide all four components by that value
 	// or return some dummy plane like 0,0,1,0 if it fails
-	
+
 	float	len = sqrt( (pP->a * pP->a) + (pP->b * pP->b) + (pP->c * pP->c) );
 	if (len > 1e-10)	//FIXME need a real epsilon here ?
 	{
@@ -6744,7 +6744,7 @@ D3DXVECTOR4* D3DXVec4Normalize( D3DXVECTOR4 *pOut, CONST D3DXVECTOR4 *pV )
 
 	*vOut = *vIn;
 	Vector4DNormalize( *vOut );
-	
+
 	return pOut;
 }
 
@@ -6782,7 +6782,7 @@ D3DXPLANE* D3DXPlaneTransform( D3DXPLANE *pOut, CONST D3DXPLANE *pP, CONST D3DXM
 				+	(pM->m[2][x] * pP->c)
 				+	(pM->m[3][x] * pP->d);
 	}
-	
+
 	return pOut;
 }
 
@@ -6803,16 +6803,16 @@ void D3DPERF_SetOptions( DWORD dwOptions )
 
 
 HRESULT D3DXCompileShader(
-        LPCSTR                          pSrcData,
-        UINT                            SrcDataLen,
-        CONST D3DXMACRO*                pDefines,
-        LPD3DXINCLUDE                   pInclude,
-        LPCSTR                          pFunctionName,
-        LPCSTR                          pProfile,
-        DWORD                           Flags,
-        LPD3DXBUFFER*                   ppShader,
-        LPD3DXBUFFER*                   ppErrorMsgs,
-        LPD3DXCONSTANTTABLE*            ppConstantTable)
+		LPCSTR                          pSrcData,
+		UINT                            SrcDataLen,
+		CONST D3DXMACRO*                pDefines,
+		LPD3DXINCLUDE                   pInclude,
+		LPCSTR                          pFunctionName,
+		LPCSTR                          pProfile,
+		DWORD                           Flags,
+		LPD3DXBUFFER*                   ppShader,
+		LPD3DXBUFFER*                   ppErrorMsgs,
+		LPD3DXCONSTANTTABLE*            ppConstantTable)
 {
 	DXABSTRACT_BREAK_ON_ERROR();	// is anyone calling this ?
 	return S_OK;
@@ -6826,18 +6826,18 @@ void toglGetClientRect( void *hWnd, RECT *destRect )
 	// so, see if a D3D device is up and running, and if so,
 	// dig in and find out its backbuffer size and use that.
 
-	uint width, height;	
+	uint width, height;
 	g_pLauncherMgr->RenderedSize( width, height, false );	// false = get them, don't set them
 	Assert( width!=0 && height!=0 );
 
 	destRect->left = 0;
 	destRect->top = 0;
 	destRect->right = width;
-	destRect->bottom = height;		
-	
+	destRect->bottom = height;
+
 	//GLMPRINTF(( "-D- GetClientRect returning rect of (0,0, %d,%d)",width,height ));
-	
-	return;	
+
+	return;
 }
 
 #endif

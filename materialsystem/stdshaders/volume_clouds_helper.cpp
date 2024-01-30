@@ -56,7 +56,7 @@ void DrawVolumeClouds( CBaseVSShader *pShader, IMaterialVar** params, IShaderDyn
 		// Vertex Shader
 		DECLARE_STATIC_VERTEX_SHADER( volume_clouds_vs20 );
 		SET_STATIC_VERTEX_SHADER( volume_clouds_vs20 );
-	
+
 		// Pixel Shader
 		if( g_pHardwareConfig->SupportsPixelShaders_2_b() && !IsOpenGL() ) // Always send POSIX down the 20 path (rg - why?)
 		{
@@ -93,7 +93,7 @@ void DrawVolumeClouds( CBaseVSShader *pShader, IMaterialVar** params, IShaderDyn
 		SET_DYNAMIC_VERTEX_SHADER_COMBO( COMPRESSED_VERTS, (int)vertexCompression );
 		SET_DYNAMIC_VERTEX_SHADER( volume_clouds_vs20 );
 
-		// Set Vertex Shader Constants 
+		// Set Vertex Shader Constants
 
 		// Time
 		float vPackedVsConst1[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
@@ -124,7 +124,7 @@ void DrawVolumeClouds( CBaseVSShader *pShader, IMaterialVar** params, IShaderDyn
 		pShader->BindTexture( SHADER_SAMPLER1, info.m_nTexture2 );
 		pShader->BindTexture( SHADER_SAMPLER2, info.m_nTexture3 );
 
-		// Set Pixel Shader Constants 
+		// Set Pixel Shader Constants
 		float vEyePos[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 		pShaderAPI->GetWorldSpaceCameraPosition( vEyePos );
 		pShaderAPI->SetPixelShaderConstant( 5, vEyePos, 1 );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -99,7 +99,7 @@ bool IsUniqueIdValid( const UniqueId_t &id )
 
 bool IsUniqueIdEqual( const UniqueId_t &id1, const UniqueId_t &id2 )
 {
-	return memcmp( &id1, &id2, sizeof( UniqueId_t ) ) == 0; 
+	return memcmp( &id1, &id2, sizeof( UniqueId_t ) ) == 0;
 }
 
 void UniqueIdToString( const UniqueId_t &id, char *pBuf, int nMaxLen )
@@ -172,6 +172,3 @@ bool Unserialize( CUtlBuffer &buf, UniqueId_t &dest )
 	}
 	return buf.IsValid();
 }
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,7 +27,7 @@ public:
 	// Get and set the current driver. Use PassengerRole_t enum in shareddefs.h for adding passengers
 	virtual CBaseCombatCharacter*	GetPassenger( int nRole = VEHICLE_ROLE_DRIVER ) = 0;
 	virtual int						GetPassengerRole( CBaseCombatCharacter *pPassenger ) = 0;
-	
+
 	// Where is the passenger seeing from?
 	virtual void			GetVehicleViewPosition( int nRole, Vector *pOrigin, QAngle *pAngles, float *pFOV = NULL ) = 0;
 

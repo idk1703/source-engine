@@ -136,7 +136,7 @@ bool CWeaponSatchel::CanDeploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponSatchel::Precache( void )
 {
@@ -265,7 +265,7 @@ void CWeaponSatchel::Throw( void )
 			pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
 			m_iChargeReady = 1;
-			
+
 			pPlayer->RemoveAmmo( 1, m_iPrimaryAmmoType );
 
 		}
@@ -328,11 +328,11 @@ bool CWeaponSatchel::Deploy( void )
 	{
 		ActivateSatchelModel();
 	}
-	
+
 	bool bRet = BaseClass::Deploy();
 	if ( bRet )
 	{
-		// 
+		//
 		CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
 		if ( pPlayer )
 		{
@@ -395,7 +395,7 @@ const char *CWeaponSatchel::GetViewModel( int ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CWeaponSatchel::GetWorldModel( void ) const
 {
@@ -447,7 +447,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( monster_satchel, CSatchelCharge );
 
 //=========================================================
-// Deactivate - do whatever it is we do to an orphaned 
+// Deactivate - do whatever it is we do to an orphaned
 // satchel when we don't want it in the world anymore.
 //=========================================================
 void CSatchelCharge::Deactivate( void )
@@ -462,7 +462,7 @@ void CSatchelCharge::Spawn( void )
 	Precache( );
 	// motor
 	SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_SLIDE );
-	SetSolid( SOLID_BBOX ); 
+	SetSolid( SOLID_BBOX );
 
 	SetModel( SATCHEL_CHARGE_MODEL );
 
@@ -526,7 +526,7 @@ void CSatchelCharge::SatchelTouch( CBaseEntity *pOther )
 }
 
 void CSatchelCharge::UpdateSlideSound( void )
-{	
+{
 	// HACKHACK - On ground isn't always set, so look for ground underneath
 	trace_t tr;
 	UTIL_TraceLine( GetAbsOrigin(), GetAbsOrigin() - Vector(0,0,10), MASK_SOLID_BRUSHONLY, this, COLLISION_GROUP_NONE, &tr );
@@ -551,7 +551,7 @@ void CSatchelCharge::SatchelThink( void )
 	}
 
 	Vector vecNewVel = GetAbsVelocity();
-	
+
 	if ( GetWaterLevel() > 0 )
 	{
 		SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_BOUNCE );
@@ -568,7 +568,7 @@ void CSatchelCharge::SatchelThink( void )
 		SetGravity( 1.0 );
 	}
 
-	SetAbsVelocity( vecNewVel );	
+	SetAbsVelocity( vecNewVel );
 }
 
 void CSatchelCharge::Precache( void )

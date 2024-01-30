@@ -22,7 +22,7 @@ ConVar nb_head_aim_resettle_time( "nb_head_aim_resettle_time", "0.3", FCVAR_CHEA
 
 
 //-----------------------------------------------------------------------------------------------
-/** 
+/**
  * A useful reply for IBody::AimHeadTowards.  When the
  * head is aiming on target, press the fire button.
  */
@@ -37,7 +37,7 @@ void PressFireButtonReply::OnSuccess( INextBot *bot )
 
 
 //-----------------------------------------------------------------------------------------------
-/** 
+/**
  * A useful reply for IBody::AimHeadTowards.  When the
  * head is aiming on target, press the alternate fire button.
  */
@@ -52,7 +52,7 @@ void PressAltFireButtonReply::OnSuccess( INextBot *bot )
 
 
 //-----------------------------------------------------------------------------------------------
-/** 
+/**
  * A useful reply for IBody::AimHeadTowards.  When the
  * head is aiming on target, press the jump button.
  */
@@ -209,7 +209,7 @@ void PlayerBody::Upkeep( void )
 			// update subject tracking by periodically estimating linear aim velocity, allowing for "slop" between updates
 			Vector desiredLookAtPos;
 
-			if ( subject->MyCombatCharacterPointer() ) 
+			if ( subject->MyCombatCharacterPointer() )
 			{
 				desiredLookAtPos = GetBot()->GetIntentionInterface()->SelectTargetPoint( GetBot(), subject->MyCombatCharacterPointer() );
 			}
@@ -259,7 +259,7 @@ void PlayerBody::Upkeep( void )
 		NDebugOverlay::HorzArrow( GetEyePosition(), m_lookAtPos, thickness, r, g, 255, 255, false, 2.0f * deltaT );
 	}
 
-	
+
 	const float onTargetTolerance = 0.98f;
 	float dot = DotProduct( forward, to );
 	if ( dot > onTargetTolerance )
@@ -328,7 +328,7 @@ void PlayerBody::Upkeep( void )
 //-----------------------------------------------------------------------------------------------
 bool PlayerBody::SetPosition( const Vector &pos )
 {
-	m_player->SetAbsOrigin( pos );	
+	m_player->SetAbsOrigin( pos );
 	return true;
 }
 
@@ -377,7 +377,7 @@ void PlayerBody::AimHeadTowards( const Vector &lookAtPos, LookAtPriorityType pri
 		if ( !IsHeadSteady() || GetHeadSteadyDuration() < nb_head_aim_settle_duration.GetFloat() )
 		{
 			// we're still finishing a look-at at the same priority
-			if ( replyWhenAimed ) 
+			if ( replyWhenAimed )
 			{
 				replyWhenAimed->OnFail( GetBot(), INextBotReply::DENIED );
 			}
@@ -397,8 +397,8 @@ void PlayerBody::AimHeadTowards( const Vector &lookAtPos, LookAtPriorityType pri
 	// don't short-circuit if "sighted in" to avoid rapid view jitter
 	if ( m_lookAtPriority > priority && !m_lookAtExpireTimer.IsElapsed() )
 	{
-		// higher priority lookat still ongoing 
-		if ( replyWhenAimed ) 
+		// higher priority lookat still ongoing
+		if ( replyWhenAimed )
 		{
 			replyWhenAimed->OnFail( GetBot(), INextBotReply::DENIED );
 		}
@@ -446,23 +446,23 @@ void PlayerBody::AimHeadTowards( const Vector &lookAtPos, LookAtPriorityType pri
 	if ( GetBot()->IsDebugging( NEXTBOT_LOOK_AT ) )
 	{
 		NDebugOverlay::Cross3D( lookAtPos, 2.0f, 255, 255, 100, true, 2.0f * duration );
-		
+
 		const char *priName = "";
 		switch( priority )
 		{
 			case BORING:		priName = "BORING"; break;
 			case INTERESTING:	priName = "INTERESTING"; break;
 			case IMPORTANT:		priName = "IMPORTANT"; break;
-			case CRITICAL:		priName = "CRITICAL"; break;		
+			case CRITICAL:		priName = "CRITICAL"; break;
 		}
-		
+
 		ConColorMsg( Color( 255, 100, 0, 255 ), "%3.2f: %s Look At ( %g, %g, %g ) for %3.2f s, Pri = %s, Reason = %s\n",
 						gpGlobals->curtime,
 						m_player->GetPlayerName(),
 						lookAtPos.x, lookAtPos.y, lookAtPos.z,
 						duration,
 						priName,
-						( reason ) ? reason : "" );	
+						( reason ) ? reason : "" );
 	}
 }
 
@@ -489,7 +489,7 @@ void PlayerBody::AimHeadTowards( CBaseEntity *subject, LookAtPriorityType priori
 		if ( !IsHeadSteady() || GetHeadSteadyDuration() < nb_head_aim_settle_duration.GetFloat() )
 		{
 			// we're still finishing a look-at at the same priority
-			if ( replyWhenAimed ) 
+			if ( replyWhenAimed )
 			{
 				replyWhenAimed->OnFail( GetBot(), INextBotReply::DENIED );
 			}
@@ -510,7 +510,7 @@ void PlayerBody::AimHeadTowards( CBaseEntity *subject, LookAtPriorityType priori
 	if ( m_lookAtPriority > priority && !m_lookAtExpireTimer.IsElapsed() )
 	{
 		// higher priority lookat still ongoing
-		if ( replyWhenAimed ) 
+		if ( replyWhenAimed )
 		{
 			replyWhenAimed->OnFail( GetBot(), INextBotReply::DENIED );
 		}
@@ -578,23 +578,23 @@ void PlayerBody::AimHeadTowards( CBaseEntity *subject, LookAtPriorityType priori
 	if ( GetBot()->IsDebugging( NEXTBOT_LOOK_AT ) )
 	{
 		NDebugOverlay::Cross3D( m_lookAtPos, 2.0f, 100, 100, 100, true, duration );
-		
+
 		const char *priName = "";
 		switch( priority )
 		{
 			case BORING:		priName = "BORING"; break;
 			case INTERESTING:	priName = "INTERESTING"; break;
 			case IMPORTANT:		priName = "IMPORTANT"; break;
-			case CRITICAL:		priName = "CRITICAL"; break;		
+			case CRITICAL:		priName = "CRITICAL"; break;
 		}
-		
+
 		ConColorMsg( Color( 255, 100, 0, 255 ), "%3.2f: %s Look At subject %s for %3.2f s, Pri = %s, Reason = %s\n",
 						gpGlobals->curtime,
 						m_player->GetPlayerName(),
 						subject->GetClassname(),
 						duration,
 						priName,
-						( reason ) ? reason : "" );	
+						( reason ) ? reason : "" );
 	}
 }
 
@@ -842,7 +842,7 @@ const Vector &PlayerBody::GetHullMins( void ) const
 	{
 		m_hullMins = VEC_HULL_MIN_SCALED( m_player );
 	}
-	
+
 	return m_hullMins;
 }
 
@@ -862,7 +862,7 @@ const Vector &PlayerBody::GetHullMaxs( void ) const
 		m_hullMaxs = VEC_HULL_MAX_SCALED( m_player );
 	}
 
-	return m_hullMaxs;	
+	return m_hullMaxs;
 }
 
 
@@ -874,8 +874,3 @@ unsigned int PlayerBody::GetSolidMask( void ) const
 {
 	return ( m_player ) ? m_player->PlayerSolidMask() : MASK_PLAYERSOLID;
 }
-
-
-
-
-

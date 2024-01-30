@@ -68,7 +68,7 @@ bool MD5_Hash_File(unsigned char digest[16], char *pszFileName, bool bUsefopen /
 	byte chunk[1024];
 	int nBytesRead;
 	MD5Context_t ctx;
-	
+
 	int nSize;
 
 	if (!bUsefopen)
@@ -133,7 +133,7 @@ bool MD5_Hash_File(unsigned char digest[16], char *pszFileName, bool bUsefopen /
 				fclose(fp);
 			return FALSE;
 		}
-	}	
+	}
 
 	if ( fp )
 		fclose(fp);
@@ -146,7 +146,7 @@ bool MD5_Hash_File(unsigned char digest[16], char *pszFileName, bool bUsefopen /
 //-----------------------------------------------------------------------------
 // Purpose: newdat.exe - makes the .DAT signature for file / virus checking
 // Input  : argc - std args
-//			*argv[] - 
+//			*argv[] -
 // Output : int 0 == success. 1 == failure
 //-----------------------------------------------------------------------------
 int main( int argc, char *argv[] )

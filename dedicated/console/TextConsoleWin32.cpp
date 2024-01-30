@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -64,7 +64,7 @@ HWND GetConsoleHwnd(void)
 	SetConsoleTitle( pszOldWindowTitle );
 
 	return hwndFound;
-} 
+}
 
 CTextConsoleWin32::CTextConsoleWin32()
 {
@@ -81,7 +81,7 @@ bool CTextConsoleWin32::Init()
 
 	hinput = GetStdHandle ( STD_INPUT_HANDLE );
 	houtput = GetStdHandle ( STD_OUTPUT_HANDLE );
-	
+
 	if ( !SetConsoleCtrlHandler( &ConsoleHandlerRoutine, TRUE) )
 	{
 		Print( "WARNING! TextConsole::Init: Could not attach console hook.\n" );
@@ -247,7 +247,7 @@ void CTextConsoleWin32::PrintRaw( const char * pszMsg, int nChars )
 		if ( houtput == NULL )
 			return;
 	}
-	
+
 	if ( nChars <= 0 )
 	{
 		nChars = strlen( pszMsg );
@@ -270,7 +270,7 @@ void CTextConsoleWin32::PrintRaw( const char * pszMsg, int nChars )
 			pTempBuf[i] = '.';
 		}
 	}
-	
+
 	WriteFile( houtput, pTempBuf ? pTempBuf : pszMsg, nChars, &dummy, NULL );
 
 	free( pTempBuf ); // usually NULL
@@ -292,7 +292,7 @@ int CTextConsoleWin32::GetWidth( void )
 		nWidth = 80;
 
 	return nWidth;
-} 
+}
 
 void CTextConsoleWin32::SetStatusLine( char * pszStatus )
 {
@@ -306,7 +306,7 @@ void CTextConsoleWin32::UpdateStatus( void )
 	COORD	coord;
 	DWORD	dwWritten = 0;
 	WORD	wAttrib[ 80 ];
-	
+
 	for ( int i = 0; i < 80; i++ )
 	{
 		wAttrib[i] = Attrib; //FOREGROUND_GREEN | FOREGROUND_INTENSITY | BACKGROUND_INTENSITY ;
@@ -315,7 +315,7 @@ void CTextConsoleWin32::UpdateStatus( void )
 	coord.X = coord.Y = 0;
 
 	WriteConsoleOutputAttribute( houtput, wAttrib, 80, coord, &dwWritten );
-	WriteConsoleOutputCharacter( houtput, statusline, 80, coord, &dwWritten );	
+	WriteConsoleOutputCharacter( houtput, statusline, 80, coord, &dwWritten );
 }
 
 
@@ -324,10 +324,10 @@ void CTextConsoleWin32::SetTitle( char * pszTitle )
 	SetConsoleTitle( pszTitle );
 }
 
-void CTextConsoleWin32::SetColor(WORD attrib) 
+void CTextConsoleWin32::SetColor(WORD attrib)
 {
 	Attrib = attrib;
-}	
+}
 
 int CTextConsoleWin32::ReceiveNewline( void )
 {
@@ -347,7 +347,7 @@ int CTextConsoleWin32::ReceiveNewline( void )
 		if ( ( m_nInputLine == 0 ) || ( strcmp( m_aszLineBuffer[ m_nInputLine - 1 ], m_szConsoleText ) ) )
 		{
 			strncpy( m_aszLineBuffer[ m_nInputLine ], m_szConsoleText, MAX_CONSOLE_TEXTLEN );
-			
+
 			m_nInputLine++;
 
 			if ( m_nInputLine > m_nTotalLines )

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -47,14 +47,14 @@ void CMessageListener::Message( VPanel* pSender, VPanel* pReceiver, KeyValues* p
 		pReceiverClass = pReceiver->Client()->GetClassName();
 
 	// FIXME: Make a bunch of filters here
-	
+
 	// filter out key focus messages
 	if (!strcmp (pKeyValues->GetName(), "KeyFocusTicked"))
 	{
 		return;
 	}
-	// filter out mousefocus messages		
-	else if (!strcmp (pKeyValues->GetName(), "MouseFocusTicked"))	
+	// filter out mousefocus messages
+	else if (!strcmp (pKeyValues->GetName(), "MouseFocusTicked"))
 	{
 		return;
 	}
@@ -94,9 +94,9 @@ void CMessageListener::Message( VPanel* pSender, VPanel* pReceiver, KeyValues* p
 		return;
 	}
 
-	Msg( "%s : (%s (%s) - > %s (%s)) )\n", 
+	Msg( "%s : (%s (%s) - > %s (%s)) )\n",
 	pKeyValues->GetName(), pSenderClass, pSenderName, pReceiverClass, pReceiverName );
-		
+
 }
 
 

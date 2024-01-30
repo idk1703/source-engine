@@ -122,7 +122,7 @@ public:
 		demofile.ReadDemoHeader();
 
 		V_memcpy( &header, &demofile.m_DemoHeader, sizeof( header ) );
-		
+
 		return true;
 	}
 
@@ -254,7 +254,7 @@ public:
 		extern IClientReplay *g_pClientReplay;
 		return g_pClientReplay;
 	}
-	
+
 	virtual uint32 GetClientSteamID()
 	{
 		CSteamID steamID = Steam3Client().SteamUser()->GetSteamID();

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -48,9 +48,9 @@ bool ObjectList::AddHead(void * newObject)
 	};
 
 	head = newElement;
-	
+
 	// if list was empty set new tail
-	if (tail==NULL) tail = head;	
+	if (tail==NULL) tail = head;
 
 	number++;
 
@@ -61,7 +61,7 @@ bool ObjectList::AddHead(void * newObject)
 void * ObjectList::RemoveHead()
 {
 	void * retObj;
-	
+
 	// check head is present
 	if (head)
 	{
@@ -88,7 +88,7 @@ bool ObjectList::AddTail(void * newObject)
 {
 	element_t * newElement = (element_t *) calloc(1, sizeof(element_t));
 
-	if (newElement == NULL) 
+	if (newElement == NULL)
 		return false; // out of memory;
 
 	newElement->object = newObject;
@@ -113,7 +113,7 @@ bool ObjectList::AddTail(void * newObject)
 void * ObjectList::RemoveTail()
 {
 	void * retObj;
-	
+
 	// check tail is present
 	if (tail)
 	{
@@ -170,13 +170,13 @@ void ObjectList::Clear( bool freeElementsMemory )
 	element_t * e = head;
 	while(e)
 	{
-		ne = e->next; 
+		ne = e->next;
 
 		if ( freeElementsMemory && e->object )
 			free( e->object );
 
 		free(e);
-		e = ne; 
+		e = ne;
 	}
 
 	head = tail = current = NULL;
@@ -216,20 +216,20 @@ void * ObjectList::GetFirst()
 	{
 		current = head->next;
 		return head->object;
-	} 
+	}
 	else
 	{
 		current = NULL;
 		return NULL;
 	};
-	
+
 }
 
 void * ObjectList::GetNext()
 {
 	void * retObj = NULL;
 	if (current)
-	{	
+	{
 		retObj = current->object;
 		current = current->next;
 	}
@@ -240,4 +240,3 @@ bool ObjectList::Add(void *newObject)
 {
 	return AddTail( newObject );
 }
-

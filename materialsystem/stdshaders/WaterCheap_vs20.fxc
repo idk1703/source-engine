@@ -12,7 +12,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 projPos					: POSITION;	
+	float4 projPos					: POSITION;
 #if !defined( _X360 )
 	float  fog						: FOG;
 #endif
@@ -47,9 +47,9 @@ VS_OUTPUT main( const VS_INPUT v )
 	o.vRefract_W_ProjZ.xy = (o.vRefract_W_ProjZ + projPos.w) * 0.5f;
 	o.vRefract_W_ProjZ.z = projPos.w;
 #endif
-	
+
 	o.vRefract_W_ProjZ.w = projPos.z;
-	
+
 	worldPos = mul( v.vPos, cModel[0] );
 
 	float3 worldTangentS = mul( v.vTangentS, ( const float3x3 )cModel[0] );
@@ -80,5 +80,3 @@ VS_OUTPUT main( const VS_INPUT v )
 #endif
 	return o;
 }
-
-

@@ -9,7 +9,7 @@
 #include "tf_gamerules.h"
 #include "npcevent.h"
 #include "engine/IEngineSound.h"
-#include "in_buttons.h"	
+#include "in_buttons.h"
 #include "tf_weaponbase_grenadeproj.h"
 #include "eventlist.h"
 
@@ -75,7 +75,7 @@ void CTFWeaponBaseGrenade::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseGrenade::Precache()
 {
@@ -83,7 +83,7 @@ void CTFWeaponBaseGrenade::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFWeaponBaseGrenade::IsPrimed( void )
 {
@@ -91,7 +91,7 @@ bool CTFWeaponBaseGrenade::IsPrimed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFWeaponBaseGrenade::Deploy( void )
 {
@@ -105,9 +105,9 @@ bool CTFWeaponBaseGrenade::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFWeaponBaseGrenade::Prime() 
+void CTFWeaponBaseGrenade::Prime()
 {
 	CTFWeaponInfo weaponInfo = GetTFWpnData();
 	m_flThrowTime = gpGlobals->curtime + weaponInfo.m_flPrimerTime;
@@ -127,9 +127,9 @@ void CTFWeaponBaseGrenade::Prime()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFWeaponBaseGrenade::Throw() 
+void CTFWeaponBaseGrenade::Throw()
 {
 	if ( !m_bPrimed )
 		return;
@@ -231,7 +231,7 @@ void CTFWeaponBaseGrenade::Throw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFWeaponBaseGrenade::ShouldDetonate( void )
 {
@@ -239,7 +239,7 @@ bool CTFWeaponBaseGrenade::ShouldDetonate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseGrenade::ItemPostFrame()
 {
@@ -261,7 +261,7 @@ void CTFWeaponBaseGrenade::ItemPostFrame()
 			// Start throwing
 			pPlayer->DoAnimationEvent( PLAYERANIMEVENT_ATTACK_GRENADE );
 			m_bThrow = true;
-		}		
+		}
 	}
 
 	if ( m_bThrow )
@@ -276,7 +276,7 @@ void CTFWeaponBaseGrenade::ItemPostFrame()
 		}
 		else if ( HasWeaponIdleTimeElapsed() )
 		{
-			// The Throw call here exists solely to catch the lone case of thirdperson where the 
+			// The Throw call here exists solely to catch the lone case of thirdperson where the
 			// viewmodel isn't being drawn, and hence the anim event doesn't trigger and force a throw.
 			// In all other cases, it'll do nothing because the grenade has already been thrown.
 			Throw();
@@ -320,7 +320,7 @@ bool CTFWeaponBaseGrenade::ShouldLowerMainWeapon( void )
 #ifdef CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFWeaponBaseGrenade::ShouldDraw( void )
 {
@@ -348,7 +348,7 @@ BEGIN_DATADESC( CTFWeaponBaseGrenade )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseGrenade::HandleAnimEvent( animevent_t *pEvent )
 {
@@ -361,11 +361,11 @@ void CTFWeaponBaseGrenade::HandleAnimEvent( animevent_t *pEvent )
 		}
 	}
 
-	BaseClass::HandleAnimEvent( pEvent );	
+	BaseClass::HandleAnimEvent( pEvent );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFWeaponBaseGrenadeProj *CTFWeaponBaseGrenade::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iFlags )
 {
@@ -374,4 +374,3 @@ CTFWeaponBaseGrenadeProj *CTFWeaponBaseGrenade::EmitGrenade( Vector vecSrc, QAng
 }
 
 #endif
-

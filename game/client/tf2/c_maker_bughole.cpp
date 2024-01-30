@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,14 +35,14 @@ IMPLEMENT_CLIENTCLASS_DT(C_Maker_Bughole, DT_Maker_Bughole, CMaker_Bughole)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_Maker_Bughole::C_Maker_Bughole( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_Maker_Bughole::OnDataChanged( DataUpdateType_t updateType )
 {

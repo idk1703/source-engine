@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -16,7 +16,7 @@ class C_DODSmokeGrenade : public C_DODBaseGrenade
 {
 public:
 	DECLARE_CLASS( C_DODSmokeGrenade, C_DODBaseGrenade );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 
 	C_DODSmokeGrenade();
 

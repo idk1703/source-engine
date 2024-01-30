@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -52,7 +52,7 @@ static char* ConvertCRtoNL( char *str )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudMenu::CHudMenu( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass(NULL, "HudMenu")
@@ -61,12 +61,12 @@ CHudMenu::CHudMenu( const char *pElementName ) :
 
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
 	SetParent( pParent );
-	
+
 	SetHiddenBits( HIDEHUD_MISCSTATUS );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenu::Init( void )
 {
@@ -82,7 +82,7 @@ void CHudMenu::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenu::Reset( void )
 {
@@ -91,7 +91,7 @@ void CHudMenu::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CHudMenu::IsMenuOpen( void )
@@ -100,14 +100,14 @@ bool CHudMenu::IsMenuOpen( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenu::VidInit( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenu::OnThink()
 {
@@ -121,7 +121,7 @@ void CHudMenu::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudMenu::ShouldDraw( void )
 {
@@ -131,7 +131,7 @@ bool CHudMenu::ShouldDraw( void )
 
 	// check for if menu is set to disappear
 	if ( m_flShutoffTime > 0 && m_flShutoffTime <= gpGlobals->realtime )
-	{  
+	{
 		// times up, shutoff
 		m_bMenuDisplayed = false;
 		return false;
@@ -141,12 +141,12 @@ bool CHudMenu::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *text - 
-//			textlen - 
-//			font - 
-//			x - 
-//			y - 
+// Purpose:
+// Input  : *text -
+//			textlen -
+//			font -
+//			x -
+//			y -
 //-----------------------------------------------------------------------------
 void CHudMenu::PaintString( const wchar_t *text, int textlen, vgui::HFont& font, int x, int y )
 {
@@ -161,7 +161,7 @@ void CHudMenu::PaintString( const wchar_t *text, int textlen, vgui::HFont& font,
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenu::Paint()
 {
@@ -199,12 +199,12 @@ void CHudMenu::Paint()
 
 		bool canblur = false;
 		if ( line->menuitem != 0 &&
-			m_nSelectedItem >= 0 && 
+			m_nSelectedItem >= 0 &&
 			( line->menuitem == m_nSelectedItem ) )
 		{
 			canblur = true;
 		}
-		
+
 		vgui::surface()->DrawSetTextColor( clr );
 
 		int drawLen = line->length;
@@ -215,7 +215,7 @@ void CHudMenu::Paint()
 
 		vgui::surface()->DrawSetTextFont( line->menuitem != 0 ? m_hItemFont : m_hTextFont );
 
-		PaintString( &g_szMenuString[ line->startchar ], drawLen, 
+		PaintString( &g_szMenuString[ line->startchar ], drawLen,
 			line->menuitem != 0 ? m_hItemFont : m_hTextFont, x, y );
 
 		if ( canblur )
@@ -280,7 +280,7 @@ void CHudMenu::ProcessText( void )
 		if ( ch == 0 )
 			break;
 
-		if ( i == startpos && 
+		if ( i == startpos &&
 			( ch == L'-' && g_szMenuString[ i + 1 ] == L'>' ) )
 		{
 			// Special handling for menu item specifiers
@@ -373,7 +373,7 @@ void CHudMenu::HideMenu( void )
 //          MsgFunc_ShowMenu.
 //
 //   takes two values:
-//		menuName  : menu name string 
+//		menuName  : menu name string
 //		validSlots: a bitfield describing the valid keys
 //-----------------------------------------------------------------------------
 void CHudMenu::ShowMenu( const char * menuName, int validSlots )
@@ -391,7 +391,7 @@ void CHudMenu::ShowMenu( const char * menuName, int validSlots )
 	char szMenuString[MAX_MENU_STRING];
 	Q_strncpy( szMenuString, ConvertCRtoNL( hudtextmessage->BufferedLocaliseTextString( g_szPrelocalisedMenuString ) ), sizeof( szMenuString ) );
 	g_pVGuiLocalize->ConvertANSIToUnicode( szMenuString, g_szMenuString, sizeof( g_szMenuString ) );
-	
+
 	ProcessText();
 
 	m_bMenuDisplayed = true;
@@ -401,7 +401,7 @@ void CHudMenu::ShowMenu( const char * menuName, int validSlots )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenu::ShowMenu_KeyValueItems( KeyValues *pKV )
 {
@@ -411,7 +411,7 @@ void CHudMenu::ShowMenu_KeyValueItems( KeyValues *pKV )
 
 	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("MenuOpen");
 	m_nSelectedItem = -1;
-	
+
 	g_szMenuString[0] = '\0';
 	wchar_t *pWritePosition = g_szMenuString;
 	int		nRemaining = sizeof( g_szMenuString ) / sizeof( wchar_t );
@@ -488,15 +488,15 @@ void CHudMenu::MsgFunc_ShowMenu( bf_read &msg)
 		}
 
 		if ( !NeedMore )
-		{  
+		{
 			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("MenuOpen");
 			m_nSelectedItem = -1;
-			
+
 			// we have the whole string, so we can localise it now
 			char szMenuString[MAX_MENU_STRING];
 			Q_strncpy( szMenuString, ConvertCRtoNL( hudtextmessage->BufferedLocaliseTextString( g_szPrelocalisedMenuString ) ), sizeof( szMenuString ) );
 			g_pVGuiLocalize->ConvertANSIToUnicode( szMenuString, g_szMenuString, sizeof( g_szMenuString ) );
-			
+
 			ProcessText();
 		}
 

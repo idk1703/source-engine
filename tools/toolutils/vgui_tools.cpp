@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -21,8 +21,8 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : appSystemFactory - 
+// Purpose:
+// Input  : appSystemFactory -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool VGui_Startup( CreateInterfaceFn appSystemFactory )
@@ -35,8 +35,8 @@ bool VGui_Startup( CreateInterfaceFn appSystemFactory )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool VGui_PostInit()
@@ -54,8 +54,8 @@ bool VGui_PostInit()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void VGui_Shutdown()
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,7 +11,7 @@
 
 DEFINE_FALLBACK_SHADER( PortalStaticOverlay, PortalStaticOverlay_DX60 );
 
-BEGIN_VS_SHADER( PortalStaticOverlay_DX60, 
+BEGIN_VS_SHADER( PortalStaticOverlay_DX60,
 				"Help for PortalStaticOverlay_DX60 shader" )
 
 				BEGIN_SHADER_PARAMS
@@ -80,7 +80,7 @@ SHADER_DRAW
 	{
 		pShaderAPI->SetDefaultState();
 	}
-	
+
 	if( params[ALPHAMASKTEXTURE]->IsTexture() )
 		StaticPass_WithAlphaMask( pShaderShadow, pShaderAPI, params ); //portal static texture blending, with an alpha mask
 	else
@@ -101,13 +101,13 @@ void StaticPass_NoAlphaMask( IShaderShadow *pShaderShadow, IShaderDynamicAPI *pS
 		pShaderShadow->EnableCustomPixelPipe( true );
 		pShaderShadow->CustomTextureStages( 1 );
 
-		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-			SHADER_TEXCHANNEL_COLOR, 
+		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+			SHADER_TEXCHANNEL_COLOR,
 			SHADER_TEXOP_SELECTARG1,
 			SHADER_TEXARG_TEXTURE, SHADER_TEXARG_TEXTURE );
 
-		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-			SHADER_TEXCHANNEL_ALPHA, 
+		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+			SHADER_TEXCHANNEL_ALPHA,
 			SHADER_TEXOP_BLEND_CONSTANTALPHA,
 			SHADER_TEXARG_ZERO, SHADER_TEXARG_ONE );
 	}
@@ -140,30 +140,30 @@ void StaticPass_WithAlphaMask( IShaderShadow *pShaderShadow, IShaderDynamicAPI *
 		pShaderShadow->CustomTextureStages( 2 );
 
 		//portal static
-		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-			SHADER_TEXCHANNEL_COLOR, 
+		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+			SHADER_TEXCHANNEL_COLOR,
 			SHADER_TEXOP_SELECTARG1,
 			SHADER_TEXARG_TEXTURE, SHADER_TEXARG_TEXTURE );
 
-		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-			SHADER_TEXCHANNEL_ALPHA, 
+		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+			SHADER_TEXCHANNEL_ALPHA,
 			SHADER_TEXOP_BLEND_CONSTANTALPHA,
 			SHADER_TEXARG_ZERO, SHADER_TEXARG_ONE );
 
 
 		//alpha mask
-		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1, 
-			SHADER_TEXCHANNEL_COLOR, 
+		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
+			SHADER_TEXCHANNEL_COLOR,
 			SHADER_TEXOP_SELECTARG1,
 			SHADER_TEXARG_PREVIOUSSTAGE, SHADER_TEXARG_PREVIOUSSTAGE );
 
-		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1, 
-			SHADER_TEXCHANNEL_ALPHA, 
+		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
+			SHADER_TEXCHANNEL_ALPHA,
 			SHADER_TEXOP_MODULATE,
 			SHADER_TEXARG_TEXTUREALPHA, SHADER_TEXARG_PREVIOUSSTAGE );
 	}
 	DYNAMIC_STATE
-	{		
+	{
 		BindTexture( SHADER_SAMPLER0, STATICBLENDTEXTURE, STATICBLENDTEXTUREFRAME );
 		BindTexture( SHADER_SAMPLER1, ALPHAMASKTEXTURE, ALPHAMASKTEXTUREFRAME );
 
@@ -177,5 +177,3 @@ void StaticPass_WithAlphaMask( IShaderShadow *pShaderShadow, IShaderDynamicAPI *
 }
 
 END_SHADER
-
-

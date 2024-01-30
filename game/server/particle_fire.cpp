@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -38,6 +38,3 @@ CParticleFire::CParticleFire()
 	m_vDirection.Init();
 #endif
 }
-
-
-

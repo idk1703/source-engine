@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,9 +23,9 @@ BEGIN_VS_SHADER_FLAGS( IntroScreenSpaceEffect_dx80, "Help for IntroScreenSpaceEf
 	}
 
 	SHADER_INIT
-	{	
+	{
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		// Requires DX9 + above

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -54,7 +54,7 @@ CHL2MPTextWindow::~CHL2MPTextWindow()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHL2MPTextWindow::Update()
 {
@@ -64,7 +64,7 @@ void CHL2MPTextWindow::Update()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHL2MPTextWindow::SetVisible(bool state)
 {
@@ -94,7 +94,7 @@ void CHL2MPTextWindow::ShowPanel(bool bShow)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHL2MPTextWindow::OnKeyCodePressed(KeyCode code)
 {
@@ -130,7 +130,7 @@ void CHL2MPTextWindow::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHL2MPTextWindow::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -170,5 +170,3 @@ void CHL2MPSpectatorGUI::Update()
 		m_nLastSpecTarget = pLocalPlayer->GetObserverTarget();
 	}
 }
-
-

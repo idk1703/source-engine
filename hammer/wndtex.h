@@ -36,7 +36,7 @@ class wndTex : public CStatic
 		IEditorTexture *m_pTexture;
 
 		afx_msg void OnPaint();
-		
+
 		DECLARE_MESSAGE_MAP();
 };
 

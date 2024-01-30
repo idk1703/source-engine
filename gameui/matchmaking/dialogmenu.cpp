@@ -25,7 +25,7 @@
 // where the first label is the "action" text and the second is an optional
 // description of the action.
 //-----------------------------------------------------------------------
-CMenuItem::CMenuItem( CDialogMenu *pParent, const char *pTitle, const char *pDescription ) 
+CMenuItem::CMenuItem( CDialogMenu *pParent, const char *pTitle, const char *pDescription )
 	: BaseClass( pParent, "MenuItem" )
 {
 	// Quiet "parent not sized yet" spew
@@ -172,7 +172,7 @@ void CMenuItem::OnClick()
 //
 // Menu item that issues a command when clicked.
 //-----------------------------------------------------------------------
-CCommandItem::CCommandItem( CDialogMenu *pParent, const char *pTitleLabel, const char *pDescLabel, const char *pCommand ) 
+CCommandItem::CCommandItem( CDialogMenu *pParent, const char *pTitleLabel, const char *pDescLabel, const char *pCommand )
 	: BaseClass( pParent, pTitleLabel, pDescLabel )
 {
 	Q_strncpy( m_szCommand, pCommand, MAX_COMMAND_LEN );
@@ -208,7 +208,7 @@ void CCommandItem::SetFocus(const bool bActive )
 //
 // Menu item to display a player in the lobby.
 //-----------------------------------------------------------------------
-CPlayerItem::CPlayerItem( CDialogMenu *pParent, const char *pTitleLabel, int64 nId, byte bVoice, bool bReady ) 
+CPlayerItem::CPlayerItem( CDialogMenu *pParent, const char *pTitleLabel, int64 nId, byte bVoice, bool bReady )
 : BaseClass( pParent, pTitleLabel, NULL, "ShowGamerCard" )
 {
 	m_pVoiceIcon = new vgui::Label( this, "voiceicon", "" );
@@ -266,7 +266,7 @@ void CPlayerItem::OnClick()
 //
 // Menu item used to display session search results.
 //-----------------------------------------------------------------------
-CBrowserItem::CBrowserItem( CDialogMenu *pParent, const char *pHost, const char *pPlayers, const char *pScenario, const char *pPing ) 
+CBrowserItem::CBrowserItem( CDialogMenu *pParent, const char *pHost, const char *pPlayers, const char *pScenario, const char *pPing )
 	: BaseClass( pParent, pHost, NULL, "SelectSession" )
 {
 	m_pPlayers = new vgui::Label( this, "players", pPlayers );
@@ -323,7 +323,7 @@ void CBrowserItem::ApplySchemeSettings( vgui::IScheme *pScheme )
 // Menu item used to present a list of options for the player to select
 // from, such as "choose a map" or "number of rounds".
 //-----------------------------------------------------------------------
-COptionsItem::COptionsItem( CDialogMenu *pParent, const char *pLabel ) 
+COptionsItem::COptionsItem( CDialogMenu *pParent, const char *pLabel )
 	: BaseClass( pParent, pLabel, NULL )
 {
 	m_nActiveOption = m_Options.InvalidIndex();
@@ -535,7 +535,7 @@ void COptionsItem::SetOptionFocusPrev()
 // description, points and unlock date. Clicking the item opens another
 // dialog with additional information about the achievement.
 //-----------------------------------------------------------------------
-CAchievementItem::CAchievementItem( CDialogMenu *pParent, const wchar_t *pName, const wchar_t *pDesc, uint points, bool bUnlocked, IAchievement* pSourceAchievement ) 
+CAchievementItem::CAchievementItem( CDialogMenu *pParent, const wchar_t *pName, const wchar_t *pDesc, uint points, bool bUnlocked, IAchievement* pSourceAchievement )
 	: BaseClass( pParent, "", "" )
 {
 	// Title and description were returned as results of a system query,
@@ -576,7 +576,7 @@ CAchievementItem::CAchievementItem( CDialogMenu *pParent, const wchar_t *pName, 
 			if ( iPos > 0 && buf[iPos] == L' ' )
 			{
 				buf[iPos] = L'\n';
-			}				
+			}
 		}
 
 		m_pDescription->SetText( buf );
@@ -639,7 +639,7 @@ void CAchievementItem::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
 
-	KeyValues*pKeys = BasePanel()->GetConsoleControlSettings()->FindKey( "AchievementItem.res" );	
+	KeyValues*pKeys = BasePanel()->GetConsoleControlSettings()->FindKey( "AchievementItem.res" );
 	ApplySettings( pKeys );
 
 	m_pImage->SetBgColor( Color( 32, 32, 32, 255 ) );
@@ -672,10 +672,10 @@ void CAchievementItem::ApplySchemeSettings( vgui::IScheme *pScheme )
 // CSectionedItem
 //
 // Menu item used to display some number of data entries, which are arranged
-// into columns.  Supports scrolling through columns horizontally with the 
+// into columns.  Supports scrolling through columns horizontally with the
 // ability to "lock" columns so they don't scroll
 //-----------------------------------------------------------------------
-CSectionedItem::CSectionedItem( CDialogMenu *pParent, const char **ppEntries, int ct  ) 
+CSectionedItem::CSectionedItem( CDialogMenu *pParent, const char **ppEntries, int ct  )
 	: BaseClass( pParent, "", NULL, "SelectSession" )
 {
 	m_bHeader = false;
@@ -773,7 +773,7 @@ CDialogMenu::CDialogMenu() : BaseClass( NULL, "DialogMenu" )
 	m_nBaseRowIdx		= 0;
 	m_nBaseColumnIdx	= 0;
 	m_iUnlocked			= 0;
-	m_nMaxVisibleItems	= 1000;	// arbitrarily large	
+	m_nMaxVisibleItems	= 1000;	// arbitrarily large
 	m_nMaxVisibleColumns = 1000;// arbitrarily large
 }
 
@@ -909,7 +909,7 @@ void CDialogMenu::PerformLayout()
 			yPos += pItem->GetTall() + m_nItemSpacing;
 		}
 	}
-	
+
 	// Reset the focus to update background colors of all menu items
 	SetFocus( m_nActive );
 
@@ -949,7 +949,7 @@ void CDialogMenu::ApplySettings( KeyValues *pResourceData )
 				col.bLocked		= pColumn->GetInt( "locked", 0 );
 				col.hFont		= m_pScheme->GetFont( pColumn->GetString( "font", "default" ) );
 				col.color		= m_pScheme->GetColor( pColumn->GetString( "fgcolor" ), Color( 0, 0, 0, 255 ) );
-				
+
 				ppHeader[idx++] = pColumn->GetString( "header", "" );
 
 				xPos = col.xpos + col.wide;
@@ -1004,7 +1004,7 @@ void CDialogMenu::ApplySettings( KeyValues *pResourceData )
 		{
 			// New Options Item
 			COptionsItem *pItem = AddOptionsItem( pMenuData->GetString( "label", "<unknown>" ) );
- 
+
 			// ID and ValueType and the same for all option values
 			const char *pID			= pMenuData->GetString( "id", "NULL" );
 			const char *pValueType	= pMenuData->GetString( "valuetype", NULL );
@@ -1051,12 +1051,12 @@ void CDialogMenu::ApplySettings( KeyValues *pResourceData )
 					prop.nType = SESSION_PROPERTY;
 					Q_strncpy( prop.szID, pID, sizeof( prop.szID ) );
 					Q_strncpy( prop.szValueType, pValueType, sizeof( prop.szValueType ) );
-					Q_snprintf( prop.szValue, sizeof(prop.szValue), "%d", i ); 
+					Q_snprintf( prop.szValue, sizeof(prop.szValue), "%d", i );
 
 					pItem->AddOption( prop.szValue, prop );
 				}
 			}
-  
+
 			// Set the default active option
   			int active = pMenuData->GetInt( "activeoption", 0 );
   			pItem->SetOptionFocus( active );
@@ -1264,7 +1264,7 @@ void CDialogMenu::SetColumnFocusNext()
 		if ( iNewColumn >= m_Columns.Count() )
 			return;
 
-		m_nActiveColumn = iNewColumn;	
+		m_nActiveColumn = iNewColumn;
 		UpdateBaseColumnIndex();
 		InvalidateLayout();
 	}
@@ -1387,7 +1387,7 @@ int	CDialogMenu::GetColumnXPos( int idx )
 {
 	// Compensate for scrolling offsets
 	columninfo_s &col = m_Columns[idx];
-	
+
 	int xpos;
 	if ( col.bLocked )
 	{
@@ -1521,4 +1521,3 @@ bool CDialogMenu::HandleKeyCode( vgui::KeyCode code )
 
 	return true;
 }
-

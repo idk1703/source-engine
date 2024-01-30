@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,7 +14,7 @@
 // Purpose: Create the right class of message based upon the type
 //-----------------------------------------------------------------------------
 CTeamMessage *CTeamMessage::Create( CTFTeam *pTeam, int iMessageID, CBaseEntity *pEntity )
-{ 
+{
 	CTeamMessage *pMessage = NULL;
 
 	// Create the right type
@@ -61,7 +61,7 @@ CTeamMessage *CTeamMessage::Create( CTFTeam *pTeam, int iMessageID, CBaseEntity 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTeamMessage::CTeamMessage( CTFTeam *pTeam, int iMessageID, CBaseEntity *pEntity, float flTTL )
 {
@@ -76,7 +76,7 @@ CTeamMessage::CTeamMessage( CTFTeam *pTeam, int iMessageID, CBaseEntity *pEntity
 // TEAM MESSAGE SOUND
 //===============================================================================================================
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTeamMessage_Sound::CTeamMessage_Sound( CTFTeam *pTeam, int iMessageID, CBaseEntity *pEntity, float flTTL ) :
 	CTeamMessage( pTeam, iMessageID, pEntity, flTTL )
@@ -84,7 +84,7 @@ CTeamMessage_Sound::CTeamMessage_Sound( CTFTeam *pTeam, int iMessageID, CBaseEnt
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamMessage_Sound::SetSound( char *sSound )
 {
@@ -98,7 +98,7 @@ void CTeamMessage_Sound::SetSound( char *sSound )
 void CTeamMessage_Sound::FireMessage( void )
 {
 	Assert( m_SoundName.String() );
-	
+
 	// Play my sound to all the team's members
 	for ( int i = 0; i < m_pTeam->GetNumPlayers(); i++ )
 	{

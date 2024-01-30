@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -29,7 +29,7 @@ CLIENTEFFECT_REGISTER_END()
 void InitSmokeFogOverlay()
 {
 	TermSmokeFogOverlay();
-	
+
 	g_SmokeFogOverlayAlpha = 0;
 
 	if(materials)
@@ -60,7 +60,7 @@ void DrawSmokeFogOverlay()
 
 	// Hard-coded for now..
 	g_SmokeFogOverlayColor.Init( 0.3, 0.3, 0.3 );
-	
+
 	CMatRenderContextPtr pRenderContext( materials );
 
 	pRenderContext->MatrixMode( MATERIAL_PROJECTION );

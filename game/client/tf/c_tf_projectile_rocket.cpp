@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -16,7 +16,7 @@ BEGIN_NETWORK_TABLE( C_TFProjectile_Rocket, DT_TFProjectile_Rocket )
 END_NETWORK_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFProjectile_Rocket::C_TFProjectile_Rocket( void )
 {
@@ -24,7 +24,7 @@ C_TFProjectile_Rocket::C_TFProjectile_Rocket( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFProjectile_Rocket::~C_TFProjectile_Rocket( void )
 {
@@ -35,7 +35,7 @@ C_TFProjectile_Rocket::~C_TFProjectile_Rocket( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFProjectile_Rocket::OnDataChanged(DataUpdateType_t updateType)
 {
@@ -43,7 +43,7 @@ void C_TFProjectile_Rocket::OnDataChanged(DataUpdateType_t updateType)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFProjectile_Rocket::CreateTrails( void )
 {

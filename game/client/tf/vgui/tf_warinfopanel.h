@@ -54,7 +54,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CWarLandingPanel : public EditablePanel, public CLocalSteamSharedObjectListener
 {

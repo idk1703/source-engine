@@ -71,7 +71,7 @@
 		WEAPON_THOMPSON_PUNCH,
 		WEAPON_MP40_PUNCH,
 
-		WEAPON_GARAND_ZOOMED,	
+		WEAPON_GARAND_ZOOMED,
 		WEAPON_K98_ZOOMED,
 		WEAPON_SPRING_ZOOMED,
 		WEAPON_K98_SCOPED_ZOOMED,
@@ -127,7 +127,7 @@ typedef struct
 typedef struct
 {
 	short iNumAttacks;		// times fired
-	short iNumHits;			// times hit	
+	short iNumHits;			// times hit
 } dod_gamestats_weapon_nodist_t;
 
 typedef struct

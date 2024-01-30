@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -80,27 +80,27 @@ bool SIMDTest()
 		fltx4 Rad0=ReplicateX4(2.0);
 		fltx4 Radm=Rad0;
 		fltx4 Rad1=Rad0;
-	
+
 		fltx4 RadmMinusRad0=SubSIMD( Radm, Rad0);
 		fltx4 Rad1MinusRadm=SubSIMD( Rad1, Radm);
-		
+
 		fltx4 SIMDMinDist=ReplicateX4( 2.0 );
 		fltx4 SIMDMinDist2=ReplicateX4( 2.0*2.0 );
-		
+
 		fltx4 SIMDMaxDist=MaxSIMD( Rad0, MaxSIMD( Radm, Rad1 ) );
 		fltx4 SIMDMaxDist2=MulSIMD( SIMDMaxDist, SIMDMaxDist);
-		
+
 
 		FourVectors StartP;
 		StartP.DuplicateVector( StartPnt );
-		
+
 		FourVectors MiddleP;
 		MiddleP.DuplicateVector( MidP );
-		
+
 		// form delta terms needed for quadratic bezier
 		FourVectors Delta0;
 		Delta0.DuplicateVector( MidP-StartPnt );
-		
+
 		FourVectors Delta1;
 		Delta1.DuplicateVector( EndPnt-MidP );
 		int nLoopCtr = PROBLEM_SIZE;
@@ -114,11 +114,11 @@ bool SIMDTest()
 			FourVectors L0 = Delta0;
 			L0 *= TScale;
 			L0 += StartP;
-			
+
 			FourVectors L1= Delta1;
 			L1 *= TScale;
 			L1 += MiddleP;
-			
+
 			FourVectors Center = L1;
 			Center -= L0;
 			Center *= TScale;
@@ -129,7 +129,7 @@ bool SIMDTest()
 			pts -= Center;
 
 			// calculate radius at the point. !!speed!! - use special case for constant radius
-			
+
 			fltx4 dist_squared= pts * pts;
 			fltx4 TooFarMask = CmpGtSIMD( dist_squared, SIMDMaxDist2 );
 			if ( ( !bConstantRadius) && ( ! IsAnyNegative( TooFarMask ) ) )
@@ -140,7 +140,7 @@ bool SIMDTest()
 				fltx4 R0=AddSIMD( Rad0, MulSIMD( RadmMinusRad0, TScale ) );
 				fltx4 R1=AddSIMD( Radm, MulSIMD( Rad1MinusRadm, TScale ) );
 				SIMDMaxDist = AddSIMD( R0, MulSIMD( SubSIMD( R1, R0 ), TScale) );
-				
+
 				// now that we know the true radius, update our mask
 				TooFarMask = CmpGtSIMD( dist_squared, MulSIMD( SIMDMaxDist, SIMDMaxDist ) );
 			}
@@ -155,7 +155,7 @@ bool SIMDTest()
 				guess=MulSIMD(guess,SubSIMD(Four_Threes,MulSIMD(dist_squared,MulSIMD(guess,guess))));
 				guess=MulSIMD(Four_PointFives,guess);
 				pts *= guess;
-				
+
 				FourVectors clamp_far=pts;
 				clamp_far *= SIMDMaxDist;
 				clamp_far += Center;
@@ -316,6 +316,6 @@ int main(int argc,char **argv)
 
 	// Run the perf. test
 	SIMDTest();
-	
+
 	return 0;
 }

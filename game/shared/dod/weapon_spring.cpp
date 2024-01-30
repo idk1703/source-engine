@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,10 +18,10 @@ class CWeaponSpring : public CDODSniperWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponSpring, CDODSniperWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponSpring()  {}
 
 	virtual void Spawn( void );
@@ -33,7 +33,7 @@ public:
 	{
 		if ( IsFullyZoomed() )
 			return WEAPON_SPRING_ZOOMED;
-		else 
+		else
 			return WEAPON_SPRING;
 	}
 
@@ -92,7 +92,7 @@ void CWeaponSpring::Spawn( void )
 	BaseClass::Spawn();
 }
 
-acttable_t CWeaponSpring::m_acttable[] = 
+acttable_t CWeaponSpring::m_acttable[] =
 {
 	{ ACT_DOD_STAND_AIM,					ACT_DOD_STAND_AIM_BOLT,					false },
 	{ ACT_DOD_CROUCH_AIM,					ACT_DOD_CROUCH_AIM_BOLT,				false },
@@ -138,7 +138,7 @@ Activity CWeaponSpring::GetPrimaryAttackActivity( void )
 	Activity actPrim;
 
 	if( m_iClip1 <= 0 )
-		actPrim = ACT_VM_PRIMARYATTACK_EMPTY;	
+		actPrim = ACT_VM_PRIMARYATTACK_EMPTY;
 	else
 		actPrim = ACT_VM_PRIMARYATTACK;
 

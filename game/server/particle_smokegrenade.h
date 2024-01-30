@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -40,7 +40,7 @@ public:
 
 
 public:
-	
+
 	// Stage 0 (default): make a smoke trail that follows the entity it's following.
 	// Stage 1          : fill a volume with smoke.
 	CNetworkVar( unsigned char, m_CurrentStage );
@@ -54,5 +54,3 @@ public:
 
 
 #endif
-
-

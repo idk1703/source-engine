@@ -25,11 +25,11 @@ private:
 
 public:
 
-	CHudGameMessage( const char *pElementName ) : CHudElement( pElementName ), vgui::Panel( NULL, "HudGameMessage" ) 
+	CHudGameMessage( const char *pElementName ) : CHudElement( pElementName ), vgui::Panel( NULL, "HudGameMessage" )
 	{
 		// Set our parent window
 		SetParent( g_pClientMode->GetViewport() );
-		
+
 		m_pIcon = NULL;
 
 		// Never hide
@@ -39,7 +39,7 @@ public:
 	void	Init( void );
 	void	VidInit( void );
 	void	Paint( void );
-	
+
 	// Callback function for the "GameMessage" user message
 	void	MsgFunc_GameMessage( bf_read &msg );
 
@@ -85,7 +85,7 @@ void CHudGameMessage::Paint( void )
 {
 	if ( !m_pIcon )
 		return;
-	
+
 	// Find our fade based on our time shown
 	float dt = ( m_flStartTime - gpGlobals->curtime );
 	float flAlpha = SimpleSplineRemapVal( dt, 0.0f, m_flDuration, 255, 0 );
@@ -99,9 +99,8 @@ void CHudGameMessage::Paint( void )
 	vgui::HFont hFont = vgui::scheme()->GetIScheme(scheme)->GetFont( "Default" );
 
 	// Draw our text
-	surface()->DrawSetTextFont( hFont ); // set the font	
+	surface()->DrawSetTextFont( hFont ); // set the font
 	surface()->DrawSetTextColor( 255, 255, 255, flAlpha ); // white
 	surface()->DrawSetTextPos( 32, 8 ); // x,y position
 	surface()->DrawPrintText( m_pText, wcslen(m_pText) ); // print text
 }
-

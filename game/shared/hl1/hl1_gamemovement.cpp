@@ -1,13 +1,13 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
 
-//========= Copyright © 1996-2001, Valve LLC, All rights reserved. ============
+//========= Copyright ï¿½ 1996-2001, Valve LLC, All rights reserved. ============
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -36,7 +36,7 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CGameMovement, IGameMovement, INTERFACENAME_G
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHL1GameMovement::CheckJumpButton( void )
 {
@@ -56,13 +56,13 @@ bool CHL1GameMovement::CheckJumpButton( void )
 		m_pHL1Player->m_flWaterJumpTime -= gpGlobals->frametime;
 		if (m_pHL1Player->m_flWaterJumpTime < 0)
 			m_pHL1Player->m_flWaterJumpTime = 0;
-		
+
 		return false;
 	}
 
 	// If we are in the water most of the way...
 	if ( m_pHL1Player->GetWaterLevel() >= 2 )
-	{	
+	{
 		// swimming, not jumping
 		SetGroundEntity( NULL );
 
@@ -70,7 +70,7 @@ bool CHL1GameMovement::CheckJumpButton( void )
 			mv->m_vecVelocity[2] = 100;
 		else if (m_pHL1Player->GetWaterType() == CONTENTS_SLIME)
 			mv->m_vecVelocity[2] = 80;
-		
+
 		// play swiming sound
 		if ( m_pHL1Player->m_flSwimSoundTime <= 0 )
 		{
@@ -94,15 +94,15 @@ bool CHL1GameMovement::CheckJumpButton( void )
 
 	// In the air now.
 	SetGroundEntity( NULL );
-	
+
 	m_pHL1Player->PlayStepSound( (Vector &)mv->GetAbsOrigin(), player->GetSurfaceData(), 1.0, true );
-	
+
 	MoveHelper()->PlayerSetAnimation( PLAYER_JUMP );
 
 	float flGroundFactor = 1.0f;
 	if ( player->GetSurfaceData() )
 	{
-		flGroundFactor = 1.0;//player->GetSurfaceData()->game.jumpFactor; 
+		flGroundFactor = 1.0;//player->GetSurfaceData()->game.jumpFactor;
 	}
 
 	// Acclerate upward
@@ -116,7 +116,7 @@ bool CHL1GameMovement::CheckJumpButton( void )
 		// v = g * sqrt(2.0 * 45 / g )
 		// v^2 = g * g * 2.0 * 45 / g
 		// v = sqrt( g * 2.0 * 45 )
-		
+
 		// Adjust for super long jump module
 		// UNDONE -- note this should be based on forward angles, not current velocity.
 		if ( m_pHL1Player->m_bHasLongJump &&
@@ -142,7 +142,7 @@ bool CHL1GameMovement::CheckJumpButton( void )
 
 	mv->m_outWishVel.z += mv->m_vecVelocity[2] - startz;
 	mv->m_outStepHeight += 0.1f;
-	
+
 	if ( gpGlobals->maxClients > 1 )
 #ifdef CLIENT_DLL
 		(dynamic_cast<C_HL1MP_Player*>(m_pHL1Player))->DoAnimationEvent( PLAYERANIMEVENT_JUMP );
@@ -208,7 +208,7 @@ void CHL1GameMovement::Duck( void )
 			{
 				float flDuckMilliseconds = MAX( 0.0f, GAMEMOVEMENT_DUCK_TIME - ( float )player->m_Local.m_flDucktime );
 				float flDuckSeconds = flDuckMilliseconds / GAMEMOVEMENT_DUCK_TIME;
-				
+
 				// Finish in duck transition when transition time is over, in "duck", in air.
 				if ( ( flDuckSeconds > TIME_TO_DUCK ) || bInDuck || bInAir )
 				{
@@ -242,7 +242,7 @@ void CHL1GameMovement::Duck( void )
 					{
 						float flDuckMilliseconds = MAX( 0.0f, GAMEMOVEMENT_DUCK_TIME - (float)player->m_Local.m_flDucktime );
 						float flDuckSeconds = flDuckMilliseconds / GAMEMOVEMENT_DUCK_TIME;
-						
+
 						// Finish ducking immediately if duck time is over or not on ground
 						if ( flDuckSeconds > TIME_TO_UNDUCK || ( bInAir ) )
 						{

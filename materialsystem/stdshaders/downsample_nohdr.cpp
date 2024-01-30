@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //============================================================================//
 
@@ -65,7 +65,7 @@ BEGIN_VS_SHADER_FLAGS( Downsample_nohdr, "Help for Downsample_nohdr", SHADER_NOT
 			pShaderShadow->VertexShaderVertexFormat( VERTEX_POSITION, 1, 0, 0 );
 
 			pShaderShadow->SetVertexShader( "Downsample_vs20", 0 );
-			
+
 			if( g_pHardwareConfig->SupportsPixelShaders_2_b() || g_pHardwareConfig->ShouldAlwaysUseShaderModel2bShaders() )
 			{
 				DECLARE_STATIC_PIXEL_SHADER( downsample_nohdr_ps20b );
@@ -118,7 +118,7 @@ BEGIN_VS_SHADER_FLAGS( Downsample_nohdr, "Help for Downsample_nohdr", SHADER_NOT
 				flPixelShaderParams[3] = 1.0f;
 			}
 			pShaderAPI->SetPixelShaderConstant( 0, flPixelShaderParams, 1 );
-						
+
 			if( g_pHardwareConfig->SupportsPixelShaders_2_b() || g_pHardwareConfig->ShouldAlwaysUseShaderModel2bShaders() )
 			{
 				DECLARE_DYNAMIC_PIXEL_SHADER( downsample_nohdr_ps20b );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -34,4 +34,3 @@ BEGIN_VS_SHADER( Detail, "Help for Detail" )
 	}
 
 END_SHADER
-

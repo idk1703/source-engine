@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -40,9 +40,9 @@ class CPhysicsMotionController : public IVP_Controller_Independent, public IPhys
 public:
 	CPhysicsMotionController( IMotionEvent *pHandler, CPhysicsEnvironment *pVEnv );
 	virtual ~CPhysicsMotionController( void );
-    virtual void do_simulation_controller(IVP_Event_Sim *event,IVP_U_Vector<IVP_Core> *core_list);
-    virtual IVP_CONTROLLER_PRIORITY get_controller_priority();
-    virtual void core_is_going_to_be_deleted_event(IVP_Core *core) 
+	virtual void do_simulation_controller(IVP_Event_Sim *event,IVP_U_Vector<IVP_Core> *core_list);
+	virtual IVP_CONTROLLER_PRIORITY get_controller_priority();
+	virtual void core_is_going_to_be_deleted_event(IVP_Core *core)
 	{
 		m_coreList.FindAndRemove( core );
 	}
@@ -310,7 +310,7 @@ bool SavePhysicsMotionController( const physsaveparams_t &params, IPhysicsMotion
 {
 	vphysics_save_motioncontroller_t controllerTemplate;
 	memset( &controllerTemplate, 0, sizeof(controllerTemplate) );
-  
+
 	CPhysicsMotionController *pControllerImp = static_cast<CPhysicsMotionController*>(pMotionController);
 	pControllerImp->WriteToTemplate( controllerTemplate );
 	params.pSave->WriteAll( &controllerTemplate );
@@ -319,15 +319,15 @@ bool SavePhysicsMotionController( const physsaveparams_t &params, IPhysicsMotion
 }
 
 bool RestorePhysicsMotionController( const physrestoreparams_t &params, IPhysicsMotionController **ppMotionController )
-{		
+{
 	CPhysicsMotionController *pControllerImp = new CPhysicsMotionController( NULL, static_cast<CPhysicsEnvironment *>(params.pEnvironment) );
-	
+
 	vphysics_save_motioncontroller_t controllerTemplate;
 	memset( &controllerTemplate, 0, sizeof(controllerTemplate) );
 	params.pRestore->ReadAll( &controllerTemplate );
-  
+
 	pControllerImp->InitFromTemplate( controllerTemplate );
-	*ppMotionController = pControllerImp; 
-  
+	*ppMotionController = pControllerImp;
+
 	return true;
 }

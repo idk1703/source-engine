@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -22,9 +22,9 @@ public:
 	{
 	}
 
-	virtual const char *GetResFilename( void ) 
-	{ 
-		return "resource/UI/SpectatorTournamentGUIHealth.res"; 
+	virtual const char *GetResFilename( void )
+	{
+		return "resource/UI/SpectatorTournamentGUIHealth.res";
 	}
 };
 

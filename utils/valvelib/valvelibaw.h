@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -23,7 +23,7 @@ class CValvelibAppWiz : public CCustomAppWiz
 public:
 	virtual CAppWizStepDlg* Next(CAppWizStepDlg* pDlg);
 	virtual CAppWizStepDlg* Back(CAppWizStepDlg* pDlg);
-		
+
 	virtual void InitCustomAppWiz();
 	virtual void ExitCustomAppWiz();
 	virtual void CustomizeProject(IBuildProject* pProject);

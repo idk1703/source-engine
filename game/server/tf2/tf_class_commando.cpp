@@ -45,7 +45,7 @@ BEGIN_SEND_TABLE_NOBASE( CPlayerClassCommando, DT_PlayerClassCommandoData )
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CPlayerClassCommando::GetClassModelString( int nTeam )
@@ -57,18 +57,18 @@ const char *CPlayerClassCommando::GetClassModelString( int nTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPlayerClassCommando::CPlayerClassCommando( CBaseTFPlayer *pPlayer, TFClass iClass ) : CPlayerClass( pPlayer, iClass )
 {
 	for (int i = 0; i < MAX_TF_TEAMS; ++i)
 	{
-		SetClassModel( MAKE_STRING(GetClassModelString(i)), i ); 
+		SetClassModel( MAKE_STRING(GetClassModelString(i)), i );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPlayerClassCommando::~CPlayerClassCommando()
 {
@@ -76,7 +76,7 @@ CPlayerClassCommando::~CPlayerClassCommando()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassCommando::ClassActivate( void )
 {
@@ -103,7 +103,7 @@ void CPlayerClassCommando::ClassActivate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassCommando::ClassDeactivate( void )
 {
@@ -112,7 +112,7 @@ void CPlayerClassCommando::ClassDeactivate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassCommando::CreateClass( void )
 {
@@ -135,7 +135,7 @@ void CPlayerClassCommando::CreateClass( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassCommando::RespawnClass( void )
 {
@@ -196,7 +196,7 @@ void CPlayerClassCommando::SetupSizeData( void )
 	// Initially set the player to the base player class standing hull size.
 	m_pPlayer->SetCollisionBounds( COMMANDOCLASS_HULL_STAND_MIN, COMMANDOCLASS_HULL_STAND_MAX );
 	m_pPlayer->SetViewOffset( COMMANDOCLASS_VIEWOFFSET_STAND );
-	m_pPlayer->m_Local.m_flStepSize = COMMANDOCLASS_STEPSIZE;	
+	m_pPlayer->m_Local.m_flStepSize = COMMANDOCLASS_STEPSIZE;
 }
 
 //-----------------------------------------------------------------------------
@@ -302,7 +302,7 @@ void CPlayerClassCommando::BullRushTouch( CBaseEntity *pTouched )
 		CPASAttenuationFilter filter( m_pPlayer, "Commando.BullRushFlesh" );
 		CBaseEntity::EmitSound( filter, m_pPlayer->entindex(), "Commando.BullRushFlesh" );
 
-		pTFPlayer->Touch( m_pPlayer ); 
+		pTFPlayer->Touch( m_pPlayer );
 	}
 }
 
@@ -385,7 +385,7 @@ void CPlayerClassCommando::ClassThink( void )
 		}
 
 		m_bOldBullRush = (bool)m_ClassData.m_bBullRush;
-	} 
+	}
 
 	// Check for melee attack
 	if ( m_bCanBoot && m_pPlayer->IsAlive() && m_flNextBootCheck < gpGlobals->curtime )
@@ -416,7 +416,7 @@ void CPlayerClassCommando::ClassThink( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassCommando::StartAdrenalinRush( void )
 {
@@ -493,7 +493,7 @@ bool CPlayerClassCommando::ClientCommand( const char *pcmd )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassCommando::SetPlayerHull( void )
 {
@@ -508,7 +508,7 @@ void CPlayerClassCommando::SetPlayerHull( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassCommando::GetPlayerHull( bool bDucking, Vector &vecMin, Vector &vecMax )
 {
@@ -525,7 +525,7 @@ void CPlayerClassCommando::GetPlayerHull( bool bDucking, Vector &vecMin, Vector 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassCommando::CreatePersonalOrder( void )
 {
@@ -540,7 +540,7 @@ void CPlayerClassCommando::CreatePersonalOrder( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassCommando::ResetViewOffset( void )
 {
@@ -551,7 +551,7 @@ void CPlayerClassCommando::ResetViewOffset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassCommando::InitVCollision( void )
 {
@@ -561,7 +561,7 @@ void CPlayerClassCommando::InitVCollision( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CPlayerClassCommando::CanGetInVehicle( void )
 {
@@ -572,7 +572,7 @@ bool CPlayerClassCommando::CanGetInVehicle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CPlayerClassCommando::ClassCostAdjustment( ResupplyBuyType_t nType )
 {

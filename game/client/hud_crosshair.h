@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@ namespace vgui
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudCrosshair : public CHudElement, public vgui::Panel
 {
@@ -41,7 +41,7 @@ public:
 protected:
 	virtual void	ApplySchemeSettings( vgui::IScheme *scheme );
 	virtual void	Paint();
-	
+
 	// Crosshair sprite and colors
 	CHudTexture		*m_pCrosshair;
 	CHudTexture		*m_pDefaultCrosshair;

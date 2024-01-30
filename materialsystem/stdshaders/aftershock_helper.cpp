@@ -89,7 +89,7 @@ void DrawAftershock( CBaseVSShader *pShader, IMaterialVar** params, IShaderDynam
 		// Vertex Shader
 		DECLARE_STATIC_VERTEX_SHADER( aftershock_vs20 );
 		SET_STATIC_VERTEX_SHADER( aftershock_vs20 );
-	
+
 		// Pixel Shader
 		if( g_pHardwareConfig->SupportsPixelShaders_2_b() )
 		{
@@ -124,7 +124,7 @@ void DrawAftershock( CBaseVSShader *pShader, IMaterialVar** params, IShaderDynam
 		SET_DYNAMIC_VERTEX_SHADER_COMBO( COMPRESSED_VERTS, (int)vertexCompression );
 		SET_DYNAMIC_VERTEX_SHADER( aftershock_vs20 );
 
-		// Set Vertex Shader Constants 
+		// Set Vertex Shader Constants
 		if ( info.m_nBumpTransform != -1 )
 		{
 			pShader->SetVertexShaderTextureTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_1, info.m_nBumpTransform );
@@ -156,7 +156,7 @@ void DrawAftershock( CBaseVSShader *pShader, IMaterialVar** params, IShaderDynam
 			pShader->BindTexture( SHADER_SAMPLER1, info.m_nBumpmap, info.m_nBumpFrame );
 		}
 
-		// Set Pixel Shader Constants 
+		// Set Pixel Shader Constants
 		float vEyePos[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 		pShaderAPI->GetWorldSpaceCameraPosition( vEyePos );
 		pShaderAPI->SetPixelShaderConstant( 5, vEyePos, 1 );

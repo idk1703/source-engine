@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -52,7 +52,7 @@ void CFuncBrush::Spawn( void )
 
 	if ( m_iDisabled )
 		TurnOff();
-	
+
 	// If it can't move/go away, it's really part of the world
 	if ( !GetEntityName() || !m_iParent )
 		AddFlag( FL_WORLDBRUSH );
@@ -88,13 +88,13 @@ bool CFuncBrush::CreateVPhysics( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CFuncBrush::DrawDebugTextOverlays( void )
 {
 	int nOffset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 		Q_snprintf( tempstr,sizeof(tempstr), "angles: %g %g %g", (double)GetLocalAngles()[PITCH], (double)GetLocalAngles()[YAW], (double)GetLocalAngles()[ROLL] );
@@ -140,7 +140,7 @@ void CFuncBrush::InputTurnOn( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CFuncBrush::InputSetExcluded( inputdata_t &inputdata )
 {
@@ -148,7 +148,7 @@ void CFuncBrush::InputSetExcluded( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CFuncBrush::InputSetInvert( inputdata_t &inputdata )
 {
@@ -319,9 +319,9 @@ void CTriggerBrush::EndTouch( CBaseEntity *pOther )
 //-----------------------------------------------------------------------------
 // Purpose: Called when we are triggered by another entity or used by the player.
 // Input  : pActivator -
-//			pCaller - 
-//			useType - 
-//			value - 
+//			pCaller -
+//			useType -
+//			value -
 //-----------------------------------------------------------------------------
 void CTriggerBrush::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
@@ -361,4 +361,3 @@ bool CTriggerBrush::PassesInputFilter( CBaseEntity *pOther, int filter )
 
 	return true;
 }
-

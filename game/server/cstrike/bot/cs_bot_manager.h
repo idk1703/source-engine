@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -138,8 +138,8 @@ public:
 	void ExtractScenarioData( void );							///< search the map entities to determine the game scenario and define important zones
 
 	// difficulty levels -----------------------------------------------------------------------------------------
-	static BotDifficultyType GetDifficultyLevel( void )		
-	{ 
+	static BotDifficultyType GetDifficultyLevel( void )
+	{
 		if (cv_bot_difficulty.GetFloat() < 0.9f)
 			return BOT_EASY;
 		if (cv_bot_difficulty.GetFloat() < 1.9f)
@@ -309,7 +309,7 @@ private:
 
 	GameScenarioType m_gameScenario;						///< what kind of game are we playing
 
-	Zone m_zone[ MAX_ZONES ];							
+	Zone m_zone[ MAX_ZONES ];
 	int m_zoneCount;
 
 	bool m_isBombPlanted;									///< true if bomb has been planted

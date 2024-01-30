@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,11 +30,11 @@ struct constraint_groupparams_t
 };
 
 // Breakable constraints;
-// 
+//
 //	forceLimit	- kg * in / s limit (N * conversion(in/m))
 //	torqueLimit - kg * in^2 / s (Nm * conversion(in^2/m^2))
 
-// 
+//
 // strength 0 - 1
 struct constraint_breakableparams_t
 {
@@ -78,7 +78,7 @@ struct constraint_axislimit_t
 	}
 };
 
-// Builds a transform which maps points in the input object's local space 
+// Builds a transform which maps points in the input object's local space
 // to the output object's local space
 inline void BuildObjectRelativeXform( IPhysicsObject *pOutputSpace, IPhysicsObject *pInputSpace, matrix3x4_t &xformInToOut )
 {
@@ -101,7 +101,7 @@ struct constraint_ragdollparams_t
 	matrix3x4_t			constraintToAttached;	// xform constraint space to attached object space
 	int					parentIndex;				// NOTE: only used for parsing.  NEED NOT BE SET for create
 	int					childIndex;					// NOTE: only used for parsing.  NEED NOT BE SET for create
-	
+
 	constraint_axislimit_t	axes[3];
 	bool				onlyAngularLimits;			// only angular limits (not translation as well?)
 	bool				isActive;
@@ -172,7 +172,7 @@ struct constraint_fixedparams_t
 {
 	matrix3x4_t						attachedRefXform;	// xform attached object space to ref object space
 	constraint_breakableparams_t	constraint;
-	
+
 	inline void InitWithCurrentObjectState( IPhysicsObject *pRef, IPhysicsObject *pAttached )
 	{
 		BuildObjectRelativeXform( pRef, pAttached, attachedRefXform );
@@ -191,7 +191,7 @@ struct constraint_fixedparams_t
 //-----------------------------------------------------------------------------
 struct constraint_ballsocketparams_t
 {
-	Vector							constraintPosition[2];		// position of the constraint in each object's space 
+	Vector							constraintPosition[2];		// position of the constraint in each object's space
 	constraint_breakableparams_t	constraint;
 	inline void Defaults()
 	{
@@ -301,7 +301,7 @@ class IPhysicsConstraint
 {
 public:
 	virtual ~IPhysicsConstraint( void ) {}
-	
+
 	// NOTE: Constraints are active when created.  You can temporarily enable/disable them with these functions
 	virtual void			Activate( void ) = 0;
 	virtual void			Deactivate( void ) = 0;

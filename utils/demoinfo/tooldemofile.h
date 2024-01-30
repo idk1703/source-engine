@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -18,7 +18,7 @@
 
 class CUtlBuffer;
 
-class CToolDemoFile  
+class CToolDemoFile
 {
 public:
 	CToolDemoFile();
@@ -39,11 +39,11 @@ public:
 	void	ReadCmdInfo( democmdinfo_t& info );
 
 	void	ReadCmdHeader( unsigned char& cmd, int& tick );
-	
+
 	const char *ReadConsoleCommand( void );
 
 	int		ReadNetworkDataTables( CUtlBuffer *buf ); // if buf is NULL, skip it
-	
+
 	int		ReadUserCmd( char *buffer, int &size );
 
 	demoheader_t *ReadDemoHeader();

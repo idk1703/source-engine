@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ public:
 	static const Vector		vLocalMaxs;
 
 #ifdef CLIENT_DLL
-	static CUtlVector<C_Prop_Portal *> AllPortals; //an array of existing portal entities	
+	static CUtlVector<C_Prop_Portal *> AllPortals; //an array of existing portal entities
 #else
 	static CUtlVector<CProp_Portal *> AllPortals; //an array of existing portal entities
 #endif //#ifdef CLIENT_DLL

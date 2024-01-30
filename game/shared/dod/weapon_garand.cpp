@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,10 +24,10 @@ class CWeaponGarand : public CDODSniperWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponGarand, CDODSniperWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponGarand()  {}
 
 	virtual void	Spawn( void );
@@ -38,8 +38,8 @@ public:
 	virtual DODWeaponID GetStatsWeaponID( void )
 	{
 		if ( IsFullyZoomed() )
-            return WEAPON_GARAND_ZOOMED;
-		else 
+	return WEAPON_GARAND_ZOOMED;
+		else
 			return WEAPON_GARAND;
 	}
 
@@ -81,7 +81,7 @@ void CWeaponGarand::Spawn( void )
 	BaseClass::Spawn();
 }
 
-acttable_t CWeaponGarand::m_acttable[] = 
+acttable_t CWeaponGarand::m_acttable[] =
 {
 	{ ACT_DOD_STAND_AIM,					ACT_DOD_STAND_AIM_RIFLE,				false },
 	{ ACT_DOD_CROUCH_AIM,					ACT_DOD_CROUCH_AIM_RIFLE,				false },
@@ -126,7 +126,7 @@ Activity CWeaponGarand::GetIdleActivity( void )
 	Activity actIdle;
 
 	if( m_iClip1 <= 0 )
-		actIdle = ACT_VM_IDLE_EMPTY;	
+		actIdle = ACT_VM_IDLE_EMPTY;
 	else
 		actIdle = ACT_VM_IDLE;
 
@@ -140,7 +140,7 @@ Activity CWeaponGarand::GetPrimaryAttackActivity( void )
 	if ( IsFullyZoomed() )
 		actPrim = ACT_VM_PRIMARYATTACK_DEPLOYED;
 	else if( m_iClip1 <= 0 )
-		actPrim = ACT_VM_PRIMARYATTACK_EMPTY;	
+		actPrim = ACT_VM_PRIMARYATTACK_EMPTY;
 	else
 		actPrim = ACT_VM_PRIMARYATTACK;
 
@@ -152,7 +152,7 @@ Activity CWeaponGarand::GetDrawActivity( void )
 	Activity actDraw;
 
 	if( m_iClip1 <= 0 )
-		actDraw = ACT_VM_DRAW_EMPTY;	
+		actDraw = ACT_VM_DRAW_EMPTY;
 	else
 		actDraw = ACT_VM_DRAW;
 
@@ -175,7 +175,7 @@ void CWeaponGarand::PrimaryAttack( void )
 		CEffectData data;
 		data.m_nHitBox = EJECTBRASS_GARANDCLIP;
 		GetPlayerOwner()->GetAttachment( 2, data.m_vOrigin, data.m_vAngles  );
-	
+
 		// shoot it up in the air
 		data.m_vAngles.x = -90;
 		data.m_vAngles.y = 0;
@@ -200,4 +200,3 @@ bool CWeaponGarand::Reload( void )
 
 	return BaseClass::Reload();
 }
-

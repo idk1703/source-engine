@@ -1338,7 +1338,7 @@ unsigned int CTFNavMesh::GetSubVersionNumber( void ) const
 
 
 //-------------------------------------------------------------------------
-/** 
+/**
  * Store custom mesh data for derived classes
  */
 void CTFNavMesh::SaveCustomData( CUtlBuffer &fileBuffer ) const
@@ -1494,7 +1494,7 @@ void CTFNavMesh::ComputeIncursionDistances( CTFNavArea *spawnArea, int team )
 	{
 		// get next area to check
 		CTFNavArea *area = static_cast< CTFNavArea * >( CNavArea::PopOpenList() );
-		
+
 		bool bIgnoreBlockedAreas = false;
 
 #ifdef TF_RAID_MODE
@@ -1584,7 +1584,7 @@ void CTFNavMesh::ComputeInvasionAreas( void )
 	FOR_EACH_VEC( TheNavAreas, it )
 	{
 		CTFNavArea *area = static_cast< CTFNavArea * >( TheNavAreas[ it ] );
-		
+
 		area->ComputeInvasionAreaVectors();
 	}
 }
@@ -1841,7 +1841,7 @@ public:
 					{
 						t = 2.0f - t;
 					}
-					
+
 					int r, g, b;
 					if ( team == TF_TEAM_RED )
 					{
@@ -1882,7 +1882,7 @@ void CTFNavMesh::UpdateDebugDisplay( void ) const
 		FOR_EACH_VEC( TheNavAreas, it )
 		{
 			CTFNavArea *area = static_cast< CTFNavArea * >( TheNavAreas[ it ] );
-			
+
 			if ( area->IsInCombat() )
 			{
 				float t = area->GetCombatIntensity();
@@ -2189,7 +2189,7 @@ void CTFNavMesh::UpdateDebugDisplay( void ) const
 					describe = "Blocked Until First Point Captured";
 				}
 			}
-			
+
 			if ( area->HasAttributeTF( TF_NAV_BLOCKED_AFTER_POINT_CAPTURE ) )
 			{
 				area->DrawFilled( 255, 255, 0, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, true );
@@ -2221,7 +2221,7 @@ void CTFNavMesh::UpdateDebugDisplay( void ) const
 				area->DrawFilled( 0, 0, 100, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, true );
 				describe = "Blue Setup Gate";
 			}
-			
+
 			if ( area->HasAttributeTF( TF_NAV_RED_SETUP_GATE ) )
 			{
 				area->DrawFilled( 100, 0, 0, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, true );
@@ -2310,7 +2310,7 @@ void CTFNavMesh::UpdateDebugDisplay( void ) const
 			{
 				area->DrawFilled( 255, 0, 0, 255, NDEBUG_PERSIST_TILL_NEXT_SERVER, true );
 			}
-		}		
+		}
 	}
 
 /*

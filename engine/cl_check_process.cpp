@@ -6,7 +6,7 @@
 //=============================================================================//
 
 //*********************************************************************************************
-// Process Check 
+// Process Check
 #include "cl_check_process.h"
 #include "dbg.h"
 
@@ -28,13 +28,13 @@
 #define SystemHandleInformation									( (SYSTEM_INFORMATION_CLASS)16 )
 #define STATUS_INFO_LENGTH_MISMATCH								( (NTSTATUS)( 0xC0000004L ) )
 
-typedef NTSTATUS (__stdcall *NtQuerySystemInformation1) 
-(   
-	IN ULONG SysInfoClass,   
-	IN OUT PVOID SystemInformation,   
-	IN ULONG SystemInformationLength,   
-	OUT PULONG RetLen   
-);  
+typedef NTSTATUS (__stdcall *NtQuerySystemInformation1)
+(
+	IN ULONG SysInfoClass,
+	IN OUT PVOID SystemInformation,
+	IN ULONG SystemInformationLength,
+	OUT PULONG RetLen
+);
 
 typedef struct _HANDLE_INFORMATION
 {
@@ -56,7 +56,7 @@ typedef struct _SYSTEM_HANDLE_INFORMATION
 
 //
 // Checks Process Count with CreateToolhelp32Snapshot
-// 
+//
 int CheckOtherInstancesRunningWithSnapShot( const char *thisProcessNameShort )
 {
 	DWORD nLength;
@@ -93,7 +93,7 @@ int CheckOtherInstancesRunningWithSnapShot( const char *thisProcessNameShort )
 
 //
 // Checks Process Count with QueryFullProcessImageName and OpenProcess
-// 
+//
 int CheckOtherInstancesWithEnumProcess( const char *thisProcessNameShort )
 {
 	NTSTATUS status;
@@ -106,26 +106,26 @@ int CheckOtherInstancesWithEnumProcess( const char *thisProcessNameShort )
 	PSYSTEM_HANDLE_INFORMATION pHandleInfo = NULL;
 	char otherProcessName[ MAX_PATH ];
 	char otherProcessNameShort[ MAX_PATH ];
-	
+
 	HINSTANCE hInst = NULL;
 
 	//  Start with a count of zero, since we will find ourselves too.
 	int iProcessCount = 0;
-	
+
 	//  Get the path to the executable for this process.
 	nLength = MAX_PATH;
 
 	//  Query all of the handles in the system.  We have to do this in a loop, since we do
 	//  not know how large of a buffer we need.
 	nBufferSize = 0;
-	
+
 	// Load ntdll.dll so we can Query the system
 	/* load the ntdll.dll */
 	NtQuerySystemInformation1 NtQuerySystemInformation;
 
 	//PVOID Info;
 	HMODULE hModule = LoadLibrary( "ntdll.dll" );
-	if (!hModule)   
+	if (!hModule)
 	{
 		iProcessCount = CHECK_PROCESS_UNSUPPORTED;
 		goto Cleanup;
@@ -138,11 +138,11 @@ int CheckOtherInstancesWithEnumProcess( const char *thisProcessNameShort )
 		{
 			free( pHandleInfo );
 		}
-	
+
 		nBufferSize += HANDLE_QUERY_BUFFER_BLOCK_SIZE;
-	
+
 		pHandleInfo = (PSYSTEM_HANDLE_INFORMATION)malloc( nBufferSize );
-	
+
 		if ( pHandleInfo == NULL )
 		{
 			iProcessCount = CHECK_PROCESS_UNSUPPORTED;
@@ -151,30 +151,30 @@ int CheckOtherInstancesWithEnumProcess( const char *thisProcessNameShort )
 
 		//  Query the handles in the system.
 		NtQuerySystemInformation = (NtQuerySystemInformation1)GetProcAddress(hModule, "NtQuerySystemInformation");
-		if ( NtQuerySystemInformation == NULL ) 
+		if ( NtQuerySystemInformation == NULL )
 		{
 			iProcessCount = CHECK_PROCESS_UNSUPPORTED;
 			goto Cleanup;
 		}
-	
+
 		status = NtQuerySystemInformation( SystemHandleInformation,	pHandleInfo, nBufferSize, NULL );
-	
+
 		//  If our buffer was too small, try again.
 		if ( status == STATUS_INFO_LENGTH_MISMATCH )
 		{
 			continue;
 		}
-	
+
 		//  If the query failed, return the error.
 		if ( !NT_SUCCESS( status ) )
 		{
 			iProcessCount = CHECK_PROCESS_UNSUPPORTED;
 			goto Cleanup;
 		}
-	
+
 		break;
 	}
-	
+
 	//
 	//  Walk all of the entries looking for process IDs we have not processed yet.
 	//  Note that this code assumes that handles will be grouped by process, which is
@@ -199,14 +199,14 @@ int CheckOtherInstancesWithEnumProcess( const char *thisProcessNameShort )
 		return CHECK_PROCESS_UNSUPPORTED;
 
 	nLastProcess = 0;
-	
+
 	for ( i = 0; i < pHandleInfo->HandleCount; i++ )
 	{
 		if ( pHandleInfo->HandleInfoArray[ i ].ProcessId != nLastProcess )
 		{
 			//nLastProcess = pHandleInfo->HandleInfoArray[ i ].ProcessId;
 			nLastProcess = pHandleInfo->HandleInfoArray[ i ].ProcessId;
-	
+
 			//
 			//  Try to open a handle to this process.  Note that we may not have
 			//  access to all processes, so we ignore errors.
@@ -214,22 +214,22 @@ int CheckOtherInstancesWithEnumProcess( const char *thisProcessNameShort )
 			process = OpenProcess( PROCESS_QUERY_INFORMATION,
 				FALSE,
 				nLastProcess );
-	
+
 			if ( process != NULL )
 			{
 				//  Query the name of the executable for the process we opened.  If the query
 				//  fails, we ignore this process.
 				nLength = MAX_PATH;
-	
+
 				bStatus = fn( process, otherProcessName, nLength );
-				
+
 				if ( bStatus )
 				{
 					//
 					//  We have the process name.  See if it is the same name as our process.
 					//
 					V_FileBase( otherProcessName, otherProcessNameShort, MAX_PATH );
-	
+
 					if ( V_strcmp( thisProcessNameShort, otherProcessNameShort ) == 0 )
 					{
 						//  We found an instance of this executable.
@@ -237,12 +237,12 @@ int CheckOtherInstancesWithEnumProcess( const char *thisProcessNameShort )
 						iProcessCount++;
 					}
 				}
-	
+
 				CloseHandle( process );
 			}
 		}
 	}
-	
+
 Cleanup:
 
 	//  Free allocated resources.

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,4 +19,3 @@ void C_OrderHeal::GetDescription( char *pDest, int bufferSize )
 
 	Q_snprintf( pDest, bufferSize, "Heal %s", targetDesc );
 }
-

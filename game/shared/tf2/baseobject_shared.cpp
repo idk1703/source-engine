@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -63,13 +63,13 @@ void CBaseObject::CreateBuildPoints( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::AddAndParseBuildPoint( int iAttachmentNumber, KeyValues *pkvBuildPoint )
 {
 	int iPoint = AddBuildPoint( iAttachmentNumber );
 
-	
+
 	m_BuildPoints[iPoint].m_bPutInAttachmentSpace = (pkvBuildPoint->GetInt( "PutInAttachmentSpace", 0 ) != 0);
 
 	// Now see if we've got a set of valid objects specified
@@ -125,7 +125,7 @@ void CBaseObject::SetBuildPointPassenger( int iPoint, int iPassenger )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseObject::GetBuildPointPassenger( int iPoint ) const
 {
@@ -133,7 +133,7 @@ int CBaseObject::GetBuildPointPassenger( int iPoint ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::AddValidObjectToBuildPoint( int iPoint, int iObjectType )
 {
@@ -142,7 +142,7 @@ void CBaseObject::AddValidObjectToBuildPoint( int iPoint, int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseObject::GetNumBuildPoints( void ) const
 {
@@ -150,7 +150,7 @@ int CBaseObject::GetNumBuildPoints( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseObject* CBaseObject::GetBuildPointObject( int iPoint )
 {
@@ -175,7 +175,7 @@ bool CBaseObject::CanBuildObjectOnBuildPoint( int iPoint, int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseObject::GetBuildPoint( int iPoint, Vector &vecOrigin, QAngle &vecAngles )
 {
@@ -220,7 +220,7 @@ void CBaseObject::SetObjectOnBuildPoint( int iPoint, CBaseObject *pObject )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CBaseObject::GetMaxSnapDistance( int iPoint )
 {
@@ -284,7 +284,7 @@ int CBaseObject::FindObjectOnBuildPoint( CBaseObject *pObject )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseObject *CBaseObject::GetObjectOfTypeOnMe( int iObjectType )
 {
@@ -302,7 +302,7 @@ CBaseObject *CBaseObject::GetObjectOfTypeOnMe( int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::RemoveAllObjects( void )
 {
@@ -318,7 +318,7 @@ void CBaseObject::RemoveAllObjects( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseObject	*CBaseObject::GetParentObject( void )
 {
@@ -421,7 +421,7 @@ bool CBaseObject::IsPowered( void )
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CBaseObject::GetSapperAttachTime( void )
 {
@@ -476,11 +476,11 @@ void CBaseObject::SetType( int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : act - 
+// Purpose:
+// Input  : act -
 //-----------------------------------------------------------------------------
-void CBaseObject::SetActivity( Activity act ) 
-{ 
+void CBaseObject::SetActivity( Activity act )
+{
 	// Allow any model swapping, etc. to occur
 	OnActivityChanged( act );
 
@@ -488,26 +488,26 @@ void CBaseObject::SetActivity( Activity act )
 	if ( !GetModelPtr() )
 		return;
 
-	int sequence = SelectWeightedSequence( act ); 
+	int sequence = SelectWeightedSequence( act );
 	if ( sequence != ACTIVITY_NOT_AVAILABLE )
 	{
-		m_Activity = act; 
+		m_Activity = act;
 		SetObjectSequence( sequence );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Activity
 //-----------------------------------------------------------------------------
 Activity CBaseObject::GetActivity( ) const
-{ 
+{
 	return m_Activity;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : act - 
+// Purpose:
+// Input  : act -
 //-----------------------------------------------------------------------------
 void CBaseObject::OnActivityChanged( Activity act )
 {
@@ -516,7 +516,7 @@ void CBaseObject::OnActivityChanged( Activity act )
 
 //-----------------------------------------------------------------------------
 // Purpose: Thin wrapper over CBaseAnimating::SetSequence to do bookkeeping.
-// Input  : sequence - 
+// Input  : sequence -
 //-----------------------------------------------------------------------------
 void CBaseObject::SetObjectSequence( int sequence )
 {
@@ -532,7 +532,7 @@ void CBaseObject::SetObjectSequence( int sequence )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::AttemptToGoActive( void )
 {
@@ -544,7 +544,7 @@ void CBaseObject::AttemptToGoActive( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::OnGoActive( void )
 {
@@ -565,7 +565,7 @@ void CBaseObject::OnGoActive( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::OnGoInactive( void )
 {

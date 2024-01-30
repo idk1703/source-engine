@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		An NPC's memory of potential enemies 
+// Purpose:		An NPC's memory of potential enemies
 //
 //=============================================================================//
 
@@ -24,7 +24,7 @@
 
 //-----------------------------------------------------------------------------
 
-AI_EnemyInfo_t::AI_EnemyInfo_t(void) 
+AI_EnemyInfo_t::AI_EnemyInfo_t(void)
 {
 	hEnemy				= NULL;
 	vLastKnownLocation	= vec3_origin;
@@ -41,7 +41,7 @@ AI_EnemyInfo_t::AI_EnemyInfo_t(void)
 	bMobbedMe = 0;
 }
 
- 
+
 //-----------------------------------------------------------------------------
 // CAI_EnemiesListSaveRestoreOps
 //
@@ -59,29 +59,29 @@ public:
 	virtual void Save( const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave )
 	{
 		CAI_Enemies::CMemMap *pMemMap = (CAI_Enemies::CMemMap *)fieldInfo.pField;
-		
+
 		int nMemories = pMemMap->Count();
 		pSave->WriteInt( &nMemories );
-		
+
 		for ( CAI_Enemies::CMemMap::IndexType_t i = pMemMap->FirstInorder(); i != pMemMap->InvalidIndex(); i = pMemMap->NextInorder( i ) )
 		{
 			pSave->WriteAll( (*pMemMap)[i] );
 		}
 	}
-	
+
 	virtual void Restore( const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore )
 	{
 		CAI_Enemies::CMemMap *pMemMap = (CAI_Enemies::CMemMap *)fieldInfo.pField;
 		Assert( pMemMap->Count() == 0 );
-		
+
 		int nMemories = pRestore->ReadInt();
-		
+
 		while ( nMemories-- )
 		{
 			AI_EnemyInfo_t *pAddMemory = new AI_EnemyInfo_t;
-			
+
 			pRestore->ReadAll( pAddMemory );
-			
+
 			if ( pAddMemory->hEnemy != NULL )
 			{
 				pMemMap->Insert( pAddMemory->hEnemy, pAddMemory );
@@ -90,16 +90,16 @@ public:
 				delete pAddMemory;
 		}
 	}
-	
+
 	virtual void MakeEmpty( const SaveRestoreFieldInfo_t &fieldInfo )
 	{
 		CAI_Enemies::CMemMap *pMemMap = (CAI_Enemies::CMemMap *)fieldInfo.pField;
-		
+
 		for ( CAI_Enemies::CMemMap::IndexType_t i = pMemMap->FirstInorder(); i != pMemMap->InvalidIndex(); i = pMemMap->NextInorder( i ) )
 		{
 			delete (*pMemMap)[i];
 		}
-		
+
 		pMemMap->RemoveAll();
 	}
 
@@ -108,7 +108,7 @@ public:
 		CAI_Enemies::CMemMap *pMemMap = (CAI_Enemies::CMemMap *)fieldInfo.pField;
 		return ( pMemMap->Count() == 0 );
 	}
-	
+
 } g_AI_MemoryListSaveRestoreOps;
 
 //-----------------------------------------------------------------------------
@@ -206,7 +206,7 @@ AI_EnemyInfo_t *CAI_Enemies::GetNext( AIEnemiesIter_t *pIter )
 
 	return m_Map[i];
 }
-	
+
 //-----------------------------------------------------------------------------
 
 AI_EnemyInfo_t *CAI_Enemies::Find( CBaseEntity *pEntity, bool bTryDangerMemory )
@@ -278,12 +278,12 @@ void CAI_Enemies::RefreshMemories(void)
 	// -------------------
 	// Check each record
 	// -------------------
-	
+
 	CMemMap::IndexType_t i = m_Map.FirstInorder();
 	while ( i != m_Map.InvalidIndex() )
-	{	
+	{
 		AI_EnemyInfo_t *pMemory = m_Map[i];
-		
+
 		CMemMap::IndexType_t iNext = m_Map.NextInorder( i ); // save so can remove
 		if ( ShouldDiscardMemory( pMemory ) )
 		{
@@ -336,9 +336,9 @@ bool CAI_Enemies::UpdateMemory(CAI_Network* pAINet, CBaseEntity *pEnemy, const V
 		if ( firstHand )
 			pMemory->timeLastSeen = gpGlobals->curtime;
 		pMemory->bEludedMe = false;
-		
+
 		float deltaDist = (pMemory->vLastKnownLocation - vPosition).LengthSqr();
-		
+
 		if (deltaDist>DIST_TRIGGER_REACQUIRE_SQ || ( deltaDist>MIN_DIST_TIME_TRIGGER_REACQUIRE_SQ && ( gpGlobals->curtime - pMemory->timeLastSeen ) > TIME_TRIGGER_REACQUIRE ) )
 		{
 			pMemory->timeLastReacquired = gpGlobals->curtime;
@@ -455,8 +455,8 @@ const Vector &CAI_Enemies::LastKnownPosition( CBaseEntity *pEnemy )
 //-----------------------------------------------------------------------------
 // Purpose: Returns the last position the enemy was SEEN at. This will always be
 // different than LastKnownPosition() when the enemy is out of sight, because
-// the last KNOWN position will be updated for a number of seconds after the 
-// player disappears. 
+// the last KNOWN position will be updated for a number of seconds after the
+// player disappears.
 //-----------------------------------------------------------------------------
 const Vector &CAI_Enemies::LastSeenPosition( CBaseEntity *pEnemy )
 {
@@ -527,8 +527,8 @@ float CAI_Enemies::FirstTimeSeen( CBaseEntity *pEnemy)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEnemy - 
+// Purpose:
+// Input  : *pEnemy -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_Enemies::HasFreeKnowledgeOf( CBaseEntity *pEnemy )
@@ -567,7 +567,7 @@ float CAI_Enemies::LastTimeTookDamageFrom( CBaseEntity *pEnemy)
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the time at which the enemy was first seen firsthand
-// Input  : *pEnemy - 
+// Input  : *pEnemy -
 // Output : float
 //-----------------------------------------------------------------------------
 float CAI_Enemies::TimeAtFirstHand( CBaseEntity *pEnemy )
@@ -624,8 +624,8 @@ void CAI_Enemies::SetMobbedMe( CBaseEntity *pEnemy, bool bMobbedMe )
 //-----------------------------------------------------------------------------
 
 void CAI_Enemies::SetFreeKnowledgeDuration( float flDuration )
-{ 
-	m_flFreeKnowledgeDuration = flDuration;	
+{
+	m_flFreeKnowledgeDuration = flDuration;
 
 	if ( m_flFreeKnowledgeDuration >= m_flEnemyDiscardTime )
 	{
@@ -641,8 +641,8 @@ void CAI_Enemies::SetFreeKnowledgeDuration( float flDuration )
 //-----------------------------------------------------------------------------
 
 void CAI_Enemies::SetEnemyDiscardTime( float flTime )
-{ 
-	m_flEnemyDiscardTime = flTime;			
+{
+	m_flEnemyDiscardTime = flTime;
 
 	if ( m_flFreeKnowledgeDuration >= m_flEnemyDiscardTime )
 	{

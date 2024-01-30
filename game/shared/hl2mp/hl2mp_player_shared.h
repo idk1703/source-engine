@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -51,7 +51,7 @@ public:
 	void				Update();
 
 	const QAngle&		GetRenderAngles();
-				
+
 	void				GetPoseParameters( CStudioHdr *pStudioHdr, float poseParameter[MAXSTUDIOPOSEPARAM] );
 
 	CHL2MP_Player		*GetOuter();

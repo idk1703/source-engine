@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -17,7 +17,7 @@ CDatatableStack::CDatatableStack( CSendTablePrecalc *pPrecalc, unsigned char *pS
 
 	m_pStructBase = pStructBase;
 	m_ObjectID = objectID;
-	
+
 	m_iCurProp = 0;
 	m_pCurProp = NULL;
 
@@ -43,5 +43,3 @@ void CDatatableStack::Init( bool bExplicitRoutes )
 
 	m_bInitted = true;
 }
-
-

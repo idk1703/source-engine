@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -48,7 +48,7 @@ public:
 	virtual bool NeedsUpdate( void ) { return false; }
 	virtual bool HasInputElements( void ) { return true; }
 	virtual void ShowPanel( bool bShow ){ };
-	virtual void SetVisible( bool state ); 
+	virtual void SetVisible( bool state );
 	vgui::VPANEL GetVPanel( void ) { return BaseClass::GetVPanel(); }
 	virtual bool IsVisible() { return BaseClass::IsVisible(); }
 	bool	IsFlawlessVictory( void );
@@ -67,7 +67,7 @@ private:
 	float	m_flFlipScoresTimes;
 	int		m_iBlueTeamScore;
 	int		m_iRedTeamScore;
-	
+
 	bool	m_bShouldBeVisible;
 	bool	m_bWasFlawlessVictory;
 

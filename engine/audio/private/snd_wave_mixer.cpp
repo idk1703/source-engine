@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -14,8 +14,8 @@
 extern bool FUseHighQualityPitch( channel_t *pChannel );
 
 //-----------------------------------------------------------------------------
-// These mixers provide an abstraction layer between the audio device and 
-// mixing/decoding code.  They allow data to be decoded and mixed using 
+// These mixers provide an abstraction layer between the audio device and
+// mixing/decoding code.  They allow data to be decoded and mixed using
 // optimized, format sensitive code by calling back into the device that
 // controls them.
 //-----------------------------------------------------------------------------
@@ -224,8 +224,8 @@ int CAudioMixerWave::GetSamplePosition( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : delaySamples - 
+// Purpose:
+// Input  : delaySamples -
 //-----------------------------------------------------------------------------
 void CAudioMixerWave::SetStartupDelaySamples( int delaySamples )
 {
@@ -301,7 +301,7 @@ static uint AppendToBuffer( char *pBuffer, const char *pSampleData, size_t nByte
 	}
 }
 
-// Load a static copy buffer (g_temppaintbuffer) with the requested number of samples, 
+// Load a static copy buffer (g_temppaintbuffer) with the requested number of samples,
 // with the first sample(s) in the buffer always set up as the last sample(s) of the previous load.
 // Return a pointer to the head of the copy buffer.
 // This ensures that interpolating pitch shifters always have the previous sample to reference.
@@ -342,7 +342,7 @@ char *CAudioMixerWave::LoadMixBuffer( channel_t *pChannel, int sample_load_reque
 
 
 	if ( IsX360() || IsDebug() )
-	{	
+	{
 		// for safety, 360 always validates sample request, due to new xma audio code and possible logic flaws
 		// PC can expect number of requested samples to be within tolerances due to exisiting aged code
 		// otherwise buffer overruns cause hard to track random crashes
@@ -373,12 +373,12 @@ char *CAudioMixerWave::LoadMixBuffer( channel_t *pChannel, int sample_load_reque
 
 		0		1		 2		 3		 4		 5		6		7		sample_index     (whole samples)
 
-		^     ^      ^      ^      ^     ^     ^     ^     ^        
-		|     |      |      |      |     |     |     |     |   
+		^     ^      ^      ^      ^     ^     ^     ^     ^
+		|     |      |      |      |     |     |     |     |
 		0    0.81   1.68   2.43   3.24  4.05  4.86  5.67  6.48          m_fsample_index  (rate*sample)
 		_______________    ________________   ________________
-						^   ^                  ^ ^        	
-						|   |                  | |                                    
+						^   ^                  ^ ^
+						|   |                  | |
 	m_sample_loaded_index   |                  | m_sample_loaded_index
 							|                  |
 		m_fsample_index----   		       ----m_fsample_index
@@ -403,7 +403,7 @@ char *CAudioMixerWave::LoadMixBuffer( channel_t *pChannel, int sample_load_reque
 	else if ( m_fsample_index < sample_loaded_index )
 	{
 		// next sample index is entirely within the previous block of samples loaded,
-		// so we'll need the last 2 samples loaded.  (can occur when rate < 1.0)		
+		// so we'll need the last 2 samples loaded.  (can occur when rate < 1.0)
 		Assert ( ceil(m_fsample_index + 0.00000001) == sample_loaded_index );
 		cCopySamps = 2;
 	}
@@ -433,7 +433,7 @@ char *CAudioMixerWave::LoadMixBuffer( channel_t *pChannel, int sample_load_reque
 		{
 			pWavName = source->getname();
 		}
-		
+
 		Warning( "CAudioMixerWave::LoadMixBuffer: '%s' samples_loaded * samplesize = %i but pData == NULL\n", pWavName, ( samples_loaded * samplesize ) );
 		*pSamplesLoaded = 0;
 		return NULL;
@@ -442,7 +442,7 @@ char *CAudioMixerWave::LoadMixBuffer( channel_t *pChannel, int sample_load_reque
 	pCopy += AppendToBuffer( pCopy, pData, samples_loaded * samplesize, pCopyBufferEnd );
 
 	// if we loaded fewer samples than we wanted to, and we're not
-	// delaying, load more samples or, if we run out of samples from non-looping source, 
+	// delaying, load more samples or, if we run out of samples from non-looping source,
 	// pad copy buffer.
 	if ( samples_loaded < sample_load_request )
 	{
@@ -450,7 +450,7 @@ char *CAudioMixerWave::LoadMixBuffer( channel_t *pChannel, int sample_load_reque
 		// if we hit 0 bytes, fill remaining space in copy buffer with 0 and exit
 		int samples_load_extra;
 		int samples_loaded_retry = -1;
-			
+
 		for ( int k = 0; (k < 10000 && samples_loaded_retry && samples_loaded < sample_load_request); k++ )
 		{
 			// how many more samples do we need to satisfy load request
@@ -493,7 +493,7 @@ char *CAudioMixerWave::LoadMixBuffer( channel_t *pChannel, int sample_load_reque
 
 	if ( samples_loaded >= 2 )
 	{
-		// always save last 2 samples from copy buffer to channel 
+		// always save last 2 samples from copy buffer to channel
 		// (we'll need 0,1 or 2 samples as start of next buffer for interpolation)
 		Assert( sizeof( pChannel->sample_prev ) >= samplesize*2 );
 		pSample = pCopy - samplesize*2;
@@ -523,7 +523,7 @@ double RoundToFixedPoint( double rate, int samples, bool bInterpolated_pitch )
 		fixp_rate = FIX_FLOAT14(rate);		// 14 bit iterator
 	else
 		fixp_rate = FIX_FLOAT(rate);		// 28 bit iterator
-	
+
 	// get number of new samples, convert back to float
 
 	d64_newSamps = (int64)fixp_rate * (int64)samples;
@@ -539,7 +539,7 @@ double RoundToFixedPoint( double rate, int samples, bool bInterpolated_pitch )
 extern double MIX_GetMaxRate( double rate, int sampleCount );
 
 // Helper routine for MixDataToDevice:
-// Compute number of new samples to load at 'rate' so we can 
+// Compute number of new samples to load at 'rate' so we can
 // output 'sampleCount' samples, from m_fsample_index to fsample_index_end (inclusive)
 // rate:				sample rate
 // sampleCountOut:		number of samples calling routine needs to output
@@ -553,11 +553,11 @@ int CAudioMixerWave::GetSampleLoadRequest( double rate, int sampleCountOut, bool
 	// NOTE: we must use fixed point math here, identical to math in mixers, to make sure
 	// we predict iteration results exactly.
 	// get floating point sample index of last sample we'll need
-	fsample_index_end = m_fsample_index + RoundToFixedPoint( rate, sampleCountOut-1, bInterpolated_pitch );				
+	fsample_index_end = m_fsample_index + RoundToFixedPoint( rate, sampleCountOut-1, bInterpolated_pitch );
 
-	// always round up to ensure we'll have that n+1 sample for interpolation	
-	sample_index_high = (int)( ceil( fsample_index_end ) );															
-	
+	// always round up to ensure we'll have that n+1 sample for interpolation
+	sample_index_high = (int)( ceil( fsample_index_end ) );
+
 	// make sure we always round the floating point index up by at least 1 sample,
 	// ie: make sure integer sample_index_high is greater than floating point sample index
 	if ( (double)sample_index_high <= fsample_index_end )
@@ -610,7 +610,7 @@ int CAudioMixerWave::MixDataToDevice_( IAudioDevice *pDevice, channel_t *pChanne
 
 	double inputRate = (pChannel->pitch * m_pData->Source().SampleRate());
 	double rate_max = inputRate / outputRate;
-	
+
 	// If we are terminating this wave prematurely, then make sure we detect the limit
 	if ( m_forcedEndSample )
 	{
@@ -634,7 +634,7 @@ int CAudioMixerWave::MixDataToDevice_( IAudioDevice *pDevice, channel_t *pChanne
 	0		1		2		3		4		5		6		7		8		9		10		sample_index     (whole samples)
 
 	^         ^         ^        ^        ^         ^         ^         ^         ^
-	|         |         |        |        |         |         |         |         |     
+	|         |         |        |        |         |         |         |         |
 	0		 1.2	   2.4      3.6      4.8       6.0       7.2	    8.4		  9.6		m_fsample_index  (rate*sample)
 	_______return 3_______      _______return 3_______       _______return 3__________
 	 						 ^   ^
@@ -643,7 +643,7 @@ int CAudioMixerWave::MixDataToDevice_( IAudioDevice *pDevice, channel_t *pChanne
 		  m_fsample_index---------
 	*/
 	while ( sampleCount > 0 )
-	{	
+	{
 		bool advanceSample = true;
 		int samples_loaded, outputSampleCount;
 		char *pData = NULL;
@@ -655,13 +655,13 @@ int CAudioMixerWave::MixDataToDevice_( IAudioDevice *pDevice, channel_t *pChanne
 
 		// process samples in paintbuffer-sized batches
 		int sampleCountOut = min( sampleCount, PAINTBUFFER_SIZE );
-	
+
 		// cap rate so that we never overflow the input copy buffer.
 		rate = MIX_GetMaxRate( rate_max, sampleCountOut );
 
 		if ( m_delaySamples > 0 )
 		{
-			// If we are preceding sample playback with a delay, 
+			// If we are preceding sample playback with a delay,
 			// just fill data buffer with 0 value samples.
 			// Because there is no pitch shift applied, outputSampleCount == sampleCountOut.
 			int num_zero_samples = min( m_delaySamples, sampleCountOut );
@@ -669,7 +669,7 @@ int CAudioMixerWave::MixDataToDevice_( IAudioDevice *pDevice, channel_t *pChanne
 			// Decrement delay counter
 			m_delaySamples -= num_zero_samples;
 
-			int sampleSize = GetMixSampleSize(); 
+			int sampleSize = GetMixSampleSize();
 			int readBytes = sampleSize * num_zero_samples;
 
 			// make sure we don't overflow temp copy buffer (g_temppaintbuffer)
@@ -678,10 +678,10 @@ int CAudioMixerWave::MixDataToDevice_( IAudioDevice *pDevice, channel_t *pChanne
 
 			// Now copy in some zeroes
 			memset( pData, 0, readBytes );
-						
+
 			// we don't pitch shift these samples, so outputSampleCount == samples_loaded
 			samples_loaded	  = num_zero_samples;
-			outputSampleCount = num_zero_samples;		
+			outputSampleCount = num_zero_samples;
 
 			advanceSample = false;
 
@@ -689,12 +689,12 @@ int CAudioMixerWave::MixDataToDevice_( IAudioDevice *pDevice, channel_t *pChanne
 			rate = 1.0f;
 		}
 		else
-		{	
+		{
 			// ask the source for the data...
 			// temp buffer req'd by some data loaders
 			char copyBuf[AUDIOSOURCE_COPYBUF_SIZE];
 
-			// compute number of new samples to load at 'rate' so we can 
+			// compute number of new samples to load at 'rate' so we can
 			// output 'sampleCount' samples, from m_fsample_index to fsample_index_end (inclusive)
 			int sample_load_request = GetSampleLoadRequest( rate, sampleCountOut, bInterpolated_pitch );
 
@@ -707,17 +707,17 @@ int CAudioMixerWave::MixDataToDevice_( IAudioDevice *pDevice, channel_t *pChanne
 			Assert ( !pData || ( samples_loaded == sample_load_request ) );
 
 			outputSampleCount = sampleCountOut;
-		}	
-		
+		}
+
 		// no samples available
 		if ( !pData )
 		{
 			break;
 		}
-		
+
 		// get sample fraction from 0th sample in copy buffer
 		double sampleFraction = m_fsample_index - floor( m_fsample_index );
-		
+
 		// if just skipping samples in source, don't mix, just keep reading
 		if ( !bSkipAllMixing )
 		{
@@ -733,14 +733,14 @@ int CAudioMixerWave::MixDataToDevice_( IAudioDevice *pDevice, channel_t *pChanne
 					// mix channel into all active paintbuffers
 					MIX_SetCurrentPaintbuffer( i );
 
-					Mix( 
+					Mix(
 						pDevice,						// Device.
 						pChannel,						// Channel.
 						pData,							// Input buffer.
 						outputOffset,					// Output position.
 						FIX_FLOAT( sampleFraction ),	// Iterators.
-						FIX_FLOAT( rate ), 
-						outputSampleCount,	
+						FIX_FLOAT( rate ),
+						outputSampleCount,
 						0 );
 				}
 			}
@@ -752,7 +752,7 @@ int CAudioMixerWave::MixDataToDevice_( IAudioDevice *pDevice, channel_t *pChanne
 			// update sample index to point to the next sample to output
 			// if we're not delaying
 			// Use fixed point math to make sure we exactly match results of mix
-			// iterators.			
+			// iterators.
 			m_fsample_index = fsample_index_prev + RoundToFixedPoint( rate, outputSampleCount, bInterpolated_pitch );
 		}
 
@@ -785,4 +785,3 @@ float CAudioMixerWave::GetVolumeScale( void )
 {
 	return 1.0f;
 }
-

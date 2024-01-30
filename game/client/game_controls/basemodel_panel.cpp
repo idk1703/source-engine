@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -76,7 +76,7 @@ void CBaseModelPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseModelPanel::ParseModelResInfo( KeyValues *inResourceData )
 {
@@ -110,7 +110,7 @@ void CBaseModelPanel::ParseModelResInfo( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseModelPanel::ParseModelAnimInfo( KeyValues *inResourceData )
 {
@@ -136,7 +136,7 @@ void CBaseModelPanel::ParseModelAnimInfo( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseModelPanel::ParseModelAttachInfo( KeyValues *inResourceData )
 {
@@ -152,7 +152,7 @@ void CBaseModelPanel::ParseModelAttachInfo( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseModelPanel::SetupModelDefaults( void )
 {
@@ -160,7 +160,7 @@ void CBaseModelPanel::SetupModelDefaults( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseModelPanel::SetupModelAnimDefaults( void )
 {
@@ -181,7 +181,7 @@ void CBaseModelPanel::SetupModelAnimDefaults( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseModelPanel::FindDefaultAnim( void )
 {
@@ -198,14 +198,14 @@ int CBaseModelPanel::FindDefaultAnim( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseModelPanel::FindAnimByName( const char *pszName )
 {
 	int iIndex = -1;
 	if ( !pszName )
 		return iIndex;
-	
+
 	int nAnimCount = m_BMPResData.m_aAnimations.Count();
 	for ( int iAnim = 0; iAnim < nAnimCount; ++iAnim )
 	{
@@ -217,7 +217,7 @@ int CBaseModelPanel::FindAnimByName( const char *pszName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseModelPanel::FindSequenceFromActivity( CStudioHdr *pStudioHdr, const char *pszActivity )
 {
@@ -237,7 +237,7 @@ int CBaseModelPanel::FindSequenceFromActivity( CStudioHdr *pStudioHdr, const cha
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseModelPanel::SetModelAnim( int iAnim )
 {
@@ -272,7 +272,7 @@ void CBaseModelPanel::SetModelAnim( int iAnim )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseModelPanel::SetMDL( MDLHandle_t handle, void *pProxyData )
 {
@@ -293,7 +293,7 @@ void CBaseModelPanel::SetMDL( MDLHandle_t handle, void *pProxyData )
 			}
 		}
 	}
-	else 
+	else
 	{
 		handle = MDLHANDLE_INVALID;
 	}
@@ -310,7 +310,7 @@ void CBaseModelPanel::SetMDL( MDLHandle_t handle, void *pProxyData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseModelPanel::SetModelAnglesAndPosition( const QAngle &angRot, const Vector &vecPos )
 {
@@ -322,7 +322,7 @@ void CBaseModelPanel::SetModelAnglesAndPosition( const QAngle &angRot, const Vec
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseModelPanel::SetMDL( const char *pMDLName, void *pProxyData )
 {
@@ -333,7 +333,7 @@ void CBaseModelPanel::SetMDL( const char *pMDLName, void *pProxyData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseModelPanel::PerformLayout()
 {
@@ -625,14 +625,14 @@ void CBaseModelPanel::LookAtBounds( const Vector &vecBoundsMin, const Vector &ve
 
 	// Get the bounds points and transform them by the desired model panel rotation.
 	Vector aBoundsPoints[8];
-	aBoundsPoints[0].Init( vecMax.x, vecMax.y, vecMax.z ); 
-	aBoundsPoints[1].Init( vecMin.x, vecMax.y, vecMax.z ); 
-	aBoundsPoints[2].Init( vecMax.x, vecMin.y, vecMax.z ); 
-	aBoundsPoints[3].Init( vecMin.x, vecMin.y, vecMax.z ); 
-	aBoundsPoints[4].Init( vecMax.x, vecMax.y, vecMin.z ); 
-	aBoundsPoints[5].Init( vecMin.x, vecMax.y, vecMin.z ); 
-	aBoundsPoints[6].Init( vecMax.x, vecMin.y, vecMin.z ); 
-	aBoundsPoints[7].Init( vecMin.x, vecMin.y, vecMin.z ); 
+	aBoundsPoints[0].Init( vecMax.x, vecMax.y, vecMax.z );
+	aBoundsPoints[1].Init( vecMin.x, vecMax.y, vecMax.z );
+	aBoundsPoints[2].Init( vecMax.x, vecMin.y, vecMax.z );
+	aBoundsPoints[3].Init( vecMin.x, vecMin.y, vecMax.z );
+	aBoundsPoints[4].Init( vecMax.x, vecMax.y, vecMin.z );
+	aBoundsPoints[5].Init( vecMin.x, vecMax.y, vecMin.z );
+	aBoundsPoints[6].Init( vecMax.x, vecMin.y, vecMin.z );
+	aBoundsPoints[7].Init( vecMin.x, vecMin.y, vecMin.z );
 
 	// Translated center point (offset from camera center).
 	Vector vecTranslateCenter = -vecCenter;
@@ -764,7 +764,7 @@ void CBaseModelPanel::particle_data_t::UpdateControlPoints( CStudioHdr *pStudioH
 		{
 			for ( int i = 0; i < vecAttachments.Count(); ++i )
 			{
-				const mstudioattachment_t& attach = pStudioHdr->pAttachment( vecAttachments[i] ); 
+				const mstudioattachment_t& attach = pStudioHdr->pAttachment( vecAttachments[i] );
 				MatrixMultiply( pWorldMatrix[ attach.localbone ], attach.local, matAttachToWorld );
 
 				MatrixVectors( matAttachToWorld, &vecForward, &vecRight, &vecUp );
@@ -779,7 +779,7 @@ void CBaseModelPanel::particle_data_t::UpdateControlPoints( CStudioHdr *pStudioH
 			matAttachToWorld = pWorldMatrix[iDefaultBone];
 			MatrixVectors( matAttachToWorld, &vecForward, &vecRight, &vecUp );
 			MatrixPosition( matAttachToWorld, vecPosition );
-			
+
 			m_pParticleSystem->SetControlPointOrientation( 0, vecForward, vecRight, vecUp );
 			m_pParticleSystem->SetControlPoint( 0, vecPosition + vecParticleOffset );
 		}
@@ -838,7 +838,7 @@ bool CBaseModelPanel::SafeDeleteParticleData( particle_data_t **pData )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseModelPanel::PrePaint3D( IMatRenderContext *pRenderContext )
 {
@@ -854,7 +854,7 @@ void CBaseModelPanel::PrePaint3D( IMatRenderContext *pRenderContext )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseModelPanel::PostPaint3D( IMatRenderContext *pRenderContext )
 {
@@ -882,4 +882,3 @@ void CBaseModelPanel::PostPaint3D( IMatRenderContext *pRenderContext )
 	pRenderContext->MatrixMode( MATERIAL_MODEL );
 	pRenderContext->PopMatrix();
 }
-

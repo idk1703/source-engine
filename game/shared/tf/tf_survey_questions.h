@@ -29,11 +29,11 @@
 //
 //	m_eType : The type of the survey question
 //	m_pszSurveyQuestionName: Name of the survey type.  Mostly for debugging
-//	m_flWeight: The weight used when randomly choosing which survey question 
+//	m_flWeight: The weight used when randomly choosing which survey question
 //				to ask a user
 //	m_pFnSurveyValidForPlayer: Survey specific function to determine if player
 //							   meets criteria to receive survey
-//	m_bIsActive: Is the survey currently active (asked of players) 
+//	m_bIsActive: Is the survey currently active (asked of players)
 //-----------------------------------------------------------------------------
 struct SurveyQuestion_t
 {
@@ -72,7 +72,7 @@ public:
 private:
 	virtual void Submit() = 0;
 	virtual const char* GetResFile() const = 0;
-	
+
 	bool m_bResponded;
 	CMsgGCSurveyRequest m_msgRequest;
 };

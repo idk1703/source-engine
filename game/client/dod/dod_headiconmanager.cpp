@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -56,7 +56,7 @@ bool CHeadIconManager::Init()
 		m_pAxisIconMaterial = materials->FindMaterial( "sprites/player_icons/german", TEXTURE_GROUP_VGUI );
 	}
 
-	if ( IsErrorMaterial( m_pAlliesIconMaterial ) || 
+	if ( IsErrorMaterial( m_pAlliesIconMaterial ) ||
 		 IsErrorMaterial( m_pAxisIconMaterial ) )
 	{
 		Assert(!"Can't find head icon materials");
@@ -75,7 +75,7 @@ void CHeadIconManager::Shutdown()
 	if ( m_pAlliesIconMaterial )
 	{
 		m_pAlliesIconMaterial->DecrementReferenceCount();
-		m_pAlliesIconMaterial = NULL;	
+		m_pAlliesIconMaterial = NULL;
 	}
 
 	if ( m_pAxisIconMaterial )
@@ -175,11 +175,11 @@ void CHeadIconManager::DrawHeadIcons()
 
 		pRenderContext->Bind( pMaterial );
 
-		Vector vOrigin; 
+		Vector vOrigin;
 		QAngle vAngle;
 
 		int iHeadAttach = pPlayer->LookupAttachment( "head" );
-			
+
 		pPlayer->GetAttachment( iHeadAttach, vOrigin, vAngle );
 
 		vOrigin.z += cl_headiconoffset.GetFloat();

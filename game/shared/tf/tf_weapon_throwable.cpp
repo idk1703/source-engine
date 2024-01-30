@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -154,7 +154,7 @@ void CTFThrowable::Precache()
 	PrecacheScriptSound( TF_GRENADE_TIMER );
 #endif // STAGING_ONLY
 	PrecacheScriptSound( TF_GRENADE_CHARGE );
-	
+
 	PrecacheScriptSound( "Weapon_bm_throwable.throw" );
 	PrecacheScriptSound( "Weapon_bm_throwable.smash" );
 
@@ -179,7 +179,7 @@ float CTFThrowable::GetDetonationTime()
 	CALL_ATTRIB_HOOK_FLOAT( flDetonationTime, throwable_detonation_time );
 	if ( flDetonationTime )
 		return flDetonationTime;
-	return 5.0f; // default 
+	return 5.0f; // default
 }
 
 //-----------------------------------------------------------------------------
@@ -194,7 +194,7 @@ void CTFThrowable::PrimaryAttack( void )
 
 	if ( m_flChargeBeginTime > 0 )
 		return;
-	
+
 	// Do all the Checks and start a charged (primed) attack
 	CTFPlayer *pPlayer = ToTFPlayer( GetPlayerOwner() );
 	if ( !pPlayer )
@@ -223,7 +223,7 @@ void CTFThrowable::PrimaryAttack( void )
 		// save that we had the attack button down
 		m_flChargeBeginTime = gpGlobals->curtime;
 #endif // GAME_LL
-		
+
 #ifdef CLIENT_DLL
 		if ( pPlayer == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -233,7 +233,7 @@ void CTFThrowable::PrimaryAttack( void )
 			{
 				EmitSound( TF_GRENADE_CHARGE );
 			}
-			else 
+			else
 			{
 				EmitSound( TF_GRENADE_TIMER );
 			}
@@ -318,7 +318,7 @@ float CTFThrowable::GetChargeBeginTime( void )
 {
 	float flDetonateTimeLength = GetDetonationTime();
 //	float flModDetonateTimeLength = 0;
-	
+
 	int iCanBePrimed = 0;
 	CALL_ATTRIB_HOOK_INT( iCanBePrimed, is_throwable_primable );
 
@@ -421,7 +421,7 @@ CTFProjectile_Throwable *CTFThrowable::FireProjectileInternal( void )
 		pGrenade->InitGrenade( vecVelocity, angVelocity, pPlayer, GetTFWpnData() );
 		pGrenade->InitThrowable( flChargePercent );
 		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );
-		
+
 		if ( flDetonateTime > 0 )
 		{
 			// Check if this has been primed
@@ -463,13 +463,13 @@ Vector CTFProjectile_Throwable::GetVelocityVector( const Vector &vecForward, con
 	// Scale the projectile speed up to a maximum of 3000?
 	float flSpeed = RemapVal( flCharge, 0, 1.0f, GetProjectileSpeed(), GetProjectileMaxSpeed() );
 
-	return ( ( flSpeed * vecForward ) + 
-		( ( random->RandomFloat( -10.0f, 10.0f ) + 200.0f ) * vecUp ) + 
+	return ( ( flSpeed * vecForward ) +
+		( ( random->RandomFloat( -10.0f, 10.0f ) + 200.0f ) * vecUp ) +
 		(   random->RandomFloat( -10.0f, 10.0f ) * vecRight ) );
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
-void CTFProjectile_Throwable::OnHit( CBaseEntity *pOther ) 
-{ 
+void CTFProjectile_Throwable::OnHit( CBaseEntity *pOther )
+{
 	if ( m_bHit )
 		return;
 
@@ -501,7 +501,7 @@ void CTFProjectile_Throwable::Explode( trace_t *pTrace, int bitsDamageType )
 		// Particle
 		const char* pszExplodeEffect = GetExplodeEffectParticle();
 		if ( pszExplodeEffect && pszExplodeEffect[0] != '\0' )
-		{	
+		{
 			CPVSFilter filter( GetAbsOrigin() );
 			TE_TFParticleEffect( filter, 0.0, pszExplodeEffect, GetAbsOrigin(), vec3_angle );
 		}
@@ -509,7 +509,7 @@ void CTFProjectile_Throwable::Explode( trace_t *pTrace, int bitsDamageType )
 		// Sounds
 		const char* pszSoundEffect = GetExplodeEffectSound();
 		if ( pszSoundEffect && pszSoundEffect[0] != '\0' )
-		{	
+		{
 			EmitSound( pszSoundEffect );
 		}
 	}
@@ -524,8 +524,8 @@ void CTFProjectile_Throwable::Explode( trace_t *pTrace, int bitsDamageType )
 //-----------------------------------------------------------------------------
 // THROWABLE REPEL
 //-----------------------------------------------------------------------------
-void CTFProjectile_ThrowableRepel::OnHit( CBaseEntity *pOther ) 
-{ 
+void CTFProjectile_ThrowableRepel::OnHit( CBaseEntity *pOther )
+{
 	if ( m_bHit )
 		return;
 
@@ -544,7 +544,7 @@ void CTFProjectile_ThrowableRepel::OnHit( CBaseEntity *pOther )
 		VectorNormalize( vecToTarget );
 
 		// Quick Fix Uber is immune
-		if ( pPlayer->m_Shared.InCond( TF_COND_MEGAHEAL )) 
+		if ( pPlayer->m_Shared.InCond( TF_COND_MEGAHEAL ))
 			return;
 
 		float flForce = 300.0f * m_flChargePercent + 350.0f;
@@ -554,7 +554,7 @@ void CTFProjectile_ThrowableRepel::OnHit( CBaseEntity *pOther )
 		// Apply Damage to Victim
 		CTakeDamageInfo info;
 		info.SetAttacker( GetThrower() );
-		info.SetInflictor( this ); 
+		info.SetInflictor( this );
 		info.SetWeapon( GetLauncher() );
 		info.SetDamage( GetDamage() );
 		info.SetDamageCustom( GetCustomDamageType() );
@@ -573,8 +573,8 @@ void CTFProjectile_ThrowableRepel::OnHit( CBaseEntity *pOther )
 //-----------------------------------------------------------------------------
 // THROWABLE BRICK
 //-----------------------------------------------------------------------------
-void CTFProjectile_ThrowableBrick::OnHit( CBaseEntity *pOther ) 
-{ 
+void CTFProjectile_ThrowableBrick::OnHit( CBaseEntity *pOther )
+{
 	if ( m_bHit )
 		return;
 
@@ -593,7 +593,7 @@ void CTFProjectile_ThrowableBrick::OnHit( CBaseEntity *pOther )
 		// Apply Damage to Victim
 		CTakeDamageInfo info;
 		info.SetAttacker( GetThrower() );
-		info.SetInflictor( this ); 
+		info.SetInflictor( this );
 		info.SetWeapon( GetLauncher() );
 		info.SetDamage( GetDamage() );
 		info.SetDamageCustom( GetCustomDamageType() );
@@ -610,8 +610,8 @@ void CTFProjectile_ThrowableBrick::OnHit( CBaseEntity *pOther )
 //-----------------------------------------------------------------------------
 // THROWABLE BREADMONSTER
 //-----------------------------------------------------------------------------
-void CTFProjectile_ThrowableBreadMonster::OnHit( CBaseEntity *pOther ) 
-{ 
+void CTFProjectile_ThrowableBreadMonster::OnHit( CBaseEntity *pOther )
+{
 	if ( m_bHit )
 		return;
 
@@ -639,7 +639,7 @@ void CTFProjectile_ThrowableBreadMonster::OnHit( CBaseEntity *pOther )
 		info.SetDamage( GetDamage() );
 		info.SetDamageCustom( GetCustomDamageType() );
 		info.SetDamagePosition( GetAbsOrigin() );
-		
+
 		int iDamageType = DMG_CLUB;
 		if ( IsCritical() )
 		{
@@ -671,7 +671,7 @@ void CTFProjectile_ThrowableBreadMonster::OnHit( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-void CTFProjectile_ThrowableBreadMonster::Detonate() 
+void CTFProjectile_ThrowableBreadMonster::Detonate()
 {
 	SetContextThink( &CBaseGrenade::SUB_Remove, gpGlobals->curtime, "RemoveThink" );
 	SetTouch( NULL );
@@ -812,7 +812,7 @@ void CTFProjectile_ConcGrenade::Misfire( )
 	{
 		SetAbsOrigin( pPlayer->GetAbsOrigin() );
 	}
-	
+
 	Explode();
 }
 //-----------------------------------------------------------------------------
@@ -851,7 +851,7 @@ void CTFProjectile_ConcGrenade::Explode( )
 		// Conc does more force the further away you are from the blast radius
 		Vector vecPushDir = pTFPlayer->GetAbsOrigin() - GetAbsOrigin();
 		float flForce = RemapVal( vecPushDir.Length(), 0, GetDamageRadius(), 0, flMaxForce );
- 		
+
  		if ( flForce < 250.0f && pObjects[i] == pThrower ) // Hold case
 		{
 			AngularImpulse ang;
@@ -1070,7 +1070,7 @@ Vector CTFProjectile_ThrowingKnife::GetVelocityVector( const Vector &vecForward,
 	// Scale the projectile speed up to a maximum of 3000?
 	float flSpeed = RemapVal( flCharge, 0, 1.0f, GetProjectileSpeed(), GetProjectileMaxSpeed() );
 
-	return ( ( flSpeed * vecForward ) + 
+	return ( ( flSpeed * vecForward ) +
 			 ( flSpeed * 0.1 * vecUp ) );
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1088,7 +1088,7 @@ void CTFProjectile_ThrowingKnife::OnHit( CBaseEntity *pOther )
 		trace_t trace;
 		UTIL_TraceLine( GetAbsOrigin(), pVictim->GetAbsOrigin(), ( MASK_SHOT & ~( CONTENTS_HITBOX ) ), &tracefilter, &trace );
 
-		Vector entForward; 
+		Vector entForward;
 		AngleVectors( pVictim->EyeAngles(), &entForward );
 		Vector toEnt = pVictim->GetAbsOrigin() - this->GetAbsOrigin();
 		toEnt.z = 0;
@@ -1106,7 +1106,7 @@ void CTFProjectile_ThrowingKnife::OnHit( CBaseEntity *pOther )
 		info.SetWeapon( GetLauncher() );
 		info.SetDamageCustom( GetCustomDamageType() );
 		info.SetDamagePosition( GetAbsOrigin() );
-		
+
 		int iDamageType = DMG_CLUB;
 		if ( bIsFromBehind )
 		{
@@ -1167,7 +1167,7 @@ void CTFProjectile_SmokeGrenade::OnHitWorld( void )
 
 		const char *pszSoundEffect = GetExplodeEffectSound();
 		if ( pszSoundEffect && pszSoundEffect[0] != '\0' )
-		{	
+		{
 			EmitSound( pszSoundEffect );
 		}
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,7 +15,7 @@ extern ConVar tf_fastbuild;
 ConVar tf_maxbankresources( "tf_maxbankresources", "2000", 0, "Max resources a single player can have." );
 
 #define BANK_RESOURCE_BITS	20
-#define MAX_PLAYER_RESOURCES ( (1 <<BANK_RESOURCE_BITS) - 1 ) 
+#define MAX_PLAYER_RESOURCES ( (1 <<BANK_RESOURCE_BITS) - 1 )
 
 //-----------------------------------------------------------------------------
 // Purpose: SendProxy that converts the UtlVector list of objects to entindexes, where it's reassembled on the client
@@ -54,11 +54,11 @@ BEGIN_SEND_TABLE_NOBASE( CTFPlayerLocalData, DT_TFLocal )
 	SendPropInt( SENDINFO( m_iIDEntIndex ), 10, SPROP_UNSIGNED ),
 	SendPropArray(	SendPropInt( SENDINFO_ARRAY(m_iResourceAmmo), 4, SPROP_UNSIGNED ), m_iResourceAmmo ),
 	SendPropInt( SENDINFO(m_iBankResources), BANK_RESOURCE_BITS, SPROP_UNSIGNED ),
-	SendPropArray2( 
+	SendPropArray2(
 		SendProxyArrayLength_PlayerObjects,
-		SendPropInt("player_object_array_element", 0, SIZEOF_IGNORE, NUM_NETWORKED_EHANDLE_BITS, SPROP_UNSIGNED, SendProxy_PlayerObjectList), 
-		MAX_OBJECTS_PER_PLAYER, 
-		0, 
+		SendPropInt("player_object_array_element", 0, SIZEOF_IGNORE, NUM_NETWORKED_EHANDLE_BITS, SPROP_UNSIGNED, SendProxy_PlayerObjectList),
+		MAX_OBJECTS_PER_PLAYER,
+		0,
 		"player_object_array"
 		 ),
 	SendPropInt( SENDINFO( m_bAttachingSapper ), 1, SPROP_UNSIGNED ),
@@ -67,7 +67,7 @@ BEGIN_SEND_TABLE_NOBASE( CTFPlayerLocalData, DT_TFLocal )
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFPlayerLocalData::CTFPlayerLocalData()
 {
@@ -122,7 +122,7 @@ void CTFPlayerLocalData::AddResources( int iAmount )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerLocalData::RemoveResources( int iAmount )
 {
@@ -131,7 +131,7 @@ void CTFPlayerLocalData::RemoveResources( int iAmount )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CTFPlayerLocalData::ResourceCount( void ) const
 {
@@ -139,7 +139,7 @@ int	CTFPlayerLocalData::ResourceCount( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerLocalData::SetResources( int iAmount )
 {

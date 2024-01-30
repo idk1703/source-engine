@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,16 +15,16 @@
 #include "GameEventListener.h"
 #include "../game/shared/cstrike/cs_gamestats_shared.h"
 
-struct SRoundData : public BaseStatData 
+struct SRoundData : public BaseStatData
 {
-	SRoundData( const StatsCollection_t *pRoundData ) 
+	SRoundData( const StatsCollection_t *pRoundData )
 	{
 		nRoundTime		= (*pRoundData)[CSSTAT_PLAYTIME];
 		nWasKilled		= (*pRoundData)[CSSTAT_DEATHS];
 		nIsMVP			= (*pRoundData)[CSSTAT_MVPS];
 		nMoneySpent		= (*pRoundData)[CSSTAT_MONEY_SPENT];
-		nStartingMoney	= -1;// We'll get this data separately 
-		nRoundEndReason	= Invalid_Round_End_Reason;// We'll get this data separately 
+		nStartingMoney	= -1;// We'll get this data separately
+		nRoundEndReason	= Invalid_Round_End_Reason;// We'll get this data separately
 		nRevenges		= (*pRoundData)[CSSTAT_REVENGES];
 		nDamageDealt	= (*pRoundData)[CSSTAT_DAMAGE];
 
@@ -54,7 +54,7 @@ struct SRoundData : public BaseStatData
 		}
 	}
 
-	uint32	nRoundTime;	
+	uint32	nRoundTime;
 	int		nTeamID;
 	int		nWinningTeamID;
 	int		nWasKilled;
@@ -114,7 +114,7 @@ public:
 	void		MsgFunc_MatchStatsUpdate( bf_read &msg );
 	void		MsgFunc_PlayerStatsUpdate( bf_read &msg );
 
-	// Steamworks Gamestats 
+	// Steamworks Gamestats
 	virtual void SubmitGameStats( KeyValues *pKV )
 	{
 		int listCount = s_StatLists->Count();

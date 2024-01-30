@@ -1,12 +1,12 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 /*
 ===== item_suit.cpp ========================================================
 
-  handling for the player's suit.
+	handling for the player's suit.
 */
 
 #include "cbase.h"
@@ -28,7 +28,7 @@ public:
 	DECLARE_CLASS( CItemSuit, CHL1Item );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( SUIT_MODEL );
 		BaseClass::Spawn( );

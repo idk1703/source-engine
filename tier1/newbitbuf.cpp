@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -101,7 +101,7 @@ bool CBitWrite::WriteString( const char *pStr )
 	return !IsOverflowed();
 }
 
-			 
+
 void CBitWrite::WriteLongLong(int64 val)
 {
 	uint *pLongs = (uint*)&val;
@@ -134,7 +134,7 @@ bool CBitWrite::WriteBits(const void *pInData, int nBits)
 		++pOut;
 		nBitsLeft -= 8;
 	}
-	
+
 	// write remaining bits
 	if ( nBitsLeft )
 	{
@@ -172,7 +172,7 @@ void CBitWrite::WriteBitCoord (const float f)
 			intval--;
 			WriteUBitLong( (unsigned int)intval, COORD_INTEGER_BITS );
 		}
-		
+
 		// Send the fraction if we have one
 		if ( fractval )
 		{
@@ -185,7 +185,7 @@ void CBitWrite::WriteBitCoordMP (const float f, bool bIntegral, bool bLowPrecisi
 {
 	int		signbit = (f <= -( bLowPrecision ? COORD_RESOLUTION_LOWPRECISION : COORD_RESOLUTION ));
 	int		intval = (int)abs(f);
-	int		fractval = bLowPrecision ? 
+	int		fractval = bLowPrecision ?
 		( abs((int)(f*COORD_DENOMINATOR_LOWPRECISION)) & (COORD_DENOMINATOR_LOWPRECISION-1) ) :
 		( abs((int)(f*COORD_DENOMINATOR)) & (COORD_DENOMINATOR-1) );
 
@@ -300,7 +300,7 @@ void CBitWrite::WriteBitVec3Normal( const Vector& fa )
 		WriteBitNormal( fa[0] );
 	if ( yflag )
 		WriteBitNormal( fa[1] );
-	
+
 	// Write z sign bit
 	int	signbit = (fa[2] <= -NORMAL_RESOLUTION);
 	WriteOneBit( signbit );
@@ -349,7 +349,7 @@ bool CBitRead::Seek( int nPosition )
 	}
 	int nHead = m_nDataBytes & 3;							// non-multiple-of-4 bytes at head of buffer. We put the "round off"
 															// at the head to make reading and detecting the end efficient.
-	
+
 	int nByteOfs = nPosition / 8;
 	if ( ( m_nDataBytes < 4 ) || ( nHead && ( nByteOfs < nHead ) ) )
 	{
@@ -409,8 +409,8 @@ void CBitRead::StartReading( const void *pData, int nBytes, int iStartBit, int n
 	m_bOverflow = false;
 	m_pBufferEnd = reinterpret_cast<uint32 const *> ( reinterpret_cast< uint8 const *> (m_pData) + nBytes );
 	if ( m_pData )
-		Seek( iStartBit ); 
-	
+		Seek( iStartBit );
+
 }
 
 bool CBitRead::ReadString( char *pStr, int maxLen, bool bLine, int *pOutNumChars )
@@ -451,7 +451,7 @@ bool CBitRead::ReadString( char *pStr, int maxLen, bool bLine, int *pOutNumChars
 char* CBitRead::ReadAndAllocateString( bool *pOverflow )
 {
 	char str[2048];
-	
+
 	int nChars;
 	bool bOverflow = !ReadString( str, sizeof( str ), false, &nChars );
 	if ( pOverflow )
@@ -483,7 +483,7 @@ void CBitRead::ReadBits(void *pOutData, int nBits)
 	unsigned char *pOut = (unsigned char*)pOutData;
 	int nBitsLeft = nBits;
 
-	
+
 	// align output to dword boundary
 	while( ((unsigned long)pOut & 3) != 0 && nBitsLeft >= 8 )
 	{
@@ -511,7 +511,7 @@ void CBitRead::ReadBits(void *pOutData, int nBits)
 		++pOut;
 		nBitsLeft -= 8;
 	}
-	
+
 	// read remaining bits
 	if ( nBitsLeft )
 	{
@@ -645,12 +645,12 @@ void CBitRead::ReadBitVec3Coord( Vector& fa )
 {
 	int		xflag, yflag, zflag;
 
-	// This vector must be initialized! Otherwise, If any of the flags aren't set, 
+	// This vector must be initialized! Otherwise, If any of the flags aren't set,
 	// the corresponding component will not be read and will be stack garbage.
 	fa.Init( 0, 0, 0 );
 
 	xflag = ReadOneBit();
-	yflag = ReadOneBit(); 
+	yflag = ReadOneBit();
 	zflag = ReadOneBit();
 
 	if ( xflag )
@@ -682,7 +682,7 @@ float CBitRead::ReadBitNormal (void)
 void CBitRead::ReadBitVec3Normal( Vector& fa )
 {
 	int xflag = ReadOneBit();
-	int yflag = ReadOneBit(); 
+	int yflag = ReadOneBit();
 
 	if (xflag)
 		fa[0] = ReadBitNormal();

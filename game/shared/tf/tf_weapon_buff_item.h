@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -47,7 +47,7 @@ class CTFBuffItem : public CTFWeaponBaseMelee
 public:
 
 	DECLARE_CLASS( CTFBuffItem, CTFWeaponBaseMelee );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFBuffItem();

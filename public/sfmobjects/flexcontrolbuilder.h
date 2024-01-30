@@ -38,7 +38,7 @@ class CFlexControlBuilder
 {
 public:
 	// Main entry point for creating flex animation set controls
-	void CreateAnimationSetControls( CDmeFilmClip *pMovie, CDmeAnimationSet *pAnimationSet, 
+	void CreateAnimationSetControls( CDmeFilmClip *pMovie, CDmeAnimationSet *pAnimationSet,
 		CDmeGameModel *pGameModel, CDmeFilmClip *pSourceClip, CDmeChannelsClip *pDestClip, bool bUseExistingLogs );
 
 private:

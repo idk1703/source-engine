@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -20,8 +20,8 @@
 bool g_FXCreationAllowed = false;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : state - 
+// Purpose:
+// Input  : state -
 //-----------------------------------------------------------------------------
 void SetFXCreationAllowed( bool state )
 {
@@ -29,7 +29,7 @@ void SetFXCreationAllowed( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool FXCreationAllowed( void )
@@ -42,7 +42,7 @@ bool FXCreationAllowed( void )
 //
 //-----------------------------------------------------------------------------
 // Purpose: Construct and activate effect
-// Input  : *name - 
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CClientSideEffect::CClientSideEffect( const char *name )
 {
@@ -127,14 +127,14 @@ static CEffectsList g_EffectsList;
 IEffectsList *clienteffects = ( IEffectsList * )&g_EffectsList;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEffectsList::CEffectsList( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEffectsList::~CEffectsList( void )
 {
@@ -142,7 +142,7 @@ CEffectsList::~CEffectsList( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Add effect to effects list
-// Input  : *effect - 
+// Input  : *effect -
 //-----------------------------------------------------------------------------
 void CEffectsList::AddEffect( CClientSideEffect *effect )
 {
@@ -171,7 +171,7 @@ void CEffectsList::AddEffect( CClientSideEffect *effect )
 }
 
 //-----------------------------------------------------------------------------
-void CEffectsList::RemoveEffect( CClientSideEffect *effect ) 
+void CEffectsList::RemoveEffect( CClientSideEffect *effect )
 {
 	Assert( effect );
 	CClientSideEffect **end = &m_rgEffects[m_nEffects];
@@ -189,7 +189,7 @@ void CEffectsList::RemoveEffect( CClientSideEffect *effect )
 
 //-----------------------------------------------------------------------------
 // Purpose: Remove specified effect by index
-// Input  : effectIndex - 
+// Input  : effectIndex -
 //-----------------------------------------------------------------------------
 void CEffectsList::RemoveEffect( int effectIndex )
 {
@@ -212,7 +212,7 @@ void CEffectsList::RemoveEffect( int effectIndex )
 
 //-----------------------------------------------------------------------------
 // Purpose: Iterate through list and simulate/draw stuff
-// Input  : frametime - 
+// Input  : frametime -
 //-----------------------------------------------------------------------------
 void CEffectsList::DrawEffects( double frametime )
 {
@@ -239,8 +239,8 @@ void CEffectsList::DrawEffects( double frametime )
 }
 
 //==================================================
-// Purpose: 
-// Input: 
+// Purpose:
+// Input:
 //==================================================
 
 void CEffectsList::Flush( void )
@@ -252,7 +252,7 @@ void CEffectsList::Flush( void )
 	for ( i = m_nEffects - 1 ; i >= 0; i-- )
 	{
 		effect = m_rgEffects[ i ];
-		
+
 		if ( effect == NULL )
 			continue;
 

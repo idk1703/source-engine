@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -11,7 +11,7 @@
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CLight : public CPointEntity
 {
@@ -22,7 +22,7 @@ public:
 	void	Spawn( void );
 	void	FadeThink( void );
 	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	
+
 	void	TurnOn( void );
 	void	TurnOff( void );
 	void	Toggle( void );

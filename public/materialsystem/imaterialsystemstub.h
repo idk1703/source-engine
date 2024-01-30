@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,7 +22,7 @@
 class IMaterialSystemStub : public IMaterialSystem
 {
 public:
-	// If this is called, then the stub will call through to the real material 
+	// If this is called, then the stub will call through to the real material
 	// system in some functions.
 	virtual void	SetRealMaterialSystem( IMaterialSystem *pSys ) = 0;
 };

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -112,7 +112,7 @@ private:
 	void				GetWorkspaceLeftRight( int& left, int& right );
 	void				SetClickedPos( int x, int y );
 	float				GetTimeForClickedPos( void );
-	
+
 	void				DrawAutoHighlight( mxEvent *event );
 
 	void				ApplyBounds( int& mx, int& my );

@@ -46,7 +46,7 @@ bool		scr_drawloading;
 int			scr_nextdrawtick;		// A hack to let things settle on reload/reconnect
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SCR_Init (void)
 {
@@ -54,7 +54,7 @@ void SCR_Init (void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SCR_Shutdown( void )
 {
@@ -138,7 +138,7 @@ void SCR_EndLoadingPlaque( void )
 }
 
 //-----------------------------------------------------------------------------
-// Places TCR required defective media message and halts 
+// Places TCR required defective media message and halts
 //-----------------------------------------------------------------------------
 #ifdef _XBOX
 void SCR_FatalDiskError()
@@ -154,7 +154,7 @@ void SCR_FatalDiskError()
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SCR_CenterPrint (char *str)
 {
@@ -165,7 +165,7 @@ void SCR_CenterPrint (char *str)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SCR_CenterStringOff( void )
 {
@@ -176,7 +176,7 @@ void SCR_CenterStringOff( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline void SCR_ShowVCRPlaybackAmount()
 {
@@ -195,13 +195,13 @@ inline void SCR_ShowVCRPlaybackAmount()
 
 	Con_NXPrintf( &info, "'+' to speed up, '-' to slow down [current sleep: %d]", g_iVCRPlaybackSleepInterval );
 	info.index++;
-	
+
 	Con_NXPrintf( &info, "'p' to pause, 's' to single step, 'r' to resume" );
 	info.index++;
-	
+
 	Con_NXPrintf( &info, "'d' to toggle this display" );
 	info.index++;
-	
+
 	Con_NXPrintf( &info, "'q' to quit" );
 }
 
@@ -214,7 +214,7 @@ void SCR_UpdateScreen( void )
 	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
 
 	R_StudioCheckReinitLightingCache();
-	
+
 	// Always force the Gamma Table to be rebuilt. Otherwise,
 	// we'll load textures with an all white gamma lookup table.
 	V_CheckGamma();
@@ -241,7 +241,7 @@ void SCR_UpdateScreen( void )
 	if ( !scr_initialized || !con_initialized )
 	{
 		// not initialized yet
-		return;				
+		return;
 	}
 
 	SCR_ShowVCRPlaybackAmount();
@@ -261,24 +261,24 @@ void SCR_UpdateScreen( void )
 	ClientDLL_FrameStageNotify( FRAME_RENDER_START );
 
 	// Simulation meant to occur before any views are rendered
-	// This needs to happen before the client DLL is called because the client DLL depends on 
+	// This needs to happen before the client DLL is called because the client DLL depends on
 	// some of the setup in FRAME_RENDER_START.
 	{
 		tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "FrameBegin" );
-	
+
 		g_EngineRenderer->FrameBegin();
 		toolframework->RenderFrameBegin();
 	}
 
 	cl.UpdateAreaBits_BackwardsCompatible();
-	
+
 	Shader_BeginRendering();
-				
+
 	// Draw world, etc.
 	V_RenderView();
 
-	CL_TakeSnapshotAndSwap();	   
-	
+	CL_TakeSnapshotAndSwap();
+
 #if defined( REPLAY_ENABLED )
 	if ( g_pReplay )
 	{
@@ -313,4 +313,3 @@ void SCR_UpdateScreen( void )
 		materials->EndFrame();
 	}
 }
-

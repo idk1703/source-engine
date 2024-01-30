@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -1085,7 +1085,7 @@ void CTFPartyInvite::AddMember( const CSteamID &steamID, const char *szPersonaNa
 {
 	EmitInfo( SPEW_GC, MATCHMAKING_SPEWLEVEL4, LOG_ALWAYS, "PartyInvite %016llx AddMember(%s, %s, %u)\n", GetGroupID(), steamID.Render(), szPersonaName ? szPersonaName : "", unAvatar );
 
-	  
+
 	CSOTFPartyInvite_PartyMember *pMember = Obj().add_members();
 	pMember->set_steam_id( steamID.ConvertToUint64() );
 	pMember->set_name( szPersonaName ? szPersonaName : "Unknown" );
@@ -1093,4 +1093,3 @@ void CTFPartyInvite::AddMember( const CSteamID &steamID, const char *szPersonaNa
 }
 
 #endif
-

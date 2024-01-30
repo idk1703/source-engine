@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,23 +34,23 @@ const int cDialogWidth = 900;
 //-----------------------------------------------------------------------------
 CAchievementAndStatsSummary::CAchievementAndStatsSummary(vgui::Panel *parent) : BaseClass(parent, "AchievementAndStatsSummary")
 {
-    SetDeleteSelfOnClose(false);
-    //SetBounds(0, 0, 640, 384);
-    SetBounds(0, 0, 900, 780);
-    SetMinimumSize( 640, 780 );
-    SetSizeable( false );
+	SetDeleteSelfOnClose(false);
+	//SetBounds(0, 0, 640, 384);
+	SetBounds(0, 0, 900, 780);
+	SetMinimumSize( 640, 780 );
+	SetSizeable( false );
 
-    SetTitle("#GameUI_CreateAchievementsAndStats", true);
-    SetOKButtonText("#GameUI_Close");
-    SetCancelButtonVisible(false);
+	SetTitle("#GameUI_CreateAchievementsAndStats", true);
+	SetOKButtonText("#GameUI_Close");
+	SetCancelButtonVisible(false);
 
 	m_pStatsSummary = new CStatsSummary( this, "StatsSummary" );
-    m_pAchievementsPage = new CAchievementsPage(this, "AchievementsPage");
-    m_pLifetimeStatsPage = new CLifetimeStatsPage(this, "StatsPage");
+	m_pAchievementsPage = new CAchievementsPage(this, "AchievementsPage");
+	m_pLifetimeStatsPage = new CLifetimeStatsPage(this, "StatsPage");
 	m_pMatchStatsPage = new CMatchStatsPage(this, "MatchStatsPage");
 
 	AddPage(m_pStatsSummary, "#GameUI_Stats_Summary");
-	AddPage(m_pAchievementsPage, "#GameUI_Achievements_Tab");    
+	AddPage(m_pAchievementsPage, "#GameUI_Achievements_Tab");
 	AddPage(m_pMatchStatsPage, "#GameUI_MatchStats");
 	AddPage(m_pLifetimeStatsPage, "#GameUI_LifetimeStats");
 }
@@ -85,9 +85,9 @@ void CAchievementAndStatsSummary::ApplySchemeSettings( vgui::IScheme *pScheme )
 //-----------------------------------------------------------------------------
 bool CAchievementAndStatsSummary::OnOK(bool applyOnly)
 {
-    BaseClass::OnOK(applyOnly);
+	BaseClass::OnOK(applyOnly);
 
-    return true;
+	return true;
 }
 
 //----------------------------------------------------------
@@ -95,14 +95,14 @@ bool CAchievementAndStatsSummary::OnOK(bool applyOnly)
 //----------------------------------------------------------
 void CAchievementAndStatsSummary::OnSizeChanged(int newWide, int newTall)
 {
-    // Lock the width, but allow height scaling
-    if ( newWide != cDialogWidth )
-    {
-        SetSize( cDialogWidth, newTall );
-        return;
-    }
+	// Lock the width, but allow height scaling
+	if ( newWide != cDialogWidth )
+	{
+		SetSize( cDialogWidth, newTall );
+		return;
+	}
 
-    BaseClass::OnSizeChanged(newWide, newTall);
+	BaseClass::OnSizeChanged(newWide, newTall);
 }
 
 //----------------------------------------------------------
@@ -112,9 +112,9 @@ void CAchievementAndStatsSummary::Activate()
 {
 	m_pStatsSummary->MakeReadyForUse();
 	m_pStatsSummary->UpdateStatsData();
-    m_pAchievementsPage->UpdateAchievementDialogInfo();
-    m_pLifetimeStatsPage->UpdateStatsData();
+	m_pAchievementsPage->UpdateAchievementDialogInfo();
+	m_pLifetimeStatsPage->UpdateStatsData();
 	m_pMatchStatsPage->UpdateStatsData();
 
-    BaseClass::Activate();
+	BaseClass::Activate();
 }

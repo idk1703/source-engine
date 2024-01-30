@@ -114,7 +114,7 @@ CReplayPerformance *CReplay::AddNewPerformance( bool bGenTitle/*=true*/, bool bG
 
 	// Cache
 	m_vecPerformances.AddToTail( pPerformance );
-	
+
 	return pPerformance;
 }
 

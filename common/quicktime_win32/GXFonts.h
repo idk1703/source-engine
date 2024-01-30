@@ -1,18 +1,18 @@
 /*
-     File:       GXFonts.h
- 
-     Contains:   QuickDraw GX font routine interfaces.
- 
-     Version:    Technology: Quickdraw GX 1.1
-                 Release:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1994-1997 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       GXFonts.h
+
+		Contains:   QuickDraw GX font routine interfaces.
+
+		Version:    Technology: Quickdraw GX 1.1
+								Release:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1994-1997 by Apple Computer, Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __GXFONTS__
 #define __GXFONTS__
@@ -49,22 +49,22 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=mac68k
+		#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+		#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+		#pragma pack(2)
 #endif
 
 #if defined(__MWERKS__) && TARGET_CPU_68K
-    #pragma push
-    #pragma pointers_in_D0
+		#pragma push
+		#pragma pointers_in_D0
 #endif
- 
+
 #if CALL_NOT_IN_CARBON
 /*
  *  GXNewFont()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -72,14 +72,14 @@ extern "C" {
  */
 EXTERN_API_C( gxFont )
 GXNewFont(
-  gxFontStorageTag         storage,
-  gxFontStorageReference   reference,
-  gxFontAttribute          attributes)                        THREEWORDINLINE(0x303C, 0x0201, 0xA832);
+	gxFontStorageTag         storage,
+	gxFontStorageReference   reference,
+	gxFontAttribute          attributes)                        THREEWORDINLINE(0x303C, 0x0201, 0xA832);
 
 
 /*
  *  GXGetFont()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -87,14 +87,14 @@ GXNewFont(
  */
 EXTERN_API_C( gxFontStorageTag )
 GXGetFont(
-  gxFont                    fontID,
-  gxFontStorageReference *  reference,
-  gxFontAttribute *         attributes)                       THREEWORDINLINE(0x303C, 0x0202, 0xA832);
+	gxFont                    fontID,
+	gxFontStorageReference *  reference,
+	gxFontAttribute *         attributes)                       THREEWORDINLINE(0x303C, 0x0202, 0xA832);
 
 
 /*
  *  GXFindFont()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -102,14 +102,14 @@ GXGetFont(
  */
 EXTERN_API_C( gxFont )
 GXFindFont(
-  gxFontStorageTag         storage,
-  gxFontStorageReference   reference,
-  gxFontAttribute *        attributes)                        THREEWORDINLINE(0x303C, 0x0203, 0xA832);
+	gxFontStorageTag         storage,
+	gxFontStorageReference   reference,
+	gxFontAttribute *        attributes)                        THREEWORDINLINE(0x303C, 0x0203, 0xA832);
 
 
 /*
  *  GXSetFont()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -117,15 +117,15 @@ GXFindFont(
  */
 EXTERN_API_C( void )
 GXSetFont(
-  gxFont                   fontID,
-  gxFontStorageTag         storage,
-  gxFontStorageReference   reference,
-  gxFontAttribute          attributes)                        THREEWORDINLINE(0x303C, 0x0204, 0xA832);
+	gxFont                   fontID,
+	gxFontStorageTag         storage,
+	gxFontStorageReference   reference,
+	gxFontAttribute          attributes)                        THREEWORDINLINE(0x303C, 0x0204, 0xA832);
 
 
 /*
  *  GXDisposeFont()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -137,7 +137,7 @@ GXDisposeFont(gxFont fontID)                                  THREEWORDINLINE(0x
 
 /*
  *  GXChangedFont()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -149,7 +149,7 @@ GXChangedFont(gxFont fontID)                                  THREEWORDINLINE(0x
 
 /*
  *  GXGetFontFormat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -161,7 +161,7 @@ GXGetFontFormat(gxFont fontID)                                THREEWORDINLINE(0x
 
 /*
  *  GXGetDefaultFont()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -173,7 +173,7 @@ GXGetDefaultFont(void)                                        THREEWORDINLINE(0x
 
 /*
  *  GXSetDefaultFont()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -185,7 +185,7 @@ GXSetDefaultFont(gxFont fontID)                               THREEWORDINLINE(0x
 
 /*
  *  GXFindFonts()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -193,21 +193,21 @@ GXSetDefaultFont(gxFont fontID)                               THREEWORDINLINE(0x
  */
 EXTERN_API_C( long )
 GXFindFonts(
-  gxFont                familyID,
-  gxFontName            name,
-  gxFontPlatform        platform,
-  gxFontScript          script,
-  gxFontLanguage        language,
-  long                  length,
-  const unsigned char   text[],
-  long                  index,
-  long                  count,
-  gxFont                fonts[])                              THREEWORDINLINE(0x303C, 0x020A, 0xA832);
+	gxFont                familyID,
+	gxFontName            name,
+	gxFontPlatform        platform,
+	gxFontScript          script,
+	gxFontLanguage        language,
+	long                  length,
+	const unsigned char   text[],
+	long                  index,
+	long                  count,
+	gxFont                fonts[])                              THREEWORDINLINE(0x303C, 0x020A, 0xA832);
 
 
 /*
  *  GXCountFontGlyphs()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -219,7 +219,7 @@ GXCountFontGlyphs(gxFont fontID)                              THREEWORDINLINE(0x
 
 /*
  *  GXCountFontTables()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -231,7 +231,7 @@ GXCountFontTables(gxFont fontID)                              THREEWORDINLINE(0x
 
 /*
  *  GXGetFontTable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -239,15 +239,15 @@ GXCountFontTables(gxFont fontID)                              THREEWORDINLINE(0x
  */
 EXTERN_API_C( long )
 GXGetFontTable(
-  gxFont            fontID,
-  long              index,
-  void *            tableData,
-  gxFontTableTag *  tableTag)                                 THREEWORDINLINE(0x303C, 0x020D, 0xA832);
+	gxFont            fontID,
+	long              index,
+	void *            tableData,
+	gxFontTableTag *  tableTag)                                 THREEWORDINLINE(0x303C, 0x020D, 0xA832);
 
 
 /*
  *  GXFindFontTable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -255,15 +255,15 @@ GXGetFontTable(
  */
 EXTERN_API_C( long )
 GXFindFontTable(
-  gxFont           fontID,
-  gxFontTableTag   tableTag,
-  void *           tableData,
-  long *           index)                                     THREEWORDINLINE(0x303C, 0x020E, 0xA832);
+	gxFont           fontID,
+	gxFontTableTag   tableTag,
+	void *           tableData,
+	long *           index)                                     THREEWORDINLINE(0x303C, 0x020E, 0xA832);
 
 
 /*
  *  GXGetFontTableParts()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -271,17 +271,17 @@ GXFindFontTable(
  */
 EXTERN_API_C( long )
 GXGetFontTableParts(
-  gxFont            fontID,
-  long              index,
-  long              offset,
-  long              length,
-  void *            tableData,
-  gxFontTableTag *  tableTag)                                 THREEWORDINLINE(0x303C, 0x020F, 0xA832);
+	gxFont            fontID,
+	long              index,
+	long              offset,
+	long              length,
+	void *            tableData,
+	gxFontTableTag *  tableTag)                                 THREEWORDINLINE(0x303C, 0x020F, 0xA832);
 
 
 /*
  *  GXFindFontTableParts()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -289,17 +289,17 @@ GXGetFontTableParts(
  */
 EXTERN_API_C( long )
 GXFindFontTableParts(
-  gxFont           fontID,
-  gxFontTableTag   tableTag,
-  long             offset,
-  long             length,
-  void *           tableData,
-  long *           index)                                     THREEWORDINLINE(0x303C, 0x0210, 0xA832);
+	gxFont           fontID,
+	gxFontTableTag   tableTag,
+	long             offset,
+	long             length,
+	void *           tableData,
+	long *           index)                                     THREEWORDINLINE(0x303C, 0x0210, 0xA832);
 
 
 /*
  *  GXSetFontTable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -307,16 +307,16 @@ GXFindFontTableParts(
  */
 EXTERN_API_C( long )
 GXSetFontTable(
-  gxFont           fontID,
-  long             index,
-  gxFontTableTag   tableTag,
-  long             length,
-  const void *     tableData)                                 THREEWORDINLINE(0x303C, 0x0211, 0xA832);
+	gxFont           fontID,
+	long             index,
+	gxFontTableTag   tableTag,
+	long             length,
+	const void *     tableData)                                 THREEWORDINLINE(0x303C, 0x0211, 0xA832);
 
 
 /*
  *  GXSetFontTableParts()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -324,18 +324,18 @@ GXSetFontTable(
  */
 EXTERN_API_C( long )
 GXSetFontTableParts(
-  gxFont           fontID,
-  long             index,
-  gxFontTableTag   tableTag,
-  long             offset,
-  long             oldLength,
-  long             newLength,
-  const void *     tableData)                                 THREEWORDINLINE(0x303C, 0x0212, 0xA832);
+	gxFont           fontID,
+	long             index,
+	gxFontTableTag   tableTag,
+	long             offset,
+	long             oldLength,
+	long             newLength,
+	const void *     tableData)                                 THREEWORDINLINE(0x303C, 0x0212, 0xA832);
 
 
 /*
  *  GXDeleteFontTable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -343,14 +343,14 @@ GXSetFontTableParts(
  */
 EXTERN_API_C( long )
 GXDeleteFontTable(
-  gxFont           fontID,
-  long             index,
-  gxFontTableTag   tableTag)                                  THREEWORDINLINE(0x303C, 0x0213, 0xA832);
+	gxFont           fontID,
+	long             index,
+	gxFontTableTag   tableTag)                                  THREEWORDINLINE(0x303C, 0x0213, 0xA832);
 
 
 /*
  *  GXCountFontNames()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -362,7 +362,7 @@ GXCountFontNames(gxFont fontID)                               THREEWORDINLINE(0x
 
 /*
  *  GXGetFontName()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -370,18 +370,18 @@ GXCountFontNames(gxFont fontID)                               THREEWORDINLINE(0x
  */
 EXTERN_API_C( long )
 GXGetFontName(
-  gxFont            fontID,
-  long              index,
-  gxFontName *      name,
-  gxFontPlatform *  platform,
-  gxFontScript *    script,
-  gxFontLanguage *  language,
-  unsigned char     text[])                                   THREEWORDINLINE(0x303C, 0x0215, 0xA832);
+	gxFont            fontID,
+	long              index,
+	gxFontName *      name,
+	gxFontPlatform *  platform,
+	gxFontScript *    script,
+	gxFontLanguage *  language,
+	unsigned char     text[])                                   THREEWORDINLINE(0x303C, 0x0215, 0xA832);
 
 
 /*
  *  GXFindFontName()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -389,18 +389,18 @@ GXGetFontName(
  */
 EXTERN_API_C( long )
 GXFindFontName(
-  gxFont           fontID,
-  gxFontName       name,
-  gxFontPlatform   platform,
-  gxFontScript     script,
-  gxFontLanguage   language,
-  unsigned char    text[],
-  long *           index)                                     THREEWORDINLINE(0x303C, 0x0216, 0xA832);
+	gxFont           fontID,
+	gxFontName       name,
+	gxFontPlatform   platform,
+	gxFontScript     script,
+	gxFontLanguage   language,
+	unsigned char    text[],
+	long *           index)                                     THREEWORDINLINE(0x303C, 0x0216, 0xA832);
 
 
 /*
  *  GXSetFontName()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -408,18 +408,18 @@ GXFindFontName(
  */
 EXTERN_API_C( long )
 GXSetFontName(
-  gxFont                fontID,
-  gxFontName            name,
-  gxFontPlatform        platform,
-  gxFontScript          script,
-  gxFontLanguage        language,
-  long                  length,
-  const unsigned char   text[])                               THREEWORDINLINE(0x303C, 0x0217, 0xA832);
+	gxFont                fontID,
+	gxFontName            name,
+	gxFontPlatform        platform,
+	gxFontScript          script,
+	gxFontLanguage        language,
+	long                  length,
+	const unsigned char   text[])                               THREEWORDINLINE(0x303C, 0x0217, 0xA832);
 
 
 /*
  *  GXDeleteFontName()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -427,17 +427,17 @@ GXSetFontName(
  */
 EXTERN_API_C( long )
 GXDeleteFontName(
-  gxFont           fontID,
-  long             index,
-  gxFontName       name,
-  gxFontPlatform   platform,
-  gxFontScript     script,
-  gxFontLanguage   language)                                  THREEWORDINLINE(0x303C, 0x0218, 0xA832);
+	gxFont           fontID,
+	long             index,
+	gxFontName       name,
+	gxFontPlatform   platform,
+	gxFontScript     script,
+	gxFontLanguage   language)                                  THREEWORDINLINE(0x303C, 0x0218, 0xA832);
 
 
 /*
  *  GXNewFontNameID()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -449,7 +449,7 @@ GXNewFontNameID(gxFont fontID)                                THREEWORDINLINE(0x
 
 /*
  *  GXCountFontEncodings()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -461,7 +461,7 @@ GXCountFontEncodings(gxFont fontID)                           THREEWORDINLINE(0x
 
 /*
  *  GXGetFontEncoding()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -469,15 +469,15 @@ GXCountFontEncodings(gxFont fontID)                           THREEWORDINLINE(0x
  */
 EXTERN_API_C( gxFontPlatform )
 GXGetFontEncoding(
-  gxFont            fontID,
-  long              index,
-  gxFontScript *    script,
-  gxFontLanguage *  language)                                 THREEWORDINLINE(0x303C, 0x021B, 0xA832);
+	gxFont            fontID,
+	long              index,
+	gxFontScript *    script,
+	gxFontLanguage *  language)                                 THREEWORDINLINE(0x303C, 0x021B, 0xA832);
 
 
 /*
  *  GXFindFontEncoding()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -485,15 +485,15 @@ GXGetFontEncoding(
  */
 EXTERN_API_C( long )
 GXFindFontEncoding(
-  gxFont           fontID,
-  gxFontPlatform   platform,
-  gxFontScript     script,
-  gxFontLanguage   language)                                  THREEWORDINLINE(0x303C, 0x021C, 0xA832);
+	gxFont           fontID,
+	gxFontPlatform   platform,
+	gxFontScript     script,
+	gxFontLanguage   language)                                  THREEWORDINLINE(0x303C, 0x021C, 0xA832);
 
 
 /*
  *  GXApplyFontEncoding()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -501,18 +501,18 @@ GXFindFontEncoding(
  */
 EXTERN_API_C( long )
 GXApplyFontEncoding(
-  gxFont                fontID,
-  long                  index,
-  long *                length,
-  const unsigned char   text[],
-  long                  count,
-  unsigned short        glyphs[],
-  char                  was16Bit[])                           THREEWORDINLINE(0x303C, 0x021D, 0xA832);
+	gxFont                fontID,
+	long                  index,
+	long *                length,
+	const unsigned char   text[],
+	long                  count,
+	unsigned short        glyphs[],
+	char                  was16Bit[])                           THREEWORDINLINE(0x303C, 0x021D, 0xA832);
 
 
 /*
  *  GXCountFontVariations()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -524,7 +524,7 @@ GXCountFontVariations(gxFont fontID)                          THREEWORDINLINE(0x
 
 /*
  *  GXFindFontVariation()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -532,17 +532,17 @@ GXCountFontVariations(gxFont fontID)                          THREEWORDINLINE(0x
  */
 EXTERN_API_C( long )
 GXFindFontVariation(
-  gxFont               fontID,
-  gxFontVariationTag   variationTag,
-  Fixed *              minValue,
-  Fixed *              defaultValue,
-  Fixed *              maxValue,
-  gxFontName *         name)                                  THREEWORDINLINE(0x303C, 0x021F, 0xA832);
+	gxFont               fontID,
+	gxFontVariationTag   variationTag,
+	Fixed *              minValue,
+	Fixed *              defaultValue,
+	Fixed *              maxValue,
+	gxFontName *         name)                                  THREEWORDINLINE(0x303C, 0x021F, 0xA832);
 
 
 /*
  *  GXGetFontVariation()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -550,17 +550,17 @@ GXFindFontVariation(
  */
 EXTERN_API_C( gxFontVariationTag )
 GXGetFontVariation(
-  gxFont        fontID,
-  long          index,
-  Fixed *       minValue,
-  Fixed *       defaultValue,
-  Fixed *       maxValue,
-  gxFontName *  name)                                         THREEWORDINLINE(0x303C, 0x0220, 0xA832);
+	gxFont        fontID,
+	long          index,
+	Fixed *       minValue,
+	Fixed *       defaultValue,
+	Fixed *       maxValue,
+	gxFontName *  name)                                         THREEWORDINLINE(0x303C, 0x0220, 0xA832);
 
 
 /*
  *  GXCountFontInstances()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -572,7 +572,7 @@ GXCountFontInstances(gxFont fontID)                           THREEWORDINLINE(0x
 
 /*
  *  GXGetFontInstance()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -580,14 +580,14 @@ GXCountFontInstances(gxFont fontID)                           THREEWORDINLINE(0x
  */
 EXTERN_API_C( gxFontName )
 GXGetFontInstance(
-  gxFont            fontID,
-  long              index,
-  gxFontVariation   variation[])                              THREEWORDINLINE(0x303C, 0x0222, 0xA832);
+	gxFont            fontID,
+	long              index,
+	gxFontVariation   variation[])                              THREEWORDINLINE(0x303C, 0x0222, 0xA832);
 
 
 /*
  *  GXSetFontInstance()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -595,15 +595,15 @@ GXGetFontInstance(
  */
 EXTERN_API_C( long )
 GXSetFontInstance(
-  gxFont                  fontID,
-  long                    index,
-  gxFontName              name,
-  const gxFontVariation   variation[])                        THREEWORDINLINE(0x303C, 0x0223, 0xA832);
+	gxFont                  fontID,
+	long                    index,
+	gxFontName              name,
+	const gxFontVariation   variation[])                        THREEWORDINLINE(0x303C, 0x0223, 0xA832);
 
 
 /*
  *  GXDeleteFontInstance()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -611,14 +611,14 @@ GXSetFontInstance(
  */
 EXTERN_API_C( long )
 GXDeleteFontInstance(
-  gxFont       fontID,
-  long         index,
-  gxFontName   name)                                          THREEWORDINLINE(0x303C, 0x0224, 0xA832);
+	gxFont       fontID,
+	long         index,
+	gxFontName   name)                                          THREEWORDINLINE(0x303C, 0x0224, 0xA832);
 
 
 /*
  *  GXCountFontDescriptors()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -630,7 +630,7 @@ GXCountFontDescriptors(gxFont fontID)                         THREEWORDINLINE(0x
 
 /*
  *  GXGetFontDescriptor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -638,14 +638,14 @@ GXCountFontDescriptors(gxFont fontID)                         THREEWORDINLINE(0x
  */
 EXTERN_API_C( gxFontDescriptorTag )
 GXGetFontDescriptor(
-  gxFont   fontID,
-  long     index,
-  Fixed *  descriptorValue)                                   THREEWORDINLINE(0x303C, 0x0226, 0xA832);
+	gxFont   fontID,
+	long     index,
+	Fixed *  descriptorValue)                                   THREEWORDINLINE(0x303C, 0x0226, 0xA832);
 
 
 /*
  *  GXFindFontDescriptor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -653,14 +653,14 @@ GXGetFontDescriptor(
  */
 EXTERN_API_C( long )
 GXFindFontDescriptor(
-  gxFont                fontID,
-  gxFontDescriptorTag   descriptorTag,
-  Fixed *               descriptorValue)                      THREEWORDINLINE(0x303C, 0x0227, 0xA832);
+	gxFont                fontID,
+	gxFontDescriptorTag   descriptorTag,
+	Fixed *               descriptorValue)                      THREEWORDINLINE(0x303C, 0x0227, 0xA832);
 
 
 /*
  *  GXSetFontDescriptor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -668,15 +668,15 @@ GXFindFontDescriptor(
  */
 EXTERN_API_C( long )
 GXSetFontDescriptor(
-  gxFont                fontID,
-  long                  index,
-  gxFontDescriptorTag   descriptorTag,
-  Fixed                 descriptorValue)                      THREEWORDINLINE(0x303C, 0x0228, 0xA832);
+	gxFont                fontID,
+	long                  index,
+	gxFontDescriptorTag   descriptorTag,
+	Fixed                 descriptorValue)                      THREEWORDINLINE(0x303C, 0x0228, 0xA832);
 
 
 /*
  *  GXDeleteFontDescriptor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -684,14 +684,14 @@ GXSetFontDescriptor(
  */
 EXTERN_API_C( long )
 GXDeleteFontDescriptor(
-  gxFont                fontID,
-  long                  index,
-  gxFontDescriptorTag   descriptorTag)                        THREEWORDINLINE(0x303C, 0x0229, 0xA832);
+	gxFont                fontID,
+	long                  index,
+	gxFontDescriptorTag   descriptorTag)                        THREEWORDINLINE(0x303C, 0x0229, 0xA832);
 
 
 /*
  *  GXCountFontFeatures()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -703,7 +703,7 @@ GXCountFontFeatures(gxFont fontID)                            THREEWORDINLINE(0x
 
 /*
  *  GXGetFontFeature()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -711,17 +711,17 @@ GXCountFontFeatures(gxFont fontID)                            THREEWORDINLINE(0x
  */
 EXTERN_API_C( gxFontName )
 GXGetFontFeature(
-  gxFont                 fontID,
-  long                   index,
-  gxFontFeatureFlag *    flags,
-  long *                 settingCount,
-  gxFontFeatureSetting   settings[],
-  gxFontFeature *        feature)                             THREEWORDINLINE(0x303C, 0x022B, 0xA832);
+	gxFont                 fontID,
+	long                   index,
+	gxFontFeatureFlag *    flags,
+	long *                 settingCount,
+	gxFontFeatureSetting   settings[],
+	gxFontFeature *        feature)                             THREEWORDINLINE(0x303C, 0x022B, 0xA832);
 
 
 /*
  *  GXFindFontFeature()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -729,17 +729,17 @@ GXGetFontFeature(
  */
 EXTERN_API_C( gxFontName )
 GXFindFontFeature(
-  gxFont                 fontID,
-  gxFontFeature          feature,
-  gxFontFeatureFlag *    flags,
-  long *                 settingCount,
-  gxFontFeatureSetting   settings[],
-  long *                 index)                               THREEWORDINLINE(0x303C, 0x022C, 0xA832);
+	gxFont                 fontID,
+	gxFontFeature          feature,
+	gxFontFeatureFlag *    flags,
+	long *                 settingCount,
+	gxFontFeatureSetting   settings[],
+	long *                 index)                               THREEWORDINLINE(0x303C, 0x022C, 0xA832);
 
 
 /*
  *  GXGetFontDefaultFeatures()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -747,13 +747,13 @@ GXFindFontFeature(
  */
 EXTERN_API_C( long )
 GXGetFontDefaultFeatures(
-  gxFont         fontID,
-  gxRunFeature   features[])                                  THREEWORDINLINE(0x303C, 0x0274, 0xA832);
+	gxFont         fontID,
+	gxRunFeature   features[])                                  THREEWORDINLINE(0x303C, 0x0274, 0xA832);
 
 
 /*
  *  GXFlattenFont()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -761,25 +761,25 @@ GXGetFontDefaultFeatures(
  */
 EXTERN_API_C( void )
 GXFlattenFont(
-  gxFont          source,
-  scalerStream *  stream,
-  gxSpoolBlock *  block)                                      THREEWORDINLINE(0x303C, 0x022D, 0xA832);
+	gxFont          source,
+	scalerStream *  stream,
+	gxSpoolBlock *  block)                                      THREEWORDINLINE(0x303C, 0x022D, 0xA832);
 
 
 
 #endif  /* CALL_NOT_IN_CARBON */
 
- 
+
 #if defined(__MWERKS__) && TARGET_CPU_68K
-    #pragma pop
+		#pragma pop
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+		#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+		#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+		#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -793,4 +793,3 @@ GXFlattenFont(
 #endif
 
 #endif /* __GXFONTS__ */
-

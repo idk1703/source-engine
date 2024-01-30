@@ -59,13 +59,13 @@ public:
 	DELEGATE_TO_OBJECT_0V(			CompactHeap, m_pMemAlloc );
 	DELEGATE_TO_OBJECT_1( MemAllocFailHandler_t, SetAllocFailHandler, MemAllocFailHandler_t, m_pMemAlloc );
 	DELEGATE_TO_OBJECT_1V(			DumpBlockStats, void *, m_pMemAlloc );
-#if defined( _MEMTEST )	
+#if defined( _MEMTEST )
 	DELEGATE_TO_OBJECT_2V(			SetStatsExtraInfo, const char *, const char *, m_pMemAlloc );
 #endif
 	DELEGATE_TO_OBJECT_0(size_t,	MemoryAllocFailed, m_pMemAlloc );
 	virtual uint32 GetDebugInfoSize() { return 0; }
 	virtual void SaveDebugInfo( void *pvDebugInfo ) { }
-	virtual void RestoreDebugInfo( const void *pvDebugInfo ) {}	
+	virtual void RestoreDebugInfo( const void *pvDebugInfo ) {}
 	virtual void InitDebugInfo( void *pvDebugInfo, const char *pchRootFileName, int nLine ) {}
 
 	// Other public methods
@@ -123,7 +123,7 @@ static int LoadLibraryThreadFunc()
 //-----------------------------------------------------------------------------
 // Used to tick the loading screen every so often
 //-----------------------------------------------------------------------------
-CLoaderMemAlloc::CLoaderMemAlloc() 
+CLoaderMemAlloc::CLoaderMemAlloc()
 {
 	m_pMemAlloc = 0;
 }

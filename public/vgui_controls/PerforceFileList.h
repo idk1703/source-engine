@@ -92,10 +92,10 @@ protected:
 		CUtlVector< int > m_ItemIDs;
 	};
 
-	// Add a file to the file list. 
+	// Add a file to the file list.
 	int AddFileToFileList( const char *pFullPath, bool bExistsOnDisk );
 
-	// Add a directory to the file list. 
+	// Add a directory to the file list.
 	int AddDirectoryToFileList( const char *pFullPath, bool bExistsOnDisk );
 
 	// Add a directory to the directory list, returns client spec

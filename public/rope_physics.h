@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,9 +29,9 @@ class CBaseRopePhysics : public CSimplePhysics::IHelper
 public:
 	DECLARE_CLASS_NOBASE( CBaseRopePhysics );
 
-					CBaseRopePhysics( 
-						CSimplePhysics::CNode *pNodes, 
-						int nNodes, 
+					CBaseRopePhysics(
+						CSimplePhysics::CNode *pNodes,
+						int nNodes,
 						CRopeSpring *pSprings,
 						float *flSpringDistsSqr );
 
@@ -53,7 +53,7 @@ public:
 	void			SetDelegate( CSimplePhysics::IHelper *pDelegate );
 
 	void			Simulate( float dt );
-	
+
 	int						NumNodes()				{ return m_nNodes; }
 	CSimplePhysics::CNode*	GetNode( int iNode )	{ return &m_pNodes[iNode]; }
 	CSimplePhysics::CNode*	GetFirstNode()			{ return &m_pNodes[0]; }
@@ -75,7 +75,7 @@ private:
 protected:
 
 	CSimplePhysics::IHelper		*m_pDelegate;
-	
+
 	CSimplePhysics::CNode		*m_pNodes;
 	int				m_nNodes;
 
@@ -108,7 +108,7 @@ public:
 
 
 template< int NUM_NODES >
-CRopePhysics<NUM_NODES>::CRopePhysics() : 
+CRopePhysics<NUM_NODES>::CRopePhysics() :
 	CBaseRopePhysics( m_Nodes, NUM_NODES, m_Springs, m_SpringDistsSqr )
 {
 }

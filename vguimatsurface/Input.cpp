@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Implementation of the VGUI ISurface interface using the 
+// Purpose: Implementation of the VGUI ISurface interface using the
 // material system to implement it
 //
 //===========================================================================//
@@ -102,7 +102,7 @@ static LRESULT CALLBACK MatSurfaceWindowProc( HWND hwnd, UINT uMsg, WPARAM wPara
 	switch(uMsg)
 	{
 	case WM_QUIT:
-		// According to windows docs, WM_QUIT should never be passed to wndprocs 
+		// According to windows docs, WM_QUIT should never be passed to wndprocs
 		Assert( 0 );
 		break;
 
@@ -144,7 +144,7 @@ static LRESULT CALLBACK MatSurfaceWindowProc( HWND hwnd, UINT uMsg, WPARAM wPara
 
 	case WM_XCONTROLLER_KEY:
 		if ( IsX360() )
-		{	
+		{
 			// First have to insert the edge case event
 			int nRetVal = 0;
 			if ( s_ChainedWindowProc )
@@ -227,7 +227,7 @@ static LRESULT CALLBACK MatSurfaceWindowProc( HWND hwnd, UINT uMsg, WPARAM wPara
 				break;
 
 			case 14:  // Chinese Traditional IMN_PRIVATE...
-				break; 
+				break;
 
 			case IMN_OPENCANDIDATE:
 				event.m_nType = IE_IMEShowCandidates;
@@ -244,23 +244,23 @@ static LRESULT CALLBACK MatSurfaceWindowProc( HWND hwnd, UINT uMsg, WPARAM wPara
 				g_pInputSystem->PostUserEvent( event );
 				break;
 
-			// To detect the change of IME mode, or the toggling of Japanese IME 
+			// To detect the change of IME mode, or the toggling of Japanese IME
 			case IMN_SETCONVERSIONMODE:
 			case IMN_SETSENTENCEMODE:
-			case IMN_SETOPENSTATUS:   
+			case IMN_SETOPENSTATUS:
 				event.m_nType = IE_IMERecomputeModes;
 				g_pInputSystem->PostUserEvent( event );
 				if ( wParam == IMN_SETOPENSTATUS )
 					return 0;
 				break;
 
-			case IMN_CLOSESTATUSWINDOW:   
-			case IMN_GUIDELINE:   
-			case IMN_OPENSTATUSWINDOW:   
-			case IMN_SETCANDIDATEPOS:   
-			case IMN_SETCOMPOSITIONFONT:   
-			case IMN_SETCOMPOSITIONWINDOW:   
-			case IMN_SETSTATUSWINDOWPOS:   
+			case IMN_CLOSESTATUSWINDOW:
+			case IMN_GUIDELINE:
+			case IMN_OPENSTATUSWINDOW:
+			case IMN_SETCANDIDATEPOS:
+			case IMN_SETCOMPOSITIONFONT:
+			case IMN_SETCOMPOSITIONWINDOW:
+			case IMN_SETSTATUSWINDOWPOS:
 				break;
 			}
 		}
@@ -283,9 +283,9 @@ chainWndProc:
 		return CallWindowProcW( s_ChainedWindowProc, hwnd, uMsg, wParam, lParam );
 
 	// This means the application is driving the messages (calling our window procedure manually)
-	// rather than us hooking their window procedure. The engine needs to do this in order for VCR 
+	// rather than us hooking their window procedure. The engine needs to do this in order for VCR
 	// mode to play back properly.
-	return 0;	
+	return 0;
 }
 
 #endif
@@ -519,6 +519,3 @@ bool InputHandleInputEvent( const InputEvent_t &event )
 
 	return false;
 }
-
-
-

@@ -80,10 +80,10 @@ bool CMapView::ShouldRender()
 	if (m_dwTimeLastRender != 0)
 	{
 		DWORD dwTimeElapsed = dwTimeNow - m_dwTimeLastRender;
-	
+
 		if ( dwTimeElapsed <= 0 )
 			return false;
-	
+
 		float flFrameRate = (1000.0f / dwTimeElapsed);
 
 		if (flFrameRate > 100.0f)
@@ -105,9 +105,9 @@ bool CMapView::ShouldRender()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : point - Point in client coordinates.
-//			bMakeFirst - 
+//			bMakeFirst -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMapView::SelectAt(const Vector2D &ptClient, bool bMakeFirst, bool bFace)
@@ -126,7 +126,7 @@ bool CMapView::SelectAt(const Vector2D &ptClient, bool bMakeFirst, bool bFace)
 
 	HitInfo_t HitData[MAX_PICK_HITS];
 	int nHits = ObjectsAt(ptClient, HitData, MAX_PICK_HITS);
-	
+
 	//
 	// If there were no hits at the given point, clear selection.
 	//
@@ -199,5 +199,3 @@ const Vector &CMapView::GetViewAxis()
 	m_pCamera->GetViewForward(vForward);
 	return vForward;
 }
-
-

@@ -201,7 +201,7 @@ void CBaseToolSystem::GetMiniViewportEngineBounds( int &x, int &y, int &width, i
 }
 
 vgui::Panel	*CBaseToolSystem::GetMiniViewport( void )
-{ 
+{
 	return m_hMiniViewport;
 }
 
@@ -278,7 +278,7 @@ void CBaseToolSystem::ClientShutdown()
 	clienttools = NULL;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Level init, shutdown for server
 //-----------------------------------------------------------------------------
@@ -510,7 +510,7 @@ void CBaseToolSystem::SetMode( bool bGameInputEnabled, bool bFullscreen )
 	if ( bOldGameInputEnabled != m_bGameInputEnabled )
 	{
 		Warning( "Input is now being sent to the %s\n", m_bGameInputEnabled ? "Game" : "Tools" );
-		
+
 		// The subtree starts at the tool system root panel.  If game input is enabled then
 		//  the subtree should not receive or process input messages, otherwise it should
 		Assert( input()->GetModalSubTree() );
@@ -696,7 +696,7 @@ void CBaseToolSystem::AdjustEngineViewport( int& x, int& y, int& width, int& hei
 
 	bool enabled;
 	int vpx, vpy, vpw, vph;
-	
+
 	m_hMiniViewport->GetViewport( enabled, vpx, vpy, vpw, vph );
 
 	if ( !enabled )
@@ -963,14 +963,14 @@ void CBaseToolSystem::PositionActionMenu()
 	// get cursor position, this is local to this text edit window
 	int cursorX, cursorY;
 	input()->GetCursorPos(cursorX, cursorY);
-	
+
 	// relayout the menu immediately so that we know it's size
 	m_hActionMenu->InvalidateLayout(true);
 
 	// Get the menu size
 	int menuWide, menuTall;
 	m_hActionMenu->GetSize( menuWide, menuTall );
-	
+
 	// work out where the cursor is and therefore the best place to put the menu
 	int wide, tall;
 	GetSize( wide, tall );
@@ -1015,7 +1015,7 @@ void CBaseToolSystem::OnClearRecent()
 	m_RecentFiles.SaveToRegistry( GetRegistryName() );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Called by the file open state machine
 //-----------------------------------------------------------------------------
@@ -1145,7 +1145,7 @@ void CBaseToolSystem::OnUnhandledMouseClick( int code )
 {
 	if ( (MouseCode)code == MOUSE_LEFT )
 	{
-		// If tool ui is visible and we're running game in a window 
+		// If tool ui is visible and we're running game in a window
 		// and they click on the ifm it'll be unhandled, but in this case
 		//  we'll switch back to the IFM mode
 		if ( !IsFullscreen() && IsGameInputEnabled() )

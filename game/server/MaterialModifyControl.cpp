@@ -161,7 +161,7 @@ int CMaterialModifyControl::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 	{
 		return pEnt->ShouldTransmit( pInfo );
 	}
-	
+
 	return FL_EDICT_DONTSEND;
 }
 
@@ -173,7 +173,7 @@ void CMaterialModifyControl::SetMaterialVar( inputdata_t &inputdata )
 {
 	//if( debug_materialmodifycontrol.GetBool() && Q_stristr( GetDebugName(), "alyx" ) )
 	//{
-		//DevMsg( 1, "CMaterialModifyControl::SetMaterialVar %s %s %s=\"%s\"\n", 
+		//DevMsg( 1, "CMaterialModifyControl::SetMaterialVar %s %s %s=\"%s\"\n",
 			//GetDebugName(), m_szMaterialName.Get(), m_szMaterialVar.Get(), inputdata.value.String() );
 	//}
 	Q_strncpy( m_szMaterialVarValue.GetForModify(), inputdata.value.String(), MATERIAL_MODIFY_STRING_SIZE );
@@ -181,7 +181,7 @@ void CMaterialModifyControl::SetMaterialVar( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMaterialModifyControl::SetMaterialVarToCurrentTime( inputdata_t &inputdata )
 {
@@ -192,7 +192,7 @@ void CMaterialModifyControl::SetMaterialVarToCurrentTime( inputdata_t &inputdata
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMaterialModifyControl::InputStartAnimSequence( inputdata_t &inputdata )
 {
@@ -237,7 +237,7 @@ void CMaterialModifyControl::InputStartAnimSequence( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMaterialModifyControl::InputStartFloatLerp( inputdata_t &inputdata )
 {
@@ -246,7 +246,7 @@ void CMaterialModifyControl::InputStartFloatLerp( inputdata_t &inputdata )
 
 //	if( debug_materialmodifycontrol.GetBool() )//&& Q_stristr( GetDebugName(), "alyx" ) )
 //	{
-//		DevMsg( 1, "CMaterialModifyControl::InputStartFloatLerp %s %s %s \"%s\"\n", 
+//		DevMsg( 1, "CMaterialModifyControl::InputStartFloatLerp %s %s %s \"%s\"\n",
 //			GetDebugName(), m_szMaterialName.Get(), m_szMaterialVar.Get(), inputdata.value.String() );
 //	}
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -112,8 +112,8 @@
 #endif
 #define REPOSITORY_VALIDATION_FILE "info.txt"
 
-#define BUG_REPORTER_DLLNAME "bugreporter_filequeue" 
-#define BUG_REPORTER_PUBLIC_DLLNAME "bugreporter_public" 
+#define BUG_REPORTER_DLLNAME "bugreporter_filequeue"
+#define BUG_REPORTER_PUBLIC_DLLNAME "bugreporter_public"
 
 #if defined( _DEBUG )
 #define PUBLIC_BUGREPORT_WAIT_TIME	3
@@ -144,8 +144,8 @@ unsigned long GetRam()
 	u_int namelen = sizeof(mib) / sizeof(mib[0]);
 	uint64_t memsize;
 	size_t len = sizeof(memsize);
-	
-	if (sysctl(mib, namelen, &memsize, &len, NULL, 0) >= 0) 
+
+	if (sysctl(mib, namelen, &memsize, &len, NULL, 0) >= 0)
 	{
 		return memsize / (1024*1024);
 	}
@@ -193,20 +193,20 @@ void DisplaySystemVersion( char *osversion, int maxlen )
 	osversion[ 0 ] = 0;
 	OSVERSIONINFOEX osvi;
 	BOOL bOsVersionInfoEx;
-	
+
 	// Try calling GetVersionEx using the OSVERSIONINFOEX structure.
 	//
 	// If that fails, try using the OSVERSIONINFO structure.
-	
+
 	ZeroMemory(&osvi, sizeof(OSVERSIONINFOEX));
 	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-	
+
 	bOsVersionInfoEx = GetVersionEx ((OSVERSIONINFO *) &osvi);
 
 	if( !bOsVersionInfoEx )
 	{
 		// If OSVERSIONINFOEX doesn't work, try OSVERSIONINFO.
-		
+
 		osvi.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
 		if (! GetVersionEx ( (OSVERSIONINFO *) &osvi) )
 		{
@@ -214,30 +214,30 @@ void DisplaySystemVersion( char *osversion, int maxlen )
 			return;
 		}
 	}
-	
+
 	switch (osvi.dwPlatformId)
 	{
 	case VER_PLATFORM_WIN32_NT:
-		
+
 		// Test for the product.
-		
+
 		if ( osvi.dwMajorVersion <= 4 )
 		{
 			Q_strncat ( osversion, "NT ", maxlen, COPY_ALL_CHARACTERS );
 		}
-		
+
 		if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0 )
 		{
 			Q_strncat ( osversion, "2000 ", maxlen, COPY_ALL_CHARACTERS );
 		}
-		
+
 		if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1 )
 		{
 			Q_strncat ( osversion, "XP ", maxlen, COPY_ALL_CHARACTERS );
 		}
-		
+
 		// Display version, service pack (if any), and build number.
-		
+
 		char build[256];
 		Q_snprintf (build, sizeof( build ), "%s (Build %d) version %d.%d",
 			osvi.szCSDVersion,
@@ -246,9 +246,9 @@ void DisplaySystemVersion( char *osversion, int maxlen )
 			osvi.dwMinorVersion );
 		Q_strncat ( osversion, build, maxlen, COPY_ALL_CHARACTERS );
 		break;
-		
+
 	case VER_PLATFORM_WIN32_WINDOWS:
-		
+
 		if (osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 0)
 		{
 			Q_strncat ( osversion, "95 ", maxlen, COPY_ALL_CHARACTERS );
@@ -256,8 +256,8 @@ void DisplaySystemVersion( char *osversion, int maxlen )
 			{
 				Q_strncat ( osversion, "OSR2 ", maxlen, COPY_ALL_CHARACTERS );
 			}
-		} 
-		
+		}
+
 		if (osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 10)
 		{
 			Q_strncat ( osversion, "98 ", maxlen, COPY_ALL_CHARACTERS );
@@ -265,16 +265,16 @@ void DisplaySystemVersion( char *osversion, int maxlen )
 			{
 				Q_strncat ( osversion, "SE ", maxlen, COPY_ALL_CHARACTERS );
 			}
-		} 
-		
+		}
+
 		if (osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 90)
 		{
 			Q_strncat ( osversion, "Me ", maxlen, COPY_ALL_CHARACTERS );
-		} 
+		}
 		break;
-		
+
 	case VER_PLATFORM_WIN32s:
-		
+
 		Q_strncat ( osversion, "Win32s ", maxlen, COPY_ALL_CHARACTERS );
 		break;
 	}
@@ -283,7 +283,7 @@ void DisplaySystemVersion( char *osversion, int maxlen )
 	const char *pszSearchString = "ProductVersion:\t";
 	const int cchSearchString = Q_strlen( pszSearchString );
 	char rgchVersionLine[1024];
-		
+
 	if ( !fpVersionInfo )
 		Q_strncat ( osversion, "OSXU ", maxlen, COPY_ALL_CHARACTERS );
 	else
@@ -373,12 +373,12 @@ static int GetNumberForMap()
 	const char *pszResult = Q_strrchr( mapname, '_' );
 	if( !pszResult )
 		//I don't know where the number of this map is, if there even is one.
-		return 1; 
+		return 1;
 
 	Q_strncpy( szNameCopy, pszResult + 1, sizeof( szNameCopy ) );
 	if ( !szNameCopy[0] )
 		return 1;
-	
+
 //	in case we can't use tchar.h, this will do the same thing
 	char *pcEndOfName = szNameCopy;
 	while(*pcEndOfName != 0)
@@ -387,9 +387,9 @@ static int GetNumberForMap()
 			*pcEndOfName = 0;
 		pcEndOfName++;
 	}
-	
+
 	//add 1 because pvcs has 0 as the first map number, not 1 (and it is not 0-based).
-	return atoi(szNameCopy) + 1;		
+	return atoi(szNameCopy) + 1;
 }
 
 //-----------------------------------------------------------------------------
@@ -439,8 +439,8 @@ CBugReportUploadProgressDialog::~CBugReportUploadProgressDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : percent - 
+// Purpose:
+// Input  : percent -
 //-----------------------------------------------------------------------------
 void CBugReportUploadProgressDialog::SetProgress( float progress )
 {
@@ -449,7 +449,7 @@ void CBugReportUploadProgressDialog::SetProgress( float progress )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBugReportUploadProgressDialog::PerformLayout()
 {
@@ -510,7 +510,7 @@ void CBugReportFinishedDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBugReportFinishedDialog::PerformLayout()
 {
@@ -520,7 +520,7 @@ void CBugReportFinishedDialog::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBugUIPanel : public vgui::Frame
 {
@@ -558,7 +558,7 @@ public:
 	void			ParseCommands( const CCommand &args );
 
 	inline bool		IsTakingSnapshot() const
-	{	
+	{
 		return m_bTakingSnapshot;
 	}
 
@@ -646,11 +646,11 @@ protected:
 		char	fixedname[ 256 ];
 	};
 
-	bool						UploadBugSubmission( 
+	bool						UploadBugSubmission(
 									char const *levelname,
 									int			bugId,
 
-									char const *savefile, 
+									char const *savefile,
 									char const *screenshot,
 									char const *bsp,
 									char const *vmf,
@@ -672,7 +672,7 @@ protected:
 	bool						m_bCanSeeRepository;
 	bool						m_bValidated;
 	bool						m_bUseNameForSubmitter;
-	
+
 	unsigned char				m_fAutoAddScreenshot;
 	enum AutoAddScreenshot { eAutoAddScreenshot_Detect = 0, eAutoAddScreenshot_Add = 1, eAutoAddScreenshot_DontAdd = 2 };
 
@@ -710,13 +710,13 @@ protected:
 //-----------------------------------------------------------------------------
 // Purpose: Basic help dialog
 //-----------------------------------------------------------------------------
-CBugUIPanel::CBugUIPanel( bool bIsPublic, vgui::Panel *parent ) : 
+CBugUIPanel::CBugUIPanel( bool bIsPublic, vgui::Panel *parent ) :
 	BaseClass( parent, "BugUIPanel"),
 	m_bIsPublic( bIsPublic ),
 	m_bAddVMF( false )
 {
-	m_sDllName = m_bIsPublic ? 
-		BUG_REPORTER_PUBLIC_DLLNAME : 
+	m_sDllName = m_bIsPublic ?
+		BUG_REPORTER_PUBLIC_DLLNAME :
 		GetInternalBugReporterDLL();
 
 	m_hZip = (HZIP)0;
@@ -726,7 +726,7 @@ CBugUIPanel::CBugUIPanel( bool bIsPublic, vgui::Panel *parent ) :
 	m_pBugReporter = NULL;
 	m_hBugReporter = 0;
 	m_bQueryingSteamForCSER = false;
-	
+
 	// Default server address (hardcoded in case not running on steam)
 	char const *cserIP = "207.173.177.12:27013";
 
@@ -768,7 +768,7 @@ CBugUIPanel::CBugUIPanel( bool bIsPublic, vgui::Panel *parent ) :
 	m_pDescription->SetMultiline( true );
 	m_pDescription->SetCatchEnterKey( true );
 	m_pDescription->SetVerticalScrollbar( true );
-	
+
 	m_pEmail = new vgui::TextEntry( this, "BugEmail" );;
 	m_pEmail->SetMaximumCharCount( 80 );
 
@@ -803,7 +803,7 @@ CBugUIPanel::CBugUIPanel( bool bIsPublic, vgui::Panel *parent ) :
 	m_pPriority = new ComboBox(this, "BugPriority", 10, false);
 	m_pGameArea = new ComboBox(this, "BugArea", 10, false);
 	m_pMapNumber = new ComboBox(this, "BugMapNumber", 10, false);
-	
+
 	m_pSubmit = new vgui::Button( this, "BugSubmit", "Submit" );
 	m_pCancel = new vgui::Button( this, "BugCancel", "Cancel" );
 	m_pClearForm = new vgui::Button( this, "BugClearForm", "Clear Form" );
@@ -814,7 +814,7 @@ CBugUIPanel::CBugUIPanel( bool bIsPublic, vgui::Panel *parent ) :
 	{
 		LoadControlSettings("Resource\\BugUIPanel_Public.res");
 	}
-	else 
+	else
 	{
 		LoadControlSettings("Resource\\BugUIPanel_Filequeue.res");
 	}
@@ -854,7 +854,7 @@ bool CBugUIPanel::Init()
 
 		int w = GetWide();
 		int h = GetTall();
-	
+
 		int x = ( videomode->GetModeStereoWidth() - w ) / 2;
 		int y = ( videomode->GetModeStereoHeight() - h ) / 2;
 
@@ -869,7 +869,7 @@ bool CBugUIPanel::Init()
 		{
 			m_pBugReporter = (IBugReporter *)factory( INTERFACEVERSION_BUGREPORTER, NULL );
 			if( m_pBugReporter )
-			{    
+			{
 				extern CreateInterfaceFn g_AppSystemFactory;
 				if ( m_pBugReporter->Init( g_AppSystemFactory ) )
 				{
@@ -973,7 +973,7 @@ void CBugUIPanel::Shutdown()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBugUIPanel::~CBugUIPanel()
 {
@@ -1028,7 +1028,7 @@ void CBugUIPanel::OnTick()
 				Assert( 0 );
 			}
 		}
-		
+
 		SetVisible( false );
 		return;
 	}
@@ -1040,7 +1040,7 @@ void CBugUIPanel::OnTick()
 		if ( m_flPauseTime <= system()->GetFrameTime())
 		{
 			m_flPauseTime = 0.0f;
-		
+
 			if ( m_pProgressDialog )
 			{
 				m_pProgressDialog->Close();
@@ -1076,10 +1076,10 @@ void CBugUIPanel::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *suffix - 
-//			*buf - 
-//			bufsize - 
+// Purpose:
+// Input  : *suffix -
+//			*buf -
+//			bufsize -
 //-----------------------------------------------------------------------------
 void CBugUIPanel::GetDataFileBase( char const *suffix, char *buf, int bufsize )
 {
@@ -1101,7 +1101,7 @@ void CBugUIPanel::GetDataFileBase( char const *suffix, char *buf, int bufsize )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CBugUIPanel::GetRepositoryURL( void )
@@ -1118,7 +1118,7 @@ const char *CBugUIPanel::GetSubmissionURL( int bugid )
 	const char *pURL = m_pBugReporter->GetSubmissionURL();
 	if ( pURL )
 		return pURL;
-	
+
 	static char url[512];
 
 	Q_snprintf(url, sizeof(url), "%s/%i", GetRepositoryURL(), bugid);
@@ -1128,15 +1128,15 @@ const char *CBugUIPanel::GetSubmissionURL( int bugid )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBugUIPanel::OnTakeSnapshot()
 {
 	GetDataFileBase( GetSubmitter(), m_szScreenShotName, sizeof( m_szScreenShotName ) );
-	
+
 	m_nSnapShotFrame = host_framecount;
 	m_bTakingSnapshot = true;
-	
+
 	if ( EngineVGui()->IsGameUIVisible() )
 	{
 		m_bHidGameUIForSnapshot = true;
@@ -1161,7 +1161,7 @@ void CBugUIPanel::OnTakeSnapshot()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBugUIPanel::OnSaveGame()
 {
@@ -1239,7 +1239,7 @@ void CBugUIPanel::OnChooseArea(vgui::Panel *panel)
 		const char *currentLevel = cl.IsActive() ? cl.m_szLevelBaseName : "console";
 
 		m_pMapNumber->DeleteAllItems();
-		
+
 		for ( int i = 0; i < c; i++ )
 		{
 			const char *level = m_pBugReporter->GetLevel(area_index, i );
@@ -1297,7 +1297,7 @@ void CBugUIPanel::OnFileSelected( char const *fullpath )
 	{
 		if ( Q_stristr( fullpath, com_basedir ) )
 		{
-			Q_snprintf( relativepath, sizeof( relativepath ), "..%s", fullpath + strlen(com_basedir) );	
+			Q_snprintf( relativepath, sizeof( relativepath ), "..%s", fullpath + strlen(com_basedir) );
 			baseDirFile = true;
 		}
 		else
@@ -1317,7 +1317,7 @@ void CBugUIPanel::OnFileSelected( char const *fullpath )
 
 	includedfile inc;
 	Q_strncpy( inc.name, relativepath, sizeof( inc.name ) );
-	
+
 	if ( baseDirFile )
 	{
 		Q_snprintf( inc.fixedname, sizeof( inc.fixedname ), "%s", inc.name+3 ); // strip the "..\"
@@ -1510,7 +1510,7 @@ void CBugUIPanel::WipeData()
 bool CBugUIPanel::IsValidEmailAddress( char const *email )
 {
 	// basic size check
-	if (!email || strlen(email) < 5) 
+	if (!email || strlen(email) < 5)
 		return false;
 
 	// make sure all the characters in the string are valid
@@ -1536,7 +1536,7 @@ bool CBugUIPanel::IsValidEmailAddress( char const *email )
 	sz++;
 	if (!V_isalnum(*sz))
 		return false;
-	
+
 	return true;
 }
 
@@ -1556,7 +1556,7 @@ bool CBugUIPanel::IsValidSubmission( bool verbose )
 	m_pTitle->GetText( title, sizeof( title ) );
 	if ( !title[ 0 ] )
 	{
-		if ( verbose ) 
+		if ( verbose )
 		{
 			Warning( "Bug must have a title\n" );
 		}
@@ -1570,18 +1570,18 @@ bool CBugUIPanel::IsValidSubmission( bool verbose )
 		m_pDescription->GetText( desc, sizeof( desc ) );
 		if ( !desc[ 0 ] )
 		{
-			if ( verbose ) 
+			if ( verbose )
 			{
 				Warning( "Bug must have a description\n" );
 			}
 			return false;
 		}
 	}
-	
+
 
 	if ( !isPublic && m_pSeverity->GetActiveItem() < 0 )
 	{
-		if ( verbose ) 
+		if ( verbose )
 		{
 			Warning( "Severity not set!\n" );
 		}
@@ -1590,7 +1590,7 @@ bool CBugUIPanel::IsValidSubmission( bool verbose )
 
 	if ( !isPublic && m_pAssignTo->GetActiveItem() < 0 )
 	{
-		if ( verbose ) 
+		if ( verbose )
 		{
 			Warning( "Owner not set!\n" );
 		}
@@ -1601,7 +1601,7 @@ bool CBugUIPanel::IsValidSubmission( bool verbose )
 	Q_strncpy( owner, m_pBugReporter->GetDisplayName( m_pAssignTo->GetActiveItem() ), sizeof( owner ) );
 	if ( !isPublic && !Q_stricmp( owner, "<<Unassigned>>" ) )
 	{
-		if ( verbose ) 
+		if ( verbose )
 		{
 			Warning( "Owner not set!\n" );
 		}
@@ -1610,7 +1610,7 @@ bool CBugUIPanel::IsValidSubmission( bool verbose )
 
 	if ( !isPublic && m_pPriority->GetActiveItem() < 0 )
 	{
-		if ( verbose ) 
+		if ( verbose )
 		{
 			Warning( "Priority not set!\n" );
 		}
@@ -1619,7 +1619,7 @@ bool CBugUIPanel::IsValidSubmission( bool verbose )
 
 	if ( !isPublic && m_pReportType->GetActiveItem() < 0 )
 	{
-		if ( verbose ) 
+		if ( verbose )
 		{
 			Warning( "Report Type not set!\n" );
 		}
@@ -1628,7 +1628,7 @@ bool CBugUIPanel::IsValidSubmission( bool verbose )
 
 	if ( !isPublic && m_pGameArea->GetActiveItem() < 0 )
 	{
-		if ( verbose ) 
+		if ( verbose )
 		{
 			Warning( "Area not set!\n" );
 		}
@@ -1800,7 +1800,7 @@ void CBugUIPanel::OnSubmit()
 	char osversion[ 256 ];
 	DisplaySystemVersion( osversion, sizeof( osversion ) );
 
-	Q_snprintf( driverinfo, sizeof( driverinfo ), 
+	Q_snprintf( driverinfo, sizeof( driverinfo ),
 		"OS Version:  %s\n"
 		"Driver Name:  %s\n"
 		"VendorId / DeviceId:  0x%x / 0x%x\n"
@@ -1824,13 +1824,13 @@ void CBugUIPanel::OnSubmit()
 	{
 		latency = (int)( 1000.0f * cl.m_NetChannel->GetAvgLatency( FLOW_OUTGOING ) );
 	}
-	
+
 	ConVarRef host_thread_mode( "host_thread_mode" );
 	ConVarRef sv_alternateticks( "sv_alternateticks" );
 	ConVarRef ai_strong_optimizations( "ai_strong_optimizations" );
 
 	char misc[ 1024 ];
-	Q_snprintf( misc, sizeof( misc ), "Convars:\n\tskill:  %i\n\tnet:  rate %i update %i cmd %i latency %i msec\n\thost_thread_mode:  %i\n\tsv_alternateticks:  %i\n\tai_strong_optimizations:  %i\n", 
+	Q_snprintf( misc, sizeof( misc ), "Convars:\n\tskill:  %i\n\tnet:  rate %i update %i cmd %i latency %i msec\n\thost_thread_mode:  %i\n\tsv_alternateticks:  %i\n\tai_strong_optimizations:  %i\n",
 		skill.GetInt(),
 		cl_rate->GetInt(),
 		(int)cl_updaterate->GetFloat(),
@@ -1941,7 +1941,7 @@ void CBugUIPanel::OnSubmit()
 	Msg( "position %s\n", position );
 	Msg( "orientation %s\n", orientation );
 	Msg( "build %s\n", build );
-	
+
 	if ( m_szSaveGameName[ 0 ] )
 	{
 		Msg( "save file save/%s.sav\n", m_szSaveGameName );
@@ -2102,7 +2102,7 @@ void CBugUIPanel::OnSubmit()
 			unsigned long len;
 
 			ZipGetMemory( m_hZip, &mem, &len );
-			if ( mem != NULL 
+			if ( mem != NULL
 				 && len > 0 )
 			{
 				// Store .zip file
@@ -2233,7 +2233,7 @@ void NonFileSystem_CreatePath (const char *path)
 {
 	char temppath[512];
 	Q_strncpy( temppath, path, sizeof(temppath) );
-	
+
 	for (char *ofs = temppath+1 ; *ofs ; ofs++)
 	{
 		if (*ofs == '/' || *ofs == '\\')
@@ -2255,9 +2255,9 @@ int copyfile( const char *local, const char *remote, void *ignored, int ignoredF
 	int fps, fpd;
 	char buffer[BSIZE];
 
-	if ( (fps = open( local , O_RDONLY ) ) == -1 ) 
+	if ( (fps = open( local , O_RDONLY ) ) == -1 )
 		return -1;
-	
+
 	if ( (fpd = open( remote, O_WRONLY | O_CREAT | O_TRUNC, 0644 ) ) == -1 )
 		return -1;
 
@@ -2296,7 +2296,7 @@ bool CBugUIPanel::UploadFile( char const *local, char const *remote, bool bDelet
 #ifdef WIN32
 		bResult = CopyFile( local, remote, false ) ? true : false;
 #elif POSIX
-		bResult = (0 == copyfile( local, remote, NULL, COPYFILE_ALL )); 
+		bResult = (0 == copyfile( local, remote, NULL, COPYFILE_ALL ));
 #else
 #error
 #endif
@@ -2379,7 +2379,7 @@ bool CBugUIPanel::UploadBugSubmission( char const *levelname, int bugId, char co
 		Q_snprintf( remotefile, sizeof( remotefile ), "%s/%s.jpg", GetSubmissionURL(bugId), screenshot );
 		Q_FixSlashes( localfile );
 		Q_FixSlashes( remotefile );
-		
+
 		g_UploadQueue.QueueCall( this, &CBugUIPanel::UploadFile, CUtlEnvelope<const char *>(localfile), CUtlEnvelope<const char *>(remotefile), false );
 	}
 
@@ -2401,7 +2401,7 @@ bool CBugUIPanel::UploadBugSubmission( char const *levelname, int bugId, char co
 		Q_snprintf( remotefile, sizeof( remotefile ), "%s/%s.bsp", GetSubmissionURL(bugId), bsp );
 		Q_FixSlashes( localfile );
 		Q_FixSlashes( remotefile );
-		
+
 		g_UploadQueue.QueueCall( this, &CBugUIPanel::UploadFile, CUtlEnvelope<const char *>(localfile), CUtlEnvelope<const char *>(remotefile), false );
 	}
 
@@ -2413,7 +2413,7 @@ bool CBugUIPanel::UploadBugSubmission( char const *levelname, int bugId, char co
 			Q_snprintf( remotefile, sizeof( remotefile ), "%s/%s.vmf", GetSubmissionURL(bugId), vmf );
 			Q_FixSlashes( localfile );
 			Q_FixSlashes( remotefile );
-		
+
 			g_UploadQueue.QueueCall( this, &CBugUIPanel::UploadFile, CUtlEnvelope<const char *>(localfile), CUtlEnvelope<const char *>(remotefile), false );
 		}
 		else
@@ -2432,7 +2432,7 @@ bool CBugUIPanel::UploadBugSubmission( char const *levelname, int bugId, char co
 			Q_snprintf( remotefile, sizeof( remotefile ), "%s/%s", GetSubmissionURL(bugId), files[ i ].fixedname );
 			Q_FixSlashes( localfile );
 			Q_FixSlashes( remotefile );
-			
+
 			g_UploadQueue.QueueCall( this, &CBugUIPanel::UploadFile, CUtlEnvelope<const char *>(localfile), CUtlEnvelope<const char *>(remotefile), false );
 		}
 	}
@@ -2473,11 +2473,11 @@ void CBugUIPanel::OnCommand( char const *command )
 	else if ( !Q_strcasecmp( command, "savegame" ) )
 	{
 		OnSaveGame();
-		
+
 		//Adrian: We always want the BSP you used when saving the game.
 		//But only if you're not the public bug reporter!
 		if ( bugreporter_includebsp.GetBool() &&
-			 m_pBugReporter->IsPublicUI() == false ) 
+			 m_pBugReporter->IsPublicUI() == false )
 		{
 			OnSaveBSP();
 		}
@@ -2596,7 +2596,7 @@ void CBugUIPanel::PopulateControls()
 		m_pAssignTo->AddItem(name , NULL );
 	}
 	m_pAssignTo->ActivateItem( defitem );
-	
+
 	defitem = 0;
 	m_pSeverity->DeleteAllItems();
 	c = m_pBugReporter->GetSeverityCount();
@@ -2644,7 +2644,7 @@ char const *CBugUIPanel::GetSubmitter()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBugUIPanel::DenySound()
 {
@@ -2652,7 +2652,7 @@ void CBugUIPanel::DenySound()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBugUIPanel::SuccessSound( int bugId )
 {
@@ -2671,7 +2671,7 @@ void CBugUIPanel::SuccessSound( int bugId )
 
 void CBugUIPanel::OnKeyCodePressed(KeyCode code)
 {
-	if ( code == KEY_ESCAPE || 
+	if ( code == KEY_ESCAPE ||
 		 GetBaseButtonCode( code ) == KEY_XBUTTON_B )
 	{
 		Close();
@@ -2772,7 +2772,7 @@ bool CBugUIPanel::AutoFillToken( char const *token, bool partial )
 
 	int i;
 	int c;
-	
+
 	c = m_pBugReporter->GetDisplayNameCount();
 	for ( i = 0; i < c; i++ )
 	{
@@ -2782,7 +2782,7 @@ bool CBugUIPanel::AutoFillToken( char const *token, bool partial )
 			return true;
 		}
 	}
-	
+
 	c = m_pBugReporter->GetSeverityCount();
 	for ( i = 0; i < c; i++ )
 	{
@@ -2844,7 +2844,7 @@ void CBugUIPanel::CheckContinueQueryingSteamForCSERList()
 	{
 		return;
 	}
-	
+
 	uint32 unIP;
 	uint16 usPort;
 	Steam3Client().SteamUtils()->GetCSERIPPort( &unIP, &usPort );
@@ -2918,7 +2918,7 @@ void CEngineBugReporter::InstallBugReportingUI( vgui::Panel *parent, IEngineBugR
 		return;
 
 	bool bIsPublic = true;
-	
+
 	char fn[ 512 ];
 
 	Q_snprintf( fn, sizeof( fn ), "%s%s", GetInternalBugReporterDLL(), DLL_EXT_STRING );
@@ -2972,11 +2972,11 @@ void CEngineBugReporter::InstallBugReportingUI( vgui::Panel *parent, IEngineBugR
 void CEngineBugReporter::Restart( IEngineBugReporter::BR_TYPE type )
 {
 	Shutdown();
-	Msg( "Changing to bugreporter(%s)\n", 
-		( type == IEngineBugReporter::BR_AUTOSELECT ) ? 
-			( "autoselect" ) : 
-			( ( type == IEngineBugReporter::BR_PUBLIC ) ? 
-				"public" : 
+	Msg( "Changing to bugreporter(%s)\n",
+		( type == IEngineBugReporter::BR_AUTOSELECT ) ?
+			( "autoselect" ) :
+			( ( type == IEngineBugReporter::BR_PUBLIC ) ?
+				"public" :
 				"valve" ) );
 	InstallBugReportingUI( m_ParentPanel, type );
 }
@@ -3002,9 +3002,9 @@ CON_COMMAND_F( bug, "Show/hide the bug reporting UI.", FCVAR_DONTRECORD )
 	if ( bWasVisible )
 	{
 		// hide
-		g_pBugUI->Close();		
+		g_pBugUI->Close();
 	}
-			
+
 	// make sure the gameUI is open so the bugreporter is visible
 	EngineVGui()->ActivateGameUI();
 
@@ -3025,9 +3025,9 @@ int CBugUIPanel::GetArea()
 	int iNewTitleLength = 80;
 
 	if ( host_state.worldmodel )
-	{		
+	{
 		CL_SetupMapName( modelloader->GetName( host_state.worldmodel ), mapname, sizeof( mapname ) );
-		iNewTitleLength = (80 - (strlen( mapname )+2)); 		
+		iNewTitleLength = (80 - (strlen( mapname )+2));
 	}
 	m_pTitle->SetMaximumCharCount( iNewTitleLength );
 
@@ -3050,9 +3050,9 @@ int CBugUIPanel::GetArea()
 		else if ( pszAreaDir && !pszAreaPrefix )
 		{
 			pszAreaDir++;
-			iDirLength = Q_strlen( szAreaMap ) - (pszAreaDir - szAreaMap);			
+			iDirLength = Q_strlen( szAreaMap ) - (pszAreaDir - szAreaMap);
 		}
-		else 
+		else
 		{
 			return 0;
 		}
@@ -3063,7 +3063,7 @@ int CBugUIPanel::GetArea()
 
 		if ( pszAreaDir && pszAreaPrefix )
 		{
-			if ( !Q_strcmp( szDirectory, gamedir) 
+			if ( !Q_strcmp( szDirectory, gamedir)
 				&& Q_strstr( mapname, pszAreaPrefix ) )
 			{
 				return i+1;
@@ -3075,7 +3075,7 @@ int CBugUIPanel::GetArea()
 			{
 				return i+1;
 			}
-		}		
+		}
 	}
 	return 0;
 }

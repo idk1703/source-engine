@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,10 +25,10 @@ public:
 
 	// Send data to the destination.
 	virtual bool	Send( const void *pData, int len ) = 0;
-	
+
 	// This version puts all the chunks into one packet and ships it off.
 	virtual bool	SendChunks( void const * const *pChunks, const int *pChunkLengths, int nChunks ) = 0;
-	
+
 	// Check for any packets coming in from the destination.
 	// Returns false if no packet was received.
 	//

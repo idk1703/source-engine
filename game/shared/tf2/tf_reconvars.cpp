@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -60,5 +60,3 @@ CReconJetpackLevel g_ReconJetpackLevels[MAX_TF_TECHLEVELS] =
 	15		// How fast it accelerates.
 	},
 };
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		Things thrown from the hand 
+// Purpose:		Things thrown from the hand
 //
 // $Workfile:     $
 // $Date:         $

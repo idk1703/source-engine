@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@
 #include "view_shared.h"
 #include "viewrender.h"
 #include "PortalSimulation.h"
-#include "C_PortalGhostRenderable.h" 
+#include "C_PortalGhostRenderable.h"
 
 struct dlight_t;
 class C_DynamicLight;
@@ -36,9 +36,9 @@ public:
 
 	CHandle<C_Prop_Portal>	m_hLinkedPortal; //the portal this portal is linked to
 	bool					m_bActivated; //a portal can exist and not be active
-	
+
 	bool					m_bSharedEnvironmentConfiguration; //this will be set by an instance of CPortal_Environment when two environments are in close proximity
-	
+
 	cplane_t				m_plane_Origin;	// The plane on which this portal is placed, normal facing outward (matching model forward vec)
 
 	virtual void			Spawn( void );

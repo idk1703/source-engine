@@ -201,7 +201,7 @@ void CInputSystem::InitializeJoysticks( void )
 		if ( SDL_IsGameController(i) )
 		{
 			JoystickHotplugAdded(i);
-		} 
+		}
 		else
 		{
 			SDL_JoystickGUID joyGUID = SDL_JoystickGetDeviceGUID(i);

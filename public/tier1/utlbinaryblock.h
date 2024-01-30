@@ -1,6 +1,6 @@
-//====== Copyright © 1996-2004, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2004, Valve Corporation, All rights reserved. =======
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -104,4 +104,3 @@ inline void CUtlBinaryBlock::Purge()
 }
 
 #endif // UTLBINARYBLOCK_H
-

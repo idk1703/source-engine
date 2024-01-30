@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@ class IModelLoadCallback;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 abstract_class IModelLoader
 {
@@ -183,7 +183,7 @@ public:
 	static void			InitFromMemory( model_t *pMapModel, const void *pData, int nDataSize );
 	static void			Shutdown( void );
 	static int			GetRefCount( void );
-	
+
 	// Free the lighting lump (increases free memory during loading on 360)
 	static void			FreeLightingLump();
 
@@ -233,7 +233,7 @@ bool Mod_MarkWaterSurfaces( model_t *pModel );
 void Mod_SetMaterialVarFlag( model_t *pModel, unsigned int flag, bool on );
 
 //-----------------------------------------------------------------------------
-// Hooks the cache notify into the MDL cache system 
+// Hooks the cache notify into the MDL cache system
 //-----------------------------------------------------------------------------
 void ConnectMDLCacheNotify( );
 void DisconnectMDLCacheNotify( );

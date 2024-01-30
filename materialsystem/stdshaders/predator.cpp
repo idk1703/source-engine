@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,7 +14,7 @@
 
 DEFINE_FALLBACK_SHADER( Predator, Predator_DX80 )
 
-BEGIN_VS_SHADER( Predator_DX80, 
+BEGIN_VS_SHADER( Predator_DX80,
 			  "Help for Predator" )
 
 	BEGIN_SHADER_PARAMS
@@ -30,7 +30,7 @@ BEGIN_VS_SHADER( Predator_DX80,
 		SHADER_PARAM( BUMPFRAME, SHADER_PARAM_TYPE_INTEGER, "0", "frame number for $bumpmap" )
 		SHADER_PARAM( BUMPOFFSET, SHADER_PARAM_TYPE_VEC2, "[0 0]", "2D bump offset for texture scrolling" )
 	END_SHADER_PARAMS
-			
+
 	SHADER_INIT_PARAMS()
 	{
 		SET_FLAGS2( MATERIAL_VAR2_NEEDS_TANGENT_SPACES );

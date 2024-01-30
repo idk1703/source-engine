@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,7 +22,7 @@ class CPanelListPanel;
 //-----------------------------------------------------------------------------
 class CMultiplayerAdvancedDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CMultiplayerAdvancedDialog, vgui::Frame ); 
+	DECLARE_CLASS_SIMPLE( CMultiplayerAdvancedDialog, vgui::Frame );
 
 public:
 	CMultiplayerAdvancedDialog(vgui::Panel *parent);

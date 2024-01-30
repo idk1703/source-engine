@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: This is a helper class for the situation where you want to build lists of 
+// Purpose: This is a helper class for the situation where you want to build lists of
 // things that fall into buckets, and effeciently keep up with which buckets have
 // been used since flush.
 //
@@ -25,7 +25,7 @@ public:
 		m_FlushCount = -1;
 	}
 
-	// Set the number of buckets that are needed.  This should get called every time 
+	// Set the number of buckets that are needed.  This should get called every time
 	// a level is loaded.
 	void SetNumMaterialSortIDs( int n )
 	{
@@ -61,7 +61,7 @@ public:
 	{
 		return m_UsedSortIDs[handle];
 	}
-	
+
 	SortIDHandle_t InvalidSortIDHandle()
 	{
 		return m_UsedSortIDs.InvalidIndex();
@@ -98,7 +98,7 @@ public:
 		// Allocate an element to stick this in.
 		unsigned short elemID = m_Elements.Alloc( true );
 		m_Elements[elemID] = elem;
-		
+
 		if( m_MaterialSortInfoArray[sortID].m_FlushCount != m_FlushCount )
 		{
 			// This is the first element that has used this sort id since flush.
@@ -124,7 +124,7 @@ public:
 	}
 
 private:
-	
+
 	struct MaterialSortInfo_t
 	{
 		MaterialSortInfo_t() :
@@ -132,22 +132,22 @@ private:
 			m_Head( (unsigned short)-1 )  // i.e., InvalidIndex()
 		{
 		}
-		
+
 		int m_FlushCount;
 		unsigned short m_Head;
 	};
-	
+
 	// This is a list of material sort info ids that have been used since flush.
 	CUtlLinkedList<unsigned short> m_UsedSortIDs;
 
 	// This is m_NumMaterialSortIDs big.
 	CUtlVector<MaterialSortInfo_t> m_MaterialSortInfoArray;
-	
-	// This is used in multilist mode to make elements that belong in the multiple lists of 
+
+	// This is used in multilist mode to make elements that belong in the multiple lists of
 	CUtlLinkedList<Element_t, unsigned short, true> m_Elements;
 
 	int m_FlushCount;
-		
+
 };
 
 #endif // MATERIALBUCKETS_H

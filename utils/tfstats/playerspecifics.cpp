@@ -41,10 +41,10 @@ void CPlayerSpecifics::writeHTML(CHTMLFile& html)
 		if (g_pMatchInfo->teamExists(t)) numteams++;
 
 	html.write("<table cols=%li cellspacing=0 border=0 cellpadding=10 bordercolor=black>\n",numteams);
-	
+
 	CPlayerListIterator i;
 	//multimap<double,CPlayer,greater<double> > ranksort;
-	
+
 	//split playerlist into teams;
 	multimap<double,CPlayer,greater<double> > rankedteams[MAX_TEAMS];
 
@@ -67,15 +67,15 @@ void CPlayerSpecifics::writeHTML(CHTMLFile& html)
 	{
 		html.write("<tr>\n");
 		int t;
-		
+
 		for (t=0;t<MAX_TEAMS;t++)
 		{
 			if (!g_pMatchInfo->teamExists(t))
 				continue;
-			
-			html.write("<td width=250 valign=top>");	
-			
-			
+
+			html.write("<td width=250 valign=top>");
+
+
 			if (rankedteams[t].begin()==rankedteams[t].end())
 				continue;
 			else
@@ -91,6 +91,5 @@ void CPlayerSpecifics::writeHTML(CHTMLFile& html)
 		html.write("</tr>\n");
 	}
 	html.write("</table>");
-	
-}
 
+}

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,7 +37,7 @@
 //				CHintWaitBuilding
 //			CHintChangeToCommander -- first level hint, doesn't rely on object, but does rely on UI manipulation
 //		CHintChooseAnyTechnology -- doesn't try to draw line to order since it's in tactical view?
-//		
+//
 
 
 //-----------------------------------------------------------------------------
@@ -46,7 +46,7 @@
 class CHintChangeToCommander : public CHintItemOrderBase
 {
 	DECLARE_CLASS( CHintChangeToCommander, CHintItemOrderBase );
-	
+
 public:
 	CHintChangeToCommander( vgui::Panel *parent, const char *panelName );
 	virtual void Think( void );
@@ -55,11 +55,11 @@ public:
 DECLARE_HINTITEMFACTORY( CHintChangeToCommander )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
-//			*panelName - 
-//			*text - 
-//			itemwidth - 
+// Purpose:
+// Input  : *parent -
+//			*panelName -
+//			*text -
+//			itemwidth -
 //-----------------------------------------------------------------------------
 CHintChangeToCommander::CHintChangeToCommander( vgui::Panel *parent, const char *panelName )
 : BaseClass( parent, panelName )
@@ -82,24 +82,24 @@ void CHintChangeToCommander::Think( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHintGotoObject : public CHintItemObjectBase
 {
 	DECLARE_CLASS( CHintGotoObject, CHintItemObjectBase );
-	
+
 public:
 	CHintGotoObject( vgui::Panel *parent, const char *panelName );
 	virtual void		Think( void );
-	
+
 private:
 	enum
 	{
 		MAX_OBJECT_TYPE = 128,
 	};
-	
+
 	EFFECT_HANDLE		m_ArrowEffect;
-	
+
 	float				m_flNextDistanceCheck;
 	IClientMode			*m_pPreviousMode;
 };
@@ -109,50 +109,50 @@ DECLARE_HINTITEMFACTORY( CHintGotoObject )
 #define ZONE_DISTANCE_CHECK_INTERVAL 0.5f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
-//			*panelName - 
+// Purpose:
+// Input  : *parent -
+//			*panelName -
 //-----------------------------------------------------------------------------
-CHintGotoObject::CHintGotoObject( vgui::Panel *parent, const char *panelName ) 
+CHintGotoObject::CHintGotoObject( vgui::Panel *parent, const char *panelName )
 	: BaseClass( parent, panelName )
 {
 	m_ArrowEffect = CreateArrowEffect( this, parent, NULL );
-	
+
 	m_flNextDistanceCheck = 0.0f;
-	
+
 	m_pPreviousMode = NULL;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintGotoObject::Think( void )
 {
 	BaseClass::Think();
-	
+
 	ClientModeTFBase *basemode = ( ClientModeTFBase * )g_pClientMode;
 	CMinimapPanel *minimap = basemode->GetMinimap();
-	
+
 	CPanelEffect *e = g_pTF2RootPanel->FindEffect( m_ArrowEffect );
 	if ( e && minimap )
 	{
 		e->SetPanelOther( minimap );
 	}
-	
+
 	// Check right away if we switch modes
 	if ( g_pClientMode != m_pPreviousMode )
 	{
 		m_flNextDistanceCheck = 0.0f;
 		m_pPreviousMode = g_pClientMode;
 	}
-	
+
 	if ( gpGlobals->curtime < m_flNextDistanceCheck )
 	{
 		return;
 	}
-	
+
 	m_flNextDistanceCheck = gpGlobals->curtime + ZONE_DISTANCE_CHECK_INTERVAL;
-	
+
 	// The order contains the resource zone target
 	C_TFBaseHint *hint = static_cast< C_TFBaseHint * >( GetParent() );
 	if ( hint )
@@ -164,19 +164,19 @@ void CHintGotoObject::Think( void )
 			if ( IsObjectOfType( pTarget ) )
 			{
 				Vector zonecenter = pTarget->WorldSpaceCenter( );
-				
+
 				if ( e && minimap )
 				{
 					float mapx, mapy;
-					
+
 					// Convert target center to map position
 					CMinimapPanel::MinimapPanel()->WorldToMinimap( MINIMAP_CLIP, zonecenter, mapx, mapy );
-					
+
 					e->SetUsingOffset( true, (int)mapx, (int)mapy );
 				}
-				
+
 				Vector delta;
-				
+
 				C_BaseTFPlayer *local = C_BaseTFPlayer::GetLocalPlayer();
 				if ( local )
 				{
@@ -192,15 +192,15 @@ void CHintGotoObject::Think( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHintDeployWeapon : public CHintItemOrderBase
 {
 	DECLARE_CLASS( CHintDeployWeapon, CHintItemOrderBase );
-	
+
 public:
 	CHintDeployWeapon( vgui::Panel *parent, const char *panelName );
-	
+
 	virtual void Think( void );
 
 	virtual void		SetWeaponType( const char *type );
@@ -229,11 +229,11 @@ private:
 DECLARE_HINTITEMFACTORY( CHintDeployWeapon )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
-//			*panelName - 
+// Purpose:
+// Input  : *parent -
+//			*panelName -
 //-----------------------------------------------------------------------------
-CHintDeployWeapon::CHintDeployWeapon( vgui::Panel *parent, const char *panelName ) 
+CHintDeployWeapon::CHintDeployWeapon( vgui::Panel *parent, const char *panelName )
 : BaseClass( parent, panelName )
 {
 	SetWeaponType( "" );
@@ -241,10 +241,10 @@ CHintDeployWeapon::CHintDeployWeapon( vgui::Panel *parent, const char *panelName
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *instring - 
-//			keylength - 
-//			**ppOutstring - 
+// Purpose:
+// Input  : *instring -
+//			keylength -
+//			**ppOutstring -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CHintDeployWeapon::CheckKeyAndValue( const char *instring, int* keylength, const char **ppOutstring )
@@ -266,8 +266,8 @@ bool CHintDeployWeapon::CheckKeyAndValue( const char *instring, int* keylength, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *type - 
+// Purpose:
+// Input  : *type -
 //-----------------------------------------------------------------------------
 void CHintDeployWeapon::SetWeaponType( const char *type )
 {
@@ -275,7 +275,7 @@ void CHintDeployWeapon::SetWeaponType( const char *type )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *CHintDeployWeapon::GetWeaponType( void )
@@ -284,8 +284,8 @@ const char *CHintDeployWeapon::GetWeaponType( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 void CHintDeployWeapon::SetPrintName( const char *name )
 {
@@ -293,7 +293,7 @@ void CHintDeployWeapon::SetPrintName( const char *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *CHintDeployWeapon::GetPrintName( void )
@@ -302,7 +302,7 @@ const char *CHintDeployWeapon::GetPrintName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *CHintDeployWeapon::GetKeyName( void )
@@ -322,7 +322,7 @@ const char *CHintDeployWeapon::GetKeyName( void )
 				C_BaseCombatWeapon *weapon = pHudSelection->GetFirstPos( slot );
 				if ( !weapon )
 					continue;
-				
+
 				if ( !stricmp( weapon->GetName(), GetWeaponType() ) )
 				{
 					Q_snprintf( keyname, sizeof( keyname ), GetKeyNameForBinding( VarArgs( "slot%i", slot + 1 ) ) );
@@ -336,8 +336,8 @@ const char *CHintDeployWeapon::GetKeyName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pKeyValues - 
+// Purpose:
+// Input  : *pKeyValues -
 //-----------------------------------------------------------------------------
 void CHintDeployWeapon::ParseItem( KeyValues *pKeyValues )
 {
@@ -357,26 +357,26 @@ void CHintDeployWeapon::ParseItem( KeyValues *pKeyValues )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintDeployWeapon::Think( void )
 {
 	BaseClass::Think();
-	
+
 	C_BaseTFPlayer *player = C_BaseTFPlayer::GetLocalPlayer();
 	if ( !player )
 		return;
-	
+
 	// Get the weapon selection Hud Element
 	CBaseHudWeaponSelection *pHudSelection = GetHudWeaponSelection();
 	// Make sure it's not still active
 	if ( pHudSelection->IsActive() )
 		return;
-	
+
 	C_BaseCombatWeapon *weapon = GetActiveWeapon();
 	if ( !weapon )
 		return;
-	
+
 	if ( !stricmp( weapon->GetClientClass()->m_pNetworkName, "CWeaponBuilder" ) )
 	{
 		m_bCompleted = true;
@@ -384,15 +384,15 @@ void CHintDeployWeapon::Think( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHintStartPlacing : public CHintItemOrderBase
 {
 	DECLARE_CLASS( CHintStartPlacing, CHintItemOrderBase );
-	
+
 public:
 	CHintStartPlacing( vgui::Panel *parent, const char *panelName );
-	
+
 	virtual void Think( void );
 private:
 };
@@ -400,22 +400,22 @@ private:
 DECLARE_HINTITEMFACTORY( CHintStartPlacing )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
-//			*panelName - 
+// Purpose:
+// Input  : *parent -
+//			*panelName -
 //-----------------------------------------------------------------------------
-CHintStartPlacing::CHintStartPlacing( vgui::Panel *parent, const char *panelName ) 
+CHintStartPlacing::CHintStartPlacing( vgui::Panel *parent, const char *panelName )
 : BaseClass( parent, panelName )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintStartPlacing::Think( void )
 {
 	BaseClass::Think();
-	
+
 	C_WeaponBuilder *builder = dynamic_cast< C_WeaponBuilder * >( GetActiveWeapon() );
 	if ( builder && builder->IsPlacingObject() )
 	{
@@ -424,15 +424,15 @@ void CHintStartPlacing::Think( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHintStartBuilding : public CHintItemOrderBase
 {
 	DECLARE_CLASS( CHintStartBuilding, CHintItemOrderBase );
-	
+
 public:
 	CHintStartBuilding( vgui::Panel *parent, const char *panelName );
-	
+
 	virtual void Think( void );
 private:
 };
@@ -440,22 +440,22 @@ private:
 DECLARE_HINTITEMFACTORY( CHintStartBuilding )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
-//			*panelName - 
+// Purpose:
+// Input  : *parent -
+//			*panelName -
 //-----------------------------------------------------------------------------
-CHintStartBuilding::CHintStartBuilding( vgui::Panel *parent, const char *panelName ) 
+CHintStartBuilding::CHintStartBuilding( vgui::Panel *parent, const char *panelName )
 	: BaseClass( parent, panelName )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintStartBuilding::Think( void )
 {
 	BaseClass::Think();
-	
+
 	C_WeaponBuilder *builder = dynamic_cast< C_WeaponBuilder * >( GetActiveWeapon() );
 	if ( builder && builder->IsBuildingObject() )
 	{
@@ -466,18 +466,18 @@ void CHintStartBuilding::Think( void )
 #define CHECK_FOR_BUILDING_INTERVAL	1.0f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHintWaitBuilding : public CHintItemObjectBase
 {
 	DECLARE_CLASS( CHintWaitBuilding, CHintItemObjectBase );
-	
+
 public:
 	CHintWaitBuilding( vgui::Panel *parent, const char *panelName );
-	
+
 	virtual void Think( void );
 private:
-	
+
 	float			m_flNextCheck;
 };
 
@@ -485,35 +485,35 @@ private:
 DECLARE_HINTITEMFACTORY( CHintWaitBuilding )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
-//			*panelName - 
+// Purpose:
+// Input  : *parent -
+//			*panelName -
 //-----------------------------------------------------------------------------
-CHintWaitBuilding::CHintWaitBuilding( vgui::Panel *parent, const char *panelName ) 
+CHintWaitBuilding::CHintWaitBuilding( vgui::Panel *parent, const char *panelName )
 	: BaseClass( parent, panelName )
 {
 	m_flNextCheck = 0.0f;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintWaitBuilding::Think( void )
 {
 	BaseClass::Think();
-	
+
 	if ( !GetActive() )
 		return;
-	
+
 	C_BaseTFPlayer *player = C_BaseTFPlayer::GetLocalPlayer();
 	if ( !player )
 		return;
-	
+
 	if ( gpGlobals->curtime < m_flNextCheck )
 		return;
-	
+
 	m_flNextCheck = gpGlobals->curtime + CHECK_FOR_BUILDING_INTERVAL;
-	
+
 	// Find resource zone
 	ClientEntityHandle_t e = ClientEntityList().FirstHandle();
 	for ( ;  e != ClientEntityList().InvalidHandle(); e = ClientEntityList().NextHandle( e ) )
@@ -521,13 +521,13 @@ void CHintWaitBuilding::Think( void )
 		C_BaseEntity *ent = C_BaseEntity::Instance( e );
 		if ( !ent )
 			continue;
-		
+
 		if ( IsObjectOfType( ent ) )
 		{
 			C_BaseObject *obj = static_cast< C_BaseObject * >( ent );
-			
+
 			Assert( obj );
-			
+
 			if ( obj->GetTeamNumber() == player->GetTeamNumber() &&	obj->IsOwnedByLocalPlayer() )
 			{
 				m_bCompleted = true;
@@ -538,15 +538,15 @@ void CHintWaitBuilding::Think( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHintBuilderSelection : public CHintItemOrderBase
 {
 	DECLARE_CLASS( CHintBuilderSelection, CHintItemOrderBase );
-	
+
 public:
 	CHintBuilderSelection( vgui::Panel *parent, const char *panelName );
-	
+
 	virtual void Think( void );
 	virtual void		SetSelection( const char *type );
 	virtual char const	*GetSelection( void );
@@ -567,21 +567,21 @@ private:
 DECLARE_HINTITEMFACTORY( CHintBuilderSelection )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
-//			*panelName - 
+// Purpose:
+// Input  : *parent -
+//			*panelName -
 //-----------------------------------------------------------------------------
-CHintBuilderSelection::CHintBuilderSelection( vgui::Panel *parent, const char *panelName ) 
+CHintBuilderSelection::CHintBuilderSelection( vgui::Panel *parent, const char *panelName )
 	: BaseClass( parent, panelName )
 {
 	SetSelection( "" );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *instring - 
-//			keylength - 
-//			**ppOutstring - 
+// Purpose:
+// Input  : *instring -
+//			keylength -
+//			**ppOutstring -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CHintBuilderSelection::CheckKeyAndValue( const char *instring, int* keylength, const char **ppOutstring )
@@ -597,8 +597,8 @@ bool CHintBuilderSelection::CheckKeyAndValue( const char *instring, int* keyleng
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *selection - 
+// Purpose:
+// Input  : *selection -
 //-----------------------------------------------------------------------------
 void CHintBuilderSelection::SetSelection( const char *selection )
 {
@@ -606,7 +606,7 @@ void CHintBuilderSelection::SetSelection( const char *selection )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *CHintBuilderSelection::GetSelection( void )
@@ -615,8 +615,8 @@ const char *CHintBuilderSelection::GetSelection( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pKeyValues - 
+// Purpose:
+// Input  : *pKeyValues -
 //-----------------------------------------------------------------------------
 void CHintBuilderSelection::ParseItem( KeyValues *pKeyValues )
 {
@@ -630,16 +630,16 @@ void CHintBuilderSelection::ParseItem( KeyValues *pKeyValues )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintBuilderSelection::Think( void )
 {
 	BaseClass::Think();
-	
+
 	C_BaseTFPlayer *player = C_BaseTFPlayer::GetLocalPlayer();
 	if ( !player )
 		return;
-	
+
 	C_WeaponBuilder *builder = dynamic_cast< C_WeaponBuilder * >( GetActiveWeapon() );
 	if ( !builder )
 		return;
@@ -655,15 +655,15 @@ void CHintBuilderSelection::Think( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHintBuilderStartAction : public CHintItemOrderBase
 {
 	DECLARE_CLASS( CHintBuilderStartAction, CHintItemOrderBase );
-	
+
 public:
 	CHintBuilderStartAction( vgui::Panel *parent, const char *panelName );
-	
+
 	virtual void Think( void );
 	virtual void		SetAction( const char *type );
 	virtual char const	*GetAction( void );
@@ -684,21 +684,21 @@ private:
 DECLARE_HINTITEMFACTORY( CHintBuilderStartAction )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
-//			*panelName - 
+// Purpose:
+// Input  : *parent -
+//			*panelName -
 //-----------------------------------------------------------------------------
-CHintBuilderStartAction::CHintBuilderStartAction( vgui::Panel *parent, const char *panelName ) 
+CHintBuilderStartAction::CHintBuilderStartAction( vgui::Panel *parent, const char *panelName )
 	: BaseClass( parent, panelName )
 {
 	SetAction( "" );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *instring - 
-//			keylength - 
-//			**ppOutstring - 
+// Purpose:
+// Input  : *instring -
+//			keylength -
+//			**ppOutstring -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CHintBuilderStartAction::CheckKeyAndValue( const char *instring, int* keylength, const char **ppOutstring )
@@ -714,8 +714,8 @@ bool CHintBuilderStartAction::CheckKeyAndValue( const char *instring, int* keyle
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *action - 
+// Purpose:
+// Input  : *action -
 //-----------------------------------------------------------------------------
 void CHintBuilderStartAction::SetAction( const char *action )
 {
@@ -723,7 +723,7 @@ void CHintBuilderStartAction::SetAction( const char *action )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *CHintBuilderStartAction::GetAction( void )
@@ -732,8 +732,8 @@ const char *CHintBuilderStartAction::GetAction( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pKeyValues - 
+// Purpose:
+// Input  : *pKeyValues -
 //-----------------------------------------------------------------------------
 void CHintBuilderStartAction::ParseItem( KeyValues *pKeyValues )
 {
@@ -747,16 +747,16 @@ void CHintBuilderStartAction::ParseItem( KeyValues *pKeyValues )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintBuilderStartAction::Think( void )
 {
 	BaseClass::Think();
-	
+
 	C_BaseTFPlayer *player = C_BaseTFPlayer::GetLocalPlayer();
 	if ( !player )
 		return;
-	
+
 	C_WeaponBuilder *builder = dynamic_cast< C_WeaponBuilder * >( GetActiveWeapon() );
 	if ( !builder )
 		return;
@@ -805,10 +805,10 @@ private:
 DECLARE_HUDELEMENT( CHudWeaponFlashHelper )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
-CHudWeaponFlashHelper::CHudWeaponFlashHelper( const char *name ) 
+CHudWeaponFlashHelper::CHudWeaponFlashHelper( const char *name )
 	: CHudElement( name ), BaseClass( NULL, "HudWeaponFlashHelper" )
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
@@ -821,7 +821,7 @@ CHudWeaponFlashHelper::CHudWeaponFlashHelper( const char *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponFlashHelper::Init( void )
 {
@@ -832,7 +832,7 @@ void CHudWeaponFlashHelper::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudWeaponFlashHelper::ShouldDraw( void )
 {
@@ -847,7 +847,7 @@ void CHudWeaponFlashHelper::ApplySchemeSettings( vgui::IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponFlashHelper::Paint()
 {
@@ -868,14 +868,14 @@ void CHudWeaponFlashHelper::Paint()
 	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
 	if ( !pPlayer )
 		return;
-	
+
 	// Redo drawing of Weapon Menu
 	m_pWeaponSelection->DrawWList( pPlayer, w, true, EFFECT_R, EFFECT_G, EFFECT_B, EFFECT_A  );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *weapon - 
+// Purpose:
+// Input  : *weapon -
 //-----------------------------------------------------------------------------
 void CHudWeaponFlashHelper::SetFlashWeapon( C_BaseCombatWeapon *weapon )
 {
@@ -883,7 +883,7 @@ void CHudWeaponFlashHelper::SetFlashWeapon( C_BaseCombatWeapon *weapon )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponFlashHelper::StartFlashing( void )
 {
@@ -891,7 +891,7 @@ void CHudWeaponFlashHelper::StartFlashing( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponFlashHelper::StopFlashing( void )
 {
@@ -899,12 +899,12 @@ void CHudWeaponFlashHelper::StopFlashing( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *weapon - 
-//			x - 
-//			y - 
-//			w - 
-//			h - 
+// Purpose:
+// Input  : *weapon -
+//			x -
+//			y -
+//			w -
+//			h -
 //-----------------------------------------------------------------------------
 void CHudWeaponFlashHelper::GetWeaponIconBounds( C_BaseCombatWeapon *weapon, int& x, int& y,int& w, int& h )
 {
@@ -930,7 +930,7 @@ void CHudWeaponFlashHelper::GetWeaponIconBounds( C_BaseCombatWeapon *weapon, int
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CHudWeaponFlashHelper::IsWeaponSelectionActive( void )
@@ -947,7 +947,7 @@ bool CHudWeaponFlashHelper::IsWeaponSelectionActive( void )
 class CHintHudWeaponFlash : public CHintItemBase
 {
 	DECLARE_CLASS( CHintHudWeaponFlash, CHintItemBase );
-	
+
 public:
 	CHintHudWeaponFlash( vgui::Panel *parent, const char *panelName );
 	~CHintHudWeaponFlash( void );
@@ -973,7 +973,7 @@ private:
 
 	bool	m_bWeaponSet;
 
-	EHANDLE m_hWeapon; 
+	EHANDLE m_hWeapon;
 
 	char	m_szWeaponName[ MAX_WEAPON_NAME ];
 
@@ -985,11 +985,11 @@ private:
 DECLARE_HINTITEMFACTORY( CHintHudWeaponFlash )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
-//			*panelName - 
-//			*text - 
-//			itemwidth - 
+// Purpose:
+// Input  : *parent -
+//			*panelName -
+//			*text -
+//			itemwidth -
 //-----------------------------------------------------------------------------
 CHintHudWeaponFlash::CHintHudWeaponFlash( vgui::Panel *parent, const char *panelName )
 : BaseClass( parent, panelName )
@@ -1003,7 +1003,7 @@ CHintHudWeaponFlash::CHintHudWeaponFlash( vgui::Panel *parent, const char *panel
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHintHudWeaponFlash::~CHintHudWeaponFlash( void )
 {
@@ -1015,10 +1015,10 @@ CHintHudWeaponFlash::~CHintHudWeaponFlash( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *instring - 
-//			keylength - 
-//			**ppOutstring - 
+// Purpose:
+// Input  : *instring -
+//			keylength -
+//			**ppOutstring -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CHintHudWeaponFlash::CheckKeyAndValue( const char *instring, int* keylength, const char **ppOutstring )
@@ -1034,7 +1034,7 @@ bool CHintHudWeaponFlash::CheckKeyAndValue( const char *instring, int* keylength
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 C_BaseCombatWeapon *CHintHudWeaponFlash::GetWeaponOfType( const char *type )
@@ -1053,7 +1053,7 @@ C_BaseCombatWeapon *CHintHudWeaponFlash::GetWeaponOfType( const char *type )
 				C_BaseCombatWeapon *weapon = pHudSelection->GetWeaponInSlot( slot, iPos );
 				if ( !weapon )
 					continue;
-			
+
 				if ( !stricmp( weapon->GetName(), type ) )
 				{
 					return weapon;
@@ -1066,9 +1066,9 @@ C_BaseCombatWeapon *CHintHudWeaponFlash::GetWeaponOfType( const char *type )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *key - 
-//			*value - 
+// Purpose:
+// Input  : *key -
+//			*value -
 //-----------------------------------------------------------------------------
 void CHintHudWeaponFlash::SetKeyValue( const char *key, const char *value )
 {
@@ -1109,7 +1109,7 @@ void CHintHudWeaponFlash::SetKeyValue( const char *key, const char *value )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintHudWeaponFlash::Think( void )
 {
@@ -1145,8 +1145,8 @@ void CHintHudWeaponFlash::Think( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bActive - 
+// Purpose:
+// Input  : bActive -
 //-----------------------------------------------------------------------------
 void CHintHudWeaponFlash::SetActive( bool bActive )
 {
@@ -1166,8 +1166,8 @@ void CHintHudWeaponFlash::SetActive( bool bActive )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 void CHintHudWeaponFlash::SetWeaponName( const char *name )
 {
@@ -1175,7 +1175,7 @@ void CHintHudWeaponFlash::SetWeaponName( const char *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *CHintHudWeaponFlash::GetWeaponName( void )
@@ -1186,7 +1186,7 @@ const char *CHintHudWeaponFlash::GetWeaponName( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct FUNCTIONLIST_t
 {
@@ -1200,8 +1200,8 @@ static FUNCTIONLIST_t g_CompletionFunctions[]=
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : HINTCOMPLETIONFUNCTION
 //-----------------------------------------------------------------------------
 HINTCOMPLETIONFUNCTION LookupCompletionFunction( const char *name )
@@ -1212,19 +1212,19 @@ HINTCOMPLETIONFUNCTION LookupCompletionFunction( const char *name )
 		FUNCTIONLIST_t *f = &g_CompletionFunctions[ i ];
 		if ( !f->name )
 			break;
-		
+
 		if ( !stricmp( f->name, name ) )
 		{
 			return f->pfn;
 		}
 		i++;
 	}
-	
+
 	return NULL;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct HINTITEM_t
 {
@@ -1247,9 +1247,9 @@ static HINTITEM_t g_HintItems[]=
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
-//			*name - 
+// Purpose:
+// Input  : *parent -
+//			*name -
 // Output : CHintItemBase
 //-----------------------------------------------------------------------------
 CHintItemBase *CreateHintItem( vgui::Panel *parent, const char *name )
@@ -1260,7 +1260,7 @@ CHintItemBase *CreateHintItem( vgui::Panel *parent, const char *name )
 		HINTITEM_t *hi = &g_HintItems[ i ];
 		if ( !hi->name )
 			break;
-		
+
 		if ( !stricmp( hi->name, name ) )
 		{
 			if ( hi->pfn )
@@ -1275,12 +1275,12 @@ CHintItemBase *CreateHintItem( vgui::Panel *parent, const char *name )
 		}
 		i++;
 	}
-	
+
 	return NULL;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 CHintData g_HintDatas[] =
@@ -1298,7 +1298,7 @@ CHintData g_HintDatas[] =
 	// Technology discovery
 	{ "TF_HINT_NEWTECHNOLOGY", TF_HINT_NEWTECHNOLOGY, 0, NULL, -1 },
 	{ "TF_HINT_WEAPONRECEIVED", TF_HINT_WEAPONRECEIVED, 0, NULL, -1 },
-	
+
 	// Sentinal
 	{ NULL, 0, 0, NULL, -1 },
 };
@@ -1317,8 +1317,8 @@ CHintData* GetHintData( int i )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : id - 
+// Purpose:
+// Input  : id -
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *LookupHintName( int id )
@@ -1329,24 +1329,24 @@ const char *LookupHintName( int id )
 		CHintData *h = &g_HintDatas[ i ];
 		if ( !h->name )
 			break;
-		
+
 		if ( h->id == id )
 		{
 			return h->name;
 		}
-		
+
 		i++;
 	}
-	
+
 	return NULL;
 }
 
 DECLARE_HINTFACTORY( C_TFBaseHint )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-typedef struct 
+typedef struct
 {
 	const char *name;
 	C_TFBaseHint	*( *pfn )( int id, int entity );
@@ -1360,10 +1360,10 @@ static HINT_t g_Hints[]=
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
-//			id - 
-//			entity - 
+// Purpose:
+// Input  : *name -
+//			id -
+//			entity -
 // Output : C_TFBaseHint
 //-----------------------------------------------------------------------------
 C_TFBaseHint *FactoryCreateHint( const char *name, int id, int entity )
@@ -1374,7 +1374,7 @@ C_TFBaseHint *FactoryCreateHint( const char *name, int id, int entity )
 		HINT_t *hi = &g_Hints[ i ];
 		if ( !hi->name )
 			break;
-		
+
 		if ( !stricmp( hi->name, name ) )
 		{
 			if ( hi->pfn )
@@ -1389,14 +1389,14 @@ C_TFBaseHint *FactoryCreateHint( const char *name, int id, int entity )
 		}
 		i++;
 	}
-	
+
 	return NULL;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Generic factory for hints
-// Input  : id - 
-//			entity - 
+// Input  : id -
+//			entity -
 // Output : C_TFBaseHint
 //-----------------------------------------------------------------------------
 C_TFBaseHint *C_TFBaseHint::CreateHint( int id, const char *subsection, int entity )
@@ -1405,7 +1405,7 @@ C_TFBaseHint *C_TFBaseHint::CreateHint( int id, const char *subsection, int enti
 	const char *hintname = LookupHintName( id );
 	if ( !hintname )
 		return NULL;
-	
+
 	// See if we should see this hint any more
 	KeyValues *pkvStats = GetHintDisplayStats();
 	if ( pkvStats )
@@ -1443,7 +1443,7 @@ C_TFBaseHint *C_TFBaseHint::CreateHint( int id, const char *subsection, int enti
 	KeyValues *pkvHintSystem = GetHintKeyValues();
 	if ( pkvHintSystem )
 	{
-		// 
+		//
 		// Parse the list of hints looking for name
 		KeyValues *pkvHint = pkvHintSystem->FindKey( hintname );
 		if ( pkvHint )
@@ -1455,14 +1455,14 @@ C_TFBaseHint *C_TFBaseHint::CreateHint( int id, const char *subsection, int enti
 			{
 				classname = defaultclass;
 			}
-			
+
 			hint = FactoryCreateHint( classname, id, entity );
 			if ( hint )
 			{
 				hint->ParseFromData( pkvHint );
 			}
-		}	
+		}
 	}
-	
+
 	return hint;
 }

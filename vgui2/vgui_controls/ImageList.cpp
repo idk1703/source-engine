@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -103,4 +103,3 @@ bool ImageList::IsValidIndex(int imageIndex)
 {
 	return m_Images.IsValidIndex(imageIndex);
 }
-

@@ -159,7 +159,7 @@ static void GetPlayerNameForSteamID( wchar_t *wCharPlayerName, int nBufSizeBytes
 	V_UTF8ToUnicode( pszName, wCharPlayerName, nBufSizeBytes );
 }
 
-CBaseLobbyPanel::CBaseLobbyPanel( vgui::Panel *pParent, CBaseLobbyContainerFrame* pContainer ) 
+CBaseLobbyPanel::CBaseLobbyPanel( vgui::Panel *pParent, CBaseLobbyContainerFrame* pContainer )
 	: vgui::PropertySheet( pParent, "LobbyPanel" ), m_sPersonaStateChangedCallback( this, &CBaseLobbyPanel::OnPersonaStateChanged )
 	, m_pContainer( pContainer )
 {
@@ -210,7 +210,7 @@ CBaseLobbyPanel::CBaseLobbyPanel( vgui::Panel *pParent, CBaseLobbyContainerFrame
 	m_flRefreshPlayerListTime = -1.f;
 
 	m_pToolTip = new CMainMenuToolTip( this );
- 	vgui::EditablePanel* pToolTipEmbeddedPanel = new vgui::EditablePanel( this, "TooltipPanel" );		
+ 	vgui::EditablePanel* pToolTipEmbeddedPanel = new vgui::EditablePanel( this, "TooltipPanel" );
 	pToolTipEmbeddedPanel->SetKeyBoardInputEnabled( false );
 	pToolTipEmbeddedPanel->SetMouseInputEnabled( false );
 	m_pToolTip->SetEmbeddedPanel( pToolTipEmbeddedPanel );
@@ -253,7 +253,7 @@ void CBaseLobbyPanel::SetMatchmakingModeBackground()
 {
 	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
 
-	// Get the background panel. 
+	// Get the background panel.
 	vgui::ImagePanel* pModeBackgroundImage = FindControl< vgui::ImagePanel >( "ModeBackgroundImage", true );
 	if ( !pModeBackgroundImage )
 		return;
@@ -451,7 +451,7 @@ bool CBaseLobbyPanel::IsAnyoneBanned( RTime32 &rtimeExpire ) const
 	// This only matters if we're searching for a mannup or ladder game
 	CTFParty *pParty = GTFGCClientSystem()->GetParty();
 	if ( pParty && ( !pParty->GetSearchPlayForBraggingRights() && !IsLadderGroup( pParty->GetMatchGroup() ) ) )
-	{	
+	{
 		return false;
 	}
 
@@ -557,7 +557,7 @@ void CBaseLobbyPanel::OnItemLeftClick( vgui::Panel* panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyPanel::WriteStatusControls()
 {
@@ -580,7 +580,7 @@ void CBaseLobbyPanel::WriteStatusControls()
 	if ( !GCClientSystem()->BConnectedtoGC() || ( GTFGCClientSystem()->GetParty() && GTFGCClientSystem()->GetParty()->BOffline() ) )
 	{
 		eDisabled = DISABLED_NO_GC;
-	}	
+	}
 
 	SetControlVisible( "NoGCGroupBox", eDisabled == DISABLED_NO_GC, true );
 	SetControlVisible( "MatchInProgressGroupBox", eDisabled == DISABLED_MATCH_IN_PROGRESS, true );
@@ -1087,7 +1087,7 @@ static void CL_ConnectLobby( const CCommand &args )
 		Warning( "connect_lobby missing LobbyID argument\n" );
 		return;
 	}
-	
+
 	uint64 ulSteamID = 0;
 	sscanf( args.Arg( 1 ), "%lld", &ulSteamID );
 	CSteamID steamIDLobby( ulSteamID );

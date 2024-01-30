@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -302,7 +302,7 @@ CAudioBuffer *CAudioWaveOutput::GetEmptyBuffer( void )
 	{
 		for ( int i = 0; i < OUTPUT_BUFFER_COUNT; i++ )
 		{
-			if ( !(m_buffers[ i ].submitted ) || 
+			if ( !(m_buffers[ i ].submitted ) ||
 				m_buffers[i].hdr->dwFlags & WHDR_DONE )
 			{
 				pOutput = &m_buffers[i];
@@ -312,7 +312,7 @@ CAudioBuffer *CAudioWaveOutput::GetEmptyBuffer( void )
 			}
 		}
 	}
-	
+
 	return pOutput;
 }
 
@@ -553,7 +553,7 @@ struct CSoundFile
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CFacePoserSound : public IFacePoserSound
 {
@@ -577,7 +577,7 @@ public:
 	void		StopAll( void );
 	void		StopSound( CAudioMixer *mixer );
 
-	void		RenderWavToDC( HDC dc, RECT& outrect, COLORREF clr, float starttime, float endtime, 
+	void		RenderWavToDC( HDC dc, RECT& outrect, COLORREF clr, float starttime, float endtime,
 		CAudioSource *pWave, bool selected = false, int selectionstart = 0, int selectionend = 0 );
 
 	// void		InstallPhonemecallback( IPhonemeTag *pTagInterface );
@@ -608,7 +608,7 @@ CFacePoserSound::~CFacePoserSound( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CAudioOuput	*CFacePoserSound::GetAudioOutput( void )
 {
@@ -673,8 +673,8 @@ void CFacePoserSound::StopSound( CAudioMixer *mixer )
 {
 }
 
-void CFacePoserSound::RenderWavToDC( HDC dc, RECT& outrect, COLORREF clr, 
-	float starttime, float endtime, CAudioSource *pWave, 
+void CFacePoserSound::RenderWavToDC( HDC dc, RECT& outrect, COLORREF clr,
+	float starttime, float endtime, CAudioSource *pWave,
 	bool selected /*= false*/, int selectionstart /*= 0*/, int selectionend /*= 0*/ )
 {
 }

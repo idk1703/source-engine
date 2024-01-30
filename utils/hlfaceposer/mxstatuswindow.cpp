@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,7 +18,7 @@ mxStatusWindow *g_pStatusWindow = NULL;
 #define STATUS_SCROLLBAR_SIZE		12
 #define STATUS_FONT_SIZE			9
 
-mxStatusWindow::mxStatusWindow(mxWindow *parent, int x, int y, int w, int h, const char *label /*= 0*/ ) 
+mxStatusWindow::mxStatusWindow(mxWindow *parent, int x, int y, int w, int h, const char *label /*= 0*/ )
 : mxWindow( parent, x, y, w, h, label ), IFacePoserToolWindow( "Status Window", "Output" ), m_pScrollbar(NULL)
 {
 	for ( int i = 0; i < MAX_TEXT_LINES; i++ )
@@ -86,7 +86,7 @@ void mxStatusWindow::redraw()
 		int line = ( rawline - offset ) & TEXT_LINE_MASK;
 
 		char *ptext = m_rgTextLines[ line ].m_szText;
-		
+
 		RECT rcTime = rcText;
 		rcTime.right = rcTime.left + 50;
 
@@ -111,7 +111,7 @@ void mxStatusWindow::redraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool mxStatusWindow::PaintBackground( void )
@@ -175,8 +175,8 @@ void mxStatusWindow::StatusPrint( COLORREF clr, bool overwrite, const char *text
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : sboffset - 
+// Purpose:
+// Input  : sboffset -
 //-----------------------------------------------------------------------------
 void mxStatusWindow::PositionSliders( int sboffset )
 {
@@ -189,7 +189,7 @@ void mxStatusWindow::PositionSliders( int sboffset )
 
 	int vpixelsneeded = max( linesused * lineheight, trueh );
 	m_pScrollbar->setVisible( linesused * lineheight > trueh );
-	
+
 
 	m_pScrollbar->setPagesize( trueh );
 	m_pScrollbar->setRange( 0, vpixelsneeded );
@@ -198,8 +198,8 @@ void mxStatusWindow::PositionSliders( int sboffset )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 // Output : int
 //-----------------------------------------------------------------------------
 int mxStatusWindow::handleEvent( mxEvent *event )
@@ -237,7 +237,7 @@ int mxStatusWindow::handleEvent( mxEvent *event )
 						event->modifiers == SB_THUMBTRACK)
 					{
 						int offset = event->height;
-						m_pScrollbar->setValue( offset ); 
+						m_pScrollbar->setValue( offset );
 						PositionSliders( offset );
 						DrawActiveTool();
 					}
@@ -255,7 +255,7 @@ int mxStatusWindow::handleEvent( mxEvent *event )
 #include "faceposer_models.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void mxStatusWindow::DrawActiveTool()
 {
@@ -283,10 +283,10 @@ void mxStatusWindow::DrawActiveTool()
 		fps = 1.0f / dt;
 	}
 
-	sprintf( sz, "%s (%i) at %.3f (%.2f fps) (soundcount %i)", 
-		activeTool ? activeTool->GetToolName() : "None", 
-		g_MDLViewer->GetCurrentFrame(), 
-		(float)realtime, 
+	sprintf( sz, "%s (%i) at %.3f (%.2f fps) (soundcount %i)",
+		activeTool ? activeTool->GetToolName() : "None",
+		g_MDLViewer->GetCurrentFrame(),
+		(float)realtime,
 		fps,
 		models->CountActiveSources() );
 
@@ -302,8 +302,8 @@ void mxStatusWindow::DrawActiveTool()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dt - 
+// Purpose:
+// Input  : dt -
 //-----------------------------------------------------------------------------
 void mxStatusWindow::Think( float dt )
 {

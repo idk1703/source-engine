@@ -1,6 +1,6 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. =======
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -21,7 +21,7 @@ class CProjectGenerator_Xbox360_2010 : public IVCProjWriter
 public:
 	CProjectGenerator_Xbox360_2010();
 	IBaseProjectGenerator *GetProjectGenerator() { return m_pVCProjGenerator; }
-	
+
 	virtual bool Save( const char *pOutputFilename );
 
 private:

@@ -81,7 +81,7 @@ void CValidator::Push( tchar *pchType, void *pvObj, tchar *pchName )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Call this each time you end a Validate() function.  It decrements 
+// Purpose: Call this each time you end a Validate() function.  It decrements
 //			our current structure depth.
 //-----------------------------------------------------------------------------
 void CValidator::Pop( )
@@ -184,7 +184,7 @@ void CValidator::RenderLeaks( void )
 	{
 		if ( !pMemBlockHdr->BClaimed( ) )
 		{
-			ConMsg( 1, _T("Leaked mem block: Addr = 0x%x\tSize = %d\n"), 
+			ConMsg( 1, _T("Leaked mem block: Addr = 0x%x\tSize = %d\n"),
 				pMemBlockHdr->PvUser( ), pMemBlockHdr->CubUser( ) );
 			ConMsg( 1, _T("\tAlloc = %s, line %d\n"),
 				pMemBlockHdr->PchFile( ), pMemBlockHdr->NLine( ) );
@@ -218,7 +218,7 @@ CValObject *CValidator::FindObject( void * pvObj )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Diff one CValidator against another.  Each Validator object is 
+// Purpose: Diff one CValidator against another.  Each Validator object is
 // tagged with whether it is new since the last snapshot or not.
 //-----------------------------------------------------------------------------
 void CValidator::DiffAgainst( CValidator *pOtherValidator )	// Removes any entries from this validator that are also present in the other.
@@ -230,7 +230,7 @@ void CValidator::DiffAgainst( CValidator *pOtherValidator )	// Removes any entri
 	{
 		pValObjectNext = pValObject->PValObjectNext( );
 		pValObject->SetBNewSinceSnapshot( pOtherValidator->FindObject( pValObject->PvObj() ) == NULL );
-		
+
 		if( pValObject->BNewSinceSnapshot() && pValObject->CubMemTree( ) )
 		{
 			for ( int ich = 0; ich < pValObject->NLevel( ); ich++ )
@@ -261,7 +261,7 @@ void CValidator::Validate( CValidator &validator, tchar *pchName )
 		validator.ClaimMemory( pValObject );
 		pValObject = pValObjectNext;
 	}
-	
+
 	validator.Pop();
 }
 

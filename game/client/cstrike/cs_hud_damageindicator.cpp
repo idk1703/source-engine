@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -86,7 +86,7 @@ CHudDamageIndicator::CHudDamageIndicator( const char *pElementName ) : CHudEleme
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDamageIndicator::Reset( void )
 {
@@ -107,7 +107,7 @@ void CHudDamageIndicator::Init( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudDamageIndicator::ShouldDraw( void )
 {
@@ -235,12 +235,12 @@ void CHudDamageIndicator::Paint()
 	if( m_flFadeCompleteTime > gpGlobals->curtime )
 	{
 		float flFade = gpGlobals->frametime * 2;
-		// draw damage indicators	
+		// draw damage indicators
 		DrawDamageIndicatorFront( flFade );
 		DrawDamageIndicatorRear( flFade );
 		DrawDamageIndicatorLeft( flFade );
 		DrawDamageIndicatorRight( flFade );
-	}	
+	}
 }
 // NVNT static to pass damage
 static float hap_damage_amount = 0;
@@ -250,7 +250,7 @@ static float hap_damage_amount = 0;
 //-----------------------------------------------------------------------------
 void CHudDamageIndicator::MsgFunc_Damage( bf_read &msg )
 {
-	int damageTaken	= msg.ReadByte();	
+	int damageTaken	= msg.ReadByte();
 
 	Vector vecFrom;
 	msg.ReadBitVec3Coord( vecFrom );
@@ -266,9 +266,9 @@ void CHudDamageIndicator::MsgFunc_Damage( bf_read &msg )
 //=============================================================================
 // HPE_BEGIN:
 // [menglish] Added reads for the added location based parameters to this message
-//=============================================================================	 
+//=============================================================================
 	msg.ReadLong();
-	msg.ReadBitVec3Coord( vecFrom );	 
+	msg.ReadBitVec3Coord( vecFrom );
 //=============================================================================
 // HPE_END
 //=============================================================================

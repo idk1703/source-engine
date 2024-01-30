@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,7 +14,7 @@
 static IPredictionSystem g_RecipientFilterPredictionSystem;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_RecipientFilter::C_RecipientFilter()
 {
@@ -26,8 +26,8 @@ C_RecipientFilter::~C_RecipientFilter()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : src - 
+// Purpose:
+// Input  : src -
 //-----------------------------------------------------------------------------
 void C_RecipientFilter::CopyFrom( const C_RecipientFilter& src )
 {
@@ -45,7 +45,7 @@ void C_RecipientFilter::CopyFrom( const C_RecipientFilter& src )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_RecipientFilter::Reset( void )
 {

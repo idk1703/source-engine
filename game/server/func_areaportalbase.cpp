@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -50,7 +50,7 @@ CFuncAreaPortalBase::~CFuncAreaPortalBase()
 bool CFuncAreaPortalBase::UpdateVisibility( const Vector &vOrigin, float fovDistanceAdjustFactor, bool &bIsOpenOnClient )
 {
 	// NOTE: We leave bIsOpenOnClient alone on purpose here. See the header for a description of why.
-	
+
 	if( m_portalNumber == -1 )
 		return false;
 
@@ -65,7 +65,3 @@ bool CFuncAreaPortalBase::UpdateVisibility( const Vector &vOrigin, float fovDist
 
 	return bOpen;
 }
-
-
-
-

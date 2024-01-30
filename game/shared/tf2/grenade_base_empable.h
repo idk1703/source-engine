@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ public:
 
 	virtual bool	CanTakeEMPDamage( void ) { return true; }
 	virtual bool	TakeEMPDamage( float duration );
-	
+
 	void	FizzleThink( void );
 
 private:

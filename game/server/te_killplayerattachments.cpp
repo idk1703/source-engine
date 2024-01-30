@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -28,7 +28,7 @@ public:
 	virtual			~CTEKillPlayerAttachments( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 	DECLARE_SERVERCLASS();
 
 public:
@@ -36,8 +36,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEKillPlayerAttachments::CTEKillPlayerAttachments( const char *name ) :
 	CBaseTempEntity( name )
@@ -46,16 +46,16 @@ CTEKillPlayerAttachments::CTEKillPlayerAttachments( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEKillPlayerAttachments::~CTEKillPlayerAttachments( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEKillPlayerAttachments::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -75,12 +75,12 @@ END_SEND_TABLE()
 static CTEKillPlayerAttachments g_TEKillPlayerAttachments( "KillPlayerAttachments" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//			player - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//			player -
 //-----------------------------------------------------------------------------
 void TE_KillPlayerAttachments( IRecipientFilter& filter, float delay,
 	int player )

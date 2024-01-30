@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -27,7 +27,7 @@ namespace vgui
 }
 
 //-----------------------------------------------------------------------------
-// CFileListManager 
+// CFileListManager
 //-----------------------------------------------------------------------------
 class CFileListManager : public vgui::ListPanel
 {
@@ -64,7 +64,7 @@ protected:
 
 
 //-----------------------------------------------------------------------------
-// CFileListManagerFrame 
+// CFileListManagerFrame
 //-----------------------------------------------------------------------------
 class CFileManagerFrame : public vgui::Frame
 {

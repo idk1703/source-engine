@@ -238,7 +238,7 @@ void CFinalSubPanel::OnZip()
 	const bool bOk = asset.Compile();
 
 	vgui::MessageBox *pMsgDialog = NULL;
-	
+
 	if ( bOk )
 	{
 		pMsgDialog = new vgui::MessageBox( "Compile Ok", "Compile Ok", this );

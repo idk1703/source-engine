@@ -81,13 +81,13 @@ CTFBaseRocket::CTFBaseRocket()
 {
 	m_vInitialVelocity.Init();
 	m_iDeflected = 0;
-	
+
 // Client specific.
 #ifdef CLIENT_DLL
 
 	m_flSpawnTime = 0.0f;
 	m_iCachedDeflect = false;
-	
+
 // Server specific.
 #else
 
@@ -107,7 +107,7 @@ CTFBaseRocket::~CTFBaseRocket()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseRocket::Precache( void )
 {
@@ -117,7 +117,7 @@ void CTFBaseRocket::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseRocket::Spawn( void )
 {
@@ -126,7 +126,7 @@ void CTFBaseRocket::Spawn( void )
 	// Precache.
 	Precache();
 	UseClientSideAnimation();
-	
+
 	if ( GetLauncher() )
 	{
 		int iMiniRocket = 0;
@@ -146,7 +146,7 @@ void CTFBaseRocket::Spawn( void )
 #else
 
 	//Derived classes must have set model.
-	Assert( GetModel() );	
+	Assert( GetModel() );
 
 	SetSolid( SOLID_BBOX );
 	SetMoveType( MOVETYPE_FLY, MOVECOLLIDE_FLY_CUSTOM );
@@ -181,7 +181,7 @@ void CTFBaseRocket::Spawn( void )
 #ifdef CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseRocket::PostDataUpdate( DataUpdateType_t type )
 {
@@ -216,7 +216,7 @@ void CTFBaseRocket::PostDataUpdate( DataUpdateType_t type )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseRocket::OnDataChanged(DataUpdateType_t updateType)
 {
@@ -224,14 +224,14 @@ void CTFBaseRocket::OnDataChanged(DataUpdateType_t updateType)
 
 	if ( updateType == DATA_UPDATE_CREATED || m_iCachedDeflect != GetDeflected() )
 	{
-		CreateTrails();		
+		CreateTrails();
 	}
 
 	m_iCachedDeflect = GetDeflected();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFBaseRocket::DrawModel( int flags )
 {
@@ -249,9 +249,9 @@ int CTFBaseRocket::DrawModel( int flags )
 #else
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTFBaseRocket *CTFBaseRocket::Create( CBaseEntity *pLauncher, const char *pszClassname, const Vector &vecOrigin, 
+CTFBaseRocket *CTFBaseRocket::Create( CBaseEntity *pLauncher, const char *pszClassname, const Vector &vecOrigin,
 									  const QAngle &vecAngles, CBaseEntity *pOwner )
 {
 	CTFBaseRocket *pRocket = static_cast<CTFBaseRocket*>( CBaseEntity::Create( pszClassname, vecOrigin, vecAngles, pOwner ) );
@@ -309,7 +309,7 @@ CTFBaseRocket *CTFBaseRocket::Create( CBaseEntity *pLauncher, const char *pszCla
 	}
 
 	Vector vecVelocity = vecForward * flLaunchSpeed;
-	pRocket->SetAbsVelocity( vecVelocity );	
+	pRocket->SetAbsVelocity( vecVelocity );
 	pRocket->SetupInitialTransmittedGrenadeVelocity( vecVelocity );
 
 	// Setup the initial angles.
@@ -324,7 +324,7 @@ CTFBaseRocket *CTFBaseRocket::Create( CBaseEntity *pLauncher, const char *pszCla
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseRocket::RocketTouch( CBaseEntity *pOther )
 {
@@ -351,7 +351,7 @@ void CTFBaseRocket::RocketTouch( CBaseEntity *pOther )
 // Purpose:
 //-----------------------------------------------------------------------------
 unsigned int CTFBaseRocket::PhysicsSolidMaskForEntity( void ) const
-{ 
+{
 	int teamContents = 0;
 
 	if ( !CanCollideWithTeammates() )
@@ -369,7 +369,7 @@ unsigned int CTFBaseRocket::PhysicsSolidMaskForEntity( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFBaseRocket::ShouldNotDetonate( void )
 {
@@ -377,7 +377,7 @@ bool CTFBaseRocket::ShouldNotDetonate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseRocket::Destroy( bool bBlinkOut, bool bBreakRocket )
 {
@@ -411,7 +411,7 @@ void CTFBaseRocket::Destroy( bool bBlinkOut, bool bBreakRocket )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseRocket::Explode( trace_t *pTrace, CBaseEntity *pOther )
 {
@@ -438,7 +438,7 @@ void CTFBaseRocket::Explode( trace_t *pTrace, CBaseEntity *pOther )
 	// Play explosion sound and effect.
 	Vector vecOrigin = GetAbsOrigin();
 	CPVSFilter filter( vecOrigin );
-	
+
 	// Halloween Spell Effect Check
 	int iHalloweenSpell = 0;
 	int iCustomParticleIndex = INVALID_STRING_INDEX;
@@ -460,7 +460,7 @@ void CTFBaseRocket::Explode( trace_t *pTrace, CBaseEntity *pOther )
 	{
 		ownerWeaponDefIndex = pWeapon->GetAttributeContainer()->GetItem()->GetItemDefIndex();
 	}
-	
+
 	int iLargeExplosion = 0;
 	CALL_ATTRIB_HOOK_INT_ON_OTHER( pPlayerOwner, iLargeExplosion, use_large_smoke_explosion );
 	if ( iLargeExplosion > 0 )
@@ -637,10 +637,10 @@ void CTFBaseRocket::DrawRadius( float flRadius )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-float CTFBaseRocket::GetRadius() 
-{ 
+float CTFBaseRocket::GetRadius()
+{
 	float flRadius = TF_ROCKET_RADIUS;
 	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( m_hLauncher, flRadius, mult_explosion_radius );
 
@@ -651,7 +651,7 @@ float CTFBaseRocket::GetRadius()
 		CALL_ATTRIB_HOOK_INT_ON_OTHER( pAttacker, iRocketSpecialist, rocket_specialist );
 		if ( iRocketSpecialist )
 		{
-			bool bDirectHit = ( GetEnemy() && GetEnemy()->GetTeamNumber() != pAttacker->GetTeamNumber() && 
+			bool bDirectHit = ( GetEnemy() && GetEnemy()->GetTeamNumber() != pAttacker->GetTeamNumber() &&
 								( GetEnemy()->IsPlayer() || GetEnemy()->MyCombatCharacterPointer() ) );
 			// If we have the Rocket Specialist attribute and hit an enemy combatant directly...
 			if ( bDirectHit )
@@ -676,7 +676,7 @@ float CTFBaseRocket::GetRadius()
 		}
 	}
 
-	return flRadius; 
+	return flRadius;
 }
 
 

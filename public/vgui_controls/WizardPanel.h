@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -73,11 +73,11 @@ public:
 	virtual void ResetDefaultButton();
 
 	// resets the sub panel history for the control
-	virtual void ResetHistory(); 
+	virtual void ResetHistory();
 
 	// returns a page by name
 	virtual WizardSubPanel *GetSubPanelByName(const char *pageName);
-	
+
 	virtual void ShowButtons(bool state);
 	virtual void GetClientArea(int &x, int &y, int &wide, int &tall);
 

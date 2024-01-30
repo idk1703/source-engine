@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -14,7 +14,7 @@
 #include "tier0/platform.h"
 
 // nonlinear transformations which may be applied to model vertices when rendering. must be powers of two
-enum DeformationType_t	
+enum DeformationType_t
 {
 	DEFORMATION_CLAMP_TO_BOX_IN_WORLDSPACE = 1,							// minxyz.minsoftness / maxxyz.maxsoftness
 };

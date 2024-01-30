@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -20,7 +20,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Forward declarations: 
+// Forward declarations:
 //-----------------------------------------------------------------------------
 class CDmxElement;
 
@@ -33,7 +33,7 @@ DECLARE_ATTRIBUTE_ARRAY_TYPE( CDmxElement*,	AT_ELEMENT_ARRAY,		"element_array" )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDmxAttribute
 {
@@ -63,7 +63,7 @@ public:
 	void SetValue( const CDmxAttribute *pAttribute );
 
 	// Method to set values in an array (just directly operate on the array)
-	// NOTE: This will create a new array of the appropriate type if 
+	// NOTE: This will create a new array of the appropriate type if
 	// the type doesn't match the current type
 	template< class T > CUtlVector< T >& GetArrayForEdit();
 
@@ -110,7 +110,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Inline methods 
+// Inline methods
 //-----------------------------------------------------------------------------
 inline DmAttributeType_t CDmxAttribute::GetType() const
 {
@@ -159,7 +159,7 @@ inline const T& CDmxAttribute::GetValue( ) const
 	return defaultValue;
 }
 
-template< class T > 
+template< class T >
 inline const CUtlVector< T >& CDmxAttribute::GetArray( ) const
 {
 	if ( CDmAttributeInfo< CUtlVector< T > >::AttributeType() == m_Type )
@@ -169,7 +169,7 @@ inline const CUtlVector< T >& CDmxAttribute::GetArray( ) const
 	return defaultArray;
 }
 
-template< class T > 
+template< class T >
 inline CUtlVector< T >& CDmxAttribute::GetArrayForEdit( )
 {
 	if ( CDmAttributeInfo< CUtlVector< T > >::AttributeType() == m_Type )

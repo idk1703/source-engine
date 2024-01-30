@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,18 +30,18 @@ CPortalCollideableEnumerator::CPortalCollideableEnumerator( const CProp_Portal *
 IterationRetval_t CPortalCollideableEnumerator::EnumElement( IHandleEntity *pHandleEntity )
 {
 	EHANDLE hEnt = pHandleEntity->GetRefEHandle();
-	
+
 	CBaseEntity *pEnt = hEnt.Get();
 	if( pEnt == NULL ) //I really never thought this would be necessary
 		return ITERATION_CONTINUE;
-	
+
 	if( hEnt == m_hTestPortal )
 		return ITERATION_CONTINUE; //ignore this portal
 
 	/*if( staticpropmgr->IsStaticProp( pHandleEntity ) )
 	{
 		//we're dealing with a static prop, which unfortunately doesn't have everything I want to use for checking
-		
+
 		ICollideable *pCollideable = pEnt->GetCollideable();
 
 		Vector vMins, vMaxs;
@@ -50,7 +50,7 @@ IterationRetval_t CPortalCollideableEnumerator::EnumElement( IHandleEntity *pHan
 		Vector ptTest( (m_vPlaneNormal.x > 0.0f)?(vMaxs.x):(vMins.x),
 						(m_vPlaneNormal.y > 0.0f)?(vMaxs.y):(vMins.y),
 						(m_vPlaneNormal.z > 0.0f)?(vMaxs.z):(vMins.z) );
-	
+
 		float fPtPlaneDist = m_vPlaneNormal.Dot( ptTest ) - m_fPlaneDist;
 		if( fPtPlaneDist <= 0.0f )
 			return ITERATION_CONTINUE;
@@ -85,19 +85,9 @@ IterationRetval_t CPortalCollideableEnumerator::EnumElement( IHandleEntity *pHan
 
 	//if we're down here, this entity needs to be added to our enumeration
 	Assert( m_iHandleCount < 1024 );
-	if( m_iHandleCount < 1024 ) 
+	if( m_iHandleCount < 1024 )
 		m_pHandles[m_iHandleCount] = pHandleEntity;
 	++m_iHandleCount;
 
 	return ITERATION_CONTINUE;
 }
-
-
-
-
-
-
-
-
-
-

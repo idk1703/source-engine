@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -40,7 +40,7 @@ void mxBitmapButton::redraw()
 
 	RECT rc;
 	GetClientRect( wnd, &rc );
-	
+
 	HDC dc = GetDC( wnd );
 
 	DrawBitmapToDC( dc, 0, 0, w(), h(), m_bmImage );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -101,7 +101,7 @@ FORCEINLINE unsigned int CDeltaBitsReader::ReadNextPropIndex()
 	Assert( m_pBuf );
 	// Expanded and optimized version of
 	// if ( m_pBuf->ReadOneBit() )
-	// { 
+	// {
 	//    m_iLastProp += 1 + m_pBuf->ReadUBitVar();
 	//    return m_iLastProp;
 	// }
@@ -209,7 +209,7 @@ inline CDeltaBitsWriter::~CDeltaBitsWriter()
 
 
 // ----------------------------------------------------------------------------- //
-// 
+//
 // CSendNode
 //
 // Each datatable gets a tree of CSendNodes. There is one CSendNode
@@ -226,8 +226,8 @@ public:
 
 	int				GetNumChildren() const;
 	CSendNode*		GetChild( int i ) const;
-	
-	
+
+
 	// Returns true if the specified prop is in this node or any of its children.
 	bool			IsPropInRecursiveProps( int i ) const;
 
@@ -240,7 +240,7 @@ public:
 	void			SetDataTableProxyIndex( unsigned short val );
 
 	// Similar to m_DataTableProxyIndex, but doesn't use DATATABLE_PROXY_INDEX_INVALID,
-	// so this can be used to index CDataTableStack::m_pProxies. 
+	// so this can be used to index CDataTableStack::m_pProxies.
 	unsigned short	GetRecursiveProxyIndex() const;
 	void			SetRecursiveProxyIndex( unsigned short val );
 
@@ -271,7 +271,7 @@ public:
 
 	// See GetDataTableProxyIndex().
 	unsigned short	m_DataTableProxyIndex;
-	
+
 	// See GetRecursiveProxyIndex().
 	unsigned short	m_RecursiveProxyIndex;
 };
@@ -279,7 +279,7 @@ public:
 
 inline int CSendNode::GetNumChildren() const
 {
-	return m_Children.Count(); 
+	return m_Children.Count();
 }
 
 inline CSendNode* CSendNode::GetChild( int i ) const
@@ -376,17 +376,17 @@ public:
 		unsigned short m_iFirstEntry;	// Index into m_ProxyPathEntries.
 		unsigned short m_nEntries;
 	};
-	
+
 	CUtlVector<CProxyPathEntry> m_ProxyPathEntries;	// For each proxy index, this is all the DT proxies that generate it.
 	CUtlVector<CProxyPath> m_ProxyPaths;			// CProxyPathEntries lookup into this.
-	
+
 	// These are what CSendNodes reference.
 	// These are actual data properties (ints, floats, etc).
 	CUtlVector<const SendProp*>	m_Props;
 
 	// Each datatable in a SendTable's tree gets a proxy index, and its properties reference that.
 	CUtlVector<unsigned char> m_PropProxyIndices;
-	
+
 	// CSendNode::m_iDatatableProp indexes this.
 	// These are the datatable properties (SendPropDataTable).
 	CUtlVector<const SendProp*>	m_DatatableProps;
@@ -407,7 +407,7 @@ public:
 	// This tells how many data table properties there are without SPROP_PROXY_ALWAYS_YES.
 	// Arrays allocated with this size can be indexed by CSendNode::GetDataTableProxyIndex().
 	int						m_nDataTableProxies;
-	
+
 	// Map prop offsets to indices for properties that can use it.
 	CUtlMap<unsigned short, unsigned short> m_PropOffsetToIndexMap;
 };
@@ -415,12 +415,12 @@ public:
 
 inline int CSendTablePrecalc::GetNumProps() const
 {
-	return m_Props.Count(); 
+	return m_Props.Count();
 }
 
 inline const SendProp* CSendTablePrecalc::GetProp( int i ) const
 {
-	return m_Props[i]; 
+	return m_Props[i];
 }
 
 inline int CSendTablePrecalc::GetNumDatatableProps() const
@@ -435,12 +435,12 @@ inline const SendProp* CSendTablePrecalc::GetDatatableProp( int i ) const
 
 inline SendTable* CSendTablePrecalc::GetSendTable() const
 {
-	return m_pSendTable; 
+	return m_pSendTable;
 }
 
 inline CSendNode* CSendTablePrecalc::GetRootNode()
 {
-	return &m_Root; 
+	return &m_Root;
 }
 
 inline int CSendTablePrecalc::GetNumDataTableProxies() const
@@ -452,7 +452,7 @@ inline int CSendTablePrecalc::GetNumDataTableProxies() const
 inline void CSendTablePrecalc::SetNumDataTableProxies( int count )
 {
 	m_nDataTableProxies = count;
-}					   
+}
 
 
 // ------------------------------------------------------------------------ //
@@ -463,7 +463,7 @@ inline void CSendTablePrecalc::SetNumDataTableProxies( int count )
 void DataTable_Warning( PRINTF_FORMAT_STRING const char *pInMessage, ... ) FMTFUNCTION( 1, 2 );
 bool ShouldWatchThisProp( const SendTable *pTable, int objectID, const char *pPropName );
 
-// Same as AreBitArraysEqual but does a trivial test to make sure the 
+// Same as AreBitArraysEqual but does a trivial test to make sure the
 // two arrays are equally sized.
 bool CompareBitArrays(
 	void const *pPacked1,

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -118,7 +118,7 @@ void CConveyorMaterialProxy::OnBind( void *pC_BaseEntity )
 
 	float sOffset = gpGlobals->curtime * cos( flAngle * ( M_PI / 180.0f ) ) * flRate;
 	float tOffset = gpGlobals->curtime * sin( flAngle * ( M_PI / 180.0f ) ) * flRate;
-	
+
 	// make sure that we are positive
 	if( sOffset < 0.0f )
 	{
@@ -128,11 +128,11 @@ void CConveyorMaterialProxy::OnBind( void *pC_BaseEntity )
 	{
 		tOffset += 1.0f + -( int )tOffset;
 	}
-			    
+
 	// make sure that we are in a [0,1] range
 	sOffset = sOffset - ( int )sOffset;
 	tOffset = tOffset - ( int )tOffset;
-	
+
 	if (m_pTextureScrollVar->GetType() == MATERIAL_VAR_TYPE_MATRIX)
 	{
 		VMatrix mat;

@@ -133,7 +133,7 @@ void CAutoSelComboBox::OnUpdateText(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 BOOL CAutoSelComboBox::OnEditUpdate(void)
 {
@@ -157,8 +157,8 @@ void CAutoSelComboBox::OnSetFocus(CWnd *pOldWnd)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwColor - 
+// Purpose:
+// Input  : dwColor -
 //-----------------------------------------------------------------------------
 void CAutoSelComboBox::SetTextColor(COLORREF dwColor)
 {
@@ -184,5 +184,3 @@ HBRUSH CAutoSelComboBox::OnCtlColor(CDC *pDC, CWnd *pWnd, UINT nCtlColor)
 
 	return(hBrush);
 }
-
-

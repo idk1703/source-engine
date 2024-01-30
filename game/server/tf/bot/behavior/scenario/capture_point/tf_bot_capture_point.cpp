@@ -124,7 +124,7 @@ ActionResult< CTFBot >	CTFBotCapturePoint::Update( CTFBot *me, float interval )
 
 			CTFBotPathCost cost( me, SAFEST_ROUTE );
 			m_path.Compute( me, point->GetAbsOrigin(), cost );
-			m_repathTimer.Start( RandomFloat( 2.0f, 3.0f ) ); 
+			m_repathTimer.Start( RandomFloat( 2.0f, 3.0f ) );
 		}
 
 		if ( TFGameRules()->IsInTraining() && !me->IsAnyPointBeingCaptured() )
@@ -228,4 +228,3 @@ QueryResultType CTFBotCapturePoint::ShouldHurry( const INextBot *bot ) const
 
 	return ANSWER_UNDEFINED;
 }
-

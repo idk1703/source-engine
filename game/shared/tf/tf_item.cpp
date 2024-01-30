@@ -24,8 +24,8 @@ END_NETWORK_TABLE()
 // Purpose: Identifier.
 //-----------------------------------------------------------------------------
 unsigned int CTFItem::GetItemID( void ) const
-{ 
-	return TF_ITEM_UNDEFINED; 
+{
+	return TF_ITEM_UNDEFINED;
 }
 
 //-----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ void CTFItem::Drop( CTFPlayer *pPlayer, bool bVisible, bool bThrown /*= false*/,
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFItem::ShouldDraw()
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -50,7 +50,7 @@ CPerfVisualBenchmark::~CPerfVisualBenchmark()
 bool CPerfVisualBenchmark::Init()
 {
 	RunInfo_t runInfo;
-	
+
 	runInfo.m_pVarName = "";
 	runInfo.m_pOnVal = "";
 	runInfo.m_pOffVal = "";
@@ -220,10 +220,10 @@ void CPerfVisualBenchmark::Start()
 	m_bWaiting = true;
 	m_bIsOn = true;									// showtime!
 	engine->ClientCmd_Unrestricted("cancelselect");				// exit menu and console
-//	engine->ClientCmd_Unrestricted("wait");				
+//	engine->ClientCmd_Unrestricted("wait");
 //	engine->ClientCmd_Unrestricted("setpause");					// pause the mofo
 	engine->ClientCmd_Unrestricted("host_timescale 0.0001");					// pause the mofo
-	
+
 }
 
 void CPerfVisualBenchmark::Stop()
@@ -235,7 +235,7 @@ void CPerfVisualBenchmark::Stop()
 	Print();
 	engine->ClientCmd_Unrestricted("host_timescale 0");					// pause the mofo
 //	engine->ClientCmd_Unrestricted("unpause");				// unpause the mofo
-//	engine->ClientCmd_Unrestricted("wait");				
+//	engine->ClientCmd_Unrestricted("wait");
 	engine->ClientCmd_Unrestricted("toggleconsole");
 }
 
@@ -281,7 +281,7 @@ void CPerfVisualBenchmark::PreRender( )
 	}
 
 	// next var
-	m_iCurVar++;				
+	m_iCurVar++;
 	if (m_iCurVar == m_RunInfo.Count())
 	{
 		Stop();
@@ -309,4 +309,3 @@ void CPerfVisualBenchmark::Print()				//  sort and print into console
 		m_RunInfo[curMax].m_flFPS=-1;
 	}
 }
-

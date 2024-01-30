@@ -37,7 +37,7 @@ PRECACHE_REGISTER(obj_resupply);
 ConVar	obj_resupply_health( "obj_resupply_health","100", FCVAR_NONE, "Resupply Station health" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectResupply::CObjectResupply()
 {
@@ -46,7 +46,7 @@ CObjectResupply::CObjectResupply()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectResupply::Spawn()
 {
@@ -73,7 +73,7 @@ void CObjectResupply::GetControlPanelInfo( int nPanelIndex, const char *&pPanelN
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectResupply::Precache()
 {
@@ -90,7 +90,7 @@ void CObjectResupply::Precache()
 
 
 //-----------------------------------------------------------------------------
-// Resupply Health 
+// Resupply Health
 //-----------------------------------------------------------------------------
 bool CObjectResupply::ResupplyHealth( CBaseTFPlayer *pPlayer, float flFraction )
 {
@@ -112,7 +112,7 @@ bool CObjectResupply::ResupplyHealth( CBaseTFPlayer *pPlayer, float flFraction )
 
 
 //-----------------------------------------------------------------------------
-// Handle commands sent from vgui panels on the client 
+// Handle commands sent from vgui panels on the client
 //-----------------------------------------------------------------------------
 bool CObjectResupply::ClientCommand( CBaseTFPlayer *pPlayer, const char *pCmd, ICommandArguments *pArg )
 {
@@ -133,7 +133,7 @@ bool CObjectResupply::ClientCommand( CBaseTFPlayer *pPlayer, const char *pCmd, I
 			return true;
 
 		// I can't do anything if I'm not active
-		if ( !ShouldBeActive() ) 
+		if ( !ShouldBeActive() )
 			return true;
 
 		// Do we have enough resources to activate it?
@@ -216,7 +216,7 @@ bool CObjectResupply::ClientCommand( CBaseTFPlayer *pPlayer, const char *pCmd, I
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectResupply::DestroyObject( void )
 {
@@ -228,8 +228,8 @@ void CObjectResupply::DestroyObject( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTeam - 
+// Purpose:
+// Input  : *pTeam -
 //-----------------------------------------------------------------------------
 void CObjectResupply::ChangeTeam( int iTeamNum )
 {
@@ -245,10 +245,10 @@ void CObjectResupply::ChangeTeam( int iTeamNum )
 		// Remove it from current team ( if it's in one ) and give it to new team
 		pExisting->RemoveResupply( this );
 	}
-		
+
 	// Change to new team
 	BaseClass::ChangeTeam( iTeamNum );
-	
+
 	// Add this object to the team's list
 	if (pTeam)
 	{
@@ -277,7 +277,7 @@ void CObjectResupply::SetupAttachedVersion( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CObjectResupply::CalculatePlacement( CBaseTFPlayer *pPlayer )
 {
@@ -294,7 +294,7 @@ bool CObjectResupply::CalculatePlacement( CBaseTFPlayer *pPlayer )
 	Vector vecForward = pPlayer->WorldSpaceCenter() - m_vecBuildOrigin;
 	SetLocalAngles( QAngle( 0, UTIL_VecToYaw( vecForward ), 0 ) );
 
-	// Is there something to attach to? 
+	// Is there something to attach to?
 	// Use my bounding box, not the build box, so I fit to the wall
 	UTIL_TraceLine( vecSrc, vecTarget, MASK_SOLID, pPlayer, COLLISION_GROUP_PLAYER_MOVEMENT, &tr);
 	//UTIL_TraceHull( vecSrc, vecTarget, WorldAlignMins(), WorldAlignMaxs(), MASK_SOLID, pPlayer, TFCOLLISION_GROUP_OBJECT, &tr );
@@ -304,7 +304,7 @@ bool CObjectResupply::CalculatePlacement( CBaseTFPlayer *pPlayer )
 	{
 		bTryToPlaceGroundVersion = true;
 	}
-	else 
+	else
 	{
 		// Make sure we're planting on the world
 		CBaseEntity *pEntity = tr.m_pEnt;

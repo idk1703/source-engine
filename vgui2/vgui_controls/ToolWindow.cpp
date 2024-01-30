@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,8 +22,8 @@ using namespace vgui;
 CUtlVector< ToolWindow * > ToolWindow::s_ToolWindows;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : int
 //-----------------------------------------------------------------------------
 int ToolWindow::GetToolWindowCount()
@@ -32,8 +32,8 @@ int ToolWindow::GetToolWindowCount()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : PropertySheet
 //-----------------------------------------------------------------------------
 ToolWindow *ToolWindow::GetToolWindow( int index )
@@ -45,10 +45,10 @@ ToolWindow *ToolWindow::GetToolWindow( int index )
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
 ToolWindow::ToolWindow(
-	Panel *parent, 
+	Panel *parent,
 	bool contextlabel,
-	IToolWindowFactory *factory /*= 0*/, 
-	Panel *page /*= NULL*/, 
+	IToolWindowFactory *factory /*= 0*/,
+	Panel *page /*= NULL*/,
 	char const *title /*= NULL */,
 	bool contextMenu /*=false*/,
 	bool inGlobalList /*= true*/ ) : BaseClass( parent, "ToolWindow" ),
@@ -96,7 +96,7 @@ ToolWindow::~ToolWindow()
 
 //-----------------------------------------------------------------------------
 // Purpose: Pass through to sheet
-// Input  :  - 
+// Input  :  -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool ToolWindow::IsDraggableTabContainer() const
@@ -136,8 +136,8 @@ void ToolWindow::AddPage(Panel *page, const char *title, bool contextMenu)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *page - 
+// Purpose:
+// Input  : *page -
 //-----------------------------------------------------------------------------
 void ToolWindow::RemovePage( Panel *page )
 {
@@ -176,16 +176,16 @@ void ToolWindow::ActivateBuildMode()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ToolWindow::RequestFocus(int direction)
 {
-    m_pPropertySheet->RequestFocus(direction);
+	m_pPropertySheet->RequestFocus(direction);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *factory - 
+// Purpose:
+// Input  : *factory -
 //-----------------------------------------------------------------------------
 void ToolWindow::SetToolWindowFactory( IToolWindowFactory *factory )
 {
@@ -193,8 +193,8 @@ void ToolWindow::SetToolWindowFactory( IToolWindowFactory *factory )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : IToolWindowFactory
 //-----------------------------------------------------------------------------
 IToolWindowFactory *ToolWindow::GetToolWindowFactory()
@@ -205,7 +205,7 @@ IToolWindowFactory *ToolWindow::GetToolWindowFactory()
 //-----------------------------------------------------------------------------
 // Purpose: To fill the space left by other tool windows
 // Input  :  edge: 0=all, 1=top, 2=right, 3=bottom, 4=left
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 
 void ToolWindow::Grow( int edge, int from_x, int from_y )
@@ -385,8 +385,8 @@ void ToolWindow::Grow( int edge, int from_x, int from_y )
 //          over titlebar: grows all edges ( from mouse pos )
 //          over edge grab area: grows just that edge
 //          over corner grab area: grows the two adjacent edges
-// Input  : 
-// Output : 
+// Input  :
+// Output :
 //-----------------------------------------------------------------------------
 
 void ToolWindow::GrowFromClick()
@@ -455,9 +455,9 @@ void ToolWindow::GrowFromClick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
-// Output : 
+// Purpose:
+// Input  :  -
+// Output :
 //-----------------------------------------------------------------------------
 
 void ToolWindow::OnMouseDoublePressed( MouseCode code )

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -94,7 +94,7 @@ private:
 		bool Less( const MorphVertexList_t& src1, const MorphVertexList_t& src2, void *pCtx );
 	};
 
-	// For each morph, store all target vertex indices 
+	// For each morph, store all target vertex indices
 	// List of all morphs affecting all vertices, used for constructing the morph only
 	CUtlSortVector<	MorphVertexList_t, VertexMorphDictLess > m_MorphLists;
 };
@@ -192,7 +192,7 @@ void CVertexMorphDict::SortDeltas()
 
 //-----------------------------------------------------------------------------
 //
-// Morph data class 
+// Morph data class
 //
 //-----------------------------------------------------------------------------
 class CMorph : public IMorphInternal, public ITextureRegenerator
@@ -324,7 +324,7 @@ private:
 
 	// The compiled vertex textures
 	ITextureInternal *m_pMorphTexture[MORPH_TEXTURE_COUNT];
-	
+
 	// The compiled vertex streams
 	IMesh* m_pMorphBuffer;
 
@@ -462,7 +462,7 @@ private:
 	ITextureInternal *m_pMorphWeightTexture;
 	IMaterial *m_pVisualizeMorphAccum;
 	IMaterial *m_pVisualizeMorphWeight;
-	IMaterial *m_pRenderMorphWeight; 
+	IMaterial *m_pRenderMorphWeight;
 };
 
 
@@ -576,7 +576,7 @@ int CMorph::ComputeMorphTextureSizeInBytes( ) const
 
 	// NOTE: Vertex size here is kind of a hack, but whatever.
 	int nVertexCount = CountStaticMeshVertices();
-	nSize += nVertexCount * 5 * sizeof(float);  
+	nSize += nVertexCount * 5 * sizeof(float);
 	return nSize;
 }
 
@@ -692,7 +692,7 @@ void CMorph::CreateAccumulatorMaterial( int nMaterialIndex )
 	// The pixel shader will interpret 65536 as 1.0, and 0 as 0.0. In the pixel shader,
 	// we will read the delta, multiply it by 2, and subtract 1 to get a -1 to 1 range.
 	// The float to fixed scale is applied prior to writing it in (delta * scale + 32768).
-	// Therefore the max representable positive value = 
+	// Therefore the max representable positive value =
 	//		65536 = max positive delta * scale + 32768
 	//		max positive delta = 32768 / scale
 	// This is what we will multiply our -1 to 1 values by in the pixel shader.
@@ -710,7 +710,7 @@ void CMorph::CreateAccumulatorMaterial( int nMaterialIndex )
 	}
 	Q_snprintf( pTemp, sizeof(pTemp), "[%d %d %d]", m_nTextureWidth, m_nTextureHeight, Get4TupleCount(m_Format) );
 	pVMTKeyValues->SetString( "$dimensions", pTemp );
-	
+
 	Q_snprintf( pTemp, sizeof(pTemp), "___AccumulateMorph%d.vmt", nMaterialIndex );
 	m_MorphAccumulationMaterial.Init( pTemp, pVMTKeyValues );
 }
@@ -748,7 +748,7 @@ int CMorph::DetermineTotalDeltaCount( const CUtlVector< MorphSegmentList_t > &mo
 		int nSegmentCount = list.Count();
 		for ( int j = 0; j < nSegmentCount; ++j )
 		{
-			nDeltaCount += list[j].m_nCount;	
+			nDeltaCount += list[j].m_nCount;
 		}
 	}
 	return nDeltaCount;
@@ -881,7 +881,7 @@ void CMorph::DisplayMorphStats()
 void CMorph::PackMorphData( )
 {
 	CUtlVector< MorphSegmentList_t > morphSegments;
-		  
+
 	BuildSegmentList( morphSegments );
 	ComputeTextureDimensions( morphSegments );
 	BuildQuadList( morphSegments );
@@ -895,8 +895,8 @@ void CMorph::PackMorphData( )
 		Q_snprintf( pTemp, sizeof(pTemp), "__morphtarget[%d]: pos/norm", s_nUniqueId );
 
 		int nTotal4Tuples = Get4TupleCount( m_Format );
-		ITexture *pTexture = g_pMaterialSystem->CreateProceduralTexture( pTemp, TEXTURE_GROUP_MORPH_TARGETS, 
-			m_nTextureWidth * nTotal4Tuples, m_nTextureHeight, IMAGE_FORMAT_RGBA16161616, 
+		ITexture *pTexture = g_pMaterialSystem->CreateProceduralTexture( pTemp, TEXTURE_GROUP_MORPH_TARGETS,
+			m_nTextureWidth * nTotal4Tuples, m_nTextureHeight, IMAGE_FORMAT_RGBA16161616,
 			TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_NODEBUGOVERRIDE |
 			TEXTUREFLAGS_SINGLECOPY | TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT | TEXTUREFLAGS_POINTSAMPLE );
 		m_pMorphTexture[MORPH_TEXTURE_POS_NORMAL_DELTA] = static_cast<ITextureInternal*>( pTexture );
@@ -906,8 +906,8 @@ void CMorph::PackMorphData( )
 	{
 		Q_snprintf( pTemp, sizeof(pTemp), "__morphtarget[%d]: side/speed", s_nUniqueId );
 
-		ITexture *pTexture = g_pMaterialSystem->CreateProceduralTexture( pTemp, TEXTURE_GROUP_MORPH_TARGETS, 
-			m_nTextureWidth, m_nTextureHeight, IMAGE_FORMAT_RGBA8888, 
+		ITexture *pTexture = g_pMaterialSystem->CreateProceduralTexture( pTemp, TEXTURE_GROUP_MORPH_TARGETS,
+			m_nTextureWidth, m_nTextureHeight, IMAGE_FORMAT_RGBA8888,
 			TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_NODEBUGOVERRIDE |
 			TEXTUREFLAGS_SINGLECOPY | TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT | TEXTUREFLAGS_POINTSAMPLE );
 		m_pMorphTexture[MORPH_TEXTURE_SPEED_SIDE_MAP] = static_cast<ITextureInternal*>( pTexture );
@@ -938,7 +938,7 @@ void CMorph::PackMorphData( )
 //-----------------------------------------------------------------------------
 void CMorph::WriteDeltaPositionNormalToTexture( CPixelWriter &pixelWriter, int x, int y, const MorphVertexInfo_t &info )
 {
-	// NOTE: 0 = -max range, 32767 = 0, 65534, 65535 = maxrange. 
+	// NOTE: 0 = -max range, 32767 = 0, 65534, 65535 = maxrange.
 	// This way we can encode +/- maxrange and 0 exactly
 	Assert ( m_Format & ( MORPH_POSITION | MORPH_WRINKLE | MORPH_NORMAL ) );
 
@@ -1055,14 +1055,14 @@ void CMorph::BuildSegmentList( CUtlVector< MorphSegmentList_t > &morphSegments )
 			{
 				// Vertical overflow, non-contiguous destination verts, or contiguous dest
 				// verts which happen to lie in different columns are the break conditions
-				if ( ( nLastDestIndex < 0 ) || ( info.m_nVertexId > nLastDestIndex + MIN_SEGMENT_GAP_SIZE ) || 
+				if ( ( nLastDestIndex < 0 ) || ( info.m_nVertexId > nLastDestIndex + MIN_SEGMENT_GAP_SIZE ) ||
 					 ( info.m_nVertexId / nDestTextureHeight != nLastDestIndex / nDestTextureHeight ) )
 				{
 					list.AddToTail( segment );
 					nLastDestIndex = -1;
 				}
 			}
-				  
+
 			// Start new segment, or append to existing segment
 			if ( nLastDestIndex < 0 )
 			{
@@ -1071,7 +1071,7 @@ void CMorph::BuildSegmentList( CUtlVector< MorphSegmentList_t > &morphSegments )
 				segment.m_nCount = 1;
 				++nSrcIndex;
 			}
-			else 
+			else
 			{
 				int nSegmentCount = info.m_nVertexId - nLastDestIndex;
 				segment.m_nCount += nSegmentCount;
@@ -1199,7 +1199,7 @@ void CMorph::CreateStaticMesh()
 
 	// NOTE: zero index count implies no index buffer
 	CMeshBuilder meshBuilder;
-	meshBuilder.Begin( m_pMorphBuffer, MATERIAL_TRIANGLES, nVertexCount, 0 ); 
+	meshBuilder.Begin( m_pMorphBuffer, MATERIAL_TRIANGLES, nVertexCount, 0 );
 
 	int nMorphCount = m_MorphQuads.Count();
 	for ( int i = 0; i < nMorphCount; ++i )
@@ -1216,23 +1216,23 @@ void CMorph::CreateStaticMesh()
 			int dy = quad.m_nFirstDest - dx * nDestTextureHeight;
 			sx *= n4TupleCount; dx *= n4TupleCount;
 
-			meshBuilder.TexCoord4f( 0, sx * flOOTexWidth, sy * flOOTexHeight, 
-				( dx - 0.5f ) * flOODestWidth, ( dy - 0.5f ) * flOODestHeight );	// Stores the source to read from 
+			meshBuilder.TexCoord4f( 0, sx * flOOTexWidth, sy * flOOTexHeight,
+				( dx - 0.5f ) * flOODestWidth, ( dy - 0.5f ) * flOODestHeight );	// Stores the source to read from
 			meshBuilder.TexCoord1f( 1, i );
 			meshBuilder.AdvanceVertex();
 
-			meshBuilder.TexCoord4f( 0, sx * flOOTexWidth, ( sy + quad.m_nCount ) * flOOTexHeight, 
-				( dx - 0.5f ) * flOODestWidth, ( dy + quad.m_nCount - 0.5f ) * flOODestHeight );	// Stores the source to read from 
+			meshBuilder.TexCoord4f( 0, sx * flOOTexWidth, ( sy + quad.m_nCount ) * flOOTexHeight,
+				( dx - 0.5f ) * flOODestWidth, ( dy + quad.m_nCount - 0.5f ) * flOODestHeight );	// Stores the source to read from
 			meshBuilder.TexCoord1f( 1, i );
 			meshBuilder.AdvanceVertex();
 
-			meshBuilder.TexCoord4f( 0, (sx + n4TupleCount) * flOOTexWidth, ( sy + quad.m_nCount ) * flOOTexHeight, 
-				( dx + n4TupleCount - 0.5f ) * flOODestWidth, ( dy + quad.m_nCount - 0.5f ) * flOODestHeight );	// Stores the source to read from 
+			meshBuilder.TexCoord4f( 0, (sx + n4TupleCount) * flOOTexWidth, ( sy + quad.m_nCount ) * flOOTexHeight,
+				( dx + n4TupleCount - 0.5f ) * flOODestWidth, ( dy + quad.m_nCount - 0.5f ) * flOODestHeight );	// Stores the source to read from
 			meshBuilder.TexCoord1f( 1, i );
 			meshBuilder.AdvanceVertex();
 
-			meshBuilder.TexCoord4f( 0, (sx + n4TupleCount) * flOOTexWidth, sy * flOOTexHeight, 
-				( dx + n4TupleCount - 0.5f ) * flOODestWidth, ( dy - 0.5f ) * flOODestHeight );	// Stores the source to read from 
+			meshBuilder.TexCoord4f( 0, (sx + n4TupleCount) * flOOTexWidth, sy * flOOTexHeight,
+				( dx + n4TupleCount - 0.5f ) * flOODestWidth, ( dy - 0.5f ) * flOODestHeight );	// Stores the source to read from
 			meshBuilder.TexCoord1f( 1, i );
 			meshBuilder.AdvanceVertex();
 		}
@@ -1257,7 +1257,7 @@ void CMorph::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *pVTFTexture
 			break;
 	}
 	Assert( nTextureType < MORPH_TEXTURE_COUNT );
-	MorphPixelWriter_t pWriteFuncs[MORPH_TEXTURE_COUNT] = 
+	MorphPixelWriter_t pWriteFuncs[MORPH_TEXTURE_COUNT] =
 	{
 		&CMorph::WriteDeltaPositionNormalToTexture,
 		&CMorph::WriteSideSpeedToTexture,
@@ -1502,7 +1502,7 @@ void CMorph::RenderMorphQuads( IMatRenderContext *pRenderContext, int nRenderId,
 //-----------------------------------------------------------------------------
 static inline bool IsMorphWeightZero( const MorphWeight_t &weight )
 {
-	return ( FloatMakePositive( weight.m_pWeight[MORPH_WEIGHT] ) < 0.001 && 
+	return ( FloatMakePositive( weight.m_pWeight[MORPH_WEIGHT] ) < 0.001 &&
 			FloatMakePositive( weight.m_pWeight[MORPH_WEIGHT_LAGGED] ) < 0.001 &&
 			FloatMakePositive( weight.m_pWeight[MORPH_WEIGHT_STEREO] ) < 0.001 &&
 			FloatMakePositive( weight.m_pWeight[MORPH_WEIGHT_STEREO_LAGGED] ) < 0.001 );
@@ -1553,7 +1553,7 @@ bool CMorph::RenderMorphWeights( IMatRenderContext *pRenderContext, int nRenderI
 	}
 
 	int *pWeightIndices = (int*)_alloca( nCountToCopy * sizeof(int) );
-	int nIndexCount = BuildNonZeroMorphList( pWeightIndices, nCountToCopy, pWeights ); 
+	int nIndexCount = BuildNonZeroMorphList( pWeightIndices, nCountToCopy, pWeights );
 	if ( nIndexCount == 0 )
 		return false;
 
@@ -1602,7 +1602,7 @@ void CMorph::AccumulateMorph( int nRenderId )
 
 	// Build a non-zero weight list and a total quad count
 	int *pTargets = (int*)_alloca( m_nMaxMorphTargetCount * sizeof(int) );
-	int nTargetCount = BuildNonZeroMorphList( pTargets, m_nMaxMorphTargetCount, m_pRenderMorphWeight ); 
+	int nTargetCount = BuildNonZeroMorphList( pTargets, m_nMaxMorphTargetCount, m_pRenderMorphWeight );
 
 	// Count the total number of quads to draw
 	int nTotalQuadCount = 0;
@@ -1657,7 +1657,7 @@ int CMorphMgrRenderContext::GetRenderId( CMorph* pMorph )
 	return -1;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 //
 // Morph manager implementation starts here
@@ -1686,7 +1686,7 @@ CMorphMgr::CMorphMgr()
 //-----------------------------------------------------------------------------
 bool CMorphMgr::ShouldAllocateScratchTextures()
 {
-	return g_pMaterialSystemHardwareConfig->HasFastVertexTextures(); 
+	return g_pMaterialSystemHardwareConfig->HasFastVertexTextures();
 }
 
 
@@ -1713,11 +1713,11 @@ void CMorphMgr::AllocateScratchTextures()
 	int nMultFactor = sqrt( (float)CMorphMgrRenderContext::MAX_MODEL_MORPHS );
 	m_nSubrectVerticalCount = nMultFactor;
 
-	m_pMorphAccumTexture = TextureManager()->CreateRenderTargetTexture( "_rt_MorphAccumulator", 
-		m_nAccumulatorWidth * nMultFactor, m_nAccumulatorHeight * nMultFactor, 
-		RT_SIZE_OFFSCREEN, fmt, RENDER_TARGET_NO_DEPTH, 
+	m_pMorphAccumTexture = TextureManager()->CreateRenderTargetTexture( "_rt_MorphAccumulator",
+		m_nAccumulatorWidth * nMultFactor, m_nAccumulatorHeight * nMultFactor,
+		RT_SIZE_OFFSCREEN, fmt, RENDER_TARGET_NO_DEPTH,
 		TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_NODEBUGOVERRIDE |
-		TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT | TEXTUREFLAGS_POINTSAMPLE | TEXTUREFLAGS_VERTEXTEXTURE, 
+		TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT | TEXTUREFLAGS_POINTSAMPLE | TEXTUREFLAGS_VERTEXTEXTURE,
 		0 );
 	m_pMorphAccumTexture->IncrementReferenceCount();
 
@@ -1734,11 +1734,11 @@ void CMorphMgr::AllocateScratchTextures()
 
 	if ( !m_bUsingConstantRegisters )
 	{
-		m_pMorphWeightTexture = TextureManager()->CreateRenderTargetTexture( "_rt_MorphWeight", 
-			m_nWeightWidth * nMultFactor, m_nWeightHeight * nMultFactor, 
-			RT_SIZE_OFFSCREEN, fmt, RENDER_TARGET_NO_DEPTH, 
+		m_pMorphWeightTexture = TextureManager()->CreateRenderTargetTexture( "_rt_MorphWeight",
+			m_nWeightWidth * nMultFactor, m_nWeightHeight * nMultFactor,
+			RT_SIZE_OFFSCREEN, fmt, RENDER_TARGET_NO_DEPTH,
 			TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_NODEBUGOVERRIDE |
-			TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT | TEXTUREFLAGS_POINTSAMPLE, 
+			TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT | TEXTUREFLAGS_POINTSAMPLE,
 			0 );
 		m_pMorphWeightTexture->IncrementReferenceCount();
 	}
@@ -1987,7 +1987,7 @@ void CMorphMgr::DebugMorphAccumulator( IMatRenderContext *pRenderContext )
 	static int s_nMorphIndex = 0;
 
 	int pSubRect[4];
-	ComputeAccumulatorSubrect( &pSubRect[0], &pSubRect[1], &pSubRect[2], &pSubRect[3], s_nMorphIndex ); 
+	ComputeAccumulatorSubrect( &pSubRect[0], &pSubRect[1], &pSubRect[2], &pSubRect[3], s_nMorphIndex );
 
 	if ( s_nMaxDisplay < 0 )
 	{
@@ -2030,7 +2030,7 @@ void CMorphMgr::DebugMorphWeights( IMatRenderContext *pRenderContext )
 	static int s_nMorphIndex = 0;
 
 	int pSubRect[4];
-	ComputeWeightSubrect( &pSubRect[0], &pSubRect[1], &pSubRect[2], &pSubRect[3], s_nMorphIndex ); 
+	ComputeWeightSubrect( &pSubRect[0], &pSubRect[1], &pSubRect[2], &pSubRect[3], s_nMorphIndex );
 
 	if ( s_nMaxDisplay < 0 )
 	{
@@ -2160,21 +2160,21 @@ void CMorphMgr::BeginMorphAccumulation( IMorphMgrRenderContext *pIRenderContext 
 
 	if ( !m_bUsingConstantRegisters )
 	{
-		// FIXME: We could theoretically avoid pushing this if we copied off all the 
+		// FIXME: We could theoretically avoid pushing this if we copied off all the
 		// weights and set the weight texture only at the end if any non-zero weights
 		// were sent down
 		pRenderContext->PushRenderTargetAndViewport( m_pMorphWeightTexture );
 
 #ifdef _DEBUG
 		// NOTE: No need to clear the texture; we will only be reading out of that
-		// texture at points where we've rendered to in this pass. 
+		// texture at points where we've rendered to in this pass.
 		// But, we'll do it for debugging reasons.
 		// I believe this pattern of weights is the least likely to occur naturally.
 		pRenderContext->ClearColor4ub( 0, 0, 0, 0 );
 		pRenderContext->ClearBuffers( true, false, false );
 #endif
 	}
-	 
+
 #ifdef DBGFLAG_ASSERT
 	pMorphRenderContext->m_bInMorphAccumulation = true;
 #endif
@@ -2221,7 +2221,7 @@ void CMorphMgr::EndMorphAccumulation( IMorphMgrRenderContext *pIRenderContext )
 	DebugMorphAccumulator( pRenderContext );
 #endif
 	pRenderContext->PopRenderTargetAndViewport();
-	 
+
 #ifdef _DEBUG
 	if ( mat_drawmorphweights.GetInt() )
 	{
@@ -2247,7 +2247,7 @@ void CMorphMgr::EndMorphAccumulation( IMorphMgrRenderContext *pIRenderContext )
 #endif
 }
 
-						 
+
 //-----------------------------------------------------------------------------
 // Accumulates a morph target into the morph texture
 //-----------------------------------------------------------------------------
@@ -2265,7 +2265,7 @@ void CMorphMgr::AccumulateMorph( IMorphMgrRenderContext *pIRenderContext, IMorph
 	}
 
 	CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
-	
+
 	CMorph *pMorphInternal = static_cast<CMorph*>( pMorph );
 	if ( !m_bUsingConstantRegisters )
 	{
@@ -2277,4 +2277,3 @@ void CMorphMgr::AccumulateMorph( IMorphMgrRenderContext *pIRenderContext, IMorph
 		++pMorphRenderContext->m_nMorphCount;
 	}
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: The TF Game rules 
+// Purpose: The TF Game rules
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@
 	#include "c_tfc_player.h"
 
 #else
-	
+
 	#include "voice_gamemgr.h"
 	#include "team.h"
 	#include "tfc_bot_temp.h"
@@ -107,7 +107,7 @@ CTFCGameRules::CTFCGameRules()
 
 #else
 
-	
+
 	int cease_fire;
 	int no_cease_fire_text;
 
@@ -155,18 +155,18 @@ CTFCGameRules::CTFCGameRules()
 	// --------------------------------------------------------------------------------------------------- //
 	// Global helper functions.
 	// --------------------------------------------------------------------------------------------------- //
-	
+
 	// World.cpp calls this but we don't use it in TFC.
 	void InitBodyQue()
 	{
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	CTFCGameRules::~CTFCGameRules()
 	{
-		// Note, don't delete each team since they are in the gEntList and will 
+		// Note, don't delete each team since they are in the gEntList and will
 		// automatically be deleted from there, instead.
 		g_Teams.Purge();
 	}
@@ -213,7 +213,7 @@ CTFCGameRules::CTFCGameRules()
 			falloff = 1.0;
 
 		int bInWater = (UTIL_PointContents ( vecSrc ) & MASK_WATER) ? true : false;
-		
+
 		vecSrc.z += 1;// in case grenade is lying on the ground
 
 		// iterate on all entities in the vicinity.
@@ -273,7 +273,7 @@ CTFCGameRules::CTFCGameRules()
 					// decrease damage for an ent that's farther from the bomb.
 					flAdjustedDamage = vecToTarget.Length() * falloff;
 					flAdjustedDamage = info.GetDamage() - flAdjustedDamage;
-				
+
 					if ( flAdjustedDamage > 0 )
 					{
 						CTakeDamageInfo adjustedInfo = info;
@@ -296,8 +296,8 @@ CTFCGameRules::CTFCGameRules()
 						}
 
 						pEntity->TakeDamage( adjustedInfo );
-			
-						// Now hit all triggers along the way that respond to damage... 
+
+						// Now hit all triggers along the way that respond to damage...
 						pEntity->TraceAttackToTriggers( adjustedInfo, vecSrc, vecEndPos, dir );
 					}
 				}
@@ -308,7 +308,7 @@ CTFCGameRules::CTFCGameRules()
 	void CTFCGameRules::Think()
 	{
 		Timer_UpdateAll();
-		
+
 		BaseClass::Think();
 	}
 
@@ -347,14 +347,14 @@ bool CTFCGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 		// swap so that lowest is always first
 		swap(collisionGroup0,collisionGroup1);
 	}
-	
+
 	//Don't stand on COLLISION_GROUP_WEAPONs
 	if( collisionGroup0 == COLLISION_GROUP_PLAYER_MOVEMENT &&
 		collisionGroup1 == COLLISION_GROUP_WEAPON )
 	{
 		return false;
 	}
-	
+
 	if ( collisionGroup0 == COLLISION_GROUP_PLAYER )
 	{
 		// Players don't collide with objects or other players
@@ -378,7 +378,7 @@ bool CTFCGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 		}
 	}
 
-	return BaseClass::ShouldCollide( collisionGroup0, collisionGroup1 ); 
+	return BaseClass::ShouldCollide( collisionGroup0, collisionGroup1 );
 }
 
 
@@ -392,7 +392,7 @@ bool CTFCGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 #define BULLET_MASS_GRAINS_TO_KG(grains)	lbs2kg(BULLET_MASS_GRAINS_TO_LB(grains))
 
 // exaggerate all of the forces, but use real numbers to keep them consistent
-#define BULLET_IMPULSE_EXAGGERATION			1	
+#define BULLET_IMPULSE_EXAGGERATION			1
 
 // convert a velocity in ft/sec and a mass in grains to an impulse in kg in/s
 #define BULLET_IMPULSE(grains, ftpersec)	((ftpersec)*12*BULLET_MASS_GRAINS_TO_KG(grains)*BULLET_IMPULSE_EXAGGERATION)
@@ -406,7 +406,7 @@ CAmmoDef* GetAmmoDef()
 	if ( !bInitted )
 	{
 		bInitted = true;
-		
+
 		// Start at 1 here and skip the dummy ammo type to make CAmmoDef use the same indices
 		// as our #defines.
 		for ( int i=1; i < TFC_NUM_AMMO_TYPES; i++ )
@@ -418,5 +418,3 @@ CAmmoDef* GetAmmoDef()
 
 	return &def;
 }
-
-

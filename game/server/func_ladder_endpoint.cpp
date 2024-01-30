@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -40,7 +40,7 @@ bool CFuncLadderEndPoint::Validate()
 {
 	// Find the the other end
 	Vector startPos = GetAbsOrigin();
-	
+
 	CFuncLadderEndPoint *other = dynamic_cast< CFuncLadderEndPoint * >( GetNextTarget() );
 	if ( !other )
 	{

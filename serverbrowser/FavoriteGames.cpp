@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -12,7 +12,7 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CFavoriteGames::CFavoriteGames(vgui::Panel *parent) : 
+CFavoriteGames::CFavoriteGames(vgui::Panel *parent) :
 	CBaseGamesPage(parent, "FavoriteGames", eFavoritesServer )
 {
 	m_bRefreshOnListReload = false;
@@ -62,7 +62,7 @@ bool CFavoriteGames::SupportsItem(InterfaceItem_e item)
 
 	case ADDCURRENTSERVER:
 		return !IsSteam() && BFiltersVisible();
-	
+
 	case GETNEWLIST:
 	default:
 		return false;
@@ -112,7 +112,7 @@ void CFavoriteGames::OnOpenContextMenu(int itemID)
 		// no selected rows, so don't display default stuff in menu
 		menu->ShowMenu( this,(uint32)-1, false, false, false, false );
 	}
-	
+
 	menu->AddMenuItem("AddServerByName", "#ServerBrowser_AddServerByIP", new KeyValues("AddServerByName"), this);
 }
 
@@ -130,16 +130,16 @@ void CFavoriteGames::OnRemoveFromFavorites()
 	{
 		int itemID = m_pGameList->GetSelectedItem( iGame );
 		int serverID = m_pGameList->GetItemData(itemID)->userData;
-		
+
 		gameserveritem_t *pServer = steamapicontext->SteamMatchmakingServers()->GetServerDetails( m_hRequest, serverID );
-		
+
 		if ( pServer )
 		{
 			steamapicontext->SteamMatchmaking()->RemoveFavoriteGame( pServer->m_nAppID, pServer->m_NetAdr.GetIP(), pServer->m_NetAdr.GetConnectionPort(), pServer->m_NetAdr.GetQueryPort(), k_unFavoriteFlagFavorite );
 		}
 	}
 
-	UpdateStatus();	
+	UpdateStatus();
 	InvalidateLayout();
 	Repaint();
 }
@@ -179,7 +179,7 @@ void CFavoriteGames::OnAddCurrentServer()
 
 //-----------------------------------------------------------------------------
 // Purpose: Parse posted messages
-//			 
+//
 //-----------------------------------------------------------------------------
 void CFavoriteGames::OnCommand(const char *command)
 {

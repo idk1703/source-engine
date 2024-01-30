@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,9 +36,9 @@ struct InvalidReason
 {
 	InvalidReason() {}
 
-	bool IsValid() const 
-	{ 
-		return m_bits.IsAllClear();	
+	bool IsValid() const
+	{
+		return m_bits.IsAllClear();
 	}
 
 	CBitVec< NUM_INVALID_REASONS > m_bits;

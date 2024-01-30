@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,7 +15,7 @@
 #include "engine/ivdebugoverlay.h"
 #include "solidsetdefaults.h"
 //CLIENT
-#ifdef CLIENT_DLL 
+#ifdef CLIENT_DLL
 #include "c_fire_smoke.h"
 #include "c_entitydissolve.h"
 #include "engine/IEngineSound.h"
@@ -159,7 +159,7 @@ void RagdollSetupAnimatedFriction( IPhysicsEnvironment *pPhysEnv, ragdoll_t *rag
 		{
 			const char *pBlock = pParse->GetCurrentBlockName();
 
-			if ( !strcmpi( pBlock, "animatedfriction") ) 
+			if ( !strcmpi( pBlock, "animatedfriction") )
 			{
 				CRagdollAnimatedFriction friction( ragdoll );
 				pParse->ParseCustom( (void*)&friction, &friction );
@@ -228,7 +228,7 @@ static void RagdollAddConstraint( IPhysicsEnvironment *pPhysEnv, ragdoll_t &ragd
 		ragdollelement_t &childElement = ragdoll.list[constraint.childIndex];
 		// save parent index
 		childElement.parentIndex = constraint.parentIndex;
-	
+
 		if ( params.jointFrictionScale > 0 )
 		{
 			for ( int k = 0; k < 3; k++ )
@@ -268,14 +268,14 @@ static void RagdollCreateObjects( IPhysicsEnvironment *pPhysEnv, ragdoll_t &ragd
 	ragdoll.allowStretch = params.allowStretch;
 	memset( ragdoll.list, 0, sizeof(ragdoll.list) );
 	memset( &ragdoll.animfriction, 0, sizeof(ragdoll.animfriction) );
-	
+
 	if ( !params.pCollide || params.pCollide->solidCount > RAGDOLL_MAX_ELEMENTS )
 		return;
 
 	constraint_groupparams_t group;
 	group.Defaults();
 	ragdoll.pGroup = pPhysEnv->CreateConstraintGroup( group );
- 
+
 	IVPhysicsKeyParser *pParse = physcollision->VPhysicsKeyParserCreate( params.pCollide->pKeyValues );
 	while ( !pParse->Finished() )
 	{
@@ -299,7 +299,7 @@ static void RagdollCreateObjects( IPhysicsEnvironment *pPhysEnv, ragdoll_t &ragd
 			CRagdollCollisionRules rules(pSet);
 			pParse->ParseCustom( (void *)&rules, &rules );
 		}
-		else if ( !strcmpi( pBlock, "animatedfriction") ) 
+		else if ( !strcmpi( pBlock, "animatedfriction") )
 		{
 			CRagdollAnimatedFriction friction( &ragdoll );
 			pParse->ParseCustom( (void*)&friction, &friction );
@@ -359,14 +359,14 @@ void RagdollSetupCollisions( ragdoll_t &ragdoll, vcollide_t *pCollide, int model
 			}
 			for ( i = 0; i < ragdoll.listCount; i++ )
 			{
-  				int parent = ragdoll.list[i].parentIndex;
+				int parent = ragdoll.list[i].parentIndex;
 				if ( parent >= 0 )
 				{
-  					Assert( ragdoll.list[i].pObject );
-  					Assert( ragdoll.list[i].pConstraint );
+					Assert( ragdoll.list[i].pObject );
+					Assert( ragdoll.list[i].pConstraint );
 					pSet->DisableCollisions( i, parent );
 				}
- 			}
+			}
 		}
 	}
 }
@@ -411,7 +411,7 @@ bool RagdollCreate( ragdoll_t &ragdoll, const ragdollparams_t &params, IPhysicsE
 		return false;
 
 	int forceBone = params.forceBoneIndex;
-	
+
 	int i;
 	float totalMass = 0;
 	for ( i = 0; i < ragdoll.listCount; i++ )
@@ -424,7 +424,7 @@ bool RagdollCreate( ragdoll_t &ragdoll, const ragdollparams_t &params, IPhysicsE
 	Vector nudgeForce = params.forceVector;
 	Vector forcePosition = params.forcePosition;
 	// UNDONE: Test scaling the force by total mass on all bones
-	
+
 	Assert( forceBone < ragdoll.listCount );
 
 	if ( forceBone >= 0 && forceBone < ragdoll.listCount )
@@ -463,7 +463,7 @@ void RagdollApplyAnimationAsVelocity( ragdoll_t &ragdoll, const matrix3x4_t *pPr
 		AngularImpulse angVel;
 		int boneIndex = ragdoll.boneIndex[i];
 		CalcBoneDerivatives( velocity, angVel, pPrevBones[boneIndex], pCurrentBones[boneIndex], dt );
-		
+
 		AngularImpulse localAngVelocity;
 
 		// Angular velocity is always applied in local space in vphysics
@@ -647,14 +647,14 @@ void RagdollSolveSeparation( ragdoll_t &ragdoll, CBaseEntity *pEntity )
 			{
 				// this fixes a bug in ep2 with antlion grubs, but causes problems in TF2 - revisit, but disable for TF now
 #if !defined(TF_CLIENT_DLL)
-				// heuristic: guess that anything separated and small mass ratio is in some state that's 
+				// heuristic: guess that anything separated and small mass ratio is in some state that's
 				// keeping the solver from fixing it
 				float mass = element.pObject->GetMass();
 				float massParent = ragdoll.list[element.parentIndex].pObject->GetMass();
 
 				if ( mass*2.0f < massParent )
 				{
-					// if this is <0.5 mass of parent and still separated it's attached to something heavy or 
+					// if this is <0.5 mass of parent and still separated it's attached to something heavy or
 					// in a bad state
 					needsFix[i] = 1;
 					++fixCount;
@@ -733,10 +733,10 @@ bool ShouldRemoveThisRagdoll( CBaseAnimating *pRagdoll )
 #ifdef CLIENT_DLL
 
 	/* we no longer ignore enemies just because they are on fire -- a ragdoll in front of me
-	   is always a higher priority for retention than a flaming zombie behind me. At the 
-	   time I put this in, the ragdolls do clean up their own effects if culled via SUB_Remove().
-	   If you're encountering trouble with ragdolls leaving effects behind, try renabling the code below.
-    /////////////////////
+		is always a higher priority for retention than a flaming zombie behind me. At the
+		time I put this in, the ragdolls do clean up their own effects if culled via SUB_Remove().
+		If you're encountering trouble with ragdolls leaving effects behind, try renabling the code below.
+	/////////////////////
 	//Just ignore it until we're done burning/dissolving.
 	if ( pRagdoll->GetEffectEntity() )
 		return false;
@@ -784,15 +784,15 @@ bool ShouldRemoveThisRagdoll( CBaseAnimating *pRagdoll )
 	if( !UTIL_FindClientInPVS( pRagdoll->edict() ) )
 	{
 		if ( g_debug_ragdoll_removal.GetBool() )
-			 NDebugOverlay::Line( pRagdoll->GetAbsOrigin(), pRagdoll->GetAbsOrigin() + Vector( 0, 0, 64 ), 0, 255, 0, true, 5 );
+			NDebugOverlay::Line( pRagdoll->GetAbsOrigin(), pRagdoll->GetAbsOrigin() + Vector( 0, 0, 64 ), 0, 255, 0, true, 5 );
 
 		return true;
 	}
 	else if( !pPlayer->FInViewCone( pRagdoll ) )
 	{
 		if ( g_debug_ragdoll_removal.GetBool() )
-			 NDebugOverlay::Line( pRagdoll->GetAbsOrigin(), pRagdoll->GetAbsOrigin() + Vector( 0, 0, 64 ), 0, 0, 255, true, 5 );
-		
+			NDebugOverlay::Line( pRagdoll->GetAbsOrigin(), pRagdoll->GetAbsOrigin() + Vector( 0, 0, 64 ), 0, 0, 255, true, 5 );
+
 		return true;
 	}
 
@@ -805,7 +805,7 @@ bool ShouldRemoveThisRagdoll( CBaseAnimating *pRagdoll )
 
 
 //-----------------------------------------------------------------------------
-// Cull stale ragdolls. There is an ifdef here: one version for episodic, 
+// Cull stale ragdolls. There is an ifdef here: one version for episodic,
 // one for everything else.
 //-----------------------------------------------------------------------------
 #if HL2_EPISODIC
@@ -861,7 +861,7 @@ void CRagdollLRURetirement::Update( float frametime ) // EPISODIC VERSION
 				}
 			}
 		}
-		else 
+		else
 		{
 			m_LRU.Remove(i);
 		}
@@ -884,7 +884,7 @@ void CRagdollLRURetirement::Update( float frametime ) // EPISODIC VERSION
 	{
 		Vector PlayerOrigin = pPlayer->GetAbsOrigin();
 		// const CBasePlayer *pPlayer = UTIL_GetLocalPlayer();
-	
+
 		for ( i = m_LRU.Head(); i < m_LRU.InvalidIndex(); i = next )
 		{
 			CBaseAnimating *pRagdoll = m_LRU[i].Get();
@@ -996,7 +996,7 @@ void CRagdollLRURetirement::Update( float frametime ) // Non-episodic version
 				}
 			}
 		}
-		else 
+		else
 		{
 			m_LRU.Remove(i);
 		}
@@ -1115,7 +1115,7 @@ C_EntityDissolve *DissolveEffect( C_BaseEntity *pTarget, float flTime )
 		pDissolve->m_flFadeOutModelStart = DEFAULT_MODEL_FADE_START;
 		pDissolve->m_flFadeOutModelLength = DEFAULT_MODEL_FADE_LENGTH;
 		pDissolve->m_flFadeInLength = DEFAULT_FADEIN_LENGTH;
-		
+
 		pDissolve->m_nDissolveType = 0;
 		pDissolve->m_flNextSparkTime = 0.0f;
 		pDissolve->m_flFadeOutLength = 0.0f;
@@ -1143,7 +1143,7 @@ C_EntityFlame *FireEffect( C_BaseAnimating *pTarget, C_BaseEntity *pServerFire, 
 	if ( pFire != NULL )
 	{
 		pFire->RemoveFromLeafSystem();
-		
+
 		pTarget->AddFlag( FL_ONFIRE );
 		pFire->SetParent( pTarget );
 		pFire->m_hEntAttached = (C_BaseEntity *) pTarget;
@@ -1178,7 +1178,7 @@ C_EntityFlame *FireEffect( C_BaseAnimating *pTarget, C_BaseEntity *pServerFire, 
 void C_BaseAnimating::IgniteRagdoll( C_BaseAnimating *pSource )
 {
 	C_BaseEntity *pChild = pSource->GetEffectEntity();
-	
+
 	if ( pChild )
 	{
 		C_EntityFlame *pFireChild = dynamic_cast<C_EntityFlame *>( pChild );
@@ -1196,7 +1196,7 @@ void C_BaseAnimating::IgniteRagdoll( C_BaseAnimating *pSource )
 void C_BaseAnimating::TransferDissolveFrom( C_BaseAnimating *pSource )
 {
 	C_BaseEntity *pChild = pSource->GetEffectEntity();
-	
+
 	if ( pChild )
 	{
 		C_EntityDissolve *pDissolveChild = dynamic_cast<C_EntityDissolve *>( pChild );

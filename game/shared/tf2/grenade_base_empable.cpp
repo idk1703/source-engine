@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,7 +11,7 @@
 #include "IEffects.h"
 
 #if !defined( CLIENT_DLL )
-// Global Savedata 
+// Global Savedata
 BEGIN_DATADESC( CBaseEMPableGrenade )
 	// Function Pointers
 	DEFINE_THINKFUNC( FizzleThink ),
@@ -39,7 +39,7 @@ END_PREDICTION_DATA()
 #define GRENADE_FIZZLE_DURATION		0.5
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseEMPableGrenade::CBaseEMPableGrenade( void )
 {

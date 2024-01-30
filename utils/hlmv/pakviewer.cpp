@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -223,7 +223,7 @@ PAKViewer::handleEvent (mxEvent *event)
 				}
 
 				// HLMV default
-				else	
+				else
 #endif
 				if (mode == 2)
 				{
@@ -239,7 +239,7 @@ PAKViewer::handleEvent (mxEvent *event)
 					return 1;
 				}
 			}
-			
+
 			return OnPAKViewer ();
 		} // event->action
 	} // mxEvent::Action
@@ -312,7 +312,7 @@ int PAKViewer::OnLoadModel ()
 		mxMessageBox (this, "Error reading model header.", g_appTitle, MX_MB_OK | MX_MB_ERROR);
 		return 1;
 	}
-		
+
 	return 1;
 }
 

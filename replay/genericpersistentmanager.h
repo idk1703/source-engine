@@ -54,7 +54,7 @@ public:
 	void				Remove( T *pObj );
 	void				RemoveFromIndex( int it );
 	void				Clear();	// Remove all objects - NOTE: Doesn't save right away
-	
+
 	bool				WriteObjToFile( T *pObj, const char *pFilename );	// Write object data to an arbitrary file
 	bool				Save();	// Saves any unsaved data immediately
 
@@ -156,7 +156,7 @@ CGenericPersistentManager< T >::CGenericPersistentManager()
 	m_flNextUnloadTime( 0.0f )
 {
 }
-	
+
 template< class T >
 CGenericPersistentManager< T >::~CGenericPersistentManager()
 {
@@ -458,7 +458,7 @@ bool CGenericPersistentManager< T >::Save()
 
 	// Write format version
 	pRoot->SetInt( "version", GetVersion() );
-	
+
 	// Write a file index instead of adding subkeys to the root?
 	if ( ShouldSerializeToIndividualFiles() )
 	{
@@ -560,7 +560,7 @@ void CGenericPersistentManager< T >::UnloadThink()
 	FOR_EACH_LL( m_lstObjsToUnload, i )
 	{
 		T *pObj = m_lstObjsToUnload[ i ];
-		
+
 		// If the object has been marked as locked, don't unload it.
 		if ( pObj->IsLocked() )
 			continue;
@@ -645,7 +645,7 @@ bool CGenericPersistentManager< T >::ReadObjFromFile( const char *pFile, T *&pOu
 	pOut = ReadObjFromKeyValues( pObjData, bForceLoad );
 	if ( !pOut )
 		return NULL;
-	
+
 	// Add the object to the manager
 	m_vecObjs.Insert( pOut );
 

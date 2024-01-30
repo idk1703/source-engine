@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -31,7 +31,7 @@ void CKeyBindings::SetBinding( ButtonCode_t code, const char *pBinding )
 		if ( !Q_stricmp( m_KeyInfo[code], pBinding ) )
 			return;
 	}
-			
+
 	// allocate memory for new binding
 	m_KeyInfo[code] = pBinding;
 }
@@ -100,7 +100,7 @@ void CKeyBindings::WriteBindings( CUtlBuffer &buf )
 
 
 //-----------------------------------------------------------------------------
-// Returns the keyname to which a binding string is bound.  E.g., if 
+// Returns the keyname to which a binding string is bound.  E.g., if
 // TAB is bound to +use then searching for +use will return "TAB"
 //-----------------------------------------------------------------------------
 const char *CKeyBindings::ButtonNameForBinding( const char *pBinding )
@@ -138,6 +138,3 @@ const char *CKeyBindings::GetBindingForButton( ButtonCode_t code )
 
 	return m_KeyInfo[ code ];
 }
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -40,8 +40,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEBeamEnts::CTEBeamEnts( const char *name ) :
 	CTEBaseBeam( name )
@@ -51,16 +51,16 @@ CTEBeamEnts::CTEBeamEnts( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEBeamEnts::~CTEBeamEnts( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEBeamEnts::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -93,20 +93,20 @@ END_SEND_TABLE()
 static CTEBeamEnts g_TEBeamEnts( "BeamEnts" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//				int	start - 
-//			end - 
-//			modelindex - 
-//			startframe - 
-//			framerate - 
-//			msg_dest - 
-//			delay - 
-//			origin - 
-//			recipient - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//				int	start -
+//			end -
+//			modelindex -
+//			startframe -
+//			framerate -
+//			msg_dest -
+//			delay -
+//			origin -
+//			recipient -
 //-----------------------------------------------------------------------------
 void TE_BeamEnts( IRecipientFilter& filter, float delay,
 	int	start, int end, int modelindex, int haloindex, int startframe, int framerate,

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -61,7 +61,7 @@ ScalableImageBorder::~ScalableImageBorder()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ScalableImageBorder::SetImage(const char *imageName)
 {
@@ -86,11 +86,11 @@ void ScalableImageBorder::SetImage(const char *imageName)
 
 		m_flCornerWidthPercent = ( wide > 0 ) ? ( (float)m_iSrcCornerWidth / (float)wide ) : 0;
 		m_flCornerHeightPercent = ( tall > 0 ) ? ( (float)m_iSrcCornerHeight / (float)tall ) : 0;
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ScalableImageBorder::SetInset(int left,int top,int right,int bottom)
 {
@@ -101,7 +101,7 @@ void ScalableImageBorder::SetInset(int left,int top,int right,int bottom)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ScalableImageBorder::GetInset(int& left,int& top,int& right,int& bottom)
 {
@@ -112,7 +112,7 @@ void ScalableImageBorder::GetInset(int& left,int& top,int& right,int& bottom)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ScalableImageBorder::Paint(int x, int y, int wide, int tall)
 {
@@ -181,7 +181,7 @@ void ScalableImageBorder::Paint(int x, int y, int wide, int tall, int breakSide,
 			verts[2].Init( Vector2D( x+drawW, y+drawH ), uv22 );
 			verts[3].Init( Vector2D( x, y+drawH ), uv12  );
 
-			g_pSurface->DrawTexturedPolygon( 4, verts );	
+			g_pSurface->DrawTexturedPolygon( 4, verts );
 
 			x += drawW;
 			uvx += uvw;
@@ -195,7 +195,7 @@ void ScalableImageBorder::Paint(int x, int y, int wide, int tall, int breakSide,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ScalableImageBorder::Paint(VPANEL panel)
 {
@@ -206,7 +206,7 @@ void ScalableImageBorder::Paint(VPANEL panel)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ScalableImageBorder::ApplySchemeSettings(IScheme *pScheme, KeyValues *inResourceData)
 {
@@ -263,10 +263,9 @@ void ScalableImageBorder::SetName(const char *name)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 IBorder::backgroundtype_e ScalableImageBorder::GetBackgroundType()
 {
 	return m_eBackgroundType;
 }
-

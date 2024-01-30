@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ bool COrderMortarAttack::CreateOrder( CPlayerClass *pClass )
 		return false;
 
 	CBaseTFPlayer *pPlayer = pClass->GetPlayer();
-	
+
 	CSortBase info;
 	info.m_pPlayer = pPlayer;
 	info.m_pTeam = pEnemyTeam;
@@ -57,7 +57,7 @@ bool COrderMortarAttack::CreateOrder( CPlayerClass *pClass )
 
 		COrderMortarAttack *pOrder = new COrderMortarAttack;
 
-		pClass->GetTeam()->AddOrder( 
+		pClass->GetTeam()->AddOrder(
 			ORDER_MORTAR_ATTACK,
 			pEnt,
 			pPlayer,
@@ -73,5 +73,3 @@ bool COrderMortarAttack::CreateOrder( CPlayerClass *pClass )
 		return false;
 	}
 }
-
-

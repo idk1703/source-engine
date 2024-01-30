@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -34,14 +34,14 @@ typedef CHandle<C_InfoAct>	ActHandle_t;
 CUtlVector< ActHandle_t >	g_hActs;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_InfoAct::C_InfoAct()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_InfoAct::~C_InfoAct()
 {
@@ -51,7 +51,7 @@ C_InfoAct::~C_InfoAct()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_InfoAct::OnPreDataChanged( DataUpdateType_t updateType )
 {
@@ -60,7 +60,7 @@ void C_InfoAct::OnPreDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_InfoAct::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -95,7 +95,7 @@ void C_InfoAct::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_InfoAct::StartAct( float flStartTime )
 {
@@ -110,10 +110,10 @@ void C_InfoAct::StartAct( float flStartTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_InfoAct::IsAWaitingAct( void )
-{ 
+{
 	return (m_spawnflags & SF_ACT_WAITINGFORGAMESTART) != 0;
 }
 
@@ -175,7 +175,7 @@ void StartAct( int iActNumber, float flStartTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int GetCurrentActNumber( void )
 {

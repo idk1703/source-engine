@@ -124,7 +124,7 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 			// bot teammates
 			return new CTFBotCompanion;
 		}
-		
+
 		if ( me->IsPlayerClass( TF_CLASS_SNIPER ) )
 		{
 			return new CTFBotSniperLurk;
@@ -178,7 +178,7 @@ Action< CTFBot > *CTFBotScenarioMonitor::DesiredScenarioAndClassAction( CTFBot *
 
 		return new CTFBotGuardArea;
 	}
-#endif // TF_RAID_MODE	
+#endif // TF_RAID_MODE
 
 	if ( TFGameRules()->IsMannVsMachineMode() )
 	{
@@ -365,4 +365,3 @@ ActionResult< CTFBot >	CTFBotScenarioMonitor::Update( CTFBot *me, float interval
 
 	return Continue();
 }
-

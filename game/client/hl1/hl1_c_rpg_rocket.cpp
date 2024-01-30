@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -36,7 +36,7 @@ void C_RpgRocket::CreateLightEffects( void )
 {
 	dlight_t *dl;
 	if ( IsEffectActive(EF_DIMLIGHT) )
-	{			
+	{
 		dl = effects->CL_AllocDlight ( index );
 		dl->origin = GetAbsOrigin();
 		dl->color.r = dl->color.g = dl->color.b = 100;

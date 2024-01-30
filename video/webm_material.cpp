@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -42,12 +42,12 @@ CQuicktimeMaterialRGBTextureRegenerator::CQuicktimeMaterialRGBTextureRegenerator
 }
 
 
-CQuicktimeMaterialRGBTextureRegenerator::~CQuicktimeMaterialRGBTextureRegenerator() 
+CQuicktimeMaterialRGBTextureRegenerator::~CQuicktimeMaterialRGBTextureRegenerator()
 {
 	// nothing to do
 }
 
-	
+
 void CQuicktimeMaterialRGBTextureRegenerator::SetSourceGWorld( GWorldPtr theGWorld, int nWidth, int nHeight )
 {
 	m_SrcGWorld		= theGWorld;
@@ -59,7 +59,7 @@ void CQuicktimeMaterialRGBTextureRegenerator::SetSourceGWorld( GWorldPtr theGWor
 void CQuicktimeMaterialRGBTextureRegenerator::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *pVTFTexture, Rect_t *pRect )
 {
 	AssertExit( pVTFTexture != nullptr );
-	
+
 	// Error condition, should only have 1 frame, 1 face, 1 mip level
 	if ( ( pVTFTexture->FrameCount() > 1 ) || ( pVTFTexture->FaceCount() > 1 ) || ( pVTFTexture->MipCount() > 1 ) || ( pVTFTexture->Depth() > 1 ) )
 	{
@@ -68,7 +68,7 @@ void CQuicktimeMaterialRGBTextureRegenerator::RegenerateTextureBits( ITexture *p
 		return;
 	}
 
-	// Make sure we have a valid video image source	
+	// Make sure we have a valid video image source
 	if ( m_SrcGWorld == nullptr )
 	{
 		WarningAssert( "Video texture source not set" );
@@ -84,7 +84,7 @@ void CQuicktimeMaterialRGBTextureRegenerator::RegenerateTextureBits( ITexture *p
 
 	// Copy directly from the Quicktime GWorld
 	PixMapHandle thePixMap = GetGWorldPixMap( m_SrcGWorld );
-	
+
 	if ( LockPixels( thePixMap ) )
 	{
 		BYTE   *pImageData	= pVTFTexture->ImageData();
@@ -92,14 +92,14 @@ void CQuicktimeMaterialRGBTextureRegenerator::RegenerateTextureBits( ITexture *p
 		BYTE   *pSrcData	= (BYTE*) GetPixBaseAddr( thePixMap );
 		long	srcStride	= QTGetPixMapHandleRowBytes( thePixMap );
 		int		rowSize		= m_nSourceWidth * 4;
-		
+
 		for (int y = 0; y < m_nSourceHeight; y++ )
 		{
 			memcpy( pImageData, pSrcData, rowSize );
 			pImageData+= dstStride;
 			pSrcData+= srcStride;
 		}
-		
+
 		UnlockPixels( thePixMap );
 	}
 	else
@@ -153,12 +153,12 @@ void CQuickTimeMaterial::Reset()
 
 	m_TexCordU = 0.0f;
 	m_TexCordV = 0.0f;
-	
+
 	m_VideoFrameWidth = 0;
 	m_VideoFrameHeight = 0;
-	
+
 	m_PlaybackFlags = VideoPlaybackFlags::NO_PLAYBACK_OPTIONS;
-	
+
 	m_bMovieInitialized = false;
 	m_bMoviePlaying = false;
 	m_bMovieFinishedPlaying = false;
@@ -167,18 +167,18 @@ void CQuickTimeMaterial::Reset()
 
 	m_bHasAudio = false;
 	m_bMuted = false;
-	
+
 	m_CurrentVolume = 0.0f;
-	
+
 	m_QTMovieTimeScale = 0;
 	m_QTMovieDuration = 0;
 	m_QTMovieDurationinSec = 0.0f;
 	m_QTMovieFrameRate.SetFPS( 0, false );
-	
+
 	SAFE_RELEASE_AUDIOCONTEXT( m_AudioContext );
 	SAFE_DISPOSE_GWORLD( m_MovieGWorld );
 	SAFE_DISPOSE_MOVIE( m_QTMovie );
-	
+
 	m_LastResult = VideoResult::SUCCESS;
 }
 
@@ -192,7 +192,7 @@ void CQuickTimeMaterial::SetQTFileName( const char *theQTMovieFileName )
 		AssertMsg( V_strlen( theQTMovieFileName ) <= MAX_QT_FILENAME_LEN, "Bad Quicktime Movie Filename" );
 		m_pFileName = COPY_STRING( theQTMovieFileName );
 	}
-	
+
 }
 
 
@@ -242,19 +242,19 @@ bool CQuickTimeMaterial::HasAudio()
 bool CQuickTimeMaterial::SetVolume( float fVolume )
 {
 	clamp( fVolume, 0.0f, 1.0f );
-	
+
 	m_CurrentVolume = fVolume;
 
 	if ( m_AudioContext != nullptr && m_bHasAudio )
 	{
 		short  movieVolume = (short) ( m_CurrentVolume * 256.0f );
-	
+
 		SetMovieVolume( m_QTMovie, movieVolume );
-		
+
 		SetResult( VideoResult::SUCCESS );
 		return true;
 	}
-	
+
 	SetResult( VideoResult::AUDIO_ERROR_OCCURED );
 	return false;
 }
@@ -271,7 +271,7 @@ void CQuickTimeMaterial::SetMuted( bool bMuteState )
 	AssertExitFunc( m_bMoviePlaying, SetResult( VideoResult::OPERATION_OUT_OF_SEQUENCE) );
 
 	SetResult( VideoResult::SUCCESS );
-	
+
 	if ( bMuteState == m_bMuted  )		// no change?
 	{
 		return;
@@ -284,7 +284,7 @@ void CQuickTimeMaterial::SetMuted( bool bMuteState )
 		OSStatus result = SetMovieAudioMute( m_QTMovie, m_bMuted, 0 );
 		AssertExitFunc( result == noErr, SetResult( VideoResult::AUDIO_ERROR_OCCURED) );
 	}
-	
+
 	SetResult( VideoResult::SUCCESS );
 }
 
@@ -320,9 +320,9 @@ VideoResult_t CQuickTimeMaterial::SoundDeviceCommand( VideoSoundDeviceOperation_
 #else
 			// On any other OS, we don't support this operation
 			return SetResult( VideoResult::OPERATION_NOT_SUPPORTED );
-#endif		
+#endif
 		}
-		
+
 		case VideoSoundDeviceOperation::SET_LIB_AUDIO_DEVICE:
 		case VideoSoundDeviceOperation::HOOK_X_AUDIO:
 		case VideoSoundDeviceOperation::SET_MILES_SOUND_DEVICE:
@@ -348,7 +348,7 @@ bool CQuickTimeMaterial::Init( const char *pMaterialName, const char *pFileName,
 	AssertExitF( m_bInitCalled == false );
 
 	m_PlaybackFlags	= flags;
-	
+
 	OpenQTMovie( pFileName );	// Open up the Quicktime file
 
 	if ( !m_bMovieInitialized )
@@ -369,7 +369,7 @@ bool CQuickTimeMaterial::Init( const char *pMaterialName, const char *pFileName,
 	}
 
 	m_bInitCalled = true;				// Look, if you only got one shot...
-    
+
 	return true;
 }
 
@@ -397,7 +397,7 @@ bool CQuickTimeMaterial::IsVideoPlaying()
 
 
 //-----------------------------------------------------------------------------
-// Checks to see if the video has a new frame ready to be rendered and 
+// Checks to see if the video has a new frame ready to be rendered and
 // downloaded into the texture and eventually display
 //-----------------------------------------------------------------------------
 bool CQuickTimeMaterial::IsNewFrameReady( void )
@@ -408,23 +408,23 @@ bool CQuickTimeMaterial::IsNewFrameReady( void )
 		return true;
 	}
 
-	// We better be playing the movie 
+	// We better be playing the movie
 	AssertExitF( m_bMoviePlaying );
-	
+
 	// paused?
 	if ( m_bMoviePaused )
 	{
-		return false;	
+		return false;
 	}
 
 	TimeValue curMovieTime = GetMovieTime( m_QTMovie, nullptr );
-	
+
 	if ( curMovieTime >= m_QTMovieDuration || m_NextInterestingTimeToPlay == NO_MORE_INTERESTING_TIMES )
 	{
 		// if we are looping, we have another frame, otherwise no
 		return m_bLoopMovie;
 	}
-	
+
 	// Enough time passed to get to next frame??
 	if ( curMovieTime < m_NextInterestingTimeToPlay )
 	{
@@ -462,7 +462,7 @@ void CQuickTimeMaterial::SetPaused( bool bPauseState )
 		Assert( m_bMoviePlaying );
 		return;
 	}
-	
+
 	if ( bPauseState )			// Pausing the movie?
 	{
 		// Save off current time and set paused state
@@ -476,7 +476,7 @@ void CQuickTimeMaterial::SetPaused( bool bPauseState )
 		StartMovie( m_QTMovie );
 		Assert( GetMoviesError() == noErr );
 	}
-	
+
 	m_bMoviePaused = bPauseState;
 }
 
@@ -496,19 +496,19 @@ bool CQuickTimeMaterial::StartVideo()
 		SetResult( VideoResult::OPERATION_ALREADY_PERFORMED );
 		return false;
 	}
-	
+
 	// Start the movie playing at the first frame
 	SetMovieTimeValue( m_QTMovie, m_MovieFirstFrameTime );
 	Assert( GetMoviesError() == noErr );
-	
+
 	StartMovie( m_QTMovie );
 	Assert( GetMoviesError() == noErr );
-	
+
 	// Transition to playing state
 	m_bMovieInitialized = false;
 	m_bMoviePlaying = true;
 
-	// Deliberately set the next interesting time to the current time to	
+	// Deliberately set the next interesting time to the current time to
 	// insure that the ::update() call causes the textures to be downloaded
 	m_NextInterestingTimeToPlay = m_MovieFirstFrameTime;
 	Update();
@@ -532,9 +532,9 @@ bool CQuickTimeMaterial::StopVideo()
 	m_bMoviePaused = false;
 	m_bMovieFinishedPlaying = true;
 
-	// free resources	
+	// free resources
 	CloseQTFile();
-	
+
 	SetResult( VideoResult::SUCCESS );
 	return true;
 }
@@ -548,7 +548,7 @@ bool CQuickTimeMaterial::StopVideo()
 bool CQuickTimeMaterial::Update( void )
 {
 	AssertExitF( m_bMoviePlaying );
-	
+
 	OSType	qTypes[1] = { VisualMediaCharacteristic };
 
 	// are we paused? can't update if so...
@@ -556,10 +556,10 @@ bool CQuickTimeMaterial::Update( void )
 	{
 		return true;			// reuse the last frame
 	}
-	
+
 	// Get current time in the movie
 	TimeValue curMovieTime = GetMovieTime( m_QTMovie, nullptr );
-	
+
 	// Did we hit the end of the movie?
 	if ( curMovieTime >= m_QTMovieDuration )
 	{
@@ -569,15 +569,15 @@ bool CQuickTimeMaterial::Update( void )
 			StopVideo();
 			return false;
 		}
-		
+
 		// Reset the movie to the start time
 		SetMovieTimeValue( m_QTMovie, m_MovieFirstFrameTime );
 		AssertExitF( GetMoviesError() == noErr );
-		
+
 		// Assure fall through to render a new frame
 		m_NextInterestingTimeToPlay = m_MovieFirstFrameTime;
 	}
-	
+
 	// Are we on the last frame of the movie? (but not past the end of any audio?)
 	if ( m_NextInterestingTimeToPlay == NO_MORE_INTERESTING_TIMES )
 	{
@@ -601,7 +601,7 @@ bool CQuickTimeMaterial::Update( void )
 
 	// Get the next frame after the current time (the movie may have advanced a bit during UpdateMovie() and MovieTasks()
 	GetMovieNextInterestingTime( m_QTMovie, nextTimeStep | nextTimeEdgeOK, 1, qTypes, GetMovieTime( m_QTMovie, nullptr ), fixed1, &m_NextInterestingTimeToPlay, nullptr );
-	
+
 	// hit the end of the movie?
 	if ( GetMoviesError() == invalidTime || m_NextInterestingTimeToPlay == END_OF_QUICKTIME_MOVIE )
 	{
@@ -622,7 +622,7 @@ bool CQuickTimeMaterial::Update( void )
 IMaterial *CQuickTimeMaterial::GetMaterial()
 {
 	return m_Material;
-}							   
+}
 
 
 //-----------------------------------------------------------------------------
@@ -631,7 +631,7 @@ IMaterial *CQuickTimeMaterial::GetMaterial()
 void CQuickTimeMaterial::GetVideoTexCoordRange( float *pMaxU, float *pMaxV )
 {
 	AssertExit( pMaxU != nullptr && pMaxV != nullptr );
-	
+
 	if ( m_Texture == nullptr )		// no texture?
 	{
 		*pMaxU = *pMaxV = 1.0f;
@@ -644,12 +644,12 @@ void CQuickTimeMaterial::GetVideoTexCoordRange( float *pMaxU, float *pMaxV )
 
 
 //-----------------------------------------------------------------------------
-// Returns the frame size of the QuickTime Video in pixels 
+// Returns the frame size of the QuickTime Video in pixels
 //-----------------------------------------------------------------------------
 void CQuickTimeMaterial::GetVideoImageSize( int *pWidth, int *pHeight )
 {
 	Assert( pWidth != nullptr && pHeight != nullptr );
-	
+
 	*pWidth  = m_VideoFrameWidth;
 	*pHeight = m_VideoFrameHeight;
 }
@@ -678,7 +678,7 @@ bool CQuickTimeMaterial::SetFrame( int FrameNum )
 		SetResult( VideoResult::OPERATION_OUT_OF_SEQUENCE );
 		return false;
 	}
-	
+
 	float	theTime = (float) FrameNum * m_QTMovieFrameRate.GetFPS();
 	return SetTime( theTime );
 }
@@ -689,7 +689,7 @@ int CQuickTimeMaterial::GetCurrentFrame()
 	AssertExitV( m_bMoviePlaying, -1 );
 
 	TimeValue curTime = m_bMoviePaused ? m_MoviePauseTime : GetMovieTime( m_QTMovie, nullptr );
-	
+
 	return curTime / m_QTMovieFrameRate.GetUnitsPerFrame();
 }
 
@@ -697,9 +697,9 @@ int CQuickTimeMaterial::GetCurrentFrame()
 float CQuickTimeMaterial::GetCurrentVideoTime()
 {
 	AssertExitV( m_bMoviePlaying, -1.0f );
-	
+
 	TimeValue curTime = m_bMoviePaused ? m_MoviePauseTime : GetMovieTime( m_QTMovie, nullptr );
-	
+
 	return curTime / m_QTMovieFrameRate.GetUnitsPerSecond();
 }
 
@@ -710,10 +710,10 @@ bool CQuickTimeMaterial::SetTime( float flTime )
 	AssertExitF( flTime >= 0 && flTime < m_QTMovieDurationinSec );
 
 	TimeValue newTime = (TimeValue) ( flTime * m_QTMovieFrameRate.GetUnitsPerSecond() + 0.5f) ;
-	
-	clamp( newTime,  m_MovieFirstFrameTime, m_QTMovieDuration ); 
 
-	// Are we paused? 	
+	clamp( newTime,  m_MovieFirstFrameTime, m_QTMovieDuration );
+
+	// Are we paused?
 	if ( m_bMoviePaused )
 	{
 		m_MoviePauseTime = newTime;
@@ -721,7 +721,7 @@ bool CQuickTimeMaterial::SetTime( float flTime )
 	}
 
 	TimeValue curMovieTime = GetMovieTime( m_QTMovie, nullptr );
-	
+
 	// Don't stop and reset movie if we are within 1 frame of the requested time
 	if ( newTime <= curMovieTime - m_QTMovieFrameRate.GetUnitsPerFrame() || newTime >= curMovieTime + m_QTMovieFrameRate.GetUnitsPerFrame() )
 	{
@@ -729,11 +729,11 @@ bool CQuickTimeMaterial::SetTime( float flTime )
 		StopMovie( m_QTMovie );
 		SetMovieTimeValue( m_QTMovie, newTime );
 		StartMovie( m_QTMovie );
-		
+
 		Assert( GetMoviesError() == noErr );
 	}
 
-	return true;	
+	return true;
 }
 
 
@@ -749,22 +749,22 @@ void CQuickTimeMaterial::CreateProceduralTexture( const char *pTextureName )
 	// Either make the texture the same dimensions as the video,
 	// or choose power-of-two textures which are at least as big as the video
 	bool actualSizeTexture = BITFLAGS_SET( m_PlaybackFlags, VideoPlaybackFlags::TEXTURES_ACTUAL_SIZE );
-	
-	int nWidth  = ( actualSizeTexture ) ? ALIGN_VALUE( m_VideoFrameWidth, TEXTURE_SIZE_ALIGNMENT ) : ComputeGreaterPowerOfTwo( m_VideoFrameWidth ); 
-	int nHeight = ( actualSizeTexture ) ? ALIGN_VALUE( m_VideoFrameHeight, TEXTURE_SIZE_ALIGNMENT ) : ComputeGreaterPowerOfTwo( m_VideoFrameHeight ); 
-	
+
+	int nWidth  = ( actualSizeTexture ) ? ALIGN_VALUE( m_VideoFrameWidth, TEXTURE_SIZE_ALIGNMENT ) : ComputeGreaterPowerOfTwo( m_VideoFrameWidth );
+	int nHeight = ( actualSizeTexture ) ? ALIGN_VALUE( m_VideoFrameHeight, TEXTURE_SIZE_ALIGNMENT ) : ComputeGreaterPowerOfTwo( m_VideoFrameHeight );
+
 	// initialize the procedural texture as 32-it RGBA, w/o mipmaps
-	m_Texture.InitProceduralTexture( pTextureName, "VideoCacheTextures", nWidth, nHeight, 
+	m_Texture.InitProceduralTexture( pTextureName, "VideoCacheTextures", nWidth, nHeight,
 				IMAGE_FORMAT_BGRA8888, TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT | TEXTUREFLAGS_NOMIP |
 				TEXTUREFLAGS_PROCEDURAL | TEXTUREFLAGS_SINGLECOPY | TEXTUREFLAGS_NOLOD );
-		
-	// Use this to get the updated frame from the remote connection		
+
+	// Use this to get the updated frame from the remote connection
 	m_Texture->SetTextureRegenerator( &m_TextureRegen /* , false */ );
-	
+
 	// compute the texcoords
 	int nTextureWidth = m_Texture->GetActualWidth();
 	int nTextureHeight = m_Texture->GetActualHeight();
-	
+
 	m_TexCordU = ( nTextureWidth > 0 ) ? (float) m_VideoFrameWidth / (float) nTextureWidth : 0.0f;
 	m_TexCordV = ( nTextureHeight > 0 ) ? (float) m_VideoFrameHeight / (float) nTextureHeight : 0.0f;
 }
@@ -830,36 +830,36 @@ void CQuickTimeMaterial::OpenQTMovie( const char *theQTMovieFileName )
 {
 	AssertExit( IS_NOT_EMPTY( theQTMovieFileName ) );
 
-    // Set graphics port 
+	// Set graphics port
 #if defined ( WIN32 )
-	SetGWorld ( (CGrafPtr) GetNativeWindowPort( nil ), nil ); 
+	SetGWorld ( (CGrafPtr) GetNativeWindowPort( nil ), nil );
 #elif defined ( OSX		)
 	SetGWorld( nil, nil );
 #endif
-	
+
 	SetQTFileName( theQTMovieFileName );
 
 	Handle	MovieFileDataRef = nullptr;
 	OSType	MovieFileDataRefType = 0;
 
-	CFStringRef	imageStrRef = CFStringCreateWithCString ( NULL,  theQTMovieFileName, 0 ); 
+	CFStringRef	imageStrRef = CFStringCreateWithCString ( NULL,  theQTMovieFileName, 0 );
 	AssertExitFunc( imageStrRef != nullptr, SetResult( VideoResult::SYSTEM_ERROR_OCCURED ) );
-	
+
 	OSErr status = QTNewDataReferenceFromFullPathCFString( imageStrRef, (QTPathStyle) kQTNativeDefaultPathStyle, 0, &MovieFileDataRef, &MovieFileDataRefType );
 	AssertExitFunc( status == noErr, SetResult( VideoResult::FILE_ERROR_OCCURED ) );
 
 	CFRelease( imageStrRef );
 
-    status = NewMovieFromDataRef( &m_QTMovie, newMovieActive, nil, MovieFileDataRef, MovieFileDataRefType );
+	status = NewMovieFromDataRef( &m_QTMovie, newMovieActive, nil, MovieFileDataRef, MovieFileDataRefType );
 	SAFE_DISPOSE_HANDLE( MovieFileDataRef );
-	
-    if ( status != noErr )
-    {
+
+	if ( status != noErr )
+	{
 		Assert( false );
 		Reset();
 		SetResult( VideoResult::VIDEO_ERROR_OCCURED );
 		return;
-    }
+	}
 
 	// disabling audio?
 	if ( BITFLAGS_SET( m_PlaybackFlags, VideoPlaybackFlags::NO_AUDIO ) )
@@ -873,20 +873,20 @@ void CQuickTimeMaterial::OpenQTMovie( const char *theQTMovieFileName )
 		m_bHasAudio = ( audioTrack != nullptr );
 	}
 
-	// Now we need to extract the time info from the QT Movie 
+	// Now we need to extract the time info from the QT Movie
 	m_QTMovieTimeScale	= GetMovieTimeScale( m_QTMovie );
 	m_QTMovieDuration	= GetMovieDuration( m_QTMovie );
 
-	// compute movie duration	
+	// compute movie duration
 	m_QTMovieDurationinSec = float ( double( m_QTMovieDuration ) / double( m_QTMovieTimeScale ) );
 	if ( !MovieGetStaticFrameRate( m_QTMovie, m_QTMovieFrameRate ) )
 	{
 		WarningAssert( "Couldn't Get Frame Rate" );
 	}
-	
+
 	// and get an estimated frame count
 	m_QTMovieFrameCount = m_QTMovieDuration / m_QTMovieTimeScale;
-	
+
 	if ( m_QTMovieFrameRate.GetUnitsPerSecond() == m_QTMovieTimeScale )
 	{
 		m_QTMovieFrameCount = m_QTMovieDuration / m_QTMovieFrameRate.GetUnitsPerFrame();
@@ -895,18 +895,18 @@ void CQuickTimeMaterial::OpenQTMovie( const char *theQTMovieFileName )
 	{
 		m_QTMovieFrameCount = (int) ( (float) m_QTMovieDurationinSec * m_QTMovieFrameRate.GetFPS() + 0.5f );
 	}
-	
+
 	// what size do we set the output rect to?
 	GetMovieNaturalBoundsRect(m_QTMovie, &m_QTMovieRect);
-	
+
 	m_VideoFrameWidth = m_QTMovieRect.right;
 	m_VideoFrameHeight = m_QTMovieRect.bottom;
-	
+
 	// Sanity check...
 	AssertExitFunc( m_QTMovieRect.top == 0 && m_QTMovieRect.left == 0 &&
-					m_QTMovieRect.right >= cMinVideoFrameWidth && m_QTMovieRect.right <= cMaxVideoFrameWidth && 
-	    		    m_QTMovieRect.bottom >= cMinVideoFrameHeight && m_QTMovieRect.bottom <= cMaxVideoFrameHeight &&
-	    		    m_QTMovieRect.right % 4 == 0,
+					m_QTMovieRect.right >= cMinVideoFrameWidth && m_QTMovieRect.right <= cMaxVideoFrameWidth &&
+					m_QTMovieRect.bottom >= cMinVideoFrameHeight && m_QTMovieRect.bottom <= cMaxVideoFrameHeight &&
+					m_QTMovieRect.right % 4 == 0,
 					SetResult( VideoResult::VIDEO_ERROR_OCCURED ) );
 
 	// Setup the QuiuckTime Graphics World for the Movie
@@ -915,9 +915,9 @@ void CQuickTimeMaterial::OpenQTMovie( const char *theQTMovieFileName )
 
 	// Setup the playback gamma according to the convar
 	SetGWorldDecodeGamma( m_MovieGWorld, VideoPlaybackGamma::USE_GAMMA_CONVAR );
-	
+
 	// Assign the GWorld to this movie
-	SetMovieGWorld( m_QTMovie, m_MovieGWorld, nil );		
+	SetMovieGWorld( m_QTMovie, m_MovieGWorld, nil );
 
 	// Setup Movie Audio, unless suppressed
 	if ( !CreateMovieAudioContext( m_bHasAudio, m_QTMovie, &m_AudioContext, true, &m_CurrentVolume ) )
@@ -925,11 +925,11 @@ void CQuickTimeMaterial::OpenQTMovie( const char *theQTMovieFileName )
 		SetResult( VideoResult::AUDIO_ERROR_OCCURED );
 		WarningAssert( "Couldn't Set Audio" );
 	}
-	
+
 	// Get the time of the first frame
 	OSType	qTypes[1] = { VisualMediaCharacteristic };
 	short	qFlags = nextTimeStep | nextTimeEdgeOK;			// use nextTimeStep instead of nextTimeMediaSample for MPEG 1-2 compatibility
-		
+
 	GetMovieNextInterestingTime( m_QTMovie, qFlags, 1, qTypes, (TimeValue) 0, fixed1, &m_MovieFirstFrameTime, NULL );
 	AssertExitFunc( GetMoviesError() == noErr, SetResult( VideoResult::VIDEO_ERROR_OCCURED ) );
 
@@ -940,7 +940,7 @@ void CQuickTimeMaterial::OpenQTMovie( const char *theQTMovieFileName )
 		status = PrerollMovie( m_QTMovie, m_MovieFirstFrameTime, playRate );
 		AssertExitFunc( status == noErr, SetResult( VideoResult::VIDEO_ERROR_OCCURED ) );
 	}
-	
+
 	m_bMovieInitialized = true;
 }
 
@@ -955,8 +955,6 @@ void CQuickTimeMaterial::CloseQTFile()
 	SAFE_RELEASE_AUDIOCONTEXT( m_AudioContext );
 	SAFE_DISPOSE_GWORLD( m_MovieGWorld );
 	SAFE_DISPOSE_MOVIE( m_QTMovie );
- 
+
 	SetQTFileName( nullptr );
 }
-
-

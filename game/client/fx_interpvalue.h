@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -17,7 +17,7 @@ enum InterpType_t
 	INTERP_SPLINE,
 };
 
-class CInterpolatedValue 
+class CInterpolatedValue
 {
 public:
 			CInterpolatedValue( void );
@@ -26,7 +26,7 @@ public:
 	void	SetTime( float start, float end );
 	void	SetRange( float start, float end );
 	void	SetType( InterpType_t type );
-	
+
 	// Set the value with no range
 	void SetAbsolute( float value );
 

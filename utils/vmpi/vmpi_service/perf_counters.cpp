@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -11,7 +11,7 @@
 #include "perf_counters.h"
 
 
-#if 1 
+#if 1
 
 class CPerfTracker : public IPerfTracker
 {
@@ -28,19 +28,19 @@ public:
 		GetSystemInfo( &info );
 		m_nProcessors = (int)info.dwNumberOfProcessors;
 	}
-	
+
 	~CPerfTracker()
 	{
 		if ( m_hQuery )
 			PdhCloseQuery( m_hQuery );
 	}
-	
+
 	virtual void Init( unsigned long dwProcessID )
 	{
 		Term();
-		
+
 		m_dwProcessID = dwProcessID;
-		
+
 		char instanceName[512];
 		if ( GetInstanceNameFromProcessID( m_dwProcessID, instanceName, sizeof( instanceName ) ) )
 		{
@@ -51,7 +51,7 @@ public:
 			{
 				m_hProcessorTimeCounter = NULL;
 			}
-			
+
 			V_snprintf( str, sizeof( str ), "\\Process(%s)\\Private Bytes", instanceName );
 			if ( PdhAddCounter( m_hQuery, str, 0, &m_hPrivateBytesCounter ) != ERROR_SUCCESS )
 			{
@@ -59,7 +59,7 @@ public:
 			}
 		}
 	}
-	
+
 	void Term()
 	{
 		if ( m_hProcessorTimeCounter )
@@ -67,26 +67,26 @@ public:
 
 		if ( m_hPrivateBytesCounter )
 			PdhRemoveCounter( m_hPrivateBytesCounter );
-			
+
 		m_hProcessorTimeCounter = NULL;
 		m_hPrivateBytesCounter = NULL;
 	}
-	
+
 	virtual void Release()
 	{
 		delete this;
 	}
-	
+
 	virtual unsigned long GetProcessID()
 	{
 		return m_dwProcessID;
 	}
-	
+
 	virtual void GetPerfData( int &processorPercentage, int &memoryUsageMegabytes )
 	{
 		processorPercentage = 101;
 		memoryUsageMegabytes = 0;
-		
+
 		// Collect query data..
 		PDH_STATUS ret = PdhCollectQueryData( m_hQuery );
 		if ( ret != ERROR_SUCCESS )
@@ -106,7 +106,7 @@ public:
 		else
 			memoryUsageMegabytes = 0;
 	}
-	
+
 
 private:
 
@@ -137,7 +137,7 @@ private:
 			{
 				// We need the # of each one..
 				CUtlDict<int,int> counts;
-				
+
 				// The instance name list is a bunch of strings terminated with nulls. The final one has two nulls after it.
 				// Walk through the list and get the process ID associated with each instance name.
 				const char *pCur = instanceList;
@@ -154,7 +154,7 @@ private:
 
 				// Each instance (like "vrad") might have multiple versions, like if you're running multiple vrad processes at the same time.
 				for ( int i=counts.First(); i != counts.InvalidIndex(); i=counts.Next( i ) )
-				{				
+				{
 					const char *pInstanceName = counts.GetElementName( i );
 					int nInstances = counts[i];
 					for ( int iInstance=0; iInstance < nInstances; iInstance++ )
@@ -162,7 +162,7 @@ private:
 						char testInstanceName[256], fullObjectName[256];
 						V_snprintf( testInstanceName, sizeof( testInstanceName ), "%s#%d", pInstanceName, iInstance );
 						V_snprintf( fullObjectName, sizeof( fullObjectName ), "\\Process(%s)\\ID Process", testInstanceName );
-						
+
 						HCOUNTER hCounter = NULL;
 						stat = PdhAddCounter( m_hQuery, fullObjectName, 0, &hCounter );
 						if ( stat == ERROR_SUCCESS )
@@ -181,21 +181,21 @@ private:
 									PdhRemoveCounter( hCounter );
 									break;
 								}
-							}		
-							
+							}
+
 							PdhRemoveCounter( hCounter );
 						}
 					}
-					
+
 					if ( bRet )
 						break;
 				}
 			}
-			
+
 			delete [] counterList;
 			delete [] instanceList;
 		}
-		
+
 		return bRet;
 	}
 
@@ -229,7 +229,7 @@ public:
 	void Init( unsigned long dwProcessID );
 
 	unsigned long GetProcessID();
-	
+
 	// Get the percentage of CPU time that the process is using.
 	int GetCPUPercentage();
 
@@ -251,12 +251,12 @@ private:
 
 
 //
-//	The performance data is accessed through the registry key 
+//	The performance data is accessed through the registry key
 //	HKEY_PEFORMANCE_DATA.
-//	However, although we use the registry to collect performance data, 
+//	However, although we use the registry to collect performance data,
 //	the data is not stored in the registry database.
-//	Instead, calling the registry functions with the HKEY_PEFORMANCE_DATA key 
-//	causes the system to collect the data from the appropriate system 
+//	Instead, calling the registry functions with the HKEY_PEFORMANCE_DATA key
+//	causes the system to collect the data from the appropriate system
 //	object managers.
 //
 //	QueryPerformanceData allocates memory block for getting the
@@ -282,17 +282,17 @@ void QueryPerformanceData(PERF_DATA_BLOCK **pPerfData, DWORD dwObjectIndex, DWOR
 
 	memset( Buffer.Base(), 0, Buffer.Count() );
 	while( (lRes = RegQueryValueEx( HKEY_PERFORMANCE_DATA,
-							   keyName,
-							   NULL,
-							   NULL,
-							   (LPBYTE)Buffer.Base(),
-							   &BufferSize )) == ERROR_MORE_DATA )
+								keyName,
+								NULL,
+								NULL,
+								(LPBYTE)Buffer.Base(),
+								&BufferSize )) == ERROR_MORE_DATA )
 	{
 		// Get a buffer that is big enough.
 		BufferSize += BYTEINCREMENT;
 		Buffer.SetSize( BufferSize );
 	}
-	
+
 	*pPerfData = (PPERF_DATA_BLOCK)Buffer.Base();
 }
 
@@ -375,14 +375,14 @@ T GetCounterValueForProcessID(PPERF_OBJECT_TYPE pPerfObj, DWORD dwCounterIndex, 
 		pPerfCntr = NextCounter( pPerfCntr );
 	}
 
-	if( pPerfObj->NumInstances == PERF_NO_INSTANCES )		
+	if( pPerfObj->NumInstances == PERF_NO_INSTANCES )
 	{
 		pCounterBlock = (PPERF_COUNTER_BLOCK) ((LPBYTE) pPerfObj + pPerfObj->DefinitionLength);
 	}
 	else
 	{
 		pPerfInst = FirstInstance( pPerfObj );
-	
+
 		for( int k=0; k < pPerfObj->NumInstances; k++ )
 		{
 			pCounterBlock = (PPERF_COUNTER_BLOCK) ((LPBYTE) pPerfInst + pPerfInst->ByteLength);
@@ -395,7 +395,7 @@ T GetCounterValueForProcessID(PPERF_OBJECT_TYPE pPerfObj, DWORD dwCounterIndex, 
 					break;
 				}
 			}
-			
+
 			// Get the next instance.
 			pPerfInst = NextInstance( pPerfInst );
 		}
@@ -416,7 +416,7 @@ T GetCounterValueForProcessID(PERF_DATA_BLOCK **pPerfData, DWORD dwObjectIndex, 
 {
 	QueryPerformanceData(pPerfData, dwObjectIndex, dwCounterIndex);
 
-    PPERF_OBJECT_TYPE pPerfObj = NULL;
+	PPERF_OBJECT_TYPE pPerfObj = NULL;
 	T lnValue = {0};
 
 	// Get the first object type.

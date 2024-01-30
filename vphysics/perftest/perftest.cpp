@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -72,7 +72,7 @@ void PhysParseSurfaceData( IPhysicsSurfaceProps *pProps, IFileSystem *pFileSyste
 				continue;
 			}
 
-			Warning( "surfaceprops::Init:  Manifest '%s' with bogus file type '%s', expecting 'file'\n", 
+			Warning( "surfaceprops::Init:  Manifest '%s' with bogus file type '%s', expecting 'file'\n",
 				SURFACEPROP_MANIFEST_FILE, sub->GetName() );
 		}
 	}
@@ -116,7 +116,7 @@ struct physicstest_t
 		//physenv->SetCollisionEventHandler( &g_Collisions );
 		//physenv->SetConstraintEventHandler( g_pConstraintEvents );
 		//physenv->SetObjectEventHandler( &g_Objects );
-		
+
 		physenv->SetSimulationTimestep( DEFAULT_TICK_INTERVAL ); // 15 ms per tick
 		// HL Game gravity, not real-world gravity
 		physenv->SetGravity( Vector( 0, 0, -600.0f ) );
@@ -177,7 +177,7 @@ struct physicstest_t
 			first = false;
 			for ( int i = 0; i < 256; i++ )
 			{
-				do 
+				do
 				{
 					r = rand()&255;
 					g = rand()&255;
@@ -222,7 +222,7 @@ struct physicstest_t
 				for ( int k = 0; k < 3; k++ )
 				{
 					Vector v;
-					
+
 					VectorTransform (objectSpaceVerts[k], matrix, v);
 					meshBuilder.Position3fv( v.Base() );
 					meshBuilder.Color4fv( color );
@@ -298,11 +298,11 @@ void SetupCamera( Vector& cameraPosition, QAngle& cameraAngles )
 	pRenderContext->Rotate( -90,  1, 0, 0 );	    // put Z going up
 	pRenderContext->Rotate( 90,  0, 0, 1 );
 
-    pRenderContext->Rotate( -cameraAngles[2],  1, 0, 0);	// roll
+	pRenderContext->Rotate( -cameraAngles[2],  1, 0, 0);	// roll
 	pRenderContext->Rotate( -cameraAngles[0],  0, 1, 0);	// pitch
-    pRenderContext->Rotate( -cameraAngles[1],  0, 0, 1);	// yaw
+	pRenderContext->Rotate( -cameraAngles[1],  0, 0, 1);	// yaw
 
-    pRenderContext->Translate( -cameraPosition[0],  -cameraPosition[1],  -cameraPosition[2] );
+	pRenderContext->Translate( -cameraPosition[0],  -cameraPosition[1],  -cameraPosition[2] );
 }
 
 static Vector cameraPosition = Vector(0,0,128);
@@ -339,4 +339,3 @@ void AppChar( int key )
 		staticTest.Explode( cameraPosition, 150 * 100 );
 	}
 }
-

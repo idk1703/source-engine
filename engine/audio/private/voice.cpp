@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -76,7 +76,7 @@ WAVEFORMATEX g_VoiceSampleFormat =
 static bool Voice_SetSampleRate( DWORD rate )
 {
 	if ( g_VoiceSampleFormat.nSamplesPerSec != rate ||
-	     g_VoiceSampleFormat.nAvgBytesPerSec != rate * 2 )
+	g_VoiceSampleFormat.nAvgBytesPerSec != rate * 2 )
 	{
 		g_VoiceSampleFormat.nSamplesPerSec = rate;
 		g_VoiceSampleFormat.nAvgBytesPerSec = rate * 2;
@@ -118,14 +118,14 @@ ConVar voice_enable( "voice_enable", "1", FCVAR_ARCHIVE );		// Globally enable o
 ConVar voice_threshold( "voice_threshold", "2000", FCVAR_ARCHIVE );
 #endif // VOICE_VOX_ENABLE
 
-// Have it force your mixer control settings so waveIn comes from the microphone. 
+// Have it force your mixer control settings so waveIn comes from the microphone.
 // CD rippers change your waveIn to come from the CD drive
 ConVar voice_forcemicrecord( "voice_forcemicrecord", "1", FCVAR_ARCHIVE );
 
 // This should not be lower than the maximum difference between clients' frame durations (due to cmdrate/updaterate),
 // plus some jitter allowance.
 ConVar voice_buffer_ms( "voice_buffer_ms", "100", FCVAR_INTERNAL_USE,
-                        "How many milliseconds of voice to buffer to avoid dropouts due to jitter and frame time differences." );
+	"How many milliseconds of voice to buffer to avoid dropouts due to jitter and frame time differences." );
 
 int g_nVoiceFadeSamples		= 1;							// Calculated each frame from the cvar.
 float g_VoiceFadeMul		= 1;							// 1 / (g_nVoiceFadeSamples - 1).
@@ -160,7 +160,7 @@ public:
 			m_StartTime = Plat_FloatTime();
 		}
 	}
-	
+
 	inline void		End(double *out)
 	{
 		if( voice_profile.GetInt() )
@@ -245,14 +245,14 @@ public:
 	int								m_iEntity;		// Number of the entity speaking on this channel (index into cl_entities).
 													// This is -1 when the channel is unused.
 
-	
+
 	CSizedCircularBuffer
 		<VOICE_RECEIVE_BUFFER_SIZE>	m_Buffer;		// Circular buffer containing the voice data.
 
 	// Used for upsampling..
 	double							m_LastFraction;	// Fraction between m_LastSample and the next sample.
 	short							m_LastSample;
-	
+
 	bool							m_bStarved;		// Set to true when the channel runs out of data for the mixer.
 													// The channel is killed at that point.
 
@@ -265,7 +265,7 @@ public:
 	CAutoGain						m_AutoGain;		// Gain we're applying to this channel
 
 	CVoiceChannel					*m_pNext;
-	
+
 	bool							m_bProximity;
 	int								m_nViewEntityIndex;
 	int								m_nSoundGuid;
@@ -377,7 +377,7 @@ public:
 		for ( int i = m_VoiceWriter.FirstInorder(); i != m_VoiceWriter.InvalidIndex(); i = m_VoiceWriter.NextInorder( i ) )
 		{
 			CVoiceWriterData *data = &m_VoiceWriter[ i ];
-			
+
 			if ( data->m_Buffer.TellPut() <= 0 )
 				continue;
 
@@ -408,7 +408,7 @@ public:
 
 		CVoiceWriterData search;
 		search.m_pChannel = ch;
-		int idx = m_VoiceWriter.Find( search ); 
+		int idx = m_VoiceWriter.Find( search );
 		if ( idx == m_VoiceWriter.InvalidIndex() )
 		{
 			idx = m_VoiceWriter.Insert( search );
@@ -448,13 +448,13 @@ int Voice_GetOutputData(
 	const int sampleCount		//! How many samples to get.
 )
 {
-	CVoiceChannel *pChannel = &g_VoiceChannels[iChannel];	
+	CVoiceChannel *pChannel = &g_VoiceChannels[iChannel];
 	short *pCopyBuf = (short*)copyBufBytes;
 
 
 	int maxOutSamples = copyBufSize / BYTES_PER_SAMPLE;
 
-	// Find out how much we want and get it from the received data channel.	
+	// Find out how much we want and get it from the received data channel.
 	CCircularBuffer *pBuffer = &pChannel->m_Buffer;
 	int nBytesToRead = pBuffer->GetReadAvailable();
 	nBytesToRead = min(min(nBytesToRead, (int)maxOutSamples), sampleCount * BYTES_PER_SAMPLE);
@@ -466,16 +466,16 @@ int Voice_GetOutputData(
 	{
 		int bufferFadeOffset = max((readSamplesAvail + nSamplesGotten) - g_nVoiceFadeSamples, 0);
 		int globalFadeOffset = max(g_nVoiceFadeSamples - (readSamplesAvail + nSamplesGotten), 0);
-		
+
 		ApplyFadeToSamples(
-			&pCopyBuf[bufferFadeOffset], 
+			&pCopyBuf[bufferFadeOffset],
 			nSamplesGotten - bufferFadeOffset,
 			globalFadeOffset,
 			g_VoiceFadeMul);
 	}
-	
-	// If there weren't enough samples in the received data channel, 
-	//   pad it with a copy of the most recent data, and if there 
+
+	// If there weren't enough samples in the received data channel,
+	//   pad it with a copy of the most recent data, and if there
 	//   isn't any, then use zeros.
 	if ( nSamplesGotten < sampleCount )
 	{
@@ -621,7 +621,7 @@ bool Voice_Init( const char *pCodecName, int nSampleRate )
 	if ( bSteam && nSampleRate == 0 )
 	{
 		Msg( "Voice_Init: Using Steam voice optimal sample rate %d\n",
-		     steamapicontext->SteamUser()->GetVoiceOptimalSampleRate() );
+		steamapicontext->SteamUser()->GetVoiceOptimalSampleRate() );
 		// Steam's sample rate may change and not be supported by our rather unflexible sound engine. However, steam
 		// will resample as necessary in DecompressVoice, so we can pretend we're outputting at native rates.
 		//
@@ -672,10 +672,10 @@ bool Voice_Init( const char *pCodecName, int nSampleRate )
 		g_hVoiceCodecDLL = FileSystem_LoadModule(pCodecName);
 
 		if ( !g_hVoiceCodecDLL || (createCodecFn = Sys_GetFactory(g_hVoiceCodecDLL)) == NULL ||
-		     (g_pEncodeCodec = (IVoiceCodec*)createCodecFn(pCodecName, NULL)) == NULL || !g_pEncodeCodec->Init( quality ) )
+		(g_pEncodeCodec = (IVoiceCodec*)createCodecFn(pCodecName, NULL)) == NULL || !g_pEncodeCodec->Init( quality ) )
 		{
 			Msg("Unable to load voice codec '%s'. Voice disabled. (module %i, iface %i, codec %i)\n",
-			    pCodecName, !!g_hVoiceCodecDLL, !!createCodecFn, !!g_pEncodeCodec);
+			pCodecName, !!g_hVoiceCodecDLL, !!createCodecFn, !!g_pEncodeCodec);
 			Voice_Deinit();
 			return false;
 		}
@@ -712,7 +712,7 @@ void Voice_EndChannel(int iChannel)
 	Assert(iChannel >= 0 && iChannel < VOICE_NUM_CHANNELS);
 
 	CVoiceChannel *pChannel = &g_VoiceChannels[iChannel];
-	
+
 	if ( pChannel->m_iEntity != -1 )
 	{
 		int iEnt = pChannel->m_iEntity;
@@ -726,7 +726,7 @@ void Voice_EndChannel(int iChannel)
 		{
 			VoiceSE_EndChannel( iChannel, pChannel->m_nViewEntityIndex );
 		}
-		
+
 		g_pSoundServices->OnChangeVoiceStatus( iEnt, false );
 		VoiceSE_CloseMouth( iEnt );
 
@@ -734,7 +734,7 @@ void Voice_EndChannel(int iChannel)
 		pChannel->m_nSoundGuid = -1;
 
 		// If the tweak mode channel is ending
-		if ( iChannel == 0 && 
+		if ( iChannel == 0 &&
 			g_bInTweakMode )
 		{
 			VoiceTweak_EndVoiceTweakMode();
@@ -770,7 +770,7 @@ void Voice_Deinit()
 	for(int i=0; i < VOICE_NUM_CHANNELS; i++)
 	{
 		CVoiceChannel *pChannel = &g_VoiceChannels[i];
-		
+
 		if ( pChannel->m_pVoiceCodec )
 		{
 			pChannel->m_pVoiceCodec->Release();
@@ -859,7 +859,7 @@ void Voice_Idle(float frametime)
 		if(g_LocalPlayerTalkingTimeout > LOCALPLAYERTALKING_TIMEOUT)
 		{
 			g_bLocalPlayerTalkingAck = false;
-			
+
 			// Tell the client DLL.
 			g_pSoundServices->OnChangeVoiceStatus(-2, FALSE);
 		}
@@ -880,7 +880,7 @@ void Voice_Idle(float frametime)
 	for(int i=0; i < VOICE_NUM_CHANNELS; i++)
 	{
 		CVoiceChannel *pChannel = &g_VoiceChannels[i];
-		
+
 		if(pChannel->m_iEntity != -1)
 		{
 			if(pChannel->m_bStarved)
@@ -899,7 +899,7 @@ void Voice_Idle(float frametime)
 					pChannel->m_nViewEntityIndex = g_pSoundServices->GetViewEntity();
 					pChannel->m_nSoundGuid = VoiceSE_StartChannel( i, pChannel->m_iEntity, pChannel->m_bProximity, pChannel->m_nViewEntityIndex );
 					g_pSoundServices->OnChangeVoiceStatus(pChannel->m_iEntity, TRUE);
-					
+
 					VoiceSE_InitMouth(pChannel->m_iEntity);
 				}
 
@@ -919,7 +919,7 @@ void Voice_Idle(float frametime)
 		for(int i=0; i < VOICE_NUM_CHANNELS; i++)
 		{
 			CVoiceChannel *pChannel = &g_VoiceChannels[i];
-			
+
 			if(pChannel->m_iEntity == -1)
 				continue;
 
@@ -930,10 +930,10 @@ void Voice_Idle(float frametime)
 	// Show profiling data?
 	if( voice_profile.GetInt() )
 	{
-		Msg("Voice - compress: %7.2fu, decompress: %7.2fu, gain: %7.2fu, upsample: %7.2fu, total: %7.2fu\n", 
-			g_CompressTime*1000000.0, 
-			g_DecompressTime*1000000.0, 
-			g_GainTime*1000000.0, 
+		Msg("Voice - compress: %7.2fu, decompress: %7.2fu, gain: %7.2fu, upsample: %7.2fu, total: %7.2fu\n",
+			g_CompressTime*1000000.0,
+			g_DecompressTime*1000000.0,
+			g_GainTime*1000000.0,
 			g_UpsampleTime*1000000.0,
 			(g_CompressTime+g_DecompressTime+g_GainTime+g_UpsampleTime)*1000000.0
 			);
@@ -950,7 +950,7 @@ bool Voice_IsRecording()
 
 
 bool Voice_RecordStart(
-	const char *pUncompressedFile, 
+	const char *pUncompressedFile,
 	const char *pDecompressedFile,
 	const char *pMicInputFile)
 {
@@ -965,7 +965,7 @@ bool Voice_RecordStart(
 	{
 		g_pEncodeCodec->ResetState();
 	}
-	
+
 	if(pMicInputFile)
 	{
 		int a, b, c;
@@ -1051,7 +1051,7 @@ bool Voice_RecordStop()
 		delete [] g_pDecompressedFileData;
 		g_pDecompressedFileData = NULL;
 	}
-	
+
 	g_VoiceWriter.Finish();
 
 	VoiceRecord_Stop();
@@ -1088,10 +1088,10 @@ int Voice_GetCompressedData(char *pchDest, int nCount, bool bFinal)
 		EVoiceResult result = steamapicontext->SteamUser()->GetAvailableVoice( &cbCompressed, &cbUncompressed, nEncodeRate );
 		if ( result == k_EVoiceResultOK )
 		{
-			result = steamapicontext->SteamUser()->GetVoice( true, pchDest, nCount, &cbCompressedWritten, 
-			                                                 g_pUncompressedFileData != NULL, g_pUncompressedFileData,
-			                                                 MAX_WAVEFILEDATA_LEN - g_nUncompressedDataBytes,
-			                                                 &cbUncompressedWritten, nEncodeRate );
+			result = steamapicontext->SteamUser()->GetVoice( true, pchDest, nCount, &cbCompressedWritten,
+					g_pUncompressedFileData != NULL, g_pUncompressedFileData,
+					MAX_WAVEFILEDATA_LEN - g_nUncompressedDataBytes,
+					&cbUncompressedWritten, nEncodeRate );
 
 			if ( g_pUncompressedFileData )
 			{
@@ -1114,9 +1114,9 @@ int Voice_GetCompressedData(char *pchDest, int nCount, bool bFinal)
 	IVoiceCodec *pCodec = g_pEncodeCodec;
 	if( g_pVoiceRecord && pCodec )
 	{
-#ifdef VOICE_VOX_ENABLE	
+#ifdef VOICE_VOX_ENABLE
 		static ConVarRef voice_vox( "voice_vox" );
-#endif // VOICE_VOX_ENABLE	
+#endif // VOICE_VOX_ENABLE
 
 		short tempData[8192];
 		int samplesWanted = min(nCount/BYTES_PER_SAMPLE, (int)sizeof(tempData)/BYTES_PER_SAMPLE);
@@ -1128,12 +1128,12 @@ int Voice_GetCompressedData(char *pchDest, int nCount, bool bFinal)
 			double curtime = Plat_FloatTime();
 			int nShouldGet = (curtime - g_MicStartTime) * Voice_SamplesPerSec();
 			gotten = min(sizeof(tempData)/BYTES_PER_SAMPLE,
-			             (size_t)min(nShouldGet, (g_nMicInputFileBytes - g_CurMicInputFileByte) / BYTES_PER_SAMPLE));
+				(size_t)min(nShouldGet, (g_nMicInputFileBytes - g_CurMicInputFileByte) / BYTES_PER_SAMPLE));
 			memcpy(tempData, &g_pMicInputFileData[g_CurMicInputFileByte], gotten*BYTES_PER_SAMPLE);
 			g_CurMicInputFileByte += gotten * BYTES_PER_SAMPLE;
 			g_MicStartTime = curtime;
 		}
-#ifdef VOICE_VOX_ENABLE	
+#ifdef VOICE_VOX_ENABLE
 		else if ( gotten && voice_vox.GetBool() == true )
 		{
 			// If the voice data is essentially silent, don't transmit
@@ -1167,7 +1167,7 @@ int Voice_GetCompressedData(char *pchDest, int nCount, bool bFinal)
 		{
 			pchDest[i] = (char)(tempData[i] >> 8);
 		}
-#else			
+#else
 		int nCompressedBytes = pCodec->Compress((char*)tempData, gotten, pchDest, nCount, !!bFinal);
 #endif
 
@@ -1181,12 +1181,12 @@ int Voice_GetCompressedData(char *pchDest, int nCount, bool bFinal)
 #ifdef VOICE_VOX_ENABLE
 		// -3 signals that we're talking
 		g_pSoundServices->OnChangeVoiceStatus( -3, (nCompressedBytes > 0) );
-#endif // VOICE_VOX_ENABLE		
+#endif // VOICE_VOX_ENABLE
 		return nCompressedBytes;
 	}
 	else
 	{
-#ifdef VOICE_VOX_ENABLE	
+#ifdef VOICE_VOX_ENABLE
 		// -3 signals that we're silent
 		g_pSoundServices->OnChangeVoiceStatus( -3, false );
 #endif // VOICE_VOX_ENABLE
@@ -1291,9 +1291,9 @@ double UpsampleIntoBuffer(
 
 
 //------------------ Copyright (c) 1999 Valve, LLC. ----------------------------
-// Purpose: Adds received voice data to 
-// Input  : 
-// Output : 
+// Purpose: Adds received voice data to
+// Input  :
+// Output :
 //------------------------------------------------------------------------------
 int Voice_AddIncomingData(int nChannel, const char *pchData, int nCount, int iSequenceNumber)
 {
@@ -1334,8 +1334,8 @@ int Voice_AddIncomingData(int nChannel, const char *pchData, int nCount, int iSe
 	{
 		uint32 nBytesWritten = 0;
 		EVoiceResult result = steamapicontext->SteamUser()->DecompressVoice( pchData, nCount,
-		                                                                     decompressed, sizeof( decompressed ),
-		                                                                     &nBytesWritten, Voice_SamplesPerSec() );
+					decompressed, sizeof( decompressed ),
+					&nBytesWritten, Voice_SamplesPerSec() );
 		if ( result == k_EVoiceResultOK )
 		{
 			nDecompressed = nBytesWritten / BYTES_PER_SAMPLE;
@@ -1367,10 +1367,10 @@ int Voice_AddIncomingData(int nChannel, const char *pchData, int nCount, int iSe
 
 	// Upsample into the dest buffer. We could do this in a mixer but it complicates the mixer.
 	pChannel->m_LastFraction = UpsampleIntoBuffer( (short*)decompressed,
-	                                               nDecompressed,
-	                                               &pChannel->m_Buffer,
-	                                               pChannel->m_LastFraction,
-	                                               (double)Voice_SamplesPerSec()/g_VoiceSampleFormat.nSamplesPerSec );
+			nDecompressed,
+			&pChannel->m_Buffer,
+			pChannel->m_LastFraction,
+			(double)Voice_SamplesPerSec()/g_VoiceSampleFormat.nSamplesPerSec );
 	pChannel->m_LastSample = decompressed[nDecompressed];
 
 	// Write to our file buffer..
@@ -1562,5 +1562,3 @@ IVoiceTweak g_VoiceTweakAPI =
 	VoiceTweak_GetControlFloat,
 	VoiceTweak_IsStillTweaking,
 };
-
-

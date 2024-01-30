@@ -122,67 +122,67 @@ int GetSvPureMode()
 
 static void SV_Pure_f( const CCommand &args )
 {
-    int pure_mode = -2;
-    if ( args.ArgC() == 2 )
-    {
-        pure_mode = atoi( args[1] );
-    }
+	int pure_mode = -2;
+	if ( args.ArgC() == 2 )
+	{
+		pure_mode = atoi( args[1] );
+	}
 
-    Msg( "--------------------------------------------------------\n" );
-    if ( pure_mode >= -1 && pure_mode <= 2 )
-    {
-        // Not changing?
-        if ( pure_mode == GetSvPureMode() )
-        {
-            Msg( "sv_pure value unchanged (current value is %d).\n", GetSvPureMode() );
-        }
-        else
-        {
+	Msg( "--------------------------------------------------------\n" );
+	if ( pure_mode >= -1 && pure_mode <= 2 )
+	{
+		// Not changing?
+		if ( pure_mode == GetSvPureMode() )
+		{
+			Msg( "sv_pure value unchanged (current value is %d).\n", GetSvPureMode() );
+		}
+		else
+		{
 
 			// Set the value.
-            g_sv_pure_mode = pure_mode;
-            Msg( "sv_pure set to %d.\n", g_sv_pure_mode );
+			g_sv_pure_mode = pure_mode;
+			Msg( "sv_pure set to %d.\n", g_sv_pure_mode );
 
-            if ( sv.IsActive() )
-            {
+			if ( sv.IsActive() )
+			{
 				g_sv_pure_waiting_on_reload = true;
-            }
-        }
-    }
-    else
-    {
-        Msg( "sv_pure: Only allow client to use certain files.\n"
+			}
+		}
+	}
+	else
+	{
+		Msg( "sv_pure: Only allow client to use certain files.\n"
 			"\n"
-            "  -1 - Do not apply any rules or restrict which files the client may load.\n"
-            "   0 - Apply rules in cfg/pure_server_minimal.txt only.\n"
-            "   1 - Apply rules in cfg/pure_server_full.txt and then cfg/pure_server_whitelist.txt.\n"
-            "   2 - Apply rules in cfg/pure_server_full.txt.\n"
-            "\n"
-            "   See cfg/pure_server_whitelist_example.txt for more details.\n"
+			"  -1 - Do not apply any rules or restrict which files the client may load.\n"
+			"   0 - Apply rules in cfg/pure_server_minimal.txt only.\n"
+			"   1 - Apply rules in cfg/pure_server_full.txt and then cfg/pure_server_whitelist.txt.\n"
+			"   2 - Apply rules in cfg/pure_server_full.txt.\n"
+			"\n"
+			"   See cfg/pure_server_whitelist_example.txt for more details.\n"
 		);
-    }
+	}
 
-    if ( pure_mode == -2 )
-    {
-        // If we're a client on a server with sv_pure = 1, display the current whitelist.
+	if ( pure_mode == -2 )
+	{
+		// If we're a client on a server with sv_pure = 1, display the current whitelist.
 #ifndef DEDICATED
-        if ( cl.IsConnected() )
-        {
-            Msg( "\n\n" );
-            extern void CL_PrintWhitelistInfo(); // from cl_main.cpp
-            CL_PrintWhitelistInfo();
-        }
-        else
+		if ( cl.IsConnected() )
+		{
+			Msg( "\n\n" );
+			extern void CL_PrintWhitelistInfo(); // from cl_main.cpp
+			CL_PrintWhitelistInfo();
+		}
+		else
 #endif
-        {
-            Msg( "\nCurrent sv_pure value is %d.\n", GetSvPureMode() );
-        }
-    }
+		{
+			Msg( "\nCurrent sv_pure value is %d.\n", GetSvPureMode() );
+		}
+	}
 	if ( sv.IsActive() && g_sv_pure_waiting_on_reload )
 	{
 		Msg( "Note: Waiting for the next changelevel to apply the current value.\n" );
 	}
-    Msg( "--------------------------------------------------------\n" );
+	Msg( "--------------------------------------------------------\n" );
 }
 
 static ConCommand sv_pure( "sv_pure", SV_Pure_f, "Show user data." );
@@ -209,30 +209,30 @@ static ConVar sv_consistency( "sv_consistency", "1", FCVAR_REPLICATED, "Legacy v
 /// XXX(JohnS): When steam voice gets ugpraded to Opus we will probably default back to steam.  At that time we should
 ///             note that Steam voice is the highest quality codec below.
 static ConVar sv_voicecodec( "sv_voicecodec", "vaudio_celt", 0,
-                             "Specifies which voice codec to use. Valid options are:\n"
-                             "vaudio_speex - Legacy Speex codec (lowest quality)\n"
-                             "vaudio_celt - Newer CELT codec\n"
-                             "steam - Use Steam voice API" );
+							"Specifies which voice codec to use. Valid options are:\n"
+							"vaudio_speex - Legacy Speex codec (lowest quality)\n"
+							"vaudio_celt - Newer CELT codec\n"
+							"steam - Use Steam voice API" );
 
 
 ConVar  sv_mincmdrate( "sv_mincmdrate", "10", FCVAR_REPLICATED, "This sets the minimum value for cl_cmdrate. 0 == unlimited." );
 ConVar  sv_maxcmdrate( "sv_maxcmdrate", "66", FCVAR_REPLICATED, "(If sv_mincmdrate is > 0), this sets the maximum value for cl_cmdrate." );
-ConVar  sv_client_cmdrate_difference( "sv_client_cmdrate_difference", "20", FCVAR_REPLICATED, 
+ConVar  sv_client_cmdrate_difference( "sv_client_cmdrate_difference", "20", FCVAR_REPLICATED,
 	"cl_cmdrate is moved to within sv_client_cmdrate_difference units of cl_updaterate before it "
 	"is clamped between sv_mincmdrate and sv_maxcmdrate." );
 
-ConVar  sv_client_min_interp_ratio( "sv_client_min_interp_ratio", "1", FCVAR_REPLICATED, 
-								   "This can be used to limit the value of cl_interp_ratio for connected clients "
-								   "(only while they are connected).\n"
-								   "              -1 = let clients set cl_interp_ratio to anything\n"
-								   " any other value = set minimum value for cl_interp_ratio"
-								   );
-ConVar  sv_client_max_interp_ratio( "sv_client_max_interp_ratio", "5", FCVAR_REPLICATED, 
-								   "This can be used to limit the value of cl_interp_ratio for connected clients "
-								   "(only while they are connected). If sv_client_min_interp_ratio is -1, "
-								   "then this cvar has no effect."
-								   );
-ConVar  sv_client_predict( "sv_client_predict", "-1", FCVAR_REPLICATED, 
+ConVar  sv_client_min_interp_ratio( "sv_client_min_interp_ratio", "1", FCVAR_REPLICATED,
+									"This can be used to limit the value of cl_interp_ratio for connected clients "
+									"(only while they are connected).\n"
+									"              -1 = let clients set cl_interp_ratio to anything\n"
+									" any other value = set minimum value for cl_interp_ratio"
+									);
+ConVar  sv_client_max_interp_ratio( "sv_client_max_interp_ratio", "5", FCVAR_REPLICATED,
+									"This can be used to limit the value of cl_interp_ratio for connected clients "
+									"(only while they are connected). If sv_client_min_interp_ratio is -1, "
+									"then this cvar has no effect."
+									);
+ConVar  sv_client_predict( "sv_client_predict", "-1", FCVAR_REPLICATED,
 	"This can be used to force the value of cl_predict for connected clients "
 	"(only while they are connected).\n"
 	"   -1 = let clients set cl_predict to anything\n"
@@ -240,14 +240,14 @@ ConVar  sv_client_predict( "sv_client_predict", "-1", FCVAR_REPLICATED,
 	"    1 = force cl_predict to 1"
 	);
 
-ConVar  sv_restrict_aspect_ratio_fov( "sv_restrict_aspect_ratio_fov", "1", FCVAR_REPLICATED, 
-									 "This can be used to limit the effective FOV of users using wide-screen\n"
-									 "resolutions with aspect ratios wider than 1.85:1 (slightly wider than 16:9).\n"
-									 "    0 = do not cap effective FOV\n"
-									 "    1 = limit the effective FOV on windowed mode users using resolutions\n"
-									 "        greater than 1.85:1\n"
-									 "    2 = limit the effective FOV on both windowed mode and full-screen users\n",
-									 true, 0, true, 2);
+ConVar  sv_restrict_aspect_ratio_fov( "sv_restrict_aspect_ratio_fov", "1", FCVAR_REPLICATED,
+									"This can be used to limit the effective FOV of users using wide-screen\n"
+									"resolutions with aspect ratios wider than 1.85:1 (slightly wider than 16:9).\n"
+									"    0 = do not cap effective FOV\n"
+									"    1 = limit the effective FOV on windowed mode users using resolutions\n"
+									"        greater than 1.85:1\n"
+									"    2 = limit the effective FOV on both windowed mode and full-screen users\n",
+									true, 0, true, 2);
 
 void OnTVEnablehanged( IConVar *pConVar, const char *pOldString, float flOldValue )
 {
@@ -378,16 +378,16 @@ void CGameServer::Clear( void )
 	m_bIsLevelMainMenuBackground = false;
 
 	m_bLoadgame = false;
-	
-	host_state.SetWorldModel( NULL );	
+
+	host_state.SetWorldModel( NULL );
 
 	Q_memset( m_szStartspot, 0, sizeof( m_szStartspot ) );
-	
+
 	num_edicts = 0;
 	max_edicts = 0;
 	free_edicts = 0;
 	edicts = NULL;
-	
+
 	// Clear the instance baseline indices in the ServerClasses.
 	if ( serverGameDLL )
 	{
@@ -418,7 +418,7 @@ void CGameServer::CreateEngineStringTables( void )
 
 	m_StringTables->SetTick( m_nTickCount ); // set first tick
 
-	bool bUseFilenameTables = false;	
+	bool bUseFilenameTables = false;
 
 	char szDownloadableFileTablename[255] = DOWNLOADABLE_FILE_TABLENAME;
 	char szModelPrecacheTablename[255] = MODEL_PRECACHE_TABLENAME;
@@ -434,18 +434,18 @@ void CGameServer::CreateEngineStringTables( void )
 		Q_snprintf( szModelPrecacheTablename, 255, ":%s", MODEL_PRECACHE_TABLENAME );
 		Q_snprintf( szGenericPrecacheTablename, 255, ":%s", GENERIC_PRECACHE_TABLENAME );
 		Q_snprintf( szSoundPrecacheTablename, 255, ":%s", SOUND_PRECACHE_TABLENAME );
-		Q_snprintf( szDecalPrecacheTablename, 255, ":%s", DECAL_PRECACHE_TABLENAME );		
-	} 	
+		Q_snprintf( szDecalPrecacheTablename, 255, ":%s", DECAL_PRECACHE_TABLENAME );
+	}
 
-	m_pDownloadableFileTable = m_StringTables->CreateStringTableEx( 
-		szDownloadableFileTablename, 
+	m_pDownloadableFileTable = m_StringTables->CreateStringTableEx(
+		szDownloadableFileTablename,
 		MAX_DOWNLOADABLE_FILES,
 		0,
 		0,
 		bUseFilenameTables );
 
-	m_pModelPrecacheTable = m_StringTables->CreateStringTableEx( 
-		szModelPrecacheTablename, 
+	m_pModelPrecacheTable = m_StringTables->CreateStringTableEx(
+		szModelPrecacheTablename,
 		MAX_MODELS,
 		sizeof ( CPrecacheUserData ),
 		PRECACHE_USER_DATA_NUMBITS,
@@ -476,8 +476,8 @@ void CGameServer::CreateEngineStringTables( void )
 		INSTANCE_BASELINE_TABLENAME,
 		MAX_DATATABLES );
 
-	m_pLightStyleTable = m_StringTables->CreateStringTable( 
-		LIGHT_STYLES_TABLENAME, 
+	m_pLightStyleTable = m_StringTables->CreateStringTable(
+		LIGHT_STYLES_TABLENAME,
 		MAX_LIGHTSTYLES );
 
 	m_pUserInfoTable = m_StringTables->CreateStringTable(
@@ -488,36 +488,36 @@ void CGameServer::CreateEngineStringTables( void )
 	m_pDynamicModelsTable = m_StringTables->CreateStringTable( "DynamicModels", 2048, true, 1 );
 
 	// Send the query info..
-	m_pServerStartupTable = m_StringTables->CreateStringTable( 
+	m_pServerStartupTable = m_StringTables->CreateStringTable(
 		SERVER_STARTUP_DATA_TABLENAME,
 		4 );
 	SetQueryPortFromSteamServer();
 	CopyPureServerWhitelistToStringTable();
 
-	Assert ( m_pModelPrecacheTable && 
-			 m_pGenericPrecacheTable &&
-			 m_pSoundPrecacheTable &&
-			 m_pDecalPrecacheTable &&
-			 m_pInstanceBaselineTable &&
-			 m_pLightStyleTable &&
-			 m_pUserInfoTable &&
-			 m_pServerStartupTable &&
-			 m_pDownloadableFileTable &&
-			 m_pDynamicModelsTable );
+	Assert ( m_pModelPrecacheTable &&
+			m_pGenericPrecacheTable &&
+			m_pSoundPrecacheTable &&
+			m_pDecalPrecacheTable &&
+			m_pInstanceBaselineTable &&
+			m_pLightStyleTable &&
+			m_pUserInfoTable &&
+			m_pServerStartupTable &&
+			m_pDownloadableFileTable &&
+			m_pDynamicModelsTable );
 
 	// create an empty lightstyle table with unique index names
 	for ( i = 0; i<MAX_LIGHTSTYLES; i++ )
 	{
 		char name[8]; Q_snprintf( name, 8, "%i", i );
 		j = m_pLightStyleTable->AddString( true, name );
-		Assert( j==i ); // indices must match 
+		Assert( j==i ); // indices must match
 	}
 
 	for ( i = 0; i<GetMaxClients(); i++ )
 	{
 		char name[8]; Q_snprintf( name, 8, "%i", i );
 		j = m_pUserInfoTable->AddString( true, name );
-		Assert( j==i ); // indices must match 
+		Assert( j==i ); // indices must match
 	}
 
 	// set up the downloadable files generator
@@ -528,7 +528,7 @@ void CGameServer::SetQueryPortFromSteamServer()
 {
 	if ( !m_pServerStartupTable )
 		return;
-		
+
 	int queryPort = Steam3Server().GetQueryPort();
 	m_pServerStartupTable->AddString( true, "QueryPort", sizeof( queryPort ), &queryPort );
 }
@@ -537,7 +537,7 @@ void CGameServer::CopyPureServerWhitelistToStringTable()
 {
 	if ( !m_pPureServerWhitelist )
 		return;
-	
+
 	CUtlBuffer buf;
 	m_pPureServerWhitelist->Encode( buf );
 	m_pServerStartupTable->AddString( true, "PureServerWhitelist", buf.TellPut(), buf.Base() );
@@ -554,14 +554,14 @@ void SV_InstallClientStringTableMirrors( void )
 	for ( int i =0; i<numTables; i++)
 	{
 		// iterate through server tables
-		CNetworkStringTable *serverTable = 
+		CNetworkStringTable *serverTable =
 			(CNetworkStringTable*)networkStringTableContainerServer->GetTable( i );
 
 		if ( !serverTable )
 			continue;
 
 		// get mathcing client table
-		CNetworkStringTable *clientTable = 
+		CNetworkStringTable *clientTable =
 			(CNetworkStringTable*)networkStringTableContainerClient->FindTable( serverTable->GetTableName() );
 
 		if ( !clientTable )
@@ -588,7 +588,7 @@ CON_COMMAND( user, "Show user data." )
 {
 	int		uid;
 	int		i;
-	
+
 	if ( !sv.IsActive() )
 	{
 		ConMsg( "Can't 'user', not running a server\n" );
@@ -764,16 +764,16 @@ CON_COMMAND( maxplayers, "Change the maximum number of players allowed on this s
 
 int SV_BuildSendTablesArray( ServerClass *pClasses, SendTable **pTables, int nMaxTables )
 {
-        int nTables = 0;
+		int nTables = 0;
 
-        for( ServerClass *pCur=pClasses; pCur; pCur=pCur->m_pNext )
-        {
-                ErrorIfNot( nTables < nMaxTables, ("SV_BuildSendTablesArray: too many SendTables!") );
-                pTables[nTables] = pCur->m_pTable;
-                ++nTables;
-        }
+		for( ServerClass *pCur=pClasses; pCur; pCur=pCur->m_pNext )
+		{
+				ErrorIfNot( nTables < nMaxTables, ("SV_BuildSendTablesArray: too many SendTables!") );
+				pTables[nTables] = pCur->m_pTable;
+				++nTables;
+		}
 
-        return nTables;
+		return nTables;
 }
 
 
@@ -854,21 +854,21 @@ void SV_InitGameDLL( void )
 	if ( CL_IsHL2Demo() && !sv.IsDedicated() && Q_stricmp( COM_GetModDirectory(), "hl2" ) )
 	{
 		Error( "The HL2 demo is unable to run Mods.\n" );
-		return;			
-	} 
+		return;
+	}
 
 	if ( CL_IsPortalDemo() && !sv.IsDedicated() && Q_stricmp( COM_GetModDirectory(), "portal" ) )
 	{
 		Error( "The Portal demo is unable to run Mods.\n" );
-		return;			
-	} 
+		return;
+	}
 
 	// check permissions
 	if ( Steam3Client().SteamApps() && !CL_IsHL2Demo() && !CL_IsPortalDemo() )
 	{
 		bool bVerifiedMod = false;
 
-        // find the game dir we're running
+		// find the game dir we're running
 		for ( int i = 0; i < ARRAYSIZE( g_ModDirPermissions ); i++ )
 		{
 			if ( !Q_stricmp( COM_GetModDirectory(), g_ModDirPermissions[i].m_pchGameDir ) )
@@ -881,7 +881,7 @@ void SV_InitGameDLL( void )
 				else
 				{
 					Error( "No permissions to run '%s'\n", COM_GetModDirectory() );
-					return;			
+					return;
 				}
 
 				break;
@@ -923,7 +923,7 @@ void SV_InitGameDLL( void )
 
 	if ( CommandLine()->FindParm( "-NoLoadPluginsForClient" ) == 0 )
 		g_pServerPluginHandler->LoadPlugins(); // load 3rd party plugins
-	
+
 
 	// let's not have any servers with no name
 	if ( host_name.GetString()[0] == 0 )
@@ -940,7 +940,7 @@ void SV_InitGameDLL( void )
 
 	host_state.interval_per_tick = serverGameDLL->GetTickInterval();
 	if ( host_state.interval_per_tick < MINIMUM_TICK_INTERVAL ||
-		 host_state.interval_per_tick > MAXIMUM_TICK_INTERVAL )
+		host_state.interval_per_tick > MAXIMUM_TICK_INTERVAL )
 	{
 		Sys_Error( "GetTickInterval returned bogus tick interval (%f)[%f to %f is valid range]", host_state.interval_per_tick,
 			MINIMUM_TICK_INTERVAL, MAXIMUM_TICK_INTERVAL );
@@ -963,7 +963,7 @@ void SV_InitGameDLL( void )
 
 		if ( sv.IsDedicated() && !g_pReplay->SV_Init( g_ServerFactory ) )
 		{
-			Sys_Error( "Replay system server init failed!" ); 
+			Sys_Error( "Replay system server init failed!" );
 		}
 	}
 #endif
@@ -1005,7 +1005,7 @@ ServerClass* SV_FindServerClass( const char *pName )
 
 		pCur = pCur->m_pNext;
 	}
-	
+
 	return NULL;
 }
 
@@ -1031,7 +1031,7 @@ void CGameServer::Init (bool isDedicated)
 	CBaseServer::Init( isDedicated );
 
 	m_FullSendTables.SetDebugName( "m_FullSendTables" );
-	
+
 	dll_initialized = false;
 }
 
@@ -1094,12 +1094,12 @@ Pitch should be PITCH_NORM (100) for no pitch shift. Values over 100 (up to 255)
 shift pitch higher, values lower than 100 lower the pitch.
 ==================
 */
-void SV_StartSound ( IRecipientFilter& filter, edict_t *pSoundEmittingEntity, int iChannel, 
-	const char *pSample, float flVolume, soundlevel_t iSoundLevel, int iFlags, 
+void SV_StartSound ( IRecipientFilter& filter, edict_t *pSoundEmittingEntity, int iChannel,
+	const char *pSample, float flVolume, soundlevel_t iSoundLevel, int iFlags,
 	int iPitch, int iSpecialDSP, const Vector *pOrigin, float soundtime, int speakerentity, CUtlVector< Vector >* pUtlVecOrigins )
 {
 
-	SoundInfo_t sound; 
+	SoundInfo_t sound;
 	sound.SetDefault();
 
 	sound.nEntityIndex = pSoundEmittingEntity ? NUM_FOR_EDICT( pSoundEmittingEntity ) : 0;
@@ -1152,9 +1152,9 @@ void SV_StartSound ( IRecipientFilter& filter, edict_t *pSoundEmittingEntity, in
 		lastSoundTime = soundtime;
 #endif
 	}
-	
+
 	// find precache number for sound
-	
+
 	// if this is a sentence, get sentence number
 	if ( pSample && TestSoundChar(pSample, CHAR_SENTENCE) )
 	{
@@ -1175,7 +1175,7 @@ void SV_StartSound ( IRecipientFilter& filter, edict_t *pSoundEmittingEntity, in
 			ConMsg ("SV_StartSound: %s not precached (%d)\n", pSample, sound.nSoundNum );
 			return;
 		}
-    }
+	}
 
 	// now sound message is complete, send to clients in filter
 	sv.BroadcastSound( sound, filter );
@@ -1183,9 +1183,9 @@ void SV_StartSound ( IRecipientFilter& filter, edict_t *pSoundEmittingEntity, in
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets bits of playerbits based on valid multicast recipients
-// Input  : usepas - 
-//			origin - 
-//			playerbits - 
+// Input  : usepas -
+//			origin -
+//			playerbits -
 //-----------------------------------------------------------------------------
 void SV_DetermineMulticastRecipients( bool usepas, const Vector& origin, CBitVec< ABSOLUTE_PLAYER_LIMIT >& playerbits )
 {
@@ -1208,7 +1208,7 @@ void SV_DetermineMulticastRecipients( bool usepas, const Vector& origin, CBitVec
 		// HACK:  Should above also check pClient->spawned instead of this
 		if ( !pClient->edict || pClient->edict->IsFree() || pClient->edict->GetUnknown() == NULL )
 			continue;
-		
+
 		// Always add the  or Replay client
 #if defined( REPLAY_ENABLED )
 		if ( pClient->IsHLTV() || pClient->IsReplay() )
@@ -1233,8 +1233,8 @@ void SV_DetermineMulticastRecipients( bool usepas, const Vector& origin, CBitVec
 
 //-----------------------------------------------------------------------------
 // Purpose: Write single ConVar change to all connected clients
-// Input  : *var - 
-//			*newValue - 
+// Input  : *var -
+//			*newValue -
 //-----------------------------------------------------------------------------
 void SV_ReplicateConVarChange( ConVar const *var, const char *newValue )
 {
@@ -1253,8 +1253,8 @@ void SV_ReplicateConVarChange( ConVar const *var, const char *newValue )
 
 //-----------------------------------------------------------------------------
 // Purpose: Execute a command on all clients or a particular client
-// Input  : *var - 
-//			*newValue - 
+// Input  : *var -
+//			*newValue -
 //-----------------------------------------------------------------------------
 void SV_ExecuteRemoteCommand( const char *pCommand, int nClientSlot )
 {
@@ -1304,13 +1304,13 @@ CGameServer::~CGameServer()
 
 //-----------------------------------------------------------------------------
 // Purpose: Disconnects the client and cleans out the m_pEnt CBasePlayer container object
-// Input  : *clientedict - 
+// Input  : *clientedict -
 //-----------------------------------------------------------------------------
 void CGameServer::RemoveClientFromGame( CBaseClient *client )
 {
 	CGameClient *pClient = (CGameClient*)client;
 
-	// we must have an active server and a spawned client 
+	// we must have an active server and a spawned client
 	// If we are a local server and we're disconnecting just return
 	if ( !pClient->edict || !pClient->IsSpawned() || !IsActive() || (pClient->GetNetChannel() && pClient->GetNetChannel()->IsLoopback() ) )
 		return;
@@ -1333,19 +1333,19 @@ int GetNetSpikeValue()
 	return s_iNetSpikeValue;
 }
 
-const char szSvNetSpikeUsageText[] = 
+const char szSvNetSpikeUsageText[] =
 	"Write network trace if amount of data sent to client exceeds N bytes.  Use zero to disable tracing.\n"
 	"Note that having this enabled, even if never triggered, impacts performance.  Set to zero when not in use.\n"
 	"For compatibility reasons, this command can be initialized on the command line with the -netspike option.";
 
 static void sv_netspike_f( const CCommand &args )
 {
-    if ( args.ArgC() != 2 )
-    {
+	if ( args.ArgC() != 2 )
+	{
 		Msg( "%s\n\n", szSvNetSpikeUsageText );
 		Msg( "sv_netspike value is currently %d\n", GetNetSpikeValue() );
 		return;
-    }
+	}
 
 	s_iNetSpikeValue = Max( V_atoi( args.Arg( 1 ) ), 0 );
 }
@@ -1496,7 +1496,7 @@ void SV_AddOriginToPVS( const Vector& origin )
 void CGameServer::BroadcastSound( SoundInfo_t &sound, IRecipientFilter &filter )
 {
 	int num = filter.GetRecipientCount();
-	
+
 	// don't add sounds while paused, unless we're in developer mode
 	if ( IsPaused() && !developer.GetInt() )
 		return;
@@ -1507,7 +1507,7 @@ void CGameServer::BroadcastSound( SoundInfo_t &sound, IRecipientFilter &filter )
 
 		if ( index < 1 || index > GetClientCount() )
 		{
-			Msg( "CGameServer::BroadcastSound:  Recipient Filter for sound (reliable: %s, init: %s) with bogus client index (%i) in list of %i clients\n", 
+			Msg( "CGameServer::BroadcastSound:  Recipient Filter for sound (reliable: %s, init: %s) with bogus client index (%i) in list of %i clients\n",
 					filter.IsReliable() ? "yes" : "no",
 					filter.IsInitMessage() ? "yes" : "no",
 					index, num );
@@ -1542,17 +1542,17 @@ CPureServerWhitelist * CGameServer::GetPureServerWhitelist() const
 //	// We only need to do something special if we were preventing hibernation
 //	// with sv_hibernate_when_empty but we would otherwise have been hibernating.
 //	// In that case, punt all connected clients.
-//	sv.UpdateHibernationState( ); 
+//	sv.UpdateHibernationState( );
 //}
 
 static bool s_bExitWhenEmpty = false;
-static ConVar sv_memlimit(  "sv_memlimit", "0", 0, 
+static ConVar sv_memlimit(  "sv_memlimit", "0", 0,
 	"If set, whenever a game ends, if the total memory used by the server is "
 	"greater than this # of megabytes, the server will exit."	);
-static ConVar sv_minuptimelimit(  "sv_minuptimelimit", "0", 0, 
+static ConVar sv_minuptimelimit(  "sv_minuptimelimit", "0", 0,
 	"If set, whenever a game ends, if the server uptime is less than "
 	"this number of hours, the server will continue running regardless of sv_memlimit."	);
-static ConVar sv_maxuptimelimit(  "sv_maxuptimelimit", "0", 0, 
+static ConVar sv_maxuptimelimit(  "sv_maxuptimelimit", "0", 0,
 	"If set, whenever a game ends, if the server uptime exceeds "
 	"this number of hours, the server will exit."	);
 
@@ -1642,7 +1642,7 @@ void CGameServer::SetHibernating( bool bHibernating )
 		{
 			// see if we have any other connected bot clients
 			for ( int iClient = 0; iClient < m_Clients.Count(); iClient++ )
-			{			
+			{
 				CBaseClient *pClient = m_Clients[iClient];
 				if ( pClient->IsFakeClient() && pClient->IsConnected() && !pClient->IsSplitScreenUser() && !pClient->IsReplay() && !pClient->IsHLTV() )
 				{
@@ -1690,7 +1690,7 @@ void CGameServer::SetHibernating( bool bHibernating )
 					bExit = true;
 				}
 			}
-			
+
 //#ifdef _LINUX
 //			// if we are a child process running forked, we want to exit now. We want to "really" exit. no destructors, no nothing
 //			if ( IsChildProcess() )							// are we a subprocess?
@@ -1729,7 +1729,7 @@ void CGameServer::UpdateHibernationState()
 
 	// see if we have any other connected clients
 	for ( int iClient = 0; iClient < m_Clients.Count(); iClient++ )
-	{			
+	{
 		CBaseClient *pClient = m_Clients[iClient];
 		// don't consider the client being removed, it still shows as connected but won't be in a moment
 		if ( pClient->IsConnected() && ( pClient->IsSplitScreenUser() || !pClient->IsFakeClient() ) )
@@ -1743,7 +1743,7 @@ void CGameServer::UpdateHibernationState()
 
 	// If a restart was requested and we're supposed to reboot after XX amount of time, reboot the server.
 	if ( !bHaveAnyClients && ( sv_maxuptimelimit.GetFloat() > 0.0f ) &&
-		 Steam3Server().SteamGameServer() && Steam3Server().SteamGameServer()->WasRestartRequested() )
+		Steam3Server().SteamGameServer() && Steam3Server().SteamGameServer()->WasRestartRequested() )
 	{
 		hibernateFromGCServer = true;
 		s_bExitWhenEmpty = true;
@@ -1797,7 +1797,7 @@ void CGameServer::FinishRestore()
 #endif
 }
 
-void CGameServer::CopyTempEntities( CFrameSnapshot* pSnapshot )	
+void CGameServer::CopyTempEntities( CFrameSnapshot* pSnapshot )
 {
 	Assert( pSnapshot->m_pTempEntities == NULL );
 
@@ -1850,18 +1850,18 @@ static void SV_ParallelSendSnapshot( CGameClient *& pClient )
 void CGameServer::SendClientMessages ( bool bSendSnapshots )
 {
 	VPROF_BUDGET( "SendClientMessages", VPROF_BUDGETGROUP_OTHER_NETWORKING );
-	
+
 	// build individual updates
 	int receivingClientCount = 0;
 	CGameClient*	pReceivingClients[ABSOLUTE_PLAYER_LIMIT];
 	for (int i=0; i< GetClientCount(); i++ )
 	{
 		CGameClient* client = Client(i);
-		
+
 		// Update Host client send state...
 		if ( !client->ShouldSendMessages() )
 			continue;
-		
+
 		// Append the unreliable data (player updates and packet entities)
 		if ( bSendSnapshots && client->IsActive() )
 		{
@@ -1874,8 +1874,8 @@ void CGameServer::SendClientMessages ( bool bSendSnapshots )
 			// Connected, but inactive, just send reliable, sequenced info.
 			if ( client->IsFakeClient() )
 				continue;
-				
-			// if client never send a netchannl packet yet, send S2C_CONNECTION 
+
+			// if client never send a netchannl packet yet, send S2C_CONNECTION
 			// because it could get lost in multiplayer
 			if ( NET_IsMultiplayer() && client->m_NetChannel->GetSequenceNr(FLOW_INCOMING) == 0 )
 			{
@@ -1909,7 +1909,7 @@ void CGameServer::SendClientMessages ( bool bSendSnapshots )
 			// It will replace anything that it does process with a NULL pointer.
 			ParallelProcess( "SV_ParallelSendSnapshot", pReceivingClients, receivingClientCount, &SV_ParallelSendSnapshot );
 		}
-		
+
 		for (int i = 0; i < receivingClientCount; ++i)
 		{
 			CGameClient *pClient = pReceivingClients[i];
@@ -1921,7 +1921,7 @@ void CGameServer::SendClientMessages ( bool bSendSnapshots )
 			pClient->SendSnapshot( pFrame );
 			pClient->UpdateSendState();
 		}
-	
+
 		pSnapshot->ReleaseReference();
 	}
 }
@@ -2005,20 +2005,20 @@ void SV_BroadcastVoiceData(IClient * pClient, int nBytes, char * data, int64 xui
 		bool bHearsPlayer = pDestClient->IsHearingClient( voiceData.m_nFromClient );
 		voiceData.m_bProximity = pDestClient->IsProximityHearingClient( voiceData.m_nFromClient );
 
-		if ( IsX360() && bSelf == true )			
+		if ( IsX360() && bSelf == true )
 			continue;
-			
+
 		if ( !bHearsPlayer && !bSelf )
-			continue;	
+			continue;
 
 		voiceData.m_nLength = nBytes * 8;
 
 		// Is loopback enabled?
 		if( !bHearsPlayer )
 		{
-			// Still send something, just zero length (this is so the client 
+			// Still send something, just zero length (this is so the client
 			// can display something that shows knows the server knows it's talking).
-			voiceData.m_nLength = 0;	
+			voiceData.m_nLength = 0;
 		}
 
 		pDestClient->SendNetMsg( voiceData );
@@ -2047,9 +2047,9 @@ void SV_CreateBaseline (void)
 #endif
 		sv.m_FullSendTablesBuffer.EnsureCapacity( NET_MAX_PAYLOAD );
 		sv.m_FullSendTables.StartWriting( sv.m_FullSendTablesBuffer.Base(), sv.m_FullSendTablesBuffer.Count() );
-		
+
 		SV_WriteSendTables( pClasses, sv.m_FullSendTables );
-		
+
 		if ( sv.m_FullSendTables.IsOverflowed() )
 		{
 			Host_Error("SV_CreateBaseline: WriteSendTables overflow.\n" );
@@ -2071,7 +2071,7 @@ void SV_CreateBaseline (void)
 	{
 		int		count = 0;
 		int		bytes = 0;
-		
+
 		for ( int entnum = 0; entnum < sv.num_edicts ; entnum++)
 		{
 			// get the current server version
@@ -2096,16 +2096,16 @@ void SV_CreateBaseline (void)
 			//
 			// create entity baseline
 			//
-			
+
 			ALIGN4 char packedData[MAX_PACKEDENTITY_DATA] ALIGN4_POST;
 			bf_write writeBuf( "SV_CreateBaseline->writeBuf", packedData, sizeof( packedData ) );
 
 
 			// create basline from zero values
 			if ( !SendTable_Encode(
-				pSendTable, 
-				edict->GetUnknown(), 
-				&writeBuf, 
+				pSendTable,
+				edict->GetUnknown(),
+				&writeBuf,
 				entnum,
 				NULL,
 				false
@@ -2120,7 +2120,7 @@ void SV_CreateBaseline (void)
 			bytes += writeBuf.GetNumBytesWritten();
 			count ++;
 		}
-		DevMsg("Created class baseline: %i classes, %i bytes.\n", count,bytes); 
+		DevMsg("Created class baseline: %i classes, %i bytes.\n", count,bytes);
 	}
 
 	g_GameEventManager.ReloadEventDefinitions();
@@ -2178,7 +2178,7 @@ bool SV_ActivateServer()
 
 	// all setup is completed, any further precache statements are errors
 	sv.m_State = ss_active;
-	
+
 	COM_TimestampedLog( "SV_CreateBaseline" );
 
 	// create a baseline for more efficient communications
@@ -2361,14 +2361,14 @@ void CGameServer::ReloadWhitelist( const char *pMapName )
 	// Load user whitelists, if allowed
 	if ( GetSvPureMode() == 1 )
 	{
-		
+
 		// Load the per-map whitelist.
 		const char *pMapWhitelistSuffix = "_whitelist.txt";
 		char testFilename[MAX_PATH] = "maps";
 		V_AppendSlash( testFilename, sizeof( testFilename ) );
 		V_strncat( testFilename, pMapName, sizeof( testFilename ) );
 		V_strncat( testFilename, pMapWhitelistSuffix, sizeof( testFilename ) );
-		
+
 		KeyValues *kv = new KeyValues( "" );
 		if ( kv->LoadFromFile( g_pFileSystem, testFilename ) )
 			m_pPureServerWhitelist->LoadCommandsFromKeyValues( kv );
@@ -2460,7 +2460,7 @@ bool CGameServer::SpawnServer( const char *szMapName, const char *szMapFile, con
 	{
 		hltv->Shutdown();
 	}
-	
+
 	// NOTE: Replay system does not deal with relay proxies.
 
 	COM_TimestampedLog( "Host_FreeToLowMark" );
@@ -2558,7 +2558,7 @@ bool CGameServer::SpawnServer( const char *szMapName, const char *szMapFile, con
 
 		// edict for a player is slot + 1, world = 0
 		pClient->edict = edicts + i + 1;
-	
+
 		// Setup up the edict
 		InitializeEntityDLLFields( pClient->edict );
 	}
@@ -2566,7 +2566,7 @@ bool CGameServer::SpawnServer( const char *szMapName, const char *szMapFile, con
 	COM_TimestampedLog( "Set up players(done)" );
 
 	m_State = ss_loading;
-	
+
 	// Set initial time values.
 	m_flTickInterval = host_state.interval_per_tick;
 	m_nTickCount = (int)( 1.0 / host_state.interval_per_tick ) + 1; // Start at appropriate 1
@@ -2733,7 +2733,7 @@ void CGameServer::UpdateMasterServerPlayers()
 	for ( int i=0; i < GetClientCount() ; i++ )
 	{
 		CGameClient *client = Client(i);
-		
+
 		if ( !client->IsConnected() )
 			continue;
 
@@ -2758,23 +2758,23 @@ bool SV_IsSimulating( void )
 		return false;
 
 #ifndef SWDS
-	// Don't simulate in single player if console is down or the bug UI is active and we're in a game 
+	// Don't simulate in single player if console is down or the bug UI is active and we're in a game
 	if ( !sv.IsMultiplayer() )
 	{
 		if ( g_LostVideoMemory )
 			return false;
 
-		// Don't simulate in single player if console is down or the bug UI is active and we're in a game 
+		// Don't simulate in single player if console is down or the bug UI is active and we're in a game
 		if ( cl.IsActive() && ( Con_IsVisible() || EngineVGui()->ShouldPause() ) )
 			return false;
 	}
 #endif //SWDS
-	
+
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool SV_HasPlayers()
@@ -2801,7 +2801,7 @@ void SV_Think( bool bIsSimulating )
 {
 	VPROF( "SV_Physics" );
 	tmZone( TELEMETRY_LEVEL1, TMZF_NONE, "SV_Think(%s)", bIsSimulating ? "simulating" : "not simulating" );
-	
+
 // @FD The staging branch already did away with "frames" and wakes on tick
 // optimally.  Currently the hibernating flag essentially means "is empty
 // and available to host a game," which is used for the GC matchmaking.
@@ -2845,8 +2845,8 @@ void SV_Think( bool bIsSimulating )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : simulating - 
+// Purpose:
+// Input  : simulating -
 //-----------------------------------------------------------------------------
 void SV_PreClientUpdate(bool bIsSimulating )
 {
@@ -2858,7 +2858,7 @@ void SV_PreClientUpdate(bool bIsSimulating )
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 /*
 ==================
@@ -2916,13 +2916,13 @@ void SV_Frame( bool finalTick )
 
 	// unlock sting tables to allow changes, helps to find unwanted changes (bebug build only)
 	networkStringTableContainerServer->Lock( false );
-	
+
 	// Run any commands from client and play client Think functions if it is time.
 	sv.RunFrame(); // read network input etc
 
 	bool simulated = false;
 	if ( SV_HasPlayers() )
-	{	
+	{
 		bool serverCanSimulate = ( serverGameDLL && !serverGameDLL->IsRestoring() ) ? true : false;
 
 		if ( serverCanSimulate && ( bIsSimulating || bSendDuringPause ) )
@@ -2962,4 +2962,3 @@ void SV_Frame( bool finalTick )
 		Steam3Server().RunFrame();
 	}
 }
-

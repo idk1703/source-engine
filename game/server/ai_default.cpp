@@ -84,8 +84,8 @@ void CAI_BaseNPC::InitDefaultScheduleSR(void)
 	ADD_DEF_SCHEDULE( "SCHED_VICTORY_DANCE",				SCHED_VICTORY_DANCE);
 	ADD_DEF_SCHEDULE( "SCHED_TARGET_FACE",					SCHED_TARGET_FACE);
 	ADD_DEF_SCHEDULE( "SCHED_TARGET_CHASE",					SCHED_TARGET_CHASE);
-	ADD_DEF_SCHEDULE( "SCHED_SMALL_FLINCH",					SCHED_SMALL_FLINCH);	
-	ADD_DEF_SCHEDULE( "SCHED_BIG_FLINCH",					SCHED_BIG_FLINCH);	
+	ADD_DEF_SCHEDULE( "SCHED_SMALL_FLINCH",					SCHED_SMALL_FLINCH);
+	ADD_DEF_SCHEDULE( "SCHED_BIG_FLINCH",					SCHED_BIG_FLINCH);
 	ADD_DEF_SCHEDULE( "SCHED_BACK_AWAY_FROM_ENEMY",			SCHED_BACK_AWAY_FROM_ENEMY);
 	ADD_DEF_SCHEDULE( "SCHED_MOVE_AWAY_FROM_ENEMY",			SCHED_MOVE_AWAY_FROM_ENEMY);
 	ADD_DEF_SCHEDULE( "SCHED_BACK_AWAY_FROM_SAVE_POSITION",	SCHED_BACK_AWAY_FROM_SAVE_POSITION);
@@ -412,18 +412,18 @@ CAI_Schedule *CAI_BaseNPC::GetSchedule(int schedule)
 	return g_AI_SchedulesManager.GetScheduleFromID( schedule );
 }
 
-bool CAI_BaseNPC::IsCurSchedule( int schedId, bool fIdeal )	
-{ 
+bool CAI_BaseNPC::IsCurSchedule( int schedId, bool fIdeal )
+{
 	if ( !m_pSchedule )
 		return ( schedId == SCHED_NONE || schedId == AI_RemapToGlobal(SCHED_NONE) );
 
-	schedId = ( AI_IdIsLocal( schedId ) ) ? 
-							GetClassScheduleIdSpace()->ScheduleLocalToGlobal(schedId) : 
+	schedId = ( AI_IdIsLocal( schedId ) ) ?
+							GetClassScheduleIdSpace()->ScheduleLocalToGlobal(schedId) :
 							schedId;
 	if ( fIdeal )
 		return ( schedId == m_IdealSchedule );
 
-	return ( m_pSchedule->GetId() == schedId ); 
+	return ( m_pSchedule->GetId() == schedId );
 }
 
 
@@ -456,7 +456,7 @@ public:
 	{
 		extern float g_AINextDisabledMessageTime;
 		g_AINextDisabledMessageTime = 0;
-	
+
 		g_AI_SchedulesManager.CreateStringRegistries();
 
 		CAI_BaseNPC::gm_iNextThinkRebalanceTick = 0;
@@ -651,7 +651,7 @@ AI_DEFINE_SCHEDULE
 	"		TASK_STOP_MOVING						0"
 	"		TASK_PLAY_SEQUENCE						ACTIVITY:ACT_DROP_WEAPON"
 	"		TASK_CREATE_PENDING_WEAPON				0"
-	""	
+	""
 	"	Interrupts"
 );
 
@@ -898,7 +898,7 @@ AI_DEFINE_SCHEDULE
 	"		COND_HEAR_DANGER"
 	"		COND_HEAR_BULLET_IMPACT"
 	"		COND_IDLE_INTERRUPT"
-	"		COND_GIVE_WAY"	
+	"		COND_GIVE_WAY"
 );
 
 
@@ -1938,10 +1938,10 @@ AI_DEFINE_SCHEDULE
 // Shoot at my enemy in order to destroy the breakable cover object
 // that they are hiding behind. This will naturally destroy the cover object.
 //-----------------------------------------------------------------------------
-AI_DEFINE_SCHEDULE	
+AI_DEFINE_SCHEDULE
 (
 	SCHED_SHOOT_ENEMY_COVER,
-	  
+
 	"	Tasks"
 	"		TASK_STOP_MOVING		0"
 	"		TASK_FACE_ENEMY			0"
@@ -2267,7 +2267,7 @@ AI_DEFINE_SCHEDULE
 //=========================================================
 // > SCHED_MOVE_AWAY_END (allows derived class to translate to appropriate behavior)
 //=========================================================
-AI_DEFINE_SCHEDULE 
+AI_DEFINE_SCHEDULE
 (
 	SCHED_MOVE_AWAY_END,
 
@@ -2295,7 +2295,7 @@ AI_DEFINE_SCHEDULE
 //=========================================================
 // > SCHED_WAIT_FOR_SPEAK_FINISH
 //=========================================================
-AI_DEFINE_SCHEDULE  
+AI_DEFINE_SCHEDULE
 (
 	SCHED_WAIT_FOR_SPEAK_FINISH,
 
@@ -2313,13 +2313,13 @@ AI_DEFINE_SCHEDULE
 	"		COND_HEAR_DANGER"
 	"		COND_HEAR_COMBAT"
 	"		COND_HEAR_BULLET_IMPACT"
-	
+
 );
 
 //=========================================================
 // > SCHED_DUCK_DODGE
 //=========================================================
-AI_DEFINE_SCHEDULE  
+AI_DEFINE_SCHEDULE
 (
  SCHED_DUCK_DODGE,
 
@@ -2335,7 +2335,7 @@ AI_DEFINE_SCHEDULE
 //=========================================================
 // > SCHED_INTERACTION_MOVE_TO_PARTNER
 //=========================================================
-AI_DEFINE_SCHEDULE  
+AI_DEFINE_SCHEDULE
 (
  SCHED_INTERACTION_MOVE_TO_PARTNER,
 
@@ -2351,7 +2351,7 @@ AI_DEFINE_SCHEDULE
 //=========================================================
 // > SCHED_INTERACTION_WAIT_FOR_PARTNER
 //=========================================================
-AI_DEFINE_SCHEDULE  
+AI_DEFINE_SCHEDULE
 (
  SCHED_INTERACTION_WAIT_FOR_PARTNER,
 
@@ -2366,7 +2366,7 @@ AI_DEFINE_SCHEDULE
 //=========================================================
 // > SCHED_SLEEP
 //=========================================================
-AI_DEFINE_SCHEDULE  
+AI_DEFINE_SCHEDULE
 (
  SCHED_SLEEP,
 
@@ -2377,5 +2377,3 @@ AI_DEFINE_SCHEDULE
  "	Interrupts"
  ""
  );
-
-

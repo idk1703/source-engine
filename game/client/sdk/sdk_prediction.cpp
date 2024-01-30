@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,9 +24,9 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CSDKPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, 
+void CSDKPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper,
 	CMoveData *move )
 {
 	// Call the default SetupMove code.
@@ -34,7 +34,7 @@ void CSDKPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelpe
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSDKPrediction::FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *move )
 {
@@ -50,4 +50,3 @@ static CSDKPrediction g_Prediction;
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CSDKPrediction, IPrediction, VCLIENT_PREDICTION_INTERFACE_VERSION, g_Prediction );
 
 CPrediction *prediction = &g_Prediction;
-

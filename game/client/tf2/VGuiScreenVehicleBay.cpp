@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -51,22 +51,22 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Standard VGUI panel for objects 
+// Standard VGUI panel for objects
 //-----------------------------------------------------------------------------
 DECLARE_VGUI_SCREEN_FACTORY( CVehicleBayVGuiScreen, "vehicle_bay_screen" );
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CVehicleBayVGuiScreen::CVehicleBayVGuiScreen( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, panelName, g_hVGuiObjectScheme ) 
+	: BaseClass( parent, panelName, g_hVGuiObjectScheme )
 {
 }
 
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CVehicleBayVGuiScreen::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {

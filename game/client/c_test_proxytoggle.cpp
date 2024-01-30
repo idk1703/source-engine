@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -74,7 +74,3 @@ CON_COMMAND_F( Test_ProxyToggle_EnsureValue, "Test_ProxyToggle_EnsureValue", FCV
 		Error( "Test_ProxyToggle_EnsureValue: value (%d) doesn't match wanted value (%d).", g_pTestObj->m_WithProxy, wantedValue );
 	}
 }
-
-
-
-

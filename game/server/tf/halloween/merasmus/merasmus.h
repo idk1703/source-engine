@@ -42,7 +42,7 @@ class CMerasmusSWStats
 {
 public:
 
-	void ResetStats () 
+	void ResetStats ()
 	{
 		V_memset( m_arrClassDamage, 0, sizeof( m_arrClassDamage ) );
 		m_flPropHuntTime1 = 0;
@@ -298,7 +298,7 @@ private:
 
 	CountdownTimer m_lifeTimer;
 	float m_flLastWarnTime;
-	
+
 	// For Stats
 	float m_flStartDisguiseTime;
 	CMerasmusSWStats m_bossStats;

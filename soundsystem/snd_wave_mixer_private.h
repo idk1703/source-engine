@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -41,13 +41,13 @@ public:
 	virtual bool MixDataToDevice( IAudioDevice *pDevice, channel_t *pChannel, int startSample, int sampleCount, int outputRate, bool forward = true );
 	virtual void IncrementSamples( channel_t *pChannel, int startSample, int sampleCount,int outputRate, bool forward = true );
 	virtual bool SkipSamples( IAudioDevice *pDevice, channel_t *pChannel, int startSample, int sampleCount,int outputRate, bool forward = true  );
-	virtual void Mix( IAudioDevice *pDevice, 
-					channel_t *pChannel, 
-					void *pData, 
-					int outputOffset, 
-					int inputOffset, 
-					fixedint fracRate, 
-					int outCount, 
+	virtual void Mix( IAudioDevice *pDevice,
+					channel_t *pChannel,
+					void *pData,
+					int outputOffset,
+					int inputOffset,
+					fixedint fracRate,
+					int outCount,
 					int timecompress,
 					bool forward = true ) = 0;
 

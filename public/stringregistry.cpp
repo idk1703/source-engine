@@ -32,7 +32,7 @@ struct StringTable_t : public CUtlDict<int, unsigned short>
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Add null terminated string to the string registry 
+// Purpose: Add null terminated string to the string registry
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------

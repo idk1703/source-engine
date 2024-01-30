@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmeshape.h"
@@ -13,13 +13,13 @@
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeShape, CDmeShape );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeShape::OnConstruction()
 {

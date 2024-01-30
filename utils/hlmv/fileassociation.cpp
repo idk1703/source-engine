@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -96,7 +96,7 @@ FileAssociation::handleEvent (mxEvent *event)
 		int index = cExtension->getSelectedIndex ();
 		if (index >= 0)
 			d_associations[index].association = event->action - IDC_ACTION1;
-		
+
 	}
 	break;
 

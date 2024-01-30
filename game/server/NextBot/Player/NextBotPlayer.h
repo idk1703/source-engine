@@ -32,7 +32,7 @@ extern ConVar NextBotPlayerMove;
  * static CBasePlayer *T::AllocatePlayerEntity( edict_t *pEdict, const char *playerName )
  *
  */
-template < typename T > 
+template < typename T >
 T * NextBotCreatePlayerBot( const char *name, bool bReportFakeClient = true )
 {
 	/*
@@ -105,7 +105,7 @@ public:
 
 	virtual void PressReloadButton( float duration = -1.0f ) = 0;
 	virtual void ReleaseReloadButton( void ) = 0;
-	
+
 	virtual void PressForwardButton( float duration = -1.0f ) = 0;
 	virtual void ReleaseForwardButton( void ) = 0;
 
@@ -157,7 +157,7 @@ public:
 	virtual INextBot *MyNextBotPointer( void ) { return this; }
 
 	// this is valid because the templatized PlayerType must be derived from CBasePlayer, which is derived from CBaseCombatCharacter
-	virtual CBaseCombatCharacter *GetEntity( void ) const { return ( PlayerType * )this; }	
+	virtual CBaseCombatCharacter *GetEntity( void ) const { return ( PlayerType * )this; }
 
 	virtual bool IsRemovedOnReset( void ) const { return false; }				// remove this bot when the NextBot manager calls Reset
 
@@ -220,7 +220,7 @@ public:
 	virtual void SetButtonScale( float forward, float right );
 
 	//------------------------------------------------------------------------
-	// Event hooks into NextBot system 
+	// Event hooks into NextBot system
 	virtual int OnTakeDamage_Alive( const CTakeDamageInfo &info );
 	virtual int OnTakeDamage_Dying( const CTakeDamageInfo &info );
 	virtual void Event_Killed( const CTakeDamageInfo &info );
@@ -676,7 +676,7 @@ inline void NextBotPlayer< PlayerType >::PhysicsSimulate( void )
 
 	if ( inputButtons & IN_FORWARD )
 	{
-		forwardSpeed = mover->GetRunSpeed();		
+		forwardSpeed = mover->GetRunSpeed();
 	}
 	else if ( inputButtons & IN_BACK )
 	{
@@ -685,7 +685,7 @@ inline void NextBotPlayer< PlayerType >::PhysicsSimulate( void )
 
 	if ( inputButtons & IN_MOVELEFT )
 	{
-		strafeSpeed = -mover->GetRunSpeed();		
+		strafeSpeed = -mover->GetRunSpeed();
 	}
 	else if ( inputButtons & IN_MOVERIGHT )
 	{
@@ -829,7 +829,7 @@ inline void NextBotPlayer< PlayerType >::Update( void )
 	// don't spend CPU updating if this Survivor is dead
 	if ( ( this->IsAlive() || !IsDormantWhenDead() ) && !NextBotPlayerStop.GetBool() )
 	{
-		INextBot::Update();	
+		INextBot::Update();
 	}
 }
 

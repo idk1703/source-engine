@@ -30,7 +30,7 @@ Vector IIntention::SelectTargetPoint( const INextBot *me, const CBaseCombatChara
 				return result;
 			}
 		}
-	}	
+	}
 
 	// no answer, use a reasonable position
 	Vector threatMins, threatMaxs;
@@ -85,7 +85,3 @@ const CKnownEntity *IIntention::SelectMoreDangerousThreat( const INextBot *me, c
 
 	return threat2;
 }
-
-
-
-

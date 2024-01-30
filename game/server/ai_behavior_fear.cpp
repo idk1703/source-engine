@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -32,7 +32,7 @@ ConVar ai_enable_fear_behavior( "ai_enable_fear_behavior", "1" );
 ConVar ai_fear_player_dist("ai_fear_player_dist", "720" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CAI_FearBehavior::CAI_FearBehavior()
 {
@@ -41,7 +41,7 @@ CAI_FearBehavior::CAI_FearBehavior()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_FearBehavior::Precache( void )
 {
@@ -49,8 +49,8 @@ void CAI_FearBehavior::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CAI_FearBehavior::StartTask( const Task_t *pTask )
 {
@@ -80,8 +80,8 @@ void CAI_FearBehavior::StartTask( const Task_t *pTask )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CAI_FearBehavior::RunTask( const Task_t *pTask )
 {
@@ -164,7 +164,7 @@ void CAI_FearBehavior::RunTask( const Task_t *pTask )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : TRUE if I have an enemy and that enemy would attack me if it could
 // Notes  : Returns FALSE if the enemy is neutral or likes me.
 //-----------------------------------------------------------------------------
@@ -247,7 +247,7 @@ void CAI_FearBehavior::ReleaseAllHints()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 // Notes  : This behavior runs when I have an enemy that I fear, but who
 //			does NOT hate or fear me (meaning they aren't going to fight me)
@@ -270,7 +270,7 @@ bool CAI_FearBehavior::CanSelectSchedule()
 
 	if( !ai_enable_fear_behavior.GetBool() )
 		return false;
-	
+
 	if( GetOuter()->IRelationType(pEnemy) != D_FR )
 		return false;
 
@@ -300,7 +300,7 @@ void CAI_FearBehavior::GatherConditions()
 				SpoilSafePlace();
 			}
 		}
-		else if( flEnemyDistSqr < FEAR_ENEMY_TOLERANCE_CLOSE_DIST_SQR && GetEnemy()->GetEnemy() == GetOuter() )	
+		else if( flEnemyDistSqr < FEAR_ENEMY_TOLERANCE_CLOSE_DIST_SQR && GetEnemy()->GetEnemy() == GetOuter() )
 		{
 			// Only become scared of an enemy at this range if they're my enemy, too
 			SetCondition( COND_FEAR_ENEMY_CLOSE );
@@ -369,7 +369,7 @@ void CAI_FearBehavior::BeginScheduleSelection()
 //-----------------------------------------------------------------------------
 void CAI_FearBehavior::EndScheduleSelection()
 {
-	// We don't have to release our hints or markers or anything here. 
+	// We don't have to release our hints or markers or anything here.
 	// Just because we ran other AI for a while doesn't mean we aren't still in a safe place.
 	//ReleaseAllHints();
 }
@@ -378,7 +378,7 @@ void CAI_FearBehavior::EndScheduleSelection()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 // Notes  : If fear behavior is running at all, we know we're afraid of our enemy
 //-----------------------------------------------------------------------------

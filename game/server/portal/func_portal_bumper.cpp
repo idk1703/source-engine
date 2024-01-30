@@ -100,4 +100,3 @@ void CFuncPortalBumper::InputToggle( inputdata_t &inputdata )
 {
 	m_bActive = !m_bActive;
 }
-

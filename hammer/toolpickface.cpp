@@ -241,19 +241,19 @@ bool CToolPickFace::OnMouseMove3D(CMapView3D *pView, UINT nFlags, const Vector2D
 void CToolPickFace::SetEyedropperCursor(void)
 {
 	static HCURSOR hcurEyedropper = NULL;
-	
+
 	if (!hcurEyedropper)
 	{
 		hcurEyedropper = LoadCursor(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDC_EYEDROPPER));
 	}
-	
+
 	SetCursor(hcurEyedropper);
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pFace - 
+// Purpose:
+// Input  : pFace -
 //-----------------------------------------------------------------------------
 void CToolPickFace::CycleSelectFace(CMapFace *pFace)
 {
@@ -298,8 +298,8 @@ void CToolPickFace::CycleSelectFace(CMapFace *pFace)
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the fully selected and partially selected faces for the picker.
-// Input  : FaceListFull - 
-//			FaceListPartial - 
+// Input  : FaceListFull -
+//			FaceListPartial -
 //-----------------------------------------------------------------------------
 void CToolPickFace::SetSelectedFaces(CMapFaceList &FaceListFull, CMapFaceList &FaceListPartial)
 {
@@ -324,8 +324,8 @@ void CToolPickFace::SetSelectedFaces(CMapFaceList &FaceListFull, CMapFaceList &F
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pFace - 
+// Purpose:
+// Input  : pFace -
 //-----------------------------------------------------------------------------
 int CToolPickFace::FindFace(CMapFace *pFace)
 {
@@ -428,9 +428,9 @@ void CToolPickFace::DeselectFace(int nIndex)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pFace - 
-//			eState - 
+// Purpose:
+// Input  : pFace -
+//			eState -
 //-----------------------------------------------------------------------------
 void CToolPickFace::AddToList(CMapFace *pFace, FaceState_t eState)
 {
@@ -444,8 +444,8 @@ void CToolPickFace::AddToList(CMapFace *pFace, FaceState_t eState)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nIndex - 
+// Purpose:
+// Input  : nIndex -
 //-----------------------------------------------------------------------------
 void CToolPickFace::RemoveFromList(int nIndex)
 {
@@ -480,4 +480,3 @@ void CToolPickFace::GetSelectedFaces(CMapFaceList &FaceListFull, CMapFaceList &F
 		}
 	}
 }
-

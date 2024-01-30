@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -53,7 +53,7 @@ void CRender2D::DrawLineTo( const Vector	&vPoint )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : ptCenter - the center point in client coordinates
 //			nRadiusX - the x radius in pixels
 //			nRadiusY - the y radius in pixels
@@ -63,7 +63,7 @@ void CRender2D::DrawCircle( const Vector &vCenter, float fRadius )
 {
 	Vector vNormal;
 	GetCamera()->GetViewForward( vNormal );
-	CRender::DrawCircle( vCenter, vNormal, fRadius, 32 ); 
+	CRender::DrawCircle( vCenter, vNormal, fRadius, 32 );
 }
 
 void CRender2D::DrawRectangle( const Vector &vMins, const Vector &vMaxs, bool bFill, int extent )
@@ -135,6 +135,3 @@ void CRender2D::DrawBox( const Vector &vMins, const Vector &vMaxs, bool bFill)
 	meshBuilder.End();
 	m_pMesh->Draw();
 }
-
-
-

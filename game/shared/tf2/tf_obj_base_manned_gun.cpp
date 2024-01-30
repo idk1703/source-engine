@@ -83,7 +83,7 @@ ConVar obj_child_range_factor( "obj_child_range_factor","1.1", FCVAR_REPLICATED,
 #define MANNEDGUN_RESTORE_TURN_RATE				150
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectBaseMannedGun::CObjectBaseMannedGun()
 {
@@ -101,7 +101,7 @@ void CObjectBaseMannedGun::SetMovementStyle( MovementStyle_t style )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBaseMannedGun::Precache()
 {
@@ -114,7 +114,7 @@ void CObjectBaseMannedGun::Precache()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBaseMannedGun::Spawn()
 {
@@ -159,7 +159,7 @@ void CObjectBaseMannedGun::CalculateMaxRange( float flDefensiveRange, float flOf
 }
 
 //-----------------------------------------------------------------------------
-// Sets up various attachment points once the model is selected 
+// Sets up various attachment points once the model is selected
 //-----------------------------------------------------------------------------
 void CObjectBaseMannedGun::OnModelSelected()
 {
@@ -177,7 +177,7 @@ void CObjectBaseMannedGun::OnModelSelected()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBaseMannedGun::UpdateOnRemove( void )
 {
@@ -213,7 +213,7 @@ void CObjectBaseMannedGun::SetupAttachedVersion( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBaseMannedGun::SetupUnattachedVersion( void )
 {
@@ -224,7 +224,7 @@ void CObjectBaseMannedGun::SetupUnattachedVersion( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBaseMannedGun::OnGoInactive( void )
 {
@@ -261,7 +261,7 @@ bool CObjectBaseMannedGun::CanGetInVehicle( CBaseTFPlayer *pPlayer )
 
 
 //-----------------------------------------------------------------------------
-// Returns the eye position 
+// Returns the eye position
 //-----------------------------------------------------------------------------
 void CObjectBaseMannedGun::GetVehicleViewPosition( int nRole, Vector *pOrigin, QAngle *pAngles, float *pFOV /*= NULL*/ )
 {
@@ -356,7 +356,7 @@ void CObjectBaseMannedGun::OnItemPostFrame( CBaseTFPlayer *pDriver )
 	// If we don't have a laser designator yet, create one
 	if ( !m_hLaserDesignation )
 	{
-		m_hLaserDesignation = CEnvLaserDesignation::CreatePredicted( pDriver ); 
+		m_hLaserDesignation = CEnvLaserDesignation::CreatePredicted( pDriver );
 	}
 
 	// Designating?
@@ -376,7 +376,7 @@ void CObjectBaseMannedGun::OnItemPostFrame( CBaseTFPlayer *pDriver )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBaseMannedGun::StopDesignating( void )
 {
@@ -451,13 +451,13 @@ void CObjectBaseMannedGun::UpdateDesignator( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBaseMannedGun::SetupMove( CBasePlayer *pPlayer, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move )
 {
 	BaseClass::SetupMove( pPlayer, ucmd, pHelper, move );
 
-	CTFMoveData *pMoveData = (CTFMoveData*)move; 
+	CTFMoveData *pMoveData = (CTFMoveData*)move;
 	Assert( sizeof(MannedPlasmagunData_t) <= pMoveData->VehicleDataMaxSize() );
 
 	MannedPlasmagunData_t *pVehicleData = (MannedPlasmagunData_t*)pMoveData->VehicleData();
@@ -474,12 +474,12 @@ void CObjectBaseMannedGun::SetupMove( CBasePlayer *pPlayer, CUserCmd *ucmd, IMov
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBaseMannedGun::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *move )
 {
 	BaseClass::FinishMove( player, ucmd, move );
-	CTFMoveData *pMoveData = (CTFMoveData*)move; 
+	CTFMoveData *pMoveData = (CTFMoveData*)move;
 	Assert( sizeof(MannedPlasmagunData_t) <= pMoveData->VehicleDataMaxSize() );
 
 	MannedPlasmagunData_t *pVehicleData = (MannedPlasmagunData_t*)pMoveData->VehicleData();
@@ -499,7 +499,7 @@ void CObjectBaseMannedGun::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMov
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBaseMannedGun::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMove )
 {
@@ -511,7 +511,7 @@ void CObjectBaseMannedGun::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMo
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CObjectBaseMannedGun::GetGunYaw() const
 {
@@ -520,7 +520,7 @@ float CObjectBaseMannedGun::GetGunYaw() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CObjectBaseMannedGun::GetGunPitch() const
 {
@@ -528,7 +528,7 @@ float CObjectBaseMannedGun::GetGunPitch() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CObjectBaseMannedGun::ShouldUseThirdPersonVehicleView( void )
 {
@@ -545,7 +545,7 @@ bool CObjectBaseMannedGun::ShouldUseThirdPersonVehicleView( void )
 
 #if defined( CLIENT_DLL )
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectBaseMannedGun::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -589,7 +589,7 @@ void C_ObjectBaseMannedGun::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Clamps the view angles while manning the gun 
+// Clamps the view angles while manning the gun
 //-----------------------------------------------------------------------------
 void C_ObjectBaseMannedGun::UpdateViewAngles( C_BasePlayer *pLocalPlayer, CUserCmd *pCmd )
 {
@@ -612,7 +612,7 @@ void C_ObjectBaseMannedGun::UpdateViewAngles( C_BasePlayer *pLocalPlayer, CUserC
 }
 
 //-----------------------------------------------------------------------------
-// Orients the gun correctly 
+// Orients the gun correctly
 //-----------------------------------------------------------------------------
 void C_ObjectBaseMannedGun::GetBoneControllers(float controllers[MAXSTUDIOBONECTRLS], float dadt)
 {
@@ -665,7 +665,7 @@ void C_ObjectBaseMannedGun::DrawCrosshair()
 	CHudCrosshair *crosshair = GET_HUDELEMENT( CHudCrosshair );
 	if ( !crosshair )
 		return;
-	
+
 	if ( iconCrosshair )
 	{
 		crosshair->SetCrosshair( iconCrosshair, gHUD.m_clrNormal );

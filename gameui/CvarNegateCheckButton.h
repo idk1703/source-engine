@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,7 +18,7 @@ class CCvarNegateCheckButton : public vgui::CheckButton
 	DECLARE_CLASS_SIMPLE( CCvarNegateCheckButton, vgui::CheckButton );
 
 public:
-	CCvarNegateCheckButton( vgui::Panel *parent, const char *panelName, const char *text, 
+	CCvarNegateCheckButton( vgui::Panel *parent, const char *panelName, const char *text,
 		char const *cvarname );
 	~CCvarNegateCheckButton();
 

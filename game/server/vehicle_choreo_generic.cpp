@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -29,7 +29,7 @@
 #define CHOREO_VEHICLE_VIEW_YAW_MIN	-60
 #define CHOREO_VEHICLE_VIEW_YAW_MAX	60
 #define CHOREO_VEHICLE_VIEW_PITCH_MIN	-90
-#define CHOREO_VEHICLE_VIEW_PITCH_MAX	38	
+#define CHOREO_VEHICLE_VIEW_PITCH_MAX	38
 
 BEGIN_DATADESC_NO_BASE( vehicleview_t )
 	DEFINE_FIELD( bClampEyeAngles, FIELD_BOOLEAN ),
@@ -49,7 +49,7 @@ END_DATADESC()
 //
 enum
 {
-	AE_CHOREO_VEHICLE_OPEN = 1,	
+	AE_CHOREO_VEHICLE_OPEN = 1,
 	AE_CHOREO_VEHICLE_CLOSE = 2,
 };
 
@@ -79,7 +79,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CChoreoGenericServerVehicle : public CBaseServerVehicle
 {
@@ -97,7 +97,7 @@ protected:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CPropVehicleChoreoGeneric : public CDynamicProp, public IDrivableVehicle
 {
@@ -302,7 +302,7 @@ bool ShouldVehicleIgnoreEntity( CBaseEntity *pVehicle, CBaseEntity *pCollide )
 
 	if ( pChoreoVehicle->GetMoveParent() == pCollide )
 		return true;
-		
+
 	return false;
 }
 
@@ -342,7 +342,7 @@ void CPropVehicleChoreoGeneric::Spawn( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleChoreoGeneric::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr )
 {
@@ -357,7 +357,7 @@ void CPropVehicleChoreoGeneric::TraceAttack( const CTakeDamageInfo &info, const 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CPropVehicleChoreoGeneric::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 {
@@ -383,7 +383,7 @@ int CPropVehicleChoreoGeneric::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Vector CPropVehicleChoreoGeneric::BodyTarget( const Vector &posSrc, bool bNoisy )
 {
@@ -404,7 +404,7 @@ Vector CPropVehicleChoreoGeneric::BodyTarget( const Vector &posSrc, bool bNoisy 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleChoreoGeneric::Think(void)
 {
@@ -413,7 +413,7 @@ void CPropVehicleChoreoGeneric::Think(void)
 	if ( GetDriver() )
 	{
 		BaseClass::Think();
-		
+
 		// If the enter or exit animation has finished, tell the server vehicle
 		if ( IsSequenceFinished() && (m_bExitAnimOn || m_bEnterAnimOn) )
 		{
@@ -519,7 +519,7 @@ void CPropVehicleChoreoGeneric::InputViewlock( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleChoreoGeneric::HandleAnimEvent( animevent_t *pEvent )
 {
@@ -537,7 +537,7 @@ void CPropVehicleChoreoGeneric::HandleAnimEvent( animevent_t *pEvent )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleChoreoGeneric::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
@@ -576,9 +576,9 @@ bool CPropVehicleChoreoGeneric::CanExitVehicle( CBaseEntity *pEntity )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Override base class to add display 
+// Purpose: Override base class to add display
 //-----------------------------------------------------------------------------
-void CPropVehicleChoreoGeneric::DrawDebugGeometryOverlays(void) 
+void CPropVehicleChoreoGeneric::DrawDebugGeometryOverlays(void)
 {
 	// Draw if BBOX is on
 	if ( m_debugOverlays & OVERLAY_BBOX_BIT )
@@ -590,7 +590,7 @@ void CPropVehicleChoreoGeneric::DrawDebugGeometryOverlays(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleChoreoGeneric::EnterVehicle( CBaseCombatCharacter *pPassenger )
 {
@@ -620,7 +620,7 @@ void CPropVehicleChoreoGeneric::EnterVehicle( CBaseCombatCharacter *pPassenger )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleChoreoGeneric::SetVehicleEntryAnim( bool bOn )
 {
@@ -629,7 +629,7 @@ void CPropVehicleChoreoGeneric::SetVehicleEntryAnim( bool bOn )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleChoreoGeneric::ExitVehicle( int nRole )
 {
@@ -648,7 +648,7 @@ void CPropVehicleChoreoGeneric::ExitVehicle( int nRole )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleChoreoGeneric::ResetUseKey( CBasePlayer *pPlayer )
 {
@@ -666,27 +666,27 @@ void CPropVehicleChoreoGeneric::GetVectors(Vector* pForward, Vector* pRight, Vec
 
 	if (pForward != NULL)
 	{
-		MatrixGetColumn( entityToWorld, 1, *pForward ); 
+		MatrixGetColumn( entityToWorld, 1, *pForward );
 	}
 
 	if (pRight != NULL)
 	{
-		MatrixGetColumn( entityToWorld, 0, *pRight ); 
+		MatrixGetColumn( entityToWorld, 0, *pRight );
 	}
 
 	if (pUp != NULL)
 	{
-		MatrixGetColumn( entityToWorld, 2, *pUp ); 
+		MatrixGetColumn( entityToWorld, 2, *pUp );
 	}
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CBaseEntity *CPropVehicleChoreoGeneric::GetDriver( void ) 
-{ 
-	return m_hPlayer; 
+CBaseEntity *CPropVehicleChoreoGeneric::GetDriver( void )
+{
+	return m_hPlayer;
 }
 
 //-----------------------------------------------------------------------------
@@ -737,8 +737,8 @@ void CPropVehicleChoreoGeneric::InputEnterVehicle( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CPropVehicleChoreoGeneric::InputEnterVehicleImmediate( inputdata_t &inputdata )
 {
@@ -760,7 +760,7 @@ void CPropVehicleChoreoGeneric::InputEnterVehicleImmediate( inputdata_t &inputda
 		// Force the player out of whatever vehicle they are in.
 		pPlayer->LeaveVehicle();
 	}
-	
+
 	// Force us to drop anything we're holding
 	pPlayer->ForceDropOfCarriedPhysObjects();
 
@@ -816,8 +816,8 @@ CPropVehicleChoreoGeneric *CChoreoGenericServerVehicle::GetVehicle( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pPlayer - 
+// Purpose:
+// Input  : pPlayer -
 //-----------------------------------------------------------------------------
 void CChoreoGenericServerVehicle::ItemPostFrame( CBasePlayer *player )
 {
@@ -841,7 +841,7 @@ void CChoreoGenericServerVehicle::ItemPostFrame( CBasePlayer *player )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoGenericServerVehicle::GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, QAngle *pAbsAngles, float *pFOV /*= NULL*/ )
 {
@@ -913,7 +913,7 @@ CVehicleChoreoViewParser::CVehicleChoreoViewParser( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleChoreoViewParser::ParseKeyValue( void *pData, const char *pKey, const char *pValue )
 {
@@ -962,9 +962,9 @@ void CVehicleChoreoViewParser::ParseKeyValue( void *pData, const char *pKey, con
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CVehicleChoreoViewParser::SetDefaults( void *pData ) 
+void CVehicleChoreoViewParser::SetDefaults( void *pData )
 {
 	vehicleview_t *pView = (vehicleview_t *)pData;
 

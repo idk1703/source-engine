@@ -82,7 +82,7 @@ public:
 	virtual void Unregister( CTacticalMission *mission );
 
 	virtual const CTacticalMission *GetMission( const char *name );			// given a mission name, return the mission (or NULL)
-	
+
 	/**
 	 * Iterate each mission.
 	 * If functor returns false, stop iterating and return false.

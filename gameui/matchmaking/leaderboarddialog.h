@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 class CLeaderboardDialog : public CBaseDialog
 {
-	DECLARE_CLASS_SIMPLE( CLeaderboardDialog, CBaseDialog ); 
+	DECLARE_CLASS_SIMPLE( CLeaderboardDialog, CBaseDialog );
 
 public:
 	CLeaderboardDialog(vgui::Panel *parent);

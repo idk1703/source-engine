@@ -14,7 +14,7 @@
 class CCSPlayerResource : public CPlayerResource
 {
 	DECLARE_CLASS( CCSPlayerResource, CPlayerResource );
-	
+
 public:
 	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();

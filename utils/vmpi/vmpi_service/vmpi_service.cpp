@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -106,7 +106,7 @@ char g_CurMasterName[512] = {0};
 #endif
 
 // If this is non-NULL, then there is NOT a VMPI worker app running currently.. the downloader
-HANDLE g_Waiting_hProcess = NULL; 
+HANDLE g_Waiting_hProcess = NULL;
 float g_Waiting_StartTime = 0;
 CUtlVector<char*> g_Waiting_Argv;
 int g_Waiting_Priority = 0;
@@ -202,7 +202,7 @@ void CVMPIServiceConnMgr::SendCurStateTo( int id )
 	data.AddToTail( VMPI_SERVICE_TO_UI_STATE );
 	data.AddMultipleToTail( sizeof( g_iCurState ), (char*)&g_iCurState );
 	data.AddToTail( (char)g_bScreensaverMode );
-	
+
 	if ( g_pPassword )
 		data.AddMultipleToTail( strlen( g_pPassword ) + 1, g_pPassword );
 	else
@@ -221,7 +221,7 @@ void CVMPIServiceConnMgr::HandlePacket( const char *pData, int len )
 			HandlePacket_KILL_PROCESS( NULL );
 		}
 		break;
-		
+
 		case VMPI_SERVICE_DISABLE:
 		{
 			KillRunningProcess( "Got a VMPI_SERVICE_DISABLE packet", true );
@@ -244,7 +244,7 @@ void CVMPIServiceConnMgr::HandlePacket( const char *pData, int len )
 		{
 			const char *pStr = pData + 1;
 			SetPassword( pStr );
-			
+
 			// Send out the new state.
 			SendCurStateTo( -1 );
 		}
@@ -283,27 +283,27 @@ void LoadStateFromRegistry()
 		DWORD type = REG_DWORD;
 		DWORD size = sizeof( val );
 
-		if ( RegQueryValueEx( 
+		if ( RegQueryValueEx(
 			g_hVMPIServiceKey,
 			"ScreensaverMode",
 			0,
 			&type,
 			(unsigned char*)&val,
-			&size ) == ERROR_SUCCESS && 
-			type == REG_DWORD && 
+			&size ) == ERROR_SUCCESS &&
+			type == REG_DWORD &&
 			size == sizeof( val ) )
 		{
 			g_bScreensaverMode = (val != 0);
 		}
 
-		if ( RegQueryValueEx( 
+		if ( RegQueryValueEx(
 			g_hVMPIServiceKey,
 			"Disabled",
 			0,
 			&type,
 			(unsigned char*)&val,
-			&size ) == ERROR_SUCCESS && 
-			type == REG_DWORD && 
+			&size ) == ERROR_SUCCESS &&
+			type == REG_DWORD &&
 			size == sizeof( val ) &&
 			val != 0 )
 		{
@@ -318,9 +318,9 @@ void SaveStateToRegistry()
 	if ( g_hVMPIServiceKey )
 	{
 		DWORD val;
-		 
+
 		val = g_bScreensaverMode;
-		RegSetValueEx( 
+		RegSetValueEx(
 			g_hVMPIServiceKey,
 			"ScreensaverMode",
 			0,
@@ -329,7 +329,7 @@ void SaveStateToRegistry()
 			sizeof( val ) );
 
 		val = (g_iCurState == VMPI_SERVICE_STATE_DISABLED);
-		RegSetValueEx( 
+		RegSetValueEx(
 			g_hVMPIServiceKey,
 			"Disabled",
 			0,
@@ -338,7 +338,7 @@ void SaveStateToRegistry()
 			sizeof( val ) );
 	}
 }
- 
+
 
 // ------------------------------------------------------------------------------------------ //
 // Helper functions.
@@ -376,7 +376,7 @@ SpewRetval_t MySpewOutputFunc( SpewType_t spewType, const char *pMsg )
 	// Print it to the console.
 	if ( g_pConnMgr )
 		g_pConnMgr->AddConsoleOutput( pMsg );
-	
+
 	// Output to the debug console.
 	OutputDebugString( pMsg );
 
@@ -404,7 +404,7 @@ void AppendArg( CUtlVector<char*> &newArgv, const char *pIn )
 
 
 void SendStartStatus( bool bStatus )
-{	
+{
 	for ( int i=0; i < 3; i++ )
 	{
 		char data[4096];
@@ -414,7 +414,7 @@ void SendStartStatus( bool bStatus )
 		dataBuf.WriteBytes( g_CurJobID, sizeof( g_CurJobID ) );
 		dataBuf.WriteByte( bStatus );
 		g_pSocket->SendTo( &g_CurRespondAddr, data, dataBuf.GetNumBytesWritten() );
-		
+
 		Sleep( 50 );
 	}
 }
@@ -430,7 +430,7 @@ void SendEndStatus()
 		dataBuf.WriteByte( VMPI_NOTIFY_END_STATUS );
 		dataBuf.WriteBytes( g_CurJobID, sizeof( g_CurJobID ) );
 		g_pSocket->SendTo( &g_CurRespondAddr, data, dataBuf.GetNumBytesWritten() );
-		
+
 		Sleep( 50 );
 	}
 }
@@ -460,7 +460,7 @@ void KillRunningProcess( const char *pReason, bool bGoToIdle )
 	// Yep. Now we can start a new one.
 	CloseHandle( g_hRunningThread );
 	g_hRunningThread = NULL;
-	
+
 	CloseHandle( g_hRunningProcess );
 	g_hRunningProcess = NULL;
 
@@ -485,7 +485,7 @@ public:
 	int		m_ID[4];		// Random ID that comes from the server.
 	float	m_Time;
 };
-															  
+
 CUtlLinkedList<CJobMemory, int> g_JobMemories;
 
 
@@ -495,7 +495,7 @@ bool FindJobMemory( int id[4] )
 	for ( int i=g_JobMemories.Head(); i != g_JobMemories.InvalidIndex(); i=iNext )
 	{
 		iNext = g_JobMemories.Next( i );
-		
+
 		CJobMemory *pJob = &g_JobMemories[i];
 		if ( memcmp( pJob->m_ID, id, sizeof( pJob->m_ID ) ) == 0 )
 			return true;
@@ -507,12 +507,12 @@ bool FindJobMemory( int id[4] )
 void TimeoutJobIDs()
 {
 	double flCurTime = Plat_FloatTime();
-	
+
 	int iNext;
 	for ( int i=g_JobMemories.Head(); i != g_JobMemories.InvalidIndex(); i=iNext )
 	{
 		iNext = g_JobMemories.Next( i );
-		
+
 		if ( (flCurTime - g_JobMemories[i].m_Time) > JOB_MEMORY_DURATION )
 			g_JobMemories.Remove( i );
 	}
@@ -522,7 +522,7 @@ void TimeoutJobIDs()
 void AddJobMemory( int id[4] )
 {
 	TimeoutJobIDs();
-	
+
 	CJobMemory job;
 	memcpy( job.m_ID, id, sizeof( job.m_ID ) );
 	job.m_Time = Plat_FloatTime();
@@ -533,7 +533,7 @@ void AddJobMemory( int id[4] )
 bool CheckJobID( bf_read &buf, int jobID[4] )
 {
 	TimeoutJobIDs();
-	
+
 	jobID[0] = buf.ReadLong();
 	jobID[1] = buf.ReadLong();
 	jobID[2] = buf.ReadLong();
@@ -542,7 +542,7 @@ bool CheckJobID( bf_read &buf, int jobID[4] )
 	{
 		return false;
 	}
-	
+
 	return true;
 }
 
@@ -568,7 +568,7 @@ void VMPI_Waiter_Term()
 		g_pSocket->Release();
 		g_pSocket = NULL;
 	}
-	
+
 	g_pPerfTracker->Release();
 	g_pPerfTracker = NULL;
 }
@@ -605,7 +605,7 @@ bool VMPI_Waiter_Init()
 		Msg( "Error creating a socket.\n" );
 		return false;
 	}
-	
+
 	// Bind to the first port we find in the range [VMPI_SERVICE_PORT, VMPI_LAST_SERVICE_PORT].
 	int iTest;
 	for ( iTest=VMPI_SERVICE_PORT; iTest <= VMPI_LAST_SERVICE_PORT; iTest++ )
@@ -615,12 +615,12 @@ bool VMPI_Waiter_Init()
 			break;
 	}
 	if ( iTest == VMPI_LAST_SERVICE_PORT )
-	{	
+	{
 		Msg( "Error binding a socket to port %d.\n", VMPI_SERVICE_PORT );
 		VMPI_Waiter_Term();
 		return false;
 	}
-	
+
 	g_iBoundPort = iTest;
 	g_pPerfTracker = CreatePerfTracker();
 	return true;
@@ -629,7 +629,7 @@ bool VMPI_Waiter_Init()
 
 void RunInDLL( const char *pFilename, CUtlVector<char*> &newArgv )
 {
-	if ( g_pConnMgr )						   
+	if ( g_pConnMgr )
 		g_pConnMgr->SetAppState( VMPI_SERVICE_STATE_BUSY );
 
 	bool bSuccess = false;
@@ -652,7 +652,7 @@ void RunInDLL( const char *pFilename, CUtlVector<char*> &newArgv )
 
 		Sys_UnloadModule( pModule );
 	}
-	
+
 	if ( !bSuccess )
 	{
 		Msg( "Error running VRAD (or VVIS) out of DLL '%s'\n", pFilename );
@@ -663,15 +663,15 @@ void RunInDLL( const char *pFilename, CUtlVector<char*> &newArgv )
 }
 
 
-void GetArgsFromBuffer( 
-	bf_read &buf, 
-	CUtlVector<char*> &newArgv, 
+void GetArgsFromBuffer(
+	bf_read &buf,
+	CUtlVector<char*> &newArgv,
 	bool *bShowAppWindow )
 {
 	int nArgs = buf.ReadWord();
 
 	bool bSpewArgs = false;
-	
+
 	for ( int iArg=0; iArg < nArgs; iArg++ )
 	{
 		char argStr[512];
@@ -703,11 +703,11 @@ bool GetDLLFilename( CUtlVector<char*> &newArgv, char pDLLFilename[MAX_PATH] )
 
 	if ( Q_stricmp( &argStr[argLen-4], ".exe" ) != 0 )
 		return false;
-		
+
 	char baseFilename[MAX_PATH];
 	Q_strncpy( baseFilename, argStr, MAX_PATH );
 	baseFilename[ min( MAX_PATH-1, argLen-4 ) ] = 0;
-	
+
 	// First try _dll.dll (src_main), then try .dll (rel).
 	V_snprintf( pDLLFilename, MAX_PATH, "%s_dll.dll", baseFilename );
 	if ( _access( pDLLFilename, 0 ) != 0 )
@@ -758,25 +758,25 @@ bool RunProcessFromArgs( CUtlVector<char*> &newArgv, bool bShowAppWindow, bool b
 
 	UINT oldMode = SetErrorMode( SEM_NOOPENFILEERRORBOX | SEM_FAILCRITICALERRORS );
 
-	BOOL bRet = CreateProcess( 
-		NULL, 
-		commandLine, 
+	BOOL bRet = CreateProcess(
+		NULL,
+		commandLine,
 		NULL,							// security
 		NULL,
 		TRUE,
 		dwFlags | IDLE_PRIORITY_CLASS,	// flags
 		NULL,							// environment
-		pWorkingDir,	
+		pWorkingDir,
 		&si,
 		pOut );
-	
+
 	SetErrorMode( oldMode );
 	return (bRet != FALSE);
 }
 
 
-void RunProcessAtCommandLine( 
-	CUtlVector<char*> &newArgv, 
+void RunProcessAtCommandLine(
+	CUtlVector<char*> &newArgv,
 	bool bShowAppWindow,
 	bool bCreateSuspended,
 	int iPriority )
@@ -792,7 +792,7 @@ void RunProcessAtCommandLine(
 		if ( newArgv.Count() > 0 && newArgv[0] )
 		{
 			V_FileBase( newArgv[0], g_RunningProcess_ExeName, sizeof( g_RunningProcess_ExeName ) );
-			
+
 			if ( V_stricmp( g_RunningProcess_ExeName, "vrad" ) == 0 || V_stricmp( g_RunningProcess_ExeName, "vvis" ) == 0 )
 				V_FileBase( newArgv[newArgv.Count()-1], g_RunningProcess_MapName, sizeof( g_RunningProcess_MapName ) );
 		}
@@ -803,7 +803,7 @@ void RunProcessAtCommandLine(
 		g_pPerfTracker->Init( g_dwRunningProcessId );
 		g_CurJobPriority = iPriority;
 		g_CreateProcessTime = GetTickCount();
-		
+
 		SendStartStatus( true );
 	}
 	else
@@ -830,7 +830,7 @@ bool WaitForProcessToExit()
 		else
 		{
 			Msg( "Finished!\n ");
-			
+
 			SendEndStatus();
 
 			// Change back to the 'waiting' icon.
@@ -891,13 +891,13 @@ void BuildPingHeader( CUtlVector<char> &data, char packetID, int iState )
 	// Figure out the computer's name.
 	char computerName[128];
 	DWORD computerNameLen = sizeof( computerName );
-	GetComputerName( computerName, &computerNameLen );	
+	GetComputerName( computerName, &computerNameLen );
 
 	// Ping back at them.
 	data.AddToTail( VMPI_PROTOCOL_VERSION );
 	data.AddToTail( packetID );
 	data.AddToTail( (char)iState );
-	
+
 	DWORD liveTime = GetTickCount() - g_AppStartTime;
 	data.AddMultipleToTail( sizeof( liveTime ), (char*)&liveTime );
 
@@ -932,7 +932,7 @@ void BuildPingHeader( CUtlVector<char> &data, char packetID, int iState )
 
 	// Write the EXE name.
 	data.AddMultipleToTail( V_strlen( g_RunningProcess_ExeName ) + 1, g_RunningProcess_ExeName );
-							
+
 	// Write memory usage.
 	short memUsageShort = (short)memoryUsageMegabytes;
 	data.AddMultipleToTail( sizeof( memUsageShort ), (const char*)&memUsageShort );
@@ -942,7 +942,7 @@ void BuildPingHeader( CUtlVector<char> &data, char packetID, int iState )
 }
 
 
-// This tracks a list 
+// This tracks a list
 void AddServicesBrowserIP( const CIPAddr &ipFrom )
 {
 	for ( int i=0; i < g_ServicesBrowsers.Count(); i++ )
@@ -1007,7 +1007,7 @@ void SendStateToServicesBrowsers()
 
 	CUtlVector<char> data;
 	BuildPingHeader( data, VMPI_PING_RESPONSE, curState );
-	
+
 	for ( int i=0; i < g_ServicesBrowsers.Count(); i++ )
 	{
 		g_pSocket->SendTo( &g_ServicesBrowsers[i].m_Addr, data.Base(), data.Count() );
@@ -1042,7 +1042,7 @@ void CheckScreensaverRunning()
 	// We want to let patching finish even if we're in screensaver mode.
 	if ( g_Waiting_hProcess && g_Waiting_bPatching )
 		return;
-	
+
 	BOOL bRunning = false;
 	SystemParametersInfo( SPI_GETSCREENSAVERRUNNING, 0, &bRunning, 0 );
 
@@ -1060,7 +1060,7 @@ void AdjustSuperDebugArgs( CUtlVector<char*> &args )
 	char filename[512];
 	if ( GetModuleFileName( GetModuleHandle( NULL ), filename, sizeof( filename ) ) == 0 )
 		return;
-	
+
 	char *pLastSlash = filename;
 	char *pCurPos = filename;
 	while ( *pCurPos )
@@ -1070,7 +1070,7 @@ void AdjustSuperDebugArgs( CUtlVector<char*> &args )
 		++pCurPos;
 	}
 	*pLastSlash = 0;
-	
+
 	// In superdebug mode, run it out of c:/hl2/bin.
 	const char *pBase = args[0];
 	const char *pBaseCur = pBase;
@@ -1083,7 +1083,7 @@ void AdjustSuperDebugArgs( CUtlVector<char*> &args )
 		}
 		++pBaseCur;
 	}
-	
+
 	int maxLen = 64 + strlen( pBase ) + 1;
 	char *pNewFilename = new char[maxLen];
 	_snprintf( pNewFilename, maxLen, "%s\\%s", filename, pBase );
@@ -1108,18 +1108,18 @@ void AdjustSuperDebugArgs( CUtlVector<char*> &args )
 // When that process terminates, we look for [cache dir]\ReadyToGo.txt and if it's
 // there, then we start the job.
 // -------------------------------------------------------------------------------- //
-bool StartDownloadingAppFiles( 
-	CUtlVector<char*> &newArgv, 
-	char *cacheDir, 
-	int cacheDirLen, 
-	bool bShowAppWindow, 
-	HANDLE *hProcess, 
+bool StartDownloadingAppFiles(
+	CUtlVector<char*> &newArgv,
+	char *cacheDir,
+	int cacheDirLen,
+	bool bShowAppWindow,
+	HANDLE *hProcess,
 	bool bPatching )
 {
 	*hProcess = NULL;
-	
+
 	V_strncpy( cacheDir, g_FileCachePath, cacheDirLen );
-	
+
 	// For now, cache dir is always the same. It's [current directory]\cache.
 	if ( _access( cacheDir, 0 ) != 0 )
 	{
@@ -1141,7 +1141,7 @@ bool StartDownloadingAppFiles(
 		{
 			if ( findData.name[0] == '.' )
 				continue;
-			
+
 			char fullFilename[MAX_PATH];
 			V_ComposeFileName( cacheDir, findData.name, fullFilename, sizeof( fullFilename ) );
 			if ( _unlink( fullFilename ) != 0 )
@@ -1150,7 +1150,7 @@ bool StartDownloadingAppFiles(
 				return false;
 			}
 		} while ( _findnext( ret, &findData ) == 0 );
-		
+
 		_findclose( ret );
 	}
 
@@ -1160,7 +1160,7 @@ bool StartDownloadingAppFiles(
 	if ( bPatching )
 	{
 		V_ComposeFileName( cacheDir, "vmpi_service_install.exe", pExeName, maxExeNameLen );
-		
+
 		// Add args for the installer.
 		newArgv.InsertAfter( 0, CopyString( "-DontTouchUI" ) );
 
@@ -1173,13 +1173,13 @@ bool StartDownloadingAppFiles(
 	{
 		V_ComposeFileName( cacheDir, newArgv[0], pExeName, maxExeNameLen );
 	}
-		
+
 	delete newArgv[0];
 	newArgv[0] = pExeName;
 
 	char fullExeFilename[MAX_PATH];
 	V_ComposeFileName( g_BaseAppPath, "vmpi_transfer.exe", fullExeFilename, sizeof( fullExeFilename ) );
-	
+
 	CUtlVector<char*> downloaderArgs;
 	downloaderArgs.AddToTail( fullExeFilename );
 #if defined( _DEBUG )
@@ -1187,7 +1187,7 @@ bool StartDownloadingAppFiles(
 #endif
 	downloaderArgs.AddToTail( "-CachePath" );		// Tell it where to download the files to.
 	downloaderArgs.AddToTail( cacheDir );
-	
+
 	// Pass all the -mpi_worker, -mpi_file, -mpi_filebase args into the downloader app.
 	for ( int i=1; i < (int)newArgv.Count()-1; i++ )
 	{
@@ -1206,13 +1206,13 @@ bool StartDownloadingAppFiles(
 			downloaderArgs.AddToTail( newArgv[i+1] );
 			++i;
 		}
-	}	
-	
+	}
+
 	// Transfer each file.
 	PROCESS_INFORMATION pi;
 	if ( !RunProcessFromArgs( downloaderArgs, bShowAppWindow, false, g_BaseAppPath, &pi ) )
 		return false;
-	
+
 	*hProcess = pi.hProcess;
 	return true;
 }
@@ -1221,17 +1221,17 @@ bool StartDownloadingAppFiles(
 void SendPatchCommandToUIs( DWORD dwInstallerProcessId )
 {
 	Msg( "SendPatchCommandToUIs\n ");
-	
+
 	CUtlVector<char> data;
 	data.AddToTail( VMPI_SERVICE_UI_PROTOCOL_VERSION );
 	data.AddToTail( VMPI_SERVICE_TO_UI_PATCHING );
 
 	// This arg tells the UI whether to exit after running the command or not.
 	data.AddToTail( 1 );
-	
+
 	// First argument is the working directory, which is the cache path in this case.
 	data.AddMultipleToTail( V_strlen( g_FileCachePath ) + 1, g_FileCachePath );
-	
+
 	// Second argument is the command line.
 	char waitAndRestartExe[MAX_PATH], serviceUIExe[MAX_PATH], commandLine[1024 * 8];
 	V_ComposeFileName( g_FileCachePath, "WaitAndRestart.exe", waitAndRestartExe, sizeof( waitAndRestartExe ) );
@@ -1248,7 +1248,7 @@ void SendPatchCommandToUIs( DWORD dwInstallerProcessId )
 	args.AddToTail( serviceUIExe );
 	BuildCommandLineFromArgs( args, commandLine, sizeof( commandLine ) );
 	data.AddMultipleToTail( V_strlen( commandLine ) + 1, commandLine );
-	
+
 	if ( g_pConnMgr )
 	{
 		g_pConnMgr->SendPacket( -1, data.Base(), data.Count() );
@@ -1262,7 +1262,7 @@ bool CheckDownloaderFinished()
 {
 	if ( !g_Waiting_hProcess )
 		return false;
-	
+
 	// Check if the downloader has timed out and kill it if necessary.
 	if ( Plat_FloatTime() - g_Waiting_StartTime > MAX_DOWNLOADER_TIME_ALLOWED )
 	{
@@ -1284,7 +1284,7 @@ bool CheckDownloaderFinished()
 	V_ComposeFileName( g_FileCachePath, "ReadyToGo.txt", testFilename, sizeof( testFilename ) );
 	if ( _access( testFilename, 0 ) != 0 )
 		return false;
-		
+
 	// Ok, the downloader finished successfully. Run the worker app.
 	if ( g_bSuperDebugMode )
 		AdjustSuperDebugArgs( g_Waiting_Argv );
@@ -1300,8 +1300,8 @@ bool CheckDownloaderFinished()
 	}
 
 	char DLLFilename[MAX_PATH];
-	if ( FindArg( __argc, __argv, "-TryDLLMode" ) && 
-		g_RunMode == RUNMODE_CONSOLE && 
+	if ( FindArg( __argc, __argv, "-TryDLLMode" ) &&
+		g_RunMode == RUNMODE_CONSOLE &&
 		GetDLLFilename( g_Waiting_Argv, DLLFilename ) &&
 		!g_Waiting_bPatching )
 	{
@@ -1313,14 +1313,14 @@ bool CheckDownloaderFinished()
 	{
 		// Run the (hopefully!) MPI app they specified.
 		RunProcessAtCommandLine( g_Waiting_Argv, g_Waiting_bShowAppWindow, g_Waiting_bPatching, g_Waiting_Priority );
-		
+
 		if ( g_Waiting_bPatching )
-		{														
+		{
 			// Tell any currently-running UI apps to patch themselves and quit ASAP so the installer can finish.
 			SendPatchCommandToUIs( g_dwRunningProcessId );
 
 			ResumeThread( g_hRunningThread ); // We started the installer suspended so we could make sure we'd send out the patch command.
-			
+
 			// We just ran the installer, but let's forget about it, otherwise we'll kill its process when we exit here.
 			CloseHandle( g_hRunningProcess );
 			CloseHandle( g_hRunningThread ) ;
@@ -1332,7 +1332,7 @@ bool CheckDownloaderFinished()
 			return true;
 		}
 	}
-	
+
 	g_Waiting_Argv.PurgeAndDeleteElements();
 	return false;
 }
@@ -1343,7 +1343,7 @@ void HandlePacket_LOOKING_FOR_WORKERS( bf_read &buf, const CIPAddr &ipFrom )
 	// If we're downloading files for a job request, don't process any more "looking for workers" packets.
 	if ( g_Waiting_hProcess )
 		return;
-	
+
 	// This will be a nonzero-length string if patching.
 	char versionString[512];
 	buf.ReadString( versionString, sizeof( versionString ) );
@@ -1367,7 +1367,7 @@ void HandlePacket_LOOKING_FOR_WORKERS( bf_read &buf, const CIPAddr &ipFrom )
 		iDownloaderPort = buf.ReadShort();
 
 	// Add these arguments after the executable filename to tell the program
-	// that it's an MPI worker and who to connect to. 
+	// that it's an MPI worker and who to connect to.
 	char strDownloaderIP[128], strMainIP[128];
 	V_snprintf( strDownloaderIP, sizeof( strDownloaderIP ), "%d.%d.%d.%d:%d", ipFrom.ip[0], ipFrom.ip[1], ipFrom.ip[2], ipFrom.ip[3], iDownloaderPort );
 	V_snprintf( strMainIP, sizeof( strMainIP ), "%d.%d.%d.%d:%d", ipFrom.ip[0], ipFrom.ip[1], ipFrom.ip[2], ipFrom.ip[3], iPort );
@@ -1383,7 +1383,7 @@ void HandlePacket_LOOKING_FOR_WORKERS( bf_read &buf, const CIPAddr &ipFrom )
 	if ( versionString[0] != 0 )
 	{
 		bPatching = true;
-		
+
 		// Check that we haven't applied this patch version yet. This case usually happens right after we've applied a patch
 		// and we're restarting. The vmpi_transfer master is still pinging us telling us to patch, but we don't want to
 		// reapply this patch.
@@ -1392,11 +1392,11 @@ void HandlePacket_LOOKING_FOR_WORKERS( bf_read &buf, const CIPAddr &ipFrom )
 			newArgv.PurgeAndDeleteElements();
 			return;
 		}
-		
+
 		// Ok, it's a new version. Get rid of whatever was running before.
 		KillRunningProcess( "Starting a patch..", true );
 	}
-								 
+
 	// If there's already a job running, only interrupt it if this new one has a higher priority.
 	if ( WaitForProcessToExit() )
 	{
@@ -1415,7 +1415,7 @@ void HandlePacket_LOOKING_FOR_WORKERS( bf_read &buf, const CIPAddr &ipFrom )
 
 	// Responses go here.
 	g_CurRespondAddr = ipFrom;
-	
+
 	// Also look for -mpi_ShowAppWindow in the args to the service.
 	if ( !g_Waiting_bShowAppWindow && FindArg( __argc, __argv, "-mpi_ShowAppWindow" ) )
 		g_Waiting_bShowAppWindow = true;
@@ -1430,7 +1430,7 @@ void HandlePacket_LOOKING_FOR_WORKERS( bf_read &buf, const CIPAddr &ipFrom )
 			delete newArgv[2];
 			newArgv[2] = CopyString( strMainIP );
 		}
-		
+
 		g_Waiting_StartTime = Plat_FloatTime();
 		g_Waiting_Argv.PurgeAndDeleteElements();
 		g_Waiting_Argv = newArgv;
@@ -1445,7 +1445,7 @@ void HandlePacket_LOOKING_FOR_WORKERS( bf_read &buf, const CIPAddr &ipFrom )
 
 	// Remember that we tried to run this job so we don't try to run it again.
 	AddJobMemory( g_CurJobID );
-	
+
 	SendStateToServicesBrowsers();
 }
 
@@ -1476,13 +1476,13 @@ void HandlePacket_KILL_PROCESS( const CIPAddr *ipFrom )
 	if ( Plat_FloatTime() - g_flLastKillProcessTime > 5 )
 	{
 		KillRunningProcess( "Got a KILL_PROCESS packet. Stopping the worker executable.\n", true );
-		
+
 		if ( ipFrom )
 		{
 			AddServicesBrowserIP( *ipFrom );
 			SendStateToServicesBrowsers();
 		}
-		
+
 		g_flLastKillProcessTime = Plat_FloatTime();
 	}
 }
@@ -1492,9 +1492,9 @@ void HandlePacket_FORCE_PASSWORD_CHANGE( bf_read &buf, const CIPAddr &ipFrom )
 {
 	char newPassword[512];
 	buf.ReadString( newPassword, sizeof( newPassword ) );
-	
+
 	Msg( "Got a FORCE_PASSWORD_CHANGE (%s) packet.\n", newPassword );
-	
+
 	SetPassword( newPassword );
 	if ( g_pConnMgr )
 		g_pConnMgr->SendCurStateTo( -1 );
@@ -1506,7 +1506,7 @@ void VMPI_Waiter_Update()
 	CheckScreensaverRunning();
 	HandleWindowMessages();
 	UpdateServicesBrowserIPs();
-	
+
 	while ( 1 )
 	{
 		WaitForProcessToExit();
@@ -1531,7 +1531,7 @@ void VMPI_Waiter_Update()
 		buf.ReadString( pwString, sizeof( pwString ) );
 
 		int packetID = buf.ReadByte();
-		
+
 		if ( pwString[0] == VMPI_PASSWORD_OVERRIDE )
 		{
 			// Always process these packets regardless of the password (these usually come from
@@ -1604,7 +1604,7 @@ void RunMainLoop()
 
 		VMPI_Waiter_Update();
 		g_pConnMgr->Update();
-		
+
 		Sleep( 50 );
 	}
 }
@@ -1647,9 +1647,9 @@ void RunService()
 }
 
 int APIENTRY WinMain(HINSTANCE hInstance,
-                     HINSTANCE hPrevInstance,
-                     LPSTR     lpCmdLine,
-                     int       nCmdShow)
+	HINSTANCE hPrevInstance,
+	LPSTR     lpCmdLine,
+	int       nCmdShow)
 {
 	// Hook spew output.
 	SpewOutputFunc( MySpewOutputFunc );
@@ -1674,9 +1674,9 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 	const char *pArg = FindArg( __argc, __argv, "-mpi_pw", NULL );
 	SetPassword( pArg );
-	
+
 	if ( FindArg( __argc, __argv, "-console" ) )
-	{					
+	{
 		g_RunMode = RUNMODE_CONSOLE;
 	}
 	else
@@ -1690,14 +1690,14 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	g_AppStartTime = GetTickCount();
 	g_bMinimized = FindArg( __argc, __argv, "-minimized" ) != NULL;
 
-	ServiceHelpers_Init(); 	
+	ServiceHelpers_Init();
 	g_hInstance = hInstance;
 
 	LoadStateFromRegistry();
 
 	// Install the service?
 	if ( g_RunMode == RUNMODE_CONSOLE )
-	{					
+	{
 		RunAsNonServiceApp();
 	}
 	else
@@ -1707,4 +1707,3 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 	return 0;
 }
-

@@ -2,7 +2,7 @@
 //
 // Purpose: This is the abstraction layer for the physics simulation system
 // Any calls to the external physics library (ipion) should be made through this
-// layer.  Eventually, the physics system will probably become a DLL and made 
+// layer.  Eventually, the physics system will probably become a DLL and made
 // accessible to the client & server side code.
 //
 // $Workfile:     $
@@ -53,9 +53,9 @@ struct gamevcollisionevent_t : public vcollisionevent_t
 	AngularImpulse	preAngularVelocity[2];
 	CBaseEntity		*pEntities[2];
 
-	void Init( vcollisionevent_t *pEvent ) 
-	{ 
-		*((vcollisionevent_t *)this) = *pEvent; 
+	void Init( vcollisionevent_t *pEvent )
+	{
+		*((vcollisionevent_t *)this) = *pEvent;
 		pEntities[0] = NULL;
 		pEntities[1] = NULL;
 	}
@@ -83,7 +83,7 @@ struct triggerevent_t
 	}
 };
 
-// parse solid parameter overrides out of a string 
+// parse solid parameter overrides out of a string
 void PhysSolidOverride( solid_t &solid, string_t overrideScript );
 
 extern CEntityList *g_pShadowEntities;

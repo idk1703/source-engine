@@ -1,4 +1,4 @@
-//======= Copyright © 1996-2006, Valve Corporation, All rights reserved. ======
+//======= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ======
 
 //	STATIC: "INTRO"						"0..1"
 //  STATIC: "USE_STATIC_CONTROL_FLOW"	"0..1" [vs20]
@@ -54,13 +54,13 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 projPos			: POSITION;	
-#if !defined( _X360 )    
+	float4 projPos			: POSITION;
+#if !defined( _X360 )
 	float  fog				: FOG;
 #endif
 	float2 baseTexCoord		: TEXCOORD0;
 	float3 vertAtten		: TEXCOORD1;
-	
+
 	float4 worldPos_projPosZ		: TEXCOORD7;		// Necessary for pixel fog
 };
 
@@ -116,12 +116,10 @@ VS_OUTPUT main( const VS_INPUT v )
 	float fIllumFactor = cTeethLighting.w;
 
 	// Darken by forward dot normal and illumination factor
-	linearColor *= fIllumFactor * saturate( dot( worldNormal, vForward ) );	
+	linearColor *= fIllumFactor * saturate( dot( worldNormal, vForward ) );
 
 	o.vertAtten = linearColor;
 	o.baseTexCoord = v.vTexCoord0;
 
 	return o;
 }
-
-

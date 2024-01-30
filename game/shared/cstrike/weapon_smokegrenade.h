@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@
 
 
 #ifdef CLIENT_DLL
-	
+
 	#define CSmokeGrenade C_SmokeGrenade
 
 #endif

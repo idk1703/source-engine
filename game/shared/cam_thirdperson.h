@@ -44,7 +44,7 @@ public:
 	CThirdPersonManager();
 	void	SetCameraOffsetAngles( const Vector& vecOffset ) { m_vecCameraOffset = vecOffset; }
 	const Vector&	GetCameraOffsetAngles( void ) const { return m_vecCameraOffset; }
-	
+
 	void	SetDesiredCameraOffset( const Vector& vecOffset ) { m_vecDesiredCameraOffset = vecOffset; }
 	const Vector&	GetDesiredCameraOffset( void ) const { return m_vecDesiredCameraOffset; }
 

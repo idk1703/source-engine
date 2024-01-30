@@ -21,13 +21,13 @@ CScript::CScript()
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-const char *CScript::SkipWhitespace( const char *data, bool *pHasNewLines, int* pNumLines ) 
+const char *CScript::SkipWhitespace( const char *data, bool *pHasNewLines, int* pNumLines )
 {
 	int c;
 
-	while ( ( c = *data ) <= ' ' ) 
+	while ( ( c = *data ) <= ' ' )
 	{
-		if ( c == '\n' ) 
+		if ( c == '\n' )
 		{
 			if ( pNumLines )
 			{
@@ -52,7 +52,7 @@ const char *CScript::SkipWhitespace( const char *data, bool *pHasNewLines, int* 
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-const char *CScript::SkipToValidToken( const char *data, bool *pHasNewLines, int* pNumLines ) 
+const char *CScript::SkipToValidToken( const char *data, bool *pHasNewLines, int* pNumLines )
 {
 	int c;
 
@@ -87,7 +87,7 @@ const char *CScript::SkipToValidToken( const char *data, bool *pHasNewLines, int
 				}
 			}
 		}
-		else if ( c == '/' && data[1] == '*' ) 
+		else if ( c == '/' && data[1] == '*' )
 		{
 			// skip /* */ comments
 			data += 2;
@@ -107,7 +107,7 @@ const char *CScript::SkipToValidToken( const char *data, bool *pHasNewLines, int
 				data++;
 			}
 
-			if ( *data ) 
+			if ( *data )
 			{
 				data += 2;
 			}
@@ -126,16 +126,16 @@ const char *CScript::SkipToValidToken( const char *data, bool *pHasNewLines, int
 //	Skips until a matching close brace is found.
 //	Internal brace depths are properly skipped.
 //-----------------------------------------------------------------------------
-void CScript::SkipBracedSection( const char** dataptr, int* numlines ) 
+void CScript::SkipBracedSection( const char** dataptr, int* numlines )
 {
 	const char*	token;
 	int	depth;
 
 	depth = 0;
-	do 
+	do
 	{
 		token = GetToken( dataptr, true, numlines );
-		if ( token[1] == '\0' ) 
+		if ( token[1] == '\0' )
 		{
 			if ( token[0] == '{' )
 				depth++;
@@ -148,15 +148,15 @@ void CScript::SkipBracedSection( const char** dataptr, int* numlines )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CScript::SkipRestOfLine( const char** dataptr, int* numlines ) 
+void CScript::SkipRestOfLine( const char** dataptr, int* numlines )
 {
 	const char*	p;
 	int	c;
 
 	p = *dataptr;
-	while ( ( c = *p++ ) != '\0' ) 
+	while ( ( c = *p++ ) != '\0' )
 	{
-		if ( c == '\n' ) 
+		if ( c == '\n' )
 		{
 			if ( numlines )
 				( *numlines )++;
@@ -217,7 +217,7 @@ const char *CScript::GetToken( const char **dataptr, bool allowLineBreaks, int *
 			*dataptr = NULL;
 			return m_Token;
 		}
-		
+
 		if ( hasNewLines && !allowLineBreaks )
 		{
 			*dataptr = data;
@@ -246,7 +246,7 @@ const char *CScript::GetToken( const char **dataptr, bool allowLineBreaks, int *
 				}
 			}
 		}
-		else if ( c =='/' && data[1] == '*' ) 
+		else if ( c =='/' && data[1] == '*' )
 		{
 			// skip /* */ comments
 			data += 2;
@@ -259,7 +259,7 @@ const char *CScript::GetToken( const char **dataptr, bool allowLineBreaks, int *
 				data++;
 			}
 
-			if ( *data ) 
+			if ( *data )
 			{
 				data += 2;
 			}
@@ -306,7 +306,7 @@ const char *CScript::GetToken( const char **dataptr, bool allowLineBreaks, int *
 					// keep end symbol
 					m_Token[len++] = c;
 				}
-			
+
 				m_Token[len] = 0;
 				*dataptr = (char*)data;
 				return m_Token;
@@ -329,17 +329,17 @@ const char *CScript::GetToken( const char **dataptr, bool allowLineBreaks, int *
 
 		data++;
 		c = *data;
-	} 
+	}
 	while ( c > ' ' );
 
-	if ( len >= MAX_SYSTOKENCHARS ) 
+	if ( len >= MAX_SYSTOKENCHARS )
 	{
 		len = 0;
 	}
 
 	m_Token[len] = '\0';
 	*dataptr = (char*)data;
-	
+
 	return m_Token;
 }
 
@@ -348,7 +348,7 @@ void CScript::PushScript( const char *pFilename )
 	// parse the text script
 	if ( !Sys_Exists( pFilename ) )
 	{
-		g_pVPC->VPCError( "Cannot open %s", pFilename );	
+		g_pVPC->VPCError( "Cannot open %s", pFilename );
 	}
 
 	char *pScriptBuffer;
@@ -441,7 +441,7 @@ void CScript::SpewScriptStack()
 
 			str += CFmtStr( "   %s Line:%d\n", m_ScriptStack[i].GetName(), m_ScriptStack[i].GetLine() );
 		}
-		str += "\n";		
+		str += "\n";
 
 		Log_Msg( LOG_VPC, "%s", str.String() );
 	}
@@ -457,17 +457,17 @@ const char *CScript::PeekNextToken( bool bAllowLineBreaks )
 	return PeekNextToken( m_pScriptData, bAllowLineBreaks );
 }
 
-void CScript::SkipRestOfLine() 
+void CScript::SkipRestOfLine()
 {
 	SkipRestOfLine( &m_pScriptData, m_pScriptLine );
 }
 
-void CScript::SkipBracedSection() 
+void CScript::SkipBracedSection()
 {
 	SkipBracedSection( &m_pScriptData, m_pScriptLine );
 }
 
-void CScript::SkipToValidToken() 
+void CScript::SkipToValidToken()
 {
 	m_pScriptData = SkipToValidToken( m_pScriptData, NULL, m_pScriptLine );
 }
@@ -482,7 +482,7 @@ void CScript::SkipToValidToken()
 bool CScript::ParsePropertyValue( const char *pBaseString, char *pOutBuff, int outBuffSize )
 {
 	const char **pScriptData = &m_pScriptData;
-	int *pScriptLine = m_pScriptLine; 
+	int *pScriptLine = m_pScriptLine;
 
 	const char	*pToken;
 	const char	*pNextToken;

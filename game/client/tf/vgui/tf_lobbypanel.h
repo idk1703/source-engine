@@ -31,7 +31,7 @@ class CBaseLobbyPanel : public vgui::PropertySheet, public CGameEventListener
 	friend class CBaseLobbyContainerFrame;
 public:
 	CBaseLobbyPanel( vgui::Panel *pParent, CBaseLobbyContainerFrame* pLobbyContainer );
-	
+
 	virtual ~CBaseLobbyPanel();
 
 	//
@@ -118,7 +118,7 @@ protected:
 	};
 
 	const LobbyPlayerInfo* GetLobbyPlayerInfo( CSteamID &steamID ) const;
-	
+
 	virtual void OnThink() OVERRIDE
 	{
 		BaseClass::OnThink();

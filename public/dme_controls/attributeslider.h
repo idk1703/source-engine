@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -35,7 +35,7 @@ class CSubRectImage;
 // we can be driven by the preset pane or by dragging on any individual control
 // we can also be driven by ctrl hovering over the preset pane or an individual control
 // if we move from control to control in the preset or here, we need to be able to decay into/out of the various individual sliders
-class CAttributeSlider : public EditablePanel 
+class CAttributeSlider : public EditablePanel
 {
 	DECLARE_CLASS_SIMPLE( CAttributeSlider, EditablePanel );
 
@@ -66,14 +66,14 @@ public:
 	void ActivateControl( AnimationControlType_t type, bool bActive );
 	bool IsControlActive( AnimationControlType_t type );
 
-	// Gets/sets the slider value. 
+	// Gets/sets the slider value.
 	// NOTE: This may not match the value pushed into the control because of fading
 	void SetValue( AnimationControlType_t type, float flValue );
 	float GetValue( AnimationControlType_t type ) const;
 	void SetValue( const AttributeValue_t& value );
 	const AttributeValue_t& GetValue() const;
 
-	// Is this slider manipulating a transform control? 
+	// Is this slider manipulating a transform control?
 	// [NOTE: This is a utility method; the control contains these states]
 	bool IsTransform() const;
 
@@ -98,7 +98,7 @@ public:
 
 	void		EnablePreview( bool state, bool simple, bool faderdrag );
 	bool		IsPreviewEnabled() const;
-	bool		IsSimplePreview() const; 
+	bool		IsSimplePreview() const;
 
 	void		UpdateTime( float dt );
 	void		UpdateFaderAmount( float amount );
@@ -209,7 +209,7 @@ private:
 	float			m_flDragStartValue;			// What was the value of the slider before the drag started?
 	float			m_flDragStartBalance;		// What was the balance of the slider before the drag started?
 
-	bool			m_bCursorInsidePanel : 1;	// Used to 
+	bool			m_bCursorInsidePanel : 1;	// Used to
 	bool			m_bRampUp : 1;
 	bool			m_bPreviewEnabled : 1;
 	bool			m_bSimplePreviewOnly : 1;
@@ -254,7 +254,7 @@ inline bool CAttributeSlider::IsTransform() const
 inline bool CAttributeSlider::IsDragging() const
 {
 	COMPILE_TIME_ASSERT( ANIM_CONTROL_COUNT < 4 );
-	return ( m_SliderMode >= SLIDER_MODE_FIRST_DRAG_MODE && m_SliderMode <= SLIDER_MODE_LAST_DRAG_MODE ); 
+	return ( m_SliderMode >= SLIDER_MODE_FIRST_DRAG_MODE && m_SliderMode <= SLIDER_MODE_LAST_DRAG_MODE );
 }
 
 inline AnimationControlType_t CAttributeSlider::GetDragControl() const
@@ -271,7 +271,7 @@ inline AnimationControlType_t CAttributeSlider::GetDragControl() const
 inline bool CAttributeSlider::IsInTextEntry() const
 {
 	COMPILE_TIME_ASSERT( ANIM_CONTROL_COUNT < 4 );
-	return ( m_SliderMode >= SLIDER_MODE_FIRST_TEXT_MODE && m_SliderMode <= SLIDER_MODE_LAST_TEXT_MODE ); 
+	return ( m_SliderMode >= SLIDER_MODE_FIRST_TEXT_MODE && m_SliderMode <= SLIDER_MODE_LAST_TEXT_MODE );
 }
 
 inline AnimationControlType_t CAttributeSlider::GetTextEntryControl() const

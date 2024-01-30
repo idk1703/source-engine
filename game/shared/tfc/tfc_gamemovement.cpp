@@ -1,13 +1,13 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
 
-//========= Copyright © 1996-2001, Valve LLC, All rights reserved. ============
+//========= Copyright ï¿½ 1996-2001, Valve LLC, All rights reserved. ============
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -39,7 +39,7 @@ public:
 
 
 private:
-	
+
 	CTFCPlayer *m_pTFCPlayer;
 };
 
@@ -84,7 +84,7 @@ bool CTFCGameMovement::CanAccelerate()
 		return true;
 	}
 	else
-	{	
+	{
 		return false;
 	}
 }
@@ -102,4 +102,3 @@ bool CTFCGameMovement::CheckJumpButton()
 		return false;
 	}
 }
-

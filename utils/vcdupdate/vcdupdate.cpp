@@ -58,7 +58,7 @@ static SpewRetval_t SpewStdout( SpewType_t spewType, char const *pMsg )
 	printf( pMsg );
 	fflush( stdout );
 
-	return ( spewType == SPEW_ASSERT ) ? SPEW_DEBUGGER : SPEW_CONTINUE; 
+	return ( spewType == SPEW_ASSERT ) ? SPEW_DEBUGGER : SPEW_CONTINUE;
 }
 
 
@@ -102,7 +102,7 @@ bool CVcdUpdateApp::Create()
 {
 	SpewOutputFunc( SpewStdout );
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "materialsystem.dll",		MATERIAL_SYSTEM_INTERFACE_VERSION },
 		{ "p4lib.dll",				P4_INTERFACE_VERSION },
@@ -178,7 +178,7 @@ bool CVcdUpdateApp::UpdateVcd( CChoreoScene *pScene, const VcdUpdateInfo_t& info
 {
 	CStudioHdr studioHdr( pStudioHdr, g_pMDLCache );
 	float pPoseParameters[MAXSTUDIOPOSEPARAM];
-	memset( pPoseParameters, 0, MAXSTUDIOPOSEPARAM * sizeof(float) ); 
+	memset( pPoseParameters, 0, MAXSTUDIOPOSEPARAM * sizeof(float) );
 
 	char pModelPath[MAX_PATH];
 	if ( pStudioHdr )
@@ -309,7 +309,7 @@ void CVcdUpdateApp::UpdateVcd( const char *pFullPath, const VcdUpdateInfo_t& inf
 			{
 				if ( info.m_bWarnMissingMDL )
 				{
-					Warning( "\t*** Missing .mdl association: File \"%s\"\tActor \"%s\"\n", pFullPath, pActorName ); 
+					Warning( "\t*** Missing .mdl association: File \"%s\"\tActor \"%s\"\n", pFullPath, pActorName );
 				}
 				continue;
 			}
@@ -319,7 +319,7 @@ void CVcdUpdateApp::UpdateVcd( const char *pFullPath, const VcdUpdateInfo_t& inf
 				Q_FileBase( pModelName, pBaseModelName, sizeof(pBaseModelName) );
 				if ( !StringHasPrefix( pActorName, pBaseModelName ) )
 				{
-					Warning( "\t*** File \"%s\": Actor name and .mdl name suspiciously different:\n\t\tMDL \"%s\"\tActor \"%s\"\n", pFullPath, pModelName, pActorName ); 
+					Warning( "\t*** File \"%s\": Actor name and .mdl name suspiciously different:\n\t\tMDL \"%s\"\tActor \"%s\"\n", pFullPath, pModelName, pActorName );
 				}
 			}
 		}
@@ -328,7 +328,7 @@ void CVcdUpdateApp::UpdateVcd( const char *pFullPath, const VcdUpdateInfo_t& inf
 	if ( UpdateVcd( pScene, info, pStudioHdr, flWavDuration ) )
 	{
 		Warning( "*** VCD %s requires update.\n", pFullPath );
-		CP4AutoEditAddFile checkout( pFullPath ); 
+		CP4AutoEditAddFile checkout( pFullPath );
 		pScene->SaveToFile( pFullPath );
 	}
 }
@@ -392,7 +392,7 @@ void CVcdUpdateApp::UpdateVcdFiles( const VcdUpdateInfo_t& info )
 int CVcdUpdateApp::Main()
 {
 	// This bit of hackery allows us to access files on the harddrive
-	g_pFullFileSystem->AddSearchPath( "", "LOCAL", PATH_ADD_TO_HEAD ); 
+	g_pFullFileSystem->AddSearchPath( "", "LOCAL", PATH_ADD_TO_HEAD );
 
 	if ( CommandLine()->CheckParm( "-h" ) || CommandLine()->CheckParm( "-help" ) )
 	{

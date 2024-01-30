@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,9 +24,9 @@ class CWeaponUMP45 : public CWeaponCSBaseGun
 {
 public:
 	DECLARE_CLASS( CWeaponUMP45, CWeaponCSBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponUMP45();
 
 	virtual void Spawn();
@@ -95,7 +95,7 @@ float CWeaponUMP45::GetInaccuracy() const
 		CCSPlayer *pPlayer = GetPlayerOwner();
 		if ( !pPlayer )
 			return 0.0f;
-	
+
 		if ( !FBitSet( pPlayer->GetFlags(), FL_ONGROUND ) )
 			return 0.24f * m_flAccuracy;
 		else
@@ -129,4 +129,3 @@ void CWeaponUMP45::PrimaryAttack()
 	else
 		pPlayer->KickBack (0.275, 0.2, 0.15, 0.0225, 2.5, 1.5, 10);
 }
-

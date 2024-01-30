@@ -100,7 +100,7 @@ ActionResult< CTFBot >	CTFBotMissionReprogrammed::Update( CTFBot *me, float inte
 			m_victim = pTarget;
 		}
 	}
-	
+
 	if ( m_victim )
 	{
 		me->m_Shared.RemoveCond( TF_COND_STUNNED );
@@ -243,7 +243,7 @@ void CTFBotMissionReprogrammed::Detonate( CTFBot *me )
 {
 	// BLAST!
 	m_hasDetonated = true;
- 
+
 	DispatchParticleEffect( "explosionTrail_seeds_mvm", me->GetAbsOrigin(), me->GetAbsAngles() );
 	DispatchParticleEffect( "fluidSmokeExpl_ring_mvm", me->GetAbsOrigin(), me->GetAbsAngles() );
 
@@ -374,4 +374,3 @@ QueryResultType CTFBotMissionReprogrammed::ShouldAttack( const INextBot *me, con
 }
 
 #endif // STAGING_ONLY
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -43,7 +43,7 @@ public:
 	CString m_ConfigFilename;
 	KeyValues* LoadConfigFile();
 
-	
+
 	// Extracted from the kv file.
 	const char *m_pSourceExeDir;
 	KeyValues *m_pSteamAppCfg;

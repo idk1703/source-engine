@@ -27,7 +27,7 @@ inline CBasePlayer *AI_GetSinglePlayer()
 	{
 		return NULL;
 	}
-	
+
 	return UTIL_GetLocalPlayer();
 }
 
@@ -53,7 +53,7 @@ public:
 	   m_flMarkTolerance( NO_MARK )
 	{
 	}
-	
+
 	void SetMark( CBaseEntity *pEntity, float tolerance )
 	{
 		if ( pEntity )
@@ -62,7 +62,7 @@ public:
 			m_flMarkTolerance = tolerance;
 		}
 	}
-	
+
 	void ClearMark()
 	{
 	   m_flMarkTolerance = NO_MARK;
@@ -96,13 +96,13 @@ public:
 	}
 
 	Vector GetMarkPos() { return m_vMark; }
-	
+
 private:
 	enum
 	{
 		NO_MARK = -1
 	};
-	
+
 	Vector			   m_vMark;
 	float			   m_flMarkTolerance;
 
@@ -135,14 +135,14 @@ public:
 
 	// How much time should I wait in between shots in a single burst?
 	void SetBurstInterval( float flMinBurstInterval, float flMaxBurstInterval );
-	
+
 	// Poll the current parameters
 	void GetBurstShotCountRange( int *pMinShotsPerBurst, int *pMaxShotsPerBurst ) const;
 	void GetRestInterval( float *pMinRestInterval, float *pMaxRestInterval ) const;
 	void GetBurstInterval( float *pMinBurstInterval, float *pMaxBurstInterval ) const;
 
 	// Reset the state. If true, the next burst time is set to now,
-	// otherwise it'll wait one rest interval before shooting 
+	// otherwise it'll wait one rest interval before shooting
 	void Reset( bool bStartShooting = true );
 
 	// Should we shoot?
@@ -167,7 +167,7 @@ public:
 	// Prevent/Allow shooting
 	void EnableShooting( void );
 	void DisableShooting( void );
-	
+
 private:
 	float	m_flNextShotTime;
 	bool	m_bInRestInterval;
@@ -206,7 +206,7 @@ private:
 	float	m_minVelocity; // = 10;
 
 	float	m_invDecay; //	0.8	// maintain X percent of velocity when slowing down
-	float	m_decayTime;//	0.4161	// Sum( 1..cycle, HEIGHTINVDECAY^cycle ) 
+	float	m_decayTime;//	0.4161	// Sum( 1..cycle, HEIGHTINVDECAY^cycle )
 	float	m_accel;	//	0.5		// accel toward maxVelocity by X percent each cycle
 
 	DECLARE_SIMPLE_DATADESC();
@@ -227,7 +227,7 @@ struct AI_FreePassParams_t
 	float moveTolerance;		// How far in open needed to move to revoke pass
 	float refillRate;			// After hiding again during pass, how quickly to reinstitute pass(seconds per second)
 	float coverDist;			// When hiding, how far from an obstructing object needed to be considered in cover
-	
+
 	float peekTime;				// How long allowed to peek
 	float peekTimeAfterDamage;	// How long allowed to peek after damaged by
 	float peekEyeDist;			// how far spaced out the eyes are
@@ -250,18 +250,18 @@ public:
 
 	void			SetPassTarget( CBaseEntity *pTarget )		{ m_hTarget = pTarget; m_FreePassTimeRemaining = 0; }
 	CBaseEntity *	GetPassTarget()								{ return m_hTarget; }
-	
+
 	void			SetParams( const AI_FreePassParams_t &params )	{ m_Params = params; }
 	const AI_FreePassParams_t &GetParams() const					{ return m_Params; }
-	
+
 	//---------------------------------
 	//	Free pass
 	//---------------------------------
 	void			Update();
-	
+
 	bool			HasPass();
 	void 			Revoke( bool bUpdateMemory = false );
-	
+
 	float			GetTimeRemaining()					{ return m_FreePassTimeRemaining; }
 	void			SetTimeRemaining( float passTime )	{ m_FreePassTimeRemaining = passTime; }
 
@@ -272,7 +272,7 @@ private:
 
 	float			m_FreePassTimeRemaining;
 	CAI_MoveMonitor m_FreePassMoveMonitor;
-	
+
 	AI_FreePassParams_t m_Params;
 
 	DECLARE_SIMPLE_DATADESC();

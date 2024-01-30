@@ -117,7 +117,7 @@ public:
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
 	{
 		LoadControlSettings( "Resource/UI/econ/ConfirmApplyPaintCanDialog.res" );
-		
+
 		BaseClass::ApplySchemeSettings( pScheme );
 
 		SetupPaintModelPanel( m_pPaintModelPanel, m_pSubjectModelPanel->GetItem(), kTeamID0, m_pToolModelPanel->GetItem()->GetModifiedRGBValue( false ) );
@@ -165,7 +165,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconTool_PaintCan::OnClientApplyTool( CEconItemView *pTool, CEconItemView *pSubject, vgui::Panel *pParent ) const
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -19,18 +19,18 @@
 char* GetLastErrorString()
 {
 	static char err[2048];
-	
+
 	LPVOID lpMsgBuf;
-	FormatMessage( 
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-		FORMAT_MESSAGE_FROM_SYSTEM | 
+	FormatMessage(
+		FORMAT_MESSAGE_ALLOCATE_BUFFER |
+		FORMAT_MESSAGE_FROM_SYSTEM |
 		FORMAT_MESSAGE_IGNORE_INSERTS,
 		NULL,
 		GetLastError(),
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
 		(LPTSTR) &lpMsgBuf,
 		0,
-		NULL 
+		NULL
 	);
 
 	strncpy( err, (char*)lpMsgBuf, sizeof( err ) );
@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
 {
 	CommandLine()->CreateCmdLine( argc, argv );
 	const char *pDLLName = "vvis_dll.dll";
-	
+
 	CSysModule *pModule = Sys_LoadModule( pDLLName );
 	if ( !pModule )
 	{
@@ -76,4 +76,3 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
-

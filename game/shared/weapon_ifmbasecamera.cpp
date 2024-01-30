@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -26,7 +26,7 @@ bool ToolFramework_SetupEngineView( Vector &origin, QAngle &angles, float &fov )
 IMPLEMENT_NETWORKCLASS_ALIASED( WeaponIFMBaseCamera, DT_WeaponIFMBaseCamera )
 LINK_ENTITY_TO_CLASS( weapon_ifm_base_camera, CWeaponIFMBaseCamera );
 
-BEGIN_NETWORK_TABLE( CWeaponIFMBaseCamera, DT_WeaponIFMBaseCamera )	
+BEGIN_NETWORK_TABLE( CWeaponIFMBaseCamera, DT_WeaponIFMBaseCamera )
 #if !defined( CLIENT_DLL )
 	SendPropFloat( SENDINFO( m_flRenderAspectRatio ), 0, SPROP_NOSCALE ),
 	SendPropFloat( SENDINFO( m_flRenderFOV ), 0, SPROP_NOSCALE ),
@@ -44,7 +44,7 @@ END_NETWORK_TABLE()
 
 #ifdef CLIENT_DLL
 
-BEGIN_PREDICTION_DATA( CWeaponIFMBaseCamera ) 
+BEGIN_PREDICTION_DATA( CWeaponIFMBaseCamera )
 	DEFINE_PRED_FIELD( m_flFOV, FIELD_FLOAT, 0 ),
 	DEFINE_PRED_FIELD( m_flArmLength, FIELD_FLOAT, 0 ),
 	DEFINE_PRED_FIELD( m_vecRelativePosition, FIELD_VECTOR, 0 ),
@@ -69,7 +69,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// CWeaponIFMBaseCamera implementation. 
+// CWeaponIFMBaseCamera implementation.
 //-----------------------------------------------------------------------------
 CWeaponIFMBaseCamera::CWeaponIFMBaseCamera()
 {
@@ -80,14 +80,14 @@ CWeaponIFMBaseCamera::CWeaponIFMBaseCamera()
 	m_angRelativeAngles.Init();
 	m_bFullScreen = false;
 	m_nScreenWidth = 0;
-	m_nScreenHeight = 0; 
+	m_nScreenHeight = 0;
 #endif
 }
 
 
 //-----------------------------------------------------------------------------
 //
-// Specific methods on the server 
+// Specific methods on the server
 //
 //-----------------------------------------------------------------------------
 #ifdef GAME_DLL
@@ -109,7 +109,7 @@ CON_COMMAND( ifm_basecamera_camerastate, "Set camera state" )
 
 	if ( args.ArgC() != 10 )
 		return;
-	
+
 	Vector vecPosition;
 	QAngle angAngles;
 	float flAspectRatio = atof( args[1] );
@@ -131,18 +131,18 @@ CON_COMMAND( ifm_basecamera_camerastate, "Set camera state" )
 
 		pCamera->SetRenderInfo( flAspectRatio, flFOV, flArmLength, vecPosition, angAngles );
 	}
-}	
+}
 
 #endif   // GAME_DLL
 
 
 //-----------------------------------------------------------------------------
 //
-// Specific methods on the client 
+// Specific methods on the client
 //
 //-----------------------------------------------------------------------------
 #ifdef CLIENT_DLL
-	
+
 
 //-----------------------------------------------------------------------------
 // Sets up the material to draw with
@@ -174,7 +174,7 @@ void CWeaponIFMBaseCamera::TransmitRenderInfo()
 	ToolFramework_SetupEngineView( position, angles, flFOV );
 
 	char pBuf[256];
-	Q_snprintf( pBuf, sizeof(pBuf), "ifm_basecamera_camerastate %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f", 
+	Q_snprintf( pBuf, sizeof(pBuf), "ifm_basecamera_camerastate %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f %.2f",
 		flAspectRatio, flFOV, m_flArmLength, position.x, position.y, position.z,
 		angles.x, angles.y, angles.z );
 
@@ -309,8 +309,8 @@ void CWeaponIFMBaseCamera::ComputeAbsCameraTransform( Vector &vecAbsOrigin, QAng
 	// Offset the view along the forward direction vector by the arm length
 	Vector vecForward;
 	AngleVectors( viewAngles, &vecForward );
-	VectorMA( viewOrigin, m_flArmLength, vecForward, viewOrigin );  
-	
+	VectorMA( viewOrigin, m_flArmLength, vecForward, viewOrigin );
+
 	// Use player roll
 	QAngle angles = m_angRelativeAngles;
 	angles.z = viewAngles.z;
@@ -400,5 +400,3 @@ void CWeaponIFMBaseCamera::DrawCrosshair( void )
 }
 
 #endif // CLIENT_DLL
-
-

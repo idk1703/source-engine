@@ -133,24 +133,11 @@ void C_ColorCorrection::ClientThink()
 	{
 		float dist = (playerOrigin - m_vecOrigin).Length();
 		weight = (dist-m_minFalloff) / (m_maxFalloff-m_minFalloff);
-		if ( weight<0.0f ) weight = 0.0f;	
-		if ( weight>1.0f ) weight = 1.0f;	
+		if ( weight<0.0f ) weight = 0.0f;
+		if ( weight>1.0f ) weight = 1.0f;
 	}
-	
+
 	g_pColorCorrectionMgr->SetColorCorrectionWeight( m_CCHandle, m_flCurWeight * ( 1.0 - weight ) );
 
 	BaseClass::ClientThink();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

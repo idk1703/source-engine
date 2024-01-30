@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,7 +19,7 @@ DECLARE_HUDELEMENT( CVehicleRoleHudElement );
 
 using namespace vgui;
 
-CVehicleRoleHudElement::CVehicleRoleHudElement( const char *pElementName ) : 
+CVehicleRoleHudElement::CVehicleRoleHudElement( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass( NULL, "VehicleRoleHudElement" )
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
@@ -76,5 +76,3 @@ void CVehicleRoleHudElement::Paint()
 		p++;
 	}
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,7 +29,7 @@ public:
 
 	mxExpressionSlider (mxWindow *parent, int x, int y, int w, int h, int id );
 	~mxExpressionSlider( void );
-	
+
 	void SetTitleWidth( int width );
 	void SetDrawTitle( bool drawTitle );
 

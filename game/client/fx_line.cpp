@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -26,9 +26,9 @@ CFXLine::CFXLine( const char *name, const FXLineData_t &data )
 : CClientSideEffect( name )
 {
 	m_FXData = data;
-	
+
 	m_FXData.m_flLifeTime = 0.0f;
-	
+
 	if ( m_FXData.m_pMaterial != NULL )
 	{
 		m_FXData.m_pMaterial->IncrementReferenceCount();
@@ -41,8 +41,8 @@ CFXLine::~CFXLine( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frametime - 
+// Purpose:
+// Input  : frametime -
 //-----------------------------------------------------------------------------
 void CFXLine::Draw( double frametime )
 {
@@ -50,20 +50,20 @@ void CFXLine::Draw( double frametime )
 	Update( frametime );
 
 	Vector lineDir, viewDir;
-	
+
 	//Get the proper orientation for the line
 	VectorSubtract( m_FXData.m_vecStart, m_FXData.m_vecEnd, lineDir );
 	VectorSubtract( m_FXData.m_vecEnd, CurrentViewOrigin(), viewDir );
-	
+
 	Vector cross = lineDir.Cross( viewDir );
 
 	VectorNormalize( cross );
 
 	CMatRenderContextPtr pRenderContext( materials );
-	
+
 	//Bind the material
 	IMesh* pMesh = pRenderContext->GetDynamicMesh( true, NULL, NULL, m_FXData.m_pMaterial );
-	
+
 	CMeshBuilder meshBuilder;
 
 	Vector tmp;
@@ -114,7 +114,7 @@ void CFXLine::Draw( double frametime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CFXLine::IsActive( void )
@@ -123,7 +123,7 @@ bool CFXLine::IsActive( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFXLine::Destroy( void )
 {
@@ -136,8 +136,8 @@ void CFXLine::Destroy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frametime - 
+// Purpose:
+// Input  : frametime -
 //-----------------------------------------------------------------------------
 void CFXLine::Update( double frametime )
 {
@@ -154,13 +154,13 @@ void FX_DrawLine( const Vector &start, const Vector &end, float scale, IMaterial
 	//Get the proper orientation for the line
 	VectorSubtract( end, start, lineDir );
 	VectorSubtract( end, CurrentViewOrigin(), viewDir );
-	
+
 	Vector cross = lineDir.Cross( viewDir );
 
 	VectorNormalize( cross );
 
 	CMatRenderContextPtr pRenderContext( materials );
-	
+
 	//Bind the material
 	IMesh* pMesh = pRenderContext->GetDynamicMesh( true, NULL, NULL, pMaterial );
 	CMeshBuilder meshBuilder;
@@ -207,7 +207,7 @@ void FX_DrawLineFade( const Vector &start, const Vector &end, float scale, IMate
 	//Get the proper orientation for the line
 	VectorSubtract( end, start, lineDir );
 	VectorSubtract( end, CurrentViewOrigin(), viewDir );
-	
+
 	float lineLength = lineDir.Length();
 	float t0 = 0.25f;
 	float t1 = 0.75f;

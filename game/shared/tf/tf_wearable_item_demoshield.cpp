@@ -36,7 +36,7 @@ END_DATADESC()
 // -- Data Desc
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFWearableDemoShield::CTFWearableDemoShield() : CTFWearable()
 {
@@ -46,7 +46,7 @@ CTFWearableDemoShield::CTFWearableDemoShield() : CTFWearable()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWearableDemoShield::Precache()
 {
@@ -58,7 +58,7 @@ void CTFWearableDemoShield::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWearableDemoShield::DoSpecialAction( CTFPlayer *pPlayer )
 {
@@ -70,7 +70,7 @@ void CTFWearableDemoShield::DoSpecialAction( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWearableDemoShield::EndSpecialAction( CTFPlayer *pPlayer )
 {
@@ -90,7 +90,7 @@ void CTFWearableDemoShield::EndSpecialAction( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFWearableDemoShield::CanCharge( CTFPlayer *pPlayer )
 {
@@ -123,7 +123,7 @@ bool CTFWearableDemoShield::CanCharge( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWearableDemoShield::DoCharge( CTFPlayer *pPlayer )
 {
@@ -137,7 +137,7 @@ void CTFWearableDemoShield::DoCharge( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWearableDemoShield::ShieldBash( CTFPlayer *pPlayer, float flCurrentChargeMeter )
 {
@@ -153,7 +153,7 @@ void CTFWearableDemoShield::ShieldBash( CTFPlayer *pPlayer, float flCurrentCharg
 	m_bImpactedSomething = true;
 
 	// Setup the swing range.
-	Vector vecForward; 
+	Vector vecForward;
 	AngleVectors( pOwner->EyeAngles(), &vecForward );
 	Vector vecStart = pOwner->Weapon_ShootPosition();
 	Vector vecEnd = vecStart + vecForward * 48;
@@ -186,7 +186,7 @@ void CTFWearableDemoShield::ShieldBash( CTFPlayer *pPlayer, float flCurrentCharg
 		float flBashDamage = CalculateChargeDamage( flCurrentChargeMeter );
 		CTakeDamageInfo info;
 		info.SetAttacker( pOwner );
-		info.SetInflictor( this ); 
+		info.SetInflictor( this );
 		info.SetWeapon( this );
 		info.SetDamage( flBashDamage );
 		info.SetDamageCustom( TF_DMG_CUSTOM_CHARGE_IMPACT );
@@ -209,7 +209,7 @@ void CTFWearableDemoShield::ShieldBash( CTFPlayer *pPlayer, float flCurrentCharg
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFWearableDemoShield::CalculateChargeDamage( float flCurrentChargeMeter )
 {
@@ -232,7 +232,7 @@ float CTFWearableDemoShield::CalculateChargeDamage( float flCurrentChargeMeter )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Vector CTFWearableDemoShield::GetShieldDamageForce( float flCurrentChargeMeter )
 {

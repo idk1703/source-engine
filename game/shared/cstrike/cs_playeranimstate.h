@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -25,7 +25,7 @@
 	#define CCSPlayer C_CSPlayer
 #else
 	class CBaseAnimatingOverlay;
-	class CWeaponCSBase; 
+	class CWeaponCSBase;
 	class CCSPlayer;
 #endif
 
@@ -45,7 +45,7 @@ enum PlayerAnimEvent_t
 	PLAYERANIMEVENT_RELOAD_LOOP,	///< w_model partial reload for shotguns
 	PLAYERANIMEVENT_RELOAD_END,		///< w_model partial reload for shotguns
 	PLAYERANIMEVENT_CLEAR_FIRING,	///< clear animations on the firing layer
-	
+
 	PLAYERANIMEVENT_COUNT
 };
 
@@ -56,7 +56,7 @@ public:
 	// This is called by both the client and the server in the same way to trigger events for
 	// players firing, jumping, throwing grenades, etc.
 	virtual void DoAnimationEvent( PlayerAnimEvent_t event, int nData = 0 ) = 0;
-	
+
 	// Returns true if we're playing the grenade prime or throw animation.
 	virtual bool IsThrowingGrenade() = 0;
 };

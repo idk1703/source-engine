@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -74,8 +74,8 @@ private:
 #define FPS_PANEL_WIDTH 300
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
 CFPSPanel::CFPSPanel( vgui::VPANEL parent ) : BaseClass( NULL, "CFPSPanel" )
 {
@@ -97,7 +97,7 @@ CFPSPanel::CFPSPanel( vgui::VPANEL parent ) : BaseClass( NULL, "CFPSPanel" )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFPSPanel::~CFPSPanel( void )
 {
@@ -143,7 +143,7 @@ void CFPSPanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFPSPanel::OnTick( void )
 {
@@ -155,7 +155,7 @@ void CFPSPanel::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CFPSPanel::ShouldDraw( void )
@@ -178,7 +178,7 @@ bool CFPSPanel::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void GetFPSColor( int nFps, unsigned char ucColor[3] )
 {
@@ -186,7 +186,7 @@ void GetFPSColor( int nFps, unsigned char ucColor[3] )
 
 	int nFPSThreshold1 = 20;
 	int nFPSThreshold2 = 15;
-	
+
 	if ( IsPC() && g_pMaterialSystemHardwareConfig->GetDXSupportLevel() >= 95 )
 	{
 		nFPSThreshold1 = 60;
@@ -200,7 +200,7 @@ void GetFPSColor( int nFps, unsigned char ucColor[3] )
 
 	if ( nFps >= nFPSThreshold1 )
 	{
-		ucColor[0] = 0; 
+		ucColor[0] = 0;
 		ucColor[1] = 255;
 	}
 	else if ( nFps >= nFPSThreshold2 )
@@ -220,7 +220,7 @@ void GetCPUColor( float cpuPercentage, unsigned char ucColor[3] )
 	if ( cpuPercentage >= kCPUMonitoringWarning1 )
 	{
 		// Excellent CPU performance
-		ucColor[0] = 10; 
+		ucColor[0] = 10;
 		ucColor[1] = 200;
 	}
 	else if ( cpuPercentage >= kCPUMonitoringWarning2 )
@@ -232,10 +232,10 @@ void GetCPUColor( float cpuPercentage, unsigned char ucColor[3] )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
+// Purpose:
+// Input  :
 //-----------------------------------------------------------------------------
-void CFPSPanel::Paint() 
+void CFPSPanel::Paint()
 {
 	int i = 0;
 	int x = 2;
@@ -272,22 +272,22 @@ void CFPSPanel::Paint()
 					m_AverageFPS = NewFrame;
 					m_high = (int)m_AverageFPS;
 					m_low = (int)m_AverageFPS;
-				} 
+				}
 				else
-				{				
+				{
 					m_AverageFPS *= ( 1.0f - NewWeight ) ;
 					m_AverageFPS += ( ( NewFrame ) * NewWeight );
 				}
-			
+
 				int NewFrameInt = (int)NewFrame;
 				if( NewFrameInt < m_low ) m_low = NewFrameInt;
-				if( NewFrameInt > m_high ) m_high = NewFrameInt;	
+				if( NewFrameInt > m_high ) m_high = NewFrameInt;
 
 				nFps = static_cast<int>( m_AverageFPS );
 				float frameMS = realFrameTime * 1000.0f;
 				GetFPSColor( nFps, ucColor );
 				g_pMatSystemSurface->DrawColoredText( m_hFont, x, 2, ucColor[0], ucColor[1], ucColor[2], 255, "%3i fps (%3i, %3i) %.1f ms on %s", nFps, m_low, m_high, frameMS, engine->GetLevelName() );
-			} 
+			}
 			else
 			{
 				m_AverageFPS = -1;
@@ -325,15 +325,15 @@ void CFPSPanel::Paint()
 			}
 		}
 
-		g_pMatSystemSurface->DrawColoredText( m_hFont, x, 2+ i * ( vgui::surface()->GetFontTall( m_hFont ) + 2 ), 
-											  255, 255, 255, 255, 
-											  "pos:  %.02f %.02f %.02f", 
+		g_pMatSystemSurface->DrawColoredText( m_hFont, x, 2+ i * ( vgui::surface()->GetFontTall( m_hFont ) + 2 ),
+											  255, 255, 255, 255,
+											  "pos:  %.02f %.02f %.02f",
 											  vecOrigin.x, vecOrigin.y, vecOrigin.z );
 		i++;
 
-		g_pMatSystemSurface->DrawColoredText( m_hFont, x, 2 + i * ( vgui::surface()->GetFontTall( m_hFont ) + 2 ), 
-											  255, 255, 255, 255, 
-											  "ang:  %.02f %.02f %.02f", 
+		g_pMatSystemSurface->DrawColoredText( m_hFont, x, 2 + i * ( vgui::surface()->GetFontTall( m_hFont ) + 2 ),
+											  255, 255, 255, 255,
+											  "ang:  %.02f %.02f %.02f",
 											  angles.x, angles.y, angles.z );
 		i++;
 
@@ -344,32 +344,32 @@ void CFPSPanel::Paint()
 			vel = player->GetLocalVelocity();
 		}
 
-		g_pMatSystemSurface->DrawColoredText( m_hFont, x, 2 + i * ( vgui::surface()->GetFontTall( m_hFont ) + 2 ), 
-											  255, 255, 255, 255, 
-											  "vel:  %.2f", 
+		g_pMatSystemSurface->DrawColoredText( m_hFont, x, 2 + i * ( vgui::surface()->GetFontTall( m_hFont ) + 2 ),
+											  255, 255, 255, 255,
+											  "vel:  %.2f",
 											  vel.Length() );
 	}
-	
+
 	if ( cl_showbattery.GetInt() > 0 )
 	{
-		if ( steamapicontext && steamapicontext->SteamUtils() && 
+		if ( steamapicontext && steamapicontext->SteamUtils() &&
 			( m_lastBatteryPercent == -1.0f || (gpGlobals->realtime - m_lastBatteryPercent) > 10.0f ) )
 		{
 			m_BatteryPercent = steamapicontext->SteamUtils()->GetCurrentBatteryPower();
 			m_lastBatteryPercent = gpGlobals->realtime;
 		}
-		
+
 		if ( m_BatteryPercent > 0 )
 		{
 			if ( m_BatteryPercent == 255 )
 			{
-				g_pMatSystemSurface->DrawColoredText( m_hFont, x, 2+ i * ( vgui::surface()->GetFontTall( m_hFont ) + 2 ), 
-													 255, 255, 255, 255,  "battery: On AC" );	
+				g_pMatSystemSurface->DrawColoredText( m_hFont, x, 2+ i * ( vgui::surface()->GetFontTall( m_hFont ) + 2 ),
+													 255, 255, 255, 255,  "battery: On AC" );
 			}
 			else
 			{
-				g_pMatSystemSurface->DrawColoredText( m_hFont, x, 2+ i * ( vgui::surface()->GetFontTall( m_hFont ) + 2 ), 
-											 255, 255, 255, 255,  "battery:  %d%%",m_BatteryPercent );	
+				g_pMatSystemSurface->DrawColoredText( m_hFont, x, 2+ i * ( vgui::surface()->GetFontTall( m_hFont ) + 2 ),
+											 255, 255, 255, 255,  "battery:  %d%%",m_BatteryPercent );
 			}
 		}
 	}
@@ -469,8 +469,8 @@ private:
 #define IO_DECAY_FRAC		0.95f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
 CBlockingFileIOPanel::CBlockingFileIOPanel( vgui::VPANEL parent ) : BaseClass( NULL, "CBlockingFileIOPanel" )
 {
@@ -506,7 +506,7 @@ CBlockingFileIOPanel::CBlockingFileIOPanel( vgui::VPANEL parent ) : BaseClass( N
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBlockingFileIOPanel::~CBlockingFileIOPanel( void )
 {
@@ -525,7 +525,7 @@ void CBlockingFileIOPanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBlockingFileIOPanel::OnTick( void )
 {
@@ -537,7 +537,7 @@ void CBlockingFileIOPanel::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBlockingFileIOPanel::ShouldDraw( void )
@@ -551,13 +551,13 @@ bool CBlockingFileIOPanel::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
+// Purpose:
+// Input  :
 //-----------------------------------------------------------------------------
-void CBlockingFileIOPanel::Paint() 
+void CBlockingFileIOPanel::Paint()
 {
 	int x = 2;
-	
+
 	int maxRecent = clamp( 0, cl_blocking_recentsize.GetInt(), 1000 );
 	int bval = cl_showblocking.GetInt();
 	if ( bval > 0 )
@@ -702,21 +702,21 @@ void CBlockingFileIOPanel::SpewItem( const RecentPeaks_t& item )
 			// break; -- intentionally fall through
 		case FILESYSTEM_BLOCKING_ASYNCHRONOUS:
 		case FILESYSTEM_BLOCKING_CALLBACKTIMING:
-			Msg( "%8.3f %16.16s i/o [%6.6s] took %8.3f msec:  %33.33s\n", 
-				 item.time, 
-				 GetBlockReason( item.reason ), 
+			Msg( "%8.3f %16.16s i/o [%6.6s] took %8.3f msec:  %33.33s\n",
+				 item.time,
+				 GetBlockReason( item.reason ),
 				 GetIOType( item.ioType ),
-				 item.elapsed * 1000.0f, 
+				 item.elapsed * 1000.0f,
 				 item.fileName.String()
 				);
 			break;
 		case FILESYSTEM_BLOCKING_SYNCHRONOUS:
 		case FILESYSTEM_BLOCKING_ASYNCHRONOUS_BLOCK:
-			Warning( "%8.3f %16.16s i/o [%6.6s] took %8.3f msec:  %33.33s\n", 
-					 item.time, 
-					 GetBlockReason( item.reason ), 
+			Warning( "%8.3f %16.16s i/o [%6.6s] took %8.3f msec:  %33.33s\n",
+					 item.time,
+					 GetBlockReason( item.reason ),
 					 GetIOType( item.ioType ),
-					 item.elapsed * 1000.0f, 
+					 item.elapsed * 1000.0f,
 					 item.fileName.String()
 				);
 			break;
@@ -747,9 +747,9 @@ void  CBlockingFileIOPanel::DrawIOTime( int x, int y, int w, int h, int slot, ch
 	float hfrac = clamp( history / maxTime, 0.0f, 1.0f );
 	float spikefrac = clamp( historyspike / maxTime, 0.0f, 1.0f );
 
-	g_pMatSystemSurface->DrawColoredText( m_hFont, x + 2, y + 1, 
-										  clr[0], clr[1], clr[2], clr[3], 
-										  "%s", 
+	g_pMatSystemSurface->DrawColoredText( m_hFont, x + 2, y + 1,
+										  clr[0], clr[1], clr[2], clr[3],
+										  "%s",
 										  label );
 
 	int textWidth = 95;
@@ -762,13 +762,13 @@ void  CBlockingFileIOPanel::DrawIOTime( int x, int y, int w, int h, int slot, ch
 
 	bool bDrawHistorySpike = false;
 
-	if ( m_History[ slot ].m_LastFile.IsValid() && 
+	if ( m_History[ slot ].m_LastFile.IsValid() &&
 		 ( gpGlobals->realtime < latchedtime + 10.0f ) )
 	{
 		bDrawHistorySpike = true;
-		g_pMatSystemSurface->DrawColoredText( m_hFont, x + w + 5, y + 1, 
+		g_pMatSystemSurface->DrawColoredText( m_hFont, x + w + 5, y + 1,
 											  255, 255, 255, 200, "[%8.3f ms]", m_History[ slot ].m_flHistorySpike * 1000.0f );
-		g_pMatSystemSurface->DrawColoredText( m_hFont, x, y + h + 1, 
+		g_pMatSystemSurface->DrawColoredText( m_hFont, x, y + h + 1,
 											  255, 255, 255, 200, "%s", m_History[ slot ].m_LastFile.String() );
 	}
 

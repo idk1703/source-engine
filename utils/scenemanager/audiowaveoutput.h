@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -69,7 +69,7 @@ public:
 
 	// returns the size of each sample in bytes
 	virtual int SampleSize( void ) { return 2; }
-	
+
 	// returns the sampling rate of the data
 	virtual int SampleRate( void ) { return OUTPUT_SAMPLE_RATE; }
 

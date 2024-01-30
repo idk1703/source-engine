@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -100,7 +100,7 @@ void CVTFPreviewPanel::RenderSphere( const Vector &vCenter, float flRadius, int 
 
 	int nVertices =  nTheta * nPhi;
 	int nIndices = 2 * ( nTheta + 1 ) * ( nPhi - 1 );
-	
+
 	pRenderContext->FogMode( MATERIAL_FOG_NONE );
 	pRenderContext->SetNumBoneWeights( 0 );
 	pRenderContext->Bind( m_PreviewMaterial );
@@ -126,8 +126,8 @@ void CVTFPreviewPanel::RenderSphere( const Vector &vCenter, float flRadius, int 
 			Vector vecPos;
 			vecPos.x = flRadius * sin(phi) * cos(theta);
 			vecPos.y = flRadius * cos(phi);
-			vecPos.z = -flRadius * sin(phi) * sin(theta); 
-			    
+			vecPos.z = -flRadius * sin(phi) * sin(theta);
+
 			Vector vecNormal = vecPos;
 			VectorNormalize( vecNormal );
 
@@ -201,7 +201,7 @@ void CVTFPreviewPanel::RenderSphere( const Vector &vCenter, float flRadius, int 
 // Paints a regular texture
 //-----------------------------------------------------------------------------
 void CVTFPreviewPanel::PaintStandardTexture( void )
-{	 
+{
 	int x, y, w, h;
 	x = y = 0;
 	GetSize( w, h );
@@ -294,7 +294,7 @@ void CVTFPreviewPanel::LookAt( const Vector &vecLookAt, float flRadius )
 	// Compute fov/2 in radians
 	flFOVx *= M_PI / 360.0f;
 
-	// Compute an effective fov	based on the aspect ratio 
+	// Compute an effective fov	based on the aspect ratio
 	// if the height is smaller than the width
 	int w, h;
 	GetSize( w, h );
@@ -317,7 +317,7 @@ void CVTFPreviewPanel::LookAt( const Vector &vecLookAt, float flRadius )
 	pRenderContext->LoadIdentity();
 
 	// convert from a right handed system to a left handed system
-	// since dx for wants it that way.  
+	// since dx for wants it that way.
 //	pRenderContext->Scale( 1.0f, 1.0f, -1.0f );
 
 	pRenderContext->Rotate( -90,  1, 0, 0 );	    // put Z going up
@@ -376,9 +376,9 @@ void CVTFPreviewPanel::Paint( void )
 	GetSize( w, h );
 	vgui::MatSystemSurface()->Begin3DPaint( 0, 0, w, h );
 
-	pRenderContext->ClearColor4ub( 76, 88, 68, 255 ); 
+	pRenderContext->ClearColor4ub( 76, 88, 68, 255 );
 	pRenderContext->ClearBuffers( true, true );
-				   
+
 	SetupProjectionMatrix( w, h );
 
 	if ( m_PreviewTexture->IsCubeMap() )

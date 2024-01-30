@@ -112,7 +112,7 @@ void CReplayRenderDialog::AddControlToAutoLayout( Panel *pPanel, bool bAdvanced 
 
 	// Use the positions from the .res file as relative positions for auto-layout
 	pPanel->GetPos( pNewLayoutInfo->nOffsetX, pNewLayoutInfo->nOffsetY );
-	
+
 	pNewLayoutInfo->bAdvanced = bAdvanced;
 
 	// Add to the list
@@ -251,7 +251,7 @@ void CReplayRenderDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 	bool bAtLeastOneVideoModeAdded = false;
 	bool bEnable = false;
 	bool bSkipped = false;
-	
+
 	for ( i = 0; i < nVidModeCount; ++i )
 	{
 		// Only offer display modes less than the current window size
@@ -264,7 +264,7 @@ void CReplayRenderDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 		bEnable =  ( nMw <= nScreenW && nMh <= nScreenH );
 		if (!bEnable)
 			bSkipped = true;
-		
+
 		m_pVideoModesCombo->AddItem( CurVideoMode.m_pName, NULL );
 		m_pVideoModesCombo->SetItemEnabled( i, bEnable );
 
@@ -419,21 +419,21 @@ void CReplayRenderDialog::Render()
 			ShowMessageBox( "#Replay_QuicktimeTitle", "#Replay_NeedQuicktime", "#GameUI_OK" );
 			return;
 		}
-		
+
 		if ( g_pVideo->GetVideoSystemStatus( VideoSystem::QUICKTIME ) != VideoSystemStatus::OK )
 		{
 			if ( g_pVideo->GetVideoSystemStatus( VideoSystem::QUICKTIME ) == VideoSystemStatus::NOT_CURRENT_VERSION )
 			{
 				ShowMessageBox( "#Replay_QuicktimeTitle", "#Replay_NeedQuicktimeNewer", "#GameUI_OK" );
-				return;	
+				return;
 			}
-		
+
 			ShowMessageBox( "#Replay_QuicktimeTitle", "#Replay_Err_QT_FailedToLoad", "#GameUI_OK" );
 			return;
 		}
 #endif
 	}
-	
+
 	// Update convars from settings
 	const int nMotionBlurQuality = clamp( m_pMotionBlurSlider->GetValue(), 0, MAX_MOTION_BLUR_QUALITY );
 	replay_rendersetting_quitwhendone.SetValue( (int)m_pQuitWhenDoneCheck->IsSelected() );
@@ -485,7 +485,7 @@ void CReplayRenderDialog::Render()
 	// timesteps).  Antialiasing does not factor in here because it doesn't require extra frames - the AA jitter
 	// is interwoven in with the motion sub-frames.
 	const int nNumMotionBlurTimeSteps = ( params.m_Settings.m_bMotionBlurEnabled ) ? CReplayRenderer::GetNumMotionBlurTimeSteps( params.m_Settings.m_nMotionBlurQuality ) : 1;
-	
+
 	if ( params.m_Settings.m_bMotionBlurEnabled )
 	{
 	 	params.m_flEngineFps = 2 * nNumMotionBlurTimeSteps * params.m_Settings.m_FPS.GetFPS();
@@ -541,11 +541,11 @@ void CReplayRenderDialog::OnThink()
 	const int nCodecQuality = clamp( m_pQualitySlider->GetValue(), 0, ReplayVideo_GetQualityRange() );
 	VideoEncodeCodec::EVideoEncodeCodec_t eCodec = ReplayVideo_GetCodec( m_pCodecCombo->GetActiveItem() ).m_nCodecId;
 
-	// fFrameSize is the scale factor based on the size of the rendered frame.  
+	// fFrameSize is the scale factor based on the size of the rendered frame.
 	const int iRes = m_pVideoModesCombo->GetActiveItem();
 	const ReplayVideoMode_t &VideoMode = ReplayVideo_GetVideoMode( iRes );
 	float fFrameSize = (float)(VideoMode.m_nWidth * VideoMode.m_nHeight)/(float)(640*480);
-	
+
 
 	float flEstimatedFileSize = 0;
 	float flEstimatedRenderTime_Min = 0;
@@ -586,13 +586,13 @@ void CReplayRenderDialog::OnThink()
 
 	wchar_t wzText[256] = L"";
 
-	g_pVGuiLocalize->ConstructString_safe( wzText, g_pVGuiLocalize->Find( "#Replay_RenderEstimate_File" ), 1, 
+	g_pVGuiLocalize->ConstructString_safe( wzText, g_pVGuiLocalize->Find( "#Replay_RenderEstimate_File" ), 1,
 									  wzFileSize,
 									  wzTimeMin,
 									  wzTimeMax );
 	m_pEstimateFileLabel->SetText( wzText );
 
-	g_pVGuiLocalize->ConstructString_safe( wzText, g_pVGuiLocalize->Find( "#Replay_RenderEstimate_Time" ), 2, 
+	g_pVGuiLocalize->ConstructString_safe( wzText, g_pVGuiLocalize->Find( "#Replay_RenderEstimate_Time" ), 2,
 									  wzTimeMin,
 									  wzTimeMax );
 	m_pEstimateTimeLabel->SetText( wzText );

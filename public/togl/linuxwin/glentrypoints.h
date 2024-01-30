@@ -69,9 +69,9 @@ public:
 
 	inline operator Result() const { return m_Result; }
 	inline operator char*() const { return (char*)m_Result; }
-		
+
 	FunctionType m_pFn;
-	
+
 	Result m_Result;
 };
 
@@ -90,7 +90,7 @@ public:
 	template<typename A, typename B, typename C, typename D, typename E, typename F, typename G, typename H> inline CGLExecuteHelper(FunctionType pFn, const char *pName, A a, B b, C c, D d, E e, F f, G g, H h) : m_pFn( pFn ) { StartCall(pName); (*m_pFn)(a, b, c, d, e, f, g, h); StopCall(pName); }
 	template<typename A, typename B, typename C, typename D, typename E, typename F, typename G, typename H, typename I> inline CGLExecuteHelper(FunctionType pFn, const char *pName, A a, B b, C c, D d, E e, F f, G g, H h, I i) : m_pFn( pFn ) { StartCall(pName); (*m_pFn)(a, b, c, d, e, f, g, h, i); StopCall(pName); }
 	template<typename A, typename B, typename C, typename D, typename E, typename F, typename G, typename H, typename I, typename J> inline CGLExecuteHelper(FunctionType pFn, const char *pName, A a, B b, C c, D d, E e, F f, G g, H h, I i, J j) : m_pFn( pFn ) { StartCall(pName); (*m_pFn)(a, b, c, d, e, f, g, h, i, j); StopCall(pName); }
-		
+
 	FunctionType m_pFn;
 };
 #endif
@@ -175,7 +175,7 @@ public:
 	#endif
 
 	inline CGLExecuteHelper<FunctionType, Result> operator() () const { return CGLExecuteHelper<FunctionType, Result>(m_pFn, GL_FUNC_NAME ); }
-	
+
 	template<typename T>
 	inline CGLExecuteHelper<FunctionType, Result> operator() (T a) const { return CGLExecuteHelper<FunctionType, Result>(m_pFn, GL_FUNC_NAME, a); }
 
@@ -213,7 +213,7 @@ public:
 	//  ready to call: if (!MyDynFunc) { printf("Function not found!\n"); }
 	operator bool () const { return m_pFn != NULL; }
 	bool operator !() const { return m_pFn == NULL; }
-		
+
 protected:
 	FunctionType m_pFn;
 
@@ -235,7 +235,7 @@ private:  // forbid default constructor.
 public:
 	CDynamicFunctionOpenGL(const char *fn, FunctionType fallback=NULL)
 	{
-        bool okay = true;
+	bool okay = true;
 		Lookup(fn, okay, fallback);
 		this->SetFuncName( fn );
 	}
@@ -303,9 +303,9 @@ public:
 	int m_nOpenGLVersionMinor;  // if GL_VERSION is 2.1.0, this will be set to 1.
 	int m_nOpenGLVersionPatch;  // if GL_VERSION is 2.1.0, this will be set to 0.
 	bool m_bHave_OpenGL;
-	
+
 	char *m_pGLDriverStrings[cGLTotalDriverStrings];
-	GLDriverProvider_t m_nDriverProvider;		
+	GLDriverProvider_t m_nDriverProvider;
 
 #ifdef OSX
 #define GL_EXT(x,glmajor,glminor) bool m_bHave_##x;
@@ -348,11 +348,11 @@ typedef void * (*GL_GetProcAddressCallbackFunc_t)(const char *, bool &, const bo
 #endif
 
 #if GL_USE_EXECUTE_HELPER_FOR_ALL_API_CALLS
-inline void CGLExecuteHelperBase::StartCall(const char *pName) 
-{ 
+inline void CGLExecuteHelperBase::StartCall(const char *pName)
+{
 	(void)pName;
 
-#if GL_TELEMETRY_ZONES	
+#if GL_TELEMETRY_ZONES
 	tmEnter( TELEMETRY_LEVEL3, TMZF_NONE, pName );
 #endif
 
@@ -377,8 +377,8 @@ inline void CGLExecuteHelperBase::StartCall(const char *pName)
 #endif
 }
 
-inline void CGLExecuteHelperBase::StopCall(const char *pName) 
-{ 
+inline void CGLExecuteHelperBase::StopCall(const char *pName)
+{
 #if GL_TRACK_API_TIME
 	uint64 nTotalCycles = tmFastTime() - m_nStartTime;
 #endif
@@ -387,13 +387,13 @@ inline void CGLExecuteHelperBase::StopCall(const char *pName)
 	tmLeave( TELEMETRY_LEVEL3 );
 #endif
 
-#if GL_TRACK_API_TIME	
+#if GL_TRACK_API_TIME
 	//double flMilliseconds = g_Telemetry.flRDTSCToMilliSeconds * nTotalCycles;
-	if (gGL) 
-	{ 
+	if (gGL)
+	{
 		gGL->m_nTotalGLCycles += nTotalCycles;
-		gGL->m_nTotalGLCalls++; 
-	} 
+		gGL->m_nTotalGLCalls++;
+	}
 #endif
 }
 #endif

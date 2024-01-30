@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -218,14 +218,14 @@ static void RegisterLightmappedSurface( SurfaceHandle_t surfID )
 	int lightmapSize[2];
 	int allocationWidth, allocationHeight;
 	bool bNeedsBumpmap;
-	
+
 	// fixme: lightmapSize needs to be in msurface_t once we
 	// switch over to having lightmap size untied to base texture
 	// size
 	lightmapSize[0] = ( MSurf_LightmapExtents( surfID )[0] ) + 1;
 	lightmapSize[1] = ( MSurf_LightmapExtents( surfID )[1] ) + 1;
-	
-	// Allocate all bumped lightmaps next to each other so that we can just 
+
+	// Allocate all bumped lightmaps next to each other so that we can just
 	// increment the s texcoord by pSurf->bumpSTexCoordOffset to render the next
 	// of the three lightmaps
 	bNeedsBumpmap = SurfNeedsBumpedLightmaps( surfID );
@@ -243,8 +243,8 @@ static void RegisterLightmappedSurface( SurfaceHandle_t surfID )
 
 	// register this surface's lightmap
 	int offsetIntoLightmapPage[2];
-	MSurf_MaterialSortID( surfID ) = materials->AllocateLightmap( 
-		allocationWidth, 
+	MSurf_MaterialSortID( surfID ) = materials->AllocateLightmap(
+		allocationWidth,
 		allocationHeight,
 		offsetIntoLightmapPage,
 		MSurf_TexInfo( surfID )->material );
@@ -270,7 +270,7 @@ static bool LightmapLess( const SurfaceHandle_t& surfID1, const SurfaceHandle_t&
 	// We want lightmapped surfaces to show up first
 	if (hasLightmap1 != hasLightmap2)
 		return hasLightmap1 > hasLightmap2;
-	
+
 	// The sort by enumeration ID
 	IMaterial* pMaterial1 = MSurf_TexInfo( surfID1 )->material;
 	IMaterial* pMaterial2 = MSurf_TexInfo( surfID2 )->material;
@@ -287,7 +287,7 @@ static bool LightmapLess( const SurfaceHandle_t& surfID1, const SurfaceHandle_t&
 		return hasLightstyle1 > hasLightstyle2;
 
 	// Then sort by lightmap area for better packing... (big areas first)
-	// NOTE: Don't care about bumpmap increasing area here because it is a linear factor 
+	// NOTE: Don't care about bumpmap increasing area here because it is a linear factor
 	// (all surfs with the same material have the same bumpmapping cost)
 #if 1
 	int area1 = MSurf_LightmapExtents( surfID1 )[0] * MSurf_LightmapExtents( surfID1 )[1];
@@ -313,7 +313,7 @@ void MaterialSystem_RegisterLightmapSurfaces( void )
 	for( int surfaceIndex = 0; surfaceIndex < host_state.worldbrush->numsurfaces; surfaceIndex++ )
 	{
 		surfID = SurfaceHandleFromIndex( surfaceIndex );
-		if( ( MSurf_TexInfo( surfID )->flags & SURF_NOLIGHT ) || 
+		if( ( MSurf_TexInfo( surfID )->flags & SURF_NOLIGHT ) ||
 			( MSurf_Flags( surfID ) & SURFDRAW_NOLIGHT) )
 		{
 			MSurf_Flags( surfID ) |= SURFDRAW_NOLIGHT;
@@ -351,10 +351,10 @@ static void TestBumpSanity( SurfaceHandle_t surfID )
 	// use the last one to check if we need a bumped lightmap, but don't have it so that we can warn.
 	bool needsBumpmap = SurfNeedsBumpedLightmaps( surfID );
 	bool hasBumpmap = SurfHasBumpedLightmaps( surfID );
-	
+
 	if ( needsBumpmap && !hasBumpmap && MSurf_Samples( surfID ) )
 	{
-		Warning( "Need to rebuild map to get bumped lighting on material %s\n", 
+		Warning( "Need to rebuild map to get bumped lighting on material %s\n",
 			materialSortInfoArray[MSurf_MaterialSortID( surfID )].material->GetName() );
 	}
 }
@@ -386,7 +386,7 @@ void MaterialSytsem_DoBumpWarnings( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static void GenerateTexCoordsForPrimVerts( void )
 {
@@ -397,9 +397,9 @@ static void GenerateTexCoordsForPrimVerts( void )
 /*
 		if( pSurf->numPrims > 0 )
 		{
-			ConMsg( "pSurf %d has %d prims (normal: %f %f %f dist: %f)\n", 
-				( int )i, ( int )pSurf->numPrims, 
-				pSurf->plane->normal[0], pSurf->plane->normal[1], pSurf->plane->normal[2], 
+			ConMsg( "pSurf %d has %d prims (normal: %f %f %f dist: %f)\n",
+				( int )i, ( int )pSurf->numPrims,
+				pSurf->plane->normal[0], pSurf->plane->normal[1], pSurf->plane->normal[2],
 				pSurf->plane->dist );
 			ConMsg( "\tfirst primID: %d\n", ( int )pSurf->firstPrimID );
 		}
@@ -414,9 +414,9 @@ static void GenerateTexCoordsForPrimVerts( void )
 				int lightmapSize[2];
 				int lightmapPageSize[2];
 				float sOffset, sScale, tOffset, tScale;
-				
-				materials->GetLightmapPageSize( 
-					SortInfoToLightmapPage( MSurf_MaterialSortID( surfID ) ), 
+
+				materials->GetLightmapPageSize(
+					SortInfoToLightmapPage( MSurf_MaterialSortID( surfID ) ),
 					&lightmapPageSize[0], &lightmapPageSize[1] );
 				lightmapSize[0] = ( MSurf_LightmapExtents( surfID )[0] ) + 1;
 				lightmapSize[1] = ( MSurf_LightmapExtents( surfID )[1] ) + 1;
@@ -437,11 +437,11 @@ static void GenerateTexCoordsForPrimVerts( void )
 					Vector& vec = vert.pos;
 
 					// base texture coordinate
-					vert.texCoord[0] = DotProduct (vec, MSurf_TexInfo( surfID )->textureVecsTexelsPerWorldUnits[0].AsVector3D()) + 
+					vert.texCoord[0] = DotProduct (vec, MSurf_TexInfo( surfID )->textureVecsTexelsPerWorldUnits[0].AsVector3D()) +
 						MSurf_TexInfo( surfID )->textureVecsTexelsPerWorldUnits[0][3];
 					vert.texCoord[0] /= MSurf_TexInfo( surfID )->material->GetMappingWidth();
 
-					vert.texCoord[1] = DotProduct (vec, MSurf_TexInfo( surfID )->textureVecsTexelsPerWorldUnits[1].AsVector3D()) + 
+					vert.texCoord[1] = DotProduct (vec, MSurf_TexInfo( surfID )->textureVecsTexelsPerWorldUnits[1].AsVector3D()) +
 						MSurf_TexInfo( surfID )->textureVecsTexelsPerWorldUnits[1][3];
 					vert.texCoord[1] /= MSurf_TexInfo( surfID )->material->GetMappingHeight();
 
@@ -457,23 +457,23 @@ static void GenerateTexCoordsForPrimVerts( void )
 					}
 					else
 					{
-						vert.lightCoord[0] = DotProduct (vec, MSurf_TexInfo( surfID )->lightmapVecsLuxelsPerWorldUnits[0].AsVector3D()) + 
+						vert.lightCoord[0] = DotProduct (vec, MSurf_TexInfo( surfID )->lightmapVecsLuxelsPerWorldUnits[0].AsVector3D()) +
 							MSurf_TexInfo( surfID )->lightmapVecsLuxelsPerWorldUnits[0][3];
 						vert.lightCoord[0] -= MSurf_LightmapMins( surfID )[0];
 						vert.lightCoord[0] += 0.5f;
 						vert.lightCoord[0] /= ( float )MSurf_LightmapExtents( surfID )[0]; //pSurf->texinfo->texture->width;
 
-						vert.lightCoord[1] = DotProduct (vec, MSurf_TexInfo( surfID )->lightmapVecsLuxelsPerWorldUnits[1].AsVector3D()) + 
+						vert.lightCoord[1] = DotProduct (vec, MSurf_TexInfo( surfID )->lightmapVecsLuxelsPerWorldUnits[1].AsVector3D()) +
 							MSurf_TexInfo( surfID )->lightmapVecsLuxelsPerWorldUnits[1][3];
 						vert.lightCoord[1] -= MSurf_LightmapMins( surfID )[1];
 						vert.lightCoord[1] += 0.5f;
 						vert.lightCoord[1] /= ( float )MSurf_LightmapExtents( surfID )[1]; //pSurf->texinfo->texture->height;
-						
+
 						vert.lightCoord[0] = sOffset + vert.lightCoord[0] * sScale;
 						vert.lightCoord[1] = tOffset + vert.lightCoord[1] * tScale;
 					}
 				}
-			}			
+			}
 		}
 	}
 }
@@ -494,7 +494,7 @@ int __cdecl SortMapCompareFunc( const void *pElem0, const void *pElem1 )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void MaterialSystem_CreateSortinfo( void )
 {
@@ -555,7 +555,7 @@ bool SurfHasBumpedLightmaps( SurfaceHandle_t surfID )
 {
 	ASSERT_SURF_VALID( surfID );
 	bool hasBumpmap = false;
-	if( ( MSurf_TexInfo( surfID )->flags & SURF_BUMPLIGHT ) && 
+	if( ( MSurf_TexInfo( surfID )->flags & SURF_BUMPLIGHT ) &&
 		( !( MSurf_TexInfo( surfID )->flags & SURF_NOLIGHT ) ) &&
 		( host_state.worldbrush->lightdata ) &&
 		( MSurf_Samples( surfID ) ) )
@@ -606,7 +606,7 @@ bool SurfNeedsLightmap( SurfaceHandle_t surfID )
 
 void BuildMSurfaceVerts( const worldbrushdata_t *pBrushData, SurfaceHandle_t surfID, Vector *verts,
 							Vector2D *texCoords, Vector2D lightCoords[][4] )
-{ 
+{
 	SurfaceCtx_t ctx;
 	SurfSetupSurfaceContext( ctx, surfID );
 
@@ -728,8 +728,8 @@ void BuildBrushModelVertexArray(worldbrushdata_t *pBrushData, SurfaceHandle_t su
 // Activate this if necessary
 //		if ( surf->flags & SURFDRAW_BUMPLIGHT )
 //		{
-//			// bump maps appear left to right in lightmap page memory, calculate 
-//			// the offset for the width of a single map. The pixel shader will use 
+//			// bump maps appear left to right in lightmap page memory, calculate
+//			// the offset for the width of a single map. The pixel shader will use
 //			// this to compute the actual texture coordinates
 //			builder.TexCoord2f( 2, ctx.m_BumpSTexCoordOffset, 0.0f );
 //		}
@@ -932,7 +932,7 @@ IMaterial *GetMaterialAtCrossHair( void )
 
 	// max_range * sqrt(3)
 	VectorMA( MainViewOrigin(), COORD_EXTENT * 1.74f, MainViewForward(), endPoint );
-	
+
 	SurfaceHandle_t hitSurfID = R_LightVec( MainViewOrigin(), endPoint, false, lightmapColor );
 	if( IS_SURF_VALID( hitSurfID ) )
 	{
@@ -960,8 +960,8 @@ void SaveSurfAtCrossHair()
 
 	// max_range * sqrt(3)
 	VectorMA(  MainViewOrigin(), COORD_EXTENT * 1.74f, MainViewForward(), endPoint );
-	
-	s_CrossHairSurfID = R_LightVec( MainViewOrigin(), endPoint, false, lightmapColor, 
+
+	s_CrossHairSurfID = R_LightVec( MainViewOrigin(), endPoint, false, lightmapColor,
 		&textureS, &textureT, &lightmapCoords[0], &lightmapCoords[1] );
 }
 
@@ -976,7 +976,7 @@ void DebugDrawLightmapAtCrossHair()
 	{
 		return;
 	}
-	materials->GetLightmapPageSize( materialSortInfoArray[MSurf_MaterialSortID( s_CrossHairSurfID )].lightmapPageID, 
+	materials->GetLightmapPageSize( materialSortInfoArray[MSurf_MaterialSortID( s_CrossHairSurfID )].lightmapPageID,
 		&lightmapPageSize[0], &lightmapPageSize[1] );
 	pMaterial = MSurf_TexInfo( s_CrossHairSurfID )->material;
 //	pMaterial->GetLowResColorSample( textureS, textureT, baseColor );
@@ -986,18 +986,18 @@ void DebugDrawLightmapAtCrossHair()
 	int i;
 	for( i = 0; i < 2; i++ )
 	{
-		xy[i] = 
+		xy[i] =
 			( ( float )pCrossHairSurf->offsetIntoLightmapPage[i] / ( float )lightmapPageSize[i] ) +
 			lightmapCoord[i] * ( pCrossHairSurf->lightmapExtents[i] / ( float )lightmapPageSize[i] );
 	}
 
 	materials->Bind( g_materialWireframe );
 	IMesh* pMesh = materials->GetDynamicMesh( g_materialWireframe );
-	
+
 	CMeshBuilder meshBuilder;
 	meshBuilder.Begin( pMesh, MATERIAL_QUAD, 1 );
 
-	meshBuilder.Position3f( 
+	meshBuilder.Position3f(
 	meshBuilder.AdvanceVertex();
 
 	meshBuilder.End();

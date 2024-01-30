@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -49,28 +49,28 @@ XERCES_CPP_NAMESPACE_USE
 class XStr
 {
 public :
-    XStr(const char* const toTranscode)
-    {
-        // Call the private transcoding method
-        fUnicodeForm = XMLString::transcode(toTranscode);
-    }
+	XStr(const char* const toTranscode)
+	{
+		// Call the private transcoding method
+		fUnicodeForm = XMLString::transcode(toTranscode);
+	}
 
-    ~XStr()
-    {
-        XMLString::release(&fUnicodeForm);
-    }
+	~XStr()
+	{
+		XMLString::release(&fUnicodeForm);
+	}
 
 
-    // -----------------------------------------------------------------------
-    //  Getter methods
-    // -----------------------------------------------------------------------
-    const XMLCh* unicodeForm() const
-    {
-        return fUnicodeForm;
-    }
+	// -----------------------------------------------------------------------
+	//  Getter methods
+	// -----------------------------------------------------------------------
+	const XMLCh* unicodeForm() const
+	{
+		return fUnicodeForm;
+	}
 
 private :
-    XMLCh*   fUnicodeForm;
+	XMLCh*   fUnicodeForm;
 };
 
 #define  _bstr_t(str) XStr(str).unicodeForm()
@@ -89,16 +89,16 @@ private :
 CVCProjConvert::CVCProjConvert()
 {
 #ifdef _WIN32
-	::CoInitialize(NULL); 
+	::CoInitialize(NULL);
 #elif _LINUX
 	try {
-            XMLPlatformUtils::Initialize();
-        }
-        catch (const XMLException& toCatch) {
-            char* message = XMLString::transcode(toCatch.getMessage());
-            Error( "Error during initialization! : %s\n", message);
-            XMLString::release(&message);
-        }
+			XMLPlatformUtils::Initialize();
+		}
+		catch (const XMLException& toCatch) {
+			char* message = XMLString::transcode(toCatch.getMessage());
+			Error( "Error during initialization! : %s\n", message);
+			XMLString::release(&message);
+		}
 #endif
 	m_bProjectLoaded = false;
 }
@@ -109,7 +109,7 @@ CVCProjConvert::CVCProjConvert()
 CVCProjConvert::~CVCProjConvert()
 {
 #ifdef _WIN32
-	::CoUninitialize(); 
+	::CoUninitialize();
 #elif _LINUX
 	// nothing to shutdown
 #endif
@@ -124,10 +124,10 @@ bool CVCProjConvert::LoadProject( const char *project )
 	HRESULT hr;
 	IXMLDOMDocument *pXMLDoc=NULL;
 
-	hr = ::CoCreateInstance(CLSID_DOMDocument, 
-							NULL, 
-							CLSCTX_INPROC_SERVER, 
-							IID_IXMLDOMDocument, 
+	hr = ::CoCreateInstance(CLSID_DOMDocument,
+							NULL,
+							CLSCTX_INPROC_SERVER,
+							IID_IXMLDOMDocument,
 							(void**)&pXMLDoc);
 
 	if (FAILED(hr))
@@ -148,35 +148,35 @@ bool CVCProjConvert::LoadProject( const char *project )
 		Msg ("Could not open %s.\n", bstrProject);
 		pXMLDoc->Release();
 		return false;
-	} 
+	}
 #elif _LINUX
 	XercesDOMParser* parser = new XercesDOMParser();
-        parser->setValidationScheme(XercesDOMParser::Val_Always);    // optional.
-        parser->setDoNamespaces(true);    // optional
+		parser->setValidationScheme(XercesDOMParser::Val_Always);    // optional.
+		parser->setDoNamespaces(true);    // optional
 
-        ErrorHandler* errHandler = (ErrorHandler*) new HandlerBase();
-        parser->setErrorHandler(errHandler);
+		ErrorHandler* errHandler = (ErrorHandler*) new HandlerBase();
+		parser->setErrorHandler(errHandler);
 
-        try {
-            parser->parse(project);
-        }
-        catch (const XMLException& toCatch) {
-            char* message = XMLString::transcode(toCatch.getMessage());
-            Error( "Exception message is: %s\n", message );    
-            XMLString::release(&message);
-            return;
-        }
-        catch (const DOMException& toCatch) {
-            char* message = XMLString::transcode(toCatch.msg);
-            Error( "Exception message is: %s\n", message );    
-            XMLString::release(&message);
-            return;
-        }
-        catch (...) {
-            Error( "Unexpected Exception \n" );
-            return;
-        }
-	
+		try {
+			parser->parse(project);
+		}
+		catch (const XMLException& toCatch) {
+			char* message = XMLString::transcode(toCatch.getMessage());
+			Error( "Exception message is: %s\n", message );
+			XMLString::release(&message);
+			return;
+		}
+		catch (const DOMException& toCatch) {
+			char* message = XMLString::transcode(toCatch.msg);
+			Error( "Exception message is: %s\n", message );
+			XMLString::release(&message);
+			return;
+		}
+		catch (...) {
+			Error( "Unexpected Exception \n" );
+			return;
+		}
+
 	DOMDocument *pXMLDoc = parser->getDocument();
 #endif
 
@@ -231,7 +231,7 @@ int CVCProjConvert::FindConfiguration( CUtlSymbol name )
 	{
 		return -1;
 	}
-	
+
 	for ( int i = 0; i < m_Configurations.Count(); i++ )
 	{
 		if ( m_Configurations[i].GetName() == name )
@@ -247,7 +247,7 @@ int CVCProjConvert::FindConfiguration( CUtlSymbol name )
 //-----------------------------------------------------------------------------
 CUtlSymbol CVCProjConvert::GetXMLAttribValue( IXMLDOMElement *p, const char *attribName )
 {
-	if (!p) 
+	if (!p)
 	{
 		return CUtlSymbol();
 	}
@@ -269,7 +269,7 @@ CUtlSymbol CVCProjConvert::GetXMLAttribValue( IXMLDOMElement *p, const char *att
 	if ( value == NULL )
 	{
 		return CUtlSymbol(); // element not found
-        }
+		}
 	char *transValue = XMLString::transcode(value);
 	CUtlSymbol name( transValue );
 	XMLString::release( &xAttrib );
@@ -285,7 +285,7 @@ CUtlSymbol CVCProjConvert::GetXMLAttribValue( IXMLDOMElement *p, const char *att
 CUtlSymbol CVCProjConvert::GetXMLNodeName( IXMLDOMElement *p )
 {
 	CUtlSymbol name;
-	if (!p) 
+	if (!p)
 	{
 		return name;
 	}
@@ -370,7 +370,7 @@ bool CVCProjConvert::ExtractConfigurations( IXMLDOMDocument *pDoc )
 #ifdef _WIN32
 	CComPtr<IXMLDOMNodeList> pConfigs;
 	pDoc->getElementsByTagName( _bstr_t("Configuration"), &pConfigs);
-    if (pConfigs)
+	if (pConfigs)
 	{
 		long len = 0;
 		pConfigs->get_length(&len);
@@ -393,8 +393,8 @@ bool CVCProjConvert::ExtractConfigurations( IXMLDOMDocument *pDoc )
 		}
 	}
 #elif _LINUX
-	 DOMNodeList *nodes = pDoc->getElementsByTagName( _bstr_t("Configuration"));
-    	if ( nodes )
+	DOMNodeList *nodes = pDoc->getElementsByTagName( _bstr_t("Configuration"));
+		if ( nodes )
 	{
 		int len = nodes->getLength();
 		for ( int i=0; i<len; i++ )
@@ -424,7 +424,7 @@ bool CVCProjConvert::ExtractIncludes( IXMLDOMElement *pDoc, CConfiguration & con
 {
 	config.ResetDefines();
 	config.ResetIncludes();
-	
+
 	if (!pDoc)
 	{
 		return false;
@@ -458,16 +458,16 @@ bool CVCProjConvert::ExtractIncludes( IXMLDOMElement *pDoc, CConfiguration & con
 					{
 						*delim = 0;
 						delim++;
-						if ( Q_stricmp( curpos, "WIN32" ) && Q_stricmp( curpos, "_WIN32" )  &&  
-							 Q_stricmp( curpos, "_WINDOWS") && Q_stricmp( curpos, "WINDOWS")) // don't add WIN32 defines
+						if ( Q_stricmp( curpos, "WIN32" ) && Q_stricmp( curpos, "_WIN32" )  &&
+							Q_stricmp( curpos, "_WINDOWS") && Q_stricmp( curpos, "WINDOWS")) // don't add WIN32 defines
 						{
 							config.AddDefine( curpos );
 						}
 						curpos = delim;
 						delim = strchr( delim, ';' );
 					}
-					if ( Q_stricmp( curpos, "WIN32" ) && Q_stricmp( curpos, "_WIN32" )  &&  
-						 Q_stricmp( curpos, "_WINDOWS") && Q_stricmp( curpos, "WINDOWS")) // don't add WIN32 defines
+					if ( Q_stricmp( curpos, "WIN32" ) && Q_stricmp( curpos, "_WIN32" )  &&
+						Q_stricmp( curpos, "_WINDOWS") && Q_stricmp( curpos, "WINDOWS")) // don't add WIN32 defines
 					{
 						config.AddDefine( curpos );
 					}
@@ -516,16 +516,16 @@ bool CVCProjConvert::ExtractIncludes( IXMLDOMElement *pDoc, CConfiguration & con
 					{
 						*delim = 0;
 						delim++;
-						if ( Q_stricmp( curpos, "WIN32" ) && Q_stricmp( curpos, "_WIN32" )  &&  
-							 Q_stricmp( curpos, "_WINDOWS") && Q_stricmp( curpos, "WINDOWS")) // don't add WIN32 defines
+						if ( Q_stricmp( curpos, "WIN32" ) && Q_stricmp( curpos, "_WIN32" )  &&
+							Q_stricmp( curpos, "_WINDOWS") && Q_stricmp( curpos, "WINDOWS")) // don't add WIN32 defines
 						{
 							config.AddDefine( curpos );
 						}
 						curpos = delim;
 						delim = strchr( delim, ';' );
 					}
-					if ( Q_stricmp( curpos, "WIN32" ) && Q_stricmp( curpos, "_WIN32" )  &&  
-						 Q_stricmp( curpos, "_WINDOWS") && Q_stricmp( curpos, "WINDOWS")) // don't add WIN32 defines
+					if ( Q_stricmp( curpos, "WIN32" ) && Q_stricmp( curpos, "_WIN32" )  &&
+						Q_stricmp( curpos, "_WINDOWS") && Q_stricmp( curpos, "WINDOWS")) // don't add WIN32 defines
 					{
 						config.AddDefine( curpos );
 					}
@@ -579,7 +579,7 @@ bool CVCProjConvert::IterateFileConfigurations( IXMLDOMElement *pFile, CUtlSymbo
 #ifdef _WIN32
 	CComPtr<IXMLDOMNodeList> pConfigs;
 	pFile->getElementsByTagName( _bstr_t("FileConfiguration"), &pConfigs);
-    if (pConfigs)
+	if (pConfigs)
 	{
 		long len = 0;
 		pConfigs->get_length(&len);
@@ -715,54 +715,54 @@ bool CVCProjConvert::ExtractFiles( IXMLDOMDocument *pDoc  )
 static char fileName[MAX_PATH];
 int CheckName(const struct dirent *dir)
 {
-        return !strcasecmp( dir->d_name, fileName );
+		return !strcasecmp( dir->d_name, fileName );
 }
 
 const char *findFileInDirCaseInsensitive(const char *file)
 {
-        const char *dirSep = strrchr(file,'/');
-        if( !dirSep )
-        {
-                dirSep=strrchr(file,'\\');
-                if( !dirSep )
-                {
-                        return NULL;
-                }
-        }
+		const char *dirSep = strrchr(file,'/');
+		if( !dirSep )
+		{
+				dirSep=strrchr(file,'\\');
+				if( !dirSep )
+				{
+						return NULL;
+				}
+		}
 
-        char *dirName = static_cast<char *>( alloca( ( dirSep - file ) +1 ) );
-        if( !dirName )
-                return NULL;
+		char *dirName = static_cast<char *>( alloca( ( dirSep - file ) +1 ) );
+		if( !dirName )
+				return NULL;
 
 		Q_strncpy( dirName, file, dirSep - file );
-        dirName[ dirSep - file ] = '\0';
+		dirName[ dirSep - file ] = '\0';
 
-        struct dirent **namelist;
-        int n;
+		struct dirent **namelist;
+		int n;
 
 		Q_strncpy( fileName, dirSep + 1, MAX_PATH );
 
 
-        n = scandir( dirName , &namelist, CheckName, alphasort );
+		n = scandir( dirName , &namelist, CheckName, alphasort );
 
-        if( n > 0 )
-        {
-                while( n > 1 )
-                {
-                        free( namelist[n] ); // free the malloc'd strings
-                        n--;
-                }
+		if( n > 0 )
+		{
+				while( n > 1 )
+				{
+						free( namelist[n] ); // free the malloc'd strings
+						n--;
+				}
 
-                Q_snprintf( fileName, sizeof( fileName ), "%s/%s", dirName, namelist[0]->d_name );
-                return fileName;
-        }
-        else
-        {
-                // last ditch attempt, just return the lower case version!
-                Q_strncpy( fileName, file, sizeof(fileName) );
-                Q_strlower( fileName );
-                return fileName;
-        }
+				Q_snprintf( fileName, sizeof( fileName ), "%s/%s", dirName, namelist[0]->d_name );
+				return fileName;
+		}
+		else
+		{
+				// last ditch attempt, just return the lower case version!
+				Q_strncpy( fileName, file, sizeof(fileName) );
+				Q_strlower( fileName );
+				return fileName;
+		}
 }
 #endif
 
@@ -770,7 +770,7 @@ void CVCProjConvert::FindFileCaseInsensitive( char *fileName, int fileNameSize )
 {
 	char filePath[ MAX_PATH ];
 
-	Q_snprintf( filePath, sizeof(filePath), "%s/%s", m_BaseDir.String(), fileName ); 
+	Q_snprintf( filePath, sizeof(filePath), "%s/%s", m_BaseDir.String(), fileName );
 
 	struct _stat buf;
 	if ( _stat( filePath, &buf ) == 0)

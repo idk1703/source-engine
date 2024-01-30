@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -39,7 +39,7 @@ class CDODMapOverview : public CMapOverview
 
 	virtual bool IsVisible( void );
 
-protected:	
+protected:
 	virtual void SetMode(int mode);
 	virtual void InitTeamColorsAndIcons();
 	virtual void FireGameEvent( IGameEvent *event );

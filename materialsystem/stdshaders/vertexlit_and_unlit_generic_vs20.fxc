@@ -1,4 +1,4 @@
-//======= Copyright © 1996-2007, Valve Corporation, All rights reserved. ======
+//======= Copyright ï¿½ 1996-2007, Valve Corporation, All rights reserved. ======
 
 //  STATIC: "VERTEXCOLOR"				"0..1"
 //	STATIC: "CUBEMAP"					"0..1"
@@ -26,7 +26,7 @@
 // SKIP: ($SEPARATE_DETAIL_UVS) && ($SEAMLESS_DETAIL)
 // SKIP: ($DONT_GAMMA_CONVERT_VERTEX_COLOR && ( ! $VERTEXCOLOR ) )
 #include "common_vs_fxc.h"
- 
+
 static const bool g_bSkinning		= SKINNING ? true : false;
 static const int  g_FogType			= DOWATERFOG;
 static const bool g_bVertexColor	= VERTEXCOLOR ? true : false;
@@ -85,7 +85,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 projPos					: POSITION;			// Projection-space position	
+	float4 projPos					: POSITION;			// Projection-space position
 #if !defined( _X360 )
 	float  fog						: FOG;
 #endif
@@ -142,18 +142,18 @@ VS_OUTPUT main( const VS_INPUT v )
 	float3 NNormal=normalize( vNormal );
 	o.SeamlessWeights.xyz = NNormal * NNormal;				// sums to 1.
 #endif
-	
+
 #if !defined( SHADER_MODEL_VS_3_0 ) || !MORPHING
 	ApplyMorph( v.vPosFlex, v.vNormalFlex, vPosition.xyz, vNormal );
 #else
-	ApplyMorph( morphSampler, cMorphTargetTextureDim, cMorphSubrect, 
+	ApplyMorph( morphSampler, cMorphTargetTextureDim, cMorphSubrect,
 		v.vVertexID, v.vTexCoord2, vPosition.xyz, vNormal );
 #endif
-	  
+
 	// Perform skinning
 	float3 worldNormal, worldPos;
-	SkinPositionAndNormal( 
-		g_bSkinning, 
+	SkinPositionAndNormal(
+		g_bSkinning,
 		vPosition, vNormal,
 		v.vBoneWeights, v.vBoneIndices,
 		worldPos, worldNormal );
@@ -167,7 +167,7 @@ VS_OUTPUT main( const VS_INPUT v )
 	// Avoid z precision errors
 	worldPos += worldNormal * 0.05f * v.vTexCoord2.z;
 #endif
-	
+
 	o.worldSpaceNormal = worldNormal;
 
 	// Transform into projection space
@@ -179,11 +179,11 @@ VS_OUTPUT main( const VS_INPUT v )
 	o.fogFactorW.w = CalcFog( worldPos, vProjPos, g_FogType );
 #if !defined( _X360 )
 	o.fog = o.fogFactorW.w;
-#endif	
+#endif
 	o.worldPos_ProjPosZ.xyz = worldPos.xyz;
 	o.worldPos_ProjPosZ.w = vProjPos.z;
 
-	// Needed for cubemaps 
+	// Needed for cubemaps
 #if CUBEMAP
 	o.worldVertToEyeVector.xyz = VSHADER_VECT_SCALE * (cEyePos - worldPos);
 #endif
@@ -210,7 +210,7 @@ VS_OUTPUT main( const VS_INPUT v )
 		#endif
 	}
 #endif
-	
+
 
 #if SEAMLESS_BASE
 	o.SeamlessTexCoord.xyz = SEAMLESS_SCALE * v.vPos.xyz;
@@ -246,5 +246,3 @@ VS_OUTPUT main( const VS_INPUT v )
 
 	return o;
 }
-
-

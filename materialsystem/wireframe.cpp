@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -13,7 +13,7 @@
 
 #ifdef _WIN32
 DEFINE_FALLBACK_SHADER( Wireframe, Wireframe_DX6 )
-BEGIN_SHADER( Wireframe_DX6, 
+BEGIN_SHADER( Wireframe_DX6,
 			  "Help for Wireframe_DX6" )
 
 	BEGIN_SHADER_PARAMS

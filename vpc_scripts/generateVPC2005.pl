@@ -5,7 +5,7 @@ no strict 'refs';
 # Data Section
 ######################################################
 
-my(@lines)		= ();	# holds the input file	
+my(@lines)		= ();	# holds the input file
 my(@tabs) 		= ();	# for indentation
 my(@lineToPrint)	= ();	# current formatted output line
 #my(@configOutput)	= ();	# output from configuration parsing
@@ -50,7 +50,7 @@ my(%configOptionsSingleValue) = (
 	# Configuration
 	"General"			=>
 	{
-		# General	
+		# General
 		"OutputDirectory"			=>	"OutputDirectory",
 		"IntermediateDirectory"			=>	"IntermediateDirectory",
 		"DeleteExtensionsOnClean"		=>	"ExtensionsToDeleteOnClean",
@@ -64,7 +64,7 @@ my(%configOptionsSingleValue) = (
 		# Debugging
 	},
 
-	# C/C++ 
+	# C/C++
 	"VCCLCompilerTool"		=>
 	{
 		# General
@@ -72,7 +72,7 @@ my(%configOptionsSingleValue) = (
 		"AdditionalUsingDirectories"		=>	"ResolveUsingReferences",
 
 		# Optimization
-		
+
 		# Preprocessor
 		"PreprocessorDefinitions"		=>	"PreprocessorDefinitions",
 
@@ -119,7 +119,7 @@ my(%configOptionsSingleValue) = (
 		"AdditionalOptions"			=>	"AdditionalOptions",
 	},
 
-	# Linker 
+	# Linker
 	"VCLinkerTool"			=>
 	{
 		# General
@@ -145,7 +145,7 @@ my(%configOptionsSingleValue) = (
 		"ProgramDatabaseFile"			=>	"GenerateProgramDatabaseFile",
 		"StripPrivateSymbols"			=>	"StripPrivateSymbols",
 		"MapFileName"				=>	"MapFileName",
-	
+
 		# System
 		"HeapReserveSize"			=>	"HeapReserverSize",
 		"HeapCommitSize"			=>	"HeapCommitSize",
@@ -230,7 +230,7 @@ my(%configOptionsSingleValue) = (
 
 my(%configOptionsMultiValue) = (
 
-		# General	
+		# General
 		"ConfigurationType"			=>	"ConfigurationType",
 		"UseOfMFC"				=>	"UseOfMFC",
 		"UseOfAtl"				=>	"UseOfATL",
@@ -238,7 +238,7 @@ my(%configOptionsMultiValue) = (
 
 		# Debugging
 
-	# C/C++ 
+	# C/C++
 		# General
 		"DebugInformationFormat"		=>	"DebugInformationFormat",
 		"SuppressStartupBanner"			=>	"SuppressStartupBanner",
@@ -255,7 +255,7 @@ my(%configOptionsMultiValue) = (
 		"OmitFramePointers"			=>	"OmitFramePointers",
 		"EnableFiberSafeOptimizations"		=>	"EnableFiberSafeOptimizations",
 		"WholeProgramOptimization"		=>	"WholeProgramOptimization",
-		
+
 		# Preprocessor
 		"IgnoreStandardIncludePath"		=>	"IgnoreStandardIncludePath",
 		"GeneratePreprocessedFile"		=>	"GeneratePreprocessedFile",
@@ -308,7 +308,7 @@ my(%configOptionsMultiValue) = (
 		"IgnoreAllDefaultLibraries"		=>	"IgnoreAllDefaultLibraries",
 		"UseUnicodeResponseFiles"		=>	"UseUNICODEResponseFiles",
 		"LinkLibraryDependencies"		=>	"LinkLibraryDependencies",
-		
+
 	# Linker
 		# General
 		"ShowProgress"				=>	"ShowProgress",
@@ -377,27 +377,27 @@ my(%configOptionsMultiValue) = (
 my(%configOptionValues) = (
 
 		# General
-		"ConfigurationType"			=> 
-		{		
+		"ConfigurationType"			=>
+		{
 			"0"	=>	"Makefile",
 			"1"	=>	"Application \(\.exe\)",
 			"2"	=>	"Dynamic Library \(\.dll\)",
 			"3"	=>	"Static Library \(\.lib\)",
 			"4"	=>	"Utility",
 		},
-		"UseOfMFC"				=> 
+		"UseOfMFC"				=>
 		{
 			"0"	=>	"Use Standard Windows Libraries",
 			"1"	=>	"Use MFC In A Static Library",
 			"2"	=>	"Use MFC In A Shared DLL",
 		},
-		"UseOfATL"				=> 
+		"UseOfATL"				=>
 		{
 			"0"	=>	"Not Using ATL",
 			"1"	=>	"Static Link To ATL",
 			"2"	=>	"Dynamic Link To ATL",
 		},
-		"CharacterSet"				=> 
+		"CharacterSet"				=>
 		{
 			"0"	=>	"Not Set",
 			"1"	=>	"Use Unicode Character Set",
@@ -406,11 +406,11 @@ my(%configOptionValues) = (
 
 		# Debugging
 
-	# C/C++ 
+	# C/C++
 		# General
-		"DebugInformationFormat"		=> 
+		"DebugInformationFormat"		=>
 		{
-			# These skip a number on purpose (per VS2005) 
+			# These skip a number on purpose (per VS2005)
 			"0"	=>	"Disabled",
 			"1"	=>	"C7 Compatible \(\/Z7\)",
 			"3"	=>	"Program Database \(\/Zi\)",
@@ -446,7 +446,7 @@ my(%configOptionValues) = (
 		},
 
 		# Optimization
-		"Optimization"	=> 
+		"Optimization"	=>
 		{
 			"0"	=>	"Disabled \(\/Od\)",
 			"1"	=>	"Minimize Size \(\/O1\)",
@@ -795,7 +795,7 @@ my(%configOptionValues) = (
 			"0"	=>	"No Debuggable attribute emitted",
 			"1"	=>	"Runtime tracking and disable optimizations \(\/ASSEMBLYDEBUG\)",
 			"2"	=>	"No runtime tracking and enable optimizations \(\/ASSEMBLYDEBUG:DISABLE\)",
-		},		
+		},
 
 		# System
 		"SubSystem"				=>
@@ -1151,16 +1151,16 @@ sub outputToAllConfigurations
 }
 
 
-sub compare_arrays 
+sub compare_arrays
 {
 	my ($first, $second) = @_;
 	return 0 unless @$first == @$second;
-	for (my $i = 0; $i < @$first; $i++) 
+	for (my $i = 0; $i < @$first; $i++)
 	{
 		if ( $first->[$i] =~ /^(Debug|Release)$/ )
 		{
 			next;
-		} 
+		}
 		return 0 if $first->[$i] ne $second->[$i];
 	}
 	return 1;
@@ -1219,7 +1219,7 @@ sub processFileConfig
 	if ( $configResult == 1 )
 	{
 		# Mark this file as excluded for the current configuration
-				
+
 		$excludes{$currentConfig} = 1;
 		$splitFiles = 1;
 	}
@@ -1266,7 +1266,7 @@ sub processFile
 
 	%configOutput = ();
 	while ( $_[++$lineCt] !~ /^\s*\<\/File\>$/ )
-	{	
+	{
 		# Check for file specific configurations
 		if ( $_[$lineCt] =~ /^\s*\<FileConfiguration/ )
 		{
@@ -1274,7 +1274,7 @@ sub processFile
 			$splitFiles += processFileConfig( @_ );
 		}
 	}
-	
+
 	# Compare the configurations to see if the files should be split
 	if ( $configFound && !$splitFiles )
 	{
@@ -1295,9 +1295,9 @@ sub processFile
 			push( @{ $configOutput{"Base"} }, @{ $configOutput{"HL2"} } );
 		}
 	}
-	
+
 	# Add the file and configuration to the appropriate projects
-	
+
 	if ( !$splitFiles )
 	{
 		if ( @{ $configOutput{"Base"} } > 0 )
@@ -1315,7 +1315,7 @@ sub processFile
 	else
 	{
 		$excludes{"Base"} = 1;
-		$exclusionsFound = 1;		
+		$exclusionsFound = 1;
 		for ( @configurations )
 		{
 			if ( !$excludes{$_} )
@@ -1380,9 +1380,9 @@ sub processFolder
 			$spaceBeforeFolder = 1;
 		}
 	}
-	
+
 	# End of the folder
-		
+
 	@lineToPrint = ( @tabs, "\}\n" );
 	for ( @configurations )
 	{
@@ -1413,7 +1413,7 @@ sub processConfigOption
 	if ( $outputvalue = $configOptionsSingleValue{$tool}{$keyname} )
 	{
 		# A single value option - outputvalue is the VPC defined keyname
-		
+
 		# Translate true/false to Yes/No
 		$keyvalue =~ s/true/Yes/;
 		$keyvalue =~ s/false/No/;
@@ -1478,7 +1478,7 @@ sub processConfigOption
 
 ####################################################
 sub processBuildTool
-{	
+{
 	push( @tabs, "\t" );
 	# Grab the tool name
 
@@ -1488,7 +1488,7 @@ sub processBuildTool
 	if ( !$toolNames{$toolName} )
 	{
 		pop( @tabs );
-		while ( $_[$lineCt] !~ /\/\>$/ ) 
+		while ( $_[$lineCt] !~ /\/\>$/ )
 		{
 			++$lineCt;
 		}
@@ -1525,7 +1525,7 @@ sub processBuildTool
 	}
 
 	pop( @tabs );
-	
+
 	# End of the tool
 	if ( $optionsFound )
 	{
@@ -1538,7 +1538,7 @@ sub processBuildTool
 
 ####################################################
 sub processConfiguration
-{	
+{
 	my( $configOptionsFound ) = 0;
 	my( $startedGeneral ) = 0;
 
@@ -1568,7 +1568,7 @@ sub processConfiguration
 			{
 				# start the fake "General" category
 				$startedGeneral = 1;
-				
+
 				push( @tabs, "\t" );
 				push( @{ $configOutput{$currentConfig} }, @tabs, "\$General\n" );
 				push( @{ $configOutput{$currentConfig} }, @tabs, "\{\n" );
@@ -1658,7 +1658,7 @@ push( @fileheader, "\"\n" );
 # Process the file one line at a time
 
 my $folderOpenBrace = 0;
-for( $lineCt = 0; $lineCt < @lines; ++$lineCt ) 
+for( $lineCt = 0; $lineCt < @lines; ++$lineCt )
 {
 	my($line) = @lines[$lineCt];
 
@@ -1667,7 +1667,7 @@ for( $lineCt = 0; $lineCt < @lines; ++$lineCt )
 		$projectName = $1;
 
 		# Print the project name
-		
+
 		my $capName = $projectName;
 		$capName =~ s/\b(\w)/\U$1/g;
 		@lineToPrint = ( "\$Project \"", $capName, "\"\n\{\n" );
@@ -1838,5 +1838,3 @@ if ( $projectCt == 1 )
 
 	rename $oldname, $newname;
 }
-
-

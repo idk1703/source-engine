@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -28,7 +28,7 @@ public:
 	virtual			~CTEBloodStream( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 	DECLARE_SERVERCLASS();
 
 public:
@@ -41,8 +41,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEBloodStream::CTEBloodStream( const char *name ) :
 	BaseClass( name )
@@ -56,16 +56,16 @@ CTEBloodStream::CTEBloodStream( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEBloodStream::~CTEBloodStream( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEBloodStream::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -76,13 +76,13 @@ void CTEBloodStream::Test( const Vector& current_origin, const QAngle& current_a
 	a = 255;
 	m_nAmount	= random->RandomInt(50, 150);
 	m_vecOrigin = current_origin;
-	
+
 	Vector forward;
 
 	m_vecOrigin.GetForModify()[2] += 24;
 
 	AngleVectors( current_angles, &forward );
-	forward[2] = 0.0;	
+	forward[2] = 0.0;
 	VectorNormalize( forward );
 
 	m_vecOrigin += forward * 50;
@@ -107,23 +107,23 @@ static CTEBloodStream g_TEBloodStream( "Blood Stream" );
 
 //-----------------------------------------------------------------------------
 // Purpose: Creates a blood stream
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//			*org - 
-//			*dir - 
-//			r - 
-//			g - 
-//			b - 
-//			a - 
-//			amount - 
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//			*org -
+//			*dir -
+//			r -
+//			g -
+//			b -
+//			a -
+//			amount -
 //-----------------------------------------------------------------------------
 void TE_BloodStream( IRecipientFilter& filter, float delay,
 	const Vector* org, const Vector* dir, int r, int g, int b, int a, int amount )
 {
 	g_TEBloodStream.m_vecOrigin = *org;
-	g_TEBloodStream.m_vecDirection = *dir;	
+	g_TEBloodStream.m_vecDirection = *dir;
 	g_TEBloodStream.r = r;
 	g_TEBloodStream.g = g;
 	g_TEBloodStream.b = b;

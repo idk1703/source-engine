@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -53,11 +53,11 @@ public:
 	virtual void			SetWeaponModel( const char *pszModelname, CBaseCombatWeapon *weapon );
 
 	virtual void			CalcViewModelLag( Vector& origin, QAngle& angles, QAngle& original_angles );
-	virtual void			CalcViewModelView( CBasePlayer *owner, const Vector& eyePosition, 
+	virtual void			CalcViewModelView( CBasePlayer *owner, const Vector& eyePosition,
 								const QAngle& eyeAngles );
 	virtual void			AddViewModelBob( CBasePlayer *owner, Vector& eyePosition, QAngle& eyeAngles ) {};
 
-	// Initializes the viewmodel for use							
+	// Initializes the viewmodel for use
 	void					SetOwner( CBaseEntity *pEntity );
 	void					SetIndex( int nIndex );
 	// Returns which viewmodel it is
@@ -78,7 +78,7 @@ public:
 	void					ShowControlPanells( bool show );
 
 	virtual CBaseCombatWeapon *GetOwningWeapon( void );
-	
+
 	virtual CBaseEntity	*GetOwnerViaInterface( void ) { return GetOwner(); }
 
 	virtual bool			IsSelfAnimating()
@@ -92,7 +92,7 @@ public:
 #if defined( INVASION_DLL ) || defined( INVASION_CLIENT_DLL )
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 #endif
@@ -138,7 +138,7 @@ public:
 	virtual int				GetFxBlend( void );
 	virtual bool			IsTransparent( void );
 	virtual bool			UsesPowerOfTwoFrameBufferTexture( void );
-	
+
 	// Should this object cast shadows?
 	virtual ShadowType_t	ShadowCastType() { return SHADOWS_NONE; }
 
@@ -159,7 +159,7 @@ public:
 	// (inherited from C_BaseAnimating)
 	virtual void			FormatViewModelAttachment( int nAttachment, matrix3x4_t &attachmentToWorld );
 	virtual bool			IsViewModel() const;
-	
+
 	CBaseCombatWeapon		*GetWeapon() const { return m_hWeapon.Get(); }
 
 #ifdef CLIENT_DLL
@@ -183,7 +183,7 @@ private:
 	CNetworkHandle( CBaseEntity, m_hOwner );				// Player or AI carrying this weapon
 
 	// soonest time Update will call WeaponIdle
-	float					m_flTimeWeaponIdle;							
+	float					m_flTimeWeaponIdle;
 
 	Activity				m_Activity;
 

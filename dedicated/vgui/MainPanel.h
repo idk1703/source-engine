@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -65,7 +65,7 @@ private:
 
 	// GUI elements
 	IManageServer *m_pGameServer;
-	
+
 	// the popup menu
 	vgui::DHANDLE<vgui::ProgressBox> m_pProgressBox;
 	CCreateMultiplayerGameServerPage *m_pConfigPage;

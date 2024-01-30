@@ -29,12 +29,12 @@ ConVar	weapon_laserrifle_range( "weapon_laserrifle_range","0", FCVAR_NONE, "Lase
 class CWeaponLaserRifle : public CBaseTFCombatWeapon
 {
 	DECLARE_CLASS( CWeaponLaserRifle, CBaseTFCombatWeapon );
-public:	
+public:
 	virtual void	Precache( void );
 	virtual float	GetFireRate( void );
 	virtual void	PrimaryAttack( void );
 	virtual bool	ComputeEMPFireState( void );
-	
+
 	// Beam
 	int		m_iSpriteTexture;
 };
@@ -43,7 +43,7 @@ LINK_ENTITY_TO_CLASS( weapon_laserrifle, CWeaponLaserRifle );
 PRECACHE_WEAPON_REGISTER(weapon_laserrifle);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponLaserRifle::Precache( void )
 {
@@ -53,7 +53,7 @@ void CWeaponLaserRifle::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponLaserRifle::GetFireRate()
 {
@@ -61,7 +61,7 @@ float CWeaponLaserRifle::GetFireRate()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponLaserRifle::ComputeEMPFireState( void )
@@ -76,14 +76,14 @@ bool CWeaponLaserRifle::ComputeEMPFireState( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponLaserRifle::PrimaryAttack( void )
 {
 	CBaseTFPlayer *pPlayer = ToBaseTFPlayer( m_hOwner );
 	if ( !pPlayer )
 		return;
-	
+
 	if ( !ComputeEMPFireState() )
 		return;
 
@@ -121,7 +121,7 @@ void CWeaponLaserRifle::PrimaryAttack( void )
 		{
 			ClearMultiDamage();
 			float flDamage = GetDamage( (tr.endpos - vecSrc).Length(), tr.hitgroup );
-			flDamage *= damagefactor;  
+			flDamage *= damagefactor;
 			pEntity->TraceAttack( CTakeDamageInfo( pPlayer, pPlayer, flDamage, DMG_ENERGYBEAM ), vecDir, &tr );
 			ApplyMultiDamage( pPlayer, pPlayer );
 		}
@@ -136,9 +136,9 @@ void CWeaponLaserRifle::PrimaryAttack( void )
 	// Laser beam
 	CBroadcastRecipientFilter filter;
 	te->BeamPoints( filter, 0.0,
-					&vecTracerSrc, 
-					&tr.endpos, 
-					m_iSpriteTexture, 
+					&vecTracerSrc,
+					&tr.endpos,
+					m_iSpriteTexture,
 					0,		// Halo index
 					0,		// Start frame
 					0,		// Frame rate

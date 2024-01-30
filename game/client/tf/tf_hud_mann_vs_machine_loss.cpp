@@ -17,15 +17,15 @@ ConVar tf_tips_show_captain_canteen( "tf_tips_show_captain_canteen", 0, FCVAR_NO
 const char *g_pszInactiveClassPortraits[] =
 {
 	"",						// TF_CLASS_UNDEFINED = 0,
-	"class_sel_sm_scout_inactive",	
+	"class_sel_sm_scout_inactive",
 	"class_sel_sm_soldier_inactive",
-	"class_sel_sm_pyro_inactive",	
-	"class_sel_sm_demo_inactive",	
-	"class_sel_sm_heavy_inactive",	
-	"class_sel_sm_engineer_inactive",	
-	"class_sel_sm_medic_inactive",	
-	"class_sel_sm_sniper_inactive",	
-	"class_sel_sm_spy_inactive",	
+	"class_sel_sm_pyro_inactive",
+	"class_sel_sm_demo_inactive",
+	"class_sel_sm_heavy_inactive",
+	"class_sel_sm_engineer_inactive",
+	"class_sel_sm_medic_inactive",
+	"class_sel_sm_sniper_inactive",
+	"class_sel_sm_spy_inactive",
 	"class_sel_sm_random_inactive",	 // Random
 };
 
@@ -85,7 +85,7 @@ void CMvMWaveLossPanel::FireGameEvent( IGameEvent * event )
 
 //-----------------------------------------------------------------------------
 void CMvMWaveLossPanel::OnTick( void )
-{	
+{
 	if ( !IsVisible() )
 		return;
 
@@ -100,7 +100,7 @@ void CMvMWaveLossPanel::OnTick( void )
 	CMannVsMachineStats *pMVMStats = MannVsMachineStats_GetInstance();
 	if ( pMVMStats != NULL )
 	{
-		if ( m_pCollectionContainer ) 
+		if ( m_pCollectionContainer )
 		{
 			m_pCollectionContainer->SetDialogVariable( "creditscollected", (int)pMVMStats->GetAcquiredCredits( -1, false ) );
 			m_pCollectionContainer->SetDialogVariable( "creditsmissed", (int)pMVMStats->GetMissedCredits( -1 ) );
@@ -172,7 +172,7 @@ void CMvMWaveLossPanel::ShowPanel()
 		wchar_t wszLocalizedWave[512];
 		g_pVGuiLocalize->ConstructString_safe( wszLocalizedWave, g_pVGuiLocalize->Find( "#TF_PVE_WaveCountFail" ), 1, wszWaveNumber );
 		SetDialogVariable( "waveheader", wszLocalizedWave );
-		
+
 		// Pop file
 		char szTempName[MAX_PATH];
 		V_FileBase( TFObjectiveResource()->GetMvMPopFileName(), szTempName, sizeof( szTempName ) );
@@ -182,21 +182,21 @@ void CMvMWaveLossPanel::ShowPanel()
 		if ( GetItemSchema()->GetMvmMissions().IsValidIndex( iChallengeIndex ) )
 		{
 			const MvMMission_t &mission = GetItemSchema()->GetMvmMissions()[ iChallengeIndex ];
-			g_pVGuiLocalize->ConstructString_safe( wszLocalizedSummary, g_pVGuiLocalize->Find( "#TF_PVE_MissionSummaryScheme" ), 2, 
+			g_pVGuiLocalize->ConstructString_safe( wszLocalizedSummary, g_pVGuiLocalize->Find( "#TF_PVE_MissionSummaryScheme" ), 2,
 				g_pVGuiLocalize->Find( mission.m_sDisplayName.Get() ), g_pVGuiLocalize->Find( mission.m_sMode.Get() ) );
 		}
-		else 
+		else
 		{
 			wchar_t wszName[256];
 			g_pVGuiLocalize->ConvertANSIToUnicode( GetMapDisplayName( szTempName ), wszName, sizeof(wszName) );
-			g_pVGuiLocalize->ConstructString_safe( wszLocalizedSummary, g_pVGuiLocalize->Find( "#TF_PVE_MissionSummaryDefault" ), 1, 
+			g_pVGuiLocalize->ConstructString_safe( wszLocalizedSummary, g_pVGuiLocalize->Find( "#TF_PVE_MissionSummaryDefault" ), 1,
 				wszName );
-		}	
+		}
 
 		SetDialogVariable( "summaryheader", wszLocalizedSummary );
 	}
 
-	
+
 	// Tips
 	if ( m_pHintContainer )
 	{
@@ -211,7 +211,7 @@ void CMvMWaveLossPanel::ShowPanel()
 			// Force Captain Canteen on to test
 			iClassUsed = TF_LAST_NORMAL_CLASS;
 		}
-#else	
+#else
 		bool bShowCaptainCanteen = false;
 #endif
 
@@ -222,7 +222,7 @@ void CMvMWaveLossPanel::ShowPanel()
 
 		// Make sure we only use captain canteen once
 		bool bUsedCaptainCanteen = ( iClassUsed == TF_LAST_NORMAL_CLASS );
-		
+
 		m_pHintContainer->SetDialogVariable( "hint2", g_TFTips.GetRandomMvMTip( iClassUsed ) );
 
 		if ( m_pHintImage2 )
@@ -258,7 +258,7 @@ void CMvMWaveLossPanel::ShowPanel()
 	bottles
 	activeupgrades
 	inactiveupgrades
-	
+
 	hint1
 	hint2*/
 }
@@ -321,9 +321,9 @@ void CMvMWaveLossPanel::SetHintImage( vgui::ImagePanel *panel, int iClassUsed, b
 void CMvMWaveLossPanel::ClearContents()
 {
 	SetDialogVariable( "waveheader", "" );
-	SetDialogVariable( "summaryheader", "" );	
+	SetDialogVariable( "summaryheader", "" );
 
-	if ( m_pCollectionContainer ) 
+	if ( m_pCollectionContainer )
 	{
 		m_pCollectionContainer->SetDialogVariable( "creditscollected", "" );
 		m_pCollectionContainer->SetDialogVariable( "creditsmissed", "" );
@@ -342,7 +342,7 @@ void CMvMWaveLossPanel::ClearContents()
 		m_pUsageContainer->SetDialogVariable( "activeupgradesteam", "" );
 		m_pUsageContainer->SetDialogVariable( "inactiveupgradesteam", "" );
 	}
-	
+
 	// Tips
 	if ( m_pHintContainer )
 	{

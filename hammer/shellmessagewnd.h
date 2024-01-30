@@ -34,7 +34,7 @@ class CShellMessageWnd : public CWnd
 		//{{AFX_MSG_MAP(CShellMessageWnd)
 		afx_msg BOOL OnCopyData(CWnd *pWnd, COPYDATASTRUCT *pCopyData);
 		//}}AFX_MSG
-	
+
 		DECLARE_MESSAGE_MAP()
 };
 

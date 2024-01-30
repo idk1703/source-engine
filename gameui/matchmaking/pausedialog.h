@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 class CPauseDialog : public CBaseDialog
 {
-	DECLARE_CLASS_SIMPLE( CPauseDialog, CBaseDialog ); 
+	DECLARE_CLASS_SIMPLE( CPauseDialog, CBaseDialog );
 
 public:
 	CPauseDialog( vgui::Panel *parent );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -30,7 +30,7 @@
 class CPlayerAnimState : public IHL1MPPlayerAnimState, public CBasePlayerAnimState
 {
 public:
-	
+
 	DECLARE_CLASS( CPlayerAnimState, CBasePlayerAnimState );
 
 	CPlayerAnimState();
@@ -53,16 +53,16 @@ public:
 
 
 private:
-	
+
 	const char* GetWeaponSuffix();
 	bool HandleJumping();
 	bool HandleDeath( Activity *deathActivity );
 
 
 private:
-	
+
 	CHL1MP_Player *m_pOuter;
-	
+
 	bool m_bJumping;
 	bool m_bFirstJumpFrame;
 	float m_flJumpStartTime;
@@ -99,7 +99,7 @@ CPlayerAnimState::CPlayerAnimState()
 void CPlayerAnimState::Init( CHL1MP_Player *pPlayer )
 {
 	m_pOuter = pPlayer;
-	
+
 	CModAnimConfig config;
 	config.m_flMaxBodyYawDegrees = 90;
 	config.m_LegAnimType = LEGANIM_GOLDSRC;
@@ -139,7 +139,7 @@ int CPlayerAnimState::CalcAimLayerSequence( float *flCycle, float *flAimSequence
 	if ( m_bDying )
 	{
 		// While dying, only play the main sequence.. don't layer this one on top.
-		*flAimSequenceWeight = 0;	
+		*flAimSequenceWeight = 0;
 	}
 	else
 	{
@@ -153,7 +153,7 @@ int CPlayerAnimState::CalcAimLayerSequence( float *flCycle, float *flAimSequence
 	}
 
 	iSequence = CalcSequenceIndex( "%s_%s_%s", pPrefix, pAimOrShoot, pWeaponSuffix );
-	
+
 	// Check if we're done firing.
 	if ( m_bFiring )
 	{
@@ -164,7 +164,7 @@ int CPlayerAnimState::CalcAimLayerSequence( float *flCycle, float *flAimSequence
 			*flCycle = 1;
 			m_bFiring = false;
 		}
-	}	
+	}
 
 	return iSequence;
 }
@@ -229,7 +229,7 @@ bool CPlayerAnimState::HandleJumping()
 	return m_bJumping;
 }
 
-int CPlayerAnimState::SelectWeightedSequence( Activity activity ) 
+int CPlayerAnimState::SelectWeightedSequence( Activity activity )
 {
 	return m_pOuter->m_iRealSequence;
 }
@@ -348,7 +348,7 @@ float CPlayerAnimState::CalcMovementPlaybackRate( bool *bIsMoving )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerAnimState::ComputePoseParam_BodyPitch( CStudioHdr *pStudioHdr )
 {
@@ -370,4 +370,3 @@ void CPlayerAnimState::ComputePoseParam_BodyPitch( CStudioHdr *pStudioHdr )
 	GetOuter()->SetPoseParameter( pStudioHdr, pitch, flPitch );
 	g_flLastBodyPitch = flPitch;
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -132,7 +132,7 @@ public:
 	{
 		if (m_targetAreaCount >= MAX_TARGET_AREAS)
 			return false;
-		
+
 		// only use two-way connections
 		if (!area->GetParent() || area->IsConnected( area->GetParent(), NUM_DIRECTIONS ))
 		{
@@ -291,7 +291,7 @@ void FollowState::OnUpdate( CCSBot *me )
 		me->DestroyPath();
 	}
 
-	// recompute our path if necessary	
+	// recompute our path if necessary
 	if (repath && m_repathInterval.IsElapsed() && !me->IsOnLadder())
 	{
 		// recompute our path to keep us near our leader
@@ -308,7 +308,7 @@ void FollowState::OnUpdate( CCSBot *me )
 		if (cv_bot_debug.GetBool())
 		{
 			for( int i=0; i<collector.m_targetAreaCount; ++i )
-				collector.m_targetArea[i]->Draw( /*255, 0, 0, 2*/ );		
+				collector.m_targetArea[i]->Draw( /*255, 0, 0, 2*/ );
 		}
 
 		// move to one of the collected areas
@@ -320,7 +320,7 @@ void FollowState::OnUpdate( CCSBot *me )
 			// if we are idle, pick a random area
 			if (m_idleTimer.IsElapsed())
 			{
-				target = collector.m_targetArea[ RandomInt( 0, collector.m_targetAreaCount-1 ) ];				
+				target = collector.m_targetArea[ RandomInt( 0, collector.m_targetAreaCount-1 ) ];
 				targetPos = target->GetCenter();
 				me->PrintIfWatched( "%4.1f: Bored. Repathing to a new nearby area\n", gpGlobals->curtime );
 			}
@@ -348,7 +348,7 @@ void FollowState::OnUpdate( CCSBot *me )
 					}
 				}
 			}
-						
+
 			if (target == NULL || me->ComputePath( target->GetCenter(), FASTEST_ROUTE ) == false)
 				me->PrintIfWatched( "Pathfind to leader failed.\n" );
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -34,14 +34,14 @@ public:
 		SCHED_POLICE_FACE_ALONG_GOAL,
 		SCHED_POLICE_TRACK_TARGET,
 		NEXT_SCHEDULE,
-		
+
 		// Tasks
 		TASK_POLICE_GET_PATH_TO_HARASS_GOAL = BaseClass::NEXT_TASK,
 		TASK_POLICE_GET_PATH_TO_POLICE_GOAL,
 		TASK_POLICE_FACE_ALONG_GOAL,
 		TASK_POLICE_ANNOUNCE_HARASS,
 		NEXT_TASK,
-		
+
 		// Conditions
 		COND_POLICE_TARGET_TOO_CLOSE_HARASS = BaseClass::NEXT_CONDITION,
 		COND_POLICE_TARGET_TOO_CLOSE_SUPPRESS,
@@ -62,25 +62,25 @@ public:
 	void	KnockOutTarget( CBaseEntity *pTarget );
 
 	int		SelectFailSchedule( int failedSchedule, int failedTask, AI_TaskFailureCode_t taskFailCode );
-	
+
 	CBaseEntity *GetGoalTarget( void );
 
 private:
-	
+
 	void	HostSpeakSentence( const char *pSentence, SentencePriority_t nSoundPriority, SentenceCriteria_t nCriteria );
 
 	int		TranslateSchedule( int scheduleType );
-	
+
 	int		SelectSchedule( void );
 	int		SelectSuppressSchedule( void );
 	int		SelectHarassSchedule( void );
-	
+
 	Activity	NPC_TranslateActivity( Activity newActivity );
 	void		GatherConditions( void );
 	bool		OverrideMoveFacing( const AILocalMoveGoal_t &move, float flInterval );
 	void		StartTask( const Task_t *pTask );
 	void		RunTask( const Task_t *pTask );
-	
+
 	void	AnnouncePolicing( void );
 	void	HostSetBatonState( bool state );
 	bool	HostBatonIsOn( void );
@@ -97,7 +97,7 @@ protected:
 	int		m_nNumWarnings;
 	bool	m_bTargetIsHostile;
 	float	m_flTargetHostileTime;
-	
+
 	CHandle<CAI_PoliceGoal> m_hPoliceGoal;
 
 	DEFINE_CUSTOM_SCHEDULE_PROVIDER;

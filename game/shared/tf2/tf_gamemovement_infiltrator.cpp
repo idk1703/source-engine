@@ -42,9 +42,9 @@ void CTFGameMovementInfiltrator::ProcessClassMovement( CBaseTFPlayer *pPlayer, C
 //-----------------------------------------------------------------------------
 const Vector &CTFGameMovementInfiltrator::GetPlayerMins( bool bDucked ) const
 {
-	return bDucked ? m_vDuckMins : m_vStandMins; 
+	return bDucked ? m_vDuckMins : m_vStandMins;
 }
-	
+
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------

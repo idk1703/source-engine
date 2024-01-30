@@ -39,10 +39,10 @@ void CToolMaterial::OnDeactivate()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pView - 
-//			nFlags - 
-//			point - 
+// Purpose:
+// Input  : pView -
+//			nFlags -
+//			point -
 // Output : Returns true if the message was handled, false if not.
 //-----------------------------------------------------------------------------
 bool CToolMaterial::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoint)
@@ -68,7 +68,7 @@ bool CToolMaterial::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2
 // Input  : Per CWnd::OnLButtonDown.
 // Output : Returns true if the message was handled, false if not.
 //-----------------------------------------------------------------------------
-bool CToolMaterial::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint) 
+bool CToolMaterial::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
 	CMapDoc *pDoc = pView->GetMapDoc();
 	if (pDoc == NULL)
@@ -90,7 +90,7 @@ bool CToolMaterial::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2
 		// No clear if CTRL pressed.
 		if (GetAsyncKeyState(VK_CONTROL) & 0x8000)
 		{
-			cmd &= ~scClear;	
+			cmd &= ~scClear;
 		}
 
 		// If they are holding down SHIFT, select the entire solid.
@@ -114,11 +114,11 @@ bool CToolMaterial::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2
 // Input  : Per CWnd::OnRButtonDown.
 // Output : Returns true if the message was handled, false if not.
 //-----------------------------------------------------------------------------
-bool CToolMaterial::OnRMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint) 
+bool CToolMaterial::OnRMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
 	BOOL bShift = ((GetAsyncKeyState(VK_SHIFT) & 0x8000) != 0);
 	BOOL bEdgeAlign = ((GetAsyncKeyState(VK_MENU) & 0x8000) != 0);
-	
+
 	ULONG ulFace;
 	CMapClass *pObject = pView->NearestObjectAt( vPoint, ulFace);
 
@@ -129,7 +129,7 @@ bool CToolMaterial::OnRMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2
 			CMapSolid *pSolid = (CMapSolid *)pObject;
 			GetHistory()->MarkUndoPosition(NULL, "Apply texture");
 			GetHistory()->Keep(pSolid);
-			
+
 			// Setup the flags.
 			int cmdFlags = 0;
 			if (bEdgeAlign)
@@ -147,7 +147,7 @@ bool CToolMaterial::OnRMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2
 			{
 				eMode = CFaceEditSheet::ModeApplyAll;
 			}
-			
+
 			// If they are holding down the shift key, apply to the entire solid.
 			if (bShift)
 			{
@@ -162,9 +162,9 @@ bool CToolMaterial::OnRMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2
 			{
 				GetMainWnd()->m_pFaceEditSheet->ClickFace(pSolid, ulFace, cmdFlags, eMode);
 			}
-		}				
+		}
 	}
-	
+
 	return true;
 }
 
@@ -191,7 +191,7 @@ bool CToolMaterial::OnMouseMove3D(CMapView3D *pView, UINT nFlags, const Vector2D
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CToolMaterial::UpdateStatusBar()
 {
@@ -210,7 +210,7 @@ bool CToolMaterial::OnKeyDown3D( CMapView3D *pView, UINT nChar, UINT nRepCnt, UI
 {
 	// TO DO:  undo?
 	//		   justify (SHIFT?)
-	
+
 	CMapDoc *pDoc = pView->GetMapDoc();
 	if ( pDoc == NULL )
 	{
@@ -252,7 +252,7 @@ bool CToolMaterial::OnKeyDown3D( CMapView3D *pView, UINT nChar, UINT nRepCnt, UI
 
 				if ( nChar == VK_UP )
 				{
-					t.VAxis[ 3 ] = ( (int)( t.VAxis[ 3 ] + nGridSize ) % 1024 );  
+					t.VAxis[ 3 ] = ( (int)( t.VAxis[ 3 ] + nGridSize ) % 1024 );
 				}
 				else if ( nChar == VK_DOWN )
 				{
@@ -267,7 +267,7 @@ bool CToolMaterial::OnKeyDown3D( CMapView3D *pView, UINT nChar, UINT nRepCnt, UI
 				{
 					t.UAxis[ 3 ] = ( (int)( t.UAxis[ 3 ] - nGridSize ) % 1024 );
 				}
-				
+
 				pFace->CalcTextureCoords();
 				pSheet->m_MaterialPage.UpdateDialogData( pFace );
 			}
@@ -277,4 +277,3 @@ bool CToolMaterial::OnKeyDown3D( CMapView3D *pView, UINT nChar, UINT nRepCnt, UI
 	}
 	return false;
 }
-

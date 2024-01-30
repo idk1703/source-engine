@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -133,7 +133,7 @@ void C_TestTraceline::DrawCube( Vector& center, unsigned char* pColor )
 		CMeshBuilder meshBuilder;
 		CMatRenderContextPtr pRenderContext( materials );
 		IMesh* pMesh = pRenderContext->GetDynamicMesh();
-		meshBuilder.DrawQuad( pMesh, facePoints[nP1].Base(), facePoints[nP2].Base(), 
+		meshBuilder.DrawQuad( pMesh, facePoints[nP1].Base(), facePoints[nP2].Base(),
 			facePoints[nP3].Base(), facePoints[nP4].Base(), pColor, true );
 	}
 }

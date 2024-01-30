@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -61,11 +61,11 @@ BEGIN_VS_SHADER_FLAGS( MorphAccumulate_DX9, "Help for MorphAccumulate", SHADER_N
  			DECLARE_STATIC_VERTEX_SHADER( morphaccumulate_vs30 );
 			SET_STATIC_VERTEX_SHADER_COMBO( CONSTANTBASEDMORPH, bUseConstantBasedAccum );
  			SET_STATIC_VERTEX_SHADER( morphaccumulate_vs30 );
- 
+
  			DECLARE_STATIC_PIXEL_SHADER( morphaccumulate_ps30 );
 			SET_STATIC_PIXEL_SHADER_COMBO( CONSTANTBASEDMORPH, bUseConstantBasedAccum );
 			SET_STATIC_PIXEL_SHADER( morphaccumulate_ps30 );
- 
+
  			// NOTE: Color indicates where in the morph accumulator to render into
 			// Texcoord0 is the texcoord to read from in the source morph texture
  			// Texcoord1 indicates the strength of the morph target
@@ -98,11 +98,10 @@ BEGIN_VS_SHADER_FLAGS( MorphAccumulate_DX9, "Help for MorphAccumulate", SHADER_N
 
  			DECLARE_DYNAMIC_VERTEX_SHADER( morphaccumulate_vs30 );
  			SET_DYNAMIC_VERTEX_SHADER( morphaccumulate_vs30 );
- 
+
  			DECLARE_DYNAMIC_PIXEL_SHADER( morphaccumulate_ps30 );
  			SET_DYNAMIC_PIXEL_SHADER( morphaccumulate_ps30 );
 		}
 		Draw();
 	}
 END_SHADER
-

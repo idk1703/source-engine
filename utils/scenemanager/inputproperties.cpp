@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,18 +12,18 @@
 static CInputParams g_Params;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
-static BOOL CALLBACK InputPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )  
+static BOOL CALLBACK InputPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	switch(uMsg)
 	{
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		// Insert code here to put the string (to find and replace with)
 		// into the edit controls.
 		// ...
@@ -39,9 +39,9 @@ static BOOL CALLBACK InputPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM 
 			SendMessage( GetDlgItem( hwndDlg, IDC_INPUTSTRING ), EM_SETSEL, 0, MAKELONG(0, 0xffff) );
 
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -49,7 +49,7 @@ static BOOL CALLBACK InputPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM 
 			GetDlgItemText( hwndDlg, IDC_INPUTSTRING, g_Params.m_szInputText, sizeof( g_Params.m_szInputText ) );
 			EndDialog( hwndDlg, 1 );
 			break;
-        case IDCANCEL:
+		case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		}
@@ -59,16 +59,16 @@ static BOOL CALLBACK InputPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int InputProperties( CInputParams *params )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_INPUTDIALOG ),
 		(HWND)GetWorkspaceManager()->getHandle(),
 		(DLGPROC)InputPropertiesDialogProc );

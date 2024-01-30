@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -29,7 +29,7 @@ CDmxElement* CreateDmxElement( const char *pType )
 
 
 //-----------------------------------------------------------------------------
-// Constructor, destructor 
+// Constructor, destructor
 //-----------------------------------------------------------------------------
 CDmxElement::CDmxElement( const char *pType )
 {
@@ -154,7 +154,7 @@ void CDmxElement::RemoveAttribute( const char *pAttributeName )
 }
 
 void CDmxElement::RemoveAttributeByPtr( CDmxAttribute *pAttribute )
-{	
+{
 	CDmxElementModifyScope modify( this );
 	int nCount = m_Attributes.Count();
 	for ( int i = 0; i < nCount; ++i )
@@ -325,7 +325,7 @@ void CDmxElement::AddElementsToDelete( CUtlVector< CDmxElement * >& elementsToDe
 //-----------------------------------------------------------------------------
 void CDmxElement::RemoveAllElementsRecursive()
 {
-	CUtlVector< CDmxElement * > elementsToDelete; 
+	CUtlVector< CDmxElement * > elementsToDelete;
 	AddElementsToDelete( elementsToDelete );
 	int nCount = elementsToDelete.Count();
 	for ( int i = 0; i < nCount; ++i )
@@ -376,12 +376,12 @@ void CDmxElement::UnpackIntoStructure( void *pData, size_t DestSizeInBytes, cons
 			else
 			{
 				CUtlBuffer buf;
-				temp.Unserialize( pUnpack->m_AttributeType, buf );				
+				temp.Unserialize( pUnpack->m_AttributeType, buf );
 			}
 			pAttribute = &temp;
 		}
 
-		if ( pUnpack->m_AttributeType != pAttribute->GetType() ) 
+		if ( pUnpack->m_AttributeType != pAttribute->GetType() )
 		{
 			Warning( "CDmxElement::UnpackIntoStructure: Mismatched attribute type in attribute \"%s\"!\n", pUnpack->m_pAttributeName );
 			continue;
@@ -423,7 +423,7 @@ void CDmxElement::UnpackIntoStructure( void *pData, size_t DestSizeInBytes, cons
 				continue;
 			}
 
-			AssertMsg( pUnpack->m_nSize == CDmxAttribute::AttributeDataSize( pAttribute->GetType() ), 
+			AssertMsg( pUnpack->m_nSize == CDmxAttribute::AttributeDataSize( pAttribute->GetType() ),
 					   "CDmxElement::UnpackIntoStructure: Incorrect size to unpack data into in attribute \"%s\"!\n", pUnpack->m_pAttributeName );
 			memcpy( pDest, pAttribute->m_pData, pUnpack->m_nSize );
 		}
@@ -480,7 +480,7 @@ void CDmxElement::AddAttributesFromStructure_Internal( const void *pData, size_t
 					nSize = sizeof( float );
 				}
 
-				AssertMsg( nSize == CDmxAttribute::AttributeDataSize( pUnpack->m_AttributeType ), 
+				AssertMsg( nSize == CDmxAttribute::AttributeDataSize( pUnpack->m_AttributeType ),
 						   "CDmxElement::UnpackIntoStructure: Incorrect size to unpack data into in attribute \"%s\"!\n", pUnpack->m_pAttributeName );
 				pAttribute->SetValue( pUnpack->m_AttributeType, pSrc, nSize );
 			}

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -32,7 +32,7 @@ class CTFShovel : public CTFWeaponBaseMelee
 public:
 
 	DECLARE_CLASS( CTFShovel, CTFWeaponBaseMelee );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFShovel();

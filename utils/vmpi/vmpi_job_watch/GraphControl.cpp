@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -81,11 +81,11 @@ void CGraphControl::Render( CDC *pDC )
 	}
 
 	int curTime = (int)endTime - nIntervals*intervalMS;
-	
+
 
 
 	CGraphEntry prevEntry, curEntry;
-	prevEntry.m_msTime = curEntry.m_msTime = -1;	
+	prevEntry.m_msTime = curEntry.m_msTime = -1;
 
 	CUtlVector<POINT> sentPoints;
 	CUtlVector<POINT> receivedPoints;
@@ -111,8 +111,8 @@ void CGraphControl::Render( CDC *pDC )
 			if ( curTime >= prevEntry.m_msTime && curTime <= curEntry.m_msTime )
 			{
 				// Interpolate the bytes sent.
-				int nBytesSent = (int)RemapVal( 
-					curTime, 
+				int nBytesSent = (int)RemapVal(
+					curTime,
 					prevEntry.m_msTime, curEntry.m_msTime,
 					prevEntry.m_nBytesSent, curEntry.m_nBytesSent );
 
@@ -120,18 +120,18 @@ void CGraphControl::Render( CDC *pDC )
 				sentPoints.AddToTail( sentPoint );
 				nMaxBytesSent = max( nMaxBytesSent, nBytesSent );
 
-				
+
 				int nBytesReceived = (int)RemapVal(
-					curTime, 
+					curTime,
 					prevEntry.m_msTime, curEntry.m_msTime,
 					prevEntry.m_nBytesReceived, curEntry.m_nBytesReceived );
-				
+
 				POINT receivedPoint = { x, nBytesReceived };
 				receivedPoints.AddToTail( receivedPoint );
 				nMaxBytesReceived = max( nMaxBytesReceived, nBytesReceived );
 			}
-		}			
-		
+		}
+
 		curTime += intervalMS;
 	}
 
@@ -149,7 +149,7 @@ void CGraphControl::Render( CDC *pDC )
 			break;
 	}
 
-	// Now find the value at the top of the graph. We choose the smallest enclosing tenth of the 
+	// Now find the value at the top of the graph. We choose the smallest enclosing tenth of the
 	// order of magnitude we're at (so if we were at 1,000,000, and our max value was 350,000, we'd choose 400,000).
 	int iTenth;
 	int topValue;
@@ -164,7 +164,7 @@ void CGraphControl::Render( CDC *pDC )
 	for ( int iSample=0; iSample < sentPoints.Count(); iSample++ )
 	{
 		double flHeight;
-		
+
 		flHeight = ((double)sentPoints[iSample].y / topValue) * (rcClient.Height() - 1);
 		sentPoints[iSample].y = (int)( rcClient.Height() - flHeight );
 
@@ -190,7 +190,7 @@ void CGraphControl::Render( CDC *pDC )
 		int y = (iLine * rcClient.Height()) / nLines;
 		pDC->MoveTo( 0, y );
 		pDC->LineTo( rcClient.Width(), y );
-	
+
 		pDC->SelectObject( pOldPen );
 	}
 
@@ -238,9 +238,9 @@ void CGraphControl::Fill( CUtlVector<CGraphEntry> &entries )
 /////////////////////////////////////////////////////////////////////////////
 // CGraphControl message handlers
 
-void CGraphControl::OnPaint() 
+void CGraphControl::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
-	
+
 	Render( &dc );
 }

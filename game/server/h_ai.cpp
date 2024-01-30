@@ -24,14 +24,14 @@ bool g_fDrawLines = FALSE;
 
 //=========================================================
 // FBoxVisible - a more accurate ( and slower ) version
-// of FVisible. 
+// of FVisible.
 //
 // !!!UNDONE - make this CAI_BaseNPC?
 //=========================================================
 bool FBoxVisible( CBaseEntity *pLooker, CBaseEntity *pTarget, Vector &vecTargetOrigin, float flSize )
 {
 	// don't look through water
-	if ((pLooker->GetWaterLevel() != 3 && pTarget->GetWaterLevel() == 3) 
+	if ((pLooker->GetWaterLevel() != 3 && pTarget->GetWaterLevel() == 3)
 		|| (pLooker->GetWaterLevel() == 3 && pTarget->GetWaterLevel() == 0))
 		return FALSE;
 
@@ -45,7 +45,7 @@ bool FBoxVisible( CBaseEntity *pLooker, CBaseEntity *pTarget, Vector &vecTargetO
 		vecTarget.z += random->RandomFloat( pTarget->WorldAlignMins().z + flSize, pTarget->WorldAlignMaxs().z - flSize);
 
 		UTIL_TraceLine(vecLookerOrigin, vecTarget, MASK_BLOCKLOS, pLooker, COLLISION_GROUP_NONE, &tr);
-		
+
 		if (tr.fraction == 1.0)
 		{
 			vecTargetOrigin = vecTarget;
@@ -58,12 +58,12 @@ bool FBoxVisible( CBaseEntity *pLooker, CBaseEntity *pTarget, Vector &vecTargetO
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Returns the correct toss velocity to throw a given object at a point. 
-//			Like the other version of VecCheckToss, but allows you to filter for any 
+// Purpose: Returns the correct toss velocity to throw a given object at a point.
+//			Like the other version of VecCheckToss, but allows you to filter for any
 //			number of entities to ignore.
 // Input  : pEntity - The object doing the throwing. Is *NOT* automatically included in the
 //					  filter below.
-//			pFilter - A trace filter of entities to ignore in the object's collision sweeps. 
+//			pFilter - A trace filter of entities to ignore in the object's collision sweeps.
 //					  It is recommended to include at least the thrower.
 //			vecSpot1 - The point from which the object is being thrown.
 //			vecSpot2 - The point TO which the object is being thrown.
@@ -79,7 +79,7 @@ Vector VecCheckToss( CBaseEntity *pEntity, ITraceFilter *pFilter, Vector vecSpot
 {
 	trace_t			tr;
 	Vector			vecMidPoint;// halfway point between Spot1 and Spot2
-	Vector			vecApex;// highest point 
+	Vector			vecApex;// highest point
 	Vector			vecScale;
 	Vector			vecTossVel;
 	Vector			vecTemp;
@@ -96,7 +96,7 @@ Vector VecCheckToss( CBaseEntity *pEntity, ITraceFilter *pFilter, Vector vecSpot
 
 	if (bRandomize)
 	{
-		// toss a little bit to the left or right, not right down on the enemy's bean (head). 
+		// toss a little bit to the left or right, not right down on the enemy's bean (head).
 		vecSpot2 += right * ( random->RandomFloat(-8,8) + random->RandomFloat(-16,16) );
 		vecSpot2 += forward * ( random->RandomFloat(-8,8) + random->RandomFloat(-16,16) );
 	}
@@ -165,7 +165,7 @@ Vector VecCheckToss( CBaseEntity *pEntity, ITraceFilter *pFilter, Vector vecSpot
 	}
 
 	// UNDONE: either ignore NPCs or change it to not care if we hit our enemy
-	UTIL_TraceLine(vecSpot2, vecApex, (MASK_SOLID_BRUSHONLY&(~CONTENTS_GRATE)), pFilter, &tr); 
+	UTIL_TraceLine(vecSpot2, vecApex, (MASK_SOLID_BRUSHONLY&(~CONTENTS_GRATE)), pFilter, &tr);
 	if (tr.fraction != 1.0)
 	{
 		// fail!
@@ -175,7 +175,7 @@ Vector VecCheckToss( CBaseEntity *pEntity, ITraceFilter *pFilter, Vector vecSpot
 	if ( vecMins && vecMaxs )
 	{
 		// Check to ensure the entity's hull can travel the first half of the grenade throw
-		UTIL_TraceHull( vecSpot1, vecApex, *vecMins, *vecMaxs, (MASK_SOLID&(~CONTENTS_GRATE)), pFilter, &tr);		
+		UTIL_TraceHull( vecSpot1, vecApex, *vecMins, *vecMaxs, (MASK_SOLID&(~CONTENTS_GRATE)), pFilter, &tr);
 		if ( tr.fraction < 1.0 )
 			return vec3_origin;
 	}
@@ -202,15 +202,15 @@ Vector VecCheckToss( CBaseEntity *pEntity, Vector vecSpot1, Vector vecSpot2, flo
 {
 	// construct a filter and call through to the other version of this function.
 	CTraceFilterSimple traceFilter( pEntity, COLLISION_GROUP_NONE );
-	return VecCheckToss( pEntity, &traceFilter, vecSpot1, vecSpot2, 
-						 flHeightMaxRatio, flGravityAdj, bRandomize, 
+	return VecCheckToss( pEntity, &traceFilter, vecSpot1, vecSpot2,
+						 flHeightMaxRatio, flGravityAdj, bRandomize,
 						 vecMins, vecMaxs );
 }
 
 //
 // VecCheckThrow - returns the velocity vector at which an object should be thrown from vecspot1 to hit vecspot2.
 // returns vec3_origin if throw is not feasible.
-// 
+//
 Vector VecCheckThrow ( CBaseEntity *pEdict, const Vector &vecSpot1, Vector vecSpot2, float flSpeed, float flGravityAdj, Vector *vecMins, Vector *vecMaxs )
 {
 	float			flGravity = GetCurrentGravity() * flGravityAdj;
@@ -227,7 +227,7 @@ Vector VecCheckThrow ( CBaseEntity *pEdict, const Vector &vecSpot1, Vector vecSp
 	Vector vecApex = vecSpot1 + (vecSpot2 - vecSpot1) * 0.5;
 	vecApex.z += 0.5 * flGravity * (time * 0.5) * (time * 0.5);
 
-	
+
 	trace_t tr;
 	UTIL_TraceLine(vecSpot1, vecApex, MASK_SOLID, pEdict, COLLISION_GROUP_NONE, &tr);
 	if (tr.fraction != 1.0)
@@ -252,7 +252,7 @@ Vector VecCheckThrow ( CBaseEntity *pEdict, const Vector &vecSpot1, Vector vecSp
 	if ( vecMins && vecMaxs )
 	{
 		// Check to ensure the entity's hull can travel the first half of the grenade throw
-		UTIL_TraceHull( vecSpot1, vecApex, *vecMins, *vecMaxs, MASK_SOLID, pEdict, COLLISION_GROUP_NONE, &tr);		
+		UTIL_TraceHull( vecSpot1, vecApex, *vecMins, *vecMaxs, MASK_SOLID, pEdict, COLLISION_GROUP_NONE, &tr);
 		if ( tr.fraction < 1.0 )
 		{
 			//NDebugOverlay::SweptBox( vecSpot1, tr.endpos, *vecMins, *vecMaxs, vec3_angle, 255, 0, 0, 64, 5.0 );

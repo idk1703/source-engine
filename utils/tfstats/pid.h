@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: interface and implementation of PID.  
+// Purpose: interface and implementation of PID.
 //
 // $Workfile:     $
 // $Date:         $

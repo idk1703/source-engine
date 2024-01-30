@@ -72,7 +72,7 @@ public:
 
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -83,7 +83,7 @@ public:
 #if defined( CLIENT_DLL )
 	virtual bool	ShouldPredict( void )
 	{
-		if ( GetOwner() && 
+		if ( GetOwner() &&
 			GetOwner() == C_BasePlayer::GetLocalPlayer() )
 			return true;
 
@@ -117,7 +117,7 @@ void CWeaponCombatPlasmaRifle::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatPlasmaRifle::ItemPostFrame( void )
 {
@@ -150,9 +150,9 @@ void CWeaponCombatPlasmaRifle::ItemPostFrame( void )
 		}
 
 		// Reload button (or fire button when we're out of ammo)
-		if ( m_flNextPrimaryAttack <= gpGlobals->curtime ) 
+		if ( m_flNextPrimaryAttack <= gpGlobals->curtime )
 		{
-			if ( pOwner->m_nButtons & IN_RELOAD ) 
+			if ( pOwner->m_nButtons & IN_RELOAD )
 			{
 				Reload();
 			}
@@ -171,14 +171,14 @@ void CWeaponCombatPlasmaRifle::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatPlasmaRifle::PrimaryAttack( void )
 {
 	CBaseTFPlayer *pPlayer = (CBaseTFPlayer*)GetOwner();
 	if (!pPlayer)
 		return;
-	
+
 	WeaponSound(SINGLE);
 
 	// Fire the bullets
@@ -219,7 +219,7 @@ void CWeaponCombatPlasmaRifle::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponCombatPlasmaRifle::GetFireRate( void )
 {
@@ -240,7 +240,7 @@ float CWeaponCombatPlasmaRifle::GetFireRate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponCombatPlasmaRifle::Deploy( void )
 {
@@ -302,7 +302,7 @@ void CWeaponCombatPlasmaRifle::ChargeThink( void )
 
 #if defined( CLIENT_DLL )
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatPlasmaRifle::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -314,7 +314,7 @@ void CWeaponCombatPlasmaRifle::OnDataChanged( DataUpdateType_t updateType )
 	{
 		if ( GetTeamNumber() == 1 )
 			m_hMaterial.Init( "sprites/chargeball_team1", TEXTURE_GROUP_CLIENT_EFFECTS );
-		else 
+		else
 			m_hMaterial.Init( "sprites/chargeball_team2", TEXTURE_GROUP_CLIENT_EFFECTS );
 	}
 
@@ -386,14 +386,14 @@ void CWeaponCombatPlasmaRifle::DrawChargingEffect( float flSize, CBaseAnimating 
 		// View model attachments are modified so you can place entities at the attachment
 		// point and when they are rendered (with a different FOV than the view model itself uses)
 		// they will render in the right spot when the view model is drawn.
-		// 
+		//
 		// In this case though, we are rendering at the same time as the view model, so we want
 		// the attachment point before the correction has been applied.
 		pAttachedEnt->UncorrectViewModelAttachment( vecMuzzleOrigin );
 
 		// If I'm fully charged, put funky effects on the ball
 		materials->Bind( m_hMaterial, this );
-		
+
 		if ( m_flPower >= MAX_RIFLE_POWER )
 		{
 			float frac = fmod( gpGlobals->curtime, 1.0 );
@@ -408,7 +408,7 @@ void CWeaponCombatPlasmaRifle::DrawChargingEffect( float flSize, CBaseAnimating 
 				color.r = colorFade;
 				color.g = colorFade;
 			}
-			else 
+			else
 			{
 				color.g = colorFade;
 			}

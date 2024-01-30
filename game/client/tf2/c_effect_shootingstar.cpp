@@ -18,7 +18,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_ShootingStarSpawner, DT_ShootingStarSpawner, CShooti
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ShootingStarSpawner::C_ShootingStarSpawner( void )
 {
@@ -26,7 +26,7 @@ C_ShootingStarSpawner::C_ShootingStarSpawner( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ShootingStarSpawner::ClientThink( void )
 {
@@ -38,7 +38,7 @@ void C_ShootingStarSpawner::ClientThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ShootingStarSpawner::SpawnShootingStars( void )
 {
@@ -80,14 +80,14 @@ C_ShootingStar::C_ShootingStar( void ) : CSimpleEmitter( "ShootingStar" )
 
 
 //-----------------------------------------------------------------------------
-// Destructor 
+// Destructor
 //-----------------------------------------------------------------------------
 C_ShootingStar::~C_ShootingStar( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Destructor 
+// Destructor
 //-----------------------------------------------------------------------------
 void C_ShootingStar::Init( const Vector vecOrigin, const Vector vecVelocity, int nSize,
 						   float flLifeTime )
@@ -115,12 +115,12 @@ void C_ShootingStar::Init( const Vector vecOrigin, const Vector vecVelocity, int
 		pParticle->m_uchEndSize = ( nSize / 3 );
 	}
 
-	int iParticle = m_aParticles.AddToTail(); 
+	int iParticle = m_aParticles.AddToTail();
 	m_aParticles[iParticle] = pParticle;
 }
 
 //-----------------------------------------------------------------------------
-// Destructor 
+// Destructor
 //-----------------------------------------------------------------------------
 void C_ShootingStar::Destroy( void )
 {
@@ -143,8 +143,8 @@ void C_ShootingStar::SetSortOrigin( const Vector &vSortOrigin )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : timeDelta - 
+// Purpose:
+// Input  : timeDelta -
 //-----------------------------------------------------------------------------
 void C_ShootingStar::Update( float timeDelta )
 {
@@ -169,7 +169,7 @@ void C_ShootingStar::Update( float timeDelta )
 	}
 
 	// Update the particles lifetime.
-	pParticle->m_flLifetime += timeDelta;	
+	pParticle->m_flLifetime += timeDelta;
 
 	// Update the particle position.
 	pParticle->m_Pos += ( pParticle->m_vecVelocity * timeDelta );

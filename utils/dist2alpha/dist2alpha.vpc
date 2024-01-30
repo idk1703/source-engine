@@ -32,7 +32,7 @@ $Project "Dist2alpha"
 		$File	"dist2alpha.cpp"
 		$File	"..\common\filesystem_tools.cpp"
 	}
-	
+
 	$Folder	"Common Files"
 	{
 		$File	"$SRCDIR\public\chunkfile.cpp"

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -107,7 +107,7 @@ static void ToggleCoachingConfirm( bool bConfirmed, void *pContext )
 static bool IsServerFull()
 {
 	int iNumPlayers = 0;
-	
+
 	for( int iPlayerIndex = 1 ; iPlayerIndex <= MAX_PLAYERS; iPlayerIndex++ )
 	{
 		if ( g_PR->IsConnected( iPlayerIndex ) == false )
@@ -139,13 +139,13 @@ public:
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
 protected:
-	virtual const char *GetResFile() { return "resource/ui/SelectPlayerDialog_Coach.res"; } 
+	virtual const char *GetResFile() { return "resource/ui/SelectPlayerDialog_Coach.res"; }
 	bool CanAskPlayerToCoach( const CSteamID &steamID );
 };
 
 static vgui::DHANDLE< CSelectPlayerForCoachDialog > g_pSelectPlayerForCoachDialog;
 
-CSelectPlayerForCoachDialog::CSelectPlayerForCoachDialog() 
+CSelectPlayerForCoachDialog::CSelectPlayerForCoachDialog()
 	: CSelectPlayerDialog( NULL )
 {
 	g_pSelectPlayerForCoachDialog = this;
@@ -255,14 +255,14 @@ CON_COMMAND( cl_coach_toggle, "Toggle coach status" )
 	}
 	if ( BInCoachesList() )
 	{
-		ShowConfirmDialog( "#TF_Coach_RemoveCoach_Title", "#TF_Coach_RemoveCoach_Text", 
-						   "#TF_Coach_Yes", "#TF_Coach_No", 
+		ShowConfirmDialog( "#TF_Coach_RemoveCoach_Title", "#TF_Coach_RemoveCoach_Text",
+						   "#TF_Coach_Yes", "#TF_Coach_No",
 						   &ToggleCoachingConfirm );
 	}
 	else
 	{
-		ShowConfirmDialog( "#TF_Coach_AddCoach_Title", "#TF_Coach_AddCoach_Text", 
-						   "#TF_Coach_Yes", "#TF_Coach_No", 
+		ShowConfirmDialog( "#TF_Coach_AddCoach_Title", "#TF_Coach_AddCoach_Text",
+						   "#TF_Coach_Yes", "#TF_Coach_No",
 						   &ToggleCoachingConfirm );
 	}
 }
@@ -277,7 +277,7 @@ public:
 	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
 	{
 		GCSDK::CGCMsg<MsgGCStandardResponse_t> msg( pNetPacket );
-		
+
 		CloseWaitingDialog();
 
 		if ( msg.Body().m_eResponse == k_EGCMsgResponseOK )
@@ -303,7 +303,7 @@ public:
 	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
 	{
 		GCSDK::CGCMsg<MsgGCStandardResponse_t> msg( pNetPacket );
-		
+
 		CloseWaitingDialog();
 
 		if ( msg.Body().m_eResponse == k_EGCMsgResponseOK )
@@ -367,8 +367,8 @@ static void PromptFindCoach()
 	}
 	else
 	{
-		ShowConfirmDialog( "#TF_Coach_AskStudent_Title", "#TF_Coach_AskStudent_Text", 
-						   "#TF_Coach_Yes", "#TF_Coach_No", 
+		ShowConfirmDialog( "#TF_Coach_AskStudent_Title", "#TF_Coach_AskStudent_Text",
+						   "#TF_Coach_Yes", "#TF_Coach_No",
 						   &FindCoach );
 	}
 }
@@ -411,10 +411,10 @@ public:
 		else
 		{
 			// retry?
-			ShowConfirmDialog( "#TF_Coach_StudentRetry_Title", "#TF_Coach_StudentRetry_Text", 
-							   "#TF_Coach_Yes", "#TF_Coach_No", 
+			ShowConfirmDialog( "#TF_Coach_StudentRetry_Title", "#TF_Coach_StudentRetry_Text",
+							   "#TF_Coach_Yes", "#TF_Coach_No",
 							   &FindCoach );
-		}		
+		}
 		return true;
 	}
 };
@@ -560,8 +560,8 @@ static void PromptIfLikeCoach()
 {
 	if ( g_bCanLikeCoach )
 	{
-		ShowConfirmDialog( "#TF_Coach_LikeCoach_Title", "#TF_Coach_LikeCoach_Text", 
-						   "#TF_Coach_Yes", "#TF_Coach_No", 
+		ShowConfirmDialog( "#TF_Coach_LikeCoach_Title", "#TF_Coach_LikeCoach_Text",
+						   "#TF_Coach_Yes", "#TF_Coach_No",
 						   &LikeCoachCallback );
 	}
 }
@@ -585,7 +585,7 @@ void CL_Coaching_LevelShutdown()
 ConVar tf_coach_min_time_played( "tf_coach_min_time_played", "7200", FCVAR_CLIENTDLL | FCVAR_HIDDEN );
 ConVar tf_coach_request_nevershowagain( "tf_coach_request_nevershowagain", "0", FCVAR_ARCHIVE | FCVAR_CLIENTDLL | FCVAR_HIDDEN );
 
-// @return true if the current player has played less than a certain threshold of hours and 
+// @return true if the current player has played less than a certain threshold of hours and
 // so is deemed eligible for coaching
 static bool Coaching_ShouldRequestCoach()
 {
@@ -603,7 +603,7 @@ static bool Coaching_ShouldRequestCoach()
 	// Grab generic stats and add time played to total time played
 	int totalTimePlayed = 0;
 	for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass < TF_LAST_NORMAL_CLASS; iClass++ )
-	{		
+	{
 		ClassStats_t &classStats = CTFStatPanel::GetClassStats( iClass );
 		totalTimePlayed += classStats.accumulated.m_iStat[TFSTAT_PLAYTIME] + classStats.accumulatedMVM.m_iStat[TFSTAT_PLAYTIME];
 	}
@@ -616,7 +616,7 @@ static bool Coaching_ShouldRequestCoach()
 	}
 
 	// check how many hours this player has played
-	const int minTimePlayedForCoachingEligibility = tf_coach_min_time_played.GetInt();	
+	const int minTimePlayedForCoachingEligibility = tf_coach_min_time_played.GetInt();
 	return ( totalTimePlayed < minTimePlayedForCoachingEligibility );
 }
 
@@ -637,8 +637,8 @@ void Coaching_CheckIfEligibleForCoaching()
 
 	if ( !tf_coach_request_nevershowagain.GetBool() && Coaching_ShouldRequestCoach() )
 	{
-		ShowConfirmOptOutDialog( "#TF_Coach_AskStudent_Title", "#TF_Coach_AskStudent_Text", 
-								 "#TF_Coach_Yes", "#TF_Coach_No", 
+		ShowConfirmOptOutDialog( "#TF_Coach_AskStudent_Title", "#TF_Coach_AskStudent_Text",
+								 "#TF_Coach_Yes", "#TF_Coach_No",
 								 "#TF_Coach_AskStudent_DoNotShowAgain", "tf_coach_request_nevershowagain",
 								 &FindCoach );
 	}
@@ -650,7 +650,7 @@ class CCoachedByPanel : public CHudElement, public vgui::EditablePanel
 {
 	DECLARE_CLASS_SIMPLE( CCoachedByPanel, vgui::EditablePanel );
 public:
-	CCoachedByPanel( const char *pElementName ) 
+	CCoachedByPanel( const char *pElementName )
 		: CHudElement( pElementName )
 		, BaseClass( NULL, "CoachedByPanel" )
 		, m_bCanLikeCoach( false )
@@ -774,7 +774,7 @@ public:
 			return;
 		}
 		const char *name = event->GetName();
-		if ( FStrEq( name, "localplayer_changeteam" ) || 
+		if ( FStrEq( name, "localplayer_changeteam" ) ||
 			 ( FStrEq( name, "player_changename" ) && event->GetInt( "userid" ) == pLocalTFPlayer->m_hCoach->GetUserID() ) )
 		{
 			UpdateUI();
@@ -801,7 +801,7 @@ public:
 				}
 				break;
 				case KEY_F8:
-				{					
+				{
 					GCSDK::CProtoBufMsg< CMsgTFCoaching_RemoveCurrentCoach > msg( k_EMsgGCCoaching_RemoveCurrentCoach );
 					GCClientSystem()->BSendMessage( msg );
 					return 0;
@@ -820,7 +820,7 @@ public:
 		{
 			return;
 		}
-		
+
 		C_TFPlayer *pCoachPlayer = pLocalTFPlayer->m_hCoach;
 		const char* pCoachName = pCoachPlayer->GetPlayerName();
 
@@ -844,7 +844,7 @@ public:
 				else
 				{
 					m_pAvatar->ClearAvatar();
-				}				
+				}
 			}
 		}
 

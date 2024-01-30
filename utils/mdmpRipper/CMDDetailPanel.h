@@ -19,11 +19,11 @@ using namespace vgui;
 
 class CMDDetailPanel : public vgui::EditablePanel
 {
-	vgui::HTML *m_pDetailWindow;	
+	vgui::HTML *m_pDetailWindow;
 	DECLARE_CLASS_SIMPLE( CMDDetailPanel, vgui::EditablePanel );
 public:
 	CMDDetailPanel( vgui::Panel *pParent, const char *pName );
-	virtual void OpenURL( const char *url );	
+	virtual void OpenURL( const char *url );
 	virtual void OnCommand( const char *pCommand );
 	virtual void Close();
 };

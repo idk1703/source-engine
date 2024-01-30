@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -42,14 +42,14 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( info_output_team, CInfoOutputTeam );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoOutputTeam::Spawn( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoOutputTeam::InputFire( inputdata_t &inputdata )
 {
@@ -64,7 +64,7 @@ void CInfoOutputTeam::InputFire( inputdata_t &inputdata )
 			{
 				EHANDLE hHandle;
 				hHandle = pPlayer;
-				m_Player.Set( hHandle, inputdata.pActivator, this ); 
+				m_Player.Set( hHandle, inputdata.pActivator, this );
 			}
 		}
 	}

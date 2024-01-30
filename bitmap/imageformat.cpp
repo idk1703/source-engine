@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -30,10 +30,10 @@ static const ImageFormatInfo_t g_ImageFormatInfo[] =
 {
 	{ "UNKNOWN",					0, 0, 0, 0, 0, false },			// IMAGE_FORMAT_UNKNOWN,
 	{ "RGBA8888",					4, 8, 8, 8, 8, false },			// IMAGE_FORMAT_RGBA8888,
-	{ "ABGR8888",					4, 8, 8, 8, 8, false },			// IMAGE_FORMAT_ABGR8888, 
+	{ "ABGR8888",					4, 8, 8, 8, 8, false },			// IMAGE_FORMAT_ABGR8888,
 	{ "RGB888",						3, 8, 8, 8, 0, false },			// IMAGE_FORMAT_RGB888,
 	{ "BGR888",						3, 8, 8, 8, 0, false },			// IMAGE_FORMAT_BGR888,
-	{ "RGB565",						2, 5, 6, 5, 0, false },			// IMAGE_FORMAT_RGB565, 
+	{ "RGB565",						2, 5, 6, 5, 0, false },			// IMAGE_FORMAT_RGB565,
 	{ "I8",							1, 0, 0, 0, 0, false },			// IMAGE_FORMAT_I8,
 	{ "IA88",						2, 0, 0, 0, 8, false },			// IMAGE_FORMAT_IA88
 	{ "P8",							1, 0, 0, 0, 0, false },			// IMAGE_FORMAT_P8
@@ -120,7 +120,7 @@ int GetMemRequired( int width, int height, int depth, ImageFormat imageFormat, b
 	if ( !mipmap )
 	{
 		// Block compressed formats
-		
+
 		if ( IsCompressed( imageFormat ) )
 		{
 /*
@@ -295,7 +295,7 @@ int GetNumMipMapLevels( int width, int height, int depth )
 	((DWORD)(BYTE)(ch0) | ((DWORD)(BYTE)(ch1) << 8) |   \
 	((DWORD)(BYTE)(ch2) << 16) | ((DWORD)(BYTE)(ch3) << 24 ))
 #endif //defined(MAKEFOURCC)
-#endif	
+#endif
 //-----------------------------------------------------------------------------
 // convert back and forth from D3D format to ImageFormat, regardless of
 // whether it's supported or not
@@ -523,4 +523,3 @@ D3DFORMAT ImageFormatToD3DFormat( ImageFormat format )
 #pragma warning (default:4063)
 
 } // ImageLoader namespace ends
-

@@ -88,12 +88,12 @@ LINK_ENTITY_TO_CLASS( infodecal, CDecal );
 // UNDONE:  These won't get sent to joining players in multi-player
 void CDecal::Spawn( void )
 {
-	if ( m_nTexture < 0 || 
+	if ( m_nTexture < 0 ||
 		(gpGlobals->deathmatch && HasSpawnFlags( SF_DECAL_NOTINDEATHMATCH )) )
 	{
 		UTIL_Remove( this );
 		return;
-	} 
+	}
 }
 
 void CDecal::Activate()
@@ -125,7 +125,7 @@ void CDecal::TriggerDecal ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_T
 
 	CBroadcastRecipientFilter filter;
 
-	te->BSPDecal( filter, 0.0, 
+	te->BSPDecal( filter, 0.0,
 		&GetAbsOrigin(), entityIndex, m_nTexture );
 
 	SetThink( &CDecal::SUB_Remove );
@@ -151,7 +151,7 @@ void CDecal::StaticDecal( void )
 
 		virtual bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
 		{
-			static const char *ppszIgnoredClasses[] = 
+			static const char *ppszIgnoredClasses[] =
 			{
 				"weapon_*",
 				"item_*",
@@ -223,7 +223,7 @@ bool CDecal::KeyValue( const char *szKeyName, const char *szValue )
 	{
 		// FIXME:  should decals all be preloaded?
 		m_nTexture = UTIL_PrecacheDecal( szValue, true );
-		
+
 		// Found
 		if (m_nTexture >= 0 )
 			return true;
@@ -287,12 +287,12 @@ LINK_ENTITY_TO_CLASS( info_projecteddecal, CProjectedDecal );
 // UNDONE:  These won't get sent to joining players in multi-player
 void CProjectedDecal::Spawn( void )
 {
-	if ( m_nTexture < 0 || 
+	if ( m_nTexture < 0 ||
 		(gpGlobals->deathmatch && HasSpawnFlags( SF_DECAL_NOTINDEATHMATCH )) )
 	{
 		UTIL_Remove( this );
 		return;
-	} 
+	}
 }
 
 void CProjectedDecal::Activate()
@@ -318,7 +318,7 @@ void CProjectedDecal::InputActivate( inputdata_t &inputdata )
 
 void CProjectedDecal::ProjectDecal( CRecipientFilter& filter )
 {
-	te->ProjectDecal( filter, 0.0, 
+	te->ProjectDecal( filter, 0.0,
 		&GetAbsOrigin(), &GetAbsAngles(), m_flDistance, m_nTexture );
 }
 
@@ -349,7 +349,7 @@ bool CProjectedDecal::KeyValue( const char *szKeyName, const char *szValue )
 	{
 		// FIXME:  should decals all be preloaded?
 		m_nTexture = UTIL_PrecacheDecal( szValue, true );
-		
+
 		// Found
 		if (m_nTexture >= 0 )
 			return true;
@@ -438,7 +438,7 @@ bool CWorld::KeyValue( const char *szKeyName, const char *szValue )
 	else if ( FStrEq(szKeyName, "world_maxs") )
 	{
 		Vector vec;
-		sscanf(	szValue, "%f %f %f", &vec.x, &vec.y, &vec.z ); 
+		sscanf(	szValue, "%f %f %f", &vec.x, &vec.y, &vec.z );
 		m_WorldMaxs = vec;
 	}
 	else
@@ -462,7 +462,7 @@ CWorld::CWorld( )
 	NetworkProp()->AttachEdict( INDEXENT(RequiredEdictIndex()) );
 	ActivityList_Init();
 	EventList_Init();
-	
+
 	SetSolid( SOLID_BSP );
 	SetMoveType( MOVETYPE_NONE );
 
@@ -627,7 +627,7 @@ void CWorld::Precache( void )
 
 // the area based ambient sounds MUST be the first precache_sounds
 
-// player precaches     
+// player precaches
 	W_Precache ();									// get weapon precaches
 	ClientPrecache();
 	g_pGameRules->Precache();
@@ -676,7 +676,7 @@ void CWorld::Precache( void )
 	CBaseCombatCharacter::InitInteractionSystem();
 
 	// Call all registered precachers.
-	CPrecacheRegister::Precache();	
+	CPrecacheRegister::Precache();
 
 	if ( m_iszChapterTitle != NULL_STRING )
 	{
@@ -698,7 +698,7 @@ void CWorld::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float GetRealTime()

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,7 +27,7 @@ const char *Info_ValueForKey ( const char *s, const char *key )
 								// work without stomping on each other
 	static	int	valueindex;
 	char	*o;
-	
+
 	valueindex = (valueindex + 1) % 4;
 	if (*s == '\\')
 		s++;
@@ -298,6 +298,3 @@ void Info_SetValueForKey (char *s, const char *key, const char *value, int maxsi
 
 	Info_SetValueForStarKey (s, key, value, maxsize);
 }
-
-
-

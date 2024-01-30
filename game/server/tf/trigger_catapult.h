@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -98,4 +98,4 @@ private:
 	CUtlVector< EHANDLE > m_hAbortedLaunchees;
 };
 
-#endif // TRIGGER_CATAPULT_H  
+#endif // TRIGGER_CATAPULT_H

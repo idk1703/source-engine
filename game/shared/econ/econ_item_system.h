@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -33,27 +33,27 @@ public:
 	void		Shutdown( void );
 
 	// Return the static item data for the specified item index
-	GameItemDefinition_t *GetStaticDataForItemByDefIndex( item_definition_index_t iItemDefIndex ) 
+	GameItemDefinition_t *GetStaticDataForItemByDefIndex( item_definition_index_t iItemDefIndex )
 	{
 		return (GameItemDefinition_t *)m_itemSchema.GetItemDefinition( iItemDefIndex );
 	}
-	CEconItemDefinition *GetStaticDataForItemByName( const char *pszDefName ) 
-	{ 
+	CEconItemDefinition *GetStaticDataForItemByName( const char *pszDefName )
+	{
 		return m_itemSchema.GetItemDefinitionByName( pszDefName );
 	}
-	CEconItemAttributeDefinition *GetStaticDataForAttributeByDefIndex( attrib_definition_index_t iAttribDefinitionIndex ) 
-	{ 
+	CEconItemAttributeDefinition *GetStaticDataForAttributeByDefIndex( attrib_definition_index_t iAttribDefinitionIndex )
+	{
 		return m_itemSchema.GetAttributeDefinition( iAttribDefinitionIndex );
 	}
-	CEconItemAttributeDefinition *GetStaticDataForAttributeByName( const char *pszDefName ) 
-	{ 
+	CEconItemAttributeDefinition *GetStaticDataForAttributeByName( const char *pszDefName )
+	{
 		return m_itemSchema.GetAttributeDefinitionByName( pszDefName );
 	}
 
 	// Select and return a random item's definition index matching the specified criteria
 	item_definition_index_t	GenerateRandomItem( CItemSelectionCriteria *pCriteria, entityquality_t *outEntityQuality );
 
-	// Select and return the base item definition index for a class's load-out slot 
+	// Select and return the base item definition index for a class's load-out slot
 	// Note: baseitemcriteria_t is game-specific and/or may not exist!
 	virtual item_definition_index_t GenerateBaseItem( struct baseitemcriteria_t *pCriteria ) { return INVALID_ITEM_DEF_INDEX; }
 
@@ -61,7 +61,7 @@ public:
 	entityquality_t GetRandomQualityForItem( bool bPreventUnique = false );
 
 	// Decrypt the item files and return the keyvalue
-	bool	DecryptItemFiles( KeyValues *pKV, const char *pName );		
+	bool	DecryptItemFiles( KeyValues *pKV, const char *pName );
 
 	GameItemSchema_t *GetItemSchema() { return &m_itemSchema; }
 

@@ -14,13 +14,13 @@
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeBodyGroupList, CDmeBodyGroupList );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeBodyGroupList::OnConstruction()
 {
@@ -33,7 +33,7 @@ void CDmeBodyGroupList::OnDestruction()
 
 
 //-----------------------------------------------------------------------------
-// Finds a body group by name 
+// Finds a body group by name
 //-----------------------------------------------------------------------------
 CDmeBodyGroup *CDmeBodyGroupList::FindBodyGroup( const char *pName )
 {
@@ -55,7 +55,7 @@ CDmeLODList *CDmeBodyGroupList::GetMainBodyPart()
 	if ( m_BodyGroups.Count() == 0 )
 		return NULL;
 
-	CDmeBodyGroup *pMainBodyGroup = FindBodyGroup( "default" ); 
+	CDmeBodyGroup *pMainBodyGroup = FindBodyGroup( "default" );
 	if ( !pMainBodyGroup )
 	{
 		pMainBodyGroup = m_BodyGroups[0];

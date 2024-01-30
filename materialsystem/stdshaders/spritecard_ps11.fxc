@@ -34,7 +34,7 @@ const float4 g_ColorPowers	: register( c1 );
 #define fAdditiveSelfBlendWeight	g_Parameters.z
 #define fSoftParticleBlendScale		g_Parameters.w
 
-#pragma warning( disable : 4707 4704 ) 
+#pragma warning( disable : 4707 4704 )
 float4 main( PS_INPUT i ) : COLOR
 {
 	// Sample frames from texture 0
@@ -51,7 +51,7 @@ float4 main( PS_INPUT i ) : COLOR
 
 #if ADDBASETEXTURE2
 	blended_rgb.a *= i.argbcolor.a;
-	
+
 	// In this case, we don't really want to pre-multiply by alpha
 	float4 color2 = tex2D( BaseTextureSampler2, i.texCoord2 );
 	blended_rgb.rgb *= blended_rgb.a;
@@ -69,4 +69,3 @@ float4 main( PS_INPUT i ) : COLOR
 #endif
 	return blended_rgb;
 }
-

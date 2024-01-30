@@ -111,7 +111,7 @@ BEGIN_DATADESC( CParticleSystem )
 	DEFINE_KEYFIELD( m_iControlPointParents[4], FIELD_CHARACTER, "cpoint5_parent" ),
 	DEFINE_KEYFIELD( m_iControlPointParents[5], FIELD_CHARACTER, "cpoint6_parent" ),
 	DEFINE_KEYFIELD( m_iControlPointParents[6], FIELD_CHARACTER, "cpoint7_parent" ),
-	
+
 	DEFINE_AUTO_ARRAY( m_hControlPointEnts, FIELD_EHANDLE ),
 
 	DEFINE_INPUTFUNC( FIELD_VOID, "Start", InputStart ),
@@ -124,7 +124,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( info_particle_system, CParticleSystem );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CParticleSystem::CParticleSystem()
 {
@@ -132,7 +132,7 @@ CParticleSystem::CParticleSystem()
 }
 
 //-----------------------------------------------------------------------------
-// Precache 
+// Precache
 //-----------------------------------------------------------------------------
 void CParticleSystem::Precache( void )
 {
@@ -147,7 +147,7 @@ void CParticleSystem::Precache( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CParticleSystem::Spawn( void )
 {
@@ -158,7 +158,7 @@ void CParticleSystem::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CParticleSystem::Activate( void )
 {
@@ -175,7 +175,7 @@ void CParticleSystem::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CParticleSystem::StartParticleSystemThink( void )
 {
@@ -191,7 +191,7 @@ int CParticleSystem::UpdateTransmitState()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CParticleSystem::StartParticleSystem( void )
 {
@@ -199,14 +199,14 @@ void CParticleSystem::StartParticleSystem( void )
 	{
 		m_flStartTime = gpGlobals->curtime;
 		m_bActive = true;
-		
+
 		// Setup our control points at this time (in case our targets weren't around at spawn time)
 		ReadControlPointEnts();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CParticleSystem::StopParticleSystem( void )
 {
@@ -214,7 +214,7 @@ void CParticleSystem::StopParticleSystem( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CParticleSystem::InputStart( inputdata_t &inputdata )
 {
@@ -222,7 +222,7 @@ void CParticleSystem::InputStart( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CParticleSystem::InputStop( inputdata_t &inputdata )
 {
@@ -230,7 +230,7 @@ void CParticleSystem::InputStop( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Find each entity referred to by m_iszControlPointNames and 
+// Purpose: Find each entity referred to by m_iszControlPointNames and
 // resolve it into the corresponding slot in m_hControlPointEnts
 //-----------------------------------------------------------------------------
 void CParticleSystem::ReadControlPointEnts( void )

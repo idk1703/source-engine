@@ -90,7 +90,7 @@ END_DATADESC();
 void CRadarTarget::Spawn()
 {
 	BaseClass::Spawn();
-	
+
 	AddEffects( EF_NODRAW );
 	SetMoveType( MOVETYPE_NONE );
 	SetSolid( SOLID_NONE );
@@ -132,7 +132,7 @@ class CVehicleCargoTrigger : public CBaseEntity
 
 public:
 
-	// 
+	//
 	// Creates a trigger with the specified bounds
 
 	static CVehicleCargoTrigger *Create( const Vector &vecOrigin, const Vector &vecMins, const Vector &vecMaxs, CBaseEntity *pOwner )
@@ -142,7 +142,7 @@ public:
 			return NULL;
 
 		UTIL_SetOrigin( pTrigger, vecOrigin );
-		UTIL_SetSize( pTrigger, vecMins, vecMaxs );		
+		UTIL_SetSize( pTrigger, vecMins, vecMaxs );
 		pTrigger->SetOwnerEntity( pOwner );
 		pTrigger->SetParent( pOwner );
 
@@ -201,7 +201,7 @@ public:
 		// The car now owns the entity
 		pJeep->AddPropToCargoHold( pProp );
 
-		// Notify the buster that it's been added to the cargo hold.		
+		// Notify the buster that it's been added to the cargo hold.
 		StriderBuster_OnAddToCargoHold( pProp );
 
 		// Stop touching this item
@@ -347,7 +347,7 @@ BEGIN_DATADESC( CPropJeepEpisodic )
 	DEFINE_OUTPUT( m_OnCompanionExitedVehicle, "OnCompanionExitedVehicle" ),
 	DEFINE_OUTPUT( m_OnHostileEnteredVehicle, "OnHostileEnteredVehicle" ),
 	DEFINE_OUTPUT( m_OnHostileExitedVehicle, "OnHostileExitedVehicle" ),
-	
+
 	DEFINE_INPUTFUNC( FIELD_VOID, "LockEntrance",				InputLockEntrance ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "UnlockEntrance",				InputUnlockEntrance ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "LockExit",					InputLockExit ),
@@ -381,7 +381,7 @@ END_SEND_TABLE()
 //=============================================================================
 // Episodic jeep
 
-CPropJeepEpisodic::CPropJeepEpisodic( void ) : 
+CPropJeepEpisodic::CPropJeepEpisodic( void ) :
 m_bEntranceLocked( false ),
 m_bExitLocked( false ),
 m_bAddingCargo( false ),
@@ -394,7 +394,7 @@ m_flNextAvoidBroadcastTime( 0.0f )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::UpdateOnRemove( void )
 {
@@ -418,7 +418,7 @@ void CPropJeepEpisodic::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::Precache( void )
 {
@@ -435,8 +435,8 @@ void CPropJeepEpisodic::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
+// Purpose:
+// Input  : *pPlayer -
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::EnterVehicle( CBaseCombatCharacter *pPassenger )
 {
@@ -447,7 +447,7 @@ void CPropJeepEpisodic::EnterVehicle( CBaseCombatCharacter *pPassenger )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::Spawn( void )
 {
@@ -480,7 +480,7 @@ void CPropJeepEpisodic::Activate()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::NPC_FinishedEnterVehicle( CAI_BaseNPC *pPassenger, bool bCompanion )
 {
@@ -497,7 +497,7 @@ void CPropJeepEpisodic::NPC_FinishedEnterVehicle( CAI_BaseNPC *pPassenger, bool 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::NPC_FinishedExitVehicle( CAI_BaseNPC *pPassenger, bool bCompanion )
 {
@@ -514,9 +514,9 @@ void CPropJeepEpisodic::NPC_FinishedExitVehicle( CAI_BaseNPC *pPassenger, bool b
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPassenger - 
-//			bCompanion - 
+// Purpose:
+// Input  : *pPassenger -
+//			bCompanion -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPropJeepEpisodic::NPC_CanEnterVehicle( CAI_BaseNPC *pPassenger, bool bCompanion )
@@ -529,9 +529,9 @@ bool CPropJeepEpisodic::NPC_CanEnterVehicle( CAI_BaseNPC *pPassenger, bool bComp
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPassenger - 
-//			bCompanion - 
+// Purpose:
+// Input  : *pPassenger -
+//			bCompanion -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPropJeepEpisodic::NPC_CanExitVehicle( CAI_BaseNPC *pPassenger, bool bCompanion )
@@ -544,7 +544,7 @@ bool CPropJeepEpisodic::NPC_CanExitVehicle( CAI_BaseNPC *pPassenger, bool bCompa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::InputLockEntrance( inputdata_t &data )
 {
@@ -552,7 +552,7 @@ void CPropJeepEpisodic::InputLockEntrance( inputdata_t &data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::InputUnlockEntrance( inputdata_t &data )
 {
@@ -560,7 +560,7 @@ void CPropJeepEpisodic::InputUnlockEntrance( inputdata_t &data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::InputLockExit( inputdata_t &data )
 {
@@ -568,7 +568,7 @@ void CPropJeepEpisodic::InputLockExit( inputdata_t &data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::InputUnlockExit( inputdata_t &data )
 {
@@ -610,7 +610,7 @@ void CPropJeepEpisodic::InputEnableRadarDetectEnemies( inputdata_t &data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::InputAddBusterToCargo( inputdata_t &data )
 {
@@ -630,7 +630,7 @@ void CPropJeepEpisodic::InputAddBusterToCargo( inputdata_t &data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPropJeepEpisodic::PassengerInTransition( void )
@@ -666,8 +666,8 @@ Vector CPropJeepEpisodic::PhysGunLaunchVelocity( const Vector &forward, float fl
 //-----------------------------------------------------------------------------
 // Purpose: Rolls the vehicle when its trying to upright itself from a punt
 //-----------------------------------------------------------------------------
-AngularImpulse CPropJeepEpisodic::PhysGunLaunchAngularImpulse( void ) 
-{ 
+AngularImpulse CPropJeepEpisodic::PhysGunLaunchAngularImpulse( void )
+{
 	if ( IsOverturned() )
 		return AngularImpulse( 0, 300, 0 );
 
@@ -678,17 +678,17 @@ AngularImpulse CPropJeepEpisodic::PhysGunLaunchAngularImpulse( void )
 //-----------------------------------------------------------------------------
 // Purpose: Get the upright strength based on what state we're in
 //-----------------------------------------------------------------------------
-float CPropJeepEpisodic::GetUprightStrength( void ) 
-{ 
+float CPropJeepEpisodic::GetUprightStrength( void )
+{
 	// Lesser if overturned
 	if ( IsOverturned() )
 		return 2.0f;
-	
-	return 0.0f; 
+
+	return 0.0f;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::CreateCargoTrigger( void )
 {
@@ -725,7 +725,7 @@ void CPropJeepEpisodic::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_
 #define	MIN_WHEEL_DUST_SPEED	5
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::UpdateWheelDust( void )
 {
@@ -733,13 +733,13 @@ void CPropJeepEpisodic::UpdateWheelDust( void )
 	const vehicleparams_t *vehicleData = m_pServerVehicle->GetVehicleParams();
 	const vehicle_operatingparams_t *carState = m_pServerVehicle->GetVehicleOperatingParams();
 	bool bAllowDust = vehicleData->steering.dustCloud;
-	
+
 	// Car must be active
 	bool bCarOn = m_VehiclePhysics.IsOn();
 
 	// Must be moving quickly enough or skidding along the ground
 	bool bCreateDust = ( bCarOn &&
-						 bAllowDust && 
+						 bAllowDust &&
 					   ( m_VehiclePhysics.GetSpeed() >= MIN_WHEEL_DUST_SPEED || carState->skidSpeed > DEFAULT_SKID_THRESHOLD ) );
 
 	// Update our wheel dust
@@ -747,7 +747,7 @@ void CPropJeepEpisodic::UpdateWheelDust( void )
 	for ( int i = 0; i < NUM_WHEEL_EFFECTS; i++ )
 	{
 		m_pServerVehicle->GetWheelContactPoint( i, vecPos );
-		
+
 		// Make sure the effect is created
 		if ( m_hWheelDust[i] == NULL )
 		{
@@ -790,7 +790,7 @@ void CPropJeepEpisodic::UpdateWheelDust( void )
 			// Angle the dust out away from the wheels
 			Vector vecForward, vecRight, vecUp;
 			GetVectors( &vecForward, &vecRight, &vecUp );
-			
+
 			const vehicle_controlparams_t *vehicleControls = m_pServerVehicle->GetVehicleControlParams();
 			float flWheelDir = ( i & 1 ) ? 1.0f : -1.0f;
 			QAngle vecAngles;
@@ -964,7 +964,7 @@ void CPropJeepEpisodic::UpdateRadar( bool forceUpdate )
 ConVar jalopy_cargo_anim_time( "jalopy_cargo_anim_time", "1.0" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::UpdateCargoEntry( void )
 {
@@ -1038,7 +1038,7 @@ void CPropJeepEpisodic::CreateAvoidanceZone( void )
 		return;
 
 	float flHullRadius = CollisionProp()->BoundingRadius2D();
-	
+
 	Vector	vecPos;
 	CollisionProp()->NormalizedToWorldSpace( Vector( 0.5f, 0.33f, 0.25f ), &vecPos );
 	CSoundEnt::InsertSound( SOUND_MOVE_AWAY, vecPos, (flHullRadius*0.4f), VEHICLE_AVOID_BROADCAST_RATE, this );
@@ -1053,7 +1053,7 @@ void CPropJeepEpisodic::CreateAvoidanceZone( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::Think( void )
 {
@@ -1063,14 +1063,14 @@ void CPropJeepEpisodic::Think( void )
 	CNPC_Alyx *pAlyx = CNPC_Alyx::GetAlyx();
 	if ( pAlyx && pAlyx->GetPassengerState() == PASSENGER_STATE_EXITING )
 	{
-		m_throttleDisableTime = gpGlobals->curtime + 0.25f;		
+		m_throttleDisableTime = gpGlobals->curtime + 0.25f;
 	}
 
 	// Update our cargo entering our hold
 	UpdateCargoEntry();
 
 	// See if the wheel dust should be on or off
-	UpdateWheelDust();	
+	UpdateWheelDust();
 
 	// Update the radar, of course.
 	UpdateRadar();
@@ -1084,8 +1084,8 @@ void CPropJeepEpisodic::Think( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
+// Purpose:
+// Input  : *pEntity -
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::AddPropToCargoHold( CPhysicsProp *pProp )
 {
@@ -1095,7 +1095,7 @@ void CPropJeepEpisodic::AddPropToCargoHold( CPhysicsProp *pProp )
 		Assert( 0 );
 		return;
 	}
-	
+
 	// Take the prop as our cargo
 	m_hCargoProp = pProp;
 	m_flCargoStartTime = gpGlobals->curtime;
@@ -1153,10 +1153,10 @@ CBaseEntity *CPropJeepEpisodic::OnFailedPhysGunPickup( Vector vPhysgunPos )
 		{
 			// Save this for later
 			CBaseEntity *pCargo = m_hCargoProp;
-			
+
 			// Drop the cargo
 			ReleasePropFromCargoHold();
-			
+
 			// Forget the item but pass it back as the object to pick up
 			m_hCargoProp = NULL;
 			return pCargo;
@@ -1257,7 +1257,7 @@ static void KillBlockingEnemyNPCs( CBasePlayer *pPlayer, CBaseEntity *pVehicleEn
 					if ( pNPC->HasDataObjectType(VPHYSICSUPDATEAI) )
 					{
 						pUpdate = static_cast<vphysicsupdateai_t *>(pNPC->GetDataObject(VPHYSICSUPDATEAI));
-						// kill this guy if I've been pushing him for more than half a second and I'm 
+						// kill this guy if I've been pushing him for more than half a second and I'm
 						// still pushing in his direction
 						if ( (gpGlobals->curtime - pUpdate->startUpdateTime) > 0.5f && DotProduct(velocity,normal) > 0)
 						{
@@ -1322,19 +1322,19 @@ void CPropJeepEpisodic::DriveVehicle( float flFrameTime, CUserCmd *ucmd, int iBu
 	   and we haven't built any gameplay around it.
 
 	   Furthermore, I don't think I've ever seen a playtester turn it on.
-	
+
 	if ( ucmd->impulse == 100 )
 	{
 		if (HeadlightIsOn())
 		{
 			HeadlightTurnOff();
 		}
-		else 
+		else
 		{
 			HeadlightTurnOn();
 		}
 	}*/
-	
+
 	if ( ucmd->forwardmove != 0.0f )
 	{
 		//Msg("Push V: %.2f, %.2f, %.2f\n", ucmd->forwardmove, carState->engineRPM, carState->speed );
@@ -1350,7 +1350,7 @@ void CPropJeepEpisodic::DriveVehicle( float flFrameTime, CUserCmd *ucmd, int iBu
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::CreateHazardLights( void )
 {
@@ -1362,7 +1362,7 @@ void CPropJeepEpisodic::CreateHazardLights( void )
 		"headlight_l",
 	};
 
-	// Turn on the hazards!	
+	// Turn on the hazards!
 	for ( int i = 0; i < NUM_HAZARD_LIGHTS; i++ )
 	{
 		if ( m_hHazardLights[i] == NULL )
@@ -1397,7 +1397,7 @@ void CPropJeepEpisodic::CreateHazardLights( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::DestroyHazardLights( void )
 {
@@ -1413,8 +1413,8 @@ void CPropJeepEpisodic::DestroyHazardLights( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nRole - 
+// Purpose:
+// Input  : nRole -
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::ExitVehicle( int nRole )
 {
@@ -1511,7 +1511,7 @@ void CPropJeepEpisodic::DestroyRadarPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::HazardBlinkThink( void )
 {
@@ -1545,7 +1545,7 @@ void CPropJeepEpisodic::HazardBlinkThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJeepEpisodic::HandleWater( void )
 {
@@ -1761,4 +1761,3 @@ bool CPropJeepEpisodic::AllowBlockedExit( CBaseCombatCharacter *pPassenger, int 
 	// sticking the player through player clips or into geometry.
 	return GetSmoothedVelocity().IsLengthLessThan( jalopy_blocked_exit_max_speed.GetFloat() );
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -38,16 +38,16 @@ public:
 	virtual bool RequiresRestart();
 
 private:
-    void        SetCurrentResolutionComboItem();
+	void        SetCurrentResolutionComboItem();
 	void		EnableOrDisableWindowedForVR();
 
-    MESSAGE_FUNC( OnDataChanged, "ControlModified" );
+	MESSAGE_FUNC( OnDataChanged, "ControlModified" );
 	MESSAGE_FUNC_PTR_CHARPTR( OnTextChanged, "TextChanged", panel, text );
 	MESSAGE_FUNC( OpenAdvanced, "OpenAdvanced" );
 	MESSAGE_FUNC( LaunchBenchmark, "LaunchBenchmark" );
 	MESSAGE_FUNC( OpenGammaDialog, "OpenGammaDialog" );
 
-   
+
 	void		PrepareResolutionList();
 
 	bool		BUseHDContent();
@@ -70,9 +70,9 @@ private:
 	vgui::DHANDLE<class CGammaDialog> m_hGammaDialog;
 
 	bool m_bRequireRestart;
-   MESSAGE_FUNC( OpenThirdPartyVideoCreditsDialog, "OpenThirdPartyVideoCreditsDialog" );
-   vgui::URLButton   *m_pThirdPartyCredits;
-   vgui::DHANDLE<class COptionsSubVideoThirdPartyCreditsDlg> m_OptionsSubVideoThirdPartyCreditsDlg;
+	MESSAGE_FUNC( OpenThirdPartyVideoCreditsDialog, "OpenThirdPartyVideoCreditsDialog" );
+	vgui::URLButton   *m_pThirdPartyCredits;
+	vgui::DHANDLE<class COptionsSubVideoThirdPartyCreditsDlg> m_OptionsSubVideoThirdPartyCreditsDlg;
 };
 
 

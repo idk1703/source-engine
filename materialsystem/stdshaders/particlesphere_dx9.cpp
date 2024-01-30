@@ -22,7 +22,7 @@ int GetDefaultDepthFeatheringValue( void ); //defined in spritecard.cpp
 DEFINE_FALLBACK_SHADER( ParticleSphere, ParticleSphere_DX9 )
 
 BEGIN_VS_SHADER_FLAGS( ParticleSphere_DX9, "Help for BumpmappedEnvMap", SHADER_NOT_EDITABLE  )
-			   
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( DEPTHBLEND, SHADER_PARAM_TYPE_INTEGER, "0", "fade at intersection boundaries" )
 		SHADER_PARAM( DEPTHBLENDSCALE, SHADER_PARAM_TYPE_FLOAT, "50.0", "Amplify or reduce DEPTHBLEND fading. Lower values make harder edges." )
@@ -88,9 +88,9 @@ BEGIN_VS_SHADER_FLAGS( ParticleSphere_DX9, "Help for BumpmappedEnvMap", SHADER_N
 			{
 				pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );
 			}
-			
+
 			int tCoordDimensions[] = {2};
-			pShaderShadow->VertexShaderVertexFormat( 
+			pShaderShadow->VertexShaderVertexFormat(
 				VERTEX_POSITION | VERTEX_COLOR, 1, tCoordDimensions, 0 );
 
 			pShaderShadow->EnableBlending( true );
@@ -124,7 +124,7 @@ BEGIN_VS_SHADER_FLAGS( ParticleSphere_DX9, "Help for BumpmappedEnvMap", SHADER_N
 			}
 
 			pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, params[LIGHT_POSITION]->GetVecValue() );
-			
+
 			// Separate the light color into something that has a max value of 1 and a scale
 			// so the vertex shader can determine if it's going to overflow the color and scale back
 			// if it needs to.

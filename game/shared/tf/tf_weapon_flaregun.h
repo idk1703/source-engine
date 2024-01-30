@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #ifndef TF_WEAPON_FLAREGUN_H
@@ -37,7 +37,7 @@ class CTFFlareGun : public CTFWeaponBaseGun
 public:
 
 	DECLARE_CLASS( CTFFlareGun, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 // Server specific.
@@ -115,7 +115,7 @@ class CTFFlareGun_Revenge : public CTFFlareGun
 {
 public:
 	DECLARE_CLASS( CTFFlareGun_Revenge, CTFFlareGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFFlareGun_Revenge();

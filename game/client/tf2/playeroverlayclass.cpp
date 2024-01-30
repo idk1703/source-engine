@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -22,13 +22,13 @@
 
 
 //-----------------------------------------------------------------------------
-// Class info. Only load it once. 
+// Class info. Only load it once.
 //-----------------------------------------------------------------------------
 
 CHudPlayerOverlayClass::CMapClassColors** CHudPlayerOverlayClass::s_ppClassInfo = 0;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CCleanupPlayerOverlayClass : public CAutoGameSystem
 {
@@ -53,7 +53,7 @@ public:
 static CCleanupPlayerOverlayClass g_CleanupPlayerOverlayClass;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 CHudPlayerOverlayClass::CHudPlayerOverlayClass( CHudPlayerOverlay *baseOverlay )
@@ -69,7 +69,7 @@ CHudPlayerOverlayClass::CHudPlayerOverlayClass( CHudPlayerOverlay *baseOverlay )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 CHudPlayerOverlayClass::~CHudPlayerOverlayClass( void )
@@ -177,7 +177,7 @@ bool CHudPlayerOverlayClass::Init( KeyValues* pKeyValues )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : pImage - Class specific image
 //-----------------------------------------------------------------------------
 void CHudPlayerOverlayClass::SetImage( BitmapImage *pImage )
@@ -210,18 +210,18 @@ void CHudPlayerOverlayClass::SetTeamAndClass( int team, int playerclass )
 // If this guy changes size, so must the associated image
 //-----------------------------------------------------------------------------
 
-void CHudPlayerOverlayClass::SetSize( int w, int h ) 
+void CHudPlayerOverlayClass::SetSize( int w, int h )
 {
 	// chain...
 	Panel::SetSize( w, h );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : r - 
-//			g - 
-//			b - 
-//			a - 
+// Purpose:
+// Input  : r -
+//			g -
+//			b -
+//			a -
 //-----------------------------------------------------------------------------
 void CHudPlayerOverlayClass::SetColor( int r, int g, int b, int a )
 {
@@ -232,7 +232,7 @@ void CHudPlayerOverlayClass::SetColor( int r, int g, int b, int a )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudPlayerOverlayClass::Paint( void )
 {

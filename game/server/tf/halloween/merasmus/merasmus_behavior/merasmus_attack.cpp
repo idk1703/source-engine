@@ -173,7 +173,7 @@ ActionResult< CMerasmus >	CMerasmusAttack::Update( CMerasmus *me, float interval
 // 			if ( !me->IsMoving() && m_tauntTimer.IsElapsed() )
 // 			{
 // 				m_tauntTimer.Start( RandomFloat( 3.0f, 5.0f ) );
-// 
+//
 // 				return SuspendFor( new CMerasmusTaunt, "Taunting because I have nothing to do." );
 // 			}
 // 		}
@@ -381,6 +381,3 @@ void CMerasmusTaunt::OnEnd( CMerasmus *me, Action< CMerasmus > *nextAction )
 	int staffBodyGroup = me->FindBodygroupByName( "staff" );
 	me->SetBodygroup( staffBodyGroup, 0 );
 }
-
-
-

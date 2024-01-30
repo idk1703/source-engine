@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -32,15 +32,15 @@ public:
 	virtual			~CTEBeamRing( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 public:
 	CNetworkVar( int, m_nStartEntity );
 	CNetworkVar( int, m_nEndEntity );
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEBeamRing::CTEBeamRing( const char *name ) :
 	CTEBaseBeam( name )
@@ -50,16 +50,16 @@ CTEBeamRing::CTEBeamRing( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEBeamRing::~CTEBeamRing( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEBeamRing::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -93,20 +93,20 @@ END_SEND_TABLE()
 static CTEBeamRing g_TEBeamRing( "BeamRing" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//				int	start - 
-//			end - 
-//			modelindex - 
-//			startframe - 
-//			framerate - 
-//			msg_dest - 
-//			delay - 
-//			origin - 
-//			recipient - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//				int	start -
+//			end -
+//			modelindex -
+//			startframe -
+//			framerate -
+//			msg_dest -
+//			delay -
+//			origin -
+//			recipient -
 //-----------------------------------------------------------------------------
 void TE_BeamRing( IRecipientFilter& filter, float delay,
 	int	start, int end, int modelindex, int haloindex, int startframe, int framerate,

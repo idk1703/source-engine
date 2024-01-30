@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -25,7 +25,7 @@ CModList::CModList()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: returns number of mods 
+// Purpose: returns number of mods
 //-----------------------------------------------------------------------------
 int CModList::ModCount()
 {
@@ -93,7 +93,7 @@ const char *CModList::GetModNameForModDir( const CGameID &gameID )
 //-----------------------------------------------------------------------------
 int CModList::ModNameCompare( const mod_t *pLeft, const mod_t *pRight )
 {
-	return ( Q_stricmp( pLeft->description, pRight->description ) ); 
+	return ( Q_stricmp( pLeft->description, pRight->description ) );
 }
 
 

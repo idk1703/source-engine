@@ -1,6 +1,6 @@
 //====== Copyright 1996-2005, Valve Corporation, All rights reserved. =======
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -34,7 +34,7 @@ static CRelevantPropertyNames g_DependencyRelevantPropertyNames =
 bool IsSharedLibraryFile( const char *pFilename )
 {
 	const char *pExt = V_GetFileExtension( pFilename );
-	if ( pExt && ( V_stricmp( pExt, "so" ) == 0 || V_stricmp( pExt, "dylib" ) == 0 || V_stricmp( pExt, "dll" ) == 0 ) ) 
+	if ( pExt && ( V_stricmp( pExt, "so" ) == 0 || V_stricmp( pExt, "dylib" ) == 0 || V_stricmp( pExt, "dll" ) == 0 ) )
 	{
 		return true;
 	}
@@ -144,7 +144,7 @@ bool CDependency::FindDependency_Internal( CUtlVector<CUtlBuffer> &callTreeOutpu
 	if ( !(flags & k_EDependsOnFlagTraversePastLibs) && m_Type == k_eDependencyType_Library )
 		return false;
 
-	// Go through everything I depend on. If any of those things 
+	// Go through everything I depend on. If any of those things
 	for ( int iDepList=0; iDepList < 2; iDepList++ )
 	{
 		if ( iDepList == 1 && !(flags & k_EDependsOnFlagCheckAdditionalDependencies) )
@@ -213,12 +213,12 @@ void CDependency_Project::ExportProjectParameters()
 {
 	g_pVPC->SetOutputFilename( m_StoredOutputFilename.Get() );
 	V_SetCurrentDirectory( m_szStoredCurrentDirectory );
-	
+
 	if ( m_StoredConditionalsActive.Count() > g_pVPC->m_Conditionals.Count() )
 	{
 		g_pVPC->VPCError( "ExportProjectParameters( %s ) - too many defines stored.", m_szStoredScriptName );
 	}
-	
+
 	for ( int iConditional=0; iConditional < g_pVPC->m_Conditionals.Count(); iConditional++ )
 	{
 		g_pVPC->m_Conditionals[iConditional].m_bGameConditionActive = m_StoredConditionalsActive[iConditional];
@@ -253,7 +253,7 @@ public:
 	{
 		m_bInLinker = false;
 	}
-	
+
 	virtual void EndProject()
 	{
 	}
@@ -312,7 +312,7 @@ public:
 			char sAbsolutePath[MAX_PATH];
 			V_MakeAbsolutePath( sAbsolutePath, sizeof( sAbsolutePath ), pFilename );
 
-			// Don't bother with source files if we're not building the full dependency set.			
+			// Don't bother with source files if we're not building the full dependency set.
 			if ( !pGraph->m_bFullDependencySet )
 				if ( IsSourceFile( sAbsolutePath ) )
 					continue;
@@ -337,7 +337,7 @@ public:
 		// Have we already parsed this file for its includes?
 		if ( pFile->m_bCheckedIncludes )
 			return;
-		
+
 		pFile->m_bCheckedIncludes = true;
 
 		// Setup all the include paths we want to search.
@@ -361,7 +361,7 @@ public:
 			{
 				char szFullName[MAX_PATH];
 				V_ComposeFileName( includeDirs[iIncludeDir].String(), includes[iIncludeFile].String(), szFullName, sizeof( szFullName ) );
-			
+
 				CDependency *pIncludeFile = pGraph->FindDependency( szFullName );
 				if ( !pIncludeFile )
 				{
@@ -428,9 +428,9 @@ public:
 			const char *pIncludeStatement = V_strstr( pSearchPos, pLookFor );
 			if ( !pIncludeStatement )
 				break;
-		
+
 			pSearchPos = pIncludeStatement + V_strlen( pLookFor );
-			
+
 			if ( !SeekToIncludeStart( pSearchPos ) )
 				continue;
 			const char *pFilenameStart = pSearchPos;
@@ -451,8 +451,8 @@ public:
 
 			includes.AddToTail( szFixed );
 		}
-		
-		free( pFileData );		
+
+		free( pFileData );
 	}
 
 	void SetupIncludeDirectories( CSpecificConfig *pConfig, const char *szScriptName )
@@ -528,13 +528,13 @@ public:
 	}
 
 protected:
-	
+
 	virtual bool StartPropertySection( configKeyword_e keyword, bool *pbShouldSkip )
 	{
 		m_bInLinker = ( keyword == KEYWORD_LINKER || keyword == KEYWORD_LIBRARIAN );
 		return true;
 	}
-	
+
 	virtual void HandleProperty( const char *pProperty, const char *pCustomScriptData )
 	{
 		// We don't want the $OutputFile property from the $BrowseInformation section.
@@ -571,7 +571,7 @@ void CProjectDependencyGraph::BuildProjectDependencies( int nBuildProjectDepsFla
 {
 	m_bFullDependencySet = ( ( nBuildProjectDepsFlags & BUILDPROJDEPS_FULL_DEPENDENCY_SET ) != 0 );
 	m_nFilesParsedForIncludes = 0;
-	
+
 	if ( m_bFullDependencySet )
 	{
 		Log_Msg( LOG_VPC, "\nBuilding full dependency set (all sources and headers)..." );
@@ -582,7 +582,7 @@ void CProjectDependencyGraph::BuildProjectDependencies( int nBuildProjectDepsFla
 	}
 
 	// Have it iterate ALL projects in the list, with whatever platform conditionals are around.
-	// When it visits a 
+	// When it visits a
 	CUtlVector<projectIndex_t> projectList;
 	CUtlVector<int> oldState;
 
@@ -634,7 +634,7 @@ void CProjectDependencyGraph::BuildProjectDependencies( int nBuildProjectDepsFla
 			int iDefine = oldState[i] >> 16;
 			g_pVPC->m_Conditionals[iDefine].m_bDefined = ( (oldState[i] & 1) != 0 );
 		}
-	}		
+	}
 
 	// Save the expensive work we did into a cache file so it can be used next time.
 	if ( m_bFullDependencySet )
@@ -728,7 +728,7 @@ bool CProjectDependencyGraph::VisitProject( projectIndex_t iProject, const char 
 
 	// Add this project.
 	CDependency_Project *pProject = new CDependency_Project( this );
-	
+
 	char szAbsolute[MAX_PATH];
 	V_MakeAbsolutePath( szAbsolute, sizeof( szAbsolute ), szProjectName );
 	pProject->m_Filename = szAbsolute;
@@ -738,7 +738,7 @@ bool CProjectDependencyGraph::VisitProject( projectIndex_t iProject, const char 
 	m_Projects.AddToTail( pProject );
 	m_AllFiles.Insert( szAbsolute, pProject );
 
-	// Remember various parameters passed to us so we can regenerate this project without having 
+	// Remember various parameters passed to us so we can regenerate this project without having
 	// to call VPC_IterateTargetProjects.
 	pProject->StoreProjectParameters( szProjectName );
 
@@ -775,12 +775,12 @@ bool CProjectDependencyGraph::VisitProject( projectIndex_t iProject, const char 
 	// That'll be something like "tier0_360".
 	char sTargetNameReplacement[MAX_PATH];
 	V_FileBase( pLinkerOutputFile, sTargetNameReplacement, sizeof( sTargetNameReplacement ) );
-	
+
 	// Now add a CDependency for each file.
 	for ( int i=0; i < outputFiles.Count(); i++ )
 	{
 		const char *pFilename = outputFiles[i].String();
-	
+
 		// Replace $(TargetName) and fixup the path.
 		char sReplaced[MAX_PATH], sAbsImportLibrary[MAX_PATH];
 		V_StrSubst( pFilename, "$(TargetName)", sTargetNameReplacement, sReplaced, sizeof( sReplaced ) );
@@ -804,7 +804,7 @@ void CProjectDependencyGraph::GetProjectDependencyTree( projectIndex_t iProject,
 	for ( int i=0; i < m_Projects.Count(); i++)
 	{
 		CDependency_Project *pProject = m_Projects[i];
-	
+
 		if ( pProject->m_iProjectIndex != iProject )
 			continue;
 
@@ -908,7 +908,7 @@ bool CProjectDependencyGraph::LoadCache( const char *pFilename )
 		byte bMore;
 		if ( fread( &bMore, 1, 1, fp ) != 1 || bMore == 0 )
 			break;
-	
+
 		CUtlString filename = ReadString( fp );
 		CDependency *pDep = FindOrCreateDependency( filename.String() );
 		if ( pDep->m_Dependencies.Count() != 0 )
@@ -955,7 +955,7 @@ bool CProjectDependencyGraph::SaveCache( const char *pFilename )
 	for ( int i=m_AllFiles.First(); i != m_AllFiles.InvalidIndex(); i=m_AllFiles.Next( i ) )
 	{
 		CDependency *pDep = m_AllFiles[i];
-		
+
 		// We only care about source files.
 		if ( pDep->m_Type != k_eDependencyType_SourceFile )
 			continue;
@@ -1021,7 +1021,7 @@ void CProjectDependencyGraph::CheckCacheEntries()
 
 		if ( pDep->m_Type != k_eDependencyType_SourceFile )
 			continue;
-	
+
 		int64 fileSize, modTime;
 		if ( !Sys_FileInfo( pDep->m_Filename.String(), fileSize, modTime ) ||
 		     pDep->m_nCacheFileSize != fileSize ||
@@ -1059,7 +1059,7 @@ void CProjectDependencyGraph::RemoveDirtyCacheEntries()
 			}
 		}
 	}
-	
+
 	// Now that any dirty children have flagged their parents as dirty, we can remove them.
 	int iNext;
 	for ( int i=m_AllFiles.First(); i != m_AllFiles.InvalidIndex(); i=iNext )
@@ -1086,7 +1086,7 @@ void CProjectDependencyGraph::MarkAllCacheEntriesValid()
 
 
 
-// This is called by VPC_IterateTargetProjects and all it does is look forf a 
+// This is called by VPC_IterateTargetProjects and all it does is look forf a
 class CGameFilterProjectIterator : public IProjectIterator
 {
 public:
@@ -1094,7 +1094,7 @@ public:
 	{
 		char szAbsolute[MAX_PATH];
 		V_MakeAbsolutePath( szAbsolute, sizeof( szAbsolute ), szProjectName );
-		
+
 		// Ok, we've got an (absolute) project filename. Search all the projects for one with that name.
 		bool bAdded = false;
 		for ( int i=0; i < m_pAllProjectsList->Count(); i++ )

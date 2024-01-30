@@ -21,7 +21,7 @@ void CSurvivalistAward::getWinner()
 {
 	map<PID,bool> isScout;		//to keep track of whether or not a player is a scout now
 	map<PID,bool> wasScout;	//true if a player ever was a scout (and therefore is in contention for the award)
-	
+
 	CEventListIterator it;
 	for (it=g_pMatchInfo->eventList()->begin(); it != g_pMatchInfo->eventList()->end(); ++it)
 	{
@@ -31,7 +31,7 @@ void CSurvivalistAward::getWinner()
 			{
 				PID pid=(*it)->getArgument(0)->asPlayerGetPID();
 				player_class newpc=playerClassNameToClassID((*it)->getArgument(1)->getStringValue());
-				
+
 				if (newpc == PC_SCOUT)
 				{
 					wasScout[pid]=isScout[pid]=true;
@@ -107,4 +107,3 @@ void CSurvivalistAward::extendedinfo(CHTMLFile& html)
 	else
 		html.write("%s only died %li times as a scout!",winnerName.c_str(),numdeaths[winnerID]);
 }
-

@@ -28,23 +28,23 @@ public:
 	}
 
 	virtual void Save( const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave )
-	{		
+	{
 		datamap_t *pArrayTypeDatamap = CTypedescDeducer<FIELD_TYPE>::Deduce( (UTLVECTOR *)NULL );
-		typedescription_t dataDesc = 
+		typedescription_t dataDesc =
 		{
-			(fieldtype_t)FIELD_TYPE, 
-			"elems", 
+			(fieldtype_t)FIELD_TYPE,
+			"elems",
 			{ 0, 0 },
-			1, 
-			FTYPEDESC_SAVE, 
-			NULL, 
-			NULL, 
+			1,
+			FTYPEDESC_SAVE,
+			NULL,
+			NULL,
 			NULL,
 			pArrayTypeDatamap,
 			-1,
 		};
-		
-		datamap_t dataMap = 
+
+		datamap_t dataMap =
 		{
 			&dataDesc,
 			1,
@@ -57,10 +57,10 @@ public:
 			true
 #endif
 		};
-		
+
 		UTLVECTOR *pUtlVector = (UTLVECTOR *)fieldInfo.pField;
 		int nElems = pUtlVector->Count();
-		
+
 		pSave->WriteInt( &nElems, 1 );
 		if ( pArrayTypeDatamap == NULL )
 		{
@@ -79,25 +79,25 @@ public:
 				pSave->WriteAll( &((*pUtlVector)[i]), &dataMap );
 		}
 	}
-	
+
 	virtual void Restore( const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore )
 	{
 		datamap_t *pArrayTypeDatamap = CTypedescDeducer<FIELD_TYPE>::Deduce( (UTLVECTOR *)NULL );
-		typedescription_t dataDesc = 
+		typedescription_t dataDesc =
 		{
-			(fieldtype_t)FIELD_TYPE, 
-			"elems", 
+			(fieldtype_t)FIELD_TYPE,
+			"elems",
 			{ 0, 0 },
-			1, 
-			FTYPEDESC_SAVE, 
-			NULL, 
-			NULL, 
+			1,
+			FTYPEDESC_SAVE,
+			NULL,
+			NULL,
 			NULL,
 			pArrayTypeDatamap,
 			-1,
 		};
-		
-		datamap_t dataMap = 
+
+		datamap_t dataMap =
 		{
 			&dataDesc,
 			1,
@@ -110,11 +110,11 @@ public:
 			true
 #endif
 		};
-		
+
 		UTLVECTOR *pUtlVector = (UTLVECTOR *)fieldInfo.pField;
 
 		int nElems = pRestore->ReadInt();
-		
+
 		pUtlVector->SetCount( nElems );
 		if ( pArrayTypeDatamap == NULL )
 		{
@@ -131,9 +131,9 @@ public:
 			dataDesc.fieldSizeInBytes = CDatamapFieldSizeDeducer<FIELD_TYPE>::FieldSize();
 			for ( int i = 0; i < nElems; i++ )
 				pRestore->ReadAll( &((*pUtlVector)[i]), &dataMap );
-		}		
+		}
 	}
-	
+
 	virtual void MakeEmpty( const SaveRestoreFieldInfo_t &fieldInfo )
 	{
 		UTLVECTOR *pUtlVector = (UTLVECTOR *)fieldInfo.pField;
@@ -145,7 +145,7 @@ public:
 		UTLVECTOR *pUtlVector = (UTLVECTOR *)fieldInfo.pField;
 		return ( pUtlVector->Count() == 0 );
 	}
-	
+
 };
 
 //-------------------------------------

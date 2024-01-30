@@ -220,7 +220,7 @@ float Fresnel4( const float3 vNormal, const float3 vEyeDir )
 //
 //    |
 //    |    .  M . . . H
-//    | . 
+//    | .
 //    L
 //    |
 //    +----------------
@@ -402,12 +402,12 @@ float3 PixelShaderDoLighting( const float3 worldPos, const float3 worldNormal,
 				   const bool bAmbientLight, const float4 lightAtten, const float3 cAmbientCube[6],
 				   in sampler NormalizeSampler, const int nNumLights, PixelShaderLightInfo cLightInfo[3],
 				   const bool bHalfLambert,
-				   
+
 				   // New optional/experimental parameters
 				   const bool bDoAmbientOcclusion, const float fAmbientOcclusion,
 				   const bool bDoLightingWarp, in sampler lightWarpSampler )
 {
-	float3 linearColor = PixelShaderDoLightingLinear( worldPos, worldNormal, staticLightingColor, 
+	float3 linearColor = PixelShaderDoLightingLinear( worldPos, worldNormal, staticLightingColor,
 													  bStaticLight, bAmbientLight, lightAtten,
 													  cAmbientCube, NormalizeSampler, nNumLights, cLightInfo, bHalfLambert,
 													  bDoAmbientOcclusion, fAmbientOcclusion,

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -120,7 +120,7 @@ public:
 	Vector			m_centerBase;
 };
 
- 
+
 // really this is indexing a vertex, but the iteration code needs a triangle + edge index.
 // edge is always 0-2 so return it in the bottom 2 bits
 static unsigned short GetPackedIndex( const IVP_Compact_Ledge *pLedge, const IVP_U_Float_Point &dir )
@@ -217,7 +217,7 @@ void InitLeafmap( IVP_Compact_Ledge *pLedge, leafmap_t *pLeafmapOut )
 			}
 			int vertCount = (maxV-minV) + 1;
 			// max possible verts is < 48, so this is just here for some real failure
-			// or vert sharing with a large collection of convexes.  In that case the 
+			// or vert sharing with a large collection of convexes.  In that case the
 			// number could be high, but this approach to implementing support is invalid
 			// because the vert range is polluted
 			if ( vertCount < BRUTE_FORCE_VERT_COUNT )
@@ -330,8 +330,8 @@ public:
 	// UNDONE: Do general ITraceObject center/offset computation and move the ray to account
 	// for this delta like we do in TraceSweepIVP()
 	// Then we can shrink the radius of objects with mass centers NOT at the origin
-	virtual float Radius( void ) const 
-	{ 
+	virtual float Radius( void ) const
+	{
 		return m_radius;
 	}
 
@@ -451,7 +451,7 @@ private:
 
 // GCC 4.2.1 can't handle loading a static const into a m128 register :(
 #ifdef WIN32
-static const 
+static const
 #endif
 fltx4 g_IVPToHLDir = { 1.0f, -1.0f, 1.0f, 1.0f };
 
@@ -510,7 +510,7 @@ CTraceIVP::CTraceIVP( const CPhysCollide *pCollide, const Vector &origin, const 
 	ConvertPositionToIVP( origin, m_matrix.vv );
 
 	forward.w = HL2IVP(origin.x);
-	// This vector is supposed to be left, so we'll negate it later, but we don't want to 
+	// This vector is supposed to be left, so we'll negate it later, but we don't want to
 	// negate the position, so add another minus to cancel out
 	right.w = -HL2IVP(origin.y);
 	up.w = HL2IVP(origin.z);
@@ -528,17 +528,17 @@ CTraceIVP::CTraceIVP( const CPhysCollide *pCollide, const Vector &origin, const 
 	float scale = IVP2HL(1.0f);
 	float negScale = IVP2HL(-1.0f);
 	// copy the existing IVP local->world matrix (swap Y & Z)
-	m_ivpLocalToHLWorld.m_flMatVal[0][0] = m_matrix.get_elem(IVP_INDEX_X,0) * scale; 
-	m_ivpLocalToHLWorld.m_flMatVal[0][1] = m_matrix.get_elem(IVP_INDEX_X,1) * scale; 
-	m_ivpLocalToHLWorld.m_flMatVal[0][2] = m_matrix.get_elem(IVP_INDEX_X,2) * scale; 
+	m_ivpLocalToHLWorld.m_flMatVal[0][0] = m_matrix.get_elem(IVP_INDEX_X,0) * scale;
+	m_ivpLocalToHLWorld.m_flMatVal[0][1] = m_matrix.get_elem(IVP_INDEX_X,1) * scale;
+	m_ivpLocalToHLWorld.m_flMatVal[0][2] = m_matrix.get_elem(IVP_INDEX_X,2) * scale;
 
-	m_ivpLocalToHLWorld.m_flMatVal[1][0] = m_matrix.get_elem(IVP_INDEX_Z,0) * scale; 
-	m_ivpLocalToHLWorld.m_flMatVal[1][1] = m_matrix.get_elem(IVP_INDEX_Z,1) * scale; 
-	m_ivpLocalToHLWorld.m_flMatVal[1][2] = m_matrix.get_elem(IVP_INDEX_Z,2) * scale; 
+	m_ivpLocalToHLWorld.m_flMatVal[1][0] = m_matrix.get_elem(IVP_INDEX_Z,0) * scale;
+	m_ivpLocalToHLWorld.m_flMatVal[1][1] = m_matrix.get_elem(IVP_INDEX_Z,1) * scale;
+	m_ivpLocalToHLWorld.m_flMatVal[1][2] = m_matrix.get_elem(IVP_INDEX_Z,2) * scale;
 
-	m_ivpLocalToHLWorld.m_flMatVal[2][0] = m_matrix.get_elem(IVP_INDEX_Y,0) * negScale; 
-	m_ivpLocalToHLWorld.m_flMatVal[2][1] = m_matrix.get_elem(IVP_INDEX_Y,1) * negScale; 
-	m_ivpLocalToHLWorld.m_flMatVal[2][2] = m_matrix.get_elem(IVP_INDEX_Y,2) * negScale; 
+	m_ivpLocalToHLWorld.m_flMatVal[2][0] = m_matrix.get_elem(IVP_INDEX_Y,0) * negScale;
+	m_ivpLocalToHLWorld.m_flMatVal[2][1] = m_matrix.get_elem(IVP_INDEX_Y,1) * negScale;
+	m_ivpLocalToHLWorld.m_flMatVal[2][2] = m_matrix.get_elem(IVP_INDEX_Y,2) * negScale;
 
 	m_ivpLocalToHLWorld.m_flMatVal[0][3] = m_matrix.vv.k[0] * scale;
 	m_ivpLocalToHLWorld.m_flMatVal[1][3] = m_matrix.vv.k[2] * scale;
@@ -1129,7 +1129,7 @@ bool CTraceSolverSweptObject::SweepHitsSphereOS( const IVP_U_Float_Point *sphere
 	// If this is a 0 length ray, then the conservative test is 100% accurate
 	if ( m_rayLengthOS > 0 )
 	{
-		// Calculate the perpendicular distance to the sphere 
+		// Calculate the perpendicular distance to the sphere
 		// The perpendicular forms a right triangle with the vector between the ray/sphere centers
 		// and the ray direction vector.  Calculate the projection of the hypoteneuse along the perpendicular
 		IVP_U_Float_Point h;
@@ -1197,7 +1197,7 @@ inline void CTraceSolverSweptObject::SweepAgainstNode(const IVP_Compact_Ledgetre
 
 void CTraceSolverSweptObject::SweepLedgeTree_r( const IVP_Compact_Ledgetree_Node *node )
 {
-	IVP_U_Float_Point center; 
+	IVP_U_Float_Point center;
 	center.set(node->center.k);
 	if ( !SweepHitsSphereOS( &center, node->radius ) )
 		return;
@@ -1378,46 +1378,46 @@ static void CalculateSeparatingPlane( trace_t *ptr, ITraceObject *sweepObject, C
 
 
 //-----------------------------------------------------------------------------
-// What is this doing? It's going to be hard to understand without reading a 
+// What is this doing? It's going to be hard to understand without reading a
 // reference on the GJK algorithm.  But here's a quick overview:
-// Basically (remember this is glossing over a ton of details!) the 
-// algorithm is building up a simplex that is trying to contain the origin.  
-// A simplex is a point, line segment, triangle, or tetrahedron - depending on 
-// how many verts you have.  
-// Anyway it slowly builds one of these one vert at a time with a directed search. 
-// So you start out with a point, then it guesses the next point that would be 
-// most likely to form a line through the origin.  If the line doesn't go quite 
-// through the origin it tries to find a third point to capture the origin 
-// within a triangle.  If that doesn't work it tries to make a 
+// Basically (remember this is glossing over a ton of details!) the
+// algorithm is building up a simplex that is trying to contain the origin.
+// A simplex is a point, line segment, triangle, or tetrahedron - depending on
+// how many verts you have.
+// Anyway it slowly builds one of these one vert at a time with a directed search.
+// So you start out with a point, then it guesses the next point that would be
+// most likely to form a line through the origin.  If the line doesn't go quite
+// through the origin it tries to find a third point to capture the origin
+// within a triangle.  If that doesn't work it tries to make a
 // tent (tetrahedron) out of the triangle to capture the origin.
 //
-// But at each step if the origin is not contained within, it tries to 
-// find which sub-feature is most likely to be in the solution.  In 
-// the point case it's always just the point.  In the line/edge case it 
-// can reduce back to a point (origin is closest to one of the points) 
-// or be the line (origin is closest to some point between them).  
-// Same with the triangle (origin is closest to one vert - vert, origin is 
-// closest to one edge - reduce to that edge, origin is closes to some point 
-// in the triangle's surface - keep the whole triangle).  With a tetrahedron 
-// keeping the whole isn't possible unless the origin is inside and you're 
+// But at each step if the origin is not contained within, it tries to
+// find which sub-feature is most likely to be in the solution.  In
+// the point case it's always just the point.  In the line/edge case it
+// can reduce back to a point (origin is closest to one of the points)
+// or be the line (origin is closest to some point between them).
+// Same with the triangle (origin is closest to one vert - vert, origin is
+// closest to one edge - reduce to that edge, origin is closes to some point
+// in the triangle's surface - keep the whole triangle).  With a tetrahedron
+// keeping the whole isn't possible unless the origin is inside and you're
 // done (the origin has been captured).
 //
-// "You're done"  means that there is an intersection between the two 
-// volumes.  Assuming you're testing a sweep, it still has to test whether that 
+// "You're done"  means that there is an intersection between the two
+// volumes.  Assuming you're testing a sweep, it still has to test whether that
 // sweep can be shrunk back until there is no intersection.  So it checks that.
 // If it's a swept test so it does the search with SolveMeshIntersection
-// Otherwise, there's nothing to shrink, so you set startsolid and allsolid 
+// Otherwise, there's nothing to shrink, so you set startsolid and allsolid
 // because it's a point/box in solid test, not a swept box/ray hits solid test.
 //
-// Why is it trying to capture the origin? Basically GJK sets up a space 
+// Why is it trying to capture the origin? Basically GJK sets up a space
 // and a convex hull (the minkowski sum) in that space.  The convex hull
 // represents a field of the distances between different features of the pair
-// of objects (e.g. for two circles, this minkowski sum is just a circle).  
-// So the origin is the point in the field where the distance between the 
+// of objects (e.g. for two circles, this minkowski sum is just a circle).
+// So the origin is the point in the field where the distance between the
 // objects is zero.  This means they intersect.
 //-----------------------------------------------------------------------------
 #if defined(_X360)
-inline void VectorNormalize_FastLowPrecision( Vector &a ) 
+inline void VectorNormalize_FastLowPrecision( Vector &a )
 {
 	float quad = (a.x*a.x) + (a.y*a.y) + (a.z*a.z);
 	float ilen = __frsqrte(quad);
@@ -1501,7 +1501,7 @@ bool CTraceSolver::SweepSingleConvex( void )
 				}
 
 				// This trace is going to miss, but not by enough.
-				// Hit the separating plane instead 
+				// Hit the separating plane instead
 				float dot = -DotProduct( m_ray->m_delta, normal );
 				if ( dot < -(m_epsilon*0.1) || (dot < -1e-4f && testLen < (m_epsilon*0.9)) )
 				{
@@ -1558,7 +1558,7 @@ bool CTraceSolver::SweepSingleConvex( void )
 				}
 				else
 				{
-					// UNDONE: This case happens when you start solid as well as when a false 
+					// UNDONE: This case happens when you start solid as well as when a false
 					// intersection is detected at the very end of the trace
 					m_trace.startsolid = true;
 					m_trace.allsolid = true;
@@ -2324,7 +2324,7 @@ float CTraceSolver::SolveMeshIntersection2D( simplex_t &simplex )
 	if ( simplex.vertCount != 3 )
 		return 0.0f;
 
-	// note: This should really do this iteratively in case the triangle is coplanar with another triangle that 
+	// note: This should really do this iteratively in case the triangle is coplanar with another triangle that
 	// is between this one and the edge of the sum in this plane
 	float dist = simplex.ClipRayToTriangle( m_ray->m_dir, m_epsilon );
 	return dist;

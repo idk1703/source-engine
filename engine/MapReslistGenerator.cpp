@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -36,10 +36,10 @@ extern engineparms_t host_parms;
 #define ENGINE_RESLIST_FILE "engine.lst"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void MapReslistGenerator_Usage()
-{ 
+{
 	Msg( "-makereslists usage:\n" );
 	Msg( "  [ -makereslists <optionalscriptfile> ] -- script file to control more complex makereslists operations (multiple passes, etc.)\n" );
 	Msg( "  [ -usereslistfile filename ] -- get map list from specified file, default is to build for maps/*.bsp\n" );
@@ -100,7 +100,7 @@ static bool ReslistLogLessFunc( CUtlString const &pLHS, CUtlString const &pRHS )
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CMapReslistGenerator::CMapReslistGenerator() : 
+CMapReslistGenerator::CMapReslistGenerator() :
 	m_AlreadyWrittenFileNames( 0, 0, true ),
 	m_DeletionListWarnings( 0, 0, DefLessFunc( CUtlSymbol ) ),
 	m_EngineLog( 0, 0, ReslistLogLessFunc ),
@@ -441,8 +441,8 @@ void CMapReslistGenerator::StartReslistGeneration()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *mapname - 
+// Purpose:
+// Input  : *mapname -
 //-----------------------------------------------------------------------------
 void CMapReslistGenerator::SetPrefix( char const *mapname )
 {
@@ -450,7 +450,7 @@ void CMapReslistGenerator::SetPrefix( char const *mapname )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CMapReslistGenerator::LogPrefix()
@@ -588,7 +588,7 @@ void CMapReslistGenerator::RunFrame()
 			{
 				// restart at specified map
 				CommandLine()->RemoveParm( "-startmap" );
-				CommandLine()->AppendParm( "-startmap", m_Maps[m_iCurrentMap].name );	
+				CommandLine()->AppendParm( "-startmap", m_Maps[m_iCurrentMap].name );
 				HostState_Restart();
 			}
 		}
@@ -799,7 +799,7 @@ void CMapReslistGenerator::FileSystemLoggingFunc(const char *fullPathFileName, c
 #define DELETIONS_WARNINGS_FILE		"undelete.lst"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapReslistGenerator::EnableDeletionsTracking()
 {
@@ -846,7 +846,7 @@ void CMapReslistGenerator::EnableDeletionsTracking()
 
 					Q_FixSlashes( filename );
 					Q_strlower( filename );
-	
+
 					m_DeletionList.AddString( filename );
 
 					++deletions;
@@ -885,7 +885,7 @@ void CMapReslistGenerator::EnableDeletionsTracking()
 
 					Q_FixSlashes( com_token );
 					Q_strlower( com_token );
-	
+
 					CUtlSymbol sym = m_DeletionListWarningsSymbols.AddString( com_token );
 					int idx = m_DeletionListWarnings.Find( sym );
 					if ( idx == m_DeletionListWarnings.InvalidIndex() )
@@ -900,7 +900,7 @@ void CMapReslistGenerator::EnableDeletionsTracking()
 
 		g_pFileSystem->Close(warningsfile);
 	}
-	
+
 	// Hook up logging function
 	g_pFileSystem->AddLoggingFunc( &TrackDeletionsLoggingFunc );
 
@@ -909,8 +909,8 @@ void CMapReslistGenerator::EnableDeletionsTracking()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fullPathFileName - 
+// Purpose:
+// Input  : *fullPathFileName -
 //-----------------------------------------------------------------------------
 void CMapReslistGenerator::TrackDeletions( const char *fullPathFileName )
 {
@@ -968,7 +968,7 @@ void CMapReslistGenerator::TrackDeletionsLoggingFunc(const char *fullPathFileNam
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapReslistGenerator::Shutdown()
 {
@@ -1006,5 +1006,3 @@ void CMapReslistGenerator::SpewTrackedDeletionsLog()
 
 	g_pFileSystem->Close( hUndeleteFile );
 }
-
-	

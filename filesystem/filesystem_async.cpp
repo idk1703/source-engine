@@ -2,14 +2,14 @@
 //
 // Purpose: CBaseFileSystem Async Operation
 //
-//			The CBaseFileSystem methods implement the IFileSystem 
-//			asynchronous entry points. The model for reads currently is a 
-//			callback model where the callback can take place either in the 
-//			context of the main thread or the worker thread. It would be 
-//			easy to do a polled model later. Async operations return a 
-//			handle which is used to refer to the operation later. The 
-//			handle is actually a pointer to a reference counted "job" 
-//			object that holds all the context, status, and results of an 
+//			The CBaseFileSystem methods implement the IFileSystem
+//			asynchronous entry points. The model for reads currently is a
+//			callback model where the callback can take place either in the
+//			context of the main thread or the worker thread. It would be
+//			easy to do a polled model later. Async operations return a
+//			handle which is used to refer to the operation later. The
+//			handle is actually a pointer to a reference counted "job"
+//			object that holds all the context, status, and results of an
 //			operation.
 //
 //=============================================================================
@@ -39,7 +39,7 @@
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 ConVar async_mode( "async_mode", "0", 0, "Set the async filesystem mode (0 = async, 1 = synchronous)" );
 #define GetAsyncMode() ( (FSAsyncMode_t)( async_mode.GetInt() ) )
@@ -83,7 +83,7 @@ CON_COMMAND( async_resume, "" )
 // Need to support old external. New implementation has less granular priority for efficiency
 //-----------------------------------------------------------------------------
 
-inline JobPriority_t ConvertPriority( int iFilesystemPriority )		
+inline JobPriority_t ConvertPriority( int iFilesystemPriority )
 {
 	if ( iFilesystemPriority == 0 )
 	{
@@ -257,7 +257,7 @@ public:
 //---------------------------------------------------------
 // A standard filesystem read job
 //---------------------------------------------------------
-class CFileAsyncReadJob : public CFileAsyncJob, 
+class CFileAsyncReadJob : public CFileAsyncJob,
 						  protected FileAsyncRequest_t
 {
 public:
@@ -306,7 +306,7 @@ public:
 
 	virtual char const	*Describe()
 	{
-		return pszFilename; 
+		return pszFilename;
 	}
 
 	const FileAsyncRequest_t *GetRequest() const
@@ -361,14 +361,14 @@ public:
 		return retval;
 	}
 
-	virtual JobStatus_t GetResult( void **ppData, int *pSize ) 
-	{ 
+	virtual JobStatus_t GetResult( void **ppData, int *pSize )
+	{
 		if ( m_pResultData )
 		{
 			*ppData = m_pResultData;
 			*pSize = m_nResultSize;
 		}
-		return GetStatus(); 
+		return GetStatus();
 	}
 
 	static void InterceptCallback( const FileAsyncRequest_t &request, int nBytesRead, FSAsyncStatus_t result )
@@ -585,7 +585,7 @@ private:
 // Job to find out file size
 //---------------------------------------------------------
 
-class CFileAsyncFileSizeJob : public CFileAsyncReadJob 
+class CFileAsyncFileSizeJob : public CFileAsyncReadJob
 {
 public:
 	CFileAsyncFileSizeJob( const FileAsyncRequest_t &fromRequest, CBaseFileSystem *pOwnerFileSystem )
@@ -618,7 +618,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CBaseFileSystem::InitAsync()
 {
@@ -693,7 +693,7 @@ void CBaseFileSystem::InitAsync()
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CBaseFileSystem::ShutdownAsync()
 {
@@ -706,7 +706,7 @@ void CBaseFileSystem::ShutdownAsync()
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CBaseFileSystem::AsyncAddFetcher( IAsyncFileFetch *pFetcher )
 {
@@ -714,7 +714,7 @@ void CBaseFileSystem::AsyncAddFetcher( IAsyncFileFetch *pFetcher )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CBaseFileSystem::AsyncRemoveFetcher( IAsyncFileFetch *pFetcher )
 {
@@ -749,7 +749,7 @@ void CBaseFileSystem::AsyncRemoveFetcher( IAsyncFileFetch *pFetcher )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CBaseFileSystem::RemoveAsyncCustomFetchJob( CFileAsyncReadJob *pJob )
 {
@@ -785,7 +785,7 @@ void CBaseFileSystem::RemoveAsyncCustomFetchJob( CFileAsyncReadJob *pJob )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 FSAsyncStatus_t CBaseFileSystem::AsyncReadMultiple( const FileAsyncRequest_t *pRequests, int nRequests, FSAsyncControl_t *phControls )
 {
@@ -793,7 +793,7 @@ FSAsyncStatus_t CBaseFileSystem::AsyncReadMultiple( const FileAsyncRequest_t *pR
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 FSAsyncStatus_t CBaseFileSystem::AsyncReadMultipleCreditAlloc( const FileAsyncRequest_t *pRequests, int nRequests, const char *pszFile, int line, FSAsyncControl_t *phControls )
 {
@@ -833,7 +833,7 @@ FSAsyncStatus_t CBaseFileSystem::AsyncReadMultipleCreditAlloc( const FileAsyncRe
 				pJob->m_hCustomFetcherHandle = handle;
 				break;
 			}
-			
+
 			// !KLUDGE! For now, this is the only other acceptable failure
 			Assert ( status == FSASYNC_ERR_NOT_MINE );
 		}
@@ -897,7 +897,7 @@ FSAsyncStatus_t CBaseFileSystem::AsyncReadMultipleCreditAlloc( const FileAsyncRe
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 FSAsyncStatus_t CBaseFileSystem::AsyncWrite(const char *pFileName, const void *pSrc, int nSrcBytes, bool bFreeMemory, bool bAppend, FSAsyncControl_t *pControl )
 {
@@ -934,7 +934,7 @@ FSAsyncStatus_t CBaseFileSystem::AsyncWrite(const char *pFileName, const void *p
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 FSAsyncStatus_t CBaseFileSystem::AsyncWriteFile(const char *pFileName, const CUtlBuffer *pBuff, int nSrcBytes, bool bFreeMemory, bool bAppend, FSAsyncControl_t *pControl )
 {
@@ -971,7 +971,7 @@ FSAsyncStatus_t CBaseFileSystem::AsyncWriteFile(const char *pFileName, const CUt
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 FSAsyncStatus_t CBaseFileSystem::AsyncAppendFile(const char *pAppendToFileName, const char *pAppendFromFileName, FSAsyncControl_t *pControl )
 {
@@ -1007,7 +1007,7 @@ FSAsyncStatus_t CBaseFileSystem::AsyncAppendFile(const char *pAppendToFileName, 
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 CThreadMutex g_AsyncFinishMutex;
 void CBaseFileSystem::AsyncFinishAll( int iToPriority )
@@ -1021,7 +1021,7 @@ void CBaseFileSystem::AsyncFinishAll( int iToPriority )
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 
 static bool AsyncWriteJobFilter( CJob *pJob )
@@ -1040,7 +1040,7 @@ void CBaseFileSystem::AsyncFinishAllWrites()
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 bool CBaseFileSystem::AsyncSuspend()
 {
@@ -1054,7 +1054,7 @@ bool CBaseFileSystem::AsyncSuspend()
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 bool CBaseFileSystem::AsyncResume()
 {
@@ -1067,7 +1067,7 @@ bool CBaseFileSystem::AsyncResume()
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 FSAsyncStatus_t CBaseFileSystem::AsyncBeginRead( const char *pszFile, FSAsyncFile_t *phFile )
 {
@@ -1084,7 +1084,7 @@ FSAsyncStatus_t CBaseFileSystem::AsyncBeginRead( const char *pszFile, FSAsyncFil
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 FSAsyncStatus_t CBaseFileSystem::AsyncEndRead( FSAsyncFile_t hFile )
 {
@@ -1098,7 +1098,7 @@ FSAsyncStatus_t CBaseFileSystem::AsyncEndRead( FSAsyncFile_t hFile )
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 FSAsyncStatus_t CBaseFileSystem::AsyncFinish( FSAsyncControl_t hControl, bool wait )
 {
@@ -1132,7 +1132,7 @@ FSAsyncStatus_t CBaseFileSystem::AsyncFinish( FSAsyncControl_t hControl, bool wa
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 FSAsyncStatus_t CBaseFileSystem::AsyncGetResult( FSAsyncControl_t hControl, void **ppData, int *pSize )
 {
@@ -1158,7 +1158,7 @@ FSAsyncStatus_t CBaseFileSystem::AsyncGetResult( FSAsyncControl_t hControl, void
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 FSAsyncStatus_t CBaseFileSystem::AsyncAbort( FSAsyncControl_t hControl )
 {
@@ -1200,7 +1200,7 @@ FSAsyncStatus_t CBaseFileSystem::AsyncAbort( FSAsyncControl_t hControl )
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 FSAsyncStatus_t CBaseFileSystem::AsyncStatus( FSAsyncControl_t hControl )
 {
@@ -1214,7 +1214,7 @@ FSAsyncStatus_t CBaseFileSystem::AsyncStatus( FSAsyncControl_t hControl )
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 FSAsyncStatus_t CBaseFileSystem::AsyncFlush()
 {
@@ -1236,7 +1236,7 @@ FSAsyncStatus_t CBaseFileSystem::AsyncFlush()
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 FSAsyncStatus_t CBaseFileSystem::AsyncSetPriority(FSAsyncControl_t hControl, int newPriority)
 {
@@ -1261,7 +1261,7 @@ FSAsyncStatus_t CBaseFileSystem::AsyncSetPriority(FSAsyncControl_t hControl, int
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CBaseFileSystem::AsyncAddRef( FSAsyncControl_t hControl )
 {
@@ -1274,7 +1274,7 @@ void CBaseFileSystem::AsyncAddRef( FSAsyncControl_t hControl )
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CBaseFileSystem::AsyncRelease( FSAsyncControl_t hControl )
 {
@@ -1287,7 +1287,7 @@ void CBaseFileSystem::AsyncRelease( FSAsyncControl_t hControl )
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 
 FSAsyncStatus_t CBaseFileSystem::SyncRead( const FileAsyncRequest_t &request )
@@ -1306,7 +1306,7 @@ FSAsyncStatus_t CBaseFileSystem::SyncRead( const FileAsyncRequest_t &request )
 	AsyncOpenedFile_t *pHeldFile = ( request.hSpecificAsyncFile != FS_INVALID_ASYNC_FILE ) ? g_AsyncOpenedFiles.Get( request.hSpecificAsyncFile ) : NULL;
 
 	FileHandle_t hFile;
-	
+
 	if ( !pHeldFile || pHeldFile->hFile == FILESYSTEM_INVALID_HANDLE )
 	{
 		hFile = OpenEx( request.pszFilename, "rb", 0, request.pszPathID );
@@ -1402,7 +1402,7 @@ FSAsyncStatus_t CBaseFileSystem::SyncRead( const FileAsyncRequest_t &request )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 FSAsyncStatus_t CBaseFileSystem::SyncGetFileSize( const FileAsyncRequest_t &request )
 {
@@ -1414,7 +1414,7 @@ FSAsyncStatus_t CBaseFileSystem::SyncGetFileSize( const FileAsyncRequest_t &requ
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 FSAsyncStatus_t CBaseFileSystem::SyncWrite(const char *pszFilename, const void *pSrc, int nSrcBytes, bool bFreeMemory, bool bAppend )
 {
@@ -1442,7 +1442,7 @@ FSAsyncStatus_t CBaseFileSystem::SyncWrite(const char *pszFilename, const void *
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 FSAsyncStatus_t CBaseFileSystem::SyncAppendFile(const char *pAppendToFileName, const char *pAppendFromFileName )
 {
@@ -1488,7 +1488,7 @@ FSAsyncStatus_t CBaseFileSystem::SyncAppendFile(const char *pAppendToFileName, c
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CBaseFileSystem::DoAsyncCallback( const FileAsyncRequest_t &request, void *pData, int nBytesRead, FSAsyncStatus_t result )
 {
@@ -1535,4 +1535,3 @@ void CBaseFileSystem::DoAsyncCallback( const FileAsyncRequest_t &request, void *
 #endif
 	}
 }
-

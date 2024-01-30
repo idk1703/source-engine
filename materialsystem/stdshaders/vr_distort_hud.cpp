@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -50,7 +50,7 @@ public:
 
 BEGIN_VS_SHADER( vr_distort_hud, "Help for hud warp" )
 	BEGIN_SHADER_PARAMS
-	
+
 		SHADER_PARAM( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "_rt_gui", "" )
 		SHADER_PARAM( DISTORTMAP, SHADER_PARAM_TYPE_TEXTURE, "vr_distort_map_left", "" )
 		SHADER_PARAM( DISTORTBOUNDS, SHADER_PARAM_TYPE_VEC4, "[ 0 0 1 1 ]", "" )

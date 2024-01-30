@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,9 +37,9 @@ public:
 
 	// Called every time light is added to a face.
 	// NOTE: This is the ONLY threadsafe function in IIncremental.
-	virtual void		AddLightToFace( 
-		IncrementalLightID lightID, 
-		int iFace, 
+	virtual void		AddLightToFace(
+		IncrementalLightID lightID,
+		int iFace,
 		int iSample,
 		int lmSize,
 		float dot,

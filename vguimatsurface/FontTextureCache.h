@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -64,7 +64,7 @@ private:
 		HCacheEntry		nextEntry;
 		HCacheEntry		prevEntry;
 	};
-	
+
 	// a single texture page
 	struct Page_t
 	{
@@ -91,7 +91,7 @@ private:
 	// cache
 	typedef CUtlVector<Page_t>	FontPageList_t;
 	FontPageList_t				m_PageList;
-	
+
 	int			m_pCurrPage[FONT_PAGE_SIZE_COUNT];
 	HCacheEntry	m_LRUListHeadIndex;
 	static int	s_pFontPageSize[FONT_PAGE_SIZE_COUNT];

@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -26,7 +26,7 @@ PLATFORM_INTERFACE void CatchAndWriteMiniDump( FnWMain pfn, int argc, tchar *arg
 
 // The ExceptionInfo_t struct is a typeless data struct
 // which is OS-dependent and should never be used by external code.
-// Just pass it back into MinidumpSetUnhandledExceptionFunction 
+// Just pass it back into MinidumpSetUnhandledExceptionFunction
 struct ExceptionInfo_t;
 
 
@@ -49,7 +49,7 @@ PLATFORM_INTERFACE FnMiniDump SetMiniDumpFunction( FnMiniDump pfn );
 
 
 // NOTE: Matches windows.h
-enum MinidumpType_t 
+enum MinidumpType_t
 {
 	MINIDUMP_Normal                           = 0x00000000,
 	MINIDUMP_WithDataSegs                     = 0x00000001,
@@ -65,12 +65,12 @@ enum MinidumpType_t
 	MINIDUMP_WithoutOptionalData              = 0x00000400,
 	MINIDUMP_WithFullMemoryInfo               = 0x00000800,
 	MINIDUMP_WithThreadInfo                   = 0x00001000,
-	MINIDUMP_WithCodeSegs                     = 0x00002000 
+	MINIDUMP_WithCodeSegs                     = 0x00002000
 };
 
-PLATFORM_INTERFACE bool WriteMiniDumpUsingExceptionInfo( 
+PLATFORM_INTERFACE bool WriteMiniDumpUsingExceptionInfo(
 	unsigned int uStructuredExceptionCode,
-	ExceptionInfo_t *pExceptionInfo, 
+	ExceptionInfo_t *pExceptionInfo,
 	uint32 nMinidumpTypeFlags,	// OR-ed together MinidumpType_t flags
 	tchar *ptchMinidumpFileNameBuffer = NULL
 	);

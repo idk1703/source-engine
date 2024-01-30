@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -55,10 +55,10 @@ public:
 	virtual void OnNotifyDependent( CMapClass *pObject, Notify_Dependent_t eNotifyType );
 
 	void DoTransform( const VMatrix &matrix );
-	
-	void OnPaste( CMapClass *pCopy, CMapWorld *pSourceWorld, CMapWorld *pDestWorld, 
+
+	void OnPaste( CMapClass *pCopy, CMapWorld *pSourceWorld, CMapWorld *pDestWorld,
 				  const CMapObjectList &OriginalList, CMapObjectList &NewList);
-	void OnClone( CMapClass *pClone, CMapWorld *pWorld, 
+	void OnClone( CMapClass *pClone, CMapWorld *pWorld,
 				  const CMapObjectList &OriginalList, CMapObjectList &NewList );
 	void OnUndoRedo( void );
 
@@ -110,7 +110,7 @@ private:
 	//
 	struct Basis_t
 	{
-		CMapFace	*m_pFace;					// Index to the face the basis were derived from	
+		CMapFace	*m_pFace;					// Index to the face the basis were derived from
 		Vector		m_vecOrigin;				// Origin of basis vectors (in plane)
 		Vector		m_vecAxes[3];				// Basis vectors
 		int			m_nAxesFlip[3];				// u, v, n flip values (3 bits x,y,z) - saved off the z components of the first 3 uv points
@@ -133,14 +133,14 @@ private:
 	//=========================================================================
 	//
 	// Handle Data
-	//		
+	//
 	struct Handles_t
 	{
 		int			m_iHit;									 // Index of the selected handle
 		Vector2D	m_vecBasisCoords[OVERLAY_HANDLES_COUNT]; // U,V coordinates of the 4 corners in the editable plane (use basis)
 		Vector		m_vec3D[OVERLAY_HANDLES_COUNT];			 // World space handles for snap testing
 	};
-		
+
 	void Handles_Clear( void );
 	void Handles_Build3D();
 	void Handles_Render3D( CRender3D *pRender );
@@ -152,7 +152,7 @@ private:
 	//=========================================================================
 	//
 	// ClipFace Data
-	//		
+	//
 	struct BlendData_t
 	{
 		void Init()
@@ -161,7 +161,7 @@ private:
 			memset(m_iPoints, 0, sizeof(m_iPoints));
 			memset(m_flBlends, 0, sizeof(m_flBlends));
 		}
-		
+
 		int		m_nType;			// type of blend (point, edge, barycentric)
 		short	m_iPoints[3];		// displacement point indices
 		float	m_flBlends[3];		// blending values
@@ -175,17 +175,17 @@ private:
 		CUtlVector<Vector>			m_aDispPointUVs;		// z is always 0 (need to be this way to share functions!)
 		CUtlVector<Vector2D>		m_aTexCoords[NUM_CLIPFACE_TEXCOORDS];
 		CUtlVector<BlendData_t>		m_aBlends;
-		
+
 		ClipFace_t()
 		{
 			m_pBuildFace = NULL;
 			m_nPointCount = 0;
 		}
 
-		~ClipFace_t()				
-		{ 
-			m_aPoints.Purge(); 
-			m_aDispPointUVs.Purge(); 
+		~ClipFace_t()
+		{
+			m_aPoints.Purge();
+			m_aDispPointUVs.Purge();
 			m_aBlends.Purge();
 
 			for ( int iCoord = 0; iCoord < NUM_CLIPFACE_TEXCOORDS; ++iCoord )
@@ -251,7 +251,7 @@ private:
 	//
 	// Transform
 	//
-		
+
 	// Utility
 	void OverlayUVToOverlayPlane( const Vector2D &vecUV, Vector &vecPoint );
 	void OverlayPlaneToOverlayUV( const Vector &vecPoint, Vector2D &vecUV );

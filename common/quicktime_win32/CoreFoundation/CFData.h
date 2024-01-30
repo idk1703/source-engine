@@ -10,7 +10,7 @@
 #if defined(__cplusplus)
 extern "C" {
 #endif
-    
+
 typedef const struct __CFData * CFDataRef;
 typedef struct __CFData * CFMutableDataRef;
 
@@ -22,7 +22,7 @@ CFDataRef CFDataCreate(CFAllocatorRef allocator, const UInt8 *bytes, CFIndex len
 
 CF_EXPORT
 CFDataRef CFDataCreateWithBytesNoCopy(CFAllocatorRef allocator, const UInt8 *bytes, CFIndex length, CFAllocatorRef bytesDeallocator);
-    /* Pass kCFAllocatorNull as bytesDeallocator to assure the bytes aren't freed */
+	/* Pass kCFAllocatorNull as bytesDeallocator to assure the bytes aren't freed */
 
 CF_EXPORT
 CFDataRef CFDataCreateCopy(CFAllocatorRef allocator, CFDataRef theData);
@@ -43,7 +43,7 @@ CF_EXPORT
 UInt8 *CFDataGetMutableBytePtr(CFMutableDataRef theData);
 
 CF_EXPORT
-void CFDataGetBytes(CFDataRef theData, CFRange range, UInt8 *buffer); 
+void CFDataGetBytes(CFDataRef theData, CFRange range, UInt8 *buffer);
 
 CF_EXPORT
 void CFDataSetLength(CFMutableDataRef theData, CFIndex length);
@@ -65,4 +65,3 @@ void CFDataDeleteBytes(CFMutableDataRef theData, CFRange range);
 #endif
 
 #endif /* ! __COREFOUNDATION_CFDATA__ */
-

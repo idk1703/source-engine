@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,10 +24,10 @@ public:
 
 	// Create a gasoline blob.
 	// flAirLifetime specifies how long it takes to fizzle out in the air.
-	static CGasolineBlob*	Create( 
-		CBaseEntity *pOwner, 
-		const Vector &vOrigin, 
-		const Vector &vStartVelocity, 
+	static CGasolineBlob*	Create(
+		CBaseEntity *pOwner,
+		const Vector &vOrigin,
+		const Vector &vStartVelocity,
 		bool bUseGravity,
 		float flAirLifetime,
 		float flLifetime );
@@ -51,7 +51,7 @@ public:
 
 // Implementation.
 public:
-	
+
 	bool	IsLit() const;
 	bool	IsStopped() const;
 	void	SetLit( bool bLit );
@@ -62,17 +62,17 @@ public:
 
 
 private:
-	
+
 	typedef CHandle<CGasolineBlob> CGasolineBlobHandle;
 	CUtlVector<CGasolineBlobHandle>	m_AutoBurnBlobs;
-	
+
 	float			m_flTimeInAir;		// How long we've been in the air.
 	float			m_flAirLifetime;	// How long we're allowed to exist in the air.
 
 	CNetworkVar( float, m_flLitStartTime );	// What time did the blob become lit at?
-	
+
 	CNetworkVar( int, m_BlobFlags );	// Combination of BLOBFLAG_ defines.
-	
+
 	// This is set at the start and is used to know the percentage of lifetime left.
 	CNetworkVar( float, m_flMaxLifetime );
 

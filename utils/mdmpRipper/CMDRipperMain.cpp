@@ -43,7 +43,7 @@ public:
 public:
 	vgui::VPANEL	m_PrevAppFocusPanel;
 };
-		
+
 //-----------------------------------------------------------------------------
 // Purpose: Utility function to pop up a VGUI message box
 //-----------------------------------------------------------------------------
@@ -56,7 +56,7 @@ void VGUIMessageBox( vgui::Panel *pParent, const char *pTitle, const char *pMsg,
 	va_end( marker );
 
 	vgui::MessageBox *dlg = new CModalPreserveMessageBox( pTitle, msg, pParent );
-	dlg->DoModal();	
+	dlg->DoModal();
 	dlg->Activate();
 	dlg->RequestFocus();
 }
@@ -73,7 +73,7 @@ CMDRipperMain::CMDRipperMain( Panel *parent, const char *name  ) : BaseClass( pa
 	Assert( hSQLWrapper != NULL );
 	Assert( sqlWrapperFactory != NULL );
 
-	sqlWrapper = sqlWrapperFactory->Create( "cserr", "steamweb-sql", "root", "" );	
+	sqlWrapper = sqlWrapperFactory->Create( "cserr", "steamweb-sql", "root", "" );
 	if ( !sqlWrapper )
 	{
 		ivgui()->DPrintf( "SQLWrapper is NULL" );
@@ -84,40 +84,40 @@ CMDRipperMain::CMDRipperMain( Panel *parent, const char *name  ) : BaseClass( pa
 	SetSize(800, 600);
 	SetMinimumSize(500, 200);
 
-	SetMinimizeButtonVisible( true );	
+	SetMinimizeButtonVisible( true );
 
 	m_pMenuBar = new vgui::MenuBar( this, "Main Menu Bar" );
 	m_pMenuBar->SetPos( 5, 26 );
 	m_pMenuBar->SetSize( 690, 28 );
 
- 	Menu *pFileMenu = new Menu(NULL, "File");
+	Menu *pFileMenu = new Menu(NULL, "File");
 	pFileMenu->AddMenuItem( "&Open", new KeyValues( "Open" ), this );
 	m_pMenuBar->AddMenu( "&File", pFileMenu );
 
-    Menu *pErrorMenu = new Menu(NULL, "Error");
+	Menu *pErrorMenu = new Menu(NULL, "Error");
 	pErrorMenu->AddMenuItem( "&Error", new KeyValues("Error"), this);
-	m_pMenuBar->AddMenu( "&Error", pErrorMenu );		
+	m_pMenuBar->AddMenu( "&Error", pErrorMenu );
 
 	m_pErrorPanel = new CMDErrorPanel( this, "MDError Panel" );
-	m_pErrorPanel->AddActionSignalTarget( this );		
-	
+	m_pErrorPanel->AddActionSignalTarget( this );
+
 	m_pModulePanel = new CMDModulePanel( this, "MDModule Panel" );
-	m_pModulePanel->AddActionSignalTarget( this );	
-	
+	m_pModulePanel->AddActionSignalTarget( this );
+
 	m_pErrorPanel->AddActionSignalTarget( m_pModulePanel );
 
 	m_pDetailPanel = new CMDDetailPanel( this, "MDDetail Panel" );
 	m_pErrorPanel->AddActionSignalTarget( this );
-	
-	LoadControlSettings( "MDRipperMain.res" );	
+
+	LoadControlSettings( "MDRipperMain.res" );
 
 	m_pErrorPanel->SetVisible( false );
 	m_pModulePanel->SetVisible( false );
-	m_pDetailPanel->SetVisible( false );	
+	m_pDetailPanel->SetVisible( false );
 }
 
 //-----------------------------------------------------------------------------
-// Destructor 
+// Destructor
 //-----------------------------------------------------------------------------
 CMDRipperMain::~CMDRipperMain()
 {
@@ -136,7 +136,7 @@ void CMDRipperMain::OnClose( void )
 
 	sqlWrapper->FreeResult();
 	sqlWrapperFactory->Free( sqlWrapper );
-	Sys_UnloadModule( hSQLWrapper );	
+	Sys_UnloadModule( hSQLWrapper );
 }
 
 /*
@@ -155,7 +155,7 @@ void CMDRipperMain::SetGlobalConfig( const char *modDir )
 // Purpose: Parse commands coming in from the VGUI dialog
 //-----------------------------------------------------------------------------
 void CMDRipperMain::OnCommand( const char *command )
-{	
+{
 	if ( Q_stricmp( command, "Open" ) == 0 )
 	{
 		OnOpen();
@@ -193,7 +193,7 @@ bool CMDRipperMain::RequestInfo( KeyValues *outputData )
 				}
 			}
 		}
-		
+
 		return ( bAccept );
 	}
 
@@ -211,25 +211,25 @@ void CMDRipperMain::OnOpen()
 
 void CMDRipperMain::OnError()
 {
-	m_pErrorPanel->NewQuery();	
+	m_pErrorPanel->NewQuery();
 	m_pErrorPanel->SetVisible( true );
 	m_pErrorPanel->MoveToFront();
 	Repaint();
 }
 
-void CMDRipperMain::OnFileSelected( const char *filename ) 
+void CMDRipperMain::OnFileSelected( const char *filename )
 {
-	m_pModulePanel->Create( filename );	
-	m_pModulePanel->SetVisible( true );	
+	m_pModulePanel->Create( filename );
+	m_pModulePanel->SetVisible( true );
 	Repaint();
 }
 
 void CMDRipperMain::OnDetail( KeyValues *data )
-{	
+{
 	char URL[1024] = "";
 	strcat( URL, "http://steamweb/cserr_detailsnograph.php?errorid=" );
 	strcat( URL, data->GetString( "errorID" ) );
-	m_pDetailPanel->OpenURL( URL );	
+	m_pDetailPanel->OpenURL( URL );
 	m_pDetailPanel->SetVisible( true );
 	m_pDetailPanel->MoveToFront();
 	Repaint();
@@ -249,7 +249,7 @@ void CMDRipperMain::OnLookUp( KeyValues *data )
 }
 
 
-void CMDRipperMain::OnDragDrop( KeyValues *pData ) 
+void CMDRipperMain::OnDragDrop( KeyValues *pData )
 {
 	KeyValues *pFiles = pData->FindKey( "list", false );
 	if ( pFiles )

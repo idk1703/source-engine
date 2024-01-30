@@ -30,7 +30,7 @@ ConVar nb_update_debug( "nb_update_debug", "0", FCVAR_CHEAT );
 //---------------------------------------------------------------------------------------------
 /**
  * Singleton accessor.
- * By returning a reference, we guarantee construction of the 
+ * By returning a reference, we guarantee construction of the
  * instance before its first use.
  */
 NextBotManager &TheNextBots( void )
@@ -184,13 +184,13 @@ static void CC_SelectBot( const CCommand &args )
 		Selector select( player, false );
 		TheNextBots().ForEachBot( select );
 
-		TheNextBots().Select( select.m_pick );				
+		TheNextBots().Select( select.m_pick );
 
 		if ( select.m_pick )
 		{
 			NDebugOverlay::Circle( select.m_pick->GetLocomotionInterface()->GetFeet() + Vector( 0, 0, 5 ), Vector( 1, 0, 0 ), Vector( 0, -1, 0 ), 25.0f, 0, 255, 0, 255, false, 1.0f );
 		}
-	}	
+	}
 }
 static ConCommand SelectBot( "nb_select", CC_SelectBot, "Select the bot you are aiming at for further debug operations.", FCVAR_CHEAT );
 
@@ -212,7 +212,7 @@ static ConCommand ForceLookAt( "nb_force_look_at", CC_ForceLookAt, "Force select
 //--------------------------------------------------------------------------------------------------------
 void CC_WarpSelectedHere( const CCommand &args )
 {
-	CBasePlayer *me = dynamic_cast< CBasePlayer * >( UTIL_GetCommandClient() ); 
+	CBasePlayer *me = dynamic_cast< CBasePlayer * >( UTIL_GetCommandClient() );
 	INextBot *pick = TheNextBots().GetSelected();
 
 	if ( me == NULL || pick == NULL )
@@ -240,7 +240,7 @@ NextBotManager::NextBotManager( void )
 {
 	m_debugType = 0;
 	m_selectedBot = NULL;
-	
+
 	m_iUpdateTickrate = 0;
 }
 
@@ -284,7 +284,7 @@ inline bool IsDead( INextBot *pBot )
 		{
 			return true;
 		}
-			
+
 		if ( pEntity->IsMarkedForDeletion() )
 		{
 			return true;
@@ -889,4 +889,3 @@ void NextBotManager::CollectAllBots( CUtlVector< INextBot * > *botVector )
 		botVector->AddToTail( m_botList[i] );
 	}
 }
-

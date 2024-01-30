@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -37,7 +37,7 @@ extern ConVar crosshair;
 
 /*
 ==================================================
-CHUDQuickInfo 
+CHUDQuickInfo
 ==================================================
 */
 
@@ -53,16 +53,16 @@ public:
 	bool ShouldDraw( void );
 	//virtual void OnThink();
 	virtual void Paint();
-	
+
 	virtual void ApplySchemeSettings( IScheme *scheme );
 private:
-	
+
 	void	DrawWarning( int x, int y, CHudTexture *icon, float &time );
 	void	UpdateEventTime( void );
 	bool	EventTimeElapsed( void );
 
 	float	m_flLastEventTime;
-	
+
 	float	m_fLastPlacedAlpha[2];
 	bool	m_bLastPlacedAlphaCountingUp[2];
 
@@ -155,7 +155,7 @@ void CHUDQuickInfo::DrawWarning( int x, int y, CHudTexture *icon, float &time )
 			time += (gpGlobals->frametime * 200.0f);
 		}
 	}
-	
+
 	// Update our time
 	time -= (gpGlobals->frametime * 200.0f);
 	Color caution = gHUD.m_clrCaution;
@@ -166,7 +166,7 @@ void CHUDQuickInfo::DrawWarning( int x, int y, CHudTexture *icon, float &time )
 
 //-----------------------------------------------------------------------------
 // Purpose: Save CPU cycles by letting the HUD system early cull
-// costly traversal.  Called per frame, return true if thinking and 
+// costly traversal.  Called per frame, return true if thinking and
 // painting need to occur.
 //-----------------------------------------------------------------------------
 bool CHUDQuickInfo::ShouldDraw( void )
@@ -231,7 +231,7 @@ void CHUDQuickInfo::Paint()
 		return;
 	}
 
-	const unsigned char iAlphaStart = 150;	   
+	const unsigned char iAlphaStart = 150;
 
 	Color portal1Color = UTIL_Portal_Color( 1 );
 	Color portal2Color = UTIL_Portal_Color( 2 );
@@ -245,7 +245,7 @@ void CHUDQuickInfo::Paint()
 
 	const float fLastPlacedAlphaLerpSpeed = 300.0f;
 
-	
+
 	float fLeftPlaceBarFill = 0.0f;
 	float fRightPlaceBarFill = 0.0f;
 
@@ -262,7 +262,7 @@ void CHUDQuickInfo::Paint()
 		else if ( pPortalgun->GetLastFiredPortal() == 2 )
 		{
 			iDrawLastPlaced = 1;
-			fRightPlaceBarFill = 1.0f;			
+			fRightPlaceBarFill = 1.0f;
 		}
 
 		if( m_bLastPlacedAlphaCountingUp[iDrawLastPlaced] )
@@ -322,11 +322,11 @@ void CHUDQuickInfo::Paint()
 
 	if ( pPortalgun->IsHoldingObject() )
 	{
-		// Change the middle to orange 
+		// Change the middle to orange
 		portal1Color = portal2Color = UTIL_Portal_Color( 0 );
 		bPortalPlacability[0] = bPortalPlacability[1] = false;
 	}
-	
+
 	if ( !hud_quickinfo_swap.GetBool() )
 	{
 		if ( bPortalPlacability[0] )
@@ -362,7 +362,7 @@ void CHUDQuickInfo::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHUDQuickInfo::UpdateEventTime( void )
 {
@@ -370,7 +370,7 @@ void CHUDQuickInfo::UpdateEventTime( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CHUDQuickInfo::EventTimeElapsed( void )
@@ -380,4 +380,3 @@ bool CHUDQuickInfo::EventTimeElapsed( void )
 
 	return false;
 }
-

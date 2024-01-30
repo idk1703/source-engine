@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 #define __LIST_H__
 
 // TODO:
-// GetPositionAtIndex needs to keep a cache of the previous call so 
+// GetPositionAtIndex needs to keep a cache of the previous call so
 // that it doesn't do a linear search every time.
 
 #include <stdlib.h>
@@ -57,13 +57,13 @@ template <class T> class GList
 public:
 	// Contructors/destructors
 	GList();
-	
+
 	//
 	Position InsertAtHead( T );
 	Position InsertAtTail( T );
 	T Remove( Position position );
 	void RemoveAll( void (*DeleteItem)( T ) );
-	void RemoveSelectedItems( bool (*NeedsRemovalFunc)( T ), void (*DeleteItemFunc)( T ) );	
+	void RemoveSelectedItems( bool (*NeedsRemovalFunc)( T ), void (*DeleteItemFunc)( T ) );
 	Position InsertAfter( T item, Position position );
 	Position InsertBefore( T item, Position position );
 	bool IsEmpty();
@@ -71,7 +71,7 @@ public:
 	T GetItemAtPosition( Position position );
 	Position GetPositionAtIndex( int index );
 	T GetItemAtIndex( int index );
-	
+
 protected:
 	GListNode<T> *head;
 	GListNode<T> *tail;
@@ -79,7 +79,7 @@ protected:
 	friend class GListIterator<T>;
 };
 
-template<class T> 
+template<class T>
 GList<T>::GList()
 {
 	// Set up a dummy head node and a dummy tail node.
@@ -92,7 +92,7 @@ GList<T>::GList()
 	numItems = 0;
 }
 
-template<class T> 
+template<class T>
 Position GList<T>::InsertAtHead( T item )
 {
 	GListNode<T> *newNode = new GListNode<T>( item );
@@ -104,7 +104,7 @@ Position GList<T>::InsertAtHead( T item )
 	return ( Position )( void * )newNode;
 }
 
-template<class T> 
+template<class T>
 Position GList<T>::InsertAtTail( T item )
 {
 	GListNode<T> *newNode = new GListNode<T>( item );
@@ -224,9 +224,9 @@ Position GList<T>::GetPositionAtIndex( int index )
 	int i;
 	GListNode<T> *node = head->next;
 	for( i = 0; i < index; i++ )
-    {
+	{
 		node = node->next;
-    }
+	}
 	return ( Position )( void * )node;
 }
 

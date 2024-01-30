@@ -53,7 +53,7 @@ class Path
 public:
 	Path( void );
 	virtual ~Path() { }
-	
+
 	enum SegmentType
 	{
 		ON_GROUND,
@@ -62,18 +62,18 @@ public:
 		JUMP_OVER_GAP,
 		LADDER_UP,
 		LADDER_DOWN,
-		
+
 		NUM_SEGMENT_TYPES
 	};
 
-	// @todo Allow custom Segment classes for different kinds of paths	
+	// @todo Allow custom Segment classes for different kinds of paths
 	struct Segment
 	{
 		CNavArea *area;									// the area along the path
 		NavTraverseType how;							// how to enter this area from the previous one
 		Vector pos;										// our movement goal position at this point in the path
 		const CNavLadder *ladder;						// if "how" refers to a ladder, this is it
-		
+
 		SegmentType type;								// how to traverse this segment of the path
 		Vector forward;									// unit vector along segment
 		float length;									// length of this segment
@@ -103,7 +103,7 @@ public:
 		SEEK_BEHIND					// search from current cursor position backward toward path start
 	};
 	virtual void MoveCursorToClosestPosition( const Vector &pos, SeekType type = SEEK_ENTIRE_PATH, float alongLimit = 0.0f ) const;		// Set cursor position to closest point on path to given position
-	
+
 	enum MoveCursorType
 	{
 		PATH_ABSOLUTE_DISTANCE,
@@ -149,7 +149,7 @@ public:
 	/**
 	 * Compute shortest path from bot to given actor via A* algorithm.
 	 * If returns true, path was found to the subject.
-	 * If returns false, path may either be invalid (use IsValid() to check), or valid but 
+	 * If returns false, path may either be invalid (use IsValid() to check), or valid but
 	 * doesn't reach all the way to the subject.
 	 */
 	template< typename CostFunctor >
@@ -160,9 +160,9 @@ public:
 		Invalidate();
 
 		m_subject = subject;
-		
+
 		const Vector &start = bot->GetPosition();
-		
+
 		CNavArea *startArea = bot->GetEntity()->GetLastKnownArea();
 		if ( !startArea )
 		{
@@ -178,7 +178,7 @@ public:
 		}
 
 		Vector subjectPos = subject->GetAbsOrigin();
-		
+
 		// if we are already in the subject area, build trivial path
 		if ( startArea == subjectArea )
 		{
@@ -215,7 +215,7 @@ public:
 			if ( count >= MAX_PATH_SEGMENTS-1 ) // save room for endpoint
 				break;
 		}
-		
+
 		if ( count == 1 )
 		{
 			BuildTrivialPath( bot, subjectPos );
@@ -242,7 +242,7 @@ public:
 			m_path[ m_segmentCount ].type = ON_GROUND;
 			++m_segmentCount;
 		}
-				
+
 		// compute path positions
 		if ( ComputePathDetails( bot, start ) == false )
 		{
@@ -253,7 +253,7 @@ public:
 
 		// remove redundant nodes and clean up path
 		Optimize( bot );
-		
+
 		PostProcess();
 
 		OnPathChanged( bot, pathResult ? COMPLETE_PATH : PARTIAL_PATH );
@@ -266,7 +266,7 @@ public:
 	/**
 	 * Compute shortest path from bot to 'goal' via A* algorithm.
 	 * If returns true, path was found to the goal position.
-	 * If returns false, path may either be invalid (use IsValid() to check), or valid but 
+	 * If returns false, path may either be invalid (use IsValid() to check), or valid but
 	 * doesn't reach all the way to the goal.
 	 */
 	template< typename CostFunctor >
@@ -275,9 +275,9 @@ public:
 		VPROF_BUDGET( "Path::Compute(goal)", "NextBotSpiky" );
 
 		Invalidate();
-		
+
 		const Vector &start = bot->GetPosition();
-		
+
 		CNavArea *startArea = bot->GetEntity()->GetLastKnownArea();
 		if ( !startArea )
 		{
@@ -336,7 +336,7 @@ public:
 			if ( count >= MAX_PATH_SEGMENTS-1 ) // save room for endpoint
 				break;
 		}
-		
+
 		if ( count == 1 )
 		{
 			BuildTrivialPath( bot, goal );
@@ -363,7 +363,7 @@ public:
 			m_path[ m_segmentCount ].type = ON_GROUND;
 			++m_segmentCount;
 		}
-				
+
 		// compute path positions
 		if ( ComputePathDetails( bot, start ) == false )
 		{
@@ -374,7 +374,7 @@ public:
 
 		// remove redundant nodes and clean up path
 		Optimize( bot );
-		
+
 		PostProcess();
 
 		OnPathChanged( bot, pathResult ? COMPLETE_PATH : PARTIAL_PATH );
@@ -492,7 +492,7 @@ public:
 			// compile the path details into a usable path
 			AssemblePrecomputedPath( bot, goalArea->GetCenter(), goalArea );
 			return true;
-		}	
+		}
 
 		// all adjacent areas are likely too far away
 		return false;
@@ -501,7 +501,7 @@ public:
 
 	//-----------------------------------------------------------------------------------------------------------------
 	/**
-	 * Given the last area in a path with valid parent pointers, 
+	 * Given the last area in a path with valid parent pointers,
 	 * construct the actual path.
 	 */
 	void AssemblePrecomputedPath( INextBot *bot, const Vector &goal, CNavArea *endArea )
@@ -571,7 +571,7 @@ public:
 	/**
 	 * Utility function for when start and goal are in the same area
 	 */
-	bool BuildTrivialPath( INextBot *bot, const Vector &goal );	
+	bool BuildTrivialPath( INextBot *bot, const Vector &goal );
 
 	/**
 	 * Determine exactly where the path goes between the given two areas
@@ -585,14 +585,14 @@ private:
 	Segment m_path[ MAX_PATH_SEGMENTS ];
 	int m_segmentCount;
 
-	bool ComputePathDetails( INextBot *bot, const Vector &start );		// determine actual path positions 
+	bool ComputePathDetails( INextBot *bot, const Vector &start );		// determine actual path positions
 
 	void Optimize( INextBot *bot );
 	void PostProcess( void );
 	int FindNextOccludedNode( INextBot *bot, int anchor );	// used by Optimize()
 
 	void InsertSegment( Segment newSegment, int i );		// insert new segment at index i
-	
+
 	mutable Vector m_pathPos;								// used by GetPosition()
 	mutable Vector m_closePos;								// used by GetClosestPosition()
 
@@ -608,9 +608,9 @@ private:
 	 */
 	void CollectAdjacentAreas( CNavArea *area )
 	{
-		m_adjAreaIndex = 0;			
+		m_adjAreaIndex = 0;
 
-		const NavConnectVector &adjNorth = *area->GetAdjacentAreas( NORTH );		
+		const NavConnectVector &adjNorth = *area->GetAdjacentAreas( NORTH );
 		FOR_EACH_VEC( adjNorth, it )
 		{
 			if ( m_adjAreaIndex >= MAX_ADJ_AREAS )
@@ -622,7 +622,7 @@ private:
 			++m_adjAreaIndex;
 		}
 
-		const NavConnectVector &adjSouth = *area->GetAdjacentAreas( SOUTH );		
+		const NavConnectVector &adjSouth = *area->GetAdjacentAreas( SOUTH );
 		FOR_EACH_VEC( adjSouth, it )
 		{
 			if ( m_adjAreaIndex >= MAX_ADJ_AREAS )
@@ -634,7 +634,7 @@ private:
 			++m_adjAreaIndex;
 		}
 
-		const NavConnectVector &adjWest = *area->GetAdjacentAreas( WEST );		
+		const NavConnectVector &adjWest = *area->GetAdjacentAreas( WEST );
 		FOR_EACH_VEC( adjWest, it )
 		{
 			if ( m_adjAreaIndex >= MAX_ADJ_AREAS )
@@ -646,7 +646,7 @@ private:
 			++m_adjAreaIndex;
 		}
 
-		const NavConnectVector &adjEast = *area->GetAdjacentAreas( EAST );	
+		const NavConnectVector &adjEast = *area->GetAdjacentAreas( EAST );
 		FOR_EACH_VEC( adjEast, it )
 		{
 			if ( m_adjAreaIndex >= MAX_ADJ_AREAS )
@@ -712,7 +712,7 @@ private:
 	{
 		CNavArea *area;
 		CNavLadder *ladder;
-		NavTraverseType how;		
+		NavTraverseType how;
 	};
 
 	AdjInfo m_adjAreaVector[ MAX_ADJ_AREAS ];
@@ -727,7 +727,7 @@ inline float Path::GetLength( void ) const
 	{
 		return 0.0f;
 	}
-	
+
 	return m_path[ m_segmentCount-1 ].distanceFromStart;
 }
 
@@ -741,12 +741,12 @@ inline void Path::Invalidate( void )
 	m_segmentCount = 0;
 
 	m_cursorPos = 0.0f;
-	
+
 	m_cursorData.pos = vec3_origin;
 	m_cursorData.forward = Vector( 1.0f, 0, 0 );
 	m_cursorData.curvature = 0.0f;
 	m_cursorData.segmentPrior = NULL;
-	
+
 	m_isCursorDataDirty = true;
 
 	m_subject = NULL;
@@ -761,14 +761,14 @@ inline const Path::Segment *Path::NextSegment( const Segment *currentSegment ) c
 {
 	if (currentSegment == NULL || !IsValid())
 		return NULL;
-		
+
 	int i = currentSegment - m_path;
 
 	if (i < 0 || i >= m_segmentCount-1)
 	{
 		return NULL;
 	}
-	
+
 	return &m_path[ i+1 ];
 }
 
@@ -776,14 +776,14 @@ inline const Path::Segment *Path::PriorSegment( const Segment *currentSegment ) 
 {
 	if (currentSegment == NULL || !IsValid())
 		return NULL;
-		
+
 	int i = currentSegment - m_path;
 
 	if (i < 1 || i >= m_segmentCount)
 	{
 		return NULL;
 	}
-	
+
 	return &m_path[ i-1 ];
 }
 
@@ -829,7 +829,7 @@ inline void Path::MoveCursor( float value, MoveCursorType type )
 	{
 		m_cursorPos += value;
 	}
-	
+
 	if ( m_cursorPos < 0.0f )
 	{
 		m_cursorPos = 0.0f;
@@ -838,7 +838,7 @@ inline void Path::MoveCursor( float value, MoveCursorType type )
 	{
 		m_cursorPos = GetLength();
 	}
-	
+
 	m_isCursorDataDirty = true;
 }
 
@@ -859,4 +859,3 @@ inline float Path::GetAge( void ) const
 
 
 #endif	// _NEXT_BOT_PATH_H_
-

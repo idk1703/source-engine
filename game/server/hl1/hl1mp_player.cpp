@@ -36,8 +36,8 @@ static CTEPlayerAnimEvent g_TEPlayerAnimEvent( "PlayerAnimEvent" );
 void TE_PlayerAnimEvent( CBasePlayer *pPlayer, PlayerAnimEvent_t event, int nData )
 {
 	CPVSFilter filter( pPlayer->EyePosition() );
-	
-	// The player himself doesn't need to be sent his animation events 
+
+	// The player himself doesn't need to be sent his animation events
 	// unless cs_showanimstate wants to show them.
 //	if ( !ToolsEnabled() && ( cl_showanimstate.GetInt() == pPlayer->entindex() ) )
 	{
@@ -60,19 +60,19 @@ PRECACHE_REGISTER( player_mp );
 
 IMPLEMENT_SERVERCLASS_ST( CHL1MP_Player, DT_HL1MP_PLAYER )
 	SendPropExclude( "DT_BaseAnimating", "m_flPoseParameter" ),
-	SendPropExclude( "DT_BaseAnimating", "m_flPlaybackRate" ),	
+	SendPropExclude( "DT_BaseAnimating", "m_flPlaybackRate" ),
 	SendPropExclude( "DT_BaseAnimating", "m_nSequence" ),
 	SendPropExclude( "DT_BaseEntity", "m_angRotation" ),
 	SendPropExclude( "DT_BaseAnimatingOverlay", "overlay_vars" ),
-	
+
 	// cs_playeranimstate and clientside animation takes care of these on the client
-//	SendPropExclude( "DT_ServerAnimationData" , "m_flCycle" ),	
+//	SendPropExclude( "DT_ServerAnimationData" , "m_flCycle" ),
 	SendPropExclude( "DT_AnimTimeMustBeFirst" , "m_flAnimTime" ),
 
 	SendPropAngle( SENDINFO_VECTORELEM(m_angEyeAngles, 0), 11 ),
 	SendPropAngle( SENDINFO_VECTORELEM(m_angEyeAngles, 1), 11 ),
 
-    SendPropEHandle( SENDINFO( m_hRagdoll ) ),
+	SendPropEHandle( SENDINFO( m_hRagdoll ) ),
 	SendPropInt( SENDINFO( m_iSpawnInterpCounter), 4 ),
 	SendPropInt( SENDINFO( m_iRealSequence ), 9 ),
 
@@ -100,7 +100,7 @@ CHL1MP_Player::CHL1MP_Player()
 //	m_pCurStateInfo = NULL;
 	m_lifeState = LIFE_DEAD; // Start "dead".
 
-	m_iSpawnInterpCounter = 0;	
+	m_iSpawnInterpCounter = 0;
 	m_flNextModelChangeTime = 0;
 	m_flNextTeamChangeTime = 0;
 
@@ -116,16 +116,16 @@ CHL1MP_Player::~CHL1MP_Player()
 
 void CHL1MP_Player::PostThink( void )
 {
-    BaseClass::PostThink();
+	BaseClass::PostThink();
 
 	QAngle angles = GetLocalAngles();
 	angles[PITCH] = 0;
 	SetLocalAngles( angles );
-	
+
 	// Store the eye angles pitch so the client can compute its animation state correctly.
 	m_angEyeAngles = EyeAngles();
 
-    m_PlayerAnimState->Update( m_angEyeAngles[YAW], m_angEyeAngles[PITCH] );
+	m_PlayerAnimState->Update( m_angEyeAngles[YAW], m_angEyeAngles[PITCH] );
 }
 
 void CHL1MP_Player::Spawn( void )
@@ -148,7 +148,7 @@ void CHL1MP_Player::Spawn( void )
 
 	if ( !IsObserver() )
 	{
-	    GiveDefaultItems();
+		GiveDefaultItems();
 		SetPlayerModel();
 	}
 
@@ -165,21 +165,21 @@ void CHL1MP_Player::DoAnimationEvent( PlayerAnimEvent_t event, int nData )
 
 void CHL1MP_Player::GiveDefaultItems( void )
 {
-    GiveNamedItem( "weapon_crowbar" );
-    GiveNamedItem( "weapon_glock" );
+	GiveNamedItem( "weapon_crowbar" );
+	GiveNamedItem( "weapon_glock" );
 
-    CBasePlayer::GiveAmmo( 68, "9mmRound" );
+	CBasePlayer::GiveAmmo( 68, "9mmRound" );
 }
 
 void CHL1MP_Player::UpdateOnRemove( void )
 {
-    if ( m_hRagdoll )
-    {
-        UTIL_RemoveImmediate( m_hRagdoll );
-        m_hRagdoll = NULL;
-    }
+	if ( m_hRagdoll )
+	{
+		UTIL_RemoveImmediate( m_hRagdoll );
+		m_hRagdoll = NULL;
+	}
 
-    BaseClass::UpdateOnRemove();
+	BaseClass::UpdateOnRemove();
 }
 
 
@@ -201,7 +201,7 @@ void CHL1MP_Player::Event_Killed( const CTakeDamageInfo &info )
 	DoAnimationEvent( PLAYERANIMEVENT_DIE );
 //    SetNumAnimOverlays( 0 );
 
-    
+
 	// Note: since we're dead, it won't draw us on the client, but we don't set EF_NODRAW
 	// because we still want to transmit to the clients in our PVS.
 	if ( !IsHLTV() )
@@ -269,7 +269,7 @@ void CHL1MP_Player::SetAnimation( PLAYER_ANIM playerAnim )
 	}
 	else if (playerAnim == PLAYER_ATTACK1)
 	{
-		if ( GetActivity() == ACT_HOVER	|| 
+		if ( GetActivity() == ACT_HOVER	||
 			GetActivity() == ACT_SWIM		||
 			GetActivity() == ACT_HOP		||
 			GetActivity() == ACT_LEAP		||
@@ -362,7 +362,7 @@ void CHL1MP_Player::SetAnimation( PLAYER_ANIM playerAnim )
 			animDesired = SelectWeightedSequence( ACT_RUN );
 			SetActivity( ACT_RUN );
 		}
-		
+
 	}
 	else
 	{
@@ -403,24 +403,24 @@ bool CHL1MP_Player::BumpWeapon( CBaseCombatWeapon *pWeapon )
 
 	// Can I have this weapon type?
 	if ( !IsAllowedToPickupWeapons() )
-    {
-        if ( sv_debugweaponpickup.GetBool() )
-            Msg("sv_debugweaponpickup: IsAllowedToPickupWeapons() returned false\n");
-        
+	{
+		if ( sv_debugweaponpickup.GetBool() )
+			Msg("sv_debugweaponpickup: IsAllowedToPickupWeapons() returned false\n");
+
 		return false;
-    }
+	}
 
 	if ( pOwner || !Weapon_CanUse( pWeapon ) || !g_pGameRules->CanHavePlayerItem( this, pWeapon ) )
 	{
-        if ( sv_debugweaponpickup.GetBool() && pOwner )
-            Msg("sv_debugweaponpickup: pOwner\n");
+		if ( sv_debugweaponpickup.GetBool() && pOwner )
+			Msg("sv_debugweaponpickup: pOwner\n");
 
-        if ( sv_debugweaponpickup.GetBool() && !Weapon_CanUse( pWeapon ) )
-            Msg("sv_debugweaponpickup: Can't use weapon\n");
+		if ( sv_debugweaponpickup.GetBool() && !Weapon_CanUse( pWeapon ) )
+			Msg("sv_debugweaponpickup: Can't use weapon\n");
 
-        if ( sv_debugweaponpickup.GetBool() && !g_pGameRules->CanHavePlayerItem( this, pWeapon ) )
-            Msg("sv_debugweaponpickup: Gamerules says player can't have item\n");
-        
+		if ( sv_debugweaponpickup.GetBool() && !g_pGameRules->CanHavePlayerItem( this, pWeapon ) )
+			Msg("sv_debugweaponpickup: Gamerules says player can't have item\n");
+
 		if ( gEvilImpulse101 )
 		{
 			UTIL_Remove( pWeapon );
@@ -431,46 +431,46 @@ bool CHL1MP_Player::BumpWeapon( CBaseCombatWeapon *pWeapon )
 	// Don't let the player fetch weapons through walls (use MASK_SOLID so that you can't pickup through windows)
 	if( !pWeapon->FVisible( this, MASK_SOLID ) && !(GetFlags() & FL_NOTARGET) )
 	{
-        if ( sv_debugweaponpickup.GetBool() && !FVisible( this, MASK_SOLID ) )
-            Msg("sv_debugweaponpickup: Can't fetch weapon through a wall\n");
+		if ( sv_debugweaponpickup.GetBool() && !FVisible( this, MASK_SOLID ) )
+			Msg("sv_debugweaponpickup: Can't fetch weapon through a wall\n");
 
-        if ( sv_debugweaponpickup.GetBool() && !(GetFlags() & FL_NOTARGET) )
-            Msg("sv_debugweaponpickup: NoTarget\n");
-        
+		if ( sv_debugweaponpickup.GetBool() && !(GetFlags() & FL_NOTARGET) )
+			Msg("sv_debugweaponpickup: NoTarget\n");
+
 		return false;
 	}
-    
+
 	bool bOwnsWeaponAlready = !!Weapon_OwnsThisType( pWeapon->GetClassname(), pWeapon->GetSubType());
 
-	if ( bOwnsWeaponAlready == true ) 
+	if ( bOwnsWeaponAlready == true )
 	{
 		//If we have room for the ammo, then "take" the weapon too.
-		 if ( Weapon_EquipAmmoOnly( pWeapon ) )
-		 {
-			 pWeapon->CheckRespawn();
+		if ( Weapon_EquipAmmoOnly( pWeapon ) )
+		{
+			pWeapon->CheckRespawn();
 
-			 UTIL_Remove( pWeapon );
+			UTIL_Remove( pWeapon );
 
-             if ( sv_debugweaponpickup.GetBool() )
-                 Msg("sv_debugweaponpickup: Picking up weapon\n");
-             
-			 return true;
-		 }
-		 else
-		 {
-             if ( sv_debugweaponpickup.GetBool() )
-                 Msg("sv_debugweaponpickup: Owns weapon already\n");
-             
-			 return false;
-		 }
+			if ( sv_debugweaponpickup.GetBool() )
+				Msg("sv_debugweaponpickup: Picking up weapon\n");
+
+			return true;
+		}
+		else
+		{
+			if ( sv_debugweaponpickup.GetBool() )
+				Msg("sv_debugweaponpickup: Owns weapon already\n");
+
+			return false;
+		}
 	}
 
 	pWeapon->CheckRespawn();
 	Weapon_Equip( pWeapon );
 
-    if ( sv_debugweaponpickup.GetBool() )    
-        Msg("sv_debugweaponpickup: Picking up weapon\n");
-            
+	if ( sv_debugweaponpickup.GetBool() )
+		Msg("sv_debugweaponpickup: Picking up weapon\n");
+
 	return true;
 }
 
@@ -518,14 +518,14 @@ void CHL1MP_Player::SetPlayerTeamModel( void )
 	char szModelName[256];
 	Q_snprintf( szModelName, 256, "%s%s/%s.mdl", s_szModelPath, pTeam->GetName(), pTeam->GetName() );
 
-    // Check to see if the model was properly precached, do not error out if not.
-    int i = modelinfo->GetModelIndex( szModelName );
-    if ( i == -1 )
-    {
-        Warning("Model %s does not exist.\n", szModelName );
-        return;
-    }
-        
+	// Check to see if the model was properly precached, do not error out if not.
+	int i = modelinfo->GetModelIndex( szModelName );
+	if ( i == -1 )
+	{
+		Warning("Model %s does not exist.\n", szModelName );
+		return;
+	}
+
 	SetModel( szModelName );
 	m_flNextModelChangeTime = gpGlobals->curtime + 5;
 }
@@ -545,14 +545,14 @@ void CHL1MP_Player::SetPlayerModel( void )
 	char szModelName[256];
 	Q_snprintf( szModelName, 256, "%s%s/%s.mdl", s_szModelPath, szBaseName, szBaseName );
 
-    // Check to see if the model was properly precached, do not error out if not.
-    int i = modelinfo->GetModelIndex( szModelName );
-    if ( i == -1 )
-    {
+	// Check to see if the model was properly precached, do not error out if not.
+	int i = modelinfo->GetModelIndex( szModelName );
+	if ( i == -1 )
+	{
 		SetModel( "models/player/mp/gordon/gordon.mdl" );
 		engine->ClientCommand ( edict(), "cl_playermodel models/gordon.mdl\n" );
-        return;
-    }
+		return;
+	}
 
 	SetModel( szModelName );
 
@@ -580,7 +580,7 @@ public:
 	// In case the client has the player entity, we transmit the player index.
 	// In case the client doesn't have it, we transmit the player's model index, origin, and angles
 	// so they can create a ragdoll in the right place.
-	CNetworkHandle( CBaseEntity, m_hPlayer );	// networked entity handle 
+	CNetworkHandle( CBaseEntity, m_hPlayer );	// networked entity handle
 	CNetworkVector( m_vecRagdollVelocity );
 	CNetworkVector( m_vecRagdollOrigin );
 };
@@ -599,23 +599,23 @@ END_SEND_TABLE()
 
 void CHL1MP_Player::CreateRagdollEntity( void )
 {
-    if ( m_hRagdoll )
-    {
-        UTIL_RemoveImmediate( m_hRagdoll );
-        m_hRagdoll = NULL;
-    }
+	if ( m_hRagdoll )
+	{
+		UTIL_RemoveImmediate( m_hRagdoll );
+		m_hRagdoll = NULL;
+	}
 
-	// If we already have a ragdoll, don't make another one.    
-    CHL1MPRagdoll *pRagdoll = dynamic_cast< CHL1MPRagdoll* >(m_hRagdoll.Get() );
+	// If we already have a ragdoll, don't make another one.
+	CHL1MPRagdoll *pRagdoll = dynamic_cast< CHL1MPRagdoll* >(m_hRagdoll.Get() );
 
-    if ( !pRagdoll )
-    {
-        // Create a new one
-        pRagdoll = dynamic_cast< CHL1MPRagdoll* >( CreateEntityByName( "hl1mp_ragdoll" ) );
-    }
+	if ( !pRagdoll )
+	{
+		// Create a new one
+		pRagdoll = dynamic_cast< CHL1MPRagdoll* >( CreateEntityByName( "hl1mp_ragdoll" ) );
+	}
 
-    if ( pRagdoll )
-    {
+	if ( pRagdoll )
+	{
 		pRagdoll->m_hPlayer = this;
 		pRagdoll->m_vecRagdollOrigin = GetAbsOrigin();
 		pRagdoll->m_vecRagdollVelocity = GetAbsVelocity();
@@ -623,14 +623,13 @@ void CHL1MP_Player::CreateRagdollEntity( void )
 		pRagdoll->m_nForceBone = m_nForceBone;
 		//pRagdoll->m_vecForce = m_vecTotalBulletForce;
 		pRagdoll->SetAbsOrigin( GetAbsOrigin() );
-        
-    }
 
-	m_hRagdoll = pRagdoll;    
+	}
+
+	m_hRagdoll = pRagdoll;
 }
 
 void CHL1MP_Player::CreateCorpse( void )
 {
 
 }
-

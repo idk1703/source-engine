@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,10 +14,10 @@
 
 
 SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
-{	
+{
 	printf( "%s", pMsg );
 	OutputDebugString( pMsg );
-	
+
 	if ( type == SPEW_ERROR )
 	{
 		printf( "\n" );
@@ -30,7 +30,7 @@ SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void printusage( void )
 {
@@ -52,10 +52,10 @@ void printusage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *sourcetreebase - 
-//			*subdir - 
-//			*baseentityclass - 
+// Purpose:
+// Input  : *sourcetreebase -
+//			*subdir -
+//			*baseentityclass -
 //-----------------------------------------------------------------------------
 void ProcessDirectory( const char *game, const char *sourcetreebase, const char *subdir, const char *baseentityclass )
 {
@@ -75,10 +75,10 @@ void ProcessDirectory( const char *game, const char *sourcetreebase, const char 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *sourcetreebase - 
-//			*subdir - 
-//			*baseentityclass - 
+// Purpose:
+// Input  : *sourcetreebase -
+//			*subdir -
+//			*baseentityclass -
 //-----------------------------------------------------------------------------
 void ProcessFile( const char *game, const char *sourcetreebase, const char *subdir, const char *baseentityclass, const char *pFileName )
 {
@@ -98,7 +98,7 @@ void ProcessFile( const char *game, const char *sourcetreebase, const char *subd
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CheckLogFile( void )
 {
@@ -110,9 +110,9 @@ void CheckLogFile( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : argc - 
-//			argv[] - 
+// Purpose:
+// Input  : argc -
+//			argv[] -
 // Output : int
 //-----------------------------------------------------------------------------
 int main( int argc, char* argv[] )

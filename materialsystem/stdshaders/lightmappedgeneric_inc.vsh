@@ -3,7 +3,7 @@
 ;------------------------------------------------------------------------------
 ;	 $SHADER_SPECIFIC_CONST_0-$SHADER_SPECIFIC_CONST_1 = Base texture transform
 ;    $SHADER_SPECIFIC_CONST_2-$SHADER_SPECIFIC_CONST_3 = Mask texture transform
-;	 $SHADER_SPECIFIC_CONST_4	 = Modulation color 
+;	 $SHADER_SPECIFIC_CONST_4	 = Modulation color
 ;------------------------------------------------------------------------------
 
 sub LightmappedGeneric

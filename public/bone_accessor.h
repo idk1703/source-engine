@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,15 +20,15 @@ class C_BaseAnimating;
 class CBoneAccessor
 {
 public:
-	
+
 	CBoneAccessor();
 	CBoneAccessor( matrix3x4_t *pBones ); // This can be used to allow access to all bones.
-	
+
 	// Initialize.
 #if defined( CLIENT_DLL )
 	void Init( const C_BaseAnimating *pAnimating, matrix3x4_t *pBones );
 #endif
-	
+
 	int GetReadableBones();
 	void SetReadableBones( int flags );
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,10 +16,10 @@
 #include "materialpatch.h"
 /*
 
-  some faces will be removed before saving, but still form nodes:
+	some faces will be removed before saving, but still form nodes:
 
-  the insides of sky volumes
-  meeting planes of different water current volumes
+	the insides of sky volumes
+	meeting planes of different water current volumes
 
 */
 
@@ -97,7 +97,7 @@ unsigned HashVec (Vector& vec)
 
 	if ( x < 0 || x >= HASH_SIZE || y < 0 || y >= HASH_SIZE )
 		Error ("HashVec: point outside valid range");
-	
+
 	return y*HASH_SIZE + x;
 }
 
@@ -125,9 +125,9 @@ int	GetVertexnum (Vector& in)
 		else
 			vert[i] = in[i];
 	}
-	
+
 	h = HashVec (vert);
-	
+
 	for (vnum=hashverts[h] ; vnum ; vnum=vertexchain[vnum])
 	{
 		Vector& p = dvertexes[vnum].point;
@@ -136,7 +136,7 @@ int	GetVertexnum (Vector& in)
 		&& fabs(p[2]-vert[2])<POINT_EPSILON )
 			return vnum;
 	}
-	
+
 // emit a vertex
 	if (numvertexes == MAX_MAP_VERTS)
 		Error ("Too many unique verts, max = %d (map has too much brush geometry)\n", MAX_MAP_VERTS);
@@ -151,7 +151,7 @@ int	GetVertexnum (Vector& in)
 	c_uniqueverts++;
 
 	numvertexes++;
-		
+
 	return numvertexes-1;
 }
 #else
@@ -505,7 +505,7 @@ struct face_vert_table_t
 		}
 		return false;
 	}
-	
+
 	int	edge0;
 	int	edge1;
 };
@@ -543,7 +543,7 @@ void Triangulate_r( CUtlVector<int> &out, const CUtlVector<int> &inIndices, cons
 		// i + count is myself, i + count-1 is previous, so we need to stop at i+count-2
 		for ( int j = 2; j < count-1; j++ )
 		{
-			// if these two form a diagonal, split the poly along 
+			// if these two form a diagonal, split the poly along
 			// the diagonal and triangulate the two sub-polys
 			int index = inIndices[i];
 			int nextArray = (i+j)%count;
@@ -748,7 +748,7 @@ face_t *FixTjuncs (node_t *headnode, face_t *pLeafFaceList)
 	c_faceoverflows = 0;
 	EmitNodeFaceVertexes_r (headnode);
 
-	// UNDONE: This count is wrong with tjuncs off on details - since 
+	// UNDONE: This count is wrong with tjuncs off on details - since
 
 	// break edges on tjunctions
 	qprintf ("---- tjunc ----\n");
@@ -756,7 +756,7 @@ face_t *FixTjuncs (node_t *headnode, face_t *pLeafFaceList)
 	c_degenerate = 0;
 	c_facecollapse = 0;
 	c_tjunctions = 0;
-	
+
 	if ( g_bAllowDetailCracks )
 	{
 		FixEdges_r (headnode);
@@ -873,13 +873,13 @@ int AddEdge( int v1, int v2, face_t *f )
 	g_VertEdgeList[v2].AddToTail( numedges );
 	IntSort( g_VertEdgeList[v1] );
 	IntSort( g_VertEdgeList[v2] );
-			  
+
 	dedge_t *edge = &dedges[numedges];
 	numedges++;
-    
-    edge->v[0] = v1;
-    edge->v[1] = v2;
-    edgefaces[numedges-1][0] = f;
+
+	edge->v[0] = v1;
+	edge->v[1] = v2;
+	edgefaces[numedges-1][0] = f;
 	return numedges - 1;
 }
 
@@ -949,14 +949,14 @@ winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, Vector& planenormal)
 	Vector		normal, delta;
 	vec_t		dot;
 	qboolean	keep1, keep2;
-	
+
 
 	//
 	// find a common edge
-	//	
+	//
 	p1 = p2 = NULL;	// stop compiler warning
-	j = 0;			// 
-	
+	j = 0;			//
+
 	for (i=0 ; i<f1->numpoints ; i++)
 	{
 		p1 = &f1->p[i];
@@ -978,7 +978,7 @@ winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, Vector& planenormal)
 		if (j < f2->numpoints)
 			break;
 	}
-	
+
 	if (i == f1->numpoints)
 		return NULL;			// no matching edges
 
@@ -990,14 +990,14 @@ winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, Vector& planenormal)
 	VectorSubtract (*p1, *back, delta);
 	CrossProduct (planenormal, delta, normal);
 	VectorNormalize (normal);
-	
+
 	back = &f2->p[(j+2)%f2->numpoints];
 	VectorSubtract (*back, *p1, delta);
 	dot = DotProduct (delta, normal);
 	if (dot > CONTINUOUS_EPSILON)
 		return NULL;			// not a convex polygon
 	keep1 = (qboolean)(dot < -CONTINUOUS_EPSILON);
-	
+
 	back = &f1->p[(i+2)%f1->numpoints];
 	VectorSubtract (*back, *p2, delta);
 	CrossProduct (planenormal, delta, normal);
@@ -1014,17 +1014,17 @@ winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, Vector& planenormal)
 	// build the new polygon
 	//
 	newf = AllocWinding (f1->numpoints + f2->numpoints);
-	
+
 	// copy first polygon
 	for (k=(i+1)%f1->numpoints ; k != i ; k=(k+1)%f1->numpoints)
 	{
 		if (k==(i+1)%f1->numpoints && !keep2)
 			continue;
-		
+
 		VectorCopy (f1->p[k], newf->p[newf->numpoints]);
 		newf->numpoints++;
 	}
-	
+
 	// copy second polygon
 	for (l= (j+1)%f2->numpoints ; l != j ; l=(l+1)%f2->numpoints)
 	{
@@ -1096,8 +1096,8 @@ face_t *TryMerge (face_t *f1, face_t *f2, Vector& planenormal)
 		return NULL;
 	if (f1->contents != f2->contents)
 		return NULL;
-    if ( f1->originalface->smoothingGroups != f2->originalface->smoothingGroups )
-        return NULL;
+	if ( f1->originalface->smoothingGroups != f2->originalface->smoothingGroups )
+		return NULL;
 	if ( !OverlaysAreEqual( f1, f2 ) )
 		return NULL;
 	if ( nomergewater && ( FaceOnWaterBrush( f1 ) || FaceOnWaterBrush( f2 ) ) )
@@ -1129,7 +1129,7 @@ void MergeFaceList(face_t **pList)
 	plane_t	*plane;
 
 	merged = NULL;
-	
+
 	for (f1 = *pList; f1 ; f1 = f1->next)
 	{
 		if (f1->merged || f1->split[0] || f1->split[1])
@@ -1144,7 +1144,7 @@ void MergeFaceList(face_t **pList)
 			if (!merged)
 				continue;
 
-			// add merged to the end of the face list 
+			// add merged to the end of the face list
 			// so it will be checked against all the faces again
 			for (end = *pList; end->next ; end = end->next)
 			;
@@ -1192,7 +1192,7 @@ void SubdivideFace (face_t **pFaceList, face_t *f)
 		{
 			mins = 999999;
 			maxs = -999999;
-			
+
 			VECTOR_COPY (tex->lightmapVecsLuxelsPerWorldUnits[axis], temp);
 			w = f->w;
 			for (i=0 ; i<w->numpoints ; i++)
@@ -1209,11 +1209,11 @@ void SubdivideFace (face_t **pFaceList, face_t *f)
 #endif
 			if (maxs - mins <= g_maxLightmapDimension)
 				break;
-			
+
 		// split it
 			c_subdivide++;
-			
-			luxelsPerWorldUnit = VectorNormalize (temp);	
+
+			luxelsPerWorldUnit = VectorNormalize (temp);
 
 			dist = ( mins + g_maxLightmapDimension - 1 ) / luxelsPerWorldUnit;
 
@@ -1310,26 +1310,26 @@ face_t *FaceFromPortal (portal_t *p, int pside)
 	side_t	*side;
 	int		deltaContents;
 
-    // portal does not bridge different visible contents
+	// portal does not bridge different visible contents
 	side = p->side;
 	if (!side)
-		return NULL;	
+		return NULL;
 
-    // allocate a new face
+	// allocate a new face
 	f = AllocFace();
 
-    // save the original "side" from the map brush -- portal->side
-    // see FindPortalSide(...)
-    f->originalface = side;
+	// save the original "side" from the map brush -- portal->side
+	// see FindPortalSide(...)
+	f->originalface = side;
 
-    //
-    // save material info
-    //
+	//
+	// save material info
+	//
 	f->texinfo = side->texinfo;
 	f->dispinfo = -1;					// all faces with displacement info are created elsewhere
 	f->smoothingGroups = side->smoothingGroups;
 
-    // save plane info
+	// save plane info
 	f->planenum = (side->planenum & ~1) | pside;
 	if ( entity_num != 0 )
 	{
@@ -1345,12 +1345,12 @@ face_t *FaceFromPortal (portal_t *p, int pside)
 		}
 	}
 
-    // save portal info
+	// save portal info
 	f->portal = p;
 	f->fogVolumeLeaf = NULL;
 
 	deltaContents = VisibleContents(p->nodes[!pside]->contents^p->nodes[pside]->contents);
-	
+
 	// don't show insides of windows or grates
 	if ( ((p->nodes[pside]->contents & CONTENTS_WINDOW) && deltaContents == CONTENTS_WINDOW) ||
 		((p->nodes[pside]->contents & CONTENTS_GRATE) && deltaContents == CONTENTS_GRATE) )
@@ -1378,9 +1378,9 @@ face_t *FaceFromPortal (portal_t *p, int pside)
 		}
 	}
 
-    //
-    // generate the winding for the face and save face contents
-    //
+	//
+	// generate the winding for the face and save face contents
+	//
 	if( pside )
 	{
 		f->w = ReverseWinding(p->winding);
@@ -1394,7 +1394,7 @@ face_t *FaceFromPortal (portal_t *p, int pside)
 
 	f->numPrims = 0;
 	f->firstPrimID = 0;
-	
+
 	// return the created face
 	return f;
 }
@@ -1406,10 +1406,10 @@ MakeFaces_r
 If a portal will make a visible face,
 mark the side that originally created it
 
-  solid / empty : solid
-  solid / water : solid
-  water / empty : water
-  water / water : none
+	solid / empty : solid
+	solid / water : solid
+	water / empty : water
+	water / water : none
 ===============
 */
 void MakeFaces_r (node_t *node)
@@ -1494,7 +1494,7 @@ int AddWindingToPrimverts( const winding_t *w, unsigned short *pIndices, int ver
 			g_numprimverts++;
 			if ( g_numprimverts > MAX_MAP_PRIMVERTS )
 			{
-				Error( "Exceeded max water verts.\nIncrease surface subdivision size or lower your subdivision size in vmt files! (%d>%d)\n", 
+				Error( "Exceeded max water verts.\nIncrease surface subdivision size or lower your subdivision size in vmt files! (%d>%d)\n",
 					( int )g_numprimverts, ( int )MAX_MAP_PRIMVERTS );
 			}
 		}
@@ -1514,7 +1514,7 @@ int AddWindingToPrimverts( const winding_t *w, unsigned short *pIndices, int ver
 static void SubdivideFaceBySubdivSize( face_t *f, float subdivsize )
 {
 	// garymcthack - REFACTOR ME!!!
-	
+
 	vec_t dummy;
 	Vector hackNormal;
 	WindingPlane( f->w, hackNormal, &dummy );
@@ -1560,7 +1560,7 @@ static void SubdivideFaceBySubdivSize( face_t *f, float subdivsize )
 			normal.Init( 1.0f, 0.0f, 0.0f );
 			planeDist = ( float )x;
 			tempWinding = CopyWinding( w );
-			ClipWindingEpsilon( tempWinding, normal, planeDist, ON_EPSILON, 
+			ClipWindingEpsilon( tempWinding, normal, planeDist, ON_EPSILON,
 				&frontWinding, &backWinding );
 			if( tempWinding )
 			{
@@ -1578,7 +1578,7 @@ static void SubdivideFaceBySubdivSize( face_t *f, float subdivsize )
 
 			normal.Init( -1.0f, 0.0f, 0.0f );
 			planeDist = -( float )( x + subdivsize );
-			ClipWindingEpsilon( tempWinding, normal, planeDist, ON_EPSILON, 
+			ClipWindingEpsilon( tempWinding, normal, planeDist, ON_EPSILON,
 				&frontWinding, &backWinding );
 			if( tempWinding )
 			{
@@ -1596,7 +1596,7 @@ static void SubdivideFaceBySubdivSize( face_t *f, float subdivsize )
 
 			normal.Init( 0.0f, 1.0f, 0.0f );
 			planeDist = ( float )y;
-			ClipWindingEpsilon( tempWinding, normal, planeDist, ON_EPSILON, 
+			ClipWindingEpsilon( tempWinding, normal, planeDist, ON_EPSILON,
 				&frontWinding, &backWinding );
 			if( tempWinding )
 			{
@@ -1614,7 +1614,7 @@ static void SubdivideFaceBySubdivSize( face_t *f, float subdivsize )
 
 			normal.Init( 0.0f, -1.0f, 0.0f );
 			planeDist = -( float )( y + subdivsize );
-			ClipWindingEpsilon( tempWinding, normal, planeDist, ON_EPSILON, 
+			ClipWindingEpsilon( tempWinding, normal, planeDist, ON_EPSILON,
 				&frontWinding, &backWinding );
 			if( tempWinding )
 			{
@@ -1633,7 +1633,7 @@ static void SubdivideFaceBySubdivSize( face_t *f, float subdivsize )
 			Msg( "output winding:\n" );
 			PrintWinding( frontWinding );
 #endif
-			
+
 			if( frontWinding )
 			{
 				windings[xi + yi * xSteps] = frontWinding;
@@ -1662,7 +1662,7 @@ static void SubdivideFaceBySubdivSize( face_t *f, float subdivsize )
 		{
 			continue;
 		}
-		unsigned short *pIndices = 
+		unsigned short *pIndices =
 			( unsigned short * )_alloca( windings[i]->numpoints * sizeof( unsigned short ) );
 		// find indices for the verts.
 		newPrim.vertCount = AddWindingToPrimverts( windings[i], pIndices, newPrim.firstVert, newPrim.vertCount );
@@ -1682,11 +1682,11 @@ static void SubdivideFaceBySubdivSize( face_t *f, float subdivsize )
 	{
 		return;
 	}
-	
+
 #ifdef USE_TRISTRIPS
 	int numTristripIndices;
 	WORD *pStripIndices = NULL;
-	Stripify( triListIndices.Size() / 3, triListIndices.Base(), &numTristripIndices, 
+	Stripify( triListIndices.Size() / 3, triListIndices.Base(), &numTristripIndices,
 		&pStripIndices );
 	Assert( pStripIndices );
 
@@ -1694,7 +1694,7 @@ static void SubdivideFaceBySubdivSize( face_t *f, float subdivsize )
 
 	for( i = 0; i < numTristripIndices; i++ )
 	{
-		Assert( pStripIndices[i] >= newPrim.firstVert && 
+		Assert( pStripIndices[i] >= newPrim.firstVert &&
 			pStripIndices[i] < newPrim.firstVert + newPrim.vertCount );
 		g_primindices[newPrim.firstIndex + newPrim.indexCount] = pStripIndices[i];
 		newPrim.indexCount++;
@@ -1735,14 +1735,14 @@ void SubdivideFaceBySubdivSize( face_t *f )
 	dtexdata_t *pTexData = GetTexData( pTexInfo->texdata );
 	bool bFound;
 	const char *pMaterialName = TexDataStringTable_GetString( pTexData->nameStringTableID );
-	MaterialSystemMaterial_t matID = 
+	MaterialSystemMaterial_t matID =
 		FindOriginalMaterial( pMaterialName, &bFound, false );
 
 	if( !bFound )
 	{
 		return;
 	}
-	const char *subdivsizeString = GetMaterialVar( matID, "$subdivsize" );	
+	const char *subdivsizeString = GetMaterialVar( matID, "$subdivsize" );
 	if( subdivsizeString )
 	{
 		float subdivSize = atof( subdivsizeString );
@@ -1769,7 +1769,7 @@ void SplitSubdividedFaces_Node_r( node_t *node )
 
 	//
 	// recursively output the other nodes
-	//	
+	//
 	SplitSubdividedFaces_Node_r( node->children[0] );
 	SplitSubdividedFaces_Node_r( node->children[1] );
 }

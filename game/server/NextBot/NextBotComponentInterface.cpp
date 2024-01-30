@@ -16,9 +16,7 @@ INextBotComponent::INextBotComponent( INextBot *bot )
 	m_curInterval = TICK_INTERVAL;
 	m_lastUpdateTime = 0;
 	m_bot = bot;
-	
+
 	// register this component with the bot
 	bot->RegisterComponent( this );
 }
-
-

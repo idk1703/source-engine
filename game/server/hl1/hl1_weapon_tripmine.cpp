@@ -86,12 +86,12 @@ void CWeaponTripMine::Spawn( void )
 
 	if ( !g_pGameRules->IsDeathmatch() )
 	{
-		UTIL_SetSize( this, Vector(-16, -16, 0), Vector(16, 16, 28) ); 
+		UTIL_SetSize( this, Vector(-16, -16, 0), Vector(16, 16, 28) );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponTripMine::Precache( void )
 {
@@ -144,7 +144,7 @@ void CWeaponTripMine::PrimaryAttack( void )
 			pPlayer->RemoveAmmo( 1, m_iPrimaryAmmoType );
 
 			pPlayer->SetAnimation( PLAYER_ATTACK1 );
-			
+
 			if ( pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) <= 0 )
 			{
 				if ( !pPlayer->SwitchToNextBestWeapon( pPlayer->GetActiveWeapon() ) )
@@ -157,7 +157,7 @@ void CWeaponTripMine::PrimaryAttack( void )
 			}
 
 			m_flNextPrimaryAttack = gpGlobals->curtime + 0.5;
-			
+
 			SetWeaponIdleTime( gpGlobals->curtime ); // MO curtime correct ?
 		}
 	}
@@ -233,7 +233,7 @@ public:
 	void		Precache( void );
 
 	int			OnTakeDamage_Alive( const CTakeDamageInfo &info );
-	
+
 	void		WarningThink( void );
 	void		PowerupThink( void );
 	void		BeamBreakThink( void );
@@ -306,7 +306,7 @@ void CTripmineGrenade::Spawn( void )
 	SetSequence( SelectWeightedSequence( ACT_TRIPMINE_WORLD ) );
 	ResetSequenceInfo();
 	m_flPlaybackRate = 0;
-	
+
 	UTIL_SetSize( this, Vector( -8, -8, -8), Vector(8, 8, 8) );
 
 	m_flDamage	= sk_plr_dmg_tripmine.GetFloat();
@@ -322,7 +322,7 @@ void CTripmineGrenade::Spawn( void )
 		// power up in 2.5 seconds
 		m_flPowerUp = gpGlobals->curtime + 2.5;
 	}
-	
+
 	SetThink( &CTripmineGrenade::PowerupThink );
 	SetNextThink( gpGlobals->curtime + 0.2 );
 
@@ -345,7 +345,7 @@ void CTripmineGrenade::Spawn( void )
 
 void CTripmineGrenade::Precache( void )
 {
-	PrecacheModel( TRIPMINE_MODEL ); 
+	PrecacheModel( TRIPMINE_MODEL );
 	m_iLaserModel = PrecacheModel( TRIPMINE_BEAM_SPRITE );
 
 	PrecacheScriptSound( "TripmineGrenade.Deploy" );
@@ -381,9 +381,9 @@ void CTripmineGrenade::PowerupThink( void  )
 			return;
 		}
 
-		// find out what we've been stuck on		
+		// find out what we've been stuck on
 		SetOwnerEntity( NULL );
-		
+
 		UTIL_TraceLine( GetAbsOrigin() + m_vecDir * 8, GetAbsOrigin() - m_vecDir * 32, MASK_SHOT, pOldOwner, COLLISION_GROUP_NONE, &tr );
 
 		if ( tr.startsolid )
@@ -488,7 +488,7 @@ void CTripmineGrenade::BeamBreakThink( void  )
 
 	// ALERT( at_console, "%f : %f\n", tr.flFraction, m_flBeamLength );
 
-	// respawn detect. 
+	// respawn detect.
 	if ( !m_hBeam )
 	{
 		MakeBeam();

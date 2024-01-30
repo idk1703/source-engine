@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -110,8 +110,8 @@ public:
 	bool UsesPowerOfTwoFrameBufferTexture( void );
 
 	virtual bool	Interpolate( float currentTime );
-	virtual void	Simulate();	
-	virtual void	Release();	
+	virtual void	Simulate();
+	virtual void	Release();
 
 	float	GetAnimTimeInterval( void ) const;
 
@@ -159,7 +159,7 @@ public:
 	//
 	virtual CMouthInfo *GetMouth();
 	virtual void	ControlMouth( CStudioHdr *pStudioHdr );
-	
+
 	// override in sub-classes
 	virtual void DoAnimationEvents( CStudioHdr *pStudio );
 	virtual void FireEvent( const Vector& origin, const QAngle& angles, int event, const char *options );
@@ -176,7 +176,7 @@ public:
 	virtual CStudioHdr *OnNewModel( void );
 	CStudioHdr	*GetModelPtr() const;
 	void InvalidateMdlCache();
-	
+
 	virtual void SetPredictable( bool state );
 	void UseClientSideAnimation();
 
@@ -248,7 +248,7 @@ public:
 	// This can be used to force client side animation to be on. Only use if you know what you're doing!
 	// Normally, the server entity should set this.
 	void							ForceClientSideAnimationOn();
-	
+
 	void							AddToClientSideAnimationList();
 	void							RemoveFromClientSideAnimationList( bool bBeingDestroyed = false );
 
@@ -271,7 +271,7 @@ public:
 	virtual bool					GetAttachment( int number, Vector &origin, QAngle &angles );
 	virtual bool					GetAttachment( int number, matrix3x4_t &matrix );
 	virtual bool					GetAttachmentVelocity( int number, Vector &originVel, Quaternion &angleVel );
-	
+
 	// Returns the attachment in local space
 	bool							GetAttachmentLocal( int iAttachment, matrix3x4_t &attachmentToLocal );
 	bool							GetAttachmentLocal( int iAttachment, Vector &origin, QAngle &angles );
@@ -332,7 +332,7 @@ public:
 	void							GetBlendedLinearVelocity( Vector *pVec );
 	int								LookupSequence ( const char *label );
 	int								LookupActivity( const char *label );
-	char const						*GetSequenceName( int iSequence ); 
+	char const						*GetSequenceName( int iSequence );
 	char const						*GetSequenceActivityName( int iSequence );
 	Activity						GetSequenceActivity( int iSequence );
 	KeyValues						*GetSequenceKeyValues( int iSequence );
@@ -377,7 +377,7 @@ public:
 	// the view models are drawn with a different FOV.
 	//
 	// If you're drawing something inside of a view model's DrawModel() function, then you want the
-	// original attachment origin instead of the adjusted one. To get that, call this on the 
+	// original attachment origin instead of the adjusted one. To get that, call this on the
 	// adjusted attachment origin.
 	virtual void					UncorrectViewModelAttachment( Vector &vOrigin ) {}
 
@@ -419,7 +419,7 @@ public:
 
 	// This is called to do the actual muzzle flash effect.
 	virtual void ProcessMuzzleFlashEvent();
-	
+
 	// Update client side animations
 	static void UpdateClientSideAnimations();
 
@@ -567,7 +567,7 @@ private:
 	float							m_flPrevEventCycle;
 	int								m_nEventSequence;
 
-	float							m_flEncodedController[MAXSTUDIOBONECTRLS];	
+	float							m_flEncodedController[MAXSTUDIOBONECTRLS];
 	CInterpolatedVarArray< float, MAXSTUDIOBONECTRLS >		m_iv_flEncodedController;
 	float							m_flOldEncodedController[MAXSTUDIOBONECTRLS];
 
@@ -601,7 +601,7 @@ private:
 	int								m_nOldSequence;
 	CBoneMergeCache					*m_pBoneMergeCache;	// This caches the strcmp lookups that it has to do
 														// when merg
-	
+
 	CUtlVector< matrix3x4_t >		m_CachedBoneData; // never access this directly. Use m_BoneAccessor.
 	memhandle_t						m_hitboxBoneCacheHandle;
 	float							m_flLastBoneSetupTime;
@@ -642,7 +642,7 @@ private:
 	bool							m_bHasAttachedParticles;
 };
 
-enum 
+enum
 {
 	RAGDOLL_FRICTION_OFF = -2,
 	RAGDOLL_FRICTION_NONE,
@@ -653,7 +653,7 @@ enum
 
 class C_ClientRagdoll : public C_BaseAnimating, public IPVSNotify
 {
-	
+
 public:
 	C_ClientRagdoll( bool bRestoring = true );
 	DECLARE_CLASS( C_ClientRagdoll, C_BaseAnimating );
@@ -745,7 +745,7 @@ inline float C_BaseAnimating::GetCycle() const
 //-----------------------------------------------------------------------------
 
 inline CStudioHdr *C_BaseAnimating::GetModelPtr() const
-{ 
+{
 	if ( IsDynamicModelLoading() )
 		return NULL;
 
@@ -781,28 +781,28 @@ inline bool C_BaseAnimating::IsModelScaled() const
 //-----------------------------------------------------------------------------
 // Sequence access
 //-----------------------------------------------------------------------------
-inline int C_BaseAnimating::GetSequence() 
-{ 
-	return m_nSequence; 
+inline int C_BaseAnimating::GetSequence()
+{
+	return m_nSequence;
 }
 
-inline bool C_BaseAnimating::IsSequenceFinished( void ) 
-{ 
-	return m_bSequenceFinished; 
+inline bool C_BaseAnimating::IsSequenceFinished( void )
+{
+	return m_bSequenceFinished;
 }
 
 inline float C_BaseAnimating::SequenceDuration( void )
-{ 
-	return SequenceDuration( GetSequence() ); 
+{
+	return SequenceDuration( GetSequence() );
 }
 
 
 //-----------------------------------------------------------------------------
 // Mouth
 //-----------------------------------------------------------------------------
-inline CMouthInfo& C_BaseAnimating::MouthInfo()			
-{ 
-	return m_mouth; 
+inline CMouthInfo& C_BaseAnimating::MouthInfo()
+{
+	return m_mouth;
 }
 
 

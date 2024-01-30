@@ -44,7 +44,7 @@ DECLARE_HUDELEMENT( CHudHealth );
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudHealth::CHudHealth( const char *pElementName ) :
 	CHudNumeric( pElementName, "HudHealth" )
@@ -63,8 +63,8 @@ bool CHudHealth::GetHealth( int& value )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : value - 
+// Purpose:
+// Input  : value -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CHudHealth::GetValue( char *val, int maxlen )
@@ -126,7 +126,7 @@ private:
 DECLARE_HUDELEMENT( CHudVehicleHealth );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudVehicleHealth::CHudVehicleHealth( const char *pElementName ) :
 	CHudNumeric( pElementName, "HudVehicleHealth" )
@@ -161,7 +161,7 @@ bool CHudVehicleHealth::GetHealth( int& value )
 			return true;
 		}
 	}
-	
+
 	bool changed = m_bPrevHealth != false;
 	if ( changed )
 	{
@@ -182,8 +182,8 @@ bool CHudVehicleHealth::GetHealth( int& value )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : value - 
+// Purpose:
+// Input  : value -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CHudVehicleHealth::GetValue( char *val, int maxlen )

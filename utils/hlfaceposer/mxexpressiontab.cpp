@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,8 +14,8 @@ mxExpressionTab *g_pExpressionClass = 0;
 
 //-----------------------------------------------------------------------------
 // Purpose: Right click context menu
-// Input  : mx - 
-//			my - 
+// Input  : mx -
+//			my -
 //-----------------------------------------------------------------------------
 void mxExpressionTab::ShowRightClickMenu( int mx, int my )
 {
@@ -52,8 +52,8 @@ void mxExpressionTab::ShowRightClickMenu( int mx, int my )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : int	
+// Purpose:
+// Output : int
 //-----------------------------------------------------------------------------
 int	mxExpressionTab::getSelectedIndex () const
 {

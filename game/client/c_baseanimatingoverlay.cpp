@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -69,14 +69,14 @@ void ResizeAnimationLayerCallback( void *pStruct, int offsetToUtlVector, int len
 	C_BaseAnimatingOverlay *pEnt = (C_BaseAnimatingOverlay*)pStruct;
 	CUtlVector < C_AnimationLayer > *pVec = &pEnt->m_AnimOverlay;
 	CUtlVector< CInterpolatedVar< C_AnimationLayer > > *pVecIV = &pEnt->m_iv_AnimOverlay;
-	
+
 	Assert( (char*)pVec - (char*)pEnt == offsetToUtlVector );
 	Assert( pVec->Count() == pVecIV->Count() );
 	Assert( pVec->Count() <= C_BaseAnimatingOverlay::MAX_OVERLAYS );
-	
+
 	int diff = len - pVec->Count();
 
-	
+
 
 	if ( diff == 0 )
 		return;
@@ -107,13 +107,13 @@ void ResizeAnimationLayerCallback( void *pStruct, int offsetToUtlVector, int len
 		pEnt->AddVar( &pVec->Element( i ), pWatcher, LATCH_ANIMATION_VAR, true );
 	}
 	// FIXME: need to set historical values of nOrder in pVecIV to MAX_OVERLAY
-	
+
 }
 
 
 BEGIN_RECV_TABLE_NOBASE( C_BaseAnimatingOverlay, DT_OverlayVars )
-	 RecvPropUtlVector( 
-		RECVINFO_UTLVECTOR_SIZEFN( m_AnimOverlay, ResizeAnimationLayerCallback ), 
+	 RecvPropUtlVector(
+		RECVINFO_UTLVECTOR_SIZEFN( m_AnimOverlay, ResizeAnimationLayerCallback ),
 		C_BaseAnimatingOverlay::MAX_OVERLAYS,
 		RecvPropDataTable(NULL, 0, 0, &REFERENCE_RECV_TABLE( DT_Animationlayer ) ) )
 END_RECV_TABLE()
@@ -207,12 +207,12 @@ void C_BaseAnimatingOverlay::GetRenderBounds( Vector& theMins, Vector& theMaxs )
 void C_BaseAnimatingOverlay::CheckForLayerChanges( CStudioHdr *hdr, float currentTime )
 {
 	bool bLayersChanged = false;
-	
+
 	// FIXME: damn, there has to be a better way than this.
 	int i;
 	for (i = 0; i < m_iv_AnimOverlay.Count(); i++)
 	{
-		CDisableRangeChecks disableRangeChecks; 
+		CDisableRangeChecks disableRangeChecks;
 
 		int iHead, iPrev1, iPrev2;
 		m_iv_AnimOverlay[i].GetInterpolationInfo( currentTime, &iHead, &iPrev1, &iPrev2 );
@@ -340,11 +340,11 @@ void C_BaseAnimatingOverlay::AccumulateLayers( IBoneSetup &boneSetup, Vector pos
 
 			/*
 			DevMsgRT( 1 , "%.3f  %.3f  %.3f\n", currentTime, fWeight, dadt );
-			debugoverlay->AddTextOverlay( GetAbsOrigin() + Vector( 0, 0, 64 ), -j - 1, 0, 
-				"%2d(%s) : %6.2f : %6.2f", 
+			debugoverlay->AddTextOverlay( GetAbsOrigin() + Vector( 0, 0, 64 ), -j - 1, 0,
+				"%2d(%s) : %6.2f : %6.2f",
 					m_AnimOverlay[i].m_nSequence,
 					hdr->pSeqdesc( m_AnimOverlay[i].m_nSequence )->pszLabel(),
-					m_AnimOverlay[i].m_flCycle, 
+					m_AnimOverlay[i].m_flCycle,
 					m_AnimOverlay[i].m_flWeight
 					);
 			*/
@@ -392,7 +392,7 @@ void C_BaseAnimatingOverlay::AccumulateLayers( IBoneSetup &boneSetup, Vector pos
 
 						if ( pHead && pPrev1 && pPrev2 )
 						{
-							DevMsgRT( "%6.2f : %30s %6.2f (%6.2f:%6.2f:%6.2f) : %6.2f (%6.2f:%6.2f:%6.2f) : %1d\n", currentTime, boneSetup.GetStudioHdr()->pSeqdesc( m_AnimOverlay[i].m_nSequence ).pszLabel(), 
+							DevMsgRT( "%6.2f : %30s %6.2f (%6.2f:%6.2f:%6.2f) : %6.2f (%6.2f:%6.2f:%6.2f) : %1d\n", currentTime, boneSetup.GetStudioHdr()->pSeqdesc( m_AnimOverlay[i].m_nSequence ).pszLabel(),
 								fCycle, (float)pPrev2->m_flCycle, (float)pPrev1->m_flCycle, (float)pHead->m_flCycle,
 								fWeight, (float)pPrev2->m_flWeight, (float)pPrev1->m_flWeight, (float)pHead->m_flWeight,
 								i );
@@ -493,10 +493,10 @@ void C_BaseAnimatingOverlay::DoAnimationEvents( CStudioHdr *pStudioHdr )
 				}
 				else if ( pevent[i].event < 5000 ) //Adrian - Support the old event system
 					continue;
-			
+
 				if ( pevent[i].cycle <= m_flOverlayPrevEventCycle[j] )
 					continue;
-				
+
 				if ( watch )
 				{
 					Msg( "%i FE %i Looped cycle %f, prev %f ev %f (time %.3f)\n",
@@ -507,8 +507,8 @@ void C_BaseAnimatingOverlay::DoAnimationEvents( CStudioHdr *pStudioHdr )
 						(float)m_AnimOverlay[j].m_flCycle,
 						gpGlobals->curtime );
 				}
-					
-					
+
+
 				FireEvent( GetAbsOrigin(), GetAbsAngles(), pevent[ i ].event, pevent[ i ].pszOptions() );
 			}
 
@@ -549,7 +549,7 @@ void C_BaseAnimatingOverlay::DoAnimationEvents( CStudioHdr *pStudioHdr )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStudioHdr *C_BaseAnimatingOverlay::OnNewModel()
 {

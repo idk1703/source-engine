@@ -72,7 +72,7 @@ public:
 
 	virtual bool IsAllowedToPickUpFlag( void ) const;
 
-	virtual void		InitClass( void );				// set health/etc 
+	virtual void		InitClass( void );				// set health/etc
 	void				ModifyMaxHealth( int nNewMaxHealth, bool bSetCurrentHealth = true, bool bAllowModelScaling = true );
 
 	virtual int GetBotType( void ) const;				// return a unique int representing the type of bot instance this is
@@ -211,7 +211,7 @@ public:
 
 	private:
 
-		
+
 		CUtlVector< int > m_touchTimes;
 	};
 
@@ -232,7 +232,7 @@ public:
 		SUPPRESS_FIRE				= 1<<3,
 		DISABLE_DODGE				= 1<<4,
 		BECOME_SPECTATOR_ON_DEATH	= 1<<5,					// move bot to spectator team when killed
-		QUOTA_MANANGED				= 1<<6,					// managed by the bot quota in CTFBotManager 
+		QUOTA_MANANGED				= 1<<6,					// managed by the bot quota in CTFBotManager
 		RETAIN_BUILDINGS			= 1<<7,					// don't destroy this bot's buildings when it disconnects
 		SPAWN_WITH_FULL_CHARGE		= 1<<8,					// all weapons start with full charge (ie: uber)
 		ALWAYS_CRIT					= 1<<9,					// always fire critical hits
@@ -408,7 +408,7 @@ public:
 		void Reset()
 		{
 			m_eventName = "default";
-			
+
 			m_skill = CTFBot::EASY;
 			m_weaponRestriction = CTFBot::ANY_WEAPON;
 			m_mission = CTFBot::NO_MISSION;
@@ -417,7 +417,7 @@ public:
 			m_maxVisionRange = -1.f;
 
 			m_items.RemoveAll();
-			
+
 			m_itemsAttributes.RemoveAll();
 			m_characterAttributes.RemoveAll();
 			m_tags.RemoveAll();
@@ -462,7 +462,7 @@ private:
 
 	CTFNavArea *m_spawnArea;			// where we spawned
 	CountdownTimer m_justLostPointTimer;
-	
+
 	int m_weaponRestrictionFlags;
 	int m_attributeFlags;
 	DifficultyType m_difficulty;
@@ -527,7 +527,7 @@ private:
 	float m_maxVisionRangeOverride;
 
 	CountdownTimer m_opportunisticTimer;
-	
+
 	CSoundPatch *m_pIdleSound;
 
 	float m_squadFormationError;
@@ -889,8 +889,8 @@ public:
 			}
 
 			// in training, avoid capturing the point until the human trainee does so
-			if ( TFGameRules()->IsInTraining() && 
-				 area->HasAttributeTF( TF_NAV_CONTROL_POINT ) && 
+			if ( TFGameRules()->IsInTraining() &&
+				 area->HasAttributeTF( TF_NAV_CONTROL_POINT ) &&
 				 !m_me->IsAnyPointBeingCaptured() &&
 				 !m_me->IsPlayerClass( TF_CLASS_ENGINEER ) )	// allow engineers to path so they can test travel distance for sentry placement
 			{
@@ -948,7 +948,7 @@ public:
 			// add a random penalty unique to this character so they choose different routes to the same place
 			float preference = 1.0f;
 
-			if ( m_routeType == DEFAULT_ROUTE && !m_me->IsMiniBoss() ) 
+			if ( m_routeType == DEFAULT_ROUTE && !m_me->IsMiniBoss() )
 			{
 				// this term causes the same bot to choose different routes over time,
 				// but keep the same route for a period in case of repaths

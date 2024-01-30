@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,7 +37,7 @@ C_PlayerClassSapper::~C_PlayerClassSapper()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float C_PlayerClassSapper::GetDrainedEnergy( void )
 {
@@ -45,7 +45,7 @@ float C_PlayerClassSapper::GetDrainedEnergy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PlayerClassSapper::DeductDrainedEnergy( float flEnergy )
 {

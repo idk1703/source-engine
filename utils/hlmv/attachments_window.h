@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -29,10 +29,10 @@ public:
 	void Init( );
 
 	void OnLoadModel();
-	
+
 	void OnTabSelected();
 	void OnTabUnselected();
-	
+
 	virtual int handleEvent( mxEvent *event );
 
 
@@ -53,7 +53,7 @@ private:
 	ControlPanel *m_pControlPanel;
 	mxListBox *m_cAttachmentList;
 	mxListBox *m_cBoneList;
-	
+
 	mxLineEdit2 *m_cTranslation;
 	mxLineEdit2 *m_cRotation;
 	mxLineEdit2 *m_cQCString;

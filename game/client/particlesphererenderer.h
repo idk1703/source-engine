@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,46 +24,46 @@ public:
 
 	// Initialize and tell it the material you'll be using.
 	void		Init( CParticleMgr *pParticleMgr, IMaterial *pMaterial );
-	
+
 	// Pass this call through from your particle system too.
 	void		StartRender( VMatrix &effectMatrix );
 
 	// Call this to	render a spherical particle.
-	void		RenderParticle( 
-		ParticleDraw *pDraw, 
+	void		RenderParticle(
+		ParticleDraw *pDraw,
 		const Vector &vOriginalPos,
 		const Vector &vTransformedPos,
 		float flAlpha,			// value 0 - 255.4
 		float flParticleSize,
-		float flAngle = 0.0f ); 
+		float flAngle = 0.0f );
 
-	void		RenderParticle_AddColor( 
-		ParticleDraw *pDraw, 
+	void		RenderParticle_AddColor(
+		ParticleDraw *pDraw,
 		const Vector &vOriginalPos,
 		const Vector &vTransformedPos,
 		float flAlpha,				// value 0 - 255.4
 		float flParticleSize,
 		const Vector &vToAdd0to1	// Add this to the color (value 0-1)
-		); 
+		);
 
-	
+
 	// Lighting is (base color) + (ambient / dist^2) + bump(directional / dist^2)
 	const Vector& GetBaseColor() const;			// Specified as 0-1
 	void SetBaseColor( const Vector &vColor );
-	
+
 	const CParticleLightInfo& GetAmbientLight() const;
 	void SetAmbientLight( const CParticleLightInfo &info );
-	
+
 	const CParticleLightInfo& GetDirectionalLight() const;
 	void SetDirectionalLight( const CParticleLightInfo &info );
 
 
 private:
 
-	void		AddLightColor( 
+	void		AddLightColor(
 		Vector const *pPos,
-		Vector const *pLightPos, 
-		Vector const *pLightColor, 
+		Vector const *pLightPos,
+		Vector const *pLightColor,
 		float flLightIntensity,
 		Vector *pOutColor );
 
@@ -73,9 +73,9 @@ private:
 private:
 
 	int m_iLastTickStartRenderCalled;	// Used for debugging.
-	
+
 	CParticleMgr *m_pParticleMgr;
-	
+
 	Vector			m_vBaseColor;
 	CParticleLightInfo m_AmbientLight;
 	CParticleLightInfo m_DirectionalLight;
@@ -87,10 +87,10 @@ private:
 // Inlines.
 // ------------------------------------------------------------------------ //
 
-inline void CParticleSphereRenderer::AddLightColor( 
+inline void CParticleSphereRenderer::AddLightColor(
 	Vector const *pPos,
-	Vector const *pLightPos, 
-	Vector const *pLightColor, 
+	Vector const *pLightPos,
+	Vector const *pLightColor,
 	float flLightIntensity,
 	Vector *pOutColor )
 {
@@ -152,7 +152,7 @@ inline void CParticleSphereRenderer::SetDirectionalLight( const CParticleLightIn
 	m_DirectionalLight = info;
 }
 
-inline void CParticleSphereRenderer::RenderParticle( 
+inline void CParticleSphereRenderer::RenderParticle(
 	ParticleDraw *pDraw,
 	const Vector &vOriginalPos,
 	const Vector &vTransformedPos,
@@ -170,13 +170,13 @@ inline void CParticleSphereRenderer::RenderParticle(
 
 	Vector vColor = m_vBaseColor;
 	AddLightColor( &vOriginalPos, &m_AmbientLight.m_vPos, &m_AmbientLight.m_vColor, m_AmbientLight.m_flIntensity, &vColor );
-	
+
 	// If the DX8 shader isn't going to handle the directional light color, then add its contribution here.
 	if( !m_bUsingPixelShaders )
 	{
 		AddLightColor( &vOriginalPos, &m_DirectionalLight.m_vPos, &m_DirectionalLight.m_vColor, m_DirectionalLight.m_flIntensity, &vColor );
 	}
-	
+
 	ClampColor( vColor );
 
 	RenderParticle_Color255SizeNormalAngle(
@@ -189,7 +189,7 @@ inline void CParticleSphereRenderer::RenderParticle(
 		flAngle );
 }
 
-inline void CParticleSphereRenderer::RenderParticle_AddColor( 
+inline void CParticleSphereRenderer::RenderParticle_AddColor(
 	ParticleDraw *pDraw,
 	const Vector &vOriginalPos,
 	const Vector &vTransformedPos,
@@ -208,13 +208,13 @@ inline void CParticleSphereRenderer::RenderParticle_AddColor(
 
 	Vector vColor = m_vBaseColor + vToAdd0to1;
 	AddLightColor( &vOriginalPos, &m_AmbientLight.m_vPos, &m_AmbientLight.m_vColor, m_AmbientLight.m_flIntensity, &vColor );
-	
+
 	// If the DX8 shader isn't going to handle the directional light color, then add its contribution here.
 	if( !m_bUsingPixelShaders )
 	{
 		AddLightColor( &vOriginalPos, &m_DirectionalLight.m_vPos, &m_DirectionalLight.m_vColor, m_DirectionalLight.m_flIntensity, &vColor );
 	}
-	
+
 	ClampColor( vColor );
 
 	RenderParticle_Color255Size(

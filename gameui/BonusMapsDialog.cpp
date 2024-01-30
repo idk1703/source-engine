@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -321,7 +321,7 @@ void CBonusMapsDialog::BuildMapsList( void )
 {
 	// clear the current list
 	m_pGameList->DeleteAllItems();
-	
+
 	BonusMapsDatabase()->ClearBonusMapsList();
 	BonusMapsDatabase()->ScanBonusMaps();
 
@@ -676,7 +676,7 @@ void CBonusMapsDialog::ApplySchemeSettings( IScheme *pScheme )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBonusMapsDialog::OnCommand( const char *command )
 {
@@ -689,7 +689,7 @@ void CBonusMapsDialog::OnCommand( const char *command )
 
 			// Don't do anything with locked items
 			if ( pBonusMap->bLocked || ( m_pChallengeSelection->IsEnabled() && GetSelectedChallenge() == -1 ) )
-				return;			
+				return;
 
 			const char *shortName = pBonusMap->szShortName;
 			if ( shortName && shortName[ 0 ] )
@@ -801,9 +801,9 @@ void CBonusMapsDialog::OnKeyCodePressed( vgui::KeyCode code )
 		OnCommand( "Close" );
 		return;
 	}
-	else if ( code == KEY_XSTICK1_RIGHT || 
-			  code == KEY_XSTICK2_RIGHT || 
-			  code == KEY_XBUTTON_RIGHT || 
+	else if ( code == KEY_XSTICK1_RIGHT ||
+			  code == KEY_XSTICK2_RIGHT ||
+			  code == KEY_XBUTTON_RIGHT ||
 			  code == KEY_RIGHT )
 	{
 		if ( m_pGameList->GetItemCount() )
@@ -838,9 +838,9 @@ void CBonusMapsDialog::OnKeyCodePressed( vgui::KeyCode code )
 			}
 		}
 	}
-	else if ( code == KEY_XSTICK1_LEFT || 
-			  code == KEY_XSTICK2_LEFT || 
-			  code == KEY_XBUTTON_LEFT || 
+	else if ( code == KEY_XSTICK1_LEFT ||
+			  code == KEY_XSTICK2_LEFT ||
+			  code == KEY_XBUTTON_LEFT ||
 			  code == KEY_LEFT )
 	{
 		if ( m_pGameList->GetItemCount() )
@@ -876,9 +876,9 @@ void CBonusMapsDialog::OnKeyCodePressed( vgui::KeyCode code )
 			}
 		}
 	}
-	else if ( code == KEY_XSTICK1_DOWN || 
-			  code == KEY_XSTICK2_DOWN || 
-			  code == KEY_XBUTTON_DOWN || 
+	else if ( code == KEY_XSTICK1_DOWN ||
+			  code == KEY_XSTICK2_DOWN ||
+			  code == KEY_XBUTTON_DOWN ||
 			  code == KEY_DOWN )
 	{
 		int nOldActiveItem = m_pChallengeSelection->GetActiveItem();
@@ -890,9 +890,9 @@ void CBonusMapsDialog::OnKeyCodePressed( vgui::KeyCode code )
 			return;
 		}
 	}
-	else if ( code == KEY_XSTICK1_UP || 
-			  code == KEY_XSTICK2_UP || 
-			  code == KEY_XBUTTON_UP || 
+	else if ( code == KEY_XSTICK1_UP ||
+			  code == KEY_XSTICK2_UP ||
+			  code == KEY_XBUTTON_UP ||
 			  code == KEY_UP )
 	{
 		int nOldActiveItem = m_pChallengeSelection->GetActiveItem();
@@ -925,11 +925,11 @@ void CBonusMapsDialog::OnPanelSelected()
 	CBonusMapPanel *pSelectedBonusMapPanel = (CBonusMapPanel *)m_pGameList->GetSelectedPanel();
 	if ( !pSelectedBonusMapPanel )
 		return;
-	
+
 	BonusMapDescription_t *pMap = BonusMapsDatabase()->GetBonusData( pSelectedBonusMapPanel->GetBonusMapListItemID() );
 	if ( !pMap )
 		return;
-	
+
 	SetControlString( "CommentLabel", pMap->szComment );
 
 	// Handle challenge selection box
@@ -950,7 +950,7 @@ void CBonusMapsDialog::OnPanelSelected()
 		{
 			ChallengeDescription_t *pChallenge = &(*pMap->m_pChallenges)[ iNumChallenges ];
 			int iType = iNumChallenges;
-			
+
 			// If the challenge type was specified then use that instead of (legacy) the order the challenges were listed
 			if ( pChallenge->iType != -1 )
 				iType = pChallenge->iType;

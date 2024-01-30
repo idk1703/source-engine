@@ -15,7 +15,7 @@ public:
 	DECLARE_CLASS( CSparkler, CBaseEntity );
 
 	void Spawn( void );
-	
+
 	void InputToggle( inputdata_t &input );	// Input function for toggling our effect's state
 	void InputScale( inputdata_t &input );
 
@@ -42,7 +42,7 @@ END_DATADESC()
 // Declare the data-table for server/client communication
 IMPLEMENT_SERVERCLASS_ST( CSparkler, DT_Sparkler )
 	SendPropInt( SENDINFO( m_bEmit ), 1, SPROP_UNSIGNED ),	// Declare our boolean state variable
-	SendPropFloat( SENDINFO( m_flScale ), 0, SPROP_NOSCALE ), 
+	SendPropFloat( SENDINFO( m_flScale ), 0, SPROP_NOSCALE ),
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
@@ -92,10 +92,10 @@ void CSparkler::InputScale( inputdata_t &input )
 void MakeSparkle( const Vector &origin, float flScale )
 {
 	CEffectData data;
-	
+
 	// Send our origin
 	data.m_vOrigin = origin;
-	
+
 	// Send our scale
 	data.m_flScale = flScale;
 

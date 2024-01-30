@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,8 +15,8 @@
 
 #if 1
 // game is in inches
-vphysics_units_t g_PhysicsUnits = 
-{ 
+vphysics_units_t g_PhysicsUnits =
+{
 	METERS_PER_INCH, //float		unitScaleMeters;			// factor that converts game units to meters
 	1.0f / METERS_PER_INCH, //float		unitScaleMetersInv;		// factor that converts meters to game units
 	0.25f,			// float		globalCollisionTolerance;	// global collision tolerance in game units
@@ -25,8 +25,8 @@ vphysics_units_t g_PhysicsUnits =
 };
 #else
 // game is in meters
-vphysics_units_t g_PhysicsUnits = 
-{ 
+vphysics_units_t g_PhysicsUnits =
+{
 	1.0f,			//float		unitScaleMeters;			// factor that converts game units to meters
 	1.0f,			//float		unitScaleMetersInv;			// factor that converts meters to game units
 	0.01f,			// float		globalCollisionTolerance;	// global collision tolerance in game units
@@ -96,17 +96,17 @@ void ConvertRotationToIVP( const QAngle& angles, IVP_U_Matrix3 &out )
 {
 	Vector forward, right, up;
 	IVP_U_Float_Point ivpForward, ivpLeft, ivpUp;
-	
+
 	AngleVectors( angles, &forward, &right, &up );
 	// now this is left
 	right = -right;
 
 	up = -up;
-	
+
 	ConvertDirectionToIVP( forward, ivpForward );
 	ConvertDirectionToIVP( right, ivpLeft );
 	ConvertDirectionToIVP( up, ivpUp );
-	
+
 	out.set_col( IVP_INDEX_X, &ivpForward );
 	out.set_col( IVP_INDEX_Z, &ivpLeft );
 	out.set_col( IVP_INDEX_Y, &ivpUp );
@@ -184,7 +184,7 @@ void ConvertRotationToHL( const IVP_U_Matrix3 &in, QAngle& angles )
 	ConvertDirectionToHL( out, up );
 
 	float xyDist = sqrt( forward[0] * forward[0] + forward[1] * forward[1] );
-	
+
 	// enough here to get angles?
 	if ( xyDist > 0.001 )
 	{
@@ -362,4 +362,3 @@ int ConvertCoordinateAxisToHL( int axisIndex )
 {
 	return axisIndex < 4 ? axisMap[axisIndex] : 0;
 }
-

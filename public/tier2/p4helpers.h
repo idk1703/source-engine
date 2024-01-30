@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -29,7 +29,7 @@ public:
 public:
 	// Opens the file for edit
 	virtual bool Edit( void );
-	
+
 	// Opens the file for add
 	virtual bool Add( void );
 
@@ -129,25 +129,25 @@ protected:
 class CP4AutoEditAddFile
 {
 public:
-	explicit CP4AutoEditAddFile( char const *szFilename ) 
+	explicit CP4AutoEditAddFile( char const *szFilename )
 	: m_spImpl( g_p4factory->AccessFile( szFilename ) )
 	, m_bHasDesiredFileType( false )
-	{ 
-		m_spImpl->Edit(); 
+	{
+		m_spImpl->Edit();
 	}
 
-	explicit CP4AutoEditAddFile( char const *szFilename, const char *szFiletype ) 
+	explicit CP4AutoEditAddFile( char const *szFilename, const char *szFiletype )
 	: m_spImpl( g_p4factory->AccessFile( szFilename ) )
 	, m_sFileType(szFiletype)
 	, m_bHasDesiredFileType( true )
-	{ 
-		m_spImpl->Edit(); 
+	{
+		m_spImpl->Edit();
 		m_spImpl->SetFileType( m_sFileType );
 	}
 
-	~CP4AutoEditAddFile( void ) 
-	{ 
-		m_spImpl->Add(); 
+	~CP4AutoEditAddFile( void )
+	{
+		m_spImpl->Add();
 		if ( m_bHasDesiredFileType )
 			m_spImpl->SetFileType( m_sFileType );
 	}

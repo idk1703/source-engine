@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,7 +18,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFProgressBar : public vgui::ImagePanel
 {
@@ -42,9 +42,9 @@ private:
 };
 
 
-// Floating delta text items, float off the top of the frame to 
+// Floating delta text items, float off the top of the frame to
 // show changes to the timer value
-typedef struct 
+typedef struct
 {
 	// amount of delta
 	int m_nAmount;
@@ -59,7 +59,7 @@ typedef struct
 class CExLabel;
 
 //-----------------------------------------------------------------------------
-// Purpose:  
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFHudTimeStatus : public vgui::EditablePanel, public CGameEventListener
 {
@@ -75,7 +75,7 @@ public:
 
 	int GetTimerIndex( void ){ return m_iTimerIndex; }
 	void SetTimerIndex( int index ){ m_iTimerIndex = ( index >= 0 ) ? index : 0; SetExtraTimePanels(); }
-	
+
 	virtual void FireGameEvent( IGameEvent *event );
 
 	void SetTeam( int nTeam ){ m_nTeam = nTeam; }
@@ -141,7 +141,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Purpose:  
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFHudKothTimeStatus : public CHudElement, public vgui::EditablePanel
 {

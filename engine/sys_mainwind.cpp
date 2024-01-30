@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 #if defined( USE_SDL )
@@ -56,7 +56,7 @@
 #include "inputsystem/ButtonCode.h"
 #ifdef WIN32
 #undef WIN32_LEAN_AND_MEAN
-  #include "unicode/unicode.h"
+	#include "unicode/unicode.h"
 #endif
 #include "GameUI/IGameUI.h"
 #include "matchmaking.h"
@@ -67,24 +67,24 @@
 
 
 #if defined( _X360 )
-  #include "xbox/xbox_win32stubs.h"
-  #include "hl2orange.spa.h"
+	#include "xbox/xbox_win32stubs.h"
+	#include "hl2orange.spa.h"
 #endif
 
 #if defined( LINUX )
-  #include "snd_dev_sdl.h"
+	#include "snd_dev_sdl.h"
 #endif
 
 
 #ifdef DBGFLAG_ASSERT
 
-  #define AssertExit( _exp )		Assert( _exp )
-  #define AssertExitF( _exp )		Assert( _exp )
+	#define AssertExit( _exp )		Assert( _exp )
+	#define AssertExitF( _exp )		Assert( _exp )
 
 #else
 
-  #define AssertExit( _exp )		if ( !( _exp ) ) return;
-  #define AssertExitF( _exp )		if ( !( _exp ) ) return false;
+	#define AssertExit( _exp )		if ( !( _exp ) ) return;
+	#define AssertExitF( _exp )		if ( !( _exp ) ) return false;
 
 #endif
 
@@ -135,7 +135,7 @@ public:
 	void			InputDetachFromGameWindow();
 
 	void			PlayStartupVideos( void );
-	
+
 	// This is the SDL_Window* under SDL, HWND otherwise.
 	void*			GetMainWindow( void );
 	// This will be the HWND under D3D + Windows (both with and without SDL), SDL_Window* everywhere else.
@@ -184,7 +184,7 @@ public:
 private:
 	void			AppActivate( bool fActive );
 	void			PlayVideoAndWait( const char *filename, bool bNeedHealthWarning = false); // plays a video file and waits till it's done to return. Can be interrupted by user.
-	
+
 private:
 	void AttachToWindow();
 	void DetachFromWindow();
@@ -255,7 +255,7 @@ struct GameMessageHandler_t
 	void (CGame::*pFn)( const InputEvent_t &event );
 };
 
-GameMessageHandler_t g_GameMessageHandlers[] = 
+GameMessageHandler_t g_GameMessageHandlers[] =
 {
 	{ IE_AppActivated,			&CGame::HandleMsg_ActivateApp },
 	{ IE_WindowMove,			&CGame::HandleMsg_WindowMove },
@@ -299,7 +299,7 @@ void CGame::AppActivate( bool fActive )
 			// Clear keyboard states (should be cleared already but...)
 			// VGui_ActivateMouse will reactivate the mouse soon.
 			ClearIOStates();
-			
+
 			UpdateMaterialSystemConfig();
 		}
 		else
@@ -357,7 +357,7 @@ void CGame::DispatchInputEvent( const InputEvent_t &event )
 {
 	switch( event.m_nType )
 	{
-	// Handle button events specially, 
+	// Handle button events specially,
 	// since we have all manner of crazy filtering going on	when dealing with them
 	case IE_ButtonPressed:
 	case IE_ButtonDoubleClicked:
@@ -422,7 +422,7 @@ void VCR_EnterPausedState()
 	g_bVCRSingleStep = false;
 
 #ifdef WIN32
-	// This is cheesy, but GetAsyncKeyState is blocked (in protected_things.h) 
+	// This is cheesy, but GetAsyncKeyState is blocked (in protected_things.h)
 	// from being accidentally used, so we get it through it by getting its pointer directly.
 	static HINSTANCE hInst = LoadLibrary( "user32.dll" );
 	if ( !hInst )
@@ -457,7 +457,7 @@ void VCR_EnterPausedState()
 			// Ok, they released the S key, so we'll process it next time the key goes down.
 			g_bWaitingForStepKeyUp = false;
 		}
-	
+
 		Sleep( 2 );
 	}
 #else
@@ -466,11 +466,11 @@ void VCR_EnterPausedState()
 }
 
 #ifdef WIN32
-void VCR_HandlePlaybackMessages( 
+void VCR_HandlePlaybackMessages(
 	HWND hWnd,
-    UINT uMsg,
-    WPARAM wParam,
-    LPARAM lParam 
+		UINT uMsg,
+		WPARAM wParam,
+		LPARAM lParam
 	)
 {
 	if ( uMsg == WM_KEYDOWN )
@@ -519,7 +519,7 @@ static LONG WINAPI CallDefaultWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, L
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: The user has accepted an invitation to a game, we need to detect if 
+// Purpose: The user has accepted an invitation to a game, we need to detect if
 //			it's TF2 and restart properly if it is
 //-----------------------------------------------------------------------------
 void XBX_HandleInvite( DWORD nUserId )
@@ -556,7 +556,7 @@ void XBX_HandleInvite( DWORD nUserId )
 		// Save off our session ID for later retrieval
 		// NOTE: We may need to actually save off the inviter's XID and search for them later on if we took too long or the
 		//		 session they were a part of went away
-		
+
 		XBX_SetInviteSessionId( inviteInfo.hostInfo.sessionID );
 		XBX_SetInvitedUserId( nUserId );
 
@@ -585,7 +585,7 @@ int CGame::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	// Any messages that change the engine's internal state (like key events) are stored in a list
 	// and processed at the end of the frame. This is necessary for VCR mode to work correctly because
 	// Windows likes to pump messages during some of its API calls like SetWindowPos, and unless we add
-	// custom code around every Windows API call so VCR mode can trap the wndproc calls, VCR mode can't 
+	// custom code around every Windows API call so VCR mode can trap the wndproc calls, VCR mode can't
 	// reproduce the calls to the wndproc.
 	//
 
@@ -599,9 +599,9 @@ int CGame::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	}
 
 	//
-	// Note: NO engine state should be changed in here while in VCR record or playback. 
-	// We can send whatever we want to Windows, but if we change its state in here instead of 
-	// in DispatchAllStoredGameMessages, the playback may not work because Windows messages 
+	// Note: NO engine state should be changed in here while in VCR record or playback.
+	// We can send whatever we want to Windows, but if we change its state in here instead of
+	// in DispatchAllStoredGameMessages, the playback may not work because Windows messages
 	// are not deterministic, so you might get different messages during playback than you did during record.
 	//
 	InputEvent_t event;
@@ -640,12 +640,12 @@ int CGame::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 	case WM_SYSCOMMAND:
 		if ( ( wParam == SC_MONITORPOWER ) || ( wParam == SC_KEYMENU ) || ( wParam == SC_SCREENSAVE ) )
-            return lRet;
-    
-		if ( wParam == SC_CLOSE ) 
+						return lRet;
+
+		if ( wParam == SC_CLOSE )
 		{
 #if !defined( NO_VCR )
-			// handle the close message, but make sure 
+			// handle the close message, but make sure
 			// it's not because we accidently hit ALT-F4
 			if ( HIBYTE(VCRHook_GetKeyState(VK_LMENU)) || HIBYTE(VCRHook_GetKeyState(VK_RMENU) ) )
 				return lRet;
@@ -732,7 +732,7 @@ int CGame::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			EngineVGui()->ActivateGameUI();
 		}
-		EngineVGui()->SystemNotification( SYSTEMNOTIFY_STORAGEDEVICES_CHANGED );	
+		EngineVGui()->SystemNotification( SYSTEMNOTIFY_STORAGEDEVICES_CHANGED );
 		break;
 
 	case WM_XMP_PLAYBACKCONTROLLERCHANGED:
@@ -748,7 +748,7 @@ int CGame::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			// X360TBD: User signed out - pause the game?
 		}
-		EngineVGui()->SystemNotification( lParam ? SYSTEMNOTIFY_USER_SIGNEDIN : SYSTEMNOTIFY_USER_SIGNEDOUT );	
+		EngineVGui()->SystemNotification( lParam ? SYSTEMNOTIFY_USER_SIGNEDIN : SYSTEMNOTIFY_USER_SIGNEDOUT );
 		break;
 
 	case WM_SYS_UI:
@@ -787,7 +787,7 @@ int CGame::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		hdc = BeginPaint(hWnd, &ps);
 		RECT rcClient;
 		GetClientRect( hWnd, &rcClient );
-#ifndef SWDS		
+#ifndef SWDS
 		// Only renders stuff if running -noshaderapi
 		if ( videomode )
 		{
@@ -814,7 +814,7 @@ int CGame::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 #ifndef SWDS
 		case 14:
-            if ( !videomode->IsWindowedMode() )
+						if ( !videomode->IsWindowedMode() )
 				return 0;
 			break;
 #endif
@@ -823,11 +823,11 @@ int CGame::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 	default:
 		lRet = CallWindowProc( m_ChainedWindowProc, hWnd, uMsg, wParam, lParam );
-	    break;
-    }
+			break;
+		}
 
-    // return 0 if handled message, 1 if not
-    return lRet;
+		// return 0 if handled message, 1 if not
+		return lRet;
 }
 #elif defined(OSX)
 
@@ -842,7 +842,7 @@ int CGame::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 #if defined( WIN32 ) && !defined( USE_SDL )
 //-----------------------------------------------------------------------------
-// Creates the game window 
+// Creates the game window
 //-----------------------------------------------------------------------------
 static LONG WINAPI HLEngineWindowProc( HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM  lParam )
 {
@@ -888,7 +888,7 @@ static void DoSomeSocketStuffInOrderToGetZoneAlarmToNoticeUs( void )
 		}
 		WSACleanup();
 	}
-	
+
 #endif
 }
 #endif
@@ -943,10 +943,10 @@ bool CGame::CreateGameWindow( void )
 #endif
 	memset( &wc, 0, sizeof( wc ) );
 
-    wc.style         = CS_OWNDC | CS_DBLCLKS;
-    wc.lpfnWndProc   = CallDefaultWindowProc;
-    wc.hInstance     = m_hInstance;
-    wc.lpszClassName = CLASSNAME;
+		wc.style         = CS_OWNDC | CS_DBLCLKS;
+		wc.lpfnWndProc   = CallDefaultWindowProc;
+		wc.hInstance     = m_hInstance;
+		wc.lpszClassName = CLASSNAME;
 
 	// find the icon file in the filesystem
 	if ( IsPC() )
@@ -962,7 +962,7 @@ bool CGame::CreateGameWindow( void )
 			wc.hIcon = (HICON)LoadIcon( GetModuleHandle( 0 ), MAKEINTRESOURCE( DEFAULT_EXE_ICON ) );
 		}
 	}
-	
+
 
 #ifndef SWDS
 	char const *pszGameType = modinfo->GetString( "type" );
@@ -983,14 +983,14 @@ bool CGame::CreateGameWindow( void )
 #ifndef _X360
 	unicode->UnregisterClassW( CLASSNAME, m_hInstance );
 	// Register it again
-    unicode->RegisterClassW( &wc );
+		unicode->RegisterClassW( &wc );
 #else
 	RegisterClass( &wc );
 #endif
 
 	// Note, it's hidden
 	DWORD style = WS_POPUP | WS_CLIPSIBLINGS;
-	
+
 	// Give it a frame if we want a border
 	if ( videomode->IsWindowedMode() )
 	{
@@ -1019,12 +1019,12 @@ bool CGame::CreateGameWindow( void )
 	}
 
 #if !defined( _X360 )
-	HWND hwnd = unicode->CreateWindowExW( exFlags, CLASSNAME, uc, style, 
+	HWND hwnd = unicode->CreateWindowExW( exFlags, CLASSNAME, uc, style,
 		0, 0, w, h, NULL, NULL, m_hInstance, NULL );
 	// NOTE: On some cards, CreateWindowExW slams the FPU control word
 	SetupFPUControlWord();
 #else
-	HWND hwnd = CreateWindowEx( exFlags, CLASSNAME, windowName, style, 
+	HWND hwnd = CreateWindowEx( exFlags, CLASSNAME, windowName, style,
 			0, 0, w, h, NULL, NULL, m_hInstance, NULL );
 #endif
 
@@ -1052,7 +1052,7 @@ bool CGame::CreateGameWindow( void )
 		Error( "Fatal Error:  Unable to create game window!" );
 		return false;
 	}
-	
+
 	char localPath[ MAX_PATH ];
 	if ( g_pFileSystem->GetLocalPath( "resource/game-icon.bmp", localPath, sizeof(localPath) ) )
 	{
@@ -1071,7 +1071,7 @@ bool CGame::CreateGameWindow( void )
 
 
 //-----------------------------------------------------------------------------
-// Destroys the game window 
+// Destroys the game window
 //-----------------------------------------------------------------------------
 void CGame::DestroyGameWindow()
 {
@@ -1116,7 +1116,7 @@ void CGame::SetGameWindow( void *hWnd )
 #if defined( USE_SDL )
 	SDL_RaiseWindow( (SDL_Window *)hWnd );
 #else
-    SetMainWindow( (HWND)hWnd );
+		SetMainWindow( (HWND)hWnd );
 #endif
 }
 
@@ -1134,7 +1134,7 @@ void CGame::AttachToWindow()
 	SetWindowLongPtrW( m_hWindow, GWLP_WNDPROC, (LONG_PTR)HLEngineWindowProc );
 #endif
 #endif // WIN32
-    
+
 	if ( g_pInputSystem )
 	{
 		// Attach the input system window proc
@@ -1191,7 +1191,7 @@ void CGame::DetachFromWindow()
 
 //-----------------------------------------------------------------------------
 // This is used in edit mode to override the default wnd proc associated w/
-// the game window specified in SetGameWindow. 
+// the game window specified in SetGameWindow.
 //-----------------------------------------------------------------------------
 bool CGame::InputAttachToGameWindow()
 {
@@ -1235,7 +1235,7 @@ void CGame::InputDetachFromGameWindow()
 #elif defined( USE_SDL )
 	Assert( !"Impl me" );
 #else
-    #error "have no idea what OS we are building for"
+		#error "have no idea what OS we are building for"
 #endif
 
 	// We don't get WM_ACTIVATEAPP messages in this case; simulate one.
@@ -1250,7 +1250,7 @@ void CGame::PlayStartupVideos( void )
 		return;
 
 #ifndef SWDS
-	
+
 	// Wait for the mode to change and stabilized
 	// FIXME: There's really no way to know when this is completed, so we have to guess a time that will mostly be correct
 	if ( videomode->IsWindowedMode() == false )
@@ -1260,15 +1260,15 @@ void CGame::PlayStartupVideos( void )
 
 	bool bEndGame = CommandLine()->CheckParm( "-endgamevid" );
 	bool bRecap = CommandLine()->CheckParm( "-recapvid" );	// FIXME: This is a temp addition until the movie playback is centralized -- jdw
-	
+
 	bool bNeedHealthWarning = false;
 
 	const char *HealthFile = "media/HealthWarning.txt";
 
 	FileHandle_t	hFile;
 
-	COM_OpenFile( HealthFile, &hFile );	
-		
+	COM_OpenFile( HealthFile, &hFile );
+
 	//There is no access to steam at this point so we are checking for the presence of an empty file that will only exist in the chinese depot
 	if ( hFile != FILESYSTEM_INVALID_HANDLE )
 	{
@@ -1285,30 +1285,30 @@ void CGame::PlayStartupVideos( void )
 		// Don't go back into the map that triggered this.
 		CommandLine()->RemoveParm( "+map" );
 		CommandLine()->RemoveParm( "+load" );
-		
+
 		pszFile = "media/EndGameVids.txt";
 	}
 	else if ( bRecap )
 	{
 		pszFile = "media/RecapVids.txt";
 	}
-	
+
 	int vidFileLength;
 
 	// have to use the malloc memory allocation option in COM_LoadFile since the memory system isn't set up at this point.
 	const char *buffer = (char *) COM_LoadFile( pszFile, 5, &vidFileLength );
-	
+
 	if ((buffer == NULL) || (vidFileLength == 0))
 	{
 		return;
 	}
 
 	// hide cursor while playing videos
-  #if defined( USE_SDL )
+	#if defined( USE_SDL )
 	g_pLauncherMgr->SetMouseVisible( false );
-  #elif defined( WIN32 )
+	#elif defined( WIN32 )
 	::ShowCursor( FALSE );
-  #endif
+	#endif
 
 #if defined( LINUX )
 	extern void VAudioInit();
@@ -1329,18 +1329,18 @@ void CGame::PlayStartupVideos( void )
 		// get the path to the media file and play it.
 		char localPath[MAX_PATH];
 
- 		    g_pFileSystem->GetLocalPath( com_token, localPath, sizeof(localPath) );
- 		
+				g_pFileSystem->GetLocalPath( com_token, localPath, sizeof(localPath) );
+
 		PlayVideoAndWait( localPath, bNeedHealthWarning );
 		localPath[0] = 0; // just to make sure we don't play the same avi file twice in the case that one movie is there but another isn't.
 	}
 
 	// show cursor again
-  #if defined( USE_SDL )
+	#if defined( USE_SDL )
 	g_pLauncherMgr->SetMouseVisible( true );
-  #elif defined( WIN32 )
+	#elif defined( WIN32 )
 	::ShowCursor( TRUE );
-  #endif
+	#endif
 
 	// call free on the buffer since the buffer was malloc'd in COM_LoadFile
 	free( (void *)buffer );
@@ -1358,7 +1358,7 @@ void CGame::PlayVideoAndWait( const char *filename, bool bNeedHealthWarning )
 	if ( !filename || !filename[0] || g_pVideo == NULL )
 		return;
 
-	// is it the valve logo file?		
+	// is it the valve logo file?
 	bool bIsValveLogo = ( Q_strstr( filename, "valve.") != NULL );
 
 	//Chinese health messages appears for 11 seconds, so we force a minimum delay time for those
@@ -1378,15 +1378,15 @@ void CGame::PlayVideoAndWait( const char *filename, bool bNeedHealthWarning )
 	::SetViewportOrgEx( dc, 0, 0, NULL );
 	::FillRect( dc, &rect, hBlackBrush );
 	::ReleaseDC( (HWND) GetMainWindow(), dc );
-    
+
 #else
 	// need OS specific way to clear screen
-    
+
 #endif
 
 	VideoResult_t status = 	g_pVideo->PlayVideoFileFullScreen( filename, "GAME", GetMainWindowPlatformSpecificHandle (),
-	                                                           m_width, m_height, m_iDesktopWidth, m_iDesktopHeight, videomode->IsWindowedMode(),
-	                                                           forcedMinTime, VideoPlaybackFlags::DEFAULT_FULLSCREEN_OPTIONS | VideoPlaybackFlags::FILL_WINDOW );
+																														m_width, m_height, m_iDesktopWidth, m_iDesktopHeight, videomode->IsWindowedMode(),
+																														forcedMinTime, VideoPlaybackFlags::DEFAULT_FULLSCREEN_OPTIONS | VideoPlaybackFlags::FILL_WINDOW );
 
 	// Everything ok?
 	if ( status == VideoResult::SUCCESS )
@@ -1395,7 +1395,7 @@ void CGame::PlayVideoAndWait( const char *filename, bool bNeedHealthWarning )
 	}
 
 	// We don't worry if it could not find something to could play
-	if ( status == VideoResult::VIDEO_FILE_NOT_FOUND )	
+	if ( status == VideoResult::VIDEO_FILE_NOT_FOUND )
 	{
 		return;
 	}
@@ -1449,7 +1449,7 @@ CGame::~CGame()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CGame::Init( void *pvInstance )
 {
@@ -1653,7 +1653,7 @@ void CGame::UpdateDesktopInformation( WPARAM wParam, LPARAM lParam )
 void CGame::SetMainWindow( HWND window )
 {
 	m_hWindow = window;
-	
+
 	// update our desktop info (since the results will change if we are going to fullscreen mode)
 	if ( !m_iDesktopWidth || !m_iDesktopHeight )
 	{
@@ -1739,4 +1739,3 @@ void CGame::SetActiveApp( bool active )
 {
 	m_bActiveApp = active;
 }
-

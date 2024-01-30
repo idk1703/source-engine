@@ -19,7 +19,7 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
-															 
+
 void AddSubKeyNamed( KeyValues *pKeys, const char *pszName );
 extern void ShowEconRequirementDialog( const char *pTitle, const char *pText, const char *pItemDefName );
 
@@ -30,7 +30,7 @@ CMatchMakingPanel *GetMatchMakingPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMatchMakingPanel::CMatchMakingPanel( IViewPort *pViewPort ) : EditablePanel( NULL, PANEL_MATCHMAKING ), m_iMMPanelKey( BUTTON_CODE_INVALID )
 {
@@ -43,7 +43,7 @@ CMatchMakingPanel::CMatchMakingPanel( IViewPort *pViewPort ) : EditablePanel( NU
 
 	EditablePanel *m_pMainContainer = new EditablePanel( this, "MainContainer" );
 	Assert( m_pMainContainer );
-	
+
 	m_pCompetitiveModeGroupPanel = new vgui::EditablePanel( m_pMainContainer, "CompetitiveModeGroupBox" );
 	m_pModeLabel = new vgui::Label( m_pCompetitiveModeGroupPanel, "LadderLabel", "" );
 	m_pModeComboBox = new vgui::ComboBox( m_pCompetitiveModeGroupPanel, "ModeComboBox", 3, false );
@@ -57,14 +57,14 @@ CMatchMakingPanel::CMatchMakingPanel( IViewPort *pViewPort ) : EditablePanel( NU
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMatchMakingPanel::~CMatchMakingPanel()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMatchMakingPanel::AttachToGameUI( void )
 {
@@ -81,7 +81,7 @@ void CMatchMakingPanel::AttachToGameUI( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CMatchMakingPanel::GetName( void )
 {
@@ -89,7 +89,7 @@ const char *CMatchMakingPanel::GetName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMatchMakingPanel::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -133,7 +133,7 @@ void CMatchMakingPanel::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMatchMakingPanel::PerformLayout()
 {
@@ -141,7 +141,7 @@ void CMatchMakingPanel::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMatchMakingPanel::OnCommand( const char *pCommand )
 {
@@ -171,7 +171,7 @@ void CMatchMakingPanel::OnCommand( const char *pCommand )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMatchMakingPanel::OnTextChanged( KeyValues *data )
 {
@@ -209,7 +209,7 @@ void CMatchMakingPanel::OnTextChanged( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMatchMakingPanel::FireGameEvent( IGameEvent *event )
 {
@@ -226,14 +226,14 @@ void CMatchMakingPanel::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMatchMakingPanel::ShowPanel( bool bShow )
 {
 	// Snag this so we know what to listen for
 	m_iMMPanelKey = gameuifuncs->GetButtonCodeForBind( "show_matchmaking" );
 
-	if ( bShow 
+	if ( bShow
 	  && ( !steamapicontext
 		|| !steamapicontext->SteamUtils()
 		|| !steamapicontext->SteamMatchmakingServers()
@@ -281,7 +281,7 @@ void CMatchMakingPanel::ShowPanel( bool bShow )
 	{
 		m_pSearchActiveGroupBox->SetVisible( bSearching && !bInMMGame );
 	}
-	
+
 	if ( bShow )
 	{
 		KeyValues *pUserData = m_pModeComboBox->GetActiveItemUserData();
@@ -300,7 +300,7 @@ void CMatchMakingPanel::ShowPanel( bool bShow )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMatchMakingPanel::OnKeyCodePressed( KeyCode code )
 {
@@ -314,7 +314,7 @@ void CMatchMakingPanel::OnKeyCodePressed( KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMatchMakingPanel::OnKeyCodeTyped( KeyCode code )
 {
@@ -328,7 +328,7 @@ void CMatchMakingPanel::OnKeyCodeTyped( KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMatchMakingPanel::OnThink()
 {
@@ -385,9 +385,9 @@ void CMatchMakingPanel::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CMatchMakingPanel::SetVisible( bool bState ) 
+void CMatchMakingPanel::SetVisible( bool bState )
 {
 	if ( bState == true )
 	{
@@ -420,7 +420,7 @@ void CMatchMakingPanel::SetVisible( bool bState )
 		IViewPortPanel *pMMOverride = gViewPortInterface->FindPanelByName( PANEL_MAINMENUOVERRIDE );
 		if ( pMMOverride )
 		{
-			((CHudMainMenuOverride*)pMMOverride)->AttachToGameUI();	
+			((CHudMainMenuOverride*)pMMOverride)->AttachToGameUI();
 		}
 
 		engine->ClientCmd_Unrestricted( "gameui_allowescapetoshow\n" );
@@ -431,7 +431,7 @@ void CMatchMakingPanel::SetVisible( bool bState )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMatchMakingPanel::StartSearch( void )
 {
@@ -534,7 +534,7 @@ void CMatchMakingPanel::StartSearch( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMatchMakingPanel::StopSearch( void )
 {

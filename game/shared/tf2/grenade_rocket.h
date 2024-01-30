@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,7 +37,7 @@ public:
 	{
 		return m_flDamage;
 	}
-	
+
 	virtual void SetDamage(float flDamage)
 	{
 		m_flDamage = flDamage;

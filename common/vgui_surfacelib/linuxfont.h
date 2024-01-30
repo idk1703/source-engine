@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -65,14 +65,14 @@ public:
 
 	// returns true if this font is underlined
 	virtual bool GetUnderlined() { return m_bUnderlined; }
-	
+
 	// gets the name of this font
 	const char *GetName() { return m_szName.String(); }
 	const char *GetFamilyName() { return m_face ? m_face->family_name : NULL; }
 
 	// gets the weight of the font
 	virtual int GetWeight() { return m_iWeight; }
-	
+
 	bool HasChar(wchar_t wch);
 
 	// gets the width of ch given its position around before and after chars
@@ -123,7 +123,7 @@ private:
 		abc_t abc;
 	};
 
-	
+
 	CUtlRBTree<abc_cache_t, unsigned short> m_ExtendedABCWidthsCache;
 	static bool ExtendedABCWidthsCacheLessFunc(const abc_cache_t &lhs, const abc_cache_t &rhs);
 
@@ -132,15 +132,15 @@ private:
 	{
 		float wide;
 	};
-	
+
 	struct kerned_abc_cache_t
 	{
 		wchar_t wch;
 		wchar_t wchBefore;
-		wchar_t wchAfter; 
+		wchar_t wchAfter;
 		kernedSize abc;
 	};
-	
+
 	CUtlRBTree<kerned_abc_cache_t, unsigned short> m_ExtendedKernedABCWidthsCache;
 	static bool ExtendedKernedABCWidthsCacheLessFunc(const kerned_abc_cache_t &lhs, const kerned_abc_cache_t &rhs);
 
@@ -154,7 +154,7 @@ private:
 			m_pchFile = NULL;
 			m_pchFriendlyName = NULL;
 		}
-		
+
 		char *m_pchFile;
 		char *m_pchFriendlyName;
 		bool operator<( const font_name_entry &rhs ) const

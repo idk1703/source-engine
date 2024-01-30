@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,7 +27,7 @@ PRECACHE_REGISTER(obj_empgenerator);
 ConVar	obj_empgenerator_health( "obj_empgenerator_health","100", FCVAR_NONE, "EMP Generator health" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectEMPGenerator::CObjectEMPGenerator()
 {
@@ -35,7 +35,7 @@ CObjectEMPGenerator::CObjectEMPGenerator()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectEMPGenerator::Spawn()
 {
@@ -55,12 +55,12 @@ void CObjectEMPGenerator::Spawn()
 	m_flExpiresAt = gpGlobals->curtime + EMPGENERATOR_LIFETIME;
 
 	SetType( OBJ_EMPGENERATOR );
-	m_fObjectFlags |= OF_SUPPRESS_NOTIFY_UNDER_ATTACK | OF_SUPPRESS_TECH_ANALYZER | 
+	m_fObjectFlags |= OF_SUPPRESS_NOTIFY_UNDER_ATTACK | OF_SUPPRESS_TECH_ANALYZER |
 		OF_DONT_AUTO_REPAIR | OF_DONT_PREVENT_BUILD_NEAR_OBJ | OF_DOESNT_NEED_POWER;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectEMPGenerator::Precache()
 {

@@ -77,7 +77,7 @@ BEGIN_VS_SHADER( ShatteredGlass_DX8,
 		}
 
 		if ( params[DETAIL]->IsDefined() )
-		{					 
+		{
 			LoadTexture( DETAIL );
 		}
 
@@ -91,7 +91,7 @@ BEGIN_VS_SHADER( ShatteredGlass_DX8,
 	{
 		bool bHasEnvmap = params[ENVMAP]->IsTexture();
 		bool bHasVertexColor = IS_FLAG_SET(MATERIAL_VAR_VERTEXCOLOR);
-	
+
 		// Base
 		SHADOW_STATE
 		{

@@ -363,7 +363,7 @@ void CSGameState::MarkBombsiteAsPlanted( int zoneIndex )
 void CSGameState::ClearBombsite( int zoneIndex )
 {
 	if (zoneIndex >= 0 && zoneIndex < m_bombsiteCount)
-		m_isBombsiteClear[ zoneIndex ] = true;	
+		m_isBombsiteClear[ zoneIndex ] = true;
 }
 
 //--------------------------------------------------------------------------------------------------------------
@@ -400,7 +400,7 @@ void CSGameState::InitializeHostageInfo( void )
 //--------------------------------------------------------------------------------------------------------------
 /**
  * Return the closest free and live hostage
- * If we are a CT this information is perfect. 
+ * If we are a CT this information is perfect.
  * Otherwise, this is based on our individual memory of the game state.
  * If NULL is returned, we don't think there are any hostages left, or we dont know where they are.
  * NOTE: a T can remember a hostage who has died.  knowPos will be filled in, but NULL will be
@@ -453,7 +453,7 @@ CHostage *CSGameState::GetNearestFreeHostage( Vector *knowPos ) const
 			if (travelDistance >= 0.0f && travelDistance < closeDistance)
 			{
 				closeDistance = travelDistance;
-				closePos = hostagePos; 
+				closePos = hostagePos;
 				close = hostage;
 			}
 		}
@@ -477,7 +477,7 @@ const Vector *CSGameState::GetRandomFreeHostagePosition( void ) const
 
 	static Vector freePos[ MAX_HOSTAGES ];
 	int freeCount = 0;
-	
+
 	for( int i=0; i<m_hostageCount; ++i )
 	{
 		const HostageInfo *info = &m_hostage[i];
@@ -716,7 +716,7 @@ bool CSGameState::AreAllHostagesBeingRescued( void ) const
 			if (info->isAlive)
 				isAllDead = false;
 		}
-	}	
+	}
 
 	// if all of the remaining hostages are dead, they arent being rescued
 	if (isAllDead)
@@ -750,7 +750,7 @@ bool CSGameState::AreAllHostagesGone( void ) const
 			if (info->isValid && info->isAlive)
 				return false;
 		}
-	}	
+	}
 
 	return true;
 }
@@ -764,4 +764,3 @@ void CSGameState::AllHostagesGone( void )
 	for( int i=0; i<m_hostageCount; ++i )
 		m_hostage[i].isValid = false;
 }
-

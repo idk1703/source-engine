@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,18 +12,18 @@
 static CMultipleParams g_Params;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
-static BOOL CALLBACK MultipleRequestDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )  
+static BOOL CALLBACK MultipleRequestDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	switch(uMsg)
 	{
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		// Insert code here to put the string (to find and replace with)
 		// into the edit controls.
 		// ...
@@ -38,9 +38,9 @@ static BOOL CALLBACK MultipleRequestDialogProc( HWND hwndDlg, UINT uMsg, WPARAM 
 			SendMessage( GetDlgItem( hwndDlg, IDC_INPUTSTRING ), EM_SETSEL, 0, MAKELONG(0, 0xffff) );
 
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDC_YESALL:
@@ -55,7 +55,7 @@ static BOOL CALLBACK MultipleRequestDialogProc( HWND hwndDlg, UINT uMsg, WPARAM 
 		case IDC_NOALL:
 			EndDialog( hwndDlg, CMultipleParams::NO_ALL );
 			break;
-        //case IDCANCEL:
+		//case IDCANCEL:
 		//	EndDialog( hwndDlg, CMultipleParams::CANCEL );
 		//	break;
 		}
@@ -74,9 +74,9 @@ void MultipleRequestChangeContext()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int _MultipleRequest( CMultipleParams *params )
@@ -99,12 +99,12 @@ int _MultipleRequest( CMultipleParams *params )
 	if ( retval == -1 )
 	{
 		g_Params = *params;
-	
-		retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+
+		retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 			MAKEINTRESOURCE( IDD_MULTIPLEQUESTION ),
 			(HWND)GetWorkspaceManager()->getHandle(),
 			(DLGPROC)MultipleRequestDialogProc );
-	
+
 		*params = g_Params;
 	}
 

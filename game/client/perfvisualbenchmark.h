@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -22,7 +22,7 @@
 
 class CPerfVisualBenchmark : public CBaseGameSystemPerFrame
 {
-	
+
 public:
 	CPerfVisualBenchmark();
 	virtual ~CPerfVisualBenchmark();

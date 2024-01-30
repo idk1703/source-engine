@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,7 +27,7 @@ double I_FloatTime( void )
 	QueryPerformanceCounter ( (LARGE_INTEGER*)&curCount );
 	curCount -= firstCount;
 	double time = (double)curCount * freq;
-	return time;	
+	return time;
 }
 
 

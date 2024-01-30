@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -27,7 +27,7 @@ public:
 	// This is called each time a server packet comes in. It is used to correlate
 	// where the server is in time compared to us.
 	void SetServerTick( int iServerTick );
-	
+
 	// Pass in the frametime you would use, and it will drift it towards the server clock.
 	float AdjustFrameTime( float inputFrameTime );
 

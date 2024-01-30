@@ -22,7 +22,7 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
-															 
+
 void AddSubKeyNamed( KeyValues *pKeys, const char *pszName );
 
 static CItemModelPanelToolTip* g_spItemTooltip = NULL;
@@ -37,9 +37,9 @@ CQuestLogPanel *GetQuestLog()
 //-------------------------------------------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CScrollableQuestList::CScrollableQuestList( vgui::Panel *parent, const char *pszPanelName ) 
+CScrollableQuestList::CScrollableQuestList( vgui::Panel *parent, const char *pszPanelName )
 	: EditablePanel( parent, pszPanelName )
 	, m_pCompletingPanel( NULL )
 	, m_bQuestsLayoutDirty( false )
@@ -61,7 +61,7 @@ CScrollableQuestList::~CScrollableQuestList()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScrollableQuestList::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -88,7 +88,7 @@ void CScrollableQuestList::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScrollableQuestList::ApplySettings( KeyValues *inResourceData )
 {
@@ -101,12 +101,12 @@ void CScrollableQuestList::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CScrollableQuestList::PerformLayout( void ) 
+void CScrollableQuestList::PerformLayout( void )
 {
 	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
-	BaseClass::PerformLayout();	
+	BaseClass::PerformLayout();
 
 	m_pContainer->InvalidateLayout( true );
 
@@ -122,7 +122,7 @@ void CScrollableQuestList::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScrollableQuestList::OnThink()
 {
@@ -164,7 +164,7 @@ int QuestSort_AcquiredTime( CQuestItemPanel* const* p1, CQuestItemPanel* const* 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScrollableQuestList::PositionQuestItemPanels()
 {
@@ -221,22 +221,22 @@ void CScrollableQuestList::PositionQuestItemPanels()
 		// This is the selected panel
 		if ( pSelected == m_vecQuestItemPanels[ i ] )
 		{
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( m_vecQuestItemPanels[ i ], folderCommands[i].m_pszSelected );	
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( m_vecQuestItemPanels[ i ], folderCommands[i].m_pszSelected );
 		}
 		else if ( pSelected )	// Some other panel is selected
 		{
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( m_vecQuestItemPanels[ i ], folderCommands[i].m_pszOtherIsSelected );	
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( m_vecQuestItemPanels[ i ], folderCommands[i].m_pszOtherIsSelected );
 		}
 		else // No panel is selected
 		{
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( m_vecQuestItemPanels[ i ], folderCommands[i].m_pszNoneSelected );	
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( m_vecQuestItemPanels[ i ], folderCommands[i].m_pszNoneSelected );
 		}
 	}
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScrollableQuestList::SetSelected( CQuestItemPanel *pItem, bool bImmediately )
 {
@@ -349,7 +349,7 @@ void CScrollableQuestList::UpdateEmptyMessage()
 					break;
 				}
 			}
-	
+
 			pszNoQuestsText = m_pszNoQuests;
 			// Don't break.  Give more important operations a chance to present
 		}
@@ -359,7 +359,7 @@ void CScrollableQuestList::UpdateEmptyMessage()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScrollableQuestList::PopulateQuestLists()
 {
@@ -438,7 +438,7 @@ void CScrollableQuestList::PopulateQuestLists()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScrollableQuestList::QuestCompletedResponse()
 {
@@ -467,7 +467,7 @@ bool CScrollableQuestList::AnyQuestItemPanelsInState( CQuestItemPanel::EItemPane
 //-------------------------------------------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CQuestLogPanel::CQuestLogPanel( IViewPort *pViewPort )
 		: EditablePanel( NULL, PANEL_QUEST_LOG )
@@ -559,7 +559,7 @@ void CQuestTooltip::PositionWindow( Panel *pTipPanel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CQuestLogPanel::~CQuestLogPanel()
 {
@@ -567,7 +567,7 @@ CQuestLogPanel::~CQuestLogPanel()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestLogPanel::AttachToGameUI( void )
 {
@@ -585,7 +585,7 @@ void CQuestLogPanel::AttachToGameUI( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CQuestLogPanel::GetName( void )
 {
@@ -593,7 +593,7 @@ const char *CQuestLogPanel::GetName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestLogPanel::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -640,7 +640,7 @@ void CQuestLogPanel::ApplySchemeSettings( IScheme *pScheme )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestLogPanel::PerformLayout()
 {
@@ -666,7 +666,7 @@ void CQuestLogPanel::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestLogPanel::OnCommand( const char *pCommand )
 {
@@ -695,7 +695,7 @@ void CQuestLogPanel::OnCommand( const char *pCommand )
 			Menu *pContextMenu = new Menu( this, "ContextMenu" );
 			pContextMenu->SetBorder( scheme()->GetIScheme( GetScheme() )->GetBorder( pszContextMenuBorder ) );
 			pContextMenu->SetFont( scheme()->GetIScheme( GetScheme() )->GetFont( pszContextMenuFont ) );
-		
+
 
 			MenuBuilder contextMenuBuilder( pContextMenu, this );
 
@@ -762,7 +762,7 @@ void CQuestLogPanel::OnCommand( const char *pCommand )
 			int nX, nY;
 			g_pVGuiInput->GetCursorPosition( nX, nY );
 			pContextMenu->SetPos( nX - 1, nY - 1 );
-	
+
 			pContextMenu->SetVisible(true);
 			pContextMenu->AddActionSignalTarget(this);
 		}
@@ -805,7 +805,7 @@ void CQuestLogPanel::OnCommand( const char *pCommand )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestLogPanel::FireGameEvent( IGameEvent *event )
 {
@@ -843,7 +843,7 @@ void CQuestLogPanel::FireGameEvent( IGameEvent *event )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestLogPanel::ShowPanel( bool bShow )
 {
@@ -860,7 +860,7 @@ void CQuestLogPanel::ShowPanel( bool bShow )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestLogPanel::OnKeyCodePressed( KeyCode code )
 {
@@ -874,7 +874,7 @@ void CQuestLogPanel::OnKeyCodePressed( KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestLogPanel::OnKeyCodeTyped( KeyCode code )
 {
@@ -888,9 +888,9 @@ void CQuestLogPanel::OnKeyCodeTyped( KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CQuestLogPanel::SetVisible( bool bState ) 
+void CQuestLogPanel::SetVisible( bool bState )
 {
 	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
 	// Default to showing the active quests upon opening
@@ -927,7 +927,7 @@ void CQuestLogPanel::SetVisible( bool bState )
 		IViewPortPanel *pMMOverride = gViewPortInterface->FindPanelByName( PANEL_MAINMENUOVERRIDE );
 		if ( pMMOverride )
 		{
-			((CHudMainMenuOverride*)pMMOverride)->AttachToGameUI();	
+			((CHudMainMenuOverride*)pMMOverride)->AttachToGameUI();
 		}
 
 		engine->ClientCmd_Unrestricted( "gameui_allowescapetoshow\n" );
@@ -939,7 +939,7 @@ void CQuestLogPanel::SetVisible( bool bState )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestLogPanel::QuestCompletedResponse()
 {
@@ -954,7 +954,7 @@ void CQuestLogPanel::QuestCompletedResponse()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestLogPanel::UpdateQuestsItemPanels()
 {
@@ -976,7 +976,7 @@ void CQuestLogPanel::UpdateQuestsItemPanels()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestLogPanel::MarkQuestsDirty()
 {
@@ -997,7 +997,7 @@ bool CQuestLogPanel::AnyQuestItemPanelsInState( CQuestItemPanel::EItemPanelState
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestLogPanel::OnCompleteQuest( void )
 {
@@ -1006,7 +1006,7 @@ void CQuestLogPanel::OnCompleteQuest( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestLogPanel::UpdateBadgeProgressPanels()
 {
@@ -1124,7 +1124,7 @@ void CQuestLogPanel::UpdateBadgeProgressPanels()
 						pLabel->SetText( CFmtStr( "%d", nNumCompletedContracts ) );
 					}
 				}
-			}			
+			}
 		}
 		else
 		{

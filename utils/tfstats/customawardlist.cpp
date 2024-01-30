@@ -27,7 +27,7 @@ CCustomAwardList* CCustomAwardList::readCustomAwards(string mapname)
 
 	g_pApp->os->chdir(g_pApp->ruleDirectory.c_str());
 	sprintf(filename,"tfc.%s.rul",mapname.c_str());
-	
+
 	CTextFile ctf1(filename);
 	CTextFile ctf2("tfc.rul");
 
@@ -47,7 +47,7 @@ CCustomAwardList* CCustomAwardList::readCustomAwards(string mapname)
 		g_pApp->warning("Neither tfc.rul nor %s could be found. No custom rules will be used");
 		return NULL;
 	}
-	
+
 
 	CCustomAwardList* newList=new TRACKED CCustomAwardList;
 	bool foundAward=false;
@@ -58,16 +58,16 @@ CCustomAwardList* CCustomAwardList::readCustomAwards(string mapname)
 		foundAward=true;
  		newList->theList.push_back(pcca);
 		pcca=CCustomAward::readCustomAward(ctf1);
-	} 
-	
+	}
+
 	pcca=CCustomAward::readCustomAward(ctf2);
 	while (pcca)
 	{
 		foundAward=true;
  		newList->theList.push_back(pcca);
 		pcca=CCustomAward::readCustomAward(ctf2);
-	} 
-	
+	}
+
 	if (!foundAward)
 	{
 		delete newList;
@@ -77,4 +77,3 @@ CCustomAwardList* CCustomAwardList::readCustomAwards(string mapname)
 
 	return newList;
 }
-	

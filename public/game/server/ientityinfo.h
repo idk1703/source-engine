@@ -111,7 +111,7 @@ abstract_class IEntityInfoManager
 {
 public:
 	virtual IEntityInfo *GetEntityInfo( edict_t *pEdict ) = 0;
-	virtual IEntityInfo *GetEntityInfo( int index ) = 0; //Retrieves the info 
+	virtual IEntityInfo *GetEntityInfo( int index ) = 0; //Retrieves the info
 
 	//Experiment..
 	virtual IServerUnknown *GetServerEntity( edict_t *pEdict ) = 0;
@@ -139,9 +139,9 @@ public:
 
 	//-----------------------------------------------------------------------------
 	// Purpose: Used to iterate all the entities within a sphere.
-	// Input  : pStartEntity - 
-	//			vecCenter - 
-	//			flRadius - 
+	// Input  : pStartEntity -
+	//			vecCenter -
+	//			flRadius -
 	//-----------------------------------------------------------------------------
 	virtual edict_t *FindEntityInSphere( edict_t *pStartEntity, const Vector &vecCenter, float flRadius ) = 0;
 

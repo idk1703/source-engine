@@ -1,6 +1,6 @@
-//====== Copyright © 1996-2004, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2004, Valve Corporation, All rights reserved. =======
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -42,7 +42,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 projPos					: POSITION;
+	float4 projPos					: POSITION;
 #if !defined( _X360 )
 	float  fog						: FOG;
 #endif
@@ -64,7 +64,7 @@ struct VS_OUTPUT
 #endif
 
 	float2 detailCoords				: TEXCOORD4;
-	float4 worldPos_worldTransition	: TEXCOORD5;	
+	float4 worldPos_worldTransition	: TEXCOORD5;
 	float3 vProjPos					: TEXCOORD6;
 	float4 fogFactorW				: TEXCOORD7;
 };
@@ -97,7 +97,7 @@ VS_OUTPUT main( const VS_INPUT v )
 
 	worldPos = mul( float4( v.vPos, 1 ), cModel[0] );
 	worldNormal = mul( vObjNormal, ( float3x3 )cModel[0] );
-	
+
 	o.worldPos_worldTransition = float4( worldPos.xyz, 1.0f );
 
 	o.fogFactorW = CalcFog( worldPos, projPos, g_FogType );
@@ -121,7 +121,7 @@ VS_OUTPUT main( const VS_INPUT v )
 		//float3 vVecY = { 0.0f, 1.0f, 0.0f };
 		//float3 vVecZ = { 0.0f, 0.0f, 1.0f };
 		//worldTangentS.xyz = normalize( ( o.fogFactorW.x * vVecZ.xyz ) + ( o.fogFactorW.y * vVecX.xyz ) + ( o.fogFactorW.z * vVecX.xyz ) );
-  		//worldTangentT.xyz = normalize( ( o.fogFactorW.x * vVecY.xyz ) + ( o.fogFactorW.y * vVecZ.xyz ) + ( o.fogFactorW.z * vVecY.xyz ) );
+		//worldTangentT.xyz = normalize( ( o.fogFactorW.x * vVecY.xyz ) + ( o.fogFactorW.y * vVecZ.xyz ) + ( o.fogFactorW.z * vVecY.xyz ) );
 
 		// Optimized version - This must match the projection in the pixel shader!
 		worldTangentS.xyz = normalize( float3( o.fogFactorW.y + o.fogFactorW.z, 0.0f, o.fogFactorW.x ) );
@@ -179,6 +179,6 @@ VS_OUTPUT main( const VS_INPUT v )
 #if WORLDVERTEXTRANSITION
 	o.worldPos_worldTransition.w = v.vColor.w;
 #endif
-	
+
 	return o;
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -120,8 +120,8 @@ static void PrintArgSummaryAndExit( int iReturnCode = 1 )
 bool IsRestrictedFileType( const char *pcFileName )
 {
 	return ( V_stristr( pcFileName, ".bat" ) || V_stristr( pcFileName, ".cmd" ) || V_stristr( pcFileName, ".com" ) || V_stristr( pcFileName, ".dll" ) ||
-			 V_stristr( pcFileName, ".exe" ) || V_stristr( pcFileName, ".msi" ) || V_stristr( pcFileName, ".rar" ) || V_stristr( pcFileName, ".reg" ) ||
-			 V_stristr( pcFileName, ".zip" ) );
+			V_stristr( pcFileName, ".exe" ) || V_stristr( pcFileName, ".msi" ) || V_stristr( pcFileName, ".rar" ) || V_stristr( pcFileName, ".reg" ) ||
+			V_stristr( pcFileName, ".zip" ) );
 }
 
 void ReadFile( char const *pName )
@@ -1030,7 +1030,7 @@ void VPKBuilder::SetInputKeys( KeyValues *pInputKeys, const char *pszControlFile
 	m_iNewTotalFileSize = 0;
 	m_iNewTotalFileSizeInChunkFiles = 0;
 	int iSortIndex = 0;
-    for ( KeyValues *i = m_pInputKeys; i; i = i->GetNextKey() )
+	for ( KeyValues *i = m_pInputKeys; i; i = i->GetNextKey() )
 	{
 		const char *pszNameOnDisk = i->GetString( "srcpath", i->GetName() );
 		char szNameInVPK[ MAX_PATH ];
@@ -1783,7 +1783,7 @@ void BuildRecursiveFileList( const char *pcDirName, CUtlStringList &fileList )
 				pcResult = g_pFullFileSystem->FindNext( findHandle );
 				continue;
 			}
-			
+
 			// Make a full path to the result
 			V_snprintf( szFullResultPath, sizeof( szFullResultPath ), "%s%c%s", pcDirName, CORRECT_PATH_SEPARATOR, pcResult );
 
@@ -1830,12 +1830,12 @@ static void DroppedVpk( const char *pszVpkFilename )
 
 			V_ExtractFilePath( szDestFilePath, szParentDirectory, sizeof( szParentDirectory ) );
 			V_FixSlashes( szParentDirectory );
-				
+
 			if ( !g_pFullFileSystem->IsDirectory( szParentDirectory ) )
 			{
 				g_pFullFileSystem->CreateDirHierarchy( szParentDirectory );
 			}
-				
+
 			printf( "extracting %s\n", fileNames[i] );
 			COutputFile outF( szDestFilePath );
 
@@ -1866,7 +1866,7 @@ static void DroppedDirectory( const char *pszDirectoryArg )
 	char szVPKPath[MAX_PATH];
 
 	// Construct path to VPK
-	V_snprintf( szVPKPath, sizeof( szVPKPath ), "%s.vpk", szDirectory ); 
+	V_snprintf( szVPKPath, sizeof( szVPKPath ), "%s.vpk", szDirectory );
 
 	// Delete any existing one at that location
 	if ( g_pFullFileSystem->FileExists( szVPKPath ) )
@@ -2005,7 +2005,7 @@ int main(int argc, char **argv)
 				Error( "Unrecognized option '%s'\n", argv[nCurArg] );
 		}
 		nCurArg++;
-		
+
 	}
 	argc -= ( nCurArg - 1 );
 	argv += ( nCurArg - 1 );

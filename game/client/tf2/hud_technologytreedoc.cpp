@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -56,7 +56,7 @@ void CTechnologyTreeDoc::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTechnologyTreeDoc::LevelInit( void )
 {
@@ -67,7 +67,7 @@ void CTechnologyTreeDoc::LevelInit( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTechnologyTreeDoc::LevelShutdown( void )
 {
@@ -79,7 +79,7 @@ void CTechnologyTreeDoc::LevelShutdown( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTechnologyTreeDoc::ReloadTechTree( void )
 {
@@ -99,9 +99,9 @@ void CTechnologyTreeDoc::ReloadTechTree( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Receive hud update message from server
-// Input  : *pszName - 
-//			iSize - 
-//			*pbuf - 
+// Input  : *pszName -
+//			iSize -
+//			*pbuf -
 // Output : int
 //-----------------------------------------------------------------------------
 int CTechnologyTreeDoc::MsgFunc_Technology(bf_read &msg)
@@ -123,11 +123,11 @@ int CTechnologyTreeDoc::MsgFunc_Technology(bf_read &msg)
 	voters &= 0x7f;
 
 	resourcelevel = (float)msg.ReadShort();
-	
+
 	// Look it up by index
 	CBaseTechnology *item = m_pTree->GetTechnology( index );
 	if ( item )
-	{	
+	{
 		bool wasactive = item->GetActive();
 
 		bool justactivated = !wasactive && available;
@@ -157,7 +157,7 @@ int CTechnologyTreeDoc::MsgFunc_Technology(bf_read &msg)
 			CreateGlobalHint( TF_HINT_NEWTECHNOLOGY, item->GetPrintName(), index, 3 );
 		}
 	}
-	
+
 	return 1;
 }
 

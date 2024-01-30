@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -58,24 +58,24 @@ struct sample_t
 	// in local luxel space
 	winding_t	*w;
 	int			s, t;
-	Vector2D	coord;	
+	Vector2D	coord;
 	Vector2D	mins;
 	Vector2D	maxs;
 	// in world units
 	Vector		pos;
 	Vector		normal;
-	float		area;	
+	float		area;
 };
 
 struct facelight_t
 {
 	// irregularly shaped light sample data, clipped by face and luxel grid
 	int			numsamples;
-	sample_t	*sample;			
+	sample_t	*sample;
 	LightingValue_t *light[MAXLIGHTMAPS][NUM_BUMP_VECTS+1];	// result of direct illumination, indexed by sample
 
 	// regularly spaced lightmap grid
-	int			numluxels;			
+	int			numluxels;
 	Vector		*luxel;				// world space position of luxel
 	Vector		*luxelNormals;		// world space normal of luxel
 	float		worldAreaPerLuxel;

@@ -1,6 +1,6 @@
 //====== Copyright 1996-2010, Valve Corporation, All rights reserved. =======
 //
-// Purpose: The file defines our Google Protocol Buffers which are used in over 
+// Purpose: The file defines our Google Protocol Buffers which are used in over
 // the wire messages between servers as well as between the TF GC and TF gameservers
 // and clients.
 //
@@ -13,15 +13,15 @@ option optimize_for = SPEED;
 option cc_generic_services = false;
 
 
-// 
+//
 // STYLE NOTES:
 //
 // Use CamelCase CMsgMyMessageName style names for messages.
-// 
+//
 // Use lowercase _ delimited names like my_steam_id for field names, this is non-standard for Steam,
-// but plays nice with the Google formatted code generation.  
-// 
-// Try not to use required fields ever. Only do so if you are really really sure you'll never want them removed. 
+// but plays nice with the Google formatted code generation.
+//
+// Try not to use required fields ever. Only do so if you are really really sure you'll never want them removed.
 // Optional should be preffered as it will make versioning easier and cleaner in the future if someone refactors
 // your message and wants to remove or rename fields.
 //
@@ -31,7 +31,7 @@ option cc_generic_services = false;
 //
 // Similar to fixed64, use fixed32 for RTime32 or other 32 bit values that are frequently larger than
 // 2^28.  It will save space in those cases, otherwise use int32 which will safe space for smaller values.
-// An exception to this rule for RTime32 is if the value will frequently be zero rather than set to an actual 
+// An exception to this rule for RTime32 is if the value will frequently be zero rather than set to an actual
 // time.
 //
 
@@ -91,7 +91,7 @@ message CMsgGCStorePurchaseInit
 	optional	string	country = 1;				// Country the purchase is being made from (obtained from Steam)
 	optional	int32	language = 2;				// Client's language
 	optional	int32	currency = 3;				// Currency the purchase is in (obtained from Steam)
-	
+
 	repeated	CGCStorePurchaseInit_LineItem	line_items = 4;
 };
 
@@ -298,7 +298,7 @@ message CSOItemCriteriaCondition
 	optional bool		required = 3;
 	optional float		float_value = 4;
 	optional string		string_value = 5;
-}	
+}
 
 
 message CSOItemCriteria
@@ -306,14 +306,14 @@ message CSOItemCriteria
 	optional uint32		item_level = 1;
 	optional int32		item_quality = 2;
 
-	optional bool		item_level_set = 3;	
-	optional bool		item_quality_set = 4;	
+	optional bool		item_level_set = 3;
+	optional bool		item_quality_set = 4;
 	optional uint32		initial_inventory = 5;
 	optional uint32		initial_quantity = 6;
 //	optional bool		forced_quality_match__DEPRECATED = 7;
 	optional bool		ignore_enabled_flag = 8;
 
-	repeated CSOItemCriteriaCondition	conditions = 9;	
+	repeated CSOItemCriteriaCondition	conditions = 9;
 
 	optional bool		recent_only = 10;
 	optional string		tags = 11;
@@ -338,13 +338,13 @@ message CSOItemRecipe
 	optional int32		class_usage_for_output = 14;
 	optional int32		slot_usage_for_output = 15;
 	optional int32		set_for_output = 16;
-	
+
 	repeated CSOItemCriteria	input_items_criteria = 20;
 	repeated CSOItemCriteria	output_items_criteria = 21;
 	repeated uint32				input_item_dupe_counts = 22;
 };
 
-// 
+//
 // k_EMsgGCDev_NewItemRequest
 //
 message CMsgDevNewItemRequest
@@ -354,7 +354,7 @@ message CMsgDevNewItemRequest
 	optional CSOItemCriteria criteria = 2;
 };
 
-// 
+//
 // k_EMsgGCDev_DebugRollLootRequest
 //
 message CMsgDevDebugRollLootRequest
@@ -372,7 +372,7 @@ message CMsgIncrementKillCountAttribute
 	optional uint64 killer_steam_id = 1;				// Kyle says: we could make these both fixed32!
 	optional uint64 victim_steam_id = 2;
 	optional uint64 item_id = 3;
-	
+
 	optional uint32 event_type = 4;
 	optional uint32 increment_value = 5;				// How much to increment the score by
 };
@@ -393,7 +393,7 @@ message CMsgTrackUniquePlayerPairEvent
 	optional uint64 killer_steam_id = 1;				// Kyle says: we could make these both fixed32!
 	optional uint64 victim_steam_id = 2;
 	optional uint64 item_id = 3;
-	
+
 	optional uint32 event_type = 4;
 };
 
@@ -475,7 +475,7 @@ message CSOEconItem
 	optional bool					contains_equipped_state_v2 = 19;		// will be set to true even if equipped_state is an empty array, meaning "unequipped from everything"
 }
 
-// 
+//
 // k_EMsgGCAdjustItemEquippedState
 //
 message CMsgAdjustItemEquippedState
@@ -485,7 +485,7 @@ message CMsgAdjustItemEquippedState
 	optional uint32		new_slot = 3;		// will be -1 if not equipped on this class any longer
 }
 
-// 
+//
 // k_EMsgGCSortItems
 //
 message CMsgSortItems
@@ -502,7 +502,7 @@ message CSOEconClaimCode
 	optional uint32		code_type = 2;
 	optional uint32		time_acquired = 3;
 	optional string		code = 4;
-}	
+}
 
 //
 // k_EMsgGCStoreGetUserData
@@ -510,7 +510,7 @@ message CSOEconClaimCode
 message CMsgStoreGetUserData
 {
 	optional fixed32 price_sheet_version = 1;
-}	
+}
 
 
 //
@@ -529,11 +529,11 @@ message CMsgStoreGetUserDataResponse
 	optional	int32			featured_item_idx = 6;
 	optional	bool		show_hat_descriptions = 7	[ default = true ];
 
-	//	Serialized KV representing the price sheet menu 
+	//	Serialized KV representing the price sheet menu
 	optional	bytes		price_sheet = 8;
-	
+
 	optional	int32		default_item_sort = 9 [ default = 0 ];
-	
+
 	// popular items by def
 	repeated	uint32		popular_items = 10;
 };
@@ -586,7 +586,7 @@ message CMsgUseItem
 {
 	optional uint64 item_id = 1;
 	optional fixed64 target_steam_id = 2;				// 64-bit field left over from original message
-	
+
 	repeated uint32 gift__potential_targets = 3;
 	optional uint32 duel__class_lock = 4;
 	optional fixed64 initiator_steam_id = 5;
@@ -648,11 +648,11 @@ message CMsgSetItemPositions
 		optional uint64		item_id = 1;
 		optional uint32		position = 2;
 	}
-	
-	repeated ItemPosition item_positions = 1;	
+
+	repeated ItemPosition item_positions = 1;
 };
 
-// 
+//
 // CSOEconItemPresetInstance - The preset, class and slot ID's are all marked key fields, so that those
 // fields will always be networked down to clients, even if only the item ID is modified.  This is so that
 // when CSharedObjectTypeCache::BUpdateFromMsg() calls its FindSharedObject(), it will have the necessary
@@ -721,9 +721,9 @@ message CMsgGCReportAbuseResponse
 //
 message CMsgGCNameItemNotification
 {
-	optional	fixed64		player_steamid = 1;		
-	optional	uint32		item_def_index = 2;		
-	optional	string		item_name_custom = 3;		
+	optional	fixed64		player_steamid = 1;
+	optional	uint32		item_def_index = 2;
+	optional	string		item_name_custom = 3;
 };
 
 //
@@ -742,7 +742,7 @@ message CMsgGCClientDisplayNotification
 //
 message CMsgGCShowItemsPickedUp
 {
-	optional	fixed64		player_steamid = 1;		
+	optional	fixed64		player_steamid = 1;
 };
 
 //

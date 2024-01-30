@@ -30,13 +30,13 @@ public:
 	int GetSize();
 	int GetMaxSize();
 	int	GetUsed();
-	
+
 	void *Alloc( unsigned bytes, bool bClear = false ) RESTRICT;
 
 	MemoryStackMark_t GetCurrentAllocPoint();
 	void FreeToAllocPoint( MemoryStackMark_t mark, bool bDecommit = true );
 	void FreeAll( bool bDecommit = true );
-	
+
 	void Access( void **ppRegion, unsigned *pBytes );
 
 	void PrintContents();
@@ -50,7 +50,7 @@ private:
 	byte *m_pNextAlloc;
 	byte *m_pCommitLimit;
 	byte *m_pAllocLimit;
-	
+
 	byte *m_pBase;
 
 	unsigned m_maxSize;
@@ -105,15 +105,15 @@ FORCEINLINE void *CMemoryStack::Alloc( unsigned bytes, bool bClear ) RESTRICT
 //-------------------------------------
 
 inline int CMemoryStack::GetMaxSize()
-{ 
+{
 	return m_maxSize;
 }
 
 //-------------------------------------
 
-inline int CMemoryStack::GetUsed() 
-{ 
-	return ( m_pNextAlloc - m_pBase ); 
+inline int CMemoryStack::GetUsed()
+{
+	return ( m_pNextAlloc - m_pBase );
 }
 
 //-------------------------------------

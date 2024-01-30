@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -70,7 +70,7 @@ void InstallVMFImporter( IDataModel *pFactory )
 //-----------------------------------------------------------------------------
 // Deals with poorly-named key values for the DME system
 //-----------------------------------------------------------------------------
-static const char *s_pKeyRemapNames[][2] = 
+static const char *s_pKeyRemapNames[][2] =
 {
 	{ "id", "__id" },
 	{ "name", "__name" },
@@ -137,7 +137,7 @@ bool CImportVMF::SerializeAttribute( CUtlBuffer &buf, CDmAttribute *pAttribute, 
 	return true;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Writes out all everything other than entities
 //-----------------------------------------------------------------------------
@@ -224,7 +224,7 @@ bool CImportVMF::SerializeEntityEditorKey( CUtlBuffer &buf, DmElementHandle_t hE
 			continue;
 
 		const char *pKeyName = pAttribute->GetName();
-		if ( Q_stricmp( pKeyName, "color" ) && Q_stricmp( pKeyName, "id" ) && 
+		if ( Q_stricmp( pKeyName, "color" ) && Q_stricmp( pKeyName, "id" ) &&
 			Q_stricmp( pKeyName, "comments" ) && Q_stricmp( pKeyName, "visgroupshown" ) &&
 			Q_stricmp( pKeyName, "visgroupautoshown" ) )
 		{
@@ -298,12 +298,12 @@ bool CImportVMF::SerializeEntities( CUtlBuffer &buf, CDmAttribute *pEntities )
 bool CImportVMF::Serialize( CUtlBuffer &buf, CDmElement *pRoot )
 {
 	// This is done in this strange way (namely, serializing other twice) to minimize diffs
-	const char *pOtherFilter1[] = 
+	const char *pOtherFilter1[] =
 	{
 		"versioninfo", "visgroups", "viewsettings", "world", NULL
 	};
 
-	const char *pOtherFilter2[] = 
+	const char *pOtherFilter2[] =
 	{
 		"cameras", "cordon", "hidden", NULL
 	};
@@ -389,7 +389,7 @@ bool CImportVMF::UnserializeEntityEditorKey( CDmAttribute *pEditorAttribute, Key
 	for ( KeyValues *pUserKey = pKeyValues->GetFirstValue(); pUserKey != NULL; pUserKey = pUserKey->GetNextValue() )
 	{
 		const char *pKeyName = pUserKey->GetName();
-		if ( Q_stricmp( pKeyName, "color" ) && Q_stricmp( pKeyName, "id" ) && 
+		if ( Q_stricmp( pKeyName, "color" ) && Q_stricmp( pKeyName, "id" ) &&
 			Q_stricmp( pKeyName, "comments" ) && Q_stricmp( pKeyName, "visgroupshown" ) &&
 			Q_stricmp( pKeyName, "visgroupautoshown" ) )
 		{
@@ -400,7 +400,7 @@ bool CImportVMF::UnserializeEntityEditorKey( CDmAttribute *pEditorAttribute, Key
 	return true;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Reads a single entity
 //-----------------------------------------------------------------------------
@@ -542,7 +542,7 @@ bool CImportVMF::UnserializeUnusedKeys( DmElementHandle_t hOther, KeyValues *pKe
 	return true;
 }
 
-	
+
 /*
 //-----------------------------------------------------------------------------
 // Reads the cordon data
@@ -591,8 +591,8 @@ CDmElement* CImportVMF::UnserializeFromKeyValues( KeyValues *pKeyValues )
 	// Each vmf needs to have an editortype associated with it so it displays nicely in editors
 	pElement->SetValue( "editorType", "VMF" );
 
-	// The VMF is a series of keyvalue blocks; either 
-	// 'entity', 'cameras', 'cordon', 'world', 'versioninfo', or 'viewsettings' 
+	// The VMF is a series of keyvalue blocks; either
+	// 'entity', 'cameras', 'cordon', 'world', 'versioninfo', or 'viewsettings'
 	CDmAttribute *pEntityArray = pElement->AddAttribute( "entities", AT_ELEMENT_ARRAY );
 
 	// All main keys are root keys
@@ -606,7 +606,7 @@ CDmElement* CImportVMF::UnserializeFromKeyValues( KeyValues *pKeyValues )
 		}
 		else
 		{
-			// We don't currently do anything with 
+			// We don't currently do anything with
 			CDmElement *pOther = CreateDmElement( "DmElement", pKeyValues->GetName(), NULL );
 			otherKeys.AddToTail( pOther );
 			bOk = UnserializeUnusedKeys( pOther->GetHandle(), pKeyValues );

@@ -81,8 +81,8 @@ static string_t s_iszTrainName;
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 CTFGrenadePipebombProjectile::CTFGrenadePipebombProjectile()
 {
@@ -105,8 +105,8 @@ CTFGrenadePipebombProjectile::CTFGrenadePipebombProjectile()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 CTFGrenadePipebombProjectile::~CTFGrenadePipebombProjectile()
 {
@@ -130,7 +130,7 @@ CTFGrenadePipebombProjectile::~CTFGrenadePipebombProjectile()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFGrenadePipebombProjectile::GetWeaponID( void ) const
 {
@@ -143,7 +143,7 @@ int CTFGrenadePipebombProjectile::GetWeaponID( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CTFGrenadePipebombProjectile::GetDamageType( void )
 {
@@ -162,7 +162,7 @@ int	CTFGrenadePipebombProjectile::GetDamageType( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFGrenadePipebombProjectile::ShouldMiniCritOnReflect() const
 {
@@ -170,7 +170,7 @@ bool CTFGrenadePipebombProjectile::ShouldMiniCritOnReflect() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrenadePipebombProjectile::UpdateOnRemove( void )
 {
@@ -192,7 +192,7 @@ void CTFGrenadePipebombProjectile::UpdateOnRemove( void )
 //
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CTFGrenadePipebombProjectile::GetTrailParticleName( void )
@@ -234,8 +234,8 @@ const char *CTFGrenadePipebombProjectile::GetTrailParticleName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void CTFGrenadePipebombProjectile::OnDataChanged(DataUpdateType_t updateType)
 {
@@ -374,7 +374,7 @@ void CTFGrenadePipebombProjectile::Simulate( void )
 
 //------------------------------------------------------------------------------
 // Purpose: Don't draw if we haven't yet gone past our original spawn point
-// Input  : flags - 
+// Input  : flags -
 //-----------------------------------------------------------------------------
 int CTFGrenadePipebombProjectile::DrawModel( int flags )
 {
@@ -429,9 +429,9 @@ const char* CTFGrenadePipebombProjectile::GetPipebombClass( int iPipeBombType )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGrenadePipebombProjectile* CTFGrenadePipebombProjectile::Create( const Vector &position, const QAngle &angles, 
-																    const Vector &velocity, const AngularImpulse &angVelocity, 
-																    CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, 
+CTFGrenadePipebombProjectile* CTFGrenadePipebombProjectile::Create( const Vector &position, const QAngle &angles,
+																    const Vector &velocity, const AngularImpulse &angVelocity,
+																    CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo,
 																	int iPipeBombType, float flMultDmg )
 {
 	// Translate a projectile type into a pipebomb type.
@@ -456,7 +456,7 @@ CTFGrenadePipebombProjectile* CTFGrenadePipebombProjectile::Create( const Vector
 	default:
 		iPipeBombDetonateType = TF_GL_MODE_REGULAR;
 	}
-	
+
 	const char* pszBombClass = GetPipebombClass( iPipeBombDetonateType );
 	CTFGrenadePipebombProjectile *pGrenade = static_cast<CTFGrenadePipebombProjectile*>( CBaseEntity::CreateNoSpawn( pszBombClass, position, angles, pOwner ) );
 	if ( pGrenade )
@@ -570,7 +570,7 @@ void CTFGrenadePipebombProjectile::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrenadePipebombProjectile::SetPipebombMode( int iPipebombMode /* = TF_GL_MODE_REGULAR */ )
 {
@@ -674,7 +674,7 @@ bool CTFGrenadePipebombProjectile::DetonateStickies()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrenadePipebombProjectile::CreatePipebombGibs( void )
 {
@@ -686,7 +686,7 @@ void CTFGrenadePipebombProjectile::CreatePipebombGibs( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrenadePipebombProjectile::Fizzle( void )
 {
@@ -694,7 +694,7 @@ void CTFGrenadePipebombProjectile::Fizzle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrenadePipebombProjectile::StickybombTouch( CBaseEntity *pOther )
 {
@@ -716,7 +716,7 @@ void CTFGrenadePipebombProjectile::StickybombTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrenadePipebombProjectile::PipebombTouch( CBaseEntity *pOther )
 {
@@ -768,7 +768,7 @@ void CTFGrenadePipebombProjectile::PipebombTouch( CBaseEntity *pOther )
 					return;
 			}
 		}
-		
+
 		if ( m_iType == TF_GL_MODE_CANNONBALL )
 		{
 			// Damage the player to push them back
@@ -818,7 +818,7 @@ void CTFGrenadePipebombProjectile::PipebombTouch( CBaseEntity *pOther )
 		}
 
 		// Save this entity as enemy, they will take 100% damage.
-		m_hEnemy = pOther;	
+		m_hEnemy = pOther;
 
 		// Restore damage. See comment in CTFGrenadePipebombProjectile::Create() above to understand this.
 		m_flDamage = m_flFullDamage;
@@ -842,7 +842,7 @@ void CTFGrenadePipebombProjectile::PipebombTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 extern bool PropDynamic_CollidesWithGrenades( CBaseEntity* pBaseEntity );
 
@@ -898,7 +898,7 @@ void CTFGrenadePipebombProjectile::VPhysicsCollision( int index, gamevcollisione
 				}
 			}
 		}
-		
+
 		m_bTouched = true;
 		return;
 	}
@@ -1141,7 +1141,7 @@ void CTFGrenadePipebombProjectile::PreArmThink( void )
 
 void CTFGrenadePipebombProjectile::ArmThink( void )
 {
-	// When between waves in MvM, players sometimes switch to medic just so demos can place crit stickies, 
+	// When between waves in MvM, players sometimes switch to medic just so demos can place crit stickies,
 	// and then switch back.  This code removes the sticky if the medic switches ( in DetonateThink() )
 	if ( IsCritical() && HasStickyEffects() && TFGameRules() && ( TFGameRules()->InSetup() || TFGameRules()->State_Get() == GR_STATE_BETWEEN_RNDS ) )
 	{
@@ -1176,7 +1176,7 @@ void CTFGrenadePipebombProjectile::ArmThink( void )
 #endif
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFGrenadePipebombProjectile::GetLiveTime( void )
 {
@@ -1230,7 +1230,7 @@ void CTFGrenadePipebombProjectile::Deflected( CBaseEntity *pDeflectedBy, Vector&
 												 2.0f );
 		}
 		Vector vecForce = vecDir * flForceMultiplier * -CTFWeaponBase::DeflectionForce( WorldAlignSize(), 90, 12.0f );
-		
+
 		pOldOwner = ToTFPlayer( GetThrower() );
 		info.SetAttacker( pDeflectedBy );
 		info.SetDamageForce( vecForce );
@@ -1382,7 +1382,7 @@ float CTFGrenadePipebombProjectile::GetDamageScaleOnWorldContact()
 #endif
 
 //-----------------------------------------------------------------------------
-float CTFGrenadePipebombProjectile::GetDamageRadius() 
+float CTFGrenadePipebombProjectile::GetDamageRadius()
 {
 	float flRadiusMod = 1.0f;
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=====================================================================================//
@@ -46,7 +46,7 @@ void CDispInfo::GetIntersectingSurfaces( GetIntersectingSurfaces_Struct *pStruct
 		// Is the list going to overflow?
 		if ( pStruct->m_nSetInfos >= pStruct->m_nMaxInfos )
 			break;
-		
+
 		Vector const &a = m_MeshReader.Position( m_MeshReader.Index(iVert+0) - m_iVertOffset );
 		Vector const &b = m_MeshReader.Position( m_MeshReader.Index(iVert+1) - m_iVertOffset );
 		Vector const &c = m_MeshReader.Position( m_MeshReader.Index(iVert+2) - m_iVertOffset );
@@ -55,7 +55,7 @@ void CDispInfo::GetIntersectingSurfaces( GetIntersectingSurfaces_Struct *pStruct
 		Vector vMin;
 		VectorMin( a, b, vMin );
 		VectorMin( c, vMin, vMin );
-		
+
 		Vector vMax;
 		VectorMax( a, b, vMax );
 		VectorMax( c, vMax, vMax );
@@ -64,13 +64,13 @@ void CDispInfo::GetIntersectingSurfaces( GetIntersectingSurfaces_Struct *pStruct
 		int iDim;
 		for ( iDim=0; iDim < 3; iDim++ )
 		{
-			if ( ((*pStruct->m_pCenter)[iDim]+pStruct->m_Radius) < vMin[iDim] || 
+			if ( ((*pStruct->m_pCenter)[iDim]+pStruct->m_Radius) < vMin[iDim] ||
 				((*pStruct->m_pCenter)[iDim]-pStruct->m_Radius) > vMax[iDim] )
 			{
 				break;
 			}
 		}
-		
+
 		if ( iDim == 3 )
 		{
 			// Couldn't reject the sphere in the loop above, so add this surface.
@@ -81,7 +81,7 @@ void CDispInfo::GetIntersectingSurfaces( GetIntersectingSurfaces_Struct *pStruct
 			pOut->m_Plane.m_Normal = ( c - a ).Cross( b - a );
 			VectorNormalize( pOut->m_Plane.m_Normal );
 			pOut->m_Plane.m_Dist = pOut->m_Plane.m_Normal.Dot( a );
-			
+
 			++pStruct->m_nSetInfos;
 			++pOut;
 		}
@@ -95,7 +95,7 @@ void CDispInfo::GetIntersectingSurfaces( GetIntersectingSurfaces_Struct *pStruct
 void CDispInfo::RenderWireframeInLightmapPage( int pageId )
 {
 #ifndef SWDS
-    // render displacement as wireframe into lightmap pages
+	// render displacement as wireframe into lightmap pages
 	SurfaceHandle_t surfID = GetParent();
 
 	Assert( ( MSurf_MaterialSortID( surfID ) >= 0 ) && ( MSurf_MaterialSortID( surfID ) < g_WorldStaticMeshes.Count() ) );
@@ -152,7 +152,7 @@ unsigned int CDispInfo::ComputeDynamicLightMask( dlight_t *pLights )
 				continue;
 
 			// This is used to ensure a maximum number of dlights in a frame
-			if ( !R_CanUseVisibleDLight( lnum ) ) 
+			if ( !R_CanUseVisibleDLight( lnum ) )
 				continue;
 
 			lightMask |= testBit;
@@ -202,10 +202,10 @@ void CDispInfo::AddDynamicLights( dlight_t *pLights, unsigned int mask )
 CDispDecalFragment* CDispInfo::AllocateDispDecalFragment( DispDecalHandle_t h, int nVerts )
 {
 	DispDecalFragmentHandle_t f = s_DispDecalFragments.Alloc(true);
-	s_DispDecalFragments.LinkBefore( s_DispDecals[h].m_FirstFragment, f ); 
+	s_DispDecalFragments.LinkBefore( s_DispDecals[h].m_FirstFragment, f );
 	s_DispDecals[h].m_FirstFragment = f;
 	CDispDecalFragment* pf = &s_DispDecalFragments[f];
-	
+
 	// Initialize the vert count:
 	pf->m_nVerts = nVerts;
 	pf->m_pVerts = new CDecalVert[nVerts];
@@ -271,29 +271,29 @@ DispDecalHandle_t CDispInfo::NotifyAddDecal( decal_t *pDecal, float flSize )
 			iDecal = s_DispDecals.Next( iDecal );
 			++nDecalCount;
 		}
-		
+
 #ifndef SWDS
 		if ( nDecalCount >= MAX_DISP_DECALS )
 		{
 			R_DecalUnlink( s_DispDecals[iLastDecal].m_pDecal, host_state.worldbrush );
 		}
 #endif
-		
+
 		s_DispDecals.LinkBefore( m_FirstDecal, h );
 		m_FirstDecal = h;
-		
+
 		CDispDecal *pDispDecal = &s_DispDecals[h];
 		pDispDecal->m_pDecal = pDecal;
 		pDispDecal->m_FirstFragment = DISP_DECAL_FRAGMENT_HANDLE_INVALID;
 		pDispDecal->m_nVerts = 0;
 		pDispDecal->m_nTris = 0;
 		pDispDecal->m_flSize = flSize;
-		
+
 		// Setup a basis for it.
 		CDecalVert *pOutVerts = NULL;
 		R_SetupDecalClip( pOutVerts, pDispDecal->m_pDecal, MSurf_Plane( m_ParentSurfID ).normal, pDispDecal->m_pDecal->material,
 			pDispDecal->m_TextureSpaceBasis, pDispDecal->m_DecalWorldScale );
-		
+
 		// Recurse and precalculate which nodes this thing can touch.
 		SetupDecalNodeIntersect( m_pPowerInfo->m_RootNode, 0, pDispDecal, 0 );
 	}
@@ -321,7 +321,7 @@ void CDispInfo::NotifyRemoveDecal( DispDecalHandle_t h )
 CDispShadowFragment* CDispInfo::AllocateShadowDecalFragment( DispShadowHandle_t h, int nCount )
 {
 	DispShadowFragmentHandle_t f = s_DispShadowFragments.Alloc(true);
-	s_DispShadowFragments.LinkBefore( s_DispShadowDecals[h].m_FirstFragment, f ); 
+	s_DispShadowFragments.LinkBefore( s_DispShadowDecals[h].m_FirstFragment, f );
 	s_DispShadowDecals[h].m_FirstFragment = f;
 	CDispShadowFragment* pf = &s_DispShadowFragments[f];
 	pf->m_nVerts = nCount;
@@ -405,7 +405,7 @@ void CDispInfo::RemoveShadowDecal( DispShadowHandle_t h )
 // ----------------------------------------------------------------------------- //
 // This little beastie generate decal fragments
 // ----------------------------------------------------------------------------- //
-void CDispInfo::GenerateDecalFragments_R( CVertIndex const &nodeIndex, 
+void CDispInfo::GenerateDecalFragments_R( CVertIndex const &nodeIndex,
 	int iNodeBitIndex, unsigned short decalHandle, CDispDecalBase *pDispDecal, int iLevel )
 {
 	// Get the node info for this node...
@@ -413,7 +413,7 @@ void CDispInfo::GenerateDecalFragments_R( CVertIndex const &nodeIndex,
 	DispNodeInfo_t const& nodeInfo = m_pNodeInfo[iNodeBitIndex];
 
 	int iNodeIndex = VertIndex( nodeIndex );
-	
+
 	// Don't bother adding decals if the node doesn't have decal info.
 	if( !pDispDecal->m_NodeIntersect.Get( iNodeBitIndex ) )
 		return;
@@ -448,7 +448,7 @@ void CDispInfo::GenerateDecalFragments_R( CVertIndex const &nodeIndex,
 	}
 }
 
-void CDispInfo::GenerateDecalFragments( CVertIndex const &nodeIndex, 
+void CDispInfo::GenerateDecalFragments( CVertIndex const &nodeIndex,
 	int iNodeBitIndex, unsigned short decalHandle, CDispDecalBase *pDispDecal )
 {
 	GenerateDecalFragments_R( nodeIndex, iNodeBitIndex, decalHandle, pDispDecal, 0 );
@@ -477,12 +477,12 @@ bool CDispInfo::ComputeShadowFragments( DispShadowHandle_t h, int& vertexCount, 
 #ifndef SWDS
 	if ((pShadowDecal->m_Flags & CDispDecalBase::NODE_BITFIELD_COMPUTED ) == 0)
 	{
-		// First, determine the nodes that the shadow decal should affect		
+		// First, determine the nodes that the shadow decal should affect
 		ShadowInfo_t const& info = g_pShadowMgr->GetInfo( pShadowDecal->m_Shadow );
-		SetupDecalNodeIntersect( 
-			m_pPowerInfo->m_RootNode, 
+		SetupDecalNodeIntersect(
+			m_pPowerInfo->m_RootNode,
 			0,			// node bit index into CDispDecal::m_NodeIntersects
-			pShadowDecal, 
+			pShadowDecal,
 			&info
 			);
 	}
@@ -766,17 +766,17 @@ void DispInfo_BatchDecals( CDispInfo **pVisibleDisps, int nVisibleDisps )
 
 			int iPool = g_aDispDecalSortPool.Alloc( true );
 			g_aDispDecalSortPool[iPool] = decal.m_pDecal;
-			
+
 			int iSortTree = decal.m_pDecal->m_iSortTree;
 			int iSortMaterial = decal.m_pDecal->m_iSortMaterial;
 
 			DecalMaterialBucket_t &materialBucket = g_aDispDecalSortTrees[iSortTree].m_aDecalSortBuckets[iGroup][iTreeType].Element( iSortMaterial );
 			if ( materialBucket.m_nCheckCount == g_nDispDecalSortCheckCount )
-			{	
+			{
 				int iHead = materialBucket.m_iHead;
 				g_aDispDecalSortPool.LinkBefore( iHead, iPool );
 			}
-			
+
 			materialBucket.m_iHead = iPool;
 			materialBucket.m_nCheckCount = g_nDispDecalSortCheckCount;
 
@@ -808,7 +808,7 @@ inline void DispInfo_DrawDecalMeshList( DecalMeshList_t &meshList )
 		{
 			pRenderContext->BindLightmapPage( MATERIAL_SYSTEM_LIGHTMAP_PAGE_WHITE );
 		}
-		
+
 		pRenderContext->Bind( batch.m_pMaterial, batch.m_pProxy );
 		meshList.m_pMesh->Draw( batch.m_iStartIndex, batch.m_nIndexCount );
 	}
@@ -825,7 +825,7 @@ void DispInfo_DrawDecalsGroup( int iGroup, int iTreeType )
 	int nVertCount = 0;
 	int nIndexCount = 0;
 
-	
+
 	int nDecalSortMaxVerts;
 	int nDecalSortMaxIndices;
 	R_DecalsGetMaxMesh( pRenderContext, nDecalSortMaxVerts, nDecalSortMaxIndices );
@@ -836,14 +836,14 @@ void DispInfo_DrawDecalsGroup( int iGroup, int iTreeType )
 	for ( int iSortTree = 0; iSortTree < nSortTreeCount; ++iSortTree )
 	{
 		bool bMeshInit = true;
-		
+
 		const CUtlVector<DecalMaterialBucket_t> &materialBucketList = g_aDispDecalSortTrees[iSortTree].m_aDecalSortBuckets[iGroup][iTreeType];
 		int nBucketCount = materialBucketList.Count();
 		for ( int iBucket = 0; iBucket < nBucketCount; ++iBucket )
 		{
 			if ( materialBucketList.Element( iBucket ).m_nCheckCount != g_nDispDecalSortCheckCount )
 				continue;
-			
+
 			int iHead = materialBucketList.Element( iBucket ).m_iHead;
 			if ( !g_aDispDecalSortPool.IsValidIndex( iHead ) )
 				continue;
@@ -857,11 +857,11 @@ void DispInfo_DrawDecalsGroup( int iGroup, int iTreeType )
 			VertexFormat_t vertexFormat = pDecalHead->material->GetVertexFormat();
 			if ( vertexFormat == 0 )
 				continue;
-	
+
 			// New bucket = new batch.
 			DecalBatchList_t *pBatch = NULL;
 			bool bBatchInit = true;
-			
+
 			int nCount;
 			int iElement = iHead;
 			while ( iElement != g_aDispDecalSortPool.InvalidIndex() )
@@ -904,7 +904,7 @@ void DispInfo_DrawDecalsGroup( int iGroup, int iTreeType )
 						pBatch = NULL;
 						bBatchInit = true;
 					}
-					
+
 					// Create the mesh.
 					if ( bMeshInit )
 					{
@@ -922,13 +922,13 @@ void DispInfo_DrawDecalsGroup( int iGroup, int iTreeType )
 						}
 
 						meshBuilder.Begin( meshList.m_pMesh, MATERIAL_TRIANGLES, nDecalSortMaxVerts, nDecalSortMaxIndices );
-						
+
 						nVertCount = 0;
 						nIndexCount = 0;
-						
+
 						bMeshInit = false;
 					}
-					
+
 					// Create the batch.
 					if ( bBatchInit )
 					{
@@ -936,7 +936,7 @@ void DispInfo_DrawDecalsGroup( int iGroup, int iTreeType )
 						int iBatchList = meshList.m_aBatches.AddToTail();
 						pBatch = &meshList.m_aBatches[iBatchList];
 						pBatch->m_iStartIndex = nIndexCount;
-						
+
 						if ( !bMatWireframe )
 						{
 							pBatch->m_pMaterial = pDecalHead->material;
@@ -947,11 +947,11 @@ void DispInfo_DrawDecalsGroup( int iGroup, int iTreeType )
 						{
 							pBatch->m_pMaterial = g_materialDecalWireframe;
 						}
-						
+
 						bBatchInit = false;
 					}
 					Assert ( pBatch );
-	
+
 					// Setup verts.
 					float flOffset = fragment.m_pDecal->lightmapOffset;
 					for ( int iVert = 0; iVert < fragment.m_nVerts; ++iVert )
@@ -973,19 +973,19 @@ void DispInfo_DrawDecalsGroup( int iGroup, int iTreeType )
 					int nTriCount = ( nCount - 2 );
 					CIndexBuilder &indexBuilder = meshBuilder;
 					indexBuilder.FastPolygon( nVertCount, nTriCount );
-					
+
 					// Update counters.
 					nVertCount += nCount;
 					nIndexCount += ( nTriCount * 3 );
 				}
-				
+
 				if ( pBatch )
 				{
 					pBatch->m_nIndexCount = ( nIndexCount - pBatch->m_iStartIndex );
 				}
 			}
 		}
-		
+
 		if ( !bMeshInit )
 		{
 			meshBuilder.End();
@@ -1003,7 +1003,7 @@ void DispInfo_DrawDecals( CDispInfo **visibleDisps, int nVisibleDisps )
 	int iGroup = 0;
 
 	// Draw world decals.
- 	DispInfo_DrawDecalsGroup( iGroup, PERMANENT_LIGHTMAP );
+	DispInfo_DrawDecalsGroup( iGroup, PERMANENT_LIGHTMAP );
 
 	// Draw lightmapped non-world decals.
 	DispInfo_DrawDecalsGroup( iGroup, LIGHTMAP );
@@ -1092,8 +1092,8 @@ void DispInfo_DrawDecals_Old( CDispInfo *visibleDisps[MAX_MAP_DISPINFO], int nVi
 
 					if ( pMaterial->InMaterialPage() )
 					{
-						meshBuilder.TexCoordSubRect2f( 0, fragment.m_pVerts[v].m_ctCoords.x, fragment.m_pVerts[v].m_ctCoords.y, 
-							                           matOffset[0], matOffset[1], matScale[0], matScale[1] );
+						meshBuilder.TexCoordSubRect2f( 0, fragment.m_pVerts[v].m_ctCoords.x, fragment.m_pVerts[v].m_ctCoords.y,
+														matOffset[0], matOffset[1], matScale[0], matScale[1] );
 					}
 					else
 					{
@@ -1114,8 +1114,8 @@ void DispInfo_DrawDecals_Old( CDispInfo *visibleDisps[MAX_MAP_DISPINFO], int nVi
 				meshBuilder.Color4ub( 255, 255, 255, 255 );
 				if ( pMaterial->InMaterialPage() )
 				{
-					meshBuilder.TexCoordSubRect2f( 0, fragment.m_pVerts[v].m_ctCoords.x, fragment.m_pVerts[v].m_ctCoords.y, 
-						                           matOffset[0], matOffset[1], matScale[0], matScale[1] );
+					meshBuilder.TexCoordSubRect2f( 0, fragment.m_pVerts[v].m_ctCoords.x, fragment.m_pVerts[v].m_ctCoords.y,
+													matOffset[0], matOffset[1], matScale[0], matScale[1] );
 				}
 				else
 				{
@@ -1129,8 +1129,8 @@ void DispInfo_DrawDecals_Old( CDispInfo *visibleDisps[MAX_MAP_DISPINFO], int nVi
 				meshBuilder.Color4ub( 255, 255, 255, 255 );
 				if ( pMaterial->InMaterialPage() )
 				{
-					meshBuilder.TexCoordSubRect2f( 0, fragment.m_pVerts[v].m_ctCoords.x, fragment.m_pVerts[v].m_ctCoords.y, 
-						                           matOffset[0], matOffset[1], matScale[0], matScale[1] );
+					meshBuilder.TexCoordSubRect2f( 0, fragment.m_pVerts[v].m_ctCoords.x, fragment.m_pVerts[v].m_ctCoords.y,
+													matOffset[0], matOffset[1], matScale[0], matScale[1] );
 				}
 				else
 				{
@@ -1181,7 +1181,7 @@ int DispInfo_AddShadowsToMeshBuilder( CMeshBuilder& meshBuilder, DispShadowHandl
 	{
 		const CDispShadowFragment& fragment = s_DispShadowFragments[f];
 		const ShadowVertex_t *pShadowVert = fragment.m_ShadowVerts;
-		
+
 		// Add in the vertices + indices, use two loops to minimize tests...
 		int i;
 		for ( i = 0; i < fragment.m_nVerts - 2; ++i, ++pShadowVert )
@@ -1341,7 +1341,7 @@ static void DispInfo_DrawChainNormals( SurfaceHandle_t *pList, int listCount )
 	for ( int i = 0; i < listCount; i++ )
 	{
 		CDispInfo *pDisp = static_cast<CDispInfo*>( pList[i]->pDispInfo );
-		
+
 		int nVerts = pDisp->NumVerts();
 
 		IMesh *pMesh = pRenderContext->GetDynamicMesh( );
@@ -1388,7 +1388,7 @@ static void DispInfo_DrawChainNormals( SurfaceHandle_t *pList, int listCount )
 
 
 //-----------------------------------------------------------------------------
-// Renders debugging information for displacements 
+// Renders debugging information for displacements
 //-----------------------------------------------------------------------------
 
 static void DispInfo_DrawDebugInformation( SurfaceHandle_t *pList, int listCount )
@@ -1405,7 +1405,7 @@ static void DispInfo_DrawDebugInformation( SurfaceHandle_t *pList, int listCount
 
 
 //-----------------------------------------------------------------------------
-// Renders all displacements in sorted order 
+// Renders all displacements in sorted order
 //-----------------------------------------------------------------------------
 void DispInfo_RenderList( int nSortGroup, SurfaceHandle_t *pList, int listCount, bool bOrtho, unsigned long flags, ERenderDepthMode DepthMode )
 {
@@ -1447,10 +1447,10 @@ void DispInfo_RenderList( int nSortGroup, SurfaceHandle_t *pList, int listCount,
 	// Draw overlays
 	OverlayMgr()->RenderOverlays( nSortGroup );
 
-	// Draw flashlight overlays	
+	// Draw flashlight overlays
 	g_pShadowMgr->DrawFlashlightOverlays( nSortGroup, bFlashlightMask );
 	OverlayMgr()->ClearRenderLists( nSortGroup );
-	  
+
 	// Draw decals
 	DispInfo_BatchDecals( visibleDisps, nVisibleDisps );
 	DispInfo_DrawDecals( visibleDisps, nVisibleDisps );
@@ -1466,4 +1466,3 @@ void DispInfo_RenderList( int nSortGroup, SurfaceHandle_t *pList, int listCount,
 	DispInfo_DrawDebugInformation( pList, listCount );
 #endif
 }
-

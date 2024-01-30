@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,9 +24,9 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDODPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, 
+void CDODPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper,
 	CMoveData *move )
 {
 	player->AvoidPhysicsProps( ucmd );
@@ -36,7 +36,7 @@ void CDODPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelpe
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODPrediction::FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *move )
 {
@@ -52,4 +52,3 @@ static CDODPrediction g_Prediction;
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CDODPrediction, IPrediction, VCLIENT_PREDICTION_INTERFACE_VERSION, g_Prediction );
 
 CPrediction *prediction = &g_Prediction;
-

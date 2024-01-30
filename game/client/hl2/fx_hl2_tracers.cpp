@@ -83,7 +83,7 @@ DECLARE_CLIENT_EFFECT( "GaussTracer", GaussTracerCallback );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Airboat gun tracers 
+// Purpose: Airboat gun tracers
 //-----------------------------------------------------------------------------
 void AirboatGunHeavyTracerCallback( const CEffectData &data )
 {
@@ -108,7 +108,7 @@ void AirboatGunHeavyTracerCallback( const CEffectData &data )
 
 	float flLength = random->RandomFloat( 300.0f, 400.0f );
 	float flLife = ( flTotalDist + flLength ) / flVelocity;	//NOTENOTE: We want the tail to finish its run as well
-	
+
 	// Add it
 	FX_AddDiscreetLine( vecStart, vecShotDir, flVelocity, flLength, flTotalDist, 5.0f, flLife, "effects/gunshiptracer" );
 }
@@ -116,7 +116,7 @@ void AirboatGunHeavyTracerCallback( const CEffectData &data )
 DECLARE_CLIENT_EFFECT( "AirboatGunHeavyTracer", AirboatGunHeavyTracerCallback );
 
 //-----------------------------------------------------------------------------
-// Purpose: Airboat gun tracers 
+// Purpose: Airboat gun tracers
 //-----------------------------------------------------------------------------
 void AirboatGunTracerCallback( const CEffectData &data )
 {
@@ -141,7 +141,7 @@ void AirboatGunTracerCallback( const CEffectData &data )
 
 	float flLength = random->RandomFloat( 256.0f, 384.0f );
 	float flLife = ( flTotalDist + flLength ) / flVelocity;	//NOTENOTE: We want the tail to finish its run as well
-	
+
 	// Add it
 	FX_AddDiscreetLine( vecStart, vecShotDir, flVelocity, flLength, flTotalDist, 2.0f, flLife, "effects/gunshiptracer" );
 }
@@ -150,7 +150,7 @@ DECLARE_CLIENT_EFFECT( "AirboatGunTracer", AirboatGunTracerCallback );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Airboat gun tracers 
+// Purpose: Airboat gun tracers
 //-----------------------------------------------------------------------------
 void HelicopterTracerCallback( const CEffectData &data )
 {
@@ -175,7 +175,7 @@ void HelicopterTracerCallback( const CEffectData &data )
 
 	float flLength = random->RandomFloat( 256.0f, 384.0f );
 	float flLife = ( flTotalDist + flLength ) / flVelocity;	//NOTENOTE: We want the tail to finish its run as well
-	
+
 	// Add it
 	FX_AddDiscreetLine( vecStart, vecShotDir, flVelocity, flLength, flTotalDist, 5.0f, flLife, "effects/gunshiptracer" );
 
@@ -188,14 +188,14 @@ void HelicopterTracerCallback( const CEffectData &data )
 DECLARE_CLIENT_EFFECT( "HelicopterTracer", HelicopterTracerCallback );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : start - 
-//			end - 
+// Purpose:
+// Input  : start -
+//			end -
 //-----------------------------------------------------------------------------
 void FX_PlayerAR2Tracer( const Vector &start, const Vector &end )
 {
 	VPROF_BUDGET( "FX_PlayerAR2Tracer", VPROF_BUDGETGROUP_PARTICLE_RENDERING );
-	
+
 	Vector	shotDir, dStart, dEnd;
 	float	length;
 
@@ -221,16 +221,16 @@ void FX_PlayerAR2Tracer( const Vector &start, const Vector &end )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : start - 
-//			end - 
-//			velocity - 
-//			makeWhiz - 
+// Purpose:
+// Input  : start -
+//			end -
+//			velocity -
+//			makeWhiz -
 //-----------------------------------------------------------------------------
 void FX_AR2Tracer( Vector& start, Vector& end, int velocity, bool makeWhiz )
 {
 	VPROF_BUDGET( "FX_AR2Tracer", VPROF_BUDGETGROUP_PARTICLE_RENDERING );
-	
+
 	//Don't make small tracers
 	float dist;
 	Vector dir;
@@ -244,23 +244,23 @@ void FX_AR2Tracer( Vector& start, Vector& end, int velocity, bool makeWhiz )
 
 	float length = random->RandomFloat( 128.0f, 256.0f );
 	float life = ( dist + length ) / velocity;	//NOTENOTE: We want the tail to finish its run as well
-	
+
 	//Add it
 	FX_AddDiscreetLine( start, dir, velocity, length, dist, random->RandomFloat( 0.5f, 1.5f ), life, "effects/gunshiptracer" );
 
 	if( makeWhiz )
 	{
-		FX_TracerSound( start, end, TRACER_TYPE_GUNSHIP );	
+		FX_TracerSound( start, end, TRACER_TYPE_GUNSHIP );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AR2TracerCallback( const CEffectData &data )
 {
 	C_BasePlayer *player = C_BasePlayer::GetLocalPlayer();
-	
+
 	if ( player == NULL )
 		return;
 
@@ -285,7 +285,7 @@ void AR2TracerCallback( const CEffectData &data )
 		FX_PlayerAR2Tracer( foo, (Vector&)data.m_vOrigin );
 		return;
 	}
-	
+
 	// Use default velocity if none specified
 	if ( !flVelocity )
 	{
@@ -299,25 +299,25 @@ void AR2TracerCallback( const CEffectData &data )
 DECLARE_CLIENT_EFFECT( "AR2Tracer", AR2TracerCallback );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &data - 
+// Purpose:
+// Input  : &data -
 //-----------------------------------------------------------------------------
 void AR2ExplosionCallback( const CEffectData &data )
 {
 	float lifetime = random->RandomFloat( 0.4f, 0.75f );
 
 	// Ground splash
-	FX_AddQuad( data.m_vOrigin, 
-				data.m_vNormal, 
-				data.m_flRadius, 
+	FX_AddQuad( data.m_vOrigin,
+				data.m_vNormal,
+				data.m_flRadius,
 				data.m_flRadius * 4.0f,
-				0.85f, 
+				0.85f,
 				1.0f,
 				0.0f,
 				0.25f,
-				random->RandomInt( 0, 360 ), 
-				random->RandomFloat( -4, 4 ), 
-				Vector( 1.0f, 1.0f, 1.0f ), 
+				random->RandomInt( 0, 360 ),
+				random->RandomFloat( -4, 4 ),
+				Vector( 1.0f, 1.0f, 1.0f ),
 				lifetime,
 				"effects/combinemuzzle1",
 				(FXQUAD_BIAS_SCALE|FXQUAD_BIAS_ALPHA) );
@@ -326,7 +326,7 @@ void AR2ExplosionCallback( const CEffectData &data )
 	VectorVectors( data.m_vNormal, vRight, vUp );
 
 	Vector	start, end;
-	
+
 	float radius = data.m_flRadius * 0.15f;
 
 	// Base vertical shaft
@@ -336,12 +336,12 @@ void AR2ExplosionCallback( const CEffectData &data )
 	end = start + ( data.m_vNormal * random->RandomFloat( radius*2.0f, radius*4.0f ) );
 
 	lineData.m_flDieTime = lifetime;
-	
+
 	lineData.m_flStartAlpha= 1.0f;
 	lineData.m_flEndAlpha = 0.0f;
-	
+
 	lineData.m_flStartScale = radius*4;
-	lineData.m_flEndScale = radius*5; 
+	lineData.m_flEndScale = radius*5;
 
 	lineData.m_pMaterial = materials->FindMaterial( "effects/ar2ground2", 0, 0 );
 
@@ -358,12 +358,12 @@ void AR2ExplosionCallback( const CEffectData &data )
 	end = start + ( data.m_vNormal * random->RandomFloat( 16, radius*0.25f ) );
 
 	lineData.m_flDieTime = lifetime - 0.1f;
-	
+
 	lineData.m_flStartAlpha= 1.0f;
 	lineData.m_flEndAlpha = 0.0f;
-	
+
 	lineData.m_flStartScale = radius*2;
-	lineData.m_flEndScale = radius*4; 
+	lineData.m_flEndScale = radius*4;
 
 	lineData.m_pMaterial = materials->FindMaterial( "effects/ar2ground2", 0, 0 );
 
@@ -379,23 +379,23 @@ void AR2ExplosionCallback( const CEffectData &data )
 DECLARE_CLIENT_EFFECT( "AR2Explosion", AR2ExplosionCallback );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &data - 
+// Purpose:
+// Input  : &data -
 //-----------------------------------------------------------------------------
 void AR2ImpactCallback( const CEffectData &data )
 {
-	FX_AddQuad( data.m_vOrigin, 
-				data.m_vNormal, 
+	FX_AddQuad( data.m_vOrigin,
+				data.m_vNormal,
 				random->RandomFloat( 24, 32 ),
 				0,
-				0.75f, 
+				0.75f,
 				1.0f,
 				0.0f,
 				0.4f,
-				random->RandomInt( 0, 360 ), 
+				random->RandomInt( 0, 360 ),
 				0,
-				Vector( 1.0f, 1.0f, 1.0f ), 
-				0.25f, 
+				Vector( 1.0f, 1.0f, 1.0f ),
+				0.25f,
 				"effects/combinemuzzle2_nocull",
 				(FXQUAD_BIAS_SCALE|FXQUAD_BIAS_ALPHA) );
 }
@@ -453,7 +453,7 @@ void MuzzleFlash_Airboat( ClientEntityHandle_t hEntity, int attachmentIndex )
 		offset = (forward * (i*6.0f*flScale));
 
 		pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), pMuzzle[random->RandomInt(0,1)], offset );
-			
+
 		if ( pParticle == NULL )
 			return;
 
@@ -477,7 +477,7 @@ void MuzzleFlash_Airboat( ClientEntityHandle_t hEntity, int attachmentIndex )
 
 	// Tack on the smoke
 	pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), pSimple->GetPMaterial( "sprites/ar2_muzzle1" ), vec3_origin );
-		
+
 	if ( pParticle == NULL )
 		return;
 
@@ -495,12 +495,12 @@ void MuzzleFlash_Airboat( ClientEntityHandle_t hEntity, int attachmentIndex )
 
 	pParticle->m_uchStartSize	= random->RandomFloat( 16.0f, 24.0f );
 	pParticle->m_uchEndSize		= pParticle->m_uchStartSize;
-	
+
 	float spokePos = random->RandomInt( 0, 5 );
 
 	pParticle->m_flRoll			= (360.0/6.0f)*spokePos;
 	pParticle->m_flRollDelta	= 0.0f;
-	
+
 #ifndef _XBOX
 	// Grab the origin out of the transform for the attachment
 	if ( muzzleflash_light.GetInt() )
@@ -518,7 +518,7 @@ void MuzzleFlash_Airboat( ClientEntityHandle_t hEntity, int attachmentIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AirboatMuzzleFlashCallback( const CEffectData &data )
 {
@@ -539,7 +539,7 @@ void MuzzleFlash_Chopper( ClientEntityHandle_t hEntity, int attachmentIndex )
 	// If the client hasn't seen this entity yet, bail.
 	if ( !FX_GetAttachmentTransform( hEntity, attachmentIndex, matAttachment ) )
 		return;
-	
+
 	CSmartPtr<CLocalSpaceEmitter> pSimple = CLocalSpaceEmitter::Create( "MuzzleFlash", hEntity, attachmentIndex );
 
 	SimpleParticle *pParticle;
@@ -553,7 +553,7 @@ void MuzzleFlash_Chopper( ClientEntityHandle_t hEntity, int attachmentIndex )
 		offset = (forward * (i*2.0f*flScale));
 
 		pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), pSimple->GetPMaterial( VarArgs( "effects/combinemuzzle%d", random->RandomInt(1,2) ) ), offset );
-			
+
 		if ( pParticle == NULL )
 			return;
 
@@ -574,16 +574,16 @@ void MuzzleFlash_Chopper( ClientEntityHandle_t hEntity, int attachmentIndex )
 		pParticle->m_flRoll			= random->RandomInt( 0, 360 );
 		pParticle->m_flRollDelta	= 0.0f;
 	}
-	
+
 	// Grab the origin out of the transform for the attachment
 	Vector		origin;
-	MatrixGetColumn( matAttachment, 3, &origin );	
+	MatrixGetColumn( matAttachment, 3, &origin );
 	CreateMuzzleflashELight( origin, 6, 128, 256, hEntity );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ChopperMuzzleFlashCallback( const CEffectData &data )
 {
@@ -635,16 +635,16 @@ void MuzzleFlash_Gunship( ClientEntityHandle_t hEntity, int attachmentIndex )
 	pParticle->m_uchEndSize		= pParticle->m_uchStartSize;
 	pParticle->m_flRoll			= random->RandomInt( 0, 360 );
 	pParticle->m_flRollDelta	= 0.0f;
-	
+
 	// Grab the origin out of the transform for the attachment
 	Vector		origin;
-	MatrixGetColumn( matAttachment, 3, &origin );	
+	MatrixGetColumn( matAttachment, 3, &origin );
 	CreateMuzzleflashELight( origin, 6, 128, 256, hEntity );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void GunshipMuzzleFlashCallback( const CEffectData &data )
 {
@@ -668,8 +668,8 @@ void MuzzleFlash_Hunter( ClientEntityHandle_t hEntity, int attachmentIndex )
 
 	// Grab the origin out of the transform for the attachment
 	Vector		origin;
-	MatrixGetColumn( matAttachment, 3, &origin );	
-	
+	MatrixGetColumn( matAttachment, 3, &origin );
+
 	dlight_t *el = effects->CL_AllocElight( LIGHT_INDEX_MUZZLEFLASH );
 	el->origin = origin;// + Vector( 12.0f, 0, 0 );
 
@@ -685,7 +685,7 @@ void MuzzleFlash_Hunter( ClientEntityHandle_t hEntity, int attachmentIndex )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void HunterMuzzleFlashCallback( const CEffectData &data )
 {

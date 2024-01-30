@@ -228,9 +228,9 @@ bool CTFBotSniperAttack::IsImmediateThreat( const CBaseCombatCharacter *subject,
 
 //---------------------------------------------------------------------------------------------
 // return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
-const CKnownEntity *CTFBotSniperAttack::SelectMoreDangerousThreat( const INextBot *me, 
+const CKnownEntity *CTFBotSniperAttack::SelectMoreDangerousThreat( const INextBot *me,
 																   const CBaseCombatCharacter *subject,
-																   const CKnownEntity *threat1, 
+																   const CKnownEntity *threat1,
 																   const CKnownEntity *threat2 ) const
 {
 	if ( threat1 && threat2 )

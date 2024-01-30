@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@
 
 extern IVAudio *vaudio;
 
-CAudioMixerWaveMP3::CAudioMixerWaveMP3( IWaveData *data ) : CAudioMixerWave( data ) 
+CAudioMixerWaveMP3::CAudioMixerWaveMP3( IWaveData *data ) : CAudioMixerWave( data )
 {
 	m_sampleCount = 0;
 	m_samplePosition = 0;
@@ -71,7 +71,7 @@ void CAudioMixerWaveMP3::GetID3HeaderOffset()
 		// this is in id3 file
 		// compute the size of the wrapper and skip it
 		m_headerOffset = 10 + ( pData[9] | (pData[8]<<7) | (pData[7]<<14) | (pData[6]<<21) );
-   }
+	}
 }
 
 int CAudioMixerWaveMP3::StreamRequestData( void *pBuffer, int bytesRequested, int offset )
@@ -94,7 +94,7 @@ int CAudioMixerWaveMP3::StreamRequestData( void *pBuffer, int bytesRequested, in
 	}
 
 	offset += m_headerOffset; // skip any id3 header/wrapper
-	
+
 	while ( bytesRequested > 0 )
 	{
 		char *pOutputBuffer = (char *)pBuffer;
@@ -102,7 +102,7 @@ int CAudioMixerWaveMP3::StreamRequestData( void *pBuffer, int bytesRequested, in
 
 		void *pData = NULL;
 		int bytesRead = m_pData->ReadSourceData( &pData, offset + totalBytesRead, bytesRequested, pOutputBuffer );
-		
+
 		if ( !bytesRead )
 			break;
 		if ( bytesRead > bytesRequested )
@@ -227,8 +227,8 @@ void CAudioMixerWaveMP3::SetSampleStart( int newPosition )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : delaySamples - 
+// Purpose:
+// Input  : delaySamples -
 //-----------------------------------------------------------------------------
 void CAudioMixerWaveMP3::SetStartupDelaySamples( int delaySamples )
 {

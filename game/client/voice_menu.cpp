@@ -43,9 +43,9 @@ void OpenVoiceMenu( int index )
 
 		CMultiplayRules *pRules = dynamic_cast< CMultiplayRules * >( GameRules() );
 		if ( pRules )
-		{			
+		{
 			if ( !pRules->GetVoiceMenuLabels( index-1, pKV ) )
-			{ 
+			{
 				pKV->deleteThis();
 				return;
 			}

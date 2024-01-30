@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -40,8 +40,8 @@ struct FXQuadData_t
 	void SetScaleBias( float bias )				{ m_flScaleBias = bias; }
 	void SetYaw( float yaw, float delta = 0.0f ){ m_flYaw = yaw; m_flDeltaYaw = delta; }
 
-	void SetMaterial( const char *shader )	
-	{ 
+	void SetMaterial( const char *shader )
+	{
 		m_pMaterial = materials->FindMaterial( shader, TEXTURE_GROUP_CLIENT_EFFECTS );
 
 		if ( m_pMaterial != NULL )
@@ -63,7 +63,7 @@ struct FXQuadData_t
 	Vector			m_Color;
 	float			m_flYaw;
 	float			m_flDeltaYaw;
-	
+
 	// Only used with FXQUAD_BIAS_ALPHA and FXQUAD_BIAS_SCALE
 	float			m_flScaleBias;
 	float			m_flAlphaBias;
@@ -74,7 +74,7 @@ class CFXQuad : public CClientSideEffect
 public:
 
 	CFXQuad( const FXQuadData_t &data );
-	
+
 	~CFXQuad( void );
 
 	virtual void	Draw( double frametime );

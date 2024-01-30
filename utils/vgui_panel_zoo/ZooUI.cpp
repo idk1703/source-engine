@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -22,7 +22,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CZooUI::CZooUI(): Frame(NULL, "PanelZoo")
 {
@@ -30,7 +30,7 @@ CZooUI::CZooUI(): Frame(NULL, "PanelZoo")
 	// calculate defaults
 	int x, y, wide, tall;
 	vgui::surface()->GetScreenSize(wide, tall);
-	
+
 	int dwide, dtall;
 	dwide = 1400;
 	dtall = 500;
@@ -97,7 +97,7 @@ CZooUI::CZooUI(): Frame(NULL, "PanelZoo")
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
 CZooUI::~CZooUI()
-{ 
+{
 }
 
 void CZooUI::OnCommand(const char *command)
@@ -107,7 +107,7 @@ void CZooUI::OnCommand(const char *command)
 		OnClose();
 	}
 }
- 
+
 //-----------------------------------------------------------------------------
 // Purpose: Handles closing of the dialog - shuts down the whole app
 //-----------------------------------------------------------------------------
@@ -136,5 +136,3 @@ MessageMapItem_t CZooUI::m_MessageMap[] =
 };
 
 IMPLEMENT_PANELMAP(CZooUI, BaseClass);
-
-

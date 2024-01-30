@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -31,7 +31,7 @@ BEGIN_SHADER_FLAGS( DebugDepth, "Help for DebugDepth", SHADER_NOT_EDITABLE )
 	SHADER_INIT
 	{
 	}
-	   
+
 	SHADER_FALLBACK
 	{
 		if( g_pHardwareConfig->GetDXSupportLevel() < 90 )
@@ -110,4 +110,3 @@ BEGIN_SHADER_FLAGS( DebugDepth, "Help for DebugDepth", SHADER_NOT_EDITABLE )
 		Draw();
 	}
 END_SHADER
-

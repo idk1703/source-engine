@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -121,7 +121,7 @@ BEGIN_VS_SHADER_FLAGS( Engine_Post_dx9, "Engine post-processing effects (softwar
 
 			DECLARE_STATIC_VERTEX_SHADER( screenspaceeffect_vs20 );
 			SET_STATIC_VERTEX_SHADER( screenspaceeffect_vs20 );
-			
+
 			if( g_pHardwareConfig->SupportsPixelShaders_2_b() || g_pHardwareConfig->ShouldAlwaysUseShaderModel2bShaders() ) // GL always goes the ps2b way for this shader, even on "ps20" parts
 			{
 				DECLARE_STATIC_PIXEL_SHADER( engine_post_ps20b );
@@ -197,7 +197,7 @@ BEGIN_VS_SHADER_FLAGS( Engine_Post_dx9, "Engine post-processing effects (softwar
 			{
 				colCorrectNumLookups = 0;
 			}
-			
+
 			if( g_pHardwareConfig->SupportsPixelShaders_2_b() || g_pHardwareConfig->ShouldAlwaysUseShaderModel2bShaders() ) // GL always goes the ps2b way for this shader, even on "ps20" parts
 			{
 				DECLARE_DYNAMIC_PIXEL_SHADER( engine_post_ps20b );

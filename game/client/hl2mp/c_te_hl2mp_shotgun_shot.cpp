@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -73,7 +73,7 @@ void C_TEHL2MPFireBullets::CreateEffects( void )
 			if ( pWpn )
 			{
 				int iSeed = m_iSeed;
-					
+
 				CShotManipulator Manipulator( m_vecDir );
 
 				for (int iShot = 0; iShot < m_iShots; iShot++)
@@ -118,7 +118,7 @@ void C_TEHL2MPFireBullets::CreateEffects( void )
 							DispatchEffect( "Tracer", data );
 						}
 					}
-					
+
 					if ( m_bDoImpacts )
 					{
 						pWpn->DoImpactEffect( tr, pAmmoDef->DamageType( m_iAmmoID ) );
@@ -156,5 +156,3 @@ BEGIN_RECV_TABLE_NOBASE(C_TEHL2MPFireBullets, DT_TEHL2MPFireBullets )
 	RecvPropBool( RECVINFO( m_bDoImpacts ) ),
 	RecvPropBool( RECVINFO( m_bDoTracers ) ),
 END_RECV_TABLE()
-
-

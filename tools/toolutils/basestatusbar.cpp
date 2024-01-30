@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -19,9 +19,9 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CBaseStatusBar::CBaseStatusBar( vgui::Panel *parent, char const *panelName ) 
+CBaseStatusBar::CBaseStatusBar( vgui::Panel *parent, char const *panelName )
 	: BaseClass( parent, panelName ),
 	m_flLastFPSSnapShot( -1.0f )
 {
@@ -39,7 +39,7 @@ CBaseStatusBar::CBaseStatusBar( vgui::Panel *parent, char const *panelName )
 
 //-----------------------------------------------------------------------------
 // Purpose: Forces console to take up full area except right edge
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CBaseStatusBar::PerformLayout()
 {

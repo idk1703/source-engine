@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -17,7 +17,7 @@ public:
 	~CSmoothingGroupMgr();
 
 	SmoothingGroupHandle_t		CreateGroup( void );
-	void						DestroyGroup( SmoothingGroupHandle_t hGroup ); 
+	void						DestroyGroup( SmoothingGroupHandle_t hGroup );
 
 	bool						IsGroup( SmoothingGroupHandle_t hGroup );
 
@@ -245,23 +245,23 @@ ChunkFileResult_t CSmoothingGroupMgr::SaveVMF( CChunkFile *pFile, CSaveInfo *pSa
 				{
 					eResult = pFile->WriteKeyValueInt( "number_faces", nFaceCount );
 				}
-				
+
 				if ( eResult == ChunkFile_Ok )
 				{
 					int nColCount = 20;
 					int nRowCount = ( nFaceCount / nColCount ) + 1;
-					
+
 					for ( int iRow = 0; iRow < nRowCount; ++iRow )
 					{
 						bool bFirst = true;
 						szBuf[0] = '\0';
-						
+
 						for ( int iCol = 0; iCol < nColCount; ++iCol )
 						{
 							int iFace = ( iRow * 20 ) + iCol;
 							if ( iFace >= nFaceCount )
 								continue;
-							
+
 							if (!bFirst)
 							{
 								strcat(szBuf, " ");
@@ -275,7 +275,7 @@ ChunkFileResult_t CSmoothingGroupMgr::SaveVMF( CChunkFile *pFile, CSaveInfo *pSa
 								strcat( szBuf, szTemp );
 							}
 						}
-						
+
 						char szKey[10];
 						sprintf( szKey, "row%d", iRow );
 						eResult = pFile->WriteKeyValue( szKey, szBuf );
@@ -313,10 +313,10 @@ ChunkFileResult_t CSmoothingGroupMgr::LoadVMF( CChunkFile *pFile )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ChunkFileResult_t CSmoothingGroupMgr::LoadSmoothingGroupMgrCallback( const char *szKey, const char *szValue, 
-																	 CSmoothingGroupMgr *pSmoothingGroupMgr )
+ChunkFileResult_t CSmoothingGroupMgr::LoadSmoothingGroupMgrCallback( const char *szKey, const char *szValue,
+																	CSmoothingGroupMgr *pSmoothingGroupMgr )
 {
-    // Get a pointer to the next available smoothing group slot.
+	// Get a pointer to the next available smoothing group slot.
 	SmoothingGroup_t *pGroup = new SmoothingGroup_t;
 	if ( !pGroup )
 		return;
@@ -347,8 +347,8 @@ ChunkFileResult_t CSmoothingGroupMgr::LoadSmoothingGroupMgrCallback( const char 
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ChunkFileResult_t CSmoothingGroupMgr::LoadSmoothingGroupMgrKeyCallback( const char *szKey, const char *szValue, 
-																	    CSmoothingGroupMgr *pSmoothingGroupMgr )
+ChunkFileResult_t CSmoothingGroupMgr::LoadSmoothingGroupMgrKeyCallback( const char *szKey, const char *szValue,
+																		CSmoothingGroupMgr *pSmoothingGroupMgr )
 {
 	return;
 }
@@ -398,8 +398,8 @@ ChunkFileResult_t CSmoothingGroupMgr::LoadSmoothingGroupKeyCallback( const char 
 		while ( pszNext != NULL )
 		{
 			nFaceID = ( float )atof( pszNext );
-			CMapFace *pFace = 
-			
+			CMapFace *pFace =
+
 
 
 CMapFace *CMapWorld::FaceID_FaceForID(int nFaceID)
@@ -413,4 +413,3 @@ CMapFace *CMapWorld::FaceID_FaceForID(int nFaceID)
 	return ChunkFile_Ok ;
 }
 #endif
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -52,7 +52,7 @@ public:
 	float			m_flOldForwardMove;
 	float			m_flSideMove;
 	float			m_flUpMove;
-	
+
 	float			m_flMaxSpeed;
 	float			m_flClientMaxSpeed;
 
@@ -61,10 +61,10 @@ public:
 	Vector			m_vecVelocity;		// edict::velocity		// Current movement direction.
 	QAngle			m_vecAngles;		// edict::angles
 	QAngle			m_vecOldAngles;
-	
+
 // Output only
 	float			m_outStepHeight;	// how much you climbed this move
-	Vector			m_outWishVel;		// This is where you tried 
+	Vector			m_outWishVel;		// This is where you tried
 	Vector			m_outJumpVel;		// This is your jump velocity
 
 	// Movement constraints	(radius 0 means no constraint)
@@ -112,9 +112,9 @@ abstract_class IGameMovement
 {
 public:
 	virtual			~IGameMovement( void ) {}
-	
+
 	// Process the current movement command
-	virtual void	ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMove ) = 0;		
+	virtual void	ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMove ) = 0;
 	virtual void	StartTrackPredictionErrors( CBasePlayer *pPlayer ) = 0;
 	virtual void	FinishTrackPredictionErrors( CBasePlayer *pPlayer ) = 0;
 	virtual void	DiffPrint( PRINTF_FORMAT_STRING char const *fmt, ... ) = 0;

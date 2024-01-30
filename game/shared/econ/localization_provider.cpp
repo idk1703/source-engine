@@ -39,12 +39,12 @@ locchar_t* CLocalizationProvider::FindSafe( const char* pchKey ) const
 	}
 }
 
-#ifdef GC 
+#ifdef GC
 #include "gcsdk/gcbase.h"
 
 // GC Localization implementation
 
-static CGCLocalizationProvider *GGCLocalizationProvider() 
+static CGCLocalizationProvider *GGCLocalizationProvider()
 {
 	static CGCLocalizationProvider *g_pGCLocalizationProvider = NULL;
 	if ( !g_pGCLocalizationProvider )
@@ -91,7 +91,7 @@ bool CGCLocalizationProvider::BEnsureCleanUTF8Truncation( char *unicodeOutput )
 			bTruncateOK = ( cBytes == 2 );
 		else if ( ( c & 0xE0 ) == 0xC0 ) // first 3 bits are 110, should be 1 following byte
 			bTruncateOK = ( cBytes == 1 );
-			
+
 		// if we truncated in the middle of a multi-byte char, move the end point back to this character
 		if ( !bTruncateOK )
 			unicodeOutput[iPos] = '\0';
@@ -140,7 +140,7 @@ void CGCLocalizationProvider::ConvertUTF8ToLocchar( const char *utf8, locchar_t 
 
 #else
 
-CLocalizationProvider *GLocalizationProvider() 
+CLocalizationProvider *GLocalizationProvider()
 {
 	static CVGUILocalizationProvider g_VGUILocalizationProvider;
 	return &g_VGUILocalizationProvider;

@@ -72,7 +72,7 @@ static void TrimAPITests()
 	CUtlString orig( "  testy  " );
 	CUtlString orig2( "\n \n\ttesty\t\r\n \n\t\r" );
 	CUtlString s;
-	
+
 	s = orig;
 	s.TrimLeft( ' ' );
 	Shipping_Assert( !V_stricmp( s.Get(), "testy  " ) );
@@ -105,7 +105,7 @@ static void OperatorAPITests()
 	// perator = on const char *
 	orig = "different2";
 	Shipping_Assert( !V_stricmp( orig.Get(), "different2" ) );
-	
+
 	orig = orig2;
 	// op ==
 	Shipping_Assert( orig == orig2 );

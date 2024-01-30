@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,7 +27,7 @@ typedef CUtlSortVector< CaptionLookup_t, CCaptionLookupLess > CaptionDictionary_
 struct AsyncCaptionData_t;
 struct AsyncCaption_t
 {
-	AsyncCaption_t() : 
+	AsyncCaption_t() :
 		m_DataBaseFile( UTL_INVAL_SYMBOL ),
 		m_RequestedBlocks( 0, 0, BlockInfo_t::Less )
 	{
@@ -74,7 +74,7 @@ struct AsyncCaption_t
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudCloseCaption : public CHudElement, public vgui::Panel
 {
@@ -103,7 +103,7 @@ public:
 	// Clear all CC data
 	void			Reset( void );
 	void			Process( const wchar_t *stream, float duration, char const *tokenstream, bool fromplayer, bool direct = false );
-	
+
 	bool			ProcessCaption( char const *tokenname, float duration, bool fromplayer = false, bool direct = false );
 	void			ProcessCaptionDirect( char const *tokenname, float duration, bool fromplayer = false );
 
@@ -167,7 +167,7 @@ private:
 
 	static bool CaptionTokenLessFunc( const CaptionRepeat &lhs, const CaptionRepeat &rhs );
 
-	void	DrawStream( wrect_t& rect, wrect_t &rcWindow, CCloseCaptionItem *item, int iFadeLine, float flFadeLineAlpha ); 
+	void	DrawStream( wrect_t& rect, wrect_t &rcWindow, CCloseCaptionItem *item, int iFadeLine, float flFadeLineAlpha );
 	void	ComputeStreamWork( int available_width, CCloseCaptionItem *item );
 	bool	SplitCommand( wchar_t const **ppIn, wchar_t *cmd, wchar_t *args ) const;
 
@@ -181,8 +181,8 @@ private:
 
 	void	DumpWork( CCloseCaptionItem *item );
 
-	void AddWorkUnit( 
-		CCloseCaptionItem *item,	
+	void AddWorkUnit(
+		CCloseCaptionItem *item,
 		WorkUnitParams& params );
 
 	CUtlVector< CCloseCaptionItem * > m_Items;

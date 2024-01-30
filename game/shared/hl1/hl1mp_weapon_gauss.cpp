@@ -56,7 +56,7 @@ class CWeaponGauss : public CBaseHL1MPCombatWeapon
 	DECLARE_CLASS( CWeaponGauss, CBaseHL1MPCombatWeapon );
 public:
 
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponGauss( void );
@@ -133,7 +133,7 @@ CWeaponGauss::CWeaponGauss( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponGauss::Precache( void )
 {
@@ -235,7 +235,7 @@ void CWeaponGauss::SecondaryAttack( void )
 
 		// spin up
 //FIXME		pPlayer->m_iWeaponVolume = GAUSS_PRIMARY_CHARGE_VOLUME;
-		
+
 		SendWeaponAnim( ACT_GAUSS_SPINUP );
 		m_nAttackState = 1;
 		SetWeaponIdleTime( gpGlobals->curtime + 0.5 );
@@ -288,7 +288,7 @@ void CWeaponGauss::SecondaryAttack( void )
 			pPlayer->SetNextAttack( gpGlobals->curtime + 1 );
 			return;
 		}
-		
+
 		if ( gpGlobals->curtime >= pPlayer->m_flAmmoStartCharge )
 		{
 			// don't eat any more ammo after gun is fully charged.
@@ -296,9 +296,9 @@ void CWeaponGauss::SecondaryAttack( void )
 		}
 
 		int pitch = ( gpGlobals->curtime - pPlayer->m_flStartCharge ) * ( 150 / GetFullChargeTime() ) + 100;
-		if ( pitch > 250 ) 
+		if ( pitch > 250 )
 			 pitch = 250;
-		
+
 		// ALERT( at_console, "%d %d %d\n", m_nAttackState, m_iSoundState, pitch );
 
 //		if ( m_iSoundState == 0 )
@@ -310,18 +310,18 @@ void CWeaponGauss::SecondaryAttack( void )
 		}
 
 //FIXME		m_pPlayer->m_iWeaponVolume = GAUSS_PRIMARY_CHARGE_VOLUME;
-		
+
 		// m_flTimeWeaponIdle = gpGlobals->curtime + 0.1;
 		if ( pPlayer->m_flStartCharge < gpGlobals->curtime - 10 )
 		{
 			// Player charged up too long. Zap him.
 			EmitSound( "Weapon_Gauss.Zap1" );
 			EmitSound( "Weapon_Gauss.Zap2" );
-			
+
 			m_nAttackState = 0;
 			SetWeaponIdleTime( gpGlobals->curtime + 1.0 );
 			pPlayer->SetNextAttack( gpGlobals->curtime + 1.0 );
-				
+
 #if !defined(CLIENT_DLL )
 			// Add DMG_CRUSH because we don't want any physics force
 			pPlayer->TakeDamage( CTakeDamageInfo( this, this, 50, DMG_SHOCK | DMG_CRUSH ) );
@@ -331,7 +331,7 @@ void CWeaponGauss::SecondaryAttack( void )
 #endif
 
 			SendWeaponAnim( ACT_VM_IDLE );
-			
+
 			StopSpinSound();
 			// Player may have been killed and this weapon dropped, don't execute any more code after this!
 			return;
@@ -340,15 +340,15 @@ void CWeaponGauss::SecondaryAttack( void )
 }
 
 //=========================================================
-// StartFire- since all of this code has to run and then 
-// call Fire(), it was easier at this point to rip it out 
+// StartFire- since all of this code has to run and then
+// call Fire(), it was easier at this point to rip it out
 // of weaponidle() and make its own function then to try to
-// merge this into Fire(), which has some identical variable names 
+// merge this into Fire(), which has some identical variable names
 //=========================================================
 void CWeaponGauss::StartFire( void )
 {
 	float flDamage;
-	
+
 	CHL1_Player *pPlayer = ToHL1Player( GetOwner() );
 	if ( !pPlayer )
 	{
@@ -417,7 +417,7 @@ void CWeaponGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
 //FIXME	pPlayer->m_iWeaponVolume = GAUSS_PRIMARY_FIRE_VOLUME;
 
 	StopSpinSound();
-	
+
 	pIgnore = pPlayer;
 
 //	ALERT( at_console, "%f %f\n", tr.flFraction, flMaxFrac );
@@ -444,7 +444,7 @@ void CWeaponGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
 		{
 			pPlayer->DoMuzzleFlash();
 			fFirstBeam = false;
-	
+
 			data6.m_vOrigin		= tr.endpos;
 //			data6.m_nEntIndex	= pPlayer->GetViewModel()->entindex();
 #ifdef CLIENT_DLL
@@ -462,7 +462,7 @@ void CWeaponGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
 			data6.m_fFlags		= m_bPrimaryFire;
 			te->DispatchEffect( filter, 0.0, data6.m_vOrigin, "HL1GaussBeamReflect", data6 );
 		}
-		
+
 		bool fShouldDamageEntity = ( pEntity->m_takedamage != DAMAGE_NO );
 
 		if ( fShouldDamageEntity )
@@ -487,7 +487,7 @@ void CWeaponGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
 				// ALERT( at_console, "reflect %f\n", n );
 				// reflect
 				Vector vecReflect;
-			
+
 				vecReflect = 2.0 * tr.plane.normal * n + vecDir;
 				flMaxFrac = flMaxFrac - tr.fraction;
 				vecDir = vecReflect;
@@ -595,7 +595,7 @@ void CWeaponGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
 					//ALERT( at_console, "blocked solid\n" );
 					if ( m_bPrimaryFire )
 					{
-						// slug doesn't punch through ever with primary 
+						// slug doesn't punch through ever with primary
 						// fire, so leave a little glowy bit and make some balls
 						CEffectData	data5;
 						data5.m_vOrigin		= tr.endpos;
@@ -605,7 +605,7 @@ void CWeaponGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
 						CSoundEnt::InsertSound( SOUND_COMBAT, GetAbsOrigin(), 600, 0.5 );
 #endif
 					}
-					
+
 					flDamage = 0;
 				}
 

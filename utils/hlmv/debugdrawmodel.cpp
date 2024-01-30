@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -17,7 +17,7 @@ extern IMaterialSystem *g_pMaterialSystem;
 #define NORMAL_LENGTH .5f
 #define NORMAL_OFFSET_FROM_MESH 0.1f
 
-int DebugDrawModel( IStudioRender *pStudioRender, DrawModelInfo_t& info, 
+int DebugDrawModel( IStudioRender *pStudioRender, DrawModelInfo_t& info,
 	matrix3x4_t *pBoneToWorld, const Vector &modelOrigin, int flags )
 {
 	// Make static so that we aren't reallocating everything all the time.
@@ -40,7 +40,7 @@ int DebugDrawModel( IStudioRender *pStudioRender, DrawModelInfo_t& info,
 
 		pRenderContext->Bind( materialBatch.m_pMaterial );
 		IMesh *pBuildMesh = pRenderContext->GetDynamicMesh( false );
-		meshBuilder.Begin( pBuildMesh, MATERIAL_TRIANGLES, materialBatch.m_Verts.Count(), 
+		meshBuilder.Begin( pBuildMesh, MATERIAL_TRIANGLES, materialBatch.m_Verts.Count(),
 			materialBatch.m_TriListIndices.Count() );
 
 		int vertID;
@@ -90,7 +90,7 @@ int DebugDrawModel( IStudioRender *pStudioRender, DrawModelInfo_t& info,
 	return 0;
 }
 
-int DebugDrawModelNormals( IStudioRender *pStudioRender, DrawModelInfo_t& info, 
+int DebugDrawModelNormals( IStudioRender *pStudioRender, DrawModelInfo_t& info,
 	matrix3x4_t *pBoneToWorld, const Vector &modelOrigin, int flags )
 {
 	// Make static so that we aren't reallocating everything all the time.
@@ -154,7 +154,7 @@ int DebugDrawModelNormals( IStudioRender *pStudioRender, DrawModelInfo_t& info,
 	return 0;
 }
 
-int DebugDrawModelTangentS( IStudioRender *pStudioRender, DrawModelInfo_t& info, 
+int DebugDrawModelTangentS( IStudioRender *pStudioRender, DrawModelInfo_t& info,
 	matrix3x4_t *pBoneToWorld, const Vector &modelOrigin, int flags )
 {
 	// Make static so that we aren't reallocating everything all the time.
@@ -271,7 +271,7 @@ int DebugDrawModelTangentT( IStudioRender *pStudioRender, DrawModelInfo_t& info,
 			}
 
 			Vector skinnedTangentT = CrossProduct( skinnedNormal, skinnedTangentS.AsVector3D() ) * skinnedTangentS.w;
-			
+
 //			skinnedPos += skinnedNormal * NORMAL_OFFSET_FROM_MESH;
 			meshBuilder.Position3fv( &skinnedPos.x );
 			meshBuilder.Color3f( 0.0f, 1.0f, 0.0f );
@@ -292,7 +292,7 @@ int DebugDrawModelTangentT( IStudioRender *pStudioRender, DrawModelInfo_t& info,
 	return 0;
 }
 
-int DebugDrawModelBadVerts( IStudioRender *pStudioRender, DrawModelInfo_t& info, 
+int DebugDrawModelBadVerts( IStudioRender *pStudioRender, DrawModelInfo_t& info,
 	matrix3x4_t *pBoneToWorld, const Vector &modelOrigin, int flags )
 {
 	// Make static so that we aren't reallocating everything all the time.
@@ -315,7 +315,7 @@ int DebugDrawModelBadVerts( IStudioRender *pStudioRender, DrawModelInfo_t& info,
 
 		pRenderContext->Bind( g_materialVertexColor );
 		IMesh *pBuildMesh = pRenderContext->GetDynamicMesh( false );
-		meshBuilder.Begin( pBuildMesh, MATERIAL_TRIANGLES, materialBatch.m_Verts.Count(), 
+		meshBuilder.Begin( pBuildMesh, MATERIAL_TRIANGLES, materialBatch.m_Verts.Count(),
 			materialBatch.m_TriListIndices.Count() );
 
 		int vertID;
@@ -347,7 +347,7 @@ int DebugDrawModelBadVerts( IStudioRender *pStudioRender, DrawModelInfo_t& info,
 			meshBuilder.TexCoord2fv( 0, &vert.m_TexCoord.x );
 			meshBuilder.UserData( &skinnedTangentS.x );
 
-			Vector color( 0.0f, 0.0f, 0.0f );	
+			Vector color( 0.0f, 0.0f, 0.0f );
 			float len;
 
 			// check the length of the tangent S vector.
@@ -392,7 +392,7 @@ int DebugDrawModelBadVerts( IStudioRender *pStudioRender, DrawModelInfo_t& info,
 	return 0;
 }
 
-int DebugDrawModelWireframe( IStudioRender *pStudioRender, DrawModelInfo_t& info, 
+int DebugDrawModelWireframe( IStudioRender *pStudioRender, DrawModelInfo_t& info,
 	matrix3x4_t *pBoneToWorld, const Vector &modelOrigin, const Vector &color, int flags )
 {
 	// Make static so that we aren't reallocating everything all the time.
@@ -415,7 +415,7 @@ int DebugDrawModelWireframe( IStudioRender *pStudioRender, DrawModelInfo_t& info
 
 		pRenderContext->Bind( g_materialWireframeVertexColor );
 		IMesh *pBuildMesh = pRenderContext->GetDynamicMesh( false );
-		meshBuilder.Begin( pBuildMesh, MATERIAL_TRIANGLES, materialBatch.m_Verts.Count(), 
+		meshBuilder.Begin( pBuildMesh, MATERIAL_TRIANGLES, materialBatch.m_Verts.Count(),
 			materialBatch.m_TriListIndices.Count() );
 
 		int vertID;
@@ -466,7 +466,7 @@ int DebugDrawModelWireframe( IStudioRender *pStudioRender, DrawModelInfo_t& info
 	return 0;
 }
 
-int DebugDrawModelBoneWeights( IStudioRender *pStudioRender, DrawModelInfo_t& info, 
+int DebugDrawModelBoneWeights( IStudioRender *pStudioRender, DrawModelInfo_t& info,
 	matrix3x4_t *pBoneToWorld, const Vector &modelOrigin, int flags )
 {
 	// Make static so that we aren't reallocating everything all the time.
@@ -489,7 +489,7 @@ int DebugDrawModelBoneWeights( IStudioRender *pStudioRender, DrawModelInfo_t& in
 
 		pRenderContext->Bind( g_materialVertexColor );
 		IMesh *pBuildMesh = pRenderContext->GetDynamicMesh( false );
-		meshBuilder.Begin( pBuildMesh, MATERIAL_TRIANGLES, materialBatch.m_Verts.Count(), 
+		meshBuilder.Begin( pBuildMesh, MATERIAL_TRIANGLES, materialBatch.m_Verts.Count(),
 			materialBatch.m_TriListIndices.Count() );
 
 		int vertID;
@@ -662,14 +662,14 @@ int DebugDrawModelTexCoord( IStudioRender *pStudioRender, const char *pMaterialN
 	}
 
 	// now draw coverage - show which UV space is used more than once
-#if 0 
+#if 0
 	for( int i = 0; i < batchList.Count(); i++ )
 	{
 		GetTriangles_MaterialBatch_t &materialBatch = tris.m_MaterialBatches[batchList[i]];
 		//pRenderContext->Bind( g_materialWireframeVertexColorNoCull );
 		pRenderContext->Bind( g_materialVertexColorAdditive );
 		IMesh *pBuildMesh = pRenderContext->GetDynamicMesh( false );
-		meshBuilder.Begin( pBuildMesh, MATERIAL_TRIANGLES, materialBatch.m_Verts.Count(), 
+		meshBuilder.Begin( pBuildMesh, MATERIAL_TRIANGLES, materialBatch.m_Verts.Count(),
 			materialBatch.m_TriListIndices.Count() );
 
 		int vertID;
@@ -714,7 +714,7 @@ int DebugDrawModelTexCoord( IStudioRender *pStudioRender, const char *pMaterialN
 
 		pRenderContext->Bind( g_materialWireframeVertexColorNoCull );
 		IMesh *pBuildMesh = pRenderContext->GetDynamicMesh( false );
-		meshBuilder.Begin( pBuildMesh, MATERIAL_TRIANGLES, materialBatch.m_Verts.Count(), 
+		meshBuilder.Begin( pBuildMesh, MATERIAL_TRIANGLES, materialBatch.m_Verts.Count(),
 			materialBatch.m_TriListIndices.Count() );
 
 		// Send the vertices down to the hardware.
@@ -758,4 +758,3 @@ int DebugDrawModelTexCoord( IStudioRender *pStudioRender, const char *pMaterialN
 
 	return 0;
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -97,7 +97,7 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ClientModeHL1Normal::ClientModeHL1Normal()
 {
@@ -159,10 +159,5 @@ IViewPortPanel* CHudViewport::CreatePanelByName( const char *szPanelName )
 		return newpanel;
 	}*/
 
-	return BaseClass::CreatePanelByName( szPanelName ); 
+	return BaseClass::CreatePanelByName( szPanelName );
 }
-
-
-
-
-

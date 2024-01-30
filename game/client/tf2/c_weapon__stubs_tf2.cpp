@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -20,7 +20,7 @@ STUB_WEAPON_CLASS( foo_weapon_select_fire_machinegun, SelectFireMachineGun, C_Ma
 STUB_WEAPON_CLASS( foo_weapon_basebludgeonweapon, BaseBludgeonWeapon, C_BaseCombatWeapon );
 
 STUB_WEAPON_CLASS( cycler_weapon, WeaponCycler, C_BaseCombatWeapon );
- 
+
 STUB_WEAPON_CLASS( weapon_assault_rifle, WeaponAssaultRifle, C_TFMachineGun );
 STUB_WEAPON_CLASS( weapon_laserdesignator, WeaponLaserDesignator, C_BaseTFCombatWeapon );
 STUB_WEAPON_CLASS( weapon_laserrifle, WeaponLaserRifle, C_BaseTFCombatWeapon );

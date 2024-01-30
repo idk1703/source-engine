@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -118,7 +118,7 @@ BEGIN_VS_SHADER( MonitorScreen_DX8,
 				fmt |= VERTEX_COLOR;
 
 			pShaderShadow->VertexShaderVertexFormat( fmt, 1, 0, 0 );
-			
+
 			unlittwotexture_Static_Index vshIndex;
 			pShaderShadow->SetVertexShader( "UnlitTwoTexture", vshIndex.GetIndex() );
 

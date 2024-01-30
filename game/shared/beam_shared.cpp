@@ -70,7 +70,7 @@ bool IsStaticPointEntity( CBaseEntity *pEnt )
 	if ( !pEnt->GetModelIndex() )
 		return 1;
 
-	if ( FClassnameIs( pEnt, "info_target" ) || FClassnameIs( pEnt, "info_landmark" ) || 
+	if ( FClassnameIs( pEnt, "info_target" ) || FClassnameIs( pEnt, "info_landmark" ) ||
 		FClassnameIs( pEnt, "path_corner" ) )
 		return true;
 
@@ -151,12 +151,12 @@ BEGIN_NETWORK_TABLE_NOBASE( CBeam, DT_Beam )
 	SendPropInt		(SENDINFO(m_nNumBeamEnts ),			5,	SPROP_UNSIGNED ),
 	SendPropArray3
 	(
-		SENDINFO_ARRAY3(m_hAttachEntity), 
+		SENDINFO_ARRAY3(m_hAttachEntity),
 		SendPropEHandle( SENDINFO_ARRAY(m_hAttachEntity) )
 	),
 	SendPropArray3
 	(
-		SENDINFO_ARRAY3(m_nAttachIndex), 
+		SENDINFO_ARRAY3(m_nAttachIndex),
 		SendPropInt( SENDINFO_ARRAY(m_nAttachIndex), ATTACHMENT_INDEX_BITS, SPROP_UNSIGNED)
 	),
 	SendPropInt		(SENDINFO(m_nHaloIndex),	16, SPROP_UNSIGNED ),
@@ -195,7 +195,7 @@ BEGIN_NETWORK_TABLE_NOBASE( CBeam, DT_Beam )
 		RECVINFO_ARRAY( m_hAttachEntity ),
 		RecvPropEHandle (RECVINFO(m_hAttachEntity[0]))
 	),
-	RecvPropArray3	
+	RecvPropArray3
 	(
 		RECVINFO_ARRAY( m_nAttachIndex ),
 		RecvPropInt (RECVINFO(m_nAttachIndex[0]))
@@ -285,7 +285,7 @@ END_DATADESC()
 BEGIN_PREDICTION_DATA( CBeam )
 
 	DEFINE_PRED_FIELD( m_nBeamType, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
-	
+
 	DEFINE_PRED_FIELD( m_nNumBeamEnts, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
 	DEFINE_PRED_ARRAY( m_hAttachEntity, FIELD_EHANDLE, MAX_BEAM_ENTS, FTYPEDESC_INSENDTABLE ),
 	DEFINE_PRED_ARRAY( m_nAttachIndex, FIELD_INTEGER, MAX_BEAM_ENTS, FTYPEDESC_INSENDTABLE ),
@@ -310,7 +310,7 @@ BEGIN_PREDICTION_DATA( CBeam )
 #endif
 	DEFINE_PRED_FIELD( m_nModelIndex, FIELD_INTEGER, FTYPEDESC_INSENDTABLE | FTYPEDESC_MODELINDEX ),
 	DEFINE_PRED_FIELD_TOL( m_vecOrigin, FIELD_VECTOR, FTYPEDESC_INSENDTABLE, 0.125f ),
-	
+
 	//DEFINE_PRED_FIELD( m_pMoveParent, SendProxy_MoveParent ),
 	//DEFINE_PRED_FIELD( m_flHDRColorScale, SendProxy_HDRColorScale ),
 
@@ -319,7 +319,7 @@ END_PREDICTION_DATA()
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBeam::CBeam( void )
 {
@@ -344,8 +344,8 @@ CBeam::CBeam( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szModelName - 
+// Purpose:
+// Input  : *szModelName -
 //-----------------------------------------------------------------------------
 void CBeam::SetModel( const char *szModelName )
 {
@@ -382,7 +382,7 @@ void CBeam::Precache( void )
 	{
 		SetStartEntity( GetOwnerEntity() );
 	}
-	
+
 	if ( m_hEndEntity.Get() )
 	{
 		SetEndEntity( m_hEndEntity );
@@ -390,35 +390,35 @@ void CBeam::Precache( void )
 }
 
 
-void CBeam::SetType( int type )		
-{ 
+void CBeam::SetType( int type )
+{
 	Assert( type < NUM_BEAM_TYPES );
 	m_nBeamType = type;
 }
 
-void CBeam::SetBeamFlags( int flags )	
-{ 
+void CBeam::SetBeamFlags( int flags )
+{
 	Assert( flags < (1 << NUM_BEAM_FLAGS) );
 	m_nBeamFlags = flags;
 }
 
-void CBeam::SetBeamFlag( int flag )		
-{ 
+void CBeam::SetBeamFlag( int flag )
+{
 	m_nBeamFlags |= flag;
 }
 
-int CBeam::GetType( void ) const 
-{ 
+int CBeam::GetType( void ) const
+{
 	return m_nBeamType;
 }
 
 int CBeam::GetBeamFlags( void ) const
-{ 
+{
 	return m_nBeamFlags;
 }
 
 void CBeam::SetStartEntity( CBaseEntity *pEntity )
-{ 
+{
 	Assert( m_nNumBeamEnts >= 2 );
 	m_hAttachEntity.Set( 0, pEntity );
 	SetOwnerEntity( pEntity );
@@ -426,8 +426,8 @@ void CBeam::SetStartEntity( CBaseEntity *pEntity )
 	pEntity->AddEFlags( EFL_FORCE_CHECK_TRANSMIT );
 }
 
-void CBeam::SetEndEntity( CBaseEntity *pEntity ) 
-{ 
+void CBeam::SetEndEntity( CBaseEntity *pEntity )
+{
 	Assert( m_nNumBeamEnts >= 2 );
 	m_hAttachEntity.Set( m_nNumBeamEnts-1, pEntity );
 	m_hEndEntity = pEntity;
@@ -490,7 +490,7 @@ const Vector &CBeam::GetAbsStartPos( void ) const
 
 const Vector &CBeam::GetAbsEndPos( void ) const
 {
-	if ( GetType() != BEAM_POINTS && GetType() != BEAM_HOSE && GetEndEntity() ) 
+	if ( GetType() != BEAM_POINTS && GetType() != BEAM_HOSE && GetEndEntity() )
 	{
 		edict_t *pent =  engine->PEntityOfEntIndex( GetEndEntity() );
 		CBaseEntity *ent = CBaseEntity::Instance( pent );
@@ -515,7 +515,7 @@ const Vector &CBeam::GetAbsEndPos( void ) const
 const Vector &C_Beam::GetAbsStartPos( void ) const
 {
 	static Vector vecStartAbsPosition;
-	if ( GetType() != BEAM_POINTS && GetType() != BEAM_HOSE ) 
+	if ( GetType() != BEAM_POINTS && GetType() != BEAM_HOSE )
 	{
 		if (ComputeBeamEntPosition( m_hAttachEntity[0], m_nAttachIndex[0], false, vecStartAbsPosition ))
 			return vecStartAbsPosition;
@@ -528,7 +528,7 @@ const Vector &C_Beam::GetAbsStartPos( void ) const
 const Vector &C_Beam::GetAbsEndPos( void ) const
 {
 	static Vector vecEndAbsPosition;
-	if ( GetType() != BEAM_POINTS && GetType() != BEAM_HOSE ) 
+	if ( GetType() != BEAM_POINTS && GetType() != BEAM_HOSE )
 	{
 		if (ComputeBeamEntPosition( m_hAttachEntity[m_nNumBeamEnts-1], m_nAttachIndex[m_nNumBeamEnts-1], false, vecEndAbsPosition ))
 			return vecEndAbsPosition;
@@ -553,10 +553,10 @@ CBeam *CBeam::BeamCreate( const char *pSpriteName, float width )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pSpriteName - 
-//			&origin - 
-//			animate - 
+// Purpose:
+// Input  : *pSpriteName -
+//			&origin -
+//			animate -
 // Output : CSprite
 //-----------------------------------------------------------------------------
 CBeam *CBeam::BeamCreatePredictable( const char *module, int line, bool persist, const char *pSpriteName, float width, CBasePlayer *pOwner )
@@ -672,7 +672,7 @@ void CBeam::SplineInit( int nNumEnts, CBaseEntity** pEntList, int *attachment )
 
 	for (int i=0;i<nNumEnts;i++)
 	{
-		m_hAttachEntity.Set( i, pEntList[i] ); 
+		m_hAttachEntity.Set( i, pEntList[i] );
 		m_nAttachIndex.Set( i, attachment[i] );
 	}
 	m_nNumBeamEnts = nNumEnts;
@@ -693,9 +693,9 @@ void CBeam::RelinkBeam( void )
 
 #ifdef PORTAL
 	CBaseEntity *pStartEntity = GetStartEntityPtr();
-	
+
 	CTraceFilterSkipClassname traceFilter( pStartEntity, "prop_energy_ball", COLLISION_GROUP_NONE );
-	
+
 	ITraceFilter *pEntityBeamTraceFilter = NULL;
 	if ( pStartEntity )
 		pEntityBeamTraceFilter = pStartEntity->GetBeamTraceFilter();
@@ -764,7 +764,7 @@ void CBeam::DoSparks( const Vector &start, const Vector &end )
 
 //-----------------------------------------------------------------------------
 // Purpose: Damages anything in the beam.
-// Input  : ptr - 
+// Input  : ptr -
 //-----------------------------------------------------------------------------
 void CBeam::BeamDamage( trace_t *ptr )
 {
@@ -787,7 +787,7 @@ void CBeam::BeamDamage( trace_t *ptr )
 			}
 			else if ( m_nDissolveType > 0 )
 			{
-				nDamageType = DMG_DISSOLVE | DMG_SHOCK; 
+				nDamageType = DMG_DISSOLVE | DMG_SHOCK;
 			}
 #endif
 
@@ -809,7 +809,7 @@ void CBeam::BeamDamage( trace_t *ptr )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBeam::TurnOn( void )
 {
@@ -817,7 +817,7 @@ void CBeam::TurnOn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBeam::TurnOff( void )
 {
@@ -875,7 +875,7 @@ void CBeam::SetTransmit( CCheckTransmitInfo *pInfo, bool bAlways )
 		return;
 
 	BaseClass::SetTransmit( pInfo, bAlways );
-	
+
 	// Force our attached entities to go too...
 	for ( int i=0; i < MAX_BEAM_ENTS; ++i )
 	{
@@ -910,7 +910,7 @@ int CBeam::DrawDebugTextOverlays(void)
 {
 #if !defined( CLIENT_DLL )
 	int text_offset = BaseClass::DrawDebugTextOverlays();
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		// Print state
 		char tempstr[512];
@@ -922,7 +922,7 @@ int CBeam::DrawDebugTextOverlays(void)
 		EntityText(text_offset,tempstr,0);
 		text_offset++;
 	}
-	
+
 	return text_offset;
 #else
 	return 0;
@@ -931,9 +931,9 @@ int CBeam::DrawDebugTextOverlays(void)
 
 #if defined( CLIENT_DLL )
 
-// Purpose: 
-// Input  : isbeingremoved - 
-//			*predicted - 
+// Purpose:
+// Input  : isbeingremoved -
+//			*predicted -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBeam::OnPredictedEntityRemove( bool isbeingremoved, C_BaseEntity *predicted )
@@ -975,14 +975,14 @@ int CBeam::DrawModel( int flags )
 		return 0;
 
 #ifdef PORTAL
-	if ( ( !g_pPortalRender->IsRenderingPortal() && !m_bDrawInMainRender ) || 
+	if ( ( !g_pPortalRender->IsRenderingPortal() && !m_bDrawInMainRender ) ||
 		( g_pPortalRender->IsRenderingPortal() && !m_bDrawInPortalRender ) )
 	{
 		return 0;
 	}
 #endif //#ifdef PORTAL
 
-	// Tracker 16432:  If rendering a savegame screenshot don't draw beams 
+	// Tracker 16432:  If rendering a savegame screenshot don't draw beams
 	//   who have viewmodels as their attached entity
 	if ( g_bRenderingScreenshot || !r_drawviewmodel.GetBool() )
 	{
@@ -1056,7 +1056,7 @@ bool CBeam::ShouldDraw()
 //-----------------------------------------------------------------------------
 void CBeam::AddEntity( void )
 {
-	// If set to invisible, skip. Do this before resetting the entity pointer so it has 
+	// If set to invisible, skip. Do this before resetting the entity pointer so it has
 	// valid data to decide whether it's visible.
 	if ( !ShouldDraw() )
 	{
@@ -1129,11 +1129,11 @@ void CBeam::ComputeBounds( Vector& mins, Vector& maxs )
 
 						mins = mins.Min( attMins );
 						mins = mins.Min( attMaxs );
-						
+
 						maxs = maxs.Max( attMins );
 						maxs = maxs.Max( attMaxs );
 					}
-					
+
 					//ASSERT_COORD( mins );
 					//ASSERT_COORD( maxs );
 				}

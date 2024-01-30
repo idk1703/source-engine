@@ -58,7 +58,7 @@ ConVar striderbuster_use_particle_flare( "striderbuster_use_particle_flare", "1"
 
 string_t g_iszVehicle;
 
-#define BUSTER_PING_SOUND_FREQ		3.0f	// How often (seconds) to issue the ping sound to remind players we are attached 
+#define BUSTER_PING_SOUND_FREQ		3.0f	// How often (seconds) to issue the ping sound to remind players we are attached
 
 static const char *s_pBusterPingThinkContext = "BusterPing";
 
@@ -179,19 +179,19 @@ BEGIN_DATADESC( CWeaponStriderBuster )
 	DEFINE_PHYSPTR( m_pConstraint ),
 
 	DEFINE_INPUTFUNC( FIELD_VOID, "ConstraintBroken", InputConstraintBroken ),
-	
+
 	DEFINE_OUTPUT( m_OnAttachToStrider, "OnAttachToStrider" ),
 	DEFINE_OUTPUT( m_OnDetonate, "OnDetonate" ),
 	DEFINE_OUTPUT( m_OnShatter, "OnShatter" ),
 	DEFINE_OUTPUT( m_OnShotDown, "OnShotDown" ),
-		
+
 	DEFINE_ENTITYFUNC( BusterTouch ),
 	DEFINE_THINKFUNC( BusterFlyThink ),
 	DEFINE_THINKFUNC( BusterDetachThink ),
 	DEFINE_THINKFUNC( BusterPingThink ),
 END_DATADESC()
 
-CWeaponStriderBuster::CWeaponStriderBuster( void ) : 
+CWeaponStriderBuster::CWeaponStriderBuster( void ) :
 	m_pConstraint( NULL ),
 	m_flCollisionSpeedSqr( -1.0f ),
 	m_hConstrainedEntity( NULL ),
@@ -200,7 +200,7 @@ CWeaponStriderBuster::CWeaponStriderBuster( void ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponStriderBuster::Precache( void )
 {
@@ -231,13 +231,13 @@ void CWeaponStriderBuster::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponStriderBuster::Spawn( void )
-{	
+{
 	SetModelName( AllocPooledString("models/magnusson_device.mdl") );
 	BaseClass::Spawn();
-	
+
 	// Setup for being shot by the player
 	m_takedamage = DAMAGE_EVENTS_ONLY;
 
@@ -261,21 +261,21 @@ void CWeaponStriderBuster::Spawn( void )
 	}
 
 	SetHealth( striderbuster_health.GetFloat() );
-	
+
 	SetNextThink(gpGlobals->curtime + 0.01f);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponStriderBuster::Activate( void )
-{	
+{
 	g_iszVehicle = AllocPooledString( "prop_vehicle_jeep" );
 	BaseClass::Activate();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponStriderBuster::OnRestore( void )
 {
@@ -301,13 +301,13 @@ void CWeaponStriderBuster::OnRestore( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponStriderBuster::DestroyConstraint( void )
 {
 	// Destroy the constraint
 	if ( m_pConstraint != NULL )
-	{ 
+	{
 		physenv->DestroyConstraint( m_pConstraint );
 		m_pConstraint = NULL;
 	}
@@ -389,8 +389,8 @@ void CWeaponStriderBuster::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
+// Purpose:
+// Input  : *pEntity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponStriderBuster::ShouldStickToEntity( CBaseEntity *pEntity )
@@ -454,7 +454,7 @@ bool CWeaponStriderBuster::StickToEntity( CBaseEntity *pOther )
 
 				// Make a sound
 				EmitSound( "Weapon_StriderBuster.StickToEntity" );
-				
+
 				DispatchParticleEffect( "striderbuster_attach", GetAbsOrigin(), GetAbsAngles(), NULL );
 
 				if( striderbuster_use_particle_flare.GetBool() )
@@ -462,7 +462,7 @@ bool CWeaponStriderBuster::StickToEntity( CBaseEntity *pOther )
 					// We don't have to save any pointers or handles to this because it's parented to the buster.
 					// So it will die when the buster dies. Yay.
 					CParticleSystem *pFlare = (CParticleSystem *) CreateEntityByName( "info_particle_system" );
-					
+
 					if ( pFlare != NULL )
 					{
 						pFlare->KeyValue( "start_active", "1" );
@@ -501,12 +501,12 @@ bool CWeaponStriderBuster::StickToEntity( CBaseEntity *pOther )
 
 				// Notify the strider we're attaching to him
 				pStrider->StriderBusterAttached( this );
-				
+
 				m_OnAttachToStrider.FireOutput( this, this );
 
 				// Start the ping sound.
 				SetContextThink( &CWeaponStriderBuster::BusterPingThink, gpGlobals->curtime + BUSTER_PING_SOUND_FREQ, s_pBusterPingThinkContext );
-				
+
 				// Don't autodelete this one!
 				WeaponManager_RemoveManaged( this );
 
@@ -528,14 +528,14 @@ void CWeaponStriderBuster::CreateDestroyedEffect( void )
 	CBaseEntity *pTrail;
 
 	StopParticleEffects( this );
-	
+
 	for ( int i = 0; i < 3; i++ )
 	{
 		pTrail = CreateEntityByName( "sparktrail" );
 		pTrail->SetOwnerEntity( this );
 		DispatchSpawn( pTrail );
 	}
-	
+
 	DispatchParticleEffect( "striderbuster_explode_core", GetAbsOrigin(), GetAbsAngles() );
 
 	// Create liquid fountain gushtacular effect here!
@@ -626,7 +626,7 @@ void CWeaponStriderBuster::BusterTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline bool CWeaponStriderBuster::IsAttachedToStrider( void ) const
 {
@@ -638,7 +638,7 @@ inline bool CWeaponStriderBuster::IsAttachedToStrider( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponStriderBuster::Detonate( void )
 {
@@ -653,7 +653,7 @@ void CWeaponStriderBuster::Detonate( void )
 		gamestats->Event_WeaponHit( ToBasePlayer( pPlayer ), true, GetClassname(), info );
 
 		// Tracker 62293:  There's a bug where the inflictor/attacker are reversed when calling TakeDamage above so the player never gets
-		//  credit for the strider buster kills.  The code has a bunch of assumptions lower level, so it's safer to just fix it here by 
+		//  credit for the strider buster kills.  The code has a bunch of assumptions lower level, so it's safer to just fix it here by
 		//  crediting a kill to the player directly.
 		gamestats->Event_PlayerKilledOther( pPlayer, pVictim, info );
 	}
@@ -678,7 +678,7 @@ void CWeaponStriderBuster::Detonate( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Intercept damage and decide whether or not we want to trigger
-// Input  : &info - 
+// Input  : &info -
 //-----------------------------------------------------------------------------
 int CWeaponStriderBuster::OnTakeDamage( const CTakeDamageInfo &info )
 {
@@ -771,7 +771,7 @@ int CWeaponStriderBuster::OnTakeDamage( const CTakeDamageInfo &info )
 			return 1;
 		}
 	}
-	
+
 	// Allow crushing damage
 	if ( info.GetDamageType() & DMG_CRUSH )
 		return BaseClass::OnTakeDamage( info );
@@ -794,7 +794,7 @@ void CWeaponStriderBuster::OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPi
 	{
 		Launch( pPhysGunUser );
 	}
-	
+
 	BaseClass::OnPhysGunPickup( pPhysGunUser, reason );
 }
 
@@ -860,12 +860,12 @@ void CWeaponStriderBuster::Launch( CBasePlayer *pPhysGunUser )
 
 	gamestats->Event_WeaponFired( pPhysGunUser, true, GetClassname() );
 }
-		
+
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &forward - 
-//			flMass - 
+// Purpose:
+// Input  : &forward -
+//			flMass -
 // Output : Vector
 //-----------------------------------------------------------------------------
 Vector CWeaponStriderBuster::PhysGunLaunchVelocity( const Vector &forward, float flMass )
@@ -874,7 +874,7 @@ Vector CWeaponStriderBuster::PhysGunLaunchVelocity( const Vector &forward, float
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponStriderBuster::Shatter( CBaseEntity *pAttacker )
 {
@@ -885,7 +885,7 @@ void CWeaponStriderBuster::Shatter( CBaseEntity *pAttacker )
 
 	if( !IsAttachedToStrider() )
 	{
-		// Don't display this particular effect if we're attached to a strider. This effect just gets lost 
+		// Don't display this particular effect if we're attached to a strider. This effect just gets lost
 		// in the big strider explosion anyway, so let's recover some perf.
 		DispatchParticleEffect( "striderbuster_break", GetAbsOrigin(), GetAbsAngles() );
 	}
@@ -919,7 +919,7 @@ void CWeaponStriderBuster::BusterFlyThink()
 		return;
 	}
 
-	// seek?	
+	// seek?
 	const float magradius = 38.0 * sk_striderbuster_magnet_multiplier.GetFloat(); // radius of strider hull times multiplier
 	if (magradius > 0 &&
 		GetMoveType() == MOVETYPE_VPHYSICS &&
@@ -934,16 +934,16 @@ void CWeaponStriderBuster::BusterFlyThink()
 		int count;
 		{
 			Vector mins,maxs;
-			mins = origin; 
+			mins = origin;
 			mins -= magradius;
-			
-			maxs = origin; 
+
+			maxs = origin;
 			maxs += magradius;
 
-			count = UTIL_EntitiesInBox(pList, 16, mins, maxs, FL_NPC); 
+			count = UTIL_EntitiesInBox(pList, 16, mins, maxs, FL_NPC);
 		}
 
-		float magradiusSq = Square( magradius );	
+		float magradiusSq = Square( magradius );
 		float nearestDistSq = magradiusSq + 1;
 		int bestFit = -1;
 		Vector toTarget; // will be garbage unless something good is found
@@ -976,10 +976,10 @@ void CWeaponStriderBuster::BusterFlyThink()
 				NDebugOverlay::Cross3D( GetAbsOrigin() + toTarget, magradius, 255, 255, 255, true, .1 );
 			}
 
-			// force magnitude. 
+			// force magnitude.
 			float magnitude = GetMass() * striderbuster_magnetic_force_strider.GetFloat();
 			int falloff = striderbuster_falloff_power.GetInt();
-			switch (falloff) 
+			switch (falloff)
 			{
 			case 1:
 				VPhysicsGetObject()->ApplyForceCenter( toTarget * (magnitude / nearestDistSq) ); // dividing through by distance squared normalizes toTarget and gives a linear falloff
@@ -1008,7 +1008,7 @@ void CWeaponStriderBuster::BusterFlyThink()
 				}
 				break;
 			default: // arbitrary powers
-				VPhysicsGetObject()->ApplyForceCenter( toTarget * (magnitude * powf(nearestDistSq,(falloff+1.0f)/2)) );  // square root for distance instead of squared, add one to normalize toTarget 
+				VPhysicsGetObject()->ApplyForceCenter( toTarget * (magnitude * powf(nearestDistSq,(falloff+1.0f)/2)) );  // square root for distance instead of squared, add one to normalize toTarget
 				break;
 			}
 		}

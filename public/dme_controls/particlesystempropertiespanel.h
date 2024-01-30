@@ -48,7 +48,7 @@ class CParticleSystemPropertiesPanel : public vgui::EditablePanel
 
 	// Sends the message 'ParticleSystemModified' when the particle system was modified in any way
 	// Sends the message 'ParticleFunctionSelChanged' when the selected particle function changed
-	//	-- stores the selected CDmeParticleFunction in a subkey called 'function' 
+	//	-- stores the selected CDmeParticleFunction in a subkey called 'function'
 
 public:
 	CParticleSystemPropertiesPanel( IParticleSystemPropertiesPanelQuery *pQuery, vgui::Panel* pParent );   // standard constructor
@@ -63,7 +63,7 @@ private:
 	// For inheriting classes to get notified without having to listen to messages
 	virtual void OnParticleSystemModified() {}
 
-	MESSAGE_FUNC( OnTextChanged, "TextChanged" );	
+	MESSAGE_FUNC( OnTextChanged, "TextChanged" );
 	MESSAGE_FUNC_PARAMS( OnDmeElementChanged, "DmeElementChanged", params );
 	MESSAGE_FUNC( OnParticleSystemModifiedInternal, "ParticleSystemModified" );
 	MESSAGE_FUNC_PARAMS( OnParticleFunctionSelChanged, "ParticleFunctionSelChanged", params );

@@ -25,7 +25,7 @@
 
 using namespace vgui;
 
-	
+
 //-----------------------------------------------------------------------------
 // Sort by target name
 //-----------------------------------------------------------------------------
@@ -145,11 +145,11 @@ void CCommentaryNodeBrowserPanel::OnDeleteEntities(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommentaryNodeBrowserPanel::OnKeyCodeTyped( vgui::KeyCode code )
 {
-	if ( code == KEY_DELETE ) 
+	if ( code == KEY_DELETE )
 	{
 		OnDeleteEntities();
 	}
@@ -161,7 +161,7 @@ void CCommentaryNodeBrowserPanel::OnKeyCodeTyped( vgui::KeyCode code )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommentaryNodeBrowserPanel::OnItemSelected( void )
 {
@@ -187,7 +187,7 @@ void CCommentaryNodeBrowserPanel::SelectNode( CDmeCommentaryNodeEntity *pNode )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Called when buttons are clicked
 //-----------------------------------------------------------------------------
@@ -196,7 +196,7 @@ void CCommentaryNodeBrowserPanel::OnCommand( const char *pCommand )
 	if ( !Q_stricmp( pCommand, "delete" ) )
 	{
 		// Confirm we want to do it
-		MessageBox *pConfirm = new MessageBox( "#CommEditDeleteObjects", "#CommEditDeleteObjectsMsg", g_pCommEditTool->GetRootPanel() ); 
+		MessageBox *pConfirm = new MessageBox( "#CommEditDeleteObjects", "#CommEditDeleteObjectsMsg", g_pCommEditTool->GetRootPanel() );
 		pConfirm->AddActionSignalTarget( this );
 		pConfirm->SetOKButtonText( "Yes" );
 		pConfirm->SetCommand( new KeyValues( "DeleteEntities" ) );
@@ -241,7 +241,7 @@ void CCommentaryNodeBrowserPanel::OnCommand( const char *pCommand )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommentaryNodeBrowserPanel::UpdateEntityList(void)
 {
@@ -266,7 +266,7 @@ void CCommentaryNodeBrowserPanel::UpdateEntityList(void)
 		}
 
 		KeyValues *kv = new KeyValues( "node" );
-		kv->SetString( "classname", pClassName ); 
+		kv->SetString( "classname", pClassName );
 		kv->SetPtr( "entity", pEntity );
 
 		const char *pTargetname = pEntity->GetValueString( "targetname" );
@@ -274,10 +274,9 @@ void CCommentaryNodeBrowserPanel::UpdateEntityList(void)
 		{
 			pTargetname = "<no targetname>";
 		}
-		kv->SetString( "targetname", pTargetname ); 
+		kv->SetString( "targetname", pTargetname );
 
 		m_pEntities->AddItem( kv, 0, false, false );
 	}
 	m_pEntities->SortList();
 }
-

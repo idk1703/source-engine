@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -12,7 +12,7 @@
 
 
 #define MCV_SELECTION_MODEL			"models/objects/obj_resupply.mdl"
-#define MCV_SELECTION_SCREEN_NAME	"screen_mcv_selection_panel"  
+#define MCV_SELECTION_SCREEN_NAME	"screen_mcv_selection_panel"
 
 
 class CObjMCVSelectionPanel : public CBaseObject
@@ -55,7 +55,7 @@ void SendProxy_TeleportStationElement( const SendProp *pProp, const void *pStruc
 	// Get the EHANDLE.
 	EHANDLE hEnt;
 	hEnt = CVehicleTeleportStation::GetDeployedTeleportStation( iElement );
-	
+
 	// Use the standard ehandle-encoding SendProxy to encode it.
 	SendProxy_EHandleToInt( pProp, pStructBase, &hEnt, pOut, iElement, objectID );
 }
@@ -67,7 +67,7 @@ void SignalChangeInMCVSelectionPanels()
 
 
 IMPLEMENT_SERVERCLASS_ST( CObjMCVSelectionPanel, DT_MCVSelectionPanel )
-	SendPropVirtualArray( 
+	SendPropVirtualArray(
 		SendProxy_TeleportStationCount,
 		32, // max # elements we'd ever send
 		SendPropEHandle( "teleport_station_element", 0, 0, 0, SendProxy_TeleportStationElement ),
@@ -135,4 +135,3 @@ void CObjMCVSelectionPanel::SetTransmit( CCheckTransmitInfo *pInfo, bool bAlways
 		CVehicleTeleportStation::GetDeployedTeleportStation( i )->SetTransmit( pInfo, bAlways );
 	}
 }
-

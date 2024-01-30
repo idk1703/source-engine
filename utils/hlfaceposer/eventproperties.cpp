@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ void CBaseEventPropertiesDialog::PopulateTagList( CEventParams *params )
 	HWND control = GetControl( IDC_TAGS );
 	if ( control )
 	{
-		SendMessage( control, CB_RESETCONTENT, 0, 0 ); 
+		SendMessage( control, CB_RESETCONTENT, 0, 0 );
 		SendMessage( control, WM_SETTEXT , 0, (LPARAM)va( "\"%s\" \"%s\"", params->m_szTagName, params->m_szTagWav ) );
 
 		for ( int i = 0; i < scene->GetNumActors(); i++ )
@@ -72,7 +72,7 @@ void CBaseEventPropertiesDialog::PopulateTagList( CEventParams *params )
 						if ( !tag )
 							continue;
 
-						SendMessage( control, CB_ADDSTRING, 0, (LPARAM)va( "\"%s\" \"%s\"", tag->GetName(), e->GetParameters() ) ); 
+						SendMessage( control, CB_ADDSTRING, 0, (LPARAM)va( "\"%s\" \"%s\"", tag->GetName(), e->GetParameters() ) );
 					}
 				}
 			}
@@ -182,11 +182,11 @@ void CMapEntities::CheckUpdateMap( char const *mapname )
 
 	// Check the header
 	if ( header.ident != IDBSPHEADER ||
-		 header.version < MINBSPVERSION || header.version > BSPVERSION )
+		header.version < MINBSPVERSION || header.version > BSPVERSION )
 	{
 		Con_ErrorPrintf( "BSP file %s is wrong version (%i), expected (%i)\n",
 			mapname,
-			header.version, 
+			header.version,
 			BSPVERSION );
 
 		filesystem->Close( hfile );
@@ -226,7 +226,7 @@ void CMapEntities::CheckUpdateMap( char const *mapname )
 
 		if (Q_stricmp (token, "{") )
 			Error ("ParseEntity: { not found");
-		
+
 		char name[ 256 ];
 		char origin[ 256 ];
 		char angles[ 256 ];
@@ -280,7 +280,7 @@ void CMapEntities::CheckUpdateMap( char const *mapname )
 			if ( FindNamedEntity( name ) == - 1 )
 			{
 				CMapEntityData ent;
-				
+
 				float org[3];
 				if ( origin[ 0 ] )
 				{
@@ -364,18 +364,18 @@ void CBaseEventPropertiesDialog::InitControlData( CEventParams *params )
 	SetDlgItemText( m_hDialog, IDC_STARTTIME, va( "%f", params->m_flStartTime ) );
 	SetDlgItemText( m_hDialog, IDC_ENDTIME, va( "%f", params->m_flEndTime ) );
 
-	SendMessage( GetControl( IDC_CHECK_ENDTIME ), BM_SETCHECK, 
+	SendMessage( GetControl( IDC_CHECK_ENDTIME ), BM_SETCHECK,
 		( WPARAM ) params->m_bHasEndTime ? BST_CHECKED : BST_UNCHECKED,
 		( LPARAM )0 );
 
 	if ( GetControl( IDC_CHECK_RESUMECONDITION ) != (HWND)0 )
 	{
-		SendMessage( GetControl( IDC_CHECK_RESUMECONDITION ), BM_SETCHECK, 
+		SendMessage( GetControl( IDC_CHECK_RESUMECONDITION ), BM_SETCHECK,
 			( WPARAM ) params->m_bResumeCondition ? BST_CHECKED : BST_UNCHECKED,
 			( LPARAM )0 );
 	}
-	
-	SendMessage( GetControl( IDC_CHECK_DISABLED ), BM_SETCHECK, 
+
+	SendMessage( GetControl( IDC_CHECK_DISABLED ), BM_SETCHECK,
 		( WPARAM ) params->m_bDisabled ? BST_CHECKED : BST_UNCHECKED,
 		( LPARAM )0 );
 
@@ -389,7 +389,7 @@ BOOL CBaseEventPropertiesDialog::InternalHandleMessage( CEventParams *params, HW
 	{
 	default:
 		break;
-    case WM_COMMAND:
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		default:
@@ -450,7 +450,7 @@ void CBaseEventPropertiesDialog::PopulateNamedActorList( HWND wnd, CEventParams 
 		char const *name = m_SortedNames[ i ];
 		if ( name && name[ 0 ] )
 		{
-			SendMessage( wnd, CB_ADDSTRING, 0, (LPARAM)name ); 
+			SendMessage( wnd, CB_ADDSTRING, 0, (LPARAM)name );
 		}
 
 		i = m_SortedNames.NextInorder( i );
@@ -481,9 +481,9 @@ void CBaseEventPropertiesDialog::PopulateNamedActorList( HWND wnd, CEventParams 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wnd - 
-//			*params - 
+// Purpose:
+// Input  : wnd -
+//			*params -
 // Output : static void
 //-----------------------------------------------------------------------------
 void CBaseEventPropertiesDialog::ParseTags( CEventParams *params )
@@ -532,9 +532,9 @@ void CBaseEventPropertiesDialog::ParseTags( CEventParams *params )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wnd - 
-//			*params - 
+// Purpose:
+// Input  : wnd -
+//			*params -
 // Output : static void
 //-----------------------------------------------------------------------------
 void CBaseEventPropertiesDialog::UpdateTagRadioButtons( CEventParams *params )
@@ -613,9 +613,9 @@ void CBaseEventPropertiesDialog::DrawSpline( HDC hdc, HWND placeholder, CChoreoE
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int EventProperties( CEventParams *params )

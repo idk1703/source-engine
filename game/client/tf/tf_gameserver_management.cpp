@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -150,7 +150,7 @@ public:
 		{
 			Msg( "Failed to reset game server account identity--check to make sure the game server account id is correct!\n" );
 		}
-		
+
 		return true;
 	}
 };

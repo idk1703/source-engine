@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -96,7 +96,7 @@ BEGIN_VS_SHADER( Refract_DX90, "Help for Refract" )
 	{
 		Refract_DX9_Vars_t info;
 		SetupVars( info );
-		
+
 		// If ( snapshotting ) or ( we need to draw this frame )
 		bool bHasFlashlight = this->UsingFlashlight( params );
 		if ( ( pShaderShadow != NULL ) || ( bHasFlashlight == false ) )

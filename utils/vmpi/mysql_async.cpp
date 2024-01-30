@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -21,7 +21,7 @@ static char* CopyString( const char *pStr )
 class CMySQLAsync : public IMySQLAsync
 {
 public:
-	
+
 	CMySQLAsync()
 	{
 		m_hThread = NULL;
@@ -31,7 +31,7 @@ public:
 																// resetting the event if it gets set.
 		m_hPendingQueryEvent = CreateEvent( NULL, false, false, NULL );
 		m_hQueryResultsEvent = CreateEvent( NULL, false, false, NULL );
-		
+
 		InitializeCriticalSection( &m_ExecuteQueryCS );
 		InitializeCriticalSection( &m_PendingQueryCS );
 	}
@@ -39,7 +39,7 @@ public:
 	~CMySQLAsync()
 	{
 		Term();
-		
+
 		CloseHandle( m_hExitEvent );
 		CloseHandle( m_hPendingQueryEvent );
 		CloseHandle( m_hQueryResultsEvent );
@@ -56,7 +56,7 @@ public:
 	virtual IMySQLRowSet* ExecuteBlocking( const char *pStr )
 	{
 		IMySQLRowSet *pRet;
-		
+
 		EnterCriticalSection( &m_ExecuteQueryCS );
 			m_pSQL->Execute( pStr );
 			pRet = m_pSQL->DuplicateRowSet();
@@ -79,7 +79,7 @@ public:
 
 		LeaveCriticalSection( &m_PendingQueryCS );
 	}
-	
+
 	virtual bool GetNextResults( CQueryResults &results )
 	{
 		results.m_pResults = NULL;
@@ -87,7 +87,7 @@ public:
 		if ( WaitForSingleObject( m_hQueryResultsEvent, 0 ) == WAIT_OBJECT_0 )
 		{
 			EnterCriticalSection( &m_PendingQueryCS );
-			
+
 				Assert( m_QueryResults.Count() > 0 );
 				int iHead = m_QueryResults.Head();
 				results = m_QueryResults[iHead];
@@ -95,7 +95,7 @@ public:
 
 				if ( m_QueryResults.Count() > 0 )
 					SetEvent( m_hQueryResultsEvent );
-			
+
 			LeaveCriticalSection( &m_PendingQueryCS );
 			return true;
 		}
@@ -112,7 +112,7 @@ public:
 		DWORD dwThreadID;
 		m_hThread = CreateThread( NULL, 0, &CMySQLAsync::StaticThreadFn, this, 0, &dwThreadID );
 		if ( m_hThread )
-		{										
+		{
 			m_pSQL = pSQL;
 			return true;
 		}
@@ -140,7 +140,7 @@ public:
 			delete [] m_PendingQueries[iPendingQuery].m_pStr;
 		}
 		m_PendingQueries.Purge();
-		
+
 		FOR_EACH_LL( m_QueryResults, i )
 		{
 			m_QueryResults[i].m_pResults->Release();
@@ -161,7 +161,7 @@ private:
 	{
 		HANDLE hEvents[2] = { m_hExitEvent, m_hPendingQueryEvent };
 
-		// 
+		//
 		while ( 1 )
 		{
 			int ret = WaitForMultipleObjects( ARRAYSIZE( hEvents ), hEvents, false, INFINITE );
@@ -172,20 +172,20 @@ private:
 			{
 				// A new string has been queued up for us to execute.
 				EnterCriticalSection( &m_PendingQueryCS );
-					
+
 					Assert( m_PendingQueries.Count() > 0 );
 					int iHead = m_PendingQueries.Head();
-					
+
 					CPendingQuery pending = m_PendingQueries[iHead];
 					m_PendingQueries.Remove( iHead );
 
 					// Set the pending query event if there are more queries waiting to run.
 					if ( m_PendingQueries.Count() > 0 )
 						SetEvent( m_hPendingQueryEvent );
-					
+
 				LeaveCriticalSection( &m_PendingQueryCS );
 
-							
+
 				// Run the query.
 				EnterCriticalSection( &m_ExecuteQueryCS );
 
@@ -195,12 +195,12 @@ private:
 					results.m_ExecuteTime.Init();
 					pending.m_Timer.End();
 					results.m_QueueTime = pending.m_Timer.GetDuration();
-					
+
 					CFastTimer executeTimer;
 					executeTimer.Start();
 
 					if ( m_pSQL->Execute( pending.m_pStr ) == 0 )
-					{			
+					{
 						executeTimer.End();
 						results.m_ExecuteTime = executeTimer.GetDuration();
 						results.m_pResults = m_pSQL->DuplicateRowSet();
@@ -220,7 +220,7 @@ private:
 				LeaveCriticalSection( &m_PendingQueryCS );
 			}
 		}
-		
+
 		return 0;
 	}
 
@@ -230,7 +230,7 @@ private:
 	}
 
 private:
-	
+
 	HANDLE m_hThread;
 	HANDLE m_hExitEvent;
 	HANDLE m_hPendingQueryEvent;	// Signaled when a new query is added.
@@ -241,11 +241,11 @@ private:
 	CRITICAL_SECTION m_PendingQueryCS;
 	CRITICAL_SECTION m_ExecuteQueryCS;
 
-	
+
 	// Outgoing query results. New ones are added to the tail.
 	CUtlLinkedList<CQueryResults, int> m_QueryResults;
 
-	
+
 	// New ones added to the tail.
 	class CPendingQuery
 	{
@@ -272,4 +272,3 @@ IMySQLAsync* CreateMySQLAsync( IMySQL *pSQL )
 		return NULL;
 	}
 }
-

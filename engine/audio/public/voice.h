@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -83,13 +83,13 @@ bool Voice_IsRecording();
 //! Begin recording input from the mic.
 bool Voice_RecordStart(
 	//! Filename to store incoming mic data, or NULL if none.
-	const char *pUncompressedFile,	
-	
+	const char *pUncompressedFile,
+
 	//! Filename to store the output of compression and decompressiong with the codec, or NULL if none.
-	const char *pDecompressedFile,	
-	
+	const char *pDecompressedFile,
+
 	//! If this is non-null, the voice manager will use this file for input instead of the mic.
-	const char *pMicInputFile		
+	const char *pMicInputFile
 	);
 
 // User wants to stop recording
@@ -110,9 +110,9 @@ int Voice_GetCompressedData(char *pchData, int nCount, bool bFinal);
 //! The data should have been compressed and gotten through a Voice_GetCompressedData call.
 int Voice_AddIncomingData(
 	//! Channel index.
-	int nChannel, 
+	int nChannel,
 	//! Compressed data to add to the channel.
-	const char *pchData, 
+	const char *pchData,
 	//! Number of bytes in pchData.
 	int nCount,
 	//! Sequence number. If a packet is missed, it adds padding so the time isn't squashed.

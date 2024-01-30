@@ -2,7 +2,7 @@
 //
 // Purpose:
 //
-// $NoKeywords: $  
+// $NoKeywords: $
 //=============================================================================//
 
 #include "linux_support.h"
@@ -27,17 +27,17 @@ int FileSelect(const struct dirent *ent)
 		if(*mask=='*')
 		{
 			mask++; // move to the next char in the mask
-			if(!*mask) // if this is the end of the mask its a match 
+			if(!*mask) // if this is the end of the mask its a match
 			{
 				return 1;
 			}
-			while(*name && toupper(*name)!=toupper(*mask)) 
+			while(*name && toupper(*name)!=toupper(*mask))
 			{ // while the two don't meet up again
 				name++;
 			}
-			if(!*name) 
+			if(!*name)
 			{ // end of the name
-				break; 
+				break;
 			}
 		}
 		else if (*mask!='?')
@@ -47,14 +47,14 @@ int FileSelect(const struct dirent *ent)
 				return 0;
 			}
 			else
-			{	
+			{
 				mask++;
 				name++;
-				if( !*mask && !*name) 
+				if( !*mask && !*name)
 				{ // if its at the end of the buffer
 					return 1;
 				}
-				
+
 			}
 
 		}
@@ -63,8 +63,8 @@ int FileSelect(const struct dirent *ent)
 			mask++;
 			name++;
 		}
-	}	
-		
+	}
+
 	return( !*mask && !*name ); // both of the strings are at the end
 }
 
@@ -76,19 +76,19 @@ int FillDataStruct(FIND_DATA *dat)
 		return -1;
 
 	char szFullPath[MAX_PATH];
-	Q_snprintf( szFullPath, sizeof(szFullPath), "%s/%s", dat->cBaseDir, dat->namelist[dat->curMatch]->d_name );  
+	Q_snprintf( szFullPath, sizeof(szFullPath), "%s/%s", dat->cBaseDir, dat->namelist[dat->curMatch]->d_name );
 
 	if(!stat(szFullPath,&fileStat))
 	{
-		dat->dwFileAttributes=fileStat.st_mode;           
+		dat->dwFileAttributes=fileStat.st_mode;
 	}
 	else
 	{
 		dat->dwFileAttributes=0;
-	}	
+	}
 
 	// now just put the filename in the output data
-	Q_snprintf( dat->cFileName, sizeof(dat->cFileName), "%s", dat->namelist[dat->curMatch]->d_name );  
+	Q_snprintf( dat->cFileName, sizeof(dat->cFileName), "%s", dat->namelist[dat->curMatch]->d_name );
 
 	//printf("%s\n", dat->namelist[dat->curMatch]->d_name);
 	free(dat->namelist[dat->curMatch]);
@@ -103,7 +103,7 @@ HANDLE FindFirstFile( const char *fileName, FIND_DATA *dat)
 	char nameStore[PATH_MAX];
 	char *dir=NULL;
 	int n,iret=-1;
-	
+
 	Q_strncpy(nameStore,fileName, sizeof( nameStore ) );
 
 	if(strrchr(nameStore,'/') )
@@ -125,7 +125,7 @@ HANDLE FindFirstFile( const char *fileName, FIND_DATA *dat)
 				dir=nameStore;
 			}
 
-			
+
 			if (stat(dir,&dirChk) < 0)
 			{
 				continue;
@@ -133,7 +133,7 @@ HANDLE FindFirstFile( const char *fileName, FIND_DATA *dat)
 
 			if( S_ISDIR( dirChk.st_mode ) )
 			{
-				break;	
+				break;
 			}
 		}
 	}
@@ -159,7 +159,7 @@ HANDLE FindFirstFile( const char *fileName, FIND_DATA *dat)
 				free(dat->namelist);
 			// silently return, nothing interesting
 		}
-		else 
+		else
 		{
 			dat->numMatches = n;
 			dat->curMatch = 0;
@@ -181,12 +181,12 @@ HANDLE FindFirstFile( const char *fileName, FIND_DATA *dat)
 bool FindNextFile(HANDLE handle, FIND_DATA *dat)
 {
 	if(dat->curMatch >= dat->numMatches)
-	{	
+	{
 		if ( dat->namelist != NULL )
 			free(dat->namelist);
 		dat->namelist = NULL;
 		return false; // no matches left
-	}	
+	}
 
 	FillDataStruct(dat);
 	return true;
@@ -213,7 +213,7 @@ bool findFileInDirCaseInsensitive( const char *file, char* output, size_t bufSiz
 	if( !dirSep )
 	{
 		dirSep=strrchr(file,'\\');
-		if( !dirSep ) 
+		if( !dirSep )
 		{
 			return false;
 		}
@@ -221,7 +221,7 @@ bool findFileInDirCaseInsensitive( const char *file, char* output, size_t bufSiz
 
 	// Allocate space for the directory portion.
 	size_t dirSize = ( dirSep - file ) + 1;
-	char *dirName = static_cast<char *>( alloca( dirSize ) ); 
+	char *dirName = static_cast<char *>( alloca( dirSize ) );
 
 	V_strncpy( dirName , file, dirSize );
 

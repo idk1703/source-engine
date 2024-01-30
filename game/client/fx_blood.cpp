@@ -38,11 +38,11 @@ PMaterialHandle g_Blood_Gore = NULL;
 PMaterialHandle g_Blood_Drops = NULL;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bloodtype - 
-//			r - 
-//			g - 
-//			b - 
+// Purpose:
+// Input  : bloodtype -
+//			r -
+//			g -
+//			b -
 //-----------------------------------------------------------------------------
 void GetBloodColor( int bloodtype, colorentry_t &color )
 {
@@ -64,25 +64,25 @@ void GetBloodColor( int bloodtype, colorentry_t &color )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &origin - 
-//			&normal - 
-//			scale - 
-//			r - 
-//			g - 
-//			b - 
-//			flags - 
+// Purpose:
+// Input  : &origin -
+//			&normal -
+//			scale -
+//			r -
+//			g -
+//			b -
+//			flags -
 //-----------------------------------------------------------------------------
 void FX_BloodSpray( const Vector &origin, const Vector &normal, float scale, unsigned char r, unsigned char g, unsigned char b, int flags )
 {
 	if ( UTIL_IsLowViolence() )
 		return;
 
-	//debugoverlay->AddLineOverlay( origin, origin + normal * 72, 255, 255, 255, true, 10 ); 
+	//debugoverlay->AddLineOverlay( origin, origin + normal * 72, 255, 255, 255, true, 10 );
 
 	Vector offset;
 	float spread	= 0.2f;
-	
+
 	//Find area ambient light color and use it to tint smoke
 	Vector worldLight = WorldGetLightForPoint( origin, true );
 	Vector color = Vector( (float)(worldLight[0] * r) / 255.0f, (float)(worldLight[1] * g) / 255.0f, (float)(worldLight[2] * b) / 255.0f );
@@ -120,7 +120,7 @@ void FX_BloodSpray( const Vector &origin, const Vector &normal, float scale, uns
 		pTrailEmitter->SetSortOrigin( origin );
 
 		// Partial gravity on blood drops.
-		pTrailEmitter->SetGravity( 600.0 ); 
+		pTrailEmitter->SetGravity( 600.0 );
 
 		pTrailEmitter->GetBinding().SetBBox( origin - Vector( 32, 32, 32 ), origin + Vector( 32, 32, 32 ) );
 		pTrailEmitter->SetFlag( bitsPARTICLE_TRAIL_VELOCITY_DAMPEN );
@@ -232,13 +232,13 @@ void FX_BloodSpray( const Vector &origin, const Vector &normal, float scale, uns
 					pParticle->m_uchColor[0]	= MIN( 1.0f, color[0] * colorRamp ) * 255.0f;
 					pParticle->m_uchColor[1]	= MIN( 1.0f, color[1] * colorRamp ) * 255.0f;
 					pParticle->m_uchColor[2]	= MIN( 1.0f, color[2] * colorRamp ) * 255.0f;
-					
+
 					pParticle->m_uchStartSize	= random->RandomFloat( scale * 0.25, scale );
 					pParticle->m_uchEndSize		= pParticle->m_uchStartSize * 2;
-					
+
 					pParticle->m_uchStartAlpha	= random->RandomInt( 200, 255 );
 					pParticle->m_uchEndAlpha	= 0;
-					
+
 					pParticle->m_flRoll			= random->RandomInt( 0, 360 );
 					pParticle->m_flRollDelta	= 0.0f;
 				}
@@ -277,13 +277,13 @@ void FX_BloodSpray( const Vector &origin, const Vector &normal, float scale, uns
 					pParticle->m_uchColor[0]	= MIN( 1.0f, color[0] * colorRamp ) * 255.0f;
 					pParticle->m_uchColor[1]	= MIN( 1.0f, color[1] * colorRamp ) * 255.0f;
 					pParticle->m_uchColor[2]	= MIN( 1.0f, color[2] * colorRamp ) * 255.0f;
-					
+
 					pParticle->m_uchStartSize	= random->RandomFloat( scale * 1.5f, scale * 2.0f );
 					pParticle->m_uchEndSize		= pParticle->m_uchStartSize * 4;
-					
+
 					pParticle->m_uchStartAlpha	= random->RandomInt( 80, 128 );
 					pParticle->m_uchEndAlpha	= 0;
-					
+
 					pParticle->m_flRoll			= random->RandomInt( 0, 360 );
 					pParticle->m_flRollDelta	= 0.0f;
 				}
@@ -298,8 +298,8 @@ void FX_BloodSpray( const Vector &origin, const Vector &normal, float scale, uns
 
 //-----------------------------------------------------------------------------
 // Purpose: Used for bullets hitting bleeding surfaces
-// Input  : origin - 
-//			normal - 
+// Input  : origin -
+//			normal -
 //			scale - This parameter is not currently used
 //-----------------------------------------------------------------------------
 void FX_BloodBulletImpact( const Vector &origin, const Vector &normal, float scale /*NOTE: Unused!*/, unsigned char r, unsigned char g, unsigned char b )
@@ -308,10 +308,10 @@ void FX_BloodBulletImpact( const Vector &origin, const Vector &normal, float sca
 		return;
 
 	Vector offset;
-	
+
 	//Find area ambient light color and use it to tint smoke
 	Vector worldLight = WorldGetLightForPoint( origin, true );
-	
+
 	if ( gpGlobals->maxClients > 1 )
 	{
 		worldLight = Vector( 1.0, 1.0, 1.0 );
@@ -331,7 +331,7 @@ void FX_BloodBulletImpact( const Vector &origin, const Vector &normal, float sca
 
 	pSimple->SetSortOrigin( origin );
 	pSimple->SetGravity( 200 );
-	
+
 	// Setup a bounding box to contain the particles without (stops auto-updating)
 	pSimple->GetBinding().SetBBox( origin - Vector( 16, 16, 16 ), origin + Vector( 16, 16, 16 ) );
 
@@ -362,13 +362,13 @@ void FX_BloodBulletImpact( const Vector &origin, const Vector &normal, float sca
 		pParticle->m_uchColor[0]	= MIN( 1.0f, color[0] * colorRamp ) * 255.0f;
 		pParticle->m_uchColor[1]	= MIN( 1.0f, color[1] * colorRamp ) * 255.0f;
 		pParticle->m_uchColor[2]	= MIN( 1.0f, color[2] * colorRamp ) * 255.0f;
-		
+
 		pParticle->m_uchStartSize	= random->RandomInt( 2, 4 );
 		pParticle->m_uchEndSize		= pParticle->m_uchStartSize * 8;
-	
+
 		pParticle->m_uchStartAlpha	= 255;
 		pParticle->m_uchEndAlpha	= 0;
-		
+
 		pParticle->m_flRoll			= random->RandomInt( 0, 360 );
 		pParticle->m_flRollDelta	= 0.0f;
 	}
@@ -398,13 +398,13 @@ void FX_BloodBulletImpact( const Vector &origin, const Vector &normal, float sca
 			pParticle->m_uchColor[0]	= MIN( 1.0f, color[0] * colorRamp ) * 255.0f;
 			pParticle->m_uchColor[1]	= MIN( 1.0f, color[1] * colorRamp ) * 255.0f;
 			pParticle->m_uchColor[2]	= MIN( 1.0f, color[2] * colorRamp ) * 255.0f;
-			
+
 			pParticle->m_uchStartSize	= random->RandomInt( 2, 4 );
 			pParticle->m_uchEndSize		= pParticle->m_uchStartSize * 4;
-		
+
 			pParticle->m_uchStartAlpha	= 255;
 			pParticle->m_uchEndAlpha	= 0;
-			
+
 			pParticle->m_flRoll			= random->RandomInt( 0, 360 );
 			pParticle->m_flRollDelta	= 0.0f;
 		}
@@ -422,8 +422,8 @@ void FX_BloodBulletImpact( const Vector &origin, const Vector &normal, float sca
 	pTrailEmitter->SetSortOrigin( origin );
 
 	// Partial gravity on blood drops
-	pTrailEmitter->SetGravity( 400.0 ); 
-	
+	pTrailEmitter->SetGravity( 400.0 );
+
 	// Enable simple collisions with nearby surfaces
 	pTrailEmitter->Setup(origin, &normal, 1, 10, 100, 400, 0.2, 0 );
 
@@ -520,7 +520,7 @@ void BloodImpactCallback( const CEffectData & data )
 	{
 		Vector vecPosition;
 		vecPosition = data.m_vOrigin;
-		
+
 		// Fetch the blood color.
 		colorentry_t color;
 		GetBloodColor( data.m_nColor, color );

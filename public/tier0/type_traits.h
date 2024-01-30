@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: functionality that is provided in C++11 type_traits, which 
+// Purpose: functionality that is provided in C++11 type_traits, which
 // currently isn't supported by the OSX compiler. Sadness.
 //
 //=============================================================================
@@ -29,4 +29,3 @@ struct V_remove_const<const T[N]>
 {
 	typedef T type;
 };
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -145,7 +145,7 @@ private:
 	vgui::Label *m_pChapterLabel;
 	CTGAImagePanel *m_pSaveGameImage;
 	ImagePanel *m_pAutoSaveImage;
-	
+
 	// things to change color when the selection changes
 	ImagePanel *m_pSaveGameScreenshotBackground;
 	Label *m_pTypeLabel;
@@ -210,7 +210,7 @@ void CBaseSaveGameDialog::ScanSavedGames()
 	// clear the current list
 	m_pGameList->DeleteAllItems();
 	m_SaveGames.RemoveAll();
-	
+
 	// iterate the saved files
 	FileFindHandle_t handle;
 	const char *pFileName = g_pFullFileSystem->FindFirst( szDirectory, &handle );
@@ -231,16 +231,16 @@ void CBaseSaveGameDialog::ScanSavedGames()
 			pFileName = g_pFullFileSystem->FindNext( handle );
 			continue;
 		}
-		
+
 		SaveGameDescription_t save;
 		if ( ParseSaveData( szFileName, pFileName, save ) )
 		{
 			m_SaveGames.AddToTail( save );
 		}
-		
+
 		pFileName = g_pFullFileSystem->FindNext( handle );
 	}
-	
+
 	g_pFullFileSystem->FindClose( handle );
 
 	// notify derived classes that save games are being scanned (so they can insert their own)
@@ -336,7 +336,7 @@ bool CBaseSaveGameDialog::ParseSaveData( char const *pszFileName, char const *ps
 
 		n = i - 6;
 		szComment[n] = '\0';
-	
+
 		n--;
 
 		// Strip back the spaces at the end.
@@ -395,9 +395,9 @@ void CBaseSaveGameDialog::OnKeyCodePressed( vgui::KeyCode code )
 		OnCommand( "Close" );
 		return;
 	}
-	else if ( code == KEY_XSTICK1_DOWN || 
-			  code == KEY_XSTICK2_DOWN || 
-			  code == KEY_XBUTTON_DOWN || 
+	else if ( code == KEY_XSTICK1_DOWN ||
+			  code == KEY_XSTICK2_DOWN ||
+			  code == KEY_XBUTTON_DOWN ||
 			  code == KEY_DOWN )
 	{
 		if ( m_pGameList->GetItemCount() )
@@ -432,9 +432,9 @@ void CBaseSaveGameDialog::OnKeyCodePressed( vgui::KeyCode code )
 			}
 		}
 	}
-	else if ( code == KEY_XSTICK1_UP || 
-			  code == KEY_XSTICK2_UP || 
-			  code == KEY_XBUTTON_UP || 
+	else if ( code == KEY_XSTICK1_UP ||
+			  code == KEY_XSTICK2_UP ||
+			  code == KEY_XBUTTON_UP ||
 			  code == KEY_UP )
 	{
 		if ( m_pGameList->GetItemCount() )
@@ -530,7 +530,7 @@ int SaveReadNameAndComment( FileHandle_t f, OUT_Z_CAP(nameSize) char *name, int 
 	{
 		return 0;
 	}
-		
+
 	g_pFullFileSystem->Read( &tag, sizeof(int), f );
 	if ( tag != SAVEGAME_VERSION )				// Enforce version for now
 	{
@@ -538,7 +538,7 @@ int SaveReadNameAndComment( FileHandle_t f, OUT_Z_CAP(nameSize) char *name, int 
 	}
 
 	g_pFullFileSystem->Read( &size, sizeof(int), f );
-	
+
 	g_pFullFileSystem->Read( &tokenCount, sizeof(int), f );	// These two ints are the token list
 	g_pFullFileSystem->Read( &tokenSize, sizeof(int), f );
 	size += tokenSize;
@@ -561,7 +561,7 @@ int SaveReadNameAndComment( FileHandle_t f, OUT_Z_CAP(nameSize) char *name, int 
 
 	char *pData;
 	int nFieldSize;
-	
+
 	pData = pSaveData;
 
 	// Allocate a table for the strings, and parse the table
@@ -627,10 +627,10 @@ int SaveReadNameAndComment( FileHandle_t f, OUT_Z_CAP(nameSize) char *name, int 
 	// Delete the string table we allocated
 	delete[] pTokenList;
 	delete[] pSaveData;
-	
+
 	if (strlen(name) > 0 && strlen(comment) > 0)
 		return 1;
-	
+
 	return 0;
 }
 
@@ -664,5 +664,3 @@ void CBaseSaveGameDialog::OnPanelSelected()
 	SetControlEnabled( "loadsave", true );
 	SetControlEnabled( "delete", true );
 }
-
-

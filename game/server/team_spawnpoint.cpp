@@ -68,7 +68,7 @@ bool CTeamSpawnPoint::IsValid( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamSpawnPoint::InputEnable( inputdata_t &inputdata )
 {
@@ -76,7 +76,7 @@ void CTeamSpawnPoint::InputEnable( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamSpawnPoint::InputDisable( inputdata_t &inputdata )
 {

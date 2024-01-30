@@ -12,7 +12,7 @@
 #endif
 
 // 16 bytes == 128 bit digest
-#define MD5_DIGEST_LENGTH 16  
+#define MD5_DIGEST_LENGTH 16
 #define MD5_BIT_LENGTH ( MD5_DIGEST_LENGTH * sizeof(unsigned char) )
 struct MD5Value_t
 {
@@ -30,8 +30,8 @@ struct MD5Value_t
 typedef struct
 {
 	unsigned int	buf[4];
-    unsigned int	bits[2];
-    unsigned char	in[64];
+	unsigned int	bits[2];
+	unsigned char	in[64];
 } MD5Context_t;
 
 void MD5Init( MD5Context_t *context );

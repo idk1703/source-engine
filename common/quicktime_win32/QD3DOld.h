@@ -1,18 +1,18 @@
 /*
-     File:       QD3DOld.h
- 
-     Contains:   Obsolete API for Quickdraw 3D that QuickTime still uses
- 
-     Version:    Technology: Quickdraw 3D 1.5.1
-                 Release:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1995-1998 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       QD3DOld.h
+
+		Contains:   Obsolete API for Quickdraw 3D that QuickTime still uses
+
+		Version:    Technology: Quickdraw 3D 1.5.1
+								Release:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1995-1998 by Apple Computer, Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __QD3DOLD__
 #define __QD3DOLD__
@@ -61,26 +61,26 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=power
+		#pragma options align=power
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+		#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+		#pragma pack(2)
 #endif
 
 #if PRAGMA_ENUM_ALWAYSINT
-    #if defined(__fourbyteints__) && !__fourbyteints__ 
-        #define __QD3DOLD__RESTORE_TWOBYTEINTS
-        #pragma fourbyteints on
-    #endif
-    #pragma enumsalwaysint on
+		#if defined(__fourbyteints__) && !__fourbyteints__
+				#define __QD3DOLD__RESTORE_TWOBYTEINTS
+				#pragma fourbyteints on
+		#endif
+		#pragma enumsalwaysint on
 #elif PRAGMA_ENUM_OPTIONS
-    #pragma option enum=int
+		#pragma option enum=int
 #elif PRAGMA_ENUM_PACK
-    #if __option(pack_enums)
-        #define __QD3DOLD__RESTORE_PACKED_ENUMS
-        #pragma options(!pack_enums)
-    #endif
+		#if __option(pack_enums)
+				#define __QD3DOLD__RESTORE_PACKED_ENUMS
+				#pragma options(!pack_enums)
+		#endif
 #endif
 
 /******************************************************************************
@@ -102,7 +102,7 @@ typedef unsigned long                   TQ3MethodType;
 #define kQ3MethodTypeObjectTraverse         Q3_METHOD_TYPE('t','r','v','s') /* byte count */
 #define kQ3MethodTypeObjectTraverseData     Q3_METHOD_TYPE('t','r','v','d') /* byte count */
 #define kQ3MethodTypeObjectWrite            Q3_METHOD_TYPE('w','r','i','t') /* Dump info to file */
-#define kQ3MethodTypeObjectReadData         Q3_METHOD_TYPE('r','d','d','t') /* Read info from file into buffer or, attach read data to parent */ 
+#define kQ3MethodTypeObjectReadData         Q3_METHOD_TYPE('r','d','d','t') /* Read info from file into buffer or, attach read data to parent */
 typedef CALLBACK_API_C( void , TQ3FunctionPointer )(void);
 typedef CALLBACK_API_C( TQ3FunctionPointer , TQ3MetaHandler )(TQ3MethodType methodType);
 /*
@@ -128,14 +128,14 @@ typedef CALLBACK_API_C( TQ3Status , TQ3ObjectUnregisterMethod )(TQ3ObjectClass o
  **                                                                          **
  *****************************************************************************/
 /*
- *  Q3ObjectClass_Unregister is an obsolete function.  For the new extensions 
- *  model you should now use Q3XObjectHierarchy_UnregisterClass which is 
+ *  Q3ObjectClass_Unregister is an obsolete function.  For the new extensions
+ *  model you should now use Q3XObjectHierarchy_UnregisterClass which is
  *  defined in QD3DExtension.h and takes identical parameters.
  */
 #if CALL_NOT_IN_CARBON
 /*
  *  Q3ObjectClass_Unregister()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -168,7 +168,7 @@ typedef CALLBACK_API_C( TQ3Status , TQ3ElementDeleteMethod )(void * internalElem
 #if CALL_NOT_IN_CARBON
 /*
  *  Q3ElementClass_Register()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -176,15 +176,15 @@ typedef CALLBACK_API_C( TQ3Status , TQ3ElementDeleteMethod )(void * internalElem
  */
 EXTERN_API_C( TQ3ObjectClass )
 Q3ElementClass_Register(
-  TQ3ElementType   elementType,
-  const char *     name,
-  unsigned long    sizeOfElement,
-  TQ3MetaHandler   metaHandler);
+	TQ3ElementType   elementType,
+	const char *     name,
+	unsigned long    sizeOfElement,
+	TQ3MetaHandler   metaHandler);
 
 
 /*
  *  Q3ElementType_GetElementSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -192,8 +192,8 @@ Q3ElementClass_Register(
  */
 EXTERN_API_C( TQ3Status )
 Q3ElementType_GetElementSize(
-  TQ3ElementType   elementType,
-  unsigned long *  sizeOfElement);
+	TQ3ElementType   elementType,
+	unsigned long *  sizeOfElement);
 
 
 
@@ -210,16 +210,16 @@ Q3ElementType_GetElementSize(
 #endif  /* CALL_NOT_IN_CARBON */
 
 struct TQ3HitData {
-  TQ3PickParts        part;
-  TQ3PickDetail       validMask;
-  unsigned long       pickID;
-  TQ3HitPath          path;
-  TQ3Object           object;
-  TQ3Matrix4x4        localToWorldMatrix;
-  TQ3Point3D          xyzPoint;
-  float               distance;
-  TQ3Vector3D         normal;
-  TQ3ShapePartObject  shapePart;
+	TQ3PickParts        part;
+	TQ3PickDetail       validMask;
+	unsigned long       pickID;
+	TQ3HitPath          path;
+	TQ3Object           object;
+	TQ3Matrix4x4        localToWorldMatrix;
+	TQ3Point3D          xyzPoint;
+	float               distance;
+	TQ3Vector3D         normal;
+	TQ3ShapePartObject  shapePart;
 };
 typedef struct TQ3HitData               TQ3HitData;
 /*
@@ -229,7 +229,7 @@ typedef struct TQ3HitData               TQ3HitData;
 #if CALL_NOT_IN_CARBON
 /*
  *  Q3Pick_GetHitData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -237,14 +237,14 @@ typedef struct TQ3HitData               TQ3HitData;
  */
 EXTERN_API_C( TQ3Status )
 Q3Pick_GetHitData(
-  TQ3PickObject   pick,
-  unsigned long   index,
-  TQ3HitData *    hitData);
+	TQ3PickObject   pick,
+	unsigned long   index,
+	TQ3HitData *    hitData);
 
 
 /*
  *  Q3Hit_EmptyData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -262,12 +262,12 @@ Q3Hit_EmptyData(TQ3HitData * hitData);
 /*
  *  Blocking, flush all buffered graphics to rasterizer and update
  *  draw context.
- *  
+ *
  *  This function has been replaced by Q3View_Sync
  */
 /*
  *  Q3Renderer_Sync()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -275,8 +275,8 @@ Q3Hit_EmptyData(TQ3HitData * hitData);
  */
 EXTERN_API_C( TQ3Status )
 Q3Renderer_Sync(
-  TQ3RendererObject   renderer,
-  TQ3ViewObject       view);
+	TQ3RendererObject   renderer,
+	TQ3ViewObject       view);
 
 
 
@@ -288,7 +288,7 @@ Q3Renderer_Sync(
 /*
  *  TQ3ObjectTraverseMethod
  *
- *  For "elements" (meaning "attributes, too), you will be passed NULL for 
+ *  For "elements" (meaning "attributes, too), you will be passed NULL for
  *  object. Sorry, custom objects will be available in the next major revision.
  *
  *  The "data" is a pointer to your internal element data.
@@ -306,7 +306,7 @@ typedef CALLBACK_API_C( void , TQ3DataDeleteMethod )(void * data);
 #if CALL_NOT_IN_CARBON
 /*
  *  Q3View_SubmitWriteData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -314,16 +314,16 @@ typedef CALLBACK_API_C( void , TQ3DataDeleteMethod )(void * data);
  */
 EXTERN_API_C( TQ3Status )
 Q3View_SubmitWriteData(
-  TQ3ViewObject         view,
-  TQ3Size               size,
-  void *                data,
-  TQ3DataDeleteMethod   deleteData);
+	TQ3ViewObject         view,
+	TQ3Size               size,
+	void *                data,
+	TQ3DataDeleteMethod   deleteData);
 
 
 /*
  *  TQ3ObjectReadDataMethod
  *
- *  For "elements" (meaning "attributes", too), you must allocate stack space 
+ *  For "elements" (meaning "attributes", too), you must allocate stack space
  *  and call Q3Set_Add on "parentObject", which is an TQ3SetObject.
  *
  *  Otherwise, parentObject is whatever object your element is a subobject of...
@@ -334,22 +334,22 @@ typedef CALLBACK_API_C( TQ3Status , TQ3ObjectReadDataMethod )(TQ3Object parentOb
 
 
 #if PRAGMA_ENUM_ALWAYSINT
-    #pragma enumsalwaysint reset
-    #ifdef __QD3DOLD__RESTORE_TWOBYTEINTS
-        #pragma fourbyteints off
-    #endif
+		#pragma enumsalwaysint reset
+		#ifdef __QD3DOLD__RESTORE_TWOBYTEINTS
+				#pragma fourbyteints off
+		#endif
 #elif PRAGMA_ENUM_OPTIONS
-    #pragma option enum=reset
+		#pragma option enum=reset
 #elif defined(__QD3DOLD__RESTORE_PACKED_ENUMS)
-    #pragma options(pack_enums)
+		#pragma options(pack_enums)
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+		#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+		#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+		#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -363,4 +363,3 @@ typedef CALLBACK_API_C( TQ3Status , TQ3ObjectReadDataMethod )(TQ3Object parentOb
 #endif
 
 #endif /* __QD3DOLD__ */
-

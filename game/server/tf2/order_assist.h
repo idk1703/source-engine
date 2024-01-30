@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ public:
 
 
 private:
-	
+
 	enum
 	{
 		NUM_ASSIST_ENEMIES = 2

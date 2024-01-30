@@ -33,10 +33,10 @@ BEGIN_NETWORK_TABLE( CTFViewModel, DT_TFViewModel )
 END_NETWORK_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #ifdef CLIENT_DLL
-CTFViewModel::CTFViewModel() 
+CTFViewModel::CTFViewModel()
 	: m_LagAnglesHistory("CPredictedViewModel::m_LagAnglesHistory")
 	, m_bBodygroupsDirty( true )
 {
@@ -52,7 +52,7 @@ CTFViewModel::CTFViewModel()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFViewModel::~CTFViewModel()
 {
@@ -195,7 +195,7 @@ void CTFViewModel::CalcViewModelView( CBasePlayer *owner, const Vector& eyePosit
 		vecNewOrigin += vOffset;
 	}
 
-	
+
 
 	BaseClass::CalcViewModelView( owner, vecNewOrigin, vecNewAngles );
 
@@ -204,7 +204,7 @@ void CTFViewModel::CalcViewModelView( CBasePlayer *owner, const Vector& eyePosit
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: Don't render the weapon if its supposed to be lowered and we have 
+// Purpose: Don't render the weapon if its supposed to be lowered and we have
 // finished the lowering animation
 //-----------------------------------------------------------------------------
 int CTFViewModel::DrawModel( int flags )
@@ -230,7 +230,7 @@ int CTFViewModel::DrawModel( int flags )
 	}
 
 	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( pLocalPlayer && pLocalPlayer->GetObserverMode() == OBS_MODE_IN_EYE && 
+	if ( pLocalPlayer && pLocalPlayer->GetObserverMode() == OBS_MODE_IN_EYE &&
 		pLocalPlayer->GetObserverTarget() && pLocalPlayer->GetObserverTarget()->IsPlayer() )
 	{
 		pPlayer = ToTFPlayer( pLocalPlayer->GetObserverTarget() );
@@ -250,7 +250,7 @@ int CTFViewModel::DrawModel( int flags )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFViewModel::OnPostInternalDrawModel( ClientModelRenderInfo_t *pInfo )
 {
@@ -270,7 +270,7 @@ bool CTFViewModel::OnPostInternalDrawModel( ClientModelRenderInfo_t *pInfo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFViewModel::StandardBlendingRules( CStudioHdr *hdr, Vector pos[], Quaternion q[], float currentTime, int boneMask )
 {
@@ -278,7 +278,7 @@ void CTFViewModel::StandardBlendingRules( CStudioHdr *hdr, Vector pos[], Quatern
 
 	CTFWeaponBase *pWeapon = ( CTFWeaponBase * )GetOwningWeapon();
 
-	if ( !pWeapon ) 
+	if ( !pWeapon )
 		return;
 
 	if ( pWeapon->GetWeaponID() == TF_WEAPON_MINIGUN )
@@ -301,17 +301,17 @@ void CTFViewModel::StandardBlendingRules( CStudioHdr *hdr, Vector pos[], Quatern
 				AngleQuaternion( a, q[iBarrelBone] );
 			}
 		}
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFViewModel::ProcessMuzzleFlashEvent()
 {
 	CTFWeaponBase *pWeapon = ( CTFWeaponBase * )GetOwningWeapon();
 
-	if ( !pWeapon || C_BasePlayer::ShouldDrawLocalPlayer() ) 
+	if ( !pWeapon || C_BasePlayer::ShouldDrawLocalPlayer() )
 		return;
 
 	pWeapon->ProcessMuzzleFlashEvent();
@@ -327,7 +327,7 @@ int CTFViewModel::GetSkin()
 
 	CTFWeaponBase *pWeapon = ( CTFWeaponBase * )GetOwningWeapon();
 
-	if ( !pWeapon ) 
+	if ( !pWeapon )
 		return nSkin;
 
 	CTFPlayer *pPlayer = ToTFPlayer( GetOwner() );
@@ -356,7 +356,7 @@ int CTFViewModel::GetSkin()
 				nSkin = 1;
 				break;
 			}
-		}	
+		}
 	}
 
 	return nSkin;
@@ -388,7 +388,7 @@ public:
 #define TF_VM_MAX_INVIS		0.5
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input :
 //-----------------------------------------------------------------------------
 void CViewModelInvisProxy::OnBind( C_BaseEntity *pEnt )
@@ -409,7 +409,7 @@ void CViewModelInvisProxy::OnBind( C_BaseEntity *pEnt )
 			pPlayer = ToTFPlayer( pMoveParent );
 		}
 	}
-	
+
 	//If its not a player then check for viewmodel.
 	if ( pPlayer == NULL )
 	{
@@ -435,7 +435,7 @@ void CViewModelInvisProxy::OnBind( C_BaseEntity *pEnt )
 		m_pPercentInvisible->SetFloatValue( 0.0f );
 		return;
 	}
-	
+
 	float flPercentInvisible = pPlayer->GetPercentInvisible();
 	float flWeaponInvis = flPercentInvisible;
 
@@ -478,7 +478,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInvisProxy::OnBind( C_BaseEntity *pC_BaseEntity )
 {
@@ -507,7 +507,7 @@ void CInvisProxy::OnBind( C_BaseEntity *pC_BaseEntity )
 			pPlayer = ToTFPlayer( pVM->GetOwner() );
 		}
 	}
-	
+
 	if ( !pPlayer )
 	{
 		if ( pEnt->IsPlayer() )
@@ -523,7 +523,7 @@ void CInvisProxy::OnBind( C_BaseEntity *pC_BaseEntity )
 			}
 		}
 	}
-	
+
 	if ( !pPlayer )
 	{
 		m_pPercentInvisible->SetFloatValue( 0.0f );

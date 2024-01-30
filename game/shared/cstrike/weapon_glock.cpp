@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -25,9 +25,9 @@ class CWeaponGlock : public CWeaponCSBase
 {
 public:
 	DECLARE_CLASS( CWeaponGlock, CWeaponCSBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponGlock();
 
 	virtual void Spawn();
@@ -40,7 +40,7 @@ public:
 
 	void GlockFire( float fSpread, bool bFireBurst );
 	void FireRemaining( float fSpread );
-	
+
 	virtual bool Reload();
 
 	virtual void WeaponIdle();
@@ -50,7 +50,7 @@ public:
 	virtual CSWeaponID GetWeaponID( void ) const		{ return WEAPON_GLOCK; }
 
 private:
-	
+
 	CWeaponGlock( const CWeaponGlock & );
 
 	CNetworkVar( bool, m_bBurstMode );
@@ -130,7 +130,7 @@ void CWeaponGlock::SecondaryAttack()
 		m_bBurstMode = true;
 		m_weaponMode = Secondary_Mode;
 	}
-	
+
 	m_flNextSecondaryAttack = gpGlobals->curtime + 0.3;
 }
 
@@ -222,10 +222,10 @@ void CWeaponGlock::PrimaryAttack()
 	//pPlayer->m_iWeaponVolume = NORMAL_GUN_VOLUME;
 	//pPlayer->m_iWeaponFlash = NORMAL_GUN_FLASH;
 
-	FX_FireBullets( 
+	FX_FireBullets(
 		pPlayer->entindex(),
-		pPlayer->Weapon_ShootPosition(), 
-		pPlayer->EyeAngles() + 2.0f * pPlayer->GetPunchAngle(), 
+		pPlayer->Weapon_ShootPosition(),
+		pPlayer->EyeAngles() + 2.0f * pPlayer->GetPunchAngle(),
 		GetWeaponID(),
 		Primary_Mode,
 		CBaseEntity::GetPredictionRandomSeed() & 255, // wrap it for network traffic so it's the same between client and server
@@ -288,18 +288,18 @@ void CWeaponGlock::FireRemaining( float fSpread )
 	float fInaccuracy = GetInaccuracy();
 	if ( weapon_accuracy_model.GetInt() == 1 )
 		fInaccuracy = 0.05;
-	
-	FX_FireBullets( 
+
+	FX_FireBullets(
 		pPlayer->entindex(),
-		pPlayer->Weapon_ShootPosition(), 
-		pPlayer->EyeAngles() + 2.0f * pPlayer->GetPunchAngle(), 
+		pPlayer->Weapon_ShootPosition(),
+		pPlayer->EyeAngles() + 2.0f * pPlayer->GetPunchAngle(),
 		GetWeaponID(),
 		Secondary_Mode,
 		CBaseEntity::GetPredictionRandomSeed() & 255, // wrap it for network traffic so it's the same between client and server
 		fInaccuracy,
 		GetSpread(),
 		m_fNextBurstShot);
-	
+
 	pPlayer->SetAnimation( PLAYER_ATTACK1 );
 	pPlayer->m_iShotsFired++;
 
@@ -353,7 +353,7 @@ void CWeaponGlock::WeaponIdle()
 	if ( pPlayer->HasShield() )
 	{
 		SetWeaponIdleTime( gpGlobals->curtime + 20 );
-				
+
 		//MIKETODO: shields
 		//if ( FBitSet(m_iWeaponState, WPNSTATE_SHIELD_DRAWN) )
 		//	 SendWeaponAnim( GLOCK18_SHIELD_IDLE, UseDecrement() ? 1:0 );

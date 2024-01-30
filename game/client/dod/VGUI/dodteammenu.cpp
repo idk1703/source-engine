@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,9 +27,9 @@ using namespace vgui;
 CDODTeamMenu::CDODTeamMenu(IViewPort *pViewPort) : CTeamMenu(pViewPort)
 {
 	m_pBackground = SETUP_PANEL( new CDODMenuBackground( this ) );
-	
+
 	m_pPanel = new EditablePanel( this, "TeamImagePanel" );// team image panel
-	
+
 	m_pFirstButton = NULL;
 
 	LoadControlSettings("Resource/UI/TeamMenu.res");	// reload this to catch DODButtons
@@ -55,7 +55,7 @@ void CDODTeamMenu::ShowPanel(bool bShow)
 
 		m_iTeamMenuKey = gameuifuncs->GetButtonCodeForBind( "changeteam" );
 	}
-	
+
 	BaseClass::ShowPanel( bShow );
 }
 
@@ -112,7 +112,7 @@ void CDODTeamMenu::OnTick( void )
 
 		if ( iNumAllies == 1 )
 		{
-			g_pVGuiLocalize->ConstructString( wbuf, sizeof(wbuf), g_pVGuiLocalize->Find("#teammenu_numAllies_1"), 0 );		
+			g_pVGuiLocalize->ConstructString( wbuf, sizeof(wbuf), g_pVGuiLocalize->Find("#teammenu_numAllies_1"), 0 );
 		}
 		else
 		{
@@ -135,7 +135,7 @@ void CDODTeamMenu::OnTick( void )
 
 		if ( iNumAxis == 1 )
 		{
-			g_pVGuiLocalize->ConstructString( wbuf, sizeof(wbuf), g_pVGuiLocalize->Find("#teammenu_numAxis_1"), 0 );		
+			g_pVGuiLocalize->ConstructString( wbuf, sizeof(wbuf), g_pVGuiLocalize->Find("#teammenu_numAxis_1"), 0 );
 		}
 		else
 		{
@@ -162,7 +162,7 @@ void CDODTeamMenu::Update( void )
 
 	Assert( pPlayer );
 
-	const ConVar *allowspecs =  cvar->FindVar( "mp_allowspectators" );	
+	const ConVar *allowspecs =  cvar->FindVar( "mp_allowspectators" );
 
 	if ( allowspecs && allowspecs->GetBool() )
 	{
@@ -178,16 +178,16 @@ void CDODTeamMenu::Update( void )
 
 	if( pPlayer->GetTeamNumber() == TEAM_UNASSIGNED ) // we aren't on a team yet
 	{
-		SetVisibleButton("CancelButton", false); 
+		SetVisibleButton("CancelButton", false);
 	}
 	else
 	{
-		SetVisibleButton("CancelButton", true); 
+		SetVisibleButton("CancelButton", true);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: When a team button is pressed it triggers this function to 
+// Purpose: When a team button is pressed it triggers this function to
 //			cause the player to join a team
 //-----------------------------------------------------------------------------
 void CDODTeamMenu::OnCommand( const char *command )
@@ -196,7 +196,7 @@ void CDODTeamMenu::OnCommand( const char *command )
 	{
 		engine->ClientCmd( command );
 	}
-		
+
 	BaseClass::OnCommand( command );
 
 	gViewPortInterface->ShowBackGround( false );
@@ -229,14 +229,14 @@ void CDODTeamMenu::PaintBackground( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Panel *CDODTeamMenu::CreateControlByName( const char *controlName )
 {
 	if( !Q_stricmp( "DODMouseOverPanelButton", controlName ) )
 	{
 		CDODMouseOverButton<EditablePanel> *newButton = new CDODMouseOverButton<EditablePanel>( this, NULL, m_pPanel );
-		
+
 		if( !m_pFirstButton )
 		{
 			m_pFirstButton = newButton;

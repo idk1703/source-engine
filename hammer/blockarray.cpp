@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -23,7 +23,7 @@ public:
 	}
 
 	T& operator[] (int iIndex);
-	
+
 	void SetCount(int nObjects);
 	int GetCount() { return nCount; }
 
@@ -44,7 +44,7 @@ BlockArray<T,BlockSize,nMaxBlocks>::BlockArray()
 template <class T, int nBlockSize, int nMaxBlocks>
 BlockArray<T,BlockSize,nMaxBlocks>::~BlockArray()
 {
-	GetBlocks(0);	// free blocks	
+	GetBlocks(0);	// free blocks
 }
 */
 

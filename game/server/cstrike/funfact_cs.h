@@ -68,4 +68,3 @@ public:
 };
 
 #endif // INCLUDED_funfact_cs
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -65,7 +65,7 @@ void W_Precache(void)
 #ifdef HL1_DLL
 	g_sModelIndexWExplosion = CBaseEntity::PrecacheModel ("sprites/WXplo1.vmt");// underwater fireball
 	g_sModelIndexBloodSpray = CBaseEntity::PrecacheModel ("sprites/bloodspray.vmt"); // initial blood
-	g_sModelIndexBloodDrop = CBaseEntity::PrecacheModel ("sprites/blood.vmt"); // splattered blood 
+	g_sModelIndexBloodDrop = CBaseEntity::PrecacheModel ("sprites/blood.vmt"); // splattered blood
 	g_sModelIndexLaserDot = CBaseEntity::PrecacheModel("sprites/laserdot.vmt");
 #endif // HL1_DLL
 
@@ -97,7 +97,7 @@ int CBaseCombatWeapon::UpdateTransmitState( void)
 	// If the weapon is being carried by a CBaseCombatCharacter, let the combat character do the logic
 	// about whether or not to transmit it.
 	if ( GetOwner() )
-	{	
+	{
 		return SetTransmitState( FL_EDICT_PVSCHECK );
 	}
 	else
@@ -143,7 +143,7 @@ void CBaseCombatWeapon::Operator_FrameUpdate( CBaseCombatCharacter *pOperator )
 		return;
 
 	CBaseViewModel *vm = pOwner->GetViewModel( m_nViewModelIndex );
-	
+
 	if ( vm != NULL )
 	{
 		vm->StudioFrameAdvance();
@@ -152,9 +152,9 @@ void CBaseCombatWeapon::Operator_FrameUpdate( CBaseCombatCharacter *pOperator )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEvent - 
-//			*pOperator - 
+// Purpose:
+// Input  : *pEvent -
+//			*pOperator -
 //-----------------------------------------------------------------------------
 void CBaseCombatWeapon::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator )
 {
@@ -180,7 +180,7 @@ void CBaseCombatWeapon::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseComb
 }
 
 // NOTE: This should never be called when a character is operating the weapon.  Animation events should be
-// routed through the character, and then back into CharacterAnimEvent() 
+// routed through the character, and then back into CharacterAnimEvent()
 void CBaseCombatWeapon::HandleAnimEvent( animevent_t *pEvent )
 {
 	//If the player is receiving this message, pass it through
@@ -340,7 +340,7 @@ bool CBaseCombatWeapon::WeaponLOSCondition( const Vector &ownerPos, const Vector
 		pBCC = ToBaseCombatCharacter( pHitEnt );
 	}
 
-	if ( pBCC ) 
+	if ( pBCC )
 	{
 		if ( npcOwner->IRelationType( pBCC ) == D_HT )
 			return true;
@@ -373,11 +373,11 @@ int CBaseCombatWeapon::WeaponRangeAttack1Condition( float flDot, float flDist )
  	{
  		return COND_NO_PRIMARY_AMMO;
  	}
- 	else if ( flDist < m_fMinRange1) 
+ 	else if ( flDist < m_fMinRange1)
  	{
  		return COND_TOO_CLOSE_TO_ATTACK;
  	}
- 	else if (flDist > m_fMaxRange1) 
+ 	else if (flDist > m_fMaxRange1)
  	{
  		return COND_TOO_FAR_TO_ATTACK;
  	}
@@ -403,15 +403,15 @@ int CBaseCombatWeapon::WeaponRangeAttack2Condition( float flDot, float flDist )
 		{
 			return COND_NO_SECONDARY_AMMO;
 		}
-		else if ( flDist < m_fMinRange2) 
+		else if ( flDist < m_fMinRange2)
 		{
 			return COND_TOO_CLOSE_TO_ATTACK;
 		}
-		else if (flDist > m_fMaxRange2) 
+		else if (flDist > m_fMaxRange2)
 		{
 			return COND_TOO_FAR_TO_ATTACK;
 		}
-		else if (flDot < 0.5) 
+		else if (flDot < 0.5)
 		{
 			return COND_NOT_FACING_ATTACK;
 		}
@@ -454,7 +454,7 @@ void CBaseCombatWeapon::DestroyItem( void )
 
 	if ( pOwner )
 	{
-		// if attached to a player, remove. 
+		// if attached to a player, remove.
 		pOwner->RemovePlayerItem( this );
 	}
 
@@ -495,7 +495,7 @@ void CBaseCombatWeapon::FallInit( void )
 		{
 			//Constrain the weapon in place
 			IPhysicsObject *pReferenceObject, *pAttachedObject;
-			
+
 			pReferenceObject = g_PhysWorldObject;
 			pAttachedObject = VPhysicsGetObject();
 
@@ -504,7 +504,7 @@ void CBaseCombatWeapon::FallInit( void )
 				constraint_fixedparams_t fixed;
 				fixed.Defaults();
 				fixed.InitWithCurrentObjectState( pReferenceObject, pAttachedObject );
-				
+
 				fixed.constraint.forceLimit	= lbs2kg( 10000 );
 				fixed.constraint.torqueLimit = lbs2kg( 10000 );
 
@@ -514,19 +514,19 @@ void CBaseCombatWeapon::FallInit( void )
 			}
 		}
 #endif //CLIENT_DLL
-	}	
+	}
 
 	SetPickupTouch();
-	
+
 	SetThink( &CBaseCombatWeapon::FallThink );
 
 	SetNextThink( gpGlobals->curtime + 0.1f );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Items that have just spawned run this think to catch them when 
-//			they hit the ground. Once we're sure that the object is grounded, 
-//			we change its solid type to trigger and set it in a large box that 
+// Purpose: Items that have just spawned run this think to catch them when
+//			they hit the ground. Once we're sure that the object is grounded,
+//			we change its solid type to trigger and set it in a large box that
 //			helps the player get it.
 //-----------------------------------------------------------------------------
 void CBaseCombatWeapon::FallThink ( void )
@@ -552,7 +552,7 @@ void CBaseCombatWeapon::FallThink ( void )
 		{
 			EmitSound( "BaseCombatWeapon.WeaponDrop" );
 		}
-		Materialize(); 
+		Materialize();
 	}
 }
 
@@ -561,7 +561,7 @@ void CBaseCombatWeapon::FallThink ( void )
 //====================================================================================
 //-----------------------------------------------------------------------------
 // Purpose: Make a weapon visible and tangible
-//-----------------------------------------------------------------------------// 
+//-----------------------------------------------------------------------------//
 void CBaseCombatWeapon::Materialize( void )
 {
 	if ( IsEffectActive( EF_NODRAW ) )
@@ -572,7 +572,7 @@ void CBaseCombatWeapon::Materialize( void )
 #else
 		EmitSound( "BaseCombatWeapon.WeaponMaterialize" );
 #endif
-		
+
 		RemoveEffects( EF_NODRAW );
 		DoMuzzleFlash();
 	}
@@ -634,8 +634,8 @@ public:
 	}
 
 
-	virtual void LevelShutdownPostEntity()  
-	{ 
+	virtual void LevelShutdownPostEntity()
+	{
 		m_list.Purge();
 	}
 
@@ -691,10 +691,10 @@ int CBaseCombatWeapon::GetAvailableWeaponsInBox( CBaseCombatWeapon **pList, int 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CBaseCombatWeapon::ObjectCaps( void )
-{ 
+{
 	int caps = BaseClass::ObjectCaps();
 	if ( !IsFollowingEntity() && !HasSpawnFlags(SF_WEAPON_NO_PLAYER_PICKUP) )
 	{
@@ -706,12 +706,12 @@ int	CBaseCombatWeapon::ObjectCaps( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseCombatWeapon::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
 	CBasePlayer *pPlayer = ToBasePlayer( pActivator );
-	
+
 	if ( pPlayer )
 	{
 		m_OnPlayerUse.FireOutput( pActivator, pCaller );
@@ -731,4 +731,3 @@ void CBaseCombatWeapon::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_
 		}
 	}
 }
-

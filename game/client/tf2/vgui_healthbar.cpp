@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -13,8 +13,8 @@
 #include <vgui/ISurface.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 CHealthBarPanel::CHealthBarPanel( vgui::Panel *pParent ) : vgui::Panel(pParent, "CHealthBarPanel" )
 {
@@ -24,7 +24,7 @@ CHealthBarPanel::CHealthBarPanel( vgui::Panel *pParent ) : vgui::Panel(pParent, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHealthBarPanel::~CHealthBarPanel( void )
 {
@@ -55,7 +55,7 @@ bool CHealthBarPanel::Init( KeyValues* pInitData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHealthBarPanel::SetGoodColor( int r, int g, int b, int a )
 {
@@ -63,7 +63,7 @@ void CHealthBarPanel::SetGoodColor( int r, int g, int b, int a )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHealthBarPanel::SetBadColor( int r, int g, int b, int a )
 {
@@ -71,7 +71,7 @@ void CHealthBarPanel::SetBadColor( int r, int g, int b, int a )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHealthBarPanel::SetHealth( float health )
 {
@@ -79,7 +79,7 @@ void CHealthBarPanel::SetHealth( float health )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHealthBarPanel::SetVertical( bool bVertical )
 {
@@ -87,13 +87,13 @@ void CHealthBarPanel::SetVertical( bool bVertical )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHealthBarPanel::Paint( void )
 {
 	int w, h;
 	GetSize( w, h );
-	
+
 	float frac;
 	frac = MIN( 1.0, m_Health );
 	frac = MAX( 0.0, m_Health );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -75,9 +75,9 @@ private:
 	ALuint  m_Buffer[NUM_BUFFERS_SOURCES];
 	ALuint  m_Source[1];
 	int		m_SndBufSize;
-	
+
 	void *m_sndBuffers;
-	
+
 	int			m_deviceSampleCount;
 
 	int			m_buffersSent;
@@ -94,13 +94,13 @@ IAudioDevice *Audio_CreateOpenALDevice( void )
 	{
 		wave = new CAudioDeviceOpenAL;
 	}
-	
+
 	if ( wave->Init() )
 		return wave;
-	
+
 	delete wave;
 	wave = NULL;
-	
+
 	return NULL;
 }
 
@@ -124,7 +124,7 @@ bool CAudioDeviceOpenAL::Init( void )
 	m_buffersCompleted = 0;
 	m_pauseCount = 0;
 	m_bSoundsShutdown = false;
-	
+
 	static bool first = true;
 	if ( first )
 	{
@@ -133,7 +133,7 @@ bool CAudioDeviceOpenAL::Init( void )
 		snd_legacy_surround.InstallChangeCallback( &OnSndSurroundLegacyChanged );
 		first = false;
 	}
-	
+
 	OpenWaveOut();
 
 	if ( snd_firsttime )
@@ -152,9 +152,9 @@ void CAudioDeviceOpenAL::Shutdown( void )
 //-----------------------------------------------------------------------------
 // WAV out device
 //-----------------------------------------------------------------------------
-inline bool CAudioDeviceOpenAL::ValidWaveOut( void ) const 
-{ 
-	return m_sndBuffers != 0; 
+inline bool CAudioDeviceOpenAL::ValidWaveOut( void ) const
+{
+	return m_sndBuffers != 0;
 }
 
 
@@ -165,44 +165,44 @@ void CAudioDeviceOpenAL::OpenWaveOut( void )
 {
 	m_buffersSent = 0;
 	m_buffersCompleted = 0;
-	
+
 	ALenum      error;
 	ALCcontext    *newContext = NULL;
 	ALCdevice    *newDevice = NULL;
-	
+
 	// Create a new OpenAL Device
 	// Pass NULL to specify the system‚use default output device
 	const ALCchar *initStr = (const ALCchar *)"\'( (sampling-rate 44100 ))";
-    
+
 	newDevice = alcOpenDevice(initStr);
 	if (newDevice != NULL)
 	{
 		// Create a new OpenAL Context
-		// The new context will render to the OpenAL Device just created 
+		// The new context will render to the OpenAL Device just created
 		ALCint attr[] = { ALC_FREQUENCY, DeviceDmaSpeed(), ALC_SYNC, AL_FALSE, 0 };
-		
+
 		newContext = alcCreateContext(newDevice, attr );
 		if (newContext != NULL)
 		{
 			// Make the new context the Current OpenAL Context
 			alcMakeContextCurrent(newContext);
-			
+
 			// Create some OpenAL Buffer Objects
 			alGenBuffers( NUM_BUFFERS_SOURCES, m_Buffer);
-			if((error = alGetError()) != AL_NO_ERROR) 
+			if((error = alGetError()) != AL_NO_ERROR)
 			{
 				DevMsg("Error Generating Buffers: ");
 				return;
 			}
-			
+
 			// Create some OpenAL Source Objects
 			alGenSources(1, m_Source);
-			if(alGetError() != AL_NO_ERROR) 
+			if(alGetError() != AL_NO_ERROR)
 			{
 				DevMsg("Error generating sources! \n");
 				return;
 			}
-			
+
 			alListener3f( AL_POSITION,0.0f,0.0f,0.0f);
 			int i;
 			for ( i = 0; i < 1; i++ )
@@ -211,10 +211,10 @@ void CAudioDeviceOpenAL::OpenWaveOut( void )
 				alSourcef( m_Source[i], AL_PITCH, 1.0f );
 				alSourcef( m_Source[i], AL_GAIN, 1.0f );
 			}
-			
+
 		}
 	}
-	
+
 	m_SndBufSize = NUM_BUFFERS_SOURCES*BUFFER_SIZE;
 	m_deviceSampleCount = m_SndBufSize / DeviceSampleBytes();
 
@@ -229,21 +229,21 @@ void CAudioDeviceOpenAL::OpenWaveOut( void )
 //-----------------------------------------------------------------------------
 // Closes the windows wave out device
 //-----------------------------------------------------------------------------
-void CAudioDeviceOpenAL::CloseWaveOut( void ) 
-{ 
+void CAudioDeviceOpenAL::CloseWaveOut( void )
+{
 	if ( ValidWaveOut() )
 	{
 		ALCcontext  *context = NULL;
 		ALCdevice  *device = NULL;
-	
+
 		m_bSoundsShutdown = true;
 		alSourceStop( m_Source[0] );
-		
+
 		// Delete the Sources
 		alDeleteSources(1, m_Source);
 		// Delete the Buffers
 		alDeleteBuffers(NUM_BUFFERS_SOURCES, m_Buffer);
-		
+
 		//Get active context
 		context = alcGetCurrentContext();
 		//Get device for active context
@@ -253,9 +253,9 @@ void CAudioDeviceOpenAL::CloseWaveOut( void )
 		//Release context
 		alcDestroyContext(context);
 		//Close device
-		alcCloseDevice(device);	
+		alcCloseDevice(device);
 	}
-	
+
 	if ( m_sndBuffers )
 	{
 		free( m_sndBuffers );
@@ -275,7 +275,7 @@ int CAudioDeviceOpenAL::PaintBegin( float mixAheadTime, int soundtime, int paint
 	//  endtime - target for samples in mixahead buffer at speed
 
 	unsigned int endtime = soundtime + mixAheadTime * DeviceDmaSpeed();
-	
+
 	int samps = DeviceSampleCount() >> (DeviceChannels()-1);
 
 	if ((int)(endtime - soundtime) > samps)
@@ -283,7 +283,7 @@ int CAudioDeviceOpenAL::PaintBegin( float mixAheadTime, int soundtime, int paint
 
 	if ((endtime - paintedtime) & 0x3)
 	{
-		// The difference between endtime and painted time should align on 
+		// The difference between endtime and painted time should align on
 		// boundaries of 4 samples.  This is important when upsampling from 11khz -> 44khz.
 		endtime -= (endtime - paintedtime) & 0x3;
 	}
@@ -295,15 +295,15 @@ int CAudioDeviceOpenAL::PaintBegin( float mixAheadTime, int soundtime, int paint
 #ifdef OSX
 ALvoid  alBufferDataStaticProc(const ALint bid, ALenum format, ALvoid* data, ALsizei size, ALsizei freq)
 {
-    static alBufferDataStaticProcPtr proc = NULL;
-    
-    if (proc == NULL) {
-        proc = (alBufferDataStaticProcPtr) alGetProcAddress((const ALCchar*) "alBufferDataStatic");
-    }
-    
-    if (proc)
-        proc(bid, format, data, size, freq);
-	
+	static alBufferDataStaticProcPtr proc = NULL;
+
+	if (proc == NULL) {
+		proc = (alBufferDataStaticProcPtr) alGetProcAddress((const ALCchar*) "alBufferDataStatic");
+	}
+
+	if (proc)
+		proc(bid, format, data, size, freq);
+
 }
 #endif
 
@@ -315,12 +315,12 @@ void CAudioDeviceOpenAL::PaintEnd( void )
 {
 	if ( !m_sndBuffers /*|| m_bSoundsShutdown*/ )
 		return;
-	
+
 	ALint state;
 	ALenum      error;
 	int iloop;
-	
-	int	cblocks = 4 << 1; 
+
+	int	cblocks = 4 << 1;
 	ALint processed = 1;
 	ALuint lastUnqueuedBuffer = 0;
 	ALuint unqueuedBuffer = -1;
@@ -331,13 +331,13 @@ void CAudioDeviceOpenAL::PaintEnd( void )
 		error = alGetError();
 		if (error != AL_NO_ERROR)
 			break;
-		
+
 		if ( processed > 0 )
 		{
 			lastUnqueuedBuffer = unqueuedBuffer;
 			alSourceUnqueueBuffers( m_Source[ 0 ], 1, &unqueuedBuffer );
 			error = alGetError();
-			if ( error != AL_NO_ERROR && error != AL_INVALID_NAME ) 
+			if ( error != AL_NO_ERROR && error != AL_INVALID_NAME )
 			{
 				DevMsg( "Error alSourceUnqueueBuffers %d\n", error );
 				break;
@@ -348,42 +348,42 @@ void CAudioDeviceOpenAL::PaintEnd( void )
 			}
 		}
 	}
-	
+
 	//
 	// submit a few new sound blocks
 	//
 	// 44K sound support
 	while (((m_buffersSent - m_buffersCompleted) >> SAMPLE_16BIT_SHIFT) < cblocks)
-	{	
-		int iBuf = m_buffersSent&BUFF_MASK; 
+	{
+		int iBuf = m_buffersSent&BUFF_MASK;
 #ifdef OSX
 		alBufferDataStaticProc( m_Buffer[iBuf], AL_FORMAT_STEREO16, (char *)m_sndBuffers + iBuf*BUFFER_SIZE, BUFFER_SIZE, DeviceDmaSpeed() );
 #else
 		alBufferData( m_Buffer[iBuf], AL_FORMAT_STEREO16, (char *)m_sndBuffers + iBuf*BUFFER_SIZE, BUFFER_SIZE, DeviceDmaSpeed() );
 #endif
-		if ( (error = alGetError()) != AL_NO_ERROR ) 
+		if ( (error = alGetError()) != AL_NO_ERROR )
 		{
 			DevMsg( "Error alBufferData %d %d\n", iBuf, error );
-		}  
-		
+		}
+
 		alSourceQueueBuffers( m_Source[0], 1, &m_Buffer[iBuf] );
-		if ( (error = alGetError() ) != AL_NO_ERROR ) 
+		if ( (error = alGetError() ) != AL_NO_ERROR )
 		{
 			DevMsg( "Error alSourceQueueBuffers %d %d\n", iBuf, error );
-		}  
+		}
 		m_buffersSent++;
 	}
-	
+
 	// make sure the stream is playing
 	alGetSourcei( m_Source[ 0 ], AL_SOURCE_STATE, &state);
 	if ( state != AL_PLAYING )
 	{
 		DevMsg( "Restarting sound playback\n" );
 		alSourcePlay( m_Source[0] );
-		if((error = alGetError()) != AL_NO_ERROR) 
+		if((error = alGetError()) != AL_NO_ERROR)
 		{
 			DevMsg( "Error alSourcePlay %d\n", error );
-		}  
+		}
 	}
 }
 
@@ -418,9 +418,9 @@ void CAudioDeviceOpenAL::UnPause( void )
 	{
 		m_pauseCount--;
 	}
-	
+
 	if ( m_pauseCount == 0 )
-	{ 
+	{
 		alSourcePlay( m_Source[0] );
 	}
 }
@@ -465,7 +465,7 @@ void CAudioDeviceOpenAL::MixUpsample( int sampleCount, int filtertype )
 {
 	paintbuffer_t *ppaint = MIX_GetCurrentPaintbufferPtr();
 	int ifilter = ppaint->ifilter;
-	
+
 	Assert (ifilter < CPAINTFILTERS);
 
 	S_MixBufferUpsample2x( sampleCount, ppaint->pbuf, &(ppaint->fltmem[ifilter][0]), CPAINTFILTERMEM, filtertype );
@@ -530,7 +530,7 @@ void CAudioDeviceOpenAL::TransferSamples( int end )
 {
 	int		lpaintedtime = g_paintedtime;
 	int		endtime = end;
-	
+
 	// resumes playback...
 
 	if ( m_sndBuffers )
@@ -580,25 +580,25 @@ void OnSndSurroundCvarChanged( IConVar *pVar, const char *pOldString, float flOl
 	// no need to reset the device
 	if ( flOldValue == -1 )
 		return;
-	
+
 	// get the user's previous speaker config
 	uint32 speaker_config = GetOSXSpeakerConfig();
-	
+
 	// get the new config
 	uint32 newSpeakerConfig = 0;
 	const char *speakerConfigDesc = "";
-	
+
 	ConVarRef var( pVar );
 	newSpeakerConfig = GetSpeakerConfigForSurroundMode( var.GetInt(), &speakerConfigDesc );
 	// make sure the config has changed
 	if (newSpeakerConfig == speaker_config)
 		return;
-	
+
 	// set new configuration
 	//SetWindowsSpeakerConfig(newSpeakerConfig);
-	
+
 	Msg("Speaker configuration has been changed to %s.\n", speakerConfigDesc);
-	
+
 	// restart sound system so it takes effect
 	//g_pSoundServices->RestartSoundSystem();
 }
@@ -608,4 +608,3 @@ void OnSndSurroundLegacyChanged( IConVar *pVar, const char *pOldString, float fl
 }
 
 #endif // !DEDICATED
-

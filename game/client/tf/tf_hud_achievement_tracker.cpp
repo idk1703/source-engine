@@ -54,7 +54,7 @@ void CHudAchievementTracker::OnThink()
 			m_flNextThink = gpGlobals->curtime - 0.1f;
 		}
 	}
-	
+
 	BaseClass::OnThink();
 }
 
@@ -78,7 +78,7 @@ void CHudAchievementTracker::PerformLayout()
 	int x, y;
 	GetPos( x, y );
 	if ( pPlayer && pPlayer->IsPlayerClass( TF_CLASS_ENGINEER ) )
-	{		
+	{
 		SetPos( x, m_iEngineerY );
 	}
 	else
@@ -91,7 +91,7 @@ bool CHudAchievementTracker::ShouldShowAchievement( IAchievement *pAchievement )
 {
 	if ( !BaseClass::ShouldShowAchievement( pAchievement ) )
 		return false;
-	
+
 	C_TFPlayer *pPlayer = CTFPlayer::GetLocalTFPlayer();
 	if ( !pPlayer )
 		return false;
@@ -155,7 +155,7 @@ bool CHudAchievementTracker::ShouldShowAchievement( IAchievement *pAchievement )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudAchievementTracker::ShouldDraw()
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -67,7 +67,7 @@ struct message_parms_t
 //-----------------------------------------------------
 //
 
-class CHudMessage: public CHudElement, public vgui::Panel, public ITextMessage 
+class CHudMessage: public CHudElement, public vgui::Panel, public ITextMessage
 {
 	DECLARE_CLASS_SIMPLE( CHudMessage, vgui::Panel );
 public:
@@ -148,7 +148,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void DispatchHudText( const char *pszText )
 {
@@ -178,7 +178,7 @@ DECLARE_HUD_MESSAGE( CHudMessage, HudMsg );
 ITextMessage *textmessage = NULL;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudMessage::CHudMessage( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass( NULL, "HudMessage" )
@@ -205,7 +205,7 @@ void CHudMessage::ApplySchemeSettings( IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMessage::Init(void)
 {
@@ -217,7 +217,7 @@ void CHudMessage::Init(void)
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMessage::VidInit( void )
 {
@@ -227,13 +227,13 @@ void CHudMessage::VidInit( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMessage::Reset( void )
 {
  	memset( m_pMessages, 0, sizeof( m_pMessages[0] ) * maxHUDMessages );
 	memset( m_startTime, 0, sizeof( m_startTime[0] ) * maxHUDMessages );
-	
+
 	m_gameTitleTime = 0;
 	m_pGameTitle = NULL;
 	m_bHaveMessage = false;
@@ -241,7 +241,7 @@ void CHudMessage::Reset( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CHudMessage::FadeBlend( float fadein, float fadeout, float hold, float localTime )
 {
@@ -270,7 +270,7 @@ float CHudMessage::FadeBlend( float fadein, float fadeout, float hold, float loc
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CHudMessage::XPosition( float x, int width, int totalWidth )
 {
@@ -298,7 +298,7 @@ int	CHudMessage::XPosition( float x, int width, int totalWidth )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CHudMessage::YPosition( float y, int height )
 {
@@ -324,7 +324,7 @@ int CHudMessage::YPosition( float y, int height )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMessage::MessageScanNextChar( void )
 {
@@ -406,7 +406,7 @@ void CHudMessage::SetFont( HScheme scheme, const char *pFontName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMessage::MessageScanStart( void )
 {
@@ -416,7 +416,7 @@ void CHudMessage::MessageScanStart( void )
 	case 1:
 	case 0:
 		m_parms.fadeTime = m_parms.pMessage->fadein + m_parms.pMessage->holdtime;
-		
+
 
 		if ( m_parms.time < m_parms.pMessage->fadein )
 		{
@@ -439,7 +439,7 @@ void CHudMessage::MessageScanStart( void )
 
 	case 2:
 		m_parms.fadeTime = (m_parms.pMessage->fadein * m_parms.length) + m_parms.pMessage->holdtime;
-		
+
 		if ( m_parms.time > m_parms.fadeTime && m_parms.pMessage->fadeout > 0 )
 			m_parms.fadeBlend = (((m_parms.time - m_parms.fadeTime) / m_parms.pMessage->fadeout) * 255);
 		else
@@ -449,7 +449,7 @@ void CHudMessage::MessageScanStart( void )
 
 	m_parms.font = g_hFontTrebuchet24;
 
-	if ( m_parms.vguiFontName != NULL && 
+	if ( m_parms.vguiFontName != NULL &&
 		m_parms.vguiFontName[ 0 ] )
 	{
 
@@ -458,7 +458,7 @@ void CHudMessage::MessageScanStart( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMessage::MessageDrawScan( client_textmessage_t *pMessage, float time )
 {
@@ -479,7 +479,7 @@ void CHudMessage::MessageDrawScan( client_textmessage_t *pMessage, float time )
 		}
 
 		pText = g_pVGuiLocalize->Find( localString );
-		if ( !pText ) 
+		if ( !pText )
 		{
 			g_pVGuiLocalize->ConvertANSIToUnicode( pMessage->pMessage, textBuf, sizeof( textBuf ) );
 			pText = textBuf;
@@ -522,7 +522,7 @@ void CHudMessage::MessageDrawScan( client_textmessage_t *pMessage, float time )
 	int fontHeight = vgui::surface()->GetFontTall( m_parms.font );
 
 	m_parms.totalHeight = ( m_parms.lines * fontHeight );
-	
+
 	m_parms.y = YPosition( pMessage->y, m_parms.totalHeight );
 	pText = pPerm;
 
@@ -545,10 +545,10 @@ void CHudMessage::MessageDrawScan( client_textmessage_t *pMessage, float time )
 		boxy -= flBoxPixels * 0.5f;
 
 		float flAlphaScale = clamp( ( 255.0f - (float)m_parms.fadeBlend ) / 255.0f, 0.0f, 1.0f );
-		Color boxColor( 
+		Color boxColor(
 			pMessage->boxcolor[ 0 ],
 			pMessage->boxcolor[ 1 ],
-			pMessage->boxcolor[ 2 ], 
+			pMessage->boxcolor[ 2 ],
 			pMessage->boxcolor[ 3 ] * flAlphaScale );
 
 		DrawBox( boxx, boxy, m_parms.totalWidth + 2.0f * flBoxPixels, m_parms.totalHeight + 2.0f * flBoxPixels * 0.5f, boxColor, 1.0f );
@@ -580,7 +580,7 @@ void CHudMessage::MessageDrawScan( client_textmessage_t *pMessage, float time )
 
 		if (m_parms.fadeBlend > 255)
 			m_parms.fadeBlend = 255;
-		
+
 		for ( j = 0; j < m_parms.lineLength; j++ )
 		{
 			m_parms.text = line[j];
@@ -596,16 +596,16 @@ void CHudMessage::MessageDrawScan( client_textmessage_t *pMessage, float time )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudMessage::ShouldDraw( void )
 {
-	return ( CHudElement::ShouldDraw() && 
+	return ( CHudElement::ShouldDraw() &&
 		( m_bHaveMessage || m_Messages.Count() ) );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMessage::Paint()
 {
@@ -672,7 +672,7 @@ void CHudMessage::Paint()
 			case 1:
 				endTime = m_startTime[i] + pMessage->fadein + pMessage->fadeout + pMessage->holdtime;
 				break;
-			
+
 			// Fade in is per character in scanning messages
 			case 2:
 				endTime = m_startTime[i] + (pMessage->fadein * strlen( pMessage->pMessage )) + pMessage->fadeout + pMessage->holdtime;
@@ -716,7 +716,7 @@ void CHudMessage::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMessage::MessageAdd( const char *pName )
 {
@@ -770,7 +770,7 @@ void CHudMessage::MessageAdd( const char *pName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMessage::MsgFunc_HudText( bf_read &msg )
 {
@@ -784,7 +784,7 @@ void CHudMessage::MsgFunc_HudText( bf_read &msg )
 #include "shake.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMessage::MsgFunc_GameTitle( bf_read &msg )
 {
@@ -816,7 +816,7 @@ void CHudMessage::MsgFunc_GameTitle( bf_read &msg )
 
 void CHudMessage::MsgFunc_HudMsg(bf_read &msg)
 {
-// Position command $position x y 
+// Position command $position x y
 // x & y are from 0 to 1 to be screen resolution independent
 // -1 means center in each dimension
 // Effect command $effect <effect number>
@@ -831,9 +831,9 @@ void CHudMessage::MsgFunc_HudMsg(bf_read &msg)
 // $holdtime (stay on the screen for this long)
 
 	int channel = msg.ReadByte() % MAX_NETMESSAGE;	// Pick the buffer
-	
+
 	client_textmessage_t *pNetMessage = TextMessageGet( s_NetworkMessageNames[ channel ] );
-	
+
 	if ( !pNetMessage || !pNetMessage->pMessage )
 		return;
 
@@ -867,7 +867,7 @@ void CHudMessage::MsgFunc_HudMsg(bf_read &msg)
 
 //-----------------------------------------------------------------------------
 // Purpose: Get font sizes
-// Input  : *pWidth - 
+// Input  : *pWidth -
 // Output : int
 //-----------------------------------------------------------------------------
 int CHudMessage::GetFontInfo( FONTABC *pABCs, vgui::HFont hFont )
@@ -935,9 +935,9 @@ CHudMessage::message_t *CHudMessage::AllocMessage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
-//			y - 
+// Purpose:
+// Input  : x -
+//			y -
 //-----------------------------------------------------------------------------
 void CHudMessage::SetPosition( int x, int y )
 {
@@ -954,13 +954,13 @@ void CHudMessage::SetPosition( int x, int y )
 
 //-----------------------------------------------------------------------------
 // Purpose: Adds a character to the active list, if possible
-// Input  : x - 
-//			y - 
-//			r - 
-//			g - 
-//			b - 
-//			a - 
-//			ch - 
+// Input  : x -
+//			y -
+//			r -
+//			g -
+//			b -
+//			a -
+//			ch -
 // Output : int
 //-----------------------------------------------------------------------------
 void CHudMessage::AddChar( int r, int g, int b, int a, wchar_t ch )
@@ -981,9 +981,9 @@ void CHudMessage::AddChar( int r, int g, int b, int a, wchar_t ch )
 
 //-----------------------------------------------------------------------------
 // Purpose: Determine width and height of specified string
-// Input  : *wide - 
-//			*tall - 
-//			*string - 
+// Input  : *wide -
+//			*tall -
+//			*string -
 //-----------------------------------------------------------------------------
 void CHudMessage::GetTextExtents( int *wide, int *tall, const char *string )
 {
@@ -992,7 +992,7 @@ void CHudMessage::GetTextExtents( int *wide, int *tall, const char *string )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMessage::SetFont( vgui::HFont hCustomFont )
 {
@@ -1009,7 +1009,7 @@ void CHudMessage::SetFont( vgui::HFont hCustomFont )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMessage::SetDefaultFont( void )
 {
@@ -1019,7 +1019,7 @@ void CHudMessage::SetDefaultFont( void )
 //-----------------------------------------------------------------------------
 // Purpose: Draw current text items
 //-----------------------------------------------------------------------------
-void CHudMessage::PaintCharacters() 
+void CHudMessage::PaintCharacters()
 {
 	int xpos = 0, ypos = 0;
 	vgui::surface()->DrawSetTextFont( m_hFont );

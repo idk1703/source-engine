@@ -21,7 +21,7 @@ public:
 	void	InputSetAnimationTarget( inputdata_t &inputdata );
 
 private:
-	
+
 	string_t	m_sAnimTargetname;
 	string_t	m_sAnimAttachmentName;
 
@@ -49,7 +49,7 @@ IMPLEMENT_SERVERCLASS_ST( CNPC_Puppet, DT_NPC_Puppet )
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Puppet::Precache( void )
 {
@@ -58,7 +58,7 @@ void CNPC_Puppet::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Puppet::Spawn( void )
 {
@@ -67,7 +67,7 @@ void CNPC_Puppet::Spawn( void )
 	Precache();
 
 	SetModel( STRING( GetModelName() ) );
-	
+
 	NPCInit();
 
 	SetHealth( 100 );
@@ -89,8 +89,8 @@ void CNPC_Puppet::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_Puppet::InputSetAnimationTarget( inputdata_t &inputdata )
 {
@@ -104,9 +104,9 @@ void CNPC_Puppet::InputSetAnimationTarget( inputdata_t &inputdata )
 		Warning("Failed to find animation target %s for npc_puppet (%s)\n", STRING( m_sAnimTargetname ), STRING( GetEntityName() ) );
 		return;
 	}
-	
+
 	m_hAnimationTarget = pTarget;
-	
+
 	CBaseAnimating *pAnimating = pTarget->GetBaseAnimating();
 	if ( pAnimating )
 	{

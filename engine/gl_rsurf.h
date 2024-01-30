@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -86,11 +86,11 @@ void R_InstallBrushRenderOverride( IBrushRenderer* pBrushRenderer );
 // update dlight status on a brush model
 extern int R_MarkDlightsOnBrushModel( model_t *model, IClientRenderable *pRenderable );
 
-void R_DrawBrushModel( 
-	IClientEntity *baseentity, 
-	model_t *model, 
-	const Vector& origin, 
-	const QAngle& angles, 
+void R_DrawBrushModel(
+	IClientEntity *baseentity,
+	model_t *model,
+	const Vector& origin,
+	const QAngle& angles,
 	ERenderDepthMode DepthMode, bool bDrawOpaque, bool bDrawTranslucent );
 
 void R_DrawBrushModelShadow( IClientRenderable* pRender );

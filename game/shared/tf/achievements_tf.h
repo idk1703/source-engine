@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -67,13 +67,13 @@ class CTFAchievementTeleporterTimingKills : public tBaseClass
 {
 	DECLARE_CLASS( CTFAchievementTeleporterTimingKills, CBaseTFAchievement );
 
-	void Init() 
+	void Init()
 	{
 		this->SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		this->SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;

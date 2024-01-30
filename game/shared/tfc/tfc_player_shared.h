@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -40,13 +40,13 @@ public:
 	friend class CTFCPlayer;
 	typedef CTFCPlayer OuterClass;
 #endif
-	
+
 	DECLARE_EMBEDDED_NETWORKVAR()
 	DECLARE_CLASS_NOBASE( CTFCPlayerShared );
 
 
 	CTFCPlayerShared();
-	
+
 	void Init( OuterClass *pOuter );
 
 	void SetPlayerClass( int playerclass );
@@ -69,7 +69,7 @@ public:
 	void RemoveItemFlags( int val );
 
 	CWeaponTFCBase*	GetActiveTFCWeapon() const;
-	
+
 // Vars that are networked.
 private:
 
@@ -84,9 +84,9 @@ public:
 
 
 private:
-	
+
 	OuterClass *m_pOuter;
-};			   
+};
 
 
 inline int CTFCPlayerShared::GetStateFlags() const

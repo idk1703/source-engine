@@ -32,7 +32,7 @@ public:
 	void InputSparkOnce( inputdata_t &inputdata );
 
 	bool IsSparking( void ){ return ( GetNextThink() != TICK_NEVER_THINK ); }
-	
+
 	DECLARE_DATADESC();
 
 	float			m_flDelay;

@@ -119,7 +119,7 @@ int g_nGenericErrorCounter = 0;
 void CErrorSystem::OGS_ReportSessionBlockDownloadError( const CHttpDownloader *pDownloader, const CClientRecordingSessionBlock *pBlock,
 														int nLocalFileSize, int nMaxBlock, const bool *pSizesDiffer,
 														const bool *pHashFail, uint8 *pLocalHash )
-														
+
 {
 	// Create a download error and queue for upload
 	KeyValues *pDownloadError = pDownloader->GetOgsRow( g_nGenericErrorCounter );
@@ -166,7 +166,7 @@ void CErrorSystem::OGS_ReportSessioInfoDownloadError( const CHttpDownloader *pDo
 	// Create a download error and queue for upload
 	KeyValues *pDownloadError = pDownloader->GetOgsRow( g_nGenericErrorCounter );
 	g_pClient->UploadOgsData( pDownloadError, false );
-	
+
 	// Create session info download error
 	KeyValues *pSessionInfoDownloadError = new KeyValues( "TF2ReplaySessionInfoDownloadErrors" );
 	pSessionInfoDownloadError->SetInt( "ErrorCounter", g_nGenericErrorCounter++ );
@@ -227,4 +227,3 @@ void CErrorSystem::Think()
 }
 
 //----------------------------------------------------------------------------------------
-

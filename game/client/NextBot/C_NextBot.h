@@ -15,8 +15,8 @@
 class IBodyClient
 {
 public:
-	enum ActivityType 
-	{ 
+	enum ActivityType
+	{
 		MOTION_CONTROLLED_XY	= 0x0001,	// XY position and orientation of the bot is driven by the animation.
 		MOTION_CONTROLLED_Z		= 0x0002,	// Z position of the bot is driven by the animation.
 		ACTIVITY_UNINTERRUPTIBLE= 0x0004,	// activity can't be changed until animation finishes
@@ -39,7 +39,7 @@ public:
 	C_NextBotCombatCharacter();
 	virtual ~C_NextBotCombatCharacter();
 
-public:	
+public:
 	virtual void Spawn( void );
 	virtual void UpdateClientSideAnimation( void );
 	virtual ShadowType_t ShadowCastType( void );
@@ -73,7 +73,7 @@ private:
 
 //--------------------------------------------------------------------------------------------------------
 /**
- * The C_NextBotManager manager 
+ * The C_NextBotManager manager
  */
 class C_NextBotManager
 {
@@ -85,7 +85,7 @@ public:
 	 * Execute functor for each NextBot in the system.
 	 * If a functor returns false, stop iteration early
 	 * and return false.
-	 */	
+	 */
 	template < typename Functor >
 	bool ForEachCombatCharacter( Functor &func )
 	{

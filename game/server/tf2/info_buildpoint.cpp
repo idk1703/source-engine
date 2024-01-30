@@ -18,7 +18,7 @@ const int SF_BUILDPOINT_ALLOW_VEHICLES		= 0x02;	// Allow all vehicles to be buil
 
 BEGIN_DATADESC( CInfoBuildPoint )
 
-	// keys 
+	// keys
 	DEFINE_KEYFIELD_NOT_SAVED( m_iszAllowedObject, FIELD_STRING, "AllowedObject" ),
 
 END_DATADESC()
@@ -29,7 +29,7 @@ LINK_ENTITY_TO_CLASS( info_buildpoint, CInfoBuildPoint );
 CUtlVector<CInfoBuildPoint*> g_MapDefinedBuildPoints;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoBuildPoint::Spawn( void )
 {
@@ -52,7 +52,7 @@ void CInfoBuildPoint::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoBuildPoint::UpdateOnRemove( void )
 {
@@ -97,9 +97,9 @@ bool CInfoBuildPoint::CanBuildObjectOnBuildPoint( int iPoint, int iObjectType )
 	// Manned guns?
 	if ( m_spawnflags & SF_BUILDPOINT_ALLOW_ALL_GUNS )
 	{
-		if ( (iObjectType == OBJ_MANNED_PLASMAGUN) || 
-			 (iObjectType == OBJ_MANNED_MISSILELAUNCHER) || 
-			 (iObjectType == OBJ_MANNED_SHIELD) ||  
+		if ( (iObjectType == OBJ_MANNED_PLASMAGUN) ||
+			 (iObjectType == OBJ_MANNED_MISSILELAUNCHER) ||
+			 (iObjectType == OBJ_MANNED_SHIELD) ||
 			 (iObjectType == OBJ_SENTRYGUN_PLASMA) )
 			return true;
 	}

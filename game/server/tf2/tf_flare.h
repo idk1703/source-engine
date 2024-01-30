@@ -47,7 +47,7 @@ public:
 	CNetworkVar( float, m_flDuration );		// when will the flare burn out?
 	CNetworkVar( float, m_flScale );
 	float			m_flNextDamage;
-	
+
 	bool			m_bFading;
 	CNetworkVar( bool, m_bLight );
 	CNetworkVar( bool, m_bSmoke );

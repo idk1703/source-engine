@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -34,7 +34,7 @@ public:
 
 public:
 	CNetworkVector( m_vecOrigin );
-	CNetworkVector( m_vecDirection );											
+	CNetworkVector( m_vecDirection );
 	CNetworkVar( int, m_nEntity );
 	CNetworkVar( int, m_nIndex );
 	CNetworkVar( unsigned char, m_chMaterialType );
@@ -70,17 +70,17 @@ CTEFootprintDecal::~CTEFootprintDecal( void )
 }
 
 //-----------------------------------------------------------------------------
-// places a footprint decal 
+// places a footprint decal
 //-----------------------------------------------------------------------------
-								    
-void TE_FootprintDecal( IRecipientFilter& filter, float delay, 
-					    const Vector *origin, const Vector *right, int entity, int index, 
+
+void TE_FootprintDecal( IRecipientFilter& filter, float delay,
+					    const Vector *origin, const Vector *right, int entity, int index,
 					    unsigned char materialType )
 {
 	Assert( origin );
 	g_TEFootprintDecal.m_vecOrigin = *origin;
 	g_TEFootprintDecal.m_vecDirection	= *right;
-	g_TEFootprintDecal.m_nEntity		= entity;	
+	g_TEFootprintDecal.m_nEntity		= entity;
 	g_TEFootprintDecal.m_nIndex			= index;
 	g_TEFootprintDecal.m_chMaterialType	= materialType;
 

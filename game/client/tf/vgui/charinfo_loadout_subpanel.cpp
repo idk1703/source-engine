@@ -30,7 +30,7 @@ DECLARE_BUILD_FACTORY( CImageButton );
 ConVar tf_explanations_charinfopanel( "tf_explanations_charinfopanel", "0", FCVAR_ARCHIVE, "Whether the user has seen explanations for this panel." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CImageButton::CImageButton( vgui::Panel *parent, const char *panelName ) : BaseClass( parent, panelName, "" )
 {
@@ -45,7 +45,7 @@ CImageButton::CImageButton( vgui::Panel *parent, const char *panelName ) : BaseC
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImageButton::ApplySettings( KeyValues *inResourceData )
 {
@@ -105,7 +105,7 @@ void CImageButton::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImageButton::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -137,7 +137,7 @@ void CImageButton::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImageButton::SetActiveImage( const char *imagename )
 {
@@ -149,7 +149,7 @@ void CImageButton::SetActiveImage( const char *imagename )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImageButton::SetInactiveImage( const char *imagename )
 {
@@ -161,7 +161,7 @@ void CImageButton::SetInactiveImage( const char *imagename )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImageButton::SetActiveImage( vgui::IImage *image )
 {
@@ -188,7 +188,7 @@ void CImageButton::SetActiveImage( vgui::IImage *image )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImageButton::SetInactiveImage( vgui::IImage *image )
 {
@@ -215,7 +215,7 @@ void CImageButton::SetInactiveImage( vgui::IImage *image )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImageButton::OnSizeChanged( int newWide, int newTall )
 {
@@ -232,7 +232,7 @@ void CImageButton::OnSizeChanged( int newWide, int newTall )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImageButton::Paint()
 {
@@ -246,7 +246,7 @@ void CImageButton::Paint()
 			m_pActiveImage->Paint();
 		}
 	}
-	else 
+	else
 	{
 		// draw the inactive image
 		if ( m_pInactiveImage )
@@ -290,7 +290,7 @@ int g_nLoadoutClassOrder[] =
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCharInfoLoadoutSubPanel::CCharInfoLoadoutSubPanel(Panel *parent) : vgui::PropertyPage(parent, "CharInfoLoadoutSubPanel")
 {
@@ -347,14 +347,14 @@ CCharInfoLoadoutSubPanel::CCharInfoLoadoutSubPanel(Panel *parent) : vgui::Proper
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCharInfoLoadoutSubPanel::~CCharInfoLoadoutSubPanel()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -385,7 +385,7 @@ void CCharInfoLoadoutSubPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::OnPageShow( void )
 {
@@ -409,7 +409,7 @@ void CCharInfoLoadoutSubPanel::OnPageShow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::OnSelectionStarted( void )
 {
@@ -417,7 +417,7 @@ void CCharInfoLoadoutSubPanel::OnSelectionStarted( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::OnSelectionEnded( void )
 {
@@ -425,7 +425,7 @@ void CCharInfoLoadoutSubPanel::OnSelectionEnded( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::OnCancelSelection( void )
 {
@@ -437,7 +437,7 @@ void CCharInfoLoadoutSubPanel::OnCancelSelection( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::OnCharInfoClosing( void )
 {
@@ -460,7 +460,7 @@ void CCharInfoLoadoutSubPanel::OnCharInfoClosing( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::OnOpenCrafting( void )
 {
@@ -468,21 +468,21 @@ void CCharInfoLoadoutSubPanel::OnOpenCrafting( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::OnCraftingClosed( void )
 {
 	PostMessage( m_pCraftingPanel, new KeyValues("Closing") );
 	m_iShowingPanel = CHAP_LOADOUT;
 	m_iPrevShowingPanel = CHAP_CRAFTING;
-	m_flStartExplanationsAt = 0; 
-	m_iCurrentClassIndex = TF_CLASS_UNDEFINED; 
+	m_flStartExplanationsAt = 0;
+	m_iCurrentClassIndex = TF_CLASS_UNDEFINED;
 	UpdateModelPanels();
 	RequestFocus();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::OnArmoryClosed( void )
 {
@@ -490,14 +490,14 @@ void CCharInfoLoadoutSubPanel::OnArmoryClosed( void )
 	PostMessage( m_pArmoryPanel, new KeyValues("Closing") );
 	m_iShowingPanel = m_iPrevShowingPanel;
 	m_iPrevShowingPanel = CHAP_ARMORY;
-	m_flStartExplanationsAt = 0; 
-	m_iCurrentClassIndex = TF_CLASS_UNDEFINED; 
+	m_flStartExplanationsAt = 0;
+	m_iCurrentClassIndex = TF_CLASS_UNDEFINED;
 	UpdateModelPanels();
 	RequestFocus();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::OnCommand( const char *command )
 {
@@ -553,7 +553,7 @@ void CCharInfoLoadoutSubPanel::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::RequestInventoryRefresh()
 {
@@ -576,7 +576,7 @@ void CCharInfoLoadoutSubPanel::RequestInventoryRefresh()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::SetClassIndex( int iClassIndex, bool bOpenClassLoadout )
 {
@@ -589,7 +589,7 @@ void CCharInfoLoadoutSubPanel::SetClassIndex( int iClassIndex, bool bOpenClassLo
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::SetTeamIndex( int iTeam )
 {
@@ -599,14 +599,14 @@ void CCharInfoLoadoutSubPanel::SetTeamIndex( int iTeam )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::OpenSubPanel( charinfo_activepanels_t iPanel )
 {
-	m_flStartExplanationsAt = 0; 
-	m_iCurrentClassIndex = TF_CLASS_UNDEFINED; 
+	m_flStartExplanationsAt = 0;
+	m_iCurrentClassIndex = TF_CLASS_UNDEFINED;
 	m_iPrevShowingPanel = m_iShowingPanel;
-	m_iShowingPanel = iPanel; 
+	m_iShowingPanel = iPanel;
 
 	UpdateModelPanels();
 
@@ -614,7 +614,7 @@ void CCharInfoLoadoutSubPanel::OpenSubPanel( charinfo_activepanels_t iPanel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::UpdateModelPanels( bool bOpenClassLoadout )
 {
@@ -670,7 +670,7 @@ void CCharInfoLoadoutSubPanel::UpdateModelPanels( bool bOpenClassLoadout )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::PerformLayout( void )
 {
@@ -690,13 +690,13 @@ void CCharInfoLoadoutSubPanel::PerformLayout( void )
 	if ( !TFInventoryManager()->GetLocalTFInventory()->RetrievedInventoryFromSteam() )
 	{
 		bool bLoggedIntoSteam = steamapicontext && steamapicontext->SteamUser() && steamapicontext->SteamUser()->BLoggedOn();
-		if ( m_pItemsLabel ) 
+		if ( m_pItemsLabel )
 			m_pNoGCLabel->SetVisible( bLoggedIntoSteam );
-		if ( m_pNoSteamLabel ) 
+		if ( m_pNoSteamLabel )
 			m_pNoSteamLabel->SetVisible( !bLoggedIntoSteam );
-		if ( m_pSelectLabel ) 
+		if ( m_pSelectLabel )
 			m_pSelectLabel->SetVisible( false );
-		if ( m_pLoadoutChangesLabel) 
+		if ( m_pLoadoutChangesLabel)
 			m_pLoadoutChangesLabel->SetVisible( false );
 
 		for ( int i = 0; i < CHSB_NUM_BUTTONS; i++ )
@@ -707,7 +707,7 @@ void CCharInfoLoadoutSubPanel::PerformLayout( void )
 	}
 	else
 	{
-		if ( m_pNoSteamLabel ) 
+		if ( m_pNoSteamLabel )
 			m_pNoSteamLabel->SetVisible( false );
 		if ( m_pNoGCLabel )
 			m_pNoGCLabel->SetVisible( false );
@@ -723,14 +723,14 @@ void CCharInfoLoadoutSubPanel::PerformLayout( void )
 		{
 			if ( m_pSelectLabel )
 				m_pSelectLabel->SetPos( 0, m_iSelectLabelY );
-			if ( m_pLoadoutChangesLabel ) 
+			if ( m_pLoadoutChangesLabel )
 				m_pLoadoutChangesLabel->SetVisible( false );
 		}
 		else
 		{
-			if ( m_pSelectLabel ) 
+			if ( m_pSelectLabel )
 				m_pSelectLabel->SetPos( 0, m_iSelectLabelOnChangesY );
-			if ( m_pLoadoutChangesLabel ) 
+			if ( m_pLoadoutChangesLabel )
 				m_pLoadoutChangesLabel->SetVisible( true );
 		}
 	}
@@ -743,7 +743,7 @@ void CCharInfoLoadoutSubPanel::PerformLayout( void )
 
 	m_bClassLayoutDirty = false;
 
-	// Now Layout the class images. 
+	// Now Layout the class images.
 	for ( int iPanel = 0; iPanel < ARRAYSIZE( g_nLoadoutClassOrder ); iPanel++ )
 	{
 		int i = g_nLoadoutClassOrder[iPanel];
@@ -775,7 +775,7 @@ void CCharInfoLoadoutSubPanel::PerformLayout( void )
 	}
 
 	// We need to do our own management of cursor arming in the buttons, because the curserentered/exited code can't
-	// deal with the way we resize the buttons without the cursor moving. 
+	// deal with the way we resize the buttons without the cursor moving.
 	int iBestButton = -1;
 	int iBestZ = 0;
 	int x = m_iMouseXPos, y = m_iMouseYPos;
@@ -938,7 +938,7 @@ void CCharInfoLoadoutSubPanel::UpdateLabelFromSubButton( int nButton )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::OnTick( void )
 {
@@ -997,7 +997,7 @@ void CCharInfoLoadoutSubPanel::OnCursorMoved( int x, int y )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Handles setting the highlighted class for both mouse and keyboard 
+// Purpose: Handles setting the highlighted class for both mouse and keyboard
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::RecalculateTargetClassLayoutAtPos( int x, int y )
 {
@@ -1051,11 +1051,11 @@ void CCharInfoLoadoutSubPanel::RecalculateTargetClassLayoutAtPos( int x, int y )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharInfoLoadoutSubPanel::RecalculateTargetClassLayout( void )
 {
-	// Now Layout the class images. 
+	// Now Layout the class images.
 	for ( int i = TF_FIRST_NORMAL_CLASS; i <= NUM_CLASSES_IN_LOADOUT_PANEL; i++ )
 	{
 		int iIndex = GetRemappedMenuIndexForClass(i);
@@ -1132,11 +1132,11 @@ void CCharInfoLoadoutSubPanel::MoveCharacterSelection( int nDirection )
 
 void CCharInfoLoadoutSubPanel::OnKeyCodeTyped(vgui::KeyCode code)
 {
-	// turn off key handling in this panel when we're showing a loadout 
+	// turn off key handling in this panel when we're showing a loadout
 	// for one class
 	if ( m_iCurrentClassIndex != TF_CLASS_UNDEFINED )
 	{
-		// let escape and B (aka "go back") through so we 
+		// let escape and B (aka "go back") through so we
 		// can actually get out of the loadout screen
 		if ( code == KEY_ESCAPE )
 		{
@@ -1152,11 +1152,11 @@ void CCharInfoLoadoutSubPanel::OnKeyCodePressed(vgui::KeyCode code)
 {
 	ButtonCode_t nButtonCode = GetBaseButtonCode( code );
 
-	// turn off key handling in this panel when we're showing a loadout 
+	// turn off key handling in this panel when we're showing a loadout
 	// for one class
 	if( m_iCurrentClassIndex != TF_CLASS_UNDEFINED )
 	{
-		// let escape and B (aka "go back") through so we 
+		// let escape and B (aka "go back") through so we
 		// can actually get out of the loadout screen
 		if ( nButtonCode == KEY_XBUTTON_B )
 		{
@@ -1165,7 +1165,7 @@ void CCharInfoLoadoutSubPanel::OnKeyCodePressed(vgui::KeyCode code)
 		return;
 	}
 
-	if ( nButtonCode == KEY_XBUTTON_LEFT || 
+	if ( nButtonCode == KEY_XBUTTON_LEFT ||
 		 nButtonCode == KEY_XSTICK1_LEFT ||
 		 nButtonCode == KEY_XSTICK2_LEFT ||
 		 nButtonCode == STEAMCONTROLLER_DPAD_LEFT ||
@@ -1181,7 +1181,7 @@ void CCharInfoLoadoutSubPanel::OnKeyCodePressed(vgui::KeyCode code)
 		}
 		return;
 	}
-	else if ( nButtonCode == KEY_XBUTTON_RIGHT || 
+	else if ( nButtonCode == KEY_XBUTTON_RIGHT ||
 			  nButtonCode == KEY_XSTICK1_RIGHT ||
 			  nButtonCode == KEY_XSTICK2_RIGHT ||
 			  nButtonCode == STEAMCONTROLLER_DPAD_RIGHT ||
@@ -1197,7 +1197,7 @@ void CCharInfoLoadoutSubPanel::OnKeyCodePressed(vgui::KeyCode code)
 		}
 		return;
 	}
-	else if ( nButtonCode == KEY_XBUTTON_UP || 
+	else if ( nButtonCode == KEY_XBUTTON_UP ||
 			  nButtonCode == KEY_XSTICK1_UP ||
 			  nButtonCode == KEY_XSTICK2_UP ||
 			  nButtonCode == STEAMCONTROLLER_DPAD_UP ||
@@ -1217,7 +1217,7 @@ void CCharInfoLoadoutSubPanel::OnKeyCodePressed(vgui::KeyCode code)
 		}
 		return;
 	}
-	else if ( nButtonCode == KEY_XBUTTON_DOWN || 
+	else if ( nButtonCode == KEY_XBUTTON_DOWN ||
 			  nButtonCode == KEY_XSTICK1_DOWN ||
 			  nButtonCode == KEY_XSTICK2_DOWN ||
 			  nButtonCode == STEAMCONTROLLER_DPAD_DOWN ||

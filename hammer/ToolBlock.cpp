@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,7 +32,7 @@ class CToolBlockMessageWnd : public CWnd
 		//{{AFX_MSG_MAP(CToolBlockMessageWnd)
 		afx_msg void OnCreateObject();
 		//}}AFX_MSG
-	
+
 		DECLARE_MESSAGE_MAP()
 
 	private:
@@ -62,9 +62,9 @@ bool CToolBlockMessageWnd::Create(void)
 {
 	WNDCLASS wndcls;
 	memset(&wndcls, 0, sizeof(WNDCLASS));
-    wndcls.lpfnWndProc   = AfxWndProc;
-    wndcls.hInstance     = AfxGetInstanceHandle();
-    wndcls.lpszClassName = g_pszClassName;
+	wndcls.lpfnWndProc   = AfxWndProc;
+	wndcls.hInstance     = AfxGetInstanceHandle();
+	wndcls.lpszClassName = g_pszClassName;
 
 	if (!AfxRegisterClass(&wndcls))
 	{
@@ -88,7 +88,7 @@ void CToolBlockMessageWnd::PreMenu2D(CToolBlock *pToolBlock, CMapView2D *pView)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CToolBlockMessageWnd::OnCreateObject()
 {
@@ -120,7 +120,7 @@ CToolBlock::~CToolBlock(void)
 // Input  : Per CWnd::OnKeyDown.
 // Output : Returns true if the message was handled, false if not.
 //-----------------------------------------------------------------------------
-bool CToolBlock::OnKeyDown2D(CMapView2D *pView, UINT nChar, UINT nRepCnt, UINT nFlags) 
+bool CToolBlock::OnKeyDown2D(CMapView2D *pView, UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	switch (nChar)
 	{
@@ -150,7 +150,7 @@ bool CToolBlock::OnKeyDown2D(CMapView2D *pView, UINT nChar, UINT nRepCnt, UINT n
 // Input  : Per CWnd::OnContextMenu.
 // Output : Returns true if the message was handled, false if not.
 //-----------------------------------------------------------------------------
-bool CToolBlock::OnContextMenu2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoint) 
+bool CToolBlock::OnContextMenu2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoint)
 {
 	static CMenu menu, menuCreate;
 	static bool bInit = false;
@@ -192,7 +192,7 @@ bool CToolBlock::OnContextMenu2D(CMapView2D *pView, UINT nFlags, const Vector2D 
 // Input  : Per CWnd::OnLButtonDown.
 // Output : Returns true if the message was handled, false if not.
 //-----------------------------------------------------------------------------
-bool CToolBlock::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint) 
+bool CToolBlock::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
 	Tool3D::OnLMouseDown3D(pView, nFlags, vPoint);
 
@@ -217,7 +217,7 @@ bool CToolBlock::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &
 // Input  : Per CWnd::OnLButtonDown.
 // Output : Returns true if the message was handled, false if not.
 //-----------------------------------------------------------------------------
-bool CToolBlock::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoint) 
+bool CToolBlock::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoint)
 {
 	Tool3D::OnLMouseDown2D(pView, nFlags, vPoint);
 
@@ -227,11 +227,11 @@ bool CToolBlock::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &
 		if ( HitTest( pView, vPoint, true ) )
 		{
 			// just update current block
-            StartTranslation( pView, vPoint, m_LastHitTestHandle );
+			StartTranslation( pView, vPoint, m_LastHitTestHandle );
 			return true;
 		}
 	}
-		
+
 	return true;
 }
 
@@ -250,7 +250,7 @@ bool CToolBlock::OnLMouseUp2D(CMapView2D *pView, UINT nFlags, const Vector2D &vP
 	}
 
 	m_pDocument->UpdateStatusbar();
-	
+
 	return true;
 }
 
@@ -279,7 +279,7 @@ bool CToolBlock::OnLMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vP
 // Input  : Per CWnd::OnMouseMove.
 // Output : Returns true if the message was handled, false if not.
 //-----------------------------------------------------------------------------
-bool CToolBlock::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoint) 
+bool CToolBlock::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoint)
 {
 	vgui::HCursor hCursor = vgui::dc_arrow;
 
@@ -287,14 +287,14 @@ bool CToolBlock::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &v
 	unsigned int uConstraints = GetConstraints( nFlags );
 
 	Tool3D::OnMouseMove2D(pView, nFlags, vPoint);
-							    
+
 	//
 	//
 	// Convert to world coords.
 	//
 	Vector vecWorld;
 	pView->ClientToWorld(vecWorld, vPoint);
-	
+
 	//
 	// Update status bar position display.
 	//
@@ -305,7 +305,7 @@ bool CToolBlock::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &v
 
 	sprintf(szBuf, " @%.0f, %.0f ", vecWorld[pView->axHorz], vecWorld[pView->axVert]);
 	SetStatusText(SBI_COORDS, szBuf);
-	
+
 	if ( IsTranslating() )
 	{
 		Tool3D::UpdateTranslation( pView, vPoint, uConstraints);
@@ -319,7 +319,7 @@ bool CToolBlock::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &v
 
 		Vector vecStart;
 		pView->ClientToWorld(vecStart, m_vMouseStart[MOUSE_LEFT] );
-		
+
 		// Snap it to the grid.
 		if ( uConstraints & constrainSnap )
 			m_pDocument->Snap( vecStart, uConstraints);
@@ -340,7 +340,7 @@ bool CToolBlock::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &v
 			hCursor = UpdateCursor( pView, m_LastHitTestHandle, m_TranslateMode );
 		}
 	}
-	
+
 
 	if ( hCursor !=  vgui::dc_none )
 		pView->SetCursor( hCursor );
@@ -369,7 +369,7 @@ bool CToolBlock::OnMouseMove3D(CMapView3D *pView, UINT nFlags, const Vector2D &v
 // Input  : Per CWnd::OnKeyDown.
 // Output : Returns true if the message was handled, false if not.
 //-----------------------------------------------------------------------------
-bool CToolBlock::OnKeyDown3D(CMapView3D *pView, UINT nChar, UINT nRepCnt, UINT nFlags) 
+bool CToolBlock::OnKeyDown3D(CMapView3D *pView, UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	switch (nChar)
 	{
@@ -483,10 +483,10 @@ void CToolBlock::CreateMapObject(CMapView *pView)
 			{
 				break;
 			}
-			
+
 			case VIEW2D_YZ:
 			{
- 				angles[1] = 90.f;
+				angles[1] = 90.f;
 				pObject->TransRotate(center, angles);
 				break;
 			}
@@ -510,8 +510,3 @@ void CToolBlock::CreateMapObject(CMapView *pView)
 	SetEmpty();
 	ResetBounds();
 }
-
-
-
-
-

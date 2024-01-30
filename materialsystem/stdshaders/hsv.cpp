@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,7 +22,7 @@ BEGIN_VS_SHADER_FLAGS( HSV, "Help for HSV", SHADER_NOT_EDITABLE )
 	SHADER_INIT
 	{
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		// Requires DX9 + above

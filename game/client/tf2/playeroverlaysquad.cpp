@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -16,10 +16,10 @@
 #include <vgui/IVGui.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
-CHudPlayerOverlaySquad::CHudPlayerOverlaySquad( CHudPlayerOverlay *baseOverlay, const char *squadname ) : 
+CHudPlayerOverlaySquad::CHudPlayerOverlaySquad( CHudPlayerOverlay *baseOverlay, const char *squadname ) :
 vgui::Label( (vgui::Panel *)NULL, "OverlaySquad", squadname )
 {
 	m_pBaseOverlay = baseOverlay;
@@ -33,7 +33,7 @@ vgui::Label( (vgui::Panel *)NULL, "OverlaySquad", squadname )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudPlayerOverlaySquad::~CHudPlayerOverlaySquad( void )
 {
@@ -41,7 +41,7 @@ CHudPlayerOverlaySquad::~CHudPlayerOverlaySquad( void )
 
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CHudPlayerOverlaySquad::Init( KeyValues* pInitData )
 {
@@ -73,8 +73,8 @@ void CHudPlayerOverlaySquad::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 void CHudPlayerOverlaySquad::SetSquad( const char *squadname )
 {
@@ -83,7 +83,7 @@ void CHudPlayerOverlaySquad::SetSquad( const char *squadname )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudPlayerOverlaySquad::Paint()
 {
@@ -107,9 +107,9 @@ void CHudPlayerOverlaySquad::OnCursorMoved(int x,int y)
 
 	LocalToScreen( x, y );
 
-	vgui::ivgui()->PostMessage( 
-		GetParent()->GetVPanel(), 
-		new KeyValues( "CursorMoved", "xpos", x, "ypos", y ), 
+	vgui::ivgui()->PostMessage(
+		GetParent()->GetVPanel(),
+		new KeyValues( "CursorMoved", "xpos", x, "ypos", y ),
 		GetVPanel()  );
 }
 
@@ -121,9 +121,9 @@ void CHudPlayerOverlaySquad::OnMousePressed(vgui::MouseCode code)
 	if ( !GetParent() )
 		return;
 
-	vgui::ivgui()->PostMessage( 
-		GetParent()->GetVPanel(), 
-		new KeyValues( "MousePressed", "code", code ), 
+	vgui::ivgui()->PostMessage(
+		GetParent()->GetVPanel(),
+		new KeyValues( "MousePressed", "code", code ),
 		GetVPanel()  );
 }
 
@@ -135,9 +135,9 @@ void CHudPlayerOverlaySquad::OnMouseDoublePressed(vgui::MouseCode code)
 	if ( !GetParent() )
 		return;
 
-	vgui::ivgui()->PostMessage( 
-		GetParent()->GetVPanel(), 
-		new KeyValues( "MouseDoublePressed", "code", code ), 
+	vgui::ivgui()->PostMessage(
+		GetParent()->GetVPanel(),
+		new KeyValues( "MouseDoublePressed", "code", code ),
 		GetVPanel()  );
 }
 
@@ -149,9 +149,9 @@ void CHudPlayerOverlaySquad::OnMouseReleased(vgui::MouseCode code)
 	if ( !GetParent() )
 		return;
 
-	vgui::ivgui()->PostMessage( 
-		GetParent()->GetVPanel(), 
-		new KeyValues( "MouseReleased", "code", code ), 
+	vgui::ivgui()->PostMessage(
+		GetParent()->GetVPanel(),
+		new KeyValues( "MouseReleased", "code", code ),
 		GetVPanel()  );
 }
 
@@ -163,9 +163,9 @@ void CHudPlayerOverlaySquad::OnMouseWheeled(int delta)
 	if ( !GetParent() )
 		return;
 
-	vgui::ivgui()->PostMessage( 
-		GetParent()->GetVPanel(), 
-		new KeyValues( "MouseWheeled", "delta", delta ), 
+	vgui::ivgui()->PostMessage(
+		GetParent()->GetVPanel(),
+		new KeyValues( "MouseWheeled", "delta", delta ),
 		GetVPanel()  );
 }
 

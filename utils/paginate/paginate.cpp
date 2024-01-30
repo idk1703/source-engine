@@ -51,12 +51,12 @@ char *va( const char *fmt, ... )
 }
 
 SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
-{	
+{
 	spewed = true;
 
 	printf( "%s", pMsg );
 	OutputDebugString( pMsg );
-	
+
 	if ( type == SPEW_ERROR )
 	{
 		printf( "\n" );
@@ -67,10 +67,10 @@ SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : depth - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : depth -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void vprint( int depth, const char *fmt, ... )
 {
@@ -129,7 +129,7 @@ void Con_Printf( const char *fmt, ... )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void printusage( void )
 {
@@ -218,7 +218,7 @@ void Paginate_CreatePath(const char *path)
 {
 	char temppath[512];
 	Q_strncpy( temppath, path, sizeof(temppath) );
-	
+
 	for (char *ofs = temppath+1 ; *ofs ; ofs++)
 	{
 		if (*ofs == '/' || *ofs == '\\')
@@ -257,7 +257,7 @@ void PaginateFile( int startpage, PageStats_t *stats, char const *filename )
 	}
 
 	FILE *outfile = NULL;
-	
+
 	if ( !preview )
 	{
 		outfile = fopen( outfn, "wb" );
@@ -267,7 +267,7 @@ void PaginateFile( int startpage, PageStats_t *stats, char const *filename )
 			return;
 		}
 	}
-	
+
 
 	fseek( fp, 0, SEEK_END );
 	int size = ftell( fp );
@@ -285,7 +285,7 @@ void PaginateFile( int startpage, PageStats_t *stats, char const *filename )
 	stats->totalbytes += size;
 
 	char *in = buf;
-	
+
 	int numlines = stats->linecount;
 	int chars_on_line = 0;
 
@@ -414,7 +414,7 @@ void PaginateFilesInDirectory( char const *rootdir )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CheckLogFile( void )
 {
@@ -432,9 +432,9 @@ void PrintHeader()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : argc - 
-//			argv[] - 
+// Purpose:
+// Input  : argc -
+//			argv[] -
 // Output : int
 //-----------------------------------------------------------------------------
 int main( int argc, char* argv[] )

@@ -25,13 +25,13 @@ class CHapticsStubbed : public IHaptics
 {
 public:
 public: // Initialization.
-	virtual bool Initialize(IVEngineClient* newengine, 
-		IViewRender *newview, 
-		vgui::IInputInternal* newinput, 
+	virtual bool Initialize(IVEngineClient* newengine,
+		IViewRender *newview,
+		vgui::IInputInternal* newinput,
 		CGlobalVarsBase* newgpGlobals,
-		CreateInterfaceFn newengineFactory, 
+		CreateInterfaceFn newengineFactory,
 		void *IMEWindow,
-		IFileSystem* filesystem, 
+		IFileSystem* filesystem,
 		IEngineVGui* newvgui,
 		ActivityList_IndexForName_t actIndexForName,
 		ActivityList_NameForIndex_t actNameForIndex)
@@ -92,7 +92,7 @@ void HapticProcessSound(const char* soundname, int entIndex);
 	void UpdateAvatarEffect(void);
 	void HapticsExitedVehicle(C_BaseEntity* vehicle, C_BaseCombatCharacter *pPassenger );
 	void HapticsEnteredVehicle(C_BaseEntity* vehicle, C_BaseCombatCharacter *pPassenger );
-	
+
 	//bool value true if user is using a haptic device.
 	extern ConVar hap_HasDevice;
 #else

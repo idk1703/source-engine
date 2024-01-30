@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,33 +34,33 @@ class TreeView : public Panel
 	DECLARE_CLASS_SIMPLE( TreeView, Panel );
 
 public:
-    TreeView(Panel *parent, const char *panelName);
-    ~TreeView();
+	TreeView(Panel *parent, const char *panelName);
+	~TreeView();
 
-    void SetSortFunc(TreeViewSortFunc_t pSortFunc);
+	void SetSortFunc(TreeViewSortFunc_t pSortFunc);
 
-    virtual int AddItem(KeyValues *data, int parentItemIndex);
+	virtual int AddItem(KeyValues *data, int parentItemIndex);
 
 	virtual int GetRootItemIndex();
 	virtual int GetNumChildren( int itemIndex );
 	virtual int GetChild( int iParentItemIndex, int iChild ); // between 0 and GetNumChildren( iParentItemIndex ).
 
-    virtual int GetItemCount(void);
-    virtual KeyValues *GetItemData(int itemIndex);
-     virtual void RemoveItem(int itemIndex, bool bPromoteChildren, bool bRecursivelyRemove = false );
-    virtual void RemoveAll();
-    virtual bool ModifyItem(int itemIndex, KeyValues *data);
+	virtual int GetItemCount(void);
+	virtual KeyValues *GetItemData(int itemIndex);
+	virtual void RemoveItem(int itemIndex, bool bPromoteChildren, bool bRecursivelyRemove = false );
+	virtual void RemoveAll();
+	virtual bool ModifyItem(int itemIndex, KeyValues *data);
 	virtual int GetItemParent(int itemIndex);
 
-    virtual void SetFont(HFont font);
+	virtual void SetFont(HFont font);
 
-    virtual void SetImageList(ImageList *imageList, bool deleteImageListWhenDone);
+	virtual void SetImageList(ImageList *imageList, bool deleteImageListWhenDone);
 
 	void SetAllowMultipleSelections( bool state );
 	bool IsMultipleSelectionAllowed() const;
 
 	virtual void ClearSelection();
-    virtual void AddSelectedItem( int itemIndex, bool clearCurrentSelection, bool requestFocus = true, bool bMakeItemVisible = true );
+	virtual void AddSelectedItem( int itemIndex, bool clearCurrentSelection, bool requestFocus = true, bool bMakeItemVisible = true );
 	virtual void RemoveSelectedItem( int itemIndex );
 	virtual void SelectAll();
 
@@ -85,15 +85,15 @@ public:
 	virtual bool IsItemIDValid(int itemIndex);
 
 	// item iterators
-	// iterate from [0..GetHighestItemID()], 
+	// iterate from [0..GetHighestItemID()],
 	// and check each with IsItemIDValid() before using
 	virtual int GetHighestItemID();
 
-    virtual void ExpandItem(int itemIndex, bool bExpand);
+	virtual void ExpandItem(int itemIndex, bool bExpand);
 	virtual bool IsItemExpanded( int itemIndex );
 
-    virtual void MakeItemVisible(int itemIndex);
-	
+	virtual void MakeItemVisible(int itemIndex);
+
 	// This tells which of the visible items is the top one.
 	virtual void GetVBarInfo( int &top, int &nItemsVisible, bool& hbarVisible );
 
@@ -114,7 +114,7 @@ public:
 		"TreeViewItemDeselected" int "itemIndex"
 			called when item is deselected
 	*/
-    int GetRowHeight();
+	int GetRowHeight();
 	int GetVisibleMaxWidth();
 	virtual void OnMousePressed(MouseCode code);
 
@@ -153,13 +153,13 @@ protected:
 
 	// overrides
 	virtual void OnMouseWheeled(int delta);
-	virtual void OnSizeChanged(int wide, int tall); 
+	virtual void OnSizeChanged(int wide, int tall);
 	virtual void ApplySchemeSettings(IScheme *pScheme);
 	MESSAGE_FUNC_INT( OnSliderMoved, "ScrollBarSliderMoved", position );
 	virtual void SetBgColor( Color color );
 
 private:
-    friend class TreeNode;
+	friend class TreeNode;
 	friend class TreeNodeText;
 
 	TreeNode* GetItem( int itemIndex );
@@ -170,7 +170,7 @@ private:
 	void CleanUpImageList( );
 
 	// to be accessed by TreeNodes
-    IImage* GetImage(int index);        
+	IImage* GetImage(int index);
 
 	// bools
 	bool m_bAllowLabelEditing : 1;
@@ -181,18 +181,18 @@ private:
 	bool m_bMultipleItemDragging : 1;
 	bool m_bAllowMultipleSelections : 1;
 
-    // cross reference - no hierarchy ordering in this list
-    CUtlLinkedList<TreeNode *, int>   m_NodeList;
-   	ScrollBar					*m_pHorzScrollBar, *m_pVertScrollBar;
+	// cross reference - no hierarchy ordering in this list
+	CUtlLinkedList<TreeNode *, int>   m_NodeList;
+		ScrollBar					*m_pHorzScrollBar, *m_pVertScrollBar;
 	int							m_nRowHeight;
 
 	ImageList					*m_pImageList;
-    TreeNode					*m_pRootNode;
-    TreeViewSortFunc_t			m_pSortFunc;
-    HFont						m_Font;
+	TreeNode					*m_pRootNode;
+	TreeViewSortFunc_t			m_pSortFunc;
+	HFont						m_Font;
 
-    CUtlVector< TreeNode * >	m_SelectedItems;
-    TreeViewSubPanel			*m_pSubPanel;
+	CUtlVector< TreeNode * >	m_SelectedItems;
+	TreeViewSubPanel			*m_pSubPanel;
 
 	int							m_nMostRecentlySelectedItem;
 	bool						m_bScrollbarExternal[ 2 ]; // 0 = vert, 1 = horz

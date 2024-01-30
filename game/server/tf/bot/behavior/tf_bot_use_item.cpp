@@ -70,4 +70,3 @@ void CTFBotUseItem::OnEnd( CTFBot *me, Action< CTFBot > *nextAction )
 {
 	me->PopRequiredWeapon();
 }
-

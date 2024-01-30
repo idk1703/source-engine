@@ -54,9 +54,9 @@ ActionResult< CTFBot >	CTFBotSpyInfiltrate::Update( CTFBot *me, float interval )
 	}
 
 	// cloak when we first enter an area of active combat
-	if ( !me->m_Shared.IsStealthed() && 
-		 !isInMySpawn && 
-		 myArea->IsInCombat() && 
+	if ( !me->m_Shared.IsStealthed() &&
+		 !isInMySpawn &&
+		 myArea->IsInCombat() &&
 		 !m_hasEnteredCombatZone )
 	{
 		m_hasEnteredCombatZone = true;
@@ -108,7 +108,7 @@ ActionResult< CTFBot >	CTFBotSpyInfiltrate::Update( CTFBot *me, float interval )
 							return SuspendFor( new CTFBotSpyAttack( victim ), "Going after a backstab victim" );
 						}
 					}
-				}					
+				}
 			}
 		}
 	}

@@ -5,7 +5,7 @@
 // Valve, L.L.C., or in accordance with the terms and conditions stipulated in
 // the agreement/contract under which the contents have been supplied.
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -46,6 +46,3 @@
 #include "tier1/utlmap.h"
 
 #include "tier0/memdbgon.h"
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -79,7 +79,7 @@ END_MESSAGE_MAP()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COPTBuild::DoBrowse(CWnd *pWnd)
 {
@@ -98,41 +98,41 @@ void COPTBuild::DoBrowse(CWnd *pWnd)
 	pWnd->SetWindowText(str);
 }
 
-void COPTBuild::OnBrowseBsp() 
+void COPTBuild::OnBrowseBsp()
 {
 	DoBrowse(&m_cBSP);
 }
 
-void COPTBuild::OnBrowseGame() 
+void COPTBuild::OnBrowseGame()
 {
 	DoBrowse(&m_cGame);
 }
 
-void COPTBuild::OnBrowseLight() 
+void COPTBuild::OnBrowseLight()
 {
 	DoBrowse(&m_cLIGHT);
 }
 
-void COPTBuild::OnBrowseVis() 
+void COPTBuild::OnBrowseVis()
 {
 	DoBrowse(&m_cVIS);
 }
 
-void COPTBuild::OnSelchangeConfigs() 
+void COPTBuild::OnSelchangeConfigs()
 {
 	SaveInfo(m_pConfig);
 
 	m_pConfig = NULL;
 
 	int iCurSel = m_cConfigs.GetCurSel();
-	
+
 	BOOL bKillFields = (iCurSel == CB_ERR) ? FALSE : TRUE;
 	m_cBSP.EnableWindow(bKillFields);
 	m_cLIGHT.EnableWindow(bKillFields);
 	m_cVIS.EnableWindow(bKillFields);
 	m_cGame.EnableWindow(bKillFields);
 	m_cBSPDir.EnableWindow(bKillFields);
-	
+
 	if(iCurSel == CB_ERR)
 		return;
 
@@ -174,20 +174,20 @@ void COPTBuild::UpdateConfigList()
 	SetModified();
 }
 
-BOOL COPTBuild::OnInitDialog() 
+BOOL COPTBuild::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
-	
+
 	UpdateConfigList();
 	SetModified(TRUE);
-	
+
 	return TRUE;
 }
 
-BOOL COPTBuild::OnApply() 
+BOOL COPTBuild::OnApply()
 {
 	SaveInfo(m_pConfig);
-	
+
 	return CPropertyPage::OnApply();
 }
 
@@ -254,27 +254,27 @@ void COPTBuild::InsertParm(UINT nID, CEdit *pEdit)
 }
 
 
-void COPTBuild::OnParmsBsp() 
+void COPTBuild::OnParmsBsp()
 {
-	InsertParm(IDC_PARMS_BSP, &m_cBSP);	
+	InsertParm(IDC_PARMS_BSP, &m_cBSP);
 }
 
-void COPTBuild::OnParmsGame() 
+void COPTBuild::OnParmsGame()
 {
 	InsertParm(IDC_PARMS_GAME, &m_cGame);
 }
 
-void COPTBuild::OnParmsLight() 
+void COPTBuild::OnParmsLight()
 {
 	InsertParm(IDC_PARMS_LIGHT, &m_cLIGHT);
 }
 
-void COPTBuild::OnParmsVis() 
+void COPTBuild::OnParmsVis()
 {
 	InsertParm(IDC_PARMS_VIS, &m_cVIS);
 }
 
-void COPTBuild::OnBrowseBspdir() 
+void COPTBuild::OnBrowseBspdir()
 {
 	CString str;
 	m_cBSPDir.GetWindowText(str);

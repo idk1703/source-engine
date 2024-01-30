@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ class CascadingMenuDemo: public DemoPage
 		CascadingMenuDemo(Panel *parent, const char *name);
 		~CascadingMenuDemo();
 		void InitMenus();
-		
+
 		// Functions that are executed in response to selecting ]
 		// menu items.
 		void OnMaggie();
@@ -32,7 +32,7 @@ class CascadingMenuDemo: public DemoPage
 		void OnMarcia();
 		void OnJohn();
 		void OnRed();
-		
+
 	private:
 
 		MenuButton *m_pOuterMenuButton;
@@ -42,7 +42,7 @@ class CascadingMenuDemo: public DemoPage
 		Menu *m_pInnerMenu2;
 		Menu *m_pDeepestMenu;
 		DECLARE_PANELMAP();
-				
+
 };
 
 //-----------------------------------------------------------------------------
@@ -88,9 +88,9 @@ void CascadingMenuDemo::InitMenus()
 	m_pOuterMenu->AddMenuItem("&Marge", new KeyValues ("Marge"), this);
 	m_pOuterMenu->AddMenuItem("Maggi&e", new KeyValues ("Maggie"), this);
 	m_pOuterMenu->SetVisible(false);
-	
+
 	// Make the number of visible menu items 20
-	m_pOuterMenu->SetNumberOfVisibleItems(20); 
+	m_pOuterMenu->SetNumberOfVisibleItems(20);
 
 	// Attach this menu to the menu button
 	m_pOuterMenuButton->SetMenu(m_pOuterMenu);
@@ -100,7 +100,7 @@ void CascadingMenuDemo::InitMenus()
 	GetBounds (x, y, dwide, dtall);
 	m_pOuterMenuButton->SetPos(10, dtall/2);
 
-	// Create cascading menu #1 
+	// Create cascading menu #1
 	// Cascading menu's don't need menu buttons, as they are triggered
 	// by selecting the menu item of the menu they are in.
 	m_pInnerMenu = new Menu(m_pOuterMenu, "InnerMenu");
@@ -130,11 +130,11 @@ void CascadingMenuDemo::InitMenus()
 	m_pInnerMenu2->AddMenuItem("Tour", new KeyValues ("Tour"), this);
 	m_pInnerMenu2->AddMenuItem("Yellow Sub", new KeyValues ("Yellow Sub"), this);
 	m_pInnerMenu2->SetVisible(false);
-	
+
 	// Add this cascading menu to the top menu as a manu item.
 	m_pOuterMenu->AddCascadingMenuItem("InnerMenu2", this, m_pInnerMenu2);
-	
-	
+
+
 	// Finally, a cascading menu inside a cascading menu!
 	m_pDeepestMenu = new Menu(m_pInnerMenu, "DeepestMenu");
 
@@ -150,7 +150,7 @@ void CascadingMenuDemo::InitMenus()
 	m_pDeepestMenu->SetVisible(false);
 
 	// Set the number of visible items in the menu to 4, this menu will have a scrollbar.
-	m_pDeepestMenu->SetNumberOfVisibleItems(4);	
+	m_pDeepestMenu->SetNumberOfVisibleItems(4);
 
 	// Add this menu item to one of the other menus already in the top most menu above
 	m_pInnerMenu->AddCascadingMenuItem("DeepestMenu", this, m_pDeepestMenu);
@@ -204,5 +204,3 @@ Panel* CascadingMenuDemo_Create(Panel *parent)
 {
 	return new CascadingMenuDemo(parent, "CascadingMenuDemo");
 }
-
-

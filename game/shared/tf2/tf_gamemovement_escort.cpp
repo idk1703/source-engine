@@ -44,10 +44,10 @@ void CTFGameMovementEscort::ProcessClassMovement( CBaseTFPlayer *pPlayer, CTFMov
 //-----------------------------------------------------------------------------
 const Vector &CTFGameMovementEscort::GetPlayerMins( bool bDucked ) const
 {
-	return bDucked ? m_vDuckMins : m_vStandMins; 
+	return bDucked ? m_vDuckMins : m_vStandMins;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------

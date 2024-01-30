@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -57,4 +57,3 @@ void CBaseTransmitProxy::Release()
 		--m_refCount;
 	}
 }
-

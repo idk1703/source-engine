@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -49,14 +49,14 @@ public:
 protected:
 	virtual void OnTick();
 	virtual void OnCommand(const char *command);
-//	virtual void OnOnMouseDoublePressed(enum vgui::MouseCode code); 
+//	virtual void OnOnMouseDoublePressed(enum vgui::MouseCode code);
 
 	// an inner class
 	class OurListPanel: public vgui::ListPanel
 	{
 	public:
 		OurListPanel(vgui::Panel *parent, const char *panelName): vgui::ListPanel(parent,panelName) { m_pParent=parent;};
-		
+
 		virtual void	OnMouseDoublePressed( vgui::MouseCode code );
 	private:
 		vgui::Panel *m_pParent;

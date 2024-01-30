@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -21,7 +21,7 @@ ConVar budget_show_peaks( "budget_show_peaks", "1", FCVAR_ARCHIVE, "enable/disab
 ConVar budget_show_averages( "budget_show_averages", "0", FCVAR_ARCHIVE, "enable/disable averages in the budget panel" );
 
 
-CBudgetBarGraphPanel::CBudgetBarGraphPanel( CBaseBudgetPanel *pParent, const char *pPanelName ) : 
+CBudgetBarGraphPanel::CBudgetBarGraphPanel( CBaseBudgetPanel *pParent, const char *pPanelName ) :
 	BaseClass( pParent, pPanelName )
 {
 	m_pBudgetPanel = pParent;
@@ -64,7 +64,7 @@ void CBudgetBarGraphPanel::DrawBarAtIndex( int id, float percent )
 
 	int red, green, blue, alpha;
 	m_pBudgetPanel->GetConfigData().m_BudgetGroupInfo[id].m_Color.GetColor( red, green, blue, alpha );
-										 
+
 	// DrawFilledRect is panel relative
 	vgui::surface()->DrawSetColor( 0, 0, 0, alpha );
 	vgui::surface()->DrawFilledRect( left, top, right+2, bottom );
@@ -118,14 +118,14 @@ void CBudgetBarGraphPanel::DrawTimeLines( void )
 	{
 		flValueInterval = config.m_flTimeLabelInterval / config.m_nLinesPerTimeLabel;
 	}
-	
+
 	int nTotalLines = config.m_flBarGraphRange;
 	if ( flValueInterval != 0.0f )
 	{
 		nTotalLines /= flValueInterval;
 	}
 	nTotalLines += 2;
-	
+
 	for( i = 0; i < nTotalLines; i++ )
 	{
 		int alpha;
@@ -133,7 +133,7 @@ void CBudgetBarGraphPanel::DrawTimeLines( void )
 		{
 			alpha = 150;
 		}
-		else if( i % config.m_nLinesPerTimeLabel == 0 ) 
+		else if( i % config.m_nLinesPerTimeLabel == 0 )
 		{
 			alpha = 100;
 		}
@@ -141,7 +141,7 @@ void CBudgetBarGraphPanel::DrawTimeLines( void )
 		{
 			alpha = 50;
 		}
-		
+
 		float flTemp = ( config.m_flBarGraphRange != 0.0f ) ? ( flValueInterval / config.m_flBarGraphRange ) : flValueInterval;
 		left = -0.5f + panelWidth * ( float )( i * flTemp );
 		right = left + 1;
@@ -249,4 +249,3 @@ void CBudgetBarGraphPanel::Paint( void )
 		DrawAverages();
 	}
 }
-

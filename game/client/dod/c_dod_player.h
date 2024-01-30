@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -46,7 +46,7 @@ public:
 	virtual void PostDataUpdate( DataUpdateType_t updateType );
 
 	virtual bool CreateMove( float flInputSampleTime, CUserCmd *pCmd );
-	
+
 	virtual void FireEvent( const Vector& origin, const QAngle& angles, int event, const char *options );
 
 	virtual void OnDataChanged( DataUpdateType_t type );
@@ -114,7 +114,7 @@ public:
 	void CheckBombTargetDefuseHint( void );
 
 	virtual void ComputeWorldSpaceSurroundingBox( Vector *pVecWorldMins, Vector *pVecWorldMaxs );
-	
+
 	// Hints
 	virtual CHintSystem	*Hints( void ) { return &m_Hints; }
 
@@ -146,7 +146,7 @@ protected:
 public:
 
 	void DoAnimationEvent( PlayerAnimEvent_t event, int nData = 0 );
-	
+
 	DODPlayerState State_Get() const;
 
 	IDODPlayerAnimState *m_PlayerAnimState;
@@ -196,7 +196,7 @@ public:
 
 	CWeaponDODBase* GetActiveDODWeapon() const;
 
-	Activity TranslateActivity( Activity baseAct, bool *pRequired = NULL );	
+	Activity TranslateActivity( Activity baseAct, bool *pRequired = NULL );
 
 	Vector m_lastStandingPos; // used by the gamemovement code for finding ladders
 
@@ -204,7 +204,7 @@ public:
 	float m_flStunEffectTime;
 	float m_flStunAlpha;
 	CNetworkVar( float, m_flStunMaxAlpha );
-	CNetworkVar( float, m_flStunDuration );	
+	CNetworkVar( float, m_flStunDuration );
 
 	float GetDeathTime( void ) { return m_flDeathTime; }
 
@@ -242,7 +242,7 @@ private:
 	Beam_t	*m_pFlashlightBeam;
 
 	float m_flMinNextStepSoundTime;
-	
+
 	float m_fNextThinkPushAway;
 
 	bool m_bPlayingProneMoveSound;
@@ -260,7 +260,7 @@ private:
 	bool						m_bColdBreathOn;
 	float						m_flColdBreathTimeStart;
 	float						m_flColdBreathTimeEnd;
-	CSmartPtr<CSimpleEmitter>	m_hColdBreathEmitter;	
+	CSmartPtr<CSimpleEmitter>	m_hColdBreathEmitter;
 	PMaterialHandle				m_hColdBreathMaterial;
 	int							m_iHeadAttach;
 

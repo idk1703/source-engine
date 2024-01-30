@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,7 +18,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CNPC_APCDriver : public CNPC_VehicleDriver
 {
@@ -29,7 +29,7 @@ public:
 
 	virtual void Spawn( void );
 	virtual void Activate( void );
-	
+
 	virtual bool FVisible( CBaseEntity *pTarget, int traceMask, CBaseEntity **ppBlocker );
 	virtual bool WeaponLOSCondition( const Vector &ownerPos, const Vector &targetPos, bool bSetConditions );
 	virtual Class_T Classify ( void ) { return CLASS_COMBINE; }
@@ -83,7 +83,7 @@ void CNPC_APCDriver::Spawn( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_APCDriver::Activate( void )
 {
@@ -118,7 +118,7 @@ void CNPC_APCDriver::InputDisableFiring( inputdata_t &inputdata )
 	m_bFiringDisabled = true;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Let's not hate things the APC makes
 //-----------------------------------------------------------------------------
@@ -162,7 +162,7 @@ bool CNPC_APCDriver::WeaponLOSCondition(const Vector &ownerPos, const Vector &ta
 	return true;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Is the enemy visible?
 //-----------------------------------------------------------------------------
@@ -294,5 +294,5 @@ void CNPC_APCDriver::PrescheduleThink( )
 //
 //-----------------------------------------------------------------------------
 AI_BEGIN_CUSTOM_NPC( npc_apcdriver, CNPC_APCDriver )
-	
+
 AI_END_CUSTOM_NPC()

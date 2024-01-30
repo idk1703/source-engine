@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -78,9 +78,9 @@ typedef uint64 VertexFormat_t;
 #define ABSOLUTE_MINIMUM_DXLEVEL 80
 #endif
 
-enum ShaderParamType_t 
-{ 
-	SHADER_PARAM_TYPE_TEXTURE, 
+enum ShaderParamType_t
+{
+	SHADER_PARAM_TYPE_TEXTURE,
 	SHADER_PARAM_TYPE_INTEGER,
 	SHADER_PARAM_TYPE_COLOR,
 	SHADER_PARAM_TYPE_VEC2,
@@ -124,8 +124,8 @@ enum MaterialMatrixMode_t
 const int NUM_MODEL_TRANSFORMS = 53;
 const int MATERIAL_MODEL_MAX = MATERIAL_MODEL + NUM_MODEL_TRANSFORMS;
 
-enum MaterialPrimitiveType_t 
-{ 
+enum MaterialPrimitiveType_t
+{
 	MATERIAL_POINTS			= 0x0,
 	MATERIAL_LINES,
 	MATERIAL_TRIANGLES,
@@ -261,7 +261,7 @@ enum LightType_OptimizationFlags_t
 };
 
 
-struct LightDesc_t 
+struct LightDesc_t
 {
 	LightType_t		m_Type;
 	Vector			m_Color;
@@ -298,7 +298,7 @@ private:
 //-----------------------------------------------------------------------------
 // allowed stencil operations. These match the d3d operations
 //-----------------------------------------------------------------------------
-enum StencilOperation_t 
+enum StencilOperation_t
 {
 #if !defined( _X360 )
 	STENCILOPERATION_KEEP = 1,
@@ -322,7 +322,7 @@ enum StencilOperation_t
 	STENCILOPERATION_FORCE_DWORD = 0x7fffffff
 };
 
-enum StencilComparisonFunction_t 
+enum StencilComparisonFunction_t
 {
 #if !defined( _X360 )
 	STENCILCOMPARISONFUNCTION_NEVER = 1,
@@ -414,7 +414,7 @@ struct MaterialAdapterInfo_t
 //-----------------------------------------------------------------------------
 struct MaterialVideoMode_t
 {
-	int m_Width;			// if width and height are 0 and you select 
+	int m_Width;			// if width and height are 0 and you select
 	int m_Height;			// windowed mode, it'll use the window size
 	ImageFormat m_Format;	// use ImageFormats (ignored for windowed mode)
 	int m_RefreshRate;		// 0 == default (ignored for windowed mode)
@@ -433,7 +433,7 @@ struct FlashlightState_t
 		m_flShadowDepthBias = 0.0005f;
 		m_flShadowJitterSeed = 0.0f;
 		m_flShadowAtten = 0.0f;
-		m_bScissor = false; 
+		m_bScissor = false;
 		m_nLeft = -1;
 		m_nTop = -1;
 		m_nRight = -1;
@@ -476,7 +476,7 @@ private:
 
 	friend class CShadowMgr;
 
-	bool m_bScissor; 
+	bool m_bScissor;
 	int m_nLeft;
 	int m_nTop;
 	int m_nRight;
@@ -484,7 +484,7 @@ private:
 };
 
 // Passed as the callback object to Async functions in the material system
-// so that callers don't have to worry about memory going out of scope before the 
+// so that callers don't have to worry about memory going out of scope before the
 // results return.
 abstract_class IAsyncTextureOperationReceiver : public IRefCounted
 {
@@ -568,7 +568,7 @@ class CShadowMgr;
 DECLARE_POINTER_HANDLE( MaterialLock_t );
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 
 abstract_class IMaterialSystem : public IAppSystem
@@ -588,12 +588,12 @@ public:
 
 	// Call this to initialize the material system
 	// returns a method to create interfaces in the shader dll
-	virtual CreateInterfaceFn	Init( char const* pShaderAPIDLL, 
+	virtual CreateInterfaceFn	Init( char const* pShaderAPIDLL,
 		IMaterialProxyFactory *pMaterialProxyFactory,
 		CreateInterfaceFn fileSystemFactory,
 		CreateInterfaceFn cvarFactory=NULL ) = 0;
 
-	// Call this to set an explicit shader version to use 
+	// Call this to set an explicit shader version to use
 	// Must be called before Init().
 	virtual void				SetShaderAPI( char const *pShaderAPIDLL ) = 0;
 
@@ -633,8 +633,8 @@ public:
 	// Get the current config for this video card (as last set by UpdateConfig)
 	virtual const MaterialSystem_Config_t &GetCurrentConfigForVideoCard() const = 0;
 
-	// Gets *recommended* configuration information associated with the display card, 
-	// given a particular dx level to run under. 
+	// Gets *recommended* configuration information associated with the display card,
+	// given a particular dx level to run under.
 	// Use dxlevel 0 to use the recommended dx level.
 	// The function returns false if an invalid dxlevel was specified
 
@@ -676,7 +676,7 @@ public:
 	// FIXME: REMOVE! Get video card identitier
 	virtual const MaterialSystemHardwareIdentifier_t &GetVideoCardIdentifier( void ) const = 0;
 
-	// Use this to spew information about the 3D layer 
+	// Use this to spew information about the 3D layer
 	virtual void				SpewDriverInfo() const = 0;
 
 	virtual void				GetDXLevelDefaults(uint &max_dxlevel,uint &recommended_dxlevel) = 0;
@@ -832,15 +832,15 @@ public:
 	virtual IMaterial *			CreateMaterial( const char *pMaterialName, KeyValues *pVMTKeyValues ) = 0;
 
 	// Find a material by name.
-	// The name of a material is a full path to 
+	// The name of a material is a full path to
 	// the vmt file starting from "hl2/materials" (or equivalent) without
 	// a file extension.
 	// eg. "dev/dev_bumptest" refers to somethign similar to:
 	// "d:/hl2/hl2/materials/dev/dev_bumptest.vmt"
 	//
 	// Most of the texture groups for pTextureGroupName are listed in texture_group_names.h.
-	// 
-	// Note: if the material can't be found, this returns a checkerboard material. You can 
+	//
+	// Note: if the material can't be found, this returns a checkerboard material. You can
 	// find out if you have that material by calling IMaterial::IsErrorMaterial().
 	// (Or use the global IsErrorMaterial function, which checks if it's null too).
 	virtual IMaterial *			FindMaterial( char const* pMaterialName, const char *pTextureGroupName, bool complain = true, const char *pComplainPrefix = NULL ) = 0;
@@ -851,7 +851,7 @@ public:
 	//---------------------------------
 	// This is the interface for knowing what materials are available
 	// is to use the following functions to get a list of materials.  The
-	// material names will have the full path to the material, and that is the 
+	// material names will have the full path to the material, and that is the
 	// only way that the directory structure of the materials will be seen through this
 	// interface.
 	// NOTE:  This is mostly for worldcraft to get a list of materials to put
@@ -859,7 +859,7 @@ public:
 	virtual MaterialHandle_t	FirstMaterial() const = 0;
 
 	// returns InvalidMaterial if there isn't another material.
-	// WARNING: you must call GetNextMaterial until it returns NULL, 
+	// WARNING: you must call GetNextMaterial until it returns NULL,
 	// otherwise there will be a memory leak.
 	virtual MaterialHandle_t	NextMaterial( MaterialHandle_t h ) const = 0;
 
@@ -883,11 +883,11 @@ public:
 	virtual bool				IsTextureLoaded( char const* pTextureName ) const = 0;
 
 	// Creates a procedural texture
-	virtual ITexture *			CreateProceduralTexture( const char	*pTextureName, 
-		const char *pTextureGroupName, 
-		int w, 
-		int h, 
-		ImageFormat fmt, 
+	virtual ITexture *			CreateProceduralTexture( const char	*pTextureName,
+		const char *pTextureGroupName,
+		int w,
+		int h,
+		ImageFormat fmt,
 		int nFlags ) = 0;
 
 	//
@@ -900,37 +900,37 @@ public:
 	// If depth == true, a depth buffer is also allocated. If not, then
 	// the screen's depth buffer is used.
 	// Creates a texture for use as a render target
-	virtual ITexture *			CreateRenderTargetTexture( int w, 
-		int h, 
+	virtual ITexture *			CreateRenderTargetTexture( int w,
+		int h,
 		RenderTargetSizeMode_t sizeMode,	// Controls how size is generated (and regenerated on video mode change).
-		ImageFormat	format, 
+		ImageFormat	format,
 		MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED ) = 0;
 
 	virtual ITexture *			CreateNamedRenderTargetTextureEx(  const char *pRTName,				// Pass in NULL here for an unnamed render target.
-		int w, 
-		int h, 
+		int w,
+		int h,
 		RenderTargetSizeMode_t sizeMode,	// Controls how size is generated (and regenerated on video mode change).
-		ImageFormat format, 
-		MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED, 
+		ImageFormat format,
+		MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED,
 		unsigned int textureFlags = TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT,
 		unsigned int renderTargetFlags = 0 ) = 0;
 
-	virtual ITexture *			CreateNamedRenderTargetTexture( const char *pRTName, 
-		int w, 
-		int h, 
+	virtual ITexture *			CreateNamedRenderTargetTexture( const char *pRTName,
+		int w,
+		int h,
 		RenderTargetSizeMode_t sizeMode,	// Controls how size is generated (and regenerated on video mode change).
-		ImageFormat format, 
-		MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED, 
-		bool bClampTexCoords = true, 
+		ImageFormat format,
+		MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED,
+		bool bClampTexCoords = true,
 		bool bAutoMipMap = false ) = 0;
 
 	// Must be called between the above Begin-End calls!
 	virtual ITexture *			CreateNamedRenderTargetTextureEx2( const char *pRTName,				// Pass in NULL here for an unnamed render target.
-		int w, 
-		int h, 
+		int w,
+		int h,
 		RenderTargetSizeMode_t sizeMode,	// Controls how size is generated (and regenerated on video mode change).
-		ImageFormat format, 
-		MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED, 
+		ImageFormat format,
+		MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED,
 		unsigned int textureFlags = TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT,
 		unsigned int renderTargetFlags = 0 ) = 0;
 
@@ -941,13 +941,13 @@ public:
 	// To allocate lightmaps, sort the whole world by material twice.
 	// The first time through, call AllocateLightmap for every surface.
 	// that has a lightmap.
-	// The second time through, call AllocateWhiteLightmap for every 
+	// The second time through, call AllocateWhiteLightmap for every
 	// surface that expects to use shaders that expect lightmaps.
 	virtual void				BeginLightmapAllocation( ) = 0;
 	virtual void				EndLightmapAllocation( ) = 0;
 
 	// returns the sorting id for this surface
-	virtual int 				AllocateLightmap( int width, int height, 
+	virtual int 				AllocateLightmap( int width, int height,
 		int offsetIntoLightmapPage[2],
 		IMaterial *pMaterial ) = 0;
 	// returns the sorting id for this surface
@@ -959,7 +959,7 @@ public:
 	// You should never call UpdateLightmap for a lightmap allocated through
 	// AllocateWhiteLightmap.
 	virtual void				UpdateLightmap( int lightmapPageID, int lightmapSize[2],
-		int offsetIntoLightmapPage[2], 
+		int offsetIntoLightmapPage[2],
 		float *pFloatImage, float *pFloatImageBump1,
 		float *pFloatImageBump2, float *pFloatImageBump3 ) = 0;
 
@@ -1055,7 +1055,7 @@ public:
 
 #ifdef DX_TO_GL_ABSTRACTION
 	virtual void				DoStartupShaderPreloading( void ) = 0;
-#endif	
+#endif
 
 	// Sets the override sizes for all render target size tests. These replace the frame buffer size.
 	// Set them when you are rendering primarily to something larger than the frame buffer (as in VR mode).
@@ -1088,7 +1088,7 @@ public:
 	// The bits will be retained by the material system and can be freed upon return.
 	virtual ITexture*			CreateNamedTextureFromBitsEx( const char* pName, const char *pTextureGroupName, int w, int h, int mips, ImageFormat fmt, int srcBufferSize, byte* srcBits, int nFlags ) = 0;
 
-	// Creates a texture compositor template for use in later code. 
+	// Creates a texture compositor template for use in later code.
 	virtual bool				AddTextureCompositorTemplate( const char* pName, KeyValues* pTmplDesc, int nTexCompositeTemplateFlags = 0 ) = 0;
 
 	// Performs final verification of all compositor templates (after they've all been initially loaded).
@@ -1097,7 +1097,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 abstract_class IMatRenderContext : public IRefCounted
 {
@@ -1118,7 +1118,7 @@ public:
 
 	// Bind a material is current for rendering.
 	virtual void				Bind( IMaterial *material, void *proxyData = 0 ) = 0;
-	// Bind a lightmap page current for rendering.  You only have to 
+	// Bind a lightmap page current for rendering.  You only have to
 	// do this for materials that require lightmaps.
 	virtual void				BindLightmapPage( int lightmapPageID ) = 0;
 
@@ -1205,8 +1205,8 @@ public:
 	virtual void DestroyStaticMesh( IMesh* mesh ) = 0;
 
 	// Gets the dynamic mesh associated with the currently bound material
-	// note that you've got to render the mesh before calling this function 
-	// a second time. Clients should *not* call DestroyStaticMesh on the mesh 
+	// note that you've got to render the mesh before calling this function
+	// a second time. Clients should *not* call DestroyStaticMesh on the mesh
 	// returned by this call.
 	// Use buffered = false if you want to not have the mesh be buffered,
 	// but use it instead in the following pattern:
@@ -1224,10 +1224,10 @@ public:
 	// If you pass in a material in pAutoBind, it will automatically bind the
 	// material. This can be helpful since you must bind the material you're
 	// going to use BEFORE calling GetDynamicMesh.
-	virtual IMesh* GetDynamicMesh( 
-		bool buffered = true, 
-		IMesh* pVertexOverride = 0,	
-		IMesh* pIndexOverride = 0, 
+	virtual IMesh* GetDynamicMesh(
+		bool buffered = true,
+		IMesh* pVertexOverride = 0,
+		IMesh* pIndexOverride = 0,
 		IMaterial *pAutoBind = 0 ) = 0;
 
 	// ------------ New Vertex/Index Buffer interface ----------------------------
@@ -1297,7 +1297,7 @@ public:
 	// Gets the current height clip mode
 	virtual MaterialHeightClipMode_t GetHeightClipMode( ) = 0;
 
-	// This returns the diameter of the sphere in pixels based on 
+	// This returns the diameter of the sphere in pixels based on
 	// the current model, view, + projection matrices and viewport.
 	virtual float	ComputePixelDiameterOfSphere( const Vector& vecAbsOrigin, float flRadius ) = 0;
 
@@ -1343,7 +1343,7 @@ public:
 	// all the necessary pixel/texel coordinate fix ups. fractional values can be used for the
 	// src_texture coordinates to get linear sampling - integer values should produce 1:1 mappings
 	// for non-scaled operations.
-	virtual void DrawScreenSpaceRectangle( 
+	virtual void DrawScreenSpaceRectangle(
 		IMaterial *pMaterial,
 		int destx, int desty,
 		int width, int height,
@@ -1398,7 +1398,7 @@ public:
 	virtual void SetStencilReferenceValue(int ref) = 0;
 	virtual void SetStencilTestMask(uint32 msk) = 0;
 	virtual void SetStencilWriteMask(uint32 msk) = 0;
-	virtual void ClearStencilBufferRectangle(int xmin, int ymin, int xmax, int ymax,int value) =0;	
+	virtual void ClearStencilBufferRectangle(int xmin, int ymin, int xmax, int ymax,int value) =0;
 
 	virtual void SetRenderTargetEx( int nRenderTargetID, ITexture *pTexture ) = 0;
 
@@ -1409,8 +1409,8 @@ public:
 
 	// Returns the number of vertices + indices we can render using the dynamic mesh
 	// Passing true in the second parameter will return the max # of vertices + indices
-	// we can use before a flush is provoked and may return different values 
-	// if called multiple times in succession. 
+	// we can use before a flush is provoked and may return different values
+	// if called multiple times in succession.
 	// Passing false into the second parameter will return
 	// the maximum possible vertices + indices that can be rendered in a single batch
 	virtual void GetMaxToRender( IMesh *pMesh, bool bMaxUntilFlush, int *pMaxVerts, int *pMaxIndices ) = 0;
@@ -1493,7 +1493,7 @@ public:
 	virtual bool				GetMorphAccumulatorTexCoord( Vector2D *pTexCoord, IMorph *pMorph, int nVertex ) = 0;
 
 	// Version of get dynamic mesh that specifies a specific vertex format
-	virtual IMesh*				GetDynamicMeshEx( VertexFormat_t vertexFormat, bool bBuffered = true, 
+	virtual IMesh*				GetDynamicMeshEx( VertexFormat_t vertexFormat, bool bBuffered = true,
 		IMesh* pVertexOverride = 0,	IMesh* pIndexOverride = 0, IMaterial *pAutoBind = 0 ) = 0;
 
 	virtual void				FogMaxDensity( float flMaxDensity ) = 0;
@@ -1541,7 +1541,7 @@ public:
 
 	// Temp render data gets immediately freed after it's all unlocked in single core.
 	// This prevents it from being freed
-	virtual void			AddRefRenderData() = 0;	
+	virtual void			AddRefRenderData() = 0;
 	virtual void			ReleaseRenderData() = 0;
 
 	// Returns whether a pointer is render data. NOTE: passing NULL returns true
@@ -1628,14 +1628,14 @@ inline void CMatRenderDataReference::Release()
 //-----------------------------------------------------------------------------
 // Utility class for locking/unlocking render data
 //-----------------------------------------------------------------------------
-template< typename E > 
+template< typename E >
 class CMatRenderData
 {
 public:
 	CMatRenderData( IMatRenderContext* pRenderContext );
 	CMatRenderData( IMatRenderContext* pRenderContext, int nCount, const E *pSrcData = NULL );
 	~CMatRenderData();
-	E* Lock( int nCount, const E* pSrcData = NULL ); 
+	E* Lock( int nCount, const E* pSrcData = NULL );
 	void Release();
 	bool IsValid() const;
 	const E* Base() const;
@@ -1687,7 +1687,7 @@ inline E* CMatRenderData<E>::Lock( int nCount, const E* pSrcData )
 	m_nCount = nCount;
 	if ( pSrcData && m_pRenderContext->IsRenderData( pSrcData ) )
 	{
-		// Yes, we're const-casting away, but that should be ok since 
+		// Yes, we're const-casting away, but that should be ok since
 		// the src data is render data
 		m_pRenderData = const_cast<E*>( pSrcData );
 		m_pRenderContext->AddRefRenderData();
@@ -1771,7 +1771,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Helper class for begin/end of pix event via constructor/destructor 
+// Helper class for begin/end of pix event via constructor/destructor
 //-----------------------------------------------------------------------------
 #define PIX_VALVE_ORANGE	0xFFF5940F
 
@@ -1800,7 +1800,7 @@ private:
 #if PIX_ENABLE
 #	define PIXEVENT PIXEvent _pixEvent
 #else
-#	define PIXEVENT 
+#	define PIXEVENT
 #endif
 
 //-----------------------------------------------------------------------------
@@ -1811,7 +1811,7 @@ private:
 static void DoMatSysQueueMark( IMaterialSystem *pMaterialSystem, const char *psz )
 {
 	CMatRenderContextPtr pRenderContext( pMaterialSystem );
-	if ( pRenderContext->GetCallQueue() ) 
+	if ( pRenderContext->GetCallQueue() )
 		pRenderContext->GetCallQueue()->QueueCall( Plat_DebugString, CUtlEnvelope<const char *>( psz ) );
 }
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,13 +30,13 @@ public:
 	virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
 	virtual void OnBind( void *pBind );
 	virtual void Release( void ) { delete this; }
-	virtual IMaterial *	GetMaterial() 
-	{ 
+	virtual IMaterial *	GetMaterial()
+	{
 		if ( m_AlphaMaskTextureOutput )
 			return m_AlphaMaskTextureOutput->GetOwningMaterial();
 		if ( m_AlphaMaskTextureFrame )
 			return m_AlphaMaskTextureFrame->GetOwningMaterial();
-		return NULL; 
+		return NULL;
 	}
 };
 
@@ -91,7 +91,7 @@ bool CPortalPickAlphaMaskProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValue
 
 	m_pOpeningTexture = materials->FindTexture( pszOpeningTextureInput, TEXTURE_GROUP_CLIENT_EFFECTS );
 	m_pOpeningTexture->IncrementReferenceCount();
-	m_pIdleTexture = materials->FindTexture( pszIdleTextureInput, TEXTURE_GROUP_CLIENT_EFFECTS );	
+	m_pIdleTexture = materials->FindTexture( pszIdleTextureInput, TEXTURE_GROUP_CLIENT_EFFECTS );
 	m_pIdleTexture->IncrementReferenceCount();
 	return true;
 }

@@ -137,8 +137,8 @@ struct collisionpair_t
 
 //-----------------------------------------------------------------------------
 // Purpose: Search a source for a bone with a specified name
-// Input  : *pSource - 
-//			*pName - 
+// Input  : *pSource -
+//			*pName -
 // Output : int boneIndex, -1 if none
 //-----------------------------------------------------------------------------
 int FindLocalBoneNamed( const s_source_t *pSource, const char *pName )
@@ -277,7 +277,7 @@ CJointedModel::CJointedModel( void )
 	memset( m_bonemap, 0, sizeof(m_bonemap) );
 	m_pConstraintList = NULL;
 	m_constraintCount = 0;
-	
+
 	m_totalVerts = 0;
 
 	// UNDONE: Move these defaults elsewhere?  They are all overrideable by the QC/script
@@ -424,7 +424,7 @@ int CJointedModel::CollisionIndex( const char *pName )
 	{
 		if ( !stricmp( pName, pList->m_name ) )
 			return index;
-		
+
 		pList = pList->m_pNext;
 		index++;
 	}
@@ -444,7 +444,7 @@ void CJointedModel::SortCollisionList( void )
 	CPhysCollisionModel **pArray;
 	pArray = new CPhysCollisionModel *[m_collisionCount];
 	CPhysCollisionModel *pList = m_pCollisionList;
-	
+
 	// make an array to make sorting easier
 	int i = 0;
 
@@ -557,7 +557,7 @@ CPhysCollisionModel *CJointedModel::GetCollisionModel( const char *pName )
 	{
 		if ( !stricmp( pName, pList->m_name ) )
 			return pList;
-		
+
 		pList = pList->m_pNext;
 	}
 
@@ -611,7 +611,7 @@ void CJointedModel::SetCollisionModelDefaults( CPhysCollisionModel *pModel )
 	pModel->m_inertia = m_defaultInertia;
 	pModel->m_rotdamping = m_defaultRotdamping;
 	pModel->m_massBias = 1.0;
-	
+
 	// not written unless modified
 	pModel->m_dragCoefficient = m_defaultDrag;
 }
@@ -733,8 +733,8 @@ void CJointedModel::DefaultDrag( float drag )
 
 //-----------------------------------------------------------------------------
 // Purpose: Transforms the source's verts into "world" space
-// Input  : *psource - 
-//			*worldVerts - 
+// Input  : *psource -
+//			*worldVerts -
 //-----------------------------------------------------------------------------
 void ConvertToWorldSpace( CJointedModel &joints, s_source_t *psource, CUtlVector<Vector> &worldVerts )
 {
@@ -788,7 +788,7 @@ void ConvertToWorldSpace( CJointedModel &joints, s_source_t *psource, CUtlVector
 
 				// convert vertex into world space
 				VectorTransform( psource->vertex[i].position, srcBoneToWorld[localBone], tmp );
-				// just assume the model is in identity space 
+				// just assume the model is in identity space
 				// FIXME: shouldn't this do an inverse xform of the default boneToWorld?
 
 				VectorMA( worldVerts[i], psource->vertex[i].boneweight.weight[n], tmp, worldVerts[i] );
@@ -800,9 +800,9 @@ void ConvertToWorldSpace( CJointedModel &joints, s_source_t *psource, CUtlVector
 
 //-----------------------------------------------------------------------------
 // Purpose: Transforms the set of verts into the space of a particular bone
-// Input  : *psource - 
-//			boneIndex - 
-//			*boneVerts - 
+// Input  : *psource -
+//			boneIndex -
+//			*boneVerts -
 //-----------------------------------------------------------------------------
 void ConvertToBoneSpace( s_source_t *psource, int boneIndex, CUtlVector<Vector> &boneVerts )
 {
@@ -829,10 +829,10 @@ void ConvertToBoneSpace( s_source_t *psource, int boneIndex, CUtlVector<Vector> 
 
 //-----------------------------------------------------------------------------
 // Purpose: Test this face to see if any of its verts are assigned to a particular bone
-// Input  : &joints - 
-//			*pmodel - 
-//			*face - 
-//			boneIndex - 
+// Input  : &joints -
+//			*pmodel -
+//			*face -
+//			boneIndex -
 // Output : Returns true if this face has a vert assigned to boneIndex
 //-----------------------------------------------------------------------------
 bool FaceHasVertOnBone( const CJointedModel &joints, s_source_t *pSource, s_face_t *face, int boneIndex )
@@ -873,9 +873,9 @@ bool FaceHasVertOnBone( const CJointedModel &joints, s_source_t *pSource, s_face
 //-----------------------------------------------------------------------------
 // Purpose: Fixup the pointers in this face to reference the mesh globally (source relative)
 //			(faces are mesh relative, each source has several meshes)
-// Input  : *pout - 
-//			*pmesh - 
-//			*pin - 
+// Input  : *pout -
+//			*pmesh -
+//			*pin -
 //-----------------------------------------------------------------------------
 void GlobalFace( s_face_t *pout, s_mesh_t *pmesh, s_face_t *pin )
 {
@@ -888,10 +888,10 @@ void GlobalFace( s_face_t *pout, s_mesh_t *pmesh, s_face_t *pin )
 //-----------------------------------------------------------------------------
 // Purpose: Copy all verts assigned to this bone.
 //			NOTE: Leaves gaps in the model around joints
-// Input  : **verts - 
-//			*worldVerts - 
-//			&joints - 
-//			boneIndex - 
+// Input  : **verts -
+//			*worldVerts -
+//			&joints -
+//			boneIndex -
 // Output : int vertCount
 //-----------------------------------------------------------------------------
 int CopyVertsByBone( Vector **verts, Vector *worldVerts, const CJointedModel &joints, int boneIndex )
@@ -927,10 +927,10 @@ int CopyVertsByBone( Vector **verts, Vector *worldVerts, const CJointedModel &jo
 // Purpose: Copy all verts that are referenced by a face which has a vert assigned
 //			to this bone.
 //			NOTE: convex hulls of each bone will overlap at the joints
-// Input  : **verts - 
-//			*worldVerts - 
-//			&joints - 
-//			boneIndex - 
+// Input  : **verts -
+//			*worldVerts -
+//			&joints -
+//			boneIndex -
 // Output : int
 //-----------------------------------------------------------------------------
 int CopyFaceVertsByBone( Vector **verts, Vector *worldVerts, const CJointedModel &joints, int boneIndex )
@@ -1015,7 +1015,7 @@ void BuildVertWeldTable( int *weldTable, s_source_t *pmodel )
 
 //-----------------------------------------------------------------------------
 // Purpose: marks all verts with a unique ID.  Each set of connected verts has
-//			the same ID.  IDs are the index of the lowest numbered face on the 
+//			the same ID.  IDs are the index of the lowest numbered face on the
 //			mesh
 // Input  : *vertID - array that holds IDs
 //			*pmodel - model to process
@@ -1043,7 +1043,7 @@ void MarkConnectedMeshes( int *vertID, s_source_t *pmodel, int *vertMap )
 	int faceid = 0;
 	// iterate the face list, minimizing the vertID at each vert
 	// until we have an iteration where no vertIDs are changed
-	do 
+	do
 	{
 		marked = 0;
 		faceid = 0;
@@ -1066,7 +1066,7 @@ void MarkConnectedMeshes( int *vertID, s_source_t *pmodel, int *vertMap )
 				int newid = min(faceid, vertID[globalFace.a]);
 				newid = min( newid, vertID[globalFace.b]);
 				newid = min( newid, vertID[globalFace.c]);
-				
+
 				// mark all verts with the minimum, count the number we had to mark
 				if ( vertID[globalFace.a] != newid )
 				{
@@ -1093,8 +1093,8 @@ void MarkConnectedMeshes( int *vertID, s_source_t *pmodel, int *vertMap )
 
 //-----------------------------------------------------------------------------
 // Purpose: Finds a CPhysCollisionModel in a linked list of models.
-// Input  : *pHead - 
-//			*pName - 
+// Input  : *pHead -
+//			*pName -
 // Output : CPhysCollisionModel
 //-----------------------------------------------------------------------------
 CPhysCollisionModel *FindObjectInList( CPhysCollisionModel *pHead, const char *pName )
@@ -1112,8 +1112,8 @@ CPhysCollisionModel *FindObjectInList( CPhysCollisionModel *pHead, const char *p
 
 //-----------------------------------------------------------------------------
 // Purpose: Fix all bones to reference the remapped/collapsed bone structure
-// Input  : *pSource - 
-//			*pList - 
+// Input  : *pSource -
+//			*pList -
 //-----------------------------------------------------------------------------
 void FixBoneList( int *boneMap, const s_source_t *pSource, CPhysCollisionModel *pList )
 {
@@ -1143,7 +1143,7 @@ void FixBoneList( int *boneMap, const s_source_t *pSource, CPhysCollisionModel *
 
 			if ( nodeIndex >= 0 )
 			{
-				// bone collapse may have changed parent hierarchy, and the root name. 
+				// bone collapse may have changed parent hierarchy, and the root name.
 				// The vertices are converted to the new reference by ConvertToWorldSpace(), as well as RemapVerticesToGlobalBones()
 				pmodel->m_name = g_bonetable[  pSource->boneLocalToGlobal[nodeIndex] ].name;
 				pmodel->m_parent = NULL;
@@ -1178,9 +1178,9 @@ void FixBoneList( int *boneMap, const s_source_t *pSource, CPhysCollisionModel *
 //			NOTE: This is broken.  It won't work for tree structures with an empty parent
 //			(i.e. 2 children attached to a parent bone that has no physics geometry - thus empty)
 //			It will not convert that parent into a constraint between 2 children
-// Input  : *pList - 
-//			*pSource - 
-//			*pParentName - 
+// Input  : *pList -
+//			*pSource -
+//			*pParentName -
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *FixParent( CPhysCollisionModel *pList, s_source_t *pSource, const char *pParentName )
@@ -1422,12 +1422,12 @@ void BuildConvexListForFaceList( s_source_t *pmodel, CUtlVector<convexlist_t> &c
 	int faceid = 0;
 	// iterate the face list, minimizing the vertID at each vert
 	// until we have an iteration where no vertIDs are changed
-	do 
+	do
 	{
 		marked = 0;
 		faceid = 0;
 
-		// basically this flood fills ids out to the verts until each island of connected 
+		// basically this flood fills ids out to the verts until each island of connected
 		// verts shares a single id (so new verts got marked)
 		for ( i = 0; i < faceList.Count(); i++ )
 		{
@@ -1511,7 +1511,7 @@ bool BuildConvexesForLists( CUtlVector<CPhysConvex *> &convexOut, const CUtlVect
 
 //-----------------------------------------------------------------------------
 // Purpose: Build a jointed collision model with constraints
-// Input  : &joints - 
+// Input  : &joints -
 // Output : int
 //-----------------------------------------------------------------------------
 int ProcessJointedModel( CJointedModel &joints )
@@ -1549,7 +1549,7 @@ int ProcessJointedModel( CJointedModel &joints )
 					faceList.AddToTail( globalFace );
 				}
 			}
-			
+
 			if ( joints.m_allowConcaveJoints )
 			{
 				BuildConvexListForFaceList( pmodel, convexList, vertList, faceList );
@@ -1650,7 +1650,7 @@ void DumpToGLView( char const *pName, s_source_t *pmodel, Vector *worldVerts, in
 		used[i] = -1;
 
 	FILE *fp = fopen( pName, "w" );
-	
+
 	// dump the model to a glview file
 	for ( i = 0; i < pmodel->nummeshes; i++ )
 	{
@@ -1795,7 +1795,7 @@ int ProcessSingleBody( CJointedModel &joints )
 //-----------------------------------------------------------------------------
 // Purpose: HACKETY HACK - get the args into a buffer.
 //			This checks for overflow, but it's not very robust - shouldn't be necessary though
-// Input  : pArgs[][ARG_SIZE] - 
+// Input  : pArgs[][ARG_SIZE] -
 //			maxCount - array size of pargs
 // Output : int - count actually used
 //-----------------------------------------------------------------------------
@@ -1816,7 +1816,7 @@ int ReadArgs( char pArgs[][ARG_SIZE], int maxCount )
 
 //-----------------------------------------------------------------------------
 // Purpose: Simple atof wrapper to keep from crashing on bad user input
-// Input  : *pString - 
+// Input  : *pString -
 // Output : float
 //-----------------------------------------------------------------------------
 float Safe_atof( const char *pString )
@@ -1829,7 +1829,7 @@ float Safe_atof( const char *pString )
 
 //-----------------------------------------------------------------------------
 // Purpose: Simple atoi wrapper to avoid crashing on bad user input
-// Input  : *pString - 
+// Input  : *pString -
 // Output : int
 //-----------------------------------------------------------------------------
 int Safe_atoi( const char *pString )
@@ -1843,19 +1843,19 @@ int Safe_atoi( const char *pString )
 
 //-----------------------------------------------------------------------------
 // Purpose: Add a constraint to our joint system
-// Input  : &joints - 
-//			*pJointName - 
-//			*pJointAxis - 
-//			*pJointType - 
-//			*pLimitMin - 
-//			*pLimitMax - 
+// Input  : &joints -
+//			*pJointName -
+//			*pJointAxis -
+//			*pJointType -
+//			*pLimitMin -
+//			*pLimitMax -
 //-----------------------------------------------------------------------------
 void CCmd_JointConstrain( CJointedModel &joints, const char *pJointName, const char *pJointAxis, const char *pJointType, const char *pLimitMin, const char *pLimitMax, const char *pFriction )
 {
 	float limitMin = Safe_atof(pLimitMin);
 	float limitMax = Safe_atof(pLimitMax);
 	float friction = Safe_atof(pFriction);
-	
+
 	int axis = -1;
 	int jointIndex = FindLocalBoneNamed( joints.m_pModel, pJointName );
 	if ( !g_bCreateMakefile && jointIndex < 0 )
@@ -1899,9 +1899,9 @@ void CCmd_JointConstrain( CJointedModel &joints, const char *pJointName, const c
 
 //-----------------------------------------------------------------------------
 // Purpose: Remove a joint from the system (don't create physical geometry for it)
-// Input  : &joints - 
-//			args[][ARG_SIZE] - 
-//			argCount - 
+// Input  : &joints -
+//			args[][ARG_SIZE] -
+//			argCount -
 //-----------------------------------------------------------------------------
 // UNDONE: Automatically skip joints that will have mass that is too low?
 void CCmd_JointSkip( CJointedModel &joints, const char *pName )
@@ -1922,8 +1922,8 @@ void CCmd_JointSkip( CJointedModel &joints, const char *pName )
 //-----------------------------------------------------------------------------
 // Purpose: Sets the object's mass.  The code will distribute this mass to each
 //			part based on the collision model's volume
-// Input  : &joints - 
-//			*pMass - 
+// Input  : &joints -
+//			*pMass -
 //-----------------------------------------------------------------------------
 void CCmd_TotalMass( CJointedModel &joints, const char *pMass )
 {
@@ -1964,7 +1964,7 @@ void CCmd_JoinAnimatedFriction( CJointedModel &joints, const char *pMinFriction,
 
 //-----------------------------------------------------------------------------
 // Purpose: Parses all legal commands inside the $collisionjoints {} block
-// Input  : &joints - 
+// Input  : &joints -
 //-----------------------------------------------------------------------------
 void ParseCollisionCommands( CJointedModel &joints )
 {
@@ -2183,7 +2183,7 @@ static bool LoadSurfaceProps( const char *pMaterialFilename )
 	char *pText = new char[len+1];
 	g_pFileSystem->Read( pText, len, fp );
 	g_pFileSystem->Close( fp );
-	
+
 	pText[len]=0;
 
 	physprops->ParseSurfaceData( pMaterialFilename, pText );
@@ -2262,7 +2262,7 @@ int DoCollisionModel( bool separateJoints )
 
 	// all bones map to themselves by default
 	g_JointedModel.SetSource( pmodel );
-	
+
 	bool parseCommands = false;
 
 	// If the next token is a { that means a data block for the collision model
@@ -2292,7 +2292,7 @@ int DoCollisionModel( bool separateJoints )
 
 //-----------------------------------------------------------------------------
 // Purpose: Walk the list of models, add up the volume
-// Input  : *pList - 
+// Input  : *pList -
 // Output : float
 //-----------------------------------------------------------------------------
 float TotalVolume( CPhysCollisionModel *pList )
@@ -2358,7 +2358,7 @@ void FixCollisionHierarchy( CJointedModel &joints )
 
 		// sort the list so parents come before children
 		joints.SortCollisionList();
-		// Now remap the constraints to bones to 
+		// Now remap the constraints to bones to
 		// Now that bones are in order, set physics indices in main bone structure
 
 		CJointConstraint *pList = g_JointedModel.m_pConstraintList;
@@ -2504,7 +2504,7 @@ void CollisionModel_ExpandBBox( Vector &mins, Vector &maxs )
 		Vector collideMins, collideMaxs;
 
 		physcollision->CollideGetAABB( &collideMins, &collideMaxs, g_JointedModel.m_pCollisionList->m_pCollisionData, vec3_origin, vec3_angle );
-		
+
 		// add the 0.25 inch collision separation as well
 		const float radius = 0.25;
 		collideMins -= Vector(radius,radius,radius);
@@ -2531,10 +2531,10 @@ void CollisionModel_Write( long checkSum )
 //		{
 //			strcat( filename, "platform_" );
 //			strcat( filename, g_pPlatformName );
-//			strcat( filename, "/" );	
+//			strcat( filename, "/" );
 //		}
-		V_strcat_safe( filename, "models/" );	
-		V_strcat_safe( filename, outname );	
+		V_strcat_safe( filename, "models/" );
+		V_strcat_safe( filename, outname );
 
 		float volume = TotalVolume( pPhys );
 		if ( volume <= 0 )
@@ -2594,7 +2594,7 @@ void CollisionModel_Write( long checkSum )
 				{
 					KeyWriteString( fp, "parent", pPhys->m_parent );
 				}
-			
+
 				KeyWriteFloat( fp, "mass", pPhys->m_mass );
 				//KeyWriteFloat( fp, "volume", pPhys->m_volume );
 
@@ -2603,7 +2603,7 @@ void CollisionModel_Write( long checkSum )
 				KeyWriteString( fp, "surfaceprop", pSurfaceProps );
 				KeyWriteFloat( fp, "damping", pPhys->m_damping );
 				KeyWriteFloat( fp, "rotdamping", pPhys->m_rotdamping );
-				
+
 				if ( pPhys->m_dragCoefficient != -1 )
 				{
 					KeyWriteFloat( fp, "drag", pPhys->m_dragCoefficient );
@@ -2720,5 +2720,3 @@ void CollisionModel_Write( long checkSum )
 		}
 	}
 }
-
-

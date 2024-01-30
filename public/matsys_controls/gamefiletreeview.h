@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -38,7 +38,7 @@ public:
 
 	// Inherited from base classes
 	virtual void GenerateChildrenOfNode( int itemIndex );
-	virtual void GenerateContextMenu( int itemIndex, int x, int y ); 
+	virtual void GenerateContextMenu( int itemIndex, int x, int y );
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
 	// Purpose: Refreshes the active file list
@@ -78,4 +78,3 @@ private:
 
 
 #endif // GAMEFILETREEVIEW_H
-

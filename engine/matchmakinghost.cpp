@@ -20,7 +20,7 @@ static ConVar mm_minplayers( "mm_minplayers", "2", 0, "Number of players require
 static ConVar mm_max_spectators( "mm_max_spectators", "4", 0, "Max players allowed on the spectator team" );
 
 //-----------------------------------------------------------------------------
-// Purpose: Start a Matchmaking session as the host 
+// Purpose: Start a Matchmaking session as the host
 //-----------------------------------------------------------------------------
 void CMatchmaking::StartHost( bool bSystemLink )
 {
@@ -104,7 +104,7 @@ void CMatchmaking::OnHostSessionCreated()
 void CMatchmaking::HandleSystemLinkSearch( netpacket_t *pPacket )
 {
 	// Should we respond to this probe?
-	if ( !m_Session.IsSystemLink() || 
+	if ( !m_Session.IsSystemLink() ||
 		 !m_Session.IsHost() ||
 		  m_Session.IsFull() ||
 		  m_CurrentState < MMSTATE_ACCEPTING_CONNECTIONS )
@@ -137,7 +137,7 @@ void CMatchmaking::HandleSystemLinkSearch( netpacket_t *pPacket )
 	msg.WriteByte( m_SessionProperties.Count() );
 	msg.WriteByte( m_SessionContexts.Count() );
 
-	uint nScenarioId = g_ClientDLL->GetPresenceID( "CONTEXT_SCENARIO" );	
+	uint nScenarioId = g_ClientDLL->GetPresenceID( "CONTEXT_SCENARIO" );
 	uint nScenarioValue = 0;
 
 	for ( int i = 0; i < m_SessionProperties.Count(); ++i )
@@ -244,7 +244,7 @@ void CMatchmaking::HandleJoinRequest( netpacket_t *pPacket )
 			if ( !GameIsActive() )
 			{
 				// If the game is in progress, the new client will choose a team after connecting
-				joinResponse.m_iTeam = ChooseTeam(); 
+				joinResponse.m_iTeam = ChooseTeam();
 			}
 			else
 			{
@@ -786,7 +786,7 @@ int CMatchmaking::GetPlayersNeeded()
 
 	// check if we can start the game
 	int total = 0;
-	
+
 	for ( int i = 0; i < m_nTotalTeams; ++i )
 	{
 		total += CountPlayersOnTeam( i );

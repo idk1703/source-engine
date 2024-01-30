@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -91,7 +91,7 @@ BEGIN_SHADER( DebugTangentSpace, "Help for DebugTangentSpace" )
 
 #ifdef USE_NEW_SHADER
 				if( g_pHardwareConfig->GetDXSupportLevel() >= 90 )
-				{					
+				{
 					DECLARE_DYNAMIC_VERTEX_SHADER( debugtangentspace_vs20 );
 					SET_DYNAMIC_VERTEX_SHADER_COMBO( DOWATERFOG, pShaderAPI->GetSceneFogMode() == MATERIAL_FOG_LINEAR_BELOW_FOG_Z );
 					SET_DYNAMIC_VERTEX_SHADER_COMBO( SKINNING, pShaderAPI->GetCurrentNumBones() > 0 );
@@ -107,7 +107,7 @@ BEGIN_SHADER( DebugTangentSpace, "Help for DebugTangentSpace" )
 					{
 						DECLARE_DYNAMIC_PIXEL_SHADER( unlitgeneric_notexture_ps20 );
 						SET_DYNAMIC_PIXEL_SHADER( unlitgeneric_notexture_ps20 );
-					}					
+					}
 				}
 				else // legacy hardware
 				{
@@ -130,4 +130,3 @@ BEGIN_SHADER( DebugTangentSpace, "Help for DebugTangentSpace" )
 		}
 	}
 END_SHADER
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -63,7 +63,7 @@ int CHL1HudNumbers::DrawHudNumber( int x, int y, int iNumber, Color &clrDraw )
 {
 	int iWidth = GetNumberFontWidth();
 	int k;
-	
+
 	if ( iNumber > 0 )
 	{
 		// SPR_Draw 100's
@@ -94,7 +94,7 @@ int CHL1HudNumbers::DrawHudNumber( int x, int y, int iNumber, Color &clrDraw )
 		k = iNumber % 10;
 		icon_digits[ k ]->DrawSelf( x, y, clrDraw );
 		x += iWidth;
-	} 
+	}
 	else
 	{
 		// SPR_Draw 100's

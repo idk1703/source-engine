@@ -66,13 +66,13 @@ private:
 	CMeshBuilder *m_pMeshBuilder;
 	IMesh *m_pMesh;
 	bool m_bBucketSort;
-	
+
 	// Output after rendering.
 	float m_MinZ;
 	float m_MaxZ;
 	float m_zCoords[MAX_TOTAL_PARTICLES];
 	int m_nZCoords;
-	
+
 	Particle *m_pCur;
 	bool m_bGotFirst;
 	float m_flPrevZ;
@@ -96,7 +96,7 @@ friend class CParticleMgr;
 friend class CParticleEffectBinding;
 public:
 	CParticleSimulateIterator();
-	
+
 	// Iterate through the particles, simulate them, and remove them if necessary.
 	Particle* GetFirst();
 	Particle* GetNext();
@@ -169,7 +169,7 @@ inline const Particle* CParticleRenderIterator::GetNext( float sortKey )
 	{
 		m_MinZ = MIN( sortKey, m_MinZ );
 		m_MaxZ = MAX( sortKey, m_MaxZ );
-		
+
 		m_zCoords[m_nZCoords] = sortKey;
 		++m_nZCoords;
 	}
@@ -240,7 +240,7 @@ inline Particle* CParticleSimulateIterator::GetNext()
 
 	if ( pRet == &m_pMaterial->m_Particles )
 		return NULL;
-	
+
 	m_pNextParticle = pRet->m_pNext;
 	return pRet;
 }
@@ -267,4 +267,3 @@ inline float CParticleSimulateIterator::GetTimeDelta() const
 
 
 #endif // PARTICLE_ITERATORS_H
-

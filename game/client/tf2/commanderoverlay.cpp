@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -10,9 +10,9 @@
 #include "utlsymbol.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: Singleton class responsible for managing overlay elements 
+// Purpose: Singleton class responsible for managing overlay elements
 //-----------------------------------------------------------------------------
-					  
+
 class CHudCommanderOverlayMgrImp : public IHudCommanderOverlayMgr
 {
 public:
@@ -132,7 +132,7 @@ void CHudCommanderOverlayMgrImp::CreatePanel( int overlay )
 	char pTeamName[6] = "Team ";
 	pTeamName[4] = '0' + panel.m_Team;
 
-	vgui::Panel *pPanel = PanelMetaClassMgr()->CreatePanelMetaClass( 
+	vgui::Panel *pPanel = PanelMetaClassMgr()->CreatePanelMetaClass(
 		panel.m_Name.String(), 0, panel.m_hEntity.Get(), panel.m_pParentPanel, pTeamName );
 	m_Overlays[overlay].m_pPanel = pPanel;
 }
@@ -152,7 +152,7 @@ void CHudCommanderOverlayMgrImp::DestroyPanel( int overlay )
 //-----------------------------------------------------------------------------
 // add an overlay element to the commander mode
 //-----------------------------------------------------------------------------
-OverlayHandle_t CHudCommanderOverlayMgrImp::AddOverlay( 
+OverlayHandle_t CHudCommanderOverlayMgrImp::AddOverlay(
 	char const* pOverlayInstance, C_BaseEntity* pEntity, vgui::Panel *pParent )
 {
 	OverlayPanel_t newPanel;
@@ -217,4 +217,3 @@ void CHudCommanderOverlayMgrImp::Tick( )
 		}
 	}
 }
-

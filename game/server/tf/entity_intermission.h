@@ -26,4 +26,3 @@ public:
 };
 
 #endif // ENTITY_INTERMISSION_H
-

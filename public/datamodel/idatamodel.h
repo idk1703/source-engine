@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -18,7 +18,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Forward declarations: 
+// Forward declarations:
 //-----------------------------------------------------------------------------
 class CDmAttribute;
 class CDmElement;
@@ -91,7 +91,7 @@ enum DmFileId_t
 // Handle to an CDmAttribute
 //-----------------------------------------------------------------------------
 enum DmAttributeHandle_t
-{  
+{
 	DMATTRIBUTE_HANDLE_INVALID = 0xffffffff
 };
 
@@ -99,7 +99,7 @@ enum DmAttributeHandle_t
 // Handle to an DmAttributeList_t
 //-----------------------------------------------------------------------------
 enum DmAttributeReferenceIterator_t
-{  
+{
 	DMATTRIBUTE_REFERENCE_ITERATOR_INVALID = 0
 };
 
@@ -152,7 +152,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Class factory methods: 
+// Class factory methods:
 //-----------------------------------------------------------------------------
 class IDmElementFactory
 {
@@ -164,7 +164,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Various serialization methods can be installed into the data model factory 
+// Various serialization methods can be installed into the data model factory
 //-----------------------------------------------------------------------------
 enum DmConflictResolution_t
 {
@@ -328,11 +328,11 @@ enum TraversalDepth_t
 
 
 //-----------------------------------------------------------------------------
-// Main interface for creation of all IDmeElements: 
+// Main interface for creation of all IDmeElements:
 //-----------------------------------------------------------------------------
 class IDataModel : public IAppSystem
 {
-public:	
+public:
 	// Installs factories used to instance elements
 	virtual void			AddElementFactory( const char *pElementTypeName, IDmElementFactory *pFactory ) = 0;
 
@@ -387,7 +387,7 @@ public:
 	// Serialization of a element tree into a utlbuffer
 	virtual bool			Serialize( CUtlBuffer &outBuf, const char *pEncodingName, const char *pFormatName, DmElementHandle_t hRoot ) = 0;
 
-	// Unserializes, returns the root of the unserialized tree in hRoot 
+	// Unserializes, returns the root of the unserialized tree in hRoot
 	// The file name passed in is simply for error messages and fileid creation
 	virtual bool			Unserialize( CUtlBuffer &inBuf, const char *pEncodingName, const char *pSourceFormatName, const char *pFormatHint,
 										 const char *pFileName, DmConflictResolution_t idConflictResolution, DmElementHandle_t &hRoot ) = 0;
@@ -409,7 +409,7 @@ public:
 
 	// restores file into an element tree
 	// NOTE: Format name is only used here for those formats which don't store
-	// the format name in the file. Use NULL for those formats which store the 
+	// the format name in the file. Use NULL for those formats which store the
 	// format name in the file.
 	virtual DmFileId_t			RestoreFromFile( const char *pFileName, const char *pPathID, const char *pFormatHint, CDmElement **ppRoot, DmConflictResolution_t idConflictResolution = CR_DELETE_NEW, DmxHeader_t *pHeaderOut = NULL ) = 0;
 
@@ -565,14 +565,14 @@ public:
 	}
 
 protected:
-	virtual bool IsEndOfStream() const 
-	{ 
-		return m_bEndOfStream; 
+	virtual bool IsEndOfStream() const
+	{
+		return m_bEndOfStream;
 	}
 
 	virtual void SetEndOfStream( bool end )
-	{ 
-		m_bEndOfStream = end; 
+	{
+		m_bEndOfStream = end;
 	}
 
 	const char *m_pDesc;

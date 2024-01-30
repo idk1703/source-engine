@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -37,7 +37,7 @@ int ExtractBbox( CStudioHdr *pstudiohdr, int sequence, Vector& mins, Vector& max
 		return 0;
 
 	mstudioseqdesc_t	&seqdesc = pstudiohdr->pSeqdesc( sequence );
-	
+
 	mins = seqdesc.bbmin;
 
 	maxs = seqdesc.bbmax;
@@ -46,10 +46,10 @@ int ExtractBbox( CStudioHdr *pstudiohdr, int sequence, Vector& mins, Vector& max
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
-// Input  : *pstudiohdr - 
-//			iSequence - 
+// Input  : *pstudiohdr -
+//			iSequence -
 //
 // Output : mstudioseqdesc_t
 //-----------------------------------------------------------------------------
@@ -77,9 +77,9 @@ void SetEventIndexForSequence( mstudioseqdesc_t &seqdesc )
 		if ( pevent->type & AE_TYPE_NEWEVENTSYSTEM )
 		{
 			const char *pEventName = pevent->pszEventName();
-			
+
 			int iEventIndex = EventList_IndexForName( pEventName );
-				
+
 			if ( iEventIndex == -1 )
 			{
 				pevent->event = EventList_RegisterPrivateEvent( pEventName );
@@ -126,7 +126,7 @@ void BuildAllAnimationEventIndexes( CStudioHdr *pstudiohdr )
 // Output :
 //-----------------------------------------------------------------------------
 void ResetEventIndexes( CStudioHdr *pstudiohdr )
-{	
+{
 	if (! pstudiohdr)
 		return;
 
@@ -134,7 +134,7 @@ void ResetEventIndexes( CStudioHdr *pstudiohdr )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 void SetActivityForSequence( CStudioHdr *pstudiohdr, int i )
@@ -149,7 +149,7 @@ void SetActivityForSequence( CStudioHdr *pstudiohdr, int i )
 	if ( pszActivityName[0] != '\0' )
 	{
 		iActivityIndex = ActivityList_IndexForName( pszActivityName );
-		
+
 		if ( iActivityIndex == -1 )
 		{
 			// Allow this now.  Animators can create custom activities that are referenced only on the client or by scripts, etc.
@@ -199,7 +199,7 @@ void IndexModelSequences( CStudioHdr *pstudiohdr )
 // Output :
 //-----------------------------------------------------------------------------
 void ResetActivityIndexes( CStudioHdr *pstudiohdr )
-{	
+{
 	if (! pstudiohdr)
 		return;
 
@@ -253,14 +253,14 @@ int SelectWeightedSequence( CStudioHdr *pstudiohdr, int activity, int curSequenc
 				break;
 			}
 			weighttotal += iabs(weight);
-			
+
 			int randomValue;
 
 			if ( IsInPrediction() )
 				randomValue = SharedRandomInt( "SelectWeightedSequence", 0, weighttotal - 1, i );
 			else
 				randomValue = RandomInt( 0, weighttotal - 1 );
-			
+
 			if (!weighttotal || randomValue < iabs(weight))
 				seq = i;
 		}
@@ -273,7 +273,7 @@ int SelectWeightedSequence( CStudioHdr *pstudiohdr, int activity, int curSequenc
 }
 
 
-// Pick a sequence for the given activity. If the current sequence is appropriate for the 
+// Pick a sequence for the given activity. If the current sequence is appropriate for the
 // current activity, and its stored weight is negative (whatever that means), always select
 // it. Otherwise perform a weighted selection -- imagine a large roulette wheel, with each
 // sequence having a number of spaces corresponding to its weight.
@@ -324,9 +324,9 @@ int CStudioHdr::CActivityToSequenceMapping::SelectWeightedSequence( CStudioHdr *
 	// until we run out of random juice
 	SequenceTuple * __restrict sequenceInfo = m_pSequenceTuples + actData->startingIdx;
 
-	const SequenceTuple *const stopHere = sequenceInfo + actData->count; // this is a backup 
+	const SequenceTuple *const stopHere = sequenceInfo + actData->count; // this is a backup
 		// in case the weights are somehow miscalculated -- we don't read or write through
-		// it (because it aliases the restricted pointer above); it's only here for 
+		// it (because it aliases the restricted pointer above); it's only here for
 		// the comparison.
 
 	while (randomValue >= sequenceInfo->weight && sequenceInfo < stopHere)
@@ -375,7 +375,7 @@ int CStudioHdr::CActivityToSequenceMapping::SelectWeightedSequenceFromModifiers(
 
 	// go through each sequence and give it a score
 	int top_score = -1;
-	CUtlVector<int> topScoring( actData->count, actData->count );	
+	CUtlVector<int> topScoring( actData->count, actData->count );
 	for ( int i = 0; i < actData->count; i++ )
 	{
 		SequenceTuple * __restrict sequenceInfo = m_pSequenceTuples + actData->startingIdx + i;
@@ -406,7 +406,7 @@ int CStudioHdr::CActivityToSequenceMapping::SelectWeightedSequenceFromModifiers(
 	{
 		return topScoring[ SharedRandomInt( "SelectWeightedSequence", 0, topScoring.Count() - 1 ) ];
 	}
-	
+
 	return topScoring[ RandomInt( 0, topScoring.Count() - 1 ) ];
 }
 
@@ -574,9 +574,9 @@ const char *GetSequenceActivityName( CStudioHdr *pstudiohdr, int iSequence )
 
 int GetSequenceFlags( CStudioHdr *pstudiohdr, int sequence )
 {
-	if ( !pstudiohdr || 
+	if ( !pstudiohdr ||
 		 !pstudiohdr->SequencesAvailable() ||
-		sequence < 0 || 
+		sequence < 0 ||
 		sequence >= pstudiohdr->GetNumSeq() )
 	{
 		return 0;
@@ -588,10 +588,10 @@ int GetSequenceFlags( CStudioHdr *pstudiohdr, int sequence )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pstudiohdr - 
-//			sequence - 
-//			type - 
+// Purpose:
+// Input  : *pstudiohdr -
+//			sequence -
+//			type -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool HasAnimationEventOfType( CStudioHdr *pstudiohdr, int sequence, int type )
@@ -643,7 +643,7 @@ int GetAnimationEvent( CStudioHdr *pstudiohdr, int sequence, animevent_t *pNPCEv
 		}
 		else if ( pevent[index].event >= EVENT_CLIENT ) //Adrian - Support the old event system
 			continue;
-	
+
 		bool bOverlapEvent = false;
 
 		if (pevent[index].cycle >= flStart && pevent[index].cycle < flEnd)
@@ -853,7 +853,7 @@ bool GotoSequence( CStudioHdr *pstudiohdr, int iCurrentSequence, float flCurrent
 			if (pstudiohdr->ExitNode( i ) == iEndNode && pstudiohdr->EntryNode( i ) == iInternNode)
 			{
 				iNextDir = -1;
-				flNextCycle = 0.999;	
+				flNextCycle = 0.999;
 				nNextSequence = i;
 				return true;
 			}
@@ -983,9 +983,9 @@ void GetAttachmentLocalSpace( CStudioHdr *pstudiohdr, int attachIndex, matrix3x4
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pstudiohdr - 
-//			*name - 
+// Purpose:
+// Input  : *pstudiohdr -
+//			*name -
 // Output : int
 //-----------------------------------------------------------------------------
 int FindHitboxSetByName( CStudioHdr *pstudiohdr, const char *name )
@@ -1007,9 +1007,9 @@ int FindHitboxSetByName( CStudioHdr *pstudiohdr, const char *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pstudiohdr - 
-//			setnumber - 
+// Purpose:
+// Input  : *pstudiohdr -
+//			setnumber -
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *GetHitboxSetName( CStudioHdr *pstudiohdr, int setnumber )
@@ -1025,8 +1025,8 @@ const char *GetHitboxSetName( CStudioHdr *pstudiohdr, int setnumber )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pstudiohdr - 
+// Purpose:
+// Input  : *pstudiohdr -
 // Output : int
 //-----------------------------------------------------------------------------
 int GetHitboxSetCount( CStudioHdr *pstudiohdr )

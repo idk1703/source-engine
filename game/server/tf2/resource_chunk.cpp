@@ -51,7 +51,7 @@ void CResourceChunk::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceChunk::Spawn( )
 {
@@ -81,7 +81,7 @@ void CResourceChunk::Spawn( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceChunk::Precache( void )
 {
@@ -127,7 +127,7 @@ void CResourceChunk::ChunkTouch( CBaseEntity *pOther )
 		// Tell the player
 		CSingleUserRecipientFilter user( (CBasePlayer*)pOther );
 		UserMessageBegin( user, "PickupRes" );
-			WRITE_BYTE( iAmountPerPlayer ); 
+			WRITE_BYTE( iAmountPerPlayer );
 		MessageEnd();
 
 		// Tell our zone to remove this chunk from it's list

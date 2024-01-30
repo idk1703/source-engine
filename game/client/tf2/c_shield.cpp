@@ -32,7 +32,7 @@ CUtlVector< C_Shield* >	C_Shield::s_Shields;
 
 
 //-----------------------------------------------------------------------------
-// Various important constants: 
+// Various important constants:
 //-----------------------------------------------------------------------------
 
 #define SHIELD_DAMAGE_CHANGE_FIRST_PASS_TIME		0.3f
@@ -78,7 +78,7 @@ C_Shield::C_Shield()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_Shield::~C_Shield()
 {
@@ -102,7 +102,7 @@ void C_Shield::InitShield( int w, int h, int subdivisions )
 }
 
 //-----------------------------------------------------------------------------
-// This is called after a network update 
+// This is called after a network update
 //-----------------------------------------------------------------------------
 void C_Shield::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -110,13 +110,13 @@ void C_Shield::OnDataChanged( DataUpdateType_t updateType )
 	{
 		m_StartTime = engine->GetLastTimeStamp();
 	}
-	
+
 	BaseClass::OnDataChanged( updateType );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : collisionGroup - 
+// Purpose:
+// Input  : collisionGroup -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_Shield::ShouldCollide( int collisionGroup, int contentsMask ) const
@@ -145,7 +145,7 @@ void C_Shield::ActivateCollisions( bool activate )
 }
 
 //-----------------------------------------------------------------------------
-// Activates all shields 
+// Activates all shields
 //-----------------------------------------------------------------------------
 void C_Shield::ActivateShields( bool activate, int team )
 {
@@ -197,7 +197,7 @@ bool C_Shield::TestCollision( const Ray_t& ray, unsigned int mask, trace_t& trac
 
 			// NOTE: Structure order of points so that our barycentric
 			// axes for each triangle are along the (u,v) directions of the mesh
-			// The barycentric coords we'll need below 
+			// The barycentric coords we'll need below
 
 			// Two triangles per quad...
 			t = IntersectRayWithTriangle( ray,
@@ -213,7 +213,7 @@ bool C_Shield::TestCollision( const Ray_t& ray, unsigned int mask, trace_t& trac
 				ihit = i; jhit = j;
 				firstTri = true;
 			}
-			
+
 			t = IntersectRayWithTriangle( ray,
 				GetPoint( j + 1, i ),
 				GetPoint( j, i ),
@@ -233,7 +233,7 @@ bool C_Shield::TestCollision( const Ray_t& ray, unsigned int mask, trace_t& trac
 	if (mint == FLT_MAX)
 		return false;
 
-	// Stuff the barycentric coordinates of the triangle hit into the hit group 
+	// Stuff the barycentric coordinates of the triangle hit into the hit group
 	// For the first triangle, the first edge goes along u, the second edge goes
 	// along -v. For the second triangle, the first edge goes along -u,
 	// the second edge goes along v.
@@ -241,7 +241,7 @@ bool C_Shield::TestCollision( const Ray_t& ray, unsigned int mask, trace_t& trac
 	const Vector& v2vec = GetPoint(v2[0], v2[1]);
 	const Vector& v3vec = GetPoint(v3[0], v3[1]);
 	float u, v;
-	bool ok = ComputeIntersectionBarycentricCoordinates( ray, 
+	bool ok = ComputeIntersectionBarycentricCoordinates( ray,
 		v1vec, v2vec, v3vec, u, v );
 	Assert( ok );
 	if ( !ok )
@@ -262,7 +262,7 @@ bool C_Shield::TestCollision( const Ray_t& ray, unsigned int mask, trace_t& trac
 
 	Vector normal;
 	float intercept;
-	ComputeTrianglePlane( v1vec, v2vec, v3vec, normal, intercept ); 
+	ComputeTrianglePlane( v1vec, v2vec, v3vec, normal, intercept );
 
 	UTIL_SetTrace( trace, ray, this, mint, hitgroup, CONTENTS_SOLID, normal, intercept );
 	return true;
@@ -313,7 +313,7 @@ void C_Shield::TextureAnimationWrapped()
 
 
 //-----------------------------------------------------------------------------
-// Indicates a collision occurred: 
+// Indicates a collision occurred:
 //-----------------------------------------------------------------------------
 void C_Shield::ReceiveMessage( int classID,  bf_read &msg )
 {
@@ -336,7 +336,7 @@ void C_Shield::ReceiveMessage( int classID,  bf_read &msg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_Shield::CreateShieldDeflection( int hitgroup, const Vector &dir, bool partialBlock )
 {
@@ -436,9 +436,9 @@ void C_Shield::DrawShieldPoints(Vector* pt, Vector* normal, float* opacity)
 	float dv = du;
 
 	unsigned char color[3];
-	color[0] = 255; 
-	color[1] = 255; 
-	color[2] = 255; 
+	color[0] = 255;
+	color[1] = 255;
+	color[2] = 255;
 
 	for ( int i = 0; i < m_SubdivisionCount - 1; ++i)
 	{
@@ -660,7 +660,7 @@ void C_Shield::ComputePoint( float s, float t, Vector& pt, Vector& normal, float
 				float blendFactor = m_SplinePatch.GetChannel( 1 );
 				blendFactor = clamp( blendFactor, 0.0f, 1.0f );
 
-				float blendValue = 1.0f; 
+				float blendValue = 1.0f;
 				Vector delta;
 				VectorSubtract( pt, GetAbsOrigin(), delta );
 				float dist = VectorLength( delta );
@@ -773,7 +773,7 @@ int	C_Shield::DrawModel( int flags )
 
 	// Set up the patch with all the data it's going to need
 	int count = Width() * Height();
- 	Vector const** pControlPoints = (Vector const**)stackalloc(count * sizeof(Vector*));
+	Vector const** pControlPoints = (Vector const**)stackalloc(count * sizeof(Vector*));
 	float* pControlOpacity = (float*)stackalloc(count * sizeof(float));
 	float* pControlBlend = (float*)stackalloc(count * sizeof(float));
 
@@ -806,7 +806,7 @@ int	C_Shield::DrawModel( int flags )
 	// Commented out because it causes things to not be drawn behind it
 //	DrawShieldDecals( pt, false );
 
-    DrawShieldPoints( pt, normal, opacity );
+	DrawShieldPoints( pt, normal, opacity );
 	DrawShieldDecals( pt, true );
 
 	return 1;

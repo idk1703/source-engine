@@ -37,11 +37,11 @@ public:
 	explicit CReport(){}
 	virtual void writeHTML(CHTMLFile& html){}
 	virtual void generate(){}
-	
+
 	virtual void makeHTMLPage(char* pageName,char* pageTitle);
 	virtual void report(CHTMLFile& html);
 	virtual ~CReport(){}
-};	
+};
 
 
 #endif // REPORT_H

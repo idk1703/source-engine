@@ -21,7 +21,7 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
-															 
+
 void AddSubKeyNamed( KeyValues *pKeys, const char *pszName );
 
 const float k_flQuestDecodeTime = 2.f;
@@ -257,13 +257,13 @@ void CQuestStatusPanel::OnThink()
 		flProgress = Bias( RemapValClamped( m_transitionTimer.GetElapsedTime(), 0.f , m_transitionTimer.GetCountdownDuration(), 0.f, 1.f ), 0.7f );
 	}
 	flProgress = RemapVal( flProgress, 0.f, 1.f, (float)nStartY, (float)nEndY );
- 
+
 	m_pMovingContainer->SetPos( m_pMovingContainer->GetXPos(), flProgress );
 	SetVisible( m_bShouldBeVisible || flProgress > 0.f );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CQuestItemPanel::CQuestItemPanel( Panel *parent, const char *pszPanelName, CEconItemView* pQuestItem, CScrollableQuestList* pQuestList )
 	: EditablePanel( parent, pszPanelName )
@@ -309,7 +309,7 @@ CQuestItemPanel::CQuestItemPanel( Panel *parent, const char *pszPanelName, CEcon
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CQuestItemPanel::~CQuestItemPanel()
 {
@@ -321,7 +321,7 @@ CQuestItemPanel::~CQuestItemPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestItemPanel::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -331,7 +331,7 @@ void CQuestItemPanel::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestItemPanel::LoadResFileForCurrentItem()
 {
@@ -537,7 +537,7 @@ void CQuestItemPanel::LoadResFileForCurrentItem()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestItemPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -573,7 +573,7 @@ void CQuestItemPanel::ApplySettings( KeyValues *inResourceData )
 	if ( 1/*m_pKVItemTracker == NULL*/ )
 	{
 		KeyValues *pTrackerKV = inResourceData->FindKey( "tracker_kv" );
-		
+
 		if ( pTrackerKV )
 		{
 			m_pKVItemTracker = pTrackerKV->MakeCopy();
@@ -600,7 +600,7 @@ void CQuestItemPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestItemPanel::PerformLayout( void )
 {
@@ -625,7 +625,7 @@ void CQuestItemPanel::PerformLayout( void )
 
 	// loaners
 	if ( m_eState == STATE_NORMAL || m_eState == STATE_COMPLETED )
-	{	
+	{
 		// get all loaners required from quest
 		CUtlVector< item_definition_index_t > vecLoanerItems;
 		bool bRequiredLoaners = GetLoanerListFromQuest( m_hQuestItem, vecLoanerItems ) > 0;
@@ -744,7 +744,7 @@ void CQuestItemPanel::PerformLayout( void )
 	}
 
 	UpdateInvalidReasons();
-	
+
 	if ( m_pItemTrackerPanel )
 	{
 		auto& vecObjectives = m_pItemTrackerPanel->GetAttributePanels();
@@ -761,7 +761,7 @@ void CQuestItemPanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CQuestItemPanel::IsCursorOverMainContainer() const
 {
@@ -769,7 +769,7 @@ bool CQuestItemPanel::IsCursorOverMainContainer() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestItemPanel::SetupObjectivesPanels( bool bRecreate )
 {
@@ -803,7 +803,7 @@ void CQuestItemPanel::SetupObjectivesPanels( bool bRecreate )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestItemPanel::SetItem( CEconItemView* pItem )
 {
@@ -878,7 +878,7 @@ bool IsNonEncodeCharacter( const wchar_t& wch)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestItemPanel::CaptureAndEncodeStrings()
 {
@@ -906,7 +906,7 @@ void CQuestItemPanel::CaptureAndEncodeStrings()
 
 	if ( m_pObjectiveExplanationLabel )
 	{
-		wchar_t wszBuff[512];	
+		wchar_t wszBuff[512];
 		m_pObjectiveExplanationLabel->GetText( wszBuff, ARRAYSIZE( wszBuff ) );
 		pKVDecoded->SetWString( "explanation", wszBuff );
 	}
@@ -923,7 +923,7 @@ void CQuestItemPanel::CaptureAndEncodeStrings()
 	// Create encoded strings from the decoded strings
 	KeyValues *pKVEncoded = pKVDecoded->MakeCopy();
 	pKVEncoded->SetName( "encoded" );
-	
+
 	m_pKVCipherStrings->AddSubKey( pKVEncoded );
 
 	RandomSeed( m_hQuestItem->GetSOCData() ? m_hQuestItem->GetSOCData()->GetOriginalID() : m_hQuestItem->GetItemDefIndex() );
@@ -945,11 +945,11 @@ void CQuestItemPanel::CaptureAndEncodeStrings()
 			if ( !IsNonEncodeCharacter( wszBuff[i] )  )
 			{
 				// Scramble, but keep trying if we scramble to a space
-				do 
+				do
 				{
 					wszBuff[i] = *(pWString + RandomInt( 0, nStrLen - 1 ) );
 				} while ( IsNonEncodeCharacter( wszBuff[i] ) );
-				
+
 			}
 
 			i++;
@@ -967,7 +967,7 @@ void CQuestItemPanel::CaptureAndEncodeStrings()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestItemPanel::OnCommand( const char *command )
 {
@@ -982,7 +982,7 @@ void CQuestItemPanel::OnCommand( const char *command )
 	{
 		m_pQuestList->SetSelected( this, false );
 	}
-	else if ( FStrEq( command, "turnin" ) ) 
+	else if ( FStrEq( command, "turnin" ) )
 	{
 		if ( m_hQuestItem && m_hQuestItem->GetItemDefinition() && m_hQuestItem->GetItemDefinition()->GetQuestDef() )
 		{
@@ -1070,7 +1070,7 @@ void CQuestItemPanel::OnCommand( const char *command )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const wchar_t* CQuestItemPanel::GetDecodedString( const char* pszKeyName, float flPercentDecoded )
 {
@@ -1101,7 +1101,7 @@ const wchar_t* CQuestItemPanel::GetDecodedString( const char* pszKeyName, float 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestItemPanel::OnThink()
 {
@@ -1172,7 +1172,7 @@ void CQuestItemPanel::OnThink()
 
 			// Bring up confirm dialog
 			CTFGenericConfirmDialog *pDialog = new CTFGenericConfirmDialog( "#TF_Trading_Timeout_Title", "#TF_Trading_Timeout_Text", "#TF_OK", NULL, NULL, NULL );
-		
+
 			if ( pDialog )
 			{
 				pDialog->SetContext( this );
@@ -1181,7 +1181,7 @@ void CQuestItemPanel::OnThink()
 
 			SetState( STATE_COMPLETED );
 		}
-		
+
 		// Intentionally fall through
 	}
 	case STATE_TURNING_IN__GC_RESPONDED:
@@ -1223,7 +1223,7 @@ void CQuestItemPanel::OnThink()
 		{
 			m_pQuestList->SetCompletingPanel( NULL );
 			m_StateTimer.Invalidate();
-	
+
 			engine->ClientCmd_Unrestricted( "gameui_allowescapetoshow\n" );
 
 			InventoryManager()->ShowItemsPickedUp( true, false );
@@ -1266,7 +1266,7 @@ void CQuestItemPanel::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestItemPanel::FireGameEvent( IGameEvent *event )
 {
@@ -1288,7 +1288,7 @@ void CQuestItemPanel::FireGameEvent( IGameEvent *event )
 			PerformLayout();
 		}
 	}
-	else if ( FStrEq( event->GetName(), "player_spawn" ) 
+	else if ( FStrEq( event->GetName(), "player_spawn" )
 		   || FStrEq( event->GetName(), "client_disconnect" ) )
 	{
 		InvalidateLayout();
@@ -1348,7 +1348,7 @@ void CQuestItemPanel::UpdateInvalidReasons()
 			m_pInactiveStatus->SetDialogVariable( "tiptext", wszBuff );
 		}
 	}
-		
+
 	// Visible if there's a reason why we're invalid
 	bool bShow = bAllAreInvalid && m_eState == STATE_NORMAL;
 	m_pInactiveStatus->SetShow( bShow );
@@ -1361,7 +1361,7 @@ void CQuestItemPanel::UpdateInvalidReasons()
 //-----------------------------------------------------------------------------
 void CQuestItemPanel::OnCollapsedGlowStart( void )
 {
-	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, m_strHighlightOn );	
+	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, m_strHighlightOn );
 }
 
 //-----------------------------------------------------------------------------
@@ -1369,11 +1369,11 @@ void CQuestItemPanel::OnCollapsedGlowStart( void )
 //-----------------------------------------------------------------------------
 void CQuestItemPanel::OnCollapsedGlowEnd( void )
 {
-	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, m_strHighlightOff );	
+	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, m_strHighlightOff );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Delete the quest. 
+// Purpose: Delete the quest.
 //-----------------------------------------------------------------------------
 void CQuestItemPanel::OnDiscardQuest( void )
 {
@@ -1446,15 +1446,15 @@ void CQuestItemPanel::OnCompleteQuest( void )
 		vgui::surface()->PlaySound( m_strTurnInSound );
 
 		GCSDK::CProtoBufMsg< CMsgGCQuestComplete_Request > msg( k_EMsgGCQuestComplete_Request );
-	
+
 		msg.Body().set_quest_item_id( m_hQuestItem->GetItemID() );
 
 		GCClientSystem()->BSendMessage( msg );
 
 		PostActionSignal( new KeyValues("CompleteQuest") );
 
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, m_strTurningIn );	
-		
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, m_strTurningIn );
+
 		const GameItemDefinition_t *pItemDef = m_hQuestItem->GetItemDefinition();
 		// Get our quest theme
 		const CQuestThemeDefinition *pTheme = pItemDef->GetQuestDef()->GetQuestTheme();
@@ -1474,7 +1474,7 @@ void CQuestItemPanel::OnIdentify()
 		// Use the timer for identifying progress
 		m_StateTimer.Start( k_flQuestDecodeTime );
 		vgui::surface()->PlaySound( m_strDecodeSound );
-		
+
 		// ack item
 		CEconItemView *pModifyItem = m_hQuestItem;
 		TFInventoryManager()->AcknowledgeItem( pModifyItem, false );
@@ -1485,7 +1485,7 @@ void CQuestItemPanel::OnIdentify()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestItemPanel::OnConfirmDelete( bool bConfirm )
 {
@@ -1493,7 +1493,7 @@ void CQuestItemPanel::OnConfirmDelete( bool bConfirm )
 	if ( bConfirm && m_hQuestItem )
 	{
 		GCSDK::CProtoBufMsg< CMsgGCQuestDiscard_Request > msg( k_EMsgGCQuestDiscard_Request );
-	
+
 		msg.Body().set_quest_item_id( m_hQuestItem->GetItemID() );
 
 		GCClientSystem()->BSendMessage( msg );
@@ -1501,7 +1501,7 @@ void CQuestItemPanel::OnConfirmDelete( bool bConfirm )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestItemPanel::OnConfirmEquipLoaners( bool bConfirm )
 {
@@ -1531,7 +1531,7 @@ void CQuestItemPanel::OnConfirmEquipLoaners( bool bConfirm )
 					{
 						int iSlot = pItem->GetStaticData()->GetLoadoutSlot( iClass );
 						TFInventoryManager()->EquipItemInLoadout( iClass, iSlot, pItem->GetItemID() );
-						
+
 						// take the player to character loadout page
 						engine->ClientCmd_Unrestricted( CFmtStr( "open_charinfo_direct %d", iClass ) );
 						break;
@@ -1543,7 +1543,7 @@ void CQuestItemPanel::OnConfirmEquipLoaners( bool bConfirm )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestItemPanel::QuestCompletedResponse()
 {
@@ -1558,7 +1558,7 @@ void CQuestItemPanel::QuestCompletedResponse()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestItemPanel::SetSelected( bool bSelected, bool bImmediate )
 {
@@ -1570,22 +1570,22 @@ void CQuestItemPanel::SetSelected( bool bSelected, bool bImmediate )
 		if ( m_bCollapsed )
 		{
 			vgui::surface()->PlaySound( m_strCollapseSound );
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, m_strAnimCollapse );	
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, m_strAnimCollapse );
 		}
 		else
 		{
 			vgui::surface()->PlaySound( m_strExpandSound );
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, m_strAnimExpand );	
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, m_strAnimExpand );
 		}
 	}
-	else 
+	else
 	{
 		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, m_strReset );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CQuestItemPanel::IsUnacknowledged()
 {

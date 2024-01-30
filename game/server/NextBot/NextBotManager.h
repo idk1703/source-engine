@@ -11,7 +11,7 @@ class CTerrorPlayer;
 
 //----------------------------------------------------------------------------------------------------------------
 /**
- * The NextBotManager manager 
+ * The NextBotManager manager
  */
 class NextBotManager
 {
@@ -40,7 +40,7 @@ public:
 	 * Execute functor for each NextBot in the system.
 	 * If a functor returns false, stop iteration early
 	 * and return false.
-	 */	
+	 */
 	template < typename Functor >
 	bool ForEachBot( Functor &func )
 	{
@@ -57,11 +57,11 @@ public:
 
 	/**
 	 * DEPRECATED: Use CollectAllBots().
-	 * Execute functor for each NextBot in the system as 
+	 * Execute functor for each NextBot in the system as
 	 * a CBaseCombatCharacter.
 	 * If a functor returns false, stop iteration early
 	 * and return false.
-	 */	
+	 */
 	template < typename Functor >
 	bool ForEachCombatCharacter( Functor &func )
 	{
@@ -79,7 +79,7 @@ public:
 
 	/**
 	 * Return closest bot to given point that passes the given filter
-	 */	
+	 */
 	template < typename Filter >
 	INextBot *GetClosestBot( const Vector &pos, Filter &filter )
 	{
@@ -208,4 +208,3 @@ extern NextBotManager &TheNextBots( void );
 
 
 #endif // _NEXT_BOT_MANAGER_H_
-

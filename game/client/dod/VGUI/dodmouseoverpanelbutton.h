@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@ class CDODMouseOverButton : public MouseOverButton<T>, public CDODButtonShape
 {
 private:
 	//DECLARE_CLASS_SIMPLE( CDODMouseOverButton, MouseOverButton );
-	
+
 public:
 	CDODMouseOverButton(vgui::Panel *parent, const char *panelName, T *templatePanel ) :
 					MouseOverButton<T>( parent, panelName, templatePanel )

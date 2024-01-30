@@ -1441,7 +1441,7 @@ virtualmodel_t *CMDLCache::GetVirtualModelFast( const studiohdr_t *pStudioHdr, M
 	studiodata_t *pStudioData = m_MDLDict[handle];
 	if ( !pStudioData )
 		return NULL;
-	
+
 	if ( !pStudioData->m_pVirtualModel )
 	{
 		DevMsg( 2, "Loading virtual model for %s\n", pStudioHdr->pszName() );
@@ -3614,7 +3614,7 @@ void CMDLCache::QueuedLoaderCallback_MDL( void *pContext, void *pContext2, const
 						char buf[MAX_PATH];
 						V_strcpy( buf, "materials/" );
 						int prefixLen = V_strlen( buf );
-						
+
 						for ( int t = 0; t < pHdr->numtextures; ++t )
 						{
 							// XXX this does not take remaps from vtxdata into account;
@@ -3714,7 +3714,7 @@ void CMDLCache::ProcessDynamicLoad( ModelParts_t *pModelParts )
 		g_pQueuedLoader->QueueDynamicLoadFunctor( CreateFunctor( ProcessDynamicLoad, pModelParts ) );
 		return;
 	}
-	
+
 	if ( pModelParts->bTexturesPending )
 	{
 		DEBUG_SCOPE_TIMER(matrefresh);
@@ -3921,4 +3921,3 @@ const studiohdr_t *virtualgroup_t::GetStudioHdr( void ) const
 {
 	return g_MDLCache.GetStudioHdr( (MDLHandle_t)(int)cache&0xffff );
 }
-

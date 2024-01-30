@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -16,7 +16,7 @@ class C_DODBaseGrenade : public CBaseGrenade
 {
 public:
 	DECLARE_CLASS( C_DODBaseGrenade, CBaseGrenade );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 
 	virtual void Spawn();
 

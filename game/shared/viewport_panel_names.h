@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,7 +13,7 @@
 
 // default panel name definitions
 #define PANEL_ALL			"all"		// all current panels
-#define PANEL_ACTIVE		"active"	// current active panel			
+#define PANEL_ACTIVE		"active"	// current active panel
 
 #define PANEL_SCOREBOARD	"scores"
 #define PANEL_OVERVIEW		"overview"

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -17,7 +17,7 @@
 #endif //#ifdef CLIENT_DLL
 
 
-acttable_t	CWeaponPortalgun::m_acttable[] = 
+acttable_t	CWeaponPortalgun::m_acttable[] =
 {
 	{ ACT_MP_STAND_IDLE,				ACT_MP_STAND_PRIMARY,					false },
 	{ ACT_MP_RUN,						ACT_MP_RUN_PRIMARY,						false },
@@ -111,7 +111,7 @@ bool CWeaponPortalgun::Reload( void )
 void CWeaponPortalgun::FillClip( void )
 {
 	CBaseCombatCharacter *pOwner  = GetOwner();
-	
+
 	if ( pOwner == NULL )
 		return;
 
@@ -127,7 +127,7 @@ void CWeaponPortalgun::FillClip( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -135,7 +135,7 @@ void CWeaponPortalgun::DryFire( void )
 {
 	WeaponSound(EMPTY);
 	SendWeaponAnim( ACT_VM_DRYFIRE );
-	
+
 	m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration();
 }
 
@@ -200,7 +200,7 @@ void CWeaponPortalgun::SetCanFirePortal2( bool bCanFire /*= true*/ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -241,7 +241,7 @@ void CWeaponPortalgun::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -286,7 +286,7 @@ void CWeaponPortalgun::DelayAttack( float fDelay )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponPortalgun::ItemHolsterFrame( void )
 {
@@ -303,7 +303,7 @@ void CWeaponPortalgun::ItemHolsterFrame( void )
 	{
 		// Reset the timer
 		m_flHolsterTime = gpGlobals->curtime;
-	
+
 		if ( GetOwner() == NULL )
 			return;
 
@@ -312,14 +312,14 @@ void CWeaponPortalgun::ItemHolsterFrame( void )
 
 		// Just load the clip with no animations
 		int ammoFill = MIN( (GetMaxClip1() - m_iClip1), GetOwner()->GetAmmoCount( GetPrimaryAmmoType() ) );
-		
+
 		GetOwner()->RemoveAmmo( ammoFill, GetPrimaryAmmoType() );
 		m_iClip1 += ammoFill;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponPortalgun::Holster( CBaseCombatWeapon *pSwitchingTo )
@@ -330,7 +330,7 @@ bool CWeaponPortalgun::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponPortalgun::Deploy( void )
@@ -366,7 +366,7 @@ void CWeaponPortalgun::WeaponIdle( void )
 	if ( WeaponShouldBeLowered() )
 	{
 		// Move to lowered position if we're not there yet
-		if ( GetActivity() != ACT_VM_IDLE_LOWERED && GetActivity() != ACT_VM_IDLE_TO_LOWERED 
+		if ( GetActivity() != ACT_VM_IDLE_LOWERED && GetActivity() != ACT_VM_IDLE_TO_LOWERED
 			&& GetActivity() != ACT_TRANSITION )
 		{
 			SendWeaponAnim( ACT_VM_IDLE_LOWERED );
@@ -380,11 +380,11 @@ void CWeaponPortalgun::WeaponIdle( void )
 	else
 	{
 		// See if we need to raise immediately
-		if ( m_flRaiseTime < gpGlobals->curtime && GetActivity() == ACT_VM_IDLE_LOWERED ) 
+		if ( m_flRaiseTime < gpGlobals->curtime && GetActivity() == ACT_VM_IDLE_LOWERED )
 		{
 			SendWeaponAnim( ACT_VM_IDLE );
 		}
-		else if ( HasWeaponIdleTimeElapsed() ) 
+		else if ( HasWeaponIdleTimeElapsed() )
 		{
 			SendWeaponAnim( ACT_VM_IDLE );
 		}
@@ -392,7 +392,7 @@ void CWeaponPortalgun::WeaponIdle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponPortalgun::StopEffects( bool stopSound )
 {
@@ -401,8 +401,8 @@ void CWeaponPortalgun::StopEffects( bool stopSound )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : effectType - 
+// Purpose:
+// Input  : effectType -
 //-----------------------------------------------------------------------------
 void CWeaponPortalgun::DoEffect( int effectType, Vector *pos )
 {

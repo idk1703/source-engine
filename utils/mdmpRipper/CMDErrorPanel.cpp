@@ -24,22 +24,22 @@ CMDErrorPanel::CMDErrorPanel( vgui::Panel *pParent, const char *pName ) :
 	m_pTokenList->AddColumnHeader(1, "module", "Module Name", 200, 0);
 	m_pTokenList->AddColumnHeader(2, "count", "Count", 100, 0);
 	m_pTokenList->AddColumnHeader(3, "minidumps", "Minidump Count", 100, 0);
-	
+
 	m_pMaxResults = new vgui::TextEntry( this, "maxResults" );
 	m_pQueryCounts = new vgui::TextEntry( this, "numCrashes" );
 
 	m_pMaxResults->SetText( "100" );
-	m_pQueryCounts->SetText( "10000" );			
+	m_pQueryCounts->SetText( "10000" );
 
-	LoadControlSettings( "MDErrorPanel.res" );		
+	LoadControlSettings( "MDErrorPanel.res" );
 }
-	
+
 void CMDErrorPanel::OnCommand( const char *pCommand )
-{	
+{
 	if ( !Q_strcmp( pCommand, "Close" ) )
-	{		
-		Close();	
-	}	
+	{
+		Close();
+	}
 	if ( !Q_strcmp( pCommand, "CheckModules" ) )
 	{
 		CheckModules();
@@ -62,8 +62,8 @@ void CMDErrorPanel::Close()
 {
 	if ( this )
 	{
-		m_pTokenList->DeleteAllItems();				
-		SetVisible( false );	
+		m_pTokenList->DeleteAllItems();
+		SetVisible( false );
 		KeyValues *kv = new KeyValues( "Refresh" );
 		this->PostActionSignal( kv );
 	}
@@ -74,9 +74,9 @@ void CMDErrorPanel::CheckModules()
 	char sql[255] = "";
 	extern void getMiniDumpHandles( char *pszQuery, const char *errorid, CUtlVector<HANDLE> *pMiniDumpHandles );
 
-	
+
 	int selectedIndex = m_pTokenList->GetSelectedItem( 0 );
-    void *kv = m_pTokenList->GetItem( selectedIndex );
+	void *kv = m_pTokenList->GetItem( selectedIndex );
 	if ( kv )
 	{
 		strcat( sql, "select MinidumpFilePath from minidumps where ErrorID=" );
@@ -87,13 +87,13 @@ void CMDErrorPanel::CheckModules()
 		getMiniDumpHandles( sql, ((KeyValues *)kv)->GetString( "errorid", "" ), &m_MiniDumpHandles );
 		KeyValues *kv = new KeyValues( "Compare", "handlePointer", (int)(&m_MiniDumpHandles) );
 		this->PostActionSignal( kv );
-	}	
+	}
 }
 
 void CMDErrorPanel::NewQuery()
 {
 	m_pTokenList->DeleteAllItems();
-	extern void errorsToListPanel( vgui::ListPanel *pTokenList, char* pszQuery );	
+	extern void errorsToListPanel( vgui::ListPanel *pTokenList, char* pszQuery );
 	char sql[255] = "";
 	char temp[10];
 	strcat( sql, "select errorid, module, count, minidumpsonhand from error_types where processed=0 and minidumpsonhand > 0 and count > " );
@@ -110,30 +110,24 @@ void CMDErrorPanel::NewQuery()
 void CMDErrorPanel::DownloadMinidumps()
 {
 	int selectedIndex = m_pTokenList->GetSelectedItem( 0 );
-    void *kv = m_pTokenList->GetItem( selectedIndex );
+	void *kv = m_pTokenList->GetItem( selectedIndex );
 	if ( kv )
 	{
 		char command[1024] = "";
-		
-		strcat( command, ((KeyValues *)kv)->GetString( "errorid", "" ));	   
-		strcat( command, " minidumpSaves" );		
-		::_spawnl( _P_WAIT, ".\\minidump.bat", "minidump.bat ", command, NULL );	
+
+		strcat( command, ((KeyValues *)kv)->GetString( "errorid", "" ));
+		strcat( command, " minidumpSaves" );
+		::_spawnl( _P_WAIT, ".\\minidump.bat", "minidump.bat ", command, NULL );
 	}
 }
 
 void CMDErrorPanel::DetailScreen()
 {
 	int selectedIndex = m_pTokenList->GetSelectedItem( 0 );
-    void *kv = m_pTokenList->GetItem( selectedIndex );
+	void *kv = m_pTokenList->GetItem( selectedIndex );
 	if ( kv )
-	{	
+	{
 		KeyValues *kvPost = new KeyValues( "Detail", "errorID", ((KeyValues *)kv)->GetString( "errorid", "" ) );
 		this->PostActionSignal( kvPost );
-	}	
+	}
 }
-
-		
-
-
-
-

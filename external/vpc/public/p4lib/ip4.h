@@ -1,6 +1,6 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. =======
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -59,7 +59,7 @@ struct P4Revision_t
 	int m_nHour, m_nMinute, m_nSecond;
 
 	CUtlSymbol m_sUser;		// submitting user
-	CUtlSymbol m_sClient;	// submitting client 
+	CUtlSymbol m_sClient;	// submitting client
 	CUtlString m_Description;
 };
 
@@ -101,7 +101,7 @@ public:
 	// retreives the list of files in a path
 	virtual CUtlVector<P4File_t> &GetFileList( const char *path ) = 0;
 
-	// returns the list of files opened for edit/integrate/delete 
+	// returns the list of files opened for edit/integrate/delete
 	virtual void GetOpenedFileList( CUtlVector<P4File_t> &fileList, bool bDefaultChangeOnly ) = 0;
 	virtual void GetOpenedFileList( const char *pRootDirectory, CUtlVector<P4File_t> &fileList ) = 0;
 	virtual void GetOpenedFileListInPath( const char *pPathID, CUtlVector<P4File_t> &fileList ) = 0;

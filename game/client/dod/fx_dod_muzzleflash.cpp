@@ -28,7 +28,7 @@ void TE_DynamicLight( IRecipientFilter& filter, float delay,
 
 void DOD_MuzzleFlashCallback( const CEffectData &data )
 {
-	CSmartPtr<CLocalSpaceEmitter> pEmitter = 
+	CSmartPtr<CLocalSpaceEmitter> pEmitter =
 		CLocalSpaceEmitter::Create( "DOD_MuzzleFlash", data.m_hEntity, data.m_nAttachmentIndex, 0 );
 
 	if ( !pEmitter )
@@ -56,7 +56,7 @@ void DOD_MuzzleFlashCallback( const CEffectData &data )
 	Assert( pEmitter );
 	pEmitter->GetBinding().SetBBox( vCenter - Vector( 10, 10, 10 ), vCenter + Vector( 10, 10, 10 ) );
 
-	// haxors - make the clip much shorter so the alpha is not 
+	// haxors - make the clip much shorter so the alpha is not
 	// changed based on large clip distances
 	pEmitter->SetNearClip( 0, 5 );
 
@@ -71,7 +71,7 @@ void DOD_MuzzleFlashCallback( const CEffectData &data )
 															vFlashOffset );
 		Assert( pParticle );
 		if( pParticle )
-		{	
+		{
 			pParticle->m_flLifetime		= 0.0f;
 			pParticle->m_flDieTime		= 0.1f;
 

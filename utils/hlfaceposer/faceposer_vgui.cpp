@@ -80,7 +80,7 @@ void CFacePoserVGui::SetFocus( CVGuiWnd *pVGuiWnd )
 		return;
 
 	g_pInputSystem->PollInputState();
-	vgui::ivgui()->RunFrame(); 
+	vgui::ivgui()->RunFrame();
 
 	g_pMatSystemSurface->AttachToWindow( NULL, false );
 	g_pInputSystem->DetachFromWindow( );
@@ -114,7 +114,7 @@ void CFacePoserVGui::Simulate()
 		return;
 
 	g_pInputSystem->PollInputState();
-	vgui::ivgui()->RunFrame(); 
+	vgui::ivgui()->RunFrame();
 
 	// run vgui animations
 	vgui::GetAnimationController()->UpdateAnimations( vgui::system()->GetCurrentTime() );

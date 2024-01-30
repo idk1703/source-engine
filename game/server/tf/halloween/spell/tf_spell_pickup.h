@@ -30,7 +30,7 @@ public:
 	void SetTier( int nTier ) { m_nTier = nTier; }
 
 private:
-	
+
 	int m_nTier;
 };
 

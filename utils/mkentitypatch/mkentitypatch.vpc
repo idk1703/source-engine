@@ -35,7 +35,7 @@ $Project "mkentitypatch"
 		$File	"$SRCDIR\public\lumpfiles.cpp"
 		$File	"$SRCDIR\public\zip_utils.cpp"
 	}
-	
+
 	$Folder	"External Header Files"
 	{
 		$File	"$SRCDIR\utils\common\bsplib.h"

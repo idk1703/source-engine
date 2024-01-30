@@ -40,7 +40,7 @@ public:
 	virtual CWeaponCSBase* CSAnim_GetActiveWeapon();
 	virtual bool CSAnim_CanMove();
 
-public:	
+public:
 	virtual void Spawn( void );
 	virtual void UpdateClientSideAnimation();
 
@@ -104,7 +104,7 @@ private:
 	int m_seq;
 
 	bool m_createdLowViolenceRagdoll;
-	
+
 private:
 	C_CHostage( const C_CHostage & );				// not defined, not accessible
 };

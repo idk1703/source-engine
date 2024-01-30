@@ -53,4 +53,3 @@ ActionResult< CEyeballBoss > CEyeballBossEmote::Update( CEyeballBoss *me, float 
 
 	return Continue();
 }
-

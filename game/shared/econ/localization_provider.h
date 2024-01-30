@@ -26,7 +26,7 @@ public:
 	virtual void ConvertLoccharToANSI	( const locchar_t *loc_In, CUtlConstString *out_ansi ) const = 0;
 	virtual void ConvertLoccharToUnicode( const locchar_t *loc_In, CUtlConstWideString *out_unicode ) const = 0;
 	virtual void ConvertUTF8ToLocchar	( const char *utf8_In, CUtlConstStringBase<locchar_t> *out_loc ) const = 0;
-	
+
 	// old C-style interface
 	virtual int ConvertLoccharToANSI( const locchar_t *loc, OUT_Z_BYTECAP(ansiBufferSize) char *ansi, int ansiBufferSize ) const = 0;
 	virtual int ConvertLoccharToUnicode( const locchar_t *loc, OUT_Z_BYTECAP(unicodeBufferSize) wchar_t *unicode, int unicodeBufferSize ) const = 0;
@@ -37,7 +37,7 @@ public:
 };
 CLocalizationProvider *GLocalizationProvider();
 
-#ifdef GC 
+#ifdef GC
 // GC localization is handled by the GC itself
 class CGCLocalizationProvider : public CLocalizationProvider
 {
@@ -83,7 +83,7 @@ public:
 	CVGUILocalizationProvider();
 
 	virtual locchar_t *Find( const char *pchKey ) const;
-	
+
 	// new interface
 	virtual void ConvertLoccharToANSI	( const locchar_t *loc_In, CUtlConstString *out_ansi ) const;
 	virtual void ConvertLoccharToUnicode( const locchar_t *loc_In, CUtlConstWideString *out_unicode ) const;

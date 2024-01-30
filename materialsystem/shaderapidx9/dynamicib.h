@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -51,9 +51,9 @@ public:
 	CIndexBuffer();
 	void Init( IDirect3DDevice9 *pD3D, uint16 *pIndexMemory, int count );
 #endif
-	
+
 	int AddRef() { return ++m_nReferenceCount; }
-	int Release() 
+	int Release()
 	{
 		int retVal = --m_nReferenceCount;
 		if ( retVal == 0 )
@@ -61,24 +61,24 @@ public:
 		return retVal;
 	}
 
-	LPDIRECT3DINDEXBUFFER GetInterface() const 
-	{ 
+	LPDIRECT3DINDEXBUFFER GetInterface() const
+	{
 		// If this buffer still exists, then Late Creation didn't happen. Best case: we'll render the wrong image. Worst case: Crash.
 		Assert( !m_pSysmemBuffer );
-		return m_pIB; 
+		return m_pIB;
 	}
-	
+
 	// Use at beginning of frame to force a flush of VB contents on first draw
 	void FlushAtFrameStart() { m_bFlush = true; }
-	
+
 	// lock, unlock
-	unsigned short *Lock( bool bReadOnly, int numIndices, int &startIndex, int startPosition = -1 );	
+	unsigned short *Lock( bool bReadOnly, int numIndices, int &startIndex, int startPosition = -1 );
 	void Unlock( int numIndices );
 	void HandleLateCreation( );
 
 	// Index position
 	int IndexPosition() const { return m_Position; }
-	
+
 	// Index size
 	int IndexSize() const { return sizeof(unsigned short); }
 
@@ -118,10 +118,10 @@ public:
 #endif
 
 	// UID
-	unsigned int UID() const 
-	{ 
+	unsigned int UID() const
+	{
 #ifdef RECORDING
-		return m_UID; 
+		return m_UID;
 #else
 		return 0;
 #endif
@@ -133,12 +133,12 @@ public:
 		if ( m_Frame != frame && !m_bDynamic )
 		{
 			m_Frame = frame;
-			VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_frame_" TEXTURE_GROUP_STATIC_INDEX_BUFFER, 
+			VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_frame_" TEXTURE_GROUP_STATIC_INDEX_BUFFER,
 				COUNTER_GROUP_TEXTURE_PER_FRAME, IndexCount() * IndexSize() );
 		}
 #endif
 	}
-	
+
 	static int BufferCount()
 	{
 #ifdef _DEBUG
@@ -191,7 +191,7 @@ private :
 
 	LPDIRECT3DINDEXBUFFER m_pIB;
 #ifdef _X360
-	
+
 	struct DynamicBufferAllocation_t
 	{
 		DWORD	m_Fence; //track whether this memory is safe to use again.
@@ -243,7 +243,7 @@ protected:
 	unsigned short *m_pShadowIndices;
 	unsigned int m_NumIndices;
 #endif
-	
+
 	unsigned int m_LockedStartIndex;
 	unsigned int m_LockedNumIndices;
 
@@ -262,11 +262,11 @@ MEMALLOC_DECLARE_EXTERNAL_TRACKING( XMem_CIndexBuffer );
 // constructor, destructor
 //-----------------------------------------------------------------------------
 
-inline CIndexBuffer::CIndexBuffer( IDirect3DDevice9 *pD3D, int count, 
+inline CIndexBuffer::CIndexBuffer( IDirect3DDevice9 *pD3D, int count,
 	bool bSoftwareVertexProcessing, bool dynamic ) :
-		m_pIB(0), 
-		m_Position(0), 
-		m_bFlush(true), 
+		m_pIB(0),
+		m_Position(0),
+		m_bFlush(true),
 		m_bLocked(false),
 		m_bExternalMemory(false),
 		m_bDynamic(dynamic),
@@ -280,11 +280,11 @@ inline CIndexBuffer::CIndexBuffer( IDirect3DDevice9 *pD3D, int count,
 #ifdef VPROF_ENABLED
 		,m_Frame( -1 )
 #endif
-		, m_nReferenceCount( 0 ) 
+		, m_nReferenceCount( 0 )
 {
 	// For write-combining, ensure we always have locked memory aligned to 4-byte boundaries
 	count = ALIGN_VALUE( count, 2 );
-	m_IndexCount = count; 
+	m_IndexCount = count;
 
 	MEM_ALLOC_CREDIT_( m_bDynamic ? ( "D3D: " TEXTURE_GROUP_DYNAMIC_INDEX_BUFFER ) : ( "D3D: " TEXTURE_GROUP_STATIC_INDEX_BUFFER ) );
 
@@ -360,12 +360,12 @@ inline CIndexBuffer::CIndexBuffer( IDirect3DDevice9 *pD3D, int count,
 #ifdef VPROF_ENABLED
 	if ( !m_bDynamic )
 	{
-		VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_STATIC_INDEX_BUFFER, 
+		VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_STATIC_INDEX_BUFFER,
 			COUNTER_GROUP_TEXTURE_GLOBAL, IndexCount() * IndexSize() );
 	}
 	else if ( IsX360() )
 	{
-		VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_DYNAMIC_INDEX_BUFFER, 
+		VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_DYNAMIC_INDEX_BUFFER,
 			COUNTER_GROUP_TEXTURE_GLOBAL, IndexCount() * IndexSize() );
 	}
 #endif
@@ -399,12 +399,12 @@ void CIndexBuffer::Create( IDirect3DDevice9 *pD3D )
 	RECORD_INT( m_bDynamic );
 
 #if !defined( _X360 )
-	HRESULT hr = pD3D->CreateIndexBuffer( 
+	HRESULT hr = pD3D->CreateIndexBuffer(
 		m_IndexCount * IndexSize(),
 		desc.Usage,
 		desc.Format,
-		desc.Pool, 
-		&m_pIB, 
+		desc.Pool,
+		&m_pIB,
 		NULL );
 	if ( hr != D3D_OK )
 	{
@@ -446,9 +446,9 @@ void CIndexBuffer::Create( IDirect3DDevice9 *pD3D )
 void *AllocateTempBuffer( size_t nSizeInBytes );
 
 inline CIndexBuffer::CIndexBuffer() :
-	m_pIB(0), 
-	m_Position(0), 
-	m_bFlush(false), 
+	m_pIB(0),
+	m_Position(0),
+	m_bFlush(false),
 	m_bLocked(false),
 	m_bExternalMemory( true ),
 	m_bDynamic( false )
@@ -456,7 +456,7 @@ inline CIndexBuffer::CIndexBuffer() :
 	,m_Frame( -1 )
 #endif
 {
-	m_IndexCount = 0; 
+	m_IndexCount = 0;
 
 #ifdef CHECK_INDICES
 	m_pShadowIndices = NULL;
@@ -471,7 +471,7 @@ inline CIndexBuffer::CIndexBuffer() :
 
 inline void CIndexBuffer::Init( IDirect3DDevice9 *pD3D, uint16 *pIndexMemory, int count )
 {
-	m_IndexCount = count; 
+	m_IndexCount = count;
 	m_Position = count;
 
 	m_iAllocationCount = count;
@@ -658,7 +658,7 @@ inline void CIndexBuffer::BlockUntilUnused( int nAllocationSize )
 		m_AllocationRing[m_AllocationRing.Tail()].m_iEndOffset = m_iAllocationCount;
 
 		//treat all allocations between the current position and the tail end of the ring as freed since they will be before we unblock
-		while( m_AllocationRing.Count() ) 
+		while( m_AllocationRing.Count() )
 		{
 			unsigned int head = m_AllocationRing.Head();
 			if( m_AllocationRing[head].m_iStartOffset == 0 )
@@ -673,8 +673,8 @@ inline void CIndexBuffer::BlockUntilUnused( int nAllocationSize )
 	unsigned int iFinalAllocationZPassIdx = 0;
 	while( m_AllocationRing.Count() )
 	{
-		unsigned int head = m_AllocationRing.Head();		
-		
+		unsigned int head = m_AllocationRing.Head();
+
 		if( m_AllocationRing[head].m_iEndOffset >= iMinBlockPosition )
 		{
 			//When this frees, we'll finally have enough space for the allocation
@@ -695,7 +695,7 @@ inline void CIndexBuffer::BlockUntilUnused( int nAllocationSize )
 #endif
 
 		if ( ( Dx9Device()->GetDeviceState() & D3DDEVICESTATE_ZPASS_BRACKET ) &&
-			( iFinalAllocationZPassIdx == ShaderAPI()->Get360ZPassCounter() ) )	
+			( iFinalAllocationZPassIdx == ShaderAPI()->Get360ZPassCounter() ) )
 		{
 			// We're about to overrun our IB ringbuffer in a single Z prepass. To avoid rendering corruption, close out the
 			// Z prepass and continue. This will reduce early-Z rejection efficiency and could cause a momentary framerate drop,
@@ -707,7 +707,7 @@ inline void CIndexBuffer::BlockUntilUnused( int nAllocationSize )
 
 		Dx9Device()->BlockOnFence( FinalFence );
 
-#ifdef SPEW_INDEX_BUFFER_STALLS	
+#ifdef SPEW_INDEX_BUFFER_STALLS
 		float dt = Plat_FloatTime() - st;
 		Warning( "Blocked locking dynamic index buffer for %f ms!\n", 1000.0 * dt );
 #endif
@@ -738,32 +738,32 @@ inline unsigned short* CIndexBuffer::Lock( bool bReadOnly, int numIndices, int& 
 		numIndices = ALIGN_VALUE( numIndices, 2 );
 
 	// Ensure there is enough space in the IB for this data
-	if ( numIndices > m_IndexCount ) 
-	{ 
+	if ( numIndices > m_IndexCount )
+	{
 		Error( "too many indices for index buffer. . tell a programmer (%d>%d)\n", ( int )numIndices, ( int )m_IndexCount );
-		Assert( false ); 
-		return 0; 
+		Assert( false );
+		return 0;
 	}
-	
+
 	if ( !IsX360() && !m_pIB && !m_pSysmemBuffer )
 		return 0;
 
 	DWORD dwFlags;
-	
+
 	if ( m_bDynamic )
 	{
 		// startPosition now can be != -1, when calling in here with a static (staging) buffer.
 #if !defined( _X360 )
 		dwFlags = LOCKFLAGS_APPEND;
-	
+
 		// If either user forced us to flush,
 		// or there is not enough space for the vertex data,
 		// then flush the buffer contents
 		// xbox must not append at position 0 because nooverwrite cannot be guaranteed
-		
+
 		if ( !m_Position || m_bFlush || !HasEnoughRoom(numIndices) )
 		{
-			if ( m_pSysmemBuffer || !g_pShaderUtil->IsRenderThreadSafe() ) 
+			if ( m_pSysmemBuffer || !g_pShaderUtil->IsRenderThreadSafe() )
 				m_bLateCreateShouldDiscard = true;
 
 			m_bFlush = false;
@@ -806,7 +806,7 @@ inline unsigned short* CIndexBuffer::Lock( bool bReadOnly, int numIndices, int& 
 	{
 		dwFlags = D3DLOCK_NOSYSLOCK;
 	}
-	
+
 	if ( bReadOnly )
 	{
 		dwFlags |= D3DLOCK_READONLY;
@@ -830,8 +830,8 @@ inline unsigned short* CIndexBuffer::Lock( bool bReadOnly, int numIndices, int& 
 	HRESULT hr = D3D_OK;
 
 #if !defined( _X360 )
-	// If the caller isn't in the thread that owns the render lock, need to return a system memory pointer--cannot talk to GL from 
-	// the non-current thread. 
+	// If the caller isn't in the thread that owns the render lock, need to return a system memory pointer--cannot talk to GL from
+	// the non-current thread.
 	if ( !m_pSysmemBuffer && !g_pShaderUtil->IsRenderThreadSafe() )
 	{
 		m_pSysmemBuffer = ( byte * )malloc( m_IndexCount * IndexSize() );
@@ -840,15 +840,15 @@ inline unsigned short* CIndexBuffer::Lock( bool bReadOnly, int numIndices, int& 
 
 	if ( m_pSysmemBuffer != NULL )
 	{
-		// Ensure that we're never moving backwards in a buffer--this code would need to be rewritten if so. 
+		// Ensure that we're never moving backwards in a buffer--this code would need to be rewritten if so.
 		// We theorize this can happen if you hit the end of a buffer and then wrap before drawing--but
 		// this would probably break in other places as well.
 		Assert( position * IndexSize() >= m_nSysmemBufferStartBytes );
 		pLockedData = ( unsigned short * )( m_pSysmemBuffer + ( position * IndexSize() ) );
 	}
-	else 
+	else
 	{
-		hr = m_pIB->Lock( position * IndexSize(), numIndices * IndexSize(), 
+		hr = m_pIB->Lock( position * IndexSize(), numIndices * IndexSize(),
 						   reinterpret_cast< void** >( &pLockedData ), dwFlags );
 	}
 #else
@@ -866,7 +866,7 @@ inline unsigned short* CIndexBuffer::Lock( bool bReadOnly, int numIndices, int& 
 		m_Position = position;
 	}
 	pLockedData = (unsigned short *)(m_pAllocatedMemory + (position * IndexSize()));
-	
+
 #endif
 
 	switch ( hr )
@@ -883,7 +883,7 @@ inline unsigned short* CIndexBuffer::Lock( bool bReadOnly, int numIndices, int& 
 	}
 
 	Assert( pLockedData != NULL );
-	   
+
 	if ( !IsX360() )
 	{
 		startIndex = position;
@@ -923,7 +923,7 @@ inline void CIndexBuffer::Unlock( int numIndices )
 	if ( m_pSysmemBuffer )
 	{
 	}
-	else 
+	else
 	{
 #if DX_TO_GL_ABSTRACTION
 		// Knowing how much data was actually written is critical for performance under OpenGL.
@@ -933,7 +933,7 @@ inline void CIndexBuffer::Unlock( int numIndices )
 		Assert( numIndices <= (int)m_LockedNumIndices );
 		int unlockBytes = ( m_bDynamic ? numIndices : m_LockedNumIndices ) * IndexSize();
 #else
-		int unlockBytes = 0; 
+		int unlockBytes = 0;
 #endif
 		ReallyUnlock( unlockBytes );
 	}
@@ -949,9 +949,9 @@ inline void CIndexBuffer::Unlock( int numIndices )
 		LockData.m_iZPassIdx = ( Dx9Device()->GetDeviceState() & D3DDEVICESTATE_ZPASS_BRACKET ) ? ShaderAPI()->Get360ZPassCounter() : 0;
 		Assert( (LockData.m_iStartOffset == 0) || (LockData.m_iStartOffset == m_AllocationRing[m_AllocationRing.Tail()].m_iEndOffset) );
 		m_AllocationRing.AddToTail( LockData );
-		
+
 		void* pLockedData = m_pAllocatedMemory + (LockData.m_iStartOffset * IndexSize());
-		
+
 		//Always re-use the same index buffer header based on the assumption that D3D copies it off in the draw calls.
 		m_pIB = &m_D3DIndexBuffer;
 		XGSetIndexBufferHeader( numIndices * IndexSize(), 0, D3DFMT_INDEX16, 0, 0, m_pIB );
@@ -1000,25 +1000,25 @@ inline void CIndexBuffer::HandleLateCreation( )
 			g_VBAllocTracker->TrackMeshAllocations( NULL );
 		}
 	}
-	
+
 	void* pWritePtr = NULL;
 	const int dataToWriteBytes = ( m_Position * IndexSize() ) - m_nSysmemBufferStartBytes;
 	DWORD dwFlags = D3DLOCK_NOSYSLOCK;
 	if ( m_bDynamic )
 		dwFlags |= ( m_bLateCreateShouldDiscard ? D3DLOCK_DISCARD : D3DLOCK_NOOVERWRITE );
-	
+
 	// Always clear this.
 	m_bLateCreateShouldDiscard = false;
-	
+
 	// Don't use the Lock function, it does a bunch of stuff we don't want.
-	HRESULT hr = m_pIB->Lock( m_nSysmemBufferStartBytes, 
+	HRESULT hr = m_pIB->Lock( m_nSysmemBufferStartBytes,
 	                         dataToWriteBytes,
 				             &pWritePtr,
 				             dwFlags);
 
-	// If this fails we're about to crash. Consider skipping the update and leaving 
+	// If this fails we're about to crash. Consider skipping the update and leaving
 	// m_pSysmemBuffer around to try again later. (For example in case of device loss)
-	Assert( SUCCEEDED( hr ) ); hr; 
+	Assert( SUCCEEDED( hr ) ); hr;
 	memcpy( pWritePtr, m_pSysmemBuffer + m_nSysmemBufferStartBytes, dataToWriteBytes );
 	ReallyUnlock( dataToWriteBytes );
 
@@ -1053,4 +1053,3 @@ inline int CIndexBuffer::AllocationCount() const
 #include "tier0/memdbgoff.h"
 
 #endif  // DYNAMICIB_H
-

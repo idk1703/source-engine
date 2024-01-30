@@ -33,7 +33,7 @@ class CWeaponGlock : public CBaseHL1MPCombatWeapon
 {
 	DECLARE_CLASS( CWeaponGlock, CBaseHL1MPCombatWeapon );
 
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 public:
@@ -82,7 +82,7 @@ void CWeaponGlock::DryFire( void )
 {
 	WeaponSound( EMPTY );
 	SendWeaponAnim( ACT_VM_DRYFIRE );
-		
+
 	m_flNextPrimaryAttack = gpGlobals->curtime + 0.2;
 }
 
@@ -141,14 +141,14 @@ void CWeaponGlock::GlockFire( float flSpread , float flCycleTime, bool fUseAutoA
 
 	Vector vecSrc = pPlayer->Weapon_ShootPosition();
 	Vector vecAiming;
-	
+
 	if ( fUseAutoAim )
 	{
-		vecAiming = pPlayer->GetAutoaimVector( AUTOAIM_10DEGREES );	
+		vecAiming = pPlayer->GetAutoaimVector( AUTOAIM_10DEGREES );
 	}
 	else
 	{
-		vecAiming = pPlayer->GetAutoaimVector( 0 );	
+		vecAiming = pPlayer->GetAutoaimVector( 0 );
 	}
 
 //	pPlayer->FireBullets( 1, vecSrc, vecAiming, Vector( flSpread, flSpread, flSpread ), MAX_TRACE_LENGTH, m_iPrimaryAmmoType, 0 );

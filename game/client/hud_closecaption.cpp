@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -84,7 +84,7 @@ public:
 	{
 		return m_hFont;
 	}
-	
+
 	void		SetFont( vgui::HFont fnt )
 	{
 		m_hFont = fnt;
@@ -222,12 +222,12 @@ Color CCloseCaptionWorkUnit::GetColor() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CCloseCaptionItem
 {
 public:
-	CCloseCaptionItem( 
+	CCloseCaptionItem(
 		const wchar_t	*stream,
 		float timetolive,
 		float addedtime,
@@ -367,7 +367,7 @@ public:
 
 		float totalfadeintime = fadeintimehidden + fadeintime;
 
-		if ( totalfadeintime > 0.001f && 
+		if ( totalfadeintime > 0.001f &&
 			time_since_start < totalfadeintime )
 		{
 			if ( time_since_start >= fadeintimehidden )
@@ -380,7 +380,7 @@ public:
 				f = clamp( f, 0.0f, 1.0f );
 				return f;
 			}
-			
+
 			return 0.0f;
 		}
 
@@ -436,7 +436,7 @@ struct VisibleStreamItem
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: The only resource manager parameter we currently care about is the name 
+// Purpose: The only resource manager parameter we currently care about is the name
 //  of the .vcd to cache into memory
 //-----------------------------------------------------------------------------
 struct asynccaptionparams_t
@@ -459,7 +459,7 @@ struct AsyncCaptionData_t
 	byte				*m_pBlockData;
 	int					m_nFileIndex;
 	int					m_nBlockSize;
-	
+
 	bool				m_bLoadPending : 1;
 	bool				m_bLoadCompleted : 1;
 
@@ -505,12 +505,12 @@ struct AsyncCaptionData_t
 	}
 
 	AsyncCaptionData_t		*GetData()
-	{ 
-		return this; 
+	{
+		return this;
 	}
 	unsigned int	Size()
-	{ 
-		return sizeof( *this ) + m_nBlockSize; 
+	{
+		return sizeof( *this ) + m_nBlockSize;
 	}
 
 	void AsyncLoad( const char *fileName, int blockOffset )
@@ -518,7 +518,7 @@ struct AsyncCaptionData_t
 		// Already pending
 		Assert ( !m_hAsyncControl );
 
-		// async load the file	
+		// async load the file
 		FileAsyncRequest_t fileRequest;
 		fileRequest.pContext    = (void *)this;
 		fileRequest.pfnCallback = ::CaptionAsyncLoaderCallback;
@@ -529,7 +529,7 @@ struct AsyncCaptionData_t
 		fileRequest.nBytes      = m_nBlockSize;
 		fileRequest.priority    = -1;
 		fileRequest.pszPathID   = "GAME";
-		
+
 		// queue for async load
 		MEM_ALLOC_CREDIT();
 		filesystem->AsyncRead( fileRequest, &m_hAsyncControl );
@@ -612,7 +612,7 @@ public:
 	}
 
 	void CaptionAsyncLoaderCallback( const FileAsyncRequest_t &request, int numReadBytes, FSAsyncStatus_t asyncStatus )
-	{	
+	{
 		// get our preserved data
 		AsyncCaptionData_t *pData = ( AsyncCaptionData_t * )request.pContext;
 
@@ -726,10 +726,10 @@ public:
 		pCaptionData->m_bLoadPending = true;
 		pCaptionData->AsyncLoad( dbname, ComputeBlockOffset( dbFileIndex, blockNum ) );
 	}
-	
+
 	//-----------------------------------------------------------------------------
 	// Purpose: Touch the cache or load the scene into the cache for the first time
-	// Input  : *filename - 
+	// Input  : *filename -
 	//-----------------------------------------------------------------------------
 	int FindOrAddBlock( int dbFileIndex, int blockNum )
 	{
@@ -766,7 +766,7 @@ public:
 		info.fileindex = dbFileIndex;
 		info.blocknum = blockNum;
 		info.handle = handle;
-        
+
 		// Add scene filename to dictionary
 		idx = requested.Insert( info );
 		return idx;
@@ -795,7 +795,7 @@ public:
 	}
 
 private:
-	
+
 	CUtlVector< AsyncCaption_t >				m_Db;
 };
 
@@ -811,7 +811,7 @@ DECLARE_HUDELEMENT( CHudCloseCaption );
 DECLARE_HUD_MESSAGE( CHudCloseCaption, CloseCaption );
 
 CHudCloseCaption::CHudCloseCaption( const char *pElementName )
-	: CHudElement( pElementName ), 
+	: CHudElement( pElementName ),
 	vgui::Panel( NULL, "HudCloseCaption" ),
 	m_CloseCaptionRepeats( 0, 0, CaptionTokenLessFunc ),
 	m_CurrentLanguage( UTL_INVAL_SYMBOL ),
@@ -862,7 +862,7 @@ CHudCloseCaption::CHudCloseCaption( const char *pElementName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudCloseCaption::~CHudCloseCaption()
 {
@@ -872,8 +872,8 @@ CHudCloseCaption::~CHudCloseCaption()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *newmap - 
+// Purpose:
+// Input  : *newmap -
 //-----------------------------------------------------------------------------
 void CHudCloseCaption::LevelInit( void )
 {
@@ -893,7 +893,7 @@ void CHudCloseCaption::TogglePaintDebug()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudCloseCaption::Paint( void )
 {
@@ -904,7 +904,7 @@ void CHudCloseCaption::Paint( void )
 	{
 		int blockWide = 350;
 		int startx = 50;
-		
+
 		int y = 0;
 		int size = 8;
 		int sizewithgap = size + 1;
@@ -998,8 +998,8 @@ void CHudCloseCaption::Paint( void )
 		visibleitems.AddToTail( si );
 
 		// Start popping really old items off the stack if we run out of space
-		while ( itemheight <= avail_height && 
-				totalheight > avail_height && 
+		while ( itemheight <= avail_height &&
+				totalheight > avail_height &&
 				visibleitems.Count() > cc_minvisibleitems.GetInt() )
 		{
 			VisibleStreamItem & pop = visibleitems[ 0 ];
@@ -1009,13 +1009,13 @@ void CHudCloseCaption::Paint( void )
 			pop.item->SetTimeToLive( 0.0f );
 
 			visibleitems.Remove( 0 );
-		}	
+		}
 	}
 
 	float desiredAlpha = visibleitems.Count() >= 1 ? 1.0f : 0.0f;
 
 	// Always return at least one line height for drawing the surrounding box
-	totalheight = MAX( totalheight, m_nLineHeight ); 
+	totalheight = MAX( totalheight, m_nLineHeight );
 
 	// Trigger box growing
 	if ( totalheight != m_nGoalHeight )
@@ -1068,9 +1068,9 @@ void CHudCloseCaption::Paint( void )
 	}
 
 	rcText.top = rcText.bottom - m_nCurrentHeight - 2 * CC_INSET;
- 
+
 	Color bgColor = GetBgColor();
-   	bgColor[3] = m_flBackgroundAlpha;
+	bgColor[3] = m_flBackgroundAlpha;
 	DrawBox( rcText.left, MAX(rcText.top,0), rcText.right - rcText.left, rcText.bottom - MAX(rcText.top,0), bgColor, m_flCurrentAlpha );
 
 	if ( !visibleitems.Count() )
@@ -1110,18 +1110,18 @@ void CHudCloseCaption::Paint( void )
 		}
 
 		int height = si->height;
- 		CCloseCaptionItem *item = si->item;
-		 
+		CCloseCaptionItem *item = si->item;
+
 		int iFadeLine = -1;
 		float flFadeLineAlpha = 1.0;
-	
-		// If the height is greater than the total height of the element, 
-		// we need to slowly pan over this item. 
+
+		// If the height is greater than the total height of the element,
+		// we need to slowly pan over this item.
 		if ( height > avail_height )
 		{
 			// Figure out how many lines we'll need to move to see the whole caption
 			int units = item->GetNumWorkUnits();
- 			int iTotalMove = 0;
+			int iTotalMove = 0;
 			for ( int j = 0 ; j < units; j++ )
 			{
 				CCloseCaptionWorkUnit *wu = item->GetWorkUnit( j );
@@ -1135,24 +1135,24 @@ void CHudCloseCaption::Paint( void )
 
 			// Figure out the delta between each point where we move the line
 			float flMoveDelta = item->GetInitialLifeSpan() / (float)units;
- 			float flCurMove = item->GetInitialLifeSpan() - item->GetTimeToLive();
- 			int iHeightToMove = 0;
+			float flCurMove = item->GetInitialLifeSpan() - item->GetTimeToLive();
+			int iHeightToMove = 0;
 
- 			int iLinesToMove = clamp( Floor2Int( flCurMove / flMoveDelta ), 0, units );
+			int iLinesToMove = clamp( Floor2Int( flCurMove / flMoveDelta ), 0, units );
 			if ( iLinesToMove )
 			{
- 				int iCurrentLineHeight = 0;
+				int iCurrentLineHeight = 0;
 				for ( int j = 0 ; j < iLinesToMove; j++ )
 				{
 					iHeightToMove = iCurrentLineHeight;
 
 					CCloseCaptionWorkUnit *wu = item->GetWorkUnit( j );
-  					iCurrentLineHeight += wu->GetHeight();
+					iCurrentLineHeight += wu->GetHeight();
 				}
 
 				// Slide to the desired distance, once the fade is done
-	 			float flTimePostMove = flCurMove - (flMoveDelta * iLinesToMove);
- 				if ( flTimePostMove < CAPTION_PAN_FADE_TIME )
+				float flTimePostMove = flCurMove - (flMoveDelta * iLinesToMove);
+				if ( flTimePostMove < CAPTION_PAN_FADE_TIME )
 				{
 					iFadeLine = iLinesToMove-1;
 
@@ -1170,8 +1170,8 @@ void CHudCloseCaption::Paint( void )
 				else if ( flTimePostMove < (CAPTION_PAN_FADE_TIME+CAPTION_PAN_SLIDE_TIME) )
 				{
 					flTimePostMove -= CAPTION_PAN_FADE_TIME;
- 					float flSlideTime = clamp( flTimePostMove / 0.25f, 0.f, 1.f );
- 					iHeightToMove += ceil((iCurrentLineHeight - iHeightToMove) * flSlideTime);
+					float flSlideTime = clamp( flTimePostMove / 0.25f, 0.f, 1.f );
+					iHeightToMove += ceil((iCurrentLineHeight - iHeightToMove) * flSlideTime);
 				}
 				else
 				{
@@ -1180,15 +1180,15 @@ void CHudCloseCaption::Paint( void )
 			}
 
 			// Minor adjustment to center the caption text within the window.
- 			rcText.top = -iHeightToMove + 2;
+			rcText.top = -iHeightToMove + 2;
 		}
 
 		rcText.bottom = rcText.top + height;
- 
+
 		wrect_t rcOut = rcText;
- 
+
 		rcOut.right = rcOut.left + si->width + 6;
-		
+
 		DrawStream( rcOut, rcOutput, item, iFadeLine, flFadeLineAlpha );
 
 		rcText.top += height;
@@ -1338,16 +1338,16 @@ bool CHudCloseCaption::SplitCommand( wchar_t const **ppIn, wchar_t *cmd, wchar_t
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *stream - 
-//			*findcmd - 
-//			value - 
+// Purpose:
+// Input  : *stream -
+//			*findcmd -
+//			value -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CHudCloseCaption::GetFloatCommandValue( const wchar_t *stream, const wchar_t *findcmd, float& value ) const
 {
 	const wchar_t *curpos = stream;
-	
+
 	for ( ; curpos && *curpos != L'\0'; ++curpos )
 	{
 		wchar_t cmd[ 256 ];
@@ -1371,7 +1371,7 @@ bool CHudCloseCaption::GetFloatCommandValue( const wchar_t *stream, const wchar_
 bool CHudCloseCaption::StreamHasCommand( const wchar_t *stream, const wchar_t *findcmd ) const
 {
 	const wchar_t *curpos = stream;
-	
+
 	for ( ; curpos && *curpos != L'\0'; ++curpos )
 	{
 		wchar_t cmd[ 256 ];
@@ -1392,7 +1392,7 @@ bool CHudCloseCaption::StreamHasCommand( const wchar_t *stream, const wchar_t *f
 
 //-----------------------------------------------------------------------------
 // Purpose: It's blank or only comprised of whitespace/space characters...
-// Input  : *stream - 
+// Input  : *stream -
 // Output : static bool
 //-----------------------------------------------------------------------------
 static bool IsAllSpaces( const wchar_t *stream )
@@ -1478,7 +1478,7 @@ void CHudCloseCaption::Process( const wchar_t *stream, float duration, const cha
 	}
 
 	float lifespan = duration + cc_linger_time.GetFloat();
-	
+
 	float addedlife = 0.0f;
 
 	if ( m_Items.Count() > 0 )
@@ -1494,7 +1494,7 @@ void CHudCloseCaption::Process( const wchar_t *stream, float duration, const cha
 
 		lifespan = MAX( lifespan, prevlife );
 	}
-	
+
 	float delay = 0.0f;
 	float override_duration = 0.0f;
 
@@ -1525,7 +1525,7 @@ void CHudCloseCaption::Process( const wchar_t *stream, float duration, const cha
 						// SFX show up instantly.
 						item->SetPreDisplayTime( 0.0f );
 					}
-					
+
 					if ( GetFloatCommandValue( phrase, L"len", override_duration ) )
 					{
 						item->SetTimeToLive( override_duration );
@@ -1661,7 +1661,7 @@ void CHudCloseCaption::AddWorkUnit( CCloseCaptionItem *item,
 	if ( wcslen( params.stream ) > 0 )
 #else
 	// params.stream is still in ucs2 format here so just do a basic zero compare for length or just space
-	if ( ((uint16 *)params.stream)[0] != 0 && ((uint16 *)params.stream)[0] != 32  )		
+	if ( ((uint16 *)params.stream)[0] != 0 && ((uint16 *)params.stream)[0] != 32  )
 #endif
 	{
 		CCloseCaptionWorkUnit *wu = new CCloseCaptionWorkUnit();
@@ -1801,7 +1801,7 @@ void CHudCloseCaption::ComputeStreamWork( int available_width, CCloseCaptionItem
 				int goback = curpos - most_recent_space - 1;
 				params.out -= ( goback + 1 );
 				params.width = most_recent_space_w;
-				
+
 				wchar_t *extra = new wchar_t[ goback + 1 ];
 				wcsncpy( extra, most_recent_space + 1, goback );
 				extra[ goback ] = L'\0';
@@ -1870,7 +1870,7 @@ void CHudCloseCaption::DrawStream( wrect_t &rcText, wrect_t &rcWindow, CCloseCap
 		int y = 0;
 
 		CCloseCaptionWorkUnit *wu = item->GetWorkUnit( i );
-	
+
 		vgui::HFont useF = wu->GetFont();
 
 		wu->GetPos( x, y );
@@ -1878,7 +1878,7 @@ void CHudCloseCaption::DrawStream( wrect_t &rcText, wrect_t &rcWindow, CCloseCap
 		rcOut.left = rcText.left + x + 3;
 		rcOut.right = rcOut.left + wu->GetWidth();
 		rcOut.top = rcText.top + y;
-   		rcOut.bottom = rcOut.top + wu->GetHeight();
+		rcOut.bottom = rcOut.top + wu->GetHeight();
 
 		// Adjust alpha to handle fade in/out at the top & bottom of the element.
 		// Used for single commentary entries that are too big to fit into the element.
@@ -1926,7 +1926,7 @@ bool CHudCloseCaption::GetNoRepeatValue( const wchar_t *caption, float &retval )
 {
 	retval = 0.0f;
 	const wchar_t *curpos = caption;
-	
+
 	for ( ; curpos && *curpos != L'\0'; ++curpos )
 	{
 		wchar_t cmd[ 256 ];
@@ -1946,8 +1946,8 @@ bool CHudCloseCaption::GetNoRepeatValue( const wchar_t *caption, float &retval )
 }
 
 bool CHudCloseCaption::CaptionTokenLessFunc( const CaptionRepeat &lhs, const CaptionRepeat &rhs )
-{ 
-	return ( lhs.m_nTokenIndex < rhs.m_nTokenIndex );	
+{
+	return ( lhs.m_nTokenIndex < rhs.m_nTokenIndex );
 }
 
 static bool CaptionTrace( const char *token )
@@ -1980,7 +1980,7 @@ int CRCString( const char *str )
 class CAsyncCaption
 {
 public:
-	CAsyncCaption() : 
+	CAsyncCaption() :
 		m_flDuration( 0.0f ),
 		m_bIsStream( false ),
 		m_bFromPlayer( false )
@@ -2035,7 +2035,7 @@ public:
 #else
 			// we persist to disk as ucs2 so convert back to real unicode here
 			caption->stream = new wchar_t[ entry.length ];
-			V_UCS2ToUnicode( (ucs2 *)&pData->m_pBlockData[ entry.offset ], caption->stream, entry.length*sizeof(wchar_t) );	
+			V_UCS2ToUnicode( (ucs2 *)&pData->m_pBlockData[ entry.offset ], caption->stream, entry.length*sizeof(wchar_t) );
 #endif
 		}
 	}
@@ -2083,7 +2083,7 @@ public:
 				break;
 
 			wcscat( buf, caption->stream );
-			if ( i < c - 1 ) 
+			if ( i < c - 1 )
 			{
 				wcscat( buf, L" " );
 			}
@@ -2124,9 +2124,9 @@ public:
 	}
 
 	bool AddToken
-	( 
-		CUtlVector< AsyncCaption_t >& directories, 
-		const char *token 
+	(
+		CUtlVector< AsyncCaption_t >& directories,
+		const char *token
 	)
 	{
 		CaptionLookup_t search;
@@ -2137,7 +2137,7 @@ public:
 		int dc = directories.Count();
 		for ( i = 0; i < dc; ++i )
 		{
-            idx = directories[ i ].m_CaptionDirectory.Find( search );
+	idx = directories[ i ].m_CaptionDirectory.Find( search );
 			if ( idx == directories[ i ].m_CaptionDirectory.InvalidIndex() )
 				continue;
 
@@ -2243,7 +2243,7 @@ private:
 			stream = new wchar_t[ len + 1 ];
 			wcsncpy( stream, in, len + 1 );
 		}
-			
+
 		char		*token;
 		int			dirindex;
 		int			fileindex;
@@ -2303,7 +2303,7 @@ void CHudCloseCaption::ClearAsyncWork()
 {
 	for ( int i = m_AsyncWork.Head(); i != m_AsyncWork.InvalidIndex(); i = m_AsyncWork.Next( i ) )
 	{
-        CAsyncCaption *item = m_AsyncWork[ i ];
+	CAsyncCaption *item = m_AsyncWork[ i ];
 		delete item;
 	}
 	m_AsyncWork.Purge();
@@ -2346,9 +2346,9 @@ bool CHudCloseCaption::AddAsyncWork( const char *tokenstream, bool bIsStream, fl
 	if ( !bIsStream )
 	{
 		bret = async->AddToken
-		( 
-			m_AsyncCaptions, 
-			tokenstream 
+		(
+			m_AsyncCaptions,
+			tokenstream
 		);
 	}
 	else
@@ -2367,9 +2367,9 @@ bool CHudCloseCaption::AddAsyncWork( const char *tokenstream, bool bIsStream, fl
 				break;
 
 			async->AddToken
-			( 
-					m_AsyncCaptions, 
-					tokenname 
+			(
+					m_AsyncCaptions,
+					tokenname
 			);
 		}
 	}
@@ -2486,10 +2486,10 @@ void CHudCloseCaption::_ProcessCaption( const wchar_t *caption, const char *toke
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszName - 
-//			iSize - 
-//			*pbuf - 
+// Purpose:
+// Input  : *pszName -
+//			iSize -
+//			*pbuf -
 //-----------------------------------------------------------------------------
 void CHudCloseCaption::MsgFunc_CloseCaption(bf_read &msg)
 {
@@ -2522,7 +2522,7 @@ void CHudCloseCaption::MsgFunc_CloseCaption(bf_read &msg)
 		}
 	}
 
-	ProcessCaption( tokenname, duration, fromplayer );	
+	ProcessCaption( tokenname, duration, fromplayer );
 }
 
 int CHudCloseCaption::GetFontNumber( bool bold, bool italic )
@@ -2573,7 +2573,7 @@ void CHudCloseCaption::InitCaptionDictionary( const char *dbfile )
 		{
 			// only want zip paths
 			continue;
-		} 
+		}
 
 		char fullpath[MAX_PATH];
 		Q_snprintf( fullpath, sizeof( fullpath ), "%s%s", path, dbfile );
@@ -2586,7 +2586,7 @@ void CHudCloseCaption::InitCaptionDictionary( const char *dbfile )
 			Q_strncpy( fullpath, fullpath360, sizeof( fullpath ) );
 		}
 
-        FileHandle_t fh = filesystem->Open( fullpath, "rb" );
+	FileHandle_t fh = filesystem->Open( fullpath, "rb" );
 		if ( FILESYSTEM_INVALID_HANDLE != fh )
 		{
 			MEM_ALLOC_CREDIT();
@@ -2609,7 +2609,7 @@ void CHudCloseCaption::InitCaptionDictionary( const char *dbfile )
 			int directoryBytes = entry.m_Header.directorysize * sizeof( CaptionLookup_t );
 			entry.m_CaptionDirectory.EnsureCapacity( entry.m_Header.directorysize );
 			dirbuffer.EnsureCapacity( directoryBytes );
-			
+
 			filesystem->Read( dirbuffer.Base(), directoryBytes, fh );
 			filesystem->Close( fh );
 
@@ -2634,7 +2634,7 @@ void CHudCloseCaption::OnFinishAsyncLoad( int nFileIndex, int nBlockNum, AsyncCa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudCloseCaption::Lock( void )
 {
@@ -2643,7 +2643,7 @@ void CHudCloseCaption::Lock( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudCloseCaption::Unlock( void )
 {
@@ -2664,11 +2664,11 @@ static int EmitCaptionCompletion( const char *partial, char commands[ COMMAND_CO
 		substring = (char *)partial + strlen( cmdname ) + 1;
 		substringLen = strlen(substring);
 	}
-	
+
 	StringIndex_t i = g_pVGuiLocalize->GetFirstStringIndex();
 
 	while ( i != INVALID_LOCALIZE_STRING_INDEX &&
-		 current < COMMAND_COMPLETION_MAXITEMS )
+		current < COMMAND_COMPLETION_MAXITEMS )
 	{
 		const char *ccname = g_pVGuiLocalize->GetNameByIndex( i );
 		if ( ccname )
@@ -2696,7 +2696,7 @@ CON_COMMAND_F_COMPLETION( cc_emit, "Emits a closed caption", 0, EmitCaptionCompl
 	CHudCloseCaption *hudCloseCaption = GET_HUDELEMENT( CHudCloseCaption );
 	if ( hudCloseCaption )
 	{
-		hudCloseCaption->ProcessCaption( args[1], 5.0f );	
+		hudCloseCaption->ProcessCaption( args[1], 5.0f );
 	}
 }
 
@@ -2881,7 +2881,7 @@ void CHudCloseCaption::FindSound( char const *pchANSI )
 					char const *pchSoundName = soundemitterbase->GetSoundName( k );
 
 					// Hash it
-					
+
 					search.SetHash( pchSoundName );
 
 					if ( search.hash == lu.hash )

@@ -27,33 +27,33 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE DISCARDABLE
 BEGIN
-    "resource.h\0"
+	"resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE DISCARDABLE
 BEGIN
-    "#include ""afxres.h""\r\n"
-    "\0"
+	"#include ""afxres.h""\r\n"
+	"\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE DISCARDABLE
 BEGIN
-    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
-    "#define _AFX_NO_OLE_RESOURCES\r\n"
-    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
-    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
-    "\r\n"
-    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
-    "#ifdef _WIN32\r\n"
-    "LANGUAGE 9, 1\r\n"
-    "#pragma code_page(1252)\r\n"
-    "#endif //_WIN32\r\n"
-    "#include ""res\\vmpi_browser_job_watch.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
-    "#include ""afxres.rc""         // Standard components\r\n"
-    "#endif\r\n"
-    "\0"
+	"#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+	"#define _AFX_NO_OLE_RESOURCES\r\n"
+	"#define _AFX_NO_TRACKER_RESOURCES\r\n"
+	"#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+	"\r\n"
+	"#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+	"#ifdef _WIN32\r\n"
+	"LANGUAGE 9, 1\r\n"
+	"#pragma code_page(1252)\r\n"
+	"#endif //_WIN32\r\n"
+	"#include ""res\\vmpi_browser_job_watch.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+	"#include ""afxres.rc""         // Standard components\r\n"
+	"#endif\r\n"
+	"\0"
 END
 
 #endif    // APSTUDIO_INVOKED
@@ -87,25 +87,25 @@ VS_VERSION_INFO VERSIONINFO
  FILETYPE 0x1L
  FILESUBTYPE 0x0L
 BEGIN
-    BLOCK "StringFileInfo"
-    BEGIN
-        BLOCK "040904B0"
-        BEGIN
-            VALUE "CompanyName", "\0"
-            VALUE "FileDescription", "vmpi_browser_job_watch MFC Application\0"
-            VALUE "FileVersion", "1, 0, 0, 1\0"
-            VALUE "InternalName", "vmpi_browser_job_watch\0"
-            VALUE "LegalCopyright", "Copyright (C) 2003\0"
-            VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "vmpi_browser_job_watch.EXE\0"
-            VALUE "ProductName", "vmpi_browser_job_watch Application\0"
-            VALUE "ProductVersion", "1, 0, 0, 1\0"
-        END
-    END
-    BLOCK "VarFileInfo"
-    BEGIN
-        VALUE "Translation", 0x409, 1200
-    END
+	BLOCK "StringFileInfo"
+	BEGIN
+		BLOCK "040904B0"
+		BEGIN
+			VALUE "CompanyName", "\0"
+			VALUE "FileDescription", "vmpi_browser_job_watch MFC Application\0"
+			VALUE "FileVersion", "1, 0, 0, 1\0"
+			VALUE "InternalName", "vmpi_browser_job_watch\0"
+			VALUE "LegalCopyright", "Copyright (C) 2003\0"
+			VALUE "LegalTrademarks", "\0"
+			VALUE "OriginalFilename", "vmpi_browser_job_watch.EXE\0"
+			VALUE "ProductName", "vmpi_browser_job_watch Application\0"
+			VALUE "ProductVersion", "1, 0, 0, 1\0"
+		END
+	END
+	BLOCK "VarFileInfo"
+	BEGIN
+		VALUE "Translation", 0x409, 1200
+	END
 END
 
 #endif    // !_MAC
@@ -117,22 +117,22 @@ END
 //
 
 IDD_JOB_WATCH DIALOG DISCARDABLE  0, 0, 592, 366
-STYLE WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
-    WS_SYSMENU | WS_THICKFRAME
+STYLE WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION |
+	WS_SYSMENU | WS_THICKFRAME
 CAPTION "Job Watch"
 FONT 8, "MS Sans Serif"
 BEGIN
-    EDITTEXT        IDC_TEXTOUTPUT,13,177,291,179,ES_MULTILINE | ES_READONLY | 
-                    WS_VSCROLL | WS_HSCROLL
-    GROUPBOX        "Workers",IDC_WORKERS_PANEL,7,32,578,132
-    GROUPBOX        "Text Output",IDC_TEXT_OUTPUT_PANEL,7,164,303,195
-    GROUPBOX        "Graphs",IDC_GRAPHS_PANEL,318,164,267,195
-    CONTROL         "",IDC_GRAPH_AREA,"Static",SS_BLACKFRAME,323,176,255,179
-    CONTROL         "List1",IDC_WORKERS,"SysListView32",LVS_REPORT | 
-                    LVS_SORTASCENDING | WS_BORDER | WS_TABSTOP,13,41,564,118
-    LTEXT           "Command Line:",IDC_STATIC,7,9,50,8
-    EDITTEXT        IDC_COMMAND_LINE,60,7,364,14,ES_AUTOHSCROLL | 
-                    ES_READONLY
+	EDITTEXT        IDC_TEXTOUTPUT,13,177,291,179,ES_MULTILINE | ES_READONLY |
+					WS_VSCROLL | WS_HSCROLL
+	GROUPBOX        "Workers",IDC_WORKERS_PANEL,7,32,578,132
+	GROUPBOX        "Text Output",IDC_TEXT_OUTPUT_PANEL,7,164,303,195
+	GROUPBOX        "Graphs",IDC_GRAPHS_PANEL,318,164,267,195
+	CONTROL         "",IDC_GRAPH_AREA,"Static",SS_BLACKFRAME,323,176,255,179
+	CONTROL         "List1",IDC_WORKERS,"SysListView32",LVS_REPORT |
+					LVS_SORTASCENDING | WS_BORDER | WS_TABSTOP,13,41,564,118
+	LTEXT           "Command Line:",IDC_STATIC,7,9,50,8
+	EDITTEXT        IDC_COMMAND_LINE,60,7,364,14,ES_AUTOHSCROLL |
+					ES_READONLY
 END
 
 
@@ -142,15 +142,15 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE 
+GUIDELINES DESIGNINFO DISCARDABLE
 BEGIN
-    IDD_JOB_WATCH, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 585
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 359
-    END
+	IDD_JOB_WATCH, DIALOG
+	BEGIN
+		LEFTMARGIN, 7
+		RIGHTMARGIN, 585
+		TOPMARGIN, 7
+		BOTTOMMARGIN, 359
+	END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -180,4 +180,3 @@ LANGUAGE 9, 1
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

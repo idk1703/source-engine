@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -14,7 +14,7 @@
 ConVar mat_hdr_tonemapscale( "mat_hdr_tonemapscale", "1.0", FCVAR_CHEAT, "The HDR tonemap scale. 1 = Use autoexposure, 0 = eyes fully closed, 16 = eyes wide open." );
 
 // 0 - eyes fully closed / fully black
-// 1 - nominal 
+// 1 - nominal
 // 16 - eyes wide open / fully white
 
 //-----------------------------------------------------------------------------
@@ -97,7 +97,7 @@ IMPLEMENT_SERVERCLASS_ST( CEnvTonemapController, DT_EnvTonemapController )
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvTonemapController::Spawn( void )
 {
@@ -106,7 +106,7 @@ void CEnvTonemapController::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CEnvTonemapController::UpdateTransmitState()
 {
@@ -190,11 +190,11 @@ void CEnvTonemapController::InputSetTonemapRate( inputdata_t &inputdata )
 // Purpose: Blend the tonemap scale to the specified value
 //-----------------------------------------------------------------------------
 void CEnvTonemapController::UpdateTonemapScaleBlend( void )
-{ 
+{
 	float flRemapped = RemapValClamped( gpGlobals->curtime, m_flBlendStartTime, m_flBlendEndTime, m_flBlendTonemapStart, m_flBlendTonemapEnd );
 	mat_hdr_tonemapscale.SetValue( flRemapped );
 
-	//Msg("Setting tonemap scale to %f (curtime %f, %f -> %f)\n", flRemapped, gpGlobals->curtime, m_flBlendStartTime, m_flBlendEndTime ); 
+	//Msg("Setting tonemap scale to %f (curtime %f, %f -> %f)\n", flRemapped, gpGlobals->curtime, m_flBlendStartTime, m_flBlendEndTime );
 
 	// Stop when we're out of the blend range
 	if ( gpGlobals->curtime >= m_flBlendEndTime )
@@ -222,7 +222,7 @@ void CEnvTonemapController::InputSetAutoExposureMax( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvTonemapController::InputUseDefaultAutoExposure( inputdata_t &inputdata )
 {
@@ -231,7 +231,7 @@ void CEnvTonemapController::InputUseDefaultAutoExposure( inputdata_t &inputdata 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvTonemapController::InputSetBloomScale( inputdata_t &inputdata )
 {
@@ -241,7 +241,7 @@ void CEnvTonemapController::InputSetBloomScale( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvTonemapController::InputUseDefaultBloomScale( inputdata_t &inputdata )
 {

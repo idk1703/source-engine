@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,7 +13,7 @@ using namespace vgui;
 
 
 class MenuDemo2 : public MenuDemo
-{	
+{
 	public:
 		MenuDemo2(Panel *parent, const char *name);
 };
@@ -22,7 +22,7 @@ class MenuDemo2 : public MenuDemo
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
 MenuDemo2::MenuDemo2(Panel *parent, const char *name) : MenuDemo(parent, name)
-{	
+{
 	// Set the number of items visible in the menu at one time to 5
 	// If there are more than 5 items in the menu a scrollbar will
 	// be added automatically
@@ -38,5 +38,3 @@ Panel* MenuDemo2_Create(Panel *parent)
 {
 	return new MenuDemo2(parent, "MenuDemo2");
 }
-
-

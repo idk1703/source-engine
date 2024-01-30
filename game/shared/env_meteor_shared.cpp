@@ -32,8 +32,8 @@ CEnvMeteorShared::CEnvMeteorShared()
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CEnvMeteorShared::Init( int nID, float flStartTime, float flPassiveTime, 
-							 const Vector &vecStartPosition, 
+void CEnvMeteorShared::Init( int nID, float flStartTime, float flPassiveTime,
+							 const Vector &vecStartPosition,
 							 const Vector &vecDirection, float flSpeed, float flDamageRadius,
 							 const Vector &vecTriggerMins, const Vector &vecTriggerMaxs )
 {
@@ -96,7 +96,7 @@ void CEnvMeteorShared::ConvertFromWorldToSkybox( void )
 	float flDeltaTime = m_flWorldExitTime - m_flStartTime;
 	Vector vecVelocity( m_vecDirection.x * m_flSpeed, m_vecDirection.y * m_flSpeed, m_vecDirection.z * m_flSpeed );
 	VectorMA( m_vecStartPosition, flDeltaTime, vecVelocity, m_vecPos );
-	
+
 	// Reset the start time.
 	m_flPosTime = m_flWorldExitTime;
 
@@ -138,7 +138,7 @@ float CEnvMeteorShared::GetDamageRadius( void )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CEnvMeteorShared::CalcEnterAndExitTimes( const Vector &vecTriggerMins, 
+void CEnvMeteorShared::CalcEnterAndExitTimes( const Vector &vecTriggerMins,
 											  const Vector &vecTriggerMaxs )
 {
 #define METEOR_TRIGGER_EPSILON	0.001f
@@ -158,14 +158,14 @@ void CEnvMeteorShared::CalcEnterAndExitTimes( const Vector &vecTriggerMins,
 		flDistStart = -m_vecStartPosition[iAxis] + vecTriggerMins[iAxis];
 		flDistEnd = -vecEndPosition[iAxis] + vecTriggerMins[iAxis];
 
-		if ( ( flDistStart > 0.0f ) && ( flDistEnd < 0.0f ) ) 
-		{ 
+		if ( ( flDistStart > 0.0f ) && ( flDistEnd < 0.0f ) )
+		{
 			flFrac = ( flDistStart - METEOR_TRIGGER_EPSILON ) / ( flDistStart - flDistEnd );
 			if ( flFrac > flEnterFrac ) { flEnterFrac = flFrac; }
 		}
 
-		if ( ( flDistStart < 0.0f ) && ( flDistEnd > 0.0f ) ) 
-		{ 
+		if ( ( flDistStart < 0.0f ) && ( flDistEnd > 0.0f ) )
+		{
 			flFrac = ( flDistStart + METEOR_TRIGGER_EPSILON ) / ( flDistStart - flDistEnd );
 			if( flFrac < flExitFrac ) { flExitFrac = flFrac; }
 		}
@@ -177,14 +177,14 @@ void CEnvMeteorShared::CalcEnterAndExitTimes( const Vector &vecTriggerMins,
 		flDistStart = m_vecStartPosition[iAxis] - vecTriggerMaxs[iAxis];
 		flDistEnd = vecEndPosition[iAxis] - vecTriggerMaxs[iAxis];
 
-		if ( ( flDistStart > 0.0f ) && ( flDistEnd < 0.0f ) ) 
-		{ 
+		if ( ( flDistStart > 0.0f ) && ( flDistEnd < 0.0f ) )
+		{
 			flFrac = ( flDistStart - METEOR_TRIGGER_EPSILON ) / ( flDistStart - flDistEnd );
 			if ( flFrac > flEnterFrac ) { flEnterFrac = flFrac; }
 		}
 
-		if ( ( flDistStart < 0.0f ) && ( flDistEnd > 0.0f ) ) 
-		{ 
+		if ( ( flDistStart < 0.0f ) && ( flDistEnd > 0.0f ) )
+		{
 			flFrac = ( flDistStart + METEOR_TRIGGER_EPSILON ) / ( flDistStart - flDistEnd );
 			if( flFrac < flExitFrac ) { flExitFrac = flFrac; }
 		}
@@ -232,7 +232,7 @@ CEnvMeteorSpawnerShared::CEnvMeteorSpawnerShared()
 {
 	m_pFactory = NULL;
 	m_nMeteorCount = 0;
-	
+
 	m_flStartTime = 0.0f;
 	m_nRandomSeed = 0;
 
@@ -329,7 +329,7 @@ float CEnvMeteorSpawnerShared::MeteorThink( float flTime )
 			Vector meteorOrigin( GetRandomFloat( m_vecMinBounds.GetX(), m_vecMaxBounds.GetX() ) /* x */,
 				                 GetRandomFloat( m_vecMinBounds.GetY(), m_vecMaxBounds.GetY() ) /* y */,
 				                 GetRandomFloat( m_vecMinBounds.GetZ(), m_vecMaxBounds.GetZ() ) /* z */ );
-			
+
 			// Calculate the direction of the meteor based on "targets."
 			Vector vecDirection( 0.0f, 0.0f, -1.0f );
 			if ( m_aTargets.Count() > 0 )
@@ -372,7 +372,7 @@ float CEnvMeteorSpawnerShared::MeteorThink( float flTime )
 				vecDirection = vecTargetPos - vecPositionInWorld;
 				VectorNormalize( vecDirection );
 			}
-			
+
 			// Pass in the randomized position, randomized speed, and start time.
 			m_pFactory->CreateMeteor( m_nMeteorCount, m_iMeteorType, meteorOrigin,
 				                      vecDirection /* direction */,
@@ -380,7 +380,7 @@ float CEnvMeteorSpawnerShared::MeteorThink( float flTime )
 									  m_flNextSpawnTime, m_flMeteorDamageRadius,
 				                      m_vecTriggerMins, m_vecTriggerMaxs );
 		}
-		
+
 		// Set next spawn time.
 		m_flNextSpawnTime += GetRandomFloat( m_flMinSpawnTime, m_flMaxSpawnTime );
 	}

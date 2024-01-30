@@ -73,7 +73,7 @@ public:
 			// FIXME:  Should this assert?
 			return false;
 		}
-		
+
 		MDLCACHE_CRITICAL_SECTION_( g_pMDLCache );
 		bool bResult = pClientEntity->GetSoundSpatialization( info );
 
@@ -139,7 +139,7 @@ public:
 		ClientDLL_VoiceStatus(entity, status);
 	}
 
-	virtual bool IsConnected() 
+	virtual bool IsConnected()
 	{
 		return cl.IsConnected();
 	}
@@ -161,7 +161,7 @@ public:
 		}
 	}
 
-	virtual char const *GetGameDir() 
+	virtual char const *GetGameDir()
 	{
 		return com_gamedir;
 	}
@@ -178,7 +178,7 @@ public:
 
 		return engineClient->IsPaused();
 	}
-	
+
 	virtual bool IsGameActive()
 	{
 		extern IVEngineClient *engineClient;
@@ -341,8 +341,8 @@ public:
 			wchar_t file[ 256 ];
 			g_pVGuiLocalize->ConvertANSIToUnicode( cachefile, file, sizeof( file ) );
 
-			g_pVGuiLocalize->ConstructString_safe( 
-				constructed, 
+			g_pVGuiLocalize->ConstructString_safe(
+				constructed,
 				( wchar_t * )format,
 				1,
 				file );

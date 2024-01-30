@@ -104,7 +104,7 @@ public:
 		}
 		return TF_RUNE_STRENGTH;
 	}
-	
+
 	virtual int		UpdateTransmitState( void ) OVERRIDE;
 	virtual	int		ShouldTransmit( const CCheckTransmitInfo *pInfo ) OVERRIDE;
 
@@ -142,7 +142,7 @@ public:
 	virtual bool		MyTouch( CBasePlayer *pPlayer ) OVERRIDE;
 	virtual const char 	*GetDefaultPowerupModel( void ) OVERRIDE { return TF_RUNE_TEMP_CRIT; }
 	virtual float		GetRespawnDelay( void ) OVERRIDE;
-		
+
 protected:
 	void	TempRuneRespawnThink( void );
 
@@ -192,7 +192,7 @@ public:
 	DECLARE_CLASS( CTFInfoPowerupSpawn, CPointEntity );
 	CTFInfoPowerupSpawn();
 	DECLARE_DATADESC();
-	
+
 	virtual void Spawn() OVERRIDE;
 
 	bool IsDisabled() const { return m_bDisabled; }
@@ -205,6 +205,3 @@ private:
 	CHandle< CTFRune > m_hRune;
 };
 #endif // ENTITY_RUNE_H
-
-
-

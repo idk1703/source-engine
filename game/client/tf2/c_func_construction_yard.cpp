@@ -25,7 +25,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_FuncConstructionYard, DT_FuncConstructionYard, CFuncC
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_FuncConstructionYard::C_FuncConstructionYard()
 {
@@ -33,10 +33,9 @@ C_FuncConstructionYard::C_FuncConstructionYard()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *C_FuncConstructionYard::GetTargetDescription( void ) const
 {
 	return "Construction Yard";
 }
-

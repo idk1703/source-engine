@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,10 +19,10 @@
 #include "scenemanager_tools.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
-CWaveFile::CWaveFile( CVCDFile *vcd, CSoundEntry *se, char const *filename ) 
+CWaveFile::CWaveFile( CVCDFile *vcd, CSoundEntry *se, char const *filename )
 	: m_pOwner( vcd ), m_pOwnerSE( se )
 {
 	m_bSentenceLoaded = false;
@@ -41,7 +41,7 @@ CWaveFile::~CWaveFile()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CWaveFile::GetLanguageId()
@@ -63,7 +63,7 @@ void CWaveFile::EnsureSentence()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWaveFile::HasLoadedSentenceInfo() const
@@ -83,8 +83,8 @@ CSoundEntry *CWaveFile::GetOwnerSoundEntry()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 void CWaveFile::SetName( char const *filename )
 {
@@ -260,8 +260,8 @@ bool CWaveFile::IsChildLast( ITreeItem *child )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : sentence - 
+// Purpose:
+// Input  : sentence -
 //-----------------------------------------------------------------------------
 void CWaveFile::SetThreadLoadedSentence( CSentence& sentence )
 {
@@ -275,8 +275,8 @@ void CWaveFile::SetThreadLoadedSentence( CSentence& sentence )
 #define WORD_DATA_EXTENSION	".txt"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *tempfile - 
+// Purpose:
+// Input  : *tempfile -
 //-----------------------------------------------------------------------------
 void CWaveFile::ExportValveDataChunk( char const *tempfile )
 {
@@ -311,8 +311,8 @@ void CWaveFile::ExportValveDataChunk( char const *tempfile )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *tempfile - 
+// Purpose:
+// Input  : *tempfile -
 //-----------------------------------------------------------------------------
 void CWaveFile::ImportValveDataChunk( char const *tempfile )
 {
@@ -376,4 +376,3 @@ void CWaveFile::GetPhonemeExportFile( char *path, int maxlen )
 	Q_snprintf( path, maxlen, "phonemes/%s", relative );
 	Q_FixSlashes( path );
 }
-

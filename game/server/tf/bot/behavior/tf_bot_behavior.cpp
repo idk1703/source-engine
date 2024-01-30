@@ -498,8 +498,8 @@ EventDesiredResult< CTFBot > CTFBotMainAction::OnStuck( CTFBot *me )
 	if ( path && path->GetCurrentGoal() )
 	{
 		UTIL_LogPrintf( "   path_goal ( \"%3.2f %3.2f %3.2f\" )\n",
-						path->GetCurrentGoal()->pos.x, 
-						path->GetCurrentGoal()->pos.y, 
+						path->GetCurrentGoal()->pos.x,
+						path->GetCurrentGoal()->pos.y,
 						path->GetCurrentGoal()->pos.z );
 	}
 	else
@@ -614,7 +614,7 @@ Vector CTFBotMainAction::SelectTargetPoint( const INextBot *meBot, const CBaseCo
 			if ( sentry )
 			{
 				// Aim a bit lower than eye height to ensure we hit the body of the sentry
-				return sentry->GetAbsOrigin() + 0.5f * sentry->GetViewOffset(); 
+				return sentry->GetAbsOrigin() + 0.5f * sentry->GetViewOffset();
 			}
 		}
 
@@ -700,7 +700,7 @@ Vector CTFBotMainAction::SelectTargetPoint( const INextBot *meBot, const CBaseCo
 						float s, c;
 						FastSinCos( elevationAngle * M_PI / 180.0f, &s, &c );
 
-						if ( c > 0.0f ) 
+						if ( c > 0.0f )
 						{
 							float elevation = rangeBetween * s / c;
 							return leadTargetSpot + Vector( 0, 0, elevation );
@@ -740,7 +740,7 @@ Vector CTFBotMainAction::SelectTargetPoint( const INextBot *meBot, const CBaseCo
 
 				// aim a bit lower than the head - the imperfections may yet give us a headshot
 				Vector desiredAimSpot;
-				
+
 				switch( me->GetDifficulty() )
 				{
 				case CTFBot::EXPERT:
@@ -781,7 +781,7 @@ Vector CTFBotMainAction::SelectTargetPoint( const INextBot *meBot, const CBaseCo
 				float s, c;
 				FastSinCos( elevationAngle * M_PI / 180.0f, &s, &c );
 
-				if ( c > 0.0f ) 
+				if ( c > 0.0f )
 				{
 					float elevation = threatRange * s / c;
 					return subject->WorldSpaceCenter() + Vector( 0, 0, elevation );
@@ -819,7 +819,7 @@ QueryResultType CTFBotMainAction::IsPositionAllowed( const INextBot *me, const V
 	{
 		const Path::Segment *goal = path->GetCurrentGoal();
 		if ( goal )
-		{ 
+		{
 			if ( goal->type == Path::DROP_DOWN || me->GetLocomotionInterface()->GetFeet().z - goal->pos.z >= me->GetLocomotionInterface()->GetMaxJumpHeight() )
 			{
 				// our goal requires us to drop down
@@ -838,11 +838,11 @@ QueryResultType CTFBotMainAction::IsPositionAllowed( const INextBot *me, const V
 	float halfWidth = 0.4f * body->GetHullWidth();
 
 	mover->TraceHull( pos + Vector( 0, 0, mover->GetStepHeight() ),	// start up a bit to handle rough terrain
-					  pos + Vector( 0, 0, -mover->GetMaxJumpHeight() ), 
-					  Vector( -halfWidth, -halfWidth, 0 ), 
-					  Vector( halfWidth, halfWidth, body->GetHullHeight() ), 
-					  body->GetSolidMask(), 
-					  &filter, 
+					  pos + Vector( 0, 0, -mover->GetMaxJumpHeight() ),
+					  Vector( -halfWidth, -halfWidth, 0 ),
+					  Vector( halfWidth, halfWidth, body->GetHullHeight() ),
+					  body->GetSolidMask(),
+					  &filter,
 					  &result );
 
 	if ( result.DidHit() )
@@ -889,7 +889,7 @@ bool CTFBotMainAction::IsImmediateThreat( const CBaseCombatCharacter *subject, c
 		// very near threats are always immediately dangerous
 		return true;
 	}
-	
+
 	// mid-to-far away threats
 
 	if ( me->IsThreatFiringAtMe( threat->GetEntity() ) )
@@ -999,9 +999,9 @@ const CKnownEntity *CTFBotMainAction::GetHealerOfThreat( const CKnownEntity *thr
 
 //---------------------------------------------------------------------------------------------
 // return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
-const CKnownEntity *CTFBotMainAction::SelectMoreDangerousThreat( const INextBot *meBot, 
+const CKnownEntity *CTFBotMainAction::SelectMoreDangerousThreat( const INextBot *meBot,
 																 const CBaseCombatCharacter *subject,
-																 const CKnownEntity *threat1, 
+																 const CKnownEntity *threat1,
 																 const CKnownEntity *threat2 ) const
 {
 	CTFBot *me = ToTFBot( meBot->GetEntity() );
@@ -1054,9 +1054,9 @@ const CKnownEntity *SelectClosestSpyToMe( CTFBot *me, const CKnownEntity *threat
 
 //---------------------------------------------------------------------------------------------
 // Return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
-const CKnownEntity *CTFBotMainAction::SelectMoreDangerousThreatInternal( const INextBot *meBot, 
+const CKnownEntity *CTFBotMainAction::SelectMoreDangerousThreatInternal( const INextBot *meBot,
 																		 const CBaseCombatCharacter *subject,
-																		 const CKnownEntity *threat1, 
+																		 const CKnownEntity *threat1,
 																		 const CKnownEntity *threat2 ) const
 {
 	CTFBot *me = ToTFBot( meBot->GetEntity() );
@@ -1067,7 +1067,7 @@ const CKnownEntity *CTFBotMainAction::SelectMoreDangerousThreatInternal( const I
 		// melee only bots just use closest threat
 		return closerThreat;
 	}
-	
+
 	// close range sentries are the most dangerous of all
 	bool shouldFearSentryGuns = true;
 
@@ -1356,7 +1356,7 @@ void CTFBotMainAction::FireWeaponAtEnemy( CTFBot *me )
 			// bounce missiles with compression blast
 			me->PressAltFireButton();
 		}
-		else if ( threat->GetTimeSinceLastSeen() < 1.0f && 
+		else if ( threat->GetTimeSinceLastSeen() < 1.0f &&
 				  me->IsDistanceBetweenLessThan( threat->GetEntity(), me->GetMaxAttackRange() ) )
 		{
 			me->PressFireButton( tf_bot_fire_weapon_min_time.GetFloat() );
@@ -1388,7 +1388,7 @@ void CTFBotMainAction::FireWeaponAtEnemy( CTFBot *me )
 				if ( m_steadyTimer.HasStarted() && m_steadyTimer.IsGreaterThen( reactionTime ) )
 				{
 					trace_t trace;
-					
+
 					Vector forward;
 					me->EyeVectors( &forward );
 
@@ -1411,7 +1411,7 @@ void CTFBotMainAction::FireWeaponAtEnemy( CTFBot *me )
 				// spray for a bit
 				me->PressFireButton( tf_bot_fire_weapon_min_time.GetFloat() );
 			}
-			else 
+			else
 			{
 				if ( me->IsExplosiveProjectileWeapon( MY_CURRENT_GUN ) )
 				{
@@ -1441,7 +1441,7 @@ void CTFBotMainAction::FireWeaponAtEnemy( CTFBot *me )
 				me->PressFireButton();
 			}
 		}
-	
+
 	}
 }
 
@@ -1646,4 +1646,3 @@ void CTFBotMainAction::Dodge( CTFBot *me )
 		}
 	}
 }
-

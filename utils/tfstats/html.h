@@ -52,7 +52,7 @@ public:
 	void div(const char* cls){write("<div class=%s>\n",cls);}
 	void div(){write("<div>\n");}
 	void enddiv(){write("</div>");}
-	
+
 	void close();
 	~CHTMLFile();
 };

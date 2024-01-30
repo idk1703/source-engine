@@ -1,14 +1,14 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
 /*
 
-  glapp.c - Simple OpenGL shell
-  
+	glapp.c - Simple OpenGL shell
+
 	There are several options allowed on the command line.  They are:
 	-height : what window/screen height do you want to use?
 	-width  : what window/screen width do you want to use?
@@ -82,7 +82,7 @@ public:
 		{
 			return NULL;
 		}
-		
+
 		return materialProxy;
 	}
 
@@ -113,20 +113,20 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 	return g_MaterialSystemApp.WinMain(hInstance, hPrevInstance, szCmdLine, iCmdShow);
 }
 
-  
+
 
 BOOL isdigits( char *s )
 {
-   int i;
-   
-   for (i = 0; s[i]; i++)
-   {
-	   if ((s[i] > '9') || (s[i] < '0'))
-       {
-		   return FALSE;
-       }
-   }
-   return TRUE;
+	int i;
+
+	for (i = 0; s[i]; i++)
+	{
+		if ((s[i] > '9') || (s[i] < '0'))
+		{
+			return FALSE;
+		}
+	}
+	return TRUE;
 }
 
 
@@ -138,27 +138,27 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 // This function builds a list the screen resolutions supported by the display driver
 static void BuildModeList(screen_res_t* &pResolutions, int &iResCount)
 {
-   DEVMODE  dm;
-   int      mode;
-   
-   mode = 0;
-   while(EnumDisplaySettings(NULL, mode, &dm))
-   {
-	   mode++;
-   }
-   
-   pResolutions = (screen_res_t *)malloc(sizeof(screen_res_t)*mode);
-   mode = 0;
-   while(EnumDisplaySettings(NULL, mode, &dm))
-   {
-	   pResolutions[mode].width = dm.dmPelsWidth;
-	   pResolutions[mode].height = dm.dmPelsHeight;
-	   pResolutions[mode].bpp = dm.dmBitsPerPel;
-	   pResolutions[mode].flags = dm.dmDisplayFlags;
-	   pResolutions[mode].frequency = dm.dmDisplayFrequency;
-	   mode++;
-   }
-   iResCount = mode;
+	DEVMODE  dm;
+	int      mode;
+
+	mode = 0;
+	while(EnumDisplaySettings(NULL, mode, &dm))
+	{
+		mode++;
+	}
+
+	pResolutions = (screen_res_t *)malloc(sizeof(screen_res_t)*mode);
+	mode = 0;
+	while(EnumDisplaySettings(NULL, mode, &dm))
+	{
+		pResolutions[mode].width = dm.dmPelsWidth;
+		pResolutions[mode].height = dm.dmPelsHeight;
+		pResolutions[mode].bpp = dm.dmBitsPerPel;
+		pResolutions[mode].flags = dm.dmDisplayFlags;
+		pResolutions[mode].frequency = dm.dmDisplayFrequency;
+		mode++;
+	}
+	iResCount = mode;
 }
 
 
@@ -166,7 +166,7 @@ bool Sys_Error(const char *pMsg, ...)
 {
 	va_list marker;
 	char msg[4096];
-	
+
 	va_start(marker, pMsg);
 	vsprintf(msg, pMsg, marker);
 	va_end(marker);
@@ -218,11 +218,11 @@ static void MaterialSystem_Error( char *fmt, ... )
 {
 	char str[4096];
 	va_list marker;
-	
+
 	va_start(marker, fmt);
 	vsprintf(str, fmt, marker);
 	va_end(marker);
-	
+
 	Sys_Error(str);
 }
 
@@ -297,37 +297,37 @@ MaterialSystemApp::~MaterialSystemApp()
 
 void MaterialSystemApp::Term()
 {
-   int i;
+	int i;
 
-   // Free the command line holder memory
-   if (m_argc > 0)
-   {
-	   // Free in reverse order of allocation
-	   for (i = (m_argc-1); i >= 0; i--)
-       {
-		   free(m_argv[i]);
-       }
-	   // Free the parameter "pockets"
-	   free(m_argv);
-   }
-	
-  
-   // Free the memory that holds the video resolution list
-   if (m_pResolutions)
-	   free(m_pResolutions);
+	// Free the command line holder memory
+	if (m_argc > 0)
+	{
+		// Free in reverse order of allocation
+		for (i = (m_argc-1); i >= 0; i--)
+		{
+			free(m_argv[i]);
+		}
+		// Free the parameter "pockets"
+		free(m_argv);
+	}
 
-   if (m_hDC)
-   {
-	   if (!ReleaseDC((HWND)m_hWnd, (HDC)m_hDC))
-       {
-		   MessageBox(NULL, "ShutdownOpenGL - ReleaseDC failed\n", "ERROR", MB_OK);
-       }
-	   m_hDC   = NULL;
-   }
-   if (m_bFullScreen)
-   {
-	   ChangeDisplaySettings( 0, 0 );
-   }
+
+	// Free the memory that holds the video resolution list
+	if (m_pResolutions)
+		free(m_pResolutions);
+
+	if (m_hDC)
+	{
+		if (!ReleaseDC((HWND)m_hWnd, (HDC)m_hDC))
+		{
+			MessageBox(NULL, "ShutdownOpenGL - ReleaseDC failed\n", "ERROR", MB_OK);
+		}
+		m_hDC   = NULL;
+	}
+	if (m_bFullScreen)
+	{
+		ChangeDisplaySettings( 0, 0 );
+	}
 
 	Clear();
 }
@@ -364,72 +364,72 @@ void MaterialSystemApp::Clear()
 int MaterialSystemApp::WinMain(void *hInstance, void *hPrevInstance, char *szCmdLine, int iCmdShow)
 {
 	MSG         msg;
-    HDC         hdc;
+	HDC         hdc;
 	memset(&msg,0,sizeof(msg));
 	CommandLine()->CreateCmdLine( Plat_GetCommandLine() );
 
-    // Not changable by user
-    m_hInstance    = hInstance;
-    m_iCmdShow     = iCmdShow;
-    m_pResolutions = 0;
-    m_NearClip     = 8.0f;
-    m_FarClip      = 28400.0f;
-	
-    // User definable
-    m_fov          = 90.0f;
-    m_bAllowSoft   = FALSE;
-    m_bFullScreen  = TRUE;
-	
-    // Get the current display device info
-    hdc = GetDC( NULL );
-    m_DevInfo.bpp    = GetDeviceCaps(hdc, BITSPIXEL);
-    m_DevInfo.width  = GetSystemMetrics(SM_CXSCREEN);
-    m_DevInfo.height = GetSystemMetrics(SM_CYSCREEN);
-    ReleaseDC(NULL, hdc);
-	
-    // Parse the command line if there is one
-    m_argc = 0;
-    if (strlen(szCmdLine) > 0)
+	// Not changable by user
+	m_hInstance    = hInstance;
+	m_iCmdShow     = iCmdShow;
+	m_pResolutions = 0;
+	m_NearClip     = 8.0f;
+	m_FarClip      = 28400.0f;
+
+	// User definable
+	m_fov          = 90.0f;
+	m_bAllowSoft   = FALSE;
+	m_bFullScreen  = TRUE;
+
+	// Get the current display device info
+	hdc = GetDC( NULL );
+	m_DevInfo.bpp    = GetDeviceCaps(hdc, BITSPIXEL);
+	m_DevInfo.width  = GetSystemMetrics(SM_CXSCREEN);
+	m_DevInfo.height = GetSystemMetrics(SM_CYSCREEN);
+	ReleaseDC(NULL, hdc);
+
+	// Parse the command line if there is one
+	m_argc = 0;
+	if (strlen(szCmdLine) > 0)
 	{
-        m_szCmdLine = szCmdLine;
-        GetParameters();
-	}
-	
-    // Default to 640 pixels wide
-    m_width  = FindNumParameter("-width", 640);
-    m_height = FindNumParameter("-height", 480);
-    m_bpp    = FindNumParameter("-bpp", 32);
-    m_fov    = FindNumParameter("-fov", 90);
-	
-    // Check for windowed rendering
-    m_bFullScreen = FALSE;
-    if (FindParameter("-fullscreen"))
-	{
-        m_bFullScreen = TRUE;
-	}
-	
-    // Build up the video mode list
-    BuildModeList(m_pResolutions, m_iResCount);
-	
-    // Create the main program window, start up OpenGL and create our viewport
-    if (CreateMainWindow( m_width, m_height, m_bpp, m_bFullScreen) != TRUE)
-	{
-        ChangeDisplaySettings(0, 0);
-        MessageBox(NULL, "Unable to create main window.\nProgram will now end.", "FATAL ERROR", MB_OK);
-        Term();
-        return 0;
+		m_szCmdLine = szCmdLine;
+		GetParameters();
 	}
 
-    // Turn the cursor off for full-screen mode
-    if (m_bFullScreen == TRUE)
-	{ 
+	// Default to 640 pixels wide
+	m_width  = FindNumParameter("-width", 640);
+	m_height = FindNumParameter("-height", 480);
+	m_bpp    = FindNumParameter("-bpp", 32);
+	m_fov    = FindNumParameter("-fov", 90);
+
+	// Check for windowed rendering
+	m_bFullScreen = FALSE;
+	if (FindParameter("-fullscreen"))
+	{
+		m_bFullScreen = TRUE;
+	}
+
+	// Build up the video mode list
+	BuildModeList(m_pResolutions, m_iResCount);
+
+	// Create the main program window, start up OpenGL and create our viewport
+	if (CreateMainWindow( m_width, m_height, m_bpp, m_bFullScreen) != TRUE)
+	{
+		ChangeDisplaySettings(0, 0);
+		MessageBox(NULL, "Unable to create main window.\nProgram will now end.", "FATAL ERROR", MB_OK);
+		Term();
+		return 0;
+	}
+
+	// Turn the cursor off for full-screen mode
+	if (m_bFullScreen == TRUE)
+	{
 		// Probably want to do this all the time anyway
-        ShowCursor(FALSE);
+		ShowCursor(FALSE);
 	}
 
-    // We're live now
-    m_bActive = TRUE;
-	
+	// We're live now
+	m_bActive = TRUE;
+
 	// Define this funciton to init your app
 	AppInit();
 
@@ -441,31 +441,31 @@ int MaterialSystemApp::WinMain(void *hInstance, void *hPrevInstance, char *szCmd
 	m_centery = ( rect.top + rect.bottom ) / 2;
 
 
-    // Begin the main program loop
-    while (m_bActive == TRUE)
+	// Begin the main program loop
+	while (m_bActive == TRUE)
 	{
-        while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
-            TranslateMessage (&msg);
-            DispatchMessage (&msg);
+			TranslateMessage (&msg);
+			DispatchMessage (&msg);
 		}
-        
+
 		if (m_pMaterialSystem)
 		{
-            RenderScene();
+			RenderScene();
 		}
 	}
-    if (m_bFullScreen == TRUE)
+	if (m_bFullScreen == TRUE)
 	{
-        ShowCursor(TRUE);
+		ShowCursor(TRUE);
 	}
-    
+
 	// Release the parameter and video resolution lists
 	Term();
-	
+
 	// Tell the app to cleanup.
 	AppExit();
-    return msg.wParam;
+	return msg.wParam;
 }
 
 
@@ -477,7 +477,7 @@ long MaterialSystemApp::WndProc(void *inhwnd, long iMsg, long wParam, long lPara
 	}
 
 	HWND hwnd = (HWND)inhwnd;
-	
+
 	switch (iMsg)
 	{
 		case WM_CHAR:
@@ -497,7 +497,7 @@ long MaterialSystemApp::WndProc(void *inhwnd, long iMsg, long wParam, long lPara
 			AppKey( wParam, false );
 			break;
 
-		
+
 		case WM_ACTIVATE:
 			if ((LOWORD(wParam) != WA_INACTIVE) && ((HWND)lParam == NULL))
 			{
@@ -512,7 +512,7 @@ long MaterialSystemApp::WndProc(void *inhwnd, long iMsg, long wParam, long lPara
 				}
 			}
 			return 0;
-			
+
 		case WM_SETFOCUS:
 			if(g_bCaptureOnFocus)
 			{
@@ -553,13 +553,13 @@ long MaterialSystemApp::WndProc(void *inhwnd, long iMsg, long wParam, long lPara
 			Term();
 			m_bActive = FALSE;
 			break;
-			
+
 		case WM_DESTROY:
 			PostQuitMessage (0);
 			return 0;
 	}
-   
-   return DefWindowProc (hwnd, iMsg, wParam, lParam);
+
+	return DefWindowProc (hwnd, iMsg, wParam, lParam);
 }
 
 
@@ -570,14 +570,14 @@ bool MaterialSystemApp::InitMaterialSystem()
 	// Init libraries.
 	MathLib_Init( true, true, true, 2.2f, 2.2f, 0.0f, 2.0f );
 	SpewOutputFunc( MatSysAppSpewFunc );
-	
+
 	if ((m_hDC = GetDC((HWND)m_hWnd)) == NULL)
 	{
 		ChangeDisplaySettings(0, 0);
 		MessageBox(NULL, "GetDC on main window failed", "FATAL ERROR", MB_OK);
 		return FALSE;
 	}
-	
+
 	// Load the material system DLL and get its interface.
 	char *pDLLName = "MaterialSystem.dll";
 	m_hMaterialSystemInst = LoadLibrary( pDLLName );
@@ -628,8 +628,8 @@ bool MaterialSystemApp::InitMaterialSystem()
 
 	MaterialSystem_Config_t config;
 	InitMaterialSystemConfig(&config);
-	config.SetFlag( MATSYS_VIDCFG_FLAGS_WINDOWED, true ); 
-	config.SetFlag( MATSYS_VIDCFG_FLAGS_RESIZING, true ); 
+	config.SetFlag( MATSYS_VIDCFG_FLAGS_WINDOWED, true );
+	config.SetFlag( MATSYS_VIDCFG_FLAGS_RESIZING, true );
 
 	if(!m_pMaterialSystem->SetMode(m_hWnd, config))
 		return Sys_Error("IMaterialSystem::SetMode failed");
@@ -643,115 +643,115 @@ bool MaterialSystemApp::InitMaterialSystem()
 	GetWindowRect( (HWND)m_hWnd, &rect );
 	m_centerx = (rect.left + rect.right) / 2;
 	m_centery = (rect.top + rect.bottom) / 2;
-	
+
 	return true;
 }
 
 
 bool MaterialSystemApp::CreateMainWindow(int width, int height, int bpp, bool fullscreen)
 {
-   HWND        hwnd;
-   WNDCLASSEX  wndclass;
-   DWORD       dwStyle, dwExStyle;
-   int         x, y, sx, sy, ex, ey, ty;
-   
-   if ((hwnd = FindWindow(g_szAppName, g_szAppName)) != NULL)
-   {
-	   SetForegroundWindow(hwnd);
-	   return 0;
-   }
-   
-   wndclass.cbSize        = sizeof (wndclass);
-   wndclass.style         = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
-   wndclass.lpfnWndProc   = ::WndProc;
-   wndclass.cbClsExtra    = 0;
-   wndclass.cbWndExtra    = 0;
-   wndclass.hInstance     = (HINSTANCE)m_hInstance;
-   wndclass.hIcon         = 0;
-   wndclass.hCursor       = LoadCursor (NULL, IDC_ARROW);
-   wndclass.hbrBackground = (HBRUSH)COLOR_GRAYTEXT;
-   wndclass.lpszMenuName  = NULL;
-   wndclass.lpszClassName = g_szAppName;
-   wndclass.hIconSm       = 0;
-   
-   
-   if (!RegisterClassEx (&wndclass))
-   {
-	   MessageBox(NULL, "Window class registration failed.", "FATAL ERROR", MB_OK);
-	   return FALSE;
-   }
-   
-   if (fullscreen)
-   {
-	   dwExStyle = WS_EX_TOPMOST;
-	   dwStyle = WS_POPUP | WS_VISIBLE;
-	   x = y = 0;
-	   sx = m_width;
-	   sy = m_height;
-   }
-   else
-   {
-	   dwExStyle = 0;
-	   //dwStyle = WS_CAPTION | WS_SYSMENU | WS_THICKFRAME;  // Use this if you want a "normal" window
-	   dwStyle = WS_CAPTION;
-	   ex = GetSystemMetrics(SM_CXEDGE);
-	   ey = GetSystemMetrics(SM_CYEDGE);
-	   ty = GetSystemMetrics(SM_CYSIZE);
-	   // Center the window on the screen
-	   x = (m_DevInfo.width / 2) - ((m_width+(2*ex)) / 2);
-	   y = (m_DevInfo.height / 2) - ((m_height+(2*ey)+ty) / 2);
-	   sx = m_width+(2*ex);
-	   sy = m_height+(2*ey)+ty;
-	   /*
-       Check to be sure the requested window size fits on the screen and
-       adjust each dimension to fit if the requested size does not fit.
-	   */
-	   if (sx >= m_DevInfo.width)
-       {
-		   x = 0;
-		   sx = m_DevInfo.width-(2*ex);
-       }
-	   if (sy >= m_DevInfo.height)
-       {
-		   y = 0;
-		   sy = m_DevInfo.height-((2*ey)+ty);
-       }
-   }
-   
-   if ((hwnd = CreateWindowEx (dwExStyle,
-	   g_szAppName,               // window class name
-	   g_szAppName,                // window caption
-	   dwStyle | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, // window style
-	   x,           // initial x position
-	   y,           // initial y position
-	   sx,           // initial x size
-	   sy,           // initial y size
-	   NULL,                    // parent window handle
-	   NULL,                    // window menu handle
-	   (HINSTANCE)m_hInstance,       // program instance handle
-	   NULL))                   // creation parameters
-	   == NULL)
-   {
-	   ChangeDisplaySettings(0, 0);
-	   MessageBox(NULL, "Window creation failed.", "FATAL ERROR", MB_OK);
-	   return FALSE;
-   }
-   
-   m_hWnd = hwnd;
-   
-   if (!InitMaterialSystem())
-   {
-	   m_hWnd = NULL;
-	   return FALSE;
-   }
-   
-   ShowWindow((HWND)m_hWnd, m_iCmdShow);
-   UpdateWindow((HWND)m_hWnd);
-   
-   SetForegroundWindow((HWND)m_hWnd);
-   SetFocus((HWND)m_hWnd);
-   
-   return TRUE;
+	HWND        hwnd;
+	WNDCLASSEX  wndclass;
+	DWORD       dwStyle, dwExStyle;
+	int         x, y, sx, sy, ex, ey, ty;
+
+	if ((hwnd = FindWindow(g_szAppName, g_szAppName)) != NULL)
+	{
+		SetForegroundWindow(hwnd);
+		return 0;
+	}
+
+	wndclass.cbSize        = sizeof (wndclass);
+	wndclass.style         = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
+	wndclass.lpfnWndProc   = ::WndProc;
+	wndclass.cbClsExtra    = 0;
+	wndclass.cbWndExtra    = 0;
+	wndclass.hInstance     = (HINSTANCE)m_hInstance;
+	wndclass.hIcon         = 0;
+	wndclass.hCursor       = LoadCursor (NULL, IDC_ARROW);
+	wndclass.hbrBackground = (HBRUSH)COLOR_GRAYTEXT;
+	wndclass.lpszMenuName  = NULL;
+	wndclass.lpszClassName = g_szAppName;
+	wndclass.hIconSm       = 0;
+
+
+	if (!RegisterClassEx (&wndclass))
+	{
+		MessageBox(NULL, "Window class registration failed.", "FATAL ERROR", MB_OK);
+		return FALSE;
+	}
+
+	if (fullscreen)
+	{
+		dwExStyle = WS_EX_TOPMOST;
+		dwStyle = WS_POPUP | WS_VISIBLE;
+		x = y = 0;
+		sx = m_width;
+		sy = m_height;
+	}
+	else
+	{
+		dwExStyle = 0;
+		//dwStyle = WS_CAPTION | WS_SYSMENU | WS_THICKFRAME;  // Use this if you want a "normal" window
+		dwStyle = WS_CAPTION;
+		ex = GetSystemMetrics(SM_CXEDGE);
+		ey = GetSystemMetrics(SM_CYEDGE);
+		ty = GetSystemMetrics(SM_CYSIZE);
+		// Center the window on the screen
+		x = (m_DevInfo.width / 2) - ((m_width+(2*ex)) / 2);
+		y = (m_DevInfo.height / 2) - ((m_height+(2*ey)+ty) / 2);
+		sx = m_width+(2*ex);
+		sy = m_height+(2*ey)+ty;
+		/*
+		Check to be sure the requested window size fits on the screen and
+		adjust each dimension to fit if the requested size does not fit.
+		*/
+		if (sx >= m_DevInfo.width)
+		{
+			x = 0;
+			sx = m_DevInfo.width-(2*ex);
+		}
+		if (sy >= m_DevInfo.height)
+		{
+			y = 0;
+			sy = m_DevInfo.height-((2*ey)+ty);
+		}
+	}
+
+	if ((hwnd = CreateWindowEx (dwExStyle,
+		g_szAppName,               // window class name
+		g_szAppName,                // window caption
+		dwStyle | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, // window style
+		x,           // initial x position
+		y,           // initial y position
+		sx,           // initial x size
+		sy,           // initial y size
+		NULL,                    // parent window handle
+		NULL,                    // window menu handle
+		(HINSTANCE)m_hInstance,       // program instance handle
+		NULL))                   // creation parameters
+		== NULL)
+	{
+		ChangeDisplaySettings(0, 0);
+		MessageBox(NULL, "Window creation failed.", "FATAL ERROR", MB_OK);
+		return FALSE;
+	}
+
+	m_hWnd = hwnd;
+
+	if (!InitMaterialSystem())
+	{
+		m_hWnd = NULL;
+		return FALSE;
+	}
+
+	ShowWindow((HWND)m_hWnd, m_iCmdShow);
+	UpdateWindow((HWND)m_hWnd);
+
+	SetForegroundWindow((HWND)m_hWnd);
+	SetFocus((HWND)m_hWnd);
+
+	return TRUE;
 }
 
 
@@ -769,7 +769,7 @@ void MaterialSystemApp::RenderScene()
 
 	if ( deltaTime > 1000 )
 		deltaTime = 0;
-	
+
 	lastTime = newTime;
 	frametime = (float) ((double)deltaTime * 0.001);
 	g_Time = newTime;
@@ -804,7 +804,7 @@ void MaterialSystemApp::RenderScene()
 
 	AppRender( frametime, deltax, deltay );
 
-    m_pMaterialSystem->SwapBuffers();
+	m_pMaterialSystem->SwapBuffers();
 
 	m_pMaterialSystem->EndFrame();
 }
@@ -813,117 +813,117 @@ void MaterialSystemApp::RenderScene()
 void MaterialSystemApp::MouseCapture()
 {
 	SetCapture( (HWND)m_hWnd );
-    ShowCursor(FALSE);
+	ShowCursor(FALSE);
 	SetCursorPos( m_centerx, m_centery );
 }
 
 
 void MaterialSystemApp::MouseRelease()
 {
-    ShowCursor(TRUE);
+	ShowCursor(TRUE);
 	ReleaseCapture();
-	
+
 	SetCursorPos( m_centerx, m_centery );
 }
 
 
 void MaterialSystemApp::GetParameters()
 {
-   int   count;
-   char *s, *tstring;
-   
-   // Make a copy of the command line to count the parameters - strtok is destructive
-   tstring = (char *)malloc(sizeof(char)*(strlen(m_szCmdLine)+1));
-   strcpy(tstring, m_szCmdLine);
-   
-   // Count the parameters
-   s = strtok(tstring, " ");
-   count = 1;
-   while (strtok(NULL, " ") != NULL)
-   {
-	   count++;
-   }
-   free(tstring);
-   
-   // Allocate "pockets" for the parameters
-   m_argv = (char **)malloc(sizeof(char*)*(count+1));
-   
-   // Copy first parameter into the "pockets"
-   m_argc = 0;
-   s = strtok(m_szCmdLine, " ");
-   m_argv[m_argc] = (char *)malloc(sizeof(char)*(strlen(s)+1));
-   strcpy(m_argv[m_argc], s);
-   m_argc++;
-   
-   // Copy the rest of the parameters
-   do
-   {
-	   // get the next token
-	   s = strtok(NULL, " ");
-	   if (s != NULL)
-       { 
-		   // add it to the list
-		   m_argv[m_argc] = (char *)malloc(sizeof(char)*(strlen(s)+1));
-		   strcpy(m_argv[m_argc], s);
-		   m_argc++;
-       }
-   }
-   while (s != NULL);
+	int   count;
+	char *s, *tstring;
+
+	// Make a copy of the command line to count the parameters - strtok is destructive
+	tstring = (char *)malloc(sizeof(char)*(strlen(m_szCmdLine)+1));
+	strcpy(tstring, m_szCmdLine);
+
+	// Count the parameters
+	s = strtok(tstring, " ");
+	count = 1;
+	while (strtok(NULL, " ") != NULL)
+	{
+		count++;
+	}
+	free(tstring);
+
+	// Allocate "pockets" for the parameters
+	m_argv = (char **)malloc(sizeof(char*)*(count+1));
+
+	// Copy first parameter into the "pockets"
+	m_argc = 0;
+	s = strtok(m_szCmdLine, " ");
+	m_argv[m_argc] = (char *)malloc(sizeof(char)*(strlen(s)+1));
+	strcpy(m_argv[m_argc], s);
+	m_argc++;
+
+	// Copy the rest of the parameters
+	do
+	{
+		// get the next token
+		s = strtok(NULL, " ");
+		if (s != NULL)
+		{
+			// add it to the list
+			m_argv[m_argc] = (char *)malloc(sizeof(char)*(strlen(s)+1));
+			strcpy(m_argv[m_argc], s);
+			m_argc++;
+		}
+	}
+	while (s != NULL);
 }
 
 
 int MaterialSystemApp::FindNumParameter(const char *s, int defaultVal)
 {
-   int i;
-   
-   for (i = 0; i < (m_argc-1); i++)
-   {
-	   if (stricmp(m_argv[i], s) == 0)
-       {
-		   if (isdigits(m_argv[i+1]))
-           {
-			   return(atoi(m_argv[i+1]));
-           }
-		   else
-           {
-			   return defaultVal;
-           }
-       }
-   }
-   return defaultVal;
+	int i;
+
+	for (i = 0; i < (m_argc-1); i++)
+	{
+		if (stricmp(m_argv[i], s) == 0)
+		{
+			if (isdigits(m_argv[i+1]))
+			{
+				return(atoi(m_argv[i+1]));
+			}
+			else
+			{
+				return defaultVal;
+			}
+		}
+	}
+	return defaultVal;
 }
 
 
 bool MaterialSystemApp::FindParameter(const char *s)
 {
-   int i;
-   
-   for (i = 0; i < m_argc; i++)
-   {
-	   if (stricmp(m_argv[i], s) == 0)
-       {
-		   return true;
-       }
-   }
-   return false;
+	int i;
+
+	for (i = 0; i < m_argc; i++)
+	{
+		if (stricmp(m_argv[i], s) == 0)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 
 const char *MaterialSystemApp::FindParameterArg( const char *s )
 {
-   int i;
-   
-   for (i = 0; i < m_argc; i++)
-   {
-	   if (stricmp(m_argv[i], s) == 0)
-       {
-		   if( (i+1) < m_argc )
-			   return m_argv[i+1];
+	int i;
+
+	for (i = 0; i < m_argc; i++)
+	{
+		if (stricmp(m_argv[i], s) == 0)
+		{
+			if( (i+1) < m_argc )
+				return m_argv[i+1];
 			else
 				return "";
-       }
-   }
-   return NULL;
+		}
+	}
+	return NULL;
 }
 
 
@@ -956,5 +956,3 @@ void MaterialSystemApp::QuitNextFrame()
 {
 	PostMessage( (HWND)m_hWnd, WM_CLOSE, 0, 0 );
 }
-
-

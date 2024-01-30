@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -33,7 +33,7 @@ using namespace vgui;
 #define INIT_HEALTH -1
 
 #define FADE_TIME	100
-#define MIN_ALPHA	100	
+#define MIN_ALPHA	100
 
 //-----------------------------------------------------------------------------
 // Purpose: Health panel
@@ -60,7 +60,7 @@ private:
 	int				m_iHealth;
 	float			m_flFade;
 	int				m_bitsDamage;
-};	
+};
 
 DECLARE_HUDELEMENT( CHudHealth );
 DECLARE_HUD_MESSAGE( CHudHealth, Damage );
@@ -74,7 +74,7 @@ CHudHealth::CHudHealth( const char *pElementName ) : CHudElement( pElementName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHealth::Init()
 {
@@ -83,7 +83,7 @@ void CHudHealth::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHealth::Reset()
 {
@@ -93,7 +93,7 @@ void CHudHealth::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHealth::VidInit()
 {
@@ -102,7 +102,7 @@ void CHudHealth::VidInit()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHealth::OnThink()
 {
@@ -166,7 +166,7 @@ void CHudHealth::Paint()
 	// If health is getting low, make it bright red
 	if ( m_iHealth <= 15 )
 		a = 255;
-		
+
 	if (m_iHealth > 25)
 	{
 		int r, g, b, nUnused;
@@ -203,7 +203,7 @@ void CHudHealth::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHealth::MsgFunc_Damage(bf_read &msg)
 {

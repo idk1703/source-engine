@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -37,22 +37,22 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TERadioIcon::C_TERadioIcon( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TERadioIcon::~C_TERadioIcon( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TERadioIcon::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -65,7 +65,7 @@ void C_TERadioIcon::PostDataUpdate( DataUpdateType_t updateType )
 		// Create the flashy above player's head
 		RadioManager()->UpdateRadioStatus( m_iAttachToClient, 1.5f );
 	}
-	
+
 	Radar_FlashPlayer( m_iAttachToClient );
 }
 

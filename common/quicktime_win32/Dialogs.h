@@ -1,17 +1,17 @@
 /*
-     File:       Dialogs.h
- 
-     Contains:   Dialog Manager interfaces.
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1985-2001 by Apple Computer, Inc., all rights reserved
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       Dialogs.h
+
+		Contains:   Dialog Manager interfaces.
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1985-2001 by Apple Computer, Inc., all rights reserved
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __DIALOGS__
 #define __DIALOGS__
@@ -64,60 +64,60 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=mac68k
+		#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+		#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+		#pragma pack(2)
 #endif
 
 enum {
-                                        /* new, more standard names for dialog item types*/
-  kControlDialogItem            = 4,
-  kButtonDialogItem             = kControlDialogItem | 0,
-  kCheckBoxDialogItem           = kControlDialogItem | 1,
-  kRadioButtonDialogItem        = kControlDialogItem | 2,
-  kResourceControlDialogItem    = kControlDialogItem | 3,
-  kStaticTextDialogItem         = 8,
-  kEditTextDialogItem           = 16,
-  kIconDialogItem               = 32,
-  kPictureDialogItem            = 64,
-  kUserDialogItem               = 0,
-  kHelpDialogItem               = 1,
-  kItemDisableBit               = 128
+																				/* new, more standard names for dialog item types*/
+	kControlDialogItem            = 4,
+	kButtonDialogItem             = kControlDialogItem | 0,
+	kCheckBoxDialogItem           = kControlDialogItem | 1,
+	kRadioButtonDialogItem        = kControlDialogItem | 2,
+	kResourceControlDialogItem    = kControlDialogItem | 3,
+	kStaticTextDialogItem         = 8,
+	kEditTextDialogItem           = 16,
+	kIconDialogItem               = 32,
+	kPictureDialogItem            = 64,
+	kUserDialogItem               = 0,
+	kHelpDialogItem               = 1,
+	kItemDisableBit               = 128
 };
 
 enum {
-                                        /* old names for dialog item types*/
-  ctrlItem                      = 4,
-  btnCtrl                       = 0,
-  chkCtrl                       = 1,
-  radCtrl                       = 2,
-  resCtrl                       = 3,
-  statText                      = 8,
-  editText                      = 16,
-  iconItem                      = 32,
-  picItem                       = 64,
-  userItem                      = 0,
-  itemDisable                   = 128
+																				/* old names for dialog item types*/
+	ctrlItem                      = 4,
+	btnCtrl                       = 0,
+	chkCtrl                       = 1,
+	radCtrl                       = 2,
+	resCtrl                       = 3,
+	statText                      = 8,
+	editText                      = 16,
+	iconItem                      = 32,
+	picItem                       = 64,
+	userItem                      = 0,
+	itemDisable                   = 128
 };
 
 enum {
-                                        /* standard dialog item numbers*/
-  kStdOkItemIndex               = 1,
-  kStdCancelItemIndex           = 2,    /* old names*/
-  ok                            = kStdOkItemIndex,
-  cancel                        = kStdCancelItemIndex
+																				/* standard dialog item numbers*/
+	kStdOkItemIndex               = 1,
+	kStdCancelItemIndex           = 2,    /* old names*/
+	ok                            = kStdOkItemIndex,
+	cancel                        = kStdCancelItemIndex
 };
 
 enum {
-                                        /* standard icon resource id's    */
-  kStopIcon                     = 0,
-  kNoteIcon                     = 1,
-  kCautionIcon                  = 2,    /* old names*/
-  stopIcon                      = kStopIcon,
-  noteIcon                      = kNoteIcon,
-  cautionIcon                   = kCautionIcon
+																				/* standard icon resource id's    */
+	kStopIcon                     = 0,
+	kNoteIcon                     = 1,
+	kCautionIcon                  = 2,    /* old names*/
+	stopIcon                      = kStopIcon,
+	noteIcon                      = kNoteIcon,
+	cautionIcon                   = kCautionIcon
 };
 
 
@@ -125,14 +125,14 @@ enum {
 
 #if OLDROUTINENAMES
 /*
-   These constants lived briefly on ETO 16.  They suggest
-   that there is only one index you can use for the OK 
-   item, which is not true.  You can put the ok item 
-   anywhere you want in the DITL.
+	These constants lived briefly on ETO 16.  They suggest
+	that there is only one index you can use for the OK
+	item, which is not true.  You can put the ok item
+	anywhere you want in the DITL.
 */
 enum {
-  kOkItemIndex                  = 1,
-  kCancelItemIndex              = 2
+	kOkItemIndex                  = 1,
+	kCancelItemIndex              = 2
 };
 
 #endif  /* OLDROUTINENAMES */
@@ -140,9 +140,9 @@ enum {
 /*  Dialog Item List Manipulation Constants */
 typedef SInt16                          DITLMethod;
 enum {
-  overlayDITL                   = 0,
-  appendDITLRight               = 1,
-  appendDITLBottom              = 2
+	overlayDITL                   = 0,
+	appendDITLRight               = 1,
+	appendDITLBottom              = 2
 };
 
 typedef SInt16                          StageList;
@@ -150,35 +150,35 @@ typedef SInt16                          StageList;
 typedef DialogPtr                       DialogRef;
 #if !OPAQUE_TOOLBOX_STRUCTS
 struct DialogRecord {
-  WindowRecord        window;                 /* in Carbon use GetDialogWindow or GetDialogPort*/
-  Handle              items;                  /* in Carbon use Get/SetDialogItem*/
-  TEHandle            textH;                  /* in Carbon use GetDialogTextEditHandle*/
-  SInt16              editField;              /* in Carbon use SelectDialogItemText/GetDialogKeyboardFocusItem*/
-  SInt16              editOpen;               /* not available in Carbon */
-  SInt16              aDefItem;               /* in Carbon use Get/SetDialogDefaultItem*/
+	WindowRecord        window;                 /* in Carbon use GetDialogWindow or GetDialogPort*/
+	Handle              items;                  /* in Carbon use Get/SetDialogItem*/
+	TEHandle            textH;                  /* in Carbon use GetDialogTextEditHandle*/
+	SInt16              editField;              /* in Carbon use SelectDialogItemText/GetDialogKeyboardFocusItem*/
+	SInt16              editOpen;               /* not available in Carbon */
+	SInt16              aDefItem;               /* in Carbon use Get/SetDialogDefaultItem*/
 };
 typedef struct DialogRecord             DialogRecord;
 typedef DialogRecord *                  DialogPeek;
 #endif  /* !OPAQUE_TOOLBOX_STRUCTS */
 
 struct DialogTemplate {
-  Rect                boundsRect;
-  SInt16              procID;
-  Boolean             visible;
-  Boolean             filler1;
-  Boolean             goAwayFlag;
-  Boolean             filler2;
-  SInt32              refCon;
-  SInt16              itemsID;
-  Str255              title;
+	Rect                boundsRect;
+	SInt16              procID;
+	Boolean             visible;
+	Boolean             filler1;
+	Boolean             goAwayFlag;
+	Boolean             filler2;
+	SInt32              refCon;
+	SInt16              itemsID;
+	Str255              title;
 };
 typedef struct DialogTemplate           DialogTemplate;
 typedef DialogTemplate *                DialogTPtr;
 typedef DialogTPtr *                    DialogTHndl;
 struct AlertTemplate {
-  Rect                boundsRect;
-  SInt16              itemsID;
-  StageList           stages;
+	Rect                boundsRect;
+	SInt16              itemsID;
+	StageList           stages;
 };
 typedef struct AlertTemplate            AlertTemplate;
 typedef AlertTemplate *                 AlertTPtr;
@@ -200,7 +200,7 @@ typedef STACK_UPP_TYPE(UserItemProcPtr)                         UserItemUPP;
 #if CALL_NOT_IN_CARBON
 /*
  *  NewSoundUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        not available
@@ -209,19 +209,19 @@ typedef STACK_UPP_TYPE(UserItemProcPtr)                         UserItemUPP;
 EXTERN_API_C( SoundUPP )
 NewSoundUPP(SoundProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppSoundProcInfo = 0x00000080 };  /* pascal no_return_value Func(2_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(SoundUPP) NewSoundUPP(SoundProcPtr userRoutine) { return (SoundUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppSoundProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewSoundUPP(userRoutine) (SoundUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppSoundProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppSoundProcInfo = 0x00000080 };  /* pascal no_return_value Func(2_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(SoundUPP) NewSoundUPP(SoundProcPtr userRoutine) { return (SoundUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppSoundProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewSoundUPP(userRoutine) (SoundUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppSoundProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 #endif  /* CALL_NOT_IN_CARBON */
 
 /*
  *  NewModalFilterUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -230,17 +230,17 @@ NewSoundUPP(SoundProcPtr userRoutine);
 EXTERN_API_C( ModalFilterUPP )
 NewModalFilterUPP(ModalFilterProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppModalFilterProcInfo = 0x00000FD0 };  /* pascal 1_byte Func(4_bytes, 4_bytes, 4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(ModalFilterUPP) NewModalFilterUPP(ModalFilterProcPtr userRoutine) { return (ModalFilterUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppModalFilterProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewModalFilterUPP(userRoutine) (ModalFilterUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppModalFilterProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppModalFilterProcInfo = 0x00000FD0 };  /* pascal 1_byte Func(4_bytes, 4_bytes, 4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(ModalFilterUPP) NewModalFilterUPP(ModalFilterProcPtr userRoutine) { return (ModalFilterUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppModalFilterProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewModalFilterUPP(userRoutine) (ModalFilterUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppModalFilterProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewModalFilterYDUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -249,17 +249,17 @@ NewModalFilterUPP(ModalFilterProcPtr userRoutine);
 EXTERN_API_C( ModalFilterYDUPP )
 NewModalFilterYDUPP(ModalFilterYDProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppModalFilterYDProcInfo = 0x00003FD0 };  /* pascal 1_byte Func(4_bytes, 4_bytes, 4_bytes, 4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(ModalFilterYDUPP) NewModalFilterYDUPP(ModalFilterYDProcPtr userRoutine) { return (ModalFilterYDUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppModalFilterYDProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewModalFilterYDUPP(userRoutine) (ModalFilterYDUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppModalFilterYDProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppModalFilterYDProcInfo = 0x00003FD0 };  /* pascal 1_byte Func(4_bytes, 4_bytes, 4_bytes, 4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(ModalFilterYDUPP) NewModalFilterYDUPP(ModalFilterYDProcPtr userRoutine) { return (ModalFilterYDUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppModalFilterYDProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewModalFilterYDUPP(userRoutine) (ModalFilterYDUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppModalFilterYDProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewUserItemUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -268,18 +268,18 @@ NewModalFilterYDUPP(ModalFilterYDProcPtr userRoutine);
 EXTERN_API_C( UserItemUPP )
 NewUserItemUPP(UserItemProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppUserItemProcInfo = 0x000002C0 };  /* pascal no_return_value Func(4_bytes, 2_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(UserItemUPP) NewUserItemUPP(UserItemProcPtr userRoutine) { return (UserItemUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppUserItemProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewUserItemUPP(userRoutine) (UserItemUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppUserItemProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppUserItemProcInfo = 0x000002C0 };  /* pascal no_return_value Func(4_bytes, 2_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(UserItemUPP) NewUserItemUPP(UserItemProcPtr userRoutine) { return (UserItemUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppUserItemProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewUserItemUPP(userRoutine) (UserItemUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppUserItemProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 #if CALL_NOT_IN_CARBON
 /*
  *  DisposeSoundUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        not available
@@ -288,18 +288,18 @@ NewUserItemUPP(UserItemProcPtr userRoutine);
 EXTERN_API_C( void )
 DisposeSoundUPP(SoundUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeSoundUPP(SoundUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeSoundUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeSoundUPP(SoundUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeSoundUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 #endif  /* CALL_NOT_IN_CARBON */
 
 /*
  *  DisposeModalFilterUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -308,16 +308,16 @@ DisposeSoundUPP(SoundUPP userUPP);
 EXTERN_API_C( void )
 DisposeModalFilterUPP(ModalFilterUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeModalFilterUPP(ModalFilterUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeModalFilterUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeModalFilterUPP(ModalFilterUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeModalFilterUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeModalFilterYDUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -326,16 +326,16 @@ DisposeModalFilterUPP(ModalFilterUPP userUPP);
 EXTERN_API_C( void )
 DisposeModalFilterYDUPP(ModalFilterYDUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeModalFilterYDUPP(ModalFilterYDUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeModalFilterYDUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeModalFilterYDUPP(ModalFilterYDUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeModalFilterYDUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeUserItemUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -344,17 +344,17 @@ DisposeModalFilterYDUPP(ModalFilterYDUPP userUPP);
 EXTERN_API_C( void )
 DisposeUserItemUPP(UserItemUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeUserItemUPP(UserItemUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeUserItemUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeUserItemUPP(UserItemUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeUserItemUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 #if CALL_NOT_IN_CARBON
 /*
  *  InvokeSoundUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        not available
@@ -362,21 +362,21 @@ DisposeUserItemUPP(UserItemUPP userUPP);
  */
 EXTERN_API_C( void )
 InvokeSoundUPP(
-  SInt16    soundNumber,
-  SoundUPP  userUPP);
+	SInt16    soundNumber,
+	SoundUPP  userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeSoundUPP(SInt16 soundNumber, SoundUPP userUPP) { CALL_ONE_PARAMETER_UPP(userUPP, uppSoundProcInfo, soundNumber); }
-  #else
-    #define InvokeSoundUPP(soundNumber, userUPP) CALL_ONE_PARAMETER_UPP((userUPP), uppSoundProcInfo, (soundNumber))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeSoundUPP(SInt16 soundNumber, SoundUPP userUPP) { CALL_ONE_PARAMETER_UPP(userUPP, uppSoundProcInfo, soundNumber); }
+	#else
+		#define InvokeSoundUPP(soundNumber, userUPP) CALL_ONE_PARAMETER_UPP((userUPP), uppSoundProcInfo, (soundNumber))
+	#endif
 #endif
 
 #endif  /* CALL_NOT_IN_CARBON */
 
 /*
  *  InvokeModalFilterUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -384,21 +384,21 @@ InvokeSoundUPP(
  */
 EXTERN_API_C( Boolean )
 InvokeModalFilterUPP(
-  DialogRef          theDialog,
-  EventRecord *      theEvent,
-  DialogItemIndex *  itemHit,
-  ModalFilterUPP     userUPP);
+	DialogRef          theDialog,
+	EventRecord *      theEvent,
+	DialogItemIndex *  itemHit,
+	ModalFilterUPP     userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(Boolean) InvokeModalFilterUPP(DialogRef theDialog, EventRecord * theEvent, DialogItemIndex * itemHit, ModalFilterUPP userUPP) { return (Boolean)CALL_THREE_PARAMETER_UPP(userUPP, uppModalFilterProcInfo, theDialog, theEvent, itemHit); }
-  #else
-    #define InvokeModalFilterUPP(theDialog, theEvent, itemHit, userUPP) (Boolean)CALL_THREE_PARAMETER_UPP((userUPP), uppModalFilterProcInfo, (theDialog), (theEvent), (itemHit))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(Boolean) InvokeModalFilterUPP(DialogRef theDialog, EventRecord * theEvent, DialogItemIndex * itemHit, ModalFilterUPP userUPP) { return (Boolean)CALL_THREE_PARAMETER_UPP(userUPP, uppModalFilterProcInfo, theDialog, theEvent, itemHit); }
+	#else
+		#define InvokeModalFilterUPP(theDialog, theEvent, itemHit, userUPP) (Boolean)CALL_THREE_PARAMETER_UPP((userUPP), uppModalFilterProcInfo, (theDialog), (theEvent), (itemHit))
+	#endif
 #endif
 
 /*
  *  InvokeModalFilterYDUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -406,22 +406,22 @@ InvokeModalFilterUPP(
  */
 EXTERN_API_C( Boolean )
 InvokeModalFilterYDUPP(
-  DialogRef         theDialog,
-  EventRecord *     theEvent,
-  short *           itemHit,
-  void *            yourDataPtr,
-  ModalFilterYDUPP  userUPP);
+	DialogRef         theDialog,
+	EventRecord *     theEvent,
+	short *           itemHit,
+	void *            yourDataPtr,
+	ModalFilterYDUPP  userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(Boolean) InvokeModalFilterYDUPP(DialogRef theDialog, EventRecord * theEvent, short * itemHit, void * yourDataPtr, ModalFilterYDUPP userUPP) { return (Boolean)CALL_FOUR_PARAMETER_UPP(userUPP, uppModalFilterYDProcInfo, theDialog, theEvent, itemHit, yourDataPtr); }
-  #else
-    #define InvokeModalFilterYDUPP(theDialog, theEvent, itemHit, yourDataPtr, userUPP) (Boolean)CALL_FOUR_PARAMETER_UPP((userUPP), uppModalFilterYDProcInfo, (theDialog), (theEvent), (itemHit), (yourDataPtr))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(Boolean) InvokeModalFilterYDUPP(DialogRef theDialog, EventRecord * theEvent, short * itemHit, void * yourDataPtr, ModalFilterYDUPP userUPP) { return (Boolean)CALL_FOUR_PARAMETER_UPP(userUPP, uppModalFilterYDProcInfo, theDialog, theEvent, itemHit, yourDataPtr); }
+	#else
+		#define InvokeModalFilterYDUPP(theDialog, theEvent, itemHit, yourDataPtr, userUPP) (Boolean)CALL_FOUR_PARAMETER_UPP((userUPP), uppModalFilterYDProcInfo, (theDialog), (theEvent), (itemHit), (yourDataPtr))
+	#endif
 #endif
 
 /*
  *  InvokeUserItemUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -429,27 +429,27 @@ InvokeModalFilterYDUPP(
  */
 EXTERN_API_C( void )
 InvokeUserItemUPP(
-  DialogRef        theDialog,
-  DialogItemIndex  itemNo,
-  UserItemUPP      userUPP);
+	DialogRef        theDialog,
+	DialogItemIndex  itemNo,
+	UserItemUPP      userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeUserItemUPP(DialogRef theDialog, DialogItemIndex itemNo, UserItemUPP userUPP) { CALL_TWO_PARAMETER_UPP(userUPP, uppUserItemProcInfo, theDialog, itemNo); }
-  #else
-    #define InvokeUserItemUPP(theDialog, itemNo, userUPP) CALL_TWO_PARAMETER_UPP((userUPP), uppUserItemProcInfo, (theDialog), (itemNo))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeUserItemUPP(DialogRef theDialog, DialogItemIndex itemNo, UserItemUPP userUPP) { CALL_TWO_PARAMETER_UPP(userUPP, uppUserItemProcInfo, theDialog, itemNo); }
+	#else
+		#define InvokeUserItemUPP(theDialog, itemNo, userUPP) CALL_TWO_PARAMETER_UPP((userUPP), uppUserItemProcInfo, (theDialog), (itemNo))
+	#endif
 #endif
 
 #if CALL_NOT_IN_CARBON || OLDROUTINENAMES
-    /* support for pre-Carbon UPP routines: New...Proc and Call...Proc */
-    #define NewSoundProc(userRoutine)                           NewSoundUPP(userRoutine)
-    #define NewModalFilterProc(userRoutine)                     NewModalFilterUPP(userRoutine)
-    #define NewModalFilterYDProc(userRoutine)                   NewModalFilterYDUPP(userRoutine)
-    #define NewUserItemProc(userRoutine)                        NewUserItemUPP(userRoutine)
-    #define CallSoundProc(userRoutine, soundNumber)             InvokeSoundUPP(soundNumber, userRoutine)
-    #define CallModalFilterProc(userRoutine, theDialog, theEvent, itemHit) InvokeModalFilterUPP(theDialog, theEvent, itemHit, userRoutine)
-    #define CallModalFilterYDProc(userRoutine, theDialog, theEvent, itemHit, yourDataPtr) InvokeModalFilterYDUPP(theDialog, theEvent, itemHit, yourDataPtr, userRoutine)
-    #define CallUserItemProc(userRoutine, theDialog, itemNo)    InvokeUserItemUPP(theDialog, itemNo, userRoutine)
+		/* support for pre-Carbon UPP routines: New...Proc and Call...Proc */
+		#define NewSoundProc(userRoutine)                           NewSoundUPP(userRoutine)
+		#define NewModalFilterProc(userRoutine)                     NewModalFilterUPP(userRoutine)
+		#define NewModalFilterYDProc(userRoutine)                   NewModalFilterYDUPP(userRoutine)
+		#define NewUserItemProc(userRoutine)                        NewUserItemUPP(userRoutine)
+		#define CallSoundProc(userRoutine, soundNumber)             InvokeSoundUPP(soundNumber, userRoutine)
+		#define CallModalFilterProc(userRoutine, theDialog, theEvent, itemHit) InvokeModalFilterUPP(theDialog, theEvent, itemHit, userRoutine)
+		#define CallModalFilterYDProc(userRoutine, theDialog, theEvent, itemHit, yourDataPtr) InvokeModalFilterYDUPP(theDialog, theEvent, itemHit, yourDataPtr, userRoutine)
+		#define CallUserItemProc(userRoutine, theDialog, itemNo)    InvokeUserItemUPP(theDialog, itemNo, userRoutine)
 #endif /* CALL_NOT_IN_CARBON */
 
 
@@ -459,7 +459,7 @@ typedef CALLBACK_API_C( void , QTModelessCallbackProcPtr )(EventRecord *theEvent
 #if CALL_NOT_IN_CARBON
 /*
  *  SetModelessDialogCallbackProc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -467,8 +467,8 @@ typedef CALLBACK_API_C( void , QTModelessCallbackProcPtr )(EventRecord *theEvent
  */
 EXTERN_API( void )
 SetModelessDialogCallbackProc(
-  DialogRef                   theDialog,
-  QTModelessCallbackProcPtr   callbackProc);
+	DialogRef                   theDialog,
+	QTModelessCallbackProcPtr   callbackProc);
 
 
 #endif  /* CALL_NOT_IN_CARBON */
@@ -477,7 +477,7 @@ typedef QTModelessCallbackProcPtr       QTModelessCallbackUPP;
 #if CALL_NOT_IN_CARBON
 /*
  *  GetDialogControlNotificationProc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -489,7 +489,7 @@ GetDialogControlNotificationProc(void * theProc);
 
 /*
  *  SetDialogMovableModal()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -501,7 +501,7 @@ SetDialogMovableModal(DialogRef theDialog);
 
 /*
  *  GetDialogParent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -516,91 +516,91 @@ GetDialogParent(DialogRef theDialog);
 #endif  /* !TARGET_OS_MAC */
 
 /*
-  ---------------------------------------------------------------------------------------------------------
-    o Following types are valid with Appearance 1.0 and later
-  ---------------------------------------------------------------------------------------------------------
+	---------------------------------------------------------------------------------------------------------
+		o Following types are valid with Appearance 1.0 and later
+	---------------------------------------------------------------------------------------------------------
 */
 enum {
-                                        /* Alert types to pass into StandardAlert */
-  kAlertStopAlert               = 0,
-  kAlertNoteAlert               = 1,
-  kAlertCautionAlert            = 2,
-  kAlertPlainAlert              = 3
+																				/* Alert types to pass into StandardAlert */
+	kAlertStopAlert               = 0,
+	kAlertNoteAlert               = 1,
+	kAlertCautionAlert            = 2,
+	kAlertPlainAlert              = 3
 };
 
 typedef SInt16                          AlertType;
 enum {
-  kAlertDefaultOKText           = -1,   /* "OK"*/
-  kAlertDefaultCancelText       = -1,   /* "Cancel"*/
-  kAlertDefaultOtherText        = -1    /* "Don't Save"*/
+	kAlertDefaultOKText           = -1,   /* "OK"*/
+	kAlertDefaultCancelText       = -1,   /* "Cancel"*/
+	kAlertDefaultOtherText        = -1    /* "Don't Save"*/
 };
 
 /* StandardAlert alert button numbers */
 enum {
-  kAlertStdAlertOKButton        = 1,
-  kAlertStdAlertCancelButton    = 2,
-  kAlertStdAlertOtherButton     = 3,
-  kAlertStdAlertHelpButton      = 4
+	kAlertStdAlertOKButton        = 1,
+	kAlertStdAlertCancelButton    = 2,
+	kAlertStdAlertOtherButton     = 3,
+	kAlertStdAlertHelpButton      = 4
 };
 
 enum {
-                                        /* Dialog Flags for use in NewFeaturesDialog or dlgx resource */
-  kDialogFlagsUseThemeBackground = (1 << 0),
-  kDialogFlagsUseControlHierarchy = (1 << 1),
-  kDialogFlagsHandleMovableModal = (1 << 2),
-  kDialogFlagsUseThemeControls  = (1 << 3)
+																				/* Dialog Flags for use in NewFeaturesDialog or dlgx resource */
+	kDialogFlagsUseThemeBackground = (1 << 0),
+	kDialogFlagsUseControlHierarchy = (1 << 1),
+	kDialogFlagsHandleMovableModal = (1 << 2),
+	kDialogFlagsUseThemeControls  = (1 << 3)
 };
 
 enum {
-                                        /* Alert Flags for use in alrx resource */
-  kAlertFlagsUseThemeBackground = (1 << 0),
-  kAlertFlagsUseControlHierarchy = (1 << 1),
-  kAlertFlagsAlertIsMovable     = (1 << 2),
-  kAlertFlagsUseThemeControls   = (1 << 3)
+																				/* Alert Flags for use in alrx resource */
+	kAlertFlagsUseThemeBackground = (1 << 0),
+	kAlertFlagsUseControlHierarchy = (1 << 1),
+	kAlertFlagsAlertIsMovable     = (1 << 2),
+	kAlertFlagsUseThemeControls   = (1 << 3)
 };
 
 /* For dftb resource */
 enum {
-  kDialogFontNoFontStyle        = 0,
-  kDialogFontUseFontMask        = 0x0001,
-  kDialogFontUseFaceMask        = 0x0002,
-  kDialogFontUseSizeMask        = 0x0004,
-  kDialogFontUseForeColorMask   = 0x0008,
-  kDialogFontUseBackColorMask   = 0x0010,
-  kDialogFontUseModeMask        = 0x0020,
-  kDialogFontUseJustMask        = 0x0040,
-  kDialogFontUseAllMask         = 0x00FF,
-  kDialogFontAddFontSizeMask    = 0x0100,
-  kDialogFontUseFontNameMask    = 0x0200,
-  kDialogFontAddToMetaFontMask  = 0x0400
+	kDialogFontNoFontStyle        = 0,
+	kDialogFontUseFontMask        = 0x0001,
+	kDialogFontUseFaceMask        = 0x0002,
+	kDialogFontUseSizeMask        = 0x0004,
+	kDialogFontUseForeColorMask   = 0x0008,
+	kDialogFontUseBackColorMask   = 0x0010,
+	kDialogFontUseModeMask        = 0x0020,
+	kDialogFontUseJustMask        = 0x0040,
+	kDialogFontUseAllMask         = 0x00FF,
+	kDialogFontAddFontSizeMask    = 0x0100,
+	kDialogFontUseFontNameMask    = 0x0200,
+	kDialogFontAddToMetaFontMask  = 0x0400
 };
 
 /* Also for dftb resource. This one is available in Mac OS X or later. */
 /* It corresponds directly to kControlUseThemeFontIDMask from Controls.h. */
 enum {
-  kDialogFontUseThemeFontIDMask = 0x0080
+	kDialogFontUseThemeFontIDMask = 0x0080
 };
 
 struct AlertStdAlertParamRec {
-  Boolean             movable;                /* Make alert movable modal */
-  Boolean             helpButton;             /* Is there a help button? */
-  ModalFilterUPP      filterProc;             /* Event filter */
-  ConstStringPtr      defaultText;            /* Text for button in OK position */
-  ConstStringPtr      cancelText;             /* Text for button in cancel position */
-  ConstStringPtr      otherText;              /* Text for button in left position */
-  SInt16              defaultButton;          /* Which button behaves as the default */
-  SInt16              cancelButton;           /* Which one behaves as cancel (can be 0) */
-  UInt16              position;               /* Position (kWindowDefaultPosition in this case */
-                                              /* equals kWindowAlertPositionParentWindowScreen) */
+	Boolean             movable;                /* Make alert movable modal */
+	Boolean             helpButton;             /* Is there a help button? */
+	ModalFilterUPP      filterProc;             /* Event filter */
+	ConstStringPtr      defaultText;            /* Text for button in OK position */
+	ConstStringPtr      cancelText;             /* Text for button in cancel position */
+	ConstStringPtr      otherText;              /* Text for button in left position */
+	SInt16              defaultButton;          /* Which button behaves as the default */
+	SInt16              cancelButton;           /* Which one behaves as cancel (can be 0) */
+	UInt16              position;               /* Position (kWindowDefaultPosition in this case */
+																							/* equals kWindowAlertPositionParentWindowScreen) */
 };
 typedef struct AlertStdAlertParamRec    AlertStdAlertParamRec;
 typedef AlertStdAlertParamRec *         AlertStdAlertParamPtr;
 enum {
-  kHICommandOther               = FOUR_CHAR_CODE('othr') /* sent by standard sheet dialogs when the "other" button is pressed */
+	kHICommandOther               = FOUR_CHAR_CODE('othr') /* sent by standard sheet dialogs when the "other" button is pressed */
 };
 
 enum {
-  kStdCFStringAlertVersionOne   = 1     /* current version of AlertStdCFStringAlertParamRec */
+	kStdCFStringAlertVersionOne   = 1     /* current version of AlertStdCFStringAlertParamRec */
 };
 
 
@@ -611,47 +611,47 @@ enum {
  */
 enum {
 
-  /*
-   * Applies to StandardSheet only. Do not dispose of the sheet window
-   * after closing it; allows the sheet to be re-used again in a later
-   * call to ShowSheetWindow.
-   */
-  kStdAlertDoNotDisposeSheet    = 1 << 0,
+	/*
+	* Applies to StandardSheet only. Do not dispose of the sheet window
+	* after closing it; allows the sheet to be re-used again in a later
+	* call to ShowSheetWindow.
+	*/
+	kStdAlertDoNotDisposeSheet    = 1 << 0,
 
-  /*
-   * Applies to StandardSheet only. Causes the sheet window to be
-   * hidden immediately without animation effects when the default
-   * button is chosen by the user.
-   */
-  kStdAlertDoNotAnimateOnDefault = 1 << 1,
+	/*
+	* Applies to StandardSheet only. Causes the sheet window to be
+	* hidden immediately without animation effects when the default
+	* button is chosen by the user.
+	*/
+	kStdAlertDoNotAnimateOnDefault = 1 << 1,
 
-  /*
-   * Applies to StandardSheet only. Causes the sheet window to be
-   * hidden immediately without animation effects when the cancel
-   * button is chosen by the user.
-   */
-  kStdAlertDoNotAnimateOnCancel = 1 << 2,
+	/*
+	* Applies to StandardSheet only. Causes the sheet window to be
+	* hidden immediately without animation effects when the cancel
+	* button is chosen by the user.
+	*/
+	kStdAlertDoNotAnimateOnCancel = 1 << 2,
 
-  /*
-   * Applies to StandardSheet only. Causes the sheet window to be
-   * hidden immediately without animation effects when the other button
-   * is chosen by the user.
-   */
-  kStdAlertDoNotAnimateOnOther  = 1 << 3
+	/*
+	* Applies to StandardSheet only. Causes the sheet window to be
+	* hidden immediately without animation effects when the other button
+	* is chosen by the user.
+	*/
+	kStdAlertDoNotAnimateOnOther  = 1 << 3
 };
 
 struct AlertStdCFStringAlertParamRec {
-  UInt32              version;                /* kStdCFStringAlertVersionOne */
-  Boolean             movable;                /* Make alert movable modal */
-  Boolean             helpButton;             /* Is there a help button? */
-  CFStringRef         defaultText;            /* Text for button in OK position */
-  CFStringRef         cancelText;             /* Text for button in cancel position */
-  CFStringRef         otherText;              /* Text for button in left position */
-  SInt16              defaultButton;          /* Which button behaves as the default */
-  SInt16              cancelButton;           /* Which one behaves as cancel (can be 0) */
-  UInt16              position;               /* Position (kWindowDefaultPosition in this case */
-                                              /* equals kWindowAlertPositionParentWindowScreen) */
-  OptionBits          flags;                  /* Options for the behavior of the alert or sheet */
+	UInt32              version;                /* kStdCFStringAlertVersionOne */
+	Boolean             movable;                /* Make alert movable modal */
+	Boolean             helpButton;             /* Is there a help button? */
+	CFStringRef         defaultText;            /* Text for button in OK position */
+	CFStringRef         cancelText;             /* Text for button in cancel position */
+	CFStringRef         otherText;              /* Text for button in left position */
+	SInt16              defaultButton;          /* Which button behaves as the default */
+	SInt16              cancelButton;           /* Which one behaves as cancel (can be 0) */
+	UInt16              position;               /* Position (kWindowDefaultPosition in this case */
+																							/* equals kWindowAlertPositionParentWindowScreen) */
+	OptionBits          flags;                  /* Options for the behavior of the alert or sheet */
 };
 typedef struct AlertStdCFStringAlertParamRec AlertStdCFStringAlertParamRec;
 typedef AlertStdCFStringAlertParamRec * AlertStdCFStringAlertParamPtr;
@@ -659,13 +659,13 @@ typedef AlertStdCFStringAlertParamRec * AlertStdCFStringAlertParamPtr;
 
 
 /*
-    NOTE: Code running under MultiFinder or System 7.0 or newer
-    should always pass NULL to InitDialogs.
+		NOTE: Code running under MultiFinder or System 7.0 or newer
+		should always pass NULL to InitDialogs.
 */
 #if CALL_NOT_IN_CARBON
 /*
  *  InitDialogs()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -677,7 +677,7 @@ InitDialogs(void * ignored)                                   ONEWORDINLINE(0xA9
 
 /*
  *  ErrorSound()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -691,7 +691,7 @@ ErrorSound(SoundUPP soundProc)                                ONEWORDINLINE(0xA9
 
 /*
  *  NewDialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -699,20 +699,20 @@ ErrorSound(SoundUPP soundProc)                                ONEWORDINLINE(0xA9
  */
 EXTERN_API( DialogRef )
 NewDialog(
-  void *             dStorage,
-  const Rect *       boundsRect,
-  ConstStr255Param   title,
-  Boolean            visible,
-  SInt16             procID,
-  WindowRef          behind,
-  Boolean            goAwayFlag,
-  SInt32             refCon,
-  Handle             items)                                   ONEWORDINLINE(0xA97D);
+	void *             dStorage,
+	const Rect *       boundsRect,
+	ConstStr255Param   title,
+	Boolean            visible,
+	SInt16             procID,
+	WindowRef          behind,
+	Boolean            goAwayFlag,
+	SInt32             refCon,
+	Handle             items)                                   ONEWORDINLINE(0xA97D);
 
 
 /*
  *  GetNewDialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -720,14 +720,14 @@ NewDialog(
  */
 EXTERN_API( DialogRef )
 GetNewDialog(
-  SInt16      dialogID,
-  void *      dStorage,
-  WindowRef   behind)                                         ONEWORDINLINE(0xA97C);
+	SInt16      dialogID,
+	void *      dStorage,
+	WindowRef   behind)                                         ONEWORDINLINE(0xA97C);
 
 
 /*
  *  NewColorDialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -735,21 +735,21 @@ GetNewDialog(
  */
 EXTERN_API( DialogRef )
 NewColorDialog(
-  void *             dStorage,
-  const Rect *       boundsRect,
-  ConstStr255Param   title,
-  Boolean            visible,
-  SInt16             procID,
-  WindowRef          behind,
-  Boolean            goAwayFlag,
-  SInt32             refCon,
-  Handle             items)                                   ONEWORDINLINE(0xAA4B);
+	void *             dStorage,
+	const Rect *       boundsRect,
+	ConstStr255Param   title,
+	Boolean            visible,
+	SInt16             procID,
+	WindowRef          behind,
+	Boolean            goAwayFlag,
+	SInt32             refCon,
+	Handle             items)                                   ONEWORDINLINE(0xAA4B);
 
 
 #if CALL_NOT_IN_CARBON
 /*
  *  CloseDialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -763,7 +763,7 @@ CloseDialog(DialogRef theDialog)                              ONEWORDINLINE(0xA9
 
 /*
  *  DisposeDialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -775,7 +775,7 @@ DisposeDialog(DialogRef theDialog)                            ONEWORDINLINE(0xA9
 
 /*
  *  ModalDialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -783,13 +783,13 @@ DisposeDialog(DialogRef theDialog)                            ONEWORDINLINE(0xA9
  */
 EXTERN_API( void )
 ModalDialog(
-  ModalFilterUPP     modalFilter,
-  DialogItemIndex *  itemHit)                                 ONEWORDINLINE(0xA991);
+	ModalFilterUPP     modalFilter,
+	DialogItemIndex *  itemHit)                                 ONEWORDINLINE(0xA991);
 
 
 /*
  *  IsDialogEvent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -801,7 +801,7 @@ IsDialogEvent(const EventRecord * theEvent)                   ONEWORDINLINE(0xA9
 
 /*
  *  DialogSelect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -809,14 +809,14 @@ IsDialogEvent(const EventRecord * theEvent)                   ONEWORDINLINE(0xA9
  */
 EXTERN_API( Boolean )
 DialogSelect(
-  const EventRecord *  theEvent,
-  DialogRef *          theDialog,
-  DialogItemIndex *    itemHit)                               ONEWORDINLINE(0xA980);
+	const EventRecord *  theEvent,
+	DialogRef *          theDialog,
+	DialogItemIndex *    itemHit)                               ONEWORDINLINE(0xA980);
 
 
 /*
  *  DrawDialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -828,7 +828,7 @@ DrawDialog(DialogRef theDialog)                               ONEWORDINLINE(0xA9
 
 /*
  *  UpdateDialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -836,13 +836,13 @@ DrawDialog(DialogRef theDialog)                               ONEWORDINLINE(0xA9
  */
 EXTERN_API( void )
 UpdateDialog(
-  DialogRef   theDialog,
-  RgnHandle   updateRgn)                                      ONEWORDINLINE(0xA978);
+	DialogRef   theDialog,
+	RgnHandle   updateRgn)                                      ONEWORDINLINE(0xA978);
 
 
 /*
  *  HideDialogItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -850,13 +850,13 @@ UpdateDialog(
  */
 EXTERN_API( void )
 HideDialogItem(
-  DialogRef         theDialog,
-  DialogItemIndex   itemNo)                                   ONEWORDINLINE(0xA827);
+	DialogRef         theDialog,
+	DialogItemIndex   itemNo)                                   ONEWORDINLINE(0xA827);
 
 
 /*
  *  ShowDialogItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -864,13 +864,13 @@ HideDialogItem(
  */
 EXTERN_API( void )
 ShowDialogItem(
-  DialogRef         theDialog,
-  DialogItemIndex   itemNo)                                   ONEWORDINLINE(0xA828);
+	DialogRef         theDialog,
+	DialogItemIndex   itemNo)                                   ONEWORDINLINE(0xA828);
 
 
 /*
  *  FindDialogItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -878,13 +878,13 @@ ShowDialogItem(
  */
 EXTERN_API( DialogItemIndexZeroBased )
 FindDialogItem(
-  DialogRef   theDialog,
-  Point       thePt)                                          ONEWORDINLINE(0xA984);
+	DialogRef   theDialog,
+	Point       thePt)                                          ONEWORDINLINE(0xA984);
 
 
 /*
  *  DialogCut()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -896,7 +896,7 @@ DialogCut(DialogRef theDialog);
 
 /*
  *  DialogPaste()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -908,7 +908,7 @@ DialogPaste(DialogRef theDialog);
 
 /*
  *  DialogCopy()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -920,7 +920,7 @@ DialogCopy(DialogRef theDialog);
 
 /*
  *  DialogDelete()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -932,7 +932,7 @@ DialogDelete(DialogRef theDialog);
 
 /*
  *  Alert()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -940,13 +940,13 @@ DialogDelete(DialogRef theDialog);
  */
 EXTERN_API( DialogItemIndex )
 Alert(
-  SInt16           alertID,
-  ModalFilterUPP   modalFilter)                               ONEWORDINLINE(0xA985);
+	SInt16           alertID,
+	ModalFilterUPP   modalFilter)                               ONEWORDINLINE(0xA985);
 
 
 /*
  *  StopAlert()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -954,13 +954,13 @@ Alert(
  */
 EXTERN_API( DialogItemIndex )
 StopAlert(
-  SInt16           alertID,
-  ModalFilterUPP   modalFilter)                               ONEWORDINLINE(0xA986);
+	SInt16           alertID,
+	ModalFilterUPP   modalFilter)                               ONEWORDINLINE(0xA986);
 
 
 /*
  *  NoteAlert()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -968,13 +968,13 @@ StopAlert(
  */
 EXTERN_API( DialogItemIndex )
 NoteAlert(
-  SInt16           alertID,
-  ModalFilterUPP   modalFilter)                               ONEWORDINLINE(0xA987);
+	SInt16           alertID,
+	ModalFilterUPP   modalFilter)                               ONEWORDINLINE(0xA987);
 
 
 /*
  *  CautionAlert()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -982,13 +982,13 @@ NoteAlert(
  */
 EXTERN_API( DialogItemIndex )
 CautionAlert(
-  SInt16           alertID,
-  ModalFilterUPP   modalFilter)                               ONEWORDINLINE(0xA988);
+	SInt16           alertID,
+	ModalFilterUPP   modalFilter)                               ONEWORDINLINE(0xA988);
 
 
 /*
  *  GetDialogItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -996,16 +996,16 @@ CautionAlert(
  */
 EXTERN_API( void )
 GetDialogItem(
-  DialogRef         theDialog,
-  DialogItemIndex   itemNo,
-  DialogItemType *  itemType,
-  Handle *          item,
-  Rect *            box)                                      ONEWORDINLINE(0xA98D);
+	DialogRef         theDialog,
+	DialogItemIndex   itemNo,
+	DialogItemType *  itemType,
+	Handle *          item,
+	Rect *            box)                                      ONEWORDINLINE(0xA98D);
 
 
 /*
  *  SetDialogItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1013,16 +1013,16 @@ GetDialogItem(
  */
 EXTERN_API( void )
 SetDialogItem(
-  DialogRef         theDialog,
-  DialogItemIndex   itemNo,
-  DialogItemType    itemType,
-  Handle            item,
-  const Rect *      box)                                      ONEWORDINLINE(0xA98E);
+	DialogRef         theDialog,
+	DialogItemIndex   itemNo,
+	DialogItemType    itemType,
+	Handle            item,
+	const Rect *      box)                                      ONEWORDINLINE(0xA98E);
 
 
 /*
  *  ParamText()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1030,15 +1030,15 @@ SetDialogItem(
  */
 EXTERN_API( void )
 ParamText(
-  ConstStr255Param   param0,
-  ConstStr255Param   param1,
-  ConstStr255Param   param2,
-  ConstStr255Param   param3)                                  ONEWORDINLINE(0xA98B);
+	ConstStr255Param   param0,
+	ConstStr255Param   param1,
+	ConstStr255Param   param2,
+	ConstStr255Param   param3)                                  ONEWORDINLINE(0xA98B);
 
 
 /*
  *  SelectDialogItemText()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1046,15 +1046,15 @@ ParamText(
  */
 EXTERN_API( void )
 SelectDialogItemText(
-  DialogRef         theDialog,
-  DialogItemIndex   itemNo,
-  SInt16            strtSel,
-  SInt16            endSel)                                   ONEWORDINLINE(0xA97E);
+	DialogRef         theDialog,
+	DialogItemIndex   itemNo,
+	SInt16            strtSel,
+	SInt16            endSel)                                   ONEWORDINLINE(0xA97E);
 
 
 /*
  *  GetDialogItemText()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1062,13 +1062,13 @@ SelectDialogItemText(
  */
 EXTERN_API( void )
 GetDialogItemText(
-  Handle   item,
-  Str255   text)                                              ONEWORDINLINE(0xA990);
+	Handle   item,
+	Str255   text)                                              ONEWORDINLINE(0xA990);
 
 
 /*
  *  SetDialogItemText()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1076,13 +1076,13 @@ GetDialogItemText(
  */
 EXTERN_API( void )
 SetDialogItemText(
-  Handle             item,
-  ConstStr255Param   text)                                    ONEWORDINLINE(0xA98F);
+	Handle             item,
+	ConstStr255Param   text)                                    ONEWORDINLINE(0xA98F);
 
 
 /*
  *  GetAlertStage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1094,7 +1094,7 @@ GetAlertStage(void)                                           TWOWORDINLINE(0x3E
 
 /*
  *  SetDialogFont()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1106,7 +1106,7 @@ SetDialogFont(SInt16 fontNum)                                 TWOWORDINLINE(0x31
 
 /*
  *  ResetAlertStage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1119,7 +1119,7 @@ ResetAlertStage(void)                                         TWOWORDINLINE(0x42
 /* APIs in Carbon*/
 /*
  *  GetParamText()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1127,17 +1127,17 @@ ResetAlertStage(void)                                         TWOWORDINLINE(0x42
  */
 EXTERN_API( void )
 GetParamText(
-  StringPtr   param0,
-  StringPtr   param1,
-  StringPtr   param2,
-  StringPtr   param3);
+	StringPtr   param0,
+	StringPtr   param1,
+	StringPtr   param2,
+	StringPtr   param3);
 
 
 
 #if CALL_NOT_IN_CARBON
 /*
  *  newdialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1145,20 +1145,20 @@ GetParamText(
  */
 EXTERN_API_C( DialogRef )
 newdialog(
-  void *        dStorage,
-  const Rect *  boundsRect,
-  const char *  title,
-  Boolean       visible,
-  SInt16        procID,
-  WindowRef     behind,
-  Boolean       goAwayFlag,
-  SInt32        refCon,
-  Handle        items);
+	void *        dStorage,
+	const Rect *  boundsRect,
+	const char *  title,
+	Boolean       visible,
+	SInt16        procID,
+	WindowRef     behind,
+	Boolean       goAwayFlag,
+	SInt32        refCon,
+	Handle        items);
 
 
 /*
  *  newcolordialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1166,20 +1166,20 @@ newdialog(
  */
 EXTERN_API_C( DialogRef )
 newcolordialog(
-  void *        dStorage,
-  const Rect *  boundsRect,
-  const char *  title,
-  Boolean       visible,
-  SInt16        procID,
-  WindowRef     behind,
-  Boolean       goAwayFlag,
-  SInt32        refCon,
-  Handle        items);
+	void *        dStorage,
+	const Rect *  boundsRect,
+	const char *  title,
+	Boolean       visible,
+	SInt16        procID,
+	WindowRef     behind,
+	Boolean       goAwayFlag,
+	SInt32        refCon,
+	Handle        items);
 
 
 /*
  *  paramtext()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1187,15 +1187,15 @@ newcolordialog(
  */
 EXTERN_API_C( void )
 paramtext(
-  const char *  param0,
-  const char *  param1,
-  const char *  param2,
-  const char *  param3);
+	const char *  param0,
+	const char *  param1,
+	const char *  param2,
+	const char *  param3);
 
 
 /*
  *  getdialogitemtext()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1203,13 +1203,13 @@ paramtext(
  */
 EXTERN_API_C( void )
 getdialogitemtext(
-  Handle   item,
-  char *   text);
+	Handle   item,
+	char *   text);
 
 
 /*
  *  setdialogitemtext()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1217,13 +1217,13 @@ getdialogitemtext(
  */
 EXTERN_API_C( void )
 setdialogitemtext(
-  Handle        item,
-  const char *  text);
+	Handle        item,
+	const char *  text);
 
 
 /*
  *  finddialogitem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1231,15 +1231,15 @@ setdialogitemtext(
  */
 EXTERN_API_C( DialogItemIndexZeroBased )
 finddialogitem(
-  DialogRef   theDialog,
-  Point *     thePt);
+	DialogRef   theDialog,
+	Point *     thePt);
 
 
 #endif  /* CALL_NOT_IN_CARBON */
 
 /*
  *  AppendDITL()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1247,14 +1247,14 @@ finddialogitem(
  */
 EXTERN_API( void )
 AppendDITL(
-  DialogRef    theDialog,
-  Handle       theHandle,
-  DITLMethod   method);
+	DialogRef    theDialog,
+	Handle       theHandle,
+	DITLMethod   method);
 
 
 /*
  *  CountDITL()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1266,7 +1266,7 @@ CountDITL(DialogRef theDialog);
 
 /*
  *  ShortenDITL()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1274,13 +1274,13 @@ CountDITL(DialogRef theDialog);
  */
 EXTERN_API( void )
 ShortenDITL(
-  DialogRef         theDialog,
-  DialogItemIndex   numberItems);
+	DialogRef         theDialog,
+	DialogItemIndex   numberItems);
 
 
 /*
  *  InsertDialogItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1288,16 +1288,16 @@ ShortenDITL(
  */
 EXTERN_API( OSStatus )
 InsertDialogItem(
-  DialogRef         theDialog,
-  DialogItemIndex   afterItem,
-  DialogItemType    itemType,
-  Handle            itemHandle,
-  const Rect *      box);
+	DialogRef         theDialog,
+	DialogItemIndex   afterItem,
+	DialogItemType    itemType,
+	Handle            itemHandle,
+	const Rect *      box);
 
 
 /*
  *  RemoveDialogItems()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1305,15 +1305,15 @@ InsertDialogItem(
  */
 EXTERN_API( OSStatus )
 RemoveDialogItems(
-  DialogRef         theDialog,
-  DialogItemIndex   itemNo,
-  DialogItemIndex   amountToRemove,
-  Boolean           disposeItemData);
+	DialogRef         theDialog,
+	DialogItemIndex   itemNo,
+	DialogItemIndex   amountToRemove,
+	Boolean           disposeItemData);
 
 
 /*
  *  StdFilterProc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1321,14 +1321,14 @@ RemoveDialogItems(
  */
 EXTERN_API( Boolean )
 StdFilterProc(
-  DialogRef          theDialog,
-  EventRecord *      event,
-  DialogItemIndex *  itemHit);
+	DialogRef          theDialog,
+	EventRecord *      event,
+	DialogItemIndex *  itemHit);
 
 
 /*
  *  GetStdFilterProc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1340,7 +1340,7 @@ GetStdFilterProc(ModalFilterUPP * theProc)                    THREEWORDINLINE(0x
 
 /*
  *  SetDialogDefaultItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1348,13 +1348,13 @@ GetStdFilterProc(ModalFilterUPP * theProc)                    THREEWORDINLINE(0x
  */
 EXTERN_API( OSErr )
 SetDialogDefaultItem(
-  DialogRef         theDialog,
-  DialogItemIndex   newItem)                                  THREEWORDINLINE(0x303C, 0x0304, 0xAA68);
+	DialogRef         theDialog,
+	DialogItemIndex   newItem)                                  THREEWORDINLINE(0x303C, 0x0304, 0xAA68);
 
 
 /*
  *  SetDialogCancelItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1362,13 +1362,13 @@ SetDialogDefaultItem(
  */
 EXTERN_API( OSErr )
 SetDialogCancelItem(
-  DialogRef         theDialog,
-  DialogItemIndex   newItem)                                  THREEWORDINLINE(0x303C, 0x0305, 0xAA68);
+	DialogRef         theDialog,
+	DialogItemIndex   newItem)                                  THREEWORDINLINE(0x303C, 0x0305, 0xAA68);
 
 
 /*
  *  SetDialogTracksCursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1376,21 +1376,21 @@ SetDialogCancelItem(
  */
 EXTERN_API( OSErr )
 SetDialogTracksCursor(
-  DialogRef   theDialog,
-  Boolean     tracks)                                         THREEWORDINLINE(0x303C, 0x0306, 0xAA68);
+	DialogRef   theDialog,
+	Boolean     tracks)                                         THREEWORDINLINE(0x303C, 0x0306, 0xAA68);
 
 
 
 
 /*
-  ---------------------------------------------------------------------------------------------------------
-    o Appearance Dialog Routines (available only with Appearance 1.0 and later)
-  ---------------------------------------------------------------------------------------------------------
+	---------------------------------------------------------------------------------------------------------
+		o Appearance Dialog Routines (available only with Appearance 1.0 and later)
+	---------------------------------------------------------------------------------------------------------
 */
 
 /*
  *  NewFeaturesDialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in AppearanceLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1398,21 +1398,21 @@ SetDialogTracksCursor(
  */
 EXTERN_API( DialogRef )
 NewFeaturesDialog(
-  void *             inStorage,
-  const Rect *       inBoundsRect,
-  ConstStr255Param   inTitle,
-  Boolean            inIsVisible,
-  SInt16             inProcID,
-  WindowRef          inBehind,
-  Boolean            inGoAwayFlag,
-  SInt32             inRefCon,
-  Handle             inItemListHandle,
-  UInt32             inFlags)                                 THREEWORDINLINE(0x303C, 0x110C, 0xAA68);
+	void *             inStorage,
+	const Rect *       inBoundsRect,
+	ConstStr255Param   inTitle,
+	Boolean            inIsVisible,
+	SInt16             inProcID,
+	WindowRef          inBehind,
+	Boolean            inGoAwayFlag,
+	SInt32             inRefCon,
+	Handle             inItemListHandle,
+	UInt32             inFlags)                                 THREEWORDINLINE(0x303C, 0x110C, 0xAA68);
 
 
 /*
  *  AutoSizeDialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in AppearanceLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1423,13 +1423,13 @@ AutoSizeDialog(DialogRef inDialog)                            THREEWORDINLINE(0x
 
 
 /*
-    Regarding StandardAlert and constness:
-    Even though the inAlertParam parameter is marked const here, there was
-    a chance Dialog Manager would modify it on versions of Mac OS prior to 9.
+		Regarding StandardAlert and constness:
+		Even though the inAlertParam parameter is marked const here, there was
+		a chance Dialog Manager would modify it on versions of Mac OS prior to 9.
 */
 /*
  *  StandardAlert()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in AppearanceLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1437,31 +1437,31 @@ AutoSizeDialog(DialogRef inDialog)                            THREEWORDINLINE(0x
  */
 EXTERN_API( OSErr )
 StandardAlert(
-  AlertType                      inAlertType,
-  ConstStr255Param               inError,
-  ConstStr255Param               inExplanation,
-  const AlertStdAlertParamRec *  inAlertParam,        /* can be NULL */
-  SInt16 *                       outItemHit)                  THREEWORDINLINE(0x303C, 0x090E, 0xAA68);
+	AlertType                      inAlertType,
+	ConstStr255Param               inError,
+	ConstStr255Param               inExplanation,
+	const AlertStdAlertParamRec *  inAlertParam,        /* can be NULL */
+	SInt16 *                       outItemHit)                  THREEWORDINLINE(0x303C, 0x090E, 0xAA68);
 
 
 /* CFString-based StandardAlert and StandardSheet APIs are only available on Mac OS X and later*/
 
 /*
  *  GetStandardAlertDefaultParams()
- *  
+ *
  *  Summary:
  *    Fills out an AlertStdCFStringAlertParamRec with default values: -
  *      not movable -   no help button -   default button with title
  *    kAlertDefaultOKText, meaning "OK" -   no cancel or other buttons
- *  
+ *
  *  Parameters:
- *    
+ *
  *    param:
  *      The parameter block to initialize.
- *    
+ *
  *    version:
  *      The parameter block version; pass kStdCFStringAlertVersionOne.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.0 and later
@@ -1469,17 +1469,17 @@ StandardAlert(
  */
 EXTERN_API( OSStatus )
 GetStandardAlertDefaultParams(
-  AlertStdCFStringAlertParamPtr   param,
-  UInt32                          version);
+	AlertStdCFStringAlertParamPtr   param,
+	UInt32                          version);
 
 
 /*
  *  CreateStandardAlert()
- *  
+ *
  *  Summary:
  *    Creates an alert containing standard elements and using standard
  *    formatting rules.
- *  
+ *
  *  Discussion:
  *    CreateStandardAlert should be used in conjunction with
  *    RunStandardAlert. After CreateStandardAlert returns, the alert is
@@ -1491,32 +1491,32 @@ GetStandardAlertDefaultParams(
  *    alert is disposed by RunStandardAlert. There is no net change to
  *    the refcount of these strings across CreateStandardAlert and
  *    RunStandardAlert.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    alertType:
  *      The type of alert to create.
- *    
+ *
  *    error:
  *      The error string to display. CreateStandardAlert increments the
  *      refcount on this string, so you may release it after
  *      CreateStandardAlert returns if you don't need it later.
- *    
+ *
  *    explanation:
  *      The explanation string to display. May be NULL or empty to
  *      display no explanation. CreateStandardAlert increments the
  *      refcount on this string, so you may release it after
  *      CreateStandardAlert returns if you don't need it later.
- *    
+ *
  *    param:
  *      The parameter block describing how to create the alert. May be
  *      NULL. CreateStandardAlert increments the refcount on the button
  *      title strings in the parameter block, so you may release them
  *      after CreateStandardAlert returns if you don't need them later.
- *    
+ *
  *    outAlert:
  *      On exit, contains the new alert.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.0 and later
@@ -1524,44 +1524,44 @@ GetStandardAlertDefaultParams(
  */
 EXTERN_API( OSStatus )
 CreateStandardAlert(
-  AlertType                              alertType,
-  CFStringRef                            error,
-  CFStringRef                            explanation,       /* can be NULL */
-  const AlertStdCFStringAlertParamRec *  param,             /* can be NULL */
-  DialogRef *                            outAlert);
+	AlertType                              alertType,
+	CFStringRef                            error,
+	CFStringRef                            explanation,       /* can be NULL */
+	const AlertStdCFStringAlertParamRec *  param,             /* can be NULL */
+	DialogRef *                            outAlert);
 
 
 /*
  *  RunStandardAlert()
- *  
+ *
  *  Summary:
  *    Shows, runs, and destroys a standard alert using a modal dialog
  *    loop.
- *  
+ *
  *  Discussion:
  *    RunStandardAlert displays and runs an alert created by
  *    CreateStandardAlert. It handles all user interaction with the
  *    alert. After the user has dismissed the alert, RunStandardAlert
  *    destroys the alert dialog; the DialogRef will be invalid after
  *    RunStandardAlert returns.
- *    
+ *
  *    NOTE: DO NOT call this function for a dialog that was not created
  *    with CreateStandardAlert! You will sorely regret it, I promise
  *    you.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    inAlert:
  *      The alert to display.
- *    
+ *
  *    filterProc:
  *      An event filter function for handling events that do not apply
  *      to the alert. May be NULL.
- *    
+ *
  *    outItemHit:
  *      On exit, contains the item index of the button that was pressed
  *      to close the alert.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.0 and later
@@ -1569,18 +1569,18 @@ CreateStandardAlert(
  */
 EXTERN_API( OSStatus )
 RunStandardAlert(
-  DialogRef          inAlert,
-  ModalFilterUPP     filterProc,       /* can be NULL */
-  DialogItemIndex *  outItemHit);
+	DialogRef          inAlert,
+	ModalFilterUPP     filterProc,       /* can be NULL */
+	DialogItemIndex *  outItemHit);
 
 
 /*
  *  CreateStandardSheet()
- *  
+ *
  *  Summary:
  *    Creates an alert containing standard elements and using standard
  *    formatting rules, and prepares it to be displayed as a sheet.
- *  
+ *
  *  Discussion:
  *    CreateStandardSheet should be used in conjunction with
  *    ShowSheetWindow. After CreateStandardSheet returns, the alert is
@@ -1597,37 +1597,37 @@ RunStandardAlert(
  *    retained during the creation of the sheet, and released when the
  *    sheet is disposed. There is no net change to the refcount of
  *    these strings across CreateStandardSheet and sheet destruction.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    alertType:
  *      The type of alert to create.
- *    
+ *
  *    error:
  *      The error string to display. CreateStandardSheet increments the
  *      refcount on this string, so you may release it after
  *      CreateStandardSheet returns if you don't need it later.
- *    
+ *
  *    explanation:
  *      The explanation string to display. May be NULL or empty to
  *      display no explanation. CreateStandardSheet increments the
  *      refcount on this string, so you may release it after
  *      CreateStandardSheet returns if you don't need it later.
- *    
+ *
  *    param:
  *      The parameter block describing how to create the alert. May be
  *      NULL. CreateStandardSheet increments the refcount on the button
  *      title strings in the parameter block, so you may release them
  *      after CreateStandardSheet returns if you don't need them later.
- *    
+ *
  *    notifyTarget:
  *      The event target to be notified when the sheet is closed. The
  *      caller should install an event handler on this target for the
  *      [kEventClassCommand, kEventProcessCommand] event.
- *    
+ *
  *    outSheet:
  *      On exit, contains the new alert.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.0 and later
@@ -1635,21 +1635,21 @@ RunStandardAlert(
  */
 EXTERN_API( OSStatus )
 CreateStandardSheet(
-  AlertType                              alertType,
-  CFStringRef                            error,
-  CFStringRef                            explanation,        /* can be NULL */
-  const AlertStdCFStringAlertParamRec *  param,              /* can be NULL */
-  EventTargetRef                         notifyTarget,
-  DialogRef *                            outSheet);
+	AlertType                              alertType,
+	CFStringRef                            error,
+	CFStringRef                            explanation,        /* can be NULL */
+	const AlertStdCFStringAlertParamRec *  param,              /* can be NULL */
+	EventTargetRef                         notifyTarget,
+	DialogRef *                            outSheet);
 
 
 /*
  *  CloseStandardSheet()
- *  
+ *
  *  Summary:
  *    Closes a standard sheet dialog and releases the dialog data
  *    structures.
- *  
+ *
  *  Discussion:
  *    CloseStandardSheet is meant to be used when you need to remove a
  *    sheet because of a higher-priority request to close the sheet's
@@ -1664,16 +1664,16 @@ CreateStandardSheet(
  *    If kStdAlertDoNotDisposeSheet was specified when the sheet was
  *    created, the sheet dialog will be hidden but not released, and
  *    you can reuse the sheet later.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    inSheet:
  *      The sheet to close.
- *    
+ *
  *    inResultCommand:
  *      This command, if not zero, will be sent to the EventTarget
  *      specified when the sheet was created.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.0 and later
@@ -1681,13 +1681,13 @@ CreateStandardSheet(
  */
 EXTERN_API( OSStatus )
 CloseStandardSheet(
-  DialogRef   inSheet,
-  UInt32      inResultCommand);
+	DialogRef   inSheet,
+	UInt32      inResultCommand);
 
 
 /*
  *  GetDialogItemAsControl()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in AppearanceLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1695,14 +1695,14 @@ CloseStandardSheet(
  */
 EXTERN_API( OSErr )
 GetDialogItemAsControl(
-  DialogRef     inDialog,
-  SInt16        inItemNo,
-  ControlRef *  outControl)                                   THREEWORDINLINE(0x303C, 0x050F, 0xAA68);
+	DialogRef     inDialog,
+	SInt16        inItemNo,
+	ControlRef *  outControl)                                   THREEWORDINLINE(0x303C, 0x050F, 0xAA68);
 
 
 /*
  *  MoveDialogItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in AppearanceLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1710,15 +1710,15 @@ GetDialogItemAsControl(
  */
 EXTERN_API( OSErr )
 MoveDialogItem(
-  DialogRef   inDialog,
-  SInt16      inItemNo,
-  SInt16      inHoriz,
-  SInt16      inVert)                                         THREEWORDINLINE(0x303C, 0x0510, 0xAA68);
+	DialogRef   inDialog,
+	SInt16      inItemNo,
+	SInt16      inHoriz,
+	SInt16      inVert)                                         THREEWORDINLINE(0x303C, 0x0510, 0xAA68);
 
 
 /*
  *  SizeDialogItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in AppearanceLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1726,15 +1726,15 @@ MoveDialogItem(
  */
 EXTERN_API( OSErr )
 SizeDialogItem(
-  DialogRef   inDialog,
-  SInt16      inItemNo,
-  SInt16      inWidth,
-  SInt16      inHeight)                                       THREEWORDINLINE(0x303C, 0x0511, 0xAA68);
+	DialogRef   inDialog,
+	SInt16      inItemNo,
+	SInt16      inWidth,
+	SInt16      inHeight)                                       THREEWORDINLINE(0x303C, 0x0511, 0xAA68);
 
 
 /*
  *  AppendDialogItemList()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DialogsLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1742,23 +1742,23 @@ SizeDialogItem(
  */
 EXTERN_API( OSErr )
 AppendDialogItemList(
-  DialogRef    dialog,
-  SInt16       ditlID,
-  DITLMethod   method)                                        THREEWORDINLINE(0x303C, 0x0412, 0xAA68);
+	DialogRef    dialog,
+	SInt16       ditlID,
+	DITLMethod   method)                                        THREEWORDINLINE(0x303C, 0x0412, 0xAA68);
 
 
 /*
-  ---------------------------------------------------------------------------------------------------------
-    o Dialog Routines available only with Appearance 1.1 (Mac OS 8.5) and later
-  ---------------------------------------------------------------------------------------------------------
+	---------------------------------------------------------------------------------------------------------
+		o Dialog Routines available only with Appearance 1.1 (Mac OS 8.5) and later
+	---------------------------------------------------------------------------------------------------------
 */
 
 /*
  *  SetDialogTimeout()
- *  
+ *
  *  Summary:
  *    Sets the timeout for a modal dialog.
- *  
+ *
  *  Discussion:
  *    SetDialogTimeout sets the delay after which a dialog will be
  *    automatically dismissed. When SetDialogTimeout is called, the
@@ -1772,22 +1772,22 @@ AppendDialogItemList(
  *    timeout value; if you are handling events in a modeless dialog or
  *    sheet using IsDialogEvent and DialogSelect, the timeout will be
  *    ignored.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    inDialog:
  *      The dialog on which to set a timeout.
- *    
+ *
  *    inButtonToPress:
  *      The dialog item index that should be returned from ModalDialog
  *      when the timeout expires.
- *    
+ *
  *    inSecondsToWait:
  *      The time to wait before dismissing the dialog, in seconds.
- *  
+ *
  *  Result:
  *    An operating system result code.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DialogsLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1795,40 +1795,40 @@ AppendDialogItemList(
  */
 EXTERN_API( OSStatus )
 SetDialogTimeout(
-  DialogRef   inDialog,
-  SInt16      inButtonToPress,
-  UInt32      inSecondsToWait);
+	DialogRef   inDialog,
+	SInt16      inButtonToPress,
+	UInt32      inSecondsToWait);
 
 
 /*
  *  GetDialogTimeout()
- *  
+ *
  *  Summary:
  *    Retrieves the timeout for a modal dialog.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    inDialog:
  *      The dialog from which to retrieve the timeout.
- *    
+ *
  *    outButtonToPress:
  *      On exit, contains the dialog item index that should be returned
  *      from ModalDialog when the dialog is dismissed. May be NULL if
  *      you do not need this information.
- *    
+ *
  *    outSecondsToWait:
  *      On exit, contains the time to wait before dismissing the
  *      dialog, in seconds. May be NULL if you do not need this
  *      information.
- *    
+ *
  *    outSecondsRemaining:
  *      On exit, contains the time until the dialog is dismissed, in
  *      seconds. May be NULL if you do not need this information.
- *  
+ *
  *  Result:
  *    An operating system result code. Returns dialogNoTimeoutErr if no
  *    timeout has been set for this dialog.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DialogsLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1836,15 +1836,15 @@ SetDialogTimeout(
  */
 EXTERN_API( OSStatus )
 GetDialogTimeout(
-  DialogRef   inDialog,
-  SInt16 *    outButtonToPress,          /* can be NULL */
-  UInt32 *    outSecondsToWait,          /* can be NULL */
-  UInt32 *    outSecondsRemaining);      /* can be NULL */
+	DialogRef   inDialog,
+	SInt16 *    outButtonToPress,          /* can be NULL */
+	UInt32 *    outSecondsToWait,          /* can be NULL */
+	UInt32 *    outSecondsRemaining);      /* can be NULL */
 
 
 /*
  *  SetModalDialogEventMask()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DialogsLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1852,13 +1852,13 @@ GetDialogTimeout(
  */
 EXTERN_API( OSStatus )
 SetModalDialogEventMask(
-  DialogRef   inDialog,
-  EventMask   inMask);
+	DialogRef   inDialog,
+	EventMask   inMask);
 
 
 /*
  *  GetModalDialogEventMask()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DialogsLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1866,22 +1866,22 @@ SetModalDialogEventMask(
  */
 EXTERN_API( OSStatus )
 GetModalDialogEventMask(
-  DialogRef    inDialog,
-  EventMask *  outMask);
+	DialogRef    inDialog,
+	EventMask *  outMask);
 
 
 
 
 /*
-  ---------------------------------------------------------------------------------------------------------
-    o Accessor functions
-  ---------------------------------------------------------------------------------------------------------
+	---------------------------------------------------------------------------------------------------------
+		o Accessor functions
+	---------------------------------------------------------------------------------------------------------
 */
 
 
 /*
  *  GetDialogWindow()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later or as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1890,18 +1890,18 @@ GetModalDialogEventMask(
 EXTERN_API( WindowRef )
 GetDialogWindow(DialogRef dialog);
 #if !OPAQUE_TOOLBOX_STRUCTS && !ACCESSOR_CALLS_ARE_FUNCTIONS
-  #ifdef __cplusplus
-    inline DEFINE_API(WindowRef ) GetDialogWindow(DialogRef dialog) { return (WindowRef)dialog; }
-  #else
-    #define GetDialogWindow(dialog) ((WindowRef)dialog)
-  #endif
+	#ifdef __cplusplus
+		inline DEFINE_API(WindowRef ) GetDialogWindow(DialogRef dialog) { return (WindowRef)dialog; }
+	#else
+		#define GetDialogWindow(dialog) ((WindowRef)dialog)
+	#endif
 #endif
 
 
 
 /*
  *  GetDialogTextEditHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later or as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1910,18 +1910,18 @@ GetDialogWindow(DialogRef dialog);
 EXTERN_API( TEHandle )
 GetDialogTextEditHandle(DialogRef dialog);
 #if !OPAQUE_TOOLBOX_STRUCTS && !ACCESSOR_CALLS_ARE_FUNCTIONS
-  #ifdef __cplusplus
-    inline DEFINE_API(TEHandle ) GetDialogTextEditHandle(DialogRef dialog) { return ((DialogPeek)dialog)->textH; }
-  #else
-    #define GetDialogTextEditHandle(dialog) (((DialogPeek)dialog)->textH)
-  #endif
+	#ifdef __cplusplus
+		inline DEFINE_API(TEHandle ) GetDialogTextEditHandle(DialogRef dialog) { return ((DialogPeek)dialog)->textH; }
+	#else
+		#define GetDialogTextEditHandle(dialog) (((DialogPeek)dialog)->textH)
+	#endif
 #endif
 
 
 
 /*
  *  GetDialogDefaultItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later or as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1930,18 +1930,18 @@ GetDialogTextEditHandle(DialogRef dialog);
 EXTERN_API( SInt16 )
 GetDialogDefaultItem(DialogRef dialog);
 #if !OPAQUE_TOOLBOX_STRUCTS && !ACCESSOR_CALLS_ARE_FUNCTIONS
-  #ifdef __cplusplus
-    inline DEFINE_API(SInt16 ) GetDialogDefaultItem(DialogRef dialog) { return ((DialogPeek)dialog)->aDefItem; }
-  #else
-    #define GetDialogDefaultItem(dialog) (((DialogPeek)dialog)->aDefItem)
-  #endif
+	#ifdef __cplusplus
+		inline DEFINE_API(SInt16 ) GetDialogDefaultItem(DialogRef dialog) { return ((DialogPeek)dialog)->aDefItem; }
+	#else
+		#define GetDialogDefaultItem(dialog) (((DialogPeek)dialog)->aDefItem)
+	#endif
 #endif
 
 
 
 /*
  *  GetDialogCancelItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later or as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1950,18 +1950,18 @@ GetDialogDefaultItem(DialogRef dialog);
 EXTERN_API( SInt16 )
 GetDialogCancelItem(DialogRef dialog);
 #if !OPAQUE_TOOLBOX_STRUCTS && !ACCESSOR_CALLS_ARE_FUNCTIONS
-  #ifdef __cplusplus
-    inline DEFINE_API(SInt16 ) GetDialogCancelItem(DialogRef dialog) { return ((DialogPeek)dialog)->editOpen; }
-  #else
-    #define GetDialogCancelItem(dialog) (((DialogPeek)dialog)->editOpen)
-  #endif
+	#ifdef __cplusplus
+		inline DEFINE_API(SInt16 ) GetDialogCancelItem(DialogRef dialog) { return ((DialogPeek)dialog)->editOpen; }
+	#else
+		#define GetDialogCancelItem(dialog) (((DialogPeek)dialog)->editOpen)
+	#endif
 #endif
 
 
 
 /*
  *  GetDialogKeyboardFocusItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later or as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1970,18 +1970,18 @@ GetDialogCancelItem(DialogRef dialog);
 EXTERN_API( SInt16 )
 GetDialogKeyboardFocusItem(DialogRef dialog);
 #if !OPAQUE_TOOLBOX_STRUCTS && !ACCESSOR_CALLS_ARE_FUNCTIONS
-  #ifdef __cplusplus
-    inline DEFINE_API(SInt16 ) GetDialogKeyboardFocusItem(DialogRef dialog) { return ((DialogPeek)dialog)->editField < 0 ? (short)(-1): (short)(((DialogPeek)dialog)->editField + 1); }
-  #else
-    #define GetDialogKeyboardFocusItem(dialog) (((DialogPeek)dialog)->editField < 0 ? (short)(-1): (short)(((DialogPeek)dialog)->editField + 1))
-  #endif
+	#ifdef __cplusplus
+		inline DEFINE_API(SInt16 ) GetDialogKeyboardFocusItem(DialogRef dialog) { return ((DialogPeek)dialog)->editField < 0 ? (short)(-1): (short)(((DialogPeek)dialog)->editField + 1); }
+	#else
+		#define GetDialogKeyboardFocusItem(dialog) (((DialogPeek)dialog)->editField < 0 ? (short)(-1): (short)(((DialogPeek)dialog)->editField + 1))
+	#endif
 #endif
 
 
 
 /*
  *  SetPortDialogPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later or as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1990,18 +1990,18 @@ GetDialogKeyboardFocusItem(DialogRef dialog);
 EXTERN_API( void )
 SetPortDialogPort(DialogRef dialog);
 #if !OPAQUE_TOOLBOX_STRUCTS && !ACCESSOR_CALLS_ARE_FUNCTIONS
-  #ifdef __cplusplus
-    inline DEFINE_API(void) SetPortDialogPort(DialogRef dialog) { MacSetPort((GrafPtr)dialog); }
-  #else
-    #define SetPortDialogPort(dialog) (MacSetPort((GrafPtr)dialog))
-  #endif
+	#ifdef __cplusplus
+		inline DEFINE_API(void) SetPortDialogPort(DialogRef dialog) { MacSetPort((GrafPtr)dialog); }
+	#else
+		#define SetPortDialogPort(dialog) (MacSetPort((GrafPtr)dialog))
+	#endif
 #endif
 
 
 
 /*
  *  GetDialogPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later or as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2010,18 +2010,18 @@ SetPortDialogPort(DialogRef dialog);
 EXTERN_API( CGrafPtr )
 GetDialogPort(DialogRef dialog);
 #if !OPAQUE_TOOLBOX_STRUCTS && !ACCESSOR_CALLS_ARE_FUNCTIONS
-  #ifdef __cplusplus
-    inline DEFINE_API(CGrafPtr ) GetDialogPort(DialogRef dialog) { return (CGrafPtr)dialog; }
-  #else
-    #define GetDialogPort(dialog) ((CGrafPtr)dialog)
-  #endif
+	#ifdef __cplusplus
+		inline DEFINE_API(CGrafPtr ) GetDialogPort(DialogRef dialog) { return (CGrafPtr)dialog; }
+	#else
+		#define GetDialogPort(dialog) ((CGrafPtr)dialog)
+	#endif
 #endif
 
 
 
 /*
  *  GetDialogFromWindow()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later or as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2030,11 +2030,11 @@ GetDialogPort(DialogRef dialog);
 EXTERN_API( DialogRef )
 GetDialogFromWindow(WindowRef window);
 #if !OPAQUE_TOOLBOX_STRUCTS && !ACCESSOR_CALLS_ARE_FUNCTIONS
-  #ifdef __cplusplus
-    inline DEFINE_API(DialogRef ) GetDialogFromWindow(WindowRef window) { return (DialogRef)window; }
-  #else
-    #define GetDialogFromWindow(window) ((DialogRef)window)
-  #endif
+	#ifdef __cplusplus
+		inline DEFINE_API(DialogRef ) GetDialogFromWindow(WindowRef window) { return (DialogRef)window; }
+	#else
+		#define GetDialogFromWindow(window) ((DialogRef)window)
+	#endif
 #endif
 
 
@@ -2043,7 +2043,7 @@ GetDialogFromWindow(WindowRef window);
 #if CALL_NOT_IN_CARBON
 /*
  *  CouldDialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2055,7 +2055,7 @@ CouldDialog(SInt16 dialogID)                                  ONEWORDINLINE(0xA9
 
 /*
  *  FreeDialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2067,7 +2067,7 @@ FreeDialog(SInt16 dialogID)                                   ONEWORDINLINE(0xA9
 
 /*
  *  CouldAlert()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2079,7 +2079,7 @@ CouldAlert(SInt16 alertID)                                    ONEWORDINLINE(0xA9
 
 /*
  *  FreeAlert()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2140,11 +2140,11 @@ newcolordialog(dStorage, boundsRect, title, visible, procID, behind, goAwayFlag,
 
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+		#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+		#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+		#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -2158,4 +2158,3 @@ newcolordialog(dStorage, boundsRect, title, visible, procID, behind, goAwayFlag,
 #endif
 
 #endif /* __DIALOGS__ */
-

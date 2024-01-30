@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -35,7 +35,7 @@ LINK_ENTITY_TO_CLASS( tf_weapon_invis, CTFWeaponInvis );
 PRECACHE_WEAPON_REGISTER( tf_weapon_invis );
 
 // Server specific.
-#if !defined( CLIENT_DLL ) 
+#if !defined( CLIENT_DLL )
 	BEGIN_DATADESC( CTFWeaponInvis )
 	END_DATADESC()
 #endif
@@ -51,7 +51,7 @@ void CTFWeaponInvis::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWeaponInvis::OnActiveStateChanged( int iOldState )
 {
@@ -68,12 +68,12 @@ void CTFWeaponInvis::OnActiveStateChanged( int iOldState )
 // Purpose: Clear out the view model when we hide
 //-----------------------------------------------------------------------------
 void CTFWeaponInvis::HideThink( void )
-{ 
+{
 	SetWeaponVisible( false );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFWeaponInvis::GetViewModel( int viewmodelindex  ) const
 {
@@ -98,7 +98,7 @@ const char *CTFWeaponInvis::GetViewModel( int viewmodelindex  ) const
 
 //-----------------------------------------------------------------------------
 // Purpose: Show/hide weapon and corresponding view model if any
-// Input  : visible - 
+// Input  : visible -
 //-----------------------------------------------------------------------------
 void CTFWeaponInvis::SetWeaponVisible( bool visible )
 {
@@ -140,7 +140,7 @@ bool CTFWeaponInvis::Deploy( void )
 
 //-----------------------------------------------------------------------------
 bool CTFWeaponInvis::Holster( CBaseCombatWeapon *pSwitchingTo )
-{ 
+{
 	bool bHolster = BaseClass::Holster( pSwitchingTo );
 
 	// far in the future
@@ -258,7 +258,7 @@ void CTFWeaponInvis::CleanupInvisibilityWatch( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWeaponInvis::SetFeignDeathState( bool bEnabled )
 {
@@ -299,7 +299,7 @@ void CTFWeaponInvis::SetCloakRates( void )
 	float fCloakConsumeRate = tf_spy_cloak_consume_rate.GetFloat();
 	float fCloakConsumeFactor = 1.0f;
 	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pOwner, fCloakConsumeFactor, mult_cloak_meter_consume_rate );	// Ask the owner since this attr may come from another weapon
-	
+
 	// This value is a inverse scale and does not match expectations on description
 	// so we subtract and invert to make it align
 	// ie 25% (0.75% in schema) makes 10seconds go to 13.3 when we want 12.5
@@ -308,7 +308,7 @@ void CTFWeaponInvis::SetCloakRates( void )
 	{
 		fCloakConsumeFactor = 1.0f / (2.0f - fCloakConsumeFactor);
 	}
-	
+
 	pOwner->m_Shared.SetCloakConsumeRate( fCloakConsumeRate * fCloakConsumeFactor );
 
 	float fCloakRegenRate = tf_spy_cloak_regen_rate.GetFloat();

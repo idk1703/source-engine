@@ -16,7 +16,7 @@ class CMatNullRenderContext : public CMatRenderContextBase
 {
 public:
 	CMatNullRenderContext()
-		:	m_WidthBackBuffer( 0 ), 
+		:	m_WidthBackBuffer( 0 ),
 			m_HeightBackBuffer( 0 )
 	{
 	}
@@ -711,7 +711,7 @@ public:
 
 	virtual void AsyncMap( ITextureInternal* pTexToMap, IAsyncTextureOperationReceiver* pRecipient, void* pExtraArgs ) OVERRIDE
 	{
-	
+
 	}
 
 	virtual void AsyncUnmap( ITextureInternal* pTexToUnmap ) OVERRIDE
@@ -728,7 +728,7 @@ public:
 	{
 		AssertMsg( 0, "CMatNullRenderContext only provides base features, not a stub (right now)" );
 	}
-	
+
 	void BindStandardTexture( Sampler_t, StandardTextureId_t )
 	{
 		AssertMsg( 0, "CMatNullRenderContext only provides base features, not a stub (right now)" );

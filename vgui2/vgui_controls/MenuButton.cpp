@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -45,7 +45,7 @@ MenuButton::MenuButton(Panel *parent, const char *panelName, const char *text) :
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-MenuButton::~MenuButton() 
+MenuButton::~MenuButton()
 {
 	delete m_pDropMenuImage;
 }
@@ -132,11 +132,11 @@ void MenuButton::SetOpenOffsetY(int yOffset)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool MenuButton::CanBeDefaultButton(void)
 {
-    return false;
+	return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -144,7 +144,7 @@ bool MenuButton::CanBeDefaultButton(void)
 //-----------------------------------------------------------------------------
 void MenuButton::DoClick()
 {
-	if ( IsDropMenuButtonStyle() && 
+	if ( IsDropMenuButtonStyle() &&
 		m_pDropMenuImage )
 	{
 		int mx, my;
@@ -203,7 +203,7 @@ void MenuButton::DoClick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void MenuButton::OnKeyCodeTyped(KeyCode code)
 {
@@ -229,7 +229,7 @@ void MenuButton::OnKeyCodeTyped(KeyCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void MenuButton::OnCursorEntered()
 {
@@ -315,7 +315,7 @@ void MenuButton::Paint(void)
 	int contentW, contentH;
 	m_pDropMenuImage->GetContentSize( contentW, contentH );
 	m_pDropMenuImage->SetColor( IsEnabled() ? GetButtonFgColor() : GetDisabledFgColor1() );
-	
+
 	int drawX = GetWide() - contentW - 2;
 
 	surface()->DrawSetColor(  IsEnabled() ? GetButtonFgColor() : GetDisabledFgColor1() );

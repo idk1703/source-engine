@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmefaceset.h"
@@ -14,7 +14,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeFaceSet, CDmeFaceSet );
 

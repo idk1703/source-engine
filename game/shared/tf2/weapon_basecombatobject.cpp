@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -118,7 +118,7 @@ void CWeaponBaseCombatObject::PlaceCombatObject( CBaseTFPlayer *pBuilder, Vector
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponBaseCombatObject::GetFireRate( void )
 {

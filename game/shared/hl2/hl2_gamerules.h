@@ -37,7 +37,7 @@ public:
 	virtual bool			Damage_IsTimeBased( int iDmgType );
 	// TEMP:
 	virtual int				Damage_GetTimeBased( void );
-	
+
 	virtual bool			ShouldCollide( int collisionGroup0, int collisionGroup1 );
 	virtual bool			ShouldUseRobustRadiusDamage(CBaseEntity *pEntity);
 #ifndef CLIENT_DLL
@@ -85,7 +85,7 @@ public:
 	void	NPC_DroppedHealth( void );
 	void	NPC_DroppedGrenade( void );
 	bool	MegaPhyscannonActive( void ) { return m_bMegaPhysgun;	}
-	
+
 	virtual bool IsAlyxInDarknessMode();
 
 private:

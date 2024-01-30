@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -34,7 +34,7 @@ enum
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: Singleton class responsible for managing overlay elements 
+// Purpose: Singleton class responsible for managing overlay elements
 //-----------------------------------------------------------------------------
 class IHudCommanderOverlayMgr
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -133,7 +133,7 @@ bool Load32BitTGA(
 		while(curOut < pImage->m_Width)
 		{
 			fp->Read(&packetHeader, 1);
-			
+
 			runLength = (int)(packetHeader & ~(1 << 7)) + 1;
 			if(curOut + runLength > pImage->m_Width)
 				return false;
@@ -182,12 +182,12 @@ void Save32BitTGA(
 	hdr.m_Height = pImage->m_Height;
 
 	g_pFullFileSystem->Write(&hdr, sizeof(hdr), fp );
-	
+
 	// Lines are written bottom-up.
 	for(y=pImage->m_Height-1; y >= 0; y--)
 	{
 		pLine = &pImage->m_pData[y*pImage->m_Width*4];
-		
+
 		runStart = 0;
 		for(x=0; x < pImage->m_Width; x++)
 		{
@@ -207,5 +207,3 @@ void Save32BitTGA(
 		}
 	}
 }
-
-

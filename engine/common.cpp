@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -47,7 +47,7 @@
 // Things in other C files.
 #define MAX_LOG_DIRECTORIES	10000
 
-bool com_ignorecolons = false; 
+bool com_ignorecolons = false;
 
 // wordbreak parsing set
 static characterset_t	g_BreakSet, g_BreakSetIncludingColons;
@@ -56,7 +56,7 @@ static characterset_t	g_BreakSet, g_BreakSetIncludingColons;
 char	com_token[COM_TOKEN_MAX_LENGTH];
 
 /*
-All of Quake's data access is through a hierarchical file system, but the contents of 
+All of Quake's data access is through a hierarchical file system, but the contents of
 the file system can be transparently merged from several sources.
 
 The "base directory" is the path to the directory holding the quake.exe and all
@@ -150,7 +150,7 @@ void COM_ExtendedExplainDisconnection( bool bPrint, const char *fmt, ... )
 	{
 		va_list		argptr;
 		char		string[1024];
-		
+
 		va_start (argptr, fmt);
 		Q_vsnprintf(string, sizeof( string ), fmt,argptr);
 		va_end (argptr);
@@ -176,17 +176,17 @@ const char *COM_Parse (const char *data)
 	unsigned char    c;
 	int             len;
 	characterset_t	*breaks;
-	
+
 	breaks = &g_BreakSetIncludingColons;
 	if ( com_ignorecolons )
 		breaks = &g_BreakSet;
-	
+
 	len = 0;
 	com_token[0] = 0;
-	
+
 	if (!data)
 		return NULL;
-		
+
 // skip whitespace
 skipwhite:
 	while ( (c = *data) <= ' ')
@@ -195,7 +195,7 @@ skipwhite:
 			return NULL;                    // end of file;
 		data++;
 	}
-	
+
 // skip // comments
 	if (c=='/' && data[1] == '/')
 	{
@@ -203,7 +203,7 @@ skipwhite:
 			data++;
 		goto skipwhite;
 	}
-	
+
 
 // handle quoted strings specially
 	if (c == '\"')
@@ -241,7 +241,7 @@ skipwhite:
 		if ( IN_CHARACTERSET( *breaks, c ) )
 			break;
 	} while (c>32);
-	
+
 	com_token[len] = 0;
 	return data;
 }
@@ -289,10 +289,10 @@ const char *COM_ParseLine (const char *data)
 {
 	int c;
 	int len;
-	
+
 	len = 0;
 	com_token[0] = 0;
-	
+
 	if (!data)
 		return NULL;
 
@@ -306,7 +306,7 @@ const char *COM_ParseLine (const char *data)
 		len++;
 		c = *data;
 	} while ( ( c>=' ' || c < 0 || c == '\t' ) && ( len < COM_TOKEN_MAX_LENGTH - 1 ) );
-	
+
 	com_token[len] = 0;
 
 	if (c==0) // end of file
@@ -359,7 +359,7 @@ char *tmpstr512()
 	static char	string[32][512];
 	static int	curstring = 0;
 	curstring = ( curstring + 1 ) & 31;
-	return string[curstring];  
+	return string[curstring];
 }
 
 /*
@@ -431,8 +431,8 @@ bool COM_CheckGameDirectory( const char *gamedir )
 
 //-----------------------------------------------------------------------------
 // Purpose: Finds the file in the search path.
-// Input  : *filename - 
-//			*file - 
+// Input  : *filename -
+//			*file -
 // Output : int
 //-----------------------------------------------------------------------------
 int COM_FindFile( const char *filename, FileHandle_t *file )
@@ -448,9 +448,9 @@ int COM_FindFile( const char *filename, FileHandle_t *file )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *filename - 
-//			*file - 
+// Purpose:
+// Input  : *filename -
+//			*file -
 // Output : int
 //-----------------------------------------------------------------------------
 int COM_OpenFile( const char *filename, FileHandle_t *file )
@@ -468,7 +468,7 @@ The filename will be prefixed by the current game directory
 void COM_WriteFile (const char *filename, void *data, int len)
 {
 	FileHandle_t  handle;
-	
+
 	int nameLen = strlen( filename ) + 2;
 	char *pName = ( char * )_alloca( nameLen );
 
@@ -483,7 +483,7 @@ void COM_WriteFile (const char *filename, void *data, int len)
 		Warning ("COM_WriteFile: failed on %s\n", pName);
 		return;
 	}
-	
+
 	g_pFileSystem->Write( data, len, handle );
 	g_pFileSystem->Close( handle );
 }
@@ -527,20 +527,20 @@ bool COM_CopyFile ( const char *pSourcePath, const char *pDestPath )
 
 	if ( in == FILESYSTEM_INVALID_HANDLE )
 		return false;
-		
+
 	// create directories up to the cache file
-	COM_CreatePath( pDestPath );     
+	COM_CreatePath( pDestPath );
 
 	out = g_pFileSystem->Open( pDestPath, "wb" );
 
 	AssertMsg( out, "COM_CopyFile(): Output file failed to open" );
-	
+
 	if ( out == FILESYSTEM_INVALID_HANDLE )
 	{
 		g_pFileSystem->Close( in );
 		return false;
 	}
-		
+
 	remaining = g_pFileSystem->Size( in );
 	while ( remaining > 0 )
 	{
@@ -558,8 +558,8 @@ bool COM_CopyFile ( const char *pSourcePath, const char *pDestPath )
 	}
 
 	g_pFileSystem->Close( in );
-	g_pFileSystem->Close( out );   
-	
+	g_pFileSystem->Close( out );
+
 	return true;
 }
 
@@ -586,7 +586,7 @@ int COM_ExpandFilename( char *filename, int maxlength )
 	{
 		Warning ("COM_ExpandFilename: can't find %s\n", filename);
 	}
-	
+
 	return 0;
 }
 
@@ -604,13 +604,13 @@ int COM_FileSize (const char *filename)
 
 //-----------------------------------------------------------------------------
 // Purpose: Close file handle
-// Input  : hFile - 
+// Input  : hFile -
 //-----------------------------------------------------------------------------
 void COM_CloseFile( FileHandle_t hFile )
 {
 	g_pFileSystem->Close( hFile );
 }
- 
+
 
 /*
 ============
@@ -677,13 +677,13 @@ byte *COM_LoadFile (const char *path, int usehunk, int *pLength)
 		Sys_Error ("COM_LoadFile: bad usehunk");
 	}
 
-	if ( !buf ) 
+	if ( !buf )
 	{
 		Sys_Error ("COM_LoadFile: not enough space for %s", path);
 		COM_CloseFile(hFile);	// exit here to prevent fault on oom (kdb)
-		return NULL;			
+		return NULL;
 	}
-		
+
 	g_pFileSystem->ReadEx( buf, bufSize, len, hFile );
 	COM_CloseFile( hFile );
 
@@ -748,7 +748,7 @@ void COM_Shutdown( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: allocates memory and copys source text
-// Input  : *in - 
+// Input  : *in -
 // Output : char *CopyString
 //-----------------------------------------------------------------------------
 char *COM_StringCopy(const char *in)
@@ -788,12 +788,12 @@ void COM_SetupLogDir( const char *mapname )
 		// Loop at max
 		if ( i == MAX_LOG_DIRECTORIES )
 		{
-			i = 0;	
+			i = 0;
 			Q_snprintf( sRelativeLogDir, sizeof( sRelativeLogDir ), "logs/%s/%04i", mapname, i );
 		}
 
 		// Make sure the directories we need exist.
-		g_pFileSystem->CreateDirHierarchy( sRelativeLogDir, "GAME" );	
+		g_pFileSystem->CreateDirHierarchy( sRelativeLogDir, "GAME" );
 
 		{
 			static bool pathsetup = false;
@@ -874,7 +874,7 @@ void COM_InitFilesystem( const char *pFullModPath )
 {
 	CFSSearchPathsInit initInfo;
 
-#ifndef SWDS	
+#ifndef SWDS
 	if ( IsPC() )
 	{
 		static char language[128];
@@ -882,13 +882,13 @@ void COM_InitFilesystem( const char *pFullModPath )
 
 		// There are two language at play here.  The Audio language which is controled by the
 		// properties on the game itself in Steam (at least for now).  And the language Steam is set to.
-        // Under Windows the text in the game is controled by the language Steam is set in, but the audio
+	// Under Windows the text in the game is controled by the language Steam is set in, but the audio
 		// is controled by the language set in the game's properties which we can get from Steam3Client
 
 		// A command line override for audio language has also been added.
 		// -audiolanguage <language>
 		// User must have the .vpk files for the language installed though in order to use the command line switch
-		
+
 		if ( Steam3Client().SteamApps() )
 		{
 			// use -audiolanguage command line to override audio language, otherwise take language from steam
@@ -909,7 +909,7 @@ void COM_InitFilesystem( const char *pFullModPath )
 		}
 	}
 #endif
-	
+
 	initInfo.m_pFileSystem = g_pFileSystem;
 	initInfo.m_pDirectoryName = pFullModPath;
 	if ( !initInfo.m_pDirectoryName )
@@ -924,15 +924,15 @@ void COM_InitFilesystem( const char *pFullModPath )
 
 	// Load gameinfo.txt and setup all the search paths, just like the tools do.
 	FileSystem_LoadSearchPaths( initInfo );
-							  
+
 	// The mod path becomes com_gamedir.
 	Q_MakeAbsolutePath( com_gamedir, sizeof( com_gamedir ), initInfo.m_ModPath );
-							  	
+
 	// Set com_basedir.
 	Q_strncpy ( com_basedir, GetBaseDirectory(), sizeof( com_basedir ) ); // the "root" directory where hl2.exe is
 	Q_strlower( com_basedir );
 	Q_FixSlashes( com_basedir );
-	
+
 #if !defined( SWDS ) && !defined( DEDICATED )
 	EngineVGui()->SetVGUIDirectories();
 #endif
@@ -953,7 +953,7 @@ const char *COM_DXLevelToString( int dxlevel )
 	{
 		bHalfPrecision = true;
 	}
-	
+
 	if( CommandLine()->CheckParm( "-dxlevel" ) )
 	{
 		switch( dxlevel )
@@ -1043,7 +1043,7 @@ const char *COM_FormatSeconds( int seconds )
 			minutes -= (hours * 60);
 		}
 	}
-	
+
 	if ( hours > 0 )
 	{
 		Q_snprintf( string, sizeof(string), "%2i:%02i:%02i", hours, minutes, seconds );
@@ -1104,10 +1104,10 @@ void COM_Log( const char *pszFile, const char *fmt, ...)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *filename1 - 
-//			*filename2 - 
-//			*iCompare - 
+// Purpose:
+// Input  : *filename1 -
+//			*filename2 -
+//			*iCompare -
 // Output : int
 //-----------------------------------------------------------------------------
 int COM_CompareFileTime(const char *filename1, const char *filename2, int *iCompare)
@@ -1134,8 +1134,8 @@ int COM_CompareFileTime(const char *filename1, const char *filename2, int *iComp
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szGameDir - 
+// Purpose:
+// Input  : *szGameDir -
 //-----------------------------------------------------------------------------
 void COM_GetGameDir(char *szGameDir, int maxlen)
 {
@@ -1145,19 +1145,19 @@ void COM_GetGameDir(char *szGameDir, int maxlen)
 
 //-----------------------------------------------------------------------------
 // Purpose: Parse a token from a file stream
-// Input  : *data - 
-//			*token - 
+// Input  : *data -
+//			*token -
 // Output : char
 //-----------------------------------------------------------------------------
 const char *COM_ParseFile(const char *data, char *token, int maxtoken )
 {
 	const char *return_data = COM_Parse(data);
 	Q_strncpy(token, com_token, maxtoken);
-	return return_data;	
+	return return_data;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : void COM_Init
 //-----------------------------------------------------------------------------
 void COM_Init ( void )
@@ -1167,7 +1167,7 @@ void COM_Init ( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool COM_IsValidPath( const char *pszFilename )
 {
@@ -1190,7 +1190,7 @@ bool COM_IsValidPath( const char *pszFilename )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool COM_IsValidLogFilename( const char *pszFilename )
 {

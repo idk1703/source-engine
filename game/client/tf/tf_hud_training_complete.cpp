@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -65,7 +65,7 @@ public:
 
 	virtual int GetRenderGroupPriority() { return 70; }
 protected:
-	
+
 	// vgui overrides
 	virtual void OnCommand( const char *command );
 
@@ -164,7 +164,7 @@ void CTFTrainingComplete::SetUpResults( IGameEvent *event )
 #else
 		// GetMapDisplayName returns char * which is %s, NOT %S, on Posix
 		V_swprintf_safe( wsText_LastMap, L"%s", GetMapDisplayName( map ) );
-		V_swprintf_safe( wsText_NextMap, L"%s", GetMapDisplayName( nextMap ) );		
+		V_swprintf_safe( wsText_NextMap, L"%s", GetMapDisplayName( nextMap ) );
 #endif
 		wchar_t wsResult[MAX_TRAINING_MSG_LENGTH];
 		g_pVGuiLocalize->ConstructString_safe( wsResult, g_pVGuiLocalize->Find( endText ), 2, wsText_LastMap, wsText_NextMap );
@@ -181,7 +181,7 @@ void CTFTrainingComplete::SetUpResults( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTrainingComplete::ApplySettings( KeyValues *inResourceData )
 {
@@ -189,7 +189,7 @@ void CTFTrainingComplete::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTrainingComplete::Reset()
 {
@@ -197,7 +197,7 @@ void CTFTrainingComplete::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTrainingComplete::Init()
 {
@@ -237,7 +237,7 @@ void CTFTrainingComplete::SetVisible( bool value )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTrainingComplete::FireGameEvent( IGameEvent * event )
 {
@@ -268,7 +268,7 @@ void CTFTrainingComplete::FireGameEvent( IGameEvent * event )
 		m_showButtonsTime = gpGlobals->curtime + DELAY_TO_SHOW_BUTTONS;
 
 		m_bShouldBeVisible = true;
-									  
+
 		SetUpResults( event );
 	}
 }
@@ -354,7 +354,7 @@ void CTFTrainingComplete::OnThink()
 			static const float BLEND_AMOUNT = 0.15f;
 			static const float BLEND_CONST = BLEND_AMOUNT - 1.0f;
 			int x, y;
-			
+
 			//Get the dy for the bottom bar.  We'll use that for all the widgets since they're all traveling the same distance.
 			m_pBottomBar->GetPos( x, y );
 			int dy = m_iBottomBarY - y;
@@ -390,7 +390,7 @@ void CTFTrainingComplete::OnThink()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTrainingComplete::OnCommand( const char *command )
 {
@@ -408,7 +408,7 @@ void CTFTrainingComplete::OnCommand( const char *command )
 		IViewPortPanel *pMMOverride = ( gViewPortInterface->FindPanelByName( PANEL_MAINMENUOVERRIDE ) );
 		if ( pMMOverride )
 		{
-			((CHudMainMenuOverride*)pMMOverride)->ScheduleTrainingCheck( true );	
+			((CHudMainMenuOverride*)pMMOverride)->ScheduleTrainingCheck( true );
 		}
 	}
 	else

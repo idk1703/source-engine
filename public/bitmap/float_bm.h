@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -17,7 +17,7 @@
 #include "tier0/dbg.h"
 #include <mathlib/mathlib.h>
 
-struct PixRGBAF 
+struct PixRGBAF
 {
 	float Red;
 	float Green;
@@ -58,12 +58,12 @@ inline PixRGBA8 PixRGBAF_to_8( PixRGBAF const &f )
 // bit flag options for ComputeSelfShadowedBumpmapFromHeightInAlphaChannel:
 #define SSBUMP_OPTION_NONDIRECTIONAL 1						// generate ambient occlusion only
 #define SSBUMP_MOD2X_DETAIL_TEXTURE 2						// scale so that a flat unshadowed
-                                                            // value is 0.5, and bake rgb luminance
-                                                            // in.
+	// value is 0.5, and bake rgb luminance
+	// in.
 
 
 
-class FloatBitMap_t 
+class FloatBitMap_t
 {
 public:
 	int Width, Height;										// bitmap dimensions
@@ -191,8 +191,8 @@ public:
 		uint32 flags                                  // SPF_xxx
 		);
 
-	FloatBitMap_t *QuarterSize(void) const;					// get a new one downsampled 
-	FloatBitMap_t *QuarterSizeBlocky(void) const;          // get a new one downsampled 
+	FloatBitMap_t *QuarterSize(void) const;					// get a new one downsampled
+	FloatBitMap_t *QuarterSizeBlocky(void) const;          // get a new one downsampled
 
 	FloatBitMap_t *QuarterSizeWithGaussian(void) const;		// downsample 2x using a gaussian
 
@@ -204,7 +204,7 @@ public:
 
 	// compress to 8 bits converts the hdr texture to an 8 bit texture, encoding a scale factor
 	// in the alpha channel. upon return, the original pixel can be (approximately) recovered
-	// by the formula rgb*alpha*overbright. 
+	// by the formula rgb*alpha*overbright.
 	// this function performs special numerical optimization on the texture to minimize the error
 	// when using bilinear filtering to read the texture.
 	void CompressTo8Bits(float overbright);
@@ -227,7 +227,7 @@ public:
 	// pixel. This function may take a while - many millions of rays may be traced.  applications
 	// using this method need to link w/ raytrace.lib
 	FloatBitMap_t *ComputeSelfShadowedBumpmapFromHeightInAlphaChannel(
-		float bump_scale, int nrays_to_trace_per_pixel=100, 
+		float bump_scale, int nrays_to_trace_per_pixel=100,
 		uint32 nOptionFlags = 0								// SSBUMP_OPTION_XXX
 		) const;
 
@@ -323,7 +323,7 @@ static inline float FLerp(float f1, float f2, float t)
 // Image Pyramid class.
 #define MAX_IMAGE_PYRAMID_LEVELS 16							// up to 64kx64k
 
-enum ImagePyramidMode_t 
+enum ImagePyramidMode_t
 {
 	PYRAMID_MODE_GAUSSIAN,
 };

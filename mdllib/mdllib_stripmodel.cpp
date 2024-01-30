@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -56,7 +56,7 @@ bool CMdlLib::StripModelBuffers( CUtlBuffer &mdlBuffer, CUtlBuffer &vvdBuffer, C
 	DECLARE_PTR( studiohdr_t, mdlHdr, mdl );
 	DECLARE_PTR( vertexFileHeader_t, vvdHdr, vvd );
 	DECLARE_PTR( OptimizedModel::FileHeader_t, vtxHdr, vtx );
-	
+
 	long checksumOld = mdlHdr->checksum;
 
 	// Don't do anything if the checksums don't match
@@ -127,7 +127,7 @@ bool CMdlLib::StripModelBuffers( CUtlBuffer &mdlBuffer, CUtlBuffer &vvdBuffer, C
 	// Otherwise do stripping
 	pMsi->m_eMode = CMdlStripInfo::MODE_STRIP_LOD_1N;
 
-	
+
 	//
 	// ===================
 	// =================== Build out table of LOD0 vertexes
@@ -137,19 +137,19 @@ bool CMdlLib::StripModelBuffers( CUtlBuffer &mdlBuffer, CUtlBuffer &vvdBuffer, C
 	CGrowableBitVec &mapVtxIndex = pMsi->m_vtxVerts;
 	ITERATE_CHILDREN2( OptimizedModel::BodyPartHeader_t, mstudiobodyparts_t, vtxBodyPart, mdlBodyPart, vtxHdr, mdlHdr, pBodyPart, pBodypart, numBodyParts )
 		ITERATE_CHILDREN2( OptimizedModel::ModelHeader_t, mstudiomodel_t, vtxModel, mdlModel, vtxBodyPart, mdlBodyPart, pModel, pModel, numModels )
-		
+
 			OptimizedModel::ModelLODHeader_t *vtxLod = CHILD_AT( vtxModel, pLOD, 0 );
 			ITERATE_CHILDREN2( OptimizedModel::MeshHeader_t, mstudiomesh_t, vtxMesh, mdlMesh, vtxLod, mdlModel, pMesh, pMesh, numMeshes )
 				ITERATE_CHILDREN( OptimizedModel::StripGroupHeader_t, vtxStripGroup, vtxMesh, pStripGroup, numStripGroups )
 					ITERATE_CHILDREN( OptimizedModel::StripHeader_t, vtxStrip, vtxStripGroup, pStrip, numStrips )
-					
+
 						if ( !( vtxStrip->flags & OptimizedModel::STRIP_IS_TRILIST ) )
 							continue;
 						for ( int i = 0; i < vtxStrip->numIndices; ++ i )
 						{
 							unsigned short *vtxIdx = CHILD_AT( vtxStripGroup, pIndex, vtxStrip->indexOffset + i );
 							OptimizedModel::Vertex_t *vtxVertex = CHILD_AT( vtxStripGroup, pVertex, *vtxIdx );
-							
+
 							unsigned short usIdx = vtxVertex->origMeshVertID + mdlMesh->vertexoffset;
 							mapVtxIndex.GrowSetBit( usIdx );
 						}
@@ -157,7 +157,7 @@ bool CMdlLib::StripModelBuffers( CUtlBuffer &mdlBuffer, CUtlBuffer &vvdBuffer, C
 					ITERATE_END
 				ITERATE_END
 			ITERATE_END
-		
+
 		ITERATE_END
 	ITERATE_END
 
@@ -175,7 +175,7 @@ bool CMdlLib::StripModelBuffers( CUtlBuffer &mdlBuffer, CUtlBuffer &vvdBuffer, C
 	//  - for every new vertex we know its old index "srcIndices[ newVertIdx ]"
 	//  - for every old vertex if it's in lod0 we know its new index "srcIndices.Find( oldVertIdx )"
 
-	
+
 	//
 	// ===================
 	// =================== Process MDL file
@@ -189,7 +189,7 @@ bool CMdlLib::StripModelBuffers( CUtlBuffer &mdlBuffer, CUtlBuffer &vvdBuffer, C
 	CUtlSortVector< CMdlStripInfo::MdlRangeItem, CLessSimple< CMdlStripInfo::MdlRangeItem > > &arrMdlOffsets = pMsi->m_vtxMdlOffsets;
 	ITERATE_CHILDREN( mstudiobodyparts_t, mdlBodyPart, mdlHdr, pBodypart, numbodyparts )
 		ITERATE_CHILDREN( mstudiomodel_t, mdlModel, mdlBodyPart, pModel, nummodels )
-			
+
 			DLog( "mdllib", 3, " Stripped %d lod(s).\n", vvdHdr->numLODs - 1 ),
 			DLog( "mdllib", 3, " Stripped %d vertexes (was: %d, now: %d).\n", mdlModel->numvertices - srcIndices.Count(), mdlModel->numvertices, srcIndices.Count() );
 
@@ -200,9 +200,9 @@ bool CMdlLib::StripModelBuffers( CUtlBuffer &mdlBuffer, CUtlBuffer &vvdBuffer, C
 			mdlModel->vertexdata.pTangentData = BYTE_OFF_PTR( vvdHdr, vvdHdr->tangentDataStart );
 
 			ITERATE_CHILDREN( mstudiomesh_t, mdlMesh, mdlModel, pMesh, nummeshes )
-				
+
 				CMdlStripInfo::MdlRangeItem mdlRangeItem( mdlMesh->vertexoffset, mdlMesh->numvertices );
-				
+
 				mdlMesh->vertexdata.modelvertexdata = &mdlModel->vertexdata;
 				mdlMesh->numvertices = srcIndices.FindLess( mdlMesh->vertexoffset + mdlMesh->numvertices );
 				mdlMesh->vertexoffset = srcIndices.FindLess( mdlMesh->vertexoffset ) + 1;
@@ -229,7 +229,7 @@ bool CMdlLib::StripModelBuffers( CUtlBuffer &mdlBuffer, CUtlBuffer &vvdBuffer, C
 
 	DLog( "mdllib", 3, " Updated %d bone(s).\n", mdlHdr->numbones );
 
-	
+
 	//
 	// ===================
 	// =================== Process VVD file
@@ -242,7 +242,7 @@ bool CMdlLib::StripModelBuffers( CUtlBuffer &mdlBuffer, CUtlBuffer &vvdBuffer, C
 
 	DECLARE_PTR( mstudiovertex_t, vvdVertexSrc, BYTE_OFF_PTR( vvdHdr, vvdHdr->vertexDataStart ) );
 	DECLARE_PTR( Vector4D, vvdTangentSrc, vvdHdr->tangentDataStart ? BYTE_OFF_PTR( vvdHdr, vvdHdr->tangentDataStart ) : NULL );
-	
+
 	// Apply the fixups first of all
 	if ( vvdHdr->numFixups )
 	{
@@ -265,7 +265,7 @@ bool CMdlLib::StripModelBuffers( CUtlBuffer &mdlBuffer, CUtlBuffer &vvdBuffer, C
 		vvdVertexSrc  ? memcpy( vvdVertexSrc, BYTE_OFF_PTR( memTempVVD.Get(), vvdHdr->vertexDataStart ), mdlNumVerticesOld * sizeof( *vvdVertexSrc ) ) : 0;
 		vvdTangentSrc ? memcpy( vvdTangentSrc, BYTE_OFF_PTR( memTempVVD.Get(), vvdHdr->tangentDataStart ), mdlNumVerticesOld * sizeof( *vvdTangentSrc ) ) : 0;
 	}
-	
+
 	vvdHdr->vertexDataStart -= ALIGN_VALUE( sizeof( vertexFileFixup_t ) * vvdHdr->numFixups, 16 );
 	vvdHdr->numFixups = 0;
 	DECLARE_PTR( mstudiovertex_t, vvdVertexNew, BYTE_OFF_PTR( vvdHdr, vvdHdr->vertexDataStart ) );
@@ -289,7 +289,7 @@ bool CMdlLib::StripModelBuffers( CUtlBuffer &mdlBuffer, CUtlBuffer &vvdBuffer, C
 	}
 	DLog( "mdllib", 3, " Stripped %d vvd bytes.\n", vvdLengthOld - vvdLength );
 
-	
+
 	//
 	// ===================
 	// =================== Process VTX file
@@ -314,12 +314,12 @@ bool CMdlLib::StripModelBuffers( CUtlBuffer &mdlBuffer, CUtlBuffer &vvdBuffer, C
 
 	ITERATE_CHILDREN( OptimizedModel::BodyPartHeader_t, vtxBodyPart, vtxHdr, pBodyPart, numBodyParts )
 		ITERATE_CHILDREN( OptimizedModel::ModelHeader_t, vtxModel, vtxBodyPart, pModel, numModels )
-		
+
 			vtxRemove.RemoveElements( CHILD_AT( vtxModel, pLOD, 1 ), vtxModel->numLODs - 1 );
 			ITERATE_CHILDREN( OptimizedModel::ModelLODHeader_t, vtxLod, vtxModel, pLOD, numLODs )
 				if ( !vtxLod_idx )	// Process only lod1-N
 					continue;
-				
+
 				vtxRemove.RemoveElements( CHILD_AT( vtxLod, pMesh, 0 ), vtxLod->numMeshes );
 				ITERATE_CHILDREN( OptimizedModel::MeshHeader_t, vtxMesh, vtxLod, pMesh, numMeshes )
 					vtxRemove.RemoveElements( CHILD_AT( vtxMesh, pStripGroup, 0 ), vtxMesh->numStripGroups );
@@ -398,10 +398,10 @@ bool CMdlLib::StripModelBuffers( CUtlBuffer &mdlBuffer, CUtlBuffer &vvdBuffer, C
 			// Find the mesh where this index belongs
 			int iMesh = arrMdlOffsets.FindLessOrEqual( CMdlStripInfo::MdlRangeItem( 0, 0, vtxVertexElement - vtxVertexBuffer ) );
 			Assert( iMesh >= 0 && iMesh < arrMdlOffsets.Count() );
-			
+
 			CMdlStripInfo::MdlRangeItem &mri = arrMdlOffsets[ iMesh ];
 			Assert( ( vtxVertexElement - vtxVertexBuffer >= mri.m_offNew ) && ( vtxVertexElement - vtxVertexBuffer < mri.m_offNew + mri.m_numNew ) );
-			
+
 			Assert( mapVtxIndex.IsBitSet( vtxVertexElement->origMeshVertID + mri.m_offOld ) );
 			vtxVertexElement->origMeshVertID = srcIndices.Find( vtxVertexElement->origMeshVertID + mri.m_offOld ) - mri.m_offNew;
 			Assert( vtxVertexElement->origMeshVertID < mri.m_numNew );
@@ -454,7 +454,7 @@ bool CMdlLib::StripModelBuffers( CUtlBuffer &mdlBuffer, CUtlBuffer &vvdBuffer, C
 			ITERATE_CHILDREN( OptimizedModel::ModelLODHeader_t, vtxLod, vtxModel, pLOD, numLODs )
 				ITERATE_CHILDREN( OptimizedModel::MeshHeader_t, vtxMesh, vtxLod, pMesh, numMeshes )
 					ITERATE_CHILDREN( OptimizedModel::StripGroupHeader_t, vtxStripGroup, vtxMesh, pStripGroup, numStripGroups )
-						
+
 						ITERATE_CHILDREN( OptimizedModel::StripHeader_t, vtxStrip, vtxStripGroup, pStrip, numStrips )
 							vtxStrip->indexOffset =
 								vtxRemove.ComputeOffset( vtxStripGroup, vtxStripGroup->indexOffset + vtxStrip->indexOffset ) -
@@ -501,4 +501,3 @@ bool CMdlLib::StripModelBuffers( CUtlBuffer &mdlBuffer, CUtlBuffer &vvdBuffer, C
 	// Done
 	return true;
 }
-

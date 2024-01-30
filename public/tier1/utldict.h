@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: A dictionary mapping from symbol to structure 
+// Purpose: A dictionary mapping from symbol to structure
 //
 // $Header: $
 // $NoKeywords: $
@@ -41,7 +41,7 @@ enum EDictCompareType
 //-----------------------------------------------------------------------------
 // A dictionary mapping from symbol to structure
 //-----------------------------------------------------------------------------
-template <class T, class I = int > 
+template <class T, class I = int >
 class CUtlDict
 {
 public:
@@ -52,7 +52,7 @@ public:
 	~CUtlDict( );
 
 	void EnsureCapacity( int );
-	
+
 	// gets particular elements
 	T&         Element( I i );
 	const T&   Element( I i ) const;
@@ -70,26 +70,26 @@ public:
 
 	// Number of allocated slots
 	I MaxElement() const;
-	
+
 	// Checks if a node is valid and in the tree
 	bool  IsValidIndex( I i ) const;
-	
+
 	// Invalid index
 	static I InvalidIndex();
-	
+
 	// Insert method (inserts in order)
 	I  Insert( const char *pName, const T &element );
 	I  Insert( const char *pName );
-	
+
 	// Find method
 	I  Find( const char *pName ) const;
 	bool HasElement( const char *pName ) const;
-	
+
 	// Remove methods
 	void	RemoveAt( I i );
 	void	Remove( const char *pName );
 	void	RemoveAll( );
-	
+
 	// Purge memory
 	void	Purge();
 	void	PurgeAndDeleteElements();	// Call delete on each element.
@@ -98,7 +98,7 @@ public:
 	I		First() const;
 	I		Next( I i ) const;
 
-	// Nested typedefs, for code that might need 
+	// Nested typedefs, for code that might need
 	// to fish out the index type from a given dict
 	typedef I IndexType_t;
 
@@ -128,31 +128,31 @@ CUtlDict<T, I>::CUtlDict( int compareType, int growSize, int initSize ) : m_Elem
 	}
 }
 
-template <class T, class I> 
+template <class T, class I>
 CUtlDict<T, I>::~CUtlDict()
 {
 	Purge();
 }
 
 template <class T, class I>
-inline void CUtlDict<T, I>::EnsureCapacity( int num )        
-{ 
-	return m_Elements.EnsureCapacity( num ); 
+inline void CUtlDict<T, I>::EnsureCapacity( int num )
+{
+	return m_Elements.EnsureCapacity( num );
 }
 
 //-----------------------------------------------------------------------------
 // gets particular elements
 //-----------------------------------------------------------------------------
 template <class T, class I>
-inline T& CUtlDict<T, I>::Element( I i )        
-{ 
-	return m_Elements[i]; 
+inline T& CUtlDict<T, I>::Element( I i )
+{
+	return m_Elements[i];
 }
 
 template <class T, class I>
-inline const T& CUtlDict<T, I>::Element( I i ) const  
-{ 
-	return m_Elements[i]; 
+inline const T& CUtlDict<T, I>::Element( I i ) const
+{
+	return m_Elements[i];
 }
 
 //-----------------------------------------------------------------------------
@@ -171,15 +171,15 @@ inline char const *CUtlDict<T, I>::GetElementName( I i ) const
 }
 
 template <class T, class I>
-inline T& CUtlDict<T, I>::operator[]( I i )        
-{ 
-	return Element(i); 
+inline T& CUtlDict<T, I>::operator[]( I i )
+{
+	return Element(i);
 }
 
 template <class T, class I>
-inline const T & CUtlDict<T, I>::operator[]( I i ) const  
-{ 
-	return Element(i); 
+inline const T & CUtlDict<T, I>::operator[]( I i ) const
+{
+	return Element(i);
 }
 
 template <class T, class I>
@@ -197,9 +197,9 @@ inline void CUtlDict<T, I>::SetElementName( I i, char const *pName )
 // Num elements
 //-----------------------------------------------------------------------------
 template <class T, class I>
-inline	unsigned int CUtlDict<T, I>::Count() const          
-{ 
-	return m_Elements.Count(); 
+inline	unsigned int CUtlDict<T, I>::Count() const
+{
+	return m_Elements.Count();
 }
 
 //-----------------------------------------------------------------------------
@@ -210,32 +210,32 @@ inline I CUtlDict<T, I>::MaxElement() const
 {
 	return m_Elements.MaxElement();
 }
-	
+
 //-----------------------------------------------------------------------------
 // Checks if a node is valid and in the tree
 //-----------------------------------------------------------------------------
 template <class T, class I>
-inline	bool CUtlDict<T, I>::IsValidIndex( I i ) const 
+inline	bool CUtlDict<T, I>::IsValidIndex( I i ) const
 {
 	return m_Elements.IsValidIndex(i);
 }
-	
-	
+
+
 //-----------------------------------------------------------------------------
 // Invalid index
 //-----------------------------------------------------------------------------
 template <class T, class I>
-inline I CUtlDict<T, I>::InvalidIndex()         
-{ 
-	return DictElementMap_t::InvalidIndex(); 
+inline I CUtlDict<T, I>::InvalidIndex()
+{
+	return DictElementMap_t::InvalidIndex();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Delete a node from the tree
 //-----------------------------------------------------------------------------
 template <class T, class I>
-void CUtlDict<T, I>::RemoveAt(I elem) 
+void CUtlDict<T, I>::RemoveAt(I elem)
 {
 	free( (void *)m_Elements.Key( elem ) );
 	m_Elements.RemoveAt(elem);
@@ -297,14 +297,14 @@ void CUtlDict<T, I>::PurgeAndDeleteElements()
 //-----------------------------------------------------------------------------
 // inserts a node into the tree
 //-----------------------------------------------------------------------------
-template <class T, class I> 
+template <class T, class I>
 I CUtlDict<T, I>::Insert( const char *pName, const T &element )
 {
 	MEM_ALLOC_CREDIT_CLASS();
 	return m_Elements.Insert( strdup( pName ), element );
 }
 
-template <class T, class I> 
+template <class T, class I>
 I CUtlDict<T, I>::Insert( const char *pName )
 {
 	MEM_ALLOC_CREDIT_CLASS();
@@ -315,7 +315,7 @@ I CUtlDict<T, I>::Insert( const char *pName )
 //-----------------------------------------------------------------------------
 // finds a node in the tree
 //-----------------------------------------------------------------------------
-template <class T, class I> 
+template <class T, class I>
 I CUtlDict<T, I>::Find( const char *pName ) const
 {
 	MEM_ALLOC_CREDIT_CLASS();
@@ -328,7 +328,7 @@ I CUtlDict<T, I>::Find( const char *pName ) const
 //-----------------------------------------------------------------------------
 // returns true if we already have this node
 //-----------------------------------------------------------------------------
-template <class T, class I> 
+template <class T, class I>
 bool CUtlDict<T, I>::HasElement( const char *pName ) const
 {
 	if ( pName )
@@ -341,13 +341,13 @@ bool CUtlDict<T, I>::HasElement( const char *pName ) const
 //-----------------------------------------------------------------------------
 // Iteration methods
 //-----------------------------------------------------------------------------
-template <class T, class I> 
+template <class T, class I>
 I CUtlDict<T, I>::First() const
 {
 	return m_Elements.FirstInorder();
 }
 
-template <class T, class I> 
+template <class T, class I>
 I CUtlDict<T, I>::Next( I i ) const
 {
 	return m_Elements.NextInorder(i);

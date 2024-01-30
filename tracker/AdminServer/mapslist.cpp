@@ -26,17 +26,17 @@ typedef enum
 } RCONSTATUS;
 
 
-typedef enum 
+typedef enum
 {
 	FS,
 	PAK
 } MAP_TYPES;
 
 CMapsList::CMapsList(IResponse *target,serveritem_t &server, const char *rconPassword,const char *mod) {
-	
+
 	memcpy(&m_Server, &server,sizeof(serveritem_t));
 	m_pResponseTarget=target;
-	
+
 	if(strcmp(mod,"valve") )
 	{
 		v_strncpy(m_sMod,mod,64);
@@ -51,7 +51,7 @@ CMapsList::CMapsList(IResponse *target,serveritem_t &server, const char *rconPas
 	m_bRconFailed=false;
 
 	v_strncpy(m_szRconPassword,rconPassword,100);
-	
+
 	m_pRcon = new CRcon(this  , server,rconPassword);
 }
 
@@ -66,17 +66,17 @@ CMapsList::~CMapsList() {
 void CMapsList::SendQuery()
 {
 	m_bIsRefreshing=true;
-	m_pRcon->SendRcon("maps *");	
+	m_pRcon->SendRcon("maps *");
 }
 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapsList::RunFrame()
 {
-	if(m_pRcon) 
+	if(m_pRcon)
 	{
 		m_pRcon->RunFrame();
 	}
@@ -114,31 +114,31 @@ void CMapsList::ServerResponded()
 	}
 
 
-	while(cur!=NULL) 
-	{	
+	while(cur!=NULL)
+	{
 		cur++;
 		next=strchr(cur,'\n');
-		if(next!=NULL) 
+		if(next!=NULL)
 		{
 			*next='\0';
 		}
 
 		if( strncmp(cur,"Dir:",4) && strncmp(cur,"-------------",13)  )
-		{	
+		{
 			TokenLine mapsLine;
 			mapsLine.SetLine(cur);
-		
-			if(mapsLine.CountToken() >= 2 ) 
+
+			if(mapsLine.CountToken() >= 2 )
 			{
 				char tmpMap[100];
 				v_strncpy(tmpMap,mapsLine.GetToken(1),100); // type
 				char *end = strstr(tmpMap,".bsp"); // cull the .bsp
-				if(end != NULL)  
+				if(end != NULL)
 				{
 					*end='\0';
 				}
-				if(checkDir==true && strstr(tmpMap,m_sMod)==NULL ) 
-					// if the map name doesn't have the mod dir in it 
+				if(checkDir==true && strstr(tmpMap,m_sMod)==NULL )
+					// if the map name doesn't have the mod dir in it
 					// and its not running the "valve" mod continue
 				{
 					cur=next;
@@ -146,8 +146,8 @@ void CMapsList::ServerResponded()
 				}
 
 				if ( strchr(tmpMap,'/') )  // remove the directory part of the map name
-				{ 
-					strcpy(tmpMap,strrchr(tmpMap,'/')+1);	
+				{
+					strcpy(tmpMap,strrchr(tmpMap,'/')+1);
 				}
 
 				for(k=0;k<m_MapsList.Count();k++)  // now check it doesn't already exist inside the map list...
@@ -191,39 +191,39 @@ void CMapsList::ServerResponded()
 
 void CMapsList::ServerFailedToRespond()
 {
-	// rcon failed 
+	// rcon failed
 	//m_pResponseTarget->ServerFailedToRespond();
 }
 
-void CMapsList::Refresh() 
+void CMapsList::Refresh()
 {
 	SendQuery();
 }
 
-bool CMapsList::IsRefreshing() 
+bool CMapsList::IsRefreshing()
 {
 
 	return m_bIsRefreshing;
 }
 
-serveritem_t &CMapsList::GetServer() 
+serveritem_t &CMapsList::GetServer()
 {
 	return m_Server;
 }
 
 
-bool CMapsList::NewMapsList() 
+bool CMapsList::NewMapsList()
 {
 	return m_bNewMapsList;
 }
 
-CUtlVector<Maps_t> *CMapsList::GetMapsList() 
+CUtlVector<Maps_t> *CMapsList::GetMapsList()
 {
 	m_bNewMapsList=false;
 	return &m_MapsList;
 }
 
-void CMapsList::SetPassword(const char *newPass) 
+void CMapsList::SetPassword(const char *newPass)
 {
 	m_pRcon->SetPassword(newPass);
 	m_bRconFailed=false;

@@ -163,7 +163,7 @@ void CObjectSpyTrap::OnGoActive()
 			break;
 		}
 	}
-	
+
 	m_takedamage = DAMAGE_NO;
 
 	m_bActive = HasAttribute( TRAP_TRIGGER_ONBUILD );
@@ -176,7 +176,7 @@ void CObjectSpyTrap::OnGoActive()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSpyTrap::SetObjectMode( int iVal )
 {
@@ -294,8 +294,8 @@ void CObjectSpyTrap::EndTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : collisionGroup - 
+// Purpose:
+// Input  : collisionGroup -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CObjectSpyTrap::ShouldCollide( int collisionGroup, int contentsMask ) const
@@ -368,7 +368,7 @@ bool CObjectSpyTrap::IsValidRadiusCloakTarget( CTFPlayer *pTarget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSpyTrap::TriggerTrap_Reprogrammer( CBaseEntity *pTouchEntity )
 {
@@ -395,7 +395,7 @@ void CObjectSpyTrap::TriggerTrap_Reprogrammer( CBaseEntity *pTouchEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSpyTrap::TriggerTrap_Magnet( void )
 {
@@ -428,7 +428,7 @@ void CObjectSpyTrap::TriggerTrap_Magnet( void )
 		// Find where we're going
 		Vector vecSourcePos = pPlayer->GetAbsOrigin();
 		Vector vecTargetPos = GetAbsOrigin();
-		vecTargetPos.z -= 32.0f;  
+		vecTargetPos.z -= 32.0f;
 
 		Vector vecVelocity = vecTargetPos - vecSourcePos;
 		vecVelocity.z += 150.f;

@@ -56,7 +56,7 @@ BEGIN_DATADESC( CSprite )
 	DEFINE_KEYFIELD( m_flHDRColorScale, FIELD_FLOAT, "HDRColorScale" ),
 
 	DEFINE_KEYFIELD( m_flGlowProxySize,	FIELD_FLOAT, "GlowProxySize" ),
-	
+
 	DEFINE_FIELD( m_flScaleTime,		FIELD_FLOAT ),
 	DEFINE_FIELD( m_flStartScale,		FIELD_FLOAT ),
 	DEFINE_FIELD( m_flDestScale,		FIELD_FLOAT ),
@@ -185,7 +185,7 @@ CSprite::CSprite()
 #endif
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSprite::Spawn( void )
 {
@@ -214,7 +214,7 @@ void CSprite::Spawn( void )
 	{
 		TurnOn();
 	}
-	
+
 	// Worldcraft only sets y rotation, copy to Z
 	if ( GetLocalAngles().y != 0 && GetLocalAngles().z == 0 )
 	{
@@ -228,10 +228,10 @@ void CSprite::Spawn( void )
 
 	// Clamp our scale if necessary
 	float scale = m_flSpriteScale;
-	
+
 	if ( scale < 0 || scale > MAX_SPRITE_SCALE )
 	{
-#if !defined( CLIENT_DLL ) 
+#if !defined( CLIENT_DLL )
 		DevMsg( "LEVEL DESIGN ERROR: Sprite %s with bad scale %f [0..%f]\n", GetDebugName(), m_flSpriteScale.Get(), MAX_SPRITE_SCALE );
 #endif
 		scale = clamp( (float) m_flSpriteScale, 0.f, MAX_SPRITE_SCALE );
@@ -280,8 +280,8 @@ void CSprite::ComputeWorldSpaceSurroundingBox( Vector *pVecWorldMins, Vector *pV
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szModelName - 
+// Purpose:
+// Input  : *szModelName -
 //-----------------------------------------------------------------------------
 void CSprite::SetModel( const char *szModelName )
 {
@@ -300,7 +300,7 @@ void CSprite::SetModel( const char *szModelName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSprite::Precache( void )
 {
@@ -311,9 +311,9 @@ void CSprite::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pSpriteName - 
-//			&origin - 
+// Purpose:
+// Input  : *pSpriteName -
+//			&origin -
 //-----------------------------------------------------------------------------
 void CSprite::SpriteInit( const char *pSpriteName, const Vector &origin )
 {
@@ -343,7 +343,7 @@ int CSprite::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 	// For these entities, it's more efficient to transmit them once and then always leave them on
 	// the client. Otherwise, the server will have to send big bursts of data with the entity states
 	// as they come in and out of the PVS.
-	
+
 	if ( GetMoveParent() )
 	{
 		CBaseViewModel *pViewModel = dynamic_cast<CBaseViewModel *>( GetMoveParent() );
@@ -353,10 +353,10 @@ int CSprite::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 			return pViewModel->ShouldTransmit( pInfo );
 		}
 	}
-	
+
 	return FL_EDICT_ALWAYS;
 }
- 
+
 //-----------------------------------------------------------------------------
 // Purpose: Fixup parent after restore
 //-----------------------------------------------------------------------------
@@ -378,10 +378,10 @@ void CSprite::OnRestore()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pSpriteName - 
-//			&origin - 
-//			animate - 
+// Purpose:
+// Input  : *pSpriteName -
+//			&origin -
+//			animate -
 // Output : CSprite
 //-----------------------------------------------------------------------------
 CSprite *CSprite::SpriteCreate( const char *pSpriteName, const Vector &origin, bool animate )
@@ -399,10 +399,10 @@ CSprite *CSprite::SpriteCreate( const char *pSpriteName, const Vector &origin, b
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pSpriteName - 
-//			&origin - 
-//			animate - 
+// Purpose:
+// Input  : *pSpriteName -
+//			&origin -
+//			animate -
 // Output : CSprite
 //-----------------------------------------------------------------------------
 CSprite *CSprite::SpriteCreatePredictable( const char *module, int line, const char *pSpriteName, const Vector &origin, bool animate )
@@ -422,7 +422,7 @@ CSprite *CSprite::SpriteCreatePredictable( const char *module, int line, const c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSprite::AnimateThink( void )
 {
@@ -433,7 +433,7 @@ void CSprite::AnimateThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSprite::AnimateUntilDead( void )
 {
@@ -449,9 +449,9 @@ void CSprite::AnimateUntilDead( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : scaleSpeed - 
-//			fadeSpeed - 
+// Purpose:
+// Input  : scaleSpeed -
+//			fadeSpeed -
 //-----------------------------------------------------------------------------
 void CSprite::Expand( float scaleSpeed, float fadeSpeed )
 {
@@ -464,7 +464,7 @@ void CSprite::Expand( float scaleSpeed, float fadeSpeed )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSprite::ExpandThink( void )
 {
@@ -486,11 +486,11 @@ void CSprite::ExpandThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frames - 
+// Purpose:
+// Input  : frames -
 //-----------------------------------------------------------------------------
 void CSprite::Animate( float frames )
-{ 
+{
 	m_flFrame += frames;
 	if ( m_flFrame > m_flMaxFrame )
 	{
@@ -518,7 +518,7 @@ void CSprite::SetBrightness( int brightness, float time )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSprite::SetSpriteScale( float scale )
 {
@@ -539,7 +539,7 @@ void CSprite::SetScale( float scale, float time )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSprite::TurnOff( void )
 {
@@ -548,14 +548,14 @@ void CSprite::TurnOff( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSprite::TurnOn( void )
 {
 	RemoveEffects( EF_NODRAW );
 	if ( (m_flSpriteFramerate && m_flMaxFrame > 1.0)
 #if !defined( CLIENT_DLL )
-		|| (m_spawnflags & SF_SPRITE_ONCE) 
+		|| (m_spawnflags & SF_SPRITE_ONCE)
 #endif
 		)
 	{
@@ -638,7 +638,7 @@ void CSprite::InputToggleSprite( inputdata_t &inputdata )
 #if defined( CLIENT_DLL )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CSprite::GetRenderScale( void )
@@ -685,7 +685,7 @@ void CSprite::GetRenderBounds( Vector &vecMins, Vector &vecMaxs )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CSprite::GetRenderBrightness( void )
 {
@@ -705,7 +705,7 @@ int	CSprite::GetRenderBrightness( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSprite::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -746,8 +746,8 @@ extern bool g_bRenderingScreenshot;
 extern ConVar r_drawviewmodel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flags - 
+// Purpose:
+// Input  : flags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CSprite::DrawModel( int flags )
@@ -758,14 +758,14 @@ int CSprite::DrawModel( int flags )
 		return 0;
 
 #ifdef PORTAL
-	if ( ( !g_pPortalRender->IsRenderingPortal() && !m_bDrawInMainRender ) || 
+	if ( ( !g_pPortalRender->IsRenderingPortal() && !m_bDrawInMainRender ) ||
 		( g_pPortalRender->IsRenderingPortal() && !m_bDrawInPortalRender ) )
 	{
 		return 0;
 	}
 #endif //#ifdef PORTAL
 
-	// Tracker 16432:  If rendering a savegame screenshot then don't draw sprites 
+	// Tracker 16432:  If rendering a savegame screenshot then don't draw sprites
 	//   who have viewmodels as their moveparent
 	if ( g_bRenderingScreenshot || !r_drawviewmodel.GetBool() )
 	{
@@ -792,11 +792,11 @@ int CSprite::DrawModel( int flags )
 	}
 
 	//Draw it
-	int drawn = DrawSprite( 
+	int drawn = DrawSprite(
 		this,
-		GetModel(), 
-		GetAbsOrigin(), 
-		GetAbsAngles(), 
+		GetModel(),
+		GetAbsOrigin(),
+		GetAbsAngles(),
 		m_flFrame,				// sprite frame to render
 		m_hAttachedToEntity,	// attach to
 		m_nAttachment,			// attachment point

@@ -67,11 +67,11 @@ void CTripmineGrenade::Spawn( void )
 
 	ResetSequenceInfo( );
 	m_flPlaybackRate	= 0;
-	
+
 	UTIL_SetSize(this, Vector( -4, -4, -2), Vector(4, 4, 2));
 
 	m_flPowerUp = gpGlobals->curtime + 2.0;
-	
+
 	SetThink( PowerupThink );
 	SetNextThink( gpGlobals->curtime + 0.2 );
 
@@ -92,7 +92,7 @@ void CTripmineGrenade::Spawn( void )
 
 void CTripmineGrenade::Precache( void )
 {
-	PrecacheModel("models/Weapons/w_slam.mdl"); 
+	PrecacheModel("models/Weapons/w_slam.mdl");
 
 	PrecacheScriptSound( "TripmineGrenade.Charge" );
 	PrecacheScriptSound( "TripmineGrenade.PowerUp" );
@@ -159,7 +159,7 @@ void CTripmineGrenade::MakeBeam( void )
 		UTIL_TraceLine( GetAbsOrigin(), m_vecEnd, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
 		m_flBeamLength = tr.fraction;
 		SetOwnerEntity( NULL );
-		
+
 	}
 
 	// set to follow laser spot
@@ -202,7 +202,7 @@ void CTripmineGrenade::BeamBreakThink( void  )
 
 	// ALERT( at_console, "%f : %f\n", tr.flFraction, m_flBeamLength );
 
-	// respawn detect. 
+	// respawn detect.
 	if ( !m_pBeam )
 	{
 		MakeBeam( );
@@ -263,4 +263,3 @@ void CTripmineGrenade::DelayDeathThink( void )
 
 	Explode( &tr, DMG_BLAST );
 }
-

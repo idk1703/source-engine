@@ -60,7 +60,7 @@ void CMerasmusZap::PlayCastSound( CMerasmus* me ) const
 	{
 	case SPELL_FIRE:
 		{
-			me->PlayLowPrioritySound( filter, "Halloween.MerasmusCastFireSpell" ); 
+			me->PlayLowPrioritySound( filter, "Halloween.MerasmusCastFireSpell" );
 		}
 		break;
 	case SPELL_LAUNCH:
@@ -70,4 +70,3 @@ void CMerasmusZap::PlayCastSound( CMerasmus* me ) const
 		break;
 	}
 }
-

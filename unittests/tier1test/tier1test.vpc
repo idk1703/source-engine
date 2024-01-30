@@ -30,7 +30,7 @@ $Project "tier1test"
 	$Folder	"Header Files"
 	{
 	}
-	
+
 	$Folder "Link Libraries"
 	{
 		$Lib mathlib

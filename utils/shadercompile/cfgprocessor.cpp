@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -123,7 +123,7 @@ template < typename K, typename V >
 V const & QuickMap< K, V >::GetLessOrEq( K &k, V const &v ) const
 {
 	const_iterator it = lower_bound( k );
-	
+
 	if ( end() == it )
 	{
 		if ( empty() )
@@ -193,8 +193,8 @@ public:
 
 public:
 	char const * Name() const { return m_sName.data(); };
-	int Min() const { return m_min; }; 
-	int Max() const { return m_max; }; 
+	int Min() const { return m_min; };
+	int Max() const { return m_max; };
 	bool IsStatic() const { return m_bStatic; }
 
 protected:
@@ -226,7 +226,7 @@ public:
 	virtual void Print( IEvaluationContext *pCtx ) const = 0;
 };
 
-#define EVAL virtual int Evaluate( IEvaluationContext *pCtx ) const 
+#define EVAL virtual int Evaluate( IEvaluationContext *pCtx ) const
 #define PRNT virtual void Print( IEvaluationContext *pCtx ) const
 
 class CExprConstant : public IExpression
@@ -848,7 +848,7 @@ namespace ConfigurationProcessing
 		{
 			riAdvanceMore += ( pSetDef->Max() - *pSetValues );
 			*pSetValues = pSetDef->Max();
-			
+
 			int iInterval = ( pSetDef->Max() - pSetDef->Min() + 1 );
 			*pSetValues -= int( riAdvanceMore % iInterval );
 			riAdvanceMore /= iInterval;
@@ -909,7 +909,7 @@ have_combo_iteration:
 		// Defines
 		Define const * const pDefVars = m_pEntry->m_pCg->GetDefinesBase();
 		Define const *pSetDef;
-		
+
 		{
 			// ------- OnCombo( nCurrentCombo ); ----------
 			sprintf( pchBuffer, "%s ", m_pEntry->m_sPrefix.data() );
@@ -938,7 +938,7 @@ have_combo_iteration:
 		}
 	} s_autoDestroyEntries;
 
-	
+
 	FILE *& GetInputStream( FILE * )
 	{
 		static FILE *s_fInput = stdin;
@@ -1267,7 +1267,7 @@ ComboHandle Combo_GetCombo( uint64 iCommandNumber )
 
 	// Advance the handle as needed
 	CPCHI_t *pImpl = new CPCHI_t( chiFound );
-	
+
 	uint64 iCommandFoundAdvance = iCommandNumber - iCommandFound;
 	pImpl->AdvanceCommands( iCommandFoundAdvance );
 
@@ -1298,7 +1298,7 @@ ComboHandle Combo_GetNext( uint64 &riCommandNumber, ComboHandle &rhCombo, uint64
 		// Advance the handle as needed
 		pImpl = new CPCHI_t( chiFound );
 		rhCombo = AsHandle( pImpl );
-		
+
 		uint64 iCommandFoundAdvance = riCommandNumber - iCommandFound;
 		pImpl->AdvanceCommands( iCommandFoundAdvance );
 
@@ -1340,7 +1340,7 @@ ComboHandle Combo_GetNext( uint64 &riCommandNumber, ComboHandle &rhCombo, uint64
 		// Set up the new combo handle
 		pImpl = new CPCHI_t( chiNext );
 		rhCombo = AsHandle( pImpl );
-		
+
 		if ( !pImpl->IsSkipped() )
 			return rhCombo;
 	}

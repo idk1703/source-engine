@@ -1,10 +1,10 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
-#include "filesystem.h" 
+#include "filesystem.h"
 #include "tier1/strtools.h"
 #include "tier1/utllinkedlist.h"
 #include "tier1/KeyValues.h"
@@ -58,10 +58,10 @@ DEFINE_ENUM_BITWISE_OPERATORS( EPlatform_t );
 	const EPlatform_t	thisPlatform = PLATFORM_XBOX_360;
 #elif defined( _PS3 )
 	const EPlatform_t	thisPlatform = PLATFORM_PS3;
-#elif defined ( _LINUX ) 
+#elif defined ( _LINUX )
 	const EPlatform_t	thisPlatform = PLATFORM_LINUX;
 #else
-  #error "UNABLE TO DETERMINE PLATFORM"
+	#error "UNABLE TO DETERMINE PLATFORM"
 #endif
 
 
@@ -78,14 +78,14 @@ struct VideoSystemInfo_t
 	const char		*m_pInterfaceName;
 };
 
-static VideoSystemInfo_t s_VideoAppSystems[] = 
+static VideoSystemInfo_t s_VideoAppSystems[] =
 {
 	{ VideoSystem::QUICKTIME,	PLATFORM_WIN32 | PLATFORM_OSX,							"video_quicktime",  VIDEO_SUBSYSTEM_INTERFACE_VERSION },
 	{ VideoSystem::BINK,		PLATFORM_WIN32 | PLATFORM_OSX | PLATFORM_XBOX_360 | PLATFORM_LINUX,		"video_bink",	    VIDEO_SUBSYSTEM_INTERFACE_VERSION },
 	//{ VideoSystem::AVI,			PLATFORM_WIN32,											"avi",				VIDEO_SUBSYSTEM_INTERFACE_VERSION },
 	//{ VideoSystem::WMV,			PLATFORM_WIN32,											"wmv",				VIDEO_SUBSYSTEM_INTERFACE_VERSION },
 	{ VideoSystem::WEBM,	PLATFORM_LINUX,							"video_webm",  VIDEO_SUBSYSTEM_INTERFACE_VERSION },
-	
+
 	{ VideoSystem::NONE,		PLATFORM_NONE, nullptr, nullptr }			// Required to terminate the list
 };
 
@@ -124,7 +124,7 @@ CValveVideoServices::~CValveVideoServices()
 {
 	DisconnectVideoLibraries( );
 }
-	
+
 
 bool CValveVideoServices::Connect( CreateInterfaceFn factory )
 {
@@ -142,12 +142,12 @@ bool CValveVideoServices::Connect( CreateInterfaceFn factory )
 #if defined( USE_SDL )
 	g_pLauncherMgr = (ILauncherMgr *)factory( SDLMGR_INTERFACE_VERSION, NULL );
 #endif
-	
+
 	if ( !ConnectVideoLibraries( factory ) )
 	{
 		return false;
 	}
-	
+
 	return ( true );
 }
 
@@ -175,7 +175,7 @@ bool CValveVideoServices::ConnectVideoLibraries( CreateInterfaceFn factory )
 	AssertExitF( m_bInitialized == false );
 
 	int n = 0;
-	
+
 	while ( IS_NOT_EMPTY( s_VideoAppSystems[n].m_pModuleName ) && s_VideoAppSystems[n].m_SystemID != VideoSystem::NONE )
 	{
 		if (BITFLAGS_SET( s_VideoAppSystems[n].m_Platforms, thisPlatform ) )
@@ -187,7 +187,7 @@ bool CValveVideoServices::ConnectVideoLibraries( CreateInterfaceFn factory )
 				CreateInterfaceFn fn = Sys_GetFactory( pModule );
 				if ( fn != nullptr )
 				{
-				
+
 					IVideoSubSystem *pVideoSystem = (IVideoSubSystem*) fn( s_VideoAppSystems[n].m_pInterfaceName, NULL );
 					if ( pVideoSystem != nullptr && pVideoSystem->Connect( factory ) )
 					{
@@ -200,25 +200,25 @@ bool CValveVideoServices::ConnectVideoLibraries( CreateInterfaceFn factory )
 								Assert( m_VideoSystemModule[slotNum] == nullptr );
 								m_VideoSystemModule[slotNum] = pModule;
 								m_VideoSystems[slotNum] = pVideoSystem;
-								
+
 								m_nInstalledSystems++;
 								success = true;
 							}
 						}
 					}
 				}
-				
+
 				if ( success == false )
 				{
-					
+
 					Msg( "Error occurred while attempting to load and initialize Video Subsystem\n Video Subsystem module '%s'\n Video Subsystem Interface  '%s'", s_VideoAppSystems[n].m_pModuleName, s_VideoAppSystems[n].m_pInterfaceName );
 					Sys_UnloadModule( pModule );
 				}
-			}			
+			}
 		}
-		
-		n++;			
-	}			
+
+		n++;
+	}
 
 	// now we query each video system for its capabilities, and supported file extensions
 	for ( int i = VideoSystem::VIDEO_SYSTEM_FIRST; i < VideoSystem::VIDEO_SYSTEM_COUNT; i++ )
@@ -228,28 +228,28 @@ bool CValveVideoServices::ConnectVideoLibraries( CreateInterfaceFn factory )
 		{
 			m_VideoSystemType[i]		= pSubSystem->GetSystemID();
 			m_VideoSystemFeatures[i]	= pSubSystem->GetSupportedFeatures();
-			
+
 			// get every file extension it handles, and the info about it
 			int eCount = pSubSystem->GetSupportedFileExtensionCount();
 			Assert( eCount > 0 );
-			
+
 			for ( int n = 0; n < eCount; n++ )
 			{
 				VideoFileExtensionInfo_t	extInfoRec;
-				
+
 				extInfoRec.m_FileExtension = pSubSystem->GetSupportedFileExtension( n );
 				extInfoRec.m_VideoSubSystem = pSubSystem->GetSystemID();
 				extInfoRec.m_VideoFeatures = pSubSystem->GetSupportedFileExtensionFeatures( n );
-				
+
 				AssertPtr( extInfoRec.m_FileExtension );
-				
+
 				m_ExtInfo.AddToTail( extInfoRec );
 			}
 		}
 	}
 
 	m_bInitialized = true;
-	
+
 	return true;
 }
 
@@ -272,19 +272,19 @@ bool CValveVideoServices::DisconnectVideoLibraries()
 			m_VideoSystems[i]->Disconnect();
 			m_VideoSystems[i] = nullptr;
 		}
-		
+
 		if ( m_VideoSystemModule[i] != nullptr )
 		{
 			Sys_UnloadModule( m_VideoSystemModule[i] );
 			m_VideoSystemModule[i] = nullptr;
 		}
-	
+
 		m_VideoSystemType[i]	 = VideoSystem::NONE;
 		m_VideoSystemFeatures[i] = VideoSystemFeature::NO_FEATURES;
 	}
 
 	m_bInitialized = false;
-	
+
 	return true;
 }
 
@@ -302,7 +302,7 @@ int CValveVideoServices::DestroyAllVideoInterfaces()
 	{
 		DestroyVideoMaterial( (IVideoMaterial*) m_MaterialList[i].m_pObject );
 	}
-	
+
 	return n;
 }
 
@@ -344,15 +344,15 @@ void CValveVideoServices::Shutdown()
 			m_VideoSystems[n]->Shutdown();
 		}
 	}
-	
+
 	BaseClass::Shutdown();
 }
-		
-	
-// ===========================================================================	
+
+
+// ===========================================================================
 // Inherited from IVideoServices
-// ===========================================================================	
-	
+// ===========================================================================
+
 // Query the available video systems
 int CValveVideoServices::GetAvailableVideoSystemCount()
 {
@@ -363,31 +363,31 @@ int CValveVideoServices::GetAvailableVideoSystemCount()
 // returns the enumerated video system, *IF* it is installed and working
 VideoSystem_t CValveVideoServices::GetAvailableVideoSystem( int n )
 {
-	if ( n< 0 || n >= m_nInstalledSystems ) 
+	if ( n< 0 || n >= m_nInstalledSystems )
 	{
 		return VideoSystem::NONE;
 	}
-	
+
 	for ( int i = VideoSystem::VIDEO_SYSTEM_FIRST, c = 0; i < VideoSystem::VIDEO_SYSTEM_COUNT; i++ )
 	{
 		if ( m_VideoSystems[i] != nullptr )
 		{
-			if ( c == n ) 
+			if ( c == n )
 			{
 				return m_VideoSystemType[i];
 			}
 			c++;
 		}
 	}
-	
+
 	return VideoSystem::NONE;
 }
 
 
-// ===========================================================================	
+// ===========================================================================
 // returns the index for the video system...
 // ... provided that system is installed and available to do something
-// ===========================================================================	
+// ===========================================================================
 int CValveVideoServices::GetIndexForSystem( VideoSystem_t n )
 {
 	if ( n >= VideoSystem::VIDEO_SYSTEM_FIRST && n < VideoSystem::VIDEO_SYSTEM_COUNT && m_nInstalledSystems > 0 )
@@ -398,7 +398,7 @@ int CValveVideoServices::GetIndexForSystem( VideoSystem_t n )
 			return i;
 		}
 	}
-	
+
 	return SYSTEM_NOT_FOUND;
 }
 
@@ -417,26 +417,26 @@ VideoSystem_t CValveVideoServices::GetSystemForIndex( int n )
 }
 
 
-// ===========================================================================	
+// ===========================================================================
 // video system query functions
-// ===========================================================================	
+// ===========================================================================
 bool CValveVideoServices::IsVideoSystemAvailable( VideoSystem_t videoSystem )
 {
-	int n = GetIndexForSystem( videoSystem ); 
+	int n = GetIndexForSystem( videoSystem );
 	return ( n != SYSTEM_NOT_FOUND ) ? true : false;
 }
 
 
 VideoSystemStatus_t CValveVideoServices::GetVideoSystemStatus( VideoSystem_t videoSystem )
 {
-	int n = GetIndexForSystem( videoSystem ); 
+	int n = GetIndexForSystem( videoSystem );
 	return ( n!= SYSTEM_NOT_FOUND ) ? m_VideoSystems[n]->GetSystemStatus() : VideoSystemStatus::NOT_INSTALLED;
 }
 
 
 VideoSystemFeature_t CValveVideoServices::GetVideoSystemFeatures( VideoSystem_t videoSystem )
 {
-	int n = GetIndexForSystem( videoSystem ); 
+	int n = GetIndexForSystem( videoSystem );
 	return ( n!= SYSTEM_NOT_FOUND ) ? m_VideoSystemFeatures[n] : VideoSystemFeature::NO_FEATURES;
 
 }
@@ -444,7 +444,7 @@ VideoSystemFeature_t CValveVideoServices::GetVideoSystemFeatures( VideoSystem_t 
 
 const char *CValveVideoServices::GetVideoSystemName( VideoSystem_t videoSystem )
 {
-	int n = GetIndexForSystem( videoSystem ); 
+	int n = GetIndexForSystem( videoSystem );
 	return ( n!= SYSTEM_NOT_FOUND ) ? m_VideoSystems[n]->GetVideoSystemName() : nullptr;
 }
 
@@ -469,14 +469,14 @@ VideoSystem_t CValveVideoServices::FindNextSystemWithFeature( VideoSystemFeature
 			return (VideoSystem_t) i;
 		}
 	}
-	
+
 	return VideoSystem::NONE;
 }
 
 
-// ===========================================================================	
+// ===========================================================================
 // video services status functions
-// ===========================================================================	
+// ===========================================================================
 VideoResult_t CValveVideoServices::GetLastResult()
 {
 	return m_LastResult;
@@ -488,36 +488,36 @@ VideoResult_t CValveVideoServices::SetResult( VideoResult_t resultCode )
 	m_LastResult = resultCode;
 	return resultCode;
 }
-	
-		
-// ===========================================================================	
+
+
+// ===========================================================================
 // deal with video file extensions and video system mappings
-// ===========================================================================	
+// ===========================================================================
 int CValveVideoServices::GetSupportedFileExtensionCount( VideoSystem_t videoSystem )
 {
-	int n = GetIndexForSystem( videoSystem ); 
-	
+	int n = GetIndexForSystem( videoSystem );
+
 	return ( n == SYSTEM_NOT_FOUND ) ? 0 : m_VideoSystems[n]->GetSupportedFileExtensionCount();
 }
 
 
 const char *CValveVideoServices::GetSupportedFileExtension( VideoSystem_t videoSystem, int extNum )
 {
-	int n = GetIndexForSystem( videoSystem ); 
+	int n = GetIndexForSystem( videoSystem );
 
 	int c = ( n == SYSTEM_NOT_FOUND ) ? 0 : m_VideoSystems[n]->GetSupportedFileExtensionCount();;
-	
+
 	return ( extNum < 0 || extNum >= c ) ? nullptr : m_VideoSystems[n]->GetSupportedFileExtension( extNum );
-	
+
 }
 
 
 VideoSystemFeature_t CValveVideoServices::GetSupportedFileExtensionFeatures( VideoSystem_t videoSystem, int extNum )
 {
-	int n = GetIndexForSystem( videoSystem ); 
+	int n = GetIndexForSystem( videoSystem );
 
 	int c = ( n == SYSTEM_NOT_FOUND ) ? 0 : m_VideoSystems[n]->GetSupportedFileExtensionCount();
-	
+
 	return ( extNum < 0 || extNum >= c ) ? VideoSystemFeature::NO_FEATURES : m_VideoSystems[n]->GetSupportedFileExtensionFeatures( extNum );
 }
 
@@ -526,7 +526,7 @@ VideoSystem_t CValveVideoServices::LocateVideoSystemForPlayingFile( const char *
 {
 	SetResult( VideoResult::BAD_INPUT_PARAMETERS );
 	AssertExitV( IS_NOT_EMPTY( pFileName ), VideoSystem::NONE );
-	
+
 	VideoSystem_t theSystem = LocateSystemAndFeaturesForFileName( pFileName, nullptr, playMode );
 
 	SetResult( VideoResult::SUCCESS );
@@ -534,15 +534,15 @@ VideoSystem_t CValveVideoServices::LocateVideoSystemForPlayingFile( const char *
 }
 
 
-// ===========================================================================	
+// ===========================================================================
 // Given a video file name, possibly with a set extension, locate the file
 //   or a suitable substitute that is playable on the current system
-// ===========================================================================	
+// ===========================================================================
 VideoResult_t CValveVideoServices::LocatePlayableVideoFile( const char *pSearchFileName, const char *pPathID, VideoSystem_t *pPlaybackSystem, char *pPlaybackFileName, int fileNameMaxLen, VideoSystemFeature_t playMode )
 {
 	AssertExitV( IS_NOT_EMPTY( pSearchFileName ) || pPlaybackSystem == nullptr || pPlaybackSystem == nullptr || fileNameMaxLen <= 0, SetResult( VideoResult::BAD_INPUT_PARAMETERS ) );
 
-	VideoResult_t Status = ResolveToPlayableVideoFile( pSearchFileName, pPathID, VideoSystem::DETERMINE_FROM_FILE_EXTENSION, playMode, 
+	VideoResult_t Status = ResolveToPlayableVideoFile( pSearchFileName, pPathID, VideoSystem::DETERMINE_FROM_FILE_EXTENSION, playMode,
 									true, pPlaybackFileName, fileNameMaxLen, pPlaybackSystem );
 
 	return SetResult( Status );
@@ -550,9 +550,9 @@ VideoResult_t CValveVideoServices::LocatePlayableVideoFile( const char *pSearchF
 
 
 
-// ===========================================================================	
+// ===========================================================================
 // Create/destroy a video material
-// ===========================================================================	
+// ===========================================================================
 IVideoMaterial* CValveVideoServices::CreateVideoMaterial( const char *pMaterialName, const char *pVideoFileName, const char *pPathID, VideoPlaybackFlags_t playbackFlags, VideoSystem_t videoSystem, bool PlayAlternateIfNotAvailable )
 {
 	SetResult( VideoResult::BAD_INPUT_PARAMETERS );
@@ -565,7 +565,7 @@ IVideoMaterial* CValveVideoServices::CreateVideoMaterial( const char *pMaterialN
 	VideoSystem_t  actualVideoSystem = videoSystem;
 
 	VideoResult_t Status = ResolveToPlayableVideoFile( pVideoFileName, pPathID, videoSystem, VideoSystemFeature::PLAY_VIDEO_FILE_IN_MATERIAL, PlayAlternateIfNotAvailable,
-	                                                   ResolvedFilePath, sizeof(ResolvedFilePath), &actualVideoSystem );
+																										ResolvedFilePath, sizeof(ResolvedFilePath), &actualVideoSystem );
 
 	SetResult( Status );
 	if ( Status != VideoResult::SUCCESS )
@@ -574,17 +574,17 @@ IVideoMaterial* CValveVideoServices::CreateVideoMaterial( const char *pMaterialN
 	}
 
 	int sysIndex = GetIndexForSystem( actualVideoSystem );
-	
+
 	if ( sysIndex == SYSTEM_NOT_FOUND )
 	{
 		SetResult( VideoResult::SYSTEM_ERROR_OCCURED );
 		return nullptr;
 	}
-	
+
 	// Create the video material
 	IVideoMaterial *pMaterial = m_VideoSystems[sysIndex]->CreateVideoMaterial( pMaterialName, ResolvedFilePath, playbackFlags );
 
-	// Update our list, and return	
+	// Update our list, and return
 	if ( pMaterial != nullptr )
 	{
 		CActiveVideoObjectRecord_t info;
@@ -608,7 +608,7 @@ VideoResult_t CValveVideoServices::DestroyVideoMaterial( IVideoMaterial* pVideoM
 		{
 			VideoResult_t Status = m_VideoSystems[ m_MaterialList[i].m_VideoSystem ]->DestroyVideoMaterial( pVideoMaterial );
 			m_MaterialList.Remove( i );
-			
+
 			return SetResult( Status );
 		}
 	}
@@ -626,15 +626,15 @@ int CValveVideoServices::GetUniqueMaterialID()
 	return m_nMaterialCount;
 }
 
-// ===========================================================================	
+// ===========================================================================
 // Query availabilily of codec for encoding video
-// ===========================================================================	
+// ===========================================================================
 VideoResult_t CValveVideoServices::IsRecordCodecAvailable( VideoSystem_t videoSystem, VideoEncodeCodec_t codec )
 {
 	AssertExitV( codec >= VideoEncodeCodec::DEFAULT_CODEC && codec < VideoEncodeCodec::CODEC_COUNT, SetResult( VideoResult::BAD_INPUT_PARAMETERS ) );
 
 	int n = GetIndexForSystem( videoSystem );
-	
+
 	if ( n == SYSTEM_NOT_FOUND )
 	{
 		return SetResult( VideoResult::SYSTEM_NOT_AVAILABLE );
@@ -644,13 +644,13 @@ VideoResult_t CValveVideoServices::IsRecordCodecAvailable( VideoSystem_t videoSy
 }
 
 
-// ===========================================================================	
-// Create/destroy a video encoder		
-// ===========================================================================	
+// ===========================================================================
+// Create/destroy a video encoder
+// ===========================================================================
 IVideoRecorder*	CValveVideoServices::CreateVideoRecorder( VideoSystem_t videoSystem )
 {
 	int n = GetIndexForSystem( videoSystem );
-	
+
 	if ( n == SYSTEM_NOT_FOUND )
 	{
 		SetResult( VideoResult::SYSTEM_NOT_AVAILABLE );
@@ -664,7 +664,7 @@ IVideoRecorder*	CValveVideoServices::CreateVideoRecorder( VideoSystem_t videoSys
 	}
 
 	IVideoRecorder *pRecorder = m_VideoSystems[n]->CreateVideoRecorder();
-	
+
 	if ( pRecorder != nullptr )
 	{
 		CActiveVideoObjectRecord_t info;
@@ -688,7 +688,7 @@ VideoResult_t CValveVideoServices::DestroyVideoRecorder( IVideoRecorder *pVideoR
 		{
 			VideoResult_t Status = m_VideoSystems[ m_RecorderList[i].m_VideoSystem ]->DestroyVideoRecorder( pVideoRecorder );
 			m_RecorderList.Remove( i );
-			
+
 			return SetResult( Status );
 		}
 	}
@@ -698,9 +698,9 @@ VideoResult_t CValveVideoServices::DestroyVideoRecorder( IVideoRecorder *pVideoR
 }
 
 
-// ===========================================================================	
+// ===========================================================================
 // Plays a given video file until it completes or the user aborts
-// ===========================================================================	
+// ===========================================================================
 VideoResult_t CValveVideoServices::PlayVideoFileFullScreen( const char *pFileName, const char *pPathID, void *mainWindow, int windowWidth, int windowHeight, int desktopWidth, int desktopHeight, bool windowed, float forcedMinTime, VideoPlaybackFlags_t playbackFlags, VideoSystem_t videoSystem, bool PlayAlternateIfNotAvailable )
 {
 	SetResult( VideoResult::BAD_INPUT_PARAMETERS );
@@ -711,15 +711,15 @@ VideoResult_t CValveVideoServices::PlayVideoFileFullScreen( const char *pFileNam
 	VideoSystem_t  actualVideoSystem = videoSystem;
 
 	VideoResult_t Status = ResolveToPlayableVideoFile( pFileName, pPathID, videoSystem, VideoSystemFeature::PLAY_VIDEO_FILE_FULL_SCREEN, PlayAlternateIfNotAvailable,
-	                                                   ResolvedFilePath, sizeof(ResolvedFilePath), &actualVideoSystem );
-	                                                   
+																										ResolvedFilePath, sizeof(ResolvedFilePath), &actualVideoSystem );
+
 	if ( Status != VideoResult::SUCCESS )
 	{
 		return Status;
 	}
 
 	int sysIndex = GetIndexForSystem( actualVideoSystem );
-	
+
 	if ( sysIndex != SYSTEM_NOT_FOUND )
 	{
 		return SetResult( m_VideoSystems[sysIndex]->PlayVideoFileFullScreen( ResolvedFilePath, mainWindow, windowWidth, windowHeight, desktopWidth, desktopHeight, windowed, forcedMinTime, playbackFlags ) );
@@ -728,22 +728,22 @@ VideoResult_t CValveVideoServices::PlayVideoFileFullScreen( const char *pFileNam
 	{
 		return SetResult( VideoResult::SYSTEM_ERROR_OCCURED );
 	}
-	
+
 }
 
 
-// ===========================================================================	
+// ===========================================================================
 // Functions to connect sound systems to video systems
-// ===========================================================================	
+// ===========================================================================
 VideoResult_t CValveVideoServices::SoundDeviceCommand( VideoSoundDeviceOperation_t operation, void *pDevice, void *pData, VideoSystem_t videoSystem )
 {
 	AssertExitV( IS_IN_RANGECOUNT( operation, 0, VideoSoundDeviceOperation::OPERATION_COUNT ), SetResult( VideoResult::BAD_INPUT_PARAMETERS ) );
-	
+
 	AssertExitV( videoSystem == VideoSystem::ALL_VIDEO_SYSTEMS || IS_IN_RANGECOUNT( videoSystem, VideoSystem::VIDEO_SYSTEM_FIRST, VideoSystem::VIDEO_SYSTEM_COUNT ), SetResult( VideoResult::BAD_INPUT_PARAMETERS ) );
 
 	int startIdx = (int)  VideoSystem::VIDEO_SYSTEM_FIRST;
 	int lastIdx = (int) VideoSystem::VIDEO_SYSTEM_COUNT - 1;
-	
+
 	if ( videoSystem != VideoSystem::ALL_VIDEO_SYSTEMS )
 	{
 		startIdx = lastIdx = GetIndexForSystem( videoSystem );
@@ -752,9 +752,9 @@ VideoResult_t CValveVideoServices::SoundDeviceCommand( VideoSoundDeviceOperation
 			return SetResult( VideoResult::SYSTEM_NOT_AVAILABLE );
 		}
 	}
-	
+
 	VideoResult_t result = VideoResult::SYSTEM_NOT_AVAILABLE;
-	
+
 	for ( int i = startIdx; i <= lastIdx; i++ )
 	{
 		int n = GetIndexForSystem( (VideoSystem_t) i );
@@ -763,14 +763,14 @@ VideoResult_t CValveVideoServices::SoundDeviceCommand( VideoSoundDeviceOperation
 			result = m_VideoSystems[n]->VideoSoundDeviceCMD( operation, pDevice, pData );
 		}
 	}
-	
+
 	return SetResult( result );
 }
 
 
-// ===========================================================================	
+// ===========================================================================
 // Sets the sound devices that the video will decode to
-// ===========================================================================	
+// ===========================================================================
 const wchar_t *CValveVideoServices::GetCodecName( VideoEncodeCodec_t nCodec )
 {
 	static const char *s_pCodecLookup[VideoEncodeCodec::CODEC_COUNT] =
@@ -796,10 +796,10 @@ const wchar_t *CValveVideoServices::GetCodecName( VideoEncodeCodec_t nCodec )
 	return g_pVGuiLocalize->Find( s_pCodecLookup[ nCodec ] );
 }
 
-// ===========================================================================	
+// ===========================================================================
 // Functions to determine which file and video system to use
-// ===========================================================================	
-VideoResult_t CValveVideoServices::ResolveToPlayableVideoFile( const char *pFileName, const char *pPathID, VideoSystem_t videoSystem, VideoSystemFeature_t requiredFeature, 
+// ===========================================================================
+VideoResult_t CValveVideoServices::ResolveToPlayableVideoFile( const char *pFileName, const char *pPathID, VideoSystem_t videoSystem, VideoSystemFeature_t requiredFeature,
 									bool PlayAlternateIfNotAvailable, char *pResolvedFileName, int resolvedFileNameMaxLen, VideoSystem_t *pResolvedVideoSystem )
 {
 	SetResult( VideoResult::BAD_INPUT_PARAMETERS );
@@ -807,11 +807,11 @@ VideoResult_t CValveVideoServices::ResolveToPlayableVideoFile( const char *pFile
 	AssertExitV( videoSystem == VideoSystem::DETERMINE_FROM_FILE_EXTENSION || IS_IN_RANGECOUNT( videoSystem, VideoSystem::VIDEO_SYSTEM_FIRST, VideoSystem::VIDEO_SYSTEM_COUNT ), VideoResult::BAD_INPUT_PARAMETERS );
 	AssertExitV( requiredFeature != VideoSystemFeature::NO_FEATURES, VideoResult::BAD_INPUT_PARAMETERS );
 	AssertExitV( pResolvedFileName != nullptr && resolvedFileNameMaxLen > 0 && pResolvedVideoSystem != nullptr, VideoResult::BAD_INPUT_PARAMETERS );
-	
+
 	// clear results should we return failure
 	pResolvedFileName[0] = nullchar;
 	*pResolvedVideoSystem = VideoSystem::NONE;
-	
+
 	int sysIdx = SYSTEM_NOT_FOUND;
 	VideoSystemFeature_t sysFeatures = VideoSystemFeature::NO_FEATURES;
 
@@ -821,14 +821,14 @@ VideoResult_t CValveVideoServices::ResolveToPlayableVideoFile( const char *pFile
 	{
 		goto search_for_video;
 	}
-	
+
 	// is the requested video system available?
-	
+
 	// We start with either the specified video system.. OR.. we choose the system based on the file extension
 	// Get the system and if it's valid, it's available features
 	if ( videoSystem != VideoSystem::DETERMINE_FROM_FILE_EXTENSION )
-	{	
-		sysIdx		= GetIndexForSystem( videoSystem );				// Caller specified the video system 
+	{
+		sysIdx		= GetIndexForSystem( videoSystem );				// Caller specified the video system
 		sysFeatures = ( sysIdx != SYSTEM_NOT_FOUND ) ? m_VideoSystemFeatures[sysIdx] : VideoSystemFeature::NO_FEATURES;
 	}
 	else
@@ -844,12 +844,12 @@ VideoResult_t CValveVideoServices::ResolveToPlayableVideoFile( const char *pFile
 	}
 
 	char ActualFilePath[MAX_PATH];
-	
-	// Examine the requested of inferred video system to see if it can do what we want, 
+
+	// Examine the requested of inferred video system to see if it can do what we want,
 	// and if so, see if the corresponding file is actually found (we support search paths)
-	
+
 	// Decision Path for when we have a preferred/specified video system specified to use
-	if ( sysIdx != SYSTEM_NOT_FOUND )	
+	if ( sysIdx != SYSTEM_NOT_FOUND )
 	{
 		bool  fileFound = false;
 
@@ -861,7 +861,7 @@ VideoResult_t CValveVideoServices::ResolveToPlayableVideoFile( const char *pFile
 				V_strncpy( ActualFilePath, pFileName, sizeof( ActualFilePath ) );
 				fileFound = g_pFullFileSystem->FileExists( pFileName, nullptr );
 			}
-			else 
+			else
 			{
 				fileFound = ( g_pFullFileSystem->RelativePathToFullPath( pFileName, pPathID, ActualFilePath, sizeof( ActualFilePath ) ) != nullptr );
 			}
@@ -901,15 +901,15 @@ search_for_video:
 	char SearchFileSpec[MAX_PATH];
 	V_strncpy( SearchFileSpec, pFileName, sizeof(SearchFileSpec) );
 	V_SetExtension( SearchFileSpec, ".*", sizeof(SearchFileSpec) );
-	
+
 	FileFindHandle_t  searchHandle = 0;
 
 	const char *pMatchingFile = g_pFullFileSystem->FindFirstEx( SearchFileSpec, pPathID, &searchHandle );
-	
+
 	while ( pMatchingFile != nullptr )
 	{
 		const char *pExt = GetFileExtension( pMatchingFile );
-		
+
 		if ( pExt != nullptr )
 		{
 			// compare file extensions
@@ -925,12 +925,12 @@ search_for_video:
 						sysIdx = GetIndexForSystem( m_ExtInfo[i].m_VideoSubSystem );
 						if ( sysIdx != SYSTEM_NOT_FOUND )
 						{
-							
+
 							// Start with any optional path we got...
 							V_ExtractFilePath( pFileName, ActualFilePath, sizeof( ActualFilePath ) );
-							// Append the search match file							
+							// Append the search match file
 							V_strncat( ActualFilePath, pMatchingFile, sizeof( ActualFilePath ) );
-							
+
 							if ( V_IsAbsolutePath( ActualFilePath ) )
 							{
 								V_strncpy( pResolvedFileName, ActualFilePath, resolvedFileNameMaxLen );
@@ -939,26 +939,26 @@ search_for_video:
 							{
 								g_pFullFileSystem->RelativePathToFullPath( ActualFilePath, pPathID, pResolvedFileName, resolvedFileNameMaxLen );
 							}
-							
+
 							// Return the system
 							*pResolvedVideoSystem = GetSystemForIndex( sysIdx );
-							
+
 							g_pFullFileSystem->FindClose( searchHandle );
-							
+
 							return SetResult( VideoResult::SUCCESS );
 						}
 					}
 				}
 			}
 		}
-	
-		// not usable.. keep searching		
+
+		// not usable.. keep searching
 		pMatchingFile = g_pFullFileSystem->FindNext( searchHandle );
-	}	
-	
+	}
+
 	// we didn't find anything we could use
 	g_pFullFileSystem->FindClose( searchHandle );
-		
+
 	return SetResult( VideoResult::VIDEO_FILE_NOT_FOUND );
 }
 
@@ -969,28 +969,28 @@ VideoSystem_t CValveVideoServices::LocateSystemAndFeaturesForFileName( const cha
 	{
 		*pFeatures = VideoSystemFeature::NO_FEATURES;
 	}
-	
+
 	AssertExitV( IS_NOT_EMPTY( pFileName ), VideoSystem::NONE );
-	
+
 	if ( m_ExtInfo.Count() < 1 )
 	{
 		return VideoSystem::NONE;
 	}
-	
+
 	// extract the file extension
-	
+
 	char fileExt[MAX_PATH];
-	
+
 	const char *pExt = GetFileExtension( pFileName );
 	if ( pExt == nullptr )
 	{
 		return VideoSystem::NONE;
 	}
 
-	// lowercase it so we can compare	
+	// lowercase it so we can compare
 	V_strncpy( fileExt, pExt, sizeof(fileExt) );
 	V_strlower( fileExt );
-	
+
 	for ( int i = 0; i < m_ExtInfo.Count(); i++ )
 	{
 		if ( V_stricmp( fileExt, m_ExtInfo[i].m_FileExtension ) == STRINGS_MATCH )
@@ -1003,7 +1003,7 @@ VideoSystem_t CValveVideoServices::LocateSystemAndFeaturesForFileName( const cha
 					continue;
 				}
 			}
-		
+
 			if ( pFeatures != nullptr)
 			{
 				*pFeatures = m_ExtInfo[i].m_VideoFeatures;
@@ -1011,7 +1011,7 @@ VideoSystem_t CValveVideoServices::LocateSystemAndFeaturesForFileName( const cha
 			return m_ExtInfo[i].m_VideoSubSystem;
 		}
 	}
-	
+
 	return VideoSystem::NONE;
 }
 
@@ -1022,13 +1022,13 @@ bool CValveVideoServices::IsMatchAnyExtension( const char *pFileName )
 	{
 		return false;
 	}
-		
+
 	const char* pExt = GetFileExtension( pFileName );
 	if ( pExt == nullptr )
 	{
 		return false;
 	}
-	
+
 	return ( V_stricmp( pExt, FILE_EXTENSION_ANY_MATCHING_VIDEO ) == STRINGS_MATCH );
 }
 
@@ -1039,9 +1039,9 @@ const char *CValveVideoServices::GetFileExtension( const char *pFileName )
 	{
 		return nullptr;
 	}
-	
+
 	const char *pExt = V_GetFileExtension( pFileName );
-	
+
 	if ( pExt == nullptr )
 	{
 		return nullptr;
@@ -1057,14 +1057,14 @@ const char *CValveVideoServices::GetFileExtension( const char *pFileName )
 
 
 
-// ===========================================================================	
+// ===========================================================================
 // CVideoCommonServices - services used by any/multiple videoSubsystems
 //   Functions are put here to avoid duplication and ensure they stay
 //   consistant across all installed subsystems
-// ===========================================================================	
+// ===========================================================================
 
 
-#ifdef WIN32		
+#ifdef WIN32
 	typedef SHORT (WINAPI *GetAsyncKeyStateFn_t)( int vKey );
 
 	static HINSTANCE s_UserDLLhInst = nullptr;
@@ -1090,7 +1090,7 @@ CVideoCommonServices::~CVideoCommonServices()
 void CVideoCommonServices::ResetInputHandlerState()
 {
 	m_bInputHandlerInitialized = false;
-	
+
 	m_bScanAll	= false;
 	m_bScanEsc	= false;
 	m_bScanReturn	= false;
@@ -1101,27 +1101,27 @@ void CVideoCommonServices::ResetInputHandlerState()
 	m_bReturnLast	= false;
 	m_bSpaceLast	= false;
 	m_bForceMinPlayTime	= false;
-		
+
 	m_bWindowed = false;
-	
+
 	m_playbackFlags = VideoPlaybackFlags::NO_PLAYBACK_OPTIONS;
 	m_forcedMinTime = 0.0f;
-	
+
 	m_StartTime = 0;
-	
+
 #ifdef WIN32
 	s_UserDLLhInst = nullptr;
 	s_pfnGetAsyncKeyState = nullptr;
-#endif	
+#endif
 
 }
 
-// ===========================================================================	
+// ===========================================================================
 // Calculate the proper dimensions to play a video in full screen mode
-//  uses the playback flags to supply rules for streaching, scaling	and 
+//  uses the playback flags to supply rules for streaching, scaling	and
 //  centering the video
-// ===========================================================================	
-bool CVideoCommonServices::CalculateVideoDimensions( int videoWidth, int videoHeight, int displayWidth, int displayHeight, VideoPlaybackFlags_t playbackFlags, 
+// ===========================================================================
+bool CVideoCommonServices::CalculateVideoDimensions( int videoWidth, int videoHeight, int displayWidth, int displayHeight, VideoPlaybackFlags_t playbackFlags,
 													int *pOutputWidth, int *pOutputHeight, int *pXOffset, int *pYOffset )
 {
 	AssertExitF( pOutputWidth != nullptr && pOutputHeight != nullptr && pXOffset != nullptr && pYOffset != nullptr );
@@ -1132,12 +1132,12 @@ bool CVideoCommonServices::CalculateVideoDimensions( int videoWidth, int videoHe
 	bool bLockAspect	= BITFLAGS_SET( playbackFlags, VideoPlaybackFlags::LOCK_ASPECT_RATIO );
 	bool bIntegralScale = BITFLAGS_SET( playbackFlags, VideoPlaybackFlags::INTEGRAL_SCALE );
 	bool bCenterVideo	= BITFLAGS_SET( playbackFlags, VideoPlaybackFlags::CENTER_VIDEO_IN_WINDOW );
-	
+
 	int curWidth = videoWidth;
 	int curHeight = videoHeight;
-	
+
 	// Try and just play it actual size?
-	if ( !bFillWindow )	
+	if ( !bFillWindow )
 	{
 		// is the window the same size or larger?
 		if ( curWidth <= displayWidth && curHeight <= displayHeight )
@@ -1162,7 +1162,7 @@ bool CVideoCommonServices::CalculateVideoDimensions( int videoWidth, int videoHe
 			else   // we are locking the aspect ratio, and need to shrink the video
 			{
 				// integral scale only....
-				if ( bIntegralScale )	
+				if ( bIntegralScale )
 				{
 					while ( curWidth > displayWidth || curHeight > displayHeight)
 					{
@@ -1176,18 +1176,18 @@ bool CVideoCommonServices::CalculateVideoDimensions( int videoWidth, int videoHe
 					float Xfactor = ( displayWidth / curWidth );
 					float Yfactor = ( displayHeight / curHeight );
 					float scale = MIN( Xfactor, Yfactor );
-					
+
 					curWidth = (int)  ( curWidth * scale + 0.35f );
 					curHeight = (int) ( curHeight * scale + 0.35f );
 					clamp( curWidth, 0, displayWidth );
 					clamp( curHeight, 0, displayHeight );
 					goto finish;
 				}
-			
+
 			}
 		}
 	}
-	
+
 	// ok.. we are wanting to fill the window....
 	if ( bFillWindow )
 	{
@@ -1209,7 +1209,7 @@ bool CVideoCommonServices::CalculateVideoDimensions( int videoWidth, int videoHe
 				float Xfactor = ( (float)displayWidth / curWidth );
 				float Yfactor = ( (float)displayHeight / curHeight );
 				float scale = MIN( Xfactor, Yfactor );
-				
+
 				curWidth = (int)  ( curWidth * scale + 0.35f );
 				curHeight = (int) ( curHeight * scale + 0.35f );
 				clamp( curWidth, 0, displayWidth );
@@ -1232,13 +1232,13 @@ bool CVideoCommonServices::CalculateVideoDimensions( int videoWidth, int videoHe
 				goto finish;
 			}
 			else
-			{	
+			{
 				curWidth = displayWidth;
 				curHeight = displayHeight;
 				goto finish;
 			}
 		}
-	}	
+	}
 
 
 finish:
@@ -1272,12 +1272,12 @@ float CVideoCommonServices::GetSystemVolume()
 	return sysVolume;
 }
 
-									  
 
-// ===========================================================================	
+
+// ===========================================================================
 // Sets up the state machine to receive messages and poll the keyboard
 //   while a full-screen video is playing
-// ===========================================================================	
+// ===========================================================================
 VideoResult_t CVideoCommonServices::InitFullScreenPlaybackInputHandler( VideoPlaybackFlags_t playbackFlags, float forcedMinTime, bool windowed )
 {
 	// already initialized?
@@ -1296,23 +1296,23 @@ VideoResult_t CVideoCommonServices::InitFullScreenPlaybackInputHandler( VideoPla
 	}
 
 	s_pfnGetAsyncKeyState = (GetAsyncKeyStateFn_t) GetProcAddress( m_UserDLLhInst, "GetAsyncKeyState" );
-	if ( s_pfnGetAsyncKeyState == NULL )	
+	if ( s_pfnGetAsyncKeyState == NULL )
 	{
 		FreeLibrary( m_UserDLLhInst );
 		return VideoResult::SYSTEM_ERROR_OCCURED;
 	}
-	
+
 #endif
 
-	// save off playback options	
+	// save off playback options
 	m_playbackFlags = playbackFlags;
 	m_forcedMinTime = forcedMinTime;
 	m_bWindowed = windowed;
 
 	// process the pause and abort options
 	m_bScanAll =  ANY_BITFLAGS_SET( playbackFlags, VideoPlaybackFlags::PAUSE_ON_ANY_KEY | VideoPlaybackFlags::ABORT_ON_ANY_KEY );
-	
-	m_bScanEsc	 = m_bScanAll || ANY_BITFLAGS_SET( playbackFlags, VideoPlaybackFlags::PAUSE_ON_ESC | VideoPlaybackFlags::ABORT_ON_ESC ); 
+
+	m_bScanEsc	 = m_bScanAll || ANY_BITFLAGS_SET( playbackFlags, VideoPlaybackFlags::PAUSE_ON_ESC | VideoPlaybackFlags::ABORT_ON_ESC );
 	m_bScanReturn = m_bScanAll || ANY_BITFLAGS_SET( playbackFlags, VideoPlaybackFlags::PAUSE_ON_RETURN | VideoPlaybackFlags::ABORT_ON_RETURN );
 	m_bScanSpace  = m_bScanAll || ANY_BITFLAGS_SET( playbackFlags, VideoPlaybackFlags::PAUSE_ON_SPACE | VideoPlaybackFlags::ABORT_ON_SPACE );
 
@@ -1332,15 +1332,15 @@ VideoResult_t CVideoCommonServices::InitFullScreenPlaybackInputHandler( VideoPla
 
 	// and we're on
 	m_bInputHandlerInitialized = true;
-	
+
 	return VideoResult::SUCCESS;
 }
 
 
-// ===========================================================================	
+// ===========================================================================
 //  Pumps the message loops and checks for a supported event
 //  returns true if there is an event to check
-// ===========================================================================	
+// ===========================================================================
 bool CVideoCommonServices::ProcessFullScreenInput( bool &bAbortEvent, bool &bPauseEvent, bool &bQuitEvent )
 {
 
@@ -1364,11 +1364,11 @@ bool CVideoCommonServices::ProcessFullScreenInput( bool &bAbortEvent, bool &bPau
 		if ( msg.message == WM_QUIT )
 		{
 			::PostQuitMessage( msg.wParam );
-			return true;			
+			return true;
 		}
-	
+
 		// todo - look for alt-tab events, etc?
-	
+
 		TranslateMessage( &msg );
 		DispatchMessage( &msg );
 	}
@@ -1421,21 +1421,21 @@ bool CVideoCommonServices::ProcessFullScreenInput( bool &bAbortEvent, bool &bPau
 		if ( m_bAbortEnabled )
 		{
 			bAbortEvent = ( bAnyKeyEvent && BITFLAGS_SET( m_playbackFlags, VideoPlaybackFlags::ABORT_ON_ANY_KEY ) ) ||
-						  ( bEscEvent && BITFLAGS_SET( m_playbackFlags, VideoPlaybackFlags::ABORT_ON_ESC ) ) ||
-				          ( bReturnEvent && BITFLAGS_SET( m_playbackFlags, VideoPlaybackFlags::ABORT_ON_RETURN ) ) ||
-						  ( bSpaceEvent && BITFLAGS_SET( m_playbackFlags, VideoPlaybackFlags::ABORT_ON_SPACE ) );
-			
+							( bEscEvent && BITFLAGS_SET( m_playbackFlags, VideoPlaybackFlags::ABORT_ON_ESC ) ) ||
+									( bReturnEvent && BITFLAGS_SET( m_playbackFlags, VideoPlaybackFlags::ABORT_ON_RETURN ) ) ||
+							( bSpaceEvent && BITFLAGS_SET( m_playbackFlags, VideoPlaybackFlags::ABORT_ON_SPACE ) );
+
 		}
-			
+
 		// check for pausing the movie?
 		if ( m_bPauseEnabled )
 		{
 			bPauseEvent = ( bAnyKeyEvent && BITFLAGS_SET( m_playbackFlags, VideoPlaybackFlags::PAUSE_ON_ANY_KEY ) ) ||
-						  ( bEscEvent && BITFLAGS_SET( m_playbackFlags, VideoPlaybackFlags::PAUSE_ON_ESC ) ) ||
-				          ( bReturnEvent && BITFLAGS_SET( m_playbackFlags, VideoPlaybackFlags::PAUSE_ON_RETURN ) ) ||
-						  ( bSpaceEvent && BITFLAGS_SET( m_playbackFlags, VideoPlaybackFlags::PAUSE_ON_SPACE ) );
+							( bEscEvent && BITFLAGS_SET( m_playbackFlags, VideoPlaybackFlags::PAUSE_ON_ESC ) ) ||
+									( bReturnEvent && BITFLAGS_SET( m_playbackFlags, VideoPlaybackFlags::PAUSE_ON_RETURN ) ) ||
+							( bSpaceEvent && BITFLAGS_SET( m_playbackFlags, VideoPlaybackFlags::PAUSE_ON_SPACE ) );
 		}
-	}				
+	}
 
 	// notify if any events triggered
 	return ( bAbortEvent || bPauseEvent );
@@ -1458,7 +1458,7 @@ VideoResult_t CVideoCommonServices::TerminateFullScreenPlaybackInputHandler()
 #endif
 
 	ResetInputHandlerState();
-	
+
 	return VideoResult::SUCCESS;
-	
+
 }

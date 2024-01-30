@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -76,10 +76,10 @@ BOOL CSwitchProps::OnKillActive()
 {
 	//call superclass
 	BOOL bRes=this->CPropertyPage::OnKillActive();
-	
+
 	m_persistDefall=m_Defall.GetCheck();
 	m_persistPause=theApp.pause=m_Pause.GetCheck();
-	
+
 	char buf[100];
 	m_PauseSecs.GetWindowText(buf,100);
 	m_persistPauseSecs=theApp.pauseSecs=atoi(buf);
@@ -90,12 +90,12 @@ BOOL CSwitchProps::OnKillActive()
 	m_persistUseSupportDir=theApp.useSupportDir=m_UseSupportDir.GetCheck()==1;
 	m_persistDisplayStartupInfo=theApp.displayStartupInfo=m_DisplayStartupInfo.GetCheck()==1;
 	m_persistElimPlayers=theApp.elimOldPlayers=m_ElimOldPlrs.GetCheck()==1;
-	
-	
+
+
 	m_elimDays.GetWindowText(buf,100);
 	m_persistElimDays=theApp.elimDays=atoi(buf);
-	
-	
+
+
 	return bRes;
 
 }
@@ -111,13 +111,13 @@ BOOL CSwitchProps::OnSetActive()
 		alreadyAcknowledged=true;
 		m_persistDefall=1;
 		m_Defall.SetCheck(1);
-		OnDefall();		
+		OnDefall();
 		return bRes;
 	}
-	
-	
+
+
 	bool temp;
-	
+
 	temp=m_persistDefall.toBool();
 	m_Defall.SetCheck(temp);
 
@@ -129,23 +129,23 @@ BOOL CSwitchProps::OnSetActive()
 
 	temp=theApp.displayMM2=m_persistDisplayMM2.toBool();
 	m_DisplayMM2.SetCheck(temp);
-	
+
 	temp=theApp.persistPlayerStats=m_persistPersistPlayerStats.toBool();
 	m_PersistPlayerStats.SetCheck(temp);
-	
+
 	temp=theApp.useSupportDir=m_persistUseSupportDir.toBool();
 	m_UseSupportDir.SetCheck(temp);
 
 	temp=theApp.displayStartupInfo=m_persistDisplayStartupInfo.toBool();
 	m_DisplayStartupInfo.SetCheck(temp);
-	
+
 	temp=theApp.elimOldPlayers=m_persistElimPlayers.toBool();
 	m_ElimOldPlrs.SetCheck(temp);
-	
+
 	theApp.elimDays=m_persistElimDays.toInt();
 	m_elimDays.SetWindowText(m_persistElimDays.toChars());
 
-	
+
 	OnDefall();
 	OnPlrpersist();
 	return bRes;
@@ -153,10 +153,10 @@ BOOL CSwitchProps::OnSetActive()
 }
 
 
-void CSwitchProps::OnDefall() 
+void CSwitchProps::OnDefall()
 {
 	bool defall=m_Defall.GetCheck()!=0;
-	
+
 	if (defall)
 	{
 		m_DisplayMM2.SetCheck(0);
@@ -181,7 +181,7 @@ void CSwitchProps::OnDefall()
 		m_OnlyHereToBeDisabledToo.EnableWindow(!defall);
 }
 
-void CSwitchProps::OnPlrpersist() 
+void CSwitchProps::OnPlrpersist()
 {
 	m_ElimOldPlrs.EnableWindow(m_PersistPlayerStats.GetCheck() && !m_Defall.GetCheck());
 	m_elimDays.EnableWindow(m_PersistPlayerStats.GetCheck() && !m_Defall.GetCheck());

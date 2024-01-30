@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,8 +14,8 @@
 #include "choreoeventwidget.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
 CChoreoGlobalEventWidget::CChoreoGlobalEventWidget( CChoreoWidget *parent )
 : CChoreoWidget( parent )
@@ -28,22 +28,22 @@ CChoreoGlobalEventWidget::CChoreoGlobalEventWidget( CChoreoWidget *parent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CChoreoGlobalEventWidget::~CChoreoGlobalEventWidget( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoGlobalEventWidget::Create( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rc - 
+// Purpose:
+// Input  : rc -
 //-----------------------------------------------------------------------------
 void CChoreoGlobalEventWidget::Layout( RECT& rc )
 {
@@ -129,7 +129,7 @@ void CChoreoGlobalEventWidget::redraw( CChoreoWidgetDrawHelper& drawHelper )
 		if ( image )
 		{
 			drawHelper.OffsetSubRect( rcTab );
-			DrawBitmapToDC( drawHelper.GrabDC(), rcTab.left, rcTab.top, 16, 16, *image );	
+			DrawBitmapToDC( drawHelper.GrabDC(), rcTab.left, rcTab.top, 16, 16, *image );
 		}
 	}
 
@@ -186,7 +186,7 @@ void CChoreoGlobalEventWidget::DrawLabel( CChoreoWidgetDrawHelper& drawHelper, C
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoGlobalEventWidget::DrawFocusRect( void )
 {
@@ -198,7 +198,7 @@ void CChoreoGlobalEventWidget::DrawFocusRect( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CChoreoEvent
 //-----------------------------------------------------------------------------
 CChoreoEvent *CChoreoGlobalEventWidget::GetEvent( void )
@@ -207,8 +207,8 @@ CChoreoEvent *CChoreoGlobalEventWidget::GetEvent( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 //-----------------------------------------------------------------------------
 void CChoreoGlobalEventWidget::SetEvent( CChoreoEvent *event )
 {

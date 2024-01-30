@@ -259,9 +259,9 @@ public:
 		return HeapSize( m_heap, 0, pMem );
 	}
 
-    // Force file + line information for an allocation
+	// Force file + line information for an allocation
 	virtual void PushAllocDbgInfo( const char *pFileName, int nLine ) {}
-    virtual void PopAllocDbgInfo() {}
+	virtual void PopAllocDbgInfo() {}
 
 	virtual long CrtSetBreakAlloc( long lNewBreakAlloc ) { return 0; }
 	virtual	int CrtSetReportMode( int nReportType, int nReportMode ) { return 0; }
@@ -305,7 +305,7 @@ public:
 
 	virtual uint32 GetDebugInfoSize() { return 0; }
 	virtual void SaveDebugInfo( void *pvDebugInfo ) { }
-	virtual void RestoreDebugInfo( const void *pvDebugInfo ) {}	
+	virtual void RestoreDebugInfo( const void *pvDebugInfo ) {}
 	virtual void InitDebugInfo( void *pvDebugInfo, const char *pchRootFileName, int nLine ) {}
 
 	virtual void GetActualDbgInfo( const char *&pFileName, int &nLine ) {}
@@ -566,7 +566,7 @@ inline T MemAlign( T val, size_t alignment )
 	return (T)( ( (size_t)val + alignment - 1 ) & ~( alignment - 1 ) );
 }
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 
 void CSmallBlockPool::Init( unsigned nBlockSize, byte *pBase, unsigned initialCommit )
@@ -647,13 +647,13 @@ void *CSmallBlockPool::Alloc()
 }
 
 void CSmallBlockPool::Free( void *p )
-	{	
+	{
 	Assert( IsOwner( p ) );
 
 	m_FreeList.Push( p );
 }
 
-// Count the free blocks.  
+// Count the free blocks.
 int CSmallBlockPool::CountFreeBlocks()
 {
 	return m_FreeList.Count();
@@ -670,7 +670,7 @@ int CSmallBlockPool::GetCommittedSize()
 
 // Return the total blocks memory is committed for in the heap
 int CSmallBlockPool::CountCommittedBlocks()
-{		 
+{
 	return  GetCommittedSize() / GetBlockSize();
 }
 
@@ -922,7 +922,7 @@ void *CSmallBlockHeap::Alloc( size_t nBytes )
 	}
 	Assert( ShouldUse( nBytes ) );
 	CSmallBlockPool *pPool = FindPool( nBytes );
-	
+
 	void *p = pPool->Alloc();
 	if ( p )
 	{
@@ -989,7 +989,7 @@ void *CSmallBlockHeap::Realloc( void *p, size_t nBytes )
 	{
 		int nBytesCopy = min( nBytes, pOldPool->GetBlockSize() );
 		memcpy( pNewBlock, p, nBytesCopy );
-	} 
+	}
 
 	pOldPool->Free( p );
 
@@ -1017,12 +1017,12 @@ void CSmallBlockHeap::DumpStats( FILE *pFile )
 		for ( int i = 0; i < NUM_POOLS; i++ )
 		{
 			// output for vxconsole parsing
-			fprintf( pFile, "Pool %i: Size: %llu Allocated: %i Free: %i Committed: %i CommittedSize: %i\n", 
-				i, 
-				(uint64)m_Pools[i].GetBlockSize(), 
-				m_Pools[i].CountAllocatedBlocks(), 
+			fprintf( pFile, "Pool %i: Size: %llu Allocated: %i Free: %i Committed: %i CommittedSize: %i\n",
+				i,
+				(uint64)m_Pools[i].GetBlockSize(),
+				m_Pools[i].CountAllocatedBlocks(),
 				m_Pools[i].CountFreeBlocks(),
-				m_Pools[i].CountCommittedBlocks(), 
+				m_Pools[i].CountCommittedBlocks(),
 				m_Pools[i].GetCommittedSize() );
 		}
 		bSpew = false;
@@ -1167,7 +1167,7 @@ void CX360SmallBlockPool::Free( void *p )
 	m_FreeList.Push( p );
 }
 
-// Count the free blocks.  
+// Count the free blocks.
 int CX360SmallBlockPool::CountFreeBlocks()
 {
 	return m_FreeList.Count();
@@ -1410,12 +1410,12 @@ void CX360SmallBlockHeap::DumpStats( FILE *pFile )
 		for( int i = 0; i < NUM_POOLS; i++ )
 	{
 			// output for vxconsole parsing
-			fprintf( pFile, "Pool %i: Size: %u Allocated: %i Free: %i Committed: %i CommittedSize: %i\n", 
-				i, 
-				m_Pools[i].GetBlockSize(), 
-				m_Pools[i].CountAllocatedBlocks(), 
+			fprintf( pFile, "Pool %i: Size: %u Allocated: %i Free: %i Committed: %i CommittedSize: %i\n",
+				i,
+				m_Pools[i].GetBlockSize(),
+				m_Pools[i].CountAllocatedBlocks(),
 				m_Pools[i].CountFreeBlocks(),
-				m_Pools[i].CountCommittedBlocks(), 
+				m_Pools[i].CountCommittedBlocks(),
 				m_Pools[i].GetCommittedSize() );
 	}
 		bSpew = false;
@@ -1428,7 +1428,7 @@ void CX360SmallBlockHeap::DumpStats( FILE *pFile )
 
 		for( int i = 0; i < NUM_POOLS; i++ )
 	{
-		
+
 			bytesCommitted += m_Pools[i].GetCommittedSize();
 			bytesAllocated += ( m_Pools[i].CountAllocatedBlocks() * m_Pools[i].GetBlockSize() );
 		}
@@ -1462,7 +1462,7 @@ CX360SmallBlockPool *CX360SmallBlockHeap::FindPool( void *p )
 void *CStdMemAlloc::Alloc( size_t nSize )
 {
 	PROFILE_ALLOC(Malloc);
-	
+
 	void *pMem;
 
 #ifdef _WIN32
@@ -1692,8 +1692,8 @@ int CStdMemAlloc::heapchk()
 #endif
 }
 
-void CStdMemAlloc::DumpStats() 
-{ 
+void CStdMemAlloc::DumpStats()
+{
 	DumpStatsFileBase( "memstats" );
 }
 
@@ -1774,12 +1774,12 @@ size_t CStdMemAlloc::DefaultFailHandler( size_t nBytes )
 {
 	if ( IsX360() && !IsRetail() )
 	{
-#ifdef _X360 
+#ifdef _X360
 		ExecuteOnce(
 		{
 			char buffer[256];
 			_snprintf( buffer, sizeof( buffer ), "***** Memory pool overflow, attempted allocation size: %u ****\n", nBytes );
-			XBX_OutputDebugString( buffer ); 
+			XBX_OutputDebugString( buffer );
 		}
 		);
 #endif

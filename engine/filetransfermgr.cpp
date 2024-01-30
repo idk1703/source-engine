@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,12 +20,12 @@ CFileTransferMgr::~CFileTransferMgr()
 }
 
 
-FileTransferID_t CFileTransferMgr::StartSending( 
-	INetChannel *pDest, 
+FileTransferID_t CFileTransferMgr::StartSending(
+	INetChannel *pDest,
 	const void *pUserData,
-	int userDataLength,	
-	const char *pFileData, 
-	int fileLength, 
+	int userDataLength,
+	const char *pFileData,
+	int fileLength,
 	int bytesPerSecond )
 {
 	return 0;
@@ -63,6 +63,3 @@ int CFileTransferMgr::InvalidIncoming() const
 void CFileTransferMgr::GetIncomingUserData( int i, const void* &pData, int &dataLen )
 {
 }
-
-
-

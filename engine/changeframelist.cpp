@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -69,7 +69,7 @@ public:
 		int nOutProps = 0;
 
 		int c = m_ChangeTicks.Count();
-		
+
 		Assert( c <= nMaxOutProps );
 
 		for ( int i=0; i < c; i++ )
@@ -103,6 +103,3 @@ IChangeFrameList* AllocChangeFrameList( int nProperties, int iCurTick )
 	pRet->Init( nProperties, iCurTick);
 	return pRet;
 }
-
-
-

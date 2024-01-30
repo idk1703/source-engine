@@ -50,7 +50,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_ObjectSentrygun, DT_ObjectSentrygun, CObjectSentrygun
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectSentrygun::C_ObjectSentrygun()
 {
@@ -71,7 +71,7 @@ C_ObjectSentrygun::C_ObjectSentrygun()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::UpdateOnRemove( void )
 {
@@ -92,33 +92,33 @@ void C_ObjectSentrygun::GetAmmoCount( int &iShells, int &iMaxShells, int &iRocke
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::UpgradeLevelChanged()
 {
 	switch( m_iUpgradeLevel )
 	{
-	case 1:	
-		{ 
+	case 1:
+		{
 			VectorCopy( SENTRYGUN_EYE_OFFSET_LEVEL_1, m_vecViewOffset );
 			m_iMaxAmmoShells = SENTRYGUN_MAX_SHELLS_1;
 			break;
 		}
-	case 2:	
-		{ 
+	case 2:
+		{
 			VectorCopy( SENTRYGUN_EYE_OFFSET_LEVEL_2, m_vecViewOffset );
 			m_iMaxAmmoShells = SENTRYGUN_MAX_SHELLS_2;
 			break;
 		}
-	case 3:	
-		{ 
+	case 3:
+		{
 			VectorCopy( SENTRYGUN_EYE_OFFSET_LEVEL_3, m_vecViewOffset );
 			m_iMaxAmmoShells = SENTRYGUN_MAX_SHELLS_3;
 			break;
 		}
-	default: 
-		{ 
-			Assert( 0 ); 
+	default:
+		{
+			Assert( 0 );
 			break;
 		}
 	}
@@ -130,7 +130,7 @@ void C_ObjectSentrygun::UpgradeLevelChanged()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::OnPreDataChanged( DataUpdateType_t updateType )
 {
@@ -140,7 +140,7 @@ void C_ObjectSentrygun::OnPreDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -220,7 +220,7 @@ void C_ObjectSentrygun::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::OnGoActive( void )
 {
@@ -230,7 +230,7 @@ void C_ObjectSentrygun::OnGoActive( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::OnGoInactive( void )
 {
@@ -240,7 +240,7 @@ void C_ObjectSentrygun::OnGoInactive( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::OnStartDisabled( void )
 {
@@ -250,7 +250,7 @@ void C_ObjectSentrygun::OnStartDisabled( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::OnEndDisabled( void )
 {
@@ -260,7 +260,7 @@ void C_ObjectSentrygun::OnEndDisabled( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::CreateLaserBeam( void )
 {
@@ -292,7 +292,7 @@ void C_ObjectSentrygun::CreateLaserBeam( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::DestroyLaserBeam( void )
 {
@@ -305,7 +305,7 @@ void C_ObjectSentrygun::DestroyLaserBeam( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::SetDormant( bool bDormant )
 {
@@ -323,7 +323,7 @@ void C_ObjectSentrygun::SetDormant( bool bDormant )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::CreateShield( void )
 {
@@ -352,7 +352,7 @@ void C_ObjectSentrygun::CreateShield( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::DestroyShield( void )
 {
@@ -372,7 +372,7 @@ void C_ObjectSentrygun::DestroyShield( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::CreateSiren( void )
 {
@@ -394,7 +394,7 @@ void C_ObjectSentrygun::CreateSiren( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::DestroySiren( void )
 {
@@ -406,7 +406,7 @@ void C_ObjectSentrygun::DestroySiren( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::ClientThink( void )
 {
@@ -459,7 +459,7 @@ void C_ObjectSentrygun::ClientThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::CheckNearMiss( Vector vecStart, Vector vecEnd )
 {
@@ -500,7 +500,7 @@ void C_ObjectSentrygun::CheckNearMiss( Vector vecStart, Vector vecEnd )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::DisplayHintTo( C_BasePlayer *pPlayer )
 {
@@ -509,7 +509,7 @@ void C_ObjectSentrygun::DisplayHintTo( C_BasePlayer *pPlayer )
 	C_TFPlayer *pTFPlayer = ToTFPlayer(pPlayer);
 	if ( InSameTeam( pPlayer ) )
 	{
-		// We're looking at a friendly object. 
+		// We're looking at a friendly object.
 		if ( pTFPlayer->IsPlayerClass( TF_CLASS_ENGINEER ) )
 		{
 			// If the sentrygun can be upgraded, and I can afford it, let me know
@@ -671,7 +671,7 @@ void C_ObjectSentrygun::UpdateDamageEffects( BuildingDamageLevel_t damageLevel )
 		case 3:
 			m_hDamageEffects = ParticleProp()->Create( pszEffect, PATTACH_POINT_FOLLOW, "sentrydamage" );
 			break;
-		}		
+		}
 	}
 }
 
@@ -723,7 +723,7 @@ void C_ObjectSentrygun::DebugDamageParticles( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::BuildTransformations( CStudioHdr *hdr, Vector *pos, Quaternion q[], const matrix3x4_t& cameraTransform, int boneMask, CBoneBitList &boneComputed )
 {
@@ -735,7 +735,7 @@ void C_ObjectSentrygun::BuildTransformations( CStudioHdr *hdr, Vector *pos, Quat
 	if ( IsBuilding() || IsPlacing() )
 		return;
 
-	
+
 	//Vector position;
 	//for ( int i=0; i<8; ++i )
 	//{
@@ -746,7 +746,7 @@ void C_ObjectSentrygun::BuildTransformations( CStudioHdr *hdr, Vector *pos, Quat
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char* C_ObjectSentrygun::GetStatusName() const
 {
@@ -754,8 +754,6 @@ const char* C_ObjectSentrygun::GetStatusName() const
 	{
 		return "#TF_Object_Sentry_Disp";
 	}
-	
+
 	return "#TF_Object_Sentry";
 }
-
-

@@ -112,7 +112,7 @@ void CUpdateHint::PostUpdateObjects(CMapObjectList *pObjects, int nNotifyCode)
 {
 	int nIndex = 0;
 	bool bFound = false;
-		
+
 	while (!bFound && (nIndex < m_ListEntries))
 	{
 		if (m_NotifyList[nIndex].nCode == nNotifyCode)
@@ -156,7 +156,7 @@ void CUpdateHint::PostUpdateObjects(CMapObjectList *pObjects, int nNotifyCode)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CUpdateHint::Reset(void)
 {
@@ -166,7 +166,7 @@ void CUpdateHint::Reset(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CUpdateHint::UpdateBounds(BoundBox &bbox)
 {

@@ -33,7 +33,7 @@ public:
 	bool ReadString(const char *name, char *data, int dataBufferSize);
 	bool ReadBuffer(const char *name, CUtlMsgBuffer &buffer);
 	// returns number of bytes read, 0 on failure
-	int ReadBlob(const char *name, void *data, int dataBufferSize);	
+	int ReadBlob(const char *name, void *data, int dataBufferSize);
 
 	// reads out the next variable available in the buffer
 	// fills out parameters with var details and data
@@ -53,8 +53,8 @@ public:
 	// pads the buffer to the specified boundary (in bytes)
 	void PadBuffer(int boundary);
 
-    // makes sure the message has this much space allocated
-    void EnsureCapacity(int dataSize);
+	// makes sure the message has this much space allocated
+	void EnsureCapacity(int dataSize);
 
 	// returns the number of bytes used by the message
 	int DataSize() const;
@@ -65,10 +65,10 @@ public:
 	// returns a const pointer to the base data
 	const void *Base() const;
 
-    // advances the write pointer - used when you write directly into the buffer
-    void SetWritePos(int size);
+	// advances the write pointer - used when you write directly into the buffer
+	void SetWritePos(int size);
 
-    CUtlMsgBuffer& Copy(const CUtlMsgBuffer &rhs);
+	CUtlMsgBuffer& Copy(const CUtlMsgBuffer &rhs);
 
 	// copy constructor
 	CUtlMsgBuffer(const CUtlMsgBuffer &rhs)
@@ -132,7 +132,7 @@ inline const void *CUtlMsgBuffer::Base() const
 //-----------------------------------------------------------------------------
 inline void CUtlMsgBuffer::EnsureCapacity(int dataSize)
 {
-    m_Memory.EnsureCapacity(dataSize);
+	m_Memory.EnsureCapacity(dataSize);
 }
 
 //-----------------------------------------------------------------------------
@@ -141,7 +141,7 @@ inline void CUtlMsgBuffer::EnsureCapacity(int dataSize)
 inline void CUtlMsgBuffer::PadBuffer(int boundary)
 {
 	// pad the buffer to be the right size for encryption
-	int pad = (boundary - (DataSize() % boundary));	
+	int pad = (boundary - (DataSize() % boundary));
 	Write("\0\0\0\0\0\0\0\0\0\0\0\0", pad);
 }
 
@@ -187,11 +187,11 @@ inline void CUtlMsgBuffer::WriteUInt(const char *name, unsigned int data)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline void CUtlMsgBuffer::SetWritePos(int size)
 {
-    m_iWritePos = size;
+	m_iWritePos = size;
 }
 
 

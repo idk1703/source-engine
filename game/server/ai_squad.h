@@ -103,7 +103,7 @@ public:
 	bool 					OccupyStrategySlotRange( CBaseEntity *pEnemy, int slotIDStart, int slotIDEnd, int *pSlot );
 	void 					VacateStrategySlot( CBaseEntity *pEnemy, int slot);
 	bool					IsStrategySlotRangeOccupied( CBaseEntity *pEnemy, int slotIDStart, int slotIDEnd );
-	
+
 	CAI_BaseNPC	*			SquadMemberInRange( const Vector &vecLocation, float flDist );
 	CAI_BaseNPC *			NearestSquadMember( CAI_BaseNPC *pMember );
 	int						GetVisibleSquadMembers( CAI_BaseNPC *pMember );
@@ -182,12 +182,12 @@ private:
 	const AISquadEnemyInfo_t *FindEnemyInfo( CBaseEntity *pEnemy ) const	{ return const_cast<CAI_Squad *>(this)->FindEnemyInfo( pEnemy ); }
 
 	AISquadEnemyInfo_t *			m_pLastFoundEnemyInfo; // Occupy/Vacate need to be reworked to not want this
-	
+
 	CUtlVector<AISquadEnemyInfo_t>	m_EnemyInfos;
 	float							m_flEnemyInfoCleanupTime;
 
 #else
-	
+
 	CVarBitVec	m_squadSlotsUsed;							// What squad slots are filled?
 
 #endif
@@ -228,10 +228,10 @@ inline CAI_Squad *CAI_SquadManager::GetNextSquad( AISquadsIter_t *pIter )
 inline CAI_Squad *CAI_SquadManager::FindCreateSquad(CAI_BaseNPC *pNPC, string_t squadName)
 {
 	CAI_Squad* pSquad = FindSquad( squadName );
-	
+
 	if ( !pSquad )
 		pSquad = CreateSquad( squadName );
-	
+
 	pSquad->AddToSquad( pNPC );
 
 	return pSquad;
@@ -242,10 +242,10 @@ inline CAI_Squad *CAI_SquadManager::FindCreateSquad(CAI_BaseNPC *pNPC, string_t 
 inline CAI_Squad *CAI_SquadManager::FindCreateSquad(string_t squadName)
 {
 	CAI_Squad* pSquad = FindSquad( squadName );
-	
+
 	if ( !pSquad )
 		pSquad = CreateSquad( squadName );
-	
+
 	return pSquad;
 }
 

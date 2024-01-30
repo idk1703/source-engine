@@ -13,7 +13,7 @@
 #include "c_tf_fx.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_TETFParticleEffect : public C_BaseTempEntity
 {
@@ -47,7 +47,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TETFParticleEffect::C_TETFParticleEffect( void )
 {
@@ -74,7 +74,7 @@ C_TETFParticleEffect::C_TETFParticleEffect( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TETFParticleEffect::PostDataUpdate( DataUpdateType_t updateType )
 {

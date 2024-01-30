@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -61,7 +61,7 @@ public:
 
 				PackedEntity();
 				~PackedEntity();
-	
+
 	void		SetNumBits( int nBits );
 	int			GetNumBits() const;
 	int			GetNumBytes() const;
@@ -88,7 +88,7 @@ public:
 
 	// If this PackedEntity has a ChangeFrameList, then this calls through. If not, it returns all props
 	int					GetPropsChangedAfterTick( int iTick, int *iOutProps, int nMaxOutProps );
-	
+
 	// Access the recipients array.
 	const CSendProxyRecipients*	GetRecipients() const;
 	int							GetNumRecipients() const;
@@ -105,10 +105,10 @@ public:
 	void				SetServerAndClientClass( ServerClass *pServerClass, ClientClass *pClientClass );
 
 public:
-	
+
 	ServerClass *m_pServerClass;	// Valid on the server
 	ClientClass	*m_pClientClass;	// Valid on the client
-		
+
 	int			m_nEntityIndex;		// Entity index.
 	int			m_ReferenceCount;	// reference count;
 
@@ -118,7 +118,7 @@ private:
 
 	void				*m_pData;				// Packed data.
 	int					m_nBits;				// Number of bits used to encode.
-	IChangeFrameList	*m_pChangeFrameList;	// Only the most current 
+	IChangeFrameList	*m_pChangeFrameList;	// Only the most current
 
 	// This is the tick this PackedEntity was created on
 	unsigned int		m_nSnapshotCreationTick : 31;
@@ -144,13 +144,13 @@ inline bool PackedEntity::IsCompressed() const
 
 inline int PackedEntity::GetNumBits() const
 {
-	Assert( !( m_nBits & 31 ) ); 
-	return m_nBits & ~(FLAG_IS_COMPRESSED); 
+	Assert( !( m_nBits & 31 ) );
+	return m_nBits & ~(FLAG_IS_COMPRESSED);
 }
 
 inline int PackedEntity::GetNumBytes() const
 {
-	return Bits2Bytes( m_nBits ); 
+	return Bits2Bytes( m_nBits );
 }
 
 inline void* PackedEntity::GetData()
@@ -208,4 +208,3 @@ inline bool PackedEntity::ShouldCheckCreationTick() const
 #include "memdbgoff.h"
 
 #endif // PACKED_ENTITY_H
-

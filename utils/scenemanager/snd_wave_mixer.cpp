@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -25,8 +25,8 @@ typedef struct channel_s
 } channel_t;
 
 //-----------------------------------------------------------------------------
-// These mixers provide an abstraction layer between the audio device and 
-// mixing/decoding code.  They allow data to be decoded and mixed using 
+// These mixers provide an abstraction layer between the audio device and
+// mixing/decoding code.  They allow data to be decoded and mixed using
 // optimized, format sensitive code by calling back into the device that
 // controls them.
 //-----------------------------------------------------------------------------
@@ -188,8 +188,8 @@ int CAudioMixerWave::GetSamplePosition( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : position - 
+// Purpose:
+// Input  : position -
 //-----------------------------------------------------------------------------
 bool CAudioMixerWave::SetSamplePosition( int position )
 {
@@ -203,8 +203,8 @@ bool CAudioMixerWave::SetSamplePosition( int position )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : position - 
+// Purpose:
+// Input  : position -
 //-----------------------------------------------------------------------------
 void CAudioMixerWave::SetLoopPosition( int position )
 {
@@ -212,7 +212,7 @@ void CAudioMixerWave::SetLoopPosition( int position )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CAudioMixerWave::GetStartPosition( void )
@@ -261,10 +261,10 @@ bool CAudioMixerWave::GetAutoDelete( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pChannel - 
-//			sampleCount - 
-//			outputRate - 
+// Purpose:
+// Input  : *pChannel -
+//			sampleCount -
+//			outputRate -
 //-----------------------------------------------------------------------------
 void CAudioMixerWave::IncrementSamples( channel_t *pChannel, int startSample, int sampleCount,int outputRate, bool forward /*= true*/ )
 {
@@ -287,7 +287,7 @@ void CAudioMixerWave::IncrementSamples( channel_t *pChannel, int startSample, in
 	{
 		int inputSampleCount;
 		int outputSampleCount = sampleCount;
-		
+
 		if ( outputRate != inputSampleRate )
 		{
 			inputSampleCount = (int)(sampleCount * rate);
@@ -296,7 +296,7 @@ void CAudioMixerWave::IncrementSamples( channel_t *pChannel, int startSample, in
 		{
 			inputSampleCount = sampleCount;
 		}
-		
+
 		sampleCount -= outputSampleCount;
 		if ( forward )
 		{
@@ -342,7 +342,7 @@ bool CAudioMixerWave::SkipSamples( channel_t *pChannel, int startSample, int sam
 		int inputSampleCount;
 		char *pData = NULL;
 		int outputSampleCount = sampleCount;
-		
+
 		if ( outputRate != inputSampleRate )
 		{
 			inputSampleCount = (int)(sampleCount * rate);
@@ -435,8 +435,8 @@ bool CAudioMixerWave::MixDataToDevice( IAudioDevice *pDevice, channel_t *pChanne
 		int inputSampleCount;
 		char *pData = NULL;
 		int outputSampleCount = sampleCount;
-		
-		
+
+
 		if ( outputRate != inputSampleRate )
 		{
 			inputSampleCount = (int)(sampleCount * rate);
@@ -452,7 +452,7 @@ bool CAudioMixerWave::MixDataToDevice( IAudioDevice *pDevice, channel_t *pChanne
 			}
 
 			Mix( pDevice, pChannel, pData, offset, m_fracOffset, fracstep, outputSampleCount, 0, forward );
-			
+
 			// compute new fraction part of sample index
 			float offset = (m_fracOffset / FIX_SCALE) + (rate * outputSampleCount);
 			offset = offset - (float)((int)offset);

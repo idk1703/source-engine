@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -136,7 +136,7 @@ void CTeleportVortex::Spawn( void )
 #else
 	// Default to purgatory
 	m_pszWhere = "spawn_purgatory";
-	
+
 	SetThink( &CTeleportVortex::VortexThink );
 	SetNextThink( gpGlobals->curtime );
 
@@ -504,7 +504,7 @@ void CTeleportVortex::OnDataChanged(DataUpdateType_t updateType)
 		{
 			// Stop any existing particle effect if necessary
 			AssertMsg( !m_pVortexEffect, "Particle effect should not be active!" );
-			
+
 			// Create the particle effect and play a sound
 			const char *pszEffectName;
 			const char *pszSound;
@@ -553,7 +553,7 @@ bool CTeleportVortex::ShouldDoBookRampOut()
 class CHightower_TeleportVortex : public CTeleportVortex
 {
 	DECLARE_DATADESC();
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_CLASS( CHightower_TeleportVortex, CTeleportVortex );
 
 public:

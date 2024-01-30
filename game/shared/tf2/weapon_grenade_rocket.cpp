@@ -37,7 +37,7 @@ END_NETWORK_TABLE()
 #if !defined( CLIENT_DLL )
 // Server Only
 ConVar weapon_grenade_rocket_track_range_mod( "weapon_grenade_rocket_track_range_mod","1.5", FCVAR_NONE, "Range multiplier when a rocket's tracking a designated target." );
-ConVar weapon_grenade_rocket_force( "weapon_grenade_rocket_force","150.0", FCVAR_NONE, "Rocket force modifier." ); 
+ConVar weapon_grenade_rocket_force( "weapon_grenade_rocket_force","150.0", FCVAR_NONE, "Rocket force modifier." );
 #endif
 
 //-----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ CWeaponGrenadeRocket *CWeaponGrenadeRocket::Create( const Vector &vecOrigin, con
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponGrenadeRocket::SetMaxRange( float flRange )
 {
@@ -101,7 +101,7 @@ void CWeaponGrenadeRocket::SetMaxRange( float flRange )
 	{
 		m_flMaxRange = MAX(1, m_flMaxRange - (vecForward.z * 1200));
 	}
-	else 
+	else
 	{
 		m_flMaxRange -= (vecForward.z * 2400);
 	}
@@ -121,7 +121,7 @@ void CWeaponGrenadeRocket::SetMaxRange( float flRange )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponGrenadeRocket::Spawn( void )
 {
@@ -140,7 +140,7 @@ void CWeaponGrenadeRocket::Spawn( void )
 	Vector forward;
 	AngleVectors( GetLocalAngles(), &forward, NULL, NULL );
 	SetAbsVelocity( forward * WEAPON_GRENADE_ROCKET_VELOCITY );
-	
+
 	SetTouch( RocketTouch );
 #else
 	// Start our flying sound loop
@@ -152,7 +152,7 @@ void CWeaponGrenadeRocket::Spawn( void )
 
 #if !defined( CLIENT_DLL )
 // Server Only
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Return my owner as my scorer
 //-----------------------------------------------------------------------------
@@ -227,7 +227,7 @@ void CWeaponGrenadeRocket::TrackThink( void )
 		Vector vecTarget;
 		if ( !CEnvLaserDesignation::GetLaserDesignation( iTeam, i, &vecTarget ) )
 			continue;
-	
+
 		// Check validity of designated target
 		Vector vecToTarget = ( vecTarget - GetAbsOrigin() );
 		float flDistanceSqr = vecToTarget.LengthSqr();
@@ -276,7 +276,7 @@ void CWeaponGrenadeRocket::SetAnglesToMatchVelocity( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponGrenadeRocket::RocketTouch( CBaseEntity *pOther )
 {
@@ -305,7 +305,7 @@ void CWeaponGrenadeRocket::RocketTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponGrenadeRocket::ApplyForcesToVehicle( CBaseEntity *pEntity )
 {
@@ -322,7 +322,7 @@ void CWeaponGrenadeRocket::ApplyForcesToVehicle( CBaseEntity *pEntity )
 	{
 		//------------------------------------------------------------
 		// Rocket the vehicle in the direction of the incoming rocket.
-		//------------------------------------------------------------	
+		//------------------------------------------------------------
 		Vector vecForceDir = GetAbsVelocity();
 		vecForceDir.z = 0.0f;
 		VectorNormalize( vecForceDir );
@@ -341,7 +341,7 @@ void CWeaponGrenadeRocket::ApplyForcesToVehicle( CBaseEntity *pEntity )
 // Client Only
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponGrenadeRocket::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -387,4 +387,3 @@ void CWeaponGrenadeRocket::ClientThink( void )
 }
 
 #endif
-

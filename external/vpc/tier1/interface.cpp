@@ -1,6 +1,6 @@
 //===== Copyright 1996-2005, Valve Corporation, All rights reserved. ======//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 #if defined( _WIN32 ) && !defined( _X360 )
@@ -68,9 +68,9 @@ InterfaceReg::InterfaceReg( InstantiateInterfaceFn fn, const char *pName ) :
 // This is the primary exported function by a dll, referenced by name via dynamic binding
 // that exposes an opqaue function pointer to the interface.
 //
-// We have the Internal variant so Sys_GetFactoryThis() returns the correct internal 
+// We have the Internal variant so Sys_GetFactoryThis() returns the correct internal
 // symbol under GCC/Linux/Mac as CreateInterface is DLL_EXPORT so its global so the loaders
-// on those OS's pick exactly 1 of the CreateInterface symbols to be the one that is process wide and 
+// on those OS's pick exactly 1 of the CreateInterface symbols to be the one that is process wide and
 // all Sys_GetFactoryThis() calls find that one, which doesn't work. Using the internal walkthrough here
 // makes sure Sys_GetFactoryThis() has the dll specific symbol and GetProcAddress() returns the module specific
 // function for CreateInterface again getting the dll specific symbol we need.
@@ -78,7 +78,7 @@ InterfaceReg::InterfaceReg( InstantiateInterfaceFn fn, const char *pName ) :
 void* CreateInterfaceInternal( const char *pName, int *pReturnCode )
 {
 	InterfaceReg *pCur;
-	
+
 	for (pCur=s_pInterfaceRegs; pCur; pCur=pCur->m_pNext)
 	{
 		if (strcmp(pCur->m_pName, pName) == 0)
@@ -90,17 +90,17 @@ void* CreateInterfaceInternal( const char *pName, int *pReturnCode )
 			return pCur->m_CreateFn();
 		}
 	}
-	
+
 	if (pReturnCode)
 	{
 		*pReturnCode = IFACE_FAILED;
 	}
-	return NULL;	
+	return NULL;
 }
 
 void* CreateInterface( const char *pName, int *pReturnCode )
 {
-    return CreateInterfaceInternal( pName, pReturnCode );
+	return CreateInterfaceInternal( pName, pReturnCode );
 }
 
 
@@ -118,12 +118,12 @@ void *GetModuleHandle(const char *name)
 		return NULL;
 	}
 
-    if( (handle=dlopen(name, RTLD_NOW))==NULL)
-    {
-            printf("DLOPEN Error:%s\n",dlerror());
-            // couldn't open this file
-            return NULL;
-    }
+	if( (handle=dlopen(name, RTLD_NOW))==NULL)
+	{
+	printf("DLOPEN Error:%s\n",dlerror());
+	// couldn't open this file
+	return NULL;
+	}
 
 	// read "man dlopen" for details
 	// in short dlopen() inc a ref count
@@ -231,7 +231,7 @@ static HMODULE Sys_LoadLibraryGuts( const char *pLibraryName )
 	char str[1024];
 
 	// How to get a string out of a #define on the command line.
-	const char *pModuleExtension = DLL_EXT_STRING;	
+	const char *pModuleExtension = DLL_EXT_STRING;
 	const char *pModuleAddition = pModuleExtension;
 
 	V_strncpy( str, pLibraryName, sizeof(str) );
@@ -259,8 +259,8 @@ static HMODULE Sys_LoadLibraryGuts( const char *pLibraryName )
 		{
 #ifdef  _WINDOWS
 			char buf[1024];
-			FormatMessage( 
-				FORMAT_MESSAGE_FROM_SYSTEM | 
+			FormatMessage(
+				FORMAT_MESSAGE_FROM_SYSTEM |
 				FORMAT_MESSAGE_IGNORE_INSERTS,
 				NULL,
 				GetLastError(),
@@ -321,7 +321,7 @@ static HMODULE Sys_LoadLibraryGuts( const char *pLibraryName )
 
 // 	if( ret )
 // 		StackToolsNotify_LoadedLibrary( str );
-	
+
 	return ret;
 #endif
 
@@ -332,7 +332,7 @@ static HMODULE Sys_LoadLibrary( const char *pLibraryName )
 {
 	// load a library. If a library suffix is set, look for the library first with that name
 	char *pSuffix = NULL;
-	
+
 	if ( CommandLine()->FindParm( "-xlsp" ) )
 	{
 		pSuffix = "_xlsp";
@@ -399,7 +399,7 @@ CSysModule *Sys_LoadModule( const char *pModuleName )
 	char alteredFilename[ MAX_PATH ];
 	if ( IsPS3() )
 	{
-		// PS3's load module *must* be fed extensions. If the extension is missing, add it. 
+		// PS3's load module *must* be fed extensions. If the extension is missing, add it.
 		if (!( strstr(pModuleName, ".sprx") || strstr(pModuleName, ".prx") ))
 		{
 			strncpy( alteredFilename, pModuleName, MAX_PATH );
@@ -416,7 +416,7 @@ CSysModule *Sys_LoadModule( const char *pModuleName )
 	{
 		// full path wasn't passed in, using the current working dir
 		char szAbsoluteModuleName[1024];
-#if defined( _PS3 ) 
+#if defined( _PS3 )
 		// getcwd not supported on ps3; use PRX PATCH path if patched
 		if ( g_pPS3PathInfo->IsPatched() )
 		{
@@ -470,17 +470,17 @@ CSysModule *Sys_LoadModule( const char *pModuleName )
 // So you can see what the error is in the debugger...
 #if defined( _WIN32 ) && !defined( _X360 )
 			char *lpMsgBuf;
-			
-			FormatMessage( 
-				FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-				FORMAT_MESSAGE_FROM_SYSTEM | 
+
+			FormatMessage(
+				FORMAT_MESSAGE_ALLOCATE_BUFFER |
+				FORMAT_MESSAGE_FROM_SYSTEM |
 				FORMAT_MESSAGE_IGNORE_INSERTS,
 				NULL,
 				GetLastError(),
 				MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
 				(LPTSTR) &lpMsgBuf,
 				0,
-				NULL 
+				NULL
 			);
 
 			LocalFree( (HLOCAL)lpMsgBuf );
@@ -499,8 +499,8 @@ CSysModule *Sys_LoadModule( const char *pModuleName )
 	// If running in the debugger, assume debug binaries are okay, otherwise they must run with -allowdebug
 	if ( !IsGameConsole() && Sys_GetProcAddress( hDLL, "BuiltDebug" ) )
 	{
-		if ( hDLL && !CommandLine()->FindParm( "-allowdebug" ) && 
-			 !Sys_IsDebuggerPresent() )
+		if ( hDLL && !CommandLine()->FindParm( "-allowdebug" ) &&
+			!Sys_IsDebuggerPresent() )
 		{
 			Error( "Module %s is a debug build\n", pModuleName );
 		}
@@ -510,11 +510,11 @@ CSysModule *Sys_LoadModule( const char *pModuleName )
 		if ( !s_bRunningWithDebugModules )
 		{
 			s_bRunningWithDebugModules = true;
-			
+
 #ifdef IS_WINDOWS_PC
 			char chMemoryName[ MAX_PATH ];
 			DebugKernelMemoryObjectName( chMemoryName );
-			
+
 			(void) CreateFileMapping( INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, 1024, chMemoryName );
 			// Created a shared memory kernel object specific to process id
 			// Existence of this object indicates that we have debug modules loaded
@@ -572,7 +572,7 @@ void Sys_UnloadModule( CSysModule *pModule )
 
 //-----------------------------------------------------------------------------
 // Purpose: returns a pointer to a function, given a module
-// Input  : module - windows HMODULE from Sys_LoadModule() 
+// Input  : module - windows HMODULE from Sys_LoadModule()
 //			*pName - proc name
 // Output : factory for this module
 //-----------------------------------------------------------------------------
@@ -627,8 +627,8 @@ CreateInterfaceFn Sys_GetFactory( const char *pModuleName )
 
 //-----------------------------------------------------------------------------
 // Purpose: get the interface for the specified module and version
-// Input  : 
-// Output : 
+// Input  :
+// Output :
 //-----------------------------------------------------------------------------
 bool Sys_LoadInterface(
 	const char *pModuleName,
@@ -661,14 +661,14 @@ bool Sys_LoadInterface(
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Place this as a singleton at module scope (e.g.) and use it to get the factory from the specified module name.  
-// 
+// Purpose: Place this as a singleton at module scope (e.g.) and use it to get the factory from the specified module name.
+//
 // When the singleton goes out of scope (.dll unload if at module scope),
-//  then it'll call Sys_UnloadModule on the module so that the refcount is decremented 
+//  then it'll call Sys_UnloadModule on the module so that the refcount is decremented
 //  and the .dll actually can unload from memory.
 //-----------------------------------------------------------------------------
-CDllDemandLoader::CDllDemandLoader( char const *pchModuleName ) : 
-	m_pchModuleName( pchModuleName ), 
+CDllDemandLoader::CDllDemandLoader( char const *pchModuleName ) :
+	m_pchModuleName( pchModuleName ),
 	m_hModule( 0 ),
 	m_bLoadAttempted( false )
 {

@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
 #include "cbase.h"
-#include "hud.h"		
+#include "hud.h"
 #include "c_props.h"
 #include "iclientvehicle.h"
 #include <vgui_controls/Controls.h>
@@ -29,7 +29,7 @@ extern float RemapAngleRange( float startInterval, float endInterval, float valu
 									// spline in between
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_PropVehicleChoreoGeneric : public C_DynamicProp, public IClientVehicle
 {
@@ -41,7 +41,7 @@ public:
 	DECLARE_DATADESC();
 
 	C_PropVehicleChoreoGeneric();
-	
+
 	void PreDataUpdate( DataUpdateType_t updateType );
 	void PostDataUpdate( DataUpdateType_t updateType );
 
@@ -115,7 +115,7 @@ BEGIN_DATADESC( C_PropVehicleChoreoGeneric )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_PropVehicleChoreoGeneric::C_PropVehicleChoreoGeneric( void )
 {
@@ -130,8 +130,8 @@ C_PropVehicleChoreoGeneric::C_PropVehicleChoreoGeneric( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_PropVehicleChoreoGeneric::PreDataUpdate( DataUpdateType_t updateType )
 {
@@ -141,7 +141,7 @@ void C_PropVehicleChoreoGeneric::PreDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PropVehicleChoreoGeneric::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -178,7 +178,7 @@ void C_PropVehicleChoreoGeneric::PostDataUpdate( DataUpdateType_t updateType )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseCombatCharacter *C_PropVehicleChoreoGeneric::GetPassenger( int nRole )
 {
@@ -206,19 +206,19 @@ int	C_PropVehicleChoreoGeneric::GetPassengerRole( C_BaseCombatCharacter *pPassen
 //-----------------------------------------------------------------------------
 void C_PropVehicleChoreoGeneric::GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, QAngle *pAbsAngles, float *pFOV /*=NULL*/ )
 {
-	SharedVehicleViewSmoothing( m_hPlayer, 
-								pAbsOrigin, pAbsAngles, 
-								m_bEnterAnimOn, m_bExitAnimOn, 
-								m_vecEyeExitEndpoint, 
-								&m_ViewSmoothingData, 
+	SharedVehicleViewSmoothing( m_hPlayer,
+								pAbsOrigin, pAbsAngles,
+								m_bEnterAnimOn, m_bExitAnimOn,
+								m_vecEyeExitEndpoint,
+								&m_ViewSmoothingData,
 								pFOV );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pLocalPlayer - 
-//			pCmd - 
+// Purpose:
+// Input  : pLocalPlayer -
+//			pCmd -
 //-----------------------------------------------------------------------------
 void C_PropVehicleChoreoGeneric::UpdateViewAngles( C_BasePlayer *pLocalPlayer, CUserCmd *pCmd )
 {
@@ -248,12 +248,10 @@ void C_PropVehicleChoreoGeneric::GetVehicleClipPlanes( float &flZNear, float &fl
 	//flZNear = 6;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Renders hud elements
 //-----------------------------------------------------------------------------
 void C_PropVehicleChoreoGeneric::DrawHudElements( )
 {
 }
-
-

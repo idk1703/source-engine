@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -102,7 +102,7 @@ public:
 	void LoadVoiceCommandScript( void );
 
 	virtual bool ShouldDrawHeadLabels()
-	{ 
+	{
 		if ( mp_show_voice_icons.GetBool() == false )
 			return false;
 
@@ -184,10 +184,10 @@ public:
 // What happens to a dead player's weapons
 	virtual int DeadPlayerWeapons( CBasePlayer *pPlayer );
 
-// What happens to a dead player's ammo	
+// What happens to a dead player's ammo
 	virtual int DeadPlayerAmmo( CBasePlayer *pPlayer );
 
-// Teamplay stuff	
+// Teamplay stuff
 	virtual const char *GetTeamID( CBaseEntity *pEntity ) {return "";}
 	virtual int PlayerRelationship( CBaseEntity *pPlayer, CBaseEntity *pTarget );
 	virtual bool PlayerCanHearChat( CBasePlayer *pListener, CBasePlayer *pSpeaker );
@@ -197,15 +197,15 @@ public:
 
 // NPCs
 	virtual bool FAllowNPCs( void );
-	
+
 	// Immediately end a multiplayer game
 	virtual void EndMultiplayerGame( void ) { GoToIntermission(); }
 
 // Voice commands
 	virtual bool ClientCommand( CBaseEntity *pEdict, const CCommand &args );
 	virtual VoiceCommandMenuItem_t *VoiceCommand( CBaseMultiplayerPlayer *pPlayer, int iMenu, int iItem );
-	
-// Bugbait report	
+
+// Bugbait report
 	bool IsLoadingBugBaitReport( void );
 
 	virtual void ResetMapCycleTimeStamp( void ){ m_nMapCycleTimeStamp = 0; }
@@ -234,7 +234,7 @@ public:
 	virtual void InitCustomResponseRulesDicts()	{}
 	virtual void ShutdownCustomResponseRulesDicts() {}
 
-	// NVNT virtual to check for haptic device 
+	// NVNT virtual to check for haptic device
 	virtual void ClientSettingsChanged( CBasePlayer *pPlayer );
 	virtual void GetNextLevelName( char *szNextMap, int bufsize, bool bRandom = false );
 
@@ -269,7 +269,7 @@ protected:
 	float m_flTimeLastMapChangeOrPlayerWasConnected;
 
 #else
-	
+
 	public:
 		const char *GetVoiceCommandSubtitle( int iMenu, int iItem );
 		bool GetVoiceMenuLabels( int iMenu, KeyValues *pKV );

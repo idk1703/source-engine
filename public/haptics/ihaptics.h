@@ -21,7 +21,7 @@ class IEngineVGui;
 
 // vgui forward decl
 namespace vgui{
-    class IInputInternal;
+	class IInputInternal;
 }
 
 // math types forward decl
@@ -39,13 +39,13 @@ typedef const char *(*ActivityList_NameForIndex_t)( int iActivityIndex );
 abstract_class IHaptics
 {
 public: // Initialization.
-	virtual bool Initialize(IVEngineClient* newengine, 
-		IViewRender *newview, 
-		vgui::IInputInternal* newinput, 
+	virtual bool Initialize(IVEngineClient* newengine,
+		IViewRender *newview,
+		vgui::IInputInternal* newinput,
 		CGlobalVarsBase* newgpGlobals,
-		CreateInterfaceFn newengineFactory, 
+		CreateInterfaceFn newengineFactory,
 		void *IMEWindow,
-		IFileSystem* filesystem, 
+		IFileSystem* filesystem,
 		IEngineVGui* newvgui,
 		ActivityList_IndexForName_t actIndexForName,
 		ActivityList_NameForIndex_t actNameForIndex) = 0;
@@ -59,19 +59,19 @@ public: // Device methods
 	virtual void ShutdownHaptics() = 0;
 
 public: // Game input handling
-	
+
 	// computes view angles and adjusts forward_move and side_move
 	virtual void CalculateMove(float &forward_move, float &side_move, float delta) = 0;
 
 	virtual void OnPlayerChanged()=0;
 
-	// Sets the internal navigation class.	
+	// Sets the internal navigation class.
 	virtual void SetNavigationClass(const char *defaultNavigationName) = 0;
 
 	// Turns the internal navigation off. ( clears navigation class )
 	inline  void ClearNavigationClass();
 
-	// Returns the active navigation class ( if none returns NULL ) 
+	// Returns the active navigation class ( if none returns NULL )
 	virtual const char *GetNavigationClass() = 0;
 
 	// Should be called by the game input class after CalculateMove (when not in menu)
@@ -82,17 +82,17 @@ public: // Game input handling
 
 
 public: // Effect methods
-	
+
 	// process a haptic event.
 	virtual void ProcessHapticEvent(int numArgs, ...) = 0;
 	virtual void ProcessHapticWeaponActivity(const char *weapon, int activity) = 0;
-	
+
 	// send a haptic punch effect
 	virtual void HapticsPunch(float strength, const QAngle &angle) = 0;
 
 	// trigger a damage effect
 	virtual void ApplyDamageEffect(float damage, int damagetype, const Vector &angle) = 0;
-	
+
 	// update the avatar ( acceleration ) effect by a velocity sample
 	virtual void UpdateAvatarVelocity(const Vector &velocity) = 0;
 
@@ -123,7 +123,7 @@ public: // Effect methods
 	virtual void SetDangling(float amount) = 0;
 
 public: // Notify methods
-	
+
 	// notify the haptics system that we have been respawned.
 	virtual void LocalPlayerReset()=0;
 
@@ -136,9 +136,9 @@ public: // Notify methods
 
 inline void IHaptics::ClearNavigationClass( void )
 {
-	 SetNavigationClass(0);
+	SetNavigationClass(0);
 }
 
 extern IHaptics* haptics;
-	
+
 #endif// HAPTICS_INTERFACE_H

@@ -5,7 +5,7 @@
 // Valve, L.L.C., or in accordance with the terms and conditions stipulated in
 // the agreement/contract under which the contents have been supplied.
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -41,7 +41,7 @@ CServerBrowserDialog &ServerBrowserDialog()
 }
 
 
-// Returns a list of the ports that we hit when looking for 
+// Returns a list of the ports that we hit when looking for
 void GetMostCommonQueryPorts( CUtlVector<uint16> &ports )
 {
 	for ( int i=0; i <= 5; i++ )
@@ -153,10 +153,10 @@ CServerBrowserDialog::~CServerBrowserDialog()
 
 	SaveUserData();
 
-  	if (m_pSavedData)
-  	{
-  		m_pSavedData->deleteThis();
-  	}
+	if (m_pSavedData)
+	{
+		m_pSavedData->deleteThis();
+	}
 }
 
 
@@ -185,7 +185,7 @@ gameserveritem_t *CServerBrowserDialog::GetServer( unsigned int serverID )
 // Purpose: Activates and gives the tab focus
 //-----------------------------------------------------------------------------
 void CServerBrowserDialog::Open()
-{	
+{
 	BaseClass::Activate();
 	m_pTabPanel->RequestFocus();
 
@@ -208,11 +208,11 @@ void CServerBrowserDialog::OnTick()
 //-----------------------------------------------------------------------------
 void CServerBrowserDialog::LoadUserData()
 {
-  	// free any old filters
-  	if (m_pSavedData)
-  	{
-  		m_pSavedData->deleteThis();
-  	}
+	// free any old filters
+	if (m_pSavedData)
+	{
+		m_pSavedData->deleteThis();
+	}
 
 	m_pSavedData = new KeyValues("Filters");
 	if (!m_pSavedData->LoadFromFile( g_pFullFileSystem, "ServerBrowser.vdf", "CONFIG"))
@@ -263,7 +263,7 @@ void CServerBrowserDialog::LoadUserData()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CServerBrowserDialog::SaveUserData()
 {
@@ -321,7 +321,7 @@ void CServerBrowserDialog::RefreshCurrentPage()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CServerBrowserDialog::BlacklistsChanged()
 {
@@ -355,7 +355,7 @@ void CServerBrowserDialog::UpdateStatusText(const char *fmt, ...)
 
 //-----------------------------------------------------------------------------
 // Purpose: Updates status test at bottom of window
-// Input  : wchar_t* (unicode string) - 
+// Input  : wchar_t* (unicode string) -
 //-----------------------------------------------------------------------------
 void CServerBrowserDialog::UpdateStatusText(wchar_t *unicode)
 {
@@ -374,7 +374,7 @@ void CServerBrowserDialog::UpdateStatusText(wchar_t *unicode)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CServerBrowserDialog::OnGameListChanged()
 {
@@ -401,12 +401,12 @@ void CServerBrowserDialog::AddServerToFavorites(gameserveritem_t &server)
 {
 	if ( steamapicontext->SteamMatchmaking() )
 	{
-		steamapicontext->SteamMatchmaking()->AddFavoriteGame( 
-			server.m_nAppID, 
-			server.m_NetAdr.GetIP(), 
-			server.m_NetAdr.GetConnectionPort(),		
-			server.m_NetAdr.GetQueryPort(), 
-			k_unFavoriteFlagFavorite, 
+		steamapicontext->SteamMatchmaking()->AddFavoriteGame(
+			server.m_nAppID,
+			server.m_NetAdr.GetIP(),
+			server.m_NetAdr.GetConnectionPort(),
+			server.m_NetAdr.GetQueryPort(),
+			k_unFavoriteFlagFavorite,
 			time( NULL ) );
 
 		if ( GameSupportsReplay() )
@@ -431,7 +431,7 @@ void CServerBrowserDialog::AddServerToBlacklist(gameserveritem_t &server)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CServerBrowserDialog::IsServerBlacklisted(gameserveritem_t &server)
 {
@@ -441,7 +441,7 @@ bool CServerBrowserDialog::IsServerBlacklisted(gameserveritem_t &server)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CServerContextMenu *CServerBrowserDialog::GetContextMenu(vgui::Panel *pPanel)
 {
@@ -451,14 +451,14 @@ CServerContextMenu *CServerBrowserDialog::GetContextMenu(vgui::Panel *pPanel)
 	m_pContextMenu = new CServerContextMenu(this);
 	m_pContextMenu->SetAutoDelete( false );
 
-    if (!pPanel)
-    {
-	    m_pContextMenu->SetParent(this);
-    }
-    else
-    {
-        m_pContextMenu->SetParent(pPanel);
-    }
+	if (!pPanel)
+	{
+		m_pContextMenu->SetParent(this);
+	}
+	else
+	{
+		m_pContextMenu->SetParent(pPanel);
+	}
 
 	m_pContextMenu->SetVisible(false);
 	return m_pContextMenu;
@@ -600,7 +600,7 @@ void CServerBrowserDialog::OnActiveGameName( KeyValues *pKV )
 {
 	Q_strncpy(m_szModDir, pKV->GetString( "name" ), sizeof(m_szModDir));
 	Q_strncpy(m_szGameName, pKV->GetString( "game" ), sizeof(m_szGameName));
-	m_iLimitAppID = CGameID( pKV->GetUint64( "appid", 0 ) );	
+	m_iLimitAppID = CGameID( pKV->GetUint64( "appid", 0 ) );
 	// reload filter settings (since they are no forced to be game specific)
 	ReloadFilterSettings();
 }
@@ -780,16 +780,16 @@ void CServerBrowserDialog::OnKeyCodePressed( vgui::KeyCode code )
 		//OnOK( false );
 		//return;
 	}
-	else if ( nButtonCode == KEY_XBUTTON_UP || 
-			  nButtonCode == KEY_XSTICK1_UP ||
-			  nButtonCode == KEY_XSTICK2_UP || 
-			  nButtonCode == STEAMCONTROLLER_DPAD_UP ||
-			  nButtonCode == KEY_UP ||
-			  nButtonCode == KEY_XBUTTON_DOWN || 
-			  nButtonCode == KEY_XSTICK1_DOWN ||
-			  nButtonCode == KEY_XSTICK2_DOWN || 
-			  nButtonCode == STEAMCONTROLLER_DPAD_DOWN ||
-			  nButtonCode == KEY_DOWN )
+	else if ( nButtonCode == KEY_XBUTTON_UP ||
+			nButtonCode == KEY_XSTICK1_UP ||
+			nButtonCode == KEY_XSTICK2_UP ||
+			nButtonCode == STEAMCONTROLLER_DPAD_UP ||
+			nButtonCode == KEY_UP ||
+			nButtonCode == KEY_XBUTTON_DOWN ||
+			nButtonCode == KEY_XSTICK1_DOWN ||
+			nButtonCode == KEY_XSTICK2_DOWN ||
+			nButtonCode == STEAMCONTROLLER_DPAD_DOWN ||
+			nButtonCode == KEY_DOWN )
 	{
 		CBaseGamesPage *pGamesPage = dynamic_cast< CBaseGamesPage* >( m_pTabPanel->GetActivePage() );
 		if ( pGamesPage )

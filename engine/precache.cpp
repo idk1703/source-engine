@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,7 +12,7 @@
 
 //-----------------------------------------------------------------------------
 // Purpose: Print out flag names
-// Input  : flags - 
+// Input  : flags -
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *GetFlagString( int flags )
@@ -49,7 +49,7 @@ char const *GetFlagString( int flags )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPrecacheItem::CPrecacheItem( void )
 {
@@ -58,7 +58,7 @@ CPrecacheItem::CPrecacheItem( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPrecacheItem::ResetStats( void )
 {
@@ -70,7 +70,7 @@ void CPrecacheItem::ResetStats( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPrecacheItem::Reference( void )
 {
@@ -85,9 +85,9 @@ void CPrecacheItem::Reference( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : type - 
-//			*ptr - 
+// Purpose:
+// Input  : type -
+//			*ptr -
 //-----------------------------------------------------------------------------
 void CPrecacheItem::Init( int type, void const *ptr )
 {
@@ -100,7 +100,7 @@ void CPrecacheItem::Init( int type, void const *ptr )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : model_t
 //-----------------------------------------------------------------------------
 model_t *CPrecacheItem::GetModel( void )
@@ -116,7 +116,7 @@ model_t *CPrecacheItem::GetModel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CPrecacheItem::GetGeneric( void )
@@ -132,7 +132,7 @@ char const *CPrecacheItem::GetGeneric( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CSfxTable
 //-----------------------------------------------------------------------------
 CSfxTable *CPrecacheItem::GetSound( void )
@@ -148,7 +148,7 @@ CSfxTable *CPrecacheItem::GetSound( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CPrecacheItem::GetName( void )
@@ -164,7 +164,7 @@ char const *CPrecacheItem::GetName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CPrecacheItem::GetDecal( void )
@@ -180,8 +180,8 @@ char const *CPrecacheItem::GetDecal( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pmodel - 
+// Purpose:
+// Input  : *pmodel -
 //-----------------------------------------------------------------------------
 void CPrecacheItem::SetModel( model_t const *pmodel )
 {
@@ -189,8 +189,8 @@ void CPrecacheItem::SetModel( model_t const *pmodel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pname - 
+// Purpose:
+// Input  : *pname -
 //-----------------------------------------------------------------------------
 void CPrecacheItem::SetGeneric( char const *pname )
 {
@@ -198,8 +198,8 @@ void CPrecacheItem::SetGeneric( char const *pname )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *psound - 
+// Purpose:
+// Input  : *psound -
 //-----------------------------------------------------------------------------
 void CPrecacheItem::SetSound( CSfxTable const *psound )
 {
@@ -207,8 +207,8 @@ void CPrecacheItem::SetSound( CSfxTable const *psound )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 void CPrecacheItem::SetName( char const *name )
 {
@@ -216,8 +216,8 @@ void CPrecacheItem::SetName( char const *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *decalname - 
+// Purpose:
+// Input  : *decalname -
 //-----------------------------------------------------------------------------
 void CPrecacheItem::SetDecal( char const *decalname )
 {
@@ -225,7 +225,7 @@ void CPrecacheItem::SetDecal( char const *decalname )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CPrecacheItem::GetFirstReference( void )
@@ -238,7 +238,7 @@ float CPrecacheItem::GetFirstReference( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CPrecacheItem::GetMostRecentReference( void )
@@ -251,7 +251,7 @@ float CPrecacheItem::GetMostRecentReference( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : unsigned int
 //-----------------------------------------------------------------------------
 unsigned int CPrecacheItem::GetReferenceCount( void )

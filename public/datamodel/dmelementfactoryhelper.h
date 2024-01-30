@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -61,16 +61,16 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Inline methods 
+// Inline methods
 //-----------------------------------------------------------------------------
-inline const char *CDmElementFactoryHelper::GetClassname() 
-{ 
-	return m_pszClassname; 
+inline const char *CDmElementFactoryHelper::GetClassname()
+{
+	return m_pszClassname;
 }
 
-inline IDmElementFactoryInternal *CDmElementFactoryHelper::GetFactory() 
-{ 
-	return m_pFactory; 
+inline IDmElementFactoryInternal *CDmElementFactoryHelper::GetFactory()
+{
+	return m_pFactory;
 }
 
 
@@ -141,7 +141,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Helper macro to create the class factory 
+// Helper macro to create the class factory
 //-----------------------------------------------------------------------------
 #if defined( MOVIEOBJECTS_LIB ) || defined ( DATAMODEL_LIB ) || defined ( DMECONTROLS_LIB )
 

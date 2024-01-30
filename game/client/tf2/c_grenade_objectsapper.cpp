@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -38,14 +38,14 @@ IMPLEMENT_CLIENTCLASS_DT(C_GrenadeObjectSapper, DT_GrenadeObjectSapper, CGrenade
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_GrenadeObjectSapper::C_GrenadeObjectSapper( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_GrenadeObjectSapper::OnDataChanged( DataUpdateType_t updateType )
 {

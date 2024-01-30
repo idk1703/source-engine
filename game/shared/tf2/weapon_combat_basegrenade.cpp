@@ -29,7 +29,7 @@ BEGIN_PREDICTION_DATA( CWeaponCombatBaseGrenade  )
 END_PREDICTION_DATA()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponCombatBaseGrenade::CWeaponCombatBaseGrenade( void )
 {
@@ -37,15 +37,15 @@ CWeaponCombatBaseGrenade::CWeaponCombatBaseGrenade( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponCombatBaseGrenade::GetFireRate( void )
-{	
-	return 2.0; 
+{
+	return 2.0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatBaseGrenade::ItemPostFrame( void )
 {
@@ -79,7 +79,7 @@ void CWeaponCombatBaseGrenade::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatBaseGrenade::PrimaryAttack( void )
 {
@@ -107,7 +107,7 @@ void CWeaponCombatBaseGrenade::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatBaseGrenade::ThrowGrenade( void )
 {

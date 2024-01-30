@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,7 +29,7 @@ CDODSpectatorGUI::CDODSpectatorGUI(IViewPort *pViewPort) : CSpectatorGUI(pViewPo
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CDODSpectatorGUI::NeedsUpdate( void )
 {
@@ -60,7 +60,7 @@ Color CDODSpectatorGUI::GetClientColor(int index)
 	Assert( team == TEAM_ALLIES || team == TEAM_AXIS || team == TEAM_SPECTATOR );
 
 	if ( GameResources() )
-		return GameResources()->GetTeamColor( team );		
+		return GameResources()->GetTeamColor( team );
 	else
 		return Color( 255, 255, 255, 255 );
 }
@@ -68,7 +68,7 @@ Color CDODSpectatorGUI::GetClientColor(int index)
 void CDODSpectatorGUI::Update()
 {
 	BaseClass::Update();
-	
+
 	C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 
 	if( pLocalPlayer )
@@ -93,7 +93,7 @@ void CDODSpectatorGUI::UpdateTimer( void )
 		int timer;
 		timer = (int)( DODGameRules()->GetTimeLeft() );
 		if ( timer < 0 )
-			 timer  = 0;
+			timer  = 0;
 
 		_snwprintf ( wText, sizeof(wText)/sizeof(wchar_t), L"%d:%02d", (timer / 60), (timer % 60) );
 		wText[62] = 0;
@@ -114,7 +114,7 @@ void CDODSpectatorGUI::UpdateTimer( void )
 		// once we know that, we can ask dodgamerules if we are going to make the next
 		// wave. If we aren't, gamerules can tell us the new time based on the reserve wave
 		float flSpawnEligibleTime;
-		
+
 		if ( pPlayer->GetObserverMode() == OBS_MODE_DEATHCAM )
 		{
 			flSpawnEligibleTime = pPlayer->GetDeathTime() + DEATH_CAM_TIME;
@@ -163,7 +163,7 @@ void CDODSpectatorGUI::UpdateTimer( void )
 			}
 			else					//"2 seconds"
 			{
-                g_pVGuiLocalize->ConstructString( wLabel, sizeof( wLabel ), g_pVGuiLocalize->Find("#Dod_Reinforcements_in_secs" ), 1, wSecs );
+	g_pVGuiLocalize->ConstructString( wLabel, sizeof( wLabel ), g_pVGuiLocalize->Find("#Dod_Reinforcements_in_secs" ), 1, wSecs );
 			}
 
 			SetDialogVariable( "reinforcements", wLabel );
@@ -188,7 +188,7 @@ void CDODSpectatorGUI::UpdateScores( void )
 
 bool CDODSpectatorGUI::ShouldShowPlayerLabel( int specmode )
 {
-	return ( (specmode == OBS_MODE_IN_EYE) || 
-			 (specmode == OBS_MODE_CHASE) ||
-			 (specmode == OBS_MODE_DEATHCAM) );
+	return ( (specmode == OBS_MODE_IN_EYE) ||
+			(specmode == OBS_MODE_CHASE) ||
+			(specmode == OBS_MODE_DEATHCAM) );
 }

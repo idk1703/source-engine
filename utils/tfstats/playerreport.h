@@ -20,15 +20,15 @@
 #include "PlrPersist.h"
 
 //------------------------------------------------------------------------------------------------------
-// Purpose:  Reports a specific player's stats. 
+// Purpose:  Reports a specific player's stats.
 //------------------------------------------------------------------------------------------------------
 class CPlayerReport: public CReport
 {
 private:
-	CPlayer* pPlayer;	
+	CPlayer* pPlayer;
 	CPlrPersist* pPersist;
 	int iWhichTeam;
-	
+
 	static map<unsigned long,bool> alreadyPersisted;
 	static map<unsigned long,bool> alreadyWroteCombStats;
 	bool reportingPersistedPlayer;

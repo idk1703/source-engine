@@ -31,13 +31,13 @@ using namespace std;
 class CAllPlayersStats :public CReport
 {
 private:
-	
+
 	void init();
-	
-	
+
+
 	public:
 		explicit CAllPlayersStats(){init();}
-		
+
 		void generate();
 		void writeHTML(CHTMLFile& html);
 };

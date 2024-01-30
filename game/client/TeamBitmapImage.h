@@ -73,7 +73,7 @@ private:
 // NOTE: This function looks for the key values 'material' and 'color'
 // and uses them to set up the material + modulation color of the image
 //-----------------------------------------------------------------------------
-bool InitializeTeamImage( KeyValues *pInitData, const char* pSectionName, 
+bool InitializeTeamImage( KeyValues *pInitData, const char* pSectionName,
 	vgui::Panel *pParent, C_BaseEntity *pEntity, CTeamBitmapImage* pBitmapImage );
 
 

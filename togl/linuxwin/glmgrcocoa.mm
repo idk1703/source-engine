@@ -31,4 +31,3 @@ CGLContextObj GetCGLContextFromNSGL( PseudoNSGLContextPtr nsglCtx )
 {
 	return (CGLContextObj)[ (NSOpenGLContext*)nsglCtx CGLContextObj];
 }
-

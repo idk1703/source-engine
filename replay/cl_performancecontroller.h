@@ -145,7 +145,7 @@ private:
 
 	CJob				*m_pSaveJob;
 	bool				m_bLastSaveStatus;
-	
+
 	IReplayPerformancePlaybackHandler		*m_pPlaybackHandler;
 };
 

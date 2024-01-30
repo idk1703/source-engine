@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -15,13 +15,13 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Simple string class. 
+// Simple string class.
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
 // Either allocates or reallocates memory to the length
 //
-// Allocated space for length characters.  It automatically adds space for the 
+// Allocated space for length characters.  It automatically adds space for the
 // nul and the cached length at the start of the memory block.  Will adjust
 // m_pString and explicitly set the nul at the end before returning.
 void *CUtlString::AllocMemory( uint32 length )
@@ -136,8 +136,8 @@ void CUtlString::Clear()
 
 void CUtlString::Purge()
 {
-    free( m_pString );
-    m_pString = NULL;
+	free( m_pString );
+	m_pString = NULL;
 }
 
 bool CUtlString::IsEqual_CaseSensitive( const char *src ) const
@@ -554,7 +554,7 @@ CUtlString CUtlString::Slice( int32 nStart, int32 nEnd ) const
 		nEnd = length - (-nEnd % length);
 	else if ( nEnd >= length )
 		nEnd = length;
-	
+
 	if ( nStart >= nEnd )
 		return CUtlString();
 
@@ -598,8 +598,8 @@ CUtlString CUtlString::Replace( const char *pszFrom, const char *pszTo ) const
 {
 	Assert( pszTo ); // Can be 0 length, but not null
 	Assert( pszFrom && *pszFrom ); // Must be valid and have one character.
-	
-	
+
+
 	const char *pos = V_strstr( String(), pszFrom );
 	if ( !pos )
 	{

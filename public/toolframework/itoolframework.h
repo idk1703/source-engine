@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -31,7 +31,7 @@ class CBoneList;
 //-----------------------------------------------------------------------------
 struct BaseEntityRecordingState_t
 {
-	BaseEntityRecordingState_t() :	
+	BaseEntityRecordingState_t() :
 		m_flTime( 0.0f ),
 		m_pModelName( 0 ),
 		m_nOwner( -1 ),
@@ -162,13 +162,13 @@ struct ParticleSystemSetControlPointOrientationState_t
 
 
 //-----------------------------------------------------------------------------
-// Purpose: This interface lives in the engine and handles loading up/unloading all 
+// Purpose: This interface lives in the engine and handles loading up/unloading all
 //  available tools
 //-----------------------------------------------------------------------------
 class IToolFrameworkInternal : public IAppSystem
 {
 public: // Client Hooks
-	virtual bool	ClientInit( CreateInterfaceFn clientFactory ) = 0; 
+	virtual bool	ClientInit( CreateInterfaceFn clientFactory ) = 0;
 	virtual void	ClientShutdown() = 0;
 
 	// Level init, shutdown
@@ -191,7 +191,7 @@ public: // Client Hooks
 
 public:  // Server Hooks
 	// Level init, shutdown
-	virtual bool	ServerInit( CreateInterfaceFn serverFactory ) = 0; 
+	virtual bool	ServerInit( CreateInterfaceFn serverFactory ) = 0;
 	virtual void	ServerShutdown() = 0;
 
 	virtual void	ServerLevelInitPreEntityAllTools() = 0;

@@ -51,7 +51,7 @@ ConVar	obj_manned_missilelauncher_damage( "obj_manned_missilelauncher_damage","1
 ConVar	obj_manned_missilelauncher_radius( "obj_manned_missilelauncher_radius","128", FCVAR_NONE, "Manned Missile Launcher explosive radius" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectMannedMissileLauncher::CObjectMannedMissileLauncher()
 {
@@ -59,7 +59,7 @@ CObjectMannedMissileLauncher::CObjectMannedMissileLauncher()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectMannedMissileLauncher::Precache()
 {
@@ -72,7 +72,7 @@ void CObjectMannedMissileLauncher::Precache()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectMannedMissileLauncher::Spawn()
 {
@@ -101,7 +101,7 @@ void CObjectMannedMissileLauncher::FinishedBuilding( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectMannedMissileLauncher::SetupTeamModel( void )
 {
@@ -199,8 +199,8 @@ void CObjectMannedMissileLauncher::Fire( )
 
 #if defined( CLIENT_DLL )
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void CObjectMannedMissileLauncher::PostDataUpdate( DataUpdateType_t updateType )
 {

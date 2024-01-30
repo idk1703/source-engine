@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -56,8 +56,8 @@ void CPetDoc::NotifyDataChanged( const char *pReason, int nNotifySource, int nNo
 	OnDataChanged( pReason, nNotifySource, nNotifyFlags );
 }
 
-	
-bool CPetDoc::GetIntChoiceList( const char *pChoiceListType, CDmElement *pElement, 
+
+bool CPetDoc::GetIntChoiceList( const char *pChoiceListType, CDmElement *pElement,
 	const char *pAttributeName, bool bArrayElement, IntChoiceList_t &list )
 {
 	if ( !Q_stricmp( pChoiceListType, "particlefield" ) )
@@ -114,7 +114,7 @@ bool CPetDoc::GetIntChoiceList( const char *pChoiceListType, CDmElement *pElemen
 	return false;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Gets the file name
 //-----------------------------------------------------------------------------
@@ -226,7 +226,7 @@ void CPetDoc::SaveToFile( )
 	SetDirty( false );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the root object
 //-----------------------------------------------------------------------------
@@ -235,7 +235,7 @@ CDmElement *CPetDoc::GetRootObject()
 	return m_hRoot;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the root object fileid
 //-----------------------------------------------------------------------------
@@ -355,7 +355,7 @@ CDmeParticleSystemDefinition *CPetDoc::FindParticleSystemDefinition( const char 
 	for ( int i = 0; i < nCount; ++i )
 	{
 		CDmeParticleSystemDefinition* pParticleSystem = particleSystemList[i];
-		if ( !Q_stricmp( pName, pParticleSystem->GetName() ) ) 
+		if ( !Q_stricmp( pName, pParticleSystem->GetName() ) )
 			return pParticleSystem;
 	}
 	return NULL;
@@ -378,7 +378,7 @@ void CPetDoc::ReplaceParticleSystemDefinition( CDmeParticleSystemDefinition *pPa
 		if ( !particleSystemList[i] )
 			continue;
 
-		if ( !Q_stricmp( particleSystemList[i]->GetName(), pParticleSystem->GetName() ) ) 
+		if ( !Q_stricmp( particleSystemList[i]->GetName(), pParticleSystem->GetName() ) )
 		{
 			nFoundIndex = i;
 			break;
@@ -412,7 +412,7 @@ void CPetDoc::ReplaceParticleSystemDefinition( CDmeParticleSystemDefinition *pPa
 	for ( int i = 0; i < nChildCount; ++i )
 	{
 		CDmeParticleChild *pChildReference = children[i];
-		pChildReference->m_Child = pParticleSystem; 
+		pChildReference->m_Child = pParticleSystem;
 	}
 
 	DestroyElement( pOldParticleSystem, TD_SHALLOW );
@@ -461,7 +461,7 @@ void CPetDoc::UpdateParticleDefinition( CDmeParticleSystemDefinition *pDef )
 //-----------------------------------------------------------------------------
 // Populate string choice lists
 //-----------------------------------------------------------------------------
-bool CPetDoc::GetStringChoiceList( const char *pChoiceListType, CDmElement *pElement, 
+bool CPetDoc::GetStringChoiceList( const char *pChoiceListType, CDmElement *pElement,
 									const char *pAttributeName, bool bArrayElement, StringChoiceList_t &list )
 {
 	if ( !Q_stricmp( pChoiceListType, "particleSystemDefinitions" ) )
@@ -492,7 +492,7 @@ bool CPetDoc::GetStringChoiceList( const char *pChoiceListType, CDmElement *pEle
 //-----------------------------------------------------------------------------
 // Populate element choice lists
 //-----------------------------------------------------------------------------
-bool CPetDoc::GetElementChoiceList( const char *pChoiceListType, CDmElement *pElement, 
+bool CPetDoc::GetElementChoiceList( const char *pChoiceListType, CDmElement *pElement,
 									 const char *pAttributeName, bool bArrayElement, ElementChoiceList_t &list )
 {
 	if ( !Q_stricmp( pChoiceListType, "allelements" ) )
@@ -523,7 +523,7 @@ bool CPetDoc::GetElementChoiceList( const char *pChoiceListType, CDmElement *pEl
 	return list.Count() > 0;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Called when data changes
 //-----------------------------------------------------------------------------
@@ -532,5 +532,3 @@ void CPetDoc::OnDataChanged( const char *pReason, int nNotifySource, int nNotify
 	SetDirty( nNotifyFlags & NOTIFY_SETDIRTYFLAG ? true : false );
 	m_pCallback->OnDocChanged( pReason, nNotifySource, nNotifyFlags );
 }
-
-

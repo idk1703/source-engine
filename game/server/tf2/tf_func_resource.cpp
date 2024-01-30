@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -25,7 +25,7 @@ LINK_ENTITY_TO_CLASS( trigger_resourcezone, CResourceZone);
 
 BEGIN_DATADESC( CResourceZone )
 
-	// keys 
+	// keys
 	DEFINE_KEYFIELD_NOT_SAVED( m_nResourcesLeft, FIELD_INTEGER, "ResourceAmount" ),
 	DEFINE_KEYFIELD_NOT_SAVED( m_iMaxChunks, FIELD_INTEGER, "ResourceChunks" ),
 	DEFINE_KEYFIELD_NOT_SAVED( m_flResourceRate, FIELD_FLOAT, "ResourceRate" ),
@@ -53,7 +53,7 @@ END_SEND_TABLE();
 PRECACHE_REGISTER( trigger_resourcezone );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CResourceZone::CResourceZone()
 {
@@ -97,21 +97,21 @@ void CResourceZone::Spawn( void )
 		m_flChunkValueMax = 60;
 
 	m_flBaseResourceRate = m_flResourceRate;
-	
+
 	m_flRespawnTimeModifier = 1.0f;
 
 	m_flTestTime = 0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceZone::Precache( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: See if we've got a gather point specified 
+// Purpose: See if we've got a gather point specified
 //-----------------------------------------------------------------------------
 void CResourceZone::Activate( void )
 {
@@ -129,7 +129,7 @@ void CResourceZone::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceZone::InputSetAmount( inputdata_t &inputdata )
 {
@@ -144,7 +144,7 @@ void CResourceZone::InputSetAmount( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceZone::InputResetAmount( inputdata_t &inputdata )
 {
@@ -159,7 +159,7 @@ void CResourceZone::InputResetAmount( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceZone::InputSetActive( inputdata_t &inputdata )
 {
@@ -167,7 +167,7 @@ void CResourceZone::InputSetActive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceZone::InputSetInactive( inputdata_t &inputdata )
 {
@@ -175,7 +175,7 @@ void CResourceZone::InputSetInactive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceZone::InputToggleActive( inputdata_t &inputdata )
 {
@@ -190,7 +190,7 @@ void CResourceZone::InputToggleActive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceZone::SetActive( bool bActive )
 {
@@ -218,7 +218,7 @@ void CResourceZone::SetActive( bool bActive )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CResourceZone::GetActive() const
 {
@@ -237,7 +237,7 @@ void CResourceZone::AddZoneIncreaser( float rate )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceZone::RemoveZoneIncreaser( float rate )
 {
@@ -270,7 +270,7 @@ bool CResourceZone::RemoveResources( int nResourcesRemoved )
 		}
 
 		SetActive( false );
-		
+
 		// Tell teams about it
 		for ( i = 0; i < GetNumberOfTeams(); i++ )
 		{
@@ -290,7 +290,7 @@ bool CResourceZone::RemoveResources( int nResourcesRemoved )
 // Purpose: Return true if this zone is empty
 //-----------------------------------------------------------------------------
 bool CResourceZone::IsEmpty( void )
-{ 
+{
 	// Inactive zones pretend to be empty, so nothing tries to do anything with them
 	if ( !GetActive() )
 		return true;
@@ -330,7 +330,7 @@ bool CResourceZone::CanBuildObjectOnBuildPoint( int iPoint, int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CResourceZone::GetBuildPoint( int iPoint, Vector &vecOrigin, QAngle &vecAngles )
 {
@@ -361,7 +361,7 @@ int CResourceZone::GetBuildPointAttachmentIndex( int iPoint ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceZone::SetObjectOnBuildPoint( int iPoint, CBaseObject *pObject )
 {
@@ -369,7 +369,7 @@ void CResourceZone::SetObjectOnBuildPoint( int iPoint, CBaseObject *pObject )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CResourceZone::GetNumObjectsOnMe( void )
 {
@@ -380,7 +380,7 @@ int CResourceZone::GetNumObjectsOnMe( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseEntity	*CResourceZone::GetFirstObjectOnMe( void )
 {
@@ -388,7 +388,7 @@ CBaseEntity	*CResourceZone::GetFirstObjectOnMe( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseObject *CResourceZone::GetObjectOfTypeOnMe( int iObjectType )
 {
@@ -419,7 +419,7 @@ void CResourceZone::GetExitPoint( CBaseEntity *pPlayer, int iPoint, Vector *pAbs
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceZone::RemoveAllObjects( void )
 {
@@ -438,7 +438,7 @@ CTFTeam *CResourceZone::GetOwningTeam( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceZone::SetOwningTeam( int iTeamNumber )
 {
@@ -453,7 +453,7 @@ int CResourceZone::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 	// Team rules may tell us that we should
 	CBaseEntity* pRecipientEntity = CBaseEntity::Instance( pInfo->m_pClientEnt );
 	Assert( pRecipientEntity->IsPlayer() );
-	
+
 	CBasePlayer *pPlayer = (CBasePlayer*)pRecipientEntity;
 	if ( pPlayer->GetTeam() )
 	{
@@ -563,7 +563,7 @@ END_SEND_TABLE();
 char *sResourceSpawnerModel = "models/resources/resource_spawner_B.mdl";
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceSpawner::Spawn( void )
 {
@@ -579,7 +579,7 @@ void CResourceSpawner::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceSpawner::Precache( void )
 {
@@ -609,14 +609,14 @@ void CResourceSpawner::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceSpawner::SetActive( bool bActive )
 {
 	// Going active?
 	if ( !m_bActive && bActive )
 	{
-		// Randomize the thinks a little to reduce network usage ong chunk spawning 
+		// Randomize the thinks a little to reduce network usage ong chunk spawning
 		SetNextThink( gpGlobals->curtime + m_hZone->GetResourceRate() + random->RandomFloat( 0.0, 1.0 ) );
 		SetThink( SpawnChunkThink );
 		RemoveEffects( EF_NODRAW );
@@ -652,7 +652,7 @@ void CResourceSpawner::SpawnChunkThink( void )
 		m_hZone->SpawnChunk( GetAbsOrigin() + Vector(0,0,64) );
 	}
 
-	// Randomize the thinks a little to reduce network usage on chunk spawning 
+	// Randomize the thinks a little to reduce network usage on chunk spawning
 	SetNextThink( gpGlobals->curtime + m_hZone->GetResourceRate() + random->RandomFloat( 0.0, 1.0 ) );
 }
 

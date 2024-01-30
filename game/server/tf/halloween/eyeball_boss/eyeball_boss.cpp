@@ -314,7 +314,7 @@ void CEyeballBoss::JarateNearbyPlayers( float range )
 
 	for( int i=0; i<playerVector.Count(); ++i )
 	{
-		if ( IsRangeLessThan( playerVector[i], range ) && 
+		if ( IsRangeLessThan( playerVector[i], range ) &&
 			IsLineOfSightClear( playerVector[i], CBaseCombatCharacter::IGNORE_ACTORS ) )
 		{
 			playerVector[i]->m_Shared.AddCond( TF_COND_URINE, 10.0f );
@@ -651,14 +651,14 @@ void CEyeballBoss::LogPlayerInteraction( const char *verb, CTFPlayer *player )
 		}
 	}
 
-	UTIL_LogPrintf( "HALLOWEEN: \"%s<%i><%s><%s>\" %s with \"%s\" (attacker_position \"%d %d %d\")\n",  
+	UTIL_LogPrintf( "HALLOWEEN: \"%s<%i><%s><%s>\" %s with \"%s\" (attacker_position \"%d %d %d\")\n",
 					player->GetPlayerName(),
 					player->GetUserID(),
 					player->GetNetworkIDString(),
 					player->GetTeam()->GetName(),
 					verb,
 					weaponLogName ? weaponLogName : "NoWeapon",
-					(int)player->GetAbsOrigin().x, 
+					(int)player->GetAbsOrigin().x,
 					(int)player->GetAbsOrigin().y,
 					(int)player->GetAbsOrigin().z );
 }
@@ -743,14 +743,14 @@ void CEyeballBossLocomotion::MaintainAltitude( void )
 	filter.AddClassnameToIgnore( "eyeball_boss" );
 
 	// find ceiling
-	TraceHull( me->GetAbsOrigin(), me->GetAbsOrigin() + Vector( 0, 0, 1000.0f ), 
-			   me->WorldAlignMins(), me->WorldAlignMaxs(), 
+	TraceHull( me->GetAbsOrigin(), me->GetAbsOrigin() + Vector( 0, 0, 1000.0f ),
+			   me->WorldAlignMins(), me->WorldAlignMaxs(),
 			   GetBot()->GetBodyInterface()->GetSolidMask(), &filter, &result );
 
 	float ceiling = result.endpos.z - me->GetAbsOrigin().z;
 
 	Vector aheadXY;
-	
+
 	if ( IsAttemptingToMove() )
 	{
 		aheadXY.x = m_forward.x;
@@ -765,8 +765,8 @@ void CEyeballBossLocomotion::MaintainAltitude( void )
 
 	TraceHull( me->GetAbsOrigin() + Vector( 0, 0, ceiling ) + aheadXY * 50.0f,
 			   me->GetAbsOrigin() + Vector( 0, 0, -2000.0f ) + aheadXY * 50.0f,
-			   Vector( 1.25f * me->WorldAlignMins().x, 1.25f * me->WorldAlignMins().y, me->WorldAlignMins().z ), 
-			   Vector( 1.25f * me->WorldAlignMaxs().x, 1.25f * me->WorldAlignMaxs().y, me->WorldAlignMaxs().z ), 
+			   Vector( 1.25f * me->WorldAlignMins().x, 1.25f * me->WorldAlignMins().y, me->WorldAlignMins().z ),
+			   Vector( 1.25f * me->WorldAlignMaxs().x, 1.25f * me->WorldAlignMaxs().y, me->WorldAlignMaxs().z ),
 			   GetBot()->GetBodyInterface()->GetSolidMask(), &filter, &result );
 
 	float groundZ = result.endpos.z;
@@ -806,7 +806,7 @@ void CEyeballBossLocomotion::Update( void )
 
 	pos += m_velocity * deltaT;
 
-	// check for collisions along move	
+	// check for collisions along move
 	trace_t result;
 	CTraceFilterSkipClassname filter( me, "eyeball_boss", COLLISION_GROUP_NONE );
 	Vector from = me->GetAbsOrigin();
@@ -983,7 +983,7 @@ const Vector &CEyeballBossLocomotion::GetFeet( void ) const
 
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
-CEyeballBossBody::CEyeballBossBody( INextBot *bot ) : CBotNPCBody( bot ) 
+CEyeballBossBody::CEyeballBossBody( INextBot *bot ) : CBotNPCBody( bot )
 {
 	m_leftRightPoseParameter = -1;
 	m_upDownPoseParameter = -1;
@@ -1018,7 +1018,7 @@ void CEyeballBossBody::Update( void )
 		NDebugOverlay::Line( me->WorldSpaceCenter(), me->WorldSpaceCenter() + 150.0f * myForward, 255, 255, 0, true, 0.1f );
 	}
 
-	// move the animation ahead in time	
+	// move the animation ahead in time
 	me->StudioFrameAdvance();
 	me->DispatchAnimEvents( me );
 }

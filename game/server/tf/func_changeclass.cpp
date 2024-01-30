@@ -22,7 +22,7 @@ LINK_ENTITY_TO_CLASS( func_changeclass, CChangeClassZone );
 //
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CChangeClassZone::CChangeClassZone()
 {
@@ -48,7 +48,7 @@ void CChangeClassZone::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChangeClassZone::Touch( CBaseEntity *pOther )
 {
@@ -77,7 +77,7 @@ void CChangeClassZone::Touch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChangeClassZone::EndTouch( CBaseEntity *pOther )
 {

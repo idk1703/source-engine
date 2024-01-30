@@ -30,7 +30,7 @@ struct baseitemcriteria_t;
 
 //===============================================================================================================
 //-----------------------------------------------------------------------------
-// Purpose: A single TF player's inventory. 
+// Purpose: A single TF player's inventory.
 //		On the client, the inventory manager contains an instance of this for the local player.
 //		On the server, each player contains an instance of this.
 //-----------------------------------------------------------------------------
@@ -99,11 +99,11 @@ protected:
 	// Extracts the position that should be used to sort items in the inventory from the backend position.
 	// Necessary if your inventory packs a bunch of info into the position instead of using it just as a position.
 	virtual int			ExtractInventorySortPosition( uint32 iBackendPosition )
-	{ 
+	{
 		// Consider unack'd items as -1, so they get stacked up before the 0th slot item
 		if ( IsUnacknowledged(iBackendPosition) )
 			return -1;
-		return ExtractBackpackPositionFromBackend(iBackendPosition); 
+		return ExtractBackpackPositionFromBackend(iBackendPosition);
 	}
 
 	virtual void		SOUpdated( const CSteamID & steamIDOwner, const GCSDK::CSharedObject *pObject, GCSDK::ESOCacheEvent eEvent ) OVERRIDE;
@@ -140,7 +140,7 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFInventoryManager : public CInventoryManager
 {
@@ -159,7 +159,7 @@ public:
 	//-----------------------------------------------------------------------
 
 	// Get the number of items picked up
-	virtual int			GetNumItemPickedUpItems( void );				
+	virtual int			GetNumItemPickedUpItems( void );
 
 	// Show the player a pickup screen with any items they've collected recently, if any
 	virtual bool		ShowItemsPickedUp( bool bForce = false, bool bReturnToGame = true, bool bNoPanel = false );
@@ -186,7 +186,7 @@ public:
 
 	// Returns the item in the specified loadout slot for a given class
 	CEconItemView		*GetItemInLoadoutForClass( int iClass, int iSlot, CSteamID *pID = NULL );
-	
+
 	CEconItemView		*GetItemInLoadoutForAccount( int nSlot, CSteamID *pID = NULL );
 
 	// Fills out the vector with the sets that are currently active on the specified player & class
@@ -194,7 +194,7 @@ public:
 
 	// We're generating a base item. We need to add the game-specific keys to the criteria so that it'll find the right base item.
 	virtual void		AddBaseItemCriteria( baseitemcriteria_t *pCriteria, CItemSelectionCriteria *pSelectionCriteria );
-	
+
 	bool				SlotContainsBaseItems( EEquipType_t eType, int iSlot );
 
 	int					GetBaseItemCount( )			{ return m_pBaseLoadoutItems.Count(); }

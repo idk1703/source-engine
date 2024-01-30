@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -47,8 +47,8 @@ void CDialogAddServer::Open()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *command - 
+// Purpose:
+// Input  : *command -
 //-----------------------------------------------------------------------------
 void CDialogAddServer::OnCommand(const char *command)
 {

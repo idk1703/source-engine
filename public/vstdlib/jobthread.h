@@ -2,28 +2,28 @@
 //
 // Purpose:	A utility for a discrete job-oriented worker thread.
 //
-//			The class CThreadPool is both the job queue, and the 
-//			worker thread. Except when the main thread attempts to 
-//			synchronously execute a job, most of the inter-thread locking 
-//			on the queue. 
+//			The class CThreadPool is both the job queue, and the
+//			worker thread. Except when the main thread attempts to
+//			synchronously execute a job, most of the inter-thread locking
+//			on the queue.
 //
-//			The queue threading model uses a manual reset event for optimal 
-//			throughput. Adding to the queue is guarded by a semaphore that 
-//			will block the inserting thread if the queue has overflown. 
-//			This prevents the worker thread from being starved out even if 
+//			The queue threading model uses a manual reset event for optimal
+//			throughput. Adding to the queue is guarded by a semaphore that
+//			will block the inserting thread if the queue has overflown.
+//			This prevents the worker thread from being starved out even if
 //			not running at a higher priority than the master thread.
 //
-//			The thread function waits for jobs, services jobs, and manages 
-//			communication between the worker and master threads. The nature 
+//			The thread function waits for jobs, services jobs, and manages
+//			communication between the worker and master threads. The nature
 //			of the work is opaque to the Executer.
 //
-//			CJob instances actually do the work. The base class 
-//			calls virtual methods for job primitives, so derivations don't 
-//			need to worry about threading models. All of the variants of 
-//			job and OS can be expressed in this hierarchy. Instances of 
-//			CJob are the items placed in the queue, and by 
-//			overriding the job primitives they are the manner by which 
-//			users of the Executer control the state of the job. 
+//			CJob instances actually do the work. The base class
+//			calls virtual methods for job primitives, so derivations don't
+//			need to worry about threading models. All of the variants of
+//			job and OS can be expressed in this hierarchy. Instances of
+//			CJob are the items placed in the queue, and by
+//			overriding the job primitives they are the manner by which
+//			users of the Executer control the state of the job.
 //
 //=============================================================================
 
@@ -60,13 +60,13 @@
 #endif
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 
 class CJob;
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 enum JobStatusEnum_t
 {
@@ -214,7 +214,7 @@ public:
 	virtual void Reserved1() = 0;
 
 	//-----------------------------------------------------
-	// Add an arbitrary call to the queue (master thread) 
+	// Add an arbitrary call to the queue (master thread)
 	//
 	// Avert thy eyes! Imagine rather:
 	//
@@ -481,7 +481,7 @@ public:
 	/// to warn you that it should only be used in unusual situations.  Otherwise, the
 	/// job manager really should manage the status for you, and you should not manhandle it.
 	void SlamStatus(JobStatus_t s) { m_status = s; }
-	
+
 	//-----------------------------------------------------
 	// Try to acquire ownership (to satisfy). If you take the lock, you must either execute or abort.
 	//-----------------------------------------------------
@@ -949,7 +949,7 @@ private:
 	const char *				m_szDescription;
 };
 
-template <typename ITEM_TYPE> 
+template <typename ITEM_TYPE>
 inline void ParallelProcess( const char *pszDescription, ITEM_TYPE *pItems, unsigned nItems, void (*pfnProcess)( ITEM_TYPE & ), void (*pfnBegin)() = NULL, void (*pfnEnd)() = NULL, int nMaxParallel = INT_MAX )
 {
 	CParallelProcessor<ITEM_TYPE, CFuncJobItemProcessor<ITEM_TYPE> > processor( pszDescription );
@@ -958,7 +958,7 @@ inline void ParallelProcess( const char *pszDescription, ITEM_TYPE *pItems, unsi
 
 }
 
-template <typename ITEM_TYPE, typename OBJECT_TYPE, typename FUNCTION_CLASS > 
+template <typename ITEM_TYPE, typename OBJECT_TYPE, typename FUNCTION_CLASS >
 inline void ParallelProcess( const char *pszDescription, ITEM_TYPE *pItems, unsigned nItems, OBJECT_TYPE *pObject, void (FUNCTION_CLASS::*pfnProcess)( ITEM_TYPE & ), void (FUNCTION_CLASS::*pfnBegin)() = NULL, void (FUNCTION_CLASS::*pfnEnd)() = NULL, int nMaxParallel = INT_MAX )
 {
 	CParallelProcessor<ITEM_TYPE, CMemberFuncJobItemProcessor<ITEM_TYPE, OBJECT_TYPE, FUNCTION_CLASS> > processor( pszDescription );
@@ -967,7 +967,7 @@ inline void ParallelProcess( const char *pszDescription, ITEM_TYPE *pItems, unsi
 }
 
 // Parallel Process that lets you specify threadpool
-template <typename ITEM_TYPE> 
+template <typename ITEM_TYPE>
 inline void ParallelProcess( const char *pszDescription, IThreadPool *pPool, ITEM_TYPE *pItems, unsigned nItems, void (*pfnProcess)( ITEM_TYPE & ), void (*pfnBegin)() = NULL, void (*pfnEnd)() = NULL, int nMaxParallel = INT_MAX )
 {
 	CParallelProcessor<ITEM_TYPE, CFuncJobItemProcessor<ITEM_TYPE> > processor( pszDescription );
@@ -1058,7 +1058,7 @@ inline void ParallelLoopProcess( const char *szDescription, long lBegin, unsigne
 
 }
 
-template < typename OBJECT_TYPE, typename FUNCTION_CLASS > 
+template < typename OBJECT_TYPE, typename FUNCTION_CLASS >
 inline void ParallelLoopProcess( const char *szDescription, long lBegin, unsigned nItems, OBJECT_TYPE *pObject, void (FUNCTION_CLASS::*pfnProcess)( long const & ), void (FUNCTION_CLASS::*pfnBegin)() = NULL, void (FUNCTION_CLASS::*pfnEnd)() = NULL, int nMaxParallel = INT_MAX )
 {
 	CParallelLoopProcessor< CMemberFuncJobItemProcessor<long const, OBJECT_TYPE, FUNCTION_CLASS> > processor( szDescription );
@@ -1169,49 +1169,49 @@ inline ThreadHandle_t ThreadExecuteSoloImpl( CFunctor *pFunctor, const char *psz
 
 inline ThreadHandle_t ThreadExecuteSolo( CJob *pJob ) { return ThreadExecuteSoloImpl( CreateFunctor( pJob, &CJob::Execute ), pJob->Describe()  ); }
 
-template <typename T1> 																								
+template <typename T1>
 inline ThreadHandle_t ThreadExecuteSolo( const char *pszName, T1 a1 ) { return ThreadExecuteSoloImpl( CreateFunctor( a1 ), pszName  ); }
 
-template <typename T1, typename T2> 																				
+template <typename T1, typename T2>
 inline ThreadHandle_t ThreadExecuteSolo( const char *pszName, T1 a1, T2 a2 ) { return ThreadExecuteSoloImpl( CreateFunctor( a1, a2 ), pszName  ); }
 
-template <typename T1, typename T2, typename T3> 																	
+template <typename T1, typename T2, typename T3>
 inline ThreadHandle_t ThreadExecuteSolo( const char *pszName, T1 a1, T2 a2, T3 a3 ) { return ThreadExecuteSoloImpl( CreateFunctor( a1, a2, a3 ), pszName  ); }
 
-template <typename T1, typename T2, typename T3, typename T4> 														
+template <typename T1, typename T2, typename T3, typename T4>
 inline ThreadHandle_t ThreadExecuteSolo( const char *pszName, T1 a1, T2 a2, T3 a3, T4 a4 ) { return ThreadExecuteSoloImpl( CreateFunctor( a1, a2, a3, a4 ), pszName  ); }
 
-template <typename T1, typename T2, typename T3, typename T4, typename T5> 											
+template <typename T1, typename T2, typename T3, typename T4, typename T5>
 inline ThreadHandle_t ThreadExecuteSolo( const char *pszName, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5 ) { return ThreadExecuteSoloImpl( CreateFunctor( a1, a2, a3, a4, a5 ), pszName  ); }
 
-template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6> 							
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
 inline ThreadHandle_t ThreadExecuteSolo( const char *pszName, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6 ) { return ThreadExecuteSoloImpl( CreateFunctor( a1, a2, a3, a4, a5, a6 ), pszName  ); }
 
-template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7> 				
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7>
 inline ThreadHandle_t ThreadExecuteSolo( const char *pszName, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7 ) { return ThreadExecuteSoloImpl( CreateFunctor( a1, a2, a3, a4, a5, a6, a7 ), pszName  ); }
 
-template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8> 	
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8>
 inline ThreadHandle_t ThreadExecuteSolo( const char *pszName, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7, T8 a8 ) { return ThreadExecuteSoloImpl( CreateFunctor( a1, a2, a3, a4, a5, a6, a7, a8 ), pszName  ); }
 
-template <typename T1, typename T2> 																				
+template <typename T1, typename T2>
 inline ThreadHandle_t ThreadExecuteSoloRef( const char *pszName, T1 a1, T2 a2 ) { return ThreadExecuteSoloImpl( CreateRefCountingFunctor(a1, a2 ), pszName  ); }
 
-template <typename T1, typename T2, typename T3> 																	
+template <typename T1, typename T2, typename T3>
 inline ThreadHandle_t ThreadExecuteSoloRef( const char *pszName, T1 a1, T2 a2, T3 a3 ) { return ThreadExecuteSoloImpl( CreateRefCountingFunctor(a1, a2, a3 ), pszName  ); }
 
-template <typename T1, typename T2, typename T3, typename T4> 														
+template <typename T1, typename T2, typename T3, typename T4>
 inline ThreadHandle_t ThreadExecuteSoloRef( const char *pszName, T1 a1, T2 a2, T3 a3, T4 a4 ) { return ThreadExecuteSoloImpl( CreateRefCountingFunctor(a1, a2, a3, a4 ), pszName  ); }
 
-template <typename T1, typename T2, typename T3, typename T4, typename T5> 											
+template <typename T1, typename T2, typename T3, typename T4, typename T5>
 inline ThreadHandle_t ThreadExecuteSoloRef( const char *pszName, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5 ) { return ThreadExecuteSoloImpl( CreateRefCountingFunctor(a1, a2, a3, a4, a5 ), pszName  ); }
 
-template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6> 							
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
 inline ThreadHandle_t ThreadExecuteSoloRef( const char *pszName, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6 ) { return ThreadExecuteSoloImpl( CreateRefCountingFunctor(a1, a2, a3, a4, a5, a6 ), pszName  ); }
 
-template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7> 				
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7>
 inline ThreadHandle_t ThreadExecuteSoloRef( const char *pszName, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7 ) { return ThreadExecuteSoloImpl( CreateRefCountingFunctor(a1, a2, a3, a4, a5, a6, a7 ), pszName  ); }
 
-template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8> 	
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8>
 inline ThreadHandle_t ThreadExecuteSoloRef( const char *pszName, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7, T8 a8 ) { return ThreadExecuteSoloImpl( CreateRefCountingFunctor(a1, a2, a3, a4, a5, a6, a7, a8 ), pszName  ); }
 
 //-----------------------------------------------------------------------------

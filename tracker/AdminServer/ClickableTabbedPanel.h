@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -23,7 +23,7 @@ class Panel;
 };
 
 
-class CClickableTabbedPanel: public vgui2::PropertySheet 
+class CClickableTabbedPanel: public vgui2::PropertySheet
 {
 
 public:

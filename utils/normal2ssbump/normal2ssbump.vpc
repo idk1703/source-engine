@@ -24,7 +24,7 @@ $Project "Normal2ssbump"
 		-$File	"$SRCDIR\public\tier0\memoverride.cpp"
 		$File	"normal2ssbump.cpp"
 	}
-	
+
 	$Folder	"Link Libraries"
 	{
 		$Lib bitmap

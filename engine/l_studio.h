@@ -52,4 +52,3 @@ extern ConVar r_lod;
 extern ConVar r_drawmodellightorigin;
 
 #endif
-

@@ -29,7 +29,7 @@ ConVar nb_debug_known_entities( "nb_debug_known_entities", "0", FCVAR_CHEAT, "Sh
 
 //------------------------------------------------------------------------------------------
 IVision::IVision( INextBot *bot ) : INextBotComponent( bot )
-{ 
+{
 	Reset();
 }
 
@@ -48,7 +48,7 @@ void IVision::Reset( void )
 
 	m_FOV = GetDefaultFieldOfView();
 	m_cosHalfFOV = cos( 0.5f * m_FOV * M_PI / 180.0f );
-	
+
 	for( int i=0; i<MAX_TEAMS; ++i )
 	{
 		m_notVisibleTimer[i].Invalidate();
@@ -120,10 +120,10 @@ const CKnownEntity *IVision::GetPrimaryKnownThreat( bool onlyVisibleThreats ) co
 const CKnownEntity *IVision::GetClosestKnown( int team ) const
 {
 	const Vector &myPos = GetBot()->GetPosition();
-	
+
 	const CKnownEntity *close = NULL;
 	float closeRange = 999999999.9f;
-	
+
 	for( int i=0; i < m_knownEntityVector.Count(); ++i )
 	{
 		const CKnownEntity &known = m_knownEntityVector[i];
@@ -134,7 +134,7 @@ const CKnownEntity *IVision::GetClosestKnown( int team ) const
 			{
 				Vector to = known.GetLastKnownPosition() - myPos;
 				float rangeSq = to.LengthSqr();
-				
+
 				if ( rangeSq < closeRange )
 				{
 					close = &known;
@@ -143,7 +143,7 @@ const CKnownEntity *IVision::GetClosestKnown( int team ) const
 			}
 		}
 	}
-	
+
 	return close;
 }
 
@@ -179,7 +179,7 @@ const CKnownEntity *IVision::GetClosestKnown( const INextBotEntityFilter &filter
 		}
 	}
 
-	return close;	
+	return close;
 }
 
 
@@ -310,7 +310,7 @@ public:
 
 //------------------------------------------------------------------------------------------
 /**
- * Populate "potentiallyVisible" with the set of all entities we could potentially see. 
+ * Populate "potentiallyVisible" with the set of all entities we could potentially see.
  * Entities in this set will be tested for visibility/recognition in IVision::Update()
  */
 void IVision::CollectPotentiallyVisibleEntities( CUtlVector< CBaseEntity * > *potentiallyVisible )
@@ -331,7 +331,7 @@ public:
 	{
 		m_vision = vision;
 	}
-	
+
 	bool operator() ( CBaseEntity *entity )
 	{
 		if ( entity &&
@@ -340,12 +340,12 @@ public:
 			 entity != m_vision->GetBot()->GetEntity() &&
 			 m_vision->IsAbleToSee( entity, IVision::USE_FOV ) )
 		{
-			m_recognized.AddToTail( entity );	
+			m_recognized.AddToTail( entity );
 		}
-			
+
 		return true;
 	}
-	
+
 	bool Contains( CBaseEntity *entity ) const
 	{
 		for( int i=0; i < m_recognized.Count(); ++i )
@@ -357,7 +357,7 @@ public:
 		}
 		return false;
 	}
-	
+
 	IVision *m_vision;
 	CUtlVector< CBaseEntity * > m_recognized;
 };
@@ -381,7 +381,7 @@ void IVision::UpdateKnownEntities( void )
 		if ( visibleNow( potentiallyVisible[ pit ] ) == false )
 			break;
 	}
-	
+
 	// update known set with new data
 	{	VPROF_BUDGET( "IVision::UpdateKnownEntities( update status )", "NextBot" );
 
@@ -397,7 +397,7 @@ void IVision::UpdateKnownEntities( void )
 				--i;
 				continue;
 			}
-			
+
 			if ( visibleNow.Contains( known.GetEntity() ) )
 			{
 				// this visible entity was already known (but perhaps not visible until now)
@@ -410,7 +410,7 @@ void IVision::UpdateKnownEntities( void )
 				{
 					if ( GetBot()->IsDebugging( NEXTBOT_VISION ) )
 					{
-						ConColorMsg( Color( 0, 255, 0, 255 ), "%3.2f: %s caught sight of %s(#%d)\n", 
+						ConColorMsg( Color( 0, 255, 0, 255 ), "%3.2f: %s caught sight of %s(#%d)\n",
 										gpGlobals->curtime,
 										GetBot()->GetDebugIdentifier(),
 										known.GetEntity()->GetClassname(),
@@ -421,7 +421,7 @@ void IVision::UpdateKnownEntities( void )
 
 					GetBot()->OnSight( known.GetEntity() );
 				}
-		
+
 				// restart 'not seen' timer
 				m_notVisibleTimer[ known.GetEntity()->GetTeamNumber() ].Start();
 			}
@@ -435,7 +435,7 @@ void IVision::UpdateKnownEntities( void )
 					// lost sight of this entity
 					if ( GetBot()->IsDebugging( NEXTBOT_VISION ) )
 					{
-						ConColorMsg( Color( 255, 0, 0, 255 ), "%3.2f: %s Lost sight of %s(#%d)\n", 
+						ConColorMsg( Color( 255, 0, 0, 255 ), "%3.2f: %s Lost sight of %s(#%d)\n",
 										gpGlobals->curtime,
 										GetBot()->GetDebugIdentifier(),
 										known.GetEntity()->GetClassname(),
@@ -456,13 +456,13 @@ void IVision::UpdateKnownEntities( void )
 			}
 		}
 	}
-		
+
 	// check for new recognizes that were not in the known set
 	{	VPROF_BUDGET( "IVision::UpdateKnownEntities( new recognizes )", "NextBot" );
 
 		int i, j;
 		for( i=0; i < visibleNow.m_recognized.Count(); ++i )
-		{	
+		{
 			for( j=0; j < m_knownEntityVector.Count(); ++j )
 			{
 				if ( visibleNow.m_recognized[i] == m_knownEntityVector[j].GetEntity() )
@@ -470,7 +470,7 @@ void IVision::UpdateKnownEntities( void )
 					break;
 				}
 			}
-			
+
 			if ( j == m_knownEntityVector.Count() )
 			{
 				// recognized a previously unknown entity (emit OnSight() event after reaction time has passed)
@@ -574,7 +574,7 @@ bool IVision::IsAbleToSee( CBaseEntity *subject, FieldOfViewCheckType checkFOV, 
 		return false;
 	}
 
-	
+
 	if ( GetBot()->GetEntity()->IsHiddenByFog( subject ) )
 	{
 		// lost in the fog
@@ -616,7 +616,7 @@ bool IVision::IsAbleToSee( const Vector &pos, FieldOfViewCheckType checkFOV ) co
 {
 	VPROF_BUDGET( "IVision::IsAbleToSee", "NextBotExpensive" );
 
-	
+
 	if ( GetBot()->IsRangeGreaterThan( pos, GetMaxVisionRange() ) )
 	{
 		return false;
@@ -633,7 +633,7 @@ bool IVision::IsAbleToSee( const Vector &pos, FieldOfViewCheckType checkFOV ) co
 		return false;
 	}
 
-	// do actual line-of-sight trace	
+	// do actual line-of-sight trace
 	return IsLineOfSightClear( pos );
 }
 
@@ -656,9 +656,9 @@ bool IVision::IsInFieldOfView( const Vector &pos ) const
 	bool bCheck = PointWithinViewAngle( GetBot()->GetBodyInterface()->GetEyePosition(), pos, GetBot()->GetBodyInterface()->GetViewVector(), m_cosHalfFOV );
 	Vector to = pos - GetBot()->GetBodyInterface()->GetEyePosition();
 	to.NormalizeInPlace();
-	
+
 	float cosDiff = DotProduct( GetBot()->GetBodyInterface()->GetViewVector(), to );
-	
+
 	if ( ( cosDiff > m_cosHalfFOV ) != bCheck )
 	{
 		Assert(0);
@@ -671,7 +671,7 @@ bool IVision::IsInFieldOfView( const Vector &pos ) const
 #else
 	return PointWithinViewAngle( GetBot()->GetBodyInterface()->GetEyePosition(), pos, GetBot()->GetBodyInterface()->GetViewVector(), m_cosHalfFOV );
 #endif
-	
+
 	return true;
 }
 
@@ -700,9 +700,9 @@ bool IVision::IsLineOfSightClear( const Vector &pos ) const
 
 	trace_t result;
 	NextBotVisionTraceFilter filter( GetBot()->GetEntity(), COLLISION_GROUP_NONE );
-	
+
 	UTIL_TraceLine( GetBot()->GetBodyInterface()->GetEyePosition(), pos, MASK_BLOCKLOS_AND_NPCS|CONTENTS_IGNORE_NODRAW_OPAQUE, &filter, &result );
-	
+
 	return ( result.fraction >= 1.0f && !result.startsolid );
 }
 
@@ -724,7 +724,7 @@ bool IVision::IsLineOfSightClearToEntity( const CBaseEntity *subject, Vector *vi
 #ifdef USE_NON_CACHE_QUERY
 	trace_t result;
 	NextBotTraceFilterIgnoreActors filter( subject, COLLISION_GROUP_NONE );
-	
+
 	UTIL_TraceLine( GetBot()->GetBodyInterface()->GetEyePosition(), subject->WorldSpaceCenter(), MASK_BLOCKLOS_AND_NPCS|CONTENTS_IGNORE_NODRAW_OPAQUE, &filter, &result );
 	Assert( result.DidHit() != bClear );
 	if ( subject->IsPlayer() && ! bClear )
@@ -734,7 +734,7 @@ bool IVision::IsLineOfSightClearToEntity( const CBaseEntity *subject, Vector *vi
 													   EOFFSET_MODE_EYEPOSITION,
 													   subject, EOFFSET_MODE_EYEPOSITION,
 													   subject, COLLISION_GROUP_NONE,
-													   MASK_BLOCKLOS_AND_NPCS|CONTENTS_IGNORE_NODRAW_OPAQUE, 
+													   MASK_BLOCKLOS_AND_NPCS|CONTENTS_IGNORE_NODRAW_OPAQUE,
 													   IgnoreActorsTraceFilterFunction, 1.0 );
 
 		// this WILL assert - the query interface happens at a different time, and has hysteresis.
@@ -798,5 +798,3 @@ bool IVision::IsLookingAt( const CBaseCombatCharacter *actor, float cosTolerance
 {
 	return IsLookingAt( actor->EyePosition(), cosTolerance );
 }
-
-

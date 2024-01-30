@@ -18,7 +18,7 @@ static const char *s_pRetireContext = "RetireContext";
 
 
 //-----------------------------------------------------------------------------
-// Save/load 
+// Save/load
 //-----------------------------------------------------------------------------
 BEGIN_DATADESC( CEntityParticleTrail )
 
@@ -47,7 +47,7 @@ LINK_ENTITY_TO_CLASS( env_particle_trail, CEntityParticleTrail );
 
 //-----------------------------------------------------------------------------
 // Purpose: Creates a flame and attaches it to a target entity.
-// Input  : pTarget - 
+// Input  : pTarget -
 //-----------------------------------------------------------------------------
 CEntityParticleTrail *CEntityParticleTrail::Create( CBaseEntity *pTarget, const EntityParticleTrailInfo_t &info, CBaseEntity *pConstraintEntity )
 {
@@ -95,7 +95,7 @@ void CEntityParticleTrail::Spawn()
 
 	if ( HasSpawnFlags( SF_RAGDOLL_BOOGIE_ELECTRICAL ) )
 	{
-		SetContextThink( ZapThink, gpGlobals->curtime + random->RandomFloat( 0.1f, 0.3f ), s_pZapContext ); 
+		SetContextThink( ZapThink, gpGlobals->curtime + random->RandomFloat( 0.1f, 0.3f ), s_pZapContext );
 	}
 	*/
 }
@@ -122,7 +122,7 @@ void CEntityParticleTrail::SetTransmit( CCheckTransmitInfo *pInfo, bool bAlways 
 		return;
 
 	BaseClass::SetTransmit( pInfo, bAlways );
-	
+
 	// Force our constraint entity to be sent too.
 	if ( m_hConstraintEntity )
 	{

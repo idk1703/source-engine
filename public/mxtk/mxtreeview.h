@@ -50,7 +50,7 @@ public:
 	void setImages(mxTreeViewItem *item, int imagenormal, int imageselected );
 	void moveItemDown( mxTreeViewItem *item );
 
-	void sortTree( mxTreeViewItem *parent, bool recurse, 
+	void sortTree( mxTreeViewItem *parent, bool recurse,
 		void *func, int parameter );
 
 	void scrollTo( mxTreeViewItem *item );

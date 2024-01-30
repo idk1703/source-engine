@@ -53,7 +53,7 @@ void CTFBotVision::Update( void )
 			// if a hidden spy changes disguises, we no longer recognize him
 			if ( playerVector[i]->m_Shared.InCond( TF_COND_DISGUISING ) )
 			{
-				me->ForgetSpy( playerVector[i] );				
+				me->ForgetSpy( playerVector[i] );
 			}
 		}
 	}
@@ -304,7 +304,7 @@ bool CTFBotVision::IsIgnored( CBaseEntity *subject ) const
 		{
 			return false;
 		}
-		
+
 		if ( enemy->m_Shared.InCond( TF_COND_DISGUISED ) && enemy->m_Shared.GetDisguiseTeam() == me->GetTeamNumber() )
 		{
 			// spy is disguised as a member of my team
@@ -328,13 +328,13 @@ bool CTFBotVision::IsIgnored( CBaseEntity *subject ) const
 
 				return true;
 			}
-			
+
 			// ignore carried objects
 			if ( object->IsPlacing() || object->IsCarried() )
 			{
 				return true;
 			}
-			
+
 			if ( object->GetType() == OBJ_SENTRYGUN && me->IsBehaviorFlagSet( TFBOT_IGNORE_ENEMY_SENTRY_GUNS ) )
 			{
 				return true;

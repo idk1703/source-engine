@@ -21,7 +21,7 @@ END_MESSAGE_MAP()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CGotoBrushDlg::CGotoBrushDlg(CWnd *pParent)
 	: CDialog(CGotoBrushDlg::IDD, pParent)
@@ -33,8 +33,8 @@ CGotoBrushDlg::CGotoBrushDlg(CWnd *pParent)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pDX - 
+// Purpose:
+// Input  : pDX -
 //-----------------------------------------------------------------------------
 void CGotoBrushDlg::DoDataExchange(CDataExchange* pDX)
 {
@@ -46,10 +46,9 @@ void CGotoBrushDlg::DoDataExchange(CDataExchange* pDX)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CGotoBrushDlg::OnOK() 
+void CGotoBrushDlg::OnOK()
 {
 	CDialog::OnOK();
 }
-

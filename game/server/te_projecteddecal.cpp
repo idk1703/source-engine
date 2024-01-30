@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -28,7 +28,7 @@ public:
 	virtual			~CTEProjectedDecal( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 	DECLARE_SERVERCLASS();
 
 public:
@@ -39,8 +39,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEProjectedDecal::CTEProjectedDecal( const char *name ) :
 	CBaseTempEntity( name )
@@ -52,16 +52,16 @@ CTEProjectedDecal::CTEProjectedDecal( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEProjectedDecal::~CTEProjectedDecal( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEProjectedDecal::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -72,7 +72,7 @@ void CTEProjectedDecal::Test( const Vector& current_origin, const QAngle& curren
 	m_angRotation = current_angles;
 
 	Vector vecEnd;
-	
+
 	Vector forward;
 
 	m_vecOrigin.GetForModify()[2] += 24;
@@ -99,22 +99,22 @@ END_SEND_TABLE()
 static CTEProjectedDecal g_TEProjectedDecal( "Projected Decal" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//			*pos - 
-//			entity - 
-//			index - 
-//			modelindex - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//			*pos -
+//			entity -
+//			index -
+//			modelindex -
 //-----------------------------------------------------------------------------
 void TE_ProjectDecal( IRecipientFilter& filter, float delay,
 	const Vector* pos, const QAngle *angles, float distance, int index )
 {
 	g_TEProjectedDecal.m_vecOrigin		= *pos;
 	g_TEProjectedDecal.m_angRotation	= *angles;
-	g_TEProjectedDecal.m_flDistance		= distance;	
+	g_TEProjectedDecal.m_flDistance		= distance;
 	g_TEProjectedDecal.m_nIndex			= index;
 
 	// Send it over the wire

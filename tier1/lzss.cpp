@@ -112,7 +112,7 @@ unsigned char *CLZSS::CompressNoAlloc( const unsigned char *pInput, int inputLen
 	pHeader->actualSize = LittleLong( inputLength );
 
 	unsigned char *pOutput = pStart + sizeof (lzss_header_t);
-	const unsigned char *pLookAhead = pInput; 
+	const unsigned char *pLookAhead = pInput;
 	const unsigned char *pWindow = pInput;
 	const unsigned char *pEncodedPosition = NULL;
 	unsigned char *pCmdByte = NULL;
@@ -162,9 +162,9 @@ unsigned char *CLZSS::CompressNoAlloc( const unsigned char *pInput, int inputLen
 			*pCmdByte = ( *pCmdByte >> 1 ) | 0x80;
 			*pOutput++ = ( ( pLookAhead-pEncodedPosition-1 ) >> LZSS_LOOKSHIFT );
 			*pOutput++ = ( ( pLookAhead-pEncodedPosition-1 ) << LZSS_LOOKSHIFT ) | ( encodedLength-1 );
-		} 
-		else 
-		{ 
+		}
+		else
+		{
 			encodedLength = 1;
 			*pCmdByte = ( *pCmdByte >> 1 );
 			*pOutput++ = *pLookAhead;
@@ -249,7 +249,7 @@ unsigned int CLZSS::Uncompress( unsigned char *pInput, CUtlBuffer &buf )
 
 	while ( !buf.IsValid() )
 	{
-		if ( !getCmdByte ) 
+		if ( !getCmdByte )
 		{
 			cmdByte = *pInput++;
 		}
@@ -260,7 +260,7 @@ unsigned int CLZSS::Uncompress( unsigned char *pInput, CUtlBuffer &buf )
 			int position = *pInput++ << LZSS_LOOKSHIFT;
 			position |= ( *pInput >> LZSS_LOOKSHIFT );
 			int count = ( *pInput++ & 0x0F ) + 1;
-			if ( count == 1 ) 
+			if ( count == 1 )
 			{
 				break;
 			}
@@ -275,8 +275,8 @@ unsigned int CLZSS::Uncompress( unsigned char *pInput, CUtlBuffer &buf )
 			{
 				buf.PutUnsignedChar( *pSource++ );
 			}
-		} 
-		else 
+		}
+		else
 		{
 			buf.PutUnsignedChar( *pInput++ );
 		}
@@ -316,7 +316,7 @@ unsigned int CLZSS::SafeUncompress( const unsigned char *pInput, unsigned char *
 
 	for ( ;; )
 	{
-		if ( !getCmdByte ) 
+		if ( !getCmdByte )
 		{
 			cmdByte = *pInput++;
 		}
@@ -327,7 +327,7 @@ unsigned int CLZSS::SafeUncompress( const unsigned char *pInput, unsigned char *
 			int position = *pInput++ << LZSS_LOOKSHIFT;
 			position |= ( *pInput >> LZSS_LOOKSHIFT );
 			int count = ( *pInput++ & 0x0F ) + 1;
-			if ( count == 1 ) 
+			if ( count == 1 )
 			{
 				break;
 			}
@@ -343,8 +343,8 @@ unsigned int CLZSS::SafeUncompress( const unsigned char *pInput, unsigned char *
 				*pOutput++ = *pSource++;
 			}
 			totalBytes += count;
-		} 
-		else 
+		}
+		else
 		{
 			if ( totalBytes + 1 > unBufSize )
 				return 0;
@@ -386,7 +386,7 @@ unsigned int CLZSS::Uncompress( const unsigned char *pInput, unsigned char *pOut
 
 	for ( ;; )
 	{
-		if ( !getCmdByte ) 
+		if ( !getCmdByte )
 		{
 			cmdByte = *pInput++;
 		}
@@ -397,7 +397,7 @@ unsigned int CLZSS::Uncompress( const unsigned char *pInput, unsigned char *pOut
 			int position = *pInput++ << LZSS_LOOKSHIFT;
 			position |= ( *pInput >> LZSS_LOOKSHIFT );
 			int count = ( *pInput++ & 0x0F ) + 1;
-			if ( count == 1 ) 
+			if ( count == 1 )
 			{
 				break;
 			}
@@ -407,8 +407,8 @@ unsigned int CLZSS::Uncompress( const unsigned char *pInput, unsigned char *pOut
 				*pOutput++ = *pSource++;
 			}
 			totalBytes += count;
-		} 
-		else 
+		}
+		else
 		{
 			*pOutput++ = *pInput++;
 			totalBytes++;
@@ -425,5 +425,3 @@ unsigned int CLZSS::Uncompress( const unsigned char *pInput, unsigned char *pOut
 
 	return totalBytes;
 }
-
-

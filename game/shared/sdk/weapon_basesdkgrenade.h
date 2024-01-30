@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,7 +15,7 @@
 
 
 #ifdef CLIENT_DLL
-	
+
 	#define CBaseSDKGrenade C_BaseSDKGrenade
 
 #endif
@@ -41,7 +41,7 @@ public:
 	bool			Reload();
 
 	virtual void	ItemPostFrame();
-	
+
 	void			DecrementAmmo( CBaseCombatCharacter *pOwner );
 	virtual void	StartGrenadeThrow();
 	virtual void	ThrowGrenade();
@@ -55,7 +55,7 @@ public:
 	virtual bool AllowsAutoSwitchFrom( void ) const;
 
 	int		CapabilitiesGet();
-	
+
 	// Each derived grenade class implements this.
 	virtual void EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer );
 #endif

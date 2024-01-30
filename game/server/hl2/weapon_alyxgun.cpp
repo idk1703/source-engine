@@ -23,7 +23,7 @@ PRECACHE_WEAPON_REGISTER(weapon_alyxgun);
 BEGIN_DATADESC( CWeaponAlyxGun )
 END_DATADESC()
 
-acttable_t	CWeaponAlyxGun::m_acttable[] = 
+acttable_t	CWeaponAlyxGun::m_acttable[] =
 {
 	{ ACT_IDLE,						ACT_IDLE_PISTOL,				true },
 	{ ACT_IDLE_ANGRY,				ACT_IDLE_ANGRY_PISTOL,			true },
@@ -55,7 +55,7 @@ acttable_t	CWeaponAlyxGun::m_acttable[] =
 	{ ACT_RUN_STEALTH,				ACT_RUN_STEALTH_PISTOL,			false },
 
 	// Readiness activities (aiming)
-	{ ACT_IDLE_AIM_RELAXED,			ACT_IDLE_PISTOL,				false },//never aims	
+	{ ACT_IDLE_AIM_RELAXED,			ACT_IDLE_PISTOL,				false },//never aims
 	{ ACT_IDLE_AIM_STIMULATED,		ACT_IDLE_ANGRY_PISTOL,			false },
 	{ ACT_IDLE_AIM_AGITATED,		ACT_IDLE_ANGRY_PISTOL,			false },//always aims
 	{ ACT_IDLE_AIM_STEALTH,			ACT_IDLE_STEALTH_PISTOL,		false },
@@ -111,7 +111,7 @@ CWeaponAlyxGun::~CWeaponAlyxGun( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponAlyxGun::Precache( void )
 {
@@ -128,14 +128,14 @@ void CWeaponAlyxGun::Equip( CBaseCombatCharacter *pOwner )
 //-----------------------------------------------------------------------------
 // Purpose: Try to encourage Alyx not to use her weapon at point blank range,
 //			but don't prevent her from defending herself if cornered.
-// Input  : flDot - 
-//			flDist - 
+// Input  : flDot -
+//			flDist -
 // Output : int
 //-----------------------------------------------------------------------------
 int CWeaponAlyxGun::WeaponRangeAttack1Condition( float flDot, float flDist )
 {
 #ifdef HL2_EPISODIC
-	
+
 	if( flDist < m_fMinRange1 )
 	{
 		// If Alyx is not able to fire because an enemy is too close, start a timer.
@@ -164,7 +164,7 @@ int CWeaponAlyxGun::WeaponRangeAttack1Condition( float flDot, float flDist )
 
 	int nBaseCondition = BaseClass::WeaponRangeAttack1Condition( flDot, flDist );
 
-	// While in a vehicle, we extend our aiming cone (this relies on COND_NOT_FACING_ATTACK 
+	// While in a vehicle, we extend our aiming cone (this relies on COND_NOT_FACING_ATTACK
 	// TODO: This needs to be rolled in at the animation level
 	if ( GetOwner()->IsInAVehicle() )
 	{
@@ -173,7 +173,7 @@ int CWeaponAlyxGun::WeaponRangeAttack1Condition( float flDot, float flDist )
 		GetVectors( NULL, &vecRight, NULL );
 		bool bRightSide = ( DotProduct( vecRoughDirection, vecRight ) > 0.0f );
 		float flTargetDot = ( bRightSide ) ? -0.7f : 0.0f;
-		
+
 		if ( nBaseCondition == COND_NOT_FACING_ATTACK && flDot >= flTargetDot )
 		{
 			nBaseCondition = COND_CAN_RANGE_ATTACK1;
@@ -182,7 +182,7 @@ int CWeaponAlyxGun::WeaponRangeAttack1Condition( float flDot, float flDist )
 
 	return nBaseCondition;
 
-#else 
+#else
 
 	return BaseClass::WeaponRangeAttack1Condition( flDot, flDist );
 
@@ -190,9 +190,9 @@ int CWeaponAlyxGun::WeaponRangeAttack1Condition( float flDot, float flDist )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flDot - 
-//			flDist - 
+// Purpose:
+// Input  : flDot -
+//			flDist -
 // Output : int
 //-----------------------------------------------------------------------------
 int CWeaponAlyxGun::WeaponRangeAttack2Condition( float flDot, float flDist )
@@ -201,8 +201,8 @@ int CWeaponAlyxGun::WeaponRangeAttack2Condition( float flDot, float flDist )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOperator - 
+// Purpose:
+// Input  : *pOperator -
 //-----------------------------------------------------------------------------
 void CWeaponAlyxGun::FireNPCPrimaryAttack( CBaseCombatCharacter *pOperator, bool bUseWeaponAngles )
 {
@@ -216,7 +216,7 @@ void CWeaponAlyxGun::FireNPCPrimaryAttack( CBaseCombatCharacter *pOperator, bool
 		GetAttachment( LookupAttachment( "muzzle" ), vecShootOrigin, angShootDir );
 		AngleVectors( angShootDir, &vecShootDir );
 	}
-	else 
+	else
 	{
 		vecShootOrigin = pOperator->Weapon_ShootPosition();
  		vecShootDir = npc->GetActualShootTrajectory( vecShootOrigin );
@@ -251,7 +251,7 @@ void CWeaponAlyxGun::FireNPCPrimaryAttack( CBaseCombatCharacter *pOperator, bool
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponAlyxGun::Operator_ForceNPCFire( CBaseCombatCharacter *pOperator, bool bSecondary )
 {
@@ -277,7 +277,7 @@ void CWeaponAlyxGun::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatC
 			FireNPCPrimaryAttack( pOperator, false );
 			break;
 		}
-		
+
 		default:
 			BaseClass::Operator_HandleAnimEvent( pEvent, pOperator );
 			break;

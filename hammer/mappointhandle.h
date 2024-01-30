@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -68,7 +68,7 @@ public:
 	virtual bool IsVisualElement(void) { return(false); } // Only visible if our parent is selected.
 	virtual bool IsClutter(void) { return true; }
 	virtual bool IsCulledByCordon(const Vector &vecMins, const Vector &vecMaxs) { return false; } // We don't hide unless our parent hides.
-	
+
 	virtual const char* GetDescription() { return("Point helper"); }
 
 	virtual void OnAddToWorld(CMapWorld *pWorld);
@@ -86,7 +86,7 @@ protected:
 
 	// Overridden to update our parent's keyvalue when we move.
 	virtual void DoTransform(const VMatrix &matrix);
-	
+
 private:
 
 	void Initialize(void);
@@ -98,7 +98,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CMapPointHandle::GetRadius(void)
 {

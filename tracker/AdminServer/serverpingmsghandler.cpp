@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -12,9 +12,9 @@
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CServerPingMsgHandlerDetails::CServerPingMsgHandlerDetails( CServerPing *baseobject, HANDLERTYPE type, void *typeinfo /*= NULL*/ ) 
+CServerPingMsgHandlerDetails::CServerPingMsgHandlerDetails( CServerPing *baseobject, HANDLERTYPE type, void *typeinfo /*= NULL*/ )
 	: CMsgHandler( type, typeinfo )
-{ 
+{
 	m_pServerPing = baseobject;
 }
 
@@ -27,5 +27,3 @@ bool CServerPingMsgHandlerDetails::Process( netadr_t *from, CMsgBuffer *msg )
 	m_pServerPing->UpdateServer(msg->GetTime());
 	return true;
 }
-
-

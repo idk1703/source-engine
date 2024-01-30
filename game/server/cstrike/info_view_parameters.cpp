@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -14,5 +14,3 @@ END_DATADESC()
 
 
 LINK_ENTITY_TO_CLASS( info_view_parameters, CInfoViewParameters );
-
-

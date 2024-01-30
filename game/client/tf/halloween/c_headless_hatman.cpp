@@ -82,8 +82,8 @@ void C_HeadlessHatman::ClientThink( void )
 
 //-----------------------------------------------------------------------------
 // Return the origin for player observers tracking this target
-Vector C_HeadlessHatman::GetObserverCamOrigin( void ) 
-{ 
+Vector C_HeadlessHatman::GetObserverCamOrigin( void )
+{
 	return EyePosition();
 }
 

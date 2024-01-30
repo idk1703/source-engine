@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,7 +24,7 @@ void CBaseHL1CombatWeapon::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseHL1CombatWeapon::FallInit( void )
 {
@@ -35,7 +35,7 @@ void CBaseHL1CombatWeapon::FallInit( void )
 	AddSolidFlags( FSOLID_NOT_SOLID );
 
 	SetPickupTouch();
-	
+
 	SetThink( &CBaseHL1CombatWeapon::FallThink );
 
 	SetNextThink( gpGlobals->curtime + 0.1f );
@@ -54,9 +54,9 @@ void CBaseHL1CombatWeapon::FallInit( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Items that have just spawned run this think to catch them when 
-//			they hit the ground. Once we're sure that the object is grounded, 
-//			we change its solid type to trigger and set it in a large box that 
+// Purpose: Items that have just spawned run this think to catch them when
+//			they hit the ground. Once we're sure that the object is grounded,
+//			we change its solid type to trigger and set it in a large box that
 //			helps the player get it.
 //-----------------------------------------------------------------------------
 void CBaseHL1CombatWeapon::FallThink ( void )
@@ -78,9 +78,8 @@ void CBaseHL1CombatWeapon::FallThink ( void )
 		ang.z = 0;
 		SetAbsAngles( ang );
 
-		Materialize(); 
+		Materialize();
 
 		SetSize( Vector( -24, -24, 0 ), Vector( 24, 24, 16 ) );
 	}
 }
-

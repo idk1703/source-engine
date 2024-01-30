@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -37,7 +37,7 @@
 	byte *buffer = (byte*) stackalloc( size );					\
 	msg->m_DataIn.ReadBits( buffer, msg->m_nLength );			\
 	msg->m_DataOut.StartWriting( buffer, size, msg->m_nLength );\
-	
+
 static void HLTV_Callback_InstanceBaseline( void *object, INetworkStringTable *stringTable, int stringNumber, char const *newString, void const *newData )
 {
 	// relink server classes to instance baselines
@@ -71,7 +71,7 @@ CHLTVClientState::~CHLTVClientState()
 
 }
 
-void CHLTVClientState::CopyNewEntity( 
+void CHLTVClientState::CopyNewEntity(
 	CEntityReadInfo &u,
 	int iClass,
 	int iSerialNum
@@ -79,7 +79,7 @@ void CHLTVClientState::CopyNewEntity(
 {
 	ServerClass *pServerClass = SV_FindServerClass( iClass );
 	Assert( pServerClass );
-	
+
 	ClientClass *pClientClass = GetClientClass( iClass );
 	Assert( pClientClass );
 
@@ -116,7 +116,7 @@ void CHLTVClientState::CopyNewEntity(
 	// create new ChangeFrameList containing all properties set as changed
 	int nFlatProps = SendTable_GetNumFlatProps( pServerClass->m_pTable );
 	IChangeFrameList *pChangeFrame = NULL;
-	
+
 	if ( !m_bSaveMemory )
 	{
 		pChangeFrame = AllocChangeFrameList( nFlatProps, nFromTick );
@@ -133,9 +133,9 @@ void CHLTVClientState::CopyNewEntity(
 	bf_write writeBuf( "HLTV_ReadEnterPVS2", packedData, sizeof( packedData ) );
 
 	int changedProps[MAX_DATATABLE_PROPS];
-	
-	// decode basline, is compressed against zero values 
-	int nChangedProps = RecvTable_MergeDeltas( pClientClass->m_pRecvTable, &fromBuf, 
+
+	// decode basline, is compressed against zero values
+	int nChangedProps = RecvTable_MergeDeltas( pClientClass->m_pRecvTable, &fromBuf,
 		u.m_pBuf, &writeBuf, -1, changedProps );
 
 	// update change tick in ChangeFrameList
@@ -168,15 +168,15 @@ static inline void HLTV_CopyExitingEnt( CEntityReadInfo &u )
 	}
 
 	CFrameSnapshot *pFromSnapshot =	u.m_pFrom->GetSnapshot();	// get from snapshot
-	
+
 	const int ent = u.m_nOldEntity;
-	
+
 	CFrameSnapshot *pSnapshot = u.m_pTo->GetSnapshot(); // get to snapshot
-	
+
 	// copy ent handle, serial numbers & class info
 	Assert( ent < pFromSnapshot->m_nNumEntities );
 	pSnapshot->m_pEntities[ent] = pFromSnapshot->m_pEntities[ent];
-	
+
 	Assert( pSnapshot->m_pEntities[ent].m_pPackedData != INVALID_PACKED_ENTITY_HANDLE );
 
 	// increase PackedEntity reference counter
@@ -186,7 +186,7 @@ static inline void HLTV_CopyExitingEnt( CEntityReadInfo &u )
 
 
 	Assert( u.m_pTo->last_entity <= ent );
-	
+
 	// mark flags as received
 	u.m_pTo->last_entity = ent;
 	u.m_pTo->transmit_entity.Set( ent );
@@ -203,7 +203,7 @@ bool CHLTVClientState::SetSignonState ( int state, int count )
 
 	if ( !CBaseClientState::SetSignonState( state, count ) )
 		return false;
-	
+
 	Assert ( m_nSignonState == state );
 
 	switch ( m_nSignonState )
@@ -232,7 +232,7 @@ bool CHLTVClientState::SetSignonState ( int state, int count )
 										break;
 
 		case SIGNONSTATE_PRESPAWN	:	break;
-		
+
 		case SIGNONSTATE_SPAWN		:	m_pHLTV->SignonComplete();
 										break;
 
@@ -263,7 +263,7 @@ bool CHLTVClientState::SetSignonState ( int state, int count )
 void CHLTVClientState::SendClientInfo( void )
 {
 	CLC_ClientInfo info;
-	
+
 	info.m_nSendTableCRC = SendTable_GetCRC();
 	info.m_nServerCount = m_nServerCount;
 	info.m_bIsHLTV = true;
@@ -277,7 +277,7 @@ void CHLTVClientState::SendClientInfo( void )
 
 	for ( int i=0; i< MAX_CUSTOM_FILES; i++ )
 		info.m_nCustomFiles[i] = 0;
-	
+
 	m_NetChannel->SendNetMsg( info );
 }
 
@@ -287,9 +287,9 @@ void CHLTVClientState::SendPacket()
 	if ( !IsConnected() )
 		return;
 
-	if ( ( net_time < m_flNextCmdTime ) || !m_NetChannel->CanPacket() )  
+	if ( ( net_time < m_flNextCmdTime ) || !m_NetChannel->CanPacket() )
 		return;
-	
+
 	if ( IsActive() )
 	{
 		NET_Tick tick( m_nDeltaTick, host_frametime_unbounded, host_frametime_stddeviation );
@@ -346,8 +346,8 @@ bool CHLTVClientState::ProcessServerInfo(SVC_ServerInfo *msg )
 		{
 			ConMsg ( "Server (%s) is not a SourceTV proxy.\n", m_NetChannel->GetAddress() );
 			Disconnect( "Server is not a SourceTV proxy", true );
-			return false; 
-		}	
+			return false;
+		}
 	}
 
 	// tell HLTV relay to clear everything
@@ -369,18 +369,18 @@ bool CHLTVClientState::ProcessServerInfo(SVC_ServerInfo *msg )
 	m_StringTableContainer->EnableRollback( false );
 #endif
 
-	// copy setting from HLTV client to HLTV server 
+	// copy setting from HLTV client to HLTV server
 	m_pHLTV->m_nGameServerMaxClients = m_nMaxClients;
 	m_pHLTV->serverclasses		= m_nServerClasses;
 	m_pHLTV->serverclassbits	= m_nServerClassBits;
 	m_pHLTV->m_nPlayerSlot		= m_nPlayerSlot;
-	
+
 	// copy other settings to HLTV server
 	V_memcpy( m_pHLTV->worldmapMD5.bits, msg->m_nMapMD5.bits, MD5_DIGEST_LENGTH );
 	m_pHLTV->m_flTickInterval	= msg->m_fTickInterval;
 
 	host_state.interval_per_tick = msg->m_fTickInterval;
-		
+
 	Q_strncpy( m_pHLTV->m_szMapname, msg->m_szMapName, sizeof(m_pHLTV->m_szMapname) );
 	Q_strncpy( m_pHLTV->m_szSkyname, msg->m_szSkyName, sizeof(m_pHLTV->m_szSkyname) );
 
@@ -610,7 +610,7 @@ bool CHLTVClientState::ProcessPacketEntities( SVC_PacketEntities *entmsg )
 	CFrameSnapshot* pSnapshot = framesnapshotmanager->CreateEmptySnapshot( GetServerTickCount(), entmsg->m_nMaxEntries );
 
 	Assert( m_pNewClientFrame == NULL );
-	
+
 	m_pNewClientFrame = new CClientFrame( pSnapshot );
 
 	Assert( entmsg->m_nBaseline >= 0 && entmsg->m_nBaseline < 2 );
@@ -637,7 +637,7 @@ bool CHLTVClientState::ProcessPacketEntities( SVC_PacketEntities *entmsg )
 
 		for ( int i = 0; i<pLastSnapshot->m_nNumEntities; i++ )
 		{
-			pEntry->m_nSerialNumber = pLastEntry->m_nSerialNumber; 
+			pEntry->m_nSerialNumber = pLastEntry->m_nSerialNumber;
 			pEntry->m_pClass = pLastEntry->m_pClass;
 
 			pEntry++;
@@ -710,7 +710,7 @@ void CHLTVClientState::ReadDeltaEnt( CEntityReadInfo &u )
 
 	Assert( i < pFromSnapshot->m_nNumEntities );
 	pSnapshot->m_pEntities[i] = pFromSnapshot->m_pEntities[i];
-	
+
 	PackedEntity *pToPackedEntity = framesnapshotmanager->CreatePackedEntity( pSnapshot, i );
 
 	// WARNING! get pFromPackedEntity after new pPackedEntity has been created, otherwise pointer may be wrong
@@ -720,7 +720,7 @@ void CHLTVClientState::ReadDeltaEnt( CEntityReadInfo &u )
 
 	// create a copy of the pFromSnapshot ChangeFrameList
 	IChangeFrameList* pChangeFrame = NULL;
- 
+
 	if ( !m_bSaveMemory )
 	{
 		pChangeFrame = pFromPackedEntity->GetChangeFrameList()->Copy();
@@ -746,8 +746,8 @@ void CHLTVClientState::ReadDeltaEnt( CEntityReadInfo &u )
 	bf_write writeBuf( "HLTV_ReadEnterPVS2", packedData, sizeof( packedData ) );
 
 	int changedProps[MAX_DATATABLE_PROPS];
-	
-	// decode baseline, is compressed against zero values 
+
+	// decode baseline, is compressed against zero values
 	int nChangedProps = RecvTable_MergeDeltas( pToPackedEntity->m_pClientClass->m_pRecvTable,
 		&fromBuf, u.m_pBuf, &writeBuf, -1, changedProps, false );
 
@@ -761,7 +761,7 @@ void CHLTVClientState::ReadDeltaEnt( CEntityReadInfo &u )
 	{
 		int bits = writeBuf.GetNumBitsWritten();
 
-		const char *compressedData = m_pHLTV->CompressPackedEntity( 
+		const char *compressedData = m_pHLTV->CompressPackedEntity(
 			pToPackedEntity->m_pServerClass,
 			(char*)writeBuf.GetData(),
 			bits );
@@ -806,9 +806,9 @@ void CHLTVClientState::ReadDeletions( CEntityReadInfo &u )
 	while ( u.m_pBuf->ReadOneBit()!=0 )
 	{
 		int idx = u.m_pBuf->ReadUBitLong( MAX_EDICT_BITS );
-		
+
 		Assert( !u.m_pTo->transmit_entity.Get( idx ) );
-		
+
 		CFrameSnapshot *pSnapshot = u.m_pTo->GetSnapshot();
 		CFrameSnapshotEntry *pEntry = &pSnapshot->m_pEntities[idx];
 
@@ -908,4 +908,3 @@ void CHLTVClientState::UpdateStats()
 
 	m_NetChannel->SendNetMsg( conVars );
 }
-	

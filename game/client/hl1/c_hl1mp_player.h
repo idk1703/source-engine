@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -17,12 +17,12 @@
 class C_HL1MP_Player : public C_HL1_Player
 {
 public:
-    DECLARE_CLASS( C_HL1MP_Player, C_HL1_Player );
-    DECLARE_CLIENTCLASS();
-    DECLARE_PREDICTABLE();
-    DECLARE_INTERPOLATION();
+	DECLARE_CLASS( C_HL1MP_Player, C_HL1_Player );
+	DECLARE_CLIENTCLASS();
+	DECLARE_PREDICTABLE();
+	DECLARE_INTERPOLATION();
 
-    C_HL1MP_Player( void );
+	C_HL1MP_Player( void );
 	~C_HL1MP_Player();
 
 	virtual const QAngle& GetRenderAngles();
@@ -35,14 +35,14 @@ public:
 	virtual void CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, float &zFar, float &fov );
 	IRagdoll* GetRepresentativeRagdoll() const;
 
-    virtual void Spawn( void );
+	virtual void Spawn( void );
 	virtual void AddEntity( void );
 	virtual bool ShouldDraw( void );
 	virtual void OnDataChanged( DataUpdateType_t type );
 	virtual void PostDataUpdate( DataUpdateType_t updateType );
-    virtual void ClientThink( void );
-	virtual C_BaseAnimating *BecomeRagdollOnClient();    
-    //QAngle GetAnimEyeAngles( void ) { return m_angEyeAngles; }
+	virtual void ClientThink( void );
+	virtual C_BaseAnimating *BecomeRagdollOnClient();
+	//QAngle GetAnimEyeAngles( void ) { return m_angEyeAngles; }
 	const QAngle& EyeAngles( void )
 	{
 		if ( IsLocalPlayer() )
@@ -58,8 +58,8 @@ public:
 	virtual ShadowType_t ShadowCastType()
 	{
 		if ( !IsVisible() )
-			 return SHADOWS_NONE;
-	
+			return SHADOWS_NONE;
+
 		return SHADOWS_RENDER_TO_TEXTURE_DYNAMIC;
 	}
 
@@ -70,16 +70,16 @@ public:
 private:
 	C_HL1MP_Player( const C_HL1MP_Player & );
 
-    EHANDLE m_hRagdoll;
+	EHANDLE m_hRagdoll;
 
-    QAngle m_angEyeAngles;
+	QAngle m_angEyeAngles;
 
 	CInterpolatedVar< QAngle >	m_iv_angEyeAngles;
 
-    IHL1MPPlayerAnimState* m_PlayerAnimState;
-    
-    int m_iSpawnInterpCounter;
-    int m_iSpawnInterpCounterCache;
+	IHL1MPPlayerAnimState* m_PlayerAnimState;
+
+	int m_iSpawnInterpCounter;
+	int m_iSpawnInterpCounterCache;
 
 	float m_fLastPredFreeze;
 };
@@ -90,7 +90,7 @@ class C_HL1MPRagdoll : public C_BaseAnimatingOverlay
 public:
 	DECLARE_CLASS( C_HL1MPRagdoll, C_BaseAnimatingOverlay );
 	DECLARE_CLIENTCLASS();
-	
+
 	C_HL1MPRagdoll();
 	~C_HL1MPRagdoll();
 
@@ -102,9 +102,9 @@ public:
 	void ImpactTrace( trace_t *pTrace, int iDamageType, const char *pCustomImpactName );
 	void UpdateOnRemove( void );
 	virtual void SetupWeights( const matrix3x4_t *pBoneToWorld, int nFlexWeightCount, float *pFlexWeights, float *pFlexDelayedWeights );
-	
+
 private:
-	
+
 	C_HL1MPRagdoll( const C_HL1MPRagdoll & ) {}
 
 	void Interp_Copy( C_BaseAnimatingOverlay *pSourceEntity );

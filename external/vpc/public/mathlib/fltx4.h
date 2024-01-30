@@ -51,7 +51,7 @@ typedef union
 	vec_uint4	vmxui;
 	__vector bool vmxbi;
 
-	struct 
+	struct
 	{
 		float x;
 		float y;

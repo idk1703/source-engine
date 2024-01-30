@@ -1,18 +1,18 @@
 /*
-     File:       Slots.h
- 
-     Contains:   Slot Manager Interfaces.
- 
-     Version:    Technology: System 7.5
-                 Release:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1986-1993, 1995-1999 by Apple Computer, Inc., all rights reserved
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       Slots.h
+
+		Contains:   Slot Manager Interfaces.
+
+		Version:    Technology: System 7.5
+								Release:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1986-1993, 1995-1999 by Apple Computer, Inc., all rights reserved
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __SLOTS__
 #define __SLOTS__
@@ -45,41 +45,41 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=mac68k
+		#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+		#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+		#pragma pack(2)
 #endif
 
 enum {
-  fCardIsChanged                = 1,    /*Card is Changed field in StatusFlags field of sInfoArray*/
-  fCkForSame                    = 0,    /*For SearchSRT. Flag to check for SAME sResource in the table. */
-  fCkForNext                    = 1,    /*For SearchSRT. Flag to check for NEXT sResource in the table. */
-  fWarmStart                    = 2     /*If this bit is set then warm start else cold start.*/
+	fCardIsChanged                = 1,    /*Card is Changed field in StatusFlags field of sInfoArray*/
+	fCkForSame                    = 0,    /*For SearchSRT. Flag to check for SAME sResource in the table. */
+	fCkForNext                    = 1,    /*For SearchSRT. Flag to check for NEXT sResource in the table. */
+	fWarmStart                    = 2     /*If this bit is set then warm start else cold start.*/
 };
 
 enum {
-  stateNil                      = 0,    /*State*/
-  stateSDMInit                  = 1,    /*:Slot declaration manager Init*/
-  statePRAMInit                 = 2,    /*:sPRAM record init*/
-  statePInit                    = 3,    /*:Primary init*/
-  stateSInit                    = 4     /*:Secondary init*/
+	stateNil                      = 0,    /*State*/
+	stateSDMInit                  = 1,    /*:Slot declaration manager Init*/
+	statePRAMInit                 = 2,    /*:sPRAM record init*/
+	statePInit                    = 3,    /*:Primary init*/
+	stateSInit                    = 4     /*:Secondary init*/
 };
 
 enum {
-                                        /* flags for spParamData */
-  fall                          = 0,    /* bit 0: set=search enabled/disabled sRsrc's */
-  foneslot                      = 1,    /*    1: set=search sRsrc's in given slot only */
-  fnext                         = 2     /*    2: set=search for next sRsrc */
+																				/* flags for spParamData */
+	fall                          = 0,    /* bit 0: set=search enabled/disabled sRsrc's */
+	foneslot                      = 1,    /*    1: set=search sRsrc's in given slot only */
+	fnext                         = 2     /*    2: set=search for next sRsrc */
 };
 
 enum {
-                                        /* Misc masks */
-  catMask                       = 0x08, /* sets spCategory field of spTBMask (bit 3) */
-  cTypeMask                     = 0x04, /* sets spCType    field of spTBMask (bit 2) */
-  drvrSWMask                    = 0x02, /* sets spDrvrSW   field of spTBMask (bit 1) */
-  drvrHWMask                    = 0x01  /* sets spDrvrHW    field of spTBMask (bit 0) */
+																				/* Misc masks */
+	catMask                       = 0x08, /* sets spCategory field of spTBMask (bit 3) */
+	cTypeMask                     = 0x04, /* sets spCType    field of spTBMask (bit 2) */
+	drvrSWMask                    = 0x02, /* sets spDrvrSW   field of spTBMask (bit 1) */
+	drvrHWMask                    = 0x01  /* sets spDrvrHW    field of spTBMask (bit 0) */
 };
 
 typedef CALLBACK_API_REGISTER68K( short , SlotIntServiceProcPtr, (long sqParameter) );
@@ -87,7 +87,7 @@ typedef REGISTER_UPP_TYPE(SlotIntServiceProcPtr)                SlotIntServiceUP
 #if CALL_NOT_IN_CARBON
 /*
  *  NewSlotIntServiceUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        not available
@@ -96,17 +96,17 @@ typedef REGISTER_UPP_TYPE(SlotIntServiceProcPtr)                SlotIntServiceUP
 EXTERN_API_C( SlotIntServiceUPP )
 NewSlotIntServiceUPP(SlotIntServiceProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppSlotIntServiceProcInfo = 0x0000B822 };  /* register 2_bytes:D0 Func(4_bytes:A1) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(SlotIntServiceUPP) NewSlotIntServiceUPP(SlotIntServiceProcPtr userRoutine) { return (SlotIntServiceUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppSlotIntServiceProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewSlotIntServiceUPP(userRoutine) (SlotIntServiceUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppSlotIntServiceProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppSlotIntServiceProcInfo = 0x0000B822 };  /* register 2_bytes:D0 Func(4_bytes:A1) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(SlotIntServiceUPP) NewSlotIntServiceUPP(SlotIntServiceProcPtr userRoutine) { return (SlotIntServiceUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppSlotIntServiceProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewSlotIntServiceUPP(userRoutine) (SlotIntServiceUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppSlotIntServiceProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  DisposeSlotIntServiceUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        not available
@@ -115,16 +115,16 @@ NewSlotIntServiceUPP(SlotIntServiceProcPtr userRoutine);
 EXTERN_API_C( void )
 DisposeSlotIntServiceUPP(SlotIntServiceUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeSlotIntServiceUPP(SlotIntServiceUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeSlotIntServiceUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeSlotIntServiceUPP(SlotIntServiceUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeSlotIntServiceUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  InvokeSlotIntServiceUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        not available
@@ -135,142 +135,142 @@ DisposeSlotIntServiceUPP(SlotIntServiceUPP userUPP);
 #endif
 EXTERN_API_C( short )
 InvokeSlotIntServiceUPP(
-  long               sqParameter,
-  SlotIntServiceUPP  userUPP)                                 ONEWORDINLINE(0x4E90);
+	long               sqParameter,
+	SlotIntServiceUPP  userUPP)                                 ONEWORDINLINE(0x4E90);
 #if !OPAQUE_UPP_TYPES && (!TARGET_OS_MAC || !TARGET_CPU_68K || TARGET_RT_MAC_CFM)
-  #ifdef __cplusplus
-      inline DEFINE_API_C(short) InvokeSlotIntServiceUPP(long sqParameter, SlotIntServiceUPP userUPP) { return (short)CALL_ONE_PARAMETER_UPP(userUPP, uppSlotIntServiceProcInfo, sqParameter); }
-  #else
-    #define InvokeSlotIntServiceUPP(sqParameter, userUPP) (short)CALL_ONE_PARAMETER_UPP((userUPP), uppSlotIntServiceProcInfo, (sqParameter))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(short) InvokeSlotIntServiceUPP(long sqParameter, SlotIntServiceUPP userUPP) { return (short)CALL_ONE_PARAMETER_UPP(userUPP, uppSlotIntServiceProcInfo, sqParameter); }
+	#else
+		#define InvokeSlotIntServiceUPP(sqParameter, userUPP) (short)CALL_ONE_PARAMETER_UPP((userUPP), uppSlotIntServiceProcInfo, (sqParameter))
+	#endif
 #endif
 
 #endif  /* CALL_NOT_IN_CARBON */
 
 #if CALL_NOT_IN_CARBON || OLDROUTINENAMES
-    /* support for pre-Carbon UPP routines: New...Proc and Call...Proc */
-    #define NewSlotIntServiceProc(userRoutine)                  NewSlotIntServiceUPP(userRoutine)
-    #define CallSlotIntServiceProc(userRoutine, sqParameter)    InvokeSlotIntServiceUPP(sqParameter, userRoutine)
+		/* support for pre-Carbon UPP routines: New...Proc and Call...Proc */
+		#define NewSlotIntServiceProc(userRoutine)                  NewSlotIntServiceUPP(userRoutine)
+		#define CallSlotIntServiceProc(userRoutine, sqParameter)    InvokeSlotIntServiceUPP(sqParameter, userRoutine)
 #endif /* CALL_NOT_IN_CARBON */
 
 struct SlotIntQElement {
-  Ptr                 sqLink;                 /*ptr to next element*/
-  short               sqType;                 /*queue type ID for validity*/
-  short               sqPrio;                 /*priority*/
-  SlotIntServiceUPP   sqAddr;                 /*interrupt service routine*/
-  long                sqParm;                 /*optional A1 parameter*/
+	Ptr                 sqLink;                 /*ptr to next element*/
+	short               sqType;                 /*queue type ID for validity*/
+	short               sqPrio;                 /*priority*/
+	SlotIntServiceUPP   sqAddr;                 /*interrupt service routine*/
+	long                sqParm;                 /*optional A1 parameter*/
 };
 typedef struct SlotIntQElement          SlotIntQElement;
 typedef SlotIntQElement *               SQElemPtr;
 struct SpBlock {
-  long                spResult;               /*FUNCTION Result*/
-  Ptr                 spsPointer;             /*structure pointer*/
-  long                spSize;                 /*size of structure*/
-  long                spOffsetData;           /*offset/data field used by sOffsetData*/
-  Ptr                 spIOFileName;           /*ptr to IOFile name for sDisDrvrName*/
-  Ptr                 spsExecPBlk;            /*pointer to sExec parameter block.*/
-  long                spParamData;            /*misc parameter data (formerly spStackPtr).*/
-  long                spMisc;                 /*misc field for SDM.*/
-  long                spReserved;             /*reserved for future expansion*/
-  short               spIOReserved;           /*Reserved field of Slot Resource Table*/
-  short               spRefNum;               /*RefNum*/
-  short               spCategory;             /*sType: Category*/
-  short               spCType;                /*Type*/
-  short               spDrvrSW;               /*DrvrSW*/
-  short               spDrvrHW;               /*DrvrHW*/
-  SInt8               spTBMask;               /*type bit mask bits 0..3 mask words 0..3*/
-  SInt8               spSlot;                 /*slot number*/
-  SInt8               spID;                   /*structure ID*/
-  SInt8               spExtDev;               /*ID of the external device*/
-  SInt8               spHwDev;                /*Id of the hardware device.*/
-  SInt8               spByteLanes;            /*bytelanes from card ROM format block*/
-  SInt8               spFlags;                /*standard flags*/
-  SInt8               spKey;                  /*Internal use only*/
+	long                spResult;               /*FUNCTION Result*/
+	Ptr                 spsPointer;             /*structure pointer*/
+	long                spSize;                 /*size of structure*/
+	long                spOffsetData;           /*offset/data field used by sOffsetData*/
+	Ptr                 spIOFileName;           /*ptr to IOFile name for sDisDrvrName*/
+	Ptr                 spsExecPBlk;            /*pointer to sExec parameter block.*/
+	long                spParamData;            /*misc parameter data (formerly spStackPtr).*/
+	long                spMisc;                 /*misc field for SDM.*/
+	long                spReserved;             /*reserved for future expansion*/
+	short               spIOReserved;           /*Reserved field of Slot Resource Table*/
+	short               spRefNum;               /*RefNum*/
+	short               spCategory;             /*sType: Category*/
+	short               spCType;                /*Type*/
+	short               spDrvrSW;               /*DrvrSW*/
+	short               spDrvrHW;               /*DrvrHW*/
+	SInt8               spTBMask;               /*type bit mask bits 0..3 mask words 0..3*/
+	SInt8               spSlot;                 /*slot number*/
+	SInt8               spID;                   /*structure ID*/
+	SInt8               spExtDev;               /*ID of the external device*/
+	SInt8               spHwDev;                /*Id of the hardware device.*/
+	SInt8               spByteLanes;            /*bytelanes from card ROM format block*/
+	SInt8               spFlags;                /*standard flags*/
+	SInt8               spKey;                  /*Internal use only*/
 };
 typedef struct SpBlock                  SpBlock;
 typedef SpBlock *                       SpBlockPtr;
 struct SInfoRecord {
-  Ptr                 siDirPtr;               /*Pointer to directory*/
-  short               siInitStatusA;          /*initialization E*/
-  short               siInitStatusV;          /*status returned by vendor init code*/
-  SInt8               siState;                /*initialization state*/
-  SInt8               siCPUByteLanes;         /*0=[d0..d7] 1=[d8..d15]*/
-  SInt8               siTopOfROM;             /*Top of ROM= $FssFFFFx: x is TopOfROM*/
-  SInt8               siStatusFlags;          /*bit 0 - card is changed*/
-  short               siTOConst;              /*Time Out C for BusErr*/
-  SInt8               siReserved[2];          /*reserved*/
-  Ptr                 siROMAddr;              /* addr of top of ROM */
-  SInt8               siSlot;                 /* slot number */
-  SInt8               siPadding[3];           /* reserved */
+	Ptr                 siDirPtr;               /*Pointer to directory*/
+	short               siInitStatusA;          /*initialization E*/
+	short               siInitStatusV;          /*status returned by vendor init code*/
+	SInt8               siState;                /*initialization state*/
+	SInt8               siCPUByteLanes;         /*0=[d0..d7] 1=[d8..d15]*/
+	SInt8               siTopOfROM;             /*Top of ROM= $FssFFFFx: x is TopOfROM*/
+	SInt8               siStatusFlags;          /*bit 0 - card is changed*/
+	short               siTOConst;              /*Time Out C for BusErr*/
+	SInt8               siReserved[2];          /*reserved*/
+	Ptr                 siROMAddr;              /* addr of top of ROM */
+	SInt8               siSlot;                 /* slot number */
+	SInt8               siPadding[3];           /* reserved */
 };
 typedef struct SInfoRecord              SInfoRecord;
 typedef SInfoRecord *                   SInfoRecPtr;
 struct SDMRecord {
-  ProcPtr             sdBEVSave;              /*Save old BusErr vector*/
-  ProcPtr             sdBusErrProc;           /*Go here to determine if it is a BusErr*/
-  ProcPtr             sdErrorEntry;           /*Go here if BusErrProc finds real BusErr*/
-  long                sdReserved;             /*Reserved*/
+	ProcPtr             sdBEVSave;              /*Save old BusErr vector*/
+	ProcPtr             sdBusErrProc;           /*Go here to determine if it is a BusErr*/
+	ProcPtr             sdErrorEntry;           /*Go here if BusErrProc finds real BusErr*/
+	long                sdReserved;             /*Reserved*/
 };
 typedef struct SDMRecord                SDMRecord;
 struct FHeaderRec {
-  long                fhDirOffset;            /*offset to directory*/
-  long                fhLength;               /*length of ROM*/
-  long                fhCRC;                  /*CRC*/
-  SInt8               fhROMRev;               /*revision of ROM*/
-  SInt8               fhFormat;               /*format - 2*/
-  long                fhTstPat;               /*test pattern*/
-  SInt8               fhReserved;             /*reserved*/
-  SInt8               fhByteLanes;            /*ByteLanes*/
+	long                fhDirOffset;            /*offset to directory*/
+	long                fhLength;               /*length of ROM*/
+	long                fhCRC;                  /*CRC*/
+	SInt8               fhROMRev;               /*revision of ROM*/
+	SInt8               fhFormat;               /*format - 2*/
+	long                fhTstPat;               /*test pattern*/
+	SInt8               fhReserved;             /*reserved*/
+	SInt8               fhByteLanes;            /*ByteLanes*/
 };
 typedef struct FHeaderRec               FHeaderRec;
 typedef FHeaderRec *                    FHeaderRecPtr;
 /*
-   
-    Extended Format header block  -  extended declaration ROM format header for super sRsrc directories.    <H2><SM0>
-   
+
+		Extended Format header block  -  extended declaration ROM format header for super sRsrc directories.    <H2><SM0>
+
 */
 
 struct XFHeaderRec {
-  long                fhXSuperInit;           /*Offset to SuperInit SExecBlock  <fhFormat,offset>*/
-  long                fhXSDirOffset;          /*Offset to SuperDirectory         <$FE,offset>*/
-  long                fhXEOL;                 /*Psuedo end-of-list          <$FF,nil>*/
-  long                fhXSTstPat;             /*TestPattern*/
-  long                fhXDirOffset;           /*Offset to (minimal) directory*/
-  long                fhXLength;              /*Length of ROM*/
-  long                fhXCRC;                 /*CRC*/
-  SInt8               fhXROMRev;              /*Revision of ROM*/
-  SInt8               fhXFormat;              /*Format-2*/
-  long                fhXTstPat;              /*TestPattern*/
-  SInt8               fhXReserved;            /*Reserved*/
-  SInt8               fhXByteLanes;           /*ByteLanes*/
+	long                fhXSuperInit;           /*Offset to SuperInit SExecBlock  <fhFormat,offset>*/
+	long                fhXSDirOffset;          /*Offset to SuperDirectory         <$FE,offset>*/
+	long                fhXEOL;                 /*Psuedo end-of-list          <$FF,nil>*/
+	long                fhXSTstPat;             /*TestPattern*/
+	long                fhXDirOffset;           /*Offset to (minimal) directory*/
+	long                fhXLength;              /*Length of ROM*/
+	long                fhXCRC;                 /*CRC*/
+	SInt8               fhXROMRev;              /*Revision of ROM*/
+	SInt8               fhXFormat;              /*Format-2*/
+	long                fhXTstPat;              /*TestPattern*/
+	SInt8               fhXReserved;            /*Reserved*/
+	SInt8               fhXByteLanes;           /*ByteLanes*/
 };
 typedef struct XFHeaderRec              XFHeaderRec;
 typedef XFHeaderRec *                   XFHeaderRecPtr;
 struct SEBlock {
-  UInt8               seSlot;                 /*Slot number.*/
-  UInt8               sesRsrcId;              /*sResource Id.*/
-  short               seStatus;               /*Status of code executed by sExec.*/
-  UInt8               seFlags;                /*Flags*/
-  UInt8               seFiller0;              /*Filler, must be SignedByte to align on odd boundry*/
-  UInt8               seFiller1;              /*Filler*/
-  UInt8               seFiller2;              /*Filler*/
-  long                seResult;               /*Result of sLoad.*/
-  long                seIOFileName;           /*Pointer to IOFile name.*/
-  UInt8               seDevice;               /*Which device to read from.*/
-  UInt8               sePartition;            /*The partition.*/
-  UInt8               seOSType;               /*Type of OS.*/
-  UInt8               seReserved;             /*Reserved field.*/
-  UInt8               seRefNum;               /*RefNum of the driver.*/
-  UInt8               seNumDevices;           /* Number of devices to load.*/
-  UInt8               seBootState;            /*State of StartBoot code.*/
-  SInt8               filler;
+	UInt8               seSlot;                 /*Slot number.*/
+	UInt8               sesRsrcId;              /*sResource Id.*/
+	short               seStatus;               /*Status of code executed by sExec.*/
+	UInt8               seFlags;                /*Flags*/
+	UInt8               seFiller0;              /*Filler, must be SignedByte to align on odd boundry*/
+	UInt8               seFiller1;              /*Filler*/
+	UInt8               seFiller2;              /*Filler*/
+	long                seResult;               /*Result of sLoad.*/
+	long                seIOFileName;           /*Pointer to IOFile name.*/
+	UInt8               seDevice;               /*Which device to read from.*/
+	UInt8               sePartition;            /*The partition.*/
+	UInt8               seOSType;               /*Type of OS.*/
+	UInt8               seReserved;             /*Reserved field.*/
+	UInt8               seRefNum;               /*RefNum of the driver.*/
+	UInt8               seNumDevices;           /* Number of devices to load.*/
+	UInt8               seBootState;            /*State of StartBoot code.*/
+	SInt8               filler;
 };
 typedef struct SEBlock                  SEBlock;
 /*  Principle  */
 #if CALL_NOT_IN_CARBON
 /*
  *  SReadByte()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -285,7 +285,7 @@ SReadByte(SpBlockPtr spBlkPtr)                                TWOWORDINLINE(0x70
 
 /*
  *  SReadWord()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -300,7 +300,7 @@ SReadWord(SpBlockPtr spBlkPtr)                                TWOWORDINLINE(0x70
 
 /*
  *  SReadLong()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -315,7 +315,7 @@ SReadLong(SpBlockPtr spBlkPtr)                                TWOWORDINLINE(0x70
 
 /*
  *  SGetCString()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -330,7 +330,7 @@ SGetCString(SpBlockPtr spBlkPtr)                              TWOWORDINLINE(0x70
 
 /*
  *  SGetBlock()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -345,7 +345,7 @@ SGetBlock(SpBlockPtr spBlkPtr)                                TWOWORDINLINE(0x70
 
 /*
  *  SFindStruct()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -360,7 +360,7 @@ SFindStruct(SpBlockPtr spBlkPtr)                              TWOWORDINLINE(0x70
 
 /*
  *  SReadStruct()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -376,7 +376,7 @@ SReadStruct(SpBlockPtr spBlkPtr)                              TWOWORDINLINE(0x70
 /*  Special  */
 /*
  *  SReadInfo()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -391,7 +391,7 @@ SReadInfo(SpBlockPtr spBlkPtr)                                TWOWORDINLINE(0x70
 
 /*
  *  SReadPRAMRec()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -406,7 +406,7 @@ SReadPRAMRec(SpBlockPtr spBlkPtr)                             TWOWORDINLINE(0x70
 
 /*
  *  SPutPRAMRec()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -421,7 +421,7 @@ SPutPRAMRec(SpBlockPtr spBlkPtr)                              TWOWORDINLINE(0x70
 
 /*
  *  SReadFHeader()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -436,7 +436,7 @@ SReadFHeader(SpBlockPtr spBlkPtr)                             TWOWORDINLINE(0x70
 
 /*
  *  SNextSRsrc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -451,7 +451,7 @@ SNextSRsrc(SpBlockPtr spBlkPtr)                               TWOWORDINLINE(0x70
 
 /*
  *  SNextTypeSRsrc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -466,7 +466,7 @@ SNextTypeSRsrc(SpBlockPtr spBlkPtr)                           TWOWORDINLINE(0x70
 
 /*
  *  SRsrcInfo()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -481,7 +481,7 @@ SRsrcInfo(SpBlockPtr spBlkPtr)                                TWOWORDINLINE(0x70
 
 /*
  *  SDisposePtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -496,7 +496,7 @@ SDisposePtr(SpBlockPtr spBlkPtr)                              TWOWORDINLINE(0x70
 
 /*
  *  SCkCardStat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -511,7 +511,7 @@ SCkCardStat(SpBlockPtr spBlkPtr)                              TWOWORDINLINE(0x70
 
 /*
  *  SReadDrvrName()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -526,7 +526,7 @@ SReadDrvrName(SpBlockPtr spBlkPtr)                            TWOWORDINLINE(0x70
 
 /*
  *  SFindSRTRec()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -541,7 +541,7 @@ SFindSRTRec(SpBlockPtr spBlkPtr)                              TWOWORDINLINE(0x70
 
 /*
  *  SFindDevBase()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -556,7 +556,7 @@ SFindDevBase(SpBlockPtr spBlkPtr)                             TWOWORDINLINE(0x70
 
 /*
  *  SFindBigDevBase()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -572,7 +572,7 @@ SFindBigDevBase(SpBlockPtr spBlkPtr)                          TWOWORDINLINE(0x70
 /*  Advanced  */
 /*
  *  InitSDeclMgr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -587,7 +587,7 @@ InitSDeclMgr(SpBlockPtr spBlkPtr)                             TWOWORDINLINE(0x70
 
 /*
  *  SPrimaryInit()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -602,7 +602,7 @@ SPrimaryInit(SpBlockPtr spBlkPtr)                             TWOWORDINLINE(0x70
 
 /*
  *  SCardChanged()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -617,7 +617,7 @@ SCardChanged(SpBlockPtr spBlkPtr)                             TWOWORDINLINE(0x70
 
 /*
  *  SExec()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -632,7 +632,7 @@ SExec(SpBlockPtr spBlkPtr)                                    TWOWORDINLINE(0x70
 
 /*
  *  SOffsetData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -647,7 +647,7 @@ SOffsetData(SpBlockPtr spBlkPtr)                              TWOWORDINLINE(0x70
 
 /*
  *  SInitPRAMRecs()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -662,7 +662,7 @@ SInitPRAMRecs(SpBlockPtr spBlkPtr)                            TWOWORDINLINE(0x70
 
 /*
  *  SReadPBSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -677,7 +677,7 @@ SReadPBSize(SpBlockPtr spBlkPtr)                              TWOWORDINLINE(0x70
 
 /*
  *  SCalcStep()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -692,7 +692,7 @@ SCalcStep(SpBlockPtr spBlkPtr)                                TWOWORDINLINE(0x70
 
 /*
  *  SInitSRsrcTable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -707,7 +707,7 @@ SInitSRsrcTable(SpBlockPtr spBlkPtr)                          TWOWORDINLINE(0x70
 
 /*
  *  SSearchSRT()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -722,7 +722,7 @@ SSearchSRT(SpBlockPtr spBlkPtr)                               TWOWORDINLINE(0x70
 
 /*
  *  SUpdateSRT()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -737,7 +737,7 @@ SUpdateSRT(SpBlockPtr spBlkPtr)                               TWOWORDINLINE(0x70
 
 /*
  *  SCalcSPointer()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -752,7 +752,7 @@ SCalcSPointer(SpBlockPtr spBlkPtr)                            TWOWORDINLINE(0x70
 
 /*
  *  SGetDriver()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -767,7 +767,7 @@ SGetDriver(SpBlockPtr spBlkPtr)                               TWOWORDINLINE(0x70
 
 /*
  *  SPtrToSlot()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -782,7 +782,7 @@ SPtrToSlot(SpBlockPtr spBlkPtr)                               TWOWORDINLINE(0x70
 
 /*
  *  SFindSInfoRecPtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -797,7 +797,7 @@ SFindSInfoRecPtr(SpBlockPtr spBlkPtr)                         TWOWORDINLINE(0x70
 
 /*
  *  SFindSRsrcPtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -812,7 +812,7 @@ SFindSRsrcPtr(SpBlockPtr spBlkPtr)                            TWOWORDINLINE(0x70
 
 /*
  *  SDeleteSRTRec()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -830,7 +830,7 @@ SDeleteSRTRec(SpBlockPtr spBlkPtr)                            TWOWORDINLINE(0x70
 #if CALL_NOT_IN_CARBON
 /*
  *  OpenSlot()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -838,13 +838,13 @@ SDeleteSRTRec(SpBlockPtr spBlkPtr)                            TWOWORDINLINE(0x70
  */
 EXTERN_API( OSErr )
 OpenSlot(
-  ParmBlkPtr   paramBlock,
-  Boolean      async);
+	ParmBlkPtr   paramBlock,
+	Boolean      async);
 
 
 /*
  *  OpenSlotSync()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -859,7 +859,7 @@ OpenSlotSync(ParmBlkPtr paramBlock)                           ONEWORDINLINE(0xA2
 
 /*
  *  OpenSlotAsync()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -875,7 +875,7 @@ OpenSlotAsync(ParmBlkPtr paramBlock)                          ONEWORDINLINE(0xA6
 /*  Device Manager Slot Support  */
 /*
  *  SIntInstall()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -886,13 +886,13 @@ OpenSlotAsync(ParmBlkPtr paramBlock)                          ONEWORDINLINE(0xA6
 #endif
 EXTERN_API( OSErr )
 SIntInstall(
-  SQElemPtr   sIntQElemPtr,
-  short       theSlot)                                        ONEWORDINLINE(0xA075);
+	SQElemPtr   sIntQElemPtr,
+	short       theSlot)                                        ONEWORDINLINE(0xA075);
 
 
 /*
  *  SIntRemove()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -903,13 +903,13 @@ SIntInstall(
 #endif
 EXTERN_API( OSErr )
 SIntRemove(
-  SQElemPtr   sIntQElemPtr,
-  short       theSlot)                                        ONEWORDINLINE(0xA076);
+	SQElemPtr   sIntQElemPtr,
+	short       theSlot)                                        ONEWORDINLINE(0xA076);
 
 
 /*
  *  SVersion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -924,7 +924,7 @@ SVersion(SpBlockPtr spBlkPtr)                                 TWOWORDINLINE(0x70
 
 /*
  *  SetSRsrcState()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -939,7 +939,7 @@ SetSRsrcState(SpBlockPtr spBlkPtr)                            TWOWORDINLINE(0x70
 
 /*
  *  InsertSRTRec()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -954,7 +954,7 @@ InsertSRTRec(SpBlockPtr spBlkPtr)                             TWOWORDINLINE(0x70
 
 /*
  *  SGetSRsrc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -969,7 +969,7 @@ SGetSRsrc(SpBlockPtr spBlkPtr)                                TWOWORDINLINE(0x70
 
 /*
  *  SGetTypeSRsrc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -984,7 +984,7 @@ SGetTypeSRsrc(SpBlockPtr spBlkPtr)                            TWOWORDINLINE(0x70
 
 /*
  *  SGetSRsrcPtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1003,11 +1003,11 @@ SGetSRsrcPtr(SpBlockPtr spBlkPtr)                             TWOWORDINLINE(0x70
 
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+		#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+		#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+		#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -1021,4 +1021,3 @@ SGetSRsrcPtr(SpBlockPtr spBlkPtr)                             TWOWORDINLINE(0x70
 #endif
 
 #endif /* __SLOTS__ */
-

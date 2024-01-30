@@ -19,7 +19,7 @@ bool GetJpegDimensions( const byte *pubData, int cubData, uint32 &width, uint32 
 // pcubUsed is an optional output param for how many bytes of data were used in the image
 bool ConvertJpegToRGBA( const byte *pubJpegData, int cubJpegData, CUtlBuffer &bufOutput, int &width, int &height, int *pcubUsed = NULL );
 
-// Convert Jpeg data to raw RGB, pubData is the jpeg data, cubData is it's size, buf is for output, and width/height are output as well. 
+// Convert Jpeg data to raw RGB, pubData is the jpeg data, cubData is it's size, buf is for output, and width/height are output as well.
 // pcubUsed is an optional output param for how many bytes of data were used in the image
 bool ConvertJpegToRGB( const byte *pubJpegData, int cubJpegData, CUtlBuffer &bufOutput, int &width, int &height, int *pcubUsed = NULL );
 

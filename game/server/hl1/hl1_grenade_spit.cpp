@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -49,7 +49,7 @@ void CGrenadeSpit::Spawn( void )
 	m_nRenderFX		= kRenderFxNone;
 
 	SetThink( &CGrenadeSpit::SpitThink );
-	SetUse( &CBaseGrenade::DetonateUse ); 
+	SetUse( &CBaseGrenade::DetonateUse );
 	SetTouch( &CGrenadeSpit::GrenadeSpitTouch );
 	SetNextThink( gpGlobals->curtime + 0.1f );
 
@@ -136,32 +136,32 @@ void CGrenadeSpit::SpitThink( void )
 
 void CGrenadeSpit::Detonate(void)
 {
-	m_takedamage	= DAMAGE_NO;	
+	m_takedamage	= DAMAGE_NO;
 
 	int		iPitch;
 
 	// splat sound
 	iPitch = random->RandomFloat( 90, 110 );
 
-	EmitSound( "GrenadeSpit.Acid" );	
-	EmitSound( "GrenadeSpit.Hit" );	
+	EmitSound( "GrenadeSpit.Acid" );
+	EmitSound( "GrenadeSpit.Hit" );
 
 	UTIL_Remove( this );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeSpit::Precache( void )
 {
 	m_nSquidSpitSprite = PrecacheModel("sprites/bigspit.vmt");// client side spittle.
 
-	PrecacheModel("models/spitball_large.mdl"); 
-	PrecacheModel("models/spitball_medium.mdl"); 
-	PrecacheModel("models/spitball_small.mdl"); 
+	PrecacheModel("models/spitball_large.mdl");
+	PrecacheModel("models/spitball_medium.mdl");
+	PrecacheModel("models/spitball_small.mdl");
 
-	PrecacheScriptSound( "GrenadeSpit.Acid" );	
-	PrecacheScriptSound( "GrenadeSpit.Hit" );	
+	PrecacheScriptSound( "GrenadeSpit.Acid" );
+	PrecacheScriptSound( "GrenadeSpit.Hit" );
 
 }
 

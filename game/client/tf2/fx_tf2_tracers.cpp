@@ -39,7 +39,7 @@ void HLaserTracerCallback( const CEffectData &data )
 	flVelocity = random->RandomFloat( 5000, 7000 );
 	float life = ( totalDist + length ) / flVelocity;
 	float flWidth = random->RandomFloat( 2.0, 2.5 );
-	
+
 	// Add it
 	FX_AddDiscreetLine( vecStart, shotDir, flVelocity, length, totalDist, flWidth, life, "effects/human_bullet" );
 }
@@ -68,7 +68,7 @@ void ALaserTracerCallback( const CEffectData &data )
 	flVelocity = random->RandomFloat( 5000, 7000 );
 	float life = ( totalDist + length ) / flVelocity;
 	float flWidth = random->RandomFloat( 2.0, 3.0 );
-	
+
 	// Add it
 	FX_AddDiscreetLine( vecStart, shotDir, flVelocity, length, totalDist, flWidth, life, "effects/alien_laser" );
 }
@@ -97,7 +97,7 @@ void MinigunTracerCallback( const CEffectData &data )
 	flVelocity = random->RandomFloat( 5000, 7000 );
 	float life = ( totalDist + length ) / flVelocity;
 	float flWidth = random->RandomFloat( 1.5, 2.0 );
-	
+
 	// Add it
 	FX_AddDiscreetLine( vecStart, shotDir, flVelocity, length, totalDist, flWidth, life, "effects/alien_laser" );
 }

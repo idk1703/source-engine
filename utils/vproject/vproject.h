@@ -29,5 +29,3 @@
 #else
 #define VPROJECT_BUILDTYPE		"Release"
 #endif
-
-

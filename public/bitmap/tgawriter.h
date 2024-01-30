@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -22,7 +22,7 @@ class CUtlBuffer;
 namespace TGAWriter
 {
 
-	bool WriteToBuffer( unsigned char *pImageData, CUtlBuffer &buffer, int width, int height, 
+	bool WriteToBuffer( unsigned char *pImageData, CUtlBuffer &buffer, int width, int height,
 						ImageFormat srcFormat, ImageFormat dstFormat );
 
 

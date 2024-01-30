@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -45,12 +45,12 @@ class CUserCmd;
 #define WEAPON_RELOAD_HUD_HINT_COUNT	1
 
 //Start with a constraint in place (don't drop to floor)
-#define	SF_WEAPON_START_CONSTRAINED	(1<<0)	
+#define	SF_WEAPON_START_CONSTRAINED	(1<<0)
 #define SF_WEAPON_NO_PLAYER_PICKUP	(1<<1)
 #define SF_WEAPON_NO_PHYSCANNON_PUNT (1<<2)
 
 //Percent
-#define	CLIP_PERC_THRESHOLD		0.75f	
+#define	CLIP_PERC_THRESHOLD		0.75f
 
 // Put this in your derived class definition to declare it's activity table
 // UNDONE: Cascade these?
@@ -59,7 +59,7 @@ class CUserCmd;
 
 // You also need to include the activity table itself in your class' implementation:
 // e.g.
-//	acttable_t	CWeaponStunstick::m_acttable[] = 
+//	acttable_t	CWeaponStunstick::m_acttable[] =
 //	{
 //		{ ACT_MELEE_ATTACK1, ACT_MELEE_ATTACK_SWING, TRUE },
 //	};
@@ -94,7 +94,7 @@ struct poseparamtable_t
 
 // You also need to include the activity table itself in your class' implementation:
 // e.g.
-//	acttable_t	CTFGrapplingHook::m_poseparamtable[] = 
+//	acttable_t	CTFGrapplingHook::m_poseparamtable[] =
 //	{
 //		{ "r_arm", 2 },
 //	};
@@ -119,7 +119,7 @@ namespace vgui2
 // context indicating that the person writing the code is not allowing
 // FireBullets() to modify the direction of the shot because the shot direction
 // being passed into the function has already been modified by another piece of
-// code and should be fired as specified. See GetActualShotTrajectory(). 
+// code and should be fired as specified. See GetActualShotTrajectory().
 
 // NOTE: The way these are calculated is that each component == sin (degrees/2)
 #define VECTOR_CONE_PRECALCULATED	vec3_origin
@@ -142,9 +142,9 @@ namespace vgui2
 
 #if defined USES_ECON_ITEMS
 #define BASECOMBATWEAPON_DERIVED_FROM		CEconEntity
-#else 
+#else
 #define BASECOMBATWEAPON_DERIVED_FROM		CBaseAnimating
-#endif 
+#endif
 
 //-----------------------------------------------------------------------------
 // Collect trace attacks for weapons that fire multiple projectiles per attack that also penetrate
@@ -171,7 +171,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: Client side rep of CBaseTFCombatWeapon 
+// Purpose: Client side rep of CBaseTFCombatWeapon
 //-----------------------------------------------------------------------------
 // Hacky
 class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
@@ -217,7 +217,7 @@ public:
 
 	// HUD Hints
 	virtual bool			ShouldDisplayAltFireHUDHint();
-	virtual void			DisplayAltFireHudHint();	
+	virtual void			DisplayAltFireHudHint();
 	virtual void			RescindAltFireHudHint(); ///< undisplay the hud hint and pretend it never showed.
 
 	virtual bool			ShouldDisplayReloadHUDHint();
@@ -244,7 +244,7 @@ public:
 	bool					UsesPrimaryAmmo( void );					// returns true if the weapon actually uses primary ammo
 	bool					UsesSecondaryAmmo( void );					// returns true if the weapon actually uses secondary ammo
 	void					GiveDefaultAmmo( void );
-	
+
 	virtual bool			CanHolster( void ) const { return TRUE; };		// returns true if the weapon can be holstered
 	virtual bool			DefaultDeploy( char *szViewModel, char *szWeaponModel, int iActivity, char *szAnimExt );
 	virtual bool			CanDeploy( void ) { return true; }			// return true if the weapon's allowed to deploy
@@ -445,9 +445,9 @@ public:
 
 	bool					IsRemoveable() { return m_bRemoveable; }
 	void					SetRemoveable( bool bRemoveable ) { m_bRemoveable = bRemoveable; }
-	
+
 	// Returns bits for	weapon conditions
-	virtual bool			WeaponLOSCondition( const Vector &ownerPos, const Vector &targetPos, bool bSetConditions );	
+	virtual bool			WeaponLOSCondition( const Vector &ownerPos, const Vector &targetPos, bool bSetConditions );
 	virtual	int				WeaponRangeAttack1Condition( float flDot, float flDist );
 	virtual	int				WeaponRangeAttack2Condition( float flDot, float flDist );
 	virtual	int				WeaponMeleeAttack1Condition( float flDot, float flDist );
@@ -457,7 +457,7 @@ public:
 	virtual void			Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator );
 	virtual void			Operator_ForceNPCFire( CBaseCombatCharacter  *pOperator, bool bSecondary ) { return; }
 	// NOTE: This should never be called when a character is operating the weapon.  Animation events should be
-	// routed through the character, and then back into CharacterAnimEvent() 
+	// routed through the character, and then back into CharacterAnimEvent()
 	void					HandleAnimEvent( animevent_t *pEvent );
 
 	virtual int				UpdateTransmitState( void );
@@ -474,12 +474,12 @@ public:
 
 	virtual void			BoneMergeFastCullBloat( Vector &localMins, Vector &localMaxs, const Vector &thisEntityMins, const Vector &thisEntityMaxs  ) const;
 
-	virtual bool			OnFireEvent( C_BaseViewModel *pViewModel, const Vector& origin, const QAngle& angles, int event, const char *options ) 
-	{ 
+	virtual bool			OnFireEvent( C_BaseViewModel *pViewModel, const Vector& origin, const QAngle& angles, int event, const char *options )
+	{
 #if defined USES_ECON_ITEMS
 		return BaseClass::OnFireEvent( pViewModel, origin, angles, event, options );
 #else
-		return false; 
+		return false;
 #endif
 	}
 
@@ -498,7 +498,7 @@ public:
 	bool					GetShootPosition( Vector &vOrigin, QAngle &vAngles );
 	virtual void			DrawCrosshair( void );
 	virtual bool			ShouldDrawCrosshair( void ) { return true; }
-	
+
 	// Weapon state checking
 	virtual bool			IsCarriedByLocalPlayer( void );
 	virtual bool			ShouldDrawUsingViewModel( void );
@@ -614,7 +614,7 @@ public:
 	// Weapon data
 	CNetworkVar( int, m_iState );				// See WEAPON_* definition
 	string_t				m_iszName;				// Classname of this weapon.
-	CNetworkVar( int, m_iPrimaryAmmoType );		// "primary" ammo index into the ammo info array 
+	CNetworkVar( int, m_iPrimaryAmmoType );		// "primary" ammo index into the ammo info array
 	CNetworkVar( int, m_iSecondaryAmmoType );	// "secondary" ammo index into the ammo info array
 	CNetworkVar( int, m_iClip1 );				// number of shots left in the primary weapon clip, -1 it not used
 	CNetworkVar( int, m_iClip2 );				// number of shots left in the secondary weapon clip, -1 it not used
@@ -645,7 +645,7 @@ private:
 	bool					m_bReloadHudHintDisplayed;	// Have we displayed a reload HUD hint since this weapon was deployed?
 	float					m_flHudHintPollTime;	// When to poll the weapon again for whether it should display a hud hint.
 	float					m_flHudHintMinDisplayTime; // if the hint is squelched before this, reset my counter so we'll display it again.
-	
+
 	// Server only
 #if !defined( CLIENT_DLL )
 
@@ -656,7 +656,7 @@ protected:
 	COutputEvent			m_OnPlayerUse;		// Fired when the player uses the weapon.
 	COutputEvent			m_OnPlayerPickup;	// Fired when the player picks up the weapon.
 	COutputEvent			m_OnNPCPickup;		// Fired when an NPC picks up the weapon.
-	COutputEvent			m_OnCacheInteraction;	// For awarding lambda cache achievements in HL2 on 360. See .FGD file for details 
+	COutputEvent			m_OnCacheInteraction;	// For awarding lambda cache achievements in HL2 on 360. See .FGD file for details
 
 #else // Client .dll only
 	bool					m_bJustRestored;
@@ -664,7 +664,7 @@ protected:
 	// Allow weapons resource to access m_hWeaponFileInfo directly
 	friend class			WeaponsResource;
 
-protected:	
+protected:
 	int						m_iOldState;
 
 #endif // End Client .dll only

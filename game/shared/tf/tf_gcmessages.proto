@@ -1,6 +1,6 @@
 //====== Copyright 1996-2010, Valve Corporation, All rights reserved. =======
 //
-// Purpose: The file defines our Google Protocol Buffers which are used in over 
+// Purpose: The file defines our Google Protocol Buffers which are used in over
 // the wire messages between servers as well as between the TF GC and TF gameservers
 // and clients.
 //
@@ -13,15 +13,15 @@ option optimize_for = SPEED;
 option cc_generic_services = false;
 
 
-// 
+//
 // STYLE NOTES:
 //
 // Use CamelCase CMsgMyMessageName style names for messages.
-// 
+//
 // Use lowercase _ delimited names like my_steam_id for field names, this is non-standard for Steam,
-// but plays nice with the Google formatted code generation.  
-// 
-// Try not to use required fields ever. Only do so if you are really really sure you'll never want them removed. 
+// but plays nice with the Google formatted code generation.
+//
+// Try not to use required fields ever. Only do so if you are really really sure you'll never want them removed.
 // Optional should be preffered as it will make versioning easier and cleaner in the future if someone refactors
 // your message and wants to remove or rename fields.
 //
@@ -31,12 +31,12 @@ option cc_generic_services = false;
 //
 // Similar to fixed64, use fixed32 for RTime32 or other 32 bit values that are frequently larger than
 // 2^28.  It will safe space in those cases, otherwise use int32 which will safe space for smaller values.
-// An exception to this rule for RTime32 is if the value will frequently be zero rather than set to an actual 
+// An exception to this rule for RTime32 is if the value will frequently be zero rather than set to an actual
 // time.
 //
 // Note: to make something a key field, list it like so:
 // optional	uint32		account_id = 1 [ (key_field) = true ];
- 
+
 import "steammessages.proto";
 import "base_gcmessages.proto";
 
@@ -61,8 +61,8 @@ enum ETFGCMsg
 
 	k_EMsgGCSaxxy_Awarded =						5029; // GC => client
 
-	k_EMsgGCFreeTrial_ThankedBySomeone =		5028; // GC => client	
-	k_EMsgGCFreeTrial_ThankedSomeone =			5030; // GC => client	
+	k_EMsgGCFreeTrial_ThankedBySomeone =		5028; // GC => client
+	k_EMsgGCFreeTrial_ThankedSomeone =			5030; // GC => client
 	k_EMsgGCFreeTrial_ConvertedToPremium =		5031; // GC => client
 
 	k_EMsgGCMeetThePyroSilliness_BananaCraft_DEPRECATED = 5032; // GC => client (was part of the pre-Meet-the-Pyro silliness)
@@ -353,7 +353,7 @@ message CMsgTFVoteKickBanPlayer
 //
 message CMsgTFVoteKickBanPlayerResult
 {
-	optional	uint32		account_id_initiator = 1;			
+	optional	uint32		account_id_initiator = 1;
 	optional	uint32		account_id_subject = 2;
 	optional	uint32		kick_reason = 3;
 	optional	bool		kick_successful = 4;
@@ -564,7 +564,7 @@ message CMsgTFQuickplay_ScoreServersResponse
 		optional uint64 steam_id = 4;
 		optional uint32 options_score = 5;
 	};
-	repeated ServerInfo servers = 1; // list of servers	
+	repeated ServerInfo servers = 1; // list of servers
 };
 
 // k_EMsgGC_QP_PlayerJoining
@@ -755,7 +755,7 @@ message CMsgGC_Halloween_ReservedItem
 	repeated float x = 1;
 	repeated float y = 2;
 	repeated float z = 3;
-	
+
 	// what type of package is this? where did it spawn? etc.
 	optional uint32 spawn_meta_info = 7;
 };
@@ -861,7 +861,7 @@ message CMsgMatchSearchCriteria
 	optional	uint32	quickplay_game_type = 8;		// eQuickplayGameType
 
 	// Ladder
-	optional	uint32	ladder_game_type = 11;			// 
+	optional	uint32	ladder_game_type = 11;			//
 
 	// Casual
 	optional	CMsgCasualMatchmakingSearchCriteria casual_criteria = 12;	// Search criteria for casual games
@@ -934,7 +934,7 @@ message CSOTFParty
 	repeated	string		search_mvm_missions = 31;		// MvM: Pop files we are willing to play.  list must not be empty, if we are in MvM mode!
 	optional	bool		search_play_for_bragging_rights = 26;	 // Do we want to play for loot?
 	optional	uint32		search_quickplay_game_type = 28; // eQuickplayGameType
-	optional	uint32		search_ladder_game_type = 33;	 // 
+	optional	uint32		search_ladder_game_type = 33;	 //
 	optional	CMsgCasualMatchmakingSearchCriteria search_casual = 34;
 	optional	uint32		custom_ping_tolerance = 36;
 
@@ -1352,21 +1352,21 @@ message CMsgTFOtherLeftChatChannel
 };
 
 message CMsgTFRequestDefaultChatChannel
-{	
+{
 };
 
 message CMsgTFRequestDefaultChatChannelResponse
-{	
+{
 	optional	string	channel_name = 1;
 	optional	fixed64	channel_id = 2;
 };
 
 message CMsgTFRequestChatChannelList
-{	
+{
 };
 
 message CMsgTFRequestChatChannelListResponse
-{	
+{
 	message ChatChannel
 	{
 		optional	string	channel_name = 1;
@@ -1597,7 +1597,7 @@ message CMsgMvMVictory
 	{
 		optional	fixed64		steam_id = 1;
 		optional	bool		squad_surplus = 2;
-	};	
+	};
 	repeated	Player		players = 2;
 
 	optional uint64 lobby_id = 3;
@@ -1702,13 +1702,13 @@ message CMsgHalloween_Merasmus2012
 	optional fixed32 time_submitted = 2;			// sent up from server for consistency
 	optional bool is_valve_server = 3;
 	optional uint32 boss_level= 4;
-	optional uint32 spawned_health = 5;		
+	optional uint32 spawned_health = 5;
 	optional uint32 remaining_health = 6;		// 0 == Boss was killed
 	optional uint32 life_time = 7;					// Amount of time in seconds, boss was alive for
 	optional uint32 bomb_kills = 8;				// Kills from Bombs
 	optional uint32 staff_kills = 9;					// kills from staff attack
 	optional uint32 pvp_kills = 10;						// Number of kills from players while Boss is out (Jerk factor)
-	optional uint32 prophunt_time1 = 11;	
+	optional uint32 prophunt_time1 = 11;
 	optional uint32 prophunt_time2 = 12;
 	optional uint32 dmg_scout = 13;			// Amount of damage done by each class
 	optional uint32 dmg_sniper = 14;
@@ -1733,11 +1733,11 @@ message CMsgHalloween_Merasmus2012
 // k_EMsgGC_UpdateMerasmusItem
 // Client -> GC.  Request to update the itemlevel of the merasmus hat
 message CMsgUpdateHalloweenMerasmusLootLevel
-{	
+{
 	message Player
 	{
 		optional	fixed64		steam_id = 1;
-	};	
+	};
 	repeated	Player		players = 1;
 
 	optional uint32 merasmus_level = 2;		// uint8
@@ -1843,7 +1843,7 @@ message CGCMsgGC_War_GlobalStatsResponse
 }
 
 //
-// k_EMsgGC_DuckLeaderboard_IndividualUpdate 
+// k_EMsgGC_DuckLeaderboard_IndividualUpdate
 //
 message CGCMsgGC_PlayerDuckLeaderboard_IndividualUpdate
 {
@@ -2061,7 +2061,7 @@ message CEconItemPreviewDataBlock
 
 //
 // k_EMsgGC_Client2GCEconPreviewDataBlockRequest
-// 
+//
 message CMsgGC_Client2GCEconPreviewDataBlockRequest
 {
 	// econ item asset preview integration with Steam Community params
@@ -2073,7 +2073,7 @@ message CMsgGC_Client2GCEconPreviewDataBlockRequest
 
 //
 // k_EMsgGC_Client2GCEconPreviewDataBlockResponse
-// 
+//
 message CMsgGC_Client2GCEconPreviewDataBlockResponse
 {
 	optional CEconItemPreviewDataBlock iteminfo = 1;
@@ -2259,7 +2259,7 @@ message CMsgGCMatchGroupDataCenterPopulation
 message CMsgGCMatchMakerStatsResponse
 {
 	repeated uint32 map_count = 1;
-	
+
 	repeated CMsgGCMatchGroupDataCenterPopulation matchgroup_data_center_population = 2;
 };
 

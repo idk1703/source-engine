@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -83,7 +83,7 @@ public:
 			// NOTE:  If not overridden at the command line, then if it's a replicated cvar, make sure that it's
 			//  value is the server's value.  This solves a problem where think_limit is defined in shared
 			//  code but the value is inside and #if defined( _DEBUG ) block and if you have a debug game .dll
-			//  and a release client, then the limiit was coming from the client even though the server value 
+			//  and a release client, then the limiit was coming from the client even though the server value
 			//  was the one that was important during debugging.  Now the server trumps the client value for
 			//  replicated ConVars by setting the value here after the ConVar has been linked.
 			if ( replicated && defvalue && !pCommand->IsCommand() )
@@ -104,8 +104,7 @@ static CGameDLL_ConVarAccessor g_ConVarAccessor;
 void InitializeCvars( void )
 {
 	// Register cvars here:
-	ConVar_Register( FCVAR_GAMEDLL, &g_ConVarAccessor ); 
+	ConVar_Register( FCVAR_GAMEDLL, &g_ConVarAccessor );
 
 	g_pDeveloper	= cvar->FindVar( "developer" );
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 //#include "studio.h"
@@ -44,4 +44,3 @@ const studiohdr_t *virtualgroup_t::GetStudioHdr( void ) const
 {
 	return g_pMDLCache->GetStudioHdr( (MDLHandle_t)((int)cache&0xffff) );
 }
-

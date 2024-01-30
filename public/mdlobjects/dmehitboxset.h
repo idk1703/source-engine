@@ -24,7 +24,7 @@ class CDmeHitboxSet : public CDmElement
 	DEFINE_ELEMENT( CDmeHitboxSet, CDmElement );
 
 public:
-	CDmaElementArray< CDmeHitbox > m_Hitboxes;	
+	CDmaElementArray< CDmeHitbox > m_Hitboxes;
 
 private:
 };

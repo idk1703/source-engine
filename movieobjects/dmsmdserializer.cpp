@@ -205,7 +205,7 @@ static bool ParserHandleSectionStart( const char *pszBuf, const char *pszSection
 
 	if ( ! *pszBuf )
 		return false;
-	
+
 	const int nCmd = V_stricmp( pszBuf, pszSectionId );
 	if ( !nCmd )
 		return true;
@@ -309,7 +309,7 @@ static bool HandleQcHints(
 
 	key[ ARRAYSIZE(key) - 1 ] = '\0';
 	val[ ARRAYSIZE(val) - 1 ] = '\0';
-	
+
 	return true;
 }
 
@@ -1170,7 +1170,7 @@ static CDmeMesh *CreateDmeMesh(
 
 	CDmeVertexData *pDmeVertexData = pDmeMesh->FindOrCreateBaseState( "bind" );
 	pDmeMesh->SetCurrentBaseState( "bind" );
-	
+
 	pDmeVertexData->FlipVCoordinate( true );
 	pDmeVertexData->CreateField( CDmeVertexData::FIELD_POSITION );
 	pDmeVertexData->CreateField( CDmeVertexData::FIELD_NORMAL );

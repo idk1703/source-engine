@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -62,7 +62,7 @@ protected:
 	float			m_flHolsterTime;	// When the weapon was holstered
 
 private:
-	
+
 	CBasePortalCombatWeapon( const CBasePortalCombatWeapon & );
 };
 

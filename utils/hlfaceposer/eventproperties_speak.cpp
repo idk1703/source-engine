@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -144,10 +144,10 @@ void CEventPropertiesSpeakDialog::InitControlData( CEventParams *params )
 	m_Timer = SetTimer( m_hDialog, TIMER_ID, 1, 0 );
 
 	HWND choices1 = GetControl( IDC_SOUNDLIST );
-	SendMessage( choices1, LB_RESETCONTENT, 0, 0 ); 
+	SendMessage( choices1, LB_RESETCONTENT, 0, 0 );
 
 	HWND choices2 = GetControl( IDC_EVENTCHOICES2 );
-	SendMessage( choices2, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( choices2, CB_RESETCONTENT, 0, 0 );
 	SendMessage( choices2, WM_SETTEXT , 0, (LPARAM)params->m_szParameters2 );
 
 	HWND attenuate = GetControl( IDC_CAPTION_ATTENUATION );
@@ -165,7 +165,7 @@ void CEventPropertiesSpeakDialog::InitDialog( HWND hwndDlg )
 	m_hDialog = hwndDlg;
 
 	g_Params.PositionSelf( m_hDialog );
-	
+
 	// Set working title for dialog, etc.
 	SetTitle();
 
@@ -182,7 +182,7 @@ static CEventPropertiesSpeakDialog g_EventPropertiesSpeakDialog;
 
 void CEventPropertiesSpeakDialog::PopulateVolumeLevels( HWND control, CEventParams *params )
 {
-	SendMessage( control, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( control, CB_RESETCONTENT, 0, 0 );
 
 	// Assume uneditable
 	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"VOL_NORM" );
@@ -204,14 +204,14 @@ void CEventPropertiesSpeakDialog::PopulateVolumeLevels( HWND control, CEventPara
 				// Found it
 				SendMessage( control, WM_SETTEXT , 0, (LPARAM)params->VolumeToString() );
 
-				// 
+				//
 				// See if the .txt file is writable
 				char const *scriptfile = soundemitter->GetSourceFileForSound( soundindex );
 				if ( scriptfile )
 				{
 					// See if it's writable
 					if ( filesystem->FileExists( scriptfile ) &&
-						 filesystem->IsFileWritable( scriptfile ) )
+						filesystem->IsFileWritable( scriptfile ) )
 					{
 						enabled = true;
 					}
@@ -224,8 +224,8 @@ void CEventPropertiesSpeakDialog::PopulateVolumeLevels( HWND control, CEventPara
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wnd - 
+// Purpose:
+// Input  : wnd -
 // Output : static void
 //-----------------------------------------------------------------------------
 void CEventPropertiesSpeakDialog::PopulateSoundList( char const *current, HWND wnd  )
@@ -283,7 +283,7 @@ void CEventPropertiesSpeakDialog::PopulateSoundList( char const *current, HWND w
 		char const *name = m_SortedNames[ j ];
 		if ( name && name[ 0 ] )
 		{
-			int temp = SendMessage( wnd, LB_ADDSTRING, 0, (LPARAM)name ); 
+			int temp = SendMessage( wnd, LB_ADDSTRING, 0, (LPARAM)name );
 
 			if ( !Q_stricmp( name, current ) )
 			{
@@ -301,9 +301,9 @@ void CEventPropertiesSpeakDialog::PopulateSoundList( char const *current, HWND w
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wnd - 
-//			*params - 
+// Purpose:
+// Input  : wnd -
+//			*params -
 // Output : static
 //-----------------------------------------------------------------------------
 
@@ -361,9 +361,9 @@ void CEventPropertiesSpeakDialog::OnCheckChangedVolumeLevel( CEventParams *param
 
 	// See if it's writable, if not then bail
 	char const *scriptfile = soundemitter->GetSourceFileForSound( soundindex );
-	if ( !scriptfile || 
-		 !filesystem->FileExists( scriptfile ) ||
-		 !filesystem->IsFileWritable( scriptfile ) )
+	if ( !scriptfile ||
+		!filesystem->FileExists( scriptfile ) ||
+		!filesystem->IsFileWritable( scriptfile ) )
 	{
 		return;
 	}
@@ -388,11 +388,11 @@ void CEventPropertiesSpeakDialog::OnCheckChangedVolumeLevel( CEventParams *param
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
 static BOOL CALLBACK EventPropertiesSpeakDialog( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
@@ -419,7 +419,7 @@ void CEventPropertiesSpeakDialog::OnSoundSelected( CEventParams *params )
 		if ( script && script [ 0 ] )
 		{
 			SendMessage( scriptname, WM_SETTEXT, (WPARAM)Q_strlen( script ) + 1, (LPARAM)script );
-		
+
 			// Look up the sound level from the soundemitter system
 			CSoundParametersInternal *params = soundemitter->InternalGetParametersForSound( soundindex );
 			if ( params )
@@ -448,14 +448,14 @@ BOOL CEventPropertiesSpeakDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARAM
 	{
 	case WM_PAINT:
 		{
-			PAINTSTRUCT ps; 
+			PAINTSTRUCT ps;
 			HDC hdc;
-			
-            hdc = BeginPaint(hwndDlg, &ps); 
-			DrawSpline( hdc, GetControl( IDC_STATIC_SPLINE ), g_Params.m_pEvent );
-            EndPaint(hwndDlg, &ps); 
 
-            return FALSE; 
+	hdc = BeginPaint(hwndDlg, &ps);
+			DrawSpline( hdc, GetControl( IDC_STATIC_SPLINE ), g_Params.m_pEvent );
+	EndPaint(hwndDlg, &ps);
+
+	return FALSE;
 		}
 		break;
 	case WM_VSCROLL:
@@ -468,11 +468,11 @@ BOOL CEventPropertiesSpeakDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARAM
 			return FALSE;
 		}
 		break;
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		{
 			InitDialog( hwndDlg );
 		}
-		return FALSE;  
+		return FALSE;
 	case WM_TIMER:
 		{
 			g_pMatSysWindow->Frame();
@@ -485,8 +485,8 @@ BOOL CEventPropertiesSpeakDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARAM
 			}
 		}
 		return FALSE;
-		
-    case WM_COMMAND:
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -527,7 +527,7 @@ BOOL CEventPropertiesSpeakDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARAM
 				EndDialog( hwndDlg, 1 );
 			}
 			break;
-        case IDCANCEL:
+	case IDCANCEL:
 			{
 				KillTimer( m_hDialog, m_Timer );
 				EndDialog( hwndDlg, 0 );
@@ -542,8 +542,8 @@ BOOL CEventPropertiesSpeakDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARAM
 		case IDC_PLAY_SOUND:
 			{
 				// Get sound name from soundemitter
-				sound->PlaySound( 
-					NULL, 
+				sound->PlaySound(
+					NULL,
 					1.0f,
 					va( "sound/%s", FacePoser_TranslateSoundName( g_Params.m_szParameters ) ),
 					NULL );
@@ -615,8 +615,8 @@ BOOL CEventPropertiesSpeakDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARAM
 						if ( HIWORD( wParam ) == LBN_DBLCLK )
 						{
 							// Get sound name from soundemitter
-							sound->PlaySound( 
-								NULL, 
+							sound->PlaySound(
+								NULL,
 								1.0f,
 								va( "sound/%s", FacePoser_TranslateSoundName( g_Params.m_szParameters ) ),
 								NULL );
@@ -653,16 +653,16 @@ BOOL CEventPropertiesSpeakDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARAM
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int EventProperties_Speak( CEventParams *params )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_EVENTPROPERTIES_SPEAK ),
 		(HWND)g_MDLViewer->getHandle(),
 		(DLGPROC)EventPropertiesSpeakDialog );

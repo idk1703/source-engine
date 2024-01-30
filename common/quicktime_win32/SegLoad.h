@@ -1,18 +1,18 @@
 /*
-     File:       SegLoad.h
- 
-     Contains:   Segment Loader Interfaces.
- 
-     Version:    Technology: Mac OS 8
-                 Release:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1985-1999 by Apple Computer, Inc., all rights reserved
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       SegLoad.h
+
+		Contains:   Segment Loader Interfaces.
+
+		Version:    Technology: Mac OS 8
+								Release:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1985-1999 by Apple Computer, Inc., all rights reserved
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __SEGLOAD__
 #define __SEGLOAD__
@@ -37,38 +37,38 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=mac68k
+		#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+		#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+		#pragma pack(2)
 #endif
 
 #if TARGET_CPU_68K && !TARGET_RT_MAC_CFM || !TARGET_OS_MAC
 /*
-   CountAppFiles, GetAppFiles, ClrAppFiles, GetAppParms, getappparms, 
-   and the AppFile data structure and enums are obsolete. 
-   They are still supported for writing old style 68K apps, 
-   but they are not supported for CFM-based apps.
-   Use AppleEvents to determine which files are to be 
-   opened or printed from the Finder.
+	CountAppFiles, GetAppFiles, ClrAppFiles, GetAppParms, getappparms,
+	and the AppFile data structure and enums are obsolete.
+	They are still supported for writing old style 68K apps,
+	but they are not supported for CFM-based apps.
+	Use AppleEvents to determine which files are to be
+	opened or printed from the Finder.
 */
 enum {
-  appOpen                       = 0,    /*Open the Document (s)*/
-  appPrint                      = 1     /*Print the Document (s)*/
+	appOpen                       = 0,    /*Open the Document (s)*/
+	appPrint                      = 1     /*Print the Document (s)*/
 };
 
 struct AppFile {
-  short               vRefNum;
-  OSType              fType;
-  short               versNum;                /*versNum in high byte*/
-  Str255              fName;
+	short               vRefNum;
+	OSType              fType;
+	short               versNum;                /*versNum in high byte*/
+	Str255              fName;
 };
 typedef struct AppFile                  AppFile;
 #if CALL_NOT_IN_CARBON
 /*
  *  CountAppFiles()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -76,13 +76,13 @@ typedef struct AppFile                  AppFile;
  */
 EXTERN_API( void )
 CountAppFiles(
-  short *  message,
-  short *  count);
+	short *  message,
+	short *  count);
 
 
 /*
  *  GetAppFiles()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -90,13 +90,13 @@ CountAppFiles(
  */
 EXTERN_API( void )
 GetAppFiles(
-  short      index,
-  AppFile *  theFile);
+	short      index,
+	AppFile *  theFile);
 
 
 /*
  *  ClrAppFiles()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -108,7 +108,7 @@ ClrAppFiles(short index);
 
 /*
  *  GetAppParms()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -116,9 +116,9 @@ ClrAppFiles(short index);
  */
 EXTERN_API( void )
 GetAppParms(
-  Str255    apName,
-  short *   apRefNum,
-  Handle *  apParam)                                          ONEWORDINLINE(0xA9F5);
+	Str255    apName,
+	short *   apRefNum,
+	Handle *  apParam)                                          ONEWORDINLINE(0xA9F5);
 
 
 #endif  /* CALL_NOT_IN_CARBON */
@@ -126,7 +126,7 @@ GetAppParms(
 #if CALL_NOT_IN_CARBON
 /*
  *  getappparms()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -134,26 +134,26 @@ GetAppParms(
  */
 EXTERN_API_C( void )
 getappparms(
-  char *    apName,
-  short *   apRefNum,
-  Handle *  apParam);
+	char *    apName,
+	short *   apRefNum,
+	Handle *  apParam);
 
 
 #endif  /* CALL_NOT_IN_CARBON */
 
 #endif  /* TARGET_CPU_68K && !TARGET_RT_MAC_CFM || !TARGET_OS_MAC */
 
- 
+
 /*
-   Because PowerPC applications don't have segments.
-   But, in order to allow applications to not have conditionalized
-   source code, UnloadSeg is macro'ed away for PowerPC.
+	Because PowerPC applications don't have segments.
+	But, in order to allow applications to not have conditionalized
+	source code, UnloadSeg is macro'ed away for PowerPC.
 */
 #if TARGET_CPU_68K
 #if CALL_NOT_IN_CARBON
 /*
  *  UnloadSeg()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -176,11 +176,11 @@ UnloadSeg(void * routineAddr)                                 ONEWORDINLINE(0xA9
 
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+		#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+		#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+		#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -194,4 +194,3 @@ UnloadSeg(void * routineAddr)                                 ONEWORDINLINE(0xA9
 #endif
 
 #endif /* __SEGLOAD__ */
-

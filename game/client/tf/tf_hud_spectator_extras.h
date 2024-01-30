@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -14,7 +14,7 @@
 #include <vgui_controls/EditablePanel.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFHudSpectatorExtras : public CHudElement, public vgui::EditablePanel
 {

@@ -127,17 +127,17 @@ void CObjectBuffStation::Precache()
 	// Models
 	PrecacheModel( BUFF_STATION_HUMAN_MODEL );
 	PrecacheModel( BUFF_STATION_ALIEN_MODEL );
-	
+
 	// Build models
 	PrecacheModel( BUFF_STATION_HUMAN_ASSEMBLING_MODEL );
 	PrecacheModel( BUFF_STATION_ALIEN_ASSEMBLING_MODEL );
-	
+
 	// VGUI Screen
 	PrecacheVGuiScreen( BUFF_STATION_VGUI_SCREEN );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBuffStation::SetupTeamModel( void )
 {
@@ -202,7 +202,7 @@ void CObjectBuffStation::DestroyObject( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBuffStation::OnGoInactive( void )
 {
@@ -249,7 +249,7 @@ void CObjectBuffStation::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Handle commands sent from vgui panels on the client 
+// Purpose: Handle commands sent from vgui panels on the client
 //-----------------------------------------------------------------------------
 bool CObjectBuffStation::ClientCommand( CBaseTFPlayer *pPlayer, const char *pCmd, ICommandArguments *pArg )
 {
@@ -263,7 +263,7 @@ bool CObjectBuffStation::ClientCommand( CBaseTFPlayer *pPlayer, const char *pCmd
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBuffStation::InitAttachmentData( void )
 {
@@ -281,7 +281,7 @@ void CObjectBuffStation::InitAttachmentData( void )
 	}
 
 	m_nObjectCount = 0;
-	Q_strncpy( szAttachName, "objectcable1", 13 );	
+	Q_strncpy( szAttachName, "objectcable1", 13 );
 	for ( int iObject = 0; iObject < BUFF_STATION_MAX_OBJECTS; ++iObject )
 	{
 		m_hObjects.Set( iObject, NULL );
@@ -586,7 +586,7 @@ void CObjectBuffStation::DetachObjectByIndex( int nIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBuffStation::UpdatePlayerAttachment( CBaseTFPlayer *pPlayer )
 {
@@ -684,7 +684,7 @@ void CObjectBuffStation::BoostPlayerThink( void )
 		}
 
 		// Check for out of range.
-		float flDistSq = GetAbsOrigin().DistToSqr( pPlayer->GetAbsOrigin() ); 
+		float flDistSq = GetAbsOrigin().DistToSqr( pPlayer->GetAbsOrigin() );
 		if ( flDistSq > flMaxRangeSq )
 		{
 			DetachPlayerByIndex( iPlayer );
@@ -707,7 +707,7 @@ void CObjectBuffStation::BoostPlayerThink( void )
 	// Set next think time.
 	if ( m_nPlayerCount > 0 )
 	{
-		SetNextThink( gpGlobals->curtime + BUFF_STATION_BOOST_PLAYER_THINK_INTERVAL, 
+		SetNextThink( gpGlobals->curtime + BUFF_STATION_BOOST_PLAYER_THINK_INTERVAL,
 			          BUFF_STATION_BOOST_PLAYER_THINK_CONTEXT );
 	}
 	else
@@ -722,7 +722,7 @@ void CObjectBuffStation::BoostPlayerThink( void )
 void CObjectBuffStation::BoostObjectThink( void )
 {
 	// Set next boost object think time.
-	SetNextThink( gpGlobals->curtime + BUFF_STATION_BOOST_OBJECT_THINK_INTERVAL, 
+	SetNextThink( gpGlobals->curtime + BUFF_STATION_BOOST_OBJECT_THINK_INTERVAL,
 		          BUFF_STATION_BOOST_OBJECT_THINK_CONTEXT );
 
 	// If we're emped, placing, or building, we're not ready to powerup
@@ -743,7 +743,7 @@ void CObjectBuffStation::BoostObjectThink( void )
 		}
 
 		// Check for out of range.
-		float flDistSq = GetAbsOrigin().DistToSqr( pObject->GetAbsOrigin() ); 
+		float flDistSq = GetAbsOrigin().DistToSqr( pObject->GetAbsOrigin() );
 		if ( flDistSq > flMaxRangeSq )
 		{
 			DetachObjectByIndex( iObject );
@@ -755,7 +755,7 @@ void CObjectBuffStation::BoostObjectThink( void )
 			continue;
 
 		// Boost it
-		if ( !pObject->AttemptToPowerup( POWERUP_BOOST, BUFF_STATION_BOOST_OBJECT_THINK_INTERVAL, 0, 
+		if ( !pObject->AttemptToPowerup( POWERUP_BOOST, BUFF_STATION_BOOST_OBJECT_THINK_INTERVAL, 0,
 			                                  this, &m_aObjectAttachInfo[iObject].m_DamageModifier ) )
 		{
 			m_aObjectAttachInfo[iObject].m_DamageModifier.RemoveModifier();
@@ -804,7 +804,7 @@ void CObjectBuffStation::BuffNearbyObjects( CBaseObject *pObjectToTarget, bool b
 	}
 	else
 	{
-		// Find nearby objects 
+		// Find nearby objects
 		for ( int iObject = 0; iObject < GetTFTeam()->GetNumObjects(); iObject++ )
 		{
 			CBaseObject *pObject = GetTFTeam()->GetObject( iObject );
@@ -852,7 +852,7 @@ bool CObjectBuffStation::CalculatePlacement( CBaseTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBuffStation::FinishedBuilding( void )
 {
@@ -870,7 +870,7 @@ void CObjectBuffStation::FinishedBuilding( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBuffStation::CheckBuffConnection( CBaseObject *pObject )
 {
@@ -906,8 +906,8 @@ bool CObjectBuffStation::IsWithinBuffRange( CBaseObject *pObject )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : act - 
+// Purpose:
+// Input  : act -
 //-----------------------------------------------------------------------------
 void CObjectBuffStation::OnActivityChanged( Activity act )
 {
@@ -925,5 +925,3 @@ void CObjectBuffStation::OnActivityChanged( Activity act )
 
 	SetupTeamModel();
 }
-
-

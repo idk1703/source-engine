@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -88,7 +88,7 @@ void mxExpressionSlider::BoundValue( void )
 	}
 }
 
-	
+
 void mxExpressionSlider::setValue( int barnum, float value )
 {
 	if (m_flSetting[ barnum ] == value && m_bIsEdited[ barnum ] == false)
@@ -130,11 +130,11 @@ void mxExpressionSlider::setRange( int barnum, float min, float max, int ticks /
 {
 	m_flMin[ barnum ] = min;
 	m_flMax[ barnum ] = max;
-	
+
 	Assert( m_flMax[ barnum ] > m_flMin[ barnum ] );
 
 	m_nTicks[ barnum ] = ticks;
-	
+
 	BoundValue();
 
 	redraw();
@@ -161,7 +161,7 @@ float mxExpressionSlider::getValue( int barnum ) const
 	float scale = 1.0;
 	if (m_bPaired)
 	{
-		// if it's paired, this is assuming that m_flCurrent[0] holds the max value, 
+		// if it's paired, this is assuming that m_flCurrent[0] holds the max value,
 		// and m_flCurrent[1] is a weighting from 0 to 1, with 0.5 being even
 		if (barnum == 0 && m_flCurrent[ 1 ] > 0.5)
 		{
@@ -195,7 +195,7 @@ void mxExpressionSlider::setEdited( int barnum, bool isEdited )
 {
 	if (m_bIsEdited[ barnum ] == isEdited)
 		return;
-	
+
 	m_bIsEdited[ barnum ] = isEdited;
 	redraw();
 }
@@ -220,8 +220,8 @@ void mxExpressionSlider::GetSliderRect( RECT& rc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &rc - 
+// Purpose:
+// Input  : &rc -
 //-----------------------------------------------------------------------------
 void mxExpressionSlider::GetBarRect( RECT &rcBar )
 {
@@ -330,7 +330,7 @@ void mxExpressionSlider::DrawThumb( int barnum, HDC& dc )
 
 	shadow = CreatePen( PS_SOLID, 1, GetSysColor( COLOR_3DDKSHADOW ) );
 	hilight = CreatePen( PS_SOLID, 1, GetSysColor( COLOR_3DHIGHLIGHT ) );
-	
+
 	switch ( barnum )
 	{
 	default:
@@ -408,10 +408,10 @@ void mxExpressionSlider::DrawThumb( int barnum, HDC& dc )
 		{
 			region[ 0 ].x = rcThumb.left;
 			region[ 0 ].y = rcThumb.top;
-			
+
 			region[ 1 ].x = rcThumb.right;
 			region[ 1 ].y = rcThumb.top;
-			
+
 			region[ 2 ].x = ( rcThumb.left + rcThumb.right ) / 2;
 			region[ 2 ].y = rcThumb.bottom - offset;
 		}
@@ -506,7 +506,7 @@ void mxExpressionSlider::DrawTitle( HDC &dc )
 	oldfont = (HFONT)SelectObject( dc, fnt );
 
 	DrawText( dc, sz, -1, &rc, DT_NOPREFIX | DT_VCENTER | DT_SINGLELINE | DT_LEFT | DT_WORD_ELLIPSIS );
-	
+
 	SelectObject( dc, oldfont );
 	DeleteObject( fnt );
 	SetBkMode( dc, oldMode );
@@ -567,7 +567,7 @@ void mxExpressionSlider::redraw()
 void mxExpressionSlider::MoveThumb( int barnum, int xpos, bool finish )
 {
 	RECT rcBar;
-	
+
 	GetBarRect( rcBar );
 
 	if ( xpos < rcBar.left )

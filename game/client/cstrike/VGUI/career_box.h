@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -75,7 +75,7 @@ public:
 	CCareerQueryBox(const wchar_t *title, const wchar_t *labelText, const char *panelName, vgui::Panel *parent = NULL);
 
 	virtual ~CCareerQueryBox();
- 
+
 private:
 	typedef CCareerBaseBox BaseClass;
 };

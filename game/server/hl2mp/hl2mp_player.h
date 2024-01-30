@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -42,7 +42,7 @@ public:
 
 	CHL2MP_Player();
 	~CHL2MP_Player( void );
-	
+
 	static CHL2MP_Player *CreatePlayer( const char *className, edict_t *ed )
 	{
 		CHL2MP_Player::s_PlayerEdict = ed;
@@ -75,7 +75,7 @@ public:
 	virtual void UpdateOnRemove( void );
 	virtual void DeathSound( const CTakeDamageInfo &info );
 	virtual CBaseEntity* EntSelectSpawnPoint( void );
-		
+
 	int FlashlightIsOn( void );
 	void FlashlightTurnOn( void );
 	void FlashlightTurnOff( void );
@@ -97,14 +97,14 @@ public:
 	void SetPlayerModel( void );
 	void SetPlayerTeamModel( void );
 	Activity TranslateTeamActivity( Activity ActToTranslate );
-	
+
 	float GetNextModelChangeTime( void ) { return m_flNextModelChangeTime; }
 	float GetNextTeamChangeTime( void ) { return m_flNextTeamChangeTime; }
 	void  PickDefaultSpawnTeam( void );
 	void  SetupPlayerSoundsByModel( const char *pModelName );
 	const char *GetPlayerModelSoundPrefix( void );
 	int	  GetPlayerModelType( void ) { return m_iPlayerSoundType;	}
-	
+
 	void  DetonateTripmines( void );
 
 	void Reset();
@@ -133,11 +133,11 @@ public:
 	Vector m_vecTotalBulletForce;	//Accumulator for bullet force in a single frame
 
 	// Tracks our ragdoll entity.
-	CNetworkHandle( CBaseEntity, m_hRagdoll );	// networked entity handle 
+	CNetworkHandle( CBaseEntity, m_hRagdoll );	// networked entity handle
 
 	virtual bool	CanHearAndReadChatFrom( CBasePlayer *pPlayer );
 
-		
+
 private:
 
 	CNetworkQAngle( m_angEyeAngles );
@@ -151,7 +151,7 @@ private:
 	float m_flNextModelChangeTime;
 	float m_flNextTeamChangeTime;
 
-	float m_flSlamProtectTime;	
+	float m_flSlamProtectTime;
 
 	HL2MPPlayerState m_iPlayerState;
 	CHL2MPPlayerStateInfo *m_pCurStateInfo;
@@ -161,7 +161,7 @@ private:
 	// This lets us rate limit the commands the players can execute so they don't overflow things like reliable buffers.
 	CUtlDict<float,int>	m_RateLimitLastCommandTimes;
 
-    bool m_bEnterObserver;
+	bool m_bEnterObserver;
 	bool m_bReady;
 };
 

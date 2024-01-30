@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -89,8 +89,8 @@ public:
 //			the our special popup container.  Why not always just parent to that
 //			single popup container?  Because we want the MINIMUM mouse focus area
 //			possible because the dashboard is not a rectangle (it grows/shrinks).
-//			
-//			
+//
+//
 //			If anything draws on top of the MM dashboard and you dont want it to
 //			have that panel add itself to this class using PushModalFullscreenPopup
 //			when it goes visible and PopModalFullscreenPopup when it hides itself

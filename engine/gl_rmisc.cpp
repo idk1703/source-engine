@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -101,14 +101,14 @@ void R_TimeRefresh_f (void)
 	ConMsg ("%f seconds (%f fps)\n", time, 128/time);
 }
 
-ConCommand timerefresh("timerefresh", R_TimeRefresh_f, "Profile the renderer.", FCVAR_CHEAT );	
-ConCommand linefile("linefile", Linefile_Read_f, "Parses map leak data from .lin file", FCVAR_CHEAT );	
+ConCommand timerefresh("timerefresh", R_TimeRefresh_f, "Profile the renderer.", FCVAR_CHEAT );
+ConCommand linefile("linefile", Linefile_Read_f, "Parses map leak data from .lin file", FCVAR_CHEAT );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void R_Init (void)
-{	
+{
 	extern byte *hunk_base;
 
 	extern void InitMathlib( void );
@@ -119,14 +119,14 @@ void R_Init (void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void R_Shutdown( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void R_ResetLightStyles( void )
 {
@@ -141,7 +141,7 @@ void R_RemoveAllDecalsFromAllModels();
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND_F( r_cleardecals, "Usage r_cleardecals <permanent>.", FCVAR_CLIENTCMD_CAN_EXECUTE | FCVAR_SERVER_CAN_EXECUTE  )
 {
@@ -189,7 +189,7 @@ void R_LoadWorldGeometry( bool bDXChange )
 			modelloader->Map_LoadDisplacements( host_state.worldmodel, false );
 			//if( !DispInfo_CreateStaticBuffers( host_state.worldmodel, materialSortInfoArray, false ) )
 			//	Sys_Error( "Can't create static meshes for displacements" );
-			
+
 			modelloader->Map_SetRenderInfoAllocated( true );
 		}
 	}
@@ -202,7 +202,7 @@ void R_LoadWorldGeometry( bool bDXChange )
 	if ( bDXChange )
 	{
 		// Must be done before MarkWaterSurfaces
-		modelloader->RecomputeSurfaceFlags( host_state.worldmodel ); 
+		modelloader->RecomputeSurfaceFlags( host_state.worldmodel );
 	}
 
 	Mod_MarkWaterSurfaces( host_state.worldmodel );
@@ -232,7 +232,7 @@ void R_LevelInit( void )
 
 	Assert( g_ClientDLL );
 
-	r_framecount = 1; 
+	r_framecount = 1;
 	R_ResetLightStyles();
 	R_DecalInit();
 	R_LoadSkys();
@@ -258,7 +258,7 @@ void R_LevelInit( void )
 	}
 
 	UpdateMaterialSystemConfig();
-	
+
 	// FIXME: E3 2003 HACK
 	if ( IsPC() && mat_levelflush.GetBool() )
 	{
@@ -275,7 +275,7 @@ void R_LevelInit( void )
 
 	R_Surface_LevelInit();
 	R_Areaportal_LevelInit();
-	
+
 	// Build the overlay fragments.
 	OverlayMgr()->CreateFragments();
 
@@ -293,6 +293,3 @@ void R_LevelShutdown()
 	R_Areaportal_LevelShutdown();
 	g_DispLightmapSamplePositions.Purge();
 }
-
-
-

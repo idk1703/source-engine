@@ -26,7 +26,7 @@ typedef enum
 } RCONSTATUS;
 
 CPlayerList::CPlayerList(IResponse *target,serveritem_t &server, const char *rconPassword) {
-	
+
 	memcpy(&m_Server, &server,sizeof(serveritem_t));
 	m_pResponseTarget=target;
 
@@ -35,7 +35,7 @@ CPlayerList::CPlayerList(IResponse *target,serveritem_t &server, const char *rco
 	m_bRconFailed=false;
 
 	v_strncpy(m_szRconPassword,rconPassword,100);
-	
+
 	m_pRcon = new CRcon(this  , server,rconPassword);
 	m_PlayerList=NULL;
 	m_pPlayerInfoMsg=NULL;
@@ -57,8 +57,8 @@ void CPlayerList::SendQuery()
 {
 	CMsgBuffer *buffer = m_pQuery->GetSendBuffer();
 	assert( buffer );
-	
-	if ( !buffer ) 
+
+	if ( !buffer )
 	{
 		return;
 	}
@@ -95,13 +95,13 @@ void CPlayerList::SendQuery()
 
 	// Sendmessage
 	m_pQuery->SendMessage( &adr );
-	
+
 }
 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerList::RunFrame()
 {
@@ -109,7 +109,7 @@ void CPlayerList::RunFrame()
 	{
 		m_pQuery->Frame();
 	}
-	if(m_pRcon) 
+	if(m_pRcon)
 	{
 		m_pRcon->RunFrame();
 	}
@@ -128,14 +128,14 @@ void CPlayerList::ServerResponded()
 //  # 1 "Player" 1 4294967295   0 30:56   22    0 192.168.3.64:27005
 
 
-	for(int i=0;i<m_PlayerList.Count();i++) 
+	for(int i=0;i<m_PlayerList.Count();i++)
 	{
-		if(cur!=NULL) 
-		{	
+		if(cur!=NULL)
+		{
 			TokenLine playerLine;
 			playerLine.SetLine(cur);
-		
-			if(playerLine.CountToken() >= 9 ) 
+
+			if(playerLine.CountToken() >= 9 )
 			{
 				//	playerLine.GetToken(1); // count
 				//	playerLine.GetToken(2); // player name
@@ -153,7 +153,7 @@ void CPlayerList::ServerResponded()
 
 		}
 	}
-	
+
 	m_bNewPlayerList=true;
 	m_bIsRefreshing=false;
 
@@ -192,35 +192,35 @@ void CPlayerList::UpdateServer()
 
 }
 
-void CPlayerList::Refresh() 
+void CPlayerList::Refresh()
 {
 	SendQuery();
 }
 
-bool CPlayerList::IsRefreshing() 
+bool CPlayerList::IsRefreshing()
 {
 
 	return m_bIsRefreshing;
 }
 
-serveritem_t &CPlayerList::GetServer() 
+serveritem_t &CPlayerList::GetServer()
 {
 	return m_Server;
 }
 
 
-bool CPlayerList::NewPlayerList() 
+bool CPlayerList::NewPlayerList()
 {
 	return m_bNewPlayerList;
 }
 
-CUtlVector<Players_t> *CPlayerList::GetPlayerList() 
+CUtlVector<Players_t> *CPlayerList::GetPlayerList()
 {
 	m_bNewPlayerList=false;
 	return &m_PlayerList;
 }
 
-void CPlayerList::SetPassword(const char *newPass) 
+void CPlayerList::SetPassword(const char *newPass)
 {
 	m_pRcon->SetPassword(newPass);
 	m_bRconFailed=false;

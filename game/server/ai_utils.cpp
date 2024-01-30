@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 
 BEGIN_SIMPLE_DATADESC( CAI_MoveMonitor )
-	DEFINE_FIELD( m_vMark, FIELD_POSITION_VECTOR ), 
+	DEFINE_FIELD( m_vMark, FIELD_POSITION_VECTOR ),
 	DEFINE_FIELD( m_flMarkTolerance, FIELD_FLOAT )
 END_DATADESC()
 
@@ -143,8 +143,8 @@ void CAI_ShotRegulator::Reset( bool bStartShooting )
 // Should we shoot?
 //-----------------------------------------------------------------------------
 bool CAI_ShotRegulator::ShouldShoot() const
-{ 
-	return ( !m_bDisabled && (m_flNextShotTime <= gpGlobals->curtime) ); 
+{
+	return ( !m_bDisabled && (m_flNextShotTime <= gpGlobals->curtime) );
 }
 
 
@@ -153,7 +153,7 @@ bool CAI_ShotRegulator::ShouldShoot() const
 //-----------------------------------------------------------------------------
 bool CAI_ShotRegulator::IsInRestInterval() const
 {
-	return (m_bInRestInterval && !ShouldShoot()); 
+	return (m_bInRestInterval && !ShouldShoot());
 }
 
 
@@ -181,12 +181,12 @@ void CAI_ShotRegulator::FireNoEarlierThan( float flTime )
 //-----------------------------------------------------------------------------
 // Burst shot count accessors
 //-----------------------------------------------------------------------------
-int CAI_ShotRegulator::GetBurstShotsRemaining() const				
-{ 
-	return m_nBurstShotsRemaining; 
+int CAI_ShotRegulator::GetBurstShotsRemaining() const
+{
+	return m_nBurstShotsRemaining;
 }
 
-void CAI_ShotRegulator::SetBurstShotsRemaining( int shots )	
+void CAI_ShotRegulator::SetBurstShotsRemaining( int shots )
 {
 	m_nBurstShotsRemaining = shots;
 }
@@ -214,7 +214,7 @@ void CAI_ShotRegulator::OnFiredWeapon()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_ShotRegulator::EnableShooting( void )
 {
@@ -222,7 +222,7 @@ void CAI_ShotRegulator::EnableShooting( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_ShotRegulator::DisableShooting( void )
 {
@@ -345,8 +345,8 @@ BEGIN_SIMPLE_DATADESC( CAI_FreePass )
 
 	DEFINE_FIELD( m_hTarget, FIELD_EHANDLE ),
 	DEFINE_FIELD( m_FreePassTimeRemaining,	FIELD_FLOAT ),
-	DEFINE_EMBEDDED( m_FreePassMoveMonitor ), 
-	DEFINE_EMBEDDED( m_Params ), 
+	DEFINE_EMBEDDED( m_FreePassMoveMonitor ),
+	DEFINE_EMBEDDED( m_Params ),
 
 END_DATADESC()
 
@@ -469,18 +469,18 @@ bool CAI_FreePass::ShouldAllowFVisible(bool bBaseResult )
 {
 	CBaseEntity *	pTarget 	= GetPassTarget();
 	AI_EnemyInfo_t *pTargetInfo = GetOuter()->GetEnemies()->Find( pTarget );
-	
+
 	if ( !bBaseResult || HasPass() )
 		return false;
-		
+
 	bool bIsVisible = true;
-		
+
 	// Peek logic
 	if ( m_Params.peekTime > 0.1 )
 	{
 		float lastTimeSeen = (pTargetInfo) ? pTargetInfo->timeLastSeen : AI_INVALID_TIME;
 		float lastTimeDamagedBy = (pTargetInfo) ? pTargetInfo->timeLastReceivedDamageFrom : AI_INVALID_TIME;
-		
+
 		if ( ( lastTimeSeen == AI_INVALID_TIME || gpGlobals->curtime - lastTimeSeen > m_Params.peekTime ) &&
 			 ( lastTimeDamagedBy == AI_INVALID_TIME || gpGlobals->curtime - lastTimeDamagedBy > m_Params.peekTimeAfterDamage ) )
 		{
@@ -500,7 +500,7 @@ bool CAI_FreePass::ShouldAllowFVisible(bool bBaseResult )
 					NDebugOverlay::Line( tr.startpos, tr.endpos - Vector( 0, 0, 2), 0, 255, 0, false, 0.1 );
 				bIsVisible = false;
 			}
-			
+
 			if ( bIsVisible )
 			{
 				UTIL_TraceLine( GetOuter()->EyePosition(), pTarget->EyePosition() + (-vecRight * m_Params.peekEyeDist - Vector( 0, 0, m_Params.peekEyeDistZ )), MASK_BLOCKLOS, GetOuter(), COLLISION_GROUP_NONE, &tr );
@@ -512,7 +512,7 @@ bool CAI_FreePass::ShouldAllowFVisible(bool bBaseResult )
 				}
 			}
 		}
-		
+
 		if ( bIsVisible && free_pass_peek_debug.GetBool() )
 			NDebugOverlay::Line( GetOuter()->EyePosition(), pTarget->EyePosition() - Vector( 0, 0, 2), 255, 0, 0, false, 0.1 );
 	}
@@ -527,7 +527,7 @@ bool CAI_FreePass::ShouldAllowFVisible(bool bBaseResult )
 string_t g_iszFuncBrushClassname = NULL_STRING;
 
 //-----------------------------------------------------------------------------
-CTraceFilterNav::CTraceFilterNav( CAI_BaseNPC *pProber, bool bIgnoreTransientEntities, const IServerEntity *passedict, int collisionGroup, bool bAllowPlayerAvoid ) : 
+CTraceFilterNav::CTraceFilterNav( CAI_BaseNPC *pProber, bool bIgnoreTransientEntities, const IServerEntity *passedict, int collisionGroup, bool bAllowPlayerAvoid ) :
 	CTraceFilterSimple( passedict, collisionGroup ),
 	m_pProber(pProber),
 	m_bIgnoreTransientEntities(bIgnoreTransientEntities),
@@ -548,7 +548,7 @@ bool CTraceFilterNav::ShouldHitEntity( IHandleEntity *pHandleEntity, int content
 	if ( m_pProber->GetMoveProbe()->ShouldBrushBeIgnored( pEntity ) == true )
 		return false;
 
-#ifdef HL1_DLL 
+#ifdef HL1_DLL
 	if ( ( contentsMask & CONTENTS_MOVEABLE ) == 0 )
 	{
 		if ( pEntity->ClassMatches( "func_pushable" ) )

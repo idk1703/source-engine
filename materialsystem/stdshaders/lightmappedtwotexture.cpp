@@ -65,14 +65,14 @@ BEGIN_SHADER( LightmappedTwoTexture,
 		}
 
 		if (params[DETAIL]->IsDefined())
-		{					 
+		{
 			LoadTexture( DETAIL );
 		}
 
 		// Don't alpha test if the alpha channel is used for other purposes
 		if (IS_FLAG_SET(MATERIAL_VAR_BASEALPHAENVMAPMASK) )
 			CLEAR_FLAGS( MATERIAL_VAR_ALPHATEST );
-			
+
 		if (params[ENVMAP]->IsDefined())
 		{
 			if( !IS_FLAG_SET(MATERIAL_VAR_ENVMAPSPHERE) )
@@ -179,7 +179,7 @@ BEGIN_SHADER( LightmappedTwoTexture,
 		{
 			FixedFunctionAdditiveMaskedEnvmapPass(
 				ENVMAP, ENVMAPMASK, BASETEXTURE,
-				ENVMAPFRAME, ENVMAPMASKFRAME, FRAME, 
+				ENVMAPFRAME, ENVMAPMASKFRAME, FRAME,
 				BASETEXTURETRANSFORM, ENVMAPMASKSCALE, ENVMAPTINT );
 		}
 	}

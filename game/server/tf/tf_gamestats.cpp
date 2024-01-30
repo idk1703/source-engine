@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -61,7 +61,7 @@ const char *g_aClassNames[] =
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 CTFGameStats::CTFGameStats()
 {
@@ -73,7 +73,7 @@ CTFGameStats::CTFGameStats()
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 CTFGameStats::~CTFGameStats()
 {
@@ -82,7 +82,7 @@ CTFGameStats::~CTFGameStats()
 
 //-----------------------------------------------------------------------------
 // Purpose: Clear out game stats
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CTFGameStats::Clear( void )
 {
@@ -157,7 +157,7 @@ bool CTFGameStats::AddDataForSend( KeyValues *pKV, StatSendType_t sendType )
 				pKVData->SetInt( "Captures", classStats.iCaptures );
 				pKVData->SetInt( "ClassChanges", classStats.iClassChanges );
 				pKV->AddSubKey( pKVData );
-			}	
+			}
 		}
 
 		// save weapon stats
@@ -175,7 +175,7 @@ bool CTFGameStats::AddDataForSend( KeyValues *pKV, StatSendType_t sendType )
 				pKVData->SetInt( "HitsWithKnownDistance", weaponStats.iHitsWithKnownDistance );
 				pKVData->SetInt( "DistanceTotal", weaponStats.iTotalDistance );
 				pKV->AddSubKey( pKVData );
-			}	
+			}
 		}
 
 		//// save deaths
@@ -201,13 +201,13 @@ bool CTFGameStats::AddDataForSend( KeyValues *pKV, StatSendType_t sendType )
 extern CBaseGameStats_Driver CBGSDriver;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFGameStats::Init( void )
 {
 	ListenForGameEvent( "teamplay_round_start" );
 	ListenForGameEvent( "tf_game_over" );
-	ListenForGameEvent( "teamplay_game_over" );	
+	ListenForGameEvent( "teamplay_game_over" );
 
 	// CTF Gameplay Events
 	ListenForGameEvent( "teamplay_flag_event" );
@@ -237,7 +237,7 @@ void StripNewlineFromString( char *string )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_LevelInit( void )
 {
@@ -250,13 +250,13 @@ void CTFGameStats::Event_LevelInit( void )
 	if ( hostip )
 	{
 		nIPAddr = hostip->GetInt();
-	}			
+	}
 
 	ConVar *hostport = cvar->FindVar( "hostip" );
 	if ( hostport )
 	{
 		nPort = hostport->GetInt();
-	}			
+	}
 
 	m_reportedStats.m_pCurrentGame->Init( STRING( gpGlobals->mapname ), gpGlobals->mapversion, nIPAddr, nPort, gpGlobals->curtime );
 	m_reportedStats.m_bValidData = false;
@@ -343,7 +343,7 @@ void CTFGameStats::LevelShutdownPreClearSteamAPIContext()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_LevelShutdown( float flElapsed )
 {
@@ -421,7 +421,7 @@ void CTFGameStats::ResetKillHistory( CTFPlayer *pPlayer )
 void CTFGameStats::ResetRoundStats()
 {
 	for ( int i = 0; i < ARRAYSIZE( m_aPlayerStats ); i++ )
-	{		
+	{
 		m_aPlayerStats[i].statsCurrentRound.Reset();
 	}
 	m_currentRoundRed.Reset();
@@ -452,7 +452,7 @@ void CTFGameStats::IncrementStat( CTFPlayer *pPlayer, TFStatType_t statType, int
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::SendStatsToPlayer( CTFPlayer *pPlayer, bool bIsAlive )
 {
@@ -532,13 +532,13 @@ void CTFGameStats::SendStatsToPlayer( CTFPlayer *pPlayer, bool bIsAlive )
 			MessageEnd();
 			break;
 		}
-	}	
+	}
 
 	AccumulateAndResetPerLifeStats( pPlayer );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::AccumulateAndResetPerLifeStats( CTFPlayer *pPlayer )
 {
@@ -554,11 +554,11 @@ void CTFGameStats::AccumulateAndResetPerLifeStats( CTFPlayer *pPlayer )
 	}
 	stats.statsCurrentRound.m_iStat[TFSTAT_POINTSSCORED] += iScore;
 	stats.statsAccumulated.m_iStat[TFSTAT_POINTSSCORED] += iScore;
-	stats.statsCurrentLife.Reset();	
+	stats.statsCurrentLife.Reset();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerConnected( CBasePlayer *pPlayer )
 {
@@ -569,7 +569,7 @@ void CTFGameStats::Event_PlayerConnected( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerDisconnectedTF( CTFPlayer *pTFPlayer )
 {
@@ -599,7 +599,7 @@ void CTFGameStats::Event_PlayerDisconnectedTF( CTFPlayer *pTFPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerChangedClass( CTFPlayer *pPlayer, int iOldClass, int iNewClass )
 {
@@ -617,10 +617,10 @@ void CTFGameStats::Event_PlayerChangedClass( CTFPlayer *pPlayer, int iOldClass, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerSpawned( CTFPlayer *pPlayer )
-{	
+{
 	// if player is spawning as a member of valid team, increase the spawn count for his class
 	int iTeam = pPlayer->GetTeamNumber();
 	int iClass = pPlayer->GetPlayerClass()->GetClassIndex();
@@ -648,12 +648,12 @@ void CTFGameStats::Event_PlayerSpawned( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------	
+// Purpose:
+//-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerForceRespawn( CTFPlayer *pPlayer )
 {
 	if ( pPlayer->IsAlive() && !TFGameRules()->PrevRoundWasWaitingForPlayers() )
-	{		
+	{
 		// send stats to player
 		SendStatsToPlayer( pPlayer, true );
 
@@ -669,9 +669,9 @@ void CTFGameStats::Event_PlayerForceRespawn( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFGameStats::Event_PlayerLeachedHealth( CTFPlayer *pPlayer, bool bDispenserHeal, float amount ) 
+void CTFGameStats::Event_PlayerLeachedHealth( CTFPlayer *pPlayer, bool bDispenserHeal, float amount )
 {
 	// make sure value is sane
 	Assert( amount >= 0 );
@@ -692,7 +692,7 @@ void CTFGameStats::Event_PlayerLeachedHealth( CTFPlayer *pPlayer, bool bDispense
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 TF_Gamestats_RoundStats_t* CTFGameStats::GetRoundStatsForTeam( int iTeamNumber )
 {
@@ -705,9 +705,9 @@ TF_Gamestats_RoundStats_t* CTFGameStats::GetRoundStatsForTeam( int iTeamNumber )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFGameStats::Event_PlayerHealedOther( CTFPlayer *pPlayer, float amount ) 
+void CTFGameStats::Event_PlayerHealedOther( CTFPlayer *pPlayer, float amount )
 {
 	// make sure value is sane
 	int iAmount = (int) amount;
@@ -730,7 +730,7 @@ void CTFGameStats::Event_PlayerHealedOther( CTFPlayer *pPlayer, float amount )
 //-----------------------------------------------------------------------------
 // Purpose:  How much health effects like mad milk generate - awarded to the provider
 //-----------------------------------------------------------------------------
-void CTFGameStats::Event_PlayerHealedOtherAssist( CTFPlayer *pPlayer, float amount ) 
+void CTFGameStats::Event_PlayerHealedOtherAssist( CTFPlayer *pPlayer, float amount )
 {
 	CMatchInfo *pMatch = GTFGCClientSystem()->GetMatch();
 	if ( pPlayer && pMatch )
@@ -760,7 +760,7 @@ void CTFGameStats::Event_PlayerHealedOtherAssist( CTFPlayer *pPlayer, float amou
 //-----------------------------------------------------------------------------
 // Purpose:  Raw damage blocked due to effects like invuln, projectile shields, etc
 //-----------------------------------------------------------------------------
-void CTFGameStats::Event_PlayerBlockedDamage( CTFPlayer *pPlayer, int nAmount ) 
+void CTFGameStats::Event_PlayerBlockedDamage( CTFPlayer *pPlayer, int nAmount )
 {
 	Assert( pPlayer && nAmount > 0 && nAmount < 3000 );
 	if ( nAmount < 0 || nAmount > 3000 )
@@ -772,7 +772,7 @@ void CTFGameStats::Event_PlayerBlockedDamage( CTFPlayer *pPlayer, int nAmount )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_AssistKill( CTFPlayer *pAttacker, CBaseEntity *pVictim )
 {
@@ -800,9 +800,9 @@ void CTFGameStats::Event_AssistKill( CTFPlayer *pAttacker, CBaseEntity *pVictim 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFGameStats::Event_PlayerInvulnerable( CTFPlayer *pPlayer ) 
+void CTFGameStats::Event_PlayerInvulnerable( CTFPlayer *pPlayer )
 {
 	IncrementStat( pPlayer, TFSTAT_INVULNS, 1 );
 
@@ -814,7 +814,7 @@ void CTFGameStats::Event_PlayerInvulnerable( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerCreatedBuilding( CTFPlayer *pPlayer, CBaseObject *pBuilding )
 {
@@ -833,7 +833,7 @@ void CTFGameStats::Event_PlayerCreatedBuilding( CTFPlayer *pPlayer, CBaseObject 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerDestroyedBuilding( CTFPlayer *pPlayer, CBaseObject *pBuilding )
 {
@@ -852,7 +852,7 @@ void CTFGameStats::Event_PlayerDestroyedBuilding( CTFPlayer *pPlayer, CBaseObjec
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_AssistDestroyBuilding( CTFPlayer *pPlayer, CBaseObject *pBuilding )
 {
@@ -865,7 +865,7 @@ void CTFGameStats::Event_AssistDestroyBuilding( CTFPlayer *pPlayer, CBaseObject 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_Headshot( CTFPlayer *pKiller, bool bBowShot )
 {
@@ -883,7 +883,7 @@ void CTFGameStats::Event_Headshot( CTFPlayer *pKiller, bool bBowShot )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_Backstab( CTFPlayer *pKiller )
 {
@@ -897,7 +897,7 @@ void CTFGameStats::Event_Backstab( CTFPlayer *pKiller )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerStunBall( CTFPlayer *pAttacker, bool bSpecial )
 {
@@ -912,7 +912,7 @@ void CTFGameStats::Event_PlayerStunBall( CTFPlayer *pAttacker, bool bSpecial )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerAwardBonusPoints( CTFPlayer *pPlayer, CBaseEntity *pSource, int nCount )
 {
@@ -946,7 +946,7 @@ void CTFGameStats::Event_PlayerAwardBonusPoints( CTFPlayer *pPlayer, CBaseEntity
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerHealthkitPickup( CTFPlayer *pTFPlayer )
 {
@@ -954,7 +954,7 @@ void CTFGameStats::Event_PlayerHealthkitPickup( CTFPlayer *pTFPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerAmmokitPickup( CTFPlayer *pTFPlayer )
 {
@@ -962,7 +962,7 @@ void CTFGameStats::Event_PlayerAmmokitPickup( CTFPlayer *pTFPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerUsedTeleport( CTFPlayer *pTeleportOwner, CTFPlayer *pTeleportingPlayer )
 {
@@ -980,11 +980,11 @@ void CTFGameStats::Event_PlayerUsedTeleport( CTFPlayer *pTeleportOwner, CTFPlaye
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFGameStats::Event_PlayerFiredWeapon( CTFPlayer *pPlayer, bool bCritical ) 
+void CTFGameStats::Event_PlayerFiredWeapon( CTFPlayer *pPlayer, bool bCritical )
 {
-	// If normal gameplay state, track weapon stats. 
+	// If normal gameplay state, track weapon stats.
 	if ( TFGameRules()->State_Get() == GR_STATE_RND_RUNNING )
 	{
 		CTFWeaponBase *pTFWeapon = pPlayer->GetActiveTFWeapon();
@@ -1021,7 +1021,7 @@ void CTFGameStats::Event_PlayerFiredWeapon( CTFPlayer *pPlayer, bool bCritical )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerDamage( CBasePlayer *pBasePlayer, const CTakeDamageInfo &info, int iDamageTaken )
 {
@@ -1133,7 +1133,7 @@ void CTFGameStats::Event_PlayerDamage( CBasePlayer *pBasePlayer, const CTakeDama
 		killerOrg = pSentry->GetAbsOrigin();
 		damage.iAttackClass = TF_CLASS_ENGINEER;
 		damage.iWeapon = ( info.GetDamageType() & DMG_BLAST ) ? TF_WEAPON_SENTRY_ROCKET : TF_WEAPON_SENTRY_BULLET;
-	} 
+	}
 	else if ( dynamic_cast<CObjectDispenser *>( pInflictor ) )
 	{
 		damage.iAttackClass = TF_CLASS_ENGINEER;
@@ -1158,7 +1158,7 @@ void CTFGameStats::Event_PlayerDamage( CBasePlayer *pBasePlayer, const CTakeDama
 		damage.iWeapon = GetWeaponFromDamage( info );
 	}
 
-	// If normal gameplay state, track weapon stats. 
+	// If normal gameplay state, track weapon stats.
 	if ( ( TFGameRules()->State_Get() == GR_STATE_RND_RUNNING ) && ( damage.iWeapon != TF_WEAPON_NONE  ) )
 	{
 		// record hits & damage in reported per-weapon stats
@@ -1180,7 +1180,7 @@ void CTFGameStats::Event_PlayerDamage( CBasePlayer *pBasePlayer, const CTakeDama
 				else
 				{
 					vecDamageOrigin = killerOrg;
-				}					
+				}
 			}
 			if ( vecDamageOrigin != vec3_origin )
 			{
@@ -1223,7 +1223,7 @@ void CTFGameStats::Event_PlayerDamage( CBasePlayer *pBasePlayer, const CTakeDama
 	{
 		//m_reportedStats.m_pCurrentGame->m_aPlayerDamage.AddToTail( damage );
 		m_reportedStats.m_pCurrentGame->m_bIsRealServer = true;
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1265,7 +1265,7 @@ void CTFGameStats::Event_BossDamage( CBasePlayer *pAttacker, int iDamage )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerSuicide( CBasePlayer *pPlayer )
 {
@@ -1277,7 +1277,7 @@ void CTFGameStats::Event_PlayerSuicide( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerKilledOther( CBasePlayer *pAttacker, CBaseEntity *pVictim, const CTakeDamageInfo &info )
 {
@@ -1340,7 +1340,7 @@ void CTFGameStats::Event_KillDetail( CTFPlayer* pKiller, CTFPlayer* pVictim, CTF
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_RoundStart()
 {
@@ -1357,7 +1357,7 @@ void CTFGameStats::Event_RoundStart()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_RoundEnd( int iWinningTeam, bool bFullRound, float flRoundTime, bool bWasSuddenDeathWin )
 {
@@ -1426,7 +1426,7 @@ void CTFGameStats::Event_RoundEnd( int iWinningTeam, bool bFullRound, float flRo
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_GameEnd()
 {
@@ -1443,7 +1443,7 @@ void CTFGameStats::Event_GameEnd()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerCapturedPoint( CTFPlayer *pPlayer )
 {
@@ -1458,7 +1458,7 @@ void CTFGameStats::Event_PlayerCapturedPoint( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerReturnedFlag( CTFPlayer *pPlayer )
 {
@@ -1467,7 +1467,7 @@ void CTFGameStats::Event_PlayerReturnedFlag( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerScoresEscortPoints( CTFPlayer *pPlayer, int iPoints )
 {
@@ -1481,11 +1481,11 @@ void CTFGameStats::Event_PlayerScoresEscortPoints( CTFPlayer *pPlayer, int iPoin
 	//if ( m_reportedStats.m_pCurrentGame != NULL )
 	//{
 	//	m_reportedStats.m_pCurrentGame->m_aClassStats[iClass].iCaptures++;
-	//}	
+	//}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerDefendedPoint( CTFPlayer *pPlayer )
 {
@@ -1504,7 +1504,7 @@ void CTFGameStats::Event_PlayerDefendedPoint( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerDominatedOther( CTFPlayer *pAttacker )
 {
@@ -1518,7 +1518,7 @@ void CTFGameStats::Event_PlayerDominatedOther( CTFPlayer *pAttacker )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerRevenge( CTFPlayer *pAttacker )
 {
@@ -1532,7 +1532,7 @@ void CTFGameStats::Event_PlayerRevenge( CTFPlayer *pAttacker )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerKilled( CBasePlayer *pPlayer, const CTakeDamageInfo &info )
 {
@@ -1561,7 +1561,7 @@ void CTFGameStats::Event_PlayerKilled( CBasePlayer *pPlayer, const CTakeDamageIn
 		killerOrg = pInflictor->GetAbsOrigin();
 	}
 	else
-	{		
+	{
 		if ( pScorer )
 		{
 			// CTFPlayerClass *pAttackerClass = pScorer->GetPlayerClass();
@@ -1759,13 +1759,13 @@ static int __cdecl SortMapPlaytime( const void *elem1, const void *elem2 )
 {
 	int time1 = static_cast< const MapNameAndPlaytime_t * >( elem1 )->nTime;
 	int time2 = static_cast< const MapNameAndPlaytime_t * >( elem2 )->nTime;
-	
+
 	if ( time2 < time1 )
 		return -1;
 
 	if ( time2 > time1 )
 		return 1;
-	
+
 	return 0;
 }
 
@@ -1872,10 +1872,10 @@ bool CTFGameStats::IsRealGameplay( TF_Gamestats_LevelStats_t *game )
 	if ( tf_stats_nogameplaycheck.GetInt() )
 		return true;
 
-	bool bIsRealGameplay = ( 
+	bool bIsRealGameplay = (
 		( game->m_iPeakPlayerCount[TF_TEAM_RED] >= TFGameRules()->GetStatsMinimumPlayers()  ) &&
 		( game->m_iPeakPlayerCount[TF_TEAM_BLUE] >= TFGameRules()->GetStatsMinimumPlayers() ) &&
-		( game->m_Header.m_iTotalTime >= TFGameRules()->GetStatsMinimumPlayedTime() ) && ( game->m_bIsRealServer ) 
+		( game->m_Header.m_iTotalTime >= TFGameRules()->GetStatsMinimumPlayedTime() ) && ( game->m_bIsRealServer )
 		);
 
 	return bIsRealGameplay;
@@ -1900,7 +1900,7 @@ bool CTFGameStats::IsRealGameplay( TF_Gamestats_LevelStats_t *game )
 //	//	Msg( "%s killed %s with %s at (%d,%d,%d), distance %d\n",
 //	//		g_aClassNames[ map->m_aPlayerDeaths[ i ].iAttackClass ],
 //	//		g_aClassNames[ map->m_aPlayerDeaths[ i ].iTargetClass ],
-//	//		WeaponIdToAlias( map->m_aPlayerDeaths[ i ].iWeapon ), 
+//	//		WeaponIdToAlias( map->m_aPlayerDeaths[ i ].iWeapon ),
 //	//		map->m_aPlayerDeaths[ i ].nPosition[ 0 ],
 //	//		map->m_aPlayerDeaths[ i ].nPosition[ 1 ],
 //	//		map->m_aPlayerDeaths[ i ].nPosition[ 2 ],
@@ -1919,7 +1919,7 @@ bool CTFGameStats::IsRealGameplay( TF_Gamestats_LevelStats_t *game )
 //	//		map->m_aPlayerDamage[ i ].nAttackerPosition[ 2 ],
 //	//		map->m_aPlayerDamage[ i ].iDamage,
 //	//		g_aClassNames[ map->m_aPlayerDamage[ i ].iTargetClass ],
-//	//		WeaponIdToAlias( map->m_aPlayerDamage[ i ].iWeapon ), 
+//	//		WeaponIdToAlias( map->m_aPlayerDamage[ i ].iWeapon ),
 //	//		map->m_aPlayerDamage[ i ].nTargetPosition[ 0 ],
 //	//		map->m_aPlayerDamage[ i ].nTargetPosition[ 1 ],
 //	//		map->m_aPlayerDamage[ i ].nTargetPosition[ 2 ],
@@ -2832,7 +2832,7 @@ void CTFGameStats::Event_PlayerLoadoutChanged( CTFPlayer *pPlayer, bool bForceRe
 
 	// Table updated, using v2
 	KeyValues* pKVData = new KeyValues( "TF2ServerPlayerLoadoutv2" );
-	
+
 	int iSlotCount = LOADOUT_POSITION_MISC2 + 1;
 	for ( int iSlot = 0; iSlot < iSlotCount; ++iSlot )
 	{
@@ -2883,19 +2883,19 @@ void CTFGameStats::Event_PlayerLoadoutChanged( CTFPlayer *pPlayer, bool bForceRe
 			// IsTrusted
 			const char *pszReg = GameCoordinator_GetRegistrationString();
 			bool bOfficial = pszReg && V_strstr( pszReg, "'Gordon'" ) && tf_mm_trusted.GetBool();
-			
+
 			pKVData->SetInt( "IsTrustedServer", bOfficial );
 			pKVData->SetInt( "IsCompetitive", bIsCompetitive );
 			GetSteamWorksSGameStatsUploader().AddStatsForUpload( pKVData );
 		}
-	
+
 		stats.loadoutStats.Set( pPlayer->GetPlayerClass()->GetClassIndex() );
 	}
 #endif
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerRevived( CTFPlayer *pPlayer )
 {
@@ -2903,7 +2903,7 @@ void CTFGameStats::Event_PlayerRevived( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerThrowableHit( CTFPlayer *pAttacker )
 {
@@ -2911,7 +2911,7 @@ void CTFGameStats::Event_PlayerThrowableHit( CTFPlayer *pAttacker )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameStats::Event_PlayerThrowableKill( CTFPlayer *pAttacker )
 {
@@ -3428,7 +3428,7 @@ void CTFGameStats::SW_PasstimeRoundEnded()
 		auto iNow = CRTime::RTime32TimeCur();
 		char filename[128];
 		V_sprintf_safe(filename, "passtime_stats_%u.txt", iNow);
-		
+
 		// add keys to simulate what the stats server usually adds to the database automatically
 		pKVData->SetInt( "SessionID", 0 );
 		pKVData->SetInt( "TimeReported", iNow );
@@ -3455,7 +3455,7 @@ void CTFGameStats::Event_PowerUpModeDeath( CTFPlayer *pKiller, CTFPlayer *pVicti
 	//	INT_FIELD( nKillerClass, KillerClass, int16 )
 	//	INT_FIELD( nKillerRune, KillerRune, int16 )
 	//	INT_FIELD( nKillerKillstreak, KillerKillstreak, int16 )
-	
+
 	//	INT_FIELD( nKillerPrimary, KillerPrimary, int32 )
 	//	INT_FIELD( nKillerSecondary, KillerSecondary, int32 )
 	//	INT_FIELD( nKillerMelee, KillerMelee, int32 )
@@ -3496,7 +3496,7 @@ void CTFGameStats::Event_PowerUpModeDeath( CTFPlayer *pKiller, CTFPlayer *pVicti
 	pKVData->SetInt( "KillerClass", pKiller->GetPlayerClass()->GetClassIndex() );
 	pKVData->SetInt( "KillerRune", GetConditionFromRuneType( pKiller->m_Shared.GetCarryingRuneType() ) );
 	pKVData->SetInt( "KillerKillstreak",  pKiller->m_Shared.GetStreak( CTFPlayerShared::kTFStreak_KillsAll ) );
-	
+
 	CEconItemView *pItem = pKiller->GetLoadoutItem( pKiller->GetPlayerClass()->GetClassIndex(), LOADOUT_POSITION_PRIMARY );
 	item_definition_index_t iItemDef = pItem ? pItem->GetItemDefIndex() : 0;
 	pKVData->SetInt( "KillerPrimary", iItemDef );
@@ -3504,15 +3504,15 @@ void CTFGameStats::Event_PowerUpModeDeath( CTFPlayer *pKiller, CTFPlayer *pVicti
 	pItem = pKiller->GetLoadoutItem( pKiller->GetPlayerClass()->GetClassIndex(), LOADOUT_POSITION_SECONDARY );
 	iItemDef = pItem ? pItem->GetItemDefIndex() : 0;
 	pKVData->SetInt( "KillerSecondary", iItemDef );
-	
+
 	pItem = pKiller->GetLoadoutItem( pKiller->GetPlayerClass()->GetClassIndex(), LOADOUT_POSITION_MELEE );
 	iItemDef = pItem ? pItem->GetItemDefIndex() : 0;
 	pKVData->SetInt( "KillerMelee", iItemDef );
-	
+
 	pKVData->SetInt( "VictimClass", pVictim->GetPlayerClass()->GetClassIndex() );
 	pKVData->SetInt( "VictimRune", GetConditionFromRuneType( pVictim->m_Shared.GetCarryingRuneType() ) );
 	pKVData->SetInt( "VictimKillstreak",  pVictim->m_Shared.GetStreak( CTFPlayerShared::kTFStreak_KillsAll ) );
-	
+
 	//pKVData->SetInt( "TimeSubmitted", GetSteamWorksSGameStatsUploader().GetTimeSinceEpoch() );
 
 	GetSteamWorksSGameStatsUploader().AddStatsForUpload( pKVData );

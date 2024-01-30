@@ -24,7 +24,7 @@
 
 using namespace vgui;
 
-	
+
 //-----------------------------------------------------------------------------
 // Sort by target name
 //-----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ CEntityReportPanel::CEntityReportPanel( CFoundryDoc *pDoc, vgui::Panel* pParent,
 	m_pExact->AddActionSignalTarget( this );
 
 	// Filtering text entries
-	m_pFilterKey = new vgui::TextEntry( this, "KeyTextEntry" ); 
+	m_pFilterKey = new vgui::TextEntry( this, "KeyTextEntry" );
 	m_pFilterValue = new vgui::TextEntry( this, "ValueTextEntry" );
 
 	// Classname combobox
@@ -188,7 +188,7 @@ void CEntityReportPanel::OnProperties(void)
 // Purpose: Deletes the marked objects.
 //-----------------------------------------------------------------------------
 void CEntityReportPanel::OnDeleteEntities(void)
-{		
+{
 	// This is undoable
 	CAppUndoScopeGuard guard( NOTIFY_SETDIRTYFLAG, "Delete Entities", "Delete Entities" );
 
@@ -230,7 +230,7 @@ void CEntityReportPanel::OnCommand( const char *pCommand )
 	if ( !Q_stricmp( pCommand, "delete" ) )
 	{
 		// Confirm we want to do it
-		MessageBox *pConfirm = new MessageBox( "#FoundryDeleteObjects", "#FoundryDeleteObjectsMsg", g_pFoundryTool->GetRootPanel() ); 
+		MessageBox *pConfirm = new MessageBox( "#FoundryDeleteObjects", "#FoundryDeleteObjectsMsg", g_pFoundryTool->GetRootPanel() );
 		pConfirm->AddActionSignalTarget( this );
 		pConfirm->SetOKButtonText( "Yes" );
 		pConfirm->SetCommand( new KeyValues( "DeleteEntities" ) );
@@ -247,7 +247,7 @@ void CEntityReportPanel::OnCommand( const char *pCommand )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Call this when our settings are dirty
 //-----------------------------------------------------------------------------
@@ -263,18 +263,18 @@ void CEntityReportPanel::MarkDirty( bool bFilterDirty )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Methods related to filtering
 //-----------------------------------------------------------------------------
-void CEntityReportPanel::OnFilterByHidden( bool bState ) 
+void CEntityReportPanel::OnFilterByHidden( bool bState )
 {
 	m_bFilterByHidden = bState;
 	UpdateEntityList();
 	MarkDirty( false );
 }
 
-void CEntityReportPanel::OnFilterByKeyvalue( bool bState ) 
+void CEntityReportPanel::OnFilterByKeyvalue( bool bState )
 {
 	m_bFilterByKeyvalue = bState;
 	UpdateEntityList();
@@ -299,7 +299,7 @@ void CEntityReportPanel::OnFilterByType( FilterType_t type )
 	MarkDirty( false );
 }
 
-void CEntityReportPanel::OnFilterByClass( bool bState ) 
+void CEntityReportPanel::OnFilterByClass( bool bState )
 {
 	m_bFilterByClass = bState;
 	UpdateEntityList();
@@ -308,19 +308,19 @@ void CEntityReportPanel::OnFilterByClass( bool bState )
 	m_pFilterClass->SetEnabled( bState );
 }
 
-void CEntityReportPanel::OnChangeFilterkey( const char *pText ) 
+void CEntityReportPanel::OnChangeFilterkey( const char *pText )
 {
 	m_szFilterKey = pText;
 	MarkDirty( true );
 }
 
-void CEntityReportPanel::OnChangeFiltervalue( const char *pText ) 
+void CEntityReportPanel::OnChangeFiltervalue( const char *pText )
 {
 	m_szFilterValue = pText;
 	MarkDirty( true );
 }
 
-void CEntityReportPanel::OnChangeFilterclass( const char *pText ) 
+void CEntityReportPanel::OnChangeFilterclass( const char *pText )
 {
 	m_szFilterClass = pText;
 	MarkDirty( true );
@@ -421,7 +421,7 @@ void CEntityReportPanel::OnRadioButtonChecked( KeyValues *kv )
 //-----------------------------------------------------------------------------
 // Purpose: Centers the 2D and 3D views on the selected entities.
 //-----------------------------------------------------------------------------
-void CEntityReportPanel::OnGoto() 
+void CEntityReportPanel::OnGoto()
 {
 	MarkSelectedEntities();
 	m_pDoc->CenterViewsOnSelection();
@@ -429,9 +429,9 @@ void CEntityReportPanel::OnGoto()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEntityReportPanel::MarkSelectedEntities() 
+void CEntityReportPanel::MarkSelectedEntities()
 {
 	m_pDoc->SelectObject(NULL, CMapDoc::scClear);
 
@@ -448,7 +448,7 @@ void CEntityReportPanel::MarkSelectedEntities()
 
 #endif
 
-void CEntityReportPanel::OnTick( ) 
+void CEntityReportPanel::OnTick( )
 {
 	BaseClass::OnTick();
 
@@ -475,7 +475,7 @@ void CEntityReportPanel::OnTick( )
 }
 
 bool CEntityReportPanel::ShouldAddEntityToList( CDmeVMFEntity *pEntity )
-{	
+{
 	// nope.
 	if ( !m_bFilterByHidden && !pEntity->IsVisible() )
 		return false;
@@ -490,7 +490,7 @@ bool CEntityReportPanel::ShouldAddEntityToList( CDmeVMFEntity *pEntity )
 
 	if ( m_iFilterByType == FILTER_SHOW_BRUSH_ENTITIES && !pEntity->IsPlaceholder() )
 		return false;
-		
+
 	const char* pClassName = pEntity->GetClassName();
 
 	if ( m_bFilterByClass )
@@ -519,13 +519,13 @@ bool CEntityReportPanel::ShouldAddEntityToList( CDmeVMFEntity *pEntity )
 				return true;
 		}
 	}
-	
+
 	return false;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityReportPanel::UpdateEntityList(void)
 {
@@ -555,7 +555,7 @@ void CEntityReportPanel::UpdateEntityList(void)
 			}
 
 			KeyValues *kv = new KeyValues( "node", "targetname", pTargetName );
-			kv->SetString( "classname", pClassName ); 
+			kv->SetString( "classname", pClassName );
 			kv->SetPtr( "entity", pEntity );
 
 			m_pEntities->AddItem( kv, 0, false, false );
@@ -567,7 +567,7 @@ void CEntityReportPanel::UpdateEntityList(void)
 
 #if 0
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityReportPanel::GenerateReport()
 {
@@ -593,7 +593,7 @@ void CEntityReportPanel::GenerateReport()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityReportPanel::OnSelChangeEntityList()
 {
@@ -602,7 +602,7 @@ void CEntityReportPanel::OnSelChangeEntityList()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityReportPanel::OnDblClkEntityList()
 {
@@ -610,7 +610,7 @@ void CEntityReportPanel::OnDblClkEntityList()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityReportPanel::OnOK()
 {
@@ -619,7 +619,7 @@ void CEntityReportPanel::OnOK()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityReportPanel::OnClose()
 {

@@ -27,7 +27,7 @@ bool StrLess( const char * const &pszLeft, const char * const &pszRight )
 //-----------------------------------------------------------------------------
 
 CStringPool::CStringPool()
-  : m_Strings( 32, 256, StrLess )
+	: m_Strings( 32, 256, StrLess )
 {
 }
 
@@ -101,7 +101,7 @@ CCountedStringPool::CCountedStringPool()
 
 	for( int i = 0; i < m_HashTable.Count(); i++ )
 	{
-		m_HashTable[i] = INVALID_ELEMENT;		
+		m_HashTable[i] = INVALID_ELEMENT;
 	}
 
 	m_FreeListStart = INVALID_ELEMENT;
@@ -123,7 +123,7 @@ void CCountedStringPool::FreeAll()
 	// Reset the hash table:
 	for( i = 0; i < m_HashTable.Count(); i++ )
 	{
-		m_HashTable[i] = INVALID_ELEMENT;		
+		m_HashTable[i] = INVALID_ELEMENT;
 	}
 
 	// Blow away the free list:
@@ -168,7 +168,7 @@ unsigned short CCountedStringPool::FindStringHandle( const char* pIntrinsic )
 			}
 		}
 	}
-	
+
 	return 0;
 
 }
@@ -225,8 +225,8 @@ unsigned short CCountedStringPool::ReferenceStringHandle( const char* pIntrinsic
 
 	m_Elements[nCurrentBucket].pString = new char[Q_strlen( pIntrinsic ) + 1];
 	Q_strcpy( m_Elements[nCurrentBucket].pString, pIntrinsic );
-	
-    return nCurrentBucket;
+
+		return nCurrentBucket;
 }
 
 
@@ -235,7 +235,7 @@ char* CCountedStringPool::ReferenceString( const char* pIntrinsic )
 	if(!pIntrinsic)
 		return NULL;
 
-	return m_Elements[ReferenceStringHandle( pIntrinsic)].pString; 
+	return m_Elements[ReferenceStringHandle( pIntrinsic)].pString;
 }
 
 void CCountedStringPool::DereferenceString( const char* pIntrinsic )

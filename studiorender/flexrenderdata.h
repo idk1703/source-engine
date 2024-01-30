@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -126,7 +126,7 @@ public:
 #endif // PLATFORM_WINDOWS
 
 private:
-	// Used to create the flex render data. maps 
+	// Used to create the flex render data. maps
 	struct CacheIndex_t
 	{
 		unsigned short	m_Tag;
@@ -275,7 +275,7 @@ inline void CCachedRenderData::SetBodyModelMesh( int body, int model, int mesh)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //  ** Only execute this function if device supports stream offset **
 //
@@ -283,8 +283,8 @@ inline void CCachedRenderData::SetBodyModelMesh( int body, int model, int mesh)
 //          lod - integer lod (0 is most detailed)
 // Output : none
 //-----------------------------------------------------------------------------
-template< class T > 
-void CCachedRenderData::ComputeFlexedVertex_StreamOffset( studiohdr_t *pStudioHdr, mstudioflex_t *pflex, 
+template< class T >
+void CCachedRenderData::ComputeFlexedVertex_StreamOffset( studiohdr_t *pStudioHdr, mstudioflex_t *pflex,
 	T *pvanim, int vertCount, float w1, float w2, float w3, float w4 )
 {
 	float w12 = w1 - w2;
@@ -330,6 +330,6 @@ void CCachedRenderData::ComputeFlexedVertex_StreamOffset( studiohdr_t *pStudioHd
 		float w = wa + ( wb - wa ) * b;
 		Vector4DWeightMAD( w, vPosition, pFlexedVertex->m_Position, vNormal, pFlexedVertex->m_Normal );
 	}
-}							 
+}
 
 #endif // FLEXRENDERDATA_H

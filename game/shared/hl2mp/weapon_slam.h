@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		SLAM 
+// Purpose:		SLAM
 //
 // $Workfile:     $
 // $Date:         $
@@ -33,7 +33,7 @@ class CWeapon_SLAM : public CBaseHL2MPCombatWeapon
 public:
 	DECLARE_CLASS( CWeapon_SLAM, CBaseHL2MPCombatWeapon );
 
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CNetworkVar( int,	m_tSlamState );
@@ -55,10 +55,10 @@ public:
 	void				WeaponIdle( void );
 	void				Weapon_Switch( void );
 	void				SLAMThink( void );
-	
+
 	void				SetPickupTouch( void );
 	void				SlamTouch( CBaseEntity *pOther );	// default weapon touch
-	void				ItemPostFrame( void );	
+	void				ItemPostFrame( void );
 	bool				Reload( void );
 	void				SetSlamState( int newState );
 	bool				CanAttachSLAM(void);		// In position where can attach SLAM?

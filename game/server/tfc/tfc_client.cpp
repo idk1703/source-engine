@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 
 ===== tf_client.cpp ========================================================
 
-  HL2 client/server game specific stuff
+	HL2 client/server game specific stuff
 
 */
 
@@ -46,7 +46,7 @@ void FinishClientPutInServer( CTFCPlayer *pPlayer )
 
 	char sName[128];
 	Q_strncpy( sName, pPlayer->GetPlayerName(), sizeof( sName ) );
-	
+
 	// First parse the name and remove any %'s
 	for ( char *pApersand = sName; pApersand != NULL && *pApersand != 0; pApersand++ )
 	{

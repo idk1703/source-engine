@@ -48,7 +48,7 @@ PRECACHE_WEAPON_REGISTER(weapon_ar2);
 
 #ifndef CLIENT_DLL
 
-acttable_t	CWeaponAR2::m_acttable[] = 
+acttable_t	CWeaponAR2::m_acttable[] =
 {
 	{ ACT_HL2MP_IDLE,					ACT_HL2MP_IDLE_AR2,					false },
 	{ ACT_HL2MP_RUN,					ACT_HL2MP_RUN_AR2,					false },
@@ -85,7 +85,7 @@ void CWeaponAR2::Precache( void )
 	UTIL_PrecacheOther( "prop_combine_ball" );
 	UTIL_PrecacheOther( "env_entity_dissolver" );
 #endif
-	
+
 }
 
 //-----------------------------------------------------------------------------
@@ -112,7 +112,7 @@ void CWeaponAR2::ItemPostFrame( void )
 			{
 				m_nVentPose = pVM->LookupPoseParameter( "VentPoses" );
 			}
-			
+
 			float flVentPose = RemapValClamped( m_nShotsFired, 0, 5, 0.0f, 1.0f );
 			pVM->SetPoseParameter( m_nVentPose, flVentPose );
 		}
@@ -122,7 +122,7 @@ void CWeaponAR2::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Activity
 //-----------------------------------------------------------------------------
 Activity CWeaponAR2::GetPrimaryAttackActivity( void )
@@ -132,7 +132,7 @@ Activity CWeaponAR2::GetPrimaryAttackActivity( void )
 
 	if ( m_nShotsFired < 3 )
 		return ACT_VM_RECOIL1;
-	
+
 	if ( m_nShotsFired < 4 )
 		return ACT_VM_RECOIL2;
 
@@ -140,9 +140,9 @@ Activity CWeaponAR2::GetPrimaryAttackActivity( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &tr - 
-//			nDamageType - 
+// Purpose:
+// Input  : &tr -
+//			nDamageType -
 //-----------------------------------------------------------------------------
 void CWeaponAR2::DoImpactEffect( trace_t &tr, int nDamageType )
 {
@@ -157,14 +157,14 @@ void CWeaponAR2::DoImpactEffect( trace_t &tr, int nDamageType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponAR2::DelayedAttack( void )
 {
 	m_bShotDelayed = false;
-	
+
 	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-	
+
 	if ( pOwner == NULL )
 		return;
 
@@ -174,7 +174,7 @@ void CWeaponAR2::DelayedAttack( void )
 
 	// Register a muzzleflash for the AI
 	pOwner->DoMuzzleFlash();
-	
+
 	WeaponSound( WPN_DOUBLE );
 
 	// Fire the bullets
@@ -187,9 +187,9 @@ void CWeaponAR2::DelayedAttack( void )
 
 #ifndef CLIENT_DLL
 	// Fire the combine ball
-	CreateCombineBall(	vecSrc, 
-						vecVelocity, 
-						sk_weapon_ar2_alt_fire_radius.GetFloat(), 
+	CreateCombineBall(	vecSrc,
+						vecVelocity,
+						sk_weapon_ar2_alt_fire_radius.GetFloat(),
 						sk_weapon_ar2_alt_fire_mass.GetFloat(),
 						sk_weapon_ar2_alt_fire_duration.GetFloat(),
 						pOwner );
@@ -198,7 +198,7 @@ void CWeaponAR2::DelayedAttack( void )
 	color32 white = {255, 255, 255, 64};
 	UTIL_ScreenFade( pOwner, white, 0.1, 0, FFADE_IN  );
 #endif
-	
+
 	//Disorient the player
 	QAngle angles = pOwner->GetLocalAngles();
 
@@ -207,7 +207,7 @@ void CWeaponAR2::DelayedAttack( void )
 	angles.z = 0;
 
 //	pOwner->SnapEyeAngles( angles );
-	
+
 	pOwner->ViewPunch( QAngle( SharedRandomInt( "ar2pax", -8, -12 ), SharedRandomInt( "ar2pay", 1, 2 ), 0 ) );
 
 	// Decrease ammo
@@ -221,7 +221,7 @@ void CWeaponAR2::DelayedAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponAR2::SecondaryAttack( void )
 {
@@ -277,14 +277,14 @@ bool CWeaponAR2::Reload( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponAR2::AddViewKick( void )
 {
 	#define	EASY_DAMPEN			0.5f
 	#define	MAX_VERTICAL_KICK	8.0f	//Degrees
 	#define	SLIDE_LIMIT			5.0f	//Seconds
-	
+
 	//Get the view kick
 	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
 

@@ -22,7 +22,7 @@ public:
 	int		DrawDebugTextOverlays(void);
 	void	DrawDebugGeometryOverlays(void);
 
-	// Input handlers	
+	// Input handlers
 	void InputSetNextPathCorner( inputdata_t &inputdata );
 	void InputInPass( inputdata_t &inputdata );
 
@@ -61,7 +61,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPathCorner::Spawn( void )
 {
@@ -92,17 +92,17 @@ void CPathCorner::InputInPass( inputdata_t &inputdata )
 // Purpose: Draw any debug text overlays
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CPathCorner::DrawDebugTextOverlays(void) 
+int CPathCorner::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		// --------------
 		// Print Target
 		// --------------
 		char tempstr[255];
-		if (m_target!=NULL_STRING) 
+		if (m_target!=NULL_STRING)
 		{
 			Q_snprintf(tempstr,sizeof(tempstr),"Target: %s",STRING(m_target));
 		}
@@ -120,7 +120,7 @@ int CPathCorner::DrawDebugTextOverlays(void)
 //-----------------------------------------------------------------------------
 // Purpose: Override base class to add display of paths
 //-----------------------------------------------------------------------------
-void CPathCorner::DrawDebugGeometryOverlays(void) 
+void CPathCorner::DrawDebugGeometryOverlays(void)
 {
 	// ----------------------------------------------
 	// Draw line to next target is bbox is selected

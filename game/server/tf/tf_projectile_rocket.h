@@ -25,7 +25,7 @@ public:
 	DECLARE_NETWORKCLASS();
 
 	// Creation.
-	static CTFProjectile_Rocket *Create( CBaseEntity *pLauncher, const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL );	
+	static CTFProjectile_Rocket *Create( CBaseEntity *pLauncher, const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL );
 	virtual void Spawn();
 	virtual void Precache();
 	virtual void RocketTouch( CBaseEntity *pOther ) OVERRIDE;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 #include "toolutils/attributeelementchoicelist.h"
 #include "datamodel/dmelement.h"
 
-	
+
 typedef CUtlRBTree< CDmElement *, int > ElementDict_t;
 
 

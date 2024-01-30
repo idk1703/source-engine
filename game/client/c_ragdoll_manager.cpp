@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -32,7 +32,7 @@ IMPLEMENT_CLIENTCLASS_DT_NOBASE( C_RagdollManager, DT_RagdollManager, CRagdollMa
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Constructor 
+// Constructor
 //-----------------------------------------------------------------------------
 C_RagdollManager::C_RagdollManager()
 {
@@ -40,8 +40,8 @@ C_RagdollManager::C_RagdollManager()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_RagdollManager::OnDataChanged( DataUpdateType_t updateType )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -43,7 +43,7 @@ public:
 
 // Internal.
 private:
-	
+
 	void SnapshotTextureHistory();
 	void SendConfigDataToBase();
 	CounterGroup_t GetCurrentCounterGroup() const;
@@ -51,7 +51,7 @@ private:
 
 private:
 
-	vgui::Label *m_pModeLabel;	
+	vgui::Label *m_pModeLabel;
 	int m_LastCounterGroup;
 	int m_MaxValue;
 	int m_SumOfValues;

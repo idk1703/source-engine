@@ -161,7 +161,7 @@ void CAI_ScriptConditions::OnRestore( void )
 		conditionactor.SetActor( m_hActor );
 		conditionactor.SetTimeOut( m_Timeout );
 		conditionactor.SetTimer( m_Timer );
- 
+
 		m_ElementList.AddToTail( conditionactor );
 
 		m_hActor = NULL;
@@ -185,7 +185,7 @@ bool CAI_ScriptConditions::EvalState( const EvalArgs_t &args )
 
 	// !!!LATER - fix this code, we shouldn't need the table anymore
 	// now that we've placed the NPC state defs in a logical order (sjb)
-	static int stateVals[] = 
+	static int stateVals[] =
 	{
 		-1, // NPC_STATE_NONE
 			0, // NPC_STATE_IDLE
@@ -297,7 +297,7 @@ bool CAI_ScriptConditions::EvalPlayerActorProximity( const EvalArgs_t &args )
 
 bool CAI_ScriptConditions::EvalPlayerTargetProximity( const EvalArgs_t &args )
 {
-	return ( !args.pTarget || 
+	return ( !args.pTarget ||
 		m_PlayerTargetProxTester.Check( args.pPlayer, args.pTarget ) );
 }
 
@@ -314,7 +314,7 @@ bool CAI_ScriptConditions::EvalActorTargetProximity( const EvalArgs_t &args )
 
 bool CAI_ScriptConditions::EvalPlayerActorLook( const EvalArgs_t &args )
 {
-	return ( !args.pActor || 
+	return ( !args.pActor ||
 		IsInFOV( args.pPlayer, args.pActor, m_flPlayerActorFOV, m_bPlayerActorFOVTrueCone ) );
 }
 

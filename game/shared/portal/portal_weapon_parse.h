@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,9 +20,9 @@ class CPortalSWeaponInfo : public FileWeaponInfo_t
 {
 public:
 	DECLARE_CLASS_GAMEROOT( CPortalSWeaponInfo, FileWeaponInfo_t );
-	
+
 	CPortalSWeaponInfo();
-	
+
 	virtual void Parse( ::KeyValues *pKeyValuesData, const char *szWeaponName );
 
 

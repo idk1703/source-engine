@@ -30,7 +30,7 @@ CTFPathFollower::~CTFPathFollower()
 	// allow bots to detach pointer to me
 	CUtlVector< INextBot * > botVector;
 	TheNextBots().CollectAllBots( &botVector );
-	
+
 	for( int i=0; i<botVector.Count(); ++i )
 	{
 		botVector[i]->NotifyPathDestruction( this );
@@ -155,4 +155,3 @@ void CTFPathFollower::Update( INextBot *bot )
 		NDebugOverlay::Line( bot->GetEntity()->WorldSpaceCenter(), moveToPos, 255, 255, 0, true, 0.1f );
 	}
 }
-

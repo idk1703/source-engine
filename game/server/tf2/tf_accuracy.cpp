@@ -140,7 +140,7 @@ void CBaseTFPlayer::Supress( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Vector CBaseTFPlayer::GenerateFireVector( Vector *viewVector )
 {
@@ -161,7 +161,7 @@ Vector CBaseTFPlayer::GenerateFireVector( Vector *viewVector )
 		angShootAngles.x = UTIL_AngleMod( angShootAngles.x + (x * flAccuracyAngle) );
 		angShootAngles.y = UTIL_AngleMod( angShootAngles.y + (y * flAccuracyAngle) );
 	}
-	
+
 	Vector forward;
 	AngleVectors( angShootAngles, &forward );
 	return forward;

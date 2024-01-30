@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -67,7 +67,7 @@ void CCSBot::OnPlayerDeath( IGameEvent *event )
 				// allow us to sneak past windows, doors, etc
 				IgnoreEnemies( 1.0f );
 
-				// move to last known position of enemy - this could cause us to flank if 
+				// move to last known position of enemy - this could cause us to flank if
 				// the danger has changed due to our teammate's recent death
 				SetTask( MOVE_TO_LAST_KNOWN_ENEMY_POSITION, GetBotEnemy() );
 				MoveTo( GetLastKnownEnemyPosition() );
@@ -140,7 +140,7 @@ void CCSBot::OnPlayerDeath( IGameEvent *event )
 
 				Vector victimOrigin = (victim) ? GetCentroid( victim ) : Vector( 0, 0, 0 );
 				if (IsVisible( victimOrigin, CHECK_FOV ))
-				{						
+				{
 					// congratulate teammates on their kills
 					if (killer && killer != this)
 					{
@@ -223,5 +223,3 @@ void CCSBot::OnPlayerFootstep( IGameEvent *event )
 
 	OnAudibleEvent( event, player, 1100.0f, PRIORITY_LOW, false, IS_FOOTSTEP ); // player_footstep
 }
-
-

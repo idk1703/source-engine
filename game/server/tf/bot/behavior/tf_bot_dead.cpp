@@ -55,4 +55,3 @@ ActionResult< CTFBot >	CTFBotDead::Update( CTFBot *me, float interval )
 
 	return Continue();
 }
-

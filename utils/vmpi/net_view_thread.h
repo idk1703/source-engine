@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,14 +24,14 @@ public:
 	// machines out on the network.
 	void Init();
 	void Term();
-	
+
 	void GetComputerNames( CUtlVector<char*> &computerNames );
 
 private:
 
 	void UpdateServicesFromNetView();
 	void ParseComputerNames( const char *pNetViewOutput );
-	
+
 	DWORD ThreadFn();
 	static DWORD WINAPI StaticThreadFn( LPVOID lpParameter );
 

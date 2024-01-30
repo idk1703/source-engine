@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -69,7 +69,7 @@ void C_TFGlow::CreateGlow()
 	cvec[1] = c.g * (1.0f/255.0f);
 	cvec[2] = c.b * (1.0f/255.0f);
 	float a = c.a * (1.0f/255.0f);
-	
+
 	int iMode = m_iMode.Get();
 	bool bDrawWhenOccluded = ( iMode == 0 ) || ( iMode == 1 );
 	bool bDrawWhenVisible = ( iMode == 0 ) || ( iMode == 2 );
@@ -82,7 +82,7 @@ void C_TFGlow::CreateGlow()
 void C_TFGlow::PostDataUpdate( DataUpdateType_t updateType )
 {
 	BaseClass::PostDataUpdate( updateType );
-	
+
 	// this could avoid recreating the glow object on every update, but it
 	// wouldn't be noticeably more efficient and it would add a ton of code here.
 	CreateGlow();

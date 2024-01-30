@@ -1,7 +1,7 @@
 
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -33,7 +33,7 @@ public:
 	CWeapon357( void );
 
 	void	PrimaryAttack( void );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 #ifndef CLIENT_DLL
@@ -41,7 +41,7 @@ public:
 #endif
 
 private:
-	
+
 	CWeapon357( const CWeapon357 & );
 };
 
@@ -58,7 +58,7 @@ PRECACHE_WEAPON_REGISTER( weapon_357 );
 
 
 #ifndef CLIENT_DLL
-acttable_t CWeapon357::m_acttable[] = 
+acttable_t CWeapon357::m_acttable[] =
 {
 	{ ACT_HL2MP_IDLE,					ACT_HL2MP_IDLE_PISTOL,					false },
 	{ ACT_HL2MP_RUN,					ACT_HL2MP_RUN_PISTOL,					false },
@@ -125,7 +125,7 @@ void CWeapon357::PrimaryAttack( void )
 	m_iClip1--;
 
 	Vector vecSrc		= pPlayer->Weapon_ShootPosition();
-	Vector vecAiming	= pPlayer->GetAutoaimVector( AUTOAIM_5DEGREES );	
+	Vector vecAiming	= pPlayer->GetAutoaimVector( AUTOAIM_5DEGREES );
 
 	FireBulletsInfo_t info( 1, vecSrc, vecAiming, vec3_origin, MAX_TRACE_LENGTH, m_iPrimaryAmmoType );
 	info.m_pAttacker = pPlayer;
@@ -149,6 +149,6 @@ void CWeapon357::PrimaryAttack( void )
 	if ( !m_iClip1 && pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) <= 0 )
 	{
 		// HEV suit - indicate out of ammo condition
-		pPlayer->SetSuitUpdate( "!HEV_AMO0", FALSE, 0 ); 
+		pPlayer->SetSuitUpdate( "!HEV_AMO0", FALSE, 0 );
 	}
 }

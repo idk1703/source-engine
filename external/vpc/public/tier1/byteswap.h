@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2006, Valve LLC, All rights reserved. ============
+//========= Copyright ï¿½ 1996-2006, Valve LLC, All rights reserved. ============
 //
 // Purpose: Low level byte swapping routines.
 //
@@ -16,7 +16,7 @@
 class CByteswap
 {
 public:
-	CByteswap() 
+	CByteswap()
 	{
 		// Default behavior sets the target endian to match the machine native endian (no swap).
 		SetTargetBigEndian( IsMachineBigEndian() );
@@ -28,7 +28,7 @@ public:
 	void SwapFieldToTargetEndian( void* pOutputBuffer, void *pData, typedescription_t *pField );
 
 	//-----------------------------------------------------------------------------
-	// Write a block of fields.  Works a bit like the saverestore code.  
+	// Write a block of fields.  Works a bit like the saverestore code.
 	//-----------------------------------------------------------------------------
 	void SwapFieldsToTargetEndian( void *pOutputBuffer, void *pBaseData, datamap_t *pDataMap );
 
@@ -49,7 +49,7 @@ public:
 	}
 
 	//-----------------------------------------------------------------------------
-	// True if the current machine is detected as big endian. 
+	// True if the current machine is detected as big endian.
 	// (Endienness is effectively detected at compile time when optimizations are
 	// enabled)
 	//-----------------------------------------------------------------------------
@@ -75,14 +75,14 @@ public:
 	}
 
 	// Changes target endian
-	inline void FlipTargetEndian( void )	
+	inline void FlipTargetEndian( void )
 	{
 		m_bSwapBytes = !m_bSwapBytes;
 		m_bBigEndian = !m_bBigEndian;
 	}
 
 	// Forces byte swapping state, regardless of endianess
-	inline void ActivateByteSwapping( bool bActivate )	
+	inline void ActivateByteSwapping( bool bActivate )
 	{
 		SetTargetBigEndian( IsMachineBigEndian() != bActivate );
 	}
@@ -114,7 +114,7 @@ public:
 	//		0  if input is byteswapped relative to nativeConstant.
 	//		-1 if input is not the same as nativeConstant and not byteswapped either.
 	//
-	// ( This is useful for detecting byteswapping in magic numbers in structure 
+	// ( This is useful for detecting byteswapping in magic numbers in structure
 	// headers for example. )
 	//-----------------------------------------------------------------------------
 	template<typename T> inline int SourceIsNativeEndian( T input, T nativeConstant )
@@ -189,7 +189,7 @@ public:
 			// If we were just going to swap in place then return.
 			if( !inputBuffer )
 				return;
-		
+
 			// Otherwise copy the inputBuffer to the outputBuffer:
 			if ( outputBuffer != inputBuffer )
 				memcpy( outputBuffer, inputBuffer, count * sizeof( T ) );
@@ -206,7 +206,7 @@ public:
 
 private:
 	//-----------------------------------------------------------------------------
-	// The lowest level byte swapping workhorse of doom.  output always contains the 
+	// The lowest level byte swapping workhorse of doom.  output always contains the
 	// swapped version of input.  ( Doesn't compare machine to target endianness )
 	//-----------------------------------------------------------------------------
 	template<typename T> static void LowLevelByteSwap( T *output, T *input )
@@ -242,7 +242,7 @@ private:
 #else
 		for( unsigned int i = 0; i < sizeof(T); i++ )
 		{
-			((unsigned char* )&temp)[i] = ((unsigned char*)input)[sizeof(T)-(i+1)]; 
+			((unsigned char* )&temp)[i] = ((unsigned char*)input)[sizeof(T)-(i+1)];
 		}
 #endif
 		V_memcpy( output, &temp, sizeof(T) );
@@ -251,12 +251,12 @@ private:
 #if defined( _X360 )
 	// specialized for void * to get 360 XDK compile working despite changelist 281331
 	//-----------------------------------------------------------------------------
-	// The lowest level byte swapping workhorse of doom.  output always contains the 
+	// The lowest level byte swapping workhorse of doom.  output always contains the
 	// swapped version of input.  ( Doesn't compare machine to target endianness )
 	//-----------------------------------------------------------------------------
 	template<> static void LowLevelByteSwap( void **output, void **input )
 	{
-		AssertMsgOnce( sizeof(void *) == sizeof(unsigned int) , "void *'s on this platform are not four bytes!" );	
+		AssertMsgOnce( sizeof(void *) == sizeof(unsigned int) , "void *'s on this platform are not four bytes!" );
 		__storewordbytereverse( *reinterpret_cast<unsigned int *>(input), 0, output );
 	}
 #endif

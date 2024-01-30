@@ -170,7 +170,7 @@ CTFNavArea *CTFNavArea::GetNextIncursionArea( int team ) const
 void CTFNavArea::CollectPriorIncursionAreas( int team, CUtlVector< CTFNavArea * > *priorVector )
 {
 	float myIncursionDistance = GetIncursionDistance( team );
-	
+
 	priorVector->RemoveAll();
 
 	for( int dir=0; dir<NUM_DIRECTIONS; ++dir )
@@ -228,7 +228,7 @@ bool CTFNavArea::IsAwayFromInvasionAreas( int myTeam, float safetyRange ) const
 		{
 			// too close to incoming enemy route to snipe
 			return false;
-		}			
+		}
 	}
 
 	return true;
@@ -254,7 +254,7 @@ public:
 	unsigned int m_marker;
 };
 
-		
+
 //-----------------------------------------------------------------------------
 class CollectInvasionAreas
 {
@@ -325,7 +325,7 @@ public:
 
 			FOR_EACH_VEC( (*list), it )
 			{
-				NavConnect connect = (*list)[ it ];				
+				NavConnect connect = (*list)[ it ];
 
 				FilterArea( area, static_cast< CTFNavArea * >( connect.area ) );
 			}
@@ -466,7 +466,7 @@ bool CTFNavArea::IsValidForWanderingPopulation( void ) const
 {
 	if ( HasAttributeTF( TF_NAV_BLOCKED | TF_NAV_SPAWN_ROOM_RED | TF_NAV_SPAWN_ROOM_BLUE | TF_NAV_NO_SPAWNING | TF_NAV_RESCUE_CLOSET ) )
 		return false;
-		
+
 	return true;
 }
 
@@ -533,5 +533,3 @@ bool CTFNavArea::IsInCombat( void ) const
 {
 	return GetCombatIntensity() > 0.01f;
 }
-
-

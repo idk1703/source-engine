@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -18,16 +18,16 @@ public:
 	DECLARE_CLASS( CItemNvgs, CItem );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		BaseClass::Spawn( );
 	}
-	
+
 	void Precache( void )
 	{
 		PrecacheScriptSound( "BaseCombatCharacter.ItemPickup2" );
 	}
-	
+
 	bool MyTouch( CBasePlayer *pBasePlayer )
 	{
 		CCSPlayer *pPlayer = dynamic_cast< CCSPlayer* >( pBasePlayer );
@@ -55,5 +55,3 @@ public:
 };
 
 LINK_ENTITY_TO_CLASS( item_nvgs, CItemNvgs );
-
-

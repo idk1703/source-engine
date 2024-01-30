@@ -66,7 +66,7 @@ enum
 };
 
 //------------------------------------------------------------------------------
-CTFBotGenerator::CTFBotGenerator( void ) 
+CTFBotGenerator::CTFBotGenerator( void )
 	: m_bBotChoosesClass(false)
 	, m_bSuppressFire(false)
 	, m_bDisableDodge(false)
@@ -294,8 +294,8 @@ void CTFBotGenerator::SpawnBot( void )
 		bot = NextBotCreatePlayerBot< CTFBot >( name );
 	}
 
-	if ( bot ) 
-	{										   
+	if ( bot )
+	{
 		m_spawnedBotVector.AddToTail( bot );
 
 #ifdef TF_RAID_MODE
@@ -309,7 +309,7 @@ void CTFBotGenerator::SpawnBot( void )
 
 		if ( m_bUseTeamSpawnpoint == false )
 		{
-			bot->SetSpawnPoint( this );		
+			bot->SetSpawnPoint( this );
 		}
 
 		if ( m_bSuppressFire )
@@ -376,7 +376,7 @@ void CTFBotGenerator::SpawnBot( void )
 			iTeam = bot->GetAutoTeam();
 		}
 		bot->ChangeTeam( iTeam, false, false );
-		
+
 		const char* pClassName =  m_bBotChoosesClass ? bot->GetNextSpawnClassname() : m_className.ToCStr();
 		bot->HandleCommand_JoinClass( pClassName );
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -53,7 +53,7 @@ public:
 		m_pPresetValue( 0 ),
 		m_RecordingMode( RECORD_PRESET )
 	{
-		m_nTimes[ TS_LEFT_FALLOFF ] = m_nTimes[ TS_LEFT_HOLD ] = 
+		m_nTimes[ TS_LEFT_FALLOFF ] = m_nTimes[ TS_LEFT_HOLD ] =
 			m_nTimes[ TS_RIGHT_HOLD ] = m_nTimes[ TS_RIGHT_FALLOFF ] = DmeTime_t( 0 );
 		m_nFalloffInterpolatorTypes[ 0 ] = m_nFalloffInterpolatorTypes[ 1 ] = INTERPOLATE_LINEAR_INTERP;
 	}
@@ -101,7 +101,7 @@ public:
 
 	// Adds new, evenly spaced samples based on m_nResampleInterval
 	// Also adds zero intensity samples at the falloff edges
-	bool			m_bResampleMode : 1; 
+	bool			m_bResampleMode : 1;
 
 private:
 	bool			m_bTimeAdvancing : 1; // Has time ever been advancing
@@ -132,7 +132,7 @@ struct LayerSelectionData_t
 	struct DataLayer_t
 	{
 		DataLayer_t( float frac, CDmeLogLayer *layer );
-		
+
 		float m_flStartFraction;
 		CDmeHandle< CDmeLogLayer, true >		m_hData;
 	};
@@ -163,7 +163,7 @@ public:
 	// NOTE: Insertion or removal may change this index!
 	// Returns -1 if the time isn't within tolerance.
 	int FindKeyWithinTolerance( DmeTime_t time, DmeTime_t nTolerance );
-	
+
 	// Returns the type of attribute being logged
 	virtual DmAttributeType_t GetDataType() const = 0;
 
@@ -300,7 +300,7 @@ public:
 	// NOTE: Insertion or removal may change this index!
 	// Returns -1 if the time isn't within tolerance.
 	virtual int FindKeyWithinTolerance( DmeTime_t time, DmeTime_t nTolerance ) = 0;
-	
+
 	// Returns the type of attribute being logged
 	virtual DmAttributeType_t GetDataType() const = 0;
 
@@ -548,7 +548,7 @@ public:
 	void		BlendLayersUsingTimeSelection( const DmeLog_TimeSelection_t &params );
 	void		BlendLayersUsingTimeSelection( const CDmeLogLayer *firstLayer, const CDmeLogLayer *secondLayer, CDmeLogLayer *outputLayer, const DmeLog_TimeSelection_t &params, bool bUseBaseLayerSamples, DmeTime_t tStartOffset );
 	void		BlendTimesUsingTimeSelection( const CDmeLogLayer *firstLayer, const CDmeLogLayer *secondLayer, CDmeLogLayer *outputLayer, const DmeLog_TimeSelection_t &params, DmeTime_t tStartOffset );
-	
+
 	virtual void		PasteAndRescaleSamples( const CDmeLogLayer *src, const DmeLog_TimeSelection_t& srcParams, const DmeLog_TimeSelection_t& destParams, bool bBlendAreaInFalloffRegion );
 	virtual void		PasteAndRescaleSamples( const CDmeLogLayer *pBaseLayer, const CDmeLogLayer *pDataLayer, CDmeLogLayer *pOutputLayer, const DmeLog_TimeSelection_t& srcParams, const DmeLog_TimeSelection_t& destParams, bool bBlendAreaInFalloffRegion );
 	virtual void		BuildCorrespondingLayer( const CDmeLogLayer *pReferenceLayer, const CDmeLogLayer *pDataLayer, CDmeLogLayer *pOutputLayer );
@@ -639,7 +639,7 @@ public:
 
 protected:
 	void RemoveKeys( DmeTime_t starttime );
-	
+
 	void		_StampKeyAtHeadResample( DmeTime_t tHeadPosition, const DmeLog_TimeSelection_t & params, const T& value, bool bSkipToHead, bool bClearPreviousKeys );
 	void		_StampKeyAtHeadFilteredByTimeSelection( DmeTime_t tHeadPosition, DmeTime_t tPreviousHeadPosition, const DmeLog_TimeSelection_t & params, const T& value );
 	void		_StampKeyFilteredByTimeSelection( CDmeTypedLogLayer< T > *pWriteLayer, DmeTime_t t, const DmeLog_TimeSelection_t &params, const T& value, bool bForce = false );
@@ -658,7 +658,7 @@ protected:
 // Template methods
 //-----------------------------------------------------------------------------
 template< class T >
-DmAttributeType_t CDmeTypedLogLayer<T>::GetDataType() const 
+DmAttributeType_t CDmeTypedLogLayer<T>::GetDataType() const
 {
 	return CDmAttributeInfo< T >::AttributeType();
 }
@@ -681,25 +681,25 @@ bool CDmeTypedLogLayer<T>::IsConstantValued() const
 // Template methods
 //-----------------------------------------------------------------------------
 template< class T >
-DmAttributeType_t CDmeTypedLog<T>::GetDataType() const 
+DmAttributeType_t CDmeTypedLog<T>::GetDataType() const
 {
 	return CDmAttributeInfo< T >::AttributeType();
 }
 
 template< class T >
-void CDmeTypedLog<T>::SetDefaultValueThreshold( float thresh ) 
+void CDmeTypedLog<T>::SetDefaultValueThreshold( float thresh )
 {
 	s_defaultThreshold = thresh;
 }
 
 template< class T >
-float CDmeTypedLog<T>::GetDefaultValueThreshold() 
+float CDmeTypedLog<T>::GetDefaultValueThreshold()
 {
 	return s_defaultThreshold;
 }
 
 template< class T >
-void CDmeTypedLog<T>::SetValueThreshold( float thresh ) 
+void CDmeTypedLog<T>::SetValueThreshold( float thresh )
 {
 	m_threshold = thresh;
 }

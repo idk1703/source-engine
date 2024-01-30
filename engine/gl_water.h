@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -13,4 +13,3 @@
 extern void			R_DrawSkyBox (float zFar, int nDrawFlags = 0x3F );
 
 #endif		// GL_WATER_H
-

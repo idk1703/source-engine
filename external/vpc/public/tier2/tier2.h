@@ -41,13 +41,13 @@ void InitCommandLineProgram( int &argc, char ** &argv );
 //-----------------------------------------------------------------------------
 // Helper empty implementation of an IAppSystem for tier2 libraries
 //-----------------------------------------------------------------------------
-template< class IInterface, int ConVarFlag = 0 > 
+template< class IInterface, int ConVarFlag = 0 >
 class CTier2AppSystem : public CTier1AppSystem< IInterface, ConVarFlag >
 {
 	typedef CTier1AppSystem< IInterface, ConVarFlag > BaseClass;
 
 public:
-	virtual bool Connect( CreateInterfaceFn factory ) 
+	virtual bool Connect( CreateInterfaceFn factory )
 	{
 		if ( !BaseClass::Connect( factory ) )
 			return false;
@@ -75,7 +75,7 @@ public:
 		BaseClass::Shutdown();
 	}
 
-	virtual void Disconnect() 
+	virtual void Disconnect()
 	{
 		DisconnectTier2Libraries();
 		BaseClass::Disconnect();
@@ -119,4 +119,3 @@ extern uint32 g_nResourceFrameCount;
 
 
 #endif // TIER2_H
-

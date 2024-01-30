@@ -315,7 +315,7 @@ static void OverlayColorRamp( bool bHalfSpace )
 	float			x, y, w, h;
 
 	pMaterial = materials->FindMaterial( "vgui/white", TEXTURE_GROUP_OTHER, true );
-	
+
 	int backBufferWidth, backBufferHeight;
 	materials->GetBackBufferDimensions( backBufferWidth, backBufferHeight );
 
@@ -323,14 +323,14 @@ static void OverlayColorRamp( bool bHalfSpace )
 	h = 80;
 	x = ( backBufferWidth - w )/2;
 	y = ( backBufferHeight - 4*h )/2;
-	
+
 	int numBands = 32;
 	int color0 = 0;
 	int color1 = bHalfSpace ? 127 : 255;
 	int colorStep = (color1 - color0 + 1)/numBands;
 
 	CMatRenderContextPtr pRenderContext( materials );
-	
+
 	pRenderContext->Bind( pMaterial );
 	IMesh* pMesh = pRenderContext->GetDynamicMesh( true );
 
@@ -576,7 +576,7 @@ void CDebugViewRender::Draw2DDebuggingInfo( const CViewSetup &viewDebug )
 	const char *pDrawMaterial = cl_drawmaterial.GetString();
 	if ( pDrawMaterial && pDrawMaterial[0] )
 	{
-		RenderMaterial( pDrawMaterial ); 
+		RenderMaterial( pDrawMaterial );
 	}
 
 	if ( mat_showwatertextures.GetBool() )
@@ -607,7 +607,7 @@ void CDebugViewRender::Draw2DDebuggingInfo( const CViewSetup &viewDebug )
 
 	const char *pDrawTexture = mat_drawTexture.GetString();
 	if ( pDrawTexture && pDrawTexture[0] )
-	{		
+	{
 		OverlayShowTexture( pDrawTexture, mat_drawTextureScale.GetFloat() );
 	}
 
@@ -671,5 +671,3 @@ void CDebugViewRender::GenerateOverdrawForTesting()
 	}
 	g_SmokeFogOverlayAlpha = 0;
 }
-
-

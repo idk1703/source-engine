@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -218,7 +218,7 @@ void CPhysicsInterface::DestroyAllCollisionSets()
 	m_pCollisionSetHash = NULL;
 }
 
-	
+
 
 // In release build, each of these libraries must contain a symbol that indicates it is also a release build
 // You MUST disable this in order to run a release vphysics.dll with a debug library.
@@ -239,4 +239,3 @@ void DebugTestFunction()
 	havana_constraints_lib_is_a_release_build = 0;
 }
 #endif
-

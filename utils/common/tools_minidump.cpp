@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ static LONG __stdcall ToolsExceptionFilter( struct _EXCEPTION_POINTERS *Exceptio
 	int iType = MiniDumpNormal;
 	if ( g_bToolsWriteFullMinidumps )
 		iType = MiniDumpWithDataSegs | MiniDumpWithIndirectlyReferencedMemory;
-		
+
 	WriteMiniDumpUsingExceptionInfo( ExceptionInfo->ExceptionRecord->ExceptionCode, ExceptionInfo, (MINIDUMP_TYPE)iType );
 	return EXCEPTION_CONTINUE_SEARCH;
 }

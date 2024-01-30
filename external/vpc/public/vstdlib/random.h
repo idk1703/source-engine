@@ -106,6 +106,3 @@ VSTDLIB_INTERFACE void	InstallUniformRandomStream( IUniformRandomStream *pStream
 #pragma warning(pop)
 
 #endif // VSTDLIB_RANDOM_H
-
-
-

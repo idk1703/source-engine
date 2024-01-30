@@ -110,7 +110,7 @@ int	CFunc_LiquidPortal::Save( ISave &save )
 		save.WriteEHandle( m_hLeftToTeleportThisFill.Base(), iLeftToTeleportThisFillCount );
 
 	save.EndBlock();
-	
+
 	return 1;
 }
 
@@ -143,12 +143,12 @@ int	CFunc_LiquidPortal::Restore( IRestore &restore )
 	if( iLeftToTeleportThisFillCount != 0 )
 	{
 		m_hLeftToTeleportThisFill.SetCount( iLeftToTeleportThisFillCount );
-		restore.ReadEHandle( m_hLeftToTeleportThisFill.Base(), iLeftToTeleportThisFillCount );		
+		restore.ReadEHandle( m_hLeftToTeleportThisFill.Base(), iLeftToTeleportThisFillCount );
 	}
 
 	restore.EndBlock();
 
-	return 1;	
+	return 1;
 }
 
 
@@ -192,7 +192,7 @@ void CFunc_LiquidPortal::InputAddActivatorToTeleportList( inputdata_t &inputdata
 	m_hTeleportList.AddToTail( inputdata.pActivator );
 	if( m_bFillInProgress )
 		m_hLeftToTeleportThisFill.AddToTail( inputdata.pActivator );
-	
+
 	if( inputdata.pActivator->IsPlayer() )
 		((CPortal_Player *)inputdata.pActivator)->m_hSurroundingLiquidPortal = this;
 }
@@ -210,7 +210,7 @@ void CFunc_LiquidPortal::InputRemoveActivatorFromTeleportList( inputdata_t &inpu
 
 			if( inputdata.pActivator->IsPlayer() && (((CPortal_Player *)inputdata.pActivator)->m_hSurroundingLiquidPortal.Get() == this) )
 				((CPortal_Player *)inputdata.pActivator)->m_hSurroundingLiquidPortal = NULL;
-			
+
 			if( m_bFillInProgress )
 			{
 				//remove from the list for this fill as well
@@ -257,7 +257,7 @@ void CFunc_LiquidPortal::ComputeLinkMatrix( void )
 
 		matLocalToWorld = EntityToWorldTransform();
 		matRemoteToWorld = pLinkedPortal->EntityToWorldTransform();
-		
+
 		MatrixInverseTR( matLocalToWorld, matLocalToWorldInv );
 		m_matrixThisToLinked = matRemoteToWorld * matLocalToWorldInv;
 
@@ -336,9 +336,5 @@ void CFunc_LiquidPortal::Think( void )
 			m_hLeftToTeleportThisFill.RemoveAll();
 			m_bFillInProgress = false;
 		}
-	}		
+	}
 }
-
-
-
-

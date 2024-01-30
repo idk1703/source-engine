@@ -208,7 +208,7 @@ class ALIGN16 CStdMemAlloc : public IMemAlloc
 {
 public:
 	CStdMemAlloc()
-	  :	m_pfnFailHandler( DefaultFailHandler ),
+	:	m_pfnFailHandler( DefaultFailHandler ),
 		m_sMemoryAllocFailed( (size_t)0 )
 	{
 		// Make sure that we return 64-bit addresses in 64-bit builds.
@@ -218,20 +218,20 @@ public:
 	virtual void *Alloc( size_t nSize );
 	virtual void *Realloc( void *pMem, size_t nSize );
 	virtual void  Free( void *pMem );
-    virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize );
+	virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize );
 
 	// Debug versions
-    virtual void *Alloc( size_t nSize, const char *pFileName, int nLine );
-    virtual void *Realloc( void *pMem, size_t nSize, const char *pFileName, int nLine );
-    virtual void  Free( void *pMem, const char *pFileName, int nLine );
-    virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize, const char *pFileName, int nLine );
+	virtual void *Alloc( size_t nSize, const char *pFileName, int nLine );
+	virtual void *Realloc( void *pMem, size_t nSize, const char *pFileName, int nLine );
+	virtual void  Free( void *pMem, const char *pFileName, int nLine );
+	virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize, const char *pFileName, int nLine );
 
 	// Returns size of a particular allocation
 	virtual size_t GetSize( void *pMem );
 
-    // Force file + line information for an allocation
-    virtual void PushAllocDbgInfo( const char *pFileName, int nLine );
-    virtual void PopAllocDbgInfo();
+	// Force file + line information for an allocation
+	virtual void PushAllocDbgInfo( const char *pFileName, int nLine );
+	virtual void PopAllocDbgInfo();
 
 	virtual long CrtSetBreakAlloc( long lNewBreakAlloc );
 	virtual	int CrtSetReportMode( int nReportType, int nReportMode );
@@ -265,7 +265,7 @@ public:
 
 	virtual uint32 GetDebugInfoSize() { return 0; }
 	virtual void SaveDebugInfo( void *pvDebugInfo ) { }
-	virtual void RestoreDebugInfo( const void *pvDebugInfo ) {}	
+	virtual void RestoreDebugInfo( const void *pvDebugInfo ) {}
 	virtual void InitDebugInfo( void *pvDebugInfo, const char *pchRootFileName, int nLine ) {}
 
 	static size_t DefaultFailHandler( size_t );
@@ -288,5 +288,3 @@ public:
 	MemAllocFailHandler_t m_pfnFailHandler;
 	size_t				m_sMemoryAllocFailed;
 } ALIGN16_POST;
-
-

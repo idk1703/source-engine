@@ -101,7 +101,7 @@ public:
 		memset( &m_args, 0, sizeof(m_args) );
 		ClearGoal();
 	}
-	
+
 	virtual void OnRestore();
 
 	virtual const char *GetName() {	return "Lead"; }
@@ -144,7 +144,7 @@ public:
 		SCHED_LEAD_SPEAK_THEN_RETRIEVE_PLAYER,
 		SCHED_LEAD_SPEAK_THEN_LEAD_PLAYER,
 		NEXT_SCHEDULE,
-		
+
 		// Tasks
 		TASK_GET_PATH_TO_LEAD_GOAL = BaseClass::NEXT_TASK,
 		TASK_STOP_LEADING,
@@ -159,7 +159,7 @@ public:
 		TASK_LEAD_RETRIEVE_WAIT,
 		TASK_LEAD_WALK_PATH,
 		NEXT_TASK,
-		
+
 		// Conditions
 		COND_LEAD_FOLLOWER_LOST = BaseClass::NEXT_CONDITION,
 		COND_LEAD_FOLLOWER_LAGGING,
@@ -172,7 +172,7 @@ public:
 		NEXT_CONDITION
 
 	};
-	
+
 private:
 
 	void GatherConditions();
@@ -195,15 +195,15 @@ private:
 	//
 	void NotifyEvent( int event )								{ if ( m_pSink ) m_pSink->OnEvent( event ) ; }
 	const char * GetConceptModifiers( const char *pszConcept )	{ return ( m_pSink ) ? m_pSink->GetConceptModifiers( pszConcept ) : NULL; }
-	
+
 	// --------------------------------
 
 	AI_LeadArgs_t			m_args;
 	CAI_LeadBehaviorHandler *m_pSink;
 	EHANDLE					m_hSinkImplementor;
-	
+
 	// --------------------------------
-	
+
 	Vector		m_goal;
 	float		m_goalyaw;
 	Vector		m_waitpoint;
@@ -222,7 +222,7 @@ private:
 	float		m_flNextLeadIdle;
 	bool		m_bInitialAheadTest;
 	CAI_MoveMonitor m_MoveMonitor;
-	
+
 	CRandStopwatch	m_LostTimer;
 	CRandStopwatch  m_LostLOSTimer;
 

@@ -31,7 +31,7 @@
 ConVar tf_explanations_discardpanel( "tf_explanations_discardpanel", "0", FCVAR_ARCHIVE, "Whether the user has seen explanations for this panel." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFItemPickupPanel::CTFItemPickupPanel( Panel *parent ) : CItemPickupPanel( parent )
 {
@@ -40,7 +40,7 @@ CTFItemPickupPanel::CTFItemPickupPanel( Panel *parent ) : CItemPickupPanel( pare
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFItemPickupPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -51,7 +51,7 @@ void CTFItemPickupPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFItemPickupPanel::OnCommand( const char *command )
 {
@@ -95,14 +95,14 @@ void CTFItemPickupPanel::OnCommand( const char *command )
 
 		EconUI()->OpenEconUI( iClass, true );
 	}
-	else 
+	else
 	{
 		BaseClass::OnCommand( command );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFItemPickupPanel::UpdateModelPanels( void )
 {
@@ -118,7 +118,7 @@ void CTFItemPickupPanel::UpdateModelPanels( void )
 		if ( m_aModelPanels[2]->HasItem() )
 		{
 			CEconItemView *pItem = m_aModelPanels[2]->GetItem();
-			
+
 			int iClass = -1;
 			if ( pItem->GetStaticData()->CanBeUsedByAllClasses() )
 			{
@@ -196,7 +196,7 @@ void CTFItemPickupPanel::UpdateModelPanels( void )
 static vgui::DHANDLE<CTFItemPickupPanel> g_TFItemPickupPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFItemPickupPanel *OpenTFItemPickupPanel( void )
 {
@@ -213,7 +213,7 @@ CTFItemPickupPanel *OpenTFItemPickupPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFItemPickupPanel *GetTFItemPickupPanel( void )
 {
@@ -224,7 +224,7 @@ CTFItemPickupPanel *GetTFItemPickupPanel( void )
 // ITEM DISCARD PANEL
 //=======================================================================================================================================================
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFItemDiscardPanel::CTFItemDiscardPanel( Panel *parent ) : CItemDiscardPanel( parent )
 {
@@ -235,7 +235,7 @@ CTFItemDiscardPanel::CTFItemDiscardPanel( Panel *parent ) : CItemDiscardPanel( p
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFItemDiscardPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -247,9 +247,9 @@ void CTFItemDiscardPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFItemDiscardPanel::PerformLayout( void ) 
+void CTFItemDiscardPanel::PerformLayout( void )
 {
 	BaseClass::PerformLayout();
 
@@ -259,7 +259,7 @@ void CTFItemDiscardPanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFItemDiscardPanel::ShowPanel(bool bShow)
 {
@@ -302,7 +302,7 @@ void CTFItemDiscardPanel::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFItemDiscardPanel::OnCommand( const char *command )
 {
@@ -323,7 +323,7 @@ void CTFItemDiscardPanel::OnCommand( const char *command )
 
 #if defined(DEBUG)
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Test_ItemPickupPanel( const CCommand &args )
 {
@@ -351,7 +351,7 @@ void Test_ItemPickupPanel( const CCommand &args )
 ConCommand test_itempickuppanel( "test_itempickuppanel", Test_ItemPickupPanel, "Debugging tool to test the item pickup panel. Usage: test_itempickuppanel\n", FCVAR_CHEAT );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Test_ItemDiscardPanel( const CCommand &args )
 {
@@ -381,4 +381,3 @@ void Test_ItemDiscardPanel( const CCommand &args )
 
 ConCommand test_itemdiscardpanel( "test_itemdiscardpanel", Test_ItemDiscardPanel, "Debugging tool to test the item discard panel. Usage: test_itemdiscardpanel <weapon name>\n   <weapon id>: 0 = primary, 1 = secondary, 2 = melee.", FCVAR_CHEAT );
 #endif // defined(DEBUG)
-

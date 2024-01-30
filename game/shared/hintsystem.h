@@ -39,7 +39,7 @@ public:
 	void Init( CBasePlayer *pPlayer, int iMaxHintTypes, const char **pszHintStrings );
 
 	//-----------------------------------------------------
-	// CBasePlayer calls these for you, if you fall back to its 
+	// CBasePlayer calls these for you, if you fall back to its
 	// versions of Spawn(), Event_Killed(), and PreThink().
 	// Call this when your player respawns
 	void				ResetHints( void );
@@ -56,7 +56,7 @@ public:
 	bool 				HintMessage( int hint, bool bForce = false, bool bOnlyIfClear = false );
 	void 				HintMessage( const char *pMessage );
 
-	// Call this to add a hint timer. It'll be reset for you automatically 
+	// Call this to add a hint timer. It'll be reset for you automatically
 	// everytime ResetHintTimers() is called.
 	void				RegisterHintTimer( int iHintID, float flTimerDuration, bool bOnlyIfClear = false, HintTimerCallback pfnCallback = NULL );
 

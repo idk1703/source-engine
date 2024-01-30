@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,7 +15,7 @@ class CChoreoActor;
 class CChoreoChannel;
 class CChoreoEvent;
 class CChoreoScene;
-class IChoreoEventCallback; 
+class IChoreoEventCallback;
 class CAudioMixer;
 class CUtlBuffer;
 class IChoreoStringPool;
@@ -37,7 +37,7 @@ class CEventRelativeTag
 {
 public:
 	DECLARE_CLASS_NOBASE( CEventRelativeTag );
-	
+
 	enum
 	{
 		MAX_EVENTTAG_LENGTH = 128,
@@ -45,7 +45,7 @@ public:
 
 					CEventRelativeTag( CChoreoEvent *owner, const char *name, float percentage );
 					CEventRelativeTag( const CEventRelativeTag& src );
-	
+
 	const char		*GetName( void );
 	float			GetPercentage( void );
 	void			SetPercentage( float percentage );
@@ -63,7 +63,7 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: GESTURE events can have "absolute tags" (where the value is not a 
+// Purpose: GESTURE events can have "absolute tags" (where the value is not a
 //  percentage, but an actual timestamp from the start of the event)
 //-----------------------------------------------------------------------------
 class CEventAbsoluteTag
@@ -76,12 +76,12 @@ public:
 
 					CEventAbsoluteTag( CChoreoEvent *owner, const char *name, float percentage );
 					CEventAbsoluteTag( const CEventAbsoluteTag& src );
-	
+
 	const char		*GetName( void );
 
 	float			GetPercentage( void );
 	void			SetPercentage( float percentage );
-	
+
 	float			GetEventTime( void );
 	void			SetEventTime( float t );
 
@@ -106,7 +106,7 @@ public:
 protected:
 
 	ChoreoStr_t		m_Name;
-	float			m_flPercentage; 
+	float			m_flPercentage;
 	bool			m_bLocked:1;
 	bool			m_bLinear:1;
 	bool			m_bEntry:1;
@@ -125,7 +125,7 @@ class CFlexTimingTag : public CEventRelativeTag
 public:
 					CFlexTimingTag( CChoreoEvent *owner, const char *name, float percentage, bool locked );
 					CFlexTimingTag( const CFlexTimingTag& src );
-	
+
 	bool			GetLocked( void );
 	void			SetLocked( bool locked );
 
@@ -264,7 +264,7 @@ public:
 
 		// Play an expression
 		EXPRESSION,
-		
+
 		// Look at another actor
 		LOOKAT,
 
@@ -446,7 +446,7 @@ public:
 	CEventRelativeTag *FindRelativeTag( const char *tagname );
 	void			AddRelativeTag( const char *tagname, float percentage );
 	void			RemoveRelativeTag( const char *tagname );
-	
+
 	bool			IsUsingRelativeTag( void );
 	void			SetUsingRelativeTag( bool usetag, const char *tagname = 0, const char *wavname = 0);
 	const char		*GetRelativeTagName( void );
@@ -457,7 +457,7 @@ public:
 	{
 		PLAYBACK = 0,	// new timeline		- FIXME: should be stored as an absolute time
 		ORIGINAL,		// original timeline - FIXME: should be stored at a fixed percentage of event
-		
+
 		NUM_ABS_TAG_TYPES,
 	} AbsTagType;
 
@@ -563,7 +563,7 @@ public:
 	int				ValidateCombinedFile();
 
 	// This returns false if the wave is CC_DISABLED or is a CC_SLAVE,
-	//  otherwise it returns the actual m_szCCToken value, or if that's 
+	//  otherwise it returns the actual m_szCCToken value, or if that's
 	//  blank it'll return the sounds.txt entry name (m_szParameters)
 	bool			GetPlaybackCloseCaptionToken( char *dest, int destlen );
 
@@ -665,11 +665,11 @@ private:
 	int				m_nGlobalID;
 
 	ChoreoStr_t		m_CCToken;
-	unsigned int	m_uRequiredCombinedChecksum; 
+	unsigned int	m_uRequiredCombinedChecksum;
 	// on master only, the combined file must have the same checksum to be useable
 	int				m_nNumSlaves;
 	// Only set on master, helps UI draw underbar
-	float			m_flLastSlaveEndTime;	
+	float			m_flLastSlaveEndTime;
 	// true if the cc token was found in the cc manager's database
 
 	CUtlVector< CChoreoEvent * >	m_Dependencies;
@@ -694,7 +694,7 @@ public:
 	// Purely for save/load
 	bool			m_bMarkedForSave:1;
 	bool			m_bUsingCombinedSoundFile:1;
-	bool			m_bCCTokenValid:1;   
+	bool			m_bCCTokenValid:1;
 	bool			m_bCombinedUsingGenderToken:1;
 
 	bool			m_bSuppressCaptionAttenuation:1;

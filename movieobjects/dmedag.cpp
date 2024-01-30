@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmedag.h"
@@ -15,20 +15,20 @@
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeDag, CDmeDag );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CUtlStack<CDmeDag::TransformInfo_t> CDmeDag::s_TransformStack;
 bool CDmeDag::s_bDrawUsingEngineCoordinates = false;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeDag::OnConstruction()
 {
@@ -77,9 +77,9 @@ void CDmeDag::SetVisible( bool bVisible )
 //-----------------------------------------------------------------------------
 // Returns the visibility attribute for DmeRenderable support
 //-----------------------------------------------------------------------------
-CDmAttribute *CDmeDag::GetVisibilityAttribute() 
-{ 
-	return m_Visible.GetAttribute(); 
+CDmAttribute *CDmeDag::GetVisibilityAttribute()
+{
+	return m_Visible.GetAttribute();
 }
 
 

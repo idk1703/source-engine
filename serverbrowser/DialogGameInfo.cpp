@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -41,7 +41,7 @@ bool QueryLessFunc( const struct challenge_s &item1, const struct challenge_s &i
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CDialogGameInfo::CDialogGameInfo( vgui::Panel *parent, int serverIP, int queryPort, unsigned short connectionPort, const char *pszConnectCode ) : 
+CDialogGameInfo::CDialogGameInfo( vgui::Panel *parent, int serverIP, int queryPort, unsigned short connectionPort, const char *pszConnectCode ) :
 	Frame(parent, "DialogGameInfo"),
 	m_CallbackPersonaStateChange( this, &CDialogGameInfo::OnPersonaStateChange ),
 	m_sConnectCode( pszConnectCode )
@@ -206,7 +206,7 @@ void CDialogGameInfo::OnPersonaStateChange( PersonaStateChange_t *pPersonaStateC
 		uint32 unGameIP;
 		uint16 usGamePort;
 		uint16 usQueryPort;
-		
+
 		if ( SteamFriends()->GetFriendGamePlayed( m_SteamIDFriend, &nGameID, &unGameIP, &usGamePort, &usQueryPort ) )
 		{
 			if ( pPersonaStateChange->m_nChangeFlags & k_EPersonaChangeGamePlayed )
@@ -468,7 +468,7 @@ void CDialogGameInfo::ShowAutoRetryOptions(bool state)
 	else
 		LoadControlSettings( "Servers/DialogGameInfo.res" );
 
-	// restore size and position as 
+	// restore size and position as
 	// load control settings will override them
 	SetBounds( x, y, wide, tall + growSize );
 
@@ -476,7 +476,7 @@ void CDialogGameInfo::ShowAutoRetryOptions(bool state)
 	PerformLayout();
 
 	m_pAutoRetryAlert->SetSelected( true );
-	
+
 	InvalidateLayout();
 }
 
@@ -674,7 +674,7 @@ void CDialogGameInfo::ConnectToServer()
 	{
 		char connectArgs[256];
 		ConstructConnectArgs( connectArgs, Q_ARRAYSIZE( connectArgs ), m_Server );
-		
+
 		if ( ( m_Server.m_bSecure && JoiningSecureServerCall() )|| !m_Server.m_bSecure )
 		{
 			switch ( g_pRunGameEngine->RunEngine( m_Server.m_nAppID, gameDir, connectArgs ) )
@@ -757,7 +757,7 @@ void CDialogGameInfo::AddPlayerToList(const char *playerName, int score, float t
 	player->SetString("PlayerName", playerName);
 	player->SetInt("Score", score);
 	player->SetInt("TimeSec", (int)timePlayedSeconds);
-	
+
 	// construct a time string
 	int seconds = (int)timePlayedSeconds;
 	int minutes = seconds / 60;
@@ -768,18 +768,18 @@ void CDialogGameInfo::AddPlayerToList(const char *playerName, int score, float t
 	buf[0] = 0;
 	if (hours)
 	{
-		Q_snprintf(buf, sizeof(buf), "%dh %dm %ds", hours, minutes, seconds);	
+		Q_snprintf(buf, sizeof(buf), "%dh %dm %ds", hours, minutes, seconds);
 	}
 	else if (minutes)
 	{
-		Q_snprintf(buf, sizeof(buf), "%dm %ds", minutes, seconds);	
+		Q_snprintf(buf, sizeof(buf), "%dm %ds", minutes, seconds);
 	}
 	else
 	{
-		Q_snprintf(buf, sizeof(buf), "%ds", seconds);	
+		Q_snprintf(buf, sizeof(buf), "%ds", seconds);
 	}
 	player->SetString("Time", buf);
-	
+
 	m_pPlayerList->AddItem(player, 0, false, true);
 	player->deleteThis();
 }
@@ -799,4 +799,3 @@ int CDialogGameInfo::PlayerTimeColumnSortFunc(ListPanel *pPanel, const ListPanel
 
 	return 0;
 }
-

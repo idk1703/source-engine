@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,12 +18,12 @@ using namespace vgui;
 static const int TIMEOUT = 1000; // 1 second timeout
 
 //-----------------------------------------------------------------------------
-// Text Entry controls are notepad-like windows that hold text. 
+// Text Entry controls are notepad-like windows that hold text.
 // In this demo we create a NON-editable text entry window that holds multiple lines
-// of text. We initialize it with some starting text and add a scroll bar to the 
+// of text. We initialize it with some starting text and add a scroll bar to the
 // window.
 // Then we use a tick function to add some more text to the window every one second.
-// As the window fills with text, the window scrolls vertically. 
+// As the window fills with text, the window scrolls vertically.
 // The scroll bar will appear after a few lines and the scroll bar
 // slider will shrink as even more text is added.
 //-----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ class TextEntryDemo4: public DemoPage
 
 		void SetVisible(bool state);
 		void OnTick();
-		
+
 	private:
 		TextEntry *m_pTextEntry;
 		int m_iTimeoutTime;
@@ -52,16 +52,16 @@ TextEntryDemo4::TextEntryDemo4(Panel *parent, const char *name) : DemoPage(paren
 	// Position the window and make it nice and wide.
 	// Make it tall enough to fit several lines of text.
 	m_pTextEntry->SetBounds(100, 100, 400, 200);
-	
+
 
 	// Make this window hold multiple lines of text.
-	// This will turn off horizontal scrolling, 
+	// This will turn off horizontal scrolling,
 	// and wrap text from line to line.
 	m_pTextEntry->SetMultiline(true);
 
 	// Add a vertical scroll bar.
 	m_pTextEntry->SetVerticalScrollbar(true);
-	
+
 	// Insert text after you have set the size and position of the window
 	m_pTextEntry->InsertString("Some starting text and a pile of text. ");
 	m_pTextEntry->InsertString("Some more text to make mutiple lines. ");
@@ -71,8 +71,8 @@ TextEntryDemo4::TextEntryDemo4(Panel *parent, const char *name) : DemoPage(paren
 
 	// This Text window is not editable by the user. It will only display.
 	m_pTextEntry->SetEditable(false);
-	
-	// This makes panel receive a 'Tick' message every frame 
+
+	// This makes panel receive a 'Tick' message every frame
 	// (~50ms, depending on sleep times/framerate)
 	// Panel is automatically removed from tick signal list when it's deleted
 	ivgui()->AddTickSignal(this->GetVPanel());
@@ -111,10 +111,10 @@ void TextEntryDemo4::OnTick()
 	if (m_iTimeoutTime)
 	{
 		int currentTime = system()->GetTimeMillis();
-		
+
 		// Check for timeout
 		if (currentTime > m_iTimeoutTime)
-		{	
+		{
 			char buf[125];
 			sprintf (buf, "Additional Text %d\n", m_iTimeoutTime);
 
@@ -142,5 +142,3 @@ Panel* TextEntryDemo4_Create(Panel *parent)
 {
 	return new TextEntryDemo4(parent, "TextEntryDemo4");
 }
-
-

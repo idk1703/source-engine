@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -18,7 +18,7 @@ public:
 	virtual bool StartBenchmark() = 0;
 	virtual void UpdateBenchmark() = 0;
 	virtual void EndBenchmark() = 0;
-	
+
 	virtual bool IsBenchmarkRunning() = 0;
 	virtual bool IsLocalBenchmarkPlayer( CBasePlayer *pPlayer ) = 0;
 
@@ -37,7 +37,7 @@ extern IServerBenchmark *g_pServerBenchmark;
 // Hooks should always use g_pServerBenchmark->RandomInt/Float to get random numbers
 // so the benchmark is deterministic.
 //
-// If they use an absolute tick number for anything, then they should also call g_pServerBenchmark->GetTickOffset() 
+// If they use an absolute tick number for anything, then they should also call g_pServerBenchmark->GetTickOffset()
 // to get a tick count since the start of the benchmark instead of looking at gpGlobals->tickcount.
 //
 class CServerBenchmarkHook

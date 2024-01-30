@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 #include "cbase.h"
@@ -185,12 +185,12 @@ class TestWindow : public CVGuiPanelWnd, public IFacePoserToolWindow
 
 public:
 
-	TestWindow( mxWindow *parent, int x, int y, int w, int h) : 
-		BaseClass(parent, x, y, w, h ), 
+	TestWindow( mxWindow *parent, int x, int y, int w, int h) :
+		BaseClass(parent, x, y, w, h ),
 		IFacePoserToolWindow( "FacePoser Frame", "FacePoser Frame" )
 	{
 		CFacePoserVguiFrame *f = new CFacePoserVguiFrame( NULL, "FacePoser Frame" );
-		
+
 		SetParentWindow( this );
 		SetMainPanel( f );
 		f->SetVisible( true );
@@ -231,7 +231,7 @@ void CreatePath( const char *relative )
 {
 	char fullpath[ 512 ];
 	Q_snprintf( fullpath, sizeof( fullpath ), "%s%s", GetGameDirectory(), relative );
- 
+
 	char *path = fullpath;
 
 	char *ofs, c;
@@ -245,7 +245,7 @@ void CreatePath( const char *relative )
 	{
 		c = *ofs;
 		if (c == '/' || c == '\\')
-		{	
+		{
 			// create the directory, but not if it's actually a filename with a dot in it!!!
 			*ofs = 0;
 			if ( !Q_stristr( path, "." ) )
@@ -332,7 +332,7 @@ void UnloadFileSystemDialogModule()
 		Sys_UnloadModule( g_pFSDialogModule );
 		g_pFSDialogModule = 0;
 	}
-}	
+}
 
 
 
@@ -416,7 +416,7 @@ bool MDLViewer::CanClose()
 		m_bVCDSaved = false;
 		if ( retval == 0 ) // YES
 		{
-			OnRebuildScenesImage();	
+			OnRebuildScenesImage();
 		}
 	}
 
@@ -518,7 +518,7 @@ public:
 				return;
 			}
 		}
-		
+
 		m_btnFPS->setVisible( false );
 		m_btnGridSnap->setVisible( false );
 	}
@@ -554,21 +554,21 @@ public:
 							if ( scene )
 							{
 								int currentFPS = scene->GetSceneFPS();
-								
+
 								CInputParams params;
 								memset( &params, 0, sizeof( params ) );
-								
+
 								strcpy( params.m_szDialogTitle, "Change FPS" );
-								
+
 								Q_snprintf( params.m_szInputText, sizeof( params.m_szInputText ),
 									"%i", currentFPS );
-								
+
 								strcpy( params.m_szPrompt, "Current FPS:" );
-								
+
 								if ( InputProperties( &params ) )
 								{
 									int newFPS = atoi( params.m_szInputText );
-									
+
 									if ( ( newFPS > 0 ) && ( newFPS != currentFPS ) )
 									{
 										g_pChoreoView->SetDirty( true );
@@ -580,7 +580,7 @@ public:
 										Con_Printf( "FPS changed to %i\n", newFPS );
 									}
 								}
-								
+
 							}
 						}
 					}
@@ -594,11 +594,11 @@ public:
 							{
 								g_pChoreoView->SetDirty( true );
 								g_pChoreoView->PushUndo( "Change Snap Frame" );
-								
+
 								scene->SetUsingFrameSnap( !scene->IsUsingFrameSnap() );
-								
+
 								g_pChoreoView->PushRedo( "Change Snap Frame" );
-								
+
 								Init();
 
 								Con_Printf( "Time frame snapping: %s\n",
@@ -623,7 +623,7 @@ public:
 		drawHelper.DrawFilledRect( GetSysColor( COLOR_BTNFACE ), rc );
 		return false;
 	}
-	
+
 private:
 
 	CFlatButton	*m_btnFPS;
@@ -640,7 +640,7 @@ private:
 #define IDC_MODELTAB_SHOWALL		1006
 #define IDC_MODELTAB_HIDEALL		1007
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CMDLViewerModelTab : public CTabWindow
 {
@@ -694,7 +694,7 @@ public:
 				{
 					CChoreoActor *a = scene->GetActor( i );
 					Assert( a );
-				
+
 					if ( stricmp( a->GetFacePoserModelName(), filename ) )
 						continue;
 					hasassoc = true;
@@ -840,7 +840,7 @@ public:
 									CChoreoActor *a = scene->GetActor( i );
 									Assert( a );
 
-									
+
 									strcpy( text.choice, a->GetName() );
 
 									if ( !stricmp( a->GetFacePoserModelName(), modelname ) )
@@ -851,14 +851,14 @@ public:
 
 									params.m_Choices.AddToTail( text );
 								}
-		
-								if ( ChoiceProperties( &params ) && 
+
+								if ( ChoiceProperties( &params ) &&
 									params.m_nSelected != oldsel )
 								{
-									
+
 									// Chose something new...
 									CChoreoActor *a = scene->GetActor( params.m_nSelected );
-									
+
 									g_pChoreoView->AssociateModelToActor( a, idx );
 								}
 							}
@@ -888,7 +888,7 @@ public:
 	void Init( void )
 	{
 		removeAll();
-		
+
 		int c = models->Count();
 		int i;
 		for ( i = 0; i < c ; i++ )
@@ -907,7 +907,7 @@ public:
 #define IDC_TOOL_TOGGLEVISIBILITY	1000
 #define IDC_TOOL_TOGGLELOCK			1001
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CMDLViewerWindowTab : public CTabWindow
 {
@@ -1066,7 +1066,7 @@ private:
 	{
 		int idx = getSelectedIndex();
 		int c = IFacePoserToolWindow::GetToolCount();
-	
+
 		if ( idx < 0 || idx >= c )
 			return NULL;
 
@@ -1092,7 +1092,7 @@ public:
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	// Output : Returns true on success, false on failure.
 	//-----------------------------------------------------------------------------
 	bool PaintBackground( void )
@@ -1167,7 +1167,7 @@ void MDLViewer::SavePosition( void )
 	FacePoser_SaveWindowPositions( "MDLViewer", visible, xpos, ypos, width, height, false, zoomed );
 }
 
-MDLViewer::MDLViewer () : 
+MDLViewer::MDLViewer () :
 	mxWindow (0, 0, 0, 0, 0, g_appTitle, mxWindow::Normal),
 	menuCloseCaptionLanguages(0),
 	m_bOldSoundScriptsDirty( -1 ),
@@ -1362,7 +1362,7 @@ MDLViewer::MDLViewer () :
 	IFacePoserToolWindow::InitTools();
 
 	Con_Printf( "windowtab->Init\n" );
-	
+
 	windowtab->Init();
 
 	Con_Printf( "loadRecentFiles\n" );
@@ -1414,7 +1414,7 @@ MDLViewer::MDLViewer () :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void MDLViewer::UpdateWindowMenu( void )
 {
@@ -1427,8 +1427,8 @@ void MDLViewer::UpdateWindowMenu( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : currentLanguageId - 
+// Purpose:
+// Input  : currentLanguageId -
 //-----------------------------------------------------------------------------
 void MDLViewer::UpdateLanguageMenu( int currentLanguageId )
 {
@@ -1462,7 +1462,7 @@ MDLViewer::~MDLViewer ()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void MDLViewer::InitModelTab( void )
 {
@@ -1470,7 +1470,7 @@ void MDLViewer::InitModelTab( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void MDLViewer::InitGridSettings( void )
 {
@@ -1478,7 +1478,7 @@ void MDLViewer::InitGridSettings( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int MDLViewer::GetActiveModelTab( void )
@@ -1487,8 +1487,8 @@ int MDLViewer::GetActiveModelTab( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : modelindex - 
+// Purpose:
+// Input  : modelindex -
 //-----------------------------------------------------------------------------
 void MDLViewer::SetActiveModelTab( int modelindex )
 {
@@ -1614,10 +1614,10 @@ void MDLViewer::LoadModelFile( const char *pszFile )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *wnd - 
-//			x - 
-//			y - 
+// Purpose:
+// Input  : *wnd -
+//			x -
+//			y -
 // Output : static bool
 //-----------------------------------------------------------------------------
 static bool WindowContainsPoint( mxWindow *wnd, int x, int y )
@@ -1726,7 +1726,7 @@ int MDLViewer::handleEvent (mxEvent *event)
 					modeltab->HandleModelSelect();
 				}
 				break;
-			
+
 			case IDC_FILE_LOADMODEL:
 				{
 					if ( ! CommandLine()->FindParm( "-NoSteamDialog" ) )
@@ -1773,21 +1773,21 @@ int MDLViewer::handleEvent (mxEvent *event)
 								g_pControlPanel->setShowBackground (true);
 							else
 								g_pControlPanel->setShowGround (true);
-							
+
 						}
 						else
 							mxMessageBox (this, "Error loading texture.", g_appTitle, MX_MB_OK | MX_MB_ERROR);
 					}
 				}
 				break;
-				
+
 			case IDC_FILE_UNLOADGROUNDTEX:
 				{
 					// g_pMatSysWindow->loadTexture (0, 1);
 					g_pControlPanel->setShowGround (false);
 				}
 				break;
-				
+
 			case IDC_FILE_RECENTFILES1:
 			case IDC_FILE_RECENTFILES2:
 			case IDC_FILE_RECENTFILES3:
@@ -1798,7 +1798,7 @@ int MDLViewer::handleEvent (mxEvent *event)
 			case IDC_FILE_RECENTFILES8:
 				{
 					int i = event->action - IDC_FILE_RECENTFILES1;
-					
+
 					if ( recentFiles[ i ] && recentFiles[ i ][ 0 ] )
 					{
 						char ext[ 4 ];
@@ -1818,26 +1818,26 @@ int MDLViewer::handleEvent (mxEvent *event)
 
 						if ( valid )
 						{
-							char tmp[256];			
+							char tmp[256];
 							strcpy (tmp, recentFiles[0]);
 							strcpy (recentFiles[0], recentFiles[i]);
 							strcpy (recentFiles[i], tmp);
-						
+
 							initRecentFiles ();
 						}
 					}
-					
+
 					redraw ();
 				}
 				break;
-				
+
 			case IDC_FILE_EXIT:
 				{
 					redraw ();
 					mx::quit ();
 				}
 				break;
-				
+
 			case IDC_OPTIONS_COLORBACKGROUND:
 			case IDC_OPTIONS_COLORGROUND:
 			case IDC_OPTIONS_COLORLIGHT:
@@ -1855,15 +1855,15 @@ int MDLViewer::handleEvent (mxEvent *event)
 					}
 				}
 				break;
-				
+
 			case IDC_OPTIONS_CENTERVIEW:
 				g_pControlPanel->centerView ();
 				break;
-				
+
 			case IDC_OPTIONS_CENTERONFACE:
 				g_pControlPanel->CenterOnFace();
 				break;
-				
+
 			case IDC_OPTIONS_CLEARMODELSOUNDS:
 				{
 					sound->StopAll();
@@ -1883,24 +1883,24 @@ int MDLViewer::handleEvent (mxEvent *event)
 					}
 				}
 				break;
-				
+
 			case IDC_OPTIONS_DUMP:
 				g_pControlPanel->dumpModelInfo ();
 				break;
-				
+
 #ifdef WIN32
 			case IDC_HELP_GOTOHOMEPAGE:
 				ShellExecute (0, "open", "http://developer.valvesoftware.com/wiki/Category:Choreography", 0, 0, SW_SHOW);
 				break;
 #endif
-				
+
 			case IDC_HELP_ABOUT:
 				mxMessageBox (this,
-					"v1.0  Copyright © 1996-2007, Valve Corporation. All rights reserved.\r\nBuild Date: " __DATE__ "",
-					"Valve Face Poser", 
+					"v1.0  Copyright ï¿½ 1996-2007, Valve Corporation. All rights reserved.\r\nBuild Date: " __DATE__ "",
+					"Valve Face Poser",
 					MX_MB_OK | MX_MB_INFORMATION);
 				break;
-				
+
 			case IDC_EXPRESSIONS_REDOBITMAPS:
 				{
 					CExpClass *active = expressions->GetActiveClass();
@@ -1914,7 +1914,7 @@ int MDLViewer::handleEvent (mxEvent *event)
 							CExpression *exp = active->GetExpression( i );
 							if ( !exp )
 								continue;
-							
+
 							g_pProgressDialog->UpdateText( exp->name );
 							g_pProgressDialog->Update( (float)i / (float)active->GetNumExpressions() );
 							if ( g_pProgressDialog->IsCancelled() )
@@ -1931,7 +1931,7 @@ int MDLViewer::handleEvent (mxEvent *event)
 							}
 						}
 						g_pMatSysWindow->DisableStickySnapshotMode( );
-						
+
 						g_pProgressDialog->Finish();
 
 						active->SelectExpression( 0 );
@@ -1957,7 +1957,7 @@ int MDLViewer::handleEvent (mxEvent *event)
 					}
 				}
 				break;
-				
+
 			case IDC_EXPRESSIONS_SAVE:
 				{
 					CExpClass *active = expressions->GetActiveClass();
@@ -2039,9 +2039,9 @@ int MDLViewer::handleEvent (mxEvent *event)
 					iret = 0;
 					int tool_number = event->action - IDC_WINDOW_FIRSTTOOL;
 					int max_tools = IDC_WINDOW_LASTTOOL - IDC_WINDOW_FIRSTTOOL;
-					
-					if ( tool_number >= 0 && 
-						tool_number <= max_tools && 
+
+					if ( tool_number >= 0 &&
+						tool_number <= max_tools &&
 						tool_number < IFacePoserToolWindow::GetToolCount() )
 					{
 						iret = 1;
@@ -2049,10 +2049,10 @@ int MDLViewer::handleEvent (mxEvent *event)
 						if ( tool )
 						{
 							mxWindow *toolw = tool->GetMxWindow();
-							
+
 							bool wasvisible = toolw->isVisible();
 							toolw->setVisible( !wasvisible );
-							
+
 							g_MDLViewer->UpdateWindowMenu();
 
 						}
@@ -2106,7 +2106,7 @@ int MDLViewer::handleEvent (mxEvent *event)
 		}
 		break;
 	} // event->event
-	
+
 	return iret;
 }
 
@@ -2325,7 +2325,7 @@ int MDLViewer::GetCurrentHitboxSet(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool MDLViewer::PaintBackground( void )
@@ -2477,7 +2477,7 @@ bool CHLFacePoserApp::Create()
 
 	SpewOutputFunc( HLFacePoserSpewFunc );
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "inputsystem.dll",		INPUTSYSTEM_INTERFACE_VERSION },
 		{ "materialsystem.dll",		MATERIAL_SYSTEM_INTERFACE_VERSION },
@@ -2492,7 +2492,7 @@ bool CHLFacePoserApp::Create()
 		{ "", "" }	// Required to terminate the list
 	};
 
-	if ( !AddSystems( appSystems ) ) 
+	if ( !AddSystems( appSystems ) )
 		return false;
 
 	// Add the P4 module separately so that if it is absent (say in the SDK) then the other system will initialize properly
@@ -2571,13 +2571,13 @@ bool CHLFacePoserApp::PreInit( )
 		return false;
 
 	g_pFileSystem = filesystem = g_pFullFileSystem;
-	g_pStudioDataCache = (IStudioDataCache*)FindSystem( STUDIO_DATA_CACHE_INTERFACE_VERSION ); 
+	g_pStudioDataCache = (IStudioDataCache*)FindSystem( STUDIO_DATA_CACHE_INTERFACE_VERSION );
 	physcollision = (IPhysicsCollision *)FindSystem( VPHYSICS_COLLISION_INTERFACE_VERSION );
 	physprop = (IPhysicsSurfaceProps *)FindSystem( VPHYSICS_SURFACEPROPS_INTERFACE_VERSION );
 	g_pLocalize = (vgui::ILocalize *)FindSystem(VGUI_LOCALIZE_INTERFACE_VERSION );
 	soundemitter = (ISoundEmitterSystemBase*)FindSystem(SOUNDEMITTERSYSTEM_INTERFACE_VERSION);
 
-	if ( !soundemitter || !g_pLocalize || !filesystem || !physprop || !physcollision || 
+	if ( !soundemitter || !g_pLocalize || !filesystem || !physprop || !physcollision ||
 		!g_pMaterialSystem || !g_pStudioRender || !g_pMDLCache || !g_pDataCache )
 	{
 		Error("Unable to load required library interface!\n");
@@ -2608,7 +2608,7 @@ bool CHLFacePoserApp::PreInit( )
 
 	LoadFileSystemDialogModule();
 
-	return true; 
+	return true;
 }
 
 void CHLFacePoserApp::PostShutdown()
@@ -2749,4 +2749,3 @@ int main (int argc, char *argv[])
 
 	return nRetVal;
 }
-

@@ -99,8 +99,8 @@ bool CBaseTFFourWheelVehicle::Deploy( void )
 
 	m_flDeployFinishTime = gpGlobals->curtime + flDeployTime;
 
-	SetContextThink( BaseFourWheeledVehicleDeployThink, gpGlobals->curtime + flDeployTime, 
-		             BASEFOURWHEELEDVEHICLE_DEPLOYTHINK_CONTEXT );
+	SetContextThink( BaseFourWheeledVehicleDeployThink, gpGlobals->curtime + flDeployTime,
+					BASEFOURWHEELEDVEHICLE_DEPLOYTHINK_CONTEXT );
 
 	// Set the deploy mode.
 	m_eDeployMode = VEHICLE_MODE_DEPLOYING;
@@ -109,7 +109,7 @@ bool CBaseTFFourWheelVehicle::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Release a vehicle from a deployed state.  Run a de-coupling 
+// Purpose: Release a vehicle from a deployed state.  Run a de-coupling
 //          animation and turn on the vehicle.
 //-----------------------------------------------------------------------------
 void CBaseTFFourWheelVehicle::UnDeploy( void )
@@ -131,8 +131,8 @@ void CBaseTFFourWheelVehicle::UnDeploy( void )
 
 	m_flDeployFinishTime = gpGlobals->curtime + flUnDeployTime;
 
-	SetContextThink( BaseFourWheeledVehicleDeployThink, gpGlobals->curtime + flUnDeployTime, 
-		             BASEFOURWHEELEDVEHICLE_DEPLOYTHINK_CONTEXT );
+	SetContextThink( BaseFourWheeledVehicleDeployThink, gpGlobals->curtime + flUnDeployTime,
+					BASEFOURWHEELEDVEHICLE_DEPLOYTHINK_CONTEXT );
 
 	// Set the deploy mode.
 	m_eDeployMode = VEHICLE_MODE_UNDEPLOYING;
@@ -152,7 +152,7 @@ void CBaseTFFourWheelVehicle::CancelDeploy( void )
 
 	// Reset the activity to the previous activity.
 	SetActivity( m_PreDeployActivity );
-	
+
 	// Reset the deploy mode.
 	m_eDeployMode = VEHICLE_MODE_NORMAL;
 
@@ -276,7 +276,7 @@ void CBaseTFFourWheelVehicle::Spawn( )
 	SetBoostUpgrade( false );
 
 	m_flNextHitTime = 0.0f;
-}	
+}
 
 //-----------------------------------------------------------------------------
 // Teleport
@@ -302,8 +302,8 @@ void CBaseTFFourWheelVehicle::Teleport( const Vector *newPosition, const QAngle 
 //-----------------------------------------------------------------------------
 void CBaseTFFourWheelVehicle::DrawDebugGeometryOverlays()
 {
-	if (m_debugOverlays & OVERLAY_BBOX_BIT) 
-	{	
+	if (m_debugOverlays & OVERLAY_BBOX_BIT)
+	{
 		m_VehiclePhysics.DrawDebugGeometryOverlays();
 	}
 	BaseClass::DrawDebugGeometryOverlays();
@@ -312,7 +312,7 @@ void CBaseTFFourWheelVehicle::DrawDebugGeometryOverlays()
 int CBaseTFFourWheelVehicle::DrawDebugTextOverlays()
 {
 	int nOffset = BaseClass::DrawDebugTextOverlays();
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		nOffset = m_VehiclePhysics.DrawDebugTextOverlays( nOffset );
 	}
@@ -321,7 +321,7 @@ int CBaseTFFourWheelVehicle::DrawDebugTextOverlays()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseTFFourWheelVehicle::StartBuilding( CBaseEntity *pPlayer )
 {
@@ -336,7 +336,7 @@ bool CBaseTFFourWheelVehicle::StartBuilding( CBaseEntity *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFFourWheelVehicle::FinishedBuilding( void )
 {
@@ -347,11 +347,11 @@ void CBaseTFFourWheelVehicle::FinishedBuilding( void )
 	m_VehiclePhysics.Initialize( pScriptName, true );
 
 	// HACK HACK:  This is a hack to avoid physics spazzing out on a newly created vehicle with the handbrake
-	//  set.  We create and activate it, but then release the handbrake for a single Think function call and 
+	//  set.  We create and activate it, but then release the handbrake for a single Think function call and
 	//  then zero out the controls right then.  This seems to stabilize something in the physics simulator.
 	m_VehiclePhysics.ReleaseHandbrake();
 	SetContextThink( BaseFourWheeledVehicleStopTheRodeoMadnessThink, gpGlobals->curtime, BASEFOURWHEELEDVEHICLE_STOPTHERODEO_CONTEXT );
-	
+
 	ResetDeteriorationTime();
 }
 
@@ -364,7 +364,7 @@ void CBaseTFFourWheelVehicle::InputThrottle( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFFourWheelVehicle::InputSteering( inputdata_t &inputdata )
 {
@@ -372,7 +372,7 @@ void CBaseTFFourWheelVehicle::InputSteering( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFFourWheelVehicle::InputAction( inputdata_t &inputdata )
 {
@@ -380,7 +380,7 @@ void CBaseTFFourWheelVehicle::InputAction( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFFourWheelVehicle::InputTurnOn( inputdata_t &inputdata )
 {
@@ -392,7 +392,7 @@ void CBaseTFFourWheelVehicle::InputTurnOn( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFFourWheelVehicle::InputTurnOff( inputdata_t &inputdata )
 {
@@ -414,7 +414,7 @@ void CBaseTFFourWheelVehicle::BaseFourWheeledVehicleThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFFourWheelVehicle::VPhysicsUpdate( IPhysicsObject *pPhysics )
 {
@@ -427,7 +427,7 @@ void CBaseTFFourWheelVehicle::VPhysicsUpdate( IPhysicsObject *pPhysics )
 
 
 //-----------------------------------------------------------------------------
-// Methods related to getting in and out of the vehicle 
+// Methods related to getting in and out of the vehicle
 //-----------------------------------------------------------------------------
 void CBaseTFFourWheelVehicle::SetPassenger( int nRole, CBasePlayer *pEnt )
 {
@@ -446,7 +446,7 @@ void CBaseTFFourWheelVehicle::SetPassenger( int nRole, CBasePlayer *pEnt )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFFourWheelVehicle::PlayerControlInit( CBasePlayer *pPlayer )
 {
@@ -465,7 +465,7 @@ void CBaseTFFourWheelVehicle::PlayerControlInit( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFFourWheelVehicle::ResetUseKey( CBasePlayer *pPlayer )
 {
@@ -473,7 +473,7 @@ void CBaseTFFourWheelVehicle::ResetUseKey( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFFourWheelVehicle::PlayerControlShutdown()
 {
@@ -533,7 +533,7 @@ void CBaseTFFourWheelVehicle::PowerupEnd( int iPowerup )
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFFourWheelVehicle::DriveVehicle( CBasePlayer *pPlayer, CUserCmd *ucmd )
 {
@@ -603,7 +603,7 @@ void CBaseTFFourWheelVehicle::DriveVehicle( CBasePlayer *pPlayer, CUserCmd *ucmd
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFFourWheelVehicle::SetupMove( CBasePlayer *pPlayer, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move )
 {
@@ -618,22 +618,22 @@ void CBaseTFFourWheelVehicle::SetupMove( CBasePlayer *pPlayer, CUserCmd *ucmd, I
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFFourWheelVehicle::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMoveData )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFFourWheelVehicle::SetBoostUpgrade( bool bBoostUpgrade ) 
-{ 
+void CBaseTFFourWheelVehicle::SetBoostUpgrade( bool bBoostUpgrade )
+{
 	m_bBoostUpgrade = bBoostUpgrade;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseTFFourWheelVehicle::IsBoostable( void )
 {
@@ -641,7 +641,7 @@ bool CBaseTFFourWheelVehicle::IsBoostable( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFFourWheelVehicle::StartBoost( void )
 {
@@ -652,7 +652,7 @@ void CBaseTFFourWheelVehicle::StartBoost( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseTFFourWheelVehicle::IsBoosting( void )
 {
@@ -669,7 +669,7 @@ void CBaseTFFourWheelVehicle::VPhysicsCollision( int index, gamevcollisionevent_
 	int otherIndex = !index;
 	CBaseEntity *pEntity = pEvent->pEntities[otherIndex];
 
-    // We only damage objects...
+	// We only damage objects...
 	// And only if we're travelling fast enough...
 	Assert( pEntity );
 	if ( !pEntity->IsSolid() )
@@ -739,7 +739,7 @@ void CBaseTFFourWheelVehicle::VPhysicsCollision( int index, gamevcollisionevent_
 		{
 			flDamageFactor *= fourwheelvehicle_hit_damage_boostmod.GetFloat();
 		}
-		
+
 		if ( ( flMaxDamageVel > flMinDamageVel ) && ( flVel < flMaxDamageVel ) )
 		{
 			// Use less damage when we're not moving fast enough

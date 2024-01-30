@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,7 +29,7 @@ public:
 
 	float&			operator[]( int i );
 	float const&	operator[]( int i ) const;
-	
+
 	float			Dot( NVectorN const &b ) const;
 	NVectorN		Cross( NVectorN const &b ) const;
 	NVectorN		Normalize() const;
@@ -49,7 +49,7 @@ public:
 
 
 public:
-	
+
 	float			v[N];
 };
 
@@ -106,7 +106,7 @@ template<int N>
 float NVectorN::Dot( NVectorN const &b ) const
 {
 	float ret = 0;
-	
+
 	for( int i=0; i < N; i++ )
 		ret += v[i]*b.v[i];
 
@@ -119,12 +119,12 @@ NVectorN NVectorN::Cross( NVectorN const &b ) const
 {
 	NVector<N> ret;
 	NMatrix<N-1> mat;
-	
+
 	for( int i=0; i < N; i++ )
 	{
 		for( y=0; y < N; y++ )
 			for( x=0; x < N; x++ )
-				mat.m[y][x] = 
+				mat.m[y][x] =
 
 		ret.v[i] = v[i]*b.v[i];
 	}
@@ -161,7 +161,7 @@ template<int N>
 NVectorN NVectorN::operator+( NVectorN const &b ) const
 {
 	NVectorN ret;
-	
+
 	for( int i=0; i < N; i++ )
 		ret.v[i] = v[i]+b.v[i];
 
@@ -182,7 +182,7 @@ template<int N>
 NVectorN NVectorN::operator-( NVectorN const &b ) const
 {
 	NVectorN ret;
-	
+
 	for( int i=0; i < N; i++ )
 		ret.v[i] = v[i]-b.v[i];
 
@@ -200,4 +200,3 @@ NVectorN NVectorN::operator*( float val ) const
 
 
 #endif // NVECTOR_H
-

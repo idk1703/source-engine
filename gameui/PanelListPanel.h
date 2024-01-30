@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,7 +21,7 @@ class KeyValues;
 //-----------------------------------------------------------------------------
 class CPanelListPanel : public vgui::Panel
 {
-	DECLARE_CLASS_SIMPLE( CPanelListPanel, vgui::Panel ); 
+	DECLARE_CLASS_SIMPLE( CPanelListPanel, vgui::Panel );
 
 public:
 	typedef struct dataitem_s

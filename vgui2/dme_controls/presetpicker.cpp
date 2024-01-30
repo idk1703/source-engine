@@ -29,7 +29,7 @@ static int __cdecl PresetNameSortFunc( vgui::ListPanel *pPanel, const vgui::List
 	return Q_stricmp( string1, string2 );
 }
 
-CPresetPickerFrame::CPresetPickerFrame( vgui::Panel *pParent, const char *pTitle, bool bAllowMultiSelect ) : 
+CPresetPickerFrame::CPresetPickerFrame( vgui::Panel *pParent, const char *pTitle, bool bAllowMultiSelect ) :
 	BaseClass( pParent, "PresetPickerFrame" )
 {
 	SetDeleteSelfOnClose( true );
@@ -85,7 +85,7 @@ void CPresetPickerFrame::RefreshPresetList( CDmElement *pPresetGroup, bool bSele
 		}
 
 		KeyValues *kv = new KeyValues( "node" );
-		kv->SetString( "name", pName ); 
+		kv->SetString( "name", pName );
 		SetElementKeyValue( kv, "preset", pPreset );
 
 		int nItemID = m_pPresetList->AddItem( kv, 0, false, false );
@@ -191,4 +191,3 @@ void CPresetPickerFrame::OnCommand( const char *pCommand )
 
 	BaseClass::OnCommand( pCommand );
 }
-

@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2006, Valve Corporation, All rights reserved. ======//
+//===== Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ======//
 //
 // Purpose: 	ExprSimplifier builds a binary tree from an infix expression (in the
 //				form of a character array).
@@ -24,7 +24,7 @@ struct ExprNode
 	ExprNode *left;  // left sub-expression
 	ExprNode *right; // right sub-expression
 	Kind kind;       // kind of node this is
-	union 
+	union
 	{
 		char cond;	// the conditional
 		bool value;	// the value

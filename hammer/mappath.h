@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -95,7 +95,7 @@ class CMapPath
 
 		// nodes + number of:
 		CUtlVector<CMapPathNode> m_Nodes;
-		
+
 		DWORD GetNewNodeID();
 
 		// name:

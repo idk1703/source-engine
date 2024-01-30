@@ -16,7 +16,7 @@
 
 
 //---------------------------------------------------------------------------------------------
-Action< CBossAlpha > *CBossAlphaBehavior::InitialContainedAction( CBossAlpha *me )	
+Action< CBossAlpha > *CBossAlphaBehavior::InitialContainedAction( CBossAlpha *me )
 {
 	return new CBossAlphaTacticalMonitor;
 }

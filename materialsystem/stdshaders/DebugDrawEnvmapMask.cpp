@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -13,7 +13,7 @@
 #include "tier0/memdbgon.h"
 
 BEGIN_VS_SHADER_FLAGS( DebugDrawEnvmapMask, "Help for DebugDrawEnvmapMask", SHADER_NOT_EDITABLE )
-			  
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( SHOWALPHA, SHADER_PARAM_TYPE_INTEGER, "0", "" )
 	END_SHADER_PARAMS

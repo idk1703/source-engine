@@ -23,7 +23,7 @@
 #define MORTAR_MINS				Vector(-30, -50, -10)
 #define MORTAR_MAXS				Vector( 30,  50, 55)
 #define MORTAR_MODEL			"models/objects/vehicle_mortar.mdl"
-#define MORTAR_SCREEN_NAME		"screen_vehicle_mortar"  
+#define MORTAR_SCREEN_NAME		"screen_vehicle_mortar"
 
 #define ELEVATION_INTERVAL 0.3
 
@@ -48,20 +48,20 @@ ConVar	vehicle_mortar_health( "vehicle_mortar_health","800", FCVAR_NONE, "Mortar
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CVehicleMortar::CVehicleMortar()
 {
 	m_flMortarYaw = 0;
 	m_flMortarPitch = 0;
 	m_bAllowedToFire = true;
-	
+
 	UseClientSideAnimation();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleMortar::Precache()
 {
@@ -76,12 +76,12 @@ void CVehicleMortar::Precache()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleMortar::Spawn()
 {
 	SetModel( MORTAR_MODEL );
-	
+
 	// This size is used for placement only...
 	SetSize(MORTAR_MINS, MORTAR_MAXS);
 	m_takedamage = DAMAGE_YES;
@@ -132,7 +132,7 @@ void CVehicleMortar::OnFinishedDeploy( void )
 	EntityMessageBegin( this, true );
 		WRITE_STRING( "OnDeployed" );
 	MessageEnd();
-	
+
 	m_flMortarYaw = 0;
 	m_flMortarPitch = 45;
 }
@@ -214,10 +214,10 @@ bool CVehicleMortar::ClientCommand( CBaseTFPlayer *pPlayer, const char *pCmd, IC
 }
 
 
-bool CVehicleMortar::CalcFireInfo( 
-	float flFiringPower, 
-	float flFiringAccuracy, 
-	bool bRangeUpgraded, 
+bool CVehicleMortar::CalcFireInfo(
+	float flFiringPower,
+	float flFiringAccuracy,
+	bool bRangeUpgraded,
 	bool bAccuracyUpgraded,
 	Vector &vStartPt,
 	Vector &vecTargetVel,
@@ -312,16 +312,16 @@ void CVehicleMortar::NextFireThink()
 bool CVehicleMortar::FireMortar( float flFiringPower, float flFiringAccuracy, bool bRangeUpgraded, bool bAccuracyUpgraded )
 {
 	SetActivity( ACT_RANGE_ATTACK1 );
-	
+
 	// Calculate the shot.
 	Vector vStartPt;
 	Vector vecTargetVel;
 	float fallTime;
 
 	if ( !CalcFireInfo(
-		flFiringPower, 
-		flFiringAccuracy, 
-		bRangeUpgraded, 
+		flFiringPower,
+		flFiringAccuracy,
+		bRangeUpgraded,
 		bAccuracyUpgraded,
 		vStartPt,
 		vecTargetVel,
@@ -348,5 +348,3 @@ bool CVehicleMortar::FireMortar( float flFiringPower, float flFiringAccuracy, bo
 
 	return true;
 }
-
-

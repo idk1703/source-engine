@@ -163,7 +163,7 @@ L 07/22/1999 - 19:40:32: "Player<59><WON:4294918427>" connected, address "165.12
 L 07/22/1999 - 19:40:59: "Player<59><WON:4294918427>" has entered the game
 L 07/22/1999 - 19:42:36: "Player<59>" disconnected
 L 07/22/1999 - 19:46:24: =------= MATCH RESULTS =------=
-L 07/22/1999 - 19:46:24: "blue" defeated "red" 
+L 07/22/1999 - 19:46:24: "blue" defeated "red"
 L 07/22/1999 - 19:46:24: "blue" RESULTS: "0" players. "27" frags, "0" unaccounted for. "45" team score. Allies:
 L 07/22/1999 - 19:46:24: "red" RESULTS: "0" players. "0" frags, "0" unaccounted for. "0" team score. Allies:
 L 07/22/1999 - 19:48:30: Log closed.

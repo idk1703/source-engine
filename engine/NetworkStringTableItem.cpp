@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,7 +11,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CNetworkStringTableItem::CNetworkStringTableItem( void )
 {
@@ -26,7 +26,7 @@ CNetworkStringTableItem::CNetworkStringTableItem( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CNetworkStringTableItem::~CNetworkStringTableItem( void )
 {
@@ -48,7 +48,7 @@ CNetworkStringTableItem::~CNetworkStringTableItem( void )
 		m_pUserData = NULL;
 	}
 #endif
-		
+
 	if ( m_pUserData )
 	{
 		delete[] m_pUserData;
@@ -72,7 +72,7 @@ void CNetworkStringTableItem::UpdateChangeList( int tick, int length, const void
 	itemchange_s item;
 
 	if ( count > 0 )
-	{	
+	{
 		// check if different from last change in list
 		item = m_pChangeList->Element( count-1 );
 
@@ -100,7 +100,7 @@ void CNetworkStringTableItem::UpdateChangeList( int tick, int length, const void
 
 			m_pChangeList->Remove( count-1 );
 		}
-				
+
 	}
 
 	item.tick = tick;
@@ -163,8 +163,8 @@ int CNetworkStringTableItem::RestoreTick( int tick )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *string - 
+// Purpose:
+// Input  : *string -
 //-----------------------------------------------------------------------------
 bool CNetworkStringTableItem::SetUserData( int tick, int length, const void *userData )
 {
@@ -185,7 +185,7 @@ bool CNetworkStringTableItem::SetUserData( int tick, int length, const void *use
 	if ( !userData && !m_pUserData )
 		return false;
 
-	if ( m_pUserData && 
+	if ( m_pUserData &&
 		length == m_nUserDataLength &&
 		!Q_memcmp( m_pUserData, (void*)userData, length ) )
 	{
@@ -204,7 +204,7 @@ bool CNetworkStringTableItem::SetUserData( int tick, int length, const void *use
 	}
 	else
 	{
-		m_pUserData = NULL; 
+		m_pUserData = NULL;
 	}
 
 	m_nTickChanged = tick;
@@ -213,8 +213,8 @@ bool CNetworkStringTableItem::SetUserData( int tick, int length, const void *use
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : stringNumber - 
+// Purpose:
+// Input  : stringNumber -
 // Output : const void
 //-----------------------------------------------------------------------------
 const void *CNetworkStringTableItem::GetUserData( int *length )
@@ -224,9 +224,3 @@ const void *CNetworkStringTableItem::GetUserData( int *length )
 
 	return ( const void * )m_pUserData;
 }
-
-
-
-
-
-

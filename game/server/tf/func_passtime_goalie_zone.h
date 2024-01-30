@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,4 +28,4 @@ public:
 	static bool BPlayerInEnemy( CTFPlayer *pPlayer );
 };
 
-#endif // FUNC_PASSTIME_GOALIE_ZONE_H  
+#endif // FUNC_PASSTIME_GOALIE_ZONE_H

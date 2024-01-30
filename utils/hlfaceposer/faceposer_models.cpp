@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -18,7 +18,7 @@
 #include "ViewerSettings.h"
 #include "matsyswin.h"
 #include "KeyValues.h"
-#include "utlbuffer.h" 
+#include "utlbuffer.h"
 #include "expression.h"
 #include "ProgressDialog.h"
 #include "tier1/UtlString.h"
@@ -41,7 +41,7 @@ IFaceposerModels::CFacePoserModel::CFacePoserModel( char const *modelfile, Studi
 
 	CStudioHdr *hdr = model->GetStudioHdr();
 	if ( hdr )
-	{	
+	{
 		Q_StripExtension( hdr->pszName(), m_szShortName, sizeof( m_szShortName ) );
 	}
 
@@ -145,8 +145,8 @@ const char *IFaceposerModels::CFacePoserModel::GetBitmapFilename( int sequence )
 	while ( *in )
 	{
 		if ( V_isalnum( *in ) ||
-			*in == '_' || 
-			*in == '\\' || 
+			*in == '_' ||
+			*in == '\\' ||
 			*in == '/' ||
 			*in == '.' ||
 			*in == ':' )
@@ -164,7 +164,7 @@ const char *IFaceposerModels::CFacePoserModel::GetBitmapFilename( int sequence )
 	strlwr( filename );
 
 	CreatePath( filename );
-	
+
 	return filename;
 }
 
@@ -247,7 +247,7 @@ void IFaceposerModels::CreateNewBitmap( int modelindex, char const *pchBitmapFil
 void IFaceposerModels::CFacePoserModel::CreateNewBitmap( char const *pchBitmapFilename, int sequence, int nSnapShotSize, bool bZoomInOnFace, CExpression *pExpression, mxbitmapdata_t *bitmap )
 {
 	MatSysWindow *pWnd = g_pMatSysWindow;
-	if ( !pWnd ) 
+	if ( !pWnd )
 		return;
 
 	StudioModel *model = m_pModel;
@@ -297,7 +297,7 @@ void IFaceposerModels::CFacePoserModel::CreateNewBitmap( char const *pchBitmapFi
 
 	QAngle oldrot, oldLight;
 	Vector oldtrans;
-	
+
 	VectorCopy( model->m_angles, oldrot );
 	VectorCopy( model->m_origin, oldtrans );
 	VectorCopy( g_viewerSettings.lightrot, oldLight );
@@ -388,7 +388,7 @@ void IFaceposerModels::CFacePoserModel::CreateNewBitmap( char const *pchBitmapFi
 
 	g_pMatSysWindow->PushSnapshotMode( nSnapShotSize );
 
-	// Snapshots are taken of the back buffer; 
+	// Snapshots are taken of the back buffer;
 	// we need to render to the back buffer but not move it to the front
 	pWnd->SuppressBufferSwap( true );
 	pWnd->redraw();
@@ -421,7 +421,7 @@ void IFaceposerModels::CFacePoserModel::CreateNewBitmap( char const *pchBitmapFi
 	}
 
 	model->ClearOverlaysSequences();
-	
+
 	if ( bitmap->valid )
 	{
 		DeleteObject( bitmap->image );
@@ -464,7 +464,7 @@ void IFaceposerModels::CFacePoserModel::BuildValidChecksums( CUtlRBTree< CRC32_t
 
 	CStudioHdr *hdr = model->GetStudioHdr();
 	if ( !hdr )
-		return;	
+		return;
 
 	for ( int i = 0; i < hdr->GetNumSeq(); i++ )
 	{
@@ -525,7 +525,7 @@ void IFaceposerModels::CFacePoserModel::ReconcileAnimationBitmaps()
 			char fullpath[ 512 ];
 			filesystem->RelativePathToFullPath( testname, "MOD", fullpath, sizeof( fullpath ) );
 			// Delete it
-			Con_ErrorPrintf( "Removing unused bitmap file %s\n", 
+			Con_ErrorPrintf( "Removing unused bitmap file %s\n",
 				fullpath );
 
 			_unlink( fullpath );
@@ -549,7 +549,7 @@ void IFaceposerModels::CFacePoserModel::RecreateAllAnimationBitmaps()
 
 	CStudioHdr *hdr = model->GetStudioHdr();
 	if ( !hdr )
-		return;	
+		return;
 
 	g_pProgressDialog->Start( CFmtStr( "%s - Animation Thumbnails", GetShortModelName() ), "", true );
 
@@ -625,7 +625,7 @@ void IFaceposerModels::CFacePoserModel::Restore( void )
 		m_pModel->PostLoadModel( m_pModel->GetFileName() );
 		m_pModel->SetSequence( m_pModel->LookupSequence( "idle_subtle" ) );
 	}
-	
+
 	g_pStudioModel = save;
 
 	SetupModelFlexcontrollerLinks( m_pModel );
@@ -711,7 +711,7 @@ char const *IFaceposerModels::GetActiveModelName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : StudioModel
 //-----------------------------------------------------------------------------
 StudioModel *IFaceposerModels::GetActiveStudioModel( void )
@@ -773,11 +773,11 @@ int IFaceposerModels::LoadModel( char const *filename )
 
 
 		CFacePoserModel *newEntry = new CFacePoserModel( filename, model );
-		
+
 		idx = m_Models.AddToTail( newEntry );
 
 		g_MDLViewer->InitModelTab();
-		
+
 		g_MDLViewer->SetActiveModelTab( idx );
 
 		//g_pControlPanel->CenterOnFace();
@@ -1013,7 +1013,7 @@ void IFaceposerModels::CheckResetFlexes( void )
 
 	m_nLastRenderFrame = current_render_frame;
 
-	// the phoneme editor just adds to the face, so reset the controllers 
+	// the phoneme editor just adds to the face, so reset the controllers
 	int c = Count();
 	for ( int i = 0; i < c; i++ )
 	{
@@ -1085,7 +1085,7 @@ void IFaceposerModels::RecreateAnimationBitmap( int modelindex, int sequence )
 int IFaceposerModels::CountActiveSources()
 {
 	int count = 0;
-	
+
 	int c = Count();
 	for ( int i = 0; i < c; i++ )
 	{

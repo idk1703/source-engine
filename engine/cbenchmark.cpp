@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -40,20 +40,20 @@ CBenchmarkResults::CBenchmarkResults()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBenchmarkResults::IsBenchmarkRunning()
 {
 	return m_bIsTestRunning;
 }
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: starts recording data
 //-----------------------------------------------------------------------------
 void CBenchmarkResults::StartBenchmark( const CCommand &args )
 {
 	const char *pszFilename = DEFAULT_RESULTS_FILENAME;
-	
+
 	if ( args.ArgC() > 1 )
 	{
 		pszFilename = args[1];
@@ -77,7 +77,7 @@ void CBenchmarkResults::StartBenchmark( const CCommand &args )
 	m_iStartFrame = host_framecount;
 	m_flStartTime = realtime;
 }
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: writes out results to file
 //-----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ void CBenchmarkResults::StopBenchmark()
 	int numticks = host_framecount - m_iStartFrame;
 	float framerate = numticks / ( realtime - m_flStartTime );
 	Msg( "Average framerate: %.2f\n", framerate );
-	
+
 	// work out where to write the file
 	g_pFileSystem->CreateDirHierarchy( DEFAULT_RESULTS_FOLDER, "MOD" );
 	char szFilename[256];
@@ -166,4 +166,3 @@ CON_COMMAND_F( bench_upload, "Uploads most recent benchmark stats to the Valve s
 {
 	GetBenchResultsMgr()->Upload();
 }
-

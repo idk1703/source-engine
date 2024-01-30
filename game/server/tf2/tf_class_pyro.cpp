@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,7 @@ CPlayerClassPyro::CPlayerClassPyro( CBaseTFPlayer *pPlayer, TFClass iClass ) : C
 {
 	for (int i = 0; i < MAX_TF_TEAMS; ++i)
 	{
-		SetClassModel( MAKE_STRING(GetClassModelString(i)), i ); 
+		SetClassModel( MAKE_STRING(GetClassModelString(i)), i );
 	}
 }
 
@@ -38,7 +38,7 @@ void CPlayerClassPyro::SetupSizeData()
 	// Initially set the player to the base player class standing hull size.
 	m_pPlayer->SetCollisionBounds( PYROCLASS_HULL_STAND_MIN, PYROCLASS_HULL_STAND_MAX );
 	m_pPlayer->SetViewOffset( PYROCLASS_VIEWOFFSET_STAND );
-	m_pPlayer->m_Local.m_flStepSize = PYROCLASS_STEPSIZE;	
+	m_pPlayer->m_Local.m_flStepSize = PYROCLASS_STEPSIZE;
 }
 
 
@@ -48,7 +48,7 @@ void CPlayerClassPyro::ClassActivate()
 
 	// Setup movement data.
 	SetupMoveData();
-	
+
 	memset( &m_ClassData, 0, sizeof( m_ClassData ) );
 }
 
@@ -84,7 +84,7 @@ void CPlayerClassPyro::CreateClass()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassPyro::SetPlayerHull()
 {
@@ -99,7 +99,7 @@ void CPlayerClassPyro::SetPlayerHull()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassPyro::GetPlayerHull( bool bDucking, Vector &vecMin, Vector &vecMax )
 {
@@ -126,7 +126,7 @@ void CPlayerClassPyro::ResetViewOffset()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassPyro::InitVCollision()
 {
@@ -137,12 +137,12 @@ void CPlayerClassPyro::InitVCollision()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CPlayerClassPyro::ResupplyAmmo( float flFraction, ResupplyReason_t reason )
 {
 	bool bGiven = false;
-	
+
 	if ((reason == RESUPPLY_ALL_FROM_STATION) || (reason == RESUPPLY_AMMO_FROM_STATION))
 	{
 		if (ResupplyAmmoType( 80 * flFraction, PYRO_AMMO_TYPE ))
@@ -161,4 +161,3 @@ bool CPlayerClassPyro::ResupplyAmmo( float flFraction, ResupplyReason_t reason )
 
 	return bGiven;
 }
-

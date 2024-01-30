@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,12 +33,12 @@ inline void SyncTag_Read( bf_read *pBuf, const char *pWantedTag )
 	{
 		char testTag[512];
 		pBuf->ReadString( testTag, sizeof( testTag ) );
-		
+
 		if ( stricmp( testTag, pWantedTag ) != 0 )
 		{
 			Error( "SyncTag_Read: out-of-sync at tag %s", pWantedTag );
 		}
-	}	
+	}
 }
 
 #else

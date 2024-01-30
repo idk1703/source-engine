@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -99,4 +99,3 @@ private:
 };
 
 #endif // FUNC_BREAKABLESURF_H
-

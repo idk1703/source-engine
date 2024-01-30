@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -39,7 +39,7 @@ void CSceneCache::Save( CUtlBuffer& buf  )
 
 	unsigned short c = GetSoundCount();
 	buf.PutShort( c );
-	
+
 	Assert( sounds.Count() <= 65536 );
 
 	for ( int i = 0; i < c; ++i )
@@ -75,8 +75,8 @@ void CSceneCache::Restore( CUtlBuffer& buf  )
 
 //-----------------------------------------------------------------------------
 // Purpose: Static method
-// Input  : *event - 
-//			soundlist - 
+// Input  : *event -
+//			soundlist -
 //-----------------------------------------------------------------------------
 void CSceneCache::PrecacheSceneEvent( CChoreoEvent *event, CUtlVector< unsigned short >& soundlist )
 {

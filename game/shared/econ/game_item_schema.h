@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #ifndef GAME_ITEM_SCHEMA_H
@@ -14,13 +14,13 @@
 	class CTFItemSchema;
 	class CTFItemDefinition;
 	class CTFItemSystem;
-	
+
 	typedef CTFItemSchema		GameItemSchema_t;
 	typedef CTFItemDefinition	GameItemDefinition_t;
 	typedef CTFItemSystem		GameItemSystem_t;
 
 	#include "tf_item_schema.h"
-#elif defined( DOTA_CLIENT_DLL ) || defined( DOTA_DLL ) || defined ( DOTA_GC_DLL ) 
+#elif defined( DOTA_CLIENT_DLL ) || defined( DOTA_DLL ) || defined ( DOTA_GC_DLL )
 // DOTA
 	class CDOTAItemSchema;
 	class CDOTAItemDefinition;

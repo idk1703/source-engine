@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -51,7 +51,7 @@ void CCSBot::RespondToRadioCommands( void )
 			return;
 		}
 	}
-	
+
 	if (m_lastRadioCommand == RADIO_INVALID)
 		return;
 
@@ -144,7 +144,7 @@ void CCSBot::RespondToRadioCommands( void )
 
 		case RADIO_HOLD_THIS_POSITION:
 		{
-			// find the leader's area 
+			// find the leader's area
 			SetTask( HOLD_POSITION );
 			StopFollowing();
 			player->InhibitAutoFollow( inhibitAutoFollowDuration );
@@ -172,7 +172,7 @@ void CCSBot::RespondToRadioCommands( void )
 
 		case RADIO_SECTOR_CLEAR:
 		{
-			// if this is a defusal scenario, and the bomb is planted, 
+			// if this is a defusal scenario, and the bomb is planted,
 			// and a human player cleared a bombsite, check it off our list too
 			if (TheCSBots()->GetScenario() == CCSBotManager::SCENARIO_DEFUSE_BOMB)
 			{
@@ -191,7 +191,7 @@ void CCSBot::RespondToRadioCommands( void )
 						canDo = true;
 					}
 				}
-			}			
+			}
 			break;
 		}
 
@@ -343,4 +343,3 @@ void CCSBot::SpeakAudio( const char *voiceFilename, float duration, int pitch )
 
 	m_voiceEndTimestamp = gpGlobals->curtime + duration;
 }
-

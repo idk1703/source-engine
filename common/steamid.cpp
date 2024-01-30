@@ -11,7 +11,7 @@
 #else
 #include <stdio.h>
 #include "dbg.h"
-#define INCLUDED_STEAM2_USERID_STRUCTS	
+#define INCLUDED_STEAM2_USERID_STRUCTS
 #include "steamcommon.h"
 #include "steam/steamclientpublic.h"
 #include "strtools.h"
@@ -27,38 +27,38 @@
 #endif
 
 static const char *DecimalToUint64( const char *pchStr, uint64 unLimit,
-                                    uint64 *punVal )
+									uint64 *punVal )
 {
-    const char *pchStart = pchStr;
-    uint64 unVal = 0;
+	const char *pchStart = pchStr;
+	uint64 unVal = 0;
 
-    while ( *pchStr >= '0' && *pchStr <= '9' )
-    {
-        uint64 unNext = unVal * 10;
-        
-        if ( unNext < unVal )
-        {
-            // 64-bit overflow.
-            return NULL;
-        }
+	while ( *pchStr >= '0' && *pchStr <= '9' )
+	{
+		uint64 unNext = unVal * 10;
 
-        unVal = unNext + (uint64)( *pchStr - '0' );
-        if ( unVal > unLimit )
-        {
-            // Limit overflow.
-            return NULL;
-        }
+		if ( unNext < unVal )
+		{
+			// 64-bit overflow.
+			return NULL;
+		}
 
-        pchStr++;
-    }
-    if ( pchStr == pchStart )
-    {
-        // No number at all.
-        return NULL;
-    }
+		unVal = unNext + (uint64)( *pchStr - '0' );
+		if ( unVal > unLimit )
+		{
+			// Limit overflow.
+			return NULL;
+		}
 
-    *punVal = unVal;
-    return pchStr;
+		pchStr++;
+	}
+	if ( pchStr == pchStart )
+	{
+		// No number at all.
+		return NULL;
+	}
+
+	*punVal = unVal;
+	return pchStr;
 }
 
 //-----------------------------------------------------------------------------
@@ -83,11 +83,11 @@ void CSteamID::SetFromString( const char *pchSteamID, EUniverse eDefaultUniverse
 	EAccountType eAccountType = k_EAccountTypeIndividual;
 #ifdef DBGFLAG_ASSERT
 	// TF Merge -- Assert is debug-only and we have unused variable warnings on :-/
-    const char *pchSteamIDString = pchSteamID;
+	const char *pchSteamIDString = pchSteamID;
 #endif
-    CSteamID StrictID;
+	CSteamID StrictID;
 
-    StrictID.SetFromStringStrict( pchSteamID, eDefaultUniverse );
+	StrictID.SetFromStringStrict( pchSteamID, eDefaultUniverse );
 
 	if ( *pchSteamID == '[' )
 		pchSteamID++;
@@ -126,9 +126,9 @@ void CSteamID::SetFromString( const char *pchSteamID, EUniverse eDefaultUniverse
 		{
 			InstancedSet( nAccountID, nInstance, eUniverse, eAccountType );
 		}
-        // Catch cases where we're allowing sloppy input that we
-        // might not want to allow.
-        AssertMsg1( this->operator==( StrictID ), "Steam ID does not pass strict parsing: '%s'", pchSteamIDString );
+		// Catch cases where we're allowing sloppy input that we
+		// might not want to allow.
+		AssertMsg1( this->operator==( StrictID ), "Steam ID does not pass strict parsing: '%s'", pchSteamIDString );
 		return;
 	}
 	else if (*pchSteamID == 'G')
@@ -200,35 +200,35 @@ void CSteamID::SetFromString( const char *pchSteamID, EUniverse eDefaultUniverse
 			pchSteamID++; // skip the optional [
 		sscanf( pchSteamID, "%u:%u", (uint*)&eUniverse, &nAccountID );
 		if ( eUniverse == k_EUniverseInvalid )
-			eUniverse = eDefaultUniverse; 
+			eUniverse = eDefaultUniverse;
 	}
 	else
 	{
-        uint64 unVal64 = 0;
-        
+		uint64 unVal64 = 0;
+
 		sscanf( pchSteamID, "%llu", &unVal64 );
-        if ( unVal64 > UINT64_MAX )
-        {
-            // Assume a full 64-bit Steam ID.
-            SetFromUint64( unVal64 );
-            // Catch cases where we're allowing sloppy input that we
-            // might not want to allow.
-            AssertMsg1( this->operator==( StrictID ), "Steam ID does not pass strict parsing: '%s'", pchSteamIDString );
-            return;
-        }
-        else
-        {
-            nAccountID = (uint)unVal64;
-        }
-	}	
-	
+		if ( unVal64 > UINT64_MAX )
+		{
+			// Assume a full 64-bit Steam ID.
+			SetFromUint64( unVal64 );
+			// Catch cases where we're allowing sloppy input that we
+			// might not want to allow.
+			AssertMsg1( this->operator==( StrictID ), "Steam ID does not pass strict parsing: '%s'", pchSteamIDString );
+			return;
+		}
+		else
+		{
+			nAccountID = (uint)unVal64;
+		}
+	}
+
 	Assert( (eUniverse > k_EUniverseInvalid) && (eUniverse < k_EUniverseMax) );
 
 	InstancedSet( nAccountID, nInstance, eUniverse, eAccountType );
 
-    // Catch cases where we're allowing sloppy input that we
-    // might not want to allow.
-    AssertMsg1( this->operator==( StrictID ), "Steam ID does not pass strict parsing: '%s'", pchSteamIDString );
+	// Catch cases where we're allowing sloppy input that we
+	// might not want to allow.
+	AssertMsg1( this->operator==( StrictID ), "Steam ID does not pass strict parsing: '%s'", pchSteamIDString );
 }
 
 // SetFromString allows many partially-correct strings, constraining how
@@ -242,244 +242,244 @@ bool CSteamID::SetFromStringStrict( const char *pchSteamID, EUniverse eDefaultUn
 {
 	uint nAccountID = 0;
 	uint nInstance = 1;
-    uint unMaxVal = 2;
+	uint unMaxVal = 2;
 	EUniverse eUniverse = eDefaultUniverse;
 	EAccountType eAccountType = k_EAccountTypeIndividual;
-    char chPrefix;
-    bool bBracket = false;
-    bool bValid = true;
-    uint64 unVal[3];
-    const char *pchEnd;
+	char chPrefix;
+	bool bBracket = false;
+	bool bValid = true;
+	uint64 unVal[3];
+	const char *pchEnd;
 
-    // Start invalid.
-    Clear();
-    
-    if ( !pchSteamID )
-    {
-        return false;
-    }
-    
+	// Start invalid.
+	Clear();
+
+	if ( !pchSteamID )
+	{
+		return false;
+	}
+
 	if ( *pchSteamID == '[' )
-    {
+	{
 		pchSteamID++;
-        bBracket = true;
-    }
+		bBracket = true;
+	}
 
-    chPrefix = *pchSteamID;
-    switch( chPrefix )
-    {
-    case 'A':
+	chPrefix = *pchSteamID;
+	switch( chPrefix )
+	{
+	case 'A':
 		// This is test only
 		eAccountType = k_EAccountTypeAnonGameServer;
-        unMaxVal = 3;
-        break;
+		unMaxVal = 3;
+		break;
 
-    case 'G':
+	case 'G':
 		eAccountType = k_EAccountTypeGameServer;
-        break;
+		break;
 
-    case 'C':
+	case 'C':
 		eAccountType = k_EAccountTypeContentServer;
-        break;
+		break;
 
-    case 'g':
+	case 'g':
 		eAccountType = k_EAccountTypeClan;
 		nInstance = 0;
-        break;
+		break;
 
-    case 'c':
+	case 'c':
 		eAccountType = k_EAccountTypeChat;
 		nInstance = k_EChatInstanceFlagClan;
-        break;
+		break;
 
-    case 'L':
+	case 'L':
 		eAccountType = k_EAccountTypeChat;
 		nInstance = k_EChatInstanceFlagLobby;
-        break;
+		break;
 
-    case 'T':
+	case 'T':
 		eAccountType = k_EAccountTypeChat;
 		nInstance = 0;	// Anon chat
-        break;
+		break;
 
-    case 'U':
+	case 'U':
 		eAccountType = k_EAccountTypeIndividual;
 		nInstance = 1;
-        break;
+		break;
 
-    case 'i':
+	case 'i':
 		eAccountType = k_EAccountTypeInvalid;
 		nInstance = 1;
-        break;
+		break;
 
-    default:
-        // We're reserving other leading characters so
-        // this should only be the plain-digits case.
-        if (chPrefix < '0' || chPrefix > '9')
-        {
-            bValid = false;
-        }
-        chPrefix = 0;
-        break;
-    }
+	default:
+		// We're reserving other leading characters so
+		// this should only be the plain-digits case.
+		if (chPrefix < '0' || chPrefix > '9')
+		{
+			bValid = false;
+		}
+		chPrefix = 0;
+		break;
+	}
 
-    if ( chPrefix )
-    {
-        pchSteamID++; // skip the prefix
+	if ( chPrefix )
+	{
+		pchSteamID++; // skip the prefix
 		if (*pchSteamID == '-' || *pchSteamID == ':')
 			pchSteamID++; // skip the optional - or :
-    }
+	}
 
-    uint unIdx = 0;
+	uint unIdx = 0;
 
-    for (;;)
-    {
-        pchEnd = DecimalToUint64( pchSteamID, UINT64_MAX, &unVal[unIdx] );
-        if ( !pchEnd )
-        {
-            bValid = false;
-            break;
-        }
+	for (;;)
+	{
+		pchEnd = DecimalToUint64( pchSteamID, UINT64_MAX, &unVal[unIdx] );
+		if ( !pchEnd )
+		{
+			bValid = false;
+			break;
+		}
 
-        unIdx++;
+		unIdx++;
 
-        // For 'A' we can have a trailing instance, which must
-        // be the end of the string.
-        if ( *pchEnd == '(' &&
-             chPrefix == 'A' )
-        {
-            if ( unIdx > 2 )
-            {
-                // Two instance IDs provided.
-                bValid = false;
-            }
-            
-            pchEnd = DecimalToUint64( pchEnd + 1, k_unSteamAccountInstanceMask, &unVal[2] );
-            if ( !pchEnd ||
-                 *pchEnd != ')' )
-            {
-                bValid = false;
-                break;
-            }
-            else
-            {
-                nInstance = (uint)unVal[2];
+		// For 'A' we can have a trailing instance, which must
+		// be the end of the string.
+		if ( *pchEnd == '(' &&
+			chPrefix == 'A' )
+		{
+			if ( unIdx > 2 )
+			{
+				// Two instance IDs provided.
+				bValid = false;
+			}
 
-                pchEnd++;
-                if ( *pchEnd == ':' )
-                {
-                    // Not expecting more values.
-                    bValid = false;
-                    break;
-                }
-            }
-        }
+			pchEnd = DecimalToUint64( pchEnd + 1, k_unSteamAccountInstanceMask, &unVal[2] );
+			if ( !pchEnd ||
+				*pchEnd != ')' )
+			{
+				bValid = false;
+				break;
+			}
+			else
+			{
+				nInstance = (uint)unVal[2];
 
-        if ( *pchEnd != ':' )
-        {
-            if ( bBracket )
-            {
-                if ( *pchEnd != ']' ||
-                     *(pchEnd + 1) != 0 )
-                {
-                    bValid = false;
-                }
-            }
-            else if ( *pchEnd != 0 )
-            {
-                bValid = false;
-            }
+				pchEnd++;
+				if ( *pchEnd == ':' )
+				{
+					// Not expecting more values.
+					bValid = false;
+					break;
+				}
+			}
+		}
 
-            break;
-        }
+		if ( *pchEnd != ':' )
+		{
+			if ( bBracket )
+			{
+				if ( *pchEnd != ']' ||
+					*(pchEnd + 1) != 0 )
+				{
+					bValid = false;
+				}
+			}
+			else if ( *pchEnd != 0 )
+			{
+				bValid = false;
+			}
 
-        if ( unIdx >= unMaxVal )
-        {
-            bValid = false;
-            break;
-        }
+			break;
+		}
 
-        pchSteamID = pchEnd + 1;
-    }
+		if ( unIdx >= unMaxVal )
+		{
+			bValid = false;
+			break;
+		}
 
-    if ( unIdx > 2 )
-    {
-        if ( unVal[2] <= k_unSteamAccountInstanceMask )
-        {
-            nInstance = (uint)unVal[2];
-        }
-        else
-        {
-            bValid = false;
-        }
-    }
-    if ( unIdx > 1 )
-    {
-        if ( unVal[0] >= k_EUniverseInvalid &&
-             unVal[0] < k_EUniverseMax )
-        {
-            eUniverse = (EUniverse)unVal[0];
-            if ( eUniverse == k_EUniverseInvalid )
-                eUniverse = eDefaultUniverse;
-        }
-        else
-        {
-            bValid = false;
-        }
+		pchSteamID = pchEnd + 1;
+	}
 
-        if ( unVal[1] <= k_unSteamAccountIDMask )
-        {
-            nAccountID = (uint)unVal[1];
-        }
-        else
-        {
-            bValid = false;
-        }
-    }
-    else if ( unIdx > 0 )
-    {
-        if ( unVal[0] <= k_unSteamAccountIDMask )
-        {
-            nAccountID = (uint)unVal[0];
-        }
-        else if ( !chPrefix )
-        {
-            if ( bValid )
-            {
-                SetFromUint64( unVal[0] );
-            }
-            return bValid;
-        }
-        else
-        {
-            bValid = false;
-        }
-    }
-    else
-    {
-        bValid = false;
-    }
+	if ( unIdx > 2 )
+	{
+		if ( unVal[2] <= k_unSteamAccountInstanceMask )
+		{
+			nInstance = (uint)unVal[2];
+		}
+		else
+		{
+			bValid = false;
+		}
+	}
+	if ( unIdx > 1 )
+	{
+		if ( unVal[0] >= k_EUniverseInvalid &&
+			unVal[0] < k_EUniverseMax )
+		{
+			eUniverse = (EUniverse)unVal[0];
+			if ( eUniverse == k_EUniverseInvalid )
+				eUniverse = eDefaultUniverse;
+		}
+		else
+		{
+			bValid = false;
+		}
 
-    if ( bValid )
-    {
-        if ( chPrefix == 'A' )
-        {
-            if ( nAccountID == 0 )
-            {
-                // i dont care what number you entered
-                CreateBlankAnonLogon(eUniverse);
-                return bValid;
-            }
-        }
+		if ( unVal[1] <= k_unSteamAccountIDMask )
+		{
+			nAccountID = (uint)unVal[1];
+		}
+		else
+		{
+			bValid = false;
+		}
+	}
+	else if ( unIdx > 0 )
+	{
+		if ( unVal[0] <= k_unSteamAccountIDMask )
+		{
+			nAccountID = (uint)unVal[0];
+		}
+		else if ( !chPrefix )
+		{
+			if ( bValid )
+			{
+				SetFromUint64( unVal[0] );
+			}
+			return bValid;
+		}
+		else
+		{
+			bValid = false;
+		}
+	}
+	else
+	{
+		bValid = false;
+	}
 
-        InstancedSet( nAccountID, nInstance, eUniverse, eAccountType );
-    }
+	if ( bValid )
+	{
+		if ( chPrefix == 'A' )
+		{
+			if ( nAccountID == 0 )
+			{
+				// i dont care what number you entered
+				CreateBlankAnonLogon(eUniverse);
+				return bValid;
+			}
+		}
 
-    return bValid;
+		InstancedSet( nAccountID, nInstance, eUniverse, eAccountType );
+	}
+
+	return bValid;
 }
 
 
-#if defined( INCLUDED_STEAM2_USERID_STRUCTS ) 
+#if defined( INCLUDED_STEAM2_USERID_STRUCTS )
 //-----------------------------------------------------------------------------
 // Purpose: Initializes a steam ID from a Steam2 ID string
 // Input:	pchSteam2ID -	Steam2 ID (as a string #:#:#) to convert
@@ -505,7 +505,7 @@ bool CSteamID::SetFromSteam2String( const char *pchSteam2ID, EUniverse eUniverse
 
 	char cExtraCharCheck = 0;
 
-	int cFieldConverted = sscanf( pchTSteam2ID, "%hu:%u:%u%c", &steam2ID.m_SteamInstanceID, 
+	int cFieldConverted = sscanf( pchTSteam2ID, "%hu:%u:%u%c", &steam2ID.m_SteamInstanceID,
 		&steam2ID.m_SteamLocalUserID.Split.High32bits, &steam2ID.m_SteamLocalUserID.Split.Low32bits, &cExtraCharCheck );
 
 	// Validate the conversion ... a special case is steam2 instance ID 1 which is reserved for special DoD handling
@@ -548,11 +548,11 @@ const char * CSteamID::Render() const
 	else if ( k_EAccountTypeMultiseat == m_steamid.m_comp.m_EAccountType )
 	{
 		V_snprintf( pchBuf, k_cBufLen, "[M:%u:%u:%u]", m_steamid.m_comp.m_EUniverse, m_steamid.m_comp.m_unAccountID, m_steamid.m_comp.m_unAccountInstance );
-	} 
+	}
 	else if ( k_EAccountTypePending == m_steamid.m_comp.m_EAccountType )
 	{
 		V_snprintf( pchBuf, k_cBufLen, "[P:%u:%u]", m_steamid.m_comp.m_EUniverse, m_steamid.m_comp.m_unAccountID );
-	} 
+	}
 	else if ( k_EAccountTypeContentServer == m_steamid.m_comp.m_EAccountType )
 	{
 		V_snprintf( pchBuf, k_cBufLen, "[C:%u:%u]", m_steamid.m_comp.m_EUniverse, m_steamid.m_comp.m_unAccountID );
@@ -633,7 +633,7 @@ bool CSteamID::BValidExternalSteamID() const
 //-----------------------------------------------------------------------------
 // Purpose:	Returns the matching chat steamID, with the default instance of 0
 // Input:	SteamID, either a Clan or a Chat type
-// Output:	SteamID with account type changed to chat, and the Clan flag set. 
+// Output:	SteamID with account type changed to chat, and the Clan flag set.
 //			If account type was not chat to start with, instance will be set to 0
 //-----------------------------------------------------------------------------
 CSteamID ChatIDFromSteamID( const CSteamID &steamID )
@@ -648,7 +648,7 @@ CSteamID ChatIDFromSteamID( const CSteamID &steamID )
 //-----------------------------------------------------------------------------
 // Purpose:	Returns the matching chat steamID, with the default instance of 0
 // Input:	SteamID, either a Clan type or a Chat type w/ the Clan flag set
-// Output:	SteamID with account type changed to clan.  
+// Output:	SteamID with account type changed to clan.
 //			If account type was not clan to start with, instance will be set to 0
 //-----------------------------------------------------------------------------
 CSteamID ClanIDFromSteamID( const CSteamID &steamID )

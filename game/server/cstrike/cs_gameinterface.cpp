@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,7 +18,7 @@ void CServerGameClients::GetPlayerLimits( int& minplayers, int& maxplayers, int 
 {
 	minplayers = 1;  // allow single player for the test maps (but we default to multi)
 	maxplayers = MAX_PLAYERS;
-	
+
 	defaultMaxPlayers = 32;	// Default to 32 players unless they change it.
 }
 
@@ -33,8 +33,6 @@ void CServerGameDLL::LevelInit_ParseAllEntities( const char *pMapEntities )
 	{
 		// don't precache AI responses (hostages) if it's not a hostage rescure map
 		extern IResponseSystem *g_pResponseSystem;
-		g_pResponseSystem->PrecacheResponses( false );	
+		g_pResponseSystem->PrecacheResponses( false );
 	}
 }
-	
-

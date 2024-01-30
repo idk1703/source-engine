@@ -8,7 +8,7 @@ option casemap:none
 ; extern "C" void SaveNonVolatileRegs( uintptr_t regs[8] );
 ; incoming parameter is rcs
 SaveNonVolatileRegs PROC FRAME
-    .endprolog
+	.endprolog
 	mov qword ptr[rcx], rbx
 	mov qword ptr[rcx+8], rbp
 	mov qword ptr[rcx+16], rsi
@@ -53,7 +53,7 @@ Coroutine_Launch_ASM PROC FRAME
 
 	; compute top of stack for coroutine: 40 bytes for stack, 64 for saved regs, 8 for return address
 	; (we do not bother including the additional unused 32 byte shadow space we own above that)
-	lea rax, [rsp+70h]			
+	lea rax, [rsp+70h]
 	mov qword ptr [rcx], rax
 
 	; save off the address of our saved regs so that we can memcpy over them later and trick
@@ -104,32 +104,32 @@ _JUMP_BUFFER ENDS
 
 ;This is the reference asm for __intrinsic_setjmp() in VS2015
 ;mov         qword ptr [rcx],rdx		; intrinsic call site does "mov rdx,rbp" followed by "add rdx,0FFFFFFFFFFFFFFC0h", looks like a nonstandard abi
-;mov         qword ptr [rcx+8],rbx  
-;mov         qword ptr [rcx+18h],rbp  
-;mov         qword ptr [rcx+20h],rsi  
-;mov         qword ptr [rcx+28h],rdi  
-;mov         qword ptr [rcx+30h],r12  
-;mov         qword ptr [rcx+38h],r13  
-;mov         qword ptr [rcx+40h],r14  
-;mov         qword ptr [rcx+48h],r15  
+;mov         qword ptr [rcx+8],rbx
+;mov         qword ptr [rcx+18h],rbp
+;mov         qword ptr [rcx+20h],rsi
+;mov         qword ptr [rcx+28h],rdi
+;mov         qword ptr [rcx+30h],r12
+;mov         qword ptr [rcx+38h],r13
+;mov         qword ptr [rcx+40h],r14
+;mov         qword ptr [rcx+48h],r15
 ;lea         r8,[rsp+8]					; rsp set to post-return address
-;mov         qword ptr [rcx+10h],r8  
-;mov         r8,qword ptr [rsp]  
-;mov         qword ptr [rcx+50h],r8  
-;stmxcsr     dword ptr [rcx+58h]  
-;fnstcw      word ptr [rcx+5Ch]  
-;movdqa      xmmword ptr [rcx+60h],xmm6  
-;ovdqa      xmmword ptr [rcx+70h],xmm7  
-;movdqa      xmmword ptr [rcx+80h],xmm8  
-;movdqa      xmmword ptr [rcx+90h],xmm9  
-;movdqa      xmmword ptr [rcx+0A0h],xmm10  
-;movdqa      xmmword ptr [rcx+0B0h],xmm11  
-;movdqa      xmmword ptr [rcx+0C0h],xmm12  
-;movdqa      xmmword ptr [rcx+0D0h],xmm13  
-;movdqa      xmmword ptr [rcx+0E0h],xmm14  
-;movdqa      xmmword ptr [rcx+0F0h],xmm15  
-;xor         eax,eax  
-;ret  
+;mov         qword ptr [rcx+10h],r8
+;mov         r8,qword ptr [rsp]
+;mov         qword ptr [rcx+50h],r8
+;stmxcsr     dword ptr [rcx+58h]
+;fnstcw      word ptr [rcx+5Ch]
+;movdqa      xmmword ptr [rcx+60h],xmm6
+;ovdqa      xmmword ptr [rcx+70h],xmm7
+;movdqa      xmmword ptr [rcx+80h],xmm8
+;movdqa      xmmword ptr [rcx+90h],xmm9
+;movdqa      xmmword ptr [rcx+0A0h],xmm10
+;movdqa      xmmword ptr [rcx+0B0h],xmm11
+;movdqa      xmmword ptr [rcx+0C0h],xmm12
+;movdqa      xmmword ptr [rcx+0D0h],xmm13
+;movdqa      xmmword ptr [rcx+0E0h],xmm14
+;movdqa      xmmword ptr [rcx+0F0h],xmm15
+;xor         eax,eax
+;ret
 
 
 ; extern "C" void NORETURN Coroutine_LongJmp_UnChecked( jmp_buf buf, int nResult )
@@ -138,7 +138,7 @@ Coroutine_LongJmp_Unchecked PROC
 	;load nResult into result from initial setjmp()
 	xor rax, rax
 	mov eax, edx
-	
+
 	;restore to setjmp() caller state
 	mov rdx, [rcx]._JUMP_BUFFER.m_Frame ; appears to be an error checking value of (_JUMP_BUFFER.m_Rbp + 0FFFFFFFFFFFFFFC0h) passed non-standardly through rdx to setjmp()
 	mov rbx, [rcx]._JUMP_BUFFER.m_Rbx

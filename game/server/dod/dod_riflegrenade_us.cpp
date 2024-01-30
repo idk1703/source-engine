@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -16,12 +16,12 @@ PRECACHE_WEAPON_REGISTER( grenade_riflegren_us );
 IMPLEMENT_SERVERCLASS_ST( CDODRifleGrenadeUS, DT_DODRifleGrenadeUS )
 END_SEND_TABLE()
 
-CDODRifleGrenadeUS* CDODRifleGrenadeUS::Create( 
-	const Vector &position, 
-	const QAngle &angles, 
-	const Vector &velocity, 
-	const AngularImpulse &angVelocity, 
-	CBaseCombatCharacter *pOwner, 
+CDODRifleGrenadeUS* CDODRifleGrenadeUS::Create(
+	const Vector &position,
+	const QAngle &angles,
+	const Vector &velocity,
+	const AngularImpulse &angVelocity,
+	CBaseCombatCharacter *pOwner,
 	float timer,
 	DODWeaponID weaponID )
 {
@@ -39,7 +39,7 @@ CDODRifleGrenadeUS* CDODRifleGrenadeUS::Create(
 	}
 
 	// Who threw this grenade
-	pGrenade->SetThrower( pOwner ); 
+	pGrenade->SetThrower( pOwner );
 
 	pGrenade->ChangeTeam( pOwner->GetTeamNumber() );
 

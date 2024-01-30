@@ -51,7 +51,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TF_PlayerResource::C_TF_PlayerResource()
 {
@@ -70,7 +70,7 @@ C_TF_PlayerResource::C_TF_PlayerResource()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TF_PlayerResource::~C_TF_PlayerResource()
 {
@@ -105,9 +105,9 @@ int C_TF_PlayerResource::GetTeam( int iIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-MM_PlayerConnectionState_t C_TF_PlayerResource::GetPlayerConnectionState( int iIndex ) const 
+MM_PlayerConnectionState_t C_TF_PlayerResource::GetPlayerConnectionState( int iIndex ) const
 {
 	if ( !iIndex || ( iIndex > MAX_PLAYERS ) )
 		return MM_DISCONNECTED;
@@ -138,7 +138,7 @@ int C_TF_PlayerResource::GetStreak( unsigned int iIndex, CTFPlayerShared::ETFStr
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_TF_PlayerResource::GetNumRespecCredits( uint32 unIndex )
 {
@@ -152,7 +152,7 @@ int C_TF_PlayerResource::GetNumRespecCredits( uint32 unIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_TF_PlayerResource::GetNumBuybackCredits( uint32 unIndex )
 {
@@ -166,7 +166,7 @@ int C_TF_PlayerResource::GetNumBuybackCredits( uint32 unIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_TF_PlayerResource::GetCountForPlayerClass( int iTeam, int iClass, bool bExcludeLocalPlayer /*=false*/ )
 {
@@ -190,7 +190,7 @@ int C_TF_PlayerResource::GetCountForPlayerClass( int iTeam, int iClass, bool bEx
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_TF_PlayerResource::GetNumPlayersForTeam( int iTeam, bool bAliveOnly )
 {
@@ -214,7 +214,7 @@ int C_TF_PlayerResource::GetNumPlayersForTeam( int iTeam, bool bAliveOnly )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_TF_PlayerResource::GetDamage( unsigned int nIndex )
 {
@@ -224,7 +224,7 @@ int C_TF_PlayerResource::GetDamage( unsigned int nIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_TF_PlayerResource::GetDamageAssist( unsigned int nIndex )
 {
@@ -234,7 +234,7 @@ int C_TF_PlayerResource::GetDamageAssist( unsigned int nIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_TF_PlayerResource::GetDamageBoss( unsigned int nIndex )
 {
@@ -244,7 +244,7 @@ int C_TF_PlayerResource::GetDamageBoss( unsigned int nIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_TF_PlayerResource::GetHealing( unsigned int nIndex )
 {
@@ -254,7 +254,7 @@ int C_TF_PlayerResource::GetHealing( unsigned int nIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_TF_PlayerResource::GetHealingAssist( unsigned int nIndex )
 {
@@ -264,7 +264,7 @@ int C_TF_PlayerResource::GetHealingAssist( unsigned int nIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_TF_PlayerResource::GetDamageBlocked( unsigned int nIndex )
 {
@@ -274,7 +274,7 @@ int C_TF_PlayerResource::GetDamageBlocked( unsigned int nIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_TF_PlayerResource::GetCurrencyCollected( unsigned int nIndex )
 {
@@ -284,7 +284,7 @@ int C_TF_PlayerResource::GetCurrencyCollected( unsigned int nIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_TF_PlayerResource::GetBonusPoints( unsigned int nIndex )
 {
@@ -294,7 +294,7 @@ int C_TF_PlayerResource::GetBonusPoints( unsigned int nIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TF_PlayerResource::UpdatePlayerScoreStats( void )
 {
@@ -313,7 +313,7 @@ void C_TF_PlayerResource::UpdatePlayerScoreStats( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TF_PlayerResource::ResetPlayerScoreStats( int playerIndex /*= -1*/ )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -78,12 +78,12 @@ CBaseAchievement::~CBaseAchievement()
 //-----------------------------------------------------------------------------
 // Purpose: sets flags
 //-----------------------------------------------------------------------------
-void CBaseAchievement::SetFlags( int iFlags ) 
-{ 
+void CBaseAchievement::SetFlags( int iFlags )
+{
 	// must always specify a save method
 	Assert( iFlags & ( ACH_SAVE_WITH_GAME | ACH_SAVE_GLOBAL ) );
 
-	m_iFlags = iFlags; 
+	m_iFlags = iFlags;
 }
 
 //-----------------------------------------------------------------------------
@@ -255,7 +255,7 @@ void CBaseAchievement::IncrementCount( int iOptIncrement )
 				AwardAchievement();
 			}
 			else
-			{	
+			{
 				HandleProgressUpdate();
 			}
 		}
@@ -288,7 +288,7 @@ void CBaseAchievement::HandleProgressUpdate()
 			// and gets past this point again
 			m_iProgressShown = iProgress;
 			m_pAchievementMgr->SetDirty( true );
-		}					
+		}
 	}
 }
 
@@ -323,19 +323,19 @@ void CBaseAchievement::CalcProgressMsgIncrement()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseAchievement::SetNextThink( float flThinkTime ) 
-{ 
-	m_pAchievementMgr->SetAchievementThink( this, flThinkTime ); 
+void CBaseAchievement::SetNextThink( float flThinkTime )
+{
+	m_pAchievementMgr->SetAchievementThink( this, flThinkTime );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseAchievement::ClearThink( void ) 
-{ 
-	m_pAchievementMgr->SetAchievementThink( this, THINK_CLEAR ); 
+void CBaseAchievement::ClearThink( void )
+{
+	m_pAchievementMgr->SetAchievementThink( this, THINK_CLEAR );
 }
 
 //-----------------------------------------------------------------------------
@@ -418,7 +418,7 @@ void CBaseAchievement::EnsureComponentBitSetAndEvaluate( int iBitNumber )
 
 	// see if we already have gotten this component
 	if ( 0 == ( iBitMask & m_iComponentBits ) )
-	{				
+	{
 		if ( !AlwaysEnabled() && !m_pAchievementMgr->CheckAchievementsEnabled() )
 		{
 			Msg( "Achievements disabled, ignoring achievement component for %s\n", GetName() );
@@ -430,7 +430,7 @@ void CBaseAchievement::EnsureComponentBitSetAndEvaluate( int iBitNumber )
 		if ( m_iCount != m_iGoal )
 		{
 			// save our state at the next good opportunity
-			m_pAchievementMgr->SetDirty( true );		
+			m_pAchievementMgr->SetDirty( true );
 
 			if ( cc_achievement_debug.GetInt() )
 			{
@@ -438,7 +438,7 @@ void CBaseAchievement::EnsureComponentBitSetAndEvaluate( int iBitNumber )
 			}
 
 			ShowProgressNotification();
-		}				
+		}
 	}
 	else
 	{
@@ -448,7 +448,7 @@ void CBaseAchievement::EnsureComponentBitSetAndEvaluate( int iBitNumber )
 		}
 	}
 
-	// Check to see if we've achieved our goal even if the bit is already set 
+	// Check to see if we've achieved our goal even if the bit is already set
 	// (this fixes some older achievements that are stuck in the 9/9 state and could never be evaluated)
 	Assert( m_iCount <= m_iGoal );
 	if ( m_iCount == m_iGoal )
@@ -477,7 +477,7 @@ void CBaseAchievement::ShowProgressNotification()
 #else
 		gameeventmanager->FireEventClientSide( event );
 #endif
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -503,11 +503,11 @@ void CBaseAchievement::PostRestoreSavedGame()
 //-----------------------------------------------------------------------------
 // Purpose: sets component bits for this achievement
 //-----------------------------------------------------------------------------
-void CBaseAchievement::SetComponentBits( uint64 iComponentBits ) 
-{ 
+void CBaseAchievement::SetComponentBits( uint64 iComponentBits )
+{
 	Assert( m_iFlags & ACH_HAS_COMPONENTS );
 	// set the bit field
-	m_iComponentBits = iComponentBits; 
+	m_iComponentBits = iComponentBits;
 	// count how many bits are set and save that as the count
 	int iNumBitsSet = 0;
 	while ( iComponentBits > 0 )
@@ -524,8 +524,8 @@ void CBaseAchievement::SetComponentBits( uint64 iComponentBits )
 //-----------------------------------------------------------------------------
 // Purpose: returns whether we should save this achievement with a save game
 //-----------------------------------------------------------------------------
-bool CBaseAchievement::ShouldSaveWithGame() 
-{ 
+bool CBaseAchievement::ShouldSaveWithGame()
+{
 	// save if we should get saved with the game, have a non-zero count, and have not
 	// been achieved (at which point the achievement state gets saved globally)
 	return ( ( m_iFlags & ACH_SAVE_WITH_GAME ) > 0 && ( GetCount() > 0 ) && !IsAchieved() );
@@ -534,8 +534,8 @@ bool CBaseAchievement::ShouldSaveWithGame()
 //-----------------------------------------------------------------------------
 // Purpose: returns whether we should save this achievement to the global file
 //-----------------------------------------------------------------------------
-bool CBaseAchievement::ShouldSaveGlobal() 
-{ 
+bool CBaseAchievement::ShouldSaveGlobal()
+{
 	// save if we should get saved globally and have a non-zero count, or if we have been achieved, or if the player has pinned this achievement to the HUD
 	return ( ( ( m_iFlags & ACH_SAVE_GLOBAL ) > 0 && ( GetCount() > 0 ) ) || IsAchieved() || ( m_iProgressShown > 0 ) || ShouldShowOnHUD() );
 }
@@ -546,9 +546,9 @@ bool CBaseAchievement::ShouldSaveGlobal()
 bool CBaseAchievement::IsActive()
 {
 	// we're not active if already achieved
-	if ( IsAchieved() )	
+	if ( IsAchieved() )
 		return false;
-	
+
 	// if there's a map filter and we're not on the specified map, we're not active
 	if ( ( m_pMapNameFilter ) && ( 0 != Q_strcmp( m_pAchievementMgr->GetMapName(), m_pMapNameFilter ) ) )
 		return false;
@@ -626,8 +626,8 @@ CFailableAchievement::CFailableAchievement() : CBaseAchievement()
 //-----------------------------------------------------------------------------
 // Purpose: returns whether we should save this achievement with a save game
 //-----------------------------------------------------------------------------
-bool CFailableAchievement::ShouldSaveWithGame() 
-{ 
+bool CFailableAchievement::ShouldSaveWithGame()
+{
 	// save if we should get saved with the game, and are active or have failed
 	return ( ( ( m_iFlags & ACH_SAVE_WITH_GAME ) > 0 ) && ( m_bActivated || m_bFailed ) );
 }
@@ -635,8 +635,8 @@ bool CFailableAchievement::ShouldSaveWithGame()
 //-----------------------------------------------------------------------------
 // Purpose: clears dynamic state for this achievement
 //-----------------------------------------------------------------------------
-void CFailableAchievement::PreRestoreSavedGame() 
-{ 
+void CFailableAchievement::PreRestoreSavedGame()
+{
 	m_bFailed = false;
 	m_bActivated = false;
 
@@ -703,7 +703,7 @@ void CFailableAchievement::OnEvaluationEvent()
 		// we haven't failed and we reached the evaluation point, we've succeeded
 		IncrementCount();
 	}
-	
+
 	if ( cc_achievement_debug.GetInt() )
 	{
 		Msg( "Failable achievement %s has been evaluated (%s), now inactive\n", GetName(), m_bFailed ? "FAILED" : "AWARDED" );
@@ -723,13 +723,13 @@ void CFailableAchievement::SetFailed()
 		if ( cc_achievement_debug.GetInt() )
 		{
 			Msg( "Achievement failed: %s (%s)\n", GetName(), GetName() );
-		}	
-	}	
+		}
+	}
 }
 
 //===========================================
 
-void CAchievement_AchievedCount::Init() 
+void CAchievement_AchievedCount::Init()
 {
 	SetFlags( ACH_SAVE_GLOBAL );
 	SetGoal( 1 );

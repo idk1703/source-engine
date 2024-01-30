@@ -191,7 +191,7 @@ public:
 
 		m_bNameSet = false;
 	}
-	
+
 	~CVMPIConnection()
 	{
 		if ( m_pSocket )
@@ -200,7 +200,7 @@ public:
 
 
 public:
-	
+
 	void HandleDisconnect()
 	{
 		if ( m_pSocket )
@@ -215,26 +215,26 @@ public:
 			// Tell the app.
 			FOR_EACH_LL( g_DisconnectHandlers, i )
 				g_DisconnectHandlers[i]( m_iConnection, str );
-			
+
 			// Free our socket.
 			m_pSocket->Release();
 			m_pSocket = NULL;
 		}
 	}
 
-	
+
 	IThreadedTCPSocket* GetSocket()
 	{
 		return m_pSocket;
 	}
 
-	
+
 	void SetMachineName( const char *pName )
 	{
 		m_MachineName.CopyArray( pName, strlen( pName ) + 1 );
 		m_bNameSet = true;
 	}
-	
+
 	const char* GetMachineName()
 	{
 		return m_MachineName.Base();
@@ -263,7 +263,7 @@ public:
 		// Store it in the global list.
 		CCriticalSectionLock csLock( &g_VMPIMessagesCS );
 		csLock.Lock();
-			
+
 			g_VMPIMessages.AddToTail( pPacket );
 
 			if ( g_VMPIMessages.Count() == 1 )
@@ -281,14 +281,14 @@ public:
 		csLock.Lock();
 
 			m_ErrorString.CopyArray( pErrorString, strlen( pErrorString ) + 1 );
-			
+
 			g_ErrorSockets.AddToTail( this );
-			
+
 			// Notify the main thread that a socket is in trouble!
 			g_ErrorSocketsEvent.SetEvent();
 
 		// Make sure the main thread picks up this error soon.
-		InterlockedIncrement( &m_ErrorSignal );	
+		InterlockedIncrement( &m_ErrorSignal );
 	}
 
 
@@ -302,7 +302,7 @@ public:
 
 
 private:
-	
+
 	CUtlVector<char> m_MachineName;
 	CUtlVector<char> m_ErrorString;
 	long m_ErrorSignal;
@@ -362,7 +362,7 @@ void ParseOptions( int argc, char **argv )
 	{
 		Msg( "%s found.\n", VMPI_GetParamString( mpi_GroupPackets ) );
 		g_bGroupPackets = true;
-	}	
+	}
 
 	const char *pTransmitRate = VMPI_FindArg( argc, argv, VMPI_GetParamString( mpi_FileTransmitRate ), "1" );
 	if ( pTransmitRate )
@@ -382,7 +382,7 @@ void ParseOptions( int argc, char **argv )
 
 	if ( VMPI_FindArg( argc, argv, VMPI_GetParamString( mpi_Stats ) ) )
 		g_bMPI_Stats = true;
-	
+
 	if ( VMPI_FindArg( argc, argv, VMPI_GetParamString( mpi_Stats_TextOutput ) ) )
 		g_bMPI_StatsTextOutput = true;
 }
@@ -393,10 +393,10 @@ void SetupDependencyFilename( CDependencyInfo *pInfo, const char *pPatchDirector
 	char baseExeFilename[512];
 	if ( !GetModuleFileName( GetModuleHandle( NULL ), baseExeFilename, sizeof( baseExeFilename ) ) )
 		Error( "GetModuleFileName failed." );
-	
+
 	// If they're in patch mode, then the dependency files come out of a directory they've passed in.
 	// Otherwise, the files come from the same exe dir we're in (like c:\valve\game\bin).
-	if ( pPatchDirectory ) 
+	if ( pPatchDirectory )
 	{
 		V_strncpy( pInfo->m_DependencyFilesDir, pPatchDirectory, sizeof( pInfo->m_DependencyFilesDir ) );
 	}
@@ -406,7 +406,7 @@ void SetupDependencyFilename( CDependencyInfo *pInfo, const char *pPatchDirector
 		V_StripLastDir( pInfo->m_DependencyFilesDir, sizeof( pInfo->m_DependencyFilesDir ) );
 	}
 
-	// Get the exe filename.	
+	// Get the exe filename.
 	V_strncpy( pInfo->m_OriginalExeFilename, V_UnqualifiedFileName( baseExeFilename ), sizeof( pInfo->m_OriginalExeFilename ) );
 }
 
@@ -450,7 +450,7 @@ void ParseDependencyFile( CDependencyInfo *pInfo, const char *pDepFilename )
 		// Now get the file info.
 		char fullFilename[MAX_PATH];
 		V_ComposeFileName( pInfo->m_DependencyFilesDir, pFile->m_Name, fullFilename, sizeof( fullFilename ) );
-		
+
 		if ( _access( fullFilename, 0 ) == 0 )
 		{
 			pInfo->m_Files.AddToTail( pFile );
@@ -472,7 +472,7 @@ void SetupDependenciesForPatch( CDependencyInfo *pInfo, const char *pPatchDirect
 {
 	char searchStr[MAX_PATH];
 	V_ComposeFileName( pPatchDirectory, "*.*", searchStr, sizeof( searchStr ) );
-	
+
 	_finddata_t data;
 	long handle = _findfirst( searchStr, &data );
 	if ( handle != -1 )
@@ -481,12 +481,12 @@ void SetupDependenciesForPatch( CDependencyInfo *pInfo, const char *pPatchDirect
 		{
 			if ( data.name[0] == '.' || (data.attrib & _A_SUBDIR) != 0 )
 				continue;
-				
+
 			CDependencyInfo::CDependencyFile *pFile = new CDependencyInfo::CDependencyFile;
 			V_strncpy( pFile->m_Name, data.name, sizeof( pFile->m_Name ) );
 			pInfo->m_Files.AddToTail( pFile );
 		} while( _findnext( handle, &data ) == 0 );
-	
+
 		_findclose( handle );
 	}
 }
@@ -497,14 +497,14 @@ void SetupDependencyInfo( CDependencyInfo *pInfo, const char *pDependencyFilenam
 	if ( bPatchMode )
 	{
 		const char *pPatchDirectory = pDependencyFilename;
-		
+
 		SetupDependencyFilename( pInfo, pPatchDirectory );
 		SetupDependenciesForPatch( pInfo, pPatchDirectory );
 	}
 	else
 	{
 		SetupDependencyFilename( pInfo, NULL );
-		
+
 		// Parse the dependency file.
 		char depFilename[MAX_PATH];
 		V_ComposeFileName( pInfo->m_DependencyFilesDir, pDependencyFilename, depFilename, sizeof( depFilename ) );
@@ -585,7 +585,7 @@ static CVMPIConnection* FindConnectionBySocket( IThreadedTCPSocket *pSocket, boo
 	for ( int i=0; i < g_nConnections; i++ )
 		if ( g_Connections[i]->GetSocket() == pSocket )
 			return g_Connections[i];
-	
+
 	return NULL;
 }
 
@@ -630,7 +630,7 @@ bool VMPI_InternalDispatchFn( MessageBuffer *pBuf, int iSource, int iPacketID )
 		else if ( pBuf->data[1] == VMPI_INTERNAL_SUBPACKET_COMMAND_LINE )
 		{
 			pBuf->setOffset( 2 );
-			
+
 			int nArgs;
 			pBuf->read( &nArgs, sizeof( nArgs ) );
 			for ( int i=0; i < nArgs; i++ )
@@ -638,17 +638,17 @@ bool VMPI_InternalDispatchFn( MessageBuffer *pBuf, int iSource, int iPacketID )
 				char str[4096];
 				if ( pBuf->ReadString( str, sizeof( str ) ) == -1 )
 					Error( "Error in ReadString() while reading command line." );
-				
+
 				g_WorkerCommandLine.AddToTail( CopyString( str ) );
 			}
-			
+
 			g_bReceivedWorkerCommandLine = true;
 			return true;
 		}
 		else if ( pBuf->data[1] == VMPI_INTERNAL_SUBPACKET_VERIFY_EXE_NAME )
 		{
 			pBuf->setOffset( 2 );
-			
+
 			if ( pBuf->ReadString( g_MasterExeName, sizeof( g_MasterExeName ) ) == -1 )
 				Error( "Error in ReadString() while reading VMPI_INTERNAL_SUBPACKET_VERIFY_EXE_NAME." );
 
@@ -670,13 +670,13 @@ CDispatchReg g_VMPIInternalDispatchReg( VMPI_INTERNAL_PACKET_ID, VMPI_InternalDi
 void VMPI_SendCommandLine( int argc, char **argv )
 {
 	MessageBuffer mb;
-	
+
 	char cPacketHeader[2] = {VMPI_INTERNAL_PACKET_ID, VMPI_INTERNAL_SUBPACKET_COMMAND_LINE};
 	mb.write( cPacketHeader, sizeof( cPacketHeader ) );
 	mb.write( &argc, sizeof( argc ) );
 	for ( int i=0; i < argc; i++ )
 		mb.WriteString( argv[i] );
-	
+
 	VMPI_SendData( mb.data, mb.getLen(), VMPI_PERSISTENT );
 }
 
@@ -685,7 +685,7 @@ void VMPI_ReceiveCommandLine()
 	// For verification purposes, tell the master we're trying to get the command line.
 	unsigned char chData[2] = {VMPI_INTERNAL_PACKET_ID, VMPI_INTERNAL_SUBPACKET_WAITING_FOR_COMMAND_LINE};
 	VMPI_SendData( chData, sizeof( chData ), VMPI_MASTER_ID );
-	
+
 	double startTime = Plat_FloatTime();
 	while ( !g_bReceivedWorkerCommandLine )
 	{
@@ -700,7 +700,7 @@ void VMPI_ReceiveCommandLine()
 void VMPI_SendExeName()
 {
 	MessageBuffer mb;
-	
+
 	char cPacketHeader[2] = {VMPI_INTERNAL_PACKET_ID, VMPI_INTERNAL_SUBPACKET_VERIFY_EXE_NAME};
 	mb.write( cPacketHeader, sizeof( cPacketHeader ) );
 
@@ -710,7 +710,7 @@ void VMPI_SendExeName()
 
 	V_FileBase( baseExeFilename, fileBase, sizeof( fileBase ) );
 	mb.WriteString( fileBase );
-	
+
 	VMPI_SendData( mb.data, mb.getLen(), VMPI_PERSISTENT );
 }
 
@@ -724,7 +724,7 @@ void VMPI_ReceiveExeName()
 
 		VMPI_DispatchNextMessage( 10 * 1000 );
 	}
-	
+
 	// Now compare the exe name we got with our own.
 	char baseExeFilename[MAX_PATH], fileBase[MAX_PATH];
 	if ( !GetModuleFileName( GetModuleHandle( NULL ), baseExeFilename, sizeof( baseExeFilename ) ) )
@@ -755,7 +755,7 @@ void VMPI_ReceiveExeName()
 class CMasterBroadcaster
 {
 public:
-	
+
 	CMasterBroadcaster();
 	~CMasterBroadcaster();
 
@@ -764,7 +764,7 @@ public:
 
 	// What port is it listening on?
 	int GetListenPort() const;
-	
+
 	// These can be used to allow more workers on or filter who's able to connect
 	int GetMaxWorkers() const;
 	void IncreaseMaxWorkers( int count );
@@ -814,7 +814,7 @@ private:
 	HANDLE m_hThread;
 	CEvent m_hShutdownEvent;
 	CEvent m_hShutdownReply;
-	
+
 	VMPIRunMode m_RunMode;
 	int m_iListenPort;
 	int m_iDownloaderListenPort;
@@ -849,25 +849,25 @@ void CMasterBroadcaster::GetPatchWorkerList( int argc, char **argv )
 				int iArg = i+2 + iWorker;
 				if ( iArg >= argc )
 					Error( "-mpi_PatchWorkers: %d specified for count, but not enough IPs following.\n", workerCount );
-			
+
 				int a, b, c, d;
 				const char *pArg = argv[iArg];
 				sscanf( pArg, "%d.%d.%d.%d", &a, &b, &c, &d );
-				
+
 				CIPAddr addr;
 				addr.Init( a, b, c, d, 0 );
-				m_PatchWorkerIPs.AddToTail( addr );				
+				m_PatchWorkerIPs.AddToTail( addr );
 			}
 			return;
 		}
 	}
 }
 
-bool CMasterBroadcaster::Init( 
-	int argc, 
-	char **argv, 
-	const char *pDependencyFilename, 
-	int nMaxWorkers, 
+bool CMasterBroadcaster::Init(
+	int argc,
+	char **argv,
+	const char *pDependencyFilename,
+	int nMaxWorkers,
 	VMPIRunMode runMode,
 	bool bPatchMode )
 {
@@ -908,7 +908,7 @@ bool CMasterBroadcaster::Init(
 			m_iListenPort = iTest;
 			m_pListenSocket = ThreadedTCP_CreateListener( &m_ConnectionCreator, m_iListenPort );
 			if ( m_pListenSocket )
-				break;				   
+				break;
 		}
 		// No need to create the downloader in SDK mode.
 		if ( m_pListenSocket && !g_bVMPISDKMode )
@@ -918,7 +918,7 @@ bool CMasterBroadcaster::Init(
 				m_iDownloaderListenPort = iTest;
 				if ( m_iDownloaderListenPort == m_iListenPort )
 					continue;
-					
+
 				m_pDownloaderListenSocket = ThreadedTCP_CreateListener( &m_ConnectionCreator, m_iDownloaderListenPort );
 				if ( m_pDownloaderListenSocket )
 					break;
@@ -946,14 +946,14 @@ bool CMasterBroadcaster::Init(
 			m_bPatching = true;
 			if ( VMPI_FindArg( argc, argv, "-mpi_ForcePatch", NULL ) )
 				m_BroadcastInfo.m_bForcePatch = true;
-		
+
 			const char *pArg = VMPI_FindArg( argc, argv, "-mpi_PatchVersion", "0" );
 			float iPatchVersion = atof( pArg );
 			if ( iPatchVersion <= 0 || iPatchVersion >= ((1 << 15) - 1) )
 			{
 				Error( "-mpi_PatchVersion <val> -  val must be between 1.0 and 32767.0" );
 			}
-			
+
 			V_strncpy( m_BroadcastInfo.m_PatchVersion, pArg, sizeof( m_BroadcastInfo.m_PatchVersion ) );
 		}
 		else
@@ -979,14 +979,14 @@ bool CMasterBroadcaster::Init(
 		}
 		// 0th arg is the exe name.
 		m_BroadcastInfo.m_Args.InsertBefore( 0, CopyString( m_BroadcastInfo.m_WorkerExeFilename ) );
-		
+
 		// Now add arguments for each file they need to transmit. The service will use this to get all the files from the master before it starts the app.
 		for ( int i=0; i < dependencyInfo.m_Files.Count(); i++ )
 		{
 			m_BroadcastInfo.m_Args.InsertAfter( 0, "-mpi_file" );
 			m_BroadcastInfo.m_Args.InsertAfter( 1, CopyString( dependencyInfo.m_Files[i]->m_Name ) );
 		}
-		
+
 		// Add -mpi_filebase so it can use absolute paths with the filesystem so we get the exact right set of files.
 		m_BroadcastInfo.m_Args.InsertAfter( 0, "-mpi_filebase" );
 		m_BroadcastInfo.m_Args.InsertAfter( 1, CopyString( dependencyInfo.m_DependencyFilesDir ) );
@@ -996,20 +996,20 @@ bool CMasterBroadcaster::Init(
 			GetPatchWorkerList( argc, argv );
 		}
 	}
-	
+
 
 	// Add ourselves as the first process (rank 0).
 	m_ConnectionCreator.CreateNewHandler();
 
 	// Initiate as many connections as we can for a few seconds.
 	m_LastSendTime = Plat_MSTime() - MASTER_BROADCAST_INTERVAL*2;
-	
-	
+
+
 	m_hShutdownEvent.Init( false, false );
 	m_hShutdownReply.Init( false, false );
 
 	DWORD dwThreadID = 0;
-	m_hThread = CreateThread( 
+	m_hThread = CreateThread(
 		NULL,
 		0,
 		&CMasterBroadcaster::StaticThreadFn,
@@ -1035,7 +1035,7 @@ void CMasterBroadcaster::BuildBroadcastPacket( bf_write &buf )
 	buf.WriteByte( VMPI_PROTOCOL_VERSION );
 
 	buf.WriteString( m_BroadcastInfo.m_Password );
-	
+
 	if ( m_BroadcastInfo.m_PatchVersion[0] == 0 )
 		buf.WriteByte( VMPI_LOOKING_FOR_WORKERS );
 	else
@@ -1056,7 +1056,7 @@ void CMasterBroadcaster::BuildBroadcastPacket( bf_write &buf )
 	// if a job crashes the workers - by looking at the command line in vmpi_service, you can see who ran the job.
 	buf.WriteString( "-mpi_MasterName" );
 	buf.WriteString( VMPI_GetLocalMachineName() );
-	
+
 	for ( int i=1; i < m_BroadcastInfo.m_Args.Count(); i++ )
 		buf.WriteString( m_BroadcastInfo.m_Args[i] );
 
@@ -1077,7 +1077,7 @@ bool CMasterBroadcaster::Update()
 
 	// Only broadcast our presence so often.
 	if ( m_pSocket )
-	{									  
+	{
 		DWORD curTime = Plat_MSTime();
 		if ( curTime - m_LastSendTime >= MASTER_BROADCAST_INTERVAL )
 		{
@@ -1093,7 +1093,7 @@ bool CMasterBroadcaster::Update()
 					for ( int i=0; i < m_PatchWorkerIPs.Count(); i++ )
 					{
 						CIPAddr addr = m_PatchWorkerIPs[i];
-						addr.port = iBroadcastPort;						
+						addr.port = iBroadcastPort;
 						m_pSocket->SendTo( &addr, packetBuf.GetBasePointer(), packetBuf.GetNumBytesWritten() );
 					}
 				}
@@ -1105,10 +1105,10 @@ bool CMasterBroadcaster::Update()
 
 			// We don't want them to keep patching over and over.
 			if ( m_PatchWorkerIPs.Count() > 0 && m_BroadcastInfo.m_bForcePatch )
-				m_PatchWorkerIPs.Purge();		 
+				m_PatchWorkerIPs.Purge();
 
 			m_LastSendTime = curTime;
-		}	
+		}
 	}
 
 	// First look for normal workers.
@@ -1117,7 +1117,7 @@ bool CMasterBroadcaster::Update()
 
 	// Now look for downloaders.
 	if ( !bRet || !pNewConn )
-	{									   
+	{
 		if ( m_pDownloaderListenSocket )
 		{
 			int nDownloadersAllowed = (m_nMaxWorkers - nActiveConnections) + 8; // Don't allow too many downloaders.
@@ -1136,7 +1136,7 @@ bool CMasterBroadcaster::Update()
 			if ( pVMPIConnection )
 				pVMPIConnection->m_bIsAService = true;
 		}
-		
+
 		// Send this guy all the persistent packets.
 		CCriticalSectionLock csLock( &g_PersistentPacketsCS );
 		csLock.Lock();
@@ -1188,7 +1188,7 @@ void CMasterBroadcaster::Term()
 		CloseHandle( m_hThread );
 		m_hThread = 0;
 	}
-	
+
 	if ( m_pSocket )
 	{
 		m_pSocket->Release();
@@ -1231,7 +1231,7 @@ void CMasterBroadcaster::IncreaseMaxWorkers( int count )
 
 	m_nMaxWorkers = min( MAX_VMPI_CONNECTIONS, m_nMaxWorkers + count );
 }
-	
+
 void CMasterBroadcaster::SetPassword( const char *pPassword )
 {
 	CCriticalSectionLock connectionsLock( &g_ConnectionsCS );
@@ -1244,13 +1244,13 @@ void CMasterBroadcaster::SetNoTimeoutOption()
 	CCriticalSectionLock connectionsLock( &g_ConnectionsCS );
 	connectionsLock.Lock();
 
-	// Don't re-add the option if it's already there.	
+	// Don't re-add the option if it's already there.
 	for ( int i=1; i < m_BroadcastInfo.m_Args.Count(); i++ )
 	{
 		if ( Q_stricmp( m_BroadcastInfo.m_Args[i], VMPI_GetParamString( mpi_NoTimeout ) ) == 0 )
 			return;
 	}
-	
+
 	m_BroadcastInfo.m_Args.InsertAfter( 0, (char*)VMPI_GetParamString( mpi_NoTimeout ) );
 }
 
@@ -1275,13 +1275,13 @@ void VMPI_HandleTimingWait_Worker()
 	if ( VMPI_IsParamUsed( mpi_TimingWait ) )
 	{
 		Msg( "-mpi_TimingWait specified. Waiting for master to start..." );
-		
+
 		// Wait for the signal to go.
 		while ( !g_bTimingWaitDone )
 		{
 			VMPI_DispatchNextMessage( 50 );
 		}
-		
+
 		Msg( "\n ");
 	}
 }
@@ -1294,7 +1294,7 @@ void VMPI_HandleTimingWait_Master()
 		Msg( "-mpi_TimingWait specified. Waiting for a keypress to continue... " );
 		getch();
 		Msg( "\n" );
-		
+
 		unsigned char cPacket[2] = { VMPI_INTERNAL_PACKET_ID, VMPI_INTERNAL_SUBPACKET_TIMING_WAIT_DONE };
 		VMPI_SendData( cPacket, sizeof( cPacket ), VMPI_PERSISTENT );
 	}
@@ -1329,7 +1329,7 @@ Retry:;
 	for ( iPort=iFirstPort; iPort <= iLastPort; iPort++ )
 	{
 		pConnectSocket = ThreadedTCP_CreateConnector(
-			masterAddr, 
+			masterAddr,
 			CIPAddr( 0, 0, 0, 0, iPort ),
 			&connectionCreator );
 
@@ -1352,14 +1352,14 @@ Retry:;
 			{
 				// Send the master our machine name.
 				VMPI_SendMachineNameTo( VMPI_MASTER_ID );
-				
+
 				// Verify that the exe is correct.
 				VMPI_ReceiveExeName();
 
 				if ( g_bVMPISDKMode )
 				{
 					VMPI_ReceiveCommandLine();
-				
+
 					CommandLine()->CreateCmdLine( g_WorkerCommandLine.Count(), g_WorkerCommandLine.Base() );
 					argc = g_WorkerCommandLine.Count();
 					argv = g_WorkerCommandLine.Base();
@@ -1380,7 +1380,7 @@ Retry:;
 			pConnectSocket->Release();
 			Error( "ITCPConnectSocket::Update() errored out" );
 		}
-		
+
 		if( wait.ShouldKeepWaiting() )
 			Sleep( 100 );
 		else
@@ -1423,7 +1423,7 @@ bool SpawnLocalWorker( int argc, char **argv, int iListenPort, bool bShowConsole
 				Q_strncat( commandLine, VMPI_GetParamString( mpi_SDKMode ), sizeof( commandLine ), COPY_ALL_CHARACTERS );
 			}
 		}
-		
+
 		if ( i >= argc )
 			break;
 
@@ -1445,9 +1445,9 @@ bool SpawnLocalWorker( int argc, char **argv, int iListenPort, bool bShowConsole
 	PROCESS_INFORMATION pi;
 	memset( &pi, 0, sizeof( pi ) );
 
-	if ( CreateProcess( 
-		NULL, 
-		commandLine, 
+	if ( CreateProcess(
+		NULL,
+		commandLine,
 		NULL,							// security
 		NULL,
 		TRUE,
@@ -1497,8 +1497,8 @@ bool InitMaster( int argc, char **argv, const char *pDependencyFilename, VMPIRun
 	// Send the base filename of the exe we're running. Sometimes if we run vvis followed by vrad
 	// really quickly, the old vvis workers can connect to the vrad process and mess with it.
 	VMPI_SendExeName();
-	
-	// In SDK mode, the master sends the command line to the workers since 
+
+	// In SDK mode, the master sends the command line to the workers since
 	// the workers weren't given a full command line by vmpi_service.
 	if ( VMPI_IsSDKMode() )
 	{
@@ -1519,12 +1519,12 @@ bool InitMaster( int argc, char **argv, const char *pDependencyFilename, VMPIRun
 		{
 			Msg( "%s found. Spawning a local worker automatically.\n", VMPI_GetParamString( mpi_AutoLocalWorker ) );
 			SpawnLocalWorker( 1, argv, g_MasterBroadcaster.GetListenPort(), true );
-		}		
+		}
 
 		bRet = true;
 	}
 
-	VMPI_HandleTimingWait_Master();	
+	VMPI_HandleTimingWait_Master();
 	return bRet;
 }
 
@@ -1546,14 +1546,14 @@ void VMPI_InitGlobals( int argc, char **argv, VMPIRunMode runMode )
 	}
 
 	#if defined( _DEBUG )
-		
+
 		for ( int iArg=0; iArg < argc; iArg++ )
 		{
 			Warning( "%s\n", argv[iArg] );
 		}
-		
+
 		Warning( "\n" );
-	
+
 	#endif
 }
 
@@ -1563,11 +1563,11 @@ bool VMPI_CheckForNonSDKExecutables()
 	char baseExeFilename[512];
 	if ( !GetModuleFileName( GetModuleHandle( NULL ), baseExeFilename, sizeof( baseExeFilename ) ) )
 		Error( "VMPI_CheckSDKMode -> GetModuleFileName failed." );
-	
+
 	V_StripLastDir( baseExeFilename, sizeof( baseExeFilename ) );
 	V_AppendSlash( baseExeFilename, sizeof( baseExeFilename ) );
 	V_strncat( baseExeFilename, "mysql_wrapper.dll", sizeof( baseExeFilename ) );
-	
+
 	// If vmpi_transfer.exe doesn't exist, then we assume we're in SDK mode.
 	return ( _access( baseExeFilename, 0 ) == 0 );
 }
@@ -1649,7 +1649,7 @@ bool IsValidSDKBinPath( CUtlVector< char* > &outStrings, int *pError )
 	{
 		*pError = 6;
 		return false;
-	}	
+	}
 
 	return true;
 }
@@ -1682,7 +1682,7 @@ void VMPI_CheckSDKMode( int argc, char **argv )
 {
 	g_bVMPISDKMode = !VMPI_CheckForNonSDKExecutables();
 	g_bVMPISDKModeSet = true;
-		
+
 	// Also check for -mpi_sdkmode (only used in testing).
 	if ( !g_bVMPISDKMode )
 	{
@@ -1696,7 +1696,7 @@ void VMPI_CheckSDKMode( int argc, char **argv )
 	}
 
 	if ( g_bVMPISDKMode )
-	{	
+	{
 		Msg( "VMPI running in SDK mode.\n" );
 	}
 }
@@ -1705,7 +1705,7 @@ void VMPI_CheckSDKMode( int argc, char **argv )
 void VMPI_SetupAutoRestartParameters( int argc, char **argv )
 {
 	if ( VMPI_FindArg( argc, argv, VMPI_GetParamString( mpi_AutoRestart ) ) )
-	{	
+	{
 		g_OriginalCommandLineParameters.SetSize( argc );
 		for ( int i=0; i < argc; i++ )
 		{
@@ -1741,9 +1741,9 @@ bool VMPI_HandleAutoRestart()
 	PROCESS_INFORMATION pi;
 	memset( &pi, 0, sizeof( pi ) );
 
-	if ( CreateProcess( 
-		NULL, 
-		commandLine, 
+	if ( CreateProcess(
+		NULL,
+		commandLine,
 		NULL,							// security
 		NULL,
 		TRUE,
@@ -1766,10 +1766,10 @@ bool VMPI_HandleAutoRestart()
 }
 
 
-bool VMPI_Init( 
-	int &argc, 
-	char **&argv, 
-	const char *pDependencyFilename, 
+bool VMPI_Init(
+	int &argc,
+	char **&argv,
+	const char *pDependencyFilename,
 	VMPI_Disconnect_Handler handler,
 	VMPIRunMode runMode,
 	bool bConnectingAsService
@@ -1791,7 +1791,7 @@ bool VMPI_Init(
 		addr.port = VMPI_MASTER_FIRST_PORT;
 		if ( !ConvertStringToIPAddr( pMasterIP, &addr ) )
 			Error( "Unable to parse or resolve master IP (%s).\n", pMasterIP );
-		
+
 		return MPI_Init_Worker( argc, argv, addr, bConnectingAsService );
 	}
 	else
@@ -1801,7 +1801,7 @@ bool VMPI_Init(
 			Error( "VMPI started as master, but no dependency filename specified.\n" );
 			return false;
 		}
-		
+
 		return InitMaster( argc, argv, pDependencyFilename, runMode, false );
 	}
 }
@@ -1814,7 +1814,7 @@ void VMPI_Init_PatchMaster( int argc, char **argv )
 		Error( "-mpi_PatchDirectory <dir> must be specified if using -PatchHost mode." );
 
 	VMPI_InitGlobals( argc, argv, VMPI_RUN_NETWORKED );
-		
+
 	InitMaster( argc, argv, pPatchDirectory, VMPI_RUN_NETWORKED, true );
 }
 
@@ -1839,7 +1839,7 @@ void VMPI_Finalize()
 	g_VMPIMessages.Purge();
 
 	g_PersistentPackets.PurgeAndDeleteElements();
-	
+
 	// Get rid of the message buffers
 	g_DispatchBuffers.Purge();
 
@@ -1848,9 +1848,9 @@ void VMPI_Finalize()
 		FreeLibrary( g_hKernel32DLL );
 		g_hKernel32DLL = NULL;
 	}
-	
+
 	g_WorkerCommandLine.PurgeAndDeleteElements();
-	
+
 	VMPI_HandleAutoRestart();
 }
 
@@ -1878,7 +1878,7 @@ void InternalHandleSocketErrors()
 	// Copy the list of sockets with errors into a local array so we can handle all the errors outside
 	// the mutex, thus avoiding potential deadlock if any error handlers call Error().
 	CUtlVector<CVMPIConnection*> errorSockets;
-	
+
 	CCriticalSectionLock csLock( &g_ErrorSocketsCS );
 	csLock.Lock();
 
@@ -1917,7 +1917,7 @@ void VMPI_HandleSocketErrors( unsigned long timeout )
 bool VMPI_GetNextMessage( MessageBuffer *pBuf, int *pSource, unsigned long startTimeout )
 {
 	HANDLE handles[2] = { g_ErrorSocketsEvent.GetEventHandle(), g_VMPIMessagesEvent.GetEventHandle() };
-	
+
 	DWORD startTime = Plat_MSTime();
 	DWORD timeout = startTimeout;
 
@@ -1964,18 +1964,18 @@ GrabNextMessage:;
 						int curPacketLen = *((int*)&pBase[iCurOffset]);
 						if ( iCurOffset + curPacketLen > pPacket->GetLen() )
 							Error( "Invalid chunked packet\n" );
-							
+
 						iCurOffset += 4;
-											 
+
 						CTCPPacket *pChunkPacket = (CTCPPacket*)malloc( sizeof( CTCPPacket ) + curPacketLen - 1 );
 						pChunkPacket->m_Len = curPacketLen;
 						pChunkPacket->m_UserData = pPacket->m_UserData;
 						memcpy( pChunkPacket->m_Data, &pBase[iCurOffset], curPacketLen );
-						groupedPackets.AddToTail( pChunkPacket );					
-						
+						groupedPackets.AddToTail( pChunkPacket );
+
 						iCurOffset += curPacketLen;
 					}
-					
+
 					for ( int i=0; i < groupedPackets.Count(); i++ )
 					{
 						g_VMPIMessages.AddToHead( groupedPackets[groupedPackets.Count() - i - 1] );
@@ -1997,11 +1997,11 @@ GrabNextMessage:;
 
 			*pSource = pPacket->GetUserData();
 			Assert( *pSource >= 0 && *pSource < g_nConnections );
-			
+
 			// Update global stats about how much data we've received.
 			++g_nMessagesReceived;
 			g_nBytesReceived += pPacket->GetLen() + 4;	// (4 bytes extra for the packet length)
-			
+
 			// Free the memory associated with the packet.
 			pPacket->Release();
 			return true;
@@ -2022,7 +2022,7 @@ bool VMPI_InternalDispatch( MessageBuffer *pBuf, int iSource )
 		g_VMPIDispatch[pBuf->data[0]] )
 	{
 		return g_VMPIDispatch[ pBuf->data[0] ]( pBuf, iSource, pBuf->data[0] );
-		
+
 	}
 	else
 	{
@@ -2076,9 +2076,9 @@ bool VMPI_DispatchUntil( MessageBuffer *pBuf, int *pSource, int packetID, int su
 	{
 		if ( !VMPI_GetNextMessage( pBuf, pSource, bWait ? VMPI_TIMEOUT_INFINITE : 0 ) )
 			return false;
-		
+
 		if ( !VMPI_InternalDispatch( pBuf, *pSource ) )
-		{		
+		{
 			if ( pBuf->getLen() >= 1 && (unsigned char)pBuf->data[0] == packetID )
 			{
 				if ( subPacketID == -1 )
@@ -2087,7 +2087,7 @@ bool VMPI_DispatchUntil( MessageBuffer *pBuf, int *pSource, int packetID, int su
 				if ( pBuf->getLen() >= 2 && (unsigned char)pBuf->data[1] == subPacketID )
 					return true;
 			}
-		
+
 			// Oops! What is this packet?
 			// Note: the most common case where this happens is if it finishes a BuildFaceLights run
 			// and is in an AppBarrier and one of the workers is still finishing up some work given to it.
@@ -2142,7 +2142,7 @@ void VMPI_GroupPackets( CVMPIConnection *pConn, void const * const *pChunks, con
 	int nTotalLength = 0;
 	for ( int i=0; i < nChunks; i++ )
 		nTotalLength += pChunkLengths[i];
-	
+
 	char *pOut = new char[nTotalLength + 4];
 	*((int*)pOut) = nTotalLength;
 	int iOutByte = 4;
@@ -2151,7 +2151,7 @@ void VMPI_GroupPackets( CVMPIConnection *pConn, void const * const *pChunks, con
 		memcpy( &pOut[iOutByte], pChunks[i], pChunkLengths[i] );
 		iOutByte += pChunkLengths[i];
 	}
-	
+
 	pConn->m_GroupedChunks.AddToTail( pOut );
 	pConn->m_GroupedChunkLengths.AddToTail( nTotalLength + 4 );
 }
@@ -2173,16 +2173,16 @@ void VMPI_FlushGroupedPackets( unsigned long msInterval )
 	for ( int i=0; i < g_nConnections; i++ )
 	{
 		CVMPIConnection *pConn = g_Connections[i];
-		
+
 		if ( !pConn )
 			continue;
-		
+
 		IThreadedTCPSocket *pSocket = pConn->GetSocket();
 		if ( !pSocket || pConn->m_GroupedChunks.Count() == 0 )
 			continue;
 
 		pSocket->SendChunks( pConn->m_GroupedChunks.Base(), pConn->m_GroupedChunkLengths.Base(), pConn->m_GroupedChunks.Count() );
-		
+
 		// Free the chunks.
 		for ( int i=1; i < pConn->m_GroupedChunks.Count(); i++ )
 		{
@@ -2190,7 +2190,7 @@ void VMPI_FlushGroupedPackets( unsigned long msInterval )
 		}
 		pConn->m_GroupedChunks.RemoveAll();
 		pConn->m_GroupedChunkLengths.RemoveAll();
-	}	
+	}
 }
 
 
@@ -2229,7 +2229,7 @@ bool VMPI_SendChunks( void const * const *pChunks, const int *pChunkLengths, int
 
 			g_PersistentPackets.AddToTail( pNew );
 		}
-	
+
 		return true;
 	}
 	else
@@ -2250,7 +2250,7 @@ bool VMPI_SendChunks( void const * const *pChunks, const int *pChunkLengths, int
 			IThreadedTCPSocket *pSocket = pConnection->GetSocket();
 			if ( !pSocket )
 				return false;
-			
+
 			if ( g_bGroupPackets && (fVMPISendFlags & k_eVMPISendFlags_GroupPackets) )
 			{
 				VMPI_GroupPackets( pConnection, pChunks, pChunkLengths, nChunks );
@@ -2330,7 +2330,7 @@ const char* VMPI_GetMachineName( int iProc )
 {
 	if ( g_bMPIMaster && iProc == VMPI_MASTER_ID )
 		return VMPI_GetLocalMachineName();
-	
+
 	if ( iProc < 0 || iProc >= g_nConnections )
 	{
 		Assert( false );
@@ -2394,7 +2394,7 @@ void VMPI_GetCurrentStage( char *pOut, int strLen )
 	csLock.Lock();
 	Q_strncpy( pOut, g_CurrentStageString, strLen );
 }
-	
+
 
 void VMPI_SetCurrentStage( const char *pCurStage )
 {
@@ -2413,7 +2413,7 @@ void VMPI_InviteDebugWorkers()
 	g_MasterBroadcaster.SetNoTimeoutOption();
 	ThreadedTCP_EnableTimeouts( false );
 
-	// Let in some more workers.	
+	// Let in some more workers.
 	g_MasterBroadcaster.IncreaseMaxWorkers( 25 );
 }
 
@@ -2474,5 +2474,3 @@ const char* VMPI_GetParamHelpString( EVMPICmdLineParam eParam )
 		return g_VMPIParams[eParam].m_pHelpText;
 	}
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -94,7 +94,7 @@ void AddToLog( const char *pMsg )
 SpewRetval_t MySpewOutputFunc( SpewType_t spewType, const tchar *pMsg )
 {
 	AddToLog( pMsg );
-	
+
 	if ( spewType == SPEW_MESSAGE || spewType == SPEW_WARNING )
 	{
 		// Format the message and send it to the control.
@@ -122,14 +122,14 @@ SpewRetval_t MySpewOutputFunc( SpewType_t spewType, const tchar *pMsg )
 		SendMessage( g_hMessageControl, EM_SETSEL, nLen, nLen );
 		SendMessage( g_hMessageControl, EM_REPLACESEL, FALSE, (LPARAM)msg.Base() );
 	}
-	
+
 	// Show a message box for warnings and errors.
 	if ( spewType == SPEW_ERROR || spewType == SPEW_WARNING )
 	{
 		if ( !g_bNoOutput )
 			AfxMessageBox( pMsg, MB_OK );
 	}
-	
+
 	if ( spewType == SPEW_ERROR	)
 	{
 		CloseLog();
@@ -152,7 +152,7 @@ void ScanDirectory( const char *pDirName, CUtlVector<CString> &subDirs, CUtlVect
 	HANDLE hFile = ::FindFirstFile( strPattern, &fileInfo );
 	if ( hFile == INVALID_HANDLE_VALUE )
 		return;
-		
+
 	do
 	{
 		if ( fileInfo.cFileName[0] == '.' )
@@ -161,7 +161,7 @@ void ScanDirectory( const char *pDirName, CUtlVector<CString> &subDirs, CUtlVect
 		if ( fileInfo.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY )
 			subDirs.AddToTail( fileInfo.cFileName );
 		else
-			files.AddToTail( fileInfo.cFileName );			
+			files.AddToTail( fileInfo.cFileName );
 	} while( ::FindNextFile(hFile, &fileInfo) );
 
 	::FindClose( hFile );
@@ -179,17 +179,17 @@ int DeleteDirectory( const char *pRootDir, bool bDeleteSubdirectories, char erro
 	if ( bDeleteSubdirectories && !g_bReinstalling )
 	{
 		for ( int i=0; i < subDirs.Count(); i++ )
-		{	
+		{
 			char fullName[MAX_PATH];
 			V_ComposeFileName( pRootDir, subDirs[i], fullName, sizeof( fullName ) );
-			
+
 			// Delete subdirectory
 			int iRC = DeleteDirectory( fullName, bDeleteSubdirectories, errorFile );
 			if ( iRC )
 				return iRC;
 		}
 	}
-	
+
 	for ( int i=0; i < files.Count(); i++ )
 	{
 		char fullName[MAX_PATH];
@@ -235,7 +235,7 @@ bool CreateDirectory_R( const char *pDirName )
 
 	if ( _access( pDirName, 0 ) == 0 )
 		return true;
-			
+
 	return CreateDirectory( pDirName, NULL ) || GetLastError() == ERROR_ALREADY_EXISTS;
 }
 
@@ -275,48 +275,48 @@ bool CreateStartMenuLink( const char *pSubFolderName, const char *pLinkName, con
 	char fullFolderName[MAX_PATH];
 	if ( !SetupStartMenuSubFolderName( pSubFolderName, fullFolderName, sizeof( fullFolderName ) ) )
 		return false;
-	
+
 	// Create the folder if necessary.
 	if ( !CreateDirectory_R( fullFolderName ) )
 	{
 		Msg( "CreateStartMenuLink failed - can't create directory %s.\n", fullFolderName );
 		return false;
 	}
-	
-	IShellLink* psl = NULL; 
 
-	// Get a pointer to the IShellLink interface. 
+	IShellLink* psl = NULL;
+
+	// Get a pointer to the IShellLink interface.
 	bool bRet = false;
 	CoInitialize( NULL );
-	HRESULT hres = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, reinterpret_cast<void**>(&psl)); 
-	if (SUCCEEDED(hres)) 
-	{ 
+	HRESULT hres = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, reinterpret_cast<void**>(&psl));
+	if (SUCCEEDED(hres))
+	{
 		psl->SetPath( pLinkTarget );	// Set the path to the shortcut target
 		if ( pArguments )
 			psl->SetArguments( pArguments );
 
-		// Query IShellLink for the IPersistFile interface for saving 
-		//the shortcut in persistent storage. 
-		IPersistFile* ppf = NULL; 
+		// Query IShellLink for the IPersistFile interface for saving
+		//the shortcut in persistent storage.
+		IPersistFile* ppf = NULL;
 		hres = psl->QueryInterface( IID_IPersistFile, reinterpret_cast<void**>(&ppf) );
-		if (SUCCEEDED(hres)) 
-		{ 
+		if (SUCCEEDED(hres))
+		{
 			// Setup the filename for the link.
 			char linkFilename[MAX_PATH];
 			V_ComposeFileName( fullFolderName, pLinkName, linkFilename, sizeof( linkFilename ) );
 			V_strncat( linkFilename, ".lnk", sizeof( linkFilename ) );
 
-			// Ensure that the string is ANSI. 
-			WCHAR wsz[MAX_PATH]; 
-			MultiByteToWideChar(CP_ACP, 0, linkFilename, -1, wsz, MAX_PATH); 
+			// Ensure that the string is ANSI.
+			WCHAR wsz[MAX_PATH];
+			MultiByteToWideChar(CP_ACP, 0, linkFilename, -1, wsz, MAX_PATH);
 
-			// Save the link by calling IPersistFile::Save. 
+			// Save the link by calling IPersistFile::Save.
 			hres = ppf->Save( wsz, TRUE );
-			ppf->Release(); 
+			ppf->Release();
 			bRet = true;
-		} 
-		
-		psl->Release(); 
+		}
+
+		psl->Release();
 	}
 	CoUninitialize();
 	return bRet;
@@ -327,18 +327,18 @@ bool CreateStartMenuLink( const char *pSubFolderName, const char *pLinkName, con
 char* GetLastErrorString()
 {
 	static char err[2048];
-	
+
 	LPVOID lpMsgBuf;
-	FormatMessage( 
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-		FORMAT_MESSAGE_FROM_SYSTEM | 
+	FormatMessage(
+		FORMAT_MESSAGE_ALLOCATE_BUFFER |
+		FORMAT_MESSAGE_FROM_SYSTEM |
 		FORMAT_MESSAGE_IGNORE_INSERTS,
 		NULL,
 		GetLastError(),
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
 		(LPTSTR) &lpMsgBuf,
 		0,
-		NULL 
+		NULL
 	);
 
 	strncpy( err, (char*)lpMsgBuf, sizeof( err ) );
@@ -360,7 +360,7 @@ bool LaunchApp( char *pCommandLine, const char *pBaseDir )
 	memset( &pi, 0, sizeof( pi ) );
 
 	return CreateProcess( NULL, pCommandLine, NULL,	NULL, FALSE, 0,	NULL, pBaseDir, &si, &pi ) != 0;
-}		
+}
 
 
 bool StartVMPIServiceUI( const char *pInstallLocation )
@@ -370,7 +370,7 @@ bool StartVMPIServiceUI( const char *pInstallLocation )
 		Msg( "StartVMPIServiceUI: Ignoring due to -DontTouchUI.\n" );
 		return true;
 	}
-	
+
 	char cmdLine[MAX_PATH];
 	V_ComposeFileName( pInstallLocation, "vmpi_service_ui.exe", cmdLine, sizeof( cmdLine ) );
 	return LaunchApp( cmdLine, pInstallLocation );
@@ -413,8 +413,8 @@ bool StopRunningApp()
 		Msg( "StopRunningApp: -DontTouchUI was specified, so exiting before stopping the app.\n" );
 		return true;
 	}
-	
-	// Send the 
+
+	// Send the
 	ISocket *pSocket = CreateIPSocket();
 	if ( pSocket )
 	{
@@ -424,7 +424,7 @@ bool StopRunningApp()
 			protocolVersions.AddToTail( VMPI_PROTOCOL_VERSION );
 			if ( VMPI_PROTOCOL_VERSION == 5 )
 				protocolVersions.AddToTail( 4 );	// We want this installer to kill the previous services too.
-			
+
 			for ( int iProtocolVersion=0; iProtocolVersion < protocolVersions.Count(); iProtocolVersion++ )
 			{
 				char cPacket[4] =
@@ -434,20 +434,20 @@ bool StopRunningApp()
 					0,
 					VMPI_STOP_SERVICE
 				};
-				
+
 				CIPAddr addr( 127, 0, 0, 1, 0 );
-				
+
 				for ( int iPort=VMPI_SERVICE_PORT; iPort <= VMPI_LAST_SERVICE_PORT; iPort++ )
 				{
 					addr.port = iPort;
 					pSocket->SendTo( &addr, cPacket, sizeof( cPacket ) );
 				}
 			}
-			
+
 			// Give it a sec to get the message and shutdown in case we're restarting.
 			Sleep( 2000 );
-			
-			
+
+
 			// This is the overkill method. If it didn't shutdown gracefully, kill it.
 			HMODULE hInst = LoadLibrary( "psapi.dll" );
 			if ( hInst )
@@ -455,12 +455,12 @@ bool StopRunningApp()
 				typedef BOOL (WINAPI *EnumProcessesFn)(DWORD *lpidProcess, DWORD cb, DWORD *cbNeeded);
 				typedef BOOL (WINAPI *EnumProcessModulesFn)(HANDLE hProcess, HMODULE *lphModule, DWORD cb, LPDWORD lpcbNeeded );
 				typedef DWORD (WINAPI *GetModuleBaseNameFn)( HANDLE hProcess, HMODULE hModule, LPTSTR lpBaseName, DWORD nSize );
-				
+
 				EnumProcessesFn EnumProcesses = (EnumProcessesFn)GetProcAddress( hInst, "EnumProcesses" );
 				EnumProcessModulesFn EnumProcessModules = (EnumProcessModulesFn)GetProcAddress( hInst, "EnumProcessModules" );
 				GetModuleBaseNameFn GetModuleBaseName = (GetModuleBaseNameFn)GetProcAddress( hInst, "GetModuleBaseNameA" );
 				if ( EnumProcessModules && EnumProcesses )
-				{				
+				{
 					// Now just to make sure, kill the processes we're interested in.
 					DWORD procIDs[1024];
 					DWORD nBytes;
@@ -522,7 +522,7 @@ bool StopOrDeleteService( SC_HANDLE hSCManager, bool bDelete )
 		Msg( "Stopping service...\n" );
 		SERVICE_STATUS status;
 		ControlService( hOldService, SERVICE_CONTROL_STOP, &status );
-		
+
 		if ( bDelete )
 		{
 			Msg( "Deleting service...\n" );
@@ -537,7 +537,7 @@ bool StopOrDeleteService( SC_HANDLE hSCManager, bool bDelete )
 					bExitedNicely = true;
 					break;
 				}
-				
+
 				// Wait for the service to stop for 8 seconds.
 				if ( GetTickCount() - startTime > 8000 )
 					break;
@@ -570,7 +570,7 @@ bool GetExistingInstallationLocation( CString &strInstallLocation )
 			return true;
 		}
 	}
-	
+
 	return false;
 }
 
@@ -611,12 +611,12 @@ bool AnyNonInstallFilesInDirectory( const char *strInstallLocation )
 		{
 			if ( data.name[0] == '.' || (data.attrib & _A_SUBDIR) != 0 )
 				continue;
-				
+
 			if ( !IsAnInstallFile( data.name ) )
 				return true;
-			
+
 		} while( _findnext( handle, &data ) == 0 );
-	
+
 		_findclose( handle );
 	}
 	return false;
@@ -678,7 +678,7 @@ const char* FindArg( const char *pArgName, const char *pDefault="" )
 }
 
 
-BOOL CServiceInstallDlg::OnInitDialog() 
+BOOL CServiceInstallDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
@@ -699,7 +699,7 @@ BOOL CServiceInstallDlg::OnInitDialog()
 	g_hMessageControl = ::GetDlgItem( GetSafeHwnd(), IDC_TEXTOUTPUT );
 	SpewOutputFunc( MySpewOutputFunc );
 
-	// Init the service manager.	
+	// Init the service manager.
 	m_hSCManager = OpenSCManager( NULL, NULL, SC_MANAGER_ALL_ACCESS );
 	if ( !m_hSCManager )
 	{
@@ -707,7 +707,7 @@ BOOL CServiceInstallDlg::OnInitDialog()
 		return FALSE;
 	}
 
-									
+
 	// See if there is a previous installation.
 	CString strInstallLocation;
 	if ( GetExistingInstallationLocation( strInstallLocation ) )
@@ -734,12 +734,12 @@ BOOL CServiceInstallDlg::OnInitDialog()
 	{
 		OnStartExisting();
 	}
-	
+
 	else if ( FindArg( __argc, __argv, "-stop" ) )
 	{
 		OnStopExisting();
 	}
-	
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -775,13 +775,13 @@ bool InstallService( SC_HANDLE hSCManager, const char *pBaseDir )
 			SERVICE_AUTO_START,		// Start automatically on system bootup.
 			SERVICE_ERROR_NORMAL,
 			filename,				// Executable to register for the service.
-			NULL,					// no load ordering group 
-			NULL,					// no tag identifier 
-			NULL,					// no dependencies 
+			NULL,					// no load ordering group
+			NULL,					// no tag identifier
+			NULL,					// no dependencies
 			NULL,					// account
-			NULL					// password 
+			NULL					// password
 			);
-	
+
 		if ( hMyService )
 			break;
 		else
@@ -823,7 +823,7 @@ void RemoveStartMenuLinks()
 	char fullFolderName[MAX_PATH];
 	if ( !SetupStartMenuSubFolderName( "Valve\\VMPI", fullFolderName, sizeof( fullFolderName ) ) )
 		return;
-	
+
 	char errorFile[MAX_PATH];
 	if ( !DeleteDirectory( fullFolderName, true, errorFile ) )
 	{
@@ -860,7 +860,7 @@ void CServiceInstallDlg::OnInstall()
 		Warning( "Unable to create directory: %s.", (const char*)strInstallLocation );
 		return;
 	}
-	
+
 	// Copy the files down.
 	Msg( "Copying files.\n" );
 	char chDir[MAX_PATH];
@@ -871,11 +871,11 @@ void CServiceInstallDlg::OnInstall()
 		char srcFilename[MAX_PATH], destFilename[MAX_PATH];
 		V_ComposeFileName( chDir, g_pInstallFiles[i], srcFilename, sizeof( srcFilename ) );
 		V_ComposeFileName( strInstallLocation, g_pInstallFiles[i], destFilename, sizeof( destFilename ) );
-		
+
 		if ( !CopyFile( srcFilename, destFilename, FALSE ) )
 		{
 			Sleep( 2000 );
-			
+
 			if ( !CopyFile( srcFilename, destFilename, FALSE ) )
 			{
 				Error( "CopyFile() failed.\nSrc: %s\nDest: %s\n%s", srcFilename, destFilename, GetLastErrorString() );
@@ -895,12 +895,12 @@ void CServiceInstallDlg::OnInstall()
 		Error( "RegSetValueEx( %s, %s ) failed.", SERVICE_INSTALL_LOCATION_KEY, (const char*)strInstallLocation );
 		return;
 	}
-	
+
 	// Setup start menu links.
 	char installerFilename[MAX_PATH];
 	V_ComposeFileName( strInstallLocation, "vmpi_service_install.exe", installerFilename, sizeof( installerFilename ) );
 	SetupStartMenuLinks( installerFilename );
-	
+
 	// Start the new service.
 	Msg( "Starting new service.\n" );
 	if ( DoStartExisting() )
@@ -923,7 +923,7 @@ bool CServiceInstallDlg::DoUninstall( bool bShowMessage )
 	{
 		// Don't ask if they care if we delete all the files in that directory if the only exes in there are the install exes.
 		if ( AnyNonInstallFilesInDirectory( strInstallLocation ) )
-		{		
+		{
 			char str[512];
 			V_snprintf( str, sizeof( str ), "Warning: this will delete all files under this directory: \n%s\nContinue?", strInstallLocation );
 			if ( AfxMessageBox( str, MB_YESNO ) != IDYES )
@@ -949,9 +949,9 @@ bool CServiceInstallDlg::DoUninstall( bool bShowMessage )
 				Msg( "NukeDirectory( %s ) failed.\nError on file: %s\n", strInstallLocation, errorFile );
 			else
 				Msg( "NukeDirectory( %s ) failed.\n", strInstallLocation );
-			
+
 			Msg( "Uninstall complete, but files are left over in %s.\n", strInstallLocation );
-			
+
 			bSuccess = false;
 		}
 	}
@@ -960,7 +960,7 @@ bool CServiceInstallDlg::DoUninstall( bool bShowMessage )
 
 	if ( bShowMessage && bSuccess )
 		AfxMessageBox( "Uninstall successful." );
-		
+
 	return true;
 }
 
@@ -979,14 +979,14 @@ bool CServiceInstallDlg::DoStartExisting()
 {
 	StopRunningApp();
 	StopOrDeleteService( m_hSCManager, false );
-	
+
 	CString strInstallLocation;
 	if ( !GetExistingInstallationLocation( strInstallLocation ) )
 	{
 		Error( "The VMPI service is not installed." );
 		return false;
 	}
-	
+
 	if ( StartVMPIService( m_hSCManager ) )
 	{
 		return StartVMPIServiceUI( strInstallLocation );
@@ -999,7 +999,7 @@ bool CServiceInstallDlg::DoStartExisting()
 
 void CServiceInstallDlg::OnStopExisting()
 {
-	
+
 	// Stop the app but don't delete it.
 	bool bDone = StopRunningApp() && StopOrDeleteService( m_hSCManager, false );
 	if ( bDone )
@@ -1022,17 +1022,17 @@ void CServiceInstallDlg::VerifyInstallFiles()
 {
 	char chDir[MAX_PATH];
 	GetModuleFileName( NULL, chDir, sizeof( chDir ) );
-	V_StripFilename( chDir );	 
-	
+	V_StripFilename( chDir );
+
 	for ( int i=0; i < ARRAYSIZE( g_pInstallFiles ); i++ )
 	{
 		char filename[MAX_PATH];
 		V_ComposeFileName( chDir, g_pInstallFiles[i], filename, sizeof( filename ) );
-		
+
 		if ( _access( filename, 0 ) != 0 )
 		{
 			char szErrorMessage[MAX_PATH];
-			
+
 			V_snprintf( szErrorMessage, sizeof( szErrorMessage ), "Required installation file missing: %s", filename );
 
 			AfxMessageBox( szErrorMessage );
@@ -1040,4 +1040,3 @@ void CServiceInstallDlg::VerifyInstallFiles()
 		}
 	}
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -27,7 +27,7 @@ struct JeepWaterData_t
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CPropJeep : public CPropVehicleDriveable
 {
@@ -48,23 +48,23 @@ public:
 	virtual bool	AllowBlockedExit( CBasePlayer *pPlayer, int nRole ) { return false; }
 	virtual bool	CanExitVehicle( CBaseEntity *pEntity );
 	virtual bool	IsVehicleBodyInWater() { return m_WaterData.m_bBodyInWater; }
-	
+
 	// Passengers do not directly receive damage from blasts or radiation damage
-	virtual bool PassengerShouldReceiveDamage( CTakeDamageInfo &info ) 
-	{ 
+	virtual bool PassengerShouldReceiveDamage( CTakeDamageInfo &info )
+	{
 		if ( GetServerVehicle() && GetServerVehicle()->IsPassengerExiting() )
 			return false;
 
 		if ( info.GetDamageType() & DMG_VEHICLE )
 			return true;
 
-		return (info.GetDamageType() & (DMG_RADIATION|DMG_BLAST) ) == 0; 
+		return (info.GetDamageType() & (DMG_RADIATION|DMG_BLAST) ) == 0;
 	}
 
 	// CBaseEntity
 	void			Think(void);
 	void			Precache( void );
-	void			Spawn( void ); 
+	void			Spawn( void );
 	void			Activate( void );
 
 	virtual void	CreateServerVehicle( void );

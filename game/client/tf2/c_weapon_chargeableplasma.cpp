@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,7 +25,7 @@ CLIENTEFFECT_REGISTER_END()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_WeaponCombat_ChargeablePlasma : public C_WeaponCombatUsedWithShieldBase
 {
@@ -72,14 +72,14 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_WeaponCombat_ChargeablePlasma::C_WeaponCombat_ChargeablePlasma( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_WeaponCombat_ChargeablePlasma::~C_WeaponCombat_ChargeablePlasma( void )
 {
@@ -87,7 +87,7 @@ C_WeaponCombat_ChargeablePlasma::~C_WeaponCombat_ChargeablePlasma( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_WeaponCombat_ChargeablePlasma::PreDataUpdate( DataUpdateType_t updateType )
 {
@@ -115,7 +115,7 @@ void C_WeaponCombat_ChargeablePlasma::NotifyShouldTransmit( ShouldTransmitState_
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_WeaponCombat_ChargeablePlasma::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -127,10 +127,10 @@ void C_WeaponCombat_ChargeablePlasma::OnDataChanged( DataUpdateType_t updateType
 		// So we can update our lights
 		if ( GetTeamNumber() == 1 )
 			m_hMaterial.Init( "sprites/chargeball_team1" );
-		else 
+		else
 			m_hMaterial.Init( "sprites/chargeball_team2" );
 
-		break;								
+		break;
 
 	case DATA_UPDATE_DATATABLE_CHANGED:
 		if ( m_bCharging != m_bLastCharging )
@@ -158,7 +158,7 @@ void C_WeaponCombat_ChargeablePlasma::OnDataChanged( DataUpdateType_t updateType
 	}
 }
 
-  
+
 //-----------------------------------------------------------------------------
 // Deal with dynamic lighting
 //-----------------------------------------------------------------------------
@@ -327,7 +327,7 @@ void C_WeaponCombat_ChargeablePlasma::DrawCrosshair( void )
 			// Calculate circle size
 			int iRatio = 30;
 
-			// Draw the circle 
+			// Draw the circle
 			int iDegrees = 0;
 			Vector vecPoint, vecLastPoint(0,0,0);
 			vecPoint.z = 0.0f;
@@ -338,7 +338,7 @@ void C_WeaponCombat_ChargeablePlasma::DrawCrosshair( void )
 
 				float ca = cos( flRadians );
 				float sa = sin( flRadians );
-							 
+
 				// Rotate it around the circle
 				vecPoint.x = (int)((ScreenWidth() / 2) + (iRatio * sa));
 				vecPoint.y = (int)((ScreenHeight() / 2) - (iRatio * ca));
@@ -355,4 +355,3 @@ void C_WeaponCombat_ChargeablePlasma::DrawCrosshair( void )
 		}
 	}
 }
-

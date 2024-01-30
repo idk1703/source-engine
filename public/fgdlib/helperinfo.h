@@ -17,7 +17,7 @@ typedef CUtlVector<char *> CParameterList;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHelperInfo
 {
@@ -43,7 +43,7 @@ class CHelperInfo
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline CHelperInfo::CHelperInfo(void)
 {
@@ -52,7 +52,7 @@ inline CHelperInfo::CHelperInfo(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline CHelperInfo::~CHelperInfo(void)
 {
@@ -72,8 +72,8 @@ inline CHelperInfo::~CHelperInfo(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : char *pszParameter - 
+// Purpose:
+// Input  : char *pszParameter -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 inline bool CHelperInfo::AddParameter(const char *pszParameter)
@@ -81,7 +81,7 @@ inline bool CHelperInfo::AddParameter(const char *pszParameter)
 	if ((pszParameter != NULL) && (pszParameter[0] != '\0'))
 	{
 		int nLen = strlen(pszParameter);
-		
+
 		if (nLen > 0)
 		{
 			char *pszNew = new char [nLen + 1];
@@ -104,19 +104,19 @@ inline const char *CHelperInfo::GetParameter(int nIndex) const
 {
 	if (nIndex >= m_Parameters.Count())
 		return NULL;
-	
-	return m_Parameters.Element(nIndex); 
+
+	return m_Parameters.Element(nIndex);
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : char *pszName - 
+// Purpose:
+// Input  : char *pszName -
 //-----------------------------------------------------------------------------
 inline void CHelperInfo::SetName(const char *pszName)
 {
 	if (pszName != NULL)
-	{	
+	{
 		strcpy(m_szName, pszName);
 	}
 }

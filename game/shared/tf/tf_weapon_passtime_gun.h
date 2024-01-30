@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ class C_PasstimeBounceReticle;
 class CPasstimeGun : public CTFWeaponBase, public ITFChargeUpWeapon
 {
 	DECLARE_CLASS( CPasstimeGun, CTFWeaponBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE(); // this has to be here because the client's precache code uses it to get the classname of this entity...
 
 public:
@@ -51,7 +51,7 @@ public:
 		Vector startVel;
 		static LaunchParams Default( CTFPlayer *pPlayer );
 	};
-	
+
 	static LaunchParams CalcLaunch( CTFPlayer *pPlayer, bool bHoming );
 
 protected:
@@ -110,9 +110,9 @@ protected:
 		BUTTONSTATE_DISABLED,			// ignore input
 	};
 
-	struct AttackInputState 
+	struct AttackInputState
 	{
-		AttackInputState( int button ) 
+		AttackInputState( int button )
 			: iButton( button ), eButtonState( BUTTONSTATE_UP )
 			, bLatchedUp( false )
 		{}
@@ -122,10 +122,10 @@ protected:
 
 		bool Is( EButtonState state ) const { return eButtonState == state; }
 		void Disable() { eButtonState = BUTTONSTATE_DISABLED; }
-		void Enable() 
-		{ 
+		void Enable()
+		{
 			if ( eButtonState == BUTTONSTATE_DISABLED )
-				eButtonState = BUTTONSTATE_UP; 
+				eButtonState = BUTTONSTATE_UP;
 		}
 		void Update( int held, int pressed, int released );
 		void LatchUp();
@@ -134,7 +134,7 @@ protected:
 
 	int m_iHalloweenAttachmentIndex;
 	int m_iAttachmentIndex;
-	
+
 	float m_flTargetResetTime;
 	float m_flThrowLoopStartTime;
 	AttackInputState m_attack, m_attack2;
@@ -147,4 +147,4 @@ protected:
 
 };
 
-#endif // TF_WEAPON_PASSTIME_GUN_H  
+#endif // TF_WEAPON_PASSTIME_GUN_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -45,8 +45,8 @@ AI_Waypoint_t CAI_Path::gm_InvalidWaypoint( Vector(0,0,0), 0, NAV_NONE, 0, 0 );
 
 //-----------------------------------------------------------------------------
 
-void CAI_Path::SetWaypoints(AI_Waypoint_t* route, bool fSetGoalFromLast) 
-{ 
+void CAI_Path::SetWaypoints(AI_Waypoint_t* route, bool fSetGoalFromLast)
+{
 	m_Waypoints.Set(route);
 
 	AI_Waypoint_t *pLast = m_Waypoints.GetLast();
@@ -69,9 +69,9 @@ void CAI_Path::SetWaypoints(AI_Waypoint_t* route, bool fSetGoalFromLast)
 
 //-----------------------------------------------------------------------------
 
-void CAI_Path::PrependWaypoints( AI_Waypoint_t *pWaypoints ) 
-{ 
-	m_Waypoints.PrependWaypoints( pWaypoints ); 
+void CAI_Path::PrependWaypoints( AI_Waypoint_t *pWaypoints )
+{
+	m_Waypoints.PrependWaypoints( pWaypoints );
 	AI_Waypoint_t *pLast = m_Waypoints.GetLast();
 	pLast->flPathDistGoal = -1;
 
@@ -80,9 +80,9 @@ void CAI_Path::PrependWaypoints( AI_Waypoint_t *pWaypoints )
 
 //-----------------------------------------------------------------------------
 
-void CAI_Path::PrependWaypoint( const Vector &newPoint, Navigation_t navType, unsigned waypointFlags ) 
-{ 
-	m_Waypoints.PrependWaypoint( newPoint, navType, waypointFlags ); 
+void CAI_Path::PrependWaypoint( const Vector &newPoint, Navigation_t navType, unsigned waypointFlags )
+{
+	m_Waypoints.PrependWaypoint( newPoint, navType, waypointFlags );
 	AI_Waypoint_t *pLast = m_Waypoints.GetLast();
 	pLast->flPathDistGoal = -1;
 
@@ -117,12 +117,12 @@ float CAI_Path::GetPathDistanceToGoal( const Vector &startPos )
 //-----------------------------------------------------------------------------
 
 Activity CAI_Path::SetMovementActivity(Activity activity)
-{ 
+{
 	Assert( activity != ACT_RESET && activity != ACT_INVALID );
 	//Msg("Set movement to %s\n", ActivityList_NameForIndex(activity) );
 
 	m_sequence = ACT_INVALID;
-	return (m_activity = activity);	
+	return (m_activity = activity);
 }
 
 //-----------------------------------------------------------------------------
@@ -304,19 +304,19 @@ float CAI_Path::GetGoalStoppingDistance( ) const
 
 
 //-----------------------------------------------------------------------------
-const Vector &CAI_Path::CurWaypointPos() const	
-{ 
+const Vector &CAI_Path::CurWaypointPos() const
+{
 	if ( GetCurWaypoint() )
-		return GetCurWaypoint()->GetPos(); 
+		return GetCurWaypoint()->GetPos();
 	AssertMsg(0, "Invalid call to CurWaypointPos()");
 	return gm_InvalidWaypoint.GetPos();
 }
 
 //-----------------------------------------------------------------------------
 const Vector &CAI_Path::NextWaypointPos() const
-{ 
+{
 	if ( GetCurWaypoint() && GetCurWaypoint()->GetNext())
-		return GetCurWaypoint()->GetNext()->GetPos(); 
+		return GetCurWaypoint()->GetNext()->GetPos();
 	static Vector invalid( 0, 0, 0 );
 	AssertMsg(0, "Invalid call to NextWaypointPos()");
 	return gm_InvalidWaypoint.GetPos();
@@ -324,8 +324,8 @@ const Vector &CAI_Path::NextWaypointPos() const
 
 //-----------------------------------------------------------------------------
 float CAI_Path::CurWaypointYaw() const
-{ 
-	return GetCurWaypoint()->flYaw; 
+{
+	return GetCurWaypoint()->flYaw;
 }
 
 //-----------------------------------------------------------------------------
@@ -333,7 +333,7 @@ float CAI_Path::CurWaypointYaw() const
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-void CAI_Path::SetGoalPosition(const Vector &goalPos) 
+void CAI_Path::SetGoalPosition(const Vector &goalPos)
 {
 
 #ifdef _DEBUG
@@ -361,10 +361,10 @@ void CAI_Path::SetLastNodeAsGoal(bool bReset)
 		{
 			DevMsg( "GetCurWaypoint Goal Position Set Twice!\n");
 		}
-	#endif	
-	
+	#endif
+
 	// Find the last node
-	if (GetCurWaypoint()) 
+	if (GetCurWaypoint())
 	{
 		AI_Waypoint_t* waypoint = GetCurWaypoint();
 
@@ -388,7 +388,7 @@ void CAI_Path::SetLastNodeAsGoal(bool bReset)
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-void CAI_Path::ResetGoalPosition(const Vector &goalPos) 
+void CAI_Path::ResetGoalPosition(const Vector &goalPos)
 {
 	m_bGoalPosSet	= true;
 	VectorAdd( goalPos, m_vecTargetOffset, m_goalPos );
@@ -396,7 +396,7 @@ void CAI_Path::ResetGoalPosition(const Vector &goalPos)
 
 
 //-----------------------------------------------------------------------------
-// Returns the *base* goal position (without the offset applied) 
+// Returns the *base* goal position (without the offset applied)
 //-----------------------------------------------------------------------------
 const Vector& CAI_Path::BaseGoalPosition() const
 {
@@ -436,7 +436,7 @@ const Vector & CAI_Path::ActualGoalPosition(void) const
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-void CAI_Path::SetGoalType(GoalType_t goalType) 
+void CAI_Path::SetGoalType(GoalType_t goalType)
 {
 
 #ifdef _DEBUG
@@ -480,7 +480,7 @@ void CAI_Path::Advance( void )
 	// -------------------------------------------------------
 	// If I have another waypoint advance my path
 	// -------------------------------------------------------
-	if (GetCurWaypoint()->GetNext()) 
+	if (GetCurWaypoint()->GetNext())
 	{
 		AI_Waypoint_t *pNext = GetCurWaypoint()->GetNext();
 
@@ -499,7 +499,7 @@ void CAI_Path::Advance( void )
 	//  This is an error catch that should *not* happen
 	//  It means a route was created with no goal
 	// -------------------------------------------------
-	else 
+	else
 	{
 		DevMsg( "!!ERROR!! Force end of route with no goal!\n");
 		GetCurWaypoint()->ModifyFlags( bits_WP_TO_GOAL, true );
@@ -644,7 +644,7 @@ void CAI_Path::ComputeRouteGoalDistances(AI_Waypoint_t *pGoalWaypoint)
 
 		float flWaypointDist = ComputePathDistance(pCurWaypoint->NavType(), pPrev->GetPos(), pCurWaypoint->GetPos());
 		pPrev->flPathDistGoal = pCurWaypoint->flPathDistGoal + flWaypointDist;
-		
+
 		pCurWaypoint = pPrev;
 	}
 }
@@ -679,5 +679,3 @@ CAI_Path::~CAI_Path()
 {
 	DeleteAll( GetCurWaypoint() );
 }
-
-

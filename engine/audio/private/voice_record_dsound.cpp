@@ -1,12 +1,12 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
 
-// This module implements the voice record and compression functions 
+// This module implements the voice record and compression functions
 
 #include "audio_pch.h"
 #if !defined( _X360 )
@@ -58,7 +58,7 @@ public:
 
 	virtual bool		RecordStart();
 	virtual void		RecordStop();
-	
+
 	// Initialize. The format of the data we expect from the provider is
 	// 8-bit signed mono at the specified sample rate.
 	virtual bool		Init(int sampleRate);
@@ -84,8 +84,8 @@ private:
 
 	// How many bytes our capture buffer has.
 	DWORD						m_nCaptureBufferBytes;
-	
-	// We need to know when the capture buffer loops, so we install an event and 
+
+	// We need to know when the capture buffer loops, so we install an event and
 	// update this in the event.
 	DWORD						m_WrapOffset;
 	HANDLE						m_hWrapEvent;
@@ -169,7 +169,7 @@ bool VoiceRecord_DSound::Init(int sampleRate)
 	DSCBUFFERDESC dscDesc;
 	DirectSoundCaptureCreateFn createFn;
 
-	
+
 	Term();
 
 
@@ -185,7 +185,7 @@ bool VoiceRecord_DSound::Init(int sampleRate)
 	};
 
 
-	
+
 	// Load the DSound DLL.
 	m_hInstDS = LoadLibrary("dsound.dll");
 	if(!m_hInstDS)
@@ -236,13 +236,13 @@ bool VoiceRecord_DSound::Init(int sampleRate)
 	DSBPOSITIONNOTIFY dsbNotify;
 	dsbNotify.dwOffset = dscDesc.dwBufferBytes - 1;
 	dsbNotify.hEventNotify = m_hWrapEvent;
-	
+
 	// Get the IDirectSoundNotify interface.
 	LPDIRECTSOUNDNOTIFY pNotify;
 	hr = m_pCaptureBuffer->QueryInterface(IID_IDirectSoundNotify, (void**)&pNotify);
 	if(FAILED(hr))
 		goto HandleError;
-	
+
 	hr = pNotify->SetNotificationPositions(1, &dsbNotify);
 	pNotify->Release();
 	if(FAILED(hr))
@@ -397,4 +397,3 @@ IVoiceRecord* CreateVoiceRecord_DSound(int sampleRate)
 		return NULL;
 	}
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -16,8 +16,8 @@
 #include "CommanderOverlay.h"
 #include "hud_commander_statuspanel.h"
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 CHudPlayerOverlayHealth::CHudPlayerOverlayHealth( CHudPlayerOverlay *baseOverlay )
 : BaseClass( NULL, "CHudPlayerOverlayHealth" )
@@ -32,8 +32,8 @@ CHudPlayerOverlayHealth::CHudPlayerOverlayHealth( CHudPlayerOverlay *baseOverlay
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 CHudPlayerOverlayHealth::~CHudPlayerOverlayHealth( void )
 {
@@ -64,8 +64,8 @@ bool CHudPlayerOverlayHealth::Init( KeyValues* pInitData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : health - 
+// Purpose:
+// Input  : health -
 //-----------------------------------------------------------------------------
 
 void CHudPlayerOverlayHealth::SetHealth( float health )
@@ -75,14 +75,14 @@ void CHudPlayerOverlayHealth::SetHealth( float health )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudPlayerOverlayHealth::Paint( void )
 {
 	int w, h;
 
 	GetSize( w, h );
-	
+
 	m_pBaseOverlay->SetColorLevel( this, m_fgColor, m_bgColor );
 
 	// Use a color related to health value....

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -89,7 +89,7 @@ void CRopeAnchor::FallThink()
 //---------------------------------------------------------
 void CRopeAnchor::RemoveThink()
 {
-	UTIL_Remove( m_hRope );	
+	UTIL_Remove( m_hRope );
 	SetThink( &CRopeAnchor::SUB_Remove );
 	SetNextThink( gpGlobals->curtime );
 }
@@ -100,7 +100,7 @@ void CRopeAnchor::RemoveThink()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CAI_RappelBehavior::CAI_RappelBehavior()
 {
@@ -174,8 +174,8 @@ void CAI_RappelBehavior::CleanupOnDeath( CBaseEntity *pCulprit, bool bFireDeathO
 	}
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CAI_RappelBehavior::StartTask( const Task_t *pTask )
 {
@@ -219,8 +219,8 @@ void CAI_RappelBehavior::StartTask( const Task_t *pTask )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CAI_RappelBehavior::RunTask( const Task_t *pTask )
 {
@@ -258,7 +258,7 @@ void CAI_RappelBehavior::RunTask( const Task_t *pTask )
 
 				GetOuter()->m_OnRappelTouchdown.FireOutput( GetOuter(), GetOuter(), 0 );
 				GetOuter()->RemoveFlag( FL_FLY );
-				
+
 				CutZipline();
 
 				TaskComplete();
@@ -274,7 +274,7 @@ void CAI_RappelBehavior::RunTask( const Task_t *pTask )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_RappelBehavior::CanSelectSchedule()
@@ -314,7 +314,7 @@ void CAI_RappelBehavior::GatherConditions()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CAI_RappelBehavior::SelectSchedule()
@@ -333,7 +333,7 @@ int CAI_RappelBehavior::SelectSchedule()
 	{
 		return SCHED_RAPPEL;
 	}
-	
+
 	return BaseClass::SelectSchedule();
 }
 

@@ -85,7 +85,7 @@ int CAI_GlobalNamespace::NextGlobalBase() const
 // CAI_LocalIdSpace
 //
 // Purpose: Maps per class IDs to global IDs, so that various classes can use
-//			the same integer in local space to represent different globally 
+//			the same integer in local space to represent different globally
 //			unique integers. Used for schedules, tasks, conditons and squads
 //
 
@@ -122,13 +122,13 @@ bool CAI_LocalIdSpace::Init( CAI_GlobalNamespace *pGlobalNamespace, CAI_LocalIdS
 bool CAI_LocalIdSpace::AddSymbol( const char *pszSymbol, int localId, const char *pszDebugSymbolType, const char *pszDebugOwner )
 {
 	AssertMsg( AI_IdIsLocal( localId ), ("Global symbol ID passed to CAI_LocalIdSpace::AddSymbol()") );
-	
+
 	if ( !m_pGlobalNamespace )
 	{
 		DevMsg( "ERROR: Adding symbol to uninitialized table %s\n", pszDebugOwner );
 		return false;
 	}
-	
+
 	if ( !IsLocalBaseSet() && !SetLocalBase( localId ) )
 	{
 		DevMsg( "ERROR: Bad %s LOCALID for %s\n", pszDebugSymbolType, pszDebugOwner );
@@ -156,7 +156,7 @@ bool CAI_LocalIdSpace::AddSymbol( const char *pszSymbol, int localId, const char
 		m_localTop = m_localBase;
 		m_globalTop = m_globalBase;
 	}
-	
+
 	m_pGlobalNamespace->AddSymbol( pszSymbol, LocalToGlobal( localId ) );
 	return true;
 }
@@ -187,14 +187,14 @@ int CAI_LocalIdSpace::GlobalToLocal( int globalID ) const
 	AssertMsg( AI_IdIsGlobal( globalID ), ("Local symbol ID passed to CAI_LocalIdSpace::GlobalToLocal()") );
 
 	const CAI_LocalIdSpace *pCurrentMap = this;
-	
-	do 
+
+	do
 	{
 		if ( pCurrentMap->IsLocalBaseSet() && globalID >= pCurrentMap->GetGlobalBase() && globalID <= pCurrentMap->GetGlobalTop()  )
 			return ( globalID - pCurrentMap->GetGlobalBase() + pCurrentMap->GetLocalBase() );
 		pCurrentMap = pCurrentMap->m_pParentIDSpace;
 	} while ( pCurrentMap != NULL );
-	
+
 	// AssertMsg( 0, ("Invalid ID passed to CAI_LocalIdSpace::GlobalToLocal()") );
 	return -1;
 }
@@ -209,14 +209,14 @@ int CAI_LocalIdSpace::LocalToGlobal( int localID ) const
 	AssertMsg( AI_IdIsLocal( localID ), ("Global symbol ID passed to CAI_LocalIdSpace::LocalToGlobal()") );
 
 	const CAI_LocalIdSpace *pCurrentMap = this;
-	
-	do 
+
+	do
 	{
 		if ( pCurrentMap->IsLocalBaseSet() && localID >= pCurrentMap->GetLocalBase() && localID <= pCurrentMap->GetLocalTop() )
 			return ( localID + pCurrentMap->GetGlobalBase() - pCurrentMap->GetLocalBase() );
 		pCurrentMap = pCurrentMap->m_pParentIDSpace;
 	} while ( pCurrentMap != NULL );
-	
+
 	// AssertMsg( 0, ("Invalid ID passed to CAI_LocalIdSpace::LocalToGlobal()") );
 	return -1;
 }

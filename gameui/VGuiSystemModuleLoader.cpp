@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -108,11 +108,11 @@ bool CVGuiSystemModuleLoader::InitializeAllModules(CreateInterfaceFn *factorylis
 			bSuccess = false;
 			Error("Platform Error: module failed to initialize\n");
 		}
-		
+
 #ifdef GAMEUI_EXPORTS
 		m_Modules[i].moduleInterface->SetParent(GetGameUIBasePanel());
 #else
-		m_Modules[i].moduleInterface->SetParent(g_pMainPanel->GetVPanel());		
+		m_Modules[i].moduleInterface->SetParent(g_pMainPanel->GetVPanel());
 #endif
 	}
 
@@ -165,7 +165,7 @@ bool CVGuiSystemModuleLoader::LoadPlatformModules(CreateInterfaceFn *factorylist
 		{
 			dllPath = it->GetString("dll_linux");
 		}
-		else 
+		else
 		{
 			dllPath = it->GetString("dll");
 		}
@@ -302,7 +302,7 @@ const char *CVGuiSystemModuleLoader::GetModuleLabel(int moduleIndex)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CVGuiSystemModuleLoader::IsModuleVisible(int moduleIndex)
 {
@@ -356,7 +356,7 @@ CreateInterfaceFn CVGuiSystemModuleLoader::GetModuleFactory(int moduleIndex)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVGuiSystemModuleLoader::PostMessageToAllModules(KeyValues *message)
 {

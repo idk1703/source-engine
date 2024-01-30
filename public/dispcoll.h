@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,12 +20,12 @@ class CCoreDispInfo;
 class CDispCollTri
 {
 public:
-	
+
 	void Init( void );
 	inline void SetPoint( int index, Vector const& vert );
 	inline void SetPointNormal( int index, Vector const& normal );
 	void CalcPlane( void );
-	
+
 	inline void SetIntersect( bool bIntersect );
 	inline bool IsIntersect( void );
 
@@ -35,7 +35,7 @@ public:
 	float	m_Distance;			// plane distance
 	short	m_ProjAxes[2];		// projection axes (2 minor axes)
 	bool	m_bIntersect;		// intersected triangle???
-};	
+};
 
 //=============================================================================
 //
@@ -44,12 +44,12 @@ public:
 class CDispCollNode
 {
 public:
-	
+
 	CDispCollNode();
 	inline bool IsLeaf( void );
 	inline void SetBounds( Vector const &bMin, Vector const &bMax );
 	inline void GetBounds( Vector &bMin, Vector &bMax );
-	
+
 	Vector			m_Bounds[2];		// node minimum and maximum
 
 	bool			m_bIsLeaf;			// is the node a leaf? ( may have to make this an int for alignment!)
@@ -207,7 +207,7 @@ inline void CDispCollTree::SetPower( int power )
 	m_Power = power;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 inline int CDispCollTree::GetPower( void )
@@ -223,7 +223,7 @@ inline void CDispCollTree::SetCheckCount( int count )
 	m_CheckCount = count;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 inline int CDispCollTree::GetCheckCount( void )

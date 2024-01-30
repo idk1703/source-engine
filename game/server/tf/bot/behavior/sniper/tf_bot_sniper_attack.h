@@ -21,9 +21,9 @@ public:
 
 	virtual Vector SelectTargetPoint( const INextBot *me, const CBaseCombatCharacter *subject ) const;		// given a subject, return the world space position we should aim at
 
-	virtual const CKnownEntity *	SelectMoreDangerousThreat( const INextBot *me, 
+	virtual const CKnownEntity *	SelectMoreDangerousThreat( const INextBot *me,
 															   const CBaseCombatCharacter *subject,
-															   const CKnownEntity *threat1, 
+															   const CKnownEntity *threat1,
 															   const CKnownEntity *threat2 ) const;	// return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
 
 	virtual const char *GetName( void ) const	{ return "SniperAttack"; };

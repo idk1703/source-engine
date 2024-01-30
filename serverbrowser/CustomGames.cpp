@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -13,14 +13,14 @@ using namespace vgui;
 #define NUM_COMMON_TAGS			20
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 TagMenuButton::TagMenuButton(Panel *parent, const char *panelName, const char *text) : BaseClass(parent,panelName,text)
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TagMenuButton::OnShowMenu( vgui::Menu *menu )
 {
@@ -30,7 +30,7 @@ void TagMenuButton::OnShowMenu( vgui::Menu *menu )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CCustomServerInfoURLQuery : public vgui::QueryBox
 {
@@ -45,14 +45,14 @@ public:
 DECLARE_BUILD_FACTORY( TagInfoLabel );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 TagInfoLabel::TagInfoLabel(Panel *parent, const char *panelName) : BaseClass(parent,panelName, (const char *)NULL, NULL)
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 TagInfoLabel::TagInfoLabel(Panel *parent, const char *panelName, const char *text, const char *pszURL) : BaseClass(parent,panelName,text,pszURL)
 {
@@ -77,11 +77,11 @@ void TagInfoLabel::OnMousePressed(MouseCode code)
 				qb->DoModal();
 			}
 		}
-	} 
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TagInfoLabel::DoOpenCustomServerInfoURL( void )
 {
@@ -94,7 +94,7 @@ void TagInfoLabel::DoOpenCustomServerInfoURL( void )
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CCustomGames::CCustomGames(vgui::Panel *parent) : 
+CCustomGames::CCustomGames(vgui::Panel *parent) :
 	BaseClass(parent, "CustomGames", eInternetServer )
 {
 	m_pGameList->AddColumnHeader(10, "Tags", "#ServerBrowser_Tags", 200);
@@ -128,10 +128,10 @@ CCustomGames::CCustomGames(vgui::Panel *parent) :
 //-----------------------------------------------------------------------------
 CCustomGames::~CCustomGames()
 {
-}		
+}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCustomGames::UpdateDerivedLayouts( void )
 {
@@ -182,7 +182,7 @@ void CCustomGames::UpdateDerivedLayouts( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCustomGames::OnLoadFilter(KeyValues *filter)
 {
@@ -197,7 +197,7 @@ void CCustomGames::OnLoadFilter(KeyValues *filter)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CCustomGames::CheckTagFilter( gameserveritem_t &server )
 {
@@ -275,7 +275,7 @@ void CCustomGames::OnSaveFilter(KeyValues *filter)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCustomGames::SetRefreshing(bool state)
 {
@@ -288,7 +288,7 @@ void CCustomGames::SetRefreshing(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCustomGames::ServerResponded( int iServer, gameserveritem_t *pServerItem )
 {
@@ -312,7 +312,7 @@ int __cdecl SortTagsInUse( const tagentry_t *pTag1, const tagentry_t *pTag2 )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCustomGames::RecalculateCommonTags( void )
 {
@@ -326,7 +326,7 @@ void CCustomGames::RecalculateCommonTags( void )
 	for ( int i = 0; i < iCount; i++ )
 	{
 		int serverID = m_pGameList->GetItemUserData( i );
-		gameserveritem_t *pServer = GetServer( serverID ); 
+		gameserveritem_t *pServer = GetServer( serverID );
 		if ( pServer && pServer->m_szGameTags && pServer->m_szGameTags[0] )
 		{
 			CUtlVector<char*> TagList;
@@ -370,7 +370,7 @@ void CCustomGames::RecalculateCommonTags( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCustomGames::OnTagMenuButtonOpened( void )
 {
@@ -396,7 +396,7 @@ int SortServerTags( char* const *p1, char* const *p2 )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCustomGames::AddTagToFilterList( const char *pszTag )
 {

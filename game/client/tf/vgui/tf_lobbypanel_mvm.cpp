@@ -156,7 +156,7 @@ static void GetPlayerNameForSteamID( wchar_t *wCharPlayerName, int nBufSizeBytes
 	V_UTF8ToUnicode( pszName, wCharPlayerName, nBufSizeBytes );
 }
 
-CLobbyPanel_MvM::CLobbyPanel_MvM( vgui::Panel *pParent, CBaseLobbyContainerFrame* pLobbyContainer ) 
+CLobbyPanel_MvM::CLobbyPanel_MvM( vgui::Panel *pParent, CBaseLobbyContainerFrame* pLobbyContainer )
 	: CBaseLobbyPanel( pParent, pLobbyContainer )
 {
 	m_pMvMMannVsMachineGroupPanel = NULL;
@@ -176,7 +176,7 @@ CLobbyPanel_MvM::CLobbyPanel_MvM( vgui::Panel *pParent, CBaseLobbyContainerFrame
 	m_pMannUpTourLootImage = NULL;
 	//m_pMannUpTourLootDetailLabel = NULL;
 	m_pTourDifficultyWarning = NULL;
-	
+
 	m_MvMPracticeGroupPanel = NULL;
 
 	m_pMvMSelectChallengeGroupPanel = NULL;
@@ -362,7 +362,7 @@ void CLobbyPanel_MvM::OnItemLeftClick( vgui::Panel* panel )
 	{
 		OnClickedOnChallenge();
 	}
-	
+
 	BaseClass::OnItemLeftClick( panel );
 }
 
@@ -483,7 +483,7 @@ void CLobbyPanel_MvM::WriteGameSettingsControls()
 bool CLobbyPanel_MvM::ShouldShowLateJoin() const
 {
 	TF_Matchmaking_WizardStep eWizardStep = GTFGCClientSystem()->GetWizardStep();
-	return 
+	return
 #ifdef USE_MVM_TOUR
 		( eWizardStep == TF_Matchmaking_WizardStep_MVM_TOUR_OF_DUTY ) ||
 #endif // USE_MVM_TOUR
@@ -523,12 +523,12 @@ void CLobbyPanel_MvM::WriteTourList()
 	bool bCompletedOneAdvancedTour = false;
 	uint32 unBadgeLevel = 0, unCompletedChallengeMask = 0;
 	const char *pszWarningString = "#TF_MVM_Tour_ExpertDifficulty_Warning";
-	
+
 	// Local player has completed at least one Advanced tour?
 	FOR_EACH_VEC( GetItemSchema()->GetMvmTours(), idxTour )
 	{
 		GTFGCClientSystem()->BGetLocalPlayerBadgeInfoForTour( idxTour, &unBadgeLevel, &unCompletedChallengeMask );
-		
+
 		const MvMTour_t &tourInfo = GetItemSchema()->GetMvmTours()[idxTour];
 		if ( tourInfo.m_eDifficulty >= k_EMvMChallengeDifficulty_Advanced && unBadgeLevel > 0 )
 		{
@@ -574,7 +574,7 @@ void CLobbyPanel_MvM::WriteTourList()
 		kvItem->SetInt( "tour_index", idxTour );
 		int itemID = m_pTourList->AddItem( 0, kvItem );
 		m_pTourList->SetItemFont( itemID, m_fontChallengeListItem );
-		
+
 		if ( tour.m_eDifficulty >= k_EMvMChallengeDifficulty_Expert && !bCompletedOneAdvancedTour )
 		{
 			m_pTourList->SetItemFgColor( itemID, s_colorBannedPlayerListItem );
@@ -649,7 +649,7 @@ void CLobbyPanel_MvM::WriteChallengeList()
 	bool bLeader = BIsPartyLeader();
 	bool bInUIState = BIsPartyInUIState();
 	bool bForBraggingRights = GTFGCClientSystem()->GetSearchPlayForBraggingRights();
-	
+
 #ifdef USE_MVM_TOUR
 	int idxTour = GTFGCClientSystem()->GetSearchMannUpTourIndex();
 
@@ -774,7 +774,7 @@ void CLobbyPanel_MvM::WriteChallengeList()
 			{
 				if ( searchChallenges == msChallenges )
 					iCheckImage = m_iImageCheckBoxYes; // all items currently selected
-				else 
+				else
 					iCheckImage = m_iImageCheckBoxNo; // does not exactly match, show as a "no"
 			}
 			else
@@ -832,7 +832,7 @@ void CLobbyPanel_MvM::WriteChallengeList()
 		if ( mission.m_iDisplayMapIndex != nCurrentMap )
 		{
 			++nCurrentSection;
-			
+
 			m_pChallengeList->AddSection( nCurrentSection, map.m_sDisplayName.Get() );
 			m_pChallengeList->SetSectionAlwaysVisible( nCurrentSection, true );
 			m_pChallengeList->SetSectionFgColor( nCurrentSection, s_colorChallengeHeader );
@@ -864,7 +864,7 @@ void CLobbyPanel_MvM::WriteChallengeList()
 		}
 
 		//wchar_t wszChallengeName[ 256 ];
-		//g_pVGuiLocalize->ConstructString_safe( wszChallengeName, L"%s1 (%s2)", 2, 
+		//g_pVGuiLocalize->ConstructString_safe( wszChallengeName, L"%s1 (%s2)", 2,
 		//								  g_pVGuiLocalize->Find( mission.m_sDisplayName.Get() ), g_pVGuiLocalize->Find( mission.m_sMode.Get() ) );
 		//kvItem->SetWString( "display_name", wszChallengeName );
 		kvItem->SetString( "display_name", mission.m_sDisplayName.Get() );

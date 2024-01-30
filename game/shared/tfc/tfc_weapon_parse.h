@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,9 +20,9 @@ class CTFCWeaponInfo : public FileWeaponInfo_t
 {
 public:
 	DECLARE_CLASS_GAMEROOT( CTFCWeaponInfo, FileWeaponInfo_t );
-	
+
 	CTFCWeaponInfo();
-	
+
 	virtual void Parse( ::KeyValues *pKeyValuesData, const char *szWeaponName );
 };
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,7 +13,7 @@
 // NOTE: This is an iterator for the contact points on an object
 // NOTE: This should only be used temporarily.  Holding one of these
 // NOTE: across collision callbacks or calls into simulation will cause errors!
-// NOTE: VPHYSICS may choose to make the data contained within this object invalid 
+// NOTE: VPHYSICS may choose to make the data contained within this object invalid
 // NOTE: any time simulation is run.
 class IPhysicsFrictionSnapshot
 {
@@ -27,7 +27,7 @@ public:
 	virtual int GetMaterial( int index ) = 0;
 
 	virtual void GetContactPoint( Vector &out ) = 0;
-	
+
 	// points away from source object
 	virtual void GetSurfaceNormal( Vector &out ) = 0;
 	virtual float GetNormalForce() = 0;

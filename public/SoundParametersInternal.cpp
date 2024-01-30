@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -42,7 +42,7 @@ struct VolumeLevel
 	const char *name;
 };
 
-static VolumeLevel g_pVolumeLevels[] = 
+static VolumeLevel g_pVolumeLevels[] =
 {
 	{ VOL_NORM, "VOL_NORM" },
 };
@@ -61,7 +61,7 @@ static PitchLookup g_pPitchLookup[] =
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct SoundLevelLookup
 {
@@ -214,7 +214,7 @@ soundlevel_t TextToSoundLevel( const char *key )
 
 //-----------------------------------------------------------------------------
 // Purpose: Convert "chan_xxx" into integer value for channel
-// Input  : *name - 
+// Input  : *name -
 // Output : static int
 //-----------------------------------------------------------------------------
 int TextToChannel( const char *name )
@@ -466,7 +466,7 @@ const char *CSoundParametersInternal::VolumeToString( void ) const
 	return sz;
 }
 
-const char *CSoundParametersInternal::ChannelToString( void ) const 
+const char *CSoundParametersInternal::ChannelToString( void ) const
 {
 	return _ChannelToString( channel );
 }

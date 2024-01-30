@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -28,7 +28,7 @@ public:
 	CTEShatterSurface( const char *name );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 	DECLARE_SERVERCLASS();
 
 public:
@@ -45,8 +45,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEShatterSurface::CTEShatterSurface( const char *name ) :
 	CBaseTempEntity( name )
@@ -67,9 +67,9 @@ CTEShatterSurface::CTEShatterSurface( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEShatterSurface::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -77,7 +77,7 @@ void CTEShatterSurface::Test( const Vector& current_origin, const QAngle& curren
 	m_vecOrigin = current_origin;
 
 	Vector vecEnd;
-	
+
 	Vector forward;
 
 	m_vecOrigin.GetForModify()[2] += 24;
@@ -121,17 +121,17 @@ END_SEND_TABLE()
 static CTEShatterSurface g_TEShatterSurface( "Surface Shatter" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//			*pos - 
-//			entity - 
-//			index - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//			*pos -
+//			entity -
+//			index -
 //-----------------------------------------------------------------------------
 void TE_ShatterSurface( IRecipientFilter& filter, float delay,
-	const Vector* pos, const QAngle* angle, const Vector* force, const Vector* forcepos, 
+	const Vector* pos, const QAngle* angle, const Vector* force, const Vector* forcepos,
 	float width, float height, float shardsize, ShatterSurface_t surfacetype,
 	int front_r, int front_g, int front_b, int back_r, int back_g, int back_b)
 {

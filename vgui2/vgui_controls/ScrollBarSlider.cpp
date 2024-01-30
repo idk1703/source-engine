@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,7 +30,7 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 ScrollBarSlider::ScrollBarSlider(Panel *parent, const char *panelName, bool vertical) : Panel(parent, panelName)
 {
-	_vertical=vertical;	
+	_vertical=vertical;
 	_dragging=false;
 	_value=0;
 	_range[0]=0;
@@ -69,7 +69,7 @@ void ScrollBarSlider::SetValue(int value)
 	if (value > _range[1] - _rangeWindow)
 	{
 		// note our scrolling range must take into acount _rangeWindow
-		value = _range[1] - _rangeWindow;	
+		value = _range[1] - _rangeWindow;
 	}
 
 	if (value < _range[0])
@@ -95,7 +95,7 @@ int ScrollBarSlider::GetValue()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ScrollBarSlider::PerformLayout()
 {
@@ -139,34 +139,34 @@ void ScrollBarSlider::RecomputeNobPosFromValue()
 			width = ftall;
 			length = fwide;
 		}
-		
+
 		// our size is proportional to frangewindow/frange
-		// the scroll bar nob's length reflects the amount of stuff on the screen 
+		// the scroll bar nob's length reflects the amount of stuff on the screen
 		// vs the total amount of stuff we could scroll through in window
 		// so if a window showed half its contents and the other half is hidden the
 		// scroll bar's length is half the window.
 		// if everything is on the screen no nob is displayed
 		// frange is how many 'lines' of stuff we can display
 		// frangewindow is how many 'lines' are in the display window
-		
+
 		// proportion of whole window that is on screen
 		float proportion = frangewindow / frange;
 		float fnobsize = length * proportion;
 		if ( fnobsize < width ) fnobsize = (float)width;
-		
+
 		float freepixels = length - fnobsize;
-		
+
 		float firstpixel = freepixels * fper;
-		
+
 		_nobPos[0] = (int)( firstpixel );
 		_nobPos[1] = (int)( firstpixel + fnobsize );
-		
+
 		if ( _nobPos[1] > length )
 		{
 			_nobPos[0] = (int)( length - fnobsize );
 			_nobPos[1] = (int)length;
 		}
-		
+
 	}
 
 	Repaint();
@@ -206,18 +206,18 @@ void ScrollBarSlider::RecomputeValueFromNobPos()
 			width = ftall;
 			length = fwide;
 		}
-		
+
 		// calculate the size of the nob
 		float proportion = frangewindow / frange;
 		float fnobsize = length * proportion;
-		
+
 		if ( fnobsize < width )
 		{
 			fnobsize = width;
 		}
-		
+
 		// Our scroll bar actually doesnt scroll through all frange lines in the truerange, we
-		// actually only scroll through frange-frangewindow number of lines so we must take that 
+		// actually only scroll through frange-frangewindow number of lines so we must take that
 		// into account when we calculate the value
 		// convert to our local size system
 
@@ -284,12 +284,12 @@ bool ScrollBarSlider::HasFullRange()
 
 	return false;
 }
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Inform other watchers that the ScrollBarSlider was moved
 //-----------------------------------------------------------------------------
 void ScrollBarSlider::SendScrollBarSliderMovedMessage()
-{	
+{
 	// send a changed message
 	PostActionSignal(new KeyValues("ScrollBarSliderMoved", "position", _value));
 }
@@ -313,7 +313,7 @@ bool ScrollBarSlider::IsSliderVisible( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ScrollBarSlider::ApplySchemeSettings(IScheme *pScheme)
 {
@@ -356,7 +356,7 @@ void ScrollBarSlider::Paint()
 	int wide,tall;
 	GetPaintSize(wide,tall);
 
-	if ( !IsSliderVisible() )	
+	if ( !IsSliderVisible() )
 		return;
 
 	Color col = GetFgColor();
@@ -400,7 +400,7 @@ void ScrollBarSlider::Paint()
 void ScrollBarSlider::PaintBackground()
 {
 //	BaseClass::PaintBackground();
-	
+
 	int wide,tall;
 	GetPaintSize(wide,tall);
 	surface()->DrawSetColor(GetBgColor());
@@ -459,7 +459,7 @@ void ScrollBarSlider::OnCursorMoved(int x,int y)
 	{
 		_nobPos[0] = _nobDragStartPos[0] + (y - _dragStartPos[1]);
 		_nobPos[1] = _nobDragStartPos[1] + (y - _dragStartPos[1]);
-		
+
 		if (_nobPos[1] > tall)
 		{
 			_nobPos[0] = tall - (_nobPos[1] - _nobPos[0]);
@@ -471,13 +471,13 @@ void ScrollBarSlider::OnCursorMoved(int x,int y)
 	{
 		_nobPos[0] = _nobDragStartPos[0] + (x - _dragStartPos[0]);
 		_nobPos[1] = _nobDragStartPos[1] + (x - _dragStartPos[0]);
-		
+
 		if (_nobPos[1] > wide)
 		{
 			_nobPos[0] = wide - (_nobPos[1] - _nobPos[0]);
 			_nobPos[1] = wide;
 		}
-		
+
 	}
 	if (_nobPos[0] < 0)
 	{
@@ -485,7 +485,7 @@ void ScrollBarSlider::OnCursorMoved(int x,int y)
 		_nobPos[0] = 0;
 		SetValue(0);
 	}
-	
+
 	InvalidateLayout();		// not invalidatelayout - because it won't draw while we're scrolling the slider
 	RecomputeValueFromNobPos();
 //	Repaint();

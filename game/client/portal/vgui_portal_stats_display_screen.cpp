@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -24,7 +24,7 @@ using namespace vgui;
 
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CPortalStatsDisplayScreen : public CVGuiScreenPanel
 {
@@ -64,15 +64,15 @@ private:
 DECLARE_VGUI_SCREEN_FACTORY( CPortalStatsDisplayScreen, "portal_stats_display_screen" );
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CPortalStatsDisplayScreen::CPortalStatsDisplayScreen( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CPortalStatsDisplayScreen", vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/PortalStatsDisplayScreen.res", "PortalStatsDisplayScreens" ) ) 
+	: BaseClass( parent, "CPortalStatsDisplayScreen", vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/PortalStatsDisplayScreen.res", "PortalStatsDisplayScreens" ) )
 {
 	m_pNumPlayerLabel = new vgui::Label( this, "NumPlayer", "" );
 	m_pNumGoalLabel = new vgui::Label( this, "NumGoal", "" );
 	m_pCheatedLabel = new vgui::Label( this, "CheatedLabel", "" );
-	
+
 	m_flNextDigitRandomizeTime = 0;
 	m_iLastRandomInt = 0;
 
@@ -90,7 +90,7 @@ void CPortalStatsDisplayScreen::ApplySchemeSettings( IScheme *pScheme )
 	m_cPass = pScheme->GetColor( "CPortalStatsDisplayScreen_Pass", GetFgColor() );
 	m_cFail = pScheme->GetColor( "CPortalStatsDisplayScreen_Fail", GetFgColor() );
 	m_cUnknown = pScheme->GetColor( "CPortalStatsDisplayScreen_Unknown", GetFgColor() );
-	m_cInvisible = Color( 0, 0, 0, 0 );	
+	m_cInvisible = Color( 0, 0, 0, 0 );
 
 	if( m_bInitLabelColor )
 	{
@@ -102,7 +102,7 @@ void CPortalStatsDisplayScreen::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CPortalStatsDisplayScreen::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {

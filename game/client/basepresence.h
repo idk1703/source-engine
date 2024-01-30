@@ -43,7 +43,7 @@ protected:
 	bool							m_bArbitrated;
 	bool							m_bReportingStats;
 	HANDLE							m_hSession;
-	CUtlVector< XUSER_PROPERTY >	m_PlayerStats;	
+	CUtlVector< XUSER_PROPERTY >	m_PlayerStats;
 
 	//---------------------------------------------------------
 	// Debug support

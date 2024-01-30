@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -24,10 +24,9 @@ void CSpectateGames::OnPageShow()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CSpectateGames::CheckTagFilter( gameserveritem_t &server )
 {
 	return true;
 }
-

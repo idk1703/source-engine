@@ -18,7 +18,7 @@
 // CDmeBoneFlexDriverControl
 //===========================================================================//
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeBoneFlexDriverControl, CDmeBoneFlexDriverControl );
 
@@ -58,7 +58,7 @@ int CDmeBoneFlexDriverControl::SetBoneComponent( int nBoneComponent )
 // CDmeBoneFlexDriver
 //===========================================================================//
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeBoneFlexDriver, CDmeBoneFlexDriver );
 
@@ -113,7 +113,7 @@ CDmeBoneFlexDriverControl *CDmeBoneFlexDriver::FindOrCreateControl( const char *
 // CDmeBoneFlexDriverList
 //===========================================================================//
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeBoneFlexDriverList, CDmeBoneFlexDriverList );
 

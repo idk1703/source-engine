@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -59,14 +59,14 @@ private:
 	float					m_flNextThink;
 
 	CTFHudFlagObjectives	*m_pFlagPanel;
-	
+
 	CHudControlPointIcons	*m_pControlPointIconsPanel;
 	CControlPointProgressBar *m_pControlPointProgressBar;
 	CTFHudEscort			*m_pEscortPanel;
 	CTFHudMultipleEscort	*m_pMultipleEscortPanel;
 	class CTFHUDRobotDestruction	*m_pRobotDestructionPanel;
 	CTFHudPasstime			*m_pHudPasstime;
-	
+
 	//=============================================================================
 	// HPE_BEGIN:
 	// [msmith]	HUD for training stuff.

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -54,5 +54,4 @@ BOOL CMDIClientWnd::OnEraseBkgnd(CDC *pDC)
 
 	pDC->SelectObject(pOldBrush);
 	return TRUE;
-} 
-
+}

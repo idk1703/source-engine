@@ -65,12 +65,12 @@ struct FileHeader_t
 	unsigned int m_nVertexes;
 
 	int m_nMeshes;
-	inline MeshHeader_t *pMesh( int nMesh ) const 
+	inline MeshHeader_t *pMesh( int nMesh ) const
 	{
 		return (MeshHeader_t *)(((byte *)this) + sizeof(FileHeader_t)) + nMesh;
 	};
 
-	inline void *pVertexBase( int nMesh ) const 
+	inline void *pVertexBase( int nMesh ) const
 	{
 		return (void *)((byte *)this + pMesh( nMesh )->m_nOffset);
 	};
@@ -83,4 +83,3 @@ struct FileHeader_t
 }; // end namespace
 
 #endif // HARDWAREVERTS_H
-

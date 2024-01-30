@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -38,7 +38,7 @@ void CMdlLib::Disconnect()
 //	g_pFileSystem = NULL;
 	return;
 }
-	
+
 
 //-----------------------------------------------------------------------------
 // Purpose: Startup
@@ -64,7 +64,3 @@ void *CMdlLib::QueryInterface( const char *pInterfaceName )
 {
 	return Sys_GetFactoryThis()( pInterfaceName, NULL );
 }
-
-
-
-

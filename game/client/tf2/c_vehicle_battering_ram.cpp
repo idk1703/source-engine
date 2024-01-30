@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,7 +13,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_VehicleBatteringRam : public C_BaseTFFourWheelVehicle
 {
@@ -37,7 +37,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_VehicleBatteringRam::C_VehicleBatteringRam()
 {
@@ -53,7 +53,7 @@ bool C_VehicleBatteringRam::IsPassengerUsingStandardWeapons( int nRole )
 }
 
 //-----------------------------------------------------------------------------
-// Clamps the view angles while manning the gun 
+// Clamps the view angles while manning the gun
 //-----------------------------------------------------------------------------
 void C_VehicleBatteringRam::UpdateViewAngles( C_BasePlayer *pLocalPlayer, CUserCmd *pCmd )
 {
@@ -67,7 +67,7 @@ void C_VehicleBatteringRam::UpdateViewAngles( C_BasePlayer *pLocalPlayer, CUserC
 }
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CVehicleBatteringRamControlPanel : public CObjectControlPanel
 {
@@ -93,16 +93,16 @@ DECLARE_VGUI_SCREEN_FACTORY( CVehicleBatteringRamControlPanel, "vehicle_batterin
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CVehicleBatteringRamControlPanel::CVehicleBatteringRamControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CVehicleBatteringRamControlPanel" ) 
+	: BaseClass( parent, "CVehicleBatteringRamControlPanel" )
 {
 }
 
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CVehicleBatteringRamControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -151,7 +151,7 @@ void CVehicleBatteringRamControlPanel::OnTick()
 	m_pPassengerLabel->SetText( buf );
 
 	// Update the get in button
-	if ( pRam->IsPlayerInVehicle( C_BaseTFPlayer::GetLocalPlayer() ) ) 
+	if ( pRam->IsPlayerInVehicle( C_BaseTFPlayer::GetLocalPlayer() ) )
 	{
 		m_pOccupyButton->SetEnabled( false );
 		return;
@@ -205,4 +205,3 @@ void CVehicleBatteringRamControlPanel::OnCommand( const char *command )
 
 	BaseClass::OnCommand(command);
 }
-

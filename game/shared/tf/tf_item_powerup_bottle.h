@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -80,7 +80,7 @@ private:
 #ifdef TF_CLIENT_DLL
 	virtual void FireGameEvent( IGameEvent *event );
 	virtual int GetWorldModelIndex( void );
-#endif 
+#endif
 
 	float m_flLastSpawnTime;
 };

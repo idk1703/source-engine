@@ -38,7 +38,7 @@ char *VarArgs( PRINTF_FORMAT_STRING const char *format, ... )
 	Q_vsnprintf (string, sizeof( string ), format,argptr);
 	va_end (argptr);
 
-	return string;	
+	return string;
 }
 
 
@@ -158,7 +158,7 @@ void CGameEventEditPanel::OnTextChanged( KeyValues *params )
 					m_pParams[i]->SetAllowNumericInputOnly( true );
 				}
 				m_pParams[i]->SetText( "" );
-				m_pParams[i]->SetVisible( true );			
+				m_pParams[i]->SetVisible( true );
 
 				subkey = subkey->GetNextKey();
 				i++;
@@ -167,7 +167,7 @@ void CGameEventEditPanel::OnTextChanged( KeyValues *params )
 			while( i < MAX_GAME_EVENT_PARAMS )
 			{
 				m_pParamLabels[i]->SetVisible( false );
-				m_pParams[i]->SetVisible( false );	
+				m_pParams[i]->SetVisible( false );
 				i++;
 			}
 		}
@@ -199,7 +199,7 @@ void CGameEventEditPanel::OnCommand( const char *pCommand )
 					char text[128];
 					m_pParams[i]->GetText( text, sizeof(text) );
 					event->SetString( subkey->GetName(), text );
-	
+
 					subkey = subkey->GetNextKey();
 					i++;
 				}

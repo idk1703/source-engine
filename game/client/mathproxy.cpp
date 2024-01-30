@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -52,8 +52,8 @@ void CAddProxy::OnBind( void *pC_BaseEntity )
 	case MATERIAL_VAR_TYPE_VECTOR:
 		{
 			Vector a, b, c;
-			m_pSrc1->GetVecValue( a.Base(), vecSize ); 
-			m_pSrc2->GetVecValue( b.Base(), vecSize ); 
+			m_pSrc1->GetVecValue( a.Base(), vecSize );
+			m_pSrc2->GetVecValue( b.Base(), vecSize );
 			VectorAdd( a, b, c );
 			m_pResult->SetVecValue( c.Base(), vecSize );
 		}
@@ -109,8 +109,8 @@ void CSubtractProxy::OnBind( void *pC_BaseEntity )
 	case MATERIAL_VAR_TYPE_VECTOR:
 		{
 			Vector a, b, c;
-			m_pSrc1->GetVecValue( a.Base(), vecSize ); 
-			m_pSrc2->GetVecValue( b.Base(), vecSize ); 
+			m_pSrc1->GetVecValue( a.Base(), vecSize );
+			m_pSrc2->GetVecValue( b.Base(), vecSize );
 			VectorSubtract( a, b, c );
 			m_pResult->SetVecValue( c.Base(), vecSize );
 		}
@@ -166,8 +166,8 @@ void CMultiplyProxy::OnBind( void *pC_BaseEntity )
 	case MATERIAL_VAR_TYPE_VECTOR:
 		{
 			Vector a, b, c;
-			m_pSrc1->GetVecValue( a.Base(), vecSize ); 
-			m_pSrc2->GetVecValue( b.Base(), vecSize ); 
+			m_pSrc1->GetVecValue( a.Base(), vecSize );
+			m_pSrc2->GetVecValue( b.Base(), vecSize );
 			VectorMultiply( a, b, c );
 			m_pResult->SetVecValue( c.Base(), vecSize );
 		}
@@ -224,8 +224,8 @@ void CDivideProxy::OnBind( void *pC_BaseEntity )
 	case MATERIAL_VAR_TYPE_VECTOR:
 		{
 			Vector a, b, c;
-			m_pSrc1->GetVecValue( a.Base(), vecSize ); 
-			m_pSrc2->GetVecValue( b.Base(), vecSize ); 
+			m_pSrc1->GetVecValue( a.Base(), vecSize );
+			m_pSrc2->GetVecValue( b.Base(), vecSize );
 			VectorDivide( a, b, c );
 			m_pResult->SetVecValue( c.Base(), vecSize );
 		}
@@ -410,9 +410,9 @@ void CSineProxy::OnBind( void *pC_BaseEntity )
 
 	// get a value in [0,1]
 	flValue = ( sin( 2.0f * M_PI * (gpGlobals->curtime - flSineTimeOffset) / flSinePeriod ) * 0.5f ) + 0.5f;
-	// get a value in [min,max]	
+	// get a value in [min,max]
 	flValue = ( flSineMax - flSineMin ) * flValue + flSineMin;
-	
+
 	SetFloatResult( flValue );
 
 	if ( ToolsEnabled() )
@@ -613,9 +613,9 @@ void CLinearRampProxy::OnBind( void *pC_BaseEntity )
 	Assert( m_pResult );
 
 	float flValue;
-	
+
 	// get a value in [0,1]
-	flValue = m_Rate.GetFloat() * gpGlobals->curtime + m_InitialValue.GetFloat();	
+	flValue = m_Rate.GetFloat() * gpGlobals->curtime + m_InitialValue.GetFloat();
 	SetFloatResult( flValue );
 
 	if ( ToolsEnabled() )
@@ -780,7 +780,7 @@ bool CExponentialProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 }
 
 void CExponentialProxy::OnBind( void *pC_BaseEntity )
-{	
+{
 	float flVal = m_Scale.GetFloat() * exp(m_pSrc1->GetFloatValue( ) + m_Offset.GetFloat());
 
 	float flMaxVal = m_flMaxVal.GetFloat();
@@ -822,7 +822,7 @@ public:
 
 
 void CAbsProxy::OnBind( void *pC_BaseEntity )
-{	
+{
 	SetFloatResult( fabs(m_pSrc1->GetFloatValue( )) );
 
 	if ( ToolsEnabled() )
@@ -929,7 +929,7 @@ void CLessOrEqualProxy::OnBind( void *pC_BaseEntity )
 	case MATERIAL_VAR_TYPE_VECTOR:
 		{
 			Vector src;
-			pSourceVar->GetVecValue( src.Base(), vecSize ); 
+			pSourceVar->GetVecValue( src.Base(), vecSize );
 			m_pResult->SetVecValue( src.Base(), vecSize );
 		}
 		break;
@@ -1047,8 +1047,8 @@ void CSelectFirstIfNonZeroProxy::OnBind( void *pC_BaseEntity )
 	case MATERIAL_VAR_TYPE_VECTOR:
 		{
 			Vector a, b;
-			m_pSrc1->GetVecValue( a.Base(), vecSize ); 
-			m_pSrc2->GetVecValue( b.Base(), vecSize ); 
+			m_pSrc1->GetVecValue( a.Base(), vecSize );
+			m_pSrc2->GetVecValue( b.Base(), vecSize );
 
 			if ( !a.IsZero() )
 			{

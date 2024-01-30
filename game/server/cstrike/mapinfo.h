@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,7 +20,7 @@ public :
 
 	DECLARE_DATADESC();
 	DECLARE_CLASS( CMapInfo, CPointEntity );
-	
+
 	CMapInfo();
 	virtual ~CMapInfo();
 

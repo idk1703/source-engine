@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ CBaseTFCombatWeapon::CBaseTFCombatWeapon ( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFCombatWeapon::Precache( void )
 {
@@ -39,7 +39,7 @@ void CBaseTFCombatWeapon::Precache( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CBaseTFCombatWeapon::GetPrimaryAmmo( void )
 {
@@ -121,8 +121,8 @@ Vector CBaseTFCombatWeapon::GetTracerSrc( Vector &vecSrc, Vector &vecFireDir )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : activity - 
+// Purpose:
+// Input  : activity -
 //-----------------------------------------------------------------------------
 void CBaseTFCombatWeapon::PlayAttackAnimation( int activity )
 {
@@ -136,8 +136,8 @@ void CBaseTFCombatWeapon::PlayAttackAnimation( int activity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : sequence - 
+// Purpose:
+// Input  : sequence -
 //-----------------------------------------------------------------------------
 bool CBaseTFCombatWeapon::SendWeaponAnim( int iActivity )
 {
@@ -201,8 +201,8 @@ bool CBaseTFCombatWeapon::SendWeaponAnim( int iActivity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : reflect - 
+// Purpose:
+// Input  : reflect -
 //-----------------------------------------------------------------------------
 void CBaseTFCombatWeapon::SetReflectViewModelAnimations( bool reflect )
 {
@@ -210,7 +210,7 @@ void CBaseTFCombatWeapon::SetReflectViewModelAnimations( bool reflect )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseTFCombatWeapon::IsReflectingAnimations( void ) const
@@ -219,14 +219,14 @@ bool CBaseTFCombatWeapon::IsReflectingAnimations( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseTFCombatWeapon::IsCamouflaged( void )
 {
 	CBaseTFPlayer *pPlayer = (CBaseTFPlayer *)GetOwner();
 	if ( pPlayer && pPlayer->IsCamouflaged() )
 		return true;
-		
+
 	return false;
 }
 
@@ -245,7 +245,7 @@ static ConVar	v_ipitch_level( "v_ipitch_level", "0.3"/*, FCVAR_UNREGISTERED*/ );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CBaseTFCombatWeapon::CalcViewmodelBob( void )
@@ -253,7 +253,7 @@ float CBaseTFCombatWeapon::CalcViewmodelBob( void )
 	static	double	bobtime;
 	static float	bob;
 	float	cycle;
-	
+
 	CBasePlayer *player = ToBasePlayer( GetOwner() );
 	if ( !player )
 		return 0.0f;
@@ -264,7 +264,7 @@ float CBaseTFCombatWeapon::CalcViewmodelBob( void )
 	}
 
 	bobtime += gpGlobals->frametime;
-	
+
 	cycle = bobtime - (int)(bobtime/cl_bobcycle.GetFloat())*cl_bobcycle.GetFloat();
 	cycle /= cl_bobcycle.GetFloat();
 
@@ -280,17 +280,17 @@ float CBaseTFCombatWeapon::CalcViewmodelBob( void )
 	// bob is proportional to simulated velocity in the xy plane
 	// (don't count Z, or jumping messes it up)
 	bob = player->GetAbsVelocity().Length2D() * cl_bob.GetFloat();
-	
+
 	bob = bob*0.3 + bob*0.7*sin(cycle);
 
 	bob = MIN( 4.0, bob );
 	bob = MAX( -7.0, bob );
 	return bob;
-	
+
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 void CBaseTFCombatWeapon::AddViewmodelBob( CBaseViewModel *viewmodel, Vector &origin, QAngle &angles )
@@ -337,10 +337,10 @@ bool CBaseTFCombatWeapon::OnFireEvent( C_BaseViewModel *pViewModel, const Vector
 		{
 			int iAttachment = -1;
 			Vector attachOrigin;
-			QAngle attachAngles; 
+			QAngle attachAngles;
 
 			// First person muzzle flashes
-			switch (event) 
+			switch (event)
 			{
 			case CL_EVENT_MUZZLEFLASH0:
 				iAttachment = 0;
@@ -433,7 +433,7 @@ void CPlayerBoostedProxy::OnBind( void *pRenderable )
 		{
 			pPlayer = ToBaseTFPlayer( pWeapon->GetOwner() );
 		}
-		else 
+		else
 		{
 			pPlayer = dynamic_cast<CBaseTFPlayer*>(pEntity);
 		}
@@ -453,7 +453,7 @@ EXPOSE_INTERFACE( CPlayerBoostedProxy, IMaterialProxy, "PlayerBoosted" IMATERIAL
 #else
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CBaseTFCombatWeapon::CalcViewmodelBob( void )
@@ -462,7 +462,7 @@ float CBaseTFCombatWeapon::CalcViewmodelBob( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 void CBaseTFCombatWeapon::AddViewmodelBob( CBaseViewModel *viewmodel, Vector &origin, QAngle &angles )

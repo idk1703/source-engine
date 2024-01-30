@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -40,7 +40,7 @@ const char *s_aPlayerClassFiles[] =
 
 
 CTFPlayerClassDataMgr s_TFPlayerClassDataMgr;
-CTFPlayerClassDataMgr *g_pTFPlayerClassDataMgr = &s_TFPlayerClassDataMgr; 
+CTFPlayerClassDataMgr *g_pTFPlayerClassDataMgr = &s_TFPlayerClassDataMgr;
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -87,7 +87,7 @@ TFPlayerClassData_t::TFPlayerClassData_t()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *TFPlayerClassData_t::GetModelName() const
 {
@@ -114,7 +114,7 @@ const char *TFPlayerClassData_t::GetDeathSound( int nType )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TFPlayerClassData_t::Parse( const char *szName )
 {
@@ -133,7 +133,7 @@ void TFPlayerClassData_t::Parse( const char *szName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TFPlayerClassData_t::ParseData( KeyValues *pKeyValuesData )
 {
@@ -158,7 +158,7 @@ void TFPlayerClassData_t::ParseData( KeyValues *pKeyValuesData )
 	char buf[32];
 	for ( i=0;i<TF_PLAYER_WEAPON_COUNT;i++ )
 	{
-		Q_snprintf( buf, sizeof(buf), "weapon%d", i+1 );		
+		Q_snprintf( buf, sizeof(buf), "weapon%d", i+1 );
 		m_aWeapons[i] = GetWeaponId( pKeyValuesData->GetString( buf ) );
 	}
 
@@ -179,8 +179,8 @@ void TFPlayerClassData_t::ParseData( KeyValues *pKeyValuesData )
 	// Buildables
 	for ( i=0;i<TF_PLAYER_BLUEPRINT_COUNT;i++ )
 	{
-		Q_snprintf( buf, sizeof(buf), "buildable%d", i+1 );		
-		m_aBuildable[i] = GetBuildableId( pKeyValuesData->GetString( buf ) );		
+		Q_snprintf( buf, sizeof(buf), "buildable%d", i+1 );
+		m_aBuildable[i] = GetBuildableId( pKeyValuesData->GetString( buf ) );
 	}
 
 	// Temp animation flags
@@ -205,11 +205,11 @@ void TFPlayerClassData_t::ParseData( KeyValues *pKeyValuesData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TFPlayerClassData_t::AddAdditionalPlayerDeathSounds( void )
 {
-#ifdef GAME_DLL	
+#ifdef GAME_DLL
 	for ( int i = DEATH_SOUND_FIRST; i <= DEATH_SOUND_LAST; ++i )
 	{
 		CopySoundNameWithModifierToken( m_szDeathSound[ i + DEATH_SOUND_MVM_FIRST ], m_szDeathSound[ i ], ARRAYSIZE( m_szDeathSound[0] ), "MVM_" );
@@ -219,7 +219,7 @@ void TFPlayerClassData_t::AddAdditionalPlayerDeathSounds( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFPlayerClassDataMgr::CTFPlayerClassDataMgr()
 {

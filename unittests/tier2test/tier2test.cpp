@@ -19,14 +19,14 @@ class CTier2TestAppSystem : public CTier2AppSystem< IAppSystem >
 	typedef CTier2AppSystem< IAppSystem > BaseClass;
 
 public:
-	virtual bool Connect( CreateInterfaceFn factory ) 
+	virtual bool Connect( CreateInterfaceFn factory )
 	{
 		if ( !BaseClass::Connect( factory ) )
 			return false;
 
 		if ( !g_pFullFileSystem )
 			return false;
-		return true; 
+		return true;
 	}
 
 	virtual InitReturnVal_t Init()

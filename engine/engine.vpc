@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------
 //	ENGINE.VPC
 //
-//	Project Script 
+//	Project Script
 //-----------------------------------------------------------------------------
 
 $macro SRCDIR		".."
@@ -89,7 +89,7 @@ $Project "engine"
 		$File	"DevShotGenerator.cpp"
 		$File	"OcclusionSystem.cpp"
 		$File	"tmessage.cpp"
-		$File	"r_efx.cpp" [!$DEDICATED] 
+		$File	"r_efx.cpp" [!$DEDICATED]
 		$File	"view.cpp" [!$DEDICATED]
 
 		$File	"baseclient.cpp"				\
@@ -117,7 +117,7 @@ $Project "engine"
 				"cl_texturelistpanel.cpp"	[!$DEDICATED]	\
 				"client.cpp"				[!$DEDICATED]	\
 				"colorcorrectionpanel.cpp"	[!$DEDICATED] 	\
-				"console.cpp"				
+				"console.cpp"
   		{
 			$Configuration
 			{
@@ -141,7 +141,7 @@ $Project "engine"
 				}
 			}
 		}
-		
+
 		$File	"buildcubemaps.cpp"	[!$DEDICATED]	\
 				"debug_leafvis.cpp"	[!$DEDICATED]	\
 				"debugoverlay.cpp"	[!$DEDICATED]	\
@@ -180,7 +180,7 @@ $Project "engine"
 			}
 		}
 	}
-	
+
 	$Folder "Server"
 	{
 		$File	"server_pch.cpp"
@@ -240,7 +240,7 @@ $Project "engine"
 		$File	"ccs.cpp"
 		$File	"clockdriftmgr.cpp"
 		$File	"cl_bounded_cvars.cpp" [!$DEDICATED]
-		$File	"cl_check_process.cpp"	
+		$File	"cl_check_process.cpp"
 		$File	"cmd.cpp"
 		$File	"cmodel.cpp"
 		$File	"cmodel_bsp.cpp"
@@ -285,7 +285,7 @@ $Project "engine"
 		$File	"gametrace_engine.cpp"
 		$File	"hltvclient.cpp"
 		$File	"hltvclientstate.cpp"
-		$File	"hltvdemo.cpp" 
+		$File	"hltvdemo.cpp"
 		$File	"hltvserver.cpp"
 		$File	"hltvtest.cpp"
 		$File	"host.cpp"
@@ -299,7 +299,7 @@ $Project "engine"
 		$File	"LoadScreenUpdate.cpp" [!$DEDICATED]
 		$File	"$SRCDIR\public\lumpfiles.cpp"
 		$File	"MapReslistGenerator.cpp"
-		$File	"matchmakinghost.cpp" [!$DEDICATED] 
+		$File	"matchmakinghost.cpp" [!$DEDICATED]
 		$File	"matchmakingqos.cpp" [!$DEDICATED]
 		$File	"matchmakingclient.cpp" [!$DEDICATED]
 		$File	"matchmakingshared.cpp" [!$DEDICATED]
@@ -354,7 +354,7 @@ $Project "engine"
 		}
 		$File	"sys_engine.cpp"
 		$File	"sys_mainwind.cpp" [!$DEDICATED]
-		$File	"sys_linuxwind.cpp" [$POSIX]		
+		$File	"sys_linuxwind.cpp" [$POSIX]
 		$File	"testscriptmgr.cpp"
 		$File	"traceinit.cpp"
 		$File	"$SRCDIR\public\vallocator.cpp"
@@ -371,7 +371,7 @@ $Project "engine"
 		$File	"$SRCDIR\public\editor_sendcommand.cpp"
 		$File	"host_saverestore.cpp" [!$DEDICATED]
 		$File	"keys.cpp"
-		$File	"lightcache.cpp" [!$DEDICATED] 
+		$File	"lightcache.cpp" [!$DEDICATED]
 		$File	"networkstringtableclient.cpp"
 		$File	"saverestore_filesystem.cpp" [!$DEDICATED]
 		$File	"$SRCDIR\public\scratchpad3d.cpp"
@@ -381,7 +381,7 @@ $Project "engine"
 		$File	"xboxsystem.cpp" [!$DEDICATED]
 		$File	"$SRCDIR\common\SourceAppInfo.cpp"
 	}
-	
+
 	$Folder	"Audio"
 	{
 		$File	"snd_io.cpp"
@@ -392,8 +392,8 @@ $Project "engine"
 		$File	"audio\private\MPAFile.cpp" [!$DEDICATED&&!$X360]
 		$File	"audio\private\MPAHeader.cpp" [!$DEDICATED&&!$X360]
 		$File	"audio\private\circularbuffer.cpp" [!$DEDICATED]
-		$File	"audio\private\snd_posix.cpp"		[$POSIX]	
-		
+		$File	"audio\private\snd_posix.cpp"		[$POSIX]
+
 		$File	"audio\audio_pch.cpp" [!$DEDICATED]
 		{
 			$Configuration
@@ -408,7 +408,7 @@ $Project "engine"
 				}
 			}
 		}
-			
+
 		// precompiled header section: common audio files
 		$File	"audio\private\vox.cpp"											\
 				"audio\private\snd_dev_common.cpp"	[!$DEDICATED]							\
@@ -422,7 +422,7 @@ $Project "engine"
 				"audio\private\snd_wave_source.cpp"	[!$DEDICATED]							\
 				"audio\private\snd_wave_temp.cpp"	[!$DEDICATED]							\
 				"audio\private\snd_win.cpp"			[!$DEDICATED]							\
-				"audio\private\voice_gain.cpp"									
+				"audio\private\voice_gain.cpp"
 		{
 			$Configuration
 			{
@@ -434,7 +434,7 @@ $Project "engine"
 				}
 			}
 		}
-		
+
 		// WIN32 only audio files
 		$File	"audio\private\snd_dev_direct.cpp"	[$WINDOWS]		\
 				"audio\private\snd_dev_wave.cpp"	[$WINDOWS]		\
@@ -456,7 +456,7 @@ $Project "engine"
 				}
 			}
 		}
-		
+
 		// X360 only audio files
 		$File	"audio\private\snd_dev_xaudio.cpp"		[$X360] \
 				"audio\private\snd_wave_mixer_xma.cpp"	[$X360]
@@ -471,7 +471,7 @@ $Project "engine"
 				}
 			}
 		}
-		
+
 		//$File "audio\private\snd_stubs.cpp"
 		$File "audio\private\snd_dev_sdl.cpp"	[$SDL && !$OSXALL]
 		$File "audio\private\snd_dev_sdl.h"		[$SDL && !$OSXALL]
@@ -534,7 +534,7 @@ $Project "engine"
 		$File	"$SRCDIR\common\vgui\vgui_budgetbargraphpanel.cpp"
 		$File	"$SRCDIR\common\vgui\vgui_budgethistorypanel.cpp"
 		$File	"$SRCDIR\common\vgui\vgui_budgetpanelshared.cpp"
-		
+
 		$File	"perfuipanel.cpp"										\
 				"vgui_basepanel.cpp"									\
 				"vgui_baseui_interface.cpp"								\
@@ -544,7 +544,7 @@ $Project "engine"
 				"vgui_helpers.cpp"										\
 				"vgui_texturebudgetpanel.cpp"							\
 				"vgui_vprofgraphpanel.cpp"								\
-				"vgui_vprofpanel.cpp"									
+				"vgui_vprofpanel.cpp"
 		{
 			$Configuration
 			{
@@ -1126,5 +1126,5 @@ $Project "engine"
 		$ImpLib	"SDL2" [$SDL]
 		$File	"$SRCDIR\DX9SDK\lib\dsound.lib" [$WIN32]
 		$File	"$SRCDIR\DX9SDK\lib\dxguid.lib" [$WIN32]
-	}	
+	}
 }

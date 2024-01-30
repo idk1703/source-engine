@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -33,15 +33,15 @@ public:
 	virtual void	SetTimeout(float seconds) = 0;
 	virtual void	SetDemoRecorder(IDemoRecorder *recorder) = 0;
 	virtual void	SetChallengeNr(unsigned int chnr) = 0;
-	
+
 	virtual void	Reset( void ) = 0;
 	virtual void	Clear( void ) = 0;
 	virtual void	Shutdown(const char *reason) = 0;
-	
+
 	virtual void	ProcessPlayback( void ) = 0;
 	virtual bool	ProcessStream( void ) = 0;
 	virtual void	ProcessPacket( struct netpacket_s* packet, bool bHasHeader ) = 0;
-			
+
 	virtual bool	SendNetMsg(INetMessage &msg, bool bForceReliable = false, bool bVoice = false ) = 0;
 #ifdef POSIX
 	FORCEINLINE bool SendNetMsg(INetMessage const &msg, bool bForceReliable = false, bool bVoice = false ) { return SendNetMsg( *( (INetMessage *) &msg ), bForceReliable, bVoice ); }
@@ -49,9 +49,9 @@ public:
 	virtual bool	SendData(bf_write &msg, bool bReliable = true) = 0;
 	virtual bool	SendFile(const char *filename, unsigned int transferID) = 0;
 	virtual void	DenyFile(const char *filename, unsigned int transferID) = 0;
-	virtual void	RequestFile_OLD(const char *filename, unsigned int transferID) = 0;	// get rid of this function when we version the 
+	virtual void	RequestFile_OLD(const char *filename, unsigned int transferID) = 0;	// get rid of this function when we version the
 	virtual void	SetChoked( void ) = 0;
-	virtual int		SendDatagram(bf_write *data) = 0;		
+	virtual int		SendDatagram(bf_write *data) = 0;
 	virtual bool	Transmit(bool onlyReliable = false) = 0;
 
 	virtual const netadr_t	&GetRemoteAddress( void ) const = 0;
@@ -61,7 +61,7 @@ public:
 	virtual unsigned int	GetChallengeNr( void ) const = 0;
 	virtual void			GetSequenceData( int &nOutSequenceNr, int &nInSequenceNr, int &nOutSequenceNrAck ) = 0;
 	virtual void			SetSequenceData( int nOutSequenceNr, int nInSequenceNr, int nOutSequenceNrAck ) = 0;
-		
+
 	virtual void	UpdateMessageStats( int msggroup, int bits) = 0;
 	virtual bool	CanPacket( void ) const = 0;
 	virtual bool	IsOverflowed( void ) const = 0;

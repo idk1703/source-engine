@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,7 +32,7 @@ CBuyMenu::CBuyMenu(IViewPort *pViewPort) : WizardPanel( NULL, PANEL_BUY )
 	SetTitleBarVisible( false );
 
 	SetAutoDelete( false ); // we reuse this panel, don't let WizardPanel delete us
-	
+
 	LoadControlSettings( "Resource/UI/BuyMenu.res" );
 	ShowButtons( false );
 
@@ -148,4 +148,3 @@ void CBuyMenu::OnKeyCodeTyped( KeyCode code )
 		BaseClass::OnKeyCodeTyped( code );
 	}
 }
-

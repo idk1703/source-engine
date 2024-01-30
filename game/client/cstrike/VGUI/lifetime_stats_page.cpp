@@ -254,4 +254,3 @@ int CLifetimeStatsPage::AddAccuracyStat(const StatsCollection_t& personalLifetim
 
 	return newItem;
 }
-

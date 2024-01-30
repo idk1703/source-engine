@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -38,12 +38,12 @@ public:
 	inline bool IsBoxSelecting();
 	inline bool IsLogicalBoxSelecting();
 	void EndBoxSelection();
-	
+
 	// Start, end logical selection
 	void StartLogicalBoxSelection( CMapViewLogical *pView, const Vector &vStart );
 	void EndLogicalBoxSelection( );
 
-	// Tool3D implementation. 
+	// Tool3D implementation.
 	virtual void SetEmpty();
 	virtual bool IsEmpty();
 
@@ -80,7 +80,7 @@ public:
 	void UpdateSelectionBounds();
 
 	bool		m_bBoxSelection;
-	
+
 protected:
 
 	void TransformSelection();
@@ -89,15 +89,15 @@ protected:
 	void FinishTranslation(bool bSave, bool bClone );
 	void StartTranslation(CMapView *pView, const Vector2D &vPoint, const Vector &vHandleOrigin );
 	bool StartBoxSelection( CMapView *pView, const Vector2D &vPoint, const Vector &vStart);
-	
+
 	void UpdateHandleState();
 
 	virtual unsigned int GetConstraints(unsigned int nKeyFlags);
 
 	void NudgeObjects(CMapView *pView, int nChar, bool bSnap, bool bClone);
-	
+
 	GDinputvariable *ChooseEyedropperVar(CMapView *pView, CUtlVector<GDinputvariable *> &VarList);
-	
+
 	CMapEntity *FindEntityInTree(CMapClass *pObject);
 
 	void SelectInBox(CMapDoc *pDoc, bool bInsideOnly);
@@ -123,7 +123,7 @@ protected:
 	void SelectInLogicalBox(CMapDoc *pDoc, bool bInsideOnly);
 
 	CSelection	*m_pSelection;	// the documents selection opject
-	
+
 	bool m_bEyedropper;			// True if we are holding down the eyedropper hotkey.
 
 	bool m_bSelected;			// Did we select an object on left button down?
@@ -148,15 +148,15 @@ protected:
 //-----------------------------------------------------------------------------
 // Are we in box selection?
 //-----------------------------------------------------------------------------
-inline bool Selection3D::IsBoxSelecting() 
-{ 
-	return m_bBoxSelection; 
+inline bool Selection3D::IsBoxSelecting()
+{
+	return m_bBoxSelection;
 }
 
-inline bool Selection3D::IsLogicalBoxSelecting() 
-{ 
-	return m_bInLogicalBoxSelection; 
+inline bool Selection3D::IsLogicalBoxSelecting()
+{
+	return m_bInLogicalBoxSelection;
 }
 
-	
+
 #endif // SELECTION3D_H

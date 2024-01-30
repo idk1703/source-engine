@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -86,7 +86,7 @@ void CMySqlDatabase::RunThread()
 			::LeaveCriticalSection(&m_csInQueue);
 
 			::EnterCriticalSection(&m_csDBAccess);
-			
+
 			// run sqldb command
 			msg.result = msg.cmd->RunCommand();
 

@@ -24,7 +24,7 @@ char* CTFStatsOSInterface::getNextDirectory(char* path)
 	char seps[3];
 	seps[0]=pathSeperator();
 	seps[1]=0;
-	
+
 	return strtok( path, seps );
 }
 
@@ -50,8 +50,8 @@ bool CTFStatsOSInterface::makeHier(string dir)
 	strcpy(path,dir.c_str());
 	//have to parse out directories one at a time. because mkdir just can't handle making nested directories that don't exist (just like md.)
 	//in otherwords, it's lame.
-	
-	
+
+
 #ifdef WIN32
 	//get drive out of path change to it.
 	//if it's only one character, then interpret it as a path, make it and return;
@@ -61,7 +61,7 @@ bool CTFStatsOSInterface::makeHier(string dir)
 		this->mkdir(path);
 		return true;
 	}
-	
+
 	//what should we do with remote machines?
 	//hmm, let's force users to use mapped drives.
 	if (path[0]=='\\' && path[1]=='\\')
@@ -69,7 +69,7 @@ bool CTFStatsOSInterface::makeHier(string dir)
 		Util::debug_dir_printf("Cannot make a directory on a remote machine.\nMap the share to a drive and specify that drive instead.\n");
 			retval=false;
 			goto end;
-	}	
+	}
 	//if it's a drive specification
 	if (path[0]=='\\')
 	{
@@ -97,7 +97,7 @@ bool CTFStatsOSInterface::makeHier(string dir)
 			}
 			dirs=&path[3];
 		}
-		else 
+		else
 		{
 			dirs=&path[2];
 		}
@@ -188,7 +188,7 @@ bool CTFStatsWin32Interface::findfirstfile(char* filemask,string& filename)
 	_finddata_t fd;
 	hFindFile=_findfirst(filemask,&fd);
 	filename=fd.name;
-	
+
 	return hFindFile != -1;
 }
 bool CTFStatsWin32Interface::findnextfile(string& filename)
@@ -196,7 +196,7 @@ bool CTFStatsWin32Interface::findnextfile(string& filename)
 	filename="";
 	if (hFindFile==-1)
 		return false;
-	
+
 	_finddata_t fd;
 	int result=_findnext(hFindFile,&fd);
 	filename=fd.name;
@@ -230,10 +230,10 @@ bool CTFStatsLinuxInterface::findfirstfile(char* filemask,string& filename)
 
 	CTFStatsLinuxInterface::filemask=filemask;
 	n=scandir(".",&namelist,CTFStatsLinuxInterface::filenameCompare,alphasort);
-	
+
 	if (n<0)
 		return false;
-	
+
 	foundFileIterator=0;
 	numFiles=n;
 	foundFiles=namelist;
@@ -296,23 +296,23 @@ int CTFStatsLinuxInterface::filenameCompare(dirent* file)
 {
 	//scan the filemask, turn it into a regular expression
 	//then fire up the regex engine and scan the filename;
-	
+
 	char buf[5000];
 	filemask2RegExp(buf);
-	
+
 	//printf("trying to match %s against %s\n",buf,file->d_name);
-	
+
 	string sbuf=buf;
 	regex expression(sbuf);
 	cmatch what;
-	
+
 	bool result=query_match((const char*)file->d_name, (const char*)(file->d_name + strlen(file->d_name)), what, expression);
 
 	//if (result)
 //		printf("\tsuccessful\n");
 //	else
 		//printf("\tno dice\n");
-	
+
 	return result?1:0;
 }
 

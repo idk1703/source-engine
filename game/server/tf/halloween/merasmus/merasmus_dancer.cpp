@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -167,6 +167,6 @@ void CMerasmusDancer::DanceThink()
 		UTIL_Remove( this );
 		return;
 	}
-	
+
 	SetNextThink( gpGlobals->curtime );
 }

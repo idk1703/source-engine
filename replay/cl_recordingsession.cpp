@@ -166,7 +166,7 @@ int CClientRecordingSession::UpdateLastBlockToDownload()
 	m_iLastBlockToDownload = MAX( m_iLastBlockToDownload, iPostDeathBlock );
 
 	CL_GetRecordingSessionManager()->FlagForFlush( this, false );
-	
+
 	IF_REPLAY_DBG( ConColorMsg( 0, Color(0,255,0), "Max block currently needed: %i\n", m_iLastBlockToDownload ) );
 
 	return m_iLastBlockToDownload;

@@ -1,12 +1,12 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -94,7 +94,7 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CPropCrane : public CBaseProp, public IDrivableVehicle
 {
@@ -124,13 +124,13 @@ public:
 	virtual int		ObjectCaps( void ) { return BaseClass::ObjectCaps() | FCAP_IMPULSE_USE; };
 	virtual void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	virtual void	DrawDebugGeometryOverlays( void );
-	
-	virtual bool PassengerShouldReceiveDamage( CTakeDamageInfo &info ) 
-	{ 
+
+	virtual bool PassengerShouldReceiveDamage( CTakeDamageInfo &info )
+	{
 		if ( info.GetDamageType() & DMG_VEHICLE )
 			return true;
 
-		return (info.GetDamageType() & (DMG_RADIATION|DMG_BLAST) ) == 0; 
+		return (info.GetDamageType() & (DMG_RADIATION|DMG_BLAST) ) == 0;
 	}
 
 	virtual Vector	BodyTarget( const Vector &posSrc, bool bNoisy = true );
@@ -197,7 +197,7 @@ protected:
 private:
 
 	CNetworkHandle( CBasePlayer, m_hPlayer );
-	CNetworkVar( bool, m_bMagnetOn ); 
+	CNetworkVar( bool, m_bMagnetOn );
 
 	// NPC Driving
 	CHandle<CNPC_VehicleDriver>		m_hNPCDriver;
@@ -221,7 +221,7 @@ private:
 	float			m_flExtension;
 	float			m_flExtensionRate;
 
-	// Magnet movement	
+	// Magnet movement
 	bool			m_bDropping;
 	float			m_flNextDangerSoundTime;
 	float			m_flNextCreakSound;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -28,7 +28,7 @@ public:
 private:
 	bool		PackAmmo( char *szName, int iCount );
 	int			GiveAmmo( int iCount, char *szName, int iMax, int *pIndex = NULL );
-	
+
 	int			m_cAmmoTypes;	// how many ammo types packed into this box (if packed by a level designer)
 	string_t	m_rgiszAmmo[MAX_AMMO_SLOTS];	// ammo names
 	int			m_rgAmmo[MAX_AMMO_SLOTS];		// ammo quantities
@@ -65,7 +65,7 @@ bool CWeaponBox::KeyValue( const char *szKeyName, const char *szValue )
 }
 
 void CWeaponBox::Spawn( void )
-{ 
+{
 	Precache();
 	SetModel( WEAPONBOX_MODEL );
 	BaseClass::Spawn();
@@ -109,7 +109,7 @@ void CWeaponBox::BoxTouch( CBaseEntity *pOther )
 	{
 		if ( m_rgiszAmmo[ i ] != NULL_STRING )
 		{
-			// there's some ammo of this type. 
+			// there's some ammo of this type.
 			pPlayer->GiveAmmo( m_rgAmmo[ i ], (char *)STRING( m_rgiszAmmo[ i ] ) );
 
 			// now empty the ammo from the weaponbox since we just gave it to the player
@@ -139,7 +139,7 @@ bool CWeaponBox::PackAmmo( char *szName, int iCount )
 		Warning( "NULL String in PackAmmo!\n" );
 		return false;
 	}
-	
+
 	Q_snprintf( szConvertedName, sizeof( szConvertedName ), "%s", szName );
 	if ( !stricmp( szName, "bolts" ) )
 	{

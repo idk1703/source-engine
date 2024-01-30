@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -133,7 +133,7 @@ bool CMinimapPlayerPanel::Init( KeyValues* pKeyValues, MinimapInitData_t* pInitD
 void CMinimapPlayerPanel::OnTick( )
 {
 	// Modify position and size if we're the local player
-	// It's too bad, but we can't do this during Init() because 
+	// It's too bad, but we can't do this during Init() because
 	// C_BaseTFPlayer::GetLocalPlayer() doesn't return the correct value at that time
 	if ( C_BaseTFPlayer::GetLocalPlayer() == GetEntity() )
 	{
@@ -180,7 +180,7 @@ void CMinimapPlayerPanel::Paint( )
 //	m_LocalAliveImage.SetAlpha( pPlayer->GetOverlayAlpha() );
 
 	bool isLocalPlayer = ( pEntity == local );
-	
+
 	bool isAlive = pPlayer->GetHealth() > 0 ? true : false;
 	if ( isAlive )
 	{
@@ -213,7 +213,7 @@ void CMinimapPlayerPanel::Paint( )
 		if (m_bClipToMap)
 			g_pMatSystemSurface->DisableClipping( false );
 	}
-				 
+
 	//  Draw dead guys with a different icon
 	if ( isAlive )
 	{
@@ -244,7 +244,3 @@ void CMinimapPlayerPanel::Paint( )
 
 	g_pMatSystemSurface->DisableClipping( false );
 }
-
-
-
-

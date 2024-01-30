@@ -17,7 +17,7 @@
 DECLARE_HUDELEMENT( CHudMiniGame );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudMiniGame::CHudMiniGame( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass( NULL, "HudMiniGame" )
@@ -27,13 +27,13 @@ CHudMiniGame::CHudMiniGame( const char *pElementName ) :
 
 	m_pActiveMinigame = NULL;
 	V_strcpy_safe( m_szResFilename, "resource/UI/HudMiniGame_Base.res" );
-	
+
 	SetHiddenBits( 0 );
 	vgui::ivgui()->AddTickSignal( GetVPanel(), 100 );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMiniGame::ApplySchemeSettings( vgui::IScheme *scheme )
 {
@@ -44,7 +44,7 @@ void CHudMiniGame::ApplySchemeSettings( vgui::IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudMiniGame::ShouldDraw( void )
 {
@@ -61,7 +61,7 @@ bool CHudMiniGame::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMiniGame::OnTick()
 {
@@ -79,8 +79,8 @@ void CHudMiniGame::OnTick()
 		{
 			m_pActiveMinigame = pActiveMinigame;
 		}
-		
-		if ( pszResFilename && pszResFilename[0] && m_szResFilename && m_szResFilename[0] )	
+
+		if ( pszResFilename && pszResFilename[0] && m_szResFilename && m_szResFilename[0] )
 		{
 			if ( !FStrEq( pszResFilename, m_szResFilename + sizeof( "resource/UI/" ) - 1 ) )
 			{
@@ -88,7 +88,7 @@ void CHudMiniGame::OnTick()
 				InvalidateLayout( false, true );
 			}
 		}
-			
+
 		if ( m_pActiveMinigame )
 		{
 			SetDialogVariable( "redscore", m_pActiveMinigame->GetScoreForTeam( TF_TEAM_RED ) );

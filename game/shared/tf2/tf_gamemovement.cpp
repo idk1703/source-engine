@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -86,7 +86,7 @@ void CTFGameMovement::CategorizePosition( void )
 				// "on the ground" surface not stap us back to earth
 				mv->m_vecAbsOrigin = vStart + trace.fraction * ( vEnd - vStart );
 //				VectorCopy( trace.endpos, mv->m_vecAbsOrigin );
-			}		
+			}
 		}
 
 		// NOTE: should this be surrounded by trace.fraction <= 1.0f ?????
@@ -133,7 +133,7 @@ void CTFGameMovement::HandleLadder( void )
 
 	if ( !BaseClass::LadderMove() && ( player->GetMoveType() == MOVETYPE_LADDER ) )
 	{
-		// clear ladder stuff unless player is noclipping or being lifted by barnacle. 
+		// clear ladder stuff unless player is noclipping or being lifted by barnacle.
 		// it will be set immediately again next frame if necessary
 		player->SetMoveType( MOVETYPE_WALK );
 		player->SetMoveCollide( MOVECOLLIDE_DEFAULT );
@@ -221,14 +221,14 @@ float CTFGameMovement::ComputeConstraintSpeedFactor( void )
 
 	float flFrac = (sqrt(flDistSq) - (pTFMove->m_flConstraintRadius - pTFMove->m_flConstraintWidth)) / pTFMove->m_flConstraintWidth;
 
-	float flSpeedFactor = Lerp( flFrac, 1.0f, pTFMove->m_flConstraintSpeedFactor ); 
+	float flSpeedFactor = Lerp( flFrac, 1.0f, pTFMove->m_flConstraintSpeedFactor );
 	return flSpeedFactor;
 }
 
 
 //-----------------------------------------------------------------------------
 // Purpose: Called in PrePlayerMove(), this function clamps the player's overall
-//          speed.  It is clamped to either the maximum client's or server's 
+//          speed.  It is clamped to either the maximum client's or server's
 //          speed (whichever is lower).
 //-----------------------------------------------------------------------------
 void CTFGameMovement::SetupSpeed( void )
@@ -238,8 +238,8 @@ void CTFGameMovement::SetupSpeed( void )
 
 	// Don't clamp speed if we are sin an "ISOMETRIC" or "NOCLIP" movetype.
 	if ( ( player->GetMoveType() == MOVETYPE_ISOMETRIC ) ||
-		 ( player->GetMoveType() == MOVETYPE_NOCLIP ) )
-		 return;
+		( player->GetMoveType() == MOVETYPE_NOCLIP ) )
+		return;
 
 	// Some events negate speed, check for these first.
 	if ( ( player->GetFlags() & FL_FROZEN ) || ( player->GetFlags() & FL_ONTRAIN ) ||  IsDead() )
@@ -252,8 +252,8 @@ void CTFGameMovement::SetupSpeed( void )
 
 	// Calculate the players max speed given movements.
 	float flSpeed = ( mv->m_flForwardMove * mv->m_flForwardMove ) +
-		            ( mv->m_flSideMove * mv->m_flSideMove ) +
-			 	    ( mv->m_flUpMove * mv->m_flUpMove );
+					( mv->m_flSideMove * mv->m_flSideMove ) +
+					( mv->m_flUpMove * mv->m_flUpMove );
 	if ( flSpeed == 0.0f )
 		return;
 
@@ -262,7 +262,7 @@ void CTFGameMovement::SetupSpeed( void )
 	// NOTE: The client max speed was set to the movement max speed (mv->m_flMaxSpeed)
 	//       in the SetupMove, however the _ProcessMovement code post sets
 	//       mv->m_flMaxSpeed to the maximum server speed (sv_maxspeed),
-	//       thus, the need to the check.  If we forego the maximum server speed, 
+	//       thus, the need to the check.  If we forego the maximum server speed,
 	//       this code can be removed.
 	if ( mv->m_flClientMaxSpeed )
 	{
@@ -320,10 +320,10 @@ void CTFGameMovement::FinishUnDuck( void )
 	}
 	else
 	{
-  		Vector viewDelta = player->GetViewOffset() - GetPlayerViewOffset( false );
+		Vector viewDelta = player->GetViewOffset() - GetPlayerViewOffset( false );
 		VectorAdd( newOrigin, viewDelta, newOrigin );
 	}
-	
+
 	TracePlayerBBox( newOrigin, newOrigin, MASK_PLAYERSOLID, COLLISION_GROUP_PLAYER_MOVEMENT, trace );
 
 	if ( !trace.startsolid )
@@ -343,7 +343,7 @@ void CTFGameMovement::FinishUnDuck( void )
 		player->m_Local.m_bDucking  = false;
 		player->SetViewOffset( GetPlayerViewOffset( false ) );
 		player->m_Local.m_flDucktime = 0;
-		
+
 		VectorCopy( newOrigin, mv->m_vecAbsOrigin );
 	}
 }
@@ -392,11 +392,11 @@ void CTFGameMovement::HandleDuck( void )
 
 			float duckmilliseconds = MAX( 0.0f, 1000.0f - (float)player->m_Local.m_flDucktime );
 			float duckseconds = duckmilliseconds / 1000.0f;
-			
+
 			if ( player->m_Local.m_bDucking )
 			{
 				// Finish ducking immediately if duck time is over or not on ground
-				if ( ( duckseconds > TIME_TO_DUCK ) || 
+				if ( ( duckseconds > TIME_TO_DUCK ) ||
 					( player->GetGroundEntity() == NULL ) )
 				{
 					FinishDuck();
@@ -425,7 +425,7 @@ void CTFGameMovement::HandleDuck( void )
 			{
 				// Finish ducking immediately if duck time is over or not on ground
 				if ( ( duckseconds > TIME_TO_UNDUCK ) ||
-					 ( player->GetGroundEntity() == NULL ) )
+					( player->GetGroundEntity() == NULL ) )
 				{
 					FinishUnDuck();
 				}
@@ -450,7 +450,7 @@ void CTFGameMovement::SetupViewAngles( void )
 
 	// Add a view punch if necessary.
 	QAngle	v_angle = ( mv->m_vecViewAngles + player->m_Local.m_vecPunchAngle );
-	
+
 	// Adjust the view roll angle.
 	if ( ( player->GetMoveType() != MOVETYPE_ISOMETRIC ) && ( player->GetMoveType() != MOVETYPE_NOCLIP ) )
 	{
@@ -515,9 +515,9 @@ bool CTFGameMovement::ShouldPlayStepSound( surfacedata_t *psurface, float fvol )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : step - 
-//			fvol - 
+// Purpose:
+// Input  : step -
+//			fvol -
 //			force - force sound to play
 //-----------------------------------------------------------------------------
 void CTFGameMovement::PlayStepSound( surfacedata_t *psurface, float fvol, bool force )
@@ -566,7 +566,7 @@ void CTFGameMovement::PlayStepSound( surfacedata_t *psurface, float fvol, bool f
 		return;
 
 	MoveHelper( )->StartSound( mv->m_vecAbsOrigin, CHAN_BODY, params.soundname, fvol, params.soundlevel, 0, params.pitch );
-}	
+}
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -575,12 +575,12 @@ int CTFGameMovement::CheckStuck( void )
 {
 	VPROF( "CTFGameMovement::CheckStuck" );
 
-	// NOTE: I am not bothering much with this as I am going to 
+	// NOTE: I am not bothering much with this as I am going to
 	//       implement an new UnSticking process.
 	if ( ( player->GetMoveType() == MOVETYPE_NOCLIP ) ||
-         ( player->GetMoveType() == MOVETYPE_NONE ) ||
-		 ( player->GetMoveType() == MOVETYPE_ISOMETRIC ) )
-		 return 0;
+		( player->GetMoveType() == MOVETYPE_NONE ) ||
+		( player->GetMoveType() == MOVETYPE_ISOMETRIC ) )
+		return 0;
 
 	return BaseClass::CheckStuck();
 }
@@ -602,7 +602,7 @@ bool CTFGameMovement::PrePlayerMove( void )
 	// Update (reduce) movement timers.
 	UpdateTimers();
 
-	// Check to see if the player is dead and setup death data, otherwise setup 
+	// Check to see if the player is dead and setup death data, otherwise setup
 	// the players view angles.
 	if ( !CheckDeath() )
 	{
@@ -637,7 +637,7 @@ void CTFGameMovement::PostPlayerMove( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameMovement::HandlePlayerMove( void )
 {
@@ -662,7 +662,7 @@ void CTFGameMovement::HandlePlayerMove( void )
 
 		case MOVETYPE_LADDER:
 			{
-				FullLadderMove(); 
+				FullLadderMove();
 				break;
 			}
 
@@ -675,9 +675,9 @@ void CTFGameMovement::HandlePlayerMove( void )
 				Vector vecPlayerDelta;
 				VectorSubtract( mv->m_vecAbsOrigin, vecPlayerOrigin, vecPlayerDelta );
 
-				if ( ( fabs( vecPlayerDelta.x ) > 0.0001f ) || 
-					 ( fabs( vecPlayerDelta.y ) > 0.0001f ) ||
-					 ( fabs( vecPlayerDelta.z ) > 0.0001f ) )
+				if ( ( fabs( vecPlayerDelta.x ) > 0.0001f ) ||
+					( fabs( vecPlayerDelta.y ) > 0.0001f ) ||
+					( fabs( vecPlayerDelta.z ) > 0.0001f ) )
 				{
 					VectorCopy( vecPlayerDelta, pTFMove->m_vecPosDelta );
 				}
@@ -702,7 +702,7 @@ void CTFGameMovement::HandlePlayerMove( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameMovement::PlayerMove( void )
 {
@@ -720,13 +720,13 @@ void CTFGameMovement::PlayerMove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameMovement::FullWalkMove()
 {
 	VPROF( "CTFGameMovement::FullWalkMove" );
 
-	if ( !CheckWater() ) 
+	if ( !CheckWater() )
 	{
 		StartGravity();
 	}
@@ -743,7 +743,7 @@ void CTFGameMovement::FullWalkMove()
 
 	// If we are swimming in the water, see if we are nudging against a place we can jump up out
 	//  of, and, if so, start out jump.  Otherwise, if we are not moving up, then reset jump timer to 0
-	if ( player->GetWaterLevel() >= WL_Waist ) 
+	if ( player->GetWaterLevel() >= WL_Waist )
 	{
 		if ( player->GetWaterLevel() == WL_Waist )
 		{
@@ -751,8 +751,8 @@ void CTFGameMovement::FullWalkMove()
 		}
 
 			// If we are falling again, then we must not trying to jump out of water any more.
-		if ( mv->m_vecVelocity[2] < 0 && 
-			 player->m_flWaterJumpTime )
+		if ( mv->m_vecVelocity[2] < 0 &&
+			player->m_flWaterJumpTime )
 		{
 			player->m_flWaterJumpTime = 0;
 		}
@@ -787,7 +787,7 @@ void CTFGameMovement::FullWalkMove()
 			mv->m_nOldButtons &= ~IN_JUMP;
 		}
 
-		// Fricion is handled before we add in any base velocity. That way, if we are on a conveyor, 
+		// Fricion is handled before we add in any base velocity. That way, if we are on a conveyor,
 		//  we don't slow when standing still, relative to the conveyor.
 		if (player->GetGroundEntity() != NULL)
 		{
@@ -805,7 +805,7 @@ void CTFGameMovement::FullWalkMove()
 		}
 		else
 		{
- 			AirMove();  // Take into account movement when in air.
+			AirMove();  // Take into account movement when in air.
 		}
 
 		// Set final flags.
@@ -833,7 +833,7 @@ void CTFGameMovement::FullWalkMove()
 	}
 
 	if  ( ( m_nOldWaterLevel == WL_NotInWater && player->GetWaterLevel() != WL_NotInWater ) ||
-		  ( m_nOldWaterLevel != WL_NotInWater && player->GetWaterLevel() == WL_NotInWater ) )
+		( m_nOldWaterLevel != WL_NotInWater && player->GetWaterLevel() == WL_NotInWater ) )
 	{
 		PlaySwimSound();
 	}
@@ -866,16 +866,16 @@ void CTFGameMovement::AirMove( void )
 	m_nMovementStackSize = 1;
 
 	AngleVectors (mv->m_vecViewAngles, &forward, &right, &up);  // Determine movement angles
-	
+
 	// Copy movement amounts
 	fmove = mv->m_flForwardMove;
 	smove = mv->m_flSideMove;
-	
+
 	// Zero out z components of movement vectors
 	forward[2] = 0;
 	right[2]   = 0;
 	VectorNormalize(forward);  // Normalize remainder of vectors
-	VectorNormalize(right);    // 
+	VectorNormalize(right);    //
 
 	for (i=0 ; i<2 ; i++)       // Determine x and y parts of velocity
 		wishvel[i] = forward[i]*fmove + right[i]*smove;
@@ -892,7 +892,7 @@ void CTFGameMovement::AirMove( void )
 		VectorScale (wishvel, mv->m_flMaxSpeed/wishspeed, wishvel);
 		wishspeed = mv->m_flMaxSpeed;
 	}
-	
+
 	AirAccelerate( wishdir, wishspeed, sv_airaccelerate.GetFloat() );
 
 	// Add in any base velocity to the current velocity.
@@ -914,7 +914,7 @@ void CTFGameMovement::WalkMove( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: This is here until the new movement code is complete.  I needed
-//          to override hl2's walk move so that "floors" are identified 
+//          to override hl2's walk move so that "floors" are identified
 //          differently.
 //-----------------------------------------------------------------------------
 void CTFGameMovement::_WalkMove( void )
@@ -941,21 +941,21 @@ void CTFGameMovement::_WalkMove( void )
 
 	CHandle< CBaseEntity > oldground;
 	oldground = player->GetGroundEntity();
-	
+
 	// Copy movement amounts
 	fmove = mv->m_flForwardMove;
 	smove = mv->m_flSideMove;
-	
+
 	// Zero out z components of movement vectors
 	forward[2] = 0;
 	right[2]   = 0;
-	
+
 	VectorNormalize (forward);  // Normalize remainder of vectors.
-	VectorNormalize (right);    // 
+	VectorNormalize (right);    //
 
 	for (i=0 ; i<2 ; i++)       // Determine x and y parts of velocity
 		wishvel[i] = forward[i]*fmove + right[i]*smove;
-	
+
 	wishvel[2] = 0;             // Zero out z part of velocity
 
 	VectorCopy (wishvel, wishdir);   // Determine maginitude of speed of move
@@ -986,9 +986,9 @@ void CTFGameMovement::_WalkMove( void )
 		return;
 	}
 
-	// first try just moving to the destination	
+	// first try just moving to the destination
 	dest[0] = mv->m_vecAbsOrigin[0] + mv->m_vecVelocity[0]*gpGlobals->frametime;
-	dest[1] = mv->m_vecAbsOrigin[1] + mv->m_vecVelocity[1]*gpGlobals->frametime;	
+	dest[1] = mv->m_vecAbsOrigin[1] + mv->m_vecVelocity[1]*gpGlobals->frametime;
 	dest[2] = mv->m_vecAbsOrigin[2];
 
 	// first try moving directly to the next spot
@@ -1069,9 +1069,9 @@ void CTFGameMovement::_WalkMove( void )
 
 	// decide which one went farther
 	downdist = (down[0] - original[0])*(down[0] - original[0])
-		     + (down[1] - original[1])*(down[1] - original[1]);
+			+ (down[1] - original[1])*(down[1] - original[1]);
 	updist   = (up[0]   - original[0])*(up[0]   - original[0])
-		     + (up[1]   - original[1])*(up[1]   - original[1]);
+			+ (up[1]   - original[1])*(up[1]   - original[1]);
 
 	if (downdist > updist)
 	{
@@ -1243,7 +1243,7 @@ float CTFGameMovement::CalcGravityAdjustment( const Vector &wishdir )
 // Purpose:
 //-----------------------------------------------------------------------------
 bool CTFGameMovement::CalcWishVelocityAndPosition( Vector &vWishPos, Vector &vWishDir,
-												   float &flWishSpeed )
+													float &flWishSpeed )
 {
 	//
 	// Determine the movement angles.
@@ -1266,7 +1266,7 @@ bool CTFGameMovement::CalcWishVelocityAndPosition( Vector &vWishPos, Vector &vWi
 	for ( int axis = 0; axis < 2; axis++ )
 	{
 		vWishVel[axis] = ( vForward[axis] * mv->m_flForwardMove ) +
-			             ( vRight[axis] * mv->m_flSideMove );
+						( vRight[axis] * mv->m_flSideMove );
 	}
 	vWishVel.z = 0.0f;
 
@@ -1315,7 +1315,7 @@ bool CTFGameMovement::CalcWishVelocityAndPosition( Vector &vWishPos, Vector &vWi
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-inline void CTFGameMovement::TracePlayerBBoxWithStep( const Vector &vStart, const Vector &vEnd, 
+inline void CTFGameMovement::TracePlayerBBoxWithStep( const Vector &vStart, const Vector &vEnd,
 							unsigned int fMask, int collisionGroup, trace_t &trace )
 {
 	VPROF( "CTFGameMovement::TracePlayerBBoxWithStep" );
@@ -1333,7 +1333,7 @@ inline void CTFGameMovement::TracePlayerBBoxWithStep( const Vector &vStart, cons
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-inline void CGameMovement::TracePlayerBBox( const Vector &start, const Vector &end, 
+inline void CGameMovement::TracePlayerBBox( const Vector &start, const Vector &end,
 							unsigned int fMask, int collisionGroup, trace_t& pm )
 {
 	VPROF( "CTFGameMovement::TracePlayerBBox" );
@@ -1378,7 +1378,7 @@ bool CTFGameMovement::RedirectGroundVelocity( const trace_t &trace )
 	// Add the impact plane normal to the list.
 	VectorCopy( trace.plane.normal, m_aImpactPlaneNormals[m_nImpactPlaneCount] );
 	m_nImpactPlaneCount++;
-	
+
 	int iPlane, iPlane2;
 	for ( iPlane = 0; iPlane < m_nImpactPlaneCount; iPlane++ )
 	{
@@ -1424,7 +1424,7 @@ bool CTFGameMovement::RedirectGroundVelocity( const trace_t &trace )
 		}
 	}
 
-	// If the original velocity is against the current velocity, stop dead to 
+	// If the original velocity is against the current velocity, stop dead to
 	// avoid tiny occilations in sloping corners
 	if ( mv->m_vecVelocity.Dot( m_vecOriginalVelocity ) <= 0.0f )
 	{
@@ -1471,7 +1471,7 @@ bool CTFGameMovement::RedirectAirVelocity( const trace_t &trace )
 		{
 			ClipVelocity( vecVelocity, m_aImpactPlaneNormals[iPlane], mv->m_vecVelocity, 1.0f + sv_bounce.GetFloat() * ( 1.0f - m_surfaceFriction ) );
 		}
-	}	
+	}
 
 	return true;
 }
@@ -1489,7 +1489,7 @@ void CTFGameMovement::CollisionResponseNone( const trace_t &trace )
 	{
 		VectorCopy( mv->m_vecAbsOrigin, m_aMovementStack[m_nMovementStackSize].m_vecPosition );
 		VectorCopy( mv->m_vecVelocity, m_aMovementStack[m_nMovementStackSize].m_vecVelocity );
-		VectorCopy( m_aMovementStack[m_nMovementStackSize].m_vecImpactNormal, 
+		VectorCopy( m_aMovementStack[m_nMovementStackSize].m_vecImpactNormal,
 			m_aMovementStack[m_nMovementStackSize].m_vecImpactNormal );
 		m_nMovementStackSize++;
 	}
@@ -1533,8 +1533,8 @@ bool CTFGameMovement::CollisionResponseGeneric( const trace_t &trace, int &nBloc
 	MoveHelper()->AddToTouched( trace, mv->m_vecVelocity );
 
 	// Check for special "blockers" (walls, steps, floor).
-    nBlocked |= BlockerType( trace.plane.normal );
-	
+	nBlocked |= BlockerType( trace.plane.normal );
+
 	// Re-direct or bounce the player's velocity vector.
 	if ( player->GetGroundEntity() != NULL )
 	{
@@ -1564,15 +1564,15 @@ int CTFGameMovement::TryPlayerMove( Vector *pFirstDest=NULL, trace_t *pFirstTrac
 	trace_t	pm;
 	Vector		end;
 	float		time_left, allFraction;
-	int			blocked;		
-	
+	int			blocked;
+
 	numbumps  = 4;           // Bump up to four times
-	
+
 	blocked   = 0;           // Assume not blocked
 	numplanes = 0;           //  and not sliding along any planes
 	VectorCopy (mv->m_vecVelocity, original_velocity);  // Store original velocity
 	VectorCopy (mv->m_vecVelocity, primal_velocity);
-	
+
 	allFraction = 0;
 	time_left = gpGlobals->frametime;   // Total time for this movement operation.
 
@@ -1607,17 +1607,17 @@ int CTFGameMovement::TryPlayerMove( Vector *pFirstDest=NULL, trace_t *pFirstTrac
 		//  the whole way, zero out our velocity and return that we
 		//  are blocked by floor and wall.
 		if (pm.allsolid)
-		{	
+		{
 			// entity is trapped in another solid
 			VectorCopy (vec3_origin, mv->m_vecVelocity);
 			return 4;
 		}
 
 		// If we moved some portion of the total distance, then
-		//  copy the end position into the pmove.origin and 
+		//  copy the end position into the pmove.origin and
 		//  zero the plane counter.
 		if( pm.fraction > 0 )
-		{	
+		{
 			// actually covered some distance
 			VectorCopy (pm.endpos, mv->m_vecAbsOrigin);
 			VectorCopy (mv->m_vecVelocity, original_velocity);
@@ -1628,7 +1628,7 @@ int CTFGameMovement::TryPlayerMove( Vector *pFirstDest=NULL, trace_t *pFirstTrac
 		//  and can return.
 		if (pm.fraction == 1)
 		{
-			 break;		// moved the entire distance
+			break;		// moved the entire distance
 		}
 
 		// Indicate a collision occurred...
@@ -1645,7 +1645,7 @@ int CTFGameMovement::TryPlayerMove( Vector *pFirstDest=NULL, trace_t *pFirstTrac
 		{
 			blocked |= 1;		// floor
 		}
-		// If the plane has a zero z component in the normal, then it's a 
+		// If the plane has a zero z component in the normal, then it's a
 		//  step or wall
 		if (!pm.plane.normal[2])
 		{
@@ -1655,10 +1655,10 @@ int CTFGameMovement::TryPlayerMove( Vector *pFirstDest=NULL, trace_t *pFirstTrac
 		// Reduce amount of m_flFrameTime left by total time left * fraction
 		//  that we covered.
 		time_left -= time_left * pm.fraction;
-		
+
 		// Did we run out of planes to clip against?
 		if (numplanes >= 5/*MAX_CLIP_PLANES*/)
-		{	
+		{
 			// this shouldn't really happen
 			//  Stop our movement if so.
 			VectorCopy (vec3_origin, mv->m_vecVelocity);
@@ -1713,12 +1713,12 @@ int CTFGameMovement::TryPlayerMove( Vector *pFirstDest=NULL, trace_t *pFirstTrac
 				if (j == numplanes)  // Didn't have to clip, so we're ok
 					break;
 			}
-			
+
 			// Did we go all the way through plane set
 			if (i != numplanes)
 			{	// go along this plane
 				// pmove.velocity is set in clipping call, no need to set again.
-				;  
+				;
 			}
 			else
 			{	// go along the crease
@@ -1777,7 +1777,7 @@ int CTFGameMovement::TryPlayerMove2( void )
 			break;
 
 		//
-		// Calculate the wish position. 
+		// Calculate the wish position.
 		//
 		Vector vecWishPos;
 		VectorMA( mv->m_vecAbsOrigin, flTimeLeft, mv->m_vecVelocity, vecWishPos );
@@ -1856,7 +1856,7 @@ int CTFGameMovement::TryPlayerMove2( void )
 		flTimeLeft -= ( flTimeLeft * trace.fraction );
 		*/
 	}
-	
+
 	// Finally, check for any movement.
 	if ( flTotalFraction == 0.0f )
 	{
@@ -1897,7 +1897,7 @@ void CTFGameMovement::TryStanding( void )
 	{
 		VectorCopy( m_aMovementStack[m_nMovementStackSize-1].m_vecPosition, mv->m_vecAbsOrigin );
 		VectorCopy( m_aMovementStack[m_nMovementStackSize-1].m_vecVelocity, mv->m_vecVelocity );
-		m_nMovementStackSize--; 
+		m_nMovementStackSize--;
 		TryStanding();
 	}
 }
@@ -1942,7 +1942,7 @@ void CTFGameMovement::ResolveStanding( void )
 	// Less than 0.5 mean we need to attempt to push up the difference.
 	vecStandPos.z = ( mv->m_vecAbsOrigin.z + ( ( 0.5f - trace.fraction ) * ( player->m_Local.m_flStepSize * 2.0f ) ) );
 	TracePlayerBBoxWithStep( mv->m_vecAbsOrigin, vecStandPos, MASK_PLAYERSOLID, COLLISION_GROUP_PLAYER_MOVEMENT, trace );
-	
+
 	// A fraction of 1.0 means we stood up fine - done.
 	if ( trace.fraction == 1.0f )
 	{
@@ -1955,7 +1955,7 @@ void CTFGameMovement::ResolveStanding( void )
 	{
 		VectorCopy( m_aMovementStack[m_nMovementStackSize-1].m_vecPosition, mv->m_vecAbsOrigin );
 		VectorCopy( m_aMovementStack[m_nMovementStackSize-1].m_vecVelocity, mv->m_vecVelocity );
-		m_nMovementStackSize--; 
+		m_nMovementStackSize--;
 		ResolveStanding();
 	}
 }
@@ -1972,7 +1972,7 @@ void CTFGameMovement::WalkMove2( void )
 	VectorCopy( m_vecGroundNormal, m_aMovementStack[0].m_vecImpactNormal );
 	m_nMovementStackSize = 1;
 
-	// Calculate the wish velocity and position.  The function returns false if 
+	// Calculate the wish velocity and position.  The function returns false if
 	// the velocity is zero, it returns true otherwise.
 	Vector vWishPos, vWishDir;
 	float flWishSpeed;
@@ -1998,7 +1998,7 @@ void CTFGameMovement::WalkMove2( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameMovement::SetMomentumList( float flValue )
 {
@@ -2016,7 +2016,7 @@ void CTFGameMovement::SetMomentumList( float flValue )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGameMovement::AddToMomentumList( float flValue )
 {
@@ -2031,7 +2031,7 @@ void CTFGameMovement::AddToMomentumList( float flValue )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFGameMovement::GetMomentum( void )
 {
@@ -2045,14 +2045,14 @@ float CTFGameMovement::GetMomentum( void )
 	{
 		flTotal += pTFMove->m_aMomentum[iMomentum];
 	}
-	
+
 	flTotal /= CTFMoveData::MOMENTUM_MAXSIZE;
 
 	return flTotal;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFGameMovement::CheckJumpButton( void )
 {
@@ -2068,13 +2068,13 @@ bool CTFGameMovement::CheckJumpButton( void )
 		player->m_flWaterJumpTime -= gpGlobals->frametime;
 		if (player->m_flWaterJumpTime < 0)
 			player->m_flWaterJumpTime = 0;
-		
+
 		return false;
 	}
 
 	// If we are in the water most of the way...
 	if ( player->GetWaterLevel() >= 2 )
-	{	
+	{
 		// swimming, not jumping
 		SetGroundEntity( NULL );
 
@@ -2082,7 +2082,7 @@ bool CTFGameMovement::CheckJumpButton( void )
 			mv->m_vecVelocity[2] = 100;
 		else if (player->GetWaterType() == CONTENTS_SLIME)
 			mv->m_vecVelocity[2] = 80;
-		
+
 		// play swiming sound
 		if ( player->m_flSwimSoundTime <= 0 )
 		{
@@ -2095,7 +2095,7 @@ bool CTFGameMovement::CheckJumpButton( void )
 	}
 
 	// No more effect
- 	if (player->GetGroundEntity() == NULL)
+	if (player->GetGroundEntity() == NULL)
 	{
 		mv->m_nOldButtons |= IN_JUMP;
 		return false;		// in air, so no effect
@@ -2105,16 +2105,16 @@ bool CTFGameMovement::CheckJumpButton( void )
 		return false;		// don't pogo stick
 
 	// In the air now.
-    SetGroundEntity( NULL );
-	
+	SetGroundEntity( NULL );
+
 	PlayStepSound( m_pSurfaceData, 1.0, true );
-	
+
 	MoveHelper()->PlayerSetAnimation( PLAYER_JUMP );
 
 	float flGroundFactor = 1.0f;
 	if (m_pSurfaceData)
 	{
-		flGroundFactor = m_pSurfaceData->game.jumpFactor; 
+		flGroundFactor = m_pSurfaceData->game.jumpFactor;
 	}
 
 	float flMul;

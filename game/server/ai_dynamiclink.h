@@ -46,14 +46,14 @@ public:
 	CAI_DynamicLink*			m_pNextDynamicLink;		// The next dynamic link in the list of dynamic links
 
 	int							m_nSrcEditID;			// the node that 'owns' this link
-	int							m_nDestEditID;			// the node on the other end of the link. 
+	int							m_nDestEditID;			// the node on the other end of the link.
 
 	int							m_nSrcID;				// the node that 'owns' this link
-	int							m_nDestID;				// the node on the other end of the link. 
-	DynamicLinkState_t			m_nLinkState;			// 
+	int							m_nDestID;				// the node on the other end of the link.
+	DynamicLinkState_t			m_nLinkState;			//
 	string_t					m_strAllowUse;			// Only this entity name or classname may use the link
 	bool						m_bInvertAllow;			// Instead of only allowing the m_strAllowUse entity, exclude only it
-	
+
 	bool						m_bFixedUpIds;
 	bool						m_bNotSaved;
 	int							m_nLinkType;
@@ -92,7 +92,7 @@ public:
 	void InputTurnOff( inputdata_t &inputdata );
 	void InputSetAllowed( inputdata_t &inputdata );
 	void InputSetInvert( inputdata_t &inputdata );
-	
+
 	CUtlVector< CHandle<CAI_DynamicLink> > m_ControlledLinks;
 	DynamicLinkState_t			m_nLinkState;
 	string_t					m_strAllowUse;		// Only this entity name or classname may use the link

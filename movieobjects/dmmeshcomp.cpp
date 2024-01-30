@@ -440,7 +440,7 @@ int CDmMeshComp::GetBorderEdges( CUtlVector< CUtlVector< CEdge * > > &borderEdge
 	// Shrink the borderEdgesList to minimum number required
 
 	bool anyConnected = false;
-	do 
+	do
 	{
 		anyConnected = false;
 

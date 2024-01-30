@@ -190,7 +190,7 @@ static BOOL ExtractDependencies( void )
 	{
 		sprintf( chExtractPath + strlen( chExtractPath ), "%s", szDllVersion );
 		bResult = ::CreateDirectory( chExtractPath, NULL );
-		
+
 		if ( bResult )
 		{
 			sprintf( chExtractPath + strlen( chExtractPath ), "\\" );
@@ -375,6 +375,3 @@ Proxy_D3DXCompileShaderFromFile(
 	pInclude->Close( lpcvData );
 	return hr;
 }
-
-
-

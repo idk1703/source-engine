@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -34,7 +34,7 @@ protected:
 public:
 	DECLARE_CLASS( CAchievementTFEngineer_RevengeCritForSentryKiller, CBaseAchievement );
 
-	virtual void Init() 
+	virtual void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		ListenForGameEvent( "object_destroyed" );
@@ -47,12 +47,12 @@ public:
 		ResetTracking();
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !m_pSentryKiller || !pVictim || !pAttacker )
 			return;
 
-		// if the local player has killed the thing that killed it's sentry, 
+		// if the local player has killed the thing that killed it's sentry,
 		// give the achievement
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() &&
 			pVictim == m_pSentryKiller &&
@@ -106,7 +106,7 @@ class CAchievementTFEngineer_ManualSentryKillsBeyondRange : public CBaseTFAchiev
 public:
 	DECLARE_CLASS( CAchievementTFEngineer_ManualSentryKillsBeyondRange, CBaseAchievement );
 
-	virtual void Init() 
+	virtual void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 10 );
@@ -115,7 +115,7 @@ public:
 	// server awards this achievement, no other code within achievement necessary
 };
 DECLARE_ACHIEVEMENT( CAchievementTFEngineer_ManualSentryKillsBeyondRange, ACHIEVEMENT_TF_ENGINEER_MANUAL_SENTRY_KILLS_BEYOND_RANGE, "TF_ENGINEER_MANUAL_SENTRY_KILLS_BEYOND_RANGE", 5 );
-																			
+
 //----------------------------------------------------------------------------------------------------------------
 // Have a manual sentry absorb X amount of damage during the course of its life.
 //----------------------------------------------------------------------------------------------------------------
@@ -124,7 +124,7 @@ class CAchievementTFEngineer_ManualSentryAbsorbDamage : public CBaseTFAchievemen
 public:
 	DECLARE_CLASS( CAchievementTFEngineer_ManualSentryAbsorbDamage, CBaseAchievement );
 
-	virtual void Init() 
+	virtual void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -141,7 +141,7 @@ class CAchievementTFEngineer_HelpTeammateBuildStructure : public CBaseTFAchievem
 public:
 	DECLARE_CLASS( CAchievementTFEngineer_HelpTeammateBuildStructure, CBaseAchievement );
 
-	virtual void Init() 
+	virtual void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -158,7 +158,7 @@ class CAchievementTFEngineer_ShotgunKillPreviousSentryTarget : public CBaseTFAch
 public:
 	DECLARE_CLASS( CAchievementTFEngineer_ShotgunKillPreviousSentryTarget, CBaseAchievement );
 
-	virtual void Init() 
+	virtual void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -179,7 +179,7 @@ protected:
 public:
 	DECLARE_CLASS( CAchievementTFEngineer_SentryAvengesYou, CBaseAchievement );
 
-	virtual void Init() 
+	virtual void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		ListenForGameEvent( "object_destroyed" );
@@ -192,7 +192,7 @@ public:
 		ResetTracking();
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pAttacker || pVictim == pAttacker )
 			return;
@@ -271,7 +271,7 @@ class CAchievementTFEngineer_RepairRecentlyDamagedSentryWhileBeingHealed : publi
 public:
 	DECLARE_CLASS( CAchievementTFEngineer_RepairRecentlyDamagedSentryWhileBeingHealed, CBaseAchievement );
 
-	virtual void Init() 
+	virtual void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -288,7 +288,7 @@ class CAchievementTFEngineer_SentryKillPlayersCapturingPoint : public CBaseTFAch
 public:
 	DECLARE_CLASS( CAchievementTFEngineer_SentryKillPlayersCapturingPoint, CBaseAchievement );
 
-	virtual void Init() 
+	virtual void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 25 );
@@ -306,7 +306,7 @@ class CAchievementTFEngineer_DestroySappersOnNonOwnedBuildings : public CBaseTFA
 public:
 	DECLARE_CLASS( CAchievementTFEngineer_DestroySappersOnNonOwnedBuildings, CBaseAchievement );
 
-	virtual void Init() 
+	virtual void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 25 );
@@ -324,7 +324,7 @@ class CAchievementTFEngineer_HelpManualSentry : public CBaseTFAchievement
 public:
 	DECLARE_CLASS( CAchievementTFEngineer_HelpManualSentry, CBaseAchievement );
 
-	virtual void Init() 
+	virtual void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 50 );
@@ -356,7 +356,7 @@ class CAchievementTFEngineer_RevengeCritLife : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		int customdmg = event->GetInt( "customkill" );
 		if ( customdmg == TF_DMG_CUSTOM_SHOTGUN_REVENGE_CRIT )
@@ -382,7 +382,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_RevengeCritLife, ACHIEVEMENT_TF_ENGI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_TeleportGrind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 100 );
@@ -456,7 +456,7 @@ class CAchievementTFEngineer_ManualCloakedSpyKill : public CBaseTFAchievement
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		if ( !pTFVictim )
@@ -507,7 +507,7 @@ class CAchievementTFEngineer_UpgradeBuildings : public CBaseTFAchievement
 				IncrementCount();
 			}
 		}
-	}	
+	}
 };
 DECLARE_ACHIEVEMENT( CAchievementTFEngineer_UpgradeBuildings, ACHIEVEMENT_TF_ENGINEER_UPGRADE_BUILDINGS, "TF_ENGINEER_UPGRADE_BUILDINGS", 5 );
 
@@ -521,7 +521,7 @@ class CAchievementTFEngineer_SentryKillLifetimeGrind : public CBaseTFAchievement
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pLocalPlayer = ToTFPlayer( C_TFPlayer::GetLocalPlayer() );
 		if ( pAttacker != pLocalPlayer )
@@ -542,7 +542,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_SentryKillLifetimeGrind, ACHIEVEMENT
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_DispenserHealGroup : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -574,7 +574,7 @@ class CAchievementTFEngineer_KillFlagCarriers : public CBaseTFAchievement
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		if ( pTFVictim && pTFVictim != pAttacker && pTFVictim->HasTheFlag() )
@@ -593,7 +593,7 @@ class CAchievementTFEngineer_KillDisguisedSpy : public CBaseTFAchievement
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		if ( !pTFVictim )
@@ -603,7 +603,7 @@ class CAchievementTFEngineer_KillDisguisedSpy : public CBaseTFAchievement
 		if ( !pLocalPlayer )
 			return;
 
-		if ( pTFVictim && pTFVictim->IsPlayerClass( TF_CLASS_SPY ) && 
+		if ( pTFVictim && pTFVictim->IsPlayerClass( TF_CLASS_SPY ) &&
 			 pTFVictim->m_Shared.InCond( TF_COND_DISGUISED ) &&
 			 event->GetInt( "weaponid" ) == TF_WEAPON_WRENCH )
 		{
@@ -616,7 +616,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_KillDisguisedSpy, ACHIEVEMENT_TF_ENG
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_FreezeTaunt : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -630,7 +630,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_FreezeTaunt, ACHIEVEMENT_TF_ENGINEER
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_FreezeWithSentry : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -713,7 +713,7 @@ class CAchievementTFEngineer_KillSpyTwoSappers : public CBaseTFAchievement
 		AwardAchievement();
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		if ( !pTFVictim )
@@ -792,13 +792,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_RemoveSapperLongDist, ACHIEVEMENT_TF
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_TauntKill : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_FILTER_ATTACKER_IS_PLAYER );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		int iEvent = event->GetInt( "customkill" );
 		if ( ( iEvent == TF_DMG_CUSTOM_TAUNTATK_ENGINEER_GUITAR_SMASH ) || ( iEvent == TF_DMG_CUSTOM_TAUNTATK_ALLCLASS_GUITAR_RIFF ) )
@@ -812,7 +812,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_TauntKill, ACHIEVEMENT_TF_ENGINEER_T
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_DestroyStickies : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 50 );
@@ -833,7 +833,7 @@ class CAchievementTFEngineer_KillSnipersSentry : public CBaseTFAchievement
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		if ( !pTFVictim )
@@ -885,7 +885,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_KillSentryWithSentry, ACHIEVEMENT_TF
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_MoveSentryGetKill : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -898,7 +898,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_MoveSentryGetKill, ACHIEVEMENT_TF_EN
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_BuildingCarry : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1000 );
@@ -1005,7 +1005,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_KillAssist, ACHIEVEMENT_TF_ENGINEER_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_DispenserHealGrind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 100000 );
@@ -1019,7 +1019,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_DispenserHealGrind, ACHIEVEMENT_TF_E
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_RepairTeamGrind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 50000 );
@@ -1033,7 +1033,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_RepairTeamGrind, ACHIEVEMENT_TF_ENGI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_TankDamage : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1046,7 +1046,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFEngineer_TankDamage, ACHIEVEMENT_TF_ENGINEER_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFEngineer_HeavyAssist : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1061,7 +1061,7 @@ class CAchievementTFEngineer_AchieveProgress1 : public CAchievement_AchievedCoun
 {
 public:
 	DECLARE_CLASS( CAchievementTFEngineer_AchieveProgress1, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 5, ACHIEVEMENT_TF_ENGINEER_START_RANGE, ACHIEVEMENT_TF_ENGINEER_END_RANGE );
@@ -1075,7 +1075,7 @@ class CAchievementTFEngineer_AchieveProgress2 : public CAchievement_AchievedCoun
 {
 public:
 	DECLARE_CLASS( CAchievementTFEngineer_AchieveProgress2, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 11, ACHIEVEMENT_TF_ENGINEER_START_RANGE, ACHIEVEMENT_TF_ENGINEER_END_RANGE );
@@ -1088,7 +1088,7 @@ class CAchievementTFEngineer_AchieveProgress3 : public CAchievement_AchievedCoun
 {
 public:
 	DECLARE_CLASS( CAchievementTFEngineer_AchieveProgress3, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 17, ACHIEVEMENT_TF_ENGINEER_START_RANGE, ACHIEVEMENT_TF_ENGINEER_END_RANGE );

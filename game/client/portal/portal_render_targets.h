@@ -15,7 +15,7 @@
 
 #include "baseclientrendertargets.h" // Base class, with interfaces called by engine and inherited members to init common render targets
 
-#ifndef PORTAL 
+#ifndef PORTAL
 #pragma message ( "This file should only be built with portal builds" )
 #endif
 

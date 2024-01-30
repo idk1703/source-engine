@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -27,12 +27,12 @@ public:
 	virtual void Detonate();
 
 // Grenade stuff.
-	static CFlashbangProjectile* Create( 
-		const Vector &position, 
-		const QAngle &angles, 
-		const Vector &velocity, 
-		const AngularImpulse &angVelocity, 
-		CBaseCombatCharacter *pOwner );	
+	static CFlashbangProjectile* Create(
+		const Vector &position,
+		const QAngle &angles,
+		const Vector &velocity,
+		const AngularImpulse &angVelocity,
+		CBaseCombatCharacter *pOwner );
 };
 
 

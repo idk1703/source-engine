@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@
 
 
 #ifdef GAME_DLL
-ConVar tf_dropped_weapon_lifetime( "tf_dropped_weapon_lifetime", "30", FCVAR_CHEAT ); 
+ConVar tf_dropped_weapon_lifetime( "tf_dropped_weapon_lifetime", "30", FCVAR_CHEAT );
 
 EXTERN_SEND_TABLE( DT_ScriptCreatedItem );
 
@@ -314,7 +314,7 @@ bool CTFDroppedWeapon::OnInternalDrawModel( ClientModelRenderInfo_t *pInfo )
 }
 //-----------------------------------------------------------------------------
 // Purpose: Get an econ material override for the given team.
-// Returns: NULL if there is no override. 
+// Returns: NULL if there is no override.
 //-----------------------------------------------------------------------------
 IMaterial *CTFDroppedWeapon::GetEconWeaponMaterialOverride( int iTeam )
 {
@@ -548,7 +548,7 @@ void CTFDroppedWeapon::InitDroppedWeapon( CTFPlayer *pPlayer, CTFWeaponBase *pWe
 	}
 
 	m_nSkin = pWeapon->GetSkin();
-	
+
 	m_nClip = pWeapon->IsEnergyWeapon() ? pWeapon->GetMaxClip1() : pWeapon->Clip1();
 	m_nAmmo = pPlayer->GetAmmoCount( pWeapon->GetPrimaryAmmoType() );
 	m_flEnergy = pWeapon->Energy_GetEnergy();

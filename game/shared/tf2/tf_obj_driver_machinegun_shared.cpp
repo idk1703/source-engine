@@ -46,7 +46,7 @@ ConVar	obj_driver_machinegun_max_ammo( "obj_driver_machinegun_max_ammo","30", FC
 ConVar	obj_driver_machinegun_ammo_recharge_rate( "obj_driver_machinegun_ammo_recharge_rate","0.5", FCVAR_REPLICATED, "Driver's mounted machinegun ammo recharge rate" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectDriverMachinegun::CObjectDriverMachinegun()
 {
@@ -61,7 +61,7 @@ CObjectDriverMachinegun::CObjectDriverMachinegun()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDriverMachinegun::Spawn()
 {
@@ -87,7 +87,7 @@ void CObjectDriverMachinegun::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDriverMachinegun::Precache()
 {
@@ -97,7 +97,7 @@ void CObjectDriverMachinegun::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CObjectDriverMachinegun::CanFireNow( void )
 {
@@ -108,7 +108,7 @@ bool CObjectDriverMachinegun::CanFireNow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDriverMachinegun::Fire( CBaseTFPlayer *pDriver )
 {
@@ -122,13 +122,13 @@ void CObjectDriverMachinegun::Fire( CBaseTFPlayer *pDriver )
 	AngleVectors( vecAng, &vecAim, 0, 0 );
 
 	static Vector spread = VECTOR_CONE_5DEGREES;
-	TFGameRules()->FireBullets( CTakeDamageInfo( this, pDriver, obj_driver_machinegun_damage.GetFloat(), DMG_BULLET ), 
+	TFGameRules()->FireBullets( CTakeDamageInfo( this, pDriver, obj_driver_machinegun_damage.GetFloat(), DMG_BULLET ),
 			1, vecSrc, vecAim, spread, obj_driver_machinegun_range.GetFloat(), m_nAmmoType, 4, entindex(), m_nBarrelAttachment );
 
 #if !defined (CLIENT_DLL)
 	SetActivity( ACT_VM_PRIMARYATTACK );
 #else
-	int sequence = SelectWeightedSequence( ACT_VM_PRIMARYATTACK ); 
+	int sequence = SelectWeightedSequence( ACT_VM_PRIMARYATTACK );
 	if ( sequence != ACTIVITY_NOT_AVAILABLE )
 	{
 		ResetSequence( sequence );
@@ -153,7 +153,7 @@ void CObjectDriverMachinegun::Fire( CBaseTFPlayer *pDriver )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDriverMachinegun::SetTargetAngles( const QAngle &vecAngles )
 {
@@ -166,7 +166,7 @@ void CObjectDriverMachinegun::SetTargetAngles( const QAngle &vecAngles )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Vector CObjectDriverMachinegun::GetFireOrigin( void )
 {

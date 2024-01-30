@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 class CSessionLobbyDialog : public CBaseDialog
 {
-	DECLARE_CLASS_SIMPLE( CSessionLobbyDialog, CBaseDialog ); 
+	DECLARE_CLASS_SIMPLE( CSessionLobbyDialog, CBaseDialog );
 
 public:
 	CSessionLobbyDialog( vgui::Panel *parent );

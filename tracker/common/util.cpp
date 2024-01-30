@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -15,10 +15,10 @@ const char *CUtil::InfoGetValue( const char *s, const char *key )
 	char	pkey[MAX_INFO_TOKEN_LENGTH];
 	// Use multiple buffers so compares
 	// work without stomping on each other
-	static	char value[NUM_BUFFERS][MAX_INFO_TOKEN_LENGTH];	
+	static	char value[NUM_BUFFERS][MAX_INFO_TOKEN_LENGTH];
 	static	int	valueindex;
 	char	*o;
-	
+
 	valueindex = (valueindex + 1) % NUM_BUFFERS;
 
 	if (*s == '\\')
@@ -56,7 +56,7 @@ const char *CUtil::InfoGetValue( const char *s, const char *key )
 
 //-----------------------------------------------------------------------------
 // Purpose: This function is supposed to localise the strings, but for now just return internal value
-// Input  : *stringName - 
+// Input  : *stringName -
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CUtil::GetString(const char *stringName)
@@ -66,5 +66,3 @@ const char *CUtil::GetString(const char *stringName)
 
 static CUtil g_Util;
 CUtil *util = &g_Util;
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -18,7 +18,7 @@
 
 // ------------------------------------------------------------------------------------------ //
 // CPlantedC4 class.
-// For now to show the planted c4 on the radar - client proxy to remove the CBaseAnimating 
+// For now to show the planted c4 on the radar - client proxy to remove the CBaseAnimating
 // network vars?
 // ------------------------------------------------------------------------------------------ //
 
@@ -48,11 +48,11 @@ public:
 	float m_flC4Blow;
 	float m_flTimerLength;
 
-	CNetworkVar( float, m_flDefuseLength );	
-	CNetworkVar( float, m_flDefuseCountDown ); 
+	CNetworkVar( float, m_flDefuseLength );
+	CNetworkVar( float, m_flDefuseCountDown );
 
 	float GetDefuseProgress( void )
-	{	
+	{
 		float flProgress = 1.0f;
 
 		if( m_flDefuseLength > 0.0 )

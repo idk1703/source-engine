@@ -23,7 +23,7 @@
 void RecvProxy_TeamObjectList( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
 	C_TFTeam *pPlayer = (C_TFTeam*)pStruct;
-	CBaseHandle *pHandle = (CBaseHandle*)(&(pPlayer->m_aObjects[pData->m_iElement])); 
+	CBaseHandle *pHandle = (CBaseHandle*)(&(pPlayer->m_aObjects[pData->m_iElement]));
 	RecvProxy_IntToEHandle( pData, pStruct, pHandle );
 }
 
@@ -42,11 +42,11 @@ IMPLEMENT_CLIENTCLASS_DT( C_TFTeam, DT_TFTeam, CTFTeam )
 	RecvPropInt( RECVINFO( m_nFlagCaptures ) ),
 	RecvPropInt( RECVINFO( m_iRole ) ),
 
-	RecvPropArray2( 
+	RecvPropArray2(
 	RecvProxyArrayLength_TeamObjects,
-	RecvPropInt( "team_object_array_element", 0, SIZEOF_IGNORE, 0, RecvProxy_TeamObjectList ), 
-	MAX_PLAYERS * MAX_OBJECTS_PER_PLAYER, 
-	0, 
+	RecvPropInt( "team_object_array_element", 0, SIZEOF_IGNORE, 0, RecvProxy_TeamObjectList ),
+	MAX_PLAYERS * MAX_OBJECTS_PER_PLAYER,
+	0,
 	"team_object_array"	),
 
 	RecvPropEHandle( RECVINFO( m_hLeader ) ),
@@ -56,7 +56,7 @@ END_RECV_TABLE()
 #define TEAM_THINK_RATE 0.5f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFTeam::C_TFTeam()
 {
@@ -65,14 +65,14 @@ C_TFTeam::C_TFTeam()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFTeam::~C_TFTeam()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFTeam::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -85,7 +85,7 @@ void C_TFTeam::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 char* C_TFTeam::Get_Name( void )
 {
@@ -95,7 +95,7 @@ char* C_TFTeam::Get_Name( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFTeam::ClientThink()
 {
@@ -106,7 +106,7 @@ void C_TFTeam::ClientThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFTeam::UpdateTeamName( void )
 {
@@ -135,7 +135,7 @@ void C_TFTeam::UpdateTeamName( void )
 					// 		INVADERS_ARE_PYRO = 1;
 					// 		INVADERS_ARE_HEAVY = 2;
 					// 	};
-					const char *pszTeamName = ( m_iTeamNum == TF_TEAM_BLUE ) ? 
+					const char *pszTeamName = ( m_iTeamNum == TF_TEAM_BLUE ) ?
 											  ( g_TF_PR->GetEventTeamStatus() == 1 ? "#TF_Pyro" : "#TF_HWGuy" ) :
 											  ( g_TF_PR->GetEventTeamStatus() == 1 ? "#TF_HWGuy" : "#TF_Pyro" );
 					wchar_t *pwzWarTeam = g_pVGuiLocalize->Find( pszTeamName );
@@ -222,7 +222,7 @@ C_TFTeam *GetGlobalTFTeam( int iTeamNumber )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_TFTeam::GetNumObjects( int iObjectType )
 {
@@ -245,7 +245,7 @@ int C_TFTeam::GetNumObjects( int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseObject *C_TFTeam::GetObject( int num )
 {
@@ -254,7 +254,7 @@ CBaseObject *C_TFTeam::GetObject( int num )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BasePlayer *C_TFTeam::GetTeamLeader( void )
 {

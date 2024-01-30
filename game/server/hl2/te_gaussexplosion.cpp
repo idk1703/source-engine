@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -48,9 +48,9 @@ END_SEND_TABLE()
 static CTEGaussExplosion g_TEGaussExplosion( "GaussExplosion" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &pos - 
-//			&angles - 
+// Purpose:
+// Input  : &pos -
+//			&angles -
 //-----------------------------------------------------------------------------
 void TE_GaussExplosion( IRecipientFilter& filter, float delay,
 	const Vector &pos, const Vector &dir, int type )
@@ -62,6 +62,3 @@ void TE_GaussExplosion( IRecipientFilter& filter, float delay,
 	//Send it
 	g_TEGaussExplosion.Create( filter, delay );
 }
-
-
-

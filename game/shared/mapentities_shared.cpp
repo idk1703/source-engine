@@ -97,7 +97,7 @@ const char *MapEntity_SkipToNextEntity( const char *pMapData, char *pWorkBuffer 
 
 //-----------------------------------------------------------------------------
 // Purpose: parses a token out of a char data block
-//			the token gets fully read no matter what the length, but only MAPKEY_MAXLENGTH 
+//			the token gets fully read no matter what the length, but only MAPKEY_MAXLENGTH
 //			characters are written into newToken
 // Input  : char *data - the data to parse
 //			char *newToken - the buffer into which the new token is written
@@ -108,17 +108,17 @@ const char *MapEntity_SkipToNextEntity( const char *pMapData, char *pWorkBuffer 
 const char *MapEntity_ParseToken( const char *data, char *newToken )
 {
 	int             len;
-		
+
 	len = 0;
 	newToken[0] = 0;
-	
+
 	if (!data)
 		return NULL;
 
 	// build the new table if we have to
 	if ( s_BuildReverseMap )
 	{
-		s_BuildReverseMap = false; 
+		s_BuildReverseMap = false;
 
 		Q_memset( s_BraceCharacters, 0, sizeof(s_BraceCharacters) );
 
@@ -127,7 +127,7 @@ const char *MapEntity_ParseToken( const char *data, char *newToken )
 			s_BraceCharacters[(unsigned)*c] = true;
 		}
 	}
-		
+
 	int             c;
 	// skip whitespace
 skipwhite:
@@ -137,7 +137,7 @@ skipwhite:
 			return NULL;                    // end of file;
 		data++;
 	}
-	
+
 // skip // comments
 	if (c=='/' && data[1] == '/')
 	{
@@ -145,7 +145,7 @@ skipwhite:
 			data++;
 		goto skipwhite;
 	}
-	
+
 
 // handle quoted strings specially
 	if (c == '\"')
@@ -196,7 +196,7 @@ skipwhite:
 		}
 
 	} while (c>32);
-	
+
 	newToken[len] = 0;
 	return data;
 }
@@ -241,7 +241,7 @@ bool CEntityMapData::GetNextKey( char *keyName, char *value )
 		Assert(0);
 		return false;
 	}
-	
+
 	Q_strncpy( keyName, token, MAPKEY_MAXLENGTH );
 
 	// fix up keynames with trailing spaces
@@ -252,7 +252,7 @@ bool CEntityMapData::GetNextKey( char *keyName, char *value )
 		n--;
 	}
 
-	// parse value	
+	// parse value
 	m_pCurrentKey = (char*)MapEntity_ParseToken( m_pCurrentKey, token );
 	if ( !m_pCurrentKey )
 	{

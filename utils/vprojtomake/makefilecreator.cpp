@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:  
-// 
+// Purpose:
+//
 // $NoKeywords: $
 //=============================================================================//
-#include "stdafx.h" 
-#include "makefilecreator.h" 
+#include "stdafx.h"
+#include "makefilecreator.h"
 #include "cmdlib.h"
 
 //-----------------------------------------------------------------------------
@@ -25,7 +25,7 @@ CMakefileCreator::~CMakefileCreator()
 void CMakefileCreator::CreateMakefiles( CVCProjConvert & proj )
 {
 	m_ProjName = proj.GetName();
-	m_BaseDir = proj.GetBaseDir();	
+	m_BaseDir = proj.GetBaseDir();
 	for ( int i = 0; i < proj.GetNumConfigurations(); i++ )
 	{
 		m_FileToBaseDirMapping.RemoveAll();
@@ -55,12 +55,12 @@ void CMakefileCreator::CreateBaseDirs( CVCProjConvert::CConfiguration & config )
 //	m_BaseDirs.Insert( "" );
 	for ( int i = 0; i < config.GetNumFileNames(); i++ )
 	{
-		if ( config.GetFileType(i) == CVCProjConvert::CConfiguration::FILE_SOURCE ) 
+		if ( config.GetFileType(i) == CVCProjConvert::CConfiguration::FILE_SOURCE )
 		{
 			char basedir[ MAX_PATH ];
 			char fulldir[ MAX_PATH ];
 			Q_snprintf( fulldir, sizeof(fulldir), "%s/%s", m_BaseDir.String(), config.GetFileName(i) );
-			if ( Q_ExtractFilePath( fulldir, basedir, sizeof(basedir) ) )	
+			if ( Q_ExtractFilePath( fulldir, basedir, sizeof(basedir) ) )
 			{
 				Q_FixSlashes( basedir );
 				Q_StripTrailingSlash( basedir );
@@ -143,11 +143,11 @@ void CMakefileCreator::CreateObjDirectoryFriendlyName ( char *name )
 	char *updir = "../";
 #endif
 
-	char *sep = Q_strstr( name, updir );	
+	char *sep = Q_strstr( name, updir );
 	while ( sep )
 	{
 		Q_strcpy( sep, sep + strlen(updir) );
-		sep = Q_strstr( sep, updir );	
+		sep = Q_strstr( sep, updir );
 	}
 }
 
@@ -195,11 +195,11 @@ void CMakefileCreator::OutputDirs( FileHandle_t f )
 		dirs.m_iBaseDirIndex = i;
 		friendlyDirName[ dirLen ] = 0;
 		Q_strncat( friendlyDirName, "_OBJ_DIR", sizeof(friendlyDirName), COPY_ALL_CHARACTERS );
-		dirs.m_ObjDir = friendlyDirName;		
+		dirs.m_ObjDir = friendlyDirName;
 		friendlyDirName[ dirLen ] = 0;
 		Q_strncat( friendlyDirName, "_OBJS", sizeof(friendlyDirName), COPY_ALL_CHARACTERS );
-		dirs.m_ObjName = friendlyDirName;		
-		
+		dirs.m_ObjName = friendlyDirName;
+
 		char objDirName[ MAX_PATH ];
 		Q_snprintf(  objDirName, sizeof(objDirName) , "obj%c$(NAME)_$(ARCH)%c", CORRECT_PATH_SEPARATOR, CORRECT_PATH_SEPARATOR );
 		Q_strncat( objDirName, dirName, sizeof(objDirName), COPY_ALL_CHARACTERS );
@@ -271,6 +271,5 @@ void CMakefileCreator::OutputBuildTarget( FileHandle_t f )
 		FileWrite( f, "$(%s)/%%.o: $(%s)/%%.cpp\n", dirs.m_ObjDir.String(), dirs.m_SrcDir.String()  );
 		FileWrite( f, "\t$(DO_CC)\n\n");
 	}
-	
-}
 
+}

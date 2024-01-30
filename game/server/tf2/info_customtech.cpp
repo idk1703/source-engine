@@ -17,7 +17,7 @@ BEGIN_DATADESC( CInfoCustomTechnology )
 	// outputs
 	DEFINE_OUTPUT( m_flTechPercentage, "TechPercentage" ),
 
-	// keys 
+	// keys
 	DEFINE_KEYFIELD_NOT_SAVED( m_iszTech , FIELD_STRING, "TechToWatch" ),
 	DEFINE_KEYFIELD_NOT_SAVED( m_iszTechTreeFile , FIELD_STRING, "NewTechFile" ),
 
@@ -50,7 +50,7 @@ int CInfoCustomTechnology::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoCustomTechnology::Spawn( void )
 {
@@ -72,7 +72,7 @@ void CInfoCustomTechnology::Activate( void )
 	}
 
 	// Get the Team's Technology Tree
-	CTFTeam *pTeam = (CTFTeam *)GetTeam(); 
+	CTFTeam *pTeam = (CTFTeam *)GetTeam();
 	if ( pTeam )
 	{
 		CTechnologyTree *pTechTree = pTeam->GetTechnologyTree();
@@ -87,7 +87,7 @@ void CInfoCustomTechnology::Activate( void )
 				Q_strncpy( m_szTechTreeFile.GetForModify(), STRING(m_iszTechTreeFile), sizeof(m_szTechTreeFile) );
 			}
 
-			// Find the technology in the techtree 
+			// Find the technology in the techtree
 			CBaseTechnology *pTechnology = pTechTree->GetTechnology( STRING(m_iszTech) );
 			// Now hook the technology up to me
 			if ( pTechnology )

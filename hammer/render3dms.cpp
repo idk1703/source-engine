@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -163,7 +163,7 @@ float CRender3D::LightPlane(Vector& Normal)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CRender3D::CRender3D(void) :
 	CRender()
@@ -209,7 +209,7 @@ CRender3D::CRender3D(void) :
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CRender3D::~CRender3D(void)
 {
@@ -249,7 +249,7 @@ void CRender3D::BeginRenderHitTarget(CMapAtom *pObject, unsigned int uHandle)
 //			rendering in selection mode.
 // Input  : pObject - Map atom pointer that will be returned from the ObjectsAt
 //			routine if this rendered object is positively hit tested.
-// Input  : pObject - 
+// Input  : pObject -
 //-----------------------------------------------------------------------------
 void CRender3D::EndRenderHitTarget(void)
 {
@@ -279,14 +279,14 @@ void CRender3D::EndRenderHitTarget(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 void CRender3D::AddTranslucentDeferredRendering( CMapPoint *pMapPoint )
 {
 	// object is translucent, render in 2nd batch
 	Vector direction = m_pView->GetViewAxis();
-	Vector center;	
+	Vector center;
 	pMapPoint->GetOrigin(center);
 
 	TranslucentObjects_t entry;
@@ -309,8 +309,8 @@ void CRender3D::AddTranslucentDeferredRendering( CMapPoint *pMapPoint )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 float CRender3D::GetElapsedTime(void)
 {
@@ -375,14 +375,14 @@ void CRender3D::ComputeFrustumRenderGeometry(CCamera *pCamera)
 void CRender3D::RenderFrustum( )
 {
 #ifdef _DEBUG
-	static int indices[] = 
+	static int indices[] =
 		{
 			0, 1, 1, 2, 2, 3, 3, 0,	// near square
 			4, 5, 5, 6, 6, 7, 7, 4,	// far square
 			0, 4, 1, 5, 2, 6, 3, 7	// connections between them
 		};
 
-	PushRenderMode( RENDER_MODE_WIREFRAME ); 
+	PushRenderMode( RENDER_MODE_WIREFRAME );
 	CMatRenderContextPtr pRenderContext( MaterialSystemInterface() );
 	IMesh* pMesh = pRenderContext->GetDynamicMesh();
 
@@ -406,7 +406,7 @@ void CRender3D::RenderFrustum( )
 	meshBuilder3D.End();
 	pMesh->Draw();
 
-	PopRenderMode(); 
+	PopRenderMode();
 #endif
 }
 
@@ -429,8 +429,8 @@ float CRender3D::GetGridSize(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwnd - 
+// Purpose:
+// Input  : hwnd -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CRender3D::SetView( CMapView *pView )
@@ -444,7 +444,7 @@ bool CRender3D::SetView( CMapView *pView )
 	Assert(hwnd != NULL);
 	Assert(pDoc != NULL);
 	Assert(pDoc->GetMapWorld() != NULL);
-	  
+
 	if (!MaterialSystemInterface()->AddView( hwnd ))
 	{
 		return false;
@@ -469,7 +469,7 @@ bool CRender3D::SetView( CMapView *pView )
 	{
 		return false;
 	}
-	
+
 	m_pVertexColor[1] = m_pVertexColor[0];
 
 	return(true);
@@ -542,14 +542,14 @@ Visibility_t CRender3D::IsBoxVisible(Vector const &BoxMins, Vector const &BoxMax
 	{
 		return(VIS_TOTAL);
 	}
-	
+
 	return(VIS_PARTIAL);
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : eRenderState - 
+// Purpose:
+// Input  : eRenderState -
 // Output : Returns true if the render state is enabled, false if it is disabled.
 //-----------------------------------------------------------------------------
 bool CRender3D::IsEnabled(RenderState_t eRenderState)
@@ -653,7 +653,7 @@ static ITexture *SetRenderTargetNamed(int nWhichTarget, char const *pRtName)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRender3D::StartRenderFrame(void)
 {
@@ -724,9 +724,9 @@ void CRender3D::StartRenderFrame(void)
 		pRenderContext->SelectionMode(true);
 		pRenderContext->ClearSelectionNames();
 
-		float aspect = (float)width / (float)height; 
+		float aspect = (float)width / (float)height;
 
-		pRenderContext->PerspectiveX( pCamera->GetFOV(), 
+		pRenderContext->PerspectiveX( pCamera->GetFOV(),
 			aspect, pCamera->GetNearClip(), pCamera->GetFarClip() );
 	}
 	else
@@ -816,10 +816,10 @@ void CRender3D::SendShadowTriangles( void )
 		CUtlVector<Vector> *tri_list=new CUtlVector<Vector>;
 		CMapDoc *pDoc = m_pView->GetMapDoc();
 		CMapWorld *pWorld = pDoc->GetMapWorld();
-		
+
 		if ( !pWorld )
 			return;
-		
+
 		if (g_pLPreviewOutputBitmap)
 			delete g_pLPreviewOutputBitmap;
 		g_pLPreviewOutputBitmap = NULL;
@@ -840,7 +840,7 @@ void CRender3D::SendShadowTriangles( void )
 		else
 			delete tri_list;
 	}
-	
+
 }
 
 
@@ -853,9 +853,9 @@ static bool LightForString( char const *pLight, Vector& intensity )
 	// scanf into doubles, then assign, so it is vec_t size independent
 	r = g = b = scaler = 0;
 	double r_hdr,g_hdr,b_hdr,scaler_hdr;
-	int argCnt = sscanf ( pLight, "%lf %lf %lf %lf %lf %lf %lf %lf", 
+	int argCnt = sscanf ( pLight, "%lf %lf %lf %lf %lf %lf %lf %lf",
 						  &r, &g, &b, &scaler, &r_hdr,&g_hdr,&b_hdr,&scaler_hdr );
-	
+
 	// This is a special case for HDR lights.  If we have a vector of [-1, -1, -1, 1], then we
 	// need to fall back to the non-HDR lighting since the HDR lighting hasn't been defined
 	// for this light source.
@@ -865,7 +865,7 @@ static bool LightForString( char const *pLight, Vector& intensity )
 		intensity.Init( -1.0f, -1.0f, -1.0f );
 		return true;
 	}
-	
+
 	if (argCnt==8) 											// 2 4-tuples
 	{
 		if (g_bHDR)
@@ -877,22 +877,22 @@ static bool LightForString( char const *pLight, Vector& intensity )
 		}
 		argCnt=4;
 	}
-	
+
 	intensity[0] = pow( r / 255.0, 2.2 ) * 255;				// convert to linear
-	
+
 	switch( argCnt)
 	{
 		case 1:
 			// The R,G,B values are all equal.
-			intensity[1] = intensity[2] = intensity[0]; 
+			intensity[1] = intensity[2] = intensity[0];
 			break;
-			
+
 		case 3:
 		case 4:
 			// Save the other two G,B values.
 			intensity[1] = pow( g / 255.0, 2.2 ) * 255;
 			intensity[2] = pow( b / 255.0, 2.2 ) * 255;
-			
+
 			// Did we also get an "intensity" scaler value too?
 			if ( argCnt == 4 )
 			{
@@ -950,7 +950,7 @@ static void SetLightFalloffParams( CMapEntity *e, CLightingPreviewLightDescripti
 		float c = GetFloatForKey (e, "_constant_attn");
 		float b = GetFloatForKey (e, "_linear_attn");
 		float a = GetFloatForKey (e, "_quadratic_attn");
-		
+
 		l.SetupOldStyleAttenuation( a, b, c );
 	}
 }
@@ -971,8 +971,8 @@ static bool ParseLightGeneric( CMapEntity *e, CLightingPreviewLightDescription &
 	if( g_bHDR )
 	{
 		if( LightForKey( e, "_lightHDR", out.m_Color ) == 0 ||
-			( out.m_Color.x == -1.0f && 
-			  out.m_Color.y == -1.0f && 
+			( out.m_Color.x == -1.0f &&
+			  out.m_Color.y == -1.0f &&
 			  out.m_Color.z == -1.0f ) )
 		{
 			LightForKey( e, "_light", out.m_Color );
@@ -982,7 +982,7 @@ static bool ParseLightGeneric( CMapEntity *e, CLightingPreviewLightDescription &
 	{
 		LightForKey( e, "_light", out.m_Color );
 	}
-	
+
 	// handle spot falloffs
 	if ( out.m_Type == MATERIAL_LIGHT_SPOT )
 	{
@@ -1015,13 +1015,13 @@ static bool ParseLightGeneric( CMapEntity *e, CLightingPreviewLightDescription &
 	}
 	else
 #endif
-	{	
+	{
 		// point down angle
 		Vector angles;
 		GetVectorForKey( e, "angles", &angles );
 		float pitch = GetFloatForKey( e,"pitch");
 		float angle = GetFloatForKey( e,"angle" );
-		SetupLightNormalFromProps( QAngle( angles.x, angles.y, angles.z ), angle, pitch, 
+		SetupLightNormalFromProps( QAngle( angles.x, angles.y, angles.z ), angle, pitch,
 								   out.m_Direction );
 	}
 	if ( out.m_Type == MATERIAL_LIGHT_DIRECTIONAL )
@@ -1039,7 +1039,7 @@ static bool ParseLightGeneric( CMapEntity *e, CLightingPreviewLightDescription &
 static bool s_bAddedLightEnvironmentAlready;
 
 
-static void AddEntityLightToLightList( 
+static void AddEntityLightToLightList(
 	CMapEntity *e,
 	CUtlVector<CLightingPreviewLightDescription> &listout )
 {
@@ -1110,10 +1110,10 @@ void CRender3D::BuildLightList( CUtlVector<CLightingPreviewLightDescription> *pL
 {
 	CMapDoc *pDoc = m_pView->GetMapDoc();
 	CMapWorld *pWorld = pDoc->GetMapWorld();
-	
+
 	if ( !pWorld )
 		return;
-	
+
 	EnumChildrenPos_t pos;
 	CMapClass *pChild = pWorld->GetFirstDescendent( pos );
 	while ( pChild )
@@ -1145,13 +1145,13 @@ void CRender3D::SendLightList( void )
 		Msg.m_pLightList = pList;								// thread deletes
 		CCamera *pCamera = GetCamera();
 		pCamera->GetViewPoint( Msg.m_EyePosition );
-	
+
 		g_HammerToLPreviewMsgQueue.QueueMessage( Msg );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRender3D::EndRenderFrame(void)
 {
@@ -1283,17 +1283,17 @@ void CRender3D::EndRenderFrame(void)
 						g_HammerToLPreviewMsgQueue.QueueMessage( Msg );
 					}
 				}
-			}			
-			
+			}
+
 			// only update non-ray traced lpreview if we have no ray traced one or if the scene has changed
-			if (m_pView->m_bUpdateView || (m_eCurrentRenderMode != RENDER_MODE_LIGHT_PREVIEW_RAYTRACED) || 
+			if (m_pView->m_bUpdateView || (m_eCurrentRenderMode != RENDER_MODE_LIGHT_PREVIEW_RAYTRACED) ||
 				(! g_pLPreviewOutputBitmap) )
 			{
 				SetRenderTargetNamed(0,"_rt_accbuf_0");
 				pRenderContext->ClearColor3ub(0,0,0);
 				MaterialSystemInterface()->ClearBuffers( true, true );
 
-				
+
 				pRenderContext->Viewport(0, 0, nTargetWidth, nTargetHeight );
 				pRenderContext->ClearColor3ub(0,0,0);
 				pRenderContext->ClearBuffers( true, true );
@@ -1304,10 +1304,10 @@ void CRender3D::EndRenderFrame(void)
 
 				CMapDoc *pDoc = m_pView->GetMapDoc();
 				CMapWorld *pWorld = pDoc->GetMapWorld();
-			
+
 				if ( !pWorld )
 					return;
-			
+
 				// now, get list of lights
 				CUtlVector<CLightingPreviewLightDescription> lightList;
 				BuildLightList( &lightList );
@@ -1351,7 +1351,7 @@ void CRender3D::EndRenderFrame(void)
 															  TEXTURE_GROUP_OTHER,true);
 				IMaterial *add_1_to_0=materials->FindMaterial("editor/addlight1",
 															  TEXTURE_GROUP_OTHER,true);
-				
+
 				IMaterial *sample_last=materials->FindMaterial("editor/sample_result_0",
 															   TEXTURE_GROUP_OTHER,true);
 				IMaterial *sample_other=materials->FindMaterial("editor/sample_result_1",
@@ -1378,7 +1378,7 @@ void CRender3D::EndRenderFrame(void)
 					SetNamedMaterialVar(src_mat,"$C1_X", spot_dir.x );
 					SetNamedMaterialVar(src_mat,"$C1_Y", spot_dir.y );
 					SetNamedMaterialVar(src_mat,"$C1_Z", spot_dir.z );
-					
+
 					// now, handle cone angle
 					if ( light.m_Type == MATERIAL_LIGHT_POINT )
 					{
@@ -1396,12 +1396,12 @@ void CRender3D::EndRenderFrame(void)
 					SetNamedMaterialVar( src_mat, "$C2_Y", light.m_Attenuation1 );
 					SetNamedMaterialVar( src_mat, "$C2_Z", light.m_Attenuation0 );
 					SetNamedMaterialVar( src_mat, "$C2_W", 1.0 );
-				
+
 					Vector color_intens = light.m_Color;
 					SetNamedMaterialVar(src_mat, "$C3_X", color_intens.x);
 					SetNamedMaterialVar(src_mat, "$C3_Y", color_intens.y);
 					SetNamedMaterialVar(src_mat, "$C3_Z", color_intens.z);
-				
+
 					pRenderContext->SetRenderTarget(dest_rt_current);
 					pRenderContext->DrawScreenSpaceRectangle(
 						src_mat, 0, 0, nTargetWidth, nTargetHeight,
@@ -1420,7 +1420,7 @@ void CRender3D::EndRenderFrame(void)
 					nTargetWidth, nTargetHeight,
 					dest_rt->GetActualWidth(),
 					dest_rt->GetActualHeight());
-			
+
 			}
 		}
 		MaterialSystemInterface()->SwapBuffers();
@@ -1441,7 +1441,7 @@ void CRender3D::EndRenderFrame(void)
 
 			RECT wrect;
 			memset(&wrect,0,sizeof(wrect));
-  
+
 			CCamera *pCamera = GetCamera();
 			int width, height;
 			pCamera->GetViewPort( width, height );
@@ -1452,7 +1452,7 @@ void CRender3D::EndRenderFrame(void)
 // 				DIB_RGB_COLORS, SRCCOPY);
 
 			// remember that we blitted it
-			m_pView->m_nLastRaytracedBitmapRenderTimeStamp = 
+			m_pView->m_nLastRaytracedBitmapRenderTimeStamp =
 				GetUpdateCounter( EVTYPE_BITMAP_RECEIVED_FROM_LPREVIEW );
 		}
 
@@ -1477,7 +1477,7 @@ void CRender3D::EndRenderFrame(void)
 			{
 				m_dwTimeLastSample = timeGetTime();
 			}
-		
+
 			m_nFramesThisSample++;
 
 			//
@@ -1514,7 +1514,7 @@ void CRender3D::PopInstanceData( void )
 }
 
 //-----------------------------------------------------------------------------
-// Renders the world axes 
+// Renders the world axes
 //-----------------------------------------------------------------------------
 void CRender3D::RenderWorldAxes()
 {
@@ -1541,7 +1541,7 @@ void CRender3D::RenderWorldAxes()
 	meshBuilder3D.Color3ub(0, 255, 0);
 	meshBuilder3D.Position3f(0, 100, 0);
 	meshBuilder3D.AdvanceVertex();
-	
+
 	meshBuilder3D.Color3ub(0, 0, 255);
 	meshBuilder3D.Position3f(0, 0, 0);
 	meshBuilder3D.AdvanceVertex();
@@ -1575,7 +1575,7 @@ void CRender3D::RenderTranslucentObjects( void )
 	while ( m_TranslucentRenderObjects.Count() > 0 )
 	{
 		TranslucentObjects_t current = m_TranslucentRenderObjects.ElementAtHead();
-		m_TranslucentRenderObjects.RemoveAtHead();	
+		m_TranslucentRenderObjects.RemoveAtHead();
 
 		if ( current.m_InstanceState.m_pInstanceClass )
 		{
@@ -1590,7 +1590,7 @@ void CRender3D::RenderTranslucentObjects( void )
 				m_CurrentInstanceState = current.m_InstanceState;
 				pInstanceClass = m_CurrentInstanceState.m_pInstanceClass;
 				m_bInstanceRendering = true;
-	
+
 				if ( pInstanceClass->IsEditable() )
 				{
 					SetInstanceRendering( INSTANCE_STATE_OFF );
@@ -1630,7 +1630,7 @@ void CRender3D::RenderTranslucentObjects( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRender3D::Render(void)
 {
@@ -1639,7 +1639,7 @@ void CRender3D::Render(void)
 	CManifest	*pManifest = pDoc->GetManifest();
 
 	bool view_changed = false;
-	
+
 	CCamera *pCamera = GetCamera();
 	Vector new_vp;
 	pCamera->GetViewPoint( new_vp );
@@ -1678,20 +1678,20 @@ void CRender3D::Render(void)
 
 		RECT wrect;
 		memset(&wrect,0,sizeof(wrect));
-  
+
 		pCamera->GetViewPort( width, height );
 // 		StretchDIBits(
 // 			m_WinData.hDC,0,0,width,height,
 // 			0,0,g_pLPreviewOutputBitmap->m_nWidth, g_pLPreviewOutputBitmap->m_nHeight,
 // 			g_pLPreviewOutputBitmap->m_pBits, (BITMAPINFO *) &mybmh,
 // 			DIB_RGB_COLORS, SRCCOPY);
-		m_pView->m_nLastRaytracedBitmapRenderTimeStamp = 
+		m_pView->m_nLastRaytracedBitmapRenderTimeStamp =
 			GetUpdateCounter( EVTYPE_BITMAP_RECEIVED_FROM_LPREVIEW );
 //		return;
 	}
 
 	StartRenderFrame();
-	
+
 	if (
 		( m_eCurrentRenderMode != RENDER_MODE_LIGHT_PREVIEW2 ) &&
 		( m_eCurrentRenderMode != RENDER_MODE_LIGHT_PREVIEW_RAYTRACED )
@@ -1761,7 +1761,7 @@ void CRender3D::Render(void)
 
 	RenderPointsAndPortals();
 
-    
+
 #ifdef _DEBUG
 	if (m_bRenderFrustum)
 	{
@@ -1789,7 +1789,7 @@ void CRender3D::Render(void)
 //          vEndPt - the arrow ending point (the head of the arrow)
 //          chRed, chGree, chBlue - the arrow color
 //-----------------------------------------------------------------------------
-void CRender3D::RenderArrow( Vector const &vStartPt, Vector const &vEndPt, 
+void CRender3D::RenderArrow( Vector const &vStartPt, Vector const &vEndPt,
 							   unsigned char chRed, unsigned char chGreen, unsigned char chBlue )
 {
 	//
@@ -1809,7 +1809,7 @@ void CRender3D::RenderArrow( Vector const &vStartPt, Vector const &vEndPt,
 	float length = VectorNormalize( coneAxis );
 	float length8 = length * 0.125;
 	length -= length8;
-	
+
 	Vector vBasePt;
 	vBasePt = vStartPt + coneAxis * length;
 
@@ -1819,9 +1819,9 @@ void CRender3D::RenderArrow( Vector const &vStartPt, Vector const &vEndPt,
 
 //-----------------------------------------------------------------------------
 // Purpose: Renders a box in flat shaded or wireframe depending on our render mode.
-// Input  : chRed - 
-//			chGreen - 
-//			chBlue - 
+// Input  : chRed -
+//			chGreen -
+//			chBlue -
 //-----------------------------------------------------------------------------
 void CRender3D::RenderBox(const Vector &Mins, const Vector &Maxs,
 							unsigned char chRed, unsigned char chGreen, unsigned char chBlue, SelectionState_t eBoxSelectionState)
@@ -1893,14 +1893,14 @@ void CRender3D::RenderBox(const Vector &Mins, const Vector &Maxs,
 
 			//
 			// If we are rendering using one of the lit modes, calculate lighting.
-			// 
+			//
 			unsigned char color[3];
 
 			assert( (eRenderModeThisPass != RENDER_MODE_TEXTURED) &&
-					(eRenderModeThisPass != RENDER_MODE_TEXTURED_SHADED) && 
-					(eRenderModeThisPass != RENDER_MODE_LIGHT_PREVIEW2) && 
-					(eRenderModeThisPass != RENDER_MODE_LIGHT_PREVIEW_RAYTRACED) && 
-					(eRenderModeThisPass != RENDER_MODE_LIGHTMAP_GRID) ); 
+					(eRenderModeThisPass != RENDER_MODE_TEXTURED_SHADED) &&
+					(eRenderModeThisPass != RENDER_MODE_LIGHT_PREVIEW2) &&
+					(eRenderModeThisPass != RENDER_MODE_LIGHT_PREVIEW_RAYTRACED) &&
+					(eRenderModeThisPass != RENDER_MODE_LIGHTMAP_GRID) );
 			if ((eRenderModeThisPass == RENDER_MODE_FLAT))
 			{
 				float fShade = LightPlane(Normal);
@@ -1978,7 +1978,7 @@ void CRender3D::RenderCone( Vector const &vBasePt, Vector const &vTipPt, float f
 	size += 16 + sizeof( Vector* );
 	byte *ptr = ( byte* )_alloca( size );
 	long data = ( long )ptr;
-	
+
 	data += 16 + sizeof( Vector* ) - 1;
 	data &= -16;
 
@@ -2010,10 +2010,10 @@ void CRender3D::RenderCone( Vector const &vBasePt, Vector const &vTipPt, float f
 	//
 	CMapFaceList m_Faces;
 	Vector ptList[3];
-	
+
 	// triangulate the base
 	for( int i = 0; i < ( nSlices - 2 ); i++ )
-	{	
+	{
 		ptList[0] = pPts[0];
 		ptList[1] = pPts[i+1];
 		ptList[2] = pPts[i+2];
@@ -2054,7 +2054,7 @@ void CRender3D::RenderCone( Vector const &vBasePt, Vector const &vTipPt, float f
 	rotAngles[PITCH] += 90;
 
 	CMatRenderContextPtr pRenderContext( MaterialSystemInterface() );
-	pRenderContext->MatrixMode( MATERIAL_MODEL ); 
+	pRenderContext->MatrixMode( MATERIAL_MODEL );
 	pRenderContext->PushMatrix();
 	pRenderContext->LoadIdentity();
 
@@ -2092,14 +2092,14 @@ void CRender3D::RenderCone( Vector const &vBasePt, Vector const &vTipPt, float f
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : vCenter - 
-//			flRadius - 
+// Purpose:
+// Input  : vCenter -
+//			flRadius -
 //			nTheta - Number of vertical slices in the sphere.
 //			nPhi - Number of horizontal slices in the sphere.
-//			chRed - 
-//			chGreen - 
-//			chBlue - 
+//			chRed -
+//			chGreen -
+//			chBlue -
 //-----------------------------------------------------------------------------
 void CRender3D::RenderSphere(Vector const &vCenter, float flRadius, int nTheta, int nPhi,
 							   unsigned char chRed, unsigned char chGreen, unsigned char chBlue )
@@ -2132,7 +2132,7 @@ void CRender3D::RenderSphere(Vector const &vCenter, float flRadius, int nTheta, 
 
 			Vector vecPos;
 			vecPos.x = flRadius * sin(phi) * cos(theta);
-			vecPos.y = flRadius * sin(phi) * sin(theta); 
+			vecPos.y = flRadius * sin(phi) * sin(theta);
 			vecPos.z = flRadius * cos(phi);
 
 			Vector vecNormal = vecPos;
@@ -2185,13 +2185,13 @@ void CRender3D::RenderSphere(Vector const &vCenter, float flRadius, int nTheta, 
 
 	meshBuilder3D.End();
 	pMesh->Draw();
-	
+
 	PopRenderMode();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRender3D::RenderWireframeSphere(Vector const &vCenter, float flRadius, int nTheta, int nPhi,
 							            unsigned char chRed, unsigned char chGreen, unsigned char chBlue )
@@ -2201,7 +2201,7 @@ void CRender3D::RenderWireframeSphere(Vector const &vCenter, float flRadius, int
 	// Make one more coordinate because (u,v) is discontinuous.
 	++nTheta;
 
-	int nVertices = nPhi * nTheta; 
+	int nVertices = nPhi * nTheta;
 	int nIndices = ( nTheta - 1 ) * 4 * ( nPhi - 1 );
 
 	CMeshBuilder meshBuilder3D;
@@ -2219,7 +2219,7 @@ void CRender3D::RenderWireframeSphere(Vector const &vCenter, float flRadius, int
 			float theta = 2.0f * M_PI * u;
 			float phi = M_PI * v;
 			meshBuilder3D.Position3f( vCenter.x + ( flRadius * sin(phi) * cos(theta) ),
-				                    vCenter.y + ( flRadius * sin(phi) * sin(theta) ), 
+				                    vCenter.y + ( flRadius * sin(phi) * sin(theta) ),
 									vCenter.z + ( flRadius * cos(phi) ) );
 			meshBuilder3D.Color3ub( chRed, chGreen, chBlue );
 			meshBuilder3D.AdvanceVertex();
@@ -2253,8 +2253,8 @@ void CRender3D::RenderWireframeSphere(Vector const &vCenter, float flRadius, int
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pDrawDC - 
+// Purpose:
+// Input  : *pDrawDC -
 //-----------------------------------------------------------------------------
 void CRender3D::RenderPointsAndPortals(void)
 {
@@ -2446,11 +2446,11 @@ void CRender3D::RenderMapClass(CMapClass *pMapClass)
 			// Render this object's children.
 			//
 			const CMapObjectList *pChildren = pMapClass->GetChildren();
-			
+
 			FOR_EACH_OBJ( *pChildren, pos )
 			{
 				Vector vecMins,vecMaxs;
-				
+
 				CMapClass *pChild = pChildren->Element(pos);
 
 				pChild->GetCullBox(vecMins, vecMaxs);
@@ -2589,7 +2589,7 @@ void CRender3D::RenderInstanceMapClass_r(CMapClass *pMapClass)
 
 //-----------------------------------------------------------------------------
 // Purpose: Prepares all objects in this node for rendering.
-// Input  : pParent - 
+// Input  : pParent -
 //-----------------------------------------------------------------------------
 void CRender3D::Preload(CMapClass *pParent)
 {
@@ -2698,7 +2698,7 @@ void CRender3D::RenderCrossHair()
 	PushRenderMode( RENDER_MODE_FLAT_NOZ );
 
 	SetDrawColor(0,0,0);
-   
+
 	DrawLine(	Vector(nCenterX - CROSSHAIR_DIST_HORIZONTAL, nCenterY - 1, 0),
 				Vector(nCenterX + CROSSHAIR_DIST_HORIZONTAL + 1, nCenterY - 1, 0) );
 
@@ -2712,7 +2712,7 @@ void CRender3D::RenderCrossHair()
 				Vector(nCenterX + 1, nCenterY + CROSSHAIR_DIST_VERTICAL, 0) );
 
 	SetDrawColor(255,255,255);
-	
+
 	DrawLine(	Vector(nCenterX - CROSSHAIR_DIST_HORIZONTAL, nCenterY, 0),
 				Vector(nCenterX + CROSSHAIR_DIST_HORIZONTAL + 1, nCenterY, 0) );
 
@@ -2755,7 +2755,7 @@ void CRender3D::RenderTool(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRender3D::RenderTree( CMapWorld *pWorld )
 {
@@ -2822,7 +2822,7 @@ bool CRender3D::NeedsOverlay() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRender3D::ShutDown(void)
 {
@@ -2832,7 +2832,7 @@ void CRender3D::ShutDown(void)
 	{
 		m_WinData.hDC = NULL;
 	}
-	
+
 	if (m_WinData.bFullScreen)
 	{
 		ChangeDisplaySettings(NULL, 0);
@@ -2916,7 +2916,7 @@ void CRender3D::RenderEnable(RenderState_t eRenderState, bool bEnable)
 
 //-----------------------------------------------------------------------------
 // Purpose: Groovy little debug hook; can be whatever I want or need.
-// Input  : pData - 
+// Input  : pData -
 //-----------------------------------------------------------------------------
 void CRender3D::DebugHook1(void *pData)
 {
@@ -2941,10 +2941,9 @@ void CRender3D::DebugHook1(void *pData)
 
 //-----------------------------------------------------------------------------
 // Purpose: Another groovy little debug hook; can be whatever I want or need.
-// Input  : pData - 
+// Input  : pData -
 //-----------------------------------------------------------------------------
 void CRender3D::DebugHook2(void *pData)
 {
 	g_bRenderCullBoxes = !g_bRenderCullBoxes;
 }
-

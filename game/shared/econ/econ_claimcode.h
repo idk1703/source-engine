@@ -37,4 +37,3 @@ bool BBuildRedemptionURL( CEconClaimCode *pClaimCode, CUtlString &redemptionURL 
 #endif
 
 #endif // ECON_CLAIMCODE_H
-

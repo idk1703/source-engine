@@ -22,7 +22,7 @@ static const char *s_pElectroThinkContext = "ElectroThinkContext";
 
 
 //-----------------------------------------------------------------------------
-// Lifetime 
+// Lifetime
 //-----------------------------------------------------------------------------
 #define DISSOLVE_FADE_IN_START_TIME			0.0f
 #define DISSOLVE_FADE_IN_END_TIME			1.0f
@@ -32,12 +32,12 @@ static const char *s_pElectroThinkContext = "ElectroThinkContext";
 #define DISSOLVE_FADE_OUT_END_TIME			2.0f
 
 //-----------------------------------------------------------------------------
-// Model 
+// Model
 //-----------------------------------------------------------------------------
-#define DISSOLVE_SPRITE_NAME	"sprites/blueglow1.vmt"	
+#define DISSOLVE_SPRITE_NAME	"sprites/blueglow1.vmt"
 
 //-----------------------------------------------------------------------------
-// Save/load 
+// Save/load
 //-----------------------------------------------------------------------------
 BEGIN_DATADESC( CEntityDissolve )
 
@@ -80,7 +80,7 @@ LINK_ENTITY_TO_CLASS( env_entity_dissolver, CEntityDissolve );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEntityDissolve::CEntityDissolve( void )
 {
@@ -125,14 +125,14 @@ void CEntityDissolve::Spawn()
 			SetContextThink( &CEntityDissolve::ElectrocuteThink, gpGlobals->curtime + 0.01f, s_pElectroThinkContext );
 		}
 	}
-	
+
 	// Setup our times
 	m_flFadeInStart = DISSOLVE_FADE_IN_START_TIME;
 	m_flFadeInLength = DISSOLVE_FADE_IN_END_TIME - DISSOLVE_FADE_IN_START_TIME;
-	
+
 	m_flFadeOutModelStart = DISSOLVE_FADE_OUT_MODEL_START_TIME;
 	m_flFadeOutModelLength = DISSOLVE_FADE_OUT_MODEL_END_TIME - DISSOLVE_FADE_OUT_MODEL_START_TIME;
-	
+
 	m_flFadeOutStart = DISSOLVE_FADE_OUT_START_TIME;
 	m_flFadeOutLength = DISSOLVE_FADE_OUT_END_TIME - DISSOLVE_FADE_OUT_START_TIME;
 
@@ -163,8 +163,8 @@ void CEntityDissolve::Spawn()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : inputdata - 
+// Purpose:
+// Input  : inputdata -
 //-----------------------------------------------------------------------------
 void CEntityDissolve::InputDissolve( inputdata_t &inputdata )
 {
@@ -190,9 +190,9 @@ void CEntityDissolve::InputDissolve( inputdata_t &inputdata )
 
 //-----------------------------------------------------------------------------
 // Purpose: Creates a flame and attaches it to a target entity.
-// Input  : pTarget - 
+// Input  : pTarget -
 //-----------------------------------------------------------------------------
-CEntityDissolve *CEntityDissolve::Create( CBaseEntity *pTarget, const char *pMaterialName, 
+CEntityDissolve *CEntityDissolve::Create( CBaseEntity *pTarget, const char *pMaterialName,
 	float flStartTime, int nDissolveType, bool *pRagdollCreated )
 {
 	if ( pRagdollCreated )
@@ -286,7 +286,7 @@ CEntityDissolve *CEntityDissolve::Create( CBaseEntity *pTarget, CBaseEntity *pSo
 	return NULL;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Attaches the flame to an entity and moves with it
 // Input  : pTarget - target entity to attach to
@@ -301,8 +301,8 @@ void CEntityDissolve::AttachToEntity( CBaseEntity *pTarget )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : lifetime - 
+// Purpose:
+// Input  : lifetime -
 //-----------------------------------------------------------------------------
 void CEntityDissolve::SetStartTime( float flStartTime )
 {
@@ -318,7 +318,7 @@ void CEntityDissolve::DissolveThink( void )
 
 	if ( GetModelName() == NULL_STRING && pTarget == NULL )
 		 return;
-	
+
 	if ( pTarget == NULL )
 	{
 		UTIL_Remove( this );
@@ -356,9 +356,9 @@ void CEntityDissolve::DissolveThink( void )
 		{
 			UTIL_Remove( pTarget );
 		}
-		
+
 		UTIL_Remove( this );
-		
+
 		return;
 	}
 
@@ -380,9 +380,9 @@ void CEntityDissolve::ElectrocuteThink( void )
 	{
 		Vector vecForce;
 		vecForce = RandomVector( -2400.0f, 2400.0f );
-		pRagdollPhys->list[j].pObject->ApplyForceCenter( vecForce ); 
+		pRagdollPhys->list[j].pObject->ApplyForceCenter( vecForce );
 	}
 
-	SetContextThink( &CEntityDissolve::ElectrocuteThink, gpGlobals->curtime + random->RandomFloat( 0.1, 0.2f ), 
+	SetContextThink( &CEntityDissolve::ElectrocuteThink, gpGlobals->curtime + random->RandomFloat( 0.1, 0.2f ),
 		s_pElectroThinkContext );
 }

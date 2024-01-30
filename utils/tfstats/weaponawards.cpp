@@ -19,7 +19,7 @@
 void CWeaponAward::getWinner()
 {
 	CEventListIterator it;
-	
+
 	for (it=g_pMatchInfo->eventList()->begin(); it != g_pMatchInfo->eventList()->end(); ++it)
 	{
 		if ((*it)->getType()==CLogEvent::FRAG)
@@ -33,7 +33,7 @@ void CWeaponAward::getWinner()
 			}
 		}
 	}
-	
+
 	map<PID,int>::iterator acc_it;
 
 	for (acc_it=accum.begin();acc_it!=accum.end();++acc_it)
@@ -126,7 +126,7 @@ void CRocketryAward::noWinner(CHTMLFile& html)
 
 //------------------------------------------------------------------------------------------------------
 // Function:	CRocketryAward::extendedinfo
-// Purpose:	
+// Purpose:
 // Input:	html - the html file to output to
 //------------------------------------------------------------------------------------------------------
 void CRocketryAward::extendedinfo(CHTMLFile& html)
@@ -228,4 +228,3 @@ void CBestSentryAward::extendedinfo(CHTMLFile& html)
 	else
 		html.write("%li people were killed by %s's well placed sentries.",accum[winnerID],winnerName.c_str());
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -331,7 +331,7 @@ private:
 	// The list of hitboxes per bone...
 	typedef CUtlVector< int	>	BoneHitboxList_t;
 	typedef CUtlVector<	BoneHitboxList_t > BoneHitboxes_t;
-	
+
 	CUtlVector< BoneHitboxes_t >	m_SetBoneHitBoxes;
 
 	// Currently selected hitbox + bone
@@ -538,13 +538,13 @@ void CBoneControlWindow::OnTabSelected()
 {
 	// Make the selected bone and highlight state match
 	OnBoneSelected( m_cBone->getSelectedIndex() );
-	OnBoneHighlighted( m_cBoneHighlight->isChecked() ); 
+	OnBoneHighlighted( m_cBoneHighlight->isChecked() );
 	OnHitboxHighlighted( m_cHitboxHighlight->isChecked() );
 	OnShowDefaultPose( m_cShowDefaultPose->isChecked() );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBoneControlWindow::GetHitboxSet( void )
 {
@@ -552,7 +552,7 @@ int CBoneControlWindow::GetHitboxSet( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBoneControlWindow::ComputeHitboxSetList( void )
 {
@@ -727,7 +727,7 @@ void CBoneControlWindow::OnHitboxSelected( int hitbox )
 	m_cHitbox->select(hitbox);
 
 	if ( m_SetBoneHitBoxes.Count() == 0 ||
-		(m_SetBoneHitBoxes[ m_nHitboxSet ].Count() <= m_Bone) || 
+		(m_SetBoneHitBoxes[ m_nHitboxSet ].Count() <= m_Bone) ||
 		(m_SetBoneHitBoxes[ m_nHitboxSet ][m_Bone].Count() <= hitbox))
 	{
 		m_Hitbox = -1;
@@ -999,12 +999,12 @@ bool CBoneControlWindow::SerializeQC( CUtlBuffer& buf )
 		// surface prop as the parent does
 		if (pBone->parent >= 0)
 		{
-			if (!stricmp( g_pStudioModel->m_SurfaceProps[i].String(), 
+			if (!stricmp( g_pStudioModel->m_SurfaceProps[i].String(),
 							g_pStudioModel->m_SurfaceProps[pBone->parent].String() ))
 				continue;
 		}
 
-		buf.Printf( "$jointsurfaceprop \"%s\"\t \"%s\"\n", pBone->pszName(), 
+		buf.Printf( "$jointsurfaceprop \"%s\"\t \"%s\"\n", pBone->pszName(),
 			g_pStudioModel->m_SurfaceProps[i].String() );
 	}
 
@@ -1021,8 +1021,8 @@ bool CBoneControlWindow::SerializeQC( CUtlBuffer& buf )
 			{
 				mstudiobbox_t &hitbox = list[j].m_BBox;
 				mstudiobone_t* pBone = hdr->pBone( hitbox.bone );
-				buf.Printf( "$hbox %d \"%s\"\t  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f", 
-					hitbox.group, pBone->pszName(), 
+				buf.Printf( "$hbox %d \"%s\"\t  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f",
+					hitbox.group, pBone->pszName(),
 					hitbox.bbmin.x, hitbox.bbmin.y, hitbox.bbmin.z,
 					hitbox.bbmax.x, hitbox.bbmax.y, hitbox.bbmax.z );
 				if ( !list[j].m_Name.IsEmpty() )
@@ -1055,7 +1055,7 @@ void CBoneControlWindow::OnGenerateQC( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBoneControlWindow::OnHitboxAddSet( void )
 {
@@ -1064,7 +1064,7 @@ void CBoneControlWindow::OnHitboxAddSet( void )
 
 	int newsetnumber = g_pStudioModel->m_HitboxSets.AddToTail();
 	g_pStudioModel->m_HitboxSets[ newsetnumber ].m_Name = sz;
-	
+
 	ComputeHitboxSetList();
 
 	m_cHitboxSet->select( newsetnumber );
@@ -1073,7 +1073,7 @@ void CBoneControlWindow::OnHitboxAddSet( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBoneControlWindow::OnHitboxDeleteSet( void )
 {
@@ -1093,7 +1093,7 @@ void CBoneControlWindow::OnHitboxDeleteSet( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBoneControlWindow::OnHitboxSetChangeName( void )
 {
@@ -1359,7 +1359,7 @@ void ControlPanel::SetupSequenceWindow( mxTab* pTab )
 
 	for ( int i = 0; i < MAX_SEQUENCES; i++ )
 	{
-		cSequence[i] = new mxChoice (wSequence, 5, 5 + i * 22, 200, 22, IDC_SEQUENCE0+i);	
+		cSequence[i] = new mxChoice (wSequence, 5, 5 + i * 22, 200, 22, IDC_SEQUENCE0+i);
 		mxToolTip::add (cSequence[i], "Select Sequence");
 		slSequence[i] = new mxSlider (wSequence, 208, 5 + i * 22, 80, 18, IDC_SEQUENCESCALE0+i);
 		slSequence[i]->setRange (0, 1.0, 100);
@@ -1377,7 +1377,7 @@ void ControlPanel::SetupSequenceWindow( mxTab* pTab )
 		x = 334;
 		y = 2 + (i % 8) * 17;
 
-		cPoseParameter[i] = new mxChoice (wSequence, 520, y, 96, 22, IDC_POSEPARAMETER+i);	
+		cPoseParameter[i] = new mxChoice (wSequence, 520, y, 96, 22, IDC_POSEPARAMETER+i);
 		cPoseParameter[i]->setVisible( false );
 
 		slPoseParameter[i] = new mxSlider (wSequence, x, y, 140, 16, IDC_POSEPARAMETER_SCALE+i);
@@ -1422,7 +1422,7 @@ void ControlPanel::SetupBodyWindow( mxTab* pTab )
 	mxToolTip::add (cBodypart, "Choose a bodypart");
 	cSubmodel = new mxChoice (wBody, 110, 5, 100, 22, IDC_SUBMODEL);
 	mxToolTip::add (cSubmodel, "Choose a submodel of current bodypart");
-	cController = new mxChoice (wBody, 5, 30, 100, 22, IDC_CONTROLLER);	
+	cController = new mxChoice (wBody, 5, 30, 100, 22, IDC_CONTROLLER);
 	mxToolTip::add (cController, "Choose a bone controller");
 	slController = new mxSlider (wBody, 105, 32, 100, 18, IDC_CONTROLLERVALUE);
 	slController->setRange (0, 255);
@@ -1432,7 +1432,7 @@ void ControlPanel::SetupBodyWindow( mxTab* pTab )
 	cSkin = new mxChoice (wBody, 5, 55, 100, 22, IDC_SKINS);
 	mxToolTip::add (cSkin, "Choose a skin family");
 	new mxLabel (wBody, 5, 170, 90, 18, "Materials used:");
-	cMaterials = new mxChoice (wBody, 105, 166, 350, 22, IDC_MATERIALS);	
+	cMaterials = new mxChoice (wBody, 105, 166, 350, 22, IDC_MATERIALS);
 	mxToolTip::add (cMaterials, "Select material for UV Chart view");
 
 	lModelInfo3 = new mxLabel (wBody, 220, 100, 220, 18, "");
@@ -1446,7 +1446,7 @@ void ControlPanel::SetupBodyWindow( mxTab* pTab )
 	mxToolTip::add (cLODChoice, "Select model LOD to render");
 	new mxLabel (wBody, 5, 126, 60, 18, "LOD Switch:");
 	leLODSwitch = new mxLineEdit(wBody, 70, 126, 35, 22, "", IDC_LODSWITCH);
-	new mxLabel (wBody, 5, 151, 60, 18, "LOD Metric:" ); 
+	new mxLabel (wBody, 5, 151, 60, 18, "LOD Metric:" );
 	lLODMetric = new mxLabel( wBody, 70, 151, 35, 22, "" );
 
 	new mxLabel( wBody, 505, 5, 100, 18, "VMTs Loaded:" );
@@ -1843,7 +1843,7 @@ ControlPanel::handleEvent (mxEvent *event)
 		tab->setBounds( 0, 0, event->width, max( 0, event->height - 20 ) );
 		return 1;
 	}
-	
+
 	if ( event->event == mxEvent::KeyDown )
 	{
 		if ( tab->getSelectedIndex() == 4 )
@@ -1890,7 +1890,7 @@ ControlPanel::handleEvent (mxEvent *event)
 			default:
 				return 0;
 		}
-		
+
 		return 1;
 	}
 
@@ -1899,7 +1899,7 @@ ControlPanel::handleEvent (mxEvent *event)
 		case IDC_TAB:
 		{
 			int tabIndex = tab->getSelectedIndex();
-			
+
 			// g_viewerSettings.highlightBone = -1;
 			g_viewerSettings.highlightHitbox = -1;
 			g_viewerSettings.showTexture = (tabIndex == 3) ? true : false;
@@ -1977,15 +1977,15 @@ ControlPanel::handleEvent (mxEvent *event)
 			g_pStudioModel->SetLODSwitchValue( g_viewerSettings.lod, val );
 			break;
 		}
-		
+
 		case IDC_AUTOLOD:
 			setAutoLOD (((mxCheckBox *) event->widget)->isChecked());
 			break;
-		
+
 		case IDC_SOFTWARESKIN:
 			setSoftwareSkin(((mxCheckBox *) event->widget)->isChecked());
 			break;
-		
+
 		case IDC_OVERBRIGHT2:
 			setOverbright(((mxCheckBox *) event->widget)->isChecked());
 			break;
@@ -2070,7 +2070,7 @@ ControlPanel::handleEvent (mxEvent *event)
 		case IDC_SHOWORIGINAXIS:
 			setShowOriginAxis (((mxCheckBox *) event->widget)->isChecked());
 			break;
-			
+
 		case IDC_MESSAGES:
 		{
 			int index = cMessageList->getSelectedIndex();
@@ -2452,7 +2452,7 @@ ControlPanel::dumpModelInfo()
 			fprintf (file, "max: %f %f %f\n", hdr->max[0], hdr->max[1], hdr->max[2]);
 			fprintf (file, "bbmin: %f %f %f\n", hdr->bbmin[0], hdr->bbmin[1], hdr->bbmin[2]);
 			fprintf (file, "bbmax: %f %f %f\n", hdr->bbmax[0], hdr->bbmax[1], hdr->bbmax[2]);
-			
+
 			fprintf (file, "flags: %d\n\n", hdr->flags);
 
 			fprintf (file, "numbones: %d\n", hdr->numbones);
@@ -2562,7 +2562,7 @@ LoadModelResult_t ControlPanel::loadModel(const char *filename)
 	{
 		return LoadModel_LoadFail;
 	}
-	
+
 	if (!g_pStudioModel->PostLoadModel( filename ))
 	{
 		return LoadModel_PostLoadFail;
@@ -2725,7 +2725,7 @@ ControlPanel::setRenderMode (int mode)
 }
 
 
-void 
+void
 ControlPanel::setHighlightBone( int index )
 {
 	if ( index >= 0 )
@@ -2954,7 +2954,7 @@ struct SortInfo_t
 	int m_nType;
 };
 
-int SortSequenceFunc( const void *p1, const void *p2 ) 
+int SortSequenceFunc( const void *p1, const void *p2 )
 {
 	const SortInfo_t* pSort1 = (const SortInfo_t*)p1;
 	const SortInfo_t* pSort2 = (const SortInfo_t*)p2;
@@ -3267,7 +3267,7 @@ ControlPanel::setBodypart (int index)
 		{
 			mstudiobodyparts_t *pbodyparts = hdr->pBodypart(0);
 			cSubmodel->removeAll();
-		
+
 			for (int i = 0; i < pbodyparts[index].nummodels; i++)
 			{
 				char str[64];
@@ -3293,7 +3293,7 @@ ControlPanel::setSubmodel (int index)
 
 
 
-void 
+void
 ControlPanel::initPhysicsBones()
 {
 	cHighlightBone->removeAll();
@@ -3305,7 +3305,7 @@ ControlPanel::initPhysicsBones()
 	cHighlightBone->select (0);
 }
 
-void 
+void
 ControlPanel::initLODs()
 {
 	cLODChoice->removeAll();
@@ -3404,7 +3404,7 @@ void ControlPanel::initMaterialChoices()
 	if (hdr)
 	{
 		const studiohdr_t *pStudioHdr = hdr->GetRenderHdr();
-		if (pStudioHdr) 
+		if (pStudioHdr)
 		{
 			cMaterials->setEnabled(pStudioHdr->numtextures > 0);
 			cMaterials->removeAll();
@@ -3477,7 +3477,7 @@ ControlPanel::setModelInfo()
 	{
 		hbcount += hdr->iHitboxCount( s );
 	}
-	
+
 	sprintf (str,
 		"Total bones: %d\n"
 		"HW Bones: %d\n"
@@ -3679,7 +3679,7 @@ void ControlPanel::connectFlexes( CStudioHdr *hdr )
 {
 	if ( !g_pStudioModel )
 		return;
-		
+
 	LocalFlexController_t i;
 	LocalFlexController_t j;
 
@@ -3883,7 +3883,7 @@ void ControlPanel::setupPhysicsBone( int boneIndex )
 	// read per-bone data
 	hlmvsolid_t solid;
 	g_pStudioModel->Physics_GetData( boneIndex, &solid, NULL );
-	
+
 	SetSlider( slPhysicsParamMassBias, lPhysicsParamMassBias, solid.massBias );
 	SetSlider( slPhysicsParamInertia, lPhysicsParamInertia, solid.params.inertia );
 	SetSlider( slPhysicsParamDamping, lPhysicsParamDamping, solid.params.damping );

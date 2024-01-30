@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -37,7 +37,7 @@ CBaseTempEntity *CBaseTempEntity::GetList( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Creates temp entity, sets name, adds to global list
-// Input  : *name - 
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CBaseTempEntity::CBaseTempEntity( const char *name )
 {
@@ -50,7 +50,7 @@ CBaseTempEntity::CBaseTempEntity( const char *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseTempEntity::~CBaseTempEntity( void )
 {
@@ -75,7 +75,7 @@ CBaseTempEntity *CBaseTempEntity::GetNext( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTempEntity::Precache( void )
 {
@@ -84,8 +84,8 @@ void CBaseTempEntity::Precache( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Default test implementation. Should only be called by derived classes
-// Input  : *current_origin - 
-//			*current_angles - 
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CBaseTempEntity::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -121,6 +121,6 @@ void CBaseTempEntity::Create( IRecipientFilter& filter, float delay )
 	Assert( !filter.IsReliable() && !filter.IsInitMessage() );
 	Assert( delay >= -1 && delay <= 1); // 1 second max delay
 
-	engine->PlaybackTempEntity( filter, delay, 
+	engine->PlaybackTempEntity( filter, delay,
 		(void *)this, GetServerClass()->m_pTable, GetServerClass()->m_ClassID );
 }

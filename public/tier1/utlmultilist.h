@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Multiple linked list container class 
+// Purpose: Multiple linked list container class
 //
 // $Revision: $
 // $NoKeywords: $
@@ -26,7 +26,7 @@
 //		type, which usually should be an unsigned short or smaller.
 //		This list can contain multiple lists
 //-----------------------------------------------------------------------------
-template <class T, class I> 
+template <class T, class I>
 class CUtlMultiList
 {
 protected:
@@ -37,7 +37,7 @@ protected:
 		I m_Previous;
 		I m_Next;
 	};
-	
+
 	struct List_t
 	{
 		I m_Head;
@@ -74,13 +74,13 @@ public:
 	// Insertion methods (call default constructor)....
 	I	InsertBefore( ListHandle_t list, I before );
 	I	InsertAfter( ListHandle_t list, I after );
-	I	AddToHead( ListHandle_t list ); 
+	I	AddToHead( ListHandle_t list );
 	I	AddToTail( ListHandle_t list );
 
 	// Insertion methods (call copy constructor)....
 	I	InsertBefore( ListHandle_t list, I before, T const& src );
 	I	InsertAfter( ListHandle_t list, I after, T const& src );
-	I	AddToHead( ListHandle_t list, T const& src ); 
+	I	AddToHead( ListHandle_t list, T const& src );
 	I	AddToTail( ListHandle_t list, T const& src );
 
 	// Removal methods
@@ -123,11 +123,11 @@ public:
 	// Are nodes in a list or valid?
 	bool  IsValidIndex( I i ) const;
 	bool  IsInList( I i ) const;
-   
+
 protected:
 	// constructs the class
 	void ConstructList( );
-	
+
 	// Gets at the list element....
 	ListElem_t& InternalElement( I i ) { return m_Memory[i]; }
 	ListElem_t const& InternalElement( I i ) const { return m_Memory[i]; }
@@ -137,13 +137,13 @@ protected:
 
 	// copy constructors not allowed
 	CUtlMultiList( CUtlMultiList<T, I> const& list ) { Assert(0); }
-	   
+
 	M							m_Memory;
 	CUtlLinkedList<List_t, I>	m_List;
 	I*	m_pElementList;
 
 	I	m_FirstFree;
-	I	m_TotalElements;	
+	I	m_TotalElements;
 	int	m_MaxElementIndex;	// The number allocated (use int so we can catch overflow)
 
 	void ResetDbgInfo()
@@ -166,12 +166,12 @@ protected:
 #endif
 	}
 
-	// For debugging purposes; 
+	// For debugging purposes;
 	// it's in release builds so this can be used in libraries correctly
 	ListElem_t  *m_pElements;
 };
-   
-   
+
+
 //-----------------------------------------------------------------------------
 // constructor, destructor
 //-----------------------------------------------------------------------------
@@ -184,14 +184,14 @@ CUtlMultiList<T,I>::CUtlMultiList( int growSize, int initSize ) :
 }
 
 template <class T, class I>
-CUtlMultiList<T,I>::CUtlMultiList( void* pMemory, int memsize ) : 
+CUtlMultiList<T,I>::CUtlMultiList( void* pMemory, int memsize ) :
 	m_Memory((ListElem_t *)pMemory, memsize/sizeof(ListElem_t)), m_pElementList(0)
 {
 	ConstructList();
 }
 
 template <class T, class I>
-CUtlMultiList<T,I>::~CUtlMultiList( ) 
+CUtlMultiList<T,I>::~CUtlMultiList( )
 {
 	RemoveAll();
 	if (m_pElementList)
@@ -214,32 +214,32 @@ void CUtlMultiList<T,I>::ConstructList( )
 template <class T, class I>
 inline T& CUtlMultiList<T,I>::Element( I i )
 {
-	return m_Memory[i].m_Element; 
+	return m_Memory[i].m_Element;
 }
 
 template <class T, class I>
 inline T const& CUtlMultiList<T,I>::Element( I i ) const
 {
-	return m_Memory[i].m_Element; 
+	return m_Memory[i].m_Element;
 }
 
 template <class T, class I>
-inline T& CUtlMultiList<T,I>::operator[]( I i )        
-{ 
-	return m_Memory[i].m_Element; 
-}
-
-template <class T, class I>
-inline T const& CUtlMultiList<T,I>::operator[]( I i ) const 
+inline T& CUtlMultiList<T,I>::operator[]( I i )
 {
-	return m_Memory[i].m_Element; 
+	return m_Memory[i].m_Element;
+}
+
+template <class T, class I>
+inline T const& CUtlMultiList<T,I>::operator[]( I i ) const
+{
+	return m_Memory[i].m_Element;
 }
 
 
 //-----------------------------------------------------------------------------
 // list creation/destruction
 //-----------------------------------------------------------------------------
-template <class T, class I> 
+template <class T, class I>
 typename CUtlMultiList<T,I>::ListHandle_t CUtlMultiList<T,I>::CreateList()
 {
 	ListHandle_t l = m_List.AddToTail();
@@ -267,9 +267,9 @@ bool CUtlMultiList<T,I>::IsValidList( ListHandle_t list ) const
 // list statistics
 //-----------------------------------------------------------------------------
 template <class T, class I>
-inline int CUtlMultiList<T,I>::TotalCount() const      
-{ 
-	return m_TotalElements; 
+inline int CUtlMultiList<T,I>::TotalCount() const
+{
+	return m_TotalElements;
 }
 
 template <class T, class I>
@@ -280,7 +280,7 @@ inline int CUtlMultiList<T,I>::Count( ListHandle_t list ) const
 }
 
 template <class T, class I>
-inline I CUtlMultiList<T,I>::MaxElementIndex() const   
+inline I CUtlMultiList<T,I>::MaxElementIndex() const
 {
 	return m_MaxElementIndex;
 }
@@ -290,31 +290,31 @@ inline I CUtlMultiList<T,I>::MaxElementIndex() const
 // Traversing the list
 //-----------------------------------------------------------------------------
 template <class T, class I>
-inline I  CUtlMultiList<T,I>::Head(ListHandle_t list) const  
+inline I  CUtlMultiList<T,I>::Head(ListHandle_t list) const
 {
 	Assert( IsValidList(list) );
-	return m_List[list].m_Head; 
+	return m_List[list].m_Head;
 }
 
 template <class T, class I>
-inline I  CUtlMultiList<T,I>::Tail(ListHandle_t list) const  
-{ 
+inline I  CUtlMultiList<T,I>::Tail(ListHandle_t list) const
+{
 	Assert( IsValidList(list) );
-	return m_List[list].m_Tail; 
+	return m_List[list].m_Tail;
 }
 
 template <class T, class I>
-inline I  CUtlMultiList<T,I>::Previous( I i ) const  
-{ 
-	Assert( IsValidIndex(i) ); 
-	return InternalElement(i).m_Previous; 
+inline I  CUtlMultiList<T,I>::Previous( I i ) const
+{
+	Assert( IsValidIndex(i) );
+	return InternalElement(i).m_Previous;
 }
 
 template <class T, class I>
-inline I  CUtlMultiList<T,I>::Next( I i ) const  
-{ 
-	Assert( IsValidIndex(i) ); 
-	return InternalElement(i).m_Next; 
+inline I  CUtlMultiList<T,I>::Next( I i ) const
+{
+	Assert( IsValidIndex(i) );
+	return InternalElement(i).m_Next;
 }
 
 
@@ -339,8 +339,8 @@ inline bool CUtlMultiList<T,I>::IndexInRange( int index ) // Static method
 }
 
 template <class T, class I>
-inline bool CUtlMultiList<T,I>::IsValidIndex( I i ) const  
-{ 
+inline bool CUtlMultiList<T,I>::IsValidIndex( I i ) const
+{
 	// GCC warns if I is an unsigned type and we do a ">= 0" against it (since the comparison is always 0).
 	// We get the warning even if we cast inside the expression. It only goes away if we assign to another variable.
 	long x = i;
@@ -411,7 +411,7 @@ I CUtlMultiList<T,I>::Alloc( )
 		{
 			m_Memory.Grow();
 			ResetDbgInfo();
-			
+
 			if ( m_MaxElementIndex >= m_Memory.NumAllocated() )
 			{
 				// We rarely if ever handle alloc failure. Continuing leads to corruption.
@@ -419,7 +419,7 @@ I CUtlMultiList<T,I>::Alloc( )
 				return InvalidIndex();
 			}
 		}
-		
+
 		elem = (I)m_MaxElementIndex;
 		++m_MaxElementIndex;
 	}
@@ -470,15 +470,15 @@ template <class T, class I>
 void CUtlMultiList<T,I>::LinkBefore( ListHandle_t list, I before, I elem )
 {
 	Assert( IsValidIndex(elem) && IsValidList(list) );
-	
+
 	// Unlink it if it's in the list at the moment
 	Unlink(list, elem);
-	
+
 	ListElem_t& newElem = InternalElement(elem);
-	
+
 	// The element *after* our newly linked one is the one we linked before.
 	newElem.m_Next = before;
-	
+
 	if (before == InvalidIndex())
 	{
 		// In this case, we're linking to the end of the list, so reset the tail
@@ -494,13 +494,13 @@ void CUtlMultiList<T,I>::LinkBefore( ListHandle_t list, I before, I elem )
 		newElem.m_Previous = beforeElem.m_Previous;
 		beforeElem.m_Previous = elem;
 	}
-	
+
 	// Reset the head if we linked to the head of the list
 	if (newElem.m_Previous == InvalidIndex())
 		m_List[list].m_Head = elem;
 	else
 		InternalElement(newElem.m_Previous).m_Next = elem;
-	
+
 	// one more element baby
 	++m_List[list].m_Count;
 
@@ -513,12 +513,12 @@ template <class T, class I>
 void  CUtlMultiList<T,I>::LinkAfter( ListHandle_t list, I after, I elem )
 {
 	Assert( IsValidIndex(elem) );
-	
+
 	// Unlink it if it's in the list at the moment
 	Unlink(list, elem);
-	
+
 	ListElem_t& newElem = InternalElement(elem);
-	
+
 	// The element *before* our newly linked one is the one we linked after
 	newElem.m_Previous = after;
 	if (after == InvalidIndex())
@@ -536,13 +536,13 @@ void  CUtlMultiList<T,I>::LinkAfter( ListHandle_t list, I after, I elem )
 		newElem.m_Next = afterElem.m_Next;
 		afterElem.m_Next = elem;
 	}
-	
+
 	// Reset the tail if we linked to the tail of the list
 	if (newElem.m_Next == InvalidIndex())
 		m_List[list].m_Tail = elem;
 	else
 		InternalElement(newElem.m_Next).m_Previous = elem;
-	
+
 	// one more element baby
 	++m_List[list].m_Count;
 
@@ -561,25 +561,25 @@ void  CUtlMultiList<T,I>::Unlink( ListHandle_t list, I elem )
 		// Make sure the element is in the right list
 		Assert( IsElementInList( list, elem ) );
 		ListElem_t& oldElem = InternalElement(elem);
-		
+
 		// If we're the first guy, reset the head
 		// otherwise, make our previous node's next pointer = our next
 		if (oldElem.m_Previous != InvalidIndex())
 			InternalElement(oldElem.m_Previous).m_Next = oldElem.m_Next;
 		else
 			m_List[list].m_Head = oldElem.m_Next;
-		
+
 		// If we're the last guy, reset the tail
 		// otherwise, make our next node's prev pointer = our prev
 		if (oldElem.m_Next != InvalidIndex())
 			InternalElement(oldElem.m_Next).m_Previous = oldElem.m_Previous;
 		else
 			m_List[list].m_Tail = oldElem.m_Previous;
-		
-		// This marks this node as not in the list, 
+
+		// This marks this node as not in the list,
 		// but not in the free list either
 		oldElem.m_Previous = oldElem.m_Next = elem;
-		
+
 		// One less puppy
 		--m_List[list].m_Count;
 
@@ -590,15 +590,15 @@ void  CUtlMultiList<T,I>::Unlink( ListHandle_t list, I elem )
 }
 
 template <class T, class I>
-inline void CUtlMultiList<T,I>::LinkToHead( ListHandle_t list, I elem ) 
+inline void CUtlMultiList<T,I>::LinkToHead( ListHandle_t list, I elem )
 {
-	LinkAfter( list, InvalidIndex(), elem ); 
+	LinkAfter( list, InvalidIndex(), elem );
 }
 
 template <class T, class I>
-inline void CUtlMultiList<T,I>::LinkToTail( ListHandle_t list, I elem ) 
+inline void CUtlMultiList<T,I>::LinkToTail( ListHandle_t list, I elem )
 {
-	LinkBefore( list, InvalidIndex(), elem ); 
+	LinkBefore( list, InvalidIndex(), elem );
 }
 
 
@@ -615,10 +615,10 @@ I CUtlMultiList<T,I>::InsertBefore( ListHandle_t list, I before )
 
 	// Link it in
 	LinkBefore( list, before, newNode );
-	
+
 	// Construct the data
 	Construct( &Element(newNode) );
-	
+
 	return newNode;
 }
 
@@ -632,23 +632,23 @@ I CUtlMultiList<T,I>::InsertAfter( ListHandle_t list, I after )
 
 	// Link it in
 	LinkAfter( list, after, newNode );
-	
+
 	// Construct the data
 	Construct( &Element(newNode) );
-	
+
 	return newNode;
 }
 
 template <class T, class I>
-inline I CUtlMultiList<T,I>::AddToHead( ListHandle_t list ) 
-{ 
-	return InsertAfter( list, InvalidIndex() ); 
+inline I CUtlMultiList<T,I>::AddToHead( ListHandle_t list )
+{
+	return InsertAfter( list, InvalidIndex() );
 }
 
 template <class T, class I>
-inline I CUtlMultiList<T,I>::AddToTail( ListHandle_t list ) 
-{ 
-	return InsertBefore( list, InvalidIndex() ); 
+inline I CUtlMultiList<T,I>::AddToTail( ListHandle_t list )
+{
+	return InsertBefore( list, InvalidIndex() );
 }
 
 
@@ -665,10 +665,10 @@ I CUtlMultiList<T,I>::InsertBefore( ListHandle_t list, I before, T const& src )
 
 	// Link it in
 	LinkBefore( list, before, newNode );
-	
+
 	// Construct the data
 	CopyConstruct( &Element(newNode), src );
-	
+
 	return newNode;
 }
 
@@ -682,23 +682,23 @@ I CUtlMultiList<T,I>::InsertAfter( ListHandle_t list, I after, T const& src )
 
 	// Link it in
 	LinkAfter( list, after, newNode );
-	
+
 	// Construct the data
 	CopyConstruct( &Element(newNode), src );
-	
+
 	return newNode;
 }
 
 template <class T, class I>
-inline I CUtlMultiList<T,I>::AddToHead( ListHandle_t list, T const& src ) 
-{ 
-	return InsertAfter( list, InvalidIndex(), src ); 
+inline I CUtlMultiList<T,I>::AddToHead( ListHandle_t list, T const& src )
+{
+	return InsertAfter( list, InvalidIndex(), src );
 }
 
 template <class T, class I>
-inline I CUtlMultiList<T,I>::AddToTail( ListHandle_t list, T const& src ) 
-{ 
-	return InsertBefore( list, InvalidIndex(), src ); 
+inline I CUtlMultiList<T,I>::AddToTail( ListHandle_t list, T const& src )
+{
+	return InsertBefore( list, InvalidIndex(), src );
 }
 
 
@@ -742,22 +742,22 @@ void  CUtlMultiList<T,I>::RemoveAll()
 		// Invoke the destructor
 		if (IsValidIndex((I)i))
 			Destruct( &Element((I)i) );
-		
+
 		// next points to the next free list item
 		InternalElement((I)i).m_Next = prev;
-		
+
 		// Indicates it's in the free list
 		InternalElement((I)i).m_Previous = (I)i;
 		prev = (I)i;
 	}
-	
+
 	// First free points to the first element
 	m_FirstFree = 0;
-	
+
 	// Clear everything else out
 	for (I list = m_List.Head(); list != m_List.InvalidIndex(); list = m_List.Next(list) )
 	{
-		m_List[list].m_Head = InvalidIndex(); 
+		m_List[list].m_Head = InvalidIndex();
 		m_List[list].m_Tail = InvalidIndex();
 		m_List[list].m_Count = 0;
 	}

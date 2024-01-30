@@ -44,7 +44,7 @@ void CTFTankBossBody::Update( void )
 {
 	CTFTankBoss *me = (CTFTankBoss *)GetBot()->GetEntity();
 
-	// move the animation ahead in time	
+	// move the animation ahead in time
 	me->StudioFrameAdvance();
 	me->DispatchAnimEvents( me );
 }

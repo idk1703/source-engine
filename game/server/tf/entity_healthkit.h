@@ -48,12 +48,12 @@ public:
 	}
 
 	virtual const char *GetDefaultPowerupModel( void )
-	{ 
+	{
 		if ( TFGameRules() && TFGameRules()->IsHolidayActive( kHoliday_TFBirthday ) )
 		{
 			return TF_MEDKIT_LARGE_BDAY;
 		}
-		
+
 		return "models/items/medkit_large.mdl";
 	}
 
@@ -94,7 +94,7 @@ public:
 			return TF_MEDKIT_SMALL_BDAY;
 		}
 
-		return "models/items/medkit_small.mdl"; 
+		return "models/items/medkit_small.mdl";
 	}
 };
 
@@ -129,7 +129,7 @@ public:
 			return TF_MEDKIT_MEDIUM_BDAY;
 		}
 
-		return "models/items/medkit_medium.mdl"; 
+		return "models/items/medkit_medium.mdl";
 	}
 };
 
@@ -181,5 +181,3 @@ public:
 };
 
 #endif // ENTITY_HEALTHKIT_H
-
-

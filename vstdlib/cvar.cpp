@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -41,7 +41,7 @@ public:
 		if ( !Q_stricmp( pInterfaceName, CVAR_QUERY_INTERFACE_VERSION ) )
 			return (ICvarQuery*)this;
 		return NULL;
-	
+
 	}
 
 	virtual bool AreConVarsLinkable( const ConVar *child, const ConVar *parent )
@@ -127,7 +127,7 @@ protected:
 	class CCVarIteratorInternal : public ICVarIteratorInternal
 	{
 	public:
-		CCVarIteratorInternal( CCvar *outer ) 
+		CCVarIteratorInternal( CCvar *outer )
 			: m_pOuter( outer )
 			//, m_pHash( &outer->m_CommandHash ), // remember my CCvar,
 			//m_hashIter( -1, -1 ) // and invalid iterator
@@ -201,7 +201,7 @@ ICvar::ICVarIteratorInternal *CCvar::FactoryInternalIterator( void )
 }
 
 //-----------------------------------------------------------------------------
-// Factor for CVars 
+// Factor for CVars
 //-----------------------------------------------------------------------------
 static CCvar s_Cvar;
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CCvar, ICvar, CVAR_INTERFACE_VERSION, s_Cvar );
@@ -282,7 +282,7 @@ void CCvar::InstallCVarQuery( ICvarQuery *pQuery )
 
 
 //-----------------------------------------------------------------------------
-// Used by DLLs to be able to unregister all their commands + convars 
+// Used by DLLs to be able to unregister all their commands + convars
 //-----------------------------------------------------------------------------
 CVarDLLIdentifier_t CCvar::AllocateDLLIdentifier()
 {
@@ -291,8 +291,8 @@ CVarDLLIdentifier_t CCvar::AllocateDLLIdentifier()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *variable - 
+// Purpose:
+// Input  : *variable -
 //-----------------------------------------------------------------------------
 void CCvar::RegisterConCommand( ConCommandBase *variable )
 {
@@ -332,7 +332,7 @@ void CCvar::RegisterConCommand( ConCommandBase *variable )
 				{
 					if( Q_stricmp( pChildVar->m_pszDefaultValue, pParentVar->m_pszDefaultValue ) != 0 )
 					{
-						Warning( "Parent and child ConVars with different default values! %s child: %s parent: %s (parent wins)\n", 
+						Warning( "Parent and child ConVars with different default values! %s child: %s parent: %s (parent wins)\n",
 							variable->GetName(), pChildVar->m_pszDefaultValue, pParentVar->m_pszDefaultValue );
 					}
 				}
@@ -362,7 +362,7 @@ void CCvar::RegisterConCommand( ConCommandBase *variable )
 					{
 						if ( Q_stricmp( pParentVar->m_pszHelpString, pChildVar->m_pszHelpString ) != 0 )
 						{
-							Warning( "Convar %s has multiple help strings:\n\tparent (wins): \"%s\"\n\tchild: \"%s\"\n", 
+							Warning( "Convar %s has multiple help strings:\n\tparent (wins): \"%s\"\n\tchild: \"%s\"\n",
 								variable->GetName(), pParentVar->m_pszHelpString, pChildVar->m_pszHelpString );
 						}
 					}
@@ -375,7 +375,7 @@ void CCvar::RegisterConCommand( ConCommandBase *variable )
 				// make sure we don't have conflicting FCVAR_CHEAT flags.
 				if ( ( pChildVar->m_nFlags & FCVAR_CHEAT ) != ( pParentVar->m_nFlags & FCVAR_CHEAT ) )
 				{
-					Warning( "Convar %s has conflicting FCVAR_CHEAT flags (child: %s, parent: %s, parent wins)\n", 
+					Warning( "Convar %s has conflicting FCVAR_CHEAT flags (child: %s, parent: %s, parent wins)\n",
 						variable->GetName(), ( pChildVar->m_nFlags & FCVAR_CHEAT ) ? "FCVAR_CHEAT" : "no FCVAR_CHEAT",
 						( pParentVar->m_nFlags & FCVAR_CHEAT ) ? "FCVAR_CHEAT" : "no FCVAR_CHEAT" );
 				}
@@ -383,7 +383,7 @@ void CCvar::RegisterConCommand( ConCommandBase *variable )
 				// make sure we don't have conflicting FCVAR_REPLICATED flags.
 				if ( ( pChildVar->m_nFlags & FCVAR_REPLICATED ) != ( pParentVar->m_nFlags & FCVAR_REPLICATED ) )
 				{
-					Warning( "Convar %s has conflicting FCVAR_REPLICATED flags (child: %s, parent: %s, parent wins)\n", 
+					Warning( "Convar %s has conflicting FCVAR_REPLICATED flags (child: %s, parent: %s, parent wins)\n",
 						variable->GetName(), ( pChildVar->m_nFlags & FCVAR_REPLICATED ) ? "FCVAR_REPLICATED" : "no FCVAR_REPLICATED",
 						( pParentVar->m_nFlags & FCVAR_REPLICATED ) ? "FCVAR_REPLICATED" : "no FCVAR_REPLICATED" );
 				}
@@ -391,7 +391,7 @@ void CCvar::RegisterConCommand( ConCommandBase *variable )
 				// make sure we don't have conflicting FCVAR_DONTRECORD flags.
 				if ( ( pChildVar->m_nFlags & FCVAR_DONTRECORD ) != ( pParentVar->m_nFlags & FCVAR_DONTRECORD ) )
 				{
-					Warning( "Convar %s has conflicting FCVAR_DONTRECORD flags (child: %s, parent: %s, parent wins)\n", 
+					Warning( "Convar %s has conflicting FCVAR_DONTRECORD flags (child: %s, parent: %s, parent wins)\n",
 						variable->GetName(), ( pChildVar->m_nFlags & FCVAR_DONTRECORD ) ? "FCVAR_DONTRECORD" : "no FCVAR_DONTRECORD",
 						( pParentVar->m_nFlags & FCVAR_DONTRECORD ) ? "FCVAR_DONTRECORD" : "no FCVAR_DONTRECORD" );
 				}
@@ -478,7 +478,7 @@ void CCvar::UnregisterConCommands( CVarDLLIdentifier_t id )
 
 
 //-----------------------------------------------------------------------------
-// Finds base commands 
+// Finds base commands
 //-----------------------------------------------------------------------------
 const ConCommandBase *CCvar::FindCommandBase( const char *name ) const
 {
@@ -513,7 +513,7 @@ const ConVar *CCvar::FindVar( const char *var_name ) const
 	const ConCommandBase *var = FindCommandBase( var_name );
 	if ( !var || var->IsCommand() )
 		return NULL;
-	
+
 	return static_cast<const ConVar*>(var);
 }
 
@@ -524,7 +524,7 @@ ConVar *CCvar::FindVar( const char *var_name )
 	ConCommandBase *var = FindCommandBase( var_name );
 	if ( !var || var->IsCommand() )
 		return NULL;
-	
+
 	return static_cast<ConVar*>( var );
 }
 
@@ -562,7 +562,7 @@ const char* CCvar::GetCommandLineValue( const char *pVariableName )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ConCommandBase *CCvar::GetCommands( void )
 {
@@ -592,7 +592,7 @@ void CCvar::RemoveGlobalChangeCallback( FnChangeCallback_t callback )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCvar::CallGlobalChangeCallbacks( ConVar *var, const char *pOldString, float flOldValue )
 {
@@ -698,7 +698,7 @@ int CCvar::ProcessQueuedMaterialThreadConVarSets()
 		nUpdateFlags |= set.m_pConVar->GetFlags() & FCVAR_MATERIAL_THREAD_MASK;
 	}
 
-	m_QueuedConVarSets.RemoveAll(); 
+	m_QueuedConVarSets.RemoveAll();
 	m_bMaterialSystemThreadSetAllowed = false;
 	return nUpdateFlags;
 }
@@ -833,7 +833,7 @@ void CCvar::ConsoleDPrintf( const char *pFormat, ... ) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #if defined( _X360 )
 
@@ -881,7 +881,7 @@ void CCvar::Find( const CCommand &args )
 
 	// Get substring to find
 	search = args[1];
-				 
+
 	// Loop through vars and print out findings
 	for ( var = GetCommands(); var; var=var->GetNext() )
 	{
@@ -892,8 +892,6 @@ void CCvar::Find( const CCommand &args )
 			!Q_stristr( var->GetHelpText(), search ) )
 			continue;
 
-		ConVar_PrintDescription( var );	
-	}	
+		ConVar_PrintDescription( var );
+	}
 }
-
-

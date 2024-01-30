@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,7 +10,7 @@
 #include "tf_obj_baseupgrade_shared.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectExplosives : public C_BaseObjectUpgrade
 {
@@ -28,9 +28,8 @@ IMPLEMENT_CLIENTCLASS_DT(C_ObjectExplosives, DT_ObjectExplosives, CObjectExplosi
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectExplosives::C_ObjectExplosives()
 {
 }
-

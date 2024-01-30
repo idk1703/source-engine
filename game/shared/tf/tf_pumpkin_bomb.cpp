@@ -71,7 +71,7 @@ void CTFPumpkinBomb::Precache()
 	PrecacheScriptSound( "Halloween.PumpkinExplode" );
 
 	CBaseEntity::SetAllowPrecache( bAllowPrecache );
-	
+
 	m_bPrecached = true;
 }
 
@@ -82,7 +82,7 @@ void CTFPumpkinBomb::SetInitParams( float scale, float damage, float radius, int
 	m_flDamage	= damage;
 	m_flScale	= scale;
 	m_flRadius	= radius;
-	
+
 	if ( flLifeTime > 0 )
 	{
 		m_flLifeTime = flLifeTime;
@@ -113,9 +113,9 @@ void CTFPumpkinBomb::Spawn()
 		SetSolid( SOLID_VPHYSICS );
 		SetHealth( 1 );
 	}
-	
+
 	BaseClass::Spawn();
-	
+
 	SetModelScale( m_flScale );
 	m_takedamage = DAMAGE_YES;
 	m_bDead = false;
@@ -240,7 +240,7 @@ void CTFPumpkinBomb::Event_Killed( const CTakeDamageInfo &info )
 		RemovePumpkin();
 		return;
 	}
-	
+
 	trace_t tr;
 	Vector vecSpot = GetAbsOrigin() + Vector ( 0 , 0 , 8 );
 	UTIL_TraceLine( vecSpot, vecSpot + Vector ( 0, 0, -32 ), MASK_SHOT_HULL, this, COLLISION_GROUP_NONE, &tr );
@@ -274,7 +274,7 @@ void CTFPumpkinBomb::Event_Killed( const CTakeDamageInfo &info )
 	}
 
 	Break();
-	
+
 	BaseClass::Event_Killed( info );
 }
 

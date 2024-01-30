@@ -66,7 +66,7 @@ public:
 	virtual void Save( ISave * ) = 0;
 	virtual void WriteSaveHeaders( ISave * ) = 0;					// Called after save to allow the writing out of any dictionaries/tables/indexes generated during save
 	virtual void PostSave() = 0;
-	
+
 	virtual void PreRestore() = 0;
 	virtual void ReadRestoreHeaders( IRestore * ) = 0;				// Called prior to Restore()
 	virtual void Restore( IRestore *, bool fCreatePlayers ) = 0;
@@ -95,7 +95,7 @@ abstract_class CDefSaveRestoreBlockHandler : public ISaveRestoreBlockHandler
 	virtual void Save( ISave * ) {}
 	virtual void WriteSaveHeaders( ISave * ) {}
 	virtual void PostSave() {}
-	
+
 	virtual void PreRestore() {}
 	virtual void ReadRestoreHeaders( IRestore * ) {}
 	virtual void Restore( IRestore *, bool fCreatePlayers ) {}
@@ -124,11 +124,11 @@ public:
 
 	virtual int		GetWritePos() const = 0;
 	virtual void	SetWritePos(int pos) = 0;
-	
+
 	//---------------------------------
 	// Datamap based writing
 	//
-	
+
 	virtual int		WriteAll( const void *pLeafObject, datamap_t *pLeafMap ) = 0;
 	virtual int		WriteFields( const char *pname, const void *pBaseData, datamap_t *pMap, typedescription_t *pFields, int fieldCount ) = 0;
 
@@ -144,15 +144,15 @@ public:
 	// Using these, one doesn't have to worry about queuing up the read pointer on restore if only
 	// a subset of the data is read
 	//
-	
+
 	virtual void	StartBlock( const char *pszBlockName ) = 0;
 	virtual void	StartBlock() = 0;
 	virtual void	EndBlock() = 0;
-	
+
 	//---------------------------------
 	// Primitive types
 	//
-	
+
 	virtual void	WriteShort( const short *value, int count = 1 ) = 0;
 	virtual void	WriteInt( const int *value, int count = 1 ) = 0;		// Save an int
 	inline void		WriteInt( const unsigned *value, int count = 1 ) { WriteInt( (int *)value, count );	}
@@ -179,11 +179,11 @@ public:
 	virtual void	WriteVector( const char *pname, const Vector *value, int count = 1 ) = 0;	// Save a vector array
 	virtual void	WriteQuaternion( const char *pname, const Quaternion &value ) = 0;				// Save a Quaternion
 	virtual void	WriteQuaternion( const char *pname, const Quaternion *value, int count = 1 ) = 0;	// Save a Quaternion array
-	
+
 	//---------------------------------
 	// Game types
 	//
-	
+
 	virtual void	WriteTime( const char *pname, const float *value, int count = 1 ) = 0;	// Save a float (timevalue)
 	virtual void	WriteTick( const char *pname, const int *value, int count = 1 ) = 0;	// Save a tick (timevalue)
 	virtual void	WritePositionVector( const char *pname, const Vector &value ) = 0;		// Offset for landmark if necessary
@@ -229,9 +229,9 @@ public:
 	//---------------------------------
 	// Datamap based reading
 	//
-	
+
 	virtual int		ReadAll( void *pLeafObject, datamap_t *pLeafMap ) = 0;
-	
+
 	virtual int		ReadFields( const char *pname, void *pBaseData, datamap_t *pMap, typedescription_t *pFields, int fieldcount = 1 ) = 0;
 	virtual void	EmptyFields( void *pBaseData, typedescription_t *pFields, int fieldcount = 1 ) = 0;
 
@@ -240,20 +240,20 @@ public:
 	{
 		return ReadAll( pLeafObject, &pLeafObject->m_DataMap );
 	}
-	
+
 	//---------------------------------
 	// Block support
 	//
-	
+
 	virtual void	StartBlock( SaveRestoreRecordHeader_t *pHeader ) = 0;
 	virtual void	StartBlock( char szBlockName[SIZE_BLOCK_NAME_BUF] ) = 0;
 	virtual void	StartBlock() = 0;
 	virtual void	EndBlock() = 0;
-	
+
 	//---------------------------------
 	// Field header cracking
 	//
-	
+
 	virtual void	ReadHeader( SaveRestoreRecordHeader_t *pheader ) = 0;
 	virtual int		SkipHeader() = 0; // skips the header, but returns the size of the field
 	virtual const char *StringFromHeaderSymbol( int symbol ) = 0;
@@ -261,7 +261,7 @@ public:
 	//---------------------------------
 	// Primitive types
 	//
-	
+
 	virtual short	ReadShort( void ) = 0;
 	virtual int		ReadShort( short *pValue, int count = 1, int nBytesAvailable = 0 ) = 0;
 	virtual int		ReadInt( int *pValue, int count = 1, int nBytesAvailable = 0 ) = 0;
@@ -276,17 +276,17 @@ public:
 	virtual int		ReadVector( Vector *pValue, int count = 1, int nBytesAvailable = 0 ) = 0;
 	virtual int		ReadQuaternion( Quaternion *pValue ) = 0;
 	virtual int		ReadQuaternion( Quaternion *pValue, int count = 1, int nBytesAvailable = 0 ) = 0;
-	
+
 	//---------------------------------
 	// Game types
 	//
-	
+
 	virtual int		ReadTime( float *pValue, int count = 1, int nBytesAvailable = 0 ) = 0;
 	virtual int		ReadTick( int *pValue, int count = 1, int nBytesAvailable = 0 ) = 0;
 	virtual int		ReadPositionVector( Vector *pValue ) = 0;
 	virtual int		ReadPositionVector( Vector *pValue, int count = 1, int nBytesAvailable = 0 ) = 0;
 	virtual int		ReadFunction( datamap_t *pMap, inputfunc_t **pValue, int count = 1, int nBytesAvailable = 0) = 0;
-	
+
 	virtual int		ReadEntityPtr( CBaseEntity **ppEntity, int count = 1, int nBytesAvailable = 0 ) = 0;
 	virtual int		ReadEdictPtr( edict_t **ppEdict, int count = 1, int nBytesAvailable = 0 ) = 0;
 	virtual int		ReadEHandle( EHANDLE *pEHandle, int count = 1, int nBytesAvailable = 0 ) = 0;

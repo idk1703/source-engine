@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -44,7 +44,7 @@ CFontManager::CFontManager()
 	m_Win32Fonts.EnsureCapacity( MAX_INITIAL_FONTS );
 
 #ifdef LINUX
-	FT_Error error = FT_Init_FreeType( &library ); 
+	FT_Error error = FT_Init_FreeType( &library );
 	if ( error )
 		Error( "Unable to initalize freetype library, is it installed?" );
 	m_pFontDataHelper = NULL;
@@ -99,7 +99,7 @@ void CFontManager::ClearAllFonts()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 vgui::HFont CFontManager::CreateFont()
 {
@@ -139,7 +139,7 @@ bool CFontManager::SetFontGlyphSet(HFont font, const char *windowsFontName, int 
 		}
 		else
 		{
-			if ( !V_stricmp( m_szLanguage, "polish" ) || 
+			if ( !V_stricmp( m_szLanguage, "polish" ) ||
 				!V_stricmp( m_szLanguage, "russian" ) ||
 				!V_stricmp( m_szLanguage, "japanese" ) ||
 				!V_stricmp( m_szLanguage, "korean" ) ||
@@ -225,7 +225,7 @@ bool CFontManager::SetFontGlyphSet(HFont font, const char *windowsFontName, int 
 			}
 		}
 		// no valid font has been created, so fallback to a different font and try again
-	} 
+	}
 	while ( NULL != ( windowsFontName = GetFallbackFontName( windowsFontName ) ) );
 
 	// nothing successfully created
@@ -473,7 +473,7 @@ int CFontManager::GetFontAscent(HFont font, wchar_t wch)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CFontManager::IsFontAdditive(HFont font)
 {
@@ -481,7 +481,7 @@ bool CFontManager::IsFontAdditive(HFont font)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CFontManager::IsBitmapFont(HFont font)
 {
@@ -510,12 +510,12 @@ void CFontManager::GetTextSize(HFont font, const wchar_t *text, int &wide, int &
 {
 	wide = 0;
 	tall = 0;
-	
+
 	if (!text)
 		return;
 
 	tall = GetFontTall(font);
-	
+
 	float xx = 0;
 	char chBefore = 0;
 	char chAfter = 0;
@@ -730,11 +730,11 @@ void CFontManager::GetKernedCharWidth( vgui::HFont font, wchar_t ch, wchar_t chB
 {
 	wide = 0.0f;
 	flabcA = 0.0f;
-	
+
 	Assert( font != vgui::INVALID_FONT );
 	if ( font == vgui::INVALID_FONT )
 		return;
-		
+
 	font_t *pFont = m_FontAmalgams[font].GetFontForChar(ch);
 	if ( !pFont )
 	{
@@ -743,13 +743,13 @@ void CFontManager::GetKernedCharWidth( vgui::HFont font, wchar_t ch, wchar_t chB
 		wide = m_FontAmalgams[font].GetFontMaxWidth();
 		return;
 	}
-	
+
 	if ( m_FontAmalgams[font].GetFontForChar( chBefore ) != pFont )
 		chBefore = 0;
-	
+
 	if ( m_FontAmalgams[font].GetFontForChar( chAfter ) != pFont )
 		chAfter = 0;
-	
+
 #if defined(LINUX)
 	pFont->GetKernedCharWidth( ch, chBefore, chAfter, wide, flabcA, flabcC );
 #else
@@ -784,4 +784,3 @@ void CFontManager::Validate( CValidator &validator, char *pchName )
 	validator.Pop();
 }
 #endif // DBGFLAG_VALIDATE
-

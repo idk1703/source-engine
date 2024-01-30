@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -26,9 +26,9 @@ public:
 	void IdleSound( void );
 	void PainSound( const CTakeDamageInfo &info );
 	void DeathSound( const CTakeDamageInfo &info );
-	
+
 	int	 GetSoundInterests ( void );
-	
+
 	float MaxYawSpeed ( void );
 
 	void Event_Killed( const CTakeDamageInfo &info );
@@ -38,7 +38,7 @@ public:
 
 	int  OnTakeDamage_Alive( const CTakeDamageInfo &inputInfo );
 	void TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator );
-	
+
 	void StartTask( const Task_t *pTask );
 
 	int  SelectSchedule( void );

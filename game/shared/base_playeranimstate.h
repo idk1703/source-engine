@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -23,7 +23,7 @@
 #endif
 
 // If a guy is moving slower than this, then he's considered to not be moving
-// (so he goes to his idle animation at full playback rate rather than his walk 
+// (so he goes to his idle animation at full playback rate rather than his walk
 // animation at low playback rate).
 #define MOVING_MINIMUM_SPEED 0.5f
 
@@ -106,11 +106,11 @@ public:
 	// classes can overlay whatever other animations they want.
 	virtual void ComputeSequences( CStudioHdr *pStudioHdr );
 
-	// This is called to figure out what the main activity is. The mod-specific class 
+	// This is called to figure out what the main activity is. The mod-specific class
 	// overrides this to handle events like jumping, firing, etc.
 	virtual Activity CalcMainActivity() = 0;
 
-	// This is called to calculate the aim layer sequence. It usually figures out the 
+	// This is called to calculate the aim layer sequence. It usually figures out the
 	// animation prefixes and suffixes and calls CalcSequenceIndex().
 	virtual int CalcAimLayerSequence( float *flCycle, float *flAimSequenceWeight, bool bForceIdle ) = 0;
 
@@ -155,7 +155,7 @@ public:
 	virtual int SelectWeightedSequence( Activity activity );
 
 public:
-	
+
 	void				GetPoseParameters( CStudioHdr *pStudioHdr, float poseParameter[MAXSTUDIOPOSEPARAM] );
 
 	CBaseAnimatingOverlay	*GetOuter() const;
@@ -166,7 +166,7 @@ public:
 // Helpers for the derived classes to use.
 protected:
 
-	// Sets up the string you specify, looks for that sequence and returns the index. 
+	// Sets up the string you specify, looks for that sequence and returns the index.
 	// Complains in the console and returns 0 if it can't find it.
 	virtual int CalcSequenceIndex( PRINTF_FORMAT_STRING const char *pBaseName, ... );
 
@@ -181,7 +181,7 @@ protected:
 	float				GetEyeYaw() const { return m_flEyeYaw; }
 
 protected:
-	
+
 	CModAnimConfig		m_AnimConfig;
 	CBaseAnimatingOverlay	*m_pOuter;
 
@@ -244,18 +244,18 @@ private:
 	float GetInterpolatedGroundSpeed();
 
 private:
-	
+
 	float m_flMaxGroundSpeed;
 
 	float m_flLastAnimationStateClearTime;
 
-	// If he's using 8-way blending, then we blend to this idle 
+	// If he's using 8-way blending, then we blend to this idle
 	int m_iCurrent8WayIdleSequence;
 	int m_iCurrent8WayCrouchIdleSequence;
 
 	// Last activity we've used on the lower body. Used to determine if animations should restart.
-	Activity m_eCurrentMainSequenceActivity;	
-												
+	Activity m_eCurrentMainSequenceActivity;
+
 	float				m_flGaitYaw;
 	float				m_flStoredCycle;
 

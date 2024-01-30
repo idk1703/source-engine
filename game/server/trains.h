@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -29,30 +29,30 @@
 #define SF_TRACKTRAIN_USE_MAXSPEED_FOR_PITCH	0x0100
 #define SF_TRACKTRAIN_UNBLOCKABLE_BY_PLAYER		0x0200
 
-#define TRAIN_ACTIVE	0x80 
+#define TRAIN_ACTIVE	0x80
 #define TRAIN_NEW		0xc0
 #define TRAIN_OFF		0x00
 #define TRAIN_NEUTRAL	0x01
 #define TRAIN_SLOW		0x02
 #define TRAIN_MEDIUM	0x03
-#define TRAIN_FAST		0x04 
+#define TRAIN_FAST		0x04
 #define TRAIN_BACK		0x05
 
 
 enum TrainVelocityType_t
 {
-        TrainVelocity_Instantaneous = 0,
-        TrainVelocity_LinearBlend,
-        TrainVelocity_EaseInEaseOut,
+	TrainVelocity_Instantaneous = 0,
+	TrainVelocity_LinearBlend,
+	TrainVelocity_EaseInEaseOut,
 };
 
 
 enum TrainOrientationType_t
 {
-        TrainOrientation_Fixed = 0,
-        TrainOrientation_AtPathTracks,
-        TrainOrientation_LinearBlend,
-        TrainOrientation_EaseInEaseOut,
+	TrainOrientation_Fixed = 0,
+	TrainOrientation_AtPathTracks,
+	TrainOrientation_LinearBlend,
+	TrainOrientation_EaseInEaseOut,
 };
 
 class CFuncTrackTrain : public CBaseEntity
@@ -97,7 +97,7 @@ public:
 	void SetSpeed( float flSpeed, bool bAccel = false );
 	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	void SetSpeedDirAccel( float flNewSpeed );
-	
+
 	// Input handlers
 	void InputSetSpeed( inputdata_t &inputdata );
 	void InputSetSpeedDir( inputdata_t &inputdata );
@@ -147,9 +147,9 @@ public:
 	// UNDONE: Add accessors?
 	CPathTrack	*m_ppath;
 	float		m_length;
-	
-#ifdef HL1_DLL	
-	bool		m_bOnTrackChange;		// we don't want to find a new node if we restore while 
+
+#ifdef HL1_DLL
+	bool		m_bOnTrackChange;		// we don't want to find a new node if we restore while
 										// riding on a func_trackchange
 #endif
 
@@ -196,7 +196,7 @@ private:
 	TrainVelocityType_t m_eVelocityType;
 	bool		m_bSoundPlaying;
 
-	COutputEvent m_OnStart,m_OnNext; 
+	COutputEvent m_OnStart,m_OnNext;
 
 	bool		m_bManualSpeedChanges;		// set when we want to send entity IO to govern speed and obey our TrainVelocityType_t
 	float		m_flDesiredSpeed;			// target speed, when m_bManualSpeedChanges is set
@@ -206,7 +206,7 @@ private:
 	bool		m_bAccelToSpeed;
 
 	float		m_flNextMPSoundTime;
-	
+
 	float		m_flSpeedForwardModifier;
 	float		m_flUnmodifiedDesiredSpeed;
 

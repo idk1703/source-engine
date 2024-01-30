@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -19,7 +19,7 @@ class C_TEImpact : public C_BaseTempEntity
 {
 public:
 	DECLARE_CLASS( C_TEImpact, C_BaseTempEntity );
-	
+
 	DECLARE_CLIENTCLASS();
 
 	C_TEImpact( void );
@@ -38,28 +38,28 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 C_TEImpact::C_TEImpact( void )
 {
 	m_vecOrigin.Init();
 	m_vecNormal.Init();
-	
+
 	m_iType		= -1;
 	m_ucFlags	= 0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 C_TEImpact::~C_TEImpact( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEImpact::Precache( void )
 {
@@ -67,8 +67,8 @@ void C_TEImpact::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : unused - 
+// Purpose:
+// Input  : unused -
 //-----------------------------------------------------------------------------
 void C_TEImpact::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -76,7 +76,7 @@ void C_TEImpact::PostDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEImpact::PlayImpactSound( trace_t &tr )
 {

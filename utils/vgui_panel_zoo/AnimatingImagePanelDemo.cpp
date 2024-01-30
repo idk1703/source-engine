@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ class AnimatingImagePanelDemo: public DemoPage
 	public:
 		AnimatingImagePanelDemo(Panel *parent, const char *name);
 		~AnimatingImagePanelDemo();
-		
+
 	private:
 		AnimatingImagePanel *m_pAnimImagePanel;
 };
@@ -59,4 +59,3 @@ Panel* AnimatingImagePanelDemo_Create(Panel *parent)
 {
 	return new AnimatingImagePanelDemo(parent, "AnimatingImagePanelDemo");
 }
-

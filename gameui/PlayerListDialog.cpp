@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -54,7 +54,7 @@ CPlayerListDialog::~CPlayerListDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerListDialog::Activate()
 {
@@ -65,7 +65,7 @@ void CPlayerListDialog::Activate()
 	int maxClients = engine->GetMaxClients();
 	for (int i = 1; i <= maxClients; i++)
 	{
-		// get the player info from the engine	
+		// get the player info from the engine
 		player_info_t pi;
 
 		if ( !engine->GetPlayerInfo(i, &pi) )
@@ -76,7 +76,7 @@ void CPlayerListDialog::Activate()
 
 		// collate user data then add it to the table
 		KeyValues *data = new KeyValues(szPlayerIndex);
-		
+
 		data->SetString("Name", pi.name );
 		data->SetInt("index", i);
 
@@ -119,7 +119,7 @@ void CPlayerListDialog::RefreshPlayerProperties()
 		data->SetString( "name", pi.name );
 
 		bool muted = false, friends = false, bot = false;
-		
+
 		if ( GameClientExports() && GameClientExports()->IsPlayerGameVoiceMuted(playerIndex) )
 		{
 			muted = true;
@@ -199,7 +199,7 @@ void CPlayerListDialog::ToggleMuteStateOfSelectedUser()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerListDialog::OnItemSelected()
 {
@@ -216,14 +216,14 @@ void CPlayerListDialog::OnItemSelected()
 
 		int iLocalPlayer = engine->GetLocalPlayer();
 
-		int iPlayerIndex = data->GetInt("index");		
+		int iPlayerIndex = data->GetInt("index");
 		bool isValidPlayer = engine->GetPlayerInfo( iPlayerIndex, &pi );
 
-		// make sure the player is not a bot, or the user 
+		// make sure the player is not a bot, or the user
 		// Matt - changed this check to see if player indeces match, instead of using friends ID
 		if ( pi.fakeplayer || iPlayerIndex == iLocalPlayer ) // || pi.friendsID == g_pFriendsUser->GetFriendsID() )
 		{
-			// invalid player, 
+			// invalid player,
 			isValidPlayer = false;
 		}
 

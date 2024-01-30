@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -21,7 +21,7 @@ BEGIN_VS_SHADER_FLAGS( BlurFilterX_DX80, "Help for BlurFilterX_DX80", SHADER_NOT
 			LoadTexture( BASETEXTURE );
 		}
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		if ( g_pHardwareConfig->GetDXSupportLevel() < 80 )

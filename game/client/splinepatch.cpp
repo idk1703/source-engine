@@ -82,7 +82,7 @@ static inline void ComputeIndex( int i, int maxval, int* idx )
 {
 	if (i == 0)
 	{
-		idx[0] = 0; idx[1] = 0; idx[2] = 1; 
+		idx[0] = 0; idx[1] = 0; idx[2] = 1;
 		idx[3] = (maxval > 2) ? 2 : 1;
 	}
 	else
@@ -172,9 +172,9 @@ void CSplinePatch::SetupPatchQuery( float s, float t )
 	ComputeIndices( );
 
 	// The patch equation is:
-	// px = S * M * Gx * M^T * T^T 
-	// py = S * M * Gy * M^T * T^T 
-	// pz = S * M * Gz * M^T * T^T 
+	// px = S * M * Gx * M^T * T^T
+	// py = S * M * Gy * M^T * T^T
+	// pz = S * M * Gz * M^T * T^T
 	// where S = [s^3 s^2 s 1], T = [t^3 t^2 t 1]
 	// M is the patch type matrix, in my case I'm using a catmull-rom
 	// G is the array of control points. rows have constant t
@@ -203,9 +203,9 @@ void CSplinePatch::SetupPatchQuery( float s, float t )
 void CSplinePatch::GetPointAndNormal( Vector& position, Vector& normal ) const
 {
 	// The patch equation is:
-	// px = S * M * Gx * M^T * T^T 
-	// py = S * M * Gy * M^T * T^T 
-	// pz = S * M * Gz * M^T * T^T 
+	// px = S * M * Gx * M^T * T^T
+	// py = S * M * Gy * M^T * T^T
+	// pz = S * M * Gz * M^T * T^T
 	// where S = [s^3 s^2 s 1], T = [t^3 t^2 t 1]
 	// M is the patch type matrix, in my case I'm using a catmull-rom
 	// G is the array of control points. rows have constant t
@@ -268,9 +268,9 @@ void CSplinePatch::GetPointAndNormal( Vector& position, Vector& normal ) const
 float CSplinePatch::GetChannel( int channel ) const
 {
 	// The patch equation is:
-	// px = S * M * Gx * M^T * T^T 
-	// py = S * M * Gy * M^T * T^T 
-	// pz = S * M * Gz * M^T * T^T 
+	// px = S * M * Gx * M^T * T^T
+	// py = S * M * Gy * M^T * T^T
+	// pz = S * M * Gz * M^T * T^T
 	// where S = [s^3 s^2 s 1], T = [t^3 t^2 t 1]
 	// M is the patch type matrix, in my case I'm using a catmull-rom
 	// G is the array of control points. rows have constant t

@@ -70,4 +70,3 @@ void CParticleSystemPropertiesContainer::OnParticleFunctionSelChanged( KeyValues
 		g_pPetTool->GetParticlePreview()->SetParticleFunction( pFunction );
 	}
 }
-

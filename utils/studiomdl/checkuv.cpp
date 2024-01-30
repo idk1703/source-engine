@@ -48,7 +48,7 @@ static void WriteOBJ( const char *pszFilename, const s_source_t *pSource )
 	fprintf( pFile, "#\n" );
 	fprintf( pFile, "# s_source_t: %s\n", pSource->filename );
 	fprintf( pFile, "# Bone Count: %d\n", pSource->numbones );
-	
+
 	for ( int i = 0; i < pSource->numbones; ++i )
 	{
 		if ( pSource->localBone[i].parent >= 0 )
@@ -264,7 +264,7 @@ bool CCheckUVCmd::CheckOverlap( const struct s_source_t *pSource ) const
 	for ( int i = 0; i < faceOverlapMap.Count(); ++i )
 	{
 		const CUtlVector< int > &overlapList = faceOverlapMap[i];
-		
+
 		if ( overlapList.IsEmpty() )
 			continue;;
 

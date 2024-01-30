@@ -61,8 +61,8 @@ struct PropModelStats_t
 	// 	models/props/de_inferno/claypot01.mdl
 	// 	models/props/de_inferno/claypot02.mdl
 	//	models/props/de_dust/grainbasket01c.mdl
-	//	models/props_junk/wood_crate001a.mdl 
-	//	models/props/cs_office/file_box_p1.mdl 
+	//	models/props_junk/wood_crate001a.mdl
+	//	models/props/cs_office/file_box_p1.mdl
 };
 
 
@@ -84,7 +84,7 @@ struct ServerStats_t
 	{ CSBreakProps,			        CSSTAT_PROPSBROKEN_ALL,			AchievementConsts::BreakPropsInRound_Props,				0,	NULL },
 	{ CSUnstoppableForce,		    CSSTAT_KILLS,					AchievementConsts::UnstoppableForce_Kills,				0,	NULL },
 	{ CSHeadshotsInRound,	        CSSTAT_KILLS_HEADSHOT,			AchievementConsts::HeadshotsInRound_Kills,				0,	NULL },
-    { CSDominationOverkillsMatch,	CSSTAT_DOMINATION_OVERKILLS,	0,				                                        10,	NULL },
+	{ CSDominationOverkillsMatch,	CSSTAT_DOMINATION_OVERKILLS,	0,				                                        10,	NULL },
 };
 
 //=============================================================================
@@ -130,13 +130,13 @@ ConVar sv_debugroundstats( "sv_debugroundstats", "0", 0, "A temporary variable t
 // HPE_BEGIN:
 // [menglish] Addition of CCS_GameStats class
 //=============================================================================
- 
+
 CCSGameStats CCS_GameStats;
 CCSGameStats::StatContainerList_t* CCSGameStats::s_StatLists = new CCSGameStats::StatContainerList_t();
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 CCSGameStats::CCSGameStats()
 {
@@ -158,7 +158,7 @@ CCSGameStats::CCSGameStats()
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 CCSGameStats::~CCSGameStats()
 {
@@ -167,7 +167,7 @@ CCSGameStats::~CCSGameStats()
 
 //-----------------------------------------------------------------------------
 // Purpose: Clear out game stats
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CCSGameStats::Clear( void )
 {
@@ -175,7 +175,7 @@ void CCSGameStats::Clear( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CCSGameStats::Init( void )
 {
@@ -189,7 +189,7 @@ bool CCSGameStats::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSGameStats::PostInit( void )
 {
@@ -197,7 +197,7 @@ void CCSGameStats::PostInit( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSGameStats::LevelShutdownPreClearSteamAPIContext( void )
 {
@@ -357,7 +357,7 @@ CON_COMMAND ( teststats, "Test command" )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSGameStats::SubmitGameStats( KeyValues *pKV )
 {
@@ -371,7 +371,7 @@ void CCSGameStats::SubmitGameStats( KeyValues *pKV )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSGameStats::Event_ShotFired( CBasePlayer *pPlayer, CBaseCombatWeapon* pWeapon )
 {
@@ -380,38 +380,38 @@ void CCSGameStats::Event_ShotFired( CBasePlayer *pPlayer, CBaseCombatWeapon* pWe
 
 	CWeaponCSBase* pCSWeapon = dynamic_cast< CWeaponCSBase * >(pWeapon);
 
-    //=============================================================================
-    // HPE_BEGIN:
-    // [dwenger] adding tracking for weapon used fun fact
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [dwenger] adding tracking for weapon used fun fact
+	//=============================================================================
 
-    if ( pCSPlayer )
-    {
-        // [dwenger] Update the player's tracking of which weapon type they fired
-        pCSPlayer->PlayerUsedFirearm( pWeapon );
+	if ( pCSPlayer )
+	{
+		// [dwenger] Update the player's tracking of which weapon type they fired
+		pCSPlayer->PlayerUsedFirearm( pWeapon );
 
-        //=============================================================================
-        // HPE_END
-        //=============================================================================
+		//=============================================================================
+		// HPE_END
+		//=============================================================================
 
-	    IncrementStat( pCSPlayer, CSSTAT_SHOTS_FIRED, 1 );
-	    // Increment the individual weapon
-	    if( pCSWeapon )
-	    {
+		IncrementStat( pCSPlayer, CSSTAT_SHOTS_FIRED, 1 );
+		// Increment the individual weapon
+		if( pCSWeapon )
+		{
 			CSWeaponID weaponId = pCSWeapon->GetWeaponID();
-		    for (int i = 0; WeaponName_StatId_Table[i].shotStatId != CSSTAT_UNDEFINED; ++i)
-		    {
-			    if ( WeaponName_StatId_Table[i].weaponId == weaponId )
-			    {
-				    IncrementStat( pCSPlayer, WeaponName_StatId_Table[i].shotStatId, 1 );
+			for (int i = 0; WeaponName_StatId_Table[i].shotStatId != CSSTAT_UNDEFINED; ++i)
+			{
+				if ( WeaponName_StatId_Table[i].weaponId == weaponId )
+				{
+					IncrementStat( pCSPlayer, WeaponName_StatId_Table[i].shotStatId, 1 );
 					break;
-			    }
-		    }
+				}
+			}
 
 			int iType = pCSPlayer->IsBot();
 			++m_weaponStats[weaponId][iType].shots;
-	    }
-    }
+		}
+	}
 }
 
 void CCSGameStats::Event_ShotHit( CBasePlayer *pPlayer, const CTakeDamageInfo &info )
@@ -426,7 +426,7 @@ void CCSGameStats::Event_ShotHit( CBasePlayer *pPlayer, const CTakeDamageInfo &i
 	if ( pInflictor )
 	{
 		if ( pInflictor == pPlayer )
-		{			
+		{
 			if ( pPlayer->GetActiveWeapon() )
 			{
 				CWeaponCSBase* pCSWeapon = dynamic_cast< CWeaponCSBase * >(pPlayer->GetActiveWeapon());
@@ -450,13 +450,13 @@ void CCSGameStats::Event_PlayerKilled( CBasePlayer *pPlayer, const CTakeDamageIn
 {
 	Assert( pPlayer );
 	CCSPlayer *pCSPlayer = ToCSPlayer( pPlayer );
-	
+
 	IncrementStat( pCSPlayer, CSSTAT_DEATHS, 1 );
 }
 
 void CCSGameStats::Event_PlayerSprayedDecal( CCSPlayer* pPlayer )
 {
-    IncrementStat( pPlayer, CSSTAT_DECAL_SPRAYS, 1 );
+	IncrementStat( pPlayer, CSSTAT_DECAL_SPRAYS, 1 );
 }
 
 void CCSGameStats::Event_PlayerKilled_PreWeaponDrop( CBasePlayer *pPlayer, const CTakeDamageInfo &info )
@@ -492,20 +492,20 @@ void CCSGameStats::Event_PlayerKilled_PreWeaponDrop( CBasePlayer *pPlayer, const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSGameStats::Event_BombPlanted( CCSPlayer* pPlayer)
 {
-    IncrementStat( pPlayer, CSSTAT_NUM_BOMBS_PLANTED, 1 );
+	IncrementStat( pPlayer, CSSTAT_NUM_BOMBS_PLANTED, 1 );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSGameStats::Event_BombDefused( CCSPlayer* pPlayer)
 {
 
-    IncrementStat( pPlayer, CSSTAT_NUM_BOMBS_DEFUSED, 1 );
+	IncrementStat( pPlayer, CSSTAT_NUM_BOMBS_DEFUSED, 1 );
 	IncrementStat( pPlayer, CSSTAT_OBJECTIVES_COMPLETED, 1 );
 	if( pPlayer && pPlayer->HasDefuser() )
 	{
@@ -521,11 +521,11 @@ void CCSGameStats::Event_BombExploded( CCSPlayer* pPlayer )
 	IncrementStat( pPlayer, CSSTAT_OBJECTIVES_COMPLETED, 1 );
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSGameStats::Event_HostageRescued( CCSPlayer* pPlayer)
 {
-    IncrementStat( pPlayer, CSSTAT_NUM_HOSTAGES_RESCUED, 1 );
+	IncrementStat( pPlayer, CSSTAT_NUM_HOSTAGES_RESCUED, 1 );
 }
 
 //-----------------------------------------------------------------------------
@@ -536,14 +536,14 @@ void CCSGameStats::Event_AllHostagesRescued()
 	IncrementTeamStat( TEAM_CT, CSSTAT_OBJECTIVES_COMPLETED, 1 );
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSGameStats::Event_WindowShattered( CBasePlayer *pPlayer)
 {
-    Assert( pPlayer );
-    CCSPlayer *pCSPlayer = ToCSPlayer( pPlayer );
+	Assert( pPlayer );
+	CCSPlayer *pCSPlayer = ToCSPlayer( pPlayer );
 
-    IncrementStat( pCSPlayer, CSSTAT_NUM_BROKEN_WINDOWS, 1 );
+	IncrementStat( pCSPlayer, CSSTAT_NUM_BROKEN_WINDOWS, 1 );
 }
 
 
@@ -565,18 +565,18 @@ void CCSGameStats::Event_BreakProp( CCSPlayer* pPlayer, CBreakableProp *pProp )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSGameStats::UpdatePlayerRoundStats(int winner)
-{	
-    int mapIndex = GetCSLevelIndex(gpGlobals->mapname.ToCStr());
-    CSStatType_t mapStatWinIndex  = CSSTAT_UNDEFINED, mapStatRoundIndex = CSSTAT_UNDEFINED;
+{
+	int mapIndex = GetCSLevelIndex(gpGlobals->mapname.ToCStr());
+	CSStatType_t mapStatWinIndex  = CSSTAT_UNDEFINED, mapStatRoundIndex = CSSTAT_UNDEFINED;
 
-    if ( mapIndex != -1 )
-    {
-        mapStatWinIndex = MapName_StatId_Table[mapIndex].statWinsId;
+	if ( mapIndex != -1 )
+	{
+		mapStatWinIndex = MapName_StatId_Table[mapIndex].statWinsId;
 		mapStatRoundIndex = MapName_StatId_Table[mapIndex].statRoundsId;
-    }
+	}
 
 	// increment the team specific stats
 	IncrementTeamStat( winner, CSSTAT_ROUNDS_WON, 1 );
@@ -662,10 +662,10 @@ void CCSGameStats::SendRollingStatsAveragesToAllPlayers()
 
 		CRecipientFilter filter;
 		filter.AddAllPlayers();
-		UserMessageBegin( filter, "MatchStatsUpdate" );  
+		UserMessageBegin( filter, "MatchStatsUpdate" );
 
 		WRITE_SHORT(firstStatInThisBatch);
-		
+
 		for ( int iStat = firstStatInThisBatch; iStat < CSSTAT_MAX && iStat <= lastMessageInThisBatch; ++iStat )
 		{
 			WRITE_FLOAT(m_rollingTStatAverages.m_fStat[iStat]);
@@ -692,7 +692,7 @@ void CCSGameStats::SendDirectStatsAveragesToAllPlayers()
 
 		CRecipientFilter filter;
 		filter.AddAllPlayers();
-		UserMessageBegin( filter, "MatchStatsUpdate" );  
+		UserMessageBegin( filter, "MatchStatsUpdate" );
 
 		WRITE_SHORT(firstStatInThisBatch);
 
@@ -709,69 +709,69 @@ void CCSGameStats::SendDirectStatsAveragesToAllPlayers()
 
 void CCSGameStats::ComputeRollingStatAverages()
 {
-    int numPlayers = 0;
-    int numCTs = 0;
-    int numTs = 0;
+	int numPlayers = 0;
+	int numCTs = 0;
+	int numTs = 0;
 
-    RoundStatsRollingAverage_t currentRoundTStatsAverage;
-    RoundStatsRollingAverage_t currentRoundCTStatsAverage;
-    RoundStatsRollingAverage_t currentRoundPlayerStatsAverage;
+	RoundStatsRollingAverage_t currentRoundTStatsAverage;
+	RoundStatsRollingAverage_t currentRoundCTStatsAverage;
+	RoundStatsRollingAverage_t currentRoundPlayerStatsAverage;
 
-    currentRoundTStatsAverage.Reset();
-    currentRoundCTStatsAverage.Reset();
-    currentRoundPlayerStatsAverage.Reset();
-    
-    //for ( int iStat = CSSTAT_FIRST; iStat < CSSTAT_MAX; ++iStat )
-    {
-        for( int iPlayerIndex = 1 ; iPlayerIndex <= MAX_PLAYERS; iPlayerIndex++ )
-        {
-            CCSPlayer *pPlayer = ToCSPlayer( UTIL_PlayerByIndex( iPlayerIndex ) );
-            if ( pPlayer && pPlayer->IsConnected())
-            {
-                StatsCollection_t &roundStats = m_aPlayerStats[pPlayer->entindex()].statsCurrentRound;
+	currentRoundTStatsAverage.Reset();
+	currentRoundCTStatsAverage.Reset();
+	currentRoundPlayerStatsAverage.Reset();
 
-                int teamNumber = pPlayer->GetTeamNumber();
-                if (teamNumber == TEAM_CT)
-                {
-                    numCTs++;                
-                    numPlayers++;
-                    currentRoundCTStatsAverage += roundStats;
-                    currentRoundPlayerStatsAverage += roundStats;
-                }
-                else if (teamNumber == TEAM_TERRORIST)
-                {
-                    numTs++;
-                    numPlayers++;
-                    currentRoundTStatsAverage += roundStats;
-                    currentRoundPlayerStatsAverage += roundStats;
-                }
-            }
-        }
+	//for ( int iStat = CSSTAT_FIRST; iStat < CSSTAT_MAX; ++iStat )
+	{
+		for( int iPlayerIndex = 1 ; iPlayerIndex <= MAX_PLAYERS; iPlayerIndex++ )
+		{
+			CCSPlayer *pPlayer = ToCSPlayer( UTIL_PlayerByIndex( iPlayerIndex ) );
+			if ( pPlayer && pPlayer->IsConnected())
+			{
+				StatsCollection_t &roundStats = m_aPlayerStats[pPlayer->entindex()].statsCurrentRound;
 
-        if (numTs > 0)
-        {
-            currentRoundTStatsAverage /= numTs;
-        }
+				int teamNumber = pPlayer->GetTeamNumber();
+				if (teamNumber == TEAM_CT)
+				{
+					numCTs++;
+					numPlayers++;
+					currentRoundCTStatsAverage += roundStats;
+					currentRoundPlayerStatsAverage += roundStats;
+				}
+				else if (teamNumber == TEAM_TERRORIST)
+				{
+					numTs++;
+					numPlayers++;
+					currentRoundTStatsAverage += roundStats;
+					currentRoundPlayerStatsAverage += roundStats;
+				}
+			}
+		}
 
-        if (numCTs > 0)
-        {
-            currentRoundCTStatsAverage /= numCTs;
-        }
+		if (numTs > 0)
+		{
+			currentRoundTStatsAverage /= numTs;
+		}
 
-        if (numPlayers > 0)
-        {
-            currentRoundPlayerStatsAverage /= numPlayers;
-        }
+		if (numCTs > 0)
+		{
+			currentRoundCTStatsAverage /= numCTs;
+		}
 
-        m_rollingTStatAverages.RollDataSetIntoAverage(currentRoundTStatsAverage);
-        m_rollingCTStatAverages.RollDataSetIntoAverage(currentRoundCTStatsAverage);
-        m_rollingPlayerStatAverages.RollDataSetIntoAverage(currentRoundPlayerStatsAverage);
-    }
+		if (numPlayers > 0)
+		{
+			currentRoundPlayerStatsAverage /= numPlayers;
+		}
+
+		m_rollingTStatAverages.RollDataSetIntoAverage(currentRoundTStatsAverage);
+		m_rollingCTStatAverages.RollDataSetIntoAverage(currentRoundCTStatsAverage);
+		m_rollingPlayerStatAverages.RollDataSetIntoAverage(currentRoundPlayerStatsAverage);
+	}
 }
 
 
 void CCSGameStats::ComputeDirectStatAverages()
-{		
+{
 	m_numberOfRoundsForDirectAverages++;
 
 	m_directCTStatAverages.Reset();
@@ -789,13 +789,13 @@ void CCSGameStats::ComputeDirectStatAverages()
 			int teamNumber = pPlayer->GetTeamNumber();
 			if (teamNumber == TEAM_CT)
 			{
-				m_numberOfCounterTerroristEntriesForDirectAverages++;                					
+				m_numberOfCounterTerroristEntriesForDirectAverages++;
 				m_directCTStatAverages += matchStats;
 				m_directPlayerStatAverages += matchStats;
 			}
 			else if (teamNumber == TEAM_TERRORIST)
 			{
-				m_numberOfTerroristEntriesForDirectAverages++;				
+				m_numberOfTerroristEntriesForDirectAverages++;
 				m_directTStatAverages += matchStats;
 				m_directPlayerStatAverages += matchStats;
 			}
@@ -842,7 +842,7 @@ void CCSGameStats::DumpMatchWeaponMetrics()
 	//int second = now->tm_sec;
 
 	//char filename[ 128 ];
-	//Q_snprintf( filename, sizeof(filename), "wm_%4d%02d%02d_%02d%02d%02d_%s.csv", 
+	//Q_snprintf( filename, sizeof(filename), "wm_%4d%02d%02d_%02d%02d%02d_%s.csv",
 	//	year, month, day, hour, minute, second, gpGlobals->mapname.ToCStr());
 
 	//FileHandle_t hLogFile = filesystem->Open( filename, "wt" );
@@ -867,15 +867,15 @@ void CCSGameStats::DumpMatchWeaponMetrics()
 
 	//	for ( int iMode = 0; iMode < WeaponMode_MAX; ++iMode)
 	//	{
-	//		filesystem->FPrintf(hLogFile, "%s, %d, %d, %d, %f, %d, %d, %d, %d\n", 
+	//		filesystem->FPrintf(hLogFile, "%s, %d, %d, %d, %f, %d, %d, %d, %d\n",
 	//			pWeaponName,
 	//			iMode,
 	//			pInfo->GetWeaponPrice(),
 	//			pInfo->m_iBullets,
 	//			pInfo->m_flCycleTime,
-	//			m_weaponStats[iWeapon][iMode].shots, 
-	//			m_weaponStats[iWeapon][iMode].hits, 
-	//			m_weaponStats[iWeapon][iMode].damage, 
+	//			m_weaponStats[iWeapon][iMode].shots,
+	//			m_weaponStats[iWeapon][iMode].hits,
+	//			m_weaponStats[iWeapon][iMode].damage,
 	//			m_weaponStats[iWeapon][iMode].kills);
 	//	}
 	//}
@@ -888,7 +888,7 @@ void CCSGameStats::DumpMatchWeaponMetrics()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSGameStats::Event_PlayerConnected( CBasePlayer *pPlayer )
 {
@@ -896,7 +896,7 @@ void CCSGameStats::Event_PlayerConnected( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSGameStats::Event_PlayerDisconnected( CBasePlayer *pPlayer )
 {
@@ -908,7 +908,7 @@ void CCSGameStats::Event_PlayerDisconnected( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSGameStats::Event_PlayerKilledOther( CBasePlayer *pAttacker, CBaseEntity *pVictim, const CTakeDamageInfo &info )
 {
@@ -916,24 +916,24 @@ void CCSGameStats::Event_PlayerKilledOther( CBasePlayer *pAttacker, CBaseEntity 
 	if ( !pVictim->IsPlayer() )
 		return;
 
-	CBaseEntity *pInflictor = info.GetInflictor();	
+	CBaseEntity *pInflictor = info.GetInflictor();
 
 	CCSPlayer *pPlayerAttacker = ToCSPlayer( pAttacker );
-	CCSPlayer *pPlayerVictim = ToCSPlayer( pVictim );	
+	CCSPlayer *pPlayerVictim = ToCSPlayer( pVictim );
 
-    // keep track of how many times every player kills every other player
-    TrackKillStats( pPlayerAttacker, pPlayerVictim );
+	// keep track of how many times every player kills every other player
+	TrackKillStats( pPlayerAttacker, pPlayerVictim );
 
 	// Skip rest of stat reporting for friendly fire
 	if ( pPlayerAttacker->GetTeam() == pVictim->GetTeam() )
 		return;
 
 	CSWeaponID weaponId = WEAPON_NONE;
-	
+
 	if ( pInflictor )
 	{
 		if ( pInflictor == pAttacker )
-		{			
+		{
 			if ( pAttacker->GetActiveWeapon() )
 			{
 				CBaseCombatWeapon* weapon = pAttacker->GetActiveWeapon();
@@ -951,7 +951,7 @@ void CCSGameStats::Event_PlayerKilledOther( CBasePlayer *pAttacker, CBaseEntity 
 					}
 				}
 			}
-		}		
+		}
 		else
 		{
 			//In the case of grenades, the inflictor is the spawned grenade entity.
@@ -1001,7 +1001,7 @@ void CCSGameStats::Event_PlayerKilledOther( CBasePlayer *pAttacker, CBaseEntity 
 					break;	// you only get credit for one kill even if you happen to be by more than one bomb
 				}
 			}
-		}		
+		}
 	}
 
 	//Increment stat if this is a headshot.
@@ -1027,7 +1027,7 @@ void CCSGameStats::Event_PlayerKilledOther( CBasePlayer *pAttacker, CBaseEntity 
 	if (playerCounts[iAttackerTeamNumber].totalAlivePlayers == 1 && playerCounts[iAttackerTeamNumber].killedPlayers >= 2)
 	{
 		IncrementStat(pPlayerAttacker, CSSTAT_KILLS_WHILE_LAST_PLAYER_ALIVE, 1);
-	}	
+	}
 
 	//if they were damaged by more than one person that must mean that someone else did damage before the killer finished them off.
 	if (pPlayerVictim->GetNumEnemyDamagers() > 1)
@@ -1043,42 +1043,42 @@ void CCSGameStats::Event_PlayerKilledOther( CBasePlayer *pAttacker, CBaseEntity 
 								weaponId == WEAPON_SCOUT ||
 								weaponId == WEAPON_SG550 ||
 								weaponId == WEAPON_G3SG1 );
-			
+
 		// If we're zoomed in
 		if ( bUsingSniper && pPlayerAttacker->GetFOV() != pPlayerAttacker->GetDefaultFOV() )
 		{
 			// Get our position
-			 Vector position = pPlayerAttacker->GetAbsOrigin();
-			 int userid = pPlayerAttacker->GetUserID();
+			Vector position = pPlayerAttacker->GetAbsOrigin();
+			int userid = pPlayerAttacker->GetUserID();
 
-			 bool bFoundPlayerEntry = false;
-			 FOR_EACH_LL( m_PlayerSnipedPosition, iElement )
-			 {
-				 sHappyCamperSnipePosition *pSnipePosition = &m_PlayerSnipedPosition[iElement];
-					 
-				 // We've found this player's entry. Next, check to see if they meet the achievement criteria
-				 if ( userid == pSnipePosition->m_iUserID )
-				 {
-					 bFoundPlayerEntry = true;
-					 Vector posDif = position - pSnipePosition->m_vPos;
+			bool bFoundPlayerEntry = false;
+			FOR_EACH_LL( m_PlayerSnipedPosition, iElement )
+			{
+				sHappyCamperSnipePosition *pSnipePosition = &m_PlayerSnipedPosition[iElement];
 
-					 // Give a small epsilon to account for floating point anomalies
-					 if ( posDif.IsLengthLessThan( .01f) )
-					 {
-						 pPlayerAttacker->AwardAchievement( CSSnipeTwoFromSameSpot );
-					 }
+				// We've found this player's entry. Next, check to see if they meet the achievement criteria
+				if ( userid == pSnipePosition->m_iUserID )
+				{
+					bFoundPlayerEntry = true;
+					Vector posDif = position - pSnipePosition->m_vPos;
 
-					 // Update their position
-					 pSnipePosition->m_vPos = position;
-					 break;
-				 }
-			 }
+					// Give a small epsilon to account for floating point anomalies
+					if ( posDif.IsLengthLessThan( .01f) )
+					{
+						pPlayerAttacker->AwardAchievement( CSSnipeTwoFromSameSpot );
+					}
 
-			 // No entry so add one
-			 if ( !bFoundPlayerEntry )
-			 {
+					// Update their position
+					pSnipePosition->m_vPos = position;
+					break;
+				}
+			}
+
+			// No entry so add one
+			if ( !bFoundPlayerEntry )
+			{
 				m_PlayerSnipedPosition.AddToTail( sHappyCamperSnipePosition( userid, position ) );
-			 }
+			}
 		}
 	}
 }
@@ -1086,14 +1086,14 @@ void CCSGameStats::Event_PlayerKilledOther( CBasePlayer *pAttacker, CBaseEntity 
 
 void CCSGameStats::CalculateOverkill(CCSPlayer* pAttacker, CCSPlayer* pVictim)
 {
-    //Count domination overkills - Do this before determining domination
-    if (pAttacker->GetTeam() != pVictim->GetTeam())
-    {
-        if (pAttacker->IsPlayerDominated(pVictim->entindex()))
-        {
-            IncrementStat( pAttacker, CSSTAT_DOMINATION_OVERKILLS, 1 );
-        }
-    }
+	//Count domination overkills - Do this before determining domination
+	if (pAttacker->GetTeam() != pVictim->GetTeam())
+	{
+		if (pAttacker->IsPlayerDominated(pVictim->entindex()))
+		{
+			IncrementStat( pAttacker, CSSTAT_DOMINATION_OVERKILLS, 1 );
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1117,10 +1117,10 @@ void CCSGameStats::Event_PlayerDamage( CBasePlayer *pBasePlayer, const CTakeDama
 	{
 		CSWeaponMode weaponMode = Primary_Mode;
 		IncrementStat( pAttacker, CSSTAT_DAMAGE, info.GetDamage() );
-		
-        if (pAttacker->m_bNightVisionOn)
-        {
-            IncrementStat( pAttacker, CSSTAT_NIGHTVISION_DAMAGE, info.GetDamage() );
+
+		if (pAttacker->m_bNightVisionOn)
+		{
+			IncrementStat( pAttacker, CSSTAT_NIGHTVISION_DAMAGE, info.GetDamage() );
 		}
 
 		const char *pWeaponName = NULL;
@@ -1190,10 +1190,10 @@ void CCSGameStats::Event_MoneySpent( CCSPlayer* pPlayer, int moneySpent, const c
 
 void CCSGameStats::Event_PlayerDonatedWeapon (CCSPlayer* pPlayer)
 {
-    if (pPlayer)
-    {
-        IncrementStat(pPlayer, CSSTAT_WEAPONS_DONATED, 1);
-    }
+	if (pPlayer)
+	{
+		IncrementStat(pPlayer, CSSTAT_WEAPONS_DONATED, 1);
+	}
 }
 
 void CCSGameStats::Event_MVPEarned( CCSPlayer* pPlayer )
@@ -1258,8 +1258,8 @@ void CCSGameStats::FireGameEvent( IGameEvent *event )
 	{
 		int userid = event->GetInt("userid", 0);
 		int entindex = event->GetInt("entindex", 0);
- 		CBreakableProp* pProp = static_cast<CBreakableProp*>(CBaseEntity::Instance(entindex));
- 		Event_BreakProp(ToCSPlayer(UTIL_PlayerByUserId(userid)), pProp);
+		CBreakableProp* pProp = static_cast<CBreakableProp*>(CBaseEntity::Instance(entindex));
+		Event_BreakProp(ToCSPlayer(UTIL_PlayerByUserId(userid)), pProp);
 	}
 	else if ( V_strcmp(pEventName, "player_decal") == 0 )
 	{
@@ -1307,18 +1307,18 @@ void CCSGameStats::ResetAllTeamStats()
 //-----------------------------------------------------------------------------
 void CCSGameStats::ResetAllStats()
 {
-    for ( int i = 0; i < ARRAYSIZE( m_aPlayerStats ); i++ )
-    {		
+	for ( int i = 0; i < ARRAYSIZE( m_aPlayerStats ); i++ )
+	{
 		m_aPlayerStats[i].statsDelta.Reset();
-        m_aPlayerStats[i].statsCurrentRound.Reset();
-        m_aPlayerStats[i].statsCurrentMatch.Reset();
-        m_rollingCTStatAverages.Reset();
-        m_rollingTStatAverages.Reset();
-        m_rollingPlayerStatAverages.Reset();
+		m_aPlayerStats[i].statsCurrentRound.Reset();
+		m_aPlayerStats[i].statsCurrentMatch.Reset();
+		m_rollingCTStatAverages.Reset();
+		m_rollingTStatAverages.Reset();
+		m_rollingPlayerStatAverages.Reset();
 		m_numberOfRoundsForDirectAverages = 0;
 		m_numberOfTerroristEntriesForDirectAverages = 0;
 		m_numberOfCounterTerroristEntriesForDirectAverages = 0;
-    }
+	}
 }
 
 
@@ -1380,7 +1380,7 @@ void CCSGameStats::ResetKillHistory( CBasePlayer* pPlayer )
 void CCSGameStats::ResetRoundStats()
 {
 	for ( int i = 0; i < ARRAYSIZE( m_aPlayerStats ); i++ )
-	{		
+	{
 		m_aPlayerStats[i].statsCurrentRound.Reset();
 	}
 }
@@ -1390,12 +1390,12 @@ void CCSGameStats::ResetRoundStats()
 //-----------------------------------------------------------------------------
 void CCSGameStats::IncrementStat( CCSPlayer* pPlayer, CSStatType_t statId, int iDelta, bool bPlayerOnly /* = false */ )
 {
-    if ( pPlayer )
-    {
-	    PlayerStats_t &stats = m_aPlayerStats[pPlayer->entindex()];
-	    stats.statsDelta[statId] += iDelta;
-	    stats.statsCurrentRound[statId] += iDelta;
-	    stats.statsCurrentMatch[statId] += iDelta;
+	if ( pPlayer )
+	{
+		PlayerStats_t &stats = m_aPlayerStats[pPlayer->entindex()];
+		stats.statsDelta[statId] += iDelta;
+		stats.statsCurrentRound[statId] += iDelta;
+		stats.statsCurrentMatch[statId] += iDelta;
 
 		// increment team stat
 		int teamIndex = pPlayer->GetTeamNumber() - FIRST_GAME_TEAM;
@@ -1404,23 +1404,23 @@ void CCSGameStats::IncrementStat( CCSPlayer* pPlayer, CSStatType_t statId, int i
 			m_aTeamStats[teamIndex][statId] += iDelta;
 		}
 
-	    for (int i = 0; i < ARRAYSIZE(ServerStatBasedAchievements); ++i)
-	    {
-		    if (ServerStatBasedAchievements[i].statId == statId)
-		    {
-			    // skip this if there is a map filter and it doesn't match
-			    if (ServerStatBasedAchievements[i].mapFilter != NULL && V_strcmp(gpGlobals->mapname.ToCStr(), ServerStatBasedAchievements[i].mapFilter) != 0)
-				    continue;
+		for (int i = 0; i < ARRAYSIZE(ServerStatBasedAchievements); ++i)
+		{
+			if (ServerStatBasedAchievements[i].statId == statId)
+			{
+				// skip this if there is a map filter and it doesn't match
+				if (ServerStatBasedAchievements[i].mapFilter != NULL && V_strcmp(gpGlobals->mapname.ToCStr(), ServerStatBasedAchievements[i].mapFilter) != 0)
+					continue;
 
-			    bool bWasMet = ServerStatBasedAchievements[i].IsMet(stats.statsCurrentRound[statId] - iDelta, stats.statsCurrentMatch[statId] - iDelta);
-			    bool bIsMet = ServerStatBasedAchievements[i].IsMet(stats.statsCurrentRound[statId], stats.statsCurrentMatch[statId]);
-			    if (!bWasMet && bIsMet)
-			    {
-				    pPlayer->AwardAchievement(ServerStatBasedAchievements[i].achievementId);
-                }
-		    }
-	    }
-    }
+				bool bWasMet = ServerStatBasedAchievements[i].IsMet(stats.statsCurrentRound[statId] - iDelta, stats.statsCurrentMatch[statId] - iDelta);
+				bool bIsMet = ServerStatBasedAchievements[i].IsMet(stats.statsCurrentRound[statId], stats.statsCurrentMatch[statId]);
+				if (!bWasMet && bIsMet)
+				{
+					pPlayer->AwardAchievement(ServerStatBasedAchievements[i].achievementId);
+				}
+			}
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1463,7 +1463,7 @@ void CCSGameStats::SendStatsToPlayer( CCSPlayer * pPlayer, int iMinStatPriority 
 {
 	ASSERT(CSSTAT_MAX < 255); // if we add more than 255 stats, we'll need to update this protocol
 	if ( pPlayer && pPlayer->IsConnected())
-	{				
+	{
 		StatsCollection_t &deltaStats = m_aPlayerStats[pPlayer->entindex()].statsDelta;
 
 		// check to see if we have any stats to actually send
@@ -1567,16 +1567,16 @@ void CCSGameStats::PreClientUpdate()
 //-----------------------------------------------------------------------------
 void CCSGameStats::TrackKillStats( CCSPlayer *pAttacker, CCSPlayer *pVictim )
 {
-    int iPlayerIndexAttacker = pAttacker->entindex();
-    int iPlayerIndexVictim = pVictim->entindex();
+	int iPlayerIndexAttacker = pAttacker->entindex();
+	int iPlayerIndexVictim = pVictim->entindex();
 
-    PlayerStats_t &statsAttacker = m_aPlayerStats[iPlayerIndexAttacker];
-    PlayerStats_t &statsVictim = m_aPlayerStats[iPlayerIndexVictim];
+	PlayerStats_t &statsAttacker = m_aPlayerStats[iPlayerIndexAttacker];
+	PlayerStats_t &statsVictim = m_aPlayerStats[iPlayerIndexVictim];
 
-    statsVictim.statsKills.iNumKilledBy[iPlayerIndexAttacker]++;
-    statsVictim.statsKills.iNumKilledByUnanswered[iPlayerIndexAttacker]++;
-    statsAttacker.statsKills.iNumKilled[iPlayerIndexVictim]++;
-    statsAttacker.statsKills.iNumKilledByUnanswered[iPlayerIndexVictim] = 0;    
+	statsVictim.statsKills.iNumKilledBy[iPlayerIndexAttacker]++;
+	statsVictim.statsKills.iNumKilledByUnanswered[iPlayerIndexAttacker]++;
+	statsAttacker.statsKills.iNumKilled[iPlayerIndexVictim]++;
+	statsAttacker.statsKills.iNumKilledByUnanswered[iPlayerIndexVictim] = 0;
 }
 
 
@@ -1607,12 +1607,12 @@ void CCSGameStats::CalcDominationAndRevenge( CCSPlayer *pAttacker, CCSPlayer *pV
 		return;
 	}
 	int iPlayerIndexVictim = pVictim->entindex();
-	PlayerStats_t &statsVictim = m_aPlayerStats[iPlayerIndexVictim];	
+	PlayerStats_t &statsVictim = m_aPlayerStats[iPlayerIndexVictim];
 	// calculate # of unanswered kills between killer & victim
 	// This is plus 1 as this function gets called before the stat is updated.  That is done so that the domination
 	// and revenge will be calculated prior to the death message being sent to the clients
 	int attackerEntityIndex = pAttacker->entindex();
-	int iKillsUnanswered = statsVictim.statsKills.iNumKilledByUnanswered[attackerEntityIndex] + 1;	
+	int iKillsUnanswered = statsVictim.statsKills.iNumKilledByUnanswered[attackerEntityIndex] + 1;
 
 	if ( CS_KILLS_FOR_DOMINATION == iKillsUnanswered )
 	{
@@ -1625,71 +1625,71 @@ void CCSGameStats::CalcDominationAndRevenge( CCSPlayer *pAttacker, CCSPlayer *pV
 		*piDeathFlags |= ( CS_DEATH_REVENGE );
 	}
 
-    //Check the overkill on 1 player achievement
-    if (iKillsUnanswered == CS_KILLS_FOR_DOMINATION + AchievementConsts::ExtendedDomination_AdditionalKills)
-    {
-        pAttacker->AwardAchievement(CSExtendedDomination);
-    }
+	//Check the overkill on 1 player achievement
+	if (iKillsUnanswered == CS_KILLS_FOR_DOMINATION + AchievementConsts::ExtendedDomination_AdditionalKills)
+	{
+		pAttacker->AwardAchievement(CSExtendedDomination);
+	}
 
-    if (iKillsUnanswered == CS_KILLS_FOR_DOMINATION)
-    {			
-        //this is the Nth unanswered kill between killer and victim, killer is now dominating victim        
-        //set victim to be dominated by killer
-        pAttacker->SetPlayerDominated( pVictim, true );
+	if (iKillsUnanswered == CS_KILLS_FOR_DOMINATION)
+	{
+		//this is the Nth unanswered kill between killer and victim, killer is now dominating victim
+		//set victim to be dominated by killer
+		pAttacker->SetPlayerDominated( pVictim, true );
 
-        //Check concurrent dominations achievement
-        int numConcurrentDominations = 0;
-        for ( int i = 1 ; i <= gpGlobals->maxClients ; i++ )
-        {
-            CCSPlayer *pPlayer= ToCSPlayer( UTIL_PlayerByIndex( i ) );
-            if (pPlayer && pAttacker->IsPlayerDominated(pPlayer->entindex()))
-            {
-                numConcurrentDominations++;
-            }
-        }
-        if (numConcurrentDominations >= AchievementConsts::ConcurrentDominations_MinDominations)
-        {
-            pAttacker->AwardAchievement(CSConcurrentDominations);
-        }
+		//Check concurrent dominations achievement
+		int numConcurrentDominations = 0;
+		for ( int i = 1 ; i <= gpGlobals->maxClients ; i++ )
+		{
+			CCSPlayer *pPlayer= ToCSPlayer( UTIL_PlayerByIndex( i ) );
+			if (pPlayer && pAttacker->IsPlayerDominated(pPlayer->entindex()))
+			{
+				numConcurrentDominations++;
+			}
+		}
+		if (numConcurrentDominations >= AchievementConsts::ConcurrentDominations_MinDominations)
+		{
+			pAttacker->AwardAchievement(CSConcurrentDominations);
+		}
 
-        
-        // record stats
-        Event_PlayerDominatedOther( pAttacker, pVictim );
-    }
-    else if ( pVictim->IsPlayerDominated( pAttacker->entindex() ) )
-    {
-        // the killer killed someone who was dominating him, gains revenge        
-        // set victim to no longer be dominating the killer
 
-        pVictim->SetPlayerDominated( pAttacker, false );
-        // record stats
-        Event_PlayerRevenge( pAttacker );
-    }
+		// record stats
+		Event_PlayerDominatedOther( pAttacker, pVictim );
+	}
+	else if ( pVictim->IsPlayerDominated( pAttacker->entindex() ) )
+	{
+		// the killer killed someone who was dominating him, gains revenge
+		// set victim to no longer be dominating the killer
+
+		pVictim->SetPlayerDominated( pAttacker, false );
+		// record stats
+		Event_PlayerRevenge( pAttacker );
+	}
 }
 
 void CCSGameStats::Event_PlayerDominatedOther( CCSPlayer *pAttacker, CCSPlayer* pVictim )
 {
-    IncrementStat( pAttacker, CSSTAT_DOMINATIONS, 1 );
+	IncrementStat( pAttacker, CSSTAT_DOMINATIONS, 1 );
 }
 
 void CCSGameStats::Event_PlayerRevenge( CCSPlayer *pAttacker )
 {
-    IncrementStat( pAttacker, CSSTAT_REVENGES, 1 );
+	IncrementStat( pAttacker, CSSTAT_REVENGES, 1 );
 }
 
 void CCSGameStats::Event_PlayerAvengedTeammate( CCSPlayer* pAttacker, CCSPlayer* pAvengedPlayer )
 {
-    if (pAttacker && pAvengedPlayer)
-    {
-        IGameEvent *event = gameeventmanager->CreateEvent( "player_avenged_teammate" );
+	if (pAttacker && pAvengedPlayer)
+	{
+		IGameEvent *event = gameeventmanager->CreateEvent( "player_avenged_teammate" );
 
-        if ( event )
-        {
-            event->SetInt( "avenger_id", pAttacker->GetUserID() );
-            event->SetInt( "avenged_player_id", pAvengedPlayer->GetUserID() );
-            gameeventmanager->FireEvent( event );
-        }
-    }
+		if ( event )
+		{
+			event->SetInt( "avenger_id", pAttacker->GetUserID() );
+			event->SetInt( "avenged_player_id", pAvengedPlayer->GetUserID() );
+			gameeventmanager->FireEvent( event );
+		}
+	}
 }
 
 void CCSGameStats::Event_LevelInit()

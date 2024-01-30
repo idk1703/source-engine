@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,7 +18,7 @@
 class CBaseEntity;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 abstract_class IEntityDataInstantiator
 {
@@ -31,20 +31,20 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 template <class T>
 class CEntityDataInstantiator : public IEntityDataInstantiator
 {
 public:
-	CEntityDataInstantiator() : 
+	CEntityDataInstantiator() :
 		m_HashTable( 64, 0, 0, CompareFunc, KeyFunc )
 	{
 	}
 
 	virtual void *GetDataObject( const CBaseEntity *instance )
 	{
-		UtlHashHandle_t handle; 
+		UtlHashHandle_t handle;
 		HashEntry entry;
 		entry.key = instance;
 		handle = m_HashTable.Find( entry );
@@ -59,7 +59,7 @@ public:
 
 	virtual void *CreateDataObject( const CBaseEntity *instance )
 	{
-		UtlHashHandle_t handle; 
+		UtlHashHandle_t handle;
 		HashEntry entry;
 		entry.key = instance;
 		handle = m_HashTable.Find( entry );
@@ -70,7 +70,7 @@ public:
 			handle = m_HashTable.Insert( entry );
 			Assert( handle != m_HashTable.InvalidHandle() );
 			m_HashTable[ handle ].data = new T;
-	
+
 			// FIXME: We'll have to remove this if any objects we instance have vtables!!!
 			Q_memset( m_HashTable[ handle ].data, 0, sizeof( T ) );
 		}
@@ -80,7 +80,7 @@ public:
 
 	virtual void DestroyDataObject( const CBaseEntity *instance )
 	{
-		UtlHashHandle_t handle; 
+		UtlHashHandle_t handle;
 		HashEntry entry;
 		entry.key = instance;
 		handle = m_HashTable.Find( entry );

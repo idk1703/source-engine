@@ -24,7 +24,7 @@ float4 main( PS_INPUT i ) : COLOR
 {
 	float4 fbSample = tex2D( FBSampler, i.texCoord );
 	float4 bloom=tex2D(BloomSampler,i.bloomTexCoord);
-	
+
 	float2 xofs=2*(i.texCoord-float2(0.5,0.5));
 	float dist=(1.0/2.0)*(xofs.x*xofs.x+xofs.y*xofs.y);
 	float vig=pow(1-dist,settings2.z);

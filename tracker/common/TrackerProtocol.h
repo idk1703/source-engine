@@ -48,7 +48,7 @@ enum TrackerMsgID_t
 
 	// Client -> server messages
 	TCLS_BASE = 2000,
-	
+
 	TCLS_LOGIN,			// login message
 	TCLS_RESPONSE,		// response to login challenge
 	TCLS_PING,
@@ -68,7 +68,7 @@ enum TrackerMsgID_t
 	TCL_CHATADDUSER,
 	TCL_CHATUSERLEAVE,
 	TCL_TYPINGMESSAGE,
-    TCL_FRIENDNETMESSAGE,
+	TCL_FRIENDNETMESSAGE,
 
 	// server -> server messages
 	TSV_BASE = 4000,

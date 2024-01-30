@@ -113,12 +113,12 @@ void GenerateStrips(const unsigned short* in_indices, const unsigned int in_numI
 //  of acceptable values for indices in your primitive groups.
 // remappedGroups: array of remapped PrimitiveGroups
 //
-// Note that, according to the remapping handed back to you, you must reorder your 
+// Note that, according to the remapping handed back to you, you must reorder your
 //  vertex buffer.
 //
 // Credit goes to the MS Xbox crew for the idea for this interface.
 //
-void RemapIndices(const PrimitiveGroup* in_primGroups, const unsigned short numGroups, 
+void RemapIndices(const PrimitiveGroup* in_primGroups, const unsigned short numGroups,
 				  const unsigned short numVerts, PrimitiveGroup** remappedGroups);
 
 #endif

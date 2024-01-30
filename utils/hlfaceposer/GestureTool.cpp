@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -63,7 +63,7 @@ GestureTool::GestureTool( mxWindow *parent )
 	m_nClickedY			= 0;
 
 	m_hPrevCursor		= 0;
-	
+
 	m_nStartX			= 0;
 	m_nStartY			= 0;
 
@@ -126,7 +126,7 @@ void GestureTool::SetEvent( CChoreoEvent *event )
 	{
 		m_nFocusEventGlobalID = event->GetGlobalID();
 	}
-	
+
 	if ( event )
 	{
 		m_flLastDuration = event->GetDuration();
@@ -143,7 +143,7 @@ void GestureTool::SetEvent( CChoreoEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CChoreoEvent *GestureTool::GetSafeEvent( void )
 {
@@ -175,8 +175,8 @@ CChoreoEvent *GestureTool::GetSafeEvent( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rcHandle - 
+// Purpose:
+// Input  : rcHandle -
 //-----------------------------------------------------------------------------
 void GestureTool::GetScrubHandleRect( RECT& rcHandle, float scrub, bool clipped )
 {
@@ -217,9 +217,9 @@ void GestureTool::GetScrubHandleReferenceRect( RECT& rcHandle, float scrub, bool
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			rcHandle - 
+// Purpose:
+// Input  : drawHelper -
+//			rcHandle -
 //-----------------------------------------------------------------------------
 void GestureTool::DrawScrubHandle( CChoreoWidgetDrawHelper& drawHelper, RECT& rcHandle, float scrub, bool reference )
 {
@@ -234,7 +234,7 @@ void GestureTool::DrawScrubHandle( CChoreoWidgetDrawHelper& drawHelper, RECT& rc
 
 	drawHelper.DrawFilledRect( br, rcHandle );
 
-	// 
+	//
 	char sz[ 32 ];
 	sprintf( sz, "%.3f", scrub );
 
@@ -266,8 +266,8 @@ void GestureTool::DrawScrubHandle( CChoreoWidgetDrawHelper& drawHelper, RECT& rc
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool GestureTool::IsMouseOverScrubHandle( mxEvent *event )
@@ -288,7 +288,7 @@ bool GestureTool::IsMouseOverScrubHandle( mxEvent *event )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool GestureTool::IsProcessing( void )
@@ -334,8 +334,8 @@ void GestureTool::SetScrubTargetTime( float t )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dt - 
+// Purpose:
+// Input  : dt -
 //-----------------------------------------------------------------------------
 void GestureTool::Think( float dt )
 {
@@ -348,8 +348,8 @@ void GestureTool::Think( float dt )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dt - 
+// Purpose:
+// Input  : dt -
 //-----------------------------------------------------------------------------
 void GestureTool::ScrubThink( float dt, bool scrubbing )
 {
@@ -387,7 +387,7 @@ void GestureTool::ScrubThink( float dt, bool scrubbing )
 			SetScrubTime( m_flScrub - maxmove );
 		}
 	}
-	
+
 	if ( scrubbing )
 	{
 		g_pMatSysWindow->Frame();
@@ -407,7 +407,7 @@ void GestureTool::DrawScrubHandles()
 
 	CChoreoWidgetDrawHelper drawHelper( this, rcTray );
 	DrawScrubHandle( drawHelper, rcHandle, m_flScrub, false );
-	
+
 	CChoreoEvent *ev = GetSafeEvent();
 	if ( ev && ev->GetDuration() > 0.0f )
 	{
@@ -459,9 +459,9 @@ void GestureTool::redraw()
 		}
 
 		rcText.left += 60;
-		
+
 		// Found it, write out description
-		// 
+		//
 		float seqduration;
 		ev->GetGestureSequenceDuration( seqduration );
 
@@ -542,7 +542,7 @@ void GestureTool::redraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void GestureTool::ShowContextMenu( mxEvent *event, bool include_track_menus )
 {
@@ -557,7 +557,7 @@ void GestureTool::ShowContextMenu( mxEvent *event, bool include_track_menus )
 		{
 			pop->add( va( "Undo %s", g_pChoreoView->GetUndoDescription() ), IDC_UNDO_GT );
 		}
-		
+
 		if ( current <= total - 1 )
 		{
 			pop->add( va( "Redo %s", g_pChoreoView->GetRedoDescription() ), IDC_REDO_GT );
@@ -587,7 +587,7 @@ void GestureTool::GetWorkspaceLeftRight( int& left, int& right )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void GestureTool::DrawFocusRect( void )
 {
@@ -620,10 +620,10 @@ float GestureTool::GetTimeForClickedPos( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dragtype - 
-//			startx - 
-//			cursor - 
+// Purpose:
+// Input  : dragtype -
+//			startx -
+//			cursor -
 //-----------------------------------------------------------------------------
 void GestureTool::StartDragging( int dragtype, int startx, int starty, HCURSOR cursor )
 {
@@ -632,7 +632,7 @@ void GestureTool::StartDragging( int dragtype, int startx, int starty, HCURSOR c
 	m_nLastX	= startx;
 	m_nStartY	= starty;
 	m_nLastY	= starty;
-	
+
 	if ( m_hPrevCursor )
 	{
 		SetCursor( m_hPrevCursor );
@@ -676,7 +676,7 @@ void GestureTool::StartDragging( int dragtype, int startx, int starty, HCURSOR c
 	{
 		AddFocusRect( rcStart );
 	}
-	
+
 	DrawFocusRect();
 }
 
@@ -811,7 +811,7 @@ int	GestureTool::handleEvent( mxEvent *event )
 				ShowContextMenu( event, false );
 				return iret;
 			}
-		
+
 			if ( m_nDragType == DRAGTYPE_NONE )
 			{
 				if ( IsMouseOverScrubHandle( event ) )
@@ -918,7 +918,7 @@ int	GestureTool::handleEvent( mxEvent *event )
 
 						redraw();
 					}
-			
+
 				}
 				break;
 			}
@@ -1149,7 +1149,7 @@ void GestureTool::ForceScrubPosition( float t )
 {
 	m_flScrub = t;
 	m_flScrubTarget = t;
-	
+
 	CChoreoEvent *e = GetSafeEvent();
 	if ( e && e->GetDuration() )
 	{
@@ -1177,8 +1177,8 @@ void GestureTool::GetMouseOverPos( int &x, int& y )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rcPos - 
+// Purpose:
+// Input  : rcPos -
 //-----------------------------------------------------------------------------
 void GestureTool::GetMouseOverPosRect( RECT& rcPos )
 {
@@ -1189,9 +1189,9 @@ void GestureTool::GetMouseOverPosRect( RECT& rcPos )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			rcPos - 
+// Purpose:
+// Input  : drawHelper -
+//			rcPos -
 //-----------------------------------------------------------------------------
 void GestureTool::DrawMouseOverPos( CChoreoWidgetDrawHelper& drawHelper, RECT& rcPos )
 {
@@ -1205,7 +1205,7 @@ void GestureTool::DrawMouseOverPos( CChoreoWidgetDrawHelper& drawHelper, RECT& r
 	float snapped = FacePoser_SnapTime( t );
 
 	// Found it, write out description
-	// 
+	//
 	char sz[ 128 ];
 	if ( t != snapped )
 	{
@@ -1225,7 +1225,7 @@ void GestureTool::DrawMouseOverPos( CChoreoWidgetDrawHelper& drawHelper, RECT& r
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void GestureTool::DrawMouseOverPos()
 {
@@ -1255,10 +1255,10 @@ void GestureTool::AddFocusRect( RECT& rc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &rcClient - 
-//			tagtype - 
-//			rcTray - 
+// Purpose:
+// Input  : &rcClient -
+//			tagtype -
+//			rcTray -
 //-----------------------------------------------------------------------------
 void GestureTool::GetTagTrayRect( RECT &rcClient, int tagtype, RECT& rcTray )
 {
@@ -1275,15 +1275,15 @@ void GestureTool::GetTagTrayRect( RECT &rcClient, int tagtype, RECT& rcTray )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rcClient - 
-//			*event - 
-//			tagtype - 
-//			*tag - 
-//			rcTag - 
+// Purpose:
+// Input  : rcClient -
+//			*event -
+//			tagtype -
+//			*tag -
+//			rcTag -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool GestureTool::GetAbsTagRect( RECT& rcClient, CChoreoEvent *event, 
+bool GestureTool::GetAbsTagRect( RECT& rcClient, CChoreoEvent *event,
 	int tagtype, CEventAbsoluteTag *tag, RECT& rcTag )
 {
 	rcTag = rcClient;
@@ -1338,7 +1338,7 @@ void GestureTool::DrawAbsoluteTags( CChoreoWidgetDrawHelper& drawHelper )
 
 		rcText.left = 2;
 
-		drawHelper.DrawColoredText( "Arial", 9, 500, RGB( 150, 150, 150 ), rcText, "%s", 
+		drawHelper.DrawColoredText( "Arial", 9, 500, RGB( 150, 150, 150 ), rcText, "%s",
 			t == 0 ? "Playback Time" : "Original Time" );
 
 		for ( int i = 0; i < event->GetNumAbsoluteTags( tagtype ); i++ )
@@ -1378,7 +1378,7 @@ void GestureTool::DrawAbsoluteTags( CChoreoWidgetDrawHelper& drawHelper )
 				continue;
 
 			drawHelper.DrawTriangleMarker( rcMark, RGB( 200, 0, 30 ), tagtype != CChoreoEvent::PLAYBACK );
-			
+
 			RECT rcText;
 			rcText = rcMark;
 
@@ -1390,18 +1390,18 @@ void GestureTool::DrawAbsoluteTags( CChoreoWidgetDrawHelper& drawHelper )
 			{
 				rcText.top += 10;
 			}
-			
+
 			char text[ 256 ];
 			sprintf( text, "%s", tag->GetName() );
 
 			int len = drawHelper.CalcTextWidth( "Arial", 9, FW_NORMAL, text );
 			rcText.left = ( rcMark.left + rcMark.right ) / 2 - len / 2;
 			rcText.right = rcText.left + len + 2;
-			
+
 			rcText.bottom = rcText.top + 10;
-			
+
 			drawHelper.DrawColoredText( "Arial", 9, FW_NORMAL, RGB( 200, 100, 100 ), rcText, text );
-			
+
 			if ( tagtype == CChoreoEvent::PLAYBACK )
 			{
 				rcText.top -= 10;
@@ -1410,27 +1410,27 @@ void GestureTool::DrawAbsoluteTags( CChoreoWidgetDrawHelper& drawHelper )
 			{
 				rcText.top += 10;
 			}
-			
+
 			// sprintf( text, "%.3f", tag->GetPercentage() * event->GetDuration() + event->GetStartTime() );
 			sprintf( text, "%.3f", tag->GetPercentage() );
 
 			len = drawHelper.CalcTextWidth( "Arial", 9, FW_NORMAL, text );
 			rcText.left = ( rcMark.left + rcMark.right ) / 2 - len / 2;
 			rcText.right = rcText.left + len + 2;
-			
+
 			rcText.bottom = rcText.top + 10;
-			
+
 			drawHelper.DrawColoredText( "Arial", 9, FW_NORMAL, RGB( 200, 100, 100 ), rcText, text );
-		}	
+		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			rc - 
-//			left - 
-//			right - 
+// Purpose:
+// Input  : drawHelper -
+//			rc -
+//			left -
+//			right -
 //-----------------------------------------------------------------------------
 void GestureTool::DrawTimeLine( CChoreoWidgetDrawHelper& drawHelper, RECT& rc, float left, float right )
 {
@@ -1451,7 +1451,7 @@ void GestureTool::DrawTimeLine( CChoreoWidgetDrawHelper& drawHelper, RECT& rc, f
 
 			if ( f != left )
 			{
-				drawHelper.DrawColoredLine( RGB( 220, 220, 240 ), PS_DOT,  1, 
+				drawHelper.DrawColoredLine( RGB( 220, 220, 240 ), PS_DOT,  1,
 					rcLabel.left, rc.top, rcLabel.left, h2() );
 			}
 
@@ -1478,9 +1478,9 @@ void GestureTool::DrawTimeLine( CChoreoWidgetDrawHelper& drawHelper, RECT& rc, f
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			my - 
+// Purpose:
+// Input  : mx -
+//			my -
 // Output : CFlexTimingTag
 //-----------------------------------------------------------------------------
 CEventAbsoluteTag *GestureTool::IsMouseOverTag( int mx, int my )
@@ -1525,9 +1525,9 @@ CEventAbsoluteTag *GestureTool::IsMouseOverTag( int mx, int my )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			my - 
+// Purpose:
+// Input  : mx -
+//			my -
 // Output : int
 //-----------------------------------------------------------------------------
 int GestureTool::GetTagTypeForMouse( int mx, int my )
@@ -1583,7 +1583,7 @@ void GestureTool::OnInsertTag( void )
 		Con_ErrorPrintf( "Timing Tag Name:  No name entered!\n" );
 		return;
 	}
-	
+
 	// Convert click to frac
 	float t = GetTimeValueForMouse( m_nClickedX ) / event->GetDuration();
 	float tshifted = event->GetOriginalPercentageFromPlaybackPercentage( t );
@@ -1629,7 +1629,7 @@ void GestureTool::OnRevert()
 
 		playback->SetPercentage( original->GetPercentage() );
 	}
-		
+
 
 	g_pChoreoView->PushRedo( "Revert Gesture Tags" );
 
@@ -1646,7 +1646,7 @@ void GestureTool::OnDeleteTag( void )
 	CEventAbsoluteTag *tag = IsMouseOverTag( m_nClickedX, m_nClickedY );
 	if ( !tag )
 		return;
-	
+
 	g_pChoreoView->SetDirty( true );
 
 	g_pChoreoView->PushUndo( "Remove Gesture Tag" );
@@ -1711,9 +1711,9 @@ void GestureTool::DrawRelativeTags( CChoreoWidgetDrawHelper& drawHelper, RECT& r
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			rc - 
+// Purpose:
+// Input  : drawHelper -
+//			rc -
 //-----------------------------------------------------------------------------
 void GestureTool::DrawRelativeTagsForEvent( CChoreoWidgetDrawHelper& drawHelper, RECT& rc, CChoreoEvent *gesture, CChoreoEvent *event, float starttime, float endtime )
 {
@@ -1728,7 +1728,7 @@ void GestureTool::DrawRelativeTagsForEvent( CChoreoWidgetDrawHelper& drawHelper,
 		if ( !tag )
 			continue;
 
-		// 
+		//
 		float tagtime = ( event->GetStartTime() + tag->GetPercentage() * event->GetDuration() ) - gesture->GetStartTime();
 		if ( tagtime < starttime || tagtime > endtime )
 			continue;
@@ -1755,7 +1755,7 @@ void GestureTool::DrawRelativeTagsForEvent( CChoreoWidgetDrawHelper& drawHelper,
 		rcText = rc;
 		rcText.bottom = rc.bottom - 10;
 		rcText.top = rcText.bottom - 10;
-	
+
 		int len = drawHelper.CalcTextWidth( "Arial", 9, FW_NORMAL, tag->GetName() );
 		rcText.left = left - len / 2;
 		rcText.right = rcText.left + len + 2;
@@ -1765,7 +1765,7 @@ void GestureTool::DrawRelativeTagsForEvent( CChoreoWidgetDrawHelper& drawHelper,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int GestureTool::ComputeHPixelsNeeded( void )
@@ -1783,7 +1783,7 @@ int GestureTool::ComputeHPixelsNeeded( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void GestureTool::RepositionHSlider( void )
 {
@@ -1810,7 +1810,7 @@ void GestureTool::RepositionHSlider( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float GestureTool::GetPixelsPerSecond( void )
@@ -1820,8 +1820,8 @@ float GestureTool::GetPixelsPerSecond( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
+// Purpose:
+// Input  : x -
 //-----------------------------------------------------------------------------
 void GestureTool::MoveTimeSliderToPos( int x )
 {
@@ -1832,7 +1832,7 @@ void GestureTool::MoveTimeSliderToPos( int x )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void GestureTool::InvalidateLayout( void )
 {
@@ -1849,9 +1849,9 @@ void GestureTool::InvalidateLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : st - 
-//			ed - 
+// Purpose:
+// Input  : st -
+//			ed -
 //-----------------------------------------------------------------------------
 void GestureTool::GetStartAndEndTime( float& st, float& ed )
 {
@@ -1860,8 +1860,8 @@ void GestureTool::GetStartAndEndTime( float& st, float& ed )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : float
 //-----------------------------------------------------------------------------
 float GestureTool::GetEventEndTime()
@@ -1874,9 +1874,9 @@ float GestureTool::GetEventEndTime()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : time - 
-//			*clipped - 
+// Purpose:
+// Input  : time -
+//			*clipped -
 // Output : int
 //-----------------------------------------------------------------------------
 int GestureTool::GetPixelForTimeValue( float time, bool *clipped /*=NULL*/ )
@@ -1903,9 +1903,9 @@ int GestureTool::GetPixelForTimeValue( float time, bool *clipped /*=NULL*/ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			clip - 
+// Purpose:
+// Input  : mx -
+//			clip -
 // Output : float
 //-----------------------------------------------------------------------------
 float GestureTool::GetTimeValueForMouse( int mx, bool clip /*=false*/)

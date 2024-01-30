@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ extern int Training_GetCompletedTrainingClasses();
 extern void Training_MarkClassComplete( int iClass, int iStage );
 
 //-----------------------------------------------------------------------------
-// Purpose:  
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFHudTraining : public vgui::EditablePanel, public CGameEventListener
 {

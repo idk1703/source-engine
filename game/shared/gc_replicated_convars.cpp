@@ -62,4 +62,3 @@ public:
 };
 
 GC_REG_JOB( CGCClient, CGCUpdateConVar, "CGCUpdateConVar", k_EMsgGCConVarUpdated, GCSDK::k_EServerTypeGCClient );
-

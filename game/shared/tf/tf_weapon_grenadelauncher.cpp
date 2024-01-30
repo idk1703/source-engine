@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "cbase.h"
@@ -30,9 +30,9 @@ ConVar tf_double_donk_window( "tf_double_donk_window", "0.5", FCVAR_CHEAT | FCVA
 
 // X is time as a fraction of cProceduralBarrelRotationTime, which is in seconds.
 // Y is rotation in degrees
-// Z is slope at Y. 
+// Z is slope at Y.
 // These are hermite spline control points that match maya.
-const Vector cProceduralBarrelRotationAnimationPoints[] = 
+const Vector cProceduralBarrelRotationAnimationPoints[] =
 {
 	Vector( 0,			0,			0 ),
 	Vector( 0.7519f,	63.546f,	0 ),
@@ -52,12 +52,12 @@ IMPLEMENT_NETWORKCLASS_ALIASED( TFGrenadeLauncher, DT_WeaponGrenadeLauncher )
 BEGIN_NETWORK_TABLE( CTFGrenadeLauncher, DT_WeaponGrenadeLauncher )
 #ifdef CLIENT_DLL
 	RecvPropFloat( RECVINFO( m_flDetonateTime ) ),
-	RecvPropInt( RECVINFO( m_iCurrentTube ) ),	
-	RecvPropInt( RECVINFO( m_iGoalTube ) ), 
+	RecvPropInt( RECVINFO( m_iCurrentTube ) ),
+	RecvPropInt( RECVINFO( m_iGoalTube ) ),
 #else
 	SendPropFloat( SENDINFO( m_flDetonateTime ) ),
-	SendPropInt( SENDINFO( m_iCurrentTube ) ),	
-	SendPropInt( SENDINFO( m_iGoalTube ) ), 
+	SendPropInt( SENDINFO( m_iCurrentTube ) ),
+	SendPropInt( SENDINFO( m_iGoalTube ) ),
 #endif
 END_NETWORK_TABLE()
 
@@ -92,8 +92,8 @@ END_DATADESC()
 //
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 CTFGrenadeLauncher::CTFGrenadeLauncher()
 {
@@ -106,15 +106,15 @@ CTFGrenadeLauncher::CTFGrenadeLauncher()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 CTFGrenadeLauncher::~CTFGrenadeLauncher()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrenadeLauncher::Spawn( void )
 {
@@ -143,11 +143,11 @@ bool CTFGrenadeLauncher::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFGrenadeLauncher::GetMaxClip1( void ) const
 {
-#ifdef _X360 
+#ifdef _X360
 	return TF_GRENADE_LAUNCHER_XBOX_CLIP;
 #endif
 
@@ -155,7 +155,7 @@ int CTFGrenadeLauncher::GetMaxClip1( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFGrenadeLauncher::GetDefaultClip1( void ) const
 {
@@ -167,7 +167,7 @@ int CTFGrenadeLauncher::GetDefaultClip1( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrenadeLauncher::PrimaryAttack( void )
 {
@@ -211,7 +211,7 @@ void CTFGrenadeLauncher::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrenadeLauncher::ItemPostFrame( void )
 {
@@ -239,7 +239,7 @@ void CTFGrenadeLauncher::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrenadeLauncher::Misfire( void )
 {
@@ -249,7 +249,7 @@ void CTFGrenadeLauncher::Misfire( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrenadeLauncher::WeaponIdle( void )
 {
@@ -257,7 +257,7 @@ void CTFGrenadeLauncher::WeaponIdle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrenadeLauncher::FireProjectileInternal( CTFPlayer* pTFPlayer )
 {
@@ -269,7 +269,7 @@ void CTFGrenadeLauncher::FireProjectileInternal( CTFPlayer* pTFPlayer )
 		{
 			pProjectile->m_bWallShatter = true;
 		}
-		
+
 		if ( m_flDetonateTime > 0.f )
 		{
 			float flDetonateTimeLength = ( gpGlobals->curtime - GetChargeBeginTime() );
@@ -297,7 +297,7 @@ void CTFGrenadeLauncher::FireProjectileInternal( CTFPlayer* pTFPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrenadeLauncher::WeaponReset( void )
 {
@@ -311,7 +311,7 @@ void CTFGrenadeLauncher::WeaponReset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFGrenadeLauncher::SendWeaponAnim( int iActivity )
 {
@@ -320,7 +320,7 @@ bool CTFGrenadeLauncher::SendWeaponAnim( int iActivity )
 	{
 		m_iGoalTube = ( m_iCurrentTube + 1 ) % TF_TUBE_COUNT;
 		m_flBarrelRotateBeginTime = gpGlobals->curtime;
-	} 
+	}
 
 	// When we start firing, play the startup firing anim first
 	if ( iActivity == ACT_VM_PRIMARYATTACK )
@@ -338,7 +338,7 @@ bool CTFGrenadeLauncher::SendWeaponAnim( int iActivity )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrenadeLauncher::PostFire()
 {
@@ -354,7 +354,7 @@ void CTFGrenadeLauncher::PostFire()
 	{
 		m_iReloadMode.Set( TF_RELOAD_START );
 	}
-	
+
 #ifndef CLIENT_DLL
 	if ( CanCharge() )
 	{
@@ -372,7 +372,7 @@ void CTFGrenadeLauncher::PostFire()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrenadeLauncher::LaunchGrenade( void )
 {
@@ -449,7 +449,7 @@ bool CTFGrenadeLauncher::IsDoubleDonk( const CBaseEntity* pVictim ) const
 	if( GetWeaponID() != TF_WEAPON_CANNON )
 		return false;
 
-	// Check each donk victim to see if we've donked them recently enough to 
+	// Check each donk victim to see if we've donked them recently enough to
 	// score a "double-donk"
 	FOR_EACH_VEC( m_vecDonkVictims, i )
 	{
@@ -507,7 +507,7 @@ void CTFGrenadeLauncher::FireFullClipAtOnce( void )
 {
 	m_iWeaponMode = TF_WEAPON_PRIMARY_MODE;
 
-	LaunchGrenade();	
+	LaunchGrenade();
 }
 
 
@@ -589,7 +589,7 @@ void CTFGrenadeLauncher::StopChargeEffects()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStudioHdr *CTFGrenadeLauncher::OnNewModel( void )
 {
@@ -601,7 +601,7 @@ CStudioHdr *CTFGrenadeLauncher::OnNewModel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrenadeLauncher::StandardBlendingRules( CStudioHdr *hdr, Vector pos[], Quaternion q[], float currentTime, int boneMask )
 {
@@ -623,7 +623,7 @@ void CTFGrenadeLauncher::OnDataChanged( DataUpdateType_t type )
 {
 	if ( m_bCurrentAndGoalTubeEqual && m_iCurrentTube != m_iGoalTube )
 		m_flBarrelRotateBeginTime = gpGlobals->curtime;
-	
+
 	m_bCurrentAndGoalTubeEqual = ( m_iCurrentTube == m_iGoalTube );
 
 	BaseClass::OnDataChanged( type );
@@ -648,9 +648,9 @@ void CTFGrenadeLauncher::UpdateBarrelMovement( void )
 			const Vector* pFirst = NULL;
 			const Vector* pSecond  = NULL;
 
-			for ( int i = 1; i < ARRAYSIZE( cProceduralBarrelRotationAnimationPoints ); ++i ) 
+			for ( int i = 1; i < ARRAYSIZE( cProceduralBarrelRotationAnimationPoints ); ++i )
 			{
-				// Need to be increasing in time, or we won't find the right span. 
+				// Need to be increasing in time, or we won't find the right span.
 				Assert( cProceduralBarrelRotationAnimationPoints[ i - 1 ].x < cProceduralBarrelRotationAnimationPoints[ i ].x );
 
 				if ( tVal <= cProceduralBarrelRotationAnimationPoints[ i ].x )
@@ -700,7 +700,7 @@ void CTFGrenadeLauncher::ViewModelAttachmentBlending( CStudioHdr *hdr, Vector po
 #endif //CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // won't be called for w_ version of the model, so this isn't getting updated twice
 //-----------------------------------------------------------------------------
 void CTFGrenadeLauncher::ItemPreFrame( void )

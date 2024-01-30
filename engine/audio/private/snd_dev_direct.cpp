@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -124,7 +124,7 @@ private:
 	int			m_deviceSampleCount;				// count of mono samples in output buffer
 	int			m_deviceDmaSpeed;					// samples per second per output buffer
 	int			m_bufferSizeBytes;					// size of a single hardware output buffer, in bytes
-	
+
 	DWORD		m_outputBufferStartOffset;						// output buffer playback starting byte offset
 	HINSTANCE	m_hInstDS;
 	bool		m_isInterleaved;
@@ -223,8 +223,8 @@ void CAudioDirectSound::Shutdown( void )
 // the output units are dependant on the device channels
 // so the ouput units for a 2 channel device are as 16 bit LR pairs
 // and the output unit for a 1 channel device are as 16 bit mono samples.
-// take into account the original start position within the buffer, and 
-// calculate difference between current position (with buffer wrap) and 
+// take into account the original start position within the buffer, and
+// calculate difference between current position (with buffer wrap) and
 // start position.
 int	CAudioDirectSound::GetOutputPosition( void )
 {
@@ -233,7 +233,7 @@ int	CAudioDirectSound::GetOutputPosition( void )
 	DWORD dwCurrent;
 
 	// get size in bytes of output buffer
-	const int size_bytes = m_bufferSizeBytes; 
+	const int size_bytes = m_bufferSizeBytes;
 	if ( IsUsingBufferPerSpeaker() )
 	{
 		// mono output buffers
@@ -242,10 +242,10 @@ int	CAudioDirectSound::GetOutputPosition( void )
 
 		start = (int) m_outputBufferStartOffset;
 		current = (int) dwCurrent;
-	} 
+	}
 	else
 	{
-		// multi-channel interleavd output buffer 
+		// multi-channel interleavd output buffer
 		// get byte offset of playback cursor in output buffer
 		pDSBuf->GetCurrentPosition(&dwCurrent, NULL);
 
@@ -277,11 +277,11 @@ void CAudioDirectSound::Pause( void )
 		pDSBuf->Stop();
 	}
 
-	if ( pDSBufFL ) pDSBufFL->Stop(); 
-	if ( pDSBufFR ) pDSBufFR->Stop(); 
-	if ( pDSBufRL ) pDSBufRL->Stop(); 
-	if ( pDSBufRR ) pDSBufRR->Stop(); 
-	if ( pDSBufFC ) pDSBufFC->Stop(); 
+	if ( pDSBufFL ) pDSBufFL->Stop();
+	if ( pDSBufFR ) pDSBufFR->Stop();
+	if ( pDSBufRL ) pDSBufRL->Stop();
+	if ( pDSBufRR ) pDSBufRR->Stop();
+	if ( pDSBufFC ) pDSBufFC->Stop();
 }
 
 
@@ -290,11 +290,11 @@ void CAudioDirectSound::UnPause( void )
 	if (pDSBuf)
 		pDSBuf->Play(0, 0, DSBPLAY_LOOPING);
 
-	if (pDSBufFL) pDSBufFL->Play(0, 0, DSBPLAY_LOOPING); 
-	if (pDSBufFR) pDSBufFR->Play(0, 0, DSBPLAY_LOOPING); 
-	if (pDSBufRL) pDSBufRL->Play(0, 0, DSBPLAY_LOOPING); 
-	if (pDSBufRR) pDSBufRR->Play( 0, 0, DSBPLAY_LOOPING); 
-	if (pDSBufFC) pDSBufFC->Play( 0, 0, DSBPLAY_LOOPING); 
+	if (pDSBufFL) pDSBufFL->Play(0, 0, DSBPLAY_LOOPING);
+	if (pDSBufFR) pDSBufFR->Play(0, 0, DSBPLAY_LOOPING);
+	if (pDSBufRL) pDSBufRL->Play(0, 0, DSBPLAY_LOOPING);
+	if (pDSBufRR) pDSBufRR->Play( 0, 0, DSBPLAY_LOOPING);
+	if (pDSBufFC) pDSBufFC->Play( 0, 0, DSBPLAY_LOOPING);
 }
 
 
@@ -339,7 +339,7 @@ int CAudioDirectSound::PaintBegin( float mixAheadTime, int soundtime, int lpaint
 	//  paintedtime - total full samples that have been mixed at speed
 	//  endtime - target for full samples in mixahead buffer at speed
 	//  samps - size of output buffer in full samples
-	
+
 	int mixaheadtime = mixAheadTime * DeviceDmaSpeed();
 	int endtime = soundtime + mixaheadtime;
 
@@ -349,7 +349,7 @@ int CAudioDirectSound::PaintBegin( float mixAheadTime, int soundtime, int lpaint
 	uint nSamples = endtime - lpaintedtime;
 	if ( nSamples & 0x3 )
 	{
-		// The difference between endtime and painted time should align on 
+		// The difference between endtime and painted time should align on
 		// boundaries of 4 samples.  This is important when upsampling from 11khz -> 44khz.
 		nSamples += (4 - (nSamples & 3));
 	}
@@ -370,41 +370,41 @@ int CAudioDirectSound::PaintBegin( float mixAheadTime, int soundtime, int lpaint
 	DWORD	dwStatus;
 
 	// If using surround, there are 4 or 5 different buffers being used and the pDSBuf is NULL.
-	if ( IsUsingBufferPerSpeaker() ) 
+	if ( IsUsingBufferPerSpeaker() )
 	{
 		if (pDSBufFL->GetStatus(&dwStatus) != DS_OK)
 			Msg ("Couldn't get SURROUND FL sound buffer status\n");
-		
+
 		if (dwStatus & DSBSTATUS_BUFFERLOST)
 			pDSBufFL->Restore();
-		
+
 		if (!(dwStatus & DSBSTATUS_PLAYING))
 			pDSBufFL->Play(0, 0, DSBPLAY_LOOPING);
 
 		if (pDSBufFR->GetStatus(&dwStatus) != DS_OK)
 			Msg ("Couldn't get SURROUND FR sound buffer status\n");
-		
+
 		if (dwStatus & DSBSTATUS_BUFFERLOST)
 			pDSBufFR->Restore();
-		
+
 		if (!(dwStatus & DSBSTATUS_PLAYING))
 			pDSBufFR->Play(0, 0, DSBPLAY_LOOPING);
 
 		if (pDSBufRL->GetStatus(&dwStatus) != DS_OK)
 			Msg ("Couldn't get SURROUND RL sound buffer status\n");
-		
+
 		if (dwStatus & DSBSTATUS_BUFFERLOST)
 			pDSBufRL->Restore();
-		
+
 		if (!(dwStatus & DSBSTATUS_PLAYING))
 			pDSBufRL->Play(0, 0, DSBPLAY_LOOPING);
 
 		if (pDSBufRR->GetStatus(&dwStatus) != DS_OK)
 			Msg ("Couldn't get SURROUND RR sound buffer status\n");
-		
+
 		if (dwStatus & DSBSTATUS_BUFFERLOST)
 			pDSBufRR->Restore();
-		
+
 		if (!(dwStatus & DSBSTATUS_PLAYING))
 			pDSBufRR->Play(0, 0, DSBPLAY_LOOPING);
 
@@ -412,10 +412,10 @@ int CAudioDirectSound::PaintBegin( float mixAheadTime, int soundtime, int lpaint
 		{
 			if (pDSBufFC->GetStatus(&dwStatus) != DS_OK)
 				Msg ("Couldn't get SURROUND FC sound buffer status\n");
-			
+
 			if (dwStatus & DSBSTATUS_BUFFERLOST)
 				pDSBufFC->Restore();
-			
+
 			if (!(dwStatus & DSBSTATUS_PLAYING))
 				pDSBufFC->Play(0, 0, DSBPLAY_LOOPING);
 		}
@@ -570,7 +570,7 @@ void CAudioDirectSound::ClearBuffer( void )
 
 		return;
 	}
-		
+
 	if ( !pDSBuf )
 		return;
 
@@ -618,47 +618,47 @@ bool CAudioDirectSound::SNDDMA_InitInterleaved( LPDIRECTSOUND lpDS, WAVEFORMATEX
 {
 	WAVEFORMATEXTENSIBLE    wfx = { 0 } ;     // DirectSoundBuffer wave format (extensible)
 
-    // set the channel mask and number of channels based on the command line parameter
-    if(channelCount == 2)
-    {
-        wfx.Format.nChannels = 2;
-        wfx.dwChannelMask = KSAUDIO_SPEAKER_STEREO;   // SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT;
-    }
-    else if(channelCount == 4)
-    {
-        wfx.Format.nChannels = 4;
-        wfx.dwChannelMask = KSAUDIO_SPEAKER_QUAD;     // SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_BACK_LEFT | SPEAKER_BACK_RIGHT;
-    }
-    else if(channelCount == 6)
-    {
-        wfx.Format.nChannels = 6;
-        wfx.dwChannelMask = KSAUDIO_SPEAKER_5POINT1;  // SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_LOW_FREQUENCY | SPEAKER_BACK_LEFT | SPEAKER_BACK_RIGHT;
-    }
-    else
-    {
-        return false;
-    }
+	// set the channel mask and number of channels based on the command line parameter
+	if(channelCount == 2)
+	{
+		wfx.Format.nChannels = 2;
+		wfx.dwChannelMask = KSAUDIO_SPEAKER_STEREO;   // SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT;
+	}
+	else if(channelCount == 4)
+	{
+		wfx.Format.nChannels = 4;
+		wfx.dwChannelMask = KSAUDIO_SPEAKER_QUAD;     // SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_BACK_LEFT | SPEAKER_BACK_RIGHT;
+	}
+	else if(channelCount == 6)
+	{
+		wfx.Format.nChannels = 6;
+		wfx.dwChannelMask = KSAUDIO_SPEAKER_5POINT1;  // SPEAKER_FRONT_LEFT | SPEAKER_FRONT_RIGHT | SPEAKER_FRONT_CENTER | SPEAKER_LOW_FREQUENCY | SPEAKER_BACK_LEFT | SPEAKER_BACK_RIGHT;
+	}
+	else
+	{
+		return false;
+	}
 
-    // setup the extensible structure
-    wfx.Format.wFormatTag             = WAVE_FORMAT_EXTENSIBLE; 
-  //wfx.Format.nChannels              = SET ABOVE 
-    wfx.Format.nSamplesPerSec         = lpFormat->nSamplesPerSec;
-    wfx.Format.wBitsPerSample         = lpFormat->wBitsPerSample; 
-    wfx.Format.nBlockAlign            = wfx.Format.wBitsPerSample / 8 * wfx.Format.nChannels;
-    wfx.Format.nAvgBytesPerSec        = wfx.Format.nSamplesPerSec * wfx.Format.nBlockAlign;
-    wfx.Format.cbSize                 = 22; // size from after this to end of extensible struct. sizeof(WORD + DWORD + GUID)
-    wfx.Samples.wValidBitsPerSample   = lpFormat->wBitsPerSample;
-  //wfx.dwChannelMask                 = SET ABOVE BASED ON COMMAND LINE PARAMETERS
-    wfx.SubFormat                     = KSDATAFORMAT_SUBTYPE_PCM;
+	// setup the extensible structure
+	wfx.Format.wFormatTag             = WAVE_FORMAT_EXTENSIBLE;
+	//wfx.Format.nChannels              = SET ABOVE
+	wfx.Format.nSamplesPerSec         = lpFormat->nSamplesPerSec;
+	wfx.Format.wBitsPerSample         = lpFormat->wBitsPerSample;
+	wfx.Format.nBlockAlign            = wfx.Format.wBitsPerSample / 8 * wfx.Format.nChannels;
+	wfx.Format.nAvgBytesPerSec        = wfx.Format.nSamplesPerSec * wfx.Format.nBlockAlign;
+	wfx.Format.cbSize                 = 22; // size from after this to end of extensible struct. sizeof(WORD + DWORD + GUID)
+	wfx.Samples.wValidBitsPerSample   = lpFormat->wBitsPerSample;
+	//wfx.dwChannelMask                 = SET ABOVE BASED ON COMMAND LINE PARAMETERS
+	wfx.SubFormat                     = KSDATAFORMAT_SUBTYPE_PCM;
 
-    // setup the DirectSound
-    DSBUFFERDESC            dsbdesc = { 0 };  // DirectSoundBuffer descriptor	
-    dsbdesc.dwSize = sizeof(DSBUFFERDESC);
+	// setup the DirectSound
+	DSBUFFERDESC            dsbdesc = { 0 };  // DirectSoundBuffer descriptor
+	dsbdesc.dwSize = sizeof(DSBUFFERDESC);
 	dsbdesc.dwFlags = 0;
 
-    dsbdesc.dwBufferBytes = SECONDARY_BUFFER_SIZE_SURROUND * channelCount;
- 
-    dsbdesc.lpwfxFormat = (WAVEFORMATEX*)&wfx;
+	dsbdesc.dwBufferBytes = SECONDARY_BUFFER_SIZE_SURROUND * channelCount;
+
+	dsbdesc.lpwfxFormat = (WAVEFORMATEX*)&wfx;
 	bool bSuccess = false;
 	for ( int i = 0; i < 3; i++ )
 	{
@@ -702,7 +702,7 @@ bool CAudioDirectSound::SNDDMA_InitInterleaved( LPDIRECTSOUND lpDS, WAVEFORMATEX
 	Q_memset( pBuffer, 0, dwSize );
 
 	pDSBuf->Unlock(pBuffer, dwSize, NULL, 0);
-	
+
 	// Make sure mixer is active (this was moved after the zeroing to avoid popping on startup -- at least when using the dx9.0b debug .dlls)
 	pDSBuf->Play(0, 0, DSBPLAY_LOOPING);
 
@@ -727,12 +727,12 @@ sndinitstat CAudioDirectSound::SNDDMA_InitDirect( void )
 	DSBCAPS			dsbcaps;
 	DWORD			dwSize, dwWrite;
 	WAVEFORMATEX	format;
-	WAVEFORMATEX	pformat; 
+	WAVEFORMATEX	pformat;
 	HRESULT			hresult;
 	void			*lpData = NULL;
 	bool			primary_format_set = false;
 	int				pri_channels = 2;
-	
+
 	if (!m_hInstDS)
 	{
 		m_hInstDS = LoadLibrary("dsound.dll");
@@ -797,12 +797,12 @@ sndinitstat CAudioDirectSound::SNDDMA_InitDirect( void )
 
 	Q_memset( &format, 0, sizeof(format) );
 	format.wFormatTag		= WAVE_FORMAT_PCM;
-    format.nChannels		= pri_channels;			
-    format.wBitsPerSample	= m_deviceSampleBits;
-    format.nSamplesPerSec	= m_deviceDmaSpeed;
-    format.nBlockAlign		= format.nChannels * format.wBitsPerSample / 8;
-    format.cbSize			= 0;
-    format.nAvgBytesPerSec	= format.nSamplesPerSec * format.nBlockAlign; 
+	format.nChannels		= pri_channels;
+	format.wBitsPerSample	= m_deviceSampleBits;
+	format.nSamplesPerSec	= m_deviceDmaSpeed;
+	format.nBlockAlign		= format.nChannels * format.wBitsPerSample / 8;
+	format.cbSize			= 0;
+	format.nAvgBytesPerSec	= format.nSamplesPerSec * format.nBlockAlign;
 
 	DSCAPS dscaps;
 	Q_memset( &dscaps, 0, sizeof(dscaps) );
@@ -868,12 +868,12 @@ sndinitstat CAudioDirectSound::SNDDMA_InitDirect( void )
 		m_bSurround = false;
 		if ( snd_legacy_surround.GetBool() )
 		{
-			if (snd_surround.GetInt() == 4) 
+			if (snd_surround.GetInt() == 4)
 			{
 				// attempt to init 4 channel surround
 				m_bSurround = SNDDMA_InitSurround(pDS, &format, &dsbcaps, 4);
 			}
-			else if (snd_surround.GetInt() == 5 || snd_surround.GetInt() == 7) 
+			else if (snd_surround.GetInt() == 5 || snd_surround.GetInt() == 7)
 			{
 				// attempt to init 5 channel surround
 				m_bSurroundCenter = SNDDMA_InitSurround(pDS, &format, &dsbcaps, 5);
@@ -887,7 +887,7 @@ sndinitstat CAudioDirectSound::SNDDMA_InitDirect( void )
 			{
 				pri_channels = 4;
 			}
-	
+
 			m_bSurround = SNDDMA_InitInterleaved( pDS, &format, pri_channels );
 		}
 	}
@@ -956,9 +956,9 @@ sndinitstat CAudioDirectSound::SNDDMA_InitDirect( void )
 		if ( snd_firsttime )
 		{
 			DevMsg("   %d channel(s)\n"
-						   "   %d bits/sample\n"
-						   "   %d samples/sec\n",
-						   DeviceChannels(), DeviceSampleBits(), DeviceDmaSpeed());
+							"   %d bits/sample\n"
+							"   %d samples/sec\n",
+							DeviceChannels(), DeviceSampleBits(), DeviceDmaSpeed());
 		}
 
 		// initialize the buffer
@@ -983,12 +983,12 @@ sndinitstat CAudioDirectSound::SNDDMA_InitDirect( void )
 
 		Q_memset( lpData, 0, dwSize );
 		pDSBuf->Unlock(lpData, dwSize, NULL, 0);
-		
+
 		// Make sure mixer is active (this was moved after the zeroing to avoid popping on startup -- at least when using the dx9.0b debug .dlls)
 		pDSBuf->Play(0, 0, DSBPLAY_LOOPING);
 
 		// we don't want anyone to access the buffer directly w/o locking it first.
-		lpData = NULL; 
+		lpData = NULL;
 
 		pDSBuf->Stop();
 
@@ -1211,7 +1211,7 @@ void ReleaseSurround(void)
 	}
 
 	if ( pDSBuf3DRR != NULL )
-	{	
+	{
 		pDSBuf3DRR->Release();
 		pDSBuf3DRR = NULL;
 	}
@@ -1251,7 +1251,7 @@ void DEBUG_DS_FillSquare( void *lpData, DWORD dwSize )
 {
 	short *lpshort = (short *)lpData;
 	DWORD j = min((DWORD)10000, dwSize/2);
- 
+
 	for (DWORD i = 0; i < j; i++)
 		lpshort[i] = 8000;
 }
@@ -1260,7 +1260,7 @@ void DEBUG_DS_FillSquare2( void *lpData, DWORD dwSize )
 {
 	short *lpshort = (short *)lpData;
 	DWORD j = min((DWORD)1000, dwSize/2);
- 
+
 	for (DWORD i = 0; i < j; i++)
 		lpshort[i] = 16000;
 }
@@ -1272,7 +1272,7 @@ void DS3D_SetBufferParams( LPDIRECTSOUND3DBUFFER pDSBuf3D, D3DVECTOR *pbpos, D3D
 	D3DVECTOR bvel;
 	D3DVECTOR bpos, bdir;
 	HRESULT hr;
-	
+
 	bvel.x = 0.0f; bvel.y = 0.0f; bvel.z = 0.0f;
 	bpos = *pbpos;
 	bdir = *pbdir;
@@ -1284,7 +1284,7 @@ void DS3D_SetBufferParams( LPDIRECTSOUND3DBUFFER pDSBuf3D, D3DVECTOR *pbpos, D3D
 	bparm.vPosition = bpos;
 	bparm.vVelocity = bvel;
 	bparm.dwInsideConeAngle = 5.0;						// narrow cones for each speaker
-	bparm.dwOutsideConeAngle = 10.0;	
+	bparm.dwOutsideConeAngle = 10.0;
 	bparm.vConeOrientation = bdir;
 	bparm.lConeOutsideVolume = DSBVOLUME_MIN;
 	bparm.flMinDistance = 100.0;		// no rolloff (until > 2.0 meter distance)
@@ -1294,7 +1294,7 @@ void DS3D_SetBufferParams( LPDIRECTSOUND3DBUFFER pDSBuf3D, D3DVECTOR *pbpos, D3D
 	hr = pDSBuf3D->SetAllParameters( &bparm, DS3D_DEFERRED );
 }
 
-// Initialization for Surround sound support (4 channel or 5 channel). 
+// Initialization for Surround sound support (4 channel or 5 channel).
 // Creates 4 or 5 mono 3D buffers to be used as Front Left, (Front Center), Front Right, Rear Left, Rear Right
 bool CAudioDirectSound::SNDDMA_InitSurround(LPDIRECTSOUND lpDS, WAVEFORMATEX* lpFormat, DSBCAPS* lpdsbc, int cchan)
 {
@@ -1306,17 +1306,17 @@ bool CAudioDirectSound::SNDDMA_InitSurround(LPDIRECTSOUND lpDS, WAVEFORMATEX* lp
 	void			*lpData = NULL;
 
 	if ( lpDS == NULL ) return FALSE;
- 
+
 	// Force format to mono channel
 
 	memcpy(&wvex, lpFormat, sizeof(WAVEFORMATEX));
 	wvex.nChannels = 1;
 	wvex.nBlockAlign = wvex.nChannels * wvex.wBitsPerSample / 8;
-	wvex.nAvgBytesPerSec = wvex.nSamplesPerSec	* wvex.nBlockAlign; 
+	wvex.nAvgBytesPerSec = wvex.nSamplesPerSec	* wvex.nBlockAlign;
 
 	memset (&dsbuf, 0, sizeof(dsbuf));
 	dsbuf.dwSize = sizeof(DSBUFFERDESC);
-														 // NOTE: LOCHARDWARE causes SB AWE64 to crash in it's DSOUND driver
+														// NOTE: LOCHARDWARE causes SB AWE64 to crash in it's DSOUND driver
 	dsbuf.dwFlags = DSBCAPS_CTRL3D;						 // don't use CTRLFREQUENCY (slow)
 	if ( !snd_mute_losefocus.GetBool() )
 	{
@@ -1325,7 +1325,7 @@ bool CAudioDirectSound::SNDDMA_InitSurround(LPDIRECTSOUND lpDS, WAVEFORMATEX* lp
 
 	// reserve space for each buffer
 
-	dsbuf.dwBufferBytes = SECONDARY_BUFFER_SIZE_SURROUND;	
+	dsbuf.dwBufferBytes = SECONDARY_BUFFER_SIZE_SURROUND;
 
 	dsbuf.lpwfxFormat = &wvex;
 
@@ -1403,7 +1403,7 @@ bool CAudioDirectSound::SNDDMA_InitSurround(LPDIRECTSOUND lpDS, WAVEFORMATEX* lp
 
 	if (cchan == 5)
 	{
-		if (DS_OK != pDSBufFC->QueryInterface(IID_IDirectSound3DBufferDef, (void**)&pDSBuf3DFC)) 
+		if (DS_OK != pDSBufFC->QueryInterface(IID_IDirectSound3DBufferDef, (void**)&pDSBuf3DFC))
 		{
 			Warning( "DS:Query 3DBuffer for 3d front center failed");
 			ReleaseSurround();
@@ -1417,17 +1417,17 @@ bool CAudioDirectSound::SNDDMA_InitSurround(LPDIRECTSOUND lpDS, WAVEFORMATEX* lp
 	HRESULT hr;
 
 	IDirectSound3DListener *plistener = NULL;
-	
+
 	hr = pDSPBuf->QueryInterface(IID_IDirectSound3DListener, (void**)&plistener);
 	if (plistener)
 	{
 		DS3DLISTENER lparm;
 		lparm.dwSize = sizeof(DS3DLISTENER);
 
-		hr = plistener->GetAllParameters( &lparm );	
+		hr = plistener->GetAllParameters( &lparm );
 
 		hr = plistener->SetOrientation( 0.0f,0.0f,1.0f, 0.0f,1.0f,0.0f, DS3D_IMMEDIATE); // frontx,y,z topx,y,z
-		hr = plistener->SetPosition(0.0f, 0.0f, 0.0f, DS3D_IMMEDIATE);	
+		hr = plistener->SetPosition(0.0f, 0.0f, 0.0f, DS3D_IMMEDIATE);
 	}
 	else
 	{
@@ -1442,29 +1442,29 @@ bool CAudioDirectSound::SNDDMA_InitSurround(LPDIRECTSOUND lpDS, WAVEFORMATEX* lp
 
 	bpos.x = -1.0; bpos.y = 0.0; bpos.z = 1.0;				// FL
 	bdir.x =  1.0; bdir.y = 0.0; bdir.z = -1.0;
-	
+
 	DS3D_SetBufferParams( pDSBuf3DFL, &bpos, &bdir );
-	
+
 	bpos.x = 1.0; bpos.y = 0.0; bpos.z = 1.0;				// FR
 	bdir.x = -1.0; bdir.y = 0.0; bdir.z = -1.0;
-	
+
 	DS3D_SetBufferParams( pDSBuf3DFR, &bpos, &bdir );
 
 	bpos.x = -1.0; bpos.y = 0.0; bpos.z = -1.0;				// RL
 	bdir.x = 1.0; bdir.y = 0.0; bdir.z = 1.0;
-	
+
 	DS3D_SetBufferParams( pDSBuf3DRL, &bpos, &bdir );
 
 	bpos.x = 1.0; bpos.y = 0.0; bpos.z = -1.0;				// RR
 	bdir.x = -1.0; bdir.y = 0.0; bdir.z = 1.0;
-	
+
 	DS3D_SetBufferParams( pDSBuf3DRR, &bpos, &bdir );
 
 	if (cchan == 5)
 	{
 		bpos.x = 0.0; bpos.y = 0.0; bpos.z = 1.0;			// FC
 		bdir.x = 0.0; bdir.y = 0.0; bdir.z = -1.0;
-	
+
 		DS3D_SetBufferParams( pDSBuf3DFC, &bpos, &bdir );
 	}
 
@@ -1618,7 +1618,7 @@ bool CAudioDirectSound::SNDDMA_InitSurround(LPDIRECTSOUND lpDS, WAVEFORMATEX* lp
 	pDSBufFR->Stop();
 	pDSBufRL->Stop();
 	pDSBufRR->Stop();
-	if (cchan == 5) 
+	if (cchan == 5)
 		pDSBufFC->Stop();
 
 	// get hardware playback position, store it, syncronize all buffers to FL
@@ -1627,14 +1627,14 @@ bool CAudioDirectSound::SNDDMA_InitSurround(LPDIRECTSOUND lpDS, WAVEFORMATEX* lp
 	pDSBufFR->SetCurrentPosition(m_outputBufferStartOffset);
 	pDSBufRL->SetCurrentPosition(m_outputBufferStartOffset);
 	pDSBufRR->SetCurrentPosition(m_outputBufferStartOffset);
-	if (cchan == 5) 
+	if (cchan == 5)
 		pDSBufFC->SetCurrentPosition(m_outputBufferStartOffset);
 
 	pDSBufFL->Play(0, 0, DSBPLAY_LOOPING);
 	pDSBufFR->Play(0, 0, DSBPLAY_LOOPING);
 	pDSBufRL->Play(0, 0, DSBPLAY_LOOPING);
 	pDSBufRR->Play(0, 0, DSBPLAY_LOOPING);
-	if (cchan == 5) 
+	if (cchan == 5)
 		pDSBufFC->Play(0, 0, DSBPLAY_LOOPING);
 
 	if (snd_firsttime)
@@ -1652,14 +1652,14 @@ void CAudioDirectSound::ChannelReset( int entnum, int channelIndex, float distan
 }
 
 const char *CAudioDirectSound::DeviceName( void )
-{ 
+{
 	if ( m_bSurroundCenter )
 		return "5 Channel Surround";
 
 	if ( m_bSurround )
 		return "4 Channel Surround";
 
-	return "Direct Sound"; 
+	return "Direct Sound";
 }
 
 // use the partial buffer locking code in stereo as well - not available when recording a movie
@@ -1674,10 +1674,10 @@ void CAudioDirectSound::TransferSamples( int end )
 {
 	int		lpaintedtime = g_paintedtime;
 	int		endtime = end;
-	
+
 	// When Surround is enabled, divert to 4 or 5 chan xfer scheme.
 	if ( m_bSurround )
-	{		
+	{
 		if ( m_isInterleaved )
 		{
 			S_TransferSurround16Interleaved( PAINTBUFFER, REARPAINTBUFFER, CENTERPAINTBUFFER, lpaintedtime, endtime);
@@ -1720,9 +1720,9 @@ void CAudioDirectSound::TransferSamples( int end )
 	}
 }
 
-bool CAudioDirectSound::IsUsingBufferPerSpeaker() 
-{ 
-	return m_bSurround && !m_isInterleaved; 
+bool CAudioDirectSound::IsUsingBufferPerSpeaker()
+{
+	return m_bSurround && !m_isInterleaved;
 }
 
 bool CAudioDirectSound::LockDSBuffer( LPDIRECTSOUNDBUFFER pBuffer, DWORD **pdwWriteBuffer, DWORD *pdwSizeBuffer, const char *pBufferName, int lockFlags )
@@ -1731,7 +1731,7 @@ bool CAudioDirectSound::LockDSBuffer( LPDIRECTSOUNDBUFFER pBuffer, DWORD **pdwWr
 		return false;
 	HRESULT hr;
 	int reps = 0;
-	while ((hr = pBuffer->Lock(0, m_bufferSizeBytes, (void**)pdwWriteBuffer, pdwSizeBuffer, 
+	while ((hr = pBuffer->Lock(0, m_bufferSizeBytes, (void**)pdwWriteBuffer, pdwSizeBuffer,
 		NULL, NULL, lockFlags)) != DS_OK)
 	{
 		if (hr != DSERR_BUFFERLOST)
@@ -1789,24 +1789,24 @@ void CAudioDirectSound::S_TransferSurround16( portable_samplepair_t *pfront, por
 	snd_rp = (int *)prear;
 	snd_cp = (int *)pcenter;
 	snd_p = (int *)pfront;
-	
+
 	int linearCount;							 // space in output buffer for linearCount mono samples
 	int sampleMonoCount = DeviceSampleCount();	 // number of mono samples per output buffer (was;(DeviceSampleCount()>>1))
 	int sampleMask = sampleMonoCount - 1;
-	
+
 	// paintedtime - number of full samples that have played since start
 	// endtime - number of full samples to play to - endtime is g_soundtime + mixahead samples
 
 	while (lpaintedtime < endtime)
-	{														
+	{
 		lpos = lpaintedtime & sampleMask;		// lpos is next output position in output buffer
 
-		linearCount = sampleMonoCount - lpos;		
+		linearCount = sampleMonoCount - lpos;
 
 		// limit output count to requested number of samples
 
-		if (linearCount > endtime - lpaintedtime)		
-			linearCount = endtime - lpaintedtime;		
+		if (linearCount > endtime - lpaintedtime)
+			linearCount = endtime - lpaintedtime;
 
 		snd_out_fleft = (short *)pdwWriteFL + lpos;
 		snd_out_fright = (short *)pdwWriteFR + lpos;
@@ -1821,7 +1821,7 @@ void CAudioDirectSound::S_TransferSurround16( portable_samplepair_t *pfront, por
 
 		for (i=0, j= 0 ; i<linearCount ; i++, j+=2)
 		{
-			snd_out_fleft[i]  = (snd_p[j]*volumeFactor)>>8;		 
+			snd_out_fleft[i]  = (snd_p[j]*volumeFactor)>>8;
 			snd_out_fright[i] = (snd_p[j + 1]*volumeFactor)>>8;
 			snd_out_rleft[i]  = (snd_rp[j]*volumeFactor)>>8;
 			snd_out_rright[i] = (snd_rp[j + 1]*volumeFactor)>>8;
@@ -1834,7 +1834,7 @@ void CAudioDirectSound::S_TransferSurround16( portable_samplepair_t *pfront, por
 			for (i=0, j=0 ; i<linearCount ; i++, j+=2)
 			{
 				snd_out_fcenter[i] = (snd_cp[j]*volumeFactor)>>8;
-				
+
 			}
 		}
 
@@ -1850,7 +1850,7 @@ void CAudioDirectSound::S_TransferSurround16( portable_samplepair_t *pfront, por
 	pDSBufRL->Unlock(pdwWriteRL, dwSizeRL, NULL, 0);
 	pDSBufRR->Unlock(pdwWriteRR, dwSizeRR, NULL, 0);
 
-	if (cchan == 5) 
+	if (cchan == 5)
 		pDSBufFC->Unlock(pdwWriteFC, dwSizeFC, NULL, 0);
 }
 
@@ -1908,7 +1908,7 @@ static void TransferSamplesToSurroundBuffer( int outputCount, surround_transfer_
 
 			transfer.pOutput[4]  = (transfer.snd_rp[j]*volumeFactor)>>8;		// RL
 			transfer.pOutput[5] = (transfer.snd_rp[j + 1]*volumeFactor)>>8;	// RR
-			
+
 #if 0
 			// average channels into the subwoofer, let the sub filter the output
 			// NOTE: avg l/r rear to do 2 shifts instead of divide by 5
@@ -1975,15 +1975,15 @@ void CAudioDirectSound::S_TransferSurround16Interleaved_FullLock( const portable
 
 	short *pOutput = (short *)pdwWrite;
 	while (lpaintedtime < endtime)
-	{														
+	{
 		lpos = lpaintedtime & sampleMask;		// lpos is next output position in output buffer
 
-		linearCount = sampleMonoCount - lpos;		
+		linearCount = sampleMonoCount - lpos;
 
 		// limit output count to requested number of samples
 
-		if (linearCount > endtime - lpaintedtime)		
-			linearCount = endtime - lpaintedtime;		
+		if (linearCount > endtime - lpaintedtime)
+			linearCount = endtime - lpaintedtime;
 
 		if ( channelCount == 4 )
 		{
@@ -2045,7 +2045,7 @@ void CAudioDirectSound::S_TransferSurround16Interleaved( const portable_samplepa
 	transfer.snd_rp = (int *)prear;
 	transfer.snd_cp = (int *)pcenter;
 	transfer.snd_p = (int *)pfront;
-	
+
 	int sampleMonoCount = DeviceSampleCount()/DeviceChannels();	 // number of full samples per output buffer
 	Assert(IsPowerOfTwo(sampleMonoCount));
 	transfer.sampleMask = sampleMonoCount - 1;
@@ -2091,4 +2091,3 @@ void CAudioDirectSound::S_TransferSurround16Interleaved( const portable_samplepa
 	}
 	pDSBuf->Unlock(pBuffer0, size0, pBuffer1, size1);
 }
-

@@ -1,18 +1,18 @@
 /*
-     File:       QD3DCamera.h
- 
-     Contains:   Generic camera routines
- 
-     Version:    Technology: Quickdraw 3D 1.6
-                 Release:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1995-1998 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       QD3DCamera.h
+
+		Contains:   Generic camera routines
+
+		Version:    Technology: Quickdraw 3D 1.6
+								Release:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1995-1998 by Apple Computer, Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __QD3DCAMERA__
 #define __QD3DCAMERA__
@@ -37,26 +37,26 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=power
+		#pragma options align=power
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+		#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+		#pragma pack(2)
 #endif
 
 #if PRAGMA_ENUM_ALWAYSINT
-    #if defined(__fourbyteints__) && !__fourbyteints__ 
-        #define __QD3DCAMERA__RESTORE_TWOBYTEINTS
-        #pragma fourbyteints on
-    #endif
-    #pragma enumsalwaysint on
+		#if defined(__fourbyteints__) && !__fourbyteints__
+				#define __QD3DCAMERA__RESTORE_TWOBYTEINTS
+				#pragma fourbyteints on
+		#endif
+		#pragma enumsalwaysint on
 #elif PRAGMA_ENUM_OPTIONS
-    #pragma option enum=int
+		#pragma option enum=int
 #elif PRAGMA_ENUM_PACK
-    #if __option(pack_enums)
-        #define __QD3DCAMERA__RESTORE_PACKED_ENUMS
-        #pragma options(!pack_enums)
-    #endif
+		#if __option(pack_enums)
+				#define __QD3DCAMERA__RESTORE_PACKED_ENUMS
+				#pragma options(!pack_enums)
+		#endif
 #endif
 
 /******************************************************************************
@@ -68,24 +68,24 @@ extern "C" {
  *  The placement of the camera.
  */
 struct TQ3CameraPlacement {
-  TQ3Point3D          cameraLocation;         /*  Location point of the camera  */
-  TQ3Point3D          pointOfInterest;        /*  Point of interest           */
-  TQ3Vector3D         upVector;               /*  "up" vector             */
+	TQ3Point3D          cameraLocation;         /*  Location point of the camera  */
+	TQ3Point3D          pointOfInterest;        /*  Point of interest           */
+	TQ3Vector3D         upVector;               /*  "up" vector             */
 };
 typedef struct TQ3CameraPlacement       TQ3CameraPlacement;
 /*
  *  The range of the camera.
  */
 struct TQ3CameraRange {
-  float               hither;                 /*  Hither plane, measured from "from" towards "to"   */
-  float               yon;                    /*  Yon  plane, measured from "from" towards "to"     */
+	float               hither;                 /*  Hither plane, measured from "from" towards "to"   */
+	float               yon;                    /*  Yon  plane, measured from "from" towards "to"     */
 };
 typedef struct TQ3CameraRange           TQ3CameraRange;
 /*
- *  Viewport specification.  Origin is (-1, 1), and corresponds to the 
+ *  Viewport specification.  Origin is (-1, 1), and corresponds to the
  *  upper left-hand corner; width and height maximum is (2.0, 2.0),
  *  corresponding to the lower left-hand corner of the window.  The
- *  TQ3Viewport specifies a part of the viewPlane that gets displayed 
+ *  TQ3Viewport specifies a part of the viewPlane that gets displayed
  *  on the window that is to be drawn.
  *  Normally, it is set with an origin of (-1.0, 1.0), and a width and
  *  height of both 2.0, specifying that the entire window is to be
@@ -95,15 +95,15 @@ typedef struct TQ3CameraRange           TQ3CameraRange;
  *
  */
 struct TQ3CameraViewPort {
-  TQ3Point2D          origin;
-  float               width;
-  float               height;
+	TQ3Point2D          origin;
+	float               width;
+	float               height;
 };
 typedef struct TQ3CameraViewPort        TQ3CameraViewPort;
 struct TQ3CameraData {
-  TQ3CameraPlacement  placement;
-  TQ3CameraRange      range;
-  TQ3CameraViewPort   viewPort;
+	TQ3CameraPlacement  placement;
+	TQ3CameraRange      range;
+	TQ3CameraViewPort   viewPort;
 };
 typedef struct TQ3CameraData            TQ3CameraData;
 /*
@@ -113,11 +113,11 @@ typedef struct TQ3CameraData            TQ3CameraData;
  *  rectangular viewPort in the frame of the camera.
  */
 struct TQ3OrthographicCameraData {
-  TQ3CameraData       cameraData;
-  float               left;
-  float               top;
-  float               right;
-  float               bottom;
+	TQ3CameraData       cameraData;
+	float               left;
+	float               top;
+	float               right;
+	float               bottom;
 };
 typedef struct TQ3OrthographicCameraData TQ3OrthographicCameraData;
 /*
@@ -128,28 +128,28 @@ typedef struct TQ3OrthographicCameraData TQ3OrthographicCameraData;
  *  The halfWidth is set to half the width of the cross section of the object,
  *  and the halfHeight equal to the halfWidth divided by the aspect ratio
  *  of the viewPort.
- * 
+ *
  *  This is the only perspective camera with specifications for off-axis
  *  viewing, which is desirable for scrolling.
  */
 struct TQ3ViewPlaneCameraData {
-  TQ3CameraData       cameraData;
-  float               viewPlane;
-  float               halfWidthAtViewPlane;
-  float               halfHeightAtViewPlane;
-  float               centerXOnViewPlane;
-  float               centerYOnViewPlane;
+	TQ3CameraData       cameraData;
+	float               viewPlane;
+	float               halfWidthAtViewPlane;
+	float               halfHeightAtViewPlane;
+	float               centerXOnViewPlane;
+	float               centerYOnViewPlane;
 };
 typedef struct TQ3ViewPlaneCameraData   TQ3ViewPlaneCameraData;
 /*
- *  A view angle aspect camera is a perspective camera specified in 
+ *  A view angle aspect camera is a perspective camera specified in
  *  terms of the minimum view angle and the aspect ratio of X to Y.
  *
  */
 struct TQ3ViewAngleAspectCameraData {
-  TQ3CameraData       cameraData;
-  float               fov;
-  float               aspectRatioXToY;
+	TQ3CameraData       cameraData;
+	float               fov;
+	float               aspectRatioXToY;
 };
 typedef struct TQ3ViewAngleAspectCameraData TQ3ViewAngleAspectCameraData;
 /******************************************************************************
@@ -161,7 +161,7 @@ typedef struct TQ3ViewAngleAspectCameraData TQ3ViewAngleAspectCameraData;
 #if CALL_NOT_IN_CARBON
 /*
  *  Q3Camera_GetType()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -173,7 +173,7 @@ Q3Camera_GetType(TQ3CameraObject camera);
 
 /*
  *  Q3Camera_SetData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -181,13 +181,13 @@ Q3Camera_GetType(TQ3CameraObject camera);
  */
 EXTERN_API_C( TQ3Status )
 Q3Camera_SetData(
-  TQ3CameraObject        camera,
-  const TQ3CameraData *  cameraData);
+	TQ3CameraObject        camera,
+	const TQ3CameraData *  cameraData);
 
 
 /*
  *  Q3Camera_GetData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -195,13 +195,13 @@ Q3Camera_SetData(
  */
 EXTERN_API_C( TQ3Status )
 Q3Camera_GetData(
-  TQ3CameraObject   camera,
-  TQ3CameraData *   cameraData);
+	TQ3CameraObject   camera,
+	TQ3CameraData *   cameraData);
 
 
 /*
  *  Q3Camera_SetPlacement()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -209,13 +209,13 @@ Q3Camera_GetData(
  */
 EXTERN_API_C( TQ3Status )
 Q3Camera_SetPlacement(
-  TQ3CameraObject             camera,
-  const TQ3CameraPlacement *  placement);
+	TQ3CameraObject             camera,
+	const TQ3CameraPlacement *  placement);
 
 
 /*
  *  Q3Camera_GetPlacement()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -223,13 +223,13 @@ Q3Camera_SetPlacement(
  */
 EXTERN_API_C( TQ3Status )
 Q3Camera_GetPlacement(
-  TQ3CameraObject       camera,
-  TQ3CameraPlacement *  placement);
+	TQ3CameraObject       camera,
+	TQ3CameraPlacement *  placement);
 
 
 /*
  *  Q3Camera_SetRange()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -237,13 +237,13 @@ Q3Camera_GetPlacement(
  */
 EXTERN_API_C( TQ3Status )
 Q3Camera_SetRange(
-  TQ3CameraObject         camera,
-  const TQ3CameraRange *  range);
+	TQ3CameraObject         camera,
+	const TQ3CameraRange *  range);
 
 
 /*
  *  Q3Camera_GetRange()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -251,13 +251,13 @@ Q3Camera_SetRange(
  */
 EXTERN_API_C( TQ3Status )
 Q3Camera_GetRange(
-  TQ3CameraObject   camera,
-  TQ3CameraRange *  range);
+	TQ3CameraObject   camera,
+	TQ3CameraRange *  range);
 
 
 /*
  *  Q3Camera_SetViewPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -265,13 +265,13 @@ Q3Camera_GetRange(
  */
 EXTERN_API_C( TQ3Status )
 Q3Camera_SetViewPort(
-  TQ3CameraObject            camera,
-  const TQ3CameraViewPort *  viewPort);
+	TQ3CameraObject            camera,
+	const TQ3CameraViewPort *  viewPort);
 
 
 /*
  *  Q3Camera_GetViewPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -279,13 +279,13 @@ Q3Camera_SetViewPort(
  */
 EXTERN_API_C( TQ3Status )
 Q3Camera_GetViewPort(
-  TQ3CameraObject      camera,
-  TQ3CameraViewPort *  viewPort);
+	TQ3CameraObject      camera,
+	TQ3CameraViewPort *  viewPort);
 
 
 /*
  *  Q3Camera_GetWorldToView()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -293,13 +293,13 @@ Q3Camera_GetViewPort(
  */
 EXTERN_API_C( TQ3Status )
 Q3Camera_GetWorldToView(
-  TQ3CameraObject   camera,
-  TQ3Matrix4x4 *    worldToView);
+	TQ3CameraObject   camera,
+	TQ3Matrix4x4 *    worldToView);
 
 
 /*
  *  Q3Camera_GetWorldToFrustum()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -307,13 +307,13 @@ Q3Camera_GetWorldToView(
  */
 EXTERN_API_C( TQ3Status )
 Q3Camera_GetWorldToFrustum(
-  TQ3CameraObject   camera,
-  TQ3Matrix4x4 *    worldToFrustum);
+	TQ3CameraObject   camera,
+	TQ3Matrix4x4 *    worldToFrustum);
 
 
 /*
  *  Q3Camera_GetViewToFrustum()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -321,8 +321,8 @@ Q3Camera_GetWorldToFrustum(
  */
 EXTERN_API_C( TQ3Status )
 Q3Camera_GetViewToFrustum(
-  TQ3CameraObject   camera,
-  TQ3Matrix4x4 *    viewToFrustum);
+	TQ3CameraObject   camera,
+	TQ3Matrix4x4 *    viewToFrustum);
 
 
 
@@ -338,7 +338,7 @@ Q3Camera_GetViewToFrustum(
  *****************************************************************************/
 /*
  *  Q3OrthographicCamera_New()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -350,7 +350,7 @@ Q3OrthographicCamera_New(const TQ3OrthographicCameraData * orthographicData);
 
 /*
  *  Q3OrthographicCamera_GetData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -358,13 +358,13 @@ Q3OrthographicCamera_New(const TQ3OrthographicCameraData * orthographicData);
  */
 EXTERN_API_C( TQ3Status )
 Q3OrthographicCamera_GetData(
-  TQ3CameraObject              camera,
-  TQ3OrthographicCameraData *  cameraData);
+	TQ3CameraObject              camera,
+	TQ3OrthographicCameraData *  cameraData);
 
 
 /*
  *  Q3OrthographicCamera_SetData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -372,13 +372,13 @@ Q3OrthographicCamera_GetData(
  */
 EXTERN_API_C( TQ3Status )
 Q3OrthographicCamera_SetData(
-  TQ3CameraObject                    camera,
-  const TQ3OrthographicCameraData *  cameraData);
+	TQ3CameraObject                    camera,
+	const TQ3OrthographicCameraData *  cameraData);
 
 
 /*
  *  Q3OrthographicCamera_SetLeft()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -386,13 +386,13 @@ Q3OrthographicCamera_SetData(
  */
 EXTERN_API_C( TQ3Status )
 Q3OrthographicCamera_SetLeft(
-  TQ3CameraObject   camera,
-  float             left);
+	TQ3CameraObject   camera,
+	float             left);
 
 
 /*
  *  Q3OrthographicCamera_GetLeft()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -400,13 +400,13 @@ Q3OrthographicCamera_SetLeft(
  */
 EXTERN_API_C( TQ3Status )
 Q3OrthographicCamera_GetLeft(
-  TQ3CameraObject   camera,
-  float *           left);
+	TQ3CameraObject   camera,
+	float *           left);
 
 
 /*
  *  Q3OrthographicCamera_SetTop()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -414,13 +414,13 @@ Q3OrthographicCamera_GetLeft(
  */
 EXTERN_API_C( TQ3Status )
 Q3OrthographicCamera_SetTop(
-  TQ3CameraObject   camera,
-  float             top);
+	TQ3CameraObject   camera,
+	float             top);
 
 
 /*
  *  Q3OrthographicCamera_GetTop()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -428,13 +428,13 @@ Q3OrthographicCamera_SetTop(
  */
 EXTERN_API_C( TQ3Status )
 Q3OrthographicCamera_GetTop(
-  TQ3CameraObject   camera,
-  float *           top);
+	TQ3CameraObject   camera,
+	float *           top);
 
 
 /*
  *  Q3OrthographicCamera_SetRight()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -442,13 +442,13 @@ Q3OrthographicCamera_GetTop(
  */
 EXTERN_API_C( TQ3Status )
 Q3OrthographicCamera_SetRight(
-  TQ3CameraObject   camera,
-  float             right);
+	TQ3CameraObject   camera,
+	float             right);
 
 
 /*
  *  Q3OrthographicCamera_GetRight()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -456,13 +456,13 @@ Q3OrthographicCamera_SetRight(
  */
 EXTERN_API_C( TQ3Status )
 Q3OrthographicCamera_GetRight(
-  TQ3CameraObject   camera,
-  float *           right);
+	TQ3CameraObject   camera,
+	float *           right);
 
 
 /*
  *  Q3OrthographicCamera_SetBottom()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -470,13 +470,13 @@ Q3OrthographicCamera_GetRight(
  */
 EXTERN_API_C( TQ3Status )
 Q3OrthographicCamera_SetBottom(
-  TQ3CameraObject   camera,
-  float             bottom);
+	TQ3CameraObject   camera,
+	float             bottom);
 
 
 /*
  *  Q3OrthographicCamera_GetBottom()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -484,8 +484,8 @@ Q3OrthographicCamera_SetBottom(
  */
 EXTERN_API_C( TQ3Status )
 Q3OrthographicCamera_GetBottom(
-  TQ3CameraObject   camera,
-  float *           bottom);
+	TQ3CameraObject   camera,
+	float *           bottom);
 
 
 
@@ -496,7 +496,7 @@ Q3OrthographicCamera_GetBottom(
  *****************************************************************************/
 /*
  *  Q3ViewPlaneCamera_New()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -508,7 +508,7 @@ Q3ViewPlaneCamera_New(const TQ3ViewPlaneCameraData * cameraData);
 
 /*
  *  Q3ViewPlaneCamera_GetData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -516,13 +516,13 @@ Q3ViewPlaneCamera_New(const TQ3ViewPlaneCameraData * cameraData);
  */
 EXTERN_API_C( TQ3Status )
 Q3ViewPlaneCamera_GetData(
-  TQ3CameraObject           camera,
-  TQ3ViewPlaneCameraData *  cameraData);
+	TQ3CameraObject           camera,
+	TQ3ViewPlaneCameraData *  cameraData);
 
 
 /*
  *  Q3ViewPlaneCamera_SetData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -530,13 +530,13 @@ Q3ViewPlaneCamera_GetData(
  */
 EXTERN_API_C( TQ3Status )
 Q3ViewPlaneCamera_SetData(
-  TQ3CameraObject                 camera,
-  const TQ3ViewPlaneCameraData *  cameraData);
+	TQ3CameraObject                 camera,
+	const TQ3ViewPlaneCameraData *  cameraData);
 
 
 /*
  *  Q3ViewPlaneCamera_SetViewPlane()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -544,13 +544,13 @@ Q3ViewPlaneCamera_SetData(
  */
 EXTERN_API_C( TQ3Status )
 Q3ViewPlaneCamera_SetViewPlane(
-  TQ3CameraObject   camera,
-  float             viewPlane);
+	TQ3CameraObject   camera,
+	float             viewPlane);
 
 
 /*
  *  Q3ViewPlaneCamera_GetViewPlane()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -558,13 +558,13 @@ Q3ViewPlaneCamera_SetViewPlane(
  */
 EXTERN_API_C( TQ3Status )
 Q3ViewPlaneCamera_GetViewPlane(
-  TQ3CameraObject   camera,
-  float *           viewPlane);
+	TQ3CameraObject   camera,
+	float *           viewPlane);
 
 
 /*
  *  Q3ViewPlaneCamera_SetHalfWidth()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -572,13 +572,13 @@ Q3ViewPlaneCamera_GetViewPlane(
  */
 EXTERN_API_C( TQ3Status )
 Q3ViewPlaneCamera_SetHalfWidth(
-  TQ3CameraObject   camera,
-  float             halfWidthAtViewPlane);
+	TQ3CameraObject   camera,
+	float             halfWidthAtViewPlane);
 
 
 /*
  *  Q3ViewPlaneCamera_GetHalfWidth()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -586,13 +586,13 @@ Q3ViewPlaneCamera_SetHalfWidth(
  */
 EXTERN_API_C( TQ3Status )
 Q3ViewPlaneCamera_GetHalfWidth(
-  TQ3CameraObject   camera,
-  float *           halfWidthAtViewPlane);
+	TQ3CameraObject   camera,
+	float *           halfWidthAtViewPlane);
 
 
 /*
  *  Q3ViewPlaneCamera_SetHalfHeight()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -600,13 +600,13 @@ Q3ViewPlaneCamera_GetHalfWidth(
  */
 EXTERN_API_C( TQ3Status )
 Q3ViewPlaneCamera_SetHalfHeight(
-  TQ3CameraObject   camera,
-  float             halfHeightAtViewPlane);
+	TQ3CameraObject   camera,
+	float             halfHeightAtViewPlane);
 
 
 /*
  *  Q3ViewPlaneCamera_GetHalfHeight()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -614,13 +614,13 @@ Q3ViewPlaneCamera_SetHalfHeight(
  */
 EXTERN_API_C( TQ3Status )
 Q3ViewPlaneCamera_GetHalfHeight(
-  TQ3CameraObject   camera,
-  float *           halfHeightAtViewPlane);
+	TQ3CameraObject   camera,
+	float *           halfHeightAtViewPlane);
 
 
 /*
  *  Q3ViewPlaneCamera_SetCenterX()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -628,13 +628,13 @@ Q3ViewPlaneCamera_GetHalfHeight(
  */
 EXTERN_API_C( TQ3Status )
 Q3ViewPlaneCamera_SetCenterX(
-  TQ3CameraObject   camera,
-  float             centerXOnViewPlane);
+	TQ3CameraObject   camera,
+	float             centerXOnViewPlane);
 
 
 /*
  *  Q3ViewPlaneCamera_GetCenterX()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -642,13 +642,13 @@ Q3ViewPlaneCamera_SetCenterX(
  */
 EXTERN_API_C( TQ3Status )
 Q3ViewPlaneCamera_GetCenterX(
-  TQ3CameraObject   camera,
-  float *           centerXOnViewPlane);
+	TQ3CameraObject   camera,
+	float *           centerXOnViewPlane);
 
 
 /*
  *  Q3ViewPlaneCamera_SetCenterY()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -656,13 +656,13 @@ Q3ViewPlaneCamera_GetCenterX(
  */
 EXTERN_API_C( TQ3Status )
 Q3ViewPlaneCamera_SetCenterY(
-  TQ3CameraObject   camera,
-  float             centerYOnViewPlane);
+	TQ3CameraObject   camera,
+	float             centerYOnViewPlane);
 
 
 /*
  *  Q3ViewPlaneCamera_GetCenterY()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -670,8 +670,8 @@ Q3ViewPlaneCamera_SetCenterY(
  */
 EXTERN_API_C( TQ3Status )
 Q3ViewPlaneCamera_GetCenterY(
-  TQ3CameraObject   camera,
-  float *           centerYOnViewPlane);
+	TQ3CameraObject   camera,
+	float *           centerYOnViewPlane);
 
 
 
@@ -682,7 +682,7 @@ Q3ViewPlaneCamera_GetCenterY(
  *****************************************************************************/
 /*
  *  Q3ViewAngleAspectCamera_New()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -694,7 +694,7 @@ Q3ViewAngleAspectCamera_New(const TQ3ViewAngleAspectCameraData * cameraData);
 
 /*
  *  Q3ViewAngleAspectCamera_SetData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -702,13 +702,13 @@ Q3ViewAngleAspectCamera_New(const TQ3ViewAngleAspectCameraData * cameraData);
  */
 EXTERN_API_C( TQ3Status )
 Q3ViewAngleAspectCamera_SetData(
-  TQ3CameraObject                       camera,
-  const TQ3ViewAngleAspectCameraData *  cameraData);
+	TQ3CameraObject                       camera,
+	const TQ3ViewAngleAspectCameraData *  cameraData);
 
 
 /*
  *  Q3ViewAngleAspectCamera_GetData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -716,13 +716,13 @@ Q3ViewAngleAspectCamera_SetData(
  */
 EXTERN_API_C( TQ3Status )
 Q3ViewAngleAspectCamera_GetData(
-  TQ3CameraObject                 camera,
-  TQ3ViewAngleAspectCameraData *  cameraData);
+	TQ3CameraObject                 camera,
+	TQ3ViewAngleAspectCameraData *  cameraData);
 
 
 /*
  *  Q3ViewAngleAspectCamera_SetFOV()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -730,13 +730,13 @@ Q3ViewAngleAspectCamera_GetData(
  */
 EXTERN_API_C( TQ3Status )
 Q3ViewAngleAspectCamera_SetFOV(
-  TQ3CameraObject   camera,
-  float             fov);
+	TQ3CameraObject   camera,
+	float             fov);
 
 
 /*
  *  Q3ViewAngleAspectCamera_GetFOV()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -744,13 +744,13 @@ Q3ViewAngleAspectCamera_SetFOV(
  */
 EXTERN_API_C( TQ3Status )
 Q3ViewAngleAspectCamera_GetFOV(
-  TQ3CameraObject   camera,
-  float *           fov);
+	TQ3CameraObject   camera,
+	float *           fov);
 
 
 /*
  *  Q3ViewAngleAspectCamera_SetAspectRatio()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -758,13 +758,13 @@ Q3ViewAngleAspectCamera_GetFOV(
  */
 EXTERN_API_C( TQ3Status )
 Q3ViewAngleAspectCamera_SetAspectRatio(
-  TQ3CameraObject   camera,
-  float             aspectRatioXToY);
+	TQ3CameraObject   camera,
+	float             aspectRatioXToY);
 
 
 /*
  *  Q3ViewAngleAspectCamera_GetAspectRatio()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -772,8 +772,8 @@ Q3ViewAngleAspectCamera_SetAspectRatio(
  */
 EXTERN_API_C( TQ3Status )
 Q3ViewAngleAspectCamera_GetAspectRatio(
-  TQ3CameraObject   camera,
-  float *           aspectRatioXToY);
+	TQ3CameraObject   camera,
+	float *           aspectRatioXToY);
 
 
 
@@ -783,22 +783,22 @@ Q3ViewAngleAspectCamera_GetAspectRatio(
 
 
 #if PRAGMA_ENUM_ALWAYSINT
-    #pragma enumsalwaysint reset
-    #ifdef __QD3DCAMERA__RESTORE_TWOBYTEINTS
-        #pragma fourbyteints off
-    #endif
+		#pragma enumsalwaysint reset
+		#ifdef __QD3DCAMERA__RESTORE_TWOBYTEINTS
+				#pragma fourbyteints off
+		#endif
 #elif PRAGMA_ENUM_OPTIONS
-    #pragma option enum=reset
+		#pragma option enum=reset
 #elif defined(__QD3DCAMERA__RESTORE_PACKED_ENUMS)
-    #pragma options(pack_enums)
+		#pragma options(pack_enums)
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+		#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+		#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+		#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -812,4 +812,3 @@ Q3ViewAngleAspectCamera_GetAspectRatio(
 #endif
 
 #endif /* __QD3DCAMERA__ */
-

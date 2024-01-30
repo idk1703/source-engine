@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,7 +33,7 @@ class CEngyDestroyMenuItem : public EditablePanel
 
 public:
 
-	CEngyDestroyMenuItem( Panel *parent, const char *panelName ) : EditablePanel(parent, panelName) 
+	CEngyDestroyMenuItem( Panel *parent, const char *panelName ) : EditablePanel(parent, panelName)
 	{
 	}
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -120,12 +120,12 @@ struct LightingValue_t
 
 	FORCEINLINE bool IsValid( void ) const
 	{
-		return ( m_vecLighting.x >= 0 && 
-				 m_vecLighting.y >= 0 && 
-				 m_vecLighting.z >= 0 &&
-				 m_vecLighting.x < 1e10 && 
-				 m_vecLighting.y < 1e10 && 
-				 m_vecLighting.z < 1e10 );
+		return ( m_vecLighting.x >= 0 &&
+				m_vecLighting.y >= 0 &&
+				m_vecLighting.z >= 0 &&
+				m_vecLighting.x < 1e10 &&
+				m_vecLighting.y < 1e10 &&
+				m_vecLighting.z < 1e10 );
 	}
 
 	FORCEINLINE void Zero( void )
@@ -133,7 +133,7 @@ struct LightingValue_t
 		m_vecLighting.Init( 0, 0, 0 );
 		m_flDirectSunAmount = 0.0;
 	}
-	
+
 	FORCEINLINE void Scale( float m_flScale )
 	{
 		m_vecLighting *= m_flScale;
@@ -170,7 +170,7 @@ struct LightingValue_t
 		m_flDirectSunAmount += src.m_flDirectSunAmount;
 		Assert( this->IsValid() );
 	}
-	
+
 	FORCEINLINE void Init( float x, float y, float z )
 	{
 		m_vecLighting.Init( x, y, z );
@@ -191,10 +191,10 @@ struct CPatch
 	Vector		origin;				// adjusted off face by face normal
 
 	dplane_t	*plane;				// plane (corrected for facing)
-	
+
 	unsigned short		m_IterationKey;	// Used to prevent touching the same patch multiple times in the same query.
 										// See IncrementPatchIterationKey().
-	
+
 	// these are packed into one dword
 	unsigned int normalMajorAxis : 2;	// the major axis of base face normal
 	unsigned int sky : 1;
@@ -377,7 +377,7 @@ inline byte PVSCheck( const byte *pvs, int iCluster )
 	}
 	else
 	{
-		// PointInLeaf still returns -1 for valid points sometimes and rather than 
+		// PointInLeaf still returns -1 for valid points sometimes and rather than
 		// have black samples, we assume the sample is in the PVS.
 		return 1;
 	}
@@ -388,7 +388,7 @@ void TestLine( FourVectors const& start, FourVectors const& stop, fltx4 *pFracti
 
 // returns 1 if the ray sees the sky, 0 if it doesn't, and in-between values for partial coverage
 void TestLine_DoesHitSky( FourVectors const& start, FourVectors const& stop,
-                          fltx4 *pFractionVisible, bool canRecurse = true, int static_prop_to_skip=-1, bool bDoDebug = false );
+	fltx4 *pFractionVisible, bool canRecurse = true, int static_prop_to_skip=-1, bool bDoDebug = false );
 
 // converts any marked brush entities to triangles for shadow casting
 void ExtractBrushEntityShadowCasters ( void );
@@ -419,8 +419,8 @@ int			ClusterFromPoint( Vector const& point );
 winding_t	*WindingFromFace (dface_t *f, Vector& origin );
 
 void WriteWinding (FileHandle_t out, winding_t *w, Vector& color );
-void WriteNormal( FileHandle_t out, Vector const &nPos, Vector const &nDir, 
-				  float length, Vector const &color );
+void WriteNormal( FileHandle_t out, Vector const &nPos, Vector const &nDir,
+				float length, Vector const &color );
 void WriteLine( FileHandle_t out, const Vector &vecPos1, const Vector &vecPos2, const Vector &color );
 void WriteTrace( const char *pFileName, const FourRays &rays, const RayTracingResult& result );
 
@@ -454,22 +454,22 @@ struct SSE_sampleLightOutput_t
 #define GATHERLFLAGS_IGNORE_NORMALS 2
 
 // SSE Gather light stuff
-void GatherSampleLightSSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int facenum, 
-					   FourVectors const& pos, FourVectors *pNormals, int normalCount, int iThread,
-					   int nLFlags = 0,					// GATHERLFLAGS_xxx
-					   int static_prop_to_skip=-1,
-					   float flEpsilon = 0.0 );
-//void GatherSampleSkyLightSSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int facenum, 
+void GatherSampleLightSSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int facenum,
+					FourVectors const& pos, FourVectors *pNormals, int normalCount, int iThread,
+					int nLFlags = 0,					// GATHERLFLAGS_xxx
+					int static_prop_to_skip=-1,
+					float flEpsilon = 0.0 );
+//void GatherSampleSkyLightSSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int facenum,
 //							 FourVectors const& pos, FourVectors *pNormals, int normalCount, int iThread,
 //							 int nLFlags = 0,
 //							 int static_prop_to_skip=-1,
 //							 float flEpsilon = 0.0 );
-//void GatherSampleAmbientSkySSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int facenum, 
+//void GatherSampleAmbientSkySSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int facenum,
 //						  FourVectors const& pos, FourVectors *pNormals, int normalCount, int iThread,
 //						  int nLFlags = 0,					// GATHERLFLAGS_xxx
 //						  int static_prop_to_skip=-1,
 //						  float flEpsilon = 0.0 );
-//void GatherSampleStandardLightSSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int facenum, 
+//void GatherSampleStandardLightSSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int facenum,
 //						  FourVectors const& pos, FourVectors *pNormals, int normalCount, int iThread,
 //						  int nLFlags = 0,					// GATHERLFLAGS_xxx
 //						  int static_prop_to_skip=-1,
@@ -523,9 +523,9 @@ public:
 	// bsp tree functions
 	virtual bool ClipRayToDisp( DispTested_t &dispTested, Ray_t const &ray ) = 0;
 	virtual bool ClipRayToDispInLeaf( DispTested_t &dispTested, Ray_t const &ray, int ndxLeaf ) = 0;
-	virtual void ClipRayToDispInLeaf( DispTested_t &dispTested, Ray_t const &ray, 
+	virtual void ClipRayToDispInLeaf( DispTested_t &dispTested, Ray_t const &ray,
 				int ndxLeaf, float& dist, dface_t*& pFace, Vector2D& luxelCoord ) = 0;
-	virtual void ClipRayToDispInLeaf( DispTested_t &dispTested, Ray_t const &ray, 
+	virtual void ClipRayToDispInLeaf( DispTested_t &dispTested, Ray_t const &ray,
 		int ndxLeaf, float& dist, Vector *pNormal ) = 0;
 	virtual void StartRayTest( DispTested_t &dispTested ) = 0;
 	virtual void AddPolysForRayTrace() = 0;
@@ -580,8 +580,8 @@ extern int patchSamplesAdded;
 //-----------------------------------------------------------------------------
 
 void ComputeDetailPropLighting( int iThread );
-void ComputeIndirectLightingAtPoint( Vector &position, Vector &normal, Vector &outColor, 
-									 int iThread, bool force_fast = false, bool bIgnoreNormals = false );
+void ComputeIndirectLightingAtPoint( Vector &position, Vector &normal, Vector &outColor,
+									int iThread, bool force_fast = false, bool bIgnoreNormals = false );
 
 //-----------------------------------------------------------------------------
 // VRad static props

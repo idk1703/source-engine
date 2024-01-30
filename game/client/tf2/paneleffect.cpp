@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,7 +18,7 @@ EFFECT_HANDLE CPanelEffect::m_nHandleCount = 0;
 
 //-----------------------------------------------------------------------------
 // Purpose: Base panel effect
-// Input  : *owner - 
+// Input  : *owner -
 //-----------------------------------------------------------------------------
 CPanelEffect::CPanelEffect( ITFHintItem *owner )
 	: m_pOwner( owner )
@@ -45,15 +45,15 @@ CPanelEffect::CPanelEffect( ITFHintItem *owner )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPanelEffect::~CPanelEffect()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *owner - 
+// Purpose:
+// Input  : *owner -
 //-----------------------------------------------------------------------------
 void CPanelEffect::SetOwner( ITFHintItem *owner )
 {
@@ -61,7 +61,7 @@ void CPanelEffect::SetOwner( ITFHintItem *owner )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : ITFHintItem
 //-----------------------------------------------------------------------------
 ITFHintItem *CPanelEffect::GetOwner( void )
@@ -70,7 +70,7 @@ ITFHintItem *CPanelEffect::GetOwner( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : EFFECT_HANDLE
 //-----------------------------------------------------------------------------
 EFFECT_HANDLE CPanelEffect::GetHandle( void )
@@ -80,7 +80,7 @@ EFFECT_HANDLE CPanelEffect::GetHandle( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Override for specific painting effects
-// Input  : *panel - 
+// Input  : *panel -
 //-----------------------------------------------------------------------------
 void CPanelEffect::doPaint( vgui::Panel *panel )
 {
@@ -101,7 +101,7 @@ void CPanelEffect::Think( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPanelEffect::ShouldRemove( void )
@@ -110,8 +110,8 @@ bool CPanelEffect::ShouldRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : remove - 
+// Purpose:
+// Input  : remove -
 //-----------------------------------------------------------------------------
 void CPanelEffect::SetShouldRemove( bool remove )
 {
@@ -119,8 +119,8 @@ void CPanelEffect::SetShouldRemove( bool remove )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : type - 
+// Purpose:
+// Input  : type -
 //-----------------------------------------------------------------------------
 void CPanelEffect::SetType( int type )
 {
@@ -128,7 +128,7 @@ void CPanelEffect::SetType( int type )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CPanelEffect::GetType( void )
@@ -137,8 +137,8 @@ int CPanelEffect::GetType( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *panel - 
+// Purpose:
+// Input  : *panel -
 //-----------------------------------------------------------------------------
 void CPanelEffect::SetPanel( vgui::Panel *panel )
 {
@@ -146,7 +146,7 @@ void CPanelEffect::SetPanel( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : vgui::Panel
 //-----------------------------------------------------------------------------
 vgui::Panel *CPanelEffect::GetPanel( void )
@@ -155,8 +155,8 @@ vgui::Panel *CPanelEffect::GetPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *panel - 
+// Purpose:
+// Input  : *panel -
 //-----------------------------------------------------------------------------
 void CPanelEffect::SetPanelOther( vgui::Panel *panel )
 {
@@ -165,7 +165,7 @@ void CPanelEffect::SetPanelOther( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : vgui::Panel
 //-----------------------------------------------------------------------------
 vgui::Panel *CPanelEffect::GetPanelOther( void )
@@ -174,11 +174,11 @@ vgui::Panel *CPanelEffect::GetPanelOther( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : r - 
-//			g - 
-//			b - 
-//			a - 
+// Purpose:
+// Input  : r -
+//			g -
+//			b -
+//			a -
 //-----------------------------------------------------------------------------
 void CPanelEffect::SetColor( int r, int g, int b, int a )
 {
@@ -189,11 +189,11 @@ void CPanelEffect::SetColor( int r, int g, int b, int a )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : r - 
-//			g - 
-//			b - 
-//			a - 
+// Purpose:
+// Input  : r -
+//			g -
+//			b -
+//			a -
 //-----------------------------------------------------------------------------
 void CPanelEffect::GetColor( int& r, int& g, int& b, int& a )
 {
@@ -204,8 +204,8 @@ void CPanelEffect::GetColor( int& r, int& g, int& b, int& a )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : time - 
+// Purpose:
+// Input  : time -
 //-----------------------------------------------------------------------------
 void CPanelEffect::SetEndTime( float time )
 {
@@ -213,7 +213,7 @@ void CPanelEffect::SetEndTime( float time )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CPanelEffect::GetEndTime( void )
@@ -222,10 +222,10 @@ float CPanelEffect::GetEndTime( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : active - 
-//			x - 
-//			y - 
+// Purpose:
+// Input  : active -
+//			x -
+//			y -
 //-----------------------------------------------------------------------------
 void CPanelEffect::SetUsingOffset( bool active, int x, int y )
 {
@@ -235,7 +235,7 @@ void CPanelEffect::SetUsingOffset( bool active, int x, int y )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPanelEffect::GetUsingOffset( void )
@@ -244,9 +244,9 @@ bool CPanelEffect::GetUsingOffset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
-//			y - 
+// Purpose:
+// Input  : x -
+//			y -
 //-----------------------------------------------------------------------------
 void CPanelEffect::GetOffset( int& x, int& y )
 {
@@ -259,7 +259,7 @@ void CPanelEffect::GetOffset( int& x, int& y )
 //  parent
 // assumes panel hierarchy stops at the client .dll root panel
 // If parent is some other panel, then this will return false
-// Input  : *panel - 
+// Input  : *panel -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPanelEffect::IsVisibleIncludingParent( vgui::Panel *panel )
@@ -282,7 +282,7 @@ bool CPanelEffect::IsVisibleIncludingParent( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CPanelEffect::GetTargetType( void )
@@ -291,8 +291,8 @@ int CPanelEffect::GetTargetType( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : type - 
+// Purpose:
+// Input  : type -
 //-----------------------------------------------------------------------------
 void CPanelEffect::SetTargetType( int type )
 {
@@ -300,12 +300,12 @@ void CPanelEffect::SetTargetType( int type )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *outpanel - 
-//			int&x - 
-//			int&y - 
-//			int&w - 
-//			int&h - 
+// Purpose:
+// Input  : *outpanel -
+//			int&x -
+//			int&y -
+//			int&w -
+//			int&h -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPanelEffect::GetTargetRectangle( vgui::Panel *outpanel, int&x, int&y, int&w, int&h )
@@ -367,9 +367,9 @@ bool CPanelEffect::GetTargetRectangle( vgui::Panel *outpanel, int&x, int&y, int&
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
-//			y - 
+// Purpose:
+// Input  : x -
+//			y -
 //-----------------------------------------------------------------------------
 void CPanelEffect::SetTargetPoint( int x, int y )
 {
@@ -379,11 +379,11 @@ void CPanelEffect::SetTargetPoint( int x, int y )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
-//			y - 
-//			w - 
-//			h - 
+// Purpose:
+// Input  : x -
+//			y -
+//			w -
+//			h -
 //-----------------------------------------------------------------------------
 void CPanelEffect::SetTargetRect( int x, int y, int w, int h )
 {
@@ -395,8 +395,8 @@ void CPanelEffect::SetTargetRect( int x, int y, int w, int h )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : visible - 
+// Purpose:
+// Input  : visible -
 //-----------------------------------------------------------------------------
 void CPanelEffect::SetVisible( bool visible )
 {
@@ -404,11 +404,10 @@ void CPanelEffect::SetVisible( bool visible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPanelEffect::GetVisible( void )
 {
 	return m_bVisible;
 }
-

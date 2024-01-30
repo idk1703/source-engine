@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,7 +19,7 @@
 class C_Tesla : public C_BaseEntity
 {
 public:
-	
+
 	DECLARE_CLASS( C_Tesla, C_BaseEntity );
 	DECLARE_CLIENTCLASS();
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -35,17 +35,17 @@ class CTFBonesaw : public CTFWeaponBaseMelee
 {
 public:
 	DECLARE_CLASS( CTFBonesaw, CTFWeaponBaseMelee );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFBonesaw() {}
 	virtual void		Activate( void );
-	virtual int			GetWeaponID( void ) const			
-	{ 
+	virtual int			GetWeaponID( void ) const
+	{
 		const CEconItemView *pEconItemView = GetAttributeContainer()->GetItem();
 		if ( !V_strcmp( pEconItemView->GetItemDefinition()->GetDefinitionName(), "Harvester" ) )
 			return TF_WEAPON_HARVESTER_SAW;
-		return TF_WEAPON_BONESAW; 
+		return TF_WEAPON_BONESAW;
 	}
 
 	virtual void		SecondaryAttack();
@@ -54,7 +54,7 @@ public:
 	int					GetBonesawType( void ) const		{ int iMode = 0; CALL_ATTRIB_HOOK_INT( iMode, set_weapon_mode ); return iMode; };
 
 	virtual void		DoMeleeDamage( CBaseEntity* ent, trace_t& trace ) OVERRIDE;
-	
+
 	float				GetProgress( void ) { return 0; }
 	int					GetCount( void );
 	const char*			GetEffectLabelText( void ) { return "#TF_ORGANS"; }

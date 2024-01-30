@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -23,10 +23,10 @@ public:
 	virtual void	DrawPreStencilMask( void );
 	virtual void	DrawStencilMask( void );
 	virtual void	DrawPostStencilFixes( void );
-	
+
 	virtual void	RenderPortalViewToBackBuffer( CViewRender *pViewRender, const CViewSetup &cameraView );
 	virtual void	RenderPortalViewToTexture( CViewRender *pViewRender, const CViewSetup &cameraView );
-	
+
 	void			AddToVisAsExitPortal( ViewCustomVisibility_t *pCustomVisibility );
 	virtual bool	DoesExitViewIntersectWaterPlane( float waterZ, int leafWaterDataID ) const;
 	virtual SkyboxVisibility_t	SkyBoxVisibleFromPortal( void );

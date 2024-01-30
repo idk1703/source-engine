@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -30,12 +30,12 @@
 
 #define STUDIO_ENABLE_PERF_COUNTERS
 
-#define STUDIO_SEQUENCE_ACTIVITY_LOOKUPS_ARE_SLOW 0 
+#define STUDIO_SEQUENCE_ACTIVITY_LOOKUPS_ARE_SLOW 0
 // If this is set to 1, then the activity->sequence mapping inside
-// the CStudioHdr will not be initialized until the first call to 
-// SelectWeightedSequence() or HaveSequenceForActivity(). If set 
+// the CStudioHdr will not be initialized until the first call to
+// SelectWeightedSequence() or HaveSequenceForActivity(). If set
 // to zero, the mapping will be initialized from CStudioHdr::Init()
-// (itself called from the constructor). 
+// (itself called from the constructor).
 // As of June 4 2007, this was set to 1 because physics, among other
 // systems, extemporaneously declares CStudioHdrs inside local function
 // scopes without querying their activity/sequence mapping at all.
@@ -171,21 +171,21 @@ struct mstudiojigglebone_t
 
 	// flexible params
 	float			yawStiffness;
-	float			yawDamping;	
+	float			yawDamping;
 	float			pitchStiffness;
-	float			pitchDamping;	
+	float			pitchDamping;
 	float			alongStiffness;
-	float			alongDamping;	
+	float			alongDamping;
 
 	// angle constraint
 	float			angleLimit;				// maximum deflection of tip in radians
-	
+
 	// yaw constraint
 	float			minYaw;					// in radians
 	float			maxYaw;					// in radians
 	float			yawFriction;
 	float			yawBounce;
-	
+
 	// pitch constraint
 	float			minPitch;				// in radians
 	float			maxPitch;				// in radians
@@ -195,7 +195,7 @@ struct mstudiojigglebone_t
 	// base spring
 	float			baseMass;
 	float			baseStiffness;
-	float			baseDamping;	
+	float			baseDamping;
 	float			baseMinLeft;
 	float			baseMaxLeft;
 	float			baseLeftFriction;
@@ -270,7 +270,7 @@ private:
 	mstudiobone_t(const mstudiobone_t& vOther);
 };
 
-struct mstudiolinearbone_t	
+struct mstudiolinearbone_t
 {
 	DECLARE_BYTESWAP_DATADESC();
 
@@ -383,8 +383,8 @@ private:
 #define BONE_USED_BY_ATTACHMENT		0x00000200	// bone (or child) is used by an attachment point
 #define BONE_USED_BY_VERTEX_MASK	0x0003FC00
 #define BONE_USED_BY_VERTEX_LOD0	0x00000400	// bone (or child) is used by the toplevel model via skinned vertex
-#define BONE_USED_BY_VERTEX_LOD1	0x00000800	
-#define BONE_USED_BY_VERTEX_LOD2	0x00001000  
+#define BONE_USED_BY_VERTEX_LOD1	0x00000800
+#define BONE_USED_BY_VERTEX_LOD2	0x00001000
 #define BONE_USED_BY_VERTEX_LOD3	0x00002000
 #define BONE_USED_BY_VERTEX_LOD4	0x00004000
 #define BONE_USED_BY_VERTEX_LOD5	0x00008000
@@ -423,7 +423,7 @@ struct mstudiobbox_t
 	int					bone;
 	int					group;				// intersection group
 	Vector				bbmin;				// bounding box
-	Vector				bbmax;	
+	Vector				bbmax;
 	int					szhitboxnameindex;	// offset to the name of the hitbox.
 	int					unused[8];
 
@@ -551,7 +551,7 @@ struct mstudioikrule_t
 	float		tail;	// end of full influence
 	float		end;	// end of all influence
 
-	float		unused3;	// 
+	float		unused3;	//
 	float		contact;	// frame footstep makes ground concact
 	float		drop;		// how far down the foot should drop when reaching for IK
 	float		top;		// top of the foot box
@@ -596,7 +596,7 @@ struct mstudiolocalhierarchy_t
 	float		tail;			// end of full influence
 	float		end;			// end of all influence
 
-	int			iStart;			// first frame 
+	int			iStart;			// first frame
 
 	int			localanimindex;
 	inline mstudiocompressedikerror_t *pLocalAnim() const { return (mstudiocompressedikerror_t *)(((byte *)this) + localanimindex); };
@@ -604,12 +604,12 @@ struct mstudiolocalhierarchy_t
 	int			unused[4];
 };
 
-	
+
 
 // animation frames
 union mstudioanimvalue_t
 {
-	struct 
+	struct
 	{
 		byte	valid;
 		byte	total;
@@ -656,7 +656,7 @@ struct mstudioanim_t
 struct mstudiomovement_t
 {
 	DECLARE_BYTESWAP_DATADESC();
-	int					endframe;				
+	int					endframe;
 	int					motionflags;
 	float				v0;			// velocity at start of block
 	float				v1;			// velocity at end of block
@@ -696,7 +696,7 @@ struct mstudioanimdesc_t
 	int					sznameindex;
 	inline char * const pszName( void ) const { return ((char *)this) + sznameindex; }
 
-	float				fps;		// frames per second	
+	float				fps;		// frames per second
 	int					flags;		// looping/non-looping flags
 
 	int					numframes;
@@ -706,7 +706,7 @@ struct mstudioanimdesc_t
 	int					movementindex;
 	inline mstudiomovement_t * const pMovement( int i ) const { return (mstudiomovement_t *)(((byte *)this) + movementindex) + i; };
 
-	int					unused1[6];			// remove as appropriate (and zero if loading older versions)	
+	int					unused1[6];			// remove as appropriate (and zero if loading older versions)
 
 	int					animblock;
 	int					animindex;	 // non-zero when anim data isn't in sections
@@ -758,7 +758,7 @@ struct mstudioautolayer_t
 struct mstudioactivitymodifier_t
 {
 	DECLARE_BYTESWAP_DATADESC();
-	
+
 	int					sznameindex;
 	inline char			*pszName() { return (sznameindex) ? (char *)(((byte *)this) + sznameindex ) : NULL; }
 };
@@ -784,9 +784,9 @@ struct mstudioseqdesc_t
 	int					numevents;
 	int					eventindex;
 	inline mstudioevent_t *pEvent( int i ) const { Assert( i >= 0 && i < numevents); return (mstudioevent_t *)(((byte *)this) + eventindex) + i; };
-	
+
 	Vector				bbmin;		// per sequence bounding box
-	Vector				bbmax;		
+	Vector				bbmax;
 
 	int					numblends;
 
@@ -827,7 +827,7 @@ struct mstudioseqdesc_t
 
 	float				entryphase;		// used to match entry gait
 	float				exitphase;		// used to match exit gait
-	
+
 	float				lastframe;		// frame that should generation EndOfSequence
 
 	int					nextseq;		// auto advancing sequences
@@ -909,7 +909,7 @@ enum FlexControllerRemapType_t
 {
 	FLEXCONTROLLER_REMAP_PASSTHRU = 0,
 	FLEXCONTROLLER_REMAP_2WAY,	// Control 0 -> ramps from 1-0 from 0->0.5. Control 1 -> ramps from 0-1 from 0.5->1
-	FLEXCONTROLLER_REMAP_NWAY,	// StepSize = 1 / (control count-1) Control n -> ramps from 0-1-0 from (n-1)*StepSize to n*StepSize to (n+1)*StepSize. A second control is needed to specify amount to use 
+	FLEXCONTROLLER_REMAP_NWAY,	// StepSize = 1 / (control count-1) Control n -> ramps from 0-1-0 from (n-1)*StepSize to n*StepSize to (n+1)*StepSize. A second control is needed to specify amount to use
 	FLEXCONTROLLER_REMAP_EYELID
 };
 
@@ -1138,7 +1138,7 @@ struct mstudioflexop_t
 {
 	DECLARE_BYTESWAP_DATADESC();
 	int		op;
-	union 
+	union
 	{
 		int		index;
 		float	value;
@@ -1159,7 +1159,7 @@ struct mstudioboneweight_t
 {
 	DECLARE_BYTESWAP_DATADESC();
 	float	weight[MAX_NUM_BONES_PER_VERT];
-	char	bone[MAX_NUM_BONES_PER_VERT]; 
+	char	bone[MAX_NUM_BONES_PER_VERT];
 	byte	numbones;
 
 //	byte	material;
@@ -1191,10 +1191,10 @@ struct mstudiotexture_t
 	inline char * const		pszName( void ) const { return ((char *)this) + sznameindex; }
 	int						flags;
 	int						used;
-    int						unused1;
+	int						unused1;
 	mutable IMaterial		*material;  // fixme: this needs to go away . .isn't used by the engine, but is used by studiomdl
 	mutable void			*clientmaterial;	// gary, replace with client material pointer if used
-	
+
 	int						unused[10];
 };
 
@@ -1315,7 +1315,7 @@ struct mstudiomesh_t
 	int					material;
 
 	int					modelindex;
-	mstudiomodel_t *pModel() const; 
+	mstudiomodel_t *pModel() const;
 
 	int					numvertices;		// number of unique vertices/normals/texcoords
 	int					vertexoffset;		// vertex mstudiovertex_t
@@ -1323,7 +1323,7 @@ struct mstudiomesh_t
 	// Access thin/fat mesh vertex data (only one will return a non-NULL result)
 	const mstudio_meshvertexdata_t	*GetVertexData(		void *pModelData = NULL );
 	const thinModelVertices_t		*GetThinVertexData(	void *pModelData = NULL );
-	
+
 	int					numflexes;			// vertex animation
 	int					flexindex;
 	inline mstudioflex_t *pFlex( int i ) const { return (mstudioflex_t *)(((byte *)this) + flexindex) + i; };
@@ -1358,7 +1358,7 @@ struct mstudiomodel_t
 
 	float				boundingradius;
 
-	int					nummeshes;	
+	int					nummeshes;
 	int					meshindex;
 	inline mstudiomesh_t *pMesh( int i ) const { return (mstudiomesh_t *)(((byte *)this) + meshindex) + i; };
 
@@ -1386,7 +1386,7 @@ struct mstudiomodel_t
 	int					unused[8];		// remove as appropriate
 };
 
-inline bool mstudio_modelvertexdata_t::HasTangentData( void ) const 
+inline bool mstudio_modelvertexdata_t::HasTangentData( void ) const
 {
 	return (pTangentData != NULL);
 }
@@ -1405,22 +1405,22 @@ inline int mstudio_modelvertexdata_t::GetGlobalTangentIndex( int i ) const
 	return ( i + ( modelptr->tangentsindex / sizeof( Vector4D ) ) );
 }
 
-inline mstudiovertex_t *mstudio_modelvertexdata_t::Vertex( int i ) const 
+inline mstudiovertex_t *mstudio_modelvertexdata_t::Vertex( int i ) const
 {
 	return (mstudiovertex_t *)pVertexData + GetGlobalVertexIndex( i );
 }
 
-inline Vector *mstudio_modelvertexdata_t::Position( int i ) const 
+inline Vector *mstudio_modelvertexdata_t::Position( int i ) const
 {
 	return &Vertex(i)->m_vecPosition;
 }
 
-inline Vector *mstudio_modelvertexdata_t::Normal( int i ) const 
-{ 
+inline Vector *mstudio_modelvertexdata_t::Normal( int i ) const
+{
 	return &Vertex(i)->m_vecNormal;
 }
 
-inline Vector4D *mstudio_modelvertexdata_t::TangentS( int i ) const 
+inline Vector4D *mstudio_modelvertexdata_t::TangentS( int i ) const
 {
 	// NOTE: The tangents vector is 16-bytes in a separate array
 	// because it only exists on the high end, and if I leave it out
@@ -1428,19 +1428,19 @@ inline Vector4D *mstudio_modelvertexdata_t::TangentS( int i ) const
 	return (Vector4D *)pTangentData + GetGlobalTangentIndex( i );
 }
 
-inline Vector2D *mstudio_modelvertexdata_t::Texcoord( int i ) const 
-{ 
+inline Vector2D *mstudio_modelvertexdata_t::Texcoord( int i ) const
+{
 	return &Vertex(i)->m_vecTexCoord;
 }
 
-inline mstudioboneweight_t *mstudio_modelvertexdata_t::BoneWeights( int i ) const 
+inline mstudioboneweight_t *mstudio_modelvertexdata_t::BoneWeights( int i ) const
 {
 	return &Vertex(i)->m_BoneWeights;
 }
 
-inline mstudiomodel_t *mstudiomesh_t::pModel() const 
-{ 
-	return (mstudiomodel_t *)(((byte *)this) + modelindex); 
+inline mstudiomodel_t *mstudiomesh_t::pModel() const
+{
+	return (mstudiomodel_t *)(((byte *)this) + modelindex);
 }
 
 inline bool mstudio_meshvertexdata_t::HasTangentData( void ) const
@@ -1469,7 +1469,7 @@ inline const thinModelVertices_t * mstudiomesh_t::GetThinVertexData( void *pMode
 
 inline int mstudio_meshvertexdata_t::GetModelVertexIndex( int i ) const
 {
-	mstudiomesh_t *meshptr = (mstudiomesh_t *)((byte *)this - offsetof(mstudiomesh_t,vertexdata)); 
+	mstudiomesh_t *meshptr = (mstudiomesh_t *)((byte *)this - offsetof(mstudiomesh_t,vertexdata));
 	return meshptr->vertexoffset + i;
 }
 
@@ -1478,14 +1478,14 @@ inline int mstudio_meshvertexdata_t::GetGlobalVertexIndex( int i ) const
 	return modelvertexdata->GetGlobalVertexIndex( GetModelVertexIndex( i ) );
 }
 
-inline Vector *mstudio_meshvertexdata_t::Position( int i ) const 
+inline Vector *mstudio_meshvertexdata_t::Position( int i ) const
 {
-	return modelvertexdata->Position( GetModelVertexIndex( i ) ); 
+	return modelvertexdata->Position( GetModelVertexIndex( i ) );
 };
 
-inline Vector *mstudio_meshvertexdata_t::Normal( int i ) const 
+inline Vector *mstudio_meshvertexdata_t::Normal( int i ) const
 {
-	return modelvertexdata->Normal( GetModelVertexIndex( i ) ); 
+	return modelvertexdata->Normal( GetModelVertexIndex( i ) );
 };
 
 inline Vector4D *mstudio_meshvertexdata_t::TangentS( int i ) const
@@ -1493,14 +1493,14 @@ inline Vector4D *mstudio_meshvertexdata_t::TangentS( int i ) const
 	return modelvertexdata->TangentS( GetModelVertexIndex( i ) );
 }
 
-inline Vector2D *mstudio_meshvertexdata_t::Texcoord( int i ) const 
+inline Vector2D *mstudio_meshvertexdata_t::Texcoord( int i ) const
 {
-	return modelvertexdata->Texcoord( GetModelVertexIndex( i ) ); 
+	return modelvertexdata->Texcoord( GetModelVertexIndex( i ) );
 };
 
-inline mstudioboneweight_t *mstudio_meshvertexdata_t::BoneWeights( int i ) const 
+inline mstudioboneweight_t *mstudio_meshvertexdata_t::BoneWeights( int i ) const
 {
-	return modelvertexdata->BoneWeights( GetModelVertexIndex( i ) ); 
+	return modelvertexdata->BoneWeights( GetModelVertexIndex( i ) );
 };
 
 inline mstudiovertex_t *mstudio_meshvertexdata_t::Vertex( int i ) const
@@ -1549,11 +1549,11 @@ struct studiomeshdata_t
 struct studioloddata_t
 {
 	// not needed - this is really the same as studiohwdata_t.m_NumStudioMeshes
-	//int					m_NumMeshes; 
+	//int					m_NumMeshes;
 	studiomeshdata_t	*m_pMeshData; // there are studiohwdata_t.m_NumStudioMeshes of these.
 	float				m_SwitchPoint;
 	// one of these for each lod since we can switch to simpler materials on lower lods.
-	int					numMaterials; 
+	int					numMaterials;
 	IMaterial			**ppMaterials; /* will have studiohdr_t.numtextures elements allocated */
 	// hack - this needs to go away.
 	int					*pMaterialFlags; /* will have studiohdr_t.numtextures elements allocated */
@@ -1642,8 +1642,8 @@ struct mstudiosrcbonetransform_t
 
 	int			sznameindex;
 	inline const char *pszName( void ) const { return ((char *)this) + sznameindex; }
-	matrix3x4_t	pretransform;	
-	matrix3x4_t	posttransform;	
+	matrix3x4_t	pretransform;
+	matrix3x4_t	posttransform;
 };
 
 
@@ -1651,7 +1651,7 @@ struct mstudiosrcbonetransform_t
 // Purpose: Load time results on model compositing
 // ----------------------------------------------------------
 
-class virtualgroup_t 
+class virtualgroup_t
 {
 public:
 	virtualgroup_t( void ) { cache = NULL; };
@@ -1698,7 +1698,7 @@ struct virtualgeneric_t
 
 struct virtualmodel_t
 {
-	void AppendSequences( int group, const studiohdr_t *pStudioHdr ); 
+	void AppendSequences( int group, const studiohdr_t *pStudioHdr );
 	void AppendAnimations( int group, const studiohdr_t *pStudioHdr );
 	void AppendAttachments( int ground, const studiohdr_t *pStudioHdr );
 	void AppendPoseParameters( int group, const studiohdr_t *pStudioHdr );
@@ -1724,7 +1724,7 @@ struct virtualmodel_t
 		return &m_group[ m_seq[ sequence ].group ];
 	} // Note: user must manage mutex for this
 
-    CThreadFastMutex m_Lock;
+	CThreadFastMutex m_Lock;
 
 	CUtlVector< virtualsequence_t > m_seq;
 	CUtlVector< virtualgeneric_t > m_anim;
@@ -1965,7 +1965,7 @@ struct vertexFileFixup_t
 // models when we change materials.
 #define STUDIOHDR_FLAGS_USES_ENV_CUBEMAP					0x00000002
 
-// Use this when there are translucent parts to the model but we're not going to sort it 
+// Use this when there are translucent parts to the model but we're not going to sort it
 #define STUDIOHDR_FLAGS_FORCE_OPAQUE						0x00000004
 
 // Use this when we want to render the opaque parts during the opaque pass
@@ -2075,12 +2075,12 @@ struct studiohdr_t
 	Vector				eyeposition;	// ideal eye position
 
 	Vector				illumposition;	// illumination center
-	
+
 	Vector				hull_min;		// ideal movement hull size
-	Vector				hull_max;			
+	Vector				hull_max;
 
 	Vector				view_bbmin;		// clipping bounding box
-	Vector				view_bbmax;		
+	Vector				view_bbmax;
 
 	int					flags;
 
@@ -2098,15 +2098,15 @@ struct studiohdr_t
 	int					hitboxsetindex;
 
 	// Look up hitbox set by index
-	mstudiohitboxset_t	*pHitboxSet( int i ) const 
-	{ 
-		Assert( i >= 0 && i < numhitboxsets); 
-		return (mstudiohitboxset_t *)(((byte *)this) + hitboxsetindex ) + i; 
+	mstudiohitboxset_t	*pHitboxSet( int i ) const
+	{
+		Assert( i >= 0 && i < numhitboxsets);
+		return (mstudiohitboxset_t *)(((byte *)this) + hitboxsetindex ) + i;
 	};
 
 	// Calls through to hitbox to determine size of specified set
-	inline mstudiobbox_t *pHitbox( int i, int set ) const 
-	{ 
+	inline mstudiobbox_t *pHitbox( int i, int set ) const
+	{
 		mstudiohitboxset_t const *s = pHitboxSet( set );
 		if ( !s )
 			return NULL;
@@ -2128,11 +2128,11 @@ struct studiohdr_t
 //private:
 	int					numlocalanim;			// animations/poses
 	int					localanimindex;		// animation descriptions
-  	inline mstudioanimdesc_t *pLocalAnimdesc( int i ) const { if (i < 0 || i >= numlocalanim) i = 0; return (mstudioanimdesc_t *)(((byte *)this) + localanimindex) + i; };
+	inline mstudioanimdesc_t *pLocalAnimdesc( int i ) const { if (i < 0 || i >= numlocalanim) i = 0; return (mstudioanimdesc_t *)(((byte *)this) + localanimindex) + i; };
 
 	int					numlocalseq;				// sequences
 	int					localseqindex;
-  	inline mstudioseqdesc_t *pLocalSeqdesc( int i ) const { if (i < 0 || i >= numlocalseq) i = 0; return (mstudioseqdesc_t *)(((byte *)this) + localseqindex) + i; };
+	inline mstudioseqdesc_t *pLocalSeqdesc( int i ) const { if (i < 0 || i >= numlocalseq) i = 0; return (mstudioseqdesc_t *)(((byte *)this) + localseqindex) + i; };
 
 //public:
 	bool				SequencesAvailable() const;
@@ -2152,11 +2152,11 @@ struct studiohdr_t
 	void				SetActivityListVersion( int version ) const;
 	int					GetEventListVersion( void );
 	void				SetEventListVersion( int version );
-	
+
 	// raw textures
 	int					numtextures;
 	int					textureindex;
-	inline mstudiotexture_t *pTexture( int i ) const { Assert( i >= 0 && i < numtextures ); return (mstudiotexture_t *)(((byte *)this) + textureindex) + i; }; 
+	inline mstudiotexture_t *pTexture( int i ) const { Assert( i >= 0 && i < numtextures ); return (mstudiotexture_t *)(((byte *)this) + textureindex) + i; };
 
 
 	// raw textures search paths
@@ -2170,7 +2170,7 @@ struct studiohdr_t
 	int					skinindex;
 	inline short		*pSkinref( int i ) const { return (short *)(((byte *)this) + skinindex) + i; };
 
-	int					numbodyparts;		
+	int					numbodyparts;
 	int					bodypartindex;
 	inline mstudiobodyparts_t	*pBodypart( int i ) const { return (mstudiobodyparts_t *)(((byte *)this) + bodypartindex) + i; };
 
@@ -2263,7 +2263,7 @@ struct studiohdr_t
 	virtualmodel_t		*GetVirtualModel( void ) const;
 
 	// for demand loaded animation blocks
-	int					szanimblocknameindex;	
+	int					szanimblocknameindex;
 	inline char * const pszAnimBlockName( void ) const { return ((char *)this) + szanimblocknameindex; }
 	int					numanimblocks;
 	int					animblockindex;
@@ -2280,7 +2280,7 @@ struct studiohdr_t
 	void				*pIndexBase;
 
 	// if STUDIOHDR_FLAGS_CONSTANT_DIRECTIONAL_LIGHT_DOT is set,
-	// this value is used to calculate directional components of lighting 
+	// this value is used to calculate directional components of lighting
 	// on static props
 	byte				constdirectionallightdot;
 
@@ -2288,7 +2288,7 @@ struct studiohdr_t
 	// the *actual* clamped root lod is found in studiohwdata
 	// this is stored here as a global store to ensure the staged loading matches the rendering
 	byte				rootLOD;
-	
+
 	// set in the mdl data to specify that lod configuration should only allow first numAllowRootLODs
 	// to be set as root LOD:
 	//	numAllowedRootLODs = 0	means no restriction, any lod can be set as root lod.
@@ -2325,7 +2325,7 @@ struct studiohdr_t
 	inline int			BoneFlexDriverCount() const { return studiohdr2index ? pStudioHdr2()->m_nBoneFlexDriverCount : 0; }
 	inline const mstudioboneflexdriver_t* BoneFlexDriver( int i ) const { Assert( i >= 0 && i < BoneFlexDriverCount() ); return studiohdr2index ? pStudioHdr2()->pBoneFlexDriver( i ) : NULL; }
 
-	// NOTE: No room to add stuff? Up the .mdl file format version 
+	// NOTE: No room to add stuff? Up the .mdl file format version
 	// [and move all fields in studiohdr2_t into studiohdr_t and kill studiohdr2_t],
 	// or add your stuff to studiohdr2_t. See NumSrcBoneTransforms/SrcBoneTransform for the pattern to use.
 	int					unused2[1];
@@ -2449,10 +2449,10 @@ public:
 	inline int			numhitboxsets() const { return m_pStudioHdr->numhitboxsets; };
 	inline mstudiohitboxset_t	*pHitboxSet( int i ) const { return m_pStudioHdr->pHitboxSet( i ); };
 
-	inline mstudiobbox_t *pHitbox( int i, int set ) const { return m_pStudioHdr->pHitbox( i, set ); }; 
+	inline mstudiobbox_t *pHitbox( int i, int set ) const { return m_pStudioHdr->pHitbox( i, set ); };
 	inline int			iHitboxCount( int set ) const { return m_pStudioHdr->iHitboxCount( set ); };
 
-	inline int			numbodyparts() const { return m_pStudioHdr->numbodyparts; };		
+	inline int			numbodyparts() const { return m_pStudioHdr->numbodyparts; };
 	inline mstudiobodyparts_t	*pBodypart( int i ) const { return m_pStudioHdr->pBodypart( i ); };
 
 	inline int			numskinfamilies() const { return m_pStudioHdr->numskinfamilies; }
@@ -2469,12 +2469,12 @@ public:
 	inline const byte	*GetBoneTableSortedByName() const { return m_pStudioHdr->GetBoneTableSortedByName(); };
 
 	inline Vector		illumposition() const { return m_pStudioHdr->illumposition; };
-	
+
 	inline Vector		hull_min() const { return m_pStudioHdr->hull_min; };		// ideal movement hull size
-	inline Vector		hull_max() const { return m_pStudioHdr->hull_max; };			
+	inline Vector		hull_max() const { return m_pStudioHdr->hull_max; };
 
 	inline Vector		view_bbmin() const { return m_pStudioHdr->view_bbmin; };		// clipping bounding box
-	inline Vector		view_bbmax() const { return m_pStudioHdr->view_bbmax; };		
+	inline Vector		view_bbmax() const { return m_pStudioHdr->view_bbmax; };
 
 	inline int			numtextures() const { return m_pStudioHdr->numtextures; };
 
@@ -2509,13 +2509,13 @@ public:
 	// This class maps an activity to sequences allowed for that activity, accelerating the resolution
 	// of SelectWeightedSequence(), especially on PowerPC. Iterating through every sequence
 	// attached to a model turned out to be a very destructive cache access pattern on 360.
-	// 
+	//
 	// I've encapsulated this behavior inside a nested class for organizational reasons; there is
 	// no particular programmatic or efficiency benefit to it. It just makes clearer what particular
 	// code in the otherwise very complicated StudioHdr class has to do with this particular
 	// optimization, and it lets you collapse the whole definition down to a single line in Visual
 	// Studio.
-	class CActivityToSequenceMapping /* final */ 
+	class CActivityToSequenceMapping /* final */
 	{
 	public:
 		// A tuple of a sequence and its corresponding weight. Lists of these correspond to activities.
@@ -2533,25 +2533,25 @@ public:
 		// values: an index into the m_pSequenceTuples array, a count of the
 		// total sequences present for an activity, and the sum of their
 		// weights.
-		// Note this struct is 128-bits wide, exactly coincident to a PowerPC 
+		// Note this struct is 128-bits wide, exactly coincident to a PowerPC
 		// cache line and VMX register. Please consider very carefully the
 		// performance implications before adding any additional fields to this.
 		// You could probably do away with totalWeight if you really had to.
 		struct HashValueType
 		{
 			// KEY (hashed)
-			int activityIdx; 
+			int activityIdx;
 
 			// VALUE (not hashed)
 			int startingIdx;
 			int count;
 			int totalWeight;
 
-			HashValueType(int _actIdx, int _stIdx, int _ct, int _tW) : 
+			HashValueType(int _actIdx, int _stIdx, int _ct, int _tW) :
 			activityIdx(_actIdx), startingIdx(_stIdx), count(_ct), totalWeight(_tW) {}
 
 			// default constructor (ought not to be actually used)
-			HashValueType() : activityIdx(-1), startingIdx(-1), count(-1), totalWeight(-1) 
+			HashValueType() : activityIdx(-1), startingIdx(-1), count(-1), totalWeight(-1)
 				{ AssertMsg(false, "Don't use default HashValueType()!"); }
 
 
@@ -2585,16 +2585,16 @@ public:
 		// These must be here because IFM does not compile/link studio.cpp (?!?)
 
 		// ctor
-		CActivityToSequenceMapping( void ) 
-			: m_pSequenceTuples(NULL), m_iSequenceTuplesCount(0), m_ActToSeqHash(8,0,0), m_expectedPStudioHdr(NULL), m_expectedVModel(NULL) 
+		CActivityToSequenceMapping( void )
+			: m_pSequenceTuples(NULL), m_iSequenceTuplesCount(0), m_ActToSeqHash(8,0,0), m_expectedPStudioHdr(NULL), m_expectedVModel(NULL)
 #if STUDIO_SEQUENCE_ACTIVITY_LAZY_INITIALIZE
-			, m_bIsInitialized(false) 
+			, m_bIsInitialized(false)
 #endif
 		{};
 
 		// dtor -- not virtual because this class has no inheritors
 		~CActivityToSequenceMapping()
-		{	
+		{
 			if ( m_pSequenceTuples != NULL )
 			{
 				if ( m_pSequenceTuples->pActivityModifiers != NULL )
@@ -2608,7 +2608,7 @@ public:
 		/// Get the list of sequences for an activity. Returns the pointer to the
 		/// first sequence tuple. Output parameters are a count of sequences present,
 		/// and the total weight of all the sequences. (it would be more LHS-friendly
-		/// to return these on registers, if only C++ offered more than one return 
+		/// to return these on registers, if only C++ offered more than one return
 		/// value....)
 		const SequenceTuple *GetSequences( int forActivity, int *outSequenceCount, int *outTotalWeight );
 
@@ -2628,7 +2628,7 @@ public:
 		/// Force Initialize() to occur again, even if it has already occured.
 		void Reinitialize( CStudioHdr *pstudiohdr );
 
-		/// A more efficient version of the old SelectWeightedSequence() function in animation.cpp. 
+		/// A more efficient version of the old SelectWeightedSequence() function in animation.cpp.
 		int SelectWeightedSequence( CStudioHdr *pstudiohdr, int activity, int curSequence );
 
 		// selects the sequence with the most matching modifiers
@@ -2642,8 +2642,8 @@ public:
 #endif
 
 		// we don't store an outer pointer because we can't initialize it at construction time
-		// (warning c4355) -- there are ways around this but it's easier to just pass in a 
-		// pointer to the CStudioHdr when we need it, since this class isn't supposed to 
+		// (warning c4355) -- there are ways around this but it's easier to just pass in a
+		// pointer to the CStudioHdr when we need it, since this class isn't supposed to
 		// export its interface outside the studio header anyway.
 		// CStudioHdr * const m_pOuter;
 
@@ -2663,7 +2663,7 @@ public:
 
 	CActivityToSequenceMapping m_ActivityToSequence;
 
-	/// A more efficient version of the old SelectWeightedSequence() function in animation.cpp. 
+	/// A more efficient version of the old SelectWeightedSequence() function in animation.cpp.
 	/// Returns -1 on failure to find a sequence
 	inline int SelectWeightedSequence( int activity, int curSequence )
 	{
@@ -2692,7 +2692,7 @@ public:
 	}
 
 	/// True iff there is at least one sequence for the given activity.
-	inline bool HaveSequenceForActivity( int activity )	
+	inline bool HaveSequenceForActivity( int activity )
 	{
 #if STUDIO_SEQUENCE_ACTIVITY_LAZY_INITIALIZE
 		if ( !m_ActivityToSequence.IsInitialized() )
@@ -2732,16 +2732,16 @@ class CModelAccess
 {
 public:
 	CModelAccess(CStudioHdr *pSemaphore)
-	 : m_pStudioHdr(pSemaphore)
+	: m_pStudioHdr(pSemaphore)
 	{
 		m_pStudioHdr->IncrementAccess();
 	}
-	
+
 	~CModelAccess()
 	{
 		m_pStudioHdr->DecrementAccess();
 	}
-	
+
 private:
 	CStudioHdr *m_pStudioHdr;
 };
@@ -2768,8 +2768,8 @@ struct flexsetting_t
 	int					nameindex;
 
 	inline char *pszName( void ) const
-	{ 
-		return (char *)(((byte *)this) + nameindex); 
+	{
+		return (char *)(((byte *)this) + nameindex);
 	}
 
 	// Leaving this for legacy support
@@ -2778,8 +2778,8 @@ struct flexsetting_t
 	// Number of flex settings
 	int					numsettings;
 	int					index;
-	
-	// OBSOLETE:  
+
+	// OBSOLETE:
 	int					obsolete2;
 
 	// Index of start of contiguous array of flexweight_t structures
@@ -2790,9 +2790,9 @@ struct flexsetting_t
 	//  any markov chain hierarchy.  Because of this possibility, we return
 	//  the number of settings in the weights array returned.  We'll generally
 	//  call this function with i == 0
-	// Input  : *base - 
-	//			i - 
-	//			**weights - 
+	// Input  : *base -
+	//			i -
+	//			**weights -
 	// Output : int
 	//-----------------------------------------------------------------------------
 	inline int psetting( byte *base, int i, flexweight_t **weights ) const;
@@ -2818,16 +2818,16 @@ struct flexsettinghdr_t
 	int					numindexes;
 	int					indexindex;
 
-	inline flexsetting_t *pIndexedSetting( int index ) const 
-	{ 
+	inline flexsetting_t *pIndexedSetting( int index ) const
+	{
 		if ( index < 0 || index >= numindexes )
 		{
 			return NULL;
 		}
 
 		int i = *((int *)(((byte *)this) + indexindex) + index);
-		
-		if (i == -1) 
+
+		if (i == -1)
 		{
 			return NULL;
 		}
@@ -2846,14 +2846,14 @@ struct flexsettinghdr_t
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: Retrieves a pointer to the flexweight_t.  
+// Purpose: Retrieves a pointer to the flexweight_t.
 // Input  : *base - flexsettinghdr_t * pointer
 //			i - index of flex setting to retrieve
 //			**weights - destination for weights array starting at index i.
 // Output : int
 //-----------------------------------------------------------------------------
 inline int flexsetting_t::psetting( byte *base, int i, flexweight_t **weights ) const
-{ 
+{
 	// Grab array pointer
 	*weights = (flexweight_t *)(((byte *)this) + settingindex) + i;
 	// Return true number of settings
@@ -2945,12 +2945,12 @@ inline const mstudioflexcontroller_t *mstudioflexcontrollerui_t::pController( in
 #define STUDIO_NWAY		17	// Fetch a value from a 2 Way slider for the 2nd value RemapVal( 0.5, 1.0, 0.0, 1.0 )
 #define STUDIO_COMBO	18	// Perform a combo operation (essentially multiply the last N values on the stack)
 #define STUDIO_DOMINATE	19	// Performs a combination domination operation
-#define STUDIO_DME_LOWER_EYELID 20	// 
-#define STUDIO_DME_UPPER_EYELID 21	// 
+#define STUDIO_DME_LOWER_EYELID 20	//
+#define STUDIO_DME_UPPER_EYELID 21	//
 
 // motion flags
 #define STUDIO_X		0x00000001
-#define STUDIO_Y		0x00000002	
+#define STUDIO_Y		0x00000002
 #define STUDIO_Z		0x00000004
 #define STUDIO_XR		0x00000008
 #define STUDIO_YR		0x00000010
@@ -2973,7 +2973,7 @@ inline const mstudioflexcontroller_t *mstudioflexcontrollerui_t::pController( in
 #define STUDIO_SNAP		0x0002		// do not interpolate between previous animation and this one
 #define STUDIO_DELTA	0x0004		// this sequence "adds" to the base sequences, not slerp blends
 #define STUDIO_AUTOPLAY	0x0008		// temporary flag that forces the sequence to always play
-#define STUDIO_POST		0x0010		// 
+#define STUDIO_POST		0x0010		//
 #define STUDIO_ALLZEROS	0x0020		// this animation/sequence has no real animation data
 //						0x0040
 #define STUDIO_CYCLEPOSE 0x0080		// cycle index is taken from a pose parameter index
@@ -2989,7 +2989,7 @@ inline const mstudioflexcontroller_t *mstudioflexcontrollerui_t::pController( in
 //							0x0002
 //							0x0004
 //							0x0008
-#define STUDIO_AL_POST		0x0010		// 
+#define STUDIO_AL_POST		0x0010		//
 //							0x0020
 #define STUDIO_AL_SPLINE	0x0040		// convert layer ramp in/out curve is a spline instead of linear
 #define STUDIO_AL_XFADE		0x0080		// pre-bias the ramp curve to compense for a non-1 weight, assuming a second layer is also going to accumulate
@@ -3048,7 +3048,7 @@ inline bool Studio_ConvertStudioHdrToNewVersion( studiohdr_t *pStudioHdr )
 			pAnim->zeroframeindex = 0;
 			pAnim->zeroframespan = 0;
 		}
-	} 
+	}
 	else if (version == 47)
 	{
 		for (int i = 0; i < pStudioHdr->numlocalanim; i++)
@@ -3074,7 +3074,7 @@ inline void Studio_SetRootLOD( studiohdr_t *pStudioHdr, int rootLOD )
 {
 	// honor studiohdr restriction of root lod in case requested root lod exceeds restriction.
 	if ( pStudioHdr->numAllowedRootLODs > 0 &&
-		 rootLOD >= pStudioHdr->numAllowedRootLODs )
+		rootLOD >= pStudioHdr->numAllowedRootLODs )
 	{
 		rootLOD = pStudioHdr->numAllowedRootLODs - 1;
 	}
@@ -3170,11 +3170,11 @@ inline int Studio_LoadVertexes( const vertexFileHeader_t *pTempVvdHdr, vertexFil
 	}
 
 	if (!pNewVvdHdr->numFixups)
-	{		
+	{
 		// fixups not required
 		// transfer vertex data
 		memcpy(
-			(byte *)pNewVvdHdr+pNewVvdHdr->vertexDataStart, 
+			(byte *)pNewVvdHdr+pNewVvdHdr->vertexDataStart,
 			(byte *)pTempVvdHdr+pTempVvdHdr->vertexDataStart,
 			numVertexes*sizeof(mstudiovertex_t) );
 
@@ -3182,7 +3182,7 @@ inline int Studio_LoadVertexes( const vertexFileHeader_t *pTempVvdHdr, vertexFil
 		{
 			// transfer tangent data to cache memory
 			memcpy(
-				(byte *)pNewVvdHdr+pNewVvdHdr->tangentDataStart, 
+				(byte *)pNewVvdHdr+pNewVvdHdr->tangentDataStart,
 				(byte *)pTempVvdHdr+pTempVvdHdr->tangentDataStart,
 				numVertexes*sizeof(Vector4D) );
 		}

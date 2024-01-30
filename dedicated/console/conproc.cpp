@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -32,7 +32,7 @@ BOOL SetConsoleCXCY(HANDLE hStdout, int cx, int cy)
 {
 	CONSOLE_SCREEN_BUFFER_INFO	info;
 	COORD						coordMax;
- 
+
 	coordMax = GetLargestConsoleWindowSize(hStdout);
 
 	if (cy > coordMax.Y)
@@ -40,67 +40,67 @@ BOOL SetConsoleCXCY(HANDLE hStdout, int cx, int cy)
 
 	if (cx > coordMax.X)
 		cx = coordMax.X;
- 
+
 	if (!GetConsoleScreenBufferInfo(hStdout, &info))
 		return FALSE;
 
 // height
-    info.srWindow.Left = 0;         
-    info.srWindow.Right = info.dwSize.X - 1;                
-    info.srWindow.Top = 0;
-    info.srWindow.Bottom = cy - 1;          
- 
+	info.srWindow.Left = 0;
+	info.srWindow.Right = info.dwSize.X - 1;
+	info.srWindow.Top = 0;
+	info.srWindow.Bottom = cy - 1;
+
 	if (cy < info.dwSize.Y)
 	{
 		if (!SetConsoleWindowInfo(hStdout, TRUE, &info.srWindow))
 			return FALSE;
- 
+
 		info.dwSize.Y = cy;
- 
+
 		if (!SetConsoleScreenBufferSize(hStdout, info.dwSize))
 			return FALSE;
-    }
-    else if (cy > info.dwSize.Y)
-    {
+	}
+	else if (cy > info.dwSize.Y)
+	{
 		info.dwSize.Y = cy;
- 
+
 		if (!SetConsoleScreenBufferSize(hStdout, info.dwSize))
 			return FALSE;
- 
+
 		if (!SetConsoleWindowInfo(hStdout, TRUE, &info.srWindow))
 			return FALSE;
-    }
- 
+	}
+
 	if (!GetConsoleScreenBufferInfo(hStdout, &info))
 		return FALSE;
- 
+
 // width
-	info.srWindow.Left = 0;         
+	info.srWindow.Left = 0;
 	info.srWindow.Right = cx - 1;
 	info.srWindow.Top = 0;
-	info.srWindow.Bottom = info.dwSize.Y - 1;               
- 
+	info.srWindow.Bottom = info.dwSize.Y - 1;
+
 	if (cx < info.dwSize.X)
 	{
 		if (!SetConsoleWindowInfo(hStdout, TRUE, &info.srWindow))
 			return FALSE;
- 
+
 		info.dwSize.X = cx;
-    
+
 		if (!SetConsoleScreenBufferSize(hStdout, info.dwSize))
 			return FALSE;
 	}
 	else if (cx > info.dwSize.X)
 	{
 		info.dwSize.X = cx;
- 
+
 		if (!SetConsoleScreenBufferSize(hStdout, info.dwSize))
 			return FALSE;
- 
+
 		if (!SetConsoleWindowInfo(hStdout, TRUE, &info.srWindow))
 			return FALSE;
 	}
- 
+
 	return TRUE;
 }
 
@@ -139,11 +139,11 @@ GetScreenBufferLines
 */
 BOOL GetScreenBufferLines (int *piLines)
 {
-	CONSOLE_SCREEN_BUFFER_INFO	info;							  
+	CONSOLE_SCREEN_BUFFER_INFO	info;
 	BOOL						bRet;
 
 	bRet = GetConsoleScreenBufferInfo (hStdout, &info);
-		
+
 	if (bRet)
 		*piLines = info.dwSize.Y;
 
@@ -199,7 +199,7 @@ CharToCode
 int CharToCode (char c)
 {
 	char upper;
-		
+
 	upper = toupper(c);
 
 	switch (c)
@@ -212,7 +212,7 @@ int CharToCode (char c)
 	}
 
 	if (V_isalpha(c))
-		return (30 + upper - 65); 
+		return (30 + upper - 65);
 
 	if (V_isdigit(c))
 		return (1 + upper - 47);
@@ -249,7 +249,7 @@ BOOL WriteText (LPCTSTR szText)
 		rec.Event.KeyEvent.wVirtualScanCode = CharToCode (*sz);
 		rec.Event.KeyEvent.uChar.AsciiChar = *sz;
 		rec.Event.KeyEvent.uChar.UnicodeChar = *sz;
-		rec.Event.KeyEvent.dwControlKeyState = V_isupper(*sz) ? 0x80 : 0x0; 
+		rec.Event.KeyEvent.dwControlKeyState = V_isupper(*sz) ? 0x80 : 0x0;
 
 		WriteConsoleInput(
 			hStdin,
@@ -283,7 +283,7 @@ unsigned _stdcall RequestProc (void *arg)
 	DWORD	dwRet;
 	HANDLE	heventWait[2];
 	int		iBeginLine, iEndLine;
-	
+
 	heventWait[0] = heventParentSend;
 	heventWait[1] = heventDone;
 
@@ -292,11 +292,11 @@ unsigned _stdcall RequestProc (void *arg)
 		dwRet = WaitForMultipleObjects (2, heventWait, FALSE, INFINITE);
 
 	// heventDone fired, so we're exiting.
-		if (dwRet == WAIT_OBJECT_0 + 1)	
+		if (dwRet == WAIT_OBJECT_0 + 1)
 			break;
 
 		pBuffer = (int *) GetMappedBuffer (hfileBuffer);
-		
+
 	// hfileBuffer is invalid.  Just leave.
 		if (!pBuffer)
 		{
@@ -316,8 +316,8 @@ unsigned _stdcall RequestProc (void *arg)
 			// Param2 : End line
 				iBeginLine = pBuffer[1];
 				iEndLine = pBuffer[2];
-				pBuffer[0] = ReadText ((LPTSTR) (pBuffer + 1), iBeginLine, 
-									   iEndLine);
+				pBuffer[0] = ReadText ((LPTSTR) (pBuffer + 1), iBeginLine,
+										iEndLine);
 				break;
 
 			case CCOM_GET_SCR_LINES:
@@ -352,13 +352,13 @@ void DeinitConProc (void)
 		SetEvent ( heventDone );
 	}
 }
-  
+
 /*
 ==============
 InitConProc
 
 ==============
-*/   
+*/
 void InitConProc ( void )
 {
 	unsigned	threadAddr;
@@ -425,4 +425,3 @@ void InitConProc ( void )
 	SetConsoleCXCY( hStdout, 80, WantHeight );
 }
 #endif // _WIN32
-

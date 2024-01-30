@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -88,11 +88,11 @@ public:
 
 public:
 	static int m_nDepth;
-	static CCallQueue m_CallQueue;	
+	static CCallQueue m_CallQueue;
 };
 
 int CPortalTouchScope::m_nDepth = 0;
-CCallQueue CPortalTouchScope::m_CallQueue;	
+CCallQueue CPortalTouchScope::m_CallQueue;
 
 CCallQueue *GetPortalCallQueue()
 {
@@ -145,7 +145,7 @@ public:
 		AddDataAccessor( PHYSICSPUSHLIST, new CEntityDataInstantiator< physicspushlist_t > );
 		AddDataAccessor( VPHYSICSUPDATEAI, new CEntityDataInstantiator< vphysicsupdateai_t > );
 		AddDataAccessor( VPHYSICSWATCHER, new CEntityDataInstantiator< CWatcherList > );
-		
+
 		return true;
 	}
 
@@ -434,7 +434,7 @@ void ReportVPhysicsStateChanged( IPhysicsObject *pPhysics, CBaseEntity *pEntity,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseEntity::DestroyAllDataObjects( void )
 {
@@ -496,7 +496,7 @@ static inline float GetActualGravity( CBaseEntity *pEnt )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : inline touchlink_t
 //-----------------------------------------------------------------------------
 inline touchlink_t *AllocTouchLink( void )
@@ -517,8 +517,8 @@ inline touchlink_t *AllocTouchLink( void )
 static touchlink_t *g_pNextLink = NULL;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *link - 
+// Purpose:
+// Input  : *link -
 // Output : inline void
 //-----------------------------------------------------------------------------
 inline void FreeTouchLink( touchlink_t *link )
@@ -544,7 +544,7 @@ ConVar sv_groundlink_debug( "sv_groundlink_debug", "0", FCVAR_NONE, "Enable logg
 #endif // STAGING_ONLY
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : inline groundlink_t
 //-----------------------------------------------------------------------------
 inline groundlink_t *AllocGroundLink( void )
@@ -572,8 +572,8 @@ inline groundlink_t *AllocGroundLink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *link - 
+// Purpose:
+// Input  : *link -
 // Output : inline void
 //-----------------------------------------------------------------------------
 inline void FreeGroundLink( groundlink_t *link )
@@ -596,7 +596,7 @@ inline void FreeGroundLink( groundlink_t *link )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseEntity::IsCurrentlyTouching( void ) const
@@ -644,7 +644,7 @@ void CBaseEntity::PhysicsCheckForEntityUntouch( void )
 				PhysicsTouch( link->entityTouched );
 			}
 			else
-			{    
+			{
 				// check to see if the touch stamp is up to date
 				if ( link->touchStamp != touchStamp )
 				{
@@ -698,7 +698,7 @@ void CBaseEntity::PhysicsNotifyOtherOfUntouch( CBaseEntity *ent, CBaseEntity *ot
 
 				// Check for complete removal
 				if ( g_bCleanupDatObject &&
-					 root->nextLink == root && 
+					 root->nextLink == root &&
 					 root->prevLink == root )
 				{
 					other->DestroyDataObject( TOUCHLINK );
@@ -718,7 +718,7 @@ void CBaseEntity::PhysicsNotifyOtherOfUntouch( CBaseEntity *ent, CBaseEntity *ot
 void CBaseEntity::PhysicsRemoveToucher( CBaseEntity *otherEntity, touchlink_t *link )
 {
 	// Every start Touch gets a corresponding end touch
-	if ( (link->flags & FTOUCHLINK_START_TOUCH) && 
+	if ( (link->flags & FTOUCHLINK_START_TOUCH) &&
 		link->entityTouched != NULL &&
 		otherEntity != NULL )
 	{
@@ -772,8 +772,8 @@ void CBaseEntity::PhysicsRemoveTouchedList( CBaseEntity *ent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *other - 
+// Purpose:
+// Input  : *other -
 // Output : groundlink_t
 //-----------------------------------------------------------------------------
 groundlink_t *CBaseEntity::AddEntityToGroundList( CBaseEntity *other )
@@ -858,7 +858,7 @@ void CBaseEntity::PhysicsNotifyOtherOfGroundRemoval( CBaseEntity *ent, CBaseEnti
 			{
 				PhysicsRemoveGround( other, link );
 
-				if ( root->nextLink == root && 
+				if ( root->nextLink == root &&
 					 root->prevLink == root )
 				{
 					other->DestroyDataObject( GROUNDLINK );
@@ -895,7 +895,7 @@ void CBaseEntity::PhysicsRemoveGround( CBaseEntity *other, groundlink_t *link )
 
 //-----------------------------------------------------------------------------
 // Purpose: static method to remove ground list for an entity
-// Input  : *ent - 
+// Input  : *ent -
 //-----------------------------------------------------------------------------
 void CBaseEntity::PhysicsRemoveGroundList( CBaseEntity *ent )
 {
@@ -1009,7 +1009,7 @@ touchlink_t *CBaseEntity::PhysicsMarkEntityAsTouched( CBaseEntity *other )
 			{
 				// update stamp
 				link->touchStamp = touchStamp;
-				
+
 				if ( !CBaseEntity::sm_bDisableTouchFuncs )
 				{
 					PhysicsTouch( other );
@@ -1101,8 +1101,8 @@ void CBaseEntity::PhysicsMarkEntitiesAsTouchingEventDriven( CBaseEntity *other, 
 
 //-----------------------------------------------------------------------------
 // Purpose: Two entities have touched, so run their touch functions
-// Input  : *other - 
-//			*ptrace - 
+// Input  : *other -
+//			*ptrace -
 //-----------------------------------------------------------------------------
 void CBaseEntity::PhysicsImpact( CBaseEntity *other, trace_t &trace )
 {
@@ -1111,7 +1111,7 @@ void CBaseEntity::PhysicsImpact( CBaseEntity *other, trace_t &trace )
 		return;
 	}
 
-	// If either of the entities is flagged to be deleted, 
+	// If either of the entities is flagged to be deleted,
 	//  don't call the touch functions
 	if ( ( GetFlags() | other->GetFlags() ) & FL_KILLME )
 	{
@@ -1228,7 +1228,7 @@ bool CBaseEntity::PhysicsCheckWater( void )
 	Vector newBaseVelocity;
 	VectorMA (GetBaseVelocity(), 50.0*GetWaterLevel(), v, newBaseVelocity);
 	SetBaseVelocity( newBaseVelocity );
-	
+
 	return GetWaterLevel() > 1;
 }
 
@@ -1257,7 +1257,7 @@ void CBaseEntity::PhysicsCheckVelocity( void )
 			bReset = true;
 		}
 
-		if ( vecAbsVelocity[i] > sv_maxvelocity.GetFloat() ) 
+		if ( vecAbsVelocity[i] > sv_maxvelocity.GetFloat() )
 		{
 #ifdef _DEBUG
 			DevWarning( 2, "Got a velocity too high on %s\n", GetClassname() );
@@ -1307,7 +1307,7 @@ void CBaseEntity::PhysicsAddGravityMove( Vector &move )
 	Vector vecBaseVelocity = GetBaseVelocity();
 	vecBaseVelocity.z = 0.0f;
 	SetBaseVelocity( vecBaseVelocity );
-	
+
 	vecAbsVelocity.z = newZVelocity;
 	SetAbsVelocity( vecAbsVelocity );
 
@@ -1319,10 +1319,10 @@ void CBaseEntity::PhysicsAddGravityMove( Vector &move )
 #define	STOP_EPSILON	0.1
 //-----------------------------------------------------------------------------
 // Purpose: Slide off of the impacting object.  Returns the blocked flags (1 = floor, 2 = step / wall)
-// Input  : in - 
-//			normal - 
-//			out - 
-//			overbounce - 
+// Input  : in -
+//			normal -
+//			out -
+//			overbounce -
 // Output : int
 //-----------------------------------------------------------------------------
 int CBaseEntity::PhysicsClipVelocity( const Vector& in, const Vector& normal, Vector& out, float overbounce )
@@ -1331,7 +1331,7 @@ int CBaseEntity::PhysicsClipVelocity( const Vector& in, const Vector& normal, Ve
 	float	change;
 	float angle;
 	int		i, blocked;
-	
+
 	blocked = 0;
 
 	angle = normal[ 2 ];
@@ -1344,7 +1344,7 @@ int CBaseEntity::PhysicsClipVelocity( const Vector& in, const Vector& normal, Ve
 	{
 		blocked |= 2;		// step
 	}
-	
+
 	backoff = DotProduct (in, normal) * overbounce;
 
 	for ( i=0 ; i<3 ; i++ )
@@ -1356,7 +1356,7 @@ int CBaseEntity::PhysicsClipVelocity( const Vector& in, const Vector& normal, Ve
 			out[i] = 0;
 		}
 	}
-	
+
 	return blocked;
 }
 
@@ -1372,7 +1372,7 @@ void CBaseEntity::ResolveFlyCollisionBounce( trace_t &trace, Vector &vecVelocity
 	// Get the impact surface's elasticity.
 	float flSurfaceElasticity;
 	physprops->GetPhysicsProperties( trace.surface.surfaceProps, NULL, NULL, NULL, &flSurfaceElasticity );
-	
+
 	float flTotalElasticity = GetElasticity() * flSurfaceElasticity;
 	if ( flMinTotalElasticity > 0.9f )
 	{
@@ -1421,12 +1421,12 @@ void CBaseEntity::ResolveFlyCollisionBounce( trace_t &trace, Vector &vecVelocity
 		}
 		else
 		{
-			Vector vecDelta = GetBaseVelocity() - vecAbsVelocity;	
+			Vector vecDelta = GetBaseVelocity() - vecAbsVelocity;
 			Vector vecBaseDir = GetBaseVelocity();
 			VectorNormalize( vecBaseDir );
 			float flScale = vecDelta.Dot( vecBaseDir );
 
-			VectorScale( vecAbsVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, vecVelocity ); 
+			VectorScale( vecAbsVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, vecVelocity );
 			VectorMA( vecVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, GetBaseVelocity() * flScale, vecVelocity );
 			PhysicsPushEntity( vecVelocity, &trace );
 		}
@@ -1458,7 +1458,7 @@ void CBaseEntity::ResolveFlyCollisionSlide( trace_t &trace, Vector &vecVelocity 
 	physprops->GetPhysicsProperties( trace.surface.surfaceProps, NULL, NULL, &flSurfaceFriction, NULL );
 
 	// A backoff of 1.0 is a slide.
-	float flBackOff = 1.0f;	
+	float flBackOff = 1.0f;
 	Vector vecAbsVelocity;
 	PhysicsClipVelocity( GetAbsVelocity(), trace.plane.normal, vecAbsVelocity, flBackOff );
 
@@ -1609,10 +1609,10 @@ void CBaseEntity::PhysicsCheckWaterTransition( void )
 	else
 	{
 		if ( oldcont != CONTENTS_EMPTY )
-		{	
+		{
 			// just crossed out of water
 			EmitSound( "BaseEntity.ExitWater" );
-		}		
+		}
 	}
 }
 
@@ -1693,14 +1693,14 @@ void CBaseEntity::PhysicsToss( void )
 	PhysicsCheckVelocity();
 
 	if (trace.allsolid )
-	{	
+	{
 		// entity is trapped in another solid
 		// UNDONE: does this entity needs to be removed?
 		SetAbsVelocity(vec3_origin);
 		SetLocalAngularVelocity(vec3_angle);
 		return;
 	}
-	
+
 #if !defined( CLIENT_DLL )
 	if (IsEdictFree())
 		return;
@@ -1710,7 +1710,7 @@ void CBaseEntity::PhysicsToss( void )
 	{
 		PerformFlyCollisionResolution( trace, move );
 	}
-	
+
 	// check for in water
 	PhysicsCheckWaterTransition();
 }
@@ -1905,7 +1905,7 @@ bool CBaseEntity::PhysicsRunThink( thinkmethods_t thinkMethod )
 {
 	if ( IsEFlagSet( EFL_NO_THINK_FUNCTION ) )
 		return true;
-	
+
 	bool bAlive = true;
 
 	// Don't fire the base if we're avoiding it
@@ -1938,7 +1938,7 @@ bool CBaseEntity::PhysicsRunThink( thinkmethods_t thinkMethod )
 		if ( !bAlive )
 			return false;
 	}
-	
+
 	return bAlive;
 }
 
@@ -2035,7 +2035,7 @@ private:
 		{
 			idx = m_Thinkers.Insert( item );
 		}
-		
+
 		return &m_Thinkers[ idx ];
 	}
 
@@ -2046,8 +2046,8 @@ private:
 
 		Msg( "-----------------\nThink report frame %i\n", gpGlobals->tickcount );
 
-		for ( int i = m_Thinkers.FirstInorder(); 
-			i != m_Thinkers.InvalidIndex(); 
+		for ( int i = m_Thinkers.FirstInorder();
+			i != m_Thinkers.InvalidIndex();
 			i = m_Thinkers.NextInorder( i ) )
 		{
 			ThinkSync *p = &m_Thinkers[ i ];
@@ -2088,7 +2088,7 @@ private:
 static CThinkSyncTester g_ThinkChecker;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseEntity::PhysicsRunSpecificThink( int nContextIndex, BASEPTR thinkFunc )
 {
@@ -2096,7 +2096,7 @@ bool CBaseEntity::PhysicsRunSpecificThink( int nContextIndex, BASEPTR thinkFunc 
 
 	if ( thinktick <= 0 || thinktick > gpGlobals->tickcount )
 		return true;
-	
+
 	float thinktime = thinktick * TICK_INTERVAL;
 
 	// Don't let things stay in the past.
@@ -2104,9 +2104,9 @@ bool CBaseEntity::PhysicsRunSpecificThink( int nContextIndex, BASEPTR thinkFunc 
 	//  by a trigger with a local time.
 	if ( thinktime < gpGlobals->curtime )
 	{
-		thinktime = gpGlobals->curtime;	
+		thinktime = gpGlobals->curtime;
 	}
-	
+
 	// Only do this on the game server
 #if !defined( CLIENT_DLL )
 	g_ThinkChecker.EntityThinking( gpGlobals->tickcount, this, thinktime, m_nNextThinkTick );
@@ -2164,7 +2164,7 @@ void CBaseEntity::SetGroundEntity( CBaseEntity *ground )
 		ground->AddEntityToGroundList( this );
 	}
 
-	// HACK/PARANOID:  This is redundant with the code above, but in case we get out of sync groundlist entries ever, 
+	// HACK/PARANOID:  This is redundant with the code above, but in case we get out of sync groundlist entries ever,
 	//  this will force the appropriate flags
 	if ( ground )
 	{
@@ -2208,7 +2208,7 @@ float CBaseEntity::GetGroundChangeTime( void )
 
 // Remove this as ground entity for all object resting on this object
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseEntity::WakeRestingObjects()
 {
@@ -2218,8 +2218,8 @@ void CBaseEntity::WakeRestingObjects()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *ent - 
+// Purpose:
+// Input  : *ent -
 //-----------------------------------------------------------------------------
 bool CBaseEntity::HasNPCsOnIt( void )
 {

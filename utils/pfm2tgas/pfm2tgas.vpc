@@ -23,7 +23,7 @@ $Project "Pfm2tgas"
 	{
 		$File	"pfm2tgas.cpp"
 	}
-	
+
 	$Folder	"Link Libraries"
 	{
 		$Lib bitmap

@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
 
-#include "cbase.h"	
+#include "cbase.h"
 #include "hud.h"
 #include "c_tf2rootpanel.h"
 #include "paneleffect.h"
@@ -41,9 +41,9 @@ public:
 
 //-----------------------------------------------------------------------------
 // Purpose: Fill in the intersection between the two rectangles.
-// Input  : *pRect1 - 
-//			*pRect2 - 
-//			*pOut - 
+// Input  : *pRect1 -
+//			*pRect2 -
+//			*pOut -
 // Output : inline bool
 //-----------------------------------------------------------------------------
 inline bool GetRectIntersection( wrect_t const *pRect1, wrect_t const *pRect2, wrect_t *pOut )
@@ -73,12 +73,12 @@ typedef enum
 } LINEEDGE_t;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
-//			y - 
-//			rect - 
-//			edge - 
-//			border - 
+// Purpose:
+// Input  : x -
+//			y -
+//			rect -
+//			edge -
+//			border -
 //-----------------------------------------------------------------------------
 static void GetCenterPoint( int& x, int& y, const wrect_t& rect, LINEEDGE_t edge, int border )
 {
@@ -113,19 +113,19 @@ static void GetCenterPoint( int& x, int& y, const wrect_t& rect, LINEEDGE_t edge
 //-----------------------------------------------------------------------------
 // Purpose: Given two rectangles, finds a direct line between the two rectangles, unless
 //  they overlap, in which case no line is output.
-// Input  : x1 - 
-//			y1 - 
-//			w1 - 
-//			h1 - 
-//			x2 - 
-//			y2 - 
-//			w2 - 
-//			h2 - 
-//			output - 
+// Input  : x1 -
+//			y1 -
+//			w1 -
+//			h1 -
+//			x2 -
+//			y2 -
+//			w2 -
+//			h2 -
+//			output -
 //-----------------------------------------------------------------------------
-static void FindConnectingLines_Straight( 
-	int x1, int y1, int w1, int h1, 
-	int x2, int y2, int w2, int h2, 
+static void FindConnectingLines_Straight(
+	int x1, int y1, int w1, int h1,
+	int x2, int y2, int w2, int h2,
 	CUtlVector< CConnectingLine >& output )
 {
 	// Reset output
@@ -216,19 +216,19 @@ static void FindConnectingLines_Straight(
 // Purpose: Given two non-intersecting rectangles, finds one, two or three segments
 //  which connect the midpoints of two of the sides of the items together with only
 //  axial lines.
-// Input  : x1 - 
-//			y1 - 
-//			w1 - 
-//			h1 - 
-//			x2 - 
-//			y2 - 
-//			w2 - 
-//			h2 - 
-//			output - 
+// Input  : x1 -
+//			y1 -
+//			w1 -
+//			h1 -
+//			x2 -
+//			y2 -
+//			w2 -
+//			h2 -
+//			output -
 //-----------------------------------------------------------------------------
-static void FindConnectingLines_Axial( 
-	int x1, int y1, int w1, int h1, 
-	int x2, int y2, int w2, int h2, 
+static void FindConnectingLines_Axial(
+	int x1, int y1, int w1, int h1,
+	int x2, int y2, int w2, int h2,
 	CUtlVector< CConnectingLine >& output )
 {
 	// Reset output
@@ -325,7 +325,7 @@ static void FindConnectingLines_Axial(
 	if ( edge1 == TOPCENTER || edge1 == BOTTOMCENTER )
 	{
 		int dx = abs( mid[ 0 ] - pt1[ 0 ] );
-		if ( dx < ( sizefrac * size1[ 0 ] ) && 
+		if ( dx < ( sizefrac * size1[ 0 ] ) &&
 			 dx < ( sizefrac * size2[ 0 ] ) )
 		{
 			// Gap is small, just use midpoint to align both
@@ -364,7 +364,7 @@ static void FindConnectingLines_Axial(
 	else
 	{
 		int dy = abs( mid[ 1 ] - pt1[ 1 ] );
-		if ( dy < ( sizefrac * size1[ 1] ) && 
+		if ( dy < ( sizefrac * size1[ 1] ) &&
 			 dy < ( sizefrac * size2[ 1 ] ) )
 		{
 			// Gap is small, just use midpoint to align both
@@ -405,12 +405,12 @@ static void FindConnectingLines_Axial(
 
 //-----------------------------------------------------------------------------
 // Purpose: Map input panel rectangle into space of output panel and return extents in xywh
-// Input  : x - 
-//			y - 
-//			w - 
-//			h - 
-//			*output - 
-//			*input - 
+// Input  : x -
+//			y -
+//			w -
+//			h -
+//			*output -
+//			*input -
 //-----------------------------------------------------------------------------
 void PanelToPanelRectangle( int& x, int& y, int& w, int& h, vgui::Panel *output, vgui::Panel *input )
 {
@@ -428,7 +428,7 @@ void PanelToPanelRectangle( int& x, int& y, int& w, int& h, vgui::Panel *output,
 
 //-----------------------------------------------------------------------------
 // Purpose: Cycle between in/2 and in centered at 3/4in
-// Input  : in - 
+// Input  : in -
 //			f - ranges from -1 to 1
 // Output : static int
 //-----------------------------------------------------------------------------
@@ -455,8 +455,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *owner - 
+// Purpose:
+// Input  : *owner -
 //-----------------------------------------------------------------------------
 CFlashBorderPanelEffect::CFlashBorderPanelEffect( ITFHintItem *owner )
 	: CPanelEffect( owner )
@@ -467,7 +467,7 @@ CFlashBorderPanelEffect::CFlashBorderPanelEffect( ITFHintItem *owner )
 
 //-----------------------------------------------------------------------------
 // Purpose: Paint the effect
-// Input  : *panel - 
+// Input  : *panel -
 //-----------------------------------------------------------------------------
 void CFlashBorderPanelEffect::doPaint( vgui::Panel *panel )
 {
@@ -533,8 +533,8 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *owner - 
+// Purpose:
+// Input  : *owner -
 //-----------------------------------------------------------------------------
 CArrowPanelEffect::CArrowPanelEffect( ITFHintItem *owner )
 	: CPanelEffect( owner )
@@ -546,8 +546,8 @@ CArrowPanelEffect::CArrowPanelEffect( ITFHintItem *owner )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawborder - 
+// Purpose:
+// Input  : drawborder -
 //-----------------------------------------------------------------------------
 void CArrowPanelEffect::SetDrawBorder( bool drawborder )
 {
@@ -555,8 +555,8 @@ void CArrowPanelEffect::SetDrawBorder( bool drawborder )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flashing - 
+// Purpose:
+// Input  : flashing -
 //-----------------------------------------------------------------------------
 void CArrowPanelEffect::SetFlashing( bool flashing )
 {
@@ -564,20 +564,20 @@ void CArrowPanelEffect::SetFlashing( bool flashing )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : startx - 
-//			starty - 
-//			endx - 
-//			endy - 
-//			r - 
-//			g - 
-//			b - 
-//			a - 
+// Purpose:
+// Input  : startx -
+//			starty -
+//			endx -
+//			endy -
+//			r -
+//			g -
+//			b -
+//			a -
 //-----------------------------------------------------------------------------
 void CArrowPanelEffect::DrawArrow( int startx, int starty, int endx, int endy, int r, int g, int b, int a )
 {
 	vgui::surface()->DrawSetColor( r, g, b, a );
-	
+
 	// Draw an arrow
 
 	Vector start( startx, starty, 0.0f );
@@ -615,15 +615,15 @@ void CArrowPanelEffect::DrawArrow( int startx, int starty, int endx, int endy, i
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : startx - 
-//			starty - 
-//			endx - 
-//			endy - 
-//			r - 
-//			g - 
-//			b - 
-//			a - 
+// Purpose:
+// Input  : startx -
+//			starty -
+//			endx -
+//			endy -
+//			r -
+//			g -
+//			b -
+//			a -
 //-----------------------------------------------------------------------------
 void CArrowPanelEffect::DrawLine( int startx, int starty, int endx, int endy, int r, int g, int b, int a )
 {
@@ -632,8 +632,8 @@ void CArrowPanelEffect::DrawLine( int startx, int starty, int endx, int endy, in
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *panel - 
+// Purpose:
+// Input  : *panel -
 //-----------------------------------------------------------------------------
 void CArrowPanelEffect::doPaint( vgui::Panel *panel )
 {
@@ -706,11 +706,11 @@ void CArrowPanelEffect::doPaint( vgui::Panel *panel )
 
 					if ( i == lines.Size() - 1 )
 					{
-						DrawArrow( l->m_ptStart[ 0 ] + x, l->m_ptStart[1] + y, l->m_ptEnd[0] + x, l->m_ptEnd[1] + y, 0, 0, 0, m_a );	
+						DrawArrow( l->m_ptStart[ 0 ] + x, l->m_ptStart[1] + y, l->m_ptEnd[0] + x, l->m_ptEnd[1] + y, 0, 0, 0, m_a );
 					}
 					else
 					{
-						DrawLine( l->m_ptStart[ 0 ] + x, l->m_ptStart[1] + y, l->m_ptEnd[0] + x, l->m_ptEnd[1] + y, 0, 0, 0, m_a );	
+						DrawLine( l->m_ptStart[ 0 ] + x, l->m_ptStart[1] + y, l->m_ptEnd[0] + x, l->m_ptEnd[1] + y, 0, 0, 0, m_a );
 					}
 				}
 			}
@@ -753,12 +753,12 @@ void CArrowPanelEffect::doPaint( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : px - 
-//			&py - 
-//			*output - 
-//			*from - 
-//			*to - 
+// Purpose:
+// Input  : px -
+//			&py -
+//			*output -
+//			*from -
+//			*to -
 //-----------------------------------------------------------------------------
 void CArrowPanelEffect::ComputeBestPoint( int& px, int &py, vgui::Panel *output, vgui::Panel *from, vgui::Panel *to )
 {
@@ -859,8 +859,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *owner - 
+// Purpose:
+// Input  : *owner -
 //-----------------------------------------------------------------------------
 CAxialLinePanelEffect::CAxialLinePanelEffect( ITFHintItem *owner )
 : CArrowPanelEffect( owner )
@@ -868,8 +868,8 @@ CAxialLinePanelEffect::CAxialLinePanelEffect( ITFHintItem *owner )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *panel - 
+// Purpose:
+// Input  : *panel -
 //-----------------------------------------------------------------------------
 void CAxialLinePanelEffect::doPaint( vgui::Panel *panel )
 {
@@ -926,7 +926,7 @@ void CAxialLinePanelEffect::doPaint( vgui::Panel *panel )
 					if ( !x && !y )
 						continue;
 
-					DrawLine( l->m_ptStart[ 0 ] + x, l->m_ptStart[1] + y, l->m_ptEnd[0] + x, l->m_ptEnd[1] + y, 0, 0, 0, m_a );	
+					DrawLine( l->m_ptStart[ 0 ] + x, l->m_ptStart[1] + y, l->m_ptEnd[0] + x, l->m_ptEnd[1] + y, 0, 0, 0, m_a );
 				}
 			}
 		}
@@ -941,9 +941,9 @@ void CAxialLinePanelEffect::doPaint( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *owner - 
-//			*target - 
+// Purpose:
+// Input  : *owner -
+//			*target -
 // Output : EFFECT_HANDLE
 //-----------------------------------------------------------------------------
 EFFECT_HANDLE CreateFlashEffect( ITFHintItem *owner, vgui::Panel *target )
@@ -963,10 +963,10 @@ EFFECT_HANDLE CreateFlashEffect( ITFHintItem *owner, vgui::Panel *target )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *owner - 
-//			*from - 
-//			*to - 
+// Purpose:
+// Input  : *owner -
+//			*from -
+//			*to -
 // Output : EFFECT_HANDLE
 //-----------------------------------------------------------------------------
 EFFECT_HANDLE CreateArrowEffect( ITFHintItem *owner, vgui::Panel *from, vgui::Panel *to )
@@ -986,10 +986,10 @@ EFFECT_HANDLE CreateArrowEffect( ITFHintItem *owner, vgui::Panel *from, vgui::Pa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *owner - 
-//			*from - 
-//			*to - 
+// Purpose:
+// Input  : *owner -
+//			*from -
+//			*to -
 // Output : EFFECT_HANDLE
 //-----------------------------------------------------------------------------
 EFFECT_HANDLE CreateAxialLineEffect( ITFHintItem *owner, vgui::Panel *from, vgui::Panel *to )
@@ -1082,8 +1082,8 @@ EFFECT_HANDLE CreateAxialLineEffectToRect( ITFHintItem *owner, vgui::Panel *from
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *owner - 
+// Purpose:
+// Input  : *owner -
 //-----------------------------------------------------------------------------
 void DestroyPanelEffects( ITFHintItem *owner )
 {

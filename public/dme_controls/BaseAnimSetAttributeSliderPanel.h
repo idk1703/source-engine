@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -93,7 +93,7 @@ public:
 
 	struct VisItem_t
 	{
-		VisItem_t() : 
+		VisItem_t() :
 			element( NULL ), selected( false ), index( 0 )
 		{
 		}

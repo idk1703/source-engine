@@ -50,7 +50,7 @@ public:
 	void		InputHideModel( inputdata_t &input );
 
 	int			PointValue( void );
-	
+
 	void		RoundRespawn( void );	//Mugsy - resetting
 	void		TriggerTargets( void );
 
@@ -101,7 +101,7 @@ private:
 	int			m_iIndex;			//the index of this point in the controlpointArray
 
 	string_t	m_iszPrintName;
-	
+
 	string_t	m_iszAlliesCapSound;	//the sound to play on cap
 	string_t	m_iszAxisCapSound;
 	string_t	m_iszResetSound;
@@ -143,7 +143,7 @@ private:
 
 	bool		m_bStartDisabled;
 
-	int m_iAlliesRequired;		// if we're controlled by an area cap, 
+	int m_iAlliesRequired;		// if we're controlled by an area cap,
 	int m_iAxisRequired;		// these hold the number of cappers required. Used to calc point value
 
 	int m_iTimedPointsAllies;	// timed points value of this flag, per team

@@ -1,17 +1,17 @@
 /*
-     File:       fenv.h
- 
-     Contains:   Floating-Point environment for PowerPC and 68K
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1987-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       fenv.h
+
+		Contains:   Floating-Point environment for PowerPC and 68K
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1987-2001 by Apple Computer, Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __FENV__
 #define __FENV__
@@ -35,11 +35,11 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=mac68k
+		#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+		#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+		#pragma pack(2)
 #endif
 
 #if TARGET_RT_MAC_MACHO && defined(__MATH__)
@@ -47,15 +47,15 @@ extern "C" {
 #else
 #if TARGET_OS_MAC
 /*
-    A collection of functions designed to provide access to the floating
-    point environment for numerical programming. It is modeled after
-    the floating-point requirements in C9X.
-    
-    The file <fenv.h> declares many functions in support of numerical
-    programming.  It provides a set of environmental controls similar to
-    the ones found in <SANE.h>.  Programs that test flags or run under
-    non-default modes must do so under the effect of an enabling
-    "fenv_access" pragma.
+		A collection of functions designed to provide access to the floating
+		point environment for numerical programming. It is modeled after
+		the floating-point requirements in C9X.
+
+		The file <fenv.h> declares many functions in support of numerical
+		programming.  It provides a set of environmental controls similar to
+		the ones found in <SANE.h>.  Programs that test flags or run under
+		non-default modes must do so under the effect of an enabling
+		"fenv_access" pragma.
 */
 
 /********************************************************************************
@@ -72,21 +72,21 @@ typedef long                            fenv_t;
 typedef long                            fexcept_t;
 /*    Definitions of floating-point exception macros                          */
 enum {
-  FE_INEXACT                    = 0x02000000,
-  FE_DIVBYZERO                  = 0x04000000,
-  FE_UNDERFLOW                  = 0x08000000,
-  FE_OVERFLOW                   = 0x10000000,
-  FE_INVALID                    = 0x20000000,
-  FE_ALL_EXCEPT                 = 0x3E000000 /* FE_INEXACT | FE_DIVBYZERO | FE_UNDERFLOW | FE_OVERFLOW | FE_INVALID*/
+	FE_INEXACT                    = 0x02000000,
+	FE_DIVBYZERO                  = 0x04000000,
+	FE_UNDERFLOW                  = 0x08000000,
+	FE_OVERFLOW                   = 0x10000000,
+	FE_INVALID                    = 0x20000000,
+	FE_ALL_EXCEPT                 = 0x3E000000 /* FE_INEXACT | FE_DIVBYZERO | FE_UNDERFLOW | FE_OVERFLOW | FE_INVALID*/
 };
 
 
 /*    Definitions of rounding direction macros                                */
 enum {
-  FE_TONEAREST                  = 0x00000000,
-  FE_TOWARDZERO                 = 0x00000001,
-  FE_UPWARD                     = 0x00000002,
-  FE_DOWNWARD                   = 0x00000003
+	FE_TONEAREST                  = 0x00000000,
+	FE_TOWARDZERO                 = 0x00000001,
+	FE_UPWARD                     = 0x00000002,
+	FE_DOWNWARD                   = 0x00000003
 };
 
 #endif  /* TARGET_CPU_PPC */
@@ -95,17 +95,17 @@ enum {
 #if TARGET_RT_MAC_68881
 typedef long                            fexcept_t;
 struct fenv_t {
-  long                FPCR;
-  long                FPSR;
+	long                FPCR;
+	long                FPSR;
 };
 typedef struct fenv_t                   fenv_t;
 enum {
-  FE_INEXACT                    = 0x00000008, /* ((long)(8))   */
-  FE_DIVBYZERO                  = 0x00000010, /* ((long)(16))  */
-  FE_UNDERFLOW                  = 0x00000020, /* ((long)(32))  */
-  FE_OVERFLOW                   = 0x00000040, /* ((long)(64))  */
-  FE_INVALID                    = 0x00000080, /* ((long)(128)) */
-  FE_ALL_EXCEPT                 = 0x000000F8 /* FE_INEXACT | FE_DIVBYZERO | FE_UNDERFLOW | FE_OVERFLOW | FE_INVALID*/
+	FE_INEXACT                    = 0x00000008, /* ((long)(8))   */
+	FE_DIVBYZERO                  = 0x00000010, /* ((long)(16))  */
+	FE_UNDERFLOW                  = 0x00000020, /* ((long)(32))  */
+	FE_OVERFLOW                   = 0x00000040, /* ((long)(64))  */
+	FE_INVALID                    = 0x00000080, /* ((long)(128)) */
+	FE_ALL_EXCEPT                 = 0x000000F8 /* FE_INEXACT | FE_DIVBYZERO | FE_UNDERFLOW | FE_OVERFLOW | FE_INVALID*/
 };
 
 #else
@@ -113,28 +113,28 @@ enum {
 typedef short                           fexcept_t;
 typedef short                           fenv_t;
 enum {
-  FE_INVALID                    = 0x0001, /* ((short)(1))  */
-  FE_UNDERFLOW                  = 0x0002, /* ((short)(2))  */
-  FE_OVERFLOW                   = 0x0004, /* ((short)(4))  */
-  FE_DIVBYZERO                  = 0x0008, /* ((short)(8))  */
-  FE_INEXACT                    = 0x0010, /* ((short)(16)) */
-  FE_ALL_EXCEPT                 = 0x001F /* FE_INEXACT | FE_DIVBYZERO | FE_UNDERFLOW | FE_OVERFLOW | FE_INVALID*/
+	FE_INVALID                    = 0x0001, /* ((short)(1))  */
+	FE_UNDERFLOW                  = 0x0002, /* ((short)(2))  */
+	FE_OVERFLOW                   = 0x0004, /* ((short)(4))  */
+	FE_DIVBYZERO                  = 0x0008, /* ((short)(8))  */
+	FE_INEXACT                    = 0x0010, /* ((short)(16)) */
+	FE_ALL_EXCEPT                 = 0x001F /* FE_INEXACT | FE_DIVBYZERO | FE_UNDERFLOW | FE_OVERFLOW | FE_INVALID*/
 };
 
 #endif  /* TARGET_RT_MAC_68881 */
 
 enum {
-  FE_TONEAREST                  = 0x0000, /* ((short)(0))  */
-  FE_UPWARD                     = 0x0001, /* ((short)(1))  */
-  FE_DOWNWARD                   = 0x0002, /* ((short)(2))  */
-  FE_TOWARDZERO                 = 0x0003 /* ((short)(3))  */
+	FE_TONEAREST                  = 0x0000, /* ((short)(0))  */
+	FE_UPWARD                     = 0x0001, /* ((short)(1))  */
+	FE_DOWNWARD                   = 0x0002, /* ((short)(2))  */
+	FE_TOWARDZERO                 = 0x0003 /* ((short)(3))  */
 };
 
 /*    Definitions of rounding precision macros  (68K only)                    */
 enum {
-  FE_LDBLPREC                   = 0x0000, /* ((short)(0))  */
-  FE_DBLPREC                    = 0x0001, /* ((short)(1))  */
-  FE_FLTPREC                    = 0x0002 /* ((short)(2))  */
+	FE_LDBLPREC                   = 0x0000, /* ((short)(0))  */
+	FE_DBLPREC                    = 0x0001, /* ((short)(1))  */
+	FE_FLTPREC                    = 0x0002 /* ((short)(2))  */
 };
 
 #endif  /* TARGET_CPU_68K */
@@ -142,7 +142,7 @@ enum {
 /* default environment object        */
 /*
  *  _FE_DFL_ENV
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in MathLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.3 and later
@@ -161,7 +161,7 @@ extern fenv_t _FE_DFL_ENV;
 *******************************************************************************/
 /*
  *  feclearexcept()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in MathLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -179,7 +179,7 @@ EXTERN_API_C( void ) feclearexcept(int excepts);
 *******************************************************************************/
 /*
  *  fegetexcept()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in MathLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -196,7 +196,7 @@ EXTERN_API_C( void ) fegetexcept(fexcept_t *flagp, int excepts);
 *******************************************************************************/
 /*
  *  feraiseexcept()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in MathLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -217,7 +217,7 @@ EXTERN_API_C( void ) feraiseexcept(int excepts);
 *******************************************************************************/
 /*
  *  fesetexcept()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in MathLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -237,7 +237,7 @@ EXTERN_API_C( void ) fesetexcept(const fexcept_t *flagp, int excepts);
 *******************************************************************************/
 /*
  *  fetestexcept()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in MathLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -257,7 +257,7 @@ EXTERN_API_C( int ) fetestexcept(int excepts);
 *******************************************************************************/
 /*
  *  fegetround()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in MathLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -276,7 +276,7 @@ EXTERN_API_C( int ) fegetround(void);
 *******************************************************************************/
 /*
  *  fesetround()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in MathLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -297,7 +297,7 @@ EXTERN_API_C( int ) fesetround(int round);
 *******************************************************************************/
 /*
  *  fegetenv()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in MathLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -317,7 +317,7 @@ EXTERN_API_C( void ) fegetenv(fenv_t * envp);
 *******************************************************************************/
 /*
  *  feholdexcept()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in MathLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -337,7 +337,7 @@ EXTERN_API_C( int ) feholdexcept(fenv_t * envp);
 *******************************************************************************/
 /*
  *  fesetenv()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in MathLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -358,7 +358,7 @@ EXTERN_API_C( void ) fesetenv(const fenv_t * envp);
 *******************************************************************************/
 /*
  *  feupdateenv()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in MathLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -372,7 +372,7 @@ EXTERN_API_C( void ) feupdateenv(const fenv_t * envp);
 #if TARGET_CPU_68K
 /*******************************************************************************
 *     The following functions provide control of rounding precision.           *
-*     Because the PowerPC does not provide this capability, these functions    *  
+*     Because the PowerPC does not provide this capability, these functions    *
 *     are available only for the 68K Macintosh.  Rounding precision values     *
 *     are defined by the rounding precision macros.  These functions are       *
 *     equivalent to the SANE functions getprecision and setprecision.          *
@@ -380,7 +380,7 @@ EXTERN_API_C( void ) feupdateenv(const fenv_t * envp);
 #if CALL_NOT_IN_CARBON
 /*
  *  fegetprec()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -391,7 +391,7 @@ EXTERN_API_C( int ) fegetprec(void);
 
 /*
  *  fesetprec()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -410,11 +410,11 @@ EXTERN_API_C( int ) fesetprec(int precision);
 
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+		#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+		#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+		#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -428,4 +428,3 @@ EXTERN_API_C( int ) fesetprec(int precision);
 #endif
 
 #endif /* __FENV__ */
-

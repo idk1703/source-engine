@@ -146,7 +146,7 @@ bool CAI_MoveSolver::Solve( const AI_MoveSuggestion_t *pSuggestions, int nSugges
 		// Sweep from left to right, summing the bias. For positive suggestions,
 		// the bias is further weighted to favor the center of the arc.
 		const float positiveDegradePer180 = 0.05; // i.e., lose 5% of weight by the time hit 180 degrees off center
-		const float positiveDegrade       = ( positiveDegradePer180 / ( NUM_SOLUTIONS * 0.5 ) ); 
+		const float positiveDegrade       = ( positiveDegradePer180 / ( NUM_SOLUTIONS * 0.5 ) );
 
 		for ( int i = 0; i < left + 1; ++i )
 		{
@@ -157,8 +157,8 @@ bool CAI_MoveSolver::Solve( const AI_MoveSuggestion_t *pSuggestions, int nSugges
 				int	iOffset = center - i;
 				float degrade = abs( iOffset ) * positiveDegrade;
 
-				if ( ( (current.flags & AIMS_FAVOR_LEFT ) && i > center ) || 
-					 ( (current.flags & AIMS_FAVOR_RIGHT) && i < center ) )
+				if ( ( (current.flags & AIMS_FAVOR_LEFT ) && i > center ) ||
+					( (current.flags & AIMS_FAVOR_RIGHT) && i < center ) )
 				{
 					degrade *= 0.9;
 				}
@@ -265,15 +265,15 @@ void CAI_MoveSolver::NormalizeSuggestions( AI_MoveSuggestion_t *pBegin, AI_MoveS
 
 bool CAI_MoveSolver::HaveRegulationForObstacle( CBaseEntity *pEntity)
 {
-   for ( int i = 0; i < m_Regulations.Count(); ++i )
-   {
-      if ( m_Regulations[i].hObstacleEntity != NULL &&
-           pEntity == m_Regulations[i].hObstacleEntity.Get() )
-      {
-         return true;
-      }
-   }
-   return false;
+	for ( int i = 0; i < m_Regulations.Count(); ++i )
+	{
+		if ( m_Regulations[i].hObstacleEntity != NULL &&
+				pEntity == m_Regulations[i].hObstacleEntity.Get() )
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -407,4 +407,3 @@ CON_COMMAND(ai_test_move_solver, "Tests the AI move solver system")
 #endif
 
 //=============================================================================
-

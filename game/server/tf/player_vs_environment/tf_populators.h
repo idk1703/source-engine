@@ -145,7 +145,7 @@ private:
 
 
 //-----------------------------------------------------------------------
-// Invokes its spawner at random positions scattered throughout 
+// Invokes its spawner at random positions scattered throughout
 // the environment at PostInitialize()
 class CRandomPlacementPopulator : public IPopulator
 {
@@ -241,11 +241,11 @@ public:
 
 	// Invoked by td_setnextwave to finish off a wave
 	void ForceFinish( void );
-	void ForceReset( void ) 
+	void ForceReset( void )
 	{
 		m_unallocatedCurrency = m_totalCurrency;
 		m_remainingCount = m_totalCount;
-		m_state = PENDING; 
+		m_state = PENDING;
 	}
 
 	bool IsSupportWave( void ) const { return m_bSupportWave; }
@@ -256,12 +256,12 @@ public:
 
 private:
 	bool IsFinishedSpawning( void );
-	
+
 	CountdownTimer m_timer;
 	EntityHandleVector_t m_activeVector;
 	int m_countSpawnedSoFar;
 	int m_myReservedSlotCount;
-	
+
 	bool m_bSupportWave;
 	bool m_bLimitedSupport;
 	CWave *m_pParent;
@@ -318,7 +318,7 @@ public:
 	CWaveSpawnPopulator *FindWaveSpawnPopulator( const char *name );	// find a CWaveSpawnPopulator by name
 
 	void AddClassType( string_t iszClassIconName, int nCount, unsigned int iFlags );
-	
+
 	int GetNumClassTypes( void ) const { return m_nWaveClassCounts.Count(); }
 	void StartUpgradesAlertTimer ( float flTime ) { m_GetUpgradesAlertTimer.Start( flTime ); }
 	void SetStartTime (float flTime) { m_flStartTime = flTime; }
@@ -373,9 +373,9 @@ private:
 
 	CFmtStr m_description;
 	CFmtStr m_soundName;
-	
+
 	float m_waitWhenDone;
-	CountdownTimer m_doneTimer;	
+	CountdownTimer m_doneTimer;
 
 	bool m_bCheckBonusCreditsMin;
 	bool m_bCheckBonusCreditsMax;

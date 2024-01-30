@@ -34,7 +34,7 @@ public:
 	CDmaString m_SurfaceProperty;
 	CDmaString m_Group;
 	CDmaString m_Bone;
-	CDmaVar< Vector > m_vecMins;	
+	CDmaVar< Vector > m_vecMins;
 	CDmaVar< Vector > m_vecMaxs;
 	CDmaColor m_RenderColor;	// used for visualization
 

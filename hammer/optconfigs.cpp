@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -33,16 +33,16 @@ IMPLEMENT_DYNCREATE(COPTConfigs, CPropertyPage)
 bool GetPersistentEnvironmentVariable( const char *pName, char *pReturn, int size )
 {
 	// Open the key
-	HKEY hregkey; 
+	HKEY hregkey;
 	// Changed to HKEY_CURRENT_USER from HKEY_LOCAL_MACHINE
 	if ( RegOpenKeyEx( HKEY_CURRENT_USER, VPROJECT_REG_KEY, 0, KEY_QUERY_VALUE, &hregkey ) != ERROR_SUCCESS )
 		return false;
-	
+
 	// Get the value
 	DWORD dwSize = size;
 	if ( RegQueryValueEx( hregkey, pName, NULL, NULL,(LPBYTE) pReturn, &dwSize ) != ERROR_SUCCESS )
 		return false;
-	
+
 	// Close the key
 	RegCloseKey( hregkey );
 
@@ -57,16 +57,16 @@ bool GetPersistentEnvironmentVariable( const char *pName, char *pReturn, int siz
 //-----------------------------------------------------------------------------
 void SetPersistentEnvironmentVariable( const char *pName, const char *pValue )
 {
-	HKEY hregkey; 
+	HKEY hregkey;
 	DWORD dwReturnValue = 0;
 
 	// Changed from HKEY_LOCAL_MACHINE to HKEY_CURRENT_USER
 	if ( RegOpenKeyEx( HKEY_CURRENT_USER, VPROJECT_REG_KEY, 0, KEY_ALL_ACCESS, &hregkey ) != ERROR_SUCCESS )
 		return;
-	
+
 	// Set the value to the string passed in
 	RegSetValueEx( hregkey, pName, 0, REG_SZ, (const unsigned char *)pValue, (int) strlen(pValue) );
-	
+
 	// Propagate changes so that environment variables takes immediate effect!
 	SendMessageTimeout( HWND_BROADCAST, WM_SETTINGCHANGE, 0, (LPARAM) "Environment", SMTO_ABORTIFHUNG, 5000, &dwReturnValue );
 
@@ -176,8 +176,8 @@ COPTConfigs::~COPTConfigs(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pDX - 
+// Purpose:
+// Input  : pDX -
 //-----------------------------------------------------------------------------
 void COPTConfigs::DoDataExchange(CDataExchange* pDX)
 {
@@ -225,7 +225,7 @@ void COPTConfigs::OnEditconfigs(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COPTConfigs::OnGdfileAdd(void)
 {
@@ -252,7 +252,7 @@ void COPTConfigs::OnGdfileAdd(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COPTConfigs::OnGdfileEdit(void)
 {
@@ -280,7 +280,7 @@ void COPTConfigs::OnGdfileEdit(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COPTConfigs::OnGdfileRemove(void)
 {
@@ -300,8 +300,8 @@ void COPTConfigs::OnGdfileRemove(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pConfig - 
+// Purpose:
+// Input  : *pConfig -
 //-----------------------------------------------------------------------------
 void COPTConfigs::SaveInfo(CGameConfig *pConfig)
 {
@@ -383,9 +383,9 @@ void COPTConfigs::SaveInfo(CGameConfig *pConfig)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void COPTConfigs::OnSelchangeConfigurations(void) 
+void COPTConfigs::OnSelchangeConfigurations(void)
 {
 	// save info from controls into last selected config
 	SaveInfo(m_pLastSelConfig);
@@ -461,20 +461,20 @@ void COPTConfigs::OnSelchangeConfigurations(void)
 	EditorUtil_TransferPath(this, IDC_MAPDIR, pConfig->szMapDir, false);
 
 	m_cCordonTexture.SetWindowText(pConfig->GetCordonTexture());
-	
+
 	char szText[100];
 	sprintf(szText, "%g", pConfig->GetDefaultTextureScale());
 	m_cDefaultTextureScale.SetWindowText(szText);
 
 	SetDlgItemInt(IDC_DEFAULT_LIGHTMAP_SCALE, pConfig->GetDefaultLightmapScale(), FALSE);
-	
+
 	// load entity type comboboxes and set strings
 	UpdateEntityLists();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COPTConfigs::UpdateEntityLists(void)
 {
@@ -513,7 +513,7 @@ void COPTConfigs::UpdateEntityLists(void)
 		m_cDefaultSolid.SetCurSel(0);
 	}
 
-		
+
 	if (pConfig->szDefaultPoint[0] != '\0')
 	{
 		m_cDefaultPoint.SetWindowText(pConfig->szDefaultPoint);
@@ -571,7 +571,7 @@ void UpdateConfigList(CComboBox &combo)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SelectActiveConfig(CComboBox &combo)
 {
@@ -604,7 +604,7 @@ void SelectActiveConfig(CComboBox &combo)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COPTConfigs::UpdateConfigList()
 {
@@ -622,7 +622,7 @@ void COPTConfigs::UpdateConfigList()
 // Purpose: Populates the combo boxes with the map formats and WAD formats, and
 //			the list of game configurations.
 //-----------------------------------------------------------------------------
-BOOL COPTConfigs::OnInitDialog(void) 
+BOOL COPTConfigs::OnInitDialog(void)
 {
 	CPropertyPage::OnInitDialog();
 
@@ -645,7 +645,7 @@ BOOL COPTConfigs::OnInitDialog(void)
 
 	nIndex = m_cTextureFormat.AddString("WAD3 (Half-Life / TFC)");
 	m_cTextureFormat.SetItemData(nIndex, tfWAD3);
-	
+
 	UpdateConfigList();
 
 	int nCurSel = m_cConfigs.GetCurSel();
@@ -684,7 +684,7 @@ bool COPTConfigs::ConfigChanged(CGameConfig *pConfig)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL COPTConfigs::OnApply(void)
@@ -701,15 +701,15 @@ BOOL COPTConfigs::OnApply(void)
 	}
 
 	Options.PerformChanges(COptions::secConfigs);
-	
+
 	return CPropertyPage::OnApply();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszTitle - 
-//			*pszDirectory - 
+// Purpose:
+// Input  : *pszTitle -
+//			*pszDirectory -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL COPTConfigs::BrowseForFolder(char *pszTitle, char *pszDirectory)
@@ -736,7 +736,7 @@ BOOL COPTConfigs::BrowseForFolder(char *pszTitle, char *pszDirectory)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COPTConfigs::OnBrowseCordonTexture(void)
 {
@@ -771,7 +771,7 @@ void COPTConfigs::OnBrowseCordonTexture(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COPTConfigs::OnBrowseGameExeDir(void)
 {
@@ -788,7 +788,7 @@ void COPTConfigs::OnBrowseGameExeDir(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COPTConfigs::OnBrowseModDir(void)
 {
@@ -805,7 +805,7 @@ void COPTConfigs::OnBrowseModDir(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COPTConfigs::OnBrowsemapdir(void)
 {
@@ -826,14 +826,12 @@ void COPTConfigs::OnBrowsemapdir(void)
 //-----------------------------------------------------------------------------
 LRESULT COPTConfigs::OnSettingChange(WPARAM wParam, LPARAM lParam)
 {
-    const char *changedSection = (const char *)lParam;
-    if ( Q_stricmp( changedSection, "Environment" ) == 0 )
+	const char *changedSection = (const char *)lParam;
+	if ( Q_stricmp( changedSection, "Environment" ) == 0 )
 	{
-		UpdateConfigList();		
+		UpdateConfigList();
 		//SelectActiveConfig();
 	}
 
 	return 0;
 }
-
-

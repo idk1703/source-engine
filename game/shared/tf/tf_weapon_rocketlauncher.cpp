@@ -159,8 +159,8 @@ ConVar  tf_mortar_allow_fulltracking( "tf_mortar_allow_fulltracking", "0.0", FCV
 #endif // STAGING_ONLY
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 CTFRocketLauncher::CTFRocketLauncher()
 {
@@ -173,8 +173,8 @@ CTFRocketLauncher::CTFRocketLauncher()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 CTFRocketLauncher::~CTFRocketLauncher()
 {
@@ -182,7 +182,7 @@ CTFRocketLauncher::~CTFRocketLauncher()
 
 #ifndef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRocketLauncher::Precache()
 {
@@ -290,7 +290,7 @@ bool CTFRocketLauncher::ShouldBlockPrimaryFire()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseEntity *CTFRocketLauncher::FireProjectile( CTFPlayer *pPlayer )
 {
@@ -360,7 +360,7 @@ CBaseEntity *CTFRocketLauncher::FireProjectile( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRocketLauncher::ItemPostFrame( void )
 {
@@ -384,7 +384,7 @@ void CTFRocketLauncher::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFRocketLauncher::DefaultReload( int iClipSize1, int iClipSize2, int iActivity )
 {
@@ -394,7 +394,7 @@ bool CTFRocketLauncher::DefaultReload( int iClipSize1, int iClipSize2, int iActi
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRocketLauncher::CreateMuzzleFlashEffects( C_BaseEntity *pAttachEnt, int nIndex )
 {
@@ -442,7 +442,7 @@ void CTFRocketLauncher_AirStrike::OnPlayerKill( CTFPlayer *pVictim, const CTakeD
 	{
 		iDecap += pVictim->m_Shared.GetDecapitations();
 	}
-	pOwner->m_Shared.SetDecapitations( iDecap );	
+	pOwner->m_Shared.SetDecapitations( iDecap );
 
 	int iClipSizeOnKills = 0;
 	CALL_ATTRIB_HOOK_INT( iClipSizeOnKills, clipsize_increase_on_kill );
@@ -594,7 +594,7 @@ int CTFRocketLauncher_AirStrike::GetCount( void )
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 //CTFRocketLauncher_Mortar::CTFRocketLauncher_Mortar()
 //{
-//	
+//
 //}
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 CBaseEntity *CTFRocketLauncher_Mortar::FireProjectile( CTFPlayer *pPlayer )
@@ -689,7 +689,7 @@ void CTFRocketLauncher_Mortar::RedirectRockets( void )
 			// only allow a single redirect
 			m_vecRockets.Remove( i );
 		}
-#else 
+#else
 		m_vecRockets.Remove( i );
 #endif
 	}
@@ -783,7 +783,7 @@ float CTFCrossbow::GetProjectileSpeed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFCrossbow::GetProjectileGravity( void )
 {
@@ -791,7 +791,7 @@ float CTFCrossbow::GetProjectileGravity( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFCrossbow::IsViewModelFlipped( void )
 {

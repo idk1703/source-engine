@@ -42,7 +42,7 @@ void CAllPlayersStats::writeHTML(CHTMLFile& html)
 
 	if (!result)
 		return;
-	
+
 	multimap<double,CPlrPersist,greater<double> > ranksort;
 
 	html.write("<table cols=1 cellspacing=0 border=0 cellpadding=10 bordercolor=black>\n");
@@ -52,19 +52,19 @@ void CAllPlayersStats::writeHTML(CHTMLFile& html)
 		pair<double,CPlrPersist> insertme;
 		insertme.second.read(f);
 		insertme.first=insertme.second.rank();
-		
+
 		ranksort.insert(insertme);
 
 		if (!g_pApp->os->findnextfile(filename))
 			break;
-		
+
 
 	}
-	
+
 	g_pApp->os->findfileclose();
-	
+
 	multimap<double,CPlrPersist,greater<double> >::iterator rankit=ranksort.begin();
-	
+
 	for (rankit;rankit!=ranksort.end();++rankit)
 	{
 		bool rowstarted=false;
@@ -72,7 +72,7 @@ void CAllPlayersStats::writeHTML(CHTMLFile& html)
 		CPlrPersist* pcpp=&(rankit->second);
 
 		time_t cutoff=g_pMatchInfo->logOpenTime() - g_pApp->getCutoffSeconds();
-		
+
 		if (pcpp->lastplayed >= cutoff || !g_pApp->eliminateOldPlayers)
 		{
 			if (!rowstarted)
@@ -81,7 +81,7 @@ void CAllPlayersStats::writeHTML(CHTMLFile& html)
 				html.write("<tr>\n");
 			}
 
-			html.write("<td width=300 valign=top>");	
+			html.write("<td width=300 valign=top>");
 			CPlayerReport pr(pcpp);
 			pr.writeHTML(html);
 			html.write("</td>\n");
@@ -104,7 +104,7 @@ void CAllPlayersStats::writeHTML(CHTMLFile& html)
 				html.write("<tr>\n");
 			}
 
-			html.write("<td width=300 valign=top>");	
+			html.write("<td width=300 valign=top>");
 			CPlayerReport pr2(pcpp2);
 			pr2.writeHTML(html);
 			html.write("</td>\n");
@@ -116,4 +116,3 @@ void CAllPlayersStats::writeHTML(CHTMLFile& html)
 	html.write("</table>");
 
 }
-

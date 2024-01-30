@@ -25,12 +25,12 @@ public:
 
 	NextBotGroundLocomotion( INextBot *bot );
 	virtual ~NextBotGroundLocomotion();
-	
+
 	virtual void Reset( void );							// reset locomotor to initial state
 	virtual void Update( void );						// update internal state
 
 	virtual void Approach( const Vector &pos, float goalWeight = 1.0f );	// move directly towards the given position
-	virtual void DriveTo( const Vector &pos );			// Move the bot to the precise given position immediately, 
+	virtual void DriveTo( const Vector &pos );			// Move the bot to the precise given position immediately,
 
 	virtual bool ClimbUpToLedge( const Vector &landingGoal, const Vector &landingForward, const CBaseEntity *obstacle );	// initiate a jump to an adjacent high ledge, return false if climb can't start
 	virtual void JumpAcrossGap( const Vector &landingGoal, const Vector &landingForward );	// initiate a jump across an empty volume of space to far side
@@ -108,10 +108,10 @@ private:
 
 	Vector m_priorPos;										// last update's position
 	Vector m_lastValidPos;									// last valid position (not interpenetrating)
-	
+
 	Vector m_acceleration;
 	Vector m_velocity;
-	
+
 	float m_desiredSpeed;									// speed bot wants to be moving
 	float m_actualSpeed;									// actual speed bot is moving
 
@@ -120,7 +120,7 @@ private:
 	float m_forwardLean;
 	float m_sideLean;
 	QAngle m_desiredLean;
-	
+
 	bool m_isJumping;										// if true, we have jumped and have not yet hit the ground
 	bool m_isJumpingAcrossGap;								// if true, we have jumped across a gap and have not yet hit the ground
 	EHANDLE m_ground;										// have to manage this ourselves, since MOVETYPE_CUSTOM always NULLs out GetGroundEntity()
@@ -271,4 +271,3 @@ inline float NextBotGroundLocomotion::GetMaxDeceleration( void ) const
 
 
 #endif // NEXT_BOT_GROUND_LOCOMOTION_H
-

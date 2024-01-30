@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -81,7 +81,7 @@ CTFMechanicalArm::~CTFMechanicalArm()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMechanicalArm::Precache()
 {
@@ -172,7 +172,7 @@ bool CTFMechanicalArm::ShockAttack( void )
 		ShockVictim( pOwner, pTarget );
 		pOwner->RemoveAmmo( AMMO_PER_PROJECTILE_SHOCK, m_iPrimaryAmmoType );
 
-		// Play an effect where the target is			
+		// Play an effect where the target is
 		CPVSFilter filter( vecTarget );
 		const char *shootsound = GetShootSound( SPECIAL3 );
 		if ( shootsound && *shootsound )
@@ -234,7 +234,7 @@ void CTFMechanicalArm::ShockVictim( CTFPlayer *pOwner, CBaseEntity *pTarget )
 		pTarget->AddEffects( EF_NODRAW );
 		pTarget->RemoveFlag( FL_GRENADE );
 	}
-	
+
 	// deal damage
 	CTakeDamageInfo info;
 	info.SetDamageType( DMG_SHOCK );
@@ -389,9 +389,9 @@ void CTFMechanicalArm::UpdateParticleBeam()
 	m_pEffectOwner = pEffectOwner;
 
 	// Constantly perform the shock attack and update control points if attack is down and we've already fired
-	if ( pFiringPlayer 
-		&& pFiringPlayer->m_nButtons & IN_ATTACK 
-		&& pFiringPlayer->GetActiveWeapon() == this 
+	if ( pFiringPlayer
+		&& pFiringPlayer->m_nButtons & IN_ATTACK
+		&& pFiringPlayer->GetActiveWeapon() == this
 		&& pFiringPlayer->GetWaterLevel() != WL_Eyes
 		&& pFiringPlayer->m_flNextAttack < gpGlobals->curtime )
 	{
@@ -475,7 +475,7 @@ void CTFMechanicalArm::PrimaryAttack()
 	int iAmmoPerShot = 0;
 	CALL_ATTRIB_HOOK_INT( iAmmoPerShot, mod_ammo_per_shot );
 	pOwner->RemoveAmmo( iAmmoPerShot, m_iPrimaryAmmoType );
-	
+
 	//int nAmmoToTake = bShocked ? 0 : GetAmmoPerShot();
 	//pOwner->RemoveAmmo( nAmmoToTake, m_iPrimaryAmmoType );
 

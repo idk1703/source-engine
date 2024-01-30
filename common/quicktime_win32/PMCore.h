@@ -1,17 +1,17 @@
 /*
-     File:       PMCore.h
- 
-     Contains:   Carbon Printing Manager Interfaces.
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1998-2001 by Apple Computer, Inc., all rights reserved
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       PMCore.h
+
+		Contains:   Carbon Printing Manager Interfaces.
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1998-2001 by Apple Computer, Inc., all rights reserved
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __PMCORE__
 #define __PMCORE__
@@ -68,7 +68,7 @@ typedef CALLBACK_API( void , PMIdleProcPtr )(void);
 typedef STACK_UPP_TYPE(PMIdleProcPtr)                           PMIdleUPP;
 /*
  *  NewPMIdleUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -79,7 +79,7 @@ NewPMIdleUPP(PMIdleProcPtr userRoutine);
 
 /*
  *  DisposePMIdleUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -90,7 +90,7 @@ DisposePMIdleUPP(PMIdleUPP userUPP);
 
 /*
  *  InvokePMIdleUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -102,7 +102,7 @@ InvokePMIdleUPP(PMIdleUPP userUPP);
 #if PM_USE_SESSION_APIS
 /*
  *  PMSessionCreatePrinterList()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.4 and later
@@ -110,15 +110,15 @@ InvokePMIdleUPP(PMIdleUPP userUPP);
  */
 EXTERN_API( OSStatus )
 PMSessionCreatePrinterList(
-  PMPrintSession   printSession,
-  CFArrayRef *     printerList,
-  CFIndex *        currentIndex,
-  PMPrinter *      currentPrinter);
+	PMPrintSession   printSession,
+	CFArrayRef *     printerList,
+	CFIndex *        currentIndex,
+	PMPrinter *      currentPrinter);
 
 
 /*
  *  PMSessionSetCurrentPrinter()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.4 and later
@@ -126,18 +126,18 @@ PMSessionCreatePrinterList(
  */
 EXTERN_API( OSStatus )
 PMSessionSetCurrentPrinter(
-  PMPrintSession   session,
-  CFStringRef      printerName);
+	PMPrintSession   session,
+	CFStringRef      printerName);
 
 
 /*
  *  PMSessionSetDestination()
- *  
+ *
  *  Summary:
  *    Alter a print session and print settings so that an associated
  *    print job is sent to the provided destination type in the,
  *    optional, MIME document format.
- *  
+ *
  *  Discussion:
  *    This function is most useful when an application would like to
  *    write its print output to disk without requiring user
@@ -145,45 +145,45 @@ PMSessionSetCurrentPrinter(
  *    provided destination can be obtained from
  *    PMSessionCopyOutputFormatList and one of these passed to this
  *    function.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    printSession:
  *      The session to be used for a print job. The session holds the
  *      preview setting which can override the destination type in the
  *      print settings.
- *    
+ *
  *    printSettings:
  *      The print settings to be used for a print job. The print
  *      settings specify whether a job will be directed toward a
  *      printer or to file. It also holds the requested MIME output
  *      type.
- *    
+ *
  *    destType:
  *      The destiation type for a print job associated with the
  *      provided print session and print settings. Fax is currently not
  *      supported, but kPMDestinationPrinter, kPMDestinationFile, and
  *      kPMDestinationPreview can be set.
- *    
+ *
  *    destFormat:
  *      The MIME type to be generated for the provided destination
  *      type. This parameter can be NULL in which the default format
  *      for the requested destination type is used. To obtain a list of
  *      valid formats for a given destiation type, use the function
  *      PMSessionCopyOutputFormatList.
- *    
+ *
  *    destLocation:
  *      Some destination types support a destination location. The
  *      clearest example is the kPMDestinationFile destination type
  *      which allows a caller to also supply a file URL specifying
  *      where the output file is to be created.
- *    
+ *
  *    SPECIAL_AVAILABILITY_NOTE:
  *      This routine is available in ApplicationsServices.framework in
  *      Mac OS X version 10.1 and later. On Mac OS X it is available to
  *      CFM applications through CarbonLib starting with Mac OS X
  *      version 10.2 and later.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.5 and later
@@ -191,20 +191,20 @@ PMSessionSetCurrentPrinter(
  */
 EXTERN_API( OSStatus )
 PMSessionSetDestination(
-  PMPrintSession      printSession,
-  PMPrintSettings     printSettings,
-  PMDestinationType   destType,
-  CFStringRef         destFormat,
-  CFURLRef            destLocation);
+	PMPrintSession      printSession,
+	PMPrintSettings     printSettings,
+	PMDestinationType   destType,
+	CFStringRef         destFormat,
+	CFURLRef            destLocation);
 
 
 /*
  *  PMSessionGetDestinationType()
- *  
+ *
  *  Summary:
  *    Hand back the destination type that will be used for a print job
  *    with the specified print settings and print session.
- *  
+ *
  *  Discussion:
  *    Currently there are four destination types:
  *    kPMDestinationPrinter, kPMDestinationFile, kPMDestinationFax and
@@ -215,32 +215,32 @@ PMSessionSetDestination(
  *    PMGetDestination as the latter does not take a print session
  *    parameter and therefore can not indicate whether preview has been
  *    selected as the destination.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    printSession:
  *      The session to be used for a print job. The session holds the
  *      preview setting which can override the destination type in the
  *      print settings.
- *    
+ *
  *    printSettings:
  *      The print settings to be used for a print job. The print
  *      settings specify whether a job will be directed toward a
  *      printer or to file.
- *    
+ *
  *    destTypeP:
  *      A pointer to a caller supplied PMDestinationType variable. If
  *      this function succeeds then *'destTypeP' will be filled in with
  *      the destination type for a print job that used the specified
  *      session and print settings. If this function fails, then
  *      *'destType' will be set to kPMDestinationInvalid.
- *    
+ *
  *    SPECIAL_AVAILABILITY_NOTE:
  *      This routine is available in ApplicationsServices.framework in
  *      Mac OS X version 10.1 and later. On Mac OS X it is available to
  *      CFM applications through CarbonLib starting with Mac OS X
  *      version 10.2 and later.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.5 and later
@@ -248,26 +248,26 @@ PMSessionSetDestination(
  */
 EXTERN_API( OSStatus )
 PMSessionGetDestinationType(
-  PMPrintSession       printSession,
-  PMPrintSettings      printSettings,
-  PMDestinationType *  destTypeP);
+	PMPrintSession       printSession,
+	PMPrintSettings      printSettings,
+	PMDestinationType *  destTypeP);
 
 
 /*
  *  PMSessionCopyDestinationFormat()
- *  
+ *
  *  Summary:
  *    Hand back the destination output MIME type associated with the
  *    provided print session and print settings.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    printSession:
  *      A currently open print session.
- *    
+ *
  *    printSettings:
  *      The print settings that are to be searched.
- *    
+ *
  *    destFormatP:
  *      A pointer to a caller allocated CFStringRef variable. If this
  *      routine returns noErr then *'destFormatP' will either be a copy
@@ -275,13 +275,13 @@ PMSessionGetDestinationType(
  *      job, or NULL indicating that the default output format will be
  *      used. If this function return an error, then *'destFormatP'
  *      will be set to NULL.
- *    
+ *
  *    SPECIAL_AVAILABILITY_NOTE:
  *      This routine is available in ApplicationsServices.framework in
  *      Mac OS X version 10.1 and later. On Mac OS X it is available to
  *      CFM applications through CarbonLib starting with Mac OS X
  *      version 10.2 and later.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.5 and later
@@ -289,32 +289,32 @@ PMSessionGetDestinationType(
  */
 EXTERN_API( OSStatus )
 PMSessionCopyDestinationFormat(
-  PMPrintSession    printSession,
-  PMPrintSettings   printSettings,
-  CFStringRef *     destFormatP);
+	PMPrintSession    printSession,
+	PMPrintSettings   printSettings,
+	CFStringRef *     destFormatP);
 
 
 /*
  *  PMSessionCopyDestinationLocation()
- *  
+ *
  *  Summary:
  *    Hand back the URL destination location given a print session and
  *    print settings.
- *  
+ *
  *  Discussion:
  *    Some destination type support a destination location which
  *    further defines where the output from a pritn job should be sent.
  *    The kPMDestinationFile destiation type, for example, will use a
  *    file URL to determine where a new file should be created.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    printSession:
  *      A currently open print session.
- *    
+ *
  *    printSettings:
  *      The print settings that are to be searched.
- *    
+ *
  *    destLocationP:
  *      A pointer to a caller allocated CFURLRef variable. If this
  *      routine returns noErr then *'outputFileP' will either be NULL
@@ -322,13 +322,13 @@ PMSessionCopyDestinationFormat(
  *      location for the current destination type or a copy of a
  *      CFURLRef will be placed in *'destLocationP'. If this function
  *      returns an error then 'destLocationP' will be set to NULL.
- *    
+ *
  *    SPECIAL_AVAILABILITY_NOTE:
  *      This routine is available in ApplicationsServices.framework in
  *      Mac OS X version 10.1 and later. On Mac OS X it is available to
  *      CFM applications through CarbonLib starting with Mac OS X
  *      version 10.2 and later.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.5 and later
@@ -336,31 +336,31 @@ PMSessionCopyDestinationFormat(
  */
 EXTERN_API( OSStatus )
 PMSessionCopyDestinationLocation(
-  PMPrintSession    printSession,
-  PMPrintSettings   printSettings,
-  CFURLRef *        destLocationP);
+	PMPrintSession    printSession,
+	PMPrintSettings   printSettings,
+	CFURLRef *        destLocationP);
 
 
 /*
  *  PMSessionCopyOutputFormatList()
- *  
+ *
  *  Summary:
  *    Hands back an an array of MIME types describing the possible
  *    output formats for the printer module associated with the current
  *    printer.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    printSession:
  *      This session's current printer's printer module will be queried
  *      for its supported output MIME types.
- *    
+ *
  *    destType:
  *      A print job can have one of several possible destination types.
  *      The list of valid output formats is dependent upon the
  *      destination type. This parameter specifies destination type of
  *      interest when retrieving the output formats list.
- *    
+ *
  *    documentFormatP:
  *      A pointer to a caller's CFArrayRef variable. If this routine
  *      completes successfully, then *'documentFormatP' will be set to
@@ -368,14 +368,14 @@ PMSessionCopyDestinationLocation(
  *      array is a MIME type specifying a type of output that can be
  *      generated by the printer module associated with the current
  *      printer.
- *    
+ *
  *    SPECIAL_AVAILABILITY_NOTE:
  *      This routine is available in ApplicationsServices.framework in
  *      Mac OS X version 10.1 and later. On Mac OS X it is available to
  *      CFM applications through CarbonLib starting with Mac OS X
  *      version 10.2 and later. On Mac OS 8/9 using CarbonLib, this
  *      routine returns kPMNotImplemented
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.6 and later
@@ -383,29 +383,29 @@ PMSessionCopyDestinationLocation(
  */
 EXTERN_API( OSStatus )
 PMSessionCopyOutputFormatList(
-  PMPrintSession      printSession,
-  PMDestinationType   destType,
-  CFArrayRef *        documentFormatP);
+	PMPrintSession      printSession,
+	PMDestinationType   destType,
+	CFArrayRef *        documentFormatP);
 
 
 
 /*
  *  PMSessionCreatePageFormatList()
- *  
+ *
  *  Summary:
  *    Hand back a list of page format instances. Each page format
  *    instance describes a paper size available on the specified
  *    printer.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    printSession:
  *      A currently open print session.
- *    
+ *
  *    printer:
  *      The printer whose page size list should be enumerated. To get
  *      the session's current printer, see PMSessionGetCurrentPrinter().
- *    
+ *
  *    pageFormatList:
  *      If this function is successful then noErr will be returned and
  *      *'pageFormatList' will be set to a newly created CFArray. Each
@@ -413,14 +413,14 @@ PMSessionCopyOutputFormatList(
  *      available paper size for the specified printer. If this
  *      function fails then a non-zero error code will be returned and
  *      *'pageFormatList' will be set to NULL.
- *    
+ *
  *    SPECIAL_AVAILABILITY_NOTE:
  *      This routine is available in ApplicationsServices.framework in
  *      Mac OS X version 10.1 and later. On Mac OS X it is available to
  *      CFM applications through CarbonLib starting with Mac OS X
  *      version 10.2 and later. On Mac OS 8/9 using CarbonLib, this
  *      routine returns kPMNotImplemented
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.6 and later
@@ -428,9 +428,9 @@ PMSessionCopyOutputFormatList(
  */
 EXTERN_API( OSStatus )
 PMSessionCreatePageFormatList(
-  PMPrintSession   printSession,
-  PMPrinter        printer,
-  CFArrayRef *     pageFormatList);
+	PMPrintSession   printSession,
+	PMPrinter        printer,
+	CFArrayRef *     pageFormatList);
 
 
 /*
@@ -442,7 +442,7 @@ PMSessionCreatePageFormatList(
  */
 /*
  *  PMSessionBeginDocumentNoDialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.6 and later
@@ -450,9 +450,9 @@ PMSessionCreatePageFormatList(
  */
 EXTERN_API( OSStatus )
 PMSessionBeginDocumentNoDialog(
-  PMPrintSession    printSession,
-  PMPrintSettings   printSettings,
-  PMPageFormat      pageFormat);
+	PMPrintSession    printSession,
+	PMPrintSettings   printSettings,
+	PMPageFormat      pageFormat);
 
 
 /*
@@ -464,7 +464,7 @@ PMSessionBeginDocumentNoDialog(
  */
 /*
  *  PMSessionEndDocumentNoDialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.6 and later
@@ -483,7 +483,7 @@ PMSessionEndDocumentNoDialog(PMPrintSession printSession);
  */
 /*
  *  PMSessionBeginPageNoDialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.6 and later
@@ -491,9 +491,9 @@ PMSessionEndDocumentNoDialog(PMPrintSession printSession);
  */
 EXTERN_API( OSStatus )
 PMSessionBeginPageNoDialog(
-  PMPrintSession   printSession,
-  PMPageFormat     pageFormat,
-  const PMRect *   pageFrame);
+	PMPrintSession   printSession,
+	PMPageFormat     pageFormat,
+	const PMRect *   pageFrame);
 
 
 /*
@@ -505,7 +505,7 @@ PMSessionBeginPageNoDialog(
  */
 /*
  *  PMSessionEndPageNoDialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.6 and later
@@ -518,7 +518,7 @@ PMSessionEndPageNoDialog(PMPrintSession printSession);
 #else
 /*
  *  PMSetIdleProc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -531,7 +531,7 @@ PMSetIdleProc(PMIdleUPP idleProc);
 /* Print loop */
 /*
  *  PMBegin()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -543,7 +543,7 @@ PMBegin(void);
 
 /*
  *  PMEnd()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -559,7 +559,7 @@ PMEnd(void);
 /************************/
 /*
  *  PMGetGrafPtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -567,14 +567,14 @@ PMEnd(void);
  */
 EXTERN_API( OSStatus )
 PMGetGrafPtr(
-  PMPrintContext   printContext,
-  GrafPtr *        grafPort);
+	PMPrintContext   printContext,
+	GrafPtr *        grafPort);
 
 
 /* PMPageFormat */
 /*
  *  PMNewPageFormat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -586,7 +586,7 @@ PMNewPageFormat(PMPageFormat * pageFormat);
 
 /*
  *  PMDisposePageFormat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -598,7 +598,7 @@ PMDisposePageFormat(PMPageFormat pageFormat);
 
 /*
  *  PMDefaultPageFormat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -610,7 +610,7 @@ PMDefaultPageFormat(PMPageFormat pageFormat);
 
 /*
  *  PMValidatePageFormat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -618,14 +618,14 @@ PMDefaultPageFormat(PMPageFormat pageFormat);
  */
 EXTERN_API( OSStatus )
 PMValidatePageFormat(
-  PMPageFormat   pageFormat,
-  Boolean *      result);
+	PMPageFormat   pageFormat,
+	Boolean *      result);
 
 
 /* PMPrintSettings */
 /*
  *  PMNewPrintSettings()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -637,7 +637,7 @@ PMNewPrintSettings(PMPrintSettings * printSettings);
 
 /*
  *  PMDisposePrintSettings()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -649,7 +649,7 @@ PMDisposePrintSettings(PMPrintSettings printSettings);
 
 /*
  *  PMDefaultPrintSettings()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -661,7 +661,7 @@ PMDefaultPrintSettings(PMPrintSettings printSettings);
 
 /*
  *  PMValidatePrintSettings()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -669,14 +669,14 @@ PMDefaultPrintSettings(PMPrintSettings printSettings);
  */
 EXTERN_API( OSStatus )
 PMValidatePrintSettings(
-  PMPrintSettings   printSettings,
-  Boolean *         result);
+	PMPrintSettings   printSettings,
+	Boolean *         result);
 
 
 /* Classic Support */
 /*
  *  PMGeneral()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -688,7 +688,7 @@ PMGeneral(Ptr pData);
 
 /*
  *  PMConvertOldPrintRecord()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -696,14 +696,14 @@ PMGeneral(Ptr pData);
  */
 EXTERN_API( OSStatus )
 PMConvertOldPrintRecord(
-  Handle             printRecordHandle,
-  PMPrintSettings *  printSettings,
-  PMPageFormat *     pageFormat);
+	Handle             printRecordHandle,
+	PMPrintSettings *  printSettings,
+	PMPageFormat *     pageFormat);
 
 
 /*
  *  PMMakeOldPrintRecord()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -711,15 +711,15 @@ PMConvertOldPrintRecord(
  */
 EXTERN_API( OSStatus )
 PMMakeOldPrintRecord(
-  PMPrintSettings   printSettings,
-  PMPageFormat      pageFormat,
-  Handle *          printRecordHandle);
+	PMPrintSettings   printSettings,
+	PMPageFormat      pageFormat,
+	Handle *          printRecordHandle);
 
 
 /* Driver Information */
 /*
  *  PMIsPostScriptDriver()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -731,7 +731,7 @@ PMIsPostScriptDriver(Boolean * isPostScript);
 
 /*
  *  PMGetLanguageInfo()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -743,7 +743,7 @@ PMGetLanguageInfo(PMLanguageInfo * info);
 
 /*
  *  PMGetDriverCreator()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -755,7 +755,7 @@ PMGetDriverCreator(OSType * creator);
 
 /*
  *  PMGetDriverReleaseInfo()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -767,7 +767,7 @@ PMGetDriverReleaseInfo(VersRec * release);
 
 /*
  *  PMGetPrinterResolutionCount()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -779,7 +779,7 @@ PMGetPrinterResolutionCount(UInt32 * count);
 
 /*
  *  PMGetPrinterResolution()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -787,13 +787,13 @@ PMGetPrinterResolutionCount(UInt32 * count);
  */
 EXTERN_API( OSStatus )
 PMGetPrinterResolution(
-  PMTag           tag,
-  PMResolution *  res);
+	PMTag           tag,
+	PMResolution *  res);
 
 
 /*
  *  PMGetIndexedPrinterResolution()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -801,8 +801,8 @@ PMGetPrinterResolution(
  */
 EXTERN_API( OSStatus )
 PMGetIndexedPrinterResolution(
-  UInt32          index,
-  PMResolution *  res);
+	UInt32          index,
+	PMResolution *  res);
 
 
 /************************/
@@ -812,7 +812,7 @@ PMGetIndexedPrinterResolution(
 /* ColorSync & PostScript Support */
 /*
  *  PMEnableColorSync()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -824,7 +824,7 @@ PMEnableColorSync(void);
 
 /*
  *  PMDisableColorSync()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -840,7 +840,7 @@ PMDisableColorSync(void);
 /************************/
 /*
  *  PMPostScriptBegin()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -852,7 +852,7 @@ PMPostScriptBegin(void);
 
 /*
  *  PMPostScriptEnd()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -868,7 +868,7 @@ PMPostScriptEnd(void);
 /************************/
 /*
  *  PMPostScriptHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -880,7 +880,7 @@ PMPostScriptHandle(Handle psHandle);
 
 /*
  *  PMPostScriptData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -888,13 +888,13 @@ PMPostScriptHandle(Handle psHandle);
  */
 EXTERN_API( OSStatus )
 PMPostScriptData(
-  Ptr    psPtr,
-  Size   len);
+	Ptr    psPtr,
+	Size   len);
 
 
 /*
  *  PMPostScriptFile()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -907,7 +907,7 @@ PMPostScriptFile(FSSpec * psFile);
 /* Error */
 /*
  *  PMError()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -919,7 +919,7 @@ PMError(void);
 
 /*
  *  PMSetError()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -934,7 +934,7 @@ PMSetError(OSStatus printError);
 /* PMPageFormat */
 /*
  *  PMCopyPageFormat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -942,8 +942,8 @@ PMSetError(OSStatus printError);
  */
 EXTERN_API( OSStatus )
 PMCopyPageFormat(
-  PMPageFormat   formatSrc,
-  PMPageFormat   formatDest);
+	PMPageFormat   formatSrc,
+	PMPageFormat   formatDest);
 
 
 /************************/
@@ -957,7 +957,7 @@ PMCopyPageFormat(
 /************************/
 /*
  *  PMFlattenPageFormat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -965,13 +965,13 @@ PMCopyPageFormat(
  */
 EXTERN_API( OSStatus )
 PMFlattenPageFormat(
-  PMPageFormat   pageFormat,
-  Handle *       flatFormat);
+	PMPageFormat   pageFormat,
+	Handle *       flatFormat);
 
 
 /*
  *  PMUnflattenPageFormat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -979,8 +979,8 @@ PMFlattenPageFormat(
  */
 EXTERN_API( OSStatus )
 PMUnflattenPageFormat(
-  Handle          flatFormat,
-  PMPageFormat *  pageFormat);
+	Handle          flatFormat,
+	PMPageFormat *  pageFormat);
 
 
 /* PMPageFormat Accessors */
@@ -1000,7 +1000,7 @@ PMUnflattenPageFormat(
 /************************/
 /*
  *  PMGetPageFormatExtendedData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1008,15 +1008,15 @@ PMUnflattenPageFormat(
  */
 EXTERN_API( OSStatus )
 PMGetPageFormatExtendedData(
-  PMPageFormat   pageFormat,
-  OSType         dataID,
-  UInt32 *       size,
-  void *         extendedData);
+	PMPageFormat   pageFormat,
+	OSType         dataID,
+	UInt32 *       size,
+	void *         extendedData);
 
 
 /*
  *  PMSetPageFormatExtendedData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1024,10 +1024,10 @@ PMGetPageFormatExtendedData(
  */
 EXTERN_API( OSStatus )
 PMSetPageFormatExtendedData(
-  PMPageFormat   pageFormat,
-  OSType         dataID,
-  UInt32         size,
-  void *         extendedData);
+	PMPageFormat   pageFormat,
+	OSType         dataID,
+	UInt32         size,
+	void *         extendedData);
 
 
 /************************/
@@ -1035,7 +1035,7 @@ PMSetPageFormatExtendedData(
 /************************/
 /*
  *  PMGetScale()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1043,13 +1043,13 @@ PMSetPageFormatExtendedData(
  */
 EXTERN_API( OSStatus )
 PMGetScale(
-  PMPageFormat   pageFormat,
-  double *       scale);
+	PMPageFormat   pageFormat,
+	double *       scale);
 
 
 /*
  *  PMSetScale()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1057,8 +1057,8 @@ PMGetScale(
  */
 EXTERN_API( OSStatus )
 PMSetScale(
-  PMPageFormat   pageFormat,
-  double         scale);
+	PMPageFormat   pageFormat,
+	double         scale);
 
 
 /************************/
@@ -1068,7 +1068,7 @@ PMSetScale(
 /************************/
 /*
  *  PMGetResolution()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1076,13 +1076,13 @@ PMSetScale(
  */
 EXTERN_API( OSStatus )
 PMGetResolution(
-  PMPageFormat    pageFormat,
-  PMResolution *  res);
+	PMPageFormat    pageFormat,
+	PMResolution *  res);
 
 
 /*
  *  PMSetResolution()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1090,8 +1090,8 @@ PMGetResolution(
  */
 EXTERN_API( OSStatus )
 PMSetResolution(
-  PMPageFormat          pageFormat,
-  const PMResolution *  res);
+	PMPageFormat          pageFormat,
+	const PMResolution *  res);
 
 
 /************************/
@@ -1100,7 +1100,7 @@ PMSetResolution(
 /************************/
 /*
  *  PMGetPhysicalPaperSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1108,13 +1108,13 @@ PMSetResolution(
  */
 EXTERN_API( OSStatus )
 PMGetPhysicalPaperSize(
-  PMPageFormat   pageFormat,
-  PMRect *       paperSize);
+	PMPageFormat   pageFormat,
+	PMRect *       paperSize);
 
 
 /*
  *  PMSetPhysicalPaperSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1122,8 +1122,8 @@ PMGetPhysicalPaperSize(
  */
 EXTERN_API( OSStatus )
 PMSetPhysicalPaperSize(
-  PMPageFormat    pageFormat,
-  const PMRect *  paperSize);
+	PMPageFormat    pageFormat,
+	const PMRect *  paperSize);
 
 
 /************************/
@@ -1132,7 +1132,7 @@ PMSetPhysicalPaperSize(
 /************************/
 /*
  *  PMGetPhysicalPageSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1140,13 +1140,13 @@ PMSetPhysicalPaperSize(
  */
 EXTERN_API( OSStatus )
 PMGetPhysicalPageSize(
-  PMPageFormat   pageFormat,
-  PMRect *       pageSize);
+	PMPageFormat   pageFormat,
+	PMRect *       pageSize);
 
 
 /*
  *  PMGetAdjustedPaperRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1154,13 +1154,13 @@ PMGetPhysicalPageSize(
  */
 EXTERN_API( OSStatus )
 PMGetAdjustedPaperRect(
-  PMPageFormat   pageFormat,
-  PMRect *       paperRect);
+	PMPageFormat   pageFormat,
+	PMRect *       paperRect);
 
 
 /*
  *  PMGetAdjustedPageRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1168,13 +1168,13 @@ PMGetAdjustedPaperRect(
  */
 EXTERN_API( OSStatus )
 PMGetAdjustedPageRect(
-  PMPageFormat   pageFormat,
-  PMRect *       pageRect);
+	PMPageFormat   pageFormat,
+	PMRect *       pageRect);
 
 
 /*
  *  PMGetUnadjustedPaperRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.1 and later
@@ -1182,13 +1182,13 @@ PMGetAdjustedPageRect(
  */
 EXTERN_API( OSStatus )
 PMGetUnadjustedPaperRect(
-  PMPageFormat   pageFormat,
-  PMRect *       paperRect);
+	PMPageFormat   pageFormat,
+	PMRect *       paperRect);
 
 
 /*
  *  PMSetUnadjustedPaperRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.1 and later
@@ -1196,13 +1196,13 @@ PMGetUnadjustedPaperRect(
  */
 EXTERN_API( OSStatus )
 PMSetUnadjustedPaperRect(
-  PMPageFormat    pageFormat,
-  const PMRect *  paperRect);
+	PMPageFormat    pageFormat,
+	const PMRect *  paperRect);
 
 
 /*
  *  PMGetUnadjustedPageRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.1 and later
@@ -1210,13 +1210,13 @@ PMSetUnadjustedPaperRect(
  */
 EXTERN_API( OSStatus )
 PMGetUnadjustedPageRect(
-  PMPageFormat   pageFormat,
-  PMRect *       pageRect);
+	PMPageFormat   pageFormat,
+	PMRect *       pageRect);
 
 
 /*
  *  PMSetAdjustedPageRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.1 and later
@@ -1224,13 +1224,13 @@ PMGetUnadjustedPageRect(
  */
 EXTERN_API( OSStatus )
 PMSetAdjustedPageRect(
-  PMPageFormat    pageFormat,
-  const PMRect *  pageRect);
+	PMPageFormat    pageFormat,
+	const PMRect *  pageRect);
 
 
 /*
  *  PMGetOrientation()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1238,13 +1238,13 @@ PMSetAdjustedPageRect(
  */
 EXTERN_API( OSStatus )
 PMGetOrientation(
-  PMPageFormat     pageFormat,
-  PMOrientation *  orientation);
+	PMPageFormat     pageFormat,
+	PMOrientation *  orientation);
 
 
 /*
  *  PMSetOrientation()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1252,15 +1252,15 @@ PMGetOrientation(
  */
 EXTERN_API( OSStatus )
 PMSetOrientation(
-  PMPageFormat    pageFormat,
-  PMOrientation   orientation,
-  Boolean         lock);
+	PMPageFormat    pageFormat,
+	PMOrientation   orientation,
+	Boolean         lock);
 
 
 /* PMPrintSettings */
 /*
  *  PMCopyPrintSettings()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1268,8 +1268,8 @@ PMSetOrientation(
  */
 EXTERN_API( OSStatus )
 PMCopyPrintSettings(
-  PMPrintSettings   settingSrc,
-  PMPrintSettings   settingDest);
+	PMPrintSettings   settingSrc,
+	PMPrintSettings   settingDest);
 
 
 /************************/
@@ -1283,7 +1283,7 @@ PMCopyPrintSettings(
 /************************/
 /*
  *  PMFlattenPrintSettings()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1291,13 +1291,13 @@ PMCopyPrintSettings(
  */
 EXTERN_API( OSStatus )
 PMFlattenPrintSettings(
-  PMPrintSettings   printSettings,
-  Handle *          flatSettings);
+	PMPrintSettings   printSettings,
+	Handle *          flatSettings);
 
 
 /*
  *  PMUnflattenPrintSettings()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1305,14 +1305,14 @@ PMFlattenPrintSettings(
  */
 EXTERN_API( OSStatus )
 PMUnflattenPrintSettings(
-  Handle             flatSettings,
-  PMPrintSettings *  printSettings);
+	Handle             flatSettings,
+	PMPrintSettings *  printSettings);
 
 
 /* PMPrintSettings Accessors */
 /*
  *  PMGetPrintSettingsExtendedData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1320,15 +1320,15 @@ PMUnflattenPrintSettings(
  */
 EXTERN_API( OSStatus )
 PMGetPrintSettingsExtendedData(
-  PMPrintSettings   printSettings,
-  OSType            dataID,
-  UInt32 *          size,
-  void *            extendedData);
+	PMPrintSettings   printSettings,
+	OSType            dataID,
+	UInt32 *          size,
+	void *            extendedData);
 
 
 /*
  *  PMSetPrintSettingsExtendedData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1336,15 +1336,15 @@ PMGetPrintSettingsExtendedData(
  */
 EXTERN_API( OSStatus )
 PMSetPrintSettingsExtendedData(
-  PMPrintSettings   printSettings,
-  OSType            dataID,
-  UInt32            size,
-  void *            extendedData);
+	PMPrintSettings   printSettings,
+	OSType            dataID,
+	UInt32            size,
+	void *            extendedData);
 
 
 /*
  *  PMGetDestination()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.1 and later
@@ -1352,14 +1352,14 @@ PMSetPrintSettingsExtendedData(
  */
 EXTERN_API( OSStatus )
 PMGetDestination(
-  PMPrintSettings      printSettings,
-  PMDestinationType *  destType,
-  CFURLRef *           fileURL);
+	PMPrintSettings      printSettings,
+	PMDestinationType *  destType,
+	CFURLRef *           fileURL);
 
 
 /*
  *  PMGetJobName()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1367,13 +1367,13 @@ PMGetDestination(
  */
 EXTERN_API( OSStatus )
 PMGetJobName(
-  PMPrintSettings   printSettings,
-  StringPtr         name);
+	PMPrintSettings   printSettings,
+	StringPtr         name);
 
 
 /*
  *  PMSetJobName()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1381,13 +1381,13 @@ PMGetJobName(
  */
 EXTERN_API( OSStatus )
 PMSetJobName(
-  PMPrintSettings   printSettings,
-  StringPtr         name);
+	PMPrintSettings   printSettings,
+	StringPtr         name);
 
 
 /*
  *  PMGetCopies()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1395,13 +1395,13 @@ PMSetJobName(
  */
 EXTERN_API( OSStatus )
 PMGetCopies(
-  PMPrintSettings   printSettings,
-  UInt32 *          copies);
+	PMPrintSettings   printSettings,
+	UInt32 *          copies);
 
 
 /*
  *  PMSetCopies()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1409,14 +1409,14 @@ PMGetCopies(
  */
 EXTERN_API( OSStatus )
 PMSetCopies(
-  PMPrintSettings   printSettings,
-  UInt32            copies,
-  Boolean           lock);
+	PMPrintSettings   printSettings,
+	UInt32            copies,
+	Boolean           lock);
 
 
 /*
  *  PMGetFirstPage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1424,13 +1424,13 @@ PMSetCopies(
  */
 EXTERN_API( OSStatus )
 PMGetFirstPage(
-  PMPrintSettings   printSettings,
-  UInt32 *          first);
+	PMPrintSettings   printSettings,
+	UInt32 *          first);
 
 
 /*
  *  PMSetFirstPage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1438,14 +1438,14 @@ PMGetFirstPage(
  */
 EXTERN_API( OSStatus )
 PMSetFirstPage(
-  PMPrintSettings   printSettings,
-  UInt32            first,
-  Boolean           lock);
+	PMPrintSettings   printSettings,
+	UInt32            first,
+	Boolean           lock);
 
 
 /*
  *  PMGetLastPage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1453,13 +1453,13 @@ PMSetFirstPage(
  */
 EXTERN_API( OSStatus )
 PMGetLastPage(
-  PMPrintSettings   printSettings,
-  UInt32 *          last);
+	PMPrintSettings   printSettings,
+	UInt32 *          last);
 
 
 /*
  *  PMSetLastPage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1467,9 +1467,9 @@ PMGetLastPage(
  */
 EXTERN_API( OSStatus )
 PMSetLastPage(
-  PMPrintSettings   printSettings,
-  UInt32            last,
-  Boolean           lock);
+	PMPrintSettings   printSettings,
+	UInt32            last,
+	Boolean           lock);
 
 
 /************************/
@@ -1480,7 +1480,7 @@ PMSetLastPage(
 /************************/
 /*
  *  PMGetPageRange()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1488,9 +1488,9 @@ PMSetLastPage(
  */
 EXTERN_API( OSStatus )
 PMGetPageRange(
-  PMPrintSettings   printSettings,
-  UInt32 *          minPage,
-  UInt32 *          maxPage);
+	PMPrintSettings   printSettings,
+	UInt32 *          minPage,
+	UInt32 *          maxPage);
 
 
 /************************/
@@ -1498,7 +1498,7 @@ PMGetPageRange(
 /************************/
 /*
  *  PMSetPageRange()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1506,14 +1506,14 @@ PMGetPageRange(
  */
 EXTERN_API( OSStatus )
 PMSetPageRange(
-  PMPrintSettings   printSettings,
-  UInt32            minPage,
-  UInt32            maxPage);
+	PMPrintSettings   printSettings,
+	UInt32            minPage,
+	UInt32            maxPage);
 
 
 /*
  *  PMSetProfile()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1521,14 +1521,14 @@ PMSetPageRange(
  */
 EXTERN_API( OSStatus )
 PMSetProfile(
-  PMPrintSettings            printSettings,
-  PMTag                      tag,
-  const CMProfileLocation *  profile);
+	PMPrintSettings            printSettings,
+	PMTag                      tag,
+	const CMProfileLocation *  profile);
 
 
 /*
  *  PMSetCollate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.6 and later
@@ -1536,13 +1536,13 @@ PMSetProfile(
  */
 EXTERN_API( OSStatus )
 PMSetCollate(
-  PMPrintSettings   printSettings,
-  Boolean           collate);
+	PMPrintSettings   printSettings,
+	Boolean           collate);
 
 
 /*
  *  PMGetCollate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.6 and later
@@ -1550,13 +1550,13 @@ PMSetCollate(
  */
 EXTERN_API( OSStatus )
 PMGetCollate(
-  PMPrintSettings   printSettings,
-  Boolean *         collate);
+	PMPrintSettings   printSettings,
+	Boolean *         collate);
 
 
 /*
  *  PMServerCreatePrinterList()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.2 and later
@@ -1564,13 +1564,13 @@ PMGetCollate(
  */
 EXTERN_API( OSStatus )
 PMServerCreatePrinterList(
-  PMServer      server,
-  CFArrayRef *  printerList);
+	PMServer      server,
+	CFArrayRef *  printerList);
 
 
 /*
  *  PMPrinterGetName()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.2 and later
@@ -1582,7 +1582,7 @@ PMPrinterGetName(PMPrinter printer);
 
 /*
  *  PMPrinterGetID()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.2 and later
@@ -1594,7 +1594,7 @@ PMPrinterGetID(PMPrinter printer);
 
 /*
  *  PMPrinterIsDefault()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.2 and later
@@ -1606,7 +1606,7 @@ PMPrinterIsDefault(PMPrinter printer);
 
 /*
  *  PMPrinterGetLocation()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.2 and later
@@ -1618,7 +1618,7 @@ PMPrinterGetLocation(PMPrinter printer);
 
 /*
  *  PMPrinterGetState()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.2 and later
@@ -1626,30 +1626,30 @@ PMPrinterGetLocation(PMPrinter printer);
  */
 EXTERN_API( OSStatus )
 PMPrinterGetState(
-  PMPrinter         printer,
-  PMPrinterState *  state);
+	PMPrinter         printer,
+	PMPrinterState *  state);
 
 
 /*
  *  PMPrinterGetDeviceURI()
- *  
+ *
  *  Summary:
  *    Hand back the URI of the printer's device.
- *  
+ *
  *  Discussion:
  *    If defined on OS 9 this function returns kPMNotImplemented.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    printer:
  *      The printer whose device URI is to be retrieved.
- *    
+ *
  *    deviceURI:
  *      On exit, if successful *'deviceURI' will contain a reference to
  *      a CFURL describing the printer's device. The caller is
  *      responsible for releasing this reference. If this call returns
  *      an error, then *'deviceURI' will be set to NULL.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.2 and later
@@ -1657,17 +1657,17 @@ PMPrinterGetState(
  */
 EXTERN_API( OSStatus )
 PMPrinterGetDeviceURI(
-  PMPrinter   printer,
-  CFURLRef *  deviceURI);
+	PMPrinter   printer,
+	CFURLRef *  deviceURI);
 
 
 
 /*
  *  PMPrinterIsFavorite()
- *  
+ *
  *  Summary:
  *    Return true if the printer is in the user's favorite printer list.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.2 and later
@@ -1679,12 +1679,12 @@ PMPrinterIsFavorite(PMPrinter printer);
 
 /*
  *  PMCGImageCreateWithEPSDataProvider()
- *  
+ *
  *  Summary:
  *    Create an image reference that references both the PostScript
  *    contents of an EPS file and a preview (proxy) image for that EPS
  *    file.
- *  
+ *
  *  Discussion:
  *    For OS X 10.1.0, this function ignores the passed in data
  *    provider. The passed in image reference is retained and then
@@ -1707,9 +1707,9 @@ PMPrinterIsFavorite(PMPrinter printer);
  *    defaults write NSGlobalDomain com.apple.print.eps.testProvider
  *    /tmp/dump.eps causes a dump of the EPS data into a file
  *    /tmp/dump.eps.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    epsDataProvider:
  *      A Core Graphics data provider that can supply the PostScript
  *      contents of the EPS file. Post OS X 10.1, there will be some
@@ -1717,18 +1717,18 @@ PMPrinterIsFavorite(PMPrinter printer);
  *      PMCGImageCreateWithEPSDataProvider() call. It is important that
  *      the EPS data begin with the EPSF required header and bounding
  *      box DSC comments.
- *    
+ *
  *    epsPreview:
  *      A Core Graphics image reference to the proxy image for the EPS
  *      file. When the image reference result of this function is
  *      rendered on screen or printed to a printer that can not render
  *      PostScript this proxy image is drawn instead.
- *  
+ *
  *  Result:
  *    an image reference capable of rendering either the EPS content or
  *    the proxy image depending upon the capabilities of the targeted
  *    context.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.1 and later
@@ -1736,8 +1736,8 @@ PMPrinterIsFavorite(PMPrinter printer);
  */
 EXTERN_API( CGImageRef )
 PMCGImageCreateWithEPSDataProvider(
-  CGDataProviderRef   epsDataProvider,
-  CGImageRef          epsPreview);
+	CGDataProviderRef   epsDataProvider,
+	CGImageRef          epsPreview);
 
 
 
@@ -1752,4 +1752,3 @@ PMCGImageCreateWithEPSDataProvider(
 #endif
 
 #endif /* __PMCORE__ */
-

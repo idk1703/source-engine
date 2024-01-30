@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -76,11 +76,11 @@ public:
 			kv->SetString( entry->name(), "" );
 		}
 	}
-	
+
 	virtual void SetData( Panel *panel, KeyValues *kv, PanelAnimationMapEntry *entry )
 	{
 		void *data = ( void * )( (*entry->m_pfnLookup)( panel ) );
-		
+
 		CHudTextureHandle *pHandle = ( CHudTextureHandle * )data;
 
 		const char *texturename = kv->GetString( entry->name() );
@@ -159,7 +159,7 @@ static void VGui_OneTimeInit()
 	vgui::Panel::AddPropertyConverter( "CHudTextureHandle", &textureHandleConverter );
 
 
-    g_pMaterialSystem->AddModeChangeCallBack( &VGui_VideoMode_AdjustForModeChange );
+	g_pMaterialSystem->AddModeChangeCallBack( &VGui_VideoMode_AdjustForModeChange );
 }
 
 bool VGui_Startup( CreateInterfaceFn appSystemFactory )
@@ -191,7 +191,7 @@ bool VGui_Startup( CreateInterfaceFn appSystemFactory )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VGui_CreateGlobalPanels( void )
 {
@@ -265,7 +265,7 @@ void VGui_PreRender()
 	if ( IsPC() )
 	{
 		loadingdisc->SetLoadingVisible( engine->IsDrawingLoadingImage() && !engine->IsPlayingDemo() );
-		
+
 		bool bShowPausedImage = !enginevgui->IsGameUIVisible() && cl_showpausedimage.GetBool() && engine->IsPaused() && !engine->IsTakingScreenshot() && !engine->IsPlayingDemo();
 #if !defined( TF_CLIENT_DLL )
 		loadingdisc->SetPausedVisible( bShowPausedImage, engine->GetPausedExpireTime()  );
@@ -281,8 +281,8 @@ void VGui_PostRender()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : cl_panelanimation - 
+// Purpose:
+// Input  : cl_panelanimation -
 //-----------------------------------------------------------------------------
 CON_COMMAND( cl_panelanimation, "Shows panel animation variables: <panelname | blank for all panels>." )
 {

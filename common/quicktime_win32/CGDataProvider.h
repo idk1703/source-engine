@@ -1,17 +1,17 @@
 /*
-     File:       CGDataProvider.h
- 
-     Contains:   CoreGraphics data provider
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       CGDataProvider.h
+
+		Contains:   CoreGraphics data provider
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef CGDATAPROVIDER_H_
 #define CGDATAPROVIDER_H_
@@ -40,11 +40,11 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=mac68k
+		#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+		#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+		#pragma pack(2)
 #endif
 
 typedef struct CGDataProvider*          CGDataProviderRef;
@@ -60,10 +60,10 @@ typedef CALLBACK_API_C( void , CGReleaseProviderProcPtr )(void * info);
  * `rewind' is called to rewind the provider to the beginning of the data.
  * `releaseProvider', if non-NULL, is called when the provider is freed. */
 struct CGDataProviderCallbacks {
-  CGGetBytesProcPtr   getBytes;
-  CGSkipBytesProcPtr  skipBytes;
-  CGRewindProcPtr     rewind;
-  CGReleaseProviderProcPtr  releaseProvider;
+	CGGetBytesProcPtr   getBytes;
+	CGSkipBytesProcPtr  skipBytes;
+	CGRewindProcPtr     rewind;
+	CGReleaseProviderProcPtr  releaseProvider;
 };
 typedef struct CGDataProviderCallbacks  CGDataProviderCallbacks;
 typedef CALLBACK_API_C( void *, CGGetBytePointerProcPtr )(void * info);
@@ -80,10 +80,10 @@ typedef CALLBACK_API_C( size_t , CGGetBytesDirectProcPtr )(void *info, void *buf
  * `releaseProvider', if non-NULL, is called when the provider is freed.
  * At least one of `getBytePointer' or `getBytes' must be non-NULL.  */
 struct CGDataProviderDirectAccessCallbacks {
-  CGGetBytePointerProcPtr  getBytePointer;
-  CGReleaseByteProcPtr  releaseBytePointer;
-  CGGetBytesDirectProcPtr  getBytes;
-  CGReleaseProviderProcPtr  releaseProvider;
+	CGGetBytePointerProcPtr  getBytePointer;
+	CGReleaseByteProcPtr  releaseBytePointer;
+	CGGetBytesDirectProcPtr  getBytes;
+	CGReleaseProviderProcPtr  releaseProvider;
 };
 typedef struct CGDataProviderDirectAccessCallbacks CGDataProviderDirectAccessCallbacks;
 typedef CALLBACK_API_C( void , CGReleaseDataProcPtr )(void *info, const void *data, size_t size);
@@ -91,7 +91,7 @@ typedef CALLBACK_API_C( void , CGReleaseDataProcPtr )(void *info, const void *da
  * the data.  `info' is passed to each of the callback functions. */
 /*
  *  CGDataProviderCreate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -99,15 +99,15 @@ typedef CALLBACK_API_C( void , CGReleaseDataProcPtr )(void *info, const void *da
  */
 EXTERN_API_C( CGDataProviderRef )
 CGDataProviderCreate(
-  void *                           info,
-  const CGDataProviderCallbacks *  callbacks);
+	void *                           info,
+	const CGDataProviderCallbacks *  callbacks);
 
 
 /* Create a direct-access data provider using `callbacks' to supply `size'
  * bytes of data. `info' is passed to each of the callback functions. */
 /*
  *  CGDataProviderCreateDirectAccess()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -115,9 +115,9 @@ CGDataProviderCreate(
  */
 EXTERN_API_C( CGDataProviderRef )
 CGDataProviderCreateDirectAccess(
-  void *                                       info,
-  size_t                                       size,
-  const CGDataProviderDirectAccessCallbacks *  callbacks);
+	void *                                       info,
+	size_t                                       size,
+	const CGDataProviderDirectAccessCallbacks *  callbacks);
 
 
 /* Create a direct-access data provider using `data', an array of `size'
@@ -125,7 +125,7 @@ CGDataProviderCreateDirectAccess(
  * passed `info' as its first argument. */
 /*
  *  CGDataProviderCreateWithData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -133,16 +133,16 @@ CGDataProviderCreateDirectAccess(
  */
 EXTERN_API_C( CGDataProviderRef )
 CGDataProviderCreateWithData(
-  void *                 info,
-  const void *           data,
-  size_t                 size,
-  CGReleaseDataProcPtr   releaseData);
+	void *                 info,
+	const void *           data,
+	size_t                 size,
+	CGReleaseDataProcPtr   releaseData);
 
 
 /* Create a data provider using `url'. */
 /*
  *  CGDataProviderCreateWithURL()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -156,7 +156,7 @@ CGDataProviderCreateWithURL(CFURLRef url);
  * providers are created with an initial retain count of 1. */
 /*
  *  CGDataProviderRetain()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -170,7 +170,7 @@ CGDataProviderRetain(CGDataProviderRef provider);
  * 0, then free `provider' and any associated resources. */
 /*
  *  CGDataProviderRelease()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -182,11 +182,11 @@ CGDataProviderRelease(CGDataProviderRef provider);
 
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+		#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+		#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+		#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -200,4 +200,3 @@ CGDataProviderRelease(CGDataProviderRef provider);
 #endif
 
 #endif /* CGDATAPROVIDER_H_ */
-

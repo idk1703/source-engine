@@ -32,7 +32,7 @@ CRagdollShadow::CRagdollShadow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRagdollShadow::Spawn( )
 {
@@ -51,7 +51,7 @@ void CRagdollShadow::Spawn( )
 	// Create the object in the physics system
 	IPhysicsObject *pPhysics = VPhysicsInitNormal( SOLID_VPHYSICS, FSOLID_NOT_SOLID, false );
 //	IPhysicsObject *pPhysics = VPhysicsInitNormal( SOLID_VPHYSICS, 0, false );
-	
+
 	// disable physics sounds on this object
 	pPhysics->SetMaterialIndex( physprops->GetSurfaceIndex("default_silent") );
 
@@ -59,11 +59,11 @@ void CRagdollShadow::Spawn( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : **ppSendTable - 
-//			*recipient - 
-//			*pvs - 
-//			clientArea - 
+// Purpose:
+// Input  : **ppSendTable -
+//			*recipient -
+//			*pvs -
+//			clientArea -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 int CRagdollShadow::ShouldTransmit( const CCheckTransmitInfo *pInfo )
@@ -76,7 +76,7 @@ int CRagdollShadow::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRagdollShadow::Precache( void )
 {

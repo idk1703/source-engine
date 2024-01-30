@@ -37,7 +37,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 vProjPos				: POSITION;
+	float4 vProjPos				: POSITION;
 
 #if (ONLY_PROJECT_POSITION == 0) //360 sometimes runs without the pixel shader component, but has to patch this output if it does.
 	float2 texCoord				: TEXCOORD0;
@@ -58,7 +58,7 @@ VS_OUTPUT main( const VS_INPUT v )
 #if !defined( SHADER_MODEL_VS_3_0 ) || !MORPHING
 	ApplyMorph( v.vPosFlex, vPosition.xyz );
 #else
-	ApplyMorph( morphSampler, cMorphTargetTextureDim, cMorphSubrect, 
+	ApplyMorph( morphSampler, cMorphTargetTextureDim, cMorphSubrect,
 		v.vVertexID, float3(0, 0, 0), vPosition.xyz );
 #endif
 
@@ -79,5 +79,3 @@ VS_OUTPUT main( const VS_INPUT v )
 
 	return o;
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -87,10 +87,10 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: Tooltip for the main menu. Isn't a panel, it just wraps the 
+// Purpose: Tooltip for the main menu. Isn't a panel, it just wraps the
 // show/hide/position handling for the embedded panel.
 //-----------------------------------------------------------------------------
-class CMainMenuToolTip : public vgui::BaseTooltip 
+class CMainMenuToolTip : public vgui::BaseTooltip
 {
 	DECLARE_CLASS_SIMPLE( CMainMenuToolTip, vgui::BaseTooltip );
 public:
@@ -118,7 +118,7 @@ protected:
 //-----------------------------------------------------------------------------
 // Purpose: Simple TF-styled text tooltip
 //-----------------------------------------------------------------------------
-class CTFTextToolTip : public CMainMenuToolTip 
+class CTFTextToolTip : public CMainMenuToolTip
 {
 	DECLARE_CLASS_SIMPLE( CTFTextToolTip, CMainMenuToolTip );
 public:
@@ -141,7 +141,7 @@ public:
 //-----------------------------------------------------------------------------
 class CTFAdvancedOptionsDialog : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFAdvancedOptionsDialog, vgui::EditablePanel ); 
+	DECLARE_CLASS_SIMPLE( CTFAdvancedOptionsDialog, vgui::EditablePanel );
 
 public:
 	CTFAdvancedOptionsDialog(vgui::Panel *parent);
@@ -232,7 +232,7 @@ private:
 		Panel* m_pPanel;
 		int m_nGap;
 	};
-	
+
 	CUtlVector< LayoutInfo_t > m_vecAutoLayoutPanels;
 };
 

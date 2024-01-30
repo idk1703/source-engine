@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -56,7 +56,7 @@ static int __cdecl GameSoundSortFunc( vgui::ListPanel *pPanel, const ListPanelIt
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CSoundPicker::CSoundPicker( vgui::Panel *pParent, int nFlags ) : 
+CSoundPicker::CSoundPicker( vgui::Panel *pParent, int nFlags ) :
 	BaseClass( pParent, "Sound Files", "wav", "sound", "wavName" )
 {
 	m_nSoundSuppressionCount = 0;
@@ -66,7 +66,7 @@ CSoundPicker::CSoundPicker( vgui::Panel *pParent, int nFlags ) :
 	Assert( SoundEmitterSystem() );
 
 	m_pViewsSheet = new vgui::PropertySheet( this, "ViewsSheet" );
- 	m_pViewsSheet->AddActionSignalTarget( this );
+	m_pViewsSheet->AddActionSignalTarget( this );
 
 	// game sounds
 	m_pGameSoundPage = NULL;
@@ -75,10 +75,10 @@ CSoundPicker::CSoundPicker( vgui::Panel *pParent, int nFlags ) :
 	{
 		m_pGameSoundPage = new PropertyPage( m_pViewsSheet, "GameSoundPage" );
 		m_pGameSoundList = new ListPanel( m_pGameSoundPage, "GameSoundsList" );
- 		m_pGameSoundList->AddColumnHeader( 0, "GameSound", "Game Sound", 52, 0 );
+		m_pGameSoundList->AddColumnHeader( 0, "GameSound", "Game Sound", 52, 0 );
 		m_pGameSoundList->AddActionSignalTarget( this );
 		m_pGameSoundList->SetSelectIndividualCells( true );
- 		m_pGameSoundList->SetEmptyListText("No game sounds");
+		m_pGameSoundList->SetEmptyListText("No game sounds");
 		m_pGameSoundList->SetDragEnabled( true );
 		m_pGameSoundList->SetAutoResize( Panel::PIN_TOPLEFT, Panel::AUTORESIZE_DOWNANDRIGHT, 0, 0, 0, 0 );
 		m_pGameSoundList->SetSortFunc( 0, GameSoundSortFunc );
@@ -89,7 +89,7 @@ CSoundPicker::CSoundPicker( vgui::Panel *pParent, int nFlags ) :
 		m_pGameSoundFilter = new TextEntry( m_pGameSoundPage, "GameSoundFilter" );
 		m_pGameSoundFilter->AddActionSignalTarget( this );
 
-        m_pGameSoundPage->LoadControlSettings( "resource/soundpickergamesoundpage.res" );
+	m_pGameSoundPage->LoadControlSettings( "resource/soundpickergamesoundpage.res" );
 
 		m_pViewsSheet->AddPage( m_pGameSoundPage, "Game Sounds" );
 	}
@@ -104,7 +104,7 @@ CSoundPicker::CSoundPicker( vgui::Panel *pParent, int nFlags ) :
 		AddExtension( "mp3" );
 
 		m_pWavPage->LoadControlSettings( "resource/soundpickerwavpage.res" );
- 		m_pViewsSheet->AddPage( m_pWavPage, "WAVs" );
+		m_pViewsSheet->AddPage( m_pWavPage, "WAVs" );
 	}
 
 	LoadControlSettings( "resource/soundpicker.res" );
@@ -140,7 +140,7 @@ void CSoundPicker::SetSelectedSound( PickType_t type, const char *pSoundName )
 {
 	if ( type == PICK_NONE || !pSoundName )
 		return;
-	
+
 	if ( m_pGameSoundPage && ( type == PICK_GAMESOUNDS ) )
 	{
 		m_pViewsSheet->SetActivePage( m_pGameSoundPage );
@@ -156,7 +156,7 @@ void CSoundPicker::SetSelectedSound( PickType_t type, const char *pSoundName )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSoundPicker::OnKeyCodePressed( KeyCode code )
 {
@@ -196,7 +196,7 @@ void CSoundPicker::UpdateGameSoundColumnHeader( int nMatchCount, int nTotalCount
 	m_pGameSoundList->SetColumnHeaderText( 0, pColumnTitle );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: builds the gamesound list
 //-----------------------------------------------------------------------------
@@ -223,7 +223,7 @@ void CSoundPicker::BuildGameSoundList()
 		KeyValues *pDrag = new KeyValues( "drag", "text", pSoundName );
 		pDrag->SetString( "texttype", "gamesoundName" );
 		m_pGameSoundList->SetItemDragData( nItemID, pDrag );
-	    ++nTotalCount;
+	++nTotalCount;
 
 		i = SoundEmitterSystem()->Next( i );
 	}
@@ -361,8 +361,8 @@ void CSoundPicker::PlayGameSound( const char *pSoundName )
 	CSoundParameters params;
 	if ( SoundEmitterSystem()->GetParametersForSound( pSoundName, params, GENDER_NONE ) )
 	{
-		m_nPlayingSound = EngineTool()->StartSound( 0, true, -1, CHAN_STATIC, params.soundname, 
-			params.volume, params.soundlevel, vec3_origin, vec3_origin, 0, 
+		m_nPlayingSound = EngineTool()->StartSound( 0, true, -1, CHAN_STATIC, params.soundname,
+			params.volume, params.soundlevel, vec3_origin, vec3_origin, 0,
 			params.pitch, false, params.delay_msec / 1000.0f );
 	}
 }
@@ -374,7 +374,7 @@ void CSoundPicker::PlayGameSound( const char *pSoundName )
 void CSoundPicker::PlayWavSound( const char *pSoundName )
 {
 	StopSoundPreview();
-	m_nPlayingSound = EngineTool()->StartSound( 0, true, -1, CHAN_STATIC, pSoundName, 
+	m_nPlayingSound = EngineTool()->StartSound( 0, true, -1, CHAN_STATIC, pSoundName,
 		VOL_NORM, SNDLVL_NONE, vec3_origin, vec3_origin, 0, PITCH_NORM, false, 0 );
 }
 
@@ -387,7 +387,7 @@ void CSoundPicker::OnNextSelectionIsDefault()
 	++m_nSoundSuppressionCount;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Derived classes have this called when the previewed asset changes
 //-----------------------------------------------------------------------------
@@ -406,7 +406,7 @@ void CSoundPicker::OnSelectedAssetPicked( const char *pAssetName )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: refreshes dialog on text changing
 //-----------------------------------------------------------------------------
@@ -503,7 +503,7 @@ const char *CSoundPicker::GetSelectedSoundName( int nSelectionIndex )
 // Purpose: Modal picker frame
 //
 //-----------------------------------------------------------------------------
-CSoundPickerFrame::CSoundPickerFrame( vgui::Panel *pParent, const char *pTitle, int nFlags ) : 
+CSoundPickerFrame::CSoundPickerFrame( vgui::Panel *pParent, const char *pTitle, int nFlags ) :
 	BaseClass( pParent )
 {
 	SetAssetPicker( new CSoundPicker( this, nFlags ) );
@@ -598,5 +598,3 @@ void CSoundPickerFrame::OnCommand( const char *pCommand )
 
 	BaseClass::OnCommand( pCommand );
 }
-
-	

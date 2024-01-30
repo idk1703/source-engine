@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -28,7 +28,7 @@ CRagdoll::CRagdoll()
 	m_ragdoll.listCount = 0;
 	m_vecLastOrigin.Init();
 	m_flLastOriginChangeTime = - 1.0f;
-	
+
 	m_lastUpdate = -FLT_MAX;
 }
 
@@ -74,7 +74,7 @@ END_DATADESC()
 
 
 IPhysicsObject *CRagdoll::GetElement( int elementNum )
-{ 
+{
 	return m_ragdoll.list[elementNum].pObject;
 }
 
@@ -89,14 +89,14 @@ void CRagdoll::BuildRagdollBounds( C_BaseEntity *ent )
 	m_maxs.Init(m_radius,m_radius,m_radius);
 }
 
-void CRagdoll::Init( 
-	C_BaseEntity *ent, 
-	CStudioHdr *pstudiohdr, 
-	const Vector &forceVector, 
-	int forceBone, 
-	const matrix3x4_t *pDeltaBones0, 
-	const matrix3x4_t *pDeltaBones1, 
-	const matrix3x4_t *pCurrentBonePosition, 
+void CRagdoll::Init(
+	C_BaseEntity *ent,
+	CStudioHdr *pstudiohdr,
+	const Vector &forceVector,
+	int forceBone,
+	const matrix3x4_t *pDeltaBones0,
+	const matrix3x4_t *pDeltaBones1,
+	const matrix3x4_t *pCurrentBonePosition,
 	float dt,
 	bool bFixedConstraints )
 {
@@ -195,7 +195,7 @@ void CRagdoll::VPhysicsUpdate( IPhysicsObject *pPhysics )
 	if ( m_allAsleep )
 	{
 		// NOTE: This is the bbox of the ragdoll's physics
-		// It's not always correct to use for culling, but it sure beats 
+		// It's not always correct to use for culling, but it sure beats
 		// using the radius box!
 		Vector origin = GetRagdollOrigin();
 		RagdollComputeExactBbox( m_ragdoll, origin, m_mins, m_maxs );
@@ -222,7 +222,7 @@ void CRagdoll::VPhysicsUpdate( IPhysicsObject *pPhysics )
 // HPE_BEGIN:
 // [menglish] Transforms a vector from the given bone's space to world space
 //=============================================================================
- 
+
 bool CRagdoll::TransformVectorToWorld(int iBoneIndex, const Vector *vPosition, Vector *vOut)
 {
 	int listIndex = -1;
@@ -241,14 +241,14 @@ bool CRagdoll::TransformVectorToWorld(int iBoneIndex, const Vector *vPosition, V
 	}
 	return false;
 }
- 
+
 //=============================================================================
 // HPE_END
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CRagdoll::PhysForceRagdollToSleep()
 {
@@ -345,13 +345,13 @@ void CRagdoll::DrawWireframe()
 }
 
 
-CRagdoll *CreateRagdoll( 
-	C_BaseEntity *ent, 
-	CStudioHdr *pstudiohdr, 
-	const Vector &forceVector, 
-	int forceBone, 
-	const matrix3x4_t *pDeltaBones0, 
-	const matrix3x4_t *pDeltaBones1, 
+CRagdoll *CreateRagdoll(
+	C_BaseEntity *ent,
+	CStudioHdr *pstudiohdr,
+	const Vector &forceVector,
+	int forceBone,
+	const matrix3x4_t *pDeltaBones0,
+	const matrix3x4_t *pDeltaBones1,
 	const matrix3x4_t *pCurrentBonePosition,
 	float dt,
 	bool bFixedConstraints )
@@ -369,7 +369,7 @@ CRagdoll *CreateRagdoll(
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ServerRagdoll : public C_BaseAnimating
 {
@@ -594,7 +594,7 @@ void C_ServerRagdoll::BuildTransformations( CStudioHdr *hdr, Vector *pos, Quater
 				boneSimulated[iBone] = true;
 				matrix3x4_t &matrix = GetBoneForWrite( iBone );
 
-				if ( m_flBlendWeightCurrent != 0.0f && pSeqDesc && 
+				if ( m_flBlendWeightCurrent != 0.0f && pSeqDesc &&
 					 // FIXME: this bone access is illegal
 					 pSeqDesc->weight( iBone ) != 0.0f )
 				{
@@ -602,21 +602,21 @@ void C_ServerRagdoll::BuildTransformations( CStudioHdr *hdr, Vector *pos, Quater
 					boneSimulated[iBone] = false;
 				}
 				else
-				{	
+				{
 					AngleMatrix( m_ragAngles[i], m_ragPos[i], matrix );
 				}
 			}
 		}
 	}
 
-	for ( i = 0; i < hdr->numbones(); i++ ) 
+	for ( i = 0; i < hdr->numbones(); i++ )
 	{
 		if ( !( hdr->boneFlags( i ) & boneMask ) )
 			continue;
 
 		// BUGBUG: Merge this code with the code in c_baseanimating somehow!!!
 		// animate all non-simulated bones
-		if ( boneSimulated[i] || 
+		if ( boneSimulated[i] ||
 			CalcProceduralBone( hdr, i, m_BoneAccessor ) )
 		{
 			continue;
@@ -625,17 +625,17 @@ void C_ServerRagdoll::BuildTransformations( CStudioHdr *hdr, Vector *pos, Quater
 		{
 			QuaternionMatrix( q[i], pos[i], bonematrix );
 
-			if (pbones[i].parent == -1) 
+			if (pbones[i].parent == -1)
 			{
 				ConcatTransforms( cameraTransform, bonematrix, GetBoneForWrite( i ) );
-			} 
-			else 
+			}
+			else
 			{
 				ConcatTransforms( GetBone( pbones[i].parent ), bonematrix, GetBoneForWrite( i ) );
 			}
 		}
 
-		if ( pbones[i].parent == -1 ) 
+		if ( pbones[i].parent == -1 )
 		{
 			// Apply client-side effects to the transformation matrix
 		//	ApplyBoneMatrixTransform( GetBoneForWrite( i ) );
@@ -643,20 +643,20 @@ void C_ServerRagdoll::BuildTransformations( CStudioHdr *hdr, Vector *pos, Quater
 	}
 }
 
-IPhysicsObject *C_ServerRagdoll::GetElement( int elementNum ) 
-{ 
+IPhysicsObject *C_ServerRagdoll::GetElement( int elementNum )
+{
 	return NULL;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : 	virtual void
 //-----------------------------------------------------------------------------
 void C_ServerRagdoll::UpdateOnRemove()
 {
 	C_BaseAnimating *anim = m_hUnragdoll.Get();
-	if ( NULL != anim && 
-		anim->GetModel() && 
+	if ( NULL != anim &&
+		anim->GetModel() &&
 		( anim->GetModel() == GetModel() ) )
 	{
 		// Need to tell C_BaseAnimating to blend out of the ragdoll data that we received last
@@ -692,7 +692,7 @@ class C_ServerRagdollAttached : public C_ServerRagdoll
 {
 	DECLARE_CLASS( C_ServerRagdollAttached, C_ServerRagdoll );
 public:
-	C_ServerRagdollAttached( void ) 
+	C_ServerRagdollAttached( void )
 	{
 		m_bHasParent = false;
 		m_vecOffset.Init();
@@ -865,4 +865,3 @@ bool WasRagdollCreatedOnCurrentTick( C_BaseEntity *pRagdoll )
 	gRagdolls.Update();
 	return gRagdolls.IsInList( pRagdoll );
 }
-

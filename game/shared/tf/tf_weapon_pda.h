@@ -17,13 +17,13 @@
 #endif
 
 // Client specific.
-#if defined( CLIENT_DLL ) 
+#if defined( CLIENT_DLL )
 	#define CTFWeaponPDA C_TFWeaponPDA
 	#define CTFWeaponPDA_Engineer_Build	C_TFWeaponPDA_Engineer_Build
 	#define CTFWeaponPDA_Engineer_Destroy	C_TFWeaponPDA_Engineer_Destroy
 	#define CTFWeaponPDA_Spy		C_TFWeaponPDA_Spy
 	#define CTFWeaponPDA_Spy_Build	C_TFWeaponPDA_Spy_Build
-	
+
 	#define CTFWeaponPDAExpansion_Dispenser		C_TFWeaponPDAExpansion_Dispenser
 	#define CTFWeaponPDAExpansion_Teleporter	C_TFWeaponPDAExpansion_Teleporter
 #endif
@@ -32,10 +32,10 @@ class CTFWeaponPDA : public CTFWeaponBase
 {
 public:
 	DECLARE_CLASS( CTFWeaponPDA, CTFWeaponBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
-#if !defined( CLIENT_DLL ) 
+#if !defined( CLIENT_DLL )
 	DECLARE_DATADESC();
 #endif
 
@@ -67,7 +67,7 @@ public:
 	virtual const char *GetPanelName() { return "pda_panel"; }
 
 
-public:	
+public:
 	CTFWeaponInfo	*m_pWeaponInfo;
 
 private:
@@ -82,7 +82,7 @@ class CTFWeaponPDA_Engineer_Build : public CTFWeaponPDA
 {
 public:
 	DECLARE_CLASS( CTFWeaponPDA_Engineer_Build, CTFWeaponPDA );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual const char *GetPanelName() { return ""; }
@@ -101,7 +101,7 @@ class CTFWeaponPDA_Engineer_Destroy : public CTFWeaponPDA
 {
 public:
 	DECLARE_CLASS( CTFWeaponPDA_Engineer_Destroy, CTFWeaponPDA );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual const char *GetPanelName() { return ""; }
@@ -117,7 +117,7 @@ class CTFWeaponPDA_Spy : public CTFWeaponPDA
 {
 public:
 	DECLARE_CLASS( CTFWeaponPDA_Spy, CTFWeaponPDA );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual const char *GetPanelName() { return ""; }
@@ -172,7 +172,7 @@ class CTFWeaponPDA_Spy_Build : public CTFWeaponPDA
 {
 public:
 	DECLARE_CLASS( CTFWeaponPDA_Spy_Build, CTFWeaponPDA );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual bool CanDeploy( void ) OVERRIDE;

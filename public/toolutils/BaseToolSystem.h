@@ -76,13 +76,13 @@ class CBaseToolSystem : public vgui::EditablePanel, public IToolSystem, public v
 public:
 	// Methods inherited from IToolSystem
 	virtual bool	Init( );
-    virtual void	Shutdown();
+	virtual void	Shutdown();
 	virtual bool	ServerInit( CreateInterfaceFn serverFactory );
 	virtual bool	ClientInit( CreateInterfaceFn clientFactory );
 	virtual void	ServerShutdown();
 	virtual void	ClientShutdown();
-	virtual bool	CanQuit(); 
-    virtual void	PostMessage( HTOOLHANDLE hEntity, KeyValues *message );
+	virtual bool	CanQuit();
+	virtual void	PostMessage( HTOOLHANDLE hEntity, KeyValues *message );
 	virtual void	Think( bool finalTick );
 	virtual void	ServerLevelInitPreEntity();
 	virtual void	ServerLevelInitPostEntity();
@@ -176,7 +176,7 @@ public:
 	// Usage mode
 	void SetMode( bool bGameInputEnabled, bool bFullscreen );
 	bool IsFullscreen() const;
- 	bool IsGameInputEnabled() const;
+	bool IsGameInputEnabled() const;
 	void EnableFullscreenToolMode( bool bEnable );
 
 	// Is this the active tool?
@@ -190,7 +190,7 @@ public:
 protected:
 	virtual void	PaintBackground();
 
-	// Derived classes must implement this to specify where in the 
+	// Derived classes must implement this to specify where in the
 	// registry to store registry settings
 	virtual const char *GetRegistryName() = 0;
 
@@ -209,12 +209,12 @@ protected:
 	// Used to open a specified file, and deal with all the lovely dialogs
 	void OpenFile( const char *pOpenFileType, const char *pSaveFileName = NULL, const char *pSaveFileType = NULL, int nFlags = 0, KeyValues *pKeyValues = NULL );
 	void OpenFile( const char *pOpenFileName, const char *pOpenFileType, const char *pSaveFileName = NULL, const char *pSaveFileType = NULL, int nFlags = 0, KeyValues *pKeyValues = NULL );
-	
+
 	// Used to save a specified file, and deal with all the lovely dialogs
 	// Pass in NULL to get a dialog to choose a filename to save
 	// Posts the keyvalues
 	void SaveFile( const char *pFileName, const char *pFileType, int nFlags, KeyValues *pKeyValues = NULL );
-	
+
 	KEYBINDING_FUNC_NODECLARE( editkeybindings, KEY_E, vgui::MODIFIER_SHIFT | vgui::MODIFIER_CONTROL | vgui::MODIFIER_ALT, OnEditKeyBindings, "#editkeybindings_help", 0 );
 	KEYBINDING_FUNC( keybindinghelp, KEY_H, 0, OnKeyBindingHelp, "#keybindinghelp_help", 0 );
 

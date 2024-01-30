@@ -50,7 +50,7 @@ LINK_ENTITY_TO_CLASS( player_manager, CPlayerResource );
 CPlayerResource *g_pPlayerResource;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerResource::Spawn( void )
 {
@@ -99,14 +99,14 @@ void CPlayerResource::ResourceThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerResource::UpdatePlayerData( void )
 {
 	for ( int i = 1; i <= MAX_PLAYERS; i++ )
 	{
 		CBasePlayer *pPlayer = (CBasePlayer*)UTIL_PlayerByIndex( i );
-		
+
 		if ( pPlayer && pPlayer->IsConnected() )
 		{
 			UpdateConnectedPlayer( i, pPlayer );
@@ -120,7 +120,7 @@ void CPlayerResource::UpdatePlayerData( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerResource::UpdateConnectedPlayer( int iIndex, CBasePlayer *pPlayer )
 {
@@ -139,10 +139,10 @@ void CPlayerResource::UpdateConnectedPlayer( int iIndex, CBasePlayer *pPlayer )
 		// update ping all 20 think ticks = (20*0.1=2seconds)
 		int ping, packetloss;
 		UTIL_GetPlayerConnectionInfo( iIndex, ping, packetloss );
-				
+
 		// calc avg for scoreboard so it's not so jittery
 		ping = 0.8f * m_iPing.Get( iIndex ) + 0.2f * ping;
-				
+
 		m_iPing.Set( iIndex, ping );
 		// m_iPacketloss.Set( iSlot, packetloss );
 	}
@@ -154,7 +154,7 @@ void CPlayerResource::UpdateConnectedPlayer( int iIndex, CBasePlayer *pPlayer )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerResource::UpdateDisconnectedPlayer( int iIndex )
 {

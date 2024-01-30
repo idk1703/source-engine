@@ -37,21 +37,21 @@ IDI_LAUNCHER2            ICON    DISCARDABLE     "..\\launcher\\res\\launcher.ic
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE DISCARDABLE
 BEGIN
-    "resource.h\0"
+	"resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE DISCARDABLE
 BEGIN
-    "#include ""afxres.h""\r\n"
-    "\0"
+	"#include ""afxres.h""\r\n"
+	"\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE DISCARDABLE
 BEGIN
-    "\r\n"
-    "\0"
+	"\r\n"
+	"\0"
 END
 
 #endif    // APSTUDIO_INVOKED
@@ -70,4 +70,3 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

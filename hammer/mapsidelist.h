@@ -52,7 +52,7 @@ class CMapSideList : public CMapHelper
 		//
 		// Should NOT have children.
 		//
-		virtual void AddChild(CMapClass *pChild) { Assert(false); } 
+		virtual void AddChild(CMapClass *pChild) { Assert(false); }
 		virtual void UpdateChild(CMapClass *pChild) { Assert(false); }
 
 		//
@@ -82,7 +82,7 @@ class CMapSideList : public CMapHelper
 		virtual void Render2D(CRender2D *pRender);
 		virtual void Render3D(CRender3D *pRender);
 
-		// 
+		//
 		// Getting face data.
 		//
 		int GetFaceCount( void )			{ return m_Faces.Count(); }

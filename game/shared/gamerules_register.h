@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -43,7 +43,7 @@ private:
 	const char *m_pClassName;
 	CreateGameRulesFn m_pFn;
 	CGameRulesRegister *m_pNext;	// Links it into the global list.
-	
+
 	static CGameRulesRegister *s_pHead;
 
 };
@@ -60,7 +60,7 @@ private:
 
 	// Server calls this at startup.
 	void CreateNetworkStringTables_GameRules();
-	
+
 	// Server calls this to install a specific game rules object. The class should have been registered
 	// with REGISTER_GAMERULES_CLASS.
 	void CreateGameRulesObject( const char *pClassName );

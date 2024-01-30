@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -21,7 +21,7 @@ ConVar cl_showhelp( "cl_showhelp", "1", FCVAR_USERINFO | FCVAR_ARCHIVE, "Set to 
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHintSystem::CHintSystem( void )
 {
@@ -32,7 +32,7 @@ CHintSystem::CHintSystem( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHintSystem::~CHintSystem( void )
 {
@@ -50,11 +50,11 @@ CHintSystem::~CHintSystem( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintSystem::Init( CBasePlayer *pPlayer, int iMaxHintTypes, const char **pszHintStrings )
 {
-	m_pPlayer = pPlayer;	
+	m_pPlayer = pPlayer;
 	m_bShowHints = true;
 
 	m_HintHistory.Resize( iMaxHintTypes );
@@ -70,7 +70,7 @@ void CHintSystem::Init( CBasePlayer *pPlayer, int iMaxHintTypes, const char **ps
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintSystem::Update( void )
 {
@@ -112,7 +112,7 @@ bool CHintSystem::HintMessage( int hint, bool bForce /* = false */, bool bOnlyIf
 
 //-----------------------------------------------------------------------------
 // Purpose: Displays a hint message to the player
-// Input  : *pMessage - 
+// Input  : *pMessage -
 //-----------------------------------------------------------------------------
 void CHintSystem::HintMessage( const char *pMessage )
 {
@@ -166,7 +166,7 @@ void CHintSystem::ResetHints( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Call this to add a hint message that should be re-added  
+// Purpose: Call this to add a hint message that should be re-added
 //			everytime we're reset, if it hasn't been displayed yet.
 //-----------------------------------------------------------------------------
 void CHintSystem::RegisterHintTimer( int iHintID, float flTimerDuration, bool bOnlyIfClear /* = false */, HintTimerCallback pfnCallback )
@@ -195,7 +195,7 @@ void CHintSystem::ReAddHintTimerIfNotDisplayed( int iHintID, float flTimerDurati
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintSystem::StartHintTimer( int iHintID )
 {
@@ -206,7 +206,7 @@ void CHintSystem::StartHintTimer( int iHintID )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintSystem::StopHintTimer( int iHintID )
 {
@@ -217,7 +217,7 @@ void CHintSystem::StopHintTimer( int iHintID )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintSystem::ResetHintTimers( void )
 {
@@ -227,7 +227,7 @@ void CHintSystem::ResetHintTimers( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintSystem::RemoveHintTimer( int iHintID )
 {
@@ -250,7 +250,7 @@ bool CHintSystem::TimerShouldFire( int iHintID )
 	{
 		if ( m_RegisteredResetHints[i].iHintID != iHintID )
 			continue;
-		
+
 		if ( m_RegisteredResetHints[i].bOnlyIfClear && HintIsCurrentlyVisible() )
 			return false;
 
@@ -262,19 +262,19 @@ bool CHintSystem::TimerShouldFire( int iHintID )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CHintSystem::ShouldShowHints( void ) 
-{ 
+bool CHintSystem::ShouldShowHints( void )
+{
 #ifdef GAME_DLL
-	return m_bShowHints; 
+	return m_bShowHints;
 #else
 	return cl_showhelp.GetBool();
 #endif
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintSystem::PlayedAHint( void )
 {
@@ -282,7 +282,7 @@ void CHintSystem::PlayedAHint( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHintSystem::HasPlayedHint( int iHintID )
 {
@@ -292,7 +292,7 @@ bool CHintSystem::HasPlayedHint( int iHintID )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintSystem::SetHintPlayed( int iHintID )
 {
@@ -302,7 +302,7 @@ void CHintSystem::SetHintPlayed( int iHintID )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void HintClear( void )
 {

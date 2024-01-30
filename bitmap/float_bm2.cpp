@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -26,7 +26,7 @@ static float IScaleValue(float f, float overbright)
 	return ival;
 }
 
-void MaybeSetScaleVaue(FloatBitMap_t const &orig, FloatBitMap_t &newbm, int x, int y, 
+void MaybeSetScaleVaue(FloatBitMap_t const &orig, FloatBitMap_t &newbm, int x, int y,
 					   float newscale, float overbright)
 {
 	// clamp the given scale value to the legal range for that pixel and regnerate the rgb

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -224,4 +224,3 @@ void CTitleWnd::OnMouseButton(void)
 	pPopupMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, MenuLocation.x, MenuLocation.y, (CWnd *)GetMainWnd(), NULL);
 	m_bMenuOpen = false;
 }
-

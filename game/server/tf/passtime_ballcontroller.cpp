@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@ namespace
 {
 	int SortDescendingPriority( CPasstimeBallController *const *ppA, CPasstimeBallController *const *ppB )
 	{
-		return static_cast< CPasstimeBallController* >( *ppB )->GetPriority() 
+		return static_cast< CPasstimeBallController* >( *ppB )->GetPriority()
 			- static_cast< CPasstimeBallController* >( *ppA )->GetPriority();
 	}
 }
@@ -167,4 +167,3 @@ int CPasstimeBallController::GetPriority() const
 {
 	return m_iPriority;
 }
-

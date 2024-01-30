@@ -159,11 +159,11 @@ void CBaseTFPlayer::TFPlayerDeathThink(void)
 
 	// ROBIN: Everyone respawns immediately now. Maps will define respawns in the future.
 
-	if ( (gpGlobals->curtime - m_flTimeOfDeath) < 3 ) 
+	if ( (gpGlobals->curtime - m_flTimeOfDeath) < 3 )
 		return;
 
 	m_lifeState = LIFE_RESPAWNABLE;
-		
+
 	// Respawn on button press, but not if they're checking the scores
 	// Also respawn if they're not looking at scores, and they've been dead for over 5 seconds
 	bool bButtonDown = (m_nButtons & ~IN_SCORE) > 0;
@@ -175,9 +175,9 @@ void CBaseTFPlayer::TFPlayerDeathThink(void)
 	/*
 	// Aliens become respawnable immediately, because they're waiting for a reinforcement wave.
 	// Humans have to wait a short time.
-	if ( (GetTeamNumber() == TEAM_HUMANS) && (gpGlobals->curtime - m_flTimeOfDeath) < 3 ) 
+	if ( (GetTeamNumber() == TEAM_HUMANS) && (gpGlobals->curtime - m_flTimeOfDeath) < 3 )
 		return;
-	if ( (GetTeamNumber() == TEAM_ALIENS) && (gpGlobals->curtime - m_flTimeOfDeath) < 1 ) 
+	if ( (GetTeamNumber() == TEAM_ALIENS) && (gpGlobals->curtime - m_flTimeOfDeath) < 1 )
 		return;
 
 	// Humans can respawn, Aliens can't (reinforcement wave for their kind)
@@ -190,7 +190,7 @@ void CBaseTFPlayer::TFPlayerDeathThink(void)
 	else
 	{
 		m_lifeState = LIFE_RESPAWNABLE;
-		
+
 		// Respawn on button press
 		if ( m_nButtons & ~IN_SCORE )
 		{
@@ -227,4 +227,3 @@ void CBaseTFPlayer::Reinforce( void )
 
 	PlayerRespawn();
 }
-

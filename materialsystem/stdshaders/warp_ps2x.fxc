@@ -113,12 +113,12 @@ float4 main( PS_INPUT i ) : COLOR
 	float r2 = Delta.x * Delta.x + Delta.y * Delta.y;
 
 	// case DISTORT_DPOLY3:
-    //        {
-    //            T rdistortion = T(1.0) / (T(1.0) + r2 * (T(dcoeff[0]) + r2 * (T(dcoeff[1]) + r2 * T(dcoeff[2]))));
-    //            xp = xp*rdistortion;
-    //            yp = yp*rdistortion;
-    //        }
-    //        break;
+	//        {
+	//            T rdistortion = T(1.0) / (T(1.0) + r2 * (T(dcoeff[0]) + r2 * (T(dcoeff[1]) + r2 * T(dcoeff[2]))));
+	//            xp = xp*rdistortion;
+	//            yp = yp*rdistortion;
+	//        }
+	//        break;
 
 	float rdistortion_r = 1.0;
 	float rdistortion_g = 1.0;
@@ -178,7 +178,7 @@ float4 main( PS_INPUT i ) : COLOR
 	DeltaB.y = DeltaB.y * ScaleY + OffsetY;
 
 #endif
-	
+
 	// Now convert back to useful texcoords.
 	float2 PixPosR, PixPosG, PixPosB;
 	PixPosR.x = DeltaR.x * 0.25 + BaseX;
@@ -205,6 +205,3 @@ float4 main( PS_INPUT i ) : COLOR
 
 	return vFinal;
 }
-
-
-

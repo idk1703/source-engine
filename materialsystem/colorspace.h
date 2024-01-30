@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -24,7 +24,7 @@ extern float g_LinearToVertex[4096];	// linear (0..4) to screen corrected vertex
 // FIXME!!!  Get rid of this. . all of this should be in mathlib
 namespace ColorSpace
 {
-	void SetGamma( float screenGamma, float texGamma, 
+	void SetGamma( float screenGamma, float texGamma,
 		           float overbright, bool allowCheats, bool linearFrameBuffer );
 
 	// convert texture to linear 0..1 value
@@ -37,13 +37,13 @@ namespace ColorSpace
 
 	// assume 0..4 range
 	void LinearToLightmap( unsigned char *pDstRGB, const float *pSrcRGB );
-	
+
 	// assume 0..4 range
 	void LinearToBumpedLightmap( const float *linearColor, const float *linearBumpColor1,
 		const float *linearBumpColor2, const float *linearBumpColor3,
 		unsigned char *ret, unsigned char *retBump1,
 		unsigned char *retBump2, unsigned char *retBump3 );
-	
+
 	// converts 0..1 linear value to screen gamma (0..255)
 	int LinearToScreenGamma( float f );
 
@@ -65,13 +65,13 @@ namespace ColorSpace
 			}
 			tmpVect[j] = g_LinearToVertex[i];
 		}
-#else		
+#else
 		tmpVect[0] = LinearToVertexLight( pSrcRGB[0] );
 		tmpVect[1] = LinearToVertexLight( pSrcRGB[1] );
 		tmpVect[2] = LinearToVertexLight( pSrcRGB[2] );
 #endif
 		ColorClamp( tmpVect );
-		
+
 		pDstRGB[0] = RoundFloatToByte( tmpVect[0] * 255.0f );
 		pDstRGB[1] = RoundFloatToByte( tmpVect[1] * 255.0f );
 		pDstRGB[2] = RoundFloatToByte( tmpVect[2] * 255.0f );
@@ -88,7 +88,7 @@ namespace ColorSpace
 
 		// HACK!  Clean this up, and add some else statements
 #define CONDITION(a,b,c) do { if( maxs[a] >= maxs[b] && maxs[b] >= maxs[c] ) { order[0] = a; order[1] = b; order[2] = c; } } while( 0 )
-		
+
 		int order[3] = {};
 		CONDITION(0,1,2);
 		CONDITION(0,2,1);
@@ -105,7 +105,7 @@ namespace ColorSpace
 			{
 				continue;
 			}
-			// This channel is too bright. . take half of the amount that we are over and 
+			// This channel is too bright. . take half of the amount that we are over and
 			// add it to the other two channel.
 			float factorToRedist = ( max - 1.0f ) / max;
 			Vector colorToRedist = factorToRedist * *colors[order[i]];
@@ -118,7 +118,7 @@ namespace ColorSpace
 		ColorClamp( color1 );
 		ColorClamp( color2 );
 		ColorClamp( color3 );
-		
+
 		if( color1[0] < 0.f ) color1[0] = 0.f;
 		if( color1[1] < 0.f ) color1[1] = 0.f;
 		if( color1[2] < 0.f ) color1[2] = 0.f;
@@ -148,7 +148,7 @@ namespace ColorSpace
 		bumpAverage += linearBump2;
 		bumpAverage += linearBump3;
 		bumpAverage *= ( 1.0f / 3.0f );
-		
+
 		Vector correctionScale;
 		if( *( int * )&bumpAverage[0] != 0 && *( int * )&bumpAverage[1] != 0 && *( int * )&bumpAverage[2] != 0 )
 		{
@@ -197,7 +197,7 @@ namespace ColorSpace
 		retBump3[2] = RoundFloatToByte( correctedBumpColor3[2] * 255.0f );
 	}
 
-	
+
 	uint16 LinearFloatToCorrectedShort( float in );
 
 	inline unsigned short LinearToUnsignedShort( float in, int nFractionalBits )
@@ -212,13 +212,13 @@ namespace ColorSpace
 	inline void ClampToHDR( const Vector &in, unsigned short out[3] )
 	{
 		Vector tmp = in;
-		
+
 		out[0] = LinearFloatToCorrectedShort( in.x );
 		out[1] = LinearFloatToCorrectedShort( in.y );
 		out[2] = LinearFloatToCorrectedShort( in.z );
 	}
 
-	FORCEINLINE void 
+	FORCEINLINE void
 		LinearToBumpedLightmap( const float *linearColor, const float *linearBumpColor1,
 		const float *linearBumpColor2, const float *linearBumpColor3,
 		float *ret, float *retBump1,
@@ -240,7 +240,7 @@ namespace ColorSpace
 		bumpAverage += linearBump2;
 		bumpAverage += linearBump3;
 		bumpAverage *= ( 1.0f / 3.0f );
-		
+
 		Vector correctionScale;
 
 		if( *( int * )&bumpAverage[0] != 0 &&
@@ -279,7 +279,7 @@ namespace ColorSpace
 
 	// The domain of the inputs is floats [0 .. 16.0f]
 	// the output range is also floats [0 .. 16.0f] (eg, compression to short does not happen)
-	FORCEINLINE void 
+	FORCEINLINE void
 		LinearToBumpedLightmap( FLTX4 linearColor, FLTX4 linearBumpColor1,
 		FLTX4 linearBumpColor2, FLTX4 linearBumpColor3,
 		fltx4 &ret, fltx4 &retBump1,		// I pray that with inlining
@@ -314,7 +314,7 @@ namespace ColorSpace
 
 	// input: floats [0 .. 16.0f]
 	// output: shorts [0 .. 65535]
-	FORCEINLINE void 
+	FORCEINLINE void
 		LinearToBumpedLightmap( const float *linearColor, const float *linearBumpColor1,
 		const float *linearBumpColor2, const float *linearBumpColor3,
 		unsigned short *ret, unsigned short *retBump1,

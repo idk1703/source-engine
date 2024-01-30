@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -61,7 +61,7 @@ public:
 							}
 							p1 = p2;
 							p2 = p2->m_pNext;
-						}	
+						}
 					}
 				}
 
@@ -141,6 +141,3 @@ class CBaseNetworkable;
 
 
 #endif
-
-
-

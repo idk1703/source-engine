@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -103,7 +103,7 @@ public:
 private:
 
 	// structure to hold a single control point
-	typedef struct 
+	typedef struct
 	{
 		char m_szName[64];
 		int m_iXPos;
@@ -118,7 +118,7 @@ private:
 	int m_iMiniRoundMask;
 
 	// Time when we should change the text to the attack directive
-	int m_iMode;	// 0 - start, 1 - previous round victory anim, 2 - attack directive, new round 
+	int m_iMode;	// 0 - start, 1 - previous round victory anim, 2 - attack directive, new round
 	float				m_flModeChangeTime;
 
 	int m_iBlueTeamTexture;
@@ -226,7 +226,7 @@ void RoundInfoOverlay::DrawCapArrows( int x0, int y0, int x1, int y1 )
 	Vector2D perp( -dir.y, dir.x );
 	perp.NormalizeInPlace();
 	perp *= YRES(50);
- 
+
 	float bloat = sin(4*gpGlobals->curtime) * 0.1f;
 
 	Vector2D edgepoint = a + dir * 0.25f;
@@ -234,20 +234,20 @@ void RoundInfoOverlay::DrawCapArrows( int x0, int y0, int x1, int y1 )
 
 	edgepoint -= 0.25f * dir * bloat;
 	edgepoint2 += 0.25f * dir * bloat;
-	
+
 	float uv1 = 0.0f, uv2 = 1.0f;
 	Vector2D uv12( uv1, uv2 );
 	Vector2D uv11( uv1, uv1 );
 	Vector2D uv21( uv2, uv1 );
 	Vector2D uv22( uv2, uv2 );
 
-	vgui::Vertex_t verts[4];	
+	vgui::Vertex_t verts[4];
 	verts[0].Init( edgepoint - perp * 0.5f, uv12 );
 	verts[1].Init( edgepoint2 - perp * 0.5f, uv11 );
 	verts[2].Init( edgepoint2 + perp * 0.5f, uv21 );
 	verts[3].Init( edgepoint + perp * 0.5f, uv22  );
 
-	vgui::surface()->DrawTexturedPolygon( 4, verts );	
+	vgui::surface()->DrawTexturedPolygon( 4, verts );
 }
 
 void RoundInfoOverlay::DrawTeamIcon( int x, int y, bool bBlueTeam, float flBloat /* = 1.0f */ )
@@ -316,7 +316,7 @@ void RoundInfoOverlay::Update( const char *szMapName )
 }
 
 void RoundInfoOverlay::SetState( int iPrevState, int iCurrentState, int iNextBattles )
-{	
+{
 	m_iPrevState = iPrevState;
 	m_iCurrentState = iCurrentState;
 	m_iMiniRoundMask = iNextBattles;
@@ -325,7 +325,7 @@ void RoundInfoOverlay::SetState( int iPrevState, int iCurrentState, int iNextBat
 	m_flModeChangeTime = gpGlobals->curtime + 0.5f;
 
 	// Find the two points that are being fought over
-	
+
 	m_iFoundPoints = 0;
 
 	for ( int i=0;i<8 && m_iFoundPoints<2;i++ )
@@ -463,7 +463,7 @@ CTFRoundInfo::CTFRoundInfo( IViewPort *pViewPort ) : Frame( NULL, PANEL_ROUNDINF
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRoundInfo::PerformLayout()
 {
@@ -471,7 +471,7 @@ void CTFRoundInfo::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRoundInfo::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -483,7 +483,7 @@ void CTFRoundInfo::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRoundInfo::ShowPanel( bool bShow )
 {
@@ -496,7 +496,7 @@ void CTFRoundInfo::ShowPanel( bool bShow )
 		char temp[255];
 		Q_snprintf( temp, sizeof( temp ), "VGUI/%s", m_szMapImage );
 		IMaterial *pMapMaterial = materials->FindMaterial( temp, TEXTURE_GROUP_VGUI, false );
-	
+
 		// are we missing any of the images we want to show?
 		if ( pMapMaterial && !IsErrorMaterial( pMapMaterial ) )
 		{
@@ -514,7 +514,7 @@ void CTFRoundInfo::ShowPanel( bool bShow )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRoundInfo::OnCommand( const char *command )
 {
@@ -529,7 +529,7 @@ void CTFRoundInfo::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRoundInfo::UpdateImage( ImagePanel *pImagePanel, const char *pszImageName )
 {
@@ -547,7 +547,7 @@ void CTFRoundInfo::UpdateImage( ImagePanel *pImagePanel, const char *pszImageNam
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRoundInfo::Update()
 {
@@ -580,7 +580,7 @@ void CTFRoundInfo::Update()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRoundInfo::OnKeyCodePressed( KeyCode code )
 {
@@ -600,7 +600,7 @@ void CTFRoundInfo::OnKeyCodePressed( KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRoundInfo::SetData( KeyValues *data )
 {
@@ -612,7 +612,7 @@ void CTFRoundInfo::SetData( KeyValues *data )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRoundInfo::FireGameEvent( IGameEvent *event )
 {

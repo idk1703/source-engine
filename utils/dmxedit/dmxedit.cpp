@@ -165,7 +165,7 @@ bool CDmxEdit::Load( const char *pFilename, const CObjType &loadType /* = DIST_A
 				traverseStack.Pop( pDag );
 				if ( !pDag )
 					continue;
-				
+
 				for ( int i = pDag->GetChildCount() - 1; i >= 0; --i )
 				{
 					traverseStack.Push( pDag->GetChild( i ) );
@@ -596,7 +596,7 @@ LUA_COMMAND(
 
 	const char *pFilename = luaL_checkstring( pLuaState, 1 );
 
-	if ( lua_isboolean( pLuaState, 2 ) ) 
+	if ( lua_isboolean( pLuaState, 2 ) )
 	{
 		if ( lua_isboolean( pLuaState, 3 ) )
 		{
@@ -823,7 +823,7 @@ void CDmxEdit::ImportCombinationControls( CDmeCombinationOperator *pSrcComboOp, 
 		const char *pControlName = pSrcComboOp->GetControlName( i );
 
 		int nRawControls = pSrcComboOp->GetRawControlCount( i );
-		int nMatchCount = 0; 
+		int nMatchCount = 0;
 		foundMatch.EnsureCount( nRawControls );
 		for ( int j = 0; j < nRawControls; ++j )
 		{
@@ -3528,7 +3528,7 @@ void FindBoundingSphere( CUtlVector< Vector > &points, Vector &cen, float &fRad 
 //-----------------------------------------------------------------------------
 // Take each delta value, add it to the base state, find the bounding sphere
 // of all of the resulting vertices, return the distance from the center to
-// the 
+// the
 //-----------------------------------------------------------------------------
 float CDmxEdit::DeltaRadius( const char *pDeltaName )
 {
@@ -3543,7 +3543,7 @@ float CDmxEdit::DeltaRadius( const char *pDeltaName )
 
 	const CUtlVector< Vector > &bindPos = pBind->GetPositionData();
 	const CUtlVector< int > &deltaPosIndices = pDelta->GetVertexIndexData( CDmeVertexData::FIELD_POSITION );
-	const CUtlVector< Vector > &deltaPos = pDelta->GetPositionData(); 
+	const CUtlVector< Vector > &deltaPos = pDelta->GetPositionData();
 
 	Assert( deltaPosIndices.Count() == deltaPos.Count() );
 

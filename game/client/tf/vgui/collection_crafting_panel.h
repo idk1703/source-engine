@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CCollectionCraftingSelectionPanel : public CItemCriteriaSelectionPanel
 {
@@ -54,7 +54,7 @@ public:
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	const char *GetItemNotSelectableReason( const CEconItemView *pItem ) const
 	{
@@ -181,7 +181,7 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CStatClockCraftingSelectionPanel : public CCollectionCraftingSelectionPanel
 {

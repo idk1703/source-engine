@@ -26,7 +26,7 @@ public:
 	void InputTeleport( inputdata_t &inputdata );
 
 private:
-	
+
 	bool	EntityMayTeleport( CBaseEntity *pTarget );
 
 	Vector m_vSaveOrigin;
@@ -50,8 +50,8 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTarget - 
+// Purpose:
+// Input  : *pTarget -
 // Output : Returns true if the entity may be teleported
 //-----------------------------------------------------------------------------
 bool CPointTeleport::EntityMayTeleport( CBaseEntity *pTarget )
@@ -126,7 +126,7 @@ void CPointTeleport::InputTeleport( inputdata_t &inputdata )
 
 	// in episodic, we have a special spawn flag that forces Gordon into a duck
 #ifdef HL2_EPISODIC
-	if ( (m_spawnflags & SF_TELEPORT_INTO_DUCK) && pTarget->IsPlayer() ) 
+	if ( (m_spawnflags & SF_TELEPORT_INTO_DUCK) && pTarget->IsPlayer() )
 	{
 		CBasePlayer *pPlayer = ToBasePlayer( pTarget );
 		if ( pPlayer != NULL )
@@ -139,9 +139,8 @@ void CPointTeleport::InputTeleport( inputdata_t &inputdata )
 			pPlayer->SetViewOffset( VEC_DUCK_VIEW_SCALED( pPlayer ) );
 			pPlayer->SetCollisionBounds( VEC_DUCK_HULL_MIN, VEC_DUCK_HULL_MAX );
 		}
-	}		
+	}
 #endif
 
 	pTarget->Teleport( &m_vSaveOrigin, &m_vSaveAngles, NULL );
 }
-

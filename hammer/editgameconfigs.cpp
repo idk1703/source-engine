@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -21,7 +21,7 @@
 // CEditGameConfigs dialog
 
 
-CEditGameConfigs::CEditGameConfigs(BOOL bSelectOnly, 
+CEditGameConfigs::CEditGameConfigs(BOOL bSelectOnly,
 								   CWnd* pParent /*=NULL*/)
 	: CDialog(CEditGameConfigs::IDD, pParent)
 {
@@ -55,7 +55,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CEditGameConfigs message handlers
 
-void CEditGameConfigs::OnAdd() 
+void CEditGameConfigs::OnAdd()
 {
 	char szName[128];
 	szName[0] = 0;
@@ -70,7 +70,7 @@ void CEditGameConfigs::OnAdd()
 	FillConfigList(pConfig->dwID);
 }
 
-void CEditGameConfigs::OnCopy() 
+void CEditGameConfigs::OnCopy()
 {
 	int iCurSel = m_cConfigs.GetCurSel();
 	if(iCurSel == CB_ERR)
@@ -85,7 +85,7 @@ void CEditGameConfigs::OnCopy()
 	FillConfigList(pNewConfig->dwID);
 }
 
-void CEditGameConfigs::OnRemove() 
+void CEditGameConfigs::OnRemove()
 {
 	int iCurSel = m_cConfigs.GetCurSel();
 	if(iCurSel == CB_ERR)
@@ -149,7 +149,7 @@ void CEditGameConfigs::FillConfigList(DWORD dwSelectID)
 	// get current selection so we can keep it
 	DWORD dwCurID = dwSelectID;
 	int iNewIndex = -1;
-	
+
 	if(m_cConfigs.GetCurSel() != LB_ERR && dwCurID == 0xFFFFFFFF)
 	{
 		dwCurID = m_cConfigs.GetItemData(m_cConfigs.GetCurSel());
@@ -181,7 +181,7 @@ void CEditGameConfigs::FillConfigList(DWORD dwSelectID)
 		OnOK();
 }
 
-void CEditGameConfigs::OnSelchangeConfigs() 
+void CEditGameConfigs::OnSelchangeConfigs()
 {
 	int iCurSel = m_cConfigs.GetCurSel();
 	if(iCurSel == LB_ERR)
@@ -191,7 +191,7 @@ void CEditGameConfigs::OnSelchangeConfigs()
 		m_cConfigs.GetItemData(iCurSel));
 }
 
-BOOL CEditGameConfigs::OnInitDialog() 
+BOOL CEditGameConfigs::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
@@ -210,8 +210,8 @@ BOOL CEditGameConfigs::OnInitDialog()
 	return TRUE;
 }
 
-void CEditGameConfigs::OnDblclkConfigs() 
+void CEditGameConfigs::OnDblclkConfigs()
 {
 	OnOK();
-	
+
 }

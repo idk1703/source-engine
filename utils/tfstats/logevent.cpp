@@ -21,7 +21,7 @@
 
 //For debugging more than anything
 const char* CLogEvent::TypeNames[]=
-{	
+{
 	{"No Type/Invalid!"},
 	{"Log File Initialize"},
 	{"Server Spawn"},
@@ -64,7 +64,7 @@ const char* CLogEvent::TypeNames[]=
 // Input:	iWhichArg - the desired argument
 // Output:	const CLogEventArgument*
 //------------------------------------------------------------------------------------------------------
-const CLogEventArgument* CLogEvent::getArgument(int iWhichArg) const 
+const CLogEventArgument* CLogEvent::getArgument(int iWhichArg) const
 {
 	if (iWhichArg < m_args.size())
 		return m_args[iWhichArg];
@@ -87,16 +87,16 @@ void CLogEvent::parseArgs()
 	int i=0;
 	while (*read)
 	{
-		
-		if (*read == '\"')	
+
+		if (*read == '\"')
 		{
 			//parseArgument moves the read pointer to the char after the closing "
 			parseArgument(++read);
 			*(write++)='[';
-			*(write++)=(char)(i++)+48; //convert int to char by adding 48 
+			*(write++)=(char)(i++)+48; //convert int to char by adding 48
 			*(write++)=']';
-		}	
-		else 
+		}
+		else
 			*write++=*read;
 
 		*read++;
@@ -164,9 +164,9 @@ bool CLogEvent::keywordsOccur(char* s1,char* s2,char* s3)
 //this is pretty cheesy
 void CLogEvent::determineType()
 {
-	
+
 	//for now just do this in a big dumb if statement
-	
+
 	if (keywordsOccur("killed","self","with"))
 		 m_EventType=SUICIDE;
 	else if (keywordsOccur("log closed"))
@@ -324,7 +324,7 @@ void CLogEvent::readEventMessage(FILE* f)
 			fpos_t temp_pos;
 			fgetpos(f,&temp_pos);
 			CLogEvent cle(f);
-			fseek(f,temp_pos,SEEK_SET);			
+			fseek(f,temp_pos,SEEK_SET);
 			if (cle.isValid())
 			{
 				//if the next log event is valid, then this broadcast did not span lines
@@ -345,7 +345,7 @@ void CLogEvent::readEventMessage(FILE* f)
 	{
 		m_Valid=false;
 	}
-	else	
+	else
 	{
 		temp[strlen(temp)-1]=0;		//rid ourselves of newline
 		m_EventMessage=new TRACKED char[strlen(temp)+1];
@@ -383,9 +383,8 @@ void CLogEvent::readEventTime(FILE* f)
 		t.tm_mon=month-1; //jan = 0
 		m_EventTime=mktime(&t);
 
-		
+
 
 	}
 
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -69,7 +69,7 @@ void CNewParticleEffect::Construct()
 
 	if ( IsValid() && clienttools->IsInRecordingMode() )
 	{
-		int nId = AllocateToolParticleEffectId();	
+		int nId = AllocateToolParticleEffectId();
 
 		static ParticleSystemCreatedState_t state;
 		state.m_nParticleSystemId = nId;
@@ -95,7 +95,7 @@ CNewParticleEffect::~CNewParticleEffect(void)
 		msg->SetPtr( "state", &state );
 
 		ToolFramework_PostToolMessage( HTOOLHANDLE_INVALID, msg );
-		m_nToolParticleEffectId = TOOLPARTICLESYSTEMID_INVALID; 
+		m_nToolParticleEffectId = TOOLPARTICLESYSTEMID_INVALID;
 	}
 
 	m_bAllocated = false;
@@ -192,7 +192,7 @@ void CNewParticleEffect::StopEmission( bool bInfiniteOnly, bool bRemoveAllPartic
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNewParticleEffect::SetDormant( bool bDormant )
 {
@@ -247,7 +247,7 @@ void CNewParticleEffect::RecordControlPointOrientation( int nWhichPoint )
 {
 	if ( m_nToolParticleEffectId != TOOLPARTICLESYSTEMID_INVALID && clienttools->IsInRecordingMode() )
 	{
-		// FIXME: Make a more direct way of getting 
+		// FIXME: Make a more direct way of getting
 		QAngle angles;
 		VectorAngles( m_ControlPoints[nWhichPoint].m_ForwardVector, m_ControlPoints[nWhichPoint].m_UpVector, angles );
 
@@ -263,7 +263,7 @@ void CNewParticleEffect::RecordControlPointOrientation( int nWhichPoint )
 	}
 }
 
-void CNewParticleEffect::SetControlPointOrientation( int nWhichPoint, 
+void CNewParticleEffect::SetControlPointOrientation( int nWhichPoint,
 	const Vector &forward, const Vector &right, const Vector &up )
 {
 	CParticleCollection::SetControlPointOrientation( nWhichPoint, forward, right, up );
@@ -377,17 +377,17 @@ void CNewParticleEffect::DetectChanges()
 	float flExtraBuffer = flBuffer * 1.3f;
 
 	// if nothing changed, return
-	if ( m_MinBounds.x < m_LastMin.x || 
-		 m_MinBounds.y < m_LastMin.y || 
-		 m_MinBounds.z < m_LastMin.z || 
+	if ( m_MinBounds.x < m_LastMin.x ||
+		 m_MinBounds.y < m_LastMin.y ||
+		 m_MinBounds.z < m_LastMin.z ||
 
 		 m_MinBounds.x > (m_LastMin.x + flExtraBuffer) ||
 		 m_MinBounds.y > (m_LastMin.y + flExtraBuffer) ||
 		 m_MinBounds.z > (m_LastMin.z + flExtraBuffer) ||
 
-		 m_MaxBounds.x > m_LastMax.x || 
-		 m_MaxBounds.y > m_LastMax.y || 
-		 m_MaxBounds.z > m_LastMax.z || 
+		 m_MaxBounds.x > m_LastMax.x ||
+		 m_MaxBounds.y > m_LastMax.y ||
+		 m_MaxBounds.z > m_LastMax.z ||
 
 		 m_MaxBounds.x < (m_LastMax.x - flExtraBuffer) ||
 		 m_MaxBounds.y < (m_LastMax.y - flExtraBuffer) ||
@@ -420,7 +420,7 @@ void CNewParticleEffect::DebugDrawBbox ( bool bCulled )
 	Vector center = GetRenderOrigin();
 	Vector mins   = m_MinBounds - center;
 	Vector maxs   = m_MaxBounds - center;
-	
+
 	int r, g, b;
 	bool bDraw = true;
 	if ( bCulled )
@@ -485,13 +485,13 @@ void CNewParticleEffect::DebugDrawBbox ( bool bCulled )
 		}
 		else
 		{
-			// green, this effect presents less cpu load 
+			// green, this effect presents less cpu load
 			r = 0;
 			g = 255;
 			b = 0;
 		}
 	}
-		 
+
 	if ( bDraw )
 	{
 		if ( debugoverlay )
@@ -514,12 +514,12 @@ int CNewParticleEffect::DrawModel( int flags )
 
 	if ( !g_pClientMode->ShouldDrawParticles() || !ParticleMgr()->ShouldRenderParticleSystems() )
 		return 0;
-	
+
 	if ( ( flags & ( STUDIO_SHADOWDEPTHTEXTURE | STUDIO_SSAODEPTHTEXTURE ) ) != 0 )
 	{
 		return 0;
 	}
-	
+
 	// do distance cull check here. We do it here instead of in particles so we can easily only do
 	// it for root objects, not bothering to cull children individually
 	CMatRenderContextPtr pRenderContext( materials );
@@ -606,4 +606,3 @@ static void DumpParticleStats_f( void )
 }
 
 static ConCommand cl_dump_particle_stats( "cl_dump_particle_stats", DumpParticleStats_f, "dump particle profiling info to particle_profile.csv") ;
-

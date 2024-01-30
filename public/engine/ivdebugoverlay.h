@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -8,7 +8,7 @@
 //
 //  cdll_int.h
 //
-// 4-23-98  
+// 4-23-98
 // JOHN:  client dll interface declarations
 //
 
@@ -23,7 +23,7 @@ class Vector;
 
 #define VDEBUG_OVERLAY_INTERFACE_VERSION	"VDebugOverlay003"
 
-// When used as a duration by a server-side NDebugOverlay:: call, 
+// When used as a duration by a server-side NDebugOverlay:: call,
 // causes the overlay to persist until the next server update.
 #define NDEBUG_PERSIST_TILL_NEXT_SERVER (0.0f)
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,7 +22,7 @@ void InitMathlib( void )
 {
 	MathLib_Init( 2.2f, // v_gamma.GetFloat()
 		2.2f, // v_texgamma.GetFloat()
-		0.0f /*v_brightness.GetFloat() */, 
+		0.0f /*v_brightness.GetFloat() */,
 		2.0f /*mat_overbright.GetInt() */, s_bAllow3DNow, true, s_bAllowSSE2, true );
 }
 

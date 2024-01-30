@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -23,9 +23,9 @@ class CGameListPanel : public vgui::ListPanel
 {
 public:
 	DECLARE_CLASS_SIMPLE( CGameListPanel, vgui::ListPanel );
-	
+
 	CGameListPanel( CBaseGamesPage *pOuter, const char *pName );
-	
+
 	virtual void OnKeyCodePressed(vgui::KeyCode code);
 
 private:
@@ -133,7 +133,7 @@ public:
 	// This is overridden in the add server dialog - since there is no Connect button, the message
 	// never gets handled, but we want to add a server when they dbl-click or press enter.
 	virtual bool OnGameListEnterPressed();
-	
+
 	int GetSelectedItemsCount();
 
 	// adds a server to the favorites
@@ -143,7 +143,7 @@ public:
 	virtual void StartRefresh();
 
 	virtual void UpdateDerivedLayouts( void );
-	
+
 	void		PrepareQuickListMap( const char *pMapName, int iListID );
 	void		SelectQuickListServers( void );
 	vgui::Panel *GetActiveList( void );
@@ -185,7 +185,7 @@ protected:
 	// Removes server from list
 	void RemoveServer( serverdisplay_t &server );
 
-	virtual bool BShowServer( serverdisplay_t &server ) { return server.m_bDoNotRefresh; } 
+	virtual bool BShowServer( serverdisplay_t &server ) { return server.m_bDoNotRefresh; }
 	void ClearServerList();
 
 	// filtering methods
@@ -202,7 +202,7 @@ protected:
 
 	// whether filter settings limit which master server to query
 	CGameID &GetFilterAppID() { return m_iLimitToAppID; }
-	
+
 	virtual void GetNewServerList();
 	virtual void StopRefresh();
 	virtual bool IsRefreshing();
@@ -240,7 +240,7 @@ protected:
 	CUtlDict< CQuickListMapServerList, int > m_quicklistserverlist;
 	int m_iServerRefreshCount;
 	CUtlVector< servermaps_t > m_vecMapNamesFound;
-	
+
 
 	EPageType m_eMatchMakingType;
 	HServerListRequest m_hRequest;
@@ -267,7 +267,7 @@ protected:
 
 	MESSAGE_FUNC_PTR_CHARPTR( OnTextChanged, "TextChanged", panel, text );
 	MESSAGE_FUNC_PTR_INT( OnButtonToggled, "ButtonToggled", panel, state );
-	
+
 	void UpdateFilterAndQuickListVisibility();
 	bool BFiltersVisible() { return m_bFiltersVisible; }
 

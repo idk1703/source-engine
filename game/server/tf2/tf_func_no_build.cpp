@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -51,7 +51,7 @@ LINK_ENTITY_TO_CLASS( func_no_build, CFuncNoBuild);
 
 BEGIN_DATADESC( CFuncNoBuild )
 
-	// keys 
+	// keys
 	DEFINE_KEYFIELD_NOT_SAVED( m_bOnlyPreventTowers, FIELD_BOOLEAN, "OnlyPreventTowers" ),
 
 	// inputs
@@ -65,7 +65,7 @@ END_DATADESC()
 PRECACHE_REGISTER( func_no_build );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFuncNoBuild::CFuncNoBuild()
 {
@@ -85,14 +85,14 @@ void CFuncNoBuild::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncNoBuild::Precache( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: See if we've got a gather point specified 
+// Purpose: See if we've got a gather point specified
 //-----------------------------------------------------------------------------
 void CFuncNoBuild::Activate( void )
 {
@@ -102,7 +102,7 @@ void CFuncNoBuild::Activate( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncNoBuild::InputSetActive( inputdata_t &inputdata )
 {
@@ -110,7 +110,7 @@ void CFuncNoBuild::InputSetActive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncNoBuild::InputSetInactive( inputdata_t &inputdata )
 {
@@ -118,7 +118,7 @@ void CFuncNoBuild::InputSetInactive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncNoBuild::InputToggleActive( inputdata_t &inputdata )
 {
@@ -133,7 +133,7 @@ void CFuncNoBuild::InputToggleActive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncNoBuild::SetActive( bool bActive )
 {
@@ -141,7 +141,7 @@ void CFuncNoBuild::SetActive( bool bActive )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CFuncNoBuild::GetActive() const
 {
@@ -176,7 +176,7 @@ int CFuncNoBuild::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 	// Team rules may tell us that we should
 	CBaseEntity* pRecipientEntity = CBaseEntity::Instance( pInfo->m_pClientEnt );
 	Assert( pRecipientEntity->IsPlayer() );
-	
+
 	CBasePlayer *pPlayer = (CBasePlayer*)pRecipientEntity;
 	if ( pPlayer->GetTeam() )
 	{

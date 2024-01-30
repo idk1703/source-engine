@@ -35,11 +35,11 @@ public:
 
 	// Shared implementation between client and server.
 	void WeaponTraceLine( const Vector& src, const Vector& end, unsigned int mask, CBaseEntity *pShooter, int damageType, trace_t* pTrace );
-	
+
 	virtual bool ShouldCollide( int collisionGroup0, int collisionGroup1 );
-	
-	virtual void FireBullets( const CTakeDamageInfo &info, int cShots, const Vector &vecSrc, const Vector &vecDirShooting, 
-		const Vector &vecSpread, float flDistance, int iBulletType, int iTracerFreq, int firingEntID, 
+
+	virtual void FireBullets( const CTakeDamageInfo &info, int cShots, const Vector &vecSrc, const Vector &vecDirShooting,
+		const Vector &vecSpread, float flDistance, int iBulletType, int iTracerFreq, int firingEntID,
 		int attachmentID, const char *sCustomTracer = NULL );
 
 
@@ -77,7 +77,7 @@ public:
 	virtual float WeaponTraceEntity( CBaseEntity *pEntity, const Vector &vecStart, const Vector &vecEnd, unsigned int mask, trace_t *ptr );
 
 	virtual void UpdateClientData( CBasePlayer *pl );
-	
+
 	// Death notices
 	virtual void		DeathNotice( CBasePlayer *pVictim, const CTakeDamageInfo &info );
 	virtual const char  *GetDamageCustomString( const CTakeDamageInfo &info );

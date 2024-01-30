@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
-#include "cbase.h"  
-#include "shake.h" 
+#include "cbase.h"
+#include "shake.h"
 #include "weapon_dodbasegun.h"
 
 #if defined( CLIENT_DLL )
@@ -16,7 +16,7 @@ class CWeaponBaseRifleGrenade : public CWeaponDODBaseGun
 {
 public:
 	DECLARE_CLASS( CWeaponBaseRifleGrenade, CWeaponDODBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponBaseRifleGrenade();
@@ -27,7 +27,7 @@ public:
 	virtual void WeaponIdle( void );
 
 	virtual DODWeaponID GetWeaponID( void ) const { return WEAPON_NONE; }
-	
+
 
 	virtual Activity GetDrawActivity( void );
 	virtual Activity GetIdleActivity( void );

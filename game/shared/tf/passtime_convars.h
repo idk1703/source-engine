@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -76,11 +76,11 @@ extern ConVar
 	tf_passtime_pack_speed,
 	tf_passtime_pack_hp_per_sec;
 
-enum class EPasstimeExperiment_Telepass { 
+enum class EPasstimeExperiment_Telepass {
 	None,
 	TeleportToCatcher,
 	SwapWithCatcher,
 	TeleportToCatcherMaintainPossession,
 };
 
-#endif // PASSTIME_CONVARS_H  
+#endif // PASSTIME_CONVARS_H

@@ -58,7 +58,7 @@ public:
 
 	void PainSound( const CTakeDamageInfo &info );
 	void DeathSound( const CTakeDamageInfo &info );
-	
+
 	WeaponProficiency_t CalcWeaponProficiency( CBaseCombatWeapon *pWeapon );
 	Vector GetActualShootPosition( const Vector &shootOrigin );
 	Vector GetActualShootTrajectory( const Vector &shootOrigin );
@@ -100,7 +100,7 @@ private:
 	// Inputs
 	void	InputPerfectAccuracyOn( inputdata_t &inputdata );
 	void	InputPerfectAccuracyOff( inputdata_t &inputdata );
-	
+
 	CAI_AssaultBehavior		m_AssaultBehavior;
 	CAI_LeadBehavior		m_LeadBehavior;
 	int						m_iNumZombies;
@@ -132,7 +132,7 @@ bool CNPC_Monk::CreateBehaviors()
 {
 	AddBehavior( &m_LeadBehavior );
 	AddBehavior( &m_AssaultBehavior );
-	
+
 	return BaseClass::CreateBehaviors();
 }
 
@@ -147,7 +147,7 @@ int CNPC_Monk::GetSoundInterests()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Monk::BuildScheduleTestBits( void )
 {
@@ -176,7 +176,7 @@ void CNPC_Monk::BuildScheduleTestBits( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Class_T	CNPC_Monk::Classify( void )
 {
@@ -185,7 +185,7 @@ Class_T	CNPC_Monk::Classify( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Activity CNPC_Monk::NPC_TranslateActivity( Activity eNewActivity )
 {
@@ -239,21 +239,21 @@ Activity CNPC_Monk::NPC_TranslateActivity( Activity eNewActivity )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Monk::Precache()
 {
 	PrecacheModel( "models/Monk.mdl" );
-	
+
 	PrecacheScriptSound( "NPC_Citizen.FootstepLeft" );
 	PrecacheScriptSound( "NPC_Citizen.FootstepRight" );
 
 	BaseClass::Precache();
 }
- 
+
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Monk::Spawn()
 {
@@ -342,8 +342,8 @@ Vector CNPC_Monk::GetActualShootTrajectory( const Vector &shootOrigin )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pEvent - 
+// Purpose:
+// Input  : pEvent -
 //-----------------------------------------------------------------------------
 void CNPC_Monk::HandleAnimEvent( animevent_t *pEvent )
 {
@@ -411,7 +411,7 @@ bool CNPC_Monk::IsValidEnemy( CBaseEntity *pEnemy )
 
 //-------------------------------------
 
-int CNPC_Monk::TranslateSchedule( int scheduleType ) 
+int CNPC_Monk::TranslateSchedule( int scheduleType )
 {
 	switch( scheduleType )
 	{
@@ -452,7 +452,7 @@ int CNPC_Monk::TranslateSchedule( int scheduleType )
 void CNPC_Monk::PrescheduleThink()
 {
 	BaseClass::PrescheduleThink();
-}	
+}
 
 //-------------------------------------
 
@@ -569,7 +569,7 @@ void CNPC_Monk::GatherConditions()
 		{
 			// Is this zombie coming for me?
 			CAI_BaseNPC *pZombie = dynamic_cast<CAI_BaseNPC*>(pSightEnt);
-			
+
 			if( pZombie && pZombie->GetEnemy() == this )
 			{
 				m_iNumZombies++;

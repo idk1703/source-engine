@@ -124,7 +124,7 @@ public:
 	bool IsAdvancedPopFile( void ) { return m_bAdvancedPopFile; }
 	void SetMapRestartTime( float flTime ) { m_flMapRestartTime = flTime; }
 	bool IsPopFileEventType( int fileType ) { return m_nMvMEventPopfileType == fileType; }
-	
+
 	void DebugWaveStats();
 
 	void AllocateBots();
@@ -166,15 +166,15 @@ public:
 private:
 	struct CheckpointSnapshotInfo
 	{
-		CSteamID m_steamId;							// which player this snapshot is for	
+		CSteamID m_steamId;							// which player this snapshot is for
 		int m_currencySpent;						// how much money they had spent up to this check point
 		CUtlVector< CUpgradeInfo > m_upgradeVector;	// the upgrades the player had as this checkpoint
 	};
 
 	struct PlayerUpgradeHistory
-	{	
+	{
 		CSteamID m_steamId;							// which player this snapshot is for
-		CUtlVector< CUpgradeInfo > m_upgradeVector;	 
+		CUtlVector< CUpgradeInfo > m_upgradeVector;
 		int m_currencySpent;
 	};
 
@@ -192,12 +192,12 @@ private:
 	CUtlVector< IPopulator * > m_populatorVector;
 	char m_popfileFull[ MAX_PATH ];
 	char m_popfileShort[ MAX_PATH ];
-	
+
 	KeyValues	*m_pTemplates;
 
 	bool m_bIsInitialized;
 	bool m_bAllocatedBots;
-	
+
 	bool m_bBonusRound;
 	CHandle< CBaseCombatCharacter > m_hBonusBoss;
 
@@ -260,13 +260,13 @@ inline bool CPopulationManager::IsRestoringCheckpoint( void ) const
 }
 
 inline int CPopulationManager::GetStartingCurrency( void ) const
-{ 
+{
 	return m_nStartingCurrency + m_nLobbyBonusCurrency;
 }
 
 inline int CPopulationManager::GetRespawnWaveTime( void ) const
-{ 
-	return m_nRespawnWaveTime; 
+{
+	return m_nRespawnWaveTime;
 }
 
 inline bool CPopulationManager::CanBotsAttackWhileInSpawnRoom( void ) const
@@ -275,8 +275,8 @@ inline bool CPopulationManager::CanBotsAttackWhileInSpawnRoom( void ) const
 }
 
 inline KeyValues *CPopulationManager::GetTemplate( const char *pszName ) const
-{ 
-	return m_pTemplates->FindKey( pszName ); 
+{
+	return m_pTemplates->FindKey( pszName );
 }
 
 // singleton accessor

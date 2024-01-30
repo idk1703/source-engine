@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -149,7 +149,7 @@ typedef enum
 	SDK_WEAPON_PISTOL,
 	SDK_WEAPON_CROWBAR,
 
-	
+
 	WEAPON_MAX,		// number of weapons weapon index
 } SDKWeaponID;
 
@@ -172,12 +172,12 @@ enum SDKPlayerState
 	// You can't move though if CSGameRules()->IsFreezePeriod() returns true.
 	// This state can jump to a bunch of other states like STATE_PICKINGCLASS or STATE_DEATH_ANIM.
 	STATE_ACTIVE=0,
-	
+
 	// This is the state you're in when you first enter the server.
-	// It's switching between intro cameras every few seconds, and there's a level info 
+	// It's switching between intro cameras every few seconds, and there's a level info
 	// screen up.
 	STATE_WELCOME,			// Show the level intro screen.
-	
+
 	// During these states, you can either be a new player waiting to join, or
 	// you can be a live player in the game who wants to change teams.
 	// Either way, you can't move while choosing team or class (or while any menu is up).
@@ -187,7 +187,7 @@ enum SDKPlayerState
 #if defined ( SDK_USE_PLAYERCLASSES )
 	STATE_PICKINGCLASS,			// Choosing class.
 #endif
-	
+
 	STATE_DEATH_ANIM,			// Playing death anim, waiting for that to finish.
 	STATE_OBSERVER_MODE,		// Noclipping around, watching players, etc.
 

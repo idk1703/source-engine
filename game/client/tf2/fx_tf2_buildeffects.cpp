@@ -42,7 +42,7 @@ void FX_BuildImpact( const Vector &origin, const QAngle &vecAngles, const Vector
 {
 	Vector	offset;
 	float	spread = 0.1f;
-	
+
 	CSmartPtr<CDustParticle> pSimple = CDustParticle::Create( "dust" );
 	pSimple->SetSortOrigin( origin );
 
@@ -76,32 +76,32 @@ void FX_BuildImpact( const Vector &origin, const QAngle &vecAngles, const Vector
 
 			pParticle->m_vecVelocity.Random( -spread, spread );
 			pParticle->m_vecVelocity += ( vecForward * RandomFloat( 1.0f, 6.0f ) );
-			
+
 			VectorNormalize( pParticle->m_vecVelocity );
 
 			float	fForce = RandomFloat( 500, 750 );
 
 			// scaled
 			pParticle->m_vecVelocity *= fForce * flScale;
-			
+
 			colorRamp = RandomFloat( 0.75f, 1.25f );
 			pParticle->m_uchColor[0]	= MIN( 1.0f, color[0] * colorRamp ) * 255.0f;
 			pParticle->m_uchColor[1]	= MIN( 1.0f, color[1] * colorRamp ) * 255.0f;
 			pParticle->m_uchColor[2]	= MIN( 1.0f, color[2] * colorRamp ) * 255.0f;
-			
+
 			// scaled
 			pParticle->m_uchStartSize	= flScale * RandomInt( 15, 20 );
 
 			// scaled
 			pParticle->m_uchEndSize		= flScale * pParticle->m_uchStartSize * 4;
-			
+
 			pParticle->m_uchStartAlpha	= RandomInt( 32, 255 );
 			pParticle->m_uchEndAlpha	= 0;
-			
+
 			pParticle->m_flRoll			= RandomInt( 0, 360 );
 			pParticle->m_flRollDelta	= RandomFloat( -8.0f, 8.0f );
 		}
-	}			
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -187,7 +187,7 @@ void TF2_FX_BuildTesla( C_BaseEntity *pEntity, Vector &vecOrigin, Vector &vecEnd
 	beamInfo.m_nSegments = 20;
 	beamInfo.m_bRenderable = true;
 	beamInfo.m_nFlags = FBEAM_ONLYNOISEONCE;
-	
+
 	beams->CreateBeamPoints( beamInfo );
 }
 
@@ -282,8 +282,8 @@ void TF2_BuildTeslaCallback( const CEffectData &data )
 DECLARE_CLIENT_EFFECT( "TF2BuildTesla", TF2_BuildTeslaCallback );
 
 //-----------------------------------------------------------------------------
-// Purpose: WarpParticle emitter 
-//			This is a particle that scales up to its max size in WARPEMMITER_MIDPOINT 
+// Purpose: WarpParticle emitter
+//			This is a particle that scales up to its max size in WARPEMMITER_MIDPOINT
 //			of it's lifetime, the drops back to its initial size by the end of its life.
 //			Alpha scales the same way.
 //-----------------------------------------------------------------------------
@@ -292,9 +292,9 @@ DECLARE_CLIENT_EFFECT( "TF2BuildTesla", TF2_BuildTeslaCallback );
 class CWarpParticleEmitter : public CSimpleEmitter
 {
 public:
-	
+
 	CWarpParticleEmitter( const char *pDebugName ) : CSimpleEmitter( pDebugName ) {}
-	
+
 	//Create
 	static CWarpParticleEmitter *Create( const char *pDebugName="dust" )
 	{
@@ -346,7 +346,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void FX_BuildWarp( Vector &vecOrigin, QAngle &vecAngles, float flScale )
 {
@@ -399,13 +399,13 @@ void FX_BuildWarp( Vector &vecOrigin, QAngle &vecAngles, float flScale )
 		pParticle->m_uchColor[0]	= MIN( 1.0f, color[0] * colorRamp ) * 255.0f;
 		pParticle->m_uchColor[1]	= MIN( 1.0f, color[1] * colorRamp ) * 255.0f;
 		pParticle->m_uchColor[2]	= MIN( 1.0f, color[2] * colorRamp ) * 255.0f;
-		
+
 		pParticle->m_uchStartSize	= RandomInt( 10,13 ) * flScale;
 		pParticle->m_uchEndSize		= pParticle->m_uchStartSize * 9;
-		
+
 		pParticle->m_uchStartAlpha	= 32;
 		pParticle->m_uchEndAlpha	= 192;
-		
+
 		pParticle->m_flRoll			= 0;
 		pParticle->m_flRollDelta	= 0;
 	}
@@ -529,13 +529,13 @@ void FX_BuildWarpSuck( Vector &vecOrigin, QAngle &vecAngles, float flScale )
 {
 	CSmartPtr<CTrailParticles> pEmitter = CTrailParticles::Create( "BuildWarpSuck" );
 	PMaterialHandle	hParticleMaterial = pEmitter->GetPMaterial( "effects/bluespark" );
-	pEmitter->Setup( (Vector &) vecOrigin, 
-						NULL, 
-						0.0, 
-						0, 
-						64, 
-						0, 
-						0, 
+	pEmitter->Setup( (Vector &) vecOrigin,
+						NULL,
+						0.0,
+						0,
+						64,
+						0,
+						0,
 						bitsPARTICLE_TRAIL_VELOCITY_DAMPEN | bitsPARTICLE_TRAIL_FADE );
 
 	// Add particles
@@ -546,7 +546,7 @@ void FX_BuildWarpSuck( Vector &vecOrigin, QAngle &vecAngles, float flScale )
 		VectorNormalize( vOffset );
 		float flDistance = RandomFloat( 16, 64 ) * flScale;
 		Vector vPos = vecOrigin + (vOffset * flDistance);
-		
+
 		TrailParticle *pParticle = (TrailParticle *) pEmitter->AddParticle( sizeof(TrailParticle), hParticleMaterial, vPos );
 		if ( pParticle )
 		{
@@ -597,12 +597,12 @@ class CGasSpurtEmitter : public CSimpleEmitter
 {
 	typedef CSimpleEmitter BaseClass;
 public:
-	CGasSpurtEmitter( const char *pDebugName ) : CSimpleEmitter( pDebugName ) 
+	CGasSpurtEmitter( const char *pDebugName ) : CSimpleEmitter( pDebugName )
 	{
 		m_flDeathTime = 0;
 		m_flLastParticleSpawnTime = 0;
 	}
-	
+
 	// Create
 	static CGasSpurtEmitter *Create( const char *pDebugName="gasspurt" )
 	{
@@ -640,7 +640,7 @@ public:
 		int numParticles = RandomInt( 1,2 );
 		for ( int i = 0; i < numParticles; i++ )
 		{
-			pParticle = (SimpleParticle *) AddParticle( sizeof( SimpleParticle ), g_Mat_DustPuff[0], m_vSortOrigin );			
+			pParticle = (SimpleParticle *) AddParticle( sizeof( SimpleParticle ), g_Mat_DustPuff[0], m_vSortOrigin );
 			if ( pParticle == NULL )
 				break;
 
@@ -672,7 +672,7 @@ public:
 			pParticle->m_uchEndSize = pParticle->m_uchStartSize*3;
 			pParticle->m_flRoll	= RandomFloat( 0, 360 );
 			pParticle->m_flRollDelta = RandomFloat( -4.0f, 4.0f );
-		}			
+		}
 
 		m_flLastParticleSpawnTime = gpGlobals->curtime + m_flSpawnRate;
 	}

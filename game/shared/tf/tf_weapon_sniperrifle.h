@@ -91,7 +91,7 @@ class CTFSniperRifle : public CTFWeaponBaseGun
 public:
 
 	DECLARE_CLASS( CTFSniperRifle, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_DATADESC();
 
@@ -146,7 +146,7 @@ public:
 
 	void			ExplosiveHeadShot( CTFPlayer *pAttacker, CTFPlayer *pVictim );
 #endif
-	
+
 	void			Detach( void ) OVERRIDE;
 
 	virtual bool	IsJarateRifle( void ) const;
@@ -212,7 +212,7 @@ class CTFSniperRifleDecap : public CTFSniperRifle
 {
 public:
 	DECLARE_CLASS( CTFSniperRifleDecap, CTFSniperRifle );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual int	GetWeaponID( void ) const			{ return TF_WEAPON_SNIPERRIFLE_DECAP; }

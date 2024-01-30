@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ public:
 	PackedEntityHandle_t	m_pPackedData;
 };
 
-// HLTV needs some more data per entity 
+// HLTV needs some more data per entity
 class CHLTVEntityData
 {
 public:
@@ -43,7 +43,7 @@ public:
 	unsigned int	m_nNodeCluster;  // if (1<<31) is set it's a node, otherwise a cluster
 };
 
-// Replay needs some more data per entity 
+// Replay needs some more data per entity
 class CReplayEntityData
 {
 public:
@@ -79,21 +79,21 @@ public:
 	void					AddReference();
 	void					ReleaseReference();
 
-	CFrameSnapshot*			NextSnapshot() const;						
+	CFrameSnapshot*			NextSnapshot() const;
 
 
 public:
 	CInterlockedInt			m_ListIndex;	// Index info CFrameSnapshotManager::m_FrameSnapshots.
 
-	// Associated frame. 
+	// Associated frame.
 	int						m_nTickCount; // = sv.tickcount
-	
+
 	// State information
-	CFrameSnapshotEntry		*m_pEntities;	
+	CFrameSnapshotEntry		*m_pEntities;
 	int						m_nNumEntities; // = sv.num_edicts
 
 	// This list holds the entities that are in use and that also aren't entities for inactive clients.
-	unsigned short			*m_pValidEntities; 
+	unsigned short			*m_pValidEntities;
 	int						m_nValidEntities;
 
 	// Additional HLTV info
@@ -142,7 +142,7 @@ public:
 	// Returns the pack data for a particular entity for a particular snapshot
 	PackedEntity*	GetPackedEntity( CFrameSnapshot* pSnapshot, int entity );
 
-	// if we are copying a Packed Entity, we have to increase the reference counter 
+	// if we are copying a Packed Entity, we have to increase the reference counter
 	void			AddEntityReference( PackedEntityHandle_t handle );
 
 	// if we are removeing a Packed Entity, we have to decrease the reference counter

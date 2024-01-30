@@ -1,26 +1,26 @@
-  
+
 #ifndef VERTEX_CACHE_H
 
 #define VERTEX_CACHE_H
 
 class VertexCache
 {
-	
+
 public:
-	
+
 	VertexCache(int size)
 	{
 		numEntries = size;
-		
+
 		entries = new int[numEntries];
-		
+
 		for(int i = 0; i < numEntries; i++)
 			entries[i] = -1;
 	}
-		
+
 	VertexCache() { VertexCache(16); }
 	~VertexCache() { delete[] entries; entries = 0; }
-	
+
 	bool InCache(int entry)
 	{
 		bool returnVal = false;
@@ -32,24 +32,24 @@ public:
 				break;
 			}
 		}
-		
+
 		return returnVal;
 	}
-	
+
 	int AddEntry(int entry)
 	{
 		int removed;
-		
+
 		removed = entries[numEntries - 1];
-		
+
 		//push everything right one
 		for(int i = numEntries - 2; i >= 0; i--)
 		{
 			entries[i + 1] = entries[i];
 		}
-		
+
 		entries[0] = entry;
-		
+
 		return removed;
 	}
 
@@ -57,8 +57,8 @@ public:
 	{
 		memset(entries, -1, sizeof(int) * numEntries);
 	}
-	
-	void Copy(VertexCache* inVcache) 
+
+	void Copy(VertexCache* inVcache)
 	{
 		for(int i = 0; i < numEntries; i++)
 		{
@@ -71,8 +71,8 @@ public:
 
 private:
 
-  int *entries;
-  int numEntries;
+	int *entries;
+	int numEntries;
 
 };
 

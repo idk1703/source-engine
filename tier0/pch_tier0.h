@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -48,10 +48,3 @@
 #endif
 
 #include "tier0/valve_on.h"
-
-
-
-
-
-
-

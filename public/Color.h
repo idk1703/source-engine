@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,7 +32,7 @@ public:
 	{
 		SetColor(_r, _g, _b, _a);
 	}
-	
+
 	// set the color
 	// r - red component (0-255)
 	// g - green component (0-255)
@@ -68,7 +68,7 @@ public:
 	inline int g() const	{ return _color[1]; }
 	inline int b() const	{ return _color[2]; }
 	inline int a() const	{ return _color[3]; }
-	
+
 	unsigned char &operator[](int index)
 	{
 		return _color[index];

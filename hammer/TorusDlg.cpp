@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -53,7 +53,7 @@ CTorusDlg::CTorusDlg(Vector& boxmins, Vector& boxmaxs, CWnd* pParent /*=NULL*/)
 	m_iRotationSides = AfxGetApp()->GetProfileInt(pszSection, "Rotation Sides", 16);
 	str = AfxGetApp()->GetProfileString(pszSection, "Rotation Start Angle_", "0");
 	m_fRotationAngle = atof(str);
-	
+
 	m_iAddHeight = AfxGetApp()->GetProfileInt(pszSection, "Add Height", 0);
 
 	Vector vecSize;
@@ -144,21 +144,21 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CTorusDlg message handlers
 
-void CTorusDlg::OnChangeArc() 
+void CTorusDlg::OnChangeArc()
 {
 }
 
-void CTorusDlg::OnChangeTorusArc() 
+void CTorusDlg::OnChangeTorusArc()
 {
 }
 
-void CTorusDlg::OnCircle() 
+void CTorusDlg::OnCircle()
 {
 	m_cArcSpin.SetPos(360);
 	OnTorusPreview();
 }
 
-void CTorusDlg::OnComputeRadius() 
+void CTorusDlg::OnComputeRadius()
 {
 	UpdateData( TRUE );
 
@@ -168,18 +168,18 @@ void CTorusDlg::OnComputeRadius()
 	OnTorusPreview();
 }
 
-void CTorusDlg::OnUpdateSides() 
+void CTorusDlg::OnUpdateSides()
 {
 }
 
-void CTorusDlg::OnUpdateWallwidth() 
+void CTorusDlg::OnUpdateWallwidth()
 {
 }
 
-BOOL CTorusDlg::OnInitDialog() 
+BOOL CTorusDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	
+
 	m_cArcSpin.SetRange(8, 360);
 	m_cSidesSpin.SetRange(3, 100);
 	m_cWallWidthSpin.SetRange(2, m_iMaxWallWidth);
@@ -192,7 +192,7 @@ BOOL CTorusDlg::OnInitDialog()
 	return TRUE;
 }
 
-void CTorusDlg::OnPaint() 
+void CTorusDlg::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 
@@ -224,9 +224,9 @@ void CTorusDlg::OnPaint()
 	bInitialized = TRUE;
 }
 
-void CTorusDlg::OnTorusPreview() 
+void CTorusDlg::OnTorusPreview()
 {
-	// 
+	//
 	// Build preview.
 	//
 	bInitialized = TRUE;
@@ -365,18 +365,18 @@ void CTorusDlg::DrawTorusCrossSection(CDC* pDC )
 	iSides = m_iSides;
 
 	MakeArcCenterRadius(0, 0,
-		flTorusRadius + iWallWidth, flTorusRadius + iWallWidth, 
+		flTorusRadius + iWallWidth, flTorusRadius + iWallWidth,
 		iSides, fStartAngle, fArc, fOuterPoints);
 
-	MakeArcCenterRadius(0, 0, 
-		flTorusRadius, flTorusRadius, 
+	MakeArcCenterRadius(0, 0,
+		flTorusRadius, flTorusRadius,
 		iSides, fStartAngle, fArc, fInnerPoints);
 
 	// check wall width - if it's half or more of the total,
 	//  set the inner poinst to the center point of the box
 	//  and turn off the CreateSouthFace flag
-		
-	Vector points[4];	
+
+	Vector points[4];
 	for (i = 0; i < iSides; i++)
 	{
 		int iNextPoint = i+1;
@@ -452,7 +452,7 @@ void CTorusDlg::DrawTorusTopView( CDC* pDC )
 	{
 		fScaleX = 1.0f;
 	}
-	
+
 	if (bmaxs[1] - bmins[1])
 	{
 		fScaleY = rcItem.Height() /(bmaxs[1] - bmins[1]);
@@ -483,16 +483,16 @@ void CTorusDlg::DrawTorusTopView( CDC* pDC )
 		yRad = 0.0f;
 	}
 
-	MakeArcCenterRadius(xCenter, yCenter, xRad + iWallWidth, yRad + iWallWidth, 
+	MakeArcCenterRadius(xCenter, yCenter, xRad + iWallWidth, yRad + iWallWidth,
 		iSides,	fStartAngle, fArc, fOuterPoints);
 
 	MakeArcCenterRadius(xCenter, yCenter, xRad, yRad,
 		iSides, fStartAngle, fArc, fInnerPoints);
-	
+
 	Vector vecCenter;
 	VectorLerp( bmins, bmaxs, 0.5f, vecCenter );
-	
-	Vector points[4];	
+
+	Vector points[4];
 	for (i = 0; i < iSides; i++)
 	{
 		int iNextPoint = i+1;

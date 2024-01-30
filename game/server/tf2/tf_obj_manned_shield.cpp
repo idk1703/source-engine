@@ -69,7 +69,7 @@ const char *g_pMannedShieldThinkContextName = "MannedShieldThinkContext";
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectMannedShield::CObjectMannedShield()
 {
@@ -82,7 +82,7 @@ CObjectMannedShield::~CObjectMannedShield()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectMannedShield::Spawn()
 {
@@ -98,7 +98,7 @@ void CObjectMannedShield::Spawn()
 	SetMaxPassengerCount( 1 );
 
 	SetType( OBJ_MANNED_SHIELD );
-	
+
 	SetContextThink( ShieldRotationThink, gpGlobals->curtime + 0.1, g_pMannedShieldThinkContextName );
 }
 
@@ -153,7 +153,7 @@ void CObjectMannedShield::PowerupEnd( int iPowerup )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectMannedShield::ShieldRotationThink( void )
 {
@@ -171,7 +171,7 @@ void CObjectMannedShield::ShieldRotationThink( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectMannedShield::Precache( void )
 {
@@ -221,7 +221,7 @@ void CObjectMannedShield::SetPassenger( int nRole, CBasePlayer *pEnt )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectMannedShield::OnItemPostFrame( CBaseTFPlayer *pDriver )
 {

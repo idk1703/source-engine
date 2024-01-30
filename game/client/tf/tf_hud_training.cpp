@@ -39,7 +39,7 @@ bool CTFHudTraining::FormatTrainingText(const char* inputString, wchar_t* output
 
 	if ( !pszBuf )
 	{
-		// use plain ASCII string 
+		// use plain ASCII string
 		g_pVGuiLocalize->ConvertANSIToUnicode( inputString, szBuf, sizeof(szBuf) );
 		pszBuf = szBuf;
 	}
@@ -74,7 +74,7 @@ bool CTFHudTraining::FormatTrainingText(const char* inputString, wchar_t* output
 		if ( isVar )
 		{
 			// move over the end of the variable
-			++ws; 
+			++ws;
 		}
 
 		// modify the label if necessary
@@ -113,12 +113,12 @@ bool CTFHudTraining::FormatTrainingText(const char* inputString, wchar_t* output
 			V_wcsncat( outputString, token, MAX_TRAINING_MSG_LENGTH );
 		}
 	}
-  return true;
+	return true;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHudTraining::CTFHudTraining( Panel *parent, const char *name ) : EditablePanel( parent, name )
 {
@@ -132,7 +132,7 @@ CTFHudTraining::CTFHudTraining( Panel *parent, const char *name ) : EditablePane
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHudTraining::~CTFHudTraining()
 {
@@ -166,7 +166,7 @@ void CTFHudTraining::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudTraining::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -188,7 +188,7 @@ void CTFHudTraining::SetTrainingObjective(char *szRawString)
 		SetDialogVariable( "goal", "" );
 		return;
 	}
-	
+
 	SetDialogVariable( "goal", wszText );
 
 	C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
@@ -207,7 +207,7 @@ void CTFHudTraining::SetTrainingText(char *szRawString)
 
 	if ( !m_pMsgLabel )
 		return;
-	
+
 	if (!FormatTrainingText(szRawString, wszText))
 	{
 		m_pMsgLabel->SetText( "" );
@@ -278,7 +278,7 @@ void CTFHudTraining::SetTrainingText(char *szRawString)
 // Purpose: Receive messages about changes in state
 //-----------------------------------------------------------------------------
 void CTFHudTraining::FireGameEvent( IGameEvent *event )
-{	
+{
 	const char *eventName = event->GetName();
 
 	if ( FStrEq( "teamplay_round_start", eventName ) )

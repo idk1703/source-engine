@@ -18,7 +18,7 @@ public:
 	C_BotNPCMinion();
 	virtual ~C_BotNPCMinion();
 
-public:	
+public:
 	virtual void Spawn( void );
 	virtual bool IsNextBot() { return true; }
 

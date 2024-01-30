@@ -16,7 +16,7 @@
 
 class ConVar;
 
-struct Ammo_t 
+struct Ammo_t
 {
 	char 				*pName;
 	int					nDamageType;
@@ -100,4 +100,3 @@ CAmmoDef* GetAmmoDef();
 
 
 #endif // AI_AMMODEF_H
- 

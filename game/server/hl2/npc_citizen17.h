@@ -89,10 +89,10 @@ public:
 #endif//HL2_EPISODIC
 
 	void			OnRestore();
-	
+
 	//---------------------------------
 	string_t 		GetModelName() const;
-	
+
 	Class_T 		Classify();
 
 	bool 			ShouldAlwaysThink();
@@ -122,10 +122,10 @@ public:
 
 	bool			ShouldAcceptGoal( CAI_BehaviorBase *pBehavior, CAI_GoalEntity *pGoal );
 	void			OnClearGoal( CAI_BehaviorBase *pBehavior, CAI_GoalEntity *pGoal );
-	
+
 	void 			StartTask( const Task_t *pTask );
 	void 			RunTask( const Task_t *pTask );
-	
+
 	Activity		NPC_TranslateActivity( Activity eNewActivity );
 	void 			HandleAnimEvent( animevent_t *pEvent );
 	void			TaskFail( AI_TaskFailureCode_t code );
@@ -145,12 +145,12 @@ public:
 	//---------------------------------
 	bool 			OnBeginMoveAndShoot();
 	void 			OnEndMoveAndShoot();
-	
+
 	virtual bool	UseAttackSquadSlots()	{ return false; }
 	void 			LocateEnemySound();
 
 	bool			IsManhackMeleeCombatant();
-	
+
 	Vector 			GetActualShootPosition( const Vector &shootOrigin );
 	void 			OnChangeActiveWeapon( CBaseCombatWeapon *pOldWeapon, CBaseCombatWeapon *pNewWeapon );
 
@@ -161,7 +161,7 @@ public:
 	// Damage handling
 	//---------------------------------
 	int 			OnTakeDamage_Alive( const CTakeDamageInfo &info );
-	
+
 	//---------------------------------
 	// Commander mode
 	//---------------------------------
@@ -195,14 +195,14 @@ public:
 	void			AddInsignia();
 	void			RemoveInsignia();
 	bool			SpeakCommandResponse( AIConcept_t concept, const char *modifiers = NULL );
-	
+
 	//---------------------------------
 	// Scanner interaction
 	//---------------------------------
 	float 			GetNextScannerInspectTime() { return m_fNextInspectTime; }
 	void			SetNextScannerInspectTime( float flTime ) { m_fNextInspectTime = flTime; }
 	bool			HandleInteraction(int interactionType, void *data, CBaseCombatCharacter* sourceEnt);
-	
+
 	//---------------------------------
 	// Hints
 	//---------------------------------
@@ -213,7 +213,7 @@ public:
 	//---------------------------------
 	bool 			IsMedic() 			{ return HasSpawnFlags(SF_CITIZEN_MEDIC); }
 	bool 			IsAmmoResupplier() 	{ return HasSpawnFlags(SF_CITIZEN_AMMORESUPPLIER); }
-	
+
 	bool 			CanHeal();
 	bool 			ShouldHealTarget( CBaseEntity *pTarget, bool bActiveUse = false );
 #if HL2_EPISODIC
@@ -227,7 +227,7 @@ public:
 	void			TossHealthKit( CBaseCombatCharacter *pThrowAt, const Vector &offset ); // create a healthkit and throw it at someone
 	void			InputForceHealthKitToss( inputdata_t &inputdata );
 #endif
-	
+
 	//---------------------------------
 	// Inputs
 	//---------------------------------
@@ -260,7 +260,7 @@ private:
 		COND_CIT_COMMANDHEAL,
 		COND_CIT_HURTBYFIRE,
 		COND_CIT_START_INSPECTION,
-		
+
 		SCHED_CITIZEN_PLAY_INSPECT_ACTIVITY = BaseClass::NEXT_SCHEDULE,
 		SCHED_CITIZEN_HEAL,
 		SCHED_CITIZEN_RANGE_ATTACK1_RPG,
@@ -271,7 +271,7 @@ private:
 #ifdef HL2_EPISODIC
 		SCHED_CITIZEN_HEAL_TOSS,
 #endif
-		
+
 		TASK_CIT_HEAL = BaseClass::NEXT_TASK,
 		TASK_CIT_RPG_AUGER,
 		TASK_CIT_PLAY_INSPECT_SEQUENCE,
@@ -285,7 +285,7 @@ private:
 	};
 
 	//-----------------------------------------------------
-	
+
 	int				m_nInspectActivity;
 	float			m_flNextFearSoundTime;
 	float			m_flStopManhackFlinch;
@@ -323,7 +323,7 @@ private:
 	COutputEvent		m_OnJoinedPlayerSquad;
 	COutputEvent		m_OnLeftPlayerSquad;
 	COutputEvent		m_OnFollowOrder;
-	COutputEvent		m_OnStationOrder; 
+	COutputEvent		m_OnStationOrder;
 	COutputEvent		m_OnPlayerUse;
 	COutputEvent		m_OnNavFailBlocked;
 
@@ -333,10 +333,10 @@ private:
 	CHandle<CAI_FollowGoal>	m_hSavedFollowGoalEnt;
 
 	bool					m_bNotifyNavFailBlocked;
-	bool					m_bNeverLeavePlayerSquad; // Don't leave the player squad unless killed, or removed via Entity I/O. 
-	
+	bool					m_bNeverLeavePlayerSquad; // Don't leave the player squad unless killed, or removed via Entity I/O.
+
 	//-----------------------------------------------------
-	
+
 	DECLARE_DATADESC();
 #ifdef _XBOX
 protected:

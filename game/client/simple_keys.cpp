@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,11 +15,11 @@
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &out - 
-//			t - 
-//			&start - 
-//			&end - 
+// Purpose:
+// Input  : &out -
+//			t -
+//			&start -
+//			&end -
 //-----------------------------------------------------------------------------
 void CSimpleKeyInterp::Interp( Vector &out, float t, const CSimpleKeyInterp &start, const CSimpleKeyInterp &end )
 {
@@ -52,8 +52,8 @@ void CSimpleKeyInterp::Interp( Vector &out, float t, const CSimpleKeyInterp &sta
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &key - 
+// Purpose:
+// Input  : &key -
 // Output : int
 //-----------------------------------------------------------------------------
 int CSimpleKeyList::Insert( const CSimpleKeyInterp &key )
@@ -68,9 +68,9 @@ int CSimpleKeyList::Insert( const CSimpleKeyInterp &key )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &out - 
-//			t - 
+// Purpose:
+// Input  : &out -
+//			t -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSimpleKeyList::Interp( Vector &out, float t )

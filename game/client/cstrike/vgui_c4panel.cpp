@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,7 +15,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CC4Panel : public CVGuiScreenPanel
 {
@@ -47,14 +47,14 @@ private:
 DECLARE_VGUI_SCREEN_FACTORY( CC4Panel, "c4_panel" );
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CC4Panel::CC4Panel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CC4Panel", vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/C4Panel.res", "ClientScheme" ) ) 
+	: BaseClass( parent, "CC4Panel", vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/C4Panel.res", "ClientScheme" ) )
 {
 	SetSize( 10, 10 ); // Quiet "parent not sized yet" spew
 	m_pTimeLabel = new vgui::Label( this, "TimerLabel", "" );
-	
+
 	m_flNextDigitRandomizeTime = 0;
 	m_iLastRandomInt = 0;
 
@@ -71,7 +71,7 @@ void CC4Panel::ApplySchemeSettings( IScheme *pScheme )
 
 	m_cArmed = pScheme->GetColor( "C4Panel_Armed", GetFgColor() );
 	m_cDefused = pScheme->GetColor( "C4Panel_Defused", GetFgColor() );
-	m_cInvisible = Color( 0, 0, 0, 0 );	
+	m_cInvisible = Color( 0, 0, 0, 0 );
 
 	if( m_bInitLabelColor )
 	{
@@ -81,7 +81,7 @@ void CC4Panel::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CC4Panel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -98,7 +98,7 @@ bool CC4Panel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 float flTransitionTimes[] = { 0.9, 0.8, 0.6, 0.45, 0.25, 0.15, 0.0 };
 
 //the defuse code, taken from the view model animation, v_c4.mdl
-char cDefuseCode[] = { '7', '3', '5', '5', '6', '0', '8', '\0' };	
+char cDefuseCode[] = { '7', '3', '5', '5', '6', '0', '8', '\0' };
 char cArmedDisplay[] = { '*', '*', '*', '*', '*', '*', '*', '\0' };
 
 //convert an integer into the readable character version of that number
@@ -166,7 +166,7 @@ void CC4Panel::OnTick()
 		//Value drawn will be based on how long we've been
 		//decoding this character
 		float flTimeInThisChar = 1.0 - flTransitionTimes[0];
-		
+
 		if( iDigitPos > 0 )
 			flTimeInThisChar = flTransitionTimes[iDigitPos-1] - flTransitionTimes[iDigitPos];
 
@@ -175,7 +175,7 @@ void CC4Panel::OnTick()
 
 
 		float flPercentDecoding = ( flProgress - flTransitionTimes[iDigitPos] ) / flTimeInThisChar;
-		
+
 		//Determine when to next change the digit that we're decoding
 		if( m_flNextDigitRandomizeTime < gpGlobals->curtime )
 		{
@@ -198,7 +198,7 @@ void CC4Panel::OnTick()
 		else	//else use a random digit
 			buf[iDigitPos] = INT_TO_CHAR( m_iLastRandomInt );
 
-		
+
 		m_pTimeLabel->SetFgColor( m_cArmed );
 		m_pTimeLabel->SetText( buf );
 	}
@@ -207,5 +207,5 @@ void CC4Panel::OnTick()
 		//Not being defused - draw the armed string
 		m_pTimeLabel->SetFgColor( m_cArmed );
 		m_pTimeLabel->SetText( cArmedDisplay );
-	}	
+	}
 }

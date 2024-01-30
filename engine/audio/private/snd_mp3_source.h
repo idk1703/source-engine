@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ public:
 
 	// Create an instance (mixer) of this audio source
 	virtual CAudioMixer			*CreateMixer( int initialStreamPosition = 0 ) = 0;
-	
+
 	virtual int					GetType( void );
 	virtual void				GetCacheData( CAudioSourceCachedInfo *info );
 
@@ -47,13 +47,13 @@ public:
 	// Total number of samples in this source.  NOTE: Some sources are infinite (mic input), they should return
 	// a count equal to one second of audio at their current rate.
 	virtual int					SampleCount( void ) { return m_dataSize; }
-	
+
 	virtual int					Format() { return 0; }
 	virtual int					DataSize( void ) { return 0; }
-	
+
 	virtual bool				IsLooped( void ) { return false; }
 	virtual bool				IsStereoWav( void ) { return false; }
-	virtual bool				IsStreaming( void ) { return false; } 
+	virtual bool				IsStreaming( void ) { return false; }
 	virtual int					GetCacheStatus( void ) { return AUDIO_IS_LOADED; }
 	virtual void				CacheLoad( void ) {}
 	virtual void				CacheUnload( void ) {}
@@ -61,7 +61,7 @@ public:
 
 	virtual int					ZeroCrossingBefore( int sample ) { return sample; }
 	virtual int					ZeroCrossingAfter( int sample ) { return sample; }
-	
+
 	// mixer's references
 	virtual void				ReferenceAdd( CAudioMixer *pMixer );
 	virtual void				ReferenceRemove( CAudioMixer *pMixer );
@@ -88,7 +88,7 @@ public:
 protected:
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	// Output : byte
 	//-----------------------------------------------------------------------------
 	inline byte *GetCachedDataPointer()

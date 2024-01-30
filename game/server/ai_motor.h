@@ -36,7 +36,7 @@ float AI_ClampYaw( float yawSpeedPerSec, float current, float target, float time
 //-----------------------------------------------------------------------------
 // CAI_Motor
 //
-// Purpose: Implements the primitive locomotion of AIs. 
+// Purpose: Implements the primitive locomotion of AIs.
 //-----------------------------------------------------------------------------
 
 class CAI_Motor : public CAI_Component,
@@ -74,9 +74,9 @@ public:
 	virtual	void		MoveStart();
 	virtual	void		MoveStop();
 	virtual void		MovePaused();
-	
+
 	//---------------------------------
-	
+
 	float				GetIdealSpeed() const;
 	float				GetIdealAccel() const;
 	float				GetCurSpeed() const			{ return m_vecVelocity.Length(); }
@@ -90,23 +90,23 @@ public:
 	//
 
 	AIMotorMoveResult_t MoveGroundStep( const Vector &newPos, CBaseEntity *pMoveTarget = NULL, float yaw = -1, bool bAsFarAsCan = true, bool bTestZ = true, AIMoveTrace_t *pTraceResult = NULL );
-	
+
 	// ----------------------------------------------------
 	// Rotational movement (yaw); goal and speed
 	// ----------------------------------------------------
-	
+
 	void 				SetYawSpeed( float yawSpeed )		{ m_YawSpeed = yawSpeed; 	}
 	float 				GetYawSpeed() const					{ return m_YawSpeed; 		}
 	float 				GetIdealYaw() const					{ return m_IdealYaw; 		}
 	void 				SetIdealYaw( float idealYaw)		{ m_IdealYaw = idealYaw; 	}
-	
+
 	// Set ideal yaw specified as a vector
 	void 				SetIdealYaw( const Vector &vecFacing)	{ SetIdealYaw( UTIL_VecToYaw( vecFacing )); }
 
 	// Set ideal yaw based on a specified target
 	void 				SetIdealYawToTarget( const Vector &target, float noise = 0.0, float offset = 0.0 );
 
-	// Set the ideal yaw and run the current or specified timestep worth of rotation. Note 
+	// Set the ideal yaw and run the current or specified timestep worth of rotation. Note
 	// it is not correct to call any "update" variant of these methods more
 	// than once per think cycle
 	void 				SetIdealYawAndUpdate( float idealYaw, float yawSpeed = AI_CALC_YAW_SPEED );
@@ -125,11 +125,11 @@ public:
 	// Run the current or specified timestep worth of rotation
 	virtual	void		UpdateYaw( int speed = -1 );
 
-	// 
+	//
 	virtual	void 		RecalculateYawSpeed();
 
 	// Returns the difference ( in degrees ) between npc's current yaw and ideal_yaw
-	float				DeltaIdealYaw(); 
+	float				DeltaIdealYaw();
 
 	// Issues turn gestures when needed due to turning
 	virtual	void		MaintainTurnActivity( void ) { };
@@ -174,17 +174,17 @@ protected:
 	void				SetMoveType( MoveType_t val, MoveCollide_t moveCollide = MOVECOLLIDE_DEFAULT );
 	float				StepHeight() const;
 	bool				CanStandOn( CBaseEntity *pSurface ) const;
-	
+
 	// ----------------------------------------------------
 	// Primitives
 	// ----------------------------------------------------
-	
+
 	virtual void		MoveFacing( const AILocalMoveGoal_t &move );
 
 	virtual AIMotorMoveResult_t MoveGroundExecute( const AILocalMoveGoal_t &move, AIMoveTrace_t *pTraceResult );
 	AIMotorMoveResult_t			MoveGroundExecuteWalk( const AILocalMoveGoal_t &move, float speed, float dist, AIMoveTrace_t *pTraceResult );
 	virtual AIMotorMoveResult_t MoveFlyExecute( const AILocalMoveGoal_t &move, AIMoveTrace_t *pTraceResult );
-	
+
 protected: // made protected while animation transition details worked out, private:
 
 	// --------------------------------
@@ -210,7 +210,7 @@ protected: // made protected while animation transition details worked out, priv
 	CAI_InterestTarget	m_facingQueue;
 
 	// --------------------------------
-	
+
 	CAI_MoveProbe *		m_pMoveProbe;
 
 	bool				m_bYawLocked;

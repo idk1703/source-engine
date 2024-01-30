@@ -64,7 +64,7 @@ struct CMannVsMachineWaveStats
 		nAttempts = 0;
 	}
 
-	void ClearStats () 
+	void ClearStats ()
 	{
 		nCreditsDropped = 0;
 		nCreditsAcquired = 0;
@@ -108,7 +108,7 @@ struct CMannVsMachineLocalWaveStats
 		nBuyBacks = 0;
 		nAttempts = 0;
 	}
-	
+
 	CMannVsMachineLocalWaveStats( const CMannVsMachineLocalWaveStats &rhs )
 	{
 		nCreditsDropped = rhs.nCreditsDropped;
@@ -188,7 +188,7 @@ struct CMannVsMachinePlayerStats
 		nTankDamage = rhs.nTankDamage;
 	}
 
-	uint32 nDeaths;	
+	uint32 nDeaths;
 	uint32 nBotDamage;
 	uint32 nGiantDamage;
 	uint32 nTankDamage;
@@ -243,7 +243,7 @@ uint32 MannVsMachineStats_GetAcquiredCredits( int idxWave = -1, bool bIncludeBon
 uint32 MannVsMachineStats_GetDroppedCredits( int idxWave = -1 );
 uint32 MannVsMachineStats_GetMissedCredits( int idxWave = -1 );
 
-#ifdef GAME_DLL 
+#ifdef GAME_DLL
 
 struct edict_t;
 
@@ -351,7 +351,7 @@ public:
 	// Message from Server about Client Upgrades
 	void ClearLocalPlayerUpgrades ();
 	void AddLocalPlayerUpgrade( int iPlayerClass, item_definition_index_t iItemDef );
-	
+
 	int GetLocalPlayerUpgradeSpending( int idxWave );
 	int GetLocalPlayerBottleSpending( int idxWave );
 	int GetLocalPlayerBuyBackSpending ( int idxWave );
@@ -363,7 +363,7 @@ public:
 
 	CUtlVector< CUpgradeInfo > *GetLocalPlayerUpgrades() { return &m_vecLocalPlayerUpgrades; }
 	CPlayerWaveSpendingStats *GetLocalSpending ( int iWaveIdx );		// Helper
-	
+
 	void SetPlayerActiveUpgradeCosts( uint64 playerId, int nSpending );
 	int GetPlayerActiveUpgradeCosts( uint64 playerId );
 
@@ -396,7 +396,7 @@ private:
 	const char *m_pMapName;
 
 #endif // GAME_DLL
-	
+
 	CMannVsMachineWaveStats m_runningTotalWaveStats;
 	CMannVsMachineWaveStats m_previousWaveStats;
 	CMannVsMachineWaveStats m_currentWaveStats;

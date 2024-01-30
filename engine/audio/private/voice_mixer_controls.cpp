@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -47,7 +47,7 @@ private:
 
 	bool			GetLineControls( DWORD dwLineID, MIXERCONTROL *controls, DWORD nControls );
 	void			FindMicSelectControl( DWORD dwLineID, DWORD nControls );
-	
+
 
 private:
 	HMIXER			m_hMixer;
@@ -64,7 +64,7 @@ private:
 	DWORD			m_dwMicSelectMultipleItems;
 	DWORD			m_dwMicSelectControlType;
 	DWORD			m_dwMicSelectIndex;
-	
+
 	// Info about the controls we found.
 	ControlInfo		m_ControlInfos[NumControls];
 };
@@ -93,7 +93,7 @@ bool CMixerControls::Init()
 
 	bool bFoundMixer = false;
 	bool bFoundConnectionWithMicVolume = false;
-	
+
 	CUtlVectorFixedGrowable<MIXERCONTROL, 64> controls;
 	// Iterate over all the devices
 	// This is done in reverse so the 0th device is our fallback if none of them had the correct MicVolume control
@@ -161,8 +161,8 @@ bool CMixerControls::Init()
 					{
 						if( pControl->dwControlType == MIXERCONTROL_CONTROLTYPE_ONOFF &&
 							(
-								strstr(pControl->szShortName, "Gain") || 
-								strstr(pControl->szShortName, "Boos") || 
+								strstr(pControl->szShortName, "Gain") ||
+								strstr(pControl->szShortName, "Boos") ||
 								strstr(pControl->szShortName, "+20d")
 							)
 						)
@@ -181,7 +181,7 @@ bool CMixerControls::Init()
 							m_ControlInfos[MicMute].m_dwControlID = pControl->dwControlID;
 							m_ControlInfos[MicMute].m_cMultipleItems = pControl->cMultipleItems;
 						}
-						
+
 						if(recordLine.dwComponentType == MIXERLINE_COMPONENTTYPE_DST_WAVEIN &&
 							pControl->dwControlType == MIXERCONTROL_CONTROLTYPE_VOLUME)
 						{
@@ -266,13 +266,13 @@ bool CMixerControls::SetValue_Float(Control iControl, float flValue )
 	return false;
 }
 
-  
+
 bool CMixerControls::SelectMicrophoneForWaveInput()
 {
 	if( m_dwMicSelectControlID == 0xFFFFFFFF )
 		return false;
 
-	MIXERCONTROLDETAILS_BOOLEAN *pmxcdSelectValue = 
+	MIXERCONTROLDETAILS_BOOLEAN *pmxcdSelectValue =
 		(MIXERCONTROLDETAILS_BOOLEAN*)_alloca( sizeof(MIXERCONTROLDETAILS_BOOLEAN) * m_dwMicSelectMultipleItems );
 
 	MIXERCONTROLDETAILS mxcd;
@@ -312,14 +312,14 @@ bool CMixerControls::SelectMicrophoneForWaveInput()
 			return true;
 		}
 	}
-	
+
 
 	return false;
 }
 
 
 void CMixerControls::Clear()
-{ 
+{
 	m_hMixer = 0;
 	memset(m_ControlInfos, 0, sizeof(m_ControlInfos));
 }
@@ -335,7 +335,7 @@ bool CMixerControls::GetControlOption_Bool(DWORD dwControlID, DWORD cMultipleIte
 	details.cMultipleItems = cMultipleItems;
 	details.cbDetails      = sizeof(MIXERCONTROLDETAILS_BOOLEAN);
 	details.paDetails      = &controlValue;
-	
+
 	MMRESULT mmr = mixerGetControlDetails((HMIXEROBJ)m_hMixer, &details, 0L);
 	if(mmr == MMSYSERR_NOERROR)
 	{
@@ -361,7 +361,7 @@ bool CMixerControls::SetControlOption_Bool(DWORD dwControlID, DWORD cMultipleIte
 	details.paDetails      = &controlValue;
 
 	controlValue.fValue = bValue;
-	
+
 	MMRESULT mmr = mixerSetControlDetails((HMIXEROBJ)m_hMixer, &details, 0L);
 	return mmr == MMSYSERR_NOERROR;
 }
@@ -377,7 +377,7 @@ bool CMixerControls::GetControlOption_Unsigned(DWORD dwControlID, DWORD cMultipl
 	details.cMultipleItems = cMultipleItems;
 	details.cbDetails      = sizeof(MIXERCONTROLDETAILS_UNSIGNED);
 	details.paDetails      = &controlValue;
-	
+
 	MMRESULT mmr = mixerGetControlDetails((HMIXEROBJ)m_hMixer, &details, 0L);
 	if(mmr == MMSYSERR_NOERROR)
 	{
@@ -403,7 +403,7 @@ bool CMixerControls::SetControlOption_Unsigned(DWORD dwControlID, DWORD cMultipl
 	details.paDetails      = &controlValue;
 
 	controlValue.dwValue = value;
-	
+
 	MMRESULT mmr = mixerSetControlDetails((HMIXEROBJ)m_hMixer, &details, 0L);
 	return mmr == MMSYSERR_NOERROR;
 }
@@ -418,7 +418,7 @@ bool CMixerControls::GetLineControls( DWORD dwLineID, MIXERCONTROL *controls, DW
 	mxlc.cControls = nControls;
 	mxlc.cbmxctrl = sizeof(MIXERCONTROL);
 	mxlc.pamxctrl = controls;
-	
+
 	MMRESULT mmr = mixerGetLineControls((HMIXEROBJ)m_hMixer, &mxlc, MIXER_GETLINECONTROLSF_ALL);
 	return mmr == MMSYSERR_NOERROR;
 }
@@ -453,7 +453,7 @@ void CMixerControls::FindMicSelectControl( DWORD dwLineID, DWORD nControls )
 			mxcd.cMultipleItems = m_dwMicSelectMultipleItems;
 			mxcd.cbDetails = sizeof(MIXERCONTROLDETAILS_LISTTEXT);
 			mxcd.paDetails = pmxcdSelectText;
-			
+
 			if (mixerGetControlDetails((HMIXEROBJ)m_hMixer,
 										 &mxcd,
 										 MIXER_OBJECTF_HMIXER |
@@ -466,7 +466,7 @@ void CMixerControls::FindMicSelectControl( DWORD dwLineID, DWORD nControls )
 					MIXERLINE mxl;
 					mxl.cbStruct = sizeof(MIXERLINE);
 					mxl.dwLineID = pmxcdSelectText[dwi].dwParam1;
-					
+
 					if (mixerGetLineInfo((HMIXEROBJ)m_hMixer,
 										   &mxl,
 										   MIXER_OBJECTF_HMIXER |
@@ -500,4 +500,3 @@ void ShutdownMixerControls()
 	delete g_pMixerControls;
 	g_pMixerControls = NULL;
 }
-

@@ -45,10 +45,10 @@ void CTFGameMovementCommando::ProcessClassMovement( CBaseTFPlayer *pPlayer, CTFM
 //-----------------------------------------------------------------------------
 const Vector &CTFGameMovementCommando::GetPlayerMins( bool bDucked ) const
 {
-	return bDucked ? m_vDuckMins : m_vStandMins; 
+	return bDucked ? m_vDuckMins : m_vStandMins;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -121,7 +121,7 @@ void CTFGameMovementCommando::CheckBullRush( void )
 		return;
 #endif
 
-	if ( CheckDoubleTapForward() && !TFMove()->CommandoData().m_bBullRush && 
+	if ( CheckDoubleTapForward() && !TFMove()->CommandoData().m_bBullRush &&
 		 TFMove()->CommandoData().m_bCanBullRush && !( player->GetFlags() & FL_DUCKING ) )
 	{
 		// Set in a bull rush.
@@ -161,7 +161,7 @@ bool CTFGameMovementCommando::PrePlayerMove( void )
 	// Update (reduce) movement timers.
 	UpdateTimers();
 
-	// Check to see if the player is dead and setup death data, otherwise setup 
+	// Check to see if the player is dead and setup death data, otherwise setup
 	// the players view angles.
 	if ( !CheckDeath() )
 	{
@@ -381,7 +381,7 @@ void CTFGameMovementCommando::BullRushMove( void )
 	// Ignoring water for now!!!!
 	StartGravity();
 
-	// Fricion is handled before we add in any base velocity. That way, if we are on a conveyor, 
+	// Fricion is handled before we add in any base velocity. That way, if we are on a conveyor,
 	//  we don't slow when standing still, relative to the conveyor.
 	if (player->GetGroundEntity() != NULL)
 	{

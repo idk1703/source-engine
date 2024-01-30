@@ -58,7 +58,7 @@ public:
 			static int __cdecl F(const char * const *a, const char * const *b) { return strcmp(*a, *b); }
 		};
 		strings.Sort( _Local::F );
-		
+
 		for ( int i = 0; i < strings.Count(); ++i )
 		{
 			DevMsg( "  %d (0x%p) : %s\n", i, strings[i], strings[i] );
@@ -125,7 +125,7 @@ string_t FindPooledString( const char *pszValue )
 
 #if !defined(CLIENT_DLL) && !defined( GC )
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void CC_DumpGameStringTable( void )
 {

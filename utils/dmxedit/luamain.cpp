@@ -67,7 +67,7 @@ DEFINE_CONSOLE_STEAM_APPLICATION_OBJECT( CDmxEditApp );
 //-----------------------------------------------------------------------------
 bool CDmxEditApp::Create()
 {
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "vstdlib.dll",			PROCESS_UTILS_INTERFACE_VERSION },
 		{ "materialsystem.dll",		MATERIAL_SYSTEM_INTERFACE_VERSION },
@@ -137,7 +137,7 @@ void CDmxEditApp::PostShutdown()
 int CDmxEditApp::Main()
 {
 	// This bit of hackery allows us to access files on the harddrive
-	g_pFullFileSystem->AddSearchPath( "", "LOCAL", PATH_ADD_TO_HEAD ); 
+	g_pFullFileSystem->AddSearchPath( "", "LOCAL", PATH_ADD_TO_HEAD );
 
 	if ( CommandLine()->CheckParm( "-h" ) || CommandLine()->CheckParm( "-help" ) )
 	{
@@ -404,7 +404,7 @@ void CDmxEditApp::PrintHelp( bool bWiki /* = false */ )
 	}
 
 	Msg( "CREDITS\n" );
-	Msg( "    Lua Copyright © 1994-2006 Lua.org, PUC-Rio.\n ");
+	Msg( "    Lua Copyright ï¿½ 1994-2006 Lua.org, PUC-Rio.\n ");
 
 	Msg( "\n" );
 }

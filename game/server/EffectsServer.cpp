@@ -29,20 +29,20 @@ public:
 	virtual ~CEffectsServer();
 
 	// Members of the IEffect interface
-	virtual void Beam( const Vector &Start, const Vector &End, int nModelIndex, 
+	virtual void Beam( const Vector &Start, const Vector &End, int nModelIndex,
 		int nHaloIndex, unsigned char frameStart, unsigned char frameRate,
-		float flLife, unsigned char width, unsigned char endWidth, unsigned char fadeLength, 
+		float flLife, unsigned char width, unsigned char endWidth, unsigned char fadeLength,
 		unsigned char noise, unsigned char red, unsigned char green,
 		unsigned char blue, unsigned char brightness, unsigned char speed);
 	virtual void Smoke( const Vector &origin, int mModel, float flScale, float flFramerate );
 	virtual void Sparks( const Vector &position, int nMagnitude = 1, int nTrailLength = 1, const Vector *pvecDir = NULL );
 	virtual void Dust( const Vector &pos, const Vector &dir, float size, float speed );
 	virtual void MuzzleFlash( const Vector &origin, const QAngle &angles, float scale, int type );
-	virtual void MetalSparks( const Vector &position, const Vector &direction ); 
+	virtual void MetalSparks( const Vector &position, const Vector &direction );
 	virtual void EnergySplash( const Vector &position, const Vector &direction, bool bExplosive = false );
 	virtual void Ricochet( const Vector &position, const Vector &direction );
 
-	// FIXME: Should these methods remain in this interface? Or go in some 
+	// FIXME: Should these methods remain in this interface? Or go in some
 	// other client-server neutral interface?
 	virtual float Time();
 	virtual bool IsServer();
@@ -51,8 +51,8 @@ public:
 private:
 	//-----------------------------------------------------------------------------
 	// Purpose: Returning true means don't even call TE func
-	// Input  : filter - 
-	//			*suppress_host - 
+	// Input  : filter -
+	//			*suppress_host -
 	// Output : static bool
 	//-----------------------------------------------------------------------------
 	bool SuppressTE( CRecipientFilter& filter )
@@ -100,9 +100,9 @@ CEffectsServer::~CEffectsServer()
 //-----------------------------------------------------------------------------
 // Generates a beam
 //-----------------------------------------------------------------------------
-void CEffectsServer::Beam( const Vector &vecStart, const Vector &vecEnd, int nModelIndex, 
+void CEffectsServer::Beam( const Vector &vecStart, const Vector &vecEnd, int nModelIndex,
 	int nHaloIndex, unsigned char frameStart, unsigned char frameRate,
-	float flLife, unsigned char width, unsigned char endWidth, unsigned char fadeLength, 
+	float flLife, unsigned char width, unsigned char endWidth, unsigned char fadeLength,
 	unsigned char noise, unsigned char red, unsigned char green,
 	unsigned char blue, unsigned char brightness, unsigned char speed)
 {
@@ -110,7 +110,7 @@ void CEffectsServer::Beam( const Vector &vecStart, const Vector &vecEnd, int nMo
 	if ( !SuppressTE( filter ) )
 	{
 		te->BeamPoints( filter, 0.0,
-			&vecStart, &vecEnd, nModelIndex, nHaloIndex, frameStart, frameRate, flLife,  
+			&vecStart, &vecEnd, nModelIndex, nHaloIndex, frameStart, frameRate, flLife,
 			width, endWidth, fadeLength, noise, red, green, blue, brightness, speed );
 	}
 }
@@ -184,7 +184,7 @@ void CEffectsServer::Ricochet( const Vector &position, const Vector &direction )
 
 
 //-----------------------------------------------------------------------------
-// FIXME: Should these methods remain in this interface? Or go in some 
+// FIXME: Should these methods remain in this interface? Or go in some
 // other client-server neutral interface?
 //-----------------------------------------------------------------------------
 float CEffectsServer::Time()

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Acts exactly like "AnimatedTexture", but ONLY if the texture 
+// Purpose: Acts exactly like "AnimatedTexture", but ONLY if the texture
 //			it's working on matches the desired texture to work on.
 //
 //			This assumes that some other proxy will be switching out the textures.

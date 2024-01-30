@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -38,7 +38,7 @@
 
 // Don't alias here
 #if defined( CBaseTFPlayer )
-#undef CBaseTFPlayer	
+#undef CBaseTFPlayer
 #endif
 
 void CAM_ToThirdPerson(void);
@@ -68,7 +68,7 @@ public:
 
 	// Returns false if the effect is done and should be deleted.
 	bool		Update( float dt );
-	
+
 	void		Render();	// Draw the effect.
 
 private:
@@ -93,10 +93,10 @@ private:
 };
 
 
-CPersonalShieldEffect* CPersonalShieldEffect::Create( 
-	C_BaseTFPlayer *pEnt, 
+CPersonalShieldEffect* CPersonalShieldEffect::Create(
+	C_BaseTFPlayer *pEnt,
 	const Vector &vOffsetFromEnt,
-	const Vector &vIncomingDirection, 
+	const Vector &vIncomingDirection,
 	int iDamage )
 {
 	CPersonalShieldEffect *pRet = new CPersonalShieldEffect;
@@ -108,13 +108,13 @@ CPersonalShieldEffect* CPersonalShieldEffect::Create(
 
 		Vector vNormal = vIncomingDirection;
 		VectorNormalize( vNormal );
-		
+
 		for ( int i=0; i < CPersonalShieldEffect::NUM_TRACERS; i++ )
 		{
 			pRet->m_vTracerEndPoints[i] = pRet->m_vOffsetFromEnt;
-			
+
 			Vector vOffset = RandomVector( -1, 1 );
-			
+
 			// Make it tangent to a sphere enclosing the player.
 			float flDot = vNormal.Dot( vOffset );
 			vOffset -= vNormal * flDot;
@@ -187,19 +187,19 @@ void CPersonalShieldEffect::Render()
 
 		CBeamSegDraw beamDraw;
 		beamDraw.Start( nSegs, pMat );
-		
+
 		for ( int iSeg=0; iSeg < nSegs; iSeg++ )
 		{
 			float t = (float)iSeg / (nSegs-1);
 			VectorLerp( vBasePos, vEndPos, t, seg.m_vPos );
-			
+
 			// Add a random offset.
 			seg.m_vPos += RandomVector( -3, 3 );
 			seg.m_flTexCoord += 0.1f;
-			
+
 			beamDraw.NextSeg( &seg );
 		}
-		
+
 		beamDraw.End();
 	}
 
@@ -241,10 +241,10 @@ void CPersonalShieldEffect::Render()
 
 //-----------------------------------------------------------------------------
 // Purpose: Helper for animation state machine
-// Input  : clear - 
-//			destination - 
-//			*pFormat - 
-//			... - 
+// Input  : clear -
+//			destination -
+//			*pFormat -
+//			... -
 //-----------------------------------------------------------------------------
 void StatusPrintf( bool clear, int destination, char *pFormat, ... )
 {
@@ -285,7 +285,7 @@ void StatusPrintf( bool clear, int destination, char *pFormat, ... )
 void RecvProxy_PlayerObjectList( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
 	CTFPlayerLocalData *pLocalData = (CTFPlayerLocalData*)pStruct;
-	CBaseHandle *pHandle = (CBaseHandle*)(&(pLocalData->m_aObjects[pData->m_iElement])); 
+	CBaseHandle *pHandle = (CBaseHandle*)(&(pLocalData->m_aObjects[pData->m_iElement]));
 	RecvProxy_IntToEHandle( pData, pStruct, pHandle );
 }
 
@@ -293,7 +293,7 @@ void RecvProxy_PlayerObjectList( const CRecvProxyData *pData, void *pStruct, voi
 void RecvProxyArrayLength_PlayerObjects( void *pStruct, int objectID, int currentArrayLength )
 {
 	CTFPlayerLocalData *pLocalData = (CTFPlayerLocalData*)pStruct;
-	
+
 	if ( pLocalData->m_aObjects.Count() != currentArrayLength )
 	{
 		pLocalData->m_aObjects.SetSize( currentArrayLength );
@@ -306,13 +306,13 @@ BEGIN_RECV_TABLE_NOBASE( CTFPlayerLocalData, DT_TFLocal )
 	RecvPropVector( RECVINFO( m_vecKnockDownDir )),
 	RecvPropInt( RECVINFO( m_bThermalVision )),
 	RecvPropInt( RECVINFO( m_iIDEntIndex )),
-	RecvPropArray( RecvPropInt( RECVINFO(m_iResourceAmmo[0])), m_iResourceAmmo),	
+	RecvPropArray( RecvPropInt( RECVINFO(m_iResourceAmmo[0])), m_iResourceAmmo),
 	RecvPropInt( RECVINFO(m_iBankResources) ),
-	RecvPropArray2( 
+	RecvPropArray2(
 		RecvProxyArrayLength_PlayerObjects,
-		RecvPropInt( "player_object_array_element", 0, SIZEOF_IGNORE, 0, RecvProxy_PlayerObjectList ), 
-		MAX_OBJECTS_PER_PLAYER, 
-		0, 
+		RecvPropInt( "player_object_array_element", 0, SIZEOF_IGNORE, 0, RecvProxy_PlayerObjectList ),
+		MAX_OBJECTS_PER_PLAYER,
+		0,
 		"player_object_array"	),
 	RecvPropInt( RECVINFO( m_bAttachingSapper ) ),
 	RecvPropFloat( RECVINFO( m_flSapperAttachmentFrac ) ),
@@ -378,7 +378,7 @@ END_PREDICTION_DATA()
 BEGIN_PREDICTION_DATA( C_BaseTFPlayer )
 
 	DEFINE_PRED_TYPEDESCRIPTION( m_TFLocal, CTFPlayerLocalData ),
-	
+
 	DEFINE_PRED_FIELD( m_flCycle, FIELD_FLOAT, FTYPEDESC_INSENDTABLE | FTYPEDESC_PRIVATE | FTYPEDESC_OVERRIDE ),
 	DEFINE_PRED_FIELD( m_flPlaybackRate, FIELD_FLOAT, FTYPEDESC_INSENDTABLE | FTYPEDESC_PRIVATE | FTYPEDESC_OVERRIDE ),
 
@@ -502,7 +502,7 @@ bool IsLocalPlayerInTactical( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseTFPlayer::C_BaseTFPlayer() :
 	m_PlayerClasses( this ), m_PlayerAnimState( this )
@@ -524,7 +524,7 @@ void C_BaseTFPlayer::Clear()
 	m_bStoreRagdollInfo	= true;
 	m_flNextUseCheck = 0;
 	m_pSapperAttachmentStatus = NULL;
-	
+
 	int i;
 	for ( i=0; i < ARRAYSIZE( m_BoostModelAngles ); i++ )
 	{
@@ -551,7 +551,7 @@ bool C_BaseTFPlayer::IsDamageBoosted() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseTFPlayer::~C_BaseTFPlayer()
 {
@@ -580,7 +580,7 @@ C_BaseTFPlayer::~C_BaseTFPlayer()
 }
 
 //-----------------------------------------------------------------------------
-// Add, remove object from the panel 
+// Add, remove object from the panel
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::SetDormant( bool bDormant )
 {
@@ -589,7 +589,7 @@ void C_BaseTFPlayer::SetDormant( bool bDormant )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_BaseTFPlayer::HasNamedTechnology( const char *name )
 {
@@ -606,7 +606,7 @@ bool C_BaseTFPlayer::HasNamedTechnology( const char *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_BaseTFPlayer::ShouldDraw()
 {
@@ -650,8 +650,8 @@ ShadowType_t C_BaseTFPlayer::ShadowCastType()
 
 //-----------------------------------------------------------------------------
 // Purpose: Called once per frame for the local player only.
-//  Called after rendering ( called in PostRender() ) the 3d objects ( i.e., other players ) 
-//  but before vgui paints 2d overlays so that we can update the positions of all world 
+//  Called after rendering ( called in PostRender() ) the 3d objects ( i.e., other players )
+//  but before vgui paints 2d overlays so that we can update the positions of all world
 //  targets before rendering
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::UpdateTargetReticles( void )
@@ -703,7 +703,7 @@ void C_BaseTFPlayer::ClientThink( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Store off old movetype ( commander or not )
-// Input  : bnewentity - 
+// Input  : bnewentity -
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::OnPreDataChanged( DataUpdateType_t updateType )
 {
@@ -712,7 +712,7 @@ void C_BaseTFPlayer::OnPreDataChanged( DataUpdateType_t updateType )
 	m_nOldTacticalView = m_TFLocal.m_nInTacticalView;
 
 	m_iLastHealth = GetHealth();
-	m_bOldKnockDownState = m_TFLocal.m_bKnockedDown; 
+	m_bOldKnockDownState = m_TFLocal.m_bKnockedDown;
 
 	m_bOldThermalVision = m_TFLocal.m_bThermalVision;
 
@@ -727,7 +727,7 @@ void C_BaseTFPlayer::OnPreDataChanged( DataUpdateType_t updateType )
 
 //-----------------------------------------------------------------------------
 // Purpose: Switch to/from commander mode if necessary
-// Input  : bnewentity - 
+// Input  : bnewentity -
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -767,7 +767,7 @@ void C_BaseTFPlayer::OnDataChanged( DataUpdateType_t updateType )
 			{
 				m_flStartKnockdown = gpGlobals->curtime;
 				m_vecOriginalViewAngles = GetAbsAngles();
-				
+
 				m_vecKnockDownGoalAngles = m_TFLocal.m_vecKnockDownDir;
 			}
 			else
@@ -795,7 +795,7 @@ void C_BaseTFPlayer::OnDataChanged( DataUpdateType_t updateType )
 			else
 			{
 				vieweffects->ClearPermanentFades();
-			}		
+			}
 		}
 
 		if ( m_nOldPlayerClass != m_iPlayerClass )
@@ -847,10 +847,10 @@ void C_BaseTFPlayer::OnDataChanged( DataUpdateType_t updateType )
 	{
 		GetPlayerClass()->ClassOnDataChanged();
 	}
-} 
+}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::PreDataUpdate( DataUpdateType_t updateType )
 {
@@ -860,7 +860,7 @@ void C_BaseTFPlayer::PreDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -895,7 +895,7 @@ void C_BaseTFPlayer::PostDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::ReceiveMessage( int classID, bf_read &msg )
 {
@@ -953,11 +953,11 @@ void C_BaseTFPlayer::Release( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::ItemPostFrame( void )
 {
-	if ( m_flNextUseCheck < gpGlobals->curtime )		
+	if ( m_flNextUseCheck < gpGlobals->curtime )
 	{
 		m_flNextUseCheck = gpGlobals->curtime + 0.3;
 
@@ -994,7 +994,7 @@ void C_BaseTFPlayer::ItemPostFrame( void )
 
 		pVehicle->ItemPostFrame( this );
 
-		// Fall through and check weapons, etc. if we're using them 
+		// Fall through and check weapons, etc. if we're using them
 		if (!bUsingStandardWeapons || !IsInAVehicle())
 			return;
 	}
@@ -1030,7 +1030,7 @@ bool C_BaseTFPlayer::IsVehicleMounted() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_BaseTFPlayer::DrawModel( int flags )
 {
@@ -1088,7 +1088,7 @@ int C_BaseTFPlayer::DrawModel( int flags )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_BaseTFPlayer::GetClass( void )
 {
@@ -1099,7 +1099,7 @@ int C_BaseTFPlayer::GetClass( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::OverrideView( CViewSetup *pSetup )
 {
@@ -1116,7 +1116,7 @@ void C_BaseTFPlayer::OverrideView( CViewSetup *pSetup )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_BaseTFPlayer::ShouldDrawViewModel()
 {
@@ -1155,7 +1155,7 @@ bool ParentIsPelvis( mstudiobone_t *bones, int start, int pelvis, int spine )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Hack to find the bone indices of the pelvis and the spine so we can 
+// Purpose: Hack to find the bone indices of the pelvis and the spine so we can
 //   more quickly determine if a bones parent is the pelvis so we can merge bones correctly
 //-----------------------------------------------------------------------------
 static void FindPelvisAndSpine( int numbones, mstudiobone_t *bones, int *pelvis, int *spine )
@@ -1181,7 +1181,7 @@ static void FindPelvisAndSpine( int numbones, mstudiobone_t *bones, int *pelvis,
 
 //-----------------------------------------------------------------------------
 // Purpose: Another hack, the TFC 1.5 v. 2 models expect controllers at the midpoint
-// Input  : controllers[MAXSTUDIOBONECTRLS] - 
+// Input  : controllers[MAXSTUDIOBONECTRLS] -
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::GetBoneControllers(float controllers[MAXSTUDIOBONECTRLS])
 {
@@ -1261,7 +1261,7 @@ void C_BaseTFPlayer::RemoveOrderTarget()
 //====================================================================================================
 // RESOURCES
 //====================================================================================================
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_BaseTFPlayer::GetBankResources( void )
 {
@@ -1346,7 +1346,7 @@ void C_BaseTFPlayer::Remove_Target( CTargetReticle *pTargetReticle )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_BaseTFPlayer::IsUsingThermalVision( void ) const
@@ -1355,7 +1355,7 @@ bool C_BaseTFPlayer::IsUsingThermalVision( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_BaseTFPlayer::GetIDTarget( void ) const
 {
@@ -1363,7 +1363,7 @@ int C_BaseTFPlayer::GetIDTarget( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_BaseTFPlayer::IsKnockedDown( void ) const
@@ -1372,8 +1372,8 @@ bool C_BaseTFPlayer::IsKnockedDown( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : ang - 
+// Purpose:
+// Input  : ang -
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::SetKnockdownAngles( const QAngle& ang )
 {
@@ -1385,8 +1385,8 @@ void C_BaseTFPlayer::SetKnockdownAngles( const QAngle& ang )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : outAngles - 
+// Purpose:
+// Input  : outAngles -
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::GetKnockdownAngles( QAngle& outAngles )
 {
@@ -1394,13 +1394,13 @@ void C_BaseTFPlayer::GetKnockdownAngles( QAngle& outAngles )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::CheckKnockdownState( void )
 {
 	m_bKnockdownOverrideAngles = false;
 
-	if ( m_flStartKnockdown == 0.0f && 
+	if ( m_flStartKnockdown == 0.0f &&
 		 m_flEndKnockdown == 0.0f &&
 		 !IsKnockedDown() )
 	{
@@ -1414,7 +1414,7 @@ void C_BaseTFPlayer::CheckKnockdownState( void )
 	{
 		if ( m_flStartKnockdown != 0.0f )
 		{
-			
+
 			dt = gpGlobals->curtime - m_flStartKnockdown;
 			if ( dt >= 0.0f && dt < KNOCKDOWN_BLEND_IN )
 			{
@@ -1478,7 +1478,7 @@ void C_BaseTFPlayer::CheckKnockdownState( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_BaseTFPlayer::CheckKnockdownAngleOverride( void ) const
@@ -1487,7 +1487,7 @@ bool C_BaseTFPlayer::CheckKnockdownAngleOverride( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float C_BaseTFPlayer::GetKnockdownViewheightAdjust( void ) const
@@ -1532,7 +1532,7 @@ int C_BaseTFPlayer::GetRenderTeamNumber( void )
 #define CAMO_MOVEMENT_PENALTYTIME			1.0f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_BaseTFPlayer::IsCamouflaged( void )
@@ -1541,7 +1541,7 @@ bool C_BaseTFPlayer::IsCamouflaged( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float C_BaseTFPlayer::GetCamouflageAmount( void )
@@ -1606,7 +1606,7 @@ float C_BaseTFPlayer::ComputeCamoEffectAmount( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int C_BaseTFPlayer::ComputeCamoAlpha( void )
@@ -1642,14 +1642,14 @@ int C_BaseTFPlayer::ComputeCamoAlpha( void )
 		//  able to draw the up close effect
 		baseline = 1;
 	}
-	
+
 	// Suppress everything based on server ramp
 	return baseline + (int)( (float)( 255 - baseline ) * ( m_flCamouflageAmount / 100.0f ) );
 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::ComputeFxBlend( void )
@@ -1664,7 +1664,7 @@ void C_BaseTFPlayer::ComputeFxBlend( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_BaseTFPlayer::IsTransparent( void )
@@ -1678,7 +1678,7 @@ bool C_BaseTFPlayer::IsTransparent( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_BaseTFPlayer::ViewModel_IsTransparent( void )
@@ -1732,7 +1732,7 @@ int	C_BaseTFPlayer::DrawOverriddenViewmodel( C_BaseViewModel *pViewmodel, int fl
 		// NOTE: for the demo we do a different "BOOST" effect.  What do we want to do here?
 		if ( !inv_demo.GetInt() )
 		{
-			if ( IsDamageBoosted()  && 
+			if ( IsDamageBoosted()  &&
 				pViewmodel->ViewModelIndex() != 0 )
 			{
 				return ret;
@@ -1795,7 +1795,7 @@ float C_BaseTFPlayer::GetDefaultAnimSpeed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: This is used to penalize the local viewer for moving around or rotating 
+// Purpose: This is used to penalize the local viewer for moving around or rotating
 //  the camera, it causes camo'd guys who are close to fade out their "white" effect
 //  for a bit of time
 //-----------------------------------------------------------------------------
@@ -1874,7 +1874,7 @@ void C_BaseTFPlayer::CheckCamoDampening( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Force amount, decay happens in CheckCamoDampening
-// Input  : amount - 
+// Input  : amount -
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::SetCamoDampening( float amount )
 {
@@ -1893,7 +1893,7 @@ float C_BaseTFPlayer::GetDampeningAmount( void )
 //-----------------------------------------------------------------------------
 // Purpose: This is used so that if you are watching a camo'd guy who is moving
 //  he becomes more visible for a bit of time, before fading back out.
-// Input  : amount - 
+// Input  : amount -
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::SetMovementCamoSuppression( float amount )
 {
@@ -1991,7 +1991,7 @@ float C_BaseTFPlayer::GetMovementCamoSuppression( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::CheckLastMovement( void )
 {
@@ -2003,7 +2003,7 @@ void C_BaseTFPlayer::CheckLastMovement( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float C_BaseTFPlayer::GetLastMoveTime( void )
@@ -2023,7 +2023,7 @@ float C_BaseTFPlayer::GetLastGainHealthTime( void ) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float C_BaseTFPlayer::GetOverlayAlpha( void )
@@ -2068,7 +2068,7 @@ float C_BaseTFPlayer::GetOverlayAlpha( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_BaseTFPlayer::IsDeployed( void )
 {
@@ -2076,7 +2076,7 @@ bool C_BaseTFPlayer::IsDeployed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_BaseTFPlayer::IsDeploying( void )
 {
@@ -2084,13 +2084,13 @@ bool C_BaseTFPlayer::IsDeploying( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_BaseTFPlayer::IsUnDeploying( void )
 {
 	return m_bUnDeploying;
 }
-			    
+
 //-----------------------------------------------------------------------------
 // Purpose: Return true if the player's allowed to switch weapons in his current state
 //-----------------------------------------------------------------------------
@@ -2138,7 +2138,7 @@ int C_BaseTFPlayer::GetNumObjects( int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	C_BaseTFPlayer::GetObjectCount( void )
 {
@@ -2146,7 +2146,7 @@ int	C_BaseTFPlayer::GetObjectCount( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseObject *C_BaseTFPlayer::GetObject( int index )
 {
@@ -2154,7 +2154,7 @@ C_BaseObject *C_BaseTFPlayer::GetObject( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::AddEntity( void )
 {
@@ -2267,10 +2267,10 @@ void FX_ReconParticle( const Vector &vecOrigin, bool bBlue )
 		pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof(SimpleParticle), g_Mat_DustPuff[0], vecOrigin );
 
 		if ( pParticle != NULL )
-		{			
+		{
 			pParticle->m_flLifetime		= 0.0f;
 			pParticle->m_flDieTime		= random->RandomFloat( 1.0f, 1.5f );
-			
+
 			pParticle->m_vecVelocity	= vec3_origin;
 
 			int	color = random->RandomInt( 128, 192 );
@@ -2326,7 +2326,7 @@ C_PlayerClass *C_BaseTFPlayer::GetPlayerClass( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::SetVehicleRole( int nRole )
 {
@@ -2346,7 +2346,7 @@ void C_BaseTFPlayer::SetVehicleRole( int nRole )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_BaseTFPlayer::CanGetInVehicle( void )
 {
@@ -2419,10 +2419,10 @@ void C_BaseTFPlayer::PerformClientSideObstacleAvoidance( float flFrameTime, CUse
 	Vector currentdir;
 	Vector rightdir;
 	AngleVectors( pCmd->viewangles, &currentdir, &rightdir, NULL );
-	
+
 	bool istryingtomove = false;
 	bool ismovingforward = false;
-	if ( fabs( pCmd->forwardmove ) > 0.0f || 
+	if ( fabs( pCmd->forwardmove ) > 0.0f ||
 		 fabs( pCmd->sidemove ) > 0.0f )
 	{
 		istryingtomove = true;
@@ -2475,7 +2475,7 @@ void C_BaseTFPlayer::PerformClientSideObstacleAvoidance( float flFrameTime, CUse
 		{
 /*
 			// Okay, line hits sphere in two points
-			// Determine how close line is to center of sphere and move sideways to avoid if we are 
+			// Determine how close line is to center of sphere and move sideways to avoid if we are
 			//  actually trying to move forward
 			Vector deltaHit = vHit2 - vHit1;
 			float leg1 = ( deltaHit.Length() ) / 2.0f;
@@ -2605,7 +2605,7 @@ C_BaseAnimating* C_BaseTFPlayer::GetRenderedWeaponModel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTFPlayer::SetIDEnt( C_BaseEntity *pEntity )
 {

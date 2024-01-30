@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -30,14 +30,14 @@ public:
 	virtual			~C_TEBeamFollow( void );
 
 	virtual void	PostDataUpdate( DataUpdateType_t updateType );
-	
+
 public:
 
 	int m_iEntIndex;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBeamFollow::C_TEBeamFollow( void )
 {
@@ -45,7 +45,7 @@ C_TEBeamFollow::C_TEBeamFollow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBeamFollow::~C_TEBeamFollow( void )
 {
@@ -53,8 +53,8 @@ C_TEBeamFollow::~C_TEBeamFollow( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEBeamFollow::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -71,7 +71,7 @@ END_RECV_TABLE()
 
 
 void TE_BeamFollow( IRecipientFilter& filter, float delay,
-	int iEntIndex, int modelIndex, int haloIndex, float life, float width, float endWidth, 
+	int iEntIndex, int modelIndex, int haloIndex, float life, float width, float endWidth,
 	float fadeLength,float r, float g, float b, float a )
 {
 	beams->CreateBeamFollow( iEntIndex, modelIndex, haloIndex, 0, life,

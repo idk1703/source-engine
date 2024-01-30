@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //======================================================================================//
@@ -46,7 +46,7 @@ bool UTIL_TestForOrientationVolumes( QAngle& vecCurAngles, const Vector& vecCurO
 			continue;
 		}
 
-		if ( IsOBBIntersectingOBB( vecCurOrigin, vecCurAngles, CProp_Portal_Shared::vLocalMins, CProp_Portal_Shared::vLocalMaxs, 
+		if ( IsOBBIntersectingOBB( vecCurOrigin, vecCurAngles, CProp_Portal_Shared::vLocalMins, CProp_Portal_Shared::vLocalMaxs,
 			pList->GetAbsOrigin(), pList->GetCollideable()->GetCollisionAngles(), pList->GetCollideable()->OBBMins(), pList->GetCollideable()->OBBMaxs() ) )
 		{
 			QAngle vecGoalAngles;
@@ -78,7 +78,7 @@ bool UTIL_TestForOrientationVolumes( QAngle& vecCurAngles, const Vector& vecCurO
 	return false;
 }
 
-LINK_ENTITY_TO_CLASS( func_portal_orientation, CFuncPortalOrientation ); 
+LINK_ENTITY_TO_CLASS( func_portal_orientation, CFuncPortalOrientation );
 
 BEGIN_DATADESC( CFuncPortalOrientation )
 
@@ -131,7 +131,7 @@ void CFuncPortalOrientation::OnActivate( void )
 		for( int i = 0; i != iPortalCount; ++i )
 		{
 			CProp_Portal *pTempPortal = pPortals[i];
-			if( IsOBBIntersectingOBB( pTempPortal->GetAbsOrigin(), pTempPortal->GetAbsAngles(), CProp_Portal_Shared::vLocalMins, CProp_Portal_Shared::vLocalMaxs, 
+			if( IsOBBIntersectingOBB( pTempPortal->GetAbsOrigin(), pTempPortal->GetAbsAngles(), CProp_Portal_Shared::vLocalMins, CProp_Portal_Shared::vLocalMaxs,
 			GetAbsOrigin(), GetCollideable()->GetCollisionAngles(), GetCollideable()->OBBMins(), GetCollideable()->OBBMaxs() ) )
 			{
 				QAngle angNewAngles;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -49,7 +49,7 @@ CChunkWalker::CChunkWalker( void const * const *pChunks, const int *pChunkLength
 	m_TotalLength = 0;
 	for ( int i=0; i < nChunks; i++ )
 		m_TotalLength += pChunkLengths[i];
-	
+
 	m_iCurChunk = 0;
 	m_iCurChunkPos = 0;
 	m_pChunks = pChunks;
@@ -71,7 +71,7 @@ void CChunkWalker::CopyTo( void *pOut, int nBytes )
 	{
 		int toCopy = nBytesLeft;
 		int curChunkLen = m_pChunkLengths[m_iCurChunk];
-		
+
 		int amtLeft = curChunkLen - m_iCurChunkPos;
 		if ( nBytesLeft > amtLeft )
 		{
@@ -132,13 +132,13 @@ bool CWaitTimer::ShouldKeepWaiting()
 
 CIPAddr::CIPAddr()
 {
-	Init( 0, 0, 0, 0, 0 ); 
+	Init( 0, 0, 0, 0, 0 );
 }
 
 
 CIPAddr::CIPAddr( const int inputIP[4], const int inputPort )
 {
-	Init( inputIP[0], inputIP[1], inputIP[2], inputIP[3], inputPort ); 
+	Init( inputIP[0], inputIP[1], inputIP[2], inputIP[3], inputPort );
 }
 
 
@@ -214,7 +214,7 @@ void IPAddrToSockAddr( const CIPAddr *pIn, struct sockaddr_in *pOut )
 	memset( pOut, 0, sizeof(*pOut) );
 	pOut->sin_family = AF_INET;
 	pOut->sin_port = htons( pIn->port );
-	
+
 	IPAddrToInAddr( pIn, &pOut->sin_addr );
 }
 
@@ -253,7 +253,7 @@ public:
 		delete this;
 	}
 
-	
+
 	virtual bool CreateSocket()
 	{
 		// Clear any old socket we had around.
@@ -309,7 +309,7 @@ public:
 	{
 		if ( !CreateSocket() )
 			return false;
-    
+
 		return BindPart2( pAddr );
 	}
 
@@ -344,7 +344,7 @@ public:
 			return false;
 		}
 	}
-	
+
 	virtual bool	Broadcast( const void *pData, const int len, const unsigned short port )
 	{
 		assert( m_Socket != INVALID_SOCKET );
@@ -367,7 +367,7 @@ public:
 		addr.port = port;
 		return SendTo( &addr, pData, len );
 	}
-	
+
 	virtual bool	SendTo( const CIPAddr *pAddr, const void *pData, const int len )
 	{
 		return SendChunksTo( pAddr, &pData, &len, 1 );
@@ -396,8 +396,8 @@ public:
 		IPAddrToSockAddr( pAddr, &addr );
 
 		DWORD dwNumBytesSent = 0;
-		DWORD ret = WSASendTo( 
-			m_Socket, 
+		DWORD ret = WSASendTo(
+			m_Socket,
 			bufs,
 			nChunks,
 			&dwNumBytesSent,
@@ -440,7 +440,7 @@ public:
 			{
 				SockAddrToIPAddr( &sender, pFrom );
 			}
-	
+
 			m_flLastRecvTime = IP_FloatTime();
 			return status;
 		}
@@ -450,7 +450,7 @@ public:
 	{
 		return IP_FloatTime() - m_flLastRecvTime;
 	}
-	
+
 
 private:
 
@@ -476,7 +476,7 @@ private:
 private:
 
 	SOCKET			m_Socket;
-	
+
 	bool			m_bMulticastGroupMembership; // Did we join a multicast group?
 	ip_mreq			m_MulticastGroupMREQ;
 
@@ -493,8 +493,8 @@ ISocket* CreateIPSocket()
 }
 
 
-ISocket* CreateMulticastListenSocket( 
-	const CIPAddr &addr, 
+ISocket* CreateMulticastListenSocket(
+	const CIPAddr &addr,
 	const CIPAddr &localInterface )
 {
 	CIPSocket *pSocket = new CIPSocket;
@@ -592,19 +592,18 @@ bool ConvertIPAddrToString( const CIPAddr *pIn, char *pOut, int outLen )
 void IP_GetLastErrorString( char *pStr, int maxLen )
 {
 	char *lpMsgBuf;
-	FormatMessage( 
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-		FORMAT_MESSAGE_FROM_SYSTEM | 
+	FormatMessage(
+		FORMAT_MESSAGE_ALLOCATE_BUFFER |
+		FORMAT_MESSAGE_FROM_SYSTEM |
 		FORMAT_MESSAGE_IGNORE_INSERTS,
 		NULL,
 		GetLastError(),
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
 		(LPTSTR) &lpMsgBuf,
 		0,
-		NULL 
+		NULL
 	);
 
 	Q_strncpy( pStr, lpMsgBuf, maxLen );
-	LocalFree( lpMsgBuf );	
+	LocalFree( lpMsgBuf );
 }
-

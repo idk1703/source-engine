@@ -29,5 +29,3 @@ void ED_AllowImmediateReuse();
 void ED_ClearFreeEdictList();
 
 #endif
-
-

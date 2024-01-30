@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ public:
 	virtual void	Shutdown();
 
 	virtual void	Enable();
-	
+
 	virtual void	PreRender( CViewSetup *pSetup );
 	virtual void	PostRender();
 	virtual	void	Update();

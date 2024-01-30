@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -39,7 +39,7 @@ enum // render modes
 
 typedef struct
 {
-	// model 
+	// model
 	float rot[3];
 	float trans[3];
 

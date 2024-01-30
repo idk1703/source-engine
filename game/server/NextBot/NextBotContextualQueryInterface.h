@@ -12,7 +12,7 @@ class CBaseCombatCharacter;
 class Path;
 class CKnownEntity;
 
-/** 
+/**
  * Since behaviors can have several concurrent actions active, we ask
  * the topmost child action first, and if it defers, its parent, and so
  * on, until we get a definitive answer.
@@ -52,9 +52,9 @@ public:
 	 */
 	virtual QueryResultType IsPositionAllowed( const INextBot *me, const Vector &pos ) const;
 
-	virtual const CKnownEntity *	SelectMoreDangerousThreat( const INextBot *me, 
+	virtual const CKnownEntity *	SelectMoreDangerousThreat( const INextBot *me,
 															   const CBaseCombatCharacter *subject,
-															   const CKnownEntity *threat1, 
+															   const CKnownEntity *threat1,
 															   const CKnownEntity *threat2 ) const;	// return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
 };
 

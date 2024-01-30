@@ -159,7 +159,7 @@ CON_COMMAND( replay_testcompress, "Test compression" )
 		Warning( "Zero length file.\n" );
 		return;
 	}
-	
+
 	FileHandle_t hInFile = g_pFullFileSystem->Open( pInFilename, "rb" );
 	if ( !hInFile )
 	{
@@ -197,7 +197,7 @@ CON_COMMAND( replay_testcompress, "Test compression" )
 		else
 		{
 			CFmtStr fmtOutFilename( "%s.%s", pInFilename, pCompressionTypeName );
-			FileHandle_t hOutFile = g_pFullFileSystem->Open( fmtOutFilename.Access(), "wb+" );	
+			FileHandle_t hOutFile = g_pFullFileSystem->Open( fmtOutFilename.Access(), "wb+" );
 			if ( !hOutFile )
 			{
 				Warning( "Failed to open out file, %s\n", fmtOutFilename.Access() );

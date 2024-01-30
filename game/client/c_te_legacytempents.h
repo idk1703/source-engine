@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -70,7 +70,7 @@ public:
 	virtual void				RocketFlare( const Vector& pos ) = 0;
 	virtual void				HL1EjectBrass( const Vector &vecPosition, const QAngle &angAngles, const Vector &vecVelocity, int nType ) = 0;
 	virtual void				CSEjectBrass( const Vector &vecPosition, const QAngle &angVelocity, int nType, int nShellType, CBasePlayer *pShooter ) = 0;
-	
+
 	virtual void				PlaySound ( C_LocalTempEntity *pTemp, float damp ) = 0;
 	virtual void				PhysicsProp( int modelindex, int skin, const Vector& pos, const QAngle &angles, const Vector& vel, int flags, int effects = 0 ) = 0;
 	virtual C_LocalTempEntity	*ClientProjectile( const Vector& vecOrigin, const Vector& vecVelocity, const Vector& vecAccel, int modelindex, int lifetime, CBaseEntity *pOwner, const char *pszImpactEffect = NULL, const char *pszParticleEffect = NULL ) = 0;
@@ -106,7 +106,7 @@ public:
 
 	virtual void			MuzzleFlash( int type, ClientEntityHandle_t hEntity, int attachmentIndex, bool firstPerson );
 	virtual void			MuzzleFlash( const Vector &pos1, const QAngle &angles, int type, ClientEntityHandle_t hEntity, bool firstPerson = false );
-	
+
 	virtual void			BreakModel(const Vector &pos, const QAngle &angles, const Vector &size, const Vector &dir, float random, float life, int count, int modelIndex, char flags);
 	virtual void			Bubbles( const Vector &mins, const Vector &maxs, float height, int modelIndex, int count, float speed );
 	virtual void			BubbleTrail( const Vector &start, const Vector &end, float height, int modelIndex, int count, float speed );
@@ -132,7 +132,7 @@ public:
 // Data
 public:
 	enum
-	{ 
+	{
 		MAX_TEMP_ENTITIES = 500,
 		MAX_TEMP_ENTITY_SPRITES = 200,
 		MAX_TEMP_ENTITY_STUDIOMODEL = 50,
@@ -182,7 +182,7 @@ private:
 	CTempEnts( const CTempEnts & );
 
 	void					TempEntFree( int index );
-	C_LocalTempEntity		*TempEntAlloc();	
+	C_LocalTempEntity		*TempEntAlloc();
 	bool					FreeLowPriorityTempEnt();
 
 	int						AddVisibleTempEntity( C_LocalTempEntity *pEntity );
@@ -190,20 +190,20 @@ private:
 	// AR2
 	void					MuzzleFlash_AR2_Player( const Vector &origin, const QAngle &angles, ClientEntityHandle_t hEntity );
 	void					MuzzleFlash_AR2_NPC( const Vector &origin, const QAngle &angles, ClientEntityHandle_t hEntity );
-							
-	// SMG1					
+
+	// SMG1
 	void					MuzzleFlash_SMG1_Player( ClientEntityHandle_t hEntity, int attachmentIndex );
 	void					MuzzleFlash_SMG1_NPC( ClientEntityHandle_t hEntity, int attachmentIndex );
-							
-	// Shotgun				
+
+	// Shotgun
 	void					MuzzleFlash_Shotgun_Player( ClientEntityHandle_t hEntity, int attachmentIndex );
 	void					MuzzleFlash_Shotgun_NPC( ClientEntityHandle_t hEntity, int attachmentIndex );
-							
-	// Pistol				
+
+	// Pistol
 	void					MuzzleFlash_Pistol_Player( ClientEntityHandle_t hEntity, int attachmentIndex );
 	void					MuzzleFlash_Pistol_NPC( ClientEntityHandle_t hEntity, int attachmentIndex );
-							
-	// Combine				
+
+	// Combine
 	void					MuzzleFlash_Combine_Player( ClientEntityHandle_t hEntity, int attachmentIndex );
 	void					MuzzleFlash_Combine_NPC( ClientEntityHandle_t hEntity, int attachmentIndex );
 

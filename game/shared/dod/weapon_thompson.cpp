@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,10 +19,10 @@ class CWeaponThompson : public CDODFullAutoPunchWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponThompson, CDODFullAutoPunchWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponThompson()  {}
 
 	virtual DODWeaponID GetWeaponID( void ) const		{ return WEAPON_THOMPSON; }
@@ -45,7 +45,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_thompson, CWeaponThompson );
 PRECACHE_WEAPON_REGISTER( weapon_thompson );
 
-acttable_t CWeaponThompson::m_acttable[] = 
+acttable_t CWeaponThompson::m_acttable[] =
 {
 	{ ACT_DOD_STAND_AIM,					ACT_DOD_STAND_AIM_TOMMY,				false },
 	{ ACT_DOD_CROUCH_AIM,					ACT_DOD_CROUCH_AIM_TOMMY,				false },
@@ -78,4 +78,3 @@ acttable_t CWeaponThompson::m_acttable[] =
 };
 
 IMPLEMENT_ACTTABLE( CWeaponThompson );
-

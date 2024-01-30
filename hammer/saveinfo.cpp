@@ -32,4 +32,3 @@ bool CSaveInfo::ShouldSaveObject(CMapClass *pObject)
 
 	return(true);
 }
-

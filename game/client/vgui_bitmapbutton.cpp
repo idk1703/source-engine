@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CBitmapButton::CBitmapButton( vgui::Panel *pParent, const char *pName, const char *pText ) : 
+CBitmapButton::CBitmapButton( vgui::Panel *pParent, const char *pName, const char *pText ) :
 	BaseClass( pParent, pName, pText )
 {
 	SetPaintBackgroundEnabled( false );
@@ -52,7 +52,7 @@ void CBitmapButton::ApplySettings(KeyValues *pInitData)
 	BaseClass::ApplySettings(pInitData);
 
 	COMPILE_TIME_ASSERT( BUTTON_STATE_COUNT == 4 );
-	const char *pSectionName[BUTTON_STATE_COUNT] = 
+	const char *pSectionName[BUTTON_STATE_COUNT] =
 	{
 		"enabledImage",
 		"mouseOverImage",
@@ -116,5 +116,3 @@ void CBitmapButton::Paint( void )
 
 	BaseClass::Paint();
 }
-
-

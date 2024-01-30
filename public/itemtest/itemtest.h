@@ -707,8 +707,8 @@ public:
 		return 0;
 	}
 
-	CTargetVTF *GetTargetVTF( int iVTF, int nSkinIndex = 0 ) 
-	{ 
+	CTargetVTF *GetTargetVTF( int iVTF, int nSkinIndex = 0 )
+	{
 		if ( nSkinIndex >= 0 && nSkinIndex < m_vecTargetVTFs.Count() )
 		{
 			if ( iVTF >= 0 && iVTF < m_vecTargetVTFs[nSkinIndex].Count() )
@@ -1067,7 +1067,7 @@ public:
 	virtual bool IsContent() const { return true; }
 
 	virtual const char *GetTypeString() const { return "ZIP"; }
-	
+
 	// This compiles all the inputs but doesn't create the final archive
 	bool CompilePreview();
 	virtual bool PostCompilePreview();

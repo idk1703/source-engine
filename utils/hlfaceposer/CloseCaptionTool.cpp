@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -65,7 +65,7 @@ public:
 	{
 		return CloseCaptionTool::GetFontNumber( m_bBold, m_bItalic );
 	}
-	
+
 	void Dump()
 	{
 		char buf[ 2048 ];
@@ -183,12 +183,12 @@ COLORREF CCloseCaptionWorkUnit::GetColor() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CCloseCaptionItem
 {
 public:
-	CCloseCaptionItem( 
+	CCloseCaptionItem(
 		wchar_t	*stream,
 		float timetolive,
 		float predisplay,
@@ -325,7 +325,7 @@ CloseCaptionTool::CloseCaptionTool( mxWindow *parent )
 	closecaptionmanager = this;
 
 	m_hFonts[ CCFONT_NORMAL ] = CreateFont(
-		-STREAM_POINTSIZE, 
+		-STREAM_POINTSIZE,
 		0,
 		0,
 		0,
@@ -341,7 +341,7 @@ CloseCaptionTool::CloseCaptionTool( mxWindow *parent )
 		STREAM_FONT );
 
 	m_hFonts[ CCFONT_ITALIC ] = CreateFont(
-		-STREAM_POINTSIZE, 
+		-STREAM_POINTSIZE,
 		0,
 		0,
 		0,
@@ -355,9 +355,9 @@ CloseCaptionTool::CloseCaptionTool( mxWindow *parent )
 		ANTIALIASED_QUALITY,
 		DEFAULT_PITCH,
 		STREAM_FONT );
-	
+
 	m_hFonts[ CCFONT_BOLD ] = CreateFont(
-		-STREAM_POINTSIZE, 
+		-STREAM_POINTSIZE,
 		0,
 		0,
 		0,
@@ -373,7 +373,7 @@ CloseCaptionTool::CloseCaptionTool( mxWindow *parent )
 		STREAM_FONT );
 
 	m_hFonts[ CCFONT_ITALICBOLD ] = CreateFont(
-		-STREAM_POINTSIZE, 
+		-STREAM_POINTSIZE,
 		0,
 		0,
 		0,
@@ -394,8 +394,8 @@ CloseCaptionTool::~CloseCaptionTool( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dt - 
+// Purpose:
+// Input  : dt -
 //-----------------------------------------------------------------------------
 void CloseCaptionTool::Think( float dt )
 {
@@ -505,7 +505,7 @@ void CloseCaptionTool::redraw()
 		{
 			ComputeStreamWork( drawHelper, avail_width, item );
 		}
-			
+
 		int itemheight = item->GetHeight();
 
 		totalheight += itemheight;
@@ -664,8 +664,8 @@ bool CloseCaptionTool::LookupStrippedUnicodeText( int languageId, char const *to
 	const wchar_t *curpos = outstr;
 	wchar_t *out = outbuf;
 	size_t outlen = 0;
-	
-	for ( ; 
+
+	for ( ;
 		curpos && *curpos != L'\0' && outlen < count;
 		++curpos )
 	{
@@ -774,7 +774,7 @@ struct WorkUnitParams
 	{
 		return CloseCaptionTool::GetFontNumber( bold, italic );
 	}
-		
+
 	wchar_t	stream[ 1024 ];
 	wchar_t	*out;
 
@@ -827,7 +827,7 @@ void CloseCaptionTool::ComputeStreamWork( CChoreoWidgetDrawHelper &helper, int a
 	WorkUnitParams params;
 
 	const wchar_t *curpos = item->GetStream();
-	
+
 	CUtlVector< COLORREF > colorStack;
 
 	for ( ; curpos && *curpos != L'\0'; ++curpos )
@@ -902,8 +902,8 @@ void CloseCaptionTool::ComputeStreamWork( CChoreoWidgetDrawHelper &helper, int a
 		}
 
 		HFONT useF = m_hFonts[ params.GetFontNumber() ];
-		
-		int w = helper.CalcTextWidthW( useF, L"%c", *curpos ); 
+
+		int w = helper.CalcTextWidthW( useF, L"%c", *curpos );
 
 		if ( ( params.x + params.width ) + w > available_width )
 		{
@@ -946,7 +946,7 @@ void CloseCaptionTool::DrawStream( CChoreoWidgetDrawHelper &helper, RECT &rcText
 		int y = 0;
 
 		CCloseCaptionWorkUnit *wu = item->GetWorkUnit( i );
-	
+
 		HFONT useF = m_hFonts[ wu->GetFontNumber() ];
 
 		wu->GetPos( x, y );

@@ -73,7 +73,7 @@ END_DATADESC();
 LINK_ENTITY_TO_CLASS( trigger_capture_area, CTriggerAreaCapture );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTriggerAreaCapture::CTriggerAreaCapture()
 {
@@ -83,7 +83,7 @@ CTriggerAreaCapture::CTriggerAreaCapture()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::Spawn( void )
 {
@@ -92,10 +92,10 @@ void CTriggerAreaCapture::Spawn( void )
 	AddSpawnFlags( SF_TRIGGER_ALLOW_CLIENTS );
 
 	InitTrigger();
-	
+
 	Precache();
 
-	SetTouch ( &CTriggerAreaCaptureShim::Touch );		
+	SetTouch ( &CTriggerAreaCaptureShim::Touch );
 	SetThink( &CTriggerAreaCapture::CaptureThink );
 	SetNextThink( gpGlobals->curtime + AREA_THINK_TIME );
 
@@ -114,7 +114,7 @@ void CTriggerAreaCapture::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTriggerAreaCapture::KeyValue( const char *szKeyName, const char *szValue )
 {
@@ -155,14 +155,14 @@ bool CTriggerAreaCapture::KeyValue( const char *szKeyName, const char *szValue )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::Precache( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTriggerAreaCapture::IsActive( void )
 {
@@ -170,7 +170,7 @@ bool CTriggerAreaCapture::IsActive( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::StartTouch(CBaseEntity *pOther)
 {
@@ -209,14 +209,14 @@ void CTriggerAreaCapture::StartTouch(CBaseEntity *pOther)
 					{
 						pPlayer->StartScoringEscortPoints( flRate );
 					}
-				}		
+				}
 			}
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::EndTouch(CBaseEntity *pOther)
 {
@@ -242,7 +242,7 @@ void CTriggerAreaCapture::EndTouch(CBaseEntity *pOther)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTriggerAreaCapture::CaptureModeScalesWithPlayers() const
 {
@@ -250,7 +250,7 @@ bool CTriggerAreaCapture::CaptureModeScalesWithPlayers() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::AreaTouch( CBaseEntity *pOther )
 {
@@ -299,7 +299,7 @@ ConVar mp_simulatemultiplecappers( "mp_simulatemultiplecappers", "1", FCVAR_CHEA
 #define MAX_CAPTURE_TEAMS 8
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::CaptureThink( void )
 {
@@ -317,7 +317,7 @@ void CTriggerAreaCapture::CaptureThink( void )
 
 	if ( !TeamplayGameRules()->PointsMayBeCaptured() )
 	{
-		// Points aren't allowed to be captured. If we were 
+		// Points aren't allowed to be captured. If we were
 		// being captured, we need to clean up and reset.
 		if ( m_bCapturing )
 		{
@@ -349,7 +349,7 @@ void CTriggerAreaCapture::CaptureThink( void )
 			{
 				CBaseMultiplayerPlayer *pPlayer = ToBaseMultiplayerPlayer(ent);
 				if ( pPlayer->IsAlive() )
-				{	
+				{
 					int iTeam = pPlayer->GetTeamNumber();
 
 					// If a team's not allowed to cap a point, don't count players in it at all
@@ -414,7 +414,7 @@ void CTriggerAreaCapture::CaptureThink( void )
 	}
 	else
 	{
-		// If we've got non-cappable, yet blockable players here for the team that's defending, they 
+		// If we've got non-cappable, yet blockable players here for the team that's defending, they
 		// need to block the cap. This catches cases like the TF invulnerability, which needs to block
 		// caps, but isn't allowed to contribute to a cap.
 		for ( int i = FIRST_GAME_TEAM; i < GetNumberOfTeams(); i++ )
@@ -497,7 +497,7 @@ void CTriggerAreaCapture::CaptureThink( void )
 			if ( ( flPercentToGo <= 0.5 || TeamplayGameRules()->PointsMayAlwaysBeBlocked() ) && m_hPoint )
 			{
 				// find the first player that is not on the capturing team
-				// they have just broken a cap and should be rewarded		
+				// they have just broken a cap and should be rewarded
 				// tell the player the capture attempt number, for checking later
 				CBaseMultiplayerPlayer *pBlockingPlayer = NULL;
 				for ( int i = FIRST_GAME_TEAM; i < GetNumberOfTeams(); i++ )
@@ -523,7 +523,7 @@ void CTriggerAreaCapture::CaptureThink( void )
 
 						// If this guy's was a blocker, but not valid now, remove him from the list
 						if ( m_Blockers[i].iCapAttemptNumber != m_iCapAttemptNumber || !IsTouching(m_Blockers[i].hPlayer) ||
-							 ( TeamplayGameRules()->PointsMayAlwaysBeBlocked() && m_Blockers[i].flNextBlockTime < gpGlobals->curtime && m_bStartTouch ) )
+							( TeamplayGameRules()->PointsMayAlwaysBeBlocked() && m_Blockers[i].flNextBlockTime < gpGlobals->curtime && m_bStartTouch ) )
 						{
 							m_Blockers.Remove(i);
 							continue;
@@ -535,7 +535,7 @@ void CTriggerAreaCapture::CaptureThink( void )
 
 					if ( !bRepeatBlocker )
 					{
-                        m_hPoint->CaptureBlocked( pBlockingPlayer, NULL );
+	m_hPoint->CaptureBlocked( pBlockingPlayer, NULL );
 
 						// Add this guy to our blocker list
 						int iNew = m_Blockers.AddToTail();
@@ -600,7 +600,7 @@ void CTriggerAreaCapture::CaptureThink( void )
 			BreakCapture( true );
 			return;
 		}
-		
+
 		//if they've lost the number of players needed to cap
 		int iTeamMembersHere = m_TeamData[m_nCapturingTeam].iNumTouching + iNumBlockablePlayers[m_nCapturingTeam];
 		if ( (iTeamMembersHere == 0 ) || (mp_capstyle.GetInt() == 0 && iTeamMembersHere < m_TeamData[m_nCapturingTeam].iNumRequiredToCap) )
@@ -618,7 +618,7 @@ void CTriggerAreaCapture::CaptureThink( void )
 		}
 		else
 		{
-			// We may get several simultaneous CaptureThink calls from StartTouch if there are several players on the trigger 
+			// We may get several simultaneous CaptureThink calls from StartTouch if there are several players on the trigger
 			// when it is enabled (like in Raid mode). We haven't started reducing m_fTimeRemaining yet but the second call to CaptureThink
 			// from StartTouch has m_bCapturing set to true and we hit this condition and call BreakCapture right away.
 			// We put this check here to prevent calling BreakCapture from the StartTouch call to CaptureThink. If the capture should
@@ -633,7 +633,7 @@ void CTriggerAreaCapture::CaptureThink( void )
 			}
 		}
 	}
-	else	
+	else
 	{
 		// If there are any teams in the zone that aren't the owner, try to start capping
 		if ( iTeamsInZone > 0 )
@@ -660,7 +660,7 @@ void CTriggerAreaCapture::CaptureThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::SetCapTimeRemaining( float flTime )
 {
@@ -685,7 +685,7 @@ void CTriggerAreaCapture::SetCapTimeRemaining( float flTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::SetOwner( int team )
 {
@@ -701,7 +701,7 @@ void CTriggerAreaCapture::SetOwner( int team )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::ForceOwner( int team )
 {
@@ -715,7 +715,7 @@ void CTriggerAreaCapture::ForceOwner( int team )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::HandleRespawnTimeAdjustments( int oldTeam, int newTeam )
 {
@@ -738,17 +738,17 @@ void CTriggerAreaCapture::HandleRespawnTimeAdjustments( int oldTeam, int newTeam
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::StartCapture( int team, int capmode )
 {
 	// Remap team to get first game team = 1
 	switch ( team - FIRST_GAME_TEAM+1 )
 	{
-	case 1: 
+	case 1:
 		m_OnStartTeam1.FireOutput( this, this );
 		break;
-	case 2: 
+	case 2:
 		m_OnStartTeam2.FireOutput( this, this );
 		break;
 	default:
@@ -757,7 +757,7 @@ void CTriggerAreaCapture::StartCapture( int team, int capmode )
 	}
 
 	m_StartOutput.FireOutput(this,this);
-	
+
 	m_nCapturingTeam = team;
 
 	OnStartCapture( m_nCapturingTeam );
@@ -811,12 +811,12 @@ void CTriggerAreaCapture::StartCapture( int team, int capmode )
 					}
 				}
 			}
-		}		
+		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::GetNumCappingPlayers( int team, int &numcappers, int *cappingplayers )
 {
@@ -847,7 +847,7 @@ void CTriggerAreaCapture::GetNumCappingPlayers( int team, int &numcappers, int *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::EndCapture( int team )
 {
@@ -856,10 +856,10 @@ void CTriggerAreaCapture::EndCapture( int team )
 	// Remap team to get first game team = 1
 	switch ( team - FIRST_GAME_TEAM+1 )
 	{
-	case 1: 
+	case 1:
 		m_OnCapTeam1.FireOutput( this, this );
 		break;
-	case 2: 
+	case 2:
 		m_OnCapTeam2.FireOutput( this, this );
 		break;
 	default:
@@ -876,7 +876,7 @@ void CTriggerAreaCapture::EndCapture( int team )
 
 	// Handle this before we assign the new team as the owner of this area
 	HandleRespawnTimeAdjustments( m_nOwningTeam, team );
-		
+
 	m_nOwningTeam = team;
 	m_bCapturing = false;
 	m_nCapturingTeam = TEAM_UNASSIGNED;
@@ -913,15 +913,15 @@ void CTriggerAreaCapture::EndCapture( int team )
 		{
 			CBaseMultiplayerPlayer *pPlayer = ToBaseMultiplayerPlayer( pTeam->GetPlayer(i) );
 			if ( pPlayer && IsTouching( pPlayer ) )
-			{	
-				pPlayer->StopScoringEscortPoints();					
+			{
+				pPlayer->StopScoringEscortPoints();
 			}
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::BreakCapture( bool bNotEnoughPlayers )
 {
@@ -930,10 +930,10 @@ void CTriggerAreaCapture::BreakCapture( bool bNotEnoughPlayers )
 		// Remap team to get first game team = 1
 		switch ( m_nCapturingTeam - FIRST_GAME_TEAM+1 )
 		{
-		case 1: 
+		case 1:
 			m_OnBreakTeam1.FireOutput( this, this );
 			break;
-		case 2: 
+		case 2:
 			m_OnBreakTeam2.FireOutput( this, this );
 			break;
 		default:
@@ -981,7 +981,7 @@ void CTriggerAreaCapture::BreakCapture( bool bNotEnoughPlayers )
 				CBaseMultiplayerPlayer *pPlayer = ToBaseMultiplayerPlayer( pTeam->GetPlayer(i) );
 				if ( pPlayer && IsTouching( pPlayer ) )
 				{
-					pPlayer->StopScoringEscortPoints();					
+					pPlayer->StopScoringEscortPoints();
 				}
 			}
 		}
@@ -989,7 +989,7 @@ void CTriggerAreaCapture::BreakCapture( bool bNotEnoughPlayers )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::IncrementCapAttemptNumber( void )
 {
@@ -999,7 +999,7 @@ void CTriggerAreaCapture::IncrementCapAttemptNumber( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::InputRoundSpawn( inputdata_t &inputdata )
 {
@@ -1035,7 +1035,7 @@ void CTriggerAreaCapture::InputRoundSpawn( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::InputSetTeamCanCap( inputdata_t &inputdata )
 {
@@ -1148,7 +1148,7 @@ bool CTriggerAreaCapture::CheckIfDeathCausesBlock( CBaseMultiplayerPlayer *pVict
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::UpdateNumPlayers( bool bBlocked /*= false */ )
 {
@@ -1168,7 +1168,7 @@ void CTriggerAreaCapture::UpdateNumPlayers( bool bBlocked /*= false */ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::UpdateOwningTeam( void )
 {
@@ -1179,7 +1179,7 @@ void CTriggerAreaCapture::UpdateOwningTeam( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::UpdateCappingTeam( int iTeam )
 {
@@ -1190,7 +1190,7 @@ void CTriggerAreaCapture::UpdateCappingTeam( int iTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::UpdateTeamInZone( void )
 {
@@ -1201,7 +1201,7 @@ void CTriggerAreaCapture::UpdateTeamInZone( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::UpdateBlocked( void )
 {
@@ -1213,7 +1213,7 @@ void CTriggerAreaCapture::UpdateBlocked( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerAreaCapture::SetNumCappers( int nNumCappers, bool bBlocked /* = false */ )
 {

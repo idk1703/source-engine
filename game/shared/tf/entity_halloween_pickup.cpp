@@ -19,7 +19,7 @@
 
 #ifdef CLIENT_DLL
 #include "c_tf_player.h"
-#endif 
+#endif
 
 #include "tf_shareddefs.h"
 #include "tf_duckleaderboard.h"
@@ -49,7 +49,7 @@ BEGIN_DATADESC( CHalloweenPickup )
 	DEFINE_OUTPUT( m_OnBluePickup, "OnBluePickup" ),
 #endif
 END_DATADESC();
-										 
+
 LINK_ENTITY_TO_CLASS( tf_halloween_pickup, CHalloweenPickup );
 
 // ************************************************************************************
@@ -105,7 +105,7 @@ ConVar tf_halloween_gift_soul_value( "tf_halloween_gift_soul_value", "10", FCVAR
 //
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHalloweenPickup::CHalloweenPickup()
 {
@@ -118,7 +118,7 @@ CHalloweenPickup::CHalloweenPickup()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHalloweenPickup::~CHalloweenPickup()
 {
@@ -147,7 +147,7 @@ void CHalloweenPickup::Precache( void )
 
 #ifdef GAME_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CHalloweenPickup::UpdateTransmitState()
 {
@@ -155,7 +155,7 @@ int CHalloweenPickup::UpdateTransmitState()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CHalloweenPickup::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 {
@@ -240,7 +240,7 @@ bool CHalloweenPickup::MyTouch( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHalloweenPickup::ValidTouch( CBasePlayer *pPlayer )
 {
@@ -325,7 +325,7 @@ CBonusDuckPickup::CBonusDuckPickup()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBonusDuckPickup::~CBonusDuckPickup()
 {
@@ -358,7 +358,7 @@ void CBonusDuckPickup::Precache( void )
 
 #ifdef GAME_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBonusDuckPickup::ValidTouch( CBasePlayer *pPlayer )
 {
@@ -562,7 +562,7 @@ void CBonusDuckPickup::BlinkThink()
 #else
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBonusDuckPickup::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -656,7 +656,7 @@ void CHalloweenGiftPickup::RemoveGift()
 //------------------------------------------------------------------------
 void CHalloweenGiftPickup::SetTargetPlayer( CTFPlayer *pTarget )
 {
-	m_hTargetPlayer = pTarget; 
+	m_hTargetPlayer = pTarget;
 }
 //------------------------------------------------------------------------
 bool CHalloweenGiftPickup::ValidTouch( CBasePlayer *pPlayer )
@@ -756,5 +756,3 @@ bool CHalloweenGiftPickup::ShouldDraw()
 	return BaseClass::ShouldDraw();
 }
 #endif
-
-

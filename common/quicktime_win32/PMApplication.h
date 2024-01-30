@@ -1,17 +1,17 @@
 /*
-     File:       PMApplication.h
- 
-     Contains:   Carbon Printing Manager Interfaces.
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1998-2001 by Apple Computer, Inc., all rights reserved
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       PMApplication.h
+
+		Contains:   Carbon Printing Manager Interfaces.
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1998-2001 by Apple Computer, Inc., all rights reserved
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __PMAPPLICATION__
 #define __PMAPPLICATION__
@@ -50,7 +50,7 @@ typedef STACK_UPP_TYPE(PMPageSetupDialogInitProcPtr)            PMPageSetupDialo
 typedef STACK_UPP_TYPE(PMSheetDoneProcPtr)                      PMSheetDoneUPP;
 /*
  *  NewPMItemUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -61,7 +61,7 @@ NewPMItemUPP(PMItemProcPtr userRoutine);
 
 /*
  *  NewPMPrintDialogInitUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -72,7 +72,7 @@ NewPMPrintDialogInitUPP(PMPrintDialogInitProcPtr userRoutine);
 
 /*
  *  NewPMPageSetupDialogInitUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -83,7 +83,7 @@ NewPMPageSetupDialogInitUPP(PMPageSetupDialogInitProcPtr userRoutine);
 
 /*
  *  NewPMSheetDoneUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.1 and later
@@ -94,7 +94,7 @@ NewPMSheetDoneUPP(PMSheetDoneProcPtr userRoutine);
 
 /*
  *  DisposePMItemUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -105,7 +105,7 @@ DisposePMItemUPP(PMItemUPP userUPP);
 
 /*
  *  DisposePMPrintDialogInitUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -116,7 +116,7 @@ DisposePMPrintDialogInitUPP(PMPrintDialogInitUPP userUPP);
 
 /*
  *  DisposePMPageSetupDialogInitUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -127,7 +127,7 @@ DisposePMPageSetupDialogInitUPP(PMPageSetupDialogInitUPP userUPP);
 
 /*
  *  DisposePMSheetDoneUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.1 and later
@@ -138,7 +138,7 @@ DisposePMSheetDoneUPP(PMSheetDoneUPP userUPP);
 
 /*
  *  InvokePMItemUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -146,13 +146,13 @@ DisposePMSheetDoneUPP(PMSheetDoneUPP userUPP);
  */
 EXTERN_API_C( void )
 InvokePMItemUPP(
-  DialogRef  theDialog,
-  short      item,
-  PMItemUPP  userUPP);
+	DialogRef  theDialog,
+	short      item,
+	PMItemUPP  userUPP);
 
 /*
  *  InvokePMPrintDialogInitUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -160,13 +160,13 @@ InvokePMItemUPP(
  */
 EXTERN_API_C( void )
 InvokePMPrintDialogInitUPP(
-  PMPrintSettings       printSettings,
-  PMDialog *            theDialog,
-  PMPrintDialogInitUPP  userUPP);
+	PMPrintSettings       printSettings,
+	PMDialog *            theDialog,
+	PMPrintDialogInitUPP  userUPP);
 
 /*
  *  InvokePMPageSetupDialogInitUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -174,13 +174,13 @@ InvokePMPrintDialogInitUPP(
  */
 EXTERN_API_C( void )
 InvokePMPageSetupDialogInitUPP(
-  PMPageFormat              pageFormat,
-  PMDialog *                theDialog,
-  PMPageSetupDialogInitUPP  userUPP);
+	PMPageFormat              pageFormat,
+	PMDialog *                theDialog,
+	PMPageSetupDialogInitUPP  userUPP);
 
 /*
  *  InvokePMSheetDoneUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.1 and later
@@ -188,17 +188,17 @@ InvokePMPageSetupDialogInitUPP(
  */
 EXTERN_API_C( void )
 InvokePMSheetDoneUPP(
-  PMPrintSession  printSession,
-  WindowRef       documentWindow,
-  Boolean         accepted,
-  PMSheetDoneUPP  userUPP);
+	PMPrintSession  printSession,
+	WindowRef       documentWindow,
+	Boolean         accepted,
+	PMSheetDoneUPP  userUPP);
 
 #if PM_USE_SESSION_APIS
 #else
 /* Print loop */
 /*
  *  PMBeginDocument()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -206,14 +206,14 @@ InvokePMSheetDoneUPP(
  */
 EXTERN_API( OSStatus )
 PMBeginDocument(
-  PMPrintSettings   printSettings,
-  PMPageFormat      pageFormat,
-  PMPrintContext *  printContext);
+	PMPrintSettings   printSettings,
+	PMPageFormat      pageFormat,
+	PMPrintContext *  printContext);
 
 
 /*
  *  PMEndDocument()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -225,7 +225,7 @@ PMEndDocument(PMPrintContext printContext);
 
 /*
  *  PMBeginPage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -233,13 +233,13 @@ PMEndDocument(PMPrintContext printContext);
  */
 EXTERN_API( OSStatus )
 PMBeginPage(
-  PMPrintContext   printContext,
-  const PMRect *   pageFrame);
+	PMPrintContext   printContext,
+	const PMRect *   pageFrame);
 
 
 /*
  *  PMEndPage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -252,7 +252,7 @@ PMEndPage(PMPrintContext printContext);
 /* Printing Dialogs */
 /*
  *  PMPageSetupDialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -260,13 +260,13 @@ PMEndPage(PMPrintContext printContext);
  */
 EXTERN_API( OSStatus )
 PMPageSetupDialog(
-  PMPageFormat   pageFormat,
-  Boolean *      accepted);
+	PMPageFormat   pageFormat,
+	Boolean *      accepted);
 
 
 /*
  *  PMPrintDialog()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -274,14 +274,14 @@ PMPageSetupDialog(
  */
 EXTERN_API( OSStatus )
 PMPrintDialog(
-  PMPrintSettings   printSettings,
-  PMPageFormat      constPageFormat,
-  Boolean *         accepted);
+	PMPrintSettings   printSettings,
+	PMPageFormat      constPageFormat,
+	Boolean *         accepted);
 
 
 /*
  *  PMPageSetupDialogInit()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -289,8 +289,8 @@ PMPrintDialog(
  */
 EXTERN_API( OSStatus )
 PMPageSetupDialogInit(
-  PMPageFormat   pageFormat,
-  PMDialog *     newDialog);
+	PMPageFormat   pageFormat,
+	PMDialog *     newDialog);
 
 
 /************************/
@@ -299,7 +299,7 @@ PMPageSetupDialogInit(
 /************************/
 /*
  *  PMPrintDialogInit()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -307,13 +307,13 @@ PMPageSetupDialogInit(
  */
 EXTERN_API( OSStatus )
 PMPrintDialogInit(
-  PMPrintSettings   printSettings,
-  PMDialog *        newDialog);
+	PMPrintSettings   printSettings,
+	PMDialog *        newDialog);
 
 
 /*
  *  PMPrintDialogInitWithPageFormat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.1 and later
@@ -321,14 +321,14 @@ PMPrintDialogInit(
  */
 EXTERN_API( OSStatus )
 PMPrintDialogInitWithPageFormat(
-  PMPrintSettings   printSettings,
-  PMPageFormat      constPageFormat,
-  PMDialog *        newDialog);
+	PMPrintSettings   printSettings,
+	PMPageFormat      constPageFormat,
+	PMDialog *        newDialog);
 
 
 /*
  *  PMPrintDialogMain()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -336,15 +336,15 @@ PMPrintDialogInitWithPageFormat(
  */
 EXTERN_API( OSStatus )
 PMPrintDialogMain(
-  PMPrintSettings        printSettings,
-  PMPageFormat           constPageFormat,
-  Boolean *              accepted,
-  PMPrintDialogInitUPP   myInitProc);
+	PMPrintSettings        printSettings,
+	PMPageFormat           constPageFormat,
+	Boolean *              accepted,
+	PMPrintDialogInitUPP   myInitProc);
 
 
 /*
  *  PMPageSetupDialogMain()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -352,9 +352,9 @@ PMPrintDialogMain(
  */
 EXTERN_API( OSStatus )
 PMPageSetupDialogMain(
-  PMPageFormat               pageFormat,
-  Boolean *                  accepted,
-  PMPageSetupDialogInitUPP   myInitProc);
+	PMPageFormat               pageFormat,
+	Boolean *                  accepted,
+	PMPageSetupDialogInitUPP   myInitProc);
 
 
 #endif  /* PM_USE_SESSION_APIS */
@@ -362,7 +362,7 @@ PMPageSetupDialogMain(
 /* Printing Dialog accessors */
 /*
  *  PMGetDialogPtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -370,14 +370,14 @@ PMPageSetupDialogMain(
  */
 EXTERN_API( OSStatus )
 PMGetDialogPtr(
-  PMDialog     pmDialog,
-  DialogRef *  theDialog);
+	PMDialog     pmDialog,
+	DialogRef *  theDialog);
 
 
 #define PMGetDialogRef PMGetDialogPtr
 /*
  *  PMGetModalFilterProc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -385,13 +385,13 @@ PMGetDialogPtr(
  */
 EXTERN_API( OSStatus )
 PMGetModalFilterProc(
-  PMDialog          pmDialog,
-  ModalFilterUPP *  filterProc);
+	PMDialog          pmDialog,
+	ModalFilterUPP *  filterProc);
 
 
 /*
  *  PMSetModalFilterProc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -399,13 +399,13 @@ PMGetModalFilterProc(
  */
 EXTERN_API( OSStatus )
 PMSetModalFilterProc(
-  PMDialog         pmDialog,
-  ModalFilterUPP   filterProc);
+	PMDialog         pmDialog,
+	ModalFilterUPP   filterProc);
 
 
 /*
  *  PMGetItemProc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -413,13 +413,13 @@ PMSetModalFilterProc(
  */
 EXTERN_API( OSStatus )
 PMGetItemProc(
-  PMDialog     pmDialog,
-  PMItemUPP *  itemProc);
+	PMDialog     pmDialog,
+	PMItemUPP *  itemProc);
 
 
 /*
  *  PMSetItemProc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -427,13 +427,13 @@ PMGetItemProc(
  */
 EXTERN_API( OSStatus )
 PMSetItemProc(
-  PMDialog    pmDialog,
-  PMItemUPP   itemProc);
+	PMDialog    pmDialog,
+	PMItemUPP   itemProc);
 
 
 /*
  *  PMGetDialogAccepted()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -441,13 +441,13 @@ PMSetItemProc(
  */
 EXTERN_API( OSStatus )
 PMGetDialogAccepted(
-  PMDialog   pmDialog,
-  Boolean *  process);
+	PMDialog   pmDialog,
+	Boolean *  process);
 
 
 /*
  *  PMSetDialogAccepted()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -455,13 +455,13 @@ PMGetDialogAccepted(
  */
 EXTERN_API( OSStatus )
 PMSetDialogAccepted(
-  PMDialog   pmDialog,
-  Boolean    process);
+	PMDialog   pmDialog,
+	Boolean    process);
 
 
 /*
  *  PMGetDialogDone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -469,13 +469,13 @@ PMSetDialogAccepted(
  */
 EXTERN_API( OSStatus )
 PMGetDialogDone(
-  PMDialog   pmDialog,
-  Boolean *  done);
+	PMDialog   pmDialog,
+	Boolean *  done);
 
 
 /*
  *  PMSetDialogDone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -483,33 +483,33 @@ PMGetDialogDone(
  */
 EXTERN_API( OSStatus )
 PMSetDialogDone(
-  PMDialog   pmDialog,
-  Boolean    done);
+	PMDialog   pmDialog,
+	Boolean    done);
 
 
 /* Presets */
 /*
  *  PMSessionEnablePrinterPresets()
- *  
+ *
  *  Summary:
  *    Enable the use of printer presets in the print dialog.
- *  
+ *
  *  Discussion:
  *    Displaying the print dialog on a session after making this call
  *    will show the presets available for the specified graphis type.
  *    In addition this call will enable the use of the simplified print
  *    dialog. On OS 9 this function returns kPMNotImplemented.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    session:
  *      The session that will be used to present the print dialog.
- *    
+ *
  *    graphicsType:
  *      The printer presets in the dialog should be suitable for
  *      rendering this type of graphic. Currently defined graphics
  *      types are: "Photo"
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.2 and later
@@ -517,25 +517,25 @@ PMSetDialogDone(
  */
 EXTERN_API( OSStatus )
 PMSessionEnablePrinterPresets(
-  PMPrintSession   session,
-  CFStringRef      graphicsType);
+	PMPrintSession   session,
+	CFStringRef      graphicsType);
 
 
 /*
  *  PMSessionDisablePrinterPresets()
- *  
+ *
  *  Summary:
  *    Disable the use of printer presets in the print dialog.
- *  
+ *
  *  Discussion:
  *    On OS 9 this function returns noErr since presets are never used
  *    in that OS.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    session:
  *      The session that will be used to present the print dialog.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.2 and later
@@ -557,4 +557,3 @@ PMSessionDisablePrinterPresets(PMPrintSession session);
 #endif
 
 #endif /* __PMAPPLICATION__ */
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -1004,5 +1004,3 @@ unsigned char detailedgifsrc[]={
 };
 
 CBinaryResource CTFStatsReport::gifDetailedScores("detailed.gif",628,detailedgifsrc);
-
-

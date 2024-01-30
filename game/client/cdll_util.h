@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -75,7 +75,7 @@ unsigned char UTIL_ComputeEntityFade( C_BaseEntity *pEntity, float flMinDist, fl
 client_textmessage_t	*TextMessageGet( const char *pName );
 
 char	*VarArgs( PRINTF_FORMAT_STRING const char *format, ... );
-	
+
 
 // Get the entity the local player is spectating (can be a player or a ragdoll entity).
 int		GetSpectatorTarget();

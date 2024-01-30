@@ -75,7 +75,7 @@ bool CEconStoreCategoryManager::BInit( CEconStorePriceSheet *pPriceSheet, KeyVal
 		{
 			AssertMsg( 0, "Store category %s is using itself as a parent category!", curCategory.m_pchName );
 		}
-		
+
 		// Attempt to find the current section's parent ID
 		bool bFound = false;
 		FOR_EACH_VEC( m_vecCategories, j )
@@ -134,7 +134,7 @@ bool CEconStoreCategoryManager::BInitCategory( CEconStorePriceSheet *pPriceSheet
 	pCategory->m_bIsHome = bIsHome;
 
 	pCategory->m_pchRawName = pCategoryName;
-	pCategory->m_unID = GetCategoryID( pCategoryName );	
+	pCategory->m_unID = GetCategoryID( pCategoryName );
 
 	pCategory->m_bUseLargeCells = pKVTab->GetBool( "use_large_cells", false );
 	pCategory->m_bVisible = pKVTab->GetBool( "visible", true );
@@ -208,7 +208,7 @@ bool CEconStoreCategoryManager::BOnPriceSheetLoaded( CEconStorePriceSheet *pPric
 			if ( entry.IsListedInCategoryOrSubcategories( Category ) )
 			{
 				Category.m_vecEntries.InsertNoSort( entry.GetItemDefinitionIndex() );
-			}		
+			}
 		}
 	}
 

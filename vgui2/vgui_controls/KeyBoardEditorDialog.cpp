@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -68,7 +68,7 @@ public:
 
 	virtual void	OnMousePressed(vgui::MouseCode code);
 	virtual void	OnMouseDoublePressed(vgui::MouseCode code);
-	
+
 	KEYBINDING_FUNC( clearbinding, KEY_DELETE, 0, OnClearBinding, 0, 0 );
 
 private:
@@ -155,12 +155,12 @@ VControlsListPanel::~VControlsListPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VControlsListPanel::ApplySchemeSettings(IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
-	m_hFont	= pScheme->GetFont("DefaultVerySmall", IsProportional() ); 
+	m_hFont	= pScheme->GetFont("DefaultVerySmall", IsProportional() );
 }
 
 //-----------------------------------------------------------------------------
@@ -206,10 +206,10 @@ void VControlsListPanel::EndCaptureMode( HCursor hCursor )
 	if (hCursor)
 	{
 		m_pInlineEditPanel->SetCursor(hCursor);
-		surface()->SetCursor(hCursor);	
+		surface()->SetCursor(hCursor);
 		if ( hCursor != dc_none )
 		{
-			vgui::input()->SetCursorPos ( m_iMouseX, m_iMouseY );	
+			vgui::input()->SetCursorPos ( m_iMouseX, m_iMouseY );
 		}
 	}
 }
@@ -294,8 +294,8 @@ CKeyBoardEditorPage::CKeyBoardEditorPage( Panel *parent, Panel *panelToEdit, Key
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 CKeyBoardEditorPage::~CKeyBoardEditorPage()
 {
@@ -314,8 +314,8 @@ void CKeyBoardEditorPage::ApplySchemeSettings( IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CKeyBoardEditorPage::SaveMappings()
 {
@@ -338,8 +338,8 @@ void CKeyBoardEditorPage::SaveMappings()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CKeyBoardEditorPage::UpdateCurrentMappings()
 {
@@ -353,8 +353,8 @@ void CKeyBoardEditorPage::UpdateCurrentMappings()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CKeyBoardEditorPage::RestoreMappings()
 {
@@ -431,7 +431,7 @@ void CKeyBoardEditorPage::BindKey( KeyCode code )
 			}
 
 			kbMap->keycode		= code;
-			kbMap->modifiers	= modifiers; 
+			kbMap->modifiers	= modifiers;
 
 			PopulateList();
 		}
@@ -473,10 +473,10 @@ void CKeyBoardEditorPage::OnKeyCodeTyped(vgui::KeyCode code)
 	switch ( code )
 	{
 	case KEY_ENTER:
-        {
+	{
 			if ( !m_pList->IsCapturing() )
 			{
-                OnCommand( "ChangeKey" );
+		OnCommand( "ChangeKey" );
 			}
 			else
 			{
@@ -598,7 +598,7 @@ void CKeyBoardEditorPage::PopulateList()
 
 			// Create a new: blank item
 			KeyValues *item = new KeyValues( "Item" );
-			
+
 			// Fill in data
 			char loc[ 128 ];
 			Q_snprintf( loc, sizeof( loc ), "#%s", kbMap->bindingname );
@@ -611,14 +611,14 @@ void CKeyBoardEditorPage::PopulateList()
 
 			// Find the binding
 			KeyBindingMap_t *bindingMap = m_pPanel->LookupBinding( kbMap->bindingname );
-			if ( bindingMap && 
-				 bindingMap->helpstring )
+			if ( bindingMap &&
+				bindingMap->helpstring )
 			{
 				AnsiText( bindingMap->helpstring, ansi, sizeof( ansi ) );
 				item->SetString( "Description", ansi);
 			}
-			
-			item->SetPtr( "Item", kbMap );			
+
+			item->SetPtr( "Item", kbMap );
 
 			sorted.Insert( item );
 		}
@@ -638,11 +638,11 @@ void CKeyBoardEditorPage::PopulateList()
 			// Not bound, add a placeholder entry
 			// Create a new: blank item
 			KeyValues *item = new KeyValues( "Item" );
-			
+
 			// fill in data
 			char loc[ 128 ];
 			Q_snprintf( loc, sizeof( loc ), "#%s", kbMap->bindingname );
-			
+
 			char ansi[ 256 ];
 			AnsiText( loc, ansi, sizeof( ansi ) );
 
@@ -654,7 +654,7 @@ void CKeyBoardEditorPage::PopulateList()
 				item->SetString( "Description", ansi );
 			}
 
-			item->SetPtr( "Unbound", kbMap );						
+			item->SetPtr( "Unbound", kbMap );
 
 			sorted.Insert( item );
 		}
@@ -689,7 +689,7 @@ void CKeyBoardEditorPage::OnClearBinding( int item )
 	}
 
 	kbMap->keycode		= KEY_NONE;
-	kbMap->modifiers	= 0; 
+	kbMap->modifiers	= 0;
 
 	PopulateList();
 }
@@ -719,7 +719,7 @@ CKeyBoardEditorSheet::CKeyBoardEditorSheet( Panel *parent, Panel *panelToEdit, K
 		if ( p->GetKeyMappingCount() == 0 )
 			continue;
 
-        CKeyBoardEditorPage *newPage = new CKeyBoardEditorPage( this, p, handle );
+	CKeyBoardEditorPage *newPage = new CKeyBoardEditorPage( this, p, handle );
 		AddPage( newPage, p->GetName() );
 		if ( p == panelToEdit )
 		{
@@ -824,7 +824,7 @@ void CKeyBoardEditorDialog::OnCommand( char const *cmd )
 		MarkForDeletion();
 	}
 	else if ( !Q_stricmp( cmd, "cancel" ) ||
-		      !Q_stricmp( cmd, "Close" ) )
+			!Q_stricmp( cmd, "Close" ) )
 	{
 		m_pKBEditor->OnRevert();
 		MarkForDeletion();

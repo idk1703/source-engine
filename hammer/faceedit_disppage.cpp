@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -135,7 +135,7 @@ void CFaceEditDispPage::UpdateEditControls( bool bAllDisps, bool bHasFace )
 	CButton *pButtonBuild = ( CButton* )GetDlgItem( ID_DISP_TAG_BUILD );
 
 	pbuttonSelect->EnableWindow( TRUE );
-	pbuttonCreate->EnableWindow( FALSE );	
+	pbuttonCreate->EnableWindow( FALSE );
 	pbuttonDestroy->EnableWindow( FALSE );
 	pbuttonPaintGeo->EnableWindow( FALSE );
 	pbuttonPaintSculpt->EnableWindow( FALSE );
@@ -183,7 +183,7 @@ void CFaceEditDispPage::UpdateEditControls( bool bAllDisps, bool bHasFace )
 	{
 		if( !bAllDisps )
 		{
-			pbuttonCreate->EnableWindow( TRUE );	
+			pbuttonCreate->EnableWindow( TRUE );
 			pbuttonDestroy->EnableWindow( TRUE );
 			pbuttonSew->EnableWindow( TRUE );
 		}
@@ -250,7 +250,7 @@ void CFaceEditDispPage::FillEditControls( bool bAllDisps )
 				CMapFace *pFace = pSheet->GetFaceListDataFace( 0 );
 				EditDispHandle_t handle = pFace->GetDisp();
 				CMapDisp *pDisp = EditDispMgr()->GetDisp( handle );
-				
+
 				power = pDisp->GetPower();
 				elevation = pDisp->GetElevation();
 				scale = pDisp->GetScale();
@@ -264,10 +264,10 @@ void CFaceEditDispPage::FillEditControls( bool bAllDisps )
 				CMapFace *pFace = pSheet->GetFaceListDataFace( faceIndex );
 				EditDispHandle_t handle = pFace->GetDisp();
 				CMapDisp *pDisp = EditDispMgr()->GetDisp( handle );
-				
+
 				// test power, elevation, and scale
-				if( power != pDisp->GetPower() ) { bAllPower = false; }				
-				if( elevation != pDisp->GetElevation() ) { bAllElevation = false; }	
+				if( power != pDisp->GetPower() ) { bAllPower = false; }
+				if( elevation != pDisp->GetElevation() ) { bAllElevation = false; }
 				if( scale != pDisp->GetScale() ) { bAllScale = false; }
 
 				if ( !pDisp->CheckFlags( CCoreDispInfo::SURF_NOPHYSICS_COLL ) ) { bAllNoPhysics = false; }
@@ -281,7 +281,7 @@ void CFaceEditDispPage::FillEditControls( bool bAllDisps )
 			{
 				SetDlgItemInt( ID_DISP_POWER, power );
 			}
-			
+
 			// set elevation value
 			SetDlgItemText( ID_DISP_ELEVATION, "" );
 			if( bAllElevation )
@@ -327,7 +327,7 @@ void CFaceEditDispPage::FillEditControls( bool bAllDisps )
 		CSpinButtonCtrl *pSpin = ( CSpinButtonCtrl* )GetDlgItem( ID_SPIN_DISP_POWER );
 		pSpin->SetPos( 0 );
 		SetDlgItemInt( ID_DISP_POWER, 0 );
-		
+
 		// set initial elevation value
 		pSpin = ( CSpinButtonCtrl* )GetDlgItem( ID_SPIN_DISP_ELEVATION );
 		pSpin->SetPos( 0 );
@@ -408,7 +408,7 @@ void CFaceEditDispPage::OnCheckMaskSelect( void )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void CFaceEditDispPage::OnCheckMaskGrid( void )
@@ -468,7 +468,7 @@ void CFaceEditDispPage::OnCheckNoPhysicsCollide( void )
 				}
 			}
 		}
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -518,7 +518,7 @@ void CFaceEditDispPage::OnCheckNoHullCollide( void )
 				}
 			}
 		}
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -568,7 +568,7 @@ void CFaceEditDispPage::OnCheckNoRayCollide( void )
 				}
 			}
 		}
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -591,7 +591,7 @@ void CFaceEditDispPage::SetTool( unsigned int tool )
 	}
 
 	if ( ( m_uiTool == FACEEDITTOOL_TAG_WALK ) ||
-		 ( m_uiTool == FACEEDITTOOL_TAG_BUILD ) || 
+		 ( m_uiTool == FACEEDITTOOL_TAG_BUILD ) ||
 		 ( m_uiTool == FACEEDITTOOL_TAG_REMOVE ) )
 	{
 		ResetForceShows();
@@ -665,7 +665,7 @@ void CFaceEditDispPage::OnButtonCreate( void )
 		int faceCount = pSheet->GetFaceListCount();
 		if( faceCount == 0 )
 			return;
-	
+
 		//
 		// open the dialog and get the desired creation power
 		//
@@ -678,7 +678,7 @@ void CFaceEditDispPage::OnButtonCreate( void )
 		}
 
 		// clamped the "power" (range [2..4])
-		int power = m_CreateDlg.m_Power;		
+		int power = m_CreateDlg.m_Power;
 
 		//
 		// get the active map doc and displacement manager
@@ -695,7 +695,7 @@ void CFaceEditDispPage::OnButtonCreate( void )
 			CMapFace *pFace = pSheet->GetFaceListDataFace( ndxFace );
 			if( !pFace )
 				continue;
-	
+
 			// make sure the face has the appropriate point count
 			if( pFace->GetPointCount() != 4 )
 				continue;
@@ -782,7 +782,7 @@ void CFaceEditDispPage::OnButtonDestroy( void )
 				continue;
 
 			EditDispHandle_t handle = pFace->GetDisp();
-			
+
 			// setup for undo
 			pDispMgr->Undo( handle, false );
 
@@ -1016,7 +1016,7 @@ void CFaceEditDispPage::OnButtonPaintGeo( void )
 	}
 
 	if( !m_PaintDistDlg.Create( IDD_DISP_PAINT_DIST, this ) )
-		return;	
+		return;
 
 	m_PaintDistDlg.ShowWindow( SW_SHOW );
 }
@@ -1039,7 +1039,7 @@ void CFaceEditDispPage::OnBnClickedDispSculptPaint( )
 	}
 
 	if( !m_PaintSculptDlg.Create( IDD_DISP_PAINT_SCULPT, this ) )
-		return;	
+		return;
 
 	m_PaintSculptDlg.ShowWindow( SW_SHOW );
 }
@@ -1102,7 +1102,7 @@ void CFaceEditDispPage::OnButtonTagWalkable( void )
 		{
 			pDoc->SetDispDrawWalkable( true );
 			m_bForceShowWalkable = true;
-		}		
+		}
 	}
 
 	UpdateDialogData();
@@ -1223,7 +1223,7 @@ void CFaceEditDispPage::OnSelectAdjacent()
 	IWorldEditDispMgr *pDispMgr = GetActiveWorldEditDispManager();
 
 	bool bSelectedAny = false;
-	
+
 	// For all selected displacements...
 	CFaceEditSheet *pSheet = ( CFaceEditSheet* )GetParent();
 	if( !pSheet )
@@ -1250,7 +1250,7 @@ void CFaceEditDispPage::OnSelectAdjacent()
 		//for ( int iEdge=0; iEdge < 4; iEdge++ )
 		//{
 		//	EditDispHandle_t hNeighbor = pDisp->GetEdgeNeighbor( iEdge );
-		
+
 		int totalDispCount = pDispMgr->WorldCount();
 		for ( int iTestDisp=0; iTestDisp < totalDispCount; iTestDisp++ )
 		{
@@ -1278,7 +1278,7 @@ void CFaceEditDispPage::OnSelectAdjacent()
 			bSelectedAny = true;
 		}
 	}
-	
+
 	if ( bSelectedAny )
 	{
 		CMapDoc::GetActiveMapDoc()->UpdateAllViews( MAPVIEW_UPDATE_TOOL );
@@ -1336,11 +1336,11 @@ void CFaceEditDispPage::UpdateElevation( CMapDisp *pDisp )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pNMHDR - 
-//			pResult - 
+// Purpose:
+// Input  : pNMHDR -
+//			pResult -
 //-----------------------------------------------------------------------------
-void CFaceEditDispPage::OnSpinUpDown( NMHDR *pNMHDR, LRESULT *pResult ) 
+void CFaceEditDispPage::OnSpinUpDown( NMHDR *pNMHDR, LRESULT *pResult )
 {
 	//
 	// get scroll up down edit box
@@ -1528,4 +1528,3 @@ BOOL CFaceEditDispPage::PreTranslateMessage( MSG *pMsg )
 		return TRUE;
 	}
 }
-

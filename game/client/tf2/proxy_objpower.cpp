@@ -24,7 +24,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFObjectPowerProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 {
@@ -35,7 +35,7 @@ bool CTFObjectPowerProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFObjectPowerProxy::OnBind( void *pArg )
 {

@@ -1,7 +1,7 @@
 
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -59,7 +59,7 @@ CTFWinPanel::CTFWinPanel( const char *pElementName ) : EditablePanel( NULL, "Win
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWinPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -67,7 +67,7 @@ void CTFWinPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWinPanel::Reset()
 {
@@ -75,7 +75,7 @@ void CTFWinPanel::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWinPanel::Init()
 {
@@ -110,7 +110,7 @@ void CTFWinPanel::SetVisible( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWinPanel::FireGameEvent( IGameEvent * event )
 {
@@ -169,7 +169,7 @@ void CTFWinPanel::FireGameEvent( IGameEvent * event )
 			}
 		}
 
-		LoadControlSettings( "resource/UI/WinPanel.res" );		
+		LoadControlSettings( "resource/UI/WinPanel.res" );
 		InvalidateLayout( false, true );
 
 		SetDialogVariable( "WinningTeamLabel", "" );
@@ -327,7 +327,7 @@ void CTFWinPanel::FireGameEvent( IGameEvent * event )
 
 				g_pVGuiLocalize->ConstructString_safe( wzWinReason, wpszFormatString, 2,
 					pLocalizedTeamName, wzFlagCaptureLimit );
-			}			
+			}
 			break;
 		case WINREASON_OPPONENTS_DEAD:
 			g_pVGuiLocalize->ConstructString_safe( wzWinReason, g_pVGuiLocalize->Find( "#Winreason_OpponentsDead" ), 1, pLocalizedTeamName );
@@ -340,7 +340,7 @@ void CTFWinPanel::FireGameEvent( IGameEvent * event )
 			{
 				g_pVGuiLocalize->ConstructString_safe( wzWinReason, g_pVGuiLocalize->Find( "#Winreason_Stalemate" ), 0 );
 			}
-			break;	
+			break;
 		case WINREASON_TIMELIMIT:
 			g_pVGuiLocalize->ConstructString_safe( wzWinReason, g_pVGuiLocalize->Find( "#Winreason_TimeLimit" ), 1, pLocalizedTeamName );
 			break;
@@ -379,7 +379,7 @@ void CTFWinPanel::FireGameEvent( IGameEvent * event )
 
 				g_pVGuiLocalize->ConstructString_safe( wzWinReason, wpszFormatString, 2,
 					pLocalizedTeamName, wzScoreLimit );
-			}			
+			}
 			break;
 		case WINREASON_STOPWATCH_WATCHING_ROUNDS:
 			if ( pBlueTeam && pBlueTeamName && pRedTeamName )
@@ -422,12 +422,12 @@ void CTFWinPanel::FireGameEvent( IGameEvent * event )
 		SetDialogVariable( "WinReasonLabel", wzWinReason );
 
 		if ( !bRoundComplete && ( WINREASON_STALEMATE != iWinReason ) && ( WINREASON_STOPWATCH_WATCHING_ROUNDS != iWinReason ) && ( WINREASON_STOPWATCH_WATCHING_FINAL_ROUND != iWinReason ) && ( WINREASON_STOPWATCH_PLAYING_ROUNDS != iWinReason ) )
-		{			
+		{
 			// if this was a mini-round, show # of capture points remaining
 			wchar_t wzNumCapturesRemaining[16];
 			wchar_t wzCapturesRemainingMsg[256]=L"";
 			_snwprintf( wzNumCapturesRemaining, ARRAYSIZE( wzNumCapturesRemaining ), L"%i", iRoundsRemaining );
-			g_pVGuiLocalize->ConstructString_safe( wzCapturesRemainingMsg,  
+			g_pVGuiLocalize->ConstructString_safe( wzCapturesRemainingMsg,
 				g_pVGuiLocalize->Find( 1 == iRoundsRemaining ? "#Winpanel_CapturePointRemaining" : "Winpanel_CapturePointsRemaining" ),
 				1, wzNumCapturesRemaining );
 			SetDialogVariable( "DetailsLabel", wzCapturesRemainingMsg );
@@ -438,7 +438,7 @@ void CTFWinPanel::FireGameEvent( IGameEvent * event )
 			const char *pCappers = event->GetString( "cappers" );
 			int iCappers = Q_strlen( pCappers );
 			if ( iCappers > 0 )
-			{	
+			{
 				char szPlayerNames[256]="";
 				wchar_t wzPlayerNames[256]=L"";
 				wchar_t wzCapMsg[512]=L"";
@@ -520,7 +520,7 @@ void CTFWinPanel::FireGameEvent( IGameEvent * event )
 			if ( pBadgePanel )
 			{
 				const IMatchGroupDescription *pMatchDesc = TFGameRules() ? GetMatchGroupDescription( TFGameRules()->GetCurrentMatchGroup() ) : NULL;
-				const IProgressionDesc *pProgressionDesc = pMatchDesc ? pMatchDesc->m_pProgressionDesc : NULL; 
+				const IProgressionDesc *pProgressionDesc = pMatchDesc ? pMatchDesc->m_pProgressionDesc : NULL;
 
 				bool bVisible = ( pMatchDesc && pProgressionDesc );
 				if ( bVisible )
@@ -560,7 +560,7 @@ void CTFWinPanel::FireGameEvent( IGameEvent * event )
 			if ( bShow )
 			{
 				// set the player labels to team color
-				Color clr = g_PR->GetTeamColor( g_PR->GetTeam( iPlayerIndex ) );				
+				Color clr = g_PR->GetTeamColor( g_PR->GetTeam( iPlayerIndex ) );
 				pPlayerName->SetFgColor( clr );
 				pPlayerClass->SetFgColor( clr );
 				pPlayerScore->SetFgColor( clr );
@@ -594,7 +594,7 @@ void CTFWinPanel::FireGameEvent( IGameEvent * event )
 			Q_snprintf( szPlayerScoreVal, ARRAYSIZE( szPlayerScoreVal ), "killstreak_player_%d_count", i );
 			int iPlayerIndex = event->GetInt( szPlayerIndexVal, 0 );
 			int iCount = event->GetInt( szPlayerScoreVal, 0 );
-			
+
 			vgui::Label *pKillStreakPlayerName = dynamic_cast<Label *>( FindChildByName( CFmtStr( "KillStreakPlayer%dName", i ) ) );
 			vgui::Label *pKillStreakPlayerClass = dynamic_cast<Label *>( FindChildByName( CFmtStr( "KillStreakPlayer%dClass", i ) ) );
 			vgui::Label *pKillStreakPlayerScore = dynamic_cast<Label *>( FindChildByName( CFmtStr( "KillStreakPlayer%dScore", i ) ) );
@@ -616,7 +616,7 @@ void CTFWinPanel::FireGameEvent( IGameEvent * event )
 				}
 
 				// set the player labels to team color
-				Color clr = g_PR->GetTeamColor( g_PR->GetTeam( iPlayerIndex ) );				
+				Color clr = g_PR->GetTeamColor( g_PR->GetTeam( iPlayerIndex ) );
 				pKillStreakPlayerName->SetFgColor( clr );
 				pKillStreakPlayerClass->SetFgColor( clr );
 				pKillStreakPlayerScore->SetFgColor( clr );
@@ -668,7 +668,7 @@ void CTFWinPanel::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWinPanel::UpdateTeamInfo()
 {

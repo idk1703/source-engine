@@ -79,30 +79,30 @@ bool g_bVCRSingleStep = false;
 
 void VCR_EnterPausedState()
 {
-        // Turn this off in case they're in single-step mode.
-        g_bVCRSingleStep = false;
+	// Turn this off in case they're in single-step mode.
+	g_bVCRSingleStep = false;
 
-        // This is cheesy, but GetAsyncKeyState is blocked (in protected_things. h)
-        // from being accidentally used, so we get it through it by getting its pointer directly.
+	// This is cheesy, but GetAsyncKeyState is blocked (in protected_things. h)
+	// from being accidentally used, so we get it through it by getting its pointer directly.
 
-         // In this mode, we enter a wait state where we only pay attention to R and Q.
+	// In this mode, we enter a wait state where we only pay attention to R and Q.
  /*        while ( 1 )
-         {
-                 if ( pfn( 'R' ) & 0x8000 )
-                        break;
+	{
+		if ( pfn( 'R' ) & 0x8000 )
+			break;
 
-                if ( pfn( 'Q' ) & 0x8000 )
-                      kill( getpid(), SIGKILL );
+		if ( pfn( 'Q' ) & 0x8000 )
+			kill( getpid(), SIGKILL );
 
-                if ( pfn( 'S' ) & 0x8000 )
-                {
-                        // Do a single step.
-                        g_bVCRSingleStep = true;
-                        break;
-                }
+		if ( pfn( 'S' ) & 0x8000 )
+		{
+			// Do a single step.
+			g_bVCRSingleStep = true;
+			break;
+		}
 
-                Sleep( 2 );
-        }
+		Sleep( 2 );
+	}
 */
 }
 
@@ -210,8 +210,8 @@ void CGame::DispatchAllStoredGameMessages()
 
 void CGame::GetDesktopInfo( int &width, int &height, int &refreshRate )
 {
-    width = 0;
-    height = 0;
+	width = 0;
+	height = 0;
 	refreshRate = 0;
 }
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,11 +37,11 @@ public:
 	// Get the size of the image
 	virtual void GetSize( int &wide, int &tall );
 	virtual void GetContentSize( int &wide, int &tall );
-	// Set the draw color 
+	// Set the draw color
 	virtual void SetColor( Color color );
 	// set the background color
 	virtual void SetBkColor( Color color ) { DrawSetColor( color ); }
-	// Get the draw color 
+	// Get the draw color
 	virtual Color GetColor();
 	virtual bool Evict();
 	virtual int GetNumFrames();

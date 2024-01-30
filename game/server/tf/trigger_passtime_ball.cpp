@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,7 +29,7 @@ void CTriggerPasstimeBall::Spawn()
 	m_bPresent = false;
 	BaseClass::Spawn();
 
-	SetSolid( SOLID_BSP );	
+	SetSolid( SOLID_BSP );
 	AddSolidFlags( FSOLID_NOT_SOLID | FSOLID_TRIGGER );
 	SetMoveType( MOVETYPE_NONE );
 	SetModel( STRING( GetModelName() ) );    // set size and link into world
@@ -57,11 +57,11 @@ void CTriggerPasstimeBall::Update()
 	// This is a crappy way to do this, but I couldn't find any way to make
 	// a normal trigger do what I want because I want enter/exit to be handled
 	// correctly when the ball is hidden.
-	// It would be more efficient to have the ball do this, but I'm 
+	// It would be more efficient to have the ball do this, but I'm
 	// trying to isolate this hack to where it makes the most sense.
 
 	SetNextThink( gpGlobals->curtime );
-	
+
 	if ( !g_pPasstimeLogic || !g_pPasstimeLogic->GetBall() )
 		return;
 

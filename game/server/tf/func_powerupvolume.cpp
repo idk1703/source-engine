@@ -47,7 +47,7 @@ void CPowerupVolume::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:		
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPowerupVolume::Touch( CBaseEntity *pOther )
 {
@@ -66,12 +66,12 @@ void CPowerupVolume::Touch( CBaseEntity *pOther )
 				return;
 
 			int iTeam = GetTeamNumber();
-			
+
 			if ( iTeam && ( pPlayer->GetTeamNumber() != iTeam ) )
 					return;
 
 			// call think function here so the first time the volume is used, it starts its timeout delay, and fires the tf_gamerules outputs when it times out
-			
+
 			pPlayer->m_Shared.AddCond( TF_COND_RUNE_IMBALANCE, 20.f );
 			pPlayer->m_Shared.AddCond( TF_COND_CRITBOOSTED_RUNE_TEMP, 20.f );
 			pPlayer->EmitSound( TF_POWERUPVOLUME_SOUND );

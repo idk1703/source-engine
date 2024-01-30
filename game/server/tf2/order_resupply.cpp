@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -48,7 +48,5 @@ bool COrderResupply::Update()
 	if ( pTeam->GetNumResuppliesCoveringPosition( pEnt->GetAbsOrigin() ) )
 		return true;
 
-	return BaseClass::Update();	
+	return BaseClass::Update();
 }
-
-

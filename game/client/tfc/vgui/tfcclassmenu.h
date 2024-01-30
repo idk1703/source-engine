@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,10 +29,10 @@ class CTFCClassMenu : public CClassMenu
 {
 private:
 	DECLARE_CLASS_SIMPLE( CTFCClassMenu, CClassMenu );
-	
+
 public:
 	CTFCClassMenu::CTFCClassMenu(IViewPort *pViewPort);
-	
+
 	const char *GetName( void );
 	void ShowPanel(bool bShow);
 	void Update();

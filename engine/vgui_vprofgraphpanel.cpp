@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -41,7 +41,7 @@ static ConVar vprof_graphheight( "vprof_graphheight", "256", FCVAR_ARCHIVE );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Displays the netgraph 
+// Purpose: Displays the netgraph
 //-----------------------------------------------------------------------------
 class CVProfGraphPanel : public vgui::Panel
 {
@@ -123,7 +123,7 @@ void IN_VProfChild(void)
 	if( n )
 	{
 		// Find the largest child:
-		CVProfGraphPanel::m_CurrentNode = n; 
+		CVProfGraphPanel::m_CurrentNode = n;
 
 		for( ; n; n = n->GetSibling() )
 		{
@@ -139,12 +139,12 @@ static ConCommand vprof_parent		("vprof_parent",	  IN_VProfParent);
 static ConCommand vprof_child		("vprof_child",		  IN_VProfChild);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
 CVProfGraphPanel::CVProfGraphPanel( vgui::VPANEL parent ) : BaseClass( NULL, "CVProfGraphPanel" )
 {
-	SetParent( parent ); 
+	SetParent( parent );
 	SetSize( videomode->GetModeStereoWidth(), videomode->GetModeStereoHeight() );
 	SetPos( 0, 0 );
 	SetVisible( false );
@@ -177,7 +177,7 @@ CVProfGraphPanel::CVProfGraphPanel( vgui::VPANEL parent ) : BaseClass( NULL, "CV
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CVProfGraphPanel::~CVProfGraphPanel( void )
 {
@@ -195,10 +195,10 @@ void CVProfGraphPanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 //-----------------------------------------------------------------------------
 // Purpose: Figure out x and y position for graph based on vprof_graphpos
 //   value.
-// Input  : *rect - 
-//			width - 
-//			*x - 
-//			*y - 
+// Input  : *rect -
+//			width -
+//			*x -
+//			*y -
 //-----------------------------------------------------------------------------
 void CVProfGraphPanel::GraphGetXY( vrect_t *rect, int width, int *x, int *y )
 {
@@ -207,12 +207,12 @@ void CVProfGraphPanel::GraphGetXY( vrect_t *rect, int width, int *x, int *y )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVProfGraphPanel::OnTick( void )
 {
 	SetVisible( ShouldDraw() );
-	
+
 }
 
 bool CVProfGraphPanel::ShouldDraw( void )
@@ -221,16 +221,16 @@ bool CVProfGraphPanel::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CVProfGraphPanel::Paint() 
+void CVProfGraphPanel::Paint()
 {
 	int			x, y, w;
 	vrect_t		vrect;
 
 	if ( ( ShouldDraw() ) == false )
 		return;
-	
+
 	// Get screen rectangle
 	vrect.x		 = 0;
 	vrect.y		 = 0;
@@ -263,7 +263,7 @@ void CVProfGraphPanel::Paint()
 		g_pMatSystemSurface->DrawColoredText( m_hFont, x, y, GRAPH_RED, GRAPH_GREEN, GRAPH_BLUE, 255, "%s", sz );
 	}
 
-	byte color[3][3] = 
+	byte color[3][3] =
 	{
 		{ 255, 0, 0 },
 		{ 0, 0, 255 },
@@ -290,7 +290,7 @@ void CVProfGraphPanel::Paint()
 void CVProfGraphPanel::GetNextSample()
 {
 	// Increment to the next sample:
-	m_CurrentSample = ( m_CurrentSample + 1 ) % TIMINGS; 
+	m_CurrentSample = ( m_CurrentSample + 1 ) % TIMINGS;
 	m_Samples[m_CurrentSample][0] = m_CurrentNode->GetPrevTime();
 	m_Samples[m_CurrentSample][1] = m_CurrentNode->GetParent() ? m_CurrentNode->GetParent()->GetPrevTime() : m_CurrentNode->GetPrevTime();
 	m_Samples[m_CurrentSample][2] = g_VProfCurrentProfile.GetRoot()->GetPrevTime();
@@ -298,9 +298,9 @@ void CVProfGraphPanel::GetNextSample()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CVProfGraphPanel::PaintLineArt( int x, int y, int w ) 
+void CVProfGraphPanel::PaintLineArt( int x, int y, int w )
 {
 	int nPanelHeight = vprof_graphheight.GetFloat() - LERP_HEIGHT - 2;
 	int h, a;
@@ -347,7 +347,7 @@ void CVProfGraphPanel::PaintLineArt( int x, int y, int w )
 		meshBuilder.AdvanceVertex();
 	}
 
-	byte color[3][4] = 
+	byte color[3][4] =
 	{
 		{ 255, 0, 0, 255 },
 		{ 0, 0, 255, 255 },
@@ -389,7 +389,7 @@ void CVProfGraphPanel::PaintLineArt( int x, int y, int w )
 
 			// Move on to the next sample:
 			sample--;
-			if ( sample < 0 ) 
+			if ( sample < 0 )
 			{
 				sample = TIMINGS - 1;
 			}
@@ -430,6 +430,3 @@ void DestroyVProfGraphPanel()
 	}
 #endif
 }
-
-
-

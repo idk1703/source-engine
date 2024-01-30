@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -72,20 +72,20 @@ public:
 	virtual float		GetSoundDuration( const char *pszName ) = 0;
 	virtual bool		IsSoundStillPlaying( int guid ) = 0;
 	// Returns the guid of the sound
-	virtual int			StartSound( 
+	virtual int			StartSound(
 		int iUserData,
 		bool staticsound,
-		int iEntIndex, 
-		int iChannel, 
-		const char *pSample, 
-		float flVolume, 
-		soundlevel_t iSoundlevel, 
+		int iEntIndex,
+		int iChannel,
+		const char *pSample,
+		float flVolume,
+		soundlevel_t iSoundlevel,
 		const Vector& origin,
 		const Vector& direction,
-		int iFlags = 0, 
-		int iPitch = PITCH_NORM, 
-		bool bUpdatePositions = true, 
-		float delay = 0.0f, 
+		int iFlags = 0,
+		int iPitch = PITCH_NORM,
+		bool bUpdatePositions = true,
+		float delay = 0.0f,
 		int speakerentity = -1 ) = 0;
 
 	virtual void		StopSoundByGuid( int guid ) = 0;
@@ -131,7 +131,7 @@ public:
 	virtual float		GetRealFrameTime() = 0; // unscaled
 
 	// Get high precision timer (for profiling?)
-	virtual float		Time() = 0; 
+	virtual float		Time() = 0;
 
 	// Host time is scaled
 	virtual float		HostFrameTime() = 0; // host_frametime
@@ -150,7 +150,7 @@ public:
 
 	virtual void		SetClientFrameTime( float frametime ) = 0; // gpGlobals->frametime on client
 
-	// Currently the engine doesn't like to do networking when it's paused, but if a tool changes entity state, it can be useful to force 
+	// Currently the engine doesn't like to do networking when it's paused, but if a tool changes entity state, it can be useful to force
 	//  a network update to get that state over to the client
 	virtual void		ForceUpdateDuringPause() = 0;
 
@@ -224,7 +224,7 @@ public:
 	virtual void DestroyPartitionHandle( SpatialPartitionHandle_t hPartition ) = 0;
 	virtual void InstallPartitionQueryCallback( IPartitionQueryCallback *pQuery ) = 0;
 	virtual void RemovePartitionQueryCallback( IPartitionQueryCallback *pQuery ) = 0;
-	virtual void ElementMoved( SpatialPartitionHandle_t handle, 
+	virtual void ElementMoved( SpatialPartitionHandle_t handle,
 		const Vector& mins, const Vector& maxs ) = 0;
 };
 

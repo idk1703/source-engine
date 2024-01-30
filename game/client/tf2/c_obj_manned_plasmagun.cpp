@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -8,7 +8,7 @@
 #include "c_obj_base_manned_gun.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectMannedPlasmagun : public C_ObjectBaseMannedGun
 {
@@ -24,4 +24,3 @@ private:
 
 IMPLEMENT_CLIENTCLASS_DT(C_ObjectMannedPlasmagun, DT_ObjectMannedPlasmagun, CObjectMannedPlasmagun)
 END_RECV_TABLE()
-

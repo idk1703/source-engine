@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -32,14 +32,14 @@ class CTFCShotgun : public CWeaponTFCBase
 {
 public:
 	DECLARE_CLASS( CTFCShotgun, CWeaponTFCBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	#ifndef CLIENT_DLL
 		DECLARE_DATADESC();
 	#endif
 
-	
+
 	CTFCShotgun();
 
 	virtual TFCWeaponID GetWeaponID( void ) const;
@@ -60,7 +60,7 @@ protected:
 
 
 private:
-	
+
 	CTFCShotgun( const CTFCShotgun & ) {}
 };
 

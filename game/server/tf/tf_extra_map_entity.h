@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #ifndef EXTRA_MAP_ENTITY_H
@@ -78,5 +78,3 @@ public:
 };
 
 #endif // EXTRA_MAP_ENTITY_H
-
-

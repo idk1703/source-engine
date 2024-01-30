@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,7 +10,7 @@
 #include "particles_simple.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectEMPGenerator : public C_BaseObject
 {
@@ -36,16 +36,16 @@ IMPLEMENT_CLIENTCLASS_DT(C_ObjectEMPGenerator, DT_ObjectEMPGenerator, CObjectEMP
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectEMPGenerator::C_ObjectEMPGenerator()
 {
-	m_ParticleEvent.Init( 300 ); 
+	m_ParticleEvent.Init( 300 );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectEMPGenerator::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -59,7 +59,7 @@ void C_ObjectEMPGenerator::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectEMPGenerator::ClientThink( void )
 {
@@ -71,7 +71,7 @@ void C_ObjectEMPGenerator::ClientThink( void )
 		Vector vOffset = RandomVector( -1, 1 );
 		VectorNormalize( vOffset );
 		vPos += vOffset * RandomFloat( 0, 50 );
-		
+
 		SimpleParticle *pParticle = m_pEmitter->AddSimpleParticle( m_hParticleMaterial, vPos );
 		if ( pParticle )
 		{
@@ -81,7 +81,7 @@ void C_ObjectEMPGenerator::ClientThink( void )
 			pParticle->m_flRollDelta = 0;
 			pParticle->m_flDieTime = 0.4f;
 			pParticle->m_flLifetime = 0;
-			pParticle->m_uchColor[0] = 255; 
+			pParticle->m_uchColor[0] = 255;
 			pParticle->m_uchColor[1] = 255;
 			pParticle->m_uchColor[2] = 255;
 			pParticle->m_uchStartAlpha = 32;
@@ -92,8 +92,3 @@ void C_ObjectEMPGenerator::ClientThink( void )
 		}
 	}
 }
-
-
-
-
-

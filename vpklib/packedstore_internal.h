@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -56,5 +56,3 @@ struct VPKDirHeaderOld_t
 
 
 #include "vpklib/packedstore.h"
-
-

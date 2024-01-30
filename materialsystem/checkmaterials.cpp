@@ -34,7 +34,7 @@ static bool DoesTextureUseAlpha( const char *pTextureName, const char *pMaterial
 		return false;
 
 	// The texture name doubles as the relative file name
-	// It's assumed to have already been set by this point	
+	// It's assumed to have already been set by this point
 	// Compute the cache name
 	char pCacheFileName[MATERIAL_MAX_PATH];
 	Q_snprintf( pCacheFileName, sizeof( pCacheFileName ), "materials/%s.vtf", pTextureName );
@@ -98,7 +98,7 @@ static bool DoesTextureUseNormal( const char *pTextureName, const char *pMateria
 		return false;
 
 	// The texture name doubles as the relative file name
-	// It's assumed to have already been set by this point	
+	// It's assumed to have already been set by this point
 	// Compute the cache name
 	char pCacheFileName[MATERIAL_MAX_PATH];
 	Q_snprintf( pCacheFileName, sizeof( pCacheFileName ), "materials/%s.vtf", pTextureName );
@@ -158,7 +158,7 @@ static bool IsTexture( const char *pTextureName )
 		return false;
 
 	// The texture name doubles as the relative file name
-	// It's assumed to have already been set by this point	
+	// It's assumed to have already been set by this point
 	// Compute the cache name
 	char pCacheFileName[MATERIAL_MAX_PATH];
 	Q_snprintf( pCacheFileName, sizeof( pCacheFileName ), "materials/%s.vtf", pTextureName );
@@ -187,7 +187,7 @@ static float MaterialFloatKeyValue( KeyValues *pKeyValues, const char *pKeyName,
 		if ( flValue != flDefault )
 			return flValue;
 	}
-	
+
 	return flDefault;
 }
 
@@ -272,7 +272,7 @@ static bool MaterialVectorKeyValue( KeyValues *pKeyValues, const char *pKeyName,
 			return true;
 		}
 	}
-	
+
 	*pDim = nDefaultDim;
 	memcpy( pVector, pDefault, nDefaultDim * sizeof(float) );
 	return false;
@@ -292,7 +292,7 @@ static bool DoesMaterialHaveKey( KeyValues *pKeyValues, const char *pKeyName )
 		if ( DoesMaterialHaveKey( pSubKey, pKeyName ) )
 			return true;
 	}
-	
+
 	return false;
 }
 
@@ -318,12 +318,12 @@ void CheckKeyValues( KeyValues *pKeyValues, CUtlVector<VTFInfo_t> &vtf )
 	{
 		if ( pSubKey->GetDataType() != KeyValues::TYPE_STRING )
 			continue;
-		
+
 		if ( IsTexture( pSubKey->GetString() ) )
 		{
 			int nLen = Q_strlen( pSubKey->GetString() ) + 1;
 			char *pTemp = (char*)_alloca( nLen );
-			memcpy( pTemp, pSubKey->GetString(), nLen ); 
+			memcpy( pTemp, pSubKey->GetString(), nLen );
 			Q_FixSlashes( pTemp );
 
 			int nCount = vtf.Count();
@@ -380,7 +380,7 @@ void CheckMaterial( KeyValues *pKeyValues, const char *pRoot, const char *pFileN
 			bool bHasBaseAlphaEnvMapMask = DoesMaterialHaveKey( pKeyValues, "$basealphaenvmapmask" );
 			if ( (flAlpha == 1.0f) && !bHasVertexAlpha && !bHasAlphaTest && !bHasTranslucent && !bHasSelfIllum && !bHasBaseAlphaEnvMapMask )
 			{
-				Warning("Material \"%s\": BASETEXTURE \"%s\"\n", pFileName, pBaseTextureName ); 
+				Warning("Material \"%s\": BASETEXTURE \"%s\"\n", pFileName, pBaseTextureName );
 			}
 		}
 	}
@@ -397,7 +397,7 @@ void CheckMaterial( KeyValues *pKeyValues, const char *pRoot, const char *pFileN
 			bool bHasNormalMapAlphaEnvMapMask = DoesMaterialHaveKey( pKeyValues, "$normalmapalphaenvmapmask" );
 			if ( !bHasEnvmap || !bHasNormalMapAlphaEnvMapMask )
 			{
-				Warning("Material \"%s\": BUMPMAP \"%s\"\n", pFileName, pBumpmapName ); 
+				Warning("Material \"%s\": BUMPMAP \"%s\"\n", pFileName, pBumpmapName );
 			}
 		}
 	}
@@ -415,14 +415,14 @@ void CheckMaterial( KeyValues *pKeyValues, const char *pRoot, const char *pFileN
 		int nDim;
 		float retVal[4];
 		float defaultVal[4] = { 1, 1, 1, 1 };
-		
+
 		if ( MaterialVectorKeyValue( pKeyValues, "$envmaptint", 3, defaultVal, &nDim, retVal ) )
 		{
-			Warning("ENVMAP + ENVMAPTINT : Material \"%s\"\n", pFileName ); 
+			Warning("ENVMAP + ENVMAPTINT : Material \"%s\"\n", pFileName );
 		}
 //		else
 //		{
-//			Warning("ENVMAP only: Material \"%s\"\n", pFileName ); 
+//			Warning("ENVMAP only: Material \"%s\"\n", pFileName );
 //		}
 	}
 	*/
@@ -437,16 +437,16 @@ void CheckMaterial( KeyValues *pKeyValues, const char *pRoot, const char *pFileN
 	{
 		bool bUsesAlpha, bIsCompressed, bIsPalettized;
 		int nSizeInBytes;
-		if ( DoesTextureUseNormal( pKeyValues->GetString( "$normalmap" ), 
+		if ( DoesTextureUseNormal( pKeyValues->GetString( "$normalmap" ),
 			pFileName, bUsesAlpha, bIsCompressed, bIsPalettized, nSizeInBytes ) )
 		{
 			if ( bIsCompressed )
 			{
-				Warning("Bad : Material compressed \"%s\"\n", pFileName ); 
+				Warning("Bad : Material compressed \"%s\"\n", pFileName );
 			}
 			else
 			{
-				Warning("Bad : Material \"%s\"\n", pFileName ); 
+				Warning("Bad : Material \"%s\"\n", pFileName );
 			}
 		}
 	}
@@ -458,14 +458,14 @@ void CheckMaterial( KeyValues *pKeyValues, const char *pRoot, const char *pFileN
 		return;
 	}
 
-	if ( DoesMaterialHaveKey( pKeyValues, "$envmap" ) || 
+	if ( DoesMaterialHaveKey( pKeyValues, "$envmap" ) ||
 		DoesMaterialHaveKey( pKeyValues, "$parallaxmap" ) ||
 		DoesMaterialHaveKey( pKeyValues, "$bumpmap" ) ||
-		DoesMaterialHaveKey( pKeyValues, "$vertexcolor" ) || 
+		DoesMaterialHaveKey( pKeyValues, "$vertexcolor" ) ||
 		DoesMaterialHaveKey( pKeyValues, "$basetexture2" )
 		)
 	{
-		Warning("Bad : Material \"%s\"\n", pFileName ); 
+		Warning("Bad : Material \"%s\"\n", pFileName );
 	}
 */
 
@@ -474,7 +474,7 @@ void CheckMaterial( KeyValues *pKeyValues, const char *pRoot, const char *pFileN
 //		Msg( " Checking %s\n", pSubKey->GetString() );
 		if ( pSubKey->GetDataType() != KeyValues::TYPE_STRING )
 			continue;
-		
+
 		bool bUsesAlpha, bIsCompressed;
 		int nSizeInBytes;
 		if ( DoesTextureUseNormal( pSubKey->GetString(), pFileName, bUsesAlpha, bIsCompressed, nSizeInBytes ) )
@@ -503,7 +503,7 @@ void CheckMaterial( KeyValues *pKeyValues, const char *pRoot, const char *pFileN
 				}
 			}
 		}
-	}	
+	}
 
 /*
 	if ( !Q_stristr( pShaderName, "VertexLitGeneric" ) )
@@ -511,7 +511,7 @@ void CheckMaterial( KeyValues *pKeyValues, const char *pRoot, const char *pFileN
 
 	if ( !DoesMaterialHaveKey( pKeyValues, "$envmap" ) && DoesMaterialHaveKey( pKeyValues, "$bumpmap" ) )
 	{
-		Warning("BUMPMAP + no ENVMAP : Material \"%s\"\n", pFileName ); 
+		Warning("BUMPMAP + no ENVMAP : Material \"%s\"\n", pFileName );
 	}
 */
 
@@ -527,13 +527,13 @@ void CheckVTFInDirectoryRecursive( const char *pRoot, const char *pDirectory, CU
 	char buf[BUF_SIZE];
 	WIN32_FIND_DATA wfd;
 	HANDLE findHandle;
-	
+
 	sprintf( buf, "%s/%s/*.vtf", pRoot, pDirectory );
 
 	findHandle = FindFirstFile( buf, &wfd );
-	if ( findHandle != INVALID_HANDLE_VALUE ) 
-	{ 
-		do 
+	if ( findHandle != INVALID_HANDLE_VALUE )
+	{
+		do
 		{
 			int i = vtf.AddToTail( );
 
@@ -548,21 +548,21 @@ void CheckVTFInDirectoryRecursive( const char *pRoot, const char *pDirectory, CU
 			vtf[i].m_VTFName = &buf2[10];
 			vtf[i].m_bFoundInVMT = false;
 
-		} while ( FindNextFile ( findHandle, &wfd ) ); 
-		
-		FindClose ( findHandle ); 
+		} while ( FindNextFile ( findHandle, &wfd ) );
+
+		FindClose ( findHandle );
 	}
 
 	// do subdirectories
 	sprintf( buf, "%s/%s/*.*", pRoot, pDirectory );
 	findHandle = FindFirstFile( buf, &wfd );
-	if ( findHandle != INVALID_HANDLE_VALUE ) 
-	{ 
-		do 
-		{ 
+	if ( findHandle != INVALID_HANDLE_VALUE )
+	{
+		do
+		{
 			if( wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY )
 			{
-				if( ( strcmp( wfd.cFileName, ".." ) == 0 ) || 
+				if( ( strcmp( wfd.cFileName, ".." ) == 0 ) ||
 					( strcmp( wfd.cFileName, "." ) == 0 ) )
 				{
 					continue;
@@ -572,8 +572,8 @@ void CheckVTFInDirectoryRecursive( const char *pRoot, const char *pDirectory, CU
 				Q_snprintf( buf, MAX_PATH, "%s/%s", pDirectory, wfd.cFileName );
 				CheckVTFInDirectoryRecursive( pRoot, buf, vtf );
 			}
-		} while ( FindNextFile ( findHandle, &wfd ) ); 
-		FindClose ( findHandle ); 
+		} while ( FindNextFile ( findHandle, &wfd ) );
+		FindClose ( findHandle );
 	}
 
 #undef BUF_SIZE
@@ -589,12 +589,12 @@ void _CheckMateralsInDirectoryRecursive( const char *pRoot, const char *pDirecto
 	char buf[BUF_SIZE];
 	WIN32_FIND_DATA wfd;
 	HANDLE findHandle;
-	
+
 	sprintf( buf, "%s/%s/*.vmt", pRoot, pDirectory );
 	findHandle = FindFirstFile( buf, &wfd );
-	if ( findHandle != INVALID_HANDLE_VALUE ) 
-	{ 
-		do 
+	if ( findHandle != INVALID_HANDLE_VALUE )
+	{
+		do
 		{
 			KeyValues * vmtKeyValues = new KeyValues("vmt");
 
@@ -610,21 +610,21 @@ void _CheckMateralsInDirectoryRecursive( const char *pRoot, const char *pDirecto
 
 			vmtKeyValues->deleteThis();
 
-		} while ( FindNextFile ( findHandle, &wfd ) ); 
-		
-		FindClose ( findHandle ); 
+		} while ( FindNextFile ( findHandle, &wfd ) );
+
+		FindClose ( findHandle );
 	}
 
 	// do subdirectories
 	sprintf( buf, "%s/%s/*.*", pRoot, pDirectory );
 	findHandle = FindFirstFile( buf, &wfd );
-	if ( findHandle != INVALID_HANDLE_VALUE ) 
-	{ 
-		do 
-		{ 
+	if ( findHandle != INVALID_HANDLE_VALUE )
+	{
+		do
+		{
 			if( wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY )
 			{
-				if( ( strcmp( wfd.cFileName, ".." ) == 0 ) || 
+				if( ( strcmp( wfd.cFileName, ".." ) == 0 ) ||
 					( strcmp( wfd.cFileName, "." ) == 0 ) )
 				{
 					continue;
@@ -634,8 +634,8 @@ void _CheckMateralsInDirectoryRecursive( const char *pRoot, const char *pDirecto
 				Q_snprintf( buf, MAX_PATH, "%s/%s", pDirectory, wfd.cFileName );
 				_CheckMateralsInDirectoryRecursive( pRoot, buf, vtf );
 			}
-		} while ( FindNextFile ( findHandle, &wfd ) ); 
-		FindClose ( findHandle ); 
+		} while ( FindNextFile ( findHandle, &wfd ) );
+		FindClose ( findHandle );
 	}
 
 //	Msg( "Normal only %d/%d/%d Normal w alpha %d/%d\n", s_nNormalBytes, s_nNormalPalettizedBytes, s_nNormalCompressedBytes, s_nNormalWithAlphaBytes, s_nNormalWithAlphaCompressedBytes );
@@ -661,4 +661,3 @@ void CheckMateralsInDirectoryRecursive( const char *pRoot, const char *pDirector
 }
 
 #endif // _CHECK_MATERIALS_FOR_PROBLEMS
-

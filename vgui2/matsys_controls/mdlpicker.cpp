@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -88,7 +88,7 @@ static int __cdecl MDLBrowserSortFunc( vgui::ListPanel *pPanel, const ListPanelI
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CMDLPicker::CMDLPicker( vgui::Panel *pParent, int nFlags ) : 
+CMDLPicker::CMDLPicker( vgui::Panel *pParent, int nFlags ) :
 	BaseClass( pParent, "MDL Files", "mdl", "models", "mdlName" )
 {
 	for( int i = 0; i < MAX_SELECTED_MODELS; i++ )
@@ -144,7 +144,7 @@ CMDLPicker::CMDLPicker( vgui::Panel *pParent, int nFlags ) :
 
 		m_pRenderPage->AddActionSignalTarget( this );
 
-        m_pRenderPage->LoadControlSettingsAndUserConfig( "resource/mdlpickerrender.res" );
+	m_pRenderPage->LoadControlSettingsAndUserConfig( "resource/mdlpickerrender.res" );
 
 		RefreshRenderSettings();
 
@@ -189,7 +189,7 @@ CMDLPicker::CMDLPicker( vgui::Panel *pParent, int nFlags ) :
 		m_pSkinsList->SetSelectIndividualCells( true );
 		m_pSkinsList->SetEmptyListText( "No .MDL file currently selected." );
 		m_pSkinsList->SetDragEnabled( true );
-		m_pSkinsList->SetAutoResize( Panel::PIN_TOPLEFT, Panel::AUTORESIZE_DOWNANDRIGHT, 6, 6, -6, -6 );		
+		m_pSkinsList->SetAutoResize( Panel::PIN_TOPLEFT, Panel::AUTORESIZE_DOWNANDRIGHT, 6, 6, -6, -6 );
 	}
 
 	if ( nFlags & PAGE_INFO )
@@ -211,7 +211,7 @@ CMDLPicker::CMDLPicker( vgui::Panel *pParent, int nFlags ) :
 		pTempCheck->SetDisabledFgColor2( pTempCheck->GetFgColor());
 
 		m_pPropDataList = new vgui::ListPanel( m_pInfoPage, "PropData" );
-		m_pPropDataList->AddColumnHeader( 0, "key", "key", 250, ListPanel::COLUMN_FIXEDSIZE );		
+		m_pPropDataList->AddColumnHeader( 0, "key", "key", 250, ListPanel::COLUMN_FIXEDSIZE );
 		m_pPropDataList->AddColumnHeader( 1, "value", "value", 52, 0 );
 		m_pPropDataList->AddActionSignalTarget( this );
 		m_pPropDataList->SetSelectIndividualCells( false );
@@ -299,7 +299,7 @@ void CMDLPicker::RefreshRenderSettings()
 	pToggle = (vgui::CheckButton*)m_pRenderPage->FindChildByName("NoGround");
 	pToggle->AddActionSignalTarget( this );
 	m_pMDLPreview->SetGroundGrid( !pToggle->IsSelected() );
-	
+
 	// collision
 	pToggle = (vgui::CheckButton*)m_pRenderPage->FindChildByName("Collision");
 	pToggle->AddActionSignalTarget( this );
@@ -363,12 +363,12 @@ void CMDLPicker::OnAssetSelected( KeyValues *pParams )
 	Q_snprintf( pProbeBuf, sizeof(pProbeBuf), "materials/lightprobes/%s", pAsset );
 
 	BeginDMXContext();
-	CDmxElement *pLightProbe = NULL; 
+	CDmxElement *pLightProbe = NULL;
 	bool bOk = UnserializeDMX( pProbeBuf, "GAME", true, &pLightProbe );
 	if ( !pLightProbe || !bOk )
 	{
 		char pBuf[1024];
-		Q_snprintf( pBuf, sizeof(pBuf), "Error loading lightprobe file '%s'!\n", pProbeBuf ); 
+		Q_snprintf( pBuf, sizeof(pBuf), "Error loading lightprobe file '%s'!\n", pProbeBuf );
 		vgui::MessageBox *pMessageBox = new vgui::MessageBox( "Error Loading File!\n", pBuf, GetParent() );
 		pMessageBox->DoModal( );
 
@@ -449,7 +449,7 @@ void CMDLPicker::OnCommand( const char *pCommand )
 			for ( int i = 0; i < nCount; ++i )
 			{
 				if ( m_pAssetBrowser->IsItemVisible( m_AssetList[ i ].m_nItemId ) &&
-					 m_pAssetBrowser->IsItemSelected( m_AssetList[ i ].m_nItemId ) )
+					m_pAssetBrowser->IsItemSelected( m_AssetList[ i ].m_nItemId ) )
 				{
 					KeyValues *pItemKeyValues = m_pAssetBrowser->GetItem( m_AssetList[ i ].m_nItemId );
 					const char *pSelectedAsset = pItemKeyValues->GetString( "asset" );
@@ -504,7 +504,7 @@ void CMDLPicker::OnDirectorySelected( char const *dir )
 
 
 //-----------------------------------------------------------------------------
-// Screen captures the specific model and writes out a .tga.  Assumes the MDLPreview 
+// Screen captures the specific model and writes out a .tga.  Assumes the MDLPreview
 // panel has been properly adjusted to 0,0 in screen space and that width / height
 // have been set.
 //-----------------------------------------------------------------------------
@@ -524,11 +524,11 @@ const char *CMDLPicker::CaptureModel( int nModIndex, const char *AssetName, cons
 	g_pMaterialSystem->BeginFrame( 0 );
 	g_pStudioRender->BeginFrame();
 
-//	pRenderContext->ClearColor4ub( 0, 0, 0, 0 ); 
+//	pRenderContext->ClearColor4ub( 0, 0, 0, 0 );
 //	pRenderContext->ClearBuffers( true, true );
 
 	Color NewPanelColor;
-	
+
 	NewPanelColor.SetColor( 0, 0, 0, 0 );
 	m_pMDLPreview->SetBackgroundColor( NewPanelColor );
 
@@ -548,7 +548,7 @@ const char *CMDLPicker::CaptureModel( int nModIndex, const char *AssetName, cons
 	g_pMaterialSystem->BeginFrame( 0 );
 	g_pStudioRender->BeginFrame();
 
-//	pRenderContext->ClearColor4ub( 255, 255, 255, 0 ); 
+//	pRenderContext->ClearColor4ub( 255, 255, 255, 0 );
 //	pRenderContext->ClearBuffers( true, true );
 
 	NewPanelColor.SetColor( 255, 255, 255, 0 );
@@ -573,8 +573,8 @@ const char *CMDLPicker::CaptureModel( int nModIndex, const char *AssetName, cons
 		for( int x = 0; x < Width; x++, pBlackPos += 4, pWhitePos += 4 )
 		{
 			if ( ( *( pBlackPos + 0 ) ) != ( *( pWhitePos + 0 ) ) ||		// blue
-				 ( *( pBlackPos + 1 ) ) != ( *( pWhitePos + 1 ) ) ||		// green
-				 ( *( pBlackPos + 2 ) ) != ( *( pWhitePos + 2 ) ) )			// red
+				( *( pBlackPos + 1 ) ) != ( *( pWhitePos + 1 ) ) ||		// green
+				( *( pBlackPos + 2 ) ) != ( *( pWhitePos + 2 ) ) )			// red
 			{
 				unsigned char	nBlueDiff = ( *( pBlackPos + 0 ) );
 				unsigned char	nGreenDiff = ( *( pBlackPos + 1 ) );
@@ -655,7 +655,7 @@ void CMDLPicker::CaptureScreenCaps( void )
 
 	CColorPickerButton *m_pBackgroundColor;
 	m_pBackgroundColor = ( CColorPickerButton * )m_pScreenCapsPage->FindChildByName( "BackgroundColor" );
-	
+
 	Color NewPanelColor = m_pBackgroundColor->GetColor();
 	NewPanelColor[3] = 0;
 	m_pMDLPreview->SetBackgroundColor( NewPanelColor );
@@ -709,7 +709,7 @@ const char *getenv( const char *varname )
 
 
 //-----------------------------------------------------------------------------
-// Writes two very simple .vmt file, one for the passed in asset, 
+// Writes two very simple .vmt file, one for the passed in asset,
 // and the other for <asset>_large.
 //-----------------------------------------------------------------------------
 void CMDLPicker::WriteBackbackVMTFiles( const char *pAssetName )
@@ -729,7 +729,7 @@ void CMDLPicker::WriteBackbackVMTFiles( const char *pAssetName )
 	char pBaseTextureName[ MAX_PATH ];
 	Q_snprintf( pBaseTextureName, sizeof( pBaseTextureName ), "backpack\\%s", pStrippedAssetName );
 	Q_FixSlashes( pBaseTextureName );
-	
+
 	{
 		CP4AutoEditAddFile autop4( pVMTFilename );
 		FileHandle_t fileHandle = g_pFullFileSystem->Open( pVMTFilename, "w" );
@@ -1242,7 +1242,7 @@ void CMDLPicker::RefreshActivitiesAndSequencesList()
 	m_pSequencesList->SetEmptyListText(".MDL file contains no sequences");
 
 	studiohdr_t *hdr = vgui::MDLCache()->GetStudioHdr( m_hSelectedMDL[ 0 ] );
-	
+
 	CUtlDict<int, unsigned short> activityNames( true, 0, hdr->GetNumSeq() );
 
 	for (int j = 0; j < hdr->GetNumSeq(); j++)
@@ -1410,7 +1410,7 @@ void CMDLPicker::GetSelectedMDLName( char *pBuffer, int nMaxLen )
 		pBuffer[0] = 0;
 	}
 }
-	
+
 //-----------------------------------------------------------------------------
 // Gets the selected activity/sequence
 //-----------------------------------------------------------------------------
@@ -1513,7 +1513,7 @@ void CMDLPicker::SelectSkin( int nSkin )
 	PostActionSignal( new KeyValues( "SkinSelectionChanged", "skin", nSkin));
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Updates preview when an item is selected
 //-----------------------------------------------------------------------------
@@ -1544,7 +1544,7 @@ void CMDLPicker::OnItemSelected( KeyValues *kv )
 	{
 		int nSelectedSkin = GetSelectedSkin();
 		SelectSkin( nSelectedSkin );
-	
+
 		return;
 	}
 
@@ -1569,7 +1569,7 @@ void CMDLPicker::OnPageChanged( )
 		}
 		return;
 	}
-	
+
 	if ( m_pActivitiesPage && ( m_pViewsSheet->GetActivePage() == m_pActivitiesPage ) )
 	{
 		m_pActivitiesList->RequestFocus();
@@ -1590,7 +1590,7 @@ void CMDLPicker::OnPageChanged( )
 // Purpose: Modal picker frame
 //
 //-----------------------------------------------------------------------------
-CMDLPickerFrame::CMDLPickerFrame( vgui::Panel *pParent, const char *pTitle, int nFlags ) : 
+CMDLPickerFrame::CMDLPickerFrame( vgui::Panel *pParent, const char *pTitle, int nFlags ) :
 	BaseClass( pParent )
 {
 	SetAssetPicker( new CMDLPicker( this, nFlags ) );
@@ -1632,7 +1632,7 @@ int CMDLPicker::UpdateSkinsList()
 			}
 		}
 	}
-		
+
 	return nNumSkins;
 }
 
@@ -1641,7 +1641,7 @@ void CMDLPicker::UpdateInfoTab()
 	studiohdr_t *hdr = vgui::MDLCache()->GetStudioHdr( m_hSelectedMDL[ 0 ] );
 	if ( !hdr )
 		return;
-	
+
 	int nMass = hdr->mass;
 	Panel *pTempPanel = m_pInfoPage->FindChildByName("MassValue");
 	char massBuff[10];
@@ -1672,7 +1672,7 @@ void CMDLPicker::UpdateInfoTab()
 	{
 		m_pPropDataList->RemoveAll();
 	}
-	
+
 	CheckButton * pTempCheck = (CheckButton *)m_pInfoPage->FindChildByName("StaticObject");
 	pTempCheck->SetCheckButtonCheckable( true );
 	pTempCheck->SetSelected( bIsStatic );
@@ -1691,7 +1691,7 @@ void CMDLPicker::UpdateInfoTab()
 
 int CMDLPicker::UpdatePropDataList( const char* pszPropData, bool &bIsStatic )
 {
-	int iCount = 0;  
+	int iCount = 0;
 
 	if ( m_pPropDataList )
 	{
@@ -1713,11 +1713,11 @@ int CMDLPicker::UpdatePropDataList( const char* pszPropData, bool &bIsStatic )
 			beginChunk = endChunk + 1;
 			beginChunk = strchr( beginChunk, '\"' ) + 1;
 			endChunk = strchr( beginChunk, '\"' );
-			Q_memcpy( valueText, beginChunk, endChunk - beginChunk );		
+			Q_memcpy( valueText, beginChunk, endChunk - beginChunk );
 			if( !Q_strcmp( keyText, "allowstatic" ) && !Q_strcmp( valueText , "1" ) )
 			{
 				if ( !bIsStatic )
-				{					
+				{
 					Label * pTempLabel = (Label *)m_pInfoPage->FindChildByName("StaticText");
 					pTempLabel->SetVisible( true );
 				}
@@ -1735,7 +1735,7 @@ int CMDLPicker::UpdatePropDataList( const char* pszPropData, bool &bIsStatic )
 				return iCount;
 			}
 			beginChunk++;
-			endChunk = strchr( beginChunk, '\"' );		
+			endChunk = strchr( beginChunk, '\"' );
 		}
 	}
 	return iCount;

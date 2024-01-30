@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -28,7 +28,7 @@ ConVar r_PhysPropStaticLighting( "r_PhysPropStaticLighting", "1" );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_PhysicsProp::C_PhysicsProp( void )
 {
@@ -40,7 +40,7 @@ C_PhysicsProp::C_PhysicsProp( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_PhysicsProp::~C_PhysicsProp( void )
 {
@@ -52,7 +52,7 @@ ConVar r_visualizeproplightcaching( "r_visualizeproplightcaching", "0" );
 
 //-----------------------------------------------------------------------------
 // Purpose: Draws the object
-// Input  : flags - 
+// Input  : flags -
 //-----------------------------------------------------------------------------
 bool C_PhysicsProp::OnInternalDrawModel( ClientModelRenderInfo_t *pInfo )
 {
@@ -87,7 +87,7 @@ bool C_PhysicsProp::OnInternalDrawModel( ClientModelRenderInfo_t *pInfo )
 		// going to sleep, have static lighting
 		pInfo->flags |= STUDIO_STATIC_LIGHTING;
 	}
-	
+
 	// track state
 	m_bAwakeLastTime = m_bAwake;
 

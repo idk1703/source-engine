@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,7 +32,7 @@ double UTIL_FloatTime (void)
 
 		base = current;
 	}
-	
+
 	return (double)(current - base)/(double)CLOCKS_PER_SEC;
 }
 
@@ -52,7 +52,7 @@ void CCodeProcessor::AddHeader( int depth, const char *filename, const char *roo
 			return;
 		}
 	}
-	
+
 	// Add to list
 	strcpy( m_Headers[ m_nHeaderCount++ ].name, filename );
 }
@@ -141,16 +141,16 @@ bool CCodeProcessor::TryBuild( const char *rootdir, const char *filename, unsign
 	if ( !CreateProcess( NULL, commandline, NULL, NULL, TRUE, 0, NULL, directory, &si, &pi ) )
 	{
 LPVOID lpMsgBuf;
-FormatMessage( 
-    FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-    FORMAT_MESSAGE_FROM_SYSTEM | 
-    FORMAT_MESSAGE_IGNORE_INSERTS,
-    NULL,
-    GetLastError(),
-    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-    (LPTSTR) &lpMsgBuf,
-    0,
-    NULL 
+FormatMessage(
+	FORMAT_MESSAGE_ALLOCATE_BUFFER |
+	FORMAT_MESSAGE_FROM_SYSTEM |
+	FORMAT_MESSAGE_IGNORE_INSERTS,
+	NULL,
+	GetLastError(),
+	MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
+	(LPTSTR) &lpMsgBuf,
+	0,
+	NULL
 );
 // Process any inserts in lpMsgBuf.
 // ...
@@ -162,7 +162,7 @@ LocalFree( lpMsgBuf );
 	}
 
 	// Wait until child process exits.
-    WaitForSingleObject( pi.hProcess, INFINITE );
+	WaitForSingleObject( pi.hProcess, INFINITE );
 
 	bool retval = false;
 	DWORD exitCode = -1;
@@ -173,10 +173,10 @@ LocalFree( lpMsgBuf );
 			retval = true;
 		}
 	}
-	
-    // Close process and thread handles. 
-    CloseHandle( pi.hProcess );
-    CloseHandle( pi.hThread );
+
+	// Close process and thread handles.
+	CloseHandle( pi.hProcess );
+	CloseHandle( pi.hThread );
 
 	return retval;
 }
@@ -234,7 +234,7 @@ retry:
 		}
 		m_Modules[ m_nModuleCount ].skipped = true;
 		strcpy( m_Modules[ m_nModuleCount++ ].name, filename );
-		
+
 		skippedfiles++;
 		return;
 	}
@@ -251,7 +251,7 @@ retry:
 	if ( !forcequiet )
 	{
 		strcpy( m_szCurrentCPP, filename );
-		
+
 		vprint( 0, "- %s\n", (char *)&filename[ m_nOffset ] );
 	}
 
@@ -276,7 +276,7 @@ retry:
 			{
 				vprint( 1, "#include %s", com_token );
 				m_nHeadersProcessed++;
-				numheaders++;				
+				numheaders++;
 
 				AddHeader( depth, filename, m_szCurrentCPP );
 
@@ -395,7 +395,7 @@ void CCodeProcessor::PrintResults( void )
 
 	vprint( 0, "%.3f K lines of code processed\n",
 		(double)m_nLinesOfCode / 1024.0 );
-	
+
 	double elapsed = ( m_flEnd - m_flStart );
 
 	if ( elapsed > 0.0 )

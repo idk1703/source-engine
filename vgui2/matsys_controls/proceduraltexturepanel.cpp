@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -33,7 +33,7 @@ CProceduralTexturePanel::~CProceduralTexturePanel()
 	CleanUp();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // initialization, shutdown
 //-----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ bool CProceduralTexturePanel::Init( int nWidth, int nHeight, bool bAllocateImage
 	{
 		m_pImageBuffer = new BGRA8888_t[nWidth * nHeight];
 	}
-	
+
 	m_TextureSubRect.x = m_TextureSubRect.y = 0;
 	m_TextureSubRect.width = nWidth;
 	m_TextureSubRect.height = nHeight;
@@ -54,8 +54,8 @@ bool CProceduralTexturePanel::Init( int nWidth, int nHeight, bool bAllocateImage
 	Q_snprintf( pTemp, 512, "__%s", GetName() );
 
 	ITexture *pTex = MaterialSystem()->CreateProceduralTexture( pTemp, TEXTURE_GROUP_VGUI,
-			m_nWidth, m_nHeight, IMAGE_FORMAT_BGRX8888, 
-			TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT | TEXTUREFLAGS_NOMIP | 
+			m_nWidth, m_nHeight, IMAGE_FORMAT_BGRX8888,
+			TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT | TEXTUREFLAGS_NOMIP |
 			TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_PROCEDURAL | TEXTUREFLAGS_SINGLECOPY );
 	pTex->SetTextureRegenerator( this );
 	m_ProceduralTexture.Init( pTex );
@@ -85,7 +85,7 @@ void CProceduralTexturePanel::MaintainProportions( bool bEnable )
 	m_bMaintainProportions = bEnable;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the image buffer + dimensions
 //-----------------------------------------------------------------------------
@@ -107,7 +107,7 @@ void CProceduralTexturePanel::CleanUp()
 
 
 //-----------------------------------------------------------------------------
-// Default implementation of regenerate texture bits 
+// Default implementation of regenerate texture bits
 //-----------------------------------------------------------------------------
 void CProceduralTexturePanel::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *pVTFTexture, Rect_t *pRect )
 {
@@ -122,7 +122,7 @@ void CProceduralTexturePanel::RegenerateTextureBits( ITexture *pTexture, IVTFTex
 	Assert( nWidth == m_nWidth && nHeight == m_nHeight );
 
 	CPixelWriter pixelWriter;
-	pixelWriter.SetPixelMemory( pVTFTexture->Format(), 
+	pixelWriter.SetPixelMemory( pVTFTexture->Format(),
 		pVTFTexture->ImageData( 0, 0, 0 ), pVTFTexture->RowSizeInBytes( 0 ) );
 
 	for ( int y = 0; y < nHeight; ++y )
@@ -169,7 +169,7 @@ void CProceduralTexturePanel::SetPaintRect( const Rect_t *pPaintRect )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Sets the draw rect
 //-----------------------------------------------------------------------------

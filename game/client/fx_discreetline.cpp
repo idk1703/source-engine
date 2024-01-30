@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -25,7 +25,7 @@ CFXLine
 ==================================================
 */
 
-CFXDiscreetLine::CFXDiscreetLine( const char *name, const Vector& start, const Vector& direction, 
+CFXDiscreetLine::CFXDiscreetLine( const char *name, const Vector& start, const Vector& direction,
 	float velocity, float length, float clipLength, float scale, float life, const char *shader )
 : CClientSideEffect( name )
 {
@@ -74,7 +74,7 @@ void CFXDiscreetLine::Draw( double frametime )
 	// Calculate our distance along our path
 	float	sDistance = m_fVelocity * m_fStartTime;
 	float	eDistance = sDistance - m_fLength;
-	
+
 	//Clip to start
 	sDistance = MAX( 0.0f, sDistance );
 	eDistance = MAX( 0.0f, eDistance );
@@ -101,7 +101,7 @@ void CFXDiscreetLine::Draw( double frametime )
 	//Setup our info for drawing the line
 	VectorSubtract( vecEnd, vecStart, lineDir );
 	VectorSubtract( vecEnd, CurrentViewOrigin(), viewDir );
-	
+
 	cross = lineDir.Cross( viewDir );
 	VectorNormalize( cross );
 
@@ -109,13 +109,13 @@ void CFXDiscreetLine::Draw( double frametime )
 	IMesh *pMesh;
 
 	CMatRenderContextPtr pRenderContext( materials );
-		
+
 	// Better, more visible tracers
 	if ( tracer_extra.GetBool() )
 	{
 		float flScreenWidth = ScreenWidth();
 		float flHalfScreenWidth = flScreenWidth * 0.5f;
-		
+
 		float zCoord = CurrentViewForward().Dot( vecStart - CurrentViewOrigin() );
 		float flScreenSpaceWidth = m_fScale * flHalfScreenWidth / zCoord;
 
@@ -285,4 +285,3 @@ void CFXDiscreetLine::Update( double frametime )
 	//VectorMA( m_vecStart, frametime, m_vecStartVelocity, m_vecStart );
 	//VectorMA( m_vecEnd, frametime, m_vecStartVelocity, m_vecEnd );
 }
-

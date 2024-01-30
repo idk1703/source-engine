@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -170,12 +170,12 @@ void DrawRefract_DX9( CBaseVSShader *pShader, IMaterialVar** params, IShaderDyna
 		{
 			flags |= VERTEX_COLOR;
 		}
-		
+
 		// This shader supports compressed vertices, so OR in that flag:
 		flags |= VERTEX_FORMAT_COMPRESSED;
 
 		pShaderShadow->VertexShaderVertexFormat( flags, nTexCoordCount, NULL, userDataSize );
-		
+
 		DECLARE_STATIC_VERTEX_SHADER( refract_vs20 );
 		SET_STATIC_VERTEX_SHADER_COMBO( MODEL,  bIsModel );
 		SET_STATIC_VERTEX_SHADER_COMBO( COLORMODULATE, bColorModulate );
@@ -282,7 +282,7 @@ void DrawRefract_DX9( CBaseVSShader *pShader, IMaterialVar** params, IShaderDyna
 		pShader->SetPixelShaderConstantGammaToLinear( 1, info.m_nRefractTint );
 		pShader->SetPixelShaderConstant( 2, info.m_nEnvmapContrast );
 		pShader->SetPixelShaderConstant( 3, info.m_nEnvmapSaturation );
-		float c5[4] = { params[info.m_nRefractAmount]->GetFloatValue(), 
+		float c5[4] = { params[info.m_nRefractAmount]->GetFloatValue(),
 			params[info.m_nRefractAmount]->GetFloatValue(), 0.0f, 0.0f };
 
 		// Time % 1000
@@ -295,4 +295,3 @@ void DrawRefract_DX9( CBaseVSShader *pShader, IMaterialVar** params, IShaderDyna
 	}
 	pShader->Draw();
 }
-

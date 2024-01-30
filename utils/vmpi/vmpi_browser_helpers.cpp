@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,7 +37,5 @@ void FormatTimeString( unsigned long nInputSeconds, char *timeStr, int outLen )
 	else
 	{
 		Q_snprintf( timeStr, outLen, "%d seconds", nSeconds );
-	}		
+	}
 }
-
-

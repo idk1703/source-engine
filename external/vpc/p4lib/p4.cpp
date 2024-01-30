@@ -1,6 +1,6 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. =======
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -40,7 +40,7 @@ struct CClientPathRecord
 	bool m_bNegative;
 };
 
-	
+
 //-----------------------------------------------------------------------------
 // Global interfaces
 //-----------------------------------------------------------------------------
@@ -159,12 +159,12 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CP4, IP4, P4_INTERFACE_VERSION, s_p4 );
 
 
 //-----------------------------------------------------------------------------
-// Scoped class to push and pop a particular client spec 
+// Scoped class to push and pop a particular client spec
 //-----------------------------------------------------------------------------
 class CScopedClientSpec
 {
 public:
-	CScopedClientSpec( const char *pClientSpec );	
+	CScopedClientSpec( const char *pClientSpec );
 	~CScopedClientSpec();
 
 private:
@@ -195,7 +195,7 @@ CScopedClientSpec::~CScopedClientSpec()
 class CScopedFileClientSpec
 {
 public:
-	CScopedFileClientSpec( const char *pFullPath );	
+	CScopedFileClientSpec( const char *pFullPath );
 	~CScopedFileClientSpec();
 
 private:
@@ -228,12 +228,12 @@ CScopedFileClientSpec::~CScopedFileClientSpec()
 
 
 //-----------------------------------------------------------------------------
-// Scoped class to push and pop a particular client spec 
+// Scoped class to push and pop a particular client spec
 //-----------------------------------------------------------------------------
 class CScopedDirClientSpec
 {
 public:
-	CScopedDirClientSpec( const char *pFullPathDir );	
+	CScopedDirClientSpec( const char *pFullPathDir );
 	~CScopedDirClientSpec();
 
 private:
@@ -266,12 +266,12 @@ CScopedDirClientSpec::~CScopedDirClientSpec()
 
 
 //-----------------------------------------------------------------------------
-// Scoped class to push and pop a particular client spec 
+// Scoped class to push and pop a particular client spec
 //-----------------------------------------------------------------------------
 class CScopedPathClientSpec
 {
 public:
-	CScopedPathClientSpec( const char *pPathID );	
+	CScopedPathClientSpec( const char *pPathID );
 	~CScopedPathClientSpec();
 
 private:
@@ -306,7 +306,7 @@ CScopedPathClientSpec::~CScopedPathClientSpec()
 static void SplitP4Output(const char *data, char *pszCmd, char *pszInfo, int bufLen)
 {
 	V_strncpy(pszCmd, data, bufLen);
-	
+
 	char *mid = V_strstr(pszCmd, " ");
 	if (mid)
 	{
@@ -407,7 +407,7 @@ public:
 		// clear the list
 		InitRetrievingData();
 
-		// search for the paths - this string gets all revisions of a file, 
+		// search for the paths - this string gets all revisions of a file,
 		// from the version they have locally to the current version
 		// this is so we can see if the local files are out of date
 		char szSearch[MAX_PATH];
@@ -519,7 +519,7 @@ private:
 				continue;
 
 			char pLocalPath[MAX_PATH];
-			V_ComposeFileName( s_p4.GetLocalRoot(), pClientPath + nLen, pLocalPath, sizeof(pLocalPath) );  
+			V_ComposeFileName( s_p4.GetLocalRoot(), pClientPath + nLen, pLocalPath, sizeof(pLocalPath) );
 			V_FixSlashes( pLocalPath );
 			fileList[i].m_sLocalFile = pLocalPath;
 		}
@@ -542,7 +542,7 @@ private:
 			fileList[i].m_sLocalFile = pLocalPath;
 		}
 	}
-	
+
 	void OutputRecordInternal(P4File_t &file, const char *szCmd, const char *szInfo)
 	{
 		if (!V_strcmp(szCmd, "headRev"))
@@ -659,7 +659,7 @@ private:
 			if ( end < ARRAYSIZE(tmpCmd) )
 			{
 				const char *pChar = szCmd + end;
-				while ( isdigit(*pChar) && pChar > szCmd ) 
+				while ( isdigit(*pChar) && pChar > szCmd )
 				{
 					pChar--;
 				}
@@ -698,7 +698,7 @@ public:
 	{
 		InitRetrievingData();
 
-		// search for the paths - this string gets all revisions of a file, 
+		// search for the paths - this string gets all revisions of a file,
 		// from the version they have locally to the current version
 		// this is so we can see if the local files are out of date
 		char szSearch[MAX_PATH];
@@ -745,12 +745,12 @@ private:
 			int64 iTime = atoi(szInfo);
 
 			struct tm *gmt = gmtime(reinterpret_cast<time_t*>(&iTime));
-	
-			revision.m_nYear = gmt->tm_year + 1900; 
+
+			revision.m_nYear = gmt->tm_year + 1900;
 			revision.m_nMonth = gmt->tm_mon + 1;
 			revision.m_nDay = gmt->tm_mday;
 			revision.m_nHour = gmt->tm_hour;
-			revision.m_nMinute = gmt->tm_min; 
+			revision.m_nMinute = gmt->tm_min;
 			revision.m_nSecond = gmt->tm_sec;
 		}
 	}
@@ -1011,7 +1011,7 @@ public:
 	// calculates the depot root
 	void GetCommonDepotRoot(char *pszDest, int destSize)
 	{
-		int nCount = m_PathMap.Count(); 
+		int nCount = m_PathMap.Count();
 		if ( nCount == 0 )
 		{
 			pszDest[0] = 0;
@@ -1063,7 +1063,7 @@ public:
 		s_p4.GetClientApi().Run("client", this);
 	}
 
-	// saves out the new path spec to the 
+	// saves out the new path spec to the
 	void WriteClientspec()
 	{
 		// write out the new clientspec
@@ -1639,9 +1639,9 @@ bool CP4::DepotFileToLocalFile( const char *pDepotFile, char *pLocalPath, int nB
 		char pTruncatedClientPath[MAX_PATH];
 		V_strncpy( pTruncatedClientPath, pClientPath, bClientRecursive ? nPathLen-2 : nPathLen );
  		if ( V_stristr( pTruncatedClientPath, pClientPattern ) != pTruncatedClientPath )
-			continue;												   
+			continue;
 
-		// This is necessary if someone has a trailing slash on their root as in c:\valve\main\ 
+		// This is necessary if someone has a trailing slash on their root as in c:\valve\main\
 		// Otherwise it'll return something like c:\valve\main\\src\blah.cpp and confuse VPC.
 		char szLocalRootWithoutSlashes[MAX_PATH];
 		V_strncpy( szLocalRootWithoutSlashes, s_p4.GetLocalRoot(), sizeof( szLocalRootWithoutSlashes ) );
@@ -1649,11 +1649,11 @@ bool CP4::DepotFileToLocalFile( const char *pDepotFile, char *pLocalPath, int nB
 
 		if ( nClientLen < nPathLen - 3 )
 		{
-			V_snprintf( pLocalPath, nBufLen, "%s\\%s%s", szLocalRootWithoutSlashes, pTruncatedClientPath + nClientLen, bRecursive ? pDepotFile + nLen - 3 : pDepotFile + nLen - 1 );  
+			V_snprintf( pLocalPath, nBufLen, "%s\\%s%s", szLocalRootWithoutSlashes, pTruncatedClientPath + nClientLen, bRecursive ? pDepotFile + nLen - 3 : pDepotFile + nLen - 1 );
 		}
 		else
 		{
-			V_snprintf( pLocalPath, nBufLen, "%s\\%s", szLocalRootWithoutSlashes, bRecursive ? pDepotFile + nLen - 3 : pDepotFile + nLen - 1 );  
+			V_snprintf( pLocalPath, nBufLen, "%s\\%s", szLocalRootWithoutSlashes, bRecursive ? pDepotFile + nLen - 3 : pDepotFile + nLen - 1 );
 		}
 		V_FixSlashes( pLocalPath );
 		nMatchCount = nLen;
@@ -1692,7 +1692,7 @@ const char *CP4::String( CUtlSymbol s ) const
 	return s.String();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: data accessor
 //-----------------------------------------------------------------------------
@@ -1731,7 +1731,7 @@ int CP4::GetLocalRootLength()
 	return m_iLocalRootLength;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: translates filespecs to depotFile paths
 //-----------------------------------------------------------------------------
@@ -1821,7 +1821,7 @@ CUtlVector<P4File_t> &CP4::GetFileListUsingClientSpec( const char *pPath, const 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: returns the list of files opened for edit/integrate/delete 
+// Purpose: returns the list of files opened for edit/integrate/delete
 //-----------------------------------------------------------------------------
 void CP4::GetOpenedFileList( CUtlVector<P4File_t> &fileList, bool bDefaultChangeOnly )
 {
@@ -1869,7 +1869,7 @@ void CP4::GetOpenedFileListInPath( const char *pPathID, CUtlVector<P4File_t> &fi
 	g_FileUser.RetrieveOpenedFiles( fileList, false );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: file history
 //-----------------------------------------------------------------------------
@@ -2135,18 +2135,18 @@ static bool MakeFilesWritable( int nCount, const char **ppFullPathList )
 	return bResult;
 }
 
-	
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CP4::OpenFileForAdd( const char *fullpath )
 {
 	return PerformPerforceOpCurChangeList( "add", fullpath );
 }
 
-	
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CP4::OpenFileForEdit( const char *fullpath )
 {
@@ -2158,7 +2158,7 @@ bool CP4::OpenFileForEdit( const char *fullpath )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CP4::OpenFileForDelete( const char *pFullPath )
 {
@@ -2167,7 +2167,7 @@ bool CP4::OpenFileForDelete( const char *pFullPath )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CP4::SyncFile( const char *pFullPath, int nRevision )
 {
@@ -2357,7 +2357,7 @@ bool CP4::PerformPerforceOpCurChangeList( const char *pOperation, const char *pF
 		pArgv += 2;
 		numArgv -= 2;
 	}
-	
+
 	m_Client.SetArgv( numArgv, pArgv );
 	m_Client.Run( pOperation, &g_ErrorHandlerUser );
 
@@ -2407,7 +2407,7 @@ void SubmitPerforceOp( int nCount, const char **ppFullPathList, const char *pDes
 	// Next, move all files to that new changelist
 	char pBuf[128];
 	V_snprintf( pBuf, sizeof(pBuf), "%d", nChangeList );
-	char **ppArgv = (char **)_alloca( (nCount + 2) * sizeof(char*) ); 
+	char **ppArgv = (char **)_alloca( (nCount + 2) * sizeof(char*) );
 	ppArgv[0] = "-c";
 	ppArgv[1] = pBuf;
 	memcpy( &ppArgv[2], ppFullPathList, nCount * sizeof(char*) );
@@ -2423,7 +2423,7 @@ bool CP4::SubmitFiles( int nCount, const char **ppFullPathList, const char *pDes
 	return PerformPerforceOp( SubmitPerforceOp, nCount, ppFullPathList, pDescription );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Opens a file in s_p4 win
 //-----------------------------------------------------------------------------
@@ -2450,15 +2450,15 @@ void CP4::OpenFileInP4Win( const char *pFullPath )
 	si.cb = sizeof(si);
 	ZeroMemory( &pi, sizeof(pi) );
 
-	// Start the child process. 
-	CreateProcess( NULL, // No module name (use command line). 
-		pSystem,			// Command line. 
-		NULL,             // Process handle not inheritable. 
-		NULL,             // Thread handle not inheritable. 
-		FALSE,            // Set handle inheritance to FALSE. 
-		0,                // No creation flags. 
-		NULL,             // Use parent's environment block. 
-		NULL,             // Use parent's starting directory. 
+	// Start the child process.
+	CreateProcess( NULL, // No module name (use command line).
+		pSystem,			// Command line.
+		NULL,             // Process handle not inheritable.
+		NULL,             // Thread handle not inheritable.
+		FALSE,            // Set handle inheritance to FALSE.
+		0,                // No creation flags.
+		NULL,             // Use parent's environment block.
+		NULL,             // Use parent's starting directory.
 		&si,              // Pointer to STARTUPINFO structure.
 		&pi );             // Pointer to PROCESS_INFORMATION structure.
 }
@@ -2518,7 +2518,7 @@ bool CP4::GetFileInfo( const char *pFullPath, P4File_t *pFileInfo )
 	return true;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Are we connected to the server? (and should we reconnect?)
 //-----------------------------------------------------------------------------

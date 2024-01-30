@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -52,12 +52,12 @@ C_AI_BaseNPC::C_AI_BaseNPC()
 //-----------------------------------------------------------------------------
 // Makes ragdolls ignore npcclip brushes
 //-----------------------------------------------------------------------------
-unsigned int C_AI_BaseNPC::PhysicsSolidMaskForEntity( void ) const 
+unsigned int C_AI_BaseNPC::PhysicsSolidMaskForEntity( void ) const
 {
 	// This allows ragdolls to move through npcclip brushes
 	if ( !IsRagdoll() )
 	{
-		return MASK_NPCSOLID; 
+		return MASK_NPCSOLID;
 	}
 	return MASK_SOLID;
 }
@@ -108,7 +108,7 @@ void C_AI_BaseNPC::ClientThink( void )
 	if ( pPlayer && m_flTimePingEffect > gpGlobals->curtime )
 	{
 		float fPingEffectTime = m_flTimePingEffect - gpGlobals->curtime;
-		
+
 		if ( fPingEffectTime > 0.0f )
 		{
 			Vector vRight, vUp;
@@ -182,4 +182,3 @@ bool C_AI_BaseNPC::GetRagdollInitBoneArrays( matrix3x4_t *pDeltaBones0, matrix3x
 
 	return bRet;
 }
-

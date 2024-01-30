@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -30,9 +30,9 @@ IMPLEMENT_DMEPANEL_FACTORY( CDmeSourceSkinPanel, DmeSourceSkin, "DmeSourceSkinDe
 //-----------------------------------------------------------------------------
 // Purpose: Constructor, destructor
 //-----------------------------------------------------------------------------
-CDmeSourceSkinPanel::CDmeSourceSkinPanel( vgui::Panel *pParent, const char *pPanelName ) : 
+CDmeSourceSkinPanel::CDmeSourceSkinPanel( vgui::Panel *pParent, const char *pPanelName ) :
 	BaseClass( pParent, pPanelName )
-{	
+{
 	m_pSkinName = new vgui::TextEntry( this, "SkinName" );
 	m_pSkinName->AddActionSignalTarget( this );
 
@@ -138,6 +138,3 @@ void CDmeSourceSkinPanel::OnTextChanged( KeyValues *kv )
 		return;
 	}
 }
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -34,15 +34,15 @@ extern "C" {
 
 
 // {B9F3EB85-B781-4ac1-8D90-93A05EE37D7D}
-DEFINE_GUID(CLSID_DirectPlayVoiceClient, 
+DEFINE_GUID(CLSID_DirectPlayVoiceClient,
 0xb9f3eb85, 0xb781, 0x4ac1, 0x8d, 0x90, 0x93, 0xa0, 0x5e, 0xe3, 0x7d, 0x7d);
 
 // {D3F5B8E6-9B78-4a4c-94EA-CA2397B663D3}
-DEFINE_GUID(CLSID_DirectPlayVoiceServer, 
+DEFINE_GUID(CLSID_DirectPlayVoiceServer,
 0xd3f5b8e6, 0x9b78, 0x4a4c, 0x94, 0xea, 0xca, 0x23, 0x97, 0xb6, 0x63, 0xd3);
 
 // {0F0F094B-B01C-4091-A14D-DD0CD807711A}
-DEFINE_GUID(CLSID_DirectPlayVoiceTest, 
+DEFINE_GUID(CLSID_DirectPlayVoiceTest,
 0xf0f094b, 0xb01c, 0x4091, 0xa1, 0x4d, 0xdd, 0xc, 0xd8, 0x7, 0x71, 0x1a);
 
 /****************************************************************************
@@ -53,11 +53,11 @@ DEFINE_GUID(CLSID_DirectPlayVoiceTest,
 
 
 // {1DFDC8EA-BCF7-41d6-B295-AB64B3B23306}
-DEFINE_GUID(IID_IDirectPlayVoiceClient, 
+DEFINE_GUID(IID_IDirectPlayVoiceClient,
 0x1dfdc8ea, 0xbcf7, 0x41d6, 0xb2, 0x95, 0xab, 0x64, 0xb3, 0xb2, 0x33, 0x6);
 
 // {FAA1C173-0468-43b6-8A2A-EA8A4F2076C9}
-DEFINE_GUID(IID_IDirectPlayVoiceServer, 
+DEFINE_GUID(IID_IDirectPlayVoiceServer,
 0xfaa1c173, 0x468, 0x43b6, 0x8a, 0x2a, 0xea, 0x8a, 0x4f, 0x20, 0x76, 0xc9);
 
 // {D26AF734-208B-41da-8224-E0CE79810BE1}
@@ -83,7 +83,7 @@ DEFINE_GUID(DPVCTGUID_GSM,
 0x24768c60, 0x5a0d, 0x11d3, 0x9b, 0xe4, 0x52, 0x54, 0x0, 0xd9, 0x85, 0xe7);
 
 // MS-PCM 64 kbit/s
-// 
+//
 // {8DE12FD4-7CB3-48ce-A7E8-9C47A22E8AC5}
 DEFINE_GUID(DPVCTGUID_NONE,
 0x8de12fd4, 0x7cb3, 0x48ce, 0xa7, 0xe8, 0x9c, 0x47, 0xa2, 0x2e, 0x8a, 0xc5);
@@ -131,9 +131,9 @@ typedef struct IDirectPlayVoiceTest FAR *LPDIRECTPLAYVOICETEST, *PDIRECTPLAYVOIC
  *
  ****************************************************************************/
 typedef HRESULT (FAR PASCAL *PDVMESSAGEHANDLER)(
-    PVOID   pvUserContext,
-    DWORD   dwMessageType,
-    LPVOID  lpMessage
+	PVOID   pvUserContext,
+	DWORD   dwMessageType,
+	LPVOID  lpMessage
 );
 
 typedef PDVMESSAGEHANDLER LPDVMESSAGEHANDLER;
@@ -187,7 +187,7 @@ typedef DWORD DVID, *LPDVID, *PDVID;
 #define DVBUFFERAGGRESSIVENESS_MAX          0x00000064
 #define DVBUFFERAGGRESSIVENESS_DEFAULT      0x00000000
 
-// 
+//
 // Buffer Quality Value Ranges
 //
 #define DVBUFFERQUALITY_MIN                 0x00000001
@@ -211,7 +211,7 @@ typedef DWORD DVID, *LPDVID, *PDVID;
 //
 #define DVID_REMAINING          0xFFFFFFFF
 
-// 
+//
 // Input level range
 //
 #define DVINPUTLEVEL_MIN                    0x00000000
@@ -237,7 +237,7 @@ typedef DWORD DVID, *LPDVID, *PDVID;
 #define DVTHRESHOLD_MAX                   0x00000063	// 99 decimal
 
 //
-// Threshold field is not used 
+// Threshold field is not used
 //
 #define DVTHRESHOLD_UNUSED                0xFFFFFFFE
 
@@ -256,7 +256,7 @@ typedef DWORD DVID, *LPDVID, *PDVID;
  ****************************************************************************/
 
 
-// 
+//
 // Enable automatic adjustment of the recording volume
 //
 #define DVCLIENTCONFIG_AUTORECORDVOLUME     0x00000008
@@ -266,37 +266,37 @@ typedef DWORD DVID, *LPDVID, *PDVID;
 //
 #define DVCLIENTCONFIG_AUTOVOICEACTIVATED   0x00000020
 
-// 
+//
 // Enable echo suppression
 //
 #define DVCLIENTCONFIG_ECHOSUPPRESSION      0x08000000
 
-// 
+//
 // Voice Activation manual mode
 //
 #define DVCLIENTCONFIG_MANUALVOICEACTIVATED 0x00000004
 
-// 
+//
 // Only playback voices that have buffers created for them
 //
 #define DVCLIENTCONFIG_MUTEGLOBAL           0x00000010
 
-// 
+//
 // Mute the playback
 //
 #define DVCLIENTCONFIG_PLAYBACKMUTE         0x00000002
 
 //
-// Mute the recording 
+// Mute the recording
 //
 #define DVCLIENTCONFIG_RECORDMUTE           0x00000001
 
-// 
+//
 // Complete the operation before returning
 //
 #define DVFLAGS_SYNC                        0x00000001
 
-// 
+//
 // Just check to see if wizard has been run, and if so what it's results were
 //
 #define DVFLAGS_QUERYONLY                   0x00000002
@@ -306,7 +306,7 @@ typedef DWORD DVID, *LPDVID, *PDVID;
 //
 #define DVFLAGS_NOHOSTMIGRATE               0x00000008
 
-// 
+//
 // Allow the back button to be enabled in the wizard
 //
 #define DVFLAGS_ALLOWBACK                   0x00000010
@@ -316,13 +316,13 @@ typedef DWORD DVID, *LPDVID, *PDVID;
 //
 #define DVSESSION_NOHOSTMIGRATION           0x00000001
 
-// 
+//
 // Server controlled targetting
 //
 #define DVSESSION_SERVERCONTROLTARGET       0x00000002
 
 //
-// Use DirectSound Normal Mode instead of priority 
+// Use DirectSound Normal Mode instead of priority
 //
 #define DVSOUNDCONFIG_NORMALMODE            0x00000001
 
@@ -331,29 +331,29 @@ typedef DWORD DVID, *LPDVID, *PDVID;
 //
 #define DVSOUNDCONFIG_AUTOSELECT            0x00000002
 
-// 
+//
 // Run in half duplex mode
 //
 #define DVSOUNDCONFIG_HALFDUPLEX            0x00000004
 
-// 
+//
 // No volume controls are available for the recording device
 //
 #define DVSOUNDCONFIG_NORECVOLAVAILABLE     0x00000010
 
-// 
+//
 // Disable capture sharing
 //
 #define DVSOUNDCONFIG_NOFOCUS               0x20000000
 
-// 
+//
 // Set system conversion quality to high
 //
 #define DVSOUNDCONFIG_SETCONVERSIONQUALITY	0x00000008
 
 //
 // Enable strict focus mode
-// 
+//
 #define DVSOUNDCONFIG_STRICTFOCUS           0x40000000
 
 //
@@ -361,7 +361,7 @@ typedef DWORD DVID, *LPDVID, *PDVID;
 //
 #define DVPLAYERCAPS_HALFDUPLEX             0x00000001
 
-// 
+//
 // Specifies that player is the local player
 //
 #define DVPLAYERCAPS_LOCAL                  0x00000002
@@ -380,8 +380,8 @@ typedef DWORD DVID, *LPDVID, *PDVID;
 //
 typedef struct
 {
-    DWORD   dwSize;                 // Size of this structure
-    DWORD   dwFlags;                // Caps flags
+	DWORD   dwSize;                 // Size of this structure
+	DWORD   dwFlags;                // Caps flags
 } DVCAPS, *LPDVCAPS, *PDVCAPS;
 
 //
@@ -390,14 +390,14 @@ typedef struct
 //
 typedef struct
 {
-    DWORD   dwSize;                 // Size of this structure
-    DWORD   dwFlags;                // Flags for client config (DVCLIENTCONFIG_...)
-    LONG    lRecordVolume;          // Recording volume 
-    LONG    lPlaybackVolume;        // Playback volume
-    DWORD   dwThreshold;          // Voice Activation Threshold
-    DWORD   dwBufferQuality;        // Buffer quality
-    DWORD   dwBufferAggressiveness; // Buffer aggressiveness
-    DWORD   dwNotifyPeriod;         // Period of notification messages (ms)
+	DWORD   dwSize;                 // Size of this structure
+	DWORD   dwFlags;                // Flags for client config (DVCLIENTCONFIG_...)
+	LONG    lRecordVolume;          // Recording volume
+	LONG    lPlaybackVolume;        // Playback volume
+	DWORD   dwThreshold;          // Voice Activation Threshold
+	DWORD   dwBufferQuality;        // Buffer quality
+	DWORD   dwBufferAggressiveness; // Buffer aggressiveness
+	DWORD   dwNotifyPeriod;         // Period of notification messages (ms)
 } DVCLIENTCONFIG, *LPDVCLIENTCONFIG, *PDVCLIENTCONFIG;
 
 //
@@ -406,12 +406,12 @@ typedef struct
 //
 typedef struct
 {
-    DWORD   dwSize;                 // Size of this structure
-    GUID    guidType;               // GUID that identifies this compression type
-    LPWSTR  lpszName;               // String name of this compression type
-    LPWSTR  lpszDescription;        // Description for this compression type
-    DWORD   dwFlags;                // Flags for this compression type
-    DWORD   dwMaxBitsPerSecond;		// Maximum # of bit/s this compression type uses
+	DWORD   dwSize;                 // Size of this structure
+	GUID    guidType;               // GUID that identifies this compression type
+	LPWSTR  lpszName;               // String name of this compression type
+	LPWSTR  lpszDescription;        // Description for this compression type
+	DWORD   dwFlags;                // Flags for this compression type
+	DWORD   dwMaxBitsPerSecond;		// Maximum # of bit/s this compression type uses
 } DVCOMPRESSIONINFO, *LPDVCOMPRESSIONINFO, *PDVCOMPRESSIONINFO;
 
 //
@@ -420,30 +420,30 @@ typedef struct
 //
 typedef struct
 {
-    DWORD   dwSize;                 // Size of this structure
-    DWORD   dwFlags;                // Session flags (DVSESSION_...)
-    DWORD   dwSessionType;          // Session type (DVSESSIONTYPE_...)
-    GUID    guidCT;                 // Compression Type to use
-    DWORD   dwBufferQuality;        // Buffer quality
-    DWORD   dwBufferAggressiveness; // Buffer aggresiveness
+	DWORD   dwSize;                 // Size of this structure
+	DWORD   dwFlags;                // Session flags (DVSESSION_...)
+	DWORD   dwSessionType;          // Session type (DVSESSIONTYPE_...)
+	GUID    guidCT;                 // Compression Type to use
+	DWORD   dwBufferQuality;        // Buffer quality
+	DWORD   dwBufferAggressiveness; // Buffer aggresiveness
 } DVSESSIONDESC, *LPDVSESSIONDESC, *PDVSESSIONDESC;
 
-// 
+//
 // DirectPlayVoice Client Sound Device Configuration
 // (Connect / GetSoundDeviceConfig)
 //
 typedef struct
 {
-    DWORD                   dwSize;                 // Size of this structure
-    DWORD                   dwFlags;                // Flags for sound config (DVSOUNDCONFIG_...)
-    GUID                    guidPlaybackDevice;     // GUID of the playback device to use
-    LPDIRECTSOUND           lpdsPlaybackDevice;     // DirectSound Object to use (optional)
-    GUID                    guidCaptureDevice;      // GUID of the capture device to use
-    LPDIRECTSOUNDCAPTURE    lpdsCaptureDevice;      // DirectSoundCapture Object to use (optional)
-    HWND                    hwndAppWindow;          // HWND of your application's top-level window
-    LPDIRECTSOUNDBUFFER     lpdsMainBuffer;         // DirectSoundBuffer to use for playback (optional)
-    DWORD                   dwMainBufferFlags;      // Flags to pass to Play() on the main buffer
-    DWORD                   dwMainBufferPriority;   // Priority to set when calling Play() on the main buffer
+	DWORD                   dwSize;                 // Size of this structure
+	DWORD                   dwFlags;                // Flags for sound config (DVSOUNDCONFIG_...)
+	GUID                    guidPlaybackDevice;     // GUID of the playback device to use
+	LPDIRECTSOUND           lpdsPlaybackDevice;     // DirectSound Object to use (optional)
+	GUID                    guidCaptureDevice;      // GUID of the capture device to use
+	LPDIRECTSOUNDCAPTURE    lpdsCaptureDevice;      // DirectSoundCapture Object to use (optional)
+	HWND                    hwndAppWindow;          // HWND of your application's top-level window
+	LPDIRECTSOUNDBUFFER     lpdsMainBuffer;         // DirectSoundBuffer to use for playback (optional)
+	DWORD                   dwMainBufferFlags;      // Flags to pass to Play() on the main buffer
+	DWORD                   dwMainBufferPriority;   // Priority to set when calling Play() on the main buffer
 } DVSOUNDDEVICECONFIG, *LPDVSOUNDDEVICECONFIG, *PDVSOUNDDEVICECONFIG;
 
 /****************************************************************************
@@ -458,20 +458,20 @@ typedef struct
 //
 typedef struct
 {
-    DWORD   dwSize;                         // Size of this structure
-    HRESULT hrResult;                       // Result of the Connect() call
+	DWORD   dwSize;                         // Size of this structure
+	HRESULT hrResult;                       // Result of the Connect() call
 } DVMSG_CONNECTRESULT, *LPDVMSG_CONNECTRESULT, *PDVMSG_CONNECTRESULT;
 
 //
 // A new player has entered the voice session
 // (DVMSGID_CREATEVOICEPLAYER)
-// 
+//
 typedef struct
 {
-    DWORD   dwSize;                         // Size of this structure
-    DVID    dvidPlayer;                     // DVID of the player who joined
-    DWORD   dwFlags;                        // Player flags (DVPLAYERCAPS_...)
-    PVOID	pvPlayerContext;                // Context value for this player (user set)
+	DWORD   dwSize;                         // Size of this structure
+	DVID    dvidPlayer;                     // DVID of the player who joined
+	DWORD   dwFlags;                        // Player flags (DVPLAYERCAPS_...)
+	PVOID	pvPlayerContext;                // Context value for this player (user set)
 } DVMSG_CREATEVOICEPLAYER, *LPDVMSG_CREATEVOICEPLAYER, *PDVMSG_CREATEVOICEPLAYER;
 
 //
@@ -480,9 +480,9 @@ typedef struct
 //
 typedef struct
 {
-    DWORD   dwSize;                         // Size of this structure
-    DVID    dvidPlayer;                     // DVID of the player who left
-    PVOID	pvPlayerContext;                // Context value for the player
+	DWORD   dwSize;                         // Size of this structure
+	DVID    dvidPlayer;                     // DVID of the player who left
+	PVOID	pvPlayerContext;                // Context value for the player
 } DVMSG_DELETEVOICEPLAYER, *LPDVMSG_DELETEVOICEPLAYER, *PDVMSG_DELETEVOICEPLAYER;
 
 //
@@ -491,20 +491,20 @@ typedef struct
 //
 typedef struct
 {
-    DWORD   dwSize;                         // Size of this structure
-    HRESULT hrResult;                       // Result of the Disconnect() call
+	DWORD   dwSize;                         // Size of this structure
+	HRESULT hrResult;                       // Result of the Disconnect() call
 } DVMSG_DISCONNECTRESULT, *LPDVMSG_DISCONNECTRESULT, *PDVMSG_DISCONNECTRESULT;
 
-// 
+//
 // The voice session host has migrated.
-// (DVMSGID_HOSTMIGRATED) 
+// (DVMSGID_HOSTMIGRATED)
 //
 typedef struct
 {
-    DWORD                   dwSize;         // Size of this structure
-    DVID                    dvidNewHostID;  // DVID of the player who is now the host
-    LPDIRECTPLAYVOICESERVER pdvServerInterface;
-                                            // Pointer to the new host object (if local player is now host)
+	DWORD                   dwSize;         // Size of this structure
+	DVID                    dvidNewHostID;  // DVID of the player who is now the host
+	LPDIRECTPLAYVOICESERVER pdvServerInterface;
+											// Pointer to the new host object (if local player is now host)
 } DVMSG_HOSTMIGRATED, *LPDVMSG_HOSTMIGRATED, *PDVMSG_HOSTMIGRATED;
 
 //
@@ -513,10 +513,10 @@ typedef struct
 //
 typedef struct
 {
-    DWORD   dwSize;                         // Size of this structure
-    DWORD   dwPeakLevel;                    // Current peak level of the audio
-    LONG    lRecordVolume;                  // Current recording volume
-    PVOID	pvLocalPlayerContext;           // Context value for the local player
+	DWORD   dwSize;                         // Size of this structure
+	DWORD   dwPeakLevel;                    // Current peak level of the audio
+	LONG    lRecordVolume;                  // Current recording volume
+	PVOID	pvLocalPlayerContext;           // Context value for the local player
 } DVMSG_INPUTLEVEL, *LPDVMSG_INPUTLEVEL, *PDVMSG_INPUTLEVEL;
 
 //
@@ -536,10 +536,10 @@ typedef struct
 //
 typedef struct
 {
-    DWORD   dwSize;                         // Size of this structure
-    DWORD   dwPeakLevel;                    // Current peak level of the output
-    LONG    lOutputVolume;                  // Current playback volume
-    PVOID	pvLocalPlayerContext;           // Context value for the local player
+	DWORD   dwSize;                         // Size of this structure
+	DWORD   dwPeakLevel;                    // Current peak level of the output
+	LONG    lOutputVolume;                  // Current playback volume
+	PVOID	pvLocalPlayerContext;           // Context value for the local player
 } DVMSG_OUTPUTLEVEL, *LPDVMSG_OUTPUTLEVEL, *PDVMSG_OUTPUTLEVEL;
 
 //
@@ -549,21 +549,21 @@ typedef struct
 //
 typedef struct
 {
-    DWORD   dwSize;                         // Size of this structure
-    DVID    dvidSourcePlayerID;                   // DVID of the player
-    DWORD   dwPeakLevel;                    // Peak level of the player's stream
-    PVOID	pvPlayerContext;                // Context value for the player
+	DWORD   dwSize;                         // Size of this structure
+	DVID    dvidSourcePlayerID;                   // DVID of the player
+	DWORD   dwPeakLevel;                    // Peak level of the player's stream
+	PVOID	pvPlayerContext;                // Context value for the player
 } DVMSG_PLAYEROUTPUTLEVEL, *LPDVMSG_PLAYEROUTPUTLEVEL, *PDVMSG_PLAYEROUTPUTLEVEL;
 
-// 
+//
 // An audio stream from the specified player has started playing back on the local client.
 // (DVMSGID_PLAYERVOICESTART).
 //
 typedef struct
 {
-    DWORD   dwSize;                         // Size of this structure
-    DVID    dvidSourcePlayerID;             // DVID of the Player 
-    PVOID	pvPlayerContext;                // Context value for this player
+	DWORD   dwSize;                         // Size of this structure
+	DVID    dvidSourcePlayerID;             // DVID of the Player
+	PVOID	pvPlayerContext;                // Context value for this player
 } DVMSG_PLAYERVOICESTART, *LPDVMSG_PLAYERVOICESTART, *PDVMSG_PLAYERVOICESTART;
 
 //
@@ -572,41 +572,41 @@ typedef struct
 //
 typedef struct
 {
-    DWORD   dwSize;                         // Size of this structure
-    DVID    dvidSourcePlayerID;             // DVID of the player
-    PVOID	pvPlayerContext;                // Context value for this player
+	DWORD   dwSize;                         // Size of this structure
+	DVID    dvidSourcePlayerID;             // DVID of the player
+	PVOID	pvPlayerContext;                // Context value for this player
 } DVMSG_PLAYERVOICESTOP, *LPDVMSG_PLAYERVOICESTOP, *PDVMSG_PLAYERVOICESTOP;
 
-// 
+//
 // Transmission has started on the local machine
 // (DVMSGID_RECORDSTART)
 //
 typedef struct
 {
-    DWORD   dwSize;                         // Size of this structure
-    DWORD   dwPeakLevel;                    // Peak level that caused transmission to start
-    PVOID	pvLocalPlayerContext;           // Context value for the local player
+	DWORD   dwSize;                         // Size of this structure
+	DWORD   dwPeakLevel;                    // Peak level that caused transmission to start
+	PVOID	pvLocalPlayerContext;           // Context value for the local player
 } DVMSG_RECORDSTART, *LPDVMSG_RECORDSTART, *PDVMSG_RECORDSTART;
 
-// 
+//
 // Transmission has stopped on the local machine
 // (DVMSGID_RECORDSTOP)
-// 
+//
 typedef struct
 {
-    DWORD   dwSize;                         // Size of this structure
-    DWORD   dwPeakLevel;                    // Peak level that caused transmission to stop
-    PVOID	pvLocalPlayerContext;           // Context value for the local player
+	DWORD   dwSize;                         // Size of this structure
+	DWORD   dwPeakLevel;                    // Peak level that caused transmission to stop
+	PVOID	pvLocalPlayerContext;           // Context value for the local player
 } DVMSG_RECORDSTOP, *LPDVMSG_RECORDSTOP, *PDVMSG_RECORDSTOP;
 
-// 
+//
 // The voice session has been lost
 // (DVMSGID_SESSIONLOST)
 //
 typedef struct
 {
-    DWORD   dwSize;                         // Size of this structure
-    HRESULT hrResult;	                    // Reason the session was disconnected
+	DWORD   dwSize;                         // Size of this structure
+	HRESULT hrResult;	                    // Reason the session was disconnected
 } DVMSG_SESSIONLOST, *LPDVMSG_SESSIONLOST, *PDVMSG_SESSIONLOST;
 
 //
@@ -615,9 +615,9 @@ typedef struct
 //
 typedef struct
 {
-    DWORD   dwSize;                         // Size of this structure
-    DWORD   dwNumTargets;                   // # of targets 
-    PDVID   pdvidTargets;                   // An array of DVIDs specifying the current targets
+	DWORD   dwSize;                         // Size of this structure
+	DWORD   dwNumTargets;                   // # of targets
+	PDVID   pdvidTargets;                   // An array of DVIDs specifying the current targets
 } DVMSG_SETTARGETS, *LPDVMSG_SETTARGETS, *PDVMSG_SETTARGETS;
 
 
@@ -627,7 +627,7 @@ typedef struct
  *
  ****************************************************************************/
 
-extern HRESULT WINAPI DirectPlayVoiceCreate( const GUID * pcIID, void **ppvInterface, IUnknown *pUnknown); 
+extern HRESULT WINAPI DirectPlayVoiceCreate( const GUID * pcIID, void **ppvInterface, IUnknown *pUnknown);
 
 /****************************************************************************
  *
@@ -639,25 +639,25 @@ extern HRESULT WINAPI DirectPlayVoiceCreate( const GUID * pcIID, void **ppvInter
 #define INTERFACE IDirectPlayVoiceClient
 DECLARE_INTERFACE_( IDirectPlayVoiceClient, IUnknown )
 {
-    /*** IUnknown methods ***/
-    STDMETHOD(QueryInterface)(THIS_ REFIID riid, PVOID *ppvObj) PURE;
-    STDMETHOD_(ULONG,AddRef)(THIS) PURE;
-    STDMETHOD_(ULONG,Release)(THIS) PURE;
-    /*** IDirectPlayVoiceClient methods ***/
-    STDMETHOD_(HRESULT, Initialize)   (THIS_ LPUNKNOWN, PDVMESSAGEHANDLER, PVOID, PDWORD, DWORD ) PURE;
-    STDMETHOD_(HRESULT, Connect)      (THIS_ PDVSOUNDDEVICECONFIG, PDVCLIENTCONFIG, DWORD ) PURE;
-    STDMETHOD_(HRESULT, Disconnect)   (THIS_ DWORD ) PURE;
-    STDMETHOD_(HRESULT, GetSessionDesc)(THIS_ PDVSESSIONDESC ) PURE;
-    STDMETHOD_(HRESULT, GetClientConfig)(THIS_ PDVCLIENTCONFIG ) PURE;
-    STDMETHOD_(HRESULT, SetClientConfig)(THIS_ PDVCLIENTCONFIG ) PURE;
-    STDMETHOD_(HRESULT, GetCaps) 		(THIS_ PDVCAPS ) PURE;
-    STDMETHOD_(HRESULT, GetCompressionTypes)( THIS_ PVOID, PDWORD, PDWORD, DWORD ) PURE;
-    STDMETHOD_(HRESULT, SetTransmitTargets)( THIS_ PDVID, DWORD, DWORD ) PURE;
-    STDMETHOD_(HRESULT, GetTransmitTargets)( THIS_ PDVID, PDWORD, DWORD ) PURE;
-    STDMETHOD_(HRESULT, Create3DSoundBuffer)( THIS_ DVID, LPDIRECTSOUNDBUFFER, DWORD, DWORD, LPDIRECTSOUND3DBUFFER * ) PURE;
-    STDMETHOD_(HRESULT, Delete3DSoundBuffer)( THIS_ DVID, LPDIRECTSOUND3DBUFFER * ) PURE;
-    STDMETHOD_(HRESULT, SetNotifyMask)( THIS_ PDWORD, DWORD ) PURE;
-    STDMETHOD_(HRESULT, GetSoundDeviceConfig)( THIS_ PDVSOUNDDEVICECONFIG, PDWORD ) PURE;
+	/*** IUnknown methods ***/
+	STDMETHOD(QueryInterface)(THIS_ REFIID riid, PVOID *ppvObj) PURE;
+	STDMETHOD_(ULONG,AddRef)(THIS) PURE;
+	STDMETHOD_(ULONG,Release)(THIS) PURE;
+	/*** IDirectPlayVoiceClient methods ***/
+	STDMETHOD_(HRESULT, Initialize)   (THIS_ LPUNKNOWN, PDVMESSAGEHANDLER, PVOID, PDWORD, DWORD ) PURE;
+	STDMETHOD_(HRESULT, Connect)      (THIS_ PDVSOUNDDEVICECONFIG, PDVCLIENTCONFIG, DWORD ) PURE;
+	STDMETHOD_(HRESULT, Disconnect)   (THIS_ DWORD ) PURE;
+	STDMETHOD_(HRESULT, GetSessionDesc)(THIS_ PDVSESSIONDESC ) PURE;
+	STDMETHOD_(HRESULT, GetClientConfig)(THIS_ PDVCLIENTCONFIG ) PURE;
+	STDMETHOD_(HRESULT, SetClientConfig)(THIS_ PDVCLIENTCONFIG ) PURE;
+	STDMETHOD_(HRESULT, GetCaps) 		(THIS_ PDVCAPS ) PURE;
+	STDMETHOD_(HRESULT, GetCompressionTypes)( THIS_ PVOID, PDWORD, PDWORD, DWORD ) PURE;
+	STDMETHOD_(HRESULT, SetTransmitTargets)( THIS_ PDVID, DWORD, DWORD ) PURE;
+	STDMETHOD_(HRESULT, GetTransmitTargets)( THIS_ PDVID, PDWORD, DWORD ) PURE;
+	STDMETHOD_(HRESULT, Create3DSoundBuffer)( THIS_ DVID, LPDIRECTSOUNDBUFFER, DWORD, DWORD, LPDIRECTSOUND3DBUFFER * ) PURE;
+	STDMETHOD_(HRESULT, Delete3DSoundBuffer)( THIS_ DVID, LPDIRECTSOUND3DBUFFER * ) PURE;
+	STDMETHOD_(HRESULT, SetNotifyMask)( THIS_ PDWORD, DWORD ) PURE;
+	STDMETHOD_(HRESULT, GetSoundDeviceConfig)( THIS_ PDVSOUNDDEVICECONFIG, PDWORD ) PURE;
 };
 
 
@@ -665,33 +665,33 @@ DECLARE_INTERFACE_( IDirectPlayVoiceClient, IUnknown )
 #define INTERFACE IDirectPlayVoiceServer
 DECLARE_INTERFACE_( IDirectPlayVoiceServer, IUnknown )
 {
-    /*** IUnknown methods ***/
-    STDMETHOD(QueryInterface)       (THIS_ REFIID riid, LPVOID * ppvObj) PURE;
-    STDMETHOD_(ULONG,AddRef)        (THIS) PURE;
-    STDMETHOD_(ULONG,Release)       (THIS) PURE;
-    /*** IDirectPlayVoiceServer methods ***/
-    STDMETHOD_(HRESULT, Initialize)   (THIS_ LPUNKNOWN, PDVMESSAGEHANDLER, PVOID, LPDWORD, DWORD ) PURE;
-    STDMETHOD_(HRESULT, StartSession)  (THIS_ PDVSESSIONDESC, DWORD ) PURE;
-    STDMETHOD_(HRESULT, StopSession)   (THIS_ DWORD ) PURE;
-    STDMETHOD_(HRESULT, GetSessionDesc)(THIS_ PDVSESSIONDESC ) PURE;
-    STDMETHOD_(HRESULT, SetSessionDesc)(THIS_ PDVSESSIONDESC ) PURE;
-    STDMETHOD_(HRESULT, GetCaps) 		(THIS_ PDVCAPS ) PURE;
-    STDMETHOD_(HRESULT, GetCompressionTypes)( THIS_ PVOID, PDWORD, PDWORD, DWORD ) PURE;
-    STDMETHOD_(HRESULT, SetTransmitTargets)( THIS_ DVID, PDVID, DWORD, DWORD ) PURE;
-    STDMETHOD_(HRESULT, GetTransmitTargets)( THIS_ DVID, PDVID, PDWORD, DWORD ) PURE;
-    STDMETHOD_(HRESULT, SetNotifyMask)( THIS_ PDWORD, DWORD ) PURE;
+	/*** IUnknown methods ***/
+	STDMETHOD(QueryInterface)       (THIS_ REFIID riid, LPVOID * ppvObj) PURE;
+	STDMETHOD_(ULONG,AddRef)        (THIS) PURE;
+	STDMETHOD_(ULONG,Release)       (THIS) PURE;
+	/*** IDirectPlayVoiceServer methods ***/
+	STDMETHOD_(HRESULT, Initialize)   (THIS_ LPUNKNOWN, PDVMESSAGEHANDLER, PVOID, LPDWORD, DWORD ) PURE;
+	STDMETHOD_(HRESULT, StartSession)  (THIS_ PDVSESSIONDESC, DWORD ) PURE;
+	STDMETHOD_(HRESULT, StopSession)   (THIS_ DWORD ) PURE;
+	STDMETHOD_(HRESULT, GetSessionDesc)(THIS_ PDVSESSIONDESC ) PURE;
+	STDMETHOD_(HRESULT, SetSessionDesc)(THIS_ PDVSESSIONDESC ) PURE;
+	STDMETHOD_(HRESULT, GetCaps) 		(THIS_ PDVCAPS ) PURE;
+	STDMETHOD_(HRESULT, GetCompressionTypes)( THIS_ PVOID, PDWORD, PDWORD, DWORD ) PURE;
+	STDMETHOD_(HRESULT, SetTransmitTargets)( THIS_ DVID, PDVID, DWORD, DWORD ) PURE;
+	STDMETHOD_(HRESULT, GetTransmitTargets)( THIS_ DVID, PDVID, PDWORD, DWORD ) PURE;
+	STDMETHOD_(HRESULT, SetNotifyMask)( THIS_ PDWORD, DWORD ) PURE;
 };
 
 #undef INTERFACE
 #define INTERFACE IDirectPlayVoiceTest
 DECLARE_INTERFACE_( IDirectPlayVoiceTest, IUnknown )
 {
-    /*** IUnknown methods ***/
-    STDMETHOD(QueryInterface)       (THIS_ REFIID riid, PVOID * ppvObj) PURE;
-    STDMETHOD_(ULONG,AddRef)        (THIS) PURE;
-    STDMETHOD_(ULONG,Release)       (THIS) PURE;
-    /*** IDirectPlayVoiceTest methods ***/
-    STDMETHOD_(HRESULT, CheckAudioSetup) (THIS_ const GUID *,  const GUID * , HWND, DWORD ) PURE;
+	/*** IUnknown methods ***/
+	STDMETHOD(QueryInterface)       (THIS_ REFIID riid, PVOID * ppvObj) PURE;
+	STDMETHOD_(ULONG,AddRef)        (THIS) PURE;
+	STDMETHOD_(ULONG,Release)       (THIS) PURE;
+	/*** IDirectPlayVoiceTest methods ***/
+	STDMETHOD_(HRESULT, CheckAudioSetup) (THIS_ const GUID *,  const GUID * , HWND, DWORD ) PURE;
 };
 
 #if !defined(__cplusplus) || defined(CINTERFACE)
@@ -853,5 +853,3 @@ DECLARE_INTERFACE_( IDirectPlayVoiceTest, IUnknown )
 #endif
 
 #endif
-
-

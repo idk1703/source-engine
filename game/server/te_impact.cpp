@@ -40,9 +40,9 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
-// Output : 
+// Purpose:
+// Input  : *name -
+// Output :
 //-----------------------------------------------------------------------------
 CTEImpact::CTEImpact( const char *name ) : CBaseTempEntity( name )
 {
@@ -51,23 +51,23 @@ CTEImpact::CTEImpact( const char *name ) : CBaseTempEntity( name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEImpact::~CTEImpact( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTEImpact::Precache( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEImpact::Test( const Vector& current_origin, const Vector& current_normal )
 {
@@ -85,11 +85,11 @@ END_SEND_TABLE()
 static CTEImpact g_TEImpact( "Impact" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
 //-----------------------------------------------------------------------------
 void TE_Impact( IRecipientFilter& filter, float delay )
 {

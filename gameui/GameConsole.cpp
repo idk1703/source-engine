@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -121,7 +121,7 @@ bool CGameConsole::IsConsoleVisible()
 #ifndef _XBOX
 	if (!m_bInitialized)
 		return false;
-	
+
 	return m_pConsole->IsVisible();
 #else
 	return false;
@@ -142,7 +142,7 @@ void CGameConsole::ActivateDelayed(float time)
 }
 
 void CGameConsole::SetParent( int parent )
-{	
+{
 #ifndef _XBOX
 	if (!m_bInitialized)
 		return;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -28,7 +28,7 @@
 
 class CAchievementTFHalloweenCollectPumpkins : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 20 );
@@ -68,7 +68,7 @@ class CAchievementTFHalloweenDominateForHat : public CBaseTFAchievementSimple
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		bool bDomination = event->GetInt( "death_flags" ) & TF_DEATH_DOMINATION;
@@ -85,7 +85,7 @@ class CAchievementTFHalloweenDominateForHat : public CBaseTFAchievementSimple
 					if ( pItem && pItem->IsValid() )
 					{
 						if ( ( pItem->GetItemDefIndex() == 116 ) ||	// Ghastly Gibus
-							 ( pItem->GetItemDefIndex() == 279 ) || 	// Ghastly Gibus 2010 
+							 ( pItem->GetItemDefIndex() == 279 ) || 	// Ghastly Gibus 2010
 							 ( pItem->GetItemDefIndex() == 584 ) ||	// Ghastly Gibus 2011
 							 ( pItem->GetItemDefIndex() == 940 ) )		// Ghostly Gibus
 						{
@@ -108,7 +108,7 @@ class CAchievementTFHalloweenKillScaredPlayer : public CBaseTFAchievementSimple
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		if ( !pTFVictim )
@@ -144,7 +144,7 @@ class CAchievementTFHalloweenPumpkinKill : public CBaseTFAchievementSimple
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		if ( !pTFVictim )
@@ -181,7 +181,7 @@ class CAchievementTFHalloweenDisguisedSpyKill : public CBaseTFAchievementSimple
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		if ( !pTFVictim )
@@ -212,7 +212,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHalloweenDisguisedSpyKill, ACHIEVEMENT_TF_HAL
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHalloweenBossKill : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -225,7 +225,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHalloweenBossKill, ACHIEVEMENT_TF_HALLOWEEN_B
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHalloweenBossKillMelee : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -238,7 +238,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHalloweenBossKillMelee, ACHIEVEMENT_TF_HALLOW
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHalloweenCollectGoodyBag : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -251,7 +251,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHalloweenCollectGoodyBag, ACHIEVEMENT_TF_HALL
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHalloweenCraftSaxtonMask : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -260,11 +260,11 @@ class CAchievementTFHalloweenCraftSaxtonMask : public CBaseTFAchievementSimple
 	// client awards this achievement in CTFPlayerInventory::SOCreated(), no other code within achievement necessary
 };
 DECLARE_ACHIEVEMENT( CAchievementTFHalloweenCraftSaxtonMask, ACHIEVEMENT_TF_HALLOWEEN_CRAFT_SAXTON_MASK, "TF_HALLOWEEN_CRAFT_SAXTON_MASK", 5 );
-  
+
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHalloweenEyeBossKill : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -277,7 +277,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHalloweenEyeBossKill, ACHIEVEMENT_TF_HALLOWEE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHalloweenLootIsland : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -290,7 +290,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHalloweenLootIsland, ACHIEVEMENT_TF_HALLOWEEN
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHalloweenMerasmusKill : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -303,7 +303,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHalloweenMerasmusKill, ACHIEVEMENT_TF_HALLOWE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHalloweenMerasmusCollectLoot : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -316,7 +316,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHalloweenMerasmusCollectLoot, ACHIEVEMENT_TF_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHalloweenHelltowerRareSpell : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -329,7 +329,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHalloweenHelltowerRareSpell, ACHIEVEMENT_TF_H
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHalloweenHelltowerWinRounds : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 142 );
@@ -360,7 +360,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHalloweenHelltowerWinRounds, ACHIEVEMENT_TF_H
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHalloweenHelltowerEnvironmentalKills : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 17 );
@@ -374,7 +374,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHalloweenHelltowerEnvironmentalKills, ACHIEVE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHalloweenHelltowerSkeletonGrind : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 99 );
@@ -396,7 +396,7 @@ class CAchievementTFHalloweenHelltowerKillGrind : public CBaseTFAchievementSimpl
 		SetMapNameFilter( "plr_hightower_event" );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( TFGameRules() && TFGameRules()->IsHalloweenScenario( CTFGameRules::HALLOWEEN_SCENARIO_HIGHTOWER ) )
 		{
@@ -439,7 +439,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHalloweenHelltowerKillGrind, ACHIEVEMENT_TF_H
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHalloweenHelltowerKillBrothers : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 10 );
@@ -455,7 +455,7 @@ class CAchievementTFHalloweenHelltowerMilestone : public CAchievement_AchievedCo
 {
 public:
 	DECLARE_CLASS( CAchievementTFHalloweenHelltowerMilestone, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 4, ACHIEVEMENT_TF_HALLOWEEN_HELLTOWER_RARE_SPELL, ACHIEVEMENT_TF_HALLOWEEN_HELLTOWER_KILL_BROTHERS );
@@ -466,7 +466,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHalloweenHelltowerMilestone, ACHIEVEMENT_TF_H
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHalloweenHelltowerSkullIslandReward : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );

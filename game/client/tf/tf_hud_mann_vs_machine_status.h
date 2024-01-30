@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,7 +30,7 @@
 #define MAX_TANK_PROGRESS_BARS 5
 
 //=========================================================
-typedef struct 
+typedef struct
 {
 	int		nCount;
 	const char	*pchClassIconName;
@@ -131,7 +131,7 @@ private:
 };
 
 //=========================================================
-class CInWorldCurrencyStatus : public vgui::EditablePanel 
+class CInWorldCurrencyStatus : public vgui::EditablePanel
 {
 	DECLARE_CLASS_SIMPLE( CInWorldCurrencyStatus, vgui::EditablePanel );
 public:
@@ -247,7 +247,7 @@ private:
 
 	void RatingLabelUpdate( void );
 	void RatingScoreUpdate( void );
-	
+
 	bool CheckState( float targetTime, float currentTime, int nextState );
 	void CheckCredits ();
 
@@ -285,7 +285,7 @@ public:
 	virtual void OnTick( void );
 
 private:
-	
+
 };
 
 //=========================================================
@@ -354,7 +354,7 @@ private:
 	float	m_flVictoryTimer;
 
 	int		m_nNextWaveTime;
- 
+
 	bool	m_bSpecPanelVisible;
 	int		m_nSpyMissionCount;
 

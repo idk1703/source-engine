@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #ifndef PUSHENTITY_H
@@ -92,7 +92,7 @@ protected:
 	void	GenerateBlockingEntityList();
 	void	GenerateBlockingEntityListAddBox( const Vector &vecMoved );
 
-	// Purpose: Gets a list of all entities hierarchically attached to the root 
+	// Purpose: Gets a list of all entities hierarchically attached to the root
 	void	SetupAllInHierarchy( CBaseEntity *pParent );
 
 	// Unlink + relink the pusher list so we can actually do the push
@@ -129,7 +129,7 @@ class CTraceFilterPushMove : public CTraceFilterSimple
 	DECLARE_CLASS( CTraceFilterPushMove, CTraceFilterSimple );
 
 public:
-	CTraceFilterPushMove( CBaseEntity *pEntity, int nCollisionGroup ) 
+	CTraceFilterPushMove( CBaseEntity *pEntity, int nCollisionGroup )
 		: CTraceFilterSimple( pEntity, nCollisionGroup )
 	{
 		m_pRootParent = pEntity->GetRootMoveParent();
@@ -143,7 +143,7 @@ public:
 		if ( UTIL_EntityHasMatchingRootParent( m_pRootParent, pTestEntity ) )
 			return false;
 
-		if ( pTestEntity->GetMoveType() == MOVETYPE_VPHYSICS && 
+		if ( pTestEntity->GetMoveType() == MOVETYPE_VPHYSICS &&
 			pTestEntity->VPhysicsGetObject() && pTestEntity->VPhysicsGetObject()->IsMoveable() )
 			return false;
 

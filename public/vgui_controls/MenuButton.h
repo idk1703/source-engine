@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -45,7 +45,7 @@ public:
 	virtual void DoClick();
 	virtual void SetOpenOffsetY(int yOffset);
 
-    virtual bool CanBeDefaultButton(void);
+	virtual bool CanBeDefaultButton(void);
 
 	// sets the direction in which the menu opens from the button, defaults to down
 	virtual void SetOpenDirection(Menu::MenuDirection_e direction);
@@ -66,7 +66,7 @@ public:
 	Menu	*GetMenu();
 
 private:
-	
+
 	Menu *m_pMenu;
 	Menu::MenuDirection_e m_iDirection;
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@ class CBaseTFPlayer;
 class CBasePlayer;
 
 //-----------------------------------------------------------------------------
-// This class is the GameMovement class for team fortress and overrides 
+// This class is the GameMovement class for team fortress and overrides
 // some of the default behavior.
 //-----------------------------------------------------------------------------
 class CTFGameMovement : public CGameMovement

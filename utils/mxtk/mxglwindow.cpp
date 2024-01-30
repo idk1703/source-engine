@@ -49,7 +49,7 @@ mxGlWindow::mxGlWindow (mxWindow *parent, int x, int y, int w, int h, const char
 		 0,		// shift bit ignored
 		 0,		// no accumulation buffer
 		 0, 0, 0, 0,	// accum bits ignored
-		 16,		// 32-bit z-buffer      
+		 16,		// 32-bit z-buffer
 		 0,		// no stencil buffer
 		 0,		// no auxiliary buffer
 		 PFD_MAIN_PLANE,	// main layer

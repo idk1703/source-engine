@@ -191,7 +191,7 @@ void CDmeMakefileUtils::SetCompileProcess( ProcessHandle_t hProcess )
 		m_CompilationStep = AFTER_COMPILATION_FAILED;
 	}
 }
-	
+
 
 //-----------------------------------------------------------------------------
 // Default implementatations for compile dependencies
@@ -431,7 +431,7 @@ CompilationState_t CDmeMakefileUtils::UpdateCompilation( char *pOutputBuf, int n
 	case BUILDING_ALL_DEPENDENCIES:
 	case BEFORE_COMPILATION:
 		return COMPILATION_NOT_COMPLETE;
- 
+
 	case AFTER_COMPILATION_FAILED:
 		m_CompilationStep = NOT_COMPILING;
 		return COMPILATION_FAILED;
@@ -462,7 +462,7 @@ CompilationState_t CDmeMakefileUtils::UpdateCompilation( char *pOutputBuf, int n
 	if ( !g_pProcessUtils->IsProcessComplete( m_hCompileProcess ) )
 		return COMPILATION_NOT_COMPLETE;
 
-	m_nExitCode = g_pProcessUtils->GetProcessExitCode( m_hCompileProcess ); 
+	m_nExitCode = g_pProcessUtils->GetProcessExitCode( m_hCompileProcess );
 	bool bCompileSucceeded = ( m_nExitCode == 0 );
 	g_pProcessUtils->CloseProcess( m_hCompileProcess );
 	m_hCompileProcess = PROCESS_HANDLE_INVALID;
@@ -522,7 +522,7 @@ bool CDmeMakefileUtils::PerformCompilationStep( CDmeMayaMakefile *pMakeFile, Com
 
 	CUtlVector< CDmeHandle< CDmeSourceMayaFile > > sources;
 	pMakeFile->GetSources( sources );
-	 
+
 	if ( !sources.Count() )
 		return false;
 
@@ -583,7 +583,7 @@ bool CDmeMakefileUtils::PerformCompilationStep( CDmeMayaMakefile *pMakeFile, Com
 
 	// Maya wants forward slashes
 	Q_FixSlashes( pSourcePath, '/' );
-    
+
 	char pMayaCommand[1024];
 	Q_snprintf( pMayaCommand, sizeof(pMayaCommand), "mayabatch.exe -batch -file \"%s\" -command \"%s\"", pSourcePath, mayaCommand.Get() );
 	ProcessHandle_t hProcess = g_pProcessUtils->StartProcess( pMayaCommand, true );

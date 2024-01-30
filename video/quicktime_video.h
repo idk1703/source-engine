@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -39,7 +39,7 @@ extern IMaterialSystem	*materials;
 	#include <Movies.h>
 	#include <windows.h>
 #elif
-    #error "Quicktime not supported on this target platform"	
+	#error "Quicktime not supported on this target platform"
 #endif
 
 
@@ -63,7 +63,7 @@ class CQuickTimeVideoSubSystem : public CTier2AppSystem< IVideoSubSystem >
 		CQuickTimeVideoSubSystem();
 		~CQuickTimeVideoSubSystem();
 
-		// Inherited from IAppSystem 
+		// Inherited from IAppSystem
 		virtual bool					Connect( CreateInterfaceFn factory );
 		virtual void					Disconnect();
 		virtual void				   *QueryInterface( const char *pInterfaceName );
@@ -71,19 +71,19 @@ class CQuickTimeVideoSubSystem : public CTier2AppSystem< IVideoSubSystem >
 		virtual void					Shutdown();
 
 		// Inherited from IVideoSubSystem
-		 
+
 		// SubSystem Identification functions
 		virtual VideoSystem_t			GetSystemID();
 		virtual VideoSystemStatus_t		GetSystemStatus();
 		virtual VideoSystemFeature_t	GetSupportedFeatures();
 		virtual const char			   *GetVideoSystemName();
-		
+
 		// Setup & Shutdown Services
 		virtual bool					InitializeVideoSystem( IVideoCommonServices *pCommonServices );
 		virtual bool					ShutdownVideoSystem();
-		
+
 		virtual VideoResult_t			VideoSoundDeviceCMD( VideoSoundDeviceOperation_t operation, void *pDevice = nullptr, void *pData = nullptr );
-		
+
 		// get list of file extensions and features we support
 		virtual int						GetSupportedFileExtensionCount();
 		virtual const char			   *GetSupportedFileExtension( int num );
@@ -96,16 +96,16 @@ class CQuickTimeVideoSubSystem : public CTier2AppSystem< IVideoSubSystem >
 		virtual IVideoMaterial		   *CreateVideoMaterial( const char *pMaterialName, const char *pVideoFileName, VideoPlaybackFlags_t flags );
 		virtual VideoResult_t			DestroyVideoMaterial( IVideoMaterial *pVideoMaterial );
 
-		// Create/destroy a video encoder		
+		// Create/destroy a video encoder
 		virtual IVideoRecorder		   *CreateVideoRecorder();
 		virtual VideoResult_t			DestroyVideoRecorder( IVideoRecorder *pRecorder );
-		
+
 		virtual VideoResult_t			CheckCodecAvailability( VideoEncodeCodec_t codec );
-		
+
 		virtual VideoResult_t			GetLastResult();
 
 	private:
-	
+
 		bool							SetupQuickTime();
 		bool							ShutdownQuickTime();
 
@@ -113,15 +113,15 @@ class CQuickTimeVideoSubSystem : public CTier2AppSystem< IVideoSubSystem >
 
 		bool							m_bQuickTimeInitialized;
 		VideoResult_t					m_LastResult;
-		
+
 		VideoSystemStatus_t				m_CurrentStatus;
 		VideoSystemFeature_t			m_AvailableFeatures;
 
 		IVideoCommonServices		   *m_pCommonServices;
-		
+
 		CUtlVector< IVideoMaterial* >	m_MaterialList;
 		CUtlVector< IVideoRecorder* >	m_RecorderList;
-		
+
 		static const VideoSystemFeature_t	DEFAULT_FEATURE_SET;
 };
 

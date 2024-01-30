@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -94,7 +94,7 @@ CfgProcessor::CfgEntryInfo const * GetEntryByStaticComboNum( uint64 nStaticCombo
 {
 	CfgProcessor::CfgEntryInfo const *pInfo;
 	uint64 nRemainStaticCombos = nStaticCombo;
-	
+
 	for ( pInfo = g_arrCompileEntries.Get(); pInfo && pInfo->m_szName; ++ pInfo )
 	{
 		if ( nRemainStaticCombos >= pInfo->m_numStaticCombos )
@@ -179,13 +179,13 @@ struct CByteCodeBlock
 		memcpy( m_ByteCode, pByteCode, nCodeSize );
 		m_nCRC32 = CRC32_ProcessSingleBuffer( pByteCode, nCodeSize );
 	}
-	
+
 	~CByteCodeBlock( void )
 	{
 		if ( m_ByteCode )
 			delete[] m_ByteCode;
 	}
-	
+
 };
 
 static int __cdecl CompareDynamicComboIDs( CByteCodeBlock * const *pA, CByteCodeBlock * const *pB )
@@ -201,7 +201,7 @@ static int __cdecl CompareDynamicComboIDs( CByteCodeBlock * const *pA, CByteCode
 struct CStaticCombo									// all the data for one static combo
 {
 	CStaticCombo *m_pNext, *m_pPrev;
-	
+
 	uint64 m_nStaticComboID;
 
 	CUtlVector< CByteCodeBlock* > m_DynamicCombos;
@@ -226,7 +226,7 @@ struct CStaticCombo									// all the data for one static combo
 	{
 		m_DynamicCombos.PurgeAndDeleteElements();
 	}
-	
+
 	void AddDynamicCombo( uint64 nComboID, void const *pComboData, size_t nCodeSize )
 	{
 		CByteCodeBlock *pNewBlock = new CByteCodeBlock( pComboData, nCodeSize, nComboID );
@@ -247,7 +247,7 @@ struct CStaticCombo									// all the data for one static combo
 
 typedef CUtlNodeHash<CStaticCombo, 7097, uint64> StaticComboNodeHash_t;
 
-template <> 
+template <>
 inline StaticComboNodeHash_t **Construct( StaticComboNodeHash_t ** pMemory )
 {
 	return ::new( pMemory ) StaticComboNodeHash_t *( NULL ); // Explicitly new with NULL
@@ -480,7 +480,7 @@ void ErrMsgDispatchMsgLine( char const *szCommand, char *szMsgLine, char const *
 	if ( szShaderName )
 	{
 		static char chFitLongMsgLine[4096];
-		
+
 		if ( *szMsgLine == '(' )
 		{
 			sprintf( chFitLongMsgLine, "%s%s", szShaderName, szMsgLine );
@@ -545,7 +545,7 @@ bool ErrMsgDispatch( MessageBuffer *pBuf, int iSource, int iPacketID )
 
 	// Parse the err msg packet
 	char *szMsgLine = pBuf->data + 1;
-	
+
 	char *szCommand = FindNext( szMsgLine, "\n" );
 	if ( !*szCommand )
 		return bInvalidPkgRetCode;
@@ -563,7 +563,7 @@ bool ErrMsgDispatch( MessageBuffer *pBuf, int iSource, int iPacketID )
 
 	// Set the msg info
 	g_Master_CompilerMsgInfo[ szMsgLine ].SetMsgReportedCommand( szCommand, atoi( szNumTimesReported ) );
-	
+
 	return true;
 }
 
@@ -649,7 +649,7 @@ void MyDisconnectHandler( int procID, const char *pReason )
 // # of duplicate static combos  (if version >= 6 )
 // [ (sorted by static combo id)
 //   static combo id
-//   id of static bombo which is identical 
+//   id of static bombo which is identical
 // ]
 //
 // each packed dynamic combo for a given static combo is stored as a series of compressed blocks.
@@ -882,12 +882,12 @@ static void WriteShaderFiles( const char *pShaderName )
 		unlink( szVCSfilename );
 		return;
 	}
-	
+
 	if ( !pByteCodeArray )
 		return;
 
-	DebugOut( "%s : %I64u combos centroid mask: 0x%x numDynamicCombos: %I64u flags: 0x%x\n", 
-		pShaderName, shaderInfo.m_nTotalShaderCombos, 
+	DebugOut( "%s : %I64u combos centroid mask: 0x%x numDynamicCombos: %I64u flags: 0x%x\n",
+		pShaderName, shaderInfo.m_nTotalShaderCombos,
 		shaderInfo.m_CentroidMask, shaderInfo.m_nDynamicCombos, shaderInfo.m_Flags );
 
 	//
@@ -949,7 +949,7 @@ static void WriteShaderFiles( const char *pShaderName )
 	Hdr.m_nStaticComboID = 0xffffffff;
 	Hdr.m_nFileOffset = 0;
 	StaticComboHeaders.AddToTail( Hdr );
-	
+
 	// now, sort. sentinel key will end up at end
 	StaticComboHeaders.Sort( CompareComboIds );
 
@@ -1094,7 +1094,7 @@ void Master_ReceiveWorkUnitFn( uint64 iWorkUnit, MessageBuffer *pBuf, int iWorke
 					nComboOfTheEntry = pEntry->m_numStaticCombos - 1;
 				}
 			}
-			
+
 			if ( iCombo < comboEnd )
 				continue;
 			else
@@ -1130,7 +1130,7 @@ void Master_ReceiveWorkUnitFn( uint64 iWorkUnit, MessageBuffer *pBuf, int iWorke
 void DebugSafeWaitPoint( bool bForceWait = false )
 {
 	static bool s_bDebuggerAttached = ( CommandLine()->FindParm( "-debugwait" ) == 0 );
-	
+
 	if ( bForceWait )
 	{
 		s_bDebuggerAttached = false;
@@ -1170,35 +1170,35 @@ void MySystem( char const * const pCommand, CmdSink::IResponse **ppResponse )
 	FILE *batFp = fopen( "temp.bat", "w" );
 	fprintf( batFp, "%s\n", pCommand );
 	fclose( batFp );
-	
+
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
-	
+
 	ZeroMemory( &si, sizeof(si) );
 	si.cb = sizeof(si);
 	ZeroMemory( &pi, sizeof(pi) );
-	
-	// Start the child process. 
-	if( !CreateProcess( NULL, // No module name (use command line). 
-		"temp.bat", // Command line. 
-		NULL,             // Process handle not inheritable. 
-		NULL,             // Thread handle not inheritable. 
-		FALSE,            // Set handle inheritance to FALSE. 
-		IDLE_PRIORITY_CLASS | CREATE_NO_WINDOW,                // No creation flags. 
-		NULL,             // Use parent's environment block. 
-		g_WorkerTempPath, // Use parent's starting directory. 
+
+	// Start the child process.
+	if( !CreateProcess( NULL, // No module name (use command line).
+		"temp.bat", // Command line.
+		NULL,             // Process handle not inheritable.
+		NULL,             // Thread handle not inheritable.
+		FALSE,            // Set handle inheritance to FALSE.
+		IDLE_PRIORITY_CLASS | CREATE_NO_WINDOW,                // No creation flags.
+		NULL,             // Use parent's environment block.
+		g_WorkerTempPath, // Use parent's starting directory.
 		&si,              // Pointer to STARTUPINFO structure.
 		&pi )             // Pointer to PROCESS_INFORMATION structure.
-		) 
+		)
 	{
 		Error( "CreateProcess failed." );
 		Assert( 0 );
 	}
-	
+
 	// Wait until child process exits.
 	WaitForSingleObject( pi.hProcess, INFINITE );
-	
-	// Close process and thread handles. 
+
+	// Close process and thread handles.
 	CloseHandle( pi.hProcess );
 	CloseHandle( pi.hThread );
 }
@@ -1221,7 +1221,7 @@ size_t AssembleWorkerReplyPackage( CfgProcessor::CfgEntryInfo const *pEntry, uin
 		ubDynamicComboBuffer.SetBigEndian( g_bIsX360 );
 
 		pStComboRec->SortDynamicCombos();
-		// iterate over all dynamic combos. 
+		// iterate over all dynamic combos.
 		for(int i = 0 ; i < pStComboRec->m_DynamicCombos.Count(); i++ )
 		{
 			CByteCodeBlock *pCode = pStComboRec->m_DynamicCombos[i];
@@ -1293,9 +1293,9 @@ size_t CopyWorkerReplyPackage( CfgProcessor::CfgEntryInfo const *pEntry, uint64 
 		pBuf->write( &len, sizeof( len ) );
 		if ( len )
 			pBuf->write( pStComboRec->m_abPackedCode.GetData(), len );
-	
+
 	}
-	
+
 	if ( pStComboRec )
 	{
 		GLOBAL_DATA_MTX_LOCK();
@@ -1367,7 +1367,7 @@ protected:
 
 	DisconnectHandlerFn_t m_fnOldDisconnectHandler;
 	CAutoPushPop< DisconnectHandlerFn_t > m_autoRestoreDisconnectHandler;
-	
+
 	void QuitSubs( void );
 	void TryToPackageData( uint64 iCommandNumber );
 	void PrepareSubProcess( SubProcess **ppSp, SubProcessKernelObjects **ppCommObjs );
@@ -1382,7 +1382,7 @@ void CWorkerAccumState < TMutexType > ::RangeBegin( uint64 iFirstCommand, uint64
 	m_iLastFinished = iFirstCommand;
 	m_hCombo = NULL;
 	CfgProcessor::Combo_GetNext( m_iNextCommand, m_hCombo, m_iEndCommand );
-	
+
 	g_fnDisconnectHandler = Special_DisconnectHandler;
 
 	// Notify all connected sub-processes that the master is still alive
@@ -1522,7 +1522,7 @@ void CWorkerAccumState < TMutexType > ::ExecuteCompileCommandThreaded( CfgProces
 	{
 		void *pvMemory = shrmem.Lock();
 		Assert( pvMemory );
-		
+
 		Combo_FormatCommand( hCombo, ( char * ) pvMemory );
 
 		shrmem.Unlock();
@@ -1542,7 +1542,7 @@ void CWorkerAccumState < TMutexType > ::ExecuteCompileCommandThreaded( CfgProces
 			TerminateProcess( GetCurrentProcess(), 1 );
 
 		CmdSink::IResponse *pResponse;
-		if ( pvMemory ) 
+		if ( pvMemory )
 			pResponse = new CSubProcessResponse( pvMemory );
 		else
 			pResponse = new CmdSink::CResponseError;
@@ -1557,7 +1557,7 @@ template < typename TMutexType >
 void CWorkerAccumState < TMutexType > ::ExecuteCompileCommand( CfgProcessor::ComboHandle hCombo )
 {
 	CmdSink::IResponse *pResponse = NULL;
-	
+
 	{
 		char chBuffer[ 4096 ];
 		Combo_FormatCommand( hCombo, chBuffer );
@@ -1590,7 +1590,7 @@ void CWorkerAccumState < TMutexType > ::HandleCommandResponse( CfgProcessor::Com
 		uint64 nDyComboIdx = iComboIndex - ( nStComboIdx * pEntryInfo->m_numDynamicCombos );
 		StaticComboFromDictAdd( pEntryInfo->m_szName, nStComboIdx )->AddDynamicCombo( nDyComboIdx , pResponse->GetResultBuffer(), pResponse->GetResultBufferLen() );
 		GLOBAL_DATA_MTX_UNLOCK();
-		
+
 	}
 
 	// Tell the master that this shader failed
@@ -1719,7 +1719,7 @@ bool CWorkerAccumState < TMutexType > ::OnProcess()
 	m_pMutex->Lock();
 		CfgProcessor::ComboHandle hThreadCombo = m_hCombo ? Combo_Alloc( m_hCombo ) : NULL;
 	m_pMutex->Unlock();
-	
+
 	uint64 iThreadCommand = ~uint64(0);
 
 	SubProcess *pSp = NULL;
@@ -1763,7 +1763,7 @@ bool CWorkerAccumState < TMutexType > ::OnProcessST()
 	while ( m_hCombo )
 	{
 		ExecuteCompileCommand( m_hCombo );
-		
+
 		Combo_GetNext( m_iNextCommand, m_hCombo, m_iEndCommand );
 	}
 	return false;
@@ -1797,7 +1797,7 @@ protected:
 
 		typedef CThreadFastMutex MultiThreadMutex_t;
 		MultiThreadMutex_t mtx;
-		
+
 		typedef CWorkerAccumState < MultiThreadMutex_t > WorkerClass_t;
 		WorkerClass_t *pWorkerObj;
 
@@ -1964,7 +1964,7 @@ void Worker_ProcessWorkUnitFn( int iThread, uint64 iWorkUnit, MessageBuffer *pBu
 			continue;
 
 		int const len = strlen( szShaderName );
-		
+
 		CUtlBinaryBlock bb;
 		bb.SetLength( 1 + len + 1 );
 		sprintf( ( char * ) bb.Get(), "%c%s", SHADERHADERROR_PACKETID, szShaderName );
@@ -2004,7 +2004,7 @@ void Shader_ParseShaderInfoFromCompileCommands( CfgProcessor::CfgEntryInfo const
 	{
 		char cmd[ 4096 ];
 		Combo_FormatCommand( hCombo, cmd );
-		
+
 		{
 			memset( &shaderInfo, 0, sizeof( ShaderInfo_t ) );
 
@@ -2070,7 +2070,7 @@ void Worker_GetLocalCopyOfShaders( void )
 	while( char *pszLineToCopy = bffr.InplaceGetLinePtr() )
 	{
 		V_MakeAbsolutePath( filename, sizeof( filename ), pszLineToCopy, g_pShaderPath );
-		
+
 		if ( g_bVerbose )
 			printf( "getting local copy of shader: \"%s\" (\"%s\")\n", pszLineToCopy, filename );
 
@@ -2092,7 +2092,7 @@ void Worker_GetLocalCopyOfShaders( void )
 		sprintf( filename, "%s%s", g_WorkerTempPath, justFilename );
 		if ( g_bVerbose )
 			printf( "creating \"%s\"\n", filename );
-		
+
 		FILE *fp3 = fopen( filename, "wb" );
 		if ( !fp3 )
 		{
@@ -2125,7 +2125,7 @@ void Worker_GetLocalCopyOfBinary( const char *pFilename )
 	sprintf( tmpFilename, "%s\\%s", g_ExeDir, pFilename );
 	if ( g_bVerbose )
 		printf( "trying to open: %s\n", tmpFilename );
-	
+
 	FILE *fp = fopen( tmpFilename, "rb" );
 	if( !fp )
 	{
@@ -2143,7 +2143,7 @@ void Worker_GetLocalCopyOfBinary( const char *pFilename )
 
 	char newFilename[MAX_PATH];
 	sprintf( newFilename, "%s%s", g_WorkerTempPath, pFilename );
-	
+
 	FILE *fp2 = fopen( newFilename, "wb" );
 	if( !fp2 )
 	{
@@ -2193,7 +2193,7 @@ void Shared_ParseListOfCompileCommands( void )
 	}
 
 //	double tt_end = Plat_FloatTime();
-	
+
 	Msg( "\rCompiling %s commands.         \r", PrettyPrintNumber( g_numCompileCommands ) );
 }
 
@@ -2290,7 +2290,7 @@ private:
 	void ThreadProc( void );
 	friend DWORD WINAPI CDistributeShaderCompileMaster::ThreadProcAdapter( LPVOID pvArg );
 	static DWORD WINAPI ThreadProcAdapter( LPVOID pvArg ) { reinterpret_cast< CDistributeShaderCompileMaster * >( pvArg )->ThreadProc(); return 0; }
-	
+
 private:
 	HANDLE m_hThread;
 	HANDLE m_hEvent;
@@ -2316,10 +2316,10 @@ CDistributeShaderCompileMaster::CDistributeShaderCompileMaster( void ) :
 CDistributeShaderCompileMaster::~CDistributeShaderCompileMaster( void )
 {
 	m_bRunning = FALSE;
-	
+
 	SetEvent( m_hEvent );
 	WaitForSingleObject( m_hThread, INFINITE );
-	
+
 	CloseHandle( m_hThread );
 	CloseHandle( m_hEvent );
 }
@@ -2353,7 +2353,7 @@ void CDistributeShaderCompileMaster::ThreadProc( void )
 	for ( ; m_bRunning; )
 	{
 		WaitForSingleObject( m_hEvent, INFINITE );
-		
+
 		// Do a pump of shaders to write
 		for ( int numShadersWritten = 0; /* forever */ ; ++ numShadersWritten )
 		{
@@ -2400,7 +2400,7 @@ int ShaderCompile_Main( int argc, char* argv[] )
 
 	bool bShouldUseVMPI = ( CommandLine()->FindParm( "-nompi" ) == 0 );
 	if ( bShouldUseVMPI )
-	{	
+	{
 		// Master, start accepting connections.
 		// Worker, make a connection.
 		DebugOut( "Before VMPI_Init\n" );
@@ -2438,7 +2438,7 @@ int ShaderCompile_Main( int argc, char* argv[] )
 		// SDK uses this since it only has filesystem_steam.dll.
 		FileSystem_Init( NULL, 0, FS_INIT_FULL );
 	}
-	
+
 	DebugOut( "After VMPI_FileSystem_Init\n" );
 	Shared_ParseListOfCompileCommands();
 	DebugOut( "After Shared_ParseListOfCompileCommands\n" );
@@ -2659,7 +2659,7 @@ int ShaderCompile_Main( int argc, char* argv[] )
 		// End
 		//
 		double end = Plat_FloatTime();
-		
+
 		GetHourMinuteSecondsString( (int)( end - g_flStartTime ), str, sizeof( str ) );
 		DebugOut( "%s elapsed\n", str );
 		DebugOut( "Precise timing = %.5f\n", ( end - g_flStartTime ) );
@@ -2671,7 +2671,7 @@ int ShaderCompile_Main( int argc, char* argv[] )
 			VMPI_Finalize();
 		}
 	}
-	
+
 	return g_Master_ShaderHadError.GetNumStrings();
 }
 

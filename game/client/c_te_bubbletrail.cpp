@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -38,7 +38,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBubbleTrail::C_TEBubbleTrail( void )
 {
@@ -51,7 +51,7 @@ C_TEBubbleTrail::C_TEBubbleTrail( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBubbleTrail::~C_TEBubbleTrail( void )
 {
@@ -64,8 +64,8 @@ void TE_BubbleTrail( IRecipientFilter& filter, float delay,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEBubbleTrail::PostDataUpdate( DataUpdateType_t updateType )
 {

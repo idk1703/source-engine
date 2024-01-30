@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -25,13 +25,13 @@ const int SF_MICROPHONE_IGNORE_NONATTENUATED	= 0x40;
 // Return codes from SoundPlayed
 enum MicrophoneResult_t
 {
-    MicrophoneResult_Ok = 0,
-    MicrophoneResult_Swallow,       // The microphone swallowed the sound. Don't play it.
-    MicrophoneResult_Remove,        // The microphone should be removed from the list of microphones.
+	MicrophoneResult_Ok = 0,
+	MicrophoneResult_Swallow,       // The microphone swallowed the sound. Don't play it.
+	MicrophoneResult_Remove,        // The microphone should be removed from the list of microphones.
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CEnvMicrophone : public CPointEntity
 {
@@ -58,13 +58,13 @@ public:
 	DECLARE_DATADESC();
 
 	// Hook for the sound system to tell us when a sound's been played. Returns true if it's to swallow the passed in sound.
-	static bool OnSoundPlayed( int entindex, const char *soundname, soundlevel_t soundlevel, 
+	static bool OnSoundPlayed( int entindex, const char *soundname, soundlevel_t soundlevel,
 		float flVolume, int iFlags, int iPitch, const Vector *pOrigin, float soundtime, CUtlVector< Vector >& soundorigins );
 
 private:
 
 	// Per-microphone notification that a sound has played.
-	MicrophoneResult_t SoundPlayed( int entindex, const char *soundname, soundlevel_t soundlevel, 
+	MicrophoneResult_t SoundPlayed( int entindex, const char *soundname, soundlevel_t soundlevel,
 		float flVolume, int iFlags, int iPitch, const Vector *pOrigin, float soundtime, CUtlVector< Vector >& soundorigins );
 
 	bool		m_bDisabled;			// If true, the microphone will not measure sound.

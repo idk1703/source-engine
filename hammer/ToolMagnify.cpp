@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,10 +26,10 @@ CToolMagnify::CToolMagnify(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pView - 
-//			nFlags - 
-//			point - 
+// Purpose:
+// Input  : *pView -
+//			nFlags -
+//			point -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CToolMagnify::OnContextMenu2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoint)
@@ -40,10 +40,10 @@ bool CToolMagnify::OnContextMenu2D(CMapView2D *pView, UINT nFlags, const Vector2
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pView - 
-//			nFlags - 
-//			point - 
+// Purpose:
+// Input  : pView -
+//			nFlags -
+//			point -
 // Output : Returns true to indicate that the message was handled.
 //-----------------------------------------------------------------------------
 bool CToolMagnify::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoint)
@@ -55,10 +55,10 @@ bool CToolMagnify::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pView - 
-//			nFlags - 
-//			point - 
+// Purpose:
+// Input  : pView -
+//			nFlags -
+//			point -
 // Output : Returns true to indicate that the message was handled.
 //-----------------------------------------------------------------------------
 bool CToolMagnify::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoint)
@@ -70,10 +70,10 @@ bool CToolMagnify::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pView - 
-//			nFlags - 
-//			point - 
+// Purpose:
+// Input  : pView -
+//			nFlags -
+//			point -
 // Output : Returns true to indicate that the message was handled.
 //-----------------------------------------------------------------------------
 bool CToolMagnify::OnRMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoint)
@@ -81,5 +81,3 @@ bool CToolMagnify::OnRMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D
 	pView->SetZoom(pView->GetZoom() * 0.5f);
 	return true;
 }
-
-

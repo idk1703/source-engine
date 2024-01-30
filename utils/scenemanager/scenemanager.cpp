@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -90,7 +90,7 @@ bool CHLSceneManagerApp::Create()
 {
 	SpewOutputFunc( SceneManagerSpewFunc );
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "vgui2.dll",				VGUI_IVGUI_INTERFACE_VERSION },
 		{ "soundemittersystem.dll",	SOUNDEMITTERSYSTEM_INTERFACE_VERSION },
@@ -144,7 +144,7 @@ bool CHLSceneManagerApp::PreInit( )
 	if ( !SetupSearchPaths() )
 		return false;
 
-	return true; 
+	return true;
 }
 
 void CHLSceneManagerApp::PostShutdown()
@@ -186,9 +186,9 @@ int CHLSceneManagerApp::Main()
 	{
 		sm->AutoLoad( NULL );
 	}
-	
+
 	int retval = mx::run ();
-	
+
 	sound->Shutdown();
 
 	g_pSoundEmitterSystem->ModShutdown();

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Define inline functions for the CParticleProperty class. The 
+// Purpose: Define inline functions for the CParticleProperty class. The
 //			definitions	exist in this include file to avoid cluttering up
 //			particle_property.h, but this file should not be included from any-
 //			where else.

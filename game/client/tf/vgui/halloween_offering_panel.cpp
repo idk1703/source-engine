@@ -20,16 +20,16 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CHalloweenOfferingPanel::CHalloweenOfferingPanel( vgui::Panel *parent, CItemModelPanelToolTip* pTooltip ) 
+CHalloweenOfferingPanel::CHalloweenOfferingPanel( vgui::Panel *parent, CItemModelPanelToolTip* pTooltip )
 	: BaseClass( parent, pTooltip )
 {
-	
+
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHalloweenOfferingPanel::~CHalloweenOfferingPanel( void )
 {
@@ -43,7 +43,7 @@ void CHalloweenOfferingPanel::CreateSelectionPanel()
 	m_hSelectionPanel = (CCollectionCraftingSelectionPanel*)pSelectionPanel;
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHalloweenOfferingPanel::OnCommand( const char *command )
 {
@@ -80,7 +80,7 @@ void CHalloweenOfferingPanel::OnCommand( const char *command )
 		m_bWaitingForGCResponse = true;
 		m_nFoundItemID.Purge();
 		m_timerResponse.Start( 5.f );
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_LetterSend" );	
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "CollectionCrafting_LetterSend" );
 		return;
 	}
 

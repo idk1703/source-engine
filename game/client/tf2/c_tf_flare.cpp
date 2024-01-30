@@ -24,7 +24,7 @@ CLIENTEFFECT_REGISTER_END()
 
 class C_SignalFlare : public C_BaseAnimating, CSimpleEmitter
 {
-	
+
 	DECLARE_CLASS( C_SignalFlare, C_BaseAnimating );
 
 public:
@@ -74,15 +74,15 @@ C_SignalFlare::C_SignalFlare( void ) : CSimpleEmitter( "C_SignalFlare" )
 
 
 //-----------------------------------------------------------------------------
-// Destructor 
+// Destructor
 //-----------------------------------------------------------------------------
 C_SignalFlare::~C_SignalFlare( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_SignalFlare::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -95,14 +95,14 @@ void C_SignalFlare::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_SignalFlare::RestoreResources( void )
 {
 	if ( m_pParticle[0] == NULL )
 	{
 		m_pParticle[0] = (SimpleParticle *) AddParticle( sizeof( SimpleParticle ), GetPMaterial( "effects/redflare" ), GetAbsOrigin() );
-		
+
 		if ( m_pParticle[0] != NULL )
 		{
 			m_pParticle[0]->m_uchColor[0] = m_pParticle[0]->m_uchColor[1] = m_pParticle[0]->m_uchColor[2] = 0;
@@ -120,7 +120,7 @@ void C_SignalFlare::RestoreResources( void )
 	if ( m_pParticle[1] == NULL )
 	{
 		m_pParticle[1] = (SimpleParticle *) AddParticle( sizeof( SimpleParticle ), GetPMaterial( "effects/yellowflare_noz" ), GetAbsOrigin() );
-		
+
 		if ( m_pParticle[1] != NULL )
 		{
 			m_pParticle[1]->m_uchColor[0] = m_pParticle[1]->m_uchColor[1] = m_pParticle[1]->m_uchColor[2] = 0;
@@ -137,8 +137,8 @@ void C_SignalFlare::RestoreResources( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pParticle - 
+// Purpose:
+// Input  : pParticle -
 //-----------------------------------------------------------------------------
 void C_SignalFlare::NotifyDestroyParticle( Particle *pParticle )
 {
@@ -156,8 +156,8 @@ void C_SignalFlare::NotifyDestroyParticle( Particle *pParticle )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : timeDelta - 
+// Purpose:
+// Input  : timeDelta -
 //-----------------------------------------------------------------------------
 void C_SignalFlare::Update( float timeDelta )
 {
@@ -185,7 +185,7 @@ void C_SignalFlare::Update( float timeDelta )
 		baseScale = 0.0f;
 
 		if ( m_pParticle[0] != NULL )
-		{	
+		{
 			m_pParticle[0]->m_flDieTime		= gpGlobals->curtime;
 			m_pParticle[0]->m_uchStartSize	= m_pParticle[0]->m_uchEndSize = 0;
 			m_pParticle[0]->m_uchColor[0]	= 0;
@@ -194,7 +194,7 @@ void C_SignalFlare::Update( float timeDelta )
 		}
 
 		if ( m_pParticle[1] != NULL )
-		{	
+		{
 			m_pParticle[1]->m_flDieTime		= gpGlobals->curtime;
 			m_pParticle[1]->m_uchStartSize	= m_pParticle[1]->m_uchEndSize = 0;
 			m_pParticle[1]->m_uchColor[0]	= 0;
@@ -235,13 +235,13 @@ void C_SignalFlare::Update( float timeDelta )
 		smokeOrg[2] += baseScale * 4.0f;
 
 		SimpleParticle *sParticle = (SimpleParticle *) AddParticle( sizeof( SimpleParticle ), g_Mat_DustPuff[1], smokeOrg );
-			
+
 		if ( sParticle == NULL )
 			return;
 
 		sParticle->m_flLifetime		= 0.0f;
 		sParticle->m_flDieTime		= 1.0f;
-		
+
 		sParticle->m_vecVelocity	= Vector( random->RandomFloat( -16.0f, 16.0f ), random->RandomFloat( -16.0f, 16.0f ), random->RandomFloat( 8.0f, 16.0f ) + 32.0f );
 
 		fColor = random->RandomInt( 64, 128 );
@@ -282,7 +282,7 @@ void C_SignalFlare::Update( float timeDelta )
 	//
 
 	Vector	offset;
-	
+
 	//Cause the base of the effect to shake
 	offset.Random( -0.5f * baseScale, 0.5f * baseScale );
 	offset += GetAbsOrigin();
@@ -292,7 +292,7 @@ void C_SignalFlare::Update( float timeDelta )
 		m_pParticle[0]->m_Pos			= offset;
 		m_pParticle[0]->m_flLifetime	= 0.0f;
 		m_pParticle[0]->m_flDieTime		= 2.0f;
-		
+
 		m_pParticle[0]->m_vecVelocity.Init();
 
 		fColor = random->RandomInt( 100.0f, 128.0f );
@@ -305,7 +305,7 @@ void C_SignalFlare::Update( float timeDelta )
 		m_pParticle[0]->m_uchStartSize	= baseScale * (float) random->RandomInt( 32, 48 );
 		m_pParticle[0]->m_uchEndSize	= m_pParticle[0]->m_uchStartSize;
 		m_pParticle[0]->m_flRollDelta	= 0.0f;
-		
+
 		if ( random->RandomInt( 0, 4 ) == 3 )
 		{
 			m_pParticle[0]->m_flRoll	+= random->RandomInt( 2, 8 );
@@ -325,7 +325,7 @@ void C_SignalFlare::Update( float timeDelta )
 		m_pParticle[1]->m_Pos			= offset;
 		m_pParticle[1]->m_flLifetime	= 0.0f;
 		m_pParticle[1]->m_flDieTime		= 2.0f;
-		
+
 		m_pParticle[1]->m_vecVelocity.Init();
 
 		fColor = 255;

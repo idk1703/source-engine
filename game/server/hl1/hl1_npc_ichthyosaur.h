@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -90,7 +90,7 @@ private:
 	Vector m_vecLastMoveTarget;
 	bool m_bHasMoveTarget;
 
-	float m_flFlyingSpeed;	
+	float m_flFlyingSpeed;
 };
 
 

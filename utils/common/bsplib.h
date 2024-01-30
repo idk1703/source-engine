@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -93,7 +93,7 @@ extern	dvertex_t	    dvertexes[MAX_MAP_VERTS];
 extern	int				g_numvertnormalindices;	// dfaces reference these. These index g_vertnormals.
 extern	unsigned short	g_vertnormalindices[MAX_MAP_VERTNORMALS];
 
-extern	int				g_numvertnormals;	
+extern	int				g_numvertnormals;
 extern	Vector			g_vertnormals[MAX_MAP_VERTNORMALS];
 
 extern	int			    numnodes;
@@ -175,7 +175,7 @@ extern CUtlVector<char>	g_TexDataStringData;
 extern CUtlVector<int>	g_TexDataStringTable;
 
 extern	int					numleafwaterdata;
-extern	dleafwaterdata_t	dleafwaterdata[MAX_MAP_LEAFWATERDATA]; 
+extern	dleafwaterdata_t	dleafwaterdata[MAX_MAP_LEAFWATERDATA];
 
 extern CUtlVector<CFaceMacroTextureInfo>	g_FaceMacroTextureInfos;
 
@@ -184,7 +184,7 @@ extern CUtlVector<doccluderpolydata_t>	g_OccluderPolyData;
 extern CUtlVector<int>					g_OccluderVertexIndices;
 
 // level flags - see LVLFLAGS_xxx in bspfile.h
-extern uint32 g_LevelFlags;	
+extern uint32 g_LevelFlags;
 
 // physics collision data
 extern	byte		*g_pPhysCollide;
@@ -244,14 +244,14 @@ public:
 
 
 	//-----------------------------------------------------------------------------
-	// Game lump accessor methods 
+	// Game lump accessor methods
 	//-----------------------------------------------------------------------------
 	void*	GetGameLump( GameLumpHandle_t handle );
 	int		GameLumpSize( GameLumpHandle_t handle );
 
 
 	//-----------------------------------------------------------------------------
-	// Game lump iteration methods 
+	// Game lump iteration methods
 	//-----------------------------------------------------------------------------
 	GameLumpHandle_t	FirstGameLump();
 	GameLumpHandle_t	NextGameLump( GameLumpHandle_t handle );
@@ -333,13 +333,13 @@ void BuildFaceCalcWindingData( dface_t *pFace, int *points );
 // Removes degenerates.
 // Fills in pTriListIndices and pnTriListIndices.
 // You must free pTriListIndices with delete[].
-void TriStripToTriList( 
+void TriStripToTriList(
 	unsigned short const *pTriStripIndices,
 	int nTriStripIndices,
 	unsigned short **pTriListIndices,
 	int *pnTriListIndices );
 
-// Calculates the lightmap coordinates at a given set of positions given the 
+// Calculates the lightmap coordinates at a given set of positions given the
 // lightmap basis information.
 void CalcTextureCoordsAtPoints(
 	float const texelsPerWorldUnits[2][4],
@@ -393,8 +393,8 @@ void SetHDRMode( bool bHDR );
 // Helper accessors for the various structures.
 // ----------------------------------------------------------------------------- //
 
-inline ColorRGBExp32* dface_AvgLightColor( dface_t *pFace, int nLightStyleIndex ) 
-{ 
+inline ColorRGBExp32* dface_AvgLightColor( dface_t *pFace, int nLightStyleIndex )
+{
 	return (ColorRGBExp32*)&(*pdlightdata)[pFace->lightofs - (nLightStyleIndex+1) * 4];
 }
 

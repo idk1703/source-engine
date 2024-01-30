@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -38,9 +38,9 @@ ConVar mp_showgestureslots( "mp_showgestureslots", "-1", FCVAR_CHEAT | FCVAR_REP
 ConVar mp_slammoveyaw( "mp_slammoveyaw", "0", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY, "Force movement yaw along an animation path." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
-//			&movementData - 
+// Purpose:
+// Input  : *pPlayer -
+//			&movementData -
 //-----------------------------------------------------------------------------
 CMultiPlayerAnimState::CMultiPlayerAnimState( CBasePlayer *pPlayer, MultiPlayerMovementData_t &movementData )
 #ifdef CLIENT_DLL
@@ -66,7 +66,7 @@ CMultiPlayerAnimState::CMultiPlayerAnimState( CBasePlayer *pPlayer, MultiPlayerM
 
 	// Jumping.
 	m_bJumping = false;
-	m_flJumpStartTime = 0.0f;	
+	m_flJumpStartTime = 0.0f;
 	m_bFirstJumpFrame = false;
 
 	// Swimming
@@ -77,7 +77,7 @@ CMultiPlayerAnimState::CMultiPlayerAnimState( CBasePlayer *pPlayer, MultiPlayerM
 	m_bDying = false;
 	m_bFirstDyingFrame = true;
 
-	m_eCurrentMainSequenceActivity = ACT_INVALID;	
+	m_eCurrentMainSequenceActivity = ACT_INVALID;
 	m_nSpecificMainSequence = -1;
 
 	// Weapon data.
@@ -91,7 +91,7 @@ CMultiPlayerAnimState::CMultiPlayerAnimState( CBasePlayer *pPlayer, MultiPlayerM
 
 	m_flMaxGroundSpeed = 0.0f;
 
-	// If you are forcing aim yaw, your code is almost definitely broken if you don't include a delay between 
+	// If you are forcing aim yaw, your code is almost definitely broken if you don't include a delay between
 	// teleporting and forcing yaw. This is due to an unfortunate interaction between the command lookback window,
 	// and the fact that m_flEyeYaw is never propogated from the server to the client.
 	// TODO: Fix this after Halloween 2014.
@@ -107,8 +107,8 @@ CMultiPlayerAnimState::CMultiPlayerAnimState( CBasePlayer *pPlayer, MultiPlayerM
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 CMultiPlayerAnimState::~CMultiPlayerAnimState()
 {
@@ -116,9 +116,9 @@ CMultiPlayerAnimState::~CMultiPlayerAnimState()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
-//			&movementData - 
+// Purpose:
+// Input  : *pPlayer -
+//			&movementData -
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::Init( CBasePlayer *pPlayer, MultiPlayerMovementData_t &movementData )
 {
@@ -130,8 +130,8 @@ void CMultiPlayerAnimState::Init( CBasePlayer *pPlayer, MultiPlayerMovementData_
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::ClearAnimationState()
 {
@@ -146,8 +146,8 @@ void CMultiPlayerAnimState::ClearAnimationState()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : event - 
+// Purpose:
+// Input  : event -
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event, int nData )
 {
@@ -334,7 +334,7 @@ void CMultiPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event, int nData
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::PlayFlinchGesture( Activity iActivity )
 {
@@ -544,13 +544,13 @@ bool CMultiPlayerAnimState::IsGestureSlotPlaying( int iGestureSlot, Activity iGe
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::RestartGesture( int iGestureSlot, Activity iGestureActivity, bool bAutoKill )
 {
 	// Sanity Check
 	Assert( iGestureSlot >= 0 && iGestureSlot < GESTURE_SLOT_COUNT );
-	
+
 	if ( !VerifyAnimLayerInSlot( iGestureSlot ) )
 			return;
 
@@ -579,7 +579,7 @@ void CMultiPlayerAnimState::RestartGesture( int iGestureSlot, Activity iGestureA
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::AddToGestureSlot( int iGestureSlot, Activity iGestureActivity, bool bAutoKill )
 {
@@ -602,7 +602,7 @@ void CMultiPlayerAnimState::AddToGestureSlot( int iGestureSlot, Activity iGestur
 	if ( iGestureSequence <= 0 )
 		return;
 
-#ifdef CLIENT_DLL 
+#ifdef CLIENT_DLL
 
 	// Setup the gesture.
 	m_aGestureSlots[iGestureSlot].m_iGestureSlot = iGestureSlot;
@@ -656,7 +656,7 @@ void CMultiPlayerAnimState::AddToGestureSlot( int iGestureSlot, Activity iGestur
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::AddVCDSequenceToGestureSlot( int iGestureSlot, int iGestureSequence, float flCycle, bool bAutoKill )
 {
@@ -677,7 +677,7 @@ void CMultiPlayerAnimState::AddVCDSequenceToGestureSlot( int iGestureSlot, int i
 	// Set the activity.
 	Activity iGestureActivity = ACT_MP_VCD;
 
-#ifdef CLIENT_DLL 
+#ifdef CLIENT_DLL
 
 	// Setup the gesture.
 	m_aGestureSlots[iGestureSlot].m_iGestureSlot = iGestureSlot;
@@ -731,7 +731,7 @@ void CMultiPlayerAnimState::AddVCDSequenceToGestureSlot( int iGestureSlot, int i
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CAnimationLayer* CMultiPlayerAnimState::GetGestureSlotLayer( int iGestureSlot )
 {
@@ -739,7 +739,7 @@ CAnimationLayer* CMultiPlayerAnimState::GetGestureSlotLayer( int iGestureSlot )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::ShowDebugInfo( void )
 {
@@ -763,8 +763,8 @@ void CMultiPlayerAnimState::RestartMainSequence( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *idealActivity - 
+// Purpose:
+// Input  : *idealActivity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMultiPlayerAnimState::HandleJumping( Activity &idealActivity )
@@ -806,8 +806,8 @@ bool CMultiPlayerAnimState::HandleJumping( Activity &idealActivity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *idealActivity - 
+// Purpose:
+// Input  : *idealActivity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMultiPlayerAnimState::HandleDucking( Activity &idealActivity )
@@ -822,16 +822,16 @@ bool CMultiPlayerAnimState::HandleDucking( Activity &idealActivity )
 		{
 			idealActivity = ACT_MP_CROUCH_IDLE;
 		}
-		
+
 		return true;
 	}
-	
+
 	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &idealActivity - 
+// Purpose:
+// Input  : &idealActivity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMultiPlayerAnimState::HandleSwimming( Activity &idealActivity )
@@ -841,11 +841,11 @@ bool CMultiPlayerAnimState::HandleSwimming( Activity &idealActivity )
 		if ( m_bFirstSwimFrame )
 		{
 			// Reset the animation.
-			RestartMainSequence();	
+			RestartMainSequence();
 			m_bFirstSwimFrame = false;
 		}
 
-		idealActivity = ACT_MP_SWIM;		
+		idealActivity = ACT_MP_SWIM;
 		m_bInSwim = true;
 		return true;
 	}
@@ -858,13 +858,13 @@ bool CMultiPlayerAnimState::HandleSwimming( Activity &idealActivity )
 			m_bFirstSwimFrame = true;
 		}
 	}
-	
+
 	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *idealActivity - 
+// Purpose:
+// Input  : *idealActivity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMultiPlayerAnimState::HandleDying( Activity &idealActivity )
@@ -874,7 +874,7 @@ bool CMultiPlayerAnimState::HandleDying( Activity &idealActivity )
 		if ( m_bFirstDyingFrame )
 		{
 			// Reset the animation.
-			RestartMainSequence();	
+			RestartMainSequence();
 			m_bFirstDyingFrame = false;
 		}
 
@@ -893,8 +893,8 @@ bool CMultiPlayerAnimState::HandleDying( Activity &idealActivity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *idealActivity - 
+// Purpose:
+// Input  : *idealActivity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMultiPlayerAnimState::HandleMoving( Activity &idealActivity )
@@ -912,17 +912,17 @@ bool CMultiPlayerAnimState::HandleMoving( Activity &idealActivity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : Activity
 //-----------------------------------------------------------------------------
 Activity CMultiPlayerAnimState::CalcMainActivity()
 {
 	Activity idealActivity = ACT_MP_STAND_IDLE;
 
-	if ( HandleJumping( idealActivity ) || 
-		HandleDucking( idealActivity ) || 
-		HandleSwimming( idealActivity ) || 
+	if ( HandleJumping( idealActivity ) ||
+		HandleDucking( idealActivity ) ||
+		HandleSwimming( idealActivity ) ||
 		HandleDying( idealActivity ) )
 	{
 		// intentionally blank
@@ -948,8 +948,8 @@ Activity CMultiPlayerAnimState::CalcMainActivity()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : actDesired - 
+// Purpose:
+// Input  : actDesired -
 // Output : Activity
 //-----------------------------------------------------------------------------
 Activity CMultiPlayerAnimState::TranslateActivity( Activity actDesired )
@@ -970,8 +970,8 @@ Activity CMultiPlayerAnimState::TranslateActivity( Activity actDesired )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : float
 //-----------------------------------------------------------------------------
 float CMultiPlayerAnimState::GetCurrentMaxGroundSpeed()
@@ -987,7 +987,7 @@ float CMultiPlayerAnimState::GetCurrentMaxGroundSpeed()
 	float d = MAX( fabs( prevX ), fabs( prevY ) );
 	float newX, newY;
 	if ( d == 0.0 )
-	{ 
+	{
 		newX = 1.0;
 		newY = 0.0;
 	}
@@ -1009,8 +1009,8 @@ float CMultiPlayerAnimState::GetCurrentMaxGroundSpeed()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *bIsMoving - 
+// Purpose:
+// Input  : *bIsMoving -
 // Output : float
 //-----------------------------------------------------------------------------
 float CMultiPlayerAnimState::CalcMovementSpeed( bool *bIsMoving )
@@ -1031,8 +1031,8 @@ float CMultiPlayerAnimState::CalcMovementSpeed( bool *bIsMoving )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *bIsMoving - 
+// Purpose:
+// Input  : *bIsMoving -
 // Output : float
 //-----------------------------------------------------------------------------
 float CMultiPlayerAnimState::CalcMovementPlaybackRate( bool *bIsMoving )
@@ -1060,7 +1060,7 @@ float CMultiPlayerAnimState::CalcMovementPlaybackRate( bool *bIsMoving )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CMultiPlayerAnimState::GetInterpolatedGroundSpeed( void )
@@ -1069,8 +1069,8 @@ float CMultiPlayerAnimState::GetInterpolatedGroundSpeed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pStudioHdr - 
+// Purpose:
+// Input  : *pStudioHdr -
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::ComputeSequences( CStudioHdr *pStudioHdr )
 {
@@ -1080,13 +1080,13 @@ void CMultiPlayerAnimState::ComputeSequences( CStudioHdr *pStudioHdr )
 	ComputeMainSequence();
 
 	// The groundspeed interpolator uses the main sequence info.
-	UpdateInterpolators();		
+	UpdateInterpolators();
 	ComputeGestureSequence( pStudioHdr );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::ComputeMainSequence()
 {
@@ -1100,7 +1100,7 @@ void CMultiPlayerAnimState::ComputeMainSequence()
 #ifdef CLIENT_DLL
 	Activity oldActivity = m_eCurrentMainSequenceActivity;
 #endif
-	
+
 	// Store our current activity so the aim and fire layers know what to do.
 	m_eCurrentMainSequenceActivity = idealActivity;
 
@@ -1113,7 +1113,7 @@ void CMultiPlayerAnimState::ComputeMainSequence()
 			ResetGroundSpeed();
 			return;
 		}
-		 
+
 		if ( !pPlayer->IsSequenceFinished() )
 			return;
 
@@ -1137,7 +1137,7 @@ void CMultiPlayerAnimState::ComputeMainSequence()
 #ifdef CLIENT_DLL
 	// If we went from idle to walk, reset the interpolation history.
 	// Kind of hacky putting this here.. it might belong outside the base class.
-	if ( (oldActivity == ACT_MP_CROUCH_IDLE || oldActivity == ACT_MP_STAND_IDLE || oldActivity == ACT_MP_DEPLOYED_IDLE || oldActivity == ACT_MP_CROUCH_DEPLOYED_IDLE ) && 
+	if ( (oldActivity == ACT_MP_CROUCH_IDLE || oldActivity == ACT_MP_STAND_IDLE || oldActivity == ACT_MP_DEPLOYED_IDLE || oldActivity == ACT_MP_CROUCH_DEPLOYED_IDLE ) &&
 		 (idealActivity == ACT_MP_WALK || idealActivity == ACT_MP_CROUCHWALK ) )
 	{
 		ResetGroundSpeed();
@@ -1146,7 +1146,7 @@ void CMultiPlayerAnimState::ComputeMainSequence()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::ResetGroundSpeed( void )
 {
@@ -1158,8 +1158,8 @@ void CMultiPlayerAnimState::ResetGroundSpeed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::UpdateInterpolators()
 {
@@ -1187,15 +1187,15 @@ void CMultiPlayerAnimState::UpdateInterpolators()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::ComputeFireSequence( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pStudioHdr - 
+// Purpose:
+// Input  : *pStudioHdr -
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::ComputeGestureSequence( CStudioHdr *pStudioHdr )
 {
@@ -1213,7 +1213,7 @@ void CMultiPlayerAnimState::ComputeGestureSequence( CStudioHdr *pStudioHdr )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::UpdateGestureLayer( CStudioHdr *pStudioHdr, GestureSlot_t *pGesture )
 {
@@ -1225,7 +1225,7 @@ void CMultiPlayerAnimState::UpdateGestureLayer( CStudioHdr *pStudioHdr, GestureS
 	if( !pPlayer )
 		return;
 
-#ifdef CLIENT_DLL 
+#ifdef CLIENT_DLL
 
 	// Get the current cycle.
 	float flCycle = pGesture->m_pAnimLayer->m_flCycle;
@@ -1263,9 +1263,9 @@ extern ConVar mp_facefronttime;
 extern ConVar mp_feetyawrate;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : eyeYaw - 
-//			eyePitch - 
+// Purpose:
+// Input  : eyeYaw -
+//			eyePitch -
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::Update( float eyeYaw, float eyePitch )
 {
@@ -1317,8 +1317,8 @@ void CMultiPlayerAnimState::Update( float eyeYaw, float eyePitch )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMultiPlayerAnimState::ShouldUpdateAnimState()
@@ -1338,7 +1338,7 @@ bool CMultiPlayerAnimState::ShouldUpdateAnimState()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CMultiPlayerAnimState::SetupPoseParameters( CStudioHdr *pStudioHdr )
 {
@@ -1481,7 +1481,7 @@ void CMultiPlayerAnimState::GetMovementFlags( CStudioHdr *pStudioHdr )
 		return;
 	}
 
-	m_nMovementSequence = GetBasePlayer()->GetSequence(); 
+	m_nMovementSequence = GetBasePlayer()->GetSequence();
 	m_LegAnimType = LEGANIM_9WAY;
 
 	KeyValues *seqKeyValues = GetBasePlayer()->GetSequenceKeyValues( m_nMovementSequence );
@@ -1510,8 +1510,8 @@ void CMultiPlayerAnimState::GetMovementFlags( CStudioHdr *pStudioHdr )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pStudioHdr - 
+// Purpose:
+// Input  : *pStudioHdr -
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::ComputePoseParam_MoveYaw( CStudioHdr *pStudioHdr )
 {
@@ -1528,7 +1528,7 @@ void CMultiPlayerAnimState::ComputePoseParam_MoveYaw( CStudioHdr *pStudioHdr )
 	// Get the current speed the character is running.
 	bool bIsMoving;
 	float flSpeed = CalcMovementSpeed( &bIsMoving );
-	
+
 	// Setup the 9-way blend parameters based on our speed and direction.
 	Vector2D vecCurrentMoveYaw( 0.0f, 0.0f );
 	if ( bIsMoving )
@@ -1594,7 +1594,7 @@ void CMultiPlayerAnimState::ComputePoseParam_MoveYaw( CStudioHdr *pStudioHdr )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::EstimateYaw( void )
 {
@@ -1634,7 +1634,7 @@ void CMultiPlayerAnimState::EstimateYaw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::ComputePoseParam_AimPitch( CStudioHdr *pStudioHdr )
 {
@@ -1647,7 +1647,7 @@ void CMultiPlayerAnimState::ComputePoseParam_AimPitch( CStudioHdr *pStudioHdr )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::ComputePoseParam_AimYaw( CStudioHdr *pStudioHdr )
 {
@@ -1659,7 +1659,7 @@ void CMultiPlayerAnimState::ComputePoseParam_AimYaw( CStudioHdr *pStudioHdr )
 	bool bMoving = ( vecVelocity.Length() > 1.0f ) ? true : false;
 
 	// If we are moving or are prone and undeployed.
-	// If you are forcing aim yaw, your code is almost definitely broken if you don't include a delay between 
+	// If you are forcing aim yaw, your code is almost definitely broken if you don't include a delay between
 	// teleporting and forcing yaw. This is due to an unfortunate interaction between the command lookback window,
 	// and the fact that m_flEyeYaw is never propogated from the server to the client.
 	// TODO: Fix this after Halloween 2014.
@@ -1696,7 +1696,7 @@ void CMultiPlayerAnimState::ComputePoseParam_AimYaw( CStudioHdr *pStudioHdr )
 	m_flGoalFeetYaw = AngleNormalize( m_flGoalFeetYaw );
 	if ( m_flGoalFeetYaw != m_flCurrentFeetYaw )
 	{
-		// If you are forcing aim yaw, your code is almost definitely broken if you don't include a delay between 
+		// If you are forcing aim yaw, your code is almost definitely broken if you don't include a delay between
 		// teleporting and forcing yaw. This is due to an unfortunate interaction between the command lookback window,
 		// and the fact that m_flEyeYaw is never propogated from the server to the client.
 		// TODO: Fix this after Halloween 2014.
@@ -1734,11 +1734,11 @@ void CMultiPlayerAnimState::ComputePoseParam_AimYaw( CStudioHdr *pStudioHdr )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flGoalYaw - 
-//			flYawRate - 
-//			flDeltaTime - 
-//			&flCurrentYaw - 
+// Purpose:
+// Input  : flGoalYaw -
+//			flYawRate -
+//			flDeltaTime -
+//			&flCurrentYaw -
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::ConvergeYawAngles( float flGoalYaw, float flYawRate, float flDeltaTime, float &flCurrentYaw )
 {
@@ -1771,8 +1771,8 @@ void CMultiPlayerAnimState::ConvergeYawAngles( float flGoalYaw, float flYawRate,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : const QAngle&
 //-----------------------------------------------------------------------------
 const QAngle& CMultiPlayerAnimState::GetRenderAngles()
@@ -1781,8 +1781,8 @@ const QAngle& CMultiPlayerAnimState::GetRenderAngles()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : vel - 
+// Purpose:
+// Input  : vel -
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::GetOuterAbsVelocity( Vector& vel )
 {
@@ -1794,7 +1794,7 @@ void CMultiPlayerAnimState::GetOuterAbsVelocity( Vector& vel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::Release( void )
 {
@@ -1802,8 +1802,8 @@ void CMultiPlayerAnimState::Release( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : float
 //-----------------------------------------------------------------------------
 float CMultiPlayerAnimState::GetOuterXYSpeed()
@@ -1825,7 +1825,7 @@ void Anim_StateLog( const char *pMsg, ... )
 	Q_vsnprintf( str, sizeof( str ), pMsg, marker );
 	va_end( marker );
 
-	// Log it?	
+	// Log it?
 	if ( anim_showstatelog.GetInt() == 1 || anim_showstatelog.GetInt() == 3 )
 	{
 		Msg( "%s", str );
@@ -1939,8 +1939,8 @@ void CMultiPlayerAnimState::DebugShowEyeYaw( void )
 	// Draw a red triangle on the ground for the eye yaw.
 	if ( debugoverlay )
 	{
-		debugoverlay->AddTriangleOverlay( ( vecPos + vecRight * flBaseSize / 2.0f ), 
-			( vecPos - vecRight * flBaseSize / 2.0f ), 
+		debugoverlay->AddTriangleOverlay( ( vecPos + vecRight * flBaseSize / 2.0f ),
+			( vecPos - vecRight * flBaseSize / 2.0f ),
 			( vecPos + vecForward * flHeight, 255, 0, 0, 255, false, 0.01f );
 	}
 
@@ -1949,8 +1949,8 @@ void CMultiPlayerAnimState::DebugShowEyeYaw( void )
 
 #if defined( CLIENT_DLL )
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : activity - 
+// Purpose:
+// Input  : activity -
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::DebugShowActivity( Activity activity )
 {
@@ -1989,8 +1989,8 @@ void CMultiPlayerAnimState::DebugShowActivity( Activity activity )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : iStartLine - 
+// Purpose:
+// Input  : iStartLine -
 //-----------------------------------------------------------------------------
 void CMultiPlayerAnimState::DebugShowAnimState( int iStartLine )
 {
@@ -2006,19 +2006,19 @@ void CMultiPlayerAnimState::DebugShowAnimState( int iStartLine )
 	for ( int i=0; i < GetBasePlayer()->GetNumAnimOverlays()-1; i++ )
 	{
 		C_AnimationLayer *pLayer = GetBasePlayer()->GetAnimOverlay( i /*i+1?*/ );
-		Anim_StatePrintf( iLine++, "%s, weight: %.2f, cycle: %.2f, aim (%d)", 
-			pLayer->m_nOrder == CBaseAnimatingOverlay::MAX_OVERLAYS ? "--" : GetSequenceName( GetBasePlayer()->GetModelPtr(), pLayer->m_nSequence ), 
-			pLayer->m_nOrder == CBaseAnimatingOverlay::MAX_OVERLAYS ? -1 :(float)pLayer->m_flWeight, 
-			pLayer->m_nOrder == CBaseAnimatingOverlay::MAX_OVERLAYS ? -1 :(float)pLayer->m_flCycle, 
+		Anim_StatePrintf( iLine++, "%s, weight: %.2f, cycle: %.2f, aim (%d)",
+			pLayer->m_nOrder == CBaseAnimatingOverlay::MAX_OVERLAYS ? "--" : GetSequenceName( GetBasePlayer()->GetModelPtr(), pLayer->m_nSequence ),
+			pLayer->m_nOrder == CBaseAnimatingOverlay::MAX_OVERLAYS ? -1 :(float)pLayer->m_flWeight,
+			pLayer->m_nOrder == CBaseAnimatingOverlay::MAX_OVERLAYS ? -1 :(float)pLayer->m_flCycle,
 			i
 			);
 	}
 #endif
 
-	Anim_StatePrintf( iLine++, "vel: %.2f, time: %.2f, max: %.2f", 
+	Anim_StatePrintf( iLine++, "vel: %.2f, time: %.2f, max: %.2f",
 		vOuterVel.Length2D(), gpGlobals->curtime, GetInterpolatedGroundSpeed() );
-		
-//	AnimStatePrintf( iLine++, "ent yaw: %.2f, body_yaw: %.2f, body_pitch: %.2f, move_x: %.2f, move_y: %.2f", 
+
+//	AnimStatePrintf( iLine++, "ent yaw: %.2f, body_yaw: %.2f, body_pitch: %.2f, move_x: %.2f, move_y: %.2f",
 //		m_angRender[YAW], g_flLastBodyYaw, g_flLastBodyPitch, m_vLastMovePose.x, m_vLastMovePose.y );
 
 	Anim_StateLog( "--------------------------------------------\n\n" );
@@ -2038,7 +2038,7 @@ void CMultiPlayerAnimState::DebugShowAnimState( int iStartLine )
 		// Draw a blue triangle on the ground for the body yaw.
 		angles[YAW] = m_angRender[YAW];
 		AngleVectors( angles, &vForward, &vRight, &vUp );
-		debugoverlay->AddTriangleOverlay( vBasePos+vRight*flBaseSize/2, vBasePos-vRight*flBaseSize/2, vBasePos+vForward*flHeight, 0, 0, 255, 255, false, 0.01 );	
+		debugoverlay->AddTriangleOverlay( vBasePos+vRight*flBaseSize/2, vBasePos-vRight*flBaseSize/2, vBasePos+vForward*flHeight, 0, 0, 255, 255, false, 0.01 );
 	}
 }
 
@@ -2074,8 +2074,8 @@ void CMultiPlayerAnimState::DebugGestureInfo( void )
 		{
 			if( pGesture->m_bActive )
 			{
-				Anim_StatePrintf( iLine++, "Gesture Slot %d(%s): %s %s(A:%s, C:%f P:%f)\n", 
-					iGesture, 
+				Anim_StatePrintf( iLine++, "Gesture Slot %d(%s): %s %s(A:%s, C:%f P:%f)\n",
+					iGesture,
 					s_aGestureSlotNames[iGesture],
 					ActivityList_NameForIndex( pGesture->m_iActivity ),
 					GetSequenceName( pPlayer->GetModelPtr(), pGesture->m_pAnimLayer->m_nSequence ),

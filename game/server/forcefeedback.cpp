@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -27,7 +27,7 @@ static CForceFeedback g_ForceFeedbackSingleton;
 IForceFeedback *forcefeedback = &g_ForceFeedbackSingleton;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CForceFeedback::Init()
@@ -36,15 +36,15 @@ bool CForceFeedback::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CForceFeedback::Shutdown()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *player - 
+// Purpose:
+// Input  : *player -
 //-----------------------------------------------------------------------------
 void CForceFeedback::StopAllEffects( CBasePlayer *player )
 {
@@ -61,9 +61,9 @@ void CForceFeedback::StopAllEffects( CBasePlayer *player )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *player - 
-//			effect - 
+// Purpose:
+// Input  : *player -
+//			effect -
 //-----------------------------------------------------------------------------
 void CForceFeedback::StopEffect( CBasePlayer *player, FORCEFEEDBACK_t effect )
 {
@@ -81,10 +81,10 @@ void CForceFeedback::StopEffect( CBasePlayer *player, FORCEFEEDBACK_t effect )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *player - 
-//			effect - 
-//			params - 
+// Purpose:
+// Input  : *player -
+//			effect -
+//			params -
 //-----------------------------------------------------------------------------
 void CForceFeedback::StartEffect( CBasePlayer *player, FORCEFEEDBACK_t effect, const FFBaseParams_t& params )
 {
@@ -107,7 +107,7 @@ void CForceFeedback::StartEffect( CBasePlayer *player, FORCEFEEDBACK_t effect, c
 		// encode duration as a signed int
 		int duration = (int)params.m_flDuration * 1000.0f;
 		WRITE_LONG( duration );
-		
+
 		// encode gain as a byte
 		byte gain = (byte)clamp( params.m_flGain * 255.0f, 0.0f, 255.0f );
 
@@ -119,8 +119,8 @@ void CForceFeedback::StartEffect( CBasePlayer *player, FORCEFEEDBACK_t effect, c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *player - 
+// Purpose:
+// Input  : *player -
 //-----------------------------------------------------------------------------
 void CForceFeedback::PauseAll( CBasePlayer *player )
 {
@@ -137,8 +137,8 @@ void CForceFeedback::PauseAll( CBasePlayer *player )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *player - 
+// Purpose:
+// Input  : *player -
 //-----------------------------------------------------------------------------
 void CForceFeedback::ResumeAll( CBasePlayer *player )
 {

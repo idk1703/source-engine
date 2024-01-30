@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -268,7 +268,7 @@ const char *CConsolePanel::CompletionItem::GetItemText( void )
 		}
 	}
 	return text;
-}	
+}
 
 const char *CConsolePanel::CompletionItem::GetCommand( void ) const
 {
@@ -292,7 +292,7 @@ const char *CConsolePanel::CompletionItem::GetCommand( void ) const
 //-----------------------------------------------------------------------------
 // Purpose: Constructor, destuctor
 //-----------------------------------------------------------------------------
-CConsolePanel::CConsolePanel( vgui::Panel *pParent, const char *pName, bool bStatusVersion ) : 
+CConsolePanel::CConsolePanel( vgui::Panel *pParent, const char *pName, bool bStatusVersion ) :
 	BaseClass( pParent, pName ), m_bStatusVersion( bStatusVersion )
 {
 	SetKeyBoardInputEnabled( true );
@@ -312,7 +312,7 @@ CConsolePanel::CConsolePanel( vgui::Panel *pParent, const char *pName, bool bSta
 		m_pHistory->SetDrawOffsets( 3, 3 );
 	}
 	m_pHistory->GotoTextEnd();
-	
+
 	m_pSubmit = new Button(this, "ConsoleSubmit", "#Console_Submit");
 	m_pSubmit->SetCommand("submit");
 	m_pSubmit->SetVisible( !m_bStatusVersion );
@@ -497,7 +497,7 @@ void CConsolePanel::RebuildCompletionList(const char *text)
 			item->m_pText = new CHistoryItem( commands[ i ].String() );
 		}
 	}
-				 
+
 	if ( bNormalBuild )
 	{
 		// look through the command list for all matches
@@ -525,10 +525,10 @@ void CConsolePanel::RebuildCompletionList(const char *text)
 					if ( pBounded || var->IsFlagSet( FCVAR_NEVER_AS_STRING ) )
 					{
 						char strValue[512];
-						
+
 						int intVal = pBounded ? pBounded->GetInt() : var->GetInt();
 						float floatVal = pBounded ? pBounded->GetFloat() : var->GetFloat();
-						
+
 						if ( floatVal == intVal )
 							Q_snprintf( strValue, sizeof( strValue ), "%d", intVal );
 						else
@@ -715,7 +715,7 @@ void CConsolePanel::OnTextChanged(Panel *panel)
 
 		UpdateCompletionListPosition();
 	}
-	
+
 	RequestFocus();
 	m_pEntry->RequestFocus();
 
@@ -848,14 +848,14 @@ void CConsolePanel::PerformLayout()
 		const int submitWide = 64;
 		const int submitInset = 7; // x inset to pull the submit button away from the frame grab
 
-		m_pHistory->SetPos(inset, inset + topHeight); 
+		m_pHistory->SetPos(inset, inset + topHeight);
 		m_pHistory->SetSize(wide - (inset * 2), tall - (entryInset * 2 + inset * 2 + topHeight + entryHeight));
 		m_pHistory->InvalidateLayout();
 
 		int nSubmitXPos = wide - ( inset + submitWide + submitInset );
 		m_pSubmit->SetPos( nSubmitXPos, tall - (entryInset * 2 + entryHeight));
 		m_pSubmit->SetSize( submitWide, entryHeight);
-		 
+
 		m_pEntry->SetPos( inset, tall - (entryInset * 2 + entryHeight) );
 		m_pEntry->SetSize( nSubmitXPos - entryInset - 2 * inset, entryHeight);
 	}
@@ -993,9 +993,9 @@ void CConsolePanel::AddToHistory( const char *commandText, const char *extraText
 		{
 			memset( extra, 0x0, strlen( extraText ) + 1 );
 			strncpy( extra, extraText, strlen( extraText )); // +1 to dodge the starting quote
-			
+
 			// Strip trailing spaces
-			int i = strlen( extra ) - 1; 
+			int i = strlen( extra ) - 1;
 			while ( i >= 0 &&  // Check I before referencing i == -1 into the extra array!
 				extra[ i ] == ' ' )
 			{
@@ -1022,7 +1022,7 @@ void CConsolePanel::AddToHistory( const char *commandText, const char *extraText
 				continue;
 
 			// stricmp so two commands with the same starting text get added
-			if ( stricmp( item->GetExtra(), extra ) )	
+			if ( stricmp( item->GetExtra(), extra ) )
 				continue;
 		}
 		m_CommandHistory.Remove( i );
@@ -1127,7 +1127,7 @@ void CConsolePanel::DumpConsoleTextToFile()
 // Console dialog starts here
 //
 //-----------------------------------------------------------------------------
-CConsoleDialog::CConsoleDialog( vgui::Panel *pParent, const char *pName, bool bStatusVersion ) : 
+CConsoleDialog::CConsoleDialog( vgui::Panel *pParent, const char *pName, bool bStatusVersion ) :
 	BaseClass( pParent, pName )
 {
 	// initialize dialog
@@ -1143,7 +1143,7 @@ void CConsoleDialog::OnScreenSizeChanged( int iOldWide, int iOldTall )
 
 	int sx, sy;
 	surface()->GetScreenSize( sx, sy );
-									 
+
 	int w, h;
 	GetSize( w, h );
 	if ( w > sx || h > sy  )

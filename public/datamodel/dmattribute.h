@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -88,7 +88,7 @@ public:
 	template< class T > const T& GetValue( const T& defaultValue ) const;
 	const char					*GetValueString() const;
 	template< class E > E		*GetValueElement() const;
-	const void					*GetValueUntyped() const; 
+	const void					*GetValueUntyped() const;
 
 	// Sets the attribute value
 	template< class T > void SetValue( const T &value );
@@ -130,9 +130,9 @@ public:
 	bool	Serialize( CUtlBuffer &buf ) const;
 	bool	Unserialize( CUtlBuffer &buf );
 
-	// Serialization of a single element. 
+	// Serialization of a single element.
 	// First version of UnserializeElement adds to tail if it worked
-	// Second version overwrites, but does not add, the element at the specified index 
+	// Second version overwrites, but does not add, the element at the specified index
 	bool	SerializeElement( int nElement, CUtlBuffer &buf ) const;
 	bool	UnserializeElement( CUtlBuffer &buf );
 	bool	UnserializeElement( int nElement, CUtlBuffer &buf );
@@ -187,7 +187,7 @@ private:
 	void CreateAttributeData();
 	void DeleteAttributeData();
 
-	// Gets at the internal data storage 
+	// Gets at the internal data storage
 	void* GetAttributeData();
 	const void*	GetAttributeData() const;
 	template < class T > typename CDmAttributeInfo< T >::StorageType_t* GetData();
@@ -228,7 +228,7 @@ private:
 	template< class T > friend class CDmArrayAttributeOp;
 };
 
-	 
+
 //-----------------------------------------------------------------------------
 // Inline methods
 //-----------------------------------------------------------------------------
@@ -279,7 +279,7 @@ inline CDmElement *CDmAttribute::GetOwner()
 //-----------------------------------------------------------------------------
 // Value getting methods
 //-----------------------------------------------------------------------------
-template< class T > 
+template< class T >
 inline const T& CDmAttribute::GetValue( const T& defaultValue ) const
 {
 	if ( GetType() == ( DmAttributeType_t )( CDmAttributeInfo< T >::ATTRIBUTE_TYPE ) )
@@ -296,7 +296,7 @@ inline const T& CDmAttribute::GetValue( const T& defaultValue ) const
 	return defaultValue;
 }
 
-template< class T > 
+template< class T >
 inline const T& CDmAttribute::GetValue() const
 {
 	static CDmaVar< T > defaultVal;
@@ -314,11 +314,11 @@ inline const char *CDmAttribute::GetValueString() const
 
 // used with GetType() for use w/ SetValue( type, void* )
 inline const void* CDmAttribute::GetValueUntyped() const
-{ 
-	return m_pData; 
-} 
+{
+	return m_pData;
+}
 
-template< class E > 
+template< class E >
 inline E* CDmAttribute::GetValueElement() const
 {
 	Assert( GetType() == AT_ELEMENT );
@@ -331,7 +331,7 @@ inline E* CDmAttribute::GetValueElement() const
 //-----------------------------------------------------------------------------
 // Value setting methods
 //-----------------------------------------------------------------------------
-template< class E > 
+template< class E >
 inline void CDmAttribute::SetValue( E* pValue )
 {
 	Assert( GetType() == AT_ELEMENT );
@@ -391,22 +391,22 @@ inline bool CDmAttribute::IsFlagSet( int nFlags ) const
 }
 
 inline bool CDmAttribute::IsDataInline() const
-{ 
-	return !IsFlagSet(FATTRIB_EXTERNAL); 
+{
+	return !IsFlagSet(FATTRIB_EXTERNAL);
 }
 
 
 //-----------------------------------------------------------------------------
-// Gets at the internal data storage 
+// Gets at the internal data storage
 //-----------------------------------------------------------------------------
-inline void* CDmAttribute::GetAttributeData() 
-{ 
-	return m_pData; 
+inline void* CDmAttribute::GetAttributeData()
+{
+	return m_pData;
 }
 
-inline const void* CDmAttribute::GetAttributeData() const 
-{ 
-	return m_pData; 
+inline const void* CDmAttribute::GetAttributeData() const
+{
+	return m_pData;
 }
 
 template < class T >
@@ -507,7 +507,7 @@ template< class E > inline CDmAttribute *CDmElement::AddAttributeElement( const 
 	CDmAttribute *pAttribute = AddAttribute( pAttributeName, AT_ELEMENT );
 	if ( !pAttribute )
 		return NULL;
-	
+
 	// FIXME: If the attribute exists but has a different element type symbol, should we complain?
 	pAttribute->SetElementTypeSymbol( E::GetStaticTypeSymbol() );
 	return pAttribute;
@@ -518,7 +518,7 @@ template< class E > inline CDmAttribute *CDmElement::AddAttributeElementArray( c
 	CDmAttribute *pAttribute = AddAttribute( pAttributeName, AT_ELEMENT_ARRAY );
 	if ( !pAttribute )
 		return NULL;
-	
+
 	// FIXME: If the attribute exists but has a different element type symbol, should we complain?
 	pAttribute->SetElementTypeSymbol( E::GetStaticTypeSymbol() );
 	return pAttribute;
@@ -650,7 +650,7 @@ T *FindReferringElement( CDmElement *pElement, UtlSymId_t symAttrName, bool bMus
 		}
 		i = g_pDataModel->NextAttributeReferencingElement( i );
 	}
-	
+
 	return NULL;
 }
 
@@ -659,7 +659,7 @@ T *FindAncestorReferencingElement( CDmElement *target )
 {
 	if ( !target )
 		return NULL;
-	
+
 	for ( DmAttributeReferenceIterator_t it = g_pDataModel->FirstAttributeReferencingElement( target->GetHandle() );
 		 it != DMATTRIBUTE_REFERENCE_ITERATOR_INVALID;
 		 it = g_pDataModel->NextAttributeReferencingElement( it ) )
@@ -673,7 +673,7 @@ T *FindAncestorReferencingElement( CDmElement *target )
 		T *t = CastElement< T >( element );
 		if ( !t )
 			continue;
-		
+
 		return t;
 	}
 	return NULL;
@@ -684,9 +684,9 @@ T *FindAncestorReferencingElement_R_Impl( CUtlRBTree< CDmElement * >& visited, C
 {
 	if ( visited.Find( check ) != visited.InvalidIndex() )
 		return NULL;
-	
+
 	visited.Insert( check );
-	
+
 	// Pass one, see if it's in this ancestor list
 	DmAttributeReferenceIterator_t it;
 	for ( it = g_pDataModel->FirstAttributeReferencingElement( check->GetHandle() );
@@ -702,10 +702,10 @@ T *FindAncestorReferencingElement_R_Impl( CUtlRBTree< CDmElement * >& visited, C
 		T *t = CastElement< T >( element );
 		if ( !t )
 			continue;
-		
+
 		return t;
 	}
-	
+
 	for ( it = g_pDataModel->FirstAttributeReferencingElement( check->GetHandle() );
 		 it != DMATTRIBUTE_REFERENCE_ITERATOR_INVALID;
 		 it = g_pDataModel->NextAttributeReferencingElement( it ) )
@@ -716,7 +716,7 @@ T *FindAncestorReferencingElement_R_Impl( CUtlRBTree< CDmElement * >& visited, C
 		Assert( element );
 		if ( !element )
 			continue;
-		
+
 		T *found = FindAncestorReferencingElement_R_Impl< T >( visited, element );
 		if ( found )
 			return found;
@@ -730,7 +730,7 @@ void FindAncestorsReferencingElement( CDmElement *target, CUtlVector< T* >& list
 {
 	if ( !target )
 		return;
-	
+
 	list.RemoveAll();
 	for ( DmAttributeReferenceIterator_t it = g_pDataModel->FirstAttributeReferencingElement( target->GetHandle() );
 		 it != DMATTRIBUTE_REFERENCE_ITERATOR_INVALID;
@@ -745,10 +745,10 @@ void FindAncestorsReferencingElement( CDmElement *target, CUtlVector< T* >& list
 		T* t = CastElement< T >( element );
 		if ( !t )
 			continue;
-		
+
 		if ( list.Find( t ) != list.InvalidIndex() )
 			continue;
-		
+
 		list.AddToTail( t );
 	}
 }
@@ -759,7 +759,7 @@ T *FindAncestorReferencingElement_R( CDmElement *target )
 {
 	if ( !target )
 		return NULL;
-	
+
 	CUtlRBTree< CDmElement * > visited( 0, 0, DefLessFunc( CDmElement * ) );
 	return FindAncestorReferencingElement_R_Impl< T >( visited, target );
 }

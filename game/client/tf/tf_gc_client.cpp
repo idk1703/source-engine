@@ -170,17 +170,17 @@ const char *CTFGCClientSystem::k_pszSteamLobbyKey_PartyID = "PartyID";
 // Reliable messages
 //-----------------------------------------------------------------------------
 class ReliableMsgNotificationAcknowledge : public CJobReliableMessageBase < ReliableMsgNotificationAcknowledge,
-                                                                            CMsgNotificationAcknowledge,
-                                                                            k_EMsgGC_NotificationAcknowledge,
-                                                                            CMsgNotificationAcknowledgeReply,
-                                                                            k_EMsgGC_NotificationAcknowledgeReply >
+	CMsgNotificationAcknowledge,
+	k_EMsgGC_NotificationAcknowledge,
+	CMsgNotificationAcknowledgeReply,
+	k_EMsgGC_NotificationAcknowledgeReply >
 {
 public:
 	const char *MsgName() { return "NotificationAcknowledge"; }
 	void InitDebugString( CUtlString &dbgStr )
 	{
 		dbgStr.Format( "Account %u / Notification %016llx",
-		               Msg().Body().account_id(), Msg().Body().notification_id() );
+		Msg().Body().account_id(), Msg().Body().notification_id() );
 	}
 };
 
@@ -257,7 +257,7 @@ CTFGCClientSystem::~CTFGCClientSystem( void )
 //
 //	virtual bool BYieldingRunJob( void *pvStartParam )
 //	{
-//		CGCMsg<MsgGCGetNews_t> msgGetNews( k_EMsgGCGetNews );	
+//		CGCMsg<MsgGCGetNews_t> msgGetNews( k_EMsgGCGetNews );
 //		msgGetNews.Body().m_unAppID = m_nAppID;
 //
 //		GCSDK::CGCMsg<MsgGCNewsReponse_t> msgResponse( k_EMsgGCNewsResponse );
@@ -307,14 +307,14 @@ CTFGCClientSystem::~CTFGCClientSystem( void )
 //class CGCClientJobHello : public GCSDK::CGCClientJob
 //{
 //public:
-//	CGCClientJobHello( GCSDK::CGCClient *pGCClient ) 
+//	CGCClientJobHello( GCSDK::CGCClient *pGCClient )
 //	: GCSDK::CGCClientJob( pGCClient )
 //	{
 //	}
 //
 //	virtual bool BYieldingRunJob( void *pvStartParam )
 //	{
-//		CProtoBufMsg<CMsgClientHello> msg( k_EMsgGCClientHello );	
+//		CProtoBufMsg<CMsgClientHello> msg( k_EMsgGCClientHello );
 //		msg.Body().set_version( engine->GetClientVersion() );
 //
 //		while ( !g_bClientReceivedGCWelcome )
@@ -340,7 +340,7 @@ CTFGCClientSystem::~CTFGCClientSystem( void )
 //
 //	virtual bool BYieldingRunJob( void *pvStartParam )
 //	{
-//		CProtoBufMsg<CMsgFindSourceTVGames> msg( k_EMsgGCFindSourceTVGames );	
+//		CProtoBufMsg<CMsgFindSourceTVGames> msg( k_EMsgGCFindSourceTVGames );
 //		CProtoBufMsg<CMsgSourceTVGamesResponse> msgResponse( k_EMsgGCSourceTVGamesResponse );
 //
 //		static ConVarRef sv_search_key("sv_search_key");
@@ -366,7 +366,7 @@ CTFGCClientSystem::~CTFGCClientSystem( void )
 //		{
 //			return true; // already connected somewhere else
 //		}
-//		
+//
 //		const CSourceTVGame &game = msgResponse.Body().games( RandomInt( 0, msgResponse.Body().games_size() - 1 ));
 //
 //		GTFGCClientSystem()->StartWatchingGame( game.server_steamid() );
@@ -487,7 +487,7 @@ void CTFGCClientSystem::PostInit()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGCClientSystem::PreInitGC()
 {
@@ -513,7 +513,7 @@ void CTFGCClientSystem::PreInitGC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGCClientSystem::PostInitGC()
 {
@@ -546,7 +546,7 @@ void CTFGCClientSystem::PostInitGC()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGCClientSystem::ReceivedClientWelcome( const CMsgClientWelcome &msg )
 {
@@ -627,7 +627,7 @@ public:
 			GTFGCClientSystem()->FireGameEventPartyUpdated();
 			// !FIXME! Here we really should mark the GC Client as not
 			// being connected to the GC
-			
+
 			Warning( "Timed out getting reply from GC to change party.\n" );
 			return true;
 		}
@@ -1129,8 +1129,8 @@ void CTFGCClientSystem::Update( float frametime )
 		// - Because source engine, we can get a stale TFGameRules from our *last* game *after* starting a new
 		//   connection.  Only even think about asking once our connect state hits connected (keyed to server_spawn)
 		if ( m_eConnectState == eConnectState_ConnectedToMatchmade &&
-		     engine->IsInGame() &&
-		     pTFGameRules && pTFGameRules->RecievedBaseline() && pTFGameRules->IsManagedMatchEnded() )
+		engine->IsInGame() &&
+		pTFGameRules && pTFGameRules->RecievedBaseline() && pTFGameRules->IsManagedMatchEnded() )
 		{
 			// We no longer consider this our assigned match.  Only the GC can change the GCAssignedMatch, this bool is
 			// our "but we reject this".  SOChanged will clear it if a new assignment overrides things.
@@ -1192,7 +1192,7 @@ void CTFGCClientSystem::Update( float frametime )
 		}
 		else
 		{
-			// Use the prompt 
+			// Use the prompt
 			m_PromptJoinHandler.MatchFound();
 		}
 	}
@@ -1284,7 +1284,7 @@ void CTFGCClientSystem::SOChanged( const GCSDK::CSharedObject *pObject, SOChange
 						Msg( "Party was updated/created, but our party is marked offline, we don't want to be matchmaking, and the party is not in a match.  Ending matchmaking\n" );
 						EndMatchmaking();
 					}
-					else 
+					else
 					{
 						Msg( "Party was updated/created, and our party is marked offline, and the party is not in a match.  Sending update to GC with our predicted changes\n" );
 						CMsgCreateOrUpdateParty *pMsg = GetCreateOrUpdatePartyMsg();
@@ -1306,7 +1306,7 @@ void CTFGCClientSystem::SOChanged( const GCSDK::CSharedObject *pObject, SOChange
 							// They backed out of the MM UI somehow, and are getting party updates.  We want out.
 							if ( pParty->GetNumMembers() <= 1 )
 							{
-									
+
 								Msg( "Creating a party when we don't want to be in matchmaking, and we're the only ones in it.  Possibly and old party from an old session. Ending matchmaking.\n" );
 								EndMatchmaking();
 							}
@@ -1461,11 +1461,11 @@ void CTFGCClientSystem::SOChanged( const GCSDK::CSharedObject *pObject, SOChange
 		if ( bLobbyChanged && ( !BConnectedToMatchServer( true ) || pLobby || m_bAssignedMatchEnded ) )
 		{
 			Msg( "Lobby received with a differing steamID. Lobby's: %s CurrentlyAssigned: %s ConnectedToMatchServer: %d HasLobby: %d AssignedMatchEnded: %d\n"
-			   , currentServer.Render()
-			   , m_steamIDGCAssignedMatch.Render()
-			   , BConnectedToMatchServer( true )
-			   , pLobby != NULL
-			   , m_bAssignedMatchEnded );
+			, currentServer.Render()
+			, m_steamIDGCAssignedMatch.Render()
+			, BConnectedToMatchServer( true )
+			, pLobby != NULL
+			, m_bAssignedMatchEnded );
 
 			m_bServerAssignmentChanged = true;
 			m_steamIDGCAssignedMatch = currentServer;
@@ -1482,7 +1482,7 @@ void CTFGCClientSystem::SOChanged( const GCSDK::CSharedObject *pObject, SOChange
 		}
 
 		//CTFParty *pParty = GetParty();
-		
+
 
 		// Lobby is gone, but we're connected to our match server still.
 		/*if ( pParty && !pLobby && BConnectedToMatchServer( false ) )
@@ -1502,9 +1502,9 @@ void CTFGCClientSystem::SOChanged( const GCSDK::CSharedObject *pObject, SOChange
 	{
 		const CTFNotification* pSONotification = ( const CTFNotification* )( pObject );
 		Msg( "Notification %llu %s: \"%s\"\n",
-		     pSONotification->Obj().notification_id(),
-		     changeType == SOChanged_Create ? "created" : changeType == SOChanged_Destroy ? "destroyed" : "updated",
-		     pSONotification->Obj().notification_string().c_str() );
+		pSONotification->Obj().notification_id(),
+		changeType == SOChanged_Create ? "created" : changeType == SOChanged_Destroy ? "destroyed" : "updated",
+		pSONotification->Obj().notification_string().c_str() );
 
 		// Update existing notification if found
 		bool bFound = false;
@@ -1514,7 +1514,7 @@ void CTFGCClientSystem::SOChanged( const GCSDK::CSharedObject *pObject, SOChange
 			if ( pNotif && pNotif->NotificationID() == pSONotification->Obj().notification_id() )
 			{
 				Msg( "Notification %llu already displayed, updating\n",
-				     pSONotification->Obj().notification_id() );
+				pSONotification->Obj().notification_id() );
 				bFound = true;
 				if ( changeType == SOChanged_Destroy )
 				{
@@ -1531,8 +1531,8 @@ void CTFGCClientSystem::SOChanged( const GCSDK::CSharedObject *pObject, SOChange
 		if ( !bFound && changeType != SOChanged_Destroy )
 		{
 			Msg( "New notification %llu arrived: \"%s\"\n",
-			     pSONotification->Obj().notification_id(),
-			     pSONotification->Obj().notification_string().c_str() );
+			pSONotification->Obj().notification_id(),
+			pSONotification->Obj().notification_string().c_str() );
 			CClientNotification *pClientNotification = new CClientNotification();
 			pClientNotification->Update( pSONotification );
 			NotificationQueue_Add( pClientNotification );
@@ -1569,7 +1569,7 @@ void CTFGCClientSystem::SOChanged( const GCSDK::CSharedObject *pObject, SOChange
 //			GCHeroRecord_t newHeroStanding;
 //			nFoundIndex = m_aHeroRecords.InsertNoSort( newHeroStanding );
 //		}
-//		
+//
 //		m_aHeroRecords[ nFoundIndex ].m_unHeroID = pHeroStandings->GetHeroID();
 //		m_aHeroRecords[ nFoundIndex ].m_unWinCount = pHeroStandings->GetWins();
 //		m_aHeroRecords[ nFoundIndex ].m_unLossCount = pHeroStandings->GetLosses();
@@ -1665,25 +1665,25 @@ void CTFGCClientSystem::DumpPing()
 	if ( !m_rtLastPingFix )
 	{
 		TFPingMsg( "No current ping data. Pending refresh: %i, Sent initial fix: %i\n",
-		           m_bPendingPingRefresh, m_bSentInitialPingFix );
+		m_bPendingPingRefresh, m_bSentInitialPingFix );
 		return;
 	}
 	char szLastFix[ k_RTimeRenderBufferSize ] = { 0 };
 	CRTime::Render( m_rtLastPingFix, szLastFix );
 
 	TFPingMsg( "Ping data is current as of %s. Pending refresh: %i, Sent initial fix: %i\n",
-	           szLastFix, m_bPendingPingRefresh, m_bSentInitialPingFix );
+	szLastFix, m_bPendingPingRefresh, m_bSentInitialPingFix );
 	for ( int i = 0; i < m_msgCachedPingUpdate.pingdata_size(); i++ )
 	{
 		Msg( "  %5s: %dms, status %i\n",
-		     m_msgCachedPingUpdate.pingdata( i ).name().c_str(),
-		     m_msgCachedPingUpdate.pingdata( i ).ping(),
-			 m_msgCachedPingUpdate.pingdata( i ).ping_status() );
+		m_msgCachedPingUpdate.pingdata( i ).name().c_str(),
+		m_msgCachedPingUpdate.pingdata( i ).ping(),
+			m_msgCachedPingUpdate.pingdata( i ).ping_status() );
 	}
 }
 
 //CTFGameAccountClient* CTFGCClientSystem::GetGameAccountClient()
-//{	
+//{
 //	if ( !m_pSOCache )
 //		return NULL;
 //
@@ -1711,7 +1711,7 @@ void CTFGCClientSystem::DumpPing()
 //}
 
 //CTFBetaParticipation* CTFGCClientSystem::GetBetaParticipation()
-//{	
+//{
 //	if ( !m_pSOCache )
 //		return NULL;
 //
@@ -1797,7 +1797,7 @@ void CTFGCClientSystem::CreateNewParty()
 }
 
 CTFGSLobby* CTFGCClientSystem::GetLobby()
-{	
+{
 	if ( !m_pSOCache )
 		return NULL;
 
@@ -1875,7 +1875,7 @@ bool ForceCompetitiveConvars()
 		// Skip it so we have no vars change when running a clean config.
 		if ( V_stricmp( pVar->GetName(), "r_decal_cullsize" ) == 0 )
 			continue;
-		
+
 		if ( !pVar->SetCompetitiveMode( true ) )
 			anyFailures = true;
 	}
@@ -2017,7 +2017,7 @@ void CTFGCClientSystem::RequestSelectWizardStep( TF_Matchmaking_WizardStep eWiza
 				|| eWizardStep == TF_Matchmaking_WizardStep_SEARCHING );
 			break;
 		case TF_Matchmaking_CASUAL:
-			Assert( eWizardStep == TF_Matchmaking_WizardStep_CASUAL 
+			Assert( eWizardStep == TF_Matchmaking_WizardStep_CASUAL
 				|| eWizardStep == TF_Matchmaking_WizardStep_SEARCHING );
 			break;
 		default:
@@ -2196,7 +2196,7 @@ bool CTFGCClientSystem::BInternalSetSearchChallenges( const CMvMMissionSet &chal
 {
 	if ( !BAllowMatchmakingSearch() )
 		return false;
-	
+
 	if ( !BIsPartyLeader() )
 	{
 		AssertMsg( false, "Not party leader" );
@@ -2252,7 +2252,7 @@ void CTFGCClientSystem::SetSearchJoinLate( bool bJoinLate )
 {
 	if ( !BAllowMatchmakingSearch() )
 		return;
-	
+
 	if ( !BIsPartyLeader() )
 	{
 		AssertMsg( false, "Not party leader" );
@@ -2284,7 +2284,7 @@ void CTFGCClientSystem::SetQuickplayGameType( EGameCategory type )
 {
 	if ( !BAllowMatchmakingSearch() )
 		return;
-	
+
 	if ( !BIsPartyLeader() )
 	{
 		AssertMsg( false, "Not party leader" );
@@ -2670,7 +2670,7 @@ void CTFGCClientSystem::SetSearchPlayForBraggingRights( bool bPlayForBraggingRig
 {
 	if ( !BAllowMatchmakingSearch() )
 		return;
-	
+
 	if ( !BIsPartyLeader() )
 	{
 		AssertMsg( false, "Not party leader" );
@@ -3172,7 +3172,7 @@ inline uint32 GetCountForMap( const CMsgGCMatchMakerStatsResponse msg, int nInde
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Get the overall health of the current local casual criteria. 
+// Purpose: Get the overall health of the current local casual criteria.
 //			Currently just takes the best individual map health.
 //-----------------------------------------------------------------------------
 CTFGCClientSystem::MatchMakerHealthData_t CTFGCClientSystem::GetOverallHealthDataForLocalCriteria() const
@@ -3235,7 +3235,7 @@ CTFGCClientSystem::MatchMakerHealthData_t CTFGCClientSystem::GetHealthDataForMap
 	// No data -- we assume bad
 	if ( nMostSearchedCount == 0 )
 		return GetHealthBracketForRatio( 0.f );
-	
+
 	if ( (int)nMapIndex < m_MatchMakerStats.map_count_size() )
 	{
 		nLargestOfSelected = GetCountForMap( m_MatchMakerStats, nMapIndex );
@@ -3452,12 +3452,12 @@ GC_REG_JOB( GCSDK::CGCClient, CGCClientSurveyRequest, "CGCClientSurveyRequest", 
 //public:
 //	CGCClientJobFindSourceTVGamesDebug( GCSDK::CGCClient *pGCClient ) : GCSDK::CGCClientJob( pGCClient )
 //	{
-//		
+//
 //	}
 //
 //	virtual bool BYieldingRunJob( void *pvStartParam )
 //	{
-//		CProtoBufMsg<CMsgFindSourceTVGames> msg( k_EMsgGCFindSourceTVGames );	
+//		CProtoBufMsg<CMsgFindSourceTVGames> msg( k_EMsgGCFindSourceTVGames );
 //		CProtoBufMsg<CMsgSourceTVGamesResponse> msgResponse( k_EMsgGCSourceTVGamesResponse );
 //
 //		static ConVarRef sv_search_key("sv_search_key");
@@ -3576,7 +3576,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCClientSurveyRequest, "CGCClientSurveyRequest", 
 //		Msg( "No lobby found.\n" );
 //		return;
 //	}
-//	
+//
 //	CProtoBufMsg<CMsgPracticeLobbySetDetails> msg( k_EMsgGCPracticeLobbySetDetails );
 //	msg.Body().set_lobby_id( pLobby->GetGroupID() );
 //	msg.Body().set_game_name( args[1] );
@@ -3647,7 +3647,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCClientSurveyRequest, "CGCClientSurveyRequest", 
 //			pEvent->SetInt( "num_messages", nMessages );
 //			gameeventmanager->FireEventClientSide( pEvent );
 //		}
-//		
+//
 //		// make sure we have all the today images downloaded
 //		for ( int i = 0; i < nMessages; i++ )
 //		{
@@ -3744,7 +3744,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCClientSurveyRequest, "CGCClientSurveyRequest", 
 //{
 //	char szExecutablePath[MAX_PATH];
 //	if ( g_pFullFileSystem->RelativePathToFullPath( "..", "EXECUTABLE_PATH", szExecutablePath, sizeof( szExecutablePath ) ) )
-//	{	
+//	{
 //		Q_FixSlashes( szExecutablePath );
 //
 //		char szSrcdsProxyBinary[MAX_PATH];
@@ -3879,7 +3879,7 @@ void CTFGCClientSystem::SendSurveyResponse( int32 nResponse )
 	msgSurveyResponse.Body().set_match_id( m_msgSurveyRequest.match_id() );
 	msgSurveyResponse.Body().set_question_type( m_msgSurveyRequest.question_type() );
 	msgSurveyResponse.Body().set_response( nResponse );
-	
+
 	if ( this->BSendMessage( msgSurveyResponse ) )
 	{
 		ClearSurveyRequest();
@@ -4490,7 +4490,7 @@ public:
 		{
 			Warning( "Received CMsgMvMVictoryInfo but CTFHudMannVsMachineStatus does not exist \n" );
 		}
-		
+
 		return true;
 	}
 };
@@ -4592,7 +4592,7 @@ public:
 		// a few seconds.
 		if ( !TFInventoryManager()->GetLocalTFInventory()->RetrievedInventoryFromSteam() )
 			return true;
-		
+
 #ifdef DBEUG
 		{
 			Msg( "Beginning response to client verification challenge:\n" );
@@ -4687,8 +4687,8 @@ CON_COMMAND( tf_datacenter_ping_override, "Override the ping data we'll report f
 	GTFGCClientSystem()->SetPingOverride( pszDC, nPing, eStatus );
 
 	ConMsg( "Started overriding datacenter \"%s\" to %ums ping with status %i (enum)\n"
-	        "Forcing a ping refresh to submit new data with this override\n",
-	        pszDC, nPing, eStatus );
+	"Forcing a ping refresh to submit new data with this override\n",
+	pszDC, nPing, eStatus );
 }
 
 CON_COMMAND( tf_datacenter_clear_ping_override, "Stop overriding ping data." )

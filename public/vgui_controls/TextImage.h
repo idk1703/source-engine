@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -48,7 +48,7 @@ public:
 //-----------------------------------------------------------------------------
 class TextImage : public Image
 {
-public:	
+public:
 	TextImage(const char *text);
 	TextImage(const wchar_t *wszText);
 	~TextImage();
@@ -71,13 +71,13 @@ public:
 	virtual vgui::HFont GetFont();
 
 	// set the width of the text to be drawn
-	// use this function if the textImage is in another window to cause 
+	// use this function if the textImage is in another window to cause
 	// the text to be truncated to the width of the window (elipsis added)
 	void SetDrawWidth(int width);
 	// get the width of the text to be drawn
-	void GetDrawWidth(int &width); 
+	void GetDrawWidth(int &width);
 
-    void ResizeImageToContent();
+	void ResizeImageToContent();
 	void ResizeImageToContentMaxWidth( int nMaxWidth );
 
 	// set the size of the image
@@ -95,7 +95,7 @@ public:
 	void SetUseFallbackFont( bool bState, HFont hFallback );
 
 	void SetAllCaps( bool bAllCaps );
-	
+
 	void SetCenterWrap( bool bWrap );
 	void RecalculateCenterWrapIndents();
 
@@ -122,7 +122,7 @@ private:
 	short _textLen;		// length of the text string
 	vgui::HFont _font;	// font of the text string
 	vgui::HFont _fallbackFont;
-	int _drawWidth;		// this is the width of the window we are drawing into. 
+	int _drawWidth;		// this is the width of the window we are drawing into.
 						// if there is not enough room truncate the txt	and add an elipsis
 
 	StringIndex_t _unlocalizedTextSymbol;	// store off the unlocalized text index for build mode

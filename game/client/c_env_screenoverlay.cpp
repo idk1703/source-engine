@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -21,7 +21,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_EnvScreenOverlay : public C_BaseEntity
 {
@@ -59,8 +59,8 @@ IMPLEMENT_CLIENTCLASS_DT( C_EnvScreenOverlay, DT_EnvScreenOverlay, CEnvScreenOve
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_EnvScreenOverlay::PreDataUpdate( DataUpdateType_t updateType )
 {
@@ -70,7 +70,7 @@ void C_EnvScreenOverlay::PreDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EnvScreenOverlay::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -81,7 +81,7 @@ void C_EnvScreenOverlay::PostDataUpdate( DataUpdateType_t updateType )
 	{
 		StartOverlays();
 	}
-	
+
 	if ( m_flStartTime == -1 )
 	{
 		 StopOverlays();
@@ -103,7 +103,7 @@ void C_EnvScreenOverlay::PostDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EnvScreenOverlay::StopOverlays( void )
 {
@@ -116,7 +116,7 @@ void C_EnvScreenOverlay::StopOverlays( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EnvScreenOverlay::StartOverlays( void )
 {
@@ -130,7 +130,7 @@ void C_EnvScreenOverlay::StartOverlays( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EnvScreenOverlay::HandleOverlaySwitch( void )
 {
@@ -142,7 +142,7 @@ void C_EnvScreenOverlay::HandleOverlaySwitch( void )
 	}
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EnvScreenOverlay::StartCurrentOverlay( void )
 {
@@ -173,7 +173,7 @@ void C_EnvScreenOverlay::StartCurrentOverlay( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EnvScreenOverlay::ClientThink( void )
 {
@@ -186,7 +186,7 @@ void C_EnvScreenOverlay::ClientThink( void )
 }
 
 // Effect types
-enum 
+enum
 {
 	SCREENEFFECT_EP2_ADVISOR_STUN,
 	SCREENEFFECT_EP1_INTRO,
@@ -216,9 +216,9 @@ IMPLEMENT_CLIENTCLASS_DT( C_EnvScreenEffect, DT_EnvScreenEffect, CEnvScreenEffec
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : classID - 
-//			&msg - 
+// Purpose:
+// Input  : classID -
+//			&msg -
 //-----------------------------------------------------------------------------
 void C_EnvScreenEffect::ReceiveMessage( int classID, bf_read &msg )
 {
@@ -235,7 +235,7 @@ void C_EnvScreenEffect::ReceiveMessage( int classID, bf_read &msg )
 	{
 		// Effect turning on
 		case 0: // FIXME: Declare
-			{		
+			{
 				// Create a keyvalue block to set these params
 				KeyValues *pKeys = new KeyValues( "keys" );
 				if ( pKeys == NULL )
@@ -275,14 +275,14 @@ void C_EnvScreenEffect::ReceiveMessage( int classID, bf_read &msg )
 					g_pScreenSpaceEffects->SetScreenSpaceEffectParams( "ep2_groggy", pKeys );
 					g_pScreenSpaceEffects->EnableScreenSpaceEffect( "ep2_groggy" );
 				}
-                
+
 				pKeys->deleteThis();
 			}
 			break;
 
 		// Effect turning off
 		case 1:	// FIXME: Declare
-			
+
 			if ( m_nType == SCREENEFFECT_EP1_INTRO )
 			{
 				if( g_pMaterialSystemHardwareConfig->GetDXSupportLevel() < 80 )

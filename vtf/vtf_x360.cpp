@@ -115,7 +115,7 @@ bool CVTFTexture::LoadImageData( CUtlBuffer &buf, bool bBufferIsVolatile, int nM
 
 	// seek to start of image data
 	// The mip levels are stored on disk ascending from smallest (1x1) to largest (NxN) to allow for picmip truncated reads
-	buf.SeekGet( CUtlBuffer::SEEK_HEAD, iImageDataOffset ); 
+	buf.SeekGet( CUtlBuffer::SEEK_HEAD, iImageDataOffset );
 
 	CLZMA lzma;
 	if ( m_iCompressedSize )
@@ -127,12 +127,12 @@ bool CVTFTexture::LoadImageData( CUtlBuffer &buf, bool bBufferIsVolatile, int nM
 			Assert( 0 );
 			return false;
 		}
-	
+
 		// have to decode entire image
 		unsigned int originalSize = lzma.GetActualSize( pCompressedData );
 		AllocateImageData( originalSize );
 		unsigned int outputLength = lzma.Uncompress( pCompressedData, m_pImageData );
-		return ( outputLength == originalSize );		
+		return ( outputLength == originalSize );
 	}
 
 	bool bOK;
@@ -318,7 +318,7 @@ void CVTFTexture::ReleaseImageMemory()
 //-----------------------------------------------------------------------------
 bool CVTFTexture::IsPreTiled() const
 {
-	return false; 
+	return false;
 }
 
 int CVTFTexture::MappingWidth() const

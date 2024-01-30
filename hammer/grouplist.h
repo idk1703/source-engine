@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -61,7 +61,7 @@ public:
 	void UpdateVisGroup(CVisGroup *pVisGroup);
 
 	CVisGroup *GetSelectedVisGroup();
-	
+
 	int GetVisGroupCount(void);
 	CVisGroup *GetVisGroup(int nIndex);
 	void SetCheck(CVisGroup *pVisGroup, int nCheckState);
@@ -132,7 +132,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGroupList::Invalidate(bool bErase)
 {
@@ -151,9 +151,9 @@ void CGroupList::SetRedraw(bool bRedraw)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nCtrlID - 
-//			*pwndParent - 
+// Purpose:
+// Input  : nCtrlID -
+//			*pwndParent -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CGroupList::SubclassDlgItem(int nCtrlID, CWnd *pwndParent)

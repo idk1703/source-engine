@@ -35,7 +35,7 @@ $Project "Hammer_launcher"
 	{
 		$File	"hammer_launcher.rc"
 	}
-	
+
 	$Folder	"Link Libraries"
 	{
 		$Lib appframework

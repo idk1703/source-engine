@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -49,12 +49,12 @@ protected:
 	void InputPressOut( inputdata_t &inputdata );
 
 	virtual int OnTakeDamage( const CTakeDamageInfo &info );
-	
+
 	enum BUTTON_CODE { BUTTON_NOTHING, BUTTON_ACTIVATE, BUTTON_RETURN, BUTTON_PRESS };
 
 	BUTTON_CODE	ButtonResponseToTouch( void );
 	void Press( CBaseEntity *pActivator, BUTTON_CODE eCode );
-	
+
 	DECLARE_DATADESC();
 
 	virtual int	ObjectCaps(void);
@@ -65,10 +65,10 @@ protected:
 	bool	m_fRotating;		// a rotating button?  default is a sliding button.
 
 	locksound_t m_ls;			// door lock sounds
-	
+
 	byte	m_bLockedSound;		// ordinals from entity selection
-	byte	m_bLockedSentence;	
-	byte	m_bUnlockedSound;	
+	byte	m_bLockedSentence;
+	byte	m_bUnlockedSound;
 	byte	m_bUnlockedSentence;
 	bool	m_bLocked;
 	int		m_sounds;

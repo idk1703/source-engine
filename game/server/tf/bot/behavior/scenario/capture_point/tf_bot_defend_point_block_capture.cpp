@@ -162,7 +162,7 @@ ActionResult< CTFBot >	CTFBotDefendPointBlockCapture::Update( CTFBot *me, float 
 		// get on the point!
 		if ( m_repathTimer.IsElapsed() )
 		{
-			m_repathTimer.Start( RandomFloat( 0.5f, 1.0f ) ); 
+			m_repathTimer.Start( RandomFloat( 0.5f, 1.0f ) );
 
 			CTFBotPathCost cost( me, DEFAULT_ROUTE );
 			m_path.Compute( me, ( pointExtent.lo + pointExtent.hi )/2.0f, cost );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -73,10 +73,10 @@ public:
 				sParticle->m_uchEndAlpha	= 0;
 				sParticle->m_uchStartSize	= random->RandomInt( 1, 2 );
 				sParticle->m_uchEndSize		= sParticle->m_uchStartSize;
-				
+
 				sParticle->m_vecVelocity	= ( direction * 64.0f ) + Vector( 0, 0, 32 );
 			}
-			
+
 			sParticle = (SimpleParticle *) m_pEmitter->AddParticle( sizeof(SimpleParticle), m_pEmitter->GetPMaterial( "effects/splash2" ), offset );
 
 			if ( sParticle )
@@ -96,7 +96,7 @@ public:
 				sParticle->m_uchEndAlpha	= 0;
 				sParticle->m_uchStartSize	= 2;
 				sParticle->m_uchEndSize		= sParticle->m_uchStartSize * 4;
-				
+
 				sParticle->m_vecVelocity	= ( direction * 64.0f ) + Vector( 0, 0, 32 );
 			}
 		}

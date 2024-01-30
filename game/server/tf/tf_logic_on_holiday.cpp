@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ class CLogicOnHoliday : public CLogicalEntity
 		bool isNothing = !(isTFBirthday || isHalloween || isSmissmas || isValentines || isFullMoon || isAprilFools);
 
 		if ( isNothing )
-		{ 
+		{
 			m_IsNothing.FireOutput( this, this );
 			return;
 		}

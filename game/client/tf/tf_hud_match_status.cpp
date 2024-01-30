@@ -61,7 +61,7 @@ bool ShouldUseMatchHUD()
 const int g_nMaxSupportedRounds = 5;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CRoundCounterPanel::CRoundCounterPanel( Panel *parent, const char *panelName )
 	: BaseClass( parent, panelName )
@@ -77,7 +77,7 @@ CRoundCounterPanel::CRoundCounterPanel( Panel *parent, const char *panelName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CRoundCounterPanel::~CRoundCounterPanel()
 {
@@ -92,7 +92,7 @@ CRoundCounterPanel::~CRoundCounterPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRoundCounterPanel::ApplySchemeSettings(IScheme *pScheme)
 {
@@ -118,7 +118,7 @@ void LoadKeyValues( KeyValues** pKV, KeyValues* pKVIn, const char* pszKeyName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRoundCounterPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -150,7 +150,7 @@ void CRoundCounterPanel::CreateRoundPanels( ImageVector& vecImages, const char* 
 		}
 
 		vecImages.Purge();
-		
+
 		if ( nMaxRounds > 0 )
 		{
 			while ( nMaxRounds-- )
@@ -272,9 +272,9 @@ void CRoundCounterPanel::LayoutPanels( ImageVector& vecImages, EAlignment eAlign
 DECLARE_HUDELEMENT( CTFHudMatchStatus );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTFHudMatchStatus::CTFHudMatchStatus(const char *pElementName) 
+CTFHudMatchStatus::CTFHudMatchStatus(const char *pElementName)
 	: CHudElement(pElementName)
 	, BaseClass(NULL, "HudMatchStatus")
 	, m_pTimePanel( NULL )
@@ -315,7 +315,7 @@ CTFHudMatchStatus::CTFHudMatchStatus(const char *pElementName)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHudMatchStatus::~CTFHudMatchStatus()
 {
@@ -327,7 +327,7 @@ CTFHudMatchStatus::~CTFHudMatchStatus()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudMatchStatus::Reset()
 {
@@ -347,7 +347,7 @@ void CTFHudMatchStatus::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudMatchStatus::SetPanelsVisible()
 {
@@ -355,7 +355,7 @@ void CTFHudMatchStatus::SetPanelsVisible()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudMatchStatus::ApplySchemeSettings(IScheme *pScheme)
 {
@@ -405,7 +405,7 @@ void CTFHudMatchStatus::ApplySchemeSettings(IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudMatchStatus::PerformLayout()
 {
@@ -416,7 +416,7 @@ void CTFHudMatchStatus::PerformLayout()
 
 bool CTFHudMatchStatus::ShouldDraw( void )
 {
-	// Force to draw during match summary so the doors show up.  This panel 
+	// Force to draw during match summary so the doors show up.  This panel
 	// will try to hide itself if you're dead, but we want to ignore that
 	// behavior and force us to draw.
 	if ( TFGameRules() && TFGameRules()->ShowMatchSummary() )
@@ -429,7 +429,7 @@ bool CTFHudMatchStatus::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudMatchStatus::OnThink()
 {
@@ -456,7 +456,7 @@ void CTFHudMatchStatus::OnThink()
 	{
 		InvalidateLayout( false, true );
 
-		// The KOTH timers are their own hud element 
+		// The KOTH timers are their own hud element
 		CTFHudKothTimeStatus *pKothHUD = GET_HUDELEMENT( CTFHudKothTimeStatus );
 		if ( pKothHUD )
 		{
@@ -520,7 +520,7 @@ void CTFHudMatchStatus::OnThink()
 				if ( m_pTimePanel->IsVisible() != bVisible )
 				{
 					m_pTimePanel->SetVisible( bVisible );
-	
+
 					// If our spectator GUI is visible, invalidate its layout so that it moves the reinforcement label
 					if ( g_pSpectatorGUI )
 					{
@@ -529,7 +529,7 @@ void CTFHudMatchStatus::OnThink()
 				}
 			}
 		}
-		else 
+		else
 		{
 			if ( m_pTimePanel->IsVisible() )
 			{
@@ -542,7 +542,7 @@ void CTFHudMatchStatus::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudMatchStatus::FireGameEvent( IGameEvent * event )
 {
@@ -561,7 +561,7 @@ void CTFHudMatchStatus::FireGameEvent( IGameEvent * event )
 	{
 		HandleCountdown( event->GetInt( "time" ) );
 	}
-	else if ( FStrEq( "show_match_summary", event->GetName() ) ) 
+	else if ( FStrEq( "show_match_summary", event->GetName() ) )
 	{
 		if ( m_pBlueTeamPanel )
 		{
@@ -625,7 +625,7 @@ ConVar tf_comp_door_bodygroup_override( "tf_comp_door_bodygroup_override", "-1",
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudMatchStatus::ShowMatchStartDoors()
 {
@@ -749,7 +749,7 @@ void CTFHudMatchStatus::InitPlayerList( SectionedListPanel *pPlayerList, int nTe
 	pPlayerList->AddColumnToSection( 0, "spacer", "", 0, m_iSpacerWidth );
 
 	// the player avatar is always a fixed size, so as we change resolutions we need to vary the size of the name column to adjust the total width of all the columns
-	int nExtraSpace = pPlayerList->GetWide() - m_iAvatarWidth - m_iSpacerWidth - m_iNameWidth - ( 2 * SectionedListPanel::COLUMN_DATA_INDENT ); // the SectionedListPanel will indent the columns on either end by SectionedListPanel::COLUMN_DATA_INDENT 
+	int nExtraSpace = pPlayerList->GetWide() - m_iAvatarWidth - m_iSpacerWidth - m_iNameWidth - ( 2 * SectionedListPanel::COLUMN_DATA_INDENT ); // the SectionedListPanel will indent the columns on either end by SectionedListPanel::COLUMN_DATA_INDENT
 	pPlayerList->AddColumnToSection( 0, "name", "", 0, m_iNameWidth + nExtraSpace );
 }
 
@@ -849,7 +849,7 @@ void CTFHudMatchStatus::UpdatePlayerAvatar( int playerIndex, KeyValues *kv )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudMatchStatus::UpdateTeamInfo()
 {

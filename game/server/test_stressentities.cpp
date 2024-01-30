@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ CBaseEntity* MoveToRandomSpot( CBaseEntity *pEnt )
 	{
 		CBasePlayer *pLocalPlayer = UTIL_GetLocalPlayer();
 		if ( pLocalPlayer )
-		{			
+		{
 			Vector vForward;
 			pLocalPlayer->EyeVectors(&vForward );
 
@@ -88,7 +88,7 @@ void Test_SpawnRandomEntities( const CCommand &args )
 	if ( g_StressEntities.Count() == 0 )
 	{
 		Error( "Test_SpawnRandomEntities: not initialized (call Test_InitRandomEntitySpawner frst)." );
-	} 
+	}
 
 	int nMin = atoi( args[ 1 ] );
 	int nMax = atoi( args[ 2 ] );
@@ -149,4 +149,3 @@ ConCommand cc_Test_InitRandomEntitySpawner( "Test_InitRandomEntitySpawner", Test
 ConCommand cc_Test_SpawnRandomEntities( "Test_SpawnRandomEntities", Test_SpawnRandomEntities, 0, FCVAR_CHEAT );
 ConCommand cc_Test_RandomizeInPVS( "Test_RandomizeInPVS", Test_RandomizeInPVS, 0, FCVAR_CHEAT );
 ConCommand cc_Test_RemoveAllRandomEntities( "Test_RemoveAllRandomEntities", Test_RemoveAllRandomEntities, 0, FCVAR_CHEAT );
-

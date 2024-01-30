@@ -22,7 +22,7 @@ void main(int argc,char **argv)
 		FloatBitMap_t src_texture(argv[1]);
 		int xsize = atoi( argv[3] );
 		int ysize = atoi( argv[4] );
-		
+
 		// render a simple scene of a terrain, using a bitmap for color data and its alpha channel for the height
 		RayTracingEnvironment rt_Env;
 		int id = 1;
@@ -62,7 +62,7 @@ void main(int argc,char **argv)
 		ReportProgress("Rendering",0,0);
 
 // 		rt_Env.RenderScene( xsize, ysize, xsize, buf, Vector( 0, 0.5, -1.0 ),
-// 							Vector( -1, 1, 0), 
+// 							Vector( -1, 1, 0),
 // 							Vector( 1, 1, 0 ),
 // 							Vector( -1, -1, 0 ),
 // 							Vector( 1, -1, 0 ) );
@@ -71,7 +71,7 @@ void main(int argc,char **argv)
 		{
 			rt_Env.RenderScene( xsize, ysize, xsize, buf,
 								EyePos,
-								Vector( -1, 0,1)-EyePos, 
+								Vector( -1, 0,1)-EyePos,
 								Vector( 1, 0, 1 )-EyePos,
 								Vector( -1, 0, -1 )-EyePos,
 								Vector( 1, 0, -1 )-EyePos );
@@ -80,7 +80,7 @@ void main(int argc,char **argv)
 		printf("pixels traced and lit per second := %f\n",(10*xsize*ysize)*(1.0/etime));
 		TGAWriter::WriteTGAFile( "test.tga", xsize, ysize, IMAGE_FORMAT_RGBA8888,
 								 reinterpret_cast<uint8 *> (buf), 4*xsize );
-		
+
 		MemAlloc_FreeAligned( buf );
 	}
 

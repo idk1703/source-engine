@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,7 +19,7 @@ public:
 
 	CHudSmokeBomb( const char *name );
 
-	virtual bool ShouldDraw();	
+	virtual bool ShouldDraw();
 	virtual void Paint();
 	virtual void Init();
 
@@ -83,7 +83,7 @@ void CHudSmokeBomb::Paint()
 
 	if ( !pPlayer )
 		return;
-    
+
 	float flExpireTime = pPlayer->m_Shared.GetSmokeBombExpireTime();
 
 	float flPercent = ( flExpireTime - gpGlobals->curtime ) / tf_smoke_bomb_time.GetFloat();

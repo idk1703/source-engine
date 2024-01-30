@@ -101,7 +101,7 @@ void CreateCrossbowBoltTF( const Vector &vecOrigin, const Vector &vecDirection, 
 	model_t *pModel = (model_t *)engine->LoadModel( pszModelName );
 
 	QAngle vAngles;
-	VectorAngles( vecDirection, vAngles );	
+	VectorAngles( vecDirection, vAngles );
 	C_LocalTempEntity *arrow = tempents->SpawnTempModel( pModel, vecOrigin - vecDirection * flDirOffset, vAngles, Vector(0, 0, 0 ), flLifeTime, FTENT_NONE );
 
 	if ( arrow )
@@ -112,23 +112,23 @@ void CreateCrossbowBoltTF( const Vector &vecOrigin, const Vector &vecDirection, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void StickRagdollNowTF( 
-	const Vector &vecOrigin, 
-	const Vector &vecDirection, 
-	const ClientEntityHandle_t &entHandle, 
-	const int boneIndexAttached, 
-	const int physicsBoneIndex, 
-	const int iShooterIndex, 
-	const int iHitGroup, 
+void StickRagdollNowTF(
+	const Vector &vecOrigin,
+	const Vector &vecDirection,
+	const ClientEntityHandle_t &entHandle,
+	const int boneIndexAttached,
+	const int physicsBoneIndex,
+	const int iShooterIndex,
+	const int iHitGroup,
 	const int iVictim,
 	const int iFlags,
 	unsigned char nColor
 ) {
 	Ray_t	shotRay;
 	trace_t tr;
-	
+
 	UTIL_TraceLine( vecOrigin - vecDirection * 16, vecOrigin + vecDirection * 64, MASK_SOLID_BRUSHONLY, NULL, COLLISION_GROUP_NONE, &tr );
 	if ( tr.surface.flags & SURF_SKY )
 		return;
@@ -200,7 +200,7 @@ void StickRagdollNowTF(
 	if ( iHitGroup == HITGROUP_HEAD )
 	{
 		CTFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-	
+
 		if ( pLocalPlayer && pLocalPlayer->entindex() == iShooterIndex )
 		{
 			CTFPlayer *pVictim = ToTFPlayer( UTIL_PlayerByIndex( iVictim ) );
@@ -219,20 +219,20 @@ void StickRagdollNowTF(
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void StickyBoltCallbackTF( const CEffectData &data )
 {
-	StickRagdollNowTF( 
-		data.m_vOrigin, 
-		data.m_vNormal, 
-		data.m_hEntity, 
-		data.m_nAttachmentIndex, 
-		data.m_nMaterial, 
-		data.m_nHitBox, 
-		data.m_nDamageType, 
-		data.m_nSurfaceProp, 
-		data.m_fFlags, 
+	StickRagdollNowTF(
+		data.m_vOrigin,
+		data.m_vNormal,
+		data.m_hEntity,
+		data.m_nAttachmentIndex,
+		data.m_nMaterial,
+		data.m_nHitBox,
+		data.m_nDamageType,
+		data.m_nSurfaceProp,
+		data.m_fFlags,
 		data.m_nColor
 	);
 }

@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2007, Valve Corporation, All rights reserved. ===========================
+//====== Copyright ï¿½ 1996-2007, Valve Corporation, All rights reserved. ===========================
 
 // Includes =======================================================================================
 #include "common_vs_fxc.h"
@@ -13,7 +13,7 @@ struct VS_INPUT
 // Interpolated values ============================================================================
 struct VS_OUTPUT
 {
-    float4 projPos	: POSITION;	
+	float4 projPos	: POSITION;
 	float2 vUv0		: TEXCOORD0;
 };
 

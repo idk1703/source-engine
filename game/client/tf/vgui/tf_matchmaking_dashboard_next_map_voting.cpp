@@ -18,7 +18,7 @@ using namespace GCSDK;
 
 extern ConVar tf_mm_next_map_vote_time;
 
-#ifdef STAGING_ONLY 
+#ifdef STAGING_ONLY
 extern ConVar tf_mm_popup_state_override;
 #endif
 
@@ -76,7 +76,7 @@ public:
 		UpdateVoteCounts();
 	}
 
-	virtual void OnUpdate() OVERRIDE	
+	virtual void OnUpdate() OVERRIDE
 	{
 		CTFMatchmakingPopup::OnUpdate();
 
@@ -98,7 +98,7 @@ public:
 	virtual bool ShouldBeActve() const OVERRIDE
 	{
 #ifdef STAGING_ONLY
-		if ( FStrEq( const_cast<CNextMapVotingDashboardState*>(this)->GetName(), tf_mm_popup_state_override.GetString() ) ) 
+		if ( FStrEq( const_cast<CNextMapVotingDashboardState*>(this)->GetName(), tf_mm_popup_state_override.GetString() ) )
 			return true;
 #endif
 
@@ -168,7 +168,7 @@ private:
 			{
 				pMapDef = GetItemSchema()->GetMasterMapDefByIndex( RandomInt( 1, GetItemSchema()->GetMapCount() - 1 ) );
 			}
-		
+
 			Assert( pMapDef );
 			if ( !pMapDef )
 				return;
@@ -177,7 +177,7 @@ private:
 			if ( pMapChoice )
 			{
 				ScalableImagePanel* pMapImage = pMapChoice->FindControl< ScalableImagePanel >( "MapImage", true );
-			
+
 				// The image
 				if ( pMapImage )
 				{
@@ -228,7 +228,7 @@ private:
 		int nVotes[ CTFGameRules::EUserNextMapVote::NUM_VOTE_STATES ];
 		memset( nVotes, 0, sizeof( nVotes ) );
 		int nTotalVotes = 0;
-		
+
 		CTFGameRules::EUserNextMapVote eWinningVote = CTFGameRules::USER_NEXT_MAP_VOTE_UNDECIDED;
 		if ( TFGameRules() )
 		{

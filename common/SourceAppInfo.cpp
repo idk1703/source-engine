@@ -8,7 +8,7 @@
 #include "tier0/dbg.h"
 
 struct SourceAppInfo_t
-{	
+{
 	const char *m_pchFullName;
 	const char *m_pchModName;
 	int m_nSteamAppId;
@@ -16,7 +16,7 @@ struct SourceAppInfo_t
 };
 
 
-static const SourceAppInfo_t s_SteamAppInfo[] = 
+static const SourceAppInfo_t s_SteamAppInfo[] =
 {
 	{	"Source SDK Base",				"sourcetest",	215,	k_App_SDK_BASE },
 	{	"Half-Life 2",					"hl2",			220,	k_App_HL2 } ,
@@ -77,4 +77,3 @@ const int GetAppSteamAppId( ESourceApp eSourceApp )
 	Assert( !"enum ESourceApp order mismatched from AppInfo_t s_SteamAppInfo, fix it!" );
 	return s_SteamAppInfo[0].m_nSteamAppId;
 }
-

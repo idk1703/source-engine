@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@
 static int g_counter = 0;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CExpression::CExpression( void )
 {
@@ -46,7 +46,7 @@ CExpression::CExpression( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Copy constructor
-// Input  : from - 
+// Input  : from -
 //-----------------------------------------------------------------------------
 CExpression::CExpression( const CExpression& from )
 {
@@ -55,7 +55,7 @@ CExpression::CExpression( const CExpression& from )
 	strcpy( name, from.name );
 	index = from.index;
 	strcpy( description, from.description );
-	
+
 	for ( i = 0; i < MAX_FP_MODELS; i++ )
 	{
 		m_Bitmap[ i ] = from.m_Bitmap[ i ];
@@ -83,7 +83,7 @@ CExpression::CExpression( const CExpression& from )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CExpression::~CExpression( void )
 {
@@ -91,7 +91,7 @@ CExpression::~CExpression( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CExpression::GetDirty( void )
@@ -100,8 +100,8 @@ bool CExpression::GetDirty( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dirty - 
+// Purpose:
+// Input  : dirty -
 //-----------------------------------------------------------------------------
 void CExpression::SetDirty( bool dirty )
 {
@@ -109,7 +109,7 @@ void CExpression::SetDirty( bool dirty )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float *CExpression::GetSettings( void )
@@ -118,7 +118,7 @@ float *CExpression::GetSettings( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float *CExpression::GetWeights( void )
@@ -127,8 +127,8 @@ float *CExpression::GetWeights( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mod - 
+// Purpose:
+// Input  : mod -
 //-----------------------------------------------------------------------------
 void CExpression::SetModified( bool mod )
 {
@@ -136,7 +136,7 @@ void CExpression::SetModified( bool mod )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CExpression::GetModified( void )
@@ -145,8 +145,8 @@ bool CExpression::GetModified( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : selected - 
+// Purpose:
+// Input  : selected -
 //-----------------------------------------------------------------------------
 void CExpression::SetSelected( bool selected )
 {
@@ -154,7 +154,7 @@ void CExpression::SetSelected( bool selected )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CExpression::GetSelected( void )
@@ -163,7 +163,7 @@ bool CExpression::GetSelected( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExpression::ResetUndo( void )
 {
@@ -179,7 +179,7 @@ void CExpression::ResetUndo( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CExpression::CanRedo( void )
@@ -194,7 +194,7 @@ bool CExpression::CanRedo( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CExpression::CanUndo( void )
@@ -209,7 +209,7 @@ bool CExpression::CanUndo( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CExpression::UndoLevels( void )
 {
@@ -217,7 +217,7 @@ int	CExpression::UndoLevels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CExpression::UndoCurrent( void )
@@ -249,12 +249,12 @@ CRC32_t	CExpression::GetBitmapCRC()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CExpression::GetBitmapCheckSum()
 {
-	CRC32_t crc = GetBitmapCRC();	
+	CRC32_t crc = GetBitmapCRC();
 
 	// Create string name out of binary data
 	static char hex[ 9 ];
@@ -263,20 +263,20 @@ const char *CExpression::GetBitmapCheckSum()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CExpression::GetBitmapFilename( int modelindex )
 {
 	static char filename[ 256 ] = { 0 };
-	
+
 	char const *classname = "error";
 	CExpClass *cl = GetExpressionClass();
 	if ( cl )
 	{
 		classname = cl->GetBaseName();
 	}
-	
+
 	char modelName[512], modelNameTemp[512];
 	Q_strncpy( modelNameTemp, models->GetModelName( modelindex ), sizeof( modelNameTemp ) );
 
@@ -286,8 +286,8 @@ const char *CExpression::GetBitmapFilename( int modelindex )
 	while ( *in )
 	{
 		if ( V_isalnum( *in ) ||
-			*in == '_' || 
-			*in == '\\' || 
+			*in == '_' ||
+			*in == '\\' ||
 			*in == '/' ||
 			*in == '.' ||
 			*in == ':' )
@@ -305,14 +305,14 @@ const char *CExpression::GetBitmapFilename( int modelindex )
 	strlwr( filename );
 
 	CreatePath( filename );
-	
+
 	return filename;
 }
 
 void CExpression::CreateNewBitmap( int modelindex )
 {
 	MatSysWindow *pWnd = g_pMatSysWindow;
-	if ( !pWnd ) 
+	if ( !pWnd )
 		return;
 
 	StudioModel *model = models->GetStudioModel( modelindex );
@@ -332,8 +332,8 @@ void CExpression::CreateNewBitmap( int modelindex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *exp - 
+// Purpose:
+// Input  : *exp -
 //-----------------------------------------------------------------------------
 void CExpression::PushUndoInformation( void )
 {
@@ -357,8 +357,8 @@ void CExpression::PushUndoInformation( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *exp - 
+// Purpose:
+// Input  : *exp -
 //-----------------------------------------------------------------------------
 void CExpression::PushRedoInformation( void )
 {
@@ -370,8 +370,8 @@ void CExpression::PushRedoInformation( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *exp - 
+// Purpose:
+// Input  : *exp -
 //-----------------------------------------------------------------------------
 void CExpression::Undo( void )
 {
@@ -382,14 +382,14 @@ void CExpression::Undo( void )
 
 	CExpUndoInfo *u = undo[ m_nUndoCurrent++ ];
 	Assert( u );
-	
+
 	memcpy( setting, u->setting, GLOBAL_STUDIO_FLEX_CONTROL_COUNT * sizeof( float ) );
 	memcpy( weight, u->weight, GLOBAL_STUDIO_FLEX_CONTROL_COUNT * sizeof( float ) );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *exp - 
+// Purpose:
+// Input  : *exp -
 //-----------------------------------------------------------------------------
 void CExpression::Redo( void )
 {
@@ -401,15 +401,15 @@ void CExpression::Redo( void )
 
 	CExpUndoInfo *u = undo[ --m_nUndoCurrent ];
 	Assert( u );
-	
+
 	memcpy( setting, u->redosetting, GLOBAL_STUDIO_FLEX_CONTROL_COUNT * sizeof( float ) );
 	memcpy( weight, u->redoweight, GLOBAL_STUDIO_FLEX_CONTROL_COUNT * sizeof( float ) );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *exp - 
+// Purpose:
+// Input  : *exp -
 //-----------------------------------------------------------------------------
 void CExpression::WipeRedoInformation( void )
 {
@@ -448,7 +448,7 @@ void CExpression::Revert( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CExpClass
 //-----------------------------------------------------------------------------
 CExpClass *CExpression::GetExpressionClass( void )
@@ -462,11 +462,10 @@ CExpClass *CExpression::GetExpressionClass( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *classname - 
+// Purpose:
+// Input  : *classname -
 //-----------------------------------------------------------------------------
 void CExpression::SetExpressionClass( char const *classname )
 {
 	strcpy( expressionclass, classname );
 }
-

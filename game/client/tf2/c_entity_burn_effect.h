@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,7 +34,7 @@ public:
 
 private:
 	int		m_hBurningEntity;	// todo: this should be an ehandle but base networkables aren't setup for ehandles yet.
-	
+
 	TimedEvent					m_Timer;
 	CSmartPtr<CSimpleEmitter>	m_pEmitter;
 	PMaterialHandle				m_hFireMaterial;

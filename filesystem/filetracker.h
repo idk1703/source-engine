@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -16,14 +16,14 @@ class CPackedStoreFileHandle;
 #if !defined( DEDICATED )
 
 // Comments from Fletcher:
-// 
+//
 // TF isn’t sending any hashes to the server. (That’s probably what CSGO is doing,
 // but not TF.) Comparing hashes doesn’t work when there are optional updates. (We
 // release a new client without updating the server.) Also on TF, we don’t ship
 // any textures or audio to the dedicated server.
-//  
+//
 // On TF, the client just confirms that the files were loaded from a trusted source.
-// 
+//
 // When a client connects to a “pure” server, the client is supposed to limit
 // which modified files are allowed.)
 
@@ -118,7 +118,7 @@ public:
 	uint8 *m_pubBuffer;
 	int m_cubBuffer;
 	MD5Value_t m_md5Value;
-    int m_idxTrackedVPKFile;
+	int m_idxTrackedVPKFile;
 	int m_idxListSubmittedJobs;
 };
 
@@ -185,7 +185,7 @@ private:
 
 	// Stats
 	int m_cThreadBlocks;
-    int m_cDupMD5s;
+	int m_cDupMD5s;
 };
 
 #else

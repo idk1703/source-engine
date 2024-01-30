@@ -30,7 +30,7 @@ public:
 	DECLARE_CLASS( NextBotCombatCharacter, CBaseCombatCharacter );
 	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();
-	
+
 	NextBotCombatCharacter( void );
 	virtual ~NextBotCombatCharacter() { }
 
@@ -59,25 +59,25 @@ public:
 	virtual void PerformCustomPhysics( Vector *pNewPosition, Vector *pNewVelocity, QAngle *pNewAngles, QAngle *pNewAngVelocity );
 
 	virtual bool BecomeRagdoll( const CTakeDamageInfo &info, const Vector &forceVector );
-	
+
 	// hook to INextBot update
 	void DoThink( void );
 
 	// expose to public
 	int	GetLastHitGroup( void ) const;								// where on our body were we injured last
 
-	virtual bool IsAreaTraversable( const CNavArea *area ) const;							// return true if we can use the given area 
+	virtual bool IsAreaTraversable( const CNavArea *area ) const;							// return true if we can use the given area
 
 	virtual CBaseCombatCharacter *GetLastAttacker( void ) const;	// return the character who last attacked me
 
 	// begin INextBot public interface ----------------------------------------------------------------
 	virtual NextBotCombatCharacter *GetEntity( void ) const			{ return const_cast< NextBotCombatCharacter * >( this ); }
 	virtual NextBotCombatCharacter *GetNextBotCombatCharacter( void ) const	{ return const_cast< NextBotCombatCharacter * >( this ); }
-	
+
 
 private:
 	EHANDLE m_lastAttacker;
-	
+
 	bool m_didModelChange;
 };
 

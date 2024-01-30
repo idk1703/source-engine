@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: The various ammo types for HL2	
+// Purpose: The various ammo types for HL2
 //
 //=============================================================================//
 
@@ -71,14 +71,14 @@ LINK_ENTITY_TO_CLASS(item_item_crate, CItem_ItemCrate);
 
 
 //-----------------------------------------------------------------------------
-// Save/load: 
+// Save/load:
 //-----------------------------------------------------------------------------
 BEGIN_DATADESC( CItem_ItemCrate )
 
-	DEFINE_KEYFIELD( m_CrateType, FIELD_INTEGER, "CrateType" ),	
-	DEFINE_KEYFIELD( m_strItemClass, FIELD_STRING, "ItemClass" ),	
-	DEFINE_KEYFIELD( m_nItemCount, FIELD_INTEGER, "ItemCount" ),	
-	DEFINE_KEYFIELD( m_strAlternateMaster, FIELD_STRING, "SpecificResupply" ),	
+	DEFINE_KEYFIELD( m_CrateType, FIELD_INTEGER, "CrateType" ),
+	DEFINE_KEYFIELD( m_strItemClass, FIELD_STRING, "ItemClass" ),
+	DEFINE_KEYFIELD( m_nItemCount, FIELD_INTEGER, "ItemCount" ),
+	DEFINE_KEYFIELD( m_strAlternateMaster, FIELD_STRING, "SpecificResupply" ),
 	DEFINE_KEYFIELD( m_CrateAppearance, FIELD_INTEGER, "CrateAppearance" ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "Kill", InputKill ),
 	DEFINE_OUTPUT( m_OnCacheInteraction, "OnCacheInteraction" ),
@@ -87,7 +87,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItem_ItemCrate::Precache( void )
 {
@@ -100,17 +100,17 @@ void CItem_ItemCrate::Precache( void )
 	{
 		if ( NULL_STRING != m_strItemClass )
 		{
-			// Don't precache if this is a null string. 
+			// Don't precache if this is a null string.
 			UTIL_PrecacheOther( STRING(m_strItemClass) );
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItem_ItemCrate::Spawn( void )
-{ 
+{
 	if ( g_pGameRules->IsAllowedToSpawn( this ) == false )
 	{
 		UTIL_Remove( this );
@@ -135,8 +135,8 @@ void CItem_ItemCrate::Spawn( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &data - 
+// Purpose:
+// Input  : &data -
 //-----------------------------------------------------------------------------
 void CItem_ItemCrate::InputKill( inputdata_t &data )
 {
@@ -161,7 +161,7 @@ int CItem_ItemCrate::OnTakeDamage( const CTakeDamageInfo &info )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItem_ItemCrate::VPhysicsCollision( int index, gamevcollisionevent_t *pEvent )
 {
@@ -179,11 +179,11 @@ void CItem_ItemCrate::VPhysicsCollision( int index, gamevcollisionevent_t *pEven
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItem_ItemCrate::OnBreak( const Vector &vecVelocity, const AngularImpulse &angImpulse, CBaseEntity *pBreaker )
 {
-	// FIXME: We could simply store the name of an entity to put into the crate 
+	// FIXME: We could simply store the name of an entity to put into the crate
 	// as a string entered in by worldcraft. Should we?	I'd do it for sure
 	// if it was easy to get a dropdown with all entity types in it.
 

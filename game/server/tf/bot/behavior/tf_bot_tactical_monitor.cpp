@@ -476,7 +476,7 @@ EventDesiredResult< CTFBot > CTFBotTacticalMonitor::OnCommandString( CTFBot *me,
 			{
 				bestSentryHint->SetPlayerOwner( me );
 				return TrySuspendFor( new CTFBotEngineerBuilding( bestSentryHint ), RESULT_CRITICAL, "Building a Sentry at a hint location" );
-			}			
+			}
 		}
 	}
 	else if ( FStrEq( command, "attack sentry at next action point" ) )
@@ -503,7 +503,7 @@ EventDesiredResult< CTFBot > CTFBotTacticalMonitor::OnCommandString( CTFBot *me,
 			float flValue;
 		};
 
-		botAttribs_t sAttribs[] = 
+		botAttribs_t sAttribs[] =
 		{
 			{ "move speed bonus", 0.5f },
 			{ "damage bonus", 1.5f },
@@ -546,7 +546,7 @@ EventDesiredResult< CTFBot > CTFBotTacticalMonitor::OnCommandString( CTFBot *me,
 			float flValue;
 		};
 
-		botAttribs_t sAttribs[] = 
+		botAttribs_t sAttribs[] =
 		{
 			{ "move speed bonus",	0.5f },
 			{ "faster reload rate", -0.4f },

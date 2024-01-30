@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -36,8 +36,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEEffectDispatch::CTEEffectDispatch( const char *name ) :
 	CBaseTempEntity( name )
@@ -45,7 +45,7 @@ CTEEffectDispatch::CTEEffectDispatch( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEEffectDispatch::~CTEEffectDispatch( void )
 {
@@ -62,7 +62,7 @@ END_SEND_TABLE()
 static CTEEffectDispatch g_TEEffectDispatch( "EffectDispatch" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TE_DispatchEffect( IRecipientFilter& filter, float delay, const Vector &pos, const char *pName, const CEffectData &data )
 {
@@ -77,7 +77,7 @@ void TE_DispatchEffect( IRecipientFilter& filter, float delay, const Vector &pos
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void DispatchEffect( const char *pName, const CEffectData &data )
 {

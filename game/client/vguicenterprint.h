@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -16,7 +16,7 @@
 #include <vgui/VGUI.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 namespace vgui
 {
@@ -34,7 +34,7 @@ public:
 
 	virtual void		Create( vgui::VPANEL parent );
 	virtual void		Destroy( void );
-	
+
 	virtual void		SetTextColor( int r, int g, int b, int a );
 	virtual void		Print( char *text );
 	virtual void		Print( wchar_t *text );

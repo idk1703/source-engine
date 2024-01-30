@@ -160,7 +160,7 @@ private:
 		Assert( pAttribInterface );
 		Assert( GetAttribInterface( (CBaseEntity*) pEntity ) == pAttribInterface );
 		Assert( pAttribInterface->GetAttributeManager() );
-		
+
 		string_t iszAttribHook = bIsGlobalConstString ? AllocPooledString_StaticConstantStringPointer( pszAttribHook ) : AllocPooledString( pszAttribHook );
 		return TypedAttribHookValueInternal( out, TValue, iszAttribHook, pEntity, pAttribInterface, pItemList );
 	}

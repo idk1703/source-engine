@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -29,7 +29,7 @@ public:
 	virtual			~CTEBeamSpline( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 	DECLARE_SERVERCLASS();
 
 public:
@@ -38,8 +38,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEBeamSpline::CTEBeamSpline( const char *name ) :
 	CBaseTempEntity( name )
@@ -53,23 +53,23 @@ CTEBeamSpline::CTEBeamSpline( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEBeamSpline::~CTEBeamSpline( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEBeamSpline::Test( const Vector& current_origin, const QAngle& current_angles )
 {
 	// Fill in data
 	m_nPoints = 6;
 	Vector m_vecStart = current_origin;
-	
+
 	Vector forward, right;
 
 	m_vecStart[2] += 24;
@@ -95,7 +95,7 @@ void CTEBeamSpline::Test( const Vector& current_origin, const QAngle& current_an
 
 IMPLEMENT_SERVERCLASS_ST_NOBASE(CTEBeamSpline, DT_TEBeamSpline)
 	SendPropInt( SENDINFO( m_nPoints ), 5, SPROP_UNSIGNED ),
-	
+
 	SendPropArray(
 		SendPropVector( SENDINFO_ARRAY(m_vecPoints), -1, SPROP_COORD),
 		m_vecPoints)
@@ -106,13 +106,13 @@ END_SEND_TABLE()
 static CTEBeamSpline g_TEBeamSpline( "BeamSpline" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//			points - 
-//			*points - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//			points -
+//			*points -
 //-----------------------------------------------------------------------------
 void TE_BeamSpline( IRecipientFilter& filter, float delay,
 	int points, Vector* rgPoints )
@@ -123,7 +123,7 @@ void TE_BeamSpline( IRecipientFilter& filter, float delay,
 	{
 		g_TEBeamSpline.m_vecPoints.Set( i, rgPoints[ i ] );
 	}
-	
+
 	for ( ; i < MAX_SPLINE_POINTS; i++ )
 	{
 		g_TEBeamSpline.m_vecPoints.GetForModify( i ).Init();

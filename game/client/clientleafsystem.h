@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Revision: $
 // $NoKeywords: $
@@ -98,7 +98,7 @@ struct SetupRenderInfo_t
 typedef unsigned short ClientLeafShadowHandle_t;
 enum
 {
-	CLIENT_LEAF_SHADOW_INVALID_HANDLE = (ClientLeafShadowHandle_t)~0 
+	CLIENT_LEAF_SHADOW_INVALID_HANDLE = (ClientLeafShadowHandle_t)~0
 };
 
 
@@ -213,5 +213,3 @@ inline IClientLeafSystem* ClientLeafSystem()
 
 
 #endif	// CLIENTLEAFSYSTEM_H
-
-

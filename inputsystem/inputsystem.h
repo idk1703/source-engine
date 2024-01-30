@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -98,7 +98,7 @@ public:
 #if defined( WIN32 ) && !defined ( _X360 )
 	virtual void *GetHapticsInterfaceAddress() const;
 #else
-	virtual void *GetHapticsInterfaceAddress() const { return NULL;}	
+	virtual void *GetHapticsInterfaceAddress() const { return NULL;}
 #endif
 	bool GetRawMouseAccumulators( int& accumX, int& accumY );
 	virtual void SetConsoleTextMode( bool bConsoleTextMode );
@@ -217,7 +217,7 @@ public:
 	// Sets rumble values for an Xbox controller
 	void SetXDeviceRumble( float fLeftMotor, float fRightMotor, int userId );
 
-	// Posts an Xbox key event, ignoring key repeats 
+	// Posts an Xbox key event, ignoring key repeats
 	void PostXKeyEvent( int nUserId, xKey_t xKey, int nSample );
 
 	// Dispatches all joystick button events through the game's window procs
@@ -263,7 +263,7 @@ public:
 	//Added called and set to true when binding input and set to false once bound
 	void SetNovintPure( bool bPure );
 #else
-	void SetNovintPure( bool bPure ) {} // to satify the IInput virtual interface	
+	void SetNovintPure( bool bPure ) {} // to satify the IInput virtual interface
 #endif
 	// Chains the window message to the previous wndproc
 	LRESULT ChainWindowMessage( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
@@ -449,7 +449,7 @@ public:
 
 	CSysModule   *m_pXInputDLL;
 	CSysModule   *m_pRawInputDLL;
-	
+
 #if defined( WIN32 ) && !defined ( _X360 )
 	// NVNT falcon module
 	CSysModule	 *m_pNovintDLL;

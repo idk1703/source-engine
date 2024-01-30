@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -21,9 +21,9 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pElementName - 
-//			*panelName - 
+// Purpose:
+// Input  : *pElementName -
+//			*panelName -
 //-----------------------------------------------------------------------------
 CHudNumeric::CHudNumeric( const char *pElementName, const char *panelName )
  : CHudElement( pElementName ), BaseClass( NULL, panelName )
@@ -74,7 +74,7 @@ void CHudNumeric::BuildPrintablesList( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Find the index of a printable character
-// Input  : ch - 
+// Input  : ch -
 // Output : int
 //-----------------------------------------------------------------------------
 int CHudNumeric::FindPrintableIndex( int ch )
@@ -84,8 +84,8 @@ int CHudNumeric::FindPrintableIndex( int ch )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *scheme - 
+// Purpose:
+// Input  : *scheme -
 //-----------------------------------------------------------------------------
 void CHudNumeric::ApplySchemeSettings(IScheme *scheme)
 {
@@ -95,7 +95,7 @@ void CHudNumeric::ApplySchemeSettings(IScheme *scheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CHudNumeric::IsRotating( void ) const
@@ -110,13 +110,13 @@ bool CHudNumeric::IsRotating( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frac - 
-//			startchar - 
-//			endchar - 
-//			prevchar - 
-//			nextchar - 
-//			subfrac - 
+// Purpose:
+// Input  : frac -
+//			startchar -
+//			endchar -
+//			prevchar -
+//			nextchar -
+//			subfrac -
 //-----------------------------------------------------------------------------
 void CHudNumeric::GetRotatedChar( float frac, char startchar, char endchar, char& prevchar, char& nextchar, float& subfrac )
 {
@@ -127,7 +127,7 @@ void CHudNumeric::GetRotatedChar( float frac, char startchar, char endchar, char
 	float diff		= ( float )endidx - ( float )startidx;
 
 	// No delta
-	if ( diff == 0.0f || 
+	if ( diff == 0.0f ||
 		startidx == m_Printables.InvalidIndex() ||
 		endidx == m_Printables.InvalidIndex() )
 	{
@@ -200,7 +200,7 @@ void CHudNumeric::GetRotatedChar( float frac, char startchar, char endchar, char
 		prevchar	= m_Printables[ outindex ];
 		nextchar	= m_Printables[ nextindex ];
 	}
-}	
+}
 
 void CHudNumeric::PaintRotatedCharacterHoriz( int x, int y, vgui::HFont& font, int prevchar, int nextchar, float frac )
 {
@@ -244,7 +244,7 @@ void CHudNumeric::PaintRotatedCharacterHoriz( int x, int y, vgui::HFont& font, i
 		{
 			// Shift tex coord and y position half way up glyph
 			vgui::Vertex_t save[2];
-			
+
 			save[0] = info.verts[0];
 			save[1] = info.verts[1];
 
@@ -253,7 +253,7 @@ void CHudNumeric::PaintRotatedCharacterHoriz( int x, int y, vgui::HFont& font, i
 
 			info.verts[1].m_Position.x = Lerp( 0.5f, save[0].m_Position.x, save[1].m_Position.x );
 			info.verts[1].m_TexCoord.x = Lerp( 0.5f, save[0].m_TexCoord.x, save[1].m_TexCoord.x );
-			
+
 			surface()->DrawRenderCharFromInfo( info );
 		}
 	}
@@ -289,7 +289,7 @@ void CHudNumeric::PaintRotatedCharacterHoriz( int x, int y, vgui::HFont& font, i
 		if ( surface()->DrawGetUnicodeCharRenderInfo( nextchar, info ) )
 		{
 			vgui::Vertex_t save[2];
-			
+
 			save[0] = info.verts[0];
 			save[1] = info.verts[1];
 
@@ -298,7 +298,7 @@ void CHudNumeric::PaintRotatedCharacterHoriz( int x, int y, vgui::HFont& font, i
 
 			info.verts[1].m_Position.x = Lerp( frac, save[0].m_Position.x, save[1].m_Position.x );
 			//info.verts[1].m_TexCoord.x = Lerp( frac, save[0].m_TexCoord.x, save[1].m_TexCoord.x );
-			
+
 			surface()->DrawRenderCharFromInfo( info );
 		}
 	}
@@ -367,13 +367,13 @@ void CHudNumeric::PaintRotatedCharacterSpeedomter( int x, int y, vgui::HFont& fo
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
-//			y - 
-//			font - 
-//			prevchar - 
-//			nextchar - 
-//			frac - 
+// Purpose:
+// Input  : x -
+//			y -
+//			font -
+//			prevchar -
+//			nextchar -
+//			frac -
 //-----------------------------------------------------------------------------
 void CHudNumeric::PaintRotatedCharacter( int x, int y, HFont& font, int prevchar, int nextchar, float frac )
 {
@@ -449,7 +449,7 @@ void CHudNumeric::PaintRotatedCharacter( int x, int y, HFont& font, int prevchar
 		{
 			// Shift tex coord and y position half way up glyph
 			vgui::Vertex_t save[2];
-			
+
 			save[0] = info.verts[0];
 			save[1] = info.verts[1];
 
@@ -458,7 +458,7 @@ void CHudNumeric::PaintRotatedCharacter( int x, int y, HFont& font, int prevchar
 
 			info.verts[1].m_Position.y = Lerp( 0.5f, save[0].m_Position.y, save[1].m_Position.y );
 			info.verts[1].m_TexCoord.y = Lerp( 0.5f, save[0].m_TexCoord.y, save[1].m_TexCoord.y );
-			
+
 			surface()->DrawRenderCharFromInfo( info );
 		}
 	}
@@ -500,7 +500,7 @@ void CHudNumeric::PaintRotatedCharacter( int x, int y, HFont& font, int prevchar
 		{
 			// Shift tex coord and y position half way up glyph
 			vgui::Vertex_t save[2];
-			
+
 			save[0] = info.verts[0];
 			save[1] = info.verts[1];
 
@@ -509,7 +509,7 @@ void CHudNumeric::PaintRotatedCharacter( int x, int y, HFont& font, int prevchar
 
 			info.verts[1].m_Position.y = Lerp( frac, save[0].m_Position.y, save[1].m_Position.y );
 			//info.verts[1].m_TexCoord.y = Lerp( frac, save[0].m_TexCoord.y, save[1].m_TexCoord.y );
-			
+
 			surface()->DrawRenderCharFromInfo( info );
 		}
 	}
@@ -519,9 +519,9 @@ void CHudNumeric::PaintRotatedCharacter( int x, int y, HFont& font, int prevchar
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *prev - 
-//			*next - 
+// Purpose:
+// Input  : *prev -
+//			*next -
 // Output : float
 //-----------------------------------------------------------------------------
 float CHudNumeric::MaxCharacterDiff( const char *prev, const char *next )
@@ -610,7 +610,7 @@ void CHudNumeric::DrawCharacterBackground( const char *text, int textlen, HFont&
 void CHudNumeric::DrawCharacterForeground( const char *text, int textlen, HFont& font, int x, int y )
 {
 	if ( m_nRotaryEffect == ROTARY_EFFECT_NONE ||
-		m_nRotaryEffect == ROTARY_EFFECT_SPEEDOMETER )	
+		m_nRotaryEffect == ROTARY_EFFECT_SPEEDOMETER )
 		return;
 
 	int abcA, abcB, abcC;
@@ -649,12 +649,12 @@ void CHudNumeric::DrawCharacterForeground( const char *text, int textlen, HFont&
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *text - 
-//			textlen - 
-//			font - 
-//			x - 
-//			y - 
+// Purpose:
+// Input  : *text -
+//			textlen -
+//			font -
+//			x -
+//			y -
 //-----------------------------------------------------------------------------
 void CHudNumeric::PaintStringRotary( float t, const char *text, int textlen, HFont& font, int x, int y )
 {
@@ -778,23 +778,23 @@ void CHudNumeric::PaintStringRotary( float t, const char *text, int textlen, HFo
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *text - 
-//			textlen - 
-//			font - 
-//			x - 
-//			y - 
+// Purpose:
+// Input  : *text -
+//			textlen -
+//			font -
+//			x -
+//			y -
 //-----------------------------------------------------------------------------
 void CHudNumeric::PaintString( const char *text, int textlen, HFont& font, int x, int y )
 {
-	if ( m_nRotaryEffect != ROTARY_EFFECT_NONE && 
-		IsRotating() && 
+	if ( m_nRotaryEffect != ROTARY_EFFECT_NONE &&
+		IsRotating() &&
 		m_flRotaryTime > 0.0f )
 	{
 		float rotation_time = gpGlobals->curtime - m_flRotaryStartTime;
 
 		PaintStringRotary( rotation_time, text, textlen, font, x, y );
-		
+
 		return;
 	}
 	PaintStringNormal( text, textlen, font, x, y );
@@ -859,7 +859,7 @@ void CHudNumeric::PaintValue( const char *value, int textlen, int wide, int tall
 	int x = wide - label_xpos_right;
 	int y = label_ypos;
 
-	if ( m_bDrawLabel ) 
+	if ( m_bDrawLabel )
 	{
 		// Label
 		PaintStringNormal( GetLabelText(), Q_strlen( GetLabelText() ), m_hLabelFont, x, y );
@@ -868,7 +868,7 @@ void CHudNumeric::PaintValue( const char *value, int textlen, int wide, int tall
 	x = wide - value_xpos_right;
 	y = value_ypos;
 
-	if ( m_nRotaryEffect != ROTARY_EFFECT_NONE && 
+	if ( m_nRotaryEffect != ROTARY_EFFECT_NONE &&
 		(bool)m_bDrawCharacterBackground )
 	{
 		DrawCharacterBackground( value, textlen, m_hTextFont, x, y );
@@ -876,7 +876,7 @@ void CHudNumeric::PaintValue( const char *value, int textlen, int wide, int tall
 
 	PaintString( value, textlen, m_hTextFont, x, y );
 
-	if ( m_nRotaryEffect != ROTARY_EFFECT_NONE && 
+	if ( m_nRotaryEffect != ROTARY_EFFECT_NONE &&
 		(bool)m_bDrawCharacterForeground )
 	{
 		DrawCharacterForeground( value, textlen, m_hTextFont, x, y );
@@ -901,7 +901,7 @@ void CHudNumeric::PaintValue( const char *value, int textlen, int wide, int tall
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : vgui::Color
 //-----------------------------------------------------------------------------
 Color CHudNumeric::GetColor()
@@ -910,7 +910,7 @@ Color CHudNumeric::GetColor()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : vgui::Color
 //-----------------------------------------------------------------------------
 Color CHudNumeric::GetBoxColor()
@@ -942,7 +942,7 @@ void CHudNumeric::Paint( void )
 
 		Q_strncpy( m_szLatchedValue, m_szPreviousValue, sizeof( m_szLatchedValue ) );
 		m_nTextLen = Q_strlen( value );
-		
+
 		m_flRotaryStartTime = gpGlobals->curtime;
 		float maxdiff = MaxCharacterDiff( m_szLatchedValue, value );
 		float timerequired = maxdiff / m_flDesiredCharactersPerSecond;

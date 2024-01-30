@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -105,7 +105,7 @@ private:
 	COutputEvent	m_Respawn2Team1Events[RESPAWN_TIMER_EVENT_COUNT];
 	COutputEvent	m_Respawn1Team2Events[RESPAWN_TIMER_EVENT_COUNT];
 	COutputEvent	m_Respawn2Team2Events[RESPAWN_TIMER_EVENT_COUNT];
-	
+
 	// Respawn timer periods
 	CNetworkVar( int, m_nRespawn1Team1Time );
 	CNetworkVar( int, m_nRespawn1Team2Time );

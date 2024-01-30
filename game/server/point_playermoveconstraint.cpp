@@ -13,7 +13,7 @@
 #define	SF_TELEPORT_TO_SPAWN_POS	0x00000001
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CPointPlayerMoveConstraint : public CBaseEntity
 {
@@ -29,10 +29,10 @@ public:
 	void	InputTurnOff( inputdata_t &inputdata );
 
 private:
-	float				m_flRadius;	
+	float				m_flRadius;
 	float				m_flConstraintWidth;
 	float				m_flSpeedFactor;
-	float				m_flRadiusSquared;	
+	float				m_flRadiusSquared;
 	CUtlVector<EHANDLE>	m_hConstrainedPlayers;
 	COutputEvent		m_OnConstraintBroken;
 };
@@ -56,7 +56,7 @@ BEGIN_DATADESC( CPointPlayerMoveConstraint )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CPointPlayerMoveConstraint::UpdateTransmitState()
 {
@@ -91,7 +91,7 @@ void CPointPlayerMoveConstraint::InputTurnOn( inputdata_t &inputdata )
 	{
 		CBasePlayer *pPlayer = ToBasePlayer( pEntity );
 		Assert( pPlayer );
-		
+
 		// Only add him if he's not already constrained
 		if ( m_hConstrainedPlayers.Find( pPlayer ) == m_hConstrainedPlayers.InvalidIndex() )
 		{

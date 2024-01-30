@@ -105,7 +105,7 @@ void CBotNPCArcher::Spawn( void )
 
 //---------------------------------------------------------------------------------------------
 unsigned int CBotNPCArcher::PhysicsSolidMaskForEntity( void ) const
-{ 
+{
 	// Only collide with the other team
 	int teamContents = ( GetTeamNumber() == TF_TEAM_RED ) ? CONTENTS_BLUETEAM : CONTENTS_REDTEAM;
 
@@ -153,7 +153,7 @@ inline ActionResult< CBotNPCArcher > CBotNPCArcherSurrender::OnStart( CBotNPCArc
 	{
 		bow->AddEffects( EF_NODRAW );
 	}
-	
+
 	me->GetBodyInterface()->StartActivity( ACT_MP_STAND_LOSERSTATE );
 
 	return Continue();
@@ -362,13 +362,13 @@ private:
 	PathFollower m_path;
 };
 
-	
+
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
 class CBotNPCArcherBehavior : public Action< CBotNPCArcher >
 {
 public:
-	virtual Action< CBotNPCArcher > *InitialContainedAction( CBotNPCArcher *me )	
+	virtual Action< CBotNPCArcher > *InitialContainedAction( CBotNPCArcher *me )
 	{
 		return new CBotNPCArcherMoveToMark;
 	}
@@ -379,7 +379,7 @@ public:
 	}
 
 	virtual EventDesiredResult< CBotNPCArcher > OnKilled( CBotNPCArcher *me, const CTakeDamageInfo &info )
-	{ 
+	{
 		// Calculate death force
 		Vector forceVector = me->CalcDamageForceVector( info );
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -58,7 +58,7 @@ static const float kAllZeros[ 4 ] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 BEGIN_VS_SHADER( warp, "Help for warp" )
 	BEGIN_SHADER_PARAMS
-	
+
 		SHADER_PARAM( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "" )
 
 	END_SHADER_PARAMS

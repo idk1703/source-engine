@@ -6,7 +6,7 @@ use Text::Wrap;
 srand(31456);
 
 print <<END
-//========= Copyright © 1996-2006, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: static data for noise() primitives.
 //
@@ -37,10 +37,10 @@ print "static int perm_c[]={\n",wrap('    ','    ',join(",",@perm_a)),"\n};\n\n"
 print "static int perm_d[]={\n",wrap('    ','    ',join(",",@perm_a)),"\n};\n\n";
 
 for ($i=0;$i<256;$i++)
-  {
+	{
 	$float_perm=(1.0/255.0)*$perm_a[$i];
 	$perm_a[$i] = sprintf("%f",$float_perm);
-  }
+	}
 &fisher_yates_shuffle(\@perm_a);
 print "static float impulse_xcoords[]={\n",wrap('    ','    ',join(",",@perm_a)),"\n};\n\n";
 &fisher_yates_shuffle(\@perm_a);
@@ -53,11 +53,11 @@ print "static float impulse_zcoords[]={\n",wrap('    ','    ',join(",",@perm_a))
 # fisher_yates_shuffle( \@array ) : generate a random permutation
 # of @array in place
 sub fisher_yates_shuffle {
-    my $array = shift;
-    my $i;
-    for ($i = @$array; --$i; ) {
-        my $j = int rand ($i+1);
-        next if $i == $j;
-        @$array[$i,$j] = @$array[$j,$i];
-    }
+	my $array = shift;
+	my $i;
+	for ($i = @$array; --$i; ) {
+		my $j = int rand ($i+1);
+		next if $i == $j;
+		@$array[$i,$j] = @$array[$j,$i];
+	}
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -44,14 +44,14 @@
 // Forward declarations
 //-----------------------------------------------------------------------------
 void Sys_ShutdownGame( void );
-int Sys_InitGame( CreateInterfaceFn appSystemFactory, 
+int Sys_InitGame( CreateInterfaceFn appSystemFactory,
 			char const* pBaseDir, void *pwnd, int bIsDedicated );
 
 // Sleep time when not focus. Set to 0 to not sleep even if app doesn't have focus.
 ConVar engine_no_focus_sleep( "engine_no_focus_sleep", "50", FCVAR_ARCHIVE );
 
 // sleep time when not focus
-#define NOT_FOCUS_SLEEP	50				
+#define NOT_FOCUS_SLEEP	50
 
 #define DEFAULT_FPS_MAX	300
 #define DEFAULT_FPS_MAX_S "300"
@@ -111,7 +111,7 @@ ConVar cpu_frequency_monitoring( "cpu_frequency_monitoring", "0", 0, "Set CPU fr
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CEngine : public IEngine
 {
@@ -129,7 +129,7 @@ public:
 
 	float			GetFrameTime( void );
 	float			GetCurTime( void );
-	
+
 	bool			TrapKey_Event( ButtonCode_t key, bool down );
 	void			TrapMouse_Event( int buttons, bool down );
 
@@ -183,14 +183,14 @@ CEngine::CEngine( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEngine::~CEngine( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEngine::Unload( void )
 {
@@ -201,7 +201,7 @@ void CEngine::Unload( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CEngine::Load( bool bDedicated, const char *rootdir )
@@ -212,23 +212,23 @@ bool CEngine::Load( bool bDedicated, const char *rootdir )
 	// NOTE: We must bypass the 'next state' block here for initialization to work properly.
 	m_nDLLState = m_nNextDLLState = InEditMode() ? DLL_PAUSED : DLL_ACTIVE;
 
-	if ( Sys_InitGame( 
+	if ( Sys_InitGame(
 		g_AppSystemFactory,
-		rootdir, 
-		game->GetMainWindowAddress(), 
+		rootdir,
+		game->GetMainWindowAddress(),
 		bDedicated ) )
 	{
 		success = true;
 
 		UpdateMaterialSystemConfig();
 	}
-	
+
 	return success;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dt - 
+// Purpose:
+// Input  : dt -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CEngine::FilterTime( float dt )
@@ -267,13 +267,13 @@ bool CEngine::FilterTime( float dt )
 
 		if (
 #if !defined(SWDS)
-		    !demoplayer->IsPlayingTimeDemo() && 
+		    !demoplayer->IsPlayingTimeDemo() &&
 #endif
-			!g_bDedicatedServerBenchmarkMode && 
+			!g_bDedicatedServerBenchmarkMode &&
 			dt < minframetime )
 		{
 			// framerate is too high
-			return false;		
+			return false;
 		}
 	}
 
@@ -281,7 +281,7 @@ bool CEngine::FilterTime( float dt )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 void CEngine::Frame( void )
@@ -328,7 +328,7 @@ void CEngine::Frame( void )
 		if ( m_flFrameTime < 0.0f )
 		{
 			// ... but if the clock ever went backwards due to a bug,
-			// we'd have no idea how much time has elapsed, so just 
+			// we'd have no idea how much time has elapsed, so just
 			// catch up to the next scheduled server tick.
 			m_flFrameTime = host_nexttick;
 		}
@@ -406,7 +406,7 @@ void CEngine::Frame( void )
 #ifdef VPROF_ENABLED
 	PreUpdateProfile( m_flFrameTime );
 #endif
-	
+
 	// Reset swallowed time...
 	m_flFilteredTime = 0.0f;
 
@@ -483,7 +483,7 @@ void CEngine::Frame( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEngine::EngineState_t CEngine::GetState( void )
 {
@@ -492,7 +492,7 @@ CEngine::EngineState_t CEngine::GetState( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEngine::SetNextState( EngineState_t iNextState )
 {
@@ -501,7 +501,7 @@ void CEngine::SetNextState( EngineState_t iNextState )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CEngine::GetFrameTime( void )
 {
@@ -510,7 +510,7 @@ float CEngine::GetFrameTime( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CEngine::GetCurTime( void )
 {

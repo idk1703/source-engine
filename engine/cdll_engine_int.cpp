@@ -1,8 +1,8 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
-// 4-23-98  
+// 4-23-98
 // JOHN:  implementation of interface between client-side DLL and game engine.
 //  The cdll shouldn't have to know anything about networking or file formats.
 //  This file is Win32-dependant
@@ -104,7 +104,7 @@
 //-----------------------------------------------------------------------------
 // forward declarations
 //-----------------------------------------------------------------------------
-IMaterial* BrushModel_GetLightingAndMaterial( const Vector &start, 
+IMaterial* BrushModel_GetLightingAndMaterial( const Vector &start,
 	const Vector &end, Vector &diffuseLightColor, Vector &baseColor );
 const char *Key_NameForBinding( const char *pBinding );
 void CL_GetBackgroundLevelName( char *pszBackgroundName, int bufSize, bool bMapName );
@@ -124,7 +124,7 @@ void AddIntersectingLeafSurfaces( mleaf_t *pLeaf, GetIntersectingSurfaces_Struct
 	{
 		SurfaceHandle_t surfID = pHandle[iSurf];
 		ASSERT_SURF_VALID( surfID );
-		
+
 		if ( MSurf_Flags(surfID) & SURFDRAW_SKY )
 			continue;
 
@@ -148,7 +148,7 @@ void AddIntersectingLeafSurfaces( mleaf_t *pLeaf, GetIntersectingSurfaces_Struct
 		pOut->m_nVerts = 0;
 		pOut->m_pEngineData = (void *)surfID;
 
-		// Build vertex list and bounding box.			
+		// Build vertex list and bounding box.
 		Vector vMin( 1000000.0f,  1000000.0f,  1000000.0f);
 		Vector vMax(-1000000.0f, -1000000.0f, -1000000.0f);
 		for(int iVert=0; iVert < MSurf_VertCount( surfID ); iVert++)
@@ -168,13 +168,13 @@ void AddIntersectingLeafSurfaces( mleaf_t *pLeaf, GetIntersectingSurfaces_Struct
 		int iDim=0;
 		for(; iDim < 3; iDim++)
 		{
-			if(((*pStruct->m_pCenter)[iDim]+pStruct->m_Radius) < vMin[iDim] || 
+			if(((*pStruct->m_pCenter)[iDim]+pStruct->m_Radius) < vMin[iDim] ||
 				((*pStruct->m_pCenter)[iDim]-pStruct->m_Radius) > vMax[iDim])
 			{
 				break;
 			}
 		}
-		
+
 		if(iDim == 3)
 		{
 			// (Couldn't reject the sphere in the loop above).
@@ -217,7 +217,7 @@ void GetIntersectingSurfaces_R(
 		AddIntersectingLeafSurfaces( pLeaf, pStruct );
 		return;
 	}
-	
+
 	// Recurse.
 	float dot;
 	cplane_t *plane = pNode->plane;
@@ -233,7 +233,7 @@ void GetIntersectingSurfaces_R(
 	// Recurse into child nodes.
 	if(dot > -pStruct->m_Radius)
 		GetIntersectingSurfaces_R(pStruct, pNode->children[SIDE_FRONT]);
-	
+
 	if(dot < pStruct->m_Radius)
 		GetIntersectingSurfaces_R(pStruct, pNode->children[SIDE_BACK]);
 }
@@ -338,10 +338,10 @@ public:
 
 	int		GetIntersectingSurfaces(
 		const model_t *model,
-		const Vector &vCenter, 
+		const Vector &vCenter,
 		const float radius,
 		const bool bOnlyVisible,
-		SurfInfo *pInfos, 
+		SurfInfo *pInfos,
 		const int nMaxInfos);
 
 	Vector	GetLightForPoint(const Vector &pos, bool bClamp);
@@ -381,7 +381,7 @@ public:
 	bool IsDrawingLoadingImage( void );
 	void Con_NPrintf( int pos, const char *fmt, ... );
 	void Con_NXPrintf( const struct con_nprint_s *info, const char *fmt, ... );
-	IMaterial *TraceLineMaterialAndLighting( const Vector &start, const Vector &end, 
+	IMaterial *TraceLineMaterialAndLighting( const Vector &start, const Vector &end,
 		                                     Vector &diffuseLightColor, Vector &baseColor );
 	int		IsBoxVisible( const Vector& mins, const Vector& maxs );
 	int		IsBoxInViewCluster( const Vector& mins, const Vector& maxs );
@@ -424,7 +424,7 @@ public:
 
 	// Returns the dx support level
 	virtual int	GetDXSupportLevel();
-	
+
 	virtual bool SupportsHDR();
 	virtual void Mat_Stub( IMaterialSystem *pMatSys );
 
@@ -530,7 +530,7 @@ public:
 
 	virtual void				StartXboxExitingProcess();
 	virtual bool				IsSaveInProgress();
-	
+
 	virtual uint				OnStorageDeviceAttached( void );
 	virtual void				OnStorageDeviceDetached( void );
 
@@ -590,10 +590,10 @@ CEngineClient::CEngineClient()
 
 int	CEngineClient::GetIntersectingSurfaces(
 	const model_t *model,
-	const Vector &vCenter, 
+	const Vector &vCenter,
 	const float radius,
 	const bool bOnlyVisible,
-	SurfInfo *pInfos, 
+	SurfInfo *pInfos,
 	const int nMaxInfos)
 {
 	if ( !model )
@@ -608,7 +608,7 @@ int	CEngineClient::GetIntersectingSurfaces(
 	theStruct.m_bOnlyVisible = bOnlyVisible;
 	theStruct.m_pInfos = pInfos;
 	theStruct.m_nMaxInfos = nMaxInfos;
-	theStruct.m_nSetInfos = 0;		
+	theStruct.m_nSetInfos = 0;
 
 	// Go down the BSP.
 	GetIntersectingSurfaces_R(
@@ -920,13 +920,13 @@ void CEngineClient::Con_NXPrintf( const struct con_nprint_s *info, const char *f
 	::Con_NXPrintf( info, "%s", text );
 }
 
-IMaterial *CEngineClient::TraceLineMaterialAndLighting( const Vector &start, const Vector &end, 
+IMaterial *CEngineClient::TraceLineMaterialAndLighting( const Vector &start, const Vector &end,
 		                                 Vector &diffuseLightColor, Vector &baseColor )
 {
 	return BrushModel_GetLightingAndMaterial( start, end, diffuseLightColor, baseColor );
 }
 
-int	CEngineClient::IsBoxVisible( const Vector& mins, const Vector& maxs ) 
+int	CEngineClient::IsBoxVisible( const Vector& mins, const Vector& maxs )
 {
 	return CM_BoxVisible( mins, maxs, Map_VisCurrent(), CM_ClusterPVSSize() );
 }
@@ -984,17 +984,17 @@ const VMatrix& CEngineClient::WorldToViewMatrix()
 // Loads a game lump off disk
 int	CEngineClient::GameLumpVersion( int lumpId ) const
 {
-	return Mod_GameLumpVersion( lumpId ); 
+	return Mod_GameLumpVersion( lumpId );
 }
 
-int	CEngineClient::GameLumpSize( int lumpId ) const 
-{ 
-	return Mod_GameLumpSize( lumpId ); 
+int	CEngineClient::GameLumpSize( int lumpId ) const
+{
+	return Mod_GameLumpSize( lumpId );
 }
 
-bool CEngineClient::LoadGameLump( int lumpId, void* pBuffer, int size ) 
-{ 
-	return Mod_LoadGameLump( lumpId, pBuffer, size ); 
+bool CEngineClient::LoadGameLump( int lumpId, void* pBuffer, int size )
+{
+	return Mod_LoadGameLump( lumpId, pBuffer, size );
 }
 
 // Returns the number of leaves in the level
@@ -1068,7 +1068,7 @@ bool CEngineClient::SupportsHDR()
 void CEngineClient::Mat_Stub( IMaterialSystem *pMatSys )
 {
 	materials = pMatSys;
-	
+
 	// Pass the call to the model renderer.
 	if ( g_pStudioRender )
 		g_pStudioRender->Mat_Stub( pMatSys );
@@ -1231,9 +1231,9 @@ int CEngineClient::SentenceGroupPickSequential( int groupIndex, char *name, int 
 int CEngineClient::SentenceIndexFromName( const char *pSentenceName )
 {
 	int sentenceIndex = -1;
-	
+
 	VOX_LookupString( pSentenceName, &sentenceIndex );
-	
+
 	return sentenceIndex;
 }
 
@@ -1315,7 +1315,7 @@ bool CEngineClient::IsTakingScreenshot( void )
 	return cl_takesnapshot;
 }
 
-int CEngineClient::GetDemoRecordingTick( void )	
+int CEngineClient::GetDemoRecordingTick( void )
 {
 	return demorecorder->GetRecordingTick();
 }
@@ -1369,7 +1369,7 @@ void CEngineClient::GetUILanguage( char *dest, int destlen )
 //-----------------------------------------------------------------------------
 SkyboxVisibility_t CEngineClient::IsSkyboxVisibleFromPoint( const Vector &vecPoint )
 {
-	// In the mat_fullbright 1 case, it's always visible 
+	// In the mat_fullbright 1 case, it's always visible
 	// (we may have no lighting in the level, and vrad is where LEAF_FLAGS_SKY is computed)
 	if ( g_pMaterialSystemConfig->nFullbright == 1 )
 		return SKYBOX_3DSKYBOX_VISIBLE;
@@ -1495,7 +1495,7 @@ void CEngineClient::SetAchievementMgr( IAchievementMgr *pAchievementMgr )
 //-----------------------------------------------------------------------------
 // Gets achievement mgr
 //-----------------------------------------------------------------------------
-IAchievementMgr *CEngineClient::GetAchievementMgr() 
+IAchievementMgr *CEngineClient::GetAchievementMgr()
 {
 	return g_pAchievementMgr;
 }
@@ -1552,7 +1552,7 @@ bool CEngineClient::IsSaveInProgress()
 extern IXboxSystem *g_pXboxSystem;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 uint CEngineClient::OnStorageDeviceAttached( void )
 {
@@ -1560,7 +1560,7 @@ uint CEngineClient::OnStorageDeviceAttached( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEngineClient::OnStorageDeviceDetached( void )
 {
@@ -1684,11 +1684,11 @@ static void ClientDLL_InitRecvTableMgr()
 	int nRecvTables = 0;
 	for ( ClientClass *pCur = ClientDLL_GetAllClasses(); pCur; pCur=pCur->m_pNext )
 	{
-		ErrorIfNot( 
-			nRecvTables < ARRAYSIZE( pRecvTables ), 
+		ErrorIfNot(
+			nRecvTables < ARRAYSIZE( pRecvTables ),
 			("ClientDLL_InitRecvTableMgr: overflowed MAX_DATATABLES")
 			);
-		
+
 		pRecvTables[nRecvTables] = pCur->m_pRecvTable;
 		++nRecvTables;
 	}
@@ -1709,7 +1709,7 @@ CreateInterfaceFn ClientDLL_GetFactory( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Loads the client DLL
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 bool ClientDLL_Load()
 {
@@ -1754,7 +1754,7 @@ bool ClientDLL_Load()
 		}
 	}
 	else
-	{	
+	{
 		// tell Steam to do a quick verify of the install. Sys_Error doesn't return, so do this first.
 		if( Steam3Client().SteamApps() )
 			Steam3Client().SteamApps()->MarkContentCorrupt( true );
@@ -1771,7 +1771,7 @@ bool ClientDLL_Load()
 }
 
 void InitExtraClientCmdCanExecuteVars()
-{	
+{
 	// This can go away when we ship a client DLL with the FCVAR_CLIENTCMD_CAN_EXECUTE flag set on these cvars/concommands.
 	Cmd_AddClientCmdCanExecuteVar( "cancelselect" );
 	Cmd_AddClientCmdCanExecuteVar( "menuselect" );
@@ -1929,7 +1929,7 @@ void ClientDLL_Init( void )
 	COM_TimestampedLog( "ClientDLL_InitRecvTableMgr" );
 
 	ClientDLL_InitRecvTableMgr();
-	
+
 	InitExtraClientCmdCanExecuteVars();
 }
 
@@ -1950,7 +1950,7 @@ void ClientDLL_Shutdown( void )
 	ClientDLL_ShutdownRecvTableMgr();
 
 	vgui::ivgui()->RunFrame();
-	
+
 	materials->UncacheAllMaterials();
 
 	vgui::ivgui()->RunFrame();
@@ -1967,7 +1967,7 @@ void ClientDLL_Shutdown( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Unloads the client .dll
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void ClientDLL_Unload()
 {
@@ -2003,7 +2003,7 @@ void ClientDLL_ProcessInput( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ClientDLL_FrameStageNotify( ClientFrameStage_t frameStage )
 {
@@ -2032,7 +2032,7 @@ void ClientDLL_Update( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ClientDLL_VoiceStatus( int entindex, bool bTalking )
 {
@@ -2046,7 +2046,7 @@ void ClientDLL_VoiceStatus( int entindex, bool bTalking )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEngineClient::FlashWindow()
 {
@@ -2062,7 +2062,7 @@ void CEngineClient::FlashWindow()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CEngineClient::GetInstancesRunningCount( )
 {
@@ -2070,7 +2070,7 @@ int CEngineClient::GetInstancesRunningCount( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CEngineClient::GetPausedExpireTime( void )
 {
@@ -2078,7 +2078,7 @@ float CEngineClient::GetPausedExpireTime( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEngineClient::StartDemoRecording( const char *pszFilename, const char *pszFolder /* = NULL */ )
 {
@@ -2141,7 +2141,7 @@ bool CEngineClient::StartDemoRecording( const char *pszFilename, const char *psz
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEngineClient::StopDemoRecording( void )
 {
@@ -2155,7 +2155,7 @@ void CEngineClient::StopDemoRecording( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEngineClient::TakeScreenshot( const char *pszFilename, const char *pszFolder /* = NULL */ )
 {
@@ -2184,7 +2184,7 @@ void CEngineClient::TakeScreenshot( const char *pszFilename, const char *pszFold
 		Shader_SwapBuffers();
 	}
 
-	// Disable threading for the duration of the screenshots, because we need to get pointers to the (complete) 
+	// Disable threading for the duration of the screenshots, because we need to get pointers to the (complete)
 	// back buffer right now.
 	bool bEnabled = materials->AllowThreading( false, g_nMaterialSystemThread );
 
@@ -2199,7 +2199,7 @@ void CEngineClient::TakeScreenshot( const char *pszFilename, const char *pszFold
 		V_sprintf_safe( szFinal, "%s", pszFilename );
 	}
 
-	V_SetExtension( szFinal, ".tga", sizeof( szFinal ) ); 
+	V_SetExtension( szFinal, ".tga", sizeof( szFinal ) );
 
 	videomode->TakeSnapshotTGA( szFinal );
 

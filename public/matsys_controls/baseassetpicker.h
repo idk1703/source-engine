@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -38,7 +38,7 @@ class CBaseAssetPicker : public vgui::EditablePanel
 	DECLARE_CLASS_SIMPLE( CBaseAssetPicker, vgui::EditablePanel );
 
 public:
-	CBaseAssetPicker( vgui::Panel *pParent, const char *pAssetType, 
+	CBaseAssetPicker( vgui::Panel *pParent, const char *pAssetType,
 		const char *pExt, const char *pSubDir, const char *pTextType );
 	~CBaseAssetPicker();
 
@@ -49,7 +49,7 @@ public:
 	virtual void GetUserConfigSettings( KeyValues *pUserConfig );
 	virtual void OnCommand( const char *pCommand );
 
-	// Purpose: 
+	// Purpose:
 	virtual void OnKeyCodePressed( vgui::KeyCode code );
 
 	// Returns the selected asset name
@@ -97,7 +97,7 @@ protected:
 	MESSAGE_FUNC_PARAMS( OnItemSelected, "ItemSelected", kv );
 	MESSAGE_FUNC_PARAMS( OnCheckButtonChecked, "CheckButtonChecked", kv );
 	MESSAGE_FUNC( OnFileSelected, "TreeViewItemSelected" );
-	
+
 protected:
 	struct AssetInfo_t
 	{
@@ -176,7 +176,7 @@ public:
 
 protected:
 	// Allows the derived class to create the picker
-	void SetAssetPicker( CBaseAssetPicker* pPicker ); 
+	void SetAssetPicker( CBaseAssetPicker* pPicker );
 	CBaseAssetPicker* GetAssetPicker() { return m_pPicker; }
 
 	// Posts a message (passing the key values)

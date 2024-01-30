@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -57,9 +57,9 @@ private:
 
 BEGIN_SIMPLE_DATADESC( CSoundEnvelope )
 	DEFINE_FIELD( m_current, FIELD_FLOAT ),
-	DEFINE_FIELD( m_target, FIELD_FLOAT ),	
-	DEFINE_FIELD( m_rate, FIELD_FLOAT ),	
-	DEFINE_FIELD( m_forceupdate, FIELD_BOOLEAN ),	
+	DEFINE_FIELD( m_target, FIELD_FLOAT ),
+	DEFINE_FIELD( m_rate, FIELD_FLOAT ),
+	DEFINE_FIELD( m_forceupdate, FIELD_BOOLEAN ),
 END_DATADESC()
 
 
@@ -122,7 +122,7 @@ bool CSoundEnvelope::ShouldUpdate( void )
 	{
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -159,13 +159,13 @@ public:
 		for ( int i = 0; i < pSrc->GetRecipientCount(); i++ )
 		{
 			int index = pSrc->GetRecipientIndex( i );
-			
+
 			if ( index >= 0 )
 				m_Recipients.AddToTail( index );
 		}
 	}
 
-	bool IsActive() const 
+	bool IsActive() const
 	{
 		return (m_Flags & FLAG_ACTIVE) != 0;
 	}
@@ -221,9 +221,9 @@ private:
 
 BEGIN_SIMPLE_DATADESC( CCopyRecipientFilter )
 
-	DEFINE_FIELD( m_Flags, FIELD_INTEGER ),	
+	DEFINE_FIELD( m_Flags, FIELD_INTEGER ),
 	DEFINE_UTLVECTOR( m_Recipients, FIELD_INTEGER ),
-		
+
 END_DATADESC()
 
 
@@ -248,7 +248,7 @@ public:
 		g_SoundPatchCount--;
 	}
 
-	void	Init( IRecipientFilter *pFilter, CBaseEntity *pEnt, int channel, const char *pSoundName, 
+	void	Init( IRecipientFilter *pFilter, CBaseEntity *pEnt, int channel, const char *pSoundName,
 				soundlevel_t iSoundLevel );
 	void	ChangePitch( float pitchTarget, float deltaTime );
 	void	ChangeVolume( float volumeTarget, float deltaTime );
@@ -268,7 +268,7 @@ public:
 	void	SetCloseCaptionDuration( float flDuration ) { m_flCloseCaptionDuration = flDuration; }
 
 	void	SetBaseFlags( int iFlags ) { m_baseFlags = iFlags; }
-	
+
 	// Returns the ent index
 	int		EntIndex() const;
 
@@ -322,14 +322,14 @@ BEGIN_SIMPLE_DATADESC( CSoundPatch )
 
 	DEFINE_EMBEDDED( m_pitch ),
 	DEFINE_EMBEDDED( m_volume ),
-	DEFINE_FIELD( m_soundlevel, FIELD_INTEGER ),	
+	DEFINE_FIELD( m_soundlevel, FIELD_INTEGER ),
 	DEFINE_FIELD( m_shutdownTime, FIELD_TIME ),
-	DEFINE_FIELD( m_flLastTime, FIELD_TIME ),	
+	DEFINE_FIELD( m_flLastTime, FIELD_TIME ),
 	DEFINE_FIELD( m_iszSoundName, FIELD_STRING ),
 	DEFINE_FIELD( m_iszSoundScriptName, FIELD_STRING ),
-	DEFINE_FIELD( m_hEnt, FIELD_EHANDLE ),	
-	DEFINE_FIELD( m_entityChannel, FIELD_INTEGER ),	
-	DEFINE_FIELD( m_flags, FIELD_INTEGER ),	
+	DEFINE_FIELD( m_hEnt, FIELD_EHANDLE ),
+	DEFINE_FIELD( m_entityChannel, FIELD_INTEGER ),
+	DEFINE_FIELD( m_flags, FIELD_INTEGER ),
 	DEFINE_FIELD( m_baseFlags, FIELD_INTEGER ),
 	DEFINE_FIELD( m_isPlaying, FIELD_INTEGER ),
 	DEFINE_FIELD( m_flScriptVolume, FIELD_FLOAT ),
@@ -338,7 +338,7 @@ BEGIN_SIMPLE_DATADESC( CSoundPatch )
 
 	// Not saved, it's debug only
 //  DEFINE_FIELD( m_iszClassName, FIELD_STRING ),
-	
+
 END_DATADESC()
 
 
@@ -350,7 +350,7 @@ END_DATADESC()
 //			*pSoundName - sound script string name
 //			attenuation - attenuation of this sound (not animated)
 //-----------------------------------------------------------------------------
-void CSoundPatch::Init( IRecipientFilter *pFilter, CBaseEntity *pEnt, int channel, const char *pSoundName, 
+void CSoundPatch::Init( IRecipientFilter *pFilter, CBaseEntity *pEnt, int channel, const char *pSoundName,
 			soundlevel_t soundlevel )
 {
 	m_hEnt = pEnt;
@@ -412,7 +412,7 @@ void CSoundPatch::ChangePitch( float pitchTarget, float deltaTime )
 //-----------------------------------------------------------------------------
 // Purpose: Ramps the volume to a new value
 // Input  : volumeTarget - new volume
-//			deltaTime - seconds to reach the new volume 
+//			deltaTime - seconds to reach the new volume
 //-----------------------------------------------------------------------------
 void CSoundPatch::ChangeVolume( float volumeTarget, float deltaTime )
 {
@@ -518,7 +518,7 @@ bool CSoundPatch::Update( float time, float deltaTime )
 		m_pitch.Update( deltaTime );
 		m_flags |= SND_CHANGE_PITCH;
 	}
-	else 
+	else
 	{
 		m_flags &= ~SND_CHANGE_PITCH;
 	}
@@ -528,7 +528,7 @@ bool CSoundPatch::Update( float time, float deltaTime )
 		m_volume.Update( deltaTime );
 		m_flags |= SND_CHANGE_VOL;
 	}
-	else 
+	else
 	{
 		m_flags &= ~SND_CHANGE_VOL;
 	}
@@ -660,7 +660,7 @@ struct SoundCommand_t
 	float			m_deltaTime;
 	soundcommands_t	m_command;
 	float			m_value;
-	
+
 	SoundCommand_t	*m_pNext;
 
 	DECLARE_SIMPLE_DATADESC();
@@ -677,19 +677,19 @@ BEGIN_SIMPLE_DATADESC( SoundCommand_t )
 // they are associated with
 //	DEFINE_FIELD( m_pPatch, FIELD_????? )
 	DEFINE_FIELD( m_time, FIELD_TIME ),
-	DEFINE_FIELD( m_deltaTime, FIELD_FLOAT ),	
-	DEFINE_FIELD( m_command, FIELD_INTEGER ),	
-	DEFINE_FIELD( m_value, FIELD_FLOAT ),	
+	DEFINE_FIELD( m_deltaTime, FIELD_FLOAT ),
+	DEFINE_FIELD( m_command, FIELD_INTEGER ),
+	DEFINE_FIELD( m_value, FIELD_FLOAT ),
 //	DEFINE_FIELD( m_pNext, FIELD_????? )
 
 END_DATADESC()
 
 typedef SoundCommand_t *SOUNDCOMMANDPTR;
 
-bool SoundCommandLessFunc( const SOUNDCOMMANDPTR &lhs, const SOUNDCOMMANDPTR &rhs )	
-{ 
+bool SoundCommandLessFunc( const SOUNDCOMMANDPTR &lhs, const SOUNDCOMMANDPTR &rhs )
+{
 	// NOTE: A greater time means "less" priority
-	return ( lhs->m_time > rhs->m_time );	
+	return ( lhs->m_time > rhs->m_time );
 }
 
 
@@ -720,16 +720,16 @@ public:
 	// Start this sound playing, or reset if already playing with new volume/pitch
 	void			Play( CSoundPatch *pSound, float volume, float pitch, float flStartTime = 0 );
 	void			CommandAdd( CSoundPatch *pSound, float executeDeltaTime, soundcommands_t command, float commandTime, float commandValue );
-	
+
 	void			SystemReset( void );
 	void			SystemUpdate( void );
 	void			CommandClear( CSoundPatch *pSound );
 	void			Shutdown( CSoundPatch *pSound );
 
 	CSoundPatch		*SoundCreate( IRecipientFilter& filter, int nEntIndex, const char *pSoundName );
-	CSoundPatch		*SoundCreate( IRecipientFilter& filter, int nEntIndex, int channel, const char *pSoundName, 
+	CSoundPatch		*SoundCreate( IRecipientFilter& filter, int nEntIndex, int channel, const char *pSoundName,
 						float attenuation );
-	CSoundPatch		*SoundCreate( IRecipientFilter& filter, int nEntIndex, int channel, const char *pSoundName, 
+	CSoundPatch		*SoundCreate( IRecipientFilter& filter, int nEntIndex, int channel, const char *pSoundName,
 						soundlevel_t soundlevel );
 	CSoundPatch		*SoundCreate( IRecipientFilter& filter, int nEntIndex, const EmitSound_t &es );
 	void			SoundDestroy( CSoundPatch *pSound );
@@ -751,7 +751,7 @@ public:
 
 #ifdef CLIENT_DLL
 	// CAutoClientSystem
-	virtual void Update( float frametime ) 
+	virtual void Update( float frametime )
 	{
 		SystemUpdate();
 	}
@@ -762,11 +762,11 @@ public:
 	}
 #endif
 
-	virtual void LevelShutdownPreEntity() 
+	virtual void LevelShutdownPreEntity()
 	{
 		SystemReset();
 	}
-	
+
 private:
 	CUtlVector<CSoundPatch *>			m_soundList;
 	CUtlPriorityQueue<SoundCommand_t *>	m_commandList;
@@ -774,7 +774,7 @@ private:
 };
 
 // Execute a command from the list
-// currently only 3 commands 
+// currently only 3 commands
 // UNDONE: Add start command?
 void CSoundControllerImp::ProcessCommand( SoundCommand_t *pCmd )
 {
@@ -850,7 +850,7 @@ void CSoundControllerImp::CommandInsert( SoundCommand_t *pCommand )
 //			executeDeltaTime - relative time to execute this command
 //			command - command to execute (SOUNDCTRL_*)
 //			commandTime - commands have 2 parameters, a time and a value
-//			value - 
+//			value -
 // Output : 	void
 //-----------------------------------------------------------------------------
 void CSoundControllerImp::CommandAdd( CSoundPatch *pSound, float executeDeltaTime, soundcommands_t command, float commandTime, float commandValue )
@@ -865,7 +865,7 @@ void CSoundControllerImp::SystemReset( void )
 	for ( int i = m_soundList.Count()-1; i >=0; i-- )
 	{
 		CSoundPatch *pNode = m_soundList[i];
-	
+
 		// shutdown all active sounds
 		pNode->Shutdown();
 	}
@@ -886,7 +886,7 @@ void CSoundControllerImp::SystemUpdate( void )
 	VPROF( "CSoundControllerImp::SystemUpdate" );
 	float time = g_pEffects->Time();
 	float deltaTime = time - m_flLastTime;
-	
+
 	// handle clock resets
 	if ( deltaTime < 0 )
 		deltaTime = 0;
@@ -1031,7 +1031,7 @@ void CSoundControllerImp::RestoreSoundPatch( CSoundPatch **ppSoundPatch, IRestor
 
 
 //-----------------------------------------------------------------------------
-// Purpose: immediately stop playing this sound 
+// Purpose: immediately stop playing this sound
 // Input  : *pSound - Patch to shut down
 //-----------------------------------------------------------------------------
 void CSoundControllerImp::Shutdown( CSoundPatch *pSound )
@@ -1062,7 +1062,7 @@ CSoundPatch *CSoundControllerImp::SoundCreate( IRecipientFilter& filter, int nEn
 	return pSound;
 }
 
-CSoundPatch *CSoundControllerImp::SoundCreate( IRecipientFilter& filter, int nEntIndex, int channel, 
+CSoundPatch *CSoundControllerImp::SoundCreate( IRecipientFilter& filter, int nEntIndex, int channel,
 			const char *pSoundName, float attenuation )
 {
 #ifdef CLIENT_DLL
@@ -1079,7 +1079,7 @@ CSoundPatch *CSoundControllerImp::SoundCreate( IRecipientFilter& filter, int nEn
 	return pSound;
 }
 
-CSoundPatch *CSoundControllerImp::SoundCreate( IRecipientFilter& filter, int nEntIndex, int channel, 
+CSoundPatch *CSoundControllerImp::SoundCreate( IRecipientFilter& filter, int nEntIndex, int channel,
 			const char *pSoundName, soundlevel_t soundlevel )
 {
 #ifdef CLIENT_DLL
@@ -1195,7 +1195,7 @@ float CSoundControllerImp::SoundPlayEnvelope( CSoundPatch *pSound, soundcommands
 		// See if we're keeping our last duration for this new point
 		if ( ( points[i].durationMin != -1.0f ) || ( points[i].durationMax != -1.0f ) )
 		{
-			duration = random->RandomFloat( points[i].durationMin, points[i].durationMax );	
+			duration = random->RandomFloat( points[i].durationMin, points[i].durationMax );
 			//duration = points[i].durationMin;
 		}
 		else if ( i == 0 )
@@ -1227,8 +1227,8 @@ float CSoundControllerImp::SoundPlayEnvelope( CSoundPatch *pSound, soundcommands
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Looping sounds are often started in entity spawn/activate functions. 
-//			In singleplayer, the player's not ready to receive sounds then, so restart 
+// Purpose: Looping sounds are often started in entity spawn/activate functions.
+//			In singleplayer, the player's not ready to receive sounds then, so restart
 //			and SoundPatches that are active and have no receivers.
 //-----------------------------------------------------------------------------
 void CSoundControllerImp::CheckLoopingSoundsForPlayer( CBasePlayer *pPlayer )
@@ -1287,7 +1287,7 @@ public:
 
 		pSave->EndBlock();
 	}
-	
+
 	virtual void Restore( const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore )
 	{
 		pRestore->StartBlock();

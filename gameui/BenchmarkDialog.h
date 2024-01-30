@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -36,7 +36,7 @@ public:
 			BaseClass::OnKeyCodePressed(code);
 		}
 	}
-	
+
 private:
 	MESSAGE_FUNC( RunBenchmark, "RunBenchmark" );
 };

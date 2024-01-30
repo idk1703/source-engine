@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,7 +15,7 @@
 
 
 #ifdef CLIENT_DLL
-	
+
 	#define CHEGrenade C_HEGrenade
 
 #endif
@@ -40,7 +40,7 @@ public:
 	DECLARE_DATADESC();
 
 	virtual void EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer );
-	
+
 #endif
 
 	CHEGrenade( const CHEGrenade & ) {}

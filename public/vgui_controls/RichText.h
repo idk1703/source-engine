@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -44,7 +44,7 @@ public:
 	void InsertChar(wchar_t ch);
 	void InsertString(const char *text);
 	void InsertString(const wchar_t *wszText);
-	
+
 	// selection
 	void SelectNone();
 	void SelectAllText();
@@ -96,8 +96,8 @@ public:
 
 	/* MESSAGE SENDING (to action signal targets)
 		"TextChanged"	- sent when the text is edited by the user
-			
-		
+
+
 		"TextClicked"	- sent when clickable text has been clicked on
 			"text"	- the text that was clicked on
 	*/
@@ -137,7 +137,7 @@ protected:
 	virtual void OnKillFocus();
 	virtual void OnMouseWheeled(int delta);	// respond to mouse wheel events
 	virtual void OnKeyCodeTyped(KeyCode code);	//respond to keyboard events
-	
+
 	MESSAGE_FUNC_INT( OnClickPanel, "ClickPanel", index);
 
 	virtual void OnCursorMoved(int x, int y);  // respond to moving the cursor with mouse button down
@@ -149,7 +149,7 @@ protected:
 	virtual void OnCursorEntered();	 // handle cursor entering window
 	virtual void OnCursorExited();	 // handle cursor exiting window
 
-	virtual void OnMouseCaptureLost(); 
+	virtual void OnMouseCaptureLost();
 	virtual void OnSizeChanged(int newWide, int newTall);
 	virtual void OnSetFocus();
 
@@ -160,7 +160,7 @@ protected:
 #ifdef DBGFLAG_VALIDATE
 	virtual void Validate( CValidator &validator, char *pchName );
 #endif // DBGFLAG_VALIDATE
-	
+
 protected:
 	ScrollBar			*_vertScrollBar;	// the scroll bar used in the window
 
@@ -187,7 +187,7 @@ private:
 	// Returns the character index the drawing should Start at
 	int GetStartDrawIndex(int &lineBreakIndexIndex);
 	int GetCursorLine();
-	int GetClickableTextIndexStart(int startIndex); 
+	int GetClickableTextIndexStart(int startIndex);
 	void CreateEditMenu(); // create copy/cut/paste menu
 
 	MESSAGE_FUNC_INT( MoveScrollBar, "MoveScrollBar", delta );
@@ -232,7 +232,7 @@ private:
 
 	bool m_bRecalcLineBreaks;
 
-	int	_recalculateBreaksIndex;			// tells next linebreakindex index to Start recalculating line breaks	
+	int	_recalculateBreaksIndex;			// tells next linebreakindex index to Start recalculating line breaks
 	bool			   _invalidateVerticalScrollbarSlider;
 	int                _cursorPos;			// the position in the text buffer of the blinking cursor
 	bool			   _mouseSelection;		// whether we are highlighting text or not (selecting text)
@@ -263,12 +263,12 @@ private:
 
 	// saved state
 	bool _recalcSavedRenderState;
-	
+
 	struct TRenderState
 	{
 		// rendering positions
 		int x, y;
-		
+
 		// basic state
 		Color textColor;
 		int pixelsIndent;

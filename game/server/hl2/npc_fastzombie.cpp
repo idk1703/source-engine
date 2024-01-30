@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -167,7 +167,7 @@ int AE_FASTZOMBIE_CLIMB_RIGHT;
 //=========================================================
 // tasks
 //=========================================================
-enum 
+enum
 {
 	TASK_FASTZOMBIE_DO_ATTACK = LAST_SHARED_TASK + 100,	// again, my !!!HACKHACK
 	TASK_FASTZOMBIE_LAND_RECOVER,
@@ -260,7 +260,7 @@ public:
 	virtual Vector GetAutoAimCenter() { return WorldSpaceCenter() - Vector( 0, 0, 12.0f ); }
 
 	void PainSound( const CTakeDamageInfo &info );
-	void DeathSound( const CTakeDamageInfo &info ); 
+	void DeathSound( const CTakeDamageInfo &info );
 	void AlertSound( void );
 	void IdleSound( void );
 	void AttackSound( void );
@@ -317,7 +317,7 @@ protected:
 	static const char *pMoanSounds[];
 
 	// Sound stuff
-	float			m_flDistFactor; 
+	float			m_flDistFactor;
 	unsigned char	m_iClimbCount; // counts rungs climbed (for sound)
 	bool			m_fIsNavJumping;
 	bool			m_fIsAttackJumping;
@@ -382,7 +382,7 @@ static const char *s_pLegsModel = "models/gibs/fast_zombie_legs.mdl";
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -399,7 +399,7 @@ void CFastZombie::Precache( void )
 #endif
 	PrecacheModel( "models/gibs/fast_zombie_torso.mdl" );
 	PrecacheModel( "models/gibs/fast_zombie_legs.mdl" );
-	
+
 	PrecacheScriptSound( "NPC_FastZombie.LeapAttack" );
 	PrecacheScriptSound( "NPC_FastZombie.FootstepRight" );
 	PrecacheScriptSound( "NPC_FastZombie.FootstepLeft" );
@@ -489,7 +489,7 @@ int CFastZombie::SelectSchedule ( void )
 			DevMsg("Wandering\n");
 #endif
 
-			// Just lost track of our enemy. 
+			// Just lost track of our enemy.
 			// Wander around a bit so we don't look like a dingus.
 			return SCHED_ZOMBIE_WANDER_MEDIUM;
 		}
@@ -546,8 +546,8 @@ void CFastZombie::PrescheduleThink( void )
 			// Zombie is close! Recalculate pitch.
 			int iPitch;
 
-			m_flDistFactor = MIN( 1.0, 1 - flDistNoBBox / FASTZOMBIE_EXCITE_DIST ); 
-			iPitch = FASTZOMBIE_MIN_PITCH + ( ( FASTZOMBIE_MAX_PITCH - FASTZOMBIE_MIN_PITCH ) * m_flDistFactor); 
+			m_flDistFactor = MIN( 1.0, 1 - flDistNoBBox / FASTZOMBIE_EXCITE_DIST );
+			iPitch = FASTZOMBIE_MIN_PITCH + ( ( FASTZOMBIE_MAX_PITCH - FASTZOMBIE_MIN_PITCH ) * m_flDistFactor);
 			ENVELOPE_CONTROLLER.SoundChangePitch( m_pMoanSound, iPitch, FASTZOMBIE_SOUND_UPDATE_FREQ );
 		}
 
@@ -562,7 +562,7 @@ void CFastZombie::PrescheduleThink( void )
 
 	if( IsCurSchedule(SCHED_FASTZOMBIE_RANGE_ATTACK1, false) )
 	{
-		// Think more frequently when flying quickly through the 
+		// Think more frequently when flying quickly through the
 		// air, to update the server's location more often.
 		SetNextThink(gpGlobals->curtime);
 	}
@@ -642,7 +642,7 @@ void CFastZombie::SetAngrySoundState( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -716,7 +716,7 @@ const char *CFastZombie::GetHeadcrabModel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CFastZombie::MaxYawSpeed( void )
 {
@@ -735,7 +735,7 @@ float CFastZombie::MaxYawSpeed( void )
 	case ACT_IDLE:
 		return 25;
 		break;
-		
+
 	default:
 		return 20;
 		break;
@@ -744,7 +744,7 @@ float CFastZombie::MaxYawSpeed( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -818,7 +818,7 @@ int CFastZombie::MeleeAttack1Conditions( float flDot, float flDist )
 	{
 		return COND_NONE;
 	}
-	
+
 	int baseResult = BaseClass::MeleeAttack1Conditions( flDot, flDist );
 
 	// @TODO (toml 07-21-04): follow up with Steve to find out why fz was explicitly not using these conditions
@@ -908,7 +908,7 @@ void CFastZombie::PainSound( const CTakeDamageInfo &info )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CFastZombie::DeathSound( const CTakeDamageInfo &info ) 
+void CFastZombie::DeathSound( const CTakeDamageInfo &info )
 {
 	EmitSound( "NPC_FastZombie.Die" );
 }
@@ -922,7 +922,7 @@ void CFastZombie::AlertSound( void )
 
 	if( pPlayer )
 	{
-		// Measure how far the player is, and play the appropriate type of alert sound. 
+		// Measure how far the player is, and play the appropriate type of alert sound.
 		// Doesn't matter if I'm getting mad at a different character, the player is the
 		// one that hears the sound.
 		float flDist;
@@ -946,9 +946,9 @@ void CFastZombie::AlertSound( void )
 //-----------------------------------------------------------------------------
 #define FASTZOMBIE_MINLEAP			200
 #define FASTZOMBIE_MAXLEAP			300
-float CFastZombie::InnateRange1MaxRange( void ) 
-{ 
-	return FASTZOMBIE_MAXLEAP; 
+float CFastZombie::InnateRange1MaxRange( void )
+{
+	return FASTZOMBIE_MAXLEAP;
 }
 
 
@@ -993,7 +993,7 @@ int CFastZombie::RangeAttack1Conditions( float flDot, float flDist )
 		return COND_NONE;
 	}
 
-	if (flDot < 0.8) 
+	if (flDot < 0.8)
 	{
 		return COND_NONE;
 	}
@@ -1064,7 +1064,7 @@ void CFastZombie::HandleAnimEvent( animevent_t *pEvent )
 		LeapAttack();
 		return;
 	}
-	
+
 	if ( pEvent->event == AE_FASTZOMBIE_GALLOP_LEFT )
 	{
 		EmitSound( "NPC_FastZombie.GallopLeft" );
@@ -1076,7 +1076,7 @@ void CFastZombie::HandleAnimEvent( animevent_t *pEvent )
 		EmitSound( "NPC_FastZombie.GallopRight" );
 		return;
 	}
-	
+
 	if ( pEvent->event == AE_ZOMBIE_ATTACK_RIGHT )
 	{
 		Vector right;
@@ -1126,7 +1126,7 @@ void CFastZombie::HandleAnimEvent( animevent_t *pEvent )
 			GetVectors( &vecForward, &vecRight, &vecUp );
 
 			vecVelocity += ( vecForward * -2500.0f ) + ( vecRight * 200.0f ) + ( vecUp * 300 );
-			
+
 			// Always kill
 			float flDamage = GetMaxHealth() + 10;
 
@@ -1219,7 +1219,7 @@ void CFastZombie::LeapAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFastZombie::StartTask( const Task_t *pTask )
 {
@@ -1262,7 +1262,7 @@ void CFastZombie::StartTask( const Task_t *pTask )
 			SetGroundEntity( NULL );
 
 			// Call begin attack jump. A little bit later if we fail to pathfind, we check
-			// this value to see if we just jumped. If so, we assume we've jumped 
+			// this value to see if we just jumped. If so, we assume we've jumped
 			// to someplace that's not pathing friendly, and so must jump again to get out.
 			BeginAttackJump();
 
@@ -1300,7 +1300,7 @@ void CFastZombie::StartTask( const Task_t *pTask )
 
 	case TASK_WAIT_FOR_MOVEMENT:
 		// If we're waiting for movement, that means that pathfinding succeeded, and
-		// we're about to be moving. So we aren't stuck. So clear this flag. 
+		// we're about to be moving. So we aren't stuck. So clear this flag.
 		m_fJustJumped = false;
 
 		BaseClass::StartTask( pTask );
@@ -1357,7 +1357,7 @@ void CFastZombie::StartTask( const Task_t *pTask )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFastZombie::RunTask( const Task_t *pTask )
 {
@@ -1399,7 +1399,7 @@ int CFastZombie::TranslateSchedule( int scheduleType )
 	case SCHED_RANGE_ATTACK1:
 		{
 			// Scream right now, cause in half a second, we're gonna jump!!
-	
+
 			if( !m_fHasScreamed )
 			{
 				// Only play that over-the-top attack scream once per combat state.
@@ -1457,7 +1457,7 @@ Activity CFastZombie::NPC_TranslateActivity( Activity baseAct )
 {
 	if ( baseAct == ACT_CLIMB_DOWN )
 		return ACT_CLIMB_UP;
-	
+
 	return BaseClass::NPC_TranslateActivity( baseAct );
 }
 
@@ -1479,7 +1479,7 @@ void CFastZombie::LeapAttackTouch( CBaseEntity *pOther )
 	AngleVectors( GetLocalAngles(), &forward );
 	forward *= 500;
 	QAngle qaPunch( 15, random->RandomInt(-5,5), random->RandomInt(-5,5) );
-	
+
 	ClawAttack( GetClawAttackRange(), 5, qaPunch, forward, ZOMBIE_BLOOD_BOTH_HANDS );
 
 	SetTouch( NULL );
@@ -1508,7 +1508,7 @@ void CFastZombie::ClimbTouch( CBaseEntity *pOther )
 
 		pOther->VelocityPunch( vecDir );
 
-		if ( GetActivity() != ACT_CLIMB_DISMOUNT || 
+		if ( GetActivity() != ACT_CLIMB_DISMOUNT ||
 			 ( pOther->GetGroundEntity() == NULL &&
 			   GetNavigator()->IsGoalActive() &&
 			   pOther->GetAbsOrigin().z - GetNavigator()->GetCurWaypointPos().z < -1.0 ) )
@@ -1611,7 +1611,7 @@ bool CFastZombie::ShouldFailNav( bool bMovementFailed )
 	if ( !BaseClass::ShouldFailNav( bMovementFailed ) )
 	{
 		DevMsg( 2, "Fast zombie in scripted sequence probably hit bad node configuration at %s\n", VecToString( GetAbsOrigin() ) );
-		
+
 		if ( GetNavigator()->GetPath()->CurWaypointNavType() == NAV_JUMP && GetNavigator()->RefindPathToGoal( false ) )
 		{
 			return false;
@@ -1643,7 +1643,7 @@ void CFastZombie::OnChangeActivity( Activity NewActivity )
 	{
 		// Scream!!!!
 		EmitSound( "NPC_FastZombie.Frenzy" );
-		SetPlaybackRate( random->RandomFloat( .9, 1.1 ) );	
+		SetPlaybackRate( random->RandomFloat( .9, 1.1 ) );
 	}
 
 	if( NewActivity == ACT_JUMP )
@@ -1696,7 +1696,7 @@ void CFastZombie::OnChangeActivity( Activity NewActivity )
 
 
 //=========================================================
-// 
+//
 //=========================================================
 int CFastZombie::SelectFailSchedule( int failedSchedule, int failedTask, AI_TaskFailureCode_t taskFailCode )
 {
@@ -1711,7 +1711,7 @@ int CFastZombie::SelectFailSchedule( int failedSchedule, int failedTask, AI_Task
 }
 
 //=========================================================
-// Purpose: Do some record keeping for jumps made for 
+// Purpose: Do some record keeping for jumps made for
 //			navigational purposes (i.e., not attack jumps)
 //=========================================================
 void CFastZombie::BeginNavJump( void )
@@ -1723,7 +1723,7 @@ void CFastZombie::BeginNavJump( void )
 }
 
 //=========================================================
-// 
+//
 //=========================================================
 void CFastZombie::EndNavJump( void )
 {
@@ -1732,12 +1732,12 @@ void CFastZombie::EndNavJump( void )
 }
 
 //=========================================================
-// 
+//
 //=========================================================
 void CFastZombie::BeginAttackJump( void )
 {
 	// Set this to true. A little bit later if we fail to pathfind, we check
-	// this value to see if we just jumped. If so, we assume we've jumped 
+	// this value to see if we just jumped. If so, we assume we've jumped
 	// to someplace that's not pathing friendly, and so must jump again to get out.
 	m_fJustJumped = true;
 
@@ -1745,14 +1745,14 @@ void CFastZombie::BeginAttackJump( void )
 }
 
 //=========================================================
-// 
+//
 //=========================================================
 void CFastZombie::EndAttackJump( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFastZombie::BuildScheduleTestBits( void )
 {
@@ -1762,7 +1762,7 @@ void CFastZombie::BuildScheduleTestBits( void )
 	//
 	// For now, make sure our active behavior gets a chance to add its own bits
 	if ( GetRunningBehavior() )
-		GetRunningBehavior()->BridgeBuildScheduleTestBits(); 
+		GetRunningBehavior()->BridgeBuildScheduleTestBits();
 
 #ifdef HL2_EPISODIC
 	SetCustomInterruptCondition( COND_PROVOKED );
@@ -1780,7 +1780,7 @@ void CFastZombie::BuildScheduleTestBits( void )
 }
 
 //=========================================================
-// 
+//
 //=========================================================
 void CFastZombie::OnStateChange( NPC_STATE OldState, NPC_STATE NewState )
 {
@@ -1831,15 +1831,15 @@ void CFastZombie::Event_Killed( const CTakeDamageInfo &info )
 		/*
 		GetBaseAnimating()->GetBonePosition( nRightHandBone, vecRightHandPos, vecRightHandAngle );
 
-		CBaseEntity *pRagdoll = CreateServerRagdollAttached(	GetBaseAnimating(), 
-																vec3_origin, 
-																-1, 
-																COLLISION_GROUP_DEBRIS, 
+		CBaseEntity *pRagdoll = CreateServerRagdollAttached(	GetBaseAnimating(),
+																vec3_origin,
+																-1,
+																COLLISION_GROUP_DEBRIS,
 																pVehiclePhys,
-																pVehicleAnimating, 
-																0, 
+																pVehicleAnimating,
+																0,
 																vecRightHandPos,
-																nRightHandBone,	
+																nRightHandBone,
 																vec3_origin );*/
 
 	}
@@ -1859,7 +1859,7 @@ bool CFastZombie::ShouldBecomeTorso( const CTakeDamageInfo &info, float flDamage
 	}
 
 	// Break in half IF:
-	// 
+	//
 	// Take half or more of max health in DMG_BLAST
 	if( (info.GetDamageType() & DMG_BLAST) && m_iHealth <= 0 )
 	{
@@ -1963,7 +1963,7 @@ void CFastZombie::VehicleLeapAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CFastZombie::CanEnterVehicle( CPropJeepEpisodic *pVehicle )
@@ -1976,7 +1976,7 @@ bool CFastZombie::CanEnterVehicle( CPropJeepEpisodic *pVehicle )
 
 //-----------------------------------------------------------------------------
 // Purpose: FIXME: Move into behavior?
-// Input  : *pOther - 
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void CFastZombie::VehicleLeapAttackTouch( CBaseEntity *pOther )
 {
@@ -2008,7 +2008,7 @@ bool CFastZombie::IsInAVehicle( void )
 // Input  : bInPVS - Whether we're in the PVS or not
 //-----------------------------------------------------------------------------
 void CFastZombie::UpdateEfficiency( bool bInPVS )
-{ 
+{
 	// If we're transitioning and in the PVS, we override our efficiency
 	if ( IsInAVehicle() && bInPVS )
 	{
@@ -2037,7 +2037,7 @@ AI_BEGIN_CUSTOM_NPC( npc_fastzombie, CFastZombie )
 	DECLARE_ACTIVITY( ACT_FASTZOMBIE_LAND_LEFT )
 	DECLARE_ACTIVITY( ACT_FASTZOMBIE_FRENZY )
 	DECLARE_ACTIVITY( ACT_FASTZOMBIE_BIG_SLASH )
-	
+
 	DECLARE_TASK( TASK_FASTZOMBIE_DO_ATTACK )
 	DECLARE_TASK( TASK_FASTZOMBIE_LAND_RECOVER )
 	DECLARE_TASK( TASK_FASTZOMBIE_UNSTICK_JUMP )
@@ -2061,7 +2061,7 @@ AI_BEGIN_CUSTOM_NPC( npc_fastzombie, CFastZombie )
 #endif	// HL2_EPISODIC
 
 	//=========================================================
-	// 
+	//
 	//=========================================================
 	DEFINE_SCHEDULE
 	(
@@ -2152,5 +2152,3 @@ AI_BEGIN_CUSTOM_NPC( npc_fastzombie, CFastZombie )
 		);
 
 AI_END_CUSTOM_NPC()
-
-

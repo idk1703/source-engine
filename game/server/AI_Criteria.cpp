@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,15 +15,15 @@
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 AI_CriteriaSet::AI_CriteriaSet() : m_Lookup( 0, 0, CritEntry_t::LessFunc )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : src - 
+// Purpose:
+// Input  : src -
 //-----------------------------------------------------------------------------
 AI_CriteriaSet::AI_CriteriaSet( const AI_CriteriaSet& src ) : m_Lookup( 0, 0, CritEntry_t::LessFunc )
 {
@@ -32,17 +32,17 @@ AI_CriteriaSet::AI_CriteriaSet( const AI_CriteriaSet& src ) : m_Lookup( 0, 0, Cr
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 AI_CriteriaSet::~AI_CriteriaSet()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *criteria - 
-//			"" - 
-//			1.0f - 
+// Purpose:
+// Input  : *criteria -
+//			"" -
+//			1.0f -
 //-----------------------------------------------------------------------------
 void AI_CriteriaSet::AppendCriteria( const char *criteria, const char *value /*= ""*/, float weight /*= 1.0f*/ )
 {
@@ -82,7 +82,7 @@ void AI_CriteriaSet::RemoveCriteria( const char *criteria )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int AI_CriteriaSet::GetCount() const
@@ -91,8 +91,8 @@ int AI_CriteriaSet::GetCount() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : int
 //-----------------------------------------------------------------------------
 int AI_CriteriaSet::FindCriterionIndex( const char *name ) const
@@ -107,8 +107,8 @@ int AI_CriteriaSet::FindCriterionIndex( const char *name ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *AI_CriteriaSet::GetName( int index ) const
@@ -123,8 +123,8 @@ const char *AI_CriteriaSet::GetName( int index ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *AI_CriteriaSet::GetValue( int index ) const
@@ -137,8 +137,8 @@ const char *AI_CriteriaSet::GetValue( int index ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : float
 //-----------------------------------------------------------------------------
 float AI_CriteriaSet::GetWeight( int index ) const
@@ -151,7 +151,7 @@ float AI_CriteriaSet::GetWeight( int index ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AI_CriteriaSet::Describe()
 {
@@ -172,22 +172,22 @@ void AI_CriteriaSet::Describe()
 
 BEGIN_SIMPLE_DATADESC( AI_ResponseParams )
 	DEFINE_FIELD( flags,	FIELD_SHORT ),
-	DEFINE_FIELD( odds,	FIELD_SHORT ),	
-	DEFINE_FIELD( soundlevel,	FIELD_CHARACTER ),	
+	DEFINE_FIELD( odds,	FIELD_SHORT ),
+	DEFINE_FIELD( soundlevel,	FIELD_CHARACTER ),
 	DEFINE_FIELD( delay,	FIELD_INTEGER ),		// These are compressed down to two float16s, so treat as an INT for saverestore
-	DEFINE_FIELD( respeakdelay,	FIELD_INTEGER ),	//  
+	DEFINE_FIELD( respeakdelay,	FIELD_INTEGER ),	//
 END_DATADESC()
 
 BEGIN_SIMPLE_DATADESC( AI_Response )
 	DEFINE_FIELD( m_Type,	FIELD_CHARACTER ),
-	DEFINE_ARRAY( m_szResponseName, FIELD_CHARACTER, AI_Response::MAX_RESPONSE_NAME ),	
-	DEFINE_ARRAY( m_szMatchingRule, FIELD_CHARACTER, AI_Response::MAX_RULE_NAME ),	
+	DEFINE_ARRAY( m_szResponseName, FIELD_CHARACTER, AI_Response::MAX_RESPONSE_NAME ),
+	DEFINE_ARRAY( m_szMatchingRule, FIELD_CHARACTER, AI_Response::MAX_RULE_NAME ),
 	// DEFINE_FIELD( m_pCriteria, FIELD_??? ), // Don't need to save this probably
 	DEFINE_EMBEDDED( m_Params ),
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 AI_Response::AI_Response()
 {
@@ -208,7 +208,7 @@ AI_Response::AI_Response( const AI_Response &from )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 AI_Response::~AI_Response()
 {
@@ -245,9 +245,9 @@ AI_Response &AI_Response::operator=( const AI_Response &from )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *response - 
-//			*criteria - 
+// Purpose:
+// Input  : *response -
+//			*criteria -
 //-----------------------------------------------------------------------------
 void AI_Response::Init( ResponseType_t type, const char *responseName, const AI_CriteriaSet& criteria,
 					const AI_ResponseParams& responseparams, const char *ruleName, const char *applyContext,
@@ -269,7 +269,7 @@ void AI_Response::Init( ResponseType_t type, const char *responseName, const AI_
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AI_Response::Describe()
 {
@@ -287,24 +287,24 @@ void AI_Response::Describe()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char * AI_Response::GetNamePtr() const
 {
-    return m_szResponseName;
+	return m_szResponseName;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char * AI_Response::GetResponsePtr() const
 {
-    return m_szResponseName;
+	return m_szResponseName;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : type - 
+// Purpose:
+// Input  : type -
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *AI_Response::DescribeResponse( ResponseType_t type )
@@ -330,7 +330,7 @@ const char *AI_Response::DescribeResponse( ResponseType_t type )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const AI_CriteriaSet
 //-----------------------------------------------------------------------------
 const AI_CriteriaSet *AI_Response::GetCriteria()
@@ -339,7 +339,7 @@ const AI_CriteriaSet *AI_Response::GetCriteria()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AI_Response::Release()
 {
@@ -347,7 +347,7 @@ void AI_Response::Release()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : soundlevel_t
 //-----------------------------------------------------------------------------
 soundlevel_t AI_Response::GetSoundLevel() const
@@ -445,12 +445,12 @@ void AI_Response::SetContext( const char *context )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *raw - 
-//			*key - 
-//			keylen - 
-//			*value - 
-//			valuelen - 
+// Purpose:
+// Input  : *raw -
+//			*key -
+//			keylen -
+//			*value -
+//			valuelen -
 //			*duration -
 // Output : static bool
 //-----------------------------------------------------------------------------

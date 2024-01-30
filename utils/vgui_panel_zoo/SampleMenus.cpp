@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,7 +10,7 @@
 #include <VGUI/IVGui.h>
 #include <vgui_controls/Controls.h>
 
-#include <vgui_controls/Menu.h> 
+#include <vgui_controls/Menu.h>
 #include <vgui_controls/MenuItem.h>
 #include <vgui_controls/MenuButton.h>
 #include <Keyvalues.h>
@@ -26,8 +26,8 @@ class SampleMenus: public DemoPage
 		~SampleMenus();
 		void InitMenus();
 		void OnCommand( const char *command );
-				
-private:		
+
+private:
 		// Menu that opens when button is pressed
 		Menu *m_pMenu;
 
@@ -61,10 +61,10 @@ private:
 
 		MenuButton *m_pMenuButton4;
 		Menu *m_pMenu4;
-		
+
 		MenuButton *m_pMenuButton5;
 		Menu *m_pMenu5;
-				
+
 };
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -86,7 +86,7 @@ SampleMenus::SampleMenus(Panel *parent, const char *name) : DemoPage(parent, nam
 	m_pMenu->SetVisible(false);
 	m_pMenuButton->SetMenu(m_pMenu);
 
-	m_pMenuButton->GetSize(wide, tall);	
+	m_pMenuButton->GetSize(wide, tall);
 	m_pMenu->SetFixedWidth(wide);
 
 
@@ -109,7 +109,7 @@ SampleMenus::SampleMenus(Panel *parent, const char *name) : DemoPage(parent, nam
 	m_pScrollMenu->AddMenuItem("Coffee Grinder", "junk", this);
 	m_pScrollMenu->AddMenuItem("Headspin", "junk", this);
 	m_pScrollMenu->AddMenuItem("The Worm", "junk", this);
-	m_pScrollMenu->SetNumberOfVisibleItems(5); 
+	m_pScrollMenu->SetNumberOfVisibleItems(5);
 	m_pScrollMenu->SetVisible(false);
 	m_pScrollMenuButton->SetMenu(m_pScrollMenu);
 
@@ -129,7 +129,7 @@ SampleMenus::SampleMenus(Panel *parent, const char *name) : DemoPage(parent, nam
 	m_pMenu2->AddMenuItem("Menu Item", "junk", this);
 	m_pMenu2->SetVisible(false);
 	m_pMenuButton2->SetMenu(m_pMenu2);
-	m_pMenuButton2->GetSize(wide, tall);	
+	m_pMenuButton2->GetSize(wide, tall);
 	m_pMenu2->SetFixedWidth(wide);
 
 	// Cascading menu with checkable menu items and items with names longer than the menu width
@@ -152,7 +152,7 @@ SampleMenus::SampleMenus(Panel *parent, const char *name) : DemoPage(parent, nam
 	m_pScrollMenu2->AddCheckableMenuItem("Headspin", "junk", this);
 	// last item not checkable for testing
 	m_pScrollMenu2->AddMenuItem("The Worm", "junk", this);
-	m_pScrollMenu2->SetNumberOfVisibleItems(5); 
+	m_pScrollMenu2->SetNumberOfVisibleItems(5);
 	m_pScrollMenu2->SetVisible(false);
 	m_pScrollMenuButton2->SetMenu(m_pScrollMenu2);
 	// Lets check off some stuff
@@ -176,7 +176,7 @@ SampleMenus::SampleMenus(Panel *parent, const char *name) : DemoPage(parent, nam
 	toggleMenuCheckButton->SetPos( 95, 220);
 
 
-	// A non fixed width menu with checkable menu items 
+	// A non fixed width menu with checkable menu items
 	m_pMenuButton3 = new MenuButton(this, "AMenuButton", "A menu");
 	m_pMenuButton3->GetContentSize(wide, tall);
 	m_pMenuButton3->SetSize(wide + Label::Content, tall + Label::Content);
@@ -190,7 +190,7 @@ SampleMenus::SampleMenus(Panel *parent, const char *name) : DemoPage(parent, nam
 	m_pMenuButton3->SetMenu(m_pMenu3);
 
 
-	// A non fixed width menu 
+	// A non fixed width menu
 	m_pMenuButton4 = new MenuButton(this, "AMenuButton", "A menu");
 	m_pMenuButton4->GetContentSize(wide, tall);
 	m_pMenuButton4->SetSize(wide + Label::Content, tall + Label::Content);
@@ -245,8 +245,8 @@ void SampleMenus::InitMenus()
 
 	// Add the menu items to this menu
 	m_pOuterMenu->SetVisible(false);
-	
-	m_pOuterMenu->SetNumberOfVisibleItems(5); 
+
+	m_pOuterMenu->SetNumberOfVisibleItems(5);
 
 	// Attach this menu to the menu button
 	m_pOuterMenuButton->SetMenu(m_pOuterMenu);
@@ -254,7 +254,7 @@ void SampleMenus::InitMenus()
 	// Position the menu button on screen.
 	m_pOuterMenuButton->SetPos(220, 15);
 
-	// Create cascading menu #1 
+	// Create cascading menu #1
 	m_pInnerMenu = new Menu(m_pOuterMenu, "InnerMenu");
 
 	// Add menu items to this menu.
@@ -273,7 +273,7 @@ void SampleMenus::InitMenus()
 	m_pInnerMenu2->AddMenuItem("Red Fish", "junk", this);
 	m_pInnerMenu2->AddMenuItem("Blue Fish", "junk", this);
 	m_pInnerMenu2->SetVisible(false);
-	
+
 	// Add this cascading menu to the top menu as a manu item.
 	m_pOuterMenu->AddCascadingMenuItem("Cascading Choice", this, m_pInnerMenu2);
 
@@ -305,8 +305,8 @@ void SampleMenus::InitMenus()
 
 	// Add the menu items to this menu
 	m_pOuterMenu2->SetVisible(false);
-	
-	m_pOuterMenu2->SetNumberOfVisibleItems(7); 
+
+	m_pOuterMenu2->SetNumberOfVisibleItems(7);
 
 	// Attach this menu to the menu button
 	m_pOuterMenuButton2->SetMenu(m_pOuterMenu2);
@@ -314,7 +314,7 @@ void SampleMenus::InitMenus()
 	// Position the menu button on screen.
 	m_pOuterMenuButton2->SetPos(220, 85);
 
-	// Create cascading menu #1 
+	// Create cascading menu #1
 	m_pInnerMenu_2 = new Menu(m_pOuterMenu2, "InnerMenu");
 
 	// Add menu items to this menu.
@@ -333,7 +333,7 @@ void SampleMenus::InitMenus()
 	m_pInnerMenu22->AddCheckableMenuItem("Red Fish", "junk", this);
 	m_pInnerMenu22->AddCheckableMenuItem("Blue Fish", "junk", this);
 	m_pInnerMenu22->SetVisible(false);
-	
+
 	// Add this cascading menu to the top menu as a manu item.
 	m_pOuterMenu2->AddCascadingMenuItem("Cascading Choice", this, m_pInnerMenu22);
 
@@ -359,13 +359,13 @@ void SampleMenus::InitMenus()
 	m_pInnerMenu22->SetMenuItemChecked( 2, true );
 	// another way of checking a menu item
 	m_pInnerMenu22->GetMenuItem(3)->SetChecked( true );
-	
+
 
 }
 
 void SampleMenus::OnCommand( const char *command )
 {
-	// Hitting the button will toggle the checking and unchecking 
+	// Hitting the button will toggle the checking and unchecking
 	// of the first item of menu3
 	if (!stricmp(command, "Check"))
 	{
@@ -393,5 +393,3 @@ Panel* SampleMenus_Create(Panel *parent)
 {
 	return new SampleMenus(parent, "Menus");
 }
-
-

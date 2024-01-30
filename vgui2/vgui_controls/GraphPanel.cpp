@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -157,7 +157,7 @@ void GraphPanel::AddItem(float sampleEnd, float sampleValue)
 
 				// remove the item from the list
 				m_Samples.Remove(sampleIndex);
-				
+
 				// move to the next item
 				sampleIndex = nextSampleIndex;
 				nextSampleIndex = m_Samples.Next(sampleIndex);

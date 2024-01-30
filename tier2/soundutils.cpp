@@ -193,7 +193,7 @@ float GetWavSoundDuration( const char *pWavFile )
 	int nChannels = pHeader->nChannels;
 	int nSampleSize = ( nBits * nChannels ) / 8;
 
-	// this can never be zero -- other functions divide by this. 
+	// this can never be zero -- other functions divide by this.
 	// This should never happen, but avoid crashing
 	if ( nSampleSize <= 0 )
 	{

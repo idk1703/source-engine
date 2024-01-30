@@ -8,7 +8,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 projPos					: POSITION;	
+	float4 projPos					: POSITION;
 	float2 baseTexCoord				: TEXCOORD0;
 };
 
@@ -20,5 +20,3 @@ VS_OUTPUT main( const VS_INPUT v )
 	o.baseTexCoord = v.vBaseTexCoord;
 	return o;
 }
-
-

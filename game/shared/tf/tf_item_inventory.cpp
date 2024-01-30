@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -90,7 +90,7 @@ CEconNotification_HasNewItems::CEconNotification_HasNewItems() : CEconNotificati
 		}
 	}
 }
-	
+
 
 CEconNotification_HasNewItems::~CEconNotification_HasNewItems()
 {
@@ -115,7 +115,7 @@ CEconNotification_HasNewItemsOnKill::CEconNotification_HasNewItemsOnKill( int iV
 	m_bShowInGame = true;
 }
 
-/*static*/ bool CEconNotification_HasNewItemsOnKill::HasUnacknowledgedItems () 
+/*static*/ bool CEconNotification_HasNewItemsOnKill::HasUnacknowledgedItems ()
 {
 	// Check to see if any items are not drops, if so show in game
 	// do not show in game if the new items are only drops
@@ -158,7 +158,7 @@ CEconNotification_HasNewItemsOnKill::CEconNotification_HasNewItemsOnKill( int iV
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool AreSlotsConsideredIdentical( EEquipType_t eEquipType, int iBaseSlot, int iTestSlot )
 {
@@ -202,7 +202,7 @@ CTFInventoryManager *TFInventoryManager( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFInventoryManager::CTFInventoryManager( void )
 
@@ -215,7 +215,7 @@ CTFInventoryManager::~CTFInventoryManager( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFInventoryManager::PostInit( void )
 {
@@ -230,7 +230,7 @@ void CTFInventoryManager::GenerateBaseItems( void )
 {
 	// Purge our lists and make new
 	m_pBaseLoadoutItems.PurgeAndDeleteElements();
-	
+
 	// Load a base top level invalid item
 	{
 		m_pDefaultItem = new CEconItemView;
@@ -249,7 +249,7 @@ void CTFInventoryManager::GenerateBaseItems( void )
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFInventoryManager::EquipItemInLoadout( int iClass, int iSlot, itemid_t iItemID )
 {
@@ -342,7 +342,7 @@ int CTFInventoryManager::GetAllQuestItems( CUtlVector<CEconItemView*> *pList )
 		CEconItemView *pItem = m_LocalInventory.GetItem( i );
 
 		// Cheapest test
-		if ( pItem->GetItemDefinition()->GetQuestDef() == NULL ) 
+		if ( pItem->GetItemDefinition()->GetQuestDef() == NULL )
 			continue;
 
 		pList->AddToTail( pItem );
@@ -354,7 +354,7 @@ int CTFInventoryManager::GetAllQuestItems( CUtlVector<CEconItemView*> *pList )
 #endif // CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEconItemView *CTFInventoryManager::GetItemInLoadoutForClass( int iClass, int iSlot, CSteamID *pID )
 {
@@ -399,7 +399,7 @@ CEconItemView *CTFInventoryManager::GetItemInLoadoutForAccount( int iSlot, CStea
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFPlayerInventory *CTFInventoryManager::GetInventoryForPlayer( const CSteamID &playerID )
 {
@@ -416,7 +416,7 @@ CTFPlayerInventory *CTFInventoryManager::GetInventoryForPlayer( const CSteamID &
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFInventoryManager::GetNumItemPickedUpItems( void )
 {
@@ -433,7 +433,7 @@ int CTFInventoryManager::GetNumItemPickedUpItems( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFInventoryManager::ShowItemsPickedUp( bool bForce, bool bReturnToGame, bool bNoPanel )
 {
@@ -490,14 +490,14 @@ bool CTFInventoryManager::ShowItemsPickedUp( bool bForce, bool bReturnToGame, bo
 	}
 
 	// Only acknowledge items if there is no panel
-	// Panel will make calls to acknowledge items itself 
+	// Panel will make calls to acknowledge items itself
 	for ( int i = 0; i < aItemsFound.Count(); i++ )
 	{
 		if ( pItemPanel )
 		{
 			pItemPanel->AddItem( aItemsFound[i] );
 		}
-		else 
+		else
 		{
 			AcknowledgeItem( aItemsFound[i] );
 		}
@@ -511,7 +511,7 @@ bool CTFInventoryManager::ShowItemsPickedUp( bool bForce, bool bReturnToGame, bo
 	{
 		SaveAckFile();
 	}
-	
+
 	aItemsFound.Purge();
 	return true;
 }
@@ -552,7 +552,7 @@ void CTFInventoryManager::Update( float frametime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFInventoryManager::ShowItemsCrafted( CUtlVector<itemid_t> *vecCraftedIndices )
 {
@@ -597,7 +597,7 @@ void CTFInventoryManager::ShowItemsCrafted( CUtlVector<itemid_t> *vecCraftedIndi
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFInventoryManager::CheckForRoomAndForceDiscard( void )
 {
@@ -664,7 +664,7 @@ bool CTFInventoryManager::SlotContainsBaseItems( EEquipType_t eType, int iSlot )
 		if ( TFGameRules() && TFGameRules()->IsUsingGrapplingHook() )
 			return true;
 	}
-#ifdef STAGING_ONLY	
+#ifdef STAGING_ONLY
 	return ( ( iSlot < LOADOUT_POSITION_HEAD && iSlot != LOADOUT_POSITION_UTILITY && !IsTauntSlot( iSlot ) )	// Allow utility slots to be empty
 			|| iSlot == LOADOUT_POSITION_PDA3 );
 #else // STAGING_ONLY
@@ -713,7 +713,7 @@ CEconItemView *CTFInventoryManager::GetBaseItemForClass( int iClass, int iSlot )
 		{
 			stockActionItemDefIndices.AddToTail( pItemDef_MvMCanteen->GetDefinitionIndex() );
 		}
-		
+
 		// Traverse List
 		for ( CEconItemView *pActionItem : m_pBaseLoadoutItems )
 		{
@@ -766,7 +766,7 @@ void CTFInventoryManager::GetActiveSets( CUtlVector<const CEconItemSetDefinition
 		}
 #else
 		pItem = TFInventoryManager()->GetItemInLoadoutForClass( iClass, i, &steamIDForPlayer );
-#endif		
+#endif
 
 		if ( !pItem )
 			continue;
@@ -830,7 +830,7 @@ void CTFInventoryManager::GetActiveSets( CUtlVector<const CEconItemSetDefinition
 		// of the same type with different remaps equipped.
 		if ( iSetItemsEquipped == pItemSet->m_iItemDefs.Count() )
 		{
-			// The entire set is equipped. 
+			// The entire set is equipped.
 			pItemSets->AddToTail( pItemSet );
 		}
 	}
@@ -865,13 +865,13 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFPlayerInventory::CTFPlayerInventory()
 {
 	m_aInventoryItems.SetLessContext( this );
 #ifdef CLIENT_DLL
-	for ( int i = 0; i < TF_TEAM_COUNT; ++i ) 
+	for ( int i = 0; i < TF_TEAM_COUNT; ++i )
 		m_CachedBaseTextureLowRes[ i ].SetLessFunc( DefLessFunc( itemid_t ) );
 #endif
 
@@ -881,7 +881,7 @@ CTFPlayerInventory::CTFPlayerInventory()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFPlayerInventory::~CTFPlayerInventory()
 {
@@ -898,7 +898,7 @@ CTFPlayerInventory::~CTFPlayerInventory()
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerInventory::CheckSaxtonMaskAchievement( const CEconItem *pEconItem )
 {
@@ -912,7 +912,7 @@ void CTFPlayerInventory::CheckSaxtonMaskAchievement( const CEconItem *pEconItem 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerInventory::UpdateCachedServerLoadoutItems()
 {
@@ -921,7 +921,7 @@ void CTFPlayerInventory::UpdateCachedServerLoadoutItems()
 #endif // CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerInventory::SOUpdated( const CSteamID & steamIDOwner, const GCSDK::CSharedObject *pObject, GCSDK::ESOCacheEvent eEvent )
 {
@@ -953,7 +953,7 @@ void CTFPlayerInventory::OnHasNewItems()
 	CEconNotification_HasNewItems *pNotification = new CEconNotification_HasNewItems();
 	pNotification->SetText( "TF_HasNewItems" );
 	pNotification->SetLifetime( 7.0f );
-	NotificationQueue_Add( pNotification );	
+	NotificationQueue_Add( pNotification );
 #endif
 }
 
@@ -980,7 +980,7 @@ CON_COMMAND( cl_newitem_test, "Tests the new item ui notification." )
 #endif // _DEBUG
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerInventory::ValidateInventoryPositions( void )
 {
@@ -1067,7 +1067,7 @@ void CTFPlayerInventory::ValidateInventoryPositions( void )
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerInventory::ConvertOldFormatInventoryToNew( void )
 {
@@ -1177,7 +1177,7 @@ void CTFPlayerInventory::SOCreated( const CSteamID & steamIDOwner, const GCSDK::
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerInventory::DumpInventoryToConsole( bool bRoot )
 {
@@ -1220,7 +1220,7 @@ void CTFPlayerInventory::DumpInventoryToConsole( bool bRoot )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerInventory::ClearClassLoadoutChangeTracking( void )
 {
@@ -1232,7 +1232,7 @@ void CTFPlayerInventory::ClearClassLoadoutChangeTracking( void )
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: Find the low res 
+// Purpose: Find the low res
 //-----------------------------------------------------------------------------
 ITexture *CTFPlayerInventory::GetWeaponSkinBaseLowRes( itemid_t nItemId, int iTeam ) const
 {
@@ -1328,7 +1328,7 @@ CEconItemView *CTFPlayerInventory::GetCacheServerItemInLoadout( int iClass, int 
 #endif // CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static CEconGameAccountClient *GetSOCacheGameAccountClient( CGCClientSharedObjectCache *pSOCache )
 {
@@ -1339,7 +1339,7 @@ static CEconGameAccountClient *GetSOCacheGameAccountClient( CGCClientSharedObjec
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFPlayerInventory::GetPreviewItemDef( void ) const
 {
@@ -1351,7 +1351,7 @@ int CTFPlayerInventory::GetPreviewItemDef( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFPlayerInventory::CanPurchaseItems( int iItemCount ) const
 {
@@ -1373,7 +1373,7 @@ bool CTFPlayerInventory::CanPurchaseItems( int iItemCount ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CTFPlayerInventory::GetMaxItemCount( void ) const
 {
@@ -1413,7 +1413,7 @@ bool CTFPlayerInventory::ClearLoadoutSlot( int iClass, int iSlot )
 		if ( m_LoadoutItems[iClass][iSlot] == LOADOUT_SLOT_USE_BASE_ITEM )
 			return false;
 	}
-	
+
 	CEconItemView *pItemInSlot = GetItemInLoadout( iClass, iSlot );
 	if ( !pItemInSlot )
 		return false;
@@ -1439,7 +1439,7 @@ void CTFPlayerInventory::UpdateWeaponSkinRequest()
 		SkinRequest_t &req = m_vecWeaponSkinRequestList[i];
 		CEconItemView *pItem = GetInventoryItemByItemID( req.m_nID );
 		Assert( pItem );
-		if ( !pItem ) 
+		if ( !pItem )
 		{
 			m_vecWeaponSkinRequestList.Remove( i );
 			continue;
@@ -1467,7 +1467,7 @@ void CTFPlayerInventory::UpdateWeaponSkinRequest()
 				m_vecWeaponSkinRequestList.Remove( i );
 			}
 		}
-		
+
 		// Draw!
 		{
 			CMDL mdl;
@@ -1494,7 +1494,7 @@ void CTFPlayerInventory::UpdateWeaponSkinRequest()
 			pItem->SetWeaponSkinUseLowRes( false );
 		}
 
-		// Don't remove until it's complete. 
+		// Don't remove until it's complete.
 		if ( pItem->GetWeaponSkinBase() )
 		{
 			Assert( pItem->GetWeaponSkinBaseCompositor() == NULL );
@@ -1506,7 +1506,7 @@ void CTFPlayerInventory::UpdateWeaponSkinRequest()
 				pItem->SetWeaponSkinBase( NULL ); // Clean up.
 			}
 
-			// We do RED, then BLUE. Then drop it out of the list. 
+			// We do RED, then BLUE. Then drop it out of the list.
 			if ( req.m_nTeam == TF_TEAM_BLUE )
 			{
 				Assert( !mdlcache->IsErrorModel( req.m_hModel ) );
@@ -1528,7 +1528,7 @@ void CTFPlayerInventory::UpdateWeaponSkinRequest()
 #endif // CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerInventory::ItemHasBeenUpdated( CEconItemView *pItem, bool bUpdateAckFile, bool bWriteAckFile )
 {
@@ -1573,7 +1573,7 @@ void CTFPlayerInventory::ItemHasBeenUpdated( CEconItemView *pItem, bool bUpdateA
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFPlayerInventory::UpdateEquipStateForClass( const itemid_t& itemID, equipped_slot_t nSlot, itemid_t *pLoadout, int nCount )
 {
@@ -1606,7 +1606,7 @@ bool CTFPlayerInventory::UpdateEquipStateForClass( const itemid_t& itemID, equip
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerInventory::PostSOUpdate( const CSteamID & steamIDOwner, GCSDK::ESOCacheEvent eEvent )
 {
@@ -1616,7 +1616,7 @@ void CTFPlayerInventory::PostSOUpdate( const CSteamID & steamIDOwner, GCSDK::ESO
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerInventory::SOCacheSubscribed( const CSteamID & steamIDOwner, GCSDK::ESOCacheEvent eEvent )
 {
@@ -1648,7 +1648,7 @@ bool CTFPlayerInventory::AddEconItem( CEconItem * pItem, bool bUpdateAckFile, bo
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerInventory::VerifyLoadoutItemsAreValid( int iClass )
 {
@@ -1681,7 +1681,7 @@ void CTFPlayerInventory::VerifyLoadoutItemsAreValid( int iClass )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerInventory::VerifyChangedLoadoutsAreValid()
 {
@@ -1699,7 +1699,7 @@ void CTFPlayerInventory::VerifyChangedLoadoutsAreValid()
 #endif // CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerInventory::ItemIsBeingRemoved( CEconItemView *pItem )
 {
@@ -1726,9 +1726,9 @@ void CTFPlayerInventory::ItemIsBeingRemoved( CEconItemView *pItem )
 
 #ifdef CLIENT_DLL
 // WTF: Declaring this inline caused a compiler bug.
-CTFPlayerInventory	*CTFInventoryManager::GetLocalTFInventory( void ) 
-{ 
-	return &m_LocalInventory; 
+CTFPlayerInventory	*CTFInventoryManager::GetLocalTFInventory( void )
+{
+	return &m_LocalInventory;
 }
 #endif
 
@@ -1761,7 +1761,7 @@ CON_COMMAND_F( item_dumpinv_sv, "Dumps the contents of a specified server invent
 	CSteamID steamID = steamapicontext->SteamUser()->GetSteamID();
 #else
 	CSteamID steamID;
-	CTFPlayer *pPlayer = ToTFPlayer( UTIL_GetCommandClient() ); 
+	CTFPlayer *pPlayer = ToTFPlayer( UTIL_GetCommandClient() );
 	pPlayer->GetSteamID( &steamID );
 #endif
 

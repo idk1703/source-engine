@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 // $NoKeywords: $
 //
 //===========================================================================//
@@ -40,7 +40,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Networking 
+// Networking
 //-----------------------------------------------------------------------------
 IMPLEMENT_CLIENTCLASS_EVENT_DT(C_TESpriteSpray, DT_TESpriteSpray, CTESpriteSpray)
 	RecvPropVector( RECVINFO(m_vecOrigin)),
@@ -53,7 +53,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TESpriteSpray::C_TESpriteSpray( void )
 {
@@ -66,7 +66,7 @@ C_TESpriteSpray::C_TESpriteSpray( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TESpriteSpray::~C_TESpriteSpray( void )
 {
@@ -74,9 +74,9 @@ C_TESpriteSpray::~C_TESpriteSpray( void )
 
 
 //-----------------------------------------------------------------------------
-// Recording 
+// Recording
 //-----------------------------------------------------------------------------
-static inline void RecordSpriteSpray( const Vector& start, const Vector &direction, 
+static inline void RecordSpriteSpray( const Vector& start, const Vector &direction,
 	int nModelIndex, int nSpeed, float flNoise, int nCount )
 {
 	if ( !ToolsEnabled() )
@@ -109,7 +109,7 @@ static inline void RecordSpriteSpray( const Vector& start, const Vector &directi
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TESpriteSpray::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -143,4 +143,3 @@ void TE_SpriteSpray( IRecipientFilter& filter, float delay, KeyValues *pKeyValue
 
 	TE_SpriteSpray( filter, delay, &vecOrigin, &vecDirection, nModelIndex, nSpeed, flNoise, nCount );
 }
-

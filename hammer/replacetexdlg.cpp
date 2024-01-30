@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -103,12 +103,12 @@ void CReplaceTexDlg::BrowseTex(int iEdit)
 	delete pBrowser;
 }
 
-void CReplaceTexDlg::OnBrowsereplace() 
+void CReplaceTexDlg::OnBrowsereplace()
 {
 	BrowseTex(IDC_REPLACE);
 }
 
-void CReplaceTexDlg::OnBrowsefind() 
+void CReplaceTexDlg::OnBrowsefind()
 {
 	BrowseTex(IDC_FIND);
 }
@@ -117,7 +117,7 @@ void CReplaceTexDlg::OnBrowsefind()
 // find/replace text string updates:
 //
 
-void CReplaceTexDlg::OnUpdateFind() 
+void CReplaceTexDlg::OnUpdateFind()
 {
 	// get texture window and set texture in there
 	CString strTex;
@@ -126,7 +126,7 @@ void CReplaceTexDlg::OnUpdateFind()
 	m_cFindPic.SetTexture(pTex);
 }
 
-void CReplaceTexDlg::OnUpdateReplace() 
+void CReplaceTexDlg::OnUpdateReplace()
 {
 	// get texture window and set texture in there
 	CString strTex;
@@ -135,7 +135,7 @@ void CReplaceTexDlg::OnUpdateReplace()
 	m_cReplacePic.SetTexture(pTex);
 }
 
-BOOL CReplaceTexDlg::OnInitDialog() 
+BOOL CReplaceTexDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
@@ -156,11 +156,11 @@ void CReplaceTexDlg::DoReplaceTextures()
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
 	if ( pDoc )
 	{
-		pDoc->ReplaceTextures( 
-			m_strFind, 
-			m_strReplace, 
-			m_iSearchAll, 
-			m_iAction | ( m_bMarkOnly ? 0x100 : 0 ), 
+		pDoc->ReplaceTextures(
+			m_strFind,
+			m_strReplace,
+			m_iSearchAll,
+			m_iAction | ( m_bMarkOnly ? 0x100 : 0 ),
 			m_bHidden,
 			(m_bRescaleTextureCoordinates != 0)
 			);

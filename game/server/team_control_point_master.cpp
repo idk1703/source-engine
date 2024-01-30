@@ -80,7 +80,7 @@ CTeamControlPointMaster::CTeamControlPointMaster()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::Spawn( void )
 {
@@ -91,7 +91,7 @@ void CTeamControlPointMaster::Spawn( void )
 	SetDefLessFunc( m_ControlPoints );
 
 	m_iCurrentRoundIndex = -1;
-  	m_bFirstRoundAfterRestart = true;
+	m_bFirstRoundAfterRestart = true;
 	m_flLastOwnershipChangeTime = -1;
 
 	BaseClass::Spawn();
@@ -103,7 +103,7 @@ void CTeamControlPointMaster::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::UpdateOnRemove( void )
 {
@@ -113,10 +113,10 @@ void CTeamControlPointMaster::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTeamControlPointMaster::KeyValue( const char *szKeyName, const char *szValue )
-{	
+{
 	if ( !Q_strncmp( szKeyName, "team_base_icon_", 15 ) )
 	{
 		int iTeam = atoi(szKeyName+15);
@@ -133,7 +133,7 @@ bool CTeamControlPointMaster::KeyValue( const char *szKeyName, const char *szVal
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::Precache( void )
 {
@@ -151,7 +151,7 @@ void CTeamControlPointMaster::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::Activate( void )
 {
@@ -166,7 +166,7 @@ void CTeamControlPointMaster::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::RoundRespawn( void )
 {
@@ -174,7 +174,7 @@ void CTeamControlPointMaster::RoundRespawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::Reset( void )
 {
@@ -182,7 +182,7 @@ void CTeamControlPointMaster::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTeamControlPointMaster::FindControlPoints( void )
 {
@@ -190,7 +190,7 @@ bool CTeamControlPointMaster::FindControlPoints( void )
 	CBaseEntity *pEnt = gEntList.FindEntityByClassname( NULL, GetControlPointName() );
 
 	int numFound = 0;
-	
+
 	while( pEnt )
 	{
 		CTeamControlPoint *pPoint = assert_cast<CTeamControlPoint *>(pEnt);
@@ -255,11 +255,11 @@ bool CTeamControlPointMaster::FindControlPoints( void )
 		m_ControlPoints[lowestIndex]->SetPointIndex( newIndex );
 		newIndex++;
 	}
-	
-	if( m_ControlPoints.Count() == 0 ) 
+
+	if( m_ControlPoints.Count() == 0 )
 	{
 		Warning( "Error! No control points found in map!\n");
-		return false;	
+		return false;
 	}
 
 	// Now setup the objective resource
@@ -291,7 +291,7 @@ bool CTeamControlPointMaster::FindControlPoints( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::SetBaseControlPoints( void )
 {
@@ -303,7 +303,7 @@ void CTeamControlPointMaster::SetBaseControlPoints( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTeamControlPointMaster::FindControlPointRounds( void )
 {
@@ -325,7 +325,7 @@ bool CTeamControlPointMaster::FindControlPointRounds( void )
 		pEnt = gEntList.FindEntityByClassname( pEnt, GetControlPointRoundName() );
 	}
 
-	if ( m_ControlPointRounds.Count() > 0 ) 
+	if ( m_ControlPointRounds.Count() > 0 )
 	{
 		// sort them in our list by priority (highest priority first)
 		m_ControlPointRounds.Sort( ControlPointRoundSort );
@@ -343,7 +343,7 @@ bool CTeamControlPointMaster::FindControlPointRounds( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTeamControlPointMaster::IsInRound( CTeamControlPoint *pPoint )
 {
@@ -357,7 +357,7 @@ bool CTeamControlPointMaster::IsInRound( CTeamControlPoint *pPoint )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTeamControlPointMaster::NumPlayableControlPointRounds( void )
 {
@@ -381,7 +381,7 @@ int CTeamControlPointMaster::NumPlayableControlPointRounds( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTeamControlPointMaster::SelectSpecificRound( void )
 {
@@ -397,8 +397,8 @@ bool CTeamControlPointMaster::SelectSpecificRound( void )
 
 			if ( pRound )
 			{
-				if ( ( m_ControlPointRounds.Find( pRound )== m_ControlPointRounds.InvalidIndex() ) || 
-					 ( !pRound->IsPlayable() && !pRound->MakePlayable() ) )
+				if ( ( m_ControlPointRounds.Find( pRound )== m_ControlPointRounds.InvalidIndex() ) ||
+					( !pRound->IsPlayable() && !pRound->MakePlayable() ) )
 				{
 					pRound = NULL;
 				}
@@ -413,7 +413,7 @@ bool CTeamControlPointMaster::SelectSpecificRound( void )
 	{
 		m_iCurrentRoundIndex = m_ControlPointRounds.Find( pRound );
 		m_ControlPointRounds[m_iCurrentRoundIndex]->SelectedToPlay();
-		
+
 		if ( pRules )
 		{
 			pRules->SetRoundOverlayDetails();
@@ -429,12 +429,12 @@ bool CTeamControlPointMaster::SelectSpecificRound( void )
 		}
 		return true;
 	}
-	
+
 	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::RegisterRoundBeingPlayed( void )
 {
@@ -453,7 +453,7 @@ void CTeamControlPointMaster::RegisterRoundBeingPlayed( void )
 		}
 	}
 
-	IGameEvent *event = gameeventmanager->CreateEvent( "teamplay_round_selected" );	
+	IGameEvent *event = gameeventmanager->CreateEvent( "teamplay_round_selected" );
 	if ( event )
 	{
 		event->SetString( "round", m_ControlPointRounds[m_iCurrentRoundIndex]->GetEntityName().ToCStr() );
@@ -463,7 +463,7 @@ void CTeamControlPointMaster::RegisterRoundBeingPlayed( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTeamControlPointMaster::GetControlPointRoundToPlay( void )
 {
@@ -499,7 +499,7 @@ bool CTeamControlPointMaster::GetControlPointRoundToPlay( void )
 		return false;
 	}
 
-    // we have a priority value, now we need to randomly pick a round with this priority that's playable
+	// we have a priority value, now we need to randomly pick a round with this priority that's playable
 	int nPriority = m_ControlPointRounds[i]->GetPriorityValue();
 	CUtlVector<int> nRounds;
 
@@ -557,7 +557,7 @@ bool CTeamControlPointMaster::GetControlPointRoundToPlay( void )
 		}
 	}
 
-	// if this is the first round after a full restart, we still have more than one round in our list, 
+	// if this is the first round after a full restart, we still have more than one round in our list,
 	// and the first played round (after the last full restart) is in our list, remove it
 	if ( m_bFirstRoundAfterRestart )
 	{
@@ -573,13 +573,13 @@ bool CTeamControlPointMaster::GetControlPointRoundToPlay( void )
 
 	// pick one to play but try to avoid picking one that we have recently played if there are other rounds to play
 	int index = random->RandomInt( 0, nRounds.Count() - 1 );
-	
+
 	// only need to check this if we have more than one round with this priority value
 	if ( pRules && nRounds.Count() > 1 )
 	{
 		// keep picking a round until we find one that's not a previously played round
 		// or until we don't have any more rounds to choose from
-		while ( pRules->IsPreviouslyPlayedRound( m_ControlPointRounds[ nRounds[ index ] ]->GetEntityName() ) && 
+		while ( pRules->IsPreviouslyPlayedRound( m_ControlPointRounds[ nRounds[ index ] ]->GetEntityName() ) &&
 				nRounds.Count() > 1 )
 		{
 			nRounds.Remove( index ); // we have played this round recently so get it out of the list
@@ -624,7 +624,7 @@ void CTeamControlPointMaster::CPMThink( void )
 		return;
 	}
 
-	// If we call this from team_control_point, this function should never 
+	// If we call this from team_control_point, this function should never
 	// trigger a win. but we'll leave it here just in case.
 	CheckWinConditions();
 
@@ -633,7 +633,7 @@ void CTeamControlPointMaster::CPMThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::CheckWinConditions( void )
 {
@@ -671,8 +671,8 @@ void CTeamControlPointMaster::CheckWinConditions( void )
 		// this will reset the round and will reset all the points
 		int iWinners = TeamOwnsAllPoints();
 		if ( ( m_iInvalidCapWinner != 1 ) &&
-			 ( iWinners >= FIRST_GAME_TEAM ) && 
-			 ( iWinners != m_iInvalidCapWinner ) )
+			( iWinners >= FIRST_GAME_TEAM ) &&
+			( iWinners != m_iInvalidCapWinner ) )
 		{
 			bool bWinner = true;
 
@@ -708,7 +708,7 @@ void CTeamControlPointMaster::CheckWinConditions( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::InputSetWinner( inputdata_t &input )
 {
@@ -718,7 +718,7 @@ void CTeamControlPointMaster::InputSetWinner( inputdata_t &input )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::InputSetWinnerAndForceCaps( inputdata_t &input )
 {
@@ -738,7 +738,7 @@ void CTeamControlPointMaster::InputSetWinnerAndForceCaps( inputdata_t &input )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::InternalSetWinner( int iTeam )
 {
@@ -770,12 +770,12 @@ void CTeamControlPointMaster::InternalSetWinner( int iTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::HandleRandomOwnerControlPoints( void )
 {
-	CUtlVector<CTeamControlPoint*> vecPoints; 
-	CUtlVector<int> vecTeams; 
+	CUtlVector<CTeamControlPoint*> vecPoints;
+	CUtlVector<int> vecTeams;
 
 	int i = 0;
 
@@ -810,7 +810,7 @@ void CTeamControlPointMaster::HandleRandomOwnerControlPoints( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::InputRoundSpawn( inputdata_t &input )
 {
@@ -841,12 +841,12 @@ void CTeamControlPointMaster::InputRoundSpawn( inputdata_t &input )
 	FindControlPointRounds();
 
 	SetBaseControlPoints();
-	
+
 	ObjectiveResource()->ResetControlPoints();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::InputRoundActivate( inputdata_t &input )
 {
@@ -875,7 +875,7 @@ void CTeamControlPointMaster::InputRoundActivate( inputdata_t &input )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::InputSetCapLayout( inputdata_t &inputdata )
 {
@@ -884,7 +884,7 @@ void CTeamControlPointMaster::InputSetCapLayout( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::InputSetCapLayoutCustomPositionX( inputdata_t &inputdata )
 {
@@ -893,7 +893,7 @@ void CTeamControlPointMaster::InputSetCapLayoutCustomPositionX( inputdata_t &inp
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::InputSetCapLayoutCustomPositionY( inputdata_t &inputdata )
 {
@@ -902,7 +902,7 @@ void CTeamControlPointMaster::InputSetCapLayoutCustomPositionY( inputdata_t &inp
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::FireTeamWinOutput( int iWinningTeam )
 {
@@ -922,7 +922,7 @@ void CTeamControlPointMaster::FireTeamWinOutput( int iWinningTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::FireRoundStartOutput( void )
 {
@@ -935,7 +935,7 @@ void CTeamControlPointMaster::FireRoundStartOutput( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::FireRoundEndOutput( void )
 {
@@ -949,7 +949,7 @@ void CTeamControlPointMaster::FireRoundEndOutput( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const CTeamControlPointRound* CTeamControlPointMaster::GetRoundByIndex( int nIndex ) const
 {
@@ -963,7 +963,7 @@ const CTeamControlPointRound* CTeamControlPointMaster::GetRoundByIndex( int nInd
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTeamControlPointMaster::PointLastContestedAt( int point )
 {
@@ -975,10 +975,10 @@ float CTeamControlPointMaster::PointLastContestedAt( int point )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: This function returns the team that owns all the cap points. 
+// Purpose: This function returns the team that owns all the cap points.
 //			If its not the case that one team owns them all, it returns 0.
 //			CPs are broken into groups. A team can win by owning all flags within a single group.
-//			
+//
 //			Can be passed an overriding team. If this is not null, the passed team
 //			number will be used for that cp. Used to predict if that CP changing would
 //			win the game.
@@ -995,7 +995,7 @@ int CTeamControlPointMaster::TeamOwnsAllPoints( CTeamControlPoint *pOverridePoin
 	}
 
 	// if TEAM_INVALID, haven't found a flag for this group yet
-	// if TEAM_UNASSIGNED, the group is still being contested 
+	// if TEAM_UNASSIGNED, the group is still being contested
 
 	// for each control point
 	for( i=0;i<m_ControlPoints.Count();i++ )
@@ -1022,7 +1022,7 @@ int CTeamControlPointMaster::TeamOwnsAllPoints( CTeamControlPoint *pOverridePoin
 		else if ( owner != iWinningTeam[group] )
 		{
 			iWinningTeam[group] = TEAM_UNASSIGNED;
-		}		
+		}
 	}
 
 	// report the first win we find as the winner
@@ -1037,7 +1037,7 @@ int CTeamControlPointMaster::TeamOwnsAllPoints( CTeamControlPoint *pOverridePoin
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTeamControlPointMaster::WouldNewCPOwnerWinGame( CTeamControlPoint *pPoint, int iNewOwner )
 {
@@ -1045,7 +1045,7 @@ bool CTeamControlPointMaster::WouldNewCPOwnerWinGame( CTeamControlPoint *pPoint,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTeamControlPointMaster::IsBaseControlPoint( int iPointIndex )
 {
@@ -1110,29 +1110,29 @@ int	CTeamControlPointMaster::GetBaseControlPoint( int iTeam )
 			iRetVal = nLowestValue;
 		}
 	}
-	
+
 	return iRetVal;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::InputEnable( inputdata_t &input )
-{ 
+{
 	m_bDisabled = false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::InputDisable( inputdata_t &input )
-{ 
+{
 	m_bDisabled = true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------	
+// Purpose:
+//-----------------------------------------------------------------------------
 int CTeamControlPointMaster::GetNumPointsOwnedByTeam( int iTeam )
 {
 	int nCount = 0;
@@ -1153,16 +1153,16 @@ int CTeamControlPointMaster::GetNumPointsOwnedByTeam( int iTeam )
 //-----------------------------------------------------------------------------
 // Purpose: returns how many more mini-rounds it will take for specified team
 //			to win, if they keep winning every mini-round
-//-----------------------------------------------------------------------------	
+//-----------------------------------------------------------------------------
 int CTeamControlPointMaster::CalcNumRoundsRemaining( int iTeam )
 {
-	// To determine how many rounds remain for a given team if it consistently wins mini-rounds, we have to 
+	// To determine how many rounds remain for a given team if it consistently wins mini-rounds, we have to
 	// simulate forward each mini-round and track the control point ownership that would result
 
 	// vector of control points the team owns in our forward-simulation
 	CUtlVector<CTeamControlPoint *> vecControlPointsOwned;
-	
-	// start with all the control points the team currently owns 
+
+	// start with all the control points the team currently owns
 	FOR_EACH_MAP_FAST( m_ControlPoints, iControlPoint )
 	{
 		if ( m_ControlPoints[iControlPoint]->GetOwner() == iTeam )
@@ -1174,12 +1174,12 @@ int CTeamControlPointMaster::CalcNumRoundsRemaining( int iTeam )
 	int iRoundsRemaining = 0;
 
 	// keep simulating what will happen next if this team keeps winning, until
-	// it owns all the control points in the map 
+	// it owns all the control points in the map
 	while ( vecControlPointsOwned.Count() < (int) m_ControlPoints.Count() )
 	{
 		iRoundsRemaining++;
 
-		// choose the next highest-priority round that is playable 
+		// choose the next highest-priority round that is playable
 		for ( int i = 0 ; i < m_ControlPointRounds.Count() ; ++i )
 		{
 			CTeamControlPointRound *pRound = m_ControlPointRounds[i];
@@ -1206,7 +1206,7 @@ int CTeamControlPointMaster::CalcNumRoundsRemaining( int iTeam )
 					// use actual control point ownership
 					iControlPointOwningTeam = pControlPoint->GetOwner();
 				}
-				
+
 				if ( 0 == iControlPoint )
 				{
 					// if this is the first control point, assign ownership to the team that owns this control point
@@ -1240,20 +1240,20 @@ int CTeamControlPointMaster::CalcNumRoundsRemaining( int iTeam )
 				}
 			}
 			// sanity check: team being simulated should be owning at least one more new control point per round, or they're not making progress
-			Assert( iNewControlPointsOwned > 0 );	
+			Assert( iNewControlPointsOwned > 0 );
 
 			// now go back and pick the next playable round (if any) given the control points this team now owns,
 			// repeat until all control points are owned.  The number of iterations it takes is the # of rounds remaining
 			// for this team to win.
 			break;
-		}				
+		}
 	}
 
 	return iRoundsRemaining;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTeamControlPointMaster::GetPartialCapturePointRate( void )
 {
@@ -1262,7 +1262,7 @@ float CTeamControlPointMaster::GetPartialCapturePointRate( void )
 
 #ifdef STAGING_ONLY
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamControlPointMaster::ListRounds( void )
 {
@@ -1288,8 +1288,8 @@ void CTeamControlPointMaster::ListRounds( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------	
+// Purpose:
+//-----------------------------------------------------------------------------
 void cc_ListRounds( void )
 {
 	CTeamControlPointMaster *pMaster = g_hControlPointMasters.Count() ? g_hControlPointMasters[0] : NULL;
@@ -1302,8 +1302,8 @@ void cc_ListRounds( void )
 static ConCommand listrounds( "listrounds", cc_ListRounds, "List the rounds for the current map", FCVAR_CHEAT );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------	
+// Purpose:
+//-----------------------------------------------------------------------------
 void cc_PlayRound( const CCommand& args )
 {
 	if ( args.ArgC() > 1 )

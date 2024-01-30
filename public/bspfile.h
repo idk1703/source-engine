@@ -18,7 +18,7 @@
 #include "mathlib/compressed_light_cube.h"
 
 // little-endian "VBSP"
-#define IDBSPHEADER	(('P'<<24)+('S'<<16)+('B'<<8)+'V')		
+#define IDBSPHEADER	(('P'<<24)+('S'<<16)+('B'<<8)+'V')
 
 // MINBSPVERSION is the minimum acceptable version.  The engine will load MINBSPVERSION through BSPVERSION
 #define MINBSPVERSION 19
@@ -45,7 +45,7 @@
 
 // upper design bounds
 #define MIN_MAP_DISP_POWER		2	// Minimum and maximum power a displacement can be.
-#define MAX_MAP_DISP_POWER		4	
+#define MAX_MAP_DISP_POWER		4
 
 // Max # of neighboring displacement touching a displacement's corner.
 #define MAX_DISP_CORNER_NEIGHBORS	4
@@ -92,7 +92,7 @@
 #define	MAX_MAP_TEXTURES				1024
 #define MAX_MAP_WORLDLIGHTS				8192
 #define MAX_MAP_CUBEMAPSAMPLES			1024
-#define MAX_MAP_OVERLAYS				512 
+#define MAX_MAP_OVERLAYS				512
 #define MAX_MAP_WATEROVERLAYS			16384
 #define MAX_MAP_TEXDATA_STRING_DATA		256000
 #define MAX_MAP_TEXDATA_STRING_TABLE	65536
@@ -138,7 +138,7 @@
 #define	MAX_MAP_TEXTURES				2
 #define MAX_MAP_WORLDLIGHTS				2
 #define MAX_MAP_CUBEMAPSAMPLES			2
-#define MAX_MAP_OVERLAYS				2 
+#define MAX_MAP_OVERLAYS				2
 #define MAX_MAP_WATEROVERLAYS			2
 #define MAX_MAP_TEXDATA_STRING_DATA		2
 #define MAX_MAP_TEXDATA_STRING_TABLE	2
@@ -194,7 +194,7 @@
 //       |                                   |
 //       |                                   |
 //
-//       x                 x                 x 
+//       x                 x                 x
 //
 //       ^                                   ^
 //       |                                   |
@@ -202,7 +202,7 @@
 //  C2M  |                                   |	C2M
 //       |                                   |
 //       |                                   |
-// 
+//
 //       0 --------------> x --------------> 3
 //
 //               C2M			  M2C
@@ -220,7 +220,7 @@
 // | 2 | 3 |
 // |   |   |
 // ---------
-// 
+//
 // ------------------------------------------------------------------------------------------------ //
 
 // These can be used to index g_ChildNodeIndexMul.
@@ -293,7 +293,7 @@ enum
 	LUMP_EDGES						= 12,	// *
 	LUMP_SURFEDGES					= 13,	// *
 	LUMP_MODELS						= 14,	// *
-	LUMP_WORLDLIGHTS				= 15,	// 
+	LUMP_WORLDLIGHTS				= 15,	//
 	LUMP_LEAFFACES					= 16,	// *
 	LUMP_LEAFBRUSHES				= 17,	// *
 	LUMP_BRUSHES					= 18,	// *
@@ -325,7 +325,7 @@ enum
 	LUMP_PRIMVERTS					= 38,
 	LUMP_PRIMINDICES				= 39,
 	// A pak file can be embedded in a .bsp now, and the file system will search the pak
-	//  file first for any referenced names, before deferring to the game directory 
+	//  file first for any referenced names, before deferring to the game directory
 	//  file system/pak files and finally the base directory file system/pak files.
 	LUMP_PAKFILE					= 40,
 	LUMP_CLIPPORTALVERTS			= 41,
@@ -405,7 +405,7 @@ struct lumpfileheader_t
 {
 	int				lumpOffset;
 	int				lumpID;
-	int				lumpVersion;	
+	int				lumpVersion;
 	int				lumpLength;
 	int				mapRevision;				// the map's revision (iteration, version) number (added BSPVERSION 6)
 };
@@ -587,7 +587,7 @@ class CDispNeighbor
 public:
 	DECLARE_BYTESWAP_DATADESC();
 	void				SetInvalid()	{ m_SubNeighbors[0].SetInvalid(); m_SubNeighbors[1].SetInvalid(); }
-	
+
 	// Returns false if there isn't anything touching this edge.
 	bool				IsValid()		{ return m_SubNeighbors[0].IsValid() || m_SubNeighbors[1].IsValid(); }
 
@@ -647,13 +647,13 @@ public:
 	int			m_iDispVertStart;					// Index into LUMP_DISP_VERTS.
 	int			m_iDispTriStart;					// Index into LUMP_DISP_TRIS.
 
-    int         power;                              // power - indicates size of map (2^power + 1)
-    int         minTess;                            // minimum tesselation allowed
-    float       smoothingAngle;                     // lighting smoothing angle
-    int         contents;                           // surface contents
+	int         power;                              // power - indicates size of map (2^power + 1)
+	int         minTess;                            // minimum tesselation allowed
+	float       smoothingAngle;                     // lighting smoothing angle
+	int         contents;                           // surface contents
 
 	unsigned short	m_iMapFace;						// Which map face this displacement comes from.
-	
+
 	int			m_iLightmapAlphaStart;				// Index into ddisplightmapalpha.
 													// The count is m_pParent->lightmapTextureSizeInLuxels[0]*m_pParent->lightmapTextureSizeInLuxels[1].
 
@@ -708,7 +708,7 @@ struct dface_t
 	byte		onNode; // 1 of on node, 0 if in leaf
 
 	int			firstedge;		// we must support > 64k edges
-	short		numedges;	
+	short		numedges;
 	short		texinfo;
 	// This is a union under the assumption that a fog volume boundary (ie. water surface)
 	// isn't a displacement map.
@@ -716,7 +716,7 @@ struct dface_t
 	// if we can add more to this.
 //	union
 //	{
-	    short       dispinfo;
+		short       dispinfo;
 		// This is only for surfaces that are the boundaries of fog volumes
 		// (ie. water surfaces)
 		// All of the rest of the surfaces can look at their leaf to find out
@@ -727,7 +727,7 @@ struct dface_t
 	// lighting info
 	byte		styles[MAXLIGHTMAPS];
 	int			lightofs;		// start of [numstyles*surfsize] samples
-    float       area;
+	float       area;
 
 	// TODO: make these unsigned chars?
 	int			m_LightmapTextureMinsInLuxels[2];
@@ -748,8 +748,8 @@ private:
 	unsigned short m_NumPrims;	// Top bit, if set, disables shadows on this surface (this is why there are accessors).
 
 public:
-	unsigned short	firstPrimID; 
-	
+	unsigned short	firstPrimID;
+
 	unsigned int	smoothingGroups;
 };
 
@@ -915,9 +915,9 @@ struct dareaportal_t
 	unsigned short	m_PortalKey;		// Entities have a key called portalnumber (and in vbsp a variable
 									// called areaportalnum) which is used
 									// to bind them to the area portals by comparing with this value.
-	
+
 	unsigned short	otherarea;		// The area this portal looks into.
-	
+
 	unsigned short	m_FirstClipPortalVert;	// Portal geometry.
 	unsigned short	m_nClipPortalVerts;
 
@@ -946,7 +946,7 @@ public:
 	DECLARE_BYTESWAP_DATADESC();
 	// This looks up into g_TexDataStringTable, which looks up into g_TexDataStringData.
 	// 0xFFFF if the face has no macro texture.
-	unsigned short m_MacroTextureNameID;	
+	unsigned short m_MacroTextureNameID;
 };
 
 // lights that were used to illuminate the world
@@ -973,18 +973,18 @@ struct dworldlight_t
 	Vector		normal;			// for surfaces and spotlights
 	int			cluster;
 	emittype_t	type;
-    int			style;
+	int			style;
 	float		stopdot;		// start of penumbra for emit_spotlight
 	float		stopdot2;		// end of penumbra for emit_spotlight
-	float		exponent;		// 
+	float		exponent;		//
 	float		radius;			// cutoff distance
-	// falloff for emit_spotlight + emit_point: 
+	// falloff for emit_spotlight + emit_point:
 	// 1 / (constant_attn + linear_attn * dist + quadratic_attn * dist^2)
-	float		constant_attn;	
+	float		constant_attn;
 	float		linear_attn;
 	float		quadratic_attn;
 	int			flags;			// Uses a combination of the DWL_FLAGS_ defines.
-	int			texinfo;		// 
+	int			texinfo;		//
 	int			owner;			// entity that this light it relative to
 };
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -508,7 +508,7 @@ bool CDmxSerializer::Unserialize( CUtlBuffer &buf, int nEncodingVersion, CDmxEle
 //-----------------------------------------------------------------------------
 bool SerializeDMX( CUtlBuffer &buf, CDmxElement *pRoot, const char *pFileName )
 {
-	// Write the format name into the file using XML format so that 
+	// Write the format name into the file using XML format so that
 	// 3rd-party XML readers can read the file without fail
 	const char *pEncodingName = buf.IsText() ? "keyvalues2" : "binary";
 	int nEncodingVersion = buf.IsText() ? 1 : 2; // HACK - we should have some way of automatically updating this when the encoding version changes!

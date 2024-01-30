@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -116,6 +116,6 @@ void CDODSmokeGrenade::Think_Remove()
 
 
 void CDODSmokeGrenade::Detonate( void )
-{	
+{
 	// Intentionally blank - our detonate does nothing
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -111,7 +111,7 @@ abstract_class IRender
 public:
 	virtual void	FrameBegin( void ) = 0;
 	virtual void	FrameEnd( void ) = 0;
-	
+
 	virtual void	ViewSetupVis( bool novis, int numorigins, const Vector origin[] ) = 0;
 
 	virtual void	ViewDrawFade( byte *color, IMaterial* pFadeMaterial ) = 0;

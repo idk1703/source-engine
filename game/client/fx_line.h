@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -29,7 +29,7 @@ struct FXLineData_t
 	float		m_flEndScale;
 	float		m_flDieTime;
 	float		m_flLifeTime;
-	
+
 	IMaterial	*m_pMaterial;
 };
 
@@ -40,7 +40,7 @@ class CFXLine : public CClientSideEffect
 public:
 
 	CFXLine( const char *name, const FXLineData_t &data );
-	
+
 	~CFXLine( void );
 
 	virtual void	Draw( double frametime );

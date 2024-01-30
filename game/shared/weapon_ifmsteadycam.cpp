@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -30,12 +30,12 @@ LINK_ENTITY_TO_CLASS( weapon_ifm_steadycam, CWeaponIFMSteadyCam );
 PRECACHE_WEAPON_REGISTER( weapon_ifm_steadycam );
 #endif
 
-BEGIN_NETWORK_TABLE( CWeaponIFMSteadyCam, DT_WeaponIFMSteadyCam )	
+BEGIN_NETWORK_TABLE( CWeaponIFMSteadyCam, DT_WeaponIFMSteadyCam )
 END_NETWORK_TABLE()
 
 #ifdef CLIENT_DLL
 
-BEGIN_PREDICTION_DATA( CWeaponIFMSteadyCam ) 
+BEGIN_PREDICTION_DATA( CWeaponIFMSteadyCam )
 	DEFINE_PRED_FIELD( m_bIsLocked, FIELD_BOOLEAN, 0 ),
 	DEFINE_PRED_FIELD( m_bInSpringMode, FIELD_BOOLEAN, 0 ),
 	DEFINE_PRED_FIELD( m_bInDirectMode, FIELD_BOOLEAN, 0 ),
@@ -60,7 +60,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// CWeaponIFMSteadyCam implementation. 
+// CWeaponIFMSteadyCam implementation.
 //-----------------------------------------------------------------------------
 CWeaponIFMSteadyCam::CWeaponIFMSteadyCam()
 {
@@ -92,7 +92,7 @@ CWeaponIFMSteadyCam::~CWeaponIFMSteadyCam()
 
 //-----------------------------------------------------------------------------
 //
-// Specific methods on the client 
+// Specific methods on the client
 //
 //-----------------------------------------------------------------------------
 #ifdef CLIENT_DLL
@@ -115,7 +115,7 @@ void CWeaponIFMSteadyCam::MatrixFromForwardDirection( const Vector &vecForward, 
 	MatrixInitialize( mat, m_vecRelativePosition, vecForward, vecLeft, vecUp );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Updates the relative orientation of the camera, spring mode
 //-----------------------------------------------------------------------------
@@ -133,7 +133,7 @@ void CWeaponIFMSteadyCam::ComputeMouseRay( const VMatrix &steadyCamToPlayer, Vec
 
 	flViewX *= flMaxD;
 	flViewY *= flMaxD;
-				    
+
 	Vector vecSelectionDir( 1.0f, -flViewX, -flViewY );
 	VectorNormalize( vecSelectionDir );
 
@@ -156,7 +156,7 @@ void CWeaponIFMSteadyCam::UpdateDirectRelativeOrientation()
 	Vector vecCurrentForward;
 	MatrixGetColumn( steadyCamToPlayer, 0, &vecCurrentForward );
 
-	// Before any updating occurs, sample the current 
+	// Before any updating occurs, sample the current
 	// world-space direction of the mouse
 	Vector vecDesiredDirection;
 	ComputeMouseRay( steadyCamToPlayer, vecDesiredDirection );
@@ -171,7 +171,7 @@ void CWeaponIFMSteadyCam::UpdateDirectRelativeOrientation()
 	m_vecViewOffset.Init();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Updates the relative orientation of the camera  when locked
 //-----------------------------------------------------------------------------
@@ -180,7 +180,7 @@ void CWeaponIFMSteadyCam::UpdateLockedRelativeOrientation()
 	CBasePlayer *pPlayer = GetPlayerOwner();
 	if ( !pPlayer )
 		return;
-	
+
 	Vector vecDesiredDirection = m_vecOffset;
 	CBaseEntity *pLock = m_hLockTarget.Get();
 	if ( pLock )
@@ -242,7 +242,7 @@ void CWeaponIFMSteadyCam::UpdateRelativeOrientation()
 
 	flViewX *= flMaxD * ifm_steadycam_mousefactor.GetFloat();
 	flViewY *= flMaxD * ifm_steadycam_mousefactor.GetFloat();
-				    
+
 	Vector vecSelectionDir( 1.0f, -flViewX, -flViewY );
 	VectorNormalize( vecSelectionDir );
 
@@ -264,7 +264,7 @@ void CWeaponIFMSteadyCam::UpdateRelativeOrientation()
 	Vector vecAxis;
 	CrossProduct( vecCurrentForward, vecDesiredDirection, vecAxis );
 	VectorNormalize( vecAxis );
-	
+
 	float flRotateRate = ifm_steadycam_rotaterate.GetFloat();
 	if ( flRotateRate < 1.0f )
 	{
@@ -279,7 +279,7 @@ void CWeaponIFMSteadyCam::UpdateRelativeOrientation()
 
 	Vector vecNewForard;
 	VMatrix rotation;
-	MatrixBuildRotationAboutAxis( rotation, vecAxis, flAngle ); 
+	MatrixBuildRotationAboutAxis( rotation, vecAxis, flAngle );
 	Vector3DMultiply( rotation, vecCurrentForward, vecNewForard );
 
 	matrix3x4_t mat;
@@ -288,8 +288,8 @@ void CWeaponIFMSteadyCam::UpdateRelativeOrientation()
 
 	Assert( m_angRelativeAngles.IsValid() );
 }
-	
-	
+
+
 //-----------------------------------------------------------------------------
 // Toggles to springy camera
 //-----------------------------------------------------------------------------
@@ -301,7 +301,7 @@ void CWeaponIFMSteadyCam::ToggleDirectMode()
 	m_bInDirectMode = !m_bInDirectMode;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Targets the camera to always look at a point
 //-----------------------------------------------------------------------------
@@ -321,7 +321,7 @@ void CWeaponIFMSteadyCam::LockCamera()
 	CBasePlayer *pPlayer = GetPlayerOwner();
 	if ( !pPlayer )
 		return;
-	
+
 	Vector vTraceStart, vTraceEnd, vTraceDir;
 	QAngle angles;
 	BaseClass::ComputeAbsCameraTransform( vTraceStart, angles );
@@ -358,7 +358,7 @@ void CWeaponIFMSteadyCam::ComputeAbsCameraTransform( Vector &vecAbsOrigin, QAngl
 		BaseClass::ComputeAbsCameraTransform( vecAbsOrigin, angAbsRotation );
 		return;
 	}
-	
+
 	Vector vecDesiredDirection = m_vecOffset;
 	if ( pLock )
 	{
@@ -396,10 +396,10 @@ void CWeaponIFMSteadyCam::ComputeViewOffset()
 
 	Vector2D vecForce;
 	Vector2DMultiply( dir, -flDist * ifm_steadycam_2dspringconstant.GetFloat(), vecForce );
-	Vector2DMA( vecForce, -ifm_steadycam_2ddragconstant.GetFloat(), m_vec2DVelocity.AsVector2D(), vecForce ); 
+	Vector2DMA( vecForce, -ifm_steadycam_2ddragconstant.GetFloat(), m_vec2DVelocity.AsVector2D(), vecForce );
 
-	Vector2DMA( m_vecViewOffset.AsVector2D(), gpGlobals->frametime, m_vec2DVelocity.AsVector2D(), m_vecViewOffset.AsVector2D() ); 
-	Vector2DMA( m_vec2DVelocity.AsVector2D(), gpGlobals->frametime, vecForce, m_vec2DVelocity.AsVector2D() ); 
+	Vector2DMA( m_vecViewOffset.AsVector2D(), gpGlobals->frametime, m_vec2DVelocity.AsVector2D(), m_vecViewOffset.AsVector2D() );
+	Vector2DMA( m_vec2DVelocity.AsVector2D(), gpGlobals->frametime, vecForce, m_vec2DVelocity.AsVector2D() );
 }
 
 
@@ -414,7 +414,7 @@ void CWeaponIFMSteadyCam::ItemPostFrame()
 	CBasePlayer *pPlayer = GetPlayerOwner();
 	if ( !pPlayer )
 		return;
-	
+
 	float flSensitivity = ifm_steadycam_sensitivity.GetFloat();
 
 	Vector2D vecOldActualViewOffset = m_vecActualViewOffset.AsVector2D();
@@ -433,7 +433,7 @@ void CWeaponIFMSteadyCam::ItemPostFrame()
 			m_vecActualViewOffset.y *= flDamp;
 		}
 	}
-	
+
 	// Add noise
 	if ( !m_bIsLocked )
 	{
@@ -463,9 +463,9 @@ void CWeaponIFMSteadyCam::ItemPostFrame()
 	{
 		float flDamp = ifm_steadycam_zoomdamp.GetFloat();
 		m_flFOVOffsetY *= flDamp;
-	}			    
+	}
 	m_flFOV += m_flFOVOffsetY * ifm_steadycam_zoomspeed.GetFloat() / 1000.0f;
-	m_flFOV = clamp( m_flFOV, 0.5f, 160.0f ); 
+	m_flFOV = clamp( m_flFOV, 0.5f, 160.0f );
 
 	if ( pPlayer->m_nButtons & IN_WALK )
 	{
@@ -535,7 +535,7 @@ void CWeaponIFMSteadyCam::GetToolRecordingState( KeyValues *msg )
 void CWeaponIFMSteadyCam::CreateMove( float flInputSampleTime, CUserCmd *pCmd, const QAngle &vecOldViewAngles )
 {
 	BaseClass::CreateMove( flInputSampleTime, pCmd, vecOldViewAngles );
-	
+
 	// Block angular movement when IN_ATTACK is pressed
 	if ( pCmd->buttons & (IN_ATTACK | IN_WALK | IN_ZOOM) )
 	{
@@ -543,7 +543,7 @@ void CWeaponIFMSteadyCam::CreateMove( float flInputSampleTime, CUserCmd *pCmd, c
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Draw the weapon's crosshair
 //-----------------------------------------------------------------------------
@@ -554,10 +554,10 @@ void CWeaponIFMSteadyCam::DrawArmLength( int x, int y, int w, int h, Color clr )
 	{
 		vgui::HScheme hScheme = vgui::scheme()->GetScheme( "ClientScheme" );
 		vgui::IScheme *pScheme = vgui::scheme()->GetIScheme( hScheme );
-		m_hFont	= pScheme->GetFont("DefaultVerySmall", false );	
+		m_hFont	= pScheme->GetFont("DefaultVerySmall", false );
 		Assert( m_hFont != vgui::INVALID_FONT );
 	}
-	
+
 	// Create our string
 	char szString[256];
 	Q_snprintf( szString, sizeof(szString), "Arm Length: %.2f\n", m_flArmLength );
@@ -569,7 +569,7 @@ void CWeaponIFMSteadyCam::DrawArmLength( int x, int y, int w, int h, Color clr )
 	int tw, th;
 	vgui::surface()->GetTextSize( m_hFont, wcString, tw, th );
 
-	vgui::surface()->DrawSetTextFont( m_hFont ); // set the font	
+	vgui::surface()->DrawSetTextFont( m_hFont ); // set the font
 	vgui::surface()->DrawSetTextColor( clr ); // white
 	vgui::surface()->DrawSetTextPos( x + w - tw - 10, y + 10 ); // x,y position
 
@@ -594,7 +594,7 @@ void CWeaponIFMSteadyCam::DrawFOV( int x, int y, int w, int h, Color clrEdges, C
 	int fy = y + h - 10;
 	int fh = nSize * cos( M_PI * m_flFOV / 360.0f );
 	int fw = nSize * sin( M_PI * m_flFOV / 360.0f );
-		  
+
 	vgui::Vertex_t v[3];
 	v[0].m_Position.Init( fx, fy );
 	v[0].m_TexCoord.Init( 0.0f, 0.0f );
@@ -626,12 +626,12 @@ void CWeaponIFMSteadyCam::DrawCrosshair( void )
 	// Draw the targeting zone around the crosshair
 	int r, g, b, a;
 	gHUD.m_clrYellowish.GetColor( r, g, b, a );
-		 
+
 	Color gray( 255, 255, 255, 192 );
 	Color light( r, g, b, 255 );
 	Color dark( r, g, b, 128 );
 	Color red( 255, 0, 0, 128 );
-	
+
 	DrawArmLength( x, y, w, h, light );
 	DrawFOV( x, y, w, h, light, dark );
 
@@ -681,16 +681,13 @@ void CWeaponIFMSteadyCam::DrawCrosshair( void )
 
 //-----------------------------------------------------------------------------
 //
-// Specific methods on the server 
+// Specific methods on the server
 //
 //-----------------------------------------------------------------------------
 #ifdef GAME_DLL
-	
+
 void CWeaponIFMSteadyCam::ItemPostFrame()
 {
 }
 
 #endif   // GAME_DLL
-
-
-

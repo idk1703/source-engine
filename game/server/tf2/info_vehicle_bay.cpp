@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,7 +20,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( info_vehicle_bay, CInfoVehicleBay );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoVehicleBay::Spawn( void )
 {
@@ -49,7 +49,7 @@ bool CInfoVehicleBay::CanBuildObjectOnBuildPoint( int iPoint, int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CInfoVehicleBay::GetBuildPoint( int iPoint, Vector &vecOrigin, QAngle &vecAngles )
 {
@@ -66,14 +66,14 @@ int CInfoVehicleBay::GetBuildPointAttachmentIndex( int iPoint ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoVehicleBay::SetObjectOnBuildPoint( int iPoint, CBaseObject *pObject )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CInfoVehicleBay::GetNumObjectsOnMe( void )
 {
@@ -81,7 +81,7 @@ int CInfoVehicleBay::GetNumObjectsOnMe( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseEntity	*CInfoVehicleBay::GetFirstObjectOnMe( void )
 {
@@ -89,7 +89,7 @@ CBaseEntity	*CInfoVehicleBay::GetFirstObjectOnMe( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseObject *CInfoVehicleBay::GetObjectOfTypeOnMe( int iObjectType )
 {
@@ -97,7 +97,7 @@ CBaseObject *CInfoVehicleBay::GetObjectOfTypeOnMe( int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CInfoVehicleBay::FindObjectOnBuildPoint( CBaseObject *pObject )
 {
@@ -105,7 +105,7 @@ int	CInfoVehicleBay::FindObjectOnBuildPoint( CBaseObject *pObject )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoVehicleBay::GetExitPoint( CBaseEntity *pPlayer, int iPoint, Vector *pAbsOrigin, QAngle *pAbsAngles )
 {
@@ -113,7 +113,7 @@ void CInfoVehicleBay::GetExitPoint( CBaseEntity *pPlayer, int iPoint, Vector *pA
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoVehicleBay::RemoveAllObjects( void )
 {
@@ -135,7 +135,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( vgui_screen_vehicle_bay, CVGuiScreenVehicleBay );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVGuiScreenVehicleBay::Activate( void )
 {
@@ -156,21 +156,21 @@ void CVGuiScreenVehicleBay::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVGuiScreenVehicleBay::SetBuildPoint( Vector &vecOrigin, QAngle &vecAngles )
 {
 	m_vecBuildPointOrigin = vecOrigin;
 	m_vecBuildPointAngles = vecAngles;
 	m_bBayIsClear = false;
-	
+
 	// Start checking to see when I'm clear again
 	SetThink( BayThink );
 	SetNextThink( gpGlobals->curtime + 0.1f );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVGuiScreenVehicleBay::BuildVehicle( CBaseTFPlayer *pPlayer, int iObjectType )
 {
@@ -204,7 +204,7 @@ void CVGuiScreenVehicleBay::BuildVehicle( CBaseTFPlayer *pPlayer, int iObjectTyp
 		pObject->AdjustInitialBuildAngles();
 
 	pEntity->Spawn();
-	
+
 	// If it's an object, finish setting it up
 	if ( !pObject )
 		return;
@@ -223,7 +223,7 @@ void CVGuiScreenVehicleBay::BuildVehicle( CBaseTFPlayer *pPlayer, int iObjectTyp
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVGuiScreenVehicleBay::FinishedBuildVehicle( CBaseObject *pObject )
 {
@@ -253,7 +253,7 @@ void CVGuiScreenVehicleBay::BayThink( void )
 			// Ignore func brushes
 			if ( pEntity->GetMoveType() == MOVETYPE_PUSH )
 				continue;
-		
+
 			//NDebugOverlay::EntityBounds( pEntity, 0,255,0,8, 0.1 );
 
 			// Check again soon

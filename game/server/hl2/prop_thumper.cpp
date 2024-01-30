@@ -51,13 +51,13 @@ public:
 	void	Thump( void );
 
 private:
-	
+
 	bool m_bEnabled;
 	int m_iHammerAttachment;
 	CSoundPatch* m_sndMotor;
 	EHANDLE m_hRepellantEnt;
 	int m_iDustScale;
-	
+
 	COutputEvent	m_OnThumped;	// Fired when thumper goes off
 
 #if HL2_EPISODIC
@@ -68,7 +68,7 @@ private:
 LINK_ENTITY_TO_CLASS( prop_thumper, CPropThumper );
 
 //-----------------------------------------------------------------------------
-// Save/load 
+// Save/load
 //-----------------------------------------------------------------------------
 BEGIN_DATADESC( CPropThumper )
 	DEFINE_FIELD( m_bEnabled, FIELD_BOOLEAN ),
@@ -121,7 +121,7 @@ void CPropThumper::Spawn( void )
 	}
 
 	m_iHammerAttachment = LookupAttachment( "hammer" );
-	
+
 	CAntlionRepellant *pRepellant = (CAntlionRepellant*)CreateEntityByName( "point_antlion_repellant" );
 
 	if ( pRepellant )
@@ -214,7 +214,7 @@ void CPropThumper::Thump ( void )
 
 	if ( thumper_show_radius.GetBool() )
 	{
-		NDebugOverlay::Box( GetAbsOrigin(), Vector(-THUMPER_RADIUS, -THUMPER_RADIUS, -THUMPER_RADIUS), Vector(THUMPER_RADIUS, THUMPER_RADIUS, THUMPER_RADIUS), 
+		NDebugOverlay::Box( GetAbsOrigin(), Vector(-THUMPER_RADIUS, -THUMPER_RADIUS, -THUMPER_RADIUS), Vector(THUMPER_RADIUS, THUMPER_RADIUS, THUMPER_RADIUS),
 			255, 64, 64, 255, THUMPER_SOUND_DURATION );
 	}
 
@@ -259,9 +259,9 @@ void CPropThumper::StopLoopingSounds( void )
 void CPropThumper::InputDisable( inputdata_t &inputdata )
 {
 	m_bEnabled = false;
-	
+
 	EmitSound( "coast.thumper_shutdown" );
-	
+
 	if ( m_hRepellantEnt )
 	{
 		variant_t emptyVariant;

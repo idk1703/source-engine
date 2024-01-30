@@ -21,7 +21,7 @@
 template<class T, int RES> struct CCubeMap
 {
 	T m_Samples[6][RES][RES];
-	
+
 public:
 	FORCEINLINE void GetCoords( Vector const &vecNormalizedDirection, int &nX, int &nY, int &nFace )
 	{

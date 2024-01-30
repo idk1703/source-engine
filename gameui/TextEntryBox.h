@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ public:
 	CTextEntryBox(const char *title, const char *labelText, const char *entryText, bool isCvar, vgui::Panel *parent = NULL);
 
 	virtual ~CTextEntryBox();
- 
+
 	virtual void PerformLayout();						///< Layout override to position the label and text entry
 	virtual void ShowWindow(vgui::Frame *pFrameOver);	///< Show window override to give focus to text entry
 

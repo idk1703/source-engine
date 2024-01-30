@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -79,7 +79,7 @@ public:
 	virtual bool IsVisualElement(void) { return(false); } // Only visible if our parent is selected.
 	virtual bool IsClutter(void) { return true; }
 	virtual bool IsCulledByCordon(const Vector &vecMins, const Vector &vecMaxs) { return false; } // We don't hide unless our parent hides.
-	
+
 	virtual const char* GetDescription() { return("Axis helper"); }
 
 	virtual void OnAddToWorld(CMapWorld *pWorld);
@@ -97,7 +97,7 @@ protected:
 
 	// Overriden to transform our endpoints, which are not children.
 	virtual void DoTransform(const VMatrix &matrix);
-	
+
 	void Initialize(void);
 
 	CMapPointHandle m_Point[2];				// The two endpoints of the axis.

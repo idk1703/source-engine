@@ -265,7 +265,7 @@ bool CSceneViewerApp::Create()
 	if ( !BaseClass::Create() )
 		return false;
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "vstdlib.dll",			PROCESS_UTILS_INTERFACE_VERSION },
 		{ "studiorender.dll",		STUDIO_RENDER_INTERFACE_VERSION },
@@ -293,7 +293,7 @@ bool CSceneViewerApp::Create()
 	AddSystem( g_pDmSerializers, DMSERIALIZERS_INTERFACE_VERSION );
 	AddSystem( GetDefaultDmeMakefileUtils(), DMEMAKEFILE_UTILS_INTERFACE_VERSION );
 
-	return true; 
+	return true;
 }
 
 void CSceneViewerApp::Destroy()
@@ -322,7 +322,7 @@ bool CSceneViewerApp::PreInit( )
 	}
 
 	// initialize interfaces
-	CreateInterfaceFn appFactory = GetFactory(); 
+	CreateInterfaceFn appFactory = GetFactory();
 	return vgui::VGui_InitDmeInterfacesList( "SceneViewer", &appFactory, 1 );
 }
 
@@ -441,11 +441,11 @@ int CSceneViewerApp::Main()
 		nLastTime = nTime;
 
 		AppPumpMessages();
-	
+
 		vgui::GetAnimationController()->UpdateAnimations( Sys_FloatTime() );
 
 		g_pMaterialSystem->BeginFrame( 0 );
-		pRenderContext->ClearColor4ub( 76, 88, 68, 255 ); 
+		pRenderContext->ClearColor4ub( 76, 88, 68, 255 );
 		pRenderContext->ClearBuffers( true, true );
 
 		g_pVGui->RunFrame();

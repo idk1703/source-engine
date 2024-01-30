@@ -213,7 +213,7 @@ protected:
 //-----------------------------------------------------------------------------
 // Inline methods
 //-----------------------------------------------------------------------------
-template < class T > 
+template < class T >
 inline CDmeTypedLog<T> *CDmeChannel::CreateLog()
 {
 	return CastElement< CDmeTypedLog<T> >( CreateLog( CDmAttributeInfo<T>::AttributeType() ) );

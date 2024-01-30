@@ -54,7 +54,7 @@ static SpewRetval_t VcdImportOutputFunc( SpewType_t spewType, const char *pMsg )
 
 	if (spewType == SPEW_ERROR)
 		return SPEW_ABORT;
-	return (spewType == SPEW_ASSERT) ? SPEW_DEBUGGER : SPEW_CONTINUE; 
+	return (spewType == SPEW_ASSERT) ? SPEW_DEBUGGER : SPEW_CONTINUE;
 }
 
 
@@ -83,7 +83,7 @@ bool CVcdImportApp::Create()
 {
 	SpewOutputFunc( VcdImportOutputFunc );
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "p4lib.dll",				P4_INTERFACE_VERSION },
 		{ "materialsystem.dll",		MATERIAL_SYSTEM_INTERFACE_VERSION },
@@ -137,7 +137,7 @@ int CVcdImportApp::Main()
 	g_pDataModel->SetUndoEnabled( false );
 
 	// This bit of hackery allows us to access files on the harddrive
-	g_pFullFileSystem->AddSearchPath( "", "LOCAL", PATH_ADD_TO_HEAD ); 
+	g_pFullFileSystem->AddSearchPath( "", "LOCAL", PATH_ADD_TO_HEAD );
 
 	// Do Perforce Stuff
 	if ( CommandLine()->FindParm( "-nop4" ) )
@@ -179,12 +179,9 @@ int CVcdImportApp::Main()
 	}
 
 	bool bOk = ImportLogsIntoVCD( pImportFileName, pInFileName, pOutFileName, info );
-	if ( bOk )	
+	if ( bOk )
 	{
 		Msg( "Wrote file %s.\n", pOutFileName );
 	}
 	return bOk;
 }
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,7 +29,7 @@ public:
 	PropertyDialog(Panel *parent, const char *panelName);
 	~PropertyDialog();
 
-	// returns a pointer to the PropertySheet this dialog encapsulates 
+	// returns a pointer to the PropertySheet this dialog encapsulates
 	virtual PropertySheet *GetPropertySheet();
 
 	// wrapper for PropertySheet interface
@@ -69,7 +69,7 @@ protected:
 
 	MESSAGE_FUNC( OnApplyButtonEnable, "ApplyButtonEnable" );
 	void EnableApplyButton(bool bEnable);
-	
+
 private:
 	PropertySheet *_propertySheet;
 	Button *_okButton;

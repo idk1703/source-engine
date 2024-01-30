@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,7 +30,7 @@ enum VehicleModeDeploy_e
 // Tread indices.
 enum TreadIndex
 {
-	TREAD_LEFT=0, 
+	TREAD_LEFT=0,
 	TREAD_RIGHT=1
 };
 

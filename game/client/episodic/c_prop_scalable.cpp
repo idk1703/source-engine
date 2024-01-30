@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -47,7 +47,7 @@ void RecvProxy_ScaleX( const CRecvProxyData *pData, void *pStruct, void *pOut )
 	C_PropScalable *pCoreData = (C_PropScalable *) pStruct;
 
 	pCoreData->m_flScaleX = pData->m_Value.m_Float;
-	
+
 	if ( pCoreData->m_bRunningScale[0] == true )
 	{
 		pCoreData->m_flTargetScale[0] = pCoreData->m_flCurrentScale[0];

@@ -26,7 +26,7 @@ class CSound;
 DECLARE_POINTER_HANDLE( AISightIter_t );
 DECLARE_POINTER_HANDLE( AISoundIter_t );
 
-// GetFirstSeenEntity can take these as optional parameters to search for 
+// GetFirstSeenEntity can take these as optional parameters to search for
 // a specific type of entity.
 enum seentype_t
 {
@@ -43,7 +43,7 @@ enum seentype_t
 //-----------------------------------------------------------------------------
 // class CAI_ScriptConditions
 //
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 class CAI_Senses : public CAI_Component
@@ -63,7 +63,7 @@ public:
 		m_SeenArrays[2] = &m_SeenMisc;
 		m_iSensingFlags = SENSING_FLAGS_NONE;
 	}
-	
+
 	float			GetDistLook() const				{ return m_LookDist; }
 	void			SetDistLook( float flDistLook ) { m_LookDist = flDistLook; }
 
@@ -77,7 +77,7 @@ public:
 #ifdef PORTAL
 	bool			CanSeeEntityThroughPortal( const CProp_Portal *pPortal, CBaseEntity *pSightEnt ); // more expensive cone & raycast test
 #endif
-	
+
 	bool			DidSeeEntity( CBaseEntity *pSightEnt ) const; //  a less expensive query that looks at cached results from recent conditionsa gathering
 
 	CBaseEntity *	GetFirstSeenEntity( AISightIter_t *pIter, seentype_t iSeenType = SEEN_ALL ) const;
@@ -90,7 +90,7 @@ public:
 	bool 			CanHearSound( CSound *pSound );
 
 	//---------------------------------
-	
+
 	float			GetTimeLastUpdate( CBaseEntity *pEntity );
 
 	//---------------------------------
@@ -109,7 +109,7 @@ private:
 	void			BeginGather();
 	void 			NoteSeenEntity( CBaseEntity *pSightEnt );
 	void			EndGather( int nSeen, CUtlVector<EHANDLE> *pResult );
-	
+
 	bool 			Look( CBaseEntity *pSightEnt );
 #ifdef PORTAL
 	bool 			LookThroughPortal( const CProp_Portal *pPortal, CBaseEntity *pSightEnt );
@@ -118,21 +118,21 @@ private:
 	int 			LookForHighPriorityEntities( int iDistance );
 	int 			LookForNPCs( int iDistance );
 	int 			LookForObjects( int iDistance );
-	
+
 	bool			SeeEntity( CBaseEntity *pEntity );
-	
+
 	float			m_LookDist;				// distance npc sees (Default 2048)
 	float			m_LastLookDist;
 	float			m_TimeLastLook;
-	
+
 	int				m_iAudibleList;				// first index of a linked list of sounds that the npc can hear.
-	
+
 	CUtlVector<EHANDLE> m_SeenHighPriority;
 	CUtlVector<EHANDLE> m_SeenNPCs;
 	CUtlVector<EHANDLE> m_SeenMisc;
-	
+
 	CUtlVector<EHANDLE> *m_SeenArrays[3];
-	
+
 	float			m_TimeLastLookHighPriority;
 	float			m_TimeLastLookNPCs;
 	float			m_TimeLastLookMisc;

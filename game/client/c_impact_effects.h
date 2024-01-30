@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,14 +13,14 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: DustParticle emitter 
+// Purpose: DustParticle emitter
 //-----------------------------------------------------------------------------
 class CDustParticle : public CSimpleEmitter
 {
 public:
-	
+
 	CDustParticle( const char *pDebugName ) : CSimpleEmitter( pDebugName ) {}
-	
+
 	//Create
 	static CDustParticle *Create( const char *pDebugName="dust" )
 	{
@@ -31,7 +31,7 @@ public:
 	virtual	float UpdateRoll( SimpleParticle *pParticle, float timeDelta )
 	{
 		pParticle->m_flRoll += pParticle->m_flRollDelta * timeDelta;
-		
+
 		pParticle->m_flRollDelta += pParticle->m_flRollDelta * ( timeDelta * -8.0f );
 
 #ifdef _XBOX

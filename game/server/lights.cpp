@@ -65,7 +65,7 @@ void CLight::Spawn( void )
 		UTIL_Remove( this );
 		return;
 	}
-	
+
 	if (m_iStyle >= 32)
 	{
 		if ( m_iszPattern == NULL_STRING && m_iDefaultStyle > 0 )
@@ -138,7 +138,7 @@ void CLight::Toggle( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Handle the "turnon" input handler
-// Input  : &inputdata - 
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CLight::InputTurnOn( inputdata_t &inputdata )
 {
@@ -147,7 +147,7 @@ void CLight::InputTurnOn( inputdata_t &inputdata )
 
 //-----------------------------------------------------------------------------
 // Purpose: Handle the "turnoff" input handler
-// Input  : &inputdata - 
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CLight::InputTurnOff( inputdata_t &inputdata )
 {
@@ -156,7 +156,7 @@ void CLight::InputTurnOff( inputdata_t &inputdata )
 
 //-----------------------------------------------------------------------------
 // Purpose: Handle the "toggle" input handler
-// Input  : &inputdata - 
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CLight::InputToggle( inputdata_t &inputdata )
 {
@@ -177,7 +177,7 @@ void CLight::InputSetPattern( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Input handler for fading from first value in old pattern to 
+// Purpose: Input handler for fading from first value in old pattern to
 //			first value in new pattern
 //-----------------------------------------------------------------------------
 void CLight::InputFadeToPattern( inputdata_t &inputdata )
@@ -238,7 +238,7 @@ class CEnvLight : public CLight
 public:
 	DECLARE_CLASS( CEnvLight, CLight );
 
-	bool	KeyValue( const char *szKeyName, const char *szValue ); 
+	bool	KeyValue( const char *szKeyName, const char *szValue );
 	void	Spawn( void );
 };
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,5 +37,3 @@ CParticleLight::CParticleLight()
 	m_PSName = NULL_STRING;
 	m_bDirectional = false;
 }
-
-

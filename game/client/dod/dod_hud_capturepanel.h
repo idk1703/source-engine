@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDoDCapturePanelIcon : public vgui::ImagePanel
 {
@@ -72,7 +72,7 @@ public:
 	virtual void OnScreenSizeChanged( int iOldWide, int iOldTall );
 
 private:
-    
+
 	CDoDCapturePanelProgressBar			*m_pProgressBar;
 
 	CUtlVector<CDoDCapturePanelIcon *>	m_PlayerIcons;

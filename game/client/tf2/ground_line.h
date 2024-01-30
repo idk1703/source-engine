@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,8 +37,8 @@ public:
 
 	// Setup the line's rendering parameters.
 	void			SetParameters(
-		const Vector &vStart, 
-		const Vector &vEnd, 
+		const Vector &vStart,
+		const Vector &vEnd,
 		const Vector &vStartColor,	// Color values 0-1
 		const Vector &vEndColor,	// Color values 0-1
 		float alpha,
@@ -53,7 +53,7 @@ public:
 	bool			IsVisible( void );
 
 private:
-	
+
 	// Draw a line along the ground.
 	void			Draw();
 	void			Paint();

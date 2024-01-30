@@ -258,7 +258,7 @@ void CDODViewRender::SetupColorCorrection( )
 
 				// fade in from round start time
 				flEffectAlpha = 1.0 - ( gpGlobals->curtime - flFadeOutStartTime ) / ( 2.0f );
-				flEffectAlpha = MAX( 0.0f, flEffectAlpha );				
+				flEffectAlpha = MAX( 0.0f, flEffectAlpha );
 			}
 		}
 

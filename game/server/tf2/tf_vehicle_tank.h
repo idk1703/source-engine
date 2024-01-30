@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -46,7 +46,7 @@ protected:
 
 
 private:
-	
+
 	void TurretThink();
 	void Fire();
 

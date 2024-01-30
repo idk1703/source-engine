@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -8,7 +8,7 @@
 #include "particles_simple.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ResourceChunk : public C_BaseAnimating
 {
@@ -19,4 +19,3 @@ public:
 
 IMPLEMENT_CLIENTCLASS_DT( C_ResourceChunk, DT_ResourceChunk, CResourceChunk )
 END_RECV_TABLE()
-

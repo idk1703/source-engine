@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -57,9 +57,9 @@ IMPLEMENT_CLIENTCLASS_DT( C_PropJeepEpisodic, DT_CPropJeepEpisodic, CPropJeepEpi
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void __MsgFunc_UpdateJalopyRadar(bf_read &msg) 
+void __MsgFunc_UpdateJalopyRadar(bf_read &msg)
 {
 	// Radar code here!
 	if( !GetHudRadar() )
@@ -91,7 +91,7 @@ void __MsgFunc_UpdateJalopyRadar(bf_read &msg)
 
 	for( int i = 0 ; i < g_pJalopy->m_iNumRadarContacts ; i++ )
 	{
-		GetHudRadar()->AddRadarContact( g_pJalopy->m_vecRadarContactPos[i], g_pJalopy->m_iRadarContactType[i], flContactTimeToLive );	
+		GetHudRadar()->AddRadarContact( g_pJalopy->m_vecRadarContactPos[i], g_pJalopy->m_iRadarContactType[i], flContactTimeToLive );
 	}
 }
 
@@ -108,14 +108,14 @@ C_PropJeepEpisodic::C_PropJeepEpisodic()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PropJeepEpisodic::Simulate( void )
 {
 	// Keep trying to hook to the radar.
 	if( GetHudRadar() != NULL )
 	{
-		// This is not our ideal long-term solution. This will only work if you only have 
+		// This is not our ideal long-term solution. This will only work if you only have
 		// one jalopy in a given level. The Jalopy and the Radar Screen are currently both
 		// assumed to be singletons. This is appropriate for EP2, however. (sjb)
 		GetHudRadar()->SetVehicle( this );
@@ -125,7 +125,7 @@ void C_PropJeepEpisodic::Simulate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PropJeepEpisodic::OnEnteredVehicle( C_BasePlayer *pPlayer )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -27,7 +27,7 @@ public:
 	virtual ~CHLTVClientState();
 
 public:
-	
+
 	const char *GetCDKeyHash() { return "HLTVHLTVHLTVHLTVHLTVHLTVHLTVHLTV"; }; // haha
 	bool SetSignonState ( int state, int count );
 	void SendClientInfo( void );
@@ -54,7 +54,7 @@ public: // IServerMessageHandlers
 
 	PROCESS_NET_MESSAGE( StringCmd );
 	PROCESS_NET_MESSAGE( SetConVar );
-		
+
 	PROCESS_SVC_MESSAGE( ServerInfo );
 	PROCESS_SVC_MESSAGE( ClassInfo );
 	PROCESS_SVC_MESSAGE( VoiceInit );

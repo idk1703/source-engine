@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -150,7 +150,7 @@ inline const CUtlVector< DmElementHandle_t > &CDmeTrackGroup::GetTracks( ) const
 	return m_Tracks.Get();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Is this track group visible?
 //-----------------------------------------------------------------------------
@@ -191,7 +191,7 @@ inline int CDmeTrackGroup::GetDisplaySize() const
 {
 	return m_nDisplaySize;
 }
-	
+
 
 //-----------------------------------------------------------------------------
 // Iterator macro

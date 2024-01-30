@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -56,7 +56,7 @@ class CTFHudMannVsMachineScoreboard : public vgui::EditablePanel, public CGameEv
 public:
 	CTFHudMannVsMachineScoreboard( Panel *parent, const char *pName );
 	~CTFHudMannVsMachineScoreboard();
-	
+
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 	virtual void FireGameEvent( IGameEvent *event );
 	virtual void OnTick( void );
@@ -105,12 +105,12 @@ private:
 	CCreditSpendPanel *m_pTotalCreditsSpend;
 
 	vgui::EditablePanel *m_pLocalPlayerStatsPanel;
-	
+
 	vgui::Label			*m_pRespecStatusLabel;
 
 	int		m_iDisplayedWave;
 
-	vgui::HFont m_hScoreFont;	
+	vgui::HFont m_hScoreFont;
 
 	//380
 	CPanelAnimationVarAliasType( int, m_iMedalWidth, "medal_width", "20", "proportional_int" );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,7 +19,7 @@
 
 #define FLAME_MAX_LIFETIME_ON_DEAD_NPCS	10.0f
 
-class CEntityFlame : public CBaseEntity 
+class CEntityFlame : public CBaseEntity
 {
 public:
 	DECLARE_SERVERCLASS();

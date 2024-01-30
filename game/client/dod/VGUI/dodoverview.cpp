@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,7 +10,7 @@
 #include <vgui/ILocalize.h>
 #include "dod_shareddefs.h"
 #include "dodoverview.h"
-#include "c_playerresource.h"	
+#include "c_playerresource.h"
 #include "c_dod_objective_resource.h"
 #include "usermessages.h"
 #include "coordsize.h"
@@ -22,7 +22,7 @@
 
 using namespace vgui;
 
-void __MsgFunc_UpdateRadar(bf_read &msg) 
+void __MsgFunc_UpdateRadar(bf_read &msg)
 {
 	if ( !g_pMapOverview )
 		return;
@@ -204,7 +204,7 @@ void CDODMapOverview::UpdateCapturePoints()
 		}
 
 		float flBombTime = g_pObjectiveResource->GetBombTimeForPoint( i );
-		
+
 		//Draw cap percentage
 		if( iCappingTeam != TEAM_UNASSIGNED )
 		{
@@ -231,7 +231,7 @@ void CDODMapOverview::InitTeamColorsAndIcons()
 	m_TeamColors[TEAM_ALLIES] = COLOR_DOD_GREEN;
 	m_TeamIcons[TEAM_ALLIES] = AddIconTexture( "sprites/minimap_icons/aplayer" );
 	m_CameraIcons[TEAM_ALLIES] = AddIconTexture( "sprites/minimap_icons/allies_camera" );
-	
+
 
 	m_TeamColors[TEAM_AXIS] = COLOR_DOD_RED;
 	m_TeamIcons[TEAM_AXIS] = AddIconTexture( "sprites/minimap_icons/gplayer" );
@@ -407,7 +407,7 @@ void CDODMapOverview::SetMode(int mode)
 		if ( m_nMode == MAP_MODE_INSET )
 			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "ZoomToLarge" );
 		else
-            g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "SnapToLarge" );
+	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "SnapToLarge" );
 	}
 
 	// finally set mode
@@ -674,7 +674,7 @@ bool CDODMapOverview::DrawCapturePoint( int iCP, MapObject_t *obj )
 				surface()->DrawSetTextPos( x+1, y );
 				surface()->DrawPrintText( wText, wcslen(wText) );
 
-				// draw name in color 
+				// draw name in color
 				surface()->DrawSetTextColor( g_PR->GetTeamColor( iCappingTeam ) );
 				surface()->DrawSetTextPos( x, y );
 				surface()->DrawPrintText( wText, wcslen(wText) );
@@ -774,7 +774,7 @@ void CDODMapOverview::DrawBombTimerSwipeIcon( Vector pos, int scale, int texture
 
 	float flEndAngle = flCompleteCircle * flPercentRemaining; // clockwise
 
-	typedef struct 
+	typedef struct
 	{
 		Vector2D vecTrailing;
 		Vector2D vecLeading;
@@ -793,7 +793,7 @@ void CDODMapOverview::DrawBombTimerSwipeIcon( Vector pos, int scale, int texture
 	-----------------
 	*/
 
-	// Encode the leading and trailing edge of each quadrant 
+	// Encode the leading and trailing edge of each quadrant
 	// in the range 0.0 -> 1.0
 
 	icon_quadrant_t quadrants[8];
@@ -830,7 +830,7 @@ void CDODMapOverview::DrawBombTimerSwipeIcon( Vector pos, int scale, int texture
 	int j;
 	for ( j=0;j<=7;j++ )
 	{
-		float flMinAngle = j * fl45degrees;	
+		float flMinAngle = j * fl45degrees;
 
 		float flAngle = clamp( flEndAngle - flMinAngle, 0, fl45degrees );
 
@@ -842,7 +842,7 @@ void CDODMapOverview::DrawBombTimerSwipeIcon( Vector pos, int scale, int texture
 		else
 		{
 			// draw our segment
-			vgui::Vertex_t vert[3];	
+			vgui::Vertex_t vert[3];
 
 			// vert 0 is mid ( 0.5, 0.5 )
 
@@ -853,14 +853,14 @@ void CDODMapOverview::DrawBombTimerSwipeIcon( Vector pos, int scale, int texture
 
 			switch( j )
 			{
-			case 0:  
+			case 0:
 			case 7:
 				//right
 				xdir = 1;
 				ydir = 0;
 				break;
 
-			case 1: 
+			case 1:
 			case 2:
 				//up
 				xdir = 0;
@@ -897,15 +897,15 @@ void CDODMapOverview::DrawBombTimerSwipeIcon( Vector pos, int scale, int texture
 
 			// vert 2 is our trailing edge
 			Vector vec2;
-			
+
 			vec2.x = newPos.x + quadrants[j].vecTrailing.x * scale*2;
-            vec2.y = newPos.y - quadrants[j].vecTrailing.y * scale*2;
+	vec2.y = newPos.y - quadrants[j].vecTrailing.y * scale*2;
 
 			Vector2D pos2 = WorldToMap( vec2 );
 			vert[2].Init( MapToPanel( pos2 ), quadrants[j].vecTrailing );
 
 			surface()->DrawTexturedPolygon( 3, vert );
-		}	
+		}
 	}
 }
 
@@ -948,7 +948,7 @@ void CDODMapOverview::DrawHorizontalSwipe( Vector pos, int scale, int textureID,
 		lowerLeft.x  = flXPos + flIconSize - width;
 	}
 
-	vgui::Vertex_t vert[4];	
+	vgui::Vertex_t vert[4];
 
 	Vector2D pos0 = WorldToMap( upperLeft );
 	vert[0].Init( MapToPanel( pos0 ), uv11 );

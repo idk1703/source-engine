@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -35,7 +35,7 @@ bool VGui_InitInterfacesList( const char *moduleName, CreateInterfaceFn *factory
 		Assert( false );
 		Error( "Must include memoverride.cpp in your project." );
 	}
-#endif	
+#endif
 	// keep a record of this module name
 	strncpy(g_szControlsModuleName, moduleName, sizeof(g_szControlsModuleName));
 	g_szControlsModuleName[sizeof(g_szControlsModuleName) - 1] = 0;
@@ -48,7 +48,7 @@ bool VGui_InitInterfacesList( const char *moduleName, CreateInterfaceFn *factory
 	setlocale(LC_MONETARY, "");
 
 	// NOTE: Vgui expects to use these interfaces which are defined in tier3.lib
-	if ( !g_pVGui || !g_pVGuiInput || !g_pVGuiPanel || 
+	if ( !g_pVGui || !g_pVGuiInput || !g_pVGuiPanel ||
 		 !g_pVGuiSurface || !g_pVGuiSchemeManager || !g_pVGuiSystem )
 	{
 		Warning( "vgui_controls is missing a required interface!\n" );
@@ -67,6 +67,3 @@ const char *GetControlsModuleName()
 }
 
 } // namespace vgui
-
-
-

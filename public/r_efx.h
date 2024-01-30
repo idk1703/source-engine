@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -24,7 +24,7 @@ public:
 	virtual int			Draw_DecalIndexFromName	( char *name );
 	virtual void		DecalShoot				( int textureIndex, int entity, const model_t *model, const Vector& model_origin, const QAngle& model_angles, const Vector& position, const Vector *saxis, int flags);
 	virtual void		DecalColorShoot			( int textureIndex, int entity, const model_t *model, const Vector& model_origin, const QAngle& model_angles, const Vector& position, const Vector *saxis, int flags, const color32 &rgbaColor);
-	virtual void		PlayerDecalShoot		( IMaterial *material, void *userdata, int entity, const model_t *model, const Vector& model_origin, const QAngle& model_angles, 
+	virtual void		PlayerDecalShoot		( IMaterial *material, void *userdata, int entity, const model_t *model, const Vector& model_origin, const QAngle& model_angles,
 													const Vector& position, const Vector *saxis, int flags, const color32 &rgbaColor );
 	virtual dlight_t	*CL_AllocDlight			( int key );
 	virtual dlight_t	*CL_AllocElight			( int key );

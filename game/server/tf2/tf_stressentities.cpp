@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -62,7 +62,7 @@ CBaseEntity* CreatePlasmaProjectile()
 		vForward.Random(-1,1);
 		VectorNormalize( vForward );
 
-		CBasePlasmaProjectile *pRet = CBasePlasmaProjectile::Create( 
+		CBasePlasmaProjectile *pRet = CBasePlasmaProjectile::Create(
 			Vector(0,0,0),
 			vForward,
 			0,
@@ -102,6 +102,3 @@ REGISTER_STRESS_ENTITY( CreateResourceBox );
 REGISTER_STRESS_ENTITY( CreatePlasmaProjectile );
 REGISTER_STRESS_ENTITY( CreatePlasmaShot );
 REGISTER_STRESS_ENTITY( CreateSignalFlare );
-
-
-

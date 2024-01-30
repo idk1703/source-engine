@@ -3,7 +3,7 @@
 // STATIC: "USEALTERNATEVIEW"	"0..1"
 
 // DYNAMIC: "SKINNING"			"0..1"
-// DYNAMIC: "ADDSTATIC"			"0..1" 
+// DYNAMIC: "ADDSTATIC"			"0..1"
 
 #define USESTATICTEXTURE (((ADDSTATIC == 1) && (HASSTATICTEXTURE == 1))?(1):(0))
 
@@ -48,40 +48,40 @@ struct VS_OUTPUT
 VS_OUTPUT main( const VS_INPUT v )
 {
 	VS_OUTPUT o = ( VS_OUTPUT )0;
-	
+
 	float3 worldPos;
-	
-	SkinPosition( 
-			g_bSkinning, 
+
+	SkinPosition(
+			g_bSkinning,
 			v.vPos,
 			v.vBoneWeights, v.vBoneIndices,
 			worldPos );
-			
+
 	float4 vTextureProjectedPos;
-			
+
 	o.vProjPos = mul( float4( worldPos, 1 ), cViewProj );
-	
+
 #if ( USEALTERNATEVIEW == 1 )
-	vTextureProjectedPos = mul( float4( worldPos, 1 ), g_CustomViewProj );	
-#else	
+	vTextureProjectedPos = mul( float4( worldPos, 1 ), g_CustomViewProj );
+#else
 	vTextureProjectedPos = o.vProjPos;
 #endif
-	
+
 #if !defined( _X360 )
 	o.vFog = CalcFog( worldPos, o.vProjPos.xyz, FOGTYPE_RANGE );
 #endif
 	o.worldPos_projPosZ = float4( worldPos.xyz, o.vProjPos.z );
-	
+
 	//Screen coordinates mapped back to texture coordinates for the portal texture
 	o.vPortalTexCoord.x = vTextureProjectedPos.x;
 	o.vPortalTexCoord.y = -vTextureProjectedPos.y; // invert Y
 	o.vPortalTexCoord.xy = (o.vPortalTexCoord.xy + vTextureProjectedPos.w) * 0.5f;
 	o.vPortalTexCoord.z = vTextureProjectedPos.w;
-	
+
 #if ( USEALTERNATEVIEW == 1 )
 	o.vPortalTexCoord.xy = saturate( o.vPortalTexCoord.xy / vTextureProjectedPos.w ) * vTextureProjectedPos.w; //stretch instead of clipping.
 #endif
-	
+
 #	if( (HASALPHAMASK == 1) || (USESTATICTEXTURE == 1) )
 	{
 		o.vSecondaryTexCoord = v.vMappingTexCoord.xy;
@@ -93,5 +93,3 @@ VS_OUTPUT main( const VS_INPUT v )
 
 	return o;
 }
-
-	

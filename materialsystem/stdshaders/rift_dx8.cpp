@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -12,16 +12,16 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-BEGIN_VS_SHADER( Rift_DX8, 
+BEGIN_VS_SHADER( Rift_DX8,
 			  "Help for Rift_DX8" )
-			  
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( TEXTURE2, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "second texture" )
 		SHADER_PARAM( FRAME2, SHADER_PARAM_TYPE_INTEGER, "0", "frame number for $texture2" )
 		SHADER_PARAM( TEXTURE2TRANSFORM, SHADER_PARAM_TYPE_MATRIX, "center .5 .5 scale 1 1 rotate 0 translate 0 0", "$texture2 texcoord transform" )
 	END_SHADER_PARAMS
 
-	SHADER_INIT_PARAMS()	
+	SHADER_INIT_PARAMS()
 	{
 		SET_FLAGS2( MATERIAL_VAR2_SUPPORTS_HW_SKINNING );
 	}

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -563,7 +563,7 @@ void WeaponSet::GetFromScratch( int& cost, WeaponSet& ws ) const
 	{
 		iHelmetPrice = CSGameRules()->GetBlackMarketPriceForWeapon( WEAPON_ASSAULTSUIT ) - CSGameRules()->GetBlackMarketPriceForWeapon( WEAPON_KEVLAR );
 		iKevlarPrice = CSGameRules()->GetBlackMarketPriceForWeapon( WEAPON_KEVLAR );
-		iNVGPrice = CSGameRules()->GetBlackMarketPriceForWeapon( WEAPON_NVG ); 
+		iNVGPrice = CSGameRules()->GetBlackMarketPriceForWeapon( WEAPON_NVG );
 	}
 
 	//-------------------------------------------------------------------------

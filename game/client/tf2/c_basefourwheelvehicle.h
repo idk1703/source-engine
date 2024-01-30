@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,7 +11,7 @@
 #include "basetfvehicle.h"
 
 class C_BasePlayer;
-	    
+
 class C_BaseTFFourWheelVehicle : public C_BaseTFVehicle
 {
 	DECLARE_CLASS( C_BaseTFFourWheelVehicle, C_BaseTFVehicle );

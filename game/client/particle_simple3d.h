@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -35,10 +35,10 @@ public:
 
 	float		m_flLifeRemaining;	// How long it lives for.
 public:
-	
-	byte		m_uchFrontColor[3];	
-	byte		m_uchSize;			
-	byte		m_uchBackColor[3];	
+
+	byte		m_uchFrontColor[3];
+	byte		m_uchSize;
+	byte		m_uchBackColor[3];
 	byte		m_pad;				// Pad to 8 bytes.
 };
 
@@ -50,7 +50,7 @@ class CSimple3DEmitter : public CSimpleEmitter
 {
 public:
 	CSimple3DEmitter( const char *pDebugName ) : CSimpleEmitter( pDebugName ) {}
-	
+
 	static CSmartPtr<CSimple3DEmitter>	Create( const char *pDebugName );
 
 	virtual void RenderParticles( CParticleRenderIterator *pIterator );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -31,7 +31,7 @@ ConVar	weapon_laserdesignator_range( "weapon_laserdesignator_range","1024", FCVA
 class CWeaponLaserDesignator : public CBaseTFCombatWeapon
 {
 	DECLARE_CLASS( CWeaponLaserDesignator, CBaseTFCombatWeapon );
-public:	
+public:
 	virtual void	Precache( void );
 	virtual float	GetFireRate( void );
 	virtual bool	Holster( CBaseCombatWeapon *pSwitchingTo = NULL );
@@ -60,7 +60,7 @@ LINK_ENTITY_TO_CLASS( weapon_laserdesignator, CWeaponLaserDesignator );
 PRECACHE_WEAPON_REGISTER(weapon_laserdesignator);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponLaserDesignator::Precache( void )
 {
@@ -69,7 +69,7 @@ void CWeaponLaserDesignator::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponLaserDesignator::GetFireRate()
 {
@@ -86,7 +86,7 @@ bool CWeaponLaserDesignator::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponLaserDesignator::ComputeEMPFireState( void )
@@ -101,7 +101,7 @@ bool CWeaponLaserDesignator::ComputeEMPFireState( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponLaserDesignator::ItemPostFrame( void )
 {
@@ -175,14 +175,14 @@ void CWeaponLaserDesignator::StopDesignating( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponLaserDesignator::PrimaryAttack( void )
 {
 	CBaseTFPlayer *pPlayer = ToBaseTFPlayer( m_hOwner );
 	if ( !pPlayer )
 		return;
-	
+
 	if ( !ComputeEMPFireState() )
 		return;
 
@@ -280,7 +280,7 @@ void CWeaponLaserDesignator::UpdateBeam( void )
 				{
 					pSentry->ToggleTurtle();
 				}
-				else 
+				else
 				{
 					// If it's an enemy object, tell my sentryguns to attack it
 					if ( !pPlayer->InSameTeam( pEntity ) )

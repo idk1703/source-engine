@@ -24,16 +24,16 @@ void CMiniDumpObject::Init( HANDLE pszFileMap, CUtlVector<module> *pKnownModuleL
 	PMINIDUMP_DIRECTORY miniDumpDir;
 	PVOID pOutput;
 	ULONG ulSize;
-	
+
 	if ( !pszFileMap )
 		return;
 	PVOID pMiniDump = MapViewOfFile( pszFileMap, FILE_MAP_READ, 0, 0, 0 );
-	
+
 	MiniDumpReadDumpStream( pMiniDump, ModuleListStream, &miniDumpDir, &pOutput, &ulSize );
-	
+
 	int numberOfModules = ((int *)pOutput)[0];
 	MINIDUMP_MODULE *pModules = (MINIDUMP_MODULE *)((byte *)pOutput + sizeof(int));
-	
+
 	for ( int i = 0; i < numberOfModules; i++ )
 	{
 		MINIDUMP_MODULE *pCurrentModule = (pModules + i);
@@ -41,9 +41,9 @@ void CMiniDumpObject::Init( HANDLE pszFileMap, CUtlVector<module> *pKnownModuleL
 		newModule->key = 0;
 		newModule->knownVersion = false;
 		int offset = pCurrentModule->ModuleNameRva;
-		int nSizeOfName = *(int *)((byte *)pMiniDump + offset);	
+		int nSizeOfName = *(int *)((byte *)pMiniDump + offset);
 		char nameBuf[1024];
-		char *pszName = (char *)(byte *)pMiniDump + offset + sizeof(int);	
+		char *pszName = (char *)(byte *)pMiniDump + offset + sizeof(int);
 		int j = 0;
 		for ( j = 0; j < nSizeOfName/2; j++ )
 		{
@@ -54,7 +54,7 @@ void CMiniDumpObject::Init( HANDLE pszFileMap, CUtlVector<module> *pKnownModuleL
 		newModule->versionInfo = GetVersionStruct(&pCurrentModule->VersionInfo);
 		bool added = false;
 
-        for ( int j = 0; j < pKnownModuleList->Count(); j++ )
+		for ( int j = 0; j < pKnownModuleList->Count(); j++ )
 		{
 			if ( !Q_stricmp( strrchr( nameBuf, '\\' )+1, pKnownModuleList->Element( j ).name ) )
 			{
@@ -62,13 +62,13 @@ void CMiniDumpObject::Init( HANDLE pszFileMap, CUtlVector<module> *pKnownModuleL
 
 				if ( newModule->versionInfo == pKnownModuleList->Element(j).versionInfo )
 				{
-					newModule->key = pKnownModuleList->Element( j ).key;					
+					newModule->key = pKnownModuleList->Element( j ).key;
 					newModule->knownVersion = true;
 				}
 				else
-				{		
+				{
 					newModule->knownVersion = false;
-				}				
+				}
 			}
 			if ( newModule->knownVersion )
 				break;
@@ -87,7 +87,7 @@ void CMiniDumpObject::Init( HANDLE pszFileMap, CUtlVector<module> *pKnownModuleL
 			m_unknownModuleList.AddToTail( *newModule );
 			added = true;
 			break;
-		}				
+		}
 		if ( !added )
 		{
 			newModule->key = 0;
@@ -95,7 +95,7 @@ void CMiniDumpObject::Init( HANDLE pszFileMap, CUtlVector<module> *pKnownModuleL
 			m_unknownModuleList.AddToTail( *newModule );
 		}
 	}
-    UnmapViewOfFile( pMiniDump );
+	UnmapViewOfFile( pMiniDump );
 }
 
 void CMiniDumpObject::InitFromHandle( HANDLE pMiniDumpHandle, CUtlVector<module> *pKnownModuleList )
@@ -108,7 +108,7 @@ void CMiniDumpObject::InitFromHandle( HANDLE pMiniDumpHandle, CUtlVector<module>
 		{
 			if ( !Q_strcmp( "MDMP", szMdmp ))
 			{
-				HANDLE hFileMap = CreateFileMapping( pMiniDumpHandle, NULL, PAGE_READONLY, 0, 0, NULL );	
+				HANDLE hFileMap = CreateFileMapping( pMiniDumpHandle, NULL, PAGE_READONLY, 0, 0, NULL );
 				Init( hFileMap, pKnownModuleList );
 			}
 		}
@@ -137,7 +137,7 @@ void CMiniDumpObject::GetVersionString( char *pszOutput, version *pVersionInfo )
 	itoa( firstLow, firstLowVer, 10 );
 	itoa( secondHigh, secondHighVer, 10 );
 	itoa( secondLow, secondLowVer, 10 );
-    
+
 	strcat( pszOutput, firstHighVer );
 	strcat( pszOutput, "." );
 	strcat( pszOutput, secondHighVer );
@@ -165,19 +165,19 @@ int CMiniDumpObject::ModuleListToListPanel( vgui::ListPanel *pTokenList, CUtlVec
 	char keyNameBuf[1024] = "module";
 	char modNumBuf[4] = "";
 	int moduleNumber = startingModule;
-		
+
 	for ( int i = 0; i < pModuleList->Count(); i++ )
 	{
 		char version[20] = "";
 		moduleNumber++;
 		itoa( moduleNumber, modNumBuf, 10 );
 		strcat( keyNameBuf, modNumBuf );
-		module currentModule = pModuleList->Element(i);			
+		module currentModule = pModuleList->Element(i);
 		GetVersionString( version, &currentModule.versionInfo );
 		bool bRepeat = false;
 
 		if ( bCumulative )
-		{			
+		{
 			int tokenCount = pTokenList->GetItemCount();
 			for ( int j = 0; j < tokenCount; j++ )
 			{
@@ -185,16 +185,16 @@ int CMiniDumpObject::ModuleListToListPanel( vgui::ListPanel *pTokenList, CUtlVec
 				const char *moduleName = strrchr( kv->GetString( "name" ), '\\' );
 				const char *secondModuleName = strrchr( currentModule.name, '\\' );
 				const char *checksum = kv->GetString( "checksum" );
-        
+
 				if ( !stricmp( moduleName, secondModuleName ) && !strcmp( kv->GetString( "version" ), version ) )
-				{					
-					int count = kv->GetInt( "count" );	
+				{
+					int count = kv->GetInt( "count" );
 					int key = kv->GetInt( "key" );
 					KeyValues *newKv = new KeyValues( keyNameBuf, "name", kv->GetString("name"), "checksum", checksum );
 					newKv->SetString( "version", version );
-					newKv->SetInt( "count", count+1 );						
+					newKv->SetInt( "count", count+1 );
 					newKv->SetInt( "key", key );
-					newKv->SetColor( "cellcolor", kv->GetColor( "cellcolor" ) );			
+					newKv->SetColor( "cellcolor", kv->GetColor( "cellcolor" ) );
 					pTokenList->RemoveItem( j );
 					pTokenList->AddItem( newKv, j, false, false );
 					bRepeat = true;
@@ -202,10 +202,10 @@ int CMiniDumpObject::ModuleListToListPanel( vgui::ListPanel *pTokenList, CUtlVec
 				}
 			}
 		}
-        
+
 		if ( !bRepeat )
 		{
-			KeyValues *kv = new KeyValues( keyNameBuf, "name", currentModule.name);	
+			KeyValues *kv = new KeyValues( keyNameBuf, "name", currentModule.name);
 			kv->SetString( "version", version );
 			kv->SetInt( "key", currentModule.key );
 			if ( bCumulative )
@@ -214,7 +214,7 @@ int CMiniDumpObject::ModuleListToListPanel( vgui::ListPanel *pTokenList, CUtlVec
 			}
 			int colorValue = 255;
 			if ( !currentModule.knownVersion )
-                colorValue = 155;
+				colorValue = 155;
 			switch ( currentModule.myType )
 			{
 			case GOOD:

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -12,7 +12,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_FuncRespawnRoom : public C_BaseEntity
 {
@@ -25,7 +25,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_FuncRespawnRoom, DT_FuncRespawnRoom, CFuncRespawnRoo
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_FuncRespawnRoomVisualizer : public C_BaseEntity
 {

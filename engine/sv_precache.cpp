@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,8 +23,8 @@
 static ConVar sv_forcepreload( "sv_forcepreload", "0", FCVAR_ARCHIVE, "Force server side preloading.");
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : int SV_ModelIndex
 //-----------------------------------------------------------------------------
 int SV_ModelIndex (const char *name)
@@ -34,9 +34,9 @@ int SV_ModelIndex (const char *name)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
-//			preload - 
+// Purpose:
+// Input  : *name -
+//			preload -
 // Output : int
 //-----------------------------------------------------------------------------
 int SV_FindOrAddModel(const char *name, bool preload )
@@ -53,8 +53,8 @@ int SV_FindOrAddModel(const char *name, bool preload )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : int
 //-----------------------------------------------------------------------------
 int SV_SoundIndex(const char *name)
@@ -64,9 +64,9 @@ int SV_SoundIndex(const char *name)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
-//			preload - 
+// Purpose:
+// Input  : *name -
+//			preload -
 // Output : int
 //-----------------------------------------------------------------------------
 int SV_FindOrAddSound(const char *name, bool preload )
@@ -83,8 +83,8 @@ int SV_FindOrAddSound(const char *name, bool preload )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : int
 //-----------------------------------------------------------------------------
 int SV_GenericIndex(const char *name)
@@ -94,9 +94,9 @@ int SV_GenericIndex(const char *name)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
-//			preload - 
+// Purpose:
+// Input  : *name -
+//			preload -
 // Output : int
 //-----------------------------------------------------------------------------
 int SV_FindOrAddGeneric(const char *name, bool preload )
@@ -113,8 +113,8 @@ int SV_FindOrAddGeneric(const char *name, bool preload )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : int
 //-----------------------------------------------------------------------------
 int SV_DecalIndex(const char *name)
@@ -123,9 +123,9 @@ int SV_DecalIndex(const char *name)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
-//			preload - 
+// Purpose:
+// Input  : *name -
+//			preload -
 // Output : int
 //-----------------------------------------------------------------------------
 int SV_FindOrAddDecal(const char *name, bool preload )
@@ -142,8 +142,8 @@ int SV_FindOrAddDecal(const char *name, bool preload )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 void SV_ForceSimpleMaterial( const char *name )
 {
@@ -152,10 +152,10 @@ void SV_ForceSimpleMaterial( const char *name )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
-//			&mins - 
-//			&maxs - 
+// Purpose:
+// Input  : *name -
+//			&mins -
+//			&maxs -
 //-----------------------------------------------------------------------------
 void SV_ForceModelBounds( const char *name, const Vector &mins, const Vector &maxs )
 {
@@ -164,7 +164,7 @@ void SV_ForceModelBounds( const char *name, const Vector &mins, const Vector &ma
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : TABLEID
 //-----------------------------------------------------------------------------
 INetworkStringTable *CGameServer::GetModelPrecacheTable( void ) const
@@ -173,10 +173,10 @@ INetworkStringTable *CGameServer::GetModelPrecacheTable( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
-//			flags - 
-//			*model - 
+// Purpose:
+// Input  : *name -
+//			flags -
+//			*model -
 // Output : int
 //-----------------------------------------------------------------------------
 int CGameServer::PrecacheModel( char const *name, int flags, model_t *model /*=NULL*/ )
@@ -231,7 +231,7 @@ int CGameServer::PrecacheModel( char const *name, int flags, model_t *model /*=N
 		{
 			slot->SetModel( modelloader->GetModelForName( name, IModelLoader::FMODELLOADER_SERVER ) );
 #ifndef SWDS
-			EngineVGui()->UpdateProgressBar(PROGRESS_PRECACHE); 
+			EngineVGui()->UpdateProgressBar(PROGRESS_PRECACHE);
 #endif
 			MapReslistGenerator().OnModelPrecached(name);
 		}
@@ -246,8 +246,8 @@ int CGameServer::PrecacheModel( char const *name, int flags, model_t *model /*=N
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : model_t
 //-----------------------------------------------------------------------------
 model_t *CGameServer::GetModel( int index )
@@ -282,8 +282,8 @@ model_t *CGameServer::GetModel( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : int
 //-----------------------------------------------------------------------------
 int CGameServer::LookupModelIndex( char const *name )
@@ -296,7 +296,7 @@ int CGameServer::LookupModelIndex( char const *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : TABLEID
 //-----------------------------------------------------------------------------
 INetworkStringTable *CGameServer::GetSoundPrecacheTable( void ) const
@@ -305,9 +305,9 @@ INetworkStringTable *CGameServer::GetSoundPrecacheTable( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
-//			flags - 
+// Purpose:
+// Input  : *name -
+//			flags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CGameServer::PrecacheSound( char const *name, int flags )
@@ -350,8 +350,8 @@ int CGameServer::PrecacheSound( char const *name, int flags )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CGameServer::GetSound( int index )
@@ -371,8 +371,8 @@ char const *CGameServer::GetSound( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : int
 //-----------------------------------------------------------------------------
 int CGameServer::LookupSoundIndex( char const *name )
@@ -385,7 +385,7 @@ int CGameServer::LookupSoundIndex( char const *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : TABLEID
 //-----------------------------------------------------------------------------
 INetworkStringTable *CGameServer::GetGenericPrecacheTable( void ) const
@@ -394,9 +394,9 @@ INetworkStringTable *CGameServer::GetGenericPrecacheTable( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
-//			flags - 
+// Purpose:
+// Input  : *name -
+//			flags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CGameServer::PrecacheGeneric( char const *name, int flags )
@@ -437,8 +437,8 @@ int CGameServer::PrecacheGeneric( char const *name, int flags )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CGameServer::GetGeneric( int index )
@@ -457,8 +457,8 @@ char const *CGameServer::GetGeneric( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : int
 //-----------------------------------------------------------------------------
 int CGameServer::LookupGenericIndex( char const *name )
@@ -472,7 +472,7 @@ int CGameServer::LookupGenericIndex( char const *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : TABLEID
 //-----------------------------------------------------------------------------
 INetworkStringTable *CGameServer::GetDecalPrecacheTable( void ) const
@@ -481,9 +481,9 @@ INetworkStringTable *CGameServer::GetDecalPrecacheTable( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
-//			flags - 
+// Purpose:
+// Input  : *name -
+//			flags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CGameServer::PrecacheDecal( char const *name, int flags )
@@ -522,8 +522,8 @@ int CGameServer::PrecacheDecal( char const *name, int flags )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : int
 //-----------------------------------------------------------------------------
 int CGameServer::LookupDecalIndex( char const *name )
@@ -536,7 +536,7 @@ int CGameServer::LookupDecalIndex( char const *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGameServer::DumpPrecacheStats( INetworkStringTable *table )
 {
@@ -578,7 +578,7 @@ void CGameServer::DumpPrecacheStats( INetworkStringTable *table )
 	{
 		char const *name = table->GetString( i );
 		CPrecacheItem *slot = &items[ i ];
-		
+
 		int testLength;
 		const CPrecacheUserData *p = ( const CPrecacheUserData * )table->GetStringUserData( i, &testLength );
 		ErrorIfNot( testLength == sizeof( *p ),
@@ -590,7 +590,7 @@ void CGameServer::DumpPrecacheStats( INetworkStringTable *table )
 
 		ConMsg( "%03i:  %s (%s):   ",
 			i,
-			name, 
+			name,
 			GetFlagString( p->flags ) );
 
 		if ( slot->GetReferenceCount() == 0 )
@@ -600,8 +600,8 @@ void CGameServer::DumpPrecacheStats( INetworkStringTable *table )
 		else
 		{
 			ConMsg( " %i refs, first %.2f mru %.2f\n",
-				slot->GetReferenceCount(), 
-				slot->GetFirstReference(), 
+				slot->GetReferenceCount(),
+				slot->GetFirstReference(),
 				slot->GetMostRecentReference() );
 		}
 	}
@@ -611,7 +611,7 @@ void CGameServer::DumpPrecacheStats( INetworkStringTable *table )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND( sv_precacheinfo, "Show precache info." )
 {
@@ -646,7 +646,7 @@ CON_COMMAND( sv_precacheinfo, "Show precache info." )
 			return;
 		}
 	}
-	
+
 	// Show all data
 	sv.DumpPrecacheStats( sv.GetGenericPrecacheTable() );
 	sv.DumpPrecacheStats( sv.GetDecalPrecacheTable() );

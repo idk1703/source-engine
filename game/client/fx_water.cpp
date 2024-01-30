@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -75,10 +75,10 @@ void UTIL_GetNormalizedColorTintAndLuminosity( const Vector &color, Vector *tint
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &origin - 
-//			&normal - 
-//			scale - 
+// Purpose:
+// Input  : &origin -
+//			&normal -
+//			scale -
 //-----------------------------------------------------------------------------
 void FX_WaterRipple( const Vector &origin, float scale, Vector *pColor, float flLifetime, float flAlpha )
 {
@@ -91,42 +91,42 @@ void FX_WaterRipple( const Vector &origin, float scale, Vector *pColor, float fl
 	Vector endPos = origin + Vector(0,0,-64);
 
 	UTIL_TraceLine( startPos, endPos, MASK_WATER, NULL, COLLISION_GROUP_NONE, &tr );
-	
+
 	if ( tr.fraction < 1.0f )
 	{
 		//Add a ripple quad to the surface
-		FX_AddQuad( tr.endpos + ( tr.plane.normal * 0.5f ), 
-					tr.plane.normal, 
-					16.0f*scale, 
-					128.0f*scale, 
+		FX_AddQuad( tr.endpos + ( tr.plane.normal * 0.5f ),
+					tr.plane.normal,
+					16.0f*scale,
+					128.0f*scale,
 					0.7f,
 					flAlpha,	// start alpha
 					0.0f,		// end alpha
 					0.25f,
 					random->RandomFloat( 0, 360 ),
 					random->RandomFloat( -16.0f, 16.0f ),
-					color, 
-					flLifetime, 
-					"effects/splashwake1", 
+					color,
+					flLifetime,
+					"effects/splashwake1",
 					(FXQUAD_BIAS_SCALE|FXQUAD_BIAS_ALPHA) );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &origin - 
-//			&normal - 
+// Purpose:
+// Input  : &origin -
+//			&normal -
 //-----------------------------------------------------------------------------
 void FX_GunshotSplash( const Vector &origin, const Vector &normal, float scale )
 {
 	VPROF_BUDGET( "FX_GunshotSplash", VPROF_BUDGETGROUP_PARTICLE_RENDERING );
-	
+
 	if ( cl_show_splashes.GetBool() == false )
 		return;
 
 	Vector	color;
 	float	luminosity;
-	
+
 	// Get our lighting information
 	FX_GetSplashLighting( origin + ( normal * scale ), &color, &luminosity );
 
@@ -210,23 +210,23 @@ void FX_GunshotSplash( const Vector &origin, const Vector &normal, float scale )
 
 		pParticle->m_vecVelocity.Random( -0.2f, 0.2f );
 		pParticle->m_vecVelocity += ( normal * random->RandomFloat( 4.0f, 6.0f ) );
-		
+
 		VectorNormalize( pParticle->m_vecVelocity );
 
 		pParticle->m_vecVelocity *= 50 * flScale * (8-i);
-		
+
 		colorRamp = random->RandomFloat( 0.75f, 1.25f );
 
 		pParticle->m_uchColor[0]	= MIN( 1.0f, color[0] * colorRamp ) * 255.0f;
 		pParticle->m_uchColor[1]	= MIN( 1.0f, color[1] * colorRamp ) * 255.0f;
 		pParticle->m_uchColor[2]	= MIN( 1.0f, color[2] * colorRamp ) * 255.0f;
-		
+
 		pParticle->m_uchStartSize	= 24 * flScale * RemapValClamped( i, 7, 0, 1, 0.5f );
 		pParticle->m_uchEndSize		= MIN( 255, pParticle->m_uchStartSize * 2 );
-		
+
 		pParticle->m_uchStartAlpha	= RemapValClamped( i, 7, 0, 255, 32 ) * luminosity;
 		pParticle->m_uchEndAlpha	= 0;
-		
+
 		pParticle->m_flRoll			= random->RandomInt( 0, 360 );
 		pParticle->m_flRollDelta	= random->RandomFloat( -4.0f, 4.0f );
 	}
@@ -249,11 +249,11 @@ void FX_GunshotSplash( const Vector &origin, const Vector &normal, float scale )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &origin - 
-//			&normal - 
-//			scale - 
-//			*pColor - 
+// Purpose:
+// Input  : &origin -
+//			&normal -
+//			scale -
+//			*pColor -
 //-----------------------------------------------------------------------------
 void FX_GunshotSlimeSplash( const Vector &origin, const Vector &normal, float scale )
 {
@@ -261,7 +261,7 @@ void FX_GunshotSlimeSplash( const Vector &origin, const Vector &normal, float sc
 		return;
 
 	VPROF_BUDGET( "FX_GunshotSlimeSplash", VPROF_BUDGETGROUP_PARTICLE_RENDERING );
-	
+
 #if 0
 
 	float	colorRamp;
@@ -272,7 +272,7 @@ void FX_GunshotSlimeSplash( const Vector &origin, const Vector &normal, float sc
 
 	Vector	color;
 	float	luminosity;
-	
+
 	// Get our lighting information
 	FX_GetSplashLighting( origin + ( normal * scale ), &color, &luminosity );
 
@@ -314,7 +314,7 @@ void FX_GunshotSlimeSplash( const Vector &origin, const Vector &normal, float sc
 
 		tParticle->m_vecVelocity = offDir * random->RandomFloat( SPLASH_MIN_SPEED * flScale * 3.0f, SPLASH_MAX_SPEED * flScale * 3.0f );
 		tParticle->m_vecVelocity[2] += random->RandomFloat( 32.0f, 64.0f ) * flScale;
-   
+
 		tParticle->m_flWidth		= random->RandomFloat( 3.0f, 6.0f ) * flScale;
 		tParticle->m_flLength		= random->RandomFloat( 0.025f, 0.05f ) * flScale;
 
@@ -356,29 +356,29 @@ void FX_GunshotSlimeSplash( const Vector &origin, const Vector &normal, float sc
 
 		pParticle->m_vecVelocity.Random( -0.2f, 0.2f );
 		pParticle->m_vecVelocity += ( normal * random->RandomFloat( 4.0f, 6.0f ) );
-		
+
 		VectorNormalize( pParticle->m_vecVelocity );
 
 		pParticle->m_vecVelocity *= 50 * flScale * (8-i);
-		
+
 		colorRamp = random->RandomFloat( 0.75f, 1.25f );
 
 		pParticle->m_uchColor[0]	= MIN( 1.0f, color[0] * colorRamp ) * 255.0f;
 		pParticle->m_uchColor[1]	= MIN( 1.0f, color[1] * colorRamp ) * 255.0f;
 		pParticle->m_uchColor[2]	= MIN( 1.0f, color[2] * colorRamp ) * 255.0f;
-		
+
 		pParticle->m_uchStartSize	= 24 * flScale * RemapValClamped( i, 7, 0, 1, 0.5f );
 		pParticle->m_uchEndSize		= MIN( 255, pParticle->m_uchStartSize * 2 );
-		
+
 		pParticle->m_uchStartAlpha	= RemapValClamped( i, 7, 0, 255, 32 ) * luminosity;
 		pParticle->m_uchEndAlpha	= 0;
-		
+
 		pParticle->m_flRoll			= random->RandomInt( 0, 360 );
 		pParticle->m_flRollDelta	= random->RandomFloat( -4.0f, 4.0f );
 	}
-	
+
 #else
-	
+
 	QAngle vecAngles;
 	VectorAngles( normal, vecAngles );
 	if ( scale < 2.0f )
@@ -410,7 +410,7 @@ void FX_GunshotSlimeSplash( const Vector &origin, const Vector &normal, float sc
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SplashCallback( const CEffectData &data )
 {
@@ -432,8 +432,8 @@ DECLARE_CLIENT_EFFECT( "watersplash", SplashCallback );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &data - 
+// Purpose:
+// Input  : &data -
 //-----------------------------------------------------------------------------
 void GunshotSplashCallback( const CEffectData &data )
 {
@@ -450,8 +450,8 @@ void GunshotSplashCallback( const CEffectData &data )
 DECLARE_CLIENT_EFFECT( "gunshotsplash", GunshotSplashCallback );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &data - 
+// Purpose:
+// Input  : &data -
 //-----------------------------------------------------------------------------
 void RippleCallback( const CEffectData &data )
 {
@@ -459,7 +459,7 @@ void RippleCallback( const CEffectData &data )
 
 	Vector	color;
 	float	luminosity;
-	
+
 	// Get our lighting information
 	FX_GetSplashLighting( data.m_vOrigin + ( Vector(0,0,1) * 4.0f ), &color, &luminosity );
 
@@ -469,8 +469,8 @@ void RippleCallback( const CEffectData &data )
 DECLARE_CLIENT_EFFECT( "waterripple", RippleCallback );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pDebugName - 
+// Purpose:
+// Input  : *pDebugName -
 // Output : WaterDebrisEffect*
 //-----------------------------------------------------------------------------
 WaterDebrisEffect* WaterDebrisEffect::Create( const char *pDebugName )
@@ -479,9 +479,9 @@ WaterDebrisEffect* WaterDebrisEffect::Create( const char *pDebugName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParticle - 
-//			timeDelta - 
+// Purpose:
+// Input  : *pParticle -
+//			timeDelta -
 // Output : float
 //-----------------------------------------------------------------------------
 float WaterDebrisEffect::UpdateAlpha( const SimpleParticle *pParticle )
@@ -490,15 +490,15 @@ float WaterDebrisEffect::UpdateAlpha( const SimpleParticle *pParticle )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParticle - 
-//			timeDelta - 
+// Purpose:
+// Input  : *pParticle -
+//			timeDelta -
 // Output : float
 //-----------------------------------------------------------------------------
 float CSplashParticle::UpdateRoll( SimpleParticle *pParticle, float timeDelta )
 {
 	pParticle->m_flRoll += pParticle->m_flRollDelta * timeDelta;
-	
+
 	pParticle->m_flRollDelta += pParticle->m_flRollDelta * ( timeDelta * -4.0f );
 
 	//Cap the minimum roll
@@ -511,9 +511,9 @@ float CSplashParticle::UpdateRoll( SimpleParticle *pParticle, float timeDelta )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParticle - 
-//			timeDelta - 
+// Purpose:
+// Input  : *pParticle -
+//			timeDelta -
 //-----------------------------------------------------------------------------
 void CSplashParticle::UpdateVelocity( SimpleParticle *pParticle, float timeDelta )
 {
@@ -533,8 +533,8 @@ void CSplashParticle::UpdateVelocity( SimpleParticle *pParticle, float timeDelta
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParticle - 
+// Purpose:
+// Input  : *pParticle -
 // Output : float
 //-----------------------------------------------------------------------------
 float CSplashParticle::UpdateAlpha( const SimpleParticle *pParticle )
@@ -554,8 +554,8 @@ float CSplashParticle::UpdateAlpha( const SimpleParticle *pParticle )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &clipPlane - 
+// Purpose:
+// Input  : &clipPlane -
 //-----------------------------------------------------------------------------
 void CSplashParticle::SetClipHeight( float flClipHeight )
 {
@@ -564,15 +564,15 @@ void CSplashParticle::SetClipHeight( float flClipHeight )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pIterator - 
+// Purpose:
+// Input  : *pIterator -
 //-----------------------------------------------------------------------------
 void CSplashParticle::SimulateParticles( CParticleSimulateIterator *pIterator )
 {
 	float timeDelta = pIterator->GetTimeDelta();
 
 	SimpleParticle *pParticle = (SimpleParticle*)pIterator->GetFirst();
-	
+
 	while ( pParticle )
 	{
 		//Update velocity

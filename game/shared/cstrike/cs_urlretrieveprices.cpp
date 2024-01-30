@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -130,7 +130,7 @@ bool ParseHTTPResponse( SOCKET socketHTML, uint32 *unPageHash = NULL )
 //-----------------------------------------------------------------------------
 // Purpose: Given http url crack it into an address and the request part
 //-----------------------------------------------------------------------------
-bool ProcessURL( const char *pchURL, void *pSockAddrIn, char *pchRequest, int cchRequest ) 
+bool ProcessURL( const char *pchURL, void *pSockAddrIn, char *pchRequest, int cchRequest )
 {
 	char rgchHost[ MAX_DNS_NAME ];
 	char rgchRequest[ MED_BUFFER_SIZE ];

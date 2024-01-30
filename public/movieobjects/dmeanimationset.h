@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -27,7 +27,7 @@ class CDmePreset : public CDmElement
 	DEFINE_ELEMENT( CDmePreset, CDmElement );
 
 public:
-	CDmaElementArray< CDmElement > &GetControlValues();	
+	CDmaElementArray< CDmElement > &GetControlValues();
 	const CDmaElementArray< CDmElement > &GetControlValues() const;
 
 	CDmElement *FindControlValue( const char *pControlName );
@@ -53,7 +53,7 @@ class CDmeProceduralPresetSettings : public CDmElement
 {
 	DEFINE_ELEMENT( CDmeProceduralPresetSettings, CDmElement );
 public:
-	
+
 	CDmaVar< float > m_flJitterScale;
 	CDmaVar< float > m_flSmoothScale;
 	CDmaVar< float > m_flSharpenScale;
@@ -129,7 +129,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// The main controlbox for controlling animation 
+// The main controlbox for controlling animation
 //-----------------------------------------------------------------------------
 class CDmeAnimationSet : public CDmElement
 {

@@ -65,25 +65,25 @@ public:
 
 	// For matching server and client commands for debugging
 	int		command_number;
-	
+
 	// the tick the client created this command
 	int		tick_count;
-	
+
 	// Player instantaneous view angles.
-	QAngle	viewangles;     
+	QAngle	viewangles;
 	// Intended velocities
 	//	forward velocity.
-	float	forwardmove;   
+	float	forwardmove;
 	//  sideways velocity.
-	float	sidemove;      
+	float	sidemove;
 	//  upward velocity.
-	float	upmove;         
+	float	upmove;
 	// Attack button states
-	int		buttons;		
+	int		buttons;
 	// Impulse command issued.
-	byte    impulse;        
+	byte    impulse;
 	// Current weapon id
-	int		weaponselect;	
+	int		weaponselect;
 	int		weaponsubtype;
 
 	int		random_seed;	// For shared random functions

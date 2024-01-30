@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -42,7 +42,7 @@
 public:
 
 	DECLARE_CLASS( CTFPipebombLauncher, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	// Server specific.
@@ -98,7 +98,7 @@ public:
 protected:
 
 	// This is here so we can network the pipebomb count for prediction purposes
-	CNetworkVar( int,				m_iPipebombCount );	
+	CNetworkVar( int,				m_iPipebombCount );
 #endif
 
 #ifdef CLIENT_DLL

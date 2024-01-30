@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
 
-#if defined( WIN32 ) 
+#if defined( WIN32 )
 #if !defined( _X360 )
 #include <wtypes.h>
 #include <winuser.h>
@@ -225,86 +225,86 @@ static const char *s_pButtonCodeName[ ] =
 	"MWHEELDOWN",	// MOUSE_WHEEL_DOWN
 
 #if defined ( _X360 ) || defined ( _LINUX )
-	"A_BUTTON",		// JOYSTICK_FIRST_BUTTON		
-	"B_BUTTON",		
-	"X_BUTTON",		
-	"Y_BUTTON",		
-	"L_SHOULDER",		
-	"R_SHOULDER",		
-	"BACK",		
+	"A_BUTTON",		// JOYSTICK_FIRST_BUTTON
+	"B_BUTTON",
+	"X_BUTTON",
+	"Y_BUTTON",
+	"L_SHOULDER",
+	"R_SHOULDER",
+	"BACK",
 	"START",
-	"STICK1",		
-	"STICK2",		
+	"STICK1",
+	"STICK2",
 #else
 	"JOY1",			// JOYSTICK_FIRST_BUTTON
-	"JOY2",		
-	"JOY3",		
-	"JOY4",		
-	"JOY5",		
-	"JOY6",		
-	"JOY7",		
-	"JOY8",		
-	"JOY9",		
+	"JOY2",
+	"JOY3",
+	"JOY4",
+	"JOY5",
+	"JOY6",
+	"JOY7",
+	"JOY8",
+	"JOY9",
 	"JOY10",
 #endif
 
-	"JOY11",		
-	"JOY12",		
-	"JOY13",		
-	"JOY14",		
-	"JOY15",		
-	"JOY16",		
-	"JOY17",	
-	"JOY18",		
-	"JOY19",		
-	"JOY20",	
-	"JOY21",	
-	"JOY22",	
-	"JOY23",		
-	"JOY24",		
-	"JOY25",		
-	"JOY26",		
-	"JOY27",	
-	"JOY28",	
-	"JOY29",	
-	"JOY30",		
-	"JOY31",		
+	"JOY11",
+	"JOY12",
+	"JOY13",
+	"JOY14",
+	"JOY15",
+	"JOY16",
+	"JOY17",
+	"JOY18",
+	"JOY19",
+	"JOY20",
+	"JOY21",
+	"JOY22",
+	"JOY23",
+	"JOY24",
+	"JOY25",
+	"JOY26",
+	"JOY27",
+	"JOY28",
+	"JOY29",
+	"JOY30",
+	"JOY31",
 	"JOY32",		// JOYSTICK_LAST_BUTTON
 
 #if defined ( _X360 )
 	"UP",			// JOYSTICK_FIRST_POV_BUTTON
-	"RIGHT",		
-	"DOWN",		
+	"RIGHT",
+	"DOWN",
 	"LEFT",			// JOYSTICK_LAST_POV_BUTTON
 
 	"S1_RIGHT",		// JOYSTICK_FIRST_AXIS_BUTTON
-	"S1_LEFT",		
+	"S1_LEFT",
 	"S1_DOWN",
-	"S1_UP",		
-	"L_TRIGGER",		
+	"S1_UP",
+	"L_TRIGGER",
 	"R_TRIGGER",
 	"S2_RIGHT",
-	"S2_LEFT",		
+	"S2_LEFT",
 	"S2_DOWN",
 	"S2_UP",		// JOYSTICK_LAST_AXIS_BUTTON
 	"V AXIS POS",
-	"V AXIS NEG",		
+	"V AXIS NEG",
 #else
 	"POV_UP",		// JOYSTICK_FIRST_POV_BUTTON
-	"POV_RIGHT",		
-	"POV_DOWN",		
+	"POV_RIGHT",
+	"POV_DOWN",
 	"POV_LEFT",		// JOYSTICK_LAST_POV_BUTTON
 
 	"X AXIS POS",	// JOYSTICK_FIRST_AXIS_BUTTON
-	"X AXIS NEG",		
+	"X AXIS NEG",
 	"Y AXIS POS",
-	"Y AXIS NEG",		
+	"Y AXIS NEG",
 	"Z AXIS POS",
-	"Z AXIS NEG",		
+	"Z AXIS NEG",
 	"R AXIS POS",
-	"R AXIS NEG",		
+	"R AXIS NEG",
 	"U AXIS POS",
-	"U AXIS NEG",		
+	"U AXIS NEG",
 	"V AXIS POS",
 	"V AXIS NEG",	// JOYSTICK_LAST_AXIS_BUTTON
 	"FALCON_NULL", // NVNT temp Fix for unaligned joystick enumeration
@@ -364,88 +364,88 @@ static const char *s_pAnalogCodeName[ ] =
 #if !defined ( _X360 )
 static const char *s_pXControllerButtonCodeNames[ ] =
 {
-	"A_BUTTON",		// JOYSTICK_FIRST_BUTTON		
-	"B_BUTTON",		
-	"X_BUTTON",		
-	"Y_BUTTON",		
-	"L_SHOULDER",		
-	"R_SHOULDER",		
-	"BACK",		
+	"A_BUTTON",		// JOYSTICK_FIRST_BUTTON
+	"B_BUTTON",
+	"X_BUTTON",
+	"Y_BUTTON",
+	"L_SHOULDER",
+	"R_SHOULDER",
+	"BACK",
 	"START",
-	"STICK1",		
-	"STICK2",		
-	"JOY11",		
-	"JOY12",		
-	"JOY13",		
-	"JOY14",		
-	"JOY15",		
-	"JOY16",		
-	"JOY17",	
-	"JOY18",		
-	"JOY19",		
-	"JOY20",	
-	"JOY21",	
-	"JOY22",	
-	"JOY23",		
-	"JOY24",		
-	"JOY25",		
-	"JOY26",		
-	"JOY27",	
-	"JOY28",	
-	"JOY29",	
-	"JOY30",		
-	"JOY31",		
+	"STICK1",
+	"STICK2",
+	"JOY11",
+	"JOY12",
+	"JOY13",
+	"JOY14",
+	"JOY15",
+	"JOY16",
+	"JOY17",
+	"JOY18",
+	"JOY19",
+	"JOY20",
+	"JOY21",
+	"JOY22",
+	"JOY23",
+	"JOY24",
+	"JOY25",
+	"JOY26",
+	"JOY27",
+	"JOY28",
+	"JOY29",
+	"JOY30",
+	"JOY31",
 	"JOY32",		// JOYSTICK_LAST_BUTTON
 
 	"UP",			// JOYSTICK_FIRST_POV_BUTTON
-	"RIGHT",		
-	"DOWN",		
+	"RIGHT",
+	"DOWN",
 	"LEFT",			// JOYSTICK_LAST_POV_BUTTON
 
 	"S1_RIGHT",		// JOYSTICK_FIRST_AXIS_BUTTON
-	"S1_LEFT",		
+	"S1_LEFT",
 	"S1_DOWN",
-	"S1_UP",		
-	"L_TRIGGER",		
+	"S1_UP",
+	"L_TRIGGER",
 	"R_TRIGGER",
 	"S2_RIGHT",
-	"S2_LEFT",		
+	"S2_LEFT",
 	"S2_DOWN",
 	"S2_UP",		// JOYSTICK_LAST_AXIS_BUTTON
 	"V AXIS POS",
-	"V AXIS NEG",		
+	"V AXIS NEG",
 };
 #endif
 
 // this maps non-translated keyboard scan codes to engine key codes
 // Google for 'Keyboard Scan Code Specification'
-static ButtonCode_t s_pScanToButtonCode_QWERTY[128] = 
-{ 
-	//	0				1				2				3				4				5				6				7 
-	//	8				9				A				B				C				D				E				F 
+static ButtonCode_t s_pScanToButtonCode_QWERTY[128] =
+{
+	//	0				1				2				3				4				5				6				7
+	//	8				9				A				B				C				D				E				F
 	KEY_NONE,		KEY_ESCAPE,		KEY_1,			KEY_2,			KEY_3,			KEY_4,			KEY_5,			KEY_6,			// 0
-	KEY_7,			KEY_8,			KEY_9,			KEY_0,			KEY_MINUS,		KEY_EQUAL,		KEY_BACKSPACE,	KEY_TAB,		// 0 
+	KEY_7,			KEY_8,			KEY_9,			KEY_0,			KEY_MINUS,		KEY_EQUAL,		KEY_BACKSPACE,	KEY_TAB,		// 0
 
 	KEY_Q,			KEY_W,			KEY_E,			KEY_R,			KEY_T,			KEY_Y,			KEY_U,			KEY_I,			// 1
-	KEY_O,			KEY_P,			KEY_LBRACKET,	KEY_RBRACKET,	KEY_ENTER,		KEY_LCONTROL,	KEY_A,			KEY_S,			// 1 
+	KEY_O,			KEY_P,			KEY_LBRACKET,	KEY_RBRACKET,	KEY_ENTER,		KEY_LCONTROL,	KEY_A,			KEY_S,			// 1
 
-	KEY_D,			KEY_F,			KEY_G,			KEY_H,			KEY_J,			KEY_K,			KEY_L,			KEY_SEMICOLON,	// 2 
-	KEY_APOSTROPHE,	KEY_BACKQUOTE,	KEY_LSHIFT,		KEY_BACKSLASH,	KEY_Z,			KEY_X,			KEY_C,			KEY_V,			// 2 
+	KEY_D,			KEY_F,			KEY_G,			KEY_H,			KEY_J,			KEY_K,			KEY_L,			KEY_SEMICOLON,	// 2
+	KEY_APOSTROPHE,	KEY_BACKQUOTE,	KEY_LSHIFT,		KEY_BACKSLASH,	KEY_Z,			KEY_X,			KEY_C,			KEY_V,			// 2
 
 	KEY_B,			KEY_N,			KEY_M,			KEY_COMMA,		KEY_PERIOD,		KEY_SLASH,		KEY_RSHIFT,		KEY_PAD_MULTIPLY,// 3
-	KEY_LALT,		KEY_SPACE,		KEY_CAPSLOCK,	KEY_F1,			KEY_F2,			KEY_F3,			KEY_F4,			KEY_F5,			// 3 
+	KEY_LALT,		KEY_SPACE,		KEY_CAPSLOCK,	KEY_F1,			KEY_F2,			KEY_F3,			KEY_F4,			KEY_F5,			// 3
 
 	KEY_F6,			KEY_F7,			KEY_F8,			KEY_F9,			KEY_F10,		KEY_NUMLOCK,	KEY_SCROLLLOCK,	KEY_HOME,		// 4
-	KEY_UP,			KEY_PAGEUP,		KEY_PAD_MINUS,	KEY_LEFT,		KEY_PAD_5,		KEY_RIGHT,		KEY_PAD_PLUS,	KEY_END,		// 4 
+	KEY_UP,			KEY_PAGEUP,		KEY_PAD_MINUS,	KEY_LEFT,		KEY_PAD_5,		KEY_RIGHT,		KEY_PAD_PLUS,	KEY_END,		// 4
 
 	KEY_DOWN,		KEY_PAGEDOWN,	KEY_INSERT,		KEY_DELETE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_F11,		// 5
 	KEY_F12,		KEY_BREAK,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		// 5
 
 	KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		// 6
-	KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		// 6 
+	KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		// 6
 
 	KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		// 7
-	KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE		// 7 
+	KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE,		KEY_NONE		// 7
 };
 
 static ButtonCode_t s_pScanToButtonCode[128];
@@ -552,7 +552,7 @@ void ButtonCode_InitKeyTranslationTable()
 	s_pVirtualKeyToButtonCode[VK_UP]		=KEY_UP;
 	s_pVirtualKeyToButtonCode[VK_LEFT]		=KEY_LEFT;
 	s_pVirtualKeyToButtonCode[VK_DOWN]		=KEY_DOWN;
-	s_pVirtualKeyToButtonCode[VK_RIGHT]		=KEY_RIGHT;	
+	s_pVirtualKeyToButtonCode[VK_RIGHT]		=KEY_RIGHT;
 	s_pVirtualKeyToButtonCode[VK_F1]		=KEY_F1;
 	s_pVirtualKeyToButtonCode[VK_F2]		=KEY_F2;
 	s_pVirtualKeyToButtonCode[VK_F3]		=KEY_F3;
@@ -682,13 +682,13 @@ ButtonCode_t ButtonCode_XKeyToButtonCode( int nPort, int keyCode )
 		int nOffset = code - JOYSTICK_FIRST_BUTTON;
 		return JOYSTICK_BUTTON( nPort, nOffset );
 	}
-	
+
 	if ( IsJoystickPOVCode( code ) )
 	{
 		int nOffset = code - JOYSTICK_FIRST_POV_BUTTON;
 		return JOYSTICK_POV_BUTTON( nPort, nOffset );
 	}
-	
+
 	if ( IsJoystickAxisCode( code ) )
 	{
 		int nOffset = code - JOYSTICK_FIRST_AXIS_BUTTON;

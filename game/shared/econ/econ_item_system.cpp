@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -74,14 +74,14 @@ GameItemSchema_t *GetItemSchema()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEconItemSystem::CEconItemSystem( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEconItemSystem::~CEconItemSystem( void )
 {
@@ -108,7 +108,7 @@ void CEconItemSystem::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconItemSystem::Shutdown( void )
 {
@@ -121,7 +121,7 @@ ConVar mp_tournament_whitelist( "mp_tournament_whitelist", "item_whitelist.txt",
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconItemSystem::ReloadWhitelist( void )
 {
@@ -202,7 +202,7 @@ CON_COMMAND_F( item_show_whitelistable_definitions, "Lists the item definitions 
 #endif // GAME_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconItemSystem::ResetAttribStringCache( void )
 {
@@ -214,7 +214,7 @@ void CEconItemSystem::ResetAttribStringCache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEconItemSystem::DecryptItemFiles( KeyValues *pKV, const char *pName )
 {
@@ -266,7 +266,7 @@ void CEconItemSystem::ParseItemSchemaFile( const char *pFilename )
 		FOR_EACH_VEC( vecErrors, nError )
 		{
 			// we want this to be an Error because several
-			// places rely on loading a valid item schema 
+			// places rely on loading a valid item schema
 			Error( "%s\n", vecErrors[nError].String() );
 		}
 	}

@@ -114,8 +114,8 @@ static void PFMWrite( float *pFloatImage, const char *pFilename, int width, int 
 	g_pFullFileSystem->Close( fp );
 }
 
-void WriteSubRect( int nSrcWidth, int nSrcHeight, const float *pSrcImage, 
-				  int nSrcOffsetX, int nSrcOffsetY, int nDstWidth, int nDstHeight, 
+void WriteSubRect( int nSrcWidth, int nSrcHeight, const float *pSrcImage,
+				  int nSrcOffsetX, int nSrcOffsetY, int nDstWidth, int nDstHeight,
 				  const char *pSrcFileName, const char *pDstFileNameExtension )
 {
 	float *pDstImage = new float[nDstWidth * nDstHeight * 3];
@@ -181,4 +181,3 @@ int main( int argc, char **argv )
 
 	return 0;
 }
-

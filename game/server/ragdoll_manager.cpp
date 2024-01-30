@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -67,7 +67,7 @@ BEGIN_DATADESC( CRagdollManager )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Constructor 
+// Constructor
 //-----------------------------------------------------------------------------
 CRagdollManager::CRagdollManager( void )
 {
@@ -77,8 +77,8 @@ CRagdollManager::CRagdollManager( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pInfo - 
+// Purpose:
+// Input  : *pInfo -
 // Output : int
 //-----------------------------------------------------------------------------
 int CRagdollManager::UpdateTransmitState()
@@ -87,7 +87,7 @@ int CRagdollManager::UpdateTransmitState()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRagdollManager::Activate()
 {
@@ -96,7 +96,7 @@ void CRagdollManager::Activate()
 	// Cache off the DX level for use later.
 	ConVarRef mat_dxlevel( "mat_dxlevel" );
 	m_iDXLevel = mat_dxlevel.GetInt();
-	
+
 	UpdateCurrentMaxRagDollCount();
 }
 
@@ -156,11 +156,11 @@ bool RagdollManager_SaveImportant( CAI_BaseNPC *pNPC )
 // Purpose: Draw any debug text overlays
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CRagdollManager::DrawDebugTextOverlays( void ) 
+int CRagdollManager::DrawDebugTextOverlays( void )
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 
@@ -171,4 +171,3 @@ int CRagdollManager::DrawDebugTextOverlays( void )
 	}
 	return text_offset;
 }
-

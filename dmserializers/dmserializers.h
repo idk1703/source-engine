@@ -51,5 +51,3 @@ void InstallPCFUpdater( IDataModel *pFactory );
 
 
 #endif // DMSERIALIZERS_H
-
-

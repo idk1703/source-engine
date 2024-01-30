@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -249,7 +249,7 @@ void CDODClientScoreBoardDialog::Update()
 	MoveToCenterOfScreen();
 
 	// update every second
-	m_fNextUpdateTime = gpGlobals->curtime + 1.0f; 
+	m_fNextUpdateTime = gpGlobals->curtime + 1.0f;
 }
 
 //-----------------------------------------------------------------------------
@@ -270,7 +270,7 @@ void CDODClientScoreBoardDialog::UpdateTeamInfo()
 			const char *pDialogVarTeamPing = NULL;
 			const char *pDialogVarTeamDeaths = NULL;
 			const char *pDialogVarTeamFrags = NULL;
-			switch ( teamIndex ) 
+			switch ( teamIndex )
 			{
 			case TEAM_ALLIES:
 					teamName = g_pVGuiLocalize->Find( "#Teamname_Allies" );
@@ -291,7 +291,7 @@ void CDODClientScoreBoardDialog::UpdateTeamInfo()
 			default:
 					Assert( false );
 					break;
-			}							
+			}
 
 			// update team name
 			wchar_t name[64];
@@ -324,42 +324,42 @@ void CDODClientScoreBoardDialog::UpdateTeamInfo()
 			g_pVGuiLocalize->ConstructString( wTeamScore, sizeof(wTeamScore), g_pVGuiLocalize->Find( "#scoreboard_teamscore" ), 2, wRoundsWon, wTickScore );
 
 			// set team score in dialog
-			SetDialogVariable( pDialogVarTeamScore, wTeamScore );		
+			SetDialogVariable( pDialogVarTeamScore, wTeamScore );
 
 			int kills = 0;
 			int deaths = 0;
 			int pingsum = 0;
 			int numcounted = 0;
 			int ping;
-			
+
 			for( int playerIndex = 1 ; playerIndex <= MAX_PLAYERS; playerIndex++ )
 			{
 				if( g_PR->IsConnected( playerIndex ) && g_PR->GetTeam( playerIndex ) == teamIndex )
 				{
 					ping = g_PR->GetPing( playerIndex );
 					kills += g_PR->GetPlayerScore( playerIndex );
-					deaths += g_PR->GetDeaths( playerIndex );		
+					deaths += g_PR->GetDeaths( playerIndex );
 
 					if ( ping >= 1 )
 					{
 						pingsum += ping;
-						numcounted++;	
+						numcounted++;
 					}
 				}
 			}
-			
+
 			if ( numcounted > 0 )
 			{
 				int ping = (int)( (float)pingsum / (float)numcounted );
-				SetDialogVariable( pDialogVarTeamPing, ping );		
+				SetDialogVariable( pDialogVarTeamPing, ping );
 			}
 			else
 			{
-				SetDialogVariable( pDialogVarTeamPing, "" );	
+				SetDialogVariable( pDialogVarTeamPing, "" );
 			}
 
-			SetDialogVariable( pDialogVarTeamFrags, kills );	
-			SetDialogVariable( pDialogVarTeamDeaths, deaths );	
+			SetDialogVariable( pDialogVarTeamFrags, kills );
+			SetDialogVariable( pDialogVarTeamDeaths, deaths );
 		}
 	}
 }
@@ -399,7 +399,7 @@ void CDODClientScoreBoardDialog::UpdatePlayerList()
 
 			if ( pPlayerList == NULL )
 			{
-				continue;			
+				continue;
 			}
 
 			KeyValues *pKeyValues = new KeyValues( "data" );
@@ -478,7 +478,7 @@ bool CDODClientScoreBoardDialog::ShouldShowAsSpectator( int iPlayerIndex )
 		return false;
 
 	// see if player is connected
-	if ( dod_PR->IsConnected( iPlayerIndex ) ) 
+	if ( dod_PR->IsConnected( iPlayerIndex ) )
 	{
 		// either spectator or unassigned team should show in spectator list
 		int iTeam = dod_PR->GetTeam( iPlayerIndex );
@@ -496,7 +496,7 @@ void CDODClientScoreBoardDialog::FireGameEvent( IGameEvent *event )
 	const char *type = event->GetName();
 
 	if ( 0 == Q_strcmp( type, "server_spawn" ) )
-	{		
+	{
 		// set server name in scoreboard
 		const char *hostname = event->GetString( "hostname" );
 		wchar_t wzHostName[256];
@@ -535,7 +535,7 @@ bool CDODClientScoreBoardDialog::GetPlayerScoreInfo( int playerIndex, KeyValues 
 	kv->SetString( "class", "" );
 
 	UpdatePlayerAvatar( playerIndex, kv );
-	
+
 	if ( g_PR->GetPing( playerIndex ) < 1 )
 	{
 		if ( g_PR->IsFakePlayer( playerIndex ) )

@@ -12,7 +12,7 @@
 #include "vgui_bitmapbutton.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_VehicleSiegeTower : public C_BaseTFFourWheelVehicle
 {
@@ -38,7 +38,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_VehicleSiegeTower, DT_VehicleSiegeTower, CVehicleSie
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_VehicleSiegeTower::C_VehicleSiegeTower()
 {
@@ -46,7 +46,7 @@ C_VehicleSiegeTower::C_VehicleSiegeTower()
 
 #if 0
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_VehicleSiegeTower::DebugMessages( void )
 {
@@ -56,7 +56,7 @@ void C_VehicleSiegeTower::DebugMessages( void )
 #endif
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CVehicleSiegeTowerControlPanel : public CObjectControlPanel
 {
@@ -83,15 +83,15 @@ private:
 DECLARE_VGUI_SCREEN_FACTORY( CVehicleSiegeTowerControlPanel, "vehicle_siege_tower_control_panel" );
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CVehicleSiegeTowerControlPanel::CVehicleSiegeTowerControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CVehicleSiegeTowerControlPanel" ) 
+	: BaseClass( parent, "CVehicleSiegeTowerControlPanel" )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CVehicleSiegeTowerControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -139,7 +139,7 @@ void CVehicleSiegeTowerControlPanel::OnTick()
 	m_pPassengerLabel->SetText( buf );
 
 	// Update the get in button
-	if ( pTower->IsPlayerInVehicle( C_BaseTFPlayer::GetLocalPlayer() ) ) 
+	if ( pTower->IsPlayerInVehicle( C_BaseTFPlayer::GetLocalPlayer() ) )
 	{
 		m_pOccupyButton->SetEnabled( false );
 		return;
@@ -200,7 +200,7 @@ void CVehicleSiegeTowerControlPanel::OnCommand( const char *command )
 //
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectSiegeLadder : public C_BaseAnimating
 {
@@ -233,7 +233,7 @@ C_ObjectSiegeLadder::C_ObjectSiegeLadder()
 //
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectSiegePlatform : public C_BaseAnimating
 {
@@ -258,4 +258,3 @@ END_RECV_TABLE()
 C_ObjectSiegePlatform::C_ObjectSiegePlatform()
 {
 }
-

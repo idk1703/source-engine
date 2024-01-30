@@ -16,9 +16,9 @@
 
 #include "tf_obj_baseupgrade_shared.h"
 
-// ------------------------------------------------------------------------ 
+// ------------------------------------------------------------------------
 // Base class for objects that, when built on a vehicle, become under control of the driver
-// ------------------------------------------------------------------------ 
+// ------------------------------------------------------------------------
 class CBaseObjectDriverGun : public CBaseObjectUpgrade
 {
 DECLARE_CLASS( CBaseObjectDriverGun, CBaseObjectUpgrade );
@@ -47,7 +47,7 @@ public:
 #ifdef CLIENT_DLL
 	// All predicted weapons need to implement and return true
 	virtual bool	IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 

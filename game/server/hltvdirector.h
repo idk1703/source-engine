@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -45,8 +45,8 @@ public:
 	CHLTVDirector();
 	virtual ~CHLTVDirector();
 
-	virtual void SetHLTVServer( IHLTVServer *hltv ); // give the director an HLTV interface 
-	IHLTVServer* GetHLTVServer( void ); 
+	virtual void SetHLTVServer( IHLTVServer *hltv ); // give the director an HLTV interface
+	IHLTVServer* GetHLTVServer( void );
 	int		GetDirectorTick( void );	// get current broadcast tick from director
 	int		GetPVSEntity( void ); // get current view entity (PVS)
 	Vector	GetPVSOrigin( void ); // get current PVS origin, if PVS entity is 0
@@ -56,11 +56,11 @@ public:
 	virtual const char** GetModEvents(); // returns list of event names forwarded to HLTV clients
 
 	void	BuildCameraList( void );
-		
+
 
 public: // IGameEventListener Interface
 	virtual void	FireGameEvent( IGameEvent * event );
-	
+
 public: // CBaseGameSystem overrides
 
 	virtual bool	Init();
@@ -75,7 +75,7 @@ public: // CBaseGameSystem overrides
 
 protected:
 
-	virtual void	StartNewShot();	
+	virtual void	StartNewShot();
 	virtual void	StartRandomShot();
 	virtual void	StartDelayMessage();
 	virtual void	StartBestFixedCameraShot(bool bForce);
@@ -95,7 +95,7 @@ protected:
 	int		FindFirstEvent( int tick ); // finds first event >= tick
 	void	CheckHistory();
 	void	RemoveEventsFromHistory(int tick); // removes all commands < tick, or all if tick -1
-	
+
 	IHLTVServer		*m_pHLTVServer;	// interface to servers HLTV object
 	float			m_fDelay;	// hltv delay in seconds
 	int				m_nBroadcastTick; // world time that is currently "on the air"
@@ -106,15 +106,15 @@ protected:
 	int				m_nNextShotTick;	// time for the next scene cut
 	int				m_iLastPlayer;		// last player in random rotation
 
-	int				m_nNextAnalyzeTick;	
-		
+	int				m_nNextAnalyzeTick;
+
 	int				m_nNumFixedCameras;	//number of cameras in current map
 	CBaseEntity		*m_pFixedCameras[MAX_NUM_CAMERAS]; // fixed cameras (point_viewcontrol)
-	
+
 	int				m_nNumActivePlayers;	//number of cameras in current map
 	CBasePlayer		*m_pActivePlayers[MAX_PLAYERS]; // fixed cameras (point_viewcontrol)
 	int				m_iCameraManIndex;		// entity index of current camera man or 0
-	
+
 	CUtlRBTree<CHLTVGameEvent>	m_EventHistory;
 };
 

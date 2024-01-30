@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -80,7 +80,7 @@ BEGIN_VS_SHADER( LightmappedReflective_DX90, "Help for Lightmapped Reflective" )
 		if( params[BASETEXTURE]->IsDefined() )
 		{
 			LoadTexture( BASETEXTURE, TEXTUREFLAGS_SRGB );
-			
+
 			if( params[ENVMAPMASK]->IsDefined() )
 			{
 				LoadTexture( ENVMAPMASK );
@@ -93,7 +93,7 @@ BEGIN_VS_SHADER( LightmappedReflective_DX90, "Help for Lightmapped Reflective" )
 	}
 
 	inline void DrawReflectionRefraction( IMaterialVar **params, IShaderShadow* pShaderShadow,
-		IShaderDynamicAPI* pShaderAPI, bool bReflection, bool bRefraction ) 
+		IShaderDynamicAPI* pShaderAPI, bool bReflection, bool bRefraction )
 	{
 		BlendType_t nBlendType = EvaluateBlendRequirements( BASETEXTURE, true );
 		bool bFullyOpaque = (nBlendType != BT_BLENDADD) && (nBlendType != BT_BLEND) && !IS_FLAG_SET(MATERIAL_VAR_ALPHATEST); //dest alpha is free for special use
@@ -105,26 +105,26 @@ BEGIN_VS_SHADER( LightmappedReflective_DX90, "Help for Lightmapped Reflective" )
 			{
 				pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );	// Refract
 				pShaderShadow->EnableSRGBRead( SHADER_SAMPLER0, g_pHardwareConfig->GetHDRType() == HDR_TYPE_INTEGER || IsOSX() );
-				
+
 				pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );	// Base
 				pShaderShadow->EnableSRGBRead( SHADER_SAMPLER1, true );
 			}
-			
+
 			if( bReflection )
 			{
 				pShaderShadow->EnableTexture( SHADER_SAMPLER2, true );	// Reflect
 				pShaderShadow->EnableSRGBRead( SHADER_SAMPLER2, g_pHardwareConfig->GetHDRType() == HDR_TYPE_INTEGER || IsOSX() );
-				
+
 				pShaderShadow->EnableTexture( SHADER_SAMPLER3, true );	// Lightmap
 				pShaderShadow->EnableSRGBRead( SHADER_SAMPLER3, g_pHardwareConfig->GetHDRType() == HDR_TYPE_NONE );
 			}
-			
+
 			if( params[BASETEXTURE]->IsTexture() )
 			{
 				// BASETEXTURE
 				pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );
 				pShaderShadow->EnableSRGBRead( SHADER_SAMPLER1, true );
-				
+
 				// LIGHTMAP
 				pShaderShadow->EnableTexture( SHADER_SAMPLER3, true );
 				pShaderShadow->EnableSRGBRead( SHADER_SAMPLER3, g_pHardwareConfig->GetHDRType() == HDR_TYPE_NONE );
@@ -149,7 +149,7 @@ BEGIN_VS_SHADER( LightmappedReflective_DX90, "Help for Lightmapped Reflective" )
 				numTexCoords = 3;
 			}
 			pShaderShadow->VertexShaderVertexFormat( fmt, numTexCoords, 0, 0 );
-			
+
 			if ( IS_FLAG_SET(MATERIAL_VAR_TRANSLUCENT ) )
 			{
 				EnableAlphaBlending( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE_MINUS_SRC_ALPHA );
@@ -161,7 +161,7 @@ BEGIN_VS_SHADER( LightmappedReflective_DX90, "Help for Lightmapped Reflective" )
 
 			// "REFLECT" "0..1"
 			// "REFRACT" "0..1"
-			
+
 			if( g_pHardwareConfig->SupportsPixelShaders_2_b() )
 			{
 				DECLARE_STATIC_PIXEL_SHADER( lightmappedreflective_ps20b );
@@ -214,7 +214,7 @@ BEGIN_VS_SHADER( LightmappedReflective_DX90, "Help for Lightmapped Reflective" )
 					BindTexture( SHADER_SAMPLER6, ENVMAPMASK, ENVMAPMASKFRAME );
 				}
 			}
-			
+
 			// Refraction tint
 			if( bRefraction )
 			{
@@ -227,19 +227,19 @@ BEGIN_VS_SHADER( LightmappedReflective_DX90, "Help for Lightmapped Reflective" )
 			}
 
 			SetVertexShaderTextureTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_1, BUMPTRANSFORM );
-			
+
 			float c0[4] = { 1.0f / 3.0f, 1.0f / 3.0f, 1.0f / 3.0f, 0.0f };
 			pShaderAPI->SetPixelShaderConstant( 0, c0, 1 );
-			
+
 			float c2[4] = { 0.5f, 0.5f, 0.5f, 0.5f };
 			pShaderAPI->SetPixelShaderConstant( 2, c2, 1 );
-							  
+
 			// fresnel constants
 			float flFresnelFactor = params[MAXREFLECTIVITY]->GetFloatValue() - params[MINREFLECTIVITY]->GetFloatValue();
 			float c3[4] = { flFresnelFactor, params[FRESNELPOWER]->GetFloatValue(), params[MINREFLECTIVITY]->GetFloatValue(), 0.0f };
 			pShaderAPI->SetPixelShaderConstant( 3, c3, 1 );
 
-			float c5[4] = { params[REFLECTAMOUNT]->GetFloatValue(), params[REFLECTAMOUNT]->GetFloatValue(), 
+			float c5[4] = { params[REFLECTAMOUNT]->GetFloatValue(), params[REFLECTAMOUNT]->GetFloatValue(),
 				params[REFRACTAMOUNT]->GetFloatValue(), params[REFRACTAMOUNT]->GetFloatValue() };
 			pShaderAPI->SetPixelShaderConstant( 5, c5, 1 );
 
@@ -247,7 +247,7 @@ BEGIN_VS_SHADER( LightmappedReflective_DX90, "Help for Lightmapped Reflective" )
 
 			DECLARE_DYNAMIC_VERTEX_SHADER( lightmappedreflective_vs20 );
 			SET_DYNAMIC_VERTEX_SHADER( lightmappedreflective_vs20 );
-			
+
 			if( g_pHardwareConfig->SupportsPixelShaders_2_b() )
 			{
 				DECLARE_DYNAMIC_PIXEL_SHADER( lightmappedreflective_ps20b );
@@ -278,10 +278,9 @@ BEGIN_VS_SHADER( LightmappedReflective_DX90, "Help for Lightmapped Reflective" )
 
 		if( !bDrewSomething )
 		{
-			// We are likely here because of the tools. . . draw something so that 
+			// We are likely here because of the tools. . . draw something so that
 			// we won't go into wireframe-land.
 			Draw();
 		}
 	}
 END_SHADER
-

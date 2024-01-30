@@ -83,7 +83,7 @@
 
 // Budgetgroup flags. These are used with VPROF_BUDGET_FLAGS.
 // These control which budget panels the groups show up in.
-// If a budget group uses VPROF_BUDGET, it gets the default 
+// If a budget group uses VPROF_BUDGET, it gets the default
 // which is BUDGETFLAG_OTHER.
 #define BUDGETFLAG_CLIENT	(1<<0)		// Shows up in the client panel.
 #define BUDGETFLAG_SERVER	(1<<1)		// Shows up in the server panel.
@@ -129,8 +129,8 @@
 #define VPROF_BUDGETGROUP_PARTICLE_SIMULATION		_T("Particle Simulation")
 #define VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING	_T("Flashlight Shadows")
 #define VPROF_BUDGETGROUP_CLIENT_SIM				_T("Client Simulation") // think functions, tempents, etc.
-#define VPROF_BUDGETGROUP_STEAM						_T("Steam") 
-#define VPROF_BUDGETGROUP_CVAR_FIND					_T("Cvar_Find") 
+#define VPROF_BUDGETGROUP_STEAM						_T("Steam")
+#define VPROF_BUDGETGROUP_CVAR_FIND					_T("Cvar_Find")
 #define VPROF_BUDGETGROUP_CLIENTLEAFSYSTEM			_T("ClientLeafSystem")
 #define VPROF_BUDGETGROUP_JOBS_COROUTINES			_T("Jobs/Coroutines")
 #define VPROF_BUDGETGROUP_SLEEPING					_T("Sleeping")
@@ -142,7 +142,7 @@
 #define VPROF_BUDGETGROUP_ATTRIBUTES				_T("Attributes")
 #define VPROF_BUDGETGROUP_FINDATTRIBUTE				_T("FindAttribute")
 #define VPROF_BUDGETGROUP_FINDATTRIBUTEUNSAFE		_T("FindAttributeUnsafe")
-	
+
 #ifdef _X360
 // update flags
 #define VPROF_UPDATE_BUDGET				0x01	// send budget data every frame
@@ -165,25 +165,25 @@
 
 #define	VPROF_0(name,group,assertAccounted,budgetFlags)	tmZone( TELEMETRY_LEVEL2, TMZF_NONE, "(%s)%s", group, name ); CVProfScope VPROF_VAR_NAME( VProf_ )(name, 0, group, assertAccounted, budgetFlags);
 
-#if VPROF_LEVEL > 0 
+#if VPROF_LEVEL > 0
 #define	VPROF_1(name,group,assertAccounted,budgetFlags)	tmZone( TELEMETRY_LEVEL3, TMZF_NONE, "(%s)%s", group, name ); CVProfScope VPROF_VAR_NAME( VProf_ )(name, 1, group, assertAccounted, budgetFlags);
 #else
 #define	VPROF_1(name,group,assertAccounted,budgetFlags)	((void)0)
 #endif
 
-#if VPROF_LEVEL > 1 
+#if VPROF_LEVEL > 1
 #define	VPROF_2(name,group,assertAccounted,budgetFlags)	CVProfScope VPROF_VAR_NAME( VProf_ )(name, 2, group, assertAccounted, budgetFlags);
 #else
 #define	VPROF_2(name,group,assertAccounted,budgetFlags)	((void)0)
 #endif
 
-#if VPROF_LEVEL > 2 
+#if VPROF_LEVEL > 2
 #define	VPROF_3(name,group,assertAccounted,budgetFlags)	CVProfScope VPROF_VAR_NAME( VProf_ )(name, 3, group, assertAccounted, budgetFlags);
 #else
 #define	VPROF_3(name,group,assertAccounted,budgetFlags)	((void)0)
 #endif
 
-#if VPROF_LEVEL > 3 
+#if VPROF_LEVEL > 3
 #define	VPROF_4(name,group,assertAccounted,budgetFlags)	CVProfScope VPROF_VAR_NAME( VProf_ )(name, 4, group, assertAccounted, budgetFlags);
 #else
 #define	VPROF_4(name,group,assertAccounted,budgetFlags)	((void)0)
@@ -208,7 +208,7 @@
 	{ \
 		VPROF( #code ); \
 		code; \
-	} 
+	}
 #endif
 
 
@@ -241,7 +241,7 @@
 #define VProfCode( code ) code
 
 #endif
- 
+
 //-----------------------------------------------------------------------------
 
 #ifdef VPROF_ENABLED
@@ -251,7 +251,7 @@
 // A node in the call graph hierarchy
 //
 
-class DBG_CLASS CVProfNode 
+class DBG_CLASS CVProfNode
 {
 friend class CVProfRecorder;
 friend class CVProfile;
@@ -259,17 +259,17 @@ friend class CVProfile;
 public:
 	CVProfNode( const tchar * pszName, int detailLevel, CVProfNode *pParent, const tchar *pBudgetGroupName, int budgetFlags );
 	~CVProfNode();
-	
+
 	CVProfNode *GetSubNode( const tchar *pszName, int detailLevel, const tchar *pBudgetGroupName, int budgetFlags );
 	CVProfNode *GetSubNode( const tchar *pszName, int detailLevel, const tchar *pBudgetGroupName );
 	CVProfNode *GetParent();
-	CVProfNode *GetSibling();		
-	CVProfNode *GetPrevSibling();	
-	CVProfNode *GetChild();		
-	
+	CVProfNode *GetSibling();
+	CVProfNode *GetPrevSibling();
+	CVProfNode *GetChild();
+
 	void MarkFrame();
 	void ResetPeak();
-	
+
 	void Pause();
 	void Resume();
 	void Reset();
@@ -291,12 +291,12 @@ public:
 	}
 
 	int	GetCurCalls();
-	double GetCurTime();		
+	double GetCurTime();
 	int GetPrevCalls();
 	double GetPrevTime();
 	int	GetTotalCalls();
-	double GetTotalTime();		
-	double GetPeakTime();		
+	double GetTotalTime();
+	double GetPeakTime();
 
 	double GetCurTimeLessChildren();
 	double GetPrevTimeLessChildren();
@@ -311,7 +311,7 @@ public:
 
 	// Not used in the common case...
 	void SetCurFrameTime( unsigned long milliseconds );
-	
+
 	void SetClientData( int iClientData )	{ m_iClientData = iClientData; }
 	int GetClientData() const				{ return m_iClientData; }
 
@@ -345,11 +345,11 @@ private:
 	int			m_iCurL2CacheMiss;
 	int			m_iTotalL2CacheMiss;
 
-#ifndef _X360	
+#ifndef _X360
 	// L2 Cache data.
 	CL2Cache	m_L2Cache;
 #else // 360:
-	
+
 	unsigned int m_iBitFlags; // see enum below for settings
 	CPMCData	m_PMCData;
 	int			m_iPrevLoadHitStores;
@@ -379,14 +379,14 @@ private:
 	int GetLoadHitStores();
 
 	private:
-	
+
 #endif
 
 	int			m_nRecursions;
-	
+
 	unsigned	m_nCurFrameCalls;
 	CCycleCount	m_CurFrameTime;
-	
+
 	unsigned	m_nPrevFrameCalls;
 	CCycleCount	m_PrevFrameTime;
 
@@ -400,7 +400,7 @@ private:
 	CVProfNode *m_pSibling;
 
 	int m_BudgetGroupID;
-	
+
 	int m_iClientData;
 	int m_iUniqueNodeID;
 };
@@ -417,7 +417,7 @@ enum VProfReportType_t
 	VPRT_HIERARCHY_TIME_PER_FRAME_AND_COUNT_ONLY	= ( 1 << 2 ),
 	VPRT_LIST_BY_TIME								= ( 1 << 3 ),
 	VPRT_LIST_BY_TIME_LESS_CHILDREN					= ( 1 << 4 ),
-	VPRT_LIST_BY_AVG_TIME							= ( 1 << 5 ),	
+	VPRT_LIST_BY_AVG_TIME							= ( 1 << 5 ),
 	VPRT_LIST_BY_AVG_TIME_LESS_CHILDREN				= ( 1 << 6 ),
 	VPRT_LIST_BY_PEAK_TIME							= ( 1 << 7 ),
 	VPRT_LIST_BY_PEAK_OVER_AVERAGE					= ( 1 << 8 ),
@@ -429,26 +429,26 @@ enum VProfReportType_t
 enum CounterGroup_t
 {
 	COUNTER_GROUP_DEFAULT=0,
-	COUNTER_GROUP_NO_RESET,				// The engine doesn't reset these counters. Usually, they are used 
+	COUNTER_GROUP_NO_RESET,				// The engine doesn't reset these counters. Usually, they are used
 										// like global variables that can be accessed across modules.
 	COUNTER_GROUP_TEXTURE_GLOBAL,		// Global texture usage counters (totals for what is currently in memory).
 	COUNTER_GROUP_TEXTURE_PER_FRAME,	// Per-frame texture usage counters.
 
 	COUNTER_GROUP_TELEMETRY,
-}; 
+};
 
-class DBG_CLASS CVProfile 
+class DBG_CLASS CVProfile
 {
 public:
 	CVProfile();
 	~CVProfile();
 
 	void Term();
-	
+
 	//
 	// Runtime operations
 	//
-	
+
 	void Start();
 	void Stop();
 
@@ -469,7 +469,7 @@ public:
 	void VXProfileUpdate();
 	void VXEnableUpdateMode( int event, bool bEnable );
 	void VXSendNodes( void );
-	
+
 	void PMCDisableAllNodes(CVProfNode *pStartNode = NULL);  ///< turn off l2 and lhs recording for everywhere
 	bool PMCEnableL2Upon(const tchar *pszNodeName, bool bRecursive = false); ///< enable l2 and lhs recording for one given node
 	bool PMCDisableL2Upon(const tchar *pszNodeName, bool bRecursive = false); ///< enable l2 and lhs recording for one given node
@@ -491,11 +491,11 @@ public:
 
 		// Same as above, but going to record for > 1 frame
 		kAllNodesInFrame_WaitingForMarkMultiFrame,	// we're going to record all the times a node is hit in a frame, but are waiting for the frame to start
-		kAllNodesInFrame_RecordingMultiFrame, 
+		kAllNodesInFrame_RecordingMultiFrame,
 	};
 
 	// Global switch to turn CPU tracing on or off at all. The idea is you set up a node first,
-	// then trigger tracing by throwing this to true. It'll reset back to false after the trace 
+	// then trigger tracing by throwing this to true. It'll reset back to false after the trace
 	// happens.
 	inline CPUTraceState GetCPUTraceMode();
 	inline void SetCPUTraceEnabled( CPUTraceState enabled, bool bTraceCompleteEvent = false, int nNumFrames = -1 );
@@ -521,11 +521,11 @@ public:
 
 	void MarkFrame();
 	void ResetPeaks();
-	
+
 	void Pause();
 	void Resume();
 	void Reset();
-	
+
 	bool IsEnabled() const;
 	int GetDetailLevel() const;
 
@@ -547,16 +547,16 @@ public:
 	{
 		m_bVTuneGroupEnabled = false;
 	}
-	
+
 	inline void PushGroup( int nGroupID );
 	inline void PopGroup( void );
 #endif
-	
+
 	int NumFramesSampled()	{ return m_nFrames; }
 	double GetPeakFrameTime();
 	double GetTotalTimeSampled();
 	double GetTimeLastFrame();
-	
+
 	CVProfNode *GetRoot();
 	CVProfNode *FindNode( CVProfNode *pStartNode, const tchar *pszNode );
 	CVProfNode *GetCurrentNode();
@@ -582,9 +582,9 @@ public:
 
 	int *FindOrCreateCounter( const tchar *pName, CounterGroup_t eCounterGroup=COUNTER_GROUP_DEFAULT  );
 	void ResetCounters( CounterGroup_t eCounterGroup );
-	
+
 	int GetNumCounters( void ) const;
-	
+
 	const tchar *GetCounterName( int index ) const;
 	int GetCounterValue( int index ) const;
 	const tchar *GetCounterNameAndValue( int index, int &val ) const;
@@ -610,12 +610,12 @@ protected:
 
 #ifdef VPROF_VTUNE_GROUP
 	bool VTuneGroupEnabled()
-	{ 
-		return m_bVTuneGroupEnabled; 
+	{
+		return m_bVTuneGroupEnabled;
 	}
-	int VTuneGroupID() 
-	{ 
-		return m_nVTuneGroupID; 
+	int VTuneGroupID()
+	{
+		return m_nVTuneGroupID;
 	}
 #endif
 
@@ -645,7 +645,7 @@ protected:
 		tchar *m_pName;
 		int m_BudgetFlags;
 	};
-	
+
 	CBudgetGroup	*m_pBudgetGroups;
 	int			m_nBudgetGroupNamesAllocated;
 	int			m_nBudgetGroupNames;
@@ -727,13 +727,13 @@ private:
 #ifdef VPROF_VTUNE_GROUP
 inline void CVProfile::PushGroup( int nGroupID )
 {
-	// There is always at least one item on the stack since we force 
+	// There is always at least one item on the stack since we force
 	// the first element to be VPROF_BUDGETGROUP_OTHER_UNACCOUNTED.
 	Assert( m_GroupIDStackDepth > 0 );
 	Assert( m_GroupIDStackDepth < MAX_GROUP_STACK_DEPTH );
 	m_GroupIDStack[m_GroupIDStackDepth] = nGroupID;
 	m_GroupIDStackDepth++;
-	if( m_GroupIDStack[m_GroupIDStackDepth-2] != nGroupID && 
+	if( m_GroupIDStack[m_GroupIDStackDepth-2] != nGroupID &&
 		VTuneGroupEnabled() &&
 		nGroupID == VTuneGroupID() )
 	{
@@ -746,10 +746,10 @@ inline void CVProfile::PushGroup( int nGroupID )
 inline void CVProfile::PopGroup( void )
 {
 	m_GroupIDStackDepth--;
-	// There is always at least one item on the stack since we force 
+	// There is always at least one item on the stack since we force
 	// the first element to be VPROF_BUDGETGROUP_OTHER_UNACCOUNTED.
 	Assert( m_GroupIDStackDepth > 0 );
-	if(	m_GroupIDStack[m_GroupIDStackDepth] != m_GroupIDStack[m_GroupIDStackDepth+1] && 
+	if(	m_GroupIDStack[m_GroupIDStackDepth] != m_GroupIDStack[m_GroupIDStackDepth+1] &&
 		VTuneGroupEnabled() &&
 		m_GroupIDStack[m_GroupIDStackDepth+1] == VTuneGroupID() )
 	{
@@ -810,17 +810,17 @@ inline CVProfNode::CVProfNode( const tchar * pszName, int detailLevel, CVProfNod
 
 //-------------------------------------
 
-inline CVProfNode *CVProfNode::GetParent()		
-{ 
+inline CVProfNode *CVProfNode::GetParent()
+{
 	Assert( m_pParent );
-	return m_pParent; 
+	return m_pParent;
 }
 
 //-------------------------------------
 
-inline CVProfNode *CVProfNode::GetSibling()		
-{ 
-	return m_pSibling; 
+inline CVProfNode *CVProfNode::GetSibling()
+{
+	return m_pSibling;
 }
 
 //-------------------------------------
@@ -828,62 +828,62 @@ inline CVProfNode *CVProfNode::GetSibling()
 // so it didn't seem like it was worth the memory waste to add the reverse
 // link per node.
 
-inline CVProfNode *CVProfNode::GetPrevSibling()		
-{ 
+inline CVProfNode *CVProfNode::GetPrevSibling()
+{
 	CVProfNode* p = GetParent();
 
-	if(!p) 
+	if(!p)
 		return NULL;
 
 	CVProfNode* s;
-	for( s = p->GetChild(); 
-	     s && ( s->GetSibling() != this ); 
+	for( s = p->GetChild();
+	     s && ( s->GetSibling() != this );
 		 s = s->GetSibling() )
 		;
 
-	return s;	
+	return s;
 }
 
 //-------------------------------------
 
-inline CVProfNode *CVProfNode::GetChild()			
-{ 
-	return m_pChild; 
+inline CVProfNode *CVProfNode::GetChild()
+{
+	return m_pChild;
 }
 
 //-------------------------------------
 
-inline const tchar *CVProfNode::GetName()				
-{ 
+inline const tchar *CVProfNode::GetName()
+{
 	Assert( m_pszName );
-	return m_pszName; 
+	return m_pszName;
 }
 
 //-------------------------------------
 
-inline int	CVProfNode::GetTotalCalls()		
-{ 
-	return m_nTotalCalls; 
+inline int	CVProfNode::GetTotalCalls()
+{
+	return m_nTotalCalls;
 }
 
 //-------------------------------------
 
-inline double CVProfNode::GetTotalTime()		
-{ 
+inline double CVProfNode::GetTotalTime()
+{
 	return m_TotalTime.GetMillisecondsF();
 }
 
 //-------------------------------------
 
-inline int	CVProfNode::GetCurCalls()		
-{ 
-	return m_nCurFrameCalls; 
+inline int	CVProfNode::GetCurCalls()
+{
+	return m_nCurFrameCalls;
 }
 
 //-------------------------------------
 
-inline double CVProfNode::GetCurTime()		
-{ 
+inline double CVProfNode::GetCurTime()
+{
 	return m_CurFrameTime.GetMillisecondsF();
 }
 
@@ -896,15 +896,15 @@ inline int CVProfNode::GetPrevCalls()
 
 //-------------------------------------
 
-inline double CVProfNode::GetPrevTime()		
-{ 
+inline double CVProfNode::GetPrevTime()
+{
 	return m_PrevFrameTime.GetMillisecondsF();
 }
 
 //-------------------------------------
 
-inline double CVProfNode::GetPeakTime()		
-{ 
+inline double CVProfNode::GetPeakTime()
+{
 	return m_PeakTime.GetMillisecondsF();
 }
 
@@ -987,9 +987,9 @@ inline void CVProfNode::ClearPrevTime()
 
 //-----------------------------------------------------------------------------
 inline int CVProfNode::GetL2CacheMisses( void )
-{ 
+{
 #ifndef _X360
-	return m_L2Cache.GetL2CacheMisses(); 
+	return m_L2Cache.GetL2CacheMisses();
 #else
 	return m_iTotalL2CacheMiss;
 #endif
@@ -1009,30 +1009,30 @@ inline int CVProfNode::GetLoadHitStores( void )
 
 //-------------------------------------
 
-inline bool CVProfile::IsEnabled() const	
-{ 
-	return ( m_enabled != 0 ); 
+inline bool CVProfile::IsEnabled() const
+{
+	return ( m_enabled != 0 );
 }
 
 //-------------------------------------
 
-inline int CVProfile::GetDetailLevel() const	
-{ 
-	return m_ProfileDetailLevel; 
+inline int CVProfile::GetDetailLevel() const
+{
+	return m_ProfileDetailLevel;
 }
 
-	
+
 //-------------------------------------
 
 inline bool CVProfile::AtRoot() const
 {
 	return m_fAtRoot;
 }
-	
+
 //-------------------------------------
 
-inline void CVProfile::Start()	
-{ 
+inline void CVProfile::Start()
+{
 	if ( ++m_enabled == 1 )
 	{
 		m_Root.EnterScope();
@@ -1045,8 +1045,8 @@ inline void CVProfile::Start()
 
 //-------------------------------------
 
-inline void CVProfile::Stop()		
-{ 
+inline void CVProfile::Stop()
+{
 	if ( --m_enabled == 0 )
 		m_Root.ExitScope();
 }
@@ -1061,7 +1061,7 @@ inline void CVProfile::EnterScope( const tchar *pszName, int detailLevel, const 
 		//if( !Plat_IsPrimaryThread() )
 		//	return;
 
-		if ( pszName != m_pCurNode->GetName() ) 
+		if ( pszName != m_pCurNode->GetName() )
 		{
 			m_pCurNode = m_pCurNode->GetSubNode( pszName, detailLevel, pBudgetGroupName, budgetFlags );
 		}
@@ -1108,7 +1108,7 @@ inline void CVProfile::ExitScope()
 
 		// ExitScope will indicate whether we should back up to our parent (we may
 		// be profiling a recursive function)
-		if (m_pCurNode->ExitScope()) 
+		if (m_pCurNode->ExitScope())
 		{
 			m_pCurNode = m_pCurNode->GetParent();
 		}
@@ -1123,7 +1123,7 @@ inline void CVProfile::Pause()
 	m_pausedEnabledDepth = m_enabled;
 	m_enabled = 0;
 	if ( !AtRoot() )
-		m_Root.Pause(); 
+		m_Root.Pause();
 }
 
 //-------------------------------------
@@ -1132,14 +1132,14 @@ inline void CVProfile::Resume()
 {
 	m_enabled = m_pausedEnabledDepth;
 	if ( !AtRoot() )
-		m_Root.Resume(); 
+		m_Root.Resume();
 }
 
 //-------------------------------------
 
 inline void CVProfile::Reset()
 {
-	m_Root.Reset(); 
+	m_Root.Reset();
 	m_nFrames = 0;
 }
 
@@ -1147,7 +1147,7 @@ inline void CVProfile::Reset()
 
 inline void CVProfile::ResetPeaks()
 {
-	m_Root.ResetPeak(); 
+	m_Root.ResetPeak();
 }
 
 //-------------------------------------
@@ -1158,7 +1158,7 @@ inline void CVProfile::MarkFrame()
 	{
 		++m_nFrames;
 		m_Root.ExitScope();
-		m_Root.MarkFrame(); 
+		m_Root.MarkFrame();
 		m_Root.EnterScope();
 
 #ifdef _X360
@@ -1219,7 +1219,7 @@ inline double CVProfile::GetTimeLastFrame()
 {
 	return m_Root.GetCurTime();
 }
-	
+
 //-------------------------------------
 
 inline CVProfNode *CVProfile::GetRoot()
@@ -1284,20 +1284,20 @@ inline unsigned int CVProfile::GetMultiTraceIndex()
 
 inline CVProfScope::CVProfScope( const tchar * pszName, int detailLevel, const tchar *pBudgetGroupName, bool bAssertAccounted, int budgetFlags )
 	: m_bEnabled( g_VProfCurrentProfile.IsEnabled() )
-{ 
+{
 	if ( m_bEnabled )
 	{
-		g_VProfCurrentProfile.EnterScope( pszName, detailLevel, pBudgetGroupName, bAssertAccounted, budgetFlags ); 
+		g_VProfCurrentProfile.EnterScope( pszName, detailLevel, pBudgetGroupName, bAssertAccounted, budgetFlags );
 	}
 }
 
 //-------------------------------------
 
-inline CVProfScope::~CVProfScope()					
-{ 
+inline CVProfScope::~CVProfScope()
+{
 	if ( m_bEnabled )
 	{
-		g_VProfCurrentProfile.ExitScope(); 
+		g_VProfCurrentProfile.ExitScope();
 	}
 }
 
@@ -1312,10 +1312,10 @@ public:
 	~CVProfCounter()
 	{
 	}
-	void Increment( int val ) 
-	{ 
+	void Increment( int val )
+	{
 		Assert( m_pCounter );
-		*m_pCounter += val; 
+		*m_pCounter += val;
 	}
 private:
 	int *m_pCounter;

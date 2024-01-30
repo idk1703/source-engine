@@ -47,7 +47,7 @@ CReplayListPanel::CReplayListPanel( Panel *pParent, const char *pName )
 	ivgui()->AddTickSignal( GetVPanel(), 10 );
 
 	m_pBorderArrowImg = new ImagePanel( this, "ArrowImage" );
-	
+
 	// Add replays and movies collections, which will contain all replays & movies.
 	m_pReplaysCollection = new CReplayThumbnailCollection( this, "ReplayThumbnailCollection", GetReplayItemManager() );
 	m_pMoviesCollection = new CMovieThumbnailCollection( this, "MovieThumbnailCollection", GetReplayMovieItemManager(), true );
@@ -277,7 +277,7 @@ CBaseThumbnailCollection *CReplayListPanel::FindOrAddReplayThumbnailCollection( 
 	{
 		return m_pMoviesCollection;
 	}
-	
+
 	return m_pReplaysCollection;
 }
 
@@ -416,7 +416,7 @@ bool CReplayListPanel::PassesFilter( IQueryableReplayItem *pItem )
 
 	wchar_t wszFilter[256];
 	Q_wcsncpy( wszFilter, m_wszFilter, sizeof( wszFilter ) );
-	
+
 	bool bPasses = true;
 	wchar_t seps[] = L" ";
 	wchar_t *last = NULL;

@@ -74,7 +74,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-CLobbyContainerFrame_Comp::CLobbyContainerFrame_Comp() 
+CLobbyContainerFrame_Comp::CLobbyContainerFrame_Comp()
 	: CBaseLobbyContainerFrame( "LobbyContainerFrame" )
 {
 	// Our internal lobby panel
@@ -94,7 +94,7 @@ void CLobbyContainerFrame_Comp::ShowPanel( bool bShow )
 {
 	if ( bShow )
 	{
-		if ( tf_comp_welcome_hide.GetBool() == false 
+		if ( tf_comp_welcome_hide.GetBool() == false
 		  && tf_comp_welcome_hide_forever.GetBool() == false
 		  && GTFGCClientSystem()->GetWizardStep() == TF_Matchmaking_WizardStep_LADDER )
 		{
@@ -159,7 +159,7 @@ void CLobbyContainerFrame_Comp::WriteControls()
 
 	const char *pszBackButtonText = "#TF_Matchmaking_Back";
 	const char *pszNextButtonText = NULL;
-	
+
 	if ( GCClientSystem()->BConnectedtoGC() )
 	{
 		if ( BIsPartyLeader()  )

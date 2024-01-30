@@ -24,6 +24,3 @@ C_MerasmusDancer::C_MerasmusDancer()
 C_MerasmusDancer::~C_MerasmusDancer()
 {
 }
-
-
-

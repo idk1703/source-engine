@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -57,7 +57,7 @@ bool CServiceConnMgr::InitServer()
 	Term();
 
 	m_bServer = true;
-	
+
 	// Create a socket to listen on.
 	for ( int iPort=VMPI_SERVICE_FIRST_UI_PORT; iPort <= VMPI_SERVICE_LAST_UI_PORT; iPort++ )
 	{
@@ -154,7 +154,7 @@ void CServiceConnMgr::Update()
 			while ( pConn->m_pSocket->Recv( data ) )
 			{
 				HandlePacket( (char*)data.Base(), data.Count() );
-				
+
 				// Don't sit in this loop too long.
 				if ( (GetTickCount() - startTime) > 50 )
 					break;
@@ -231,4 +231,3 @@ void CServiceConnMgr::OnTerminateConnection( int id )
 void CServiceConnMgr::HandlePacket( const char *pData, int len )
 {
 }
-

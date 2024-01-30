@@ -65,7 +65,7 @@ class CMapDecal : public CMapHelper
 		int SerializeMAP(std::fstream &File, BOOL bRMF);
 
 		bool IsVisualElement(void) { return(true); }
-		
+
 		const char* GetDescription() { return("Decal helper"); }
 
 		virtual void PostloadWorld(CMapWorld *pWorld);
@@ -80,7 +80,7 @@ class CMapDecal : public CMapHelper
 		// Implements CMapAtom transformation functions.
 		//
 		void DoTransform(const VMatrix &matrix);
-		
+
 		void AddSolid(CMapSolid *pSolid);
 
 		int CanDecalSolid(CMapSolid *pSolid, CMapFace **ppFaces);

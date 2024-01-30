@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,14 +16,14 @@
 
 #include "IObjectContainer.h"	// Added by ClassView
 
-class ObjectList : public IObjectContainer  
+class ObjectList : public IObjectContainer
 {
 public:
 	void	Init();
 	bool	Add( void * newObject );
 	void *	GetFirst();
 	void *	GetNext();
-	
+
 
 
 	ObjectList();

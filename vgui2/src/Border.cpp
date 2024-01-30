@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -51,7 +51,7 @@ Border::~Border()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Border::SetInset(int left,int top,int right,int bottom)
 {
@@ -62,7 +62,7 @@ void Border::SetInset(int left,int top,int right,int bottom)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Border::GetInset(int& left,int& top,int& right,int& bottom)
 {
@@ -73,7 +73,7 @@ void Border::GetInset(int& left,int& top,int& right,int& bottom)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Border::Paint(int x, int y, int wide, int tall)
 {
@@ -119,7 +119,7 @@ void Border::Paint(int x, int y, int wide, int tall, int breakSide, int breakSta
 	{
 		line_t *line = &(_sides[SIDE_TOP].lines[i]);
 		g_pSurface->DrawSetColor(line->col[0], line->col[1], line->col[2], line->col[3]);
-		
+
 		if (breakSide == SIDE_TOP)
 		{
 			// split into two section
@@ -159,7 +159,7 @@ void Border::Paint(int x, int y, int wide, int tall, int breakSide, int breakSta
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Border::Paint(VPANEL panel)
 {
@@ -170,7 +170,7 @@ void Border::Paint(VPANEL panel)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Border::ApplySchemeSettings(IScheme *pScheme, KeyValues *inResourceData)
 {
@@ -261,10 +261,9 @@ void Border::SetName(const char *name)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 IBorder::backgroundtype_e Border::GetBackgroundType()
 {
 	return m_eBackgroundType;
 }
-

@@ -44,7 +44,7 @@ class CDmeCombinationInputControl : public CDmElement
 public:
 	virtual void OnElementUnserialized();
 
-	// Adds a control, returns the control index, 
+	// Adds a control, returns the control index,
 	// returns true if remapped control lists need updating
 	bool AddRawControl( const char *pRawControlName );
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -134,7 +134,7 @@ void CRemoveTracker::RemoveBytes( void *pos, int length )
 	// Insert new
 	Assert( m_map.InvalidIndex() == m_map.Find( ( byte * ) pos ) );
 	Map::IndexType_t idx = m_map.InsertOrReplace( ( byte * ) pos, length );
-	
+
 	// New hint
 	m_hint.idx = idx;
 	m_hint.ptr = ( byte * ) pos;
@@ -201,5 +201,3 @@ void * CRemoveTracker::ComputePointer( void *ptrNothingRemoved ) const
 
 	return BYTE_OFF_PTR( ptrNothingRemoved, - iRemoved );
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -51,10 +51,10 @@ public:
 
 	// Returns the current count of available samples
 	int SampleCount( void );
-	
+
 	// returns the size of each sample in bytes
 	int SampleSize( void ) { return m_sampleSize; }
-	
+
 	// returns the sampling rate of the data
 	int SampleRate( void ) { return m_sampleRate; }
 
@@ -226,7 +226,7 @@ void CAudioWaveInput::OpenDevice( void )
 			m_buffers[i]->dwBufferLength = bufferSize;
 			m_buffers[i]->dwUser = 0;
 			m_buffers[i]->dwFlags = 0;
-	
+
 			waveInPrepareHeader( m_deviceHandle, m_buffers[i], sizeof( *m_buffers[i] ) );
 			waveInAddBuffer( m_deviceHandle, m_buffers[i], sizeof( *m_buffers[i] ) );
 		}
@@ -639,7 +639,7 @@ CAudioBuffer *CAudioWaveOutput::GetEmptyBuffer( void )
 	{
 		for ( int i = 0; i < OUTPUT_BUFFER_COUNT; i++ )
 		{
-			if ( !(m_buffers[ i ].submitted ) || 
+			if ( !(m_buffers[ i ].submitted ) ||
 				m_buffers[i].hdr->dwFlags & WHDR_DONE )
 			{
 				pOutput = &m_buffers[i];
@@ -649,7 +649,7 @@ CAudioBuffer *CAudioWaveOutput::GetEmptyBuffer( void )
 			}
 		}
 	}
-	
+
 	return pOutput;
 }
 
@@ -690,7 +690,7 @@ void CAudioWaveOutput::Update( float time )
 	if ( time > m_mixTime )
 	{
 		CAudioBuffer *pBuffer = GetEmptyBuffer();
-		
+
 		// no free buffers, mixing is ahead of the playback!
 		if ( !pBuffer || !pBuffer->hdr )
 		{
@@ -704,7 +704,7 @@ void CAudioWaveOutput::Update( float time )
 		m_mixTime += sampleCount * (1.0f / OUTPUT_SAMPLE_RATE);
 
 		short *pSamples = reinterpret_cast<short *>(pBuffer->hdr->lpData);
-		
+
 		SilenceBuffer( pSamples, sampleCount );
 
 		int tempCount = sampleCount;
@@ -735,7 +735,7 @@ void CAudioWaveOutput::Update( float time )
 					if ( g_pPhonemeEditor->IsActiveTool() || g_pWaveBrowser->IsActiveTool() )
 					{
 						model = models->GetActiveStudioModel();
-	
+
 					}
 				}
 
@@ -765,8 +765,8 @@ void CAudioWaveOutput::Update( float time )
 					{
 						AddToReferencedList( pSource, pBuffer );
 					}
-				} 
-				else 
+				}
+				else
 				{
 					if ( !IsSourceReferencedByActiveBuffer( pSource ) )
 					{
@@ -1023,7 +1023,7 @@ struct CSoundFile
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CFacePoserSound : public IFacePoserSound
 {
@@ -1046,7 +1046,7 @@ public:
 	void		StopAll( void );
 	void		StopSound( CAudioMixer *mixer );
 
-	void		RenderWavToDC( HDC dc, RECT& outrect, COLORREF clr, float starttime, float endtime, 
+	void		RenderWavToDC( HDC dc, RECT& outrect, COLORREF clr, float starttime, float endtime,
 		CAudioSource *pWave, bool selected = false, int selectionstart = 0, int selectionend = 0 );
 
 	// void		InstallPhonemecallback( IPhonemeTag *pTagInterface );
@@ -1090,7 +1090,7 @@ CFacePoserSound::~CFacePoserSound( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CAudioOuput	*CFacePoserSound::GetAudioOutput( void )
 {
@@ -1297,7 +1297,7 @@ void ComputeBlendedSetting( Emphasized_Phoneme *classes, float emphasis_intensit
 			float frac = dist_remaining / ( 1.0f - STRONG_CROSSFADE_START );
 
 			classes[ PHONEME_CLASS_NORMAL ].amount = (frac) * 2.0f * STRONG_CROSSFADE_START;
-			classes[ PHONEME_CLASS_STRONG ].amount = 1.0f - frac; 
+			classes[ PHONEME_CLASS_STRONG ].amount = 1.0f - frac;
 		}
 		else
 		{
@@ -1314,7 +1314,7 @@ void ComputeBlendedSetting( Emphasized_Phoneme *classes, float emphasis_intensit
 			float frac = dist_remaining / ( WEAK_CROSSFADE_START );
 
 			classes[ PHONEME_CLASS_NORMAL ].amount = (1.0f - frac) * 2.0f * WEAK_CROSSFADE_START;
-			classes[ PHONEME_CLASS_WEAK ].amount = frac; 
+			classes[ PHONEME_CLASS_WEAK ].amount = frac;
 		}
 		else
 		{
@@ -1341,12 +1341,12 @@ void CFacePoserSound::AddViseme( float intensity, StudioModel *model, int phonem
 	for ( i = 0; i < NUM_PHONEME_CLASSES; i++ )
 	{
 		Emphasized_Phoneme *info = &g_PhonemeClasses[ i ];
-		
+
 		info->valid = false;
 		info->exp = NULL;
 		info->settings = NULL;
 		info->amount = 0.0f;
-		
+
 		info->cl = expressions->FindClass( info->classname, true );
 		if ( info->cl )
 		{
@@ -1461,8 +1461,8 @@ void CFacePoserSound::SetupWeights( void )
 						if ( !phoneme )
 							continue;
 
-						// if the filter starts within this phoneme, make sure the filter size is 
-						// at least least as long as the current phoneme, or until the end of the next phoneme, 
+						// if the filter starts within this phoneme, make sure the filter size is
+						// at least least as long as the current phoneme, or until the end of the next phoneme,
 						// whichever is smaller
 						if (t > phoneme->GetStartTime() && t < phoneme->GetEndTime())
 						{
@@ -1583,8 +1583,8 @@ void CFacePoserSound::StopSound( CAudioMixer *mixer )
 	}
 }
 
-void CFacePoserSound::RenderWavToDC( HDC dc, RECT& outrect, COLORREF clr, 
-	float starttime, float endtime, CAudioSource *pWave, 
+void CFacePoserSound::RenderWavToDC( HDC dc, RECT& outrect, COLORREF clr,
+	float starttime, float endtime, CAudioSource *pWave,
 	bool selected /*= false*/, int selectionstart /*= 0*/, int selectionend /*= 0*/ )
 {
 	channel_t channel;
@@ -1672,7 +1672,7 @@ void CFacePoserSound::RenderWavToDC( HDC dc, RECT& outrect, COLORREF clr,
 			if ( selected )
 			{
 				bool boundary = false;
-				bool inselection = ( currenttime >= selectionstarttime && 
+				bool inselection = ( currenttime >= selectionstarttime &&
 					currenttime <= selectionendtime );
 
 				if ( inselection )
@@ -1708,7 +1708,7 @@ void CFacePoserSound::RenderWavToDC( HDC dc, RECT& outrect, COLORREF clr,
 					}
 
 					HPEN old = (HPEN)SelectObject( dc, *usePen );
-		
+
 					MoveToEx( dc, outrect.left + pixel, top, NULL );
 					LineTo( dc, outrect.left + pixel, bottom-1 );
 
@@ -1719,7 +1719,7 @@ void CFacePoserSound::RenderWavToDC( HDC dc, RECT& outrect, COLORREF clr,
 
 			int maxvalue = -65536;
 			int minvalue = 65536;
-			
+
 			short *pData = samples;
 
 			// only take fix samples
@@ -1734,7 +1734,7 @@ void CFacePoserSound::RenderWavToDC( HDC dc, RECT& outrect, COLORREF clr,
 				{
 					maxvalue = val;
 				}
-				
+
 				if ( val < minvalue )
 				{
 					minvalue = val;

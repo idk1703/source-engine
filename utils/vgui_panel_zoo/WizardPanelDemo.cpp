@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -22,7 +22,7 @@ using namespace vgui;
 
 //-----------------------------------------------------------------------------
 // This is a demo of a Wizard.
-// A wizard is an interactive utility within an application that guides the user through 
+// A wizard is an interactive utility within an application that guides the user through
 // each step of a task.
 //
 // Wizards typically display a sequence of steps, the user fills in information
@@ -31,7 +31,7 @@ using namespace vgui;
 // and the wizard exits.
 //
 // In VGUI, the Wizard class is the panel that holds the wizard navigation buttons
-// to move to the previous or next panel, and the finish and cancel buttons to 
+// to move to the previous or next panel, and the finish and cancel buttons to
 // exit. It also creates the panels that display when the buttons are pressed, called
 // WizardSubPanels. These panels have thier own layout and functions that determine
 // when to enable/disable the Wizard's navigation buttons.
@@ -51,14 +51,14 @@ class CSomeSelections : public WizardSubPanel
 public:
 	CSomeSelections(Panel *parent, const char *panelName);
 	~CSomeSelections(){};
-	
+
 	virtual WizardSubPanel *GetNextSubPanel();
 	virtual void OnDisplayAsPrev();
 	// Called when the wizard 'next' button is pressed.
 	// Return true if the wizard should advance.
 	virtual bool OnNextButton()	{ return true;}
 	virtual void PerformLayout();
-	
+
 private:
 	TextEntry *m_pFirstNameEdit;
 	TextEntry *m_pLastNameEdit;
@@ -69,7 +69,7 @@ private:
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CSomeSelections::CSomeSelections(Panel *parent, const char *panelName) : 
+CSomeSelections::CSomeSelections(Panel *parent, const char *panelName) :
 WizardSubPanel(parent, panelName)
 {
 	// create the controls
@@ -78,7 +78,7 @@ WizardSubPanel(parent, panelName)
 	m_pFirstNameEdit = new TextEntry(this, "FirstNameEdit");
 	m_pLastNameEdit = new TextEntry(this, "LastNameEdit");
 	m_pEmailEdit = new TextEntry(this, "EmailEdit");
-		
+
 	// The layout of the controls is loaded from a resource file.
 	LoadControlSettings("Demo/WizardPanelDemo.res");
 }
@@ -97,7 +97,7 @@ WizardSubPanel *CSomeSelections::GetNextSubPanel()
 //-----------------------------------------------------------------------------
 // Purpose: Execute this code when a panel has had the 'prev' button pressed
 // and the panel to be displayed is this one.
-// Input  :  
+// Input  :
 //-----------------------------------------------------------------------------
 void CSomeSelections::OnDisplayAsPrev()
 {
@@ -130,7 +130,7 @@ class CMoreSelections : public WizardSubPanel
 public:
 	CMoreSelections(Panel *parent, const char *panelName);
 	~CMoreSelections(){};
-	
+
 	virtual WizardSubPanel *GetNextSubPanel();
 	virtual void OnDisplayAsNext();
 	virtual bool OnPrevButton() { return true;}
@@ -138,7 +138,7 @@ public:
 	void OnRadioButtonChecked(Panel *panel);
 
 	DECLARE_PANELMAP();
-		
+
 private:
 	RadioButton *m_pDoneRadio;
 };
@@ -146,7 +146,7 @@ private:
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CMoreSelections::CMoreSelections(Panel *parent, const char *panelName) : 
+CMoreSelections::CMoreSelections(Panel *parent, const char *panelName) :
 WizardSubPanel(parent, panelName)
 {
 	// create the controls
@@ -192,7 +192,7 @@ void CMoreSelections::PerformLayout()
 		GetWizardPanel()->SetFinishButtonEnabled(true);
 
 	}
-	GetWizardPanel()->SetNextButtonEnabled(false);	
+	GetWizardPanel()->SetNextButtonEnabled(false);
 }
 
 //-----------------------------------------------------------------------------
@@ -220,7 +220,7 @@ IMPLEMENT_PANELMAP(CMoreSelections, Panel);
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-// Purpose: A wizard panel containing two 
+// Purpose: A wizard panel containing two
 // wizard sub panels
 //-----------------------------------------------------------------------------
 class CWonderfulWizard : public WizardPanel
@@ -228,10 +228,10 @@ class CWonderfulWizard : public WizardPanel
 public:
 	CWonderfulWizard();
 	~CWonderfulWizard(){};
-	
+
 	void Run(void);
 	void Open();
-	
+
 private:
 };
 
@@ -242,11 +242,11 @@ CWonderfulWizard::CWonderfulWizard() : WizardPanel(NULL, "WonderfulWizard")
 {
 	// The size of the Wizard.
 	//SetBounds(0, 0, 480, 360);
-	
+
 	// The first panel to be displayed.
 	WizardSubPanel *subPanel = new CSomeSelections(this, "CSomeSelections");
 	subPanel->SetVisible(false);
-	
+
 	// The second panel to be displayed.
 	subPanel = new CMoreSelections(this, "CMoreSelections");
 	subPanel->SetVisible(false);
@@ -261,9 +261,9 @@ void CWonderfulWizard::Run( void )
 
 	// Call run, with the name of the first panel to be displayed.
 	WizardPanel::Run(dynamic_cast<WizardSubPanel *>(FindChildByName("CSomeSelections")));
-	
+
 	SetTitle("A Wizard Panel ", true);
-}	 
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: Display the wizard.
@@ -279,7 +279,7 @@ void CWonderfulWizard::Open()
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-// Purpose: A demonstration of a wizard panel containing two 
+// Purpose: A demonstration of a wizard panel containing two
 // wizard sub panels
 //-----------------------------------------------------------------------------
 class WizardPanelDemo: public DemoPage
@@ -287,14 +287,14 @@ class WizardPanelDemo: public DemoPage
 public:
 	WizardPanelDemo(Panel *parent, const char *name);
 	~WizardPanelDemo(){};
-	
+
 	void SetVisible(bool status);
-	
+
 private:
 	// We use a handle because the window could be destroyed if someone
-	// closed the wizard. 
+	// closed the wizard.
 	DHANDLE<CWonderfulWizard> m_hWizardPanel;
-	
+
 };
 
 //-----------------------------------------------------------------------------
@@ -330,12 +330,12 @@ void WizardPanelDemo::SetVisible(bool status)
 	else
 	{
 		if (m_hWizardPanel.Get())
-		{		
+		{
 			m_hWizardPanel->SetVisible(false);
 		}
 	}
 
-	DemoPage::SetVisible(status);	
+	DemoPage::SetVisible(status);
 }
 
 
@@ -344,5 +344,3 @@ Panel* WizardPanelDemo_Create(Panel *parent)
 {
 	return new WizardPanelDemo(parent, "WizardPanelDemo");
 }
-
-

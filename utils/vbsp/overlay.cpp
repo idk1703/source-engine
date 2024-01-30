@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -76,7 +76,7 @@ int Overlay_GetFromEntity( entity_t *pMapEnt )
 		Error( "Overlay Material Name (%s) too long! > OVERLAY_MAP_STRLEN (%d)", pMaterialName, OVERLAY_MAP_STRLEN );
 		return -1;
 	}
-	strcpy( pMapOverlay->szMaterialName, pMaterialName );	
+	strcpy( pMapOverlay->szMaterialName, pMaterialName );
 
 	// Convert the sidelist to side id(s).
 	const char *pSideList = ValueForKey( pMapEnt, "sides" );
@@ -264,7 +264,7 @@ void Overlay_EmitOverlayFace( mapoverlay_t *pMapOverlay )
 			}
 
 			texInfo.lightmapVecsLuxelsPerWorldUnits[iVec][3] = -99999.0f;
-			texInfo.textureVecsTexelsPerWorldUnits[iVec][3] = -99999.0f;			
+			texInfo.textureVecsTexelsPerWorldUnits[iVec][3] = -99999.0f;
 		}
 		pOverlay->nTexInfo = FindOrCreateTexInfo( texInfo );
 
@@ -352,7 +352,7 @@ void OverlayTransition_EmitOverlayFace( mapoverlay_t *pMapOverlay )
 			}
 
 			texInfo.lightmapVecsLuxelsPerWorldUnits[iVec][3] = -99999.0f;
-			texInfo.textureVecsTexelsPerWorldUnits[iVec][3] = -99999.0f;			
+			texInfo.textureVecsTexelsPerWorldUnits[iVec][3] = -99999.0f;
 		}
 		pOverlay->nTexInfo = FindOrCreateTexInfo( texInfo );
 
@@ -403,7 +403,7 @@ void OverlayTransition_EmitOverlayFaces( void )
 //-----------------------------------------------------------------------------
 #define OVERLAY_BASIS_U					0
 #define OVERLAY_BASIS_V					1
-#define OVERLAY_BASIS_NORMAL			2	
+#define OVERLAY_BASIS_NORMAL			2
 #define OVERLAY_HANDLES_COUNT			4
 
 
@@ -435,7 +435,7 @@ void Overlay_Translate( mapoverlay_t *pOverlay, Vector &OriginOffset, QAngle &An
 	// erase move component
 	tmpMatrix.SetTranslation( vec3_origin );
 
-	// check if matrix would still change something 
+	// check if matrix would still change something
 	if ( !tmpMatrix.IsIdentity() )
 	{
 		// make sure axes are normalized (they should be anyways)
@@ -467,7 +467,7 @@ void Overlay_Translate( mapoverlay_t *pOverlay, Vector &OriginOffset, QAngle &An
 		}
 		else
 		{
-			// more complex transformation, move UV coordinates, but leave base axes 
+			// more complex transformation, move UV coordinates, but leave base axes
 			for ( int iHandle=0; iHandle<OVERLAY_HANDLES_COUNT;iHandle++)
 			{
 				Vector vecUV = pOverlay->vecUVPoints[iHandle];

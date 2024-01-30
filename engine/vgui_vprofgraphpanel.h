@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -24,4 +24,3 @@ void DestroyVProfGraphPanel();
 
 
 #endif // VGUI_VPROFGRAPHPANEL_H
-

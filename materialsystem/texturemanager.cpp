@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -75,7 +75,7 @@ void V_StripWhitespace( char* pBuffer )
 	char* pSrc = pBuffer;
 	char* pDst = pBuffer;
 	char* pDstFirstTrailingWhitespace = NULL;
-	
+
 	// Remove leading whitespace
 	bool leading = true;
 	while ( *pSrc )
@@ -144,9 +144,9 @@ public:
 				{
 					// Fill mip 0 with a checkerboard
 					CPixelWriter pixelWriter;
-					pixelWriter.SetPixelMemory( pVTFTexture->Format(), 
+					pixelWriter.SetPixelMemory( pVTFTexture->Format(),
 						pVTFTexture->ImageData( iFrame, iFace, 0, 0, 0, z ), pVTFTexture->RowSizeInBytes( 0 ) );
-					
+
 					for (int y = 0; y < nHeight; ++y)
 					{
 						pixelWriter.Seek( 0, y );
@@ -211,9 +211,9 @@ public:
 					for (int z = 0; z < nDepth; ++z)
 					{
 						CPixelWriter pixelWriter;
-						pixelWriter.SetPixelMemory( pVTFTexture->Format(), 
+						pixelWriter.SetPixelMemory( pVTFTexture->Format(),
 							pVTFTexture->ImageData( iFrame, iFace, iMip, 0, 0, z ), pVTFTexture->RowSizeInBytes( iMip ) );
-					
+
 						for (int y = 0; y < nHeight; ++y)
 						{
 							pixelWriter.Seek( 0, y );
@@ -258,9 +258,9 @@ public:
 		Vector direction;
 		for (int iFace = 0; iFace < 6; ++iFace)
 		{
-			pixelWriter.SetPixelMemory( pVTFTexture->Format(), 
+			pixelWriter.SetPixelMemory( pVTFTexture->Format(),
 				pVTFTexture->ImageData( 0, iFace, 0 ), pVTFTexture->RowSizeInBytes( 0 ) );
-			
+
 			int nWidth = pVTFTexture->Width();
 			int nHeight = pVTFTexture->Height();
 
@@ -292,7 +292,7 @@ public:
 					case CUBEMAP_FACE_LEFT:
 						pixelWriter.WritePixel( 255 - iz, 255 - iy, ix, 255 );
 						break;
-					case CUBEMAP_FACE_BACK:	
+					case CUBEMAP_FACE_BACK:
 						pixelWriter.WritePixel( ix, iz, iy, 255 );
 						break;
 					case CUBEMAP_FACE_FRONT:
@@ -332,9 +332,9 @@ public:
 		Vector direction;
 		for (int iFace = 0; iFace < 6; ++iFace)
 		{
-			pixelWriter.SetPixelMemory( pVTFTexture->Format(), 
+			pixelWriter.SetPixelMemory( pVTFTexture->Format(),
 				pVTFTexture->ImageData( 0, iFace, 0 ), pVTFTexture->RowSizeInBytes( 0 ) );
-			
+
 			int nWidth = pVTFTexture->Width();
 			int nHeight = pVTFTexture->Height();
 
@@ -366,7 +366,7 @@ public:
 							flY = 255.0f - flY;
 							flZ = 255.0f - flZ;
 							break;
-						case CUBEMAP_FACE_BACK:	
+						case CUBEMAP_FACE_BACK:
 							break;
 						case CUBEMAP_FACE_FRONT:
 							flY = 255.0f - flY;
@@ -400,7 +400,7 @@ public:
 						case CUBEMAP_FACE_LEFT:
 							pixelWriter.WritePixelF( flZ, flY, flX, 0.0f );
 							break;
-						case CUBEMAP_FACE_BACK:	
+						case CUBEMAP_FACE_BACK:
 							pixelWriter.WritePixelF( flX,  flZ,  flY, 0.0f );
 							break;
 						case CUBEMAP_FACE_FRONT:
@@ -433,7 +433,7 @@ public:
 						iy = 255 - iy;
 						iz = 255 - iz;
 						break;
-					case CUBEMAP_FACE_BACK:	
+					case CUBEMAP_FACE_BACK:
 						break;
 					case CUBEMAP_FACE_FRONT:
 						iy = 255 - iy;
@@ -471,7 +471,7 @@ public:
 //						pixelWriter.WritePixelSigned( -128, -128, -128, 0 );
 						pixelWriter.WritePixelSigned( iz, iy, ix, 0 );
 						break;
-					case CUBEMAP_FACE_BACK:	
+					case CUBEMAP_FACE_BACK:
 						// wrong
 //						pixelWriter.WritePixelSigned( -128, -128, -128, 0 );
 						pixelWriter.WritePixelSigned( ix, iz, iy, 0 );
@@ -544,7 +544,7 @@ public:
 		for ( int z = 0; z < nDepth; ++z )
 		{
 			CPixelWriter pixelWriter;
-			pixelWriter.SetPixelMemory( pVTFTexture->Format(), 
+			pixelWriter.SetPixelMemory( pVTFTexture->Format(),
 				pVTFTexture->ImageData( 0, 0, 0, 0, 0, z ), pVTFTexture->RowSizeInBytes( 0 ) );
 
 			for ( int y = 0; y < nHeight; ++y )
@@ -564,7 +564,7 @@ public:
 		}
 	}
 
-	virtual void Release() 
+	virtual void Release()
 	{
 		delete this;
 	}
@@ -645,14 +645,14 @@ public:
 
 	virtual void ForceAllTexturesIntoHardware( void );
 
-	virtual ITextureInternal *CreateRenderTargetTexture( 
+	virtual ITextureInternal *CreateRenderTargetTexture(
 		const char *pRTName,	// NULL for auto-generated name
-		int w, 
-		int h, 
-		RenderTargetSizeMode_t sizeMode, 
-		ImageFormat fmt, 
-		RenderTargetType_t type, 
-		unsigned int textureFlags, 
+		int w,
+		int h,
+		RenderTargetSizeMode_t sizeMode,
+		ImageFormat fmt,
+		RenderTargetType_t type,
+		unsigned int textureFlags,
 		unsigned int renderTargetFlags );
 
 	virtual bool HasPendingTextureDestroys() const;
@@ -716,7 +716,7 @@ protected:
 
 	CUtlDict< ITextureInternal *, unsigned short > m_TextureList;
 	CUtlDict< const char *, unsigned short > m_TextureAliases;
-	CUtlDict< int, unsigned short > m_TextureExcludes;	
+	CUtlDict< int, unsigned short > m_TextureExcludes;
 	CUtlDict< CCopyableUtlVector<AsyncLoadJob_t> > m_PendingAsyncLoads;
 	CUtlVector< ITextureInternal* > m_ReadbackTextures;
 	CUtlVector< ITextureInternal* >			m_preloadedTextures;
@@ -766,7 +766,7 @@ protected:
 static CTextureManager s_TextureManager;
 ITextureManager *g_pTextureManager = &s_TextureManager;
 
-struct AsyncLoadJob_t 
+struct AsyncLoadJob_t
 {
 	CUtlString m_TextureName;
 	CUtlString m_TextureGroupName;
@@ -838,8 +838,8 @@ private:
 class CAsyncMapResult : public IAsyncTextureOperationReceiver
 {
 public:
-	CAsyncMapResult( ITextureInternal* pTex ) 
-	: m_pTexToMap( pTex ) 
+	CAsyncMapResult( ITextureInternal* pTex )
+	: m_pTexToMap( pTex )
 	, m_nReferenceCount( 0 )
 	, m_pMemory( NULL )
 	, m_nPitch( 0 )
@@ -855,7 +855,7 @@ public:
 		if ( retVal == 0 )
 			delete this;
 
-		return retVal;	
+		return retVal;
 	}
 
 	virtual int GetRefCount() const OVERRIDE{ return m_nReferenceCount; }
@@ -877,14 +877,14 @@ public:
 
 	ITextureInternal* const m_pTexToMap;
 	CInterlockedInt m_nReferenceCount;
-	volatile void* m_pMemory; 
+	volatile void* m_pMemory;
 	volatile int m_nPitch;
 
 private:
 	volatile bool m_bSignalled;
 };
 
-struct AsyncReadJob_t 
+struct AsyncReadJob_t
 {
 	ITexture* m_pSrcRt;
 	ITextureInternal* m_pSysmemTex;
@@ -923,15 +923,15 @@ struct AsyncReadJob_t
 	, m_nAdditionalCreationFlags( nAdditionalCreationFlags )
 	, m_pRecipient( pRecipient )
 	, m_pExtraArgs( pExtraArgs )
-	{ 
-	
+	{
+
 	}
 
 	~AsyncReadJob_t()
 	{
 		Assert( ThreadInMainThread() );
 
-		delete [] m_pDstName; 
+		delete [] m_pDstName;
 
 		SafeRelease( &m_pRecipient );
 
@@ -981,7 +981,7 @@ bool IsJobCancelled( AsyncLoadJob_t* pJob )
 }
 
 //-----------------------------------------------------------------------------
-// Functions can be called from any thread, unless they are prefixed with a thread name. 
+// Functions can be called from any thread, unless they are prefixed with a thread name.
 class AsyncLoader
 {
 public:
@@ -993,7 +993,7 @@ public:
 			m_asyncScratchVTFs.PushItem( CreateVTFTexture() );
 		}
 
-		// Do this after everything else. 
+		// Do this after everything else.
 		m_LoaderThread = CreateSimpleThread( AsyncLoader::LoaderMain, this );
 	}
 
@@ -1021,14 +1021,14 @@ public:
 		tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
 
 		m_bQuit = true;
-		ThreadJoin( m_LoaderThread );		
+		ThreadJoin( m_LoaderThread );
 	}
 
 	void ThreadMain_Update()
 	{
 		Assert( ThreadInMainThread() );
 		tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
-		
+
 		AsyncLoadJob_t *pJob = NULL;
 		if ( m_completedJobs.PopItem( &pJob ) )
 		{
@@ -1045,11 +1045,11 @@ public:
 	void ReleaseAsyncReadBuffer( IVTFTexture *pScratchVTF )
 	{
 		Assert( pScratchVTF != NULL );
-		m_asyncScratchVTFs.PushItem( pScratchVTF  );	
+		m_asyncScratchVTFs.PushItem( pScratchVTF  );
 	}
 
 private:
-	inline bool ThreadInLoaderThread() 
+	inline bool ThreadInLoaderThread()
 	{
 		return s_TextureManager.ThreadInAsyncLoadThread();
 	}
@@ -1107,7 +1107,7 @@ private:
 		return 0;
 	}
 
-	ThreadHandle_t m_LoaderThread; 
+	ThreadHandle_t m_LoaderThread;
 	volatile bool m_bQuit;
 
 	CTSQueue< AsyncLoadJob_t *> m_pendingJobs;
@@ -1116,7 +1116,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Functions can be called from any thread, unless they are prefixed with a thread name. 
+// Functions can be called from any thread, unless they are prefixed with a thread name.
 class AsyncReader
 {
 public:
@@ -1124,7 +1124,7 @@ public:
 	: m_bQuit( false )
 	{
 
-		// Do this after everything else. 
+		// Do this after everything else.
 		m_HelperThread = CreateSimpleThread( AsyncReader::ReaderMain, this );
 	}
 
@@ -1161,7 +1161,7 @@ public:
 					delete pMapped;
 					continue;
 				}
-				
+
 				if ( pMapped->m_pAsyncMap->IsSignalled() )
 				{
 					if ( pMapped->m_pAsyncMap->m_pMemory != 0 && pMapped->m_pAsyncMap->m_nPitch != 0 )
@@ -1174,7 +1174,7 @@ public:
 						Assert( !"Failed to perform a map that shouldn't fail, need to deal with this if it ever happens." );
 						DevWarning( "Failed to perform a map that shouldn't fail, need to deal with this if it ever happens." );
 					}
-					
+
 					// Remove the head, which is pMapped
 					m_queuedMaps.RemoveAtHead();
 				}
@@ -1231,13 +1231,13 @@ public:
 
 			m_scheduledReads.Insert( pRequestCopy );
 		}
-		
+
 		while ( m_completedJobs.Count() > 0 )
 		{
 			tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "CreateTextureFromBits" );
-			
+
 			AsyncReadJob_t* pCreate = NULL;
-			if ( m_completedJobs.PopItem( &pCreate ) ) 
+			if ( m_completedJobs.PopItem( &pCreate ) )
 			{
 				// Check after we do the unmap, we need to do that here.
 				if ( IsJobCancelled( pCreate ) )
@@ -1309,7 +1309,7 @@ private:
 		const ImageFormat dstFmt = pJob->m_dstFmt;
 		CUtlMemory< unsigned char > dstBufferAllMips;
 		const int dstMemRequried = ImageLoader::GetMemRequired( w, h, 1, dstFmt, pJob->m_bGenMips );
-		
+
 		{
 			tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s-Allocations", __FUNCTION__ );
 			srcBufferFinestMip.EnsureCapacity( srcFinestMemRequired );
@@ -1337,29 +1337,29 @@ private:
 			tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s-ByteSwapInPlace", __FUNCTION__ );
 			ImageLoader::ConvertImageFormat( (unsigned char*) pJob->m_pAsyncMap->m_pMemory, GetImageFormatRawReadback( srcFmt ), srcBufferFinestMip.Base(), srcFmt, w, h );
 		}
-		
+
 		if ( pJob->m_bGenMips )
 		{
 			GenerateMipmaps( &srcBufferAllMips, srcBufferFinestMip.Base(), w, h, srcFmt );
 		}
 		else
 		{
-			// If we're not generating mips, then allmips == finest mip, but the code below expects everything to 
+			// If we're not generating mips, then allmips == finest mip, but the code below expects everything to
 			// be in all mips.
 			srcBufferAllMips.Swap( srcBufferFinestMip );
 		}
 
 		// Code below expects that the data is here one way or another.
 		Assert( srcBufferAllMips.Count() == srcAllMemRequired );
-		
-		if ( srcFmt != dstFmt ) 
+
+		if ( srcFmt != dstFmt )
 		{
 			ConvertTexelData( &dstBufferAllMips, dstFmt, srcBufferAllMips, w, h, srcFmt, pJob->m_bGenMips );
 			pJob->m_finalTexelData.Swap( dstBufferAllMips );
 		}
 		else
 		{
-			// Just swap out the buffers. 
+			// Just swap out the buffers.
 			pJob->m_finalTexelData.Swap( srcBufferAllMips );
 		}
 
@@ -1423,11 +1423,11 @@ private:
 //-----------------------------------------------------------------------------
 // Texture manager
 //-----------------------------------------------------------------------------
-CTextureManager::CTextureManager( void ) 
+CTextureManager::CTextureManager( void )
 : m_TextureList( true )
 , m_TextureAliases( true )
 , m_TextureExcludes( true )
-, m_PendingAsyncLoads( true ) 
+, m_PendingAsyncLoads( true )
 , m_textureStreamingRequests( DefLessFunc( ITextureInternal* ) )
 , m_nAsyncLoadThread( 0xFFFFFFFF )
 , m_nAsyncReadThread( 0xFFFFFFFF )
@@ -1524,7 +1524,7 @@ void CTextureManager::Init( int nFlags )
 		m_pSignedNormalizationCubemap = CreateProceduralTexture( "normalizesigned", TEXTURE_GROUP_CUBE_MAP,
 																NORMALIZATION_CUBEMAP_SIZE, NORMALIZATION_CUBEMAP_SIZE, 1, fmt, nTextureFlags );
 		CreateSignedNormalizationCubemap( m_pSignedNormalizationCubemap );
-		
+
 		m_pIdentityLightWarp = FindOrLoadTexture( "dev/IdentityLightWarp", TEXTURE_GROUP_OTHER );
 		m_pIdentityLightWarp->IncrementReferenceCount();
 	}
@@ -1575,7 +1575,7 @@ void CTextureManager::Shutdown()
 		m_pDebugLuxels2D = NULL;
 	}
 
-	// These checks added because it's possible for shutdown to be called before the material system is 
+	// These checks added because it's possible for shutdown to be called before the material system is
 	// fully initialized.
 	if ( m_pWhiteTexture )
 	{
@@ -1670,7 +1670,7 @@ void CTextureManager::AllocateStandardRenderTargets( )
 		// A offscreen render target which is the size + format of the back buffer (*not* HDR format!)
 		if ( bAllocateFullscreenTexture )
 		{
-			m_pFullScreenTexture = CreateRenderTargetTexture( "_rt_FullScreen", 1, 1, RT_SIZE_FULL_FRAME_BUFFER_ROUNDED_UP, 
+			m_pFullScreenTexture = CreateRenderTargetTexture( "_rt_FullScreen", 1, 1, RT_SIZE_FULL_FRAME_BUFFER_ROUNDED_UP,
 				MaterialSystem()->GetBackBufferFormat(), RENDER_TARGET, TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT, 0 );
 			m_pFullScreenTexture->IncrementReferenceCount();
 		}
@@ -1912,7 +1912,7 @@ void CTextureManager::ForceAllTexturesIntoHardware( void )
 {
 	if ( IsX360() )
 		return;
-	
+
 	IMaterial *pMaterial = MaterialSystem()->FindMaterial( "engine/preloadtexture", "texture preload" );
 	pMaterial = ((IMaterialInternal *)pMaterial)->GetRealTimeVersion(); //always work with the realtime material internally
 	pMaterial->IncrementReferenceCount();
@@ -1941,22 +1941,22 @@ ITextureInternal *CTextureManager::ErrorTexture()
 
 ITextureInternal *CTextureManager::NormalizationCubemap()
 {
-	return m_pNormalizationCubemap; 
+	return m_pNormalizationCubemap;
 }
 
 ITextureInternal *CTextureManager::SignedNormalizationCubemap()
 {
-	return m_pSignedNormalizationCubemap; 
+	return m_pSignedNormalizationCubemap;
 }
 
 ITextureInternal *CTextureManager::ShadowNoise2D()
 {
-	return m_pShadowNoise2D; 
+	return m_pShadowNoise2D;
 }
 
 ITextureInternal *CTextureManager::IdentityLightWarp()
 {
-	return m_pIdentityLightWarp; 
+	return m_pIdentityLightWarp;
 }
 
 ITextureInternal *CTextureManager::FullFrameDepthTexture()
@@ -1974,13 +1974,13 @@ ITextureInternal *CTextureManager::DebugLuxels2D()
 //-----------------------------------------------------------------------------
 // Creates a procedural texture
 //-----------------------------------------------------------------------------
-ITextureInternal *CTextureManager::CreateProceduralTexture( 
-	const char			*pTextureName, 
-	const char			*pTextureGroupName, 
-	int					w, 
-	int					h, 
-	int					d, 
-	ImageFormat			fmt, 
+ITextureInternal *CTextureManager::CreateProceduralTexture(
+	const char			*pTextureName,
+	const char			*pTextureGroupName,
+	int					w,
+	int					h,
+	int					d,
+	ImageFormat			fmt,
 	int					nFlags,
 	ITextureRegenerator *generator )
 {
@@ -2029,7 +2029,7 @@ ITextureInternal *CTextureManager::FindTexture( const char *pTextureName )
 {
 	if ( !pTextureName || pTextureName[0] == 0 )
 		return NULL;
-	
+
 	char szCleanName[MAX_PATH];
 	NormalizeTextureName( pTextureName, szCleanName, sizeof( szCleanName ) );
 
@@ -2161,7 +2161,7 @@ void CTextureManager::SetExcludedTextures( const char *pScriptName )
 			if ( pTextureName[0] != 0 && isdigit( pTextureName[0] ) )
 			{
 				nDimensionsLimit = atoi( pTextureName );
-				
+
 				// skip forward to name
 				for ( ;; )
 				{
@@ -2230,14 +2230,14 @@ bool CTextureManager::IsTextureLoaded( const char *pTextureName )
 //-----------------------------------------------------------------------------
 // Creates a texture that's a render target
 //-----------------------------------------------------------------------------
-ITextureInternal *CTextureManager::CreateRenderTargetTexture( 
+ITextureInternal *CTextureManager::CreateRenderTargetTexture(
 	const char *pRTName,	// NULL for auto-generated name
-	int w, 
-	int h, 
-	RenderTargetSizeMode_t sizeMode, 
-	ImageFormat fmt, 
-	RenderTargetType_t type, 
-	unsigned int textureFlags, 
+	int w,
+	int h,
+	RenderTargetSizeMode_t sizeMode,
+	ImageFormat fmt,
+	RenderTargetType_t type,
+	unsigned int textureFlags,
 	unsigned int renderTargetFlags )
 {
 	MEM_ALLOC_CREDIT_( __FILE__ ": Render target" );
@@ -2251,7 +2251,7 @@ ITextureInternal *CTextureManager::CreateRenderTargetTexture(
 		{
 			// Changing the underlying render target, but leaving the pointer and refcount
 			// alone fixes callers that have exisiting references to this object.
-			ITextureInternal::ChangeRenderTarget( pTexture, w, h, sizeMode, fmt, type, 
+			ITextureInternal::ChangeRenderTarget( pTexture, w, h, sizeMode, fmt, type,
 					textureFlags, renderTargetFlags );
 
 			// download if ready
@@ -2259,8 +2259,8 @@ ITextureInternal *CTextureManager::CreateRenderTargetTexture(
 			return pTexture;
 		}
 	}
- 
-	pTexture = ITextureInternal::CreateRenderTarget( pRTName, w, h, sizeMode, fmt, type, 
+
+	pTexture = ITextureInternal::CreateRenderTarget( pRTName, w, h, sizeMode, fmt, type,
 											  textureFlags, renderTargetFlags );
 	if ( !pTexture )
 		return NULL;
@@ -2336,7 +2336,7 @@ void CTextureManager::RemoveTexture( ITextureInternal *pTexture )
 	if ( !ThreadInMainThread() || MaterialSystem()->GetRenderThreadId() != 0xFFFFFFFF )
 	{
 		Assert( !"CTextureManager::RemoveTexture should never be called here");
-		// This is catastrophically bad, don't do this. Someone needs to fix this. 
+		// This is catastrophically bad, don't do this. Someone needs to fix this.
 		DebuggerBreakIfDebugging_StagingOnly();
 		return;
 	}
@@ -2365,10 +2365,10 @@ void CTextureManager::RemoveTexture( ITextureInternal *pTexture )
 		}
 	}
 
-	if ( bTextureFound ) 
+	if ( bTextureFound )
 	{
 		Assert( !"CTextureManager::RemoveTexture has been called for a texture that has already requested cleanup. That's a paddlin'." );
-		// This is catastrophically bad, don't do this. Someone needs to fix this. 
+		// This is catastrophically bad, don't do this. Someone needs to fix this.
 		DebuggerBreakIfDebugging_StagingOnly();
 		return;
 	}
@@ -2433,7 +2433,7 @@ void CTextureManager::DebugPrintUsedTextures( void )
 			char buff[256];
 			const char *pName = m_TextureExcludes.GetElementName( i );
 			V_snprintf( buff, sizeof( buff ), "Excluded: %d '%s' \n", m_TextureExcludes[i], pName );
-	
+
 			// an excluded texture is valid, but forced tiny
 			if ( IsTextureLoaded( pName ) )
 			{
@@ -2510,7 +2510,7 @@ void CTextureManager::AsyncFindOrLoadTexture( const char *pTextureName, const ch
 			return;
 		}
 	}
-	
+
 	AsyncLoadJob_t asyncLoad( pTextureName, pTextureGroupName, pRecipient, pExtraArgs, bComplain, nAdditionalCreationFlags );
 
 	// If this is the first person asking to load this, then remember so we don't load the same thing over and over again.
@@ -2526,7 +2526,7 @@ void CTextureManager::AsyncFindOrLoadTexture( const char *pTextureName, const ch
 		AsyncLoad( asyncLoad );
 		pendingIndex = m_PendingAsyncLoads.Insert( pTextureName );
 	}
-	else 
+	else
 	{
 		// If this is a thing we've seen before, just note that we also need it.
 		m_PendingAsyncLoads[ pendingIndex ].AddToTail( asyncLoad );
@@ -2546,10 +2546,10 @@ void CTextureManager::CompleteAsyncLoad( AsyncLoadJob_t* pJob )
 		pJob->m_pResultData->Download( NULL, pJob->m_nAdditionalCreationFlags );
 		bDownloaded = true;
 	}
-	
+
 	// Then notify the caller that they're finished.
 	pJob->m_pRecipient->OnAsyncFindComplete( pJob->m_pResultData, pJob->m_pExtraArgs );
-	
+
 	// Finally, deal with any other stragglers that asked for the same surface we did.
 	int pendingIndex = m_PendingAsyncLoads.Find( pJob->m_TextureName.Get() );
 	Assert( pendingIndex != m_PendingAsyncLoads.InvalidIndex() );
@@ -2625,12 +2625,12 @@ void CTextureManager::CompleteAsyncRead( AsyncReadJob_t* pJob )
 
 	int mips = pJob->m_bGenMips ? ImageLoader::GetNumMipMapLevels( w, h ) : 1;
 
-	int nFlags = pJob->m_nAdditionalCreationFlags 
+	int nFlags = pJob->m_nAdditionalCreationFlags
 		       | TEXTUREFLAGS_SINGLECOPY
 			   | TEXTUREFLAGS_IGNORE_PICMIP
 			   | ( mips > 1
 			       ? TEXTUREFLAGS_ALL_MIPS
-				   : TEXTUREFLAGS_NOMIP 
+				   : TEXTUREFLAGS_NOMIP
 			     )
 	;
 
@@ -2678,8 +2678,8 @@ ITextureInternal* CTextureManager::AcquireReadbackTexture( int w, int h, ImageFo
 			ITextureInternal* pTex = m_ReadbackTextures[ i ];
 			Assert( pTex );
 
-			if ( pTex->GetActualWidth() == w 
-			  && pTex->GetActualHeight() == h 
+			if ( pTex->GetActualWidth() == w
+			  && pTex->GetActualHeight() == h
 			  && pTex->GetImageFormat() == fmt )
 			{
 				// Found one in the cache already
@@ -2736,14 +2736,14 @@ void CTextureManager::ReleaseReadbackTexture( ITextureInternal* pTex )
 		textures.Sort( SortTexturesForDump );
 		FOR_EACH_VEC( textures, i )
 		{
-			CUtlPair< CUtlString, void* >& pair = textures[i]; 
+			CUtlPair< CUtlString, void* >& pair = textures[i];
 			Warning( "[%p]: %s\n", pair.second, pair.first.Get() )	;
 		}
 	}
 #endif
 
 //-----------------------------------------------------------------------------
-// Warms the texture cache from a vpk. This will cause coarse mipmaps to be 
+// Warms the texture cache from a vpk. This will cause coarse mipmaps to be
 // available all the time, starting with mipmap level 3. This allows us to have
 // all the textures available all the time, but we only pay for fine levels when
 // we actually need them.
@@ -2767,16 +2767,16 @@ void CTextureManager::WarmTextureCache()
 	Assert( g_pShaderAPI->CanDownloadTextures() );
 
 	g_pFullFileSystem->AddSearchPath( "tf2_texture_cache.vpk", cTextureCachePathDir, PATH_ADD_TO_TAIL );
-	
+
 	CUtlDict< int > filesToLoad( k_eDictCompareTypeCaseSensitive );
-	
+
 	// TODO: Maybe work directly with VPK (still need to add to the filesystem for LoadTexture)?
 	// CPackFile
 
 	// Add the pak and then walk through the contents.
 	FindFilesToLoad( &filesToLoad, "*.*" );
 
-	// Then add the list of files from the cache, which will deal with running without a VPK and also 
+	// Then add the list of files from the cache, which will deal with running without a VPK and also
 	// allow us to add late stragglers.
 	ReadFilesToLoad( &filesToLoad, "texture_preload_list.txt" );
 
@@ -2788,7 +2788,7 @@ void CTextureManager::WarmTextureCache()
 
 	Assert( filesToLoad.Count() > 0 );
 
-	// Now read all of the files. 
+	// Now read all of the files.
 	// TODO: This needs to read in specific order to ensure peak performance.
 	FOR_EACH_DICT( filesToLoad, i )
 	{
@@ -2826,7 +2826,7 @@ void CTextureManager::WarmTextureCache()
 //-----------------------------------------------------------------------------
 // Reads the list of files contained in the vpk loaded above, and adds them to the
 // list of files we need to load (passing in as pOutFilesToLoad). The map contains
-// the 
+// the
 //-----------------------------------------------------------------------------
 void CTextureManager::FindFilesToLoad( CUtlDict< int >* pOutFilesToLoad, const char* pFilename )
 {
@@ -2839,7 +2839,7 @@ void CTextureManager::FindFilesToLoad( CUtlDict< int >* pOutFilesToLoad, const c
 	{
 		if ( g_pFullFileSystem->FindIsDirectory( fh ) )
 		{
-			if ( pFilename[0] != '.' ) 
+			if ( pFilename[0] != '.' )
 			{
 				char childFilename[_MAX_PATH];
 				V_sprintf_safe( childFilename, "%s/*.*", pFilename );
@@ -2850,16 +2850,16 @@ void CTextureManager::FindFilesToLoad( CUtlDict< int >* pOutFilesToLoad, const c
 		{
 			char filenameNoExtension[_MAX_PATH];
 			V_StripExtension( pFilename, filenameNoExtension, _MAX_PATH );
-			// Add the file to the list, which we will later traverse in order to ensure we're hitting these in the expected order for the VPK. 
+			// Add the file to the list, which we will later traverse in order to ensure we're hitting these in the expected order for the VPK.
 			( *pOutFilesToLoad ).Insert( CUtlString( filenameNoExtension ), 0 );
 		}
 
-		pFilename = g_pFullFileSystem->FindNext( fh );			
+		pFilename = g_pFullFileSystem->FindNext( fh );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Read the contents of pFilename, which should just be a list of texture names 
+// Read the contents of pFilename, which should just be a list of texture names
 // that we should load.
 //-----------------------------------------------------------------------------
 void CTextureManager::ReadFilesToLoad( CUtlDict< int >* pOutFilesToLoad, const char* pFilename )
@@ -2870,12 +2870,12 @@ void CTextureManager::ReadFilesToLoad( CUtlDict< int >* pOutFilesToLoad, const c
 	if ( !fh )
 		return;
 
-	CUtlBuffer fileContents( 0, 0, CUtlBuffer::TEXT_BUFFER ); 
+	CUtlBuffer fileContents( 0, 0, CUtlBuffer::TEXT_BUFFER );
 	if ( !g_pFullFileSystem->ReadToBuffer( fh, fileContents ) )
 		goto cleanup;
 
 	char buffer[_MAX_PATH + 1];
-	while ( 1 ) 
+	while ( 1 )
 	{
 		fileContents.GetLine( buffer, _MAX_PATH );
 		if ( buffer[ 0 ] == 0 )
@@ -2913,9 +2913,9 @@ void CTextureManager::UpdatePostAsync()
 		Assert( pRequest != NULL );
 
 		// Update the LOD bias to smoothly stream the texture in. We only need to do this on frames that
-		// we actually have been requested to draw--other frames it doesn't matter (see, because we're not drawing?) 
+		// we actually have been requested to draw--other frames it doesn't matter (see, because we're not drawing?)
 		pRequest->UpdateLodBias();
-		m_textureStreamingRequests.InsertOrReplace( pRequest, g_FrameNum );	
+		m_textureStreamingRequests.InsertOrReplace( pRequest, g_FrameNum );
 	}
 
 	// Then update streaming
@@ -2928,9 +2928,9 @@ void CTextureManager::UpdatePostAsync()
 		{
 			ITextureInternal* pTex = m_textureStreamingRequests.Key( i );
 
-			// It's been awhile since we were asked to full res this texture, so let's evict 
+			// It's been awhile since we were asked to full res this texture, so let's evict
 			// if it's still full res.
-			
+
 			if ( pTex->GetTargetResidence() == RESIDENT_FULL )
 				pTex->MakeResident( RESIDENT_PARTIAL );
 
@@ -2938,7 +2938,7 @@ void CTextureManager::UpdatePostAsync()
 		}
 	}
 
-	// Then, start allowing new stuff to ask for data. 
+	// Then, start allowing new stuff to ask for data.
 	FOR_EACH_MAP_FAST( m_textureStreamingRequests, i )
 	{
 		int requestFrame = m_textureStreamingRequests[ i ];
@@ -2950,7 +2950,7 @@ void CTextureManager::UpdatePostAsync()
 			if ( pTex->GetTargetResidence() == RESIDENT_FULL )
 				continue;
 
-			// TODO: What to do if this fails? Auto-reask next frame? 
+			// TODO: What to do if this fails? Auto-reask next frame?
 			pTex->MakeResident( RESIDENT_FULL );
 		}
 	}
@@ -2988,7 +2988,7 @@ bool CTextureManager::AddTextureCompositorTemplate( const char* pName, KeyValues
 	}
 
 	CTextureCompositorTemplate* pNewTmpl = CTextureCompositorTemplate::Create( pName, pTmplDesc );
-	
+
 	// If this is the case, the logging has already been done.
 	if ( pNewTmpl == NULL )
 		return false;
@@ -3056,11 +3056,11 @@ void CTextureManager::RequestAllMipmaps( ITextureInternal* pTex )
 
 	unsigned int nTexFlags = pTex->GetFlags();
 
-	// If this isn't a streamable texture or if there are no mipmaps, there's nothing to do. 
+	// If this isn't a streamable texture or if there are no mipmaps, there's nothing to do.
 	if ( !( nTexFlags & TEXTUREFLAGS_STREAMABLE ) || ( nTexFlags & TEXTUREFLAGS_NOMIP ) )
 		return;
 
-	m_asyncStreamingRequests.PushItem( pTex );	
+	m_asyncStreamingRequests.PushItem( pTex );
 }
 
 void CTextureManager::EvictAllTextures()
@@ -3099,4 +3099,3 @@ static ImageFormat GetImageFormatRawReadback( ImageFormat fmt )
 
 	return fmt;
 }
-

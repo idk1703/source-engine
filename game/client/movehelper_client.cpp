@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,13 +32,13 @@ public:
 
 	// Numbered line printf
 	virtual void	Con_NPrintf( int idx, char const* fmt, ... );
-		
+
 	virtual bool	PlayerFallingDamage(void);
 	virtual void	PlayerSetAnimation( PLAYER_ANIM eAnim );
 
 	// These have separate server vs client impementations
 	virtual void	StartSound( const Vector& origin, int channel, char const* sample, float volume, soundlevel_t soundlevel, int fFlags, int pitch );
-	virtual void	StartSound( const Vector& origin, const char *soundname ); 
+	virtual void	StartSound( const Vector& origin, const char *soundname );
 	virtual void	PlaybackEventFull( int flags, int clientindex, unsigned short eventindex, float delay, Vector& origin, Vector& angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2 );
 	virtual IPhysicsSurfaceProps *GetSurfaceProps( void );
 
@@ -60,7 +60,7 @@ private:
 	};
 
 	CUtlVector<touchlist_t>			m_TouchList;
-};	
+};
 
 //-----------------------------------------------------------------------------
 // Singleton
@@ -72,7 +72,7 @@ static CMoveHelperClient s_MoveHelperClient;
 
 
 //-----------------------------------------------------------------------------
-// Constructor 
+// Constructor
 //-----------------------------------------------------------------------------
 CMoveHelperClient::CMoveHelperClient( void )
 {
@@ -85,7 +85,7 @@ CMoveHelperClient::~CMoveHelperClient( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 char const* CMoveHelperClient::GetName( EntityHandle_t handle ) const
@@ -103,7 +103,7 @@ void CMoveHelperClient::ResetTouchList( void )
 }
 
 //-----------------------------------------------------------------------------
-// Adds to the touched list 
+// Adds to the touched list
 //-----------------------------------------------------------------------------
 
 bool CMoveHelperClient::AddToTouched( const trace_t& tr, const Vector& impactvelocity )
@@ -189,7 +189,7 @@ void CMoveHelperClient::StartSound( const Vector& origin, const char *soundname 
 // Play a sound
 //-----------------------------------------------------------------------------
 
-void CMoveHelperClient::StartSound( const Vector& origin, int channel, 
+void CMoveHelperClient::StartSound( const Vector& origin, int channel,
 	char const* pSample, float volume, soundlevel_t soundlevel, int fFlags, int pitch )
 {
 	if ( pSample )
@@ -233,10 +233,10 @@ IPhysicsSurfaceProps *CMoveHelperClient::GetSurfaceProps( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bDeveloper - 
-//			*pFormat - 
-//			... - 
+// Purpose:
+// Input  : bDeveloper -
+//			*pFormat -
+//			... -
 //-----------------------------------------------------------------------------
 void CMoveHelperClient::Con_NPrintf( int idx, char const* pFormat, ...)
 {
@@ -246,7 +246,7 @@ void CMoveHelperClient::Con_NPrintf( int idx, char const* pFormat, ...)
 	va_start(marker, pFormat);
 	Q_vsnprintf(msg, sizeof( msg ), pFormat, marker);
 	va_end(marker);
-	
+
 #if defined( CSTRIKE_DLL ) || defined( DOD_DLL ) // reltodo
 	engine->Con_NPrintf( idx, "%s", msg );
 #else

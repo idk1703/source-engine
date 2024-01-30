@@ -120,7 +120,7 @@ private:
 
 	// Called when blocked to tell the door to continue moving.
 	virtual void DoorResume( void ) = 0;
-	
+
 	// Called to send the door instantly to its spawn positions.
 	virtual void DoorTeleportToSpawnPosition() = 0;
 	// }
@@ -172,12 +172,12 @@ private:
 	// }
 
 	int		m_nHardwareType;
-	
+
 	DoorState_t m_eDoorState;	// Holds whether the door is open, closed, opening, or closing.
 
 	locksound_t m_ls;			// The sounds the door plays when being locked, unlocked, etc.
-	EHANDLE		m_hActivator;		
-	
+	EHANDLE		m_hActivator;
+
 	bool	m_bLocked;				// True if the door is locked.
 	EHANDLE	m_hBlocker;				// Entity blocking the door currently
 	bool	m_bFirstBlocked;		// Marker for being the first door (in a group) to be blocked (needed for motion control)

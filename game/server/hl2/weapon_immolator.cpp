@@ -20,7 +20,7 @@
 #include "tier0/memdbgon.h"
 
 #define MAX_BURN_RADIUS		256
-#define RADIUS_GROW_RATE	50.0	// units/sec 
+#define RADIUS_GROW_RATE	50.0	// units/sec
 
 #define IMMOLATOR_TARGET_INVALID Vector( FLT_MAX, FLT_MAX, FLT_MAX )
 
@@ -32,7 +32,7 @@ public:
 	DECLARE_SERVERCLASS();
 
 	CWeaponImmolator( void );
-	
+
 	void Precache( void );
 	void PrimaryAttack( void );
 	void ItemPostFrame( void );
@@ -40,7 +40,7 @@ public:
 	int CapabilitiesGet( void ) {	return bits_CAP_WEAPON_RANGE_ATTACK1;	}
 
 	void ImmolationDamage( const CTakeDamageInfo &info, const Vector &vecSrcIn, float flRadius, int iClassIgnore );
-	virtual bool WeaponLOSCondition( const Vector &ownerPos, const Vector &targetPos, bool bSetConditions );	
+	virtual bool WeaponLOSCondition( const Vector &ownerPos, const Vector &targetPos, bool bSetConditions );
 	virtual int	WeaponRangeAttack1Condition( float flDot, float flDist );
 
 	void Update();
@@ -82,7 +82,7 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Maps base activities to weapons-specific ones so our characters do the right things.
 //-----------------------------------------------------------------------------
-acttable_t CWeaponImmolator::m_acttable[] = 
+acttable_t CWeaponImmolator::m_acttable[] =
 {
 	{	ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK_SNIPER_RIFLE, true }
 };
@@ -100,7 +100,7 @@ CWeaponImmolator::CWeaponImmolator( void )
 
 void CWeaponImmolator::StartImmolating()
 {
-	// Start the radius really tiny because we use radius == 0.0 to 
+	// Start the radius really tiny because we use radius == 0.0 to
 	// determine whether the immolator is operating or not.
 	m_flBurnRadius = 0.1;
 	m_flTimeLastUpdatedRadius = gpGlobals->curtime;
@@ -119,7 +119,7 @@ void CWeaponImmolator::StopImmolating()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponImmolator::Precache( void )
 {
@@ -129,7 +129,7 @@ void CWeaponImmolator::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponImmolator::PrimaryAttack( void )
 {
@@ -138,7 +138,7 @@ void CWeaponImmolator::PrimaryAttack( void )
 	if( !IsImmolating() )
 	{
 		StartImmolating();
-	} 
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -330,7 +330,7 @@ void CWeaponImmolator::Update()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponImmolator::ItemPostFrame( void )
 {

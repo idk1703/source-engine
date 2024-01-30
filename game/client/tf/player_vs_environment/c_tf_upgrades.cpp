@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -139,13 +139,13 @@ void CUpgradeBuyPanel::OnCommand( const char *command )
 	BaseClass::OnCommand( command );
 }
 
-bool CUpgradeBuyPanel::ValidateUpgradeStepData( void ) 
+bool CUpgradeBuyPanel::ValidateUpgradeStepData( void )
 {
 	m_bOverCap = false;
 
 	if ( !m_hPlayer )
 		return false;
-	
+
 	int nNumSteps = GetUpgradeStepData( m_hPlayer, m_nWeaponSlot, m_nUpgradeIndex, m_nCurrentStep, m_bOverCap );
 	if ( nNumSteps )
 	{
@@ -304,7 +304,7 @@ void CUpgradeBuyPanel::UpdateImages( int nCurrentMoney )
 DECLARE_HUDELEMENT( CHudUpgradePanel );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudUpgradePanel::CHudUpgradePanel( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudUpgradePanel" )
 {
@@ -354,7 +354,7 @@ CHudUpgradePanel::CHudUpgradePanel( const char *pElementName ) : CHudElement( pE
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudUpgradePanel::~CHudUpgradePanel()
 {
@@ -371,7 +371,7 @@ CHudUpgradePanel::~CHudUpgradePanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudUpgradePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -435,7 +435,7 @@ void CHudUpgradePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudUpgradePanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -454,7 +454,7 @@ void CHudUpgradePanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudUpgradePanel::ShouldDraw( void )
 {
@@ -476,7 +476,7 @@ bool CHudUpgradePanel::ShouldDraw( void )
 		bool bInZone = m_hPlayer->m_Shared.IsInUpgradeZone();
 
 		// check for other popups
-		if ( bInZone && !CHudElement::ShouldDraw() ) 
+		if ( bInZone && !CHudElement::ShouldDraw() )
 		{
 			CTFStatPanel *pStatPanel = GetStatPanel();
 			if ( pStatPanel->IsVisible() )
@@ -497,7 +497,7 @@ bool CHudUpgradePanel::ShouldDraw( void )
 			m_bWasInZone = bInZone;
 		}
 	}
-	
+
 	return m_bShowUpgradeMenu;
 }
 
@@ -512,7 +512,7 @@ void CHudUpgradePanel::SetVisible( bool bVisible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudUpgradePanel::SetActive( bool bActive )
 {
@@ -529,7 +529,7 @@ void CHudUpgradePanel::SetActive( bool bActive )
 
 		KeyValues *kv = new KeyValues( "MvM_UpgradesBegin" );
 		engine->ServerCmdKeyValues( kv );
-		
+
 		// Get our currency
 		if ( m_hPlayer && !m_bInspectMode )
 		{
@@ -545,7 +545,7 @@ void CHudUpgradePanel::SetActive( bool bActive )
 		UpgradeItemInSlot( LOADOUT_POSITION_PRIMARY );
 
 		m_pTipPanel->SetVisible( true );
-		
+
 		if ( tf_mvm_tabs_discovered.GetInt() >= 3 )
 		{
 			m_bHighlightedTab = true;
@@ -600,7 +600,7 @@ void CHudUpgradePanel::SetActive( bool bActive )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudUpgradePanel::OnTick( void )
 {
@@ -638,7 +638,7 @@ void CHudUpgradePanel::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudUpgradePanel::FireGameEvent( IGameEvent *event )
 {
@@ -676,7 +676,7 @@ void CHudUpgradePanel::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudUpgradePanel::PlayerInventoryChanged( C_TFPlayer *pPlayer )
 {
@@ -717,7 +717,7 @@ void CHudUpgradePanel::PlayerInventoryChanged( C_TFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudUpgradePanel::UpdateModelPanels( void )
 {
@@ -767,7 +767,7 @@ void CHudUpgradePanel::UpdateModelPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudUpgradePanel::PerformLayout( void )
 {
@@ -848,7 +848,7 @@ void CHudUpgradePanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudUpgradePanel::OnItemPanelEntered( vgui::Panel *panel )
 {
@@ -870,7 +870,7 @@ void CHudUpgradePanel::OnItemPanelEntered( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudUpgradePanel::OnItemPanelExited( vgui::Panel *panel )
 {
@@ -885,7 +885,7 @@ void CHudUpgradePanel::OnItemPanelExited( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudUpgradePanel::CreateItemModelPanel( int iLoadoutSlot )
 {
@@ -915,7 +915,7 @@ void CHudUpgradePanel::CreateItemModelPanel( int iLoadoutSlot )
 		if ( m_pItemModelPanelKVs )
 		{
 			pItemPanel->ApplySettings( m_pItemModelPanelKVs );
-		} 
+		}
 
 		pItemPanel->MakeReadyForUse();
 		pItemPanel->SetActAsButton( true, true );
@@ -965,7 +965,7 @@ void CHudUpgradePanel::CreateItemModelPanel( int iLoadoutSlot )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudUpgradePanel::OnItemPanelMousePressed( vgui::Panel *panel )
 {
@@ -992,7 +992,7 @@ void CHudUpgradePanel::OnItemPanelMousePressed( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudUpgradePanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOver )
 {
@@ -1007,7 +1007,7 @@ void CHudUpgradePanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMous
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudUpgradePanel::UpgradeItemInSlot( int iSlot )
 {
@@ -1039,7 +1039,7 @@ void CHudUpgradePanel::UpgradeItemInSlot( int iSlot )
 
 				FOR_EACH_VEC( pItemSlotBuyPanel->upgradeBuyPanels, i )
 				{
-					pItemSlotBuyPanel->upgradeBuyPanels[ i ]->SetVisible( true );	
+					pItemSlotBuyPanel->upgradeBuyPanels[ i ]->SetVisible( true );
 				}
 			}
 			else
@@ -1076,7 +1076,7 @@ void CHudUpgradePanel::UpgradeItemInSlot( int iSlot )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudUpgradePanel::UpdateUpgradeButtons( void )
 {
@@ -1106,7 +1106,7 @@ void CHudUpgradePanel::UpdateUpgradeButtons( void )
 				// Don't create button if it belongs to the wrong group
 				int nUIGroup = pUpgrade->nUIGroup;
 
-				if ( ( pItemSlotBuyPanel->nSlot == -1 && ( nUIGroup == UIGROUP_UPGRADE_ATTACHED_TO_ITEM || nUIGroup == UIGROUP_POWERUPBOTTLE ) ) || 
+				if ( ( pItemSlotBuyPanel->nSlot == -1 && ( nUIGroup == UIGROUP_UPGRADE_ATTACHED_TO_ITEM || nUIGroup == UIGROUP_POWERUPBOTTLE ) ) ||
 					 ( pItemSlotBuyPanel->nSlot != -1 && nUIGroup == UIGROUP_UPGRADE_ATTACHED_TO_PLAYER ) )
 				{
 					continue;
@@ -1125,7 +1125,7 @@ void CHudUpgradePanel::UpdateUpgradeButtons( void )
 					continue;
 				}
 
-				int nCost = pItemSlotBuyPanel->nSlot >= 0 ? 
+				int nCost = pItemSlotBuyPanel->nSlot >= 0 ?
 					TFGameRules()->GetCostForUpgrade( &( g_MannVsMachineUpgrades.m_Upgrades[ i ] ), pItemSlotBuyPanel->nSlot, m_hPlayer->GetPlayerClass()->GetClassIndex(), m_hPlayer ) :
 					g_MannVsMachineUpgrades.m_Upgrades[ i ].nCost;
 
@@ -1228,7 +1228,7 @@ void CHudUpgradePanel::UpdateJoystickControls( void )
 
 		if ( bUp )
 		{
-			nGridPosY -= 1;			
+			nGridPosY -= 1;
 		}
 		else if ( bDown )
 		{
@@ -1244,7 +1244,7 @@ void CHudUpgradePanel::UpdateJoystickControls( void )
 				FOR_EACH_VEC( pItemSlotBuyPanel->upgradeBuyPanels, i )
 				{
 					CUpgradeBuyPanel *pUpgradeBuyPanel = pItemSlotBuyPanel->upgradeBuyPanels[ i ];
-					if ( pUpgradeBuyPanel && pUpgradeBuyPanel->IsVisible() && 
+					if ( pUpgradeBuyPanel && pUpgradeBuyPanel->IsVisible() &&
 						 pUpgradeBuyPanel->m_nGridPositionX == nGridPosX && pUpgradeBuyPanel->m_nGridPositionY == nGridPosY )
 					{
 						m_pActiveUpgradeBuyPanel = pUpgradeBuyPanel;
@@ -1275,7 +1275,7 @@ void CHudUpgradePanel::UpdateJoystickControls( void )
 
 		if ( bLeft )
 		{
-			nGridPosX -= 1;			
+			nGridPosX -= 1;
 		}
 		else if ( bRight )
 		{
@@ -1291,7 +1291,7 @@ void CHudUpgradePanel::UpdateJoystickControls( void )
 				FOR_EACH_VEC( pItemSlotBuyPanel->upgradeBuyPanels, i )
 				{
 					CUpgradeBuyPanel *pUpgradeBuyPanel = pItemSlotBuyPanel->upgradeBuyPanels[ i ];
-					if ( pUpgradeBuyPanel && pUpgradeBuyPanel->IsVisible() && 
+					if ( pUpgradeBuyPanel && pUpgradeBuyPanel->IsVisible() &&
 						 pUpgradeBuyPanel->m_nGridPositionX == nGridPosX && pUpgradeBuyPanel->m_nGridPositionY == nGridPosY )
 					{
 						m_pActiveUpgradeBuyPanel = pUpgradeBuyPanel;
@@ -1351,7 +1351,7 @@ void CHudUpgradePanel::UpdateJoystickControls( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudUpgradePanel::UpdateHighlights( void )
 {
@@ -1464,7 +1464,7 @@ void CHudUpgradePanel::UpdateHighlights( void )
 					pUpgradeBuyPanel->SetVisible( false );
 					continue;
 				}
-			
+
 				pUpgradeBuyPanel->SetVisible( true );
 
 				if ( pMouseOverPanel && ( pMouseOverPanel == pUpgradeBuyPanel || pMouseOverPanel->GetParent() == pUpgradeBuyPanel ) )
@@ -1478,7 +1478,7 @@ void CHudUpgradePanel::UpdateHighlights( void )
 	}
 }
 
-void CHudUpgradePanel::UpdateMouseOverHighlight( void ) 
+void CHudUpgradePanel::UpdateMouseOverHighlight( void )
 {
 	if ( !m_pActiveUpgradeBuyPanel )
 	{
@@ -1511,7 +1511,7 @@ void CHudUpgradePanel::UpdateMouseOverHighlight( void )
 }
 
 void CHudUpgradePanel::UpdateButtonStates( int nCurrentMoney, int nUpgrade /*= 0*/, int nNumPurchased /*= 0*/ )
-{	
+{
 	for ( int nSlotIndex = 0; nSlotIndex < ARRAYSIZE( m_ItemSlotBuyPanels ); ++nSlotIndex )
 	{
 		ItemSlotBuyPanels *pItemSlotBuyPanel = &( m_ItemSlotBuyPanels[ nSlotIndex ] );
@@ -1815,7 +1815,7 @@ void CHudUpgradePanel::UpdateItemStatsLabel( void )
 			pCurItemData->IterateAttributes( &attrIt );
 		}
 	}
-	
+
 	attrIt.SortAttributes();
 	attrIt.Finalize( NULL, &itemDesc, GLocalizationProvider() );
 
@@ -1867,7 +1867,7 @@ void CHudUpgradePanel::CancelUpgrades( void )
 				kvSub->SetInt( "upgrade", pUpgradeBuyPanel->m_nUpgradeIndex );
 				kvSub->SetInt( "count", -pUpgradeBuyPanel->m_nPurchases );		// revert previous buy and sell
 
-				if ( pItemSlotBuyPanel->nSlot == LOADOUT_POSITION_ACTION && !bSellAllowed && 
+				if ( pItemSlotBuyPanel->nSlot == LOADOUT_POSITION_ACTION && !bSellAllowed &&
 					 pUpgradeBuyPanel->m_nPurchases < 0 )
 				{
 					// The player wasn't refunded these so the cancel gives it back for free
@@ -1883,7 +1883,7 @@ void CHudUpgradePanel::CancelUpgrades( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudUpgradePanel::AddItemStatText( const locchar_t *loc_AttrDescText, attrib_colors_t eColor, wchar_t *out_wszAttribDesc, int iAttribDescSize )
 {
@@ -1969,7 +1969,7 @@ bool CHudUpgradePanel::QuickEquipBottle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudUpgradePanel::OnCommand( const char *command )
 {

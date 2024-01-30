@@ -1,13 +1,13 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
 //--------------------------------------------------------------------------------------------------------------
 // download.cpp
-// 
+//
 // Implementation file for optional HTTP asset downloading
 // Author: Matthew D. Campbell (matt@turtlerockstudios.com), 2004
 //--------------------------------------------------------------------------------------------------------------
@@ -257,7 +257,7 @@ static bool DecompressBZipToDisk( const char *outFilename, const char *srcFilena
 			else
 			{
 				totalBytes += bytesWritten;
-				if ( !bMapFile ) 
+				if ( !bMapFile )
 				{
 					if ( totalBytes > MAX_FILE_SIZE )
 					{
@@ -679,7 +679,7 @@ void CDownloadManager::QueueInternal( const char *pBaseURL, const char *pURLPath
 	// Invoke the callback if appropriate
 	if ( bAsHttp )
 	{
-		OnHttpConnecting( rc ); 
+		OnHttpConnecting( rc );
 	}
 }
 
@@ -795,7 +795,7 @@ void CDownloadManager::CheckActiveDownload()
 		UpdateProgressBar();
 		return;
 	}
-	
+
 	// check active request for completion / error / progress update
 	switch ( m_activeRequest->status )
 	{
@@ -925,7 +925,7 @@ void CDownloadManager::StartNewDownload()
 
 		// Start the thread
 		DWORD threadID;
-		VCRHook_CreateThread(NULL, 0, 
+		VCRHook_CreateThread(NULL, 0,
 #ifdef POSIX
 			(void *)
 #endif
@@ -943,7 +943,7 @@ void CDownloadManager::StartNewDownload()
 		}
 
 		m_lastPercent = 0;
-		
+
 		m_activeRequest->nRequestID = cl.m_NetChannel->RequestFile( m_activeRequest->gamePath );
 	}
 }
@@ -964,7 +964,7 @@ void CDownloadManager::UpdateProgressBar()
 		int overallPercent = (m_totalRequests - m_queuedRequests.Count() - 1) * 100 / m_totalRequests;
 		int filePercent = 0;
 		if ( m_activeRequest->nBytesTotal > 0 )
-		{	
+		{
 			filePercent = ( m_activeRequest->nBytesCurrent * 100 / m_activeRequest->nBytesTotal );
 		}
 
@@ -974,7 +974,7 @@ void CDownloadManager::UpdateProgressBar()
 	{
 		int received, total;
 		cl.m_NetChannel->GetStreamProgress( FLOW_INCOMING, &received, &total );
-		
+
 		progress = (float)(received)/(float)(total);
 	}
 
@@ -1090,4 +1090,3 @@ static CDownloadSystem s_DownloadSystem;
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CDownloadSystem, IDownloadSystem, INTERFACEVERSION_DOWNLOADSYSTEM, s_DownloadSystem );
 
 //--------------------------------------------------------------------------------------------------------------
-

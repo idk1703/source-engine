@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,7 +15,7 @@
 class IBSPLighting
 {
 public:
-		
+
 	virtual					~IBSPLighting() {}
 	virtual void			Release() = 0;
 
@@ -25,7 +25,7 @@ public:
 	// - start the incremental lighting thread
 	// - start lighting in the background if need be
 	virtual bool			Load( char const *pFilename ) = 0;
-	
+
 	// Shutdown everything (but keep the object around).
 	virtual void			Term() = 0;
 
@@ -49,7 +49,7 @@ public:
 	// update all the lightmaps and the views should be redrawn.
 	virtual bool			CheckForNewLightmaps() = 0;
 
-	// Render the current lightmaps.	
+	// Render the current lightmaps.
 	virtual void			Draw() = 0;
 };
 

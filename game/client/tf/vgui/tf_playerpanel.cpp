@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -45,7 +45,7 @@ using namespace vgui;
 extern ConVar tf_max_health_boost;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFPlayerPanel::CTFPlayerPanel( vgui::Panel *parent, const char *name ) : vgui::EditablePanel( parent, name )
 {
@@ -59,7 +59,7 @@ CTFPlayerPanel::CTFPlayerPanel( vgui::Panel *parent, const char *name ) : vgui::
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerPanel::Reset( void )
 {
@@ -76,7 +76,7 @@ void CTFPlayerPanel::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFPlayerPanel::Update( void )
 {
@@ -152,8 +152,8 @@ bool CTFPlayerPanel::Update( void )
 				}
 
 				// Hide class info from the other team?
-				if ( !bObserver && 
-					 TFGameRules()->IsCompetitiveMode() && 
+				if ( !bObserver &&
+					 TFGameRules()->IsCompetitiveMode() &&
 					 GetTeam() != g_TF_PR->GetTeam( pLocalPlayer->entindex() ) )
 				{
 					iClass = TF_CLASS_UNDEFINED;
@@ -297,7 +297,7 @@ bool CTFPlayerPanel::Update( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -309,10 +309,10 @@ void CTFPlayerPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFPlayerPanel::SetPlayerIndex( int iIndex ) 
-{ 
+void CTFPlayerPanel::SetPlayerIndex( int iIndex )
+{
 	if ( iIndex <= 0 )
 	{
 		Setup( iIndex, CSteamID(), "" );
@@ -324,7 +324,7 @@ void CTFPlayerPanel::SetPlayerIndex( int iIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerPanel::Setup( int iPlayerIndex, CSteamID steamID, const char *pszPlayerName, int nLobbyTeam /*= TEAM_INVALID*/ )
 {
@@ -349,11 +349,11 @@ void CTFPlayerPanel::Setup( int iPlayerIndex, CSteamID steamID, const char *pszP
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFPlayerPanel::SetSpecIndex( int iIndex ) 
-{ 
-	m_iSpecIndex = iIndex; 
+void CTFPlayerPanel::SetSpecIndex( int iIndex )
+{
+	m_iSpecIndex = iIndex;
 
 	if ( m_iSpecIndex > 0 && m_iSpecIndex <= 12 && !m_bPlayerReadyModeActive )
 	{
@@ -366,13 +366,13 @@ void CTFPlayerPanel::SetSpecIndex( int iIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerPanel::UpdateBorder( void )
 {
 	if ( !g_TF_PR )
 		return;
-		
+
 	vgui::IScheme *pScheme = vgui::scheme()->GetIScheme( GetScheme() );
 	if ( !m_bPrevAlive )
 	{
@@ -392,7 +392,7 @@ void CTFPlayerPanel::UpdateBorder( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CTFPlayerPanel::GetTeam( void )
 {
@@ -407,5 +407,3 @@ int	CTFPlayerPanel::GetTeam( void )
 
 	return TEAM_INVALID;
 }
-
-

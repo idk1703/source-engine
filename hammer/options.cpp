@@ -35,7 +35,7 @@ char *g_pMapDir = NULL;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 COptionsConfigs::COptionsConfigs(void)
 {
@@ -44,8 +44,8 @@ COptionsConfigs::COptionsConfigs(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 COptionsConfigs::~COptionsConfigs(void)
 {
@@ -61,8 +61,8 @@ COptionsConfigs::~COptionsConfigs(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 CGameConfig *COptionsConfigs::AddConfig(void)
 {
@@ -74,10 +74,10 @@ CGameConfig *COptionsConfigs::AddConfig(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwID - 
-//			piIndex - 
-// Output : 
+// Purpose:
+// Input  : dwID -
+//			piIndex -
+// Output :
 //-----------------------------------------------------------------------------
 CGameConfig *COptionsConfigs::FindConfig(DWORD dwID, int *piIndex)
 {
@@ -112,7 +112,7 @@ CGameConfig *COptionsConfigs::FindConfigForGame(const char *szGame)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns the number of game configurations successfully imported.
 //-----------------------------------------------------------------------------
 int COptionsConfigs::ImportOldGameConfigs(const char *pszFileName)
@@ -165,7 +165,7 @@ int COptionsConfigs::ImportOldGameConfigs(const char *pszFileName)
 #include "tier0/memdbgoff.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool COptionsConfigs::ResetGameConfigs( bool bOverwrite )
@@ -179,7 +179,7 @@ bool COptionsConfigs::ResetGameConfigs( bool bOverwrite )
 	{
 		// Reset the configurations on the disk
 		mgr.ResetConfigs();
-		
+
 		// Load the newly changed game configs
 		nNumLoaded = LoadGameConfigs();
 	}
@@ -190,9 +190,9 @@ bool COptionsConfigs::ResetGameConfigs( bool bOverwrite )
 
 		if ( mgr.GetDefaultGameBlock( pDefaultConfigs ) == false )
 			return false;
-		
+
 		// Load from the blocks
-		nNumLoaded = LoadGameConfigsBlock( pDefaultConfigs ); 
+		nNumLoaded = LoadGameConfigsBlock( pDefaultConfigs );
 
 		// Clean up
 		pDefaultConfigs->deleteThis();
@@ -202,8 +202,8 @@ bool COptionsConfigs::ResetGameConfigs( bool bOverwrite )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pBlock - 
+// Purpose:
+// Input  : *pBlock -
 // Output : int
 //-----------------------------------------------------------------------------
 int COptionsConfigs::LoadGameConfigsBlock( KeyValues *pBlock )
@@ -217,7 +217,7 @@ int COptionsConfigs::LoadGameConfigsBlock( KeyValues *pBlock )
 	{
 		CGameConfig *pConfig = AddConfig();
 		if ( pConfig != NULL )
-		{	
+		{
 			if ( pConfig->Load( pKey ) )
 			{
 				nConfigsRead++;
@@ -278,7 +278,7 @@ int COptionsConfigs::LoadGameConfigs()
 
 //-----------------------------------------------------------------------------
 // Purpose: Saves all the cgame configurations to disk.
-// Input  : *pszFileName - 
+// Input  : *pszFileName -
 //-----------------------------------------------------------------------------
 void COptionsConfigs::SaveGameConfigs()
 {
@@ -293,12 +293,12 @@ void COptionsConfigs::SaveGameConfigs()
 
 	// Get the global configuration data
 	KeyValues *pGame = mgr.GetGameBlock();
-	
+
 	// For each Hammer known configuation, update the values in the global configs
 	for ( int i = 0; i < nConfigs; i++ )
 	{
 		KeyValues *pConfig = pGame->FindKey(Configs.GetAt(i)->szName);
-		
+
 		// Add the configuration if it wasn't found
 		if ( pConfig == NULL )
 		{
@@ -343,14 +343,14 @@ void COptionsConfigs::SaveGameConfigs()
 		pConfig->deleteThis();
 		pConfig = pNextConfig;
 	}
-	
+
 	// Save the resulting changes
 	mgr.SaveConfigs( m_strConfigDir );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 COptions::COptions(void)
 {
@@ -452,7 +452,7 @@ static bool WorldcraftSettingsFound(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool COptions::Init(void)
 {
@@ -482,7 +482,7 @@ bool COptions::Init(void)
 	}
 
 	SetDefaults();
-	
+
 	if (!Read())
 	{
 		return false;
@@ -503,7 +503,7 @@ bool COptions::Init(void)
 		pMainWnd->SetBrightness(textures.fBrightness);
 
 		pMainWnd->UpdateAllDocViews( MAPVIEW_OPTIONS_CHANGED );
-		
+
 		// FIXME: can't do this before the filesystem is initialized
 		//pMainWnd->GlobalNotify(WM_GAME_CHANGED);
 	}
@@ -653,8 +653,8 @@ bool COptions::Read(void)
 	general.iMaxAutosavesPerMap = APP()->GetProfileInt(pszGeneral, "Max Saves Per Map", 5);
 	general.bEnableAutosave = APP()->GetProfileInt(pszGeneral, "Autosaves Enabled", 1);
 	general.bClosedCorrectly = APP()->GetProfileInt(pszGeneral, "Closed Correctly", TRUE);
-	general.bUseVGUIModelBrowser = APP()->GetProfileInt(pszGeneral, "VGUI Model Browser", TRUE);	
-	general.bShowHiddenTargetsAsBroken = APP()->GetProfileInt(pszGeneral, "Show Hidden Targets As Broken", TRUE);	
+	general.bUseVGUIModelBrowser = APP()->GetProfileInt(pszGeneral, "VGUI Model Browser", TRUE);
+	general.bShowHiddenTargetsAsBroken = APP()->GetProfileInt(pszGeneral, "Show Hidden Targets As Broken", TRUE);
 	general.bRadiusCulling = APP()->GetProfileInt(pszGeneral, "Use Radius Culling", FALSE);
 
 	char szDefaultAutosavePath[MAX_PATH];
@@ -665,7 +665,7 @@ bool COptions::Read(void)
 	{
 		strcpy( general.szAutosaveDir, szDefaultAutosavePath );
 	}
-	APP()->SetDirectory( DIR_AUTOSAVE, general.szAutosaveDir );	
+	APP()->SetDirectory( DIR_AUTOSAVE, general.szAutosaveDir );
 
 	// read view2d
 	view2d.bCrosshairs = APP()->GetProfileInt(pszView2D, "Crosshairs", FALSE);
@@ -705,7 +705,7 @@ bool COptions::Read(void)
 	view3d.bReverseSelection = APP()->GetProfileInt(pszView3D, "ReverseSelection", FALSE);
 	view3d.fFOV = 90;
 	view3d.fLightConeLength = 10;
-		
+
 	ReadColorSettings();
 
 	//
@@ -730,7 +730,7 @@ bool COptions::Read(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool COptions::RunConfigurationDialog()
@@ -764,10 +764,10 @@ bool COptions::RunConfigurationDialog()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptions::ReadColorSettings(void)
-{ 
+{
 	colors.bUseCustom = (APP()->GetProfileInt(g_szColors, "UseCustom", 0) != 0);
 	if (colors.bUseCustom)
 	{
@@ -847,8 +847,8 @@ void COptions::ReadColorSettings(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fOverwrite - 
+// Purpose:
+// Input  : fOverwrite -
 //-----------------------------------------------------------------------------
 void COptions::Write( BOOL fOverwrite, BOOL fSaveConfigs )
 {
@@ -891,7 +891,7 @@ void COptions::Write( BOOL fOverwrite, BOOL fSaveConfigs )
 	APP()->WriteProfileInt(pszGeneral, "Use Radius Culling", general.bRadiusCulling);
 
 
-	
+
 	// write view2d
 	APP()->WriteProfileInt(pszView2D, "Crosshairs", view2d.bCrosshairs);
 	APP()->WriteProfileInt(pszView2D, "GroupCarve", view2d.bGroupCarve);
@@ -943,11 +943,11 @@ void COptions::Write( BOOL fOverwrite, BOOL fSaveConfigs )
 
 void COptions::SetClosedCorrectly(BOOL bClosed)
 {
-	APP()->WriteProfileInt( pszGeneral, "Closed Correctly", bClosed );	
+	APP()->WriteProfileInt( pszGeneral, "Closed Correctly", bClosed );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptions::SetDefaults(void)
 {
@@ -989,7 +989,7 @@ void COptions::SetDefaults(void)
 	general.bShowCollisionModels = FALSE;
 	general.bShowDetailObjects = TRUE;
 	general.bShowNoDrawBrushes = TRUE;
-	
+
 	// view2d
 	view2d.bCrosshairs = FALSE;
 	view2d.bGroupCarve = TRUE;
@@ -1036,7 +1036,7 @@ void COptions::SetDefaults(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: This is called by the user interface itself when changes are made. 
+// Purpose: This is called by the user interface itself when changes are made.
 //			tells the COptions object to notify the parts of the interface.
 // Input  : dwOptionsChanged - Flags indicating which options changed.
 //-----------------------------------------------------------------------------
@@ -1078,4 +1078,3 @@ void COptions::PerformChanges(DWORD dwOptionsChanged)
 		}
 	}
 }
-

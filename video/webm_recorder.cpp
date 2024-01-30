@@ -19,11 +19,11 @@
 struct WebMEncodingDataRateInfo_t
 {
 	int	m_XResolution;
-	int m_YResolution;		
+	int m_YResolution;
 	float m_MinDataRate;			// in KBits / second
 	float m_MaxDataRate;			// in KBits / second
 	float m_MinAudioDataRate;			// in KBits / second
-	float m_MaxAudioDataRate;			// in KBits / second            
+	float m_MaxAudioDataRate;			// in KBits / second
 };
 
 // Quality is passed into us as a number between 0 and 100, we use that to scale between the min and max bitrates.
@@ -97,7 +97,7 @@ bool CWebMVideoRecorder::CreateNewMovieFile( const char *pFilename, bool hasAudi
 	// crete the webm file
 	if (!m_mkvWriter.Open(pFilename))
 	{
-		SetResult( VideoResult::OPERATION_ALREADY_PERFORMED );	    
+		SetResult( VideoResult::OPERATION_ALREADY_PERFORMED );
 		return false;
 	}
 
@@ -135,9 +135,9 @@ bool CWebMVideoRecorder::CreateNewMovieFile( const char *pFilename, bool hasAudi
 bool CWebMVideoRecorder::SetMovieVideoParameters( VideoEncodeCodec_t theCodec, int videoQuality, int movieFrameWidth, int movieFrameHeight, VideoFrameRate_t movieFPS, VideoEncodeGamma_t gamma )
 {
 #ifdef LOG_ENCODER_OPERATIONS
-    Msg("CWebMVideoRecorder::SetMovieVideoParameters()\n");
+	Msg("CWebMVideoRecorder::SetMovieVideoParameters()\n");
 #endif
-    
+
 	SetResult( VideoResult::BAD_INPUT_PARAMETERS );
 	AssertExitF( IS_IN_RANGECOUNT( theCodec, VideoEncodeCodec::DEFAULT_CODEC, VideoEncodeCodec::CODEC_COUNT ) );
 	AssertExitF( IS_IN_RANGE( videoQuality, VideoEncodeQuality::MIN_QUALITY, VideoEncodeQuality::MAX_QUALITY ) );
@@ -150,15 +150,15 @@ bool CWebMVideoRecorder::SetMovieVideoParameters( VideoEncodeCodec_t theCodec, i
 	// Get the defaults for the WebM encoder
 	if (vpx_codec_enc_config_default(vpx_codec_vp8_cx(), &m_vpxConfig, 0) != VPX_CODEC_OK)
 	{
-	    SetResult( VideoResult::INITIALIZATION_ERROR_OCCURED );
-	    return false;
+		SetResult( VideoResult::INITIALIZATION_ERROR_OCCURED );
+		return false;
 	}
 
 	m_MovieFrameWidth = movieFrameWidth;
 	m_MovieFrameHeight = movieFrameHeight;
 
 	m_MovieGamma = gamma;
-	
+
 	m_vpxConfig.g_h = movieFrameHeight;
 	m_vpxConfig.g_w = movieFrameWidth;
 
@@ -169,7 +169,7 @@ bool CWebMVideoRecorder::SetMovieVideoParameters( VideoEncodeCodec_t theCodec, i
 	// FPS
 	m_vpxConfig.g_timebase.den = movieFPS.GetUnitsPerSecond();
 	m_vpxConfig.g_timebase.num = movieFPS.GetUnitsPerFrame();
-	
+
 	m_MovieRecordFPS = movieFPS;
 
 	m_DurationPerFrame = m_MovieRecordFPS.GetUnitsPerFrame();
@@ -180,13 +180,13 @@ bool CWebMVideoRecorder::SetMovieVideoParameters( VideoEncodeCodec_t theCodec, i
 
 	// Set the bitrate for this size and level of quality
 	m_vpxConfig.rc_target_bitrate = GetVideoDataRate(videoQuality, movieFrameWidth, movieFrameHeight);
-	
+
 
 #ifdef LOG_ENCODER_OPERATIONS
 	Msg( "Video Frame Rate = %f FPS\n   %d time units per second\n   %d time units per frame\n", m_MovieRecordFPS.GetFPS(), m_MovieRecordFPS.GetUnitsPerSecond(), m_MovieRecordFPS.GetUnitsPerFrame() );
 	if ( m_MovieRecordFPS.IsNTSCRate() )
 		Msg( "   IS CONSIDERED NTSC RATE\n");
-	Msg( "Using %d threads for WebM encoding\n", m_vpxConfig.g_threads);	
+	Msg( "Using %d threads for WebM encoding\n", m_vpxConfig.g_threads);
 	Msg( "MovieTimeScale is being set to  %d\nDuration Per Frame is  %d\n", m_MovieTimeScale, m_DurationPerFrame );
 	Msg( "Time per frame in nanoseconds %d\n\n", m_FrameDuration);
 
@@ -195,17 +195,17 @@ bool CWebMVideoRecorder::SetMovieVideoParameters( VideoEncodeCodec_t theCodec, i
 	// Init the codec
 	if (vpx_codec_enc_init(&m_vpxContext, vpx_codec_vp8_cx(), &m_vpxConfig, 0) != VPX_CODEC_OK)
 	{
-	    SetResult( VideoResult::INITIALIZATION_ERROR_OCCURED );
-	    return false;
+		SetResult( VideoResult::INITIALIZATION_ERROR_OCCURED );
+		return false;
 	}
 
 	// add the video track
 	m_vid_track = m_mkvMuxerSegment.AddVideoTrack(static_cast<int>(m_vpxConfig.g_w),
-						    static_cast<int>(m_vpxConfig.g_h),
-						    1);
+							static_cast<int>(m_vpxConfig.g_h),
+							1);
 
 	mkvmuxer::VideoTrack* const video =
-	    static_cast<mkvmuxer::VideoTrack*>(
+		static_cast<mkvmuxer::VideoTrack*>(
 		m_mkvMuxerSegment.GetTrackByNumber(m_vid_track));
 
 	video->set_display_width(m_vpxConfig.g_w);
@@ -219,15 +219,15 @@ bool CWebMVideoRecorder::SetMovieVideoParameters( VideoEncodeCodec_t theCodec, i
 bool CWebMVideoRecorder::SetMovieSourceImageParameters( VideoEncodeSourceFormat_t srcImageFormat, int imgWidth, int imgHeight )
 {
 #ifdef LOG_ENCODER_OPERATIONS
-    Msg("CWebMVideoRecorder::SetMovieSourceImageParameters()\n");
+	Msg("CWebMVideoRecorder::SetMovieSourceImageParameters()\n");
 #endif
-    
+
 	SetResult( VideoResult::BAD_INPUT_PARAMETERS );
 	AssertExitF( IS_IN_RANGECOUNT( srcImageFormat, VideoEncodeSourceFormat::VIDEO_FORMAT_FIRST, VideoEncodeSourceFormat::VIDEO_FORMAT_COUNT ) );
 	// WebM Recorder only supports BGRA_32BIT and BGR_24BIT
 	AssertExitF( (srcImageFormat == VideoEncodeSourceFormat::BGRA_32BIT) ||
-	             (srcImageFormat == VideoEncodeSourceFormat::BGR_24BIT) );
-	
+				(srcImageFormat == VideoEncodeSourceFormat::BGR_24BIT) );
+
 	AssertExitF( IS_IN_RANGE( imgWidth, cMinVideoFrameWidth, cMaxVideoFrameWidth ) && IS_IN_RANGE( imgHeight, cMinVideoFrameHeight, cMaxVideoFrameHeight ) );
 
 	SetResult( VideoResult::OPERATION_OUT_OF_SEQUENCE );
@@ -245,7 +245,7 @@ bool CWebMVideoRecorder::SetMovieSourceImageParameters( VideoEncodeSourceFormat_
 	m_mkvMuxerSegment.CuesTrack(m_vid_track);
 
 	SetResult( VideoResult::SUCCESS );
-	
+
 	return true;
 }
 
@@ -253,9 +253,9 @@ bool CWebMVideoRecorder::SetMovieSourceImageParameters( VideoEncodeSourceFormat_
 bool CWebMVideoRecorder::SetMovieSourceAudioParameters( AudioEncodeSourceFormat_t srcAudioFormat, int audioSampleRate, AudioEncodeOptions_t audioOptions, int audioSampleGroupSize )
 {
 #ifdef LOG_ENCODER_OPERATIONS
-    Msg("CWebMVideoRecorder::SetMovieSourceAudioParameters()\n");
+	Msg("CWebMVideoRecorder::SetMovieSourceAudioParameters()\n");
 #endif
-    
+
 	SetResult( VideoResult::ILLEGAL_OPERATION );
 	AssertExitF( m_bHasAudio );
 
@@ -275,8 +275,8 @@ bool CWebMVideoRecorder::SetMovieSourceAudioParameters( AudioEncodeSourceFormat_
 	int ret=vorbis_encode_init(&m_vi,m_audioChannels,m_audioSampleRate,-1,WEBM_AUDIO_BITRATE,-1);
 	if (ret)
 	{
-	    SetResult( VideoResult::BAD_INPUT_PARAMETERS );
-	    return false;
+		SetResult( VideoResult::BAD_INPUT_PARAMETERS );
+		return false;
 	}
 	/* set up the analysis state and auxiliary encoding storage */
 	vorbis_comment_init(&m_vc);
@@ -300,60 +300,60 @@ bool CWebMVideoRecorder::SetMovieSourceAudioParameters( AudioEncodeSourceFormat_
 
 	// setup the audio track
 	m_aud_track = m_mkvMuxerSegment.AddAudioTrack(static_cast<int>(m_audioSampleRate),
-						      static_cast<int>(m_audioChannels),
-						      0);
+							static_cast<int>(m_audioChannels),
+							0);
 	if (!m_aud_track)
 	{
-	    printf("\n Could not add audio track.\n");
-	    return false;
+		printf("\n Could not add audio track.\n");
+		return false;
 	}
 
 	mkvmuxer::AudioTrack* const audio =
-	    static_cast<mkvmuxer::AudioTrack*>(
+		static_cast<mkvmuxer::AudioTrack*>(
 		m_mkvMuxerSegment.GetTrackByNumber(m_aud_track));
 	if (!audio)
 	{
-	    SetResult( VideoResult::BAD_INPUT_PARAMETERS );
-	    return false;
+		SetResult( VideoResult::BAD_INPUT_PARAMETERS );
+		return false;
 	}
 
 	/* Vorbis streams begin with three headers; the initial header (with
-	   most of the codec setup parameters) which is mandated by the Ogg
-	   bitstream spec.  The second header holds any comment fields.  The
-	   third header holds the bitstream codebook.  We merely need to
-	   make the headers, then pass them to libvorbis one at a time;
-	   libvorbis handles the additional Ogg bitstream constraints */
+		most of the codec setup parameters) which is mandated by the Ogg
+		bitstream spec.  The second header holds any comment fields.  The
+		third header holds the bitstream codebook.  We merely need to
+		make the headers, then pass them to libvorbis one at a time;
+		libvorbis handles the additional Ogg bitstream constraints */
 
 	{
-	    ogg_packet ident_packet;
-	    ogg_packet comments_packet;
-	    ogg_packet setup_packet;
-	    int iHeaderLength;
+		ogg_packet ident_packet;
+		ogg_packet comments_packet;
+		ogg_packet setup_packet;
+		int iHeaderLength;
 		uint8 *privateHeader=NULL;
 		uint8 *pbPrivateHeader=NULL;
 
-	    vorbis_analysis_headerout(&m_vd,&m_vc,&ident_packet,&comments_packet,&setup_packet);
-	    iHeaderLength = 3 + ident_packet.bytes + comments_packet.bytes + setup_packet.bytes;
-	    privateHeader = new uint8[iHeaderLength];
-	    pbPrivateHeader = privateHeader;
+		vorbis_analysis_headerout(&m_vd,&m_vc,&ident_packet,&comments_packet,&setup_packet);
+		iHeaderLength = 3 + ident_packet.bytes + comments_packet.bytes + setup_packet.bytes;
+		privateHeader = new uint8[iHeaderLength];
+		pbPrivateHeader = privateHeader;
 
-	    *pbPrivateHeader++ = 2; // number of headers - 1
-	    *pbPrivateHeader++ = (uint8)ident_packet.bytes;
-	    *pbPrivateHeader++ = (uint8)comments_packet.bytes;
-	    
-	    memcpy(pbPrivateHeader, ident_packet.packet, ident_packet.bytes);
-	    pbPrivateHeader+= ident_packet.bytes;
+		*pbPrivateHeader++ = 2; // number of headers - 1
+		*pbPrivateHeader++ = (uint8)ident_packet.bytes;
+		*pbPrivateHeader++ = (uint8)comments_packet.bytes;
 
-	    memcpy(pbPrivateHeader, comments_packet.packet, comments_packet.bytes);
-	    pbPrivateHeader+= comments_packet.bytes;
+		memcpy(pbPrivateHeader, ident_packet.packet, ident_packet.bytes);
+		pbPrivateHeader+= ident_packet.bytes;
 
-	    memcpy(pbPrivateHeader, setup_packet.packet, setup_packet.bytes);
-	    pbPrivateHeader+= setup_packet.bytes;
+		memcpy(pbPrivateHeader, comments_packet.packet, comments_packet.bytes);
+		pbPrivateHeader+= comments_packet.bytes;
 
-	    audio->SetCodecPrivate(privateHeader,iHeaderLength);
+		memcpy(pbPrivateHeader, setup_packet.packet, setup_packet.bytes);
+		pbPrivateHeader+= setup_packet.bytes;
+
+		audio->SetCodecPrivate(privateHeader,iHeaderLength);
 		delete [] privateHeader;
 	}
-	
+
 	SetResult( VideoResult::SUCCESS );
 	return true;
 }
@@ -362,26 +362,26 @@ bool CWebMVideoRecorder::SetMovieSourceAudioParameters( AudioEncodeSourceFormat_
 bool CWebMVideoRecorder::IsReadyToRecord()
 {
 #ifdef LOG_ENCODER_OPERATIONS
-    Msg("CWebMVideoRecorder::IsReadyToRecord()\n");
+	Msg("CWebMVideoRecorder::IsReadyToRecord()\n");
 #endif
 
-    return ( m_SrcImageYV12Buffer != NULL && !m_bMovieFinished);
+	return ( m_SrcImageYV12Buffer != NULL && !m_bMovieFinished);
 }
- 
- 
+
+
 VideoResult_t CWebMVideoRecorder::GetLastResult()
 {
 #ifdef LOG_ENCODER_OPERATIONS
-    Msg("CWebMVideoRecorder::GetLastResult()\n");
+	Msg("CWebMVideoRecorder::GetLastResult()\n");
 #endif
 
-    return m_LastResult;
+	return m_LastResult;
 }
 
 
 void CWebMVideoRecorder::SetResult( VideoResult_t resultCode )
 {
-    m_LastResult = resultCode;
+	m_LastResult = resultCode;
 }
 
 void CWebMVideoRecorder::ConvertBGRAToYV12( void *pFrameBuffer, int nStrideAdjustBytes, vpx_image_t *m_SrcImageYV12Buffer, bool fIncludesAlpha )
@@ -393,60 +393,60 @@ void CWebMVideoRecorder::ConvertBGRAToYV12( void *pFrameBuffer, int nStrideAdjus
 		iSrcBytesPerPixel = 4;
 	else
 		iSrcBytesPerPixel = 3;
-	
-    int srcStride = m_SrcImageWidth * iSrcBytesPerPixel + nStrideAdjustBytes;
-    int iX,iY;
-    byte *pSrc;
-    byte *pDstY,*pDstU,*pDstV;
-    byte r,g,b,a;
-    byte y,u,v;
 
-    // This isn't fast or good, but it works and that's good enough for a first pass
-    pSrc = (byte *)pFrameBuffer;
+	int srcStride = m_SrcImageWidth * iSrcBytesPerPixel + nStrideAdjustBytes;
+	int iX,iY;
+	byte *pSrc;
+	byte *pDstY,*pDstU,*pDstV;
+	byte r,g,b,a;
+	byte y,u,v;
 
-    // YV12 has a complete frame of Y, followed by half sized U and V 
-    pDstY = m_SrcImageYV12Buffer->planes[0];
-    pDstU = m_SrcImageYV12Buffer->planes[1];
-    pDstV = m_SrcImageYV12Buffer->planes[2];
+	// This isn't fast or good, but it works and that's good enough for a first pass
+	pSrc = (byte *)pFrameBuffer;
 
-    
-    for (iY=0;iY<m_MovieFrameHeight;iY++)
-    {
-	    for(iX=0;iX<m_MovieFrameWidth;iX++)
-	    {
-		    b = pSrc[iSrcBytesPerPixel*iX+0];
-		    g = pSrc[iSrcBytesPerPixel*iX+1];	    
-		    r = pSrc[iSrcBytesPerPixel*iX+2];
-		    if (fIncludesAlpha)
-			    a = pSrc[iSrcBytesPerPixel*iX+3];
+	// YV12 has a complete frame of Y, followed by half sized U and V
+	pDstY = m_SrcImageYV12Buffer->planes[0];
+	pDstU = m_SrcImageYV12Buffer->planes[1];
+	pDstV = m_SrcImageYV12Buffer->planes[2];
 
-		    y = (byte)((66*r + 129*g + 25*b + 128) >> 8) + 16;
 
-		    pDstY[iX] = y;
-		    if ((iY%2 == 0) && (iX%2 == 0))
-		    {
-			    u = (byte)((-38*r - 74*g + 112*b + 128) >> 8) + 128;
-			    v = (byte)((112*r - 94*g - 18*b + 128) >> 8) + 128;
-		
-			    pDstU[iX/2] = u;
-			    pDstV[iX/2] = v;
-		    }
-	    }
-	    // next row, using strides
-	    pDstY += m_SrcImageYV12Buffer->stride[0];
-	    if ((iY%2) == 0)
-	    {
-		    pDstU += m_SrcImageYV12Buffer->stride[1];
-		    pDstV += m_SrcImageYV12Buffer->stride[2];
-	    }
-	    pSrc += srcStride;
-    }
-    
+	for (iY=0;iY<m_MovieFrameHeight;iY++)
+	{
+		for(iX=0;iX<m_MovieFrameWidth;iX++)
+		{
+			b = pSrc[iSrcBytesPerPixel*iX+0];
+			g = pSrc[iSrcBytesPerPixel*iX+1];
+			r = pSrc[iSrcBytesPerPixel*iX+2];
+			if (fIncludesAlpha)
+				a = pSrc[iSrcBytesPerPixel*iX+3];
+
+			y = (byte)((66*r + 129*g + 25*b + 128) >> 8) + 16;
+
+			pDstY[iX] = y;
+			if ((iY%2 == 0) && (iX%2 == 0))
+			{
+				u = (byte)((-38*r - 74*g + 112*b + 128) >> 8) + 128;
+				v = (byte)((112*r - 94*g - 18*b + 128) >> 8) + 128;
+
+				pDstU[iX/2] = u;
+				pDstV[iX/2] = v;
+			}
+		}
+		// next row, using strides
+		pDstY += m_SrcImageYV12Buffer->stride[0];
+		if ((iY%2) == 0)
+		{
+			pDstU += m_SrcImageYV12Buffer->stride[1];
+			pDstV += m_SrcImageYV12Buffer->stride[2];
+		}
+		pSrc += srcStride;
+	}
+
 }
 
 bool CWebMVideoRecorder::AppendVideoFrame( void *pFrameBuffer, int nStrideAdjustBytes )
 {
-	uint64 time_ns;    
+	uint64 time_ns;
 #ifdef LOG_ENCODER_OPERATIONS
 	Msg("CWebMVideoRecorder::AppendVideoFrame()\n");
 #endif
@@ -461,7 +461,7 @@ bool CWebMVideoRecorder::AppendVideoFrame( void *pFrameBuffer, int nStrideAdjust
 		char rgch[256];
 		int i,j;
 		byte *pByte;
-	
+
 		sprintf(rgch, "./frames/vid_%d", m_nFramesAdded);
 		fp = fopen(rgch, "wb");
 
@@ -472,13 +472,13 @@ bool CWebMVideoRecorder::AppendVideoFrame( void *pFrameBuffer, int nStrideAdjust
 			pByte += (m_MovieFrameWidth*4 + nStrideAdjustBytes);
 		}
 		fclose(fp);
-	
+
 	}
 #endif
 
 	SetResult( VideoResult::BAD_INPUT_PARAMETERS );
 	AssertExitF( pFrameBuffer != nullptr );
-	
+
 	SetResult( VideoResult::OPERATION_OUT_OF_SEQUENCE );
 	AssertExitF( IsReadyToRecord() );
 
@@ -496,13 +496,13 @@ bool CWebMVideoRecorder::AppendVideoFrame( void *pFrameBuffer, int nStrideAdjust
 			SetResult( VideoResult::BAD_INPUT_PARAMETERS );
 			return false;
 	}
-	
+
 
 	// Compress it with the webm codec
 
 	time_ns = ((uint64)m_FrameDuration*(uint64)(m_nFramesAdded+1));
-    
-	vpx_codec_err_t vpxError = vpx_codec_encode(&m_vpxContext, m_SrcImageYV12Buffer, time_ns, m_FrameDuration, 0, 0);   
+
+	vpx_codec_err_t vpxError = vpx_codec_encode(&m_vpxContext, m_SrcImageYV12Buffer, time_ns, m_FrameDuration, 0, 0);
 
 	if (vpxError != VPX_CODEC_OK)
 	{
@@ -521,11 +521,11 @@ bool CWebMVideoRecorder::AppendVideoFrame( void *pFrameBuffer, int nStrideAdjust
 		{
 			// Extract if this is a keyframe from the first packet of data for each frame
 			bKeyframe = vpxPacket->data.frame.flags & VPX_FRAME_IS_KEY;
-	    
+
 			m_mkvMuxerSegment.AddFrame((const uint8 *)vpxPacket->data.frame.buf, vpxPacket->data.frame.sz, m_vid_track,
-			                           time_ns, bKeyframe);
+										time_ns, bKeyframe);
 		}
-	
+
 	}
 	m_nFramesAdded++;
 
@@ -559,10 +559,10 @@ bool CWebMVideoRecorder::FlushAudioSamples()
 			uint64  time_ns = ((uint64)m_FrameDuration*(uint64)(m_nFramesAdded+1));
 
 			if (!m_mkvMuxerSegment.AddFrame(op.packet,
-			                                op.bytes,
-			                                m_aud_track,
-			                                time_ns,
-			                                true))
+											op.bytes,
+											m_aud_track,
+											time_ns,
+											true))
 			{
 				return false;
 			}
@@ -576,13 +576,13 @@ bool CWebMVideoRecorder::AppendAudioSamples( void *pSampleBuffer, size_t sampleS
 #ifdef LOG_ENCODER_OPERATIONS
 	Msg("CWebMVideoRecorder::AppendAudioSamples()\n");
 #endif
-    
+
 	SetResult( VideoResult::ILLEGAL_OPERATION );
 	AssertExitF( m_bHasAudio );
-	
+
 	SetResult( VideoResult::BAD_INPUT_PARAMETERS );
 	AssertExitF( pSampleBuffer != nullptr );
-	
+
 	SetResult( VideoResult::OPERATION_OUT_OF_SEQUENCE );
 	AssertExitF( IsReadyToRecord() );
 
@@ -596,13 +596,13 @@ bool CWebMVideoRecorder::AppendAudioSamples( void *pSampleBuffer, size_t sampleS
 		int i,j;
 		byte *pByte;
 		static int i_AudSample_batch=0;
-		static int i_AudSample_frame=-1;	
+		static int i_AudSample_frame=-1;
 
 		if (m_nFramesAdded != i_AudSample_frame)
 			i_AudSample_batch = 0;
 
 		i_AudSample_frame = m_nFramesAdded;
-	
+
 		sprintf(rgch, "./frames/aud_%d_%d", i_AudSample_frame, i_AudSample_batch);
 		fp = fopen(rgch, "wb");
 
@@ -614,9 +614,9 @@ bool CWebMVideoRecorder::AppendAudioSamples( void *pSampleBuffer, size_t sampleS
 		fwrite(pByte, sampleSize, 1, fp);
 
 		fclose(fp);
-	
-		i_AudSample_batch++;	
-	
+
+		i_AudSample_batch++;
+
 	}
 #endif
 	int num_blocks = sampleSize / ((m_audioBitDepth/8)*m_audioChannels);
@@ -625,7 +625,7 @@ bool CWebMVideoRecorder::AppendAudioSamples( void *pSampleBuffer, size_t sampleS
 	// Deinterleave input samples, convert them to float, and store them in
 	// buffer
 	const int16* pPCMsamples = (int16*)pSampleBuffer;
-    
+
 	for (int i = 0; i < num_blocks; ++i)
 	{
 		for (int c = 0; c < m_audioChannels; ++c)
@@ -655,38 +655,38 @@ int CWebMVideoRecorder::GetFrameCount()
 int CWebMVideoRecorder::GetSampleCount()
 {
 #ifdef LOG_ENCODER_OPERATIONS
-    Msg("CWebMVideoRecorder::GetSampleCount()\n");
+	Msg("CWebMVideoRecorder::GetSampleCount()\n");
 #endif
-    
+
 //	return ( m_pEncoder == nullptr ) ? 0 : m_pEncoder->GetSampleCount();
-    return true;
+	return true;
 }
 
 
 VideoFrameRate_t CWebMVideoRecorder::GetFPS()
 {
 #ifdef LOG_ENCODER_OPERATIONS
-    Msg("CWebMVideoRecorder::GetFPS()\n");
+	Msg("CWebMVideoRecorder::GetFPS()\n");
 #endif
 
-    return m_MovieRecordFPS;
+	return m_MovieRecordFPS;
 }
 
 
 int CWebMVideoRecorder::GetSampleRate()
 {
 #ifdef LOG_ENCODER_OPERATIONS
-    Msg("CWebMVideoRecorder::GetSampleRate()\n");
+	Msg("CWebMVideoRecorder::GetSampleRate()\n");
 #endif
 //	return ( m_pEncoder == nullptr ) ? 0 : m_pEncoder->GetSampleRate();
-    return true;
+	return true;
 }
 
 
 bool CWebMVideoRecorder::AbortMovie()
 {
 #ifdef LOG_ENCODER_OPERATIONS
-    Msg("CWebMVideoRecorder::AbortMovie()\n");
+	Msg("CWebMVideoRecorder::AbortMovie()\n");
 #endif
 	SetResult( VideoResult::OPERATION_OUT_OF_SEQUENCE );
 //	AssertExitF( m_pEncoder != nullptr && !m_bMovieFinished );
@@ -706,7 +706,7 @@ bool CWebMVideoRecorder::FinishMovie( bool SaveMovieToDisk )
 	// Compress it with the webm codec
 	m_nFramesAdded++;
 	uint64 time_ns = ((uint64)m_FrameDuration*(uint64)(m_nFramesAdded+1));
-	    
+
 	vpx_codec_err_t vpxError = vpx_codec_encode(&m_vpxContext, NULL, time_ns, m_FrameDuration, 0, 0);
 
 	if (vpxError != VPX_CODEC_OK)
@@ -724,11 +724,11 @@ bool CWebMVideoRecorder::FinishMovie( bool SaveMovieToDisk )
 		{
 			uint64 time_ns;
 			bool bKeyframe=false;
-	    
+
 			// Extract if this is a keyframe from the first packet of data for each frame
 			bKeyframe = vpxPacket->data.frame.flags & VPX_FRAME_IS_KEY;
 			time_ns = ((uint64)m_FrameDuration*(uint64)m_nFramesAdded);
-	
+
 			m_mkvMuxerSegment.AddFrame((const uint8 *)vpxPacket->data.frame.buf, vpxPacket->data.frame.sz, m_vid_track, time_ns, bKeyframe);
 		}
 	}
@@ -739,7 +739,7 @@ bool CWebMVideoRecorder::FinishMovie( bool SaveMovieToDisk )
 	vorbis_dsp_clear(&m_vd);
 	vorbis_block_clear(&m_vb);
 	vorbis_info_clear(&m_vi);
-    
+
 	m_bMovieFinished = true;
 
 #ifdef LOG_ENCODER_OPERATIONS
@@ -755,21 +755,21 @@ bool CWebMVideoRecorder::FinishMovie( bool SaveMovieToDisk )
 bool CWebMVideoRecorder::EstimateMovieFileSize( size_t *pEstSize, int movieWidth, int movieHeight, VideoFrameRate_t movieFps, float movieDuration, VideoEncodeCodec_t theCodec, int videoQuality,  AudioEncodeSourceFormat_t srcAudioFormat, int audioSampleRate )
 {
 #ifdef LOG_ENCODER_OPERATIONS
-    Msg("CWebMVideoRecorder::EstimateMovieFileSize()\n");    
+	Msg("CWebMVideoRecorder::EstimateMovieFileSize()\n");
 #endif
-    float fVidRate;
-    float fAudRate;
-    float movieDurationInSeconds;
+	float fVidRate;
+	float fAudRate;
+	float movieDurationInSeconds;
 
-    fVidRate = GetVideoDataRate(videoQuality, movieWidth, movieHeight);
-    fAudRate = GetAudioDataRate(videoQuality, movieWidth, movieHeight);
+	fVidRate = GetVideoDataRate(videoQuality, movieWidth, movieHeight);
+	fAudRate = GetAudioDataRate(videoQuality, movieWidth, movieHeight);
 	movieDurationInSeconds = movieDuration;
 
-    // data rates is in killobits/second so convert to bytes/second
-    *pEstSize = (size_t)((fVidRate*1000*movieDurationInSeconds/8) + (fAudRate*1000*movieDuration*movieDurationInSeconds/8));
+	// data rates is in killobits/second so convert to bytes/second
+	*pEstSize = (size_t)((fVidRate*1000*movieDurationInSeconds/8) + (fAudRate*1000*movieDuration*movieDurationInSeconds/8));
 
-    SetResult( VideoResult::SUCCESS );
-    return true;
+	SetResult( VideoResult::SUCCESS );
+	return true;
 }
 
 
@@ -788,7 +788,7 @@ float CWebMVideoRecorder::GetVideoDataRate( int quality, int width, int height )
 	// Didn't find the resolution, odd
 	Msg("Unable to find WebM resolution (%d, %d) at quality %d\n", width, height, quality);
 	// Default to 2kb/s
-	return 2000.0f;	
+	return 2000.0f;
 }
 
 float CWebMVideoRecorder::GetAudioDataRate( int quality, int width, int height )
@@ -805,7 +805,7 @@ float CWebMVideoRecorder::GetAudioDataRate( int quality, int width, int height )
 	}
 	// Didn't find the resolution, odd
 	Msg("Unable to find WebM resolution (%d, %d) at quality %d\n", width, height, quality);
-    
+
 	// Default to 128kb/s for audio
-	return 128.0f;	
+	return 128.0f;
 }

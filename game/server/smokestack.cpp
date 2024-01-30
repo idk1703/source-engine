@@ -95,8 +95,8 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 CSmokeStack::CSmokeStack()
 {
-	memset( &m_AmbientLight, 0, sizeof(m_AmbientLight) ); 
-	memset( &m_DirLight, 0, sizeof(m_DirLight) ); 
+	memset( &m_AmbientLight, 0, sizeof(m_AmbientLight) );
+	memset( &m_DirLight, 0, sizeof(m_DirLight) );
 
 	IMPLEMENT_NETWORKVAR_CHAIN( &m_AmbientLight );
 	IMPLEMENT_NETWORKVAR_CHAIN( &m_DirLight );
@@ -198,7 +198,7 @@ bool CSmokeStack::KeyValue( const char *szKeyName, const char *szValue )
 			Q_snprintf( str, sizeof( str ), "%s.vmt", szValue );
 			m_strMaterialModel = AllocPooledString( str );
 		}
-		
+
 		const char *pName = STRING( m_strMaterialModel );
 		char szStrippedName[512];
 
@@ -211,12 +211,12 @@ bool CSmokeStack::KeyValue( const char *szKeyName, const char *szValue )
 		int iCount = 1;
 		char str[512];
 		Q_snprintf( str, sizeof( str ), "%s%d.vmt", szStrippedName, iCount );
-		
+
 		while ( filesystem->FileExists( UTIL_VarArgs( "materials/%s", str ) ) )
 		{
 			PrecacheModel( str );
 			iCount++;
-			
+
 			Q_snprintf( str, sizeof( str ), "%s%d.vmt", szStrippedName, iCount );
 		}
 
@@ -232,7 +232,7 @@ bool CSmokeStack::KeyValue( const char *szKeyName, const char *szValue )
 void CSmokeStack::Precache()
 {
 	m_iMaterialModel = PrecacheModel( STRING( m_strMaterialModel ) );
-	
+
 	BaseClass::Precache();
 }
 
@@ -266,11 +266,9 @@ void CSmokeStack::InputTurnOff( inputdata_t &inputdata )
 
 void CSmokeStack::RecalcWindVector()
 {
-	m_vWind = Vector(  
-		cos( DEG2RAD( (float)m_WindAngle ) ) * m_WindSpeed, 
+	m_vWind = Vector(
+		cos( DEG2RAD( (float)m_WindAngle ) ) * m_WindSpeed,
 		sin( DEG2RAD( (float)m_WindAngle ) ) * m_WindSpeed,
 		0 );
-	
+
 }
-
-

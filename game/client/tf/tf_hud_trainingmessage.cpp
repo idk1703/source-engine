@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -26,7 +26,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudTrainingMsg : public CHudElement, public EditablePanel
 {
@@ -49,7 +49,7 @@ DECLARE_HUD_MESSAGE( CHudTrainingMsg, TrainingMsg );
 DECLARE_HUD_MESSAGE( CHudTrainingMsg, TrainingObjective );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTrainingMsg::CHudTrainingMsg( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudTrainingMsg" )
 {
@@ -59,7 +59,7 @@ CHudTrainingMsg::CHudTrainingMsg( const char *pElementName ) : CHudElement( pEle
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTrainingMsg::Init()
 {
@@ -68,7 +68,7 @@ void CHudTrainingMsg::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudTrainingMsg::ShouldDraw( void )
 {
@@ -110,4 +110,3 @@ void CHudTrainingMsg::MsgFunc_TrainingObjective( bf_read &msg )
 		pStatus->SetTrainingObjective(szString);
 	}
 }
-

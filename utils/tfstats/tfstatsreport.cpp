@@ -49,7 +49,7 @@ void CTFStatsReport::genJavaScript()
 	FILE* f=fopen( jsname.c_str(),"wt");
 	if (!f)
 		g_pApp->fatalError("Can't open output file \"%s\"! (reason: %s)\nPlease make sure that the file does not exist OR\nif the file does exit, make sure it is not read-only",jsname.c_str(),strerror(errno));
-	else 
+	else
 		fprintf(f,javaScriptSource);
 
 		fclose(f);
@@ -68,7 +68,7 @@ void CTFStatsReport::genStyleSheet()
 	FILE* f=fopen(cssname.c_str(),"wt");
 	if (!f)
 		g_pApp->fatalError("Can't open output file \"%s\"! (reason: %s)\nPlease make sure that the file does not exist OR\nif the file does exit, make sure it is not read-only",cssname.c_str(),strerror(errno));
-	else 
+	else
 		fprintf(f,styleSheetSource);
 
 	fclose(f);
@@ -89,7 +89,7 @@ void CTFStatsReport::genAllPlayersStyleSheet()
 	FILE* f=fopen(cssname.c_str(),"wt");
 	if (!f)
 		g_pApp->fatalError("Can't open output file \"%s\"! (reason: %s)\nPlease make sure that the file does not exist OR\nif the file does exit, make sure it is not read-only",cssname.c_str(),strerror(errno));
-	else 
+	else
 		fprintf(f,styleSheetSource);
 
 	fclose(f);
@@ -147,7 +147,7 @@ void CTFStatsReport::genIndex()
 void CTFStatsReport::genImages()
 {
 	int chresult=g_pApp->os->chdir(g_pApp->supportDirectory.c_str());
-	
+
 	 gifAwards.writeOut();
 	 jpgBgLeft.writeOut();
 	 jpgBgTop.writeOut();
@@ -175,20 +175,20 @@ void CTFStatsReport::genTopFrame()
 	html.write("<table width=100%% height=100%% cellpadding=0 cellspacing=0 border=0 background=\"%s/bgtop.jpg\">\n",g_pApp->supportHTTPPath.c_str());
 	html.write("\t<tr valign=top>\n");
 	html.write("\t\t<td>\n");
-	
+
 	html.write("\t\t<div class=server>\n");
 	html.write("\t\t<nobr>%s Match Report</nobr>\n",g_pMatchInfo->getServerName().c_str());
 
 	html.write("\t\t</div>\n");
-	
+
 	html.write("\t\t<div class=match>\n");
 	if(g_pMatchInfo->mapName()!="")
 		html.write("\t\tmap: %s ",g_pMatchInfo->mapName().c_str());
-	
+
 	char buf[1000];
 	html.write(" %s\n",Util::makeDurationString(matchstart,matchend,buf));
 	html.write("\t\t</div>\n");
-	
+
 	html.write("\t\t</td>\n");
 	html.write("\t</tr>\n");
 	html.write("</table>\n");
@@ -201,7 +201,7 @@ inline void writeEventHandlers(CHTMLFile& html, char* id)
 	html.write(" OnMouseOver=\" window.status='%s'; %sImgLink.over();return true; \" ",id,id);
 	html.write(" OnMouseOut=\" window.status=' ';%sImgLink.out();return true; \" ",id,id);
 }
-	
+
 
 
 void CTFStatsReport::genNavFrame()
@@ -209,10 +209,10 @@ void CTFStatsReport::genNavFrame()
 	string imgname(g_pApp->supportHTTPPath);
 	imgname+="/bgleft.jpg";
 	CHTMLFile html("nav.html","top",CHTMLFile::printBody,imgname.c_str(),0,0);
-	
+
 	string jshttppath(g_pApp->supportHTTPPath);
 	jshttppath+="/support.js";
-	
+
 	html.write("<script language=\"JavaScript\" src=\"%s\"></script>\n",jshttppath.c_str());
 	html.write("<script language=\"JavaScript\">\n");
 	html.write("<!--\n");
@@ -238,8 +238,8 @@ void CTFStatsReport::genNavFrame()
 	html.write("\t\t\t<p><a href=\"MatchResults.html\" target=\"data\"");writeEventHandlers(html,"MatchStats");html.write("><img name=\"MatchStats\"src=\"%s/match.statistics.off.gif\" border=0></a>\n",g_pApp->supportHTTPPath.c_str());
 	html.write("\t\t\t<p><a href=\"players.html\" target=\"data\"");writeEventHandlers(html,"PlayerStatsMatch");html.write("><img name=\"PlayerStatsMatch\" src=\"%s/player.statistics.match.off.gif\" border=0></a>\n",g_pApp->supportHTTPPath.c_str());
 	html.write("\t\t\t<p><a href=\"dialogue.html\" target=\"data\"");writeEventHandlers(html,"DialoguePage");html.write("><img name=\"DialoguePage\" src=\"%s/game.dialog.off.gif\" border=0></a>\n",g_pApp->supportHTTPPath.c_str());
-	
-	
+
+
 	if(g_pApp->cmdLineSwitches["persistplayerstats"]=="yes" && !g_pMatchInfo->isLanGame())
 	{
 		string s(g_pApp->playerHTTPPath);
@@ -258,12 +258,12 @@ void CTFStatsReport::genNavFrame()
 	html.write("MatchStatsImgLink.on();\n");
 	html.write("//-->\n");
 	html.write("</script>\n");
-	
+
 }
 
 CTFStatsReport::~CTFStatsReport()
 {
-	
+
 }
 
 void CTFStatsReport::init()
@@ -287,9 +287,9 @@ const char* CTFStatsReport::makeDurationString()
 		sprintf(DurationString,"");
 		return DurationString;
 	}
-	
+
 	int sday=pstart->tm_mday;
-	
+
 	int sweekday=pstart->tm_wday;
 	int smo=pstart->tm_mon;
 	int syear=pstart->tm_year+1900;
@@ -298,7 +298,7 @@ const char* CTFStatsReport::makeDurationString()
 	if (pstart->tm_isdst)
 		shour=(shour+23)%24; //this substracts 1 while accounting for backing up past 0
 	int smin=pstart->tm_min;
-	
+
 	tm* pend=localtime(&matchend);
 	if (!pend)
 		pend=pstart;
@@ -307,7 +307,7 @@ const char* CTFStatsReport::makeDurationString()
 	if (pend->tm_isdst)
 		ehour=(ehour+23)%24; //this substracts 1 while accounting for backing up past 0
 
-	
+
 	char* matchtz=NULL;
 	matchtz=g_pApp->os->gettzname()[0];
 
@@ -319,7 +319,7 @@ void CTFStatsReport::generate()
 {
 	if (g_pMatchInfo->eventList()->empty())
 	{
-		matchstart=0; 
+		matchstart=0;
 		matchend=0;
 	}
 	else
@@ -335,7 +335,5 @@ void CTFStatsReport::generate()
 	matchhours=pmatchtime->tm_hour;
 	matchminutes=pmatchtime->tm_min;
 	matchseconds=pmatchtime->tm_sec;
-	
+
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,7 +34,7 @@ class INetworkStringTable
 public:
 
 	virtual					~INetworkStringTable( void ) {};
-		
+
 	// Table Info
 	virtual const char		*GetTableName( void ) const = 0;
 	virtual TABLEID			GetTableId( void ) const = 0;
@@ -47,7 +47,7 @@ public:
 	virtual bool			ChangedSinceTick( int tick ) const = 0;
 
 	// Accessors (length -1 means don't change user data if string already exits)
-	virtual int				AddString( bool bIsServer, const char *value, int length = -1, const void *userdata = 0 ) = 0; 
+	virtual int				AddString( bool bIsServer, const char *value, int length = -1, const void *userdata = 0 ) = 0;
 
 	virtual const char		*GetString( int stringNumber ) = 0;
 	virtual void			SetStringUserData( int stringNumber, int length, const void *userdata ) = 0;
@@ -61,13 +61,13 @@ public:
 class INetworkStringTableContainer
 {
 public:
-	
+
 	virtual					~INetworkStringTableContainer( void ) {};
-	
+
 	// table creation/destruction
 	virtual INetworkStringTable	*CreateStringTable( const char *tableName, int maxentries, int userdatafixedsize = 0, int userdatanetworkbits = 0 ) = 0;
 	virtual void				RemoveAllTables( void ) = 0;
-	
+
 	// table infos
 	virtual INetworkStringTable	*FindTable( const char *tableName ) const = 0;
 	virtual INetworkStringTable	*GetTable( TABLEID stringTable ) const = 0;

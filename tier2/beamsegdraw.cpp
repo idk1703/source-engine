@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -45,7 +45,7 @@ inline void CBeamSegDraw::ComputeNormal( const Vector &vecCameraPos, const Vecto
 	// vTangentY = line vector for beam
 	Vector vTangentY;
 	VectorSubtract( vStartPos, vNextPos, vTangentY );
-	
+
 	// vDirToBeam = vector from viewer origin to beam
 	Vector vDirToBeam;
 	VectorSubtract( vStartPos, vecCameraPos, vDirToBeam );
@@ -79,7 +79,7 @@ inline void CBeamSegDraw::SpecifySeg( const Vector &vecCameraPos, const Vector &
 		m_pMeshBuilder->TangentS3fv( vNormal.Base() );
 		m_pMeshBuilder->TangentT3fv( vTangentY.Base() );
 		m_pMeshBuilder->AdvanceVertex();
-		
+
 		m_pMeshBuilder->Position3fv( vPoint2.Base() );
 		m_pMeshBuilder->Color4f( VectorExpand( m_Seg.m_vColor ), m_Seg.m_flAlpha );
 		m_pMeshBuilder->TexCoord2f( 0, 1, m_Seg.m_flTexCoord );
@@ -110,7 +110,7 @@ inline void CBeamSegDraw::SpecifySeg( const Vector &vecCameraPos, const Vector &
 		m_Mesh.TangentS3fv( vNormal.Base() );
 		m_Mesh.TangentT3fv( vTangentY.Base() );
 		m_Mesh.AdvanceVertex();
-		
+
 		m_Mesh.Position3fv( vPoint2.Base() );
 		m_Mesh.Color4f( VectorExpand( m_Seg.m_vColor ), m_Seg.m_flAlpha );
 		m_Mesh.TexCoord2f( 0, 1, m_Seg.m_flTexCoord );
@@ -171,7 +171,7 @@ void CBeamSegDraw::End()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBeamSegDrawArbitrary::SetNormal( const Vector &normal )
 {
@@ -180,7 +180,7 @@ void CBeamSegDrawArbitrary::SetNormal( const Vector &normal )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBeamSegDrawArbitrary::NextSeg( BeamSeg_t *pSeg )
 {
@@ -200,8 +200,8 @@ void CBeamSegDrawArbitrary::NextSeg( BeamSeg_t *pSeg )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &vNextPos - 
+// Purpose:
+// Input  : &vNextPos -
 //-----------------------------------------------------------------------------
 void CBeamSegDrawArbitrary::SpecifySeg( const Vector &vNormal )
 {
@@ -226,7 +226,7 @@ void CBeamSegDrawArbitrary::SpecifySeg( const Vector &vNormal )
 	m_Mesh.TexCoord2f( 0, 0, m_Seg.m_flTexCoord );
 	m_Mesh.TexCoord2f( 1, 0, m_Seg.m_flTexCoord );
 	m_Mesh.AdvanceVertex();
-	
+
 	m_Mesh.Position3fv( vPoint2.Base() );
 	m_Mesh.Color4ub( r, g, b, a );
 	m_Mesh.TexCoord2f( 0, 1, m_Seg.m_flTexCoord );

@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
-	   
+
 #include "unitlib/unitlib.h"
 #include "tier0/dbg.h"
 #include <string.h>
@@ -22,7 +22,7 @@ CTestCase::CTestCase( char const* pName, ITestSuite* pParent )
 	Assert( pName );
 	m_pName = new char[strlen(pName) + 1];
 	strcpy( m_pName, pName );
-	
+
 	// Only install the test case if it has no parent
 	if (pParent)
 	{
@@ -94,7 +94,7 @@ void CTestSuite::AddTest( ITestCase* pTest )
 	else
 	{
 		m_ppTestCases = (ITestCase**)realloc( m_ppTestCases, (m_TestCount+1) * sizeof(ITestCase**) );
-	}							  
+	}
 
 	m_ppTestCases[m_TestCount++] = pTest;
 }

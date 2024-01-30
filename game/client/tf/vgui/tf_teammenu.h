@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -16,7 +16,7 @@
 #include <teammenu.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFTeamButton : public CExButton
 {
@@ -58,7 +58,7 @@ class CTFTeamMenu : public CTeamMenu, public CGameEventListener
 {
 private:
 	DECLARE_CLASS_SIMPLE( CTFTeamMenu, CTeamMenu );
-		
+
 public:
 	CTFTeamMenu( IViewPort *pViewPort );
 	~CTFTeamMenu();

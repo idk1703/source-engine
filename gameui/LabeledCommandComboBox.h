@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,13 +34,13 @@ public:
 	void			ApplyChanges();
 	void			Reset();
 	bool			HasBeenModified();
-	
+
 	enum
 	{
 		MAX_NAME_LEN = 256,
 		MAX_COMMAND_LEN = 256
 	};
-	
+
 private:
 	MESSAGE_FUNC_CHARPTR( OnTextChanged, "TextChanged", text );
 

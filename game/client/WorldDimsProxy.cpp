@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -74,5 +74,3 @@ IMaterial *CWorldDimsProxy::GetMaterial()
 }
 
 EXPOSE_INTERFACE( CWorldDimsProxy, IMaterialProxy, "WorldDims" IMATERIAL_PROXY_INTERFACE_VERSION );
-
-

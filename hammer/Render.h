@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -125,13 +125,13 @@ public:
 	CRender(void);
 	virtual ~CRender(void);
 
-	
+
 
 	enum
 	{	TEXT_SINGLELINE           =   0x1,             // put all of the text on one line
 		TEXT_MULTILINE            =   0x2,             // the text is written on multiple lines
 		TEXT_JUSTIFY_BOTTOM       =   0x4,             // default
-		TEXT_JUSTIFY_TOP          =   0x8,				
+		TEXT_JUSTIFY_TOP          =   0x8,
 		TEXT_JUSTIFY_RIGHT        =  0x10,			  // default
 		TEXT_JUSTIFY_LEFT         =  0x20,
 		TEXT_JUSTIFY_HORZ_CENTER  =  0x40,
@@ -156,7 +156,7 @@ public:
 
 	// begin/end single render frame, sets up camera etc
 	virtual void StartRenderFrame();
-    virtual void EndRenderFrame();
+	virtual void EndRenderFrame();
 	int  GetRenderFrame() { return m_nFrameCount; }
 
 	// switch rendering to client space coordinates (horz,vert,ignore)
@@ -175,7 +175,7 @@ public:
 	void SetDrawColor( const Color &color );
 	void GetDrawColor( Color &color );
 	void SetHandleColor( unsigned char r, unsigned char g, unsigned char b );
-	
+
 	void SetHandleStyle( int size, int type );
 
 	void SetDefaultRenderMode(EditorRenderMode_t eRenderMode);
@@ -190,7 +190,7 @@ public:
 	void PopRenderMode();
 
 	// drawing primitives
-			void DrawPoint( const Vector &vPoint );			
+			void DrawPoint( const Vector &vPoint );
 			void DrawLine( const Vector &vStart, const Vector &vEnd );
 	virtual void DrawBox( const Vector &vMins, const Vector &vMaxs, bool bFill = false );
 			void DrawBoxExt( const Vector &vCenter, float extend, bool bFill = false );
@@ -237,7 +237,7 @@ public:
 			void			TransformInstanceVector( Vector &In, Vector &Out ) { m_CurrentInstanceState.m_InstanceMatrix.V3Mul( In, Out ); }
 			void			RotateInstanceVector( Vector &In, Vector &Out ) { VectorRotate( In, m_CurrentInstanceState.m_InstanceMatrix.As3x4(), Out ); }
 			void			TransformInstanceAABB( Vector &InMins, Vector &InMaxs, Vector &OutMins, Vector &OutMaxs ) { TransformAABB( m_CurrentInstanceState.m_InstanceMatrix.As3x4(), InMins, InMaxs, OutMins, OutMaxs );  }
-  
+
 protected:
 
 	bool GetRequiredMaterial( const char *pName, IMaterial* &pMaterial );
@@ -256,8 +256,8 @@ protected:
 	bool					m_bIsLocalTransform;
 	CUtlVector< VMatrix >	m_LocalMatrix;
 
-	VMatrix			m_OrthoMatrix;	
-		
+	VMatrix			m_OrthoMatrix;
+
 
 	// Meshbuilder used for drawing
 	IMesh* m_pMesh;
@@ -273,7 +273,7 @@ protected:
 	int			m_nHandleType;
 
 	// frame count
-	int			m_nFrameCount;		// increases each setup camera 
+	int			m_nFrameCount;		// increases each setup camera
 	bool		m_bIsRendering;
 	bool		m_bIsRenderingIntoVGUI;
 
@@ -281,7 +281,7 @@ protected:
 	IMaterial*	m_pCurrentMaterial;	// The currently bound material
 	IMaterial*	m_pBoundMaterial;	// a material given from external caller
 
-	int			m_nDecalMode;			// 0 or 1 
+	int			m_nDecalMode;			// 0 or 1
 	IMaterial*	m_pWireframe[2];		// default wireframe material
 	IMaterial*	m_pFlat[2];				// default flat material
 	IMaterial*	m_pDotted[2];			// default dotted material

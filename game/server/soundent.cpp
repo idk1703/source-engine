@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -63,7 +63,7 @@ void CSound::Clear ( void )
 
 //=========================================================
 // Reset - clears the volume, origin, and type for a sound,
-// but doesn't expire or unlink it. 
+// but doesn't expire or unlink it.
 //=========================================================
 void CSound::Reset ( void )
 {
@@ -122,13 +122,13 @@ bool CSound::FIsScent ( void )
 // This function returns the spot the listener should be
 // interested in if he hears the sound. MOST of the time,
 // this spot is the same as the sound's origin. But sometimes
-// (like with bullet impacts) the entity that owns the 
+// (like with bullet impacts) the entity that owns the
 // sound is more interesting than the actual location of the
 // sound effect.
 //---------------------------------------------------------
 const Vector &CSound::GetSoundReactOrigin( void )
 {
-	
+
 	// Check pure types.
 	switch( m_iType )
 	{
@@ -136,7 +136,7 @@ const Vector &CSound::GetSoundReactOrigin( void )
 	case SOUND_PHYSICS_DANGER:
 		if( m_hOwner.Get() != NULL )
 		{
-			// We really want the origin of this sound's 
+			// We really want the origin of this sound's
 			// owner.
 			return m_hOwner->GetAbsOrigin();
 		}
@@ -232,7 +232,7 @@ CSoundEnt::~CSoundEnt()
 
 
 //=========================================================
-// Spawn 
+// Spawn
 //=========================================================
 void CSoundEnt::Spawn( void )
 {
@@ -269,7 +269,7 @@ void CSoundEnt::Think ( void )
 	SetNextThink( gpGlobals->curtime + 0.1 );// how often to check the sound list.
 
 	iPreviousSound = SOUNDLIST_EMPTY;
-	iSound = m_iActiveSound; 
+	iSound = m_iActiveSound;
 
 	while ( iSound != SOUNDLIST_EMPTY )
 	{
@@ -358,7 +358,7 @@ void CSoundEnt::Precache ( void )
 }
 
 //=========================================================
-// FreeSound - clears the passed active sound and moves it 
+// FreeSound - clears the passed active sound and moves it
 // to the top of the free list. TAKE CARE to only call this
 // function for sounds in the Active list!!
 //=========================================================
@@ -376,7 +376,7 @@ void CSoundEnt::FreeSound ( int iSound, int iPrevious )
 		// must fix the index for the Previous sound
 		g_pSoundEnt->m_SoundPool[ iPrevious ].m_iNext = g_pSoundEnt->m_SoundPool[ iSound ].m_iNext;
 	}
-	else 
+	else
 	{
 		// the sound we're freeing IS the head of the active list.
 		g_pSoundEnt->m_iActiveSound = g_pSoundEnt->m_SoundPool [ iSound ].m_iNext;
@@ -388,7 +388,7 @@ void CSoundEnt::FreeSound ( int iSound, int iPrevious )
 }
 
 //=========================================================
-// IAllocSound - moves a sound from the Free list to the 
+// IAllocSound - moves a sound from the Free list to the
 // Active list returns the index of the alloc'd sound
 //=========================================================
 int CSoundEnt::IAllocSound( void )
@@ -406,10 +406,10 @@ int CSoundEnt::IAllocSound( void )
 
 	// there is at least one sound available, so move it to the
 	// Active sound list, and return its SoundPool index.
-	
+
 	iNewSound = m_iFreeSound;// copy the index of the next free sound
 
-	m_iFreeSound = m_SoundPool[ m_iFreeSound ].m_iNext;// move the index down into the free list. 
+	m_iFreeSound = m_SoundPool[ m_iFreeSound ].m_iNext;// move the index down into the free list.
 
 	m_SoundPool[ iNewSound ].m_iNext = m_iActiveSound;// point the new sound at the top of the active list.
 
@@ -423,7 +423,7 @@ int CSoundEnt::IAllocSound( void )
 }
 
 //=========================================================
-// InsertSound - Allocates a free sound and fills it with 
+// InsertSound - Allocates a free sound and fills it with
 // sound info.
 //=========================================================
 void CSoundEnt::InsertSound ( int iType, const Vector &vecOrigin, int iVolume, float flDuration, CBaseEntity *pOwner, int soundChannelIndex, CBaseEntity *pSoundTarget )
@@ -491,12 +491,12 @@ void CSoundEnt::InsertSound ( int iType, const Vector &vecOrigin, int iVolume, f
 //---------------------------------------------------------
 int CSoundEnt::FindOrAllocateSound( CBaseEntity *pOwner, int soundChannelIndex )
 {
-	int iSound = m_iActiveSound; 
+	int iSound = m_iActiveSound;
 
 	while ( iSound != SOUNDLIST_EMPTY )
 	{
 		CSound &sound = m_SoundPool[iSound];
-		
+
 		if ( sound.m_ownerChannelIndex == soundChannelIndex && sound.m_hOwner == pOwner )
 		{
 			return iSound;
@@ -509,7 +509,7 @@ int CSoundEnt::FindOrAllocateSound( CBaseEntity *pOwner, int soundChannelIndex )
 }
 
 //=========================================================
-// Initialize - clears all sounds and moves them into the 
+// Initialize - clears all sounds and moves them into the
 // free sound list.
 //=========================================================
 void CSoundEnt::Initialize ( void )
@@ -541,7 +541,7 @@ void CSoundEnt::Initialize ( void )
 
 	m_SoundPool[ i - 1 ].m_iNext = SOUNDLIST_EMPTY;// terminate the list here.
 
-	
+
 	// now reserve enough sounds for each client
 	for ( i = 0 ; i < gpGlobals->maxClients ; i++ )
 	{
@@ -675,7 +675,7 @@ CSound*	CSoundEnt::GetLoudestSoundOfType( int iType, const Vector &vecEarPositio
 {
 	CSound *pLoudestSound = NULL;
 
-	int iThisSound; 
+	int iThisSound;
 	int	iBestSound = SOUNDLIST_EMPTY;
 	float flBestDist = MAX_COORD_RANGE*MAX_COORD_RANGE;// so first nearby sound will become best so far.
 	float flDist;
@@ -804,5 +804,3 @@ void CAISound::InputEmitAISound( inputdata_t &inputdata )
 
 	g_pSoundEnt->InsertSound( m_iSoundType | m_iSoundContext, vecLocation, m_iVolume, m_flDuration, this );
 }
-
-

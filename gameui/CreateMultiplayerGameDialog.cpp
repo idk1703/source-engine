@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ CCreateMultiplayerGameDialog::CCreateMultiplayerGameDialog(vgui::Panel *parent) 
 	m_bBotsEnabled = false;
 	SetDeleteSelfOnClose(true);
 	SetSize(348, 460);
-	
+
 	SetTitle("#GameUI_CreateServer", true);
 	SetOKButtonText("#GameUI_Start");
 
@@ -94,7 +94,7 @@ CCreateMultiplayerGameDialog::~CCreateMultiplayerGameDialog()
 bool CCreateMultiplayerGameDialog::OnOK(bool applyOnly)
 {
 	// reset server enforced cvars
-	g_pCVar->RevertFlaggedConVars( FCVAR_REPLICATED );	
+	g_pCVar->RevertFlaggedConVars( FCVAR_REPLICATED );
 
 	// Cheats were disabled; revert all cheat cvars to their default values.
 	// This must be done heading into multiplayer games because people can play
@@ -157,7 +157,7 @@ void CCreateMultiplayerGameDialog::OnKeyCodePressed( vgui::KeyCode code )
 	{
 		OnOK( false );
 	}
-	else if ( nButtonCode == KEY_XBUTTON_UP || 
+	else if ( nButtonCode == KEY_XBUTTON_UP ||
 			  nButtonCode == KEY_XSTICK1_UP ||
 			  nButtonCode == KEY_XSTICK2_UP ||
 			  nButtonCode == STEAMCONTROLLER_DPAD_UP ||
@@ -170,9 +170,9 @@ void CCreateMultiplayerGameDialog::OnKeyCodePressed( vgui::KeyCode code )
 		}
 		m_pServerPage->GetMapList()->ActivateItem( nItem );
 	}
-	else if ( nButtonCode == KEY_XBUTTON_DOWN || 
+	else if ( nButtonCode == KEY_XBUTTON_DOWN ||
 			  nButtonCode == KEY_XSTICK1_DOWN ||
-			  nButtonCode == KEY_XSTICK2_DOWN || 
+			  nButtonCode == KEY_XSTICK2_DOWN ||
 			  nButtonCode == STEAMCONTROLLER_DPAD_DOWN ||
 			  nButtonCode == KEY_DOWN )
 	{

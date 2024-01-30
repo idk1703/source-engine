@@ -69,7 +69,7 @@ private:
 
 	CUtlVector< PointOfInterest > m_attentionSet;	// the set of things we are attending to
 
-	
+
 };
 
 inline int IAttention::CompareSignificance( const CBaseEntity *a, const CBaseEntity *b ) const
@@ -78,4 +78,3 @@ inline int IAttention::CompareSignificance( const CBaseEntity *a, const CBaseEnt
 }
 
 #endif // _NEXT_BOT_ATTENTION_INTERFACE_H_
-

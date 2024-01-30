@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -40,7 +40,7 @@ void UseEntityState::OnUpdate( CCSBot *me )
 	// if we are looking at the entity, "use" it and exit
 	if (me->IsLookingAtPosition( pos ))
 	{
-		if (TheCSBots()->GetScenario() == CCSBotManager::SCENARIO_RESCUE_HOSTAGES && 
+		if (TheCSBots()->GetScenario() == CCSBotManager::SCENARIO_RESCUE_HOSTAGES &&
 			me->GetTeamNumber() == TEAM_CT &&
 			me->GetTask() == CCSBot::COLLECT_HOSTAGES)
 		{
@@ -58,6 +58,3 @@ void UseEntityState::OnExit( CCSBot *me )
 	me->ClearLookAt();
 	me->ResetStuckMonitor();
 }
-
-
-

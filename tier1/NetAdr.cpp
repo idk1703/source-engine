@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // NetAdr.cpp: implementation of the CNetAdr class.
 //
@@ -95,8 +95,8 @@ bool netadr_t::IsReservedAdr () const
 	if ( type == NA_IP )
 	{
 		if ( (ip[0] == 10) ||									// 10.x.x.x is reserved
-			 (ip[0] == 127) ||									// 127.x.x.x 
-			 (ip[0] == 172 && ip[1] >= 16 && ip[1] <= 31) ||	// 172.16.x.x  - 172.31.x.x 
+			 (ip[0] == 127) ||									// 127.x.x.x
+			 (ip[0] == 172 && ip[1] >= 16 && ip[1] <= 31) ||	// 172.16.x.x  - 172.31.x.x
 			 (ip[0] == 192 && ip[1] >= 168) ) 					// 192.168.x.x
 			return true;
 	}
@@ -291,8 +291,8 @@ bool netadr_t::SetFromString( const char *pch, bool bUseDNS )
 	}
 
 	// Starts with a number and has a dot
-	if ( address[0] >= '0' && 
-		 address[0] <= '9' && 
+	if ( address[0] >= '0' &&
+		 address[0] <= '9' &&
 		 strchr( address, '.' ) )
 	{
 		int n1 = -1, n2 = -1, n3 = -1, n4 = -1, n5 = 0; // set port to 0 if we don't parse one
@@ -324,7 +324,7 @@ bool netadr_t::SetFromString( const char *pch, bool bUseDNS )
 		{
 			*pchColon = 0;
 		}
-		
+
 		// DNS it base name
 		struct hostent *h = gethostbyname( address );
 		if ( !h )
@@ -358,7 +358,7 @@ bool netadr_t::operator<(const netadr_t &netadr) const
 
 
 void netadr_t::SetFromSocket( int hSocket )
-{	
+{
 	// dgoodenough - since this is skipped on X360, seems reasonable to skip as well on PS3
 	// PS3_BUILDFIX
 	// FIXME - Leap of faith, this works without asserting on X360, so I assume it will on PS3

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Inner workings of Performance Monitor Counters on the xbox 360; 
+// Purpose: Inner workings of Performance Monitor Counters on the xbox 360;
 // they let vprof track L2 dcache misses, LHS, etc.
 //
 //=============================================================================//
@@ -8,7 +8,7 @@
 #include "pch_tier0.h"
 
 #ifndef _X360
-#error pmc360.cpp must only be compiled for XBOX360! 
+#error pmc360.cpp must only be compiled for XBOX360!
 #else
 
 #include "tier0/platform.h"
@@ -21,7 +21,7 @@
 
 static bool s_bInitialized = false;
 
-CPMCData::CPMCData() 
+CPMCData::CPMCData()
 {
 }
 
@@ -51,7 +51,7 @@ void CPMCData::Start()
 	// Get the counters.
 	DmPMCGetCounters( &pmcstate );
 
-	// in the default state as set up by InitializeOnceProgramWide, 
+	// in the default state as set up by InitializeOnceProgramWide,
 	// counters 9 and 6 are L2 misses and LHS respectively
 	m_OnStart.L2CacheMiss = pmcstate.pmc[9];
 	m_OnStart.LHS = pmcstate.pmc[6];
@@ -70,12 +70,12 @@ void CPMCData::End()
 	// Get the counters.
 	DmPMCGetCounters( &pmcstate );
 
-	// in the default state as set up by InitializeOnceProgramWide, 
+	// in the default state as set up by InitializeOnceProgramWide,
 	// counters 9 and 6 are l2 misses and LHS respectively
 	const uint64 &endL2 = pmcstate.pmc[9];
 	const uint64 &endLHS = pmcstate.pmc[6];
 
-	// compute delta between end and start. Because these are 
+	// compute delta between end and start. Because these are
 	// unsigned nums, even in overflow this still works out
 	// correctly under modular arithmetic.
 	m_Delta.L2CacheMiss = endL2 - m_OnStart.L2CacheMiss;

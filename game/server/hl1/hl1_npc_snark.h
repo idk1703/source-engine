@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		Projectile shot from the MP5 
+// Purpose:		Projectile shot from the MP5
 //
 // $Workfile:     $
 // $Date:         $

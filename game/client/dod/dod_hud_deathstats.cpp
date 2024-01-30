@@ -1,7 +1,7 @@
 
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -43,7 +43,7 @@ CDODDeathStatsPanel::CDODDeathStatsPanel( const char *pElementName )
 
 	memset( &m_DeathRecord, 0, sizeof(m_DeathRecord) );
 
-	LoadControlSettings("Resource/UI/DeathStats.res");	
+	LoadControlSettings("Resource/UI/DeathStats.res");
 }
 
 void CDODDeathStatsPanel::OnScreenSizeChanged( int iOldWide, int iOldTall )
@@ -59,7 +59,7 @@ void CDODDeathStatsPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODDeathStatsPanel::Reset()
 {
@@ -92,7 +92,7 @@ void CDODDeathStatsPanel::VidInit( void )
 void CDODDeathStatsPanel::FireGameEvent( IGameEvent * event)
 {
 	if ( Q_strcmp( "player_death", event->GetName() ) == 0 )
-	{	
+	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 
 		if ( !pLocalPlayer )
@@ -110,7 +110,7 @@ void CDODDeathStatsPanel::FireGameEvent( IGameEvent * event)
 		}
 
 		int killer = engine->GetPlayerForUserID( event->GetInt("attacker") );
-		
+
 		const char *killedwith = event->GetString( "weapon" );
 
 		char fullkilledwith[128];
@@ -158,10 +158,10 @@ void CDODDeathStatsPanel::FireGameEvent( IGameEvent * event)
 		// - life defenses
 
 		Show();
-	}	
+	}
 }
 
-const char *szHitgroupNames[] = 
+const char *szHitgroupNames[] =
 {
 	"head",
 	"chest",
@@ -224,7 +224,7 @@ void CDODDeathStatsPanel::Paint( void )
 				}
 			}
 		}
-	}	
+	}
 
 	Q_strncat( buf, "\n", sizeof(buf), COPY_ALL_CHARACTERS );
 
@@ -276,7 +276,7 @@ int CDODDeathStatsPanel::DrawDeathNoticeItem( int x, int y )
 	{
 		iKillerTeam = g_PR->GetTeam( m_DeathRecord.Killer.iEntIndex );
 		iVictimTeam = g_PR->GetTeam( m_DeathRecord.Victim.iEntIndex );
-	}	
+	}
 
 	wchar_t victim[ 256 ];
 	wchar_t killer[ 256 ];
@@ -318,7 +318,7 @@ int CDODDeathStatsPanel::DrawDeathNoticeItem( int x, int y )
 	int yText = y + ( iconTall - iFontTall ) / 2;
 
 	int boxWidth = len + iconWide + spacerX;
-	int boxHeight = MIN( iconTall, m_flLineHeight );	
+	int boxHeight = MIN( iconTall, m_flLineHeight );
 	int boxBorder = XRES(2);
 
 	// Only draw killers name if it wasn't a suicide
@@ -339,7 +339,7 @@ int CDODDeathStatsPanel::DrawDeathNoticeItem( int x, int y )
 		Color c = g_PR->GetTeamColor( iKillerTeam );
 		surface()->DrawSetTextColor( c );
 
-		// Draw killer's name			
+		// Draw killer's name
 		surface()->DrawSetTextPos( x, yText );
 		const wchar_t *p = killer;
 		while ( *p )

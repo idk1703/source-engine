@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,7 +18,7 @@ public:
 
 	CHudDefuser( const char *name );
 
-	virtual bool ShouldDraw();	
+	virtual bool ShouldDraw();
 	virtual void Paint();
 
 private:
@@ -67,13 +67,12 @@ void CHudDefuser::Paint()
 	{
 		m_pIcon = gHUD.GetIcon( "defuser" );
 	}
-	
+
 	if ( m_pIcon )
 	{
 		int x, y, w, h;
 		GetBounds( x, y, w, h );
-		
+
 		m_pIcon->DrawSelf( 0, 0, w, h, m_clrIcon );
 	}
 }
-

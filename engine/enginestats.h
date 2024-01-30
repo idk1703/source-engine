@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ public:
 	void BeginRun( void );
 
 	// Advances the next frame for the stats...
-	void NextFrame(); 
+	void NextFrame();
 
 	void BeginFrame( void );
 
@@ -67,7 +67,7 @@ public:
 	//
 
 	double GetRunTime( void );
-	
+
 	void SetFrameTime( float flFrameTime ) { m_flFrameTime = flFrameTime; }
 	void SetFPSVariability( float flFPSVariability ) { m_flFPSVariability = flFPSVariability; }
 
@@ -107,7 +107,7 @@ inline void CEngineStats::BeginTimedStat( EngineTimedStatId_t stat )
 {
 	if (m_InFrame)
 	{
-		m_StatGroup.m_StatStartTime[stat] = 
+		m_StatGroup.m_StatStartTime[stat] =
 			Sys_FloatTime();
 	}
 }
@@ -117,7 +117,7 @@ inline void CEngineStats::EndTimedStat( EngineTimedStatId_t stat )
 	if (m_InFrame)
 	{
 		float dt = (float)Sys_FloatTime() - (float)(m_StatGroup.m_StatStartTime[stat]);
-		m_StatGroup.m_StatFrameTime[stat] += dt; 
+		m_StatGroup.m_StatFrameTime[stat] += dt;
 	}
 }
 
@@ -126,14 +126,14 @@ inline void CEngineStats::AddToTimedStat( EngineTimedStatId_t stat, float dt )
 {
 	if (m_InFrame)
 	{
-		m_StatGroup.m_StatFrameTime[stat] += dt; 
+		m_StatGroup.m_StatFrameTime[stat] += dt;
 	}
 }
 
 // Slams a timed stat
 inline void CEngineStats::SetTimedStat( EngineTimedStatId_t stat, float time )
 {
-	m_StatGroup.m_StatFrameTime[stat] = time; 
+	m_StatGroup.m_StatFrameTime[stat] = time;
 }
 extern CEngineStats g_EngineStats;
 

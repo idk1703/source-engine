@@ -25,10 +25,10 @@ float *GetClientColor( int clientIndex )
 	{
 		return g_ColorGreen;
 	}
-	else 
+	else
 	{
 		return g_ColorYellow;
-	}	
+	}
 }
 
 // converts all '\r' characters to '\n', so that the engine can deal with the properly
@@ -101,7 +101,7 @@ void CHudChatLine::PerformFadeout( void )
 	int lr = m_clrText[0];
 	int lg = m_clrText[1];
 	int lb = m_clrText[2];
-	
+
 	//CSPort chat only fades out, no blinking.
 	if ( curtime <= m_flExpireTime && curtime > m_flExpireTime - CHATLINE_FADE_TIME )
 	{
@@ -111,11 +111,11 @@ void CHudChatLine::PerformFadeout( void )
 		alpha = clamp( alpha, 0, 255 );
 
 		wchar_t wbuf[4096];
-		
+
 		GetText(0, wbuf, sizeof(wbuf));
 
 		SetText( "" );
-			
+
 		if ( m_iNameLength > 0 )
 		{
 			wchar_t wText[4096];
@@ -140,7 +140,7 @@ void CHudChatLine::PerformFadeout( void )
 			InsertString( wbuf );
 		}
 	}
-	
+
 	OnThink();
 }
 
@@ -170,7 +170,7 @@ void CHudChatInputLine::ApplySchemeSettings(vgui::IScheme *pScheme)
 
 CHudChat::CHudChat( const char *pElementName ) : BaseClass( pElementName )
 {
-	
+
 }
 
 void CHudChat::CreateChatInputLine( void )
@@ -186,7 +186,7 @@ void CHudChat::CreateChatLines( void )
 		char sz[ 32 ];
 		Q_snprintf( sz, sizeof( sz ), "ChatLine%02i", i );
 		m_ChatLines[ i ] = new CHudChatLine( this, sz );
-		m_ChatLines[ i ]->SetVisible( false );		
+		m_ChatLines[ i ]->SetVisible( false );
 	}
 }
 
@@ -215,10 +215,10 @@ void CHudChat::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszName - 
-//			iSize - 
-//			*pbuf - 
+// Purpose:
+// Input  : *pszName -
+//			iSize -
+//			*pbuf -
 //-----------------------------------------------------------------------------
 void CHudChat::MsgFunc_SayText( bf_read &msg )
 {
@@ -227,7 +227,7 @@ void CHudChat::MsgFunc_SayText( bf_read &msg )
 	int client = msg.ReadByte();
 	msg.ReadString( szString, sizeof(szString) );
 	bool bWantsToChat = msg.ReadByte();
-	
+
 	if ( bWantsToChat )
 	{
 		// print raw chat text
@@ -280,7 +280,7 @@ void CHudChat::MsgFunc_TextMsg( bf_read &msg )
 {
 	char szString[2048];
 	int msg_dest = msg.ReadByte();
-	
+
 	wchar_t szBuf[5][128];
 	wchar_t outputBuf[256];
 
@@ -354,9 +354,9 @@ void CHudChat::MsgFunc_TextMsg( bf_read &msg )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fmt - 
-//			... - 
+// Purpose:
+// Input  : *fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CHudChat::ChatPrintf( int iPlayerIndex, const char *fmt, ... )
 {
@@ -379,7 +379,7 @@ void CHudChat::ChatPrintf( int iPlayerIndex, const char *fmt, ... )
 	{
 		pmsg++;
 	}
-	
+
 	if ( !*pmsg )
 		return;
 
@@ -405,19 +405,19 @@ void CHudChat::ChatPrintf( int iPlayerIndex, const char *fmt, ... )
 	}
 
 	line->SetText( "" );
-	
+
 	int iNameLength = 0;
-	
+
 	player_info_t sPlayerInfo;
 	if ( iPlayerIndex == 0 )
 	{
 		Q_memset( &sPlayerInfo, 0, sizeof(player_info_t) );
-		Q_strncpy( sPlayerInfo.name, "Console", sizeof(sPlayerInfo.name)  );	
+		Q_strncpy( sPlayerInfo.name, "Console", sizeof(sPlayerInfo.name)  );
 	}
 	else
 	{
 		engine->GetPlayerInfo( iPlayerIndex, &sPlayerInfo );
-	}	
+	}
 
 	const char *pName = sPlayerInfo.name;
 
@@ -440,7 +440,7 @@ void CHudChat::ChatPrintf( int iPlayerIndex, const char *fmt, ... )
 		float *flColor = GetClientColor( iPlayerIndex );
 
 		line->SetExpireTime();
-	
+
 		// draw the first x characters in the player color
 		Q_strncpy( buf, pmsg, MIN( iNameLength + 1, MAX_PLAYER_NAME_LENGTH+32) );
 		buf[ MIN( iNameLength, MAX_PLAYER_NAME_LENGTH+31) ] = 0;

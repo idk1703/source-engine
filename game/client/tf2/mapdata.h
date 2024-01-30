@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -120,7 +120,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Gets at the singleton map data 
+// Gets at the singleton map data
 //-----------------------------------------------------------------------------
 CMapData& MapData();
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -67,7 +67,7 @@ class IMaterialVar;
 
 struct mtexinfo_t
 {
-	Vector4D	textureVecsTexelsPerWorldUnits[2];	// [s/t] unit vectors in world space. 
+	Vector4D	textureVecsTexelsPerWorldUnits[2];	// [s/t] unit vectors in world space.
 							                        // [i][3] is the s/t offset relative to the origin.
 	Vector4D	lightmapVecsLuxelsPerWorldUnits[2];
 	float		luxelsPerWorldUnit;
@@ -102,7 +102,7 @@ struct mnode_t
 
 // node specific
 	cplane_t	*plane;
-	mnode_t		*children[2];	
+	mnode_t		*children[2];
 
 	unsigned short		firstsurface;
 	unsigned short		numsurfaces;
@@ -368,7 +368,7 @@ struct model_t
 	modtype_t			type;
 	int					flags;			// MODELFLAG_???
 
-	// volume occupied by the model graphics	
+	// volume occupied by the model graphics
 	Vector				mins, maxs;
 	float				radius;
 
@@ -459,7 +459,7 @@ struct msurfacenormal_t
 	unsigned int firstvertnormal;
 //	unsigned short	firstvertnormal;
 	// FIXME: Should I just point to the leaf here since it has this data?????????????
-//	short fogVolumeID;			// -1 if not in fog  
+//	short fogVolumeID;			// -1 if not in fog
 };
 #pragma pack()
 
@@ -478,8 +478,8 @@ struct msurfacelighting_t
 	int m_fDLightBits;			// Indicates which dlights illuminates this surface.
 	int m_nDLightFrame;			// Indicates the last frame in which dlights illuminated this surface
 
-	unsigned char m_nStyles[MAXLIGHTMAPS];	// index into d_lightstylevalue[] for animated lights 
-											// no one surface can be effected by more than 4 
+	unsigned char m_nStyles[MAXLIGHTMAPS];	// index into d_lightstylevalue[] for animated lights
+											// no one surface can be effected by more than 4
 											// animated lights.
 
 	// NOTE: This is tricky. To get this to fit in a single cache line,
@@ -502,7 +502,7 @@ struct msurface2_t
 	// These are packed in to flags now
 	//unsigned char			vertCount;		// number of verts for this surface
 	//unsigned char			sortGroup;		// only uses 2 bits, subdivide?
-	cplane_t				*plane;			// pointer to shared plane	
+	cplane_t				*plane;			// pointer to shared plane
 	int						firstvertindex;	// look up in model->vertindices[] (only uses 17-18 bits?)
 	WorldDecalHandle_t		decals;
 	ShadowDecalHandle_t		m_ShadowDecals; // unsigned short

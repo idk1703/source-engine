@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "dme_controls/BaseAnimSetControlGroupPanel.h"
@@ -41,7 +41,7 @@ private:
 	CBaseAnimSetControlGroupPanel	*m_pGroupPanel;
 };
 
-CAnimGroupTree::CAnimGroupTree( Panel *parent, const char *panelName, CBaseAnimSetControlGroupPanel *groupPanel ) : 
+CAnimGroupTree::CAnimGroupTree( Panel *parent, const char *panelName, CBaseAnimSetControlGroupPanel *groupPanel ) :
 	BaseClass( parent, panelName ),
 	m_pGroupPanel( groupPanel )
 {
@@ -132,8 +132,8 @@ CBaseAnimSetControlGroupPanel::CBaseAnimSetControlGroupPanel( vgui::Panel *paren
 	m_hGroups = new CAnimGroupTree( this, "AnimSetGroups", this );
 	m_hGroups->SetMultipleItemDragEnabled( true );
 	m_hGroups->SetAutoResize
-		( 
-		Panel::PIN_TOPLEFT, 
+		(
+		Panel::PIN_TOPLEFT,
 		Panel::AUTORESIZE_DOWNANDRIGHT,
 		0, 0,
 		0, 0
@@ -296,7 +296,7 @@ void CBaseAnimSetControlGroupPanel::ChangeAnimationSet( CDmeAnimationSet *newAni
 		return;
 	}
 
-	// Compare groups 
+	// Compare groups
 	bool bRebuildGroups = false;
 	const CDmaElementArray< CDmElement > &groups = m_AnimSet->GetSelectionGroups();
 	int c = groups.Count();
@@ -346,7 +346,7 @@ void CBaseAnimSetControlGroupPanel::ChangeAnimationSet( CDmeAnimationSet *newAni
 		for ( int i = 0; i < c; ++i )
 		{
 			CDmElement *group = groups[ i ];
-			
+
 			if ( !group->HasAttribute( "treeColor" ) )
 			{
 				if ( !guard )
@@ -394,7 +394,7 @@ void CBaseAnimSetControlGroupPanel::ChangeAnimationSet( CDmeAnimationSet *newAni
 		for ( int i = 0; i < m_hSelectableIndices.Count(); ++i )
 		{
 
-			m_hGroups->AddSelectedItem( m_hSelectableIndices[ i ], 
+			m_hGroups->AddSelectedItem( m_hSelectableIndices[ i ],
 				false,  // don't clear selection
 				true,   // put focus on tree
 				false ); // don't expand tree to make all of these visible...

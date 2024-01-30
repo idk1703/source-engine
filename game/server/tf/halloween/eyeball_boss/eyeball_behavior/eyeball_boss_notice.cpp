@@ -40,4 +40,3 @@ ActionResult< CEyeballBoss > CEyeballBossNotice::Update( CEyeballBoss *me, float
 
 	return Continue();
 }
-

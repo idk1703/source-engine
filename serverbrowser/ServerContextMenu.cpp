@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -27,11 +27,11 @@ CServerContextMenu::~CServerContextMenu()
 // Purpose: Activates the menu
 //-----------------------------------------------------------------------------
 void CServerContextMenu::ShowMenu(
-	Panel *target, 
-	unsigned int serverID, 
-	bool showConnect, 
+	Panel *target,
+	unsigned int serverID,
+	bool showConnect,
 	bool showViewGameInfo,
-	bool showRefresh, 
+	bool showRefresh,
 	bool showAddToFavorites )
 {
 	if (showConnect)

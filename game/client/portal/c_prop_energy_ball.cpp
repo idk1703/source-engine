@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 //	c_prop_energy_ball.cpp
-// 
+//
 // Purpose: Portal version of the combine ball. This client code is needed to provide a different
 //			look when the energy ball has infinite life and to have modified client effects.
 //
@@ -63,7 +63,7 @@ BEGIN_PREDICTION_DATA( C_PropEnergyBall )
 END_PREDICTION_DATA()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_PropEnergyBall::C_PropEnergyBall(): m_bIsInfiniteLife(false), m_fTimeTillDeath(-1), m_fCurAlpha ( 1.0f )
 {
@@ -84,7 +84,7 @@ void C_PropEnergyBall::OnDataChanged(DataUpdateType_t updateType )
 		float fStartFadeTime = cl_energy_ball_start_fade_time.GetFloat();
 
 		if ( fStartFadeTime < 1.0f )
-		{ 
+		{
 			fStartFadeTime = 1.0f;
 		}
 

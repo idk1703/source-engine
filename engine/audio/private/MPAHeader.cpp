@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -24,8 +24,8 @@ const uint32 CMPAHeader::m_dwTolerance = 3;	// 3 bytes
 const uint32 CMPAHeader::m_dwMaxRange = ( 256 * 1024 );
 
 // sampling rates in hertz: 1. index = MPEG Version ID, 2. index = sampling rate index
-const uint32 CMPAHeader::m_dwSamplingRates[4][3] = 
-{ 
+const uint32 CMPAHeader::m_dwSamplingRates[4][3] =
+{
 	{11025, 12000, 8000,  },	// MPEG 2.5
 	{0,     0,     0,     },	// reserved
 	{22050, 24000, 16000, },	// MPEG 2
@@ -48,7 +48,7 @@ const uint32 CMPAHeader::m_dwBitrates[2][3][15] =
 		{0,32,48,56, 64, 80, 96,112,128,160,192,224,256,320,384,},	// Layer2
 		{0,32,40,48, 56, 64, 80, 96,112,128,160,192,224,256,320,}	// Layer3
 	},
-	{	// MPEG 2, 2.5		
+	{	// MPEG 2, 2.5
 		{0,32,48,56,64,80,96,112,128,144,160,176,192,224,256,},		// Layer1
 		{0,8,16,24,32,40,48,56,64,80,96,112,128,144,160,},			// Layer2
 		{0,8,16,24,32,40,48,56,64,80,96,112,128,144,160,}			// Layer3
@@ -60,14 +60,14 @@ const uint32 CMPAHeader::m_dwSamplesPerFrames[2][3] =
 {
 	{	// MPEG 1
 		384,	// Layer1
-		1152,	// Layer2	
+		1152,	// Layer2
 		1152	// Layer3
 	},
 	{	// MPEG 2, 2.5
 		384,		// Layer1
 		1152,	// Layer2
 		576		// Layer3
-	}	
+	}
 };
 
 // Samples per Frame / 8
@@ -82,7 +82,7 @@ const uint32 CMPAHeader::m_dwCoefficients[2][3] =
 		48,		// Layer1
 		144,	// Layer2
 		72		// Layer3
-	}	
+	}
 };
 
 // needed later for CRC check
@@ -98,12 +98,12 @@ const uint32 CMPAHeader::m_dwSideinfoSizes[2][3][2] =
 		{0,0},	// Layer1
 		{0,0},	// Layer2
 		{17,32}	// Layer3
-	}	
+	}
 };
 
 // constructor (throws exception if no frame found)
 CMPAHeader::CMPAHeader( CMPAFile* pMPAFile, uint32 dwExpectedOffset, bool bSubsequentFrame, bool bReverse ) :
-m_pMPAFile( pMPAFile ), m_dwSyncOffset( dwExpectedOffset ), m_dwRealFrameSize( 0 ) 
+m_pMPAFile( pMPAFile ), m_dwSyncOffset( dwExpectedOffset ), m_dwRealFrameSize( 0 )
 {
 	// first check at expected offset (extended for not subsequent frames)
 	HeaderError error = IsSync( m_dwSyncOffset, !bSubsequentFrame );
@@ -168,8 +168,8 @@ bool CMPAHeader::SkipEmptyFrames()
 		{
 			m_dwSyncOffset += m_dwComputedFrameSize + MPA_HEADER_SIZE;
 			dwHeader = m_pMPAFile->ExtractBytes( m_dwSyncOffset, MPA_HEADER_SIZE, false );
-			
-			if( IsSync( dwHeader, false ) != noError ) 
+
+			if( IsSync( dwHeader, false ) != noError )
 				return false;
 		}
 	}
@@ -199,7 +199,7 @@ CMPAHeader::HeaderError CMPAHeader::DecodeHeader( uint32 dwHeader, bool bSimpleD
 		m_bLSF = true;
 
 	// get layer (0 = layer1, 2 = layer2, ...)
-	m_Layer = (MPALayer)(3 - ((dwHeader >> 17) & 0x03));	
+	m_Layer = (MPALayer)(3 - ((dwHeader >> 17) & 0x03));
 	if( m_Layer == LayerReserved )
 		return headerCorrupt;
 
@@ -213,7 +213,7 @@ CMPAHeader::HeaderError CMPAHeader::DecodeHeader( uint32 dwHeader, bool bSimpleD
 	m_dwBitrate = m_dwBitrates[m_bLSF][m_Layer][bIndex] * 1000; // convert from kbit to bit
 
 	if( m_dwBitrate == 0 )	// means free bitrate (is unsupported yet)
-		return freeBitrate;	
+		return freeBitrate;
 
 	// sampling rate
 	bIndex = (BYTE)((dwHeader >> 10) & 0x03);
@@ -241,7 +241,7 @@ CMPAHeader::HeaderError CMPAHeader::DecodeHeader( uint32 dwHeader, bool bSimpleD
 
 		// copyright bit
 		m_bCopyright = (dwHeader >> 3) & 0x01;
-		
+
 		// original bit
 		m_bCopyright = (dwHeader >> 2) & 0x01;
 
@@ -257,21 +257,21 @@ CMPAHeader::HeaderError CMPAHeader::IsSync( uint32 dwOffset,  bool bExtended  )
 {
 	HeaderError error = noSync;
 	uint32 dwHeader = m_pMPAFile->ExtractBytes( dwOffset, MPA_HEADER_SIZE, false );
-		
+
 	// sync bytes found?
 	if( (dwHeader & 0xFFE00000) ==  0xFFE00000 )
 	{
 		error = DecodeHeader( dwHeader );
 		if( error == noError )
-		{	
+		{
 			// enough buffer to do extended check?
 			if( bExtended )
-			{	
+			{
 				// recursive call (offset for next frame header)
 				dwOffset = m_dwSyncOffset+m_dwComputedFrameSize;
 				try
 				{
-					CMPAHeader m_SubsequentFrame( m_pMPAFile, dwOffset, true );	
+					CMPAHeader m_SubsequentFrame( m_pMPAFile, dwOffset, true );
 					m_dwRealFrameSize = m_SubsequentFrame.m_dwSyncOffset - m_dwSyncOffset;
 				}
 				catch( CMPAException& Exc )
@@ -283,11 +283,11 @@ CMPAHeader::HeaderError CMPAHeader::IsSync( uint32 dwOffset,  bool bExtended  )
 							m_dwRealFrameSize = m_pMPAFile->m_dwEnd - m_pMPAFile->m_dwBegin - m_dwSyncOffset;
 						else
 							m_dwRealFrameSize = m_dwComputedFrameSize;
-						error = noError;		
+						error = noError;
 					}
 					else
 						error = noSync;
-				}	
+				}
 			}
 		}
 	}

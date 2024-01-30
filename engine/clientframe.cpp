@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -81,9 +81,9 @@ void CClientFrame::SetSnapshot( CFrameSnapshot *pSnapshot )
 
 void CClientFrame::CopyFrame( CClientFrame &frame )
 {
-	tick_count = frame.tick_count;	
+	tick_count = frame.tick_count;
 	last_entity = frame.last_entity;
-	
+
 	SetSnapshot( frame.GetSnapshot() ); // adds reference to snapshot
 
 	transmit_entity = frame.transmit_entity;
@@ -110,7 +110,7 @@ CClientFrame *CClientFrameManager::GetClientFrame( int nTick, bool bExact )
 		{
 			if ( frame->tick_count == nTick )
 				return frame;
-			
+
 			if ( bExact )
 				return NULL;
 
@@ -118,12 +118,12 @@ CClientFrame *CClientFrameManager::GetClientFrame( int nTick, bool bExact )
 		}
 
 		lastFrame = frame;
-		frame = frame->m_pNext;	
+		frame = frame->m_pNext;
 	}
 
 	if ( bExact )
 		return NULL;
-	
+
 	return lastFrame;
 }
 
@@ -190,7 +190,7 @@ void CClientFrameManager::RemoveOldestFrame( void )
 
 void CClientFrameManager::DeleteClientFrames(int nTick)
 {
-	
+
 	if ( nTick < 0 )
 	{
 		while ( m_nFrames > 0 )

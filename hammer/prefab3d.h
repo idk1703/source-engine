@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -46,7 +46,7 @@ class CPrefab3D : public CPrefab
 
 		// prefab data:
 		CMapWorld *m_pWorld;
-}; 
+};
 
 
 //-----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ CMapWorld *CPrefab3D::GetWorld(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPrefab3D::SetWorld(CMapWorld *pWorld)
 {
@@ -86,7 +86,7 @@ class CPrefabRMF : public CPrefab3D
 
 		int DoLoad(std::fstream&, DWORD = 0);
 		int DoSave(std::fstream&, DWORD = 0);
-}; 
+};
 
 
 class CPrefabVMF : public CPrefab3D
@@ -110,6 +110,6 @@ class CPrefabVMF : public CPrefab3D
 
 		char m_szFilename[MAX_PATH];	// Full path of the prefab VMF.
 		int m_nFileTime;				// File modification time of the last loaded version of the prefab.
-}; 
+};
 
 #endif // PREFAB3D_H

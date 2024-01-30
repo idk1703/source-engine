@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@ class SampleDropDowns: public DemoPage
 	public:
 		SampleDropDowns(Panel *parent, const char *name);
 		~SampleDropDowns();
-	
+
 	private:
 		ComboBox *m_pNormal;
 		ComboBox *m_pNormalScroll;
@@ -28,7 +28,7 @@ class SampleDropDowns: public DemoPage
 		Label *m_pLabel2;
 		Label *m_pLabel3;
 		Label *m_pLabel4;
-		
+
 };
 
 //-----------------------------------------------------------------------------
@@ -101,5 +101,3 @@ Panel* SampleDropDowns_Create(Panel *parent)
 {
 	return new SampleDropDowns(parent, "Drop-downs");
 }
-
-

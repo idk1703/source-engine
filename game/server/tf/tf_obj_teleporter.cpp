@@ -32,7 +32,7 @@
 #define TELEPORTER_MODEL_LIGHT				"models/buildables/teleporter_light.mdl"
 
 #define TELEPORTER_MINS			Vector( -24, -24, 0)
-#define TELEPORTER_MAXS			Vector( 24, 24, 12)	
+#define TELEPORTER_MAXS			Vector( 24, 24, 12)
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -134,7 +134,7 @@ void CObjectTeleporter::TeleporterSend( CTFPlayer *pPlayer )
 	if ( GetBuilder() && GetBuilder()->GetTeam() == pPlayer->GetTeam() )
 	{
 		// Strange Health Provided to Allies
-		EconEntity_OnOwnerKillEaterEvent( 
+		EconEntity_OnOwnerKillEaterEvent(
 			dynamic_cast<CEconEntity *>( GetBuilder()->GetEntityForLoadoutSlot( LOADOUT_POSITION_PDA ) ),
 			GetBuilder(),
 			pPlayer,
@@ -142,7 +142,7 @@ void CObjectTeleporter::TeleporterSend( CTFPlayer *pPlayer )
 		);
 
 		if ( GetBuilder() != pPlayer &&
-			 TFGameRules() && 
+			 TFGameRules() &&
 			 TFGameRules()->GameModeUsesUpgrades() &&
 			 TFGameRules()->State_Get() == GR_STATE_RND_RUNNING )
 		{
@@ -159,7 +159,7 @@ void CObjectTeleporter::TeleporterSend( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Receive a teleporting player 
+// Purpose: Receive a teleporting player
 //-----------------------------------------------------------------------------
 void CObjectTeleporter::TeleporterReceive( CTFPlayer *pPlayer, float flDelay )
 {
@@ -207,7 +207,7 @@ void CObjectTeleporter::TeleporterReceive( CTFPlayer *pPlayer, float flDelay )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectTeleporter::CObjectTeleporter()
 {
@@ -232,12 +232,12 @@ CObjectTeleporter::CObjectTeleporter()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectTeleporter::Spawn()
 {
 	SetSolid( SOLID_BBOX );
-	
+
 	m_takedamage = DAMAGE_NO;
 
 	SetState( TELEPORTER_STATE_BUILDING );
@@ -262,7 +262,7 @@ void CObjectTeleporter::Spawn()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectTeleporter::UpdateOnRemove()
 {
@@ -276,7 +276,7 @@ void CObjectTeleporter::UpdateOnRemove()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectTeleporter::FirstSpawn()
 {
@@ -289,7 +289,7 @@ void CObjectTeleporter::FirstSpawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectTeleporter::SetObjectMode( int iVal )
 {
@@ -356,7 +356,7 @@ int CObjectTeleporter::GetUpgradeMetalRequired()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectTeleporter::SetModel( const char *pModel )
 {
@@ -381,7 +381,7 @@ void CObjectTeleporter::SetModel( const char *pModel )
 void CObjectTeleporter::InitializeMapPlacedObject( void )
 {
 	BaseClass::InitializeMapPlacedObject();
-	
+
 	SetObjectMode( IsEntrance() ? MODE_TELEPORTER_ENTRANCE : MODE_TELEPORTER_EXIT );
 
 #ifdef STAGING_ONLY
@@ -429,7 +429,7 @@ void CObjectTeleporter::SetStartBuildingModel( void )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 bool CObjectTeleporter::IsPlacementPosValid( void )
 {
@@ -454,7 +454,7 @@ bool CObjectTeleporter::IsPlacementPosValid( void )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CObjectTeleporter::OnGoActive( void )
 {
@@ -485,7 +485,7 @@ void CObjectTeleporter::OnGoActive( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectTeleporter::Precache()
 {
@@ -495,7 +495,7 @@ void CObjectTeleporter::Precache()
 	int iModelIndex;
 
 	PrecacheModel( TELEPORTER_MODEL_ENTRANCE_PLACEMENT );
-	PrecacheModel( TELEPORTER_MODEL_EXIT_PLACEMENT );	
+	PrecacheModel( TELEPORTER_MODEL_EXIT_PLACEMENT );
 
 	iModelIndex = PrecacheModel( TELEPORTER_MODEL_BUILDING );
 	PrecacheGibsForModel( iModelIndex );
@@ -674,7 +674,7 @@ void CObjectTeleporter::TeleporterTouch( CBaseEntity *pOther )
 		bool bSetReserved = !m_hReservedForPlayer;
 		if ( !bSetReserved )
 		{
-			 bSetReserved = ( !PlayerCanBeTeleported(m_hReservedForPlayer) || !m_hReservedForPlayer->IsAlive() || 
+			 bSetReserved = ( !PlayerCanBeTeleported(m_hReservedForPlayer) || !m_hReservedForPlayer->IsAlive() ||
 							  (m_flReserveAfterTouchUntil != 0 && m_flReserveAfterTouchUntil < gpGlobals->curtime) );
 		}
 
@@ -702,7 +702,7 @@ void CObjectTeleporter::TeleporterTouch( CBaseEntity *pOther )
 			}
 			else
 			{
-				// If it's been some time since we went active, and the reserved player still 
+				// If it's been some time since we went active, and the reserved player still
 				// hasn't teleported, we clear his reservation to prevent griefing.
 				if ( gpGlobals->curtime - m_flLastStateChangeTime > 3.0 )
 				{
@@ -720,7 +720,7 @@ void CObjectTeleporter::ApplySpeedBoost( CTFPlayer *pPlayer )
 {
 	if ( m_iState != TELEPORTER_STATE_READY )
 		return;
-	
+
 	Vector origin = GetAbsOrigin();
 	CPVSFilter filter( origin );
 	int iTeam = pPlayer->GetTeamNumber();
@@ -766,11 +766,11 @@ bool CObjectTeleporter::Command_Repair( CTFPlayer *pActivator, float flRepairMod
 {
 	float flTargetHeal = 100.0f * flRepairMod;
 	int iAmountToHeal = MIN( flTargetHeal, GetMaxHealth() - GetHealth() );
-		
+
 	// repair the building
 	int iRepairCost = ceil( (float)( iAmountToHeal ) * 0.2f );
 
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CObjectTeleporter::Command_Repair ( %f / %d ) - cost = %d\n", gpGlobals->curtime, 
+	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CObjectTeleporter::Command_Repair ( %f / %d ) - cost = %d\n", gpGlobals->curtime,
 		GetHealth(),
 		GetMaxHealth(),
 		iRepairCost ) );
@@ -786,7 +786,7 @@ bool CObjectTeleporter::Command_Repair( CTFPlayer *pActivator, float flRepairMod
 
 		int nHealthToAdd = iRepairCost * 5;
 		float flNewHealth = MIN( GetMaxHealth(), GetHealth() + nHealthToAdd );
-		SetHealth( flNewHealth );	  
+		SetHealth( flNewHealth );
 
 		// add the same amount of health to our match
 		CObjectTeleporter *pMatch = GetMatchingTeleporter();
@@ -808,7 +808,7 @@ bool CObjectTeleporter::Command_Repair( CTFPlayer *pActivator, float flRepairMod
 			// repair the building
 			iRepairCost = ceil( (float)( iAmountToHeal ) * 0.2f );
 
-			TRACE_OBJECT( UTIL_VarArgs( "%0.2f CObjectTeleporter::Command_Repair ( %f / %d ) - cost = %d\n", gpGlobals->curtime, 
+			TRACE_OBJECT( UTIL_VarArgs( "%0.2f CObjectTeleporter::Command_Repair ( %f / %d ) - cost = %d\n", gpGlobals->curtime,
 				pMatch->GetHealth(),
 				pMatch->GetMaxHealth(),
 				iRepairCost ) );
@@ -824,13 +824,13 @@ bool CObjectTeleporter::Command_Repair( CTFPlayer *pActivator, float flRepairMod
 
 				int nHealthToAdd = iRepairCost * 5;
 				float flNewHealth = MIN( pMatch->GetMaxHealth(), pMatch->GetHealth() + nHealthToAdd );
-				pMatch->SetHealth( flNewHealth );	  
+				pMatch->SetHealth( flNewHealth );
 
 				return ( iRepairCost > 0 );
 			}
 		}
 	}
-				
+
 	return false;
 }
 
@@ -862,7 +862,7 @@ bool CObjectTeleporter::IsMatchingTeleporterReady( void )
 	}
 
 	if ( m_hMatchingTeleporter &&
-		m_hMatchingTeleporter->GetState() != TELEPORTER_STATE_BUILDING && 
+		m_hMatchingTeleporter->GetState() != TELEPORTER_STATE_BUILDING &&
 		!m_hMatchingTeleporter->IsUpgrading() &&
 		!m_hMatchingTeleporter->IsDisabled() )
 		return true;
@@ -881,7 +881,7 @@ bool CObjectTeleporter::IsSendingPlayer( CTFPlayer *pPlayer )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CObjectTeleporter::CheckUpgradeOnHit( CTFPlayer *pPlayer )
 {
@@ -894,7 +894,7 @@ bool CObjectTeleporter::CheckUpgradeOnHit( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectTeleporter::CopyUpgradeStateToMatch( CObjectTeleporter *pMatch, bool bFrom )
 {
@@ -903,7 +903,7 @@ void CObjectTeleporter::CopyUpgradeStateToMatch( CObjectTeleporter *pMatch, bool
 	{
 		if ( bFrom )
 		{
-			pMatch->CopyUpgradeStateToMatch( pMatch, false ); 
+			pMatch->CopyUpgradeStateToMatch( pMatch, false );
 		}
 		else
 		{
@@ -951,7 +951,7 @@ void CObjectTeleporter::DeterminePlaybackRate( void )
 
 		switch( m_iState )
 		{
-		case TELEPORTER_STATE_READY:	
+		case TELEPORTER_STATE_READY:
 			{
 				// spin up to 1.0 from whatever we're at, at some high rate
 				flPlaybackRate = Approach( 1.0f, flPlaybackRate, 0.5f * flFrameTime );
@@ -994,7 +994,7 @@ void CObjectTeleporter::DeterminePlaybackRate( void )
 						flLowSpinSpeed,
 						1.0f );
 				}
-			}		
+			}
 			break;
 
 		default:
@@ -1161,7 +1161,7 @@ void CObjectTeleporter::RecieveTeleportingPlayer( CTFPlayer* pTeleportingPlayer 
 		{
 			DetonateObject();
 		}
-	}			
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1175,7 +1175,7 @@ void CObjectTeleporter::TeleporterThink( void )
 	SetContextThink( &CObjectTeleporter::TeleporterThink, gpGlobals->curtime + BUILD_TELEPORTER_NEXT_THINK, TELEPORTER_THINK_CONTEXT );
 
 	// At any point, if our match is not ready, revert to IDLE
-#ifdef STAGING_ONLY	
+#ifdef STAGING_ONLY
 	if ( IsDisabled() || ( IsMatchingTeleporterReady() == false && !IsSpeedPad() ))
 #else
 	if ( IsDisabled() || IsMatchingTeleporterReady() == false )
@@ -1193,7 +1193,7 @@ void CObjectTeleporter::TeleporterThink( void )
 		return;
 
 	// pMatch is not NULL and is not building
-#ifdef STAGING_ONLY		
+#ifdef STAGING_ONLY
 	CObjectTeleporter *pMatch = NULL;
 
 	if ( !IsSpeedPad() )
@@ -1224,7 +1224,7 @@ void CObjectTeleporter::TeleporterThink( void )
 	default:
 	case TELEPORTER_STATE_IDLE:
 		// Do we have a match that is active?
-#ifdef STAGING_ONLY			
+#ifdef STAGING_ONLY
 		if ( IsMatchingTeleporterReady() || IsSpeedPad() )
 #else
 		if ( IsMatchingTeleporterReady() )
@@ -1259,7 +1259,7 @@ void CObjectTeleporter::TeleporterThink( void )
 			}
 
 			m_flRechargeTime = gpGlobals->curtime + ( BUILD_TELEPORTER_FADEOUT_TIME + BUILD_TELEPORTER_FADEIN_TIME + m_flCurrentRechargeDuration );
-		
+
 			// change state to recharging...
 			SetState( TELEPORTER_STATE_RECHARGING );
 		}
@@ -1294,7 +1294,7 @@ void CObjectTeleporter::TeleporterThink( void )
 					event->SetInt( "builderid", GetBuilder() ? GetBuilder()->GetUserID() : 0 );
 					if ( GetMatchingTeleporter() )
 					{
-						event->SetFloat( "dist", GetMatchingTeleporter()->GetAbsOrigin().DistTo( GetAbsOrigin() ) );					
+						event->SetFloat( "dist", GetMatchingTeleporter()->GetAbsOrigin().DistTo( GetAbsOrigin() ) );
 					}
 					else
 					{
@@ -1327,7 +1327,7 @@ void CObjectTeleporter::TeleporterThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectTeleporter::FinishedBuilding( void )
 {
@@ -1359,7 +1359,7 @@ void CObjectTeleporter::ShowDirectionArrow( bool bShow )
 		{
 			SetBodygroup( m_iDirectionBodygroup, bShow ? 1 : 0 );
 		}
-			
+
 		m_bShowDirectionArrow = bShow;
 
 		if ( bShow )
@@ -1382,11 +1382,11 @@ void CObjectTeleporter::ShowDirectionArrow( bool bShow )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-int CObjectTeleporter::DrawDebugTextOverlays(void) 
+int CObjectTeleporter::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		CObjectTeleporter *pMatch = GetMatchingTeleporter();
 
@@ -1504,7 +1504,7 @@ void CObjectTeleporter::UpdateMaxHealth( int nHealth, bool bForce /* = false */ 
 		return;
 
 	float flPercentageHealth = (float)GetHealth()/(float)GetMaxHealth();
-	
+
 	SetMaxHealth( nHealth );
 	SetHealth( nHealth * flPercentageHealth );
 }
@@ -1544,7 +1544,7 @@ void CObjectTeleporter::FinishUpgrading( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CObjectTeleporter::InputWrenchHit( CTFPlayer *pPlayer, CTFWrench *pWrench, Vector hitLoc )
 {
@@ -1552,7 +1552,7 @@ bool CObjectTeleporter::InputWrenchHit( CTFPlayer *pPlayer, CTFWrench *pWrench, 
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CObjectTeleporter::MakeCarriedObject( CTFPlayer *pCarrier )
 {
@@ -1610,7 +1610,7 @@ void CObjectTeleporter::SpawnBread( const CTFPlayer* pTeleportingPlayer )
 		// Must have vphysics to place as a physics prop
 		studiohdr_t *pStudioHdr = mdlcache->GetStudioHdr( h );
 		if ( pStudioHdr && mdlcache->GetVCollide( h ) )
-		{	
+		{
 			// Try to create entity
 			pProp = dynamic_cast< CPhysicsProp * >( CreateEntityByName( "prop_physics_override" ) );
 			if ( pProp )

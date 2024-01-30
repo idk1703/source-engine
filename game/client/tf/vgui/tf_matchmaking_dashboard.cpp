@@ -30,7 +30,7 @@ ConVar tf_mm_dashboard_spew_enabled( "tf_mm_dashboard_spew_enabled", "0", FCVAR_
 
 extern ConVar tf_mm_next_map_vote_time;
 
-#ifdef STAGING_ONLY 
+#ifdef STAGING_ONLY
 ConVar tf_mm_dashboard_force_show( "tf_mm_dashboard_force_show", "0", 0, "Force the mm dashboard to show" );
 ConVar tf_mm_popup_state_override( "tf_mm_popup_state_override", "", 0, "Force state on mm dashboard popup" );
 #endif
@@ -50,7 +50,7 @@ bool BInEndOfMatch()
 // Purpose: Pnael that lives on the viewport that is a popup that we parent
 //			the MM dashboard panels to
 //-----------------------------------------------------------------------------
-class CMatchMakingHUDPopupContainer : public Panel 
+class CMatchMakingHUDPopupContainer : public Panel
 {
 public:
 	DECLARE_CLASS_SIMPLE( CMatchMakingHUDPopupContainer, Panel );
@@ -173,7 +173,7 @@ void CMMDashboardParentManager::AttachToTopMostPopup()
 	}
 
 	FOR_EACH_VEC( m_vecPanels, i )
-	{	
+	{
 		Panel *pPanel = m_vecPanels[ i ];
 		// No longer a popup
 		surface()->ReleasePanel( pPanel->GetVPanel() );
@@ -217,7 +217,7 @@ void CTFMatchmakingPopup::OnEnter()
 	SetCollapsed( false );
 }
 
-void CTFMatchmakingPopup::OnUpdate() 
+void CTFMatchmakingPopup::OnUpdate()
 {
 }
 
@@ -243,13 +243,13 @@ CTFMatchmakingPopup::CTFMatchmakingPopup( const char* pszName, const char* pszRe
 {
 	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme");
 	SetScheme(scheme);
-	ivgui()->AddTickSignal( GetVPanel(), 100 ); 
+	ivgui()->AddTickSignal( GetVPanel(), 100 );
 
 	GetMMDashboardParentManager()->AddPanel( this );
 	SetKeyBoardInputEnabled( false );
 
 	SetProportional( true );
-	
+
 	ListenForGameEvent( "rematch_failed_to_create" );
 	ListenForGameEvent( "party_updated" );
 }
@@ -444,7 +444,7 @@ CTFMatchmakingDashboard::~CTFMatchmakingDashboard()
 	GetMMDashboardParentManager()->RemovePanel( this );
 }
 
-void CTFMatchmakingDashboard::ApplySchemeSettings( vgui::IScheme *pScheme ) 
+void CTFMatchmakingDashboard::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
 
@@ -472,7 +472,7 @@ void CTFMatchmakingDashboard::OnCommand( const char *command )
 			bool bNoPenalty = ( GTFGCClientSystem()->GetAssignedMatchAbandonStatus() != k_EAbandonGameStatus_AbandonWithPenalty );
 			if ( bNoPenalty )
 			{
-				GTFGCClientSystem()->EndMatchmaking( true );			
+				GTFGCClientSystem()->EndMatchmaking( true );
 			}
 			else
 			{

@@ -88,7 +88,7 @@ END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
 // Purpose: Precache
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CPropEnergyBall::Precache()
 {
@@ -129,8 +129,8 @@ void CPropEnergyBall::StopLoopingSounds()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CPropEnergyBall::Spawn()
 {
@@ -219,7 +219,7 @@ void CPropEnergyBall::VPhysicsCollision( int index, gamevcollisionevent_t *pEven
 	if ( !bIsEnteringPortalAndLockingAxisForward )
 	{
 		trace_t		tr;
-		UTIL_TraceLine ( GetAbsOrigin(), GetAbsOrigin() + 60*preVelocity, MASK_SHOT, 
+		UTIL_TraceLine ( GetAbsOrigin(), GetAbsOrigin() + 60*preVelocity, MASK_SHOT,
 			this, COLLISION_GROUP_NONE, &tr);
 
 		// Only place decals and draw effects if we hit something valid
@@ -243,16 +243,16 @@ void CPropEnergyBall::VPhysicsCollision( int index, gamevcollisionevent_t *pEven
 
 		EmitSound( "EnergyBall.Impact" );
 	}
-	
+
 	// Record our direction so our fixed direction hacks know we have changed direction immediately
-	m_vLastKnownDirection = vecFinalVelocity; 
+	m_vLastKnownDirection = vecFinalVelocity;
 
 	// Scale new velocity to our fixed speed
 	vecFinalVelocity *= GetSpeed();
 
 	// Try to update the velocity now, however I'm told this rarely works.
 	// We will spam updates in our think function to help get us in the direction we want to go.
-	PhysCallbackSetVelocity( pEvent->pObjects[index], vecFinalVelocity ); 
+	PhysCallbackSetVelocity( pEvent->pObjects[index], vecFinalVelocity );
 }
 
 void CPropEnergyBall::NotifySystemEvent(CBaseEntity *pNotify, notify_system_event_t eventType, const notify_system_event_params_t &params )
@@ -298,7 +298,7 @@ void CPropEnergyBall::NotifySystemEvent(CBaseEntity *pNotify, notify_system_even
 
 //-----------------------------------------------------------------------------
 // Purpose: Send down the time till death to the client code to help indicate when the ball will detonate
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CPropEnergyBall::Think()
 {
@@ -333,7 +333,7 @@ void CPropEnergyBall::Think()
 
 //-----------------------------------------------------------------------------
 // Purpose: Make a sound/effect for the removal of the energy ball, and switch to the cleanup think
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CPropEnergyBall::ExplodeThink( )
 {
@@ -376,8 +376,8 @@ void CPropEnergyBall::StartTouch( CBaseEntity *pOther )
 	if ( pOther->IsPlayer() )
 	{
 		CTakeDamageInfo info( this, GetOwnerEntity(), GetAbsVelocity(), GetAbsOrigin(), 1500.0f, DMG_DISSOLVE );
-	 	pOther->OnTakeDamage( info );
-		
+		pOther->OnTakeDamage( info );
+
 		// Destruct when we hit the player
 		SetContextThink( &CPropCombineBall::ExplodeThink, gpGlobals->curtime, "ExplodeTimerContext" );
 	}
@@ -422,7 +422,7 @@ void CPropEnergyBall::EndTouch( CBaseEntity *pOther )
 	}
 
 	BaseClass::EndTouch( pOther );
-	
+
 }
 
 class CEnergyBallLauncher : public CPointCombineBallLauncher
@@ -447,7 +447,7 @@ private:
 LINK_ENTITY_TO_CLASS( point_energy_ball_launcher, CEnergyBallLauncher );
 
 BEGIN_DATADESC( CEnergyBallLauncher )
-	
+
 	DEFINE_KEYFIELD( m_fBallLifetime, FIELD_FLOAT, "BallLifetime" ),
 	DEFINE_KEYFIELD( m_fMinBallLifeAfterPortal, FIELD_FLOAT, "MinLifeAfterPortal" ),
 
@@ -514,7 +514,7 @@ void CEnergyBallLauncher::SpawnBall()
 		pBallObj->SetDamping( &speed, &rot );
 
 		// HUGE rotational inertia, don't allow the ball to have any spin
-        Vector vInertia( 1e30, 1e30, 1e30 );
+	Vector vInertia( 1e30, 1e30, 1e30 );
 		pBallObj->SetInertia( vInertia );
 
 		// Low mass to let it bounce off of obstructions for certain puzzles.
@@ -528,7 +528,7 @@ void CEnergyBallLauncher::SpawnBall()
 		pBall->m_bIsInfiniteLife = false;
 	}
 	else
-	{	
+	{
 		pBall->m_bIsInfiniteLife = true;
 	}
 
@@ -575,7 +575,7 @@ static void fire_energy_ball_f( void )
 		pBall->SetSpawner( NULL );
 
 		pBall->SetSpeed( 400.0f );
-				
+
 
 		pBall->SetAbsVelocity( vForward * 400.0f );
 

@@ -56,7 +56,7 @@ static void GetExportTimeRange( DmeTime_t *pExportStart, DmeTime_t *pExportEnd, 
 static void AddLogLayerForExport( ExportInfo_t &info, CDmElement *pRoot, const char *pControlName, CDmeChannel *pChannel )
 {
 	CDmeLog *pLog = pChannel->GetLog();
-	if ( !pLog || pLog->GetNumLayers() == 0 ) 
+	if ( !pLog || pLog->GetNumLayers() == 0 )
 		return;
 
 	CDmrElementArray<> animations( pRoot, "animations" );
@@ -104,7 +104,7 @@ static void ExportAnimations( ExportInfo_t &info, CDmElement *pRoot )
 
 			CDmeLog *pValueLog = pValueChannel->GetLog();
 			CDmeLog *pBalanceLog = pBalanceChannel->GetLog();
-			if ( pValueLog && pBalanceLog && pValueLog->GetNumLayers() != 0 && pBalanceLog->GetNumLayers() != 0 ) 
+			if ( pValueLog && pBalanceLog && pValueLog->GetNumLayers() != 0 && pBalanceLog->GetNumLayers() != 0 )
 			{
 				DmeTime_t tValueBias, tBalanceBias;
 				double flValueScale, flBalanceScale;
@@ -134,11 +134,11 @@ static void ExportAnimations( ExportInfo_t &info, CDmElement *pRoot )
 				char pControlName[512];
 				Q_snprintf( pControlName, sizeof(pControlName), "value_%s", pControl->GetName() );
 				pValueLogLayer->SetName( pControlName );
-				animations.AddToTail( pValueLogLayer ); 
+				animations.AddToTail( pValueLogLayer );
 
 				Q_snprintf( pControlName, sizeof(pControlName), "balance_%s", pControl->GetName() );
 				pBalanceLogLayer->SetName( pControlName );
-				animations.AddToTail( pBalanceLogLayer ); 
+				animations.AddToTail( pBalanceLogLayer );
 			}
 		}
 		else
@@ -267,9 +267,7 @@ bool ExportFacialAnimation( const char *pFileName, CDmeFilmClip *pMovie, CDmeFil
 
 	pRoot->SetFileId( DMFILEID_INVALID, TD_DEEP );
 	const char *pEncoding = "keyvalues2_flat";
-	bool bOk = g_pDataModel->SaveToFile( pFileName, NULL, pEncoding, pFileFormat, pRoot ); 
+	bool bOk = g_pDataModel->SaveToFile( pFileName, NULL, pEncoding, pFileFormat, pRoot );
 	DestroyElement( pRoot, TD_DEEP );
 	return bOk;
 }
-
-

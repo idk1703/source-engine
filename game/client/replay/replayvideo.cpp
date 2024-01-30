@@ -28,7 +28,7 @@ static ReplayVideoMode_t s_VideoModes[] =
 
 //-----------------------------------------------------------------------------
 #ifdef USE_WEBM_FOR_REPLAY
-static ReplayCodec_t s_Codecs[] = 
+static ReplayCodec_t s_Codecs[] =
 {
 	{ VideoEncodeCodec::WEBM_CODEC, "#Replay_Codec_WEBM" },
 };
@@ -36,7 +36,7 @@ static int s_nNumCodecs = ARRAYSIZE( s_Codecs );
 
 //-----------------------------------------------------------------------------
 
-static ReplayQualityPreset_t s_QualityPresets[] = 
+static ReplayQualityPreset_t s_QualityPresets[] =
 {
 	{ "#Replay_RenderSetting_Low", VideoEncodeCodec::WEBM_CODEC, 0, false, 0 },
 	{ "#Replay_RenderSetting_Medium", VideoEncodeCodec::WEBM_CODEC, 50, false, 1 },
@@ -47,7 +47,7 @@ static int s_NumQualityPresets = ARRAYSIZE( s_QualityPresets );
 static int s_DefaultQualityPreset = 1;
 
 #else
-static ReplayCodec_t s_Codecs[] = 
+static ReplayCodec_t s_Codecs[] =
 {
 	{ VideoEncodeCodec::MJPEG_A_CODEC, "#Replay_Codec_MJPEGA" },
 	{ VideoEncodeCodec::H264_CODEC, "#Replay_Codec_H264" },
@@ -56,7 +56,7 @@ static int s_nNumCodecs = ARRAYSIZE( s_Codecs );
 
 //-----------------------------------------------------------------------------
 
-static ReplayQualityPreset_t s_QualityPresets[] = 
+static ReplayQualityPreset_t s_QualityPresets[] =
 {
 	{ "#Replay_RenderSetting_Low", VideoEncodeCodec::MJPEG_A_CODEC, 0, false, 0 },
 	{ "#Replay_RenderSetting_Medium", VideoEncodeCodec::MJPEG_A_CODEC, 50, false, 1 },
@@ -131,7 +131,7 @@ int ReplayVideo_FindCodecPresetFromCodec( VideoEncodeCodec_t nCodecId )
 		if ( s_Codecs[ i ].m_nCodecId == nCodecId )
 			return i;
 	}
-	
+
 	AssertMsg( 0, "Codec not found!  This should never happen!" );
 
 	return 0;

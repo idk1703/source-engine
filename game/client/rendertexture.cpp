@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 // Implements local hooks into named renderable textures.
 // See matrendertexture.cpp in material system for list of available RT's
 //
@@ -44,7 +44,7 @@ ITexture *GetPowerOfTwoFrameBufferTexture( void )
 		Assert( !IsErrorTexture( s_pPowerOfTwoFrameBufferTexture ) );
 		AddReleaseFunc();
 	}
-	
+
 	return s_pPowerOfTwoFrameBufferTexture;
 }
 
@@ -76,7 +76,7 @@ ITexture *GetCameraTexture( void )
 		Assert( !IsErrorTexture( s_pCameraTexture ) );
 		AddReleaseFunc();
 	}
-	
+
 	return s_pCameraTexture;
 }
 
@@ -117,7 +117,7 @@ ITexture *GetFullFrameFrameBufferTexture( int textureIndex )
 		Assert( !IsErrorTexture( s_pFullFrameFrameBufferTexture[textureIndex] ) );
 		AddReleaseFunc();
 	}
-	
+
 	return s_pFullFrameFrameBufferTexture[textureIndex];
 }
 
@@ -134,7 +134,7 @@ ITexture *GetWaterReflectionTexture( void )
 		Assert( !IsErrorTexture( s_pWaterReflectionTexture ) );
 		AddReleaseFunc();
 	}
-	
+
 	return s_pWaterReflectionTexture;
 }
 
@@ -150,7 +150,7 @@ ITexture *GetWaterRefractionTexture( void )
 		Assert( !IsErrorTexture( s_pWaterRefractionTexture ) );
 		AddReleaseFunc();
 	}
-	
+
 	return s_pWaterRefractionTexture;
 }
 
@@ -166,7 +166,7 @@ ITexture *GetSmallBufferHDR0( void )
 		Assert( !IsErrorTexture( s_pSmallBufferHDR0 ) );
 		AddReleaseFunc();
 	}
-	
+
 	return s_pSmallBufferHDR0;
 }
 
@@ -182,7 +182,7 @@ ITexture *GetSmallBufferHDR1( void )
 		Assert( !IsErrorTexture( s_pSmallBufferHDR1 ) );
 		AddReleaseFunc();
 	}
-	
+
 	return s_pSmallBufferHDR1;
 }
 
@@ -198,7 +198,7 @@ ITexture *GetSmallBuffer0( void )
 		Assert( !IsErrorTexture( s_pQuarterSizedFB0 ) );
 		AddReleaseFunc();
 	}
-	
+
 	return s_pQuarterSizedFB0;
 }
 
@@ -214,7 +214,7 @@ ITexture *GetSmallBuffer1( void )
 		Assert( !IsErrorTexture( s_pQuarterSizedFB1 ) );
 		AddReleaseFunc();
 	}
-	
+
 	return s_pQuarterSizedFB1;
 }
 

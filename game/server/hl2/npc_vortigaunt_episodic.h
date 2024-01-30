@@ -99,7 +99,7 @@ public:
 
 	void			DeathSound( const CTakeDamageInfo &info );
 	void			PainSound( const CTakeDamageInfo &info );
-	
+
 	virtual void	TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator );
 	virtual void	SpeakSentence( int sentType );
 
@@ -170,9 +170,9 @@ private:
 	};
 
 	//=========================================================
-	// Vortigaunt Tasks 
+	// Vortigaunt Tasks
 	//=========================================================
-	enum 
+	enum
 	{
 		TASK_VORTIGAUNT_HEAL_WARMUP = BaseClass::NEXT_TASK,
 		TASK_VORTIGAUNT_HEAL,
@@ -194,7 +194,7 @@ private:
 		COND_VORTIGAUNT_HEAL_TARGET_TOO_FAR,	// Outside or heal range
 		COND_VORTIGAUNT_HEAL_TARGET_BLOCKED,	// Blocked by an obstruction
 		COND_VORTIGAUNT_HEAL_TARGET_BEHIND_US,	// Not within our "forward" range
-		COND_VORTIGAUNT_HEAL_VALID,				// All conditions satisfied	
+		COND_VORTIGAUNT_HEAL_VALID,				// All conditions satisfied
 		COND_VORTIGAUNT_DISPEL_ANTLIONS,		// Repulse all antlions around us
 	};
 
@@ -215,9 +215,9 @@ private:
 	float			m_fGlowChangeTime;
 	bool			m_bGlowTurningOn;
 	int				m_nCurGlowIndex;
-	
+
 	CHandle<CVortigauntEffectDispel>	m_hHandEffect[2];
-	
+
 	void			StartHandGlow( int beamType, int nHand );
 	void			EndHandGlow( int beamType = VORTIGAUNT_BEAM_ALL );
 	void			MaintainGlows( void );
@@ -230,9 +230,9 @@ private:
 	EHANDLE				m_hHealTarget;			// The person that I'm going to heal.
 	bool				m_bPlayerRequestedHeal;	// This adds some priority to our heal (allows it to happen in combat, etc)
 	float				m_flNextHealTokenTime;
-	
+
 	VortigauntHealState_t	m_eHealState;
-	
+
 	CBaseEntity		*FindHealTarget( void );
 	bool			HealBehaviorAvailable( void );
 	void			SetHealTarget( CBaseEntity *pTarget, bool bPlayerRequested );
@@ -246,16 +246,16 @@ private:
 	bool			m_bArmorRechargeEnabled;
 	bool			m_bForceArmorRecharge;
 	float			m_flDispelTestTime;
-	
+
 	bool			m_bExtractingBugbait;
-	
+
 	bool			IsCarryingNPC( void ) const { return m_bCarryingNPC; }
 	bool			m_bCarryingNPC;
 
 	COutputEvent	m_OnFinishedExtractingBugbait;
 	COutputEvent	m_OnFinishedChargingTarget;
 	COutputEvent	m_OnPlayerUse;
-	
+
 	//Adrian: Let's do it the right way!
 	int				m_iLeftHandAttachment;
 	int				m_iRightHandAttachment;
@@ -276,9 +276,9 @@ public:
 };
 
 //=============================================================================
-// 
-//  Charge Token 
-//	
+//
+//  Charge Token
+//
 //=============================================================================
 
 class CVortigauntChargeToken : public CBaseEntity
@@ -289,7 +289,7 @@ public:
 
 	static CVortigauntChargeToken *CreateChargeToken( const Vector &vecOrigin, CBaseEntity *pOwner, CBaseEntity *pTarget );
 
-	CVortigauntChargeToken( void );	
+	CVortigauntChargeToken( void );
 
 	virtual void	Spawn( void );
 	virtual void	Precache( void );
@@ -314,9 +314,9 @@ private:
 };
 
 //=============================================================================
-// 
+//
 //  Dispel Effect
-//	
+//
 //=============================================================================
 
 class CVortigauntEffectDispel : public CBaseEntity
@@ -327,7 +327,7 @@ public:
 
 	static CVortigauntEffectDispel *CreateEffectDispel( const Vector &vecOrigin, CBaseEntity *pOwner, CBaseEntity *pTarget );
 
-	CVortigauntEffectDispel( void );	
+	CVortigauntEffectDispel( void );
 
 	virtual void	Spawn( void );
 

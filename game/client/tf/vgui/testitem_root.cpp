@@ -52,7 +52,7 @@ void	UpdateItemTestKVs( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTestItemRoot::CTestItemRoot( vgui::Panel *parent ) : vgui::EditablePanel( parent, "TestItemRoot" )
 {
@@ -97,14 +97,14 @@ CTestItemRoot::CTestItemRoot( vgui::Panel *parent ) : vgui::EditablePanel( paren
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTestItemRoot::~CTestItemRoot( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemRoot::SetupComboBoxes( void )
 {
@@ -124,7 +124,7 @@ void CTestItemRoot::SetupComboBoxes( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemRoot::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -172,15 +172,15 @@ void CTestItemRoot::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTestItemRoot::PerformLayout( void ) 
+void CTestItemRoot::PerformLayout( void )
 {
 	BaseClass::PerformLayout();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemRoot::FireGameEvent( IGameEvent *event )
 {
@@ -193,7 +193,7 @@ void CTestItemRoot::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemRoot::Close( void )
 {
@@ -203,7 +203,7 @@ void CTestItemRoot::Close( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemRoot::OnSetTestItemKVs( KeyValues *pKV )
 {
@@ -230,7 +230,7 @@ void CTestItemRoot::OnSetTestItemKVs( KeyValues *pKV )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemRoot::OnButtonChecked( KeyValues *pData )
 {
@@ -297,7 +297,7 @@ void CTestItemRoot::OnButtonChecked( KeyValues *pData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemRoot::CommitSettingsToKV( void )
 {
@@ -309,7 +309,7 @@ void CTestItemRoot::CommitSettingsToKV( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemRoot::OnFileSelected(const char *fullpath)
 {
@@ -328,7 +328,7 @@ void CTestItemRoot::OnFileSelected(const char *fullpath)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemRoot::ExportTestSetup( const char *pFilename )
 {
@@ -338,11 +338,11 @@ void CTestItemRoot::ExportTestSetup( const char *pFilename )
 	CommitSettingsToKV();
 
 	g_pRootItemTestingKV->SaveToFile( g_pFullFileSystem, pFilename );
-	tf_testitem_recent.SetValue( pFilename );	
+	tf_testitem_recent.SetValue( pFilename );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemRoot::ImportTestSetup( KeyValues *pKV )
 {
@@ -370,7 +370,7 @@ void CTestItemRoot::ImportTestSetup( KeyValues *pKV )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemRoot::ImportTestSetup( const char *pFilename )
 {
@@ -396,7 +396,7 @@ void CTestItemRoot::ImportTestSetup( const char *pFilename )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTestItemRoot::FindReplaceableItemsForSelectedClass( CUtlVector<item_definition_index_t> *pItemDefs, bool bWeapons )
 {
@@ -485,7 +485,7 @@ int CTestItemRoot::FindReplaceableItemsForSelectedClass( CUtlVector<item_definit
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemRoot::UpdateTestItems( void )
 {
@@ -546,7 +546,7 @@ void CTestItemRoot::UpdateTestItems( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemRoot::CloseAndTestItem( void )
 {
@@ -573,7 +573,7 @@ void CTestItemRoot::CloseAndTestItem( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemRoot::OnCommand( const char *command )
 {
@@ -676,7 +676,7 @@ void CTestItemRoot::OnCommand( const char *command )
 		}
 		return;
 	}
-	
+
 
 	BaseClass::OnCommand( command );
 }
@@ -685,7 +685,7 @@ void CTestItemRoot::OnCommand( const char *command )
 static vgui::DHANDLE<CTestItemRoot> g_hTestItemRoot;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void OpenTestItemRoot( void )
 {
@@ -717,7 +717,7 @@ ConCommand testitem( "itemtest", OpenTestItemRoot, "Open the item testing panel.
 static vgui::DHANDLE<CTestItemBotControls> g_hTestItemBotControls;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTestItemBotControls::CTestItemBotControls( vgui::Panel *parent ) : vgui::EditablePanel( parent, "TestItemBotControls" )
 {
@@ -752,14 +752,14 @@ CTestItemBotControls::CTestItemBotControls( vgui::Panel *parent ) : vgui::Editab
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTestItemBotControls::~CTestItemBotControls( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemBotControls::SetupComboBoxes( void )
 {
@@ -775,7 +775,7 @@ void CTestItemBotControls::SetupComboBoxes( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemBotControls::FireGameEvent( IGameEvent *event )
 {
@@ -788,7 +788,7 @@ void CTestItemBotControls::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemBotControls::Close( void )
 {
@@ -798,7 +798,7 @@ void CTestItemBotControls::Close( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemBotControls::ImportTestSetup( KeyValues *pKV )
 {
@@ -817,7 +817,7 @@ void CTestItemBotControls::ImportTestSetup( KeyValues *pKV )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemBotControls::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -830,9 +830,9 @@ void CTestItemBotControls::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTestItemBotControls::PerformLayout( void ) 
+void CTestItemBotControls::PerformLayout( void )
 {
 	BaseClass::PerformLayout();
 
@@ -849,7 +849,7 @@ void CTestItemBotControls::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemBotControls::OnCommand( const char *command )
 {
@@ -873,7 +873,7 @@ void CTestItemBotControls::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemBotControls::UpdateBots( void )
 {
@@ -888,7 +888,7 @@ void CTestItemBotControls::UpdateBots( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemBotControls::CommitSettingsToKV( void )
 {
@@ -905,7 +905,7 @@ void CTestItemBotControls::CommitSettingsToKV( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void OpenTestItemBotControls( void )
 {

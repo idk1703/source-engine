@@ -67,7 +67,7 @@ CMapQuadBounds::~CMapQuadBounds(void)
 // Purpose: Before saving, fill in my parent entity's keys with the bounds of
 //			a non-nodraw face from a sibling solid.
 //------------------------------------------------------------------------------
-void CMapQuadBounds::PresaveWorld(void) 
+void CMapQuadBounds::PresaveWorld(void)
 {
 
 	CMapEntity *pMapEntity = dynamic_cast<CMapEntity*>(GetParent());
@@ -115,7 +115,7 @@ void CMapQuadBounds::PresaveWorld(void)
 					m_nError = QUAD_ERR_NONE;
 				}
 			}
-		} 
+		}
 
 		static char buf[64];
 		sprintf( buf, "%g %g %g", (double)m_vLowerLeft[0], (double)m_vLowerLeft[1], (double)m_vLowerLeft[2] );
@@ -174,6 +174,3 @@ CMapClass *CMapQuadBounds::CopyFrom(CMapClass *pObject, bool bUpdateDependencies
 
 	return(this);
 }
-
-
-

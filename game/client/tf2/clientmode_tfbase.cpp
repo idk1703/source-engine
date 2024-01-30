@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -22,7 +22,7 @@ CMinimapPanel *ClientModeTFBase::m_pMinimap = NULL;
 vgui::HScheme g_hVGuiObjectScheme = 0;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ClientModeTFBase::ClientModeTFBase( void )
 {
@@ -32,14 +32,14 @@ ClientModeTFBase::ClientModeTFBase( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ClientModeTFBase::~ClientModeTFBase( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CMinimapPanel
 //-----------------------------------------------------------------------------
 CMinimapPanel *ClientModeTFBase::GetMinimap( void )
@@ -48,7 +48,7 @@ CMinimapPanel *ClientModeTFBase::GetMinimap( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 // FIXME: Remove if this ever becomes true for HL2 (I expect it will)
@@ -85,7 +85,7 @@ void ClientModeTFBase::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ClientModeTFBase::Shutdown()
 {
@@ -94,7 +94,7 @@ void ClientModeTFBase::Shutdown()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ClientModeTFBase::Enable( void )
 {
@@ -120,7 +120,7 @@ void ClientModeTFBase::LevelInit( const char *newmap )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ClientModeTFBase::LevelShutdown( void )
 {
@@ -133,8 +133,8 @@ void ClientModeTFBase::LevelShutdown( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pSetup - 
+// Purpose:
+// Input  : *pSetup -
 //-----------------------------------------------------------------------------
 void ClientModeTFBase::PreRender( CViewSetup *pSetup )
 {
@@ -152,7 +152,7 @@ void ClientModeTFBase::PreRender( CViewSetup *pSetup )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ClientModeTFBase::PostRender( void )
 {
@@ -172,7 +172,7 @@ void ClientModeTFBase::PostRender( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ClientModeTFBase::Initialize( void )
 {
@@ -184,12 +184,12 @@ void ClientModeTFBase::Initialize( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ClientModeTFBase::Update( void )
 {
 	BaseClass::Update();
-	
+
 	MapData().Update();
 }
 
@@ -220,4 +220,3 @@ int	ClientModeTFBase::KeyInput( int down, ButtonCode_t keynum, const char *pszCu
 
 	return BaseClass::KeyInput( down, keynum, pszCurrentBinding );
 }
-

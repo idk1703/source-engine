@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -91,7 +91,7 @@ const uint32 kTradeRequestLifetime = 30.0f;
 class CTradingWaitDialog : public CGenericWaitingDialog
 {
 public:
-	CTradingWaitDialog( const char *pText = "#TF_Trading_Timeout_Text", const wchar_t *pPlayerName = NULL ) 
+	CTradingWaitDialog( const char *pText = "#TF_Trading_Timeout_Text", const wchar_t *pPlayerName = NULL )
 		: CGenericWaitingDialog( NULL )
 		, m_pText( pText )
 		, m_pKeyValues( NULL )
@@ -144,8 +144,8 @@ static void TradeCompleteDialogClosed( bool bConfirmed, void *pContext )
 class CTFTradeRequestNotification : public CEconNotification
 {
 public:
-	CTFTradeRequestNotification( uint64 ulInitiatorSteamID, uint32 unTradeRequestID, const char* pPlayerName ) 
-		: CEconNotification() 
+	CTFTradeRequestNotification( uint64 ulInitiatorSteamID, uint32 unTradeRequestID, const char* pPlayerName )
+		: CEconNotification()
 		, m_unTradeRequestID( unTradeRequestID )
 	{
 		SetSteamID( ulInitiatorSteamID );
@@ -275,14 +275,14 @@ public:
 					// otherwise, test if they are in the current game
 					for( int iPlayerIndex = 1 ; iPlayerIndex <= MAX_PLAYERS; iPlayerIndex++ )
 					{
-						if ( g_PR && g_PR->IsConnected( iPlayerIndex ) ) 
+						if ( g_PR && g_PR->IsConnected( iPlayerIndex ) )
 						{
 							player_info_t pi;
 							if ( !engine->GetPlayerInfo( iPlayerIndex, &pi ) )
 								continue;
 							if ( !pi.friendsID )
 								continue;
-							
+
 							CSteamID steamID( pi.friendsID, 1, GetUniverse(), k_EAccountTypeIndividual );
 							if ( steamID == steamIDOther )
 							{
@@ -311,7 +311,7 @@ public:
 			}
 			break;
 		}
-		
+
 		NotificationQueue_Add( new CTFTradeRequestNotification( msg.Body().m_ulOtherSteamID, msg.Body().m_unTradeRequestID, playerName.Get() ) );
 		return true;
 	}
@@ -337,7 +337,7 @@ CON_COMMAND( cl_trading_test, "Tests the trade ui notification." )
  */
 class CEconNotificationVisitor_RemoveTradeRequest	: public CEconNotificationVisitor
 {
-public: 
+public:
 	CEconNotificationVisitor_RemoveTradeRequest( uint32 unTradeRequestID ) : m_unTradeRequestID( unTradeRequestID ) {}
 	virtual void Visit( CEconNotification &notification )
 	{
@@ -506,7 +506,7 @@ void Trading_RequestTrade( int iPlayerIdx )
 }
 
 void Trading_RequestTrade( const CSteamID &steamID )
-{								
+{
 	sbTestingSelfTrade = false;
 	GCSDK::CGCMsg< MsgGCTrading_InitiateTradeRequest_t > msg( k_EMsgGCTrading_InitiateTradeRequest );
 	msg.Body().m_ulOtherSteamID = steamID.ConvertToUint64();
@@ -548,7 +548,7 @@ const char* UniverseToCommunityURL( EUniverse universe )
 	}
 
 	// Should never get here.
-	return UniverseToCommunityURL( k_EUniversePublic ); 
+	return UniverseToCommunityURL( k_EUniversePublic );
 }
 
 const char* GetCommunityURL()
@@ -574,12 +574,12 @@ void Trading_SendGift( const CSteamID& steamID, const CEconItemView& giftItem )
 	C_CTF_GameStats.Event_Trading( IE_TRADING_ITEM_GIFTED, steamID.ConvertToUint64(), iGiftsGiven );
 #endif
 
-	// Build up the steam URL and send it over. 
+	// Build up the steam URL and send it over.
 	// Should look like this: https://steamcommunity.com/trade/1/sendgift/?appid=&contextid=&assetid=&steamid_target=
 
-	steamapicontext->SteamFriends()->ActivateGameOverlayToWebPage( 
+	steamapicontext->SteamFriends()->ActivateGameOverlayToWebPage(
 		CFmtStrMax( "%s/trade/1/sendgift/?appid=%d&contextid=%d&assetid=%llu&steamid_target=%llu",
-					GetCommunityURL(), 
+					GetCommunityURL(),
 					engine->GetAppID(),
 					2, // k_EEconContextBackpack
 					giftItem.GetItemID(),
@@ -610,7 +610,7 @@ CON_COMMAND( cl_trade, "Trade with a person by player name" )
 
 			if ( FStrEq( pi.name, args[1] ) == false )
 				continue;
-			
+
 			CSteamID steamID( pi.friendsID, 1, GetUniverse(), k_EAccountTypeIndividual );
 			Trading_RequestTrade( steamID );
 			return;

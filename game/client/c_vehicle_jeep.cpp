@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -38,7 +38,7 @@ C_PropJeep::C_PropJeep()
 	m_vecEyeSpeed.Init();
 	m_flViewAngleDeltaTime = 0.0f;
 	m_pHeadlight = NULL;
-	
+
 	ConVarRef r_JeepFOV( "r_JeepFOV" );
 	m_ViewSmoothingData.flFOV = r_JeepFOV.GetFloat();
 }
@@ -80,7 +80,7 @@ void C_PropJeep::Simulate( void )
 		{
 			GetAttachment( iAttachment, vVector, vAngle );
 			AngleVectors( vAngle, &vecForward, &vecRight, &vecUp );
-		
+
 			m_pHeadlight->UpdateLight( vVector, vecForward, vecRight, vecUp, JEEP_HEADLIGHT_DISTANCE );
 		}
 	}
@@ -118,7 +118,7 @@ void C_PropJeep::UpdateViewAngles( C_BasePlayer *pLocalPlayer, CUserCmd *pCmd )
 			Vector vehicleEyeOrigin;
 			QAngle vehicleEyeAngles;
 			GetAttachmentLocal( eyeAttachmentIndex, vehicleEyeOrigin, vehicleEyeAngles );
-			
+
 			QAngle outAngles;
 			InterpolateAngles( pCmd->viewangles, vehicleEyeAngles, outAngles, r_JeepViewBlendToScale.GetFloat() );
 			pCmd->viewangles = outAngles;
@@ -170,7 +170,7 @@ void C_PropJeep::ComputePDControllerCoefficients( float *pCoefficientsOut,
 	pCoefficientsOut[0] = flKs * flScale;
 	pCoefficientsOut[1] = ( flKd + flKs * flDeltaTime ) * flScale;
 }
- 
+
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -233,10 +233,10 @@ void C_PropJeep::DampenForwardMotion( Vector &vecVehicleEyePos, QAngle &vecVehic
 		float flCoefficients[2];
 		ComputePDControllerCoefficients( flCoefficients, r_JeepViewDampenFreq.GetFloat(), r_JeepViewDampenDamp.GetFloat(), flFrameTime );
 		m_vecEyeSpeed += ( ( flCoefficients[0] * vecDeltaPos + flCoefficients[1] * vecDeltaSpeed ) * flFrameTime );
-		
+
 		// Save off data for next frame.
 		m_vecLastEyePos = vecPredEyePos;
-		
+
 		// Move eye forward/backward.
 		Vector vecForwardOffset = vecForward * ( vecForward.Dot( vecDeltaPos ) );
 		vecVehicleEyePos -= vecForwardOffset;
@@ -258,7 +258,7 @@ void C_PropJeep::DampenUpMotion( Vector &vecVehicleEyePos, QAngle &vecVehicleEye
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PropJeep::OnEnteredVehicle( C_BasePlayer *pPlayer )
 {
@@ -273,8 +273,8 @@ void C_PropJeep::OnEnteredVehicle( C_BasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &data - 
+// Purpose:
+// Input  : &data -
 //-----------------------------------------------------------------------------
 void WheelDustCallback( const CEffectData &data )
 {
@@ -288,7 +288,7 @@ void WheelDustCallback( const CEffectData &data )
 
 	//FIXME: Better sampling area
 	offset = data.m_vOrigin + ( data.m_vNormal * data.m_flScale );
-	
+
 	//Find area ambient light color and use it to tint smoke
 	Vector	worldLight = WorldGetLightForPoint( offset, true );
 
@@ -300,10 +300,10 @@ void WheelDustCallback( const CEffectData &data )
 	pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof(SimpleParticle), g_Mat_DustPuff[0], offset );
 
 	if ( pParticle != NULL )
-	{			
+	{
 		pParticle->m_flLifetime		= 0.0f;
 		pParticle->m_flDieTime		= random->RandomFloat( 0.25f, 0.5f );
-		
+
 		pParticle->m_vecVelocity = RandomVector( -1.0f, 1.0f );
 		VectorNormalize( pParticle->m_vecVelocity );
 		pParticle->m_vecVelocity[2] += random->RandomFloat( 16.0f, 32.0f ) * (data.m_flScale*2.0f);

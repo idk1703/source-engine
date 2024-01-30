@@ -138,8 +138,8 @@ void CAbuseReportDlg::PerformLayout()
 	vgui::surface()->GetWorkspaceBounds( x, y, ww, wt );
 	GetSize(wide, tall);
 	SetPos(x + ((ww - wide) / 2), y + ((wt - tall) / 2));
-	
-	// @todo setup 
+
+	// @todo setup
 }
 
 class CCustomTextureImagePanel : public vgui::Panel
@@ -168,14 +168,14 @@ public:
 		vgui::surface()->DrawSetTexture( iTextureHandle );
 		int iWide, iTall;
 		GetSize( iWide, iTall );
-		
+
 		vgui::Vertex_t verts[4];
 		verts[0].Init( Vector2D(     0,	    0 ), Vector2D( 0.0f, 0.0f ) );
 		verts[1].Init( Vector2D( iWide,     0 ), Vector2D( 1.0f, 0.0f ) );
 		verts[2].Init( Vector2D( iWide, iTall ), Vector2D( 1.0f, 1.0f ) );
 		verts[3].Init( Vector2D(     0,	iTall ), Vector2D( 0.0f, 1.0f ) );
 
-		vgui::surface()->DrawTexturedPolygon( 4, verts );	
+		vgui::surface()->DrawTexturedPolygon( 4, verts );
 		vgui::surface()->DrawSetColor(COLOR_WHITE);
 	}
 

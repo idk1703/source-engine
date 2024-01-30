@@ -150,7 +150,7 @@ CON_COMMAND( gameui_activate, "Shows the game UI" )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND( gameui_preventescape, "Escape key doesn't hide game UI" )
 {
@@ -158,7 +158,7 @@ CON_COMMAND( gameui_preventescape, "Escape key doesn't hide game UI" )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND( gameui_allowescapetoshow, "Escape key allowed to show game UI" )
 {
@@ -166,7 +166,7 @@ CON_COMMAND( gameui_allowescapetoshow, "Escape key allowed to show game UI" )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND( gameui_preventescapetoshow, "Escape key doesn't show game UI" )
 {
@@ -174,7 +174,7 @@ CON_COMMAND( gameui_preventescapetoshow, "Escape key doesn't show game UI" )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND( gameui_allowescape, "Escape key allowed to hide game UI" )
 {
@@ -191,7 +191,7 @@ void BaseUI_ProgressEnabled_f()
 static ConCommand progress_enable("progress_enable", &BaseUI_ProgressEnabled_f );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CEnginePanel : public vgui::EditablePanel
 {
@@ -228,7 +228,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CStaticPanel : public vgui::Panel
 {
@@ -246,7 +246,7 @@ public:
 vgui::VPanelHandle g_DrawTreeSelectedPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CFocusOverlayPanel : public vgui::Panel
 {
@@ -297,7 +297,7 @@ public:
 	{
 		return m_GameUIFactory;
 	}
-	
+
 	// handlers for game UI (main menu)
 	virtual void ActivateGameUI();
 	virtual bool HideGameUI();
@@ -463,7 +463,7 @@ class CLoaderProgress : public ILoaderProgress
 {
 public:
 	CLoaderProgress()
-	{ 
+	{
 		// initialize to disabled state
 		m_SnappedProgress = -1;
 	}
@@ -480,7 +480,7 @@ public:
 		{
 			// not enabled
 			return;
-		}	
+		}
 
 		int snappedProgress = progress * 15;
 
@@ -508,7 +508,7 @@ private:
 };
 static CLoaderProgress s_LoaderProgress;
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
@@ -572,7 +572,7 @@ void CEngineVGui::Init()
 	{
 		Error( "Could not load: %s\n", szDllName );
 	}
-	
+
 	// get the initialization func
 	staticGameUIFuncs = (IGameUI *)m_GameUIFactory(GAMEUI_INTERFACE_VERSION, NULL);
 	if (!staticGameUIFuncs )
@@ -647,7 +647,7 @@ void CEngineVGui::Init()
 	//		staticGameUIPanel ( GameUI stuff ) ( zpos == 100 )
 	//		staticDebugSystemPanel ( Engine debug stuff ) zpos == 125 )
 
-	staticPanel = new CStaticPanel( NULL, "staticPanel" );	
+	staticPanel = new CStaticPanel( NULL, "staticPanel" );
 	staticPanel->SetBounds( 0, 0, videomode->GetModeUIWidth(), videomode->GetModeUIHeight() );
 	staticPanel->SetPaintBorderEnabled(false);
 	staticPanel->SetPaintBackgroundEnabled(false);
@@ -808,15 +808,15 @@ void CEngineVGui::Init()
 	if ( IsX360() )
 	{
 		// provide an interface for loader to send progress notifications
-		g_pQueuedLoader->InstallProgress( &s_LoaderProgress ); 
+		g_pQueuedLoader->InstallProgress( &s_LoaderProgress );
 	}
 
 	// show the game UI
 	COM_TimestampedLog( "ActivateGameUI()" );
 	ActivateGameUI();
 
-	if ( staticGameConsole && 
-		!CommandLine()->CheckParm( "-forcestartupmenu" ) && 
+	if ( staticGameConsole &&
+		!CommandLine()->CheckParm( "-forcestartupmenu" ) &&
 		!CommandLine()->CheckParm( "-hideconsole" ) &&
 		( CommandLine()->FindParm( "-toconsole" ) || CommandLine()->FindParm( "-console" ) || CommandLine()->FindParm( "-rpt" ) || CommandLine()->FindParm( "-allowdebug" ) ) )
 	{
@@ -954,7 +954,7 @@ void CEngineVGui::Shutdown()
 
 	// stop the App running
 	vgui::ivgui()->Stop();
-	
+
 	// unload the dll
 	Sys_UnloadModule(m_hStaticGameUIModule);
 	m_hStaticGameUIModule = NULL;
@@ -1021,14 +1021,14 @@ bool CEngineVGui::ShouldPause()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEngineVGui::ConfirmQuit()
 {
 	ActivateGameUI();
 	staticGameUIFuncs->OnConfirmQuit();
 }
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Shows any GameUI related panels
 //-----------------------------------------------------------------------------
@@ -1050,7 +1050,7 @@ void CEngineVGui::ActivateGameUI()
 	ClearIOStates();
 
 	staticGameUIPanel->SetVisible(true);
-	staticGameUIPanel->MoveToFront();	
+	staticGameUIPanel->MoveToFront();
 
 	staticClientDLLPanel->SetVisible(false);
 	staticClientDLLPanel->SetMouseInputEnabled(false);
@@ -1079,7 +1079,7 @@ bool CEngineVGui::HideGameUI()
 	{
 		staticGameUIPanel->SetVisible(false);
 		staticGameUIPanel->SetPaintBackgroundEnabled(false);
-	
+
 		staticClientDLLPanel->SetVisible(true);
 		staticClientDLLPanel->MoveToFront();
 		staticClientDLLPanel->SetMouseInputEnabled(true);
@@ -1095,9 +1095,9 @@ bool CEngineVGui::HideGameUI()
 	{
 		// Tracker 18820:  Pulling up options/console was perma-pausing the background levels, now we
 		//  unpause them when you hit the Esc key even though the UI remains...
-		if ( levelName && 
-			 levelName[0] && 
-			 ( engineClient->GetMaxClients() <= 1 ) && 
+		if ( levelName &&
+			 levelName[0] &&
+			 ( engineClient->GetMaxClients() <= 1 ) &&
 			 engineClient->IsPaused() )
 		{
 			Cbuf_AddText("unpause\n");
@@ -1169,7 +1169,7 @@ void CEngineVGui::ClearConsole()
 //-----------------------------------------------------------------------------
 // Purpose: data accessor
 //-----------------------------------------------------------------------------
-bool CEngineVGui::IsGameUIVisible() 
+bool CEngineVGui::IsGameUIVisible()
 {
 	return staticGameUIPanel && staticGameUIPanel->IsVisible();
 }
@@ -1185,7 +1185,7 @@ struct LoadingProgressDescription_t
 };
 
 LoadingProgressDescription_t g_ListenServerLoadingProgressDescriptions[] =
-{	
+{
 	{ PROGRESS_NONE,						0,		0,		NULL },
 	{ PROGRESS_SPAWNSERVER,					2,		0,		"#LoadingProgress_SpawningServer" },
 	{ PROGRESS_LOADWORLDMODEL,				4,		7,		"#LoadingProgress_LoadMap" },
@@ -1210,7 +1210,7 @@ LoadingProgressDescription_t g_ListenServerLoadingProgressDescriptions[] =
 };
 
 LoadingProgressDescription_t g_RemoteConnectLoadingProgressDescriptions[] =
-{	
+{
 	{ PROGRESS_NONE,						0,		0,		NULL },
 	{ PROGRESS_CHANGELEVEL,					1,		0,		"#LoadingProgress_Changelevel" },
 	{ PROGRESS_BEGINCONNECT,				5,		0,		"#LoadingProgress_BeginConnect" },
@@ -1242,7 +1242,7 @@ LoadingProgressDescription_t &GetProgressDescription(int eProgress)
 		// find the closest match
 		if (g_pLoadingProgressDescriptions[i].eProgress >= eProgress)
 			return g_pLoadingProgressDescriptions[i];
-	
+
 		++i;
 	}
 
@@ -1268,7 +1268,7 @@ void CEngineVGui::OnLevelLoadingStarted()
 			pSyncReportConVar->SetValue( 0 );
 		}
 	}
-	
+
 	if ( IsX360() )
 	{
 		// TCR requirement, always!!!
@@ -1357,7 +1357,7 @@ void CEngineVGui::OnLevelLoadingFinished()
 
 		int nPerc = (int)(100 * (flFirstLoadProgressTime / flTotalTime));
 		int nTickPerc = (int)(100 * ((float)m_LoadingProgress[i].eProgress / (float)PROGRESS_HIGHESTITEM));
-		
+
 		// interpolated percentage is in between the real times and the most ticks
 		int nInterpPerc = (nPerc + nTickPerc) / 2;
 		Msg("\t%d\t%.3f\t\ttime: %d%%\t\tinterp: %d%%\t\trepeat: %d\n", m_LoadingProgress[i].eProgress, flTimeTaken, nPerc, nInterpPerc, nRepeatCount);
@@ -1533,7 +1533,7 @@ void CEngineVGui::UpdateButtonState( const InputEvent_t &event )
 	m_pInputInternal->UpdateButtonState( event );
 }
 
-		
+
 //-----------------------------------------------------------------------------
 // Purpose: Returns 1 if the key event is handled, 0 if the engine should handle it
 //-----------------------------------------------------------------------------
@@ -1567,7 +1567,7 @@ bool CEngineVGui::Key_Event( const InputEvent_t &event )
 	if ( IsPC() && code == KEY_BACKQUOTE && ( IsAltKeyDown() || IsCtrlKeyDown() ) )
 		return true;
 #endif
-			   
+
 	// ESCAPE toggles game ui
 	if ( bDown && ( code == KEY_ESCAPE || code == KEY_XBUTTON_START || code == STEAMCONTROLLER_START) && !g_ClientDLL->HandleUiToggle() )
 	{
@@ -1666,7 +1666,7 @@ void CEngineVGui::Simulate()
 
 //	if ( !vgui::ivgui()->IsRunning() )
 //		Cbuf_AddText( "quit\n" );
-	
+
 	toolframework->VGui_PostSimulateAllTools();
 }
 
@@ -1735,7 +1735,7 @@ void CEngineVGui::Paint( PaintMode_t mode )
 		staticClientDLLPanel->SetVisible( saveVisible );
 		staticClientDLLToolsPanel->SetVisible( saveToolsVisible );
 	}
-	
+
 	if ( mode & PAINT_INGAMEPANELS )
 	{
 		bool bSaveVisible = vgui::ipanel()->IsVisible( pVPanel );
@@ -1924,7 +1924,7 @@ void VGui_PlaySound( const char *pFileName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VGui_ActivateMouse()
 {
@@ -1937,10 +1937,10 @@ void VGui_ActivateMouse()
 		g_ClientDLL->IN_DeactivateMouse ();
 		return;
 	}
-		
-	/* 
+
+	/*
 	//
-	// MIKE AND ALFRED: these panels should expose whether they want mouse input or not and 
+	// MIKE AND ALFRED: these panels should expose whether they want mouse input or not and
 	// CalculateMouseVisible will take them into account.
 	//
 	// If showing game ui, make sure nothing else is hooking it
@@ -1950,7 +1950,7 @@ void VGui_ActivateMouse()
 		return;
 	}
 	*/
-			
+
 	if ( vgui::surface()->IsCursorLocked() && !g_bTextMode )
 	{
 		g_ClientDLL->IN_ActivateMouse ();
@@ -2013,7 +2013,7 @@ bool CFocusOverlayPanel::DrawTitleSafeOverlay( void )
 	y1 = backBufferHeight - insetY;
 
 	vgui::surface()->DrawSetColor( 255, 255, 0, 255 );
-	vgui::surface()->DrawOutlinedRect( x, y, x1, y1 );	
+	vgui::surface()->DrawOutlinedRect( x, y, x1, y1 );
 
 	return true;
 }
@@ -2082,7 +2082,7 @@ bool CFocusOverlayPanel::DrawFocusPanelList( void )
 		int x, y, x1, y1;
 		vgui::ipanel()->GetClipRect( vpanel, x, y, x1, y1 );
 
-		if ( (x1 - x) == videomode->GetModeUIWidth() && 
+		if ( (x1 - x) == videomode->GetModeUIWidth() &&
 			 (y1 - y) == videomode->GetModeUIHeight() )
 		{
 			x += fullscreeninset;
@@ -2160,7 +2160,7 @@ CON_COMMAND( vgui_togglepanel, "show/hide vgui panel by name." )
 		fg = atoi( args[ 3 ] ) ? true : false;
 		bg = atoi( args[ 4 ] ) ? true : false;
 	}
-		
+
 	char const *panelname = args[ 1 ];
 	if ( !panelname || !panelname[ 0 ] )
 		return;
@@ -2225,7 +2225,7 @@ void CEngineVGui::DrawMouseFocus( void )
 
 	if ( !vgui_drawfocus.GetBool() )
 		return;
-	
+
 	staticFocusOverlayPanel->MoveToFront();
 
 	bool include_hidden = vgui_drawfocus.GetInt() == 2;
@@ -2260,7 +2260,7 @@ void CEngineVGui::DrawMouseFocus( void )
 	// Now draw them
 	con_nprint_t np;
 	np.time_to_live = 1.0f;
-	
+
 	int c = g_FocusPanelList.Size();
 
 	int slot = 0;
@@ -2304,7 +2304,7 @@ void CEngineVGui::ShowNewGameDialog( int chapter )
 	staticGameUIFuncs->ShowNewGameDialog( chapter );
 }
 
-void CEngineVGui::OnCreditsFinished( void ) 
+void CEngineVGui::OnCreditsFinished( void )
 {
 	staticGameUIFuncs->OnCreditsFinished();
 }
@@ -2351,7 +2351,7 @@ ConCommand DumpPanels("dump_panels", DumpPanels_f, "Dump Panel Tree" );
 
 #if defined( _X360 )
 //-----------------------------------------------------------------------------
-// Purpose: For testing message dialogs 
+// Purpose: For testing message dialogs
 //-----------------------------------------------------------------------------
 #include "vgui_controls/MessageDialog.h"
 CON_COMMAND( dlg_normal, "Display a sample message dialog" )

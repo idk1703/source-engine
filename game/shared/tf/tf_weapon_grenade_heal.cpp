@@ -21,7 +21,7 @@
 #endif
 
 #define GRENADE_HEAL_TIMER	3.0f //Seconds
-#define	GRENADE_HEAL_LEADIN	2.0f 
+#define	GRENADE_HEAL_LEADIN	2.0f
 
 //=============================================================================
 //
@@ -55,10 +55,10 @@ ConVar tf_grenade_heal_amount( "tf_grenade_heal_amount", "100", FCVAR_CHEAT, "Am
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj *CTFGrenadeHeal::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, 
+CTFWeaponBaseGrenadeProj *CTFGrenadeHeal::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel,
 													 AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
 {
-	return CTFGrenadeHealProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse, 
+	return CTFGrenadeHealProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse,
 		pPlayer, GetTFWpnData(), flTime );
 }
 
@@ -79,14 +79,14 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGrenadeHealProjectile* CTFGrenadeHealProjectile::Create( const Vector &position, const QAngle &angles, 
-														 const Vector &velocity, const AngularImpulse &angVelocity, 
+CTFGrenadeHealProjectile* CTFGrenadeHealProjectile::Create( const Vector &position, const QAngle &angles,
+														 const Vector &velocity, const AngularImpulse &angVelocity,
 														 CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags )
 {
 	CTFGrenadeHealProjectile *pGrenade = static_cast<CTFGrenadeHealProjectile*>( CTFWeaponBaseGrenadeProj::Create( "tf_weapon_grenade_heal_projectile", position, angles, velocity, angVelocity, pOwner, weaponInfo, timer, iFlags ) );
 	if ( pGrenade )
 	{
-		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );	
+		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );
 	}
 
 	return pGrenade;

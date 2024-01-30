@@ -22,7 +22,7 @@ class CTFGrapplingHook : public CTFRocketLauncher
 {
 public:
 	DECLARE_CLASS( CTFGrapplingHook, CTFRocketLauncher );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	// Server specific.

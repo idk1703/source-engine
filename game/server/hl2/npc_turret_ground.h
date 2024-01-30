@@ -39,7 +39,7 @@ public:
 	}
 
 
-	// Sensing 
+	// Sensing
 	void GatherConditions();
 	Vector EyePosition();
 	bool FVisible( CBaseEntity *pEntity, int traceMask, CBaseEntity **ppBlocker );
@@ -78,7 +78,7 @@ protected:
 	//-----------------------------------------------------
 	// Conditions, Schedules, Tasks
 	//-----------------------------------------------------
-	enum 
+	enum
 	{
 		SCHED_GROUND_TURRET_IDLE = BaseClass::NEXT_SCHEDULE,
 		SCHED_GROUND_TURRET_ATTACK,

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -40,7 +40,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEFizz::C_TEFizz( void )
 {
@@ -51,15 +51,15 @@ C_TEFizz::C_TEFizz( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEFizz::~C_TEFizz( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEFizz::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -88,5 +88,3 @@ IMPLEMENT_CLIENTCLASS_EVENT_DT(C_TEFizz, DT_TEFizz, CTEFizz)
 	RecvPropInt( RECVINFO(m_nDensity)),
 	RecvPropInt( RECVINFO(m_nCurrent)),
 END_RECV_TABLE()
-
-

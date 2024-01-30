@@ -55,7 +55,7 @@ static void Helper_LaunchPreviewWithPreviewDataBlock( CEconItemPreviewDataBlock 
 	// Create an econ item view
 	CEconItem econItem;
 	econItem.DeserializeFromProtoBufItem( protoData.econitem() );
-	
+
 	CEconItemView itemView;
 	itemView.Init( econItem.GetDefinitionIndex(), econItem.GetQuality(), econItem.GetItemLevel(), econItem.GetAccountID() );
 	itemView.SetNonSOEconItem( &econItem );
@@ -225,7 +225,7 @@ void CTFItemInspectionPanel::PerformLayout()
 
 		// Force the description to update right now, or else it might be caught up
 		// in the queue of 50 panels in the backpack which want to load their crap first
-		m_pItemNamePanel->UpdateDescription();	
+		m_pItemNamePanel->UpdateDescription();
 	}
 
 	BaseClass::PerformLayout();
@@ -297,15 +297,15 @@ void CTFItemInspectionPanel::SetItem( CEconItemView *pItem )
 	m_pTeamColorNavPanel->UpdateButtonSelectionStates( 0 );
 }
 //-----------------------------------------------------------------------------
-void CTFItemInspectionPanel::SetSpecialAttributesOnly( bool bSpecialOnly ) 
-{ 
+void CTFItemInspectionPanel::SetSpecialAttributesOnly( bool bSpecialOnly )
+{
 	if ( m_pItemNamePanel )
 	{
 		if ( bSpecialOnly )
 		{
 			m_pItemNamePanel->SetNameOnly( false );
 		}
-		m_pItemNamePanel->SetSpecialAttributesOnly( bSpecialOnly ); 
+		m_pItemNamePanel->SetSpecialAttributesOnly( bSpecialOnly );
 	}
 }
 //-----------------------------------------------------------------------------
@@ -336,7 +336,7 @@ void CTFItemInspectionPanel::SetItemCopy( CEconItemView *pItem )
 	if ( pItem )
 	{
 		m_pItemViewData = new CEconItemView( *pItem );
-		m_pSOEconItemData = new CEconItem( *pItem->GetSOCData() ); 
+		m_pSOEconItemData = new CEconItem( *pItem->GetSOCData() );
 		m_pItemViewData->SetNonSOEconItem( m_pSOEconItemData );
 		// always use high res for inspect
 		m_pItemViewData->SetWeaponSkinUseHighRes( true );

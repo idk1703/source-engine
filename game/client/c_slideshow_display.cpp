@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -335,7 +335,7 @@ void C_SlideshowDisplay::BuildSlideShowImagesList( void )
 		// Add material index to this list
 		m_SlideMaterialLists[ iList ]->iSlideMaterials.AddToTail( iMatIndex );
 		m_SlideMaterialLists[ iList ]->iSlideIndex.AddToTail( iSlideIndex );
-		
+
 		if ( IsX360() )
 		{
 			// Seek to end of first line

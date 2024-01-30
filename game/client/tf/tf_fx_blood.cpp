@@ -47,7 +47,7 @@ void TFBloodSprayCallback( Vector vecOrigin, Vector vecNormal, ClientEntityHandl
 		bPyroVision = true;
 	}
 #endif
-	 
+
 	if ( !bUnderwater && TFGameRules() && TFGameRules()->IsBirthday() && RandomFloat(0,1) < 0.2 )
 	{
 		DispatchParticleEffect( "bday_blood", vecOrigin, vecAngles, pPlayer );
@@ -60,7 +60,7 @@ void TFBloodSprayCallback( Vector vecOrigin, Vector vecNormal, ClientEntityHandl
 	{
 		DispatchParticleEffect( bUnderwater ? "lowV_water_blood_impact_red_01" : "lowV_blood_impact_red_01", vecOrigin, vecAngles, pPlayer );
 	}
-	else 
+	else
 	{
 		DispatchParticleEffect( bUnderwater ? "water_blood_impact_red_01" : "blood_impact_red_01", vecOrigin, vecAngles, pPlayer );
 	}
@@ -123,7 +123,7 @@ void TFBloodSprayCallback( Vector vecOrigin, Vector vecNormal, ClientEntityHandl
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_TETFBlood : public C_BaseTempEntity
 {
@@ -143,7 +143,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TETFBlood::C_TETFBlood( void )
 {
@@ -153,7 +153,7 @@ C_TETFBlood::C_TETFBlood( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TETFBlood::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -175,6 +175,3 @@ IMPLEMENT_CLIENTCLASS_EVENT_DT(C_TETFBlood, DT_TETFBlood, CTETFBlood)
 	RecvPropVector( RECVINFO(m_vecNormal)),
 	RecvPropInt( "entindex", 0, SIZEOF_IGNORE, 0, RecvProxy_BloodEntIndex ),
 END_RECV_TABLE()
-
-
-

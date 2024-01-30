@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -81,7 +81,7 @@ CMultiplayerAdvancedDialog::~CMultiplayerAdvancedDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiplayerAdvancedDialog::Activate()
 {
@@ -91,7 +91,7 @@ void CMultiplayerAdvancedDialog::Activate()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiplayerAdvancedDialog::OnClose()
 {
@@ -100,8 +100,8 @@ void CMultiplayerAdvancedDialog::OnClose()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *command - 
+// Purpose:
+// Input  : *command -
 //-----------------------------------------------------------------------------
 void CMultiplayerAdvancedDialog::OnCommand( const char *command )
 {
@@ -130,7 +130,7 @@ void CMultiplayerAdvancedDialog::OnKeyCodeTyped(KeyCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiplayerAdvancedDialog::GatherCurrentValues()
 {
@@ -190,7 +190,7 @@ void CMultiplayerAdvancedDialog::GatherCurrentValues()
 				pCombo = (ComboBox *)pList->pControl;
 				// pCombo->GetText( strValue, sizeof( strValue ) );
 				int activeItem = pCombo->GetActiveItem();
-				
+
 				pItem = pObj->pListItems;
 	//			int n = (int)pObj->fdefValue;
 
@@ -231,7 +231,7 @@ void CMultiplayerAdvancedDialog::GatherCurrentValues()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiplayerAdvancedDialog::CreateControls()
 {
@@ -288,7 +288,7 @@ void CMultiplayerAdvancedDialog::CreateControls()
 		case O_BOOL:
 			pBox = new CheckButton( pCtrl, "DescCheckButton", pObj->prompt );
 			pBox->SetSelected( pObj->fdefValue != 0.0f ? true : false );
-			
+
 			pCtrl->pControl = (Panel *)pBox;
 			break;
 		case O_STRING:
@@ -383,7 +383,7 @@ void CMultiplayerAdvancedDialog::CreateControls()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiplayerAdvancedDialog::DestroyControls()
 {
@@ -404,9 +404,9 @@ void CMultiplayerAdvancedDialog::DestroyControls()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CMultiplayerAdvancedDialog::SaveValues() 
+void CMultiplayerAdvancedDialog::SaveValues()
 {
 	// Get the values from the controls:
 	GatherCurrentValues();
@@ -428,4 +428,3 @@ void CMultiplayerAdvancedDialog::SaveValues()
 		}
 	}
 }
-

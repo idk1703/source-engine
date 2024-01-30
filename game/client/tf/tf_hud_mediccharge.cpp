@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -29,7 +29,7 @@ using namespace vgui;
 extern ConVar weapon_medigun_resist_num_chunks;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudMedicChargeMeter : public CHudElement, public EditablePanel
 {
@@ -68,8 +68,8 @@ struct ResistIcons_t
 	const char* m_pzsBlue;
 };
 
-static ResistIcons_t g_ResistIcons[MEDIGUN_NUM_RESISTS] = 
-{	
+static ResistIcons_t g_ResistIcons[MEDIGUN_NUM_RESISTS] =
+{
 	{ "../HUD/defense_buff_bullet_blue",	"../HUD/defense_buff_bullet_red"  },
 	{ "../HUD/defense_buff_explosion_blue",	"../HUD/defense_buff_explosion_red" },
 	{ "../HUD/defense_buff_fire_blue",		"../HUD/defense_buff_fire_red" },
@@ -77,7 +77,7 @@ static ResistIcons_t g_ResistIcons[MEDIGUN_NUM_RESISTS] =
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudMedicChargeMeter::CHudMedicChargeMeter( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudMedicCharge" )
 {
@@ -111,7 +111,7 @@ CHudMedicChargeMeter::CHudMedicChargeMeter( const char *pElementName ) : CHudEle
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMedicChargeMeter::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -134,7 +134,7 @@ void CHudMedicChargeMeter::ApplySchemeSettings( IScheme *pScheme )
 	}
 
 	m_pResistPanel->SetVisible( false );
-	
+
 	// Figure out which controls to show
 	UpdateKnownChargeType( true );
 
@@ -142,7 +142,7 @@ void CHudMedicChargeMeter::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudMedicChargeMeter::ShouldDraw( void )
 {
@@ -160,7 +160,7 @@ bool CHudMedicChargeMeter::ShouldDraw( void )
 		return false;
 	}
 
-	if ( pWpn->GetWeaponID() != TF_WEAPON_MEDIGUN && pWpn->GetWeaponID() != TF_WEAPON_BONESAW && 
+	if ( pWpn->GetWeaponID() != TF_WEAPON_MEDIGUN && pWpn->GetWeaponID() != TF_WEAPON_BONESAW &&
 		 !( pWpn->GetWeaponID() == TF_WEAPON_SYRINGEGUN_MEDIC && pWpn->UberChargeAmmoPerShot() > 0.0f ) )
 	{
 		return false;
@@ -170,7 +170,7 @@ bool CHudMedicChargeMeter::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMedicChargeMeter::OnTick( void )
 {
@@ -187,7 +187,7 @@ void CHudMedicChargeMeter::OnTick( void )
 	if ( !pWpn )
 		return;
 
-	if ( pWpn->GetWeaponID() == TF_WEAPON_BONESAW || 
+	if ( pWpn->GetWeaponID() == TF_WEAPON_BONESAW ||
 		 ( pWpn->GetWeaponID() == TF_WEAPON_SYRINGEGUN_MEDIC && pWpn->UberChargeAmmoPerShot() > 0.0f ) )
 	{
 		pWpn = pPlayer->Weapon_OwnsThisID( TF_WEAPON_MEDIGUN );
@@ -276,7 +276,7 @@ void CHudMedicChargeMeter::OnTick( void )
 			}
 		}
 
-	}	
+	}
 
 	m_flLastChargeValue = flCharge;
 }

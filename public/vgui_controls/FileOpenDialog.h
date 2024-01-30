@@ -132,7 +132,7 @@ private:
 
 	vgui::ComboBox 		*m_pFullPathEdit;
 	vgui::ListPanel		*m_pFileList;
-	
+
 	FileCompletionEdit 	*m_pFileNameEdit;
 
 	vgui::ComboBox 		*m_pFileTypeCombo;

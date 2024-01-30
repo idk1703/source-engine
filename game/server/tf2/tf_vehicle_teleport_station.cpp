@@ -43,12 +43,12 @@ CUtlVector<CVehicleTeleportStation*> CVehicleTeleportStation::s_DeployedTeleport
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CVehicleTeleportStation::CVehicleTeleportStation()
 {
 	g_AllTeleportStations.AddToTail( this );
-	
+
 	//FIXME: we should be able to use clientside animation on this vehicle, but prediction is messing it
 	//up right now.
 	//UseClientSideAnimation();
@@ -63,12 +63,12 @@ CVehicleTeleportStation::~CVehicleTeleportStation()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleTeleportStation::Spawn()
 {
 	SetModel( TELEPORT_STATION_MODEL );
-	
+
 	// This size is used for placement only...
 	UTIL_SetSize( this, TELEPORT_STATION_MINS, TELEPORT_STATION_MAXS );
 	m_takedamage = DAMAGE_YES;
@@ -82,7 +82,7 @@ void CVehicleTeleportStation::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleTeleportStation::Precache()
 {
@@ -91,12 +91,12 @@ void CVehicleTeleportStation::Precache()
 	PrecacheVGuiScreen( "screen_vehicle_bay" );
 
 	PrecacheModel( "sprites/redglow1.vmt" );
-	
+
 	BaseClass::Precache();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleTeleportStation::UpdateOnRemove( void )
 {
@@ -115,7 +115,7 @@ void CVehicleTeleportStation::GetControlPanelInfo( int nPanelIndex, const char *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleTeleportStation::GetControlPanelClassName( int nPanelIndex, const char *&pPanelName )
 {
@@ -246,7 +246,7 @@ void CVehicleTeleportStation::OnFinishedUnDeploy( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleTeleportStation::RemoveCornerSprites( void )
 {
@@ -304,7 +304,7 @@ bool CVehicleTeleportStation::ValidDeployPosition( void )
 	}
 
 	Vector vecDelta = (m_vecTeleporterMaxs - m_vecTeleporterMins) * 0.5;
-	Vector vecEnd = (m_vecTeleporterMaxs + m_vecTeleporterMins) * 0.5; 
+	Vector vecEnd = (m_vecTeleporterMaxs + m_vecTeleporterMins) * 0.5;
 	Vector vecSrc = vecEnd + Vector(0,0,TELEPORT_STATION_ZONE_HEIGHT * 0.5);
 
 	// Make sure it's clear
@@ -348,7 +348,7 @@ bool CVehicleTeleportStation::ValidDeployPosition( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleTeleportStation::DoTeleport( void )
 {
@@ -377,7 +377,7 @@ void CVehicleTeleportStation::DoTeleport( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleTeleportStation::PostTeleportThink( void )
 {
@@ -386,7 +386,7 @@ void CVehicleTeleportStation::PostTeleportThink( void )
 	{
 		flTime = g_hCurrentAct->GetMCVTimer();
 	}
-	
+
 	// Start the corner sprites up
 	for ( int i = 0; i < 4; i++ )
 	{
@@ -405,10 +405,9 @@ CVehicleTeleportStation* CVehicleTeleportStation::GetFirstDeployedMCV( int iTeam
 	for ( int i=0; i < s_DeployedTeleportStations.Count(); i++ )
 	{
 		CVehicleTeleportStation *pStation = s_DeployedTeleportStations[i];
-		
+
 		if ( pStation->GetTeamNumber() == iTeam )
 			return pStation;
 	}
 	return NULL;
 }
-

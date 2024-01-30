@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -42,11 +42,11 @@ void CBaseGrenadeContact::Spawn( void )
 	QAngle angles;
 	VectorAngles(GetAbsVelocity(), angles);
 	SetLocalAngles( angles );
-	
+
 	// make NPCs afaid of it while in the air
 	SetThink( &CBaseGrenadeContact::DangerSoundThink );
 	SetNextThink( gpGlobals->curtime );
-	
+
 	// Tumble in air
 	QAngle vecAngVelocity( random->RandomFloat ( -100, -500 ), 0, 0 );
 	SetLocalAngularVelocity( vecAngVelocity );

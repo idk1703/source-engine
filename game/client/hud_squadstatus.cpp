@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -52,13 +52,13 @@ private:
 	CPanelAnimationVar( Color, m_SquadIconColor, "SquadIconColor", "255 220 0 160" );
 	CPanelAnimationVar( Color, m_LastMemberColor, "LastMemberColor", "255 220 0 0" );
 	CPanelAnimationVar( Color, m_SquadTextColor, "SquadTextColor", "255 220 0 160" );
-	
+
 	int m_iSquadMembers;
 	int m_iSquadMedics;
 	bool m_bSquadMembersFollowing;
 	bool m_bSquadMemberAdded;
 	bool m_bSquadMemberJustDied;
-};	
+};
 
 
 DECLARE_HUDELEMENT( CHudSquadStatus );
@@ -78,7 +78,7 @@ CHudSquadStatus::CHudSquadStatus( const char *pElementName ) : CHudElement( pEle
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudSquadStatus::Init( void )
 {
@@ -92,7 +92,7 @@ void CHudSquadStatus::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudSquadStatus::Reset( void )
 {
@@ -101,7 +101,7 @@ void CHudSquadStatus::Reset( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Save CPU cycles by letting the HUD system early cull
-// costly traversal.  Called per frame, return true if thinking and 
+// costly traversal.  Called per frame, return true if thinking and
 // painting need to occur.
 //-----------------------------------------------------------------------------
 bool CHudSquadStatus::ShouldDraw( void )
@@ -113,11 +113,11 @@ bool CHudSquadStatus::ShouldDraw( void )
 		return false;
 
 	bNeedsDraw = ( pPlayer->m_HL2Local.m_iSquadMemberCount > 0 ||
-					( pPlayer->m_HL2Local.m_iSquadMemberCount != m_iSquadMembers ) || 
+					( pPlayer->m_HL2Local.m_iSquadMemberCount != m_iSquadMembers ) ||
 					( pPlayer->m_HL2Local.m_fSquadInFollowMode != m_bSquadMembersFollowing ) ||
 					( m_iSquadMembers > 0 ) ||
 					( m_LastMemberColor[3] > 0 ) );
-		
+
 	return ( bNeedsDraw && CHudElement::ShouldDraw() );
 }
 
@@ -157,7 +157,7 @@ void CHudSquadStatus::OnThink( void )
 		m_LastMemberColor = m_SquadIconColor;
 		m_LastMemberColor[3] = 0;
 		m_bSquadMemberAdded = true;
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "SquadMemberAdded" ); 
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "SquadMemberAdded" );
 	}
 	else if ( squadMembers < m_iSquadMembers )
 	{
@@ -167,12 +167,12 @@ void CHudSquadStatus::OnThink( void )
 		m_bSquadMemberAdded = false;
 		if (m_bSquadMemberJustDied)
 		{
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "SquadMemberDied" ); 
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "SquadMemberDied" );
 			m_bSquadMemberJustDied = false;
 		}
 		else
 		{
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "SquadMemberLeft" ); 
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "SquadMemberLeft" );
 		}
 	}
 
@@ -275,5 +275,3 @@ void CHudSquadStatus::Paint()
 		surface()->DrawPrintText(text, wcslen(text));
 	}
 }
-
-

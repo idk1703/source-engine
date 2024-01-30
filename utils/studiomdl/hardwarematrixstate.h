@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -9,7 +9,7 @@
 #define HARDWAREMATRIXSTATE_H
 #pragma once
 
-// This emulates the hardware matrix palette and keeps up with 
+// This emulates the hardware matrix palette and keeps up with
 // matrix usage, LRU's matrices, etc.
 class CHardwareMatrixState
 {
@@ -17,7 +17,7 @@ public:
 	CHardwareMatrixState();
 
 	void Init( int numHardwareMatrices );
-	
+
 	// return false if there is no slot for this matrix.
 	bool AllocateMatrix( int globalMatrixID );
 
@@ -27,7 +27,7 @@ public:
 
 	// return true if a matrix is allocate.
 	bool IsMatrixAllocated( int globalMatrixID ) const;
-	
+
 	// flush usage flags - signifies that none of the matrices are being used in the current strip
 	// do this when starting a new strip.
 	void SetAllUnused();

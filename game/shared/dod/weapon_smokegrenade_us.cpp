@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -28,7 +28,7 @@ public:
 
 	virtual void EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flLifeTime = GRENADE_FUSE_LENGTH )
 	{
-        CDODSmokeGrenadeUS::Create( vecSrc, vecAngles, vecVel, angImpulse, pPlayer );
+	CDODSmokeGrenadeUS::Create( vecSrc, vecAngles, vecVel, angImpulse, pPlayer );
 	}
 
 #endif

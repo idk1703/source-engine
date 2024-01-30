@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -44,8 +44,8 @@ static objectparams_t SBallVPhysicsObjectParams()
 }
 
 //-----------------------------------------------------------------------------
-// CBallPlayerToucher exists because we need the ball to touch both players and 
-// triggers. If the ball has FSOLID_TRIGGER, it will touch players but not 
+// CBallPlayerToucher exists because we need the ball to touch both players and
+// triggers. If the ball has FSOLID_TRIGGER, it will touch players but not
 // triggers. And if it doesn't have that, it will touch triggers but not players.
 // So this is a hack (there's probably a right way to do this) so the ball can
 // just be solid and touch triggers, and this will touch players.
@@ -56,10 +56,10 @@ public:
 	CBallPlayerToucher() : m_pBall( 0 ) {}
 
 	//-----------------------------------------------------------------------------
-	virtual void Spawn() OVERRIDE 
+	virtual void Spawn() OVERRIDE
 	{
 		// NOTE: this used to create its own vphysics sphere, but it turns out that
-		// the engine totally ignores it. 
+		// the engine totally ignores it.
 		SetCollisionGroup( COLLISION_GROUP_PROJECTILE );
 		SetModelIndex( m_pBall->GetModelIndex() );
 		SetMoveType( MOVETYPE_NONE ); // DIFFERENT
@@ -90,7 +90,7 @@ private:
 	friend class CPasstimeBall;
 	CPasstimeBall *m_pBall;
 
-	void OnTouch( CBaseEntity *pOther ) 
+	void OnTouch( CBaseEntity *pOther )
 	{
 		m_pBall->OnTouch( pOther );
 	}
@@ -148,20 +148,20 @@ void CPasstimeBall::Precache()
 }
 
 //-----------------------------------------------------------------------------
-CTFPlayer *CPasstimeBall::GetThrower() const 
-{ 
-	return m_hThrower.Get(); 
+CTFPlayer *CPasstimeBall::GetThrower() const
+{
+	return m_hThrower.Get();
 }
 
 //-----------------------------------------------------------------------------
-void CPasstimeBall::SetThrower( CTFPlayer *pPlayer ) 
-{ 
-	m_hThrower = pPlayer; 
+void CPasstimeBall::SetThrower( CTFPlayer *pPlayer )
+{
+	m_hThrower = pPlayer;
 	if ( !pPlayer )
 	{
 		ChangeTeam( TEAM_UNASSIGNED );
 	}
-	else 
+	else
 	{
 		ChangeTeam( pPlayer->GetTeamNumber() );
 	}
@@ -169,8 +169,8 @@ void CPasstimeBall::SetThrower( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-unsigned int CPasstimeBall::PhysicsSolidMaskForEntity() const 
-{ 
+unsigned int CPasstimeBall::PhysicsSolidMaskForEntity() const
+{
 	return MASK_PLAYERSOLID; // must include CONTENT_PLAYERCLIP
 }
 
@@ -178,9 +178,9 @@ unsigned int CPasstimeBall::PhysicsSolidMaskForEntity() const
 int CPasstimeBall::GetCollisionCount() const { return m_iCollisionCount; }
 
 //-----------------------------------------------------------------------------
-int CPasstimeBall::GetCarryDuration() const 
+int CPasstimeBall::GetCarryDuration() const
 {
-	return ( (m_flBeginCarryTime > 0) && (m_flBeginCarryTime < gpGlobals->curtime) ) 
+	return ( (m_flBeginCarryTime > 0) && (m_flBeginCarryTime < gpGlobals->curtime) )
 		? (gpGlobals->curtime - m_flBeginCarryTime)
 		: 0;
 }
@@ -189,7 +189,7 @@ int CPasstimeBall::GetCarryDuration() const
 //-----------------------------------------------------------------------------
 static const char *GetTrailEffectForTeam( int iTeam )
 {
-	switch ( iTeam ) 
+	switch ( iTeam )
 	{
 	case TF_TEAM_RED: return "passtime/passtime_balltrail_red.vmt";
 	case TF_TEAM_BLUE: return "passtime/passtime_balltrail_blu.vmt";
@@ -267,7 +267,7 @@ void CPasstimeBall::ChangeTeam( int iTeam )
 	if ( iTeam == TEAM_UNASSIGNED )
 	{
 		// NOTE: don't call SetThrower here, it'll be recursive.
-		m_hThrower = 0; 
+		m_hThrower = 0;
 	}
 }
 
@@ -280,7 +280,7 @@ bool CPasstimeBall::CreateModelCollider()
 	tmpSolid.params.pGameData = static_cast<void *>( this );
 
 	auto *pPhysObj = VPhysicsInitNormal( SOLID_VPHYSICS, 0, false, &tmpSolid );
-	if ( !pPhysObj ) 
+	if ( !pPhysObj )
 	{
 		return false;
 	}
@@ -295,7 +295,7 @@ bool CPasstimeBall::CreateModelCollider()
 //-----------------------------------------------------------------------------
 void CPasstimeBall::CreateSphereCollider()
 {
-	// NOTE: calling VPhysicsInitNormal(SOLID_BBOX) doesn't work right. 
+	// NOTE: calling VPhysicsInitNormal(SOLID_BBOX) doesn't work right.
 	// Not calling SetSolid after also doesn't work right.
 	// In order for CreateSphereObject to work and not crash, you must do
 	// VPhysicsInitNormal( SOLID_NONE followed by SetSolid(whatever)
@@ -324,7 +324,7 @@ void CPasstimeBall::CreateSphereCollider()
 void CPasstimeBall::Spawn()
 {
 	// not sure why this has to come first, but iirc it does.
-	SetCollisionGroup( COLLISION_GROUP_NONE ); 
+	SetCollisionGroup( COLLISION_GROUP_NONE );
 
 	// === CBaseProp::Spawn
 	const char *pszModelName = (char*) STRING( GetModelName() );
@@ -352,8 +352,8 @@ void CPasstimeBall::Spawn()
 	// === CBreakableProp::Spawn
 	m_flFadeScale = 1;
 	m_iHealth = 0;
-	m_takedamage = tf_passtime_ball_takedamage.GetBool() 
-		? DAMAGE_EVENTS_ONLY 
+	m_takedamage = tf_passtime_ball_takedamage.GetBool()
+		? DAMAGE_EVENTS_ONLY
 		: DAMAGE_NO;
 	m_iMaxHealth = 1;
 
@@ -377,7 +377,7 @@ void CPasstimeBall::Spawn()
 	m_flBeginCarryTime = -1;
 	ResetTrail();
 	ChangeTeam( TEAM_UNASSIGNED );
-	
+
 	if ( TFGameRules()->IsPasstimeMode() )
 	{
 		// TODO the ball used to be functional in non-wasabi maps, but I haven't maintained it
@@ -393,7 +393,7 @@ void CPasstimeBall::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-void CPasstimeBall::SetIdleRespawnTime() 
+void CPasstimeBall::SetIdleRespawnTime()
 {
 	auto *pTimer = TFGameRules()->GetActiveRoundTimer();
 	if ( !pTimer ) return;
@@ -415,7 +415,7 @@ bool CPasstimeBall::ShouldCollide( int iCollisionGroup, int iContentsMask ) cons
 {
 	// note: returning false for COLLISION_GROUP_PLAYER_MOVEMENT means the ball won't
 	// stop player movement. the only real visible effect when this function doesn't
-	// return false for COLLISION_GROUP_PLAYER_MOVEMENT is that the ball is unable 
+	// return false for COLLISION_GROUP_PLAYER_MOVEMENT is that the ball is unable
 	// to impart physics forces on itself when a player blocks it, since the player
 	// will set velocity to zero due to being "stuck" on the ball, even though the
 	// ball won't actually prevent the player from moving through it.
@@ -425,7 +425,7 @@ bool CPasstimeBall::ShouldCollide( int iCollisionGroup, int iContentsMask ) cons
 //-----------------------------------------------------------------------------
 void CPasstimeBall::ResetTrail()
 {
-	// ideally this would just drop all of the existing trail points instead of 
+	// ideally this would just drop all of the existing trail points instead of
 	// re-creating all the entities, but I couldn't find a clean way to do it in
 	// a reasonable amount of time.
 	HideTrail();
@@ -450,7 +450,7 @@ void CPasstimeBall::ResetTrail()
 void CPasstimeBall::HideTrail()
 {
 	// ideally this would just hide the existing trails instead of deleting
-	// them all, but I couldn't find a clean way to do it in a reasonable 
+	// them all, but I couldn't find a clean way to do it in a reasonable
 	// amount of time.
 	if ( !m_bTrailActive )
 	{
@@ -482,11 +482,11 @@ CPasstimeBall::~CPasstimeBall()
 
 //-----------------------------------------------------------------------------
 // OnBecomeNotCarried: common boilerplate between SetStateFree/OutOfPlay
-void CPasstimeBall::OnBecomeNotCarried() 
+void CPasstimeBall::OnBecomeNotCarried()
 {
 	CTFPlayer *pCarrier = m_hCarrier;
 
-	// 
+	//
 	// Carrier management and events
 	//
 	if ( pCarrier && pCarrier->m_Shared.HasPasstimeBall() )
@@ -509,7 +509,7 @@ void CPasstimeBall::OnBecomeNotCarried()
 		m_flBeginCarryTime = -1;
 	}
 
-	// 
+	//
 	// Reset various tracking and counters
 	//
 	m_iCollisionCount = 0;
@@ -551,7 +551,7 @@ void CPasstimeBall::SetStateFree()
 	VPhysicsGetObject()->EnableGravity( true );
 	VPhysicsGetObject()->Wake();
 
-	// 
+	//
 	// Trail management
 	//
 	if ( !m_bTrailActive )
@@ -566,7 +566,7 @@ void CPasstimeBall::SetStateFree()
 	if ( !m_pHumLoop )
 	{
 		CReliableBroadcastRecipientFilter filter;
-		m_pHumLoop = CSoundEnvelopeController::GetController().SoundCreate( 
+		m_pHumLoop = CSoundEnvelopeController::GetController().SoundCreate(
 			filter, entindex(), "Passtime.BallIdle" );
 		CSoundEnvelopeController::GetController().Play( m_pHumLoop, 1, PITCH_NORM );
 	}
@@ -595,8 +595,8 @@ void CPasstimeBall::SetStateOutOfPlay()
 
 	// this is a hack to make sure the carrier stats are captured because
 	// ChangeTeam updates some stats and may not be called at end of round.
-	ChangeTeam( TEAM_UNASSIGNED ); 
-	
+	ChangeTeam( TEAM_UNASSIGNED );
+
 	//
 	// Change state
 	//
@@ -618,7 +618,7 @@ void CPasstimeBall::SetStateOutOfPlay()
 	TFGameRules()->SetObjectiveObserverTarget( 0 );
 	VPhysicsGetObject()->EnableGravity( false );
 
-	// 
+	//
 	// Trail management
 	//
 	HideTrail();
@@ -662,7 +662,7 @@ void CPasstimeBall::SetStateCarried( CTFPlayer *pCarrier )
 		return;
 	}
 
-	// 
+	//
 	// Carrier management and events
 	// FIXME move all of the event handling for ball events into CTFPasstimeLogic
 	//
@@ -685,7 +685,7 @@ void CPasstimeBall::SetStateCarried( CTFPlayer *pCarrier )
 	}
 	pCarrier->TeamFortress_SetSpeed();
 
-	// 
+	//
 	// Adjust things common to all states
 	//
 	DisableIdleRespawnTime();
@@ -711,7 +711,7 @@ void CPasstimeBall::SetStateCarried( CTFPlayer *pCarrier )
 	m_bTouchedSinceSpawn = true;
 	SetLocalOrigin( Vector( 0,0,0 ) ); // because SetParent(pCarrier)
 
-	// 
+	//
 	// Sounds
 	//
 	EmitSound( "Passtime.BallGet" );
@@ -745,7 +745,7 @@ void CPasstimeBall::SetStateCarried( CTFPlayer *pCarrier )
 
 //-----------------------------------------------------------------------------
 void CPasstimeBall::MoveToSpawner( const Vector &pos )
-{ 
+{
 	MoveTo( pos, Vector( 0,0,0 ) );
 	m_bTouchedSinceSpawn = false;
 	m_hPrevCarrier = 0;
@@ -783,7 +783,7 @@ void CPasstimeBall::MoveTo( const Vector &pos, const Vector &vecVel )
 	Vector fwd = vecVel.Normalized();
 	AngularImpulse angular( fwd.x * 0, fwd.y * 0, fwd.z * 1 ); // TODO
 	pPhys->SetVelocity( &vecVel, &angular );
-		
+
 	PhysicsTouchTriggers();
 
 	m_vecPrevOrigin = pos; // used for tracking pass distance
@@ -836,7 +836,7 @@ void CPasstimeBall::DefaultThink()
 		HudNotification_t ejectReason;
 		if ( !g_pPasstimeLogic->BCanPlayerPickUpBall( pCarrier, &ejectReason ) )
 		{
-			if ( ejectReason && TFGameRules() ) 
+			if ( ejectReason && TFGameRules() )
 			{
 				CSingleUserReliableRecipientFilter filter( pCarrier );
 				TFGameRules()->SendHudNotification( filter, ejectReason );
@@ -862,8 +862,8 @@ void CPasstimeBall::DefaultThink()
 		IPhysicsObject *pPhysObj = VPhysicsGetObject();
 		Vector vecVel;
 		pPhysObj->GetVelocity( &vecVel, 0 );
-		SetAbsVelocity( vecVel ); 	
-		// this is a hack to work around some issues where GetAbsVelocity was just 
+		SetAbsVelocity( vecVel );
+		// this is a hack to work around some issues where GetAbsVelocity was just
 		// returning some huge value. this seems to fix it, so something is probably fubar in physics :/
 		// hopefully just related to using the sphere collider that nothing else uses.
 
@@ -882,7 +882,7 @@ void CPasstimeBall::UpdateLagCompensationHistory()
 
 	Assert( m_lagCompensationHistory.Count() < 1000 ); // insanity check
 	m_flLagCompensationTeleportDistanceSqr = 64*64;
-	
+
 	// remove tail records that are too old
 	int tailIndex = m_lagCompensationHistory.Tail();
 	int flDeadtime = gpGlobals->curtime - sv_maxunlag.GetFloat();
@@ -893,7 +893,7 @@ void CPasstimeBall::UpdateLagCompensationHistory()
 		// if tail is within limits, stop
 		if ( tail.flSimulationTime >= flDeadtime )
 			break;
-			
+
 		// remove tail, get new tail
 		m_lagCompensationHistory.Remove( tailIndex );
 		tailIndex = m_lagCompensationHistory.Tail();
@@ -929,7 +929,7 @@ void CPasstimeBall::StartLagCompensation( CBasePlayer *player, CUserCmd *cmd )
 		// correct is the amout of time we have to correct game time
 		float correct = 0.0f;
 
-		INetChannelInfo *nci = engine->GetPlayerNetInfo( player->entindex() ); 
+		INetChannelInfo *nci = engine->GetPlayerNetInfo( player->entindex() );
 
 		if ( nci )
 		{
@@ -942,11 +942,11 @@ void CPasstimeBall::StartLagCompensation( CBasePlayer *player, CUserCmd *cmd )
 
 		// add view interpolation latency see C_BaseEntity::GetInterpolationAmount()
 		correct += TICKS_TO_TIME( lerpTicks );
-	
+
 		// check bouns [0,sv_maxunlag]
 		correct = clamp( correct, 0.0f, sv_maxunlag.GetFloat() );
 
-		// correct tick send by player 
+		// correct tick send by player
 		targettick = cmd->tick_count - lerpTicks;
 
 		// calc difference between tick send by player and our latency based tick
@@ -982,7 +982,7 @@ void CPasstimeBall::StartLagCompensation( CBasePlayer *player, CUserCmd *cmd )
 			if ( delta.Length2DSqr() > m_flLagCompensationTeleportDistanceSqr )
 			{
 				// lost track, too much difference
-				return; 
+				return;
 			}
 
 			// did we find a context smaller than target time ?
@@ -1003,7 +1003,7 @@ void CPasstimeBall::StartLagCompensation( CBasePlayer *player, CUserCmd *cmd )
 
 
 		float frac = 0.0f;
-		if ( prevRecord && 
+		if ( prevRecord &&
 			 (record->flSimulationTime < flTargetTime) &&
 			 (record->flSimulationTime < prevRecord->flSimulationTime) )
 		{
@@ -1014,7 +1014,7 @@ void CPasstimeBall::StartLagCompensation( CBasePlayer *player, CUserCmd *cmd )
 			Assert( flTargetTime < prevRecord->flSimulationTime );
 
 			// calc fraction between both records
-			frac = ( flTargetTime - record->flSimulationTime ) / 
+			frac = ( flTargetTime - record->flSimulationTime ) /
 				( prevRecord->flSimulationTime - record->flSimulationTime );
 
 			Assert( frac > 0 && frac < 1 ); // should never extrapolate
@@ -1062,7 +1062,7 @@ bool CPasstimeBall::BIgnorePlayer( CTFPlayer *pPlayer )
 
 	if ( !m_bLeftOwner && (pPlayer == GetThrower()) )
 	{
-		const float flDist = CalcDistanceToAABB( 
+		const float flDist = CalcDistanceToAABB(
 			pPlayer->WorldAlignMins(),
 			pPlayer->WorldAlignMaxs(),
 			GetAbsOrigin() - pPlayer->GetAbsOrigin() );
@@ -1126,13 +1126,13 @@ void CPasstimeBall::TouchPlayer( CTFPlayer *pPlayer )
 	{
 		// can't pick it up and not on the same team = block
 
-		// NOTE: BlockDamage has to come after BlockReflect in order for 
+		// NOTE: BlockDamage has to come after BlockReflect in order for
 		// the reflection to work right. BlockDamage might apply a force
 		// to the player, which will taint the reflection vector.
 		// NOTE: because some of these functions might change the ball's
 		// velocity, get it once and then pass it to each.
 		IPhysicsObject* pPhysObj = VPhysicsGetObject();
-		Vector vecBallVel; 
+		Vector vecBallVel;
 		pPhysObj->GetVelocity( &vecBallVel, 0 );
 
 		BlockReflect( pPlayer, pPlayer->GetAbsOrigin(), vecBallVel );
@@ -1143,7 +1143,7 @@ void CPasstimeBall::TouchPlayer( CTFPlayer *pPlayer )
 			// ball was in flight
 			PasstimeGameEvents::BallBlocked( GetThrower()->entindex(), pPlayer->entindex() ).Fire();
 		}
-			
+
 		CPasstimeBallController::DisableOn( this );
 		m_iCollisionCount++;
 		SetThrower( 0 );
@@ -1194,7 +1194,7 @@ void CPasstimeBall::BlockDamage( CTFPlayer *pPlayer, const Vector& vecBallVel )
 {
 	const float flSpeed = vecBallVel.Length();
 	const float flDamageSpeed = 1000;
-	
+
 	pPlayer->m_Shared.OnSpyTouchedByEnemy();
 
 	if ( flSpeed >= flDamageSpeed )
@@ -1252,16 +1252,16 @@ void CPasstimeBall::OnTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-void CPasstimeBall::VPhysicsCollision( int index, gamevcollisionevent_t *pEvent ) 
+void CPasstimeBall::VPhysicsCollision( int index, gamevcollisionevent_t *pEvent )
 {
 	BaseClass::VPhysicsCollision( index, pEvent );
-	
+
 	if ( !TFGameRules()->IsPasstimeMode() )
 	{
 		return;
 	}
 
-	if ( g_pPasstimeLogic && (g_pPasstimeLogic->GetBall() == this) 
+	if ( g_pPasstimeLogic && (g_pPasstimeLogic->GetBall() == this)
 		&& g_pPasstimeLogic->OnBallCollision( this, index, pEvent )
 		&& IsGroundCollision( index, pEvent ) )
 	{
@@ -1277,7 +1277,7 @@ void CPasstimeBall::OnCollision()
 	m_flAirtimeDistance = 0;
 	m_flLastCollisionTime = gpGlobals->curtime;
 	++m_iCollisionCount;
-	if ( m_iCollisionCount == 1 ) 
+	if ( m_iCollisionCount == 1 )
 	{
 		SetThrower( 0 );
 		if ( m_bTouchedSinceSpawn )
@@ -1289,7 +1289,7 @@ void CPasstimeBall::OnCollision()
 }
 
 //-----------------------------------------------------------------------------
-int	CPasstimeBall::OnTakeDamage( const CTakeDamageInfo &info ) 
+int	CPasstimeBall::OnTakeDamage( const CTakeDamageInfo &info )
 {
 	if ( !tf_passtime_ball_takedamage.GetBool() )
 	{
@@ -1328,8 +1328,8 @@ void CPasstimeBall::Deflected(CBaseEntity *pDeflectedBy, Vector& vecDir )
 		return;
 	}
 
-	// WeaponBase::DeflectEntity will redirect the velocity with the same flSpeed, 
-	// which means that a stationary ball won't move since it has 0 flSpeed. this 
+	// WeaponBase::DeflectEntity will redirect the velocity with the same flSpeed,
+	// which means that a stationary ball won't move since it has 0 flSpeed. this
 	// will just make sure the velocity is what it should be
 
 	// vecDir points from the point under the player's crosshair to the ball's origin.
@@ -1351,7 +1351,7 @@ void CPasstimeBall::Deflected(CBaseEntity *pDeflectedBy, Vector& vecDir )
 }
 
 //-----------------------------------------------------------------------------
-//static 
+//static
 CPasstimeBall *CPasstimeBall::Create( Vector vecPosition, QAngle angles )
 {
 	// mostly copied from CreatePhysicsToy
@@ -1365,17 +1365,17 @@ CPasstimeBall *CPasstimeBall::Create( Vector vecPosition, QAngle angles )
 
 	studiohdr_t *pStudioHdr = mdlcache->GetStudioHdr( hMdl );
 	Assert( pStudioHdr );
-	if( !pStudioHdr ) 
+	if( !pStudioHdr )
 	{
 		return 0;
 	}
 
-	// i don't know what this "allow precache" stuff does, 
+	// i don't know what this "allow precache" stuff does,
 	// i copied it from other code and forgot to note where it was
 	bool oldAllowPrecache = CBaseEntity::IsPrecacheAllowed();
-	CBaseEntity::SetAllowPrecache( true ); 
+	CBaseEntity::SetAllowPrecache( true );
 
-	CPasstimeBall *pBall = dynamic_cast< CPasstimeBall* >( CreateEntityByName( "passtime_ball" ) ); 
+	CPasstimeBall *pBall = dynamic_cast< CPasstimeBall* >( CreateEntityByName( "passtime_ball" ) );
 
 	char pszBuf[512];
 	Q_snprintf( pszBuf, sizeof( pszBuf ), "%.10f %.10f %.10f", vecPosition.x, vecPosition.y, vecPosition.z );
@@ -1394,15 +1394,15 @@ CPasstimeBall *CPasstimeBall::Create( Vector vecPosition, QAngle angles )
 }
 
 //-----------------------------------------------------------------------------
-void CPasstimeBall::SetHomingTarget( CTFPlayer *pPlayer ) 
-{ 
-	m_hHomingTarget = pPlayer; 
+void CPasstimeBall::SetHomingTarget( CTFPlayer *pPlayer )
+{
+	m_hHomingTarget = pPlayer;
 	if ( m_hHomingTarget )
 	{
 		if ( !m_pBeepLoop )
 		{
 			CReliableBroadcastRecipientFilter filter;
-			m_pBeepLoop = CSoundEnvelopeController::GetController().SoundCreate( 
+			m_pBeepLoop = CSoundEnvelopeController::GetController().SoundCreate(
 				filter, entindex(), "Passtime.BallHoming" );
 			CSoundEnvelopeController::GetController().Play( m_pBeepLoop, 1, PITCH_NORM );
 		}
@@ -1424,14 +1424,13 @@ CTFPlayer *CPasstimeBall::GetHomingTarget() const
 }
 
 //-----------------------------------------------------------------------------
-float CPasstimeBall::GetAirtimeSec() const 
+float CPasstimeBall::GetAirtimeSec() const
 {
 	return MAX( 0, gpGlobals->curtime - m_flLastCollisionTime );
 }
 
 //-----------------------------------------------------------------------------
-float CPasstimeBall::GetAirtimeDistance() const 
+float CPasstimeBall::GetAirtimeDistance() const
 {
 	return m_flAirtimeDistance;
 }
-

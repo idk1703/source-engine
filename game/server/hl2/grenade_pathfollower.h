@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		Projectile shot by wasteland scanner 
+// Purpose:		Projectile shot by wasteland scanner
 //
 // $Workfile:     $
 // $Date:         $

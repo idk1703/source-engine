@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -16,7 +16,7 @@ class CAchievementEp1KillAntlionsWithCar : public CBaseAchievement
 {
 protected:
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_WITH_GAME );
 		SetInflictorFilter( "prop_physics" );
@@ -24,7 +24,7 @@ protected:
 		SetGameDirFilter( "episodic" );
 		SetGoal( 15 );
 	}
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// any model that passed previous filters and begins with "props_vehicles" is a physics car
 		const char *pszName = GetModelName( pInflictor );
@@ -41,7 +41,7 @@ class CAchievementEp1KillEnemiesWithSniperAlyx : public CBaseAchievement
 {
 protected:
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_KILL_ENEMY_EVENTS | ACH_SAVE_WITH_GAME );
 		SetInflictorEntityNameFilter( "sniper_alyx" );
@@ -55,7 +55,7 @@ class CAchievementEp1BeatCitizenEscortNoCitizenDeaths : public CFailableAchievem
 {
 protected:
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_MAP_EVENTS | ACH_LISTEN_KILL_EVENTS | ACH_SAVE_WITH_GAME );
 		SetGameDirFilter( "episodic" );
@@ -63,7 +63,7 @@ protected:
 		SetVictimFilter( "npc_citizen" );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// if any citizens die while this achievement is active, achievement fails
 		SetFailed();
@@ -83,7 +83,7 @@ class CAchievementEp1BeatGameOneBullet : public CFailableAchievement
 	DECLARE_CLASS( CAchievementEp1BeatGameOneBullet, CFailableAchievement );
 protected:
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_MAP_EVENTS | ACH_SAVE_WITH_GAME );
 		SetGameDirFilter( "episodic" );

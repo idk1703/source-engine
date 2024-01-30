@@ -32,7 +32,7 @@
 
 
 
-// rename table from the great rename 
+// rename table from the great rename
 static const char *s_RemapOperatorNameTable[]={
 	"alpha_fade", "Alpha Fade and Decay",
 	"alpha_fade_in_random", "Alpha Fade In Random",
@@ -119,7 +119,7 @@ CParticleSystemMgr *g_pParticleSystemMgr = &s_ParticleSystemMgr;
 
 
 int g_nParticle_Multiplier = 1;
-	
+
 
 //-----------------------------------------------------------------------------
 // Particle dictionary
@@ -137,7 +137,7 @@ public:
 	CParticleSystemDefinition* FindParticleSystem( ParticleSystemHandle_t h );
 	CParticleSystemDefinition* FindParticleSystem( const char *pName );
 	CParticleSystemDefinition* FindParticleSystem( const DmObjectId_t &id );
-	
+
 	CParticleSystemDefinition* operator[]( int idx )
 	{
 		return m_ParticleNameMap[ idx ];
@@ -184,7 +184,7 @@ void CParticleSystemDictionary::DestroyExistingElement( CDmxElement *pElement )
 		}
 		return;
 	}
-	
+
 	// Use id based lookup instead
 	int nCount = m_ParticleIdMap.Count();
 	const DmObjectId_t& id = pElement->GetId();
@@ -279,7 +279,7 @@ CParticleSystemDefinition* CParticleSystemDictionary::FindParticleSystem( const 
 // For editing, create a faked particle operator definition for children
 // The only thing used in here is GetUnpackStructure.
 //-----------------------------------------------------------------------------
-BEGIN_DMXELEMENT_UNPACK( ParticleChildrenInfo_t ) 
+BEGIN_DMXELEMENT_UNPACK( ParticleChildrenInfo_t )
 	DMXELEMENT_UNPACK_FIELD( "delay", "0.0", float, m_flDelay )
 END_DMXELEMENT_UNPACK( ParticleChildrenInfo_t, s_ChildrenInfoUnpack )
 
@@ -311,7 +311,7 @@ static CChildOperatorDefinition s_ChildOperatorDefinition;
 //-----------------------------------------------------------------------------
 // Unpack structure for CParticleSystemDefinition
 //-----------------------------------------------------------------------------
-BEGIN_DMXELEMENT_UNPACK( CParticleSystemDefinition ) 
+BEGIN_DMXELEMENT_UNPACK( CParticleSystemDefinition )
 	DMXELEMENT_UNPACK_FIELD( "max_particles", "1000", int, m_nMaxParticles )
 	DMXELEMENT_UNPACK_FIELD( "initial_particles", "0", int, m_nInitialParticles )
 	DMXELEMENT_UNPACK_FIELD_STRING_USERDATA( "material", "vgui/white", m_pszMaterialName, "vmtPicker" )
@@ -410,7 +410,7 @@ void CParticleSystemDefinition::Uncache()
 		return;
 
 	m_bIsPrecached = false;
-	m_Material.Shutdown();	
+	m_Material.Shutdown();
 //	m_Material.Init( "debug/particleerror", TEXTURE_GROUP_OTHER, true );
 
 	int nChildCount = m_Children.Count();
@@ -498,7 +498,7 @@ void CParticleSystemDefinition::ParseOperators(
 				m_nPerParticleUpdatedAttributeMask |= pNewRef->GetWrittenAttributes();
 				m_nInitialAttributeReadMask |= pNewRef->GetReadInitialAttributes();
 				break;
-				
+
 			case FUNCTION_RENDERER:
 				m_nPerParticleUpdatedAttributeMask |= pNewRef->GetWrittenAttributes();
 				m_nInitialAttributeReadMask |= pNewRef->GetReadInitialAttributes();
@@ -621,7 +621,7 @@ bool CParticleSystemDefinition::UsesFullFrameBufferTexture()
 //-----------------------------------------------------------------------------
 // Helper methods to write particle systems
 //-----------------------------------------------------------------------------
-void CParticleSystemDefinition::WriteOperators( CDmxElement *pElement, 
+void CParticleSystemDefinition::WriteOperators( CDmxElement *pElement,
 	const char *pOpKeyName, const CUtlVector<CParticleOperatorInstance *> &inList )
 {
 	CDmxElementModifyScope modify( pElement );
@@ -781,7 +781,7 @@ void CParticleOperatorInstance::InitNewParticles( CParticleCollection *pParticle
 		InitNewParticlesScalar( pParticles, nFirstParticle, nParticleCount, nAttributeWriteMask, pContext );
 		return;
 	}
-	
+
 	int nHead = nFirstParticle & 3;
 	if ( nHead )
 	{
@@ -947,7 +947,7 @@ CParticleCollection::CParticleCollection( )
 	m_pParent = NULL;
 	m_LocalLighting = Color(255, 255, 255, 255);
 	m_LocalLightingCP = -1;
-	
+
 }
 
 CParticleCollection::~CParticleCollection( void )
@@ -1035,16 +1035,16 @@ void CParticleCollection::Init( CParticleSystemDefinition *pDef, float flDelay, 
 	m_fl4CurTime = ReplicateX4( m_flCurTime );
 	if ( m_pDef->m_nContextDataSize )
 	{
-		m_pOperatorContextData = reinterpret_cast<uint8 *> 
+		m_pOperatorContextData = reinterpret_cast<uint8 *>
 			( MemAlloc_AllocAligned( m_pDef->m_nContextDataSize, 16 ) );
 	}
-	
+
 	m_flNextSleepTime = g_pParticleSystemMgr->GetLastSimulationTime() + pDef->m_flNoDrawTimeToGoToSleep;
 
 	// now, init context data
 	CUtlVector<CParticleOperatorInstance *> *olists[] =
 	{
-		&(m_pDef->m_Operators), &(m_pDef->m_Renderers), 
+		&(m_pDef->m_Operators), &(m_pDef->m_Renderers),
 		&(m_pDef->m_Initializers), &(m_pDef->m_Emitters),
 		&(m_pDef->m_ForceGenerators),
 		&(m_pDef->m_Constraints),
@@ -1177,7 +1177,7 @@ void CParticleCollection::UnlinkFromDefList( )
 		m_pDef->m_pFirstCollection = m_pNextDef;
 		Assert( !m_pPrevDef );
 	}
-	else 
+	else
 	{
 		Assert( m_pPrevDef );
 		m_pPrevDef->m_pNextDef = m_pNextDef;
@@ -1201,12 +1201,12 @@ void CParticleCollection::UnlinkFromDefList( )
 }
 
 //-----------------------------------------------------------------------------
-// Determine if this particle has moved since the last time it was simulated, 
+// Determine if this particle has moved since the last time it was simulated,
 // which will let us know if the bbox needs to be updated.
 //-----------------------------------------------------------------------------
 bool CParticleCollection::HasMoved() const
 {
-	// It's weird that this is possible, but it apparently is (see the many other functions that 
+	// It's weird that this is possible, but it apparently is (see the many other functions that
 	// check).
 	if ( !m_pDef )
 		return false;
@@ -1243,10 +1243,10 @@ void CParticleCollection::InitStorage( CParticleSystemDefinition *pDef )
 	Assert( pDef->m_nMaxParticles < 65536 );
 
 	m_nMaxAllowedParticles = min ( MAX_PARTICLES_IN_A_SYSTEM, pDef->m_nMaxParticles );
-	m_nAllocatedParticles = 4 + 4 * ( ( m_nMaxAllowedParticles + 3 ) / 4 );						    
+	m_nAllocatedParticles = 4 + 4 * ( ( m_nMaxAllowedParticles + 3 ) / 4 );
 
 	int nConstantMemorySize = 3 * 4 * MAX_PARTICLE_ATTRIBUTES * sizeof(float) + 16;
-						 
+
 	// Align allocation for constant attributes to 16 byte boundaries
 	m_pConstantMemory =	new unsigned char[nConstantMemorySize];
 	m_pConstantAttributes = (float*)( (size_t)( m_pConstantMemory + 15 ) & ~0xF );
@@ -1260,12 +1260,12 @@ void CParticleCollection::InitStorage( CParticleSystemDefinition *pDef )
 
 	// Only worry about initial attributes that are per-particle *and* are updated at a later time
 	// If they aren't updated at a later time, then we can just point the initial + current pointers at the same memory
-	m_nPerParticleReadInitialAttributeMask = pDef->m_nInitialAttributeReadMask & 
+	m_nPerParticleReadInitialAttributeMask = pDef->m_nInitialAttributeReadMask &
 		( pDef->m_nPerParticleInitializedAttributeMask & pDef->m_nPerParticleUpdatedAttributeMask );
 
 	// This is the mask of attributes which are initialized per-particle, but never updated
 	// *and* where operators want to read initial particle state
-	int nPerParticleReadConstantAttributeMask = pDef->m_nInitialAttributeReadMask & 
+	int nPerParticleReadConstantAttributeMask = pDef->m_nInitialAttributeReadMask &
 		( pDef->m_nPerParticleInitializedAttributeMask & ( ~pDef->m_nPerParticleUpdatedAttributeMask ) );
 
 	int sz = 0;
@@ -1275,7 +1275,7 @@ void CParticleCollection::InitStorage( CParticleSystemDefinition *pDef )
 	{
 		int nAttrSize = ( ( 1 << bit ) & ATTRIBUTES_WHICH_ARE_VEC3S_MASK ) ? 3 : 1;
 		if ( nPerParticleAttributeMask & ( 1 << bit ) )
-		{ 
+		{
 			sz += nAttrSize;
 		}
 		if ( m_nPerParticleReadInitialAttributeMask & ( 1 << bit ) )
@@ -1284,7 +1284,7 @@ void CParticleCollection::InitStorage( CParticleSystemDefinition *pDef )
 		}
 	}
 
-	// Gotta allocate a couple extra floats to account for 
+	// Gotta allocate a couple extra floats to account for
 	int nAllocationSize = m_nAllocatedParticles * sz * sizeof(float) + 16;
 	m_pParticleMemory = new unsigned char[ nAllocationSize ];
 	memset( m_pParticleMemory, 0, nAllocationSize );
@@ -1307,7 +1307,7 @@ void CParticleCollection::InitStorage( CParticleSystemDefinition *pDef )
 		int nAttrSize = ( ( 1 << bit ) & ATTRIBUTES_WHICH_ARE_VEC3S_MASK ) ? 3 : 1;
 
 		if ( nPerParticleAttributeMask & ( 1 << bit ) )
-		{ 
+		{
 			m_pParticleAttributes[ bit ] = pMem;
 			m_nParticleFloatStrides[ bit ] = nAttrSize * 4;
 			pMem += nAttrSize * m_nAllocatedParticles;
@@ -1625,7 +1625,7 @@ float FadeInOut( float flFadeInStart, float flFadeInEnd, float flFadeOutStart, f
 
 }
 
-bool CParticleCollection::CheckIfOperatorShouldRun( 
+bool CParticleCollection::CheckIfOperatorShouldRun(
 	CParticleOperatorInstance const * pOp ,
 	float *pflCurStrength)
 {
@@ -1702,7 +1702,7 @@ void CParticleCollection::Render( IMatRenderContext *pRenderContext, bool bTrans
 			}
 		}
 	}
-	
+
 	// let children render
 	for( CParticleCollection *p = m_Children.m_pHead; p; p = p->m_pNext )
 	{
@@ -1826,10 +1826,10 @@ void CParticleCollection::SkipToTime( float t )
 	if ( t > m_flCurTime )
 	{
 		UpdatePrevControlPoints( t - m_flCurTime );
-		m_flCurTime = t;	
+		m_flCurTime = t;
 		m_fl4CurTime = ReplicateX4( t );
 		m_nParticleFlags &= ~PCFLAGS_FIRST_FRAME;
-		
+
 		// FIXME: In future, we may have to tell operators, initializers about this too
 		int nEmitterCount = m_pDef->m_Emitters.Count();
 		int i;
@@ -1859,7 +1859,7 @@ static void CHECKSYSTEM( CParticleCollection *pParticles )
 	{
 		const float *xyz = pParticles->GetFloatAttributePtr( PARTICLE_ATTRIBUTE_XYZ, i );
 		const float *xyz_prev = pParticles->GetFloatAttributePtr( PARTICLE_ATTRIBUTE_PREV_XYZ, i );
-/*		
+/*
 		const float *rad = pParticles->GetFloatAttributePtr( PARTICLE_ATTRIBUTE_RADIUS, i );
 		Assert( IsFinite( rad[0] ) );
 
@@ -1905,7 +1905,7 @@ void CParticleCollection::SimulateFirstFrame( )
 		}
 		m_nOperatorRandomSampleOffset += 17;
 	}
-	
+
 	// first, create initial particles
 	int nNumToCreate = min( m_pDef->m_nInitialParticles, m_nMaxAllowedParticles );
 	if ( nNumToCreate > 0 )
@@ -1994,11 +1994,11 @@ void CParticleCollection::Simulate( float dt, bool updateBboxOnly )
 			m_flDt = flDT_ThisStep;
 			m_flCurTime += flDT_ThisStep;
 			m_fl4CurTime = ReplicateX4( m_flCurTime );
-		
+
 #ifdef _DEBUG
 			m_bIsRunningOperators = true;
 #endif
-		
+
 			m_nOperatorRandomSampleOffset = 0;
 			int nCount = m_pDef->m_Operators.Count();
 			for( int i = 0; i < nCount; i++ )
@@ -2031,8 +2031,8 @@ void CParticleCollection::Simulate( float dt, bool updateBboxOnly )
 				float flEmitStrength;
 				if ( CheckIfOperatorShouldRun( m_pDef->m_Emitters[i], &flEmitStrength ) )
 				{
-					uint32 nInittedMask = m_pDef->m_Emitters[i]->Emit( 
-						this, flEmitStrength, 
+					uint32 nInittedMask = m_pDef->m_Emitters[i]->Emit(
+						this, flEmitStrength,
 						m_pOperatorContextData + m_pDef->m_nEmittersCtxOffsets[i] );
 					if ( nOldParticleCount != m_nActiveParticles )
 					{
@@ -2042,7 +2042,7 @@ void CParticleCollection::Simulate( float dt, bool updateBboxOnly )
 					}
 				}
 			}
-		
+
 			m_nOperatorRandomSampleOffset = 0;
 			nCount = m_pDef->m_Operators.Count();
 			if ( m_nActiveParticles )
@@ -2270,7 +2270,7 @@ void CParticleCollection::GetControlPointAtTime( int nControlPoint, float flTime
 
 //-----------------------------------------------------------------------------
 // Used to retrieve the previous position of a control point
-// 
+//
 //-----------------------------------------------------------------------------
 void CParticleCollection::GetControlPointAtPrevTime( int nControlPoint, Vector *pControlPoint ) const
 {
@@ -2364,7 +2364,7 @@ void CParticleCollection::BloatBoundsUsingControlPoint()
 	// so that we know they're in their correct position.
 	if ( m_nSimulatedFrames > 2 )
 	{
-		// Include control points in the bbox. 
+		// Include control points in the bbox.
 		for (int i = 0; i <= m_nHighestCP; ++i) {
 			if ( !m_pDef->ReadsControlPoint( i ) )
 				continue;
@@ -2436,7 +2436,7 @@ void CParticleCollection::RecomputeBounds( void )
 	m_MinBounds.x = min( min( SubFloat( min_x, 0 ), SubFloat( min_x, 1 ) ), min( SubFloat( min_x, 2 ), SubFloat( min_x, 3 ) ) );
 	m_MinBounds.y = min( min( SubFloat( min_y, 0 ), SubFloat( min_y, 1 ) ), min( SubFloat( min_y, 2 ), SubFloat( min_y, 3 ) ) );
 	m_MinBounds.z = min( min( SubFloat( min_z, 0 ), SubFloat( min_z, 1 ) ), min( SubFloat( min_z, 2 ), SubFloat( min_z, 3 ) ) );
-							  
+
 	m_MaxBounds.x = max( max( SubFloat( max_x, 0 ), SubFloat( max_x, 1 ) ), max( SubFloat( max_x, 2 ), SubFloat( max_x, 3 ) ) );
 	m_MaxBounds.y = max( max( SubFloat( max_y, 0 ), SubFloat( max_y, 1 ) ), max( SubFloat( max_y, 2 ), SubFloat( max_y, 3 ) ) );
 	m_MaxBounds.z = max( max( SubFloat( max_z, 0 ), SubFloat( max_z, 1 ) ), max( SubFloat( max_z, 2 ), SubFloat( max_z, 3 ) ) );
@@ -2483,7 +2483,7 @@ bool CParticleCollection::IsFinished( void )
 		return false;
 	if ( m_nActiveParticles )
 		return false;
-	if ( m_bDormant ) 
+	if ( m_bDormant )
 		return false;
 
 	// no particles. See if any emmitters intead to create more particles
@@ -2516,14 +2516,14 @@ void CParticleCollection::StopEmission( bool bInfiniteOnly, bool bRemoveAllParti
 	// get deleted if we're told to stop emission while dormant. SetDormant() ensures
 	// dormancy is set to true after stopping out emission.
 	m_bDormant = false;
-	
+
 	if ( bWakeOnStop )
 	{
 		// Set next sleep time - an additional fudge factor is added over the normal time
 		// so that existing particles have a chance to go away.
 		m_flNextSleepTime = Max ( m_flNextSleepTime, ( g_pParticleSystemMgr->GetLastSimulationTime() + 10 ));
 	}
-		 
+
 	m_bEmissionStopped = true;
 
 	for( int i=0; i < m_pDef->m_Emitters.Count(); i++ )
@@ -2569,7 +2569,7 @@ void CParticleCollection::StartEmission( bool bInfiniteOnly )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Dormant particle systems simulate their particles, but don't emit 
+// Purpose: Dormant particle systems simulate their particles, but don't emit
 //			new ones. Unlike particle systems that have StopEmission() called
 //			dormant particle systems don't remove themselves when they're
 //			out of particles, assuming they'll return at some point.
@@ -2615,7 +2615,7 @@ void CParticleCollection::MoveParticle( int nInitialIndex, int nNewIndex )
 				int oldofs = oldidxsse + ( nNewIndex & 3 );
 				int lastidxsse = 12 * ( nInitialIndex >> 2 );
 				int lastofs = lastidxsse + ( nInitialIndex & 3 );
-				
+
 				m_pParticleAttributes[p][oldofs] = m_pParticleAttributes[p][lastofs];
 				m_pParticleAttributes[p][4+oldofs] = m_pParticleAttributes[p][4+lastofs];
 				m_pParticleAttributes[p][8+oldofs] = m_pParticleAttributes[p][8+lastofs];
@@ -2628,7 +2628,7 @@ void CParticleCollection::MoveParticle( int nInitialIndex, int nNewIndex )
 			case 4:										// move a float
 				m_pParticleInitialAttributes[p][nNewIndex] = m_pParticleInitialAttributes[p][nInitialIndex];
 				break;
-				
+
 			case 12:										// move a vec3
 			{
 				// sse weirdness
@@ -2636,7 +2636,7 @@ void CParticleCollection::MoveParticle( int nInitialIndex, int nNewIndex )
 				int oldofs = oldidxsse + ( nNewIndex & 3 );
 				int lastidxsse = 12 * ( nInitialIndex >> 2 );
 				int lastofs = lastidxsse + ( nInitialIndex & 3 );
-				
+
 				m_pParticleInitialAttributes[p][oldofs] = m_pParticleInitialAttributes[p][lastofs];
 				m_pParticleInitialAttributes[p][4+oldofs] = m_pParticleInitialAttributes[p][4+lastofs];
 				m_pParticleInitialAttributes[p][8+oldofs] = m_pParticleInitialAttributes[p][8+lastofs];
@@ -2743,9 +2743,9 @@ void CParticleCollection::ApplyKillList( void )
 	Assert( nLeftInKillList <= m_nActiveParticles );
 
 	// now, execute kill list
-	// Previously, this code would swap the last item that wasn't dead into this slot. 
+	// Previously, this code would swap the last item that wasn't dead into this slot.
 	// However, some lists require order invariance, so we need to collapse over holes instead of
-	// doing the (cheaper) swap from the end to the hole. 
+	// doing the (cheaper) swap from the end to the hole.
 	if ( !m_bRequiresOrderInvariance )
 	{
 		while( nLeftInKillList )
@@ -2774,8 +2774,8 @@ void CParticleCollection::ApplyKillList( void )
 			MoveParticle( nParticlesActiveNow-1, nKillIndex );
 			nParticlesActiveNow--;
 		}
-	} 
-	else 
+	}
+	else
 	{
 		// The calling code may tell us to kill particles that are already out of bounds.
 		// That causes this code to kill more particles than we're supposed to (possibly even causing a crash).
@@ -2786,7 +2786,7 @@ void CParticleCollection::ApplyKillList( void )
 
 		for ( int readLoc = 1 + writeLoc; readLoc < nParticlesActiveNow; ++readLoc )
 		{
-			if ( nLeftInKillList > 0 && readLoc == *pCurKillListSlot ) 
+			if ( nLeftInKillList > 0 && readLoc == *pCurKillListSlot )
 			{
 				pCurKillListSlot++;
 				--nLeftInKillList;
@@ -2816,7 +2816,7 @@ void CParticleCollection::CalculatePathValues( CPathParameters const &PathIn,
 	GetControlPointAtTime( PathIn.m_nStartControlPointNumber, flTimeStamp, &StartPnt );
 	Vector EndPnt;
 	GetControlPointAtTime( PathIn.m_nEndControlPointNumber, flTimeStamp, &EndPnt );
-	
+
 	Vector MidP;
 	VectorLerp(StartPnt, EndPnt, PathIn.m_flMidPoint, MidP);
 
@@ -2848,7 +2848,7 @@ void CParticleCollection::CalculatePathValues( CPathParameters const &PathIn,
 		RandomVector( 0, -PathIn.m_flBulge, PathIn.m_flBulge, &RndVector);
 		MidP+=RndVector;
 	}
-	
+
 	*pStartPnt = StartPnt;
 	*pMidPnt = MidP;
 	*pEndPnt = EndPnt;
@@ -2869,22 +2869,22 @@ public:
 		tint.SetColor( 255, 255, 255, 255 );
 	}
 	virtual void TraceLine( const Vector& vecAbsStart,
-							const Vector& vecAbsEnd, unsigned int mask, 
+							const Vector& vecAbsEnd, unsigned int mask,
 							const class IHandleEntity *ignore,
 							int collisionGroup, CBaseTrace *ptr )
 	{
 		ptr->fraction = 1.0;								// no hit
 	}
 
-	virtual void GetRandomPointsOnControllingObjectHitBox( 
+	virtual void GetRandomPointsOnControllingObjectHitBox(
 		CParticleCollection *pParticles,
-		int nControlPointNumber, 
+		int nControlPointNumber,
 		int nNumPtsOut,
 		float flBBoxScale,
 		int nNumTrysToGetAPointInsideTheModel,
 		Vector *pPntsOut,
 		Vector vecDirectionBias,
-		Vector *pHitBoxRelativeCoordOut, int *pHitBoxIndexOut ) 
+		Vector *pHitBoxRelativeCoordOut, int *pHitBoxIndexOut )
 	{
 		for ( int i = 0; i < nNumPtsOut; ++i )
 		{
@@ -3014,7 +3014,7 @@ void CParticleSystemMgr::UncacheAllParticleSystems()
 	{
 		m_pParticleSystemDictionary->FindParticleSystem( h )->Uncache();
 	}
-	
+
 	// Flush sheets, as they can accumulate several MB of memory per map
 	FlushAllSheets();
 }
@@ -3023,7 +3023,7 @@ void CParticleSystemMgr::UncacheAllParticleSystems()
 //-----------------------------------------------------------------------------
 // return the particle field name
 //-----------------------------------------------------------------------------
-static const char *s_pParticleFieldNames[MAX_PARTICLE_ATTRIBUTES] = 
+static const char *s_pParticleFieldNames[MAX_PARTICLE_ATTRIBUTES] =
 {
 	"Position", // XYZ, 0
 	"Life Duration", // LIFE_DURATION, 1 );
@@ -3038,7 +3038,7 @@ static const char *s_pParticleFieldNames[MAX_PARTICLE_ATTRIBUTES] =
 	"Creation Time", // CREATION_TIME, 8 );
 	"Sequence Number", // SEQUENCE_NUMBER, 9 );
 	"Trail Length", // TRAIL_LENGTH, 10 );
-	"Particle ID", // PARTICLE_ID, 11 ); 
+	"Particle ID", // PARTICLE_ID, 11 );
 
 	"Yaw", // YAW, 12 );
 	"Sequence Number 1", // SEQUENCE_NUMBER1, 13 );
@@ -3071,7 +3071,7 @@ const char* CParticleSystemMgr::GetParticleFieldName( int nParticleField ) const
 	return s_pParticleFieldNames[nParticleField];
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the available particle operators
 //-----------------------------------------------------------------------------
@@ -3305,7 +3305,7 @@ bool CParticleSystemMgr::ReadParticleConfigFile( const char *pFileName, bool bPr
 		CUtlBuffer fileBuffer;
 		bool bHaveParticles = g_pFullFileSystem->ReadFile( szTargetName, "GAME", fileBuffer );
 		if ( bHaveParticles )
-		{			
+		{
 			fileBuffer.SetBigEndian( false );
 			return ReadParticleConfigFile( fileBuffer, bPrecache, bDecommitTempMemory, szTargetName );
 		}
@@ -3328,7 +3328,7 @@ bool CParticleSystemMgr::ReadParticleConfigFile( const char *pFileName, bool bPr
 		{
 			pExt = "pcf";
 		}
-		
+
 		if ( g_pMaterialSystemHardwareConfig->GetDXSupportLevel() < 90 )
 		{
 			Q_snprintf( pFallbackBuf, sizeof(pFallbackBuf), "%s_dx80.%s", pTemp, pExt );
@@ -3572,7 +3572,7 @@ void CParticleSystemMgr::FlushAllSheets( void )
 // 	{
 // 		delete m_SheetList.Element(i);
 // 	}
-// 
+//
 // 	m_SheetList.RemoveAll();
 
 	m_SheetList.PurgeAndDeleteElements();
@@ -3657,9 +3657,9 @@ void CParticleSystemMgr::BuildBatchList( int iRenderCache, IMatRenderContext *pR
 				BatchStep_t step;
 				step.m_pParticles = pParticles;
 				step.m_pRenderer = pParticles->GetRenderer( j );
-				step.m_pContext = pParticles->GetRendererContext( j ); 
+				step.m_pContext = pParticles->GetRendererContext( j );
 				step.m_nFirstParticle = nFirstParticle;
-				step.m_nParticleCount = step.m_pRenderer->GetParticlesToRender( pParticles, 
+				step.m_nParticleCount = step.m_pRenderer->GetParticlesToRender( pParticles,
 					step.m_pContext, nFirstParticle, nRemainingVertices, nRemainingIndices, &step.m_nVertCount, &iPart );
 				nFirstParticle += step.m_nParticleCount;
 
@@ -3676,7 +3676,7 @@ void CParticleSystemMgr::BuildBatchList( int iRenderCache, IMatRenderContext *pR
 						break;
 
 					// Not enough room
-					Assert( pBatch->m_nVertCount > 0 && pBatch->m_nIndexCount > 0 ); 
+					Assert( pBatch->m_nVertCount > 0 && pBatch->m_nIndexCount > 0 );
 					pBatch = &batches[batches.AddToTail()];
 					pBatch->m_nVertCount = 0;
 					pBatch->m_nIndexCount = 0;
@@ -3687,7 +3687,7 @@ void CParticleSystemMgr::BuildBatchList( int iRenderCache, IMatRenderContext *pR
 		}
 	}
 
-	if ( pBatch->m_nVertCount <= 0 || pBatch->m_nIndexCount <= 0 ) 
+	if ( pBatch->m_nVertCount <= 0 || pBatch->m_nIndexCount <= 0 )
 	{
 		batches.FastRemove( batches.Count() - 1 );
 	}
@@ -3713,9 +3713,9 @@ void CParticleSystemMgr::DumpProfileInformation( void )
 			float flmax = m_ParticleOperators[i][j]->MaximumRecordedExecutionTime();
 			float fltotal = m_ParticleOperators[i][j]->TotalRecordedExecutionTime();
 			if ( fltotal > 0.0 )
-				g_pFullFileSystem->FPrintf( fh, "%s,%f,%f\n", 
+				g_pFullFileSystem->FPrintf( fh, "%s,%f,%f\n",
 											m_ParticleOperators[i][j]->GetName(), fltotal, flmax );
-		}	   
+		}
 	}
 	g_pFullFileSystem->Close( fh );
 #endif
@@ -3797,7 +3797,7 @@ void CParticleSystemMgr::DrawRenderCache( bool bShadowDepth )
 				const BatchStep_t &step = batch.m_BatchStep[j];
 				// FIXME: this will break if it ever calls into C_OP_RenderSprites::Render[TwoSequence]SpriteCard()
 				//        (need to protect against that and/or split the meshBuilder batch to support that path here)
-				step.m_pRenderer->RenderUnsorted( step.m_pParticles, step.m_pContext, pRenderContext, 
+				step.m_pRenderer->RenderUnsorted( step.m_pParticles, step.m_pContext, pRenderContext,
 					meshBuilder, nVertexOffset, step.m_nFirstParticle, step.m_nParticleCount );
 				nVertexOffset += step.m_nVertCount;
 			}
@@ -3832,7 +3832,7 @@ void CParticleSystemMgr::TallyParticlesRendered( int nVertexCount, int nIndexCou
 
 void IParticleSystemQuery::GetRandomPointsOnControllingObjectHitBox(
 	CParticleCollection *pParticles,
-	int nControlPointNumber, 
+	int nControlPointNumber,
 	int nNumPtsOut,
 	float flBBoxScale,
 	int nNumTrysToGetAPointInsideTheModel,

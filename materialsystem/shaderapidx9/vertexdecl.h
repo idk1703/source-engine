@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -28,5 +28,4 @@ IDirect3DVertexDeclaration9 *FindOrCreateVertexDecl( VertexFormat_t fmt, bool bS
 void ReleaseAllVertexDecl( );
 
 
-#endif // VERTEXDECL_H 
-
+#endif // VERTEXDECL_H

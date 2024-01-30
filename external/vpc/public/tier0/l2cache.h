@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #ifndef CL2CACHE_H
@@ -44,4 +44,3 @@ private:
 };
 
 #endif   // CL2CACHE_H
-

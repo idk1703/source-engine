@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -46,7 +46,7 @@ static ConVar r_rimlight( "r_rimlight", "1", FCVAR_NONE );
 // Initialize shader parameters
 //-----------------------------------------------------------------------------
 void InitParamsSkin_DX9( CBaseVSShader *pShader, IMaterialVar** params, const char *pMaterialName, VertexLitGeneric_DX9_Vars_t &info )
-{	
+{
 	// FLASHLIGHTFIXME: Do ShaderAPI::BindFlashlightTexture
 	Assert( info.m_nFlashlightTexture >= 0 );
 
@@ -58,7 +58,7 @@ void InitParamsSkin_DX9( CBaseVSShader *pShader, IMaterialVar** params, const ch
 	{
 		params[FLASHLIGHTTEXTURE]->SetStringValue( "effects/flashlight001" );
 	}
-	
+
 	// Write over $basetexture with $info.m_nBumpmap if we are going to be using diffuse normal mapping.
 	if( info.m_nAlbedo != -1 && g_pConfig->UseBumpmapping() && info.m_nBumpmap != -1 && params[info.m_nBumpmap]->IsDefined() && params[info.m_nAlbedo]->IsDefined() &&
 		params[info.m_nBaseTexture]->IsDefined() )
@@ -124,12 +124,12 @@ void InitSkin_DX9( CBaseVSShader *pShader, IMaterialVar** params, VertexLitGener
 {
 	Assert( info.m_nFlashlightTexture >= 0 );
 	pShader->LoadTexture( info.m_nFlashlightTexture, TEXTUREFLAGS_SRGB );
-	
+
 	bool bIsBaseTextureTranslucent = false;
 	if ( params[info.m_nBaseTexture]->IsDefined() )
 	{
 		pShader->LoadTexture( info.m_nBaseTexture, TEXTUREFLAGS_SRGB );
-		
+
 		if ( params[info.m_nBaseTexture]->GetTextureValue()->IsTranslucent() )
 		{
 			bIsBaseTextureTranslucent = true;
@@ -201,7 +201,7 @@ void InitSkin_DX9( CBaseVSShader *pShader, IMaterialVar** params, VertexLitGener
 			}
 		}
 	}
-	
+
 	if ( params[info.m_nEnvmap]->IsDefined() )
 	{
 		pShader->LoadCubeMap( info.m_nEnvmap, g_pHardwareConfig->GetHDRType() == HDR_TYPE_NONE ? TEXTUREFLAGS_SRGB : 0  );
@@ -231,11 +231,11 @@ void DrawSkin_DX9_Internal( CBaseVSShader *pShader, IMaterialVar** params, IShad
 	bool bHasBaseTexture = (info.m_nBaseTexture != -1) && params[info.m_nBaseTexture]->IsTexture();
 	bool bHasBump = (info.m_nBumpmap != -1) && params[info.m_nBumpmap]->IsTexture();
 
-	bool bHasBaseTextureWrinkle = bHasBaseTexture && 
+	bool bHasBaseTextureWrinkle = bHasBaseTexture &&
 		(info.m_nWrinkle != -1) && params[info.m_nWrinkle]->IsTexture() &&
 		(info.m_nStretch != -1) && params[info.m_nStretch]->IsTexture();
 
-	bool bHasBumpWrinkle = bHasBump && 
+	bool bHasBumpWrinkle = bHasBump &&
 		(info.m_nNormalWrinkle != -1) && params[info.m_nNormalWrinkle]->IsTexture() &&
 		(info.m_nNormalStretch != -1) && params[info.m_nNormalStretch]->IsTexture();
 
@@ -294,18 +294,18 @@ void DrawSkin_DX9_Internal( CBaseVSShader *pShader, IMaterialVar** params, IShad
 
 		if ( ! ( params[info.m_nBaseTexture]->GetTextureValue()->IsTranslucent() ) )
 			bCanUseBaseAlphaPhongMaskFastPath = true;
-		
+
 		pContextData->m_bFastPath =
-			(! bHasBump ) && 
+			(! bHasBump ) &&
 			(! bHasSpecularExponentTexture ) &&
 			(! bHasPhongTintMap ) &&
-			(! bHasPhongWarp ) && 
-			(! bHasRimLight ) && 
+			(! bHasPhongWarp ) &&
+			(! bHasRimLight ) &&
 			(! hasDetailTexture ) &&
 			bCanUseBaseAlphaPhongMaskFastPath &&
 			(! bHasSelfIllum ) &&
 			(! bBlendTintByBaseAlpha );
-		
+
 		// Alpha test: FIXME: shouldn't this be handled in CBaseVSShader::SetInitialShadowState
 		pShaderShadow->EnableAlphaTest( bIsAlphaTested );
 
@@ -324,7 +324,7 @@ void DrawSkin_DX9_Internal( CBaseVSShader *pShader, IMaterialVar** params, IShad
 
 			if( bIsAlphaTested )
 			{
-				// disable alpha test and use the zfunc zequals since alpha isn't guaranteed to 
+				// disable alpha test and use the zfunc zequals since alpha isn't guaranteed to
 				// be the same on both the regular pass and the flashlight pass.
 				pShaderShadow->EnableAlphaTest( false );
 				pShaderShadow->DepthFunc( SHADER_DEPTHFUNC_EQUAL );
@@ -353,7 +353,7 @@ void DrawSkin_DX9_Internal( CBaseVSShader *pShader, IMaterialVar** params, IShad
 				}
 			}
 		}
-		
+
 		unsigned int flags = VERTEX_POSITION;
 		if( bHasNormal )
 		{
@@ -427,13 +427,13 @@ void DrawSkin_DX9_Internal( CBaseVSShader *pShader, IMaterialVar** params, IShad
 		}
 
 		pShaderShadow->EnableSRGBWrite( true );
-		
+
 		// texcoord0 : base texcoord, texcoord2 : decal hw morph delta
 		int pTexCoordDim[3] = { 2, 0, 3 };
 		int nTexCoordCount = 1;
 
 #ifndef _X360
-		// Special morphed decal information 
+		// Special morphed decal information
 		if ( bIsDecal && g_pHardwareConfig->HasFastVertexTextures() )
 		{
 			nTexCoordCount = 3;
@@ -649,10 +649,10 @@ void DrawSkin_DX9_Internal( CBaseVSShader *pShader, IMaterialVar** params, IShad
 
 		// don't have an easy way to get this through to GLM, so just print it old school
 		//printf("\n-D- DrawSkin_DX9_Internal numBones is %d", numBones );
-		
+
 		bool bWriteDepthToAlpha = false;
 		bool bWriteWaterFogToAlpha = false;
-		if( bFullyOpaque ) 
+		if( bFullyOpaque )
 		{
 			bWriteDepthToAlpha = pShaderAPI->ShouldWriteDepthToDestAlpha();
 			bWriteWaterFogToAlpha = (fogType == MATERIAL_FOG_LINEAR_BELOW_FOG_Z);
@@ -720,11 +720,11 @@ void DrawSkin_DX9_Internal( CBaseVSShader *pShader, IMaterialVar** params, IShad
 		{
 			if ( IS_PARAM_DEFINED( info.m_nDetailTextureTransform ) )
 				pShader->SetVertexShaderTextureScaledTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_4,
-																info.m_nDetailTextureTransform, 
+																info.m_nDetailTextureTransform,
 																info.m_nDetailScale );
 			else
 				pShader->SetVertexShaderTextureScaledTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_4,
-																info.m_nBaseTextureTransform, 
+																info.m_nBaseTextureTransform,
 																info.m_nDetailScale );
 		}
 
@@ -912,7 +912,7 @@ void DrawSkin_DX9_Internal( CBaseVSShader *pShader, IMaterialVar** params, IShad
 
 		pShaderAPI->SetPixelShaderConstant( PSREG_EYEPOS_SPEC_EXPONENT, vEyePos_SpecExponent, 1 );
 		pShaderAPI->SetPixelShaderConstant( PSREG_FRESNEL_SPEC_PARAMS, vFresnelRanges_SpecBoost, 1 );
-		
+
 		pShaderAPI->SetPixelShaderConstant( PSREG_FLASHLIGHT_POSITION_RIM_BOOST, vRimBoost, 1 );	// Rim boost in w on non-flashlight pass
 
 		pShaderAPI->SetPixelShaderConstant( PSREG_SPEC_RIM_PARAMS, vSpecularTint, 1 );

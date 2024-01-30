@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,7 +15,7 @@ BEGIN_DATADESC( CAI_HolsterBehavior )
 END_DATADESC();
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CAI_HolsterBehavior::CAI_HolsterBehavior()
 {
@@ -24,8 +24,8 @@ CAI_HolsterBehavior::CAI_HolsterBehavior()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CAI_HolsterBehavior::StartTask( const Task_t *pTask )
 {
@@ -42,8 +42,8 @@ void CAI_HolsterBehavior::StartTask( const Task_t *pTask )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CAI_HolsterBehavior::RunTask( const Task_t *pTask )
 {
@@ -60,7 +60,7 @@ void CAI_HolsterBehavior::RunTask( const Task_t *pTask )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_HolsterBehavior::CanSelectSchedule()
@@ -85,7 +85,7 @@ bool CAI_HolsterBehavior::CanSelectSchedule()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CAI_HolsterBehavior::SelectSchedule()
@@ -107,7 +107,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_HolsterBehavior )
 
 	//=========================================================
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_HOLSTER_WEAPON,
 
@@ -118,7 +118,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_HolsterBehavior )
 		"	Interrupts"
 	)
 
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_DRAW_WEAPON,
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -60,7 +60,7 @@ RotatingProgressBar::~RotatingProgressBar()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void RotatingProgressBar::ApplySettings(KeyValues *inResourceData)
 {
@@ -89,12 +89,12 @@ void RotatingProgressBar::ApplySettings(KeyValues *inResourceData)
 	m_flRotatingY = inResourceData->GetFloat( "rotating_y", 0 );
 	m_flRotatingWide = inResourceData->GetFloat( "rotating_wide", 0 );
 	m_flRotatingTall = inResourceData->GetFloat( "rotating_tall", 0 );
-	
+
 	BaseClass::ApplySettings( inResourceData );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void RotatingProgressBar::ApplySchemeSettings(IScheme *pScheme)
 {
@@ -131,7 +131,7 @@ void RotatingProgressBar::SetImage(const char *imageName)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void RotatingProgressBar::PaintBackground()
 {
@@ -151,7 +151,7 @@ void RotatingProgressBar::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void RotatingProgressBar::Paint()
 {
@@ -171,7 +171,7 @@ void RotatingProgressBar::Paint()
 	float mid_x = m_flRotatingX + m_flRotOriginX * m_flRotatingWide;
 	float mid_y = m_flRotatingY + m_flRotOriginY * m_flRotatingTall;
 
-	Vertex_t vert[4];	
+	Vertex_t vert[4];
 
 	vert[0].Init( Vector2D( m_flRotatingX, m_flRotatingY ), Vector2D(0,0) );
 	vert[1].Init( Vector2D( m_flRotatingX+m_flRotatingWide, m_flRotatingY ), Vector2D(1,0) );

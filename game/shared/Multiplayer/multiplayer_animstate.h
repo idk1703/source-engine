@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #ifndef MULTIPLAYERANIMSTATE_H
@@ -154,7 +154,7 @@ struct MultiPlayerMovementData_t
 	// Set speeds to -1 if they are not used.
 	float		m_flWalkSpeed;
 	float		m_flRunSpeed;
-	float		m_flSprintSpeed;	
+	float		m_flSprintSpeed;
 	float		m_flBodyYawRate;
 };
 
@@ -178,7 +178,7 @@ public:
 	// players firing, jumping, throwing grenades, etc.
 	virtual void ClearAnimationState();
 	virtual void DoAnimationEvent( PlayerAnimEvent_t event, int nData = 0 );
-	virtual Activity CalcMainActivity();	
+	virtual Activity CalcMainActivity();
 	virtual void Update( float eyeYaw, float eyePitch );
 	virtual void Release( void );
 
@@ -207,7 +207,7 @@ public:
 	bool	VerifyAnimLayerInSlot( int iGestureSlot );
 
 	// Feet.
-	// If you are forcing aim yaw, your code is almost definitely broken if you don't include a delay between 
+	// If you are forcing aim yaw, your code is almost definitely broken if you don't include a delay between
 	// teleporting and forcing yaw. This is due to an unfortunate interaction between the command lookback window,
 	// and the fact that m_flEyeYaw is never propogated from the server to the client.
 	// TODO: Fix this after Halloween 2014.
@@ -215,7 +215,7 @@ public:
 
 protected:
 
-	virtual void Init( CBasePlayer *pPlayer, MultiPlayerMovementData_t &movementData ); 
+	virtual void Init( CBasePlayer *pPlayer, MultiPlayerMovementData_t &movementData );
 	CBasePlayer *GetBasePlayer( void )				{ return m_pPlayer; }
 
 	// Allow inheriting classes to override SelectWeightedSequence
@@ -301,7 +301,7 @@ protected:
 
 	bool						m_bCurrentFeetYawInitialized;
 	float						m_flLastAnimationStateClearTime;
-	
+
 	float m_flEyeYaw;
 	float m_flEyePitch;
 	float m_flGoalFeetYaw;
@@ -312,7 +312,7 @@ protected:
 
 	// Jumping.
 	bool	m_bJumping;
-	float	m_flJumpStartTime;	
+	float	m_flJumpStartTime;
 	bool	m_bFirstJumpFrame;
 
 	// Swimming.
@@ -324,7 +324,7 @@ protected:
 	bool	m_bFirstDyingFrame;
 
 	// Last activity we've used on the lower body. Used to determine if animations should restart.
-	Activity m_eCurrentMainSequenceActivity;	
+	Activity m_eCurrentMainSequenceActivity;
 
 	// Specific full-body sequence to play
 	int		m_nSpecificMainSequence;

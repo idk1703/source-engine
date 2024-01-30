@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // Defines the entry point for the application.
 //
@@ -151,7 +151,7 @@ SpewRetval_t LauncherDefaultSpewFunc( SpewType_t spewType, char const *pMsg )
 #else
 	fprintf( stderr, "%s", pMsg );
 #endif
-	
+
 	switch( spewType )
 	{
 	case SPEW_MESSAGE:
@@ -175,7 +175,7 @@ SpewRetval_t LauncherDefaultSpewFunc( SpewType_t spewType, char const *pMsg )
 #endif
 		}
 		return SPEW_DEBUGGER;
-	
+
 	case SPEW_ERROR:
 	default:
 #if defined( WIN32 ) || defined( USE_SDL )
@@ -278,7 +278,7 @@ void UTIL_ComputeBaseDir()
 		int j = strlen( g_szBasedir );
 		if (j > 0)
 		{
-			if ( ( g_szBasedir[j-1] == '\\' ) || 
+			if ( ( g_szBasedir[j-1] == '\\' ) ||
 				 ( g_szBasedir[j-1] == '/' ) )
 			{
 				g_szBasedir[j-1] = 0;
@@ -502,7 +502,7 @@ void CLogAllFiles::LogFile(const char *fullPathFileName, const char *options)
 		Q_strlower( rel );
 #endif
 		Q_FixSlashes( rel );
-		
+
 		LogToAllReslist( rel );
 	}
 }
@@ -516,7 +516,7 @@ void CLogAllFiles::LogAllFilesFunc(const char *fullPathFileName, const char *opt
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: This is a bit of a hack because it appears 
+// Purpose: This is a bit of a hack because it appears
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 static bool IsWin98OrOlder()
@@ -527,7 +527,7 @@ static bool IsWin98OrOlder()
 	OSVERSIONINFOEX osvi;
 	ZeroMemory(&osvi, sizeof(OSVERSIONINFOEX));
 	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-	
+
 	BOOL bOsVersionInfoEx = GetVersionEx ((OSVERSIONINFO *) &osvi);
 	if( !bOsVersionInfoEx )
 	{
@@ -587,7 +587,7 @@ void TryToLoadSteamOverlayDLL()
 				V_ComposeFileName( pchSteamInstallPath, "GameOverlayRenderer" DLL_EXT_STRING, rgchSteamPath, Q_ARRAYSIZE(rgchSteamPath) );
 				// This could fail, but we can't fix it if it does so just ignore failures
 				LoadLibrary( rgchSteamPath );
-			
+
 			}
 
 			SteamAPI_Shutdown();
@@ -598,7 +598,7 @@ void TryToLoadSteamOverlayDLL()
 }
 
 //-----------------------------------------------------------------------------
-// Inner loop: initialize, shutdown main systems, load steam to 
+// Inner loop: initialize, shutdown main systems, load steam to
 //-----------------------------------------------------------------------------
 class CSourceAppSystemGroup : public CSteamAppSystemGroup
 {
@@ -654,7 +654,7 @@ bool CSourceAppSystemGroup::Create()
 
 	double st = Plat_FloatTime();
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "engine" DLL_EXT_STRING,			CVAR_QUERY_INTERFACE_VERSION },	// NOTE: This one must be first!!
 		{ "inputsystem" DLL_EXT_STRING,		INPUTSYSTEM_INTERFACE_VERSION },
@@ -665,7 +665,7 @@ bool CSourceAppSystemGroup::Create()
 		{ "studiorender" DLL_EXT_STRING,	STUDIO_RENDER_INTERFACE_VERSION },
 		{ "vphysics" DLL_EXT_STRING,		VPHYSICS_INTERFACE_VERSION },
 		{ "video_services" DLL_EXT_STRING,  VIDEO_SERVICES_INTERFACE_VERSION },
-  
+
 		// NOTE: This has to occur before vgui2.dll so it replaces vgui2's surface implementation
 		{ "vguimatsurface" DLL_EXT_STRING,	VGUI_SURFACE_INTERFACE_VERSION },
 		{ "vgui2" DLL_EXT_STRING,			VGUI_IVGUI_INTERFACE_VERSION },
@@ -678,7 +678,7 @@ bool CSourceAppSystemGroup::Create()
 	AddSystem( (IAppSystem *)CreateSDLMgr(), SDLMGR_INTERFACE_VERSION );
 #endif
 
-	if ( !AddSystems( appSystems ) ) 
+	if ( !AddSystems( appSystems ) )
 		return false;
 
 
@@ -689,7 +689,7 @@ bool CSourceAppSystemGroup::Create()
 		AddSystem( sourceVRModule, SOURCE_VIRTUAL_REALITY_INTERFACE_VERSION );
 	}
 
-	// pull in our filesystem dll to pull the queued loader from it, we need to do it this way due to the 
+	// pull in our filesystem dll to pull the queued loader from it, we need to do it this way due to the
 	// steam/stdio split for our steam filesystem
 	char pFileSystemDLL[MAX_PATH];
 	bool bSteam;
@@ -705,7 +705,7 @@ bool CSourceAppSystemGroup::Create()
 #ifdef STAGING_ONLY
 		AppModule_t p4libModule = LoadModule( "p4lib" DLL_EXT_STRING );
 		IP4 *p4 = (IP4*)AddSystem( p4libModule, P4_INTERFACE_VERSION );
-		
+
 		// If we are running with -steam then that means the tools are being used by an SDK user. Don't exit in this case!
 		if ( !p4 && !CommandLine()->FindParm( "-steam" ) )
 		{
@@ -815,7 +815,7 @@ bool CSourceAppSystemGroup::PreInit()
 	// Required to run through the editor
 	if ( m_bEditMode )
 	{
-		g_pMaterialSystem->EnableEditorMaterials();	
+		g_pMaterialSystem->EnableEditorMaterials();
 	}
 
 	StartupInfo_t info;
@@ -849,7 +849,7 @@ void CSourceAppSystemGroup::PostShutdown()
 	DisconnectTier1Libraries();
 }
 
-void CSourceAppSystemGroup::Destroy() 
+void CSourceAppSystemGroup::Destroy()
 {
 	g_pEngineAPI = NULL;
 	g_pMaterialSystem = NULL;
@@ -869,7 +869,7 @@ void CSourceAppSystemGroup::Destroy()
 const char *CSourceAppSystemGroup::DetermineDefaultMod()
 {
 	if ( !m_bEditMode )
-	{   		 
+	{
 		return CommandLine()->ParmValue( "-game", DEFAULT_HL2_GAMEDIR );
 	}
 	return g_pHammer->GetDefaultMod();
@@ -983,7 +983,7 @@ bool GrabSourceMutex()
 
 		// we leave the file open, under unix rules when we die we'll automatically close and remove the locks
 		return true;
-	}   		 
+	}
 
 	// We were unable to open the file, it should be because we are unable to retain a lock
 	if ( errno != EWOULDBLOCK)
@@ -1012,7 +1012,7 @@ void ReleaseSourceMutex()
 	{
 		close( g_lockfd );
 		g_lockfd = -1;
-		unlink( g_lockFilename ); 
+		unlink( g_lockFilename );
 	}
 #endif
 }
@@ -1064,12 +1064,12 @@ static char *va( char *format, ... )
 	Q_vsnprintf( string[curstring], sizeof( string[curstring] ), format, argptr );
 	va_end (argptr);
 
-	return string[curstring];  
+	return string[curstring];
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *param - 
+// Purpose:
+// Input  : *param -
 // Output : static char const
 //-----------------------------------------------------------------------------
 static char const *Cmd_TranslateFileAssociation(char const *param )
@@ -1094,17 +1094,17 @@ static char const *Cmd_TranslateFileAssociation(char const *param )
 	{
 		FileAssociationInfo& info = g_FileAssociations[ i ];
 
-		if ( ! Q_strcmp( extension, info.extension ) && 
+		if ( ! Q_strcmp( extension, info.extension ) &&
 			! CommandLine()->FindParm(va( "+%s", info.command_to_issue ) ) )
 		{
-			// Translate if haven't already got one of these commands			
+			// Translate if haven't already got one of these commands
 			Q_strncpy( sz, temp, sizeof( sz ) );
 			Q_FileBase( sz, temp, sizeof( sz ) );
 
 			Q_snprintf( sz, sizeof( sz ), "%s %s", info.command_to_issue, temp );
 			retval = sz;
 			break;
-		}		
+		}
 	}
 
 	// return null if no translation, otherwise return commands
@@ -1113,7 +1113,7 @@ static char const *Cmd_TranslateFileAssociation(char const *param )
 
 //-----------------------------------------------------------------------------
 // Purpose: Converts all the convar args into a convar command
-// Input  : none 
+// Input  : none
 // Output : const char * series of convars
 //-----------------------------------------------------------------------------
 static const char *BuildCommand()
@@ -1127,7 +1127,7 @@ static const char *BuildCommand()
 		const char *szParm = CommandLine()->GetParm(i);
 		if (!szParm) continue;
 
-		if (szParm[0] == '-') 
+		if (szParm[0] == '-')
 		{
 			// skip -XXX options and eat their args
 			const char *szValue = CommandLine()->ParmValue(szParm);
@@ -1149,7 +1149,7 @@ static const char *BuildCommand()
 				build.PutChar(';');
 			}
 		}
-		else 
+		else
 		{
 			// singleton values, convert to command
 			char const *translated = Cmd_TranslateFileAssociation( CommandLine()->GetParm( i ) );
@@ -1168,10 +1168,10 @@ static const char *BuildCommand()
 
 //-----------------------------------------------------------------------------
 // Purpose: The real entry point for the application
-// Input  : hInstance - 
-//			hPrevInstance - 
-//			lpCmdLine - 
-//			nCmdShow - 
+// Input  : hInstance -
+//			hPrevInstance -
+//			lpCmdLine -
+//			nCmdShow -
 // Output : int APIENTRY
 //-----------------------------------------------------------------------------
 #ifdef WIN32
@@ -1224,7 +1224,7 @@ DLL_EXPORT int LauncherMain( int argc, char **argv )
 		return -1;
 	}
 
-	// Quickly check the hardware key, essentially a warning shot.  
+	// Quickly check the hardware key, essentially a warning shot.
 	if ( !Plat_VerifyHardwareKeyPrompt() )
 	{
 		return -1;
@@ -1238,20 +1238,20 @@ DLL_EXPORT int LauncherMain( int argc, char **argv )
 #endif
 
 	// No -dxlevel or +mat_hdr_level allowed on POSIX
-#ifdef POSIX	
+#ifdef POSIX
 	CommandLine()->RemoveParm( "-dxlevel" );
 	CommandLine()->RemoveParm( "+mat_hdr_level" );
 	CommandLine()->RemoveParm( "+mat_dxlevel" );
 #endif
 
-	// If we're using -default command line parameters, get rid of DX8 settings. 
+	// If we're using -default command line parameters, get rid of DX8 settings.
 	if ( CommandLine()->CheckParm( "-default" ) )
 	{
 		CommandLine()->RemoveParm( "-dxlevel" );
 		CommandLine()->RemoveParm( "-maxdxlevel" );
 		CommandLine()->RemoveParm( "+mat_dxlevel" );
 	}
-	
+
 	// Figure out the directory the executable is running from
 	UTIL_ComputeBaseDir();
 
@@ -1267,7 +1267,7 @@ DLL_EXPORT int LauncherMain( int argc, char **argv )
 	if ( bWaitForConsole )
 		COM_TimestampedLog( "LauncherMain: Application Start - %s", CommandLine()->GetCmdLine() );
 	if ( bSpewDllInfo )
-	{	
+	{
 		XBX_DumpDllInfo( GetBaseDirectory() );
 		Error( "Stopped!\n" );
 	}
@@ -1303,11 +1303,11 @@ DLL_EXPORT int LauncherMain( int argc, char **argv )
 	}
 	XBX_SetPrimaryUserId( userID );
 #endif // defined( _X360 )
-	
+
 #ifdef POSIX
 	{
 		struct stat st;
-		if ( stat( RELAUNCH_FILE, &st ) == 0 ) 
+		if ( stat( RELAUNCH_FILE, &st ) == 0 )
 		{
 			unlink( RELAUNCH_FILE );
 		}
@@ -1382,7 +1382,7 @@ DLL_EXPORT int LauncherMain( int argc, char **argv )
 					::MessageBox( NULL, "The modified entity keyvalues could not be sent to the Source Engine because the engine does not appear to be running.", "Source Engine Not Running", MB_OK | MB_ICONEXCLAMATION );
 				}
 				else
-				{			
+				{
 					const char *szCommand = BuildCommand();
 
 					//
@@ -1475,7 +1475,7 @@ DLL_EXPORT int LauncherMain( int argc, char **argv )
 			bReslistCycle = reslistgenerator->ShouldContinue();
 			bRestart = bReslistCycle;
 		}
-		
+
 		if ( !bReslistCycle )
 		{
 			// Remove any overrides in case settings changed
@@ -1513,8 +1513,8 @@ DLL_EXPORT int LauncherMain( int argc, char **argv )
 #if defined( WIN32 ) && !defined( _X360 )
 
 	// Now that the mutex has been released, check HKEY_CURRENT_USER\Software\Valve\Source\Relaunch URL. If there is a URL here, exec it.
-	// This supports the capability of immediately re-launching the the game via Steam in a different audio language 
-	HKEY hKey; 
+	// This supports the capability of immediately re-launching the the game via Steam in a different audio language
+	HKEY hKey;
 	if ( RegOpenKeyEx( HKEY_CURRENT_USER, "Software\\Valve\\Source", NULL, KEY_ALL_ACCESS, &hKey) == ERROR_SUCCESS )
 	{
 		char szValue[MAX_PATH];
@@ -1531,7 +1531,7 @@ DLL_EXPORT int LauncherMain( int argc, char **argv )
 
 #elif defined( OSX ) || defined( LINUX )
 	struct stat st;
-	if ( stat( RELAUNCH_FILE, &st ) == 0 ) 
+	if ( stat( RELAUNCH_FILE, &st ) == 0 )
 	{
 		FILE *fp = fopen( RELAUNCH_FILE, "r" );
 		if ( fp )

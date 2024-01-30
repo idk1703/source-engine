@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -32,13 +32,13 @@ public:
 
 	void SetAmmo(int ammo, bool playAnimation);
 	void SetAmmo2(int ammo2, bool playAnimation);
-		
+
 protected:
 	virtual void OnThink();
 
 	void UpdateAmmoDisplays();
 	void UpdatePlayerAmmo( C_BasePlayer *player );
-	
+
 private:
 	CHandle< C_BaseCombatWeapon > m_hCurrentActiveWeapon;
 	CHandle< C_BaseEntity > m_hCurrentVehicle;
@@ -62,7 +62,7 @@ CHudAmmo::CHudAmmo( const char *pElementName ) : BaseClass(NULL, "HudAmmo"), CHu
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAmmo::Init( void )
 {
@@ -73,7 +73,7 @@ void CHudAmmo::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAmmo::VidInit( void )
 {
@@ -337,7 +337,7 @@ protected:
 				// we've changed to a weapon that uses secondary ammo
 				g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("WeaponUsesSecondaryAmmo");
 			}
-			else 
+			else
 			{
 				// we've changed away from a weapon that uses secondary ammo
 				g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("WeaponDoesNotUseSecondaryAmmo");
@@ -345,11 +345,10 @@ protected:
 			m_hCurrentActiveWeapon = wpn;
 		}
 	}
-	
+
 private:
 	CHandle< C_BaseCombatWeapon > m_hCurrentActiveWeapon;
 	int		m_iAmmo;
 };
 
 DECLARE_HUDELEMENT( CHudSecondaryAmmo );
-

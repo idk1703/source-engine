@@ -15,7 +15,7 @@
 // ---------------------------
 //  Navigation Type Bits
 // ---------------------------
-enum Navigation_t 
+enum Navigation_t
 {
 	NAV_NONE = -1,	// error condition
 	NAV_GROUND = 0,	// walk/run

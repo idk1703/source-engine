@@ -100,7 +100,7 @@ void WaveFixupTmpFile( const char *filename )
 		Warning( "WaveFixupTmpFile( '%s' ) failed to open file for editing\n", tmpfilename );
 		return;
 	}
-	
+
 	// file size goes in RIFF chunk
 	int size = g_pFileSystem->Size( file ) - 2*sizeof( int );
 	// offset to data chunk

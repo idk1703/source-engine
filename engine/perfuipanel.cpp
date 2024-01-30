@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -61,7 +61,7 @@ enum PerformanceTool_t
 	DEFAULT_PERF_TOOL = PERF_TOOL_NONE,
 };
 
-static const char *s_pPerfToolNames[PERF_TOOL_COUNT] = 
+static const char *s_pPerfToolNames[PERF_TOOL_COUNT] =
 {
 	"No Tool Active",
 	"Prop Fade Distance Tool",
@@ -71,14 +71,14 @@ static const char *s_pPerfToolNames[PERF_TOOL_COUNT] =
 
 
 //-----------------------------------------------------------------------------
-// Base class for all perf tool panels 
+// Base class for all perf tool panels
 //-----------------------------------------------------------------------------
 class CPerfUIChildPanel : public vgui::EditablePanel
 {
 	DECLARE_CLASS_SIMPLE( CPerfUIChildPanel, vgui::EditablePanel );
 
 public:
-	CPerfUIChildPanel( vgui::Panel *parent, const char *pName )  : BaseClass( parent, pName ) 
+	CPerfUIChildPanel( vgui::Panel *parent, const char *pName )  : BaseClass( parent, pName )
 	{
 		SetVisible( false );
 	}
@@ -89,7 +89,7 @@ public:
 
 //-----------------------------------------------------------------------------
 //
-// The prop fade distance helper tool 
+// The prop fade distance helper tool
 //
 //-----------------------------------------------------------------------------
 class CPropFadeUIPanel : public CPerfUIChildPanel
@@ -119,10 +119,10 @@ protected:
 	vgui::TextEntry *m_pMinScreenArea;
 	vgui::TextEntry *m_pMaxScreenArea;
 
-	static const char *s_pFadeVisualizeLabel[VISUALIZE_TYPE_COUNT]; 
+	static const char *s_pFadeVisualizeLabel[VISUALIZE_TYPE_COUNT];
 };
 
-const char *CPropFadeUIPanel::s_pFadeVisualizeLabel[CPropFadeUIPanel::VISUALIZE_TYPE_COUNT] = 
+const char *CPropFadeUIPanel::s_pFadeVisualizeLabel[CPropFadeUIPanel::VISUALIZE_TYPE_COUNT] =
 {
 	"No visualization",
 	"Show Fade Distance",
@@ -131,7 +131,7 @@ const char *CPropFadeUIPanel::s_pFadeVisualizeLabel[CPropFadeUIPanel::VISUALIZE_
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPropFadeUIPanel::CPropFadeUIPanel( vgui::Panel *parent ) : BaseClass( parent, "PropFadeUIPanel")
 {
@@ -152,21 +152,21 @@ CPropFadeUIPanel::CPropFadeUIPanel( vgui::Panel *parent ) : BaseClass( parent, "
 
 
 //-----------------------------------------------------------------------------
-// Visualization changed 
+// Visualization changed
 //-----------------------------------------------------------------------------
 void CPropFadeUIPanel::OnTextChanged( KeyValues *data )
 {
 	Panel *pPanel = reinterpret_cast<vgui::Panel *>( data->GetPtr("panel") );
 	vgui::ComboBox *pBox = dynamic_cast<vgui::ComboBox *>( pPanel );
 
-	if( pBox == m_pVisualization ) 
+	if( pBox == m_pVisualization )
 	{
 		OnVisualizationSelected();
 		return;
 	}
 
 	vgui::TextEntry *pText = dynamic_cast<vgui::TextEntry *>( pPanel );
-	if (( pText == m_pMinScreenArea ) || ( pText == m_pMaxScreenArea )) 
+	if (( pText == m_pMinScreenArea ) || ( pText == m_pMaxScreenArea ))
 	{
 		char buf[256];
 		float flMinArea, flMaxArea;
@@ -186,7 +186,7 @@ void CPropFadeUIPanel::OnTextChanged( KeyValues *data )
 
 
 //-----------------------------------------------------------------------------
-// Activate, deactivate: 
+// Activate, deactivate:
 //-----------------------------------------------------------------------------
 void CPropFadeUIPanel::OnVisualizationSelected()
 {
@@ -209,7 +209,7 @@ void CPropFadeUIPanel::OnVisualizationSelected()
 
 
 //-----------------------------------------------------------------------------
-// Activate, deactivate: 
+// Activate, deactivate:
 //-----------------------------------------------------------------------------
 void CPropFadeUIPanel::Activate()
 {
@@ -230,9 +230,9 @@ void CPropFadeUIPanel::Deactivate()
 	r_staticpropinfo.SetValue( 0 );
 }
 
-	
+
 //-----------------------------------------------------------------------------
-// The areaportals helper tool 
+// The areaportals helper tool
 //-----------------------------------------------------------------------------
 class CAreaPortalsUIPanel : public CPerfUIChildPanel
 {
@@ -247,7 +247,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CAreaPortalsUIPanel::CAreaPortalsUIPanel( vgui::Panel *parent ) : BaseClass( parent, "AreaPortalUIPanel")
 {
@@ -255,7 +255,7 @@ CAreaPortalsUIPanel::CAreaPortalsUIPanel( vgui::Panel *parent ) : BaseClass( par
 
 
 //-----------------------------------------------------------------------------
-// Activate, deactivate: 
+// Activate, deactivate:
 //-----------------------------------------------------------------------------
 void CAreaPortalsUIPanel::Activate()
 {
@@ -271,7 +271,7 @@ void CAreaPortalsUIPanel::Deactivate()
 
 
 //-----------------------------------------------------------------------------
-// The occlusion helper tool 
+// The occlusion helper tool
 //-----------------------------------------------------------------------------
 class COcclusionUIPanel : public CPerfUIChildPanel
 {
@@ -304,11 +304,11 @@ private:
 	vgui::TextEntry *m_pMaxOccludeeArea;
 	vgui::CheckButton *m_pDeactivateOcclusion;
 
-	static const char *s_pOccVisualizeLabel[VISUALIZE_TYPE_COUNT]; 
+	static const char *s_pOccVisualizeLabel[VISUALIZE_TYPE_COUNT];
 };
 
 
-const char *COcclusionUIPanel::s_pOccVisualizeLabel[COcclusionUIPanel::VISUALIZE_TYPE_COUNT] = 
+const char *COcclusionUIPanel::s_pOccVisualizeLabel[COcclusionUIPanel::VISUALIZE_TYPE_COUNT] =
 {
 	"No visualization",
 	"View occluders",
@@ -316,7 +316,7 @@ const char *COcclusionUIPanel::s_pOccVisualizeLabel[COcclusionUIPanel::VISUALIZE
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 COcclusionUIPanel::COcclusionUIPanel( vgui::Panel *parent ) : BaseClass( parent, "AreaPortalUIPanel")
 {
@@ -332,7 +332,7 @@ COcclusionUIPanel::COcclusionUIPanel( vgui::Panel *parent ) : BaseClass( parent,
 	m_pMinOccluderArea = new vgui::TextEntry( this, "MinOccluderSize" );
 	m_pMaxOccludeeArea = new vgui::TextEntry( this, "MaxOccludeeSize" );
 
-	m_pDeactivateOcclusion = new vgui::CheckButton( this, "DeactivateOcclusion", "" );	
+	m_pDeactivateOcclusion = new vgui::CheckButton( this, "DeactivateOcclusion", "" );
 	m_pDeactivateOcclusion->AddActionSignalTarget( this );
 
 	LoadControlSettings("Resource\\PerfOcclusionUIPanel.res");
@@ -340,7 +340,7 @@ COcclusionUIPanel::COcclusionUIPanel( vgui::Panel *parent ) : BaseClass( parent,
 
 
 //-----------------------------------------------------------------------------
-// Activate, deactivate: 
+// Activate, deactivate:
 //-----------------------------------------------------------------------------
 void COcclusionUIPanel::Activate()
 {
@@ -362,21 +362,21 @@ void COcclusionUIPanel::Deactivate()
 
 
 //-----------------------------------------------------------------------------
-// Visualization changed 
+// Visualization changed
 //-----------------------------------------------------------------------------
 void COcclusionUIPanel::OnTextChanged( KeyValues *data )
 {
 	Panel *pPanel = reinterpret_cast<vgui::Panel *>( data->GetPtr("panel") );
 	vgui::ComboBox *pBox = dynamic_cast<vgui::ComboBox *>( pPanel );
 
-	if( pBox == m_pVisualization ) 
+	if( pBox == m_pVisualization )
 	{
 		OnVisualizationSelected();
 		return;
 	}
 
 	vgui::TextEntry *pText = dynamic_cast<vgui::TextEntry *>( pPanel );
-	if (( pText == m_pMinOccluderArea ) || ( pText == m_pMaxOccludeeArea )) 
+	if (( pText == m_pMinOccluderArea ) || ( pText == m_pMaxOccludeeArea ))
 	{
 		char buf[256];
 		float flMinArea, flMaxArea;
@@ -399,7 +399,7 @@ void COcclusionUIPanel::OnTextChanged( KeyValues *data )
 
 
 //-----------------------------------------------------------------------------
-// Activate, deactivate: 
+// Activate, deactivate:
 //-----------------------------------------------------------------------------
 void COcclusionUIPanel::OnVisualizationSelected()
 {
@@ -420,7 +420,7 @@ void COcclusionUIPanel::OnVisualizationSelected()
 
 
 //-----------------------------------------------------------------------------
-// Activate, deactivate: 
+// Activate, deactivate:
 //-----------------------------------------------------------------------------
 void COcclusionUIPanel::OnDeactivateOcclusion()
 {
@@ -438,7 +438,7 @@ void COcclusionUIPanel::OnCheckButtonChecked(Panel *panel)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CPerfUIPanel : public vgui::Frame
 {
@@ -569,7 +569,7 @@ void CPerfUIPanel::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// A new performance tool was selected 
+// A new performance tool was selected
 //-----------------------------------------------------------------------------
 void CPerfUIPanel::OnTextChanged( KeyValues *data )
 {
@@ -630,7 +630,7 @@ void CPerfUIPanel::OnCommand( char const *command )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPerfUIPanel::OnKeyCodeTyped(KeyCode code)
 {
@@ -648,7 +648,7 @@ void CPerfUIPanel::OnKeyCodeTyped(KeyCode code)
 
 
 //-----------------------------------------------------------------------------
-// Main interface to the performance tools 
+// Main interface to the performance tools
 //-----------------------------------------------------------------------------
 static CPerfUIPanel *g_pPerfUI = NULL;
 

@@ -29,7 +29,7 @@ using namespace std;
 //------------------------------------------------------------------------------------------------------
 class CCustomAward: public CAward
 {
-public: 
+public:
 	//factory method.
 	static CCustomAward* readCustomAward(CTextFile& f);
 protected:
@@ -45,7 +45,7 @@ protected:
 	map<string,int> stringscores; //this is wrt to the current award.  score in this sense is not related to game score
 											// but simply a score that is relative to other contenders for the award.
 	map<string,int> stringnums; //this is the number of times any of the triggers was activated
-	
+
 	string noWinnerMsg;
 	string extraInfoMsg;
 	virtual void extendedinfo(CHTMLFile& html);
@@ -56,7 +56,7 @@ public:
 
 	void getWinner();
 
-	
+
 };
 
 #endif // CUSTOMAWARD_H

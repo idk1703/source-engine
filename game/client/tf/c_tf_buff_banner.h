@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -29,7 +29,7 @@ public:
 
 	C_TFBuffBanner();
 	~C_TFBuffBanner() {}
-	
+
 	void SetBuffItem( C_TFBuffItem* newBuffItem ) { m_hBuffItem = newBuffItem; }
 
 	virtual void NotifyBoneAttached( C_BaseAnimating* attachTarget );

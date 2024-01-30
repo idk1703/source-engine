@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -25,7 +25,7 @@ class SendTable;
 class ClientClass;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CEventInfo
 {
@@ -65,7 +65,7 @@ public:
 		pSendTable = src.pSendTable;
 		pClientClass = src.pClientClass;
 		filter.AddPlayersFromFilter( &src.filter );
-				
+
 		if ( src.pData )
 		{
 			int size = Bits2Bytes( src.bits );
@@ -81,21 +81,21 @@ public:
 
 	// 0 implies not in use
 	short classID;
-	
+
 	// If non-zero, the delay time when the event should be fired ( fixed up on the client )
 	float fire_delay;
 
 	// send table pointer or NULL if send as full update
 	const SendTable *pSendTable;
 	const ClientClass *pClientClass;
-	
+
 	// Length of data bits
 	int		bits;
 	// Raw event data
 	byte	*pData;
 	// CLIENT ONLY Reliable or not, etc.
 	int		flags;
-	
+
 	// clients that see that event
 	CEngineRecipientFilter filter;
 };

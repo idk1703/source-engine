@@ -50,18 +50,18 @@
 //
 //-----------------------------------------------------------------------------
 
-#define	FUNC_TEMPLATE_ARG_PARAMS_0			
-#define	FUNC_BASE_TEMPLATE_ARG_PARAMS_0		
-#define	FUNC_ARG_MEMBERS_0					
-#define	FUNC_ARG_FORMAL_PARAMS_0			
-#define	FUNC_PROXY_ARG_FORMAL_PARAMS_0		
-#define	FUNC_CALL_ARGS_INIT_0				
-#define	FUNC_CALL_MEMBER_ARGS_0				
-#define	FUNC_CALL_ARGS_0					
-#define	FUNC_FUNCTOR_CALL_ARGS_0			
-#define	FUNC_TEMPLATE_FUNC_PARAMS_0			
-#define	FUNC_BASE_TEMPLATE_FUNC_PARAMS_0	
-#define	FUNC_ADDL_TEMPLATE_FUNC_PARAMS_0	
+#define	FUNC_TEMPLATE_ARG_PARAMS_0
+#define	FUNC_BASE_TEMPLATE_ARG_PARAMS_0
+#define	FUNC_ARG_MEMBERS_0
+#define	FUNC_ARG_FORMAL_PARAMS_0
+#define	FUNC_PROXY_ARG_FORMAL_PARAMS_0
+#define	FUNC_CALL_ARGS_INIT_0
+#define	FUNC_CALL_MEMBER_ARGS_0
+#define	FUNC_CALL_ARGS_0
+#define	FUNC_FUNCTOR_CALL_ARGS_0
+#define	FUNC_TEMPLATE_FUNC_PARAMS_0
+#define	FUNC_BASE_TEMPLATE_FUNC_PARAMS_0
+#define	FUNC_ADDL_TEMPLATE_FUNC_PARAMS_0
 
 #define	FUNC_TEMPLATE_ARG_PARAMS_1			, typename ARG_TYPE_1
 #define	FUNC_BASE_TEMPLATE_ARG_PARAMS_1		, ARG_TYPE_1
@@ -289,9 +289,9 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// When calling through a functor, care needs to be taken to not pass objects that might go away. 
+// When calling through a functor, care needs to be taken to not pass objects that might go away.
 // Since this code determines the type to store in the functor based on the actual arguments,
-// this is achieved by changing the point of call. 
+// this is achieved by changing the point of call.
 //
 // See also CUtlEnvelope
 //-----------------------------------------------------------------------------
@@ -300,7 +300,7 @@ public:
 template <typename T>
 inline T RefToVal(const T &item)
 {
-   return item;
+	return item;
 }
 
 //-----------------------------------------------------------------------------
@@ -362,7 +362,7 @@ class CMemberFuncProxyBase
 {
 protected:
 	CMemberFuncProxyBase( OBJECT_TYPE_PTR pObject, FUNCTION_TYPE pfnProxied )
-	  : m_pObject( pObject ),
+		: m_pObject( pObject ),
 		m_pfnProxied( pfnProxied )
 	{
 		MEM_POLICY::OnAcquire(m_pObject);
@@ -372,7 +372,7 @@ protected:
 	{
 		MEM_POLICY::OnRelease(m_pObject);
 	}
-	
+
 	void Set( OBJECT_TYPE_PTR pObject, FUNCTION_TYPE pfnProxied )
 	{
 		m_pfnProxied = pfnProxied;
@@ -572,7 +572,7 @@ public:
 	{
 		m_pAllocator = pAllocator;
 	}
-	
+
 	#define DEFINE_NONMEMBER_FUNCTOR_FACTORY_CUSTOM(N) \
 		template <typename FUNCTION_RETTYPE FUNC_TEMPLATE_FUNC_PARAMS_##N FUNC_TEMPLATE_ARG_PARAMS_##N> \
 		inline CFunctor *CreateFunctor( FUNCTION_RETTYPE (*pfnProxied)( FUNC_BASE_TEMPLATE_FUNC_PARAMS_##N ) FUNC_ARG_FORMAL_PARAMS_##N ) \
@@ -629,7 +629,7 @@ public:
 
 private:
 	CAllocator *m_pAllocator;
-	
+
 };
 
 //-----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -59,10 +59,10 @@ public:
 	void DetachListener();
 
 	// Object listener
-    virtual void event_object_deleted( IVP_Event_Object *);
-    virtual void event_object_created( IVP_Event_Object *) {}
-    virtual void event_object_revived( IVP_Event_Object *) {}
-    virtual void event_object_frozen ( IVP_Event_Object *) {}
+	virtual void event_object_deleted( IVP_Event_Object *);
+	virtual void event_object_created( IVP_Event_Object *) {}
+	virtual void event_object_revived( IVP_Event_Object *) {}
+	virtual void event_object_frozen ( IVP_Event_Object *) {}
 	void WriteToTemplate( vphysics_save_cphysicsspring_t &params );
 
 private:
@@ -213,7 +213,7 @@ IPhysicsSpring *CreateSpring( IVP_Environment *pEnvironment, CPhysicsObject *pOb
 {
 	// fill in template
 	IVP_Template_Spring spring_template;
-	
+
 	spring_template.spring_values_are_relative=IVP_FALSE;
 	spring_template.spring_constant		= pParams->constant;
 	spring_template.spring_len			= ConvertDistanceToIVP( pParams->naturalLength );
@@ -283,4 +283,3 @@ bool RestorePhysicsSpring( const physrestoreparams_t &params, CPhysicsSpring **p
 
 	return true;
 }
-

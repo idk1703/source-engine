@@ -46,7 +46,7 @@ WinPanel_Round::WinPanel_Round( const char *pElementName ) :
 	m_fFadeBeginTime(0.0f)
 {
 	SetSize( 10, 10 ); // Quiet "parent not sized yet" spew
-	SetParent(g_pClientMode->GetViewport());	
+	SetParent(g_pClientMode->GetViewport());
 
 	SetScheme( "ClientScheme" );
 
@@ -60,11 +60,11 @@ WinPanel_Round::~WinPanel_Round()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WinPanel_Round::Reset()
 {
-	Hide();	
+	Hide();
 }
 
 void WinPanel_Round::Init()
@@ -79,7 +79,7 @@ void WinPanel_Round::Init()
 	ListenForGameEvent( "round_mvp" );
 
 	InitLayout();
-	
+
 	m_bShouldBeVisible = false;
 	m_bShowTimerDefend = false;
 	m_bShowTimerAttack = false;
@@ -98,7 +98,7 @@ void WinPanel_Round::InitLayout()
 
 
 void WinPanel_Round::VidInit()
-{	
+{
 }
 
 //=============================================================================
@@ -121,17 +121,17 @@ void WinPanel_Round::FireGameEvent( IGameEvent* event )
 
 	if ( Q_strcmp( "round_end", pEventName ) == 0 )
 	{
-	}		
+	}
 	else if ( Q_strcmp( "round_start", pEventName ) == 0 )
-	{		
-		Hide();		
+	{
+		Hide();
 	}
 	else if( Q_strcmp( "cs_win_panel_match", pEventName ) == 0 )
-	{	
+	{
 		Hide();
 	}
 	else if( Q_strcmp( "round_mvp", pEventName ) == 0 )
-	{		
+	{
 		C_BasePlayer *basePlayer = UTIL_PlayerByUserId( event->GetInt( "userid" ) );
 		CSMvpReason_t mvpReason = (CSMvpReason_t)event->GetInt( "reason" );
 
@@ -271,7 +271,7 @@ void WinPanel_Round::FireGameEvent( IGameEvent* event )
 		case VIP_Assassinated:
 		case Terrorists_Escaped:
 		case Terrorists_Win:
-		case Hostages_Not_Rescued:            
+		case Hostages_Not_Rescued:
 		case VIP_Not_Escaped:
 			pWinLabel->SetText(UpperCaseWideString(LocalizeFindSafe("#winpanel_t_win")));
 			pWinLabel->SetFgColor(Color(184,0,0,255));
@@ -307,7 +307,7 @@ void WinPanel_Round::FireGameEvent( IGameEvent* event )
 void WinPanel_Round::SetMVP( C_CSPlayer* pPlayer, CSMvpReason_t reason )
 {
 	CAvatarImagePanel* pMVP_Avatar = dynamic_cast<CAvatarImagePanel*>(FindChildByName("MVP_Avatar"));
-	
+
 	if ( pMVP_Avatar )
 	{
 		pMVP_Avatar->ClearAvatar();
@@ -441,7 +441,7 @@ void WinPanel_Round::OnThink()
 				gHUD.UnlockRenderGroup( iRenderGroup );
 			}
 			m_bShouldBeVisible = false;
-			SetAlpha(0);			
+			SetAlpha(0);
 			m_bIsFading = false;
 		}
 	}

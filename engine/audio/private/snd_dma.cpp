@@ -280,8 +280,8 @@ float S_ComputeDelayForSoundtime( float soundtime, clocksync_index_t syncIndex )
 	if ( gameDeltaTime < 0 || fabs(delay) > 0.500f )
 	{
 		// Note that the equations assume a correlation between game time and real time
-		// some kind of clock error.  This can happen with large host_timescale or when the 
-		// framerate hitches drastically (game time is a smaller clamped value wrt real time).  
+		// some kind of clock error.  This can happen with large host_timescale or when the
+		// framerate hitches drastically (game time is a smaller clamped value wrt real time).
 		// The current sync estimate has probably drifted due to this or some other problem, recompute.
 		//Msg("Clock ERROR!: %.2f %.2f\n", gameDeltaTime, delay);
 		S_SyncClockAdjust(syncIndex);
@@ -377,13 +377,13 @@ const char *CSfxTable::getname()
 		char* pString = tmpstr512();
 		if ( g_pFileSystem )
 			g_pFileSystem->String( s_Sounds.Key( m_namePoolIndex ), pString, 512 );
-		else 
+		else
 		{
 			pString[0] = 0;
 		}
 		return pString;
 	}
-	
+
 	return NULL;
 }
 
@@ -406,7 +406,7 @@ const char *CSfxTable::GetFileName()
 	}
 
 	const char *pName = getname();
-	return pName ? PSkipSoundChars( pName ) : NULL;	
+	return pName ? PSkipSoundChars( pName ) : NULL;
 }
 
 bool CSfxTable::IsPrecachedSound()
@@ -432,22 +432,22 @@ typedef struct
 	float		initial_percent;
 
 	// How far to adjust client's volume down by.
-	float		percent;  
+	float		percent;
 
 	// GetHostTime() when we started adjusting volume
-	float		starttime;   
+	float		starttime;
 
 	// # of seconds to get to faded out state
-	float		fadeouttime; 
-    // # of seconds to hold
-	float		holdtime;  
+	float		fadeouttime;
+	// # of seconds to hold
+	float		holdtime;
 	// # of seconds to restore
 	float		fadeintime;
 } soundfade_t;
 
 static soundfade_t soundfade;  // Client sound fading singleton object
 
-// 0)headphones 2)stereo speakers 4)quad 5)5point1 
+// 0)headphones 2)stereo speakers 4)quad 5)5point1
 // autodetected from windows settings
 ConVar snd_surround( "snd_surround_speakers", "-1", FCVAR_INTERNAL_USE );
 ConVar snd_legacy_surround( "snd_legacy_surround", "0", FCVAR_ARCHIVE );
@@ -459,7 +459,7 @@ ConVar snd_pitchquality( "snd_pitchquality", "1", FCVAR_ARCHIVE );		// 1) use hi
 // master volume
 static ConVar volume( "volume", "1.0", FCVAR_ARCHIVE | FCVAR_ARCHIVE_XBOX, "Sound volume", true, 0.0f, true, 1.0f );
 // user configurable music volume
-ConVar snd_musicvolume( "snd_musicvolume", "1.0", FCVAR_ARCHIVE | FCVAR_ARCHIVE_XBOX, "Music volume", true, 0.0f, true, 1.0f );	
+ConVar snd_musicvolume( "snd_musicvolume", "1.0", FCVAR_ARCHIVE | FCVAR_ARCHIVE_XBOX, "Music volume", true, 0.0f, true, 1.0f );
 
 ConVar snd_mixahead( "snd_mixahead", "0.1", FCVAR_ARCHIVE );
 ConVar snd_mix_async( "snd_mix_async", "0" );
@@ -488,7 +488,7 @@ public:
 		{
 			return false;
 		}
-		
+
 		m_SoundNames.AddString( pSfx->GetFileName() );
 		return true;
 	}
@@ -560,7 +560,7 @@ public:
 				{
 					Msg( "CResourcePreloadSound: Purging: %s\n", pSfx->GetFileName() );
 				}
-				
+
 				pSfx->pSource->CacheUnload();
 				delete pSfx->pSource;
 				pSfx->pSource = NULL;
@@ -571,14 +571,14 @@ public:
 
 		wavedatacache->Flush();
 	}
-	
+
 private:
 	CUtlSymbolTable	m_SoundNames;
 };
 static CResourcePreloadSound s_ResourcePreloadSound;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float S_GetMasterVolume( void )
@@ -602,10 +602,10 @@ void S_SoundInfo_f(void)
 	}
 
 	Msg( "Sound Device:   %s\n", g_AudioDevice->DeviceName() );
-    Msg( "  Channels:     %d\n", g_AudioDevice->DeviceChannels() );
-    Msg( "  Samples:      %d\n", g_AudioDevice->DeviceSampleCount() );
-    Msg( "  Bits/Sample:  %d\n", g_AudioDevice->DeviceSampleBits() );
-    Msg( "  Rate:         %d\n", g_AudioDevice->DeviceDmaSpeed() );
+	Msg( "  Channels:     %d\n", g_AudioDevice->DeviceChannels() );
+	Msg( "  Samples:      %d\n", g_AudioDevice->DeviceSampleCount() );
+	Msg( "  Bits/Sample:  %d\n", g_AudioDevice->DeviceSampleBits() );
+	Msg( "  Rate:         %d\n", g_AudioDevice->DeviceDmaSpeed() );
 	Msg( "total_channels: %d\n", total_channels);
 
 	if ( IsX360() )
@@ -734,7 +734,7 @@ void S_Init( void )
 	}
 
 	Assert( g_pVideo != NULL );
-	
+
 	if ( g_pVideo != NULL )
 	{
 		if ( g_pVideo->SoundDeviceCommand( VideoSoundDeviceOperation::HOOK_X_AUDIO, NULL ) != VideoResult::SUCCESS )
@@ -783,7 +783,7 @@ void S_Shutdown(void)
 
 	// release sentences resources
 	TRACESHUTDOWN( VOX_Shutdown() );
-	
+
 	if ( IsPC() )
 	{
 		// shutdown vaudio
@@ -817,9 +817,9 @@ bool S_IsInitted()
 // =======================================================================
 
 //-----------------------------------------------------------------------------
-// Return sfx and set pfInCache to 1 if 
+// Return sfx and set pfInCache to 1 if
 // name is in name cache. Otherwise, alloc
-// a new spot in name cache and return 0 
+// a new spot in name cache and return 0
 // in pfInCache.
 //-----------------------------------------------------------------------------
 CSfxTable *S_FindName( const char *szName, int *pfInCache )
@@ -908,7 +908,7 @@ CAudioSource *S_LoadSound( CSfxTable *pSfx, channel_t *ch )
 		{
 			if ( SND_IsInGame() && !g_pQueuedLoader->IsMapLoading() )
 			{
-				// sound should be present (due to reslists), but NOT allowing a load hitch during gameplay 
+				// sound should be present (due to reslists), but NOT allowing a load hitch during gameplay
 				// loading a sound during gameplay is a bad experience, causes a very expensive sync i/o to fetch the header
 				// and in the case of a memory wave, the actual audio data
 				bool bFound = false;
@@ -937,7 +937,7 @@ CAudioSource *S_LoadSound( CSfxTable *pSfx, channel_t *ch )
 					if ( !bFound )
 					{
 						// warn once
-						DevWarning( "S_LoadSound: Late load '%s', skipping.\n", pSfx->getname() ); 
+						DevWarning( "S_LoadSound: Late load '%s', skipping.\n", pSfx->getname() );
 						pSfx->m_bIsLateLoad = true;
 					}
 				}
@@ -969,7 +969,7 @@ CAudioSource *S_LoadSound( CSfxTable *pSfx, channel_t *ch )
 		// override streaming
 		if ( IsX360() )
 		{
-			const char *s_CriticalSounds[] = 
+			const char *s_CriticalSounds[] =
 			{
 				"common",
 				"items",
@@ -1023,7 +1023,7 @@ CAudioSource *S_LoadSound( CSfxTable *pSfx, channel_t *ch )
 		double ed = Plat_FloatTime();
 		g_flAccumulatedSoundLoadTime += ( ed - st );
 	}
-	else 
+	else
 	{
 		pSfx->pSource->CheckAudioSourceCache();
 	}
@@ -1121,7 +1121,7 @@ void S_ReloadSound( const char *name )
 		Assert( Q_stricmp( sfx->getname(), name ) == 0 );
 	}
 #endif
-	
+
 	S_InternalReloadSound( sfx );
 }
 
@@ -1135,7 +1135,7 @@ void S_ReloadFilesInList( IFileList *pFilesToReload )
 	S_StopAllSounds( true );
 	wavedatacache->Flush();
 	audiosourcecache->ForceRecheckDiskInfo();	// Force all cached audio data to recheck size/date info next time it's accessed.
-	
+
 
 	CUtlVector< CSfxTable * > processed;
 
@@ -1149,7 +1149,7 @@ void S_ReloadFilesInList( IFileList *pFilesToReload )
 			Assert( !"S_HandlePureServerWhitelist - can't get a filename." );
 			continue;
 		}
-	
+
 		// If the file isn't cached in yet, then the filesystem hasn't touched its file, so don't bother.
 		CSfxTable *sfx = s_Sounds[i].pSfx;
 		if ( sfx && ( processed.Find( sfx ) == processed.InvalidIndex() ) )
@@ -1160,7 +1160,7 @@ void S_ReloadFilesInList( IFileList *pFilesToReload )
 			else
 				Q_snprintf( fullFilename, sizeof( fullFilename ), "sound/%s", filename );
 
-			
+
 			if ( !pFilesToReload->IsFileInList( fullFilename ) )
 				continue;
 
@@ -1238,7 +1238,7 @@ ConVar voice_steal("voice_steal", "2");
 /*
 =================
 SND_StealDynamicChannel
-Select a channel from the dynamic channel allocation area.  For the given entity, 
+Select a channel from the dynamic channel allocation area.  For the given entity,
 override any other sound playing on the same channel (see code comments below for
 exceptions).
 =================
@@ -1261,7 +1261,7 @@ channel_t *SND_StealDynamicChannel(SoundSource soundsource, int entchannel, cons
 	for ( int ch_idx = 0; ch_idx < MAX_DYNAMIC_CHANNELS ; ch_idx++)
 	{
 		channel_t *ch = &channels[ch_idx];
-		
+
 		if ( ch->activeIndex )
 		{
 			// channel CHAN_AUTO never overrides sounds on same channel
@@ -1476,15 +1476,15 @@ channel_t *SND_PickDynamicChannel(SoundSource soundsource, int entchannel, const
 	return pChannel;
 }
 
-  			
+
 
 /*
 =====================
 SND_PickStaticChannel
 =====================
 Pick an empty channel from the static sound area, or allocate a new
-channel.  Only fails if we're at max_channels (128!!!) or if 
-we're trying to allocate a channel for a stream sound that is 
+channel.  Only fails if we're at max_channels (128!!!) or if
+we're trying to allocate a channel for a stream sound that is
 already playing.
 
 */
@@ -1494,11 +1494,11 @@ channel_t *SND_PickStaticChannel(int soundsource, CSfxTable *pSfx)
 	channel_t *ch = NULL;
 
 	// Check for replacement sound, or find the best one to replace
- 	for (i = MAX_DYNAMIC_CHANNELS; i<total_channels; i++)
+	for (i = MAX_DYNAMIC_CHANNELS; i<total_channels; i++)
 		if (channels[i].sfx == NULL)
 			break;
 
-	if (i < total_channels) 
+	if (i < total_channels)
 	{
 		// reuse an empty static sound channel
 		ch = &channels[i];
@@ -1573,7 +1573,7 @@ bool S_IsMusic( channel_t *pChannel )
 	if ( !source )
 		return false;
 
-	// Don't save restore looping sounds as you can end up with an entity restarting them again and have 
+	// Don't save restore looping sounds as you can end up with an entity restarting them again and have
 	//  them accumulate, etc.
 	if ( source->IsLooped() )
 		return false;
@@ -1598,7 +1598,7 @@ bool S_IsMusic( channel_t *pChannel )
 
 //-----------------------------------------------------------------------------
 // Purpose: For save/restore of currently playing music
-// Input  : list - 
+// Input  : list -
 //-----------------------------------------------------------------------------
 void S_GetCurrentlyPlayingMusic( CUtlVector< musicsave_t >& musiclist )
 {
@@ -1620,8 +1620,8 @@ void S_GetCurrentlyPlayingMusic( CUtlVector< musicsave_t >& musiclist )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *song - 
+// Purpose:
+// Input  : *song -
 //-----------------------------------------------------------------------------
 void S_RestartSong( const musicsave_t *song )
 {
@@ -1650,10 +1650,10 @@ void S_RestartSong( const musicsave_t *song )
 			// Now find the channel this went on and skip ahead in the mixer
 			for (int i = 0; i < total_channels; i++)
 			{
-				channel_t *ch = &channels[i]; 
+				channel_t *ch = &channels[i];
 
 				if ( !ch->pMixer ||
-					 !ch->pMixer->GetSource() )
+					!ch->pMixer->GetSource() )
 				{
 					continue;
 				}
@@ -1676,7 +1676,7 @@ soundlevel_t SND_GetSndlvl ( channel_t *pchannel );
 
 
 ConVar dsp_dist_min("dsp_dist_min", "0.0", FCVAR_DEMO|FCVAR_CHEAT);		// range at which sounds are mixed at dsp_mix_min
-ConVar dsp_dist_max("dsp_dist_max", "1440.0", FCVAR_DEMO|FCVAR_CHEAT);	// range at which sounds are mixed at dsp_mix_max	
+ConVar dsp_dist_max("dsp_dist_max", "1440.0", FCVAR_DEMO|FCVAR_CHEAT);	// range at which sounds are mixed at dsp_mix_max
 
 ConVar dsp_mix_min("dsp_mix_min", "0.2", FCVAR_DEMO );		// dsp mix at dsp_dist_min distance "near"
 ConVar dsp_mix_max("dsp_mix_max", "0.8", FCVAR_DEMO );		// dsp mix at dsp_dist_max distance "far"
@@ -1714,9 +1714,9 @@ float SND_GetDspMix( channel_t *pchannel, int idist)
 		// sounds below dsp_db_min decrease dsp_mix_min & dsp_mix_max by N%
 		// ie: quiet sounds get less dsp mix than loud sounds
 
-		soundlevel_t sndlvl = SND_GetSndlvl( pchannel ); 
+		soundlevel_t sndlvl = SND_GetSndlvl( pchannel );
 		soundlevel_t sndlvl_min = (soundlevel_t)(dsp_db_min.GetInt());
-		
+
 		if (sndlvl <= sndlvl_min)
 		{
 			mix_min *= dsp_db_mixdrop.GetFloat();
@@ -1743,7 +1743,7 @@ float SND_GetDspMix( channel_t *pchannel, int idist)
 		return 0.0;
 
 	// linear ramp - get dry mix %
-	
+
 	// dist: 0->(max - min)
 
 	dist = clamp( dist, dist_min, dist_max ) - dist_min;
@@ -1755,7 +1755,7 @@ float SND_GetDspMix( channel_t *pchannel, int idist)
 	// mix: min->max
 
 	mix = ((mix_max - mix_min) * dist) + mix_min;
-				
+
 	return mix;
 }
 
@@ -1774,14 +1774,14 @@ float SND_GetDistanceMix( channel_t *pchannel, int idist)
 {
 	float mix;
 	float dist = (float)idist;
-	
+
 	// doppler wavs are 100% near - their spatialization is calculated later.
 
 	if ( pchannel->wavtype == CHAR_DOPPLER )
 		return 0.0;
 
 	// linear ramp - get dry mix %
-	
+
 	// dist 0->(max - min)
 
 	dist = clamp( dist, (float) DVAR_DIST_MIN, (float) DVAR_DIST_MAX ) - (float) DVAR_DIST_MIN;
@@ -1793,11 +1793,11 @@ float SND_GetDistanceMix( channel_t *pchannel, int idist)
 	// mix min->max
 
 	mix = ((DVAR_MIX_MAX - DVAR_MIX_MIN) * dist) + DVAR_MIX_MIN;
-	
+
 	return mix;
 }
 
-// given facing direction of source, and channel, 
+// given facing direction of source, and channel,
 // return -1.0 - 1.0, where -1.0 is source facing away from listener
 // and 1.0 is source facing listener
 
@@ -1812,7 +1812,7 @@ float SND_GetFacingDirection( channel_t *pChannel, const QAngle &source_angles )
 
 	if ( pChannel->wavtype != CHAR_DIRECTIONAL )
 		return 1.0;
-	
+
 	VectorSubtract(listener_origin, pChannel->origin, SL);
 	VectorNormalize(SL);
 
@@ -1824,12 +1824,12 @@ float SND_GetFacingDirection( channel_t *pChannel, const QAngle &source_angles )
 	// ie: projection of SF onto SL
 
 	dotSFSL = DotProduct( SF, SL );
-		
+
 	return dotSFSL;
 }
 
-// calculate point of closest approach - caller must ensure that the 
-// forward facing vector of the entity playing this sound points in exactly the direction of 
+// calculate point of closest approach - caller must ensure that the
+// forward facing vector of the entity playing this sound points in exactly the direction of
 // travel of the sound. ie: for bullets or tracers, forward vector must point in traceline direction.
 // return true if sound is to be played, false if sound cannot be heard (shot away from player)
 
@@ -1837,7 +1837,7 @@ bool SND_GetClosestPoint( channel_t *pChannel, QAngle &source_angles, Vector &vn
 {
 	// S - sound source origin
 	// L - listener origin
-	
+
 	Vector SF;				// sound source forward direction unit vector
 	Vector SL;				// sound -> listener vector
 	Vector SD;				// sound->closest point vector
@@ -1858,7 +1858,7 @@ bool SND_GetClosestPoint( channel_t *pChannel, QAngle &source_angles, Vector &vn
 
 	AngleVectors( source_angles, &SF );
 	VectorNormalize( SF );
-	
+
 	dSLSF = DotProduct( SL, SF );
 
 
@@ -1868,9 +1868,9 @@ bool SND_GetClosestPoint( channel_t *pChannel, QAngle &source_angles, Vector &vn
 		// unless we're recording in the tool, since we may play back from in front of the source
 		return false;
 	}
-		
+
 	// project dSLSF along forward unit vector from sound source
-	
+
 	VectorMultiply( SF, dSLSF, SD );
 
 	// output vector - add SD to sound source origin
@@ -1881,8 +1881,8 @@ bool SND_GetClosestPoint( channel_t *pChannel, QAngle &source_angles, Vector &vn
 }
 
 
-// given point of nearest approach and sound source facing angles, 
-// return vector pointing into quadrant in which to play 
+// given point of nearest approach and sound source facing angles,
+// return vector pointing into quadrant in which to play
 // doppler left wav (incomming) and doppler right wav (outgoing).
 
 // doppler left is point in space to play left doppler wav
@@ -1916,13 +1916,13 @@ void SND_GetDopplerPoints( channel_t *pChannel, QAngle &source_angles, Vector &v
 
 	// source_doppler_left - location in space to play doppler left wav (incomming)
 	// source_doppler_right	- location in space to play doppler right wav (outgoing)
-	
+
 	VectorMultiply( SF, -1*DOPPLER_DIST_LEFT_TO_RIGHT, DL );
 	VectorMultiply( SF, DOPPLER_DIST_LEFT_TO_RIGHT, DR );
 
 	VectorAdd( vnearpoint, DL, source_doppler_left );
 	VectorAdd( vnearpoint, DR, source_doppler_right );
-	
+
 	// set pitch of channel based on nearest distance to listener
 
 	// LN is vector from listener to closest approach point
@@ -1931,7 +1931,7 @@ void SND_GetDopplerPoints( channel_t *pChannel, QAngle &source_angles, Vector &v
 
 	float pitch;
 	float dist = VectorLength( LN );
-	
+
 	// dist varies 0->1
 
 	dist = clamp(dist, (float)DOPPLER_DIST_MIN, (float)DOPPLER_DIST_MAX);
@@ -1940,13 +1940,13 @@ void SND_GetDopplerPoints( channel_t *pChannel, QAngle &source_angles, Vector &v
 	// pitch varies from max to min
 
 	pitch = DOPPLER_PITCH_MAX - dist * (DOPPLER_PITCH_MAX - DOPPLER_PITCH_MIN);
-	
+
 	pChannel->basePitch = (int)(pitch * 100.0);
 }
 
 // console variables used to construct gain curve - don't change these!
 
-extern ConVar snd_foliage_db_loss; 
+extern ConVar snd_foliage_db_loss;
 extern ConVar snd_gain;
 extern ConVar snd_refdb;
 extern ConVar snd_refdist;
@@ -1954,7 +1954,7 @@ extern ConVar snd_gain_max;
 extern ConVar snd_gain_min;
 
 ConVar snd_showstart( "snd_showstart", "0", FCVAR_CHEAT );	// showstart always skips info on player footsteps!
-												// 1 - show sound name, channel, volume, time 
+												// 1 - show sound name, channel, volume, time
 												// 2 - show dspmix, distmix, dspface, l/r/f/r vols
 												// 3 - show sound origin coords
 												// 4 - show gain of dsp_room
@@ -2003,11 +2003,11 @@ soundlevel_t SND_GetSndlvl ( channel_t *pchannel )
 // The complete gain calculation, with SNDLVL given in dB is:
 //
 // GAIN = 1/dist * snd_refdist * 10 ^ ( ( SNDLVL - snd_refdb - (dist * snd_foliage_db_loss / 1200)) / 20 )
-// 
+//
 //		for gain > SND_GAIN_THRESH, start curve smoothing with
 //
 // GAIN = 1 - 1 / (Y * GAIN ^ SND_GAIN_POWER)
-// 
+//
 //		 where Y = -1 / ( (SND_GAIN_THRESH ^ SND_GAIN_POWER) * (SND_GAIN_THRESH - 1) )
 //
 
@@ -2050,7 +2050,7 @@ float SND_GetGain( channel_t *ch, bool fplayersound, bool fmusicsound, bool floo
 
 		if ( fplayersound )
 		{
-			
+
 			// player weapon sounds get extra gain - this compensates
 			// for npc distance effect weapons which mix louder as L+R into L,R
 			// Hack.
@@ -2069,7 +2069,7 @@ float SND_GetGain( channel_t *ch, bool fplayersound, bool fmusicsound, bool floo
 			snd_showstart.SetValue(5);	// display once
 		}
 
-		return gain; 
+		return gain;
 	}
 }
 
@@ -2100,7 +2100,7 @@ float SND_FadeToNewGain( channel_t *ch, float gain_new )
 	}
 
 	// set up new increment to new target
-	
+
 	float frametime = g_pSoundServices->GetHostFrametime();
 	float speed;
 	speed = ( frametime / SND_GAIN_FADE_TIME ) * (gain_new - ch->ob_gain);
@@ -2108,11 +2108,11 @@ float SND_FadeToNewGain( channel_t *ch, float gain_new )
 	ch->ob_gain_inc = fabs(speed);
 
 	// ch->ob_gain_inc = fabs(gain_new - ch->ob_gain) / 10.0;
-	
+
 	ch->ob_gain_target = gain_new;
 
 	// if not hit target, keep approaching
-	
+
 	if ( fabs( ch->ob_gain - ch->ob_gain_target ) > 0.01 )
 	{
 		ch->ob_gain = Approach( ch->ob_gain_target, ch->ob_gain, ch->ob_gain_inc );
@@ -2164,8 +2164,8 @@ bool SND_ChannelOkToTrace( channel_t *ch )
 	return true;
 }
 
-// determine if we need to reset all flags for traceline limiting - 
-// this happens if we hit a frame whein no tracelines occur ie: all currently 
+// determine if we need to reset all flags for traceline limiting -
+// this happens if we hit a frame whein no tracelines occur ie: all currently
 // playing sounds are blocked.
 
 void SND_ChannelTraceReset( void )
@@ -2173,11 +2173,11 @@ void SND_ChannelTraceReset( void )
 	if ( g_snd_trace_count )
 		return;
 
-	// if no tracelines performed this frame, then reset all 
+	// if no tracelines performed this frame, then reset all
 	// trace flags
 
 	for (int i = 0; i < total_channels; i++)
-		channels[i].flags.bTraced = false; 
+		channels[i].flags.bTraced = false;
 }
 
 bool SND_IsLongWave( channel_t *pChannel )
@@ -2254,7 +2254,7 @@ float SND_GetGainObscured( channel_t *ch, bool fplayersound, bool flooping, bool
 	// set up traceline from player eyes to sound emitting entity origin
 
 	Vector endpoint = ch->origin;
-	
+
 	trace_t tr;
 	CTraceFilterWorldOnly filter;	// UNDONE: also test for static props?
 	Ray_t ray;
@@ -2281,12 +2281,12 @@ float SND_GetGainObscured( channel_t *ch, bool fplayersound, bool flooping, bool
 		int i;
 
 		// get radius
-		
+
 		if ( ch->radius > 0 )
 			radius = ch->radius;
 		else
 			radius = dB_To_Radius( sndlvl);		// approximate radius from soundlevel
-		
+
 		// set up extent endpoints - on upward or downward diagonals, facing player
 
 		for (i = 0; i < 4; i++)
@@ -2299,7 +2299,7 @@ float SND_GetGainObscured( channel_t *ch, bool fplayersound, bool flooping, bool
 		VectorVectors( vsrc_forward, vsrc_right, vsrc_up );
 
 		VectorAdd( vsrc_up, vsrc_right, vecl );
-		
+
 		// if src above listener, force 'up' vector to point down - create diagonals up & down
 
 		if ( endpoint.z > listener_origin.z + (10 * 12) )
@@ -2309,7 +2309,7 @@ float SND_GetGainObscured( channel_t *ch, bool fplayersound, bool flooping, bool
 		VectorNormalize( vecl );
 		VectorNormalize( vecr );
 
-		// get diagonal vectors from sound source 
+		// get diagonal vectors from sound source
 
 		vecl2 = radius * vecl;
 		vecr2 = radius * vecr;
@@ -2331,7 +2331,7 @@ float SND_GetGainObscured( channel_t *ch, bool fplayersound, bool flooping, bool
 
 			ray.Init( MainViewOrigin(), endpoints[i] );
 			g_pEngineTraceClient->TraceRay( ray, MASK_BLOCK_AUDIO, &filter, &tr );
-			
+
 			if (tr.DidHit() && tr.fraction < 0.99 && !tr.startsolid )
 			{
 				count++;	// skip first obscured point: at least 2 points + center should be obscured to hear db loss
@@ -2341,7 +2341,7 @@ float SND_GetGainObscured( channel_t *ch, bool fplayersound, bool flooping, bool
 		}
 	}
 
-	
+
 	if ( flooping && snd_showstart.GetInt() == 7)
 	{
 		static float g_drop_prev = 0;
@@ -2428,7 +2428,7 @@ void DSP_SetSpatialDelay( int chan, float v )
 
 	int iproc = 0;
 
-	DSP_ChangePresetValue( idsp_spatial, chan, iproc, value );		
+	DSP_ChangePresetValue( idsp_spatial, chan, iproc, value );
 /*
 
 	if (chan & 0x01)
@@ -2438,11 +2438,11 @@ void DSP_SetSpatialDelay( int chan, float v )
 */
 }
 
-// use non-feedback delay to stereoize (or make quad, or quad + center) the mono dsp_room fx, 
+// use non-feedback delay to stereoize (or make quad, or quad + center) the mono dsp_room fx,
 // This simulates the average sum of delays caused by reflections
 // from the left and right walls relative to the player.  The average delay
 // difference between left & right wall is (l + r)/2.  This becomes the average
-// delay difference between left & right ear. 
+// delay difference between left & right ear.
 // call at most once per frame to update player->wall spatial delays
 
 void SND_SetSpatialDelays()
@@ -2451,11 +2451,11 @@ void SND_SetSpatialDelays()
 	float dist, v, vp;
 	Vector v_dir, v_dir2;
 	int chan_max = (g_AudioDevice->IsSurround() ? 4 : 2) + (g_AudioDevice->IsSurroundCenter() ? 1 : 0);  // 2, 4, 5 channels
-	
+
 	// use listener_forward2d, which doesn't change when player looks up/down.
 
 	Vector listener_forward2d;
-	
+
 	ConvertListenerVectorTo2D( &listener_forward2d, &listener_right );
 
 	// init struct if 1st time through
@@ -2467,13 +2467,13 @@ void SND_SetSpatialDelays()
 	}
 
 	// return if dsp_spatial is 0
-	
-	if ( !dsp_spatial.GetInt() ) 
+
+	if ( !dsp_spatial.GetInt() )
 		return;
-	
+
 	// if listener has not been updated, do nothing
 
-	if ((listener_origin  == vec3_origin) && 
+	if ((listener_origin  == vec3_origin) &&
 		(listener_forward == vec3_origin) &&
 		(listener_right	  == vec3_origin) &&
 		(listener_up	  == vec3_origin) )
@@ -2483,9 +2483,9 @@ void SND_SetSpatialDelays()
 		return;
 
 	// get time
-	
+
 	double dtime = g_pSoundServices->GetHostTime();
-	
+
 	// compare to previous time - if starting new check - don't check for new room until timer expires
 
 	if (!g_ssp.chan && !g_ssp.cycle)
@@ -2498,7 +2498,7 @@ void SND_SetSpatialDelays()
 	// count[chan][cycle] 0,1 0,2 0,3   1,1 1,2 1,3    2,1 2,2 2,3 ...
 
 	g_ssp.cycle++;
-	
+
 	if (g_ssp.cycle == 3)
 	{
 		g_ssp.cycle = 0;
@@ -2506,7 +2506,7 @@ void SND_SetSpatialDelays()
 		// cycle through front left, front right, rear left, rear right, front center delays
 
 		g_ssp.chan++;
-	
+
 		if (g_ssp.chan >= chan_max )
 			g_ssp.chan = 0;
 	}
@@ -2557,7 +2557,7 @@ void SND_SetSpatialDelays()
 		v_dir = (listener_right - listener_forward2d) / 2.0;
 		v_dir = g_ssp.cycle ? (g_ssp.cycle == 1 ? listener_right * 0.5: -listener_forward2d * 0.5) : v_dir;
 		break;
-		
+
 	case 4: // front center: trace max 100' 'cone' to player's front
 		v_dir = listener_forward2d;
 		v_dir2 = g_ssp.cycle ? (g_ssp.cycle == 1 ? listener_right * 0.15 : -listener_right * 0.15) : v_dir;
@@ -2565,7 +2565,7 @@ void SND_SetSpatialDelays()
 		break;
 	}
 
-	Vector endpoint;	
+	Vector endpoint;
 	trace_t tr;
 	CTraceFilterWorldOnly filter;
 
@@ -2578,9 +2578,9 @@ void SND_SetSpatialDelays()
 
 	if ( tr.DidHit() )
 	{
-		dist = VectorLength( tr.endpos - MainViewOrigin() );	
+		dist = VectorLength( tr.endpos - MainViewOrigin() );
 	}
-	
+
 	g_ssp.dist[g_ssp.chan][g_ssp.cycle] = dist;
 
 	// set new result in dsp_spatial delay params when all delay values have been filled in
@@ -2598,7 +2598,7 @@ void SND_SetSpatialDelays()
 
 			// only change if 10% difference from previous
 
-			if ((vp != v) && int(v) && (PercentDifference( v, vp ) >= 0.1))		
+			if ((vp != v) && int(v) && (PercentDifference( v, vp ) >= 0.1))
 			{
 				// update when we have data for all L/R && RL/RR channels...
 
@@ -2627,7 +2627,7 @@ void SND_SetSpatialDelays()
 					DSP_SetSpatialDelay(chan-1, vl);
 					DSP_SetSpatialDelay(chan, vr);
 				}
-				
+
 				// update center chan
 
 				if (chan == 4)
@@ -2636,15 +2636,15 @@ void SND_SetSpatialDelays()
 					DSP_SetSpatialDelay(chan, vl);
 				}
 			}
-			
+
 			g_ssp.value_prev[chan] = v;
 
 		}
 
 		// update wait timer now that all values have been checked
 
-		g_ssp.last_change = dtime;		
-	}	
+		g_ssp.last_change = dtime;
+	}
 }
 
 // Dsp Automatic Selection:
@@ -2706,12 +2706,12 @@ struct das_room_t
 	int width_max;				// max width
 	int length_max;				// max length
 	int height_max;				// max height
-		
+
 	float refl_avg;				// running average of reflectivity of all walls
-	float refl_walls[6];		// left,right,front,back,ceiling,floor reflectivities	
+	float refl_walls[6];		// left,right,front,back,ceiling,floor reflectivities
 
 	float sky_pct;				// percent of sky hits
-	
+
 	Vector room_mins;			// room bounds
 	Vector room_maxs;
 
@@ -2734,10 +2734,10 @@ struct das_node_t
 	bool fused;					// true if valid node
 	bool fseesplayer;			// true if node sees player on last check
 	short dsp_preset;				// preset
-		
+
 	int range_min;				// min,max detection ranges
 	int range_max;
-	
+
 	int dist;					// last distance to player
 
 	// room parameters when node was created:
@@ -2864,11 +2864,11 @@ bool DAS_NodeInRange( das_room_t *proom, das_node_t *pnode )
 
 	dist = VectorLength( proom->vplayer - pnode->vplayer );
 
-	// player can still see previous room selection point, and it's less than n feet away, 
+	// player can still see previous room selection point, and it's less than n feet away,
 	// then flag this node as visible
 
 	pnode->dist = dist;
-	
+
 	return ( dist <= pnode->range_max );
 }
 
@@ -2897,7 +2897,7 @@ bool DAS_CheckNextNode( das_room_t *proom )
 
 		if ( g_das_nodes[i].fused && DAS_NodeInRange( proom, &(g_das_nodes[i]) ) )
 		{
-			// trace to see if player can still see node, 
+			// trace to see if player can still see node,
 			// if so stop checking
 
 			if ( DAS_TraceNodeToPlayer( proom, &(g_das_nodes[i]) ))
@@ -2910,7 +2910,7 @@ checknode_exit:
 	// flag that all nodes have been checked
 
 	if ( g_das_checked_count >= DAS_CNODES )
-		g_das_all_checked = true;	
+		g_das_all_checked = true;
 
 	return g_das_all_checked;
 }
@@ -2925,7 +2925,7 @@ int DAS_GetNextNodeIndex()
 void DAS_StoreNode( das_room_t *proom, int dsp_preset)
 {
 	// overwrite node in cyclic list
-	
+
 	int i = DAS_GetNextIndex( &g_das_store_next, DAS_CNODES );
 
 	g_das_nodes[i].dsp_preset = dsp_preset;
@@ -2933,11 +2933,11 @@ void DAS_StoreNode( das_room_t *proom, int dsp_preset)
 	g_das_nodes[i].vplayer = proom->vplayer;
 
 	// calculate node scanning range_max based on room size
-	
+
 	if ( !proom->bskyabove )
 	{
 		// inside range - halls & tunnels have nodes every 5*width
-		g_das_nodes[i].range_max = fpmin((int)DAS_DIST_MAX, min(proom->width_max * 5, proom->length_max) ); 
+		g_das_nodes[i].range_max = fpmin((int)DAS_DIST_MAX, min(proom->width_max * 5, proom->length_max) );
 		g_das_nodes[i].range_min = DAS_DIST_MIN;
 	}
 	else
@@ -2974,13 +2974,13 @@ int DAS_GetDspPreset( bool foutside )
 	int area;
 
 	// find node that represents room with greatest floor area, return its preset.
-	
+
 	for (i = 0; i < DAS_CNODES; i++)
 	{
 		if (g_das_nodes[i].fused && g_das_nodes[i].fseesplayer)
 		{
 			area = (g_das_nodes[i].room.width_max * g_das_nodes[i].room.length_max);
-			
+
 			if ( g_das_nodes[i].room.bskyabove == foutside )
 			{
 				if (area > area_max)
@@ -2992,8 +2992,8 @@ int DAS_GetDspPreset( bool foutside )
 
 					g_pdas_last_node = &(g_das_nodes[i]);
 				}
-			}			
-/*		
+			}
+/*
 
 			// find nearest node, return its preset
 
@@ -3007,17 +3007,17 @@ int DAS_GetDspPreset( bool foutside )
 					// save pointer to last node that saw player
 
 					g_pdas_last_node = &(g_das_nodes[i]);
-		
+
 				}
 			}
 */
 		}
 	}
-	
+
 	return dsp_preset;
 }
 
-// custom trace filter: 
+// custom trace filter:
 // a) never hit player or monsters or entities
 // b) always hit world, or moveables or static props
 
@@ -3045,7 +3045,7 @@ public:
 		// don't hit any ents
 
 		pEntity = pUnk->GetIClientEntity();
-		
+
 		if ( pEntity )
 			return false;
 
@@ -3071,11 +3071,11 @@ bool DAS_TraceNodeToPlayer( das_room_t *proom, das_node_t *pnode )
 	float dist;
 	Ray_t ray;
 	ray.Init( proom->vplayer, pnode->vplayer );
-	
+
 	g_pEngineTraceClient->TraceRay( ray, DAS_TRACE_MASK, &filterP, &trP );
 	dist = VectorLength( proom->vplayer - pnode->vplayer );
 
-	// player can still see previous room selection point, and it's less than n feet away, 
+	// player can still see previous room selection point, and it's less than n feet away,
 	// then flag this node as visible
 
 	if ( !trP.DidHit() && (dist <= DAS_DIST_MAX) )
@@ -3083,7 +3083,7 @@ bool DAS_TraceNodeToPlayer( das_room_t *proom, das_node_t *pnode )
 		fseesplayer = true;
 		pnode->dist = dist;
 	}
-	
+
 	pnode->fseesplayer = fseesplayer;
 
 	return fseesplayer;
@@ -3144,11 +3144,11 @@ bool DAS_CalcRoomProps( das_room_t *proom )
 	int k;
 	bool b_diaghitsky = false;
 
-	// reject this location if up vector doesn't hit sky, but 
-	// one or more up diagonals do hit sky - 
+	// reject this location if up vector doesn't hit sky, but
+	// one or more up diagonals do hit sky -
 	// in this case, player is under a slight overhang, narrow bridge, or
 	// standing just inside a window or doorway. keep looking for better node location
-	
+
 	for (i = IVEC_DIAG_UP; i < IVEC_UP; i++)
 	{
 		if (proom->skyhits[i] > 0.0)
@@ -3162,11 +3162,11 @@ bool DAS_CalcRoomProps( das_room_t *proom )
 
 	for (i = 0; i < IVEC_DIAG_UP; i+=2)
 		dist[i/2] = proom->dist[i] + proom->dist[i+1];	// 1st pair is width
-	
+
 	// if areas differ by more than 25%
 	// select the pair with the greater area
 
-	// if areas do not differ by more than 25%, select the pair with the 
+	// if areas do not differ by more than 25%, select the pair with the
 	// longer measured distance. Filters incorrect selection due to diagonals.
 
 	area1 = (float)(dist[0] * dist[1]);
@@ -3174,7 +3174,7 @@ bool DAS_CalcRoomProps( das_room_t *proom )
 
 	area1 = (int)area1 == 0 ? 1.0 : area1;
 	area2 = (int)area2 == 0 ? 1.0 : area2;
-	
+
 	if ( PercentDifference(area1, area2) > 0.25 )
 	{
 		// areas are more than 25% different - select pair with greater area
@@ -3200,7 +3200,7 @@ bool DAS_CalcRoomProps( das_room_t *proom )
 		j = iMaxDist > 1 ? 2 : 0;
 	}
 
-	
+
 	// width is always the smaller of the dimensions
 
 	width_max = min (dist[j], dist[j+1]);
@@ -3219,13 +3219,13 @@ bool DAS_CalcRoomProps( das_room_t *proom )
 	proom->length_max = length_max;
 	proom->width_max = width_max;
 	proom->height_max = height_max;
-			
+
 	// get room max,min from chosen width, depth
 	// 0..3 or 4..7
 
 	for ( i = j*2; i < 4+(j*2); i++)
 		DAS_SetRoomBounds( proom, proom->hit[i], false );
-	
+
 	// get room height min from down trace
 
 	proom->room_mins.z = proom->hit[IVEC_DOWN].z;
@@ -3260,10 +3260,10 @@ bool DAS_CalcRoomProps( das_room_t *proom )
 		refl += proom->reflect[i];
 		proom->refl_walls[k] = proom->reflect[i];
 	}
-	
+
 	// assume ceiling is open
 
-	proom->refl_walls[4] = 0.0;	 
+	proom->refl_walls[4] = 0.0;
 
 	// get ceiling reflectivity, if any non zero
 
@@ -3283,16 +3283,16 @@ bool DAS_CalcRoomProps( das_room_t *proom )
 
 			// upward trace didn't hit sky, keep checking
 
-			proom->refl_walls[4] = proom->reflect[i];	
+			proom->refl_walls[4] = proom->reflect[i];
 		}
 	}
 
 	// add in ceiling reflectivity, if any
-	
+
 	refl += proom->refl_walls[4];
 
 	// get floor reflectivity
-		
+
 	refl += proom->reflect[IVEC_DOWN];
 	proom->refl_walls[5] = proom->reflect[IVEC_DOWN];
 
@@ -3306,7 +3306,7 @@ bool DAS_CalcRoomProps( das_room_t *proom )
 
 	for ( i = j*2; i < 4+(j*2); i++)
 		sky_pct += proom->skyhits[i];
-	
+
 	for ( i = IVEC_DIAG_UP; i < IVEC_DOWN; i++)
 	{
 		if (proom->skyhits[i] > 0.0)
@@ -3344,7 +3344,7 @@ bool DAS_HitSolid( trace_t *ptr )
 
 	if (!ptr->DidHit())
 		return false;
-	
+
 	// if hit sky, return false (not solid)
 	if (ptr->surface.flags & SURF_SKY)
 		return false;
@@ -3396,23 +3396,23 @@ ConVar das_low_ceiling("adsp_low_ceiling", "108"); // low ceiling height hl2
 
 void DAS_SetTraceHeight( das_room_t *proom, trace_t *ptrU, trace_t *ptrD )
 {
-	// NOTE: when tracing down through player's box, endpos and startpos are reversed and 
+	// NOTE: when tracing down through player's box, endpos and startpos are reversed and
 	// startsolid and allsolid are true.
 
 	int zup = abs(ptrU->endpos.z - ptrU->startpos.z);		// height above player's head
 	int zdown = abs(ptrD->endpos.z - ptrD->startpos.z);		// distance to floor from player's head
 	int h;
 	h = zup + zdown;
-	
+
 	int door_height = das_door_height.GetInt();
 	int wall_height = das_wall_height.GetInt();
 	int low_ceiling = das_low_ceiling.GetInt();
-	
+
 	if (h > low_ceiling && h <= wall_height)
 	{
 		// low ceiling - trace out just above standard door height @ 112
 		if (h > door_height)
-			proom->vplayer.z = fpmin(ptrD->endpos.z, ptrD->startpos.z) + door_height + 1;	
+			proom->vplayer.z = fpmin(ptrD->endpos.z, ptrD->startpos.z) + door_height + 1;
 		else
 			proom->vplayer.z = fpmin(ptrD->endpos.z, ptrD->startpos.z) + h - 1;
 	}
@@ -3427,7 +3427,7 @@ void DAS_SetTraceHeight( das_room_t *proom, trace_t *ptrU, trace_t *ptrD )
 		// very low ceiling, trace out from just below ceiling
 		proom->vplayer.z = fpmin(ptrD->endpos.z, ptrD->startpos.z) + h - 1;
 		proom->lowceiling = h;
-	}		
+	}
 
 	Assert (proom->vplayer.z <= ptrU->endpos.z);
 
@@ -3436,7 +3436,7 @@ void DAS_SetTraceHeight( das_room_t *proom, trace_t *ptrU, trace_t *ptrD )
 		// draw line to height, and between floor and ceiling
 
 		CDebugOverlay::AddLineOverlay( ptrD->endpos, ptrU->endpos, 0, 255, 0, 255, false, 20 );
-		
+
 		Vector mins;
 		Vector maxs;
 		mins.Init(-1,-1,-2.0);
@@ -3453,7 +3453,7 @@ void DAS_SetTraceHeight( das_room_t *proom, trace_t *ptrU, trace_t *ptrD )
 // prepare room struct for new round of checks:
 // clear out struct,
 // init trace height origin by finding space above player's head
-// returns true if player is in valid position to begin checks from 
+// returns true if player is in valid position to begin checks from
 
 bool DAS_StartTraceChecks( das_room_t *proom )
 {
@@ -3472,7 +3472,7 @@ bool DAS_StartTraceChecks( das_room_t *proom )
 
 	// find point between player's head and ceiling - trace out to walls from here
 
-	trace_t trU, trD;	
+	trace_t trU, trD;
 	CTraceFilterDAS filterU, filterD;
 
 	Vector v_dir = g_das_vec3[IVEC_DOWN];	// down - find floor
@@ -3481,7 +3481,7 @@ bool DAS_StartTraceChecks( das_room_t *proom )
 
 	Ray_t ray;
 	ray.Init( proom->vplayer, endpoint );
-	
+
 	g_pEngineTraceClient->TraceRay( ray,  DAS_TRACE_MASK, &filterD, &trD );
 
 	// if player jumping or in air, don't continue
@@ -3501,7 +3501,7 @@ bool DAS_StartTraceChecks( das_room_t *proom )
 
 	if ( DAS_HitSolid( &trD) )
 		DAS_SetTraceHeight( proom, &trU, &trD );
-	
+
 	return true;
 }
 
@@ -3515,7 +3515,7 @@ void DAS_DebugDrawTrace ( trace_t *ptr, int r, int g, int b, float duration, int
 		return;
 
 	CDebugOverlay::AddLineOverlay( ptr->startpos, ptr->endpos, r, g, b, 255, false, duration );
-	
+
 	Vector mins;
 	Vector maxs;
 	mins.Init(-1,-1,-2.0);
@@ -3548,7 +3548,7 @@ void DAS_GetSurfaceData( das_room_t *proom, trace_t *ptr, das_surfdata_t *psurfd
 	surfacedata_t *psurf;
 
 	psurf = physprop->GetSurfaceData( ptr->surface.surfaceProps );
-	
+
 	reflectivity = psurf ? psurf->audio.reflectivity : DAS_REFLECTIVITY_NORM;
 
 	// keep wall hit location and normal, to calc room bounds and center
@@ -3562,7 +3562,7 @@ void DAS_GetSurfaceData( das_room_t *proom, trace_t *ptr, das_surfdata_t *psurfd
 	// if started tracing from within player box, startpos & endpos may be flipped
 
 	if (ptr->endpos.z >= ptr->startpos.z)
-		hit = ptr->endpos;	
+		hit = ptr->endpos;
 	else
 		hit = ptr->startpos;
 
@@ -3577,7 +3577,7 @@ void DAS_GetSurfaceData( das_room_t *proom, trace_t *ptr, das_surfdata_t *psurfd
 		norm.Init(0.0, 0.0, -1.0);
 
 		Vector endpoint = hit + ( norm * DAS_ROOM_TRACE_LEN );
-		
+
 		Ray_t ray;
 		ray.Init( hit, endpoint );
 
@@ -3604,16 +3604,16 @@ void DAS_GetSurfaceData( das_room_t *proom, trace_t *ptr, das_surfdata_t *psurfd
 
 
 // algorithm for detecting approximate size of space around player. Handles player in corner & non-axis aligned rooms.
-// also handles player on catwalk or player under small bridge/overhang.  
-// The goal is to only change the dsp room description if the the player moves into 
+// also handles player on catwalk or player under small bridge/overhang.
+// The goal is to only change the dsp room description if the the player moves into
 // a space which is SIGNIFICANTLY different from the previously set dsp space.
 
 // save player position. find a point above player's head and trace out from here.
 
 // from player position, get max width and max length:
 
-// from player position, 
-// a) trace x,-x, y,-y axes 
+// from player position,
+// a) trace x,-x, y,-y axes
 // b) trace xy, -xy, x-y, -x-y diagonals
 // c) select largest room size detected from max width, max length
 
@@ -3644,10 +3644,10 @@ bool DAS_UpdateRoomSize( das_room_t *proom )
 		return true;
 
 	// cycle through all walls, floor, ceiling
-	// get wall index 
+	// get wall index
 
 	iwall = proom->iwall;
-	
+
 	// get height above player and init proom for new round of checks
 
 	if (iwall == 0)
@@ -3695,13 +3695,13 @@ bool DAS_UpdateRoomSize( das_room_t *proom )
 		ray.Init( startpoint, endpoint );
 		g_pEngineTraceClient->TraceRay( ray, DAS_TRACE_MASK, &filterDas, &tr );
 	}
-	
+
 	if (das_debug.GetInt() > 2)
 	{
 		// draw trace lines
 
 		if ( DAS_HitSolid( &tr ) )
-			DAS_DebugDrawTrace( &tr, 0, 255, 255, 10, DAS_ScanningForHeight( proom ) + 3);	
+			DAS_DebugDrawTrace( &tr, 0, 255, 255, 10, DAS_ScanningForHeight( proom ) + 3);
 		else
 			DAS_DebugDrawTrace( &tr, 255, 0, 0, 10, DAS_ScanningForHeight( proom ) + 3);	// red lines if sky hit or no hit
 	}
@@ -3733,7 +3733,7 @@ bool DAS_UpdateRoomSize( das_room_t *proom )
 
 	if ( DAS_HitSolid( &tr) )
 		DAS_GetSurfaceData( proom, &tr, &surfdata );
-	
+
 	// store surface data
 
 	proom->dist[iwall]		= surfdata.dist;
@@ -3745,7 +3745,7 @@ bool DAS_UpdateRoomSize( das_room_t *proom )
 	// update wall counter
 
 	proom->iwall++;
-	
+
 	if (proom->iwall == DAS_CWALLS)
 	{
 		bool b_good_node_location;
@@ -3759,7 +3759,7 @@ bool DAS_UpdateRoomSize( das_room_t *proom )
 		proom->iwall = 0;
 		proom->broomready = b_good_node_location;	// room ready to check if good node location
 
-		return b_good_node_location;	
+		return b_good_node_location;
 	}
 
 	return false;			// room not yet fully updated
@@ -3774,7 +3774,7 @@ class CDasEntEnum : public IPartitionEnumerator
 	float m_volume;		// space occupied by ents
 
 	public:
-	
+
 	void Reset()
 	{
 		m_count = 0;
@@ -3784,12 +3784,12 @@ class CDasEntEnum : public IPartitionEnumerator
 	// called with each handle...
 
 	IterationRetval_t EnumElement( IHandleEntity *pHandleEntity )
-	{		
+	{
 		float vol;
 
 		// get bounding box of entity
 		// Generate a collideable
-		
+
 		ICollideable *pCollideable = g_pEngineTraceClient->GetCollideable( pHandleEntity );
 
 		if ( !pCollideable )
@@ -3799,13 +3799,13 @@ class CDasEntEnum : public IPartitionEnumerator
 
 		if ( !IsSolid( pCollideable->GetSolid(), pCollideable->GetSolidFlags() ) )
 			return ITERATION_CONTINUE;
-		
+
 		m_count++;
-		
+
 		// compute volume of space occupied by entity
 		Vector mins = pCollideable->OBBMins();
 		Vector maxs = pCollideable->OBBMaxs();
-		
+
 		vol = fabs((maxs.x - mins.x) * (maxs.y - mins.y) * (maxs.z - mins.z));
 
 		m_volume += vol;	// add to total vol
@@ -3830,7 +3830,7 @@ void DAS_SetDiffusion( das_room_t *proom )
 	// BRJ 7/12/05
 	// This was commented out because the y component of proom->room_mins, proom->room_maxs was never
 	// being computed, causing a bogus box to be sent to the partition system. The results of
-	// this computation (namely the diffusion + ent_count fields of das_room_t) were never being used. 
+	// this computation (namely the diffusion + ent_count fields of das_room_t) were never being used.
 	// Therefore, we'll avoid the enumeration altogether
 
 	proom->diffusion = 0.0f;
@@ -3843,16 +3843,16 @@ void DAS_SetDiffusion( das_room_t *proom )
 	float vol;
 	float volroom;
 	float dfn;
-	
+
 	enumerator.Reset();
-	
-	SpatialPartition()->EnumerateElementsInBox(mask, proom->room_mins, proom->room_maxs, true, &enumerator );	
-	
+
+	SpatialPartition()->EnumerateElementsInBox(mask, proom->room_mins, proom->room_maxs, true, &enumerator );
+
 	count = enumerator.m_count;
 	vol = enumerator.m_volume;
 
 	// compute diffusion from volume
-	
+
 	// how much space around player is filled with props?
 
 	volroom = (proom->room_maxs.x - proom->room_mins.x) * (proom->room_maxs.y - proom->room_mins.y) * (proom->room_maxs.z - proom->room_mins.z);
@@ -3884,9 +3884,9 @@ void DAS_DisplayRoomDEBUG( das_room_t *proom, bool fnew, float preset )
 	dx = proom->length_max / 12.0;
 	dy = proom->width_max / 12.0;
 	dz = proom->height_max / 12.0;
-	
+
 	float refl = proom->refl_avg;
-	
+
 	count = (float)(proom->ent_count);
 	float fsky = (proom->bskyabove ? 1.0 : 0.0);
 
@@ -3930,7 +3930,7 @@ void DAS_DisplayRoomDEBUG( das_room_t *proom, bool fnew, float preset )
 // return false if this is not a good location for creating a new node
 
 bool DAS_CheckNewRoom( das_room_t *proom )
-{	
+{
 	bool bnewroom;
 	float dw,dw2,dr,ds,dh;
 	int cchanged = 0;
@@ -3939,7 +3939,7 @@ bool DAS_CheckNewRoom( das_room_t *proom )
 	Vector v3d;
 	float dist;
 
-	// player can't see previous node, determine if this is a good place to lay down 
+	// player can't see previous node, determine if this is a good place to lay down
 	// a new node.  Get room at last seen node for comparison
 
 	if (g_pdas_last_node)
@@ -3954,7 +3954,7 @@ bool DAS_CheckNewRoom( das_room_t *proom )
 	}
 
 	// if player not at least n feet from last node, return false
-	
+
 	v3d = proom->vplayer - proom_prev->vplayer;
 	v2d.Init(v3d.x, v3d.y);
 
@@ -3993,7 +3993,7 @@ bool DAS_CheckNewRoom( das_room_t *proom )
 
 	if ( (1.0 - dw) >= DAS_WIDTH_MIN )
 		cchanged++;
-		
+
 	if ( (1.0 - dw2) >= DAS_WIDTH_MIN )
 		cchanged++;
 
@@ -4021,12 +4021,12 @@ bool DAS_CheckNewRoom( das_room_t *proom )
 	bnewroom = false;
 
 check_ret:
-	
+
 	if ( bnewroom )
 	{
 		// if low ceiling detected < 112 units, and max height is > low ceiling height by 20%, discard - no change
 		// this detects player in doorway, under pipe or narrow bridge
-		
+
 		if ( proom->lowceiling && (proom->lowceiling < proom->height_max))
 		{
 			float h = (float)(proom->lowceiling) / (float)proom->height_max;
@@ -4052,7 +4052,7 @@ extern int DSP_ConstructPreset( bool bskyabove, int width, int length, int heigh
 
 int DAS_GetRoomDSP( das_room_t *proom, int inode )
 {
-	
+
 	// preset constructor
 	// call dsp module with params, get dsp preset back
 
@@ -4067,8 +4067,8 @@ int DAS_GetRoomDSP( das_room_t *proom, int inode )
 	// fill array of surface reflectivities - for left,right,front,back,ceiling,floor
 
 	for (int i = 0; i < 6; i++)
-		surf_refl[i] = proom->refl_walls[i];	
-	
+		surf_refl[i] = proom->refl_walls[i];
+
 	return DSP_ConstructPreset( bskyabove, width, length, height, fdiffusion, freflectivity, surf_refl, inode, DAS_CNODES );
 
 }
@@ -4088,7 +4088,7 @@ void DAS_CheckNewRoomDSP( )
 
 	// if listener has not been updated, do nothing
 
-	if ((listener_origin  == vec3_origin) && 
+	if ((listener_origin  == vec3_origin) &&
 		(listener_forward == vec3_origin) &&
 		(listener_right	  == vec3_origin) &&
 		(listener_up	  == vec3_origin) )
@@ -4109,7 +4109,7 @@ void DAS_CheckNewRoomDSP( )
 	{
 		// make sure room params are reinitialized each time autoroom is selected
 
-		g_bdas_room_init = 0;		
+		g_bdas_room_init = 0;
 		return;
 	}
 
@@ -4121,9 +4121,9 @@ void DAS_CheckNewRoomDSP( )
 	}
 
 	// get time
-	
+
 	double dtime = g_pSoundServices->GetHostTime();
-	
+
 	// compare to previous time - don't check for new room until timer expires
 	// ie: wait at least DAS_AUTO_WAIT seconds between preset changes
 
@@ -4139,7 +4139,7 @@ void DAS_CheckNewRoomDSP( )
 
 	if (!bRoom_ready)
 		return;
-		
+
 
 	if ( !g_bdas_create_new_node )
 	{
@@ -4160,9 +4160,9 @@ void DAS_CheckNewRoomDSP( )
 		if (dsp_preset != -1)
 		{
 			// an existing node can see player - just set preset and return
-				
+
 			if (dsp_preset != dsp_room_GetInt())
-			{		
+			{
 				// changed preset, so update timestamp
 
 				proom->last_dsp_change = g_pSoundServices->GetHostTime();
@@ -4174,7 +4174,7 @@ void DAS_CheckNewRoomDSP( )
 			DSP_SetDspAuto( dsp_preset );
 
 			goto check_new_room_exit;
-		} 
+		}
 	}
 
 	g_bdas_create_new_node = true;
@@ -4190,7 +4190,7 @@ void DAS_CheckNewRoomDSP( )
 		dsp_preset = DAS_GetRoomDSP( proom, DAS_GetNextNodeIndex() );
 
 		DSP_SetDspAuto( dsp_preset );
-				
+
 		// changed preset, so update timestamp
 
 		proom->last_dsp_change = g_pSoundServices->GetHostTime();
@@ -4219,7 +4219,7 @@ check_new_room_exit:
 	return;
 }
 
-// remap contents of volumes[] arrary if sound originates from player, or is music, and is 100% 'mono' 
+// remap contents of volumes[] arrary if sound originates from player, or is music, and is 100% 'mono'
 // ie: same volume in all channels
 
 void RemapPlayerOrMusicVols(  channel_t *ch, int volumes[CCHANVOLUMES/2], bool fplayersound, bool fmusicsound, float mono )
@@ -4247,7 +4247,7 @@ void RemapPlayerOrMusicVols(  channel_t *ch, int volumes[CCHANVOLUMES/2], bool f
 
 		// remap 2 chan non-spatialized versions of player and music sounds
 		// note: this is required to keep volumes same as 4 & 5 ch cases!
-		
+
 		float vol_dist_music[] =  {1.0, 1.0};	// FL, FR music volumes
 		float vol_dist_player[] = {1.0, 1.0};	// FL, FR player volumes
 		float *pvol_dist;
@@ -4265,21 +4265,21 @@ void RemapPlayerOrMusicVols(  channel_t *ch, int volumes[CCHANVOLUMES/2], bool f
 	if ( fplayersound ) // && (ch->bstereowav && ch->wavtype != CHAR_DIRECTIONAL && ch->wavtype != CHAR_DISTVARIANT) )
 	{
 		// NOTE: player sounds also get n% overall volume boost.
-		
-		//float vol_dist5[]   = {0.29, 0.29, 0.09, 0.09, 0.63};	// FL, FR, RL, RR, FC - 5 channel (mono source) volume distribution		
+
+		//float vol_dist5[]   = {0.29, 0.29, 0.09, 0.09, 0.63};	// FL, FR, RL, RR, FC - 5 channel (mono source) volume distribution
 		//float vol_dist5st[] = {0.29, 0.29, 0.09, 0.09, 0.63};	// FL, FR, RL, RR, FC - 5 channel (stereo source) volume distribution
-		
-		float vol_dist5[]   = {0.30, 0.30, 0.09, 0.09, 0.59};	// FL, FR, RL, RR, FC - 5 channel (mono source) volume distribution		
+
+		float vol_dist5[]   = {0.30, 0.30, 0.09, 0.09, 0.59};	// FL, FR, RL, RR, FC - 5 channel (mono source) volume distribution
 		float vol_dist5st[] = {0.30, 0.30, 0.09, 0.09, 0.59};	// FL, FR, RL, RR, FC - 5 channel (stereo source) volume distribution
-		
+
 		float vol_dist4[]   = {0.50, 0.50, 0.15, 0.15, 0.00};	// FL, FR, RL, RR, 0  - 4 channel (mono source) volume distribution
 		float vol_dist4st[] = {0.50, 0.50, 0.15, 0.15, 0.00};	// FL, FR, RL, RR, 0  - 4 channel (stereo source)volume distribution
 
 		float *pvol_dist;
-		
+
 		if ( ch->flags.bstereowav && (ch->wavtype == CHAR_OMNI || ch->wavtype == CHAR_SPATIALSTEREO || ch->wavtype == 0))
 		{
-			pvol_dist = (g_AudioDevice->IsSurroundCenter() ? vol_dist5st : vol_dist4st);	
+			pvol_dist = (g_AudioDevice->IsSurroundCenter() ? vol_dist5st : vol_dist4st);
 		}
 		else
 		{
@@ -4329,8 +4329,8 @@ void SND_Spatialize(channel_t *ch)
 {
 	VPROF("SND_Spatialize");
 
-    vec_t dist;
-    Vector source_vec;
+	vec_t dist;
+	Vector source_vec;
 	Vector source_vec_DL;
 	Vector source_vec_DR;
 	Vector source_doppler_left;
@@ -4351,8 +4351,8 @@ void SND_Spatialize(channel_t *ch)
 	ch->distmix = 0;				// default 100% left (near) wav
 
 #if !defined( _X360 )
-	if ( ch->sfx && 
-		ch->sfx->pSource && 
+	if ( ch->sfx &&
+		ch->sfx->pSource &&
 		ch->sfx->pSource->GetType() == CAudioSource::AUDIO_SOURCE_VOICE )
 	{
 		Voice_Spatialize( ch );
@@ -4378,7 +4378,7 @@ void SND_Spatialize(channel_t *ch)
 	QAngle source_angles;
 	source_angles.Init(0.0, 0.0, 0.0);
 	Vector entOrigin = ch->origin;
-	
+
 	bool looping = false;
 
 	CAudioSource *pSource = ch->sfx ? ch->sfx->pSource : NULL;
@@ -4386,9 +4386,9 @@ void SND_Spatialize(channel_t *ch)
 	{
 		looping = pSource->IsLooped();
 	}
-	
+
 	SpatializationInfo_t si;
-	si.info.Set( 
+	si.info.Set(
 		ch->soundsource,
 		ch->entchannel,
 		ch->sfx ? ch->sfx->getname() : "",
@@ -4412,7 +4412,7 @@ void SND_Spatialize(channel_t *ch)
 
 	{
 		VPROF_("SoundServices->GetSoundSpatializtion", 2, VPROF_BUDGETGROUP_OTHER_SOUND, false, BUDGETFLAG_OTHER );
-		fvalidentity = g_pSoundServices->GetSoundSpatialization( ch->soundsource, si );	
+		fvalidentity = g_pSoundServices->GetSoundSpatialization( ch->soundsource, si );
 	}
 
 	if ( ch->flags.bUpdatePositions )
@@ -4445,12 +4445,12 @@ void SND_Spatialize(channel_t *ch)
 	}
 #endif // 0
 
-	
+
 	fdopplerwav = ((ch->wavtype == CHAR_DOPPLER) && !fplayersound);
 	if ( fdopplerwav )
 	{
 		VPROF_("SND_Spatialize doppler", 2, VPROF_BUDGETGROUP_OTHER_SOUND, false, BUDGETFLAG_OTHER );
-		Vector vnearpoint;				// point of closest approach to listener, 
+		Vector vnearpoint;				// point of closest approach to listener,
 										// along sound source forward direction (doppler wavs)
 
 		vnearpoint = ch->origin;		// default nearest sound approach point
@@ -4467,7 +4467,7 @@ void SND_Spatialize(channel_t *ch)
 		// find location of doppler left & doppler right points
 
 		SND_GetDopplerPoints( ch, source_angles, vnearpoint, source_doppler_left, source_doppler_right);
-	
+
 		// source_vec_DL is vector from listener to doppler left point
 		// source_vec_DR is vector from listener to doppler right point
 
@@ -4508,7 +4508,7 @@ void SND_Spatialize(channel_t *ch)
 
 		dist = VectorNormalize( source_vec );
 	}
-	
+
 	// calculate dsp mix based on distance to listener & sound level (linear approximation)
 
 	ch->dspmix = SND_GetDspMix( ch, dist );
@@ -4518,7 +4518,7 @@ void SND_Spatialize(channel_t *ch)
 	if ( !fplayersound )
 	{
 		ch->dspface = SND_GetFacingDirection( ch, source_angles );
-		
+
 		// calculate mixing parameter for CHAR_DISTVAR wavs
 
 		ch->distmix = SND_GetDistanceMix( ch, dist );
@@ -4533,7 +4533,7 @@ void SND_Spatialize(channel_t *ch)
 		if ( mono < 0.0 )
 			mono = 0.0;
 		mono /= interval;
-		
+
 		mono = 1.0 - mono;
 
 		// mono is 0.0 -> 1.0 from radius 100% to radius 50%
@@ -4543,7 +4543,7 @@ void SND_Spatialize(channel_t *ch)
 	if ( ch->dist_mult <= 0 && !fdopplerwav )
 	{
 		// sound is centered left/right/front/back
-		
+
 		mono = 1.0;
 		bAttenuated = false;
 	}
@@ -4570,7 +4570,7 @@ void SND_Spatialize(channel_t *ch)
 	gain *= MXR_GetVolFromMixGroup( ch->mixgroups, &last_mixgroupid );
 
 	// if playing a word, get volume scale of word - scale gain
-		
+
 	scale = VOX_GetChanVol(ch);
 
 	gain *= scale;
@@ -4588,15 +4588,15 @@ void SND_Spatialize(channel_t *ch)
 		// left doppler location
 
 		g_AudioDevice->SpatializeChannel( volumes,  ch->master_vol, source_vec_DL, gain, mono );
-		
+
 		// load volumes into channel as crossfade targets
 
 		ChannelSetVolTargets( ch, volumes, IFRONT_LEFT, CCHANVOLUMES/2 );
 
 		// right doppler location
 
-		g_AudioDevice->SpatializeChannel( volumes, ch->master_vol, source_vec_DR, gain, mono );		
-		
+		g_AudioDevice->SpatializeChannel( volumes, ch->master_vol, source_vec_DR, gain, mono );
+
 		// load volumes into channel as crossfade targets
 
 		ChannelSetVolTargets( ch, volumes, IFRONT_LEFTD, CCHANVOLUMES/2 );
@@ -4607,10 +4607,10 @@ void SND_Spatialize(channel_t *ch)
 		int volumes[CCHANVOLUMES/2];
 
 		g_AudioDevice->SpatializeChannel( volumes, ch->master_vol, source_vec, gain, mono );
-		
+
 		// Special case for stereo sounds originating from player in surround mode
 		// and special case for musci: remap volumes directly to channels.
-	
+
 		RemapPlayerOrMusicVols( ch, volumes, fplayersound, fmusicsound, mono );
 
 		// load volumes into channel as crossfade volume targets
@@ -4637,7 +4637,7 @@ void SND_Spatialize(channel_t *ch)
 
 ClearAllVolumes:
 
-	// Clear all volumes and return. 
+	// Clear all volumes and return.
 	// This shuts the sound off permanently.
 
 	ChannelClearVolumes( ch );
@@ -4645,7 +4645,7 @@ ClearAllVolumes:
 	// end of first time spatializing sound
 
 	ch->flags.bfirstpass = false;
-}           
+}
 
 ConVar snd_defer_trace("snd_defer_trace","1");
 void SND_SpatializeFirstFrameNoTrace( channel_t *pChannel)
@@ -4712,15 +4712,15 @@ int S_AlterChannel( int soundsource, int entchannel, CSfxTable *sfx, int vol, in
 
 				if (flags & SND_CHANGE_PITCH)
 					channels[ch_idx].basePitch = pitch;
-				
+
 				if (flags & SND_CHANGE_VOL)
 					channels[ch_idx].master_vol = vol;
-				
+
 				if (flags & SND_STOP)
 				{
 					S_FreeChannel(&channels[ch_idx]);
 				}
-			
+
 				return TRUE;
 			}
 		}
@@ -4738,36 +4738,36 @@ int S_AlterChannel( int soundsource, int entchannel, CSfxTable *sfx, int vol, in
 	for ( int i = 0; i < list.Count(); i++ )
 	{
 		ch_idx = list.GetChannelIndex(i);
-		if ( channels[ch_idx].soundsource == soundsource && 
-			 ( ( flags & SND_IGNORE_NAME ) || 
-			   ( channels[ch_idx].entchannel == entchannel && channels[ch_idx].sfx == sfx ) ) )
+		if ( channels[ch_idx].soundsource == soundsource &&
+			( ( flags & SND_IGNORE_NAME ) ||
+				( channels[ch_idx].entchannel == entchannel && channels[ch_idx].sfx == sfx ) ) )
 		{
 			if (flags & SND_CHANGE_PITCH)
 				channels[ch_idx].basePitch = pitch;
-			
+
 			if (flags & SND_CHANGE_VOL)
 				channels[ch_idx].master_vol = vol;
-			
+
 			if (flags & SND_STOP)
 			{
 				S_FreeChannel(&channels[ch_idx]);
 			}
-		
+
 			if ( ( flags & SND_IGNORE_NAME ) == 0 )
 				return TRUE;
 			else
 				bSuccess = true;
 		}
-   }
+	}
 
 	return ( bSuccess ) ? ( TRUE ) : ( FALSE );
 }
 
-// set channel flags during initialization based on 
+// set channel flags during initialization based on
 // source name
 
 void S_SetChannelWavtype( channel_t *target_chan, CSfxTable *pSfx )
-{	
+{
 	// if 1st or 2nd character of name is CHAR_DRYMIX, sound should be mixed dry with no dsp (ie: music)
 
 	if ( TestSoundChar(pSfx->getname(), CHAR_DRYMIX) )
@@ -4781,12 +4781,12 @@ void S_SetChannelWavtype( channel_t *target_chan, CSfxTable *pSfx )
 		target_chan->flags.bfast_pitch = false;
 
 	// get sound spatialization encoding
-	
+
 	target_chan->wavtype = 0;
 
 	if ( TestSoundChar( pSfx->getname(), CHAR_DOPPLER ))
 		target_chan->wavtype = CHAR_DOPPLER;
-	
+
 	if ( TestSoundChar( pSfx->getname(), CHAR_DIRECTIONAL ))
 		target_chan->wavtype = CHAR_DIRECTIONAL;
 
@@ -4802,7 +4802,7 @@ void S_SetChannelWavtype( channel_t *target_chan, CSfxTable *pSfx )
 
 
 // Sets bstereowav flag in channel if source is true stere wav
-// sets default wavtype for stereo wavs to CHAR_DISTVARIANT - 
+// sets default wavtype for stereo wavs to CHAR_DISTVARIANT -
 // ie: sound varies with distance (left is close, right is far)
 // Must be called after S_SetChannelWavtype
 
@@ -4813,8 +4813,8 @@ void S_SetChannelStereo( channel_t *target_chan, CAudioSource *pSource )
 		target_chan->flags.bstereowav = false;
 		return;
 	}
-	
-	// returns true only if source data is a stereo wav file. 
+
+	// returns true only if source data is a stereo wav file.
 	// ie: mp3, voice, sentence are all excluded.
 
 	target_chan->flags.bstereowav = pSource->IsStereoWav();
@@ -4825,7 +4825,7 @@ void S_SetChannelStereo( channel_t *target_chan, CAudioSource *pSource )
 
 	if ( IsSoundSourceLocalPlayer( target_chan->soundsource ) )
 		return;
-	
+
 	// default wavtype for stereo wavs is OMNI - except for drymix or sounds with 0 attenuation
 
 	if ( target_chan->flags.bstereowav && !target_chan->wavtype && !target_chan->flags.bdry && target_chan->dist_mult )
@@ -4860,7 +4860,7 @@ bool BChannelLowVolume( channel_t *pch, int vol_min )
 		if (vol_target > max_target)
 			max_target = vol_target;
 	}
-		
+
 	return (max <= vol_min && max_target <= vol_min);
 }
 
@@ -4892,15 +4892,15 @@ void ChannelClearVolumes( channel_t *pch )
 int ChannelGetVol( channel_t *pch, int ivol )
 {
 	Assert(ivol < CCHANVOLUMES);
-	return (int)(pch->fvolume[ivol]);	
+	return (int)(pch->fvolume[ivol]);
 }
 
-// return maximum current output volume 
+// return maximum current output volume
 
 int ChannelGetMaxVol( channel_t *pch )
 {
 	float max = 0.0;
-	
+
 	for (int i = 0; i < CCHANVOLUMES; i++)
 	{
 		if (pch->fvolume[i] > max)
@@ -4915,8 +4915,8 @@ int ChannelGetMaxVol( channel_t *pch )
 void ChannelSetVol( channel_t *pch, int ivol, int vol )
 {
 	Assert(ivol < CCHANVOLUMES);
-	
-	pch->fvolume[ivol] = (float)(clamp(vol, 0, 255));	
+
+	pch->fvolume[ivol] = (float)(clamp(vol, 0, 255));
 
 	pch->fvolume_target[ivol] = pch->fvolume[ivol];
 	pch->fvolume_inc[ivol] = 0.0;
@@ -4955,7 +4955,7 @@ void ChannelSetVolTarget( channel_t *pch, int ivol, int volume_target )
 	float vol_current;
 
 	Assert(ivol < CCHANVOLUMES);
-	
+
 	// set volume target
 
 	pch->fvolume_target[ivol] = vol_target;
@@ -4967,7 +4967,7 @@ void ChannelSetVolTarget( channel_t *pch, int ivol, int volume_target )
 	// if first time spatializing, set target = volume with no crossfade
 	// if current & target volumes are close - don't bother crossfading
 
-	if ( pch->flags.bfirstpass || (fabs(vol_target - vol_current) < 5.0)) 
+	if ( pch->flags.bfirstpass || (fabs(vol_target - vol_current) < 5.0))
 	{
 		// set current volume = target, no increment
 
@@ -4980,10 +4980,10 @@ void ChannelSetVolTarget( channel_t *pch, int ivol, int volume_target )
 	speed = ( frametime / VOL_XFADE_TIME ) * (vol_target - vol_current);
 
 	// make sure we never increment by more than +/- VOL_INCR_MAX volume units per frame
-	
+
 	speed = clamp(speed, (float) -VOL_INCR_MAX, (float) VOL_INCR_MAX);
 
-	pch->fvolume_inc[ivol] = speed;	
+	pch->fvolume_inc[ivol] = speed;
 }
 
 // set volume targets, using array pvolume as source volumes.
@@ -4993,7 +4993,7 @@ void ChannelSetVolTarget( channel_t *pch, int ivol, int volume_target )
 void ChannelSetVolTargets( channel_t *pch, int *pvolumes, int ivol_offset, int cvol )
 {
 	int volume_target;
-	
+
 	Assert(ivol_offset + cvol <= CCHANVOLUMES);
 
 	for (int i = 0; i < cvol; i++)
@@ -5040,7 +5040,7 @@ void ChannelUpdateVolXfade( channel_t *pch )
 // =======================================================================
 // S_StartDynamicSound
 // =======================================================================
-// Start a sound effect for the given entity on the given channel (ie; voice, weapon etc).  
+// Start a sound effect for the given entity on the given channel (ie; voice, weapon etc).
 // Try to grab a channel out of the 8 dynamic spots available.
 // Currently used for looping sounds, streaming sounds, sentences, and regular entity sounds.
 // NOTE: volume is 0.0 - 1.0 and attenuation is 0.0 - 1.0 when passed in.
@@ -5070,13 +5070,13 @@ int S_StartDynamicSound( StartSoundParams_t& params )
 
 	// Msg("Start sound %s\n", pSfx->getname() );
 
-	// override the entchannel to CHAN_STREAM if this is a 
+	// override the entchannel to CHAN_STREAM if this is a
 	// non-voice stream sound.
 	if ( TestSoundChar(sndname, CHAR_STREAM ) && params.entchannel != CHAN_VOICE && params.entchannel != CHAN_VOICE2 )
 		params.entchannel = CHAN_STREAM;
-	
+
 	vol = params.fvol*255;
-	
+
 	if (vol > 255)
 	{
 		DevMsg("S_StartDynamicSound: %s volume > 255", sndname );
@@ -5091,7 +5091,7 @@ int S_StartDynamicSound( StartSoundParams_t& params )
 			return 0;
 		if ( params.flags & SND_STOP )
 			return 0;
-		// fall through - if we're not trying to stop the sound, 
+		// fall through - if we're not trying to stop the sound,
 		// and we didn't find it (it's not playing), go ahead and start it up
 	}
 
@@ -5116,7 +5116,7 @@ int S_StartDynamicSound( StartSoundParams_t& params )
 		Plat_DebugString(szTmp);
 	}
 #endif
-	
+
 	bool bIsSentence = TestSoundChar( sndname, CHAR_SENTENCE );
 
 	SND_ActivateChannel( target_chan );
@@ -5127,7 +5127,7 @@ int S_StartDynamicSound( StartSoundParams_t& params )
 
 	VectorCopy(params.origin, target_chan->origin);
 	VectorCopy(params.direction, target_chan->direction);
-	
+
 	// never update positions if source entity is 0
 	target_chan->flags.bUpdatePositions = params.bUpdatePositions && (params.soundsource == 0 ? 0 : 1);
 
@@ -5170,7 +5170,7 @@ int S_StartDynamicSound( StartSoundParams_t& params )
 
 		// NOTE: sentence names stored in the cache lookup are
 		// prepended with a '!'.  Sentence names stored in the
-		// sentence file do not have a leading '!'. 
+		// sentence file do not have a leading '!'.
 		VOX_LoadSound( target_chan, PSkipSoundChars( sndname ) );
 	}
 	else
@@ -5216,7 +5216,7 @@ int S_StartDynamicSound( StartSoundParams_t& params )
 
 	S_SetChannelStereo( target_chan, pSource );
 
-	if (nSndShowStart == 5)	
+	if (nSndShowStart == 5)
 	{
 		snd_showstart.SetValue(6);		// debug: show gain for next spatialize only
 		nSndShowStart = 6;
@@ -5235,7 +5235,7 @@ int S_StartDynamicSound( StartSoundParams_t& params )
 
 		DevMsg( "DynamicSound %s : src %d : channel %d : %d dB : vol %.2f : time %.3f\n", sndname, params.soundsource, params.entchannel, params.soundlevel, params.fvol, g_pSoundServices->GetHostTime() );
 		if (nSndShowStart == 2 || nSndShowStart == 5)
-			DevMsg( "\t dspmix %1.2f : distmix %1.2f : dspface %1.2f : lvol %1.2f : cvol %1.2f : rvol %1.2f : rlvol %1.2f : rrvol %1.2f\n", 
+			DevMsg( "\t dspmix %1.2f : distmix %1.2f : dspface %1.2f : lvol %1.2f : cvol %1.2f : rvol %1.2f : rlvol %1.2f : rrvol %1.2f\n",
 				pTargetChan->dspmix, pTargetChan->distmix, pTargetChan->dspface,
 				pTargetChan->fvolume[IFRONT_LEFT], pTargetChan->fvolume[IFRONT_CENTER], pTargetChan->fvolume[IFRONT_RIGHT], pTargetChan->fvolume[IREAR_LEFT], pTargetChan->fvolume[IREAR_RIGHT] );
 		if (nSndShowStart == 3)
@@ -5248,9 +5248,9 @@ int S_StartDynamicSound( StartSoundParams_t& params )
 	}
 
 	// If a client can't hear a sound when they FIRST receive the StartSound message,
-	// the client will never be able to hear that sound. This is so that out of 
+	// the client will never be able to hear that sound. This is so that out of
 	// range sounds don't fill the playback buffer.  For streaming sounds, we bypass this optimization.
-	
+
 	if ( BChannelLowVolume( target_chan, 0 ) && !toolframework->IsToolRecording() )
 	{
 		// Looping sounds don't use this optimization because they should stick around until they're killed.
@@ -5284,7 +5284,7 @@ int S_StartDynamicSound( StartSoundParams_t& params )
 		Assert( target_chan->sfx );
 		Assert( target_chan->sfx->pSource );
 
-		// delay count is computed at the sampling rate of the source because the output rate will 
+		// delay count is computed at the sampling rate of the source because the output rate will
 		// match the source rate when the sound is mixed
 		float rate = target_chan->sfx->pSource->SampleRate();
 		int delaySamples = (int)( params.delay * rate );
@@ -5322,8 +5322,8 @@ int S_StartDynamicSound( StartSoundParams_t& params )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : CSfxTable
 //-----------------------------------------------------------------------------
 CSfxTable *S_DummySfx( const char *name )
@@ -5343,7 +5343,7 @@ and one-shot ambient streaming sounds.  Can also play 'regular' sounds one-shot,
 in case designers want to trigger regular game sounds.
 Pitch changes playback pitch of wave by % above or below 100.  Ignored if pitch == 100
 
-  NOTE: volume is 0.0 - 1.0 and attenuation is 0.0 - 1.0 when passed in.
+	NOTE: volume is 0.0 - 1.0 and attenuation is 0.0 - 1.0 when passed in.
 */
 
 int S_StartStaticSound( StartSoundParams_t& params )
@@ -5381,16 +5381,16 @@ int S_StartStaticSound( StartSoundParams_t& params )
 		if (S_AlterChannel(params.soundsource, params.entchannel, params.pSfx, vol, params.pitch, params.flags) || (params.flags & SND_STOP))
 			return 0;
 	}
-	
+
 	if ( params.pitch == 0 )
 	{
 		DevMsg( "Warning: S_StartStaticSound Ignored, called with pitch 0\n");
 		return 0;
 	}
-	
+
 	// First, make sure the sound source entity is even in the PVS.
-	float flSoundRadius = 0.0f;	
-	
+	float flSoundRadius = 0.0f;
+
 	bool looping = false;
 
 	/*
@@ -5402,7 +5402,7 @@ int S_StartStaticSound( StartSoundParams_t& params )
 	*/
 
 	SpatializationInfo_t si;
-	si.info.Set( 
+	si.info.Set(
 		params.soundsource,
 		params.entchannel,
 		params.pSfx ? sndname : "",
@@ -5416,7 +5416,7 @@ int S_StartStaticSound( StartSoundParams_t& params )
 		params.speakerentity );
 
 	si.type = SpatializationInfo_t::SI_INCREATION;
-	
+
 	si.pOrigin = NULL;
 	si.pAngles = NULL;
 	si.pflRadius = &flSoundRadius;
@@ -5451,14 +5451,14 @@ int S_StartStaticSound( StartSoundParams_t& params )
 		Plat_DebugString(szTmp);
 	}
 #endif
-	
+
 	if ( TestSoundChar(sndname, CHAR_SENTENCE) )
 	{
 		// this is a sentence. link words to play in sequence.
 
 		// NOTE: sentence names stored in the cache lookup are
 		// prepended with a '!'.  Sentence names stored in the
-		// sentence file do not have a leading '!'. 
+		// sentence file do not have a leading '!'.
 
 		// link all words and load the first word
 		VOX_LoadSound( ch, PSkipSoundChars(sndname) );
@@ -5504,7 +5504,7 @@ int S_StartStaticSound( StartSoundParams_t& params )
 	}
 
 	ch->dist_mult = SNDLVL_TO_DIST_MULT( params.soundlevel );
-	
+
 	S_SetChannelWavtype( ch, params.pSfx );
 
 	ch->basePitch = params.pitch;
@@ -5572,7 +5572,7 @@ int S_StartStaticSound( StartSoundParams_t& params )
 	{
 		Assert( ch->sfx );
 		Assert( ch->sfx->pSource );
-		
+
 		float rate = ch->sfx->pSource->SampleRate();
 
 		int delaySamples = (int)( params.delay * rate * params.pitch * 0.01f );
@@ -5639,7 +5639,7 @@ int S_StartStaticSound( StartSoundParams_t& params )
 			pChannel->basePitch = ch->basePitch;
 			pChannel->pitch = ch->pitch;
 			S_FreeChannel( ch );
-			
+
 			return 0;
 		}
 	}
@@ -5650,8 +5650,8 @@ int S_StartStaticSound( StartSoundParams_t& params )
 	{
 		DevMsg( "StaticSound %s : src %d : channel %d : %d dB : vol %.2f : radius %.0f : time %.3f\n", sndname, params.soundsource, params.entchannel, params.soundlevel, params.fvol, flSoundRadius, g_pSoundServices->GetHostTime() );
 		if (nSndShowStart == 2 || nSndShowStart == 5)
-			DevMsg( "\t dspmix %1.2f : distmix %1.2f : dspface %1.2f : lvol %1.2f : cvol %1.2f : rvol %1.2f : rlvol %1.2f : rrvol %1.2f\n", 
-				ch->dspmix, ch->distmix, ch->dspface, 
+			DevMsg( "\t dspmix %1.2f : distmix %1.2f : dspface %1.2f : lvol %1.2f : cvol %1.2f : rvol %1.2f : rlvol %1.2f : rrvol %1.2f\n",
+				ch->dspmix, ch->distmix, ch->dspface,
 				ch->fvolume[IFRONT_LEFT], ch->fvolume[IFRONT_CENTER], ch->fvolume[IFRONT_RIGHT], ch->fvolume[IREAR_LEFT], ch->fvolume[IREAR_RIGHT] );
 		if (nSndShowStart == 3)
 			DevMsg( "\t x: %4f y: %4f z: %4f\n", ch->origin.x, ch->origin.y, ch->origin.z );
@@ -5689,7 +5689,7 @@ int S_StartSound( StartSoundParams_t& params )
 
 	if ( params.staticsound )
 	{
-		VPROF_( "StartStaticSound", 0, VPROF_BUDGETGROUP_OTHER_SOUND, false, BUDGETFLAG_OTHER );	
+		VPROF_( "StartStaticSound", 0, VPROF_BUDGETGROUP_OTHER_SOUND, false, BUDGETFLAG_OTHER );
 		return S_StartStaticSound( params );
 	}
 	else
@@ -5703,7 +5703,7 @@ int S_StartSound( StartSoundParams_t& params )
 inline bool IsChannelLooped( int iChannel )
 {
 	return (channels[iChannel].sfx &&
-			channels[iChannel].sfx->pSource && 
+			channels[iChannel].sfx->pSource &&
 			channels[iChannel].sfx->pSource->IsLooped() );
 }
 
@@ -5714,17 +5714,17 @@ int S_GetCurrentStaticSounds( SoundInfo_t *pResult, int nSizeResult, int entchan
 	{
 		if ( channels[i].entchannel == entchannel && channels[i].sfx )
 		{
-			pResult->Set( channels[i].soundsource, 
-						  channels[i].entchannel, 
-						  channels[i].sfx->getname(), 
-						  channels[i].origin,
-						  channels[i].direction,
-						  ( (float)channels[i].master_vol / 255.0 ),
-						  DIST_MULT_TO_SNDLVL( channels[i].dist_mult ),
-						  IsChannelLooped( i ),
-						  channels[i].basePitch,
-						  listener_origin,
-						  channels[i].speakerentity );
+			pResult->Set( channels[i].soundsource,
+						channels[i].entchannel,
+						channels[i].sfx->getname(),
+						channels[i].origin,
+						channels[i].direction,
+						( (float)channels[i].master_vol / 255.0 ),
+						DIST_MULT_TO_SNDLVL( channels[i].dist_mult ),
+						IsChannelLooped( i ),
+						channels[i].basePitch,
+						listener_origin,
+						channels[i].speakerentity );
 			pResult++;
 			nSpaceRemaining--;
 		}
@@ -5766,8 +5766,8 @@ channel_t *S_FindChannelByGuid( int guid )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : guid - 
+// Purpose:
+// Input  : guid -
 //-----------------------------------------------------------------------------
 void S_StopSoundByGuid( int guid )
 {
@@ -5781,8 +5781,8 @@ void S_StopSoundByGuid( int guid )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : guid - 
+// Purpose:
+// Input  : guid -
 //-----------------------------------------------------------------------------
 float S_SoundDurationByGuid( int guid )
 {
@@ -5813,7 +5813,7 @@ bool S_IsLoopingSoundByGuid( int guid )
 
 //-----------------------------------------------------------------------------
 // Purpose: Note that the guid is preincremented, so we can just return the current value as the "last sound" indicator
-// Input  :  - 
+// Input  :  -
 // Output : int
 //-----------------------------------------------------------------------------
 int S_GetGuidForLastSoundEmitted()
@@ -5822,8 +5822,8 @@ int S_GetGuidForLastSoundEmitted()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : guid - 
+// Purpose:
+// Input  : guid -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool S_IsSoundStillPlaying( int guid )
@@ -5833,9 +5833,9 @@ bool S_IsSoundStillPlaying( int guid )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : guid - 
-//			fvol - 
+// Purpose:
+// Input  : guid -
+//			fvol -
 //-----------------------------------------------------------------------------
 void S_SetVolumeByGuid( int guid, float fvol )
 {
@@ -5844,8 +5844,8 @@ void S_SetVolumeByGuid( int guid, float fvol )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : guid - 
+// Purpose:
+// Input  : guid -
 // Output : float
 //-----------------------------------------------------------------------------
 float S_GetElapsedTimeByGuid( int guid )
@@ -5863,8 +5863,8 @@ float S_GetElapsedTimeByGuid( int guid )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : sndlist - 
+// Purpose:
+// Input  : sndlist -
 //-----------------------------------------------------------------------------
 void S_GetActiveSounds( CUtlVector< SndInfo_t >& sndlist )
 {
@@ -5895,14 +5895,14 @@ void S_GetActiveSounds( CUtlVector< SndInfo_t >& sndlist )
 		info.m_bUpdatePositions = ch->flags.bUpdatePositions;
 		// true if playing linked sentence
 		info.m_bIsSentence		= ch->flags.isSentence;
-		// if true, bypass all dsp processing for this sound (ie: music)	
+		// if true, bypass all dsp processing for this sound (ie: music)
 		info.m_bDryMix			= ch->flags.bdry;
 		// true if sound is playing through in-game speaker entity.
 		info.m_bSpeaker			= ch->flags.bSpeaker;
 		// true if sound is using special DSP effect
 		info.m_bSpecialDSP		= ( ch->special_dsp != 0 );
 		// for snd_show, networked sounds get colored differently than local sounds
-		info.m_bFromServer		= ch->flags.fromserver; 
+		info.m_bFromServer		= ch->flags.fromserver;
 
 		sndlist.AddToTail( info );
 	}
@@ -5968,19 +5968,19 @@ void S_ClearBuffer( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : percent - 
-//			holdtime - 
-//			intime - 
-//			outtime - 
+// Purpose:
+// Input  : percent -
+//			holdtime -
+//			intime -
+//			outtime -
 //-----------------------------------------------------------------------------
 void S_SoundFade( float percent, float holdtime, float intime, float outtime )
 {
-	soundfade.starttime				= g_pSoundServices->GetHostTime();  
+	soundfade.starttime				= g_pSoundServices->GetHostTime();
 
-	soundfade.initial_percent		= percent;       
-	soundfade.fadeouttime			= outtime;    
-	soundfade.holdtime				= holdtime;   
+	soundfade.initial_percent		= percent;
+	soundfade.fadeouttime			= outtime;
+	soundfade.holdtime				= holdtime;
 	soundfade.fadeintime			= intime;
 }
 
@@ -5994,7 +5994,7 @@ void S_UpdateSoundFade(void)
 	// Determine current fade value.
 
 	// Assume no fading remains
-	soundfade.percent = 0;  
+	soundfade.percent = 0;
 
 	totaltime = soundfade.fadeouttime + soundfade.fadeintime + soundfade.holdtime;
 
@@ -6053,9 +6053,9 @@ static void S_UpdateVoiceDuck( int voiceChannelCount, int voiceChannelMaxVolume,
 	if ( voiceChannelCount > 0 )
 	{
 		voiceChannelMaxVolume = clamp(voiceChannelMaxVolume, 0, 255);
-		
+
 		// duckTarget = RemapVal( voiceChannelMaxVolume, 0, 255, 1.0, volume_when_ducked );
-	
+
 		// KB: Change: ducker now active if any character is speaking above threshold volume.
 		// KB: Active ducker drops all volumes to volumes * snd_duckvolume
 
@@ -6091,7 +6091,7 @@ void ConvertListenerVectorTo2D( Vector *pvforward, Vector *pvright )
 	angles2d[PITCH]	= 0;
 	angles2d[YAW] += 90; // rotate 90 ccw
 	angles2d[ROLL] = 0;
-	
+
 	if (angles2d[YAW] >= 360)
 		angles2d[YAW] -= 360;
 
@@ -6102,8 +6102,8 @@ void ConvertListenerVectorTo2D( Vector *pvforward, Vector *pvright )
 	*pvforward = listener_forward2d;
 }
 
-// If this is nonzero, we will only spatialize some of the static 
-// channels each frame. The round robin will spatialize 1 / (2 ^ x) 
+// If this is nonzero, we will only spatialize some of the static
+// channels each frame. The round robin will spatialize 1 / (2 ^ x)
 // of the spatial channels each frame.
 ConVar snd_spatialize_roundrobin( "snd_spatialize_roundrobin", "0", FCVAR_ALLOWED_IN_COMPETITIVE, "Lowend optimization: if nonzero, spatialize only a fraction of sound channels each frame. 1/2^x of channels will be spatialized per frame." );
 /*
@@ -6119,8 +6119,8 @@ void S_Update( const AudioState_t *pAudioState )
 	channel_t	*ch;
 	channel_t	*combine;
 	static unsigned int s_roundrobin = 0 ; ///< number of times this function is called.
-									  ///< used instead of host_frame because that number
-									  ///< isn't necessarily available here (sez Yahn).
+									///< used instead of host_frame because that number
+									///< isn't necessarily available here (sez Yahn).
 
 	if ( !g_AudioDevice->IsActive() )
 		return;
@@ -6133,7 +6133,7 @@ void S_Update( const AudioState_t *pAudioState )
 	if ( pAudioState )
 	{
 		VectorCopy( pAudioState->m_Origin, listener_origin );
-		AngleVectors( pAudioState->m_Angles, &listener_forward, &listener_right, &listener_up ); 
+		AngleVectors( pAudioState->m_Angles, &listener_forward, &listener_right, &listener_up );
 		s_bIsListenerUnderwater = pAudioState->m_bIsUnderwater;
 	}
 	else
@@ -6146,7 +6146,7 @@ void S_Update( const AudioState_t *pAudioState )
 	}
 
 	g_AudioDevice->UpdateListener( listener_origin, listener_forward, listener_right, listener_up );
- 
+
 	combine = NULL;
 
 	int voiceChannelCount = 0;
@@ -6162,7 +6162,7 @@ void S_Update( const AudioState_t *pAudioState )
 	// updates dsp_room if automatic room detection enabled
 	DAS_CheckNewRoomDSP();
 
-	// update spatialization for static and dynamic sounds	
+	// update spatialization for static and dynamic sounds
 	CChannelList list;
 	g_ActiveChannels.GetActiveChannels( list );
 
@@ -6261,8 +6261,8 @@ void S_Update( const AudioState_t *pAudioState )
 
 			if (snd_surround.GetInt() < 4)
 			{
-				Con_NXPrintf ( &np, "%02i l(%03d) r(%03d) vol(%03d) ent(%03d) pos(%6d %6d %6d) timeleft(%f) looped(%d) %50s", 
-					total+ 1, 
+				Con_NXPrintf ( &np, "%02i l(%03d) r(%03d) vol(%03d) ent(%03d) pos(%6d %6d %6d) timeleft(%f) looped(%d) %50s",
+					total+ 1,
 					(int)channel->fvolume[IFRONT_LEFT],
 					(int)channel->fvolume[IFRONT_RIGHT],
 					channel->master_vol,
@@ -6271,13 +6271,13 @@ void S_Update( const AudioState_t *pAudioState )
 					(int)channel->origin[1],
 					(int)channel->origin[2],
 					timeleft,
-					bLooping, 
+					bLooping,
 					channel->sfx->getname());
 			}
 			else
 			{
-				Con_NXPrintf ( &np, "%02i l(%03d) c(%03d) r(%03d) rl(%03d) rr(%03d) vol(%03d) ent(%03d) pos(%6d %6d %6d) timeleft(%f) looped(%d) %50s", 
-					total+ 1, 
+				Con_NXPrintf ( &np, "%02i l(%03d) c(%03d) r(%03d) rl(%03d) rr(%03d) vol(%03d) ent(%03d) pos(%6d %6d %6d) timeleft(%f) looped(%d) %50s",
+					total+ 1,
 					(int)channel->fvolume[IFRONT_LEFT],
 					(int)channel->fvolume[IFRONT_CENTER],
 					(int)channel->fvolume[IFRONT_RIGHT],
@@ -6346,20 +6346,20 @@ CON_COMMAND( snd_dumpclientsounds, "Dump sounds to VXConsole" )
 		bool bLooping = ch->sfx->pSource->IsLooped();
 		const char *pszclassname = GetClientClassname(ch->soundsource);
 
-		Msg( "%02i %s l(%03d) c(%03d) r(%03d) rl(%03d) rr(%03d) vol(%03d) pos(%6d %6d %6d) timeleft(%f) looped(%d) %50s chan:%d ent(%03d):%s\n", 
-			total+ 1, 
+		Msg( "%02i %s l(%03d) c(%03d) r(%03d) rl(%03d) rr(%03d) vol(%03d) pos(%6d %6d %6d) timeleft(%f) looped(%d) %50s chan:%d ent(%03d):%s\n",
+			total+ 1,
 			ch->flags.fromserver ? "SERVER" : "CLIENT",
-			(int)ch->fvolume[IFRONT_LEFT], 
+			(int)ch->fvolume[IFRONT_LEFT],
 			(int)ch->fvolume[IFRONT_CENTER],
-			(int)ch->fvolume[IFRONT_RIGHT], 
-			(int)ch->fvolume[IREAR_LEFT], 
-			(int)ch->fvolume[IREAR_RIGHT], 
+			(int)ch->fvolume[IFRONT_RIGHT],
+			(int)ch->fvolume[IREAR_LEFT],
+			(int)ch->fvolume[IREAR_RIGHT],
 			ch->master_vol,
 			(int)ch->origin[0],
 			(int)ch->origin[1],
 			(int)ch->origin[2],
 			timeleft,
-			bLooping, 
+			bLooping,
 			ch->sfx->getname(),
 			ch->entchannel,
 			ch->soundsource,
@@ -6384,7 +6384,7 @@ void GetSoundTime(void)
 	fullsamples = g_AudioDevice->DeviceSampleCount() / g_AudioDevice->DeviceChannels();
 
 	// NOTE: it is possible to miscount buffers if it has wrapped twice between
-	// calls to S_Update.  However, since the output buffer size is > 1 second of sound, 
+	// calls to S_Update.  However, since the output buffer size is > 1 second of sound,
 	// this should only occur for framerates lower than 1hz
 
 	// sampleOutCount is counted in 16 bit *full* samples, of number of samples output to hardware
@@ -6395,26 +6395,26 @@ void GetSoundTime(void)
 		// buffer wrapped
 		s_buffers++;
 		if ( g_paintedtime > 0x70000000 )
-		{	
+		{
 			// time to chop things off to avoid 32 bit limits
 			s_buffers = 0;
 			g_paintedtime = fullsamples;
 			S_StopAllSounds( true );
 		}
 	}
-	
+
 	s_oldsampleOutCount = sampleOutCount;
 
 	if ( cl_movieinfo.IsRecording() || IsReplayRendering() )
 	{
 		// when recording a replay, we look at the record frame rate, not the engine frame rate
-		
+
 #if defined( REPLAY_ENABLED )
 		extern IClientReplayContext *g_pClientReplayContext;
 		if ( IsReplayRendering() )
 		{
 			IReplayMovieRenderer *pMovieRenderer = (g_pClientReplayContext != NULL) ? g_pClientReplayContext->GetMovieRenderer() : NULL;
-		
+
 			if ( pMovieRenderer && pMovieRenderer->IsAudioSyncFrame() )
 			{
 				float t = g_pSoundServices->GetHostTime();
@@ -6422,26 +6422,26 @@ void GetSoundTime(void)
 				{
 					float frameTime = pMovieRenderer->GetRecordingFrameDuration();
 					float fSamples = frameTime * (float) g_AudioDevice->DeviceDmaSpeed() + g_ReplaySoundTimeFracAccumulator;
-					
+
 					float intPart = (float) floor( fSamples );
 					g_ReplaySoundTimeFracAccumulator = fSamples - intPart;
-					
+
 					g_soundtime += (int) intPart;
 					s_lastsoundtime = t;
 				}
 			}
-		
+
 		}
-		else	// cl_movieinfo.IsRecording() 
+		else	// cl_movieinfo.IsRecording()
 				// in movie, just mix one frame worth of sound
 #endif
 		{
-		
+
 			float t = g_pSoundServices->GetHostTime();
 			if ( s_lastsoundtime != t )
 			{
 				g_soundtime += g_pSoundServices->GetHostFrametime() * g_AudioDevice->DeviceDmaSpeed();
-				
+
 				s_lastsoundtime = t;
 			}
 		}
@@ -6472,7 +6472,7 @@ void S_ExtraUpdate( void )
 	// then don't mix.  Important - mixing with listener at 'false' origin causes
 	// some sounds to incorrectly spatialize to 0 volume, killing them before they can play.
 
-	if ((listener_origin  == vec3_origin) && 
+	if ((listener_origin  == vec3_origin) &&
 		(listener_forward == vec3_origin) &&
 		(listener_right	  == vec3_origin) &&
 		(listener_up	  == vec3_origin) )
@@ -6515,10 +6515,10 @@ void S_Update_Guts( float mixAheadTime )
 //		// has played out more sound than we've actually
 //		// mixed.  We need to call S_Update_ more often.
 //
-//		DevMsg ("S_Update_ : Underflow\n"); 
-//		paintedtime = g_soundtime;		
+//		DevMsg ("S_Update_ : Underflow\n");
+//		paintedtime = g_soundtime;
 //	}
-//	(kdb) above code doesn't handle underflow correctly 
+//	(kdb) above code doesn't handle underflow correctly
 //	should actually zero out the paintbuffer to advance to the new
 //	time.
 
@@ -6648,9 +6648,9 @@ void S_DspParms( const CCommand &args )
 	{
 		// if dsp_parms with no arguments, reload entire preset file
 
-		 DSP_DEBUGReloadPresetFile();
+		DSP_DEBUGReloadPresetFile();
 
-		 return;
+		return;
 	}
 
 	if ( args.ArgC() < 4 )
@@ -6658,7 +6658,7 @@ void S_DspParms( const CCommand &args )
 		Msg( "Usage: dsp_parms PRESET# PROC# param0 param1 ...up to param15 \n" );
 		return;
 	}
-	
+
 	int cparam = min( args.ArgC() - 4, 16);
 
 	float params[16];
@@ -6686,7 +6686,7 @@ void S_Play( const char *pszName, bool flush = false )
 	int			inCache;
 	char		szName[256];
 	CSfxTable	*pSfx;
-	
+
 	Q_strncpy( szName, pszName, sizeof( szName ) );
 	if ( !Q_strrchr( pszName, '.' ) )
 	{
@@ -6728,7 +6728,7 @@ static void S_PlayVol( const CCommand &args )
 	float vol;
 	char name[256];
 	CSfxTable *pSfx;
-	
+
 	for ( int i = 1; i<args.ArgC(); i += 2 )
 	{
 		if ( !Q_strrchr( args[i], '.') )
@@ -6771,7 +6771,7 @@ static void S_PlayDelay( const CCommand &args )
 	CSfxTable *pSfx;
 
 	float delay = Q_atof( args[ 1 ] );
-	
+
 	Q_strncpy(szName, args[ 2 ], sizeof( szName ) );
 	if ( !Q_strrchr( args[ 2 ], '.' ) )
 	{
@@ -6779,7 +6779,7 @@ static void S_PlayDelay( const CCommand &args )
 	}
 
 	pSfx = S_FindName( szName, NULL );
-	
+
 	StartSoundParams_t params;
 	params.staticsound = false;
 	params.soundsource = g_pSoundServices->GetViewEntity();
@@ -6933,7 +6933,7 @@ void DEBUG_StartSoundMeasure(int type, int samplecount )
 // type 1 - dsp, 2 - mix, 3 - load sound, 4 - all sound
 
 // BUGBUG: snd_profile 4 reports a lower average because it's average cost
-// PER CALL and most calls (via SoundExtraUpdate()) don't do any work and 
+// PER CALL and most calls (via SoundExtraUpdate()) don't do any work and
 // bring the average down.  If you want an average PER FRAME instead, it's generally higher.
 void DEBUG_StopSoundMeasure(int type, int samplecount )
 {
@@ -6955,29 +6955,29 @@ void DEBUG_StopSoundMeasure(int type, int samplecount )
 	{
 		switch (g_snd_profile_type)
 		{
-		case 1: 
-			Msg("dsp: (%2.2f) millisec   ", ((float)g_snd_time_debug) / 100.0); 
-			Msg("(%2.2f) pct of frame \n", 100.0 * ((float)g_snd_time_debug) / ((float)g_snd_frametime_total)); 
+		case 1:
+			Msg("dsp: (%2.2f) millisec   ", ((float)g_snd_time_debug) / 100.0);
+			Msg("(%2.2f) pct of frame \n", 100.0 * ((float)g_snd_time_debug) / ((float)g_snd_frametime_total));
 			break;
-		case 2: 
+		case 2:
 			Msg("mix+dsp:(%2.2f) millisec   ", ((float)g_snd_time_debug) / 100.0);
-			Msg("(%2.2f) pct of frame \n", 100.0 * ((float)g_snd_time_debug) / ((float)g_snd_frametime_total)); 
+			Msg("(%2.2f) pct of frame \n", 100.0 * ((float)g_snd_time_debug) / ((float)g_snd_frametime_total));
 			break;
-		case 3: 
+		case 3:
 			//if ( (((float)g_snd_time_debug) / 100.0) < 0.01 )
 			//	break;
-			Msg("snd load: (%2.2f) millisec   ", ((float)g_snd_time_debug) / 100.0); 
-			Msg("(%2.2f) pct of frame \n", 100.0 * ((float)g_snd_time_debug) / ((float)g_snd_frametime_total)); 
+			Msg("snd load: (%2.2f) millisec   ", ((float)g_snd_time_debug) / 100.0);
+			Msg("(%2.2f) pct of frame \n", 100.0 * ((float)g_snd_time_debug) / ((float)g_snd_frametime_total));
 			break;
-		case 4: 
-			Msg("sound: (%2.2f) millisec   ", ((float)g_snd_time_debug) / 100.0); 
-			Msg("(%2.2f) pct of frame (%d samples) \n", 100.0 * ((float)g_snd_time_debug) / ((float)g_snd_frametime_total), g_snd_samplecount); 
+		case 4:
+			Msg("sound: (%2.2f) millisec   ", ((float)g_snd_time_debug) / 100.0);
+			Msg("(%2.2f) pct of frame (%d samples) \n", 100.0 * ((float)g_snd_time_debug) / ((float)g_snd_frametime_total), g_snd_samplecount);
 			break;
 		}
-		
+
 		g_snd_count_debug = 0;
 		g_snd_time_debug = 0;
-		g_snd_samplecount = 0;	
+		g_snd_samplecount = 0;
 		g_snd_frametime_total = 0;
 	}
 
@@ -6997,15 +6997,15 @@ static void S_Say( const CCommand &args )
 		return;
 
 	char sound[256];
-	Q_strncpy( sound, args[1], sizeof( sound ) );		
-	
+	Q_strncpy( sound, args[1], sizeof( sound ) );
+
 	// DEBUG - test performance of dsp code
 	if ( !Q_stricmp( sound, "dsp" ) )
 	{
 		unsigned time;
 		int i;
 		int count = 10000;
-		int idsp; 
+		int idsp;
 
 		for (i = 0; i < PAINTBUFFER_SIZE; i++)
 		{
@@ -7014,13 +7014,13 @@ static void S_Say( const CCommand &args )
 		}
 
 		Msg ("Start profiling 10,000 calls to DSP\n");
-		
+
 		idsp = dsp_room.GetInt();
-		
+
 		// get system time
 
 		time = Plat_MSTime();
-		
+
 		for (i = 0; i < count; i++)
 		{
 			// SX_RoomFX(PAINTBUFFER_SIZE, TRUE, TRUE);
@@ -7028,11 +7028,11 @@ static void S_Say( const CCommand &args )
 			DSP_Process(idsp, g_paintbuffer, NULL, NULL, PAINTBUFFER_SIZE);
 
 		}
-		// display system time delta 
+		// display system time delta
 		Msg("%d milliseconds \n", Plat_MSTime() - time);
 		return;
-	} 
-	
+	}
+
 	if ( !Q_stricmp(sound, "paint") )
 	{
 		unsigned time;
@@ -7041,7 +7041,7 @@ static void S_Say( const CCommand &args )
 		int psav = g_paintedtime;
 
 		Msg ("Start profiling MIX_PaintChannels\n");
-		
+
 		pSfx = S_PrecacheSound("ambience/labdrone1.wav");
 
 		StartSoundParams_t params;
@@ -7062,9 +7062,9 @@ static void S_Say( const CCommand &args )
 
 		// paint a boatload of sound
 
-		MIX_PaintChannels( g_paintedtime + 512*count, s_bIsListenerUnderwater );		
+		MIX_PaintChannels( g_paintedtime + 512*count, s_bIsListenerUnderwater );
 
-		// display system time delta 
+		// display system time delta
 		Msg("%d milliseconds \n", Plat_MSTime() - time);
 		g_paintedtime = psav;
 		return;
@@ -7105,7 +7105,7 @@ static void S_Say( const CCommand &args )
 		params.pitch = PITCH_NORM;
 
 		S_StartDynamicSound ( params );
-		
+
 		// remove last
 		g_Sentences.Remove( g_Sentences.Size() - 1 );
 	}
@@ -7151,7 +7151,7 @@ static void S_Say( const CCommand &args )
 // mix groups - these equivalent to submixes on an audio mixer
 
 // list of rules for determining sound membership in mix groups.
-// All conditions which are not null are ANDed together 
+// All conditions which are not null are ANDed together
 #define CMXRCLASSMAX	16
 #define CMXRNAMEMAX		32
 
@@ -7162,7 +7162,7 @@ struct classlistelem_t
 
 
 struct grouprule_t
-{	
+{
 	char			szmixgroup[CMXRNAMEMAX];	// mix group name
 	int				mixgroupid;					// mix group unique id
 	char			szdir[CMXRNAMEMAX];			// substring to search for in ch->sfx
@@ -7179,7 +7179,7 @@ struct grouprule_t
 	float			total_vol;					// total volume of all sounds in this group, if group can cause ducking
 	float			ducker_threshold;			// ducking is caused by this group if total_vol > ducker_threshold
 												// and causes_ducking is enabled.
-	float			duck_target_vol;			// target volume while ducking	
+	float			duck_target_vol;			// target volume while ducking
 	float			duck_ramp_val;				// current value of ramp - moves towards duck_target_vol
 };
 
@@ -7197,7 +7197,7 @@ int g_mapMixgroupidToGrouprulesid[CMXRGROUPMAX];				// map mixgroupid (one per u
 // sound mixer globals
 
 classlistelem_t g_groupclasslist[CMXRCLASSMAX];
-soundmixer_t	g_soundmixers[CMXRSOUNDMIXERSMAX];	// all sound mixers	
+soundmixer_t	g_soundmixers[CMXRSOUNDMIXERSMAX];	// all sound mixers
 grouprule_t		g_grouprules[CMXRGROUPRULESMAX];	// all rules for determining mix group membership
 
 
@@ -7246,7 +7246,7 @@ const char *GetClientClassname( SoundSource soundsource )
 		if ( pClientEntity )
 		{
 			ClientClass *pClientClass = pClientEntity->GetClientClass();
-			// check npc sounds 
+			// check npc sounds
 			if ( pClientClass )
 			{
 				return pClientClass->GetName();
@@ -7285,8 +7285,8 @@ int MXR_GetMixGroupListFromDirName( const char *pDirname, byte *pList, int listM
 
 // determine which mixgroups sound is in, and save those mixgroupids in sound.
 // use current soundmixer indicated with g_isoundmixer, and contents of g_rgpgrouprules.
-// Algorithm: 
-//		1. all conditions in a row are AND conditions, 
+// Algorithm:
+//		1. all conditions in a row are AND conditions,
 //		2. all rows sharing the same groupname are OR conditions.
 // so - if a sound matches all conditions of a row, it is given that row's mixgroup id
 //		if a sound doesn't match all conditions of a row, the next row is checked.
@@ -7326,7 +7326,7 @@ void MXR_GetMixGroupFromSoundsource( channel_t *pchan, SoundSource soundsource, 
 
 		if (pszclassname)
 		{
-			DevMsg("(%s:%s) \n", pszclassname, sndname);	
+			DevMsg("(%s:%s) \n", pszclassname, sndname);
 		}
 	}
 
@@ -7338,7 +7338,7 @@ void MXR_GetMixGroupFromSoundsource( channel_t *pchan, SoundSource soundsource, 
 	{
 		pchan->sfx->OnNameChanged( pchan->sfx->getname() );
 	}
-	
+
 	// since this is a sorted list (in group rule order) we only need to test against the next matching rule
 	// this avoids a search inside the loop
 	int currentDirRuleIndex = 0;
@@ -7427,13 +7427,13 @@ void MXR_GetMixGroupFromSoundsource( channel_t *pchan, SoundSource soundsource, 
 			if (cmixgroups >= 8)
 				return;		// too many matches, stop looking
 		}
-		
+
 		if (fmatch && snd_showclassname.GetInt() >= 2)
 		{
 			// show all mixgroups for this sound
 			if (cmixgroups == 1)
 			{
-				DevMsg("\n%s:%s: ", g_szsoundmixer_cur, sndname);	
+				DevMsg("\n%s:%s: ", g_szsoundmixer_cur, sndname);
 			}
 			if (prule->szmixgroup[0])
 			{
@@ -7492,32 +7492,32 @@ void MXR_DebugGraphMixVolumes( debug_showvols_t *groupvols, int cgroups)
 
 
 	r = 96; g = 86; b = 226; a = 255; ab = 255;
-	
+
 	// show volume, dsp_volume
 
 	Q_snprintf( text, 128, "Game Volume: %1.2f", volume.GetFloat());
-	CDebugOverlay::AddScreenTextOverlay(flXpos, flYpos, duration, r, g, b,a,  text); 
+	CDebugOverlay::AddScreenTextOverlay(flXpos, flYpos, duration, r, g, b,a,  text);
 	flYpos += MXR_DEBUG_INCY;
 
 	Q_snprintf( text, 128, "DSP Volume: %1.2f", dsp_volume.GetFloat());
-	CDebugOverlay::AddScreenTextOverlay(flXpos, flYpos, duration, r, g, b,a,  text); 
+	CDebugOverlay::AddScreenTextOverlay(flXpos, flYpos, duration, r, g, b,a,  text);
 	flYpos += MXR_DEBUG_INCY;
-	
+
 	for (int i = 0; i < cgroups; i++)
-	{	
+	{
 		// r += 64; g += 64; b += 16;
 
 		r = r % 255; g = g % 255; b = b % 255;
-		
-		Q_snprintf( text, 128, "%s: %1.2f (%1.2f)", groupvols[i].psz, 
+
+		Q_snprintf( text, 128, "%s: %1.2f (%1.2f)", groupvols[i].psz,
 					groupvols[i].vol * g_DuckScale, groupvols[i].totalvol * g_DuckScale);
 
 		CDebugOverlay::AddScreenTextOverlay(flXpos, flYpos, duration, r, g, b,a,  text);
 
 		// draw volume bar graph
-		
+
 		float vol = (groupvols[i].totalvol * g_DuckScale) / MXR_DEBUG_MAXVOL;
-		
+
 		// draw first 70% green
 		float vol1 = 0.0;
 		float vol2 = 0.0;
@@ -7544,11 +7544,11 @@ void MXR_DebugGraphMixVolumes( debug_showvols_t *groupvols, int cgroups)
 			CDebugOverlay::AddScreenTextOverlay(flXposBar, flYpos, duration, rb, gb, bb,ab,  bartext);
 		}
 
-		
+
 		// yellow bar
-		if (vol2 > MXR_DEBUG_YELLOWLIMIT)	
+		if (vol2 > MXR_DEBUG_YELLOWLIMIT)
 		{
-			rb = 255; gb = 255; bb = 0;	
+			rb = 255; gb = 255; bb = 0;
 			Q_memset(bartext, 0, sizeof(bartext));
 
 			cbars = (int)((float)vol2 * (float)MXR_DEBUG_VOLSCALE);
@@ -7618,22 +7618,22 @@ void MXR_UpdateAllDuckerVolumes( void )
 
 	int i;
 	double dtime = g_pSoundServices->GetHostTime();
-	
+
 	// don't update until timer expires
 
 	if (fabs(dtime - g_mxr_ducktime) < SND_DUCKER_UPDATETIME)
 			return;
-	
+
 	g_mxr_ducktime = dtime;
 
 	// clear out all total volume values for groups
 
 	for ( i = 0; i < g_cgrouprules; i++)
 		g_grouprules[i].total_vol = 0.0;
-	
+
 	// for every channel in a mix group which can cause ducking:
 	// get total volume, store total in grouprule:
-	
+
 	CChannelList list;
 	int ch_idx;
 
@@ -7657,25 +7657,25 @@ void MXR_UpdateAllDuckerVolumes( void )
 
 				if (imixgroup < 0)
 					continue;
-				
+
 				int	grouprulesid = g_mapMixgroupidToGrouprulesid[imixgroup];
-			
+
 				if (g_grouprules[grouprulesid].causes_ducking)
 					g_grouprules[grouprulesid].total_vol += pchan->last_vol;
 
 				if (g_grouprules[grouprulesid].is_ducked)
 					b_found_ducked_channel = true;
 			}
-		}		
+		}
 	}
-	
+
 	// if no channels playing which may be ducked, do nothing
 
 	if ( !b_found_ducked_channel )
 		return;
 
 	// for all groups that can be ducked:
-	// see if a higher priority sound group has a volume > threshold, 
+	// see if a higher priority sound group has a volume > threshold,
 	// if so, then duck this group by setting duck_target_vol to duck_target_pct.
 	// if no sound group is causing ducking in this group, reset duck_target_vol to 1.0
 
@@ -7691,12 +7691,12 @@ void MXR_UpdateAllDuckerVolumes( void )
 			// if global voice ducking is active, skip sound group ducking and just set duck_volume target to 1.0
 
 			if ( g_DuckScale >= 1.0 )
-			{	
+			{
 				// check all sound groups for higher priority duck trigger
 
 				for (int j = 0; j < g_cgrouprules; j++)
 				{
-					if (g_grouprules[j].priority > priority && 
+					if (g_grouprules[j].priority > priority &&
 						g_grouprules[j].causes_ducking &&
 						g_grouprules[j].total_vol > g_grouprules[j].ducker_threshold)
 					{
@@ -7705,7 +7705,7 @@ void MXR_UpdateAllDuckerVolumes( void )
 						// and break
 
 						duck_volume = g_grouprules[i].duck_target_pct;
-						
+
 						// UNDONE: to prevent edge condition caused by crossing threshold, may need to have secondary
 						// UNDONE: timer which allows ducking at 0.2 hz
 
@@ -7714,7 +7714,7 @@ void MXR_UpdateAllDuckerVolumes( void )
 				}
 			}
 
-			g_grouprules[i].duck_target_vol = duck_volume; 
+			g_grouprules[i].duck_target_vol = duck_volume;
 		}
 	}
 
@@ -7726,19 +7726,19 @@ void MXR_UpdateAllDuckerVolumes( void )
 	{
 		float target	= g_grouprules[i].duck_target_vol;
 		float current	= g_grouprules[i].duck_ramp_val;
-			
+
 		if (g_grouprules[i].is_ducked && (current != target))
 		{
 
 			float ramptime = target < current ? snd_duckerattacktime.GetFloat() : snd_duckerreleasetime.GetFloat();
 
-			// delta is volume change per update (we can do this 
+			// delta is volume change per update (we can do this
 			// since we run at an approximate fixed update rate of 10hz)
 
 			float delta	= (1.0 - g_grouprules[i].duck_target_pct);
-			
+
 			delta *= ( SND_DUCKER_UPDATETIME / ramptime );
-			
+
 			if (current > target)
 				delta = -delta;
 
@@ -7768,9 +7768,9 @@ void MXR_DebugShowMixVolumes( void )
 
 	// for the current soundmixer:
 	// make a totalvolume bucket for each mixgroup type in the soundmixer.
-	// for every active channel, add its spatialized volume to 
+	// for every active channel, add its spatialized volume to
 	// totalvolume bucket for that channel's selected mixgroup
-	
+
 	// display all mixgroup/volume/totalvolume values as horizontal bars
 
 	debug_showvols_t groupvols[CMXRGROUPMAX];
@@ -7783,10 +7783,10 @@ void MXR_DebugShowMixVolumes( void )
 		DevMsg("No sound mixer selected!");
 		return;
 	}
-	
+
 	soundmixer_t *pmixer = &g_soundmixers[g_isoundmixer];
 
-	// for every entry in mapMixgroupidToValue which is not -1, 
+	// for every entry in mapMixgroupidToValue which is not -1,
 	// set up groupvols
 
 	for (i = 0; i < CMXRGROUPMAX; i++)
@@ -7801,7 +7801,7 @@ void MXR_DebugShowMixVolumes( void )
 		}
 	}
 
-	// for every active channel, get its volume and 
+	// for every active channel, get its volume and
 	// the selected mixgroupid, add to groupvols totalvol
 
 	CChannelList list;
@@ -7825,7 +7825,7 @@ void MXR_DebugShowMixVolumes( void )
 					break;
 				}
 			}
-		}	
+		}
 	}
 
 	// groupvols is now fully initialized - just display it
@@ -7851,7 +7851,7 @@ static void MXR_DebugSetMixGroupVolume( const CCommand &args )
 
 	if ( g_isoundmixer < 0 )
 		return;
-	
+
 	soundmixer_t *pmixer = &g_soundmixers[g_isoundmixer];
 
 	pmixer->mapMixgroupidToValue[imixgroup] = vol;
@@ -7868,7 +7868,7 @@ static void MXR_DebugSetMixGroupVolume( const CCommand &args )
 
 float MXR_GetVolFromMixGroup( int rgmixgroupid[8], int *plast_mixgroupid )
 {
-	
+
 	// if no soundmixer currently set, return 1.0 volume
 
 	if (g_isoundmixer < 0)
@@ -7902,7 +7902,7 @@ float MXR_GetVolFromMixGroup( int rgmixgroupid[8], int *plast_mixgroupid )
 					duckgain = duckgain_new;
 
 				Assert(imixgroup < CMXRGROUPMAX);
-				
+
 				// return first mixgroup id in the passed in array
 				// that maps to a non -1 volume value for this
 				// sound mixer
@@ -7910,11 +7910,11 @@ float MXR_GetVolFromMixGroup( int rgmixgroupid[8], int *plast_mixgroupid )
 				if ( pmixer->mapMixgroupidToValue[imixgroup] >= 0)
 				{
 					*plast_mixgroupid = imixgroup;
-					
+
 					// get gain due to mixer settings
 
 					float gain = pmixer->mapMixgroupidToValue[imixgroup];
-	
+
 					// modify gain with ducker settings for this group
 
 					return gain * duckgain;
@@ -7934,7 +7934,7 @@ int MXR_GetMixgroupFromName( const char *pszgroupname )
 	// scan group rules for mapping from name to id
 	if ( !pszgroupname )
 		return -1;
-	
+
 	if ( Q_strlen(pszgroupname) == 0 )
 		return -1;
 
@@ -7942,7 +7942,7 @@ int MXR_GetMixgroupFromName( const char *pszgroupname )
 	{
 		if ( !Q_stricmp(g_grouprules[i].szmixgroup, pszgroupname ) )
 			return g_grouprules[i].mixgroupid;
-	}	
+	}
 
 	return -1;
 }
@@ -7958,7 +7958,7 @@ char *MXR_GetGroupnameFromId( int mixgroupid)
 	{
 		if ( g_grouprules[i].mixgroupid == mixgroupid)
 			return g_grouprules[i].szmixgroup;
-	}	
+	}
 
 	return NULL;
 }
@@ -7986,7 +7986,7 @@ void MXR_AssignGroupIds( void )
 			g_mapMixgroupidToGrouprulesid[cmixgroupid] = i;
 
 			cmixgroupid++;
-		}	
+		}
 	}
 }
 
@@ -8048,10 +8048,10 @@ bool MXR_LoadAllSoundMixers( void )
 	}
 
 	pstart = pbuffer;
-	
+
 	// first pass: load g_grouprules[]
 
-	// starting at top of file, 
+	// starting at top of file,
 	// scan for first '{', skipping all comment lines
 		// get strings for: groupname, directory, classname, chan, sndlvl_min, sndlvl_max
 		// convert chan to CHAN_ lookup
@@ -8065,7 +8065,7 @@ bool MXR_LoadAllSoundMixers( void )
 	while (1)
 	{
 		pstart = COM_Parse( pstart );
-	
+
 		if ( strlen(com_token) <= 0)
 			break; // eof
 
@@ -8080,7 +8080,7 @@ bool MXR_LoadAllSoundMixers( void )
 		pstart = COM_Parse( pstart );
 		if (com_token[0] == CHAR_RIGHT_PAREN)
 			break;
-		
+
 		grouprule_t *pgroup = &g_grouprules[g_cgrouprules];
 
 		// copy mixgroup name, directory, classname
@@ -8088,7 +8088,7 @@ bool MXR_LoadAllSoundMixers( void )
 
 		if (com_token[0])
 			Q_memcpy(pgroup->szmixgroup, com_token, min((size_t)CMXRNAMEMAX-1, strlen(com_token)));
-		
+
 		pstart = COM_Parse( pstart );
 		if (com_token[0])
 			Q_memcpy(pgroup->szdir, com_token, min((size_t)CMXRNAMEMAX-1, strlen(com_token)));
@@ -8125,7 +8125,7 @@ bool MXR_LoadAllSoundMixers( void )
 			pgroup->chantype = -1;
 
 		// get sndlvls
-		
+
 		pstart = COM_Parse( pstart );
 		if (com_token[0])
 			pgroup->soundlevel_min = atoi(com_token);
@@ -8180,14 +8180,14 @@ bool MXR_LoadAllSoundMixers( void )
 		// update rule count
 
 		g_cgrouprules++;
-		
+
 		if (g_cgrouprules >= CMXRGROUPRULESMAX)
 		{
 			// UNDONE: error! too many rules
 			break;
 		}
 	}
-	
+
 	// now process all groupids in groups, such that
 	// each mixgroup gets a unique id.
 
@@ -8200,7 +8200,7 @@ bool MXR_LoadAllSoundMixers( void )
 			// while not '}'
 			// scan for "<name>", save as groupname
 			// scan for "<num>", save as mix value
-	
+
 	while(1)
 	{
 		pstart = COM_Parse( pstart );
@@ -8232,11 +8232,11 @@ bool MXR_LoadAllSoundMixers( void )
 
 			if (com_token[0] == CHAR_RIGHT_PAREN)
 				break;	// finished with this sounmixer
-			
+
 			// lookup mixgroupid for groupname
 			int mixgroupid = MXR_GetMixgroupFromName( com_token );
 			float value;
-			
+
 			// get mix value
 			pstart = COM_Parse( pstart );
 			value = atof( com_token );
@@ -8361,7 +8361,7 @@ float S_GetMono16Samples( const char *pszName, CUtlVector< short >& sampleList )
 
 					short left = 0;
 					short right = 0;
-					
+
 					if ( mix_sample_size == 1 )
 					{
 						// Not possible!!!, must be at least 2 bytes!!!

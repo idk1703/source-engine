@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -41,7 +41,7 @@ public:
 			~CConstructorChecker()	{Assert(m_nConstructedObjects == 0);}
 	int		m_nConstructedObjects;
 } g_ConstructorChecker;
- 
+
 
 
 //-----------------------------------------------------------------------------
@@ -104,18 +104,18 @@ static inline CDispInfo* GetModelDisp( model_t const *pWorld, int i )
 {
 	return static_cast< CDispInfo* >(
 		DispInfo_IndexArray( pWorld->brush.pShared->hDispInfos, i ) );
-}			
+}
 
 
-static void BuildDispSurfInit( 
-	model_t *pWorld, 
+static void BuildDispSurfInit(
+	model_t *pWorld,
 	CCoreDispInfo *pBuildDisp,
 	SurfaceHandle_t worldSurfID )
 {
 	if( !IS_SURF_VALID( worldSurfID ) )
 		return;
 	ASSERT_SURF_VALID( worldSurfID );
-	
+
 	Vector surfPoints[4];
 	Vector surfNormals[4];
 	Vector2D surfTexCoords[4];
@@ -184,13 +184,13 @@ static void BuildDispSurfInit(
 		case 2: { uv.Init( ( float )lightmapWidth, ( float )lightmapHeight ); break; }
 		case 3: { uv.Init( ( float )lightmapWidth, 0.0f ); break; }
 		}
-		
+
 		uv.x += 0.5f;
 		uv.y += 0.5f;
-		
-		uv *= ctx.m_Scale; 
-		uv += ctx.m_Offset; 
-		
+
+		uv *= ctx.m_Scale;
+		uv += ctx.m_Offset;
+
 		pDispSurf->SetLuxelCoord( 0, ndxLuxel, uv );
 	}
 #endif
@@ -207,13 +207,13 @@ VertexFormat_t ComputeDisplacementStaticMeshVertexFormat( const IMaterial * pMat
 	return vertexFormat;
 }
 
-void AddEmptyMesh( 
+void AddEmptyMesh(
 	model_t *pWorld,
-	CDispGroup *pCombo, 
+	CDispGroup *pCombo,
 	const ddispinfo_t *pMapDisps,
 	int *pDispInfos,
 	int nDisps,
-	int nTotalVerts, 
+	int nTotalVerts,
 	int nTotalIndices )
 {
 	CMatRenderContextPtr pRenderContext( materials );
@@ -255,7 +255,7 @@ void AddEmptyMesh(
 		CalcMaxNumVertsAndIndices( pMapDisp->power, &nVerts, &nIndices );
 		iVertOffset += nVerts;
 		iIndexOffset += nIndices;
-		
+
 		pMesh->m_DispInfos[iDisp] = pDisp;
 	}
 
@@ -264,7 +264,7 @@ void AddEmptyMesh(
 }
 
 
-void FillStaticBuffer( 
+void FillStaticBuffer(
 	CGroupMesh *pMesh,
 	CDispInfo *pDisp,
 	const CCoreDispInfo *pCoreDisp,
@@ -275,54 +275,54 @@ void FillStaticBuffer(
 	// Put the verts into the buffer.
 	int nVerts, nIndices;
 	CalcMaxNumVertsAndIndices( pDisp->GetPower(), &nVerts, &nIndices );
-	
+
 	CMeshBuilder builder;
 	builder.BeginModify( pMesh->m_pMesh, pDisp->m_iVertOffset, nVerts, 0, 0 );
-	
+
 	SurfaceCtx_t ctx;
 	SurfSetupSurfaceContext( ctx, pDisp->GetParent() );
-	
+
 	for( int i=0; i < nVerts; i++ )
 	{
 		// NOTE: position comes from our system-memory buffer so when you're restoring
 		//       static buffers (from alt+tab), it includes changes from terrain mods.
 		const Vector &vPos = pCoreDisp->GetVert( i );
 		builder.Position3f( vPos.x, vPos.y, vPos.z );
-		
+
 		const Vector &vNormal = pCoreDisp->GetNormal( i );
 		builder.Normal3f( vNormal.x, vNormal.y, vNormal.z );
-		
+
 		Vector vec;
 		pCoreDisp->GetTangentS( i, vec );
 		builder.TangentS3f( VectorExpand( vec ) );
-		
+
 		pCoreDisp->GetTangentT( i, vec );
 		builder.TangentT3f( VectorExpand( vec ) );
-		
+
 		Vector2D texCoord;
 		pCoreDisp->GetTexCoord( i, texCoord );
 		builder.TexCoord2f( 0, texCoord.x, texCoord.y );
-		
+
 		Vector2D lightCoord;
 		{
 			pCoreDisp->GetLuxelCoord( 0, i, lightCoord );
 			builder.TexCoord2f( DISP_LMCOORDS_STAGE, lightCoord.x, lightCoord.y );
 		}
-		
+
 		float flAlpha = ( ( CCoreDispInfo * )pCoreDisp )->GetAlpha( i );
 		flAlpha *= ( 1.0f / 255.0f );
 		flAlpha = clamp( flAlpha, 0.0f, 1.0f );
 		builder.Color4f( 1.0f, 1.0f, 1.0f, flAlpha );
-		
+
 		if( nLightmaps > 1 )
 		{
 			SurfComputeLightmapCoordinate( ctx, pDisp->GetParent(), pDisp->m_Verts[i].m_vPos, lightCoord );
 			builder.TexCoord2f( 2, ctx.m_BumpSTexCoordOffset, 0.0f );
 		}
-		
+
 		builder.AdvanceVertex();
 	}
-	
+
 	builder.EndModify();
 #endif
 }
@@ -358,7 +358,7 @@ void DispInfo_CreateMaterialGroups( model_t *pWorld, const MaterialSystem_SortIn
 		CDispInfo *pDisp = GetModelDisp( pWorld, iDisp );
 
 		int idLMPage = pSortInfos[MSurf_MaterialSortID( pDisp->m_ParentSurfID )].lightmapPageID;
-		
+
 		CDispGroup *pCombo = FindCombo( g_DispGroups, idLMPage, MSurf_TexInfo( pDisp->m_ParentSurfID )->material );
 		if( !pCombo )
 			pCombo = AddCombo( g_DispGroups, idLMPage, MSurf_TexInfo( pDisp->m_ParentSurfID )->material );
@@ -401,10 +401,10 @@ void DispInfo_CreateEmptyStaticBuffers( model_t *pWorld, const ddispinfo_t *pMap
 
 			int nVerts, nIndices;
 			CalcMaxNumVertsAndIndices( pMapDisp->power, &nVerts, &nIndices );
-			
+
 			// If we're going to pass our vertex buffer limit, or we're at the last one,
 			// make a static buffer and fill it up.
-			if( (nTotalVerts + nVerts) > MAX_STATIC_BUFFER_VERTS || 
+			if( (nTotalVerts + nVerts) > MAX_STATIC_BUFFER_VERTS ||
 				(nTotalIndices + nIndices) > MAX_STATIC_BUFFER_INDICES )
 			{
 				AddEmptyMesh( pWorld, pCombo, pMapDisps, &pCombo->m_DispInfos[iStart], iDisp-iStart, nTotalVerts, nTotalIndices );
@@ -429,21 +429,21 @@ void DispInfo_CreateEmptyStaticBuffers( model_t *pWorld, const ddispinfo_t *pMap
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pWorld - 
-//			iDisp - 
-//			*pMapDisp - 
-//			*pCoreDisp - 
-//			*pVerts - 
-//			pWorld - 
-//			iDisp - 
+// Purpose:
+// Input  : *pWorld -
+//			iDisp -
+//			*pMapDisp -
+//			*pCoreDisp -
+//			*pVerts -
+//			pWorld -
+//			iDisp -
 // Output : Returns true on success, false on failure.
 // Information: Setup the CCoreDispInfo using the ddispinfo_t and have it translate the data
 // into a format we'll copy into the rendering structures. This roundaboutness is because
 // of legacy code. It should all just be stored in the map file, but it's not a high priority right now.
 //-----------------------------------------------------------------------------
 bool DispInfo_CreateFromMapDisp( model_t *pWorld, int iDisp, const ddispinfo_t *pMapDisp, CCoreDispInfo *pCoreDisp, const CDispVert *pVerts,
-								 const CDispTri *pTris,const MaterialSystem_SortInfo_t *pSortInfos, bool bRestoring )
+								const CDispTri *pTris,const MaterialSystem_SortInfo_t *pSortInfos, bool bRestoring )
 {
 	// Get the matching CDispInfo to fill in.
 	CDispInfo *pDisp = GetModelDisp( pWorld, iDisp );
@@ -461,7 +461,7 @@ bool DispInfo_CreateFromMapDisp( model_t *pWorld, int iDisp, const ddispinfo_t *
 	}
 
 	// Build the reset of the intermediate data from the initial map displacement data.
-	BuildDispSurfInit( pWorld, pCoreDisp, pDisp->GetParent() );	
+	BuildDispSurfInit( pWorld, pCoreDisp, pDisp->GetParent() );
 	if ( !pCoreDisp->Create() )
 		return false;
 
@@ -474,7 +474,7 @@ bool DispInfo_CreateFromMapDisp( model_t *pWorld, int iDisp, const ddispinfo_t *
 	// Store ddispinfo_t data.
 	pDisp->CopyMapDispData( pMapDisp );
 
-	// Store CCoreDispInfo data.	
+	// Store CCoreDispInfo data.
 	if( !pDisp->CopyCoreDispData( pWorld, pSortInfos, pCoreDisp, bRestoring ) )
 		return false;
 
@@ -486,11 +486,11 @@ bool DispInfo_CreateFromMapDisp( model_t *pWorld, int iDisp, const ddispinfo_t *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pWorld - 
-//			iDisp - 
-//			*pCoreDisp - 
-//			*pVerts - 
+// Purpose:
+// Input  : *pWorld -
+//			iDisp -
+//			*pCoreDisp -
+//			*pVerts -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 void DispInfo_CreateStaticBuffersAndTags( model_t *pWorld, int iDisp, CCoreDispInfo *pCoreDisp, const CDispVert *pVerts )
@@ -511,10 +511,10 @@ void SetupMeshReaders( model_t *pWorld, int nDisplacements )
 	for ( int iDisp=0; iDisp < nDisplacements; iDisp++ )
 	{
 		CDispInfo *pDisp = GetModelDisp( pWorld, iDisp );
-		
+
 		MeshDesc_t desc;
 		memset( &desc, 0, sizeof( desc ) );
-		
+
 		desc.m_VertexSize_Position = sizeof( CDispRenderVert );
 		desc.m_VertexSize_TexCoord[0] = sizeof( CDispRenderVert );
 		desc.m_VertexSize_TexCoord[DISP_LMCOORDS_STAGE] = sizeof( CDispRenderVert );
@@ -532,9 +532,9 @@ void SetupMeshReaders( model_t *pWorld, int nDisplacements )
 
 		desc.m_nIndexSize = 1;
 		desc.m_pIndices = pDisp->m_Indices.Base();
-		
+
 		pDisp->m_MeshReader.BeginRead_Direct( desc, pDisp->NumVerts(), pDisp->m_nIndices );
-	}		
+	}
 }
 
 void UpdateDispBBoxes( model_t *pWorld, int nDisplacements )
@@ -544,7 +544,7 @@ void UpdateDispBBoxes( model_t *pWorld, int nDisplacements )
 		CDispInfo *pDisp = GetModelDisp( pWorld, iDisp );
 		pDisp->UpdateBoundingBox();
 	}
-}		
+}
 
 
 #include "tier0/memdbgoff.h"
@@ -552,7 +552,7 @@ bool DispInfo_LoadDisplacements( model_t *pWorld, bool bRestoring )
 {
 	const MaterialSystem_SortInfo_t *pSortInfos = materialSortInfoArray;
 
-	int nDisplacements = CMapLoadHelper::LumpSize( LUMP_DISPINFO ) / sizeof( ddispinfo_t );	
+	int nDisplacements = CMapLoadHelper::LumpSize( LUMP_DISPINFO ) / sizeof( ddispinfo_t );
 	int nLuxels = CMapLoadHelper::LumpSize( LUMP_DISP_LIGHTMAP_ALPHAS );
 	int nSamplePositionBytes = CMapLoadHelper::LumpSize( LUMP_DISP_LIGHTMAP_SAMPLE_POSITIONS );
 
@@ -561,8 +561,8 @@ bool DispInfo_LoadDisplacements( model_t *pWorld, bool bRestoring )
 	{
 		/* Breakpoint-able: */
 		if (pWorld->brush.pShared->numDispInfos != nDisplacements)
-		{ 
-			volatile int a = 0; a = a + 1; 
+		{
+			volatile int a = 0; a = a + 1;
 		}
 
 		if ( !pWorld->brush.pShared->numDispInfos && nDisplacements )
@@ -571,7 +571,7 @@ bool DispInfo_LoadDisplacements( model_t *pWorld, bool bRestoring )
 			return false;
 		}
 
-		ErrorIfNot( 
+		ErrorIfNot(
 			pWorld->brush.pShared->numDispInfos == nDisplacements,
 			("DispInfo_LoadDisplacments: dispcounts (%d and %d) don't match.", pWorld->brush.pShared->numDispInfos, nDisplacements)
 			);
@@ -594,7 +594,7 @@ bool DispInfo_LoadDisplacements( model_t *pWorld, bool bRestoring )
 		}
 		CMapLoadHelper lhDispLMAlphas( LUMP_DISP_LIGHTMAP_ALPHAS );
 		lhDispLMAlphas.LoadLumpData( 0, nLuxels, g_DispLMAlpha.Base() );
-	
+
 		// Load lightmap sample positions.
 		{
 		MEM_ALLOC_CREDIT();
@@ -606,7 +606,7 @@ bool DispInfo_LoadDisplacements( model_t *pWorld, bool bRestoring )
 
 	// Free old data.
 	DispInfo_ReleaseMaterialSystemObjects( pWorld );
-	
+
 	// load the displacement info structures into temporary space
 	// using temporary storage that is not the stack for compatibility with console stack
 #ifndef _X360
@@ -615,7 +615,7 @@ bool DispInfo_LoadDisplacements( model_t *pWorld, bool bRestoring )
 	CUtlMemory< ddispinfo_t > m_DispInfoBuf( 0, MAX_MAP_DISPINFO );
 	ddispinfo_t *tempDisps = m_DispInfoBuf.Base();
 #endif
-	ErrorIfNot( 
+	ErrorIfNot(
 		nDisplacements <= MAX_MAP_DISPINFO,
 		("DispInfo_LoadDisplacements: nDisplacements (%d) > MAX_MAP_DISPINFO (%d)", nDisplacements, MAX_MAP_DISPINFO)
 		);
@@ -625,7 +625,7 @@ bool DispInfo_LoadDisplacements( model_t *pWorld, bool bRestoring )
 	// Now hook up the displacements to their parents.
 	DispInfo_LinkToParentFaces( pWorld, tempDisps, nDisplacements );
 
-	// First, create "groups" (or "combos") which contain all the displacements that 
+	// First, create "groups" (or "combos") which contain all the displacements that
 	// use the same material and lightmap.
 	DispInfo_CreateMaterialGroups( pWorld, pSortInfos );
 
@@ -664,7 +664,7 @@ bool DispInfo_LoadDisplacements( model_t *pWorld, bool bRestoring )
 		CCoreDispInfo *pCoreDisp = new CCoreDispInfo;
 		aCoreDisps.AddToTail( pCoreDisp );
 	}
-	
+
 	CMapLoadHelper lhDispVerts( LUMP_DISP_VERTS );
 	CMapLoadHelper lhDispTris( LUMP_DISP_TRIS );
 
@@ -686,11 +686,11 @@ bool DispInfo_LoadDisplacements( model_t *pWorld, bool bRestoring )
 		ErrorIfNot( nTris <= MAX_DISPTRIS, ( "DispInfo_LoadDisplacements: invalid tri count (%d)", nTris ) );
 		lhDispTris.LoadLumpData( iCurTri * sizeof(CDispTri), nTris*sizeof(CDispTri), tempTris );
 		iCurTri += nTris;
-	
+
 		// Now create the CoreDispInfo and the base CDispInfo.
 		if ( !DispInfo_CreateFromMapDisp( pWorld, iDisp, pMapDisp, aCoreDisps[iDisp], tempVerts, tempTris, pSortInfos, bRestoring ) )
 			return false;
-	}	
+	}
 
 	// Smooth Normals.
 	SmoothDispSurfNormals( aCoreDisps.Base(), nDisplacements );
@@ -699,7 +699,7 @@ bool DispInfo_LoadDisplacements( model_t *pWorld, bool bRestoring )
 	for ( iDisp = 0; iDisp < nDisplacements; ++iDisp )
 	{
 		DispInfo_CreateStaticBuffersAndTags( pWorld, iDisp, aCoreDisps[iDisp], tempVerts );
-		
+
 		// Copy over the now blended normals
 		CDispInfo *pDisp = GetModelDisp( pWorld, iDisp );
 		pDisp->CopyCoreDispVertData( aCoreDisps[iDisp], pDisp->m_BumpSTexCoordOffset );
@@ -714,15 +714,15 @@ bool DispInfo_LoadDisplacements( model_t *pWorld, bool bRestoring )
 	for ( iDisp=0; iDisp < nDisplacements; iDisp++ )
 	{
 		CDispInfo *pDisp = GetModelDisp( pWorld, iDisp );
-		
+
 		pDisp->m_ActiveVerts = pDisp->m_AllowedVerts;
 	}
 
 	for ( iDisp=0; iDisp < nDisplacements; iDisp++ )
 	{
 		CDispInfo *pDisp = GetModelDisp( pWorld, iDisp );
-		pDisp->TesselateDisplacement();			
-	}		
+		pDisp->TesselateDisplacement();
+	}
 
 	SetupMeshReaders( pWorld, nDisplacements );
 
@@ -741,7 +741,7 @@ void DispInfo_ReleaseMaterialSystemObjects( model_t *pWorld )
 	for( int iGroup=0; iGroup < g_DispGroups.Size(); iGroup++ )
 	{
 		CDispGroup *pGroup = g_DispGroups[iGroup];
-	
+
 		for( int iMesh=0; iMesh < pGroup->m_Meshes.Size(); iMesh++ )
 		{
 			CGroupMesh *pMesh = pGroup->m_Meshes[iMesh];
@@ -766,7 +766,7 @@ void DispInfo_ReleaseMaterialSystemObjects( model_t *pWorld )
 				AssertOnce( 0 );
 				continue;
 			}
-			
+
 			pDisp->m_pMesh = NULL;
 			pDisp->m_iVertOffset = pDisp->m_iIndexOffset = 0;
 		}
@@ -782,7 +782,7 @@ CDispInfo::CDispInfo()
 {
 	m_ParentSurfID = SURFACE_HANDLE_INVALID;
 
-    m_bTouched = false;
+	m_bTouched = false;
 
 	++g_ConstructorChecker.m_nConstructedObjects;
 
@@ -794,7 +794,7 @@ CDispInfo::CDispInfo()
 	m_pPowerInfo = NULL;
 
 	m_ViewerSphereCenter.Init( 1e24, 1e24, 1e24 );
-	
+
 	m_bInUse = false;
 
 	m_pNodeInfo = 0;
@@ -825,7 +825,7 @@ CDispInfo::~CDispInfo()
 
 	--g_ConstructorChecker.m_nConstructedObjects;
 
-	// All the decals should have been freed through 
+	// All the decals should have been freed through
 	// CModelLoader::Map_UnloadModel -> R_DecalTerm
 	Assert( m_FirstDecal == DISP_DECAL_HANDLE_INVALID );
 	Assert( m_FirstShadowDecal == DISP_SHADOW_HANDLE_INVALID );
@@ -853,11 +853,11 @@ void CDispInfo::CopyCoreDispVertData( const CCoreDispInfo *pCoreDisp, float bump
 		pCoreDisp->GetNormal( i, m_Verts[i].m_vNormal );
 		pCoreDisp->GetTangentS( i, m_Verts[i].m_vSVector );
 		pCoreDisp->GetTangentT( i, m_Verts[i].m_vTVector );
-	} 
+	}
 #endif
 }
 
-bool CDispInfo::CopyCoreDispData( 
+bool CDispInfo::CopyCoreDispData(
 	model_t *pWorld,
 	const MaterialSystem_SortInfo_t *pSortInfos,
 	const CCoreDispInfo *pCoreDisp,
@@ -926,7 +926,7 @@ int CDispInfo::NumLightMaps()
 //-----------------------------------------------------------------------------
 // Purpose:
 // NOTE: You cannot use the builddisp.cpp IsTriWalkable, IsTriBuildable functions
-//       because the flags are different having been collapsed in vbsp 
+//       because the flags are different having been collapsed in vbsp
 //-----------------------------------------------------------------------------
 void BuildTagData( CCoreDispInfo *pCoreDisp, CDispInfo *pDisp )
 {
@@ -958,20 +958,20 @@ void BuildTagData( CCoreDispInfo *pCoreDisp, CDispInfo *pDisp )
 	{
 		if ( pCoreDisp->IsTriTag( iTri, DISPTRI_TAG_WALKABLE ) )
 		{
-			pCoreDisp->GetTriIndices( iTri, 
-								      pDisp->m_pWalkIndices[nWalkCount],
-									  pDisp->m_pWalkIndices[nWalkCount+1],
-									  pDisp->m_pWalkIndices[nWalkCount+2] );
+			pCoreDisp->GetTriIndices( iTri,
+									pDisp->m_pWalkIndices[nWalkCount],
+									pDisp->m_pWalkIndices[nWalkCount+1],
+									pDisp->m_pWalkIndices[nWalkCount+2] );
 
 			nWalkCount += 3;
 		}
 
 		if ( pCoreDisp->IsTriTag( iTri, DISPTRI_TAG_BUILDABLE ) )
 		{
-			pCoreDisp->GetTriIndices( iTri, 
-								      pDisp->m_pBuildIndices[nBuildCount],
-									  pDisp->m_pBuildIndices[nBuildCount+1],
-									  pDisp->m_pBuildIndices[nBuildCount+2] );
+			pCoreDisp->GetTriIndices( iTri,
+									pDisp->m_pBuildIndices[nBuildCount],
+									pDisp->m_pBuildIndices[nBuildCount+1],
+									pDisp->m_pBuildIndices[nBuildCount+2] );
 
 			nBuildCount += 3;
 		}
@@ -985,9 +985,9 @@ void BuildTagData( CCoreDispInfo *pCoreDisp, CDispInfo *pDisp )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pDisp - 
-//			&vecPoint - 
+// Purpose:
+// Input  : *pDisp -
+//			&vecPoint -
 // Output : int
 //-----------------------------------------------------------------------------
 int FindNeighborCornerVert( CCoreDispInfo *pDisp, const Vector &vecPoint )
@@ -1034,9 +1034,9 @@ void UpdateTangentSpace(CCoreDispInfo *pDisp, const CVertIndex &index, const Vec
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : **ppListBase - 
-//			nListSize - 
+// Purpose:
+// Input  : **ppListBase -
+//			nListSize -
 //-----------------------------------------------------------------------------
 void BlendSubNeighbors( CCoreDispInfo **ppListBase, int nListSize )
 {
@@ -1102,9 +1102,9 @@ void BlendSubNeighbors( CCoreDispInfo **ppListBase, int nListSize )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pDisp - 
-//			iNeighbors[512] - 
+// Purpose:
+// Input  : *pDisp -
+//			iNeighbors[512] -
 // Output : int
 //-----------------------------------------------------------------------------
 int GetAllNeighbors( const CCoreDispInfo *pDisp, int iNeighbors[512] )
@@ -1139,9 +1139,9 @@ int GetAllNeighbors( const CCoreDispInfo *pDisp, int iNeighbors[512] )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : **ppListBase - 
-//			listSize - 
+// Purpose:
+// Input  : **ppListBase -
+//			listSize -
 //-----------------------------------------------------------------------------
 void BlendCorners( CCoreDispInfo **ppListBase, int nListSize )
 {
@@ -1158,7 +1158,7 @@ void BlendCorners( CCoreDispInfo **ppListBase, int nListSize )
 		nbCornerVerts.RemoveAll();
 		nbCornerVerts.EnsureCapacity( nNeighbors );
 		nbCornerVerts.AddMultipleToTail( nNeighbors );
-		
+
 		// For each corner.
 		for ( int iCorner=0; iCorner < 4; iCorner++ )
 		{
@@ -1176,7 +1176,7 @@ void BlendCorners( CCoreDispInfo **ppListBase, int nListSize )
 			{
 				int iNBListIndex = iNeighbors[iNeighbor];
 				CCoreDispInfo *pNeighbor = ppListBase[iNBListIndex];
-				
+
 				// Find out which vert it is on the neighbor.
 				int iNBCorner = FindNeighborCornerVert( pNeighbor, vCornerVert );
 				if ( iNBCorner == -1 )
@@ -1213,9 +1213,9 @@ void BlendCorners( CCoreDispInfo **ppListBase, int nListSize )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : **ppListBase - 
-//			listSize - 
+// Purpose:
+// Input  : **ppListBase -
+//			listSize -
 //-----------------------------------------------------------------------------
 void BlendEdges( CCoreDispInfo **ppListBase, int nListSize )
 {
@@ -1288,7 +1288,7 @@ void BlendEdges( CCoreDispInfo **ppListBase, int nListSize )
 						viTween[!iEdgeDim] = iTween;
 						UpdateTangentSpace(pDisp, viTween, vecNormal, vAvgTanS);
 					}
-			
+
 					viPrevPos = it.GetVertIndex();
 				}
 			}
@@ -1297,9 +1297,9 @@ void BlendEdges( CCoreDispInfo **ppListBase, int nListSize )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : **pListBase - 
-//			listSize - 
+// Purpose:
+// Input  : **pListBase -
+//			listSize -
 // NOTE: todo - this is almost the same code as found in vrad, should probably
 //              move it up into common code at some point if the feature
 //              continues to get used

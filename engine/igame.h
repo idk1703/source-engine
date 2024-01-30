@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -28,17 +28,17 @@ public:
 	virtual void	SetGameWindow( void* hWnd ) = 0;
 
 	// This is used in edit mode to override the default wnd proc associated w/
-	// the game window specified in SetGameWindow. 
+	// the game window specified in SetGameWindow.
 	virtual bool	InputAttachToGameWindow() = 0;
 	virtual void	InputDetachFromGameWindow() = 0;
 
 	virtual void	PlayStartupVideos( void ) = 0;
 
-        // This will be the SDL_Window* under SDL, the WindowRef under Mac, and
-        // the HWND on Win32.
+	// This will be the SDL_Window* under SDL, the WindowRef under Mac, and
+	// the HWND on Win32.
 	virtual void*	GetMainWindow( void ) = 0;
-        // This will be the HWND under Direct3D, and the SDL_Window* or
-        // WindowRef under GL.
+	// This will be the HWND under Direct3D, and the SDL_Window* or
+	// WindowRef under GL.
 	virtual void*	GetMainDeviceWindow( void ) = 0;
 
 	virtual void**	GetMainWindowAddress( void ) = 0;

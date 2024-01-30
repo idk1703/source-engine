@@ -23,7 +23,7 @@ public:
 	KeyValuesJSONParser( const char *pszText, int cbSize = -1 );
 	~KeyValuesJSONParser();
 
-	/// Parse the whole string.  If there's a problem, returns NULL and sets m_nLine,m_szErrMsg with more info. 
+	/// Parse the whole string.  If there's a problem, returns NULL and sets m_nLine,m_szErrMsg with more info.
 	KeyValues *ParseFile();
 
 	/// Error message is returned here, if there is one.

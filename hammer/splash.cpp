@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -23,7 +23,7 @@
 #include <sys/stat.h>
 #include "StatusBarIDs.h"
 
-unsigned char g_CantTouchThis[] = 
+unsigned char g_CantTouchThis[] =
 {
 	0x4D, 0x54, 0x68, 0x64, 0x00, 0x00, 0x00, 0x06, 0x00, 0x01, 0x00, 0x0B, 0x00, 0xF0, 0x4D, 0x54,
 	0x72, 0x6B, 0x00, 0x00, 0x00, 0x13, 0x00, 0xFF, 0x58, 0x04, 0x04, 0x02, 0x18, 0x08, 0x00, 0xFF,
@@ -70,7 +70,7 @@ unsigned char g_CantTouchThis[] =
 
 /////////////////////////////////////////////////////////////////////////////
 
-#include <mmsystem.h> 
+#include <mmsystem.h>
 
 int m_uiMIDIPlayerID = 0;
 
@@ -166,7 +166,7 @@ END_MESSAGE_MAP()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CSplashWnd::CSplashWnd()
 {
@@ -176,7 +176,7 @@ CSplashWnd::CSplashWnd()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CSplashWnd::~CSplashWnd()
 {
@@ -187,8 +187,8 @@ CSplashWnd::~CSplashWnd()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bEnable - 
+// Purpose:
+// Input  : bEnable -
 //-----------------------------------------------------------------------------
 void CSplashWnd::EnableSplashScreen(bool bEnable)
 {
@@ -197,8 +197,8 @@ void CSplashWnd::EnableSplashScreen(bool bEnable)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pParentWnd - 
+// Purpose:
+// Input  : pParentWnd -
 //-----------------------------------------------------------------------------
 void CSplashWnd::ShowSplashScreen(CWnd* pParentWnd /*= NULL*/)
 {
@@ -257,7 +257,7 @@ void CSplashWnd::OnTimer(UINT nIDEvent)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSplashWnd::DoHide()
 {
@@ -266,7 +266,7 @@ void CSplashWnd::DoHide()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 BOOL CSplashWnd::PreTranslateAppMessage(MSG* pMsg)
 {
@@ -292,8 +292,8 @@ BOOL CSplashWnd::PreTranslateAppMessage(MSG* pMsg)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pParentWnd - 
+// Purpose:
+// Input  : pParentWnd -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CSplashWnd::Create(CWnd* pParentWnd /*= NULL*/)
@@ -311,7 +311,7 @@ BOOL CSplashWnd::Create(CWnd* pParentWnd /*= NULL*/)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSplashWnd::PostNcDestroy()
 {
@@ -320,7 +320,7 @@ void CSplashWnd::PostNcDestroy()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CSplashWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
@@ -331,7 +331,7 @@ int CSplashWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CenterWindow();
 
 	// set topmost
-	SetWindowPos(&wndTop, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | 
+	SetWindowPos(&wndTop, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE |
 		SWP_NOREDRAW);
 
 	// Set a timer to destroy the splash screen.
@@ -342,7 +342,7 @@ int CSplashWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSplashWnd::OnPaint()
 {

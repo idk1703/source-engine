@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -151,9 +151,9 @@ private:
 
 	typedef CUtlRBTree< InputLayout_t, unsigned short > InputLayoutDict_t;
 
-	static bool InputLayoutLessFunc( const InputLayout_t &lhs, const InputLayout_t &rhs )	
-	{ 
-		return ( lhs.m_VertexFormat < rhs.m_VertexFormat );	
+	static bool InputLayoutLessFunc( const InputLayout_t &lhs, const InputLayout_t &rhs )
+	{
+		return ( lhs.m_VertexFormat < rhs.m_VertexFormat );
 	}
 
 	struct VertexShader_t
@@ -187,7 +187,7 @@ private:
 	void ReleaseInputLayouts( VertexShaderIndex_t nIndex );
 
 	IDXGIOutput *m_pOutput;
-	ID3D10Device *m_pDevice;	
+	ID3D10Device *m_pDevice;
 	IDXGISwapChain *m_pSwapChain;
 	ID3D10RenderTargetView *m_pRenderTargetView;
 
@@ -237,17 +237,17 @@ extern CShaderDeviceDx10* g_pShaderDeviceDx10;
 //-----------------------------------------------------------------------------
 inline ID3D10Device *D3D10Device()
 {
-	return g_pShaderDeviceDx10->m_pDevice;	
+	return g_pShaderDeviceDx10->m_pDevice;
 }
 
 inline IDXGISwapChain *D3D10SwapChain()
 {
-	return g_pShaderDeviceDx10->m_pSwapChain;	
+	return g_pShaderDeviceDx10->m_pSwapChain;
 }
 
 inline ID3D10RenderTargetView *D3D10RenderTargetView()
 {
-	return g_pShaderDeviceDx10->m_pRenderTargetView;	
+	return g_pShaderDeviceDx10->m_pRenderTargetView;
 }
 
 

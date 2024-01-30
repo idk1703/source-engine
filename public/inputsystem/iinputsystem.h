@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -32,7 +32,7 @@ public:
 	virtual void AttachToWindow( void* hWnd ) = 0;
 	virtual void DetachFromWindow( ) = 0;
 
-	// Enables/disables input. PollInputState will not update current 
+	// Enables/disables input. PollInputState will not update current
 	// button/analog states when it is called if the system is disabled.
 	virtual void EnableInput( bool bEnable ) = 0;
 

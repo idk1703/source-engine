@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -66,7 +66,7 @@ public:
 	virtual void		GetIntersectingSurfaces( GetIntersectingSurfaces_Struct *pStruct ) = 0;
 
 	virtual void		RenderWireframeInLightmapPage( int pageId ) = 0;
-	
+
 	virtual void		GetBoundingBox( Vector &bbMin, Vector &bbMax ) = 0;
 
 	// Get and set the parent surfaces.
@@ -82,7 +82,7 @@ public:
 	// flSize is like the radius of the decal so the decal isn't put on any disp faces it's too far away from.
 	virtual DispDecalHandle_t	NotifyAddDecal( decal_t *pDecal, float flSize ) = 0;
 	virtual void				NotifyRemoveDecal( DispDecalHandle_t h ) = 0;
-	
+
 	virtual DispShadowHandle_t	AddShadowDecal( ShadowHandle_t shadowHandle ) = 0;
 	virtual void				RemoveShadowDecal( DispShadowHandle_t handle ) = 0;
 
@@ -108,7 +108,7 @@ public:
 // Adds shadow rendering data to a particular mesh builder
 // The function will return the new base index
 // ----------------------------------------------------------------------------- //
-int				DispInfo_AddShadowsToMeshBuilder( CMeshBuilder& meshBuilder, 
+int				DispInfo_AddShadowsToMeshBuilder( CMeshBuilder& meshBuilder,
 										DispShadowHandle_t h, int baseIndex );
 
 

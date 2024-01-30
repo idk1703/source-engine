@@ -18,7 +18,7 @@ struct FFEffectInfo_t
 	FORCEFEEDBACK_t	effectType;
 	char const		*name;
 };
-	
+
 #define DECLARE_FFEFFECT( name )	{ name, #name }
 
 static FFEffectInfo_t g_EffectTypes[] =
@@ -32,8 +32,8 @@ static FFEffectInfo_t g_EffectTypes[] =
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : effect - 
+// Purpose:
+// Input  : effect -
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *NameForForceFeedbackEffect( FORCEFEEDBACK_t effect )
@@ -48,8 +48,8 @@ char const *NameForForceFeedbackEffect( FORCEFEEDBACK_t effect )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : FORCEFEEDBACK_t
 //-----------------------------------------------------------------------------
 FORCEFEEDBACK_t ForceFeedbackEffectForName( const char *name )
@@ -68,7 +68,7 @@ FORCEFEEDBACK_t ForceFeedbackEffectForName( const char *name )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CForceFeedback : public IForceFeedback, public CAutoGameSystem
 {
@@ -99,8 +99,8 @@ static CForceFeedback g_ForceFeedbackSingleton;
 IForceFeedback *forcefeedback = &g_ForceFeedbackSingleton;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &msg - 
+// Purpose:
+// Input  : &msg -
 //-----------------------------------------------------------------------------
 void __MsgFunc_ForceFeedback( bf_read &msg )
 {
@@ -108,7 +108,7 @@ void __MsgFunc_ForceFeedback( bf_read &msg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CForceFeedback::Init()
@@ -118,15 +118,15 @@ bool CForceFeedback::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CForceFeedback::Shutdown()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *player - 
+// Purpose:
+// Input  : *player -
 //-----------------------------------------------------------------------------
 void CForceFeedback::StopAllEffects( CBasePlayer *player )
 {
@@ -137,9 +137,9 @@ void CForceFeedback::StopAllEffects( CBasePlayer *player )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *player - 
-//			effect - 
+// Purpose:
+// Input  : *player -
+//			effect -
 //-----------------------------------------------------------------------------
 void CForceFeedback::StopEffect( CBasePlayer *player, FORCEFEEDBACK_t effect )
 {
@@ -150,10 +150,10 @@ void CForceFeedback::StopEffect( CBasePlayer *player, FORCEFEEDBACK_t effect )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *player - 
-//			effect - 
-//			params - 
+// Purpose:
+// Input  : *player -
+//			effect -
+//			params -
 //-----------------------------------------------------------------------------
 void CForceFeedback::StartEffect( CBasePlayer *player, FORCEFEEDBACK_t effect, const FFBaseParams_t& params )
 {
@@ -166,8 +166,8 @@ void CForceFeedback::StartEffect( CBasePlayer *player, FORCEFEEDBACK_t effect, c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *player - 
+// Purpose:
+// Input  : *player -
 //-----------------------------------------------------------------------------
 void CForceFeedback::PauseAll( CBasePlayer *player )
 {
@@ -178,8 +178,8 @@ void CForceFeedback::PauseAll( CBasePlayer *player )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *player - 
+// Purpose:
+// Input  : *player -
 //-----------------------------------------------------------------------------
 void CForceFeedback::ResumeAll( CBasePlayer *player )
 {
@@ -190,7 +190,7 @@ void CForceFeedback::ResumeAll( CBasePlayer *player )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CForceFeedback::Internal_StopAllEffects()
 {
@@ -198,8 +198,8 @@ void CForceFeedback::Internal_StopAllEffects()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : heffect - 
+// Purpose:
+// Input  : heffect -
 //-----------------------------------------------------------------------------
 void CForceFeedback::Internal_StopEffect( FORCEFEEDBACK_t effect )
 {
@@ -207,8 +207,8 @@ void CForceFeedback::Internal_StopEffect( FORCEFEEDBACK_t effect )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : effect - 
+// Purpose:
+// Input  : effect -
 //-----------------------------------------------------------------------------
 void CForceFeedback::Internal_StartEffect( FORCEFEEDBACK_t effect, const FFBaseParams_t& params)
 {
@@ -223,7 +223,7 @@ void CForceFeedback::Internal_StartEffect( FORCEFEEDBACK_t effect, const FFBaseP
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CForceFeedback::Internal_PauseAll()
 {
@@ -231,7 +231,7 @@ void CForceFeedback::Internal_PauseAll()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CForceFeedback::Internal_ResumeAll()
 {
@@ -239,10 +239,10 @@ void CForceFeedback::Internal_ResumeAll()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszName - 
-//			iSize - 
-//			*pbuf - 
+// Purpose:
+// Input  : *pszName -
+//			iSize -
+//			*pbuf -
 //-----------------------------------------------------------------------------
 void CForceFeedback::MsgFunc_ForceFeedback( bf_read &msg )
 {

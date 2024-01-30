@@ -153,7 +153,7 @@ void CreateTestScene( CUtlVector< DmElementHandle_t >& handles, DmFileId_t filei
 	CDmrElementArray< > elementVec2( pElement7, "element_array_test", true );
 	elementVec2.AddToTail( pElement2 );
 	elementVec2.AddToTail( pElement4 );
-	
+
 	pElement->SetValue( "element_test", pElement7 );
 	pElement->SetValue( "shared_element_test", pElement6 );
 	CDmrElementArray<> children( pElement, "children", true );
@@ -169,7 +169,7 @@ DmElementHandle_t CreateTestScene( DmFileId_t fileid )
 {
 	CUtlVector< DmElementHandle_t > handles;
 	CreateTestScene( handles, fileid );
-	return handles[ 0 ]; 
+	return handles[ 0 ];
 }
 
 DmElementHandle_t CreateKeyValuesTestScene( DmFileId_t fileid )
@@ -242,7 +242,7 @@ bool AssertEqualsUtlVector( bool quiet, const CUtlVector<T> &src1, const CUtlVec
 		}
 		retval = false;
 	}
-	
+
 	for ( int i = 0; i < src1.Count(); ++i )
 	{
 		if ( !src2.IsValidIndex( i ) )
@@ -272,7 +272,7 @@ bool AssertEqualAttributes( bool quiet, CDmAttribute *pAttribute1, CDmAttribute 
 {
 	// Always follow ptrs to elements...
 	if ( pAttribute1->GetType() != AT_ELEMENT_ARRAY &&
-		 pAttribute1->GetType() != AT_ELEMENT )
+		pAttribute1->GetType() != AT_ELEMENT )
 	{
 		// Dirty flag checking here is to avoid infinite recursive loops
 		if ( !pAttribute1->IsFlagSet( FATTRIB_DIRTY ) && !pAttribute2->IsFlagSet( FATTRIB_DIRTY ) )
@@ -285,7 +285,7 @@ bool AssertEqualAttributes( bool quiet, CDmAttribute *pAttribute1, CDmAttribute 
 		{
 			AssertMsg( 0, "AssertEqualAttributes:  pAttribute1 is NULL\n" );
 		}
-        return false;
+	return false;
 	}
 
 

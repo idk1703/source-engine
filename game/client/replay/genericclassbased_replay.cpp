@@ -135,7 +135,7 @@ bool CGenericClassBasedReplay::Read( KeyValues *pIn )
 
 	// Read player class
 	m_nPlayerClass = pIn->GetInt( "player_class" );		Assert( IsValidClass( m_nPlayerClass ) );
-	
+
 	// Read player team
 	m_nPlayerTeam = pIn->GetInt( "player_team" );		Assert( IsValidTeam( m_nPlayerTeam ) );
 
@@ -378,7 +378,7 @@ const char *CGenericClassBasedReplay::GetKillerClass() const
 void CGenericClassBasedReplay::DumpGameSpecificData() const
 {
 	DevMsg( "  class: %s\n", GetPlayerClass() );
-	
+
 	// Print kills
 	DevMsg( "  %i kills:\n", GetKillCount() );
 	for ( int i = 0; i < GetKillCount(); ++i )

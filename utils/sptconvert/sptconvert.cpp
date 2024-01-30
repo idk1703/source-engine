@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // A simple tool for converting SpeedTree .spt files into .smd files
 // for use in Source
@@ -183,13 +183,13 @@ void OutputTreeGeometry( CSpeedTreeRT &speedTree, CSpeedTreeRT::SGeometry &sGeom
 
 		float d[3] = { pCoords[8] - pCoords[0], pCoords[9] - pCoords[1], pCoords[10] - pCoords[2] };
 		float size = sqrtf( d[0]*d[0] + d[1]*d[1] + d[2]*d[2] ) * 0.5f;
-		
+
 		fprintf( file, "%s_TreeLeaf\n", leafTextureName );
 		fprintf( file, "0 %f %f %f %f %f 0.0 %f %f\n", pPos[0], pPos[1], pPos[2], pTex[0], pTex[1], -size, -size );
 		fprintf( file, "0 %f %f %f %f %f 0.0 %f %f\n", pPos[0], pPos[1], pPos[2], pTex[2], pTex[3],  size, -size );
 		fprintf( file, "0 %f %f %f %f %f 0.0 %f %f\n", pPos[0], pPos[1], pPos[2], pTex[4], pTex[5],  size,  size );
-																				
-		fprintf( file, "%s_TreeLeaf\n", leafTextureName );						
+
+		fprintf( file, "%s_TreeLeaf\n", leafTextureName );
 		fprintf( file, "0 %f %f %f %f %f 0.0 %f %f\n", pPos[0], pPos[1], pPos[2], pTex[0], pTex[1], -size, -size );
 		fprintf( file, "0 %f %f %f %f %f 0.0 %f %f\n", pPos[0], pPos[1], pPos[2], pTex[4], pTex[5],  size,  size );
 		fprintf( file, "0 %f %f %f %f %f 0.0 %f %f\n", pPos[0], pPos[1], pPos[2], pTex[6], pTex[7], -size,  size );

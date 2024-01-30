@@ -31,7 +31,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( entity_spawn_manager, CEntitySpawnManager );
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CEntitySpawnManager::Spawn( void )
 {
@@ -50,7 +50,7 @@ void CEntitySpawnManager::RegisterSpawnPoint( CEntitySpawnPoint* pNewPoint )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CEntitySpawnManager::Activate( void )
 {
@@ -219,7 +219,7 @@ void CEntitySpawnPoint::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CEntitySpawnPoint::UpdateOnRemove(void)
 {

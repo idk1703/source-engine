@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,10 +18,10 @@ class CWeaponBAR : public CDODFireSelectWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponBAR, CDODFireSelectWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponBAR()  {}
 
 	virtual DODWeaponID GetWeaponID( void ) const		{ return WEAPON_BAR; }
@@ -31,7 +31,7 @@ public:
 	{
 		if ( IsSemiAuto() )
 			return WEAPON_BAR_SEMIAUTO;
-		else 
+		else
 			return WEAPON_BAR;
 	}
 
@@ -52,7 +52,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_bar, CWeaponBAR );
 PRECACHE_WEAPON_REGISTER( weapon_bar );
 
-acttable_t CWeaponBAR::m_acttable[] = 
+acttable_t CWeaponBAR::m_acttable[] =
 {
 	{ ACT_DOD_STAND_AIM,					ACT_DOD_STAND_AIM_BAR,					false },
 	{ ACT_DOD_CROUCH_AIM,					ACT_DOD_CROUCH_AIM_BAR,					false },
@@ -62,7 +62,7 @@ acttable_t CWeaponBAR::m_acttable[] =
 	{ ACT_PRONE_IDLE,						ACT_DOD_PRONE_AIM_BAR,					false },
 	{ ACT_PRONE_FORWARD,					ACT_DOD_PRONEWALK_IDLE_BAR,				false },
 	{ ACT_DOD_STAND_IDLE,					ACT_DOD_STAND_IDLE_BAR,					false },
-	{ ACT_DOD_CROUCH_IDLE,					ACT_DOD_CROUCH_IDLE_BAR,				false },	
+	{ ACT_DOD_CROUCH_IDLE,					ACT_DOD_CROUCH_IDLE_BAR,				false },
 	{ ACT_DOD_CROUCHWALK_IDLE,				ACT_DOD_CROUCHWALK_IDLE_BAR,			false },
 	{ ACT_DOD_WALK_IDLE,					ACT_DOD_WALK_IDLE_BAR,					false },
 	{ ACT_DOD_RUN_IDLE,						ACT_DOD_RUN_IDLE_BAR,					false },

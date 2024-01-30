@@ -1,6 +1,6 @@
 //====== Copyright 1996-2004, Valve Corporation, All rights reserved. =======
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -15,7 +15,7 @@
 //-----------------------------------------------------------------------------
 // Base class, containing simple memory management
 //-----------------------------------------------------------------------------
-CUtlBinaryBlock::CUtlBinaryBlock( int growSize, int initSize ) 
+CUtlBinaryBlock::CUtlBinaryBlock( int growSize, int initSize )
 {
 	MEM_ALLOC_CREDIT();
 	m_Memory.Init( growSize, initSize );
@@ -123,7 +123,7 @@ bool CUtlBinaryBlock::operator==( const CUtlBinaryBlock &src ) const
 
 
 //-----------------------------------------------------------------------------
-// Simple string class. 
+// Simple string class.
 //-----------------------------------------------------------------------------
 CUtlString::CUtlString()
 {
@@ -467,7 +467,7 @@ CUtlString CUtlString::Slice( int32 nStart, int32 nEnd ) const
 		nEnd = Length() - (-nEnd % Length());
 	else if ( nEnd >= Length() )
 		nEnd = Length();
-	
+
 	if ( nStart >= nEnd )
 		return CUtlString( "" );
 

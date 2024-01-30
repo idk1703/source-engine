@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,7 +16,7 @@
 static IPredictionSystem g_RecipientFilterPredictionSystem;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CRecipientFilter::CRecipientFilter()
 {
@@ -28,8 +28,8 @@ CRecipientFilter::~CRecipientFilter()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : src - 
+// Purpose:
+// Input  : src -
 //-----------------------------------------------------------------------------
 void CRecipientFilter::CopyFrom( const CRecipientFilter& src )
 {
@@ -47,7 +47,7 @@ void CRecipientFilter::CopyFrom( const CRecipientFilter& src )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRecipientFilter::Reset( void )
 {
@@ -320,7 +320,7 @@ void CRecipientFilter::SetIgnorePredictionCull( bool ignore )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Simple class to create a filter for all players on a given team 
+// Purpose: Simple class to create a filter for all players on a given team
 //-----------------------------------------------------------------------------
 CTeamRecipientFilter::CTeamRecipientFilter( int team, bool isReliable )
 {
@@ -360,9 +360,9 @@ CTeamRecipientFilter::CTeamRecipientFilter( int team, bool isReliable )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : origin - 
-//			ATTN_NORM - 
+// Purpose:
+// Input  : origin -
+//			ATTN_NORM -
 //-----------------------------------------------------------------------------
 void CPASAttenuationFilter::Filter( const Vector& origin, float attenuation /*= ATTN_NORM*/ )
 {
@@ -379,7 +379,7 @@ void CPASAttenuationFilter::Filter( const Vector& origin, float attenuation /*= 
 	Vector vecRelative;
 
 	int c = GetRecipientCount();
-	
+
 	for ( int i = c - 1; i >= 0; i-- )
 	{
 		int index = GetRecipientIndex( i );

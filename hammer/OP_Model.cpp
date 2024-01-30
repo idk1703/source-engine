@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -34,7 +34,7 @@ const int FRAME_SCROLLBAR_RANGE = 1000;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 COP_Model::COP_Model() : CObjectPage(COP_Model::IDD), m_ComboSequence( this )
 {
@@ -47,7 +47,7 @@ COP_Model::COP_Model() : CObjectPage(COP_Model::IDD), m_ComboSequence( this )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 COP_Model::~COP_Model()
 {
@@ -55,8 +55,8 @@ COP_Model::~COP_Model()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pDX - 
+// Purpose:
+// Input  : pDX -
 //-----------------------------------------------------------------------------
 void COP_Model::DoDataExchange(CDataExchange* pDX)
 {
@@ -69,9 +69,9 @@ void COP_Model::DoDataExchange(CDataExchange* pDX)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : Mode - 
-//			pData - 
+// Purpose:
+// Input  : Mode -
+//			pData -
 //-----------------------------------------------------------------------------
 void COP_Model::UpdateData( int Mode, PVOID pData, bool bCanEdit )
 {
@@ -81,7 +81,7 @@ void COP_Model::UpdateData( int Mode, PVOID pData, bool bCanEdit )
 	{
 		return;
 	}
-	
+
 	if (Mode == LoadFirstData)
 	{
 		CMapStudioModel *pModel = GetModelHelper();
@@ -97,7 +97,7 @@ void COP_Model::UpdateData( int Mode, PVOID pData, bool bCanEdit )
 
 			// Set the list of suggestions.
 			CUtlVector<CString> suggestions;
-	
+
 			int nCount = pModel->GetSequenceCount();
 			for ( int i = 0; i < nCount; i++ )
 			{
@@ -105,9 +105,9 @@ void COP_Model::UpdateData( int Mode, PVOID pData, bool bCanEdit )
 				pModel->GetSequenceName(i, szName);
 				suggestions.AddToTail( szName );
 			}
-			
+
 			m_ComboSequence.SetSuggestions( suggestions, 0 );
-			
+
 			// Tell it to go to the last sequence the model was on.
 			if ( txt[0] )
 			{
@@ -138,7 +138,7 @@ BOOL COP_Model::OnSetActive()
 	return CObjectPage::OnSetActive();
 }
 
-BOOL COP_Model::OnKillActive() 
+BOOL COP_Model::OnKillActive()
 {
 	Options.view3d.bAnimateModels = m_bOldAnimatedModels;
 
@@ -153,7 +153,7 @@ BOOL COP_Model::OnKillActive()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool COP_Model::SaveData(void)
@@ -164,14 +164,14 @@ bool COP_Model::SaveData(void)
 	}
 
 	// Apply the dialog data to all the objects being edited.
-	
+
 	return true;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszClass - 
+// Purpose:
+// Input  : pszClass -
 //-----------------------------------------------------------------------------
 void COP_Model::UpdateForClass(LPCTSTR pszClass)
 {
@@ -183,8 +183,8 @@ void COP_Model::UpdateForClass(LPCTSTR pszClass)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flFrame - 
+// Purpose:
+// Input  : flFrame -
 //-----------------------------------------------------------------------------
 void COP_Model::UpdateFrameText(float flFrame)
 {
@@ -195,10 +195,10 @@ void COP_Model::UpdateFrameText(float flFrame)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
-BOOL COP_Model::OnInitDialog() 
+BOOL COP_Model::OnInitDialog()
 {
 	CObjectPage::OnInitDialog();
 
@@ -207,17 +207,17 @@ BOOL COP_Model::OnInitDialog()
 	//
 	m_ScrollBarFrame.SetRange(0, FRAME_SCROLLBAR_RANGE);
 
-	return TRUE;	             
+	return TRUE;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nSBCode - 
-//			nPos - 
-//			pScrollBar - 
+// Purpose:
+// Input  : nSBCode -
+//			nPos -
+//			pScrollBar -
 //-----------------------------------------------------------------------------
-void COP_Model::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar) 
+void COP_Model::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar)
 {
 	if (pScrollBar == (CScrollBar *)&m_ScrollBarFrame)
 	{
@@ -235,13 +235,13 @@ void COP_Model::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar)
 			}
 		}
 	}
-	
+
 	CPropertyPage::OnHScroll(nSBCode, nPos, pScrollBar);
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COP_Model::OnTextChanged( const char *pText )
 {
@@ -264,7 +264,7 @@ void COP_Model::OnTextChanged( const char *pText )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapStudioModel *COP_Model::GetModelHelper(void)
 {

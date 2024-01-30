@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -47,7 +47,7 @@ public:
 		CAvatarImagePanel	*m_pAvatar;
 		CExLabel			*m_pPlayerNameLabel;
 	};
-	
+
 	MESSAGE_FUNC_PTR( OnItemSelected, "ItemSelected", panel );
 	MESSAGE_FUNC_PTR( OnItemContextMenu, "ItemContextMenu", panel );
 	void OnScoreBoardMouseRightRelease( void );
@@ -124,7 +124,7 @@ private:
 	vgui::HFont					m_pFontTimeLeftString;
 
 	CTFHudMannVsMachineScoreboard *m_pMvMScoreboard;
-	
+
 	int							m_iImageDominated;
 	int							m_iImageDominatedDead;
 	int							m_iImageNemesis;

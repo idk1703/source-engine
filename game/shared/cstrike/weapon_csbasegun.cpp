@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -67,7 +67,7 @@ void CWeaponCSBaseGun::ItemPostFrame()
 	if ( (m_flNextPrimaryAttack <= gpGlobals->curtime) && (pPlayer->m_bResumeZoom == TRUE) )
 	{
 		pPlayer->m_bResumeZoom = false;
-		
+
 		if ( m_iClip1 != 0 || ( GetWeaponFlags() & ITEM_FLAG_NOAUTORELOAD ) )
 		{
 			m_weaponMode = Secondary_Mode;
@@ -99,7 +99,7 @@ bool CWeaponCSBaseGun::CSBaseGunFire( float flCycleTime, CSWeaponMode weaponMode
 	if ( m_iClip1 > 0 )
 	{
 		pPlayer->m_iShotsFired++;
-	
+
 		// These modifications feed back into flSpread eventually.
 		if ( pCSInfo.m_flAccuracyDivisor != -1 )
 		{
@@ -111,7 +111,7 @@ bool CWeaponCSBaseGun::CSBaseGunFire( float flCycleTime, CSWeaponMode weaponMode
 				iShotsFired = iShotsFired * iShotsFired * iShotsFired;
 
 			m_flAccuracy = ( iShotsFired / pCSInfo.m_flAccuracyDivisor ) + pCSInfo.m_flAccuracyOffset;
-			
+
 			if ( m_flAccuracy > pCSInfo.m_flMaxInaccuracy )
 				m_flAccuracy = pCSInfo.m_flMaxInaccuracy;
 		}
@@ -151,7 +151,7 @@ bool CWeaponCSBaseGun::CSBaseGunFire( float flCycleTime, CSWeaponMode weaponMode
 		weaponMode,
 		CBaseEntity::GetPredictionRandomSeed() & 255,
 		GetInaccuracy(),
-		GetSpread(), 
+		GetSpread(),
 		flCurAttack );
 
 	DoFireEffects();
@@ -168,7 +168,7 @@ bool CWeaponCSBaseGun::CSBaseGunFire( float flCycleTime, CSWeaponMode weaponMode
 void CWeaponCSBaseGun::DoFireEffects()
 {
 	CCSPlayer *pPlayer = GetPlayerOwner();
-	
+
 	if ( pPlayer )
 		 pPlayer->DoMuzzleFlash();
 }

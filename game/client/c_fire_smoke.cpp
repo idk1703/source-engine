@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,12 +26,12 @@ CLIENTEFFECT_REGISTER_END()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pRecvProp - 
-//			*pStruct - 
-//			*pVarData - 
-//			*pIn - 
-//			objectID - 
+// Purpose:
+// Input  : *pRecvProp -
+//			*pStruct -
+//			*pVarData -
+//			*pIn -
+//			objectID -
 //-----------------------------------------------------------------------------
 void RecvProxy_Scale( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
@@ -42,19 +42,19 @@ void RecvProxy_Scale( const CRecvProxyData *pData, void *pStruct, void *pOut )
 	if ( ( pFireSmoke->m_flScale != scale ) && ( pFireSmoke->m_flScaleEnd != scale ) )
 	{
 		pFireSmoke->m_flScaleStart		= pFireSmoke->m_flScaleRegister;
-		pFireSmoke->m_flScaleEnd		= scale;			
+		pFireSmoke->m_flScaleEnd		= scale;
 	}
 
 	pFireSmoke->m_flScale = scale;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pRecvProp - 
-//			*pStruct - 
-//			*pVarData - 
-//			*pIn - 
-//			objectID - 
+// Purpose:
+// Input  : *pRecvProp -
+//			*pStruct -
+//			*pVarData -
+//			*pIn -
+//			objectID -
 //-----------------------------------------------------------------------------
 void RecvProxy_ScaleTime( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
@@ -110,7 +110,7 @@ C_FireSmoke::~C_FireSmoke()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_FireSmoke::Simulate( void )
 {
@@ -122,15 +122,15 @@ void C_FireSmoke::Simulate( void )
 #define	FLAME_TRANS_START	0.75f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_FireSmoke::AddFlames( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bnewentity - 
+// Purpose:
+// Input  : bnewentity -
 //-----------------------------------------------------------------------------
 void C_FireSmoke::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -144,14 +144,14 @@ void C_FireSmoke::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_FireSmoke::UpdateEffects( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_FireSmoke::ShouldDraw()
@@ -161,7 +161,7 @@ bool C_FireSmoke::ShouldDraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_FireSmoke::Start( void )
 {
@@ -208,7 +208,7 @@ void C_FireSmoke::StartClientOnly( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_FireSmoke::RemoveClientOnly(void)
 {
@@ -224,35 +224,35 @@ void C_FireSmoke::RemoveClientOnly(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_FireSmoke::UpdateAnimation( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_FireSmoke::UpdateFlames( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_FireSmoke::UpdateScale( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_FireSmoke::Update( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_FireSmoke::FindClipPlane( void )
 {
@@ -272,7 +272,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_EntityFlame, DT_EntityFlame, CEntityFlame )
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_EntityFlame::C_EntityFlame( void ) :
 m_hEffect( NULL )
@@ -281,7 +281,7 @@ m_hEffect( NULL )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_EntityFlame::~C_EntityFlame( void )
 {
@@ -289,7 +289,7 @@ C_EntityFlame::~C_EntityFlame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EntityFlame::StopEffect( void )
 {
@@ -307,14 +307,14 @@ void C_EntityFlame::StopEffect( void )
 		m_hEntAttached->SetEffectEntity( NULL );
 		m_hEntAttached->StopSound( "General.BurningFlesh" );
 		m_hEntAttached->StopSound( "General.BurningObject" );
-		
-		
+
+
 		m_hEntAttached = NULL;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EntityFlame::UpdateOnRemove( void )
 {
@@ -352,7 +352,7 @@ void C_EntityFlame::CreateEffect( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EntityFlame::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -375,14 +375,14 @@ void C_EntityFlame::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EntityFlame::Simulate( void )
 {
 	if ( gpGlobals->frametime <= 0.0f )
 		return;
 
-#ifdef HL2_EPISODIC 
+#ifdef HL2_EPISODIC
 
 	if ( IsEffectActive(EF_BRIGHTLIGHT) || IsEffectActive(EF_DIMLIGHT) )
 	{
@@ -396,11 +396,11 @@ void C_EntityFlame::Simulate( void )
 		dl->die = gpGlobals->curtime + 0.001;
 	}
 
-#endif // HL2_EPISODIC 
+#endif // HL2_EPISODIC
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EntityFlame::ClientThink( void )
 {

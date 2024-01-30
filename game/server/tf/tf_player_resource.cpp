@@ -51,7 +51,7 @@ END_SEND_TABLE()
 LINK_ENTITY_TO_CLASS( tf_player_manager, CTFPlayerResource );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFPlayerResource::CTFPlayerResource( void )
 {
@@ -65,7 +65,7 @@ CTFPlayerResource::CTFPlayerResource( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerResource::FireGameEvent( IGameEvent * event )
 {
@@ -80,7 +80,7 @@ void CTFPlayerResource::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerResource::SetPartyLeaderIndex( int iTeam, int iIndex )
 {
@@ -100,7 +100,7 @@ void CTFPlayerResource::SetPartyLeaderIndex( int iTeam, int iIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFPlayerResource::GetPartyLeaderIndex( int iTeam )
 {
@@ -113,7 +113,7 @@ int CTFPlayerResource::GetPartyLeaderIndex( int iTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerResource::UpdatePlayerData( void )
 {
@@ -196,7 +196,7 @@ void CTFPlayerResource::UpdatePlayerData( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerResource::UpdateConnectedPlayer( int iIndex, CBasePlayer *pPlayer )
 {
@@ -205,7 +205,7 @@ void CTFPlayerResource::UpdateConnectedPlayer( int iIndex, CBasePlayer *pPlayer 
 	CTFPlayer *pTFPlayer = ToTFPlayer( pPlayer );
 
 	PlayerStats_t *pTFPlayerStats = CTF_GameStats.FindPlayerStats( pTFPlayer );
-	if ( pTFPlayerStats ) 
+	if ( pTFPlayerStats )
 	{
 		// Update accumulated and per-round stats
 		localplayerscoring_t *pData = pTFPlayer->m_Shared.GetScoringData();
@@ -248,12 +248,12 @@ void CTFPlayerResource::UpdateConnectedPlayer( int iIndex, CBasePlayer *pPlayer 
 		}
 		else
 		{
-			// Kill eater points-scored tracking.  Increment all equipped items with this kill eater type.  
+			// Kill eater points-scored tracking.  Increment all equipped items with this kill eater type.
 			// We only do this when we're NOT in MvM
 			HatAndMiscEconEntities_OnOwnerKillEaterEventNoParter( pTFPlayer, kKillEaterEvent_PointsScored, nDelta );
 		}
 	}
-		
+
 	m_iTotalScore.Set( iIndex, iTotalScore );
 	m_bArenaSpectator.Set( iIndex, pTFPlayer->IsArenaSpectator() );
 
@@ -318,7 +318,7 @@ void CTFPlayerResource::UpdateConnectedPlayer( int iIndex, CBasePlayer *pPlayer 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerResource::UpdateDisconnectedPlayer( int iIndex )
 {
@@ -355,7 +355,7 @@ void CTFPlayerResource::UpdateDisconnectedPlayer( int iIndex )
 			}
 		}
 	}
-	
+
 	// free up the slot if we're not preserving it
 	m_iConnectionState.Set( iIndex, MM_DISCONNECTED );
 	m_vecFreeSlots.AddToTail( iIndex );
@@ -363,7 +363,7 @@ void CTFPlayerResource::UpdateDisconnectedPlayer( int iIndex )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerResource::Spawn( void )
 {
@@ -371,7 +371,7 @@ void CTFPlayerResource::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerResource::Init( int iIndex )
 {
@@ -397,7 +397,7 @@ int CTFPlayerResource::GetTotalScore( int iIndex )
 	CTFPlayer *pPlayer = (CTFPlayer*)UTIL_PlayerByIndex( iIndex );
 
 	if ( pPlayer && pPlayer->IsConnected() )
-	{	
+	{
 		return m_iTotalScore[iIndex];
 	}
 
@@ -413,5 +413,3 @@ void CTFPlayerResource::SetPlayerClassWhenKilled( int iIndex, int iClass )
 
 	m_iPlayerClassWhenKilled.Set( iIndex, iClass );
 }
-
-

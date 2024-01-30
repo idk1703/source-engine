@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -85,7 +85,7 @@ LINK_ENTITY_TO_CLASS( env_ar2explosion, CEnvAR2Explosion );
 // Purpose: So you can see where this function begins and the last one ends.
 //-----------------------------------------------------------------------------
 void CEnvAR2Explosion::Spawn( void )
-{ 
+{
 	Precache();
 
 	SetSolid( SOLID_NONE );

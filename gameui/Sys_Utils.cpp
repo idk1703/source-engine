@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -177,4 +177,3 @@ void Sys_EnumWindows(void *callbackFunction, int lparam)
 #else
 #error
 #endif
-

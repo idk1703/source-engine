@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,7 +27,7 @@ int ScreenTransform( const Vector& point, Vector& screen );
 DECLARE_HUDELEMENT( CHudSpecCrosshair );
 
 CHudSpecCrosshair::CHudSpecCrosshair( const char *pElementName ) :
-  CHudElement( pElementName ), BaseClass( NULL, "HudSpecCrosshair" )
+	CHudElement( pElementName ), BaseClass( NULL, "HudSpecCrosshair" )
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
 	SetParent( pParent );
@@ -58,7 +58,7 @@ void CHudSpecCrosshair::Paint( void )
 
 	if ( engine->IsDrawingLoadingImage() || engine->IsPaused() )
 		return;
-	
+
 	C_BasePlayer* pPlayer = C_BasePlayer::GetLocalPlayer();
 
 	if ( !pPlayer )
@@ -80,8 +80,8 @@ void CHudSpecCrosshair::Paint( void )
 	x = ScreenWidth()/2;
 	y = ScreenHeight()/2;
 
-	m_pCrosshair->DrawSelf( 
-			x - 0.5f * m_pCrosshair->Width(), 
+	m_pCrosshair->DrawSelf(
+			x - 0.5f * m_pCrosshair->Width(),
 			y - 0.5f * m_pCrosshair->Height(),
 			m_clrCrosshair );
 }

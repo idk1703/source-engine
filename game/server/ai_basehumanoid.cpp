@@ -136,13 +136,13 @@ bool CAI_BaseHumanoid::OnMoveBlocked( AIMoveResult_t *pResult )
 
 		float massBonus = ( IsNavigationUrgent() ) ? 40.0 : 0;
 
-		if ( pBlocker->GetMoveType() == MOVETYPE_VPHYSICS && 
-			 pBlocker != GetGroundEntity() && 
+		if ( pBlocker->GetMoveType() == MOVETYPE_VPHYSICS &&
+			 pBlocker != GetGroundEntity() &&
 			 !pBlocker->IsNavIgnored() &&
 			 !dynamic_cast<CBasePropDoor *>(pBlocker) &&
-			 pBlocker->VPhysicsGetObject() && 
-			 pBlocker->VPhysicsGetObject()->IsMoveable() && 
-			 ( pBlocker->VPhysicsGetObject()->GetMass() <= 35.0 + massBonus + 0.1 || 
+			 pBlocker->VPhysicsGetObject() &&
+			 pBlocker->VPhysicsGetObject()->IsMoveable() &&
+			 ( pBlocker->VPhysicsGetObject()->GetMass() <= 35.0 + massBonus + 0.1 ||
 			   ( pBlocker->VPhysicsGetObject()->GetMass() <= 50.0 + massBonus + 0.1 && IsSmall( pBlocker ) ) ) )
 		{
 			DbgNavMsg1( this, "Setting ignore on object %s", pBlocker->GetDebugName() );
@@ -175,7 +175,7 @@ void CAI_BaseHumanoid::TraceAttack( const CTakeDamageInfo &info, const Vector &v
 	{
 		if ( info.GetAttacker() && info.GetAttacker()->IsPlayer() && info.GetAttacker() != GetEnemy() && !IsInAScript() )
 		{
-			// Shot in the head by a player I've never seen. In this case the player 
+			// Shot in the head by a player I've never seen. In this case the player
 			// has gotten the drop on this enemy and such an attack is always lethal (at close range)
 			bSneakAttacked = true;
 
@@ -283,8 +283,8 @@ void CAI_BaseHumanoid::RunTaskRangeAttack1( const Task_t *pTask )
 	// doesn't break when my enemy dies. (sjb)
 	if( vecEnemyLKP != vec3_origin )
 	{
-		if ( ( pTask->iTask == TASK_RANGE_ATTACK1 || pTask->iTask == TASK_RELOAD ) && 
-			 ( CapabilitiesGet() & bits_CAP_AIM_GUN ) && 
+		if ( ( pTask->iTask == TASK_RANGE_ATTACK1 || pTask->iTask == TASK_RELOAD ) &&
+			 ( CapabilitiesGet() & bits_CAP_AIM_GUN ) &&
 			 FInAimCone( vecEnemyLKP ) )
 		{
 			// Arms will aim, so leave body yaw as is

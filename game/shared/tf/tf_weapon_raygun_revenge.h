@@ -25,7 +25,7 @@ class CTFRaygun_Revenge : public CTFRaygun
 {
 public:
 	DECLARE_CLASS( CTFRaygun, CTFRocketLauncher );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFRaygun();
@@ -61,7 +61,7 @@ public:
 			return 0.0f;
 		}
 
-		return 25.f; 
+		return 25.f;
 	}
 	virtual float		Energy_GetRechargeCost( void ) const { return 25.f; }
 
@@ -82,7 +82,7 @@ class CTFDRGPomson : public CTFRaygun
 {
 public:
 	DECLARE_CLASS( CTFDRGPomson, CTFRaygun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_DRG_POMSON; }

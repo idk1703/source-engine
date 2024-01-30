@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -23,7 +23,7 @@ ASSERT_INVARIANT( ( bits_LINK_STALE_SUGGESTED | bits_LINK_OFF ) <= 255 && ( AI_M
 // Purpose:	Given the source node ID, returns the destination ID
 // Input  :
 // Output :
-//-----------------------------------------------------------------------------	
+//-----------------------------------------------------------------------------
 int	CAI_Link::DestNodeID(int srcID)
 {
 	if (srcID == m_iSrcID)

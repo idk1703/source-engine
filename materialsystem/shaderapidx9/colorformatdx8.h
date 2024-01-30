@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -37,7 +37,7 @@ ImageFormat FindNearestSupportedBackBufferFormat( unsigned int displayAdapter, D
 //-----------------------------------------------------------------------------
 // Initializes the color format informat; call it every time display mode changes
 //-----------------------------------------------------------------------------
-void InitializeColorInformation( unsigned int displayAdapter, D3DDEVTYPE deviceType, 
+void InitializeColorInformation( unsigned int displayAdapter, D3DDEVTYPE deviceType,
 								 ImageFormat displayFormat );
 
 //-----------------------------------------------------------------------------

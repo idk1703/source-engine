@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -90,6 +90,3 @@ void CMinimapResourceZonePanel::Paint( )
 		m_ppImage->Paint();
 	}
 }
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -67,7 +67,7 @@ class CUtlBuffer;
 
 enum DiskWriteMode_t
 {
-	WRITE_TO_DISK_NEVER,	
+	WRITE_TO_DISK_NEVER,
 	WRITE_TO_DISK_ALWAYS,
 	WRITE_TO_DISK_UPDATE,	// file must exist
 };

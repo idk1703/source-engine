@@ -37,14 +37,14 @@ public:
 	uint32 GetAppID() { return m_nAppID; }
 	const CSteamID & GetLocalPlayerSteamID() { return m_SteamIDLocalPlayer; }
 
-	// Allow others to register for a callback when the Steam logged on status changes	
+	// Allow others to register for a callback when the Steam logged on status changes
 	void InstallCallback( CUtlDelegate< void ( const SteamLoggedOnChange_t & ) > delegate );
 	void RemoveCallback( CUtlDelegate< void ( const SteamLoggedOnChange_t & ) > delegate );
-	
+
 private:
 	void UpdateLoggedOnState();
 	void InvokeCallbacks( const SteamLoggedOnChange_t &loggedOnStatus );
-	
+
 	bool m_bActive;
 	bool m_bLoggedOn;
 	CSteamID m_SteamIDLocalPlayer;

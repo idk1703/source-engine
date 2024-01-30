@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -52,7 +52,7 @@ public:
 	operator IMaterial*() const { return m_pMaterial; }
 	operator IMaterial const*() const { return m_pMaterial; }
 	IMaterial* operator->() { return m_pMaterial; }
-	
+
 private:
 	IMaterial* m_pMaterial;
 };

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -11,7 +11,7 @@
 #include "ivp_material.hxx"
 #include <ctype.h>
 #include "utlsymbol.h"
-#include "tier1/strtools.h" 
+#include "tier1/strtools.h"
 #include "vcollide_parse_private.h"
 #include "ctype.h"
 
@@ -26,22 +26,22 @@ class CSurface : public IVP_Material
 public:
 
 	// IVP_Material
-    virtual IVP_DOUBLE get_friction_factor()
+	virtual IVP_DOUBLE get_friction_factor()
 	{
 		return data.physics.friction;
 	}
-    
-    virtual IVP_DOUBLE get_elasticity()
+
+	virtual IVP_DOUBLE get_elasticity()
 	{
 		return data.physics.elasticity;
 	}
-    virtual const char *get_name();
+	virtual const char *get_name();
 	// UNDONE: not implemented here.
-	virtual IVP_DOUBLE get_second_friction_factor() 
-	{ 
-		return 0; 
+	virtual IVP_DOUBLE get_second_friction_factor()
+	{
+		return 0;
 	}
-    virtual IVP_DOUBLE get_adhesion()
+	virtual IVP_DOUBLE get_adhesion()
 	{
 		return 0;
 	}
@@ -74,7 +74,7 @@ public:
 	// IVP_Material_Manager
 	virtual IVP_Material *get_material_by_index(IVP_Real_Object *pObject, const IVP_U_Point *world_position, int index);
 
-    virtual IVP_DOUBLE get_friction_factor(IVP_Contact_Situation *situation)	// returns values >0, value of 1.0f means object stands on a 45 degres hill
+	virtual IVP_DOUBLE get_friction_factor(IVP_Contact_Situation *situation)	// returns values >0, value of 1.0f means object stands on a 45 degres hill
 	{
 		// vehicle wheels get no friction with stuff that isn't ground
 		// helps keep control of the car
@@ -91,7 +91,7 @@ public:
 		return factor;
 	}
 
-    virtual IVP_DOUBLE get_elasticity(IVP_Contact_Situation *situation)		// range [0, 1.0f[, the relative speed after a collision compared to the speed before
+	virtual IVP_DOUBLE get_elasticity(IVP_Contact_Situation *situation)		// range [0, 1.0f[, the relative speed after a collision compared to the speed before
 	{
 		IVP_DOUBLE flElasticity = BaseClass::get_elasticity( situation );
 		if ( flElasticity > 1.0f )
@@ -153,7 +153,7 @@ public:
 private:
 	const CSurface	*GetInternalSurface( int materialIndex ) const;
 	CSurface	*GetInternalSurface( int materialIndex );
-	
+
 	void			CopyPhysicsProperties( CSurface *pOut, int baseIndex );
 	bool			AddFileToDatabase( const char *pFilename );
 
@@ -572,7 +572,7 @@ int CPhysicsSurfaceProps::ParseSurfaceData( const char *pFileName, const char *p
 		m_init = true;
 		//AddReservedMaterials
 		CSurface prop;
-		
+
 		int baseMaterial = GetSurfaceIndex( "default" );
 		memset( &prop.data, 0, sizeof(prop.data) );
 		prop.m_name = m_strings.AddString( GetReservedMaterialName(MATERIAL_INDEX_SHADOW) );
@@ -603,7 +603,7 @@ int CIVPMaterialManager::RemapIVPMaterialIndex( int ivpMaterialIndex ) const
 {
 	if ( ivpMaterialIndex > 127 )
 		return ivpMaterialIndex;
-	
+
 	return m_propMap[ivpMaterialIndex];
 }
 
@@ -624,7 +624,7 @@ IVP_Material *CIVPMaterialManager::get_material_by_index(IVP_Real_Object *pObjec
 }
 
 // Installs a LUT for remapping IVP material indices to physprop indices
-// A table of the names of the materials in index order is stored with the 
+// A table of the names of the materials in index order is stored with the
 // compiled bsp file.  This is then remapped dynamically without touching the
 // per-triangle indices on load.  If we wanted to support multiple LUTs, it would
 // be better to preprocess/remap the triangles in the collision models at load time

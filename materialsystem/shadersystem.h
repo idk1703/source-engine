@@ -1,12 +1,12 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
 //
 // Shader system:
-//	The shader system makes a few fundamental assumptions about when 
+//	The shader system makes a few fundamental assumptions about when
 //	certain types of state get set.
 //
 // 1) Anything that can potentially affect vertex format must be set up
@@ -60,7 +60,7 @@ enum
 	// lighting flags
 	SHADER_UNLIT					= 0x0000,
 	SHADER_VERTEX_LIT				= 0x0001,
-	SHADER_NEEDS_LIGHTMAP			= 0x0002, 
+	SHADER_NEEDS_LIGHTMAP			= 0x0002,
 	SHADER_NEEDS_BUMPED_LIGHTMAPS	= 0x0004,
 	SHADER_LIGHTING_MASK			= 0x0007,
 */
@@ -196,7 +196,7 @@ public:
 	// Call the SHADER_INIT block of the shaders
 	virtual void InitShaderInstance( IShader *pShader, IMaterialVar **params, const char *pMaterialName, const char *pTextureGroupName ) = 0;
 
-	// go through each param and make sure it is the right type, load textures, 
+	// go through each param and make sure it is the right type, load textures,
 	// compute state snapshots and vertex types, etc.
 	virtual bool InitRenderState( IShader *pShader, int numParams, IMaterialVar **params, ShaderRenderState_t* pRenderState, char const* pMaterialName ) = 0;
 

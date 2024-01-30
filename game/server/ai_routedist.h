@@ -16,7 +16,7 @@
 
 // ----------------------------------------------------------------------------
 // Computes the route distance + route direction based on nav type
-// FIXME: Where should this go? 
+// FIXME: Where should this go?
 // ----------------------------------------------------------------------------
 inline float ComputePathDistance( Navigation_t navType, const Vector &start, const Vector &end )
 {

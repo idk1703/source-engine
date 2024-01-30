@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -60,7 +60,7 @@ enum
 class CWaveList : public mxListView
 {
 public:
-	CWaveList( mxWindow *parent, int id = 0 ) 
+	CWaveList( mxWindow *parent, int id = 0 )
 		: mxListView( parent, 0, 0, 0, 0, id )
 	{
 		// SendMessage ( (HWND)getHandle(), WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_FIXED_FONT), MAKELPARAM (TRUE, 0));
@@ -219,22 +219,22 @@ public:
 		m_szSearchString[0]=0;
 
 		m_pPlay = new mxButton( this, 0, 0, 0, 0, "Play", IDC_PLAY_SOUND );
-		
+
 		m_pStopSounds = new mxButton( this, 0, 0, 0, 0, "Stop Sounds", IDC_STOP_SOUNDS );
-		
+
 		m_pSearch = new mxButton( this, 0, 0, 0, 0, "Search...", IDC_SEARCH );
-		
+
 		m_pSearchString = new mxLabel( this, 0, 0, 0, 0, "" );
-		
+
 	}
-	
+
 	bool PaintBackground( void )
 	{
 		redraw();
 		return false;
 	}
-	
-	
+
+
 	virtual void redraw()
 	{
 		CDrawHelper drawHelper( this, GetSysColor( COLOR_BTNFACE ) );
@@ -249,25 +249,25 @@ public:
 		case mxEvent::Size:
 			{
 				iret = 1;
-				
+
 				int split = 120;
-				
+
 				int x = 1;
-				
+
 				m_pPlay->setBounds( x, 1, split, h2() - 2 );
-				
+
 				x += split + 10;
-				
+
 				m_pStopSounds->setBounds( x, 1, split, h2()-2 );
-				
+
 				x += split + 10;
-				
+
 				m_pSearch->setBounds( x, 1, split, h2() - 2 );
-				
+
 				x += split + 10;
-				
+
 				m_pSearchString->setBounds( x, 2, split * 2, h2() - 4 );
-				
+
 				x += split * 2 + 10;
 			}
 			break;
@@ -299,10 +299,10 @@ public:
 			}
 			break;
 		}
-		
+
 		return iret;
 	}
-	
+
 	char const	*GetSearchString()
 	{
 		return m_szSearchString;
@@ -327,26 +327,26 @@ public:
 	}
 
 private:
-	
+
 	mxButton		*m_pStopSounds;
 	mxButton		*m_pPlay;
 	mxButton		*m_pSearch;
 	mxLabel			*m_pSearchString;
-	
+
 	CWaveBrowser	*m_pBrowser;
 
 	char			m_szSearchString[ 256 ];
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
 CWaveBrowser::CWaveBrowser( mxWindow *parent, CWorkspaceManager *manager, int id ) :
 	BaseClass( parent, 0, 0, 0, 0, "Wave Browser", id )
 {
 	m_pManager = manager;
-	
+
 	SceneManager_MakeToolWindow( this, false );
 
 	m_pListView = new CWaveList( this, IDC_SB_LISTVIEW );
@@ -355,8 +355,8 @@ CWaveBrowser::CWaveBrowser( mxWindow *parent, CWorkspaceManager *manager, int id
 
 	HIMAGELIST list = GetWorkspaceManager()->CreateImageList();
 
-	// Associate the image list with the tree-view control. 
-    m_pListView->setImageList( (void *)list ); 
+	// Associate the image list with the tree-view control.
+	m_pListView->setImageList( (void *)list );
 
 	LoadAllSounds();
 
@@ -364,7 +364,7 @@ CWaveBrowser::CWaveBrowser( mxWindow *parent, CWorkspaceManager *manager, int id
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWaveBrowser::OnDelete()
 {
@@ -372,8 +372,8 @@ void CWaveBrowser::OnDelete()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 // Output : int
 //-----------------------------------------------------------------------------
 int CWaveBrowser::handleEvent( mxEvent *event )
@@ -532,7 +532,7 @@ bool CWaveBrowser::LoadWaveFilesInDirectory( CUtlDict< CWaveFile *, int >& sound
 			char *pFileNameWithPath;
 			int nAllocSize = nDirectoryNameLen + Q_strlen(pFileName) + 2;
 			pFileNameWithPath = (char *)stackalloc( nAllocSize );
-			Q_snprintf(	pFileNameWithPath, nAllocSize, "%s/%s", &pDirectoryName[SOUND_PREFIX_LEN], pFileName ); 
+			Q_snprintf(	pFileNameWithPath, nAllocSize, "%s/%s", &pDirectoryName[SOUND_PREFIX_LEN], pFileName );
 			Q_strnlwr( pFileNameWithPath, nAllocSize );
 
 			CWaveFile *wav = new CWaveFile( NULL, NULL, pFileNameWithPath );
@@ -630,14 +630,14 @@ void CWaveBrowser::RemoveAllSounds()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWaveBrowser::PopulateTree( char const *subdirectory, bool textsearch /*= false*/ )
 {
 	int i;
 
 	CUtlRBTree< CWaveFile *, int >		m_Sorted( 0, 0, NameLessFunc );
-	
+
 	bool check_load_sentence_data = false;
 
 	char const *texttofind = NULL;
@@ -751,7 +751,7 @@ void CWaveBrowser::BuildSelectionList( CUtlVector< CWaveFile * >& selected )
 	selected.RemoveAll();
 
 	int idx = -1;
-	do 
+	do
 	{
 		idx = m_pListView->getNextSelectedItem( idx );
 		if ( idx != -1 )
@@ -763,7 +763,7 @@ void CWaveBrowser::BuildSelectionList( CUtlVector< CWaveFile * >& selected )
 			}
 		}
 	} while ( idx != -1 );
-	
+
 }
 
 void CWaveBrowser::ShowContextMenu( void )
@@ -787,8 +787,8 @@ void CWaveBrowser::ShowContextMenu( void )
 	}
 	else
 	{
-		pop->add( "Enable Voice Ducking", IDC_SB_ENABLEVOICEDUCKING ); 
-		pop->add( "Disable Voice Ducking", IDC_SB_DISABLEVOICEDUCKING ); 
+		pop->add( "Enable Voice Ducking", IDC_SB_ENABLEVOICEDUCKING );
+		pop->add( "Disable Voice Ducking", IDC_SB_DISABLEVOICEDUCKING );
 		pop->addSeparator();
 	}
 
@@ -850,8 +850,8 @@ void CWaveBrowser::OnCheckin()
 void SplitFileName( char const *in, char *path, int maxpath, char *filename, int maxfilename );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *se - 
+// Purpose:
+// Input  : *se -
 //-----------------------------------------------------------------------------
 void CWaveBrowser::JumpToItem( CWaveFile *wav )
 {

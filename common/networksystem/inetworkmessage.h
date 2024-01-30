@@ -44,12 +44,12 @@ public:
 	// Pass in client indices (which are their ent indices - 1).
 	virtual void	SetNetChannel(INetChannel * netchan) = 0; // netchannel this message is from/for
 	virtual void	SetReliable( bool state ) = 0;	// set to true if it's a reliable message
-		
+
 	virtual	bool	ReadFromBuffer( bf_read &buffer ) = 0; // returns true if parsing was OK
 	virtual	bool	WriteToBuffer( bf_write &buffer ) = 0;	// returns true if writing was OK
-		
+
 	virtual bool	IsReliable( void ) const = 0;  // true, if message needs reliable handling
-	
+
 	virtual int				GetGroup( void ) const = 0;	// returns net message group of this message
 	virtual int				GetType( void ) const = 0;	// returns module specific header tag eg svc_serverinfo
 	virtual const char		*GetGroupName( void ) const = 0;	// returns network message group name
@@ -76,7 +76,7 @@ protected:
 		virtual const char		*GetGroupName( void ) const { return #group; } \
 		virtual int				GetType() const { return msgtype; } \
 		virtual const char		*GetName() const { return #msgtype;}\
-					
+
 
 //-----------------------------------------------------------------------------
 // Default empty base class for net messages
@@ -84,10 +84,10 @@ protected:
 class CNetworkMessage : public INetworkMessage
 {
 public:
-	CNetworkMessage() 
-	{	
+	CNetworkMessage()
+	{
 		m_bReliable = true;
-		m_pNetChannel = NULL; 
+		m_pNetChannel = NULL;
 	}
 
 	virtual void Release()
@@ -97,33 +97,33 @@ public:
 
 	virtual ~CNetworkMessage() {};
 
-	virtual void SetReliable( bool state ) 
-	{ 
+	virtual void SetReliable( bool state )
+	{
 		m_bReliable = state;
 	}
 
-	virtual bool IsReliable() const 
-	{ 
+	virtual bool IsReliable() const
+	{
 		return m_bReliable;
 	}
 
 	virtual void SetNetChannel(INetChannel * netchan)
-	{ 
-		m_pNetChannel = netchan; 
+	{
+		m_pNetChannel = netchan;
 	}
 
 	virtual bool Process()
 	{
 		// no handler set
-		Assert( 0 ); 
-		return false; 
-	}	
+		Assert( 0 );
+		return false;
+	}
 
 	INetChannel	*GetNetChannel() const
-	{ 
-		return m_pNetChannel; 
+	{
+		return m_pNetChannel;
 	}
-		
+
 protected:
 	bool m_bReliable;			// true if message should be send reliable
 	INetChannel *m_pNetChannel;	// netchannel this message is from/for
@@ -131,4 +131,3 @@ protected:
 
 
 #endif // INETWORKMESSAGE_H
-

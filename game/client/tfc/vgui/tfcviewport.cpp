@@ -41,7 +41,7 @@
 
 
 //
-// This is the main function of the viewport. Right here is where we create our class menu, 
+// This is the main function of the viewport. Right here is where we create our class menu,
 // team menu, and anything else that we want to turn on and off in the UI.
 //
 void TFCViewport::CreateDefaultPanels( void )
@@ -76,7 +76,7 @@ IViewPortPanel* TFCViewport::CreatePanelByName(const char *szPanelName)
 	// create a generic base panel, don't add twice
 	newpanel = BaseClass::CreatePanelByName( szPanelName );
 
-	return newpanel; 
+	return newpanel;
 }
 
 int TFCViewport::GetDeathMessageStartHeight( void )
@@ -93,4 +93,3 @@ int TFCViewport::GetDeathMessageStartHeight( void )
 
 	return x;
 }
-

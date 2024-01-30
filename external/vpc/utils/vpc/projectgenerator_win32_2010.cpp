@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2006, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: VPC
 //
@@ -129,7 +129,7 @@ bool CProjectGenerator_Win32_2010::WriteFile( CProjectFile *pFile, const char *p
 
 		m_XMLWriter.PopNode( true );
 	}
-	
+
 	return true;
 }
 
@@ -156,7 +156,7 @@ bool CProjectGenerator_Win32_2010::WriteFolder( CProjectFolder *pFolder, const c
 	{
 		m_XMLWriter.PopNode( true );
 	}
-	
+
 	return true;
 }
 
@@ -254,7 +254,7 @@ bool CProjectGenerator_Win32_2010::WritePrimaryXML( const char *pOutputFilename 
 
 	m_XMLWriter.PushNode( "ItemGroup", "Label=\"ProjectConfigurations\"" );
 	CUtlVector< CUtlString > configurationNames;
-	m_pVCProjGenerator->GetAllConfigurationNames( configurationNames ); 
+	m_pVCProjGenerator->GetAllConfigurationNames( configurationNames );
 	const char *pPlatformString = "Win32";
 	if ( g_pVPC->IsPlatformDefined( "WIN64" ) )
 		pPlatformString = "x64";
@@ -318,7 +318,7 @@ bool CProjectGenerator_Win32_2010::WritePrimaryXML( const char *pOutputFilename 
 		m_XMLWriter.Write( "<Import Project=\"$(UserRootDir)\\Microsoft.Cpp.$(Platform).user.props\" Condition=\"exists('$(UserRootDir)\\Microsoft.Cpp.$(Platform).user.props')\" Label=\"LocalAppDataPlatform\" />" );
 		m_XMLWriter.PopNode( true );
 	}
-	
+
 	m_XMLWriter.Write( "<PropertyGroup Label=\"UserMacros\" />" );
 
 	m_XMLWriter.PushNode( "PropertyGroup" );
@@ -373,7 +373,7 @@ bool CProjectGenerator_Win32_2010::WritePrimaryXML( const char *pOutputFilename 
 		if ( !WriteFolder( m_pVCProjGenerator->GetRootFolder(), s_TypeKeyNames[i], 0 ) )
 			return false;
 	}
-	
+
 	m_XMLWriter.Write( "<Import Project=\"$(VCTargetsPath)\\Microsoft.Cpp.targets\" />" );
 	m_XMLWriter.PushNode( "ImportGroup", "Label=\"ExtensionTargets\"" );
 	m_XMLWriter.PopNode( true );
@@ -436,7 +436,7 @@ bool CProjectGenerator_Win32_2010::WriteFileToSecondaryXML( CProjectFile *pFile,
 	{
 		m_XMLFilterWriter.Write( CFmtStr( "<%s Include=\"%s\" />", pKeyName, pFile->m_Name.Get() ) );
 	}
-	
+
 	return true;
 }
 
@@ -539,9 +539,9 @@ bool CProjectGenerator_Win32_2010::WriteTool( const char *pToolName, const CProj
 	{
 		m_XMLWriter.PopNode( true );
 	}
-	
+
 	return true;
-}	
+}
 
 bool CProjectGenerator_Win32_2010::WriteProperty( const PropertyState_t *pPropertyState, bool bEmitConfiguration, const char *pConfigName, const char *pOutputName, const char *pOutputValue )
 {

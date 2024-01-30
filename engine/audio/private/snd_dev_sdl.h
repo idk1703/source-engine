@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -12,5 +12,3 @@ class IAudioDevice;
 IAudioDevice *Audio_CreateSDLAudioDevice( void );
 
 #endif // SND_DEV_SDL_H
-
-

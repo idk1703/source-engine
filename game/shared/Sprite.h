@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,23 +41,23 @@ public:
 		SPR_ORIENTED				= 3,
 		SPR_VP_PARALLEL_ORIENTED	= 4
 	} SPRITETYPE;
-	
+
 	// Determine sprite orientation
-	static void							GetSpriteAxes( SPRITETYPE type, 
+	static void							GetSpriteAxes( SPRITETYPE type,
 										const Vector& origin,
 										const QAngle& angles,
-										Vector& forward, 
-										Vector& right, 
+										Vector& forward,
+										Vector& right,
 										Vector& up );
 
 	// Sprites can alter blending amount
 	virtual float					GlowBlend( CEngineSprite *psprite, const Vector& entorigin, int rendermode, int renderfx, int alpha, float *scale );
 
 	// Draws tempent as a sprite
-	int								DrawSprite( 
+	int								DrawSprite(
 										IClientEntity *entity,
-										const model_t *model, 
-										const Vector& origin, 
+										const model_t *model,
+										const Vector& origin,
 										const QAngle& angles,
 										float frame,
 										IClientEntity *attachedto,
@@ -65,8 +65,8 @@ public:
 										int rendermode,
 										int renderfx,
 										int alpha,
-										int r, 
-										int g, 
+										int r,
+										int g,
 										int b,
 										float scale,
 										float flHDRColorScale = 1.0f
@@ -103,20 +103,20 @@ public:
 
 	virtual int ShouldTransmit( const CCheckTransmitInfo *pInfo );
 	virtual int UpdateTransmitState( void );
-	
+
 	void SetAsTemporary( void ) { AddSpawnFlags( SF_SPRITE_TEMPORARY ); }
 	bool IsTemporary( void ) { return ( HasSpawnFlags( SF_SPRITE_TEMPORARY ) ); }
-	
+
 	int	ObjectCaps( void )
-	{ 
+	{
 		int flags = 0;
-		
+
 		if ( IsTemporary() )
 		{
 			flags = FCAP_DONT_SAVE;
 		}
-		
-		return (BaseClass::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | flags; 
+
+		return (BaseClass::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | flags;
 	}
 
 	void OnRestore();
@@ -163,7 +163,7 @@ public:
 	}
 	inline void SetTexture( int spriteIndex ) { SetModelIndex( spriteIndex ); }
 	inline void SetColor( int r, int g, int b ) { SetRenderColor( r, g, b, GetRenderColor().a ); }
-	
+
 	void SetBrightness( int brightness, float duration = 0.0f );
 	void SetScale( float scale, float duration = 0.0f );
 	void SetSpriteScale( float scale );
@@ -173,41 +173,41 @@ public:
 	int	GetBrightness( void ) { return m_nBrightness; }
 	float GetHDRColorScale( void ) { return m_flHDRColorScale; }
 
-	inline void FadeAndDie( float duration ) 
-	{ 
+	inline void FadeAndDie( float duration )
+	{
 		SetBrightness( 0, duration );
-		SetThink(&CSprite::AnimateUntilDead); 
-		m_flDieTime = gpGlobals->curtime + duration; 
-		SetNextThink( gpGlobals->curtime );  
+		SetThink(&CSprite::AnimateUntilDead);
+		m_flDieTime = gpGlobals->curtime + duration;
+		SetNextThink( gpGlobals->curtime );
 	}
 
-	inline void AnimateAndDie( float framerate ) 
-	{ 
-		SetThink(&CSprite::AnimateUntilDead); 
+	inline void AnimateAndDie( float framerate )
+	{
+		SetThink(&CSprite::AnimateUntilDead);
 		m_flSpriteFramerate = framerate;
-		m_flDieTime = gpGlobals->curtime + (m_flMaxFrame / m_flSpriteFramerate); 
-		SetNextThink( gpGlobals->curtime ); 
+		m_flDieTime = gpGlobals->curtime + (m_flMaxFrame / m_flSpriteFramerate);
+		SetNextThink( gpGlobals->curtime );
 	}
 
-	inline void AnimateForTime( float framerate, float time ) 
-	{ 
-		SetThink(&CSprite::AnimateUntilDead); 
+	inline void AnimateForTime( float framerate, float time )
+	{
+		SetThink(&CSprite::AnimateUntilDead);
 		m_flSpriteFramerate = framerate;
 		m_flDieTime = gpGlobals->curtime + time;
-		SetNextThink( gpGlobals->curtime ); 
+		SetNextThink( gpGlobals->curtime );
 	}
 
 	// FIXME: This completely blows.
 	// Surely there's gotta be a better way.
 	void FadeOutFromSpawn( )
 	{
-		SetThink(&CSprite::BeginFadeOutThink); 
-		SetNextThink( gpGlobals->curtime + 0.01f ); 
+		SetThink(&CSprite::BeginFadeOutThink);
+		SetNextThink( gpGlobals->curtime + 0.01f );
 	}
 
 	void BeginFadeOutThink( )
 	{
-		FadeAndDie( 0.25f ); 
+		FadeAndDie( 0.25f );
 	}
 
 	void AnimateUntilDead( void );
@@ -256,7 +256,7 @@ private:
 
 	CNetworkVar( int, m_nBrightness );
 	CNetworkVar( float, m_flBrightnessTime );
-	
+
 	CNetworkVar( float, m_flSpriteScale );
 	CNetworkVar( float, m_flScaleTime );
 	CNetworkVar( bool, m_bWorldSpaceScale );

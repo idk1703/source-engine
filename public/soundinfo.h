@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -89,15 +89,15 @@ struct SoundInfo_t
 	bool			bIsSentence;
 	bool			bIsAmbient;
 	int				nSpeakerEntity;
-	
+
 	//---------------------------------
-	
+
 	SoundInfo_t()
 	{
 		SetDefault();
 	}
 
-	void Set(int newEntity, int newChannel, const char *pszNewName, const Vector &newOrigin, const Vector& newDirection, 
+	void Set(int newEntity, int newChannel, const char *pszNewName, const Vector &newOrigin, const Vector& newDirection,
 			float newVolume, soundlevel_t newSoundLevel, bool newLooping, int newPitch, const Vector &vecListenerOrigin, int speakerentity )
 	{
 		nEntityIndex = newEntity;
@@ -129,11 +129,11 @@ struct SoundInfo_t
 		nSequenceNumber = 0;
 
 		pszName = NULL;
-	
+
 		bLooping = false;
 		bIsSentence = false;
 		bIsAmbient = false;
-		
+
 		vOrigin.Init();
 		vDirection.Init();
 		vListenerOrigin.Init();
@@ -163,7 +163,7 @@ struct SoundInfo_t
 		else
 		{
 			buffer.WriteOneBit( 1 );
-		
+
 			if ( nEntityIndex <= 31)
 			{
 				buffer.WriteOneBit( 1 );
@@ -202,9 +202,9 @@ struct SoundInfo_t
 			{
 				// send full seqnr
 				buffer.WriteUBitLong( 0, 2 ); // 2 zero bits
-				buffer.WriteUBitLong( nSequenceNumber, SOUND_SEQNUMBER_BITS ); 
+				buffer.WriteUBitLong( nSequenceNumber, SOUND_SEQNUMBER_BITS );
 			}
-						
+
 			if ( fVolume == delta->fVolume )
 			{
 				buffer.WriteOneBit( 0 );
@@ -240,9 +240,9 @@ struct SoundInfo_t
 
 				if ( iDelay < 0 )
 				{
-					iDelay /=10;	
+					iDelay /=10;
 				}
-				
+
 				buffer.WriteSBitLong( iDelay , MAX_SOUND_DELAY_MSEC_ENCODE_BITS );
 			}
 
@@ -278,7 +278,7 @@ struct SoundInfo_t
 		}
 
 		if ( nProtoVersion > 22 )
-		{	
+		{
 			READ_DELTA_UINT( nSoundNum, MAX_SOUND_INDEX_BITS );
 		}
 		else
@@ -315,7 +315,7 @@ struct SoundInfo_t
 			{
 				nSequenceNumber = buffer.ReadUBitLong( SOUND_SEQNUMBER_BITS );
 			}
-				
+
 			if ( buffer.ReadOneBit() != 0 )
 			{
 				fVolume = (float)buffer.ReadUBitLong( 7 )/127.0f;
@@ -346,7 +346,7 @@ struct SoundInfo_t
 			{
 				// Up to 4096 msec delay
 				fDelay = (float)buffer.ReadSBitLong( MAX_SOUND_DELAY_MSEC_ENCODE_BITS ) / 1000.0f; ;
-				
+
 				if ( fDelay < 0 )
 				{
 					fDelay *= 10.0f;

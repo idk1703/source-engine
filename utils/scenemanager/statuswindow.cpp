@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,7 +13,7 @@ CStatusWindow *g_pStatusWindow = NULL;
 #define STATUS_SCROLLBAR_SIZE		12
 #define STATUS_FONT_SIZE			10
 
-CStatusWindow::CStatusWindow(mxWindow *parent, int x, int y, int w, int h, const char *label /*= 0*/ ) 
+CStatusWindow::CStatusWindow(mxWindow *parent, int x, int y, int w, int h, const char *label /*= 0*/ )
 : mxWindow( parent, x, y, w, h, label ), m_pScrollbar(NULL)
 {
 	for ( int i = 0; i < MAX_TEXT_LINES; i++ )
@@ -85,7 +85,7 @@ void CStatusWindow::redraw()
 		COLORREF clr = RGB( m_rgTextLines[ line ].r, m_rgTextLines[ line ].g, m_rgTextLines[ line ].b );
 
 		char *ptext = m_rgTextLines[ line ].m_szText;
-		
+
 		RECT rcTime = rcText;
 		rcTime.right = rcTime.left + 50;
 
@@ -108,7 +108,7 @@ void CStatusWindow::redraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CStatusWindow::PaintBackground( void )
@@ -174,8 +174,8 @@ void CStatusWindow::StatusPrint( int r, int g, int b, bool overwrite, const char
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : sboffset - 
+// Purpose:
+// Input  : sboffset -
 //-----------------------------------------------------------------------------
 void CStatusWindow::PositionSliders( int sboffset )
 {
@@ -188,7 +188,7 @@ void CStatusWindow::PositionSliders( int sboffset )
 
 	int vpixelsneeded = max( linesused * lineheight, trueh );
 	m_pScrollbar->setVisible( linesused * lineheight > trueh );
-	
+
 
 	m_pScrollbar->setPagesize( trueh );
 	m_pScrollbar->setRange( 0, vpixelsneeded );
@@ -197,8 +197,8 @@ void CStatusWindow::PositionSliders( int sboffset )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 // Output : int
 //-----------------------------------------------------------------------------
 int CStatusWindow::handleEvent( mxEvent *event )
@@ -231,7 +231,7 @@ int CStatusWindow::handleEvent( mxEvent *event )
 						event->modifiers == SB_THUMBTRACK)
 					{
 						int offset = event->height;
-						m_pScrollbar->setValue( offset ); 
+						m_pScrollbar->setValue( offset );
 						PositionSliders( offset );
 					}
 				}

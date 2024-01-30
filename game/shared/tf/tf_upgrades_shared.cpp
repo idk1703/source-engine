@@ -23,7 +23,7 @@ CMannVsMachineUpgradeManager::CMannVsMachineUpgradeManager()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineUpgradeManager::LevelInitPostEntity()
 {
@@ -31,7 +31,7 @@ void CMannVsMachineUpgradeManager::LevelInitPostEntity()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineUpgradeManager::LevelShutdownPostEntity()
 {
@@ -39,7 +39,7 @@ void CMannVsMachineUpgradeManager::LevelShutdownPostEntity()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineUpgradeManager::ParseUpgradeBlockForUIGroup( KeyValues *pKV, int iDefaultUIGroup )
 {
@@ -101,7 +101,7 @@ void CMannVsMachineUpgradeManager::ParseUpgradeBlockForUIGroup( KeyValues *pKV, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CMannVsMachineUpgradeManager::GetAttributeIndexByName( const char* pszAttributeName )
 {
@@ -130,7 +130,7 @@ int CMannVsMachineUpgradeManager::GetAttributeIndexByName( const char* pszAttrib
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineUpgradeManager::LoadUpgradesFile( void )
 {
@@ -215,7 +215,7 @@ int GetUpgradeStepData( CTFPlayer *pPlayer, int nWeaponSlot, int nUpgradeIndex, 
 					 ? pPowerupBottle->GetNumCharges()
 					 : 0;
 		bOverCap = nCurrentStep == pPowerupBottle->GetMaxNumCharges();
-		
+
 		return pPowerupBottle->GetMaxNumCharges();
 	}
 
@@ -229,7 +229,7 @@ int GetUpgradeStepData( CTFPlayer *pPlayer, int nWeaponSlot, int nUpgradeIndex, 
 	// Find the baseline value for this attribute. We start by assuming that it has no default value on
 	// the item level (CEconItem) and defaulting to 100% for percentages and 0 for anything else.
 	float flBase = bPercentage ? 1.0f : 0.0f;
-	
+
 	// If the item has a backing store, we pull from that to find the attribute value before any
 	// gameplay-specific (CEconItemView-level) attribute modifications. If we're a player we don't have
 	// any persistent backing store. This will either stomp our above value if found or leave it unchanged
@@ -241,7 +241,7 @@ int GetUpgradeStepData( CTFPlayer *pPlayer, int nWeaponSlot, int nUpgradeIndex, 
 
 	// ...
 	float flCurrentAttribValue = bPercentage ? 1.0f : 0.0f;
-	
+
 	if ( pMannVsMachineUpgrade->nUIGroup == UIGROUP_UPGRADE_ATTACHED_TO_PLAYER )
 	{
 		::FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pPlayer->GetAttributeList(), pAttribDef, &flCurrentAttribValue );
@@ -257,7 +257,7 @@ int GetUpgradeStepData( CTFPlayer *pPlayer, int nWeaponSlot, int nUpgradeIndex, 
 
 	// ...
 	const float flIncrement = pMannVsMachineUpgrade->flIncrement;
-	
+
 	// Figure out the cap value for this attribute. We start by trusting whatever is specified in our
 	// upgrade config but if we're dealing with an item that specifies different properties at a level
 	// before MvM upgrades (ie., the Soda Popper already specifies "Reload time decreased") then we
@@ -276,7 +276,7 @@ int GetUpgradeStepData( CTFPlayer *pPlayer, int nWeaponSlot, int nUpgradeIndex, 
 
 	// Calculate the the total number of upgrade levels and current upgrade level
 	int nNumSteps = 0;
-	
+
 	// ...
 	nNumSteps = RoundFloatToInt( fabsf( ( flCap - flBase ) / flIncrement ) );
 	nCurrentStep = RoundFloatToInt( fabsf( ( flCurrentAttribValue - flBase ) / flIncrement ) );

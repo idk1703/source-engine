@@ -21,10 +21,10 @@ class ILocomotion : public INextBotComponent
 public:
 	ILocomotion( INextBot *bot );
 	virtual ~ILocomotion();
-	
+
 	virtual void Reset( void );								// (EXTEND) reset to initial state
 	virtual void Update( void );							// (EXTEND) update internal state
-	
+
 	//
 	// The primary locomotive method
 	// Depending on the physics of the bot's motion, it may not actually
@@ -35,13 +35,13 @@ public:
 	virtual void Approach( const Vector &goalPos, float goalWeight = 1.0f );	// (EXTEND) move directly towards the given position
 
 	//
-	// Move the bot to the precise given position immediately, 
+	// Move the bot to the precise given position immediately,
 	// updating internal state as needed
 	// Collision resolution is done to prevent interpenetration, which may prevent
 	// the bot from reaching the given position. If no collisions occur, the
 	// bot will be at the given position when this method returns.
 	//
-	virtual void DriveTo( const Vector &pos );				// (EXTEND) Move the bot to the precise given position immediately, 
+	virtual void DriveTo( const Vector &pos );				// (EXTEND) Move the bot to the precise given position immediately,
 
 	//
 	// Locomotion modifiers
@@ -82,7 +82,7 @@ public:
 
 	virtual void SetDesiredLean( const QAngle &lean ) { }
 	virtual const QAngle &GetDesiredLean( void ) const;
-	
+
 
 	//
 	// Locomotion information
@@ -111,8 +111,8 @@ public:
 	virtual float GetTraversableSlopeLimit( void ) const;	// return Z component of unit normal of steepest traversable slope
 
 	// return true if the given entity can be ignored during locomotion
-	enum TraverseWhenType 
-	{ 
+	enum TraverseWhenType
+	{
 		IMMEDIATELY,		// the entity will not block our motion - we'll carry right through
 		EVENTUALLY			// the entity will block us until we spend effort to open/destroy it
 	};
@@ -135,10 +135,10 @@ public:
 	virtual bool IsEntityTraversable( CBaseEntity *obstacle, TraverseWhenType when = EVENTUALLY ) const;
 
 	//
-	// Stuck state.  If the locomotor cannot make progress, it becomes "stuck" and can only leave 
+	// Stuck state.  If the locomotor cannot make progress, it becomes "stuck" and can only leave
 	// this stuck state by successfully moving and becoming un-stuck.
 	//
-	virtual bool IsStuck( void ) const;				// return true if bot is stuck 
+	virtual bool IsStuck( void ) const;				// return true if bot is stuck
 	virtual float GetStuckDuration( void ) const;	// return how long we've been stuck
 	virtual void ClearStuckStatus( const char *reason = "" );	// reset stuck status to un-stuck
 
@@ -306,9 +306,9 @@ inline const Vector & ILocomotion::GetMotionVector( void ) const
 	return m_motionVector;
 }
 
-inline float ILocomotion::GetTraversableSlopeLimit( void ) const	
-{ 
-	return 0.6; 
+inline float ILocomotion::GetTraversableSlopeLimit( void ) const
+{
+	return 0.6;
 }
 
 inline bool ILocomotion::IsStuck( void ) const
@@ -332,4 +332,3 @@ inline void ILocomotion::TraceHull( const Vector& start, const Vector& end, cons
 
 
 #endif // _NEXT_BOT_LOCOMOTION_INTERFACE_H_
-

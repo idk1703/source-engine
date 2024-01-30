@@ -26,7 +26,7 @@ DmeFramerate_t::DmeFramerate_t( int fps /*= 0*/ ) :
 {
 }
 
-DmeFramerate_t::DmeFramerate_t( int nNumerator, int nDenominator ) : 
+DmeFramerate_t::DmeFramerate_t( int nNumerator, int nDenominator ) :
 	m_num( nNumerator ), m_den( nDenominator * 10000 )
 {
 }
@@ -57,7 +57,7 @@ void DmeFramerate_t::SetFramerate( int fps )
 // other (uncommon) options besides 30(29.97 - ntsc video) are 24 (23.976 - ntsc film) and 60 (59.94 - ntsc progressive)
 void DmeFramerate_t::SetFramerateNTSC( int multiplier /*= 30*/ )
 {
-	// ntsc = 30 fps * 1000 / 1001 
+	// ntsc = 30 fps * 1000 / 1001
 	//      = ( 30 / 10000 fptms ) * 1000 / 1001
 	//      = 30 / 10010
 	m_num = multiplier;

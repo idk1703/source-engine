@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,13 +19,13 @@
 typedef void (*pfnUserMsgHook)(bf_read &msg);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CUserMessage
 {
 	public:
 		// byte size of message, or -1 for variable sized
-		int				size;	
+		int				size;
 		const char		*name;
 		// Client only dispatch function for message
 		CUtlVector<pfnUserMsgHook>	clienthooks;
@@ -38,10 +38,10 @@ class CUserMessage
 class CUserMessages
 {
 public:
-	
+
 	CUserMessages();
 	~CUserMessages();
-	
+
 	// Returns -1 if not found, otherwise, returns appropriate index
 	int		LookupUserMessage( const char *name );
 	int		GetUserMessageSize( int index );

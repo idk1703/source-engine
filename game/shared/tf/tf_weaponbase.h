@@ -65,9 +65,9 @@ enum
 // structure to encapsulate state of head bob
 struct BobState_t
 {
-	BobState_t() 
-	{ 
-		m_flBobTime = 0; 
+	BobState_t()
+	{
+		m_flBobTime = 0;
 		m_flLastBobTime = 0;
 		m_flLastSpeed = 0;
 		m_flVerticalBob = 0;
@@ -101,7 +101,7 @@ void AddViewModelBobHelper( Vector &origin, QAngle &angles, BobState_t *pBobStat
 #endif
 
 // Interface for weapons that have a charge time
-class ITFChargeUpWeapon 
+class ITFChargeUpWeapon
 {
 public:
 	virtual bool CanCharge( void ) = 0;
@@ -111,7 +111,7 @@ public:
 	virtual float GetChargeMaxTime( void ) = 0;
 
 	virtual float GetCurrentCharge( void )
-	{ 
+	{
 		return ( gpGlobals->curtime - GetChargeBeginTime() ) / GetChargeMaxTime();
 	}
 };
@@ -180,7 +180,7 @@ public:
 
 // 		if ( ( pEntity->MyCombatCharacterPointer() || pEntity->MyCombatWeaponPointer() ) && pEntity->GetTeamNumber() == m_iIgnoreTeam )
 // 			return false;
-// 
+//
 // 		if ( pEntity->IsPlayer() && pEntity->GetTeamNumber() == m_iIgnoreTeam )
 // 			return false;
 
@@ -219,7 +219,7 @@ class CTFWeaponBase : public CBaseCombatWeapon, public IHasOwner
 #endif
 {
 	DECLARE_CLASS( CTFWeaponBase, CBaseCombatWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 #if !defined ( CLIENT_DLL )
 	DECLARE_DATADESC();
@@ -278,7 +278,7 @@ class CTFWeaponBase : public CBaseCombatWeapon, public IHasOwner
 
 	// Extra wearables.
 #ifdef GAME_DLL
-	virtual void ChangeTeam( int iTeamNum ) OVERRIDE;	
+	virtual void ChangeTeam( int iTeamNum ) OVERRIDE;
 	virtual void UpdateExtraWearables();
 	virtual void ExtraWearableEquipped( CTFWearable *pExtraWearableItem );
 	virtual void ExtraWearableViewModelEquipped( CTFWearable *pExtraWearableItem );
@@ -701,7 +701,7 @@ private:
 
 	CNetworkVar( int,	m_nKillComboClass );
 	CNetworkVar( int,	m_nKillComboCount );
-	
+
 	int GetInspectActivity( TFWeaponInspectStage inspectStage );
 	bool IsInspectActivity( int iActivity );
 	CNetworkVar( float, m_flInspectAnimTime );
@@ -723,7 +723,7 @@ bool WeaponID_IsSniperRifleOrBow( int iWeaponID );
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// CTFWeaponAttachmentModel 
+// CTFWeaponAttachmentModel
 //-----------------------------------------------------------------------------
 class CTFWeaponAttachmentModel : public CBaseAnimating, public IHasOwner
 {
@@ -732,13 +732,13 @@ public:
 	CTFWeaponAttachmentModel() { m_bIsViewModelAttachment = false; m_hWeaponAssociatedWith = NULL; }
 
 	virtual bool ShouldDraw( void );
-	
+
 	void				Init( CBaseEntity *pParent, CTFWeaponBase *pAssociatedWeapon, bool bIsViewModel );
 	void				SetWeaponAssociatedWith( CTFWeaponBase *pWeapon ) { m_hWeaponAssociatedWith = pWeapon; }
 	CBaseEntity*		GetWeaponAssociatedWith( void ) const { return m_hWeaponAssociatedWith.Get(); }
 
 	bool BIsViewModelAttachment() { return m_bIsViewModelAttachment; }
-	
+
 	virtual CBaseEntity	*GetOwnerViaInterface( void ) OVERRIDE { return m_hWeaponAssociatedWith.Get() ? m_hWeaponAssociatedWith.Get()->GetOwner() : NULL; }
 private:
 

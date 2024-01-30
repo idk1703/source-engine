@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -56,7 +56,7 @@ public:
 
 	Vector				m_vLaserCurPos;			// Last position successfully burned
 	bool				InnateWeaponLOSCondition( const Vector &ownerPos, const Vector &targetPos, bool bSetConditions );
-	
+
 	// ------------------------------
 	//	Dormancy
 	// ------------------------------
@@ -73,7 +73,7 @@ public:
 	void			PrescheduleThink();
 
 	bool			IsValidEnemy( CBaseEntity *pEnemy );
-	
+
 	void			StartTask( const Task_t *pTask );
 	void			RunTask( const Task_t *pTask );
 	virtual int		SelectSchedule ( void );

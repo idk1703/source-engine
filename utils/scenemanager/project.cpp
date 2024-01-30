@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -216,7 +216,7 @@ void CProject::SaveToFile()
 		if ( scene->GetComments() && scene->GetComments()[0] )
 		{
 			buf.Printf( "\t\t\"comments\"\t\"%s\"\n",
-				scene->GetComments() );		
+				scene->GetComments() );
 		}
 
 		int vcdcount = scene->GetVCDCount();
@@ -235,7 +235,7 @@ void CProject::SaveToFile()
 			if ( vcd->GetComments() && vcd->GetComments()[0] )
 			{
 				buf.Printf( "\t\t\t\"comments\"\t\"%s\"\n",
-					vcd->GetComments() );		
+					vcd->GetComments() );
 			}
 
 			buf.Printf( "\t\t}\n" );
@@ -293,7 +293,7 @@ void CProject::ValidateTree( mxTreeView *tree, mxTreeViewItem* parent )
 		{
 			Q_snprintf( sz, sizeof( sz ) , "%s", scene->GetName() );
 		}
-		
+
 
 		mxTreeViewItem *spot = scene->FindItem( tree, parent );
 		if ( !spot )

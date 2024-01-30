@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -22,7 +22,7 @@ class Panel;
 
 enum
 {
-    MODIFIER_SHIFT		= ( 1 << 0 ),
+	MODIFIER_SHIFT		= ( 1 << 0 ),
 	MODIFIER_CONTROL	= ( 1 << 1 ),
 	MODIFIER_ALT		= ( 1 << 2 ),
 };
@@ -165,7 +165,7 @@ struct KeyBindingMap_t
 			PanelKBMapFunc_##name::InitVar();			\
 		}												\
 	};													\
-	PanelKBMapFunc_##name m_##name##_register;		
+	PanelKBMapFunc_##name m_##name##_register;
 
 #define _KBBindKeyCommon( name, keycode, modifiers, _classname )	\
 	class PanelKBBindFunc_##_classname; \
@@ -187,7 +187,7 @@ struct KeyBindingMap_t
 			PanelKBBindFunc_##_classname::InitVar();	\
 		}												\
 	};													\
-	PanelKBBindFunc_##_classname m_##_classname##_bindkey_register;	
+	PanelKBBindFunc_##_classname m_##_classname##_bindkey_register;
 
 #define KEYBINDING_FUNC( name, keycode, modifiers, function, help, doc )				_KBMapFuncCommonFunc( name, keycode, modifiers, function, help, doc, false ); virtual void function()
 #define KEYBINDING_FUNC_NODECLARE( name, keycode, modifiers, function, help, doc )		_KBMapFuncCommonFunc( name, keycode, modifiers, function, help, doc, false );

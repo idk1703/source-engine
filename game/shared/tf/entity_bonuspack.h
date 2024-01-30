@@ -50,14 +50,14 @@ public:
 	virtual bool	ValidTouch( CBasePlayer *pPlayer ) OVERRIDE;
 
 	virtual const char *GetDefaultPowerupModel( void ) OVERRIDE
-	{ 
+	{
 		return "models/bots/bot_worker/bot_worker_powercore.mdl";
 	}
 
 private:
 
 	void BlinkThink();
-	
+
 	int m_nBlinkCount;
 	float m_flKillTime;
 	float m_flCanPickupTime;
@@ -65,5 +65,3 @@ private:
 };
 
 #endif // ENTITY_BONUSPACK_H
-
-

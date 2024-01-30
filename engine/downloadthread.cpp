@@ -1,13 +1,13 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
 //--------------------------------------------------------------------------------------------------------------
 // downloadthread.cpp
-// 
+//
 // Implementation file for optional HTTP asset downloading thread
 // Author: Matthew D. Campbell (matt@turtlerockstudios.com), 2004
 //--------------------------------------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ void Thread_DPrintf (char *fmt, ...)
 #ifdef _DEBUG
 	va_list		argptr;
 	char		msg[4096];
-		
+
 	va_start( argptr, fmt );
 	Q_vsnprintf( msg, sizeof(msg), fmt, argptr );
 	va_end( argptr );
@@ -544,13 +544,13 @@ int Q_StrTrim( char *pStr )
 {
 	char *pSource = pStr;
 	char *pDest = pStr;
-	
+
 	// skip white space at the beginning
 	while ( *pSource != 0 && isspace( *pSource ) )
 	{
 		pSource++;
 	}
-	
+
 	// copy everything else
 	char *pLastWhiteBlock = NULL;
 	char *pStart = pDest;
@@ -569,7 +569,7 @@ int Q_StrTrim( char *pStr )
 		pDest++;
 	}
 	*pDest = 0;
-	
+
 	// did we end in a whitespace block?
 	if ( pLastWhiteBlock != NULL )
 	{
@@ -577,7 +577,7 @@ int Q_StrTrim( char *pStr )
 		pDest = pLastWhiteBlock;
 		*pLastWhiteBlock = 0;
 	}
-	
+
 	return pDest - pStart;
 }
 
@@ -586,7 +586,7 @@ static size_t curlHeaderFn( void *ptr, size_t size, size_t nmemb, void *stream)
 	char *pszHeader = (char*)ptr;
 	char *pszValue = NULL;
 	RequestContext_t *pRC = (RequestContext_t *) stream;
-	
+
 	pszHeader[ ( size * nmemb - 1 ) ] = NULL;
 	pszValue = Q_strstr( pszHeader, ":" );
 	if ( pszValue )
@@ -605,7 +605,7 @@ static size_t curlHeaderFn( void *ptr, size_t size, size_t nmemb, void *stream)
 			pRC->data = (byte*)malloc( len );
 		}
 	}
-	
+
 	return size * nmemb;
 }
 
@@ -626,32 +626,32 @@ RequestContext_t g_pacRequestCtx;
 void SetProxiesForURL( CURL *hMasterCURL, const char *pszURL )
 {
 	uint32 uProxyPort = 0;
-	char rgchProxyHost[1024]; 
+	char rgchProxyHost[1024];
 	char *pszProxyExceptionList = NULL;
 	rgchProxyHost[0] = '\0';
-	
+
 #if defined(OSX)
-	
+
 	// create an urlref around the raw URL
 	CFURLRef url = CFURLCreateWithBytes( NULL, ( const UInt8 * ) pszURL, strlen( pszURL ), kCFStringEncodingASCII, NULL );
-	// copy the proxies dictionary 
+	// copy the proxies dictionary
 	CFDictionaryRef proxyDict = SCDynamicStoreCopyProxies(NULL);
 	// and ask the system what proxies it thinks I should consider for the given URL
 	CFArrayRef proxies = CFNetworkCopyProxiesForURL( url, proxyDict );
-	
+
 	CFIndex iProxy;
 	// walk through the returned set, looking for any types we (and lib curl) can handle
 	// the list is returned in "preference order", but we can only handle http, and pac urls
 	for( iProxy = 0; iProxy < CFArrayGetCount( proxies ); iProxy++ )
 	{
 		CFDictionaryRef proxy =	(CFDictionaryRef) CFArrayGetValueAtIndex( proxies, iProxy );
-		
+
 		if ( proxy == NULL )
 			break;
-		
+
 		// what type of proxy is this one?
 		CFStringRef proxyType = (CFStringRef) CFDictionaryGetValue( proxy, kCFProxyTypeKey );
-		
+
 		if ( CFEqual( proxyType, kCFProxyTypeNone ) )
 		{
 			// no proxy should be used - we're done.
@@ -661,17 +661,17 @@ void SetProxiesForURL( CURL *hMasterCURL, const char *pszURL )
 		{
 			// manually configured HTTP proxy settings.
 			const void *val = NULL;
-			
+
 			// grab the proxy port
 			val = CFDictionaryGetValue( proxy, kCFProxyPortNumberKey );
 			if ( val == NULL || !CFNumberGetValue( (CFNumberRef) val, kCFNumberIntType, &uProxyPort ) )
 				// either we failed, or the port was invalid
 				continue;
-			
+
 			// no port specified - use the default http port
 			if ( uProxyPort == 0 )
 				uProxyPort = 80;
-			
+
 			int cbOffset = 0;
 			// see if they've specified authentication (username/password)
 			val = CFDictionaryGetValue( proxy, kCFProxyUsernameKey );
@@ -680,7 +680,7 @@ void SetProxiesForURL( CURL *hMasterCURL, const char *pszURL )
 				// we've got "username" in rgchProxyHost
 				cbOffset = Q_strlen( rgchProxyHost );
 				val = CFDictionaryGetValue( proxy, kCFProxyPasswordKey );
-				if ( val != NULL && CFStringGetLength( (CFStringRef) val ) ) 
+				if ( val != NULL && CFStringGetLength( (CFStringRef) val ) )
 				{
 					// and there's a non-null password value - put a colon after username
 					rgchProxyHost[cbOffset++] = ':';
@@ -691,13 +691,13 @@ void SetProxiesForURL( CURL *hMasterCURL, const char *pszURL )
 				// since we've got at least a username, we need an @
 				rgchProxyHost[cbOffset++] = '@';
 			}
-			
+
 			val = CFDictionaryGetValue( proxy, kCFProxyHostNameKey );
 			if ( val == NULL || !CFStringGetCString( (CFStringRef) val, rgchProxyHost + cbOffset, sizeof(rgchProxyHost) - cbOffset, kCFStringEncodingASCII ) || rgchProxyHost[cbOffset] == '\0' )
 				continue;
-			
+
 			break;
-		} 
+		}
 		else if ( CFEqual( proxyType, kCFProxyTypeAutoConfigurationURL ) )
 		{
 			// a proxy autoconfig URL has been provided
@@ -706,22 +706,22 @@ void SetProxiesForURL( CURL *hMasterCURL, const char *pszURL )
 			CFURLRef cfUrl = (CFURLRef) CFDictionaryGetValue( proxy, kCFProxyAutoConfigurationURLKey );
 			CFStringGetCString( (CFStringRef) CFStringCreateWithFormat( NULL, NULL, CFSTR("%@"), cfUrl ),
 							   rgchPacURL, sizeof( rgchPacURL ), kCFStringEncodingASCII );
-			
+
 			CURLcode res = CURLE_OK;
 			// see if we've not yet fetched this pac file
 			if ( !g_pacRequestCtx.cacheData || Q_strcmp( (const char *)g_pacRequestCtx.cacheData, rgchPacURL ) )
-			{			
+			{
 				if ( g_pacRequestCtx.cacheData )
 				{
-					free( g_pacRequestCtx.cacheData ); 
+					free( g_pacRequestCtx.cacheData );
 					g_pacRequestCtx.cacheData = NULL;
-				}				
+				}
 				if ( g_pacRequestCtx.data )
 				{
-					free( g_pacRequestCtx.data ); 
+					free( g_pacRequestCtx.data );
 					g_pacRequestCtx.data = NULL;
 				}
-				
+
 				// grab the data, using the same request context structure (and callbacks) we use for real downloads
 				CURL *hCURL = curl_easy_init();
 				if ( !hCURL )
@@ -733,17 +733,17 @@ void SetProxiesForURL( CURL *hMasterCURL, const char *pszURL )
 				curl_easy_setopt( hCURL, CURLOPT_NOSIGNAL, 1 );
 				curl_easy_setopt( hCURL, CURLOPT_CONNECTTIMEOUT, 30 );
 				curl_easy_setopt( hCURL, CURLOPT_FOLLOWLOCATION, 1 ); // follow 30x redirections from the web server
-				
+
 				// and setup the callback fns
 				curl_easy_setopt( hCURL, CURLOPT_HEADERFUNCTION, &curlHeaderFn );
 				curl_easy_setopt( hCURL, CURLOPT_WRITEFUNCTION, &curlWriteFn );
-				
+
 				// setup callback stream pointers
 				curl_easy_setopt( hCURL, CURLOPT_WRITEHEADER, &g_pacRequestCtx );
 				curl_easy_setopt( hCURL, CURLOPT_WRITEDATA, &g_pacRequestCtx );
-				
+
 				curl_easy_setopt( hCURL, CURLOPT_URL, rgchPacURL );
-				
+
 				res = curl_easy_perform( hCURL );
 				curl_easy_cleanup( hCURL );
 			}
@@ -755,13 +755,13 @@ void SetProxiesForURL( CURL *hMasterCURL, const char *pszURL )
 					g_pacRequestCtx.cacheData = (unsigned char*) malloc( Q_strlen( rgchPacURL ) + 1 );
 					Q_memcpy( g_pacRequestCtx.cacheData, rgchPacURL, Q_strlen( rgchPacURL ) );
 				}
-				
+
 				if ( !g_pacRequestCtx.data ) // no data in the proxy.pac they have, so just ignore it
 					return;
-				
+
 				// wrap the data (the pac contents) into a cfstring
 				CFStringRef cfPacStr = CFStringCreateWithCString( kCFAllocatorDefault, (const char *)g_pacRequestCtx.data, kCFStringEncodingASCII );
-				
+
 				// and ask the system, given this proxy pac, what (list of) proxies should I consider for this URL?
 				CFErrorRef err;
 				CFArrayRef proxiesForUrl = CFNetworkCopyProxiesForAutoConfigurationScript( cfPacStr, cfUrl, &err );
@@ -770,7 +770,7 @@ void SetProxiesForURL( CURL *hMasterCURL, const char *pszURL )
 					// we're re-assigning the value that the loop is iterating over, the postincrement will fire after we do this,
 					// hence the -1 (rather than 0) assignment to iProxy
 					proxies = proxiesForUrl;
-					iProxy = -1;					
+					iProxy = -1;
 				}
 				continue;
 			}
@@ -787,19 +787,19 @@ void SetProxiesForURL( CURL *hMasterCURL, const char *pszURL )
 		{
 			Msg( "unsupported proxy type\n" );
 			break;
-		}		
+		}
 	}
 #else
 #warning "CHTTPDownloadThread doesn't know how to set proxy config"
 #endif
-	
+
 	if ( rgchProxyHost[0] == '\0' || uProxyPort <= 0 )
 	{
 		if ( pszProxyExceptionList )
 			free( pszProxyExceptionList );
 		return;
 	}
-	
+
 	curl_easy_setopt( hMasterCURL, CURLOPT_PROXY, rgchProxyHost );
 	curl_easy_setopt( hMasterCURL, CURLOPT_PROXYPORT, uProxyPort );
 	if ( pszProxyExceptionList )
@@ -807,7 +807,7 @@ void SetProxiesForURL( CURL *hMasterCURL, const char *pszURL )
 		curl_easy_setopt( hMasterCURL, (CURLoption) (CURLOPTTYPE_OBJECTPOINT + 177) /*CURLOPT_NOPROXY*/ , pszProxyExceptionList );
 		free( pszProxyExceptionList );
 	}
-	
+
 }
 
 
@@ -819,9 +819,9 @@ void DownloadThread( void *voidPtr )
 		bDoneInit = true;
 		curl_global_init( CURL_GLOBAL_SSL );
 	}
-	
+
 	RequestContext_t& rc = *(RequestContext_t *)voidPtr;
-	
+
 	rc.status = HTTP_FETCH;
 
 	CURL *hCURL = curl_easy_init();
@@ -832,7 +832,7 @@ void DownloadThread( void *voidPtr )
 		rc.threadDone = true;
 		return;
 	}
-	
+
 	curl_easy_setopt( hCURL, CURLOPT_NOPROGRESS, 1 );
 	curl_easy_setopt( hCURL, CURLOPT_NOSIGNAL, 1 );
 	curl_easy_setopt( hCURL, CURLOPT_CONNECTTIMEOUT, 30 );
@@ -841,12 +841,12 @@ void DownloadThread( void *voidPtr )
 	// turn off certificate verification similar to how we set INTERNET_FLAG_IGNORE_CERT_CN_INVALID and INTERNET_FLAG_IGNORE_CERT_DATE_INVALID on Windows
 	curl_easy_setopt( hCURL, CURLOPT_SSL_VERIFYHOST, 0 );
 	curl_easy_setopt( hCURL, CURLOPT_SSL_VERIFYPEER, 0 );
-	
+
 	// and now the callback fns
 	curl_easy_setopt( hCURL, CURLOPT_HEADERFUNCTION, &curlHeaderFn );
 	curl_easy_setopt( hCURL, CURLOPT_WRITEFUNCTION, &curlWriteFn );
 
-	
+
 	uint32 cubURL = Q_strlen( rc.baseURL ) + Q_strlen( rc.urlPath )  + 2 /*one for the /, one for the null*/;
 	char *pchURL = (char *) malloc( cubURL );
 	Q_snprintf( pchURL, cubURL, "%s%s", rc.baseURL, rc.urlPath );
@@ -862,14 +862,14 @@ void DownloadThread( void *voidPtr )
 
 	// setup proxies
 	SetProxiesForURL( hCURL, pchURL );
-	
+
 	// set the url
 	curl_easy_setopt( hCURL, CURLOPT_URL, pchURL );
-	
+
 	// setup callback stream pointers
 	curl_easy_setopt( hCURL, CURLOPT_WRITEHEADER, &rc );
 	curl_easy_setopt( hCURL, CURLOPT_WRITEDATA, &rc );
-	
+
 	curl_easy_setopt( hCURL, CURLOPT_FOLLOWLOCATION, 1 );
 	curl_easy_setopt( hCURL, CURLOPT_MAXREDIRS, 1 );
 	curl_easy_setopt( hCURL, CURLOPT_UNRESTRICTED_AUTH, 1 );
@@ -888,7 +888,7 @@ void DownloadThread( void *voidPtr )
 	{
 		free( pchReferer );
 	}
-	
+
 	if ( res == CURLE_OK )
 	{
 		curl_easy_getinfo( hCURL , CURLINFO_RESPONSE_CODE , &rc.status );
@@ -897,7 +897,7 @@ void DownloadThread( void *voidPtr )
 			// write the file before we change the status to DONE, so that the write
 			// will finish before the main thread goes on and starts messing with the file
 			WriteFileFromRequestContext( rc );
-	
+
 			rc.status = HTTP_DONE;
 			rc.error = HTTP_ERROR_NONE;
 		}
@@ -907,7 +907,7 @@ void DownloadThread( void *voidPtr )
 			rc.error = HTTP_ERROR_FILE_NONEXISTENT;
 		}
 	}
-	else 
+	else
 	{
 		rc.status = HTTP_ERROR;
 	}
@@ -924,11 +924,11 @@ void DownloadThread( void *voidPtr )
 		delete[] rc.data;
 		rc.data = NULL;
 	}
-	
-	
+
+
 	curl_easy_cleanup( hCURL );
-	
-	rc.threadDone = true;	
+
+	rc.threadDone = true;
 }
 #else
 void DownloadThread( void *voidPtr )
@@ -937,4 +937,3 @@ void DownloadThread( void *voidPtr )
 	Assert( !"Implement me" );
 }
 #endif
-

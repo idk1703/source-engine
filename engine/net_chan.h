@@ -79,7 +79,7 @@ private: // netchan structurs
 	};
 
 	// Client's now store the command they sent to the server and the entire results set of
-	//  that command. 
+	//  that command.
 	typedef struct netframe_s
 	{
 		// Data received from server
@@ -110,12 +110,12 @@ private: // netchan structurs
 		netframe_t	*currentframe;	// current frame
 	} netflow_t;
 
-public: 
+public:
 	CNetChan();
 	~CNetChan();
 
 public:	// INetChannelInfo interface
-	
+
 	const char  *GetName( void ) const;
 	const char  *GetAddress( void ) const;
 	float		GetTime( void ) const;
@@ -123,7 +123,7 @@ public:	// INetChannelInfo interface
 	float		GetTimeSinceLastReceived( void ) const;
 	int			GetDataRate( void ) const;
 	int			GetBufferSize( void ) const;
-		
+
 	bool		IsLoopback( void ) const;
 	bool		IsNull() const; // .dem file playback channel is of type NA_NULL!!!
 	bool		IsTimingOut( void ) const;
@@ -139,7 +139,7 @@ public:	// INetChannelInfo interface
 	int			GetSequenceNr( int flow ) const ;
 	bool		IsValidPacket( int flow, int frame_number ) const ;
 	float		GetPacketTime( int flow, int frame_number ) const ;
-	int			GetPacketBytes( int flow, int frame_number, int group ) const ; 
+	int			GetPacketBytes( int flow, int frame_number, int group ) const ;
 	bool		GetStreamProgress( int flow, int *received, int *total ) const;
 	float		GetCommandInterpolationAmount( int flow, int frame_number ) const;
 	void		GetPacketResponseLatency( int flow, int frame_number, int *pnLatencyMsecs, int *pnChoke ) const;
@@ -155,11 +155,11 @@ public:	// INetChannel interface
 	void		SetTimeout(float seconds);
 	void		SetDemoRecorder(IDemoRecorder *recorder);
 	void		SetChallengeNr(unsigned int chnr);
-	
+
 	void		Reset( void );
 	void		Clear( void );
 	void		Shutdown(const char * reason);
-	
+
 	void		ProcessPlayback( void );
 	bool		ProcessStream( void );
 	void		ProcessPacket( netpacket_t * packet, bool bHasHeader );
@@ -175,7 +175,7 @@ public:	// INetChannel interface
 	void RequestFile_OLD(const char *filename, unsigned int transferID); // request remote file to upload, returns request ID
 	void		DenyFile(const char *filename, unsigned int transferID); // deny a file request
 	bool		Transmit(bool onlyReliable = false); // send data from buffers
-	
+
 	const netadr_t	&GetRemoteAddress( void ) const;
 	INetChannelHandler *GetMsgHandler( void ) const;
 	int				GetDropNumber( void ) const;
@@ -183,7 +183,7 @@ public:	// INetChannel interface
 	unsigned int	GetChallengeNr( void ) const;
 	void			GetSequenceData( int &nOutSequenceNr, int &nInSequenceNr, int &nOutSequenceNrAck );
 	void			SetSequenceData( int nOutSequenceNr, int nInSequenceNr, int nOutSequenceNrAck );
-		
+
 	void		UpdateMessageStats( int msggroup, int bits);
 	bool		CanPacket( void ) const;
 	bool		IsOverflowed( void ) const;
@@ -213,11 +213,11 @@ public:
 	bool		HasQueuedPackets() const;
 
 private:
-	
+
 	void	FlowReset( void );
 	void	FlowUpdate( int flow, int addbytes  );
 	void	FlowNewPacket(int flow, int seqnr, int acknr, int nChoked, int nDropped, int nSize );
-	
+
 	bool	ProcessMessages( bf_read &buf );
 	bool	ProcessControlMessage( int cmd, bf_read &buf);
 	bool	SendReliableViaStream( dataFragments_t *data);
@@ -263,15 +263,15 @@ public:
 	int			m_nInSequenceNr;
 	// last received acknowledge outgoing sequnce number
 	int			m_nOutSequenceNrAck;
-	
+
 	// state of outgoing reliable data (0/1) flip flop used for loss detection
 	int			m_nOutReliableState;
 	// state of incoming reliable data
 	int			m_nInReliableState;
 
 	int			m_nChokedPackets;	//number of choked packets
-	
-		
+
+
 	// Reliable data buffer, send which each packet (or put in waiting list)
 	bf_write	m_StreamReliable;
 	CUtlMemory<byte> m_ReliableDataBuffer;
@@ -288,19 +288,19 @@ public:
 	int			m_Socket;   // NS_SERVER or NS_CLIENT index, depending on channel.
 	int			m_StreamSocket;	// TCP socket handle
 
-	unsigned int m_MaxReliablePayloadSize;	// max size of reliable payload in a single packet	
+	unsigned int m_MaxReliablePayloadSize;	// max size of reliable payload in a single packet
 
 	// Address this channel is talking to.
-	netadr_t	remote_address;  
-	
+	netadr_t	remote_address;
+
 	// For timeouts.  Time last message was received.
-	float		last_received;		
+	float		last_received;
 	// Time when channel was connected.
-	double      connect_time;       
+	double      connect_time;
 
 	// Bandwidth choke
 	// Bytes per second
-	int			m_Rate;				
+	int			m_Rate;
 	// If realtime > cleartime, free to send next packet
 	double		m_fClearTime;
 
@@ -311,7 +311,7 @@ public:
 	unsigned int	m_FileRequestCounter;	// increasing counter with each file request
 	bool			m_bFileBackgroundTranmission; // if true, only send 1 fragment per packet
 	bool			m_bUseCompression;	// if true, larger reliable data will be bzip compressed
-	
+
 	// TCP stream state maschine:
 	bool		m_StreamActive;		// true if TCP is active
 	int			m_SteamType;		// STREAM_CMD_*
@@ -322,17 +322,17 @@ public:
 	CUtlMemory<byte> m_StreamData;			// Here goes the stream data (if not file). Only allocated if we're going to use it.
 
 	// packet history
-	netflow_t		m_DataFlow[ MAX_FLOWS ];  
+	netflow_t		m_DataFlow[ MAX_FLOWS ];
 	int				m_MsgStats[INetChannelInfo::TOTAL];	// total bytes for each message group
 
 
 	int				m_PacketDrop;	// packets lost before getting last update (was global net_drop)
 
 	char			m_Name[32];		// channel name
-	
-	unsigned int	m_ChallengeNr;	// unique, random challenge number 
 
-	float		m_Timeout;		// in seconds 
+	unsigned int	m_ChallengeNr;	// unique, random challenge number
+
+	float		m_Timeout;		// in seconds
 
 	INetChannelHandler			*m_MessageHandler;	// who registers and processes messages
 	CUtlVector<INetMessage*>	m_NetMessages;		// list of registered message

@@ -33,7 +33,7 @@ DECLARE_BUILD_FACTORY( CEconItemDetailsRichText );
 DECLARE_BUILD_FACTORY( CExplanationPopup );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool SetChildPanelVisible( vgui::Panel *pParent, const char *pChildName, bool bVisible, bool bSearchForChildRecursively )
 {
@@ -50,7 +50,7 @@ bool SetChildPanelVisible( vgui::Panel *pParent, const char *pChildName, bool bV
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool SetChildPanelEnabled( vgui::Panel *pParent, const char *pChildName, bool bEnabled, bool bSearchForChildRecursively )
 {
@@ -67,7 +67,7 @@ bool SetChildPanelEnabled( vgui::Panel *pParent, const char *pChildName, bool bE
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool SetChildButtonSelected( vgui::Panel *pParent, const char *pChildName, bool bSelected, bool bSearchForChildRecursively )
 {
@@ -84,7 +84,7 @@ bool SetChildButtonSelected( vgui::Panel *pParent, const char *pChildName, bool 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool IsChildButtonSelected( vgui::Panel *pParent, const char *pChildName, bool bSearchForChildRecursively )
 {
@@ -97,7 +97,7 @@ bool IsChildButtonSelected( vgui::Panel *pParent, const char *pChildName, bool b
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool AddChildActionSignalTarget( vgui::Panel *pParent, const char *pChildName, Panel *messageTarget, bool bSearchForChildRecursively )
 {
@@ -111,7 +111,7 @@ bool AddChildActionSignalTarget( vgui::Panel *pParent, const char *pChildName, P
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool SetXToRed( vgui::Label *pPanel )
 {
@@ -133,7 +133,7 @@ bool SetXToRed( vgui::Label *pPanel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CExButton::CExButton( Panel *parent, const char *name, const char *text, vgui::Panel *pActionSignalTarget, const char *cmd ) : Button( parent, name, text, pActionSignalTarget, cmd )
 {
@@ -147,7 +147,7 @@ CExButton::CExButton( Panel *parent, const char *name, const char *text, vgui::P
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CExButton::CExButton( Panel *parent, const char *name, const wchar_t *wszText, vgui::Panel *pActionSignalTarget, const char *cmd ) : Button( parent, name, wszText, pActionSignalTarget, cmd )
 {
@@ -161,7 +161,7 @@ CExButton::CExButton( Panel *parent, const char *name, const wchar_t *wszText, v
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExButton::ApplySettings( KeyValues *inResourceData )
 {
@@ -198,7 +198,7 @@ void CExButton::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 vgui::IBorder *CExButton::GetBorder(bool depressed, bool armed, bool selected, bool keyfocus)
 {
@@ -213,12 +213,12 @@ vgui::IBorder *CExButton::GetBorder(bool depressed, bool armed, bool selected, b
 
 	if ( m_pDefaultBorderOverride )
 		return m_pDefaultBorderOverride;
-	
+
 	return BaseClass::GetBorder( depressed, armed, selected, keyfocus );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExButton::SetFontStr( const char *pFont )
 {
@@ -229,7 +229,7 @@ void CExButton::SetFontStr( const char *pFont )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExButton::SetColorStr( const char *pColor )
 {
@@ -240,7 +240,7 @@ void CExButton::SetColorStr( const char *pColor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExButton::OnMouseFocusTicked()
 {
@@ -255,7 +255,7 @@ void CExButton::OnMouseFocusTicked()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExButton::OnCursorEntered()
 {
@@ -270,7 +270,7 @@ void CExButton::OnCursorEntered()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExButton::OnCursorExited()
 {
@@ -285,7 +285,7 @@ void CExButton::OnCursorExited()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CExImageButton::CExImageButton( Panel *parent, const char *name, const char *text, vgui::Panel *pActionSignalTarget, const char *cmd ) : CExButton( parent, name, text, pActionSignalTarget, cmd )
 {
@@ -301,7 +301,7 @@ CExImageButton::CExImageButton( Panel *parent, const char *name, const char *tex
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CExImageButton::CExImageButton( Panel *parent, const char *name, const wchar_t *wszText, vgui::Panel *pActionSignalTarget, const char *cmd ) : CExButton( parent, name, wszText, pActionSignalTarget, cmd )
 {
@@ -317,7 +317,7 @@ CExImageButton::CExImageButton( Panel *parent, const char *name, const wchar_t *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CExImageButton::~CExImageButton( void )
 {
@@ -326,7 +326,7 @@ CExImageButton::~CExImageButton( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExImageButton::ApplySettings( KeyValues *inResourceData )
 {
@@ -405,7 +405,7 @@ void CExImageButton::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Color CExImageButton::GetImageColor( void )
 {
@@ -421,7 +421,7 @@ Color CExImageButton::GetImageColor( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExImageButton::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -431,7 +431,7 @@ void CExImageButton::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExImageButton::SetArmed(bool state)
 {
@@ -450,7 +450,7 @@ void CExImageButton::SetArmed(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExImageButton::SetEnabled(bool state)
 {
@@ -463,7 +463,7 @@ void CExImageButton::SetEnabled(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExImageButton::SetSelected(bool state)
 {
@@ -482,7 +482,7 @@ void CExImageButton::SetSelected(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExImageButton::SetSubImage( const char *pszImage )
 {
@@ -490,11 +490,11 @@ void CExImageButton::SetSubImage( const char *pszImage )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExImageButton::SetImageDefault( const char *pszImageDefault )
 {
-	V_strcpy_safe( m_szImageDefault, pszImageDefault );	
+	V_strcpy_safe( m_szImageDefault, pszImageDefault );
 	if ( !IsArmed() )
 	{
 		SetSubImage( pszImageDefault );
@@ -502,7 +502,7 @@ void CExImageButton::SetImageDefault( const char *pszImageDefault )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExImageButton::SetImageArmed( const char *pszImageArmed )
 {
@@ -514,7 +514,7 @@ void CExImageButton::SetImageArmed( const char *pszImageArmed )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExImageButton::SetImageSelected( const char *pszImageSelected )
 {
@@ -526,7 +526,7 @@ void CExImageButton::SetImageSelected( const char *pszImageSelected )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CExLabel::CExLabel( Panel *parent, const char *name, const char *text ) : Label( parent, name, text )
 {
@@ -534,7 +534,7 @@ CExLabel::CExLabel( Panel *parent, const char *name, const char *text ) : Label(
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CExLabel::CExLabel( Panel *parent, const char *name, const wchar_t *wszText ) : Label( parent, name, wszText )
 {
@@ -542,7 +542,7 @@ CExLabel::CExLabel( Panel *parent, const char *name, const wchar_t *wszText ) : 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExLabel::ApplySettings( KeyValues *inResourceData )
 {
@@ -552,7 +552,7 @@ void CExLabel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExLabel::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -563,7 +563,7 @@ void CExLabel::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExLabel::SetColorStr( const char *pColor )
 {
@@ -572,7 +572,7 @@ void CExLabel::SetColorStr( const char *pColor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExLabel::SetColorStr( Color cColor )
 {
@@ -581,7 +581,7 @@ void CExLabel::SetColorStr( Color cColor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CExRichText::CExRichText( Panel *parent, const char *name ) : RichText( parent, name )
 {
@@ -629,7 +629,7 @@ CExRichText::CExRichText( Panel *parent, const char *name ) : RichText( parent, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExRichText::CreateImagePanels( void )
 {
@@ -654,7 +654,7 @@ void CExRichText::CreateImagePanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExRichText::ApplySettings( KeyValues *inResourceData )
 {
@@ -683,7 +683,7 @@ void CExRichText::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExRichText::SetFontStr( const char *pFont )
 {
@@ -697,7 +697,7 @@ void CExRichText::SetFontStr( const char *pFont )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExRichText::SetColorStr( const char *pColor )
 {
@@ -711,7 +711,7 @@ void CExRichText::SetColorStr( const char *pColor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExRichText::SetCustomImage( vgui::Panel *pImage, const char *pszImage, char *pszStorage )
 {
@@ -742,7 +742,7 @@ void CExRichText::SetCustomImage( vgui::Panel *pImage, const char *pszImage, cha
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExRichText::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -778,7 +778,7 @@ void CExRichText::ApplySchemeSettings( IScheme *pScheme )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExRichText::PerformLayout()
 {
@@ -789,7 +789,7 @@ void CExRichText::PerformLayout()
 		_vertScrollBar->SetZPos( 500 );
 		m_pUpArrow->SetZPos( 501 );
 		m_pDownArrow->SetZPos( 501 );
-		
+
 		// turn off painting the vertical scrollbar
 		_vertScrollBar->SetPaintBackgroundEnabled( false );
 		_vertScrollBar->SetPaintBorderEnabled( false );
@@ -797,7 +797,7 @@ void CExRichText::PerformLayout()
 		_vertScrollBar->SetScrollbarButtonsVisible( false );
 		_vertScrollBar->GetButton(0)->SetMouseInputEnabled( false );
 		_vertScrollBar->GetButton(1)->SetMouseInputEnabled( false );
-		
+
 		if (  _vertScrollBar->IsVisible() )
 		{
 			int nMin, nMax;
@@ -837,7 +837,7 @@ void CExRichText::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExRichText::SetText( const wchar_t *text )
 {
@@ -857,7 +857,7 @@ void CExRichText::SetText( const wchar_t *text )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExRichText::SetText( const char *text )
 {
@@ -877,7 +877,7 @@ void CExRichText::SetText( const char *text )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExRichText::SetScrollBarImagesVisible( bool visible )
 {
@@ -905,7 +905,7 @@ void CExRichText::SetScrollBarImagesVisible( bool visible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExRichText::OnTick()
 {
@@ -957,7 +957,7 @@ void CExRichText::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Rich text control that knows how to fill itself with information 
+// Purpose: Rich text control that knows how to fill itself with information
 //			that describes a specific item definition.
 //-----------------------------------------------------------------------------
 CEconItemDetailsRichText::CEconItemDetailsRichText( vgui::Panel *parent, const char *panelName )
@@ -969,7 +969,7 @@ CEconItemDetailsRichText::CEconItemDetailsRichText( vgui::Panel *parent, const c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconItemDetailsRichText::ApplySettings( KeyValues *inResourceData )
 {
@@ -986,7 +986,7 @@ void CEconItemDetailsRichText::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconItemDetailsRichText::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -996,7 +996,7 @@ void CEconItemDetailsRichText::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconItemDetailsRichText::UpdateDetailsForItem( const CEconItemDefinition *pDef )
 {
@@ -1015,7 +1015,7 @@ void CEconItemDetailsRichText::UpdateDetailsForItem( const CEconItemDefinition *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconItemDetailsRichText::AddDataText( const char *pszText, bool bAddPostLines, const wchar_t *wpszArg, const wchar_t *wpszArg2, const int *pItemDefIndex )
 {
@@ -1100,7 +1100,7 @@ void CEconItemDetailsRichText::AddDataText( const char *pszText, bool bAddPostLi
 					// If the next character isn't the end of a link, insert the string
 					if ( bInLink && pItemDefIndex )
 					{
-						InsertItemLink( wszText, *pItemDefIndex, &color );				
+						InsertItemLink( wszText, *pItemDefIndex, &color );
 					}
 					else
 					{
@@ -1125,7 +1125,7 @@ void CEconItemDetailsRichText::AddDataText( const char *pszText, bool bAddPostLi
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconItemDetailsRichText::DataText_AppendUsageData( const CEconItemDefinition *pBaseDef )
 {
@@ -1244,7 +1244,7 @@ void CEconItemDetailsRichText::DataText_AppendUsageData( const CEconItemDefiniti
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconItemDetailsRichText::DataText_AppendToolUsage( const CEconItemDefinition *pDef )
 {
@@ -1283,7 +1283,7 @@ void CEconItemDetailsRichText::DataText_AppendToolUsage( const CEconItemDefiniti
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconItemDetailsRichText::DataText_AppendStoreFlags( const CEconItemDefinition *pDef )
 {
@@ -1308,7 +1308,7 @@ void CEconItemDetailsRichText::DataText_AppendStoreFlags( const CEconItemDefinit
 		wchar_t *pLocText = bHolidayRestriction
 						  ? g_pVGuiLocalize->Find( "#TF_Armory_Item_Limited_Holiday" )
 						  : g_pVGuiLocalize->Find( "#TF_Armory_Item_Limited" );
-		
+
 		if ( pLocText )
 		{
 			InsertColorChange( Color( 255, 140, 0, 255 ) );
@@ -1319,7 +1319,7 @@ void CEconItemDetailsRichText::DataText_AppendStoreFlags( const CEconItemDefinit
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconItemDetailsRichText::DataText_AppendItemData( const CEconItemDefinition *pDef )
 {
@@ -1398,7 +1398,7 @@ void CEconItemDetailsRichText::DataText_AppendItemData( const CEconItemDefinitio
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconItemDetailsRichText::DataText_AppendBundleData( const CEconItemDefinition *pDef )
 {
@@ -1434,7 +1434,7 @@ void CEconItemDetailsRichText::DataText_AppendBundleData( const CEconItemDefinit
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconItemDetailsRichText::DataText_AppendAttributeData( const CEconItemDefinition *pDef )
 {
@@ -1484,7 +1484,7 @@ void CEconItemDetailsRichText::DataText_AppendAttributeData( const CEconItemDefi
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconItemDetailsRichText::DataText_AppendSetData( const CEconItemDefinition *pDef )
 {
@@ -1540,7 +1540,7 @@ void CEconItemDetailsRichText::DataText_AppendSetData( const CEconItemDefinition
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconItemDetailsRichText::UpdateToolList( void )
 {
@@ -1566,22 +1566,22 @@ void CEconItemDetailsRichText::UpdateToolList( void )
 
 		// Now make sure it doesn't have the same type as an existing tool
 		bool bAlreadyFound = false;
-		
+
 		FOR_EACH_VEC( m_ToolList, tool )
 		{
 			CEconItemDefinition *pOtherDef = ItemSystem()->GetStaticDataForItemByDefIndex( m_ToolList[tool] );
 			Assert( pOtherDef );
-				
+
 			const IEconTool *pOtherEconTool = pOtherDef->GetEconTool();
 			Assert( pOtherEconTool );
-				
+
 			bAlreadyFound = !V_strcmp( pEconTool->GetTypeName(), pOtherEconTool->GetTypeName() );
 			if ( bAlreadyFound )
 			{
 				break;
 			}
 		}
-		
+
 		if ( !bAlreadyFound )
 		{
 			m_ToolList.AddToTail( pDef->GetDefinitionIndex() );
@@ -1590,7 +1590,7 @@ void CEconItemDetailsRichText::UpdateToolList( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconItemDetailsRichText::InsertItemLink( const wchar_t *pwzItemName, int iItemDef, Color *pColorOverride )
 {
@@ -1602,7 +1602,7 @@ void CEconItemDetailsRichText::InsertItemLink( const wchar_t *pwzItemName, int i
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CExplanationPopup::CExplanationPopup(Panel *parent, const char *panelName) : vgui::EditablePanel( parent, panelName )
 {
@@ -1618,7 +1618,7 @@ CExplanationPopup::CExplanationPopup(Panel *parent, const char *panelName) : vgu
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CExplanationPopup::~CExplanationPopup( void )
 {
@@ -1627,7 +1627,7 @@ CExplanationPopup::~CExplanationPopup( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExplanationPopup::OnCommand( const char *command )
 {
@@ -1643,16 +1643,16 @@ void CExplanationPopup::OnCommand( const char *command )
 	{
 		Hide( -1 );
 	}
-	else 
+	else
 	{
 		BaseClass::OnCommand( command );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CExplanationPopup::Hide( int iExplanationDelta ) 
+void CExplanationPopup::Hide( int iExplanationDelta )
 {
 	int iPos = m_iPositionInChain;
 	const char *pszMoveTo = NULL;
@@ -1673,8 +1673,8 @@ void CExplanationPopup::Hide( int iExplanationDelta )
 		iPos++;
 	}
 
-	SetVisible( false ); 
-	m_pCallout->SetVisible( false ); 
+	SetVisible( false );
+	m_pCallout->SetVisible( false );
 	vgui::ivgui()->RemoveTickSignal( GetVPanel() );
 
 	if ( m_bForceClose )
@@ -1700,7 +1700,7 @@ void CExplanationPopup::Hide( int iExplanationDelta )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExplanationPopup::Popup( int iPosition, int iTotalPanels )
 {
@@ -1752,7 +1752,7 @@ void CExplanationPopup::Popup( int iPosition, int iTotalPanels )
 		}
 	}
 
-	// Now assemble our position label 
+	// Now assemble our position label
 	char szTmp[16];
 	Q_snprintf(szTmp, 16, "%d/%d", m_iPositionInChain, m_iTotalInChain );
 	SetDialogVariable( "explanationnumber", szTmp );
@@ -1802,7 +1802,7 @@ void CExplanationPopup::Popup( int iPosition, int iTotalPanels )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExplanationPopup::OnTick( void )
 {
@@ -1883,7 +1883,7 @@ void CExplanationPopup::OnKeyCodeTyped( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExplanationPopup::OnKeyCodePressed( vgui::KeyCode code )
 {
@@ -1897,7 +1897,7 @@ void CExplanationPopup::OnKeyCodePressed( vgui::KeyCode code )
 			OnCommand( "close" );
 			return;
 		}
-		else if ( nButtonCode == KEY_XBUTTON_LEFT || 
+		else if ( nButtonCode == KEY_XBUTTON_LEFT ||
 				  nButtonCode == KEY_XSTICK1_LEFT ||
 				  nButtonCode == KEY_XSTICK2_LEFT ||
 				  code == KEY_LEFT )
@@ -1905,7 +1905,7 @@ void CExplanationPopup::OnKeyCodePressed( vgui::KeyCode code )
 			OnCommand( "prevexplanation" );
 			return;
 		}
-		else if ( nButtonCode == KEY_XBUTTON_RIGHT || 
+		else if ( nButtonCode == KEY_XBUTTON_RIGHT ||
 				  nButtonCode == KEY_XSTICK1_RIGHT ||
 				  nButtonCode == KEY_XSTICK2_RIGHT ||
 				  code == KEY_RIGHT )
@@ -1919,7 +1919,7 @@ void CExplanationPopup::OnKeyCodePressed( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExplanationPopup::PositionCallout( float flElapsed )
 {
@@ -1984,7 +1984,7 @@ void CExplanationPopup::PositionCallout( float flElapsed )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExplanationPopupCalloutArrow::Paint( void )
 {
@@ -2023,7 +2023,7 @@ void CExplanationPopupCalloutArrow::Paint( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExplanationPopup::ApplySettings( KeyValues *inResourceData )
 {
@@ -2033,7 +2033,7 @@ void CExplanationPopup::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExplanationPopup::SetPrevExplanation( const char *pszPrev )
 {
@@ -2045,7 +2045,7 @@ void CExplanationPopup::SetPrevExplanation( const char *pszPrev )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExplanationPopup::FireGameEvent( IGameEvent *event )
 {
@@ -2062,7 +2062,7 @@ void CExplanationPopup::FireGameEvent( IGameEvent *event )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPanelModalStack g_ModalStack;
 CPanelModalStack *TFModalStack( void )
@@ -2071,7 +2071,7 @@ CPanelModalStack *TFModalStack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPanelModalStack::PushModal( vgui::Panel *pDialog )
 {
@@ -2084,7 +2084,7 @@ void CPanelModalStack::PushModal( vgui::Panel *pDialog )
 			return;
 	}
 
-	m_pDialogs.AddToHead( hHandle );		
+	m_pDialogs.AddToHead( hHandle );
 
 	vgui::input()->SetAppModalSurface( pDialog->GetVPanel() );
 	pDialog->RequestFocus();
@@ -2092,7 +2092,7 @@ void CPanelModalStack::PushModal( vgui::Panel *pDialog )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPanelModalStack::PopModal( vgui::Panel *pDialog )
 {
@@ -2110,7 +2110,7 @@ void CPanelModalStack::PopModal( vgui::Panel *pDialog )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPanelModalStack::PopModal( int iIdx )
 {
@@ -2139,7 +2139,7 @@ void CPanelModalStack::PopModal( int iIdx )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPanelModalStack::Update( void )
 {
@@ -2190,7 +2190,7 @@ void CPanelModalStack::Update( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 vgui::VPanelHandle CPanelModalStack::Top()
 {
@@ -2203,7 +2203,7 @@ vgui::VPanelHandle CPanelModalStack::Top()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CPanelModalStack::IsEmpty() const
 {
@@ -2211,12 +2211,12 @@ bool CPanelModalStack::IsEmpty() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CGenericWaitingDialog::CGenericWaitingDialog( vgui::Panel *pParent )
 	: BaseClass( pParent, "GenericWaitingDialog" )
 	, m_bAnimateEllipses(false)
-	, m_iNumEllipses(0)	  
+	, m_iNumEllipses(0)
 {
 	if ( pParent == NULL )
 	{
@@ -2229,7 +2229,7 @@ CGenericWaitingDialog::CGenericWaitingDialog( vgui::Panel *pParent )
 void CGenericWaitingDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
-	
+
 	LoadControlSettings( GetResFile(), GetResFilePathId() );
 }
 
@@ -2241,7 +2241,7 @@ void CGenericWaitingDialog::Close()
 void CGenericWaitingDialog::OnCommand( const char *command )
 {
 	bool bClose = false;
-	
+
 	if ( !Q_stricmp( command, "close" ) )
 	{
 		bClose = true;
@@ -2251,31 +2251,31 @@ void CGenericWaitingDialog::OnCommand( const char *command )
 		OnUserClose();
 		bClose = true;
 	}
-	
+
 	if ( bClose )
 	{
 		TFModalStack()->PopModal( this );
 		SetVisible( false );
-		MarkForDeletion();			
+		MarkForDeletion();
 		return;
-	}	
-	
+	}
+
 	BaseClass::OnCommand( command );
 }
 
 void CGenericWaitingDialog::OnTick( void )
 {
 	BaseClass::OnTick();
-	
+
 	if ( !IsVisible() )
 	{
 		vgui::ivgui()->RemoveTickSignal( GetVPanel() );
 	}
-	
+
 	if ( m_bAnimateEllipses )
 	{
 		m_iNumEllipses = ((m_iNumEllipses+1) % 4);
-		
+
 		switch ( m_iNumEllipses )
 		{
 		case 3: SetDialogVariable( "ellipses", L"..." ); break;
@@ -2313,7 +2313,7 @@ void CGenericWaitingDialog::ShowStatusUpdate( bool bAnimateEllipses, bool bAllow
 		pButton->SetVisible( bAllowClose );
 		pButton->SetEnabled( bAllowClose );
 	}
-	
+
 	m_bAnimateEllipses = bAnimateEllipses;
 	if ( flMaxWaitTime > 0 )
 	{
@@ -2325,17 +2325,17 @@ void CGenericWaitingDialog::ShowStatusUpdate( bool bAnimateEllipses, bool bAllow
 		m_timer.Invalidate();
 		SetDialogVariable( "duration", L"" );
 	}
-	
+
 	if ( m_bAnimateEllipses )
 	{
 		m_iNumEllipses = 0;
 	}
-	
+
 	if ( flMaxWaitTime > 0 || m_bAnimateEllipses )
 	{
 		vgui::ivgui()->AddTickSignal( GetVPanel(), 500 );
 	}
-	
+
 	SetDialogVariable( "ellipses", L"" );
 }
 

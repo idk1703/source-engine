@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -79,13 +79,13 @@ void CBaseObject::CreateBuildPoints( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::AddAndParseBuildPoint( int iAttachmentNumber, KeyValues *pkvBuildPoint )
 {
 	int iPoint = AddBuildPoint( iAttachmentNumber );
 
-	
+
 	m_BuildPoints[iPoint].m_bPutInAttachmentSpace = (pkvBuildPoint->GetInt( "PutInAttachmentSpace", 0 ) != 0);
 
 	// Now see if we've got a set of valid objects specified
@@ -130,7 +130,7 @@ int CBaseObject::AddBuildPoint( int iAttachmentNum )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::AddValidObjectToBuildPoint( int iPoint, int iObjectType )
 {
@@ -139,7 +139,7 @@ void CBaseObject::AddValidObjectToBuildPoint( int iPoint, int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseObject::GetNumBuildPoints( void ) const
 {
@@ -147,7 +147,7 @@ int CBaseObject::GetNumBuildPoints( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseObject* CBaseObject::GetBuildPointObject( int iPoint )
 {
@@ -172,7 +172,7 @@ bool CBaseObject::CanBuildObjectOnBuildPoint( int iPoint, int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseObject::GetBuildPoint( int iPoint, Vector &vecOrigin, QAngle &vecAngles )
 {
@@ -219,7 +219,7 @@ void CBaseObject::SetObjectOnBuildPoint( int iPoint, CBaseObject *pObject )
 ConVar tf_obj_max_attach_dist( "tf_obj_max_attach_dist", "160", FCVAR_REPLICATED | FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CBaseObject::GetMaxSnapDistance( int iPoint )
 {
@@ -259,7 +259,7 @@ int CBaseObject::FindObjectOnBuildPoint( CBaseObject *pObject )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseObject *CBaseObject::GetObjectOfTypeOnMe( int iObjectType )
 {
@@ -277,7 +277,7 @@ CBaseObject *CBaseObject::GetObjectOfTypeOnMe( int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::RemoveAllObjects( void )
 {
@@ -294,7 +294,7 @@ void CBaseObject::RemoveAllObjects( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseObject	*CBaseObject::GetParentObject( void )
 {
@@ -305,7 +305,7 @@ CBaseObject	*CBaseObject::GetParentObject( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseEntity	*CBaseObject::GetParentEntity( void )
 {
@@ -362,19 +362,19 @@ void CBaseObject::SetType( int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : act - 
+// Purpose:
+// Input  : act -
 //-----------------------------------------------------------------------------
-void CBaseObject::SetActivity( Activity act ) 
-{ 
+void CBaseObject::SetActivity( Activity act )
+{
 	// Hrm, it's not actually a studio model...
 	if ( !GetModelPtr() )
 		return;
 
-	int sequence = SelectWeightedSequence( act ); 
+	int sequence = SelectWeightedSequence( act );
 	if ( sequence != ACTIVITY_NOT_AVAILABLE )
 	{
-		m_Activity = act; 
+		m_Activity = act;
 		SetObjectSequence( sequence );
 	}
 	else
@@ -384,17 +384,17 @@ void CBaseObject::SetActivity( Activity act )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Activity
 //-----------------------------------------------------------------------------
 Activity CBaseObject::GetActivity( ) const
-{ 
+{
 	return m_Activity;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Thin wrapper over CBaseAnimating::SetSequence to do bookkeeping.
-// Input  : sequence - 
+// Input  : sequence -
 //-----------------------------------------------------------------------------
 void CBaseObject::SetObjectSequence( int sequence )
 {
@@ -411,7 +411,7 @@ void CBaseObject::SetObjectSequence( int sequence )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::OnGoActive( void )
 {
@@ -439,7 +439,7 @@ void CBaseObject::OnGoActive( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::OnGoInactive( void )
 {
@@ -457,8 +457,8 @@ void CBaseObject::OnGoInactive( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : collisionGroup - 
+// Purpose:
+// Input  : collisionGroup -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseObject::ShouldCollide( int collisionGroup, int contentsMask ) const
@@ -570,9 +570,9 @@ bool CBaseObject::CalculatePlacementPos( void )
 	int iIteration;
 	for ( iIteration = 0; iIteration < nIterations; iIteration++ )
 	{
-		UTIL_TraceHull( 
-			Vector( m_vecBuildOrigin.x, m_vecBuildOrigin.y, topZ ), 
-			Vector( m_vecBuildOrigin.x, m_vecBuildOrigin.y, flBoxBottomZ ), 
+		UTIL_TraceHull(
+			Vector( m_vecBuildOrigin.x, m_vecBuildOrigin.y, topZ ),
+			Vector( m_vecBuildOrigin.x, m_vecBuildOrigin.y, flBoxBottomZ ),
 			-vHalfBuildDimsXY, vHalfBuildDimsXY, MASK_PLAYERSOLID_BRUSHONLY, this, COLLISION_GROUP_PLAYER_MOVEMENT, &tr );
 		bottomZ = tr.endpos.z;
 
@@ -640,15 +640,15 @@ bool CBaseObject::VerifyCorner( const Vector &vBottomCenter, float xOffset, floa
 {
 	// NOTE: I am changing the 0.1 on the bottom start to 2.0 to deal with the epsilon differnece
 	//       between the trace hull and trace line version of collision against a rotated bsp object.
-	//       I will probably want to change the code if we find more bugs around this, but for now as 
+	//       I will probably want to change the code if we find more bugs around this, but for now as
 	//       a test changing it hear should be fine.
 	// Start slightly above the surface
 	Vector vStart( vBottomCenter.x + xOffset, vBottomCenter.y + yOffset, vBottomCenter.z + 2.0 );
 
 	trace_t tr;
-	UTIL_TraceLine( 
-		vStart, 
-		vStart - Vector( 0, 0, TF_OBJ_GROUND_CLEARANCE ), 
+	UTIL_TraceLine(
+		vStart,
+		vStart - Vector( 0, 0, TF_OBJ_GROUND_CLEARANCE ),
 		MASK_PLAYERSOLID_BRUSHONLY, this, COLLISION_GROUP_PLAYER_MOVEMENT, &tr );
 
 	// Cannot build on very steep slopes ( > 45 degrees )

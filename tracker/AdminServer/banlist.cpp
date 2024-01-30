@@ -26,7 +26,7 @@ typedef enum
 } RCONSTATUS;
 
 CBanList::CBanList(IResponse *target,serveritem_t &server, const char *rconPassword) {
-	
+
 	memcpy(&m_Server, &server,sizeof(serveritem_t));
 	m_pResponseTarget=target;
 
@@ -36,7 +36,7 @@ CBanList::CBanList(IResponse *target,serveritem_t &server, const char *rconPassw
 	m_bGotIPs = false;
 
 	v_strncpy(m_szRconPassword,rconPassword,100);
-	
+
 	m_pRcon = new CRcon(this  , server,rconPassword);
 	m_BanList=NULL;
 }
@@ -59,11 +59,11 @@ void CBanList::SendQuery()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBanList::RunFrame()
 {
-	if(m_pRcon) 
+	if(m_pRcon)
 	{
 		m_pRcon->RunFrame();
 	}
@@ -74,7 +74,7 @@ void CBanList::RunFrame()
 void CBanList::ServerResponded()
 {
 
-	if(m_bGotIPs == false) 
+	if(m_bGotIPs == false)
 	{
 		m_BanList.RemoveAll();
 
@@ -82,7 +82,7 @@ void CBanList::ServerResponded()
 		const char *cur = strstr(rconResp,"UserID filter list:")
 								+ strlen("UserID filter list:");
 
-		if( (unsigned int)cur == strlen("UserID filter list:")) 
+		if( (unsigned int)cur == strlen("UserID filter list:"))
 			// if strstr returned NULL and we added a strlen to it...
 		{
 			cur=NULL;
@@ -94,34 +94,34 @@ void CBanList::ServerResponded()
 	// and on empty it produces:
 	//	IP filter list: empty
 
-		while(cur!=NULL) 
+		while(cur!=NULL)
 		{
 
 			TokenLine banLine;
 			cur++; // dodge the newline
 			banLine.SetLine(cur); // need to add one here, to remove the "\n"
-			if(banLine.CountToken() >= 4 ) 
+			if(banLine.CountToken() >= 4 )
 			{
 				Bans_t ban;
 
 				memset(&ban,0x0,sizeof(Bans_t));
-	
+
 				v_strncpy(ban.name,banLine.GetToken(1),20);
 				sscanf(banLine.GetToken(3),"%f",&ban.time);
 				ban.type= ID;
 				m_BanList.AddToTail(ban);
-	
+
 			}
 			cur=strchr(cur,'\n');
-		
+
 		}
-		
+
 		m_bGotIPs=true;
 
 		// now find out the list of banned ips
 		m_pRcon->SendRcon("listip");
-	} 
-	else 
+	}
+	else
 	{
 
 	// listip format:
@@ -132,39 +132,39 @@ void CBanList::ServerResponded()
 		const char *cur = strstr(rconResp,"IP filter list:")
 								+ strlen("IP filter list:");
 
-		if( (unsigned int)cur == strlen("IP filter list:")) 
+		if( (unsigned int)cur == strlen("IP filter list:"))
 			// if strstr returned NULL and we added a strlen to it...
 		{
 			cur=NULL;
 		}
 
 
-		while(cur!=NULL) 
+		while(cur!=NULL)
 		{
 
-			char tmpStr[512]; 
+			char tmpStr[512];
 			Bans_t ban;
-	
+
 			cur++; // dodge past the newline
 			v_strncpy(tmpStr,cur,512);
 
 			memset(&ban,0x0,sizeof(Bans_t));
-	
+
 			if( strchr(tmpStr,':') != NULL )
 			{
-				char *time; 
+				char *time;
 				time = strchr(tmpStr,':')+1;
 				tmpStr[strchr(tmpStr,':')-tmpStr]=0;
-				
+
 				v_strncpy(ban.name,tmpStr,20);
 				unsigned int i=0;
 				while(i<strlen(ban.name)) // strip all the white space out...
 				{
-					if( ban.name[i]==' ') 
+					if( ban.name[i]==' ')
 					{
 						strcpy(&ban.name[i],&ban.name[i+1]);
-					} 
-					else 
+					}
+					else
 					{
 						i++;
 					}
@@ -173,12 +173,12 @@ void CBanList::ServerResponded()
 				sscanf(time,"%f",&ban.time);
 				ban.type= IP;
 				m_BanList.AddToTail(ban);
-	
+
 			}
 			cur=strchr(cur,'\n');
-		
+
 		}
-		
+
 		m_bNewBanList=true;
 		m_bIsRefreshing=false;
 
@@ -207,34 +207,34 @@ void CBanList::ServerFailedToRespond()
 //	m_pResponseTarget->ServerFailedToRespond();
 }
 
-void CBanList::Refresh() 
+void CBanList::Refresh()
 {
 	SendQuery();
 }
 
-bool CBanList::IsRefreshing() 
+bool CBanList::IsRefreshing()
 {
 	return m_bIsRefreshing;
 }
 
-serveritem_t &CBanList::GetServer() 
+serveritem_t &CBanList::GetServer()
 {
 	return m_Server;
 }
 
 
-bool CBanList::NewBanList() 
+bool CBanList::NewBanList()
 {
 	return m_bNewBanList;
 }
 
-CUtlVector<Bans_t> *CBanList::GetBanList() 
+CUtlVector<Bans_t> *CBanList::GetBanList()
 {
 	m_bNewBanList=false;
 	return &m_BanList;
 }
 
-void CBanList::SetPassword(const char *newPass) 
+void CBanList::SetPassword(const char *newPass)
 {
 	m_pRcon->SetPassword(newPass);
 	m_bRconFailed=false;

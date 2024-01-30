@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -264,8 +264,8 @@ struct DXTAlphaBlock3BitLinear
 
 #pragma pack()
 
-static inline void GetColorBlockColorsBGRA8888( DXTColBlock *pBlock, BGRA8888_t *col_0, 
-											    BGRA8888_t *col_1, BGRA8888_t *col_2, 
+static inline void GetColorBlockColorsBGRA8888( DXTColBlock *pBlock, BGRA8888_t *col_0,
+											    BGRA8888_t *col_1, BGRA8888_t *col_2,
 												BGRA8888_t *col_3, WORD & wrd  )
 {
 	// input data is assumed to be x86 order
@@ -274,7 +274,7 @@ static inline void GetColorBlockColorsBGRA8888( DXTColBlock *pBlock, BGRA8888_t 
 	WORD color1 = LittleShort( pBlock->col1 );
 
 	// convert to full precision correctly.
-	// If this was a perf problem, we could optimize it. But this isn't used in any hotpaths 
+	// If this was a perf problem, we could optimize it. But this isn't used in any hotpaths
 	// (now) so let's just do the correct but slow fp math.
 	col_0->a = 0xff;
 	col_0->r = ( uint8 ) round( ( ( BGR565_t* ) &color0 )->r * 255.0f / 31.0f );
@@ -288,9 +288,9 @@ static inline void GetColorBlockColorsBGRA8888( DXTColBlock *pBlock, BGRA8888_t 
 
 	if ( color0 > color1 )
 	{
-		// Four-color block: derive the other two colors.    
+		// Four-color block: derive the other two colors.
 		// 00 = color_0, 01 = color_1, 10 = color_2, 11 = color_3
-		// These two bit codes correspond to the 2-bit fields 
+		// These two bit codes correspond to the 2-bit fields
 		// stored in the 64-bit block.
 
 		wrd = ((WORD)col_0->r * 2 + (WORD)col_1->r )/3;
@@ -318,13 +318,13 @@ static inline void GetColorBlockColorsBGRA8888( DXTColBlock *pBlock, BGRA8888_t 
 	else
 	{
 		// Three-color block: derive the other color.
-		// 00 = color_0,  01 = color_1,  10 = color_2,  
+		// 00 = color_0,  01 = color_1,  10 = color_2,
 		// 11 = transparent.
-		// These two bit codes correspond to the 2-bit fields 
-		// stored in the 64-bit block. 
+		// These two bit codes correspond to the 2-bit fields
+		// stored in the 64-bit block.
 
 		// explicit for each component, unlike some refrasts...????
-		
+
 		wrd = ((WORD)col_0->r + (WORD)col_1->r )/2;
 		col_2->r = (BYTE)wrd;
 		wrd = ((WORD)col_0->g + (WORD)col_1->g )/2;
@@ -338,11 +338,11 @@ static inline void GetColorBlockColorsBGRA8888( DXTColBlock *pBlock, BGRA8888_t 
 		col_3->b = 0xff;
 		col_3->a = 0x00;
 	}
-}			
+}
 
-template <class CDestPixel> 
+template <class CDestPixel>
 static inline void DecodeColorBlock( CDestPixel *pOutputImage, DXTColBlock *pColorBlock, int width,
-					                 BGRA8888_t *col_0, BGRA8888_t *col_1, 
+					                 BGRA8888_t *col_0, BGRA8888_t *col_1,
 					                 BGRA8888_t *col_2, BGRA8888_t *col_3 )
 {
 	// width is width of image in pixels
@@ -392,7 +392,7 @@ static inline void DecodeColorBlock( CDestPixel *pOutputImage, DXTColBlock *pCol
 	}
 }
 
-template <class CDestPixel> 
+template <class CDestPixel>
 static inline void DecodeAlpha3BitLinear( CDestPixel *pImPos, DXTAlphaBlock3BitLinear *pAlphaBlock, int width, int nChannelSelect = 3 )
 {
 	static BYTE		gBits[4][4];
@@ -402,28 +402,28 @@ static inline void DecodeAlpha3BitLinear( CDestPixel *pImPos, DXTAlphaBlock3BitL
 	gAlphas[0] = pAlphaBlock->alpha0;
 	gAlphas[1] = pAlphaBlock->alpha1;
 
-	// 8-alpha or 6-alpha block?    
+	// 8-alpha or 6-alpha block?
 
 	if( gAlphas[0] > gAlphas[1] )
 	{
-		// 8-alpha block:  derive the other 6 alphas.    
+		// 8-alpha block:  derive the other 6 alphas.
 		// 000 = alpha_0, 001 = alpha_1, others are interpolated
 
 		gAlphas[2] = ( 6 * gAlphas[0] +     gAlphas[1]) / 7;	// bit code 010
-		gAlphas[3] = ( 5 * gAlphas[0] + 2 * gAlphas[1]) / 7;	// Bit code 011    
-		gAlphas[4] = ( 4 * gAlphas[0] + 3 * gAlphas[1]) / 7;	// Bit code 100    
+		gAlphas[3] = ( 5 * gAlphas[0] + 2 * gAlphas[1]) / 7;	// Bit code 011
+		gAlphas[4] = ( 4 * gAlphas[0] + 3 * gAlphas[1]) / 7;	// Bit code 100
 		gAlphas[5] = ( 3 * gAlphas[0] + 4 * gAlphas[1]) / 7;	// Bit code 101
-		gAlphas[6] = ( 2 * gAlphas[0] + 5 * gAlphas[1]) / 7;	// Bit code 110    
+		gAlphas[6] = ( 2 * gAlphas[0] + 5 * gAlphas[1]) / 7;	// Bit code 110
 		gAlphas[7] = (     gAlphas[0] + 6 * gAlphas[1]) / 7;	// Bit code 111
-	}    
+	}
 	else
 	{
-		// 6-alpha block:  derive the other alphas.    
+		// 6-alpha block:  derive the other alphas.
 		// 000 = alpha_0, 001 = alpha_1, others are interpolated
 
 		gAlphas[2] = (4 * gAlphas[0] +     gAlphas[1]) / 5;	// Bit code 010
-		gAlphas[3] = (3 * gAlphas[0] + 2 * gAlphas[1]) / 5;	// Bit code 011    
-		gAlphas[4] = (2 * gAlphas[0] + 3 * gAlphas[1]) / 5;	// Bit code 100    
+		gAlphas[3] = (3 * gAlphas[0] + 2 * gAlphas[1]) / 5;	// Bit code 011
+		gAlphas[4] = (2 * gAlphas[0] + 3 * gAlphas[1]) / 5;	// Bit code 100
 		gAlphas[5] = (    gAlphas[0] + 4 * gAlphas[1]) / 5;	// Bit code 101
 		gAlphas[6] = 0;										// Bit code 110
 		gAlphas[7] = 255;									// Bit code 111
@@ -517,7 +517,7 @@ static inline void DecodeAlpha3BitLinear( CDestPixel *pImPos, DXTAlphaBlock3BitL
 	}
 }
 
-template <class CDestPixel> 
+template <class CDestPixel>
 static void ConvertFromDXT1( const uint8 *src, CDestPixel *dst, int width, int height )
 {
 	Assert( sizeof( BGRA8888_t ) == 4 );
@@ -587,7 +587,7 @@ static void ConvertFromDXT1( const uint8 *src, CDestPixel *dst, int width, int h
 	}
 }
 
-template <class CDestPixel> 
+template <class CDestPixel>
 static void ConvertFromDXT5( const uint8 *src, CDestPixel *dst, int width, int height )
 {
 	int realWidth = 0;
@@ -612,7 +612,7 @@ static void ConvertFromDXT5( const uint8 *src, CDestPixel *dst, int width, int h
 	int xblocks, yblocks;
 	xblocks = width >> 2;
 	yblocks = height >> 2;
-	
+
 	CDestPixel *pDstScan = dst;
 	DWORD *pSrcScan = ( DWORD * )src;
 
@@ -667,7 +667,7 @@ static void ConvertFromDXT5( const uint8 *src, CDestPixel *dst, int width, int h
 	}
 }
 
-template <class CDestPixel> 
+template <class CDestPixel>
 static void ConvertFromDXT5IgnoreAlpha( const uint8 *src, CDestPixel *dst, int width, int height )
 {
 	int realWidth = 0;
@@ -692,7 +692,7 @@ static void ConvertFromDXT5IgnoreAlpha( const uint8 *src, CDestPixel *dst, int w
 	int xblocks, yblocks;
 	xblocks = width >> 2;
 	yblocks = height >> 2;
-	
+
 	CDestPixel *pDstScan = dst;
 	DWORD *pSrcScan = ( DWORD * )src;
 
@@ -739,7 +739,7 @@ static void ConvertFromDXT5IgnoreAlpha( const uint8 *src, CDestPixel *dst, int w
 }
 
 
-template <class CDestPixel> 
+template <class CDestPixel>
 static void ConvertFromATIxN( const uint8 *src, CDestPixel *dst, int width, int height, bool bATI2N )
 {
 	int realWidth = 0;
@@ -859,7 +859,7 @@ bool ConvertToATIxN(  const uint8 *src, ImageFormat srcImageFormat,
 	destTexture.pData = (ATI_TC_BYTE*) dst;
 
 	ATI_TC_ERROR errATI = ATI_TC_ConvertTexture( &srcTexture, &destTexture, NULL, NULL, NULL, NULL );		// Convert it!
-	
+
 	free( srcTexture.pData );																				// Free temporary buffers
 
 	if ( errATI != ATI_TC_OK )
@@ -874,7 +874,7 @@ bool ConvertToATIxN(  const uint8 *src, ImageFormat srcImageFormat,
 
 
 bool ConvertToDXTLegacy(  const uint8 *src, ImageFormat srcImageFormat,
- 						  uint8 *dst, ImageFormat dstImageFormat, 
+ 						  uint8 *dst, ImageFormat dstImageFormat,
 					      int width, int height, int srcStride, int dstStride )
 {
 #if !defined( _X360 ) && !defined( POSIX )
@@ -888,10 +888,10 @@ bool ConvertToDXTLegacy(  const uint8 *src, ImageFormat srcImageFormat,
 	memset( &descOut, 0, sizeof(descOut) );
 	float weight[3] = {0.3086f, 0.6094f, 0.0820f};
 	DWORD dwEncodeType = GetDXTCEncodeType( dstImageFormat );
-	
+
 	// Setup descIn
 	descIn.dwSize = sizeof(descIn);
-	descIn.dwFlags = DDSD_WIDTH | DDSD_HEIGHT | DDSD_LPSURFACE | 
+	descIn.dwFlags = DDSD_WIDTH | DDSD_HEIGHT | DDSD_LPSURFACE |
 		/*DDSD_PITCH | */ DDSD_PIXELFORMAT;
 	descIn.dwWidth = width;
 	descIn.dwHeight = height;
@@ -938,10 +938,10 @@ bool ConvertToDXTLegacy(  const uint8 *src, ImageFormat srcImageFormat,
 	default:
 		return false;
 	}
-	
+
 	// Setup descOut
 	descOut.dwSize = sizeof( descOut );
-	
+
 	// Encode the texture
 	S3TCencode( &descIn, NULL, &descOut, dst, dwEncodeType, weight );
 	return true;
@@ -967,7 +967,7 @@ void CompressSTB( uint8 *pDstBytes, ImageFormat dstFmt, const uint8 *pSrcBytes, 
 	RGBA8888_t srcBlock[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 	SrcPixel_t* pSrcs[4] = { 0, 0, 0, 0 };
 
-	for ( uint32 y = 0; y < cPixY; y += 4 ) 
+	for ( uint32 y = 0; y < cPixY; y += 4 )
 	{
 		// This handles clamping for cPixY % 4 != 0
 		pSrcs[ 0 ] = ( SrcPixel_t* ) ( pSrcBytes + cSrcPitch * Min( y + 0, cLastY ) );
@@ -975,7 +975,7 @@ void CompressSTB( uint8 *pDstBytes, ImageFormat dstFmt, const uint8 *pSrcBytes, 
 		pSrcs[ 2 ] = ( SrcPixel_t* ) ( pSrcBytes + cSrcPitch * Min( y + 2, cLastY ) );
 		pSrcs[ 3 ] = ( SrcPixel_t* ) ( pSrcBytes + cSrcPitch * Min( y + 3, cLastY ) );
 
-		for ( uint x = 0; x < cPixX; x += 4 ) 
+		for ( uint x = 0; x < cPixX; x += 4 )
 		{
 			for ( uint i = 0; i < 4; ++i )
 			{
@@ -1031,15 +1031,15 @@ bool ConvertToDXTRuntime( const uint8 *src, ImageFormat srcImageFormat,
 }
 
 bool ConvertToDXT( const uint8 *src, ImageFormat srcImageFormat,
- 				   uint8 *dst, ImageFormat dstImageFormat, 
+ 				   uint8 *dst, ImageFormat dstImageFormat,
 				   int width, int height, int srcStride, int dstStride )
 {
 	// The STB compressor (the new compressor) is faster and higher quality in most cases, and has less error overall
 	// than the S3TC compressor. So use it by default, unless we're working with a format that STB doesn't support.
-	bool bUseNewCompressor = dstImageFormat != IMAGE_FORMAT_DXT1_ONEBITALPHA 
+	bool bUseNewCompressor = dstImageFormat != IMAGE_FORMAT_DXT1_ONEBITALPHA
 		                  && dstImageFormat != IMAGE_FORMAT_DXT3;
 
-//	bool bUseNewCompressor = dstImageFormat == IMAGE_FORMAT_DXT1_RUNTIME 
+//	bool bUseNewCompressor = dstImageFormat == IMAGE_FORMAT_DXT1_RUNTIME
 //		                  || dstImageFormat == IMAGE_FORMAT_DXT5_RUNTIME;
 
 	if ( bUseNewCompressor )
@@ -1146,12 +1146,12 @@ void ConvertImageFormat_RGB323232F_To_RGBA8888( float *pSrcImage, uint8 *dst, in
 			fpix.Green = pf[1];
 			fpix.Blue = pf[2];
 			fpix.Alpha = 0.f;
-			
+
 			flbm.WritePixelRGBAF( x, y, fpix );
 		}
 	}
 	// memcpy( flbm.RGBAData, pSrcImage, width * height * 4 );
-	
+
 	flbm.CompressTo8Bits( 8.0 );
 
 	// Now, get the pixels
@@ -1252,7 +1252,7 @@ void ConvertImageFormat_RGBA16161616F_To_RGBA16161616( float16 *pSrcImage, unsig
 }
 
 bool ConvertImageFormat( const uint8 *src, ImageFormat srcImageFormat,
- 					     uint8 *dst, ImageFormat dstImageFormat, 
+ 					     uint8 *dst, ImageFormat dstImageFormat,
 						 int width, int height, int srcStride, int dstStride )
 {
 	// HDRFIXME: WE NEED A BIGGER INTERMEDIATE FORMAT!!!!!
@@ -1272,7 +1272,7 @@ bool ConvertImageFormat( const uint8 *src, ImageFormat srcImageFormat,
 		}
 	}
 	else if ( srcImageFormat == IMAGE_FORMAT_RGBA16161616F )
-	{	
+	{
 		if ( dstImageFormat == IMAGE_FORMAT_RGB323232F )
 		{
 			Assert( srcStride == 0 && dstStride == 0 );
@@ -1319,7 +1319,7 @@ bool ConvertImageFormat( const uint8 *src, ImageFormat srcImageFormat,
 			return true;
 		}
 	}
-	
+
 	// Fast path for just copying a compressed texture
 	if ( ( ( dstImageFormat == IMAGE_FORMAT_DXT1 || dstImageFormat == IMAGE_FORMAT_DXT1_RUNTIME ||
 		     dstImageFormat == IMAGE_FORMAT_DXT3 ||
@@ -1339,7 +1339,7 @@ bool ConvertImageFormat( const uint8 *src, ImageFormat srcImageFormat,
 		memcpy( dst, src, memRequired );
 		return true;
 	}
-	else if ( ( srcImageFormat == IMAGE_FORMAT_RGBA8888 ||		
+	else if ( ( srcImageFormat == IMAGE_FORMAT_RGBA8888 ||
 			   srcImageFormat == IMAGE_FORMAT_RGB888    ||														// RGBA source
 			   srcImageFormat == IMAGE_FORMAT_BGRA8888  ||														//
 			   srcImageFormat == IMAGE_FORMAT_BGRX8888 ) &&	   													// and
@@ -1495,7 +1495,7 @@ bool ConvertImageFormat( const uint8 *src, ImageFormat srcImageFormat,
 		int line;
 		int srcPixelSize = SizeInBytes(srcImageFormat);
 		int dstPixelSize = SizeInBytes(dstImageFormat);
-		
+
 		if ( srcStride == 0 )
 		{
 			srcStride = srcPixelSize * width;
@@ -1504,36 +1504,36 @@ bool ConvertImageFormat( const uint8 *src, ImageFormat srcImageFormat,
 		{
 			dstStride = dstPixelSize * width;
 		}
-		
+
 		// Fast path...
-		if( ( srcImageFormat == dstImageFormat ) || 
+		if( ( srcImageFormat == dstImageFormat ) ||
 			((srcImageFormat == IMAGE_FORMAT_BGRA8888) && (dstImageFormat == IMAGE_FORMAT_BGRX8888)) )
 		{
 			if ( IsX360() && ( srcStride == dstStride ) && ( width*srcPixelSize == srcStride ) )
 			{
 				// fastest path
-				memcpy( dst, src, height*srcStride ); 
+				memcpy( dst, src, height*srcStride );
 				return true;
 			}
 
 			for ( line = 0; line < height; ++line )
 			{
-				memcpy( dst, src, width*srcPixelSize ); 
+				memcpy( dst, src, width*srcPixelSize );
 				dst += dstStride;
 				src += srcStride;
 			}
 			return true;
 		}
-		
+
 		// format conversion
 		uint8 *lineBufRGBA8888 = (uint8 *)_alloca(width*4);
-		
+
 		UserFormatToRGBA8888Func_t userFormatToRGBA8888Func;
 		RGBA8888ToUserFormatFunc_t RGBA8888ToUserFormatFunc;
-		
+
 		userFormatToRGBA8888Func = GetUserFormatToRGBA8888Func_t( srcImageFormat );
 		RGBA8888ToUserFormatFunc = GetRGBA8888ToUserFormatFunc_t( dstImageFormat );
-		
+
 		if ( !userFormatToRGBA8888Func || !RGBA8888ToUserFormatFunc )
 		{
 			return false;
@@ -1553,7 +1553,7 @@ bool ConvertImageFormat( const uint8 *src, ImageFormat srcImageFormat,
 //-----------------------------------------------------------------------------
 // Color conversion routines
 //-----------------------------------------------------------------------------
-void ConvertIA88ImageToNormalMapRGBA8888( const uint8 *src, int width, 
+void ConvertIA88ImageToNormalMapRGBA8888( const uint8 *src, int width,
 										  int height, uint8 *dst,
 										  float bumpScale )
 {
@@ -1585,7 +1585,7 @@ void ConvertIA88ImageToNormalMapRGBA8888( const uint8 *src, int width,
 			//     |
 			//     Y
 			*/
-			
+
 			Vector xVect, yVect, normal;
 			xVect[0] = ooMaxDim;
 			xVect[1] = 0.0f;
@@ -1676,7 +1676,7 @@ void NormalizeNormalMapRGBA8888( uint8 *src, int numTexels )
 //-----------------------------------------------------------------------------
 // Image rotation
 //-----------------------------------------------------------------------------
-bool RotateImageLeft( const uint8 *src, uint8 *dst, 
+bool RotateImageLeft( const uint8 *src, uint8 *dst,
 					  int widthHeight, ImageFormat imageFormat )
 {
 #define SRC(x,y) src[((x)+(y)*widthHeight)*sizeInBytes]
@@ -1712,7 +1712,7 @@ bool RotateImageLeft( const uint8 *src, uint8 *dst,
 	return true;
 }
 
-bool RotateImage180( const uint8 *src, uint8 *dst, 
+bool RotateImage180( const uint8 *src, uint8 *dst,
 					  int widthHeight, ImageFormat imageFormat )
 {
 	// OPTIMIZE: do this transformation directly.
@@ -2368,6 +2368,3 @@ void RGBA16161616ToRGBA8888( const uint8 *src_, uint8 *dst, int numPixels )
 }
 
 } // ImageLoader namespace ends
-
-
-

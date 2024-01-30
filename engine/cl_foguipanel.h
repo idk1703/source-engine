@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ class Slider;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CFogUIPanel : public vgui::Frame
 {
@@ -41,20 +41,20 @@ public:
 	virtual void	OnMessage(const KeyValues *params,  vgui::VPANEL fromPanel);
 
 	static	void	InstallFogUI( vgui::Panel *parent );
-	
+
 	void			UpdateFogStartSlider();
 	void			UpdateFogEndSlider();
 
 	void			UpdateFogColorRedSlider();
 	void			UpdateFogColorGreenSlider();
 	void			UpdateFogColorBlueSlider();
-	
+
 	void			UpdateFogColors();
 
 	void			UpdateFarZSlider();
 
 protected:
-	
+
 	MESSAGE_FUNC_PARAMS( OnTextNewLine, "TextNewLine", data );
 	MESSAGE_FUNC_PARAMS( OnTextKillFocus, "TextKillFocus", data );
 

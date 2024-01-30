@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -35,7 +35,7 @@ void RunSceneToDmxTests( CChoreoScene *scene )
 
 	CChoreoScene *scene2 = new CChoreoScene( NULL );
 	scene2->SetFileName( scene->GetFilename() );
-	
+
 	success = ConvertDmxToScene( dmx, scene2 );
 	Assert( success );
 
@@ -43,7 +43,7 @@ void RunSceneToDmxTests( CChoreoScene *scene )
 	Q_StripExtension( scene->GetFilename(), sz, sizeof( sz ) );
 	Q_strncat( sz, "_2.vcd", sizeof( sz ), COPY_ALL_CHARACTERS );
 	scene2->SaveToFile( sz );
-	
+
 	delete scene2;
 
 	g_pDataModel->RemoveFileId( fileid );
@@ -52,7 +52,7 @@ void RunSceneToDmxTests( CChoreoScene *scene )
 DEFINE_TESTCASE_NOSUITE( DmxTestVcdToDme )
 {
 	Msg( "Running .vcd (faceposer) to dmx tests\n" );
-	
+
 #ifdef _DEBUG
 	int nStartingCount = g_pDataModel->GetAllocatedElementCount();
 #endif

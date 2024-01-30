@@ -1,19 +1,19 @@
 /* Copyright (C) 2000 MySQL AB & MySQL Finland AB & TCX DataKonsult AB
-   
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-   
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-   
-   You should have received a copy of the GNU Library General Public
-   License along with this library; if not, write to the Free
-   Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
-   MA 02111-1307, USA */
+
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Library General Public
+	License as published by the Free Software Foundation; either
+	version 2 of the License, or (at your option) any later version.
+
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Library General Public License for more details.
+
+	You should have received a copy of the GNU Library General Public
+	License along with this library; if not, write to the Free
+	Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+	MA 02111-1307, USA */
 
 #ifndef _dbug_h
 #define _dbug_h
@@ -33,18 +33,18 @@ extern	void _db_enter_(const char *_func_,const char *_file_,uint _line_,
 			const char **_sfunc_,const char **_sfile_,
 			uint *_slevel_, char ***);
 extern	void _db_return_(uint _line_,const char **_sfunc_,const char **_sfile_,
-			 uint *_slevel_);
+			uint *_slevel_);
 extern	void _db_pargs_(uint _line_,const char *keyword);
 extern	void _db_doprnt_ _VARARGS((const char *format,...));
 extern	void _db_dump_(uint _line_,const char *keyword,const char *memory,
-		       uint length);
+				uint length);
 extern	void _db_lock_file();
 extern	void _db_unlock_file();
 
 #define DBUG_ENTER(a) const char *_db_func_, *_db_file_; uint _db_level_; \
 	char **_db_framep_; \
 	_db_enter_ (a,__FILE__,__LINE__,&_db_func_,&_db_file_,&_db_level_, \
-		    &_db_framep_)
+			&_db_framep_)
 #define DBUG_LEAVE \
 	(_db_return_ (__LINE__, &_db_func_, &_db_file_, &_db_level_))
 #define DBUG_RETURN(a1) {DBUG_LEAVE; return(a1);}

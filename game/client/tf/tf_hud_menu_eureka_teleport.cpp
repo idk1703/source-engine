@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -32,7 +32,7 @@ extern ConVar tf_build_menu_controller_mode;
 
 DECLARE_HUDELEMENT_DEPTH( CHudEurekaEffectTeleportMenu, 41 );	// in front of engy building status
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudEurekaEffectTeleportMenu::CHudEurekaEffectTeleportMenu( const char *pElementName )
 	: CHudElement( pElementName )
@@ -58,7 +58,7 @@ CHudEurekaEffectTeleportMenu::CHudEurekaEffectTeleportMenu( const char *pElement
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudEurekaEffectTeleportMenu::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -77,7 +77,7 @@ void CHudEurekaEffectTeleportMenu::ApplySchemeSettings( IScheme *pScheme )
 		}
 		else
 		{
-			pszCustomDir = "resource/UI/build_menu";	
+			pszCustomDir = "resource/UI/build_menu";
 		}
 		break;
 	}
@@ -94,7 +94,7 @@ void CHudEurekaEffectTeleportMenu::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudEurekaEffectTeleportMenu::ShouldDraw( void )
 {
@@ -108,7 +108,7 @@ bool CHudEurekaEffectTeleportMenu::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudEurekaEffectTeleportMenu::SetVisible( bool bState )
 {
@@ -124,7 +124,7 @@ void CHudEurekaEffectTeleportMenu::SetVisible( bool bState )
 			m_eCurrentBuildMenuLayout = eDesired;
 			InvalidateLayout( true, true );
 		}
-		
+
 		const char* key = engine->Key_LookupBinding( "lastinv" );
 		if ( !key )
 		{
@@ -154,7 +154,7 @@ void CHudEurekaEffectTeleportMenu::SetVisible( bool bState )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudEurekaEffectTeleportMenu::CanTeleport() const
 {
@@ -181,7 +181,7 @@ bool CHudEurekaEffectTeleportMenu::CanTeleport() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudEurekaEffectTeleportMenu::SendTeleportMessage( eEurekaTeleportTargets eTeleportTarget )
 {
@@ -209,7 +209,7 @@ void CHudEurekaEffectTeleportMenu::SendTeleportMessage( eEurekaTeleportTargets e
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CHudEurekaEffectTeleportMenu::HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
 {
@@ -293,7 +293,7 @@ int	CHudEurekaEffectTeleportMenu::HudElementKeyInput( int down, ButtonCode_t key
 				return 0;
 			}
 
-			// allow slot1 - slot4 
+			// allow slot1 - slot4
 			if ( iSlot < 1 || iSlot > EUREKA_NUM_TARGETS )
 				return 1;
 		}
@@ -335,7 +335,7 @@ int	CHudEurekaEffectTeleportMenu::HudElementKeyInput( int down, ButtonCode_t key
 			default:
 				return 1;	// key not handled
 			}
-		}		
+		}
 
 		if ( iSlot > 0 )
 		{
@@ -355,7 +355,7 @@ void CHudEurekaEffectTeleportMenu::WantsToTeleport()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudEurekaEffectTeleportMenu::SetSelectedItem( eEurekaTeleportTargets eSelectedTeleportTarget )
 {
@@ -375,13 +375,13 @@ void CHudEurekaEffectTeleportMenu::SetSelectedItem( eEurekaTeleportTargets eSele
 
 			m_pActiveSelection->SetPos( x, y );
 
-			UpdateHintLabels();			
+			UpdateHintLabels();
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudEurekaEffectTeleportMenu::OnTick( void )
 {
@@ -397,7 +397,7 @@ void CHudEurekaEffectTeleportMenu::OnTick( void )
 	m_pUnavailableTargets[ EUREKA_TELEPORT_HOME ]->SetVisible( false );
 
 	const C_BaseObject *pObj = pLocalPlayer->GetObjectOfType( OBJ_TELEPORTER, MODE_TELEPORTER_EXIT );
-	bool bTeleAvailable = pObj 
+	bool bTeleAvailable = pObj
 					    && !pObj->IsBuilding()
 					    && !pObj->IsPlacing()
 					    && !pObj->IsUpgrading()
@@ -408,7 +408,7 @@ void CHudEurekaEffectTeleportMenu::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudEurekaEffectTeleportMenu::UpdateHintLabels( void )
 {

@@ -46,10 +46,10 @@ public:
 	virtual ~CSelection(void);
 
 	void	Init(CMapDoc *pDocument);
-	
+
 	bool	SelectObject(CMapClass *pobj, int cmd = scSelect);
 	void	SelectObjectList(const CMapObjectList *pList, int cmd = (scClear|scSelect|scSaveChanges) );
-	
+
 	bool	RemoveAll();		// true if any elements were removed
 	bool	RemoveInvisibles(); // true if any elements were removed
 	bool	RemoveDead();		// true if any elements were removed
@@ -60,7 +60,7 @@ public:
 	bool	IsAnEntitySelected();
 	bool	IsEditable();
 	bool	IsCopyable();
-	
+
 
 	const CMapObjectList* GetList(void);
 	CMapDoc *GetMapDoc() { return m_pDocument; }
@@ -70,13 +70,13 @@ public:
 	void ClearHitList();
 	void AddHit(CMapClass *pObject);
 	void SetCurrentHit(int iIndex, bool bCascading = false);
-	
+
 	SelectMode_t GetMode(void);
 	void SetMode(SelectMode_t eSelectMode);
 	void SetSelectionState(SelectionState_t eSelectionState);
-	
-    bool GetBounds(Vector &vecMins, Vector &vecMaxs);
-	
+
+	bool GetBounds(Vector &vecMins, Vector &vecMaxs);
+
 	// Used for translations. Uses entity origins and brush bounds. That way, when moving stuff,
 	// the entity origins will stay on the grid.
 	void GetBoundsForTranslation( Vector &vecMins, Vector &vecMaxs );
@@ -87,7 +87,7 @@ public:
 	bool GetLogicalBoundsCenter( Vector2D &vecCenter );
 
 	void SetBoundsDirty() {m_bBoundsDirty = true;}
-	
+
 protected:
 
 	void UpdateSelectionBounds();
@@ -100,7 +100,7 @@ protected:
 
 	BoundBox	m_Bounds;				// current bounds
 	BoundBox	m_LastValidBounds;		// last valid selection bounds
-	
+
 	Vector2D m_vecLogicalMins;		// Selection bounds in "logical" space
 	Vector2D m_vecLogicalMaxs;
 
@@ -108,8 +108,8 @@ protected:
 	CMapObjectList	m_HitList; // list of 'hit' object (potential selected object)
 	int				m_iCurHit; // current hit or -1
 
-	
-	
+
+
 
 };
 

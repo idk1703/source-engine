@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -54,7 +54,7 @@ static void ED_ClearEdict( edict_t *e )
 	e->ClearFree();
 	e->ClearStateChanged();
 	e->SetChangeInfoSerialNumber( 0 );
-	
+
 	serverGameEnts->FreeContainingEntity(e);
 	InitializeEntityDLLFields(e);
 
@@ -155,7 +155,7 @@ edict_t *ED_Alloc( int iForceEdictIndex )
 			Warning( "ED_Alloc( %d ) - invalid edict index specified.", iForceEdictIndex );
 			return NULL;
 		}
-		
+
 		edict_t *e = &sv.edicts[ iForceEdictIndex ];
 		if ( e->IsFree() )
 		{
@@ -215,7 +215,7 @@ edict_t *ED_Alloc( int iForceEdictIndex )
 	}
 
 	// Do this before clearing since clear now needs to call back into the edict to deduce the index so can get the changeinfo data in the parallel structure
-	edict_t *pEdict = sv.edicts + sv.num_edicts++; 
+	edict_t *pEdict = sv.edicts + sv.num_edicts++;
 
 	// We should not be in the free list...
 	Assert( !g_FreeEdicts.IsBitSet( pEdict->m_EdictIndex ) );
@@ -260,7 +260,7 @@ edict_t *ED_Alloc( int iForceEdictIndex )
 			break;
 		}
 	}
-	
+
 	return pEdict;
 }
 
@@ -313,7 +313,7 @@ void ED_Free (edict_t *ed)
 	g_FreeEdicts.Set( ed->m_EdictIndex );
 
 	// Increment the serial number so it knows to send explicit deletes the clients.
-	ed->m_NetworkSerialNumber++; 
+	ed->m_NetworkSerialNumber++;
 }
 
 //

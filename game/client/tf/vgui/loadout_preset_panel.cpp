@@ -20,7 +20,7 @@ using namespace vgui;
 DECLARE_BUILD_FACTORY( CLoadoutPresetPanel );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CLoadoutPresetPanel::CLoadoutPresetPanel( vgui::Panel *pParent, const char *pName )
 :	EditablePanel( pParent, "loadout_preset_panel" )
@@ -42,7 +42,7 @@ CLoadoutPresetPanel::CLoadoutPresetPanel( vgui::Panel *pParent, const char *pNam
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadoutPresetPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -68,7 +68,7 @@ void CLoadoutPresetPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadoutPresetPanel::ApplySettings( KeyValues *pInResourceData )
 {
@@ -83,9 +83,9 @@ void CLoadoutPresetPanel::ApplySettings( KeyValues *pInResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CLoadoutPresetPanel::PerformLayout() 
+void CLoadoutPresetPanel::PerformLayout()
 {
 	BaseClass::PerformLayout();
 
@@ -123,7 +123,7 @@ void CLoadoutPresetPanel::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadoutPresetPanel::SetClass( int iClass )
 {
@@ -136,7 +136,7 @@ void CLoadoutPresetPanel::SetClass( int iClass )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadoutPresetPanel::EnableVerticalDisplay( bool bVertical )
 {
@@ -144,7 +144,7 @@ void CLoadoutPresetPanel::EnableVerticalDisplay( bool bVertical )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadoutPresetPanel::LoadPreset( int iPresetIndex )
 {
@@ -152,7 +152,7 @@ void CLoadoutPresetPanel::LoadPreset( int iPresetIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadoutPresetPanel::OnCommand( const char *command )
 {
@@ -201,7 +201,7 @@ bool CLoadoutPresetPanel::HandlePresetKeyPressed( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 equipped_preset_t CLoadoutPresetPanel::GetSelectedPresetID() const
 {
@@ -223,7 +223,7 @@ equipped_preset_t CLoadoutPresetPanel::GetSelectedPresetID() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadoutPresetPanel::UpdatePresetButtonStates()
 {

@@ -30,7 +30,7 @@ float4 main( PS_INPUT i ) : COLOR
 	float tmscale=max(0.18/max(avg_lum,0.0001),settings3.x);
 	tmscale=min(tmscale,settings3.y);
 
-	
+
 	float2 xofs=2*(i.texCoord-float2(0.5,0.5));
 	float dist=(1.0/2.0)*(xofs.x*xofs.x+xofs.y*xofs.y);
 	float vig=pow(1-dist,settings2.z);

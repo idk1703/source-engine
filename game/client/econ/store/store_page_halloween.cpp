@@ -24,7 +24,7 @@
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFStorePage_SpecialPromo::CTFStorePage_SpecialPromo( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData ) : BaseClass( parent, pPageData )
 {
@@ -32,7 +32,7 @@ CTFStorePage_SpecialPromo::CTFStorePage_SpecialPromo( Panel *parent, const CEcon
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 /*
 void CTFStorePage_SpecialPromo::OrderItemsForDisplay( CUtlVector<const econ_store_entry_t *>& vecItems ) const
@@ -42,7 +42,7 @@ void CTFStorePage_SpecialPromo::OrderItemsForDisplay( CUtlVector<const econ_stor
 */
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFStorePage_Popular::CTFStorePage_Popular( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData ) : BaseClass( parent, pPageData )
 {

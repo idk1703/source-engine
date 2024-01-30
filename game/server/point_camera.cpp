@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ CPointCamera* GetPointCameraList()
 LINK_ENTITY_TO_CLASS( point_camera, CPointCamera );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPointCamera::~CPointCamera()
 {
@@ -48,14 +48,14 @@ CPointCamera::CPointCamera()
 	// Set these to opposites so that it'll be sent the first time around.
 	m_bActive = false;
 	m_bIsOn = false;
-	
+
 	m_bFogEnable = false;
 
 	g_PointCameraList.Insert( this );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointCamera::Spawn( void )
 {
@@ -89,7 +89,7 @@ int CPointCamera::UpdateTransmitState()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointCamera::SetActive( bool bActive )
 {
@@ -107,7 +107,7 @@ void CPointCamera::SetActive( bool bActive )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointCamera::InputChangeFOV( inputdata_t &inputdata )
 {
@@ -148,7 +148,7 @@ void CPointCamera::InputChangeFOV( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointCamera::ChangeFOVThink( void )
 {
@@ -195,7 +195,7 @@ void CPointCamera::InputSetOnAndTurnOthersOff( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointCamera::InputSetOn( inputdata_t &inputdata )
 {
@@ -203,7 +203,7 @@ void CPointCamera::InputSetOn( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointCamera::InputSetOff( inputdata_t &inputdata )
 {
@@ -243,11 +243,11 @@ END_DATADESC()
 IMPLEMENT_SERVERCLASS_ST( CPointCamera, DT_PointCamera )
 	SendPropFloat( SENDINFO( m_FOV ), 0, SPROP_NOSCALE ),
 	SendPropFloat( SENDINFO( m_Resolution ), 0, SPROP_NOSCALE ),
-	SendPropInt( SENDINFO( m_bFogEnable ), 1, SPROP_UNSIGNED ),	
+	SendPropInt( SENDINFO( m_bFogEnable ), 1, SPROP_UNSIGNED ),
 	SendPropInt( SENDINFO_STRUCTELEM( m_FogColor ), 32, SPROP_UNSIGNED ),
-	SendPropFloat( SENDINFO( m_flFogStart ), 0, SPROP_NOSCALE ),	
-	SendPropFloat( SENDINFO( m_flFogEnd ), 0, SPROP_NOSCALE ),	
-	SendPropFloat( SENDINFO( m_flFogMaxDensity ), 0, SPROP_NOSCALE ),	
+	SendPropFloat( SENDINFO( m_flFogStart ), 0, SPROP_NOSCALE ),
+	SendPropFloat( SENDINFO( m_flFogEnd ), 0, SPROP_NOSCALE ),
+	SendPropFloat( SENDINFO( m_flFogMaxDensity ), 0, SPROP_NOSCALE ),
 	SendPropInt( SENDINFO( m_bActive ), 1, SPROP_UNSIGNED ),
 	SendPropInt( SENDINFO( m_bUseScreenAspectRatio ), 1, SPROP_UNSIGNED ),
 END_SEND_TABLE()

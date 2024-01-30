@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -228,12 +228,12 @@ void CKeyValuesSystem::RegisterSizeofKeyValues(int size)
 
 static void KVLeak( char const *fmt, ... )
 {
-	va_list argptr; 
-    char data[1024];
-    
-    va_start(argptr, fmt);
-    V_vsnprintf(data, sizeof( data ), fmt, argptr);
-    va_end(argptr);
+	va_list argptr;
+	char data[1024];
+
+	va_start(argptr, fmt);
+	V_vsnprintf(data, sizeof( data ), fmt, argptr);
+	va_end(argptr);
 
 	Msg( data );
 }
@@ -502,7 +502,7 @@ int CKeyValuesSystem::CaseInsensitiveHash(const char *string, int iBounds)
 			hash = (hash << 1) + *string;
 		}
 	}
-	  
+
 	return hash % iBounds;
 }
 
@@ -519,7 +519,7 @@ void CKeyValuesSystem::SetKeyValuesExpressionSymbol( const char *name, bool bVal
 		++ name;
 
 	HKeySymbol hSym = GetSymbolForString( name, true );	// find or create symbol
-	
+
 	{
 		AUTO_LOCK( m_mutex );
 		m_KvConditionalSymbolTable.InsertOrReplace( hSym, bValue );
@@ -569,18 +569,18 @@ bool CKeyValuesSystem::GetKeyValuesExpressionSymbol( const char *name )
 	}
 
 	if ( !V_stricmp( name, "ENGLISH" ) ||
-		 !V_stricmp( name, "JAPANESE" ) ||
-		 !V_stricmp( name, "GERMAN" ) ||
-		 !V_stricmp( name, "FRENCH" ) ||
-		 !V_stricmp( name, "SPANISH" ) ||
-		 !V_stricmp( name, "ITALIAN" ) ||
-		 !V_stricmp( name, "KOREAN" ) ||
-		 !V_stricmp( name, "TCHINESE" ) ||
-		 !V_stricmp( name, "PORTUGUESE" ) ||
-		 !V_stricmp( name, "SCHINESE" ) ||
-		 !V_stricmp( name, "POLISH" ) ||
-		 !V_stricmp( name, "RUSSIAN" ) ||
-		 !V_stricmp( name, "TURKISH" ) )
+		!V_stricmp( name, "JAPANESE" ) ||
+		!V_stricmp( name, "GERMAN" ) ||
+		!V_stricmp( name, "FRENCH" ) ||
+		!V_stricmp( name, "SPANISH" ) ||
+		!V_stricmp( name, "ITALIAN" ) ||
+		!V_stricmp( name, "KOREAN" ) ||
+		!V_stricmp( name, "TCHINESE" ) ||
+		!V_stricmp( name, "PORTUGUESE" ) ||
+		!V_stricmp( name, "SCHINESE" ) ||
+		!V_stricmp( name, "POLISH" ) ||
+		!V_stricmp( name, "RUSSIAN" ) ||
+		!V_stricmp( name, "TURKISH" ) )
 	{
 		// the language symbols are true if we are in that language
 		// english is assumed when no language is present

@@ -44,7 +44,7 @@ public:
 	virtual bool OnMouseMove3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
 	virtual bool OnKeyDown3D(CMapView3D *pView, UINT nChar, UINT nRepCnt, UINT nFlags);
 	virtual bool OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
-	
+
 	virtual void RenderTool2D(CRender2D *pRender);
 	virtual void RenderTool3D(CRender3D *pRender);
 

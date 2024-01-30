@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -59,7 +59,7 @@ namespace BugReportHarvester
 
 using namespace BugReportHarvester;
 
-// TODO: cut protocol version down to u8 if possible, to reduce bandwidth usage 
+// TODO: cut protocol version down to u8 if possible, to reduce bandwidth usage
 // for very frequent but tiny commands.
 typedef u32		ProtocolVersion_t;
 
@@ -73,24 +73,24 @@ typedef u32		ClientSessionHandle_t;
 
 typedef u32		NetworkTransactionId_t;
 
-// Command codes are intentionally as small as possible to minimize bandwidth usage 
+// Command codes are intentionally as small as possible to minimize bandwidth usage
 // for very frequent but tiny commands (e.g. GDS 'FindServer' commands).
 typedef u8		Command_t;
 
-// ... likewise response codes are as small as possible - we use this when we 
+// ... likewise response codes are as small as possible - we use this when we
 // ... can and revert to large types on a case by case basis.
 typedef u8		CommandResponse_t;
 
 
-// This define our standard type for length prefix for variable length messages 
+// This define our standard type for length prefix for variable length messages
 // in wire protocols.
 // This is specifically used by CWSABUFWrapper::PrepareToReceiveLengthPrefixedMessage()
 // and its supporting functions.
-// It is defined here for generic (portable) network code to use when constructing 
+// It is defined here for generic (portable) network code to use when constructing
 // messages to be sent to peers that use the above function.
 // e.g. SteamValidateUserIDTickets.dll uses this for that purpose.
 
-// We support u16 or u32 (obviously switching between them breaks existing protocols 
+// We support u16 or u32 (obviously switching between them breaks existing protocols
 // unless all components are switched simultaneously).
 typedef	u32		NetworkMessageLengthPrefix_t;
 
@@ -117,10 +117,10 @@ typedef u32								ContextID_t;
 // This is the version of the protocol used by latest-build clients.
 const ProtocolVersion_t			cuCurrentProtocolVersion		= 1;
 
-// This is the minimum protocol version number that the client must 
+// This is the minimum protocol version number that the client must
 // be able to speak in order to communicate with the server.
-// The client sends its protocol version this before every command, and if we 
-// don't support that version anymore then we tell it nicely.  The client 
+// The client sends its protocol version this before every command, and if we
+// don't support that version anymore then we tell it nicely.  The client
 // should respond by doing an auto-update.
 const ProtocolVersion_t			cuRequiredProtocolVersion		= 1;
 
@@ -160,7 +160,7 @@ namespace HarvestFileCommand
 // Class declaration:	CWin32UploadBugReport
 //
 //#############################################################################
-// 
+//
 // Authors:
 //
 //		Yahn Bernier
@@ -205,7 +205,7 @@ static void BugUploadProgress( u32 uContext, const TBugReportProgress & rBugRepo
 struct TBugReportParameters
 {
 	// IP Address of the CSERServer to send the report to
-	netadr_t				m_ipCSERServer;		
+	netadr_t				m_ipCSERServer;
 
 	TSteamGlobalUserID		m_userid;
 
@@ -247,7 +247,7 @@ struct TBugReportParameters
 
 // Note that this API is blocking, though the callback, if passed, can occur during execution.
 EBugReportUploadStatus Win32UploadBugReportBlocking
-( 
+(
 	const TBugReportParameters & rBugReportParameters	// Input
 );
 
@@ -259,7 +259,7 @@ inline void Encrypt8ByteSequence( IceKey& cipher, const unsigned char *plainText
 	cipher.encrypt(plainText, cipherText);
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void EncryptBuffer( IceKey& cipher, unsigned char *bufData, uint bufferSize)
 {
@@ -292,9 +292,9 @@ bool UploadBugReport(
 	int ram,
 	int cpu,
 	char const *processor,
-	unsigned int high, 
-	unsigned int low, 
-	unsigned int vendor, 
+	unsigned int high,
+	unsigned int low,
+	unsigned int vendor,
 	unsigned int device,
 	char const *osversion,
 	char const *attachedfile,
@@ -368,9 +368,9 @@ void UpdateProgress( const TBugReportParameters & params, char const *fmt, ... )
 class CWin32UploadBugReport
 {
 public:
-	explicit CWin32UploadBugReport( 
-		const netadr_t & harvester, 
-		const TBugReportParameters & rBugReportParameters, 
+	explicit CWin32UploadBugReport(
+		const netadr_t & harvester,
+		const TBugReportParameters & rBugReportParameters,
 		u32 contextid );
 	~CWin32UploadBugReport();
 
@@ -428,9 +428,9 @@ private:
 	u32								m_ContextID;
 };
 
-CWin32UploadBugReport::CWin32UploadBugReport( 
-	const netadr_t & harvester, 
-	const TBugReportParameters & rBugReportParameters, 
+CWin32UploadBugReport::CWin32UploadBugReport(
+	const netadr_t & harvester,
+	const TBugReportParameters & rBugReportParameters,
 	u32 contextid ) :
 	m_States(),
 	m_uCurrentState( eCreateTCPSocket ),
@@ -463,9 +463,9 @@ CWin32UploadBugReport::~CWin32UploadBugReport()
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 // Function:	DoBlockingReceive()
-// 
+//
 //-----------------------------------------------------------------------------
 bool CWin32UploadBugReport::DoBlockingReceive( uint bytesExpected, CUtlBuffer& buf )
 {
@@ -606,7 +606,7 @@ bool CWin32UploadBugReport::SendUploadCommand( EBugReportUploadStatus& status, C
 	UpdateProgress( m_rBugReportParameters, "Sending harvesting protocol upload request." );
 // Send upload command
 	buf.Purge();
-	
+
 	NetworkMessageLengthPrefix_t messageSize
 		(
 				sizeof( Command_t )
@@ -617,7 +617,7 @@ bool CWin32UploadBugReport::SendUploadCommand( EBugReportUploadStatus& status, C
 		);
 
 	// Prefix the length to the command
-	buf.PutInt( (int)messageSize ); 
+	buf.PutInt( (int)messageSize );
 	buf.PutChar( Commands::cuSendBugReport );
 	buf.PutInt( (int)m_ContextID );
 
@@ -674,7 +674,7 @@ bool CWin32UploadBugReport::ReceiveOKToSendFile( EBugReportUploadStatus& status,
 		status = eBugReportUploadFailed;
 		return false;
 	}
-	
+
 	SetNextState( eSendWholeFile );
 	return true;
 }
@@ -693,7 +693,7 @@ bool CWin32UploadBugReport::SendWholeFile( EBugReportUploadStatus& status, CUtlB
 			FileHandle_t fh;
 			fh = g_pFileSystem->Open(  m_rBugReportParameters.m_sAttachmentFile, "rb" );
 			if ( FILESYSTEM_INVALID_HANDLE != fh )
-			{		
+			{
 				g_pFileSystem->Read( (void *)filebuf, sizeactual, fh );
 
 				g_pFileSystem->Close( fh );
@@ -797,7 +797,7 @@ bool CWin32UploadBugReport::CloseTCPSocket( EBugReportUploadStatus& status, CUtl
 }
 
 EBugReportUploadStatus Win32UploadBugReportBlocking
-( 
+(
 	const TBugReportParameters & rBugReportParameters
 )
 {
@@ -948,7 +948,7 @@ EBugReportUploadStatus Win32UploadBugReportBlocking
 #ifdef WIN32
 			adr.sin_addr.S_un.S_addr = harvester_ip;
 #else
-			adr.sin_addr.s_addr = harvester_ip;			
+			adr.sin_addr.s_addr = harvester_ip;
 #endif
 			netadr_t BugReportHarvesterFSMIPAddress;
 			BugReportHarvesterFSMIPAddress.SetFromSockadr( (struct sockaddr *)&adr );

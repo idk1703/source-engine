@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -62,7 +62,7 @@ void CFXStaticLine::Draw( double frametime )
 	// Get the proper orientation for the line
 	VectorSubtract( m_vecEnd, m_vecStart, lineDir );
 	VectorSubtract( m_vecEnd, CurrentViewOrigin(), viewDir );
-	
+
 	cross = lineDir.Cross( viewDir );
 
 	VectorNormalize( cross );
@@ -86,7 +86,7 @@ void CFXStaticLine::Draw( double frametime )
 		meshBuilder.TexCoord2f( 0, 0.0f, 1.0f );
 	else if (flipVertical)
 		meshBuilder.TexCoord2f( 0, 0.0f, 0.0f );
-	else 
+	else
 		meshBuilder.TexCoord2f( 0, 1.0f, 1.0f );
 	meshBuilder.Color4ub( 255, 255, 255, 255 );
 	meshBuilder.AdvanceVertex();
@@ -98,7 +98,7 @@ void CFXStaticLine::Draw( double frametime )
 		meshBuilder.TexCoord2f( 0, 1.0f, 1.0f );
 	else if (flipVertical)
 		meshBuilder.TexCoord2f( 0, 1.0f, 0.0f );
-	else 
+	else
 		meshBuilder.TexCoord2f( 0, 0.0f, 1.0f );
 	meshBuilder.Color4ub( 255, 255, 255, 255 );
 	meshBuilder.AdvanceVertex();
@@ -110,7 +110,7 @@ void CFXStaticLine::Draw( double frametime )
 		meshBuilder.TexCoord2f( 0, 1.0f, 0.0f );
 	else if (flipVertical)
 		meshBuilder.TexCoord2f( 0, 1.0f, 1.0f );
-	else 
+	else
 		meshBuilder.TexCoord2f( 0, 0.0f, 0.0f );
 	meshBuilder.Color4ub( 255, 255, 255, 255 );
 	meshBuilder.AdvanceVertex();
@@ -122,7 +122,7 @@ void CFXStaticLine::Draw( double frametime )
 		meshBuilder.TexCoord2f( 0, 0.0f, 0.0f );
 	else if (flipVertical)
 		meshBuilder.TexCoord2f( 0, 0.0f, 1.0f );
-	else 
+	else
 		meshBuilder.TexCoord2f( 0, 1.0f, 0.0f );
 	meshBuilder.Color4ub( 255, 255, 255, 255 );
 	meshBuilder.AdvanceVertex();

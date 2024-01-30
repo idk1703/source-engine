@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -128,7 +128,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEPlayerDecal::C_TEPlayerDecal( void )
 {
@@ -138,26 +138,26 @@ C_TEPlayerDecal::C_TEPlayerDecal( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEPlayerDecal::~C_TEPlayerDecal( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEPlayerDecal::Precache( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 IMaterial *CreateTempMaterialForPlayerLogo( int iPlayerIndex, player_info_t *info, char *texname, int nchars )
 {
 	// Doesn't have a logo?
-	if ( !info->customFiles[0] )	
+	if ( !info->customFiles[0] )
 		return NULL;
 
 	IMaterial *logo = materials->FindMaterial( VarArgs("decals/playerlogo%2.2d", iPlayerIndex), TEXTURE_GROUP_DECAL );
@@ -191,12 +191,12 @@ IMaterial *CreateTempMaterialForPlayerLogo( int iPlayerIndex, player_info_t *inf
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : filter - 
-//			delay - 
-//			pos - 
-//			player - 
-//			entity - 
+// Purpose:
+// Input  : filter -
+//			delay -
+//			pos -
+//			player -
+//			entity -
 //-----------------------------------------------------------------------------
 void TE_PlayerDecal( IRecipientFilter& filter, float delay,
 	const Vector* pos, int player, int entity  )
@@ -220,9 +220,9 @@ void TE_PlayerDecal( IRecipientFilter& filter, float delay,
 		return;
 
 	ITexture *texture = materials->FindTexture( texname, TEXTURE_GROUP_DECAL );
-	if ( IsErrorTexture( texture ) ) 
+	if ( IsErrorTexture( texture ) )
 	{
-		return; // not found 
+		return; // not found
 	}
 
 	// Update the texture used by the material if need be.
@@ -238,22 +238,22 @@ void TE_PlayerDecal( IRecipientFilter& filter, float delay,
 	}
 
 	color32 rgbaColor = { 255, 255, 255, 255 };
-	effects->PlayerDecalShoot( 
-		logo, 
+	effects->PlayerDecalShoot(
+		logo,
 		(void *)player,
-		entity, 
-		ent->GetModel(), 
-		ent->GetAbsOrigin(), 
-		ent->GetAbsAngles(), 
-		*pos, 
-		0, 
+		entity,
+		ent->GetModel(),
+		ent->GetAbsOrigin(),
+		ent->GetAbsAngles(),
+		*pos,
+		0,
 		0,
 		rgbaColor );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEPlayerDecal::PostDataUpdate( DataUpdateType_t updateType )
 {

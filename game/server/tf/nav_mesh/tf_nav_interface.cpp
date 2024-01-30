@@ -20,7 +20,7 @@ public:
 
 	// Input handlers
 	void RecomputeBlockers(inputdata_t &inputdata);
-	
+
 	DECLARE_DATADESC();
 };
 

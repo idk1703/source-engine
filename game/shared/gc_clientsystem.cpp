@@ -111,18 +111,18 @@ bool CGCClientSystem::BSendMessage( uint32 unMsgType, const uint8 *pubData, uint
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CGCClientSystem::BSendMessage( const GCSDK::CGCMsgBase& msg )									
-{ 
-	return m_GCClient.BSendMessage( msg ); 
+bool CGCClientSystem::BSendMessage( const GCSDK::CGCMsgBase& msg )
+{
+	return m_GCClient.BSendMessage( msg );
 }
 
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CGCClientSystem::BSendMessage( const GCSDK::CProtoBufMsgBase& msg )									
-{ 
-	return m_GCClient.BSendMessage( msg ); 
+bool CGCClientSystem::BSendMessage( const GCSDK::CProtoBufMsgBase& msg )
+{
+	return m_GCClient.BSendMessage( msg );
 }
 
 
@@ -190,7 +190,7 @@ void CGCClientSystem::OnLogonSuccess( SteamServersConnected_t *pLogonSuccess )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGCClientSystem::LevelInitPreEntity()
 {
@@ -198,7 +198,7 @@ void CGCClientSystem::LevelInitPreEntity()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGCClientSystem::LevelShutdownPostEntity()
 {
@@ -209,7 +209,7 @@ void CGCClientSystem::LevelShutdownPostEntity()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGCClientSystem::Shutdown()
 {
@@ -223,7 +223,7 @@ void CGCClientSystem::Shutdown()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGCClientSystem::SetupGC()
 {
@@ -246,7 +246,7 @@ void CGCClientSystem::SetupGC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGCClientSystem::InitGC()
 {
@@ -294,11 +294,11 @@ void CGCClientSystem::Update( float frametime )
 		m_GCClient.BMainLoop( k_nThousand, (uint64)( frametime * 1000000.0f ) );
 }
 #else
-void CGCClientSystem::PreClientUpdate()	
-{ 
+void CGCClientSystem::PreClientUpdate()
+{
 	ThinkConnection();
 	if ( m_bInittedGC )
-		m_GCClient.BMainLoop( k_nThousand, ( uint64 )( gpGlobals->frametime * 1000000.0f ) ); 	
+		m_GCClient.BMainLoop( k_nThousand, ( uint64 )( gpGlobals->frametime * 1000000.0f ) );
 }
 #endif
 
@@ -307,7 +307,7 @@ void CGCClientSystem::ThinkConnection()
 {
 
 	// Currently logged on?
-	#ifdef CLIENT_DLL	
+	#ifdef CLIENT_DLL
 		bool bLoggedOn = ClientSteamContext().BLoggedOn();
 	#else
 		bool bLoggedOn = steamgameserverapicontext && steamgameserverapicontext->SteamGameServer() && steamgameserverapicontext->SteamGameServer()->BLoggedOn();
@@ -377,7 +377,7 @@ void CGCClientSystem::ReceivedClientWelcome( const CMsgClientWelcome &msg )
 {
 	m_bConnectedToGC = true;
 	Msg( "Connection to game coordinator established.\n" );
-	
+
 	IGameEvent *pEvent = gameeventmanager->CreateEvent( "gc_new_session" );
 	if ( pEvent )
 	{

@@ -160,7 +160,7 @@ ActionResult< CEyeballBoss > CEyeballBossEmerge::Update( CEyeballBoss *me, float
 			if ( pObjects[i]->IsPlayer() )
 				continue;
 
-			// Remove the enemy pipe 
+			// Remove the enemy pipe
 			pObjects[i]->SetThink( &CBaseEntity::SUB_Remove );
 			pObjects[i]->SetNextThink( gpGlobals->curtime );
 			pObjects[i]->SetTouch( NULL );

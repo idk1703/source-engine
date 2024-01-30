@@ -38,7 +38,7 @@ public:
 
 protected:
 
-	PlayerClassSapperData_t	*m_pSapperData; 
+	PlayerClassSapperData_t	*m_pSapperData;
 	Vector						m_vStandMins;
 	Vector						m_vStandMaxs;
 	Vector						m_vStandViewOffset;

@@ -108,7 +108,7 @@ public:
 	}
 	virtual void	RenderParticles( CParticleRenderIterator *pIterator )
 	{
-	}		
+	}
 
 	virtual void				SetParticleCullRadius( float radius );
 	virtual void				NotifyRemove( void );
@@ -133,7 +133,7 @@ public:
 protected:
 	// Returns nonzero if Release() has been called.
 	int		IsReleased();
-	
+
 	// Used to track down bugs.
 	const char	*m_pDebugName;
 
@@ -164,7 +164,7 @@ private:
 	void		Release();
 	void		RecordControlPointOrientation( int nWhichPoint );
 	void		Construct();
-	
+
 	int			m_RefCount;		// When this goes to zero and the effect has no more active
 								// particles, (and it's dynamically allocated), it will delete itself.
 

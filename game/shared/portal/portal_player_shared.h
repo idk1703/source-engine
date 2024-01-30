@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -21,7 +21,7 @@ enum
 	PLAYER_SOUNDS_MAX,
 };
 
-enum 
+enum
 {
 	CONCEPT_CHELL_IDLE,
 	CONCEPT_CHELL_DEAD,

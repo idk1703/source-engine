@@ -39,7 +39,7 @@ END_DATADESC()
 ConVar	obj_mortar_health( "obj_mortar_health","200", FCVAR_NONE, "Mortar object health" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectMortar::CObjectMortar()
 {
@@ -50,12 +50,12 @@ CObjectMortar::CObjectMortar()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectMortar::Spawn()
 {
 	SetModel( "models/objects/obj_mortar.mdl" );
-	
+
 	SetSolid( SOLID_BBOX );
 	UTIL_SetSize(this, MORTAR_MINS, MORTAR_MAXS);
 	m_takedamage = DAMAGE_YES;
@@ -76,7 +76,7 @@ void CObjectMortar::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectMortar::Precache()
 {
@@ -93,7 +93,7 @@ void CObjectMortar::GetControlPanelInfo( int nPanelIndex, const char *&pPanelNam
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectMortar::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
@@ -263,4 +263,3 @@ void CObjectMortar::ReloadingThink( void )
 
 	m_iSalvoLeft = MORTAR_SALVO_SIZE;
 }
-

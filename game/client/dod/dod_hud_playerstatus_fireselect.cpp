@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,7 +24,7 @@
 #include "dod_hud_playerstatus_fireselect.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDoDHudFireSelect::CDoDHudFireSelect( vgui::Panel *parent, const char *name ) : vgui::EditablePanel( parent, name )
 {
@@ -48,7 +48,7 @@ void CDoDHudFireSelect::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudFireSelect::SetVisible( bool state )
 {
@@ -63,7 +63,7 @@ void CDoDHudFireSelect::SetVisible( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudFireSelect::OnThink()
 {

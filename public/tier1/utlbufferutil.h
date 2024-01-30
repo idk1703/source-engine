@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -32,7 +32,7 @@ class CUtlBinaryBlock;
 class CUtlString;
 class CUtlCharConversion;
 
-	
+
 //-----------------------------------------------------------------------------
 // For string serialization, set the delimiter rules
 //-----------------------------------------------------------------------------
@@ -189,4 +189,3 @@ bool Unserialize( CUtlBuffer &buf, CUtlVector<T> &dest )
 
 
 #endif // UTLBUFFERUTIL_H
-

@@ -17,7 +17,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 projPos					: POSITION;	
+	float4 projPos					: POSITION;
 #if !defined( _X360 )
 	float  fog						: FOG;
 #endif
@@ -41,12 +41,12 @@ VS_OUTPUT main( const VS_INPUT v )
 	float4 projPos = mul( float4( worldPos, 1 ), cViewProj );
 	o.projPos = projPos;
 	projPos.z = dot( float4( worldPos, 1 ), cViewProjZ );
-	
+
 	// NOTE: CalcFog returns 1 for non-water fog, so it's ok to use fog
 	// It returns the real fog for range fog, since we do vertex fog
 	o.fogFactorW = CalcFog( worldPos, projPos, g_FogType );
 #if !defined( _X360 )
-	o.fog = o.fogFactorW;	
+	o.fog = o.fogFactorW;
 #endif
 	o.shadowColor = v.vColor;
 	o.worldPos_projPosZ = float4( worldPos, projPos.z );
@@ -62,5 +62,3 @@ VS_OUTPUT main( const VS_INPUT v )
 
 	return o;
 }
-
-

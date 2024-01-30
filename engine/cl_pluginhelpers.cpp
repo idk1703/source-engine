@@ -157,12 +157,12 @@ CPluginGameUIDialog::CPluginGameUIDialog() : vgui::Frame( NULL, "Plugins" )
 	m_Menu = new CPluginMenu( this );
 	m_RichText = new vgui::RichText( this, "Rich" );
 	m_Message = new vgui::Label( this, "Label", "" );
-	m_Entry = new vgui::TextEntry( this, "Entry" ); 
+	m_Entry = new vgui::TextEntry( this, "Entry" );
 	m_EntryLabel = new vgui::Label( this, "EntryLabel", "" );
 	m_CloseButton = new vgui::Button( this, "Close", "");
 
 	LoadControlSettings("Resource/UI/Plugin.res");
-	InvalidateLayout();	
+	InvalidateLayout();
 }
 
 //-----------------------------------------------------------------------------
@@ -192,7 +192,7 @@ void CPluginGameUIDialog::OnCommand( const char *cmd )
 			char entryText[ 255 ];
 			m_Entry->GetText( entryText, sizeof(entryText) );
 			Q_snprintf( userCMD, sizeof(userCMD), "%s %s\n", m_szEntryCommand, entryText );
-			
+
 			// Only let them run commands marked with FCVAR_CLIENTCMD_CAN_EXECUTE.
 			Cbuf_AddTextWithMarkers( eCmdExecutionMarker_Enable_FCVAR_CLIENTCMD_CAN_EXECUTE, userCMD, eCmdExecutionMarker_Disable_FCVAR_CLIENTCMD_CAN_EXECUTE );
 		}
@@ -216,7 +216,7 @@ void CPluginGameUIDialog::Show( DIALOG_TYPE type, KeyValues *kv )
 	m_Entry->SetVisible(false);
 	m_EntryLabel->SetVisible(false);
 	m_szEntryCommand[ 0 ] = 0;
-		
+
 	SetTitle( kv->GetWString( "title" ), true );
 
 	switch ( type )
@@ -324,7 +324,7 @@ private:
 //-----------------------------------------------------------------------------
 // Purpose: constructor
 //-----------------------------------------------------------------------------
-CPluginHudMessage::CPluginHudMessage( vgui::VPANEL parent ) : vgui::Frame( NULL, "PluginHudMessage" ) 
+CPluginHudMessage::CPluginHudMessage( vgui::VPANEL parent ) : vgui::Frame( NULL, "PluginHudMessage" )
 {
 	SetParent( parent );
 	SetVisible( false );
@@ -352,7 +352,7 @@ CPluginHudMessage::CPluginHudMessage( vgui::VPANEL parent ) : vgui::Frame( NULL,
 	vgui::ivgui()->AddTickSignal(GetVPanel());
 
 	LoadControlSettings("Resource/UI/PluginHud.res");
-	InvalidateLayout();	
+	InvalidateLayout();
 	GetSize( m_iTargetW, m_iTargetH );
 }
 
@@ -405,7 +405,7 @@ void CPluginHudMessage::StartHiding()
 {
 	if ( m_pExtraPanelIcon->IsVisible() )
 	{
-		m_pAnimationController->StartAnimationSequence( "PluginMessageSmall" ); 
+		m_pAnimationController->StartAnimationSequence( "PluginMessageSmall" );
 	}
 	else
 	{
@@ -418,7 +418,7 @@ void CPluginHudMessage::StartHiding()
 //-----------------------------------------------------------------------------
 void CPluginHudMessage::Hide()
 {
-	m_pAnimationController->StartAnimationSequence( "PluginMessageHide" ); 
+	m_pAnimationController->StartAnimationSequence( "PluginMessageHide" );
 	m_pExtraPanelIcon->SetVisible( false );
 }
 
@@ -439,14 +439,14 @@ void CPluginHudMessage::ShowMessage( const wchar_t *text, int time, Color clr, b
 		m_pExtraPanelIcon->SetVisible( true );
 	}
 
-	m_pAnimationController->StartAnimationSequence( "PluginMessageShow" ); 
+	m_pAnimationController->StartAnimationSequence( "PluginMessageShow" );
 
 	SetVisible( true );
 	InvalidateLayout();
 	int textW, textH;
 	m_Message->GetContentSize( textW, textH );
-	
-	textW = min( textW + MESSAGE_X_INSET + 10, (int)MAX_TEXT_LEN_PIXELS ); 
+
+	textW = min( textW + MESSAGE_X_INSET + 10, (int)MAX_TEXT_LEN_PIXELS );
 	SetSize( textW, m_iTargetH ); // the "small" animation event changes our size
 }
 
@@ -508,7 +508,7 @@ void CPluginUIManager::OnTick()
 		m_pHudMessage->StartHiding();
 		m_iHudDisplayUntil = 0;
 	}
-	
+
 	BaseClass::OnTick();
 }
 
@@ -525,7 +525,7 @@ void CPluginUIManager::Shutdown()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: shows a particular ui type and queues their lifetime 
+// Purpose: shows a particular ui type and queues their lifetime
 //-----------------------------------------------------------------------------
 void CPluginUIManager::Show( DIALOG_TYPE type, KeyValues *kv )
 {
@@ -535,7 +535,7 @@ void CPluginUIManager::Show( DIALOG_TYPE type, KeyValues *kv )
 		// Don't allow this prompt on QuickPlay servers
 		if ( cl.IsClientConnectionViaMatchMaking() )
 			return;
-		
+
 		// Do the askconnect dialog.
 		float flDuration = kv->GetFloat( "time", 4.0f );
 		const char *pIP = kv->GetString( "title", NULL );
@@ -544,11 +544,11 @@ void CPluginUIManager::Show( DIALOG_TYPE type, KeyValues *kv )
 			DevMsg( "Ignoring DIALOG_ASKCONNECT message. No IP specified." );
 			return;
 		}
-		
+
 		ShowAskConnectPanel( pIP, flDuration );
 		return;
 	}
-	
+
 	int level = kv->GetInt( "level", INT_MAX );
 	if ( level < m_iCurPriority )
 	{
@@ -587,7 +587,7 @@ void CPluginUIManager::Show( DIALOG_TYPE type, KeyValues *kv )
 //-----------------------------------------------------------------------------
 void CPluginUIManager::OnPanelClosed()
 {
-	m_iCurPriority = INT_MAX;	
+	m_iCurPriority = INT_MAX;
 	m_iHudDisplayUntil = 0;
 	m_iMessageDisplayUntil = 0;
 	m_pGameUIDialog->SetVisible( false );

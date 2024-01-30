@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -90,7 +90,7 @@ private:
 		STATE_FREE,
 		STATE_CARRIED
 	};
-	
+
 	EState m_eState;
 	CHandle<CTFPlayer> m_hThrower;
 	EHANDLE m_hBlocker;
@@ -109,12 +109,12 @@ private:
 	float m_flBeginCarryTime;
 	float m_flIdleRespawnTime;
 
-	struct LagRecord 
+	struct LagRecord
 	{
 		float flSimulationTime;
 		Vector vecOrigin;
 	};
-	
+
 	CUtlFixedLinkedList<LagRecord> m_lagCompensationHistory;
 	LagRecord m_lagCompensationRestore;
 	bool m_bLagCompensationNeedsRestore;
@@ -126,4 +126,4 @@ private:
 	CNetworkHandle( CTFPlayer, m_hPrevCarrier );
 };
 
-#endif // TF_PASSTIME_BALL_H  
+#endif // TF_PASSTIME_BALL_H

@@ -18,7 +18,7 @@ This tool was written as an example on how to use the classes:
 CMPAFile, CMPAHeader, CVBRHeader and CMPAException.
 
 The article MPEG Audio Frame Header on Sourceproject
-[http://www.codeproject.com/audio/MPEGAudioInfo.asp] 
+[http://www.codeproject.com/audio/MPEGAudioInfo.asp]
 provides additional information about these classes and the frame header
 in general.
 
@@ -43,7 +43,7 @@ statically linked.
 class CMPAException
 {
 public:
-	
+
 	enum ErrorIDs
 	{
 		ErrOpenFile,
@@ -104,7 +104,7 @@ private:
 	const char *m_szFile;
 	bool m_bMustReleaseFile;
 
-public:	
+public:
 	uint32 m_dwBegin;	// offset of first MPEG Audio frame
 	uint32 m_dwEnd;		// offset of last MPEG Audio frame (estimated)
 	bool m_bVBRFile;

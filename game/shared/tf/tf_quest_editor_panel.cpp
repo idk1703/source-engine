@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -69,7 +69,7 @@ void WriteLocalizationData()
 		Warning( "Failed to GenerateFullPath %s\n", g_skLocalizationFile );
 		return;
 	}
-	
+
 	FOR_EACH_VEC( ILocalizationEditorParamAutoList::AutoList(), i )
 	{
 		CLocalizationEditorParam* pLocalizationEntry = static_cast< CLocalizationEditorParam* >( ILocalizationEditorParamAutoList::AutoList()[i] );
@@ -79,7 +79,7 @@ void WriteLocalizationData()
 
 		wchar_t wszLocalizedValue[MAX_QUEST_DESC_LENGTH];
 		g_pVGuiLocalize->ConvertANSIToUnicode( pLocalizationEntry->GetLocalizationValue(), wszLocalizedValue, sizeof( wszLocalizedValue ) );
-		
+
 		const char *pszTokenName = pLocalizationEntry->GetValue();
 		if ( pszTokenName[0] == '#' )
 		{
@@ -133,7 +133,7 @@ void IEditorObject::OnSizeChanged( int newWide, int newTall )
 
 
 bool IEditorObject::IsFlagSet( int nFlag, bool bCheckUpTree ) const
-{ 
+{
 	bool bIsFlagSet = m_Flags & nFlag;
 	if ( !bIsFlagSet && bCheckUpTree )
 	{
@@ -159,7 +159,7 @@ IEditorObject::ESerializeAction IEditorObject::ShouldWrite( const IEditableDataT
 
 	if ( GetOwningEditable() != pCallingEditable )
 		return SKIP_THIS_AND_CONTINUE;
-		
+
 	return WRITE_THIS_AND_CONTINUE;
 }
 
@@ -222,16 +222,16 @@ const IEditableDataType* IEditorObject::GetOwningEditable() const
 {
 	const IEditableDataType* pOwningEditable = NULL;
 	const IEditorObject* pPanel = this;
-	
-	do 
+
+	do
 	{
 		pOwningEditable = pPanel->m_pOwningEditable;
 		pPanel = dynamic_cast< const IEditorObject* >( const_cast< IEditorObject* >( pPanel )->GetParent() ); // Good lord, VGUI.  GetParent() isn't const?  Really?
-	} 
+	}
 	while ( pOwningEditable == NULL && pPanel != NULL );
 
 	Assert( pOwningEditable != NULL );
-		
+
 	return pOwningEditable;
 }
 
@@ -241,7 +241,7 @@ const IEditableDataType* IEditorObject::GetOwningEditable() const
 void IEditorObject::InvalidateChain()
 {
 	InvalidateLayout();
-		
+
 	Panel* pParent = this;
 
 	do
@@ -400,7 +400,7 @@ void CEditorObjectNode::SerializeToKVs( KeyValues* pKV, const IEditableDataType*
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CEditorObjectNode::PerformLayout() 
+void CEditorObjectNode::PerformLayout()
 {
 	m_pDeleteButton->SetVisible( m_vecChildren.Count() > 0 && !IsFlagSet( FLAG_HIDDEN ) && !IsFlagSet( FLAG_NOT_DELETABLE ) );
 	m_pDeleteButton->SetPos( 470, 0 );
@@ -444,7 +444,7 @@ void CEditorObjectNode::OnCommand( const char *command )
 		else
 		{
 			m_pToggleCollapseButton->SetText( "+" );
-		}		
+		}
 
 		SetFlag( FLAG_COLLAPSED, !IsFlagSet( FLAG_COLLAPSED ) );
 		InvalidateChain();
@@ -474,7 +474,7 @@ void CEditorObjectNode::RemoveNode()
 {
 	MarkForDeletion();
 
-	InvalidateChain();	
+	InvalidateChain();
 }
 
 void CEditorObjectNode::ClearPendingChangesFlag()
@@ -631,7 +631,7 @@ void CTextEntryEditorParam::SetTextEntryValue( const char* pszValue )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const char* CTextEntryEditorParam::GetValue() const 
+const char* CTextEntryEditorParam::GetValue() const
 {
 	m_pTextEntry->GetText( m_szValueBuff, sizeof( m_szValueBuff ) );
 	return m_szValueBuff;
@@ -702,7 +702,7 @@ void CComboBoxEditorParam::PerformLayout()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-int CComboBoxEditorParam::GetContentTall() const 
+int CComboBoxEditorParam::GetContentTall() const
 {
 	return IsFlagSet( FLAG_HIDDEN ) ? 0 : m_pComboBox->GetTall();
 }
@@ -710,7 +710,7 @@ int CComboBoxEditorParam::GetContentTall() const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const char* CComboBoxEditorParam::GetValue() const 
+const char* CComboBoxEditorParam::GetValue() const
 {
 	return m_pComboBox->GetActiveItemUserData()->GetString( "write" );
 }
@@ -822,7 +822,7 @@ void CNewQuestObjectiveParam::OnCommand( const char *command )
 //-----------------------------------------------------------------------------
 IOptionalExpandableBlock::IOptionalExpandableBlock( EditorObjectInitStruct init, const char* pszButtonText )
 	: BaseClass( init )
-{ 
+{
 	m_pAddButton = new Button( this, "add", pszButtonText, this, "add" );
 }
 
@@ -909,11 +909,11 @@ CQuestObjectiveNode::CQuestObjectiveNode( CEditorObjectNode* pParentNode, KeyVal
 
 	m_pDefIndexComboBox = new CComboBoxEditorParam( { this, "conditions_def_index", FLAGS_NONE }, "Conditions:" );
 	m_pDefIndexComboBox->GetComboBox()->AddActionSignalTarget( this );
-	
+
 
 	m_pSelectObjectiveButton = new Button( m_pDefIndexComboBox, "selectobjective", "Pick", this, "selectobjective" );
 	m_pSelectObjectiveButton->AddActionSignalTarget( this );
-	
+
 
 	PopulateAndSelectConditionsCombobox( nConditionsDefIndex );
 }
@@ -987,7 +987,7 @@ void CQuestObjectiveNode::OnTextChanged( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestObjectiveNode::OnObjectiveSelected( KeyValues *data )
 {
@@ -1032,7 +1032,7 @@ void CQuestDescriptionNode::CreateNewDefaultControl()
 
 	KeyValuesAD pKVDesc( CFmtStr( "%d", nDefindex ) );
 	pKVDesc->SetString( "token", CFmtStr( g_skDescTokenFormat, nObjectDefIndex, nDefindex ) );
-	
+
 	CreateNewControl( pKVDesc );
 }
 
@@ -1072,8 +1072,8 @@ CComboBoxEditorParam* CreateWeaponComboBox( EditorObjectInitStruct init, const c
 			continue;
 
 		if ( !( iSlot == LOADOUT_POSITION_PRIMARY
-		     || iSlot == LOADOUT_POSITION_SECONDARY 
-		     || iSlot == LOADOUT_POSITION_MELEE 
+		     || iSlot == LOADOUT_POSITION_SECONDARY
+		     || iSlot == LOADOUT_POSITION_MELEE
 		     || iSlot == LOADOUT_POSITION_PDA
 		     || iSlot == LOADOUT_POSITION_PDA2
 		     || iSlot == LOADOUT_POSITION_BUILDING ) )
@@ -1212,11 +1212,11 @@ void CQuestObjectiveRestrictionNode::CreateControlsForCondition()
 		else if ( FStrEq( "combo_box", pszControlType ) )
 		{
 			CComboBoxEditorParam* pNewParam = new CComboBoxEditorParam( { this, params->GetName(), FLAGS_NONE }, pszLabelText );
-	
+
 			const char *pszOutput = outputKey->GetString( pszParamName, "" );
 
 			pNewParam->ClearComboBoxEntries();
-		
+
 			FOR_EACH_TRUE_SUBKEY( params, pChoiceKey )
 			{
 				const char *pszChoiceName = pChoiceKey->GetName();
@@ -1416,7 +1416,7 @@ CEditorQuest::CEditorQuest( KeyValues *pKV, Panel* pParent, const IEditableDataT
 	new CTextEntryEditorParam( { pQuestNode, "reward", FLAGS_NONE }, "Reward:", pKVQuest->GetString( "reward" ) );
 	new CTextEntryEditorParam( { pQuestNode, "objectives_to_roll", FLAGS_NONE }, "Objectives to roll:", pKVQuest->GetString( "objectives_to_roll" ) );
 	new CTextEntryEditorParam( { pQuestNode, "mm_map", FLAGS_NONE }, "Casual MM Map:", pKVQuest->GetString( "mm_map" ) );
-	CComboBoxEditorParam *pThemeParam = new CComboBoxEditorParam( { pQuestNode, "theme", FLAGS_NONE }, "Theming:" ); 
+	CComboBoxEditorParam *pThemeParam = new CComboBoxEditorParam( { pQuestNode, "theme", FLAGS_NONE }, "Theming:" );
 	nChosenIndex = -1;
 	{
 		const auto& mapThemes = GetItemSchema()->GetQuestThemes();
@@ -1432,7 +1432,7 @@ CEditorQuest::CEditorQuest( KeyValues *pKV, Panel* pParent, const IEditableDataT
 		}
 	}
 
-	CComboBoxEditorParam *pCorrespondingOperation = new CComboBoxEditorParam( { pQuestNode, "operation", FLAGS_NONE }, "Operation:" ); 
+	CComboBoxEditorParam *pCorrespondingOperation = new CComboBoxEditorParam( { pQuestNode, "operation", FLAGS_NONE }, "Operation:" );
 	nChosenIndex = -1;
 	{
 		const auto& mapOperations = GetItemSchema()->GetOperationDefinitions();
@@ -1577,7 +1577,7 @@ void IEditableDataType::SaveEdits()
 
 	CKeyValuesDumpToString dumpOrig;
 	CKeyValuesDumpToString dumpNew;
-	
+
 	// Dump into strings
 	m_pKVLiveData->Dump( &dumpNew, 0, true );
 	m_pKVSavedData->Dump( &dumpOrig, 0, true );
@@ -1748,7 +1748,7 @@ void CEditableQuestDataType::WriteDataToDisk( bool bDelete )
 	CUtlBuffer bufRawData;
 	bufRawData.SetBufferType( true, true );
 	bufRawData.PutString( CFmtStr( "\"%s\"\n{\n", "quests") );
-	
+
 	bool bReadFileOK = g_pFullFileSystem->ReadFile( g_skQuestDefFile, NULL, bufRawData );
 	if ( !bReadFileOK )
 	{
@@ -1757,7 +1757,7 @@ void CEditableQuestDataType::WriteDataToDisk( bool bDelete )
 	}
 
 	bufRawData.PutString( "\n}" );
-	
+
 	// Load the buffer into keyvalues
 	KeyValuesAD pKVQuestItemData( "quests" );
 	pKVQuestItemData->LoadFromBuffer( NULL, bufRawData );
@@ -1788,7 +1788,7 @@ void CEditableQuestDataType::WriteDataToDisk( bool bDelete )
 			if ( pKVObjectives )
 			{
 				FOR_EACH_TRUE_SUBKEY( pKVObjectives, pKVEntry )
-				{	
+				{
 					char szDesc[256];
 					g_pVGuiLocalize->ConvertUnicodeToANSI( g_pVGuiLocalize->Find( pKVEntry->GetString( "description_string" ) ), szDesc, sizeof( szDesc ) );
 					g_pFullFileSystem->FPrintf( fileHandle, "%d,%d,%d,%s,\n", pKVEntry->GetInt( "DefIndex" ), pKVEntry->GetInt( "points" ), pKVEntry->GetInt( "advanced" ), szDesc );
@@ -1885,7 +1885,7 @@ IEditorObject* CEditableObjectiveConditionDataType::CreateEditableObject_Interna
 
 	const char *pszType = pKVConditionLogic->GetString( "type" );
 	CTFQuestCondition *pCondition = CreateEvaluatorByName( pszType, NULL );
-		
+
 	if ( !pCondition->BInitFromKV( pKVConditionLogic, NULL ) )
 	{
 		Assert( false );
@@ -2035,7 +2035,7 @@ void CQuestEditorPanel::UpdateButtons( IEditableDataType::EType eType )
 void CQuestEditorPanel::OnCommand( const char *command )
 {
 	if ( Q_strnicmp( "select", command, 6 ) == 0 )
-	{	
+	{
 		// comes in the form "select(type) (name)"
 		const char* pszType = command + 6;
 		IEditableDataType::EType eType = (IEditableDataType::EType)atoi( pszType );
@@ -2347,7 +2347,7 @@ IEditableDataType* CQuestEditorPanel::CreateNewQuest()
 	}
 
 	++nNextQuestDefIndex;
-	
+
 	// Create keyvalues to describe a default quest
 	KeyValuesAD pKVNewQuest( CFmtStr( "%d", nNextQuestDefIndex ) );
 	pKVNewQuest->SetString( "name", CFmtStr( g_skItemNameFormat, nNextQuestDefIndex ) );
@@ -2386,7 +2386,7 @@ IEditableDataType* CQuestEditorPanel::CreateNewObjectiveCondition()
 	KeyValuesAD pKVNewObjCond( CFmtStr( "%d", nNextDefIndex ) );
 	pKVNewObjCond->SetString( "name", "*** New Objective ***" );
 
-	KeyValues* pKVConditionsBlock = pKVNewObjCond->CreateNewKey(); 
+	KeyValues* pKVConditionsBlock = pKVNewObjCond->CreateNewKey();
 	pKVConditionsBlock->SetName( "condition_logic" );
 	pKVConditionsBlock->SetString( "event_name", "player_score_changed" );
 	pKVConditionsBlock->SetString( "score_key_name", "delta" );
@@ -2406,18 +2406,18 @@ void CQuestEditorPanel::OpenEditContextMenu()
 	pContextMenu->AddMenuItem( "Revert", this, new KeyValues( "revert" ) );
 	pContextMenu->AddSeparator();
 	pContextMenu->AddMenuItem( "Delete", this, new KeyValues( "delete" ) );
-	
+
 	// Position to the cursor's position
 	int nX, nY;
 	g_pVGuiInput->GetCursorPosition( nX, nY );
 	pContextMenu->SetPos( nX - 1, nY - 1 );
-	
+
 	pContextMenu->SetVisible(true);
 	pContextMenu->AddActionSignalTarget(this);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestEditorPanel::OnTextChanged( KeyValues *data )
 {
@@ -2433,7 +2433,7 @@ void CQuestEditorPanel::OnTextChanged( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestEditorPanel::OnSelectQuestObjective( KeyValues *data )
 {
@@ -2442,7 +2442,7 @@ void CQuestEditorPanel::OnSelectQuestObjective( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestEditorPanel::CheckForChanges()
 {

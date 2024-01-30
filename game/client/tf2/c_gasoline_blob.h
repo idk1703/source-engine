@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,7 +33,7 @@ private:
 						CGasolineEmitter() : CSimpleEmitter( "Gasoline" ){}
 						CGasolineEmitter( const CGasolineEmitter & );
 
-	
+
 	C_GasolineBlob		*m_pBlob;
 
 	PMaterialHandle		m_hFireMaterial;

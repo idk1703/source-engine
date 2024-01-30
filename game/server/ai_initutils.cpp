@@ -26,11 +26,11 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-LINK_ENTITY_TO_CLASS( info_hint,			CNodeEnt );	
-LINK_ENTITY_TO_CLASS( info_node,			CNodeEnt );	
-LINK_ENTITY_TO_CLASS( info_node_hint,		CNodeEnt );	
-LINK_ENTITY_TO_CLASS( info_node_air,		CNodeEnt );	
-LINK_ENTITY_TO_CLASS( info_node_air_hint,	CNodeEnt );	
+LINK_ENTITY_TO_CLASS( info_hint,			CNodeEnt );
+LINK_ENTITY_TO_CLASS( info_node,			CNodeEnt );
+LINK_ENTITY_TO_CLASS( info_node_hint,		CNodeEnt );
+LINK_ENTITY_TO_CLASS( info_node_air,		CNodeEnt );
+LINK_ENTITY_TO_CLASS( info_node_air_hint,	CNodeEnt );
 LINK_ENTITY_TO_CLASS( info_node_climb,		CNodeEnt );
 LINK_ENTITY_TO_CLASS( aitesthull, CAI_TestHull );
 
@@ -121,9 +121,9 @@ void CAI_TestHull::ReturnTestHull(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &startPos - 
-//			&endPos - 
+// Purpose:
+// Input  : &startPos -
+//			&endPos -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_TestHull::IsJumpLegal(const Vector &startPos, const Vector &apex, const Vector &endPos) const
@@ -168,7 +168,7 @@ BEGIN_SIMPLE_DATADESC( HintNodeData )
 	DEFINE_KEYFIELD( iDisabled,			FIELD_INTEGER,	"StartHintDisabled" ),
 	DEFINE_FIELD(	 nNodeID,			FIELD_INTEGER ),
 	DEFINE_KEYFIELD( iszActivityName,	FIELD_STRING,	"hintactivity" ),
-    DEFINE_KEYFIELD( nTargetWCNodeID,	FIELD_INTEGER, "TargetNode" ),
+	DEFINE_KEYFIELD( nTargetWCNodeID,	FIELD_INTEGER, "TargetNode" ),
 	DEFINE_KEYFIELD( nWCNodeID,			FIELD_INTEGER,	"nodeid" ),
 	DEFINE_KEYFIELD( fIgnoreFacing,		FIELD_INTEGER,	"IgnoreFacing" ),
 	DEFINE_KEYFIELD( minState,			FIELD_INTEGER,	"MinimumState" ),
@@ -193,8 +193,8 @@ void CNodeEnt::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pMapData - 
+// Purpose:
+// Input  : *pMapData -
 //-----------------------------------------------------------------------------
 int CNodeEnt::Spawn( const char *pMapData )
 {
@@ -221,7 +221,7 @@ int CNodeEnt::Spawn( const char *pMapData )
 		UTIL_RemoveImmediate( this );
 		return -1;
 	}
-	
+
 	// ---------------------------------------------------------------------------------
 	//  First check if this node has a hint.  If so create a hint entity
 	// ---------------------------------------------------------------------------------
@@ -258,7 +258,7 @@ int CNodeEnt::Spawn( const char *pMapData )
 		m_nNodeCount++;
 		UTIL_RemoveImmediate( this );
 		return -1;
-	}	
+	}
 	else
 	{
 		m_nNodeCount++;
@@ -272,7 +272,7 @@ int CNodeEnt::Spawn( const char *pMapData )
 	new_node->SetHint( pHint );
 
 	// -------------------------------------------------------------------------
-	//  Update table of how each WC id relates to each engine ID	
+	//  Update table of how each WC id relates to each engine ID
 	// -------------------------------------------------------------------------
 	if (g_pAINetworkManager->GetEditOps()->m_pNodeIndexTable)
 	{
@@ -296,7 +296,7 @@ int CNodeEnt::Spawn( const char *pMapData )
 			g_pAINetworkManager->GetEditOps()->m_pWCPosition[new_node->GetId()]		= new_node->GetOrigin();
 		}
 	}
-	
+
 	if (FClassnameIs( this, "info_node_air" ) || FClassnameIs( this, "info_node_air_hint" ))
 	{
 		new_node->SetType( NODE_AIR );
@@ -333,10 +333,7 @@ int CNodeEnt::Spawn( const char *pMapData )
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-CNodeEnt::CNodeEnt( void ) 
+CNodeEnt::CNodeEnt( void )
 {
 	m_debugOverlays = 0;
 }
-
-
-

@@ -38,9 +38,9 @@ void AddSubKeyNamed( KeyValues *pKeys, const char *pszName );
 DECLARE_BUILD_FACTORY( CStorePreviewItemIcon );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CStoreItemControlsPanel::CStoreItemControlsPanel( vgui::Panel *pParent, const char *pPanelName, CItemModelPanel *pItemModelPanel ) 
+CStoreItemControlsPanel::CStoreItemControlsPanel( vgui::Panel *pParent, const char *pPanelName, CItemModelPanel *pItemModelPanel )
 :	vgui::EditablePanel( pParent, pPanelName ),
 	m_pItemModelPanel( pItemModelPanel ),
 	m_pEntry( NULL ),
@@ -65,14 +65,14 @@ void CStoreItemControlsPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 	);
 }
 
-const econ_store_entry_t *CStoreItemControlsPanel::GetItem() const 
+const econ_store_entry_t *CStoreItemControlsPanel::GetItem() const
 {
 	return m_pEntry;
 }
 
 void CStoreItemControlsPanel::SetItem( const econ_store_entry_t *pEntry )
 {
-	m_pEntry = pEntry;		
+	m_pEntry = pEntry;
 }
 
 void CStoreItemControlsPanel::SetButtonsVisible( bool bVisible )
@@ -97,7 +97,7 @@ void CStoreItemControlsPanel::OnCursorEntered()
 	if ( m_pItemModelPanel && m_pItemModelPanel->HasItem() )
 	{
 		SetButtonsVisible( true );
-	}	
+	}
 }
 
 void CStoreItemControlsPanel::OnCursorExited()
@@ -151,7 +151,7 @@ void CStoreItemControlsPanel::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePreviewItemIcon::OnItemPanelMouseReleased( vgui::Panel *panel )
 {
@@ -159,9 +159,9 @@ void CStorePreviewItemIcon::OnItemPanelMouseReleased( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CStorePricePanel::CStorePricePanel( vgui::Panel *pParent, const char *pPanelName ) 
+CStorePricePanel::CStorePricePanel( vgui::Panel *pParent, const char *pPanelName )
 	: vgui::EditablePanel( pParent, pPanelName )
 {
 	m_bOldDiscountVisibility = false;
@@ -177,14 +177,14 @@ CStorePricePanel::CStorePricePanel( vgui::Panel *pParent, const char *pPanelName
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStorePricePanel::~CStorePricePanel()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char* CStorePricePanel::GetPanelResFile()
 {
@@ -192,12 +192,12 @@ const char* CStorePricePanel::GetPanelResFile()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePricePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
-		
+
 	LoadControlSettings( GetPanelResFile() );
 
 	m_pPrice = dynamic_cast< CExLabel* >( FindChildByName( "Price" ) );
@@ -212,7 +212,7 @@ void CStorePricePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 	m_pSaleBorder = dynamic_cast< vgui::EditablePanel* >( FindChildByName( "StorePriceBorder" ) );
 	m_pOGPrice = dynamic_cast< CExLabel* >( FindChildByName( "OG_Price" ) );
 	m_pCrossout = FindChildByName( "OG_Price_CrossOut" );
-	
+
 	// Only support one "limited"
 	m_pLimited = FindChildByName( "LimitedLarge" );
 	if ( !m_pLimited )
@@ -222,7 +222,7 @@ void CStorePricePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePricePanel::PerformLayout()
 {
@@ -321,7 +321,7 @@ void CStorePricePanel::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePricePanel::SetPriceText( int iPrice, const char *pVariable, const econ_store_entry_t *pEntry )
 {
@@ -329,7 +329,7 @@ void CStorePricePanel::SetPriceText( int iPrice, const char *pVariable, const ec
 	{
 		if ( pEntry->m_bIsMarketItem )
 		{
-			SetDialogVariable( pVariable, g_pVGuiLocalize->Find( "#Store_Market" ) );	
+			SetDialogVariable( pVariable, g_pVGuiLocalize->Find( "#Store_Market" ) );
 		}
 		else
 		{
@@ -340,9 +340,9 @@ void CStorePricePanel::SetPriceText( int iPrice, const char *pVariable, const ec
 
 	wchar_t wzLocalizedPrice[ kLocalizedPriceSizeInChararacters ];
 	MakeMoneyString( wzLocalizedPrice, ARRAYSIZE( wzLocalizedPrice ), iPrice, EconUI()->GetStorePanel()->GetCurrency() );
-	
+
 	if ( pEntry->m_bIsMarketItem )
-	{	
+	{
 		wchar_t wzMarketString[96];
 		g_pVGuiLocalize->ConstructString_safe(
 			wzMarketString,
@@ -360,7 +360,7 @@ void CStorePricePanel::SetPriceText( int iPrice, const char *pVariable, const ec
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static bool IsItemPreviewed( const econ_store_entry_t *pEntry, ECurrency eCurrency )
 {
@@ -369,7 +369,7 @@ static bool IsItemPreviewed( const econ_store_entry_t *pEntry, ECurrency eCurren
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AddItemToCartHelper( const char *pszContext, const econ_store_entry_t *pEntry, ECartItemType eSelectedCartItemType )
 {
@@ -390,7 +390,7 @@ void AddItemToCartHelper( const char *pszContext, const econ_store_entry_t *pEnt
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AddItemToCartHelper( const char *pszContext, item_definition_index_t unItemDef, ECartItemType eSelectedCartItemType )
 {
@@ -402,7 +402,7 @@ void AddItemToCartHelper( const char *pszContext, item_definition_index_t unItem
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePricePanel::SetItem( const econ_store_entry_t *pEntry )
 {
@@ -426,7 +426,7 @@ void CStorePricePanel::SetItem( const econ_store_entry_t *pEntry )
 
 	item_price_t unBasePrice;
 	const bool bIsDiscounted = pEntry->HasDiscount( eCurrency, &unBasePrice );
-	
+
 	if ( m_pDiscount && m_pOGPrice )
 	{
 		// and discount
@@ -453,7 +453,7 @@ void CStorePricePanel::SetItem( const econ_store_entry_t *pEntry )
 	if ( m_pCrossout && m_pOGPrice )
 	{
 		m_pCrossout->SetVisible( bIsDiscounted );
-	}		
+	}
 
 	if ( m_pNew )
 	{
@@ -510,7 +510,7 @@ void CStorePricePanel::SetItem( const econ_store_entry_t *pEntry )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePricePanel::OnStoreItemControlsPanelHover( KeyValues *data )
 {
@@ -532,7 +532,7 @@ void CStorePricePanel::OnStoreItemControlsPanelHover( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStorePage::CStorePage(Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData, const char *pPreviewItemResFile ) : vgui::PropertyPage(parent, "StorePage")
 {
@@ -542,9 +542,9 @@ CStorePage::CStorePage(Panel *parent, const CEconStoreCategoryManager::StoreCate
 	m_pModelPanelLabelsKVs = NULL;
 	m_pCartModelPanelKVs = NULL;
 	m_pCartQuantityLabelKVs = NULL;
-	
+
 	m_pFeaturedItemPanel = NULL;
-		
+
 	m_pItemBackdropPanel = new EditablePanel( this, "ItemBackdrop" );
 	m_pMouseOverItemPanel = new CItemModelPanel( this, "mouseoveritempanel" );
 	m_pMouseOverTooltip = new CItemModelPanelToolTip( this );
@@ -595,7 +595,7 @@ CStorePage::CStorePage(Panel *parent, const CEconStoreCategoryManager::StoreCate
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStorePage::~CStorePage()
 {
@@ -627,22 +627,22 @@ CStorePage::~CStorePage()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::OnPostCreate()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-const char *CStorePage::GetPageResFile( void ) 
-{ 
+const char *CStorePage::GetPageResFile( void )
+{
 	return m_pPageData->m_pchPageRes;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStorePreviewItemPanel *CStorePage::CreatePreviewPanel( void )
 {
@@ -650,7 +650,7 @@ CStorePreviewItemPanel *CStorePage::CreatePreviewPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -679,7 +679,7 @@ void CStorePage::ApplySchemeSettings( vgui::IScheme *pScheme )
 	}
 #endif
 
-	LoadControlSettings( GetPageResFile(), NULL, NULL, pConditions );	
+	LoadControlSettings( GetPageResFile(), NULL, NULL, pConditions );
 
 	if ( pConditions )
 	{
@@ -733,7 +733,7 @@ void CStorePage::ApplySchemeSettings( vgui::IScheme *pScheme )
 			pButton->AddActionSignalTarget( GetVPanel() );
 		}
 	}
-	
+
 	m_pCartFeaturedItemImage = dynamic_cast<vgui::ImagePanel*>( FindChildByName("CartFeaturedItemSymbol") );
 	if ( m_pCartFeaturedItemImage )
 	{
@@ -786,7 +786,7 @@ void CStorePage::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::ApplySettings( KeyValues *inResourceData )
 {
@@ -840,7 +840,7 @@ void CStorePage::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::PerformLayout( void )
 {
@@ -899,7 +899,7 @@ void CStorePage::PerformLayout( void )
 		pItemModelPanel->SetNoItemText( "#SelectNoItemSlot" );
 
 		PositionItemPanel(pItemModelPanel, i );
-		
+
 		int iX,iY,iW,iH;
 		pItemModelPanel->GetBounds( iX, iY, iW, iH );
 		// Position our price label and controls
@@ -1005,7 +1005,7 @@ void CStorePage::PerformLayout( void )
 #endif
 		const char *pszLocString = bIsFreeTrial ? "#Store_FreeTrial_BonusText" : "#Store_Promotion_SpendForGift";
 		const char *pszElementName = bIsFreeTrial ? "BonusTextLabel" : "PromotionLabel_BonusItem";
-				
+
 		g_pVGuiLocalize->ConstructString_safe( wszText, g_pVGuiLocalize->Find( pszLocString ), 1, wszPriceThreshold );
 		CExLabel *pPromotionText = dynamic_cast< CExLabel* >( FindChildByName( pszElementName, true ) );
 		if ( pPromotionText )
@@ -1034,7 +1034,7 @@ void CStorePage::PositionItemPanel( CItemModelPanel *pPanel, int iIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::OnPageShow( void )
 {
@@ -1055,7 +1055,7 @@ void CStorePage::OnPageShow( void )
 	m_pMouseOverItemPanel->SetVisible( false );
 
 	CreateItemPanels();
-	
+
 	if ( m_pFilterComboBox )
 	{
 		SetFilter( 0 );
@@ -1091,7 +1091,7 @@ void CStorePage::OnPageShow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStorePricePanel* CStorePage::CreatePricePanel( int iIndex )
 {
@@ -1108,7 +1108,7 @@ CStorePricePanel* CStorePage::CreatePricePanel( int iIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::OrderItemsForDisplay( CUtlVector<const econ_store_entry_t *>& vecItems ) const
 {
@@ -1124,7 +1124,7 @@ void CStorePage::OrderItemsForDisplay( CUtlVector<const econ_store_entry_t *>& v
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::CreateItemPanels( void )
 {
@@ -1163,7 +1163,7 @@ void CStorePage::CreateItemPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::OnCommand( const char *command )
 {
@@ -1251,7 +1251,7 @@ void CStorePage::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::FireGameEvent( IGameEvent *event )
 {
@@ -1264,7 +1264,7 @@ void CStorePage::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::OnMouseWheeled( int delta )
 {
@@ -1311,7 +1311,7 @@ void CStorePage::OnMouseWheeled( int delta )
 			// don't move into empty slots
 			currentSelectionIndex = oldSelectionIndex;
 		}
-	} 
+	}
 	else if ( delta > 0 )
 	{
 		currentSelectionIndex = oldSelectionIndex-1;
@@ -1357,7 +1357,7 @@ void CStorePage::OnMouseWheeled( int delta )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CStorePage::AssignItemToPanel( CItemModelPanel *pPanel, int iIndex )
 {
@@ -1378,7 +1378,7 @@ int CStorePage::AssignItemToPanel( CItemModelPanel *pPanel, int iIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CStorePage::GetNumPages( void )
 {
@@ -1386,7 +1386,7 @@ int CStorePage::GetNumPages( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 /* static */ int CStorePage::ItemDisplayOrderSort_UseSortOverride( const econ_store_entry_t *const *ppA, const econ_store_entry_t *const *ppB )
 {
@@ -1470,7 +1470,7 @@ void CStorePage::UpdateFilteredItems( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::UpdateModelPanels( void )
 {
@@ -1506,12 +1506,12 @@ void CStorePage::UpdateModelPanels( void )
 
 	UpdateBackpackLabel();
 
-	// Now layout again to position our item buttons 
+	// Now layout again to position our item buttons
 	InvalidateLayout();
 
 	if ( m_pFilterComboBox )
 	{
-		m_pFilterComboBox->GetComboButton()->SetFgColor( Color( 117,107,94,255 ) ); 
+		m_pFilterComboBox->GetComboButton()->SetFgColor( Color( 117,107,94,255 ) );
 		m_pFilterComboBox->GetComboButton()->SetDefaultColor( Color( 117,107,94,255), Color( 0,0,0,0) );
 		m_pFilterComboBox->GetComboButton()->SetArmedColor( Color( 117,107,94,255), Color( 0,0,0,0) );
 		m_pFilterComboBox->GetComboButton()->SetDepressedColor( Color( 117,107,94,255), Color( 0,0,0,0) );
@@ -1525,7 +1525,7 @@ void CStorePage::UpdateModelPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::OnItemPanelMouseReleased( vgui::Panel *panel )
 {
@@ -1546,7 +1546,7 @@ void CStorePage::OnItemPanelMouseReleased( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::OnItemPanelMouseDoublePressed( vgui::Panel *panel )
 {
@@ -1583,7 +1583,7 @@ void CStorePage::OnItemPanelMouseDoublePressed( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::DeSelectAllItemPanels( void )
 {
@@ -1612,7 +1612,7 @@ void CStorePage::DeSelectAllItemPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::ToggleSelectItemPanel( CItemModelPanel *pPanel )
 {
@@ -1635,7 +1635,7 @@ void CStorePage::ToggleSelectItemPanel( CItemModelPanel *pPanel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::SelectItemPanel( CItemModelPanel *pPanel )
 {
@@ -1647,7 +1647,7 @@ void CStorePage::SelectItemPanel( CItemModelPanel *pPanel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::OnItemPanelEntered( vgui::Panel *panel )
 {
@@ -1677,7 +1677,7 @@ void CStorePage::OnItemPanelEntered( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::OnItemPanelExited( vgui::Panel *panel )
 {
@@ -1706,7 +1706,7 @@ void CStorePage::OnItemPanelExited( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::OnItemAddToCart( vgui::Panel *panel )
 {
@@ -1736,7 +1736,7 @@ void CStorePage::OnItemAddToCart( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOver )
 {
@@ -1763,7 +1763,7 @@ void CStorePage::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOver 
 	const CEconStorePriceSheet *pPriceSheet = EconUI()->GetStorePanel()->GetPriceSheet();
 
 	if ( pItemPanel->GetItem() && pPriceSheet )
-	{ 
+	{
 		const econ_store_entry_t  *pEntry = pPriceSheet->GetEntry( pItemPanel->GetItem()->GetItemDefIndex() );
 
 		if (pEntry && pEntry->m_bHighlighted && !bMouseOver )
@@ -1776,7 +1776,7 @@ void CStorePage::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOver 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::CalculateItemButtonPos( CItemModelPanel *pItemPanel, int x, int y, int *iXPos, int *iYPos )
 {
@@ -1785,7 +1785,7 @@ void CStorePage::CalculateItemButtonPos( CItemModelPanel *pItemPanel, int x, int
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::UpdateSelectionInfoPanel( void )
 {
@@ -1882,18 +1882,18 @@ void CStorePage::OnTextChanged( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::SetFilter( int iFilter )
 {
 	if ( iFilter != m_iCurrentFilter )
 		m_bFilterDirty = true;
 
-	m_iCurrentFilter = iFilter;	
+	m_iCurrentFilter = iFilter;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::ShowPreview( int iClass, const econ_store_entry_t* pEntry )
 {
@@ -1908,7 +1908,7 @@ void CStorePage::ShowPreview( int iClass, const econ_store_entry_t* pEntry )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::SetDetailsVisible( bool bVisible )
 {
@@ -1934,7 +1934,7 @@ void CStorePage::SetDetailsVisible( bool bVisible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CStorePage::FindAndSelectEntry( const econ_store_entry_t *pEntry )
 {
@@ -1974,7 +1974,7 @@ bool CStorePage::FindAndSelectEntry( const econ_store_entry_t *pEntry )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const econ_store_entry_t *CStorePage::GetSelectedEntry( void )
 {
@@ -2012,7 +2012,7 @@ const econ_store_entry_t *CStorePage::GetSelectedEntry( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::AddSelectionToCart( void )
 {
@@ -2032,7 +2032,7 @@ void CStorePage::AddSelectionToCart( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::UpdateCart( void )
 {
@@ -2102,7 +2102,7 @@ void CStorePage::UpdateCart( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ConVar econ_never_show_items_in_cart_count( "econ_never_show_items_in_cart_count", "1", FCVAR_DEVELOPMENTONLY );
 
@@ -2151,7 +2151,7 @@ void CStorePage::UpdateBackpackLabel( void )
 			g_pVGuiLocalize->ConstructString_safe( wszLocalized, g_pVGuiLocalize->Find( "#Store_FreeBackpackSpace_WithCartItems" ), 2, wszBackpackSlotCount, wszCartCount );
 		}
 	}
-	
+
 	SetDialogVariable( "freebackpackspace", wszLocalized );
 
 	if ( m_pBackpackLabel )
@@ -2162,7 +2162,7 @@ void CStorePage::UpdateBackpackLabel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::UpdateFilterComboBox( void )
 {
@@ -2180,7 +2180,7 @@ void CStorePage::UpdateFilterComboBox( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::PreviewSelectionItem( void )
 {
@@ -2199,7 +2199,7 @@ void CStorePage::PreviewSelectionItem( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::DoPreviewItem( item_definition_index_t usItemDef )
 {
@@ -2225,7 +2225,7 @@ void CStorePage::DoPreviewItem( item_definition_index_t usItemDef )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePage::OnPreviewItem( KeyValues *pData )
 {

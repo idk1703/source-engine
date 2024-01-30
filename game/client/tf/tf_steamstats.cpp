@@ -1,7 +1,7 @@
 
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ StatMap_t g_SteamStats[] = {
 	{ "iBuildingsDestroyed",	TFSTAT_BUILDINGSDESTROYED,	PROPERTY_BUILDINGS_DESTROYED,	},
 	{ "iNumInvulnerable",		TFSTAT_INVULNS,				PROPERTY_INVULNS,				},
 	{ "iKillAssists",			TFSTAT_KILLASSISTS,			PROPERTY_KILL_ASSISTS,			},
-};		
+};
 
 // class specific stats
 StatMap_t g_SteamStats_Pyro[] = {
@@ -93,7 +93,7 @@ StatMap_t g_SteamMapStats[] = {
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CTFSteamStats::CTFSteamStats() 
+CTFSteamStats::CTFSteamStats()
 {
 	m_flTimeNextForceUpload = 0;
 }
@@ -128,7 +128,7 @@ void CTFSteamStats::FireGameEvent( IGameEvent *event )
 	{
 		bool bForceUpload = event->GetBool( "forceupload" );
 
-		// if we haven't uploaded stats in a long time, upload them 
+		// if we haven't uploaded stats in a long time, upload them
 		if ( ( gpGlobals->curtime >= m_flTimeNextForceUpload ) || bForceUpload )
 		{
 			UploadStats();
@@ -138,7 +138,7 @@ void CTFSteamStats::FireGameEvent( IGameEvent *event )
 	{
 		Assert( steamapicontext->SteamUserStats() );
 		if ( !steamapicontext->SteamUserStats() )
-			return; 
+			return;
 		CTFStatPanel *pStatPanel = GET_HUDELEMENT( CTFStatPanel );
 		Assert( pStatPanel );
 
@@ -153,26 +153,26 @@ void CTFSteamStats::FireGameEvent( IGameEvent *event )
 
 				Q_snprintf( szStatName, ARRAYSIZE( szStatName ), "%s.accum.%s", g_aPlayerClassNames_NonLocalized[iClass], g_SteamStats[iStat].pszName );
 				if ( steamapicontext->SteamUserStats()->GetStat( szStatName, &iData ) )
-				{					
-					classStats.accumulated.m_iStat[g_SteamStats[iStat].iStat] = iData;					
+				{
+					classStats.accumulated.m_iStat[g_SteamStats[iStat].iStat] = iData;
 				}
 				Q_snprintf( szStatName, ARRAYSIZE( szStatName ), "%s.max.%s", g_aPlayerClassNames_NonLocalized[iClass], g_SteamStats[iStat].pszName );
 				if ( steamapicontext->SteamUserStats()->GetStat( szStatName, &iData ) )
-				{		
+				{
 					classStats.max.m_iStat[g_SteamStats[iStat].iStat] = iData;
 				}
 
 				// MVM Stats
 				Q_snprintf( szStatName, ARRAYSIZE( szStatName ), "%s.mvm.accum.%s", g_aPlayerClassNames_NonLocalized[iClass], g_SteamStats[iStat].pszName );
 				if ( steamapicontext->SteamUserStats()->GetStat( szStatName, &iData ) )
-				{					
-					classStats.accumulatedMVM.m_iStat[g_SteamStats[iStat].iStat] = iData;					
+				{
+					classStats.accumulatedMVM.m_iStat[g_SteamStats[iStat].iStat] = iData;
 				}
 				Q_snprintf( szStatName, ARRAYSIZE( szStatName ), "%s.mvm.max.%s", g_aPlayerClassNames_NonLocalized[iClass], g_SteamStats[iStat].pszName );
 				if ( steamapicontext->SteamUserStats()->GetStat( szStatName, &iData ) )
-				{		
+				{
 					classStats.maxMVM.m_iStat[g_SteamStats[iStat].iStat] = iData;
-				}	
+				}
 			}
 
 			// Grab class specific stats:
@@ -187,24 +187,24 @@ void CTFSteamStats::FireGameEvent( IGameEvent *event )
 
 					Q_snprintf( szStatName, ARRAYSIZE( szStatName ), "%s.accum.%s", g_aPlayerClassNames_NonLocalized[iClass], pClassStatMap[iStat].pszName );
 					if ( steamapicontext->SteamUserStats()->GetStat( szStatName, &iData ) )
-					{					
-						classStats.accumulated.m_iStat[pClassStatMap[iStat].iStat] = iData;					
+					{
+						classStats.accumulated.m_iStat[pClassStatMap[iStat].iStat] = iData;
 					}
 					Q_snprintf( szStatName, ARRAYSIZE( szStatName ), "%s.max.%s", g_aPlayerClassNames_NonLocalized[iClass], pClassStatMap[iStat].pszName );
 					if ( steamapicontext->SteamUserStats()->GetStat( szStatName, &iData ) )
-					{		
+					{
 						classStats.max.m_iStat[pClassStatMap[iStat].iStat] = iData;
 					}
 
 					// MVM Stats
 					Q_snprintf( szStatName, ARRAYSIZE( szStatName ), "%s.mvm.accum.%s", g_aPlayerClassNames_NonLocalized[iClass], pClassStatMap[iStat].pszName );
 					if ( steamapicontext->SteamUserStats()->GetStat( szStatName, &iData ) )
-					{					
-						classStats.accumulatedMVM.m_iStat[pClassStatMap[iStat].iStat] = iData;					
+					{
+						classStats.accumulatedMVM.m_iStat[pClassStatMap[iStat].iStat] = iData;
 					}
 					Q_snprintf( szStatName, ARRAYSIZE( szStatName ), "%s.mvm.max.%s", g_aPlayerClassNames_NonLocalized[iClass], pClassStatMap[iStat].pszName );
 					if ( steamapicontext->SteamUserStats()->GetStat( szStatName, &iData ) )
-					{		
+					{
 						classStats.maxMVM.m_iStat[pClassStatMap[iStat].iStat] = iData;
 					}
 					iStat++;
@@ -226,8 +226,8 @@ void CTFSteamStats::FireGameEvent( IGameEvent *event )
 
 				Q_snprintf( szStatName, ARRAYSIZE( szStatName ), "%s.accum.%s",  pMap->pszMapName, g_SteamMapStats[iStat].pszName );
 				if ( steamapicontext->SteamUserStats()->GetStat( szStatName, &iData ) )
-				{					
-					mapStats.accumulated.m_iStat[g_SteamMapStats[iStat].iStat] = iData;					
+				{
+					mapStats.accumulated.m_iStat[g_SteamMapStats[iStat].iStat] = iData;
 				}
 			}
 		}
@@ -258,7 +258,7 @@ void CTFSteamStats::UploadStats()
 
 	// Only upload if Steam is running & the achievement manager exists.
 	if ( !steamapicontext->SteamUserStats() )
-		return; 
+		return;
 
 	CAchievementMgr *pAchievementMgr = dynamic_cast<CAchievementMgr *>( engine->GetAchievementMgr() );
 	if ( !pAchievementMgr )

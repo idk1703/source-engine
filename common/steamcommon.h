@@ -14,7 +14,7 @@
 **
 **		This file is distributed to Steam application developers.
 **
-**		
+**
 **
 *******************************************************************************/
 
@@ -314,7 +314,7 @@ typedef struct
 
 } TSteamApp;
 
-typedef enum 
+typedef enum
 {
 	eNoCost				= 0,
 	eBillOnceOnly		= 1,
@@ -446,8 +446,8 @@ typedef struct
 	char					szTypeOfProofOfPurchase[ STEAM_TYPE_OF_PROOF_OF_PURCHASE_SIZE + 1 ];
 
 	/* A ProofOfPurchase token is not necessarily a nul-terminated string; it may be binary data
-	   (perhaps encrypted). Hence we need a length and an array of bytes.							*/
-	unsigned int			uLengthOfBinaryProofOfPurchaseToken;	
+		(perhaps encrypted). Hence we need a length and an array of bytes.							*/
+	unsigned int			uLengthOfBinaryProofOfPurchaseToken;
 	char					cBinaryProofOfPurchaseToken[ STEAM_PROOF_OF_PURCHASE_TOKEN_SIZE + 1 ];
 } TSteamPrepurchaseInfo;
 
@@ -566,7 +566,7 @@ typedef enum
 											/* before allowing logout, unsubscribe, etc             */
 } ESteamUserTypeFlags;
 
-typedef enum 
+typedef enum
 {
 	eSteamAccountStatusDefault			=	0x00000000,
 	eSteamAccountStatusEmailVerified	=	0x00000001,
@@ -599,9 +599,9 @@ typedef struct
 
 typedef struct
 {
-  unsigned int uAppId;
-  int bIsSystemDefined;
-  char szMountPath[STEAM_MAX_PATH];
+	unsigned int uAppId;
+	int bIsSystemDefined;
+	char szMountPath[STEAM_MAX_PATH];
 } TSteamAppDependencyInfo;
 
 typedef enum
@@ -650,9 +650,9 @@ const unsigned int										STEAM_USE_LATEST_VERSION = 0xFFFFFFFF;
 ** Each Steam instance (licensed Steam Service Provider) has a unique SteamInstanceID_t.
 **
 ** Each Steam instance as its own DB of users.
-** Each user in the DB has a unique SteamLocalUserID_t (a serial number, with possible 
+** Each user in the DB has a unique SteamLocalUserID_t (a serial number, with possible
 ** rare gaps in the sequence).
-** 
+**
 ******************************************************************************/
 
 typedef	unsigned short		SteamInstanceID_t;		// MUST be 16 bits
@@ -667,16 +667,16 @@ typedef	unsigned long long	SteamLocalUserID_t;		// MUST be 64 bits
 /******************************************************************************
 **
 ** Applications need to be able to authenticate Steam users from ANY instance.
-** So a SteamIDTicket contains SteamGlobalUserID, which is a unique combination of 
+** So a SteamIDTicket contains SteamGlobalUserID, which is a unique combination of
 ** instance and user id.
 **
 ** SteamLocalUserID is an unsigned 64-bit integer.
-** For platforms without 64-bit int support, we provide access via a union that splits it into 
-** high and low unsigned 32-bit ints.  Such platforms will only need to compare LocalUserIDs 
+** For platforms without 64-bit int support, we provide access via a union that splits it into
+** high and low unsigned 32-bit ints.  Such platforms will only need to compare LocalUserIDs
 ** for equivalence anyway - not perform arithmetic with them.
-** 
+**
 ********************************************************************************/
-typedef struct	
+typedef struct
 {
 	unsigned int	Low32bits;
 	unsigned int	High32bits;

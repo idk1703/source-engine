@@ -33,7 +33,7 @@ CQuestObjectiveManager *QuestObjectiveManager( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseQuestObjectiveTracker::CBaseQuestObjectiveTracker( const CTFQuestObjectiveDefinition* pObjective, CQuestItemTracker* pParent )
 	: m_nObjectiveDefIndex( pObjective->GetDefinitionIndex() )
@@ -41,7 +41,7 @@ CBaseQuestObjectiveTracker::CBaseQuestObjectiveTracker( const CTFQuestObjectiveD
 	, m_pEvaluator( NULL )
 {
 	KeyValues *pKVConditions = pObjective->GetConditionsKeyValues();
-	
+
 	AssertMsg( !m_pEvaluator, "%s", CFmtStr( "Too many input for operator '%s'.", GetConditionName() ).Get() );
 
 	const char *pszType = pKVConditions->GetString( "type" );
@@ -62,7 +62,7 @@ CBaseQuestObjectiveTracker::CBaseQuestObjectiveTracker( const CTFQuestObjectiveD
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseQuestObjectiveTracker::~CBaseQuestObjectiveTracker()
 {
@@ -73,7 +73,7 @@ CBaseQuestObjectiveTracker::~CBaseQuestObjectiveTracker()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseQuestObjectiveTracker::IsValidForPlayer( const CTFPlayer *pOwner, InvalidReasonsContainer_t& invalidReasons ) const
 {
@@ -81,7 +81,7 @@ bool CBaseQuestObjectiveTracker::IsValidForPlayer( const CTFPlayer *pOwner, Inva
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const CTFPlayer *CBaseQuestObjectiveTracker::GetQuestOwner() const
 {
@@ -89,7 +89,7 @@ const CTFPlayer *CBaseQuestObjectiveTracker::GetQuestOwner() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseQuestObjectiveTracker::EvaluateCondition( CTFQuestEvaluator *pSender, int nScore )
 {
@@ -102,7 +102,7 @@ void CBaseQuestObjectiveTracker::EvaluateCondition( CTFQuestEvaluator *pSender, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseQuestObjectiveTracker::ResetCondition()
 {
@@ -110,7 +110,7 @@ void CBaseQuestObjectiveTracker::ResetCondition()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseQuestObjectiveTracker::UpdateConditions()
 {
@@ -130,7 +130,7 @@ bool CBaseQuestObjectiveTracker::UpdateConditions()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const CTFPlayer* CBaseQuestObjectiveTracker::GetTrackedPlayer() const
 {
@@ -143,7 +143,7 @@ const CTFPlayer* CBaseQuestObjectiveTracker::GetTrackedPlayer() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseQuestObjectiveTracker::IncrementCount( int nIncrementValue )
 {
@@ -157,7 +157,7 @@ void CBaseQuestObjectiveTracker::IncrementCount( int nIncrementValue )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CQuestItemTracker::CQuestItemTracker( const CSharedObject* pItem, CSteamID SteamIDOwner, CSOTrackerManager* pManager )
 	: CBaseSOTracker( pItem, SteamIDOwner, pManager )
@@ -206,7 +206,7 @@ CQuestItemTracker::CQuestItemTracker( const CSharedObject* pItem, CSteamID Steam
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CQuestItemTracker::~CQuestItemTracker()
 {
@@ -265,7 +265,7 @@ void CQuestItemTracker::UpdatePointsFromSOItem()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const CBaseQuestObjectiveTracker* CQuestItemTracker::FindTrackerForDefIndex( uint32 nDefIndex ) const
 {
@@ -288,8 +288,8 @@ uint32 CQuestItemTracker::GetEarnedStandardPoints() const
 	return m_nStandardPoints;
 #endif
 }
-uint32 CQuestItemTracker::GetEarnedBonusPoints() const 
-{ 
+uint32 CQuestItemTracker::GetEarnedBonusPoints() const
+{
 #ifdef GAME_DLL
 	return m_nStartingBonusPoints + m_nBonusPoints;
 #else
@@ -298,7 +298,7 @@ uint32 CQuestItemTracker::GetEarnedBonusPoints() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestItemTracker::IncrementCount( uint32 nIncrementValue, const CQuestObjectiveDefinition* pObjective )
 {
@@ -384,7 +384,7 @@ void CQuestItemTracker::OnUpdate()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestItemTracker::OnRemove()
 {
@@ -398,7 +398,7 @@ void CQuestItemTracker::OnRemove()
 #endif
 }
 
-void CQuestItemTracker::Spew() const 
+void CQuestItemTracker::Spew() const
 {
 	CBaseSOTracker::Spew();
 
@@ -409,7 +409,7 @@ void CQuestItemTracker::Spew() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CQuestItemTracker::DoesObjectiveNeedToBeTracked( const CQuestObjectiveDefinition* pObjective ) const
 {
@@ -435,7 +435,7 @@ bool CQuestItemTracker::DoesObjectiveNeedToBeTracked( const CQuestObjectiveDefin
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestItemTracker::CommitChangesToDB()
 {
@@ -454,7 +454,7 @@ void CQuestItemTracker::CommitChangesToDB()
 			, m_pItem->GetItemID()
 			, GetEarnedStandardPoints()
 			, GetEarnedBonusPoints() ), 0 );
-	
+
 	CSteamID ownerSteamID( m_pItem->GetAccountID(), GetUniverse(), k_EAccountTypeIndividual );
 
 	CMsgGCQuestObjective_PointsChange record;
@@ -470,7 +470,7 @@ void CQuestItemTracker::CommitChangesToDB()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CQuestItemTracker::IsValidForPlayer( const CTFPlayer *pOwner, InvalidReasonsContainer_t& invalidReasons ) const
 {
@@ -529,7 +529,7 @@ void CQuestItemTracker::SendUpdateToClient( const CQuestObjectiveDefinition* pOb
 
 #if defined( DEBUG ) || defined( STAGING_ONLY )
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestItemTracker::DBG_CompleteQuest()
 {

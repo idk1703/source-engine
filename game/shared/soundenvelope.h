@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -53,9 +53,9 @@ public:
 	virtual void		Shutdown( CSoundPatch *pSound ) = 0;
 
 	virtual CSoundPatch	*SoundCreate( IRecipientFilter& filter, int nEntIndex, const char *pSoundName ) = 0;
-	virtual CSoundPatch	*SoundCreate( IRecipientFilter& filter, int nEntIndex, int channel, const char *pSoundName, 
+	virtual CSoundPatch	*SoundCreate( IRecipientFilter& filter, int nEntIndex, int channel, const char *pSoundName,
 							float attenuation ) = 0;
-	virtual CSoundPatch	*SoundCreate( IRecipientFilter& filter, int nEntIndex, int channel, const char *pSoundName, 
+	virtual CSoundPatch	*SoundCreate( IRecipientFilter& filter, int nEntIndex, int channel, const char *pSoundName,
 							soundlevel_t soundlevel ) = 0;
 	virtual CSoundPatch	*SoundCreate( IRecipientFilter& filter, int nEntIndex, const EmitSound_t &es ) = 0;
 	virtual void		SoundDestroy( CSoundPatch	* ) = 0;
@@ -64,7 +64,7 @@ public:
 	virtual void		SoundFadeOut( CSoundPatch *pSound, float deltaTime, bool destroyOnFadeout = false ) = 0;
 	virtual float		SoundGetPitch( CSoundPatch *pSound ) = 0;
 	virtual float		SoundGetVolume( CSoundPatch *pSound ) = 0;
-	
+
 	virtual float		SoundPlayEnvelope( CSoundPatch *pSound, soundcommands_t soundCommand, envelopePoint_t *points, int numPoints ) = 0;
 	virtual float		SoundPlayEnvelope( CSoundPatch *pSound, soundcommands_t soundCommand, envelopeDescription_t *envelope ) = 0;
 

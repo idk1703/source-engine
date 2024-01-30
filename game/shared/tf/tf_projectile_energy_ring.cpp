@@ -39,7 +39,7 @@ const char* g_pszBisonImpactFleshSound			( "Weapon_Bison.ProjectileImpactWorld" 
 const char* g_pszBisonImpactWorldSound			( "Weapon_Bison.ProjectileImpactFlesh" );
 const char* g_pszBisonTrailParticle				( "drg_bison_projectile" );
 const char* g_pszBisonTrailParticleCrit			( "drg_bison_projectile_crit" );
-												  
+
 const char* g_pszEnergyProjectileImpactParticle	( "drg_pomson_impact" );
 //=============================================================================
 //
@@ -89,17 +89,17 @@ float CTFProjectile_EnergyRing::GetGravity( void )
 
 float CTFProjectile_EnergyRing::GetInitialVelocity( void )
 {
-	return ShouldPenetrate() ? 840.f : 1200.f; 
+	return ShouldPenetrate() ? 840.f : 1200.f;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFProjectile_EnergyRing *CTFProjectile_EnergyRing::Create( CTFWeaponBaseGun *pLauncher, const Vector &vecOrigin, const QAngle& vecAngles, float fSpeed, float fGravity, 
+CTFProjectile_EnergyRing *CTFProjectile_EnergyRing::Create( CTFWeaponBaseGun *pLauncher, const Vector &vecOrigin, const QAngle& vecAngles, float fSpeed, float fGravity,
 														    CBaseEntity *pOwner, CBaseEntity *pScorer, Vector vColor1, Vector vColor2, bool bCritical )
 {
 	CTFProjectile_EnergyRing *pRing = NULL;
-	
+
 #ifdef GAME_DLL
 	Vector vecForward, vecRight, vecUp;
 	AngleVectors( vecAngles, &vecForward, &vecRight, &vecUp );
@@ -118,7 +118,7 @@ CTFProjectile_EnergyRing *CTFProjectile_EnergyRing::Create( CTFWeaponBaseGun *pL
 	pRing->Spawn();
 
 	Vector vecVelocity = vecForward * pRing->GetInitialVelocity();
-	pRing->SetAbsVelocity( vecVelocity );	
+	pRing->SetAbsVelocity( vecVelocity );
 
 	// Setup the initial angles.
 	QAngle angles;
@@ -143,14 +143,14 @@ CTFProjectile_EnergyRing *CTFProjectile_EnergyRing::Create( CTFWeaponBaseGun *pL
 	{
 		if ( pRaygun->GetWeaponID() == TF_WEAPON_DRG_POMSON )
 		{
-			pRing = static_cast<CTFProjectile_EnergyRing*>( CTFBaseProjectile::Create( "tf_projectile_energy_ring", vecOrigin, vecAngles, pOwner, 
-																					   1200.f, g_sModelIndexRing, 
+			pRing = static_cast<CTFProjectile_EnergyRing*>( CTFBaseProjectile::Create( "tf_projectile_energy_ring", vecOrigin, vecAngles, pOwner,
+																					   1200.f, g_sModelIndexRing,
 																					   ENERGY_RING_DISPATCH_EFFECT_POMSON, pScorer, bCritical, vColor1, vColor2 ) );
 		}
 		else
 		{
-			pRing = static_cast<CTFProjectile_EnergyRing*>( CTFBaseProjectile::Create( "tf_projectile_energy_ring", vecOrigin, vecAngles, pOwner, 
-																					   1200.f, g_sModelIndexRing, 
+			pRing = static_cast<CTFProjectile_EnergyRing*>( CTFBaseProjectile::Create( "tf_projectile_energy_ring", vecOrigin, vecAngles, pOwner,
+																					   1200.f, g_sModelIndexRing,
 																					   ENERGY_RING_DISPATCH_EFFECT, pScorer, bCritical, vColor1, vColor2 ) );
 		}
 
@@ -171,7 +171,7 @@ CTFProjectile_EnergyRing *CTFProjectile_EnergyRing::Create( CTFWeaponBaseGun *pL
 // Purpose:
 //-----------------------------------------------------------------------------
 void CTFProjectile_EnergyRing::Spawn()
-{	
+{
 	BaseClass::Spawn();
 
 	SetSolid( SOLID_BBOX );
@@ -211,13 +211,13 @@ struct collidelist_t
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFProjectile_EnergyRing::ProjectileTouch( CBaseEntity *pOther )
 {
 	// Verify a correct "other."
 	Assert( pOther );
-	if ( !pOther->IsSolid() || pOther->IsSolidFlagSet( FSOLID_VOLUME_CONTENTS ) || pOther->IsSolidFlagSet( FSOLID_NOT_SOLID ) 
+	if ( !pOther->IsSolid() || pOther->IsSolidFlagSet( FSOLID_VOLUME_CONTENTS ) || pOther->IsSolidFlagSet( FSOLID_NOT_SOLID )
 		|| pOther->GetCollisionGroup() == TFCOLLISION_GROUP_RESPAWNROOMS )
 		return;
 
@@ -287,9 +287,9 @@ void CTFProjectile_EnergyRing::ProjectileTouch( CBaseEntity *pOther )
 	}
 
 	// The stuff we collide with
-	bool bCombatEntity = pOther->IsPlayer() || 
-						 pOther->IsBaseObject() || 
-						 pOther->IsCombatCharacter() || 
+	bool bCombatEntity = pOther->IsPlayer() ||
+						 pOther->IsBaseObject() ||
+						 pOther->IsCombatCharacter() ||
 						 pOther->IsCombatItem();
 
 	if ( !bCombatEntity )
@@ -321,7 +321,7 @@ void CTFProjectile_EnergyRing::ProjectileTouch( CBaseEntity *pOther )
 		}
 
 		const int nMaxPenetrates = 5;
-		const int nDamage = GetDamage() * pow( 0.75f, m_vecHitEnemies.Count() ); 
+		const int nDamage = GetDamage() * pow( 0.75f, m_vecHitEnemies.Count() );
 
 		CTakeDamageInfo info( this, pOwner, GetLauncher(), nDamage, GetDamageType(), TF_DMG_CUSTOM_PLASMA );
 		info.SetReportedPosition( pOwner->GetAbsOrigin() );
@@ -354,8 +354,8 @@ void CTFProjectile_EnergyRing::ProjectileTouch( CBaseEntity *pOther )
 		{
 			return;
 		}
-	
-		
+
+
 		UTIL_Remove( this );
 		return;
 	}
@@ -367,7 +367,7 @@ void CTFProjectile_EnergyRing::ProjectileTouch( CBaseEntity *pOther )
 	}
 
 	PlayImpactEffects( pTrace->endpos, false );
-	
+
 	// Remove by default.  Fixes this entity living forever on things like doors.
 	UTIL_Remove( this );
 }
@@ -375,7 +375,7 @@ void CTFProjectile_EnergyRing::ProjectileTouch( CBaseEntity *pOther )
 void CTFProjectile_EnergyRing::ResolveFlyCollisionCustom( trace_t &trace, Vector &vecVelocity )
 {
 	PlayImpactEffects( trace.endpos, false );
-	
+
 	// Remove by default.  Fixes this entity living forever on things like doors.
 	UTIL_Remove( this );
 }
@@ -420,7 +420,7 @@ void CTFProjectile_EnergyRing::OnDataChanged( DataUpdateType_t updateType )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFProjectile_EnergyRing::GetDamage()
 {

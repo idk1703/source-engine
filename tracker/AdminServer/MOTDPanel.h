@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -63,7 +63,7 @@ private:
 	vgui::Button *m_pSendMOTDButton;
 
 	CRcon *m_pRcon;
-		
+
 	DECLARE_PANELMAP();
 	typedef vgui::PropertyPage BaseClass;
 };

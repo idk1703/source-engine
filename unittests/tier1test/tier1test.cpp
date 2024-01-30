@@ -20,11 +20,11 @@ class CTier1TestAppSystem : public CTier1AppSystem< IAppSystem >
 	typedef CTier1AppSystem< IAppSystem > BaseClass;
 
 public:
-	virtual bool Connect( CreateInterfaceFn factory ) 
+	virtual bool Connect( CreateInterfaceFn factory )
 	{
 		if ( !BaseClass::Connect( factory ) )
 			return false;
-		return true; 
+		return true;
 	}
 
 	virtual InitReturnVal_t Init()

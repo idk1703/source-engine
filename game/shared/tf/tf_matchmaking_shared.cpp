@@ -30,11 +30,11 @@ const char *s_pszMatchGroups[] =
 {
 	"MatchGroup_MvM_Practice",
 	"MatchGroup_MvM_MannUp",
-	
+
 	"MatchGroup_Ladder_6v6",
 	"MatchGroup_Ladder_9v9",
 	"MatchGroup_Ladder_12v12",
-	
+
 	"MatchGroup_Casual_6v6",
 	"MatchGroup_Casual_9v9",
 	"MatchGroup_Casual_12v12",
@@ -60,20 +60,20 @@ void On6v6MatchSizeChanged( IConVar *pConVar, const char *pOldString, float flOl
 #endif
 
 GCConVar tf_mm_match_size_mvm( "tf_mm_match_size_mvm", "6", FCVAR_MATCHSIZE_THING,
-                               "How many players in an MvM matchmade group?" );
+	"How many players in an MvM matchmade group?" );
 GCConVar tf_mm_match_size_ladder_6v6( "tf_mm_match_size_ladder_6v6", "12", FCVAR_MATCHSIZE_THING,
-                                      "Number of players required to play a 6v6 ladder game.", true, 1, true, 12
+	"Number of players required to play a 6v6 ladder game.", true, 1, true, 12
 #ifdef GC_DLL
-									  , On6v6MatchSizeChanged
+									, On6v6MatchSizeChanged
 #endif
-									  );
+									);
 
 GCConVar tf_mm_match_size_ladder_9v9( "tf_mm_match_size_ladder_9v9", "18", FCVAR_MATCHSIZE_THING,
-                                      "Number of players required to play a 9v9 ladder game." );
+	"Number of players required to play a 9v9 ladder game." );
 GCConVar tf_mm_match_size_ladder_12v12( "tf_mm_match_size_ladder_12v12", "24", FCVAR_MATCHSIZE_THING,
-                                        "Number of players required to play a 12v12 ladder game." );
+	"Number of players required to play a 12v12 ladder game." );
 GCConVar tf_mm_match_size_ladder_12v12_minimum( "tf_mm_match_size_ladder_12v12_minimum", "12", FCVAR_MATCHSIZE_THING,
-                                                "Specifies the minimum number of players needed to launch a 12v12 match. Set to -1 to disable." );
+	"Specifies the minimum number of players needed to launch a 12v12 match. Set to -1 to disable." );
 
 
 //-----------------------------------------------------------------------------
@@ -107,9 +107,9 @@ CCasualCriteriaHelper::CCasualCriteriaHelper( const CMsgCasualMatchmakingSearchC
 		}
 	}
 }
-	
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CCasualCriteriaHelper::IsMapSelected( const MapDef_t* pMapDef ) const
 {
@@ -128,7 +128,7 @@ bool CCasualCriteriaHelper::IsMapSelected( const uint32 nMapDefIndex ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CCasualCriteriaHelper::IsMapInValidCategory( uint32 nMapDefIndex ) const
 {

@@ -116,7 +116,7 @@ void CHeadlessHatman::Precache()
 	CBaseEntity::SetAllowPrecache( true );
 
 	PrecacheHeadlessHatman();
-	
+
 	CBaseEntity::SetAllowPrecache( bAllowPrecache );
 }
 
@@ -204,7 +204,7 @@ const char *CHeadlessHatman::GetWeaponModel() const
 class CHeadlessHatmanBehavior : public Action< CHeadlessHatman >
 {
 public:
-	virtual Action< CHeadlessHatman > *InitialContainedAction( CHeadlessHatman *me )	
+	virtual Action< CHeadlessHatman > *InitialContainedAction( CHeadlessHatman *me )
 	{
 		return new CHeadlessHatmanEmerge;
 	}
@@ -220,7 +220,7 @@ public:
 				const CUtlVector< CHeadlessHatman::AttackerInfo > &attackerVector = me->GetAttackerVector();
 				for( int i=0; i<attackerVector.Count(); ++i )
 				{
-					if ( attackerVector[i].m_attacker != NULL && 
+					if ( attackerVector[i].m_attacker != NULL &&
 						 gpGlobals->curtime - attackerVector[i].m_timestamp < deathTime )
 					{
 						CReliableBroadcastRecipientFilter filter;
@@ -256,8 +256,8 @@ public:
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
 CHeadlessHatmanIntention::CHeadlessHatmanIntention( CHeadlessHatman *me ) : IIntention( me )
-{ 
-	m_behavior = new Behavior< CHeadlessHatman >( new CHeadlessHatmanBehavior ); 
+{
+	m_behavior = new Behavior< CHeadlessHatman >( new CHeadlessHatmanBehavior );
 }
 
 CHeadlessHatmanIntention::~CHeadlessHatmanIntention()
@@ -266,14 +266,14 @@ CHeadlessHatmanIntention::~CHeadlessHatmanIntention()
 }
 
 void CHeadlessHatmanIntention::Reset( void )
-{ 
-	delete m_behavior; 
+{
+	delete m_behavior;
 	m_behavior = new Behavior< CHeadlessHatman >( new CHeadlessHatmanBehavior );
 }
 
 void CHeadlessHatmanIntention::Update( void )
 {
-	m_behavior->Update( static_cast< CHeadlessHatman * >( GetBot() ), GetUpdateInterval() ); 
+	m_behavior->Update( static_cast< CHeadlessHatman * >( GetBot() ), GetUpdateInterval() );
 }
 
 // is this a place we can be?
@@ -324,7 +324,7 @@ bool CHeadlessHatmanLocomotion::ShouldCollideWith( const CBaseEntity *object ) c
 	if ( TFGameRules()->IsHalloweenScenario( CTFGameRules::HALLOWEEN_SCENARIO_DOOMSDAY ) && object->IsPlayer() )
 	{
 		return false;
-	}	
+	}
 
 	return BaseClass::ShouldCollideWith( object );
 }

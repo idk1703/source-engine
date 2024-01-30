@@ -198,7 +198,7 @@ float DoShadowNvidiaPCF5x5Gaussian( sampler DepthSampler, const float4 shadowMap
 
 float DoShadowATICheap( sampler DepthSampler, const float4 shadowMapPos )
 {
-    float2 shadowMapCenter = shadowMapPos.xy/shadowMapPos.w;
+	float2 shadowMapCenter = shadowMapPos.xy/shadowMapPos.w;
 	float objDepth = shadowMapPos.z / shadowMapPos.w;
 	float fSampleDepth = tex2D( DepthSampler, shadowMapCenter ).x;
 
@@ -212,13 +212,13 @@ float DoShadowATICheap( sampler DepthSampler, const float4 shadowMapPos )
 float DoShadowPoisson16Sample( sampler DepthSampler, sampler RandomRotationSampler, const float3 vProjCoords, const float2 vScreenPos, const float4 vShadowTweaks, bool bNvidiaHardwarePCF, bool bFetch4 )
 {
 	float2 vPoissonOffset[8] = { float2(  0.3475f,  0.0042f ),
-								 float2(  0.8806f,  0.3430f ),
-								 float2( -0.0041f, -0.6197f ),
-								 float2(  0.0472f,  0.4964f ),
-								 float2( -0.3730f,  0.0874f ),
-								 float2( -0.9217f, -0.3177f ),
-								 float2( -0.6289f,  0.7388f ),
-								 float2(  0.5744f, -0.7741f ) };
+								float2(  0.8806f,  0.3430f ),
+								float2( -0.0041f, -0.6197f ),
+								float2(  0.0472f,  0.4964f ),
+								float2( -0.3730f,  0.0874f ),
+								float2( -0.9217f, -0.3177f ),
+								float2( -0.6289f,  0.7388f ),
+								float2(  0.5744f, -0.7741f ) };
 
 	float flScaleOverMapSize = vShadowTweaks.x * 2;		// Tweak parameters to shader
 	float2 vNoiseOffset = vShadowTweaks.zw;
@@ -240,7 +240,7 @@ float DoShadowPoisson16Sample( sampler DepthSampler, sampler RandomRotationSampl
 
 	RMatTop.z = shadowMapCenter.x;				// To be added in d2adds generated below
 	RMatBottom.z = shadowMapCenter.y;
-	
+
 	float fResult = 0.0f;
 
 	if ( bNvidiaHardwarePCF )
@@ -360,7 +360,7 @@ float DoShadow360Simple( sampler DepthSampler, const float3 vProjCoords )
 
 #if defined( REVERSE_DEPTH_ON_X360 )
 	objDepth = 1.0f - objDepth;
-#endif	
+#endif
 
 	float4 vSampledDepths, vWeights;
 
@@ -445,7 +445,7 @@ float AmountShadowed_8Tap_360( sampler DepthSampler, float2 tc, float objDepth )
 	float4 vSampledDepthsA, vSampledDepthsB;
 
 	// Optimal 8 rooks pattern to get an idea about whether we're at a penumbra or not
-	// From [Kallio07] "Scanline Edge-Flag Algorithm for Antialiasing" 
+	// From [Kallio07] "Scanline Edge-Flag Algorithm for Antialiasing"
 	//
 	//        +---+---+---+---+---+---+---+---+
 	//        |   |   |   |   |   | o |   |   |
@@ -521,9 +521,9 @@ float AmountShadowed_4Tap_360( sampler DepthSampler, float2 tc, float objDepth )
 float DoShadowPoisson360( sampler DepthSampler, sampler RandomRotationSampler, const float3 vProjCoords, const float2 vScreenPos, const float4 vShadowTweaks )
 {
 	float2 vPoissonOffset[8] = { float2(  0.3475f,  0.0042f ), float2(  0.8806f,  0.3430f ),
-								 float2( -0.0041f, -0.6197f ), float2(  0.0472f,  0.4964f ),
-								 float2( -0.3730f,  0.0874f ), float2( -0.9217f, -0.3177f ),
-								 float2( -0.6289f,  0.7388f ), float2(  0.5744f, -0.7741f ) };
+								float2( -0.0041f, -0.6197f ), float2(  0.0472f,  0.4964f ),
+								float2( -0.3730f,  0.0874f ), float2( -0.9217f, -0.3177f ),
+								float2( -0.6289f,  0.7388f ), float2(  0.5744f, -0.7741f ) };
 
 	float2 shadowMapCenter = vProjCoords.xy;		// Center of shadow filter
 	float objDepth = min( vProjCoords.z, 0.99999 );	// Object depth in shadow space
@@ -634,7 +634,7 @@ float DoFlashlightShadow( sampler DepthSampler, sampler RandomRotationSampler, f
 }
 
 float3 SpecularLight( const float3 vWorldNormal, const float3 vLightDir, const float fSpecularExponent,
-					  const float3 vEyeDir, const bool bDoSpecularWarp, in sampler specularWarpSampler, float fFresnel )
+					const float3 vEyeDir, const bool bDoSpecularWarp, in sampler specularWarpSampler, float fFresnel )
 {
 	float3 result = float3(0.0f, 0.0f, 0.0f);
 
@@ -650,7 +650,7 @@ float3 SpecularLight( const float3 vWorldNormal, const float3 vLightDir, const f
 	return vSpecular;
 }
 
-void DoSpecularFlashlight( float3 flashlightPos, float3 worldPos, float4 flashlightSpacePosition, float3 worldNormal,  
+void DoSpecularFlashlight( float3 flashlightPos, float3 worldPos, float4 flashlightSpacePosition, float3 worldNormal,
 					float3 attenuationFactors, float farZ, sampler FlashlightSampler, sampler FlashlightDepthSampler, sampler RandomRotationSampler,
 					int nShadowLevel, bool bDoShadows, bool bAllowHighQuality, const float2 vScreenPos, const float fSpecularExponent, const float3 vEyeDir,
 					const bool bDoSpecularWarp, sampler specularWarpSampler, float fFresnel, float4 vShadowTweaks,
@@ -729,7 +729,7 @@ void DoSpecularFlashlight( float3 flashlightPos, float3 worldPos, float4 flashli
 }
 
 // Diffuse only version
-float3 DoFlashlight( float3 flashlightPos, float3 worldPos, float4 flashlightSpacePosition, float3 worldNormal, 
+float3 DoFlashlight( float3 flashlightPos, float3 worldPos, float4 flashlightSpacePosition, float3 worldNormal,
 					float3 attenuationFactors, float farZ, sampler FlashlightSampler, sampler FlashlightDepthSampler,
 					sampler RandomRotationSampler, int nShadowLevel, bool bDoShadows, bool bAllowHighQuality,
 					const float2 vScreenPos, bool bClip, float4 vShadowTweaks = float4(3/1024.0f, 0.0005f, 0.0f, 0.0f), bool bHasNormal = true )

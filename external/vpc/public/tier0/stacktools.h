@@ -113,7 +113,7 @@ public:
 
 //Encodes data so that every byte's most significant bit is a 1. Ensuring no null terminators.
 //This puts the encoded data in the 128-255 value range. Leaving all standard ascii characters for control.
-//Returns string length (not including the written null terminator as is standard). 
+//Returns string length (not including the written null terminator as is standard).
 //Or if the buffer is too small. Returns negative of necessary buffer size (including room needed for null terminator)
 PLATFORM_INTERFACE int EncodeBinaryToString( const void *pToEncode, int iDataLength, char *pEncodeOut, int iEncodeBufferSize );
 

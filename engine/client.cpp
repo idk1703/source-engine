@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -55,7 +55,7 @@
 #include "tier0/memdbgon.h"
 
 static ConVar cl_timeout( "cl_timeout", "30", FCVAR_ARCHIVE, "After this many seconds without receiving a packet from the server, the client will disconnect itself" );
-	   ConVar cl_logofile( "cl_logofile", "materials/decals/spraylogo.vtf", FCVAR_ARCHIVE, "Spraypoint logo decal." ); // TODO must be more generic
+	ConVar cl_logofile( "cl_logofile", "materials/decals/spraylogo.vtf", FCVAR_ARCHIVE, "Spraypoint logo decal." ); // TODO must be more generic
 static ConVar cl_soundfile( "cl_soundfile", "sound/player/jingle.wav", FCVAR_ARCHIVE, "Jingle sound file." );
 static ConVar cl_allowdownload ( "cl_allowdownload", "1", FCVAR_ARCHIVE, "Client downloads customization files" );
 static ConVar cl_downloadfilter( "cl_downloadfilter", "all", FCVAR_ARCHIVE, "Determines which files can be downloaded from the server (all, none, nosounds, mapsonly)" );
@@ -68,7 +68,7 @@ static ConVar cl_downloadfilter( "cl_downloadfilter", "all", FCVAR_ARCHIVE, "Det
 	#define CONVAR_DEFAULT_ALWAYS_FLUSH_MODELS "0"
 #endif
 static ConVar cl_always_flush_models( "cl_always_flush_models", CONVAR_DEFAULT_ALWAYS_FLUSH_MODELS, FCVAR_INTERNAL_USE,
-                                      "If set, always flush models between map loads.  Useful on systems under memory pressure." );
+					"If set, always flush models between map loads.  Useful on systems under memory pressure." );
 
 extern ConVar sv_downloadurl;
 
@@ -126,7 +126,7 @@ const char *CClientState::GetCDKeyHash( void )
 {
 	if ( IsPC() )
 	{
-		char szKeyBuffer[256]; // Keys are about 13 chars long.	
+		char szKeyBuffer[256]; // Keys are about 13 chars long.
 		static char szHashedKeyBuffer[64];
 		int nKeyLength;
 		bool bDedicated = false;
@@ -163,7 +163,7 @@ const char *CClientState::GetCDKeyHash( void )
 		// Now get the md5 hash of the key
 		memset( &ctx, 0, sizeof( ctx ) );
 		memset( digest, 0, sizeof( digest ) );
-		
+
 		MD5Init(&ctx);
 		MD5Update(&ctx, (unsigned char*)szKeyBuffer, nKeyLength);
 		MD5Final(digest, &ctx);
@@ -177,7 +177,7 @@ const char *CClientState::GetCDKeyHash( void )
 void CClientState::SendClientInfo( void )
 {
 	CLC_ClientInfo info;
-	
+
 	info.m_nSendTableCRC = SendTable_GetCRC();
 	info.m_nServerCount = m_nServerCount;
 	info.m_bIsHLTV = false;
@@ -218,7 +218,7 @@ void CClientState::SendServerCmdKeyValues( KeyValues *pKeyValues )
 {
 	if ( !pKeyValues )
 		return;
-	
+
 	CLC_CmdKeyValues clcCommand( pKeyValues );
 
 	if ( !m_NetChannel )
@@ -247,16 +247,16 @@ bool CClientState::SetSignonState ( int state, int count )
 
 	switch ( m_nSignonState )
 	{
-		case SIGNONSTATE_CHALLENGE	:	
-			m_bMarkedCRCsUnverified = false;	// Remember that we just connected to a new server so it'll 
+		case SIGNONSTATE_CHALLENGE	:
+			m_bMarkedCRCsUnverified = false;	// Remember that we just connected to a new server so it'll
 												// reverify any necessary file CRCs on this server.
 			EngineVGui()->UpdateProgressBar(PROGRESS_SIGNONCHALLENGE);
 			break;
 
-		case SIGNONSTATE_CONNECTED :	
+		case SIGNONSTATE_CONNECTED :
 			{
 				EngineVGui()->UpdateProgressBar(PROGRESS_SIGNONCONNECTED);
-				
+
 				// make sure it's turned off when connecting
 				EngineVGui()->HideDebugSystem();
 
@@ -267,7 +267,7 @@ bool CClientState::SetSignonState ( int state, int count )
 				// allow longer timeout
 				m_NetChannel->SetTimeout( SIGNON_TIME_OUT );
 				m_NetChannel->SetMaxBufferSize( true, NET_MAX_PAYLOAD );
-				
+
 				// set user settings (rate etc)
 				NET_SetConVar convars;
 				Host_BuildConVarUpdateMessage( &convars, FCVAR_USERINFO, false );
@@ -275,7 +275,7 @@ bool CClientState::SetSignonState ( int state, int count )
 			}
 			break;
 
-		case SIGNONSTATE_NEW :	
+		case SIGNONSTATE_NEW :
 			{
 				EngineVGui()->UpdateProgressBar(PROGRESS_SIGNONNEW);
 
@@ -298,7 +298,7 @@ bool CClientState::SetSignonState ( int state, int count )
 		case SIGNONSTATE_PRESPAWN	:
 			m_nSoundSequence = 1;	// reset sound sequence number after receiving signon sounds
 			break;
-		
+
 		case SIGNONSTATE_SPAWN :
 			{
 				Assert( g_ClientDLL );
@@ -332,7 +332,7 @@ bool CClientState::SetSignonState ( int state, int count )
 				}
 
 				HostState_OnClientConnected();
-				
+
 				if ( m_nMaxClients > 1 )
 				{
 					g_pMatchmaking->AddLocalPlayersToTeams();
@@ -340,7 +340,7 @@ bool CClientState::SetSignonState ( int state, int count )
 			}
 			break;
 
-		case SIGNONSTATE_CHANGELEVEL:	
+		case SIGNONSTATE_CHANGELEVEL:
 			m_NetChannel->SetTimeout( SIGNON_TIME_OUT );  // allow 5 minutes timeout
 			if ( m_nMaxClients > 1 )
 			{
@@ -376,7 +376,7 @@ bool CClientState::HookClientStringTable( char const *tableName )
 		{
 			g_ClientDLL->InstallStringTableCallback( tableName );
 		}
-        return false;
+	return false;
 	}
 
 #if 0
@@ -391,7 +391,7 @@ bool CClientState::HookClientStringTable( char const *tableName )
 	Q_snprintf( szModelPrecacheTablename, 255, ":%s", MODEL_PRECACHE_TABLENAME );
 	Q_snprintf( szGenericPrecacheTablename, 255, ":%s", GENERIC_PRECACHE_TABLENAME );
 	Q_snprintf( szSoundPrecacheTablename, 255, ":%s", SOUND_PRECACHE_TABLENAME );
-	Q_snprintf( szDecalPrecacheTablename, 255, ":%s", DECAL_PRECACHE_TABLENAME );		
+	Q_snprintf( szDecalPrecacheTablename, 255, ":%s", DECAL_PRECACHE_TABLENAME );
 #else
 	const char *szDownloadableFileTablename = DOWNLOADABLE_FILE_TABLENAME;
 	const char *szModelPrecacheTablename = MODEL_PRECACHE_TABLENAME;
@@ -492,7 +492,7 @@ bool CClientState::InstallEngineStringTableCallback( char const *tableName )
 	Q_snprintf( szModelPrecacheTablename, 255, ":%s", MODEL_PRECACHE_TABLENAME );
 	Q_snprintf( szGenericPrecacheTablename, 255, ":%s", GENERIC_PRECACHE_TABLENAME );
 	Q_snprintf( szSoundPrecacheTablename, 255, ":%s", SOUND_PRECACHE_TABLENAME );
-	Q_snprintf( szDecalPrecacheTablename, 255, ":%s", DECAL_PRECACHE_TABLENAME );		
+	Q_snprintf( szDecalPrecacheTablename, 255, ":%s", DECAL_PRECACHE_TABLENAME );
 #else
 	const char *szDownloadableFileTablename = DOWNLOADABLE_FILE_TABLENAME;
 	const char *szModelPrecacheTablename = MODEL_PRECACHE_TABLENAME;
@@ -582,7 +582,7 @@ void CClientState::InstallStringTableCallback( char const *tableName )
 bool CClientState::IsPaused() const
 {
 	return m_bPaused || ( g_LostVideoMemory && Host_IsSinglePlayerGame() ) ||
-		!host_initialized || 
+		!host_initialized ||
 		demoplayer->IsPlaybackPaused() ||
 		EngineVGui()->ShouldPause();
 }
@@ -591,7 +591,7 @@ float CClientState::GetTime() const
 {
 	int nTickCount = GetClientTickCount();
 	float flTickTime = nTickCount * host_state.interval_per_tick;
-	
+
 	// Timestamps are rounded to exact tick during simulation
 	if ( insimulation )
 	{
@@ -638,7 +638,7 @@ float CClientState::GetClientInterpAmount()
 		if ( !s_cl_interp )
 			return 0.1f;
 	}
-		
+
 	float flInterpRatio = s_cl_interp_ratio->GetFloat();
 	float flInterp = s_cl_interp->GetFloat();
 
@@ -676,7 +676,7 @@ void CClientState::Clear( void )
 	m_bPrepareClientDLL = false;
 
 	DeleteClientFrames( -1 ); // clear all
-		
+
 	viewangles.Init();
 	m_flLastServerTickTime = 0.0f;
 	oldtickcount = 0;
@@ -730,14 +730,14 @@ void CClientState::FullConnect( netadr_t &adr )
 	m_NetChannel->SetDataRate( cl_rate->GetFloat() );
 
 	// Not in the demo loop now
-	demonum = -1;		
-	
+	demonum = -1;
+
 	// We don't have a backed up cmd history yet
 	lastoutgoingcommand = -1;
 
 	// we didn't send commands yet
 	chokedcommands = 0;
-	
+
 	// Report connection success.
 	if ( Q_stricmp("loopback", adr.ToString() ) )
 	{
@@ -746,8 +746,8 @@ void CClientState::FullConnect( netadr_t &adr )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : model_t
 //-----------------------------------------------------------------------------
 model_t *CClientState::GetModel( int index )
@@ -806,8 +806,8 @@ model_t *CClientState::GetModel( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : int -- note -1 if missing
 //-----------------------------------------------------------------------------
 int CClientState::LookupModelIndex( char const *name )
@@ -821,9 +821,9 @@ int CClientState::LookupModelIndex( char const *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
-//			*name - 
+// Purpose:
+// Input  : index -
+//			*name -
 //-----------------------------------------------------------------------------
 void CClientState::SetModel( int tableIndex )
 {
@@ -878,8 +878,8 @@ void CClientState::SetModel( int tableIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : model_t
 //-----------------------------------------------------------------------------
 char const *CClientState::GetGeneric( int index )
@@ -904,8 +904,8 @@ char const *CClientState::GetGeneric( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : int -- note -1 if missing
 //-----------------------------------------------------------------------------
 int CClientState::LookupGenericIndex( char const *name )
@@ -920,9 +920,9 @@ int CClientState::LookupGenericIndex( char const *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
-//			*name - 
+// Purpose:
+// Input  : index -
+//			*name -
 //-----------------------------------------------------------------------------
 void CClientState::SetGeneric( int tableIndex )
 {
@@ -932,8 +932,8 @@ void CClientState::SetGeneric( int tableIndex )
 		return;
 	}
 	// Bogus index
-	if ( tableIndex < 0 || 
-		 tableIndex >= m_pGenericPrecacheTable->GetNumStrings() )
+	if ( tableIndex < 0 ||
+		tableIndex >= m_pGenericPrecacheTable->GetNumStrings() )
 	{
 		return;
 	}
@@ -945,8 +945,8 @@ void CClientState::SetGeneric( int tableIndex )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CClientState::GetSoundName( int index )
@@ -964,8 +964,8 @@ char const *CClientState::GetSoundName( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : model_t
 //-----------------------------------------------------------------------------
 CSfxTable *CClientState::GetSound( int index )
@@ -997,8 +997,8 @@ CSfxTable *CClientState::GetSound( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : int -- note -1 if missing
 //-----------------------------------------------------------------------------
 int CClientState::LookupSoundIndex( char const *name )
@@ -1012,9 +1012,9 @@ int CClientState::LookupSoundIndex( char const *name )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
-//			*name - 
+// Purpose:
+// Input  : index -
+//			*name -
 //-----------------------------------------------------------------------------
 void CClientState::SetSound( int tableIndex )
 {
@@ -1060,8 +1060,8 @@ void CClientState::SetSound( int tableIndex )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : model_t
 //-----------------------------------------------------------------------------
 char const *CClientState::GetDecalName( int index )
@@ -1082,17 +1082,17 @@ char const *CClientState::GetDecalName( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
-//			*name - 
+// Purpose:
+// Input  : index -
+//			*name -
 //-----------------------------------------------------------------------------
 void CClientState::SetDecal( int tableIndex )
 {
 	if ( !m_pDecalPrecacheTable )
 		return;
 
-	if ( tableIndex < 0 || 
-		 tableIndex >= m_pDecalPrecacheTable->GetNumStrings() )
+	if ( tableIndex < 0 ||
+		tableIndex >= m_pDecalPrecacheTable->GetNumStrings() )
 	{
 		return;
 	}
@@ -1163,14 +1163,14 @@ void CClientState::AddCustomFile( int slot, const char *resourceFile)
 	// Compute checksum of resource file
 	CRC_File( &crcValue, resourceFile );
 
-	// Copy it into materials/downloads if it's not there yet, so the server doesn't have to 
+	// Copy it into materials/downloads if it's not there yet, so the server doesn't have to
 	// transmit the file back to us.
 	bool bCopy = true;
 	CCustomFilename filehex( crcValue );
 	char szAbsFilename[ MAX_PATH ];
 	if ( g_pFileSystem->RelativePathToFullPath( filehex.m_Filename, "game", szAbsFilename, sizeof(szAbsFilename), FILTER_CULLPACK ) )
 	{
-		// check if existing file already has same CRC, 
+		// check if existing file already has same CRC,
 		// then we don't need to copy it anymore
 		CRC32_t test;
 		CRC_File( &test, szAbsFilename );
@@ -1223,7 +1223,7 @@ void CClientState::CheckOwnCustomFiles()
 {
 	// clear file CRCs
 	Q_memset( m_nCustomFiles, 0, sizeof(m_nCustomFiles) );
-	
+
 	if ( m_nMaxClients == 1 )
 		return;	// not in singleplayer
 
@@ -1235,7 +1235,7 @@ void CClientState::CheckOwnCustomFiles()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClientState::DumpPrecacheStats( const char * name )
 {
@@ -1246,7 +1246,7 @@ void CClientState::DumpPrecacheStats( const char * name )
 	}
 
 	CPrecacheItem *items = NULL;
-	
+
 	if ( !Q_strcmp(MODEL_PRECACHE_TABLENAME, name ) )
 	{
 		items = model_precache;
@@ -1301,8 +1301,8 @@ void CClientState::DumpPrecacheStats( const char * name )
 		else
 		{
 			ConMsg( " %i refs, first %.2f mru %.2f\n",
-				slot->GetReferenceCount(), 
-				slot->GetFirstReference(), 
+				slot->GetReferenceCount(),
+				slot->GetFirstReference(),
 				slot->GetMostRecentReference() );
 		}
 	}
@@ -1315,8 +1315,8 @@ void CClientState::ReadDeletions( CEntityReadInfo &u )
 	VPROF( "ReadDeletions" );
 	while ( u.m_pBuf->ReadOneBit()!=0 )
 	{
-		int idx = u.m_pBuf->ReadUBitLong( MAX_EDICT_BITS );	
-		
+		int idx = u.m_pBuf->ReadUBitLong( MAX_EDICT_BITS );
+
 		Assert( !u.m_pTo->transmit_entity.Get( idx ) );
 
 		CL_DeleteDLLEntity( idx, "ReadDeletions" );
@@ -1365,7 +1365,7 @@ void CClientState::ReadDeltaEnt( CEntityReadInfo &u )
 {
 	VPROF( "ReadDeltaEnt" );
 	CL_CopyExistingEntity( u );
-	
+
 	u.NextOldEntity();
 }
 
@@ -1391,7 +1391,7 @@ void CClientState::ReadPreserveEnt( CEntityReadInfo &u )
 	if ( u.m_nOldEntity >= MAX_EDICTS || u.m_nOldEntity < 0 || u.m_nNewEntity >= MAX_EDICTS )
 	{
 		Host_Error( "CL_ReadPreserveEnt: Entity out of bounds. Old: %i, New: %i",
-		            u.m_nOldEntity, u.m_nNewEntity );
+			u.m_nOldEntity, u.m_nNewEntity );
 	}
 
 	u.m_pTo->last_entity = u.m_nOldEntity;
@@ -1417,7 +1417,7 @@ void CClientState::StartUpdatingSteamResources()
 		return;
 	}
 
-	// we can only do this when in SIGNONSTATE_NEW, 
+	// we can only do this when in SIGNONSTATE_NEW,
 	// since the completion of this triggers the continuation of SIGNONSTATE_NEW
 	Assert(m_nSignonState == SIGNONSTATE_NEW);
 
@@ -1658,7 +1658,7 @@ bool CheckSimpleMaterial( IMaterial *pMaterial )
 
 	const char *name = pMaterial->GetShaderName();
 	if ( Q_strncasecmp( name, "VertexLitGeneric", 16 ) &&
-		 Q_strncasecmp( name, "UnlitGeneric", 12 ) )
+		Q_strncasecmp( name, "UnlitGeneric", 12 ) )
 		return false;
 
 	if ( pMaterial->GetMaterialVarFlag( MATERIAL_VAR_IGNOREZ ) )
@@ -2008,9 +2008,9 @@ void CClientState::UpdateAreaBits_BackwardsCompatible()
 		tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
 
 		memcpy( m_chAreaBits, m_pAreaBits, sizeof( m_chAreaBits ) );
-		
+
 		// The whole point of adding this array was that the client could react to closed portals.
-		// If they're using the old interface to set area portal bits, then we use the old 
+		// If they're using the old interface to set area portal bits, then we use the old
 		// behavior of assuming all portals are open on the clent.
 		memset( m_chAreaPortalBits, 0xFF, sizeof( m_chAreaPortalBits ) );
 
@@ -2055,7 +2055,7 @@ void CClientState::RunFrame()
 		// Also print a warning to console
 		static float s_flLastWarningTime = 0.0f;
 		if ( !s_bLowPagedPoolMemoryWarning ||
-			 ( Plat_FloatTime() - s_flLastWarningTime > 3.0f ) )	// print a warning no faster than once every 3 sec
+			( Plat_FloatTime() - s_flLastWarningTime > 3.0f ) )	// print a warning no faster than once every 3 sec
 		{
 			s_bLowPagedPoolMemoryWarning = true;
 			s_flLastWarningTime = Plat_FloatTime();

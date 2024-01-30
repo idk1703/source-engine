@@ -21,7 +21,7 @@
 
 using namespace std;
 //------------------------------------------------------------------------------------------------------
-// Purpose: CTeamKillAward is an award given to the player who kills more of 
+// Purpose: CTeamKillAward is an award given to the player who kills more of
 // their teammates than any other player.
 //------------------------------------------------------------------------------------------------------
 class CTeamKillAward: public CAward

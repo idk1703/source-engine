@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -131,9 +131,7 @@ void FileSystem_SetWhitelistSpewFlags()
 		Assert( !"FileSystem_InitSpewFlags - no filesystem." );
 		return;
 	}
-	
+
 	g_pFileSystem->SetWhitelistSpewFlags( fs_whitelist_spew_flags.GetInt() );
 #endif
 }
-
-	

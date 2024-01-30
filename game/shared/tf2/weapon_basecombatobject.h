@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -46,7 +46,7 @@ protected:
 	/*
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -61,8 +61,8 @@ protected:
 #endif
 	*/
 
-private:														
-	CWeaponBaseCombatObject( const CWeaponBaseCombatObject & );						
+private:
+	CWeaponBaseCombatObject( const CWeaponBaseCombatObject & );
 };
 
 #endif // WEAPON_BASECOMBATOBJECT_H

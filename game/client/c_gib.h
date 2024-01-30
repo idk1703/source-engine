@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,7 +22,7 @@ public:
 	~C_Gib( void );
 
 	static C_Gib	*CreateClientsideGib( const char *pszModelName, Vector vecOrigin, Vector vecForceDir, AngularImpulse vecAngularImp, float flLifetime = DEFAULT_GIB_LIFETIME );
-	
+
 	bool	InitializeGib( const char *pszModelName, Vector vecOrigin, Vector vecForceDir, AngularImpulse vecAngularImp, float flLifetime = DEFAULT_GIB_LIFETIME );
 	void	ClientThink( void );
 	void	StartTouch( C_BaseEntity *pOther );
@@ -46,13 +46,13 @@ public:
 	virtual void Update( float frametime );
 	virtual void LevelInitPreEntity( void );
 
-	void	AddGib( C_BaseEntity *pEntity ); 
+	void	AddGib( C_BaseEntity *pEntity );
 	void	RemoveGib( C_BaseEntity *pEntity );
 
 private:
 	typedef CHandle<C_BaseEntity> CGibHandle;
-	CUtlLinkedList< CGibHandle > m_LRU; 
-	
+	CUtlLinkedList< CGibHandle > m_LRU;
+
 };
 
 

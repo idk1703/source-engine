@@ -71,7 +71,7 @@ private:
 	void PlaySound( const char *pszSound, CTFPlayer *pPlayer );
 	virtual void OnRedScoreChanged() OVERRIDE;
 	virtual void OnBlueScoreChanged() OVERRIDE;
-	
+
 	void EvaluatePlayerCount();
 
 	void SetCountdownImage( string_t iszCountdownImage ) { m_iszCountdownImage = iszCountdownImage; }

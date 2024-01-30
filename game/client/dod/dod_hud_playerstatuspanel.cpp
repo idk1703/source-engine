@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -43,7 +43,7 @@ private:
 	ImagePanel				*m_pAlliesIcon;
 	ImagePanel				*m_pAxisIcon;
 	CDoDHudAmmo				*m_pAmmoStatus;
-	CDoDHudHealth			*m_pHealthStatus;	
+	CDoDHudHealth			*m_pHealthStatus;
 	CDoDHudCurrentWeapon	*m_pCurrentWeapon;
 	CDoDHudStamina			*m_pStamina;
 	CDoDHudMGHeat			*m_pMGHeat;
@@ -56,7 +56,7 @@ DECLARE_HUDELEMENT( CDoDHudPlayerStatusPanel );
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CDoDHudPlayerStatusPanel::CDoDHudPlayerStatusPanel( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudPlayerStatusPanel" ) 
+CDoDHudPlayerStatusPanel::CDoDHudPlayerStatusPanel( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudPlayerStatusPanel" )
 {
 	SetParent( g_pClientMode->GetViewport() );
 
@@ -81,7 +81,7 @@ void CDoDHudPlayerStatusPanel::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudPlayerStatusPanel::Init()
 {
@@ -92,7 +92,7 @@ void CDoDHudPlayerStatusPanel::Init()
 
 	if ( m_pStamina )
 	{
-		m_pStamina->SetVisible( true );	
+		m_pStamina->SetVisible( true );
 	}
 
 	if ( m_pAlliesIcon )
@@ -107,7 +107,7 @@ void CDoDHudPlayerStatusPanel::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudPlayerStatusPanel::PerformLayout()
 {
@@ -119,12 +119,12 @@ void CDoDHudPlayerStatusPanel::PerformLayout()
 	if ( w != ScreenWidth() )
 	{
 		// doing this because of the 16:9 and 16:10 resolutions (VGUI doesn't scale properly for them)
-		SetBounds( x, y, ScreenWidth(), t ); 
+		SetBounds( x, y, ScreenWidth(), t );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudPlayerStatusPanel::OnThink()
 {
@@ -180,5 +180,3 @@ void CDoDHudPlayerStatusPanel::OnThink()
 		}
 	}
 }
-
-

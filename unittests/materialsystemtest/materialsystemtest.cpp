@@ -28,8 +28,8 @@
 
 //-----------------------------------------------------------------------------
 // Purpose: Warning/Msg call back through this API
-// Input  : type - 
-//			*pMsg - 
+// Input  : type -
+//			*pMsg -
 // Output : SpewRetval_t
 //-----------------------------------------------------------------------------
 SpewRetval_t SpewFunc( SpewType_t type, const char *pMsg )
@@ -96,7 +96,7 @@ bool CMaterialSystemTestApp::Create()
 {
 	SpewOutputFunc( SpewFunc );
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "materialsystem.dll",		MATERIAL_SYSTEM_INTERFACE_VERSION },
 
@@ -104,7 +104,7 @@ bool CMaterialSystemTestApp::Create()
 		{ "", "" }
 	};
 
-	if ( !AddSystems( appSystems ) ) 
+	if ( !AddSystems( appSystems ) )
 		return false;
 
 	IMaterialSystem *pMaterialSystem = (IMaterialSystem*)FindSystem( MATERIAL_SYSTEM_INTERFACE_VERSION );
@@ -134,7 +134,7 @@ bool CMaterialSystemTestApp::Create()
 		pShaderDLL = "shaderapidx9.dll";
 	}
 
-	pMaterialSystem->SetShaderAPI( pShaderDLL );	
+	pMaterialSystem->SetShaderAPI( pShaderDLL );
 	return true;
 }
 
@@ -170,18 +170,18 @@ bool CMaterialSystemTestApp::CreateAppWindow( const char *pTitle, bool bWindowed
 	WNDCLASSEX		wc;
 	memset( &wc, 0, sizeof( wc ) );
 	wc.cbSize		 = sizeof( wc );
-    wc.style         = CS_OWNDC | CS_DBLCLKS;
-    wc.lpfnWndProc   = MaterialSystemTestWndProc;
-    wc.hInstance     = (HINSTANCE)GetAppInstance();
-    wc.lpszClassName = "Valve001";
+	wc.style         = CS_OWNDC | CS_DBLCLKS;
+	wc.lpfnWndProc   = MaterialSystemTestWndProc;
+	wc.hInstance     = (HINSTANCE)GetAppInstance();
+	wc.lpszClassName = "Valve001";
 	wc.hIcon		 = NULL; //LoadIcon( s_HInstance, MAKEINTRESOURCE( IDI_LAUNCHER ) );
 	wc.hIconSm		 = wc.hIcon;
 
-    RegisterClassEx( &wc );
+	RegisterClassEx( &wc );
 
 	// Note, it's hidden
 	DWORD style = WS_POPUP | WS_CLIPSIBLINGS;
-	
+
 	if ( bWindowed )
 	{
 		// Give it a frame
@@ -202,14 +202,14 @@ bool CMaterialSystemTestApp::CreateAppWindow( const char *pTitle, bool bWindowed
 	AdjustWindowRectEx(&windowRect, style, FALSE, 0);
 
 	// Create the window
-	m_HWnd = CreateWindow( wc.lpszClassName, pTitle, style, 0, 0, 
-		windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, 
+	m_HWnd = CreateWindow( wc.lpszClassName, pTitle, style, 0, 0,
+		windowRect.right - windowRect.left, windowRect.bottom - windowRect.top,
 		NULL, NULL, (HINSTANCE)GetAppInstance(), NULL );
 
 	if (!m_HWnd)
 		return false;
 
-    int     CenterX, CenterY;
+	int     CenterX, CenterY;
 
 	CenterX = (GetSystemMetrics(SM_CXSCREEN) - w) / 2;
 	CenterY = (GetSystemMetrics(SM_CYSCREEN) - h) / 2;
@@ -218,7 +218,7 @@ bool CMaterialSystemTestApp::CreateAppWindow( const char *pTitle, bool bWindowed
 
 	// In VCR modes, keep it in the upper left so mouse coordinates are always relative to the window.
 	SetWindowPos (m_HWnd, NULL, CenterX, CenterY, 0, 0,
-				  SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW | SWP_DRAWFRAME);
+				SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW | SWP_DRAWFRAME);
 
 	return true;
 }
@@ -391,7 +391,7 @@ void CMaterialSystemTestApp::TestDynamicBuffers( IMatRenderContext *pMatRenderCo
 	pMatRenderContext->ClearColor3ub( RandomInt( 0, 100 ), RandomInt( 0, 100 ), RandomInt( 190, 255 ) );
 	pMatRenderContext->ClearBuffers( true, true );
 
-	static unsigned char s_pColors[4][4] = 
+	static unsigned char s_pColors[4][4] =
 	{
 		{ 255,   0,   0, 255 },
 		{   0, 255,   0, 255 },
@@ -469,7 +469,7 @@ int CMaterialSystemTestApp::Main()
 
 	// Clears the screen
 	g_pMaterialSystem->BeginFrame( 0 );
-	pRenderContext->ClearColor4ub( 76, 88, 68, 255 ); 
+	pRenderContext->ClearColor4ub( 76, 88, 68, 255 );
 	pRenderContext->ClearBuffers( true, true );
 	g_pMaterialSystem->EndFrame();
 	g_pMaterialSystem->SwapBuffers();

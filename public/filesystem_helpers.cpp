@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -39,12 +39,12 @@ const char* ParseFileInternal( const char* pFileBytes, char* pTokenOut, bool* pW
 	InitializeCharacterSets();
 
 	// YWB:  Ignore colons as token separators in COM_Parse
-	static bool com_ignorecolons = false;  
+	static bool com_ignorecolons = false;
 	characterset_t& breaks = pCharSet ? *pCharSet : (com_ignorecolons ? g_BreakSet : g_BreakSetIncludingColons);
-	
+
 	int c;
 	unsigned int len = 0;
-	
+
 // skip whitespace
 skipwhite:
 
@@ -54,7 +54,7 @@ skipwhite:
 			return 0;                    // end of file;
 		pFileBytes++;
 	}
-	
+
 // skip // comments
 	if (c=='/' && pFileBytes[1] == '/')
 	{
@@ -62,7 +62,7 @@ skipwhite:
 			pFileBytes++;
 		goto skipwhite;
 	}
-	
+
 // skip c-style comments
 	if (c=='/' && pFileBytes[1] == '*' )
 	{
@@ -123,7 +123,7 @@ skipwhite:
 		if ( IN_CHARACTERSET( breaks, c ) )
 			break;
 	} while (c>32);
-	
+
 	pTokenOut[len] = 0;
 	return pFileBytes;
 }

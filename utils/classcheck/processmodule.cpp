@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,7 +32,7 @@ double UTIL_FloatTime (void)
 
 		base = current;
 	}
-	
+
 	return (double)(current - base)/(double)CLOCKS_PER_SEC;
 }
 
@@ -130,7 +130,7 @@ void CCodeProcessor::ResolveBaseClasses( const char *baseentityclass )
 				//vprint( 0, "couldn't find base class %s for %s\n", cl->m_szBaseClass, cl->m_szName );
 			}
 		}
-		
+
 		cl = cl->m_pNext;
 	}
 
@@ -350,9 +350,9 @@ void CCodeProcessor::ReportHungarianNotationErrors()
 	while ( cl )
 	{
 		int c = 0;
-		
+
 		cl->CheckForHungarianErrors( c );
-		
+
 		classcount++;
 		warningcount += c;
 
@@ -370,7 +370,7 @@ void CCodeProcessor::PrintClassList( void ) const
 	}
 
 	CClass *cl = m_pClassList;
-	
+
 	while ( cl )
 	{
 		if ( cl->m_bDerivedFromCBaseEntity )
@@ -408,7 +408,7 @@ void CCodeProcessor::PrintClassList( void ) const
 				base = base->m_pBaseClass;
 			}
 
-			int i; 
+			int i;
 
 			if ( GetPrintHierarchy() && GetPrintMembers() )
 			{
@@ -446,7 +446,7 @@ void CCodeProcessor::PrintClassList( void ) const
 					vprint( 1, "\nMember Variables\n\n" );
 				}
 
-				
+
 				for ( i = 0; i < cl->m_nVarCount; i++ )
 				{
 					CClassVariable *var = cl->m_Variables[ i ];
@@ -518,7 +518,7 @@ void CCodeProcessor::PrintClassList( void ) const
 				//	vprint( 1, "\nPrediction TYPEDESCRIPTION not specified for class\n\n" );
 				}
 			}
-		
+
 			if ( GetPrintHierarchy() )
 			{
 				vprint( 0, "\n" );
@@ -696,7 +696,7 @@ char *CCodeProcessor::ParseTypeDescription( char *current, bool fIsMacroized )
 
 		strcpy( varname, com_token );
 
-		
+
 		char vartype[ 256 ];
 
 		vartype[0]=0;
@@ -710,13 +710,13 @@ char *CCodeProcessor::ParseTypeDescription( char *current, bool fIsMacroized )
 		{
 			strcpy( vartype, "funcptr" );
 		}
-		else if ( !stricmp(definetype, "DEFINE_FIELD") || 
+		else if ( !stricmp(definetype, "DEFINE_FIELD") ||
 			!stricmp(definetype, "DEFINE_INDEX") ||
-			!stricmp(definetype, "DEFINE_KEYFIELD") || 
-			!stricmp(definetype, "DEFINE_KEYFIELD_NOT_SAVED") || 
-			!stricmp(definetype, "DEFINE_UTLVECTOR") || 
-			!stricmp(definetype, "DEFINE_GLOBAL_FIELD") || 
-			!stricmp(definetype, "DEFINE_GLOBAL_KEYFIELD") || 
+			!stricmp(definetype, "DEFINE_KEYFIELD") ||
+			!stricmp(definetype, "DEFINE_KEYFIELD_NOT_SAVED") ||
+			!stricmp(definetype, "DEFINE_UTLVECTOR") ||
+			!stricmp(definetype, "DEFINE_GLOBAL_FIELD") ||
+			!stricmp(definetype, "DEFINE_GLOBAL_KEYFIELD") ||
 			!stricmp(definetype, "DEFINE_CUSTOM_FIELD") ||
 			!stricmp(definetype, "DEFINE_INPUT") ||
 			!stricmp(definetype, "DEFINE_AUTO_ARRAY") ||
@@ -767,7 +767,7 @@ char *CCodeProcessor::ParseTypeDescription( char *current, bool fIsMacroized )
 
 			if ( !stricmp( com_token, "(" ) )
 			{
-				++nParenCount; 
+				++nParenCount;
 			}
 			else if ( !stricmp( com_token, ")" ) )
 			{
@@ -939,7 +939,7 @@ char *CCodeProcessor::ParseReceiveTable( char *current )
 						root[ spot - cropped ] = 0;
 						strcpy( cropped, spot + 1 );
 
-						classVar = cl->FindVar( root, true );	
+						classVar = cl->FindVar( root, true );
 					}
 					else
 					{
@@ -1064,7 +1064,7 @@ char *CCodeProcessor::ParsePredictionTypeDescription( char *current )
 
 		strcpy( varname, com_token );
 
-		
+
 		char vartype[ 256 ];
 
 		vartype[0]=0;
@@ -1094,7 +1094,7 @@ char *CCodeProcessor::ParsePredictionTypeDescription( char *current )
 
 			if ( !stricmp( com_token, "(" ) )
 			{
-				++nParenCount; 
+				++nParenCount;
 			}
 			else if ( !stricmp( com_token, ")" ) )
 			{
@@ -1182,7 +1182,7 @@ bool CCodeProcessor::CheckShouldSkip( bool forcequiet, int depth, char const *fi
 	return true;
 }
 
-bool CCodeProcessor::LoadFile( char **buffer, char *filename, char const *module, bool forcequiet, 
+bool CCodeProcessor::LoadFile( char **buffer, char *filename, char const *module, bool forcequiet,
 	int depth, int& filelength, int& numheaders, int& skippedfiles,
 	char const *srcroot, char const *root, char const *baseroot )
 {
@@ -1223,7 +1223,7 @@ static bool SkipFile( char const *module )
 	return false;
 }
 
-void CCodeProcessor::ProcessModule( bool forcequiet, int depth, int& maxdepth, int& numheaders, int& skippedfiles, 
+void CCodeProcessor::ProcessModule( bool forcequiet, int depth, int& maxdepth, int& numheaders, int& skippedfiles,
 	const char *srcroot, const char *baseroot, const char *root, const char *module )
 {
 	char filename[ 256 ];
@@ -1234,7 +1234,7 @@ void CCodeProcessor::ProcessModule( bool forcequiet, int depth, int& maxdepth, i
 	}
 	int filelength;
 	char *buffer = NULL;
-		
+
 	// Always skip these particular modules/headers
 	if ( SkipFile( module ) )
 	{
@@ -1435,7 +1435,7 @@ void CCodeProcessor::ProcessModule( bool forcequiet, int depth, int& maxdepth, i
 								cl->SetBaseClass( basename );
 								strcpy( cl->m_szTypedefBaseClass, basename );
 							}
-							
+
 							do
 							{
 								current = CC_ParseToken( current );
@@ -1454,7 +1454,7 @@ void CCodeProcessor::ProcessModule( bool forcequiet, int depth, int& maxdepth, i
 				}
 			}
 		}
-		else if ( !strcmp( com_token, "TYPEDESCRIPTION" ) || 
+		else if ( !strcmp( com_token, "TYPEDESCRIPTION" ) ||
 			    !strcmp( com_token, "typedescription_t" ) )
 		{
 			current = ParseTypeDescription( current, false );
@@ -1555,7 +1555,7 @@ void CCodeProcessor::PrintResults( const char *baseentityclass )
 
 	vprint( 0, "%.3f K lines of code processed\n",
 		(double)m_nLinesOfCode / 1024.0 );
-	
+
 	double elapsed = ( m_flEnd - m_flStart );
 
 	if ( elapsed > 0.0 )
@@ -1570,7 +1570,7 @@ void CCodeProcessor::PrintResults( const char *baseentityclass )
 CCodeProcessor::CCodeProcessor( void )
 {
 	m_pClassList					= NULL;
-	
+
 	m_Modules.RemoveAll();
 
 	m_bQuiet						= false;
@@ -1599,7 +1599,7 @@ CCodeProcessor::~CCodeProcessor( void )
 {
 }
 
-void CCodeProcessor::ConstructModuleList_R( int level, const char *baseentityclass, 
+void CCodeProcessor::ConstructModuleList_R( int level, const char *baseentityclass,
 	const char *gamespecific, const char *root, const char *srcroot )
 {
 	char directory[ 256 ];
@@ -1730,7 +1730,7 @@ void CCodeProcessor::Process( const char *baseentityclass, const char *gamespeci
 	vprint( 0, "--- Processing %s\n\n", rootdirectory );
 
 	m_nOffset = strlen( rootdirectory ) + 1;
-	
+
 	ConstructModuleList_R( 0, baseentityclass, gamespecific, rootdirectory, sourcetreebase );
 
 	m_flEnd = UTIL_FloatTime();
@@ -1738,7 +1738,7 @@ void CCodeProcessor::Process( const char *baseentityclass, const char *gamespeci
 	PrintResults( baseentityclass );
 }
 
-void CCodeProcessor::Process( const char *baseentityclass, const char *gamespecific, 
+void CCodeProcessor::Process( const char *baseentityclass, const char *gamespecific,
 	const char *sourcetreebase, const char *subdir, const char *pFileName )
 {
 	SetupIncludePath( sourcetreebase, subdir, gamespecific );

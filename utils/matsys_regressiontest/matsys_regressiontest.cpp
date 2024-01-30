@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -133,7 +133,7 @@ void DisplayError( const char* pError, ... )
 {
 	va_list		argptr;
 	char		msg[1024];
-	
+
 	va_start( argptr, pError );
 	Q_vsnprintf( msg, sizeof( msg ), pError, argptr );
 	va_end( argptr );
@@ -258,8 +258,8 @@ void Shader_Init( HWND mainWindow )
 	const char* pDLLName;
 	pDLLName = "shaderapidx9";
 
-	// assume that IFileSystem paths have already been set via g_pFileSystem 
-	g_MaterialSystemClientFactory = g_pMaterialSystem->Init( 
+	// assume that IFileSystem paths have already been set via g_pFileSystem
+	g_MaterialSystemClientFactory = g_pMaterialSystem->Init(
 		pDLLName, &g_DummyMaterialProxyFactory, g_pFileSystemFactory, VStdLib_GetICVarFactory() );
 	if (!g_MaterialSystemClientFactory)
 	{
@@ -309,7 +309,7 @@ void Shader_Shutdown( HWND hwnd )
 static void CalcWindowSize( int desiredRenderingWidth, int desiredRenderingHeight,
 							int *windowWidth, int *windowHeight )
 {
-    int     borderX, borderY;
+	int     borderX, borderY;
 	borderX = (GetSystemMetrics(SM_CXFIXEDFRAME) + 1) * 2;
 	borderY = (GetSystemMetrics(SM_CYFIXEDFRAME) + 1) * 2 + GetSystemMetrics(SM_CYSIZE) + 1;
 	*windowWidth = desiredRenderingWidth + borderX;
@@ -321,8 +321,8 @@ static void CalcWindowSize( int desiredRenderingWidth, int desiredRenderingHeigh
 //-----------------------------------------------------------------------------
 LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
-    switch( msg )
-    {
+	switch( msg )
+	{
 	case WM_PAINT:
 		RenderFrame();
 		break;
@@ -335,36 +335,36 @@ LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 			break;
 		}
 		break;
-		
-        case WM_DESTROY:
+
+		case WM_DESTROY:
 			g_Exiting = true;
-            PostQuitMessage( 0 );
-            return 0;
-    }
-	
-    return DefWindowProc( hWnd, msg, wParam, lParam );
+			PostQuitMessage( 0 );
+			return 0;
+	}
+
+	return DefWindowProc( hWnd, msg, wParam, lParam );
 }
 
 bool CreateAppWindow( const char* pAppName, int width, int height )
 {
-    // Register the window class
-	WNDCLASSEX windowClass = 
-	{ 
+	// Register the window class
+	WNDCLASSEX windowClass =
+	{
 		sizeof(WNDCLASSEX), CS_CLASSDC, MsgProc, 0L, 0L,
-        GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
-        pAppName, NULL 
+		GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
+		pAppName, NULL
 	};
 
-    RegisterClassEx( &windowClass );
+	RegisterClassEx( &windowClass );
 
-    // Create the application's window
-    g_HWnd = CreateWindow( pAppName, pAppName,
-		WS_OVERLAPPEDWINDOW, 
+	// Create the application's window
+	g_HWnd = CreateWindow( pAppName, pAppName,
+		WS_OVERLAPPEDWINDOW,
 		0, 0, width, height,
 		GetDesktopWindow(), NULL, windowClass.hInstance, NULL );
-	
-    ShowWindow (g_HWnd, SW_SHOWDEFAULT);
-	
+
+	ShowWindow (g_HWnd, SW_SHOWDEFAULT);
+
 	return (g_HWnd != 0);
 }
 
@@ -426,8 +426,8 @@ static char *GetBaseDir( const char *pszBuffer )
 	j = strlen( basedir );
 	if (j > 0)
 	{
-		if ( ( basedir[ j-1 ] == '\\' ) || 
-			 ( basedir[ j-1 ] == '/' ) )
+		if ( ( basedir[ j-1 ] == '\\' ) ||
+			( basedir[ j-1 ] == '/' ) )
 		{
 			basedir[ j-1 ] = 0;
 		}
@@ -455,12 +455,12 @@ void Shutdown()
 void PumpWindowsMessages ()
 {
 	MSG msg;
-	while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) == TRUE) 
+	while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) == TRUE)
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
-	
+
 	InvalidateRect(g_HWnd, NULL, false);
 	UpdateWindow(g_HWnd);
 }
@@ -484,7 +484,7 @@ void AllocateLightmap( LightmapInfo_t& lightmapInfo, int width, int height )
 	CMatRenderContextPtr pRenderContext( materials );
 	IMaterial *pHackMaterial = g_pMaterialSystem->FindMaterial( "shadertest/lightmappedgeneric", TEXTURE_GROUP_OTHER );
 	pRenderContext->Bind( pHackMaterial );
-	lightmapInfo.m_SortID = 
+	lightmapInfo.m_SortID =
 		g_pMaterialSystem->AllocateLightmap( 16, 16, lightmapInfo.m_OffsetIntoLightmapPage, pHackMaterial );
 }
 
@@ -579,7 +579,7 @@ void ScreenShot( const char *pFilename )
 	{
 		Error( "Couldn't write %s\n", pFilename );
 	}
-	
+
 	free( pImage );
 }
 
@@ -616,7 +616,7 @@ void DrawBackground( void )
 	IMesh *pMesh = pRenderContext->GetDynamicMesh();
 	CMeshBuilder meshBuilder;
 	meshBuilder.Begin( pMesh, MATERIAL_QUADS, 1 );
-	
+
 #define X 500.0f
 #define Y 500.0f
 #define Z -500.0f
@@ -636,7 +636,7 @@ void DrawBackground( void )
 	meshBuilder.Position3f( -X, -Y, Z );
 	meshBuilder.TexCoord2f( 0, 0.0f, 1.0f );
 	meshBuilder.AdvanceVertex();
-	
+
 	meshBuilder.End();
 	pMesh->Draw();
 
@@ -675,13 +675,13 @@ void DrawQuad( const LightmapInfo_t& lightmapInfo )
 {
 	CMatRenderContextPtr pRenderContext( materials );
 	pRenderContext->BindLightmapPage( g_pMaterialSortInfo[lightmapInfo.m_SortID].lightmapPageID );
-	
+
 	pRenderContext->Bind( g_pProceduralMaterial );
 
 	IMesh *pMesh = pRenderContext->GetDynamicMesh();
 	CMeshBuilder meshBuilder;
 	meshBuilder.Begin( pMesh, MATERIAL_QUADS, 1 );
-	
+
 #define X 350.0f
 #define Y (X*(4.0f/3.0f))
 #define Z -500.0f
@@ -713,7 +713,7 @@ void DrawQuad( const LightmapInfo_t& lightmapInfo )
 	meshBuilder.Normal3f( 0.0f, 0.0f, 1.0f );
 	meshBuilder.Color4f( 0.0f, 1.0f, 1.0f, 1.0f );
 	meshBuilder.AdvanceVertex();
-	
+
 	meshBuilder.End();
 	pMesh->Draw();
 
@@ -752,7 +752,7 @@ based on lightmappedgeneric_ps11.fxc:
 
 
 Versions with DETAIL aren't implemented yet in HLSL, but we'll go ahead and test those.
-*/  	
+*/
 	// The following are shader combos from lightmappedgeneric_ps20
 	for( int BUMPMAP = 0; BUMPMAP <= 1; BUMPMAP++ )
 	{
@@ -809,7 +809,7 @@ Versions with DETAIL aren't implemented yet in HLSL, but we'll go ahead and test
 																	// skip commands from shader lightmappedgeneric_vs11
 																	if( ENVMAPCAMERASPACE && ENVMAPSPHERE ) continue;
 																	if( !ENVMAP && ( ENVMAPCAMERASPACE || ENVMAPSPHERE ) ) continue;
-																	
+
 																	// skip commands from shader lihgtmappedgeneric_ps11
 																	if( !ENVMAP && ( BASEALPHAENVMAPMASK || ENVMAPMASK ) ) continue;
 																	if( !BASETEXTURE && BASEALPHAENVMAPMASK ) continue;
@@ -817,7 +817,7 @@ Versions with DETAIL aren't implemented yet in HLSL, but we'll go ahead and test
 																	if( !BASETEXTURE && BASEALPHAENVMAPMASK ) continue;
 																	if( SELFILLUM && BASEALPHAENVMAPMASK ) continue;
 																	if( !BASETEXTURE && SELFILLUM ) continue;
-																	
+
 																	// skip commands from shader lightmappedgeneric_ps20
 																	if( DETAIL && BUMPMAP ) continue;
 																	if( ENVMAPMASK && BUMPMAP ) continue;
@@ -825,11 +825,11 @@ Versions with DETAIL aren't implemented yet in HLSL, but we'll go ahead and test
 																	if( NORMALMAPALPHAENVMAPMASK && ENVMAPMASK ) continue;
 																	if( BASEALPHAENVMAPMASK && ENVMAPMASK ) continue;
 																	if( BASEALPHAENVMAPMASK && SELFILLUM ) continue;
-																	
+
 																	// skip commands from flags that don't make sense (or we don't want to test)
 																	if( !BASETEXTURE && ( ALPHATEST || TRANSLUCENT ) ) continue;
 																	if( TRANSLUCENT && ALPHATEST ) continue;
-																	
+
 																	KeyValues *pKeyValues = new KeyValues( "lightmappedgeneric" );
 																	if ( BASETEXTURE )
 																	{
@@ -908,7 +908,7 @@ Versions with DETAIL aren't implemented yet in HLSL, but we'll go ahead and test
 																	EndFrame();
 																	char filename[MAX_PATH];
 																	sprintf( filename, "%s\\lightmappedgeneric_dx80", CommandLine()->ParmValue( "-targetdir" ) );
-																	
+
 																	if( BUMPMAP ) Q_strcat( filename, "_BUMPMAP", sizeof(filename) );
 																	if( NORMALMAPALPHAENVMAPMASK ) Q_strcat( filename, "_NORMALMAPALPHAENVMAPMASK", sizeof(filename) );
 
@@ -916,7 +916,7 @@ Versions with DETAIL aren't implemented yet in HLSL, but we'll go ahead and test
 																	if( ENVMAPMASK ) Q_strcat( filename, "_ENVMAPMASK", sizeof(filename) );
 																	if( SELFILLUM ) Q_strcat( filename, "_SELFILLUM", sizeof(filename) );
 																	if( BASEALPHAENVMAPMASK ) Q_strcat( filename, "_BASEALPHAENVMAPMASK", sizeof(filename) );
-																	
+
 																	if( DETAIL ) Q_strcat( filename, "_DETAIL", sizeof(filename) );
 																	if( ENVMAP ) Q_strcat( filename, "_ENVMAP", sizeof(filename) );
 																	if( ENVMAPCAMERASPACE ) Q_strcat( filename, "_ENVMAPCAMERASPACE", sizeof(filename) );
@@ -927,7 +927,7 @@ Versions with DETAIL aren't implemented yet in HLSL, but we'll go ahead and test
 																	if( TRANSLUCENT ) Q_strcat( filename, "_TRANSLUCENT", sizeof(filename) );
 																	if( COLORMODULATE ) Q_strcat( filename, "_COLORMODULATE", sizeof(filename) );
 																	if( ALPHAMODULATE ) Q_strcat( filename, "_ALPHAMODULATE", sizeof(filename) );
-																	
+
 																	if( BUMPMAP ) Q_strcat( filename, "_BUMPMAP", sizeof(filename) );
 																	Q_strcat( filename, ".tga", sizeof(filename) );
 																	ScreenShot( filename );
@@ -970,7 +970,7 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE hInstance, LPSTR pCommands, INT )
 	{
 		Error( "Must specify -targetdir on command line!\n" );
 	}
-	
+
 	struct _stat statbuf;
 	if( 0 != _stat( CommandLine()->ParmValue( "-targetdir" ), &statbuf ) )
 	{
@@ -996,13 +996,13 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE hInstance, LPSTR pCommands, INT )
 	char* pRootDir = GetBaseDir( moduleName );
 
 #ifdef DBGFLAG_ASSERT
-	int len = 
+	int len =
 #endif
 
 	Q_snprintf( szBuffer, sizeof( szBuffer ), "PATH=%s;%s", pRootDir, pPath );
 	Assert( len < 4096 );
 	_putenv( szBuffer );
-		    
+
 	MathLib_Init( 2.2f, 2.2f, 0.0f, 2.0f );
 
 	if (!Init( pCommands ) )
@@ -1018,6 +1018,5 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE hInstance, LPSTR pCommands, INT )
 	RenderFrame();
 	Shutdown();
 
-    return 0;
+	return 0;
 }
-

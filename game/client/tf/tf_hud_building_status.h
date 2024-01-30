@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,7 +22,7 @@ class C_BaseObject;
 class CIconPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBuildingHealthBar : public vgui::ProgressBar
 {
@@ -41,7 +41,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBuildingStatusAlertTray : public vgui::Panel
 {
@@ -81,7 +81,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBuildingStatusItem : public vgui::EditablePanel
 {
@@ -166,7 +166,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBuildingStatusItem_SentryGun : public CBuildingStatusItem
 {
@@ -201,7 +201,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBuildingStatusItem_SentryGun_Disposable : public CBuildingStatusItem
 {
@@ -232,7 +232,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBuildingStatusItem_Dispenser : public CBuildingStatusItem
 {
@@ -253,7 +253,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBuildingStatusItem_TeleporterEntrance : public CBuildingStatusItem
 {
@@ -283,7 +283,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBuildingStatusItem_TeleporterExit : public CBuildingStatusItem
 {
@@ -330,7 +330,7 @@ private:
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBuildingStatusItem_Sapper : public CBuildingStatusItem
 {
@@ -345,7 +345,7 @@ private:
 	// Health of target building
 	vgui::ContinuousProgressBar *m_pTargetHealthBar;
 
-	// image of target building 
+	// image of target building
 	CIconPanel *m_pTargetIcon;
 
 	int m_iTargetType;

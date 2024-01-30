@@ -74,9 +74,9 @@ void CSolidSetDefaults::SetDefaults( void *pData )
 CSolidSetDefaults g_SolidSetup;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &mins - 
-//			&maxs - 
+// Purpose:
+// Input  : &mins -
+//			&maxs -
 // Output : CPhysCollide
 //-----------------------------------------------------------------------------
 CPhysCollide *PhysCreateBbox( const Vector &minsIn, const Vector &maxsIn )
@@ -90,17 +90,17 @@ CPhysCollide *PhysCreateBbox( const Vector &minsIn, const Vector &maxsIn )
 	CPhysCollide *pResult = physcollision->BBoxToCollide( mins, maxs );
 
 	g_pPhysSaveRestoreManager->NoteBBox( mins, maxs, pResult );
-	
+
 	return pResult;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
-//			&mins - 
-//			&maxs - 
-//			&origin - 
-//			isStatic - 
+// Purpose:
+// Input  : *pEntity -
+//			&mins -
+//			&maxs -
+//			&origin -
+//			isStatic -
 // Output : static IPhysicsObject
 //-----------------------------------------------------------------------------
 IPhysicsObject *PhysModelCreateBox( CBaseEntity *pEntity, const Vector &mins, const Vector &maxs, const Vector &origin, bool isStatic )
@@ -129,18 +129,18 @@ IPhysicsObject *PhysModelCreateBox( CBaseEntity *pEntity, const Vector &mins, co
 	CPhysCollide *pCollide = PhysCreateBbox( mins, maxs );
 	if ( !pCollide )
 		return NULL;
-	
+
 	return PhysModelCreateCustom( pEntity, pCollide, origin, vec3_angle, STRING(pEntity->GetModelName()), isStatic, &solid );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
-//			&mins - 
-//			&maxs - 
-//			&origin - 
-//			isStatic - 
+// Purpose:
+// Input  : *pEntity -
+//			&mins -
+//			&maxs -
+//			&origin -
+//			isStatic -
 // Output : static IPhysicsObject
 //-----------------------------------------------------------------------------
 IPhysicsObject *PhysModelCreateOBB( CBaseEntity *pEntity, const Vector &mins, const Vector &maxs, const Vector &origin, const QAngle &angle, bool isStatic )
@@ -158,7 +158,7 @@ IPhysicsObject *PhysModelCreateOBB( CBaseEntity *pEntity, const Vector &mins, co
 		if ( model )
 		{
 			CStudioHdr studioHdr( modelinfo->GetStudiomodel( model ), mdlcache );
-			if (studioHdr.IsValid()) 
+			if (studioHdr.IsValid())
 			{
 				pSurfaceProps = Studio_GetDefaultSurfaceProps( &studioHdr );
 			}
@@ -169,17 +169,17 @@ IPhysicsObject *PhysModelCreateOBB( CBaseEntity *pEntity, const Vector &mins, co
 	CPhysCollide *pCollide = PhysCreateBbox( mins, maxs );
 	if ( !pCollide )
 		return NULL;
-	
+
 	return PhysModelCreateCustom( pEntity, pCollide, origin, angle, STRING(pEntity->GetModelName()), isStatic, &solid );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &solid - 
-//			*pEntity - 
-//			modelIndex - 
-//			solidIndex - 
+// Purpose:
+// Input  : &solid -
+//			*pEntity -
+//			modelIndex -
+//			solidIndex -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool PhysModelParseSolidByIndex( solid_t &solid, CBaseEntity *pEntity, int modelIndex, int solidIndex )
@@ -230,10 +230,10 @@ bool PhysModelParseSolidByIndex( solid_t &solid, CBaseEntity *pEntity, int model
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &solid - 
-//			*pEntity - 
-//			modelIndex - 
+// Purpose:
+// Input  : &solid -
+//			*pEntity -
+//			modelIndex -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool PhysModelParseSolid( solid_t &solid, CBaseEntity *pEntity, int modelIndex )
@@ -242,11 +242,11 @@ bool PhysModelParseSolid( solid_t &solid, CBaseEntity *pEntity, int modelIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &solid - 
-//			*pEntity - 
-//			*pCollide - 
-//			solidIndex - 
+// Purpose:
+// Input  : &solid -
+//			*pEntity -
+//			*pCollide -
+//			solidIndex -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool PhysModelParseSolidByIndex( solid_t &solid, CBaseEntity *pEntity, vcollide_t *pCollide, int solidIndex )
@@ -293,12 +293,12 @@ bool PhysModelParseSolidByIndex( solid_t &solid, CBaseEntity *pEntity, vcollide_
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
-//			modelIndex - 
-//			&origin - 
-//			&angles - 
-//			*pSolid - 
+// Purpose:
+// Input  : *pEntity -
+//			modelIndex -
+//			&origin -
+//			&angles -
+//			*pSolid -
 // Output : IPhysicsObject
 //-----------------------------------------------------------------------------
 IPhysicsObject *PhysModelCreate( CBaseEntity *pEntity, int modelIndex, const Vector &origin, const QAngle &angles, solid_t *pSolid )
@@ -309,7 +309,7 @@ IPhysicsObject *PhysModelCreate( CBaseEntity *pEntity, int modelIndex, const Vec
 	vcollide_t *pCollide = modelinfo->GetVCollide( modelIndex );
 	if ( !pCollide || !pCollide->solidCount )
 		return NULL;
-	
+
 	solid_t tmpSolid;
 	if ( !pSolid )
 	{
@@ -352,11 +352,11 @@ IPhysicsObject *PhysModelCreate( CBaseEntity *pEntity, int modelIndex, const Vec
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
-//			modelIndex - 
-//			&origin - 
-//			&angles - 
+// Purpose:
+// Input  : *pEntity -
+//			modelIndex -
+//			&origin -
+//			&angles -
 // Output : IPhysicsObject
 //-----------------------------------------------------------------------------
 IPhysicsObject *PhysModelCreateUnmoveable( CBaseEntity *pEntity, int modelIndex, const Vector &origin, const QAngle &angles )
@@ -407,13 +407,13 @@ IPhysicsObject *PhysModelCreateUnmoveable( CBaseEntity *pEntity, int modelIndex,
 
 //-----------------------------------------------------------------------------
 // Purpose: Create a vphysics object based on an existing collision model
-// Input  : *pEntity - 
-//			*pModel - 
-//			&origin - 
-//			&angles - 
-//			*pName - 
-//			isStatic - 
-//			*pSolid - 
+// Input  : *pEntity -
+//			*pModel -
+//			&origin -
+//			&angles -
+//			*pName -
+//			isStatic -
+//			*pSolid -
 // Output : IPhysicsObject
 //-----------------------------------------------------------------------------
 IPhysicsObject *PhysModelCreateCustom( CBaseEntity *pEntity, const CPhysCollide *pModel, const Vector &origin, const QAngle &angles, const char *pName, bool isStatic, solid_t *pSolid )
@@ -447,11 +447,11 @@ IPhysicsObject *PhysModelCreateCustom( CBaseEntity *pEntity, const CPhysCollide 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
-//			radius - 
-//			&origin - 
-//			&solid - 
+// Purpose:
+// Input  : *pEntity -
+//			radius -
+//			&origin -
+//			&solid -
 // Output : IPhysicsObject
 //-----------------------------------------------------------------------------
 IPhysicsObject *PhysSphereCreate( CBaseEntity *pEntity, float radius, const Vector &origin, solid_t &solid )
@@ -472,7 +472,7 @@ IPhysicsObject *PhysSphereCreate( CBaseEntity *pEntity, float radius, const Vect
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhysGetDefaultAABBSolid( solid_t &solid )
 {
@@ -484,13 +484,13 @@ void PhysGetDefaultAABBSolid( solid_t &solid )
 
 //-----------------------------------------------------------------------------
 // Purpose: Destroy a physics object
-// Input  : *pObject - 
+// Input  : *pObject -
 //-----------------------------------------------------------------------------
 void PhysDestroyObject( IPhysicsObject *pObject, CBaseEntity *pEntity )
 {
 	g_pPhysSaveRestoreManager->ForgetModel( pObject );
 
-	
+
 	if ( pObject )
 		pObject->SetGameData( NULL );
 
@@ -548,7 +548,7 @@ void PhysParseSurfaceData( IPhysicsSurfaceProps *pProps, IFileSystem *pFileSyste
 				continue;
 			}
 
-			Warning( "surfaceprops::Init:  Manifest '%s' with bogus file type '%s', expecting 'file'\n", 
+			Warning( "surfaceprops::Init:  Manifest '%s' with bogus file type '%s', expecting 'file'\n",
 				SURFACEPROP_MANIFEST_FILE, sub->GetName() );
 		}
 	}
@@ -599,7 +599,7 @@ IPhysicsObject *PhysCreateWorld_Shared( CBaseEntity *pWorld, vcollide_t *pWorldC
 	params.pGameData = static_cast<void *>(pWorld);
 	params.pName = "world";
 
-	IPhysicsObject *pWorldPhysics = physenv->CreatePolyObjectStatic( 
+	IPhysicsObject *pWorldPhysics = physenv->CreatePolyObjectStatic(
 		pWorldCollide->solids[0], surfaceData, vec3_origin, vec3_angle, &params );
 
 	// hint - saves vphysics some work
@@ -634,7 +634,7 @@ IPhysicsObject *PhysCreateWorld_Shared( CBaseEntity *pWorld, vcollide_t *pWorldC
 				continue;
 			}
 			// create this as part of the world
-			IPhysicsObject *pObject = physenv->CreatePolyObjectStatic( pWorldCollide->solids[solid.index], 
+			IPhysicsObject *pObject = physenv->CreatePolyObjectStatic( pWorldCollide->solids[solid.index],
 				surfaceData, vec3_origin, vec3_angle, &solid.params );
 
 			// invalid collision model or can't create, ignore
@@ -664,7 +664,7 @@ IPhysicsObject *PhysCreateWorld_Shared( CBaseEntity *pWorld, vcollide_t *pWorldC
 				fluid.params.pGameData = static_cast<void *>(pWorld);
 				surfaceData = physprops->GetSurfaceIndex( fluid.surfaceprop );
 				// create this as part of the world
-				IPhysicsObject *pWater = physenv->CreatePolyObjectStatic( pWorldCollide->solids[fluid.index], 
+				IPhysicsObject *pWater = physenv->CreatePolyObjectStatic( pWorldCollide->solids[fluid.index],
 					surfaceData, vec3_origin, vec3_angle, &solid.params );
 
 				pWater->SetCallbackFlags( pWater->GetCallbackFlags() | CALLBACK_NEVER_DELETED );
@@ -822,7 +822,7 @@ void PhysDisableObjectCollisions( IPhysicsObject *pObject0, IPhysicsObject *pObj
 	PhysRecheckObjectPair( pObject0, pObject1 );
 }
 
-void PhysComputeSlideDirection( IPhysicsObject *pPhysics, const Vector &inputVelocity, const AngularImpulse &inputAngularVelocity, 
+void PhysComputeSlideDirection( IPhysicsObject *pPhysics, const Vector &inputVelocity, const AngularImpulse &inputAngularVelocity,
 							   Vector *pOutputVelocity, Vector *pOutputAngularVelocity, float minMass )
 {
 	Vector velocity = inputVelocity;
@@ -877,7 +877,7 @@ void PhysComputeSlideDirection( IPhysicsObject *pPhysics, const Vector &inputVel
 	pPhysics->DestroyFrictionSnapshot( pSnapshot );
 
 	//NDebugOverlay::Line( pos, pos + unitVel * 20, 0, 0, 255, true, 0.1 );
-	
+
 	if ( pOutputVelocity )
 	{
 		*pOutputVelocity = velocity;
@@ -945,35 +945,35 @@ void PhysFrictionEffect( Vector &vecPos, Vector vecVel, float energy, int surfac
 	switch ( phit->game.material )
 	{
 	case CHAR_TEX_DIRT:
-		
+
 		if ( energy < MASS10_SPEED2ENERGY(15) )
 			break;
-		
+
 		g_pEffects->Dust( vecPos, invVecVel, 1, 16 );
 		break;
 
 	case CHAR_TEX_CONCRETE:
-		
+
 		if ( energy < MASS10_SPEED2ENERGY(28) )
 			break;
-		
+
 		g_pEffects->Dust( vecPos, invVecVel, 1, 16 );
 		break;
 	}
-	
+
 	//Metal sparks
 	if ( energy > MASS10_SPEED2ENERGY(50) )
 	{
 		// make sparks for metal/concrete scrapes with enough energy
 		if ( psurf->game.material == CHAR_TEX_METAL || psurf->game.material == CHAR_TEX_GRATE )
-		{	
+		{
 			switch ( phit->game.material )
 			{
 			case CHAR_TEX_CONCRETE:
 			case CHAR_TEX_METAL:
 
 				g_pEffects->MetalSparks( vecPos, invVecVel );
-				break;									
+				break;
 			}
 		}
 	}
@@ -983,7 +983,7 @@ void PhysFrictionSound( CBaseEntity *pEntity, IPhysicsObject *pObject, float ene
 {
 	if ( !pEntity || energy < 75.0f || surfaceProps < 0 )
 		return;
-	
+
 	// don't make noise for hidden/invisible/sky materials
 	surfacedata_t *phit = physprops->GetSurfaceData( surfacePropsHit );
 	surfacedata_t *psurf = physprops->GetSurfaceData( surfaceProps );
@@ -996,7 +996,7 @@ void PhysFrictionSound( CBaseEntity *pEntity, IPhysicsObject *pObject, float ene
 
 	// volume of scrape is proportional to square of energy (steeper rolloff at low energies)
 	float volume = energy * energy;
-		
+
 	unsigned short soundName = psurf->sounds.scrapeRough;
 	short *soundHandle = &psurf->soundhandles.scrapeRough;
 
@@ -1013,7 +1013,7 @@ void PhysFrictionSound( CBaseEntity *pEntity, IPhysicsObject *pObject, float ene
 
 //-----------------------------------------------------------------------------
 // Purpose: Precaches a surfaceproperties string name if it's set.
-// Input  : idx - 
+// Input  : idx -
 // Output : static void
 //-----------------------------------------------------------------------------
 static HSOUNDSCRIPTHANDLE PrecachePhysicsSoundByStringIndex( int idx )
@@ -1051,5 +1051,3 @@ void PrecachePhysicsSounds()
 		pprop->soundhandles.strainSound = PrecachePhysicsSoundByStringIndex( pprop->sounds.strainSound );
 	}
 }
-
-

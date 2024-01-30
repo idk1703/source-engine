@@ -34,7 +34,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_ObjectResupply, DT_ObjectResupply, CObjectResupply)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectResupply::C_ObjectResupply()
 {
@@ -42,7 +42,7 @@ C_ObjectResupply::C_ObjectResupply()
 
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CResupplyControlPanel : public CObjectControlPanel
 {
@@ -70,16 +70,16 @@ DECLARE_VGUI_SCREEN_FACTORY( CResupplyControlPanel, "resupply_control_panel" );
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CResupplyControlPanel::CResupplyControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CResupplyControlPanel" ) 
+	: BaseClass( parent, "CResupplyControlPanel" )
 {
 }
 
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CResupplyControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -25,7 +25,7 @@ float CubicBezier( float t, float A, float B, float C, float D )
 	return QuadraticBezier( t, Lerp( t, A, B ), Lerp( t, B, C ), Lerp( t, C, D ) );
 }
 
-BEGIN_VS_SHADER( VortWarp_dx8, 
+BEGIN_VS_SHADER( VortWarp_dx8,
 				"Help for VortWarp_dx8" )
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( SELFILLUMTINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "Self-illumination tint" )
@@ -51,12 +51,12 @@ BEGIN_VS_SHADER( VortWarp_dx8,
 		{
 			params[SELFILLUMTINT]->SetVecValue( 0.0f, 0.0f, 0.0f, 0.0f );
 		}
-		
+
 		SET_FLAGS2( MATERIAL_VAR2_LIGHTING_VERTEX_LIT );
 	}
 
 	SHADER_FALLBACK
-	{	
+	{
 		if ( g_pHardwareConfig->GetDXSupportLevel() < 80)
 			return "Vortwarp_dx7";
 		return 0;

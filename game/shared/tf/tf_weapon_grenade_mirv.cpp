@@ -20,7 +20,7 @@
 #endif
 
 #define GRENADE_MIRV_TIMER	3.0f // seconds
-#define	GRENADE_MIRV_LEADIN	2.0f 
+#define	GRENADE_MIRV_LEADIN	2.0f
 
 //=============================================================================
 //
@@ -68,7 +68,7 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj *CTFGrenadeMirv::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, 
+CTFWeaponBaseGrenadeProj *CTFGrenadeMirv::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel,
 							      AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
 {
 	return CTFGrenadeMirvProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse,
@@ -95,8 +95,8 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_grenade_mirv_projectile );
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGrenadeMirvProjectile* CTFGrenadeMirvProjectile::Create( const Vector &position, const QAngle &angles, 
-															const Vector &velocity, const AngularImpulse &angVelocity, 
+CTFGrenadeMirvProjectile* CTFGrenadeMirvProjectile::Create( const Vector &position, const QAngle &angles,
+															const Vector &velocity, const AngularImpulse &angVelocity,
 															CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags )
 {
 	CTFGrenadeMirvProjectile *pGrenade = static_cast<CTFGrenadeMirvProjectile*>( CTFWeaponBaseGrenadeProj::Create( "tf_weapon_grenade_mirv_projectile", position, angles, velocity, angVelocity, pOwner, weaponInfo, timer, iFlags ) );
@@ -183,7 +183,7 @@ void CTFGrenadeMirvProjectile::Explode( trace_t *pTrace, int bitsDamageType )
 	// Create the bomblets.
 	for ( int iBomb = 0; iBomb < TF_WEAPON_GRENADE_MIRV_BOMB_COUNT; ++iBomb )
 	{
-		Vector vecSrc = pTrace->endpos + Vector( 0, 0, 1.0f ); 
+		Vector vecSrc = pTrace->endpos + Vector( 0, 0, 1.0f );
 		Vector vecVelocity( random->RandomFloat( -75.0f, 75.0f ) * 3.0f,
 			                random->RandomFloat( -75.0f, 75.0f ) * 3.0f,
 							random->RandomFloat( 30.0f, 70.0f ) * 5.0f );
@@ -214,7 +214,7 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_grenade_mirv_bomb );
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGrenadeMirvBomb *CTFGrenadeMirvBomb::Create( const Vector &position, const QAngle &angles, const Vector &velocity, 
+CTFGrenadeMirvBomb *CTFGrenadeMirvBomb::Create( const Vector &position, const QAngle &angles, const Vector &velocity,
 							                    const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, float timer )
 {
 	CTFGrenadeMirvBomb *pBomb = static_cast<CTFGrenadeMirvBomb*>( CBaseEntity::Create( "tf_weapon_grenade_mirv_bomb", position, angles, pOwner ) );
@@ -222,7 +222,7 @@ CTFGrenadeMirvBomb *CTFGrenadeMirvBomb::Create( const Vector &position, const QA
 	{
 		pBomb->SetDetonateTimerLength( timer );
 		pBomb->SetupInitialTransmittedGrenadeVelocity( velocity );
-		pBomb->SetThrower( pOwner ); 
+		pBomb->SetThrower( pOwner );
 		pBomb->SetOwnerEntity( NULL );
 
 		pBomb->SetGravity( TF_WEAPON_GRENADE_MIRV_BOMB_GRAVITY );

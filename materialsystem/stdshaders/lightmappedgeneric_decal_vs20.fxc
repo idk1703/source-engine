@@ -24,14 +24,14 @@ struct VS_OUTPUT
 	float2 vTexCoord1	: TEXCOORD1;
 	float2 vTexCoord2	: TEXCOORD2;
 	float2 vTexCoord3	: TEXCOORD3;
-	
+
 	float4 worldPos_projPosZ		: TEXCOORD4;		// Necessary for pixel fog
 
 	float4 vColor : COLOR0;
 
 	float4 fogFactorW	: COLOR1;
 
-#if !defined( _X360 )    
+#if !defined( _X360 )
 	float  fog		: FOG;
 #endif
 };
@@ -60,14 +60,14 @@ VS_OUTPUT main( const VS_INPUT v )
 	float2 offset;
 	offset.x = v.vTexCoord2.x;
 	offset.y = 0.0f;
-	
+
 	o.vTexCoord0.x = dot( v.vTexCoord0, cShaderConst0 );
 	o.vTexCoord0.y = dot( v.vTexCoord0, cShaderConst1 );
-	
+
 	o.vTexCoord1 = offset + v.vTexCoord1.xy;
-	o.vTexCoord2 = (offset * 2.0) + v.vTexCoord1.xy;	
+	o.vTexCoord2 = (offset * 2.0) + v.vTexCoord1.xy;
 	o.vTexCoord3 = (offset * 3.0) + v.vTexCoord1.xy;
-	
+
 	o.vColor = v.vColor;
 
 	return o;

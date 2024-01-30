@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@
 #include "backpack_panel.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CEconSampleRootUI : public vgui::Frame, public IEconRootUI, public CGameEventListener
 {
@@ -35,7 +35,7 @@ public:
 	void		 SetCheckForRoomOnExit( bool bCheck ) { m_bCheckForRoomOnExit = bCheck; }
 
 	void		 FireGameEvent( IGameEvent *event );
-	
+
 	//---------------------------------------
 	// IEconRootUI
 	virtual IEconRootUI	*OpenEconUI( int iDirectToPage = 0, bool bCheckForInventorySpaceOnExit = false );
@@ -50,7 +50,7 @@ public:
 
 	// Gamestats access
 	virtual void		Gamestats_ItemTransaction( int eventID, CEconItemView *item, const char *pszReason = NULL, int iQuality = 0 ) { return; }
-	virtual void		Gamestats_Store( int eventID, CEconItemView* item=NULL, const char* panelName=NULL, 
+	virtual void		Gamestats_Store( int eventID, CEconItemView* item=NULL, const char* panelName=NULL,
 		int classId=0, const cart_item_t* in_cartItem=NULL, int in_checkoutAttempts=0, const char* storeError=NULL, int in_totalPrice=0, int in_currencyCode=0 ) { return; }
 	virtual void		SetExperimentValue( uint64 experimentValue ) { return; }
 

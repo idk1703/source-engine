@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -38,7 +38,7 @@ CON_COMMAND( viewanim_create, "viewanim_create" )
 	if ( g_pTestAnimation )
 	{
 		g_pTestAnimation->Spawn();
-	}	
+	}
 }
 
 // run the test animation
@@ -99,7 +99,7 @@ CON_COMMAND( viewanim_save, "Save current animation to file" )
 		return;
 
 	if ( g_pTestAnimation )
-	{	
+	{
 		g_pTestAnimation->SaveAsAnimFile( args[1] );
 	}
 	else
@@ -115,7 +115,7 @@ CON_COMMAND( viewanim_load, "load animation from file" )
 		return;
 
 	if ( g_pTestAnimation )
-	{	
+	{
 		g_pTestAnimation->LoadViewAnimFile( args[1] );
 	}
 	else
@@ -137,7 +137,7 @@ void CViewAngleAnimation::Spawn( void )
 {
 	m_iFlags = 0;
 	QAngle angles;
-	engine->GetViewAngles( angles );	
+	engine->GetViewAngles( angles );
 
 	/*
 	if ( m_iFlags & VIEWANIM_RELATIVE )
@@ -318,7 +318,7 @@ void CViewAngleAnimation::ClientThink()
 	{
 		if ( ( m_KeyFrames[i]->m_iFlags & VIEWANIM_RELATIVE ) && !( m_iFlags & VIEWANIM_RELATIVE ) )
 		{
-            // new relative position is current angles
+	// new relative position is current angles
 			engine->GetViewAngles( m_vecBaseAngles );
 		}
 
@@ -383,4 +383,3 @@ void CViewAngleAnimation::SetAngles( QAngle vecCalculatedAngles )
 
 	engine->SetViewAngles( vecViewAngle );
 }
-

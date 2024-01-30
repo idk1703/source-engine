@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -74,7 +74,7 @@ void CTFCShotgun::PrimaryAttack()
 	SendWeaponAnim( ACT_VM_PRIMARYATTACK );
 	pOwner->DoAnimationEvent( PLAYERANIMEVENT_FIRE_GUN );
 
-	// Shoot!	
+	// Shoot!
 	FireBulletsInfo_t info;
 	info.m_vecSrc = pOwner->Weapon_ShootPosition();
 	info.m_vecDirShooting = pOwner->GetAutoaimVector( AUTOAIM_5DEGREES );
@@ -88,14 +88,14 @@ void CTFCShotgun::PrimaryAttack()
 
 	m_flTimeWeaponIdle = gpGlobals->curtime + 5.0;
 	m_fInSpecialReload = 0;
-	
+
 	pOwner->m_Shared.RemoveStateFlags( TFSTATE_RELOADING );
 
 	// Setup fire delays
 	m_iClip1 -= 1;
 	if ( Clip1() != 0 )
 		m_flPumpTime = gpGlobals->curtime + 0.5;
-	
+
 	m_flNextPrimaryAttack = gpGlobals->curtime + 0.5;
 }
 
@@ -161,7 +161,7 @@ bool CTFCShotgun::Reload()
 		m_fInSpecialReload = 1;
 		pOwner->m_Shared.RemoveStateFlags( TFSTATE_RELOADING );
 	}
-	
+
 	return true;
 }
 
@@ -177,7 +177,7 @@ void CTFCShotgun::WeaponIdle()
 	{
 		SendWeaponAnim( ACT_VM_PULLBACK_HIGH );
 		WeaponSound( SPECIAL1 );	// Pump sound.
-		
+
 		m_flPumpTime = -1;
 	}
 
@@ -213,7 +213,7 @@ void CTFCShotgun::WeaponIdle()
 
 
 #ifdef CLIENT_DLL
-	
+
 	// ------------------------------------------------------------------------------------------------ //
 	// ------------------------------------------------------------------------------------------------ //
 	// CLIENT DLL SPECIFIC CODE

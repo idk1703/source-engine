@@ -86,7 +86,7 @@ static bool g_bInError = false;
 #define	NUM_LIGHT_TYPES				4
 #define LIGHTING_COMBINATION_COUNT	5
 
-static const char *g_LightCombinationNames[] = 
+static const char *g_LightCombinationNames[] =
 {
 	"DISABLE                ",
 //	"SPOT                   ",
@@ -153,27 +153,27 @@ DEFINE_WINDOWED_STEAM_APPLICATION_OBJECT_GLOBALVAR( CIHVTestApp, s_IHVTestApp );
 //-----------------------------------------------------------------------------
 bool CIHVTestApp::CreateAppWindow( const char* pAppName, int width, int height )
 {
-    // Register the window class
+	// Register the window class
 	WNDCLASSEX		wc;
 	memset( &wc, 0, sizeof( wc ) );
 	wc.cbSize		 = sizeof( wc );
-    wc.style         = CS_CLASSDC;
-    wc.lpfnWndProc   = WinAppWindowProc;
-    wc.hInstance     = (HINSTANCE)GetAppInstance();
-    wc.lpszClassName = pAppName;
+	wc.style         = CS_CLASSDC;
+	wc.lpfnWndProc   = WinAppWindowProc;
+	wc.hInstance     = (HINSTANCE)GetAppInstance();
+	wc.lpszClassName = pAppName;
 	wc.hIcon		 = NULL;
 	wc.hIconSm		 = wc.hIcon;
 
-    RegisterClassEx( &wc );
+	RegisterClassEx( &wc );
 
-    // Create the application's window
-    m_hWnd = CreateWindow( pAppName, pAppName,
-		WS_OVERLAPPEDWINDOW, 
+	// Create the application's window
+	m_hWnd = CreateWindow( pAppName, pAppName,
+		WS_OVERLAPPEDWINDOW,
 		0, 0, width, height,
 		GetDesktopWindow(), NULL, wc.hInstance, NULL );
-	
-    ShowWindow (m_hWnd, SW_SHOWDEFAULT);
-	
+
+	ShowWindow (m_hWnd, SW_SHOWDEFAULT);
+
 	return (m_hWnd != 0);
 }
 
@@ -227,15 +227,15 @@ static BenchRunInfo g_BenchRuns[NUM_BENCH_RUNS] =
 #define MODEL_COLUMNS 3
 static BenchRunInfo g_BenchRuns[NUM_BENCH_RUNS] =
 {
-	{ { "models/alyx.mdl", 
-		"models/alyx.mdl", 
-		"models/alyx.mdl", 
-		"models/alyx.mdl", 
-		"models/alyx.mdl", 
-		"models/alyx.mdl", 
-		"models/alyx.mdl", 
-		"models/alyx.mdl", 
-		"models/alyx.mdl", 
+	{ { "models/alyx.mdl",
+		"models/alyx.mdl",
+		"models/alyx.mdl",
+		"models/alyx.mdl",
+		"models/alyx.mdl",
+		"models/alyx.mdl",
+		"models/alyx.mdl",
+		"models/alyx.mdl",
+		"models/alyx.mdl",
 	}, 100, MODEL_ROWS, MODEL_COLUMNS, 75.0f, { 1, 4, 20, 23, 25, 30, 34, 38, 1 }, -1 },
 };
 
@@ -259,10 +259,10 @@ static void WriteBenchResults( void )
 	}
 
 	fprintf( fp, "------------------------------------------------------------------\n" );
-	
+
 	time_t ltime;
 	time( &ltime );
-	
+
 	fprintf( fp, "%s\n", GetCommandLine() );
 	fprintf( fp, "Run at: %s", ctime( &ltime ) );
 
@@ -290,7 +290,7 @@ static void WriteBenchResults( void )
 			Warning( "%f %d\n", ( float )g_BenchResults[i][j].totalTime, g_BenchResults[i][j].totalTris );
 		}
 	}
-	
+
 	fclose( fp );
 }
 
@@ -314,7 +314,7 @@ void CIHVTestApp::Destroy()
 static void CalcWindowSize( int desiredRenderingWidth, int desiredRenderingHeight,
 							int *windowWidth, int *windowHeight )
 {
-    int     borderX, borderY;
+	int     borderX, borderY;
 	borderX = (GetSystemMetrics(SM_CXFIXEDFRAME) + 1) * 2;
 	borderY = (GetSystemMetrics(SM_CYFIXEDFRAME) + 1) * 2 + GetSystemMetrics(SM_CYSIZE) + 1;
 	*windowWidth = desiredRenderingWidth + borderX;
@@ -398,7 +398,7 @@ static void MaterialSystem_Warning( const char *fmt, ... )
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
-	
+
 	va_start( argptr, fmt );
 	Q_vsnprintf( msg, sizeof ( msg ), fmt, argptr );
 	va_end( argptr );
@@ -411,7 +411,7 @@ static void MaterialSystem_Warning( char *fmt, ... )
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
-	
+
 	va_start( argptr, fmt );
 	Q_vsnprintf( msg, sizeof( msg ), fmt, argptr );
 	va_end( argptr );
@@ -433,7 +433,7 @@ static void MaterialSystem_Error( char *fmt, ... )
 	MessageBox( NULL, (LPCTSTR)msg, "MaterialSystem Fatal Error", MB_OK | MB_ICONINFORMATION );
 
 #ifdef _DEBUG
-	Assert( 0 );	
+	Assert( 0 );
 #endif
 	exit( -1 );
 }
@@ -513,7 +513,7 @@ void CEngineStats::BeginFrame( void )
 void CEngineStats::EndFrame( void )
 {
 	double deltaTime;
-	
+
 	m_frameEndTime = Sys_FloatTime();
 	deltaTime = GetCurrentSystemFrameTime();
 
@@ -536,7 +536,7 @@ static CEngineStats g_EngineStats;
 //	Lighting
 //-----------------------------------------------------------------------------
 // If you change the number of lighting combinations, change LIGHTING_COMBINATION_COUNT
-static LightType_t g_LightCombinations[][MAX_LIGHTS] = 
+static LightType_t g_LightCombinations[][MAX_LIGHTS] =
 {
 	{ MATERIAL_LIGHT_DISABLE,		MATERIAL_LIGHT_DISABLE },			// 0
 //	{ MATERIAL_LIGHT_SPOT,			MATERIAL_LIGHT_DISABLE },
@@ -582,7 +582,7 @@ static void InitTestLights( void )
 	int i;
 	for( i = 0; i < MAX_LIGHTS; i++ )
 	{
-		// MATERIAL_LIGHT_DISABLE		
+		// MATERIAL_LIGHT_DISABLE
 		pLight = &g_TestLights[MATERIAL_LIGHT_DISABLE][i];
 		pLight->m_Type = MATERIAL_LIGHT_DISABLE;
 	}
@@ -678,7 +678,7 @@ static void SetupLighting( int lightingCombination, Vector &lightOffset )
 		g_pStudioRender->SetLocalLights( 0, NULL );
 		pRenderContext->SetAmbientLight( 1.0, 1.0, 1.0 );
 
-		static Vector white[6] = 
+		static Vector white[6] =
 		{
 			Vector( 1.0, 1.0, 1.0 ),
 			Vector( 1.0, 1.0, 1.0 ),
@@ -693,7 +693,7 @@ static void SetupLighting( int lightingCombination, Vector &lightOffset )
 	{
 		pRenderContext->SetAmbientLight( 0.0f, 0.0f, 0.0f );
 
-		static Vector black[6] = 
+		static Vector black[6] =
 		{
 			Vector( 0.0, 0.0, 0.0 ),
 			Vector( 0.0, 0.0, 0.0 ),
@@ -712,7 +712,7 @@ static void SetupLighting( int lightingCombination, Vector &lightOffset )
 			lightDescs[lightID] = g_TestLights[lightType][lightID];
 			lightDescs[lightID].m_Position += lightOffset;
 		}
-			    
+
 		// Feed disabled lights through?
 		if( g_LightCombinations[lightingCombination][1] == MATERIAL_LIGHT_DISABLE )
 		{
@@ -788,7 +788,7 @@ matrix3x4_t* CIHVTestApp::SetUpBones( studiohdr_t *pStudioHdr, const matrix3x4_t
 	MatrixCopy( shapeToWorld, rootToWorld );
 
 	matrix3x4_t *pBoneToWorld = g_pStudioRender->LockBoneMatrices( studioHdr.numbones() );
-	for ( int i = 0; i < studioHdr.numbones(); i++ ) 
+	for ( int i = 0; i < studioHdr.numbones(); i++ )
 	{
 		// If it's not being used, fill with NAN for errors
 		if ( !(studioHdr.pBone( i )->flags & boneMask) )
@@ -808,11 +808,11 @@ matrix3x4_t* CIHVTestApp::SetUpBones( studiohdr_t *pStudioHdr, const matrix3x4_t
 		QuaternionMatrix( q[i], boneMatrix );
 		MatrixSetColumn( pos[i], 3, boneMatrix );
 
-		if (studioHdr.pBone(i)->parent == -1) 
+		if (studioHdr.pBone(i)->parent == -1)
 		{
 			ConcatTransforms (rootToWorld, boneMatrix, pBoneToWorld[i]);
-		} 
-		else 
+		}
+		else
 		{
 			ConcatTransforms (pBoneToWorld[ studioHdr.pBone(i)->parent ], boneMatrix, pBoneToWorld[i] );
 		}
@@ -830,7 +830,7 @@ bool CIHVTestApp::LoadModel( const char* pModelName, IHVTestModel *pModel )
 	pModel->hMdl = g_pMDLCache->FindMDL( pModelName );
 
 	pModel->pStudioHdr = g_pMDLCache->GetStudioHdr( pModel->hMdl );
-	
+
 	g_pMDLCache->GetVertexData( pModel->hMdl );
 	g_pMDLCache->FinishPendingLoads();
 
@@ -844,7 +844,7 @@ bool CIHVTestApp::LoadModel( const char* pModelName, IHVTestModel *pModel )
 
 
 //-----------------------------------------------------------------------------
-// Loads all models 
+// Loads all models
 //-----------------------------------------------------------------------------
 bool CIHVTestApp::LoadModels( void )
 {
@@ -853,7 +853,7 @@ bool CIHVTestApp::LoadModels( void )
 	{
 		g_NumRows = g_NumCols = atoi( pArgVal );
 	}
-	
+
 	/* figure out which LOD we are going to render */
 	if( CommandLine()->CheckParm( "-lod", &pArgVal ) )
 	{
@@ -870,7 +870,7 @@ bool CIHVTestApp::LoadModels( void )
 	{
 		g_RefreshRate = atoi( pArgVal );
 	}
-	
+
 	if( CommandLine()->CheckParm( "-light", &pArgVal ) )
 	{
 		g_LightingCombination = atoi( pArgVal );
@@ -900,7 +900,7 @@ bool CIHVTestApp::LoadModels( void )
 			int k;
 			for( k = 0; k < g_nMaxModels; k++ )
 			{
-				if( g_BenchRuns[i].pModelName[k] ) 
+				if( g_BenchRuns[i].pModelName[k] )
 				{
 					if( !LoadModel( g_BenchRuns[i].pModelName[k], &g_BenchModels[i][k] ) )
 					{
@@ -929,8 +929,8 @@ bool CIHVTestApp::LoadModels( void )
 //-----------------------------------------------------------------------------
 LONG CIHVTestApp::WindowProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
-    switch( msg )
-    {
+	switch( msg )
+	{
 		// abort when ESC is hit
 	case WM_CHAR:
 		switch(wParam)
@@ -943,10 +943,10 @@ LONG CIHVTestApp::WindowProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam 
 
 	case WM_DESTROY:
 			m_bExitMainLoop = true;
-            return 0;
-    }
-	
-    return DefWindowProc( hWnd, msg, wParam, lParam );
+			return 0;
+	}
+
+	return DefWindowProc( hWnd, msg, wParam, lParam );
 }
 
 
@@ -965,7 +965,7 @@ LONG WINAPI CIHVTestApp::WinAppWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, 
 void CIHVTestApp::AppPumpMessages()
 {
 	MSG msg;
-	while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) == TRUE) 
+	while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) == TRUE)
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
@@ -1036,7 +1036,7 @@ void CIHVTestApp::RenderFrame( void )
 	}
 	if( g_BenchMode )
 	{
-		pModel = &g_BenchModels[currentRun][0];		
+		pModel = &g_BenchModels[currentRun][0];
 		g_NumCols = g_BenchRuns[currentRun].cols;
 		g_NumRows = g_BenchRuns[currentRun].rows;
 	}
@@ -1045,7 +1045,7 @@ void CIHVTestApp::RenderFrame( void )
 		pModel = m_pIHVTestModel;
 	}
 	Assert( pModel );
-	
+
 	g_EngineStats.BeginFrame();
 
 	g_pMaterialSystem->BeginFrame( 0 );
@@ -1091,7 +1091,7 @@ void CIHVTestApp::RenderFrame( void )
 	{
 		for( c = 0; c < g_NumCols; c++ )
 		{
-			// If we are alternating models, select the next valid model.			
+			// If we are alternating models, select the next valid model.
 			if( g_BenchMode )
 			{
 				do
@@ -1119,7 +1119,7 @@ void CIHVTestApp::RenderFrame( void )
 				cameraMatrix[0][3] = ( ( c + 0.5f ) - ( g_NumCols * .5f ) ) * 75.0f;
 				cameraMatrix[1][3] = ( ( float )r - ( g_NumCols * .5f ) ) * 75.0f;
 			}
-			
+
 			Vector modelOrigin( cameraMatrix[0][3], cameraMatrix[1][3], 0.0f );
 			Vector lightOffset( cameraMatrix[0][3], cameraMatrix[1][3], 0.0f );
 
@@ -1139,7 +1139,7 @@ void CIHVTestApp::RenderFrame( void )
 			int boneMask = BONE_USED_BY_VERTEX_AT_LOD( lod );
 			matrix3x4_t *pBoneToWorld = SetUpBones( pModel->pStudioHdr, cameraMatrix, currentRun, modelAlternator, boneMask );
 			boneSetupTime += Sys_FloatTime() - startBoneSetupTime;
-			
+
 			pRenderContext->MatrixMode( MATERIAL_MODEL );
 			pRenderContext->PushMatrix();
 
@@ -1205,11 +1205,11 @@ void CIHVTestApp::RenderFrame( void )
 //-----------------------------------------------------------------------------
 bool CIHVTestApp::Create()
 {
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
-		{ "materialsystem.dll",		MATERIAL_SYSTEM_INTERFACE_VERSION },	
+		{ "materialsystem.dll",		MATERIAL_SYSTEM_INTERFACE_VERSION },
 		{ "datacache.dll",			DATACACHE_INTERFACE_VERSION },
-		{ "studiorender.dll",		STUDIO_RENDER_INTERFACE_VERSION },	
+		{ "studiorender.dll",		STUDIO_RENDER_INTERFACE_VERSION },
 		{ "datacache.dll",			MDLCACHE_INTERFACE_VERSION },
 		{ "vphysics.dll",			VPHYSICS_INTERFACE_VERSION },
 		{ "", "" }	// Required to terminate the list
@@ -1217,7 +1217,7 @@ bool CIHVTestApp::Create()
 
 	MathLib_Init( 2.2f, 2.2f, 0.0f, 2.0f );
 
-	if ( !AddSystems( appSystems ) ) 
+	if ( !AddSystems( appSystems ) )
 		return false;
 
 	g_pFileSystem = ( IFileSystem * )FindSystem( FILESYSTEM_INTERFACE_VERSION );
@@ -1260,7 +1260,7 @@ bool CIHVTestApp::Create()
 // StudioRender...
 //-----------------------------------------------------------------------------
 bool CIHVTestApp::SetupStudioRender( void )
-{	
+{
 	StudioRenderConfig_t config;
 	memset( &config, 0, sizeof(config) );
 
@@ -1272,24 +1272,24 @@ bool CIHVTestApp::SetupStudioRender( void )
 	config.fEyeShiftX = 0.0f;
 	config.fEyeShiftY = 0.0f;
 	config.fEyeShiftZ = 0.0f;
-	config.fEyeSize = 0.0f;	
+	config.fEyeSize = 0.0f;
 
 	config.bNoHardware = false;
 	config.bNoSoftware = false;
 
 	config.bSoftwareSkin = false;
 	config.bSoftwareLighting = false;
-	
+
 	config.drawEntities = true;
 	config.bWireframe = false;
 	config.bDrawNormals = false;
 	config.bDrawTangentFrame = false;
 	config.skin = 0;
-	
+
 	config.fullbright = 0;
 
 	config.bShowEnvCubemapOnly = false;
-	
+
 	g_pStudioRender->UpdateConfig( config );
 
 	return true;
@@ -1347,7 +1347,7 @@ bool CIHVTestApp::PreInit( void )
 	{
 		g_BenchMode = true;
 	}
-	
+
 	if( !g_BenchMode && !CommandLine()->CheckParm( "-i" ) )
 	{
 		// Set some default parameters for running as a unittest
@@ -1362,7 +1362,7 @@ bool CIHVTestApp::PreInit( void )
 			g_BenchRuns[0].pModelName[0] = pArgVal;
 		}
 	}
-	
+
 	if( CommandLine()->CheckParm( "-softwaretl" ) )
 	{
 		g_SoftwareTL = true;
@@ -1433,7 +1433,7 @@ bool CIHVTestApp::PreInit( void )
 		DisplayError( "Can't figure out window dimensions!!" );
 		exit( -1 );
 	}
-	
+
 	int windowWidth, windowHeight;
 	CalcWindowSize( g_RenderWidth, g_RenderHeight, &windowWidth, &windowHeight );
 
@@ -1456,7 +1456,7 @@ void CIHVTestApp::PostShutdown()
 int CIHVTestApp::Main()
 {
 	SpewOutputFunc( IHVTestSpewFunc );
-		    
+
 	if ( !SetupStudioRender() )
 	{
 		return 0;
@@ -1503,6 +1503,5 @@ extern void Sys_InitFloatTime( void ); //garymcthack
 	VTPause();
 #endif
 
-    return 0;
+	return 0;
 }
-

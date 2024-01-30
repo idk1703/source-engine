@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -31,12 +31,12 @@ static char* CopyString( const char *pStr )
 }
 
 
-BOOL APIENTRY DllMain( HANDLE hModule, 
-                       DWORD  ul_reason_for_call, 
-                       LPVOID lpReserved
-					 )
+BOOL APIENTRY DllMain( HANDLE hModule,
+	DWORD  ul_reason_for_call,
+	LPVOID lpReserved
+					)
 {
-    return TRUE;
+	return TRUE;
 }
 
 
@@ -366,7 +366,7 @@ int CMySQL::GetColumnIndex( const char *pColumnName )
 			return i;
 		}
 	}
-	
+
 	return -1;
 }
 
@@ -374,7 +374,7 @@ int CMySQL::GetColumnIndex( const char *pColumnName )
 void CMySQL::CancelIteration()
 {
 	m_Fields.Purge();
-	
+
 	if ( m_pResult )
 	{
 		mysql_free_result( m_pResult );

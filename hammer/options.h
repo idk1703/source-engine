@@ -34,7 +34,7 @@ public:
 	BOOL bGroupWhileIgnore;
 	BOOL bStretchArches;
 	BOOL bShowHelpers;
-	BOOL bCheckVisibleMapErrors;	
+	BOOL bCheckVisibleMapErrors;
 	int iTimeBetweenSaves;
 	int iMaxAutosaveSpace;
 	int iMaxAutosavesPerMap;
@@ -47,7 +47,7 @@ public:
 	BOOL bEnableAutosave;
 	BOOL bShowHiddenTargetsAsBroken;
 	BOOL bRadiusCulling;
-}; 
+};
 
 
 class COptionsTextures
@@ -138,7 +138,7 @@ public:
 	BOOL bReverseSelection;	// Whether to animate studio models.
 	bool bPreviewModelFade; // Whether to preview model fade in the 3D view.
 	float fFOV;				// FOV of 3D Camera
-	float fLightConeLength;  // Multiplier for light_spot cone length 
+	float fLightConeLength;  // Multiplier for light_spot cone length
 };
 
 

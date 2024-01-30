@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -89,12 +89,12 @@ bool CVertexBufferDx10::Allocate( )
 
 		if ( !m_bIsDynamic )
 		{
-			VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_STATIC_INDEX_BUFFER, 
+			VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_STATIC_INDEX_BUFFER,
 				COUNTER_GROUP_TEXTURE_GLOBAL, m_nBufferSize );
 		}
 		else
 		{
-			VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_DYNAMIC_INDEX_BUFFER, 
+			VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_DYNAMIC_INDEX_BUFFER,
 				COUNTER_GROUP_TEXTURE_GLOBAL, m_nBufferSize );
 			// Dynamic meshes should never be compressed (slows down writing to them)
 			Assert( CompressionType( GetVertexFormat() ) == VERTEX_COMPRESSION_NONE );
@@ -123,12 +123,12 @@ void CVertexBufferDx10::Free()
 
 		if ( !m_bIsDynamic )
 		{
-			VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_STATIC_INDEX_BUFFER, 
+			VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_STATIC_INDEX_BUFFER,
 				COUNTER_GROUP_TEXTURE_GLOBAL, - m_nBufferSize );
 		}
 		else
 		{
-			VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_DYNAMIC_INDEX_BUFFER, 
+			VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_DYNAMIC_INDEX_BUFFER,
 				COUNTER_GROUP_TEXTURE_GLOBAL, - m_nBufferSize );
 		}
 	}
@@ -244,7 +244,7 @@ bool CVertexBufferDx10::Lock( int nMaxVertexCount, bool bAppend, VertexDesc_t &d
 			goto vertexBufferLockFailed;
 	}
 
-	// Check to see if we have enough memory 
+	// Check to see if we have enough memory
 	int nMemoryRequired = nMaxVertexCount * VertexSize();
 	bool bHasEnoughMemory = ( m_nFirstUnwrittenOffset + nMemoryRequired <= m_nBufferSize );
 
@@ -284,7 +284,7 @@ bool CVertexBufferDx10::Lock( int nMaxVertexCount, bool bAppend, VertexDesc_t &d
 
 	ComputeVertexDescription( (unsigned char*)pLockedData + m_nFirstUnwrittenOffset, m_VertexFormat, desc );
 	desc.m_nFirstVertex = 0;
-	desc.m_nOffset = m_nFirstUnwrittenOffset; 
+	desc.m_nOffset = m_nFirstUnwrittenOffset;
 	m_bIsLocked = true;
 	return true;
 
@@ -294,7 +294,7 @@ vertexBufferLockFailed:
 	// Set up a bogus index descriptor
 	ComputeVertexDescription( 0, 0, desc );
 	desc.m_nFirstVertex = 0;
-	desc.m_nOffset = 0; 
+	desc.m_nOffset = 0;
 	return false;
 }
 
@@ -339,7 +339,7 @@ int CIndexBufferDx10::s_nBufferCount = 0;
 //-----------------------------------------------------------------------------
 // constructor, destructor
 //-----------------------------------------------------------------------------
-CIndexBufferDx10::CIndexBufferDx10( ShaderBufferType_t type, MaterialIndexFormat_t fmt, int nIndexCount, const char *pBudgetGroupName ) : 
+CIndexBufferDx10::CIndexBufferDx10( ShaderBufferType_t type, MaterialIndexFormat_t fmt, int nIndexCount, const char *pBudgetGroupName ) :
 	BaseClass( pBudgetGroupName )
 {
 	Assert( nIndexCount != 0 );
@@ -391,12 +391,12 @@ bool CIndexBufferDx10::Allocate( )
 	{
 		if ( !m_bIsDynamic )
 		{
-			VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_STATIC_INDEX_BUFFER, 
+			VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_STATIC_INDEX_BUFFER,
 				COUNTER_GROUP_TEXTURE_GLOBAL, m_nBufferSize );
 		}
 		else
 		{
-			VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_DYNAMIC_INDEX_BUFFER, 
+			VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_DYNAMIC_INDEX_BUFFER,
 				COUNTER_GROUP_TEXTURE_GLOBAL, m_nBufferSize );
 		}
 #ifdef _DEBUG
@@ -420,12 +420,12 @@ void CIndexBufferDx10::Free()
 
 		if ( !m_bIsDynamic )
 		{
-			VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_STATIC_INDEX_BUFFER, 
+			VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_STATIC_INDEX_BUFFER,
 				COUNTER_GROUP_TEXTURE_GLOBAL, - m_nBufferSize );
 		}
 		else
 		{
-			VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_DYNAMIC_INDEX_BUFFER, 
+			VPROF_INCREMENT_GROUP_COUNTER( "TexGroup_global_" TEXTURE_GROUP_DYNAMIC_INDEX_BUFFER,
 				COUNTER_GROUP_TEXTURE_GLOBAL, - m_nBufferSize );
 		}
 	}
@@ -541,7 +541,7 @@ bool CIndexBufferDx10::Lock( int nMaxIndexCount, bool bAppend, IndexDesc_t &desc
 			goto indexBufferLockFailed;
 	}
 
-	// Check to see if we have enough memory 
+	// Check to see if we have enough memory
 	int nMemoryRequired = nMaxIndexCount * IndexSize();
 	bool bHasEnoughMemory = ( m_nFirstUnwrittenOffset + nMemoryRequired <= m_nBufferSize );
 
@@ -747,11 +747,11 @@ void CMeshDx10::Draw(CPrimList *pPrims, int nPrims)
 }
 
 // Copy verts and/or indices to a mesh builder. This only works for temp meshes!
-void CMeshDx10::CopyToMeshBuilder( 
+void CMeshDx10::CopyToMeshBuilder(
 								  int iStartVert,		// Which vertices to copy.
-								  int nVerts, 
+								  int nVerts,
 								  int iStartIndex,	// Which indices to copy.
-								  int nIndices, 
+								  int nIndices,
 								  int indexOffset,	// This is added to each index.
 								  CMeshBuilder &builder )
 {

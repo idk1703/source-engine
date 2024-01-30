@@ -33,10 +33,10 @@ public:
 
 	virtual int		UpdateTransmitState() { return SetTransmitState( FL_EDICT_FULLCHECK ); }
 	virtual int 	ShouldTransmit( const CCheckTransmitInfo *pInfo );
-	
+
 	// This is called when removing the order.
 	void			DetachFromPlayer();
-	
+
 
 // Overridables.
 public:

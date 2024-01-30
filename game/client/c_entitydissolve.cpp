@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -50,7 +50,7 @@ extern PMaterialHandle g_Material_Spark;
 PMaterialHandle g_Material_AR2Glow = NULL;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_EntityDissolve::C_EntityDissolve( void )
 {
@@ -61,7 +61,7 @@ C_EntityDissolve::C_EntityDissolve( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EntityDissolve::GetRenderBounds( Vector& theMins, Vector& theMaxs )
 {
@@ -178,7 +178,7 @@ static void FX_BuildTesla( C_BaseEntity *pEntity, Vector &vecOrigin, Vector &vec
 	beamInfo.m_nSegments = 18;
 	beamInfo.m_bRenderable = true;
 	beamInfo.m_nFlags = 0; //FBEAM_ONLYNOISEONCE;
-	
+
 	beams->CreateBeamEntPoint( beamInfo );
 }
 
@@ -299,7 +299,7 @@ static inline void SortAbsVectorComponents( const Vector& src, int* pVecIdx )
 //-----------------------------------------------------------------------------
 // Compute the bounding box's center, size, and basis
 //-----------------------------------------------------------------------------
-void C_EntityDissolve::ComputeRenderInfo( mstudiobbox_t *pHitBox, const matrix3x4_t &hitboxToWorld, 
+void C_EntityDissolve::ComputeRenderInfo( mstudiobbox_t *pHitBox, const matrix3x4_t &hitboxToWorld,
 										 Vector *pVecAbsOrigin, Vector *pXVec, Vector *pYVec )
 {
 	// Compute the center of the hitbox in worldspace
@@ -378,7 +378,7 @@ void C_EntityDissolve::DoSparks( mstudiohitboxset_t *set, matrix3x4_t *hitboxbon
 
 	float dt = m_flStartTime + m_flFadeOutStart - gpGlobals->curtime;
 	dt = clamp( dt, 0.0f, m_flFadeOutStart );
-	
+
 	float flNextTime;
 	if (m_nDissolveType == ENTITY_DISSOLVE_ELECTRICAL)
 	{
@@ -414,7 +414,7 @@ void C_EntityDissolve::DoSparks( mstudiohitboxset_t *set, matrix3x4_t *hitboxbon
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EntityDissolve::SetupEmitter( void )
 {
@@ -426,13 +426,13 @@ void C_EntityDissolve::SetupEmitter( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float C_EntityDissolve::GetFadeInPercentage( void )
 {
 	float dt = gpGlobals->curtime - m_flStartTime;
-	
+
 	if ( dt > m_flFadeOutStart )
 		return 1.0f;
 
@@ -442,7 +442,7 @@ float C_EntityDissolve::GetFadeInPercentage( void )
 	if ( (dt > m_flFadeInStart) && (dt < m_flFadeInStart + m_flFadeInLength) )
 	{
 		dt -= m_flFadeInStart;
-		
+
 		return ( dt / m_flFadeInLength );
 	}
 
@@ -450,55 +450,55 @@ float C_EntityDissolve::GetFadeInPercentage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float C_EntityDissolve::GetFadeOutPercentage( void )
 {
 	float dt = gpGlobals->curtime - m_flStartTime;
-	
+
 	if ( dt < m_flFadeInStart )
 		return 1.0f;
 
 	if ( dt > m_flFadeOutStart )
 	{
 		dt -= m_flFadeOutStart;
-		
+
 		if ( dt > m_flFadeOutLength )
 			return 0.0f;
-		
+
 		return 1.0f - ( dt / m_flFadeOutLength );
 	}
-	
+
 	return 1.0f;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float C_EntityDissolve::GetModelFadeOutPercentage( void )
 {
 	float dt = gpGlobals->curtime - m_flStartTime;
-	
+
 	if ( dt < m_flFadeOutModelStart )
 		return 1.0f;
 
 	if ( dt > m_flFadeOutModelStart )
 	{
 		dt -= m_flFadeOutModelStart;
-		
+
 		if ( dt > m_flFadeOutModelLength )
 			return 0.0f;
-		
+
 		return 1.0f - ( dt / m_flFadeOutModelLength );
 	}
-	
+
 	return 1.0f;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EntityDissolve::ClientThink( void )
 {
@@ -585,8 +585,8 @@ void C_EntityDissolve::ClientThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flags - 
+// Purpose:
+// Input  : flags -
 // Output : int
 //-----------------------------------------------------------------------------
 int C_EntityDissolve::DrawModel( int flags )
@@ -613,7 +613,7 @@ int C_EntityDissolve::DrawModel( int flags )
 
 	// Make sure the emitter is setup properly
 	SetupEmitter();
-	
+
 	// Get fade percentages for the effect
 	float fadeInPerc = GetFadeInPercentage();
 	float fadeOutPerc = GetFadeOutPercentage();
@@ -685,12 +685,12 @@ int C_EntityDissolve::DrawModel( int flags )
 				continue;
 
 			sParticle = (SimpleParticle *) m_pEmitter->AddParticle( sizeof(SimpleParticle), g_Material_Spark, vecAbsOrigin + offset );
-			
+
 			if ( sParticle == NULL )
 				return 1;
 
 			sParticle->m_vecVelocity	= Vector( Helper_RandomFloat( -4.0f, 4.0f ), Helper_RandomFloat( -4.0f, 4.0f ), Helper_RandomFloat( 16.0f, 64.0f ) );
-			
+
 			if ( m_nDissolveType == ENTITY_DISSOLVE_CORE )
 			{
 				if ( m_bCoreExplode == true )
@@ -711,7 +711,7 @@ int C_EntityDissolve::DrawModel( int flags )
 			}
 
 			sParticle->m_flDieTime = random->RandomFloat( 0.4f, 0.5f );
-			
+
 			// If we're the last particles, last longer
 			if ( numParticles == 0 )
 			{
@@ -732,7 +732,7 @@ int C_EntityDissolve::DrawModel( int flags )
 			{
 				sParticle->m_flRollDelta	= Helper_RandomFloat( -8.0f, 8.0f );
 			}
-			
+
 			sParticle->m_flLifetime		= 0.0f;
 
 			sParticle->m_flRoll			= Helper_RandomInt( 0, 360 );
@@ -746,7 +746,7 @@ int C_EntityDissolve::DrawModel( int flags )
 			sParticle->m_uchEndAlpha	= 0;
 			sParticle->m_uchEndSize		= 0;
 		}
-			
+
 		for ( int j = 0; j < numParticles; j++ )
 		{
 			offset = xDir * Helper_RandomFloat( -xScale*0.5f, xScale*0.5f ) + yDir * Helper_RandomFloat( -yScale*0.5f, yScale*0.5f );
@@ -756,7 +756,7 @@ int C_EntityDissolve::DrawModel( int flags )
 
 			if ( sParticle == NULL )
 				return 1;
-			
+
 			sParticle->m_vecVelocity	= Vector( Helper_RandomFloat( -4.0f, 4.0f ), Helper_RandomFloat( -4.0f, 4.0f ), Helper_RandomFloat( -64.0f, 128.0f ) );
 			sParticle->m_uchStartSize	= random->RandomFloat( 8, 12 ) * spriteScale;
 			sParticle->m_flDieTime		= 0.1f;

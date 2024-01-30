@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -25,9 +25,9 @@
 
 DEFINE_FALLBACK_SHADER( Sprite, Sprite_DX8 )
 
-BEGIN_VS_SHADER( Sprite_DX8, 
+BEGIN_VS_SHADER( Sprite_DX8,
 			  "Help for Sprite_DX8" )
-			  
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( SPRITEORIGIN, SHADER_PARAM_TYPE_VEC3, "[0 0 0]", "sprite origin" )
 		SHADER_PARAM( SPRITEORIENTATION, SHADER_PARAM_TYPE_INTEGER, "0", "sprite orientation" )
@@ -147,11 +147,11 @@ BEGIN_VS_SHADER( Sprite_DX8,
 		s_pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_MODULATION_COLOR, color );
 
 		// identity base texture transorm
-		float ident[2][4] = { 
+		float ident[2][4] = {
 			{ 1.0f, 0.0f, 0.0f, 0.0f },
-			{ 0.0f, 1.0f, 0.0f, 0.0f } 
+			{ 0.0f, 1.0f, 0.0f, 0.0f }
 		};
-		s_pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, &ident[0][0], 2 ); 
+		s_pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, &ident[0][0], 2 );
 	}
 
 	SHADER_DRAW
@@ -318,18 +318,18 @@ BEGIN_VS_SHADER( Sprite_DX8,
 					s_pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_MODULATION_COLOR, color );
 
 					s_pShaderAPI->SetPixelShaderIndex( 0 );
-	
+
 					color[0] = color[1] = color[2] = flFade * frameBlendAlpha;
 					color[3] = 1.0f;
 					s_pShaderAPI->SetPixelShaderConstant( 0, color );
 
-	
+
 					// identity base texture transorm
-					float ident[2][4] = { 
+					float ident[2][4] = {
 						{ 1.0f, 0.0f, 0.0f, 0.0f },
-						{ 0.0f, 1.0f, 0.0f, 0.0f } 
+						{ 0.0f, 1.0f, 0.0f, 0.0f }
 					};
-					s_pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, &ident[0][0], 2 ); 
+					s_pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, &ident[0][0], 2 );
 				}
 				Draw();
 				SHADOW_STATE
@@ -362,11 +362,11 @@ BEGIN_VS_SHADER( Sprite_DX8,
 					s_pShaderAPI->SetPixelShaderConstant( 0, color );
 
 					// identity base texture transorm
-					float ident[2][4] = { 
+					float ident[2][4] = {
 						{ 1.0f, 0.0f, 0.0f, 0.0f },
-						{ 0.0f, 1.0f, 0.0f, 0.0f } 
+						{ 0.0f, 1.0f, 0.0f, 0.0f }
 					};
-					s_pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, &ident[0][0], 2 ); 
+					s_pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, &ident[0][0], 2 );
 				}
 				Draw();
 			}

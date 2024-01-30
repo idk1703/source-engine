@@ -55,7 +55,7 @@ IMPLEMENT_SERVERCLASS_ST( CParticlePerformanceMonitor, DT_ParticlePerformanceMon
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CParticlePerformanceMonitor::Spawn( void )
 {
@@ -66,7 +66,7 @@ void CParticlePerformanceMonitor::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CParticlePerformanceMonitor::UpdateTransmitState()
 {
@@ -92,4 +92,3 @@ void CParticlePerformanceMonitor::InputStopMeasuring( inputdata_t &inputdata )
 {
 	m_bMeasurePerf = false;
 }
-

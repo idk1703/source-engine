@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -48,7 +48,7 @@ class CBudgetPanelContainer;
 //-----------------------------------------------------------------------------
 class CGamePanelInfo : public vgui::Frame, public IManageServer
 {
-	DECLARE_CLASS_SIMPLE( CGamePanelInfo, vgui::Frame ); 
+	DECLARE_CLASS_SIMPLE( CGamePanelInfo, vgui::Frame );
 public:
 	CGamePanelInfo(vgui::Panel *parent, const char *name, const char *mod);
 	~CGamePanelInfo();
@@ -79,7 +79,7 @@ private:
 	// methods
 	vgui::ComboBox *m_pViewCombo;
 	vgui::AnimatingImagePanel *m_pAnimImagePanel;
-	
+
 	// GUI pabels
 	// main property sheet
 	vgui::PropertySheet *m_pDetailsSheet;

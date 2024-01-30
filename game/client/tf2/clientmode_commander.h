@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -33,7 +33,7 @@ class CClientModeCommander : public ClientModeTFBase, public IMinimapClient
 
 // IClientMode overrides.
 public:
-	
+
 					CClientModeCommander();
 	virtual			~CClientModeCommander();
 
@@ -41,7 +41,7 @@ public:
 
 	virtual void	Enable();
 	virtual void	Disable();
-	
+
 	virtual void	Update();
 	virtual void	Layout();
 

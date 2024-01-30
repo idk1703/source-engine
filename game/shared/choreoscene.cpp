@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -39,13 +39,13 @@ bool	CChoreoScene::s_bEditingDisabled = false;
 
 //-----------------------------------------------------------------------------
 // Purpose: Creates scene from a file
-// Input  : *filename - 
-//			*pfn - 
+// Input  : *filename -
+//			*pfn -
 // Output : CChoreoScene
 //-----------------------------------------------------------------------------
-CChoreoScene *ChoreoLoadScene( 	
+CChoreoScene *ChoreoLoadScene(
 	char const *filename,
-	IChoreoEventCallback *callback, 
+	IChoreoEventCallback *callback,
 	ISceneTokenProcessor *tokenizer,
 	void ( *pfn ) ( const char *fmt, ... ) )
 {
@@ -58,10 +58,10 @@ CChoreoScene *ChoreoLoadScene(
 }
 
 bool IsBufferBinaryVCD( char *pBuffer, int bufferSize )
-{	
+{
 	if ( bufferSize > 4 && *(int *)pBuffer == SCENE_BINARY_TAG )
 	{
-		return true;	
+		return true;
 	}
 
 	return false;
@@ -69,9 +69,9 @@ bool IsBufferBinaryVCD( char *pBuffer, int bufferSize )
 
 //-----------------------------------------------------------------------------
 // Purpose: Debug printout
-// Input  : level - 
-//			*fmt - 
-//			... - 
+// Input  : level -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CChoreoScene::choreoprintf( int level, const char *fmt, ... )
 {
@@ -84,9 +84,9 @@ void CChoreoScene::choreoprintf( int level, const char *fmt, ... )
 	while ( level-- > 0 )
 	{
 		if (m_pfnPrint )
-		{ 
+		{
 			 (*m_pfnPrint)( "  " );
-		} 
+		}
 		else
 		{
 			 printf( "  " );
@@ -102,12 +102,12 @@ void CChoreoScene::choreoprintf( int level, const char *fmt, ... )
 	{
 		printf( "%s", string );
 	}
-	
+
 	Msg( "%s", string );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CChoreoScene::CChoreoScene( IChoreoEventCallback *callback )
 {
@@ -117,7 +117,7 @@ CChoreoScene::CChoreoScene( IChoreoEventCallback *callback )
 
 //-----------------------------------------------------------------------------
 // Purpose: // Assignment
-// Input  : src - 
+// Input  : src -
 // Output : CChoreoScene&
 //-----------------------------------------------------------------------------
 CChoreoScene& CChoreoScene::operator=( const CChoreoScene& src )
@@ -154,7 +154,7 @@ CChoreoScene& CChoreoScene::operator=( const CChoreoScene& src )
 	m_Channels.RemoveAll();
 
 	m_pTokenizer = src.m_pTokenizer;
-	
+
 	m_flCurrentTime = src.m_flCurrentTime;
 	m_flStartLoopTime = src.m_flStartLoopTime;
 	m_flStartTime = src.m_flStartTime;
@@ -193,7 +193,7 @@ CChoreoScene& CChoreoScene::operator=( const CChoreoScene& src )
 
 		for ( int j = 0; j < newActor->GetNumChannels() ; j++ )
 		{
-			CChoreoChannel *ch = newActor->GetChannel( j ); 
+			CChoreoChannel *ch = newActor->GetChannel( j );
 			m_Channels.AddToTail( ch );
 
 			for ( int k = 0; k < ch->GetNumEvents(); k++ )
@@ -226,7 +226,7 @@ CChoreoScene& CChoreoScene::operator=( const CChoreoScene& src )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoScene::Init( IChoreoEventCallback *callback )
 {
@@ -308,8 +308,8 @@ bool CChoreoScene::ShouldIgnorePhonemes() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *callback - 
+// Purpose:
+// Input  : *callback -
 //-----------------------------------------------------------------------------
 void CChoreoScene::SetEventCallbackInterface( IChoreoEventCallback *callback )
 {
@@ -317,9 +317,9 @@ void CChoreoScene::SetEventCallbackInterface( IChoreoEventCallback *callback )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : level - 
-//			*e - 
+// Purpose:
+// Input  : level -
+//			*e -
 //-----------------------------------------------------------------------------
 void CChoreoScene::PrintEvent( int level, CChoreoEvent *e )
 {
@@ -339,15 +339,15 @@ void CChoreoScene::PrintEvent( int level, CChoreoEvent *e )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : level - 
-//			*c - 
+// Purpose:
+// Input  : level -
+//			*c -
 //-----------------------------------------------------------------------------
 void CChoreoScene::PrintChannel( int level, CChoreoChannel *c )
 {
 	choreoprintf( level, "channel \"%s\"\n", c->GetName() );
 	choreoprintf( level, "{\n" );
-	
+
 	for ( int i = 0; i < c->GetNumEvents(); i++ )
 	{
 		CChoreoEvent *e = c->GetEvent( i );
@@ -361,15 +361,15 @@ void CChoreoScene::PrintChannel( int level, CChoreoChannel *c )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : level - 
-//			*a - 
+// Purpose:
+// Input  : level -
+//			*a -
 //-----------------------------------------------------------------------------
 void CChoreoScene::PrintActor( int level, CChoreoActor *a )
 {
 	choreoprintf( level, "actor \"%s\"\n", a->GetName() );
 	choreoprintf( level, "{\n" );
-	
+
 	for ( int i = 0; i < a->GetNumChannels(); i++ )
 	{
 		CChoreoChannel *c = a->GetChannel( i );
@@ -383,7 +383,7 @@ void CChoreoScene::PrintActor( int level, CChoreoActor *a )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoScene::Print( void )
 {
@@ -411,7 +411,7 @@ void CChoreoScene::Print( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: prints if m_pfnPrint is active
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 
 void CChoreoScene::SceneMsg( const char *pFormat, ... )
@@ -433,7 +433,7 @@ void CChoreoScene::SceneMsg( const char *pFormat, ... )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CChoreoEvent
 //-----------------------------------------------------------------------------
 CChoreoEvent *CChoreoScene::AllocEvent( void )
@@ -446,7 +446,7 @@ CChoreoEvent *CChoreoScene::AllocEvent( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CChoreoChannel
 //-----------------------------------------------------------------------------
 CChoreoChannel *CChoreoScene::AllocChannel( void )
@@ -459,7 +459,7 @@ CChoreoChannel *CChoreoScene::AllocChannel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CChoreoActor
 //-----------------------------------------------------------------------------
 CChoreoActor *CChoreoScene::AllocActor( void )
@@ -472,8 +472,8 @@ CChoreoActor *CChoreoScene::AllocActor( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : CChoreoActor
 //-----------------------------------------------------------------------------
 CChoreoActor *CChoreoScene::FindActor( const char *name )
@@ -492,7 +492,7 @@ CChoreoActor *CChoreoScene::FindActor( const char *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CChoreoScene::GetNumEvents( void )
@@ -501,8 +501,8 @@ int CChoreoScene::GetNumEvents( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : event - 
+// Purpose:
+// Input  : event -
 // Output : CChoreoEvent
 //-----------------------------------------------------------------------------
 CChoreoEvent *CChoreoScene::GetEvent( int event )
@@ -514,7 +514,7 @@ CChoreoEvent *CChoreoScene::GetEvent( int event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CChoreoScene::GetNumActors( void )
@@ -523,8 +523,8 @@ int CChoreoScene::GetNumActors( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : actor - 
+// Purpose:
+// Input  : actor -
 // Output : CChoreoActor
 //-----------------------------------------------------------------------------
 CChoreoActor *CChoreoScene::GetActor( int actor )
@@ -535,7 +535,7 @@ CChoreoActor *CChoreoScene::GetActor( int actor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CChoreoScene::GetNumChannels( void )
@@ -544,8 +544,8 @@ int CChoreoScene::GetNumChannels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : channel - 
+// Purpose:
+// Input  : channel -
 // Output : CChoreoChannel
 //-----------------------------------------------------------------------------
 CChoreoChannel *CChoreoScene::GetChannel( int channel )
@@ -583,34 +583,34 @@ void CCurveData::Parse( ISceneTokenProcessor *tokenizer, ICurveDataAccessor *dat
 
 	if ( stricmp( tokenizer->CurrentToken(), "{" ) )
 		tokenizer->Error( "expecting {\n" );
-	
+
 	while ( 1 )
 	{
 		// Parse until }
 		tokenizer->GetToken( true );
-		
+
 		if ( strlen( tokenizer->CurrentToken() ) <= 0 )
 		{
 			tokenizer->Error( "expecting ramp data\n" );
 			break;
 		}
-		
+
 		if ( !Q_stricmp( tokenizer->CurrentToken(), "}" ) )
 			break;
-		
+
 		CUtlVector< CExpressionSample > samples;
-		
+
 		float time = (float)atof( tokenizer->CurrentToken() );
 		tokenizer->GetToken( false );
 		float value = (float)atof( tokenizer->CurrentToken() );
-		
+
 		// Add to counter
 		int idx = samples.AddToTail();
 		CExpressionSample *s = &samples[ idx ];
-			
+
 		s->time			= time;
 		s->value		= value;
-		
+
 		// If there are more tokens on this line, then it's a new format curve name
 		if ( tokenizer->TokenAvailable() )
 		{
@@ -636,7 +636,7 @@ void CCurveData::Parse( ISceneTokenProcessor *tokenizer, ICurveDataAccessor *dat
 
 //-----------------------------------------------------------------------------
 // Purpose: Helper for restoring edge info
-// Input  : *edgeinfo - 
+// Input  : *edgeinfo -
 //-----------------------------------------------------------------------------
 void CChoreoScene::ParseEdgeInfo( ISceneTokenProcessor *tokenizer, EdgeInfo_t *edgeinfo )
 {
@@ -652,9 +652,9 @@ void CChoreoScene::ParseEdgeInfo( ISceneTokenProcessor *tokenizer, EdgeInfo_t *e
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *tokenizer - 
-//			*e - 
+// Purpose:
+// Input  : *tokenizer -
+//			*e -
 //-----------------------------------------------------------------------------
 void CChoreoScene::ParseFlexAnimations( ISceneTokenProcessor *tokenizer, CChoreoEvent *e, bool removeold /*= true*/ )
 {
@@ -720,24 +720,24 @@ void CChoreoScene::ParseFlexAnimations( ISceneTokenProcessor *tokenizer, CChoreo
 	{
 		tokenizer->Error( "expecting {\n" );
 	}
-	
+
 	while ( 1 )
 	{
 		// Parse until }
 		tokenizer->GetToken( true );
-		
+
 		if ( strlen( tokenizer->CurrentToken() ) <= 0 )
 		{
 			tokenizer->Error( "expecting flex animation data\n" );
 			break;
 		}
-		
+
 		if ( !Q_stricmp( tokenizer->CurrentToken(), "}" ) )
 			break;
-		
+
 		char flexcontroller[ CFlexAnimationTrack::MAX_CONTROLLER_NAME ];
 		Q_strncpy( flexcontroller, tokenizer->CurrentToken(), sizeof( flexcontroller ) );
-		
+
 		// Animations default to active
 		bool active = true;
 		bool combo = false;
@@ -746,19 +746,19 @@ void CChoreoScene::ParseFlexAnimations( ISceneTokenProcessor *tokenizer, CChoreo
 		tokenizer->GetToken( true );
 
 		EdgeInfo_t edgeinfo[ 2 ];
-		
+
 		if ( !Q_stricmp( tokenizer->CurrentToken(), "disabled" ) )
 		{
 			active = false;
 			tokenizer->GetToken( true );
 		}
-		
+
 		if ( !Q_stricmp( tokenizer->CurrentToken(), "combo" ) )
 		{
 			combo = true;
 			tokenizer->GetToken( true );
 		}
-		
+
 		if ( !Q_stricmp( tokenizer->CurrentToken(), "range" ) )
 		{
 			tokenizer->GetToken( false );
@@ -767,7 +767,7 @@ void CChoreoScene::ParseFlexAnimations( ISceneTokenProcessor *tokenizer, CChoreo
 			range_max = atof( tokenizer->CurrentToken() );
 			tokenizer->GetToken( true );
 		}
-		
+
 		if ( !Q_stricmp( tokenizer->CurrentToken(), "leftedge" ) )
 		{
 			ParseEdgeInfo( tokenizer, &edgeinfo[ 0 ] );
@@ -779,36 +779,36 @@ void CChoreoScene::ParseFlexAnimations( ISceneTokenProcessor *tokenizer, CChoreo
 		}
 
 		CUtlVector< CExpressionSample > samples[2];
-		
+
 		for ( int samplecount = 0; samplecount < ( combo ? 2 : 1 ); samplecount++ )
 		{
 			if ( stricmp( tokenizer->CurrentToken(), "{" ) )
 			{
 				tokenizer->Error( "expecting {\n" );
 			}
-			
+
 			while ( 1 )
 			{
 				tokenizer->GetToken( true );
-				
+
 				if ( strlen( tokenizer->CurrentToken() ) <= 0 )
 				{
 					tokenizer->Error( "expecting flex animation data\n" );
 					break;
 				}
-				
+
 				if ( !Q_stricmp( tokenizer->CurrentToken(), "}" ) )
 					break;
-				
+
 				float time = (float)atof( tokenizer->CurrentToken() );
 				tokenizer->GetToken( false );
 				float value = (float)atof( tokenizer->CurrentToken() );
-				
+
 				// Add to counter
 				int idx = samples[ samplecount ].AddToTail();
-				
+
 				CExpressionSample *s = &samples[ samplecount ][ idx ];
-				
+
 				if ( samples_use_realtime )
 				{
 					s->time		= time;
@@ -833,13 +833,13 @@ void CChoreoScene::ParseFlexAnimations( ISceneTokenProcessor *tokenizer, CChoreo
 					s->SetCurveType( nDefaultCurveType );
 				}
 			}
-			
+
 			if ( combo && samplecount == 0 )
 			{
 				tokenizer->GetToken( true );
 			}
 		}
-		
+
 		if ( active || samples[ 0 ].Size() >= 1 )
 		{
 			// Add it in
@@ -847,16 +847,16 @@ void CChoreoScene::ParseFlexAnimations( ISceneTokenProcessor *tokenizer, CChoreo
 			Assert( track );
 			track->SetTrackActive( active );
 			track->SetComboType( combo );
-			
+
 			track->SetMin( range_min );
 			track->SetMax( range_max );
-			
+
 			for ( int t = 0; t < ( combo ? 2 : 1 ); t++ )
 			{
 				for ( int i = 0; i < samples[ t ].Size(); i++ )
 				{
 					CExpressionSample *sample = &samples[ t ][ i ];
-					
+
 					CExpressionSample *added = track->AddSample( sample->time, sample->value, t );
 					Assert( added );
 					added->SetCurveType( sample->GetCurveType() );
@@ -879,9 +879,9 @@ void CChoreoScene::ParseFlexAnimations( ISceneTokenProcessor *tokenizer, CChoreo
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *actor - 
-//			*channel - 
+// Purpose:
+// Input  : *actor -
+//			*channel -
 // Output : CChoreoEvent
 //-----------------------------------------------------------------------------
 CChoreoEvent *CChoreoScene::ParseEvent( CChoreoActor *actor, CChoreoChannel *channel )
@@ -1068,7 +1068,7 @@ CChoreoEvent *CChoreoScene::ParseEvent( CChoreoActor *actor, CChoreoChannel *cha
 		{
 			m_pTokenizer->GetToken( true );
 			CChoreoEvent::AbsTagType tagtype;
-			
+
 			tagtype = CChoreoEvent::TypeForAbsoluteTagName( m_pTokenizer->CurrentToken() );
 
 			if ( tagtype == (CChoreoEvent::AbsTagType) -1 )
@@ -1218,7 +1218,7 @@ CChoreoEvent *CChoreoScene::ParseEvent( CChoreoActor *actor, CChoreoChannel *cha
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CChoreoActor
 //-----------------------------------------------------------------------------
 CChoreoActor *CChoreoScene::ParseActor( void )
@@ -1271,8 +1271,8 @@ const char *CChoreoScene::GetMapname( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 void CChoreoScene::SetMapname( const char *name )
 {
@@ -1280,7 +1280,7 @@ void CChoreoScene::SetMapname( const char *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoScene::ParseMapname( void )
 {
@@ -1291,7 +1291,7 @@ void CChoreoScene::ParseMapname( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoScene::ParseFPS( void )
 {
@@ -1303,7 +1303,7 @@ void CChoreoScene::ParseFPS( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoScene::ParseSnap( void )
 {
@@ -1313,7 +1313,7 @@ void CChoreoScene::ParseSnap( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoScene::ParseIgnorePhonemes( void )
 {
@@ -1323,8 +1323,8 @@ void CChoreoScene::ParseIgnorePhonemes( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *actor - 
+// Purpose:
+// Input  : *actor -
 //-----------------------------------------------------------------------------
 void CChoreoScene::ParseFacePoserModel( CChoreoActor *actor )
 {
@@ -1333,8 +1333,8 @@ void CChoreoScene::ParseFacePoserModel( CChoreoActor *actor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *actor - 
+// Purpose:
+// Input  : *actor -
 // Output : CChoreoChannel
 //-----------------------------------------------------------------------------
 CChoreoChannel *CChoreoScene::ParseChannel( CChoreoActor *actor )
@@ -1382,7 +1382,7 @@ CChoreoChannel *CChoreoScene::ParseChannel( CChoreoActor *actor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CChoreoScene::ParseFromBuffer( const char *pFilename, ISceneTokenProcessor *tokenizer )
@@ -1446,7 +1446,7 @@ bool CChoreoScene::ParseFromBuffer( const char *pFilename, ISceneTokenProcessor 
 
 	ReconcileCloseCaption();
 
-	InternalDetermineEventTypes(); 
+	InternalDetermineEventTypes();
 
 	if ( CChoreoScene::s_bEditingDisabled )
 	{
@@ -1470,7 +1470,7 @@ void CChoreoScene::RemoveEventsExceptTypes( int* typeList, int count )
 			CChoreoChannel *c = a->GetChannel( j );
 			if ( !c )
 				continue;
-			
+
 			int num = c->GetNumEvents();
 			for ( int k = num - 1 ; k >= 0; --k )
 			{
@@ -1538,7 +1538,7 @@ void CChoreoScene::InternalDetermineEventTypes()
 			CChoreoChannel *c = a->GetChannel( j );
 			if ( !c )
 				continue;
-			
+
 			for ( int k = 0 ; k < c->GetNumEvents(); k++ )
 			{
 				CChoreoEvent *e = c->GetEvent( k );
@@ -1552,7 +1552,7 @@ void CChoreoScene::InternalDetermineEventTypes()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CChoreoScene::FindStopTime( void )
@@ -1581,11 +1581,11 @@ float CChoreoScene::FindStopTime( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fp - 
-//			level - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : *fp -
+//			level -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CChoreoScene::FilePrintf( CUtlBuffer& buf, int level, const char *fmt, ... )
 {
@@ -1602,8 +1602,8 @@ void CChoreoScene::FilePrintf( CUtlBuffer& buf, int level, const char *fmt, ... 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fp - 
+// Purpose:
+// Input  : *fp -
 //-----------------------------------------------------------------------------
 void CChoreoScene::FileSaveHeader( CUtlBuffer& buf )
 {
@@ -1611,8 +1611,8 @@ void CChoreoScene::FileSaveHeader( CUtlBuffer& buf )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mark - 
+// Purpose:
+// Input  : mark -
 //-----------------------------------------------------------------------------
 void CChoreoScene::MarkForSaveAll( bool mark )
 {
@@ -1640,8 +1640,8 @@ void CChoreoScene::MarkForSaveAll( bool mark )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *filename - 
+// Purpose:
+// Input  : *filename -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CChoreoScene::ExportMarkedToFile( const char *filename )
@@ -1682,8 +1682,8 @@ bool CChoreoScene::ExportMarkedToFile( const char *filename )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *filename - 
+// Purpose:
+// Input  : *filename -
 //-----------------------------------------------------------------------------
 bool CChoreoScene::SaveToFile( const char *filename )
 {
@@ -1737,10 +1737,10 @@ bool CChoreoScene::SaveToFile( const char *filename )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : buf - 
-//			level - 
-//			*e - 
+// Purpose:
+// Input  : buf -
+//			level -
+//			*e -
 //-----------------------------------------------------------------------------
 void CChoreoScene::FileSaveRamp( CUtlBuffer& buf, int level, CChoreoEvent *e )
 {
@@ -1748,10 +1748,10 @@ void CChoreoScene::FileSaveRamp( CUtlBuffer& buf, int level, CChoreoEvent *e )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : buf - 
-//			level - 
-//			*e - 
+// Purpose:
+// Input  : buf -
+//			level -
+//			*e -
 //-----------------------------------------------------------------------------
 void CChoreoScene::FileSaveSceneRamp( CUtlBuffer& buf, int level )
 {
@@ -1763,8 +1763,8 @@ void CCurveData::FileSave( CUtlBuffer& buf, int level, const char *name )
 {
 	// Nothing to save?
 	int c = GetCount();
-	if ( c <= 0 && 
-		!IsEdgeActive( true ) && 
+	if ( c <= 0 &&
+		!IsEdgeActive( true ) &&
 		!IsEdgeActive( false ) )
 		return;
 
@@ -1798,13 +1798,13 @@ void CCurveData::FileSave( CUtlBuffer& buf, int level, const char *name )
 			CChoreoScene::FilePrintf( buf, level + 1, "%.4f %.4f \"%s\"\n",
 				sample->time,
 				sample->value,
-				Interpolator_NameForCurveType( sample->GetCurveType(), false ) );	
+				Interpolator_NameForCurveType( sample->GetCurveType(), false ) );
 		}
 		else
 		{
 			CChoreoScene::FilePrintf( buf, level + 1, "%.4f %.4f\n",
 				sample->time,
-				sample->value );	
+				sample->value );
 		}
 	}
 
@@ -1827,7 +1827,7 @@ void CChoreoScene::FileSaveScaleSettings( CUtlBuffer& buf, int level, CChoreoSce
 
 		FilePrintf( buf, level + 1, "\"%s\" \"%i\"\n",
 			scene->m_TimeZoomLookup.GetElementName( i ),
-			value );	
+			value );
 	}
 
 	FilePrintf( buf, level, "}\n" );
@@ -1835,10 +1835,10 @@ void CChoreoScene::FileSaveScaleSettings( CUtlBuffer& buf, int level, CChoreoSce
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : buf - 
-//			level - 
-//			*track - 
+// Purpose:
+// Input  : buf -
+//			level -
+//			*track -
 //-----------------------------------------------------------------------------
 void CChoreoScene::FileSaveFlexAnimationTrack( CUtlBuffer& buf, int level, CFlexAnimationTrack *track, int nDefaultCurveType )
 {
@@ -1891,7 +1891,7 @@ void CChoreoScene::FileSaveFlexAnimationTrack( CUtlBuffer& buf, int level, CFlex
 
 
 	FilePrintf( buf, level + 2, "%s\n", line );
-	
+
 	// Write out samples
 	FilePrintf( buf, level + 2, "{\n" );
 
@@ -1906,13 +1906,13 @@ void CChoreoScene::FileSaveFlexAnimationTrack( CUtlBuffer& buf, int level, CFlex
 			FilePrintf( buf, level + 3, "%.4f %.4f \"%s\"\n",
 				s->time,
 				s->value,
-				Interpolator_NameForCurveType( s->GetCurveType(), false ) );	
+				Interpolator_NameForCurveType( s->GetCurveType(), false ) );
 		}
 		else
 		{
 			FilePrintf( buf, level + 3, "%.4f %.4f\n",
 				s->time,
-				s->value );	
+				s->value );
 		}
 	}
 
@@ -1922,7 +1922,7 @@ void CChoreoScene::FileSaveFlexAnimationTrack( CUtlBuffer& buf, int level, CFlex
 	if ( track->IsComboType() )
 	{
 		FilePrintf( buf, level + 2, "{\n" );
-	
+
 		for ( int j = 0 ; j < track->GetNumSamples( 1) ; j++ )
 		{
 			CExpressionSample *s = track->GetSample( j, 1 );
@@ -1934,13 +1934,13 @@ void CChoreoScene::FileSaveFlexAnimationTrack( CUtlBuffer& buf, int level, CFlex
 				FilePrintf( buf, level + 3, "%.4f %.4f \"%s\"\n",
 					s->time,
 					s->value,
-					Interpolator_NameForCurveType( s->GetCurveType(), false ) );	
+					Interpolator_NameForCurveType( s->GetCurveType(), false ) );
 			}
 			else
 			{
 				FilePrintf( buf, level + 3, "%.4f %.4f\n",
 					s->time,
-					s->value );	
+					s->value );
 			}
 		}
 
@@ -1949,10 +1949,10 @@ void CChoreoScene::FileSaveFlexAnimationTrack( CUtlBuffer& buf, int level, CFlex
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : buf - 
-//			level - 
-//			*e - 
+// Purpose:
+// Input  : buf -
+//			level -
+//			*e -
 //-----------------------------------------------------------------------------
 void CChoreoScene::FileSaveFlexAnimations( CUtlBuffer& buf, int level, CChoreoEvent *e )
 {
@@ -1981,10 +1981,10 @@ void CChoreoScene::FileSaveFlexAnimations( CUtlBuffer& buf, int level, CChoreoEv
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fp - 
-//			level - 
-//			*e - 
+// Purpose:
+// Input  : *fp -
+//			level -
+//			*e -
 //-----------------------------------------------------------------------------
 void CChoreoScene::FileSaveEvent( CUtlBuffer& buf, int level, CChoreoEvent *e )
 {
@@ -2107,7 +2107,7 @@ void CChoreoScene::FileSaveEvent( CUtlBuffer& buf, int level, CChoreoEvent *e )
 		FilePrintf( buf, level + 1, "relativetag \"%s\" \"%s\"\n",
 			e->GetRelativeTagName(), e->GetRelativeWavName() );
 	}
-	
+
 	if ( e->GetNumFlexAnimationTracks() > 0 )
 	{
 		FileSaveFlexAnimations( buf, level, e );
@@ -2141,10 +2141,10 @@ void CChoreoScene::FileSaveEvent( CUtlBuffer& buf, int level, CChoreoEvent *e )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fp - 
-//			level - 
-//			*c - 
+// Purpose:
+// Input  : *fp -
+//			level -
+//			*c -
 //-----------------------------------------------------------------------------
 void CChoreoScene::FileSaveChannel( CUtlBuffer& buf, int level, CChoreoChannel *c )
 {
@@ -2153,7 +2153,7 @@ void CChoreoScene::FileSaveChannel( CUtlBuffer& buf, int level, CChoreoChannel *
 
 	FilePrintf( buf, level, "channel \"%s\"\n", c->GetName() );
 	FilePrintf( buf, level, "{\n" );
-	
+
 	for ( int i = 0; i < c->GetNumEvents(); i++ )
 	{
 		CChoreoEvent *e = c->GetEvent( i );
@@ -2173,10 +2173,10 @@ void CChoreoScene::FileSaveChannel( CUtlBuffer& buf, int level, CChoreoChannel *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fp - 
-//			level - 
-//			*a - 
+// Purpose:
+// Input  : *fp -
+//			level -
+//			*a -
 //-----------------------------------------------------------------------------
 void CChoreoScene::FileSaveActor( CUtlBuffer& buf, int level, CChoreoActor *a )
 {
@@ -2185,7 +2185,7 @@ void CChoreoScene::FileSaveActor( CUtlBuffer& buf, int level, CChoreoActor *a )
 
 	FilePrintf( buf, level, "actor \"%s\"\n", a->GetName() );
 	FilePrintf( buf, level, "{\n" );
-	
+
 	for ( int i = 0; i < a->GetNumChannels(); i++ )
 	{
 		CChoreoChannel *c = a->GetChannel( i );
@@ -2210,7 +2210,7 @@ void CChoreoScene::FileSaveActor( CUtlBuffer& buf, int level, CChoreoActor *a )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CChoreoScene::FindAdjustedStartTime( void )
@@ -2242,7 +2242,7 @@ float CChoreoScene::FindAdjustedStartTime( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CChoreoScene::FindAdjustedEndTime( void )
@@ -2279,7 +2279,7 @@ float CChoreoScene::FindAdjustedEndTime( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoScene::ResetSimulation( bool forward /*= true*/, float starttime /*= 0.0f*/, float endtime /*= 0.0f*/ )
 {
@@ -2326,7 +2326,7 @@ void CChoreoScene::ResetSimulation( bool forward /*= true*/, float starttime /*=
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CChoreoScene::CheckEventCompletion( void )
 {
@@ -2347,7 +2347,7 @@ bool CChoreoScene::CheckEventCompletion( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CChoreoScene::SimulationFinished( void )
@@ -2373,7 +2373,7 @@ bool CChoreoScene::SimulationFinished( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CChoreoEvent *CChoreoScene::FindPauseBetweenTimes( float starttime, float endtime )
 {
@@ -2452,7 +2452,7 @@ int CChoreoScene::EventThink( CChoreoEvent *e, float frame_start_time, float fra
 				// Search for pause condition in between the original time and the
 				//  adjusted start time, but make sure that the pause event hasn't already triggered...
 				CChoreoEvent *pauseEvent = FindPauseBetweenTimes( starttime, starttime + m_flSoundSystemLatency );
-				if ( pauseEvent && 
+				if ( pauseEvent &&
 					( frame_start_time <= pauseEvent->GetStartTime() ) )
 				{
 					pauseEvent->AddEventDependency( e );
@@ -2557,9 +2557,9 @@ int CChoreoScene::EventThink( CChoreoEvent *e, float frame_start_time, float fra
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &e0 - 
-//			&e1 - 
+// Purpose:
+// Input  : &e0 -
+//			&e1 -
 // Output : static bool
 //-----------------------------------------------------------------------------
 bool CChoreoScene::EventLess( const CChoreoScene::ActiveList &al0, const CChoreoScene::ActiveList &al1 )
@@ -2613,7 +2613,7 @@ bool CChoreoScene::EventLess( const CChoreoScene::ActiveList &al0, const CChoreo
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoScene::ClearPauseEventDependencies()
 {
@@ -2627,9 +2627,9 @@ void CChoreoScene::ClearPauseEventDependencies()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pauseEvent - 
-//			*suppressed - 
+// Purpose:
+// Input  : *pauseEvent -
+//			*suppressed -
 //-----------------------------------------------------------------------------
 void CChoreoScene::AddPauseEventDependency( CChoreoEvent *pauseEvent, CChoreoEvent *suppressed )
 {
@@ -2639,8 +2639,8 @@ void CChoreoScene::AddPauseEventDependency( CChoreoEvent *pauseEvent, CChoreoEve
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : curtime - 
+// Purpose:
+// Input  : curtime -
 //-----------------------------------------------------------------------------
 void CChoreoScene::Think( float curtime )
 {
@@ -2730,7 +2730,7 @@ void CChoreoScene::Think( float curtime )
 
 //-----------------------------------------------------------------------------
 // Purpose: Loop points are handled prior to other events
-// Input  : curtime - 
+// Input  : curtime -
 //-----------------------------------------------------------------------------
 float CChoreoScene::LoopThink( float curtime )
 {
@@ -2770,8 +2770,8 @@ float CChoreoScene::LoopThink( float curtime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : entry - 
+// Purpose:
+// Input  : entry -
 //-----------------------------------------------------------------------------
 void CChoreoScene::ProcessActiveListEntry( ActiveList *entry )
 {
@@ -2825,7 +2825,7 @@ void CChoreoScene::ProcessActiveListEntry( ActiveList *entry )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CChoreoScene::GetTime( void )
@@ -2834,8 +2834,8 @@ float CChoreoScene::GetTime( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : t - 
+// Purpose:
+// Input  : t -
 //-----------------------------------------------------------------------------
 void CChoreoScene::SetTime( float t )
 {
@@ -2843,8 +2843,8 @@ void CChoreoScene::SetTime( float t )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : t - 
+// Purpose:
+// Input  : t -
 //-----------------------------------------------------------------------------
 void CChoreoScene::LoopToTime( float t )
 {
@@ -2854,8 +2854,8 @@ void CChoreoScene::LoopToTime( float t )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pfn - 
+// Purpose:
+// Input  : *pfn -
 //-----------------------------------------------------------------------------
 void CChoreoScene::SetPrintFunc( void ( *pfn ) ( const char *fmt, ... ) )
 {
@@ -2863,8 +2863,8 @@ void CChoreoScene::SetPrintFunc( void ( *pfn ) ( const char *fmt, ... ) )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *actor - 
+// Purpose:
+// Input  : *actor -
 //-----------------------------------------------------------------------------
 void CChoreoScene::RemoveActor( CChoreoActor *actor )
 {
@@ -2876,8 +2876,8 @@ void CChoreoScene::RemoveActor( CChoreoActor *actor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *actor - 
+// Purpose:
+// Input  : *actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int CChoreoScene::FindActorIndex( CChoreoActor *actor )
@@ -2893,9 +2893,9 @@ int CChoreoScene::FindActorIndex( CChoreoActor *actor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : a1 - 
-//			a2 - 
+// Purpose:
+// Input  : a1 -
+//			a2 -
 //-----------------------------------------------------------------------------
 void CChoreoScene::SwapActors( int a1, int a2 )
 {
@@ -2907,8 +2907,8 @@ void CChoreoScene::SwapActors( int a1, int a2 )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *actor - 
+// Purpose:
+// Input  : *actor -
 //-----------------------------------------------------------------------------
 void CChoreoScene::DeleteReferencedObjects( CChoreoActor *actor )
 {
@@ -2916,7 +2916,7 @@ void CChoreoScene::DeleteReferencedObjects( CChoreoActor *actor )
 	{
 		CChoreoChannel *channel = actor->GetChannel( i );
 		actor->RemoveChannel( channel );
-		
+
 		DeleteReferencedObjects( channel );
 	}
 
@@ -2924,8 +2924,8 @@ void CChoreoScene::DeleteReferencedObjects( CChoreoActor *actor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *channel - 
+// Purpose:
+// Input  : *channel -
 //-----------------------------------------------------------------------------
 void CChoreoScene::DeleteReferencedObjects( CChoreoChannel *channel )
 {
@@ -2933,7 +2933,7 @@ void CChoreoScene::DeleteReferencedObjects( CChoreoChannel *channel )
 	{
 		CChoreoEvent *event = channel->GetEvent( i );
 		channel->RemoveEvent( event );
-		
+
 		DeleteReferencedObjects( event );
 	}
 
@@ -2941,8 +2941,8 @@ void CChoreoScene::DeleteReferencedObjects( CChoreoChannel *channel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 //-----------------------------------------------------------------------------
 void CChoreoScene::DeleteReferencedObjects( CChoreoEvent *event )
 {
@@ -2956,8 +2956,8 @@ void CChoreoScene::DeleteReferencedObjects( CChoreoEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *actor - 
+// Purpose:
+// Input  : *actor -
 //-----------------------------------------------------------------------------
 void CChoreoScene::DestroyActor( CChoreoActor *actor )
 {
@@ -2975,8 +2975,8 @@ void CChoreoScene::DestroyActor( CChoreoActor *actor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *channel - 
+// Purpose:
+// Input  : *channel -
 //-----------------------------------------------------------------------------
 void CChoreoScene::DestroyChannel( CChoreoChannel *channel )
 {
@@ -2994,8 +2994,8 @@ void CChoreoScene::DestroyChannel( CChoreoChannel *channel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 //-----------------------------------------------------------------------------
 void CChoreoScene::DestroyEvent( CChoreoEvent *event )
 {
@@ -3013,30 +3013,30 @@ void CChoreoScene::DestroyEvent( CChoreoEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoScene::ResumeSimulation( void )
 {
 	// If the thing that paused us was a SECTION pause event, then this will be set
-	if ( m_nLastPauseEvent >= 0 && 
+	if ( m_nLastPauseEvent >= 0 &&
 		 m_nLastPauseEvent < m_PauseEvents.Count() )
 	{
 		// Start any suppressed dependencies immediately, should only be .wav files!!!
 		// These are .wav files which are placed at or just after the SECTION pause event
 		//  in the .vcd, but due to the user's sound system latency, they would have triggered before the
-		//  pause (we pre-queue sounds).  Since we suppressed that, we need to unsupress / start these sounds 
+		//  pause (we pre-queue sounds).  Since we suppressed that, we need to unsupress / start these sounds
 		//  now that the SECTION pause is being resumed from
 		CUtlVector< CChoreoEvent * > deps;
 		CChoreoEvent *pauseEvent = m_PauseEvents[ m_nLastPauseEvent ];
 		Assert( pauseEvent );
-		
+
 		// Sanity check ( this should be about 1 tick usually  15 msec)
 		float timeSincePaused = m_flCurrentTime - pauseEvent->GetStartTime();
 		if ( fabs( timeSincePaused ) > 1.0f )
 		{
 			Assert( !"Resume simulation with unexpected pause event" );
 		}
-		
+
 		// Snag any sounds which were suppressed by this issue
 		pauseEvent->GetEventDependencies( deps );
 		for ( int j = 0; j < deps.Count(); ++j )
@@ -3062,9 +3062,9 @@ void CChoreoScene::SetSoundFileStartupLatency( float time )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : start - 
-//			end - 
+// Purpose:
+// Input  : start -
+//			end -
 //-----------------------------------------------------------------------------
 void CChoreoScene::GetSceneTimes( float& start, float& end )
 {
@@ -3088,7 +3088,7 @@ void CChoreoScene::ReconcileTags( void )
 			CChoreoChannel *c = a->GetChannel( j );
 			if ( !c )
 				continue;
-			
+
 			for ( int k = 0 ; k < c->GetNumEvents(); k++ )
 			{
 				CChoreoEvent *e = c->GetEvent( k );
@@ -3098,7 +3098,7 @@ void CChoreoScene::ReconcileTags( void )
 				if ( !e->IsUsingRelativeTag() )
 					continue;
 
-				CEventRelativeTag *tag = FindTagByName( 
+				CEventRelativeTag *tag = FindTagByName(
 					e->GetRelativeWavName(),
 					e->GetRelativeTagName() );
 
@@ -3127,9 +3127,9 @@ void CChoreoScene::ReconcileTags( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *wavname - 
-//			*name - 
+// Purpose:
+// Input  : *wavname -
+//			*name -
 // Output : CChoreoEvent
 //-----------------------------------------------------------------------------
 CChoreoEvent *CChoreoScene::FindTargetingEvent( const char *wavname, const char *name )
@@ -3145,7 +3145,7 @@ CChoreoEvent *CChoreoScene::FindTargetingEvent( const char *wavname, const char 
 			CChoreoChannel *c = a->GetChannel( j );
 			if ( !c )
 				continue;
-			
+
 			for ( int k = 0 ; k < c->GetNumEvents(); k++ )
 			{
 				CChoreoEvent *e = c->GetEvent( k );
@@ -3169,9 +3169,9 @@ CChoreoEvent *CChoreoScene::FindTargetingEvent( const char *wavname, const char 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *wavname - 
-//			*name - 
+// Purpose:
+// Input  : *wavname -
+//			*name -
 // Output : CEventRelativeTag
 //-----------------------------------------------------------------------------
 CEventRelativeTag *CChoreoScene::FindTagByName( const char *wavname, const char *name )
@@ -3187,7 +3187,7 @@ CEventRelativeTag *CChoreoScene::FindTagByName( const char *wavname, const char 
 			CChoreoChannel *c = a->GetChannel( j );
 			if ( !c )
 				continue;
-			
+
 			for ( int k = 0 ; k < c->GetNumEvents(); k++ )
 			{
 				CChoreoEvent *e = c->GetEvent( k );
@@ -3213,8 +3213,8 @@ CEventRelativeTag *CChoreoScene::FindTagByName( const char *wavname, const char 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *filename - 
+// Purpose:
+// Input  : *filename -
 //-----------------------------------------------------------------------------
 void CChoreoScene::ExportEvents( const char *filename, CUtlVector< CChoreoEvent * >& events )
 {
@@ -3246,10 +3246,10 @@ void CChoreoScene::ExportEvents( const char *filename, CUtlVector< CChoreoEvent 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *actor - 
-//			*channel - 
-//			starttime - 
+// Purpose:
+// Input  : *actor -
+//			*channel -
+//			starttime -
 //-----------------------------------------------------------------------------
 void CChoreoScene::ImportEvents( ISceneTokenProcessor *tokenizer, CChoreoActor *actor, CChoreoChannel *channel )
 {
@@ -3291,7 +3291,7 @@ bool CChoreoScene::IsSubScene( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CChoreoScene::GetSceneFPS( void ) const
@@ -3300,8 +3300,8 @@ int CChoreoScene::GetSceneFPS( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fps - 
+// Purpose:
+// Input  : fps -
 //-----------------------------------------------------------------------------
 void CChoreoScene::SetSceneFPS( int fps )
 {
@@ -3309,7 +3309,7 @@ void CChoreoScene::SetSceneFPS( int fps )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CChoreoScene::IsUsingFrameSnap( void ) const
@@ -3318,8 +3318,8 @@ bool CChoreoScene::IsUsingFrameSnap( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : snap - 
+// Purpose:
+// Input  : snap -
 //-----------------------------------------------------------------------------
 void CChoreoScene::SetUsingFrameSnap( bool snap )
 {
@@ -3327,8 +3327,8 @@ void CChoreoScene::SetUsingFrameSnap( bool snap )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : t - 
+// Purpose:
+// Input  : t -
 // Output : float
 //-----------------------------------------------------------------------------
 float CChoreoScene::SnapTime( float t )
@@ -3340,7 +3340,7 @@ float CChoreoScene::SnapTime( float t )
 	Assert( fps > 0 );
 
 	int itime = (int)( t * fps + 0.5f );
-	
+
 	t = (float)itime / fps;
 
 	// FIXME:  If FPS is set and "using grid", snap to proper fractional time value
@@ -3350,7 +3350,7 @@ float CChoreoScene::SnapTime( float t )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoScene::ReconcileGestureTimes()
 {
@@ -3390,8 +3390,8 @@ char const *CChoreoScene::TimeZoomName( int i )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *tool - 
+// Purpose:
+// Input  : *tool -
 // Output : int
 //-----------------------------------------------------------------------------
 int CChoreoScene::GetTimeZoom( char const *tool )
@@ -3407,9 +3407,9 @@ int CChoreoScene::GetTimeZoom( char const *tool )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *tool - 
-//			tz - 
+// Purpose:
+// Input  : *tool -
+//			tz -
 //-----------------------------------------------------------------------------
 void CChoreoScene::SetTimeZoom( char const *tool, int tz )
 {
@@ -3429,18 +3429,18 @@ void CChoreoScene::ParseScaleSettings( ISceneTokenProcessor *tokenizer, CChoreoS
 
 	if ( stricmp( tokenizer->CurrentToken(), "{" ) )
 		tokenizer->Error( "expecting {\n" );
-	
+
 	while ( 1 )
 	{
 		// Parse until }
 		tokenizer->GetToken( true );
-		
+
 		if ( strlen( tokenizer->CurrentToken() ) <= 0 )
 		{
 			tokenizer->Error( "expecting scalesettings data\n" );
 			break;
 		}
-		
+
 		if ( !Q_stricmp( tokenizer->CurrentToken(), "}" ) )
 			break;
 
@@ -3534,7 +3534,7 @@ bool CChoreoScene::Merge( CChoreoScene *other )
 
 				newEvent->SetChannel( destChannel );
 				newEvent->SetActor( destActor );
-				
+
 				ecount++;
 			}
 		}
@@ -3569,7 +3569,7 @@ void CChoreoScene::ReconcileCloseCaption()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CChoreoScene::GetFilename() const
@@ -3677,7 +3677,7 @@ bool CChoreoScene::SaveBinary( char const *pszBinaryFileName, char const *pPathI
 	CUtlBuffer buf;
 	SaveToBinaryBuffer( buf, nTextVersionCRC, pStringPool );
 
-	if ( g_pFullFileSystem->FileExists( pszBinaryFileName, pPathID ) && 
+	if ( g_pFullFileSystem->FileExists( pszBinaryFileName, pPathID ) &&
 		 !g_pFullFileSystem->IsFileWritable( pszBinaryFileName, pPathID ) )
 	{
 		Warning( "Forcing '%s' to be writable!!!\n", pszBinaryFileName );
@@ -3769,8 +3769,8 @@ void CChoreoScene::SaveToBinaryBuffer( CUtlBuffer& buf, unsigned int nTextVersio
 
 //-----------------------------------------------------------------------------
 // Purpose: Static method to extract just the CRC from a binary .xcd file
-// Input  : buf - 
-//			crc - 
+// Input  : buf -
+//			crc -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CChoreoScene::GetCRCFromBinaryBuffer( CUtlBuffer& buf, unsigned int& crc )
@@ -3817,7 +3817,7 @@ bool CChoreoScene::RestoreFromBinaryBuffer( CUtlBuffer& buf, char const *filenam
 		MEM_ALLOC_CREDIT();
 		CChoreoEvent *e = AllocEvent();
 		Assert( e );
-		
+
 		if ( e->RestoreFromBuffer( buf, this, pStringPool ) )
 		{
 			continue;

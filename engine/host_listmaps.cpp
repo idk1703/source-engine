@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -41,7 +41,7 @@ public:
 	};
 
 					CMapListItem( void );
-	
+
 	void			SetValid( int valid );
 	int				GetValid( void ) const;
 
@@ -59,7 +59,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapListItem::CMapListItem( void )
 {
@@ -68,8 +68,8 @@ CMapListItem::CMapListItem( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : valid - 
+// Purpose:
+// Input  : valid -
 //-----------------------------------------------------------------------------
 void CMapListItem::SetValid( int valid )
 {
@@ -77,7 +77,7 @@ void CMapListItem::SetValid( int valid )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 int CMapListItem::GetValid( void ) const
@@ -86,8 +86,8 @@ int CMapListItem::GetValid( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : ts - 
+// Purpose:
+// Input  : ts -
 //-----------------------------------------------------------------------------
 void CMapListItem::SetFileTimestamp( long ts )
 {
@@ -95,7 +95,7 @@ void CMapListItem::SetFileTimestamp( long ts )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : long
 //-----------------------------------------------------------------------------
 long CMapListItem::GetFileTimestamp( void ) const
@@ -105,7 +105,7 @@ long CMapListItem::GetFileTimestamp( void ) const
 
 //-----------------------------------------------------------------------------
 // Purpose: Check whether this map file has changed related to the passed in timestamp
-// Input  : ts - 
+// Input  : ts -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMapListItem::IsSameTime( long ts ) const
@@ -115,7 +115,7 @@ bool CMapListItem::IsSameTime( long ts ) const
 
 //-----------------------------------------------------------------------------
 // Purpose: Get the timestamp for the file from the file system
-// Input  : *name - 
+// Input  : *name -
 // Output : long
 //-----------------------------------------------------------------------------
 long CMapListItem::GetFSTimeStamp( char const *name )
@@ -126,7 +126,7 @@ long CMapListItem::GetFSTimeStamp( char const *name )
 
 //-----------------------------------------------------------------------------
 // Purpose: Check whether the specified map header version is up-to-date
-// Input  : *name - 
+// Input  : *name -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 int CMapListItem::CheckFSHeaderVersion( char const *name )
@@ -191,7 +191,7 @@ void Host_UpdateMapList( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapListManager::CMapListManager( void )
 {
@@ -200,7 +200,7 @@ CMapListManager::CMapListManager( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapListManager::~CMapListManager( void )
 {
@@ -208,7 +208,7 @@ CMapListManager::~CMapListManager( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapListManager::Think( void )
 {
@@ -226,7 +226,7 @@ void CMapListManager::Think( void )
 	int i;
 
 	m_bDirty = false;
-		
+
 	for ( i = m_Items.Count() - 1; i >= 0 ; i-- )
 	{
 		CMapListItem *item = &m_Items[ i ];
@@ -328,7 +328,7 @@ void CMapListManager::RefreshList( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapListManager::GetMapCount( void ) const
@@ -337,8 +337,8 @@ int CMapListManager::GetMapCount( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 int CMapListManager::IsMapValid( int index ) const
@@ -352,8 +352,8 @@ int CMapListManager::IsMapValid( int index ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CMapListManager::GetMapName( int index ) const
@@ -434,9 +434,9 @@ void CMapListManager::BuildList( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pakorfilesys - 
-//			*mapname - 
+// Purpose:
+// Input  : *pakorfilesys -
+//			*mapname -
 // Output : static void
 //-----------------------------------------------------------------------------
 static bool MapList_CheckPrintMap( const char *pakorfilesys, const char *mapname, int valid,
@@ -474,10 +474,10 @@ static bool MapList_CheckPrintMap( const char *pakorfilesys, const char *mapname
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszSubString - 
-//			listobsolete - 
-//			maxitemlength - 
+// Purpose:
+// Input  : *pszSubString -
+//			listobsolete -
+//			maxitemlength -
 // Output : static int
 //-----------------------------------------------------------------------------
 static int MapList_CountMaps( const char *pszSubString, bool listobsolete, int& maxitemlength )
@@ -519,10 +519,10 @@ static int MapList_CountMaps( const char *pszSubString, bool listobsolete, int& 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //  Lists all maps matching the substring
 //  If the substring is empty, or "*", then lists all maps
-// Input  : *pszSubString - 
+// Input  : *pszSubString -
 //-----------------------------------------------------------------------------
 int MapList_ListMaps( const char *pszSubString, bool listobsolete, bool verbose, int maxcount, int maxitemlength, char maplist[][ 64 ] )
 {
@@ -576,12 +576,12 @@ int MapList_ListMaps( const char *pszSubString, bool listobsolete, bool verbose,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *partial - 
-//			context - 
-//			longest - 
-//			maxcommands - 
-//			**commands - 
+// Purpose:
+// Input  : *partial -
+//			context -
+//			longest -
+//			maxcommands -
+//			**commands -
 // Output : int
 //-----------------------------------------------------------------------------
 int _Host_Map_f_CompletionFunc( char const *cmdname, char const *partial, char commands[ COMMAND_COMPLETION_MAXITEMS ][ COMMAND_COMPLETION_ITEM_LENGTH ] )
@@ -612,12 +612,12 @@ int _Host_Map_f_CompletionFunc( char const *cmdname, char const *partial, char c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *partial - 
-//			context - 
-//			longest - 
-//			maxcommands - 
-//			**commands - 
+// Purpose:
+// Input  : *partial -
+//			context -
+//			longest -
+//			maxcommands -
+//			**commands -
 // Output : int
 //-----------------------------------------------------------------------------
 static int Host_Map_f_CompletionFunc( char const *partial, char commands[ COMMAND_COMPLETION_MAXITEMS ][ COMMAND_COMPLETION_ITEM_LENGTH ] )
@@ -627,12 +627,12 @@ static int Host_Map_f_CompletionFunc( char const *partial, char commands[ COMMAN
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *partial - 
-//			context - 
-//			longest - 
-//			maxcommands - 
-//			**commands - 
+// Purpose:
+// Input  : *partial -
+//			context -
+//			longest -
+//			maxcommands -
+//			**commands -
 // Output : int
 //-----------------------------------------------------------------------------
 static int Host_Map_Commentary_f_CompletionFunc( char const *partial, char commands[ COMMAND_COMPLETION_MAXITEMS ][ COMMAND_COMPLETION_ITEM_LENGTH ] )
@@ -642,12 +642,12 @@ static int Host_Map_Commentary_f_CompletionFunc( char const *partial, char comma
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *partial - 
-//			context - 
-//			longest - 
-//			maxcommands - 
-//			**commands - 
+// Purpose:
+// Input  : *partial -
+//			context -
+//			longest -
+//			maxcommands -
+//			**commands -
 // Output : int
 //-----------------------------------------------------------------------------
 static int Host_Changelevel_f_CompletionFunc( char const *partial, char commands[ COMMAND_COMPLETION_MAXITEMS ][ COMMAND_COMPLETION_ITEM_LENGTH ] )
@@ -657,12 +657,12 @@ static int Host_Changelevel_f_CompletionFunc( char const *partial, char commands
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *partial - 
-//			context - 
-//			longest - 
-//			maxcommands - 
-//			**commands - 
+// Purpose:
+// Input  : *partial -
+//			context -
+//			longest -
+//			maxcommands -
+//			**commands -
 // Output : int
 //-----------------------------------------------------------------------------
 static int Host_Changelevel2_f_CompletionFunc( char const *partial, char commands[ COMMAND_COMPLETION_MAXITEMS ][ COMMAND_COMPLETION_ITEM_LENGTH ] )

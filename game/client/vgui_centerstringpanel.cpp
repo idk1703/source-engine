@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -63,10 +63,10 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
-CCenterStringLabel::CCenterStringLabel( vgui::VPANEL parent ) : 
+CCenterStringLabel::CCenterStringLabel( vgui::VPANEL parent ) :
 	BaseClass( NULL, "CCenterStringLabel", " " )
 {
 	SetParent( parent );
@@ -88,7 +88,7 @@ CCenterStringLabel::CCenterStringLabel( vgui::VPANEL parent ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCenterStringLabel::~CCenterStringLabel( void )
 {
@@ -136,11 +136,11 @@ void CCenterStringLabel::ApplySchemeSettings(vgui::IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : r - 
-//			g - 
-//			b - 
-//			a - 
+// Purpose:
+// Input  : r -
+//			g -
+//			b -
+//			a -
 //-----------------------------------------------------------------------------
 void CCenterStringLabel::SetTextColor( int r, int g, int b, int a )
 {
@@ -148,27 +148,27 @@ void CCenterStringLabel::SetTextColor( int r, int g, int b, int a )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCenterStringLabel::Print( char *text )
 {
 	SetText( text );
-	
+
 	m_flCentertimeOff = scr_centertime.GetFloat() + gpGlobals->curtime;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCenterStringLabel::Print( wchar_t *text )
 {
 	SetText( text );
-	
+
 	m_flCentertimeOff = scr_centertime.GetFloat() + gpGlobals->curtime;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCenterStringLabel::ColorPrint( int r, int g, int b, int a, char *text )
 {
@@ -177,7 +177,7 @@ void CCenterStringLabel::ColorPrint( int r, int g, int b, int a, char *text )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCenterStringLabel::ColorPrint( int r, int g, int b, int a, wchar_t *text )
 {
@@ -186,7 +186,7 @@ void CCenterStringLabel::ColorPrint( int r, int g, int b, int a, wchar_t *text )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCenterStringLabel::Clear( void )
 {
@@ -194,7 +194,7 @@ void CCenterStringLabel::Clear( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCenterStringLabel::OnTick( void )
 {
@@ -206,7 +206,7 @@ void CCenterStringLabel::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 // FIXME, this has dependencies on the engine that should go away
 //-----------------------------------------------------------------------------
@@ -228,8 +228,8 @@ bool CCenterStringLabel::ShouldDraw( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 CCenterPrint::CCenterPrint( void )
 {

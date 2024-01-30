@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -48,6 +48,3 @@ void CFilterComboBox::OnKillFocus()
 
 	BaseClass::OnKillFocus( );
 }
-
-
-	

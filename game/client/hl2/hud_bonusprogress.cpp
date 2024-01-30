@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -59,7 +59,7 @@ private:
 	int		m_iBonusProgress;
 
 	int		m_iLastChallenge;
-};	
+};
 
 DECLARE_HUDELEMENT( CHudBonusProgress );
 
@@ -72,7 +72,7 @@ CHudBonusProgress::CHudBonusProgress( const char *pElementName ) : CHudElement( 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBonusProgress::Init()
 {
@@ -80,7 +80,7 @@ void CHudBonusProgress::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBonusProgress::Reset()
 {
@@ -96,7 +96,7 @@ void CHudBonusProgress::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBonusProgress::VidInit()
 {
@@ -104,7 +104,7 @@ void CHudBonusProgress::VidInit()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBonusProgress::OnThink()
 {

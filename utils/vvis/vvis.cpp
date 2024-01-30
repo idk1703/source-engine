@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -80,14 +80,14 @@ winding_t *NewWinding (int points)
 {
 	winding_t	*w;
 	int			size;
-	
+
 	if (points > MAX_POINTS_ON_WINDING)
 		Error ("NewWinding: %i points, max %d", points, MAX_POINTS_ON_WINDING);
-	
+
 	size = (int)(&((winding_t *)0)->points[points]);
 	w = (winding_t*)malloc (size);
 	memset (w, 0, size);
-	
+
 	return w;
 }
 
@@ -103,7 +103,7 @@ void prl(leaf_t *l)
 	int			i;
 	portal_t	*p;
 	plane_t		pl;
-	
+
 	int count = l->portals.Count();
 	for (i=0 ; i<count ; i++)
 	{
@@ -147,7 +147,7 @@ void BuildTracePortals( int clusterStart )
 void SortPortals (void)
 {
 	int		i;
-	
+
 	for (i=0 ; i<g_numportals*2 ; i++)
 		sorted_portals[i] = &portals[i];
 
@@ -228,7 +228,7 @@ void ClusterMerge (int clusternum)
 	if ( CheckBit( uncompressed, clusternum ) )
 		Warning("WARNING: Cluster portals saw into cluster\n");
 #endif
-		
+
 	SetBit( uncompressed, clusternum );
 	numvis++;		// count the leaf itself
 
@@ -266,7 +266,7 @@ static int CompressAndCrosscheckClusterVis( int clusternum )
 
 	byte *dest = vismap_p;
 	vismap_p += numbytes;
-	
+
 	if (vismap_p > vismap_end)
 		Error ("Vismap expansion overflow");
 
@@ -302,11 +302,11 @@ void CalcPortalVis (void)
 	}
 
 
-    if (g_bUseMPI) 
+	if (g_bUseMPI)
 	{
- 		RunMPIPortalFlow();
+		RunMPIPortalFlow();
 	}
-	else 
+	else
 	{
 		RunThreadsOnIndividual (g_numportals*2, true, PortalFlow);
 	}
@@ -315,7 +315,7 @@ void CalcPortalVis (void)
 
 void CalcVisTrace (void)
 {
-    RunThreadsOnIndividual (g_numportals*2, true, BasePortalVis);
+	RunThreadsOnIndividual (g_numportals*2, true, BasePortalVis);
 	BuildTracePortals( g_TraceClusterStart );
 	// NOTE: We only schedule the one-way portals out of the start cluster here
 	// so don't run g_numportals*2 in this case
@@ -331,13 +331,13 @@ void CalcVis (void)
 {
 	int		i;
 
-	if (g_bUseMPI) 
+	if (g_bUseMPI)
 	{
 		RunMPIBasePortalVis();
 	}
-	else 
+	else
 	{
-	    RunThreadsOnIndividual (g_numportals*2, true, BasePortalVis);
+		RunThreadsOnIndividual (g_numportals*2, true, BasePortalVis);
 	}
 
 	SortPortals ();
@@ -359,7 +359,7 @@ void CalcVis (void)
 		count += CompressAndCrosscheckClusterVis( i );
 	}
 
-		
+
 	Msg ("Optimized: %d visible clusters (%.2f%%)\n", count, count*100.0/totalvis);
 	Msg ("Total clusters visible: %i\n", totalvis);
 	Msg ("Average clusters visible: %i\n", totalvis / portalclusters);
@@ -379,11 +379,11 @@ void SetPortalSphere (portal_t *p)
 	{
 		VectorAdd (total, w->points[i], total);
 	}
-	
+
 	for (i=0 ; i<3 ; i++)
 		total[i] /= w->numpoints;
 
-	bestr = 0;		
+	bestr = 0;
 	for (i=0 ; i<w->numpoints ; i++)
 	{
 		VectorSubtract (w->points[i], total, dist);
@@ -471,14 +471,14 @@ void LoadPortals (char *name)
 	// these counts should take advantage of 64 bit systems automatically
 	leafbytes = ((portalclusters+63)&~63)>>3;
 	leaflongs = leafbytes/sizeof(long);
-	
+
 	portalbytes = ((g_numportals*2+63)&~63)>>3;
 	portallongs = portalbytes/sizeof(long);
 
 // each file portal is split into two memory portals
 	portals = (portal_t*)malloc(2*g_numportals*sizeof(portal_t));
 	memset (portals, 0, 2*g_numportals*sizeof(portal_t));
-	
+
 	leafs = (leaf_t*)malloc(portalclusters*sizeof(leaf_t));
 	memset (leafs, 0, portalclusters*sizeof(leaf_t));
 
@@ -490,7 +490,7 @@ void LoadPortals (char *name)
 	vismap_p = (byte *)&dvis->bitofs[portalclusters];
 
 	vismap_end = vismap + MAX_MAP_VISIBILITY;
-		
+
 	for (i=0, p=portals ; i<g_numportals ; i++)
 	{
 		if (fscanf (f, "%i %i %i ", &numpoints, &leafnums[0], &leafnums[1])
@@ -501,11 +501,11 @@ void LoadPortals (char *name)
 		if ( (unsigned)leafnums[0] > portalclusters
 		|| (unsigned)leafnums[1] > portalclusters)
 			Error ("LoadPortals: reading portal %i", i);
-		
+
 		w = p->winding = NewWinding (numpoints);
 		w->original = true;
 		w->numpoints = numpoints;
-		
+
 		for (j=0 ; j<numpoints ; j++)
 		{
 			double	v[3];
@@ -520,25 +520,25 @@ void LoadPortals (char *name)
 				w->points[j][k] = v[k];
 		}
 		fscanf (f, "\n");
-		
+
 	// calc plane
 		PlaneFromWinding (w, &plane);
 
 	// create forward portal
 		l = &leafs[leafnums[0]];
 		l->portals.AddToTail(p);
-		
+
 		p->winding = w;
 		VectorSubtract (vec3_origin, plane.normal, p->plane.normal);
 		p->plane.dist = -plane.dist;
 		p->leaf = leafnums[1];
 		SetPortalSphere (p);
 		p++;
-		
+
 	// create backwards portal
 		l = &leafs[leafnums[1]];
 		l->portals.AddToTail(p);
-		
+
 		p->winding = NewWinding(w->numpoints);
 		p->winding->numpoints = w->numpoints;
 		for (j=0 ; j<w->numpoints ; j++)
@@ -552,7 +552,7 @@ void LoadPortals (char *name)
 		p++;
 
 	}
-	
+
 	fclose (f);
 }
 
@@ -616,13 +616,13 @@ void CalcPAS (void)
 
 		dest = (long *)vismap_p;
 		vismap_p += j;
-		
+
 		if (vismap_p > vismap_end)
 			Error ("Vismap expansion overflow");
 
 		dvis->bitofs[i][DVIS_PAS] = (byte *)dest-vismap;
 
-		memcpy (dest, compressed, j);	
+		memcpy (dest, compressed, j);
 	}
 
 	Msg ("Average clusters audible: %i\n", count/portalclusters);
@@ -645,14 +645,14 @@ static void GetBoundsForFace( int faceID, Vector &faceMin, Vector &faceMax )
 		dedge_t *pEdge = &dedges[edgeID];
 		dvertex_t *pVert0 = &dvertexes[pEdge->v[0]];
 		dvertex_t *pVert1 = &dvertexes[pEdge->v[1]];
-		AddPointToBounds( pVert0->point, faceMin, faceMax );	
-		AddPointToBounds( pVert1->point, faceMin, faceMax );	
+		AddPointToBounds( pVert0->point, faceMin, faceMax );
+		AddPointToBounds( pVert1->point, faceMin, faceMax );
 	}
 }
 
 // FIXME: should stick this in mathlib
-static float GetMinDistanceBetweenBoundingBoxes( const Vector &min1, const Vector &max1, 
-												 const Vector &min2, const Vector &max2 )
+static float GetMinDistanceBetweenBoundingBoxes( const Vector &min1, const Vector &max1,
+												const Vector &min2, const Vector &max2 )
 {
 	if( IsBoxIntersectingBox( min1, max1, min2, max2 ) )
 	{
@@ -692,18 +692,18 @@ static float CalcDistanceFromLeafToWater( int leafNum )
 	// If we know that this one doesn't see a water surface then don't bother doing anything.
 	if( ((dleafs[leafNum].contents & CONTENTS_TESTFOGVOLUME) == 0) && ( dleafs[leafNum].leafWaterDataID == -1 ) )
 		return 65535; // FIXME: make a define for this.
-	
+
 	// First get the vis data..
 	int cluster = dleafs[leafNum].cluster;
 	if (cluster < 0)
 		return 65535; // FIXME: make a define for this.
-	
+
 	DecompressVis( &dvisdata[dvis->bitofs[cluster][DVIS_PVS]], uncompressed );
-	
+
 	float minDist = 65535.0f; // FIXME: make a define for this.
-	
+
 	Vector leafMin, leafMax;
-	
+
 	leafMin[0] = ( float )dleafs[leafNum].mins[0];
 	leafMin[1] = ( float )dleafs[leafNum].mins[1];
 	leafMin[2] = ( float )dleafs[leafNum].mins[2];
@@ -713,7 +713,7 @@ static float CalcDistanceFromLeafToWater( int leafNum )
 
 /*
 	CUtlVector<listplane_t> temp;
-	
+
 	// build a convex solid out of the planes so that we can get at the triangles.
 	for( j = dleafs[i].firstleafbrush; j < dleafs[i].firstleafbrush + dleafs[i].numleafbrushes; j++ )
 	{
@@ -725,7 +725,7 @@ static float CalcDistanceFromLeafToWater( int leafNum )
 			AddListPlane( &temp, pplane->normal[0], pplane->normal[1], pplane->normal[2], pplane->dist );
 		}
 		CPhysConvex *pConvex = physcollision->ConvexFromPlanes( (float *)temp.Base(), temp.Count(), VPHYSICS_MERGE );
-		ConvertConvexToCollide(  &pConvex, 
+		ConvertConvexToCollide(  &pConvex,
 			temp.RemoveAll();
 	}
 */
@@ -736,22 +736,22 @@ static float CalcDistanceFromLeafToWater( int leafNum )
 		// Don't need to bother if this is the same as the current cluster
 		if (j == cluster)
 			continue;
-		
+
 		// If the cluster isn't in our current pvs, then get out of here.
 		if ( !CheckBit( uncompressed, j ) )
 			continue;
-		
+
 		// Found a visible cluster, now iterate over all leaves
 		// inside that cluster
 		for (k = 0; k < g_ClusterLeaves[j].leafCount; ++k)
 		{
 			int nClusterLeaf = g_ClusterLeaves[j].leafs[k];
-			
+
 			// Don't bother testing the ones that don't see a water boundary.
 			if( ((dleafs[nClusterLeaf].contents & CONTENTS_TESTFOGVOLUME) == 0) && ( dleafs[nClusterLeaf].leafWaterDataID == -1 ) )
-				continue;	
+				continue;
 
-			// Find the minimum distance between each surface on the boundary of the leaf 
+			// Find the minimum distance between each surface on the boundary of the leaf
 			// that we have the pvs for and each water surface in the leaf that we are testing.
 			int nFirstFaceID = dleafs[nClusterLeaf].firstleafface;
 			for( int leafFaceID = 0; leafFaceID < dleafs[nClusterLeaf].numleaffaces; ++leafFaceID )
@@ -770,7 +770,7 @@ static float CalcDistanceFromLeafToWater( int leafNum )
 					// what the closest distance is.
 					// FIXME: this could be a face/face distance between the water
 					// face and the bounding volume of the leaf.
-					
+
 					// Get the bounding box of the face
 					Vector faceMin, faceMax;
 					GetBoundsForFace( faceID, faceMin, faceMax );
@@ -968,14 +968,14 @@ int ParseCommandLine( int argc, char **argv )
 		{
 			// nothing to do here, but don't bail on this option
 		}
-		// NOTE: the -mpi checks must come last here because they allow the previous argument 
+		// NOTE: the -mpi checks must come last here because they allow the previous argument
 		// to be -mpi as well. If it game before something else like -game, then if the previous
 		// argument was -mpi and the current argument was something valid like -game, it would skip it.
 		else if ( !Q_strncasecmp( argv[i], "-mpi", 4 ) || !Q_strncasecmp( argv[i-1], "-mpi", 4 ) )
 		{
 			if ( stricmp( argv[i], "-mpi" ) == 0 )
 				g_bUseMPI = true;
-		
+
 			// Any other args that start with -mpi are ok too.
 			if ( i == argc - 1 )
 				break;
@@ -1008,7 +1008,7 @@ void PrintUsage( int argc, char **argv )
 {
 	PrintCommandLine( argc, argv );
 
-	Warning(	
+	Warning(
 		"usage  : vvis [options...] bspfile\n"
 		"example: vvis -fast c:\\hl2\\hl2\\maps\\test\n"
 		"\n"
@@ -1056,7 +1056,7 @@ void PrintUsage( int argc, char **argv )
 			{
 				if ( (VMPI_GetParamFlags( (EVMPICmdLineParam)i ) & VMPI_PARAM_SDK_HIDDEN) && bIsSDKMode )
 					continue;
-					
+
 				Warning( "[%s]\n", VMPI_GetParamString( (EVMPICmdLineParam)i ) );
 				Warning( VMPI_GetParamHelpString( (EVMPICmdLineParam)i ) );
 				Warning( "\n\n" );

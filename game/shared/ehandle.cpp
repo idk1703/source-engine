@@ -10,7 +10,7 @@
 #include "tier0/memdbgon.h"
 
 #if defined( GAME_DLL )
-	
+
 	#include "entitylist.h"
 
 
@@ -26,7 +26,5 @@
 	}
 
 #else
-	
+
 #endif
-
-

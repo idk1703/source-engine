@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -20,7 +20,7 @@ struct triangleledge_t
 };
 
 // minimum footprint convex hull rep.  Assume 8-bits of index space per edge/triangle/vert
-// NOTE: EACH ELEMENT OF THESE STRUCTS MUST BE 8-bits OR YOU HAVE TO WRITE SWAPPING CODE FOR 
+// NOTE: EACH ELEMENT OF THESE STRUCTS MUST BE 8-bits OR YOU HAVE TO WRITE SWAPPING CODE FOR
 // THE X360 IMPLEMENTATION.  THERE IS NO SUCH CODE AS OF NOW.
 #pragma pack(1)
 struct packedtriangle_t
@@ -54,7 +54,7 @@ struct virtualmeshhull_t
 {
 	byte		hullCount; // only bytes allowed see above
 	byte		pad[3];
-	
+
 	inline const packedhull_t *GetPackedHull( int hullIndex ) const
 	{
 		Assert(hullIndex<hullCount);
@@ -89,7 +89,7 @@ struct virtualmeshhull_t
 
 #pragma pack()
 // end
-// NOTE: EACH ELEMENT OF THE ABOVE STRUCTS MUST BE 8-bits OR YOU HAVE TO WRITE SWAPPING CODE FOR 
+// NOTE: EACH ELEMENT OF THE ABOVE STRUCTS MUST BE 8-bits OR YOU HAVE TO WRITE SWAPPING CODE FOR
 // THE X360 IMPLEMENTATION.  THERE IS NO SUCH CODE AS OF NOW.
 
 

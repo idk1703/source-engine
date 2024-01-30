@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -90,7 +90,7 @@ public:
 	// A version that sweeps a collideable through the world
 	// abs start + abs end represents the collision origins you want to sweep the collideable through
 	// vecAngles represents the collision angles of the collideable during the sweep
-	virtual void	SweepCollideable( ICollideable *pCollide, const Vector &vecAbsStart, const Vector &vecAbsEnd, 
+	virtual void	SweepCollideable( ICollideable *pCollide, const Vector &vecAbsStart, const Vector &vecAbsEnd,
 		const QAngle &vecAngles, unsigned int fMask, ITraceFilter *pTraceFilter, trace_t *pTrace );
 
 	// Enumerates over all entities along a ray
@@ -226,7 +226,7 @@ ICollideable *CEngineTraceClient::GetCollideable( IHandleEntity *pEntity )
 		return pProp;
 
 	IClientUnknown *pUnk = entitylist->GetClientUnknownFromHandle( pEntity->GetRefEHandle() );
-	return pUnk->GetCollideable(); 
+	return pUnk->GetCollideable();
 }
 #endif
 
@@ -277,18 +277,18 @@ int CEngineTraceServer::SpatialPartitionTriggerMask() const
 class CPointContentsEnum : public IPartitionEnumerator
 {
 public:
-	CPointContentsEnum( CEngineTrace *pEngineTrace, const Vector &pos ) : m_Contents(CONTENTS_EMPTY) 
+	CPointContentsEnum( CEngineTrace *pEngineTrace, const Vector &pos ) : m_Contents(CONTENTS_EMPTY)
 	{
 		m_pEngineTrace = pEngineTrace;
-		m_Pos = pos; 
+		m_Pos = pos;
 		m_pCollide = NULL;
 	}
 
-	static inline bool TestEntity( 
+	static inline bool TestEntity(
 		CEngineTrace *pEngineTrace,
-		ICollideable *pCollide, 
-		const Vector &vPos, 
-		int *pContents, 
+		ICollideable *pCollide,
+		const Vector &vPos,
+		int *pContents,
 		ICollideable **pWorldCollideable )
 	{
 		// Deal with static props
@@ -310,7 +310,7 @@ public:
 			}
 			return false;
 		}
-		
+
 		// We only care about solid volumes
 		if ((pCollide->GetSolidFlags() & FSOLID_VOLUME_CONTENTS) == 0)
 			return false;
@@ -320,7 +320,7 @@ public:
 		{
 			Assert( pCollide->GetCollisionModelIndex() < MAX_MODELS && pCollide->GetCollisionModelIndex() >= 0 );
 			int nHeadNode = GetModelHeadNode( pCollide );
-			int contents = CM_TransformedPointContents( vPos, nHeadNode, 
+			int contents = CM_TransformedPointContents( vPos, nHeadNode,
 				pCollide->GetCollisionOrigin(), pCollide->GetCollisionAngles() );
 
 			if (contents != CONTENTS_EMPTY)
@@ -383,7 +383,7 @@ int	CEngineTrace::GetPointContents( const Vector &vecAbsPosition, IHandleEntity*
 {
 	VPROF( "CEngineTrace_GetPointContents" );
 //	VPROF_BUDGET( "CEngineTrace_GetPointContents", "CEngineTrace_GetPointContents" );
-	
+
 	m_traceStatCounters[TRACE_STAT_COUNTER_POINTCONTENTS]++;
 	// First check the collision model
 	int nContents = CM_PointContents( vecAbsPosition, 0 );
@@ -391,7 +391,7 @@ int	CEngineTrace::GetPointContents( const Vector &vecAbsPosition, IHandleEntity*
 	{
 		nContents = CONTENTS_WATER;
 	}
-	
+
 	if ( nContents != CONTENTS_SOLID )
 	{
 		CPointContentsEnum contentsEnum(this, vecAbsPosition);
@@ -438,7 +438,7 @@ inline bool CEngineTrace::ShouldPerformCustomRayTest( const Ray_t& ray, ICollide
 	// No model? The entity's got its own collision detector maybe
 	// Does the entity force box or ray tests to go through its code?
 	return( (pCollideable->GetSolid() == SOLID_CUSTOM) ||
-			(ray.m_IsRay && (pCollideable->GetSolidFlags() & FSOLID_CUSTOMRAYTEST )) || 
+			(ray.m_IsRay && (pCollideable->GetSolidFlags() & FSOLID_CUSTOMRAYTEST )) ||
 			(!ray.m_IsRay && (pCollideable->GetSolidFlags() & FSOLID_CUSTOMBOXTEST )) );
 }
 
@@ -538,7 +538,7 @@ static void FASTCALL GetBrushesInAABB_ParseLeaf( const Vector *pExtents, CCollis
 		int iBrushNumber = pBSPData->map_leafbrushes[pLeaf->firstleafbrush + i];
 		cbrush_t *pBrush = &pBSPData->map_brushes[iBrushNumber];
 
-		if( pCounters[iBrushNumber] ) 
+		if( pCounters[iBrushNumber] )
 			continue;
 
 		pCounters[iBrushNumber] = 1;
@@ -584,7 +584,7 @@ void CEngineTrace::GetBrushesInAABB( const Vector &vMins, const Vector &vMaxs, C
 		ptBBoxExtents[i].x = (i & (1<<0)) ? (vMaxs.x) : (vMins.x);
 		ptBBoxExtents[i].y = (i & (1<<1)) ? (vMaxs.y) : (vMins.y);
 		ptBBoxExtents[i].z = (i & (1<<2)) ? (vMaxs.z) : (vMins.z);
-	}	
+	}
 
 	int *pLeafList = (int *)stackalloc( pBSPData->numleafs * 2 * sizeof( int ) ); // *2 just in case
 	int iNumLeafs = CM_BoxLeafnums( vMins, vMaxs, pLeafList, pBSPData->numleafs * 2, NULL );
@@ -609,7 +609,7 @@ CPhysCollide* CEngineTrace::GetCollidableFromDisplacementsInAABB( const Vector& 
 {
 	CCollisionBSPData *pBSPData = GetCollisionBSPData();
 
-	int *pLeafList = (int *)stackalloc( pBSPData->numleafs * sizeof( int ) ); 
+	int *pLeafList = (int *)stackalloc( pBSPData->numleafs * sizeof( int ) );
 	int iLeafCount = CM_BoxLeafnums( vMins, vMaxs, pLeafList, pBSPData->numleafs, NULL );
 
 	// Get all the triangles for displacement surfaces in this box, add them to a polysoup
@@ -634,7 +634,7 @@ CPhysCollide* CEngineTrace::GetCollidableFromDisplacementsInAABB( const Vector& 
 		{
 			int dispIndex = pBSPData->map_dispList[curLeaf.dispListStart + k];
 			CDispCollTree *pDispTree = &g_pDispCollTrees[dispIndex];
-		
+
 			// make sure we only check this brush once per trace/stab
 			if ( !pTraceInfo->Visit( pDispTree->m_iCounter, count, pCounters ) )
 				continue;
@@ -700,11 +700,11 @@ CPhysCollide* CEngineTrace::GetCollidableFromDisplacementsInAABB( const Vector& 
 					int nProp = pDispTree->GetSurfaceProps(0);
 					physcollision->PolysoupAddTriangle( pDispCollideSoup, v0, v1, v2, nProp );
 				}
- 
+
 			}// triangle loop
 
 		}// for each displacement in leaf
-		
+
 	}// for each leaf
 
 	EndTrace( pTraceInfo );
@@ -861,13 +861,13 @@ bool CEngineTrace::ClipRayToVPhysics( const Ray_t &ray, unsigned int fMask, ICol
 		vcollide_t *pCollide = g_pMDLCache->GetVCollide( pModel->studio );
 		if ( pCollide && pCollide->solidCount )
 		{
-			physcollision->TraceBox( 
+			physcollision->TraceBox(
 				ray,
 				fMask,
 				&studioConvex,
 				pCollide->solids[0], // UNDONE: Support other solid indices?!?!?!? (forced zero)
-				pEntity->GetCollisionOrigin(), 
-				pEntity->GetCollisionAngles(), 
+				pEntity->GetCollisionOrigin(),
+				pEntity->GetCollisionAngles(),
 				pTrace );
 			bTraced = true;
 		}
@@ -889,13 +889,13 @@ bool CEngineTrace::ClipRayToVPhysics( const Ray_t &ray, unsigned int fMask, ICol
 				CBrushConvexInfo brushConvex;
 
 				IConvexInfo *pConvexInfo = (pModel->type) == mod_brush ? &brushConvex : NULL;
-				physcollision->TraceBox( 
+				physcollision->TraceBox(
 					ray,
 					fMask,
 					pConvexInfo,
 					pCollide->solids[0], // UNDONE: Support other solid indices?!?!?!? (forced zero)
-					pEntity->GetCollisionOrigin(), 
-					pEntity->GetCollisionAngles(), 
+					pEntity->GetCollisionOrigin(),
+					pEntity->GetCollisionAngles(),
 					pTrace );
 				bTraced = true;
 			}
@@ -986,7 +986,7 @@ bool CEngineTrace::ClipRayToBBox( const Ray_t &ray, unsigned int fMask, ICollide
 	vecInvDelta = ray.InvDelta();
 	VectorAdd( pEntity->GetCollisionOrigin(), pEntity->OBBMins(), vecAbsMins );
 	VectorAdd( pEntity->GetCollisionOrigin(), pEntity->OBBMaxs(), vecAbsMaxs );
-	IntersectRayWithBox( ray, vecInvDelta, vecAbsMins, vecAbsMaxs, pTrace); 
+	IntersectRayWithBox( ray, vecInvDelta, vecAbsMins, vecAbsMaxs, pTrace);
 	return true;
 }
 
@@ -997,7 +997,7 @@ bool CEngineTrace::ClipRayToOBB( const Ray_t &ray, unsigned int fMask, ICollidea
 
 	// NOTE: This is busted because it doesn't compute fractionleftsolid, which at the
 	// moment is required for the engine trace system.
-	IntersectRayWithOBB( ray, pEntity->GetCollisionOrigin(), pEntity->GetCollisionAngles(), 
+	IntersectRayWithOBB( ray, pEntity->GetCollisionOrigin(), pEntity->GetCollisionAngles(),
 		pEntity->OBBMins(), pEntity->OBBMaxs(), DIST_EPSILON, pTrace );
 	return true;
 }
@@ -1092,7 +1092,7 @@ void CEngineTrace::ClipRayToCollideable( const Ray_t &ray, unsigned int fMask, I
 	}
 	else
 	{
-		bTraced = ClipRayToVPhysics( ray, fMask, pEntity, pStudioHdr, pTrace );	
+		bTraced = ClipRayToVPhysics( ray, fMask, pEntity, pStudioHdr, pTrace );
 	}
 
 	// FIXME: Why aren't we using solid type to check what kind of collisions to test against?!?!
@@ -1191,7 +1191,7 @@ public:
 
 	enum { MAX_ENTITIES_ALONGRAY = 1024 };
 
-	CEntityListAlongRay() 
+	CEntityListAlongRay()
 	{
 		m_nCount = 0;
 	}
@@ -1309,7 +1309,7 @@ void CEngineTraceClient::HandleEntityToCollideable( IHandleEntity *pHandleEntity
 		*ppDebugName = "<null>";
 		return;
 	}
-	
+
 	*ppCollide = pUnk->GetCollideable();
 	*ppDebugName = "client entity";
 	IClientNetworkable *pNetwork = pUnk->GetClientNetworkable();
@@ -1389,7 +1389,7 @@ void CEngineTrace::SetupLeafAndEntityListRay( const Ray_t &ray, CTraceListData &
 
 	// Get the leaves that intersect the ray.
 	traceData.LeafCountReset();
-	CM_RayLeafnums( ray, traceData.m_aLeafList.Base(), traceData.LeafCountMax(), traceData.m_nLeafCount ); 
+	CM_RayLeafnums( ray, traceData.m_aLeafList.Base(), traceData.LeafCountMax(), traceData.m_nLeafCount );
 
 	// Find all the entities in the voxels that intersect this ray.
 	traceData.EntityCountReset();
@@ -1405,7 +1405,7 @@ void CEngineTrace::SetupLeafAndEntityListBox( const Vector &vecBoxMin, const Vec
 	int iTopNode = -1;
 	traceData.LeafCountReset();
 	traceData.m_nLeafCount = CM_BoxLeafnums( vecBoxMin, vecBoxMax, traceData.m_aLeafList.Base(), traceData.LeafCountMax(), &iTopNode );
-	
+
 	// Find all entities in the voxels that intersect this box.
 	traceData.EntityCountReset();
 	SpatialPartition()->EnumerateElementsInBox( SpatialPartitionMask(), vecBoxMin, vecBoxMax, false, &traceData );
@@ -1576,7 +1576,7 @@ CON_COMMAND( ray_clear, "Clear the current rays" )
 
 CON_COMMAND_EXTERN( ray_bench, RayBench, "Time the rays" )
 {
-#if VPROF_LEVEL > 0 
+#if VPROF_LEVEL > 0
 	g_VProfCurrentProfile.Start();
 	g_VProfCurrentProfile.Reset();
 	g_VProfCurrentProfile.ResetPeaks();
@@ -1632,7 +1632,7 @@ CON_COMMAND_EXTERN( ray_bench, RayBench, "Time the rays" )
 				hit++;
 			else
 				miss++;
-#if VPROF_LEVEL > 0 
+#if VPROF_LEVEL > 0
 			g_VProfCurrentProfile.MarkFrame();
 #endif
 		}
@@ -1647,7 +1647,7 @@ CON_COMMAND_EXTERN( ray_bench, RayBench, "Time the rays" )
 		}
 		Msg("RAY TEST: %d hits, %d misses, %.2fms   (%d rays, %d sweeps) (%d ray/prop, %d box/prop)\n", hit, miss, ms, point, swept, rayVsProp, boxVsProp );
 	}
-#if VPROF_LEVEL > 0 
+#if VPROF_LEVEL > 0
 	g_VProfCurrentProfile.MarkFrame();
 	g_VProfCurrentProfile.Stop();
 	g_VProfCurrentProfile.OutputReport( VPRT_FULL & ~VPRT_HIERARCHY, NULL );
@@ -1659,7 +1659,7 @@ CON_COMMAND_EXTERN( ray_bench, RayBench, "Time the rays" )
 // A version that simply accepts a ray (can work as a traceline or tracehull)
 //-----------------------------------------------------------------------------
 void CEngineTrace::TraceRay( const Ray_t &ray, unsigned int fMask, ITraceFilter *pTraceFilter, trace_t *pTrace )
-{	
+{
 #if defined _DEBUG && !defined SWDS
 	if( debugrayenable.GetBool() )
 	{
@@ -1679,7 +1679,7 @@ void CEngineTrace::TraceRay( const Ray_t &ray, unsigned int fMask, ITraceFilter 
 	VPROF_INCREMENT_COUNTER( "TraceRay", 1 );
 	m_traceStatCounters[TRACE_STAT_COUNTER_TRACERAY]++;
 //	VPROF_BUDGET( "CEngineTrace::TraceRay", "Ray/Hull Trace" );
-	
+
 	CTraceFilterHitAll traceFilter;
 	if ( !pTraceFilter )
 	{
@@ -1714,7 +1714,7 @@ void CEngineTrace::TraceRay( const Ray_t &ray, unsigned int fMask, ITraceFilter 
 	}
 	else
 	{
-		// Set initial start + endpos, necessary if the world isn't traced against 
+		// Set initial start + endpos, necessary if the world isn't traced against
 		// because we may not trace against *anything* below.
 		VectorAdd( ray.m_Start, ray.m_StartOffset, pTrace->startpos );
 		VectorAdd( pTrace->startpos, ray.m_Delta, pTrace->endpos );
@@ -1740,7 +1740,7 @@ void CEngineTrace::TraceRay( const Ray_t &ray, unsigned int fMask, ITraceFilter 
 		// Explicitly compute end so that this computation happens at the quantization of
 		// the output (endpos).  That way we won't miss any intersections we would get
 		// by feeding these results back in to the tracer
-		// This is not the same as entityRay.m_Delta *= pTrace->fraction which happens 
+		// This is not the same as entityRay.m_Delta *= pTrace->fraction which happens
 		// at a quantization that is more precise as m_Start moves away from the origin
 		Vector end;
 		VectorMA( entityRay.m_Start, pTrace->fraction, entityRay.m_Delta, end );
@@ -1840,7 +1840,7 @@ void CEngineTrace::TraceRay( const Ray_t &ray, unsigned int fMask, ITraceFilter 
 //-----------------------------------------------------------------------------
 // A version that sweeps a collideable through the world
 //-----------------------------------------------------------------------------
-void CEngineTrace::SweepCollideable( ICollideable *pCollide, 
+void CEngineTrace::SweepCollideable( ICollideable *pCollide,
 		const Vector &vecAbsStart, const Vector &vecAbsEnd, const QAngle &vecAngles,
 		unsigned int fMask, ITraceFilter *pTraceFilter, trace_t *pTrace )
 {
@@ -1863,7 +1863,7 @@ void CEngineTrace::SweepCollideable( ICollideable *pCollide,
 class CEnumerationFilter : public IPartitionEnumerator
 {
 public:
-	CEnumerationFilter( CEngineTrace *pEngineTrace, IEntityEnumerator* pEnumerator ) : 
+	CEnumerationFilter( CEngineTrace *pEngineTrace, IEntityEnumerator* pEnumerator ) :
 		m_pEngineTrace(pEngineTrace), m_pEnumerator(pEnumerator) {}
 
 	IterationRetval_t EnumElement( IHandleEntity *pHandleEntity )

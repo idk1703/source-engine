@@ -1,10 +1,10 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 #ifdef _WIN32
-#include <windows.h> 
+#include <windows.h>
 #include <direct.h>
 
 // includes for the VGUI version
@@ -40,10 +40,10 @@ void* DedicatedFactory(const char *pName, int *pReturnCode);
 int StartVGUI( CreateInterfaceFn dedicatedFactory )
 {
 	// the "base dir" so we can scan mod name
-	g_pFullFileSystem->AddSearchPath(".", "MAIN");	
+	g_pFullFileSystem->AddSearchPath(".", "MAIN");
 	// the main platform dir
 	g_pFullFileSystem->AddSearchPath( "platform", "PLATFORM", PATH_ADD_TO_HEAD);
-	
+
 	vgui::ivgui()->SetSleep(false);
 
 	// find our configuration directory
@@ -184,4 +184,3 @@ void VGUIPrintf( const char *msg )
 }
 
 #endif // _WIN32
-

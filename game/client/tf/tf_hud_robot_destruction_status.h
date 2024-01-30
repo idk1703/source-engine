@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,7 +27,7 @@ public:
 
 	virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
 	virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
-	
+
 	void SetImageVisible( bool bVisible ) { m_pImage->SetVisible( bVisible ); }
 protected:
 	vgui::ImagePanel	*m_pImage;
@@ -116,7 +116,7 @@ public:
 
 	virtual void FireGameEvent( IGameEvent *pEvent ) OVERRIDE;
 
-	
+
 	void UpdateRobotElements();
 private:
 	void PaintPDPlayerScore( const CTFPlayer* pPlayer );
@@ -127,7 +127,7 @@ private:
 	void PerformRobotLayout( RobotVector_t& vecRobots, int nTeam );
 	void SetPlayingToLabelVisible( bool bVisible );
 	void UpdateTeamRobotCounts();
-	
+
 	int					m_nStealLeftEdge;
 	int					m_nStealRightEdge;
 	KeyValues			*m_pRobotIndicatorKVs;
@@ -155,7 +155,7 @@ private:
 	public:
 
 		CProgressPanel( vgui::Panel *parent, const char *name );
-		
+
 		virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
 		virtual void PaintBackground() OVERRIDE;
 		virtual void OnTick() OVERRIDE;
@@ -215,4 +215,3 @@ private:
 };
 
 #endif	// TF_HUD_ROBOT_DESTRUCTION_STATUS_H
-

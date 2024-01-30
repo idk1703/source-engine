@@ -24,13 +24,13 @@ public:
 	virtual Activity GetActivity( void ) const;							// return currently animating activity
 	virtual bool IsActivity( Activity act ) const;						// return true if currently animating activity matches the given one
 
-	virtual void AimHeadTowards( const Vector &lookAtPos, 
-								 LookAtPriorityType priority = BORING, 
+	virtual void AimHeadTowards( const Vector &lookAtPos,
+								 LookAtPriorityType priority = BORING,
 								 float duration = 0.0f,
 								 INextBotReply *replyWhenAimed = NULL,
 								 const char *reason = NULL );		// aim the bot's head towards the given goal
 	virtual void AimHeadTowards( CBaseEntity *subject,
-								 LookAtPriorityType priority = BORING, 
+								 LookAtPriorityType priority = BORING,
 								 float duration = 0.0f,
 								 INextBotReply *replyWhenAimed = NULL,
 								 const char *reason = NULL );		// continually aim the bot's head towards the given subject
@@ -40,7 +40,7 @@ public:
 
 private:
 	int m_currentActivity;
-	int m_moveXPoseParameter;	
+	int m_moveXPoseParameter;
 	int m_moveYPoseParameter;
 	QAngle m_desiredAimAngles;
 };

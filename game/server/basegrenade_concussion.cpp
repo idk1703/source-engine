@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -70,7 +70,7 @@ void CBaseGrenadeConcussion::FallThink(void)
 
 //
 // Contact grenade, explode when it touches something
-// 
+//
 void CBaseGrenadeConcussion::ExplodeConcussion( CBaseEntity *pOther )
 {
 	trace_t		tr;
@@ -103,15 +103,15 @@ void CBaseGrenadeConcussion::Spawn( void )
 
 	m_nRenderFX = kRenderFxGlowShell;
 	SetRenderColor( 200, 200, 20, 255 );
-	
+
 	// make NPCs afaid of it while in the air
 	SetThink( &CBaseGrenadeConcussion::FallThink );
 	SetNextThink( gpGlobals->curtime );
-	
+
 	// Tumble in air
 	QAngle vecAngVel( random->RandomFloat ( -100, -500 ), 0, 0 );
 	SetLocalAngularVelocity( vecAngVel );
-	
+
 	// Explode on contact
 	SetTouch( &CBaseGrenadeConcussion::ExplodeConcussion );
 

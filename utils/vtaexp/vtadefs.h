@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -169,4 +169,3 @@ private:
 	// int						InodeOfPhyVectex( int iVertex0 );
 	Point3					Pt3GetRVertexNormal(RVertex *prvertex, DWORD smGroupFace);
 };
-

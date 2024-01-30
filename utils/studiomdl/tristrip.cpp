@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -347,4 +347,3 @@ int BuildTris (s_trianglevert_t (*x)[3], s_mesh_t *y, byte **ppdata )
 	// printf("%d %d %d\n", numcommandnodes, numcommands, pmesh->numtris  );
 	return numcommands * sizeof( short );
 }
-

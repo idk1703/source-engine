@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -48,8 +48,8 @@ void InstallSFMV6Importer( IDataModel *pFactory )
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CImportSFMV6::CImportSFMV6( char const *formatName, char const *nextFormatName ) : 
-	BaseClass( formatName, nextFormatName )	
+CImportSFMV6::CImportSFMV6( char const *formatName, char const *nextFormatName ) :
+	BaseClass( formatName, nextFormatName )
 {
 }
 

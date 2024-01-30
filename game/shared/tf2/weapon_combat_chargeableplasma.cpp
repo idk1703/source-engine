@@ -15,7 +15,7 @@
 #define BURST_FIRE_RATE			0.15
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CWeaponCombat_ChargeablePlasma : public CWeaponCombatUsedWithShieldBase
 {
@@ -67,7 +67,7 @@ void CWeaponCombat_ChargeablePlasma::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombat_ChargeablePlasma::Precache( void )
 {
@@ -75,7 +75,7 @@ void CWeaponCombat_ChargeablePlasma::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// New technologies: 
+// New technologies:
 //-----------------------------------------------------------------------------
 void CWeaponCombat_ChargeablePlasma::GainedNewTechnology( CBaseTechnology *pTechnology )
 {
@@ -107,7 +107,7 @@ void CWeaponCombat_ChargeablePlasma::GainedNewTechnology( CBaseTechnology *pTech
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombat_ChargeablePlasma::ItemPostFrame( void )
 {
@@ -201,14 +201,14 @@ void CWeaponCombat_ChargeablePlasma::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombat_ChargeablePlasma::PrimaryAttack( void )
 {
 	CBaseTFPlayer *pPlayer = (CBaseTFPlayer*)GetOwner();
 	if (!pPlayer)
 		return;
-	
+
 	WeaponSound(SINGLE);
 
 	// Fire the bullets
@@ -247,15 +247,15 @@ void CWeaponCombat_ChargeablePlasma::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponCombat_ChargeablePlasma::GetFireRate( void )
-{	
+{
 	return SequenceDuration();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponCombat_ChargeablePlasma::Deploy( void )
 {
@@ -306,14 +306,14 @@ CBaseEntity *CWeaponCombat_ChargeablePlasma::GetLockTarget( void )
 		CBaseEntity *pTargetEntity = tr.m_pEnt;
 
 		// Don't guide on same team or on anything other than players, objects, and NPCs
-		if ( pTargetEntity->InSameTeam(pPlayer) || (!pTargetEntity->IsPlayer() 
+		if ( pTargetEntity->InSameTeam(pPlayer) || (!pTargetEntity->IsPlayer()
 			&& (pTargetEntity->MyNPCPointer() == NULL)) )
 			return NULL;
 
 		// Compute the target offset relative to the target
 		Vector vecWorldOffset;
 		VectorSubtract( tr.endpos, pTargetEntity->GetAbsOrigin(), vecWorldOffset );
-		VectorIRotate( vecWorldOffset, pTargetEntity->EntityToWorldTransform(), m_vecTargetOffset ); 
+		VectorIRotate( vecWorldOffset, pTargetEntity->EntityToWorldTransform(), m_vecTargetOffset );
 		m_flLockedAt = gpGlobals->curtime + 0.2;
 		return pTargetEntity;
 	}

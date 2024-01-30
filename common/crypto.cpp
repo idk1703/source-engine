@@ -17,8 +17,8 @@
 #include <sys/socket.h>
 #endif
 
-/* this stuff needs to be before the crypto headers, as it relies on memdbg, which doesn't 
-   do the right thing in the face of xdebug getting included below */
+/* this stuff needs to be before the crypto headers, as it relies on memdbg, which doesn't
+	do the right thing in the face of xdebug getting included below */
 // tier0
 //#include "tier0/tier0.h"
 #include "tier0/basetypes.h"
@@ -46,7 +46,7 @@
 #include "openssl/aes.h"
 #if defined(_M_IX86) || defined (_M_X64) || defined(__i386__) || defined(__x86_64__)
 #include <emmintrin.h>
-#endif 
+#endif
 #endif
 
 // crypto ++
@@ -66,7 +66,7 @@
 #undef Verify
 #define VPROF_BUDGETGROUP_ENCRYPTION				_T("Encryption")
 #define SPEW_CRYPTO "crypto"
-const int k_cMedBuff = 1024;					// medium buffer 
+const int k_cMedBuff = 1024;					// medium buffer
 
 #if defined(GNUC)
 #pragma GCC diagnostic ignored "-Wshadow"
@@ -142,7 +142,7 @@ private:
 	CTSList<CAutoSeededRNG>::Node_t *m_pRNGNode;
 };
 
-// force run this static construction code 
+// force run this static construction code
 class CGlobalInitConstructor
 {
 public:
@@ -173,10 +173,10 @@ volatile static CGlobalInitConstructor s_StaticCryptoConstructor;
 //			cubKey -			Size of the key (must be k_nSymmetricKeyLen)
 // Output:  true if successful, false if encryption failed
 //-----------------------------------------------------------------------------
-bool CCrypto::SymmetricEncryptWithIV( const uint8 *pubPlaintextData, const uint32 cubPlaintextData, 
-									  const uint8 *pIV, const uint32 cubIV,
-									  uint8 *pubEncryptedData, uint32 *pcubEncryptedData,
-									  const uint8 *pubKey, const uint32 cubKey )
+bool CCrypto::SymmetricEncryptWithIV( const uint8 *pubPlaintextData, const uint32 cubPlaintextData,
+									const uint8 *pIV, const uint32 cubIV,
+									uint8 *pubEncryptedData, uint32 *pcubEncryptedData,
+									const uint8 *pubKey, const uint32 cubKey )
 {
 	VPROF_BUDGET( "CCrypto::SymmetricEncrypt", VPROF_BUDGETGROUP_ENCRYPTION );
 	Assert( pubPlaintextData );
@@ -208,7 +208,7 @@ bool CCrypto::SymmetricEncryptWithIV( const uint8 *pubPlaintextData, const uint3
 	}
 
 	try		// handle any exceptions crypto++ may throw
-	{	
+	{
 		if ( pTemp != NULL )
 		{
 			AESEncryption aesEncrypt( pubKey, cubKey );
@@ -244,7 +244,7 @@ bool CCrypto::SymmetricEncryptWithIV( const uint8 *pubPlaintextData, const uint3
 			bRet = true;
 		}
 	}
-	catch ( Exception e ) 
+	catch ( Exception e )
 	{
 		DMsg( SPEW_CRYPTO, 2, "CCrypto::SymmetricEncrypt: crypto++ threw exception %s (%d)\n",
 			e.what(), e.GetErrorType() );
@@ -274,7 +274,7 @@ bool CCrypto::SymmetricEncryptWithIV( const uint8 *pubPlaintextData, const uint3
 // Output:  true if successful, false if encryption failed
 //-----------------------------------------------------------------------------
 
-bool CCrypto::SymmetricEncrypt( const uint8 *pubPlaintextData, const uint32 cubPlaintextData, 
+bool CCrypto::SymmetricEncrypt( const uint8 *pubPlaintextData, const uint32 cubPlaintextData,
 								uint8 *pubEncryptedData, uint32 *pcubEncryptedData,
 								const uint8 *pubKey, const uint32 cubKey )
 {
@@ -348,7 +348,7 @@ static bool BDecryptAESUsingOpenSSL( const uint8 *pubEncryptedData, uint32 cubEn
 	AES_decrypt( pubEncryptedData + nDecrypted, rgubWorking, key );
 	for ( int i = 0; i < k_nSymmetricBlockSize; ++i )
 		rgubWorking[i] ^= pIV[i];
-	
+
 	// Get final block padding length and make sure it is backfilled properly (PKCS#5)
 	uint8 pad = rgubWorking[ k_nSymmetricBlockSize - 1 ];
 	if ( pad < 1 || pad > k_nSymmetricBlockSize )
@@ -357,10 +357,10 @@ static bool BDecryptAESUsingOpenSSL( const uint8 *pubEncryptedData, uint32 cubEn
 		if ( rgubWorking[i] != pad )
 			return false;
 
-    // Check that we have enough space for final bytes
-    if ( *pcubPlaintextData < nDecrypted + k_nSymmetricBlockSize - pad )
-        return false;
-    
+	// Check that we have enough space for final bytes
+	if ( *pcubPlaintextData < nDecrypted + k_nSymmetricBlockSize - pad )
+		return false;
+
 	// Write any non-pad bytes from rgubWorking to pubPlaintextData
 	for ( int i = 0; i < k_nSymmetricBlockSize - pad; ++i )
 		pubPlaintextData[nDecrypted++] = rgubWorking[i];
@@ -378,9 +378,9 @@ static bool BDecryptAESUsingOpenSSL( const uint8 *pubEncryptedData, uint32 cubEn
 #else
 
 /* function, not method */
-static bool SymmetricDecryptWorker( const uint8 *pubEncryptedData, uint32 cubEncryptedData, 
+static bool SymmetricDecryptWorker( const uint8 *pubEncryptedData, uint32 cubEncryptedData,
 									const uint8 * pIV, uint32 cubIV,
-									uint8 *pubPlaintextData, uint32 *pcubPlaintextData, 
+									uint8 *pubPlaintextData, uint32 *pcubPlaintextData,
 									AESDecryption &aesDecrypt )
 {
 	VPROF_BUDGET( "CCrypto::SymmetricDecrypt", VPROF_BUDGETGROUP_ENCRYPTION );
@@ -406,7 +406,7 @@ static bool SymmetricDecryptWorker( const uint8 *pubEncryptedData, uint32 cubEnc
 	// the IV in the returned encrypted data we never actually hit that case.
 	//
 	if ( ( pubEncryptedData + cubEncryptedData >= pubPlaintextData ) &&
-		 ( pubPlaintextData + cubPlaintextData >= pubEncryptedData ) )
+		( pubPlaintextData + cubPlaintextData >= pubEncryptedData ) )
 	{
 		pTemp = new uint8[cubPlaintextData];
 		bUseTempBuffer = true;
@@ -436,7 +436,7 @@ static bool SymmetricDecryptWorker( const uint8 *pubEncryptedData, uint32 cubEnc
 			bRet = true;
 		}
 	}
-	catch ( Exception e ) 
+	catch ( Exception e )
 	{
 		DMsg( SPEW_CRYPTO, 4, "CCrypto::SymmetricDecrypt: crypto++ threw exception %s (%d)\n",
 			e.what(), e.GetErrorType() );
@@ -455,7 +455,7 @@ static bool SymmetricDecryptWorker( const uint8 *pubEncryptedData, uint32 cubEnc
 
 //-----------------------------------------------------------------------------
 // Purpose: Decrypts the specified data with the specified key.  Uses AES (Rijndael) symmetric
-//			decryption.  
+//			decryption.
 // Input:	pubEncryptedData -	Data to be decrypted
 //			cubEncryptedData -	Size of data to be decrypted
 //			pubPlaintextData -  Pointer to buffer to receive decrypted data
@@ -466,9 +466,9 @@ static bool SymmetricDecryptWorker( const uint8 *pubEncryptedData, uint32 cubEnc
 //			cubKey -			Size of the key (must be k_nSymmetricKeyLen)
 // Output:  true if successful, false if decryption failed
 //-----------------------------------------------------------------------------
-bool CCrypto::SymmetricDecrypt( const uint8 *pubEncryptedData, uint32 cubEncryptedData, 
-							   uint8 *pubPlaintextData, uint32 *pcubPlaintextData, 
-							   const uint8 *pubKey, const uint32 cubKey )
+bool CCrypto::SymmetricDecrypt( const uint8 *pubEncryptedData, uint32 cubEncryptedData,
+								uint8 *pubPlaintextData, uint32 *pcubPlaintextData,
+								const uint8 *pubKey, const uint32 cubKey )
 {
 	Assert( pubEncryptedData );
 	Assert( cubEncryptedData);
@@ -522,7 +522,7 @@ bool CCrypto::SymmetricDecrypt( const uint8 *pubEncryptedData, uint32 cubEncrypt
 
 //-----------------------------------------------------------------------------
 // Purpose: Decrypts the specified data with the specified key.  Uses AES (Rijndael) symmetric
-//			decryption.  
+//			decryption.
 // Input:	pubEncryptedData -	Data to be decrypted
 //			cubEncryptedData -	Size of data to be decrypted
 //			pIV -				Initialization vector. Byte array one block in size.
@@ -535,9 +535,9 @@ bool CCrypto::SymmetricDecrypt( const uint8 *pubEncryptedData, uint32 cubEncrypt
 //			cubKey -			Size of the key (must be k_nSymmetricKeyLen)
 // Output:  true if successful, false if decryption failed
 //-----------------------------------------------------------------------------
-bool CCrypto::SymmetricDecryptWithIV( const uint8 *pubEncryptedData, uint32 cubEncryptedData, 
+bool CCrypto::SymmetricDecryptWithIV( const uint8 *pubEncryptedData, uint32 cubEncryptedData,
 								const uint8 * pIV, uint32 cubIV,
-								uint8 *pubPlaintextData, uint32 *pcubPlaintextData, 
+								uint8 *pubPlaintextData, uint32 *pcubPlaintextData,
 								const uint8 *pubKey, const uint32 cubKey )
 {
 	Assert( pubEncryptedData );
@@ -590,9 +590,9 @@ uint32 CCrypto::GetSymmetricEncryptedSize( uint32 cubPlaintextData )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Encrypts the specified data with the specified text password.  
+// Purpose: Encrypts the specified data with the specified text password.
 //			Uses the SHA256 hash of the password as the key for AES (Rijndael) symmetric
-//			encryption. A SHA1 HMAC of the result is appended, for authentication on 
+//			encryption. A SHA1 HMAC of the result is appended, for authentication on
 //			the receiving end.
 //			The encrypted data may then be decrypted by calling DecryptWithPasswordAndAuthenticate
 //			with the same password.
@@ -606,8 +606,8 @@ uint32 CCrypto::GetSymmetricEncryptedSize( uint32 cubPlaintextData )
 // Output:  true if successful, false if encryption failed
 //-----------------------------------------------------------------------------
 bool CCrypto::EncryptWithPasswordAndHMAC( const uint8 *pubPlaintextData, uint32 cubPlaintextData,
-								 uint8 * pubEncryptedData, uint32 * pcubEncryptedData,
-								 const char *pchPassword )
+								uint8 * pubEncryptedData, uint32 * pcubEncryptedData,
+								const char *pchPassword )
 {
 	//
 	// Generate a random IV
@@ -621,9 +621,9 @@ bool CCrypto::EncryptWithPasswordAndHMAC( const uint8 *pubPlaintextData, uint32 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Encrypts the specified data with the specified text password.  
+// Purpose: Encrypts the specified data with the specified text password.
 //			Uses the SHA256 hash of the password as the key for AES (Rijndael) symmetric
-//			encryption. A SHA1 HMAC of the result is appended, for authentication on 
+//			encryption. A SHA1 HMAC of the result is appended, for authentication on
 //			the receiving end.
 //			The encrypted data may then be decrypted by calling DecryptWithPasswordAndAuthenticate
 //			with the same password.
@@ -640,9 +640,9 @@ bool CCrypto::EncryptWithPasswordAndHMAC( const uint8 *pubPlaintextData, uint32 
 // Output:  true if successful, false if encryption failed
 //-----------------------------------------------------------------------------
 bool CCrypto::EncryptWithPasswordAndHMACWithIV( const uint8 *pubPlaintextData, uint32 cubPlaintextData,
-								 const uint8 * pIV, uint32 cubIV,
-								 uint8 * pubEncryptedData, uint32 * pcubEncryptedData,
-								 const char *pchPassword )
+								const uint8 * pIV, uint32 cubIV,
+								uint8 * pubEncryptedData, uint32 * pcubEncryptedData,
+								const char *pchPassword )
 {
 	uint8 rgubKey[k_nSymmetricKeyLen];
 	if ( !pchPassword || !pchPassword[0] )
@@ -661,7 +661,7 @@ bool CCrypto::EncryptWithPasswordAndHMACWithIV( const uint8 *pubPlaintextData, u
 	{
 		CryptoPP::SHA256().CalculateDigest( rgubKey, (const uint8 *)pchPassword, Q_strlen( pchPassword ) );
 	}
-	catch ( Exception e ) 
+	catch ( Exception e )
 	{
 		DMsg( SPEW_CRYPTO, 4, "CCrypto::EncryptWithPassword: crypto++ threw exception %s (%d)\n",
 			e.what(), e.GetErrorType() );
@@ -698,9 +698,9 @@ bool CCrypto::EncryptWithPasswordAndHMACWithIV( const uint8 *pubPlaintextData, u
 //			pchPassword -		the text password to decrypt the data with
 // Output:  true if successful, false if decryption failed
 //-----------------------------------------------------------------------------
-bool CCrypto::DecryptWithPasswordAndAuthenticate( const uint8 * pubEncryptedData, uint32 cubEncryptedData, 
-								 uint8 * pubPlaintextData, uint32 * pcubPlaintextData,
-								 const char *pchPassword )
+bool CCrypto::DecryptWithPasswordAndAuthenticate( const uint8 * pubEncryptedData, uint32 cubEncryptedData,
+								uint8 * pubPlaintextData, uint32 * pcubPlaintextData,
+								const char *pchPassword )
 {
 	uint8 rgubKey[k_nSymmetricKeyLen];
 	if ( !pchPassword || !pchPassword[0] )
@@ -713,7 +713,7 @@ bool CCrypto::DecryptWithPasswordAndAuthenticate( const uint8 * pubEncryptedData
 	{
 		CryptoPP::SHA256().CalculateDigest( rgubKey, (const uint8 *)pchPassword, Q_strlen( pchPassword ) );
 	}
-	catch ( Exception e ) 
+	catch ( Exception e )
 	{
 		DMsg( SPEW_CRYPTO, 4, "CCrypto::EncryptWithPassword: crypto++ threw exception %s (%d)\n",
 			e.what(), e.GetErrorType() );
@@ -730,7 +730,7 @@ bool CCrypto::DecryptWithPasswordAndAuthenticate( const uint8 * pubEncryptedData
 		// invalid ciphertext or key
 		if ( Q_memcmp( &hmacActual, pHMAC, sizeof( SHADigest_t ) ) )
 			return false;
-		
+
 		bRet = SymmetricDecrypt( pubEncryptedData, cubCiphertext, pubPlaintextData, pcubPlaintextData, rgubKey, k_nSymmetricKeyLen );
 	}
 
@@ -772,7 +772,7 @@ bool CCrypto::RSAGenerateKeys( uint8 *pubPublicKey, uint32 *pcubPublicKey, uint8
 		*pcubPublicKey = arraySinkPublicKey.TotalPutLength();
 		bRet = true;
 	}
-	catch ( Exception e ) 
+	catch ( Exception e )
 	{
 		DMsg( SPEW_CRYPTO, 2, "CCrypto::RSAGenerateKeys: crypto++ threw exception %s (%d)\n",
 			e.what(), e.GetErrorType() );
@@ -783,7 +783,7 @@ bool CCrypto::RSAGenerateKeys( uint8 *pubPublicKey, uint32 *pcubPublicKey, uint8
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Encrypts the specified data with the specified RSA public key.  
+// Purpose: Encrypts the specified data with the specified RSA public key.
 //			The encrypted data may then be decrypted by calling RSADecrypt with the
 //			corresponding RSA private key.
 // Input:	pubPlaintextData -	Data to be encrypted
@@ -796,9 +796,9 @@ bool CCrypto::RSAGenerateKeys( uint8 *pubPublicKey, uint32 *pcubPublicKey, uint8
 //			cubPublicKey -		Size of the key (must be k_nSymmetricKeyLen)
 // Output:  true if successful, false if encryption failed
 //-----------------------------------------------------------------------------
-bool CCrypto::RSAEncrypt( const uint8 *pubPlaintextData, uint32 cubPlaintextData, 
-						  uint8 *pubEncryptedData, uint32 *pcubEncryptedData, 
-						  const uint8 *pubPublicKey, const uint32 cubPublicKey )
+bool CCrypto::RSAEncrypt( const uint8 *pubPlaintextData, uint32 cubPlaintextData,
+						uint8 *pubEncryptedData, uint32 *pcubEncryptedData,
+						const uint8 *pubPublicKey, const uint32 cubPublicKey )
 {
 	VPROF_BUDGET( "CCrypto::RSAEncrypt", VPROF_BUDGETGROUP_ENCRYPTION );
 	bool bRet = false;
@@ -843,7 +843,7 @@ bool CCrypto::RSAEncrypt( const uint8 *pubPlaintextData, uint32 cubPlaintextData
 
 		bRet = true;
 	}
-	catch ( Exception e ) 
+	catch ( Exception e )
 	{
 		DMsg( SPEW_CRYPTO, 2, "CCrypto::RSAEncrypt: Encrypt() threw exception %s (%d)\n",
 			e.what(), e.GetErrorType() );
@@ -854,7 +854,7 @@ bool CCrypto::RSAEncrypt( const uint8 *pubPlaintextData, uint32 cubPlaintextData
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Decrypts the specified data with the specified RSA private key 
+// Purpose: Decrypts the specified data with the specified RSA private key
 // Input:	pubEncryptedData -	Data to be decrypted
 //			cubEncryptedData -	Size of data to be decrypted
 //			pubPlaintextData -  Pointer to buffer to receive decrypted data
@@ -865,9 +865,9 @@ bool CCrypto::RSAEncrypt( const uint8 *pubPlaintextData, uint32 cubPlaintextData
 //			cubPrivateKey -		Size of the key (must be k_nSymmetricKeyLen)
 // Output:  true if successful, false if decryption failed
 //-----------------------------------------------------------------------------
-bool CCrypto::RSADecrypt( const uint8 *pubEncryptedData, uint32 cubEncryptedData, 
-						  uint8 *pubPlaintextData, uint32 *pcubPlaintextData, 
-						  const uint8 *pubPrivateKey, const uint32 cubPrivateKey )
+bool CCrypto::RSADecrypt( const uint8 *pubEncryptedData, uint32 cubEncryptedData,
+						uint8 *pubPlaintextData, uint32 *pcubPlaintextData,
+						const uint8 *pubPrivateKey, const uint32 cubPrivateKey )
 {
 	VPROF_BUDGET( "CCrypto::RSADecrypt", VPROF_BUDGETGROUP_ENCRYPTION );
 	bool bRet = false;
@@ -929,7 +929,7 @@ bool CCrypto::RSADecrypt( const uint8 *pubEncryptedData, uint32 cubEncryptedData
 
 		bRet = true;
 	}
-	catch ( Exception e ) 
+	catch ( Exception e )
 	{
 		DMsg( SPEW_CRYPTO, 2, "CCrypto::RSADecrypt: Decrypt() threw exception %s (%d)\n",
 			e.what(), e.GetErrorType() );
@@ -952,9 +952,9 @@ bool CCrypto::RSADecrypt( const uint8 *pubEncryptedData, uint32 cubEncryptedData
 //			cubPublicKey -		Size of the key
 // Output:  true if successful, false if decryption failed
 //-----------------------------------------------------------------------------
-bool CCrypto::RSAPublicDecrypt_NoPadding( const uint8 *pubEncryptedData, uint32 cubEncryptedData, 
-						 uint8 *pubPlaintextData, uint32 *pcubPlaintextData, 
-						 const uint8 *pubPublicKey, const uint32 cubPublicKey )
+bool CCrypto::RSAPublicDecrypt_NoPadding( const uint8 *pubEncryptedData, uint32 cubEncryptedData,
+						uint8 *pubPlaintextData, uint32 *pcubPlaintextData,
+						const uint8 *pubPublicKey, const uint32 cubPublicKey )
 {
 	VPROF_BUDGET( "CCrypto::RSADecrypt", VPROF_BUDGETGROUP_ENCRYPTION );
 	bool bRet = false;
@@ -995,7 +995,7 @@ bool CCrypto::RSAPublicDecrypt_NoPadding( const uint8 *pubEncryptedData, uint32 
 
 		bRet = true;
 	}
-	catch ( Exception e ) 
+	catch ( Exception e )
 	{
 		DMsg( SPEW_CRYPTO, 2, "CCrypto::RSAPublicDecrypt_NoPadding: Decrypt() threw exception %s (%d)\n",
 			e.what(), e.GetErrorType() );
@@ -1019,9 +1019,9 @@ bool CCrypto::RSAPublicDecrypt_NoPadding( const uint8 *pubEncryptedData, uint32 
 //			cubPrivateKey -		Size of the key
 // Output:  true if successful, false if signature failed
 //-----------------------------------------------------------------------------
-bool CCrypto::RSASign( const uint8 *pubData, const uint32 cubData, 
-					   uint8 *pubSignature, uint32 *pcubSignature,
-					   const uint8 *pubPrivateKey, const uint32 cubPrivateKey )
+bool CCrypto::RSASign( const uint8 *pubData, const uint32 cubData,
+						uint8 *pubSignature, uint32 *pcubSignature,
+						const uint8 *pubPrivateKey, const uint32 cubPrivateKey )
 {
 	VPROF_BUDGET( "CCrypto::RSASign", VPROF_BUDGETGROUP_ENCRYPTION );
 	Assert( pubData );
@@ -1040,7 +1040,7 @@ bool CCrypto::RSASign( const uint8 *pubData, const uint32 cubData,
 		*pcubSignature = (uint32)len;
 		bRet = true;
 	}
-	catch ( Exception e ) 
+	catch ( Exception e )
 	{
 		DMsg( SPEW_CRYPTO, 2, "CCrypto::RSASign: SignMessage threw exception %s (%d)\n",
 			e.what(), e.GetErrorType() );
@@ -1056,28 +1056,28 @@ bool CCrypto::RSASign( const uint8 *pubData, const uint32 cubData,
 //			cubData -			Size of data that was signed signed
 //			pubSignature -		Signature block
 //			cubSignature -		Size of signature block
-//			pubPublicKey -		The RSA public key to use to verify the signature 
+//			pubPublicKey -		The RSA public key to use to verify the signature
 //								(must be from same pair as RSA private key used to generate signature)
 //			cubPublicKey -		Size of the key
 // Output:  true if successful and signature is authentic, false if signature does not match or other error
 //-----------------------------------------------------------------------------
-bool CCrypto::RSAVerifySignature( const uint8 *pubData, const uint32 cubData, 
-								  const uint8 *pubSignature, const uint32 cubSignature, 
-								  const uint8 *pubPublicKey, const uint32 cubPublicKey )
+bool CCrypto::RSAVerifySignature( const uint8 *pubData, const uint32 cubData,
+								const uint8 *pubSignature, const uint32 cubSignature,
+								const uint8 *pubPublicKey, const uint32 cubPublicKey )
 {
 	VPROF_BUDGET( "CCrypto::RSAVerifySignature", VPROF_BUDGETGROUP_ENCRYPTION );
 	Assert( pubData );
 	Assert( pubSignature );
 	Assert( pubPublicKey );
 
-	bool bRet = false;	
+	bool bRet = false;
 	try		// handle any exceptions crypto++ may throw
 	{
 		StringSource stringSourcePublicKey( pubPublicKey, cubPublicKey, true );
 		RSASSA_PKCS1v15_SHA_Verifier pub( stringSourcePublicKey );
 		bRet = pub.VerifyMessage( pubData, cubData, pubSignature, cubSignature );
 	}
-	catch ( Exception e ) 
+	catch ( Exception e )
 	{
 		DMsg( SPEW_CRYPTO, 2, "CCrypto::RSASign: VerifyMessage threw exception %s (%d)\n",
 			e.what(), e.GetErrorType() );
@@ -1100,9 +1100,9 @@ bool CCrypto::RSAVerifySignature( const uint8 *pubData, const uint32 cubData,
 //			cubPrivateKey -		Size of the key
 // Output:  true if successful, false if signature failed
 //-----------------------------------------------------------------------------
-bool CCrypto::RSASignSHA256( const uint8 *pubData, const uint32 cubData, 
-					   uint8 *pubSignature, uint32 *pcubSignature,
-					   const uint8 *pubPrivateKey, const uint32 cubPrivateKey )
+bool CCrypto::RSASignSHA256( const uint8 *pubData, const uint32 cubData,
+						uint8 *pubSignature, uint32 *pcubSignature,
+						const uint8 *pubPrivateKey, const uint32 cubPrivateKey )
 {
 	VPROF_BUDGET( "CCrypto::RSASign", VPROF_BUDGETGROUP_ENCRYPTION );
 	Assert( pubData );
@@ -1121,7 +1121,7 @@ bool CCrypto::RSASignSHA256( const uint8 *pubData, const uint32 cubData,
 		*pcubSignature = (uint32)len;
 		bRet = true;
 	}
-	catch ( Exception e ) 
+	catch ( Exception e )
 	{
 		DMsg( SPEW_CRYPTO, 2, "CCrypto::RSASign: SignMessage threw exception %s (%d)\n",
 			e.what(), e.GetErrorType() );
@@ -1137,28 +1137,28 @@ bool CCrypto::RSASignSHA256( const uint8 *pubData, const uint32 cubData,
 //			cubData -			Size of data that was signed signed
 //			pubSignature -		Signature block
 //			cubSignature -		Size of signature block
-//			pubPublicKey -		The RSA public key to use to verify the signature 
+//			pubPublicKey -		The RSA public key to use to verify the signature
 //								(must be from same pair as RSA private key used to generate signature)
 //			cubPublicKey -		Size of the key
 // Output:  true if successful and signature is authentic, false if signature does not match or other error
 //-----------------------------------------------------------------------------
-bool CCrypto::RSAVerifySignatureSHA256( const uint8 *pubData, const uint32 cubData, 
-								  const uint8 *pubSignature, const uint32 cubSignature, 
-								  const uint8 *pubPublicKey, const uint32 cubPublicKey )
+bool CCrypto::RSAVerifySignatureSHA256( const uint8 *pubData, const uint32 cubData,
+								const uint8 *pubSignature, const uint32 cubSignature,
+								const uint8 *pubPublicKey, const uint32 cubPublicKey )
 {
 	VPROF_BUDGET( "CCrypto::RSAVerifySignature", VPROF_BUDGETGROUP_ENCRYPTION );
 	Assert( pubData );
 	Assert( pubSignature );
 	Assert( pubPublicKey );
 
-	bool bRet = false;	
+	bool bRet = false;
 	try		// handle any exceptions crypto++ may throw
 	{
 		StringSource stringSourcePublicKey( pubPublicKey, cubPublicKey, true );
 		RSASS<PKCS1v15, SHA256>::Verifier pub( stringSourcePublicKey );
 		bRet = pub.VerifyMessage( pubData, cubData, pubSignature, cubSignature );
 	}
-	catch ( Exception e ) 
+	catch ( Exception e )
 	{
 		DMsg( SPEW_CRYPTO, 2, "CCrypto::RSASign: VerifyMessage threw exception %s (%d)\n",
 			e.what(), e.GetErrorType() );
@@ -1211,8 +1211,8 @@ bool CCrypto::HexEncode( const uint8 *pubData, const uint32 cubData, char *pchEn
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Hex-decodes a block of data.  (Text -> binary representation.)  
-// Input:	pchData -			Null-terminated hex-encoded string 
+// Purpose: Hex-decodes a block of data.  (Text -> binary representation.)
+// Input:	pchData -			Null-terminated hex-encoded string
 //			pubDecodedData -	Pointer to buffer to store output in
 //			pcubDecodedData -	Pointer to variable that contains size of
 //								output buffer.  At exit, is filled in with actual size
@@ -1293,14 +1293,14 @@ bool CCrypto::Base64Encode( const uint8 *pubData, uint32 cubData, char *pchEncod
 bool CCrypto::Base64Encode( const uint8 *pubData, uint32 cubData, char *pchEncodedData, uint32* pcchEncodedData, const char *pszLineBreak )
 {
 	VPROF_BUDGET( "CCrypto::Base64Encode", VPROF_BUDGETGROUP_ENCRYPTION );
-	
+
 	if ( pchEncodedData == NULL )
 	{
 		AssertMsg( *pcchEncodedData == 0, "NULL output buffer with non-zero size passed to Base64Encode" );
 		*pcchEncodedData = Base64EncodeMaxOutput( cubData, pszLineBreak );
 		return true;
 	}
-	
+
 	const uint8 *pubDataEnd = pubData + cubData;
 	char *pchEncodedDataStart = pchEncodedData;
 	str_size unLineBreakLen = pszLineBreak ? Q_strlen( pszLineBreak ) : 0;
@@ -1319,7 +1319,7 @@ bool CCrypto::Base64Encode( const uint8 *pubData, uint32 cubData, char *pchEncod
 	{
 		if ( cchEncodedData < 4 + unLineBreakLen )
 			goto out_of_space;
-		
+
 		if ( nNextLineBreak == 0 )
 		{
 			memcpy( pchEncodedData, pszLineBreak, unLineBreakLen );
@@ -1392,8 +1392,8 @@ out_of_space:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Base64-decodes a block of data.  (Text -> binary representation.)  
-// Input:	pchData -			Null-terminated hex-encoded string 
+// Purpose: Base64-decodes a block of data.  (Text -> binary representation.)
+// Input:	pchData -			Null-terminated hex-encoded string
 //			pubDecodedData -	Pointer to buffer to store output in
 //			pcubDecodedData -	Pointer to variable that contains size of
 //								output buffer.  At exit, is filled in with actual size
@@ -1408,7 +1408,7 @@ bool CCrypto::Base64Decode( const char *pchData, uint8 *pubDecodedData, uint32 *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Base64-decodes a block of data.  (Text -> binary representation.)  
+// Purpose: Base64-decodes a block of data.  (Text -> binary representation.)
 // Input:	pchData -			base64-encoded string, null terminated
 //			cchDataMax -		maximum length of string unless a null is encountered first
 //			pubDecodedData -	Pointer to buffer to store output in
@@ -1422,7 +1422,7 @@ bool CCrypto::Base64Decode( const char *pchData, uint8 *pubDecodedData, uint32 *
 bool CCrypto::Base64Decode( const char *pchData, uint32 cchDataMax, uint8 *pubDecodedData, uint32 *pcubDecodedData, bool bIgnoreInvalidCharacters )
 {
 	VPROF_BUDGET( "CCrypto::Base64Decode", VPROF_BUDGETGROUP_ENCRYPTION );
-	
+
 	uint32 cubDecodedData = *pcubDecodedData;
 	uint32 cubDecodedDataOrig = cubDecodedData;
 
@@ -1431,13 +1431,13 @@ bool CCrypto::Base64Decode( const char *pchData, uint32 cchDataMax, uint8 *pubDe
 		AssertMsg( *pcubDecodedData == 0, "NULL output buffer with non-zero size passed to Base64Decode" );
 		cubDecodedDataOrig = cubDecodedData = ~0u;
 	}
-	
+
 	// valid base64 character range: '+' (0x2B) to 'z' (0x7A)
 	// table entries are 0-63, -1 for invalid entries, -2 for '='
 	static const char rgchInvBase64[] = {
 		62, -1, -1, -1, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61,
 		-1, -1, -1, -2, -1, -1, -1,  0,  1,  2,  3,  4,  5,  6,  7,
-		 8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+		8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
 		23, 24, 25, -1, -1, -1, -1, -1, -1, 26, 27, 28, 29, 30, 31,
 		32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
 		47, 48, 49, 50, 51
@@ -1517,7 +1517,7 @@ bool CCrypto::Base64Decode( const char *pchData, uint32 cchDataMax, uint8 *pubDe
 			un24BitsWithSentinel <<= 8;
 		}
 	}
-	
+
 	*pcubDecodedData = cubDecodedDataOrig - cubDecodedData;
 	return true;
 
@@ -1695,7 +1695,7 @@ bool CCrypto::BGzipBuffer( const uint8 *pubData, uint32 cubData, CCryptoOutBuffe
 	try
 	{
 		std::string gzip_output;
-		StringSource( (byte *)pubData, cubData, true, new Gzip( new StringSink( gzip_output ) ) ); 
+		StringSource( (byte *)pubData, cubData, true, new Gzip( new StringSink( gzip_output ) ) );
 		bufOutput.Set( (uint8*)gzip_output.c_str(), (uint32)gzip_output.length() );
 	}
 	catch( ... )
@@ -1712,7 +1712,7 @@ bool CCrypto::BGunzipBuffer( const uint8 *pubData, uint32 cubData, CCryptoOutBuf
 	try
 	{
 		std::string gunzip_output;
-		StringSource( (byte *)pubData, cubData, true, new Gunzip( new StringSink( gunzip_output ) ) ); 
+		StringSource( (byte *)pubData, cubData, true, new Gunzip( new StringSink( gunzip_output ) ) );
 		bufOutput.Set( (uint8*)gunzip_output.c_str(), (uint32)gunzip_output.length() );
 	}
 	catch( ... )
@@ -1728,7 +1728,7 @@ class HexDecoderTKS : public HexDecoder
 {
 public:
 	HexDecoderTKS(BufferedTransformation *attachment, const int *pnDecodingArray)
-		: HexDecoder(attachment) 
+		: HexDecoder(attachment)
 	{
 		BaseN_Decoder::IsolatedInitialize( MakeParameters( Name::DecodingLookupArray(), pnDecodingArray )( Name::Log2Base(), 4 ) );
 	}
@@ -1747,7 +1747,7 @@ public:
 
 //-----------------------------------------------------------------------------
 // Purpose: Implement hex encoding / decoding using a custom lookup table.
-//			This is a class because the decoding is done via a generated 
+//			This is a class because the decoding is done via a generated
 //			reverse-lookup table, and to save time it's best to just create
 //			that table once.
 //-----------------------------------------------------------------------------
@@ -1817,9 +1817,9 @@ bool CCustomHexEncoder::Encode( const uint8 *pubData, const uint32 cubData, char
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Hex-decodes a block of data.  (Text -> binary representation.)  
+// Purpose: Hex-decodes a block of data.  (Text -> binary representation.)
 //			With custom encoding-table
-// Input:	pchData -			Null-terminated hex-encoded string 
+// Input:	pchData -			Null-terminated hex-encoded string
 //			pubDecodedData -	Pointer to buffer to store output in
 //			pcubDecodedData -	Pointer to variable that contains size of
 //								output buffer.  At exit, is filled in with actual size
@@ -1857,7 +1857,7 @@ bool CCustomHexEncoder::Decode( const char *pchData, uint8 *pubDecodedData, uint
 
 //-----------------------------------------------------------------------------
 // Purpose: Implement hex encoding / decoding using a custom lookup table.
-//			This is a class because the decoding is done via a generated 
+//			This is a class because the decoding is done via a generated
 //			reverse-lookup table, and to save time it's best to just create
 //			that table once.
 //-----------------------------------------------------------------------------
@@ -1927,9 +1927,9 @@ bool CCustomBase32Encoder::Encode( const uint8 *pubData, const uint32 cubData, c
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Base32-decodes a block of data.  (Text -> binary representation.)  
+// Purpose: Base32-decodes a block of data.  (Text -> binary representation.)
 //			With custom encoding table
-// Input:	pchData -			Null-terminated hex-encoded string 
+// Input:	pchData -			Null-terminated hex-encoded string
 //			pubDecodedData -	Pointer to buffer to store output in
 //			pcubDecodedData -	Pointer to variable that contains size of
 //								output buffer.  At exit, is filled in with actual size
@@ -1977,7 +1977,7 @@ bool CCustomBase32Encoder::Decode( const char *pchData, uint8 *pubDecodedData, u
 bool CCustomBase32Encoder::Encode( CSimpleBitString *pBitStringData, char *pchEncodedData, uint32 cchEncodedData )
 {
 	// This is useful if you have, say, 125 bits of information and
-	// want to encode them into 25 base32-encoded characters. 
+	// want to encode them into 25 base32-encoded characters.
 	uint32 cBits = pBitStringData->GetCurrNumBits();
 
 	uint32 cCharacters = (cBits / 5);
@@ -2009,9 +2009,9 @@ bool CCustomBase32Encoder::Encode( CSimpleBitString *pBitStringData, char *pchEn
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Base32-decodes a block of data.  (Text -> binary representation.)  
+// Purpose: Base32-decodes a block of data.  (Text -> binary representation.)
 //			With custom encoding table, and a BitString output
-// Input:	pchData -				Null-terminated base32-encoded string 
+// Input:	pchData -				Null-terminated base32-encoded string
 //			pBitStringDecodedData -	Pointer to BitString to receive decoded data
 //-----------------------------------------------------------------------------
 bool CCustomBase32Encoder::Decode( const char *pchData, CSimpleBitString *pBitStringDecodedData )
@@ -2067,7 +2067,7 @@ bool CCrypto::BValidatePasswordHash( const char *pchInput, EPasswordHashAlg hash
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Given a plaintext password and salt, generate a password hash of 
+// Purpose: Given a plaintext password and salt, generate a password hash of
 // the requested type.
 //-----------------------------------------------------------------------------
 bool CCrypto::BGeneratePasswordHash( const char *pchInput, EPasswordHashAlg hashType, const Salt_t &Salt, PasswordHash_t &OutPasswordHash )
@@ -2090,7 +2090,7 @@ bool CCrypto::BGeneratePasswordHash( const char *pchInput, EPasswordHashAlg hash
 		//
 		size_t cDigestSHA1 = k_HashLengths[k_EHashSHA1];
 		size_t cPadding = ( cDigest - cDigestSHA1 ) / 2;
-		
+
 		AssertMsg( ( ( cDigest - cDigestSHA1 ) % 2 ) == 0, "Invalid hash width for k_EHashBigPassword, needs to be even." );
 
 		CCrypto::GenerateSaltedSHA1Digest( pchInput, &Salt, (SHADigest_t *)( (uint8 *)&OutPasswordHash.bigpassword + cPadding ) );
@@ -2216,4 +2216,3 @@ bool CCrypto::BUpgradeOrWrapPasswordHash( PasswordHash_t &InPasswordHash, EPassw
 
 	return bResult;
 }
-

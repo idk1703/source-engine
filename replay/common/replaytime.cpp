@@ -60,9 +60,9 @@ void CReplayTime::SetTime( int nHour, int nMin, int nSec )
 	Assert( nHour >= 0 && nHour <= 23 );
 	Assert( nMin  >= 0 && nMin  <= 59 );
 	Assert( nSec  >= 0 && nSec  <= 59 );
-	
+
 	m_fTime  = nHour;
-	m_fTime |= ( ( nMin ) << 5 ); 
+	m_fTime |= ( ( nMin ) << 5 );
 	m_fTime |= ( ( nSec ) << 11 );
 
 #ifdef _DEBUG

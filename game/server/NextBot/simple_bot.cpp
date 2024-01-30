@@ -149,7 +149,7 @@ public:
 	// Update is called repeatedly (usually once per server frame) while the Action is active
 	virtual ActionResult< CSimpleBot >	Update( CSimpleBot *me, float interval )
 	{
-		if ( m_path.IsValid() && !m_timer.IsElapsed() ) 
+		if ( m_path.IsValid() && !m_timer.IsElapsed() )
 		{
 			// PathFollower::Update() moves the bot along the path using the bot's ILocomotion and IBody interfaces
 			m_path.Update( me );

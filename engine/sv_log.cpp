@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -29,7 +29,7 @@ static ConVar sv_logflush( "sv_logflush", "0", FCVAR_ARCHIVE, "Flush the log fil
 static ConVar sv_logecho( "sv_logecho", "1", FCVAR_ARCHIVE, "Echo log information to the console." );
 static ConVar sv_log_onefile( "sv_log_onefile", "0", FCVAR_ARCHIVE, "Log server information to only one file." );
 static ConVar sv_logbans( "sv_logbans", "0", FCVAR_ARCHIVE, "Log server bans in the server logs." ); // should sv_banid() calls be logged in the server logs?
-static ConVar sv_logsecret( "sv_logsecret", "0", 0, "If set then include this secret when doing UDP logging (will use 0x53 as packet type, not usual 0x52)" ); 
+static ConVar sv_logsecret( "sv_logsecret", "0", 0, "If set then include this secret when doing UDP logging (will use 0x53 as packet type, not usual 0x52)" );
 
 static ConVar sv_logfilename_format( "sv_logfilename_format", "", FCVAR_ARCHIVE, "Log filename format. See strftime for formatting codes." );
 static ConVar sv_logfilecompress( "sv_logfilecompress", "0", FCVAR_ARCHIVE, "Gzip compress logfile and rename to logfilename.log.gz on close." );
@@ -79,16 +79,16 @@ CON_COMMAND( log, "Enables logging to file, console, and udp < on | off >." )
 					bHaveFirst = true;
 				}
 			}
-	
+
 			if ( !bHaveFirst )
 			{
-				ConMsg( "no destinations! (file, console, or udp)\n" );	
-				ConMsg( "check \"sv_logfile\", \"sv_logecho\", and \"logaddress_list\"" );	
+				ConMsg( "no destinations! (file, console, or udp)\n" );
+				ConMsg( "check \"sv_logfile\", \"sv_logecho\", and \"logaddress_list\"" );
 			}
 
 			ConMsg( "\n" );
 		}
-		else 
+		else
 		{
 			ConMsg( "not currently logging\n" );
 		}
@@ -312,7 +312,7 @@ void CLog::SetLoggingState( bool state )
 	m_bActive = state;
 }
 
-void CLog::RunFrame() 
+void CLog::RunFrame()
 {
 	if ( m_bFlushLog && m_hLogFile != FILESYSTEM_INVALID_HANDLE && ( realtime - m_flLastLogFlush ) > 1.0f )
 	{
@@ -324,7 +324,7 @@ void CLog::RunFrame()
 bool CLog::AddLogAddress(netadr_t addr)
 {
 	int i = 0;
-	
+
 	for ( i = 0; i < m_LogAddresses.Count(); ++i )
 	{
 		if ( m_LogAddresses.Element(i).CompareAdr(addr, false) )
@@ -347,7 +347,7 @@ bool CLog::AddLogAddress(netadr_t addr)
 bool CLog::DelLogAddress(netadr_t addr)
 {
 	int i = 0;
-	
+
 	for ( i = 0; i < m_LogAddresses.Count(); ++i )
 	{
 		if ( m_LogAddresses.Element(i).CompareAdr(addr, false) )
@@ -391,7 +391,7 @@ void CLog::ListLogAddress( void )
 		{
 			pElement = &m_LogAddresses.Element(i);
 			pszAdr = pElement->ToString();
-			
+
 			ConMsg( "%s\n", pszAdr );
 		}
 	}
@@ -462,7 +462,7 @@ void CLog::Printf( const char *fmt, ... )
 {
 	va_list			argptr;
 	static char		string[1024];
-	
+
 	if ( !IsActive() )
 	{
 		return;
@@ -497,7 +497,7 @@ void CLog::Print( const char * text )
 		today.tm_hour, today.tm_min, today.tm_sec, text );
 
 	// Echo to server console
-	if ( sv_logecho.GetInt() ) 
+	if ( sv_logecho.GetInt() )
 	{
 		ConMsg( "%s", string );
 	}
@@ -522,7 +522,7 @@ void CLog::Print( const char * text )
 				NET_OutOfBandPrintf(NS_SERVER, m_LogAddresses.Element(i), "%c%s%s", S2A_LOGSTRING2, sv_logsecret.GetString(), string );
 			else
 				NET_OutOfBandPrintf(NS_SERVER, m_LogAddresses.Element(i), "%c%s", S2A_LOGSTRING, string );
-			
+
 		}
 	}
 }
@@ -557,29 +557,29 @@ void CLog::FireGameEvent( IGameEvent *event )
 	{
 		Printf( "server_message: \"%s\"\n", event->GetString("text") );
 	}
-	
+
 	else if ( Q_strcmp(name, "server_addban") == 0 )
 	{
 		if ( sv_logbans.GetInt() > 0 )
 		{
 			const int userid = event->GetInt( "userid" );
 			const char *pszName = event->GetString( "name" );
-			const char *pszNetworkid = event->GetString( "networkid" );	
-			const char *pszIP = event->GetString( "ip" );	
+			const char *pszNetworkid = event->GetString( "networkid" );
+			const char *pszIP = event->GetString( "ip" );
 			const char *pszDuration = event->GetString( "duration" );
 			const char *pszCmdGiver = event->GetString( "by" );
 			const char *pszResult = NULL;
-			
+
 			if ( Q_strlen( pszIP ) > 0 )
 			{
 				pszResult = event->GetInt( "kicked" ) > 0 ? "was kicked and banned by IP" : "was banned by IP";
 
 				if ( userid > 0 )
 				{
-					Printf( "Addip: \"%s<%i><%s><>\" %s \"%s\" by \"%s\" (IP \"%s\")\n", 
+					Printf( "Addip: \"%s<%i><%s><>\" %s \"%s\" by \"%s\" (IP \"%s\")\n",
 										pszName,
-										userid, 
-										pszNetworkid, 
+										userid,
+										pszNetworkid,
 										pszResult,
 										pszDuration,
 										pszCmdGiver,
@@ -587,7 +587,7 @@ void CLog::FireGameEvent( IGameEvent *event )
 				}
 				else
 				{
-					Printf( "Addip: \"<><><>\" %s \"%s\" by \"%s\" (IP \"%s\")\n", 
+					Printf( "Addip: \"<><><>\" %s \"%s\" by \"%s\" (IP \"%s\")\n",
 										pszResult,
 										pszDuration,
 										pszCmdGiver,
@@ -600,18 +600,18 @@ void CLog::FireGameEvent( IGameEvent *event )
 
 				if ( userid > 0 )
 				{
-					Printf( "Banid: \"%s<%i><%s><>\" %s \"%s\" by \"%s\"\n", 
+					Printf( "Banid: \"%s<%i><%s><>\" %s \"%s\" by \"%s\"\n",
 										pszName,
-										userid, 
-										pszNetworkid, 
+										userid,
+										pszNetworkid,
 										pszResult,
 										pszDuration,
 										pszCmdGiver );
 				}
 				else
 				{
-					Printf( "Banid: \"<><%s><>\" %s \"%s\" by \"%s\"\n", 
-										pszNetworkid, 
+					Printf( "Banid: \"<><%s><>\" %s \"%s\" by \"%s\"\n",
+										pszNetworkid,
 										pszResult,
 										pszDuration,
 										pszCmdGiver );
@@ -624,23 +624,23 @@ void CLog::FireGameEvent( IGameEvent *event )
 	{
 		if ( sv_logbans.GetInt() > 0 )
 		{
-			const char *pszNetworkid = event->GetString( "networkid" );	
-			const char *pszIP = event->GetString( "ip" );	
+			const char *pszNetworkid = event->GetString( "networkid" );
+			const char *pszIP = event->GetString( "ip" );
 			const char *pszCmdGiver = event->GetString( "by" );
-			
+
 			if ( Q_strlen( pszIP ) > 0 )
 			{
-				Printf( "Removeip: \"<><><>\" was unbanned by \"%s\" (IP \"%s\")\n", 
+				Printf( "Removeip: \"<><><>\" was unbanned by \"%s\" (IP \"%s\")\n",
 								pszCmdGiver,
 								pszIP );
 			}
 			else
 			{
-				Printf( "Removeid: \"<><%s><>\" was unbanned by \"%s\"\n", 
-								pszNetworkid, 
+				Printf( "Removeid: \"<><%s><>\" was unbanned by \"%s\"\n",
+								pszNetworkid,
 								pszCmdGiver );
 			}
-		}		
+		}
 	}
 }
 

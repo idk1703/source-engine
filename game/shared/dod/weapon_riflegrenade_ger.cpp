@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -23,7 +23,7 @@ class CWeaponRifleGrenadeGER : public CWeaponBaseRifleGrenade
 {
 public:
 	DECLARE_CLASS( CWeaponRifleGrenadeGER, CWeaponBaseRifleGrenade );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
 
@@ -58,7 +58,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_riflegren_ger, CWeaponRifleGrenadeGER );
 PRECACHE_WEAPON_REGISTER( weapon_riflegren_ger );
 
-acttable_t CWeaponRifleGrenadeGER::m_acttable[] = 
+acttable_t CWeaponRifleGrenadeGER::m_acttable[] =
 {
 	{ ACT_DOD_STAND_AIM,					ACT_DOD_STAND_AIM_RIFLE,				false },
 	{ ACT_DOD_CROUCH_AIM,					ACT_DOD_CROUCH_AIM_RIFLE,				false },

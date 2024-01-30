@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -18,9 +18,9 @@ class CBaseAnimatingOverlay;
 
 class CAnimationLayer
 {
-public:	
+public:
 	DECLARE_CLASS_NOBASE( CAnimationLayer );
-	
+
 	CAnimationLayer( void );
 	void	Init( CBaseAnimatingOverlay *pOverlay );
 
@@ -35,7 +35,7 @@ public:
 	void NetworkStateChanged();
 	void NetworkStateChanged( void *pVar );
 
-public:	
+public:
 
 #define ANIM_LAYER_ACTIVE		0x0001
 #define ANIM_LAYER_AUTOKILL		0x0002
@@ -48,16 +48,16 @@ public:
 
 	bool	m_bSequenceFinished;
 	bool	m_bLooping;
-	
+
 	CNetworkVar( int, m_nSequence );
 	CNetworkVar( float, m_flCycle );
 	CNetworkVar( float, m_flPrevCycle );
 	CNetworkVar( float, m_flWeight );
-	
+
 	float	m_flPlaybackRate;
 
 	float	m_flBlendIn; // start and end blend frac (0.0 for now blend)
-	float	m_flBlendOut; 
+	float	m_flBlendOut;
 
 	float	m_flKillRate;
 	float	m_flKillDelay;
@@ -90,7 +90,7 @@ public:
 
 	// Network state changes get forwarded here.
 	CBaseAnimatingOverlay *m_pOwnerEntity;
-	
+
 	DECLARE_SIMPLE_DATADESC();
 };
 
@@ -127,7 +127,7 @@ class CBaseAnimatingOverlay : public CBaseAnimating
 	DECLARE_CLASS( CBaseAnimatingOverlay, CBaseAnimating );
 
 public:
-	enum 
+	enum
 	{
 		MAX_OVERLAYS = 15,
 	};
@@ -138,7 +138,7 @@ private:
 	//int				m_nActiveBaseLayers;
 
 public:
-	
+
 	virtual void	OnRestore();
 
 	virtual void	StudioFrameAdvance();

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -23,7 +23,7 @@ DEFINE_FALLBACK_SHADER( DecalBaseTimesLightmapAlphaBlendSelfIllum, DecalBaseTime
 extern ConVar r_flashlight_version2;
 
 BEGIN_VS_SHADER( DecalBaseTimesLightmapAlphaBlendSelfIllum_DX9, "" )
-			  
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM_OVERRIDE( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "decals/decalporthole001b", "decal base texture", 0 )
 		SHADER_PARAM( SELFILLUMTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "decals/decalporthole001b_mask", "self-illum texture" )
@@ -126,7 +126,7 @@ BEGIN_VS_SHADER( DecalBaseTimesLightmapAlphaBlendSelfIllum_DX9, "" )
 			SET_DYNAMIC_VERTEX_SHADER_COMBO( DOWATERFOG, pShaderAPI->GetSceneFogMode() == MATERIAL_FOG_LINEAR_BELOW_FOG_Z );
 			SET_DYNAMIC_VERTEX_SHADER( lightmappedgeneric_decal_vs20 );
 
-			pShaderAPI->SetPixelShaderFogParams( PSREG_FOG_PARAMS );			
+			pShaderAPI->SetPixelShaderFogParams( PSREG_FOG_PARAMS );
 
 			float vEyePos_SpecExponent[4];
 			pShaderAPI->GetWorldSpaceCameraPosition( vEyePos_SpecExponent );
@@ -155,7 +155,7 @@ BEGIN_VS_SHADER( DecalBaseTimesLightmapAlphaBlendSelfIllum_DX9, "" )
 			pShaderShadow->EnablePolyOffset( SHADER_POLYOFFSET_DECAL );
 			pShaderShadow->EnableBlending( true );
 			pShaderShadow->BlendFunc( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE_MINUS_SRC_ALPHA );
-			
+
 			// Base texture
 			pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
 			pShaderShadow->EnableSRGBRead( SHADER_SAMPLER0, true );
@@ -202,7 +202,7 @@ BEGIN_VS_SHADER( DecalBaseTimesLightmapAlphaBlendSelfIllum_DX9, "" )
 			SET_DYNAMIC_VERTEX_SHADER_COMBO( LIGHTING_PREVIEW, false );
 			SET_DYNAMIC_VERTEX_SHADER( lightmappedgeneric_vs20 );
 
-			pShaderAPI->SetPixelShaderFogParams( PSREG_FOG_PARAMS );					
+			pShaderAPI->SetPixelShaderFogParams( PSREG_FOG_PARAMS );
 
 			float vEyePos_SpecExponent[4];
 			pShaderAPI->GetWorldSpaceCameraPosition( vEyePos_SpecExponent );

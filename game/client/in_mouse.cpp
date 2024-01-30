@@ -53,11 +53,11 @@ extern const ConVar *sv_cheats;
 class ConVar_m_pitch : public ConVar_ServerBounded
 {
 public:
-	ConVar_m_pitch() : 
+	ConVar_m_pitch() :
 		ConVar_ServerBounded( "m_pitch","0.022", FCVAR_ARCHIVE, "Mouse pitch factor." )
 	{
 	}
-	
+
 	virtual float GetFloat() const
 	{
 		if ( !sv_cheats )
@@ -68,7 +68,7 @@ public:
 		if ( !sv_cheats || sv_cheats->GetBool() )
 			return flBaseValue;
 
-		// If sv_cheats is off than it can only be 0.022 or -0.022 (if they've reversed the mouse in the options).		
+		// If sv_cheats is off than it can only be 0.022 or -0.022 (if they've reversed the mouse in the options).
 		if ( flBaseValue > 0 )
 			return 0.022f;
 		else
@@ -159,7 +159,7 @@ void CInput::ActivateMouse (void)
 //-----------------------------------------------------------------------------
 void CInput::DeactivateMouse (void)
 {
-	// This gets called whenever the mouse should be inactive. We only respond to it if we had 
+	// This gets called whenever the mouse should be inactive. We only respond to it if we had
 	// previously activated the mouse. We'll show the cursor in here.
 	if ( !m_fMouseActive )
 		return;
@@ -186,14 +186,14 @@ void CInput::DeactivateMouse (void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInput::CheckMouseAcclerationVars()
 {
 	// Don't change them if the mouse is inactive, invalid, or not using parameters for restore
 	if ( !m_fMouseActive ||
-		 !m_fMouseInitialized || 
-		 !m_fMouseParmsValid || 
+		 !m_fMouseInitialized ||
+		 !m_fMouseParmsValid ||
 		 !m_fRestoreSPI )
 	{
 		return;
@@ -253,17 +253,17 @@ void CInput::CheckMouseAcclerationVars()
 //-----------------------------------------------------------------------------
 void CInput::Init_Mouse (void)
 {
-	if ( CommandLine()->FindParm("-nomouse" ) ) 
-		return; 
+	if ( CommandLine()->FindParm("-nomouse" ) )
+		return;
 
 	m_flPreviousMouseXPosition = 0.0f;
 	m_flPreviousMouseYPosition = 0.0f;
-	
+
 	m_fMouseInitialized = true;
 
 	m_fMouseParmsValid = false;
 
-	if ( CommandLine()->FindParm ("-useforcedmparms" ) ) 
+	if ( CommandLine()->FindParm ("-useforcedmparms" ) )
 	{
 #ifdef WIN32
 		m_fMouseParmsValid = SystemParametersInfo( SPI_GETMOUSE, 0, m_rgOrigMouseParms, 0 ) ? true : false;
@@ -272,19 +272,19 @@ void CInput::Init_Mouse (void)
 #endif
 		if ( m_fMouseParmsValid )
 		{
-			if ( CommandLine()->FindParm ("-noforcemspd" ) ) 
+			if ( CommandLine()->FindParm ("-noforcemspd" ) )
 			{
 				m_rgNewMouseParms[ MOUSE_SPEED_FACTOR ] = m_rgOrigMouseParms[ MOUSE_SPEED_FACTOR ];
 
 /*
 				int mouseAccel[3];
-				SystemParametersInfo(SPI_GETMOUSE, 0, &mouseAccel, 0); mouseAccel[2] = 0; 
-				bool ok = SystemParametersInfo(SPI_SETMOUSE, 0, &mouseAccel, SPIF_UPDATEINIFILE); 
-				
-				// Now check registry and close/re-open Control Panel > Mouse and see 'Enhance pointer precision' is OFF 
-				mouseAccel[2] = 1; 
-				ok = SystemParametersInfo(SPI_SETMOUSE, 0, &mouseAccel, SPIF_UPDATEINIFILE); 
-				
+				SystemParametersInfo(SPI_GETMOUSE, 0, &mouseAccel, 0); mouseAccel[2] = 0;
+				bool ok = SystemParametersInfo(SPI_SETMOUSE, 0, &mouseAccel, SPIF_UPDATEINIFILE);
+
+				// Now check registry and close/re-open Control Panel > Mouse and see 'Enhance pointer precision' is OFF
+				mouseAccel[2] = 1;
+				ok = SystemParametersInfo(SPI_SETMOUSE, 0, &mouseAccel, SPIF_UPDATEINIFILE);
+
 				// Now check registry and close/re-open Control Panel > Mouse and see 'Enhance pointer precision' is ON
 */
 			}
@@ -293,7 +293,7 @@ void CInput::Init_Mouse (void)
 				m_rgCheckMouseParam[ MOUSE_SPEED_FACTOR ] = 1;
 			}
 
-			if ( CommandLine()->FindParm ("-noforcemaccel" ) ) 
+			if ( CommandLine()->FindParm ("-noforcemaccel" ) )
 			{
 				m_rgNewMouseParms[ MOUSE_ACCEL_THRESHHOLD1 ] = m_rgOrigMouseParms[ MOUSE_ACCEL_THRESHHOLD1 ];
 				m_rgNewMouseParms[ MOUSE_ACCEL_THRESHHOLD2 ] = m_rgOrigMouseParms[ MOUSE_ACCEL_THRESHHOLD2 ];
@@ -309,8 +309,8 @@ void CInput::Init_Mouse (void)
 
 //-----------------------------------------------------------------------------
 // Purpose: Get the center point of the engine window
-// Input  : int&x - 
-//			y - 
+// Input  : int&x -
+//			y -
 //-----------------------------------------------------------------------------
 void CInput::GetWindowCenter( int&x, int& y )
 {
@@ -328,15 +328,15 @@ void CInput::ResetMouse( void )
 {
 	int x, y;
 	GetWindowCenter( x,  y );
-	SetMousePos( x, y );	
+	SetMousePos( x, y );
 }
 
 
 //-----------------------------------------------------------------------------
 // Purpose: GetAccumulatedMouse -- the mouse can be sampled multiple times per frame and
 //  these results are accumulated each time. This function gets the accumulated mouse changes and resets the accumulators
-// Input  : *mx - 
-//			*my - 
+// Input  : *mx -
+//			*my -
 //-----------------------------------------------------------------------------
 void CInput::GetAccumulatedMouseDeltasAndResetAccumulators( float *mx, float *my )
 {
@@ -355,19 +355,19 @@ void CInput::GetAccumulatedMouseDeltasAndResetAccumulators( float *mx, float *my
 			*my = (float)rawMouseY;
 		}
 	}
-	
+
 	m_flAccumulatedMouseXMovement = 0;
 	m_flAccumulatedMouseYMovement = 0;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: GetMouseDelta -- Filters the mouse and stores results in old position
-// Input  : mx - 
-//			my - 
-//			*oldx - 
-//			*oldy - 
-//			*x - 
-//			*y - 
+// Input  : mx -
+//			my -
+//			*oldx -
+//			*oldy -
+//			*x -
+//			*y -
 //-----------------------------------------------------------------------------
 void CInput::GetMouseDelta( float inmousex, float inmousey, float *pOutMouseX, float *pOutMouseY )
 {
@@ -394,42 +394,42 @@ void CInput::GetMouseDelta( float inmousex, float inmousey, float *pOutMouseX, f
 // Purpose: Multiplies mouse values by sensitivity.  Note that for windows mouse settings
 //  the input x,y offsets are already scaled based on that.  The custom acceleration, therefore,
 //  is totally engine-specific and applies as a post-process to allow more user tuning.
-// Input  : *x - 
-//			*y - 
+// Input  : *x -
+//			*y -
 //-----------------------------------------------------------------------------
 void CInput::ScaleMouse( float *x, float *y )
 {
 	float mx = *x;
 	float my = *y;
 
-	float mouse_sensitivity = ( gHUD.GetSensitivity() != 0 ) 
+	float mouse_sensitivity = ( gHUD.GetSensitivity() != 0 )
 		?  gHUD.GetSensitivity() : sensitivity.GetFloat();
 
-	if ( m_customaccel.GetInt() == 1 ||  m_customaccel.GetInt() == 2 ) 
-	{ 
+	if ( m_customaccel.GetInt() == 1 ||  m_customaccel.GetInt() == 2 )
+	{
 		float raw_mouse_movement_distance = sqrt( mx * mx + my * my );
 		float acceleration_scale = m_customaccel_scale.GetFloat();
 		float accelerated_sensitivity_max = m_customaccel_max.GetFloat();
 		float accelerated_sensitivity_exponent = m_customaccel_exponent.GetFloat();
 		float accelerated_sensitivity = ( (float)pow( raw_mouse_movement_distance, accelerated_sensitivity_exponent ) * acceleration_scale + mouse_sensitivity );
 
-		if ( accelerated_sensitivity_max > 0.0001f && 
+		if ( accelerated_sensitivity_max > 0.0001f &&
 			accelerated_sensitivity > accelerated_sensitivity_max )
 		{
 			accelerated_sensitivity = accelerated_sensitivity_max;
 		}
 
-		*x *= accelerated_sensitivity; 
-		*y *= accelerated_sensitivity; 
+		*x *= accelerated_sensitivity;
+		*y *= accelerated_sensitivity;
 
 		// Further re-scale by yaw and pitch magnitude if user requests alternate mode 2/4
 		// This means that they will need to up their value for m_customaccel_scale greatly (>40x) since m_pitch/yaw default
 		//  to 0.022
 		if ( m_customaccel.GetInt() == 2 || m_customaccel.GetInt() == 4 )
-		{ 
-			*x *= m_yaw.GetFloat(); 
-			*y *= m_pitch->GetFloat(); 
-		} 
+		{
+			*x *= m_yaw.GetFloat();
+			*y *= m_pitch->GetFloat();
+		}
 	}
 	else if ( m_customaccel.GetInt() == 3 )
 	{
@@ -437,11 +437,11 @@ void CInput::ScaleMouse( float *x, float *y )
 		float fExp = MAX(0.0f, (m_customaccel_exponent.GetFloat() - 1.0f) / 2.0f);
 		float accelerated_sensitivity = powf( raw_mouse_movement_distance_squared, fExp ) * mouse_sensitivity;
 
-		*x *= accelerated_sensitivity; 
-		*y *= accelerated_sensitivity; 
+		*x *= accelerated_sensitivity;
+		*y *= accelerated_sensitivity;
 	}
 	else
-	{ 
+	{
 		*x *= mouse_sensitivity;
 		*y *= mouse_sensitivity;
 	}
@@ -449,10 +449,10 @@ void CInput::ScaleMouse( float *x, float *y )
 
 //-----------------------------------------------------------------------------
 // Purpose: ApplyMouse -- applies mouse deltas to CUserCmd
-// Input  : viewangles - 
-//			*cmd - 
-//			mouse_x - 
-//			mouse_y - 
+// Input  : viewangles -
+//			*cmd -
+//			mouse_x -
+//			mouse_y -
 //-----------------------------------------------------------------------------
 void CInput::ApplyMouse( QAngle& viewangles, CUserCmd *cmd, float mouse_x, float mouse_y )
 {
@@ -546,7 +546,7 @@ void CInput::ApplyMouse( QAngle& viewangles, CUserCmd *cmd, float mouse_x, float
 /*		if ((in_strafe.state & 1) && IsNoClipping() )
 		{
 			cmd->upmove -= m_forward.GetFloat() * mouse_y;
-		} 
+		}
 		else */
 		{
 			// Default is to apply vertical mouse movement as a forward key press.
@@ -599,7 +599,7 @@ void CInput::AccumulateMouse( void )
 
 		m_flAccumulatedMouseXMovement += current_posx - x;
 		m_flAccumulatedMouseYMovement += current_posy - y;
-		
+
 #elif defined( USE_SDL )
 		int dx, dy;
 		engine->GetMouseDelta( dx, dy );
@@ -626,8 +626,8 @@ void CInput::AccumulateMouse( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Get raw mouse position
-// Input  : &ox - 
-//			&oy - 
+// Input  : &ox -
+//			&oy -
 //-----------------------------------------------------------------------------
 void CInput::GetMousePos(int &ox, int &oy)
 {
@@ -636,8 +636,8 @@ void CInput::GetMousePos(int &ox, int &oy)
 
 //-----------------------------------------------------------------------------
 // Purpose: Force raw mouse position
-// Input  : x - 
-//			y - 
+// Input  : x -
+//			y -
 //-----------------------------------------------------------------------------
 void CInput::SetMousePos(int x, int y)
 {
@@ -646,7 +646,7 @@ void CInput::SetMousePos(int x, int y)
 
 //-----------------------------------------------------------------------------
 // Purpose: MouseMove -- main entry point for applying mouse
-// Input  : *cmd - 
+// Input  : *cmd -
 //-----------------------------------------------------------------------------
 void CInput::MouseMove( CUserCmd *cmd )
 {
@@ -663,9 +663,9 @@ void CInput::MouseMove( CUserCmd *cmd )
 	// Don't drift pitch at all while mouselooking.
 	view->StopPitchDrift ();
 
-	//jjb - this disables normal mouse control if the user is trying to 
-	//      move the camera, or if the mouse cursor is visible 
-	if ( !m_fCameraInterceptingMouse && 
+	//jjb - this disables normal mouse control if the user is trying to
+	//      move the camera, or if the mouse cursor is visible
+	if ( !m_fCameraInterceptingMouse &&
 		 !vgui::surface()->IsCursorVisible() )
 	{
 		// Sample mouse one more time
@@ -695,11 +695,11 @@ void CInput::MouseMove( CUserCmd *cmd )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *mx - 
-//			*my - 
-//			*unclampedx - 
-//			*unclampedy - 
+// Purpose:
+// Input  : *mx -
+//			*my -
+//			*unclampedx -
+//			*unclampedy -
 //-----------------------------------------------------------------------------
 void CInput::GetFullscreenMousePos( int *mx, int *my, int *unclampedx /*=NULL*/, int *unclampedy /*=NULL*/ )
 {
@@ -751,9 +751,9 @@ void CInput::GetFullscreenMousePos( int *mx, int *my, int *unclampedx /*=NULL*/,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			my - 
+// Purpose:
+// Input  : mx -
+//			my -
 //-----------------------------------------------------------------------------
 void CInput::SetFullscreenMousePos( int mx, int my )
 {

@@ -22,20 +22,20 @@ public:
 	virtual ~CEffectsClient();
 
 	// Members of the IEffect interface
-	virtual void Beam( const Vector &Start, const Vector &End, int nModelIndex, 
+	virtual void Beam( const Vector &Start, const Vector &End, int nModelIndex,
 		int nHaloIndex, unsigned char frameStart, unsigned char frameRate,
-		float flLife, unsigned char width, unsigned char endWidth, unsigned char fadeLength, 
+		float flLife, unsigned char width, unsigned char endWidth, unsigned char fadeLength,
 		unsigned char noise, unsigned char red, unsigned char green,
 		unsigned char blue, unsigned char brightness, unsigned char speed);
 	virtual void Smoke( const Vector &origin, int modelIndex, float scale, float framerate );
 	virtual void Sparks( const Vector &position, int nMagnitude = 1, int nTrailLength = 1, const Vector *pvecDir = NULL );
 	virtual void Dust( const Vector &pos, const Vector &dir, float size, float speed );
 	virtual void MuzzleFlash( const Vector &origin, const QAngle &angles, float fScale, int type );
-	virtual void MetalSparks( const Vector &position, const Vector &direction ); 
+	virtual void MetalSparks( const Vector &position, const Vector &direction );
 	virtual void EnergySplash( const Vector &position, const Vector &direction, bool bExplosive = false );
 	virtual void Ricochet( const Vector &position, const Vector &direction );
 
-	// FIXME: Should these methods remain in this interface? Or go in some 
+	// FIXME: Should these methods remain in this interface? Or go in some
 	// other client-server neutral interface?
 	virtual float Time();
 	virtual bool IsServer();
@@ -44,8 +44,8 @@ public:
 private:
 	//-----------------------------------------------------------------------------
 	// Purpose: Returning true means don't even call TE func
-	// Input  : filter - 
-	//			*suppress_host - 
+	// Input  : filter -
+	//			*suppress_host -
 	// Output : static bool
 	//-----------------------------------------------------------------------------
 	bool SuppressTE( C_RecipientFilter& filter )
@@ -97,13 +97,13 @@ void CEffectsClient::SuppressEffectsSounds( bool bSuppress )
 	m_bSuppressSound = bSuppress;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Generates a beam
 //-----------------------------------------------------------------------------
-void CEffectsClient::Beam( const Vector &vecStartPoint, const Vector &vecEndPoint, 
+void CEffectsClient::Beam( const Vector &vecStartPoint, const Vector &vecEndPoint,
 	int nModelIndex, int nHaloIndex, unsigned char frameStart, unsigned char nFrameRate,
-	float flLife, unsigned char nWidth, unsigned char nEndWidth, unsigned char nFadeLength, 
+	float flLife, unsigned char nWidth, unsigned char nEndWidth, unsigned char nFadeLength,
 	unsigned char noise, unsigned char r, unsigned char g,
 	unsigned char b, unsigned char brightness, unsigned char nSpeed)
 {
@@ -111,9 +111,9 @@ void CEffectsClient::Beam( const Vector &vecStartPoint, const Vector &vecEndPoin
 //	CBroadcastRecipientFilter filter;
 //	if ( !SuppressTE( filter ) )
 //	{
-//	beams->CreateBeamPoints( vecStartPoint, vecEndPoint, nModelIndex, nHaloIndex, 
-//		m_fHaloScale, 
-//		flLife, 0.1 * nWidth,  0.1 * nEndWidth, nFadeLength, 0.01 * nAmplitude, a, 0.1 * nSpeed, 
+//	beams->CreateBeamPoints( vecStartPoint, vecEndPoint, nModelIndex, nHaloIndex,
+//		m_fHaloScale,
+//		flLife, 0.1 * nWidth,  0.1 * nEndWidth, nFadeLength, 0.01 * nAmplitude, a, 0.1 * nSpeed,
 //		m_nStartFrame, 0.1 * nFrameRate, r, g, b );
 //	}
 }
@@ -175,7 +175,7 @@ void CEffectsClient::MuzzleFlash( const Vector &vecOrigin, const QAngle &vecAngl
 		case MUZZLEFLASH_TYPE_STRIDER:
 			FX_StriderMuzzleEffect( vecOrigin, vecAngles, flScale, INVALID_EHANDLE_INDEX );
 			break;
-		
+
 		default:
 			Msg("No case for Muzzleflash type: %d\n", iType );
 			break;
@@ -215,7 +215,7 @@ void CEffectsClient::Ricochet( const Vector &position, const Vector &direction )
 	}
 }
 
-// FIXME: Should these methods remain in this interface? Or go in some 
+// FIXME: Should these methods remain in this interface? Or go in some
 // other client-server neutral interface?
 float CEffectsClient::Time()
 {
@@ -227,5 +227,3 @@ bool CEffectsClient::IsServer()
 {
 	return false;
 }
-
-

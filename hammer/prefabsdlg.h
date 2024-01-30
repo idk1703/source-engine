@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -45,7 +45,7 @@ protected:
 	int GetCurObject() { return iCurObject; }
 	CPrefabLibrary * GetCurrentLibrary(int *piSel = NULL);
 	CPrefab * GetCurrentObject(int *piSel = NULL);
-	void AddToObjectList(CPrefab *pPrefab, int iItem = -1, 
+	void AddToObjectList(CPrefab *pPrefab, int iItem = -1,
 		BOOL bReplace = FALSE);
 	CImageList PrefabImages;
 	void EditObjectInfo();

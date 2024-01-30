@@ -72,7 +72,7 @@ ConVar	obj_manned_plasmagun_clip( "obj_manned_plasmagun_clip","35", FCVAR_REPLIC
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectMannedPlasmagun::CObjectMannedPlasmagun()
 {
@@ -81,7 +81,7 @@ CObjectMannedPlasmagun::CObjectMannedPlasmagun()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectMannedPlasmagun::Precache()
 {
@@ -94,7 +94,7 @@ void CObjectMannedPlasmagun::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectMannedPlasmagun::SetupTeamModel( void )
 {
@@ -120,7 +120,7 @@ void CObjectMannedPlasmagun::SetupTeamModel( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectMannedPlasmagun::Spawn()
 {
@@ -166,7 +166,7 @@ void CObjectMannedPlasmagun::RechargeThink(  )
 	ROBIN: Remove idle recharging for now
 
 	if (gpGlobals->curtime >= m_flNextIdleTime)
-		flNextRechargeTime = MANNED_PLASMAGUN_IDLE_RECHARGE_TIME; 
+		flNextRechargeTime = MANNED_PLASMAGUN_IDLE_RECHARGE_TIME;
 	else
 		flNextRechargeTime = MANNED_PLASMAGUN_RECHARGE_TIME;
 	*/
@@ -276,8 +276,8 @@ void CObjectMannedPlasmagun::Fire( )
 
 #if defined( CLIENT_DLL )
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void CObjectMannedPlasmagun::PostDataUpdate( DataUpdateType_t updateType )
 {

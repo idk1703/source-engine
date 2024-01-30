@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -41,7 +41,7 @@ public:
 
 	void		Play();
 
-	
+
 	bool		GetVoiceDuck();
 	/*
 	void		SetVoiceDuck( bool duck );

@@ -93,7 +93,7 @@ protected:
 	void				OnItemPostFrame( CBaseTFPlayer *pDriver );
 
 private:
-	
+
 	// Deploy.
 	void				InternalDeploy( void );
 	void				InternalUnDeploy( void );

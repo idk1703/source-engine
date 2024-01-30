@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -56,7 +56,7 @@ struct DmElementArray_t : public CUtlVector< DmElementHandle_t >
 {
 	DmElementArray_t() : m_ElementType( UTL_INVAL_SYMBOL ) {}
 
-	UtlSymId_t m_ElementType;	
+	UtlSymId_t m_ElementType;
 };
 
 
@@ -227,7 +227,7 @@ template <> inline float GetComponent( const VMatrix &value, int i )
 
 
 //-----------------------------------------------------------------------------
-// Attribute info... 
+// Attribute info...
 //-----------------------------------------------------------------------------
 template <typename T>
 class CDmAttributeInfo

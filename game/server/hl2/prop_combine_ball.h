@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -135,18 +135,18 @@ private:
 	void OnHitEntity( CBaseEntity *pHitEntity, float flSpeed, int index, gamevcollisionevent_t *pEvent );
 	void DoImpactEffect( const Vector &preVelocity, int index, gamevcollisionevent_t *pEvent );
 
-	// Bounce inside the spawner: 
+	// Bounce inside the spawner:
 	void BounceInSpawner( float flSpeed, int index, gamevcollisionevent_t *pEvent );
 
 	bool IsAttractiveTarget( CBaseEntity *pEntity );
 
-	// Deflects the ball toward enemies in case of a collision 
+	// Deflects the ball toward enemies in case of a collision
 	void DeflectTowardEnemy( float flSpeed, int index, gamevcollisionevent_t *pEvent );
 
-	// Is this something we can potentially dissolve? 
+	// Is this something we can potentially dissolve?
 	bool IsHittableEntity( CBaseEntity *pHitEntity );
 
-	// Sucky. 
+	// Sucky.
 	void WhizSoundThink();
 	void DieThink();
 	void DissolveThink();

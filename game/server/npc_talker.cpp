@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,7 +15,7 @@
 #include "tier0/memdbgon.h"
 
 
-	
+
 BEGIN_SIMPLE_DATADESC( CNPCSimpleTalkerExpresser )
 	//									m_pSink		(reconnected on load)
 	DEFINE_AUTO_ARRAY(	m_szMonologSentence,	FIELD_CHARACTER	),
@@ -37,7 +37,7 @@ BEGIN_DATADESC( CNPCSimpleTalker )
 END_DATADESC()
 
 // array of friend names
-char *CNPCSimpleTalker::m_szFriends[TLK_CFRIENDS] = 
+char *CNPCSimpleTalker::m_szFriends[TLK_CFRIENDS] =
 {
 	"NPC_barney",
 	"NPC_scientist",
@@ -55,7 +55,7 @@ bool CNPCSimpleTalker::KeyValue( const char *szKeyName, const char *szValue )
 	{
 		m_iszUnUse = AllocPooledString(szValue);
 	}
-	else 
+	else
 		return BaseClass::KeyValue( szKeyName, szValue );
 
 	return true;
@@ -92,7 +92,7 @@ void CNPCSimpleTalker::BuildScheduleTestBits( void )
 void CNPCSimpleTalker::PrescheduleThink( void )
 {
 	BaseClass::PrescheduleThink();
-	
+
 	(assert_cast<CNPCSimpleTalkerExpresser *>(GetExpresser()))->SpeakMonolog();
 }
 
@@ -101,7 +101,7 @@ bool CNPCSimpleTalker::ShouldSuspendMonolog( void )
 	float flDist;
 
 	flDist = ((assert_cast<CNPCSimpleTalkerExpresser *>(GetExpresser()))->GetMonologueTarget()->GetAbsOrigin() - GetAbsOrigin()).Length();
-	
+
 	if( flDist >= 384 )
 	{
 		return true;
@@ -117,7 +117,7 @@ bool CNPCSimpleTalker::ShouldResumeMonolog( void )
 	if( HasCondition( COND_SEE_PLAYER ) )
 	{
 		flDist = ((assert_cast<CNPCSimpleTalkerExpresser *>(GetExpresser()))->GetMonologueTarget()->GetAbsOrigin() - GetAbsOrigin()).Length();
-		
+
 		if( flDist <= 256 )
 		{
 			return true;
@@ -171,7 +171,7 @@ void CNPCSimpleTalker::StartTask( const Task_t *pTask )
 		FIdleHello();
 		TaskComplete();
 		break;
-	
+
 	case TASK_TALKER_STARE:
 		// let the player know I know he's staring at me.
 		FIdleStare();
@@ -281,13 +281,13 @@ void CNPCSimpleTalker::RunTask( const Task_t *pTask )
 
 Activity CNPCSimpleTalker::NPC_TranslateActivity( Activity eNewActivity )
 {
-	if ((eNewActivity == ACT_IDLE)										&& 
+	if ((eNewActivity == ACT_IDLE)										&&
 		(GetExpresser()->IsSpeaking())										&&
 		(SelectWeightedSequence ( ACT_SIGNAL3 ) != ACTIVITY_NOT_AVAILABLE)	)
 	{
 		return ACT_SIGNAL3;
 	}
-	else if ((eNewActivity == ACT_SIGNAL3)									&& 
+	else if ((eNewActivity == ACT_SIGNAL3)									&&
 			 (SelectWeightedSequence ( ACT_SIGNAL3 ) == ACTIVITY_NOT_AVAILABLE)	)
 	{
 		return ACT_IDLE;
@@ -307,7 +307,7 @@ void CNPCSimpleTalker::Event_Killed( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseEntity	*CNPCSimpleTalker::EnumFriends( CBaseEntity *pPrevious, int listNumber, bool bTrace )
 {
@@ -344,8 +344,8 @@ CBaseEntity	*CNPCSimpleTalker::EnumFriends( CBaseEntity *pPrevious, int listNumb
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pKiller - 
+// Purpose:
+// Input  : *pKiller -
 //-----------------------------------------------------------------------------
 void CNPCSimpleTalker::AlertFriends( CBaseEntity *pKiller )
 {
@@ -377,7 +377,7 @@ void CNPCSimpleTalker::AlertFriends( CBaseEntity *pKiller )
 					{
 						// Killed by an enemy!!!
 						CNPCSimpleTalker *pAlly = (CNPCSimpleTalker *)pNPC;
-						
+
 						if( pAlly && pAlly->GetExpresser()->CanSpeakConcept( TLK_ALLY_KILLED ) )
 						{
 							pAlly->Speak( TLK_ALLY_KILLED );
@@ -390,7 +390,7 @@ void CNPCSimpleTalker::AlertFriends( CBaseEntity *pKiller )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPCSimpleTalker::ShutUpFriends( void )
 {
@@ -447,7 +447,7 @@ void CNPCSimpleTalker::LimitFollowers( CBaseEntity *pPlayer, int maxFollowers )
 void CNPCSimpleTalker::HandleAnimEvent( animevent_t *pEvent )
 {
 	switch( pEvent->event )
-	{		
+	{
 	case SCRIPT_EVENT_SENTENCE_RND1:		// Play a named sentence group 25% of the time
 		if (random->RandomInt(0,99) < 75)
 			break;
@@ -602,7 +602,7 @@ void CNPCSimpleTalker::DeferAllIdleSpeech( float flDelay, CAI_BaseNPC *pIgnore )
 // ask question of nearby friend, or make statement
 //=========================================================
 int CNPCSimpleTalker::FIdleSpeak( void )
-{ 
+{
 	// try to start a conversation, or make statement
 	int pitch;
 
@@ -610,9 +610,9 @@ int CNPCSimpleTalker::FIdleSpeak( void )
 		return false;
 
 	Assert( GetExpresser()->SemaphoreIsAvailable( this ) );
-	
+
 	pitch = GetExpresser()->GetVoicePitch();
-		
+
 	// player using this entity is alive and wounded?
 	CBaseEntity *pTarget = GetTarget();
 
@@ -623,13 +623,13 @@ int CNPCSimpleTalker::FIdleSpeak( void )
 			if ( pTarget->IsAlive() )
 			{
 				SetSpeechTarget( GetTarget() );
-				if (GetExpresser()->CanSpeakConcept( TLK_PLHURT3) && 
+				if (GetExpresser()->CanSpeakConcept( TLK_PLHURT3) &&
 					(GetTarget()->m_iHealth <= GetTarget()->m_iMaxHealth / 8))
 				{
 					Speak( TLK_PLHURT3 );
 					return true;
 				}
-				else if (GetExpresser()->CanSpeakConcept( TLK_PLHURT2) && 
+				else if (GetExpresser()->CanSpeakConcept( TLK_PLHURT2) &&
 					(GetTarget()->m_iHealth <= GetTarget()->m_iMaxHealth / 4))
 				{
 					Speak( TLK_PLHURT2 );
@@ -731,7 +731,7 @@ bool CNPCSimpleTalker::SpeakAnswerFriend( CBaseEntity *pFriend )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPCSimpleTalker::FIdleSpeakWhileMoving( void )
 {
@@ -751,7 +751,7 @@ void CNPCSimpleTalker::FIdleSpeakWhileMoving( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CNPCSimpleTalker::PlayScriptedSentence( const char *pszSentence, float delay, float volume, soundlevel_t soundlevel, bool bConcurrent, CBaseEntity *pListener )
 {
@@ -784,7 +784,7 @@ void CNPCSimpleTalker::SetAnswerQuestion( CNPCSimpleTalker *pSpeaker )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CNPCSimpleTalker::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 {
@@ -813,14 +813,14 @@ int CNPCSimpleTalker::SelectNonCombatSpeechSchedule()
 {
 	if ( !IsOkToSpeak() )
 		return SCHED_NONE;
-		
+
 	// talk about world
 	if ( ShouldSpeakRandom( m_nSpeak * 2, GetSpeechFilter() ? GetSpeechFilter()->GetIdleModifier() : 1.0 ) )
 	{
 		//Msg("standing idle speak\n" );
 		return SCHED_TALKER_IDLE_SPEAK;
 	}
-	
+
 	// failed to speak, so look at the player if he's around
 	if ( AI_IsSinglePlayer() && GetExpresser()->CanSpeak() && HasCondition ( COND_SEE_PLAYER ) && random->RandomInt( 0, 6 ) == 0 )
 	{
@@ -832,7 +832,7 @@ int CNPCSimpleTalker::SelectNonCombatSpeechSchedule()
 			// watch the client.
 			Vector forward;
 			AngleVectors( pPlayer->GetLocalAngles(), &forward );
-			if ( ( pPlayer->GetAbsOrigin() - GetAbsOrigin() ).Length2D() < TALKER_STARE_DIST	&& 
+			if ( ( pPlayer->GetAbsOrigin() - GetAbsOrigin() ).Length2D() < TALKER_STARE_DIST	&&
 				 UTIL_DotPoints( pPlayer->GetAbsOrigin(), GetAbsOrigin(), forward ) >= m_flFieldOfView )
 			{
 				// go into the special STARE schedule if the player is close, and looking at me too.
@@ -852,7 +852,7 @@ int CNPCSimpleTalker::SelectNonCombatSpeechSchedule()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPCSimpleTalker::CanSayHello( void )
@@ -861,7 +861,7 @@ bool CNPCSimpleTalker::CanSayHello( void )
 	if ( Classify() == CLASS_PLAYER_ALLY_VITAL )
 		return false;
 #endif
-	
+
 	if ( GetSpeechFilter() && GetSpeechFilter()->NeverSayHello() )
 		return false;
 
@@ -947,8 +947,8 @@ int CNPCSimpleTalkerExpresser::SpeakRawSentence( const char *pszSentence, float 
 
 	if ( pszSentence[0] == AI_SP_START_MONOLOG )
 	{
-		// this sentence command will start this NPC speaking 
-		// lengthy monolog from smaller sentences. 
+		// this sentence command will start this NPC speaking
+		// lengthy monolog from smaller sentences.
 		BeginMonolog( (char *)pszSentence, pListener );
 		return -1;
 	}
@@ -985,8 +985,8 @@ void CNPCSimpleTalkerExpresser::BeginMonolog( char *pszSentenceName, CBaseEntity
 
 	Q_strncpy( m_szMonologSentence, pszSentenceName ,sizeof(m_szMonologSentence));
 
-	// change the "AI_SP_START_MONOLOG" to an "AI_SP_MONOLOG_LINE". m_sMonologSentence is now the 
-	// string we'll tack numbers onto to play sentences from this group in 
+	// change the "AI_SP_START_MONOLOG" to an "AI_SP_MONOLOG_LINE". m_sMonologSentence is now the
+	// string we'll tack numbers onto to play sentences from this group in
 	// sequential order.
 	m_szMonologSentence[0] = AI_SP_MONOLOG_LINE;
 
@@ -1056,7 +1056,7 @@ void CNPCSimpleTalkerExpresser::SuspendMonolog( float flInterval )
 	{
 		m_fMonologSuspended = true;
 	}
-	
+
 	// free up other characters to speak.
 	if ( GetSink()->UseSemaphore() )
 	{
@@ -1152,7 +1152,7 @@ AI_BEGIN_CUSTOM_NPC(talk_monster,CNPCSimpleTalker)
 	//=========================================================
 	// > SCHED_TALKER_IDLE_RESPONSE
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_TALKER_IDLE_RESPONSE,
 
@@ -1183,7 +1183,7 @@ AI_BEGIN_CUSTOM_NPC(talk_monster,CNPCSimpleTalker)
 	//=========================================================
 	// > SCHED_TALKER_IDLE_SPEAK
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_TALKER_IDLE_SPEAK,
 
@@ -1208,7 +1208,7 @@ AI_BEGIN_CUSTOM_NPC(talk_monster,CNPCSimpleTalker)
 	//=========================================================
 	// > SCHED_TALKER_IDLE_HELLO
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_TALKER_IDLE_HELLO,
 
@@ -1241,7 +1241,7 @@ AI_BEGIN_CUSTOM_NPC(talk_monster,CNPCSimpleTalker)
 	//=========================================================
 	// > SCHED_TALKER_IDLE_STOP_SHOOTING
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_TALKER_IDLE_STOP_SHOOTING,
 
@@ -1257,7 +1257,7 @@ AI_BEGIN_CUSTOM_NPC(talk_monster,CNPCSimpleTalker)
 	//=========================================================
 	// Scold the player before attacking.
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_TALKER_BETRAYED,
 
@@ -1272,7 +1272,7 @@ AI_BEGIN_CUSTOM_NPC(talk_monster,CNPCSimpleTalker)
 	//=========================================================
 	// > SCHED_TALKER_IDLE_WATCH_CLIENT
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_TALKER_IDLE_WATCH_CLIENT,
 
@@ -1294,11 +1294,11 @@ AI_BEGIN_CUSTOM_NPC(talk_monster,CNPCSimpleTalker)
 		"		COND_GIVE_WAY"
 		"		COND_IDLE_INTERRUPT"
 	)
-	 
+
 	//=========================================================
 	// > SCHED_TALKER_IDLE_WATCH_CLIENT_STARE
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_TALKER_IDLE_WATCH_CLIENT_STARE,
 
@@ -1329,7 +1329,7 @@ AI_BEGIN_CUSTOM_NPC(talk_monster,CNPCSimpleTalker)
 	//=========================================================
 	// > SCHED_TALKER_IDLE_EYE_CONTACT
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_TALKER_IDLE_EYE_CONTACT,
 

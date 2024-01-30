@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,7 +19,7 @@ public:
 
 	DECLARE_SERVERCLASS();
 
-	// Overrides 
+	// Overrides
 public:
 	CDODRifleGrenadeGER() {}
 	virtual void Spawn();
@@ -28,12 +28,12 @@ public:
 	// Grenade stuff.
 public:
 
-	static CDODRifleGrenadeGER* Create( 
-		const Vector &position, 
-		const QAngle &angles, 
-		const Vector &velocity, 
-		const AngularImpulse &angVelocity, 
-		CBaseCombatCharacter *pOwner, 
+	static CDODRifleGrenadeGER* Create(
+		const Vector &position,
+		const QAngle &angles,
+		const Vector &velocity,
+		const AngularImpulse &angVelocity,
+		CBaseCombatCharacter *pOwner,
 		float timer,
 		DODWeaponID weaponID );
 

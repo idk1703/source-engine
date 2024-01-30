@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ public:
 
 	C_World( void );
 	~C_World( void );
-	
+
 	// Override the factory create/delete functions since the world is a singleton.
 	virtual bool Init( int entnum, int iSerialNum );
 	virtual void Release();

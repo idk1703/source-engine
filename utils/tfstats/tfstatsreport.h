@@ -22,14 +22,14 @@
 #include "BinaryResource.h"
 #include "MatchInfo.h"
 #include "HTML.h"
-#include "util.h"	
+#include "util.h"
 
 //------------------------------------------------------------------------------------------------------
 // Purpose:  This class is reponsible for generating the top and nav frames of the
 //	report. also for generating all the resources such as jpgs, gifs, javascripts and
 //	style sheets
 //------------------------------------------------------------------------------------------------------
-class CTFStatsReport  
+class CTFStatsReport
 {
 private:
 	time_t matchstart;
@@ -72,11 +72,11 @@ private:
 	static CBinaryResource gifPlayerStatsServerOn;
 
 
-	
+
 public:
 
 	explicit CTFStatsReport();
-	
+
 	void genImages();
 	void genJavaScript();
 	void genStyleSheet();
@@ -89,5 +89,5 @@ public:
 
 };
 
-#endif 
+#endif
 #endif // TFSTATSREPORT_H

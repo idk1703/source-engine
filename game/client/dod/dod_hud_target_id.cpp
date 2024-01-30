@@ -22,7 +22,7 @@
 static ConVar hud_centerid( "hud_centerid", "1", FCVAR_ARCHIVE );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTargetID : public CHudElement, public vgui::Panel
 {
@@ -46,7 +46,7 @@ DECLARE_HUDELEMENT( CTargetID );
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTargetID::CTargetID( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass( NULL, "TargetID" )
@@ -143,7 +143,7 @@ void CTargetID::Paint()
 		{
 			// Construct the wide char name string
 			g_pVGuiLocalize->ConvertANSIToUnicode( pPlayer->GetPlayerName(),  wszPlayerName, sizeof(wszPlayerName) );
-			
+
 			_snwprintf( wszHealthText, ARRAYSIZE(wszHealthText) - 1, L"%.0f", (float)pPlayer->GetHealth() );
 			wszHealthText[ ARRAYSIZE(wszHealthText)-1 ] = '\0';
 
@@ -172,7 +172,7 @@ void CTargetID::Paint()
 				// draw a black dropshadow ( the default one looks horrible )
 				vgui::surface()->DrawSetTextPos( xpos+1, ypos+1 );
 				vgui::surface()->DrawSetTextColor( Color(0,0,0,255) );
-				vgui::surface()->DrawPrintText( sIDString, wcslen(sIDString) );		
+				vgui::surface()->DrawPrintText( sIDString, wcslen(sIDString) );
 
 				vgui::surface()->DrawSetTextPos( xpos, ypos );
 				vgui::surface()->DrawSetTextColor( g_PR->GetTeamColor( pPlayer->GetTeamNumber() ) );
@@ -180,7 +180,7 @@ void CTargetID::Paint()
 			}
 
 			pLocalDODPlayer->HintMessage( HINT_FRIEND_SEEN );
-		}		
+		}
 		else if( IsPlayerIndex( iEntIndex ) &&
 			pPlayer->GetTeamNumber() != TEAM_SPECTATOR &&
 			pPlayer->GetTeamNumber() != TEAM_UNASSIGNED &&

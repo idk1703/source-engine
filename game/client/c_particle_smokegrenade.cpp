@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -55,7 +55,7 @@ public:
 					~C_ParticleSmokeGrenade();
 
 private:
-	
+
 	class SmokeGrenadeParticle : public Particle
 	{
 	public:
@@ -122,7 +122,7 @@ private:
 	void UpdateDynamicLightList( const Vector &vMins, const Vector &vMaxs );
 
 	void UpdateSmokeTrail( float fTimeDelta );
-	
+
 	void UpdateParticleAndFindTrade( int iParticle, float fTimeDelta );
 	void UpdateParticleDuringTrade( int iParticle, float flTimeDelta );
 
@@ -142,9 +142,9 @@ private:
 		return x >= 0 && y >= 0 && z >= 0 && x < m_xCount && y < m_yCount && z < m_zCount;
 	}
 
-	inline Vector				GetSmokeParticlePos(int x, int y, int z)	
+	inline Vector				GetSmokeParticlePos(int x, int y, int z)
 	{
-		return m_SmokeBasePos + 
+		return m_SmokeBasePos +
 			Vector( ((float)x / (m_xCount-1)) * m_SpacingRadius * 2 - m_SpacingRadius,
 				((float)y / (m_yCount-1)) * m_SpacingRadius * 2 - m_SpacingRadius,
 				((float)z / (m_zCount-1)) * m_SpacingRadius * 2 - m_SpacingRadius);
@@ -165,7 +165,7 @@ private:
 
 // State variables from server.
 public:
-	
+
 	unsigned char		m_CurrentStage;
 	Vector				m_SmokeBasePos;
 
@@ -203,7 +203,7 @@ private:
 	Vector				m_MinColor;
 	Vector				m_MaxColor;
 
-	float				m_ExpandTimeCounter;	// How long since we started expanding.	
+	float				m_ExpandTimeCounter;	// How long since we started expanding.
 	float				m_ExpandRadius;			// How large is our radius.
 
 	C_SmokeTrail		m_SmokeTrail;
@@ -343,7 +343,7 @@ void C_ParticleSmokeGrenade::Start(CParticleMgr *pParticleMgr, IPrototypeArgAcce
 {
 	if(!pParticleMgr->AddEffect( &m_ParticleEffect, this ))
 		return;
-	
+
 	m_SmokeTrail.Start(pParticleMgr, pArgs);
 
 	m_SmokeTrail.m_ParticleLifetime = 0.5;
@@ -388,7 +388,7 @@ void C_ParticleSmokeGrenade::Start(CParticleMgr *pParticleMgr, IPrototypeArgAcce
 		 pPlayer->m_SmokeGrenades.AddToTail( this );
 	}
 #endif
-		 
+
 }
 
 void C_ParticleSmokeGrenade::ClientThink()
@@ -396,16 +396,16 @@ void C_ParticleSmokeGrenade::ClientThink()
 	if ( m_CurrentStage == 1 )
 	{
 		// Add our influence to the global smoke fog alpha.
-		
+
 		float testDist = (MainViewOrigin() - m_SmokeBasePos ).Length();
 
 		float fadeEnd = m_ExpandRadius;
 
 		// The center of the smoke cloud that always gives full fog overlay
 		float flCoreDistance = fadeEnd * 0.3;
-		
+
 		if(testDist < fadeEnd)
-		{			
+		{
 			if( testDist < flCoreDistance )
 			{
 				EngineGetSmokeFogOverlayAlpha() += m_FadeAlpha;
@@ -414,7 +414,7 @@ void C_ParticleSmokeGrenade::ClientThink()
 			{
 				EngineGetSmokeFogOverlayAlpha() += (1 - ( testDist - flCoreDistance ) / ( fadeEnd - flCoreDistance ) ) * m_FadeAlpha;
 			}
-		}	
+		}
 	}
 }
 
@@ -439,7 +439,7 @@ void C_ParticleSmokeGrenade::UpdateSmokeTrail( float fTimeDelta )
 
 		m_SmokeTrail.SetLocalOrigin( GetAbsOrigin() );
 		m_SmokeTrail.Update(fTimeDelta);
-	}	
+	}
 }
 
 
@@ -448,7 +448,7 @@ inline void C_ParticleSmokeGrenade::UpdateParticleDuringTrade( int iParticle, fl
 	SmokeParticleInfo *pInfo = &m_SmokeParticleInfos[iParticle];
 	SmokeParticleInfo *pOther = &m_SmokeParticleInfos[pInfo->m_TradeIndex];
 	Assert(pOther->m_TradeIndex == iParticle);
-	
+
 	// This makes sure the trade only gets updated once per frame.
 	if(pInfo < pOther)
 	{
@@ -457,7 +457,7 @@ inline void C_ParticleSmokeGrenade::UpdateParticleDuringTrade( int iParticle, fl
 		int x, y, z;
 		GetParticleInfoXYZ(iParticle, x, y, z);
 		Vector myPos = GetSmokeParticlePos(x, y, z) - m_SmokeBasePos;
-		
+
 		int otherX, otherY, otherZ;
 		GetParticleInfoXYZ(pInfo->m_TradeIndex, otherX, otherY, otherZ);
 		Vector otherPos = GetSmokeParticlePos(otherX, otherY, otherZ) - m_SmokeBasePos;
@@ -466,7 +466,7 @@ inline void C_ParticleSmokeGrenade::UpdateParticleDuringTrade( int iParticle, fl
 		if(pInfo->m_TradeClock >= pInfo->m_TradeDuration)
 		{
 			pInfo->m_TradeIndex = pOther->m_TradeIndex = -1;
-			
+
 			pInfo->m_pParticle->m_Pos = otherPos;
 			pOther->m_pParticle->m_Pos = myPos;
 
@@ -475,11 +475,11 @@ inline void C_ParticleSmokeGrenade::UpdateParticleDuringTrade( int iParticle, fl
 			pOther->m_pParticle = temp;
 		}
 		else
-		{			
+		{
 			// Ok, move them closer.
 			float percent = (float)cos(pInfo->m_TradeClock * 2 * 1.57079632f / pInfo->m_TradeDuration);
 			percent = percent * 0.5 + 0.5;
-			
+
 			pInfo->m_pParticle->m_FadeAlpha  = pInfo->m_FadeAlpha + (pOther->m_FadeAlpha - pInfo->m_FadeAlpha) * (1 - percent);
 			pOther->m_pParticle->m_FadeAlpha = pInfo->m_FadeAlpha + (pOther->m_FadeAlpha - pInfo->m_FadeAlpha) * percent;
 
@@ -534,7 +534,7 @@ void C_ParticleSmokeGrenade::UpdateParticleAndFindTrade( int iParticle, float fT
 						pOther->m_TradeIndex = iParticle;
 						pInfo->m_TradeClock = pOther->m_TradeClock = 0;
 						pInfo->m_TradeDuration = FRand(TRADE_DURATION_MIN, TRADE_DURATION_MAX);
-						
+
 						bFound = true;
 						break;
 					}
@@ -551,7 +551,7 @@ void C_ParticleSmokeGrenade::Update(float fTimeDelta)
 
 	// Update the smoke trail.
 	UpdateSmokeTrail( fTimeDelta );
-	
+
 	// Update our fade alpha.
 	if(flLifetime < m_FadeStartTime)
 	{
@@ -570,7 +570,7 @@ void C_ParticleSmokeGrenade::Update(float fTimeDelta)
 	// Scale by the amount the sphere has grown.
 	m_FadeAlpha *= m_ExpandRadius / (m_SpacingRadius*2);
 
-	
+
 	// Update our bbox.
 
 	Vector vMins = m_SmokeBasePos - Vector( m_SpacingRadius + SMOKEGRENADE_PARTICLERADIUS, m_SpacingRadius + SMOKEGRENADE_PARTICLERADIUS, m_SpacingRadius + SMOKEGRENADE_PARTICLERADIUS );
@@ -602,7 +602,7 @@ void C_ParticleSmokeGrenade::Update(float fTimeDelta)
 
 			if(!pInfo->m_pParticle)
 				continue;
-		
+
 			if(pInfo->m_TradeIndex == -1)
 			{
 				UpdateParticleAndFindTrade( i, fTimeDelta );
@@ -626,11 +626,11 @@ void C_ParticleSmokeGrenade::UpdateDynamicLightList( const Vector &vMins, const 
 	for ( int i=0; i < nLights; i++ )
 	{
 		dlight_t *pIn = lights[i];
-		if ( pIn->origin.x + pIn->radius <= vMins.x || 
-			 pIn->origin.y + pIn->radius <= vMins.y || 
-			 pIn->origin.z + pIn->radius <= vMins.z || 
-			 pIn->origin.x - pIn->radius >= vMaxs.x || 
-			 pIn->origin.y - pIn->radius >= vMaxs.y || 
+		if ( pIn->origin.x + pIn->radius <= vMins.x ||
+			 pIn->origin.y + pIn->radius <= vMins.y ||
+			 pIn->origin.z + pIn->radius <= vMins.z ||
+			 pIn->origin.x - pIn->radius >= vMaxs.x ||
+			 pIn->origin.y - pIn->radius >= vMaxs.y ||
 			 pIn->origin.z - pIn->radius >= vMaxs.z )
 		{
 		}
@@ -664,7 +664,7 @@ inline void C_ParticleSmokeGrenade::ApplyDynamicLight( const Vector &vParticlePo
 				color += pLight->m_vColor * (1 - flDistSqr / pLight->m_flRadiusSqr) * 0.1f;
 			}
 		}
-	
+
 		// Rescale the color..
 		float flMax = MAX( color.x, MAX( color.y, color.z ) );
 		if ( flMax > 1 )
@@ -690,7 +690,7 @@ void C_ParticleSmokeGrenade::RenderParticles( CParticleRenderIterator *pIterator
 		{
 			Vector vTemp;
 			TransformParticle(ParticleMgr()->GetModelView(), vWorldSpacePos, vTemp);
-			sortKey = vTemp.z;		
+			sortKey = vTemp.z;
 		}
 		else
 		{
@@ -704,11 +704,11 @@ void C_ParticleSmokeGrenade::RenderParticles( CParticleRenderIterator *pIterator
 			else
 			{
 				renderPos = vWorldSpacePos;
-			}		
+			}
 
 			// Figure out the alpha based on where it is in the sphere.
 			float alpha = 1 - len / m_ExpandRadius;
-			
+
 			// This changes the ramp to be very solid in the core, then taper off.
 			static float testCutoff=0.3;
 			if(alpha > testCutoff)
@@ -737,7 +737,7 @@ void C_ParticleSmokeGrenade::RenderParticles( CParticleRenderIterator *pIterator
 			ApplyDynamicLight( renderPos, color );
 
 			color = (color + Vector( 0.5, 0.5, 0.5 )) / 2;   //Desaturate
-			
+
 			Vector tRenderPos;
 			TransformParticle(ParticleMgr()->GetModelView(), renderPos, tRenderPos);
 			sortKey = tRenderPos.z;
@@ -832,7 +832,7 @@ void C_ParticleSmokeGrenade::FillVolume()
 		for(int y=0; y < m_yCount; y++)
 		{
 			vPos.y = m_SmokeBasePos.y + ((float)y * invNumPerDimY) * m_SpacingRadius * 2 - m_SpacingRadius;
-							  
+
 			for(int z=0; z < m_zCount; z++)
 			{
 				vPos.z = m_SmokeBasePos.z + ((float)z * invNumPerDimZ) * m_SpacingRadius * 2 - m_SpacingRadius;
@@ -858,7 +858,7 @@ void C_ParticleSmokeGrenade::FillVolume()
 					else
 					*/
 					{
-						SmokeGrenadeParticle *pParticle = 
+						SmokeGrenadeParticle *pParticle =
 							(SmokeGrenadeParticle*)m_ParticleEffect.AddParticle(sizeof(SmokeGrenadeParticle), m_MaterialHandles[rand() % NUM_MATERIAL_HANDLES]);
 
 						if(pParticle)
@@ -871,7 +871,7 @@ void C_ParticleSmokeGrenade::FillVolume()
 							//debugoverlay->AddBoxOverlay( vPos, Vector( -2, -2, -2), Vector( 2, 2, 2), vec3_angle, 255, 0, 0, 255, 5.0f );
 						}
 
-						
+
 
 						#ifdef _DEBUG
 							int testX, testY, testZ;
@@ -934,7 +934,7 @@ void C_ParticleSmokeGrenade::CleanupToolRecordingState( KeyValues *msg )
 	// know the grenade has been recorded at this point
 	if ( !clienttools->IsInRecordingMode() )
 		return;
-	
+
 	// NOTE: Particle system destruction message will be sent by the particle effect itself.
 	if ( m_bVolumeFilled && GetToolParticleEffectId() == TOOLPARTICLESYSTEMID_INVALID )
 	{
@@ -981,11 +981,11 @@ void C_ParticleSmokeGrenade::CleanupToolRecordingState( KeyValues *msg )
  		pRollSpeed->SetFloat( "maxRollSpeed", ROTATION_SPEED );
 
 		KeyValues *pColor = pInitializers->FindKey( "DmeRandomInterpolatedColorInitializer", true );
-		Color c1( 
+		Color c1(
 			FastFToC( clamp( m_MinColor.x, 0.f, 1.f ) ),
 			FastFToC( clamp( m_MinColor.y, 0.f, 1.f ) ),
 			FastFToC( clamp( m_MinColor.z, 0.f, 1.f ) ), 255 );
-		Color c2( 
+		Color c2(
 			FastFToC( clamp( m_MaxColor.x, 0.f, 1.f ) ),
 			FastFToC( clamp( m_MaxColor.y, 0.f, 1.f ) ),
 			FastFToC( clamp( m_MaxColor.z, 0.f, 1.f ) ), 255 );
@@ -1013,7 +1013,7 @@ void C_ParticleSmokeGrenade::CleanupToolRecordingState( KeyValues *msg )
 
 		KeyValues *pAlphaCosineUpdater = pUpdaters->FindKey( "DmeAlphaCosineUpdater", true );
 		pAlphaCosineUpdater->SetFloat( "duration", m_FadeEndTime - m_FadeStartTime );
-		
+
 		pUpdaters->FindKey( "DmeColorDynamicLightUpdater", true );
 
 		KeyValues *pSmokeGrenadeUpdater = pUpdaters->FindKey( "DmeSmokeGrenadeUpdater", true );
@@ -1029,6 +1029,3 @@ void C_ParticleSmokeGrenade::CleanupToolRecordingState( KeyValues *msg )
 		oldmsg->deleteThis();
 	}
 }
-
-
-

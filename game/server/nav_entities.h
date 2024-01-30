@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -14,9 +14,9 @@
 
 //-----------------------------------------------------------------------------------------------------
 /**
-  * An entity that modifies pathfinding cost to all areas it overlaps, to allow map designers
-  * to tell bots to avoid/prefer certain regions.
-  */
+	* An entity that modifies pathfinding cost to all areas it overlaps, to allow map designers
+	* to tell bots to avoid/prefer certain regions.
+	*/
 class CFuncNavCost : public CBaseEntity
 {
 public:
@@ -73,10 +73,10 @@ public:
 
 //-----------------------------------------------------------------------------------------------------
 /**
-  * An entity that can block/unblock nav areas.  This is meant for semi-transient areas that block
-  * pathfinding but can be ignored for longer-term queries like computing L4D flow distances and
-  * escape routes.
-  */
+	* An entity that can block/unblock nav areas.  This is meant for semi-transient areas that block
+	* pathfinding but can be ignored for longer-term queries like computing L4D flow distances and
+	* escape routes.
+	*/
 class CFuncNavBlocker : public CBaseEntity
 {
 	DECLARE_DATADESC();

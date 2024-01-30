@@ -1,13 +1,13 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
 //
 // VMatrix always postmultiply vectors as in Ax = b.
-// Given a set of basis vectors ((F)orward, (L)eft, (U)p), and a (T)ranslation, 
+// Given a set of basis vectors ((F)orward, (L)eft, (U)p), and a (T)ranslation,
 // a matrix to transform a vector into that space looks like this:
 // Fx Lx Ux Tx
 // Fy Ly Uy Ty
@@ -55,16 +55,16 @@ public:
 	// the Y axis = left, and the Z axis = up
 	VMatrix( const Vector& forward, const Vector& left, const Vector& up );
 	VMatrix( const Vector& forward, const Vector& left, const Vector& up, const Vector& translation );
-	
+
 	// Construct from a 3x4 matrix
 	VMatrix( const matrix3x4_t& matrix3x4 );
 
 	// Set the values in the matrix.
-	void		Init( 
+	void		Init(
 		vec_t m00, vec_t m01, vec_t m02, vec_t m03,
 		vec_t m10, vec_t m11, vec_t m12, vec_t m13,
 		vec_t m20, vec_t m21, vec_t m22, vec_t m23,
-		vec_t m30, vec_t m31, vec_t m32, vec_t m33 
+		vec_t m30, vec_t m31, vec_t m32, vec_t m33
 		);
 
 
@@ -73,13 +73,13 @@ public:
 
 	// array access
 	inline float* operator[](int i)
-	{ 
-		return m[i]; 
+	{
+		return m[i];
 	}
 
 	inline const float* operator[](int i) const
-	{ 
-		return m[i]; 
+	{
+		return m[i];
 	}
 
 	// Get a pointer to m[0][0]
@@ -166,7 +166,7 @@ public:
 public:
 
 	VMatrix&	operator=(const VMatrix &mOther);
-	
+
 	// Multiply two matrices (out = this * vm).
 	void		MatrixMul( const VMatrix &vm, VMatrix &out ) const;
 
@@ -174,7 +174,7 @@ public:
 	const VMatrix& operator+=(const VMatrix &other);
 
 #ifndef VECTOR_NO_SLOW_OPERATIONS
-	// Just calls MatrixMul and returns the result.	
+	// Just calls MatrixMul and returns the result.
 	VMatrix		operator*(const VMatrix &mOther) const;
 
 	// Add/Subtract two matrices.
@@ -184,7 +184,7 @@ public:
 	// Negation.
 	VMatrix		operator-() const;
 
-	// Return inverse matrix. Be careful because the results are undefined 
+	// Return inverse matrix. Be careful because the results are undefined
 	// if the matrix doesn't have an inverse (ie: InverseGeneral returns false).
 	VMatrix		operator~() const;
 #endif
@@ -198,20 +198,20 @@ public:
 
 	// Setup a matrix for origin and angles.
 	void		SetupMatrixOrgAngles( const Vector &origin, const QAngle &vAngles );
-	
+
 	// Setup a matrix for angles and no translation.
 	void		SetupMatrixAngles( const QAngle &vAngles );
 
 	// General inverse. This may fail so check the return!
 	bool		InverseGeneral(VMatrix &vInverse) const;
-	
+
 	// Does a fast inverse, assuming the matrix only contains translation and rotation.
 	void		InverseTR( VMatrix &mRet ) const;
 
 	// Usually used for debug checks. Returns true if the upper 3x3 contains
 	// unit vectors and they are all orthogonal.
 	bool		IsRotationMatrix() const;
-	
+
 #ifndef VECTOR_NO_SLOW_OPERATIONS
 	// This calls the other InverseTR and returns the result.
 	VMatrix		InverseTR() const;
@@ -220,7 +220,7 @@ public:
 	Vector		GetScale() const;
 
 	// (Fast) multiply by a scaling matrix setup from vScale.
-	VMatrix		Scale(const Vector &vScale);	
+	VMatrix		Scale(const Vector &vScale);
 
 	// Normalize the basis vectors.
 	VMatrix		NormalizeBasisVectors() const;
@@ -300,11 +300,11 @@ void Vector3DMultiply( const VMatrix& src1, const Vector& src2, Vector& dst );
 // Vector3DMultiplyPosition treats src2 as if it's a point (adds the translation)
 inline void Vector3DMultiplyPosition( const VMatrix& src1, const VectorByValue src2, Vector& dst );
 
-// Vector3DMultiplyPositionProjective treats src2 as if it's a point 
+// Vector3DMultiplyPositionProjective treats src2 as if it's a point
 // and does the perspective divide at the end
 void Vector3DMultiplyPositionProjective( const VMatrix& src1, const Vector &src2, Vector& dst );
 
-// Vector3DMultiplyPosition treats src2 as if it's a direction 
+// Vector3DMultiplyPosition treats src2 as if it's a direction
 // and does the perspective divide at the end
 // NOTE: src1 had better be an inverse transpose to use this correctly
 void Vector3DMultiplyProjective( const VMatrix& src1, const Vector &src2, Vector& dst );
@@ -392,12 +392,12 @@ void CalculateSphereFromProjectionMatrixInverse( const VMatrix &volumeToWorld, V
 void FrustumPlanesFromMatrix( const VMatrix &clipToWorld, Frustum_t &frustum );
 
 //-----------------------------------------------------------------------------
-// Setup a matrix from euler angles. 
+// Setup a matrix from euler angles.
 //-----------------------------------------------------------------------------
 void MatrixFromAngles( const QAngle& vAngles, VMatrix& dst );
 
 //-----------------------------------------------------------------------------
-// Creates euler angles from a matrix 
+// Creates euler angles from a matrix
 //-----------------------------------------------------------------------------
 void MatrixToAngles( const VMatrix& src, QAngle& vAngles );
 
@@ -510,7 +510,7 @@ inline void VMatrix::Init( const matrix3x4_t& matrix3x4 )
 	m[3][0] = 0.0f;
 	m[3][1] = 0.0f;
 	m[3][2] = 0.0f;
-	m[3][3] = 1.0f;	
+	m[3][3] = 1.0f;
 }
 
 
@@ -600,7 +600,7 @@ inline void VMatrix::SetTranslation(const Vector &vTrans)
 	m[2][3] = vTrans.z;
 }
 
-		  
+
 //-----------------------------------------------------------------------------
 // appply translation to this matrix in the input space
 //-----------------------------------------------------------------------------
@@ -800,7 +800,7 @@ inline void VMatrix::Identity()
 
 inline bool VMatrix::IsIdentity() const
 {
-	return 
+	return
 		m[0][0] == 1.0f && m[0][1] == 0.0f && m[0][2] == 0.0f && m[0][3] == 0.0f &&
 		m[1][0] == 0.0f && m[1][1] == 1.0f && m[1][2] == 0.0f && m[1][3] == 0.0f &&
 		m[2][0] == 0.0f && m[2][1] == 0.0f && m[2][2] == 1.0f && m[2][3] == 0.0f &&
@@ -943,5 +943,3 @@ inline void MatrixPerspectiveOffCenterX( VMatrix& dst, double flFovX, double flA
 }
 
 #endif
-
-

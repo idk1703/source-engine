@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@
 
 DEFINE_FALLBACK_SHADER( Core, Core_DX80 )
 
-BEGIN_VS_SHADER( Core_DX80, 
+BEGIN_VS_SHADER( Core_DX80,
 			  "Help for Core_DX80" )
 
 	BEGIN_SHADER_PARAMS
@@ -246,4 +246,3 @@ BEGIN_VS_SHADER( Core_DX80,
 		}
 	}
 END_SHADER
-

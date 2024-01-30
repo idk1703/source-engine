@@ -19,7 +19,7 @@ enum Hull_t
 	HULL_TINY,				// Headcrab
 	HULL_WIDE_SHORT,		// Bullsquid
 	HULL_MEDIUM,			// Cremator
-	HULL_TINY_CENTERED,		// Manhack 
+	HULL_TINY_CENTERED,		// Manhack
 	HULL_LARGE,				// Antlion Guard
 	HULL_LARGE_CENTERED,	// Mortar Synth
 	HULL_MEDIUM_TALL,		// Hunter
@@ -66,7 +66,7 @@ namespace NAI_Hull
 	float		Height(int id);
 
 	int			Bits(int id);
- 
+
 	const char*	Name(int id);
 
 	Hull_t		LookupId(const char *szName);

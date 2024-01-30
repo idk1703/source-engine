@@ -69,7 +69,7 @@ public:
 	void		PlayerRunCommand( CUserCmd *ucmd, IMoveHelper *moveHelper );
 	void		UpdateClientData( void );
 	void		OnSave( IEntitySaveUtils *pUtils );
-	
+
 	void		CheckTimeBasedDamage( void );
 
 	// from cbasecombatcharacter

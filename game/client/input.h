@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -22,7 +22,7 @@
 typedef unsigned int CRC32_t;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CKeyboardKey
 {
@@ -102,7 +102,7 @@ public:
 
 	virtual		float		CAM_CapYaw( float fVal ) const { return fVal; }
 	virtual		float		CAM_CapPitch( float fVal ) const { return fVal; }
-	
+
 #if defined( HL2_CLIENT_DLL )
 	// IK back channel info
 	virtual		void		AddIKGroundContactInfo( int entindex, float minheight, float maxheight );
@@ -110,7 +110,7 @@ public:
 	virtual		void		LevelInit( void );
 
 	virtual		void		CAM_SetCameraThirdData( CameraThirdData_t *pCameraData, const QAngle &vecCameraOffset );
-	virtual		void		CAM_CameraThirdThink( void );	
+	virtual		void		CAM_CameraThirdThink( void );
 
 	virtual	bool		EnableJoystickMode();
 
@@ -237,7 +237,7 @@ private:
 	joy_axis_t m_rgAxes[ MAX_JOYSTICK_AXES ];
 	// List of queryable keys
 	CKeyboardKey *m_pKeys;
-	
+
 	// Is the 3rd person camera using the mouse?
 	bool		m_fCameraInterceptingMouse;
 	// Are we in 3rd person view?
@@ -245,7 +245,7 @@ private:
 	// Should we move view along with mouse?
 	bool		m_fCameraMovingWithMouse;
 
-	
+
 	// Is the camera in distance moving mode?
 	bool		m_fCameraDistanceMove;
 	// Old and current mouse position readings.
@@ -280,7 +280,7 @@ private:
 		CUserCmd	m_cmd;
 		CRC32_t		m_crc;
 	};
-				
+
 	CUserCmd	*m_pCommands;
 	CVerifiedUserCmd *m_pVerifiedCommands;
 
@@ -297,7 +297,7 @@ private:
 extern kbutton_t in_strafe;
 extern kbutton_t in_speed;
 extern kbutton_t in_jlook;
-extern kbutton_t in_graph;  
+extern kbutton_t in_graph;
 extern kbutton_t in_moveleft;
 extern kbutton_t in_moveright;
 extern kbutton_t in_forward;
@@ -312,4 +312,3 @@ extern void KeyUp( kbutton_t *b, const char *c );
 
 
 #endif // INPUT_H
-	

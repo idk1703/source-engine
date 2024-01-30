@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,5 +24,3 @@ void CTFCWeaponInfo::Parse( KeyValues *pKeyValuesData, const char *szWeaponName 
 {
 	BaseClass::Parse( pKeyValuesData, szWeaponName );
 }
-
-

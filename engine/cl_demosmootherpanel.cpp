@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -90,7 +90,7 @@ CSmoothingTypeButton::CSmoothingTypeButton(Panel *parent, const char *panelName,
 	m_pMenu->AddMenuItem( "Auto-setup keys 1 second", "keys1", parent );
 	m_pMenu->AddMenuItem( "Auto-setup keys 2 second", "keys2", parent );
 	m_pMenu->AddMenuItem( "Auto-setup keys 4 second", "keys4", parent );
-	
+
 	m_pMenu->MakePopup();
 	MenuButton::SetMenu(m_pMenu);
 	SetOpenDirection(Menu::UP);
@@ -124,7 +124,7 @@ CFixEdgeButton::CFixEdgeButton(Panel *parent, const char *panelName, const char 
 	m_pMenu->AddMenuItem( "Smooth Left", "smoothleft", parent );
 	m_pMenu->AddMenuItem( "Smooth Right", "smoothright", parent );
 	m_pMenu->AddMenuItem( "Smooth Both", "smoothboth", parent );
-	
+
 	m_pMenu->MakePopup();
 	MenuButton::SetMenu(m_pMenu);
 	SetOpenDirection(Menu::UP);
@@ -157,14 +157,14 @@ CDemoSmootherPanel::CDemoSmootherPanel( vgui::Panel *parent ) : Frame( parent, "
 	m_pPreviewOriginal = new vgui::Button( this, "DemoSmoothPreviewOriginal", "Show Original" );
 	m_pPreviewProcessed = new vgui::Button( this, "DemoSmoothPreviewProcessed", "Show Processed" );
 
-	m_pBackOff = new vgui::CheckButton( this, "DemoSmoothBackoff", "Back off" );	
+	m_pBackOff = new vgui::CheckButton( this, "DemoSmoothBackoff", "Back off" );
 	m_pHideLegend = new vgui::CheckButton( this, "DemoSmoothHideLegend", "Hide legend" );
 
 	m_pHideOriginal = new vgui::CheckButton( this, "DemoSmoothHideOriginal", "Hide original" );
 	m_pHideProcessed = new vgui::CheckButton( this, "DemoSmoothHideProcessed", "Hide processed" );
 
 	m_pSelectionInfo = new vgui::Label( this, "DemoSmoothSelectionInfo", "" );
-	m_pShowAllSamples = new vgui::CheckButton( this, "DemoSmoothShowAll", "Show All" );	
+	m_pShowAllSamples = new vgui::CheckButton( this, "DemoSmoothShowAll", "Show All" );
 	m_pSelectSamples = new vgui::Button( this, "DemoSmoothSelect", "Select" );
 
 	m_pPauseResume = new vgui::Button( this, "DemoSmoothPauseResume", "Pause" );
@@ -220,7 +220,7 @@ CDemoSmootherPanel::CDemoSmootherPanel( vgui::Panel *parent ) : Frame( parent, "
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDemoSmootherPanel::~CDemoSmootherPanel()
 {
@@ -240,7 +240,7 @@ void CDemoSmootherPanel::Reset( void )
 	m_bHasSelection = false;
 	memset( m_nSelection, 0, sizeof( m_nSelection ) );
 	m_iSelectionTicksSpan = 0;
-	
+
 	m_bInputActive = false;
 	memset( m_nOldCursor, 0, sizeof( m_nOldCursor ) );
 
@@ -310,14 +310,14 @@ void CDemoSmootherPanel::OnTick()
 	char sz[ 512 ];
 	if ( m_bPreviewing )
 	{
-		Q_snprintf( sz, sizeof( sz ), "%.3f at tick %i (%.3f s)", 
+		Q_snprintf( sz, sizeof( sz ), "%.3f at tick %i (%.3f s)",
 			m_fPreviewCurrentTime,
 			GetTickForFrame( m_nPreviewLastFrame ),
 			TICKS_TO_TIME( m_iSelectionTicksSpan ) );
 	}
 	else
 	{
-		Q_snprintf( sz, sizeof( sz ), "%i to %i (%.3f s)", 
+		Q_snprintf( sz, sizeof( sz ), "%i to %i (%.3f s)",
 			m_Smoothing.smooth[ m_nSelection[ 0 ] ].frametick,
 			m_Smoothing.smooth[ m_nSelection[ 1 ] ].frametick,
 			TICKS_TO_TIME( m_iSelectionTicksSpan ) );
@@ -326,7 +326,7 @@ void CDemoSmootherPanel::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoSmootherPanel::CanEdit()
@@ -341,8 +341,8 @@ bool CDemoSmootherPanel::CanEdit()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *command - 
+// Purpose:
+// Input  : *command -
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::OnCommand(const char *command)
 {
@@ -523,7 +523,7 @@ void CDemoSmootherPanel::OnCommand(const char *command)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::OnSave()
 {
@@ -536,7 +536,7 @@ void CDemoSmootherPanel::OnSave()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::OnReload()
 {
@@ -547,7 +547,7 @@ void CDemoSmootherPanel::OnReload()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::OnVDMChanged( void )
 {
@@ -562,7 +562,7 @@ void CDemoSmootherPanel::OnVDMChanged( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::OnRevert()
 {
@@ -584,15 +584,15 @@ void CDemoSmootherPanel::OnRevert()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::OnRefresh()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pScheme - 
+// Purpose:
+// Input  : *pScheme -
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -600,7 +600,7 @@ void CDemoSmootherPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CDemoSmootherPanel::GetStartFrame()
@@ -612,7 +612,7 @@ int CDemoSmootherPanel::GetStartFrame()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CDemoSmootherPanel::GetEndFrame()
@@ -624,8 +624,8 @@ int CDemoSmootherPanel::GetEndFrame()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : original - 
+// Purpose:
+// Input  : original -
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::OnPreview( bool original )
 {
@@ -647,10 +647,10 @@ void CDemoSmootherPanel::OnPreview( bool original )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frame - 
-//			elapsed - 
-//			info - 
+// Purpose:
+// Input  : frame -
+//			elapsed -
+//			info -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoSmootherPanel::OverrideView( democmdinfo_t& info, int tick )
@@ -783,15 +783,15 @@ void GetColorForSample( bool original, bool samplepoint, bool targetpoint, demos
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : origin - 
-//			mins - 
-//			maxs - 
-//			angles - 
-//			r - 
-//			g - 
-//			b - 
-//			a - 
+// Purpose:
+// Input  : origin -
+//			mins -
+//			maxs -
+//			angles -
+//			r -
+//			g -
+//			b -
+//			a -
 //-----------------------------------------------------------------------------
 void Draw_Box( const Vector& origin, const Vector& mins, const Vector& maxs, const QAngle& angles, int r, int g, int b, int a )
 {
@@ -800,9 +800,9 @@ void Draw_Box( const Vector& origin, const Vector& mins, const Vector& maxs, con
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *sample - 
-//			*next - 
+// Purpose:
+// Input  : *sample -
+//			*next -
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::DrawSmoothingSample( bool original, bool processed, int samplenumber, demosmoothing_t *sample, demosmoothing_t *next )
 {
@@ -860,7 +860,7 @@ void CDemoSmootherPanel::DrawSmoothingSample( bool original, bool processed, int
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::DrawDebuggingInfo(  int frame, float elapsed )
 {
@@ -985,7 +985,7 @@ void CDemoSmootherPanel::OnSelect()
 			m_Smoothing.smooth[ i ].selected = false;
 		}
 	}
-	
+
 	PushRedo( "select" );
 
 	m_iSelectionTicksSpan = endsample->frametick - startsample->frametick;
@@ -1026,7 +1026,7 @@ int CDemoSmootherPanel::GetFrameForTick( int tick )
 
 		if ( tick == middleTick )
 			return middle;
-        		
+
 		if ( tick > middleTick )
 		{
 			if ( first == middle )
@@ -1068,10 +1068,10 @@ int CDemoSmootherPanel::GetTickForFrame( int frame )
 
 //-----------------------------------------------------------------------------
 // Purpose: Interpolate Euler angles using quaternions to avoid singularities
-// Input  : start - 
-//			end - 
-//			output - 
-//			frac - 
+// Input  : start -
+//			end -
+//			output -
+//			frac -
 //-----------------------------------------------------------------------------
 static void InterpolateAngles( const QAngle& start, const QAngle& end, QAngle& output, float frac )
 {
@@ -1186,8 +1186,8 @@ bool CDemoSmootherPanel::GetInterpolatedOriginAndAngles( bool readonly, Vector& 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : t - 
+// Purpose:
+// Input  : t -
 //-----------------------------------------------------------------------------
 bool CDemoSmootherPanel::GetInterpolatedViewPoint(  Vector& origin, QAngle& angles )
 {
@@ -1270,7 +1270,7 @@ Quaternion SmoothAngles( CUtlVector< Quaternion >& stack )
 
 	Quaternion output;
 	output.Init();
-	
+
 	int i;
 	for ( i = 0; i < c; i++ )
 	{
@@ -1288,7 +1288,7 @@ Vector SmoothOrigin( CUtlVector< Vector >& stack )
 
 	Vector output;
 	output.Init();
-	
+
 	int i;
 	for ( i = 0; i < c; i++ )
 	{
@@ -1302,7 +1302,7 @@ Vector SmoothOrigin( CUtlVector< Vector >& stack )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::OnSetKeys(float interval)
 {
@@ -1327,7 +1327,7 @@ void CDemoSmootherPanel::OnSetKeys(float interval)
 		p->vecmoved = p->info.GetViewOrigin();
 		p->samplepoint = false;
 
-		if ( !lastkey || 
+		if ( !lastkey ||
 			TICKS_TO_TIME( p->frametick - lastkey->frametick ) >= interval )
 		{
 			lastkey = p;
@@ -1339,7 +1339,7 @@ void CDemoSmootherPanel::OnSetKeys(float interval)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::OnSmoothSelectionAngles( void )
 {
@@ -1384,7 +1384,7 @@ void CDemoSmootherPanel::OnSmoothSelectionAngles( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::OnSmoothSelectionOrigin( void )
 {
@@ -1615,11 +1615,11 @@ demosmoothing_t *CDemoSmootherPanel::GetBoundedSample( CUtlVector< demosmoothing
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : t - 
-//			points - 
-//			prev - 
-//			next - 
+// Purpose:
+// Input  : t -
+//			points -
+//			prev -
+//			next -
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::FindSpanningPoints( int tick, CUtlVector< demosmoothing_t * >& points, int& prev, int& next )
 {
@@ -1631,7 +1631,7 @@ void CDemoSmootherPanel::FindSpanningPoints( int tick, CUtlVector< demosmoothing
 	for ( i = 0; i < c; i++ )
 	{
 		demosmoothing_t	*p = points[ i ];
-		
+
 		if ( tick < p->frametick )
 			break;
 	}
@@ -1649,7 +1649,7 @@ void CDemoSmootherPanel::OnSplineSampleOrigin( void )
 		return;
 
 	int c = m_Smoothing.smooth.Count();
-	
+
 	if ( c < 2 )
 		return;
 
@@ -1676,7 +1676,7 @@ void CDemoSmootherPanel::OnSplineSampleOrigin( void )
 		demosmoothing_t	*current;
 		demosmoothing_t	*next;
 		demosmoothing_t	*latest;
-		
+
 		int cur;
 		int cur2;
 
@@ -1714,7 +1714,7 @@ void CDemoSmootherPanel::OnSplineSampleAngles( void )
 		return;
 
 	int c = m_Smoothing.smooth.Count();
-	
+
 	if ( c < 2 )
 		return;
 
@@ -1739,7 +1739,7 @@ void CDemoSmootherPanel::OnSplineSampleAngles( void )
 
 		demosmoothing_t	*current;
 		demosmoothing_t	*next;
-		
+
 		int cur;
 		int cur2;
 
@@ -1805,7 +1805,7 @@ void CDemoSmootherPanel::OnLookAtPoints( bool spline )
 		demosmoothing_t	*current;
 		demosmoothing_t	*next;
 		demosmoothing_t	*latest;
-		
+
 		int cur;
 		int cur2;
 
@@ -1836,7 +1836,7 @@ void CDemoSmootherPanel::OnLookAtPoints( bool spline )
 			Vector d = next->vectarget - current->vectarget;
 			VectorMA( current->vectarget, frac, d, splined );
 		}
-		
+
 		Vector vecToTarget = splined - ( p->info.GetViewOrigin() + m_vecEyeOffset );
 		VectorNormalize( vecToTarget );
 
@@ -1854,7 +1854,7 @@ void CDemoSmootherPanel::OnLookAtPoints( bool spline )
 void CDemoSmootherPanel::SetLastFrame( bool jumptotarget, int frame )
 {
 	// bool changed = frame != m_nPreviewLastFrame;
-	
+
 	int useFrame = max( m_Smoothing.m_nFirstSelectableSample, frame );
 
 	m_nPreviewLastFrame = useFrame;
@@ -1981,7 +1981,7 @@ void CDemoSmootherPanel::WipeRedo( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CDemoSmootherPanel::GetUndoDescription( void )
@@ -1995,7 +1995,7 @@ const char *CDemoSmootherPanel::GetUndoDescription( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CDemoSmootherPanel::GetRedoDescription( void )
@@ -2010,7 +2010,7 @@ const char *CDemoSmootherPanel::GetRedoDescription( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoSmootherPanel::CanRedo( void )
@@ -2025,7 +2025,7 @@ bool CDemoSmootherPanel::CanRedo( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoSmootherPanel::CanUndo( void )
@@ -2040,7 +2040,7 @@ bool CDemoSmootherPanel::CanUndo( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::OnToggleKeyFrame( void )
 {
@@ -2078,7 +2078,7 @@ void CDemoSmootherPanel::OnToggleKeyFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::OnToggleLookTarget( void )
 {
@@ -2109,7 +2109,7 @@ void CDemoSmootherPanel::OnToggleLookTarget( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::OnNextKey()
 {
@@ -2140,7 +2140,7 @@ void CDemoSmootherPanel::OnNextKey()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::OnPrevKey()
 {
@@ -2171,7 +2171,7 @@ void CDemoSmootherPanel::OnPrevKey()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::OnNextTarget()
 {
@@ -2202,7 +2202,7 @@ void CDemoSmootherPanel::OnNextTarget()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::OnPrevTarget()
 {
@@ -2265,7 +2265,7 @@ void CDemoSmootherPanel::DrawTargetSpline()
 		demosmoothing_t	*current;
 		demosmoothing_t	*next;
 		demosmoothing_t	*latest;
-		
+
 		int cur;
 		int cur2;
 
@@ -2331,7 +2331,7 @@ void CDemoSmootherPanel::DrawKeySpline()
 		demosmoothing_t	*current;
 		demosmoothing_t	*next;
 		demosmoothing_t	*latest;
-		
+
 		int cur;
 		int cur2;
 
@@ -2419,7 +2419,7 @@ void CDemoSmootherPanel::OnSaveKey()
 	p->info.viewOrigin2 = p->vecmoved;
 	p->info.flags |= FDEMO_USE_ORIGIN2;
 	p->info.flags |= FDEMO_USE_ANGLES2;
-	
+
 	PushRedo( "save key" );
 }
 
@@ -2440,7 +2440,7 @@ void CDemoSmootherPanel::OnSetView()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoSmootherPanel::OnGotoFrame()
 {
@@ -2478,7 +2478,7 @@ void CDemoSmootherPanel::OnOriginEaseCurve( EASEFUNC easefunc )
 		return;
 
 	int c = m_Smoothing.smooth.Count();
-	
+
 	if ( c < 2 )
 		return;
 
@@ -2501,7 +2501,7 @@ void CDemoSmootherPanel::OnOriginEaseCurve( EASEFUNC easefunc )
 		demosmoothing_t	*p = &m_Smoothing.smooth[ i ];
 
 		float elapsed = p->frametick - pstart->frametick;
-        float frac = elapsed / dt;
+	float frac = elapsed / dt;
 
 		// Apply ease function
 		frac = (*easefunc)( frac );
@@ -2567,7 +2567,7 @@ void CDemoSmootherPanel::ParseSmoothingInfo( CDemoFile &demoFile, CSmoothingCont
 			case dem_usercmd:
 				{
 					demoFile.ReadUserCmd( NULL, dummy );
-					
+
 				}
 				break;
 			default:
@@ -2588,14 +2588,14 @@ void CDemoSmootherPanel::ParseSmoothingInfo( CDemoFile &demoFile, CSmoothingCont
 		int curpos = demoFile.GetCurPos( true );
 
 		demoFile.ReadCmdInfo( info );
-		demoFile.ReadSequenceInfo( dummy, dummy ); 
+		demoFile.ReadSequenceInfo( dummy, dummy );
 		demoFile.ReadRawData( NULL, 0 );
 
 		// Add to end of list
 		demosmoothing_t smoothing_entry;
 
 		smoothing_entry.file_offset = curpos;
-		smoothing_entry.frametick = tick; 
+		smoothing_entry.frametick = tick;
 		smoothing_entry.info = info;
 		smoothing_entry.samplepoint = false;
 		smoothing_entry.vecmoved = 	info.GetViewOrigin();
@@ -2605,7 +2605,7 @@ void CDemoSmootherPanel::ParseSmoothingInfo( CDemoFile &demoFile, CSmoothingCont
 
 		int sampleIndex = smoothing.smooth.AddToTail( smoothing_entry );
 
-		if ( !foundFirstSelectable && 
+		if ( !foundFirstSelectable &&
 			smoothing_entry.vecmoved.LengthSqr() > 0.0f )
 		{
 			foundFirstSelectable = true;
@@ -2646,9 +2646,9 @@ void CDemoSmootherPanel::LoadSmoothingInfo( const char *filename, CSmoothingCont
 	ClearSmoothingInfo( smoothing );
 
 	ParseSmoothingInfo( demoFile, smoothing );
-	
+
 	demoFile.Close();
-	
+
 	//Performsmoothing( smooth );
 	//SaveSmoothedDemo( name, smooth );
 
@@ -2713,7 +2713,7 @@ void CDemoSmootherPanel::SaveSmoothingInfo( char const *filename, CSmoothingCont
 
 		fs->Seek( infile, p->file_offset, FILESYSTEM_SEEK_HEAD );
 
-		// wacky hacky overwriting 
+		// wacky hacky overwriting
 		fs->Write( &p->info, sizeof( democmdinfo_t ), outfile );
 
 		lastwritepos = fs->Tell( outfile );

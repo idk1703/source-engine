@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,7 +20,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Save/load 
+// Save/load
 //-----------------------------------------------------------------------------
 BEGIN_SIMPLE_DATADESC( CAI_Spotlight )
 
@@ -42,7 +42,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CAI_Spotlight::CAI_Spotlight()
 {
@@ -60,7 +60,7 @@ CAI_Spotlight::~CAI_Spotlight()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_Spotlight::Precache(void)
 {
@@ -72,13 +72,13 @@ void CAI_Spotlight::Precache(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_Spotlight::Init( CAI_BaseNPC *pOuter, int nFlags, float flConstraintAngle, float flMaxLength )
 {
 	SetOuter( pOuter );
 	m_nFlags = nFlags;
-	m_flConstraintAngle = flConstraintAngle; 
+	m_flConstraintAngle = flConstraintAngle;
 	m_flSpotlightMaxLength = flMaxLength;
 
 	// Check for user error
@@ -139,7 +139,7 @@ void CAI_Spotlight::CreateSpotlightEntities( void )
 	// Create the endpoint
 	// Get the initial position...
 	Vector vecStartPoint;
-	if ( m_nSpotlightAttachment == 0 ) 
+	if ( m_nSpotlightAttachment == 0 )
 	{
 		vecStartPoint = GetOuter()->GetAbsOrigin();
 	}
@@ -170,7 +170,7 @@ void CAI_Spotlight::CreateSpotlightEntities( void )
 	m_hSpotlight = CBeam::BeamCreate( "sprites/glow_test02.vmt", SPOTLIGHT_WIDTH );
 	// Set the temporary spawnflag on the beam so it doesn't save (we'll recreate it on restore)
 	m_hSpotlight->AddSpawnFlags( SF_BEAM_TEMPORARY );
-	m_hSpotlight->SetColor( 255, 255, 255 ); 
+	m_hSpotlight->SetColor( 255, 255, 255 );
 	m_hSpotlight->SetHaloTexture( m_nHaloSprite );
 	m_hSpotlight->SetHaloScale( 32 );
 	m_hSpotlight->SetEndWidth( m_hSpotlight->GetWidth() );
@@ -191,7 +191,7 @@ void CAI_Spotlight::SpotlightDestroy(void)
 	{
 		UTIL_Remove(m_hSpotlight);
 		m_hSpotlight = NULL;
-		
+
 		UTIL_Remove(m_hSpotlightTarget);
 		m_hSpotlightTarget = NULL;
 	}
@@ -227,7 +227,7 @@ void CAI_Spotlight::SetSpotlightTargetDirection( const Vector &vSpotlightTargetD
 bool CAI_Spotlight::ConstrainToCone( Vector *pDirection )
 {
 	Vector vecOrigin, vecForward;
-	if ( m_nSpotlightAttachment == 0 ) 
+	if ( m_nSpotlightAttachment == 0 )
 	{
 		QAngle vecAngles;
 		vecAngles = GetOuter()->GetAbsAngles();
@@ -282,7 +282,7 @@ void CAI_Spotlight::UpdateSpotlightDirection( void )
 
 	// Compute the current beam direction
 	Vector vTargetDir;
-	VectorSubtract( m_vSpotlightTargetPos, m_hSpotlight->GetAbsStartPos(), vTargetDir ); 
+	VectorSubtract( m_vSpotlightTargetPos, m_hSpotlight->GetAbsStartPos(), vTargetDir );
 	VectorNormalize(vTargetDir);
 	ConstrainToCone( &vTargetDir );
 
@@ -344,11 +344,11 @@ void CAI_Spotlight::UpdateSpotlightEndpoint( void )
 	vecStartPoint = m_hSpotlight->GetAbsStartPos();
 	ComputeEndpoint( vecStartPoint, &vecEndPoint );
 
-	// If I'm not facing the spotlight turn it off 
+	// If I'm not facing the spotlight turn it off
 	Vector vecSpotDir;
 	VectorSubtract( vecEndPoint, vecStartPoint, vecSpotDir );
 	float flBeamLength = VectorNormalize(vecSpotDir);
-	
+
 	m_hSpotlightTarget->SetAbsOrigin( vecEndPoint );
 	m_hSpotlightTarget->SetAbsVelocity( vec3_origin );
 	m_hSpotlightTarget->m_vSpotlightOrg = vecStartPoint;
@@ -357,13 +357,13 @@ void CAI_Spotlight::UpdateSpotlightEndpoint( void )
 	// Avoid sudden change in where beam fades out when cross disconinuities
 	m_flSpotlightCurLength = Lerp( 0.20f, m_flSpotlightCurLength, flBeamLength );
 
-	// Fade out spotlight end if past max length.  
+	// Fade out spotlight end if past max length.
 	if (m_flSpotlightCurLength > 2*m_flSpotlightMaxLength)
 	{
 		m_hSpotlightTarget->SetRenderColorA( 0 );
 		m_hSpotlight->SetFadeLength(m_flSpotlightMaxLength);
 	}
-	else if (m_flSpotlightCurLength > m_flSpotlightMaxLength)		
+	else if (m_flSpotlightCurLength > m_flSpotlightMaxLength)
 	{
 		m_hSpotlightTarget->SetRenderColorA( (1-((m_flSpotlightCurLength-m_flSpotlightMaxLength)/m_flSpotlightMaxLength)) );
 		m_hSpotlight->SetFadeLength(m_flSpotlightMaxLength);
@@ -376,13 +376,13 @@ void CAI_Spotlight::UpdateSpotlightEndpoint( void )
 
 	// Adjust end width to keep beam width constant
 	float flNewWidth = SPOTLIGHT_WIDTH * ( flBeamLength / m_flSpotlightMaxLength );
-	
+
 	flNewWidth = MIN( 100, flNewWidth );
 
 	m_hSpotlight->SetWidth(flNewWidth);
 	m_hSpotlight->SetEndWidth(flNewWidth);
 
-	// Adjust width of light on the end.  
+	// Adjust width of light on the end.
 	if ( FBitSet (m_nFlags, AI_SPOTLIGHT_NO_DLIGHTS) )
 	{
 		m_hSpotlightTarget->m_flLightScale = 0.0;
@@ -408,4 +408,3 @@ void CAI_Spotlight::Update(void)
 	UpdateSpotlightDirection();
 	UpdateSpotlightEndpoint();
 }
-

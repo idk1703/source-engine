@@ -42,7 +42,7 @@ public:
 	{
 		BaseClass::OnCommand( command );
 
-		// For some weird reason, this dialog can 
+		// For some weird reason, this dialog can
 		if ( Q_stricmp( command, "ShowFAQ" ) == 0 )
 		{
 			system()->ShellExecute( "open", "http://www.valve-erc.com/srcsdk/faq.html#convertINI" );
@@ -68,7 +68,7 @@ public:
 public:
 	vgui::VPANEL	m_PrevAppFocusPanel;
 };
-		
+
 //-----------------------------------------------------------------------------
 // Purpose: Utility function to pop up a VGUI message box
 //-----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ CVConfigDialog::CVConfigDialog( Panel *parent, const char *name ) : BaseClass( p
 	SetMinimumSize(200, 100);
 
 	SetMinimizeButtonVisible( true );
-	
+
 	m_pConfigCombo = new ComboBox( this, "ConfigCombo", 8, false );
 
 	PopulateConfigList();
@@ -115,11 +115,11 @@ CVConfigDialog::CVConfigDialog( Panel *parent, const char *name ) : BaseClass( p
 		pDlg->SetVisible( true );
 		pDlg->MoveToCenterOfScreen();
 		input()->SetAppModalSurface( pDlg->GetVPanel() );
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Destructor 
+// Destructor
 //-----------------------------------------------------------------------------
 CVConfigDialog::~CVConfigDialog()
 {
@@ -142,7 +142,7 @@ void CVConfigDialog::PopulateConfigList( bool bSelectActiveConfig /*=true*/ )
 		if ( GetVConfigRegistrySetting( GAMEDIR_TOKEN, szKeyValue, sizeof( szKeyValue ) ) == false )
 		{
 			//NOTE: We may want to pop an info dialog here if there was no initial VPROJECT setting
-			activeItem = 0;		
+			activeItem = 0;
 		}
 	}
 	else
@@ -160,7 +160,7 @@ void CVConfigDialog::PopulateConfigList( bool bSelectActiveConfig /*=true*/ )
 	{
 		// Set the text
 		kv->SetString( "ModDir", g_Configs[i]->m_ModDir.Base() );
-		
+
 		// Add the item into the list
 		int index = m_pConfigCombo->AddItem( g_Configs[i]->m_Name.Base(), kv );
 
@@ -251,7 +251,7 @@ void CVConfigDialog::OnCommand( const char *command )
 		pDialog->DoModal();
 	}
 	else if ( Q_stricmp( command, "RemoveConfig" ) == 0 )
-	{	
+	{
 		// Don't allow the list to completely vanish
 		// NOTE: We should display the list as being empty, i.e. "<EMPTY>"
 		if ( g_Configs.Count() <= 1 )

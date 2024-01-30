@@ -45,7 +45,7 @@ class CTrackEntry
 		void OnRemoveVisGroup(CVisGroup *pGroup);
 
 		bool m_bAutoDestruct;
-	
+
 	protected:
 
 		size_t m_nDataSize;
@@ -105,7 +105,7 @@ private:
 	BOOL CheckObjectFlag(CMapClass *pObject, int iFlag);
 
 	CUtlVector<CTrackEntry> Data;
-	
+
 	CHistory *Parent;
 	DWORD dwID;	// id of this tracker..
 	char szName[128];
@@ -149,7 +149,7 @@ public:
 	//
 	void KeepNew(CMapClass *pObject, bool bKeepChildren = true);
 	void KeepNew(const CMapObjectList *pList, bool bKeepChildren = true);
-	
+
 	void Undo(CMapObjectList *pNewSelection);
 
 	BOOL IsUndoable();	// anything to undo?
@@ -158,7 +158,7 @@ public:
 
 	// returns current name
 	LPCTSTR GetCurTrackName() { return CurTrack ? CurTrack->szName : ""; }
-	
+
 	// total override:
 	void SetActive(BOOL bActive);
 	BOOL IsActive() { return m_bActive; }

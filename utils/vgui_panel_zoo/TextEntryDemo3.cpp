@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,19 +14,19 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// TextEntry controls are notepad-like windows that hold text. 
+// TextEntry controls are notepad-like windows that hold text.
 // In this demo we create an NON-editable text entry window that holds multiple lines
-// of text. We initialize it with some text and add a scroll bar to the 
-// window. 
+// of text. We initialize it with some text and add a scroll bar to the
+// window.
 //-----------------------------------------------------------------------------
 class TextEntryDemo3: public DemoPage
 {
 	public:
 		TextEntryDemo3(Panel *parent, const char *name);
 		~TextEntryDemo3();
-		
+
 	private:
-		TextEntry *m_pTextEntry;				
+		TextEntry *m_pTextEntry;
 };
 
 //-----------------------------------------------------------------------------
@@ -39,16 +39,16 @@ TextEntryDemo3::TextEntryDemo3(Panel *parent, const char *name) : DemoPage(paren
 	// Position the window and make it nice and wide.
 	// Make it tall enough to fit several lines of text.
 	m_pTextEntry->SetBounds(100, 100, 200, 100);
-	
+
 
 	// Make this window hold multiple lines of text.
-	// This will turn off horizontal scrolling, 
+	// This will turn off horizontal scrolling,
 	// and wrap text from line to line.
 	m_pTextEntry->SetMultiline(true);
 
 	// Add a vertical scroll bar.
 	m_pTextEntry->SetVerticalScrollbar(true);
-	
+
 	// Insert text after you have set the size and position of the window
 	m_pTextEntry->InsertString("Some starting text and a pile of text. ");
 	m_pTextEntry->InsertString("Some more text to make mutiple lines. ");
@@ -58,7 +58,7 @@ TextEntryDemo3::TextEntryDemo3(Panel *parent, const char *name) : DemoPage(paren
 
 	// This Text window is not editable by the user. It will only display.
 	m_pTextEntry->SetEditable(false);
-	
+
 }
 
 //-----------------------------------------------------------------------------
@@ -73,5 +73,3 @@ Panel* TextEntryDemo3_Create(Panel *parent)
 {
 	return new TextEntryDemo3(parent, "TextEntryDemo3");
 }
-
-

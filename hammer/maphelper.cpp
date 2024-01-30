@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,4 +36,3 @@ CMapClass *CMapHelper::PrepareSelection(SelectMode_t eSelectMode)
 	Assert(false);
 	return NULL;
 }
-

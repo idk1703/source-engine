@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -51,7 +51,7 @@ void CTGAPreviewPanel::SetTGA( const char *pFullPath )
 	m_TGAName = pFullPath;
 
 	buf.SeekGet( CUtlBuffer::SEEK_HEAD, 0 );
-	if ( !TGALoader::Load( (unsigned char*)GetImageBuffer(), buf, 
+	if ( !TGALoader::Load( (unsigned char*)GetImageBuffer(), buf,
 		  nWidth, nHeight, IMAGE_FORMAT_BGRA8888, flGamma, false ) )
 	{
 		Shutdown();

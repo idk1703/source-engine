@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,9 +22,9 @@ using namespace vgui;
 bool ShouldUseMatchHUD();
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-class CRoundCounterPanel : public EditablePanel, public CGameEventListener 
+class CRoundCounterPanel : public EditablePanel, public CGameEventListener
 {
 public:
 	DECLARE_CLASS_SIMPLE( CRoundCounterPanel, EditablePanel );
@@ -71,7 +71,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFHudMatchStatus : public CHudElement, public EditablePanel
 {
@@ -79,7 +79,7 @@ class CTFHudMatchStatus : public CHudElement, public EditablePanel
 public:
 	CTFHudMatchStatus( const char *pElementName );
 	virtual ~CTFHudMatchStatus( void );
-	
+
 	virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
 	virtual void FireGameEvent( IGameEvent * event ) OVERRIDE;
 	virtual void OnThink() OVERRIDE;

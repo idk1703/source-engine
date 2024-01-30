@@ -64,7 +64,7 @@ bool CAI_MoveAndShootOverlay::HasAvailableRangeAttack()
 
 void CAI_MoveAndShootOverlay::StartShootWhileMove()
 {
-	if ( GetOuter()->GetState() == NPC_STATE_SCRIPT || 
+	if ( GetOuter()->GetState() == NPC_STATE_SCRIPT ||
 		 !HasAvailableRangeAttack() ||
 		 !GetOuter()->HaveSequenceForActivity( GetOuter()->TranslateActivity( ACT_WALK_AIM ) ) ||
 		 !GetOuter()->HaveSequenceForActivity( GetOuter()->TranslateActivity( ACT_RUN_AIM ) ) )
@@ -72,7 +72,7 @@ void CAI_MoveAndShootOverlay::StartShootWhileMove()
 		NoShootWhileMove();
 		return;
 	}
-	
+
 	GetOuter()->GetShotRegulator()->FireNoEarlierThan( gpGlobals->curtime + m_initialDelay );
 	m_bNoShootWhileMove = false;
 }
@@ -91,7 +91,7 @@ bool CAI_MoveAndShootOverlay::CanAimAtEnemy()
 		savedConditions = GetOuter()->AccessConditionBits();
 		GetOuter()->GatherEnemyConditions( GetOuter()->GetEnemy() );
 	}
-	
+
 	if ( pOuter->HasCondition( COND_CAN_RANGE_ATTACK1 ) )
 	{
 		result = true;
@@ -115,7 +115,7 @@ bool CAI_MoveAndShootOverlay::CanAimAtEnemy()
 	{
 		GetOuter()->AccessConditionBits() = savedConditions;
 	}
-		
+
 	return result;
 }
 

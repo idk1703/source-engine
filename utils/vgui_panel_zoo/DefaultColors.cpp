@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,7 +30,7 @@ Color colors[] = {
 	Color(149, 136, 49),
 	Color(196, 181, 80)
 };
-	
+
 
 
 class DefaultColors: public DemoPage
@@ -88,5 +88,3 @@ Panel* DefaultColors_Create(Panel *parent)
 {
 	return new DefaultColors(parent, "Default Colors");
 }
-
-

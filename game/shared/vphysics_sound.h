@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -49,7 +49,7 @@ namespace physicssound
 				unsigned short soundName = psurf->sounds.impactHard;
 				if ( pHit && psurf->sounds.impactSoft )
 				{
-					if ( pHit->audio.hardnessFactor < psurf->audio.hardThreshold || 
+					if ( pHit->audio.hardnessFactor < psurf->audio.hardThreshold ||
 						(psurf->audio.hardVelocityThreshold > 0 && psurf->audio.hardVelocityThreshold > sound.impactSpeed) )
 					{
 						soundName = psurf->sounds.impactSoft;

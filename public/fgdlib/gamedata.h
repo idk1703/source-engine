@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -88,7 +88,7 @@ class GameData
 		bool	RemapNameField( const char *pszInValue, char *pszOutValue, TNameFixup NameFixup );
 		bool	LoadFGDMaterialExclusions( TokenReader &tr );
 		bool	LoadFGDAutoVisGroups( TokenReader &tr );
-		
+
 
 		CUtlVector< FGDMatExlcusions_s >	m_FGDMaterialExclusions;
 
@@ -126,13 +126,13 @@ inline GDclass *GameData::GetClass(int nIndex)
 {
 	if (nIndex >= m_Classes.Count())
 		return NULL;
-		
+
 	return m_Classes.Element(nIndex);
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int GameData::GetMinMapCoord(void)
 {
@@ -141,7 +141,7 @@ int GameData::GetMinMapCoord(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int GameData::GetMaxMapCoord(void)
 {

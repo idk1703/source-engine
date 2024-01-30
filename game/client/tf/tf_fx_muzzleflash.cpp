@@ -40,15 +40,15 @@ void TE_DynamicLight( IRecipientFilter& filter, float delay,
 extern PMaterialHandle g_Material_Spark;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TF_3rdPersonMuzzleFlashCallback( const CEffectData &data )
 {
 	float scale = data.m_flMagnitude;
 	int attachmentIndex = data.m_nAttachmentIndex;
-	
+
 	CSmartPtr<CLocalSpaceEmitter> pSimple = CLocalSpaceEmitter::Create( "MuzzleFlash", data.m_hEntity, attachmentIndex, 0 );
-	
+
 	Vector			forward(1,0,0), offset, right(0,1,0);
 
 	//
@@ -68,7 +68,7 @@ void TF_3rdPersonMuzzleFlashCallback( const CEffectData &data )
 			offset = (forward * (i*2.0f*scale));
 
 			SimpleParticle *pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), pSimple->GetPMaterial( VarArgs( "effects/muzzleflash%d", random->RandomInt(1,4) ) ), offset );
-				
+
 			if ( pParticle == NULL )
 				return;
 
@@ -94,13 +94,13 @@ void TF_3rdPersonMuzzleFlashCallback( const CEffectData &data )
 	{
 		scale *= 4;
 		float flScale = random->RandomFloat( scale-0.1f, scale+0.1f );
-		
+
 		for ( int i = 1; i < 9; i++ )
 		{
 			offset = (forward * (i*2.0f*scale));
 
 			SimpleParticle *pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), pSimple->GetPMaterial( VarArgs( "effects/muzzleflash%d", random->RandomInt(1,4) ) ), offset );
-				
+
 			if ( pParticle == NULL )
 				return;
 
@@ -129,7 +129,7 @@ void TF_3rdPersonMuzzleFlashCallback( const CEffectData &data )
 	for( i=0;i<3;i++ )
 	{
 		SimpleParticle *pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), g_Mat_DustPuff[0], offset );
-			
+
 		if ( pParticle )
 		{
 			pParticle->m_flLifetime		= 0.0f;
@@ -188,11 +188,11 @@ DECLARE_CLIENT_EFFECT( "TF_3rdPersonMuzzleFlash_SentryGun", TF_3rdPersonMuzzleFl
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszModelName - 
-//			vecOrigin - 
-//			vecForceDir - 
-//			vecAngularImp - 
+// Purpose:
+// Input  : *pszModelName -
+//			vecOrigin -
+//			vecForceDir -
+//			vecAngularImp -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 C_MuzzleFlashModel *C_MuzzleFlashModel::CreateMuzzleFlashModel( const char *pszModelName, C_BaseEntity *pParent, int iAttachment, float flLifetime )
@@ -208,7 +208,7 @@ C_MuzzleFlashModel *C_MuzzleFlashModel::CreateMuzzleFlashModel( const char *pszM
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_MuzzleFlashModel::InitializeMuzzleFlash( const char *pszModelName, C_BaseEntity *pParent, int iAttachment, float flLifetime )
 {
@@ -234,7 +234,7 @@ bool C_MuzzleFlashModel::InitializeMuzzleFlash( const char *pszModelName, C_Base
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_MuzzleFlashModel::SetLifetime( float flLifetime )
 {
@@ -243,7 +243,7 @@ void C_MuzzleFlashModel::SetLifetime( float flLifetime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_MuzzleFlashModel::ClientThink( void )
 {
@@ -274,7 +274,7 @@ void C_MuzzleFlashModel::SetIs3rdPersonFlash( bool bEnable )
 	m_bIs3rdPersonFlash = bEnable;
 }
 
-					   
+
 bool C_MuzzleFlashModel::SetupBones( matrix3x4_t *pBoneToWorldOut, int nMaxBones, int boneMask, float currentTime )
 {
 	// FIXME: This is an incredibly brutal hack to get muzzle flashes positioned correctly for recording
@@ -290,7 +290,7 @@ bool C_MuzzleFlashModel::SetupBones( matrix3x4_t *pBoneToWorldOut, int nMaxBones
 		nWorldModelIndex = pParent->GetWorldModelIndex();
 		pParent->SetModelIndex( nWorldModelIndex );
 	}
-	
+
 	bool bResult = BaseClass::SetupBones( pBoneToWorldOut, nMaxBones, boneMask, currentTime );
 
 	if ( m_bIs3rdPersonFlash && pParent )

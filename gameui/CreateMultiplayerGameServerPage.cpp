@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -97,7 +97,7 @@ void CCreateMultiplayerGameServerPage::OnKeyCodePressed( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCreateMultiplayerGameServerPage::EnableBots( KeyValues *data )
 {
@@ -184,7 +184,7 @@ void CCreateMultiplayerGameServerPage::LoadMaps( const char *pszPathID )
 		}
 
 		// remove the text 'maps/' and '.bsp' from the file name to get the map name
-		
+
 		str = Q_strstr( pszFilename, "maps" );
 		if ( str )
 		{
@@ -240,14 +240,14 @@ void CCreateMultiplayerGameServerPage::LoadMapList()
 	m_pMapList->AddItem( RANDOM_MAP, new KeyValues( "data", "mapname", RANDOM_MAP ) );
 
 	// Load the GameDir maps
-	LoadMaps( "GAME" ); 
+	LoadMaps( "GAME" );
 
 	// set the first item to be selected
 	m_pMapList->ActivateItem( 0 );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CCreateMultiplayerGameServerPage::IsRandomMapSelected()
 {
@@ -260,7 +260,7 @@ bool CCreateMultiplayerGameServerPage::IsRandomMapSelected()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CCreateMultiplayerGameServerPage::GetMapName()
 {
@@ -299,7 +299,7 @@ void CCreateMultiplayerGameServerPage::SetMap(const char *mapName)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCreateMultiplayerGameServerPage::OnCheckButtonChecked()
 {

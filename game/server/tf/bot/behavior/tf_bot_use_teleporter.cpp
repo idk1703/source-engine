@@ -120,4 +120,3 @@ ActionResult< CTFBot >	CTFBotUseTeleporter::Update( CTFBot *me, float interval )
 
 	return Continue();
 }
-

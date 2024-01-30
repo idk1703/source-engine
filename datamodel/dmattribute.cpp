@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -38,13 +38,13 @@ bool IsAttributeEqual( const CUtlVector<T> &src1, const CUtlVector<T> &src2 )
 {
 	if ( src1.Count() != src2.Count() )
 		return false;
-		
+
 	for ( int i=0; i < src1.Count(); i++ )
 	{
 		if ( !( src1[i] == src2[i] ) )
 			return false;
 	}
-	
+
 	return true;
 }
 
@@ -54,7 +54,7 @@ bool IsAttributeEqual( const CUtlVector<T> &src1, const CUtlVector<T> &src2 )
 //-----------------------------------------------------------------------------
 static inline bool IsA( DmElementHandle_t hElement, UtlSymId_t type )
 {
-	// treat NULL, deleted, and unloaded elements as being of any type - 
+	// treat NULL, deleted, and unloaded elements as being of any type -
 	// when set, undeleted or loaded, this should be checked again
 	CDmElement *pElement = g_pDataModel->GetElement( hElement );
 	return pElement ? pElement->IsA( type ) : true;
@@ -350,7 +350,7 @@ void CDmAttributeOp<bool>::SetValue( CDmAttribute *pAttribute, DmAttributeType_t
 
 	default:
 		Assert(0);
-		break;			 			  
+		break;
 	}
 }
 
@@ -708,7 +708,7 @@ class CUndoArrayAttributeSetValueElement : public CUndoAttributeArrayBase<T>
 	typedef CUndoAttributeArrayBase<T> BaseClass;
 
 public:
-	CUndoArrayAttributeSetValueElement( CDmAttribute *pAttribute, int slot, const T &newValue ) : 
+	CUndoArrayAttributeSetValueElement( CDmAttribute *pAttribute, int slot, const T &newValue ) :
 		BaseClass( pAttribute, "CUndoArrayAttributeSetValueElement" ),
 		m_nSlot( slot )
 	{
@@ -753,8 +753,8 @@ class CUndoArrayAttributeSetMultipleValueElement : public CUndoAttributeArrayBas
 	typedef CUndoAttributeArrayBase<T> BaseClass;
 
 public:
-	CUndoArrayAttributeSetMultipleValueElement( CDmAttribute *pAttribute, int nSlot, int nCount, const T *pNewValue ) : 
-		BaseClass( pAttribute, "CUndoArrayAttributeSetMultipleValueElement" ), 
+	CUndoArrayAttributeSetMultipleValueElement( CDmAttribute *pAttribute, int nSlot, int nCount, const T *pNewValue ) :
+		BaseClass( pAttribute, "CUndoArrayAttributeSetMultipleValueElement" ),
 		m_nSlot( nSlot ), m_nCount( nCount )
 	{
 		Assert( pAttribute->GetOwner() && pAttribute->GetOwner()->GetFileId() != DMFILEID_INVALID );
@@ -829,7 +829,7 @@ class CUndoAttributeArrayInsertBefore : public CUndoAttributeArrayBase<T>
 {
 	typedef CUndoAttributeArrayBase<T> BaseClass;
 public:
-	CUndoAttributeArrayInsertBefore( CDmAttribute *pAttribute, int slot, int count = 1 ) : 
+	CUndoAttributeArrayInsertBefore( CDmAttribute *pAttribute, int slot, int count = 1 ) :
 		BaseClass( pAttribute, "CUndoAttributeArrayInsertBefore" ),
 		m_nIndex( slot ), m_nCount( count )
 	{
@@ -878,7 +878,7 @@ class CUndoAttributeArrayInsertCopyBefore : public CUndoAttributeArrayBase<T>
 	typedef CUndoAttributeArrayBase<T> BaseClass;
 
 public:
-	CUndoAttributeArrayInsertCopyBefore( CDmAttribute *pAttribute, int slot, const T& newValue ) : 
+	CUndoAttributeArrayInsertCopyBefore( CDmAttribute *pAttribute, int slot, const T& newValue ) :
 		BaseClass( pAttribute, "CUndoAttributeArrayInsertCopyBefore" ),
 		m_nIndex( slot ),
 		m_newValue( newValue )
@@ -921,7 +921,7 @@ class CUndoAttributeArrayRemoveElement : public CUndoAttributeArrayBase<T>
 	typedef CUndoAttributeArrayBase<T> BaseClass;
 
 public:
-	CUndoAttributeArrayRemoveElement( CDmAttribute *pAttribute, bool fastRemove, int elem, int count ) : 
+	CUndoAttributeArrayRemoveElement( CDmAttribute *pAttribute, bool fastRemove, int elem, int count ) :
 		BaseClass( pAttribute, "CUndoAttributeArrayRemoveElement" ),
 		m_bFastRemove( fastRemove ), m_nIndex( elem ), m_nCount( count )
 	{
@@ -1019,7 +1019,7 @@ public:
 		return buf;
 	}
 
-private:	
+private:
 	bool						m_bFastRemove;
 	int							m_nIndex;
 	int							m_nCount;
@@ -1292,7 +1292,7 @@ int CDmArrayAttributeOp<T>::InsertMultipleBefore( int elem, int num )
 	int index = Data().InsertMultipleBefore( elem, num );
 	for ( int i = 0; i < num; ++i )
 	{
-		CDmAttributeInfo<T>::SetDefaultValue( Data()[ index + i ] );	
+		CDmAttributeInfo<T>::SetDefaultValue( Data()[ index + i ] );
 	}
 	OnAttributeArrayElementAdded( index, index + num - 1 );
 	m_pAttribute->OnChanged( true );
@@ -1520,9 +1520,9 @@ void CDmArrayAttributeOp<T>::Set( int i, const T& value )
 	}
 
 	m_pAttribute->PreChanged();
-	OnAttributeArrayElementRemoved( i, i ); 
+	OnAttributeArrayElementRemoved( i, i );
 	Data()[i] = value;
-	OnAttributeArrayElementAdded( i, i ); 
+	OnAttributeArrayElementAdded( i, i );
 	m_pAttribute->OnChanged( false );
 }
 
@@ -1573,7 +1573,7 @@ void CDmArrayAttributeOp<T>::SetMultiple( int i, int nCount, const T* pValue )
 	}
 
 	m_pAttribute->PreChanged();
-	OnAttributeArrayElementRemoved( i, i+nCount-1 ); 
+	OnAttributeArrayElementRemoved( i, i+nCount-1 );
 	for ( int j = 0; j < nCount; ++j )
 	{
 		if ( ShouldInsertElement( pValue[j] ) )
@@ -1581,7 +1581,7 @@ void CDmArrayAttributeOp<T>::SetMultiple( int i, int nCount, const T* pValue )
 			Data()[i+j] = pValue[j];
 		}
 	}
-	OnAttributeArrayElementAdded( i, i+nCount-1 ); 
+	OnAttributeArrayElementAdded( i, i+nCount-1 );
 	m_pAttribute->OnChanged( false );
 }
 
@@ -1622,7 +1622,7 @@ void CDmArrayAttributeOp<T>::Swap( int i, int j )
 	if ( i == j )
 		return;
 
-	// TODO - define Swap<T> for all attribute types to make swapping strings 
+	// TODO - define Swap<T> for all attribute types to make swapping strings
 	// and voids fast (via pointer swaps, rather than 3 copies!)
 	T vk = Data()[ i ];
 	if ( IsAttributeEqual( vk, Data()[j] ) )
@@ -1641,13 +1641,13 @@ void CDmArrayAttributeOp<T>::Swap( int i, int j )
 
 	m_pAttribute->PreChanged();
 
-	OnAttributeArrayElementRemoved( i, i ); 
+	OnAttributeArrayElementRemoved( i, i );
 	Data()[i] = Data()[j];
-	OnAttributeArrayElementAdded( i, i ); 
+	OnAttributeArrayElementAdded( i, i );
 
-	OnAttributeArrayElementRemoved( j, j ); 
+	OnAttributeArrayElementRemoved( j, j );
 	Data()[j] = vk;
-	OnAttributeArrayElementAdded( j, j ); 
+	OnAttributeArrayElementAdded( j, j );
 
 	m_pAttribute->OnChanged( false );
 }
@@ -1885,7 +1885,7 @@ CDmAttribute::~CDmAttribute()
 	case AT_ELEMENT:
 		g_pDataModelImp->OnElementReferenceRemoved( GetValue<DmElementHandle_t>(), this );
 		break;
-	
+
 	case AT_ELEMENT_ARRAY:
 		{
 			CDmrElementArray<> array( this );
@@ -1897,7 +1897,7 @@ CDmAttribute::~CDmAttribute()
 		}
 		break;
 	}
-	
+
 	CleanupMailingList();
 	InvalidateHandle();
 	DeleteAttributeData();
@@ -1995,8 +1995,8 @@ UtlSymId_t CDmAttribute::GetElementTypeSymbol() const
 //-----------------------------------------------------------------------------
 // Is modification allowed in this phase?
 //-----------------------------------------------------------------------------
-bool CDmAttribute::ModificationAllowed() const 
-{ 
+bool CDmAttribute::ModificationAllowed() const
+{
 	if ( IsFlagSet( FATTRIB_READONLY ) )
 		return false;
 
@@ -2009,8 +2009,8 @@ bool CDmAttribute::ModificationAllowed() const
 	return false;
 }
 
-bool CDmAttribute::MarkDirty() 
-{ 
+bool CDmAttribute::MarkDirty()
+{
 	if ( !ModificationAllowed() )
 	{
 		Assert( 0 );
@@ -2294,7 +2294,7 @@ template<> void CDmAttribute::CopyData( const DmElementHandle_t& value )
 //-----------------------------------------------------------------------------
 // Should we be allowed to modify the attribute data?
 //-----------------------------------------------------------------------------
-template< class T > 
+template< class T >
 bool CDmAttribute::ShouldModify( const T& value )
 {
 	if ( !IsTypeConvertable<T>() )
@@ -2745,7 +2745,7 @@ template< class T, class B >
 int CDmaArrayBase<T,B>::AddToTail()
 {
 	T defaultVal;
-	CDmAttributeInfo<T>::SetDefaultValue( defaultVal );	
+	CDmAttributeInfo<T>::SetDefaultValue( defaultVal );
 	CDmArrayAttributeOp<T> accessor( this->m_pAttribute );
 	return accessor.InsertBefore( Value().Count(), defaultVal );
 }
@@ -2754,7 +2754,7 @@ template< class T, class B >
 int	CDmaArrayBase<T,B>::InsertBefore( int elem )
 {
 	T defaultVal;
-	CDmAttributeInfo<T>::SetDefaultValue( defaultVal );	
+	CDmAttributeInfo<T>::SetDefaultValue( defaultVal );
 	CDmArrayAttributeOp<T> accessor( this->m_pAttribute );
 	return accessor.InsertBefore( elem, defaultVal );
 }
@@ -2989,7 +2989,7 @@ bool CDmrDecorator<T,BaseClass>::IsValid() const
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Helper macros to make switch statements based on type 
+// Helper macros to make switch statements based on type
 //-----------------------------------------------------------------------------
 #define ARRAY_METHOD_VOID( _type, _func )														\
 	case CDmAttributeInfo< CUtlVector< _type > >::ATTRIBUTE_TYPE:								\
@@ -3189,7 +3189,7 @@ int GetAllocatedAttributeCount()
 //-----------------------------------------------------------------------------
 const char *AttributeTypeName( DmAttributeType_t type )
 {
-	if ( ( type >= 0 ) && ( type < AT_TYPE_COUNT ) ) 
+	if ( ( type >= 0 ) && ( type < AT_TYPE_COUNT ) )
 		return s_pAttrInfo[ type ]->AttributeTypeName();
 	return "unknown";
 }
@@ -3230,7 +3230,7 @@ static CInstantiateOp<DmUnknownAttribute_t> __s_AttrDmUnknownAttribute_t;
 		}													\
 	};														\
 	static CInstantiateOp< _className > __s_Attr ## _className;	\
-	static CInstantiateOp< CUtlVector< _className > > __s_AttrArray ## _className;	
+	static CInstantiateOp< CUtlVector< _className > > __s_AttrArray ## _className;
 
 #define DEFINE_ATTRIBUTE_TYPE( _type )	\
 	INSTANTIATE_GENERIC_OPS( _type )	\

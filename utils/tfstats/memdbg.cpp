@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose: code to track allocations via replacing the global new operator
-//	some of this code was written by Paul Andre LeBlanc 
+//	some of this code was written by Paul Andre LeBlanc
 //	<paul.a.leblanc@sympatico.ca> I got it off of dejanews.com
 //	usage: new TRACKED object-type
 //
@@ -44,7 +44,7 @@ void * operator new[](size_t size)
 
 void operator delete(void* ptr)
 {
-	 free(ptr);
+	free(ptr);
 }
 
 void operator delete[](void* ptr)
@@ -56,28 +56,28 @@ void operator delete[](void* ptr)
 //this code will track allocations
 //this code was written by Paul Andre LeBlanc <paul.a.leblanc@sympatico.ca>
 //I got it off of dejanews.com
-void *operator new(size_t size, const char *file, const int line) 
+void *operator new(size_t size, const char *file, const int line)
 {
-  void *ptr = new char[size];
-  numBytesAllocated+=size;
-  cout << "new: Allocating " << size << " bytes in file " << file << ", line " << line << ", address is " << ptr << " (" << numBytesAllocated<<" total allocated)"<< endl;
-  return ptr;
+	void *ptr = new char[size];
+	numBytesAllocated+=size;
+	cout << "new: Allocating " << size << " bytes in file " << file << ", line " << line << ", address is " << ptr << " (" << numBytesAllocated<<" total allocated)"<< endl;
+	return ptr;
 }
- 
+
 void *operator new[](size_t size, const char *file, const int line) {
-  void *ptr = new char[size];
-  numBytesAllocated+=size;
-  cout << "new[]: Allocating " << size << " bytes in file " << file << ", line " << line << ", address is " << ptr << " (" << numBytesAllocated<<" total allocated)" << endl;
-  return ptr;
+	void *ptr = new char[size];
+	numBytesAllocated+=size;
+	cout << "new[]: Allocating " << size << " bytes in file " << file << ", line " << line << ", address is " << ptr << " (" << numBytesAllocated<<" total allocated)" << endl;
+	return ptr;
 }
- 
+
 void operator delete(void *ptr, const char *file, const int line) {
-  cout << "delete: Freeing memory allocated at file " << file << ", line " << line << ", address is " << ptr << endl;
-  delete [] (char *) ptr;
+	cout << "delete: Freeing memory allocated at file " << file << ", line " << line << ", address is " << ptr << endl;
+	delete [] (char *) ptr;
 }
- 
-void operator delete[](void *ptr, const char *file, const int line) 
-{  
+
+void operator delete[](void *ptr, const char *file, const int line)
+{
 	cout << "delete[]: Freeing memory allocated at file " << file << ", line " << line << ", address is " << ptr << endl;
 	delete [] (char *) ptr;
 }

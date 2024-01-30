@@ -58,7 +58,7 @@ void CToolMenuBar::SetInfo( const char *pInfo )
 
 
 //-----------------------------------------------------------------------------
-// Lays out the menu bar 
+// Lays out the menu bar
 //-----------------------------------------------------------------------------
 void CToolMenuBar::PerformLayout()
 {

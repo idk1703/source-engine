@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,7 @@ static ConVar r_waterforceexpensive( "r_waterforceexpensive", "0", FCVAR_ARCHIVE
 
 DEFINE_FALLBACK_SHADER( Water, Water_DX9_HDR )
 
-BEGIN_VS_SHADER( Water_DX90, 
+BEGIN_VS_SHADER( Water_DX90,
 			  "Help for Water" )
 
 	BEGIN_SHADER_PARAMS
@@ -177,7 +177,7 @@ BEGIN_VS_SHADER( Water_DX90,
 	}
 
 	inline void DrawReflectionRefraction( IMaterialVar **params, IShaderShadow* pShaderShadow,
-		IShaderDynamicAPI* pShaderAPI, bool bReflection, bool bRefraction ) 
+		IShaderDynamicAPI* pShaderAPI, bool bReflection, bool bRefraction )
 	{
 		SHADOW_STATE
 		{
@@ -221,7 +221,7 @@ BEGIN_VS_SHADER( Water_DX90,
 				numTexCoords = 3;
 			}
 			pShaderShadow->VertexShaderVertexFormat( fmt, numTexCoords, 0, 0 );
-			
+
 			Vector4D Scroll1;
 			params[SCROLL1]->GetVecValue( Scroll1.Base(), 4 );
 
@@ -232,7 +232,7 @@ BEGIN_VS_SHADER( Water_DX90,
 
 			// "REFLECT" "0..1"
 			// "REFRACT" "0..1"
-			
+
 			if ( g_pHardwareConfig->SupportsPixelShaders_2_b() )
 			{
 				DECLARE_STATIC_PIXEL_SHADER( water_ps20b );
@@ -284,7 +284,7 @@ BEGIN_VS_SHADER( Water_DX90,
 			}
 
 			pShaderAPI->BindStandardTexture( SHADER_SAMPLER5, TEXTURE_NORMALIZATION_CUBEMAP_SIGNED );
-			
+
 			// Refraction tint
 			if( bRefraction )
 			{
@@ -313,7 +313,7 @@ BEGIN_VS_SHADER( Water_DX90,
 			}
 
 			SetVertexShaderTextureTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_1, BUMPTRANSFORM );
-			
+
 			float curtime=pShaderAPI->CurrentTime();
 			float vc0[4];
 			float v0[4];
@@ -327,26 +327,26 @@ BEGIN_VS_SHADER( Water_DX90,
 
 			float c0[4] = { 1.0f / 3.0f, 1.0f / 3.0f, 1.0f / 3.0f, 0.0f };
 			pShaderAPI->SetPixelShaderConstant( 0, c0, 1 );
-			
+
 			float c2[4] = { 0.5f, 0.5f, 0.5f, 0.5f };
 			pShaderAPI->SetPixelShaderConstant( 2, c2, 1 );
-			
+
 			// fresnel constants
 			float c3[4] = { 1.0f, 0.0f, 0.0f, 0.0f };
 			pShaderAPI->SetPixelShaderConstant( 3, c3, 1 );
 
-			float c5[4] = { params[REFLECTAMOUNT]->GetFloatValue(), params[REFLECTAMOUNT]->GetFloatValue(), 
+			float c5[4] = { params[REFLECTAMOUNT]->GetFloatValue(), params[REFLECTAMOUNT]->GetFloatValue(),
 				params[REFRACTAMOUNT]->GetFloatValue(), params[REFRACTAMOUNT]->GetFloatValue() };
 			pShaderAPI->SetPixelShaderConstant( 5, c5, 1 );
 
 			SetPixelShaderConstantGammaToLinear( 6, FOGCOLOR );
 
-			float c7[4] = 
-			{ 
-				params[FOGSTART]->GetFloatValue(), 
-				params[FOGEND]->GetFloatValue() - params[FOGSTART]->GetFloatValue(), 
-				1.0f, 
-				0.0f 
+			float c7[4] =
+			{
+				params[FOGSTART]->GetFloatValue(),
+				params[FOGEND]->GetFloatValue() - params[FOGSTART]->GetFloatValue(),
+				1.0f,
+				0.0f
 			};
 			if (g_pHardwareConfig->GetHDRType() == HDR_TYPE_INTEGER )
 			{
@@ -359,7 +359,7 @@ BEGIN_VS_SHADER( Water_DX90,
 
 			DECLARE_DYNAMIC_VERTEX_SHADER( water_vs20 );
 			SET_DYNAMIC_VERTEX_SHADER( water_vs20 );
-			
+
 			if ( g_pHardwareConfig->SupportsPixelShaders_2_b() )
 			{
 				DECLARE_DYNAMIC_PIXEL_SHADER( water_ps20b );
@@ -377,7 +377,7 @@ BEGIN_VS_SHADER( Water_DX90,
 		Draw();
 	}
 
-	inline void DrawCheapWater( IMaterialVar **params, IShaderShadow* pShaderShadow, 
+	inline void DrawCheapWater( IMaterialVar **params, IShaderShadow* pShaderShadow,
 		                        IShaderDynamicAPI* pShaderAPI, bool bBlend, bool bRefraction )
 	{
 		SHADOW_STATE
@@ -464,7 +464,7 @@ BEGIN_VS_SHADER( Water_DX90,
 
 			float cheapWaterStartDistance = params[CHEAPWATERSTARTDISTANCE]->GetFloatValue();
 			float cheapWaterEndDistance = params[CHEAPWATERENDDISTANCE]->GetFloatValue();
-			float cheapWaterParams[4] = 
+			float cheapWaterParams[4] =
 			{
 				(float)(cheapWaterStartDistance * VSHADER_VECT_SCALE),
 				(float)(cheapWaterEndDistance * VSHADER_VECT_SCALE),
@@ -482,7 +482,7 @@ BEGIN_VS_SHADER( Water_DX90,
 				float zero[4] = { 0.0f, 0.0f, 0.0f, params[REFLECTBLENDFACTOR]->GetFloatValue() };
 				pShaderAPI->SetPixelShaderConstant( 2, zero );
 			}
-		
+
 			pShaderAPI->SetPixelShaderFogParams( 3 );
 
 			if( params[SCROLL1]->IsDefined())
@@ -567,7 +567,7 @@ BEGIN_VS_SHADER( Water_DX90,
 
 		if( !bDrewSomething )
 		{
-			// We are likely here because of the tools. . . draw something so that 
+			// We are likely here because of the tools. . . draw something so that
 			// we won't go into wireframe-land.
 			Draw();
 		}
@@ -589,4 +589,3 @@ BEGIN_INHERITED_SHADER( Water_DX9_HDR, Water_DX90,
 		return 0;
 	}
 END_INHERITED_SHADER
-

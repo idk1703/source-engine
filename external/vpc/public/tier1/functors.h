@@ -53,20 +53,20 @@
 //-----------------------------------------------------------------------------
 
 #define	FUNC_SOLO_TEMPLATE_ARG_PARAMS_0
-#define	FUNC_TEMPLATE_ARG_PARAMS_0			
-#define	FUNC_BASE_TEMPLATE_ARG_PARAMS_0		
+#define	FUNC_TEMPLATE_ARG_PARAMS_0
+#define	FUNC_BASE_TEMPLATE_ARG_PARAMS_0
 #define	FUNC_SOLO_BASE_TEMPLATE_ARG_PARAMS_0
-#define	FUNC_ARG_MEMBERS_0					
-#define	FUNC_ARG_FORMAL_PARAMS_0			
-#define	FUNC_PROXY_ARG_FORMAL_PARAMS_0			
-#define	FUNC_CALL_ARGS_INIT_0				
-#define	FUNC_SOLO_CALL_ARGS_INIT_0				
-#define	FUNC_CALL_MEMBER_ARGS_0				
-#define	FUNC_CALL_ARGS_0					
+#define	FUNC_ARG_MEMBERS_0
+#define	FUNC_ARG_FORMAL_PARAMS_0
+#define	FUNC_PROXY_ARG_FORMAL_PARAMS_0
+#define	FUNC_CALL_ARGS_INIT_0
+#define	FUNC_SOLO_CALL_ARGS_INIT_0
+#define	FUNC_CALL_MEMBER_ARGS_0
+#define	FUNC_CALL_ARGS_0
 #define	FUNC_CALL_DATA_ARGS_0( _var )
-#define	FUNC_FUNCTOR_CALL_ARGS_0			
-#define	FUNC_TEMPLATE_FUNC_PARAMS_0			
-#define	FUNC_BASE_TEMPLATE_FUNC_PARAMS_0	
+#define	FUNC_FUNCTOR_CALL_ARGS_0
+#define	FUNC_TEMPLATE_FUNC_PARAMS_0
+#define	FUNC_BASE_TEMPLATE_FUNC_PARAMS_0
 #define	FUNC_VALIDATION_STRING_0			V_snprintf( pString, nBufLen, "method( void )" );
 #define FUNC_SEPARATOR_0
 
@@ -78,14 +78,14 @@
 #define	FUNC_ARG_FORMAL_PARAMS_1			, const ARG_TYPE_1 &arg1
 #define	FUNC_PROXY_ARG_FORMAL_PARAMS_1		const ARG_TYPE_1 &arg1
 #define	FUNC_CALL_ARGS_INIT_1				, m_arg1( arg1 )
-#define	FUNC_SOLO_CALL_ARGS_INIT_1			: m_arg1( arg1 )	
+#define	FUNC_SOLO_CALL_ARGS_INIT_1			: m_arg1( arg1 )
 #define	FUNC_CALL_MEMBER_ARGS_1				m_arg1
 #define	FUNC_CALL_ARGS_1					arg1
 #define	FUNC_CALL_DATA_ARGS_1( _var )		_var->m_arg1
 #define	FUNC_FUNCTOR_CALL_ARGS_1			, arg1
 #define	FUNC_TEMPLATE_FUNC_PARAMS_1			, typename FUNC_ARG_TYPE_1
 #define	FUNC_BASE_TEMPLATE_FUNC_PARAMS_1	FUNC_ARG_TYPE_1
-#define	FUNC_VALIDATION_STRING_1			V_snprintf( pString, nBufLen, "method( %s )", typeid( ARG_TYPE_1 ).name() );	
+#define	FUNC_VALIDATION_STRING_1			V_snprintf( pString, nBufLen, "method( %s )", typeid( ARG_TYPE_1 ).name() );
 #define FUNC_SEPARATOR_1					,
 
 #define	FUNC_SOLO_TEMPLATE_ARG_PARAMS_2		typename ARG_TYPE_1, typename ARG_TYPE_2
@@ -374,7 +374,7 @@ public:
 abstract_class CFunctorData : public IRefCounted
 {
 public:
-	virtual void ComputeValidationString( char *pString, size_t nBufLen ) const = 0; 
+	virtual void ComputeValidationString( char *pString, size_t nBufLen ) const = 0;
 };
 
 abstract_class CFunctorCallback : public IRefCounted
@@ -382,16 +382,16 @@ abstract_class CFunctorCallback : public IRefCounted
 public:
 	virtual bool IsEqual( CFunctorCallback *pSrc ) const = 0;
 	virtual void operator()( CFunctorData *pData ) = 0;
-	virtual void ComputeValidationString( char *pString, size_t nBufLen ) const = 0; 
+	virtual void ComputeValidationString( char *pString, size_t nBufLen ) const = 0;
 	virtual const char *GetImplClassName() const = 0;
 	virtual const void *GetTarget() const = 0;
 };
 
 
 //-----------------------------------------------------------------------------
-// When calling through a functor, care needs to be taken to not pass objects that might go away. 
+// When calling through a functor, care needs to be taken to not pass objects that might go away.
 // Since this code determines the type to store in the functor based on the actual arguments,
-// this is achieved by changing the point of call. 
+// this is achieved by changing the point of call.
 //
 // See also CUtlEnvelope
 //-----------------------------------------------------------------------------
@@ -399,7 +399,7 @@ public:
 template <typename T>
 inline T RefToVal(const T &item)
 {
-   return item;
+	return item;
 }
 
 
@@ -472,7 +472,7 @@ public:
 
 protected:
 	CMemberFuncProxyBase( OBJECT_TYPE_PTR pObject, FUNCTION_TYPE pfnProxied )
-	  : m_pObject( pObject ),
+		: m_pObject( pObject ),
 		m_pfnProxied( pfnProxied )
 	{
 		MEM_POLICY::OnAcquire(m_pObject);
@@ -482,7 +482,7 @@ protected:
 	{
 		MEM_POLICY::OnRelease(m_pObject);
 	}
-	
+
 	void Set( OBJECT_TYPE_PTR pObject, FUNCTION_TYPE pfnProxied )
 	{
 		m_pfnProxied = pfnProxied;
@@ -624,7 +624,7 @@ FUNC_GENERATE_ALL_BUT0( DEFINE_FUNCTOR_DATA_TEMPLATE );
 
 class CFunctorCallback0 : public CFunctorCallbackBase
 {
-	typedef void (*Callback_t)( ); 
+	typedef void (*Callback_t)( );
 public:
 	CFunctorCallback0( Callback_t pfnProxied ) : m_pfnProxied( pfnProxied ) {}
 	void operator()( CFunctorData *pFunctorDataBase )
@@ -633,16 +633,16 @@ public:
 		m_pfnProxied( );
 	}
 	virtual void ComputeValidationString( char *pString, size_t nBufLen ) const { FUNC_VALIDATION_STRING_0 }
-	virtual bool IsEqual( CFunctorCallback *pSrc ) const 
-	{ 
+	virtual bool IsEqual( CFunctorCallback *pSrc ) const
+	{
 		if ( V_stricmp( GetImplClassName(), pSrc->GetImplClassName() ) )
 			return false;
-		return m_pfnProxied == static_cast< CFunctorCallback0* >( pSrc )->m_pfnProxied; 
+		return m_pfnProxied == static_cast< CFunctorCallback0* >( pSrc )->m_pfnProxied;
 	}
 	virtual const char *GetImplClassName() const { return "CFunctorCallback0"; }
 	virtual const void *GetTarget() const { return ( void * )m_pfnProxied; }
 private:
-	Callback_t m_pfnProxied; 
+	Callback_t m_pfnProxied;
 };
 
 FUNC_GENERATE_ALL_BUT0( DEFINE_FUNCTOR_CALLBACK_TEMPLATE );
@@ -668,25 +668,25 @@ FUNC_GENERATE_ALL_BUT0( DEFINE_FUNCTOR_CALLBACK_TEMPLATE );
 		CMemberFuncProxy##N< FUNCTION_CLASS *, MemberCallback_t FUNC_BASE_TEMPLATE_ARG_PARAMS_##N, MEM_POLICY> m_Proxy; \
 	}
 
-template < class FUNCTION_CLASS, class MEM_POLICY = CFuncMemPolicyNone > 
+template < class FUNCTION_CLASS, class MEM_POLICY = CFuncMemPolicyNone >
 class CMemberFunctorCallback0 : public CFunctorCallbackBase
 {
 	typedef void (FUNCTION_CLASS::*MemberCallback_t)( );
 public:
-	CMemberFunctorCallback0( FUNCTION_CLASS *pObject, MemberCallback_t pfnProxied ) : m_Proxy( pObject, pfnProxied ) {} 
+	CMemberFunctorCallback0( FUNCTION_CLASS *pObject, MemberCallback_t pfnProxied ) : m_Proxy( pObject, pfnProxied ) {}
 	void operator()( CFunctorData *pFunctorDataBase )
 	{
 		ValidateFunctorData( pFunctorDataBase );
 		m_Proxy( );
 	}
 	virtual void ComputeValidationString( char *pString, size_t nBufLen ) const { FUNC_VALIDATION_STRING_0 }
-	virtual bool IsEqual( CFunctorCallback *pSrc ) const 
-	{ 
+	virtual bool IsEqual( CFunctorCallback *pSrc ) const
+	{
 		if ( V_stricmp( GetImplClassName(), pSrc->GetImplClassName() ) )
 			return false;
-		return m_Proxy == static_cast< CMemberFunctorCallback0 * >( pSrc )->m_Proxy; 
+		return m_Proxy == static_cast< CMemberFunctorCallback0 * >( pSrc )->m_Proxy;
 	}
-	virtual const char *GetImplClassName() const { return "CMemberFunctorCallback0"; } 
+	virtual const char *GetImplClassName() const { return "CMemberFunctorCallback0"; }
 	virtual const void *GetTarget() const { return m_Proxy.GetTarget(); }
 private:
 	CMemberFuncProxy0< FUNCTION_CLASS *, MemberCallback_t, MEM_POLICY > m_Proxy;
@@ -764,7 +764,7 @@ FUNC_GENERATE_ALL( DEFINE_REF_COUNTING_CONST_MEMBER_FUNCTOR_FACTORY );
 
 inline CFunctorData *CreateFunctorData()
 {
-	return new CFunctorData0(); 
+	return new CFunctorData0();
 }
 
 FUNC_GENERATE_ALL_BUT0( DEFINE_FUNCTOR_DATA_FACTORY );
@@ -855,7 +855,7 @@ public:
 	{
 		m_pAllocator = pAllocator;
 	}
-	
+
 	#define DEFINE_NONMEMBER_FUNCTOR_FACTORY_CUSTOM(N) \
 		template <typename FUNCTION_RETTYPE FUNC_TEMPLATE_FUNC_PARAMS_##N FUNC_TEMPLATE_ARG_PARAMS_##N> \
 		inline CFunctor *CreateFunctor( FUNCTION_RETTYPE (*pfnProxied)( FUNC_BASE_TEMPLATE_FUNC_PARAMS_##N ) FUNC_ARG_FORMAL_PARAMS_##N ) \
@@ -912,7 +912,7 @@ public:
 
 private:
 	CAllocator *m_pAllocator;
-	
+
 };
 
 //-----------------------------------------------------------------------------

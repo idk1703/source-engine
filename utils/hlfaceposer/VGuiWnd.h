@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -19,7 +19,7 @@ namespace vgui
 	typedef unsigned long HCursor;
 }
 
-class CVGuiWnd 
+class CVGuiWnd
 {
 
 public:
@@ -61,7 +61,7 @@ public:
 
 	CVGuiPanelWnd( mxWindow *parent, int x, int y, int w, int h );
 
-	virtual int handleEvent( mxEvent *event ); 
+	virtual int handleEvent( mxEvent *event );
 	virtual void redraw();
 };
 

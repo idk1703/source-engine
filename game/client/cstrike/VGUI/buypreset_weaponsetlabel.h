@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -94,7 +94,7 @@ public:
 		m_image->SetSize( wide, tall );
 	}
 
-	// Set the draw color 
+	// Set the draw color
 	virtual void SetColor(Color col)
 	{
 		if ( !m_image )

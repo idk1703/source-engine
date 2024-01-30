@@ -68,14 +68,14 @@ void CFuncMoveLinear::Spawn( void )
 
 	SetMoveType( MOVETYPE_PUSH );
 	SetModel( STRING( GetModelName() ) );
-	
+
 	// Don't allow zero or negative speeds
 	if (m_flSpeed <= 0)
 	{
 		m_flSpeed = 100;
 	}
-	
-	// If move distance is set to zero, use with width of the 
+
+	// If move distance is set to zero, use with width of the
 	// brush to determine the size of the move distance
 	if (m_flMoveDistance <= 0)
 	{
@@ -113,11 +113,11 @@ bool CFuncMoveLinear::ShouldSavePhysics( void )
 {
 	// don't save physics for func_water_analog, regen
 	return !FClassnameIs( this, "func_water_analog" );
-		
+
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CFuncMoveLinear::CreateVPhysics( void )
 {
@@ -137,7 +137,7 @@ bool CFuncMoveLinear::CreateVPhysics( void )
 
 		IPhysicsObject *pPhysics = VPhysicsInitShadow( false, false );
 		fluidparams_t fluid;
-		
+
 		Assert( CollisionProp()->GetCollisionAngles() == vec3_angle );
 		fluid.damping = 0.01f;
 		fluid.surfacePlane[0] = 0;
@@ -148,10 +148,10 @@ bool CFuncMoveLinear::CreateVPhysics( void )
 		fluid.torqueFactor = 0.1f;
 		fluid.viscosityFactor = 0.01f;
 		fluid.pGameData = static_cast<void *>(this);
-		
+
 		//FIXME: Currently there's no way to specify that you want slime
 		fluid.contents = CONTENTS_WATER;
-		
+
 		m_pFluidController = physenv->CreateFluidController( pPhysics, &fluid );
 	}
 
@@ -200,7 +200,7 @@ void CFuncMoveLinear::MoveTo(Vector vPosition, float flSpeed)
 				ep.m_flVolume = 1;
 				ep.m_SoundLevel = SNDLVL_NORM;
 
-				EmitSound( filter, entindex(), ep );	
+				EmitSound( filter, entindex(), ep );
 			}
 		}
 
@@ -278,7 +278,7 @@ void CFuncMoveLinear::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 	if ( value > 1.0 )
 		value = 1.0;
 	Vector move = m_vecPosition1 + (value * (m_vecPosition2 - m_vecPosition1));
-	
+
 	Vector delta = move - GetLocalOrigin();
 	float speed = delta.Length() * 10;
 
@@ -339,7 +339,7 @@ void CFuncMoveLinear::InputSetPosition( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 void CFuncMoveLinear::Blocked( CBaseEntity *pOther )
 {
-	// Hurt the blocker 
+	// Hurt the blocker
 	if ( m_flBlockDamage )
 	{
 		if ( pOther->m_takedamage == DAMAGE_EVENTS_ONLY )
@@ -353,8 +353,8 @@ void CFuncMoveLinear::Blocked( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CFuncMoveLinear::InputSetSpeed( inputdata_t &inputdata )
 {
@@ -374,11 +374,11 @@ void CFuncMoveLinear::InputSetSpeed( inputdata_t &inputdata )
 // Purpose: Draw any debug text overlays
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CFuncMoveLinear::DrawDebugTextOverlays(void) 
+int CFuncMoveLinear::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 		float flTravelDist = (m_vecPosition1 - m_vecPosition2).Length();

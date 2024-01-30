@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -59,7 +59,7 @@ public:
 	void	Event_Killed( const CTakeDamageInfo &info );
 	int		OnTakeDamage_Alive( const CTakeDamageInfo &info );
 	void	Gib();
-	void	GetGunAim( Vector *vecAim );	
+	void	GetGunAim( Vector *vecAim );
 	~CNPC_MissileDefense();
 
 	Vector		m_vGunAng;
@@ -138,7 +138,7 @@ void CNPC_MissileDefense::FireCannons( void )
 		return;
 	}
 	// ----------------------------------------------
-	// Make sure gun it pointing in right direction	
+	// Make sure gun it pointing in right direction
 	// ----------------------------------------------
 	Vector vGunDir;
 	GetGunAim( &vGunDir );
@@ -187,7 +187,7 @@ void CNPC_MissileDefense::FireCannons( void )
 
 	Vector vecGun;
 	QAngle vecAng;
-	
+
 	GetAttachment( MD_AP_LGUN, vecGun, vecAng );
 
 	Vector vecTarget;
@@ -266,7 +266,7 @@ void CNPC_MissileDefense::Spawn( void )
 	CapabilitiesClear();
 	CapabilitiesAdd ( bits_CAP_INNATE_RANGE_ATTACK1 );
 
-	// Hate missiles	
+	// Hate missiles
 	AddClassRelationship( CLASS_MISSILE, D_HT, 5 );
 
 	m_spawnflags |= SF_NPC_LONG_RANGE;
@@ -349,7 +349,7 @@ void CNPC_MissileDefense::Gib(void)
 	SetBodygroup( 4, 0 );
 	m_takedamage = 0;
 	SetThink(NULL);
-	
+
 	// Throw manhackgibs
 	CGib::SpawnSpecificGibs( this, MD_GIB_COUNT, 300, 500, MD_GIB_MODEL);
 }
@@ -362,7 +362,7 @@ void CNPC_MissileDefense::Gib(void)
 void CNPC_MissileDefense::RunAI( void )
 {
 	// If my enemy is dead clear the memory and reset m_hEnemy
-	if (GetEnemy() != NULL && 
+	if (GetEnemy() != NULL &&
 		!GetEnemy()->IsAlive())
 	{
 		ClearEnemyMemory();
@@ -405,7 +405,7 @@ void CNPC_MissileDefense::EnemyShootPosition(CBaseEntity* pEnemy, Vector *vPosit
 	}
 
 	*vPosition = pEnemy->GetAbsOrigin();
-	
+
 	// Add prediction but prevents us from flipping around as enemy approaches us
 	float	flDist		= (pEnemy->GetAbsOrigin() - GetAbsOrigin()).Length();
 	Vector	vPredVel	= pEnemy->GetSmoothedVelocity() * 0.5;
@@ -430,7 +430,7 @@ void CNPC_MissileDefense::AimGun( void )
 
 	Vector forward, right, up;
 	AngleVectors( GetLocalAngles(), &forward, &right, &up );
-		
+
 	// Get gun attachment points
 	Vector vBasePos;
 	QAngle vBaseAng;

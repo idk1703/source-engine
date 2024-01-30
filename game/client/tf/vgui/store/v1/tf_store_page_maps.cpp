@@ -12,15 +12,15 @@
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTFStorePage_Maps::CTFStorePage_Maps( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData ) 
+CTFStorePage_Maps::CTFStorePage_Maps( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData )
 :	BaseClass( parent, pPageData, "Resource/UI/econ/store/v1/StorePreviewItemPanel_Maps.res" )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage_Maps::OnPageShow()
 {

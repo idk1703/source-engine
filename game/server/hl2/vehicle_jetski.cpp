@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -76,7 +76,7 @@ private:
 	void			OnTurn( CUserCmd *ucmd );
 	void			OnSpeed( CUserCmd *ucmd );
 	void			UpdateTurnAndSpeed( void );
-	
+
 	void			CreateSplash( int nSplashType );
 
 	bool			UpdateLean( CUserCmd *ucmd );
@@ -114,7 +114,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJetski::Precache( void )
 {
@@ -122,7 +122,7 @@ void CPropJetski::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJetski::Spawn( void )
 {
@@ -150,7 +150,7 @@ void CPropJetski::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJetski::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr )
 {
@@ -164,7 +164,7 @@ void CPropJetski::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CPropJetski::OnTakeDamage( const CTakeDamageInfo &info )
 {
@@ -188,12 +188,12 @@ int CPropJetski::OnTakeDamage( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJetski::Think(void)
 {
 	BaseClass::Think();
-	
+
 	// set handbrake after physics sim settles down
 	if ( gpGlobals->curtime < m_flHandbrakeTime )
 	{
@@ -225,7 +225,7 @@ void CPropJetski::Think(void)
 				GetAttachment( "vehicle_driver_eyes", vecEyes, vecEyeAng );
 				vecEyeAng.x = 0;
 				vecEyeAng.z = 0;
-				pPlayer->SnapEyeAngles( vecEyeAng );			
+				pPlayer->SnapEyeAngles( vecEyeAng );
 			}
 			m_bExitAnimOn = false;
 		}
@@ -283,7 +283,7 @@ void CPropJetski::OnTurn( CUserCmd *ucmd )
 	return;
 
 	// Roll right.
-	if( bRight )	 
+	if( bRight )
 	{
 		float flLengthRight = JETSKI_SHOCK_LENGTH_SHORT + ( JETSKI_SHOCK_LENGTH_REST - JETSKI_SHOCK_LENGTH_SHORT ) * flInvAbsSteering;
 		float flLengthLeft = JETSKI_SHOCK_LENGTH_REST + ( JETSKI_SHOCK_LENGTH_LONG - JETSKI_SHOCK_LENGTH_REST ) * flAbsSteering;
@@ -305,7 +305,7 @@ void CPropJetski::OnTurn( CUserCmd *ucmd )
 		m_flSpringLengthApproach[3] = flLengthRight;		// Back-Right
 	}
 	// Return springs to their normal height
-	else		
+	else
 	{
 		m_flSpringLengthApproach[0] = JETSKI_SHOCK_LENGTH_REST;			// Front-Left
 		m_flSpringLengthApproach[1] = JETSKI_SHOCK_LENGTH_REST;			// Front-Right
@@ -366,7 +366,7 @@ float CPropJetski::CalculateDrag( CUserCmd *ucmd )
 	float flDrag = 0.0f;
 
 	bool bLean = UpdateLean( ucmd );
-	
+
 #if 0
 	if ( bLean )
 	{
@@ -437,7 +437,7 @@ void CPropJetski::OnSpeed( CUserCmd *ucmd )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJetski::UpdateTurnAndSpeed( void )
 {
@@ -461,7 +461,7 @@ void CPropJetski::UpdateTurnAndSpeed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJetski::DriveVehicle( CBasePlayer *pPlayer, CUserCmd *ucmd )
 {
@@ -477,14 +477,14 @@ void CPropJetski::DriveVehicle( CBasePlayer *pPlayer, CUserCmd *ucmd )
 
 	// Save this data.
 	m_nSpeed = m_VehiclePhysics.GetSpeed();
-	m_nRPM = m_VehiclePhysics.GetRPM();	
+	m_nRPM = m_VehiclePhysics.GetRPM();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
-//			*pMoveData - 
+// Purpose:
+// Input  : *pPlayer -
+//			*pMoveData -
 //-----------------------------------------------------------------------------
 void CPropJetski::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMoveData )
 {
@@ -492,7 +492,7 @@ void CPropJetski::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMoveData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJetski::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move )
 {
@@ -500,7 +500,7 @@ void CPropJetski::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *p
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropJetski::CreateSplash( int nSplashType )
 {
@@ -513,7 +513,7 @@ void CPropJetski::CreateSplash( int nSplashType )
 
 	CEffectData	data;
 	data.m_vOrigin = vecSplashPoint;
-	
+
 	switch ( nSplashType )
 	{
 	case JETSKI_SPLASH_SPRAY:

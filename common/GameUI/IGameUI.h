@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ enum ESystemNotify
 //-----------------------------------------------------------------------------
 // Purpose: contains all the functions that the GameUI dll exports
 //-----------------------------------------------------------------------------
-abstract_class IGameUI 
+abstract_class IGameUI
 {
 public:
 	// initialization/shutdown
@@ -58,10 +58,10 @@ public:
 	// notifications
 	virtual void OnGameUIActivated() = 0;
 	virtual void OnGameUIHidden() = 0;
-	
+
 	// OLD: Use OnConnectToServer2
-	virtual void OLD_OnConnectToServer(const char *game, int IP, int port) = 0; 
-	
+	virtual void OLD_OnConnectToServer(const char *game, int IP, int port) = 0;
+
 	virtual void OnDisconnectFromServer_OLD( uint8 eSteamLoginFailure, const char *username ) = 0;
 	virtual void OnLevelLoadingStarted(bool bShowProgressDialog) = 0;
 	virtual void OnLevelLoadingFinished(bool bError, const char *failureReason, const char *extendedReason) = 0;

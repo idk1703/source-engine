@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -127,7 +127,7 @@ void DebugOut( const char *pMsg, ... )
 	va_start( marker, pMsg );
 	_vsnprintf( msg, sizeof( msg ), pMsg, marker );
 	va_end( marker );
-	
+
 	if (g_bVerbose)
 	{
 		Msg( "%s", msg );
@@ -191,35 +191,35 @@ void MySystem( char *pCommand )
 	FILE *batFp = fopen( "temp.bat", "w" );
 	fprintf( batFp, "%s\n", pCommand );
 	fclose( batFp );
-	
+
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
-	
+
 	ZeroMemory( &si, sizeof(si) );
 	si.cb = sizeof(si);
 	ZeroMemory( &pi, sizeof(pi) );
-	
-	// Start the child process. 
-	if( !CreateProcess( NULL, // No module name (use command line). 
-		"temp.bat", // Command line. 
-		NULL,             // Process handle not inheritable. 
-		NULL,             // Thread handle not inheritable. 
-		FALSE,            // Set handle inheritance to FALSE. 
-		IDLE_PRIORITY_CLASS | CREATE_NO_WINDOW,                // No creation flags. 
-		NULL,             // Use parent's environment block. 
-		g_WorkerTempPath, // Use parent's starting directory. 
+
+	// Start the child process.
+	if( !CreateProcess( NULL, // No module name (use command line).
+		"temp.bat", // Command line.
+		NULL,             // Process handle not inheritable.
+		NULL,             // Thread handle not inheritable.
+		FALSE,            // Set handle inheritance to FALSE.
+		IDLE_PRIORITY_CLASS | CREATE_NO_WINDOW,                // No creation flags.
+		NULL,             // Use parent's environment block.
+		g_WorkerTempPath, // Use parent's starting directory.
 		&si,              // Pointer to STARTUPINFO structure.
 		&pi )             // Pointer to PROCESS_INFORMATION structure.
-		) 
+		)
 	{
 		Error( "CreateProcess failed." );
 		Assert( 0 );
 	}
-	
+
 	// Wait until child process exits.
 	WaitForSingleObject( pi.hProcess, INFINITE );
-	
-	// Close process and thread handles. 
+
+	// Close process and thread handles.
 	CloseHandle( pi.hProcess );
 	CloseHandle( pi.hThread );
 }
@@ -264,7 +264,7 @@ void Worker_ProcessWorkUnitFn( int iThread, uint64 iWorkUnit, MessageBuffer *pBu
 		char localVTFName[1024];
 		sprintf( localVTFName, "%s%s", g_WorkerTempPath, g_CompileCommands[i] + 3 );
 		DebugOut( "local: \"%s\"\n", localVTFName );
-		
+
 		FILE *fp = fopen( localVTFName, "rb" );
 		if( fp )
 		{
@@ -284,7 +284,7 @@ void Worker_ProcessWorkUnitFn( int iThread, uint64 iWorkUnit, MessageBuffer *pBu
 		else
 		{
 //			static CUtlStringMap<bool> m_FileAlreadyFailed;
-//			
+//
 //			if( !m_FileAlreadyFailed.Defined( g_CompileCommands[i] ) )
 //			{
 //				m_FileAlreadyFailed[g_CompileCommands[i]] = true;
@@ -411,7 +411,7 @@ void Worker_GetFileFromMaster( const char *pFileName )
 
 	sprintf( filename, "%s%s", g_WorkerTempPath, pFileName + 3 ); // dear lord . .skip the u:\ BUG BUG BUG
 //	printf( "creating \"%s\"\n", pFileName );
-	
+
 	FILE *fp3 = fopen( filename, "wb" );
 	if( !fp3 )
 	{
@@ -444,7 +444,7 @@ void Worker_GetLocalCopyOfBinary( const char *pFilename )
 	char tmpFilename[MAX_PATH];
 	sprintf( tmpFilename, "%s\\%s", g_ExeDir, pFilename );
 	printf( "trying to open: %s\n", tmpFilename );
-	
+
 	FILE *fp = fopen( tmpFilename, "rb" );
 	if( !fp )
 	{
@@ -462,7 +462,7 @@ void Worker_GetLocalCopyOfBinary( const char *pFilename )
 
 	char newFilename[MAX_PATH];
 	sprintf( newFilename, "%s%s", g_WorkerTempPath, pFilename );
-	
+
 	DebugOut( "this is fucked \"%s\"\n", newFilename );
 	FILE *fp2 = fopen( newFilename, "wb" );
 	if( !fp2 )
@@ -550,8 +550,8 @@ void WriteTexture( const char *pTextureName )
 #if 0
 	CUtlVector<CUtlBuffer> &byteCodeArray = g_ByteCode[pShaderName];
 	const ShaderInfo_t &shaderInfo = g_ShaderToShaderInfo[pShaderName];
-//	printf( "%s : %d combos centroid mask: 0x%x numDynamicCombos: %d flags: 0x%x\n", 
-//		pShaderName, shaderInfo.m_nTotalShaderCombos, 
+//	printf( "%s : %d combos centroid mask: 0x%x numDynamicCombos: %d flags: 0x%x\n",
+//		pShaderName, shaderInfo.m_nTotalShaderCombos,
 //		shaderInfo.m_CentroidMask, shaderInfo.m_nDynamicCombos, shaderInfo.m_Flags );
 	CUtlBuffer header;
 	CUtlBuffer body;
@@ -560,7 +560,7 @@ void WriteTexture( const char *pTextureName )
 	header.PutInt( shaderInfo.m_nDynamicCombos );
 	header.PutUnsignedInt( shaderInfo.m_Flags );
 	header.PutUnsignedInt( shaderInfo.m_CentroidMask );
-	
+
 	int headerSize = sizeof( int ) * 5;
 	int directorySize = sizeof( int ) * 2 * shaderInfo.m_nTotalShaderCombos;
 	int bodyOffset = headerSize + directorySize;
@@ -610,7 +610,7 @@ void WriteTexture( const char *pTextureName )
 		// The file exists, let's see if it's writable.
 		if( !( buf.st_mode & _S_IWRITE ) )
 		{
-			// It isn't writable. . we'd better change it's permissions (or check it out possibly).			
+			// It isn't writable. . we'd better change it's permissions (or check it out possibly).
 			printf( "Warning: making %s writable!\n", filename2 );
 			_chmod( filename2, _S_IREAD | _S_IWRITE );
 		}
@@ -648,7 +648,7 @@ int TextureCompile_Main( int argc, char* argv[] )
 	SetupDebugFile();
 	numthreads = 1; // holy shit batman!
 	SetupPaths( argc, argv );
-	
+
 	// Master, start accepting connections.
 	// Worker, make a connection.
 	DebugOut( "Before VMPI_Init\n" );
@@ -666,7 +666,7 @@ int TextureCompile_Main( int argc, char* argv[] )
 
 	int maxFileSystemMemoryUsageBytes = 50000000;
 	CmdLib_InitFileSystem( ".", maxFileSystemMemoryUsageBytes );
-	
+
 	DebugOut( "After VMPI_FileSystem_Init\n" );
 	Shared_ParseListOfCompileCommands();
 	DebugOut( "After Shared_ParseListOfCompileCommands\n" );
@@ -732,7 +732,7 @@ int TextureCompile_Main( int argc, char* argv[] )
 	VMPI_FileSystem_Term();
 	VMPI_Finalize();
 	g_bSuppressPrintfOutput = false;
-	
+
 	if( g_bMPIMaster )
 	{
 /*
@@ -751,9 +751,9 @@ int TextureCompile_Main( int argc, char* argv[] )
 				WriteTexture( g_ByteCode.String( i ) );
 			}
 		}
-		
+
 		double end = Plat_FloatTime();
-		
+
 		char str[512];
 		GetHourMinuteSecondsString( (int)( end - g_flStartTime ), str, sizeof( str ) );
 		Msg( "%s elapsed\n", str );

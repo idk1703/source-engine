@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose: Special case hash table for console commands
 //
@@ -18,10 +18,10 @@
 // This is a hash table class very similar to the CUtlHashFast, but
 // modified specifically so that we can look up ConCommandBases
 // by string names without having to actually store those strings in
-// the dictionary, and also iterate over all of them. 
+// the dictionary, and also iterate over all of them.
 // It uses separate chaining: each key hashes to a bucket, each
-// bucket is a linked list of hashed commands. We store the hash of 
-// the command's string name as well as its pointer, so we can do 
+// bucket is a linked list of hashed commands. We store the hash of
+// the command's string name as well as its pointer, so we can do
 // the linked list march part of the Find() operation more quickly.
 class CConCommandHash
 {
@@ -78,7 +78,7 @@ public:
 		int bucket;
 		CCommandHashHandle_t handle;
 
-		CCommandHashIterator_t(int _bucket, const CCommandHashHandle_t &_handle) 
+		CCommandHashIterator_t(int _bucket, const CCommandHashHandle_t &_handle)
 			: bucket(_bucket), handle(_handle) {};
 		// inline operator UtlHashFastHandle_t() const { return handle; };
 	};
@@ -94,7 +94,7 @@ private:
 	CCommandHashHandle_t Find( const char *name, HashKey_t hash) const;
 
 protected:
-	enum 
+	enum
 	{
 		kNUM_BUCKETS = 256,
 		kBUCKETMASK  = kNUM_BUCKETS - 1,
@@ -153,7 +153,7 @@ CConCommandHash::CCommandHashIterator_t CConCommandHash::First() const
 			return CCommandHashIterator_t( bucket, iElement );
 	}
 
-	// if we are down here, the list is empty 
+	// if we are down here, the list is empty
 	return CCommandHashIterator_t( -1, invalidIndex );
 }
 
@@ -161,7 +161,7 @@ CConCommandHash::CCommandHashIterator_t CConCommandHash::First() const
 // Purpose: For iterating over the whole hash, return the next element after
 // the param one. Or an invalid iterator.
 //-----------------------------------------------------------------------------
-CConCommandHash::CCommandHashIterator_t 
+CConCommandHash::CCommandHashIterator_t
 CConCommandHash::Next( const CConCommandHash::CCommandHashIterator_t &iter ) const
 {
 	// look for the next entry in the current bucket

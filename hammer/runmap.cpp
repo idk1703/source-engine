@@ -76,13 +76,13 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CRunMap message handlers
 
-void CRunMap::OnExpert() 
+void CRunMap::OnExpert()
 {
 	m_bSwitchMode = TRUE;
 	EndDialog(IDOK);
 }
 
-BOOL CRunMap::OnInitDialog() 
+BOOL CRunMap::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	return TRUE;

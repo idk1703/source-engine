@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,4 +16,3 @@ void C_OrderRespawnStation::GetDescription( char *pDest, int bufferSize )
 {
 	Q_strncpy( pDest, "Build Respawn Station Near Object", bufferSize );
 }
-

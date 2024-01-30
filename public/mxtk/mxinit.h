@@ -26,7 +26,7 @@ class mxWindow;
 
 
 
-class mx  
+class mx
 {
 public:
 	// NO CREATORS
@@ -66,8 +66,8 @@ public:
 		{
 		}
 		unsigned char  flags; // one or more of above ACCEL_ flags
-		unsigned short key; // Specifies the accelerator key. This member can be either a virtual-key code or a character code. 
-		unsigned short command; // Specifies the accelerator identifier. This value is placed in the low-order word of the wParam parameter of the WM_COMMAND or WM_SYSCOMMAND message when the accelerator is pressed. 
+		unsigned short key; // Specifies the accelerator key. This member can be either a virtual-key code or a character code.
+		unsigned short command; // Specifies the accelerator identifier. This value is placed in the low-order word of the wParam parameter of the WM_COMMAND or WM_SYSCOMMAND message when the accelerator is pressed.
 	};
 
 	static void createAccleratorTable( int numentries, Accel_t *entries );

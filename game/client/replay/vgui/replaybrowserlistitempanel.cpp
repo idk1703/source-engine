@@ -131,7 +131,7 @@ CReplayBrowserThumbnail::~CReplayBrowserThumbnail()
 }
 
 void CReplayBrowserThumbnail::SetReplayItem( QueryableReplayItemHandle_t hReplayItem )
-{ 
+{
 	if ( m_hReplayItem != REPLAY_HANDLE_INVALID && m_hReplayItem != hReplayItem )
 	{
 		IQueryableReplayItem *pReplayItem = m_pReplayItemManager->GetItem( m_hReplayItem );
@@ -144,7 +144,7 @@ void CReplayBrowserThumbnail::SetReplayItem( QueryableReplayItemHandle_t hReplay
 		}
 	}
 
-	m_hReplayItem = hReplayItem; 
+	m_hReplayItem = hReplayItem;
 
 	if ( hReplayItem != REPLAY_HANDLE_INVALID )
 	{
@@ -265,7 +265,7 @@ void CReplayBrowserThumbnail::ApplySchemeSettings( vgui::IScheme *pScheme )
 	LoadControlSettings( "resource/ui/replaybrowser/listthumbnail.res", "GAME" );
 
 	// Get default from the .res file
-	m_clrDefaultBg = GetBgColor();	
+	m_clrDefaultBg = GetBgColor();
 	m_clrHighlight = GetSchemeColor( "TanDark", Color( 255, 255, 255, 255 ), pScheme );
 }
 
@@ -685,7 +685,7 @@ void CBaseThumbnailCollection::UpdateViewingPage( void )
 	for ( int i = 0; i < iThumbnailsPerPage; i++ )
 	{
 		int iReplayIndex = (iFirstReplayOnPage + i);
-		
+
 		int iRow = floor( i / (float)m_nReplayThumbnailsPerRow );
 		int iColumn = i % m_nReplayThumbnailsPerRow;
 
@@ -715,7 +715,7 @@ void CBaseThumbnailCollection::UpdateViewingPage( void )
 
 			m_vecRows[iRow]->AddReplayThumbnail( REPLAY_HANDLE_INVALID );
 		}
-		
+
 		if ( iReplayIndex >= m_vecReplays.Count() )
 		{
 			m_vecRows[iRow]->m_vecThumbnails[iColumn]->SetReplayItem( REPLAY_HANDLE_INVALID );

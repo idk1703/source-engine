@@ -1,7 +1,7 @@
 
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -91,12 +91,12 @@ BEGIN_DMXELEMENT_UNPACK( MapStats_t )
 END_DMXELEMENT_UNPACK( MapStats_t, s_MapStatsUnpack )
 
 // priority order of stats to display record for; earlier position in list is highest
-TFStatType_t g_statPriority[] = { TFSTAT_HEADSHOTS, TFSTAT_BACKSTABS, TFSTAT_MAXSENTRYKILLS, TFSTAT_HEALING, TFSTAT_KILLS, TFSTAT_KILLASSISTS,  
-	TFSTAT_DAMAGE, TFSTAT_DOMINATIONS, TFSTAT_INVULNS, TFSTAT_BUILDINGSDESTROYED, TFSTAT_CAPTURES, TFSTAT_DEFENSES, TFSTAT_REVENGE, TFSTAT_TELEPORTS, TFSTAT_BUILDINGSBUILT, 
+TFStatType_t g_statPriority[] = { TFSTAT_HEADSHOTS, TFSTAT_BACKSTABS, TFSTAT_MAXSENTRYKILLS, TFSTAT_HEALING, TFSTAT_KILLS, TFSTAT_KILLASSISTS,
+	TFSTAT_DAMAGE, TFSTAT_DOMINATIONS, TFSTAT_INVULNS, TFSTAT_BUILDINGSDESTROYED, TFSTAT_CAPTURES, TFSTAT_DEFENSES, TFSTAT_REVENGE, TFSTAT_TELEPORTS, TFSTAT_BUILDINGSBUILT,
 	TFSTAT_HEALTHLEACHED, TFSTAT_POINTSSCORED, TFSTAT_PLAYTIME, TFSTAT_BONUS_POINTS };
 // stat types that we don't display records for, kept in this list just so we can assert all stats appear in one list or the other
 TFStatType_t g_statUnused[] = { TFSTAT_DEATHS, TFSTAT_UNDEFINED, TFSTAT_SHOTS_FIRED, TFSTAT_SHOTS_HIT, TFSTAT_FIREDAMAGE, TFSTAT_BLASTDAMAGE,
-	TFSTAT_DAMAGETAKEN, TFSTAT_HEALTHKITS, TFSTAT_AMMOKITS, TFSTAT_CLASSCHANGES, TFSTAT_CRITS, TFSTAT_SUICIDES, TFSTAT_CURRENCY_COLLECTED, TFSTAT_DAMAGE_ASSIST, TFSTAT_HEALING_ASSIST, 
+	TFSTAT_DAMAGETAKEN, TFSTAT_HEALTHKITS, TFSTAT_AMMOKITS, TFSTAT_CLASSCHANGES, TFSTAT_CRITS, TFSTAT_SUICIDES, TFSTAT_CURRENCY_COLLECTED, TFSTAT_DAMAGE_ASSIST, TFSTAT_HEALING_ASSIST,
 	TFSTAT_DAMAGE_BOSS, TFSTAT_DAMAGE_BLOCKED, TFSTAT_DAMAGE_RANGED, TFSTAT_DAMAGE_RANGED_CRIT_RANDOM, TFSTAT_DAMAGE_RANGED_CRIT_BOOSTED, TFSTAT_REVIVED, TFSTAT_THROWABLEHIT, TFSTAT_THROWABLEKILL, TFSTAT_KILLS_RUNECARRIER, TFSTAT_FLAGRETURNS,
 	TFSTAT_KILLSTREAK_MAX };
 
@@ -111,7 +111,7 @@ const char *g_szLocalizedRecordText[] =
 	"",
 	"[shots hit]",
 	"[shots fired]",
-	"#StatPanel_Kills",	
+	"#StatPanel_Kills",
 	"[deaths]",
 	"#StatPanel_DamageDealt",
 	"#StatPanel_Captures",
@@ -128,7 +128,7 @@ const char *g_szLocalizedRecordText[] =
 	"#StatPanel_Backstabs",
 	"#StatPanel_HealthLeached",
 	"#StatPanel_BuildingsBuilt",
-	"#StatPanel_SentryKills",		
+	"#StatPanel_SentryKills",
 	"#StatPanel_Teleports",
 	"#StatPanel_BonusPoints"
 };
@@ -138,7 +138,7 @@ const char *g_szLocalizedMVMRecordText[] =
 	"",
 	"[shots hit]",
 	"[shots fired]",
-	"#StatPanel_MVM_Kills",	
+	"#StatPanel_MVM_Kills",
 	"[deaths]",
 	"#StatPanel_MVM_DamageDealt",
 	"#StatPanel_MVM_Captures",
@@ -155,7 +155,7 @@ const char *g_szLocalizedMVMRecordText[] =
 	"#StatPanel_MVM_Backstabs",
 	"#StatPanel_MVM_HealthLeached",
 	"#StatPanel_MVM_BuildingsBuilt",
-	"#StatPanel_MVM_SentryKills",		
+	"#StatPanel_MVM_SentryKills",
 	"#StatPanel_MVM_Teleports",
 	"#StatPanel_MVM_BonusPoints"
 };
@@ -220,7 +220,7 @@ void CTFStatPanel::LevelShutdown()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStatPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -228,7 +228,7 @@ void CTFStatPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStatPanel::Reset()
 {
@@ -253,7 +253,7 @@ void CTFStatPanel::ResetDisplayedStat()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStatPanel::Init()
 {
@@ -268,7 +268,7 @@ void CTFStatPanel::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStatPanel::UpdateStats( int iClass, const RoundStats_t &stats, bool bAlive )
 {
@@ -294,7 +294,7 @@ void CTFStatPanel::UpdateStats( int iClass, const RoundStats_t &stats, bool bAli
 	}
 
 	// sentry kills is a max value rather than a count, meaningless to accumulate
-	classStats.accumulated.m_iStat[TFSTAT_MAXSENTRYKILLS] = 0;	
+	classStats.accumulated.m_iStat[TFSTAT_MAXSENTRYKILLS] = 0;
 	classStats.accumulatedMVM.m_iStat[TFSTAT_MAXSENTRYKILLS] = 0;
 
 	ResetDisplayedStat();
@@ -405,7 +405,7 @@ void CTFStatPanel::UpdateMapStats( map_identifier_t iMapID, const RoundMapStats_
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStatPanel::TestStatPanel( TFStatType_t statType, RecordBreakType_t recordType )
 {
@@ -448,12 +448,12 @@ void CTFStatPanel::WriteStats( void )
 	{
 		CSteamID steamID = steamapicontext->SteamUser()->GetSteamID();
 		iSteamID = steamID.GetAccountID();
-	}	
+	}
 	// Calc CRC of all data to make the local data file somewhat tamper-resistant
 	int iCRC = CalcCRC( iSteamID );
 
 	pPlayerStats->SetValue( "iVersion", static_cast<int>( PLAYERSTATS_FILE_VERSION ) );
-	pPlayerStats->SetValue( "SteamID", iSteamID );	
+	pPlayerStats->SetValue( "SteamID", iSteamID );
 	pPlayerStats->SetValue( "iTimestamp", iCRC );	// store the CRC with a non-obvious name
 
 	CDmxAttribute *pClassStatsList = pPlayerStats->AddAttribute( "aClassStats" );
@@ -553,7 +553,7 @@ void CTFStatPanel::WriteStats( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFStatPanel::ReadStats( void )
 {
@@ -595,7 +595,7 @@ bool CTFStatPanel::ReadStats( void )
 	}
 
 	int iSteamID = pPlayerStats->GetValue<int>( "SteamID" );
-	int iCRCFile = pPlayerStats->GetValue<int>( "iTimestamp" );	
+	int iCRCFile = pPlayerStats->GetValue<int>( "iTimestamp" );
 
 	const CUtlVector< CDmxElement* > &aClassStatsList = pPlayerStats->GetArray< CDmxElement * >( "aClassStats" );
 	int iCount = aClassStatsList.Count();
@@ -656,8 +656,8 @@ bool CTFStatPanel::ReadStats( void )
 	// check file CRC and steam ID to see if we think this file has not been tampered with
 	int iCRC = CalcCRC( iSteamID );
 	// does file CRC match CRC generated from file data, and is there a Steam ID in the file
-	if ( ( iCRC == iCRCFile ) && ( iSteamID > 0 ) && steamapicontext->SteamUser() ) 
-	{		
+	if ( ( iCRC == iCRCFile ) && ( iSteamID > 0 ) && steamapicontext->SteamUser() )
+	{
 		// does the file Steam ID match current Steam ID (so you can't hand around files)
 		CSteamID steamID = steamapicontext->SteamUser()->GetSteamID();
 		if ( steamID.GetAccountID() == (uint32) iSteamID )
@@ -689,7 +689,7 @@ int CTFStatPanel::CalcCRC( int iSteamID )
 		CRC32_ProcessBuffer( &crc, &classStats, sizeof( classStats ) );
 		// since the class data structure is highly guessable from the file, add one other thing to make the CRC hard to hack w/o code disassembly
 		int iObfuscate = iClass * iClass;
-		CRC32_ProcessBuffer( &crc, &iObfuscate, sizeof( iObfuscate ) );	
+		CRC32_ProcessBuffer( &crc, &iObfuscate, sizeof( iObfuscate ) );
 	}
 
 	CRC32_Final( &crc );
@@ -698,7 +698,7 @@ int CTFStatPanel::CalcCRC( int iSteamID )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStatPanel::ShowStatPanel( int iClass, int iTeam, int iCurStatValue, TFStatType_t statType, RecordBreakType_t recordBreakType,
 								 bool bAlive )
@@ -724,7 +724,7 @@ void CTFStatPanel::ShowStatPanel( int iClass, int iTeam, int iCurStatValue, TFSt
 	SetDialogVariable( "stattextlarge", "" );
 	SetDialogVariable( "stattextsmall", "" );
 	if ( recordBreakType == RECORDBREAK_CLOSE )
-	{		
+	{
 		// if we are displaying that the player got close to a record, show current & best values
 		char szCur[32],szBest[32];
 		wchar_t wzCur[32],wzBest[32];
@@ -745,7 +745,7 @@ void CTFStatPanel::ShowStatPanel( int iClass, int iTeam, int iCurStatValue, TFSt
 		SetDialogVariable( "stattextlarge", szValue );
 	}
 
-	SetDialogVariable( "statdesc", g_pVGuiLocalize->Find( CFmtStr( "%s_%s", bMVM ? g_szLocalizedMVMRecordText[statType] : g_szLocalizedRecordText[statType], 
+	SetDialogVariable( "statdesc", g_pVGuiLocalize->Find( CFmtStr( "%s_%s", bMVM ? g_szLocalizedMVMRecordText[statType] : g_szLocalizedRecordText[statType],
 		pRecordTextSuffix[recordBreakType] ) ) );
 
 	// Set the class name. We can't use a dialog variable because it's a string that's already
@@ -775,7 +775,7 @@ void CTFStatPanel::ShowStatPanel( int iClass, int iTeam, int iCurStatValue, TFSt
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStatPanel::FireGameEvent( IGameEvent * event )
 {
@@ -799,13 +799,13 @@ void CTFStatPanel::FireGameEvent( IGameEvent * event )
 		{
 			// hide panel if we're currently showing it
 			Hide();
-		}		
+		}
 		m_flTimeLastSpawn = gpGlobals->curtime;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStatPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -825,7 +825,7 @@ void CTFStatPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStatPanel::OnTick()
 {
@@ -837,7 +837,7 @@ void CTFStatPanel::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStatPanel::Show()
 {
@@ -847,7 +847,7 @@ void CTFStatPanel::Show()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStatPanel::Hide()
 {
@@ -862,7 +862,7 @@ void CTFStatPanel::Hide()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFStatPanel::ShouldDraw( void )
 {
@@ -871,7 +871,7 @@ bool CTFStatPanel::ShouldDraw( void )
 
 	if ( IsTakingAFreezecamScreenshot() )
 		return false;
-	
+
 	if ( TFGameRules() && TFGameRules()->IsInArenaMode() == true )
 	{
 		m_flTimeHide = gpGlobals->curtime;
@@ -882,7 +882,7 @@ bool CTFStatPanel::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStatPanel::ClearStatsInMemory( void )
 {
@@ -894,7 +894,7 @@ void CTFStatPanel::ClearStatsInMemory( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStatPanel::ResetStats( void )
 {
@@ -1013,10 +1013,10 @@ float CTFStatPanel::GetTotalHoursPlayed( void )
 	float totalTimePlayed = 0;
 
 	for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass < TF_LAST_NORMAL_CLASS; iClass++ )
-	{		
+	{
 		totalTimePlayed += GetClassStats( iClass ).accumulated.m_iStat[ TFSTAT_PLAYTIME ] + GetClassStats( iClass ).accumulatedMVM.m_iStat[ TFSTAT_PLAYTIME ];
 	}
-	
+
 	return totalTimePlayed / ( 60.0f * 60.0f );
 }
 
@@ -1144,7 +1144,7 @@ void TestStatPanel( const CCommand &args )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void HideStatPanel()
 {
@@ -1155,7 +1155,7 @@ void HideStatPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ResetPlayerStats()
 {
@@ -1166,7 +1166,7 @@ void ResetPlayerStats()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void RefreshPlayerStats()
 {
@@ -1185,4 +1185,3 @@ ConCommand hidestatpanel( "hidestatpanel", HideStatPanel, "", FCVAR_DEVELOPMENTO
 ConCommand refreshplayerstats( "refreshplayerstats", RefreshPlayerStats, "", FCVAR_DEVELOPMENTONLY );
 
 ConCommand resetplayerstats( "resetplayerstats", ResetPlayerStats, "", FCVAR_CLIENTCMD_CAN_EXECUTE );
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,7 +18,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDemoActionManager : public IDemoActionManager
 {
@@ -78,7 +78,7 @@ static CDemoActionManager g_DemoActionManager;
 IDemoActionManager *demoaction = ( IDemoActionManager * )&g_DemoActionManager;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDemoActionManager::CDemoActionManager()
 {
@@ -90,21 +90,21 @@ CDemoActionManager::CDemoActionManager()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDemoActionManager::~CDemoActionManager()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoActionManager::Init( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoActionManager::Shutdown( void )
 {
@@ -143,7 +143,7 @@ void CDemoActionManager::ReloadFromDisk( void )
 				while( pIter )
 				{
 					char factorytouse[ 512 ];
-					
+
 					Q_strncpy( factorytouse, pIter->GetName(), sizeof( factorytouse ) );
 
 					// New format is to put numbers in here
@@ -187,8 +187,8 @@ void CDemoActionManager::ReloadFromDisk( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *demfilename - 
+// Purpose:
+// Input  : *demfilename -
 //-----------------------------------------------------------------------------
 void CDemoActionManager::StartPlaying( char const *demfilename )
 {
@@ -222,7 +222,7 @@ void CDemoActionManager::StartPlaying( char const *demfilename )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoActionManager::ClearAll()
 {
@@ -237,7 +237,7 @@ void CDemoActionManager::ClearAll()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoActionManager::StopPlaying()
 {
@@ -256,9 +256,9 @@ void CDemoActionManager::StopPlaying()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : demoframe - 
-//			demotime - 
+// Purpose:
+// Input  : demoframe -
+//			demotime -
 //-----------------------------------------------------------------------------
 void CDemoActionManager::Update(  bool newframe, int demotick, float demotime )
 {
@@ -290,8 +290,8 @@ void CDemoActionManager::Update(  bool newframe, int demotick, float demotime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : buf - 
+// Purpose:
+// Input  : buf -
 //-----------------------------------------------------------------------------
 void CDemoActionManager::SaveToBuffer( CUtlBuffer& buf )
 {
@@ -314,8 +314,8 @@ void CDemoActionManager::SaveToBuffer( CUtlBuffer& buf )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *demfilename - 
+// Purpose:
+// Input  : *demfilename -
 //-----------------------------------------------------------------------------
 void CDemoActionManager::SaveToFile( void )
 {
@@ -351,8 +351,8 @@ void CDemoActionManager::SaveToFile( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *demfilename - 
+// Purpose:
+// Input  : *demfilename -
 //-----------------------------------------------------------------------------
 void CDemoActionManager::OnVDMLoaded( char const *demfilename )
 {
@@ -376,7 +376,7 @@ char const *CDemoActionManager::GetCurrentDemoFile( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CDemoActionManager::GetActionCount( void )
@@ -386,8 +386,8 @@ int CDemoActionManager::GetActionCount( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : CBaseDemoAction
 //-----------------------------------------------------------------------------
 CBaseDemoAction *CDemoActionManager::GetAction( int index )
@@ -400,8 +400,8 @@ CBaseDemoAction *CDemoActionManager::GetAction( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *action - 
+// Purpose:
+// Input  : *action -
 //-----------------------------------------------------------------------------
 void CDemoActionManager::AddAction( CBaseDemoAction *action )
 {
@@ -411,8 +411,8 @@ void CDemoActionManager::AddAction( CBaseDemoAction *action )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *action - 
+// Purpose:
+// Input  : *action -
 //-----------------------------------------------------------------------------
 void CDemoActionManager::RemoveAction( CBaseDemoAction *action )
 {
@@ -424,7 +424,7 @@ void CDemoActionManager::RemoveAction( CBaseDemoAction *action )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoActionManager::IsDirty( void ) const
@@ -433,8 +433,8 @@ bool CDemoActionManager::IsDirty( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dirty - 
+// Purpose:
+// Input  : dirty -
 //-----------------------------------------------------------------------------
 void CDemoActionManager::SetDirty( bool dirty )
 {
@@ -442,8 +442,8 @@ void CDemoActionManager::SetDirty( bool dirty )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *action - 
+// Purpose:
+// Input  : *action -
 //-----------------------------------------------------------------------------
 void CDemoActionManager::InsertFireEvent( CBaseDemoAction *action )
 {
@@ -456,7 +456,7 @@ void CDemoActionManager::InsertFireEvent( CBaseDemoAction *action )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoActionManager::DispatchEvents()
 {
@@ -478,6 +478,3 @@ bool CDemoActionManager::OverrideView( democmdinfo_t& info, int tick )
 	// override view
 	return false;
 }
-
-
-

@@ -98,7 +98,7 @@ private:
 		matrix3x4_t	m_DagToWorld;
 		bool m_bComputedDagToWorld;
 	};
-	
+
 	static CUtlStack<TransformInfo_t> s_TransformStack;
 	static bool s_bDrawUsingEngineCoordinates;
 };

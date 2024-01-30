@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -29,7 +29,7 @@
 
 #include "MainPanel.h"
 #include <imanageserver.h>
-#include "ivguimodule.h" 
+#include "ivguimodule.h"
 #include <vgui/IVGui.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -83,7 +83,7 @@ void CMainPanel::Initialize( )
 	m_bIsInConfig = true;
 	m_bClosing = false;
 	m_pProgressBox = NULL;
-	m_hShutdown = NULL; 
+	m_hShutdown = NULL;
 
 	MoveToFront();
 
@@ -91,16 +91,16 @@ void CMainPanel::Initialize( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMainPanel::Open( void )
-{	
+{
 	m_pConfigPage->SetVisible(true);
 	m_pConfigPage->MoveToFront();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMainPanel::OnClose()
 {
@@ -126,7 +126,7 @@ void CMainPanel::StartServer(const char *cvars)
 	// hide the config page and close it
 	m_pConfigPage->SetVisible(false);
 	m_pConfigPage->Close();
-		
+
 	gpszCvars = strdup(cvars);
 
 	// show the basic progress box immediately
@@ -200,9 +200,9 @@ void CMainPanel::OnTick()
 	{
 		static int count = 0;
 		if (WAIT_OBJECT_0 == WaitForSingleObject(m_hShutdown, 10) || count > 5000)
-		{	
+		{
 			if (!m_bStarted)
-			{	
+			{
 				serveritem_t server;
 				m_pConfigPage->GetServer(server);
 				ManageServerUIHandle_t managePage = g_pAdminServer->OpenManageServerDialog(server.name, server.gameDir);
@@ -210,7 +210,7 @@ void CMainPanel::OnTick()
 				m_bStarted = true;
 
 				if (m_pProgressBox)
-				{	
+				{
 					m_pProgressBox->Close();
 					m_pProgressBox = NULL;
 				}
@@ -219,13 +219,13 @@ void CMainPanel::OnTick()
 			{
 				DoStop();
 			}
-			
+
 			surface()->SetCursor(dc_user);
 			m_bStarting = false;
 			ResetEvent(m_hShutdown);
 		}
 		else
-		{	
+		{
 			count++;
 		}
 	}
@@ -242,7 +242,7 @@ void CMainPanel::DoStop()
 	m_bClosing = true;
 
 	if (m_pProgressBox)
-	{	
+	{
 		m_pProgressBox->Close();
 		m_pProgressBox = NULL;
 	}

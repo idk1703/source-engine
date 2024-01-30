@@ -14,7 +14,7 @@
 // 2)  For each combined sound in a vcd, make sure there's a valid entry in the localization table
 // 3)  For each combined sound, verify that the english version combined .wav file has the proper checksum
 // 4)  Note any files in the closecaption folder which are orphaned after parsing the above
-// 5)  If hl2_french directories etc. exist, then compare combined .wav files with localized versions and 
+// 5)  If hl2_french directories etc. exist, then compare combined .wav files with localized versions and
 //   see if localized checksum tag differs from US one, or warn if tag missing, but complain if .wav duration is different.
 //
 //	UNDONE:re-create combined .wav files in english to the extent that the checksums mismatch?
@@ -102,7 +102,7 @@ static bool forceextract = false;
 void vprint( int depth, const char *fmt, ... );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void printusage( void )
 {
@@ -145,7 +145,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CSceneTokenProcessor::CurrentToken( void )
@@ -154,8 +154,8 @@ const char *CSceneTokenProcessor::CurrentToken( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : crossline - 
+// Purpose:
+// Input  : crossline -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSceneTokenProcessor::GetToken( bool crossline )
@@ -164,7 +164,7 @@ bool CSceneTokenProcessor::GetToken( bool crossline )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSceneTokenProcessor::TokenAvailable( void )
@@ -199,9 +199,9 @@ void cleanquotes( char *text )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fmt - 
-//			... - 
+// Purpose:
+// Input  : *fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CSceneTokenProcessor::Error( const char *fmt, ... )
 {
@@ -218,12 +218,12 @@ void CSceneTokenProcessor::Error( const char *fmt, ... )
 static CSceneTokenProcessor g_TokenProcessor;
 
 SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
-{	
+{
 	spewed = true;
 
 	printf( "%s", pMsg );
 	OutputDebugString( pMsg );
-	
+
 	if ( type == SPEW_ERROR )
 	{
 		printf( "\n" );
@@ -275,12 +275,12 @@ void nuke_print( int depth, const char *fmt, ... )
 	va_start( va, fmt );
 	vsprintf( string, fmt, va );
 	va_end( va );
-	
+
 	static bool first = false;
 
 
 	FILE *fp = NULL;
-	
+
 	char const *nukefile = "nuke.bat";
 
 	if ( first )
@@ -313,10 +313,10 @@ void nuke_print( int depth, const char *fmt, ... )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : depth - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : depth -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void vprint( int depth, const char *fmt, ... )
 {
@@ -433,7 +433,7 @@ void BuildFileList( CUtlVector< CUtlSymbol >& files, char const *rootdir, char c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CheckLogFile( void )
 {
@@ -551,8 +551,8 @@ static StdIOReadBinary io_in;
 #define WAVE_CUE			MAKEID('c','u','e',' ')
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &walk - 
+// Purpose:
+// Input  : &walk -
 //-----------------------------------------------------------------------------
 static void ParseSentence( CSentence& sentence, IterateRIFF &walk )
 {
@@ -608,7 +608,7 @@ bool LoadSentenceFromWavFileUsingIO( char const *wavfile, CSentence& sentence, I
 					{
 						*formatsize = walk.ChunkSize();
 						walk.ChunkRead( formatbuffer );
-					}	
+					}
 					else
 					{
 						Error( "oops, format tag too big!!!" );
@@ -713,7 +713,7 @@ bool ValidateCombinedFileCheckSum( char const *outfilename, char const *cctoken,
 					dothisfile = true;
 				}
 				if ( ch == 'a' || ch == 'A' )
-				{	
+				{
 					regenerate_all = true;
 					dothisfile = true;
 				}
@@ -747,7 +747,7 @@ bool ValidateCombinedFileCheckSum( char const *outfilename, char const *cctoken,
 	_strlwr( fn );
 	Q_FixSlashes( fn );
 	CUtlSymbol sym = g_Analysis.symbols.AddString( fn );
-	
+
 	if ( referencedcaptionwaves.Find( sym ) == referencedcaptionwaves.InvalidIndex() )
 	{
 		referencedcaptionwaves.Insert( sym );
@@ -1031,7 +1031,7 @@ void BuildVCDAndMapNameListsFromReslists( CUtlVector< CUtlSymbol >& vcdsinreslis
 			g_pFullFileSystem->Close(resfilehandle);
 		}
 	}
-	
+
 
 	if ( !loaded )
 	{
@@ -1168,7 +1168,7 @@ void SpewDuplicatedText( char const *lang, const char *entry, const wchar_t *str
 	wchar_t cleaned[ 4096 ];
 
 	wchar_t *out = cleaned;
-	
+
 	for ( ; curpos && *curpos != L'\0'; ++curpos )
 	{
 		wchar_t cmd[ 256 ];
@@ -1234,7 +1234,7 @@ void CheckDuplcatedText( void )
 		Q_snprintf( fn, sizeof( fn ), "resource/closecaption_%s.txt", language );
 
 		g_pVGuiLocalize->AddFile( fn );
-	
+
 		// Now check for closecaption_xxx.txt entries which are orphaned because there isn't an existing sound script entry in use for them
 		StringIndex_t str = g_pVGuiLocalize->GetFirstStringIndex();
 		while ( str != INVALID_LOCALIZE_STRING_INDEX )
@@ -1273,7 +1273,7 @@ void SpewEnglishText( const wchar_t *str )
 	wchar_t cleaned[ 4096 ];
 
 	wchar_t *out = cleaned;
-	
+
 	for ( ; curpos && *curpos != L'\0'; ++curpos )
 	{
 		wchar_t cmd[ 256 ];
@@ -1362,7 +1362,7 @@ void CheckUnusedSounds()
 		}
 		else
 		{
-			int scriptindex = g_pSoundEmitterSystem->FindSoundScript( g_pSoundEmitterSystem->GetSourceFileForSound( i ) ); 
+			int scriptindex = g_pSoundEmitterSystem->FindSoundScript( g_pSoundEmitterSystem->GetSourceFileForSound( i ) );
 			if ( scriptindex != -1 )
 			{
 				slot = usedscripts.Find( scriptindex );
@@ -1401,7 +1401,7 @@ void CheckUnusedSounds()
 	g_pFullFileSystem->RemoveFile( "cc_combined.txt", "GAME" );
 
 	logprint( "todo.csv", "\"CC_TOKEN\",\"TEXT\",\"WAVE FILE\"\n" );
-			
+
 	// Now check for closecaption_xxx.txt entries which are orphaned because there isn't an existing sound script entry in use for them
 	StringIndex_t str = g_pVGuiLocalize->GetFirstStringIndex();
 	while ( str != INVALID_LOCALIZE_STRING_INDEX )
@@ -1450,7 +1450,7 @@ void CheckUnusedSounds()
 								CSentence sentence;
 								if ( LoadSentenceFromWavFile( va( "sound/%s", PSkipSoundChars( wavname ) ), sentence ) )
 								{
-									if ( Q_strlen( sentence.GetText() ) > 0 ) 
+									if ( Q_strlen( sentence.GetText() ) > 0 )
 									{
 										Q_snprintf( ansi, sizeof( ansi ), "%s", sentence.GetText() );
 										cleanquotes( ansi );
@@ -1616,7 +1616,7 @@ void SpewScript( char const *vcdname, CUtlRBTree< CChoreoEvent *, int >& list )
 					CSentence sentence;
 					if ( LoadSentenceFromWavFile( va( "sound/%s", PSkipSoundChars( wavname ) ), sentence ) )
 					{
-						if ( Q_strlen( sentence.GetText() ) > 0 ) 
+						if ( Q_strlen( sentence.GetText() ) > 0 )
 						{
 							Q_snprintf( sentence_text, sizeof( sentence_text ), "%s", sentence.GetText() );
 							cleanquotes( sentence_text );
@@ -1704,7 +1704,7 @@ void CheckLocalizationEntries( CUtlVector< CUtlSymbol >& vcdfiles, CUtlRBTree< C
 		Q_snprintf( fullname, sizeof( fullname ), "%s", g_Analysis.symbols.String( vcdname ) );
 
 		LoadScriptFile( fullname );
-	
+
 		CChoreoScene *scene = ChoreoLoadScene( fullname, NULL, &g_TokenProcessor, Con_Printf );
 		if ( !scene )
 		{
@@ -1769,11 +1769,11 @@ void CheckLocalizationEntries( CUtlVector< CUtlSymbol >& vcdfiles, CUtlRBTree< C
 					//Q_FileBase( g_Analysis.symbols.String( vcdname ), fn, sizeof( fn ) );
 					Q_strncpy( fn, &g_Analysis.symbols.String( vcdname )[ gamedirskip ], sizeof( fn ) );
 
-					
+
 					if ( Q_stristr( tok, ".wav" ) )
 					{
 						if ( verbose )
-						{	
+						{
 							if ( !regenerate_quiet )
 							{
 								vprint( 0, "(OBSOLETE???)missing cc token '%s' (!.wav file):  vcd (%s), event (%s)\n",
@@ -1789,8 +1789,8 @@ void CheckLocalizationEntries( CUtlVector< CUtlSymbol >& vcdfiles, CUtlRBTree< C
 						{
 							vprint( 0, "missing %s cc token '%s':  vcd (%s), event (%s)\n",
 								pass == 0 ? "normal" : "combined",
-								tok, 
-								fn, 
+								tok,
+								fn,
 								e->GetName() );
 						}
 
@@ -1814,7 +1814,7 @@ void CheckLocalizationEntries( CUtlVector< CUtlSymbol >& vcdfiles, CUtlRBTree< C
 										CSentence sentence;
 										if ( LoadSentenceFromWavFile( va( "sound/%s", PSkipSoundChars( wavname ) ), sentence ) )
 										{
-											if ( Q_strlen( sentence.GetText() ) > 0 ) 
+											if ( Q_strlen( sentence.GetText() ) > 0 )
 											{
 												Q_snprintf( suggested, sizeof( suggested ), "%s", sentence.GetText() );
 												cleanquotes( suggested );
@@ -1829,8 +1829,8 @@ void CheckLocalizationEntries( CUtlVector< CUtlSymbol >& vcdfiles, CUtlRBTree< C
 
 						++missingcount;
 					}
-					
-					
+
+
 				}
 				else
 				{
@@ -1927,7 +1927,7 @@ float GetWaveDuration( char const *wavname )
 		//vprint( 0, "unable to load %s\n", wavname );
 		return 0.0f;
 	}
-	
+
 	CAudioMixer *pMixer = wave->CreateMixer();
 	if ( !pMixer )
 	{
@@ -1935,7 +1935,7 @@ float GetWaveDuration( char const *wavname )
 		delete wave;
 		return 0.0f;
 	}
-	
+
 	float duration = wave->GetRunningLength();
 	return duration;
 }
@@ -1964,7 +1964,7 @@ void ValidateForeignLanguageWaves( char const *language, CUtlVector< CUtlSymbol 
 	char langdir[ 512 ];
 	char strippedgamedir[ 512 ];
 	Q_strncpy( langdir, gamedir, sizeof( langdir ) );
-	
+
 	Q_StripTrailingSlash( langdir );
 
 	Q_strncpy( strippedgamedir, langdir, sizeof( strippedgamedir ) );
@@ -1982,7 +1982,7 @@ void ValidateForeignLanguageWaves( char const *language, CUtlVector< CUtlSymbol 
 	for ( int i = 0; i < c; ++i )
 	{
 		CUtlSymbol& sym = combinedwavfiles[ i ];
-		
+
 		char wavname[ 512 ];
 		Q_strncpy( wavname, g_Analysis.symbols.String( sym ), sizeof( wavname ) );
 
@@ -2114,7 +2114,7 @@ void CheckWaveFile( CUtlDict< CUtlSymbol, int >& wavtosound, char const *wavname
 	CSentence sentence;
 	if ( LoadSentenceFromWavFile( va( "sound/%s", PSkipSoundChars( wavname ) ), sentence ) )
 	{
-		if ( Q_strlen( sentence.GetText() ) > 0 ) 
+		if ( Q_strlen( sentence.GetText() ) > 0 )
 		{
 			Q_snprintf( ansi, sizeof( ansi ), "%s", sentence.GetText() );
 			cleanquotes( ansi );
@@ -2138,7 +2138,7 @@ void CheckWaveFile( CUtlDict< CUtlSymbol, int >& wavtosound, char const *wavname
 		}
 	}
 
-	logprint( "wavcheck.csv", 
+	logprint( "wavcheck.csv",
 		"\"%s\",\"%s\",\"%s\",\"%s\"\n",
 		wavname,
 		soundname,
@@ -2153,7 +2153,7 @@ void WavCheck( CUtlVector< CUtlSymbol >& wavfiles )
 	vprint( 0, "Building reverse lookup\n" );
 
 
-	logprint( "wavcheck.csv", 
+	logprint( "wavcheck.csv",
 		"\"%s\",\"%s\",\"%s\",\"%s\"\n",
 		"WaveName",
 		"Sound Script Name",
@@ -2205,7 +2205,7 @@ static void COM_CreatePath (const char *path)
 {
 	char temppath[512];
 	Q_strncpy( temppath, path, sizeof(temppath) );
-	
+
 	for (char *ofs = temppath+1 ; *ofs ; ofs++)
 	{
 		if (*ofs == '/' || *ofs == '\\')
@@ -2260,11 +2260,11 @@ void MakeBatchFile( CUtlVector< CUtlSymbol >& wavfiles, char const *pchFromdir, 
 		Q_strlower( fullname );
 		Q_FixSlashes( fullname );
 
-		//logprint( "copywaves.bat", "xcopy \"%s\" \"%s\"\n", 
+		//logprint( "copywaves.bat", "xcopy \"%s\" \"%s\"\n",
 			//shortname,
 			//fullname );
 
-		
+
 		COM_CreatePath( fullname );
 
 		CopyFile( shortname, fullname, TRUE );
@@ -2272,8 +2272,8 @@ void MakeBatchFile( CUtlVector< CUtlSymbol >& wavfiles, char const *pchFromdir, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : store - 
+// Purpose:
+// Input  : store -
 //-----------------------------------------------------------------------------
 void StoreValveDataChunk( CSentence& sentence, IterateOutputRIFF& store )
 {
@@ -2365,7 +2365,7 @@ void ExtractPhonemesForWave( IPhonemeExtractor *extractor, char const *wavname )
 		return;
 	}
 
-	if ( !forceextract && 
+	if ( !forceextract &&
 		sentence.m_Words.Count() > 0 )
 	{
 		vprint( 0, "  skip '%s', already has phonemes\n", wavname );
@@ -2392,8 +2392,8 @@ void ExtractPhonemesForWave( IPhonemeExtractor *extractor, char const *wavname )
 	int channels = pHeader->nChannels;
 
 	int sampleSize = (bits * channels) / 8;
-	
-	// this can never be zero -- other functions divide by this. 
+
+	// this can never be zero -- other functions divide by this.
 	// This should never happen, but avoid crashing
 	if ( sampleSize <= 0 )
 		sampleSize = 1;
@@ -2411,7 +2411,7 @@ void ExtractPhonemesForWave( IPhonemeExtractor *extractor, char const *wavname )
 
 		int blockCount = sampleCount / blockSize;
 		int blockRem = sampleCount % blockSize;
-		
+
 		// total samples in complete blocks
 		sampleCount = blockCount * pFormat->wSamplesPerBlock;
 
@@ -2435,7 +2435,7 @@ void ExtractPhonemesForWave( IPhonemeExtractor *extractor, char const *wavname )
 	char filename[ 512 ];
 	Q_snprintf( filename, sizeof( filename ), "%s", wavname );
 
-	int result = extractor->Extract( 
+	int result = extractor->Extract(
 		filename,
 		dataSize, // (int)( m_pWaveFile->GetRunningLength() * m_pWaveFile->SampleRate() * m_pWaveFile->TrueSampleSize() ),
 		Msg,
@@ -2511,7 +2511,7 @@ int LoadPhonemeExtractors()
 	const char *pFilename = g_pFullFileSystem->FindFirstEx( "phonemeextractors/*.dll", "EXECUTABLE_PATH", &findHandle );
 	int useextractor = -1;
 	while ( pFilename )
-	{	
+	{
 		char fullpath[ 512 ];
 		Q_snprintf( fullpath, sizeof( fullpath ), "phonemeextractors/%s", pFilename  );
 
@@ -2547,7 +2547,7 @@ int LoadPhonemeExtractors()
 			useextractor = g_Extractors.Count();
 		}
 
-		g_Extractors.AddToTail( e );	
+		g_Extractors.AddToTail( e );
 	}
 
 	g_pFullFileSystem->FindClose( findHandle );
@@ -2738,7 +2738,7 @@ bool SplitCommand( wchar_t const **ppIn, wchar_t *cmd, wchar_t *args )
 wchar_t *GetStartupCommands( const wchar_t *str )
 {
 	const wchar_t *curpos = str;
-	
+
 	for ( ; curpos && *curpos != L'\0'; ++curpos )
 	{
 		wchar_t cmd[ 256 ];
@@ -2761,7 +2761,7 @@ wchar_t *GetStartupCommands( const wchar_t *str )
 		cmds[ len ] = L'\0';
 		return cmds;
 	}
-	
+
 	return NULL;
 }
 
@@ -2836,7 +2836,7 @@ void BuildOrderedCaptionList( CUtlVector< OrderedCaption_t >& list )
 		data = ReadUnicodeToken(data, valuetoken, MAX_LOCALIZED_CHARS, bQuoted);
 		if (!valuetoken[0] && !bQuoted)
 			break;	// we've hit the null terminator
-		
+
 		if (state == STATE_BASE)
 		{
 			if (!stricmp(key, "Language"))
@@ -2959,7 +2959,7 @@ void LoadImportData( char const *filename, CUtlDict< LookupData_t, int >& lookup
 		data = ReadUnicodeToken(data, valuetoken, MAX_LOCALIZED_CHARS, bQuoted);
 		if (!valuetoken[0] && !bQuoted)
 			break;	// we've hit the null terminator
-		
+
 		wchar_t *vcopy = new wchar_t[ wcslen( valuetoken ) + 1 ];
 		wcscpy( vcopy, valuetoken );
 
@@ -2983,7 +2983,7 @@ void LoadImportData( char const *filename, CUtlDict< LookupData_t, int >& lookup
 //  we need to read in the closecaption_english.txt file
 //   and then build a reverse lookup of .wav to caption name and build a new
 //   closecaption_test.txt file based on the unicode caption strings
-// Input  : *importfile - 
+// Input  : *importfile -
 //-----------------------------------------------------------------------------
 void ImportCaptions( char const *pchImportfile )
 {
@@ -3245,7 +3245,7 @@ bool CLocalizationCheckApp::Create()
 	SpewOutputFunc( SpewFunc );
 	SpewActivate( "localization_check", 2 );
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "vgui2.dll",				VGUI_IVGUI_INTERFACE_VERSION },
 		{ "soundemittersystem.dll",	SOUNDEMITTERSYSTEM_INTERFACE_VERSION },
@@ -3285,7 +3285,7 @@ bool CLocalizationCheckApp::PreInit( )
 	// work out of the root directory (same as the reslists)
 	g_pFullFileSystem->AddSearchPath(".", "root");
 
-	return true; 
+	return true;
 }
 
 
@@ -3297,9 +3297,9 @@ void CLocalizationCheckApp::PostShutdown( )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : argc - 
-//			argv[] - 
+// Purpose:
+// Input  : argc -
+//			argv[] -
 // Output : int
 //-----------------------------------------------------------------------------
 int CLocalizationCheckApp::Main()
@@ -3577,7 +3577,7 @@ int CLocalizationCheckApp::Main()
 			CUtlVector< CUtlSymbol > localized_files;
 			BuildFileList( localized_files, todir, ".wav" );
 			vprint( 0, "found %i .wav files in %s (and subdirs)\n\n", localized_files.Count(), todir );
-		
+
 			SyncDucking( englishfiles, localized_files );
 		}
 		else

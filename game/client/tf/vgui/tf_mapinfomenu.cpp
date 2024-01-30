@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,7 +37,7 @@ CTFMapInfoMenu::CTFMapInfoMenu( IViewPort *pViewPort ) : Frame( NULL, PANEL_MAPI
 
 	// load the new scheme early!!
 	SetScheme( "ClientScheme" );
-	
+
 	SetTitleBarVisible( false );
 	SetMinimizeButtonVisible( false );
 	SetMaximizeButtonVisible( false );
@@ -73,7 +73,7 @@ CTFMapInfoMenu::~CTFMapInfoMenu()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapInfoMenu::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -128,7 +128,7 @@ void CTFMapInfoMenu::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapInfoMenu::ShowPanel( bool bShow )
 {
@@ -150,7 +150,7 @@ void CTFMapInfoMenu::ShowPanel( bool bShow )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFMapInfoMenu::CheckForIntroMovie()
 {
@@ -164,7 +164,7 @@ bool CTFMapInfoMenu::CheckForIntroMovie()
 	char resolvedFile[MAX_PATH];
 	if ( g_pVideo && g_pVideo->LocatePlayableVideoFile( pVideoFileName, "GAME", &playbackSystem, resolvedFile, sizeof(resolvedFile) ) == VideoResult::SUCCESS  )
 	{
-		return true;	
+		return true;
 	}
 
 	return false;
@@ -173,7 +173,7 @@ bool CTFMapInfoMenu::CheckForIntroMovie()
 const char *COM_GetModDirectory();
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFMapInfoMenu::HasViewedMovieForMap()
 {
@@ -181,7 +181,7 @@ bool CTFMapInfoMenu::HasViewedMovieForMap()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapInfoMenu::CheckIntroState()
 {
@@ -224,7 +224,7 @@ void CTFMapInfoMenu::CheckIntroState()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapInfoMenu::CheckBackContinueButtons()
 {
@@ -254,7 +254,7 @@ void CTFMapInfoMenu::CheckBackContinueButtons()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapInfoMenu::OnCommand( const char *command )
 {
@@ -329,10 +329,10 @@ void CTFMapInfoMenu::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapInfoMenu::Update()
-{ 
+{
 	InvalidateLayout( false, true );
 }
 
@@ -366,7 +366,7 @@ void CTFMapInfoMenu::LoadMapPage()
 			// take off the vgui/ at the beginning when we set the image
 			Q_snprintf( szMapImage, sizeof( szMapImage ), "maps/menu_photos_%s", m_szMapName );
 			Q_strlower( szMapImage );
-			
+
 			m_pMapImage->SetImage( szMapImage );
 		}
 	}
@@ -437,7 +437,7 @@ void CTFMapInfoMenu::LoadMapPage()
 			{
 				// convert the win32 ucs2 data to wchar_t
 				dataSize*=2;// need to *2 to account for ucs2 to wchar_t (4byte) growth
-				wchar_t *memBlockConverted = (wchar_t *)malloc(dataSize);	
+				wchar_t *memBlockConverted = (wchar_t *)malloc(dataSize);
 				V_UCS2ToUnicode( (ucs2 *)memBlock, memBlockConverted, dataSize );
 				free(memBlock);
 				memBlock = memBlockConverted;
@@ -486,7 +486,7 @@ void CTFMapInfoMenu::LoadMapPage()
 			{
 				Q_snprintf( mapInfoKey, sizeof( mapInfoKey ), "#%s", m_szMapName );
 			}
-		
+
 			Q_strlower( mapInfoKey );
 
 			if( !g_pVGuiLocalize->Find( mapInfoKey ) )
@@ -561,13 +561,13 @@ void CTFMapInfoMenu::LoadMapPage()
 	{
 		if ( m_pMapInfo )
 		{
-			m_pMapInfo->SetWide( m_pMapInfo->GetWide() + ( m_pMapImage->GetWide() * 0.75 ) ); // add in the extra space the images would have taken 
+			m_pMapInfo->SetWide( m_pMapInfo->GetWide() + ( m_pMapImage->GetWide() * 0.75 ) ); // add in the extra space the images would have taken
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapInfoMenu::SetMapTitle()
 {
@@ -575,7 +575,7 @@ void CTFMapInfoMenu::SetMapTitle()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapInfoMenu::OnKeyCodePressed( KeyCode code )
 {
@@ -616,7 +616,7 @@ void CTFMapInfoMenu::OnKeyCodePressed( KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapInfoMenu::OnKeyCodeReleased( vgui::KeyCode code )
 {
@@ -626,7 +626,7 @@ void CTFMapInfoMenu::OnKeyCodeReleased( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapInfoMenu::OnThink()
 {
@@ -645,4 +645,3 @@ void CTFMapInfoMenu::OnThink()
 
 	BaseClass::OnThink();
 }
-

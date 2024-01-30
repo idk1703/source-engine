@@ -74,9 +74,9 @@ public:
 
 	struct file_t
 	{
-		file_t() 
-		{ 
-			pBuffer = NULL; 
+		file_t()
+		{
+			pBuffer = NULL;
 			pCompressedBuffer = NULL;
 			nSize = 0;
 			nCompressedSize = NULL;
@@ -146,7 +146,7 @@ public:
 
 	void			Compress( SaveFile_t *pFile );
 	void			Uncompress( SaveFile_t *pFile );
-	
+
 	void			AuditFiles( void );
 	bool			LoadFileFromDisk( const char *pFilename );
 
@@ -163,11 +163,11 @@ private:
 
 	unsigned int	CompressedSize( const char *pFileName );
 
-	CUtlSymbol		AddString( const char *str ) 
+	CUtlSymbol		AddString( const char *str )
 	{
 		char szString[ MAX_PATH ];
 		Q_strncpy( szString, str, sizeof( szString ) );
-		return m_pSaveDirectory->m_SymbolTable.AddString( Q_strlower( szString ) ); 
+		return m_pSaveDirectory->m_SymbolTable.AddString( Q_strlower( szString ) );
 	}
 	const char		*GetString( CUtlSymbol &id ) { return m_pSaveDirectory->m_SymbolTable.String( id ); }
 
@@ -202,18 +202,18 @@ void CSaveRestoreFileSystem::Compress( SaveFile_t *pFile )
 	for(int i=0;i<10;i++)
 	{
 		uint32 sz;
-		unsigned char *pCompressedBuffer = newcompressor_test.Compress( 
+		unsigned char *pCompressedBuffer = newcompressor_test.Compress(
 			(unsigned char *) pFile->pBuffer->Base(), pFile->nSize, &sz );
 		delete[] pCompressedBuffer;
 	}
 	Warning(" new compressor_test %f", Plat_FloatTime() - start );
-    if ( 1)
+	if ( 1)
 	{
 		uint32 sz;
 		uint32 sz1;
 		unsigned char *pNewCompressedBuffer = newcompressor_test.Compress(
 			(unsigned char *) pFile->pBuffer->Base(), pFile->nSize, &sz );
-		unsigned char *pOldCompressedBuffer = compressor_test.Compress( 
+		unsigned char *pOldCompressedBuffer = compressor_test.Compress(
 			(unsigned char *) pFile->pBuffer->Base(), pFile->nSize, &sz1 );
 		if ( ! pNewCompressedBuffer )
 			Warning("new no comp");
@@ -232,7 +232,7 @@ void CSaveRestoreFileSystem::Compress( SaveFile_t *pFile )
 #endif
 
 	CLZSS compressor( 2048 );
-	
+
 	unsigned char *pCompressedBuffer = compressor.Compress( (unsigned char *) pFile->pBuffer->Base(), pFile->nSize, &pFile->nCompressedSize );
 	if ( pCompressedBuffer == NULL )
 	{
@@ -262,7 +262,7 @@ void CSaveRestoreFileSystem::Compress( SaveFile_t *pFile )
 	float percent = 0.f;
 	if ( srcBytes )
 		percent = 100.0f * (1.0f - (float)destBytes/(float)srcBytes);
-	
+
 	SaveMsg( "SIM: SaveDir: (%s) Compressed %d bytes to %d bytes. (%.0f%%)\n", GetString( pFile->name ), srcBytes, destBytes, percent );
 }
 
@@ -295,7 +295,7 @@ void CSaveRestoreFileSystem::Uncompress( SaveFile_t *pFile )
 
 	unsigned int srcBytes = pFile->nCompressedSize;
 	unsigned int destBytes = pFile->nSize;
-	
+
 	SaveMsg( "SIM: SaveDir: (%s) Uncompressed %d bytes to %d bytes.\n", GetString( pFile->name ), srcBytes, destBytes );
 }
 
@@ -430,7 +430,7 @@ void CSaveRestoreFileSystem::Close( FileHandle_t hFile )
 	if ( HandleIsValid( hFile ) )
 	{
 		SaveFile_t &file = GetFile( hFile );
-		
+
 		// Files opened for read don't need to be recompressed
 		if ( file.eType == READ_ONLY )
 		{
@@ -709,12 +709,12 @@ void CSaveRestoreFileSystem::DirectorCopyToMemory( const char *pPath, const char
 				saveFile.pCompressedBuffer->Put( szFileName, sizeof( szFileName ) );
 				saveFile.pCompressedBuffer->Put( &fileSize, sizeof(fileSize) );
 				saveFile.pCompressedBuffer->Put( file.pCompressedBuffer->Base(), file.nCompressedSize );
-				
+
 				SaveMsg("SIM: Packed: %s [Size: %.02f KB]\n", GetString( file.name ), (float)file.nCompressedSize / 1024.0f );
 				nNumFilesPacked++;
 			}
 		}
-	}		
+	}
 
 	// Set the final, complete size of the file
 	saveFile.nCompressedSize = saveFile.pCompressedBuffer->TellMaxPut();
@@ -749,7 +749,7 @@ void CSaveRestoreFileSystem::DirectoryCopy( const char *pPath, const char *pDest
 
 	SaveFile_t &saveFile = GetFile( hSaveFile );
 
-	// Find out how large this is going to be 
+	// Find out how large this is going to be
 	unsigned int nWriteSize = saveFile.nSize;
 	for ( int i = GetDirectory().FirstInorder(); GetDirectory().IsValidIndex( i ); i = GetDirectory().NextInorder( i ) )
 	{
@@ -800,7 +800,7 @@ void CSaveRestoreFileSystem::DirectoryCopy( const char *pPath, const char *pDest
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Extracts all the files contained within pFile. 
+// Purpose: Extracts all the files contained within pFile.
 //			Does not Uncompress the extracted data.
 //-----------------------------------------------------------------------------
 bool CSaveRestoreFileSystem::DirectoryExtract( FileHandle_t pFile, int fileCount, bool bIsXSave )
@@ -820,7 +820,7 @@ bool CSaveRestoreFileSystem::DirectoryExtract( FileHandle_t pFile, int fileCount
 		pCopy = Open( fileName, "wb" );
 		if ( !pCopy )
 			return false;
-		
+
 		SaveFile_t &destFile = GetFile( pCopy );
 		destFile.pCompressedBuffer->EnsureCapacity( fileSize );
 
@@ -829,7 +829,7 @@ bool CSaveRestoreFileSystem::DirectoryExtract( FileHandle_t pFile, int fileCount
 			return false;
 
 		destFile.pCompressedBuffer->SeekPut( CUtlBuffer::SEEK_HEAD, fileSize );
-		destFile.nCompressedSize = fileSize;	
+		destFile.nCompressedSize = fileSize;
 
 		SaveMsg("SIM: Extracted: %s [Size: %d KB]\n", GetString( destFile.name ), destFile.nCompressedSize / 1024 );
 	}
@@ -838,8 +838,8 @@ bool CSaveRestoreFileSystem::DirectoryExtract( FileHandle_t pFile, int fileCount
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFilename - 
+// Purpose:
+// Input  : *pFilename -
 //-----------------------------------------------------------------------------
 bool CSaveRestoreFileSystem::LoadFileFromDisk( const char *pFilename )
 {
@@ -859,8 +859,8 @@ bool CSaveRestoreFileSystem::LoadFileFromDisk( const char *pFilename )
 		return false;
 
 	// Hold the compressed size
-	memoryFile.nCompressedSize = memoryFile.pCompressedBuffer->TellMaxPut();	
-	
+	memoryFile.nCompressedSize = memoryFile.pCompressedBuffer->TellMaxPut();
+
 	// Close the disk file
 	g_pFileSystem->Close( hDiskFile );
 
@@ -977,7 +977,7 @@ void CSaveRestoreFileSystem::LoadSaveDirectoryFromDisk( const char *pPath )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSaveRestoreFileSystem::AuditFiles( void )
 {
@@ -990,7 +990,7 @@ void CSaveRestoreFileSystem::AuditFiles( void )
 	{
 		SaveFile_t &file = GetFile( i );
 		i = GetDirectory().NextInorder( i );
-		
+
 		nTotalFiles++;
 		nTotalCompressed += file.nCompressedSize;
 		nTotalUncompressed += file.nSize;
@@ -1027,13 +1027,13 @@ CON_COMMAND( dump_x360_saves, "Dump X360 save games to disk" )
 	char szOutName[MAX_PATH]; // Output path to the disk
 	char szFileNameBase[MAX_PATH]; // Name of the file minus directories or extensions
 	FileFindHandle_t findHandle;
-	
+
 	char szSearchPath[MAX_PATH];
 	Q_snprintf( szSearchPath, sizeof( szSearchPath ), "%s:\\*.*", GetCurrentMod() );
-	
+
 	const char *pFileName = g_pFileSystem->FindFirst( szSearchPath, &findHandle );
 	while (pFileName)
-	{		
+	{
 		// Create the proper read path
 		Q_snprintf( szInName, sizeof( szInName ), "%s:\\%s", GetCurrentMod(), pFileName );
 		// Read the file and blat it out
@@ -1047,14 +1047,14 @@ CON_COMMAND( dump_x360_saves, "Dump X360 save games to disk" )
 
 			Msg("Copied file: %s to %s\n", szInName, szOutName );
 		}
-		
+
 		// Clean up
 		buf.Clear();
 
 		// Any more save files
 		pFileName = g_pFileSystem->FindNext( findHandle );
 	}
-	
+
 	g_pFileSystem->FindClose( findHandle );
 }
 
@@ -1082,7 +1082,7 @@ CON_COMMAND( dump_x360_cfg, "Dump X360 config files to disk" )
 
 	const char *pFileName = g_pFileSystem->FindFirst( szSearchPath, &findHandle );
 	while (pFileName)
-	{		
+	{
 		// Create the proper read path
 		Q_snprintf( szInName, sizeof( szInName ), "cfg:\\%s", pFileName );
 		// Read the file and blat it out
@@ -1133,7 +1133,7 @@ static bool FileCopy( FileHandle_t pOutput, FileHandle_t pInput, int fileSize )
 			break;
 		}
 		g_pSaveRestoreFileSystem->Write( buf, readSize, pOutput );
-		
+
 		fileSize -= size;
 	}
 
@@ -1153,7 +1153,7 @@ class CSaveRestoreFileSystemPassthrough : public ISaveRestoreFileSystem
 {
 public:
 	CSaveRestoreFileSystemPassthrough() :  m_iContainerOpens( 0 ) {}
-	
+
 	bool FileExists( const char *pFileName, const char *pPathID )
 	{
 		return g_pFileSystem->FileExists( pFileName, pPathID );
@@ -1362,7 +1362,7 @@ public:
 	{
 		char const	*findfn;
 		char		szPath[ MAX_PATH ];
-		
+
 		findfn = Sys_FindFirstEx( pPath, "DEFAULT_WRITE_PATH", NULL, 0 );
 		while ( findfn != NULL )
 		{
@@ -1475,4 +1475,3 @@ CON_COMMAND( dumpsavedir, "List the contents of the save directory in memory" )
 {
 	s_SaveRestoreFileSystem.DumpSaveDirectory();
 }
-

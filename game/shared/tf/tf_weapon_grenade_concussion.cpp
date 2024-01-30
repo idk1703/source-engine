@@ -52,10 +52,10 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj *CTFGrenadeConcussion::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, 
+CTFWeaponBaseGrenadeProj *CTFGrenadeConcussion::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel,
 							        AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
 {
-	return CTFGrenadeConcussionProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse, 
+	return CTFGrenadeConcussionProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse,
 		                                pPlayer, GetTFWpnData(), flTime );
 }
 
@@ -75,8 +75,8 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_grenade_concussion_projectile );
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGrenadeConcussionProjectile* CTFGrenadeConcussionProjectile::Create( const Vector &position, const QAngle &angles, 
-																const Vector &velocity, const AngularImpulse &angVelocity, 
+CTFGrenadeConcussionProjectile* CTFGrenadeConcussionProjectile::Create( const Vector &position, const QAngle &angles,
+																const Vector &velocity, const AngularImpulse &angVelocity,
 																CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags )
 {
 	CTFGrenadeConcussionProjectile *pGrenade = static_cast<CTFGrenadeConcussionProjectile*>( CTFWeaponBaseGrenadeProj::Create( "tf_weapon_grenade_concussion_projectile", position, angles, velocity, angVelocity, pOwner, weaponInfo, timer, iFlags ) );
@@ -155,10 +155,10 @@ void CTFGrenadeConcussionProjectile::Explode( trace_t *pTrace, int bitsDamageTyp
 #ifdef GAME_DLL
 
 	// Invisible.
-	SetModelName( NULL_STRING );	
+	SetModelName( NULL_STRING );
 	AddSolidFlags( FSOLID_NOT_SOLID );
 	m_takedamage = DAMAGE_NO;
-	
+
 	// Move the impact point away from the surface a little bit.
 	if ( pTrace->fraction != 1.0 )
 	{

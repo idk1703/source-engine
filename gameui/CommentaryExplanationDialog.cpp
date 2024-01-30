@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -20,7 +20,7 @@ using namespace vgui;
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCommentaryExplanationDialog::CCommentaryExplanationDialog(vgui::Panel *parent, char *pszFinishCommand) : BaseClass(parent, "CommentaryExplanationDialog")
 {
@@ -40,7 +40,7 @@ CCommentaryExplanationDialog::CCommentaryExplanationDialog(vgui::Panel *parent, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCommentaryExplanationDialog::~CCommentaryExplanationDialog()
 {
@@ -59,7 +59,7 @@ void CCommentaryExplanationDialog::OnKeyCodeTyped(KeyCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommentaryExplanationDialog::OnKeyCodePressed(KeyCode code)
 {
@@ -98,7 +98,7 @@ void CCommentaryExplanationDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommentaryExplanationDialog::OnClose( void )
 {

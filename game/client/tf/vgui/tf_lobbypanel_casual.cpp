@@ -37,7 +37,7 @@ class CCasualCategory : public CExpandablePanel
 	DECLARE_CLASS_SIMPLE( CCasualCategory, CExpandablePanel );
 
 public:
-	CCasualCategory( Panel *parent, const char *panelName, EGameCategory eCategory, Panel* pSignalHandler ) 
+	CCasualCategory( Panel *parent, const char *panelName, EGameCategory eCategory, Panel* pSignalHandler )
 		: BaseClass( parent, panelName )
 		, m_eCategory( eCategory )
 		, pToggleButton( NULL )
@@ -112,13 +112,13 @@ public:
 				bool bOdd = i % 2 == 1;
 				int nXPos = bOdd ? GetWide() * 0.5f : 0;
 				pMapEntry->SetPos( nXPos, nYPos );
-				
+
 				nYPos += bOdd || i == pCategory->m_vecEnabledMaps.Count() - 1 ? pMapEntry->GetTall() : 0;
 			}
 
 			pMapsContainer->SetTall( nYPos + 10 );
 			pMapsContainer->SetAutoResize( PIN_BOTTOMRIGHT, Panel::AUTORESIZE_NO, 0, 0, 0, 0 );
-			
+
 			// We want to be able to expand to this height
 			m_nExpandedHeight = nYPos + m_nCollapsedHeight;
 		}
@@ -152,7 +152,7 @@ public:
 		{
 			pToggleButton->SetImageArmed( BIsExpanded() ? "/pve/sell_selected" : "/pve/buy_selected" );
 			pToggleButton->SetImageDefault( BIsExpanded() ? "/pve/sell_disabled" : "/pve/buy_disabled" );
-		} 
+		}
 
 		// Update progress bars
 		FOR_EACH_MAP_FAST( m_mapMapPanels, i )
@@ -227,7 +227,7 @@ static void GetPlayerNameForSteamID( wchar_t *wCharPlayerName, int nBufSizeBytes
 	V_UTF8ToUnicode( pszName, wCharPlayerName, nBufSizeBytes );
 }
 
-CLobbyPanel_Casual::CLobbyPanel_Casual( vgui::Panel *pParent, CBaseLobbyContainerFrame* pLobbyContainer ) 
+CLobbyPanel_Casual::CLobbyPanel_Casual( vgui::Panel *pParent, CBaseLobbyContainerFrame* pLobbyContainer )
 	: CBaseLobbyPanel( pParent, pLobbyContainer )
 	, m_fontCategoryListItem( 0 )
 	, m_fontGroupHeader( 0 )
@@ -287,7 +287,7 @@ void CLobbyPanel_Casual::WriteGameSettingsControls()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 EMatchGroup CLobbyPanel_Casual::GetMatchGroup( void ) const
 {
@@ -295,7 +295,7 @@ EMatchGroup CLobbyPanel_Casual::GetMatchGroup( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLobbyPanel_Casual::OnThink()
 {
@@ -363,7 +363,7 @@ void CLobbyPanel_Casual::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 	BaseClass::ApplySchemeSettings( pScheme );
 
-	int nAvatarWidth = ( ( m_iAvatarWidth * 5 / 4 ) + 1 ); 
+	int nAvatarWidth = ( ( m_iAvatarWidth * 5 / 4 ) + 1 );
 	int nExtraWidth = ( m_pChatPlayerList->GetWide() - ( 2 * nAvatarWidth ) - m_iPlayerNameWidth - m_iBannedWidth );
 
 	m_pChatPlayerList->AddColumnToSection( 0, "avatar", "#TF_Players", vgui::SectionedListPanel::COLUMN_IMAGE, nAvatarWidth );
@@ -443,7 +443,7 @@ void CLobbyPanel_Casual::OnCheckButtonChecked( vgui::Panel* panel )
 
 		m_bCriteriaDirty = true;
 	}
-	
+
 	BaseClass::OnCheckButtonChecked( panel );
 }
 
@@ -481,7 +481,7 @@ void CLobbyPanel_Casual::WriteCategories( void )
 		tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s - FOR_EACH_MAP( mapMMGroups, i )", __FUNCTION__ );
 
 		const SchemaMMGroup_t* pCat = mapMMGroups[ i ];
-		
+
 		if ( !pCat->m_bitsValidMMGroups.IsBitSet( GetMatchGroup() ) )
 		{
 			continue;

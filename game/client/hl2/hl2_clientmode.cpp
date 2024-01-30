@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -74,4 +74,3 @@ void CHLModeManager::LevelShutdown( void )
 
 static CHLModeManager g_HLModeManager;
 IVModeManager *modemanager = &g_HLModeManager;
-

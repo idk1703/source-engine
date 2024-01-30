@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -102,8 +102,8 @@ class CDispDecalBase
 public:
 	CDispDecalBase( int flags ) : m_Flags(flags) {}
 
-	enum 
-	{ 
+	enum
+	{
 		NODE_BITFIELD_COMPUTED = 0x1,
 		DECAL_SHADOW = 0x2,
 		NO_INTERSECTION = 0x4,
@@ -151,8 +151,8 @@ class CDispDecalFragment
 public:
 	enum { MAX_VERTS = 6 };					// 3 decal verts clipped by 4 planes results in a maximum of 6 (not 8) verts
 
-	decal_t			*m_pDecal;				// Owning Decal	
-	unsigned char	m_nVerts;				// 
+	decal_t			*m_pDecal;				// Owning Decal
+	unsigned char	m_nVerts;				//
 	CDecalVert*		m_pVerts;				// m_pVerts[MAX_VERTS];
 
 	~CDispDecalFragment()
@@ -175,7 +175,7 @@ enum
 
 class CDispShadowDecal : public CDispDecalBase
 {
-public:	
+public:
 	CDispShadowDecal() : CDispDecalBase(DECAL_SHADOW) {}
 
 	ShadowHandle_t	m_Shadow;
@@ -210,7 +210,7 @@ public:
 	Vector			m_vNormal;
 	Vector			m_vSVector;
 	Vector			m_vTVector;
-	
+
 	Vector2D		m_vTexCoord;
 	Vector2D		m_LMCoords;
 };

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -36,7 +36,7 @@ END_NETWORK_TABLE()
 #define NEAR_MISS_THRESHOLD 120
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFProjectile_Arrow::C_TFProjectile_Arrow( void )
 {
@@ -51,14 +51,14 @@ C_TFProjectile_Arrow::C_TFProjectile_Arrow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFProjectile_Arrow::~C_TFProjectile_Arrow( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFProjectile_Arrow::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -98,7 +98,7 @@ void C_TFProjectile_Arrow::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFProjectile_Arrow::NotifyBoneAttached( C_BaseAnimating* attachTarget )
 {
@@ -109,7 +109,7 @@ void C_TFProjectile_Arrow::NotifyBoneAttached( C_BaseAnimating* attachTarget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFProjectile_Arrow::ClientThink( void )
 {
@@ -157,7 +157,7 @@ void C_TFProjectile_Arrow::ClientThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFProjectile_Arrow::CheckNearMiss( void )
 {
@@ -221,7 +221,7 @@ void C_TFProjectile_Arrow::CheckNearMiss( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFProjectile_Arrow::CreateCritTrail( void )
 {

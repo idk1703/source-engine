@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,25 +28,25 @@ class CPrefab;
 class CObjectBar : public CHammerBar, public CFilteredComboBox::ICallbacks
 {
 public:
-	
+
 	CObjectBar();
 	BOOL Create(CWnd *pParentWnd);
-	
+
 	static LPCTSTR GetDefaultEntityClass(void);
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	
+
 	void UpdateListForTool(int iTool);
 	void SetupForBlockTool();
 	void DoHideControls();
 	CMapClass *CreateInBox(BoundBox *pBox, CMapView *pView = NULL);
 	BOOL GetPrefabBounds(BoundBox *pBox);
-	
+
 	// If this is on, then it'll randomize the yaw when entities are placed.
 	bool UseRandomYawOnEntityPlacement();
 
 	void DoDataExchange(CDataExchange *pDX);
-	
+
 	bool IsEntityToolCreatingPrefab( void );
 	bool IsEntityToolCreatingEntity( void );
 	CMapClass *BuildPrefabObjectAtPoint( Vector const &HitPos );
@@ -58,8 +58,8 @@ public:
 
 
 private:
-	
-	enum 
+
+	enum
 	{
 		listPrimitives,
 		listPrefabs,
@@ -69,17 +69,17 @@ private:
 	//{{AFX_DATA(CMapViewBar)
 	enum { IDD = IDD_OBJECTBAR };
 	//}}AFX_DATA
-	
+
 	CFilteredComboBox	m_CreateList;				// this should really be m_ItemList
 	CComboBox			m_CategoryList;
 	CEdit				m_Faces;
-	CSpinButtonCtrl		m_FacesSpin; 
+	CSpinButtonCtrl		m_FacesSpin;
 
 	CPrefab* FindPrefabByName( const char *pName );
 
 	void LoadBlockCategories( void );
 	void LoadEntityCategories( void );
-	void LoadPrefabCategories( void );	
+	void LoadPrefabCategories( void );
 
 	void LoadBlockItems( void );
 	void LoadEntityItems( void );
@@ -89,10 +89,10 @@ private:
 
 	int GetPrevSelIndex(DWORD dwGameID, int *piNewIndex = NULL);
 	BOOL EnableFaceControl(CWnd *pWnd, BOOL bModifyWnd);
-	
+
 	int iEntitySel;
 	int iBlockSel;
-	
+
 	// previous selections:
 	DWORD m_dwPrevGameID;
 	struct tagprevsel
@@ -110,14 +110,14 @@ private:
 		} entity;
 	} m_PrevSel[MAX_PREV_SEL];
 	int m_iLastTool;
-	
+
 protected:
-	
+
 	afx_msg void UpdateControl(CCmdUI*);
 	afx_msg void UpdateFaceControl(CCmdUI*);
 	afx_msg void OnCategorylistSelchange();
 	afx_msg void OnChangeCategory();
-	
+
 	DECLARE_MESSAGE_MAP()
 };
 

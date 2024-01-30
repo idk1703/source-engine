@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -19,11 +19,11 @@ void CStudioRenderContext::GetTriangles( const DrawModelInfo_t& info, matrix3x4_
 
 	out.m_MaterialBatches.RemoveAll(); // clear out data.
 
-	if( !info.m_pStudioHdr || !info.m_pHardwareData || 
+	if( !info.m_pStudioHdr || !info.m_pHardwareData ||
 		!info.m_pHardwareData->m_NumLODs || !info.m_pHardwareData->m_pLODs )
 	{
 		return;
-	} 
+	}
 
 	int lod = info.m_Lod;
 	int lastlod = info.m_pHardwareData->m_NumLODs - 1;
@@ -31,7 +31,7 @@ void CStudioRenderContext::GetTriangles( const DrawModelInfo_t& info, matrix3x4_
 	if ( lod == USESHADOWLOD )
 	{
 		lod = lastlod;
-	} 
+	}
 	else
 	{
 		lod = clamp( lod, 0, lastlod );
@@ -58,7 +58,7 @@ void CStudioRenderContext::GetTriangles( const DrawModelInfo_t& info, matrix3x4_
 	ComputePoseToWorld( out.m_PoseToWorld, info.m_pStudioHdr, boneMask, m_RC.m_ViewOrigin, pBoneToWorld );
 
 	int i;
-	for (i=0 ; i < info.m_pStudioHdr->numbodyparts ; i++) 
+	for (i=0 ; i < info.m_pStudioHdr->numbodyparts ; i++)
 	{
 		mstudiomodel_t *pModel = NULL;
 		R_StudioSetupModel( i, info.m_Body, &pModel, info.m_pStudioHdr );
@@ -98,7 +98,7 @@ void CStudioRenderContext::GetTriangles( const DrawModelInfo_t& info, matrix3x4_
 					// ensure any unintended access faults
 					vert.m_TangentS.Init( VEC_T_NAN, VEC_T_NAN, VEC_T_NAN, VEC_T_NAN );
 				}
-#endif				
+#endif
 				vert.m_NumBones = vertData->BoneWeights( vertID )->numbones;
 				int j;
 				for ( j = 0; j < vert.m_NumBones; j++ )
@@ -125,7 +125,7 @@ void CStudioRenderContext::GetTriangles( const DrawModelInfo_t& info, matrix3x4_
 				studiomeshgroup_t *pMeshGroup = &pMeshData->m_pMeshGroup[stripGroupID];
 //				bool bIsFlexed = ( pMeshGroup->m_Flags & MESHGROUP_IS_FLEXED ) != 0;
 //				bool bIsHWSkinned = ( pMeshGroup->m_Flags & MESHGROUP_IS_HWSKINNED ) != 0;
-				
+
 				// Iterate over all strips. . . each strip potentially changes bones states.
 				int stripID;
 				for ( stripID = 0; stripID < pMeshGroup->m_NumStrips; stripID++ )

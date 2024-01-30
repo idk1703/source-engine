@@ -115,7 +115,7 @@ void CMannVsMachineLogic::Update( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineLogic::InitPopulationManager( void )
 {

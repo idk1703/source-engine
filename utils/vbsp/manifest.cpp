@@ -18,8 +18,8 @@ CManifestMap::CManifestMap( void )
 //-----------------------------------------------------------------------------
 // Purpose: default constructor
 //-----------------------------------------------------------------------------
-CManifest::CManifest( void ) 
-{ 
+CManifest::CManifest( void )
+{
 	m_InstancePath[ 0 ] = 0;
 	m_bIsCordoning = false;
 	m_CordoningMapEnt = NULL;
@@ -101,9 +101,9 @@ ChunkFileResult_t CManifest::LoadManifestMapsCallback( CChunkFile *pFile, CManif
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
-// Output : 
+// Purpose:
+// Input  :
+// Output :
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CManifest::LoadCordonBoxCallback( CChunkFile *pFile, Cordon_t *pCordon )
 {
@@ -117,9 +117,9 @@ ChunkFileResult_t CManifest::LoadCordonBoxCallback( CChunkFile *pFile, Cordon_t 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
-// Output : 
+// Purpose:
+// Input  :
+// Output :
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CManifest::LoadCordonBoxKeyCallback( const char *szKey, const char *szValue, BoundBox *pBox )
 {
@@ -137,9 +137,9 @@ ChunkFileResult_t CManifest::LoadCordonBoxKeyCallback( const char *szKey, const 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
-// Output : 
+// Purpose:
+// Input  :
+// Output :
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CManifest::LoadCordonKeyCallback( const char *szKey, const char *szValue, Cordon_t *pCordon )
 {
@@ -158,9 +158,9 @@ ChunkFileResult_t CManifest::LoadCordonKeyCallback( const char *szKey, const cha
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
-// Output : 
+// Purpose:
+// Input  :
+// Output :
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CManifest::LoadCordonCallback( CChunkFile *pFile, CManifest *pManifest )
 {
@@ -282,7 +282,7 @@ epair_t *CManifest::CreateEPair( char *pKey, char *pValue )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: this function will load in all of the submaps belonging to this manifest, 
+// Purpose: this function will load in all of the submaps belonging to this manifest,
 //			except for the top level map, which is loaded separately.
 // Input  : pMapFile - the top level map that was previously loaded
 //			pszFileName - the absolute file name of the top level map file
@@ -349,9 +349,9 @@ bool CManifest::LoadSubMaps( CMapFile *pMapFile, const char *pszFileName )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
-// Output : 
+// Purpose:
+// Input  :
+// Output :
 //-----------------------------------------------------------------------------
 bool CManifest::LoadVMFManifestUserPrefs( const char *pszFileName )
 {
@@ -468,9 +468,9 @@ bool CManifest::LoadVMFManifest( const char *pszFileName )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
-// Output : 
+// Purpose:
+// Input  :
+// Output :
 //-----------------------------------------------------------------------------
 void CManifest::CordonWorld( )
 {

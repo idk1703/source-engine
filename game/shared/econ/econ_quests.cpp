@@ -55,7 +55,7 @@ uint32 GetEarnedStandardPoints( const IEconItemInterface* pQuestItem )
 
 uint32 GetEarnedBonusPoints( const IEconItemInterface* pQuestItem )
 {
-	
+
 #ifndef GC_DLL
 	const CQuestItemTracker* pItemTracker = assert_cast< const CQuestItemTracker* >( QuestObjectiveManager()->GetTypedTracker< CQuestItemTracker* >( pQuestItem->GetID() ) );
 	if ( pItemTracker )

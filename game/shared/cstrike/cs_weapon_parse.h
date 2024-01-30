@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,7 +18,7 @@
 //--------------------------------------------------------------------------------------------------------
 enum CSWeaponType
 {
-	WEAPONTYPE_KNIFE=0,	
+	WEAPONTYPE_KNIFE=0,
 	WEAPONTYPE_PISTOL,
 	WEAPONTYPE_SUBMACHINEGUN,
 	WEAPONTYPE_RIFLE,
@@ -102,9 +102,9 @@ class CCSWeaponInfo : public FileWeaponInfo_t
 {
 public:
 	DECLARE_CLASS_GAMEROOT( CCSWeaponInfo, FileWeaponInfo_t );
-	
+
 	CCSWeaponInfo();
-	
+
 	virtual void Parse( ::KeyValues *pKeyValuesData, const char *szWeaponName );
 
 	int GetRealWeaponPrice( void ) { return m_iWeaponPrice; }
@@ -124,9 +124,9 @@ public:
 
 	int	  m_iCrosshairMinDistance;
 	int	  m_iCrosshairDeltaDistance;
-	
+
 	bool  m_bCanUseWithShield;
-	
+
 	char m_WrongTeamMsg[32];	// Reference to a string describing the error if someone tries to buy
 								// this weapon but they're on the wrong team to have it.
 								// Zero-length if no specific message for this weapon.
@@ -140,7 +140,7 @@ public:
 
 	int	  m_iMuzzleFlashStyle;
 	float m_flMuzzleScale;
-	
+
 	// Parameters for FX_FireBullets:
 	int		m_iPenetration;
 	int		m_iDamage;
@@ -172,14 +172,14 @@ public:
 	// Delay until the next idle animation after shooting.
 	float	m_flTimeToIdleAfterFire;
 	float	m_flIdleInterval;
-   
+
 	int		GetWeaponPrice( void ) const;
 	int		GetDefaultPrice( void );
 	int		GetPrevousPrice( void );
 	void	SetWeaponPrice( int iPrice ) { m_iWeaponPrice = iPrice; }
 	void	SetDefaultPrice( int iPrice ) { m_iDefaultPrice = iPrice; }
 	void	SetPreviousPrice( int iPrice ) { m_iPreviousPrice = iPrice; }
-    
+
 private:
 
 	int m_iWeaponPrice;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -40,9 +40,9 @@ IHudTextMessage *hudtextmessage = &g_HudTextMessage;
 // Purpose:  Searches through the string for any msg names (indicated by a '#')
 // any found are looked up in titles.txt and the new message substituted
 // the new value is pushed into dst_buffer
-// Input  : *msg - 
-//			*dst_buffer - 
-//			buffer_size - 
+// Input  : *msg -
+//			*dst_buffer -
+//			buffer_size -
 // Output : char
 //-----------------------------------------------------------------------------
 char *CHudTextMessage::LocaliseTextString( const char *msg, char *dst_buffer, int buffer_size )
@@ -97,13 +97,13 @@ char *CHudTextMessage::LocaliseTextString( const char *msg, char *dst_buffer, in
 
 	//
 // ensure null termination
-	dst_buffer[buffer_size-1] = 0; 
+	dst_buffer[buffer_size-1] = 0;
 	return dst_buffer;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: As above, but with a local static buffer
-// Input  : *msg - 
+// Input  : *msg -
 // Output : char
 //-----------------------------------------------------------------------------
 char *CHudTextMessage::BufferedLocaliseTextString( const char *msg )
@@ -114,8 +114,8 @@ char *CHudTextMessage::BufferedLocaliseTextString( const char *msg )
 
 //-----------------------------------------------------------------------------
 // Purpose:  Simplified version of LocaliseTextString;  assumes string is only one word
-// Input  : *msg - 
-//			*msg_dest - 
+// Input  : *msg -
+//			*msg_dest -
 // Output : char
 //-----------------------------------------------------------------------------
 char *CHudTextMessage::LookupString( const char *msg, int *msg_dest )
@@ -124,19 +124,19 @@ char *CHudTextMessage::LookupString( const char *msg, int *msg_dest )
 		return "";
 
 	// '#' character indicates this is a reference to a string in titles.txt, and not the string itself
-	if ( msg[0] == '#' ) 
+	if ( msg[0] == '#' )
 	{
 		// this is a message name, so look up the real message
 		client_textmessage_t *clmsg = TextMessageGet( msg+1 );
 
 		if ( !clmsg || !(clmsg->pMessage) )
 			return (char*)msg; // lookup failed, so return the original string
-		
+
 		if ( msg_dest )
 		{
 			// check to see if titles.txt info overrides msg destination
 			// if clmsg->effect is less than 0, then clmsg->effect holds -1 * message_destination
-			if ( clmsg->effect < 0 )  // 
+			if ( clmsg->effect < 0 )  //
 				*msg_dest = -clmsg->effect;
 		}
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -17,7 +17,7 @@ public:
 	void	Spawn( void );
 
 private:
-	
+
 	COutputEvent m_On2Speakers;
 	COutputEvent m_On4Speakers;
 	COutputEvent m_On51Speakers;
@@ -39,7 +39,7 @@ enum
 	SND_SURROUND_HEADPHONES = 0,
 	SND_SURROUND_2SPEAKERS = 2,
 	SND_SURROUND_4SPEAKERS = 4,
-	SND_SURROUND_51SPEAKERS, 
+	SND_SURROUND_51SPEAKERS,
 };
 
 void CSurroundTest::FireCorrectOutput( inputdata_t &inputdata )
@@ -49,7 +49,7 @@ void CSurroundTest::FireCorrectOutput( inputdata_t &inputdata )
 	if ( pSurroundCVar )
 	{
 		int iSetting = pSurroundCVar->GetInt();
-		
+
 		if ( iSetting == SND_SURROUND_HEADPHONES || iSetting == SND_SURROUND_2SPEAKERS )
 		{
 			m_On2Speakers.FireOutput( this, this );

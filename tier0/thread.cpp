@@ -111,7 +111,7 @@ static DWORD STDCALL ThreadProcX86SetDataBreakpoints( LPVOID pvParam )
 				}
 			}
 
-			threadEntry.dwSize = sizeof( THREADENTRY32 );			
+			threadEntry.dwSize = sizeof( THREADENTRY32 );
 			bContinue = Thread32Next( hSnap, &threadEntry );
 		}
 
@@ -153,7 +153,7 @@ void Plat_SetHardwareDataBreakpoint( const void *pAddress, int nWatchBytes, bool
 		{
 			if ( s_BreakpointState.pAddress[i] && s_BreakpointState.pAddress[i] != pAddress && i < 3 )
 				continue;
-		
+
 			// Last iteration.
 
 			if ( s_BreakpointState.pAddress[i] && s_BreakpointState.pAddress[i] != pAddress )
@@ -172,7 +172,7 @@ void Plat_SetHardwareDataBreakpoint( const void *pAddress, int nWatchBytes, bool
 			break;
 		}
 	}
-	
+
 
 	HANDLE hWorkThread = CreateThread( NULL, NULL, &ThreadProcX86SetDataBreakpoints, NULL, 0, NULL );
 	if ( hWorkThread != INVALID_HANDLE_VALUE )

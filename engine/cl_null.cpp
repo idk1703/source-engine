@@ -44,7 +44,7 @@ void EndLoadingUpdates() {}
 
 void Con_ColorPrintf( const Color& clr, const char *fmt, ... )
 {
-    va_list argptr; 
+	va_list argptr;
 	char		msg[MAXPRINTMSG];
 	static bool	inupdate;
 

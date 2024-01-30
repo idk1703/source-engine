@@ -16,8 +16,8 @@ void CVPC::SetupDefaultConditionals()
 	{
 		FindOrCreateConditional( "WIN32", true, CONDITIONAL_PLATFORM );
 		FindOrCreateConditional( "WIN64", true, CONDITIONAL_PLATFORM );
-		
-		// LINUX is the platform but the VPC scripts use $LINUX and $DEDICATED 
+
+		// LINUX is the platform but the VPC scripts use $LINUX and $DEDICATED
 		// (which we automatically create later).
 		FindOrCreateConditional( "LINUX32", true, CONDITIONAL_PLATFORM );
 		FindOrCreateConditional( "LINUX64", true, CONDITIONAL_PLATFORM );
@@ -28,13 +28,13 @@ void CVPC::SetupDefaultConditionals()
 		FindOrCreateConditional( "X360", true, CONDITIONAL_PLATFORM );
 		FindOrCreateConditional( "PS3", true, CONDITIONAL_PLATFORM );
 	}
-	
+
 	//
 	// CUSTOM conditionals
 	//
 	{
 		// setup default custom conditionals
-		FindOrCreateConditional( "PROFILE", true, CONDITIONAL_CUSTOM );		
+		FindOrCreateConditional( "PROFILE", true, CONDITIONAL_CUSTOM );
 		FindOrCreateConditional( "RETAIL", true, CONDITIONAL_CUSTOM );
 		FindOrCreateConditional( "CALLCAP", true, CONDITIONAL_CUSTOM );
 		FindOrCreateConditional( "FASTCAP", true, CONDITIONAL_CUSTOM );
@@ -50,7 +50,7 @@ void CVPC::SetupDefaultConditionals()
 		FindOrCreateConditional( "NO_CEG", true, CONDITIONAL_CUSTOM );
 		FindOrCreateConditional( "UPLOAD_CEG", true, CONDITIONAL_CUSTOM );
 	}
-}	
+}
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -113,7 +113,7 @@ conditional_t *CVPC::FindOrCreateConditional( const char *pName, bool bCreate, c
 
 	char tempName[256];
 	V_strncpy( tempName, pName, sizeof( tempName ) );
-	
+
 	// primary internal use as lower case, but spewed to user as upper for style consistency
 	m_Conditionals[index].name = V_strlower( tempName );
 	m_Conditionals[index].upperCaseName = V_strupr( tempName );
@@ -146,7 +146,7 @@ bool CVPC::ConditionHasDefinedType( const char* pCondition, conditionalType_e ty
 	{
 		if ( m_Conditionals[i].type != type )
 			continue;
-	
+
 		sprintf( symbol, "$%s", m_Conditionals[i].name.String() );
 		if ( V_stristr( pCondition, symbol ) )
 		{

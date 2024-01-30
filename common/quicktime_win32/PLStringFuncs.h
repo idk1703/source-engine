@@ -1,17 +1,17 @@
 /*
-     File:       PLStringFuncs.h
- 
-     Contains:   Pascal string manipulation routines that parallel ANSI C string.h
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1999-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       PLStringFuncs.h
+
+		Contains:   Pascal string manipulation routines that parallel ANSI C string.h
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1999-2001 by Apple Computer, Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __PLSTRINGFUNCS__
 #define __PLSTRINGFUNCS__
@@ -37,7 +37,7 @@ extern "C" {
 
 /*
  *  PLstrcmp()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -45,13 +45,13 @@ extern "C" {
  */
 EXTERN_API( short )
 PLstrcmp(
-  ConstStr255Param   str1,
-  ConstStr255Param   str2);
+	ConstStr255Param   str1,
+	ConstStr255Param   str2);
 
 
 /*
  *  PLstrncmp()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -59,14 +59,14 @@ PLstrcmp(
  */
 EXTERN_API( short )
 PLstrncmp(
-  ConstStr255Param   str1,
-  ConstStr255Param   str2,
-  short              num);
+	ConstStr255Param   str1,
+	ConstStr255Param   str2,
+	short              num);
 
 
 /*
  *  PLstrcpy()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -74,13 +74,13 @@ PLstrncmp(
  */
 EXTERN_API( StringPtr )
 PLstrcpy(
-  StringPtr          str1,
-  ConstStr255Param   str2);
+	StringPtr          str1,
+	ConstStr255Param   str2);
 
 
 /*
  *  PLstrncpy()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -88,14 +88,14 @@ PLstrcpy(
  */
 EXTERN_API( StringPtr )
 PLstrncpy(
-  StringPtr          str1,
-  ConstStr255Param   str2,
-  short              num);
+	StringPtr          str1,
+	ConstStr255Param   str2,
+	short              num);
 
 
 /*
  *  PLstrcat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -103,13 +103,13 @@ PLstrncpy(
  */
 EXTERN_API( StringPtr )
 PLstrcat(
-  StringPtr          str1,
-  ConstStr255Param   str2);
+	StringPtr          str1,
+	ConstStr255Param   str2);
 
 
 /*
  *  PLstrncat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -117,14 +117,14 @@ PLstrcat(
  */
 EXTERN_API( StringPtr )
 PLstrncat(
-  StringPtr          str1,
-  ConstStr255Param   str2,
-  short              num);
+	StringPtr          str1,
+	ConstStr255Param   str2,
+	short              num);
 
 
 /*
  *  PLstrchr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -132,13 +132,13 @@ PLstrncat(
  */
 EXTERN_API( Ptr )
 PLstrchr(
-  ConstStr255Param   str1,
-  short              ch1);
+	ConstStr255Param   str1,
+	short              ch1);
 
 
 /*
  *  PLstrrchr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -146,13 +146,13 @@ PLstrchr(
  */
 EXTERN_API( Ptr )
 PLstrrchr(
-  ConstStr255Param   str1,
-  short              ch1);
+	ConstStr255Param   str1,
+	short              ch1);
 
 
 /*
  *  PLstrpbrk()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -160,13 +160,13 @@ PLstrrchr(
  */
 EXTERN_API( Ptr )
 PLstrpbrk(
-  ConstStr255Param   str1,
-  ConstStr255Param   str2);
+	ConstStr255Param   str1,
+	ConstStr255Param   str2);
 
 
 /*
  *  PLstrspn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -174,13 +174,13 @@ PLstrpbrk(
  */
 EXTERN_API( short )
 PLstrspn(
-  ConstStr255Param   str1,
-  ConstStr255Param   str2);
+	ConstStr255Param   str1,
+	ConstStr255Param   str2);
 
 
 /*
  *  PLstrstr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -188,13 +188,13 @@ PLstrspn(
  */
 EXTERN_API( Ptr )
 PLstrstr(
-  ConstStr255Param   str1,
-  ConstStr255Param   str2);
+	ConstStr255Param   str1,
+	ConstStr255Param   str2);
 
 
 /*
  *  PLstrlen()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -206,7 +206,7 @@ PLstrlen(ConstStr255Param str);
 
 /*
  *  PLpos()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -214,8 +214,8 @@ PLstrlen(ConstStr255Param str);
  */
 EXTERN_API( short )
 PLpos(
-  ConstStr255Param   str1,
-  ConstStr255Param   str2);
+	ConstStr255Param   str1,
+	ConstStr255Param   str2);
 
 
 
@@ -231,4 +231,3 @@ PLpos(
 #endif
 
 #endif /* __PLSTRINGFUNCS__ */
-

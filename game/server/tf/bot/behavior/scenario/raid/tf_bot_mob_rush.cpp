@@ -103,7 +103,7 @@ ActionResult< CTFBot >	CTFBotMobRush::Update( CTFBot *me, float interval )
 		}
 	}
 
-	
+
 	if ( !m_victim->IsAlive() && me->IsRangeLessThan( m_victim, tf_bot_taunt_range.GetFloat() ) )
 	{
 		// we got 'em!

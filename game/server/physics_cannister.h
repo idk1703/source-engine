@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -29,7 +29,7 @@ public:
 	void CalcThrust( const Vector &position, const Vector &direction, IPhysicsObject *pPhys )
 	{
 		Vector force = direction * m_thrust * pPhys->GetMass();
-		
+
 		// Adjust for the position of the thruster -- apply proper torque)
 		pPhys->CalculateVelocityOffset( force, position, &m_thrustVector, &m_torqueVector );
 		pPhys->WorldToLocalVector( &m_thrustVector, m_thrustVector );
@@ -69,8 +69,8 @@ public:
 
 	virtual int OnTakeDamage( const CTakeDamageInfo &info );
 
-	int ObjectCaps() 
-	{ 
+	int ObjectCaps()
+	{
 		return (BaseClass::ObjectCaps() | FCAP_IMPULSE_USE);
 	}
 	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
@@ -102,12 +102,12 @@ public:
 	virtual void OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason );
 	virtual void OnPhysGunDrop( CBasePlayer *pPhysGunUser, PhysGunDrop_t reason );
 	virtual	CBasePlayer *HasPhysicsAttacker( float dt );
-	virtual bool ShouldPuntUseLaunchForces( PhysGunForce_t reason ) 
-	{ 
-		if ( reason == PHYSGUN_FORCE_LAUNCHED ) 
+	virtual bool ShouldPuntUseLaunchForces( PhysGunForce_t reason )
+	{
+		if ( reason == PHYSGUN_FORCE_LAUNCHED )
 			return (m_thrustTime!=0);
-			
-		return false; 
+
+		return false;
 	}
 	virtual AngularImpulse PhysGunLaunchAngularImpulse( void ) { return vec3_origin; }
 	virtual Vector PhysGunLaunchVelocity( const Vector &forward, float flMass ) { return vec3_origin; }

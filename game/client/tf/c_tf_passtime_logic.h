@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -45,7 +45,7 @@ public:
 private:
 	bool GetImportantEntities( C_PasstimeBall **ppBall, C_TFPlayer **ppCarrier, C_TFPlayer **ppHomingTarget ) const;
 	void DestroyBeam( int i, C_PasstimeBall *pBall );
-	
+
 	void DestroyBeams( C_PasstimeBall *pBall );
 	void UpdateBeams();
 
@@ -67,4 +67,4 @@ private:
 //-----------------------------------------------------------------------------
 extern C_TFPasstimeLogic* g_pPasstimeLogic;
 
-#endif // C_TF_PASSTIME_LOGIC_H  
+#endif // C_TF_PASSTIME_LOGIC_H

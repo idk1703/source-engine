@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -47,7 +47,7 @@ PRECACHE_WEAPON_REGISTER( weapon_flashbang );
 
 	void CFlashbang::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer )
 	{
-		CFlashbangProjectile::Create( 
+		CFlashbangProjectile::Create(
 			vecSrc,
 			vecAngles,
 			vecVel,
@@ -56,5 +56,3 @@ PRECACHE_WEAPON_REGISTER( weapon_flashbang );
 	}
 
 #endif
-
-

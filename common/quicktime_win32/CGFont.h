@@ -1,17 +1,17 @@
 /*
-     File:       CGFont.h
- 
-     Contains:   CoreGraphics font
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+	File:       CGFont.h
+
+	Contains:   CoreGraphics font
+
+	Version:    QuickTime 7.3
+
+	Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
+
+	Bugs?:      For bug reports, consult the following page on
+				the World Wide Web:
+
+					http://developer.apple.com/bugreporter/
+
 */
 
 #ifndef CGFONT_H_
@@ -37,18 +37,18 @@ extern "C" {
 #endif
 
 #if PRAGMA_ENUM_ALWAYSINT
-    #if defined(__fourbyteints__) && !__fourbyteints__ 
-        #define __CGFONT__RESTORE_TWOBYTEINTS
-        #pragma fourbyteints on
-    #endif
-    #pragma enumsalwaysint on
+	#if defined(__fourbyteints__) && !__fourbyteints__
+		#define __CGFONT__RESTORE_TWOBYTEINTS
+		#pragma fourbyteints on
+	#endif
+	#pragma enumsalwaysint on
 #elif PRAGMA_ENUM_OPTIONS
-    #pragma option enum=int
+	#pragma option enum=int
 #elif PRAGMA_ENUM_PACK
-    #if __option(pack_enums)
-        #define __CGFONT__RESTORE_PACKED_ENUMS
-        #pragma options(!pack_enums)
-    #endif
+	#if __option(pack_enums)
+		#define __CGFONT__RESTORE_PACKED_ENUMS
+		#pragma options(!pack_enums)
+	#endif
 #endif
 
 typedef struct CGFont*                  CGFontRef;
@@ -59,7 +59,7 @@ typedef unsigned short                  CGGlyph;
  * should be a pointer to an ATSFontRef. */
 /*
  *  CGFontCreateWithPlatformFont()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -74,7 +74,7 @@ CGFontCreateWithPlatformFont(void * platformFontReference);
  * created with an initial retain count of 1. */
 /*
  *  CGFontRetain()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -88,7 +88,7 @@ CGFontRetain(CGFontRef font);
  * then release it and any associated resources. */
 /*
  *  CGFontRelease()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -103,14 +103,14 @@ CGFontRelease(CGFontRef font);
 
 
 #if PRAGMA_ENUM_ALWAYSINT
-    #pragma enumsalwaysint reset
-    #ifdef __CGFONT__RESTORE_TWOBYTEINTS
-        #pragma fourbyteints off
-    #endif
+	#pragma enumsalwaysint reset
+	#ifdef __CGFONT__RESTORE_TWOBYTEINTS
+		#pragma fourbyteints off
+	#endif
 #elif PRAGMA_ENUM_OPTIONS
-    #pragma option enum=reset
+	#pragma option enum=reset
 #elif defined(__CGFONT__RESTORE_PACKED_ENUMS)
-    #pragma options(pack_enums)
+	#pragma options(pack_enums)
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -124,4 +124,3 @@ CGFontRelease(CGFontRef font);
 #endif
 
 #endif /* CGFONT_H_ */
-

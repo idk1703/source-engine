@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,14 +37,14 @@ public:
 	void SetPoint(int x1, int y1)
 	{
 		x=x1;
-		y=y1;	
+		y=y1;
 	}
 
 	void GetPoint(int &x1, int &y1) const
 	{
 		x1 = x;
 		y1 = y;
-	
+
 	}
 
 	bool operator == (Point &rhs) const

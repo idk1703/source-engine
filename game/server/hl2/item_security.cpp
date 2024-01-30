@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 
 ===== item_security.cpp ========================================================
 
-  handling for the security item
+	handling for the security item
 */
 
 #include "cbase.h"
@@ -24,7 +24,7 @@ public:
 	DECLARE_CLASS( CItemSecurity, CItem );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/w_security.mdl" );
 		BaseClass::Spawn( );
@@ -41,4 +41,3 @@ public:
 };
 
 LINK_ENTITY_TO_CLASS(item_security, CItemSecurity);
-

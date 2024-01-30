@@ -83,7 +83,7 @@ ActionResult< CTFBot >	CTFBotPayloadPush::Update( CTFBot *me, float interval )
 			enemyToCart.z = 0.0f;
 			enemyToCart.NormalizeInPlace();
 
-			pushPos = cart->WorldSpaceCenter() + tf_bot_cart_push_radius.GetFloat() * enemyToCart;		
+			pushPos = cart->WorldSpaceCenter() + tf_bot_cart_push_radius.GetFloat() * enemyToCart;
 		}
 
 		CTFBotPathCost cost( me, DEFAULT_ROUTE );
@@ -152,4 +152,3 @@ QueryResultType CTFBotPayloadPush::ShouldHurry( const INextBot *bot ) const
 {
 	return ANSWER_UNDEFINED;
 }
-

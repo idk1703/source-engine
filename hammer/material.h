@@ -29,7 +29,7 @@ struct MaterialCacheEntry_t;
 
 
 //-----------------------------------------------------------------------------
-// Inherit from this to enumerate materials 
+// Inherit from this to enumerate materials
 //-----------------------------------------------------------------------------
 class IMaterialEnumerator
 {
@@ -39,7 +39,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CMaterial : public IEditorTexture
 {
@@ -75,7 +75,7 @@ public:
 	int GetHeight(void) const;
 
 	float GetDecalScale(void) const;
-	
+
 	const char *GetFileName(void) const;
 
 	inline CPalette *GetPalette(void) const
@@ -154,11 +154,11 @@ protected:
 	static bool ShouldSkipMaterial(const char *pszName, int nFlags);
 
 	// Finds all .VMT files in a particular directory
-	static bool LoadMaterialsInDirectory( char const* pDirectoryName, int nDirectoryNameLen, 
+	static bool LoadMaterialsInDirectory( char const* pDirectoryName, int nDirectoryNameLen,
 						IMaterialEnumerator *pEnum, int nContext, int nFlags );
 
 	// Discovers all .VMT files lying under a particular directory recursively
-	static bool InitDirectoryRecursive( char const* pDirectoryName, 
+	static bool InitDirectoryRecursive( char const* pDirectoryName,
 						IMaterialEnumerator *pEnum, int nContext, int nFlags );
 
 	CMaterial(void);
@@ -194,7 +194,7 @@ typedef CMaterial *CMaterialPtr;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CMaterialCache
 {

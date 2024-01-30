@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -112,7 +112,7 @@ private:
 	char			m_szButtonFont[64];		// font for the button icon
 	char			m_szFGColor[64];		// foreground color (text)
 	char			m_szBGColor[64];		// background color (fill color)
-	
+
 	vgui::HFont		m_hButtonFont;
 	vgui::HFont		m_hTextFont;
 	char			*m_pHelpName;
@@ -232,19 +232,19 @@ public:
 	void OpenLoadSingleplayerCommentaryDialog();
 	void OnOpenAchievementsDialog();
 
-    //=============================================================================
-    // HPE_BEGIN:
-    // [dwenger] Specific code for CS Achievements Display
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [dwenger] Specific code for CS Achievements Display
+	//=============================================================================
 
-    // $TODO(HPE): Move this to a game-specific location
-    void OnOpenCSAchievementsDialog();
+	// $TODO(HPE): Move this to a game-specific location
+	void OnOpenCSAchievementsDialog();
 
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
-    void OnOpenAchievementsDialog_Xbox();
+	void OnOpenAchievementsDialog_Xbox();
 	void OnOpenControllerDialog();
 
 	// Xbox 360
@@ -350,13 +350,13 @@ private:
 
 	// menu logo
 	CMainMenuGameLogo *m_pGameLogo;
-	
+
 	// menu buttons
 	CUtlVector< CBackgroundMenuButton * >m_pGameMenuButtons;
 	CGameMenu *m_pGameMenu;
 	bool m_bPlatformMenuInitialized;
 	int m_iGameMenuInset;
-	
+
 	vgui::VPANEL	m_hMainMenuOverridePanel;
 
 	struct coord {
@@ -409,7 +409,7 @@ private:
 	bool						m_bUseMatchmaking;
 	bool						m_bRestartFromInvite;
 	bool						m_bRestartSameGame;
-	
+
 	// Used for internal state dealing with blades
 	bool						m_bUserRefusedSignIn;
 	bool						m_bUserRefusedStorageDevice;

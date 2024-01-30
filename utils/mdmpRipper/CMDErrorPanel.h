@@ -21,7 +21,7 @@ class CMDErrorPanel : public vgui::EditablePanel
 {
 	DECLARE_CLASS_SIMPLE( CMDErrorPanel, vgui::EditablePanel );
 
-	vgui::ListPanel *m_pTokenList;	
+	vgui::ListPanel *m_pTokenList;
 	vgui::TextEntry *m_pMaxResults;
 	vgui::TextEntry *m_pQueryCounts;
 

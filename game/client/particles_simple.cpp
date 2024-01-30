@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -67,7 +67,7 @@ CParticleEffect::~CParticleEffect( void )
 		msg->SetInt( "id", m_nToolParticleEffectId );
 		msg->SetFloat( "time", gpGlobals->curtime );
 		ToolFramework_PostToolMessage( HTOOLHANDLE_INVALID, msg );
-		m_nToolParticleEffectId = TOOLPARTICLESYSTEMID_INVALID; 
+		m_nToolParticleEffectId = TOOLPARTICLESYSTEMID_INVALID;
 	}
 #endif
 }
@@ -89,7 +89,7 @@ int CParticleEffect::IsReleased()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CParticleEffect::AddRef()
 {
@@ -117,8 +117,8 @@ void CParticleEffect::Release()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &vSortOrigin - 
+// Purpose:
+// Input  : &vSortOrigin -
 //-----------------------------------------------------------------------------
 const Vector &CParticleEffect::GetSortOrigin()
 {
@@ -132,8 +132,8 @@ const char *CParticleEffect::GetEffectName()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pParticle - 
+// Purpose:
+// Input  : pParticle -
 //-----------------------------------------------------------------------------
 void CParticleEffect::NotifyDestroyParticle( Particle* pParticle )
 {
@@ -151,7 +151,7 @@ void CParticleEffect::Update( float flTimeDelta )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CParticleEffect::NotifyRemove()
 {
@@ -185,8 +185,8 @@ void CParticleEffect::SetParticleCullRadius( float radius )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : PMaterialHandle
 //-----------------------------------------------------------------------------
 PMaterialHandle CParticleEffect::GetPMaterial(const char *name)
@@ -195,9 +195,9 @@ PMaterialHandle CParticleEffect::GetPMaterial(const char *name)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : particleSize - 
-//			material - 
+// Purpose:
+// Input  : particleSize -
+//			material -
 // Output : SimpleParticle
 //-----------------------------------------------------------------------------
 Particle *CParticleEffect::AddParticle( unsigned int particleSize, PMaterialHandle material, const Vector &origin )
@@ -245,14 +245,14 @@ CSmartPtr<CSimpleEmitter> CSimpleEmitter::Create( const char *pDebugName )
 //			nearClipMax - end of clip range
 //-----------------------------------------------------------------------------
 void CSimpleEmitter::SetNearClip( float nearClipMin, float nearClipMax )
-{ 
+{
 	m_flNearClipMin = nearClipMin;
 	m_flNearClipMax = nearClipMax;
 }
 
 
-SimpleParticle*	CSimpleEmitter::AddSimpleParticle( 
-	PMaterialHandle hMaterial, 
+SimpleParticle*	CSimpleEmitter::AddSimpleParticle(
+	PMaterialHandle hMaterial,
 	const Vector &vOrigin,
 	float flDieTime,
 	unsigned char uchSize )
@@ -277,8 +277,8 @@ SimpleParticle*	CSimpleEmitter::AddSimpleParticle(
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fTimeDelta - 
+// Purpose:
+// Input  : fTimeDelta -
 // Output : float
 //-----------------------------------------------------------------------------
 float CSimpleEmitter::UpdateAlpha( const SimpleParticle *pParticle )
@@ -287,8 +287,8 @@ float CSimpleEmitter::UpdateAlpha( const SimpleParticle *pParticle )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fTimeDelta - 
+// Purpose:
+// Input  : fTimeDelta -
 // Output : float
 //-----------------------------------------------------------------------------
 float CSimpleEmitter::UpdateScale( const SimpleParticle *pParticle )
@@ -297,8 +297,8 @@ float CSimpleEmitter::UpdateScale( const SimpleParticle *pParticle )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fTimeDelta - 
+// Purpose:
+// Input  : fTimeDelta -
 // Output : Vector
 //-----------------------------------------------------------------------------
 
@@ -335,8 +335,8 @@ void CSimpleEmitter::UpdateVelocity( SimpleParticle *pParticle, float timeDelta 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fTimeDelta - 
+// Purpose:
+// Input  : fTimeDelta -
 // Output : float
 //-----------------------------------------------------------------------------
 float CSimpleEmitter::UpdateRoll( SimpleParticle *pParticle, float timeDelta )
@@ -347,9 +347,9 @@ float CSimpleEmitter::UpdateRoll( SimpleParticle *pParticle, float timeDelta )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParticle - 
-//			timeDelta - 
+// Purpose:
+// Input  : *pParticle -
+//			timeDelta -
 //-----------------------------------------------------------------------------
 Vector CSimpleEmitter::UpdateColor( const SimpleParticle *pParticle )
 {
@@ -410,8 +410,8 @@ void CSimpleEmitter::RenderParticles( CParticleRenderIterator *pIterator )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : state - 
+// Purpose:
+// Input  : state -
 //-----------------------------------------------------------------------------
 void CSimpleEmitter::SetDrawBeforeViewModel( bool state )
 {
@@ -451,9 +451,9 @@ void CEmberEffect::UpdateVelocity( SimpleParticle *pParticle, float timeDelta )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParticle - 
-//			timeDelta - 
+// Purpose:
+// Input  : *pParticle -
+//			timeDelta -
 //-----------------------------------------------------------------------------
 Vector CEmberEffect::UpdateColor( const SimpleParticle *pParticle )
 {
@@ -469,9 +469,9 @@ Vector CEmberEffect::UpdateColor( const SimpleParticle *pParticle )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParticle - 
-//			timeDelta - 
+// Purpose:
+// Input  : *pParticle -
+//			timeDelta -
 // Output : float
 //-----------------------------------------------------------------------------
 CFireSmokeEffect::CFireSmokeEffect( const char *pDebugName ) : CSimpleEmitter( pDebugName )
@@ -493,9 +493,9 @@ float CFireSmokeEffect::UpdateAlpha( const SimpleParticle *pParticle )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParticle - 
-//			timeDelta - 
+// Purpose:
+// Input  : *pParticle -
+//			timeDelta -
 //-----------------------------------------------------------------------------
 void CFireSmokeEffect::UpdateVelocity( SimpleParticle *pParticle, float timeDelta )
 {
@@ -503,9 +503,9 @@ void CFireSmokeEffect::UpdateVelocity( SimpleParticle *pParticle, float timeDelt
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParticle - 
-//			timeDelta - 
+// Purpose:
+// Input  : *pParticle -
+//			timeDelta -
 // Output : Vector
 //-----------------------------------------------------------------------------
 CFireParticle::CFireParticle( const char *pDebugName ) : CSimpleEmitter( pDebugName )

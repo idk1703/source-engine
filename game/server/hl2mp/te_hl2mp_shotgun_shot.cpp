@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -42,8 +42,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEHL2MPFireBullets::CTEHL2MPFireBullets( const char *name ) :
 	CBaseTempEntity( name )
@@ -51,7 +51,7 @@ CTEHL2MPFireBullets::CTEHL2MPFireBullets( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEHL2MPFireBullets::~CTEHL2MPFireBullets( void )
 {
@@ -64,7 +64,7 @@ IMPLEMENT_SERVERCLASS_ST_NOBASE(CTEHL2MPFireBullets, DT_TEHL2MPFireBullets)
 	SendPropInt( SENDINFO( m_iSeed ), NUM_BULLET_SEED_BITS, SPROP_UNSIGNED ),
 	SendPropInt( SENDINFO( m_iShots ), 5, SPROP_UNSIGNED ),
 	SendPropInt( SENDINFO( m_iPlayer ), 6, SPROP_UNSIGNED ), 	// max 64 players, see MAX_PLAYERS
-	SendPropFloat( SENDINFO( m_flSpread ), 10, 0, 0, 1 ),	
+	SendPropFloat( SENDINFO( m_flSpread ), 10, 0, 0, 1 ),
 	SendPropBool( SENDINFO( m_bDoImpacts ) ),
 	SendPropBool( SENDINFO( m_bDoTracers ) ),
 END_SEND_TABLE()
@@ -74,7 +74,7 @@ END_SEND_TABLE()
 static CTEHL2MPFireBullets g_TEHL2MPFireBullets( "Shotgun Shot" );
 
 
-void TE_HL2MPFireBullets( 
+void TE_HL2MPFireBullets(
 	int	iPlayerIndex,
 	const Vector &vOrigin,
 	const Vector &vDir,
@@ -97,8 +97,8 @@ void TE_HL2MPFireBullets(
 	g_TEHL2MPFireBullets.m_iAmmoID = iAmmoID;
 	g_TEHL2MPFireBullets.m_bDoTracers = bDoTracers;
 	g_TEHL2MPFireBullets.m_bDoImpacts = bDoImpacts;
-	
+
 	Assert( iSeed < (1 << NUM_BULLET_SEED_BITS) );
-	
+
 	g_TEHL2MPFireBullets.Create( filter, 0 );
 }

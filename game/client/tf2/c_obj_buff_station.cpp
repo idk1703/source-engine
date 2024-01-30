@@ -10,7 +10,7 @@
 #include "C_BaseTFPlayer.h"
 #include "ObjectControlPanel.h"
 #include "vgui_bitmapbutton.h"
-	    
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -46,7 +46,7 @@ public:
 
 private:
 	typedef CHandle<C_BaseTFPlayer> CPlayerHandle;
-	int				m_nPlayerCount;					
+	int				m_nPlayerCount;
 	CPlayerHandle	m_hPlayers[BUFF_STATION_MAX_PLAYERS];
 	CPlayerHandle	m_hOldPlayers[BUFF_STATION_MAX_PLAYERS];
 
@@ -67,7 +67,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_ObjectBuffStation, DT_ObjectBuffStation, CObjectBuff
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectBuffStation::C_ObjectBuffStation( void )
 {
@@ -89,7 +89,7 @@ bool C_ObjectBuffStation::IsLocalPlayerAttached( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectBuffStation::Release( void )
 {
@@ -111,7 +111,7 @@ void C_ObjectBuffStation::Release( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectBuffStation::OnPreDataChanged( DataUpdateType_t updateType )
 {
@@ -124,7 +124,7 @@ void C_ObjectBuffStation::OnPreDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectBuffStation::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -158,7 +158,7 @@ void C_ObjectBuffStation::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CBuffStationControlPanel : public CObjectControlPanel
 {
@@ -183,16 +183,16 @@ DECLARE_VGUI_SCREEN_FACTORY( CBuffStationControlPanel, "buffstation_control_pane
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CBuffStationControlPanel::CBuffStationControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CBuffStationControlPanel" ) 
+	: BaseClass( parent, "CBuffStationControlPanel" )
 {
 }
 
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CBuffStationControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -269,4 +269,3 @@ void CBuffStationControlPanel::OnCommand( const char *command )
 
 	BaseClass::OnCommand(command);
 }
-

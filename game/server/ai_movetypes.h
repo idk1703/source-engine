@@ -36,7 +36,7 @@ enum AIMoveResult_t
 	AIMR_ILLEGAL				= -4,	         // Move is illegal for some reason
 
 	AIMR_OK						= 0,
-	
+
 	AIMR_CHANGE_TYPE,	                         // Locomotion method has changed
 };
 
@@ -79,7 +79,7 @@ struct AIMoveTrace_t
 	{
 		memset( this, 0, sizeof(*this) );
 	}
-	
+
 	AIMoveResult_t 	fStatus;				// See AIMoveResult_t
 	Vector 			vEndPosition;			// The last point that could be moved to
 	Vector			vHitNormal;				// The normal of a hit, if any. vec3_origin if none. Can be none even if "hit"
@@ -126,15 +126,15 @@ struct AILocalMoveGoal_t
 	{
 		memset( this, 0, sizeof(*this) );
 	}
-	
+
 	// Object of the goal
 	Vector			target;
 
 	// The actual move. Note these need not always agree with "target"
-	Vector			dir; 
+	Vector			dir;
 	Vector			facing;
 	float			speed;
-	
+
 	// The distance maximum distance intended to travel in path length
 	float			maxDist;
 
@@ -165,12 +165,12 @@ enum AIMotorMoveResult_t
 {
 	AIM_FAILED,
 	AIM_SUCCESS,
-	
+
 	// Partial successes
 	AIM_PARTIAL_HIT_NPC,
 	AIM_PARTIAL_HIT_WORLD,
 	AIM_PARTIAL_HIT_TARGET,
-	
+
 	AIM_NUM_RESULTS
 };
 
@@ -192,37 +192,37 @@ public:
 	//
 	// Local navigation notifications, each allows services provider to overridde default result
 	//
-	virtual bool OnCalcBaseMove( AILocalMoveGoal_t *pMoveGoal, 
-								float distClear, 
+	virtual bool OnCalcBaseMove( AILocalMoveGoal_t *pMoveGoal,
+								float distClear,
 								AIMoveResult_t *pResult ) = 0;
 
-	virtual bool OnObstructionPreSteer( AILocalMoveGoal_t *pMoveGoal, 
-											float distClear, 
+	virtual bool OnObstructionPreSteer( AILocalMoveGoal_t *pMoveGoal,
+											float distClear,
 											AIMoveResult_t *pResult ) = 0;
 
-	virtual bool OnFailedSteer( AILocalMoveGoal_t *pMoveGoal, 
-									float distClear, 
+	virtual bool OnFailedSteer( AILocalMoveGoal_t *pMoveGoal,
+									float distClear,
 									AIMoveResult_t *pResult ) = 0;
 
 	virtual bool OnFailedLocalNavigation( AILocalMoveGoal_t *pMoveGoal,
-									float distClear, 
+									float distClear,
 									AIMoveResult_t *pResult ) = 0;
-	
-	virtual bool OnInsufficientStopDist( AILocalMoveGoal_t *pMoveGoal, 
-											 float distClear, 
+
+	virtual bool OnInsufficientStopDist( AILocalMoveGoal_t *pMoveGoal,
+											 float distClear,
 											 AIMoveResult_t *pResult ) = 0;
 
 
 	virtual bool OnMoveBlocked( AIMoveResult_t *pResult ) = 0;
-	
+
 	//---------------------------------
 	//
 	// Motor notifications, each allows services provider to overridde default result
 	//
 	virtual bool OnMoveStalled( const AILocalMoveGoal_t &move ) = 0;
-	virtual bool OnMoveExecuteFailed( const AILocalMoveGoal_t &move, 
-									const AIMoveTrace_t &trace, 
-									AIMotorMoveResult_t fMotorResult, 
+	virtual bool OnMoveExecuteFailed( const AILocalMoveGoal_t &move,
+									const AIMoveTrace_t &trace,
+									AIMotorMoveResult_t fMotorResult,
 									AIMoveResult_t *pResult ) = 0;
 };
 
@@ -237,7 +237,7 @@ public:
 	//
 	// Queries
 	//
-	virtual float CalcYawSpeed( void ) { return -1.0; } 
+	virtual float CalcYawSpeed( void ) { return -1.0; }
 
 
 	//---------------------------------
@@ -250,14 +250,14 @@ public:
 	virtual bool OnFailedLocalNavigation( AILocalMoveGoal_t *pMoveGoal, float distClear, AIMoveResult_t *pResult ) { return false;	}
 	virtual bool OnInsufficientStopDist( AILocalMoveGoal_t *pMoveGoal, float distClear, AIMoveResult_t *pResult ) { return false;	}
 	virtual bool OnMoveBlocked( AIMoveResult_t *pResult ) { return false;	}
-	
+
 	//---------------------------------
 	//
 	// Motor notifications, each allows services provider to overridde default result
 	//
 	virtual bool OnMoveStalled( const AILocalMoveGoal_t &move ) { return false;	}
 	virtual bool OnMoveExecuteFailed( const AILocalMoveGoal_t &move, const AIMoveTrace_t &trace, AIMotorMoveResult_t fMotorResult, AIMoveResult_t *pResult ) { return false;	}
-	
+
 };
 
 //-------------------------------------
@@ -269,11 +269,11 @@ public:
 	 :	m_pProxied( NULL )
 	{
 	}
-	
+
 	//---------------------------------
-	
+
 	void Init( IAI_MovementSink *pMovementServices ) { m_pProxied = pMovementServices; }
-	
+
 	//---------------------------------
 	//
 	// Queries
@@ -284,31 +284,31 @@ public:
 	//
 	// Local navigation notifications, each allows services provider to overridde default result
 	//
-	virtual bool OnCalcBaseMove( AILocalMoveGoal_t *pMoveGoal, 
-								float distClear, 
+	virtual bool OnCalcBaseMove( AILocalMoveGoal_t *pMoveGoal,
+								float distClear,
 								AIMoveResult_t *pResult );
 
-	virtual bool OnObstructionPreSteer( AILocalMoveGoal_t *pMoveGoal, 
-											float distClear, 
+	virtual bool OnObstructionPreSteer( AILocalMoveGoal_t *pMoveGoal,
+											float distClear,
 											AIMoveResult_t *pResult );
-	virtual bool OnFailedSteer( AILocalMoveGoal_t *pMoveGoal, 
-									float distClear, 
+	virtual bool OnFailedSteer( AILocalMoveGoal_t *pMoveGoal,
+									float distClear,
 									AIMoveResult_t *pResult );
-	virtual bool OnFailedLocalNavigation( AILocalMoveGoal_t *pMoveGoal, 
-									float distClear, 
+	virtual bool OnFailedLocalNavigation( AILocalMoveGoal_t *pMoveGoal,
+									float distClear,
 									AIMoveResult_t *pResult );
-	virtual bool OnInsufficientStopDist( AILocalMoveGoal_t *pMoveGoal, 
-											 float distClear, 
+	virtual bool OnInsufficientStopDist( AILocalMoveGoal_t *pMoveGoal,
+											 float distClear,
 											 AIMoveResult_t *pResult );
 	virtual bool OnMoveBlocked( AIMoveResult_t *pResult );
-	
+
 	//---------------------------------
 	//
 	// Motor notifications, each allows services provider to overridde default result
 	//
 	virtual bool OnMoveStalled( const AILocalMoveGoal_t &move );
 	virtual bool OnMoveExecuteFailed( const AILocalMoveGoal_t &move, const AIMoveTrace_t &trace, AIMotorMoveResult_t fMotorResult, AIMoveResult_t *pResult );
-	
+
 	IAI_MovementSink *m_pProxied;
 };
 

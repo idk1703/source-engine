@@ -93,8 +93,8 @@ string_t ExtractParentName(string_t parentName)
 //-----------------------------------------------------------------------------
 // Purpose: Callback function for qsort, used to sort entities by their depth
 //			in the movement hierarchy.
-// Input  : pEnt1 - 
-//			pEnt2 - 
+// Input  : pEnt1 -
+//			pEnt2 -
 // Output : Returns -1, 0, or 1 per qsort spec.
 //-----------------------------------------------------------------------------
 static int __cdecl CompareSpawnOrder(HierarchicalSpawn_t *pEnt1, HierarchicalSpawn_t *pEnt2)
@@ -134,7 +134,7 @@ static int ComputeSpawnHierarchyDepth_r( CBaseEntity *pEntity )
 	CBaseEntity *pParent = gEntList.FindEntityByName( NULL, ExtractParentName(pEntity->m_iParent) );
 	if (!pParent)
 		return 1;
-	
+
 	if (pParent == pEntity)
 	{
 		Warning( "LEVEL DESIGN ERROR: Entity %s is parented to itself!\n", pEntity->GetDebugName() );
@@ -222,7 +222,7 @@ void SetupParentsForSpawnList( int nEntities, HierarchicalSpawn_t *pSpawnList )
 
 				if ((pParent != NULL) && (pParent->edict() != NULL))
 				{
-					pEntity->SetParent( pParent ); 
+					pEntity->SetParent( pParent );
 				}
 			}
 		}
@@ -512,14 +512,14 @@ void SpawnHierarchicalList( int nEntities, HierarchicalSpawn_t *pSpawnList, bool
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntData - 
+// Purpose:
+// Input  : *pEntData -
 //-----------------------------------------------------------------------------
 void MapEntity_PrecacheEntity( const char *pEntData, int &nStringSize )
 {
 	CEntityMapData entData( (char*)pEntData, nStringSize );
 	char className[MAPKEY_MAXLENGTH];
-	
+
 	if (!entData.ExtractValue("classname", className))
 	{
 		Error( "classname missing from entity!\n" );
@@ -549,7 +549,7 @@ const char *MapEntity_ParseEntity(CBaseEntity *&pEntity, const char *pEntData, I
 {
 	CEntityMapData entData( (char*)pEntData );
 	char className[MAPKEY_MAXLENGTH];
-	
+
 	if (!entData.ExtractValue("classname", className))
 	{
 		Error( "classname missing from entity!\n" );
@@ -585,9 +585,9 @@ const char *MapEntity_ParseEntity(CBaseEntity *&pEntity, const char *pEntData, I
 		char value[MAPKEY_MAXLENGTH];
 		if ( entData.GetFirstKey(keyName, value) )
 		{
-			do 
+			do
 			{
-			} 
+			}
 			while ( entData.GetNextKey(keyName, value) );
 		}
 	}
@@ -597,5 +597,3 @@ const char *MapEntity_ParseEntity(CBaseEntity *&pEntity, const char *pEntData, I
 	//
 	return entData.CurrentBufferPosition();
 }
-
-

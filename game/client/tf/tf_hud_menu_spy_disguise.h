@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -65,7 +65,7 @@ private:
 	EditablePanel *m_pActiveSelection;
 
 	int m_iShowingTeam;
-	
+
 	int m_iSelectedItem;
 
 	int m_iGroupSelection;

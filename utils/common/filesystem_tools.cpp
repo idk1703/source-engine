@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -50,7 +50,7 @@ CSysModule			*g_pFullFileSystemModule = NULL;
 char		qdir[1024];
 
 // This is the base engine + mod-specific game dir (e.g. "c:\tf2\mytfmod\")
-char		gamedir[1024];	
+char		gamedir[1024];
 
 void FileSystem_SetupStandardDirectories( const char *pFilename, const char *pGameInfoPath )
 {
@@ -102,7 +102,7 @@ bool FileSystem_Init_Normal( const char *pFilename, FSInitType_t initType, bool 
 		mountContentInfo.m_bToolsMode = true;
 		if ( FileSystem_MountContent( mountContentInfo ) != FS_OK )
 			return false;
-		
+
 		// Finally, load the search paths.
 		CFSSearchPathsInit searchPathsInit;
 		searchPathsInit.m_pDirectoryName = loadModuleInfo.m_GameInfoPath;

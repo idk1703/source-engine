@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,7 +22,7 @@
 
 
 //=========================================================
-// CSingleplayRules - rules for the single player Half-Life 
+// CSingleplayRules - rules for the single player Half-Life
 // game.
 //=========================================================
 class CSingleplayRules : public CGameRules
@@ -42,7 +42,7 @@ public:
 	virtual bool	Damage_NoPhysicsForce( int iDmgType );		// Damage types that don't have to supply a physics force & position.
 	virtual bool	Damage_ShouldNotBleed( int iDmgType );			// Damage types that don't make the player bleed.
 	// TEMP: These will go away once DamageTypes become enums.
-	virtual int		Damage_GetTimeBased( void );		
+	virtual int		Damage_GetTimeBased( void );
 	virtual int		Damage_GetShouldGibCorpse( void );
 	virtual int		Damage_GetShowOnHud( void );
 	virtual int		Damage_GetNoPhysicsForce( void );
@@ -63,7 +63,7 @@ public:
 	virtual bool FShouldSwitchWeapon( CBasePlayer *pPlayer, CBaseCombatWeapon *pWeapon );
 	virtual CBaseCombatWeapon *GetNextBestWeapon( CBaseCombatCharacter *pPlayer, CBaseCombatWeapon *pCurrentWeapon );
 	bool SwitchToNextBestWeapon( CBaseCombatCharacter *pPlayer, CBaseCombatWeapon *pCurrentWeapon );
-	
+
 // Functions to verify the single/multiplayer status of a game
 	virtual bool IsDeathmatch( void );
 	virtual bool IsCoOp( void );
@@ -76,7 +76,7 @@ public:
 // Client damage rules
 	virtual float FlPlayerFallDamage( CBasePlayer *pPlayer );
 	virtual bool AllowDamage( CBaseEntity *pVictim, const CTakeDamageInfo &info );
-	
+
 // Client spawn/respawn control
 	virtual void PlayerSpawn( CBasePlayer *pPlayer );
 	virtual bool FPlayerCanRespawn( CBasePlayer *pPlayer );
@@ -115,13 +115,13 @@ public:
 // What happens to a dead player's weapons
 	virtual int DeadPlayerWeapons( CBasePlayer *pPlayer );
 
-// What happens to a dead player's ammo	
+// What happens to a dead player's ammo
 	virtual int DeadPlayerAmmo( CBasePlayer *pPlayer );
 
 // NPCs
 	virtual bool FAllowNPCs( void );
 
-// Teamplay stuff	
+// Teamplay stuff
 	virtual const char *GetTeamID( CBaseEntity *pEntity ) {return "";};
 	virtual int PlayerRelationship( CBaseEntity *pPlayer, CBaseEntity *pTarget );
 	virtual bool PlayerCanHearChat( CBasePlayer *pListener, CBasePlayer *pSpeaker );

@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose:	This file sets all of our debugging flags.  It should be 
+// Purpose:	This file sets all of our debugging flags.  It should be
 //			called before all other header files.
 //
 // $NoKeywords: $
@@ -38,7 +38,7 @@
 
 #define DBGFLAG_MEMORY
 #ifdef _SERVER	// only enable new & delete tracking for server; on client it conflicts with CRT mem leak tracking
-#define DBGFLAG_MEMORY_NEWDEL	
+#define DBGFLAG_MEMORY_NEWDEL
 #endif
 #ifdef STEAM
 #define DBGFLAG_VALIDATE

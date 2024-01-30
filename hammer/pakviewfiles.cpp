@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -66,7 +66,7 @@ void CPakViewFiles::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // CPakViewFiles message handlers
 
-void CPakViewFiles::OnInitialUpdate() 
+void CPakViewFiles::OnInitialUpdate()
 {
 	CListView::OnInitialUpdate();
 	CListCtrl& lc = GetListCtrl();
@@ -75,11 +75,11 @@ void CPakViewFiles::OnInitialUpdate()
 	DWORD dwStyle = GetWindowLong(lc.m_hWnd, GWL_STYLE);
 	SetWindowLong(lc.m_hWnd, GWL_STYLE, (dwStyle & ~LVS_TYPEMASK) |
 		LVS_ALIGNLEFT | LVS_AUTOARRANGE | LVS_REPORT | // LVS_ICON |
-  		// LVS_NOITEMDATA | 
+  		// LVS_NOITEMDATA |
 		 LVS_SORTASCENDING);
 
 	// add some headers
-	
+
 	// 1. name of entry
 	lc.InsertColumn(0, "Name", LVCFMT_LEFT, 150, colName);
 	// 2. size of entry

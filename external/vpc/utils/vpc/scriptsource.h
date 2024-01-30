@@ -67,8 +67,8 @@ public:
 	const char		*GetToken( bool bAllowLineBreaks );
 	const char		*PeekNextToken( bool bAllowLineBreaks );
 	void			SkipRestOfLine();
-	void			SkipBracedSection(); 
-	void			SkipToValidToken(); 
+	void			SkipBracedSection();
+	void			SkipToValidToken();
 
 	bool			ParsePropertyValue( const char *pBaseString, char *pOutBuff, int outBuffSize );
 

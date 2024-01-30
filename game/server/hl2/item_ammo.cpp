@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: The various ammo types for HL2	
+// Purpose: The various ammo types for HL2
 //
 //=============================================================================//
 
@@ -44,7 +44,7 @@ public:
 	DECLARE_CLASS( CItem_BoxSRounds, CItem );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/items/boxsrounds.mdl" );
 		BaseClass::Spawn( );
@@ -59,7 +59,7 @@ public:
 		{
 			if ( g_pGameRules->ItemShouldRespawn( this ) == GR_ITEM_RESPAWN_NO )
 			{
-				UTIL_Remove(this);	
+				UTIL_Remove(this);
 			}
 
 			return true;
@@ -79,7 +79,7 @@ public:
 	DECLARE_CLASS( CItem_LargeBoxSRounds, CItem );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/items/boxsrounds.mdl" );
 		BaseClass::Spawn( );
@@ -94,7 +94,7 @@ public:
 		{
 			if ( g_pGameRules->ItemShouldRespawn( this ) == GR_ITEM_RESPAWN_NO )
 			{
-				UTIL_Remove(this);	
+				UTIL_Remove(this);
 			}
 			return true;
 		}
@@ -113,7 +113,7 @@ public:
 	DECLARE_CLASS( CItem_BoxMRounds, CItem );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/items/boxmrounds.mdl");
 		BaseClass::Spawn( );
@@ -128,7 +128,7 @@ public:
 		{
 			if ( g_pGameRules->ItemShouldRespawn( this ) == GR_ITEM_RESPAWN_NO )
 			{
-				UTIL_Remove(this);	
+				UTIL_Remove(this);
 			}
 			return true;
 		}
@@ -147,7 +147,7 @@ public:
 	DECLARE_CLASS( CItem_LargeBoxMRounds, CItem );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/items/boxmrounds.mdl");
 		BaseClass::Spawn( );
@@ -162,7 +162,7 @@ public:
 		{
 			if ( g_pGameRules->ItemShouldRespawn( this ) == GR_ITEM_RESPAWN_NO )
 			{
-				UTIL_Remove(this);	
+				UTIL_Remove(this);
 			}
 			return true;
 		}
@@ -181,7 +181,7 @@ public:
 	DECLARE_CLASS( CItem_BoxLRounds, CItem );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/items/combine_rifle_cartridge01.mdl");
 		BaseClass::Spawn( );
@@ -196,8 +196,8 @@ public:
 		{
 			if ( g_pGameRules->ItemShouldRespawn( this ) == GR_ITEM_RESPAWN_NO )
 			{
-				UTIL_Remove(this);	
-			}	
+				UTIL_Remove(this);
+			}
 			return true;
 		}
 		return false;
@@ -215,7 +215,7 @@ public:
 	DECLARE_CLASS( CItem_LargeBoxLRounds, CItem );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/items/combine_rifle_cartridge01.mdl");
 		BaseClass::Spawn( );
@@ -230,8 +230,8 @@ public:
 		{
 			if ( g_pGameRules->ItemShouldRespawn( this ) == GR_ITEM_RESPAWN_NO )
 			{
-				UTIL_Remove(this);	
-			}	
+				UTIL_Remove(this);
+			}
 			return true;
 		}
 		return false;
@@ -254,7 +254,7 @@ public:
 		PrecacheModel ("models/items/357ammo.mdl");
 	}
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/items/357ammo.mdl");
 		BaseClass::Spawn( );
@@ -266,8 +266,8 @@ public:
 		{
 			if ( g_pGameRules->ItemShouldRespawn( this ) == GR_ITEM_RESPAWN_NO )
 			{
-				UTIL_Remove(this);	
-			}	
+				UTIL_Remove(this);
+			}
 			return true;
 		}
 		return false;
@@ -289,7 +289,7 @@ public:
 		PrecacheModel ("models/items/357ammobox.mdl");
 	}
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/items/357ammobox.mdl");
 		BaseClass::Spawn( );
@@ -301,7 +301,7 @@ public:
 		{
 			if ( g_pGameRules->ItemShouldRespawn( this ) == GR_ITEM_RESPAWN_NO )
 			{
-				UTIL_Remove(this);	
+				UTIL_Remove(this);
 			}
 			return true;
 		}
@@ -325,7 +325,7 @@ public:
 	}
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/items/crossbowrounds.mdl");
 		BaseClass::Spawn( );
@@ -337,8 +337,8 @@ public:
 		{
 			if ( g_pGameRules->ItemShouldRespawn( this ) == GR_ITEM_RESPAWN_NO )
 			{
-				UTIL_Remove(this);	
-			}	
+				UTIL_Remove(this);
+			}
 			return true;
 		}
 		return false;
@@ -356,7 +356,7 @@ public:
 	DECLARE_CLASS( CItem_FlareRound, CItem );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/items/flare.mdl");
 		BaseClass::Spawn( );
@@ -371,7 +371,7 @@ public:
 		{
 			if ( g_pGameRules->ItemShouldRespawn( this ) == GR_ITEM_RESPAWN_NO )
 			{
-				UTIL_Remove(this);	
+				UTIL_Remove(this);
 			}
 			return true;
 		}
@@ -391,7 +391,7 @@ public:
 	DECLARE_CLASS( CItem_BoxFlareRounds, CItem );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/items/boxflares.mdl");
 		BaseClass::Spawn( );
@@ -406,7 +406,7 @@ public:
 		{
 			if ( g_pGameRules->ItemShouldRespawn( this ) == GR_ITEM_RESPAWN_NO )
 			{
-				UTIL_Remove(this);	
+				UTIL_Remove(this);
 			}
 			return true;
 		}
@@ -424,7 +424,7 @@ public:
 	DECLARE_CLASS( CItem_RPG_Round, CItem );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/weapons/w_missile_closed.mdl");
 		BaseClass::Spawn( );
@@ -439,8 +439,8 @@ public:
 		{
 			if ( g_pGameRules->ItemShouldRespawn( this ) == GR_ITEM_RESPAWN_NO )
 			{
-				UTIL_Remove(this);	
-			}	
+				UTIL_Remove(this);
+			}
 			return true;
 		}
 		return false;
@@ -458,7 +458,7 @@ public:
 	DECLARE_CLASS( CItem_AR2_Grenade, CItem );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/items/ar2_grenade.mdl");
 		BaseClass::Spawn( );
@@ -473,8 +473,8 @@ public:
 		{
 			if ( g_pGameRules->ItemShouldRespawn( this ) == GR_ITEM_RESPAWN_NO )
 			{
-				UTIL_Remove(this);	
-			}	
+				UTIL_Remove(this);
+			}
 			return true;
 		}
 		return false;
@@ -494,7 +494,7 @@ public:
 	DECLARE_CLASS( CItem_BoxSniperRounds, CItem );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/items/boxsniperrounds.mdl");
 		BaseClass::Spawn( );
@@ -509,8 +509,8 @@ public:
 		{
 			if ( g_pGameRules->ItemShouldRespawn( this ) == GR_ITEM_RESPAWN_NO )
 			{
-				UTIL_Remove(this);	
-			}	
+				UTIL_Remove(this);
+			}
 			return true;
 		}
 		return false;
@@ -528,7 +528,7 @@ public:
 	DECLARE_CLASS( CItem_BoxBuckshot, CItem );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/items/boxbuckshot.mdl");
 		BaseClass::Spawn( );
@@ -543,7 +543,7 @@ public:
 		{
 			if ( g_pGameRules->ItemShouldRespawn( this ) == GR_ITEM_RESPAWN_NO )
 			{
-				UTIL_Remove(this);	
+				UTIL_Remove(this);
 			}
 			return true;
 		}
@@ -567,7 +567,7 @@ public:
 	}
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/items/combine_rifle_ammo01.mdl");
 		BaseClass::Spawn( );
@@ -579,7 +579,7 @@ public:
 		{
 			if ( g_pGameRules->ItemShouldRespawn( this ) == GR_ITEM_RESPAWN_NO )
 			{
-				UTIL_Remove(this);	
+				UTIL_Remove(this);
 			}
 			return true;
 		}
@@ -631,7 +631,7 @@ public:
 
 	void	InputKill( inputdata_t &data );
 	void	CrateThink( void );
-	
+
 	virtual int OnTakeDamage( const CTakeDamageInfo &info );
 
 protected:
@@ -655,7 +655,7 @@ LINK_ENTITY_TO_CLASS( item_ammo_crate, CItem_AmmoCrate );
 
 BEGIN_DATADESC( CItem_AmmoCrate )
 
-	DEFINE_KEYFIELD( m_nAmmoType,	FIELD_INTEGER, "AmmoType" ),	
+	DEFINE_KEYFIELD( m_nAmmoType,	FIELD_INTEGER, "AmmoType" ),
 
 	DEFINE_FIELD( m_flCloseTime, FIELD_FLOAT ),
 	DEFINE_FIELD( m_hActivator, FIELD_EHANDLE ),
@@ -689,20 +689,20 @@ const char *CItem_AmmoCrate::m_lpzModelNames[NUM_AMMO_CRATE_TYPES] =
 	"models/items/ammocrate_grenade.mdl",	// Grenades
 	"models/items/ammocrate_smg1.mdl",		// 357
 	"models/items/ammocrate_smg1.mdl",	// Crossbow
-	
+
 	//FIXME: This model is incorrect!
-	"models/items/ammocrate_ar2.mdl",		// Combine Ball 
+	"models/items/ammocrate_ar2.mdl",		// Combine Ball
 	"models/items/ammocrate_smg2.mdl",	    // smg grenade
 };
 
 // Ammo type names
 const char *CItem_AmmoCrate::m_lpzAmmoNames[NUM_AMMO_CRATE_TYPES] =
 {
-	"Pistol",		
-	"SMG1",			
-	"AR2",			
-	"RPG_Round",	
-	"Buckshot",		
+	"Pistol",
+	"SMG1",
+	"AR2",
+	"RPG_Round",
+	"Buckshot",
 	"Grenade",
 	"357",
 	"XBowBolt",
@@ -742,7 +742,7 @@ const char *CItem_AmmoCrate::m_pGiveWeapon[NUM_AMMO_CRATE_TYPES] =
 #define	AMMO_CRATE_CLOSE_DELAY	1.5f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItem_AmmoCrate::Spawn( void )
 {
@@ -776,7 +776,7 @@ bool CItem_AmmoCrate::CreateVPhysics( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItem_AmmoCrate::Precache( void )
 {
@@ -788,17 +788,17 @@ void CItem_AmmoCrate::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItem_AmmoCrate::SetupCrate( void )
 {
 	SetModelName( AllocPooledString( m_lpzModelNames[m_nAmmoType] ) );
-	
+
 	m_nAmmoIndex = GetAmmoDef()->Index( m_lpzAmmoNames[m_nAmmoType] );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItem_AmmoCrate::OnRestore( void )
 {
@@ -809,11 +809,11 @@ void CItem_AmmoCrate::OnRestore( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pActivator - 
-//			*pCaller - 
-//			useType - 
-//			value - 
+// Purpose:
+// Input  : *pActivator -
+//			*pCaller -
+//			useType -
+//			value -
 //-----------------------------------------------------------------------------
 void CItem_AmmoCrate::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
@@ -838,13 +838,13 @@ void CItem_AmmoCrate::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 		vOrigin.z += ( maxs.z - mins.z );
 		mins = (mins - GetAbsOrigin()) * 0.2f;
 		maxs = (maxs - GetAbsOrigin()) * 0.2f;
-		mins.z = ( GetAbsOrigin().z - vOrigin.z );  
-		
+		mins.z = ( GetAbsOrigin().z - vOrigin.z );
+
 		UTIL_TraceHull( vOrigin, vOrigin, mins, maxs, MASK_SOLID, this, COLLISION_GROUP_NONE, &tr );
 
 		if ( tr.startsolid || tr.allsolid )
 			 return;
-			
+
 		m_hActivator = pPlayer;
 
 		// Animate!
@@ -891,7 +891,7 @@ int CItem_AmmoCrate::OnTakeDamage( const CTakeDamageInfo &info )
 //-----------------------------------------------------------------------------
 // Purpose: Catches the monster-specific messages that occur when tagged
 //			animation frames are played.
-// Input  : *pEvent - 
+// Input  : *pEvent -
 //-----------------------------------------------------------------------------
 void CItem_AmmoCrate::HandleAnimEvent( animevent_t *pEvent )
 {
@@ -932,9 +932,9 @@ void CItem_AmmoCrate::HandleAnimEvent( animevent_t *pEvent )
 	BaseClass::HandleAnimEvent( pEvent );
 }
 
-	
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItem_AmmoCrate::CrateThink( void )
 {
@@ -974,11 +974,10 @@ void CItem_AmmoCrate::CrateThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &data - 
+// Purpose:
+// Input  : &data -
 //-----------------------------------------------------------------------------
 void CItem_AmmoCrate::InputKill( inputdata_t &data )
 {
 	UTIL_Remove( this );
 }
-

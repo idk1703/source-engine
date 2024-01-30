@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -43,7 +43,7 @@ void CEventPropertiesSequenceDialog::PopulateSequenceList( HWND wnd )
 	{
 		for (int i = 0; i < hdr->GetNumSeq(); i++)
 		{
-			SendMessage( wnd, CB_ADDSTRING, 0, (LPARAM)hdr->pSeqdesc(i).pszLabel() ); 
+			SendMessage( wnd, CB_ADDSTRING, 0, (LPARAM)hdr->pSeqdesc(i).pszLabel() );
 		}
 	}
 }
@@ -53,10 +53,10 @@ void CEventPropertiesSequenceDialog::InitControlData( CEventParams *params )
 	BaseClass::InitControlData( params );
 
 	HWND choices1 = GetControl( IDC_EVENTCHOICES );
-	SendMessage( choices1, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( choices1, CB_RESETCONTENT, 0, 0 );
 	SendMessage( choices1, WM_SETTEXT , 0, (LPARAM)params->m_szParameters );
 
-	SendMessage( GetControl( IDC_CHECK_PLAYOVERSCRIPT ), BM_SETCHECK, 
+	SendMessage( GetControl( IDC_CHECK_PLAYOVERSCRIPT ), BM_SETCHECK,
 		( WPARAM ) g_Params.m_bPlayOverScript ? BST_CHECKED : BST_UNCHECKED,
 		( LPARAM )0 );
 
@@ -68,7 +68,7 @@ void CEventPropertiesSequenceDialog::InitDialog( HWND hwndDlg )
 	m_hDialog = hwndDlg;
 
 	g_Params.PositionSelf( m_hDialog );
-	
+
 	// Set working title for dialog, etc.
 	SetTitle();
 
@@ -84,9 +84,9 @@ void CEventPropertiesSequenceDialog::InitDialog( HWND hwndDlg )
 static CEventPropertiesSequenceDialog g_EventPropertiesSequenceDialog;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wnd - 
-//			*params - 
+// Purpose:
+// Input  : wnd -
+//			*params -
 // Output : static
 //-----------------------------------------------------------------------------
 
@@ -96,11 +96,11 @@ void CEventPropertiesSequenceDialog::ShowControlsForEventType( CEventParams *par
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
 static BOOL CALLBACK EventPropertiesSequenceDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
@@ -121,14 +121,14 @@ BOOL CEventPropertiesSequenceDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPA
 	{
 	case WM_PAINT:
 		{
-			PAINTSTRUCT ps; 
+			PAINTSTRUCT ps;
 			HDC hdc;
-			
-            hdc = BeginPaint(hwndDlg, &ps); 
-			DrawSpline( hdc, GetControl( IDC_STATIC_SPLINE ), g_Params.m_pEvent );
-            EndPaint(hwndDlg, &ps); 
 
-            return FALSE; 
+	hdc = BeginPaint(hwndDlg, &ps);
+			DrawSpline( hdc, GetControl( IDC_STATIC_SPLINE ), g_Params.m_pEvent );
+	EndPaint(hwndDlg, &ps);
+
+	return FALSE;
 		}
 		break;
 	case WM_VSCROLL:
@@ -141,13 +141,13 @@ BOOL CEventPropertiesSequenceDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPA
 			return FALSE;
 		}
 		break;
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		{
 			InitDialog( hwndDlg );
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -177,7 +177,7 @@ BOOL CEventPropertiesSequenceDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPA
 				EndDialog( hwndDlg, 1 );
 			}
 			break;
-        case IDCANCEL:
+	case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		case IDC_CHECK_ENDTIME:
@@ -231,16 +231,16 @@ BOOL CEventPropertiesSequenceDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPA
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int EventProperties_Sequence( CEventParams *params )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_EVENTPROPERTIES_SEQUENCE ),
 		(HWND)g_MDLViewer->getHandle(),
 		(DLGPROC)EventPropertiesSequenceDialogProc );

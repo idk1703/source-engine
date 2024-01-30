@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -18,14 +18,13 @@ BEGIN_DATADESC( CActAnimating )
 END_DATADESC()
 
 
-void CActAnimating::SetActivity( Activity act ) 
-{ 
-	int sequence = SelectWeightedSequence( act ); 
+void CActAnimating::SetActivity( Activity act )
+{
+	int sequence = SelectWeightedSequence( act );
 	if ( sequence != ACTIVITY_NOT_AVAILABLE )
 	{
 		ResetSequence( sequence );
-		m_Activity = act; 
+		m_Activity = act;
 		SetCycle( 0 );
 	}
 }
-

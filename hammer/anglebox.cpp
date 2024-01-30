@@ -47,11 +47,11 @@ CAngleBox::~CAngleBox()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nFlags - 
-//			point - 
+// Purpose:
+// Input  : nFlags -
+//			point -
 //-----------------------------------------------------------------------------
-void CAngleBox::OnMouseMove(UINT nFlags, CPoint point) 
+void CAngleBox::OnMouseMove(UINT nFlags, CPoint point)
 {
 	if (m_bDragging)
 	{
@@ -66,7 +66,7 @@ void CAngleBox::OnMouseMove(UINT nFlags, CPoint point)
 		int nNewYaw = fixang(180 - (int)lineangle(point.x, point.y, m_ptClientCenter.x, m_ptClientCenter.y));
 		m_vecAngles.Init();
 		m_vecAngles[YAW] = nNewYaw;
-		
+
 		//
 		// Draw the new angle line.
 		//
@@ -78,11 +78,11 @@ void CAngleBox::OnMouseMove(UINT nFlags, CPoint point)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nFlags - 
-//			point - 
+// Purpose:
+// Input  : nFlags -
+//			point -
 //-----------------------------------------------------------------------------
-void CAngleBox::OnLButtonUp(UINT nFlags, CPoint point) 
+void CAngleBox::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	// release dc
 	if (m_bDragging)
@@ -99,17 +99,17 @@ void CAngleBox::OnLButtonUp(UINT nFlags, CPoint point)
 
 		GetParent()->PostMessage(ABN_CHANGED, GetDlgCtrlID(), 0);
 	}
-		
+
 	CWnd::OnLButtonUp(nFlags, point);
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nFlags - 
-//			point - 
+// Purpose:
+// Input  : nFlags -
+//			point -
 //-----------------------------------------------------------------------------
-void CAngleBox::OnLButtonDown(UINT nFlags, CPoint point) 
+void CAngleBox::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	//
 	// Start dragging.
@@ -125,8 +125,8 @@ void CAngleBox::OnLButtonDown(UINT nFlags, CPoint point)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pDC - 
+// Purpose:
+// Input  : pDC -
 //-----------------------------------------------------------------------------
 void CAngleBox::DrawAngleLine(CDC *pDC)
 {
@@ -219,8 +219,8 @@ char *CAngleBox::GetAngleEditText(char *szBuf)
 //-----------------------------------------------------------------------------
 // Purpose: Called internally and by the linked combo box, this updates the angles
 //			without updating the linked combo box.
-// Input  : szAngles - 
-//			bRedraw - 
+// Input  : szAngles -
+//			bRedraw -
 //-----------------------------------------------------------------------------
 void CAngleBox::SetAnglesInternal(const QAngle &vecAngles, bool bRedraw)
 {
@@ -264,8 +264,8 @@ void CAngleBox::SetAnglesInternal(const QAngle &vecAngles, bool bRedraw)
 //-----------------------------------------------------------------------------
 // Purpose: Called from the client code, this sets our angles and updates the
 //			linked combo box.
-// Input  : szAngles - 
-//			bRedraw - 
+// Input  : szAngles -
+//			bRedraw -
 //-----------------------------------------------------------------------------
 void CAngleBox::SetAngles(const QAngle &vecAngles, bool bRedraw)
 {
@@ -277,8 +277,8 @@ void CAngleBox::SetAngles(const QAngle &vecAngles, bool bRedraw)
 //-----------------------------------------------------------------------------
 // Purpose: Called from the client code, this sets our angles via a string and
 //			updates the linked combo box.
-// Input  : szAngles - 
-//			bRedraw - 
+// Input  : szAngles -
+//			bRedraw -
 //-----------------------------------------------------------------------------
 void CAngleBox::SetAngles(const char *szAngles, bool bRedraw)
 {
@@ -291,8 +291,8 @@ void CAngleBox::SetAngles(const char *szAngles, bool bRedraw)
 //-----------------------------------------------------------------------------
 // Purpose: Called internally and by the linked combo box, this sets our
 //			'different' state without updating the linked combo box.
-// Input  : bDifferent - 
-//			bRedraw - 
+// Input  : bDifferent -
+//			bRedraw -
 //-----------------------------------------------------------------------------
 void CAngleBox::SetDifferentInternal(bool bDifferent, bool bRedraw)
 {
@@ -340,7 +340,7 @@ void CAngleBox::SetDifferent(bool bDifferent, bool bRedraw)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAngleBox::OnPaint(void)
 {
@@ -369,7 +369,7 @@ void CAngleBox::OnPaint(void)
 	// Draw a 3D circle.
 	//
 	m_ptClientCenter = r.CenterPoint();
-	
+
 	pDC->SelectStockObject(NULL_PEN);
 	pDC->SelectObject(pBackBrush);
 	pDC->Ellipse(r);
@@ -416,7 +416,7 @@ void CAngleBox::Enable(bool bEnable)
 	else
 	{
 		EnableWindow(FALSE);
-		
+
 		if (m_pEdit)
 		{
 			m_pEdit->EnableWindow(FALSE);
@@ -436,7 +436,7 @@ void CAngleBox::Show(bool bShow)
 	if (bShow)
 	{
 		ShowWindow(SW_SHOW);
-		
+
 		if (m_pEdit)
 		{
 			m_pEdit->ShowWindow(SW_SHOW);
@@ -492,8 +492,8 @@ CAngleCombo::CAngleCombo()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szAngles - 
+// Purpose:
+// Input  : *szAngles -
 //-----------------------------------------------------------------------------
 void CAngleCombo::SetAnglesInternal(const char *szAngles)
 {
@@ -506,7 +506,7 @@ void CAngleCombo::SetAnglesInternal(const char *szAngles)
 //-----------------------------------------------------------------------------
 // Purpose: Handles a change in the contents of the angle edit control.
 //-----------------------------------------------------------------------------
-void CAngleCombo::OnChangeAngleEdit(void) 
+void CAngleCombo::OnChangeAngleEdit(void)
 {
 	if (m_bEnableUpdate)
 	{
@@ -522,7 +522,7 @@ void CAngleCombo::OnChangeAngleEdit(void)
 //-----------------------------------------------------------------------------
 // Purpose: Handles a change in the current selection of the angle edit combo.
 //-----------------------------------------------------------------------------
-void CAngleCombo::OnSelChangeAngleEdit(void) 
+void CAngleCombo::OnSelChangeAngleEdit(void)
 {
 	char buf[64];
 	int nSel = GetCurSel();
@@ -559,4 +559,3 @@ void CAngleCombo::UpdateAngleBox(char *szText)
 		}
 	}
 }
-

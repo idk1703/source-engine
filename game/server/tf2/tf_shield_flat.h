@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -46,7 +46,7 @@ public:
 	void ShieldMoved();
 
 public:
-	
+
 	// networked data
 	CNetworkVar( unsigned char, m_ShieldState );
 	CNetworkVar( float, m_Width );

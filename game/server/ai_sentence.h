@@ -42,7 +42,7 @@ enum SentencePriority_t
 //-----------------------------------------------------------------------------
 // This is the met of the class
 //-----------------------------------------------------------------------------
-abstract_class CAI_SentenceBase : public CAI_Component 
+abstract_class CAI_SentenceBase : public CAI_Component
 {
 	DECLARE_CLASS_NOBASE( CAI_SentenceBase );
 	DECLARE_SIMPLE_DATADESC();
@@ -93,7 +93,7 @@ private:
 // NOTE: This is a template class so each user has a different set of globals
 //-----------------------------------------------------------------------------
 template< class NPC_CLASS >
-class CAI_Sentence : public CAI_SentenceBase 
+class CAI_Sentence : public CAI_SentenceBase
 {
 	DECLARE_CLASS_NOFRIEND( CAI_Sentence, CAI_SentenceBase );
 
@@ -116,13 +116,13 @@ private:
 // Voice pitch
 //-----------------------------------------------------------------------------
 inline void CAI_SentenceBase::SetVoicePitch( int voicePitch )
-{ 
-	m_voicePitch = voicePitch; 
+{
+	m_voicePitch = voicePitch;
 }
 
 inline int CAI_SentenceBase::GetVoicePitch() const
-{ 
-	return m_voicePitch; 
+{
+	return m_voicePitch;
 }
 
 
@@ -146,7 +146,7 @@ void CAI_Sentence< NPC_CLASS >::Init( NPC_CLASS *pOuter, const char *pGameSound 
 			m_voicePitchMax = params.pitchhigh;
 		}
 	}
-	
+
 	// Select a voice pitch
 	if ( random->RandomInt(0,1) )
 	{

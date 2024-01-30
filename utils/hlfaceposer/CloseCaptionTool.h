@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -58,8 +58,8 @@ private:
 
 	void	DumpWork( CCloseCaptionItem *item );
 
-	void AddWorkUnit( 
-		CCloseCaptionItem *item,	
+	void AddWorkUnit(
+		CCloseCaptionItem *item,
 		WorkUnitParams& params );
 
 	CUtlVector< CCloseCaptionItem * > m_Items;

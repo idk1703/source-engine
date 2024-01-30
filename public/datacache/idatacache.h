@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -51,8 +51,8 @@ typedef memhandle_t DataCacheHandle_t;
 struct DataCacheLimits_t
 {
 	DataCacheLimits_t( unsigned _nMaxBytes = (unsigned)-1, unsigned _nMaxItems = (unsigned)-1, unsigned _nMinBytes = 0, unsigned _nMinItems = 0 )
-		: nMaxBytes(_nMaxBytes), 
-		nMaxItems(_nMaxItems), 
+		: nMaxBytes(_nMaxBytes),
+		nMaxItems(_nMaxItems),
 		nMinBytes(_nMinBytes),
 		nMinItems(_nMinItems)
 	{
@@ -127,7 +127,7 @@ enum DataCacheNotificationType_t
 	// Cache is requesting item be relocated for debugging purposes
 	DC_RELOCATE,
 
-	// Item info should be output to console, return false to accept default handling 
+	// Item info should be output to console, return false to accept default handling
 	DC_PRINT_INF0,
 };
 
@@ -245,7 +245,7 @@ public:
 	virtual void *GetNoTouch( DataCacheHandle_t handle, bool bFrameLock = false ) = 0;
 
 	//--------------------------------------------------------
-	// Purpose: "Frame locking" (not game frame). A crude way to manage locks over relatively 
+	// Purpose: "Frame locking" (not game frame). A crude way to manage locks over relatively
 	//			short periods. Does not affect normal locks/unlocks
 	//--------------------------------------------------------
 	virtual int BeginFrameLocking() = 0;
@@ -269,7 +269,7 @@ public:
 
 
 	//--------------------------------------------------------
-	// Purpose: Explicitly mark an item as "least recently used". 
+	// Purpose: Explicitly mark an item as "least recently used".
 	//--------------------------------------------------------
 	virtual bool Age( DataCacheHandle_t handle ) = 0;
 
@@ -322,13 +322,13 @@ abstract_class IDataCacheClient
 {
 public:
 	//--------------------------------------------------------
-	// 
+	//
 	//--------------------------------------------------------
 	virtual bool HandleCacheNotification( const DataCacheNotification_t &notification  ) = 0;
 
 
 	//--------------------------------------------------------
-	// 
+	//
 	//--------------------------------------------------------
 	virtual bool GetItemName( DataCacheClientID_t clientId, const void *pItem, char *pDest, unsigned nMaxLen  ) = 0;
 };
@@ -452,38 +452,38 @@ public:
 	}
 
 	LOCK_TYPE CacheGet( DataCacheHandle_t handle, bool bFrameLock = true )
-	{ 
-		return (LOCK_TYPE)(((STORAGE_TYPE *)m_pCache->Get( handle, bFrameLock ))->GetData()); 
+	{
+		return (LOCK_TYPE)(((STORAGE_TYPE *)m_pCache->Get( handle, bFrameLock ))->GetData());
 	}
 
-	LOCK_TYPE CacheGetNoTouch( DataCacheHandle_t handle )	
-	{ 
-		return (LOCK_TYPE)(((STORAGE_TYPE *)m_pCache->GetNoTouch( handle ))->GetData()); 
+	LOCK_TYPE CacheGetNoTouch( DataCacheHandle_t handle )
+	{
+		return (LOCK_TYPE)(((STORAGE_TYPE *)m_pCache->GetNoTouch( handle ))->GetData());
 	}
 
-	LOCK_TYPE CacheLock( DataCacheHandle_t handle )				
-	{ 
-		return (LOCK_TYPE)(((STORAGE_TYPE *)m_pCache->Lock( handle ))->GetData()); 
+	LOCK_TYPE CacheLock( DataCacheHandle_t handle )
+	{
+		return (LOCK_TYPE)(((STORAGE_TYPE *)m_pCache->Lock( handle ))->GetData());
 	}
 
 	int CacheUnlock( DataCacheHandle_t handle )
-	{ 
-		return m_pCache->Unlock( handle ); 
+	{
+		return m_pCache->Unlock( handle );
 	}
 
 	void CacheTouch( DataCacheHandle_t handle )
-	{ 
-		m_pCache->Touch( handle ); 
+	{
+		m_pCache->Touch( handle );
 	}
 
 	void CacheRemove( DataCacheHandle_t handle, bool bNotify = true )
-	{ 
-		m_pCache->Remove( handle, bNotify ); 
+	{
+		m_pCache->Remove( handle, bNotify );
 	}
 
 	void CacheFlush()
-	{ 
-		m_pCache->Flush(); 
+	{
+		m_pCache->Flush();
 	}
 
 	DataCacheHandle_t CacheCreate( const CREATE_PARAMS &createParams, unsigned flags = DCAF_DEFAULT )

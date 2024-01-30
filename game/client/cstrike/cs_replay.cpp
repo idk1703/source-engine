@@ -117,7 +117,7 @@ void CCSReplay::FireGameEvent( IGameEvent *pEvent )
 			}
 
 			// Revenge?
-			if ( pEvent->GetInt( "death_flags" ) & REPLAY_DEATH_REVENGE ) 
+			if ( pEvent->GetInt( "death_flags" ) & REPLAY_DEATH_REVENGE )
 			{
 				AddRevenge( nVictimID );
 			}
@@ -127,7 +127,7 @@ void CCSReplay::FireGameEvent( IGameEvent *pEvent )
 			{
 				AddKill( pVictim->GetPlayerName(), pVictim->PlayerClass() );
 			}
-		
+
 			// Take a quick screenshot with some delay
 			ConVarRef replay_screenshotkilldelay( "replay_screenshotkilldelay" );
 			if ( replay_screenshotkilldelay.IsValid() )
@@ -136,7 +136,7 @@ void CCSReplay::FireGameEvent( IGameEvent *pEvent )
 				g_pReplayScreenshotManager->CaptureScreenshot( params );
 			}
 		}
-		
+
 		// Player death?
 		else if ( pKiller &&
 				  nVictimID == pLocalPlayer->GetUserID() )

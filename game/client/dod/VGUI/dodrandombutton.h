@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -56,7 +56,7 @@ void CDODRandomButton<T>::PaintBackground()
 
 	surface()->DrawSetColor(this->GetBgColor());
 	surface()->DrawSetTexture( CDODRandomButton<T>::m_iWhiteTexture );
-	
+
 	Vertex_t verts[4];
 
 	verts[0].Init( Vector2D( 0, 0 ) );
@@ -78,14 +78,14 @@ void CDODRandomButton<T>::PaintBorder()
 	surface()->DrawSetColor(this->GetFgColor());
 
 	// top
-	surface()->DrawLine( 0, 1, wide-1, 1 );	
+	surface()->DrawLine( 0, 1, wide-1, 1 );
 
 	// left
 	surface()->DrawLine( 1, 1, inset-1, tall-1 );
 
 	// bottom
 	surface()->DrawLine( inset-1, tall-1, wide-1, tall-1 );
-	
+
 	// right
 	surface()->DrawLine( wide-1, 0, wide-1, tall-1 );
 }

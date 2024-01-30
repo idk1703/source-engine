@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -44,7 +44,7 @@ BEGIN_MESSAGE_MAP(CFilterControl, CHammerBar)
 	ON_UPDATE_COMMAND_UI(IDC_MARKMEMBERS, UpdateControl)
 	ON_UPDATE_COMMAND_UI(IDC_SHOW_ALL, UpdateControl)
 	ON_UPDATE_COMMAND_UI(IDC_VISGROUP_MOVEUP, UpdateControl)
-	ON_UPDATE_COMMAND_UI(IDC_VISGROUP_MOVEDOWN, UpdateControl)		
+	ON_UPDATE_COMMAND_UI(IDC_VISGROUP_MOVEDOWN, UpdateControl)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, OnSelChangeTab)
 	ON_WM_ACTIVATE()
 	ON_WM_SHOWWINDOW()
@@ -52,25 +52,25 @@ BEGIN_MESSAGE_MAP(CFilterControl, CHammerBar)
 	ON_WM_WINDOWPOSCHANGED()
 	ON_REGISTERED_MESSAGE(g_uToggleStateMsg, OnListToggleState)
 	ON_REGISTERED_MESSAGE(g_uLeftDragDropMsg, OnListLeftDragDrop)
-	ON_REGISTERED_MESSAGE(g_uRightDragDropMsg, OnListRightDragDrop)	
+	ON_REGISTERED_MESSAGE(g_uRightDragDropMsg, OnListRightDragDrop)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pParentWnd - 
+// Purpose:
+// Input  : pParentWnd -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CFilterControl::Create(CWnd *pParentWnd)
 {
 	if (!CHammerBar::Create(pParentWnd, IDD_FILTERCONTROL, CBRS_RIGHT | CBRS_SIZE_DYNAMIC, IDCB_FILTERCONTROL, "Filter Control"))
-		
+
 	{
 		return FALSE;
 	}
 
-	m_cGroupBox.SubclassDlgItem(IDC_GROUPS, this);	
+	m_cGroupBox.SubclassDlgItem(IDC_GROUPS, this);
 	m_cGroupBox.EnableChecks();
 
 	m_cTabControl.SubclassDlgItem(IDC_TAB1, this);
@@ -87,7 +87,7 @@ BOOL CFilterControl::Create(CWnd *pParentWnd)
 	hIcon = pApp->LoadIcon(IDI_MOVE_DOWN);
 	((CButton *)GetDlgItem(IDC_VISGROUP_MOVEDOWN))->SetIcon(hIcon);
 
-    AddControl( IDC_GROUPS, GROUP_BOX );
+	AddControl( IDC_GROUPS, GROUP_BOX );
 	AddControl( IDC_VISGROUP_MOVEUP, BOTTOM_JUSTIFY );
 	AddControl( IDC_VISGROUP_MOVEDOWN, BOTTOM_JUSTIFY );
 	AddControl( IDC_SHOW_ALL, BOTTOM_JUSTIFY );
@@ -106,9 +106,9 @@ BOOL CFilterControl::Create(CWnd *pParentWnd)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nLength - 
-//			dwMode - 
+// Purpose:
+// Input  : nLength -
+//			dwMode -
 // Output : CSize
 //-----------------------------------------------------------------------------
 CSize CFilterControl::CalcDynamicLayout(int nLength, DWORD dwMode)
@@ -124,10 +124,10 @@ CSize CFilterControl::CalcDynamicLayout(int nLength, DWORD dwMode)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nType - 
-//			cx - 
-//			cy - 
+// Purpose:
+// Input  : nType -
+//			cx -
+//			cy -
 //-----------------------------------------------------------------------------
 void CFilterControl::OnSize(UINT nType, int cx, int cy)
 {
@@ -146,7 +146,7 @@ void CFilterControl::OnSize(UINT nType, int cx, int cy)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFilterControl::UpdateGroupList(void)
 {
@@ -176,7 +176,7 @@ void CFilterControl::UpdateGroupList(void)
 		}
 	}
 
-	UpdateGroupListChecks();		
+	UpdateGroupListChecks();
 
 	if (pVisGroup)
 	{
@@ -191,8 +191,8 @@ void CFilterControl::UpdateGroupList(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pCmdUI - 
+// Purpose:
+// Input  : pCmdUI -
 //-----------------------------------------------------------------------------
 void CFilterControl::UpdateControl(CCmdUI *pCmdUI)
 {
@@ -211,9 +211,9 @@ void CFilterControl::UpdateControlGroups(CCmdUI *pCmdUI)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pTarget - 
-//			bDisableIfNoHndler - 
+// Purpose:
+// Input  : pTarget -
+//			bDisableIfNoHndler -
 //-----------------------------------------------------------------------------
 void CFilterControl::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
 {
@@ -222,7 +222,7 @@ void CFilterControl::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFilterControl::OnShowAllGroups(void)
 {
@@ -241,7 +241,7 @@ void CFilterControl::OnShowAllGroups(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 BOOL CFilterControl::OnMoveUpDown(UINT uCmd)
 {
@@ -278,7 +278,7 @@ BOOL CFilterControl::OnMoveUpDown(UINT uCmd)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFilterControl::OnEditGroups(void)
 {
@@ -296,9 +296,9 @@ void CFilterControl::OnEditGroups(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pObject - 
-//			pInfo - 
+// Purpose:
+// Input  : pObject -
+//			pInfo -
 // Output : Returns TRUE to continue enumerating, FALSE to stop.
 //-----------------------------------------------------------------------------
 static BOOL MarkMembersOfGroup(CMapClass *pObject, MARKMEMBERSINFO *pInfo)
@@ -356,7 +356,7 @@ void CFilterControl::OnMarkMembers(void)
 						}
 					}
 				}
-				
+
 				pChild = pWorld->GetNextDescendent(pos);
 			}
 		}
@@ -365,8 +365,8 @@ void CFilterControl::OnMarkMembers(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pPos - 
+// Purpose:
+// Input  : pPos -
 //-----------------------------------------------------------------------------
 void CFilterControl::OnWindowPosChanged(WINDOWPOS *pPos)
 {
@@ -380,9 +380,9 @@ void CFilterControl::OnWindowPosChanged(WINDOWPOS *pPos)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bShow - 
-//			nStatus - 
+// Purpose:
+// Input  : bShow -
+//			nStatus -
 //-----------------------------------------------------------------------------
 void CFilterControl::OnShowWindow(BOOL bShow, UINT nStatus)
 {
@@ -396,10 +396,10 @@ void CFilterControl::OnShowWindow(BOOL bShow, UINT nStatus)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nState - 
-//			pWnd - 
-//			bMinimized - 
+// Purpose:
+// Input  : nState -
+//			pWnd -
+//			bMinimized -
 //-----------------------------------------------------------------------------
 void CFilterControl::OnActivate(UINT nState, CWnd* pWnd, BOOL bMinimized)
 {
@@ -440,9 +440,9 @@ LRESULT CFilterControl::OnListToggleState(WPARAM wParam, LPARAM lParam)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wParam - 
-//			lParam - 
+// Purpose:
+// Input  : wParam -
+//			lParam -
 // Output : LRESULT
 //-----------------------------------------------------------------------------
 LRESULT CFilterControl::OnListLeftDragDrop(WPARAM wParam, LPARAM lParam)
@@ -503,9 +503,9 @@ LRESULT CFilterControl::OnListLeftDragDrop(WPARAM wParam, LPARAM lParam)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wParam - 
-//			lParam - 
+// Purpose:
+// Input  : wParam -
+//			lParam -
 // Output : LRESULT
 //-----------------------------------------------------------------------------
 LRESULT CFilterControl::OnListRightDragDrop(WPARAM wParam, LPARAM lParam)
@@ -539,10 +539,10 @@ LRESULT CFilterControl::OnListRightDragDrop(WPARAM wParam, LPARAM lParam)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wParam - 
-//			lParam - 
-//			pResult - 
+// Purpose:
+// Input  : wParam -
+//			lParam -
+//			pResult -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CFilterControl::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT *pResult)
@@ -575,7 +575,7 @@ BOOL CFilterControl::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT *pResult)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 BOOL CFilterControl::OnInitDialog(void)
 {
@@ -584,7 +584,7 @@ BOOL CFilterControl::OnInitDialog(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFilterControl::UpdateGroupListChecks(void)
 {
@@ -607,15 +607,15 @@ void CFilterControl::UpdateGroupListChecks(void)
 	}
 }
 
-void CFilterControl::OnSelChangeTab(NMHDR *header, LRESULT *result) 
+void CFilterControl::OnSelChangeTab(NMHDR *header, LRESULT *result)
 {
-	if ( m_cTabControl.GetCurSel() == 0 ) 
+	if ( m_cTabControl.GetCurSel() == 0 )
 	{
-		m_bShowingAuto = FALSE;				
-	} 
-	else 
-	{
-		m_bShowingAuto = TRUE;		
+		m_bShowingAuto = FALSE;
 	}
-	UpdateGroupList();	
+	else
+	{
+		m_bShowingAuto = TRUE;
+	}
+	UpdateGroupList();
 }

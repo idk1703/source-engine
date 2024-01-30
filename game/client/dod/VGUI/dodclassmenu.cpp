@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,7 +32,7 @@ using namespace vgui;
 
 extern ConVar hud_classautokill;
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Panel *CDODClassInfoPanel::CreateControlByName( const char *controlName )
 {
@@ -72,7 +72,7 @@ CDODClassMenu::CDODClassMenu(IViewPort *pViewPort) : CClassMenu(pViewPort)
 	m_pBackground = SETUP_PANEL( new CDODMenuBackground( this ) );
 
 	m_pClassInfoPanel = new CDODClassInfoPanel( this, "ClassInfoPanel" );
-	
+
 	vgui::ivgui()->AddTickSignal( GetVPanel() );
 
 	m_iActivePlayerClass = -1;
@@ -106,7 +106,7 @@ void CDODClassMenu::ShowPanel( bool bShow )
 		m_pSuicideOption->SetSelected( hud_classautokill.GetBool() );
 	}
 
-	for( int i = 0; i< GetChildCount(); i++ ) 
+	for( int i = 0; i< GetChildCount(); i++ )
 	{
 		CImageMouseOverButton<CDODClassInfoPanel> *button =
 			dynamic_cast<CImageMouseOverButton<CDODClassInfoPanel> *>(GetChild(i));
@@ -129,7 +129,7 @@ void CDODClassMenu::ShowPanel( bool bShow )
 	// recalc position of checkbox, since it doesn't do right alignment
 	m_pSuicideOption->SizeToContents();
 
-	int x, y, wide, tall; 
+	int x, y, wide, tall;
 	m_pSuicideOption->GetBounds( x, y, wide, tall );
 
 	int parentW, parentH;
@@ -171,12 +171,12 @@ void CDODClassMenu::Update()
 	}
 	else
 	{
-		SetVisibleButton( "CancelButton", true ); 
+		SetVisibleButton( "CancelButton", true );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Panel *CDODClassMenu::CreateControlByName( const char *controlName )
 {
@@ -248,13 +248,13 @@ void CDODClassMenu::PaintBackground( void )
 }
 
 //-----------------------------------------------------------------------------
-// Do things that should be done often, eg number of players in the 
+// Do things that should be done often, eg number of players in the
 // selected class
 //-----------------------------------------------------------------------------
 void CDODClassMenu::OnTick( void )
 {
-	//When a player changes teams, their class and team values don't get here 
-	//necessarily before the command to update the class menu. This leads to the cancel button 
+	//When a player changes teams, their class and team values don't get here
+	//necessarily before the command to update the class menu. This leads to the cancel button
 	//being visible and people cancelling before they have a class. check for class == DOD_CLASS_NONE and if so
 	//hide the cancel button
 
@@ -302,7 +302,7 @@ void CDODClassMenu::UpdateNumClassLabel( void )
 
 			if ( pLimitCvar )
 				iClassLimit[i] = MIN( 32, pLimitCvar->GetInt() );
-		}	
+		}
 
 		if ( iClassLimit[i] < 0 || iClassCount[i] < iClassLimit[i] )
 			m_pClassFullLabel[i]->SetVisible( false );
@@ -338,7 +338,7 @@ void CDODClassMenu::OnSuicideOptionChanged( vgui::Panel *Panel )
 
 	void CDODClassMenu::OnRefreshClassMenu( void )
 	{
-		for( int i = 0; i< GetChildCount(); i++ ) 
+		for( int i = 0; i< GetChildCount(); i++ )
 		{
 			CImageMouseOverButton<CDODClassInfoPanel> *button =
 				dynamic_cast<CImageMouseOverButton<CDODClassInfoPanel> *>(GetChild(i));
@@ -347,7 +347,7 @@ void CDODClassMenu::OnSuicideOptionChanged( vgui::Panel *Panel )
 			{
 				button->RefreshClassPage();
 			}
-		}		
+		}
 	}
 
 #endif

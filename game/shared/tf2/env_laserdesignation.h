@@ -35,7 +35,7 @@ public:
 
 		// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -56,7 +56,7 @@ public:
 
 	virtual int		DrawModel( int flags );
 #else
-	virtual int		UpdateTransmitState();	
+	virtual int		UpdateTransmitState();
 	virtual int		ShouldTransmit( const CCheckTransmitInfo *pInfo );
 #endif
 

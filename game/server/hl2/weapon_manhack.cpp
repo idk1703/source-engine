@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -99,6 +99,3 @@ void CWeapon_Manhack::PrimaryAttack()
 void CWeapon_Manhack::SecondaryAttack()
 {
 }
-
-
-

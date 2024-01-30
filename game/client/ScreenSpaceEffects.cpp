@@ -45,7 +45,7 @@ public:
 
 	virtual void SetScreenSpaceEffectParams( const char *pEffectName, KeyValues *params );
 	virtual void SetScreenSpaceEffectParams( IScreenSpaceEffect *pEffect, KeyValues *params );
-    
+
 	virtual void EnableScreenSpaceEffect( const char *pEffectName );
 	virtual void EnableScreenSpaceEffect( IScreenSpaceEffect *pEffect );
 
@@ -120,7 +120,7 @@ IScreenSpaceEffect *CScreenSpaceEffectManager::GetScreenSpaceEffect( const char 
 
 
 //---------------------------------------------------------------------------------------
-// CScreenSpaceEffectManager::SetScreenSpaceEffectParams 
+// CScreenSpaceEffectManager::SetScreenSpaceEffectParams
 //	- Assign parameters to the specified effect
 //---------------------------------------------------------------------------------------
 void CScreenSpaceEffectManager::SetScreenSpaceEffectParams( const char *pEffectName, KeyValues *params )
@@ -213,7 +213,7 @@ class CExampleEffect : public IScreenSpaceEffect
 {
 public:
 	CExampleEffect( );
-   ~CExampleEffect( );
+	~CExampleEffect( );
 
 	void Init( );
 	void Shutdown( );
@@ -312,6 +312,6 @@ void CExampleEffect::Render( int x, int y, int w, int h )
 	CMatRenderContextPtr pRenderContext( materials );
 
 	pRenderContext->DrawScreenSpaceRectangle( m_Material, x, y, w, h,
-											actualRect.x, actualRect.y, actualRect.x+actualRect.width-1, actualRect.y+actualRect.height-1, 
+											actualRect.x, actualRect.y, actualRect.x+actualRect.width-1, actualRect.y+actualRect.height-1,
 											pTexture->GetActualWidth(), pTexture->GetActualHeight() );
 }

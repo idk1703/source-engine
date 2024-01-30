@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -17,4 +17,4 @@ typedef struct
 	bool draw;
 } ModeElements;
 
-#endif 
+#endif

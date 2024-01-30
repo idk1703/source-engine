@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
-#include "cbase.h"	   
+#include "cbase.h"
 #include "c_te_particlesystem.h"
 #include "movevars_shared.h"
 
@@ -118,7 +118,7 @@ StandardParticle_t* CTEParticleRenderer::AddParticle()
 		m_MaterialHandle = m_ParticleEffect.FindOrAddMaterial("particle/particledefault");
 	}
 
-	StandardParticle_t *pParticle = 
+	StandardParticle_t *pParticle =
 		(StandardParticle_t*)BaseClass::AddParticle( sizeof(StandardParticle_t), m_MaterialHandle, m_vSortOrigin );
 
 	if(pParticle)
@@ -236,12 +236,12 @@ void CTEParticleRenderer::SimulateParticles( CParticleSimulateIterator *pIterato
 			case pt_vox_grav:
 				pParticle->m_Velocity[2] -= grav * 8;
 				break;
-				
+
 			case pt_vox_slowgrav:
 				pParticle->m_Velocity[2] -= grav * 4;
 				break;
 
-				
+
 			case pt_blob:
 			case pt_blob2:
 				pParticle->m_EffectDataWord += (unsigned short)(time2 * (1 << SIMSHIFT));
@@ -251,10 +251,10 @@ void CTEParticleRenderer::SimulateParticles( CParticleSimulateIterator *pIterato
 					pParticle->m_EffectDataWord = 0;
 					iRamp = 0;
 				}
-				
+
 				colorIndex = &gSparkRamp[ iRamp ];
 				pParticle->SetColor((float)(*colorIndex)[0] / 255.0f, (float)(*colorIndex)[1] / 255.0f, (float)(*colorIndex)[2] / 255.0f);
-				
+
 				pParticle->m_Velocity[0] -= pParticle->m_Velocity[0]*0.5*ft;
 				pParticle->m_Velocity[1] -= pParticle->m_Velocity[1]*0.5*ft;
 				pParticle->m_Velocity[2] -= grav * 5;
@@ -278,5 +278,3 @@ void CTEParticleRenderer::SimulateParticles( CParticleSimulateIterator *pIterato
 		pParticle = (StandardParticle_t*)pIterator->GetNext();
 	}
 }
-
-

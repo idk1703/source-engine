@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -41,7 +41,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBSPDecal::C_TEBSPDecal( void )
 {
@@ -51,14 +51,14 @@ C_TEBSPDecal::C_TEBSPDecal( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBSPDecal::~C_TEBSPDecal( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEBSPDecal::Precache( void )
 {
@@ -81,8 +81,8 @@ void TE_BSPDecal( IRecipientFilter& filter, float delay,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEBSPDecal::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -106,4 +106,3 @@ IMPLEMENT_CLIENTCLASS_EVENT_DT(C_TEBSPDecal, DT_TEBSPDecal, CTEBSPDecal)
 	RecvPropInt( RECVINFO(m_nEntity)),
 	RecvPropInt( RECVINFO(m_nIndex)),
 END_RECV_TABLE()
-

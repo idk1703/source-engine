@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2007, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2007, Valve Corporation, All rights reserved. =======
 //
 //=============================================================================
 
@@ -60,30 +60,30 @@ const float4 g_EyePos_SpecExponent		: register( PSREG_EYEPOS_SPEC_EXPONENT );
 static const int g_BlurCount = BLUR;
 static const float g_BlurFraction = 1.0f / 512.0f;
 static const float g_HalfBlurFraction = 0.5 * g_BlurFraction;
-static const float4 g_BlurFractionVec = float4( g_BlurFraction, g_HalfBlurFraction, 
-                                               -g_BlurFraction,-g_HalfBlurFraction );
+static const float4 g_BlurFractionVec = float4( g_BlurFraction, g_HalfBlurFraction,
+	-g_BlurFraction,-g_HalfBlurFraction );
 
 struct PS_INPUT
 {
 	float4 vBumpTexCoord			: TEXCOORD0;			// NormalMap1 in xy, NormalMap2 in wz
 	float3 vTangentVertToEyeVector	: TEXCOORD1;
-	float3 vWorldNormal				: TEXCOORD2; 
-	float3 vWorldTangent			: TEXCOORD3; 
-	float3 vWorldBinormal			: TEXCOORD4; 
-	float3 vRefractXYW				: TEXCOORD5; 
+	float3 vWorldNormal				: TEXCOORD2;
+	float3 vWorldTangent			: TEXCOORD3;
+	float3 vWorldBinormal			: TEXCOORD4;
+	float3 vRefractXYW				: TEXCOORD5;
 	float3 vWorldViewVector			: TEXCOORD6;
 #if COLORMODULATE
 	float4 ColorModulate            : COLOR0;
 #endif
 
 	float4 worldPos_projPosZ		: TEXCOORD7;		// Necessary for pixel fog
-	float4 fogFactorW				: COLOR1;	
+	float4 fogFactorW				: COLOR1;
 };
 
 float4 main( PS_INPUT i ) : COLOR
 {
 	float3 result;
-	
+
 	float pixelFogFactor = CalcPixelFogFactor( PIXELFOGTYPE, g_FogParams, g_EyePos_SpecExponent.z, i.worldPos_projPosZ.z, i.worldPos_projPosZ.w );
 
 #if FADEOUTONSILHOUETTE
@@ -114,7 +114,7 @@ float4 main( PS_INPUT i ) : COLOR
 
 	// Perform division by W only once
 	float ooW = 1.0f / i.vRefractXYW.z;
-	
+
 	// Compute coordinates for sampling refraction
 	float2 vRefractTexCoordNoWarp = i.vRefractXYW.xy * ooW;
 	float2 vRefractTexCoord = vNormal.xy;
@@ -138,7 +138,7 @@ float4 main( PS_INPUT i ) : COLOR
 	//  use bilinear filtering hardware to weight lower 2x1 samples evenly (0.5*[G + H])
 	//  scale bottom 2x1 by 2/9
 	//  fetch last sample (I) and scale by 1/9.
-	
+
 	float2 upper_2x2_loc = vRefractTexCoord.xy - float2(g_HalfBlurFraction, g_HalfBlurFraction);
 	float2 right_1x2_loc = vRefractTexCoord.xy + float2(g_BlurFraction, -g_HalfBlurFraction);
 	float2 lower_2x1_loc = vRefractTexCoord.xy + float2(-g_HalfBlurFraction, g_BlurFraction);

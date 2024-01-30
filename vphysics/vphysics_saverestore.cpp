@@ -40,7 +40,7 @@ bool CPhysicsEnvironment::Save( const physsaveparams_t &params )
 {
 	const PhysInterfaceId_t type = params.type;
 	Assert( type >= 0 && type < PIID_NUM_TYPES );
-	
+
 	static PhysSaveFunc_t saveFuncs[PIID_NUM_TYPES] =
 	{
 		NoPhysSaveFunc,
@@ -54,7 +54,7 @@ bool CPhysicsEnvironment::Save( const physsaveparams_t &params )
 		(PhysSaveFunc_t)SavePhysicsMotionController,
 		(PhysSaveFunc_t)SavePhysicsVehicleController,
 	};
-	
+
 	if ( type >= 0 && type < PIID_NUM_TYPES )
 	{
 		params.pSave->WriteInt( (int *)&params.pObject );
@@ -87,7 +87,7 @@ bool CPhysicsEnvironment::Restore( const physrestoreparams_t &params )
 {
 	const PhysInterfaceId_t type = params.type;
 	Assert( type >= 0 && type < PIID_NUM_TYPES );
-	
+
 	static PhysRestoreFunc_t restoreFuncs[PIID_NUM_TYPES] =
 	{
 		NoPhysRestoreFunc,
@@ -101,7 +101,7 @@ bool CPhysicsEnvironment::Restore( const physrestoreparams_t &params )
 		(PhysRestoreFunc_t)RestorePhysicsMotionController,
 		(PhysRestoreFunc_t)RestorePhysicsVehicleController,
 	};
-	
+
 	if ( type >= 0 && type < PIID_NUM_TYPES )
 	{
 		void *pOldObject;
@@ -174,7 +174,7 @@ void CVPhysPtrSaveRestoreOps::Restore( const SaveRestoreFieldInfo_t &fieldInfo, 
 //-------------------------------------
 
 void CVPhysPtrSaveRestoreOps::PostRestore()
-{	
+{
 	s_VPhysPtrMap.RemoveAll();
 	PostRestorePhysicsObject();
 	PostRestorePhysicsConstraintGroup();

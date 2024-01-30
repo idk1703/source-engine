@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -49,7 +49,7 @@ public:
 	bool	Holster( CBaseCombatWeapon *pSwitchingTo = NULL );
 
 	int		CapabilitiesGet( void ) { return bits_CAP_WEAPON_RANGE_ATTACK1; }
-	
+
 	bool	Reload( void );
 
 private:
@@ -60,7 +60,7 @@ private:
 	void	CheckThrowPosition( CBasePlayer *pPlayer, const Vector &vecEye, Vector &vecSrc );
 
 	bool	m_bRedraw;	//Draw the weapon again after throwing a grenade
-	
+
 	int		m_AttackPaused;
 	bool	m_fDrawbackFinished;
 
@@ -79,7 +79,7 @@ BEGIN_DATADESC( CWeaponHopwire )
 	DEFINE_FIELD( m_hActiveHopWire, FIELD_EHANDLE ),
 END_DATADESC()
 
-acttable_t	CWeaponHopwire::m_acttable[] = 
+acttable_t	CWeaponHopwire::m_acttable[] =
 {
 	{ ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK_SLAM, true },
 };
@@ -93,7 +93,7 @@ LINK_ENTITY_TO_CLASS( weapon_hopwire, CWeaponHopwire );
 PRECACHE_WEAPON_REGISTER(weapon_hopwire);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponHopwire::Precache( void )
 {
@@ -108,7 +108,7 @@ void CWeaponHopwire::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponHopwire::Deploy( void )
 {
@@ -119,7 +119,7 @@ bool CWeaponHopwire::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponHopwire::Holster( CBaseCombatWeapon *pSwitchingTo )
@@ -134,9 +134,9 @@ bool CWeaponHopwire::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEvent - 
-//			*pOperator - 
+// Purpose:
+// Input  : *pEvent -
+//			*pOperator -
 //-----------------------------------------------------------------------------
 void CWeaponHopwire::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator )
 {
@@ -211,7 +211,7 @@ bool CWeaponHopwire::HasAnyAmmo( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponHopwire::Reload( void )
@@ -237,7 +237,7 @@ bool CWeaponHopwire::Reload( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponHopwire::SecondaryAttack( void )
 {
@@ -254,7 +254,7 @@ void CWeaponHopwire::SecondaryAttack( void )
 		return;
 
 	CBasePlayer *pPlayer = ToBasePlayer( pOwner );
-	
+
 	if ( pPlayer == NULL )
 		return;
 
@@ -289,7 +289,7 @@ void CWeaponHopwire::HandleFireOnEmpty( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponHopwire::PrimaryAttack( void )
 {
@@ -324,7 +324,7 @@ void CWeaponHopwire::PrimaryAttack( void )
 	*/
 	m_AttackPaused = GRENADE_PAUSED_SECONDARY;
 	SendWeaponAnim( ACT_VM_PULLBACK_LOW );
-	
+
 	// Put both of these off indefinitely. We do not know how long
 	// the player will hold the grenade.
 	m_flTimeWeaponIdle = FLT_MAX;
@@ -340,8 +340,8 @@ void CWeaponHopwire::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOwner - 
+// Purpose:
+// Input  : *pOwner -
 //-----------------------------------------------------------------------------
 void CWeaponHopwire::DecrementAmmo( CBaseCombatCharacter *pOwner )
 {
@@ -349,7 +349,7 @@ void CWeaponHopwire::DecrementAmmo( CBaseCombatCharacter *pOwner )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponHopwire::ItemPostFrame( void )
 {
@@ -410,9 +410,9 @@ void CWeaponHopwire::CheckThrowPosition( CBasePlayer *pPlayer, const Vector &vec
 {
 	trace_t tr;
 
-	UTIL_TraceHull( vecEye, vecSrc, -Vector(GRENADE_RADIUS+2,GRENADE_RADIUS+2,GRENADE_RADIUS+2), Vector(GRENADE_RADIUS+2,GRENADE_RADIUS+2,GRENADE_RADIUS+2), 
+	UTIL_TraceHull( vecEye, vecSrc, -Vector(GRENADE_RADIUS+2,GRENADE_RADIUS+2,GRENADE_RADIUS+2), Vector(GRENADE_RADIUS+2,GRENADE_RADIUS+2,GRENADE_RADIUS+2),
 		pPlayer->PhysicsSolidMaskForEntity(), pPlayer, pPlayer->GetCollisionGroup(), &tr );
-	
+
 	if ( tr.DidHit() )
 	{
 		vecSrc = tr.endpos;
@@ -420,8 +420,8 @@ void CWeaponHopwire::CheckThrowPosition( CBasePlayer *pPlayer, const Vector &vec
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
+// Purpose:
+// Input  : *pPlayer -
 //-----------------------------------------------------------------------------
 void CWeaponHopwire::ThrowGrenade( CBasePlayer *pPlayer )
 {
@@ -444,8 +444,8 @@ void CWeaponHopwire::ThrowGrenade( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
+// Purpose:
+// Input  : *pPlayer -
 //-----------------------------------------------------------------------------
 void CWeaponHopwire::LobGrenade( CBasePlayer *pPlayer )
 {
@@ -455,7 +455,7 @@ void CWeaponHopwire::LobGrenade( CBasePlayer *pPlayer )
 	pPlayer->EyeVectors( &vForward, &vRight, NULL );
 	Vector vecSrc = vecEye + vForward * 18.0f + vRight * 8.0f + Vector( 0, 0, -8 );
 	CheckThrowPosition( pPlayer, vecEye, vecSrc );
-	
+
 	Vector vecThrow;
 	pPlayer->GetVelocity( &vecThrow, NULL );
 	vecThrow += vForward * 350 + Vector( 0, 0, 50 );
@@ -467,8 +467,8 @@ void CWeaponHopwire::LobGrenade( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
+// Purpose:
+// Input  : *pPlayer -
 //-----------------------------------------------------------------------------
 void CWeaponHopwire::RollGrenade( CBasePlayer *pPlayer )
 {

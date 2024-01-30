@@ -41,7 +41,7 @@ ConVar tf_boss_alpha_grenade_launch_range( "tf_boss_alpha_grenade_launch_range",
 ConVar tf_boss_alpha_quit_range( "tf_boss_alpha_quit_range", "2500"/*, FCVAR_CHEAT*/ );
 ConVar tf_boss_alpha_reaction_time( "tf_boss_alpha_reaction_time", "0.5"/*, FCVAR_CHEAT*/ );
 ConVar tf_boss_alpha_stunned_injury_multiplier( "tf_boss_alpha_stunned_injury_multiplier", "10" );
-ConVar tf_boss_alpha_head_radius( "tf_boss_alpha_head_radius", "75" );	// 50 
+ConVar tf_boss_alpha_head_radius( "tf_boss_alpha_head_radius", "75" );	// 50
 ConVar tf_boss_alpha_hate_taunt_cooldown( "tf_boss_alpha_hate_taunt_cooldown", "10"/*, FCVAR_CHEAT*/ );
 ConVar tf_boss_alpha_debug_damage( "tf_boss_alpha_debug_damage", "0"/*, FCVAR_CHEAT*/ );
 ConVar tf_boss_alpha_min_nuke_after_stun_time( "tf_boss_alpha_min_nuke_after_stun_time", "5" /*, FCVAR_CHEAT */ );
@@ -404,7 +404,7 @@ bool CBossAlpha::CheckSkillShots( const CTakeDamageInfo &info )
 
 /*
 	Vector hitDir = inflictor->GetAbsVelocity();
-	
+
 	if ( inflictor->IsPlayer() )
 	{
 		hitDir = hitSpot - inflictor->EyePosition();
@@ -657,7 +657,7 @@ int CBossAlpha::OnTakeDamage_Alive( const CTakeDamageInfo &rawInfo )
 		return 0;
 	}
 
-	
+
 	// keep a list of everyone who hurt me, and when
 	if ( info.GetAttacker() && info.GetAttacker()->MyCombatCharacterPointer() && !InSameTeam( info.GetAttacker() ) )
 	{
@@ -1086,7 +1086,7 @@ void CBossAlpha::Update( void )
 				{
 					// the taunter becomes our new attack target
 					SetAttackTarget( playerVector[i], tf_boss_alpha_hate_taunt_cooldown.GetFloat() );
-				}	
+				}
 			}
 		}
 	}
@@ -1266,8 +1266,8 @@ void CBossAlpha::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir,
 // Intention interface
 //---------------------------------------------------------------------------------------------
 CBossAlphaIntention::CBossAlphaIntention( CBossAlpha *me ) : IIntention( me )
-{ 
-	m_behavior = new Behavior< CBossAlpha >( new CBossAlphaBehavior ); 
+{
+	m_behavior = new Behavior< CBossAlpha >( new CBossAlphaBehavior );
 }
 
 CBossAlphaIntention::~CBossAlphaIntention()
@@ -1276,14 +1276,14 @@ CBossAlphaIntention::~CBossAlphaIntention()
 }
 
 void CBossAlphaIntention::Reset( void )
-{ 
-	delete m_behavior; 
+{
+	delete m_behavior;
 	m_behavior = new Behavior< CBossAlpha >( new CBossAlphaBehavior );
 }
 
 void CBossAlphaIntention::Update( void )
 {
-	m_behavior->Update( static_cast< CBossAlpha * >( GetBot() ), GetUpdateInterval() ); 
+	m_behavior->Update( static_cast< CBossAlpha * >( GetBot() ), GetUpdateInterval() );
 }
 
 QueryResultType CBossAlphaIntention::IsPositionAllowed( const INextBot *meBot, const Vector &pos ) const
@@ -1296,8 +1296,8 @@ QueryResultType CBossAlphaIntention::IsPositionAllowed( const INextBot *meBot, c
 //---------------------------------------------------------------------------------------------
 // Locomotion interface
 //---------------------------------------------------------------------------------------------
-CBossAlphaLocomotion::CBossAlphaLocomotion( INextBot *bot ) : NextBotGroundLocomotion( bot ) 
-{ 
+CBossAlphaLocomotion::CBossAlphaLocomotion( INextBot *bot ) : NextBotGroundLocomotion( bot )
+{
 	CBossAlpha *me = (CBossAlpha *)GetBot()->GetEntity();
 
 	m_runSpeed = me->GetMoveSpeed();
@@ -1371,7 +1371,7 @@ bool CBossAlphaVision::IsIgnored( CBaseEntity *subject ) const
 		{
 			return false;
 		}
-		
+
 		if ( enemy->m_Shared.InCond( TF_COND_DISGUISED ) && enemy->m_Shared.GetDisguiseTeam() == GetBot()->GetEntity()->GetTeamNumber() )
 		{
 			// spy is disguised as a member of my team

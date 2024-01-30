@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -40,7 +40,7 @@ CMapClass *CMapKeyFrame::CreateMapKeyFrame(CHelperInfo *pHelperInfo, CMapEntity 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapKeyFrame::CMapKeyFrame()
 {
@@ -50,11 +50,11 @@ CMapKeyFrame::CMapKeyFrame()
 	m_flSpeed = 0;
 	m_bRebuildPath = false;
 	m_Angles.Init();
-	
+
 	// setup the quaternion identity
 	m_qAngles[0] = m_qAngles[1] = m_qAngles[2] = 0;
 	m_qAngles[3] = 1;
-	
+
 	m_pPositionInterpolator = NULL;
 	m_iPositionInterpolator = -1;
 	m_iChangeFrame = -1;
@@ -72,8 +72,8 @@ CMapKeyFrame::~CMapKeyFrame()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bFullUpdate - 
+// Purpose:
+// Input  : bFullUpdate -
 //-----------------------------------------------------------------------------
 void CMapKeyFrame::CalcBounds(BOOL bFullUpdate)
 {
@@ -110,7 +110,7 @@ void CMapKeyFrame::CalcBounds(BOOL bFullUpdate)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CMapClass *
 //-----------------------------------------------------------------------------
 CMapClass *CMapKeyFrame::Copy(bool bUpdateDependencies)
@@ -122,8 +122,8 @@ CMapClass *CMapKeyFrame::Copy(bool bUpdateDependencies)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObj - 
+// Purpose:
+// Input  : *pObj -
 // Output : CMapClass *
 //-----------------------------------------------------------------------------
 CMapClass *CMapKeyFrame::CopyFrom(CMapClass *pObj, bool bUpdateDependencies)
@@ -156,7 +156,7 @@ CMapClass *CMapKeyFrame::CopyFrom(CMapClass *pObj, bool bUpdateDependencies)
 //-----------------------------------------------------------------------------
 // Purpose: notifies the keyframe that it has been cloned
 //			inserts the clone into the correct place in the keyframe list
-// Input  : *pClone - 
+// Input  : *pClone -
 //-----------------------------------------------------------------------------
 void CMapKeyFrame::OnClone( CMapClass *pClone, CMapWorld *pWorld, const CMapObjectList &OriginalList, CMapObjectList &NewList )
 {
@@ -211,8 +211,8 @@ void CMapKeyFrame::OnRemoveFromWorld(CMapWorld *pWorld, bool bNotifyChildren)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *outQuat - 
+// Purpose:
+// Input  : *outQuat -
 //-----------------------------------------------------------------------------
 void CMapKeyFrame::GetQuatAngles( Quaternion &outQuat )
 {
@@ -222,7 +222,7 @@ void CMapKeyFrame::GetQuatAngles( Quaternion &outQuat )
 
 //-----------------------------------------------------------------------------
 // Purpose: Recalulates timings based on the new position
-// Input  : *pfOrigin - 
+// Input  : *pfOrigin -
 //-----------------------------------------------------------------------------
 void CMapKeyFrame::SetOrigin( Vector& pfOrigin )
 {
@@ -233,7 +233,7 @@ void CMapKeyFrame::SetOrigin( Vector& pfOrigin )
 
 //-----------------------------------------------------------------------------
 // Purpose: Renders the connecting lines between the keyframes
-// Input  : pRender - 
+// Input  : pRender -
 //-----------------------------------------------------------------------------
 void CMapKeyFrame::Render3D( CRender3D *pRender )
 {
@@ -286,7 +286,7 @@ void CMapKeyFrame::Render3D( CRender3D *pRender )
 		}
 	}
 
-	
+
 }
 
 
@@ -321,7 +321,7 @@ float CMapKeyFrame::GetRemainingTime( CMapObjectList *pVisited )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CMapKeyFrame
 //-----------------------------------------------------------------------------
 CMapKeyFrame *CMapKeyFrame::NextKeyFrame( void )
@@ -335,8 +335,8 @@ CMapKeyFrame *CMapKeyFrame::NextKeyFrame( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Notifies that the entity this is attached to has had a key change
-// Input  : key - 
-//			value - 
+// Input  : key -
+//			value -
 //-----------------------------------------------------------------------------
 void CMapKeyFrame::OnParentKeyChanged( const char* key, const char* value )
 {
@@ -419,7 +419,7 @@ void CMapKeyFrame::RecalculateTimeFromSpeed( void )
 		m_bRebuildPath = true;
 	}
 
-	// "NextTime" key removed until we get a real-time updating entity properties dialog		
+	// "NextTime" key removed until we get a real-time updating entity properties dialog
 	/*
 	CMapEntity *ent = dynamic_cast<CMapEntity*>( Parent );
 	if ( ent )
@@ -436,7 +436,7 @@ void CMapKeyFrame::RecalculateTimeFromSpeed( void )
 //-----------------------------------------------------------------------------
 // Purpose: Builds the spline points between this keyframe and the previous
 //			keyframe.
-// Input  : pPrev - 
+// Input  : pPrev -
 //-----------------------------------------------------------------------------
 void CMapKeyFrame::BuildPathSegment( CMapKeyFrame *pPrev )
 {
@@ -517,7 +517,7 @@ CMapEntity *CMapKeyFrame::GetParentEntity( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMapKeyFrame::IsAnyKeyInSequenceSelected( void )
@@ -542,8 +542,8 @@ bool CMapKeyFrame::IsAnyKeyInSequenceSelected( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : iInterpolator - 
+// Purpose:
+// Input  : iInterpolator -
 // Output : IPositionInterpolator
 //-----------------------------------------------------------------------------
 IPositionInterpolator* CMapKeyFrame::SetupPositionInterpolator( int iInterpolator )
@@ -562,7 +562,7 @@ IPositionInterpolator* CMapKeyFrame::SetupPositionInterpolator( int iInterpolato
 		{
 			for ( int i=pEnt->GetFirstKeyValue(); i != pEnt->GetInvalidKeyValue(); i=pEnt->GetNextKeyValue( i ) )
 			{
-				m_pPositionInterpolator->ProcessKey( 
+				m_pPositionInterpolator->ProcessKey(
 					pEnt->GetKey( i ),
 					pEnt->GetKeyValue( i ) );
 			}
@@ -585,7 +585,7 @@ void CMapKeyFrame::UpdateDependencies(CMapWorld *pWorld, CMapClass *pObject)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapKeyFrame::SetAnimator(CMapAnimator *pAnimator)
 {
@@ -594,11 +594,9 @@ void CMapKeyFrame::SetAnimator(CMapAnimator *pAnimator)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapKeyFrame::SetNextKeyFrame(CMapKeyFrame *pNext)
 {
 	m_pNextKeyFrame = (CMapKeyFrame *)UpdateDependency(m_pNextKeyFrame, pNext);
 }
-
-

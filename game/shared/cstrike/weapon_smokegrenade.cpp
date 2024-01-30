@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,7 +13,7 @@
 
 
 #ifdef CLIENT_DLL
-	
+
 #else
 
 	#include "cs_player.h"
@@ -46,4 +46,3 @@ PRECACHE_WEAPON_REGISTER( weapon_smokegrenade );
 	}
 
 #endif
-

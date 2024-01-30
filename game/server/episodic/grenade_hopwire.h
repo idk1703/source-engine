@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -30,7 +30,7 @@ public:
 	void	SetTimer( float timer );
 	void	SetVelocity( const Vector &velocity, const AngularImpulse &angVelocity );
 	void	Detonate( void );
-	
+
 	void	EndThink( void );		// Last think before going away
 	void	CombatThink( void );	// Makes the main explosion go off
 

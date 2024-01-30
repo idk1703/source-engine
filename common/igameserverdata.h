@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -67,16 +67,16 @@ enum ServerDataResponseType_t
 /* PACKET FORMAT
 
 REQUEST:
-  int requestID;
-  int ServerDataRequestType_t;
-  NullTerminatedString (variable or command)
-  NullTerminatedString (value)
+	int requestID;
+	int ServerDataRequestType_t;
+	NullTerminatedString (variable or command)
+	NullTerminatedString (value)
 
 RESPONSE:
-  int requestID;
-  int ServerDataResponseType_t;
-  NullTerminatedString (variable)
-  NullTerminatedString (value)
+	int requestID;
+	int ServerDataResponseType_t;
+	NullTerminatedString (variable)
+	NullTerminatedString (value)
 
 */
 

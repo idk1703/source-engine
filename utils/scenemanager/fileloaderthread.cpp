@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -187,7 +187,7 @@ int CFileLoaderThread::DoThreadWork()
 
 		transfer.AddToTail( r );
 		// Do the work
-		
+
 		m_nTotalProcessed++;
 
 		r->valid = SceneManager_LoadSentenceFromWavFileUsingIO( r->filename, r->sentence, m_ThreadIO );
@@ -233,7 +233,7 @@ int CFileLoaderThread::ProcessCompleted()
 
 //-----------------------------------------------------------------------------
 // Purpose: Main winsock processing thread
-// Input  : threadobject - 
+// Input  : threadobject -
 // Output : static DWORD WINAPI
 //-----------------------------------------------------------------------------
 static DWORD WINAPI FileLoaderThreadFunc( LPVOID threadobject )
@@ -283,7 +283,7 @@ CFileLoaderThread::CFileLoaderThread( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFileLoaderThread::Start()
 {
@@ -292,7 +292,7 @@ void CFileLoaderThread::Start()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFileLoaderThread::~CFileLoaderThread( void )
 {
@@ -326,7 +326,7 @@ HANDLE CFileLoaderThread::GetShutdownHandle( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Locks object and adds wavefile to thread
-// Input  : *wavefile - 
+// Input  : *wavefile -
 //-----------------------------------------------------------------------------
 void CFileLoaderThread::AddWaveFilesToThread( CUtlVector< CWaveFile * >& wavefiles )
 {
@@ -338,7 +338,7 @@ void CFileLoaderThread::AddWaveFilesToThread( CUtlVector< CWaveFile * >& wavefil
 		SentenceRequest *request = new SentenceRequest;
 		request->wavefile = wavefiles[ i ];
 		Q_strncpy( request->filename, request->wavefile->GetFileName(), sizeof( request->filename ) );
-	
+
 
 		m_FileList.AddToTail( request );
 
@@ -349,7 +349,7 @@ void CFileLoaderThread::AddWaveFilesToThread( CUtlVector< CWaveFile * >& wavefil
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFileLoaderThread::Lock( void )
 {
@@ -359,7 +359,7 @@ void CFileLoaderThread::Lock( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFileLoaderThread::Unlock( void )
 {

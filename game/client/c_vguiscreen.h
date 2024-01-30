@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -58,7 +58,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_VGuiScreen : public C_BaseEntity
 {
@@ -127,11 +127,11 @@ private:
 	void DrawScreenOverlay();
 
 private:
-	int m_nPixelWidth; 
+	int m_nPixelWidth;
 	int m_nPixelHeight;
-	float m_flWidth; 
+	float m_flWidth;
 	float m_flHeight;
-	int m_nPanelName;	// The name of the panel 
+	int m_nPanelName;	// The name of the panel
 	int	m_nButtonState;
 	int m_nButtonPressed;
 	int m_nButtonReleased;
@@ -180,4 +180,3 @@ void SetVGuiScreenButtonState( C_BaseEntity *pVguiScreen, int nButtonState );
 
 
 #endif // C_VGUISCREEN_H
-  

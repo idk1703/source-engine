@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,7 +33,7 @@ using namespace vgui;
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
 ProgressBox::ProgressBox(const char *title, const char *text, const char *pszUnknownTimeString, Panel *parent) : Frame(parent, NULL, parent ? false : true)
-{	
+{
 	// save off the non-localized title, since we may need to dynamically localize it (on progress updates)
 	const wchar_t *ws = g_pVGuiLocalize->Find(title);
 	if (ws)
@@ -134,7 +134,7 @@ void ProgressBox::ApplySchemeSettings(IScheme *pScheme)
 //-----------------------------------------------------------------------------
 void ProgressBox::DoModal(Frame *pFrameOver)
 {
-    ShowWindow(pFrameOver);
+	ShowWindow(pFrameOver);
 	input()->SetAppModalSurface(GetVPanel());
 }
 
@@ -173,7 +173,7 @@ void ProgressBox::ShowWindow(Frame *pFrameOver)
 // Purpose: Put the text and OK buttons in correct place
 //-----------------------------------------------------------------------------
 void ProgressBox::PerformLayout()
-{	
+{
 	int x, y, wide, tall;
 	GetClientArea(x, y, wide, tall);
 	wide += x;
@@ -318,7 +318,7 @@ void ProgressBox::OnClose()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ProgressBox::OnShutdownRequest()
 {
@@ -349,7 +349,7 @@ void ProgressBox::SetCancelButtonVisible(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ProgressBox::SetCancelButtonEnabled(bool state)
 {

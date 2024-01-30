@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,9 +23,9 @@ class LabelDemo: public DemoPage
 	public:
 		LabelDemo(Panel *parent, const char *name);
 		~LabelDemo();
-		
+
 	private:
-		Label *m_pLabel;				
+		Label *m_pLabel;
 };
 
 //-----------------------------------------------------------------------------
@@ -49,5 +49,3 @@ Panel* LabelDemo_Create(Panel *parent)
 {
 	return new LabelDemo(parent, "LabelDemo");
 }
-
-

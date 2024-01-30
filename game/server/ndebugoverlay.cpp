@@ -64,9 +64,9 @@ OverlayLine_t* GetDebugOverlayLine(void)
 //-----------------------------------------------------------------------------
 // Purpose: Adds a debug line to be drawn on the screen
 // Input  : If testLOS is true, color is based on line of sight test
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
-void UTIL_AddDebugLine(const Vector &startPos, const Vector &endPos, bool noDepthTest, bool testLOS) 
+void UTIL_AddDebugLine(const Vector &startPos, const Vector &endPos, bool noDepthTest, bool testLOS)
 {
 	OverlayLine_t* debugLine = GetDebugOverlayLine();
 
@@ -96,7 +96,7 @@ void UTIL_AddDebugLine(const Vector &startPos, const Vector &endPos, bool noDept
 //-----------------------------------------------------------------------------
 // Purpose: Returns z value of floor below given point (up to 384 inches below)
 //-----------------------------------------------------------------------------
-float GetLongFloorZ(const Vector &origin) 
+float GetLongFloorZ(const Vector &origin)
 {
 	// trace to the ground, then pop up 8 units and place node there to make it
 	// easier for them to connect (think stairs, chairs, and bumps in the floor).
@@ -104,22 +104,22 @@ float GetLongFloorZ(const Vector &origin)
 	//
 	trace_t	tr;
 	UTIL_TraceLine ( origin,
-					 origin - Vector ( 0, 0, 2048 ),
-					 MASK_NPCSOLID_BRUSHONLY,
-					 NULL,
-					 COLLISION_GROUP_NONE,
-					 &tr );
+					origin - Vector ( 0, 0, 2048 ),
+					MASK_NPCSOLID_BRUSHONLY,
+					NULL,
+					COLLISION_GROUP_NONE,
+					&tr );
 
 	// This trace is ONLY used if we hit an entity flagged with FL_WORLDBRUSH
 	trace_t	trEnt;
 	UTIL_TraceLine ( origin,
-					 origin - Vector ( 0, 0, 2048 ),
-					 MASK_NPCSOLID,
-					 NULL,
-					 COLLISION_GROUP_NONE,
-					 &trEnt );
+					origin - Vector ( 0, 0, 2048 ),
+					MASK_NPCSOLID,
+					NULL,
+					COLLISION_GROUP_NONE,
+					&trEnt );
 
-	
+
 	// Did we hit something closer than the floor?
 	if ( trEnt.fraction < tr.fraction )
 	{
@@ -145,7 +145,7 @@ void UTIL_DrawPositioningOverlay( float flCrossDistance )
 {
 	CBasePlayer* pPlayer = UTIL_PlayerByIndex(CBaseEntity::m_nDebugPlayer);
 
-	if (!pPlayer) 
+	if (!pPlayer)
 	{
 		return;
 	}
@@ -156,18 +156,18 @@ void UTIL_DrawPositioningOverlay( float flCrossDistance )
 #ifdef _WIN32
 	Vector topPos		= NWCEdit::AirNodePlacementPosition();
 #else
-        Vector pForward;
-        pPlayer->EyeVectors( &pForward );
+	Vector pForward;
+	pPlayer->EyeVectors( &pForward );
 
-        Vector  floorVec = pForward;
-        floorVec.z = 0;
-        VectorNormalize( floorVec );
-        VectorNormalize( pForward );
+	Vector  floorVec = pForward;
+	floorVec.z = 0;
+	VectorNormalize( floorVec );
+	VectorNormalize( pForward );
 
-        float cosAngle = DotProduct(floorVec,pForward);
+	float cosAngle = DotProduct(floorVec,pForward);
 
-        float lookDist = g_pAINetworkManager->GetEditOps()->m_flAirEditDistance/cosAngle;
-        Vector topPos = pPlayer->EyePosition()+pForward * lookDist;
+	float lookDist = g_pAINetworkManager->GetEditOps()->m_flAirEditDistance/cosAngle;
+	Vector topPos = pPlayer->EyePosition()+pForward * lookDist;
 #endif
 
 	Vector bottomPos	= topPos;
@@ -216,7 +216,7 @@ void UTIL_DrawPositioningOverlay( float flCrossDistance )
 //------------------------------------------------------------------------------
 // Purpose : Draw all overlay lines in the list
 //------------------------------------------------------------------------------
-void UTIL_DrawOverlayLines(void) 
+void UTIL_DrawOverlayLines(void)
 {
 	if (m_nDebugOverlayIndex != -1)
 	{
@@ -225,11 +225,11 @@ void UTIL_DrawOverlayLines(void)
 			if (m_debugOverlayLine[i]->draw)
 			{
 				NDebugOverlay::Line(m_debugOverlayLine[i]->origin,
-									 m_debugOverlayLine[i]->dest,
-									 m_debugOverlayLine[i]->r,
-									 m_debugOverlayLine[i]->g,
-									 m_debugOverlayLine[i]->b,
-									 m_debugOverlayLine[i]->noDepthTest,0);
+									m_debugOverlayLine[i]->dest,
+									m_debugOverlayLine[i]->r,
+									m_debugOverlayLine[i]->g,
+									m_debugOverlayLine[i]->b,
+									m_debugOverlayLine[i]->noDepthTest,0);
 			}
 		}
 	}
@@ -252,7 +252,7 @@ CON_COMMAND( clear_debug_overlays, "clears debug overlays" )
 		return;
 
 	CBaseEntity *pEntity = gEntList.FirstEnt();
-	
+
 	// Clear all entities of their debug overlays
 	while ( pEntity )
 	{
@@ -260,7 +260,7 @@ CON_COMMAND( clear_debug_overlays, "clears debug overlays" )
 		// UNDONE: Clear out / expire timed overlays?
 		pEntity = gEntList.NextEnt( pEntity );
 	}
-	
+
 	// Clear all engine overlays
 	if ( debugoverlay )
 	{

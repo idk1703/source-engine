@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -47,11 +47,11 @@ DESTRUCTOR VWeightExportClass::~VWeightExportClass(void)
 }
 
 
-int VWeightExportClass::DoExport(const TCHAR *name, ExpInterface *ei, Interface *pi, BOOL suppressPrompts, DWORD options) 
+int VWeightExportClass::DoExport(const TCHAR *name, ExpInterface *ei, Interface *pi, BOOL suppressPrompts, DWORD options)
 {
 	ExpInterface	*pexpiface = ei;	// Hungarian
 	Interface		*piface = pi;		// Hungarian
-	
+
 	// Reset the name-map property manager
 	ResetINodeMap();
 
@@ -117,7 +117,7 @@ int VWeightExportClass::DoExport(const TCHAR *name, ExpInterface *ei, Interface 
 
 	for (i = 0; i < m_cMaxNode; i++)
 	{
-		fprintf(pFile, "%5d \"%s\" %3d\n", 
+		fprintf(pFile, "%5d \"%s\" %3d\n",
 			i, m_MaxNode[i].szNodeName, m_MaxNode[i].imaxnodeParent );
 	}
 
@@ -148,8 +148,8 @@ int VWeightExportClass::DoExport(const TCHAR *name, ExpInterface *ei, Interface 
 
 	return 1/*success*/;
 }
-	
-	
+
+
 void VWeightExportClass::CollectNodes( INode *pnode )
 {
 	// Get pre-stored "index"
@@ -174,8 +174,8 @@ void VWeightExportClass::CollectNodes( INode *pnode )
 	return;
 }
 
-	
-	
+
+
 BOOL VWeightExportClass::CollectModel( ExpInterface *pexpiface)
 {
 	// Dump mesh info: vertices, normals, UV texture map coords, bone assignments
@@ -190,7 +190,7 @@ BOOL VWeightExportClass::CollectModel( ExpInterface *pexpiface)
 	(void) pexpiface->theScene->EnumTree(&procCollectModel);
 	//fprintf(pFile, "end\n" );
 	return TRUE;
-}	
+}
 
 
 // #define DEBUG_MESH_DUMP
@@ -209,14 +209,14 @@ int CollectModelTEP::callback(INode *pnode)
 	// clear physique export parameters
 	m_mcExport = NULL;
 	m_phyExport = NULL;
-    m_phyMod = NULL;
-    m_bonesProMod = NULL;
+	m_phyMod = NULL;
+	m_bonesProMod = NULL;
 
 	ASSERT_MBOX(!(pnode)->IsRootNode(), "Encountered a root node!");
 
 	int iNode = ::GetIndexOfINode(pnode);
 	TSTR strNodeName(pnode->GetName());
-	
+
 	// The Footsteps node apparently MUST have a dummy mesh attached!  Ignore it explicitly.
 	if (FStrEq((char*)strNodeName, "Bip01 Footsteps"))
 		return TREE_CONTINUE;
@@ -251,22 +251,22 @@ int CollectModelTEP::callback(INode *pnode)
 	Matrix3 mat3ObjectTM = pnode->GetObjectTM(m_tvToDump);
 
 	// initialize physique export parameters
-    m_phyMod = FindPhysiqueModifier(pnode);
-    if (m_phyMod)
+	m_phyMod = FindPhysiqueModifier(pnode);
+	if (m_phyMod)
 	{
 		// Physique Modifier exists for given Node
-	    m_phyExport = (IPhysiqueExport *)m_phyMod->GetInterface(I_PHYINTERFACE);
+		m_phyExport = (IPhysiqueExport *)m_phyMod->GetInterface(I_PHYINTERFACE);
 
-        if (m_phyExport)
-        {
-            // create a ModContext Export Interface for the specific node of the Physique Modifier
-           m_mcExport = (IPhyContextExport *)m_phyExport->GetContextInterface(pnode);
+		if (m_phyExport)
+		{
+			// create a ModContext Export Interface for the specific node of the Physique Modifier
+			m_mcExport = (IPhyContextExport *)m_phyExport->GetContextInterface(pnode);
 
-		   if (m_mcExport)
-		   {
-		       // convert all vertices to Rigid 
-                m_mcExport->ConvertToRigid(TRUE);
-		   }
+			if (m_mcExport)
+			{
+				// convert all vertices to Rigid
+				m_mcExport->ConvertToRigid(TRUE);
+			}
 		}
 	}
 
@@ -314,7 +314,7 @@ int CollectModelTEP::callback(INode *pnode)
 		{
 			m_phec->m_cMaxVertex++;
 		}
-	}	
+	}
 
 	// fflush( m_pfile );
 
@@ -347,10 +347,9 @@ void CollectModelTEP::cleanup(void)
 		{
 			m_phyExport->ReleaseContextInterface(m_mcExport);
 			m_mcExport = NULL;
-        }
-        m_phyMod->ReleaseInterface(I_PHYINTERFACE, m_phyExport);
+		}
+		m_phyMod->ReleaseInterface(I_PHYINTERFACE, m_phyExport);
 		m_phyExport = NULL;
 		m_phyMod = NULL;
 	}
 }
-

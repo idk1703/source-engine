@@ -130,9 +130,9 @@ private:
 	{
 		ScalableImagePanel* pClassIcon = pParent->FindControl< ScalableImagePanel >( CFmtStr( "%sIcon", pszClassName ), true );
 		if( pClassIcon )
-		{ 
+		{
 			pClassIcon->SetImage( stats.classes_played() & (1<<nBit) ? CFmtStr( "class_icons/filter_%s_on", pszClassName ) : CFmtStr( "class_icons/filter_%s", pszClassName ) );
-		} 
+		}
 	}
 };
 
@@ -142,7 +142,7 @@ extern Color s_colorChallengeHeader;
 
 DECLARE_BUILD_FACTORY( CLadderLobbyLeaderboard );
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CLadderLobbyLeaderboard::CLadderLobbyLeaderboard( Panel *pParent, const char *pszPanelName )
 	: CTFLeaderboardPanel( pParent, pszPanelName )
@@ -160,7 +160,7 @@ CLadderLobbyLeaderboard::CLadderLobbyLeaderboard( Panel *pParent, const char *ps
 	}
 
 	m_pToolTip = new CTFTextToolTip( this );
- 	m_pToolTipEmbeddedPanel = new vgui::EditablePanel( this, "TooltipPanel" );		
+ 	m_pToolTipEmbeddedPanel = new vgui::EditablePanel( this, "TooltipPanel" );
 	m_pToolTipEmbeddedPanel->SetKeyBoardInputEnabled( false );
 	m_pToolTipEmbeddedPanel->SetMouseInputEnabled( false );
  	m_pToolTip->SetEmbeddedPanel( m_pToolTipEmbeddedPanel );
@@ -170,7 +170,7 @@ CLadderLobbyLeaderboard::CLadderLobbyLeaderboard( Panel *pParent, const char *ps
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLadderLobbyLeaderboard::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -187,7 +187,7 @@ void CLadderLobbyLeaderboard::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLadderLobbyLeaderboard::PerformLayout()
 {
@@ -198,7 +198,7 @@ void CLadderLobbyLeaderboard::PerformLayout()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLadderLobbyLeaderboard::OnCommand( const char *command )
 {
@@ -230,7 +230,7 @@ void CLadderLobbyLeaderboard::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CLadderLobbyLeaderboard::GetLeaderboardData( CUtlVector< LeaderboardEntry_t* >& scores )
 {
@@ -245,7 +245,7 @@ bool CLadderLobbyLeaderboard::GetLeaderboardData( CUtlVector< LeaderboardEntry_t
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CLadderLobbyLeaderboard::UpdateLeaderboards()
 {
@@ -356,7 +356,7 @@ bool CLadderLobbyLeaderboard::UpdateLeaderboards()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLadderLobbyLeaderboard::SetLeaderboard( const char *pszLeaderboardName, bool bGlobal )
 {
@@ -373,9 +373,9 @@ static void GetPlayerNameForSteamID( wchar_t *wCharPlayerName, int nBufSizeBytes
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CLobbyPanel_Comp::CLobbyPanel_Comp( vgui::Panel *pParent, CBaseLobbyContainerFrame* pLobbyContainer ) 
+CLobbyPanel_Comp::CLobbyPanel_Comp( vgui::Panel *pParent, CBaseLobbyContainerFrame* pLobbyContainer )
 	: CBaseLobbyPanel( pParent, pLobbyContainer )
 	, m_pCompetitiveModeLeaderboard( NULL )
 	, m_pMatchHistoryScroller( NULL )
@@ -396,7 +396,7 @@ CLobbyPanel_Comp::CLobbyPanel_Comp( vgui::Panel *pParent, CBaseLobbyContainerFra
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CLobbyPanel_Comp::~CLobbyPanel_Comp()
 {
@@ -405,7 +405,7 @@ CLobbyPanel_Comp::~CLobbyPanel_Comp()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLobbyPanel_Comp::OnCommand( const char *command )
 {
@@ -425,7 +425,7 @@ void CLobbyPanel_Comp::OnCommand( const char *command )
 		{
 			m_pCompetitiveModeLeaderboard->SetVisible( true );
 		}
-		 
+
 		SetControlVisible( "MatchHistoryCategories", false, true );
 		SetControlVisible( "MatchHistoryContainer", false, true );
 
@@ -442,7 +442,7 @@ void CLobbyPanel_Comp::OnCommand( const char *command )
 
 		SetControlVisible( "MatchHistoryCategories", true, true );
 		SetControlVisible( "MatchHistoryContainer", true, true );
-		
+
 		return;
 	}
 	else if ( !Q_strncmp( "sort", command, 4 ) )
@@ -468,7 +468,7 @@ void CLobbyPanel_Comp::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CLobbyPanel_Comp::ShouldShowLateJoin() const
 {
@@ -476,7 +476,7 @@ bool CLobbyPanel_Comp::ShouldShowLateJoin() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLobbyPanel_Comp::ApplyChatUserSettings( const CBaseLobbyPanel::LobbyPlayerInfo &player, KeyValues *pKV ) const
 {
@@ -485,7 +485,7 @@ void CLobbyPanel_Comp::ApplyChatUserSettings( const CBaseLobbyPanel::LobbyPlayer
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLobbyPanel_Comp::WriteGameSettingsControls()
 {
@@ -504,13 +504,13 @@ void CLobbyPanel_Comp::WriteGameSettingsControls()
 	m_pContainer->SetNextButtonEnabled( true );
 
 	SetControlVisible( "ScrollableContainer", GTFGCClientSystem()->GetWizardStep()== TF_Matchmaking_WizardStep_LADDER );
-	
+
 	--m_iWritingPanel;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CLobbyPanel_Comp::GetMedalCountForStat( EMatchGroup unLadderType, RankStatType_t nStatType, int nMedalLevel )
 {
@@ -601,7 +601,7 @@ int CLobbyPanel_Comp::GetMedalCountForStat( EMatchGroup unLadderType, RankStatTy
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLobbyPanel_Comp::OnThink()
 {
@@ -614,7 +614,7 @@ void CLobbyPanel_Comp::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLobbyPanel_Comp::FireGameEvent( IGameEvent *event )
 {
@@ -633,7 +633,7 @@ void CLobbyPanel_Comp::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 EMatchGroup CLobbyPanel_Comp::GetMatchGroup( void ) const
 {
@@ -641,7 +641,7 @@ EMatchGroup CLobbyPanel_Comp::GetMatchGroup( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLobbyPanel_Comp::SOCreated( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent )
 {
@@ -652,7 +652,7 @@ void CLobbyPanel_Comp::SOCreated( const CSteamID & steamIDOwner, const CSharedOb
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLobbyPanel_Comp::SOUpdated( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent )
 {
@@ -663,7 +663,7 @@ void CLobbyPanel_Comp::SOUpdated( const CSteamID & steamIDOwner, const CSharedOb
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLobbyPanel_Comp::PerformLayout()
 {
@@ -673,7 +673,7 @@ void CLobbyPanel_Comp::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLobbyPanel_Comp::ApplySchemeSettings( vgui::IScheme *pScheme )
 {

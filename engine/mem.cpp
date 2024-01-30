@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -20,7 +20,7 @@ void *Mem_Malloc( size_t size )
 void *Mem_ZeroMalloc( size_t size )
 {
 	void *p;
-	
+
 	p = malloc( size );
 	memset( (unsigned char *)p, 0, size );
 	return p;

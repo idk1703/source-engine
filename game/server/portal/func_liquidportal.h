@@ -35,7 +35,7 @@ public:
 	virtual int	Save( ISave &save );
 	virtual int	Restore( IRestore &restore );
 
-    void InputSetLinkedLiquidPortal( inputdata_t &inputdata );
+	void InputSetLinkedLiquidPortal( inputdata_t &inputdata );
 	void InputSetFillTime( inputdata_t &inputdata ); //time it takes to fill the portal volume
 	void InputStartFilling( inputdata_t &inputdata ); //start filling with portal liquid, will teleport entities as they become completely enveloped
 
@@ -62,4 +62,3 @@ public:
 };
 
 #endif //#ifndef FUNC_LIQUIDPORTAL_H
-

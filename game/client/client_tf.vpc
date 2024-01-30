@@ -33,7 +33,7 @@ $Project "Client (TF)"
 	{
 		-$File	"$SRCDIR\game\shared\weapon_parse_default.cpp"
 	}
-	
+
 	$Folder	"Source Files"
 	{
 		$File	"$SRCDIR\game\shared\basecombatweapon_shared.h"
@@ -65,7 +65,7 @@ $Project "Client (TF)"
 		$File	"$SRCDIR\game\shared\teamplay_round_timer.cpp"
 		$File	"$SRCDIR\game\shared\teamplay_round_timer.h"
 		$File	"$SRCDIR\common\ServerBrowser\blacklisted_server_manager.h"
-		$File	"$SRCDIR\common\ServerBrowser\blacklisted_server_manager.cpp"	
+		$File	"$SRCDIR\common\ServerBrowser\blacklisted_server_manager.cpp"
 		{
 			$Configuration
 			{
@@ -78,7 +78,7 @@ $Project "Client (TF)"
 
 		$File	"TeamBitmapImage.cpp"
 		$File	"voice_menu.cpp"
-		
+
 		$File	"$SRCDIR\common\GameUI\scriptobject.cpp"
 		{
 			$Configuration
@@ -108,7 +108,7 @@ $Project "Client (TF)"
 			$File	"$SRCDIR\game\shared\tf\tf_item_inventory.h"
 			$File	"$SRCDIR\game\shared\tf\tf_item_wearable.cpp"
 			$File	"$SRCDIR\game\shared\tf\tf_item_wearable.h"
-			
+
 			$File	"$SRCDIR\game\shared\tf\tf_item_system.cpp"
 			$File	"$SRCDIR\game\shared\tf\tf_item_system.h"
 			$File	"$SRCDIR\game\shared\tf\tf_item_schema.cpp"
@@ -132,34 +132,34 @@ $Project "Client (TF)"
 			$File	"$SRCDIR\game\shared\tf\tf_notification.h"
 			$File	"$SRCDIR\game\shared\tf\tf_notification.cpp"
 		}
-		
+
 		$Folder "Economy Client"
 		{
 			$File	"econ\item_selection_panel.cpp"
 			$File	"econ\item_selection_panel.h"
-			
+
 			$Folder	"Store"
 			{
 				$File	"econ\store\store_page_halloween.cpp"
 				$File	"econ\store\store_page_halloween.h"
 			}
 		}
-		
+
 		$Folder "TF Economy Client Overrides"
 		{
 			$File	"tf\vgui\tf_item_pickup_panel.cpp"
 			$File	"tf\vgui\tf_item_pickup_panel.h"
-			
+
 			$File	"tf\vgui\store\tf_store.cpp"
 			$File	"tf\vgui\store\tf_store.h"
-			
+
 			$File	"tf\vgui\store\tf_store_panel_base.h"
 			$File	"tf\vgui\store\tf_store_panel_base.cpp"
 			$File	"tf\vgui\store\tf_store_page_base.cpp"
 			$File	"tf\vgui\store\tf_store_page_base.h"
 			$File	"tf\vgui\store\tf_store_preview_item_base.cpp"
 			$File	"tf\vgui\store\tf_store_preview_item_base.h"
-			
+
 			$Folder "v1"
 			{
 				$File	"tf\vgui\store\v1\tf_store_page.cpp"
@@ -171,7 +171,7 @@ $Project "Client (TF)"
 				$File	"tf\vgui\store\v1\tf_store_page_maps.cpp"
 				$File	"tf\vgui\store\v1\tf_store_page_maps.h"
 			}
-			
+
 			$Folder "v2"
 			{
 				$File	"tf\vgui\store\v2\tf_store_page2.cpp"
@@ -390,7 +390,7 @@ $Project "Client (TF)"
 			$File	"tf\tf_hud_training.cpp"
 			$File	"tf\tf_hud_training.h"
 			$File	"tf\c_tf_gamestats.cpp"
-			$File	"tf\c_tf_gamestats.h"			
+			$File	"tf\c_tf_gamestats.h"
 			$File	"$SRCDIR\game\shared\tf\tf_gamestats_shared.h"
 			$File	"tf\tf_hud_mainmenuoverride.cpp"
 			$File	"tf\tf_hud_mainmenuoverride.h"
@@ -791,7 +791,7 @@ $Project "Client (TF)"
 				$File	"tf\tf_streams.h"
 				$File	"tf\tf_streams.cpp"
 			}
-			
+
 			$Folder	"halloween"
 			{
 				$File	"tf\halloween\c_headless_hatman.cpp"
@@ -809,7 +809,7 @@ $Project "Client (TF)"
 				$File	"$SRCDIR\game\shared\tf\halloween\tf_weapon_spellbook.cpp"
 				$File	"$SRCDIR\game\shared\tf\halloween\tf_weapon_spellbook.h"
 			}
-			
+
 			$Folder	"Bot NPC"
 			{
 				$File	"tf\bot_npc\c_bot_npc.cpp"
@@ -822,7 +822,7 @@ $Project "Client (TF)"
 					$File	"tf\bot_npc\map_entities\c_tf_bot_hint_engineer_nest.cpp"
 					$File	"tf\bot_npc\map_entities\c_tf_bot_hint_engineer_nest.h"
 				}
-			}		
+			}
 
 			$Folder	"NextBot"
 			{
@@ -844,7 +844,7 @@ $Project "Client (TF)"
 				$File	"$SRCDIR\game\shared\tf\tf_mann_vs_machine_stats.h"
 				$File	"$SRCDIR\game\shared\tf\tf_upgrades_shared.cpp"
 				$File	"$SRCDIR\game\shared\tf\tf_upgrades_shared.h"
-			}		
+			}
 
 			$Folder	"Matchmaking"
 			{

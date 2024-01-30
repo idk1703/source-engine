@@ -90,7 +90,7 @@ void CComboBoxBackpackOverlayDialogBase::OnCommand( const char *command )
 	else if ( !Q_strnicmp( command, "apply", 5 ) )
 	{
 		OnComboBoxApplication();
-		
+
 		TFModalStack()->PopModal( this );
 
 		SetVisible( false );
@@ -99,7 +99,7 @@ void CComboBoxBackpackOverlayDialogBase::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CComboBoxBackpackOverlayDialogBase::Show()
 {
@@ -169,7 +169,7 @@ void CStyleSelectDialog::PopulateComboBoxOptions()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStyleSelectDialog::OnComboBoxApplication()
 {
@@ -200,7 +200,7 @@ void CStyleSelectDialog::OnComboBoxApplication()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStyleSelectDialog::OnComboBoxChanged( int iNewSelection )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -61,7 +61,3 @@ EXTERN_RECV_TABLE(DT_BaseAnimatingOverlay);
 
 
 #endif // C_BASEANIMATINGOVERLAY_H
-
-
-
-

@@ -17,13 +17,13 @@
 class CSocket;
 class IResponse;
 
-typedef struct 
+typedef struct
 {
 	char queued[1024];
 } queue_requests_t;
 
 
-class CRcon 
+class CRcon
 {
 
 public:
@@ -51,7 +51,7 @@ public:
 	void UpdateServer(netadr_t *adr, int challenge,const char *resp);
 
 	// returns the challenge id
-	bool Challenge(); 
+	bool Challenge();
 
 	// returns if a new rcon result is waiting
 	bool NewRcon();
@@ -63,21 +63,21 @@ public:
 	void BadPassword(const char *info);
 
 	// returns whether this rcon is disabled (due to bad passwords)
-	bool Disabled(); 
+	bool Disabled();
 
 	//set the password to use in the rcon request
 	void SetPassword(const char *newPass);
-	
+
 private:
 
 	// sends the actual request
 	void RconRequest(const char *command, int challenge);
 	// requests a challenge value from the server
-	void GetChallenge(); 
+	void GetChallenge();
 
 	serveritem_t m_Server;
 	CSocket	*m_pQuery;	// Game server query socket
-	
+
 	IResponse *m_pResponseTarget;
 
 	bool m_bIsRefreshing; // whether we are currently performing an rcon command

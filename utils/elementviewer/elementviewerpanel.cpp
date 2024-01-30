@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -33,7 +33,7 @@ using namespace vgui;
 
 typedef vgui::DHANDLE< CElementPropertiesTree > viewList_t;
 typedef CUtlRBTree< CDmElement *, int > ElementDict_t;
- 
+
 struct ViewerDoc_t
 {
 	ViewerDoc_t() : m_fileid( DMFILEID_INVALID ), m_bDirty( false ) {}
@@ -407,7 +407,7 @@ void CElementViewerPanel::PerformLayout()
 	// Make the editor panel fill the space
 	int iWidth, iHeight;
 
-	vgui::VPANEL parent = GetParent() ? GetParent()->GetVPanel() : vgui::surface()->GetEmbeddedPanel(); 
+	vgui::VPANEL parent = GetParent() ? GetParent()->GetVPanel() : vgui::surface()->GetEmbeddedPanel();
 	vgui::ipanel()->GetSize( parent, iWidth, iHeight );
 	SetSize( iWidth, iHeight );
 	m_pMenuBar->SetSize( iWidth, 28 );

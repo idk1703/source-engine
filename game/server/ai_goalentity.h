@@ -40,22 +40,22 @@ public:
 	}
 
 	virtual int	ObjectCaps()	{ return ((BaseClass::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_NOTIFY_ON_TRANSITION); }
-	
+
 	virtual void	Spawn();
 	virtual void	OnRestore();
 	virtual int		DrawDebugTextOverlays();
-	
+
 	virtual void 	InputActivate( inputdata_t &inputdata );
 	virtual void 	InputUpdateActors( inputdata_t &inputdata );
 	virtual void 	InputDeactivate( inputdata_t &inputdata );
-	
+
 	// Goal entities can become Dormant if they're left behind on previous maps.
 	// Transitioning back to the map with cause a dormant goal entity to reactivate itself.
 	void			EnterDormant( void );
 	void			ExitDormant( void );
 
 	bool 			IsActive();
-	
+
 	int 			NumActors();
 	CAI_BaseNPC *	GetActor( int iActor = 0 );
 
@@ -73,14 +73,14 @@ protected:
 
 	virtual void	EnableGoal( CAI_BaseNPC *pAI )	{}
 	virtual void	DisableGoal( CAI_BaseNPC *pAI  ) {}
-	
+
 	void UpdateActors();
 
 	const CUtlVector<AIHANDLE> &AccessActors()
 	{
 		return m_actors;
 	}
-	
+
 private:
 	enum Flags_t
 	{
@@ -88,8 +88,8 @@ private:
 		RESOLVED_NAME 	= 0x02,
 		DORMANT			= 0x04,
 	};
-	
-	enum SearchType_t	
+
+	enum SearchType_t
 	{
 		ST_ENTNAME,
 		ST_CLASSNAME,
@@ -98,19 +98,19 @@ private:
 	void DelayedRefresh();
 	void PruneActors();
 	void ResolveNames();
-	
+
 	// From Worldcraft
 	string_t				m_iszActor;
 	string_t 				m_iszGoal;
 	bool					m_fStartActive;
 	SearchType_t			m_SearchType;
 	string_t				m_iszConceptModifiers;
-	
+
 	CUtlVector<AIHANDLE>	m_actors;
 	EHANDLE					m_hGoalEntity;
 	unsigned 				m_flags;
-	
-	
+
+
 protected:
 	DECLARE_DATADESC();
 };
@@ -148,7 +148,7 @@ inline int CAI_GoalEntity::NumActors()
 	UpdateActors();
 	return m_actors.Count();
 }
-	
+
 //-------------------------------------
 
 inline CAI_BaseNPC *CAI_GoalEntity::GetActor( int iActor )

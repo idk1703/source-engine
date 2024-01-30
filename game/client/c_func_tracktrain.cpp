@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,7 +13,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// An entity which emits other entities at points 
+// An entity which emits other entities at points
 //-----------------------------------------------------------------------------
 class C_FuncTrackTrain : public C_BaseEntity
 {
@@ -84,12 +84,12 @@ bool C_FuncTrackTrain::GetSoundSpatialization( SpatializationInfo_t& info )
 	// Out of PVS
 	if ( IsDormant() )
 		return false;
-	
+
 	if ( info.pflRadius )
 	{
 		*info.pflRadius = m_flRadius;
 	}
-	
+
 	if ( info.pOrigin )
 	{
 		Vector vecStart, vecEnd, vecWorldDir;
@@ -100,7 +100,7 @@ bool C_FuncTrackTrain::GetSoundSpatialization( SpatializationInfo_t& info )
 		VectorMA( vecStart, m_flLineLength, vecWorldDir, vecEnd );
 
 		float t;
-		CalcClosestPointOnLine( info.info.vListenerOrigin, vecStart, vecEnd, *info.pOrigin, &t ); 
+		CalcClosestPointOnLine( info.info.vListenerOrigin, vecStart, vecEnd, *info.pOrigin, &t );
 		if ( t < 0.0f )
 		{
 			*info.pOrigin = vecStart;
@@ -118,5 +118,3 @@ bool C_FuncTrackTrain::GetSoundSpatialization( SpatializationInfo_t& info )
 
 	return true;
 }
-
-

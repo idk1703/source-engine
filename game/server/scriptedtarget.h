@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -46,7 +46,7 @@ public:
 	float				PercentComplete(void);
 
 	Vector				m_vLastPosition;	// Last position that's been reached
-	
+
 private:
 	int					m_iDisabled;		// Initial state
 	string_t			m_iszEntity;		// entity that is wanted for this script

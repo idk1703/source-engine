@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,21 +17,21 @@
 
 inline int InternalVertIndex( const CPowerInfo *pInfo, const CVertIndex &vert )
 {
-	return vert.y * pInfo->m_SideLength + vert.x;	
+	return vert.y * pInfo->m_SideLength + vert.x;
 }
 
 
 template< class TesselateHelper >
-inline void InternalEndTriangle( 
+inline void InternalEndTriangle(
 	TesselateHelper *pHelper,
-	CVertIndex const &nodeIndex, 
+	CVertIndex const &nodeIndex,
 	int &iCurTriVert )
 {
 	// End our current triangle here.
 	Assert( iCurTriVert == 2 );
-	
+
 	// Finish the triangle.
-	pHelper->m_TempIndices[2] = (unsigned short)InternalVertIndex( pHelper->m_pPowerInfo, nodeIndex ); 
+	pHelper->m_TempIndices[2] = (unsigned short)InternalVertIndex( pHelper->m_pPowerInfo, nodeIndex );
 
 	pHelper->EndTriangle();
 
@@ -45,10 +45,10 @@ inline void InternalEndTriangle(
 // Tesselates a single node, doesn't deal with hierarchy
 //-----------------------------------------------------------------------------
 template< class TesselateHelper >
-inline void TesselateDisplacementNode( 
+inline void TesselateDisplacementNode(
 	TesselateHelper *pHelper,
-	CVertIndex const &nodeIndex, 
-	int iLevel, 
+	CVertIndex const &nodeIndex,
+	int iLevel,
 	int *pActiveChildren )
 {
 	int iPower = pHelper->m_pPowerInfo->m_Power - iLevel;
@@ -62,14 +62,14 @@ inline void TesselateDisplacementNode(
 	for( int iVert=0; iVert < pWinding->m_nVerts; iVert++ )
 	{
 		CVertIndex sideVert = BuildOffsetVertIndex( nodeIndex, pWinding->m_Verts[iVert].m_Index, vertInc );
-		
+
 		int iVertNode = pWinding->m_Verts[iVert].m_iNode;
 		bool bNode = (iVertNode != -1) && pActiveChildren[iVertNode];
 		if( bNode )
 		{
 			if( iCurTriVert == 2 )
 				InternalEndTriangle( pHelper, nodeIndex, iCurTriVert );
-			
+
 			iCurTriVert = 0;
 		}
 		else
@@ -92,7 +92,7 @@ inline void TesselateDisplacementNode(
 // Tesselates in a *breadth first* fashion
 //-----------------------------------------------------------------------------
 template< class T >
-inline void TesselateDisplacement_R( 
+inline void TesselateDisplacement_R(
 	T *pHelper,
 	const CVertIndex &nodeIndex,
 	int iNodeBitIndex,
@@ -173,12 +173,12 @@ public:
 	// void EndTriangle();								// (the 3 indices are in m_TempIndices).
 	// DispNodeInfo_t& GetNodeInfo( int iNodeBit );
 
-	
+
 	// Set these before calling TesselateDisplacement.
 	uint32 *m_pActiveVerts;		// These bits control the tesselation.
 	const CPowerInfo *m_pPowerInfo;								// Lots of precalculated data about a displacement this size.
-	
-	
+
+
 	// Used internally by TesselateDisplacement.
 	int m_nIndices;						// After calling TesselateDisplacement, this is set to the # of indices generated.
 	unsigned short m_TempIndices[6];
@@ -186,7 +186,7 @@ public:
 
 
 
-// This interface is shared betwixt VBSP and the engine. VBSP uses it to build the 
+// This interface is shared betwixt VBSP and the engine. VBSP uses it to build the
 // physics mesh and the engine uses it to render.
 //
 // To use this function, derive a class from CBaseTesselateHelper that supports the TesselateHelper functions.
@@ -194,7 +194,7 @@ template< class TesselateHelper >
 inline void TesselateDisplacement( TesselateHelper *pHelper )
 {
 	pHelper->m_nIndices = 0;
-	
+
 	TesselateDisplacement_R<TesselateHelper>(
 		pHelper,
 		pHelper->m_pPowerInfo->m_RootNode,

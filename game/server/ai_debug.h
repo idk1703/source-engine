@@ -79,7 +79,7 @@ extern ConVar ai_debug_doors;
 #define AIDoorDebugMsg( pNPC, msg )	if ( !AIIsDebuggingDoors( pNPC ) ) ; else Msg( msg )
 #else
 #define AIIsDebuggingDoors( pNPC ) (false)
-#define AIDoorDebugMsg( pNPC, msg )	((void)(0)) 
+#define AIDoorDebugMsg( pNPC, msg )	((void)(0))
 #endif
 
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -17,7 +17,7 @@
 DEFINE_FALLBACK_SHADER( UnlitTwoTexture, UnlitTwoTexture_DX8 )
 
 BEGIN_VS_SHADER( UnlitTwoTexture_DX8, "Help for UnlitTwoTexture" )
-			  
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( TEXTURE2, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "second texture" )
 		SHADER_PARAM( FRAME2, SHADER_PARAM_TYPE_INTEGER, "0", "frame number for $texture2" )
@@ -47,8 +47,8 @@ BEGIN_VS_SHADER( UnlitTwoTexture_DX8, "Help for UnlitTwoTexture" )
 		info.m_nRefractAmount = REFRACTAMOUNT;
 	}
 
-	bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const 
-	{ 
+	bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const
+	{
 		if ( params[CLOAKPASSENABLED]->GetIntValue() ) // If material supports cloaking
 		{
 			if ( bCheckSpecificToThisFrame == false ) // For setting model flag at load time
@@ -59,7 +59,7 @@ BEGIN_VS_SHADER( UnlitTwoTexture_DX8, "Help for UnlitTwoTexture" )
 		}
 
 		// Check flag2 if not drawing cloak pass
-		return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE ); 
+		return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE );
 	}
 
 	bool IsTranslucent( IMaterialVar **params ) const
@@ -72,7 +72,7 @@ BEGIN_VS_SHADER( UnlitTwoTexture_DX8, "Help for UnlitTwoTexture" )
 		}
 
 		// Check flag if not drawing cloak pass
-		return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT ); 
+		return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT );
 	}
 
 	SHADER_INIT_PARAMS()

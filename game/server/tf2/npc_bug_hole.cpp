@@ -50,7 +50,7 @@ END_DATADESC()
 static ConVar	npc_bughole_health( "npc_bughole_health","300", FCVAR_NONE, "Bug hole's health." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMaker_BugHole::CMaker_BugHole( void)
 {
@@ -60,7 +60,7 @@ CMaker_BugHole::CMaker_BugHole( void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMaker_BugHole::Spawn( void )
 {
@@ -90,7 +90,7 @@ void CMaker_BugHole::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMaker_BugHole::Precache( void )
 {
@@ -100,7 +100,7 @@ void CMaker_BugHole::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMaker_BugHole::BugHoleThink( void )
 {
@@ -165,7 +165,7 @@ void CMaker_BugHole::SpawnBug( float flTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMaker_BugHole::SpawnWarrior( float flTime )
 {
@@ -174,7 +174,7 @@ void CMaker_BugHole::SpawnWarrior( float flTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMaker_BugHole::SpawnBuilder( float flTime )
 {
@@ -201,7 +201,7 @@ void CMaker_BugHole::BugHoleUnderAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Send a bug out to patrol 
+// Purpose: Send a bug out to patrol
 //-----------------------------------------------------------------------------
 void CMaker_BugHole::StartPatrol( void )
 {

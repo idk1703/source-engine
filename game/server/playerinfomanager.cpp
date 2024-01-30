@@ -16,7 +16,7 @@ static CPluginBotManager s_BotManager;
 namespace
 {
 
-	// 
+	//
 	//  Old version support
 	//
 	abstract_class IPlayerInfo_V1
@@ -41,7 +41,7 @@ namespace
 		// returns the armor/health of the player (exact meaning is mod dependent)
 		virtual int	GetArmorValue() = 0;
 	};
-	
+
 	abstract_class IPlayerInfoManager_V1
 	{
 	public:
@@ -108,7 +108,7 @@ IBotController *CPluginBotManager::GetBotController( edict_t *pEdict )
 }
 
 edict_t *CPluginBotManager::CreateBot( const char *botname )
-{	
+{
 	edict_t *pEdict = engine->CreateFakeClient( botname );
 	if (!pEdict)
 	{
@@ -131,4 +131,3 @@ edict_t *CPluginBotManager::CreateBot( const char *botname )
 
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CPlayerInfoManager, IPlayerInfoManager, INTERFACEVERSION_PLAYERINFOMANAGER, s_PlayerInfoManager);
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CPluginBotManager, IBotManager, INTERFACEVERSION_PLAYERBOTMANAGER, s_BotManager);
-

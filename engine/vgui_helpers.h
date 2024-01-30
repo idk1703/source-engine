@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -23,21 +23,21 @@ class ConVar;
 class CConVarCheckButton : public vgui::CheckButton
 {
 public:
-	
+
 	typedef vgui::CheckButton BaseClass;
 
 
 	CConVarCheckButton( vgui::Panel *parent, const char *panelName, const char *text );
-	
+
 	// Call this to initialize it with a cvar. The CheckButton will be set to the current
 	// value of the ConVar.
 	void SetConVar( ConVar *pVar );
-	
+
 	virtual void SetSelected( bool state );
-	
+
 
 public:
-	
+
 	ConVar *m_pConVar;
 };
 
@@ -46,8 +46,8 @@ public:
 
 // Return true if the state was changed at all (in any way that would require an InvalidateLayout on the control).
 typedef bool (*UpdateItemStateFn)(
-	vgui::TreeView *pTree, 
-	int iChildItemId, 
+	vgui::TreeView *pTree,
+	int iChildItemId,
 	KeyValues *pSub );
 
 
@@ -59,10 +59,10 @@ typedef bool (*UpdateItemStateFn)(
 // that should be added to the tree.
 //
 // If iRoot is -1, then it uses GetRootItemIndex().
-// 
+//
 // Returns true if any elements were added or changed.
-bool IncrementalUpdateTree( 
-	vgui::TreeView *pTree, 
+bool IncrementalUpdateTree(
+	vgui::TreeView *pTree,
 	KeyValues *pValues,
 	UpdateItemStateFn fn,
 	int iRoot = -1

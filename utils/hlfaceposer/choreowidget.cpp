@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,8 +26,8 @@ void *CChoreoWidget::operator new( size_t stAllocateBlock )
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pMem - 
+// Purpose:
+// Input  : *pMem -
 //-----------------------------------------------------------------------------
 void CChoreoWidget::operator delete( void *pMem )
 {
@@ -42,7 +42,7 @@ void CChoreoWidget::operator delete( void *pMem )
 
 //-----------------------------------------------------------------------------
 // Purpose: Construct widget, all widgets clip their children and brethren
-// Input  : *parent - 
+// Input  : *parent -
 //-----------------------------------------------------------------------------
 CChoreoWidget::CChoreoWidget( CChoreoWidget *parent )
 {
@@ -54,7 +54,7 @@ CChoreoWidget::CChoreoWidget( CChoreoWidget *parent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CChoreoWidget::~CChoreoWidget( void )
 {
@@ -69,9 +69,9 @@ int	CChoreoWidget::GetItemHeight( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			my - 
+// Purpose:
+// Input  : mx -
+//			my -
 //-----------------------------------------------------------------------------
 void CChoreoWidget::LocalToScreen( int& mx, int& my )
 {
@@ -83,16 +83,16 @@ void CChoreoWidget::LocalToScreen( int& mx, int& my )
 	POINT pt;
 	pt.x = (short)mx;
 	pt.y = (short)my;
-	
+
 	ClientToScreen( wnd, &pt );
-	
+
 	mx = pt.x;
 	my = pt.y;
 	*/
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CChoreoWidget::IsSelected( void )
@@ -101,8 +101,8 @@ bool CChoreoWidget::IsSelected( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : selected - 
+// Purpose:
+// Input  : selected -
 //-----------------------------------------------------------------------------
 void CChoreoWidget::SetSelected( bool selected )
 {

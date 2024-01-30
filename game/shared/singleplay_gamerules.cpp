@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -33,7 +33,7 @@ bool CSingleplayRules::IsMultiplayer( void )
 
 // Needed during the conversion, but once DMG_* types have been fixed, this isn't used anymore.
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CSingleplayRules::Damage_GetTimeBased( void )
 {
@@ -42,7 +42,7 @@ int CSingleplayRules::Damage_GetTimeBased( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CSingleplayRules::Damage_GetShouldGibCorpse( void )
 {
@@ -51,7 +51,7 @@ int	CSingleplayRules::Damage_GetShouldGibCorpse( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CSingleplayRules::Damage_GetShowOnHud( void )
 {
@@ -60,7 +60,7 @@ int CSingleplayRules::Damage_GetShowOnHud( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CSingleplayRules::Damage_GetNoPhysicsForce( void )
 {
@@ -70,7 +70,7 @@ int	CSingleplayRules::Damage_GetNoPhysicsForce( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CSingleplayRules::Damage_GetShouldNotBleed( void )
 {
@@ -80,8 +80,8 @@ int	CSingleplayRules::Damage_GetShouldNotBleed( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : iDmgType - 
+// Purpose:
+// Input  : iDmgType -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSingleplayRules::Damage_IsTimeBased( int iDmgType )
@@ -91,8 +91,8 @@ bool CSingleplayRules::Damage_IsTimeBased( int iDmgType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : iDmgType - 
+// Purpose:
+// Input  : iDmgType -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSingleplayRules::Damage_ShouldGibCorpse( int iDmgType )
@@ -102,8 +102,8 @@ bool CSingleplayRules::Damage_ShouldGibCorpse( int iDmgType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : iDmgType - 
+// Purpose:
+// Input  : iDmgType -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSingleplayRules::Damage_ShowOnHUD( int iDmgType )
@@ -113,8 +113,8 @@ bool CSingleplayRules::Damage_ShowOnHUD( int iDmgType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : iDmgType - 
+// Purpose:
+// Input  : iDmgType -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSingleplayRules::Damage_NoPhysicsForce( int iDmgType )
@@ -125,8 +125,8 @@ bool CSingleplayRules::Damage_NoPhysicsForce( int iDmgType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : iDmgType - 
+// Purpose:
+// Input  : iDmgType -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSingleplayRules::Damage_ShouldNotBleed( int iDmgType )
@@ -213,7 +213,7 @@ bool CSingleplayRules::Damage_ShouldNotBleed( int iDmgType )
 
 		CBaseCombatWeapon	*pBestWeapon = NULL;
 		CBaseCombatWeapon	*pWeapon;
-		
+
 		int	nBestWeight	= -1;
 
 		//Search for the best weapon to use next based on its weight
@@ -232,7 +232,7 @@ bool CSingleplayRules::Damage_ShouldNotBleed( int iDmgType )
 			// Must be eligible for switching to.
 			if (!pPlayer->Weapon_CanSwitchTo(pWeapon))
 				continue;
-			
+
 			// Must be of higher quality.
 			if ( pWeapon->GetWeight() <= nBestWeight )
 				continue;
@@ -250,7 +250,7 @@ bool CSingleplayRules::Damage_ShouldNotBleed( int iDmgType )
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	// Output : Returns true on success, false on failure.
 	//-----------------------------------------------------------------------------
 	bool CSingleplayRules::SwitchToNextBestWeapon( CBaseCombatCharacter *pPlayer, CBaseCombatWeapon *pCurrentWeapon )
@@ -367,7 +367,7 @@ bool CSingleplayRules::Damage_ShouldNotBleed( int iDmgType )
 	}
 
 	//=========================================================
-	// FlWeaponRespawnTime - Returns 0 if the weapon can respawn 
+	// FlWeaponRespawnTime - Returns 0 if the weapon can respawn
 	// now,  otherwise it returns the time at which it can try
 	// to spawn again.
 	//=========================================================
@@ -478,7 +478,7 @@ bool CSingleplayRules::Damage_ShouldNotBleed( int iDmgType )
 	//=========================================================
 	int CSingleplayRules::PlayerRelationship( CBaseEntity *pPlayer, CBaseEntity *pTarget )
 	{
-		// why would a single player in half life need this? 
+		// why would a single player in half life need this?
 		return GR_NOTTEAMMATE;
 	}
 
@@ -497,4 +497,3 @@ bool CSingleplayRules::Damage_ShouldNotBleed( int iDmgType )
 	}
 
 #endif
-

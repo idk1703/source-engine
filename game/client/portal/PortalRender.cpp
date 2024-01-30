@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -61,11 +61,11 @@ PortalViewIDNode_t *AllocPortalViewIDNode( int iChildLinkCount )
 	else
 	{
 		static int iNewAllocationCounter = VIEW_ID_COUNT;
-		pNode->iPrimaryViewID = iNewAllocationCounter; 
+		pNode->iPrimaryViewID = iNewAllocationCounter;
 		iNewAllocationCounter += 2; //2 to make room for skybox view ids
 	}
 
-	CMatRenderContextPtr pRenderContext( materials );	
+	CMatRenderContextPtr pRenderContext( materials );
 #ifndef TEMP_DISABLE_PORTAL_VIS_QUERY
 	pNode->occlusionQueryHandle = pRenderContext->CreateOcclusionQueryObject();
 #endif
@@ -133,17 +133,17 @@ void RemovePortalViewIDChildLinkIndex( PortalViewIDNode_t *pNode, int iRemoveInd
 
 //-----------------------------------------------------------------------------
 //
-// Active Portal class 
+// Active Portal class
 //
 //-----------------------------------------------------------------------------
-CPortalRenderable::CPortalRenderable( void ) : 	
+CPortalRenderable::CPortalRenderable( void ) :
 	m_bIsPlaybackPortal( false )
 {
 	m_matrixThisToLinked.Identity();
-	
+
 	//Portal view ID indexing setup
 	IncreasePortalViewIDChildLinkCount( &s_PortalRender.m_HeadPortalViewIDNode );
-	m_iPortalViewIDNodeIndex = s_PortalRender.m_AllPortals.AddToTail( this );	
+	m_iPortalViewIDNodeIndex = s_PortalRender.m_AllPortals.AddToTail( this );
 }
 
 CPortalRenderable::~CPortalRenderable( void )
@@ -156,7 +156,7 @@ CPortalRenderable::~CPortalRenderable( void )
 	//I know the current behavior for CUtlVector::FastRemove() is to move the tail into the removed index. But I need that behavior to be true in the future as well so I'm doing it explicitly
 	s_PortalRender.m_AllPortals[m_iPortalViewIDNodeIndex] = s_PortalRender.m_AllPortals.Tail();
 	s_PortalRender.m_AllPortals.Remove( iLast );
-	
+
 	RemovePortalViewIDChildLinkIndex( &s_PortalRender.m_HeadPortalViewIDNode, m_iPortalViewIDNodeIndex ); //does the same transplant operation as above to all portal view id nodes
 }
 
@@ -171,7 +171,7 @@ void CPortalRenderable::BeginPortalPixelVisibilityQuery( void )
 		return;
 
 	PortalViewIDNode_t *pCurrentPortalViewNode = g_pPortalRender->m_PortalViewIDNodeChain[g_pPortalRender->m_iViewRecursionLevel]->ChildNodes[m_iPortalViewIDNodeIndex];
-	
+
 	if( pCurrentPortalViewNode )
 	{
 		CMatRenderContextPtr pRenderContext( materials );
@@ -194,7 +194,7 @@ void CPortalRenderable::EndPortalPixelVisibilityQuery( void )
 		return;
 
 	PortalViewIDNode_t *pCurrentPortalViewNode = g_pPortalRender->m_PortalViewIDNodeChain[g_pPortalRender->m_iViewRecursionLevel]->ChildNodes[m_iPortalViewIDNodeIndex];
-	
+
 	if( pCurrentPortalViewNode )
 	{
 		CMatRenderContextPtr pRenderContext( materials );
@@ -241,7 +241,7 @@ void CPortalRender::LevelShutdownPreEntity()
 bool CPortalRender::ShouldUseStencilsToRenderPortals( ) const
 {
 	// only use stencils when it's requested, and available
-	return r_portal_use_stencils.GetBool() && ( materials->StencilBufferBits() != 0 ); 
+	return r_portal_use_stencils.GetBool() && ( materials->StencilBufferBits() != 0 );
 }
 
 
@@ -256,7 +256,7 @@ int CPortalRender::ShouldForceCheaperWaterLevel() const
 			return 0;
 
 		PortalViewIDNode_t *pPixelVisNode = m_PortalViewIDNodeChain[m_iViewRecursionLevel - 1]->ChildNodes[m_pRenderingViewForPortal->m_iPortalViewIDNodeIndex];
-		
+
 		if( pPixelVisNode->fScreenFilledByPortalSurfaceLastFrame_Normalized >= 0.0f )
 		{
 			if( pPixelVisNode->fScreenFilledByPortalSurfaceLastFrame_Normalized < 0.005f )
@@ -374,7 +374,7 @@ void Recursive_InvalidatePortalPixelVis( PortalViewIDNode_t *pNode )
 	pNode->fScreenFilledByPortalSurfaceLastFrame_Normalized = -1.0f;
 	pNode->iOcclusionQueryPixelsRendered = -5;
 	pNode->iWindowPixelsAtQueryTime = 0;
-	
+
 	for( int i = pNode->ChildNodes.Count(); --i >= 0; )
 	{
 		PortalViewIDNode_t *pChildNode = pNode->ChildNodes[i];
@@ -412,7 +412,7 @@ void CPortalRender::EnteredPortal( CPortalRenderable *pEnteredPortal )
 		PixelVisibility_ShiftVisibilityViews( VIEW_3DSKY, pExitPortalsNewNode->iPrimaryViewID + 1 );
 	}
 
-	
+
 
 	if( pNewHead ) //it's possible we entered a portal we couldn't see through
 	{
@@ -449,9 +449,9 @@ void CPortalRender::EnteredPortal( CPortalRenderable *pEnteredPortal )
 
 
 
-   
+
 bool CPortalRender::DrawPortalsUsingStencils( CViewRender *pViewRender )
-{	  
+{
 	VPROF( "CPortalRender::DrawPortalsUsingStencils" );
 
 	if( !ShouldUseStencilsToRenderPortals() )
@@ -498,7 +498,7 @@ bool CPortalRender::DrawPortalsUsingStencils( CViewRender *pViewRender )
 
 	const int iMaxDepth = MIN( r_portal_stencil_depth.GetInt(), MIN( MAX_PORTAL_RECURSIVE_VIEWS, (1 << materials->StencilBufferBits()) ) - 1 );
 
-	if( m_iViewRecursionLevel >= iMaxDepth ) //can't support any more views	
+	if( m_iViewRecursionLevel >= iMaxDepth ) //can't support any more views
 	{
 		m_iRemainingPortalViewDepth = 0; //special case handler for max depth 0 cases
 		for( int i = 0; i != iNumRenderablePortals; ++i )
@@ -538,7 +538,7 @@ bool CPortalRender::DrawPortalsUsingStencils( CViewRender *pViewRender )
 
 	int iParentLevelStencilReferenceValue = m_iViewRecursionLevel;
 	int iStencilReferenceValue = iParentLevelStencilReferenceValue + 1;
-	
+
 	if( m_iViewRecursionLevel == 0 ) //first entry into the stencil drawing
 	{
 		pRenderContext->SetStencilEnable( true );
@@ -550,7 +550,7 @@ bool CPortalRender::DrawPortalsUsingStencils( CViewRender *pViewRender )
 		pRenderContext->SetStencilWriteMask( 0xFF );
 		pRenderContext->SetStencilReferenceValue( 0 );
 
-        m_RecursiveViewComplexFrustums[0].RemoveAll(); //clear any garbage leftover in the complex frustums from last frame
+	m_RecursiveViewComplexFrustums[0].RemoveAll(); //clear any garbage leftover in the complex frustums from last frame
 	}
 
 	if( m_RecursiveViewComplexFrustums[m_iViewRecursionLevel].Count() == 0 )
@@ -564,7 +564,7 @@ bool CPortalRender::DrawPortalsUsingStencils( CViewRender *pViewRender )
 		CPortalRenderable *pCurrentPortal = actualActivePortals[i];
 
 		m_RecursiveViewComplexFrustums[m_iViewRecursionLevel + 1].RemoveAll(); //clear any previously stored complex frustum
-		
+
 		if( (pCurrentPortal->GetLinkedPortal() == NULL) ||
 			(pCurrentPortal == m_pRenderingViewExitPortal) ||
 			(pCurrentPortal->ShouldUpdatePortalView_BasedOnView( *pViewSetup, m_RecursiveViewComplexFrustums[m_iViewRecursionLevel] ) == false) )
@@ -584,7 +584,7 @@ bool CPortalRender::DrawPortalsUsingStencils( CViewRender *pViewRender )
 			m_PortalViewIDNodeChain[m_iViewRecursionLevel]->ChildNodes[pCurrentPortal->m_iPortalViewIDNodeIndex] = AllocPortalViewIDNode( m_HeadPortalViewIDNode.ChildNodes.Count() );
 
 		PortalViewIDNode_t *pCurrentPortalViewNode = m_PortalViewIDNodeChain[m_iViewRecursionLevel]->ChildNodes[pCurrentPortal->m_iPortalViewIDNodeIndex];
-		
+
 		// Step 0, Allow for special effects to happen before cutting a hole
 		{
 			pRenderContext->SetStencilCompareFunction( STENCILCOMPARISONFUNCTION_EQUAL );
@@ -642,9 +642,9 @@ bool CPortalRender::DrawPortalsUsingStencils( CViewRender *pViewRender )
 				Assert( m_PortalViewIDNodeChain[m_iViewRecursionLevel]->ChildNodes.Count() > pCurrentPortal->m_iPortalViewIDNodeIndex );
 
 				m_PortalViewIDNodeChain[m_iViewRecursionLevel + 1] = m_PortalViewIDNodeChain[m_iViewRecursionLevel]->ChildNodes[pCurrentPortal->m_iPortalViewIDNodeIndex];
-				
+
 				pCurrentPortal->RenderPortalViewToBackBuffer( pViewRender, *pViewSetup );
-				
+
 				m_PortalViewIDNodeChain[m_iViewRecursionLevel + 1] = NULL;
 
 				CGlowOverlay::RestoreSkyOverlayData( m_iViewRecursionLevel );
@@ -657,7 +657,7 @@ bool CPortalRender::DrawPortalsUsingStencils( CViewRender *pViewRender )
 				pRenderContext->FogEnd( fFogEndBackup );
 				pRenderContext->SetFogZ( fFogZBackup );
 
-				
+
 				//do a full reset of what we think the stencil operations are in case the recursive calls got weird
 				pRenderContext->SetStencilCompareFunction( STENCILCOMPARISONFUNCTION_EQUAL );
 				pRenderContext->SetStencilPassOperation( STENCILOPERATION_KEEP );
@@ -720,7 +720,7 @@ bool CPortalRender::DrawPortalsUsingStencils( CViewRender *pViewRender )
 	pRenderContext->Flush( true ); //just in case
 
 	++m_iRemainingPortalViewDepth;
-		  
+
 	for( int i = 0; i != iNumRenderablePortals; ++i )
 	{
 		CPortalRenderable *pCurrentPortal = actualActivePortals[i];
@@ -794,8 +794,8 @@ void CPortalRender::DrawPortalsToTextures( CViewRender *pViewRender, const CView
 
 		pCurrentPortal->RenderPortalViewToTexture( pViewRender, cameraView );
 
-		m_PortalViewIDNodeChain[m_iViewRecursionLevel + 1] = NULL;		
-	}	
+		m_PortalViewIDNodeChain[m_iViewRecursionLevel + 1] = NULL;
+	}
 
 	render->PopView( pViewRender->GetFrustum() );
 
@@ -923,7 +923,7 @@ int	CPortalRender::GetRemainingPortalViewDepth() const
 
 
 //-----------------------------------------------------------------------------
-// Returns the current View IDs 
+// Returns the current View IDs
 //-----------------------------------------------------------------------------
 int CPortalRender::GetCurrentViewId() const
 {
@@ -975,7 +975,7 @@ void CPortalRender::UpdateDepthDoublerTexture( const CViewSetup &viewSetup )
 			break;
 		}
 	}
-	
+
 	if( bShouldUpdate )
 	{
 		Rect_t srcRect;
@@ -1034,7 +1034,7 @@ void CPortalRender::HandlePortalPlaybackMessage( KeyValues *pKeyValues )
 	for ( KeyValues *pCurr = pKeyValues->GetFirstTrueSubKey(); pCurr; pCurr = pCurr->GetNextTrueSubKey() )
 	{
 		// Create new area portals for those ids that don't exist
-        int nPortalId = pCurr->GetInt( "portalId" );
+	int nPortalId = pCurr->GetInt( "portalId" );
 		IClientRenderable *pRenderable = (IClientRenderable*)pCurr->GetPtr( "clientRenderable" );
 		int nIndex = FindRecordedPortalIndex( nPortalId );
 		if ( nIndex < 0 )
@@ -1131,7 +1131,7 @@ void CPortalRender::AddPortalCreationFunc( const char *szPortalType, PortalRende
 }
 
 bool Recursive_IsPortalViewID( PortalViewIDNode_t *pNode, view_id_t id )
-{	
+{
 	if ( pNode->iPrimaryViewID == id )
 		return true;
 
@@ -1170,9 +1170,3 @@ bool CPortalRender::IsPortalViewID( view_id_t id )
 
 	return false;
 }
-
-
-
-
-
-

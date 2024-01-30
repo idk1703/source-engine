@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // Purpose: Defines a group of app systems that all have the same lifetime
 // that need to be connected/initialized, etc. in a well-defined order
@@ -20,13 +20,13 @@
 
 
 //-----------------------------------------------------------------------------
-// Forward declarations 
+// Forward declarations
 //-----------------------------------------------------------------------------
 class IDedicatedServerAPI;
 
 
 //-----------------------------------------------------------------------------
-// Singleton interfaces 
+// Singleton interfaces
 //-----------------------------------------------------------------------------
 extern IDedicatedServerAPI *engine;
 
@@ -35,7 +35,7 @@ extern char g_szEXEName[ MAX_PATH ];
 
 
 //-----------------------------------------------------------------------------
-// Inner loop: initialize, shutdown main systems, load steam to 
+// Inner loop: initialize, shutdown main systems, load steam to
 //-----------------------------------------------------------------------------
 #ifdef POSIX
 #define DEDICATED_BASECLASS CTier2SteamApp
@@ -61,7 +61,7 @@ public:
 		return CSteamAppSystemGroup::LoadModule( factory );
 	}
 
-	// Method to add various global singleton systems 
+	// Method to add various global singleton systems
 	bool AddSystems( AppSystemInfo_t *pSystems )
 	{
 		return CSteamAppSystemGroup::AddSystems( pSystems );

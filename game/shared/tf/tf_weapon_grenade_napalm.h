@@ -62,7 +62,7 @@ public:
 	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_GRENADE_NAPALM; }
 
 	// Creation.
-	static CTFGrenadeNapalmProjectile *Create( const Vector &position, const QAngle &angles, const Vector &velocity, 
+	static CTFGrenadeNapalmProjectile *Create( const Vector &position, const QAngle &angles, const Vector &velocity,
 		                                       const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags = 0 );
 
 	// Overrides.

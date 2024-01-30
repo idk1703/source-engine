@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -79,7 +79,7 @@ typedef struct
 
 typedef struct
 {
-	int			version;	
+	int			version;
 	lump_t		lumps[HEADER_LUMPS];
 } dheader_t;
 
@@ -175,7 +175,7 @@ typedef struct
 	short		side;
 
 	int			firstedge;		// we must support > 64k edges
-	short		numedges;	
+	short		numedges;
 	short		texinfo;
 
 // lighting info

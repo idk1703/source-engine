@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -114,8 +114,8 @@ static StdIOWriteBinary io_out;
 #define WAVE_CUE			MAKEID('c','u','e',' ')
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &walk - 
+// Purpose:
+// Input  : &walk -
 //-----------------------------------------------------------------------------
 static void SceneManager_ParseSentence( CSentence& sentence, IterateRIFF &walk )
 {
@@ -189,7 +189,7 @@ enum
 class CWaveList : public mxListView
 {
 public:
-	CWaveList( mxWindow *parent, int id = 0 ) 
+	CWaveList( mxWindow *parent, int id = 0 )
 		: mxListView( parent, 0, 0, 0, 0, id )
 	{
 		// Add column headers
@@ -341,21 +341,21 @@ public:
 		m_szSearchString[0]=0;
 
 		m_pPlay = new mxButton( this, 0, 0, 0, 0, "Play", IDC_PLAYSOUND );
-		
+
 		m_pStopSounds = new mxButton( this, 0, 0, 0, 0, "Stop Sounds", IDC_STOP_SOUNDS );
-		
+
 		m_pSearch = new mxLineEdit( this, 0, 0, 0, 0, "", IDC_SEARCH );
 
-		m_pCancelSearch = new mxButton( this, 0, 0, 0, 0, "Cancel", IDC_CANCELSEARCH );		
+		m_pCancelSearch = new mxButton( this, 0, 0, 0, 0, "Cancel", IDC_CANCELSEARCH );
 	}
-	
+
 	bool PaintBackground( void )
 	{
 		redraw();
 		return false;
 	}
-	
-	
+
+
 	virtual void redraw()
 	{
 		CChoreoWidgetDrawHelper drawHelper( this, GetSysColor( COLOR_BTNFACE ) );
@@ -370,25 +370,25 @@ public:
 		case mxEvent::Size:
 			{
 				iret = 1;
-				
+
 				int split = 120;
-				
+
 				int x = 1;
-				
+
 				m_pPlay->setBounds( x, 1, split, h2() - 2 );
-				
+
 				x += split + 10;
-				
+
 				m_pStopSounds->setBounds( x, 1, split, h2()-2 );
-				
+
 				x += split + 10;
 
 				m_pCancelSearch->setBounds( x, 1, split, h2() - 2 );
-				
+
 				x += split + 10;
-				
+
 				m_pSearch->setBounds( x, 0, split * 3, h2() - 1 );
-				
+
 				x += split * 3 + 10;
 			}
 			break;
@@ -439,10 +439,10 @@ public:
 			}
 			break;
 		}
-		
+
 		return iret;
 	}
-	
+
 	char const	*GetSearchString()
 	{
 		return m_szSearchString;
@@ -464,12 +464,12 @@ public:
 	}
 
 private:
-	
+
 	mxButton		*m_pStopSounds;
 	mxButton		*m_pPlay;
 	mxLineEdit		*m_pSearch;
 	mxButton		*m_pCancelSearch;
-	
+
 	CWaveBrowser	*m_pBrowser;
 
 	char			m_szSearchString[ 256 ];
@@ -477,8 +477,8 @@ private:
 
 #pragma optimize( "", on )
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
 CWaveBrowser::CWaveBrowser( mxWindow *parent )
 	: IFacePoserToolWindow( "WaveBrowser", "Waves" ), mxWindow( parent, 0, 0, 0, 0 )
@@ -494,8 +494,8 @@ CWaveBrowser::CWaveBrowser( mxWindow *parent )
 
 	//HIMAGELIST list = CreateImageList();
 
-	// Associate the image list with the tree-view control. 
-    //m_pListView->setImageList( (void *)list ); 
+	// Associate the image list with the tree-view control.
+	//m_pListView->setImageList( (void *)list );
 
 	LoadAllSounds();
 
@@ -503,84 +503,84 @@ CWaveBrowser::CWaveBrowser( mxWindow *parent )
 }
 
 #define CX_ICON  16
-#define CY_ICON  16 
+#define CY_ICON  16
 
 HIMAGELIST CWaveBrowser::CreateImageList()
 {
 	HIMAGELIST list;
-	
-	list = ImageList_Create( CX_ICON, CY_ICON, 
+
+	list = ImageList_Create( CX_ICON, CY_ICON,
 		FALSE, NUM_IMAGES, 0 );
 
-    // Load the icon resources, and add the icons to the image list. 
-    HICON hicon;
+	// Load the icon resources, and add the icons to the image list.
+	HICON hicon;
 	int slot;
 #if defined( DBGFLAG_ASSERT )
 	int c = 0;
 #endif
 
 	/*
-	hicon = LoadIcon( GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_WORKSPACE)); 
-	slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon( GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_WORKSPACE));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
-	hicon = LoadIcon( GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_WORKSPACE_CHECKEDOUT)); 
-	slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon( GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_WORKSPACE_CHECKEDOUT));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
-	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_PROJECT)); 
-    slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_PROJECT));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
-	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_PROJECT_CHECKEDOUT)); 
-    slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_PROJECT_CHECKEDOUT));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
-	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_SCENE)); 
-	slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_SCENE));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 	*/
 
-//	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_SCENE_CHECKEDOUT)); 
-//	slot = ImageList_AddIcon(list, hicon); 
+//	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_SCENE_CHECKEDOUT));
+//	slot = ImageList_AddIcon(list, hicon);
 //	Assert( slot == c++ );
 //	DeleteObject( hicon );
 
 	/*
-	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_VCD)); 
-    slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_VCD));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
-	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_VCD_CHECKEDOUT )); 
-    slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_VCD_CHECKEDOUT ));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 	*/
 
-	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_WAV)); 
-    slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_WAV));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
 	/*
-	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_WAV_CHECKEDOUT)); 
-    slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_WAV_CHECKEDOUT));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
-	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_SPEAK)); 
-    slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_SPEAK));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
-	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_SPEAK_CHECKEDOUT)); 
-    slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_SPEAK_CHECKEDOUT));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 	*/
@@ -589,7 +589,7 @@ HIMAGELIST CWaveBrowser::CreateImageList()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWaveBrowser::OnDelete()
 {
@@ -597,8 +597,8 @@ void CWaveBrowser::OnDelete()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 // Output : int
 //-----------------------------------------------------------------------------
 int CWaveBrowser::handleEvent( mxEvent *event )
@@ -725,7 +725,7 @@ bool CWaveBrowser::LoadWaveFilesInDirectory( CUtlDict< CWaveFile *, int >& sound
 			char *pFileNameWithPath;
 			int nAllocSize = nDirectoryNameLen + Q_strlen(pFileName) + 2;
 			pFileNameWithPath = (char *)stackalloc( nAllocSize );
-			Q_snprintf(	pFileNameWithPath, nAllocSize, "%s/%s", &pDirectoryName[SOUND_PREFIX_LEN], pFileName ); 
+			Q_snprintf(	pFileNameWithPath, nAllocSize, "%s/%s", &pDirectoryName[SOUND_PREFIX_LEN], pFileName );
 			Q_strnlwr( pFileNameWithPath, nAllocSize );
 
 			CWaveFile *wav = new CWaveFile( pFileNameWithPath );
@@ -812,14 +812,14 @@ void CWaveBrowser::RemoveAllSounds()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWaveBrowser::PopulateTree( char const *subdirectory )
 {
 	int i;
 
 	CUtlRBTree< CWaveFile *, int >		m_Sorted( 0, 0, NameLessFunc );
-	
+
 	bool check_load_sentence_data = false;
 
 	char const *texttofind = NULL;
@@ -894,7 +894,7 @@ void CWaveBrowser::PopulateTree( char const *subdirectory )
 			selectedSlot = slot;
 		}
 
-		if ( ( check_load_sentence_data || m_bTextSearch ) && 
+		if ( ( check_load_sentence_data || m_bTextSearch ) &&
 			!wav->HasLoadedSentenceInfo() && !wav->IsAsyncLoading() )
 		{
 			wav->SetAsyncLoading( true );
@@ -944,7 +944,7 @@ void CWaveBrowser::BuildSelectionList( CUtlVector< CWaveFile * >& selected )
 	selected.RemoveAll();
 
 	int idx = -1;
-	do 
+	do
 	{
 		idx = m_pListView->getNextSelectedItem( idx );
 		if ( idx != -1 )
@@ -956,7 +956,7 @@ void CWaveBrowser::BuildSelectionList( CUtlVector< CWaveFile * >& selected )
 			}
 		}
 	} while ( idx != -1 );
-	
+
 }
 
 void CWaveBrowser::ShowContextMenu( void )
@@ -1003,27 +1003,27 @@ void CWaveBrowser::OnPlay()
 
 static void SplitFileName( char const *in, char *path, int maxpath, char *filename, int maxfilename )
 {
-   char drive[_MAX_DRIVE];
-   char dir[_MAX_DIR];
-   char fname[_MAX_FNAME];
-   char ext[_MAX_EXT];
+	char drive[_MAX_DRIVE];
+	char dir[_MAX_DIR];
+	char fname[_MAX_FNAME];
+	char ext[_MAX_EXT];
 
-   _splitpath( in, drive, dir, fname, ext );
+	_splitpath( in, drive, dir, fname, ext );
 
-   if ( dir[0] )
-   {
+	if ( dir[0] )
+	{
 		Q_snprintf( path, maxpath, "\\%s", dir );
-   }
-   else
-   {
-	   path[0] = 0;
-   }
-   Q_snprintf( filename, maxfilename, "%s%s", fname, ext );
+	}
+	else
+	{
+		path[0] = 0;
+	}
+	Q_snprintf( filename, maxfilename, "%s%s", fname, ext );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *se - 
+// Purpose:
+// Input  : *se -
 //-----------------------------------------------------------------------------
 void CWaveBrowser::JumpToItem( CWaveFile *wav )
 {
@@ -1101,7 +1101,7 @@ void CWaveBrowser::OnCancelSearch()
 
 	m_bTextSearch = false;
 
-	PopulateTree( m_pFileTree->GetSelectedPath() ); 
+	PopulateTree( m_pFileTree->GetSelectedPath() );
 }
 
 char const *CWaveBrowser::GetSearchString()
@@ -1146,7 +1146,7 @@ void CWaveBrowser::SetCurrent( char const *filename )
 {
 // Get sound name and look up .wav from it
 	char const *p = filename;
-	if ( p && 
+	if ( p &&
 		( !Q_strnicmp( p, "sound/", 6 ) || !Q_strnicmp( p, "sound\\", 6 ) ) )
 	{
 		p += 6;

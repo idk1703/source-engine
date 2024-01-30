@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -54,12 +54,12 @@ private:
 	CPanelAnimationVarAliasType( float, m_IconX, "icon_xpos", "4", "proportional_float" );
 	CPanelAnimationVarAliasType( float, m_IconY, "icon_ypos", "4", "proportional_float" );
 
-	enum { NOT_FADING, 
-		   FADING_UP, 
+	enum { NOT_FADING,
+		   FADING_UP,
 		   FADING_DOWN
 	} m_kIsFading;
 #endif
-};	
+};
 
 
 DECLARE_HUDELEMENT( CHudPosture );
@@ -70,7 +70,7 @@ namespace
 	// Don't pass a null pPlayer. Doesn't check for it.
 	inline bool PlayerIsDucking(C_BasePlayer *pPlayer)
 	{
-		return  pPlayer->m_Local.m_bDucked &&		 // crouching 
+		return  pPlayer->m_Local.m_bDucked &&		 // crouching
 				pPlayer->GetGroundEntity() != NULL ; // but not jumping
 	}
 }
@@ -93,7 +93,7 @@ CHudPosture::CHudPosture( const char *pElementName ) : CHudElement( pElementName
 
 //-----------------------------------------------------------------------------
 // Purpose: Save CPU cycles by letting the HUD system early cull
-// costly traversal.  Called per frame, return true if thinking and 
+// costly traversal.  Called per frame, return true if thinking and
 // painting need to occur.
 //-----------------------------------------------------------------------------
 bool CHudPosture::ShouldDraw()
@@ -109,7 +109,7 @@ bool CHudPosture::ShouldDraw()
 #ifdef _X360
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudPosture::Init( void )
 {
@@ -118,7 +118,7 @@ void CHudPosture::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudPosture::Reset( void )
 {
@@ -147,7 +147,7 @@ void CHudPosture::OnTick( void )
 		{
 			m_kIsFading = NOT_FADING;
 		}
-	}	
+	}
 	else // player is not ducking
 	{
 		if (GetAlpha() > 0)
@@ -192,4 +192,3 @@ void CHudPosture::Paint()
 }
 
 #endif
-

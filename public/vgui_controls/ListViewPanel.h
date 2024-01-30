@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -47,7 +47,7 @@ public:
 
 	virtual void ScrollToItem(int itemID);
 
-	virtual void SetSortFunc(ListViewSortFunc_t func);	
+	virtual void SetSortFunc(ListViewSortFunc_t func);
 	virtual void SortList();
 
 	// image handling
@@ -73,7 +73,7 @@ public:
 protected:
 	// overrides
 	virtual void OnMouseWheeled(int delta);
-	virtual void OnSizeChanged(int wide, int tall); 
+	virtual void OnSizeChanged(int wide, int tall);
 	virtual void PerformLayout();
 	virtual void Paint();
 	virtual void ApplySchemeSettings(IScheme *pScheme);
@@ -106,7 +106,7 @@ private:
 	Color 		m_SelectionFgColor;
 
 	// selection data
-	CUtlVector<int> 	m_SelectedItems;		
+	CUtlVector<int> 	m_SelectedItems;
 	int					m_LastSelectedItemID;
 	int					m_ShiftStartItemID;
 

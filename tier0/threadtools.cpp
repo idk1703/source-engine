@@ -14,8 +14,8 @@
 #endif
 #ifdef _WIN32
 	#include <process.h>
-	
-#ifdef IS_WINDOWS_PC	
+
+#ifdef IS_WINDOWS_PC
 	#include <Mmsystem.h>
 	#pragma comment(lib, "winmm.lib")
 #endif // IS_WINDOWS_PC
@@ -39,8 +39,8 @@
 #endif
 
 typedef int (*PTHREAD_START_ROUTINE)(
-    void *lpThreadParameter
-    );
+	void *lpThreadParameter
+	);
 typedef PTHREAD_START_ROUTINE LPTHREAD_START_ROUTINE;
 #include <sched.h>
 #include <exception>
@@ -82,17 +82,17 @@ ASSERT_INVARIANT(TT_INFINITE == INFINITE);
 #endif
 
 //-----------------------------------------------------------------------------
-// Simple thread functions. 
+// Simple thread functions.
 // Because _beginthreadex uses stdcall, we need to convert to cdecl
 //-----------------------------------------------------------------------------
 struct ThreadProcInfo_t
 {
 	ThreadProcInfo_t( ThreadFunc_t pfnThread, void *pParam )
-	  : pfnThread( pfnThread),
+	: pfnThread( pfnThread),
 		pParam( pParam )
 	{
 	}
-	
+
 	ThreadFunc_t pfnThread;
 	void *		 pParam;
 };
@@ -208,7 +208,7 @@ void ThreadSleep(unsigned nMilliseconds)
 
 	Sleep( nMilliseconds );
 #elif defined(POSIX)
-   usleep( nMilliseconds * 1000 ); 
+	usleep( nMilliseconds * 1000 );
 #endif
 }
 
@@ -255,7 +255,7 @@ bool ThreadIsThreadIdRunning( ThreadId_t uThreadId )
 	}
 	return bRunning;
 #elif defined( _PS3 )
-	
+
 	// will return CELL_OK for zombie threads
 	int priority;
 	return (sys_ppu_thread_get_priority( uThreadId, &priority ) == CELL_OK );
@@ -309,8 +309,8 @@ bool ThreadSetPriority( ThreadHandle_t hThread, int priority )
 #ifdef _WIN32
 	return ( SetThreadPriority(hThread, priority) != 0 );
 #elif defined(POSIX)
-	struct sched_param thread_param; 
-	thread_param.sched_priority = priority; 
+	struct sched_param thread_param;
+	thread_param.sched_priority = priority;
 	pthread_setschedparam( (pthread_t)hThread, SCHED_OTHER, &thread_param );
 	return true;
 #endif
@@ -353,7 +353,7 @@ uint InitMainThread()
 	// or prctl(PR_SET_NAME).  Top can either display cmdline or comm; it
 	// switched to display comm by default; htop still displays cmdline by
 	// default. Top -c will output cmdline rather than comm.
-	// 
+	//
 	// If you press 'H' while top is running it will display each thread as a
 	// separate process, so you will have different entries for MainThrd,
 	// MatQueue0, etc with their own CPU usage.  But when that mode isn't enabled
@@ -459,14 +459,14 @@ void ThreadSetDebugName( ThreadId_t id, const char *pszName )
 		if ( id == (uint32)-1 )
 			id = pthread_self();
 
-		/* 
+		/*
 			pthread_setname_np() in phthread_setname.c has the following code:
-		
+
 			#define TASK_COMM_LEN 16
-			  size_t name_len = strlen (name);
-			  if (name_len >= TASK_COMM_LEN)
+			size_t name_len = strlen (name);
+			if (name_len >= TASK_COMM_LEN)
 				return ERANGE;
-		
+
 			So we need to truncate the threadname to 16 or the call will just fail.
 		*/
 		char szThreadName[ 16 ];
@@ -513,9 +513,9 @@ PLATFORM_INTERFACE ThreadedLoadLibraryFunc_t GetThreadedLoadLibraryFunc()
 
 CThreadSyncObject::CThreadSyncObject()
 #ifdef _WIN32
-  : m_hSyncObject( NULL ), m_bCreatedHandle(false)
+	: m_hSyncObject( NULL ), m_bCreatedHandle(false)
 #elif defined(POSIX)
-  : m_bInitalized( false )
+	: m_bInitalized( false )
 #endif
 {
 }
@@ -525,20 +525,20 @@ CThreadSyncObject::CThreadSyncObject()
 CThreadSyncObject::~CThreadSyncObject()
 {
 #ifdef _WIN32
-   if ( m_hSyncObject && m_bCreatedHandle )
-   {
-      if ( !CloseHandle(m_hSyncObject) )
-	  {
-		  Assert( 0 );
-	  }
-   }
+	if ( m_hSyncObject && m_bCreatedHandle )
+	{
+	if ( !CloseHandle(m_hSyncObject) )
+	{
+		Assert( 0 );
+	}
+	}
 #elif defined(POSIX)
-   if ( m_bInitalized )
-   {
+	if ( m_bInitalized )
+	{
 	pthread_cond_destroy( &m_Condition );
-        pthread_mutex_destroy( &m_Mutex );
+		pthread_mutex_destroy( &m_Mutex );
 	m_bInitalized = false;
-   }
+	}
 #endif
 }
 
@@ -547,9 +547,9 @@ CThreadSyncObject::~CThreadSyncObject()
 bool CThreadSyncObject::operator!() const
 {
 #ifdef _WIN32
-   return !m_hSyncObject;
+	return !m_hSyncObject;
 #elif defined(POSIX)
-   return !m_bInitalized;
+	return !m_bInitalized;
 #endif
 }
 
@@ -559,9 +559,9 @@ void CThreadSyncObject::AssertUseable()
 {
 #ifdef THREADS_DEBUG
 #ifdef _WIN32
-   AssertMsg( m_hSyncObject, "Thread synchronization object is unuseable" );
+	AssertMsg( m_hSyncObject, "Thread synchronization object is unuseable" );
 #elif defined(POSIX)
-   AssertMsg( m_bInitalized, "Thread synchronization object is unuseable" );
+	AssertMsg( m_bInitalized, "Thread synchronization object is unuseable" );
 #endif
 #endif
 }
@@ -571,20 +571,20 @@ void CThreadSyncObject::AssertUseable()
 bool CThreadSyncObject::Wait( uint32 dwTimeout )
 {
 #ifdef THREADS_DEBUG
-   AssertUseable();
+	AssertUseable();
 #endif
 #ifdef _WIN32
-   return ( VCRHook_WaitForSingleObject( m_hSyncObject, dwTimeout ) == WAIT_OBJECT_0 );
+	return ( VCRHook_WaitForSingleObject( m_hSyncObject, dwTimeout ) == WAIT_OBJECT_0 );
 #elif defined(POSIX)
-    pthread_mutex_lock( &m_Mutex );
-    bool bRet = false;
-    if ( m_cSet > 0 )
-    {
+	pthread_mutex_lock( &m_Mutex );
+	bool bRet = false;
+	if ( m_cSet > 0 )
+	{
 		bRet = true;
 		m_bWakeForEvent = false;
-    }
-    else
-    {
+	}
+	else
+	{
 		volatile int ret = 0;
 
 		while ( !m_bWakeForEvent && ret != ETIMEDOUT )
@@ -592,24 +592,24 @@ bool CThreadSyncObject::Wait( uint32 dwTimeout )
 			struct timeval tv;
 			gettimeofday( &tv, NULL );
 			volatile struct timespec tm;
-			
+
 			uint64 actualTimeout = dwTimeout;
-			
+
 			if ( dwTimeout == TT_INFINITE && m_bManualReset )
 				actualTimeout = 10; // just wait 10 msec at most for manual reset events and loop instead
-				
+
 			volatile uint64 nNanoSec = (uint64)tv.tv_usec*1000 + (uint64)actualTimeout*1000000;
 			tm.tv_sec = tv.tv_sec + nNanoSec /1000000000;
 			tm.tv_nsec = nNanoSec % 1000000000;
 
 			do
-			{   
+			{
 				ret = pthread_cond_timedwait( &m_Condition, &m_Mutex, (const timespec *)&tm );
-			} 
+			}
 			while( ret == EINTR );
 
 			bRet = ( ret == 0 );
-			
+
 			if ( m_bManualReset )
 			{
 				if ( m_cSet )
@@ -618,14 +618,14 @@ bool CThreadSyncObject::Wait( uint32 dwTimeout )
 					ret = 0; // force the loop to spin back around
 			}
 		}
-		
+
 		if ( bRet )
 			m_bWakeForEvent = false;
-    }
-    if ( !m_bManualReset && bRet )
+	}
+	if ( !m_bManualReset && bRet )
 		m_cSet = 0;
-    pthread_mutex_unlock( &m_Mutex );
-    return bRet;
+	pthread_mutex_unlock( &m_Mutex );
+	return bRet;
 #endif
 }
 
@@ -636,19 +636,19 @@ bool CThreadSyncObject::Wait( uint32 dwTimeout )
 CThreadEvent::CThreadEvent( bool bManualReset )
 {
 #ifdef _WIN32
-    m_hSyncObject = CreateEvent( NULL, bManualReset, FALSE, NULL );
+	m_hSyncObject = CreateEvent( NULL, bManualReset, FALSE, NULL );
 	m_bCreatedHandle = true;
-    AssertMsg1(m_hSyncObject, "Failed to create event (error 0x%x)", GetLastError() );
+	AssertMsg1(m_hSyncObject, "Failed to create event (error 0x%x)", GetLastError() );
 #elif defined( POSIX )
-    pthread_mutexattr_t Attr;
-    pthread_mutexattr_init( &Attr );
-    pthread_mutex_init( &m_Mutex, &Attr );
-    pthread_mutexattr_destroy( &Attr );
-    pthread_cond_init( &m_Condition, NULL );
-    m_bInitalized = true;
-    m_cSet = 0;
+	pthread_mutexattr_t Attr;
+	pthread_mutexattr_init( &Attr );
+	pthread_mutex_init( &m_Mutex, &Attr );
+	pthread_mutexattr_destroy( &Attr );
+	pthread_cond_init( &m_Condition, NULL );
+	m_bInitalized = true;
+	m_cSet = 0;
 	m_bWakeForEvent = false;
-    m_bManualReset = bManualReset;
+	m_bManualReset = bManualReset;
 #else
 #error "Implement me"
 #endif
@@ -672,16 +672,16 @@ CThreadEvent::CThreadEvent( HANDLE hHandle )
 
 bool CThreadEvent::Set()
 {
-   AssertUseable();
+	AssertUseable();
 #ifdef _WIN32
-   return ( SetEvent( m_hSyncObject ) != 0 );
+	return ( SetEvent( m_hSyncObject ) != 0 );
 #elif defined(POSIX)
-    pthread_mutex_lock( &m_Mutex );
-    m_cSet = 1;
+	pthread_mutex_lock( &m_Mutex );
+	m_cSet = 1;
 	m_bWakeForEvent = true;
-    int ret = pthread_cond_signal( &m_Condition );
-    pthread_mutex_unlock( &m_Mutex );
-    return ret == 0;
+	int ret = pthread_cond_signal( &m_Condition );
+	pthread_mutex_unlock( &m_Mutex );
+	return ret == 0;
 #endif
 }
 
@@ -690,16 +690,16 @@ bool CThreadEvent::Set()
 bool CThreadEvent::Reset()
 {
 #ifdef THREADS_DEBUG
-   AssertUseable();
+	AssertUseable();
 #endif
 #ifdef _WIN32
-   return ( ResetEvent( m_hSyncObject ) != 0 );
+	return ( ResetEvent( m_hSyncObject ) != 0 );
 #elif defined(POSIX)
 	pthread_mutex_lock( &m_Mutex );
 	m_cSet = 0;
 	m_bWakeForEvent = false;
 	pthread_mutex_unlock( &m_Mutex );
-	return true; 
+	return true;
 #endif
 }
 
@@ -708,7 +708,7 @@ bool CThreadEvent::Reset()
 bool CThreadEvent::Check()
 {
 #ifdef THREADS_DEBUG
-   AssertUseable();
+	AssertUseable();
 #endif
 	return Wait( 0 );
 }
@@ -751,9 +751,9 @@ CThreadSemaphore::CThreadSemaphore( long initialValue, long maxValue )
 bool CThreadSemaphore::Release( long releaseCount, long *pPreviousCount )
 {
 #ifdef THRDTOOL_DEBUG
-   AssertUseable();
+	AssertUseable();
 #endif
-   return ( ReleaseSemaphore( m_hSyncObject, releaseCount, pPreviousCount ) != 0 );
+	return ( ReleaseSemaphore( m_hSyncObject, releaseCount, pPreviousCount ) != 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -762,9 +762,9 @@ bool CThreadSemaphore::Release( long releaseCount, long *pPreviousCount )
 
 CThreadFullMutex::CThreadFullMutex( bool bEstablishInitialOwnership, const char *pszName )
 {
-   m_hSyncObject = CreateMutex( NULL, bEstablishInitialOwnership, pszName );
+	m_hSyncObject = CreateMutex( NULL, bEstablishInitialOwnership, pszName );
 
-   AssertMsg1( m_hSyncObject, "Failed to create mutex (error 0x%x)", GetLastError() );
+	AssertMsg1( m_hSyncObject, "Failed to create mutex (error 0x%x)", GetLastError() );
 }
 
 //---------------------------------------------------------
@@ -772,9 +772,9 @@ CThreadFullMutex::CThreadFullMutex( bool bEstablishInitialOwnership, const char 
 bool CThreadFullMutex::Release()
 {
 #ifdef THRDTOOL_DEBUG
-   AssertUseable();
+	AssertUseable();
 #endif
-   return ( ReleaseMutex( m_hSyncObject ) != 0 );
+	return ( ReleaseMutex( m_hSyncObject ) != 0 );
 }
 
 #endif
@@ -889,12 +889,12 @@ bool ThreadInterlockedAssignIf( long volatile *pDest, long value, long comperand
 	Assert( (size_t)pDest % 4 == 0 );
 
 #if !(defined(_WIN64) || defined (_X360))
-	__asm 
+	__asm
 	{
 		mov	eax,comperand
 		mov	ecx,pDest
 		mov edx,value
-		lock cmpxchg [ecx],edx 
+		lock cmpxchg [ecx],edx
 		mov eax,0
 		setz al
 	}
@@ -922,12 +922,12 @@ bool ThreadInterlockedAssignPointerIf( void * volatile *pDest, void *value, void
 {
 	Assert( (size_t)pDest % 4 == 0 );
 #if !(defined(_WIN64) || defined (_X360))
-	__asm 
+	__asm
 	{
 		mov	eax,comperand
 		mov	ecx,pDest
 		mov edx,value
-		lock cmpxchg [ecx],edx 
+		lock cmpxchg [ecx],edx
 		mov eax,0
 		setz al
 	}
@@ -944,7 +944,7 @@ int64 ThreadInterlockedCompareExchange64( int64 volatile *pDest, int64 value, in
 #if defined(_WIN64) || defined (_X360)
 	return InterlockedCompareExchange64( pDest, value, comperand );
 #else
-	__asm 
+	__asm
 	{
 		lea esi,comperand;
 		lea edi,value;
@@ -954,12 +954,12 @@ int64 ThreadInterlockedCompareExchange64( int64 volatile *pDest, int64 value, in
 		mov ebx,[edi];
 		mov ecx,4[edi];
 		mov esi,pDest;
-		lock CMPXCHG8B [esi];			
+		lock CMPXCHG8B [esi];
 	}
 #endif
 }
 
-bool ThreadInterlockedAssignIf64(volatile int64 *pDest, int64 value, int64 comperand ) 
+bool ThreadInterlockedAssignIf64(volatile int64 *pDest, int64 value, int64 comperand )
 {
 	Assert( (size_t)pDest % 8 == 0 );
 
@@ -974,12 +974,12 @@ bool ThreadInterlockedAssignIf64(volatile int64 *pDest, int64 value, int64 compe
 		mov ebx,[edi];
 		mov ecx,4[edi];
 		mov esi,pDest;
-		lock CMPXCHG8B [esi];			
+		lock CMPXCHG8B [esi];
 		mov eax,0;
 		setz al;
 	}
 #else
-	return ( ThreadInterlockedCompareExchange64( pDest, value, comperand ) == comperand ); 
+	return ( ThreadInterlockedCompareExchange64( pDest, value, comperand ) == comperand );
 #endif
 }
 
@@ -1016,7 +1016,7 @@ int64 ThreadInterlockedIncrement64( int64 volatile *pDest )
 
 	int64 Old;
 
-	do 
+	do
 	{
 		Old = *pDest;
 	} while (ThreadInterlockedCompareExchange64(pDest, Old + 1, Old) != Old);
@@ -1029,7 +1029,7 @@ int64 ThreadInterlockedDecrement64( int64 volatile *pDest )
 	Assert( (size_t)pDest % 8 == 0 );
 	int64 Old;
 
-	do 
+	do
 	{
 		Old = *pDest;
 	} while (ThreadInterlockedCompareExchange64(pDest, Old - 1, Old) != Old);
@@ -1042,7 +1042,7 @@ int64 ThreadInterlockedExchange64( int64 volatile *pDest, int64 value )
 	Assert( (size_t)pDest % 8 == 0 );
 	int64 Old;
 
-	do 
+	do
 	{
 		Old = *pDest;
 	} while (ThreadInterlockedCompareExchange64(pDest, value, Old) != Old);
@@ -1055,7 +1055,7 @@ int64 ThreadInterlockedExchangeAdd64( int64 volatile *pDest, int64 value )
 	Assert( (size_t)pDest % 8 == 0 );
 	int64 Old;
 
-	do 
+	do
 	{
 		Old = *pDest;
 	} while (ThreadInterlockedCompareExchange64(pDest, Old + value, Old) != Old);
@@ -1106,7 +1106,7 @@ void *ThreadInterlockedExchangePointer( void * volatile *pDest, void *value )
 }
 
 void *ThreadInterlockedCompareExchangePointer( void *volatile *pDest, void *value, void *comperand )
-{	
+{
 	return  __sync_val_compare_and_swap( pDest, comperand, value );
 }
 
@@ -1121,14 +1121,14 @@ int64 ThreadInterlockedCompareExchange64( int64 volatile *pDest, int64 value, in
 	int64 retVal = *pDest;
 	if ( OSAtomicCompareAndSwap64( comperand, value, pDest ) )
 		retVal = *pDest;
-	
+
 	return retVal;
 #else
 	return __sync_val_compare_and_swap( pDest, comperand, value  );
 #endif
 }
 
-bool ThreadInterlockedAssignIf64( int64 volatile * pDest, int64 value, int64 comperand ) 
+bool ThreadInterlockedAssignIf64( int64 volatile * pDest, int64 value, int64 comperand )
 {
 	return __sync_bool_compare_and_swap( pDest, comperand, value );
 }
@@ -1137,12 +1137,12 @@ int64 ThreadInterlockedExchange64( int64 volatile *pDest, int64 value )
 {
 	Assert( (size_t)pDest % 8 == 0 );
 	int64 Old;
-	
-	do 
+
+	do
 	{
 		Old = *pDest;
 	} while (ThreadInterlockedCompareExchange64(pDest, value, Old) != Old);
-	
+
 	return Old;
 }
 
@@ -1222,7 +1222,7 @@ int64 ThreadInterlockedExchange64( int64 volatile *pDest, int64 value )
 	Assert( (size_t)pDest % 8 == 0 );
 	int64 Old;
 
-	do 
+	do
 	{
 		Old = *pDest;
 	} while (ThreadInterlockedCompareExchange64(pDest, value, Old) != Old);
@@ -1230,16 +1230,16 @@ int64 ThreadInterlockedExchange64( int64 volatile *pDest, int64 value )
 	return Old;
 }
 
-bool ThreadInterlockedAssignIf64(volatile int64 *pDest, int64 value, int64 comperand ) 
+bool ThreadInterlockedAssignIf64(volatile int64 *pDest, int64 value, int64 comperand )
 {
 	Assert( (size_t)pDest % 8 == 0 );
-	return ( ThreadInterlockedCompareExchange64( pDest, value, comperand ) == comperand ); 
+	return ( ThreadInterlockedCompareExchange64( pDest, value, comperand ) == comperand );
 }
 
 bool ThreadInterlockedAssignIf( long volatile *pDest, long value, long comperand )
 {
 	Assert( (size_t)pDest % 4 == 0 );
-	return ( ThreadInterlockedCompareExchange( pDest, value, comperand ) == comperand ); 
+	return ( ThreadInterlockedCompareExchange( pDest, value, comperand ) == comperand );
 }
 
 #endif
@@ -1327,7 +1327,7 @@ bool CThreadMutex::TryLock()
 	Lock();
 	return true;
 #elif defined( POSIX )
-	 return pthread_mutex_trylock( &m_Mutex ) == 0;
+	return pthread_mutex_trylock( &m_Mutex ) == 0;
 #else
 #error "Implement me!"
 	return true;
@@ -1342,7 +1342,7 @@ bool CThreadMutex::TryLock()
 
 #define THREAD_SPIN (8*1024)
 
-void CThreadFastMutex::Lock( const uint32 threadId, unsigned nSpinSleepTime ) volatile 
+void CThreadFastMutex::Lock( const uint32 threadId, unsigned nSpinSleepTime ) volatile
 {
 	int i;
 	if ( nSpinSleepTime != TT_INFINITE )
@@ -1373,7 +1373,7 @@ void CThreadFastMutex::Lock( const uint32 threadId, unsigned nSpinSleepTime ) vo
 		if ( !nSpinSleepTime && GetThreadPriority( GetCurrentThread() ) > THREAD_PRIORITY_NORMAL )
 		{
 			nSpinSleepTime = 1;
-		} 
+		}
 		else
 #endif
 
@@ -1635,7 +1635,7 @@ CThreadLocalPtr<CThread> g_pCurThread;
 //---------------------------------------------------------
 
 CThread::CThread()
-:	
+:
 #ifdef _WIN32
 	m_hThread( NULL ),
 #endif
@@ -1658,7 +1658,7 @@ CThread::~CThread()
 	{
 		if ( IsAlive() )
 		{
-			Msg( "Illegal termination of worker thread! Threads must negotiate an end to the thread before the CThread object is destroyed.\n" ); 
+			Msg( "Illegal termination of worker thread! Threads must negotiate an end to the thread before the CThread object is destroyed.\n" );
 #ifdef _WIN32
 
 			DoNewAssertDialog( __FILE__, __LINE__, "Illegal termination of worker thread! Threads must negotiate an end to the thread before the CThread object is destroyed.\n" );
@@ -1980,7 +1980,7 @@ unsigned int CThread::Resume()
 	int susCount = m_nSuspendCount++;
 	while ( thread_resume( pthread_mach_thread_np(m_threadId) )  != KERN_SUCCESS )
 	{
-	};	
+	};
 	return ( susCount - 1) != 0;
 #else
 #error
@@ -2092,10 +2092,10 @@ bool CThread::WaitForCreateComplete(CThreadEvent * pEvent)
 bool CThread::IsThreadRunning()
 {
 #ifdef _PS3
-    // ThreadIsThreadIdRunning() doesn't work on PS3 if the thread is in a zombie state
-    return m_eventTheadExit.Check();
+	// ThreadIsThreadIdRunning() doesn't work on PS3 if the thread is in a zombie state
+	return m_eventTheadExit.Check();
 #else
-    return ThreadIsThreadIdRunning( (ThreadId_t)m_threadId );
+	return ThreadIsThreadIdRunning( (ThreadId_t)m_threadId );
 #endif
 }
 
@@ -2110,48 +2110,48 @@ CThread::ThreadProc_t CThread::GetThreadProc()
 
 unsigned __stdcall CThread::ThreadProc(LPVOID pv)
 {
-  std::auto_ptr<ThreadInit_t> pInit((ThreadInit_t *)pv);
-  
+	std::auto_ptr<ThreadInit_t> pInit((ThreadInit_t *)pv);
+
 #ifdef _X360
-        // Make sure all threads are consistent w.r.t floating-point math
+		// Make sure all threads are consistent w.r.t floating-point math
 	SetupFPUControlWord();
 #endif
-	
+
 	CThread *pThread = pInit->pThread;
 	g_pCurThread = pThread;
-	
+
 	g_pCurThread->m_pStackBase = AlignValue( &pThread, 4096 );
-	
+
 	pInit->pThread->m_result = -1;
-	
+
 	bool bInitSuccess = true;
 	if ( pInit->pfInitSuccess )
 		*(pInit->pfInitSuccess) = false;
-	
+
 	try
 	{
 		bInitSuccess = pInit->pThread->Init();
 	}
-	
+
 	catch (...)
 	{
 		pInit->pInitCompleteEvent->Set();
 		throw;
 	}
-	
+
 	if ( pInit->pfInitSuccess )
 		*(pInit->pfInitSuccess) = bInitSuccess;
 	pInit->pInitCompleteEvent->Set();
 	if (!bInitSuccess)
 		return 0;
-	
+
 	if ( pInit->pThread->m_flags & SUPPORT_STOP_PROTOCOL )
 	{
 		try
 		{
 			pInit->pThread->m_result = pInit->pThread->Run();
 		}
-		
+
 		catch (...)
 		{
 		}
@@ -2160,11 +2160,11 @@ unsigned __stdcall CThread::ThreadProc(LPVOID pv)
 	{
 		pInit->pThread->m_result = pInit->pThread->Run();
 	}
-	
+
 	pInit->pThread->OnExit();
 	g_pCurThread = (int)NULL;
 	pInit->pThread->Cleanup();
-	
+
 	return pInit->pThread->m_result;
 }
 
@@ -2284,7 +2284,7 @@ int CWorkerThread::WaitForReply( unsigned timeout, WaitFunc_t pfnWait )
 #ifdef WIN32
 	CThreadEvent threadEvent( GetThreadHandle() );
 #endif
-	
+
 	CThreadEvent *waits[] =
 	{
 #ifdef WIN32
@@ -2292,7 +2292,7 @@ int CWorkerThread::WaitForReply( unsigned timeout, WaitFunc_t pfnWait )
 #endif
 		&m_EventComplete
 	};
-	
+
 
 	unsigned result;
 	bool bInDebugger = Plat_IsInDebugSession();

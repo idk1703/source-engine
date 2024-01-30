@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ CHudSuitPower::CHudSuitPower( const char *pElementName ) : CHudElement( pElement
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudSuitPower::Init( void )
 {
@@ -46,7 +46,7 @@ void CHudSuitPower::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudSuitPower::Reset( void )
 {
@@ -55,7 +55,7 @@ void CHudSuitPower::Reset( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Save CPU cycles by letting the HUD system early cull
-// costly traversal.  Called per frame, return true if thinking and 
+// costly traversal.  Called per frame, return true if thinking and
 // painting need to occur.
 //-----------------------------------------------------------------------------
 bool CHudSuitPower::ShouldDraw()
@@ -73,7 +73,7 @@ bool CHudSuitPower::ShouldDraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudSuitPower::OnThink( void )
 {
@@ -253,5 +253,3 @@ void CHudSuitPower::Paint()
 		}
 	}
 }
-
-

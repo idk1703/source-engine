@@ -15,7 +15,7 @@
 #include "gcsdk/schemasharedobject.h"
 
 //---------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //---------------------------------------------------------------------------------
 class CTFCoachRating : public GCSDK::CSchemaSharedObject< CSchCoachRating, k_EEconTypeCoachRating >
 {
@@ -25,7 +25,7 @@ class CTFCoachRating : public GCSDK::CSchemaSharedObject< CSchCoachRating, k_EEc
 
 public:
 	CTFCoachRating() {}
-	CTFCoachRating( uint32 unAccountID ) 
+	CTFCoachRating( uint32 unAccountID )
 	{
 		Obj().m_unAccountIDCoach = unAccountID;
 	}

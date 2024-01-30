@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -39,7 +39,7 @@ public:
 
 	virtual void	NPC_FinishedEnterVehicle( CAI_BaseNPC *pPassenger, bool bCompanion );
 	virtual void	NPC_FinishedExitVehicle( CAI_BaseNPC *pPassenger, bool bCompanion );
-	
+
 	virtual bool	NPC_CanEnterVehicle( CAI_BaseNPC *pPassenger, bool bCompanion );
 	virtual bool	NPC_CanExitVehicle( CAI_BaseNPC *pPassenger, bool bCompanion );
 	virtual void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
@@ -47,14 +47,14 @@ public:
 	virtual void	EnterVehicle( CBaseCombatCharacter *pPassenger );
 	virtual void	ExitVehicle( int nRole );
 	virtual bool	AllowBlockedExit( CBaseCombatCharacter *pPassenger, int nRole );
-	
+
 	// Passengers take no damage except what we pass them
-	virtual bool	PassengerShouldReceiveDamage( CTakeDamageInfo &info ) 
-	{ 
+	virtual bool	PassengerShouldReceiveDamage( CTakeDamageInfo &info )
+	{
 		if ( GetServerVehicle() && GetServerVehicle()->IsPassengerExiting() )
 			return false;
 
-		return ( info.GetDamageType() & DMG_VEHICLE ) != 0; 
+		return ( info.GetDamageType() & DMG_VEHICLE ) != 0;
 	}
 
 	virtual int		ObjectCaps( void ) { return (BaseClass::ObjectCaps() | FCAP_NOTIFY_ON_TRANSITION); }
@@ -91,7 +91,7 @@ protected:
 	void	SetBusterHopperVisibility(bool visible);
 
 private:
-	
+
 	void	UpdateWheelDust( void );
 	void	UpdateRadar( bool forceUpdate = false );
 

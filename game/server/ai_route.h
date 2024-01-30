@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -108,14 +108,14 @@ public:
 	void			SetLastNodeAsGoal(bool bReset = false);			// Sets last node as goal and goal position
 	void			ResetGoalPosition(const Vector &goalPos);		// Reset the goal position
 
-	// Returns the *base* goal position (without the offset applied) 
+	// Returns the *base* goal position (without the offset applied)
 	const Vector&	BaseGoalPosition() const;
 
 	// Returns the *actual* goal position (with the offset applied)
 	const Vector &	ActualGoalPosition(void) const;			// Get the goal position
 
 	GoalType_t		GoalType(void) const;						// Get the goal type
-	
+
 	void			SetGoalFlags( unsigned flags )		{ m_goalFlags = flags;				}
 	unsigned		GoalFlags( void ) const;			// Get the goal flags
 
@@ -132,7 +132,7 @@ public:
 
 	int GetLastNodeReached() { return m_iLastNodeReached; }
 	void ClearWaypoints()
-	{ 
+	{
 		m_Waypoints.RemoveAll();
 		m_iLastNodeReached = NO_NODE;
 	}

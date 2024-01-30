@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -93,23 +93,23 @@ float PercentageOfFlashForPlayer(CBaseEntity *player, Vector flashPos, CBaseEnti
 // --------------------------------------------------------------------------------------------------- //
 //
 // RadiusDamage - this entity is exploding, or otherwise needs to inflict damage upon entities within a certain range.
-// 
+//
 // only damage ents that can clearly be seen by the explosion!
 // --------------------------------------------------------------------------------------------------- //
 
-void RadiusFlash( 
-	Vector vecSrc, 
-	CBaseEntity *pevInflictor, 
-	CBaseEntity *pevAttacker, 
-	float flDamage, 
-	int iClassIgnore, 
+void RadiusFlash(
+	Vector vecSrc,
+	CBaseEntity *pevInflictor,
+	CBaseEntity *pevAttacker,
+	float flDamage,
+	int iClassIgnore,
 	int bitsDamageType )
 {
 	vecSrc.z += 1;// in case grenade is lying on the ground
 
 	if ( !pevAttacker )
 		pevAttacker = pevInflictor;
-	
+
 	trace_t		tr;
 	float		flAdjustedDamage;
 	variant_t	var;
@@ -118,7 +118,7 @@ void RadiusFlash(
 	Vector		vForward;
 	Vector		vecLOS;
 	float		flDot;
-	
+
 	CBaseEntity		*pEntity = NULL;
 	static float	flRadius = 1500;
 	float			falloff = flDamage / flRadius;
@@ -127,10 +127,10 @@ void RadiusFlash(
 
 	// iterate on all entities in the vicinity.
 	while ((pEntity = gEntList.FindEntityInSphere( pEntity, vecSrc, flRadius )) != NULL)
-	{	
+	{
 		bool bPlayer = pEntity->IsPlayer();
 		bool bHostage = ( Q_stricmp( pEntity->GetClassname(), "hostage_entity" ) == 0 );
-		
+
 		if( !bPlayer && !bHostage )
 			continue;
 
@@ -148,7 +148,7 @@ void RadiusFlash(
 		{
 			// decrease damage for an ent that's farther from the grenade
 			flAdjustedDamage = flDamage - ( vecSrc - pEntity->EyePosition() ).Length() * falloff;
-		
+
 			if ( flAdjustedDamage > 0 )
 			{
 				// See if we were facing the flash
@@ -158,13 +158,13 @@ void RadiusFlash(
 
 				float flDistance = vecLOS.Length();
 
-				// Normalize both vectors so the dotproduct is in the range -1.0 <= x <= 1.0 
+				// Normalize both vectors so the dotproduct is in the range -1.0 <= x <= 1.0
 				vecLOS.NormalizeInPlace();
-					
+
 				flDot = DotProduct (vecLOS, vForward);
 
 				float startingAlpha = 255;
-	
+
 				// if target is facing the bomb, the effect lasts longer
 				if( flDot >= 0.5 )
 				{
@@ -191,26 +191,26 @@ void RadiusFlash(
 
 				if ( bPlayer )
 				{
-    				// blind players and bots
+				// blind players and bots
 					CCSPlayer *player = static_cast< CCSPlayer * >( pEntity );
 
-                    //=============================================================================
-                    // HPE_BEGIN:
-                    // [tj] Store who was responsible for the most recent flashbang blinding.
-                    //=============================================================================
-                     
-                    CCSPlayer *attacker = ToCSPlayer (pevAttacker);
-                    if (attacker && player)
-                    {
-                        player->SetLastFlashbangAttacker(attacker);
-                    }
-                     
-                    //=============================================================================
-                    // HPE_END
-                    //=============================================================================
-                    
+	//=============================================================================
+	// HPE_BEGIN:
+	// [tj] Store who was responsible for the most recent flashbang blinding.
+	//=============================================================================
 
-                                         
+	CCSPlayer *attacker = ToCSPlayer (pevAttacker);
+	if (attacker && player)
+	{
+	player->SetLastFlashbangAttacker(attacker);
+	}
+
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
+
+
+
 					player->Blind( fadeHold, fadeTime, startingAlpha );
 
 					// deafen players and bots
@@ -218,11 +218,11 @@ void RadiusFlash(
 				}
 				else if ( bHostage )
 				{
-					variant_t val;					
+					variant_t val;
 					val.SetFloat( fadeTime );
 					pEntity->AcceptInput( "flashbang", pevInflictor, pevAttacker, val, 0 );
 				}
-			}	
+			}
 		}
 	}
 
@@ -234,15 +234,15 @@ void RadiusFlash(
 // CFlashbangProjectile implementation.
 // --------------------------------------------------------------------------------------------------- //
 
-CFlashbangProjectile* CFlashbangProjectile::Create( 
-	const Vector &position, 
-	const QAngle &angles, 
-	const Vector &velocity, 
-	const AngularImpulse &angVelocity, 
+CFlashbangProjectile* CFlashbangProjectile::Create(
+	const Vector &position,
+	const QAngle &angles,
+	const Vector &velocity,
+	const AngularImpulse &angVelocity,
 	CBaseCombatCharacter *pOwner )
 {
 	CFlashbangProjectile *pGrenade = (CFlashbangProjectile*)CBaseEntity::Create( "flashbang_projectile", position, angles, pOwner );
-	
+
 	// Set the timer for 1 second less than requested. We're going to issue a SOUND_DANGER
 	// one second before detonation.
 	pGrenade->SetAbsVelocity( velocity );
@@ -289,7 +289,7 @@ void CFlashbangProjectile::Precache()
 void CFlashbangProjectile::Detonate()
 {
 	RadiusFlash ( GetAbsOrigin(), this, GetThrower(), 4, CLASS_NONE, DMG_BLAST );
-	EmitSound( "Flashbang.Explode" );	
+	EmitSound( "Flashbang.Explode" );
 
 	// tell the bots a flashbang grenade has exploded
 	CCSPlayer *player = ToCSPlayer(GetThrower());

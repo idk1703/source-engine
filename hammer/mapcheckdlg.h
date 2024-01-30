@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -28,7 +28,7 @@ private:
 	CMapCheckDlg(CWnd *pParent = NULL);
 	enum { IDD = IDD_MAPCHECK };
 	bool DoCheck();
-	
+
 protected:
 
 	//{{AFX_DATA(CMapCheckDlg)

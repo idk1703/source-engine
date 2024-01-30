@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,16 +21,16 @@ extern ConVar mannedgun_usethirdperson;
 DECLARE_VGUI_SCREEN_FACTORY( CMannedPlasmagunControlPanel, "manned_plasmagun_control_panel" );
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CMannedPlasmagunControlPanel::CMannedPlasmagunControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CMannedPlasmagunControlPanel" ) 
+	: BaseClass( parent, "CMannedPlasmagunControlPanel" )
 {
 }
 
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CMannedPlasmagunControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -119,4 +119,3 @@ void CMannedPlasmagunControlPanel::OnCommand( const char *command )
 
 	BaseClass::OnCommand(command);
 }
-

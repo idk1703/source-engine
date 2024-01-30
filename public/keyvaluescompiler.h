@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -120,7 +120,7 @@ class CRunTimeKeyValuesStringTable
 public:
 
 	bool ReadStringTable( int numStrings, CUtlBuffer& buf );
-	
+
 	inline int Count() const
 	{
 		return m_Strings.Count();
@@ -132,7 +132,7 @@ public:
 	}
 
 private:
-	CUtlVector< const char * >	m_Strings; 
+	CUtlVector< const char * >	m_Strings;
 };
 
 class CCompiledKeyValuesReader
@@ -140,7 +140,7 @@ class CCompiledKeyValuesReader
 public:
 
 	CCompiledKeyValuesReader();
-	
+
 	bool		LoadFile( char const *filename );
 
 	KeyValues	*Instance( char const *kvfilename );
@@ -157,10 +157,10 @@ private:
 
 	struct FileInfo_t
 	{
-		FileInfo_t() : 
+		FileInfo_t() :
 			hFile( 0 ),
-			nFirstIndex( 0 ), 
-			nCount( 0 ) 
+			nFirstIndex( 0 ),
+			nCount( 0 )
 		{
 		}
 		FileNameHandle_t	hFile;

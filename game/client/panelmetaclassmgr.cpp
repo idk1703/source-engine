@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: A panel "metaclass" is a name given to a particular type of 
+// Purpose: A panel "metaclass" is a name given to a particular type of
 // panel with particular instance data. Such panels tend to be dynamically
 // added and removed from their parent panels.
 //
@@ -170,7 +170,7 @@ vgui::Panel *CPanelWrapper::GetPanel( )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Singleton class responsible for managing metaclass panels 
+// Purpose: Singleton class responsible for managing metaclass panels
 //-----------------------------------------------------------------------------
 class CPanelMetaClassMgrImp : public IPanelMetaClassMgr
 {
@@ -243,7 +243,7 @@ CPanelMetaClassMgrImp::~CPanelMetaClassMgrImp()
 void CPanelMetaClassMgrImp::InstallPanelType( const char* pPanelName, IPanelFactory* pFactory )
 {
 	Assert( pPanelName && pFactory );
-	
+
 	// convert to lowercase
 	int len = Q_strlen(pPanelName) + 1;
 	char* pTemp = (char*)stackalloc( len );
@@ -299,7 +299,7 @@ bool CPanelMetaClassMgrImp::ParseSingleMetaClass( const char* pFileName,
 //-----------------------------------------------------------------------------
 // Parse the metaclass list
 //-----------------------------------------------------------------------------
-bool CPanelMetaClassMgrImp::ParseMetaClassList( const char* pFileName, 
+bool CPanelMetaClassMgrImp::ParseMetaClassList( const char* pFileName,
 												  KeyValues* pKeyValues, int keyValueIdx )
 {
 	// Iterate over all metaclasses...
@@ -343,7 +343,7 @@ void CPanelMetaClassMgrImp::LoadMetaClassDefinitionFile( const char *pFileName )
 		}
 
 		m_MetaClassKeyValues[i]->deleteThis();
-		m_MetaClassKeyValues.RemoveAt(i); 
+		m_MetaClassKeyValues.RemoveAt(i);
 	}
 
 	// Create a new keyvalues entry
@@ -404,7 +404,7 @@ vgui::Panel *CPanelMetaClassMgrImp::CreatePanelMetaClass( const char* pMetaClass
 	// Search for the metaclass name
 	int i = m_MetaClassDict.Find( pMetaClassName );
 	if (i == m_MetaClassDict.InvalidIndex())
-		return NULL; 
+		return NULL;
 
 	// Now that we've got the metaclass, we can figure out what kind of
 	// panel to instantiate...
@@ -433,5 +433,3 @@ void CPanelMetaClassMgrImp::DestroyPanelMetaClass( vgui::Panel *pPanel )
 //		pPanel->MarkForDeletion();
 	delete pPanel;
 }
-
-

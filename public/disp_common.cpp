@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,15 +34,15 @@ static CNodeVert const g_NodeChildLookup[4][2] =
 
 static CNodeVert const g_NodeTriWinding[9] =
 {
-	CNodeVert(0, 1), 
-	CNodeVert(0, 0), 
-	CNodeVert(1, 0), 
-	CNodeVert(2, 0), 
-	CNodeVert(2, 1), 
-	CNodeVert(2, 2), 
-	CNodeVert(1, 2), 
-	CNodeVert(0, 2), 
-	CNodeVert(0, 1) 
+	CNodeVert(0, 1),
+	CNodeVert(0, 0),
+	CNodeVert(1, 0),
+	CNodeVert(2, 0),
+	CNodeVert(2, 1),
+	CNodeVert(2, 2),
+	CNodeVert(1, 2),
+	CNodeVert(0, 2),
+	CNodeVert(0, 1)
 };
 
 // Indexed by CORNER_. These store NEIGHBOREDGE_ defines and tell which edges butt up against the corner.
@@ -69,14 +69,14 @@ CShiftInfo g_ShiftInfos[3][3] =
 		{0, -1, true},		// CORNER_TO_CORNER -> CORNER_TO_MIDPOINT
 		{2, -1, true}		// CORNER_TO_CORNER -> MIDPOINT_TO_CORNER
 	},
-	
+
 	{
 		{0,  1, true},		// CORNER_TO_MIDPOINT -> CORNER_TO_CORNER
 		{0,  0, false},		// CORNER_TO_MIDPOINT -> CORNER_TO_MIDPOINT (invalid)
 		{0,  0, false}		// CORNER_TO_MIDPOINT -> MIDPOINT_TO_CORNER (invalid)
 	},
 
-	{	
+	{
 		{-1, 1, true},		// MIDPOINT_TO_CORNER -> CORNER_TO_CORNER
 		{0,  0, false},		// MIDPOINT_TO_CORNER -> CORNER_TO_MIDPOINT (invalid)
 		{0,  0, false}		// MIDPOINT_TO_CORNER -> MIDPOINT_TO_CORNER (invalid)
@@ -104,8 +104,8 @@ inline int SignedBitShift( int val, int shift )
 		return val >> -shift;
 }
 
-static inline void RotateVertIndex( 
-	NeighborOrientation neighor, 
+static inline void RotateVertIndex(
+	NeighborOrientation neighor,
 	int sideLengthMinus1,
 	CVertIndex const &in,
 	CVertIndex &out )
@@ -131,8 +131,8 @@ static inline void RotateVertIndex(
 	}
 }
 
-static inline void RotateVertIncrement( 
-	NeighborOrientation neighor, 
+static inline void RotateVertIncrement(
+	NeighborOrientation neighor,
 	CVertIndex const &in,
 	CVertIndex &out )
 {
@@ -185,7 +185,7 @@ int GetCornerIndexFromPoint( CVertIndex const &index, int iPower )
 
 	if( index.x == 0 && index.y == 0 )
 		return CORNER_LOWER_LEFT;
-	
+
 	else if( index.x == 0 && index.y == sideLengthMinus1 )
 		return CORNER_UPPER_LEFT;
 
@@ -208,7 +208,7 @@ int GetNeighborEdgePower( CDispUtilsHelper *pDisp, int iEdge, int iSub )
 		return -1;
 
 	CDispUtilsHelper *pNeighbor = pDisp->GetDispUtilsByIndex( pSub->GetNeighborIndex() );
-	
+
 	CShiftInfo *pInfo = &g_ShiftInfos[pSub->m_Span][pSub->m_NeighborSpan];
 	Assert( pInfo->m_bValid );
 
@@ -243,15 +243,15 @@ CDispUtilsHelper* SetupEdgeIncrements(
 	// Setup a start point and edge increment (NOTE: just precalculate these
 	// and store them in the CDispSubNeighbors).
 	CVertIndex tempInc;
-	
+
 	const CPowerInfo *pPowerInfo = pDisp->GetPowerInfo();
 	myIndex[iEdgeDim] = g_EdgeSideLenMul[iEdge] * pPowerInfo->m_SideLengthM1;
 	myIndex[iFreeDim] = pPowerInfo->m_MidPoint * iSub;
 	TransformIntoSubNeighbor( pDisp, iEdge, iSub, myIndex, nbIndex );
-	
+
 	int myPower = pDisp->GetPowerInfo()->m_Power;
 	int nbPower = pNeighbor->GetPowerInfo()->m_Power + pShiftInfo->m_PowerShiftAdd;
-	
+
 	myInc[iEdgeDim] = tempInc[iEdgeDim] = 0;
 	if( nbPower > myPower )
 	{
@@ -275,7 +275,7 @@ CDispUtilsHelper* SetupEdgeIncrements(
 }
 
 
-int GetSubNeighborIndex( 
+int GetSubNeighborIndex(
 	CDispUtilsHelper *pDisp,
 	int iEdge,
 	CVertIndex const &nodeIndex )
@@ -308,8 +308,8 @@ int GetSubNeighborIndex(
 	// Make sure we get a valid neighbor.
 	if( !pSide->m_SubNeighbors[iSub].IsValid() )
 	{
-		if( iSub == 1 && 
-			pSide->m_SubNeighbors[0].IsValid() && 
+		if( iSub == 1 &&
+			pSide->m_SubNeighbors[0].IsValid() &&
 			pSide->m_SubNeighbors[0].m_Span == CORNER_TO_CORNER )
 		{
 			iSub = 0;
@@ -353,11 +353,11 @@ void SetupSpan( int iPower, int iEdge, NeighborSpan span, CVertIndex &viStart, C
 }
 
 
-CDispUtilsHelper* TransformIntoSubNeighbor( 
+CDispUtilsHelper* TransformIntoSubNeighbor(
 	CDispUtilsHelper *pDisp,
 	int iEdge,
 	int iSub,
-	CVertIndex const &nodeIndex, 
+	CVertIndex const &nodeIndex,
 	CVertIndex &out
 	)
 {
@@ -370,7 +370,7 @@ CDispUtilsHelper* TransformIntoSubNeighbor(
 	// Find the corresponding parts on the neighbor.
 	CDispUtilsHelper *pNeighbor = pDisp->GetDispUtilsByIndex( pSub->GetNeighborIndex() );
 	int iNBEdge = (iEdge + 2 + pSub->GetNeighborOrientation()) & 3;
-	
+
 	CVertIndex viDestStart, viDestEnd;
 	SetupSpan( pNeighbor->GetPower(), iNBEdge, pSub->GetNeighborSpan(), viDestEnd, viDestStart );
 
@@ -391,22 +391,22 @@ CDispUtilsHelper* TransformIntoSubNeighbor(
 }
 
 
-CDispUtilsHelper* TransformIntoNeighbor( 
+CDispUtilsHelper* TransformIntoNeighbor(
 	CDispUtilsHelper *pDisp,
 	int iEdge,
-	CVertIndex const &nodeIndex, 
+	CVertIndex const &nodeIndex,
 	CVertIndex &out
 	)
 {
 	if ( iEdge == -1 )
 		iEdge = GetEdgeIndexFromPoint( nodeIndex, pDisp->GetPower() );
-	
+
 	int iSub = GetSubNeighborIndex( pDisp, iEdge, nodeIndex );
 	if ( iSub == -1 )
 		return NULL;
 
 	CDispUtilsHelper *pRet = TransformIntoSubNeighbor( pDisp, iEdge, iSub, nodeIndex, out );
-	
+
 #if 0
 	// Debug check.. make sure it comes back to the same point from the other side.
 	#if defined( _DEBUG )
@@ -424,17 +424,17 @@ CDispUtilsHelper* TransformIntoNeighbor(
 			CDispUtilsHelper *pTest = TransformIntoNeighbor( pRet, iNeighborEdge, out, testIndex );
 			Assert( pTest == pDisp );
 			Assert( testIndex == nodeIndex );
-		
+
 			bTesting = false;
 		}
 	#endif
 #endif
-		
+
 	return pRet;
 }
 
 
-bool DoesPointHaveAnyNeighbors( 
+bool DoesPointHaveAnyNeighbors(
 	CDispUtilsHelper *pDisp,
 	const CVertIndex &index )
 {
@@ -532,7 +532,7 @@ bool CDispEdgeIterator::Next()
 		// Ok, move up to the next sub.
 		if ( m_iCurSub == 1 )
 			return false;
-	
+
 		++m_iCurSub;
 		m_It.Start( m_pDisp, m_iEdge, m_iCurSub );
 	}
@@ -616,10 +616,10 @@ static inline void SetupCoordXY( CNodeVert &out, CNodeVert const &bottomLeft, CN
 }
 
 
-static unsigned short* DispCommon_GenerateTriIndices_R( 
-	CNodeVert const &bottomLeft, 
+static unsigned short* DispCommon_GenerateTriIndices_R(
+	CNodeVert const &bottomLeft,
 	CNodeVert const &topRight,
-	unsigned short *indices, 
+	unsigned short *indices,
 	int power,
 	int sideLength )
 {
@@ -675,7 +675,7 @@ static unsigned short* DispCommon_GenerateTriIndices_R(
 // ------------------------------------------------------------------------------------------- //
 // CDispUtilsHelper functions.
 // ------------------------------------------------------------------------------------------- //
-	
+
 int CDispUtilsHelper::GetPower() const
 {
 	return GetPowerInfo()->GetPower();
@@ -704,13 +704,13 @@ CVertIndex CDispUtilsHelper::GetEdgeMidPoint( int iEdge ) const
 
 	if ( iEdge == NEIGHBOREDGE_LEFT )
 		return CVertIndex( 0, mid );
-	
+
 	else if ( iEdge == NEIGHBOREDGE_TOP )
 		return CVertIndex( mid, end );
 
 	else if ( iEdge == NEIGHBOREDGE_RIGHT )
 		return CVertIndex( end, mid );
-	
+
 	else if ( iEdge == NEIGHBOREDGE_BOTTOM )
 		return CVertIndex( mid, 0 );
 
@@ -728,7 +728,7 @@ void DispCommon_GenerateTriIndices( int power, unsigned short *indices )
 {
 	int sideLength = 1 << power;
 	DispCommon_GenerateTriIndices_R(
-		CNodeVert( 0, 0 ), 
+		CNodeVert( 0, 0 ),
 		CNodeVert( sideLength, sideLength ),
 		indices,
 		power,
@@ -778,7 +778,7 @@ void GetDispBox( CCoreDispInfo *pDisp, CDispBox &box )
 		const Vector &vTest = pDisp->GetSurface()->GetPoint( iVert );
 		VectorMin( vTest, vMin, vMin );
 		VectorMax( vTest, vMax, vMax );
-	}		
+	}
 
 	// Puff the box out a little.
 	static float flPuff = 0.1f;
@@ -831,7 +831,7 @@ bool FindEdge( CCoreDispInfo *pInfo, Vector const &vPoint1, Vector const &vPoint
 			return true;
 		}
 	}
-	
+
 	return false;
 }
 
@@ -854,14 +854,14 @@ void AddNeighbor( CCoreDispInfo *pMain,
 				  CCoreDispInfo *pOther, int iNeighborEdge, NeighborSpan nbSpan )
 {
 	// The edge iteration before coming in here goes 0-1, 1-2, 2-3, 3-4.
-	// This flips the sense of CORNER_TO_MIDPOINT/MIDPOINT_TO_CORNER on the right and 
+	// This flips the sense of CORNER_TO_MIDPOINT/MIDPOINT_TO_CORNER on the right and
 	// bottom edges and is undone here.
 	span = NeighborSpanFlip( iEdge, span );
 	nbSpan = NeighborSpanFlip( iNeighborEdge, nbSpan );
 
 	// Get the subspan this fills on our displacement.
 	CDispSubNeighbor *pSub = &pMain->GetEdgeNeighbor(iEdge)->m_SubNeighbors[iSub];
-	
+
 	// Which subspan does this use in the neighbor?
 	CDispSubNeighbor *pNeighborSub;
 	if ( nbSpan == MIDPOINT_TO_CORNER )
@@ -880,7 +880,7 @@ void AddNeighbor( CCoreDispInfo *pMain,
 		return;
 	}
 
-	// Now just copy the data into each displacement.	
+	// Now just copy the data into each displacement.
 	pSub->m_iNeighbor = pOther->GetListIndex();
 	pSub->m_NeighborOrientation = g_CoreDispNeighborOrientationMap[iEdge][iNeighborEdge];
 	pSub->m_Span = span;
@@ -936,13 +936,13 @@ void SetupEdgeNeighbors( CCoreDispInfo *pMain, CCoreDispInfo *pOther )
 				AddNeighbor( pMain, iEdge, 0, CORNER_TO_CORNER, pOther, iNBEdge, MIDPOINT_TO_CORNER );
 			}
 			else
-			{			
+			{
 				// Ok, look for 1 or two that abut this side.
 				if( FindEdge( pOther, mid, pt[0], iNBEdge ) )
 				{
 					AddNeighbor( pMain, iEdge, g_bEdgeNeighborFlip[iEdge], CORNER_TO_MIDPOINT, pOther, iNBEdge, CORNER_TO_CORNER );
 				}
-				
+
 				if( FindEdge( pOther, pt[1], mid, iNBEdge ) )
 				{
 					AddNeighbor( pMain, iEdge, !g_bEdgeNeighborFlip[iEdge], MIDPOINT_TO_CORNER, pOther, iNBEdge, CORNER_TO_CORNER );
@@ -965,7 +965,7 @@ bool HasEdgeNeighbor( const CCoreDispInfo *pMain, int iNeighbor )
 				return true;
 
 		const CDispNeighbor *pEdge = pMain->GetEdgeNeighbor( i );
-		if ( pEdge->m_SubNeighbors[0].GetNeighborIndex() == iNeighbor || 
+		if ( pEdge->m_SubNeighbors[0].GetNeighborIndex() == iNeighbor ||
 			pEdge->m_SubNeighbors[1].GetNeighborIndex() == iNeighbor )
 		{
 			return true;
@@ -989,11 +989,11 @@ void SetupCornerNeighbors( CCoreDispInfo *pMain, CCoreDispInfo *pOther, int *nOv
 	for ( int iMainCorner=0; iMainCorner < 4; iMainCorner++ )
 	{
 		Vector const &vMainCorner = pMain->GetCornerPoint( iMainCorner );
-		
+
 		for ( int iOtherCorner=0; iOtherCorner < 4; iOtherCorner++ )
 		{
 			Vector const &vOtherCorner = pOther->GetCornerPoint( iOtherCorner );
-		
+
 			if ( VectorsAreEqual( vMainCorner, vOtherCorner, 0.001f ) )
 			{
 				iMainSharedCorner = iMainCorner;
@@ -1023,7 +1023,7 @@ void SetupCornerNeighbors( CCoreDispInfo *pMain, CCoreDispInfo *pOther, int *nOv
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-bool VerifyNeighborVertConnection( CDispUtilsHelper *pDisp, const CVertIndex &nodeIndex, 
+bool VerifyNeighborVertConnection( CDispUtilsHelper *pDisp, const CVertIndex &nodeIndex,
 								   const CDispUtilsHelper *pTestNeighbor, const CVertIndex &testNeighborIndex,
 								   int mySide )
 {
@@ -1042,7 +1042,7 @@ bool VerifyNeighborVertConnection( CDispUtilsHelper *pDisp, const CVertIndex &no
 		}
 
 		CDispUtilsHelper *pTest = TransformIntoNeighbor( pNeighbor, iSide, nbIndex, testIndex );
-		
+
 		if( pTest != pDisp || nodeIndex != testIndex )
 		{
 			return false;
@@ -1077,7 +1077,7 @@ void VerifyNeighborConnections( CCoreDispInfo **ppListBase, int nDisps )
 						Warning( "Warning: invalid neighbor connection on displacement near (%.2f %.2f %.2f)\n", VectorExpand( pDisp->GetCornerPoint(0) ) );
 						bHappy = false;
 					}
-				}			
+				}
 			}
 		}
 
@@ -1098,7 +1098,7 @@ void FindNeighboringDispSurfs( CCoreDispInfo **ppListBase, int nListSize )
 	}
 
 	CUtlVector<CDispBox> boxes;
-	SetupDispBoxes( ppListBase, nListSize, boxes );	
+	SetupDispBoxes( ppListBase, nListSize, boxes );
 
 	int nCornerOverflows = 0;
 
@@ -1116,7 +1116,7 @@ void FindNeighboringDispSurfs( CCoreDispInfo **ppListBase, int nListSize )
 				continue;
 
 			SetupEdgeNeighbors( pMain, pOther );
-			
+
 			// NOTE: this must come after SetupEdgeNeighbors because it makes sure not to add
 			// corner neighbors for disps that are already edge neighbors.
 			SetupCornerNeighbors( pMain, pOther, &nCornerOverflows );
@@ -1156,7 +1156,7 @@ int IsCorner( CVertIndex const &index, int sideLength )
 		else if ( index.y == sideLength-1 )
 			return true;
 	}
-	
+
 	return false;
 }
 
@@ -1191,7 +1191,7 @@ bool IsVertAllowed( CDispUtilsHelper *pDisp, CVertIndex const &sideVert, int iLe
 	// Ok, it exists. Make sure the neighbor hasn't disallowed it.
 	CVertIndex nbIndex;
 	TransformIntoSubNeighbor( pDisp, iSide, iSub, sideVert, nbIndex );
-	
+
 	CBitVec<MAX_DISPVERTS> &allowedVerts = CCoreDispInfo::FromDispUtils( pNeighbor )->GetAllowedVerts();
 	return !!allowedVerts.Get( pNeighbor->VertIndexToInt( nbIndex ) );
 }
@@ -1201,8 +1201,8 @@ bool IsVertAllowed( CDispUtilsHelper *pDisp, CVertIndex const &sideVert, int iLe
 void UnallowVerts_R( CDispUtilsHelper *pDisp, CVertIndex const &nodeIndex, int &nUnallowed )
 {
 	int iNodeIndex = pDisp->VertIndexToInt( nodeIndex );
-	
-	CCoreDispInfo *pCoreDisp = CCoreDispInfo::FromDispUtils( pDisp );	
+
+	CCoreDispInfo *pCoreDisp = CCoreDispInfo::FromDispUtils( pDisp );
 	if ( !pCoreDisp->GetAllowedVerts().Get( iNodeIndex ) )
 		return;
 
@@ -1276,8 +1276,8 @@ void SetupAllowedVerts( CCoreDispInfo **ppListBase, int nListSize )
 	}
 
 	// Disable verts that need to be disabled so higher-powered displacements remove
-	// the necessary triangles when bordering lower-powered displacements.	
-	// It is necessary to loop around here because disabling verts can accumulate into 
+	// the necessary triangles when bordering lower-powered displacements.
+	// It is necessary to loop around here because disabling verts can accumulate into
 	// neighbors.
 	bool bContinue;
 	do
@@ -1286,7 +1286,7 @@ void SetupAllowedVerts( CCoreDispInfo **ppListBase, int nListSize )
 		for( iDisp = 0; iDisp < nListSize; ++iDisp )
 		{
 			CDispUtilsHelper *pDisp = ppListBase[iDisp];
-			
+
 			int nUnallowed = 0;
 			DisableUnallowedVerts_R( pDisp, pDisp->GetPowerInfo()->m_RootNode, 0, nUnallowed );
 			if ( nUnallowed )

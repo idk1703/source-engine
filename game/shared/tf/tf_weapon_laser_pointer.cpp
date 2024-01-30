@@ -3,7 +3,7 @@
 // Purpose: Engineer's Laser Pointer
 //
 //=============================================================================//
-#include "cbase.h" 
+#include "cbase.h"
 #include "tf_fx_shared.h"
 #include "tf_weapon_laser_pointer.h"
 #include "in_buttons.h"
@@ -358,7 +358,7 @@ CLaserDot::~CLaserDot( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CLaserDot* CLaserDot::Create( const Vector &origin, CBaseEntity *pOwner, bool bVisibleDot )
 {
@@ -384,7 +384,7 @@ CLaserDot* CLaserDot::Create( const Vector &origin, CBaseEntity *pOwner, bool bV
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CLaserDot::DrawModel( int flags )
 {

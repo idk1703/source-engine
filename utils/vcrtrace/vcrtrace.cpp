@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -136,7 +136,7 @@ WMessage g_WMessages[] =
 };
 
 // Message table for winsock messages.
-WMessage g_WinsockMessages[] = 
+WMessage g_WinsockMessages[] =
 {
 	DEFINE_WMESSAGE(WSAEWOULDBLOCK),
 	DEFINE_WMESSAGE(WSAEINPROGRESS),
@@ -234,7 +234,7 @@ static void VCR_TraceEvents()
 	int iEvent = 0;
 
 	g_pTrace = g_pVCR->GetVCRTraceInterface();
-	
+
 	while ( !g_bEndOfFile )
 	{
 		++iEvent;
@@ -261,12 +261,12 @@ static void VCR_TraceEvents()
 				Msg("Sys_FloatTime: %f\n", ret);
 			}
 			break;
-			
+
 			case VCREvent_recvfrom:
 			{
 				int ret;
 				char buf[8192];
-				
+
 				VCRTrace_Read(&ret, sizeof(ret));
 
 				Assert(ret < (int)sizeof(buf));
@@ -337,13 +337,13 @@ static void VCR_TraceEvents()
 				char *f;
 
 				VCRTrace_Read(&len, sizeof(len));
-				
+
 				if(len != -1)
 				{
 					f = (char*)malloc(len);
 					VCRTrace_Read(f, len);
 				}
-				
+
 				Msg("Cmd_Exec: %d\n", len);
 			}
 			break;
@@ -409,7 +409,7 @@ static void VCR_TraceEvents()
 				Msg("VCREvent_RegCloseKey\n");
 			}
 			break;
-			
+
 			case VCREvent_PeekMessage:
 			{
 				MSG msg;
@@ -451,7 +451,7 @@ static void VCR_TraceEvents()
 			{
 				char val;
 				unsigned long nEvents;
-				
+
 				VCRTrace_ReadVal( val );
 				VCRTrace_ReadVal( nEvents );
 
@@ -491,7 +491,7 @@ static void VCR_TraceEvents()
 			case VCREvent_recv:
 			{
 				int ret;
-				
+
 				// Get the result from our file.
 				VCRTrace_ReadVal( ret );
 				if ( ret == SOCKET_ERROR )
@@ -515,7 +515,7 @@ static void VCR_TraceEvents()
 				int ret;
 
 				// Get the result from our file.
-				VCRTrace_ReadVal( ret );										   
+				VCRTrace_ReadVal( ret );
 				if ( ret == SOCKET_ERROR )
 				{
 					int err;
@@ -561,7 +561,7 @@ static void VCR_TraceEvents()
 			{
 				char val;
 				VCRTrace_ReadVal( val );
-				
+
 				Msg( "VCREvent_WaitForSingleObject " );
 				if ( val == 1 )
 					Msg( "(WAIT_OBJECT_0)\n" );
@@ -621,10 +621,10 @@ SpewRetval_t MySpewOutput( SpewType_t spewType, tchar const *pMsg )
 
 	if ( spewType == SPEW_ASSERT )
 		return SPEW_DEBUGGER;
-	
+
 	else if ( spewType == SPEW_ERROR )
 		return SPEW_ABORT;
-	
+
 	else
 		return SPEW_CONTINUE;
 }
@@ -658,4 +658,3 @@ int main(int argc, char* argv[])
 	VCR_TraceEvents();
 	return 0;
 }
-

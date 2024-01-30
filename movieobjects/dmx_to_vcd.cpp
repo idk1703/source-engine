@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -31,7 +31,7 @@ bool ConvertEventToDmx( CChoreoEvent *event, CDmeChannelsClip *clip )
 	clip->SetValue( "parameters2", event->GetParameters2() );
 
 	// event_ramp is a channel under the event's channels clip
-	CDmrElementArray<> array( clip, "channels" ); 
+	CDmrElementArray<> array( clip, "channels" );
 	Assert( array.IsValid() );
 	if ( array.IsValid() )
 	{
@@ -51,14 +51,14 @@ bool ConvertEventToDmx( CChoreoEvent *event, CDmeChannelsClip *clip )
 			pCurveInfo->SetUseEdgeInfo( true );
 			pCurveInfo->SetDefaultEdgeZeroValue( 0.0f );
 			// Left edge
-			pCurveInfo->SetEdgeInfo( 0, 
-				event->GetRamp()->IsEdgeActive( true ), 
-				event->GetRamp()->GetEdgeZeroValue( true ), 
+			pCurveInfo->SetEdgeInfo( 0,
+				event->GetRamp()->IsEdgeActive( true ),
+				event->GetRamp()->GetEdgeZeroValue( true ),
 				event->GetRamp()->GetEdgeCurveType( true ) );
 			// Right edge
-			pCurveInfo->SetEdgeInfo( 1, 
-				event->GetRamp()->IsEdgeActive( false ), 
-				event->GetRamp()->GetEdgeZeroValue( false ), 
+			pCurveInfo->SetEdgeInfo( 1,
+				event->GetRamp()->IsEdgeActive( false ),
+				event->GetRamp()->GetEdgeZeroValue( false ),
 				event->GetRamp()->GetEdgeCurveType( false ) );
 
 			ramp->SetCurveInfo( pCurveInfo );
@@ -139,7 +139,7 @@ bool ConvertEventToDmx( CChoreoEvent *event, CDmeChannelsClip *clip )
 		if ( event->GetNumAbsoluteTags( (CChoreoEvent::AbsTagType)tagtype ) > 0 )
 		{
 			char sz[ 512 ];
-			
+
 			Q_snprintf( sz, sizeof( sz ), "absolutetags %s", CChoreoEvent::NameForAbsoluteTagType( (CChoreoEvent::AbsTagType)tagtype ) );
 
 			CDmElement *tags = CreateElement< CDmElement >( sz, clip->GetFileId() );
@@ -248,14 +248,14 @@ bool ConvertEventToDmx( CChoreoEvent *event, CDmeChannelsClip *clip )
 						pCurveInfo->SetUseEdgeInfo( true );
 						pCurveInfo->SetDefaultEdgeZeroValue( 0.0f );
 						// Left edge
-						pCurveInfo->SetEdgeInfo( 0, 
-							track->IsEdgeActive( true ), 
-							track->GetEdgeZeroValue( true ), 
+						pCurveInfo->SetEdgeInfo( 0,
+							track->IsEdgeActive( true ),
+							track->GetEdgeZeroValue( true ),
 							track->GetEdgeCurveType( true ) );
 						// Right edge
-						pCurveInfo->SetEdgeInfo( 1, 
-							track->IsEdgeActive( false ), 
-							track->GetEdgeZeroValue( false ), 
+						pCurveInfo->SetEdgeInfo( 1,
+							track->IsEdgeActive( false ),
+							track->GetEdgeZeroValue( false ),
 							track->GetEdgeCurveType( false ) );
 
 						log->SetCurveInfo( pCurveInfo );
@@ -265,7 +265,7 @@ bool ConvertEventToDmx( CChoreoEvent *event, CDmeChannelsClip *clip )
 						int sampleCount = track->GetNumSamples();
 						for ( int j = 0; j < sampleCount; ++j )
 						{
-							CExpressionSample *sample = track->GetSample( j );                            
+							CExpressionSample *sample = track->GetSample( j );
 							log->SetKey( DmeTime_t( sample->time ), sample->value, sample->GetCurveType() );
 						}
 					}
@@ -280,7 +280,7 @@ bool ConvertEventToDmx( CChoreoEvent *event, CDmeChannelsClip *clip )
 						array.AddToTail( balanceChannel );
 
 						channel->SetValue( "balanceChannel", balanceChannel );
-						
+
 						balanceChannel->SetValue< bool >( "flexchannel", true );
 
 						balanceChannel->SetValue< bool >( "disabled", !track->IsTrackActive() );
@@ -301,14 +301,14 @@ bool ConvertEventToDmx( CChoreoEvent *event, CDmeChannelsClip *clip )
 							/*
 							// Don't need to support edge properties for balance curves?
 							// Left edge
-							pCurveInfo->SetEdgeInfo( 0, 
-								track->IsEdgeActive( true ), 
-								track->GetEdgeZeroValue( true ), 
+							pCurveInfo->SetEdgeInfo( 0,
+								track->IsEdgeActive( true ),
+								track->GetEdgeZeroValue( true ),
 								track->GetEdgeCurveType( true ) );
 							// Right edge
-							pCurveInfo->SetEdgeInfo( 1, 
-								track->IsEdgeActive( false ), 
-								track->GetEdgeZeroValue( false ), 
+							pCurveInfo->SetEdgeInfo( 1,
+								track->IsEdgeActive( false ),
+								track->GetEdgeZeroValue( false ),
 								track->GetEdgeCurveType( false ) );
 							*/
 
@@ -368,7 +368,7 @@ bool ConvertSceneToDmx( CChoreoScene *scene, CDmeFilmClip *dmx )
 		{
 			const char *name = scene->TimeZoomName( i );
 			int value = scene->GetTimeZoom( name );
-		
+
 			scaleSettings->SetValue< int >( name, value );
 		}
 	}
@@ -389,10 +389,10 @@ bool ConvertSceneToDmx( CChoreoScene *scene, CDmeFilmClip *dmx )
 		CDmrElementArray<> array( pClip, "channels" );
 		Assert( array.IsValid() );
 		if ( array.IsValid() )
-		{																			   
+		{
 			CDmeChannel *channel = CreateElement< CDmeChannel >( VCD_SCENE_RAMP_TRACK_GROUP_NAME, dmx->GetFileId() );
 			array.AddToTail( channel );
-	
+
 			// Fill in values..., just log for now
 			channel->CreateLog( AT_FLOAT );
 			CDmeTypedLog<float> *ramp = static_cast< CDmeTypedLog<float> * >( channel->GetLog() );
@@ -406,14 +406,14 @@ bool ConvertSceneToDmx( CChoreoScene *scene, CDmeFilmClip *dmx )
 				pCurveInfo->SetUseEdgeInfo( true );
 				pCurveInfo->SetDefaultEdgeZeroValue( 0.0f );
 				// Left edge
-				pCurveInfo->SetEdgeInfo( 0, 
-					scene->GetSceneRamp()->IsEdgeActive( true ), 
-					scene->GetSceneRamp()->GetEdgeZeroValue( true ), 
+				pCurveInfo->SetEdgeInfo( 0,
+					scene->GetSceneRamp()->IsEdgeActive( true ),
+					scene->GetSceneRamp()->GetEdgeZeroValue( true ),
 					scene->GetSceneRamp()->GetEdgeCurveType( true ) );
 				// Right edge
-				pCurveInfo->SetEdgeInfo( 1, 
-					scene->GetSceneRamp()->IsEdgeActive( false ), 
-					scene->GetSceneRamp()->GetEdgeZeroValue( false ), 
+				pCurveInfo->SetEdgeInfo( 1,
+					scene->GetSceneRamp()->IsEdgeActive( false ),
+					scene->GetSceneRamp()->GetEdgeZeroValue( false ),
 					scene->GetSceneRamp()->GetEdgeCurveType( false ) );
 
 				ramp->SetCurveInfo( pCurveInfo );
@@ -480,7 +480,7 @@ bool ConvertSceneToDmx( CChoreoScene *scene, CDmeFilmClip *dmx )
 					Assert( 0 );
 					break;
 				}
-    		}
+		}
 		}
 	}
 
@@ -646,8 +646,8 @@ bool ConvertDmxToEvent( CChoreoScene *scene, CDmeTrackGroup *pActor, CDmeTrack *
 			ramp->GetEdgeInfo( 0, active[ 0 ], value[ 0 ], curveType[ 0 ] );
 			ramp->GetEdgeInfo( 1, active[ 1 ], value[ 1 ], curveType[ 1 ] );
 
-			event->GetRamp()->SetEdgeActive( true, active[ 0 ] ); 
-			event->GetRamp()->SetEdgeActive( false, active[ 1 ] ); 
+			event->GetRamp()->SetEdgeActive( true, active[ 0 ] );
+			event->GetRamp()->SetEdgeActive( false, active[ 1 ] );
 
 			event->GetRamp()->SetEdgeInfo( true, curveType[ 0 ], value[ 0 ] );
 			event->GetRamp()->SetEdgeInfo( false, curveType[ 1 ], value[ 1 ] );
@@ -680,7 +680,7 @@ bool ConvertDmxToEvent( CChoreoScene *scene, CDmeTrackGroup *pActor, CDmeTrack *
 			const CDmrStringArray names( tags, "tagname" );
 			const CDmrArray<float> percentages( tags, "tagpercentage" );
 			Assert( names.IsValid() && percentages.IsValid() );
-			
+
 			Assert( names.Count() == percentages.Count() );
 			for ( int t = 0; t < names.Count(); t++ )
 			{
@@ -709,7 +709,7 @@ bool ConvertDmxToEvent( CChoreoScene *scene, CDmeTrackGroup *pActor, CDmeTrack *
 		}
 	}
 
-	
+
 	// Abs tags
 	int tagtype;
 	for ( tagtype = 0; tagtype < CChoreoEvent::NUM_ABS_TAG_TYPES; tagtype++ )
@@ -736,21 +736,21 @@ bool ConvertDmxToEvent( CChoreoScene *scene, CDmeTrackGroup *pActor, CDmeTrack *
 			}
 		}
 	}
-	
+
 	if ( clip->HasAttribute( "relative_tag" ) )
 	{
 		CDmElement *relativeTag = clip->GetValueElement< CDmElement >( "relative_tag" );
 		if ( relativeTag )
 		{
 			event->SetUsingRelativeTag
-			( 
+			(
 				true,
 				relativeTag->GetValueString( "tagname" ),
-				relativeTag->GetValueString( "tagwav" ) 
+				relativeTag->GetValueString( "tagwav" )
 			);
 		}
 	}
-				
+
 	switch ( event->GetType() )
 	{
 	default:
@@ -844,19 +844,19 @@ bool ConvertDmxToEvent( CChoreoScene *scene, CDmeTrackGroup *pActor, CDmeTrack *
 						log->GetEdgeInfo( 0, active[ 0 ], value[ 0 ], curveType[ 0 ] );
 						log->GetEdgeInfo( 1, active[ 1 ], value[ 1 ], curveType[ 1 ] );
 
-						track->SetEdgeActive( true, active[ 0 ] ); 
-						track->SetEdgeActive( false, active[ 1 ] ); 
+						track->SetEdgeActive( true, active[ 0 ] );
+						track->SetEdgeActive( false, active[ 1 ] );
 
 						track->SetEdgeInfo( true, curveType[ 0 ], value[ 0 ] );
 						track->SetEdgeInfo( false, curveType[ 1 ], value[ 1 ] );
 
-                        int sampleCount = log->GetKeyCount();
+	int sampleCount = log->GetKeyCount();
 						for ( int j = 0; j < sampleCount; ++j )
 						{
 							int curveType = log->GetKeyCurveType( j );
 							float value = log->GetKeyValue( j );
 							DmeTime_t time = log->GetKeyTime( j );
- 
+
 							CExpressionSample *sample = track->AddSample( time.GetSeconds(), value, 0 );
 							sample->SetCurveType( curveType );
 						}
@@ -882,7 +882,7 @@ bool ConvertDmxToEvent( CChoreoScene *scene, CDmeTrackGroup *pActor, CDmeTrack *
 									int curveType = balance->GetKeyCurveType( j );
 									float value = balance->GetKeyValue( j );
 									DmeTime_t time = balance->GetKeyTime( j );
-		 
+
 									CExpressionSample *sample = track->AddSample( time.GetSeconds(), value, 1 );
 									sample->SetCurveType( curveType );
 								}
@@ -966,8 +966,8 @@ bool ConvertDmxToScene( CDmeFilmClip *dmx, CChoreoScene *scene )
 							ramp->GetEdgeInfo( 0, active[ 0 ], value[ 0 ], curveType[ 0 ] );
 							ramp->GetEdgeInfo( 1, active[ 1 ], value[ 1 ], curveType[ 1 ] );
 
-							scene->GetSceneRamp()->SetEdgeActive( true, active[ 0 ] ); 
-							scene->GetSceneRamp()->SetEdgeActive( false, active[ 1 ] ); 
+							scene->GetSceneRamp()->SetEdgeActive( true, active[ 0 ] );
+							scene->GetSceneRamp()->SetEdgeActive( false, active[ 1 ] );
 
 							scene->GetSceneRamp()->SetEdgeInfo( true, curveType[ 0 ], value[ 0 ] );
 							scene->GetSceneRamp()->SetEdgeInfo( false, curveType[ 1 ], value[ 1 ] );
@@ -1023,7 +1023,7 @@ bool ConvertDmxToScene( CDmeFilmClip *dmx, CChoreoScene *scene )
 		for ( int j = 0 ; j < nNumTracks; ++j )
 		{
 			CDmeTrack *pTrack = pTrackGroup->GetTrack( j );
-			
+
 			EnsureActorAndChannelForTrack( scene, pTrackGroup, pTrack );
 
 			int numEvents = pTrack->GetClipCount();
@@ -1032,7 +1032,7 @@ bool ConvertDmxToScene( CDmeFilmClip *dmx, CChoreoScene *scene )
 				CDmeChannelsClip *pClip = CastElement< CDmeChannelsClip >( pTrack->GetClip( clip ) );
 				if ( !pClip )
 					continue;
-				
+
 				bool success = ConvertDmxToEvent( scene, pTrackGroup, pTrack, pClip, false );
 				if ( !success )
 				{

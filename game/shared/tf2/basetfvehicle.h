@@ -120,7 +120,7 @@ public:
 	// Figure out which role of a parent vehicle this vehicle is sitting in..
 	int GetParentVehicleRole();
 
-	// Purpose: 
+	// Purpose:
 	void GetPassengerExitPoint( CBasePlayer *pPlayer, int nRole, Vector *pAbsPosition, QAngle *pAbsAngles );
 	int	 GetEntryAnimForPoint( const Vector &vecPoint );
 	int  GetExitAnimToUse( Vector &vecEyeExitEndpoint, bool &bAllPointsBlocked );
@@ -205,7 +205,7 @@ public:
 
 	// Returns the driver as a tfplayer pointer
 	CBaseTFPlayer *GetDriverPlayer();
-	
+
 	int	GetMaxPassengerCount() const;
 	int GetPassengerCount() const;
 

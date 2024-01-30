@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -27,14 +27,14 @@ bool GameRulesAllowsAchievements( void )
 
 class CAchievementDODThrowBackGren : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		// listen for player kill enemy events, base class will increment count each time that happens
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !GameRulesAllowsAchievements() )
 			return;
@@ -49,7 +49,7 @@ class CAchievementDODThrowBackGren : public CBaseAchievement
 			const char *killedwith = event->GetString( "weapon" );
 			int iLocalTeam = pLocalPlayer->GetTeamNumber();
 
-			if ( ( iLocalTeam == TEAM_ALLIES &&	( FStrEq( killedwith, "frag_ger" ) || FStrEq( killedwith, "riflegren_ger" ) ) ) || 
+			if ( ( iLocalTeam == TEAM_ALLIES &&	( FStrEq( killedwith, "frag_ger" ) || FStrEq( killedwith, "riflegren_ger" ) ) ) ||
 				 ( iLocalTeam == TEAM_AXIS && ( FStrEq( killedwith, "frag_us" ) || FStrEq( killedwith, "riflegren_us" ) ) ) )
 			{
 				// This kill was made with an enemy grenade.
@@ -63,7 +63,7 @@ DECLARE_ACHIEVEMENT( CAchievementDODThrowBackGren, ACHIEVEMENT_DOD_THROW_BACK_GR
 
 class CAchievementDODConsecutiveHeadshots : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -76,7 +76,7 @@ DECLARE_ACHIEVEMENT( CAchievementDODConsecutiveHeadshots, ACHIEVEMENT_DOD_CONSEC
 
 class CAchievementDODMGPositionStreak : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -89,13 +89,13 @@ DECLARE_ACHIEVEMENT( CAchievementDODMGPositionStreak, ACHIEVEMENT_DOD_MG_POSITIO
 
 class CAchievementDODWinKnifeFight : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !GameRulesAllowsAchievements() )
 			return;
@@ -120,7 +120,7 @@ class CAchievementDODWinKnifeFight : public CBaseAchievement
 						IncrementCount();
 					}
 				}
-			}			
+			}
 		}
 	}
 };
@@ -144,7 +144,7 @@ class CAchievementDODCustomMaps : public CBaseAchievement
 {
 	// Requires a player to kill at least one player on 5 different non-official maps
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
 		SetGoal( 5 );
@@ -159,9 +159,9 @@ class CAchievementDODCustomMaps : public CBaseAchievement
 		m_bCheckedCurrentMap = false;
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
-		if ( m_bCheckedCurrentMap ) 
+		if ( m_bCheckedCurrentMap )
 			return;
 
 		// don't store the map name if we're not going to give achievement progress
@@ -195,7 +195,7 @@ class CAchievementDODCustomMaps : public CBaseAchievement
 	bool IsOfficialMap( const char *pszMapName )
 	{
 		bool bFound = false;
-	
+
 		for ( int i=0;i<ARRAYSIZE(pszOfficialMaps);i++ )
 		{
 			if ( FStrEq( pszMapName, pszOfficialMaps[i] ) )
@@ -203,7 +203,7 @@ class CAchievementDODCustomMaps : public CBaseAchievement
 				bFound = true;
 				break;
 			}
-		}	
+		}
 
 		return bFound;
 	}
@@ -216,7 +216,7 @@ DECLARE_ACHIEVEMENT( CAchievementDODCustomMaps, ACHIEVEMENT_DOD_PLAY_CUSTOM_MAPS
 
 class CAchievementDODKillsWithGrenade : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -229,7 +229,7 @@ class CAchievementDODKillsWithGrenade : public CBaseAchievement
 		m_iKillCount = 0;
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !GameRulesAllowsAchievements() )
 			return;
@@ -274,7 +274,7 @@ DECLARE_ACHIEVEMENT( CAchievementDODKillsWithGrenade, ACHIEVEMENT_DOD_KILLS_WITH
 
 class CAchievementDODLongRangeRocket : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -287,7 +287,7 @@ DECLARE_ACHIEVEMENT( CAchievementDODLongRangeRocket, ACHIEVEMENT_DOD_LONG_RANGE_
 
 class CAchievementDODEndRoundKills : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -315,7 +315,7 @@ class CAchievementDODEndRoundKills : public CBaseAchievement
 	}
 
 	// count kills in endround. No requirement that your team must have won the round - grenades count
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		DODRoundState state = DODGameRules()->State_Get();
 
@@ -342,7 +342,7 @@ DECLARE_ACHIEVEMENT( CAchievementDODEndRoundKills, ACHIEVEMENT_DOD_END_ROUND_KIL
 
 class CAchievementDODCapLastFlag : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -355,7 +355,7 @@ DECLARE_ACHIEVEMENT( CAchievementDODCapLastFlag, ACHIEVEMENT_DOD_CAP_LAST_FLAG, 
 
 class CAchievementDODUseEnemyWeapons : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -368,7 +368,7 @@ DECLARE_ACHIEVEMENT( CAchievementDODUseEnemyWeapons, ACHIEVEMENT_DOD_USE_ENEMY_W
 
 class CAchievementDODKillDominatingMG : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -381,7 +381,7 @@ DECLARE_ACHIEVEMENT( CAchievementDODKillDominatingMG, ACHIEVEMENT_DOD_KILL_DOMIN
 
 class CAchievementDODColmarDefense : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -394,7 +394,7 @@ DECLARE_ACHIEVEMENT( CAchievementDODColmarDefense, ACHIEVEMENT_DOD_COLMAR_DEFENS
 
 class CAchievementDODJagdOvertimeCap : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -407,7 +407,7 @@ DECLARE_ACHIEVEMENT( CAchievementDODJagdOvertimeCap, ACHIEVEMENT_DOD_JAGD_OVERTI
 
 class CAchievementDODWeaponMastery : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -420,7 +420,7 @@ DECLARE_ACHIEVEMENT( CAchievementDODWeaponMastery, ACHIEVEMENT_DOD_WEAPON_MASTER
 
 class CAchievementDODBlockCaptures : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -491,14 +491,14 @@ DECLARE_ACHIEVEMENT( CAchievementDODBlockCaptures, ACHIEVEMENT_DOD_BLOCK_CAPTURE
 // kills as axis
 class CBaseAchievementKillsOnTeam : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
 		SetGoal( 5000 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		Assert( pAttacker == C_BasePlayer::GetLocalPlayer() );
 
@@ -541,7 +541,7 @@ class CBaseAchievementKillsAsClass : public CBaseAchievement
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		Assert( pAttacker == C_BasePlayer::GetLocalPlayer() );
 
@@ -638,7 +638,7 @@ DECLARE_KILLS_WITH_WEAPON_ACHIEVEMENT( "riflegren_ger", 250, DOD_KILLS_WITH_RIFL
 // flag captures
 class CAchievementDODFlagCaptureGrind : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 100 );
@@ -684,7 +684,7 @@ DECLARE_ACHIEVEMENT( CAchievementDODFlagCaptureGrind, ACHIEVEMENT_DOD_CAPTURE_GR
 
 class CAchievementDODBlockCapturesGrind : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 100 );
@@ -719,7 +719,7 @@ DECLARE_ACHIEVEMENT( CAchievementDODBlockCapturesGrind, ACHIEVEMENT_DOD_BLOCK_CA
 
 class CAchievementDODRoundsWonGrind : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 100 );
@@ -753,7 +753,7 @@ DECLARE_ACHIEVEMENT( CAchievementDODRoundsWonGrind, ACHIEVEMENT_DOD_ROUNDS_WON_G
 
 class CAchievementDODBombsPlantedGrind : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 100 );
@@ -782,7 +782,7 @@ DECLARE_ACHIEVEMENT( CAchievementDODBombsPlantedGrind, ACHIEVEMENT_DOD_BOMBS_PLA
 
 class CAchievementDODBombsDefusedGrind : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 100 );
@@ -811,7 +811,7 @@ class CAchievementDOD_All_Pack_1 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementDOD_All_Pack_1, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 51, 0, 51 );
@@ -831,15 +831,15 @@ public:
 	DECLARE_CLASS( CAchievementDODBeatTheHeat, CBaseAchievement );
 	void Init()
 	{
-		SetFlags( ACH_SAVE_GLOBAL | ACH_HAS_COMPONENTS );	
-		
+		SetFlags( ACH_SAVE_GLOBAL | ACH_HAS_COMPONENTS );
+
 		static const char *szComponents[] =
 		{
 			"dod_kalt", "dod_colmar"
-		};	
+		};
 		m_pszComponentNames = szComponents;
 		m_iNumComponents = ARRAYSIZE( szComponents );
-		SetGoal( m_iNumComponents ); 
+		SetGoal( m_iNumComponents );
 
 		BaseClass::Init();
 	}
@@ -871,7 +871,7 @@ DECLARE_ACHIEVEMENT( CAchievementDODBeatTheHeat, ACHIEVEMENT_DOD_BEAT_THE_HEAT, 
 // Winter 2011
 class CAchievementDODCollectHolidayGifts : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 3 );

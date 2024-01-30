@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,10 +18,10 @@ class CWeaponGerKnife : public CWeaponDODBaseMelee
 {
 public:
 	DECLARE_CLASS( CWeaponGerKnife, CWeaponDODBaseMelee );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponGerKnife()  {}
 
 	virtual DODWeaponID GetWeaponID( void ) const		{ return WEAPON_GERKNIFE; }
@@ -41,7 +41,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_gerknife, CWeaponGerKnife );
 PRECACHE_WEAPON_REGISTER( weapon_gerknife );
 
-acttable_t CWeaponGerKnife::m_acttable[] = 
+acttable_t CWeaponGerKnife::m_acttable[] =
 {
 	{ ACT_IDLE,								ACT_DOD_STAND_AIM_KNIFE,				false },
 	{ ACT_CROUCHIDLE,						ACT_DOD_CROUCH_AIM_KNIFE,				false },

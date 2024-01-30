@@ -92,7 +92,7 @@ ConVar  object_deterioration_time( "object_deterioration_time", "30", 0, "Time i
 IMPLEMENT_AUTO_LIST( IBaseObjectAutoList );
 
 BEGIN_DATADESC( CBaseObject )
-	// keys 
+	// keys
 	DEFINE_KEYFIELD_NOT_SAVED( m_SolidToPlayers,		FIELD_INTEGER, "SolidToPlayer" ),
 	DEFINE_KEYFIELD( m_nDefaultUpgradeLevel, FIELD_INTEGER, "defaultupgrade" ),
 
@@ -149,9 +149,9 @@ IMPLEMENT_SERVERCLASS_ST(CBaseObject, DT_BaseObject)
 END_SEND_TABLE();
 
 
-bool PlayerIndexLessFunc( const int &lhs, const int &rhs )	
-{ 
-	return lhs < rhs; 
+bool PlayerIndexLessFunc( const int &lhs, const int &rhs )
+{
+	return lhs < rhs;
 }
 
 // This controls whether ropes attached to objects are transmitted or not. It's important that
@@ -162,7 +162,7 @@ public:
 	CObjectRopeTransmitProxy( CBaseEntity *pRope ) : CBaseTransmitProxy( pRope )
 	{
 	}
-	
+
 	virtual int ShouldTransmit( const CCheckTransmitInfo *pInfo, int nPrevShouldTransmitResult )
 	{
 		// Don't transmit the rope if it's not even visible.
@@ -181,10 +181,10 @@ public:
 		// Give control to whichever object is being placed.
 		if ( m_hObj1 && m_hObj1->IsPlacing() )
 			return m_hObj1->ShouldTransmit( pInfo );
-		
+
 		else if ( m_hObj2 && m_hObj2->IsPlacing() )
 			return m_hObj2->ShouldTransmit( pInfo );
-		
+
 		else
 			return FL_EDICT_ALWAYS;
 	}
@@ -196,7 +196,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseObject::CBaseObject()
 {
@@ -228,7 +228,7 @@ CBaseObject::CBaseObject()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::UpdateOnRemove( void )
 {
@@ -264,7 +264,7 @@ void CBaseObject::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseObject::UpdateTransmitState()
 {
@@ -272,7 +272,7 @@ int CBaseObject::UpdateTransmitState()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseObject::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 {
@@ -315,7 +315,7 @@ void CBaseObject::SetTransmit( CCheckTransmitInfo *pInfo, bool bAlways )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::Precache()
 {
@@ -340,7 +340,7 @@ void CBaseObject::Precache()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::Spawn( void )
 {
@@ -523,7 +523,7 @@ void CBaseObject::SpawnControlPanels()
 }
 
 //-----------------------------------------------------------------------------
-// Handle commands sent from vgui panels on the client 
+// Handle commands sent from vgui panels on the client
 //-----------------------------------------------------------------------------
 bool CBaseObject::ClientCommand( CTFPlayer *pSender, const CCommand &args )
 {
@@ -533,7 +533,7 @@ bool CBaseObject::ClientCommand( CTFPlayer *pSender, const CCommand &args )
 
 #define BASE_OBJECT_THINK_DELAY	0.1
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::BaseObjectThink( void )
 {
@@ -558,7 +558,7 @@ void CBaseObject::BaseObjectThink( void )
 	{
 		if ( MustBeBuiltOnAttachmentPoint() )
 		{
-			UpdateAttachmentPlacement();	
+			UpdateAttachmentPlacement();
 			m_bServerOverridePlacement = true;
 		}
 		else
@@ -607,7 +607,7 @@ void CBaseObject::ResetPlacement( void )
 {
 	m_bPlacementOK = false;
 
-	// Clear out previous parent 
+	// Clear out previous parent
 	if ( m_hBuiltOnEntity.Get() )
 	{
 		m_hBuiltOnEntity = NULL;
@@ -684,7 +684,7 @@ bool CBaseObject::EstimateValidBuildPos( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::DeterminePlaybackRate( void )
 {
@@ -699,14 +699,14 @@ void CBaseObject::DeterminePlaybackRate( void )
 	}
 
 	// If a sapper was added or removed part way through construction we need to invert the time to completion
-	bool bAdjustCompleteTime = ( flReverseBuildingConstructionSpeed > 0.0f && GetPlaybackRate() < 0.0f ) || 
+	bool bAdjustCompleteTime = ( flReverseBuildingConstructionSpeed > 0.0f && GetPlaybackRate() < 0.0f ) ||
 							   ( flReverseBuildingConstructionSpeed < 0.0f && GetPlaybackRate() >= 0.0f );
 
 	if ( IsBuilding() )
 	{
 		// Default half rate, author build anim as if one player is building
 		// ConstructionMultiplier already contains the reverse
-		SetPlaybackRate( GetConstructionMultiplier() * 0.5 );	
+		SetPlaybackRate( GetConstructionMultiplier() * 0.5 );
 	}
 	else
 	{
@@ -721,7 +721,7 @@ void CBaseObject::DeterminePlaybackRate( void )
 		flUpgradeTime /= ( ( flReverseBuildingConstructionSpeed < 0.0f ) ? ( flReverseBuildingConstructionSpeed * -1.0 ) : 1.0f );
 		m_flUpgradeCompleteTime = gpGlobals->curtime + flUpgradeTime * fRelativeCycle;
 		m_flTotalConstructionTime = m_flConstructionTimeLeft = GetTotalTime();
-		
+
 		float flNewConstructionTimeLeft = m_flConstructionTimeLeft * fRelativeCycle;
 		m_flConstructionTimeLeft *= fRelativeCycle;
 
@@ -736,26 +736,26 @@ void CBaseObject::DeterminePlaybackRate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFPlayer *CBaseObject::GetOwner()
-{ 
-	return m_hBuilder; 
+{
+	return m_hBuilder;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::SetBuilder( CTFPlayer *pBuilder )
 {
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseObject::SetBuilder builder %s\n", gpGlobals->curtime, 
+	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseObject::SetBuilder builder %s\n", gpGlobals->curtime,
 		pBuilder ? pBuilder->GetPlayerName() : "NULL" ) );
 
 	m_hBuilder = pBuilder;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CBaseObject::ObjectType( ) const
 {
@@ -859,7 +859,7 @@ void CBaseObject::StartPlacement( CTFPlayer *pPlayer )
 
 	// needed?
 	m_nRenderMode = kRenderNormal;
-	
+
 	// Set my build size
 	CollisionProp()->WorldSpaceAABB( &m_vecBuildMins.GetForModify(), &m_vecBuildMaxs.GetForModify() );
 	m_vecBuildMins -= Vector( 4,4,0 );
@@ -947,7 +947,7 @@ bool CBaseObject::FindBuildPointOnPlayer( CTFPlayer *pTFPlayer, CBasePlayer *pBu
 	if ( !pTFPlayer )
 		return false;
 
-	if ( pTFPlayer->m_Shared.InCond( TF_COND_SAPPED ) ) 
+	if ( pTFPlayer->m_Shared.InCond( TF_COND_SAPPED ) )
 		return false;
 
 	if ( pTFPlayer->m_Shared.IsInvulnerable() )
@@ -1017,16 +1017,16 @@ bool CBaseObject::TestPositionForPlayerBlock( Vector vecBuildOrigin, CBasePlayer
 	Vector vBuildDims = m_vecBuildMaxs - m_vecBuildMins;
 	Vector vHalfBuildDims = vBuildDims * 0.5;
 
-	 
+
 	// the locations of the 8 test positions
-	// boxes are adjacent to the object box and are at least as large as 
+	// boxes are adjacent to the object box and are at least as large as
 	// a player to ensure that a player can pass this location
 
 	//	0  1  2
 	//	7  X  3
 	//	6  5  4
 
-	static int iPositions[8][2] = 
+	static int iPositions[8][2] =
 	{
 		{ -1, -1 },
 		{ 0, -1 },
@@ -1045,7 +1045,7 @@ bool CBaseObject::TestPositionForPlayerBlock( Vector vecBuildOrigin, CBasePlayer
 		// mark them all as unvisited
 		bNodeVisited[i] = false;
 
-		Vector vecTest = vecBuildOrigin;		
+		Vector vecTest = vecBuildOrigin;
 		vecTest.x += ( iPositions[i][0] * ( vHalfBuildDims.x + vHalfPlayerDims.x ) );
 		vecTest.y += ( iPositions[i][1] * ( vHalfBuildDims.y + vHalfPlayerDims.y ) );
 
@@ -1122,7 +1122,7 @@ bool CBaseObject::UpdatePlacement( void )
 	{
 		return UpdateAttachmentPlacement();
 	}
-	
+
 	// Finds bsp-valid place for building to be built
 	// Checks for validity, nearby to other entities, in line of sight
 	m_bPlacementOK = IsPlacementPosValid();
@@ -1165,7 +1165,7 @@ bool CBaseObject::FindSnapToBuildPos( CBaseObject *pObjectOverride )
 		for ( int iTeam = FIRST_GAME_TEAM; iTeam < nTeamCount; ++iTeam )
 		{
 			// Hostile attachments look for enemy objects only
-			if ( bHostileAttachment ) 
+			if ( bHostileAttachment )
 			{
 				if ( iTeam == iMyTeam )
 				{
@@ -1181,9 +1181,9 @@ bool CBaseObject::FindSnapToBuildPos( CBaseObject *pObjectOverride )
 			CTFTeam *pTeam = ( CTFTeam * )GetGlobalTeam( iTeam );
 			if ( !pTeam )
 				continue;
-			
+
 			// See if we're allowed to build on Robots
-			if ( TFGameRules() && TFGameRules()->GameModeUsesMiniBosses() && 
+			if ( TFGameRules() && TFGameRules()->GameModeUsesMiniBosses() &&
 				 GetType() == OBJ_ATTACHMENT_SAPPER && !pPlayer->IsBot() )
 			{
 				CUtlVector< CTFPlayer * > playerVector;
@@ -1215,7 +1215,7 @@ bool CBaseObject::FindSnapToBuildPos( CBaseObject *pObjectOverride )
 					}
 				}
 			}
-		}	
+		}
 	}
 	else
 	{
@@ -1257,7 +1257,7 @@ bool CBaseObject::IsValidPlacement( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CBaseObject::GetResponseRulesModifier( void )
 {
@@ -1318,7 +1318,7 @@ bool CBaseObject::StartBuilding( CBaseEntity *pBuilder )
 			((CTFPlayer*)pBuilder)->SpeakConceptIfAllowed( MP_CONCEPT_REDEPLOY_BUILDING, GetResponseRulesModifier() );
 		}
 	}
-	
+
 	// Check to see if we need to add this to a hierarchy.  We can just do a simple ray trace from the center as
 	// the placement code has guarenteed we are in a valid position.
 	trace_t trace;
@@ -1371,7 +1371,7 @@ bool CBaseObject::StartBuilding( CBaseEntity *pBuilder )
 	}
 	m_flPercentageConstructed = 0;
 
-	m_nRenderMode = kRenderNormal; 
+	m_nRenderMode = kRenderNormal;
 	RemoveSolidFlags( FSOLID_NOT_SOLID );
 
 	// NOTE: We must spawn the control panels now, instead of during
@@ -1451,7 +1451,7 @@ bool CBaseObject::ShouldBeMiniBuilding( CTFPlayer* pPlayer )
 	if ( TFGameRules()->GameModeUsesUpgrades() )
 	{
 		if ( pPlayer->GetNumObjects( OBJ_SENTRYGUN ) && pPlayer->CanBuild( OBJ_SENTRYGUN ) == CB_CAN_BUILD && !IsCarried() )
-			return true;	
+			return true;
 	}
 
 	if ( !pWrench->IsPDQ() )
@@ -1489,7 +1489,7 @@ void CBaseObject::BuildingThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::SetControlPanelsActive( bool bState )
 {
@@ -1504,7 +1504,7 @@ void CBaseObject::SetControlPanelsActive( bool bState )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::FinishedBuilding( void )
 {
@@ -1617,7 +1617,7 @@ ConVar object_capture_damage( "obj_capture_damage", "0", 0, "Captures all damage
 CUtlDict<int,int> g_DamageMap;
 
 void Cmd_DamageDump_f(void)
-{	
+{
 	CUtlDict<bool,int> g_UniqueColumns;
 	int idx;
 
@@ -1628,7 +1628,7 @@ void Cmd_DamageDump_f(void)
 
 		int ColumnIdx = g_UniqueColumns.Find( szColumnName );
 
-		if( ColumnIdx == g_UniqueColumns.InvalidIndex() ) 
+		if( ColumnIdx == g_UniqueColumns.InvalidIndex() )
 		{
 			g_UniqueColumns.Insert( szColumnName, false );
 		}
@@ -1644,7 +1644,7 @@ void Cmd_DamageDump_f(void)
 
 	filesystem->FPrintf(f,"\n");
 
- 
+
 	CUtlDict<bool,int> g_CompletedRows;
 
 	// Dump each row:
@@ -1677,7 +1677,7 @@ void Cmd_DamageDump_f(void)
 				for( int ColumnIdx = g_UniqueColumns.First(); ColumnIdx != g_UniqueColumns.InvalidIndex(); ColumnIdx = g_UniqueColumns.Next( ColumnIdx ) )
 				{
 					char szRowNameCommaColumn[256];
-					Q_strncpy( szRowNameCommaColumn, szRowNameComma, sizeof( szRowNameCommaColumn ) );					
+					Q_strncpy( szRowNameCommaColumn, szRowNameComma, sizeof( szRowNameCommaColumn ) );
 					Q_strncat( szRowNameCommaColumn, g_UniqueColumns.GetElementName( ColumnIdx ), sizeof( szRowNameCommaColumn ), COPY_ALL_CHARACTERS );
 
 					int nDamageAmount = 0;
@@ -1710,7 +1710,7 @@ void Cmd_DamageDump_f(void)
 static ConCommand obj_dump_damage( "obj_dump_damage", Cmd_DamageDump_f );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ReportDamage( const char* szInflictor, const char* szVictim, float fAmount, int nCurrent, int nMax )
 {
@@ -1811,7 +1811,7 @@ bool CBaseObject::PassDamageOntoChildren( const CTakeDamageInfo &info, float *fl
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseObject::OnTakeDamage( const CTakeDamageInfo &info )
 {
@@ -1874,11 +1874,11 @@ int CBaseObject::OnTakeDamage( const CTakeDamageInfo &info )
 		flDamage *= obj_damage_factor.GetFloat();
 	}
 
-	
+
 	CTFWeaponBase *pWeapon = dynamic_cast<CTFWeaponBase *>(info.GetWeapon());
 	if ( pWeapon )
 	{
-#ifdef STAGING_ONLY		
+#ifdef STAGING_ONLY
 		// Attacker has building disabling properties
 		float flDisablingAttack = 0.0f;
 		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pWeapon, flDisablingAttack, disable_buildings_on_hit );
@@ -1968,7 +1968,7 @@ int CBaseObject::OnTakeDamage( const CTakeDamageInfo &info )
 		flDamage = flDamage - m_flHealth;
 		SetHealth( 1 );
 
-		// Pass leftover damage 
+		// Pass leftover damage
 		if ( flDamage )
 		{
 			if ( PassDamageOntoChildren( info, &flDamage ) )
@@ -2151,7 +2151,7 @@ float CBaseObject::GetConstructionMultiplier( void )
 
 	float flMultiplier = 1.0;
 
-	// expire all the old 
+	// expire all the old
 	int i = m_ConstructorList.LastInorder();
 	while ( i != m_ConstructorList.InvalidIndex() )
 	{
@@ -2195,7 +2195,7 @@ void CBaseObject::Explode( void )
 	const char *pExplodeEffect = GetObjectInfo( ObjectType() )->m_pExplosionParticleEffect;
 	if ( pExplodeEffect && pExplodeEffect[0] != '\0' )
 	{
-		// Send to everyone - we're inside prediction for the engy who hit this off, but we 
+		// Send to everyone - we're inside prediction for the engy who hit this off, but we
 		// don't predict that the hit will kill this object.
 		CDisablePredictionFiltering disabler;
 
@@ -2223,7 +2223,7 @@ void CBaseObject::CreateObjectGibs( void )
 	const float flMetalCostPercentage = 0.5f;
 	const int nTotalMetal = pObjectInfo->m_iMetalToDropInGibs == 0 ? pObjectInfo->m_Cost * flMetalCostPercentage : pObjectInfo->m_iMetalToDropInGibs;
 
-	
+
 	int nMetalPerGib = nTotalMetal / m_aGibs.Count();
 	int nLeftOver = nTotalMetal % m_aGibs.Count();
 
@@ -2279,7 +2279,7 @@ CTFAmmoPack* CBaseObject::CreateAmmoPack( const char *pchModel, int nMetal )
 
 		// Give the ammo pack some health, so that trains can destroy it.
 		pAmmoPack->SetCollisionGroup( COLLISION_GROUP_DEBRIS );
-		pAmmoPack->m_takedamage = DAMAGE_YES;		
+		pAmmoPack->m_takedamage = DAMAGE_YES;
 		pAmmoPack->SetHealth( 900 );
 		pAmmoPack->m_bObjGib = true;
 
@@ -2305,7 +2305,7 @@ void CBaseObject::Killed( const CTakeDamageInfo &info )
 	CTFPlayer *pScorer = ToTFPlayer( TFGameRules()->GetDeathScorer( pKiller, pInflictor, this ) );
 	CTFPlayer *pAssister = NULL;
 
-	// If we are being carried, 
+	// If we are being carried,
 
 	// if this object has a sapper on it, and was not killed by the sapper (killed by damage other than crush, since sapper does crushing damage),
 	// award an assist to the owner of the sapper since it probably contributed to destroying this object
@@ -2375,7 +2375,7 @@ void CBaseObject::Killed( const CTakeDamageInfo &info )
 			{
 				event->SetInt( "assister", pAssister->GetUserID() );
 			}
-			
+
 			event->SetInt( "attacker", pScorer->GetUserID() );	// attacker
 			event->SetString( "weapon", killer_weapon_name );
 			event->SetString( "weapon_logclassname", killer_weapon_log_name );
@@ -2508,15 +2508,15 @@ bool CBaseObject::ShouldAutoRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : iTeamNum - 
+// Purpose:
+// Input  : iTeamNum -
 //-----------------------------------------------------------------------------
 void CBaseObject::ChangeTeam( int iTeamNum )
 {
 	CTFTeam *pTeam = ( CTFTeam * )GetGlobalTeam( iTeamNum );
 	CTFTeam *pExisting = ( CTFTeam * )GetTeam();
 
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseObject::ChangeTeam old %s new %s\n", gpGlobals->curtime, 
+	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseObject::ChangeTeam old %s new %s\n", gpGlobals->curtime,
 		pExisting ? pExisting->GetName() : "NULL",
 		pTeam ? pTeam->GetName() : "NULL" ) );
 
@@ -2529,10 +2529,10 @@ void CBaseObject::ChangeTeam( int iTeamNum )
 		// Remove it from current team ( if it's in one ) and give it to new team
 		pExisting->RemoveObject( this );
 	}
-		
+
 	// Change to new team
 	BaseClass::ChangeTeam( iTeamNum );
-	
+
 	// Add this object to the team's list
 	// But only if we're not placing it
 	if ( pTeam && (!m_bPlacing) )
@@ -2561,7 +2561,7 @@ bool CBaseObject::HasSapper( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseObject::IsPlasmaDisabled( void )
 {
@@ -2652,8 +2652,8 @@ void CBaseObject::InputRemoveHealth( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CBaseObject::InputSetSolidToPlayer( inputdata_t &inputdata )
 {
@@ -2664,8 +2664,8 @@ void CBaseObject::InputSetSolidToPlayer( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CBaseObject::InputSetBuilder( inputdata_t &inputdata )
 {
@@ -2679,8 +2679,8 @@ void CBaseObject::InputSetBuilder( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CBaseObject::InputShow( inputdata_t &inputdata )
 {
@@ -2689,8 +2689,8 @@ void CBaseObject::InputShow( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CBaseObject::InputHide( inputdata_t &inputdata )
 {
@@ -2699,8 +2699,8 @@ void CBaseObject::InputHide( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
+// Purpose:
+// Input  :
 // Output : did this wrench hit do any work on the object?
 //-----------------------------------------------------------------------------
 bool CBaseObject::InputWrenchHit( CTFPlayer *pPlayer, CTFWrench *pWrench, Vector hitLoc )
@@ -2762,7 +2762,7 @@ bool CBaseObject::InputWrenchHit( CTFPlayer *pPlayer, CTFWrench *pWrench, Vector
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseObject::OnWrenchHit( CTFPlayer *pPlayer, CTFWrench *pWrench, Vector hitLoc )
 {
@@ -2782,7 +2782,7 @@ bool CBaseObject::OnWrenchHit( CTFPlayer *pPlayer, CTFWrench *pWrench, Vector hi
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::DoWrenchHitEffect( Vector hitLoc, bool bRepairHit, bool bUpgradeHit )
 {
@@ -2801,7 +2801,7 @@ void CBaseObject::DoWrenchHitEffect( Vector hitLoc, bool bRepairHit, bool bUpgra
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseObject::CheckUpgradeOnHit( CTFPlayer *pPlayer )
 {
@@ -2818,7 +2818,7 @@ bool CBaseObject::CheckUpgradeOnHit( CTFPlayer *pPlayer )
 		if ( TFGameRules() && TFGameRules()->IsPowerupMode() )
 		{
 			nMaxToAdd *= 2;
-		}		
+		}
 		CALL_ATTRIB_HOOK_INT_ON_OTHER( pPlayer, nMaxToAdd, upgrade_rate_mod );
 		int iAmountToAdd = MIN( nMaxToAdd, iPlayerMetal );
 
@@ -2839,7 +2839,7 @@ bool CBaseObject::CheckUpgradeOnHit( CTFPlayer *pPlayer )
 				iAmountToAdd = 200;
 			}
 #endif
-			
+
 			if ( TFGameRules()->GameModeUsesUpgrades() && TFGameRules()->IsQuickBuildTime() )
 			{
 				iAmountToAdd = 200;
@@ -2915,7 +2915,7 @@ bool CBaseObject::Command_Repair( CTFPlayer *pActivator, float flRepairMod )
 	// repair the building
 	int iRepairCost = ceil( (float)( iAmountToHeal ) / flRepairToMetalRatio );
 
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseObject::Command_Repair ( %f / %d ) - cost = %d\n", gpGlobals->curtime, 
+	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseObject::Command_Repair ( %f / %d ) - cost = %d\n", gpGlobals->curtime,
 		GetHealth(),
 		GetMaxHealth(),
 		iRepairCost ) );
@@ -2989,8 +2989,8 @@ void CBaseObject::StartUpgrading( void )
 
 	RemoveAllGestures();
 
-	if ( TFGameRules() && TFGameRules()->IsInTraining() && 
-		TFGameRules()->GetTrainingModeLogic() && 
+	if ( TFGameRules() && TFGameRules()->IsInTraining() &&
+		TFGameRules()->GetTrainingModeLogic() &&
 		GetOwner() && GetOwner()->IsFakeClient() == false )
 	{
 		TFGameRules()->GetTrainingModeLogic()->OnPlayerUpgradedBuilding( GetOwner(), this );
@@ -2998,7 +2998,7 @@ void CBaseObject::StartUpgrading( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::FinishUpgrading( void )
 {
@@ -3043,7 +3043,7 @@ void CBaseObject::ApplyHealthUpgrade( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::PlayStartupAnimation( void )
 {
@@ -3051,7 +3051,7 @@ void CBaseObject::PlayStartupAnimation( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::DetermineAnimation( void )
 {
@@ -3133,7 +3133,7 @@ void CBaseObject::AttachObjectToObject( CBaseEntity *pEntity, int iPoint, Vector
 					FollowEntity( m_hBuiltOnEntity.Get() );
 				}
 			}
-			
+
 			// Parent ourselves to the object
 			IHasBuildPoints *pBPInterface = dynamic_cast<IHasBuildPoints*>( pEntity );
 			Assert( pBPInterface );
@@ -3204,7 +3204,7 @@ void CBaseObject::SpawnEntityOnBuildPoint( const char *pEntityName, int iAttachm
 	pEntity->SetAbsOrigin( vecOrigin );
 	pEntity->SetAbsAngles( vecAngles );
 	pEntity->Spawn();
-	
+
 	// If it's an object, finish setting it up
 	CBaseObject *pObject = dynamic_cast<CBaseObject*>(pEntity);
 	if ( !pObject )
@@ -3307,18 +3307,18 @@ void CBaseObject::SetSolidToPlayers( OBJSOLIDTYPE stp, bool force )
 
 	if ( changed || force )
 	{
-		SetCollisionGroup( 
-			IsSolidToPlayers() ? 
-				TFCOLLISION_GROUP_OBJECT_SOLIDTOPLAYERMOVEMENT : 
+		SetCollisionGroup(
+			IsSolidToPlayers() ?
+				TFCOLLISION_GROUP_OBJECT_SOLIDTOPLAYERMOVEMENT :
 				TFCOLLISION_GROUP_OBJECT );
 	}
 }
 
-int CBaseObject::DrawDebugTextOverlays(void) 
+int CBaseObject::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 
@@ -3393,14 +3393,14 @@ void CBaseObject::SetPlasmaDisabled( float flDuration )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::OnStartDisabled( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::OnEndDisabled( void )
 {
@@ -3495,7 +3495,7 @@ void CBaseObject::SetModel( const char *pModel )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::Activate( void )
 {
@@ -3725,7 +3725,7 @@ int CBaseObject::GetMaxHealthForCurrentLevel( void )
 	{
 		CALL_ATTRIB_HOOK_INT_ON_OTHER( GetOwner(), iMaxHealth, mult_engy_building_health );
 	}
-	
+
 	if ( !IsMiniBuilding() && ( GetUpgradeLevel() > 1 ) )
 	{
 		float flMultiplier = pow( UPGRADE_LEVEL_HEALTH_MULTIPLIER, GetUpgradeLevel() - 1 );

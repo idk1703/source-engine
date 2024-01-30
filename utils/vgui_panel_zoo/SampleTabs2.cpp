@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@ class SampleTabs2: public DemoPage
 	public:
 		SampleTabs2(Panel *parent, const char *name);
 		~SampleTabs2();
-	
+
 	private:
 		PropertySheet *m_pPropertySheet;
 
@@ -84,5 +84,3 @@ Panel* SampleTabs2_Create(Panel *parent)
 {
 	return new SampleTabs2(parent, "Scrolling Tabs");
 }
-
-

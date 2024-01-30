@@ -29,10 +29,10 @@ void CCureAward::getWinner()
 				fNoWinner=false;
 			}
 	}
-	
+
 	map<PID,int>::iterator cureiter;
 
-	
+
 	for (cureiter=numcures.begin();cureiter!=numcures.end();++cureiter)
 	{
 		PID currID=(*cureiter).first;
@@ -50,7 +50,7 @@ void CCureAward::noWinner(CHTMLFile& html)
 {
 	html.write("No one was cured during this match.");
 }
-			
+
 //------------------------------------------------------------------------------------------------------
 // Function:	CCureAward::extendedinfo
 // Purpose:	reports how many people the winner cured
@@ -63,4 +63,3 @@ void CCureAward::extendedinfo(CHTMLFile& html)
 	else
 		html.write("%s healed cured %li sick people!",winnerName.c_str(),numcures[winnerID]);
 }
-

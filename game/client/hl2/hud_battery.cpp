@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -40,9 +40,9 @@ public:
 	void OnThink( void );
 	void MsgFunc_Battery(bf_read &msg );
 	bool ShouldDraw();
-	
+
 private:
-	int		m_iBat;	
+	int		m_iBat;
 	int		m_iNewBat;
 };
 
@@ -58,7 +58,7 @@ CHudBattery::CHudBattery( const char *pElementName ) : BaseClass(NULL, "HudSuit"
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBattery::Init( void )
 {
@@ -69,7 +69,7 @@ void CHudBattery::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBattery::Reset( void )
 {
@@ -78,7 +78,7 @@ void CHudBattery::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBattery::VidInit( void )
 {
@@ -87,7 +87,7 @@ void CHudBattery::VidInit( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Save CPU cycles by letting the HUD system early cull
-// costly traversal.  Called per frame, return true if thinking and 
+// costly traversal.  Called per frame, return true if thinking and
 // painting need to occur.
 //-----------------------------------------------------------------------------
 bool CHudBattery::ShouldDraw( void )
@@ -98,7 +98,7 @@ bool CHudBattery::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBattery::OnThink( void )
 {
@@ -139,7 +139,7 @@ void CHudBattery::OnThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBattery::MsgFunc_Battery( bf_read &msg )
 {

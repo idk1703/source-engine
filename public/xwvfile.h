@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -40,7 +40,7 @@ struct xwvHeader_t
 	unsigned int	dataSize;			// length of samples in bytes
 	unsigned int	numDecodedSamples;	// for duration calcs
 	int				loopStart;			// -1 = no loop, offset of loop in samples
-	unsigned short	loopBlock;			// the xma block where the loop starts 
+	unsigned short	loopBlock;			// the xma block where the loop starts
 	unsigned short	numLeadingSamples;	// number of leading samples in the loop block to discard
 	unsigned short	numTrailingSamples;	// number of trailing samples at the final block to discard
 	unsigned short	vdatSize;			// follows seek table
@@ -60,9 +60,9 @@ struct xwvHeader_t
 	{
 		int rates[] = {11025, 22050, 44100};
 		int rate = sampleRate;
-		return rates[rate]; 
+		return rates[rate];
 	}
-	
+
 	inline int GetChannels() const { return channels; }
 
 	void SetSampleRate( int sampleRateIn )

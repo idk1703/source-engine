@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -31,7 +31,7 @@ public:
 	void SetLimit( uint64 m_cMicroSecDuration );
 	bool BLimitReached();
 	int64 CMicroSecOverage();
-	int64 CMicroSecLeft(); 
+	int64 CMicroSecLeft();
 	int64 CMilliSecLeft();
 private:
 	int64 GetPerformanceCountNow();
@@ -143,7 +143,7 @@ inline int64 CReliableTimer::CMicroSecOverage()
 	if ( nPerformanceCountNow+10000 < m_nPerformanceCounterStart )
 		AssertMsgOnce( nPerformanceCountNow >= m_nPerformanceCounterStart, CDbgFmtMsg( "CReliableTimer went backwards - start:%lld end:%lld", m_nPerformanceCounterStart, m_nPerformanceCounterEnd ).ToString() );
 #endif
-	int64 nPerformanceCountOver = ( nPerformanceCountNow > m_nPerformanceCounterLimit ? 
+	int64 nPerformanceCountOver = ( nPerformanceCountNow > m_nPerformanceCounterLimit ?
 		nPerformanceCountNow - m_nPerformanceCounterLimit : 0 );
 
 	Assert( 0 != sm_nPerformanceFrequency );	// must have calc'd performance counter frequency
@@ -163,7 +163,7 @@ inline int64 CReliableTimer::CMicroSecLeft()
 	if ( nPerformanceCountNow+10000 < m_nPerformanceCounterStart )
 		AssertMsgOnce( nPerformanceCountNow >= m_nPerformanceCounterStart, CDbgFmtMsg( "CReliableTimer went backwards - start:%lld end:%lld", m_nPerformanceCounterStart, m_nPerformanceCounterEnd ).ToString() );
 #endif
-	int64 nPerformanceCountLeft = ( nPerformanceCountNow < m_nPerformanceCounterLimit ? 
+	int64 nPerformanceCountLeft = ( nPerformanceCountNow < m_nPerformanceCounterLimit ?
 		m_nPerformanceCounterLimit - nPerformanceCountNow : 0 );
 
 	DbgAssert( 0 != sm_nPerformanceFrequency );	// must have calc'd performance counter frequency

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -13,9 +13,9 @@
 
 DEFINE_FALLBACK_SHADER( UnlitTwoTexture, UnlitTwoTexture_DX6 )
 
-BEGIN_SHADER( UnlitTwoTexture_DX6, 
+BEGIN_SHADER( UnlitTwoTexture_DX6,
 			  "Help for UnlitTwoTexture_DX6" )
-			  
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( TEXTURE2, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "second texture" )
 		SHADER_PARAM( FRAME2, SHADER_PARAM_TYPE_INTEGER, "0", "frame number for $texture2" )

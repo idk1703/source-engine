@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -108,9 +108,9 @@ public:
 	// Change 'activelights' to only consist of new or changed lights.
 	virtual bool		PrepareForLighting();
 
-	virtual void		AddLightToFace( 
-		IncrementalLightID lightID, 
-		int iFace, 
+	virtual void		AddLightToFace(
+		IncrementalLightID lightID,
+		int iFace,
 		int iSample,
 		int lmSize,
 		float dot,
@@ -138,7 +138,7 @@ private:
 
 	// Returns true if the incremental file is valid and we can use InitUpdate.
 	bool				IsIncrementalFileValid();
-	
+
 	void				Term();
 
 	// For each light in 'activelights', add a light to m_Lights and link them together.
@@ -156,14 +156,14 @@ private:
 
 	char const		*m_pIncrementalFilename;
 	char const		*m_pBSPFilename;
-	
-	CUtlLinkedList<CIncLight*, IncrementalLightID>	
+
+	CUtlLinkedList<CIncLight*, IncrementalLightID>
 					m_Lights;
 
 	// The face index is set to 1 if a face has new lighting data applied to it.
 	// This is used to optimize the set of lightmaps we recomposite.
 	CUtlVector<unsigned char>	m_FacesTouched;
-	
+
 	int				m_TotalMemory;
 
 	// Set to true when one or more runs were completed successfully.

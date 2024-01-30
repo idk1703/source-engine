@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -16,10 +16,10 @@
 #include "phonemeeditor.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
-CWaveFile::CWaveFile( char const *filename ) 
+CWaveFile::CWaveFile( char const *filename )
 {
 	m_bAsyncLoading = false;
 
@@ -37,7 +37,7 @@ CWaveFile::~CWaveFile()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CWaveFile::GetLanguageId()
@@ -61,7 +61,7 @@ void CWaveFile::EnsureSentence()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWaveFile::HasLoadedSentenceInfo() const
@@ -119,8 +119,8 @@ int CWaveFile::GetIconIndex() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : sentence - 
+// Purpose:
+// Input  : sentence -
 //-----------------------------------------------------------------------------
 void CWaveFile::SetThreadLoadedSentence( CSentence& sentence )
 {

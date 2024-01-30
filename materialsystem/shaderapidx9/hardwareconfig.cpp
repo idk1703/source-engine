@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -24,7 +24,7 @@
 static CHardwareConfig s_HardwareConfig;
 CHardwareConfig *g_pHardwareConfig = &s_HardwareConfig;
 
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CHardwareConfig, IMaterialSystemHardwareConfig, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CHardwareConfig, IMaterialSystemHardwareConfig,
 	MATERIALSYSTEM_HARDWARECONFIG_INTERFACE_VERSION, s_HardwareConfig )
 
 template<typename T>
@@ -96,9 +96,9 @@ CON_COMMAND_F( ccs_create_convars_from_hwconfig, "Create convars from the curren
 	HWCFG( m_NullTextureFormat );
 	HWCFG( m_nVertexTextureCount );
 	HWCFG( m_nMaxVertexTextureDimension );
-	HWCFG( m_AlphaToCoverageState );					
-	HWCFG( m_AlphaToCoverageEnableValue );				
-	HWCFG( m_AlphaToCoverageDisableValue );			
+	HWCFG( m_AlphaToCoverageState );
+	HWCFG( m_AlphaToCoverageEnableValue );
+	HWCFG( m_AlphaToCoverageDisableValue );
 	HWCFG( m_nMaxViewports );
 	HWCFG( m_flMinGammaControlPoint );
 	HWCFG( m_flMaxGammaControlPoint );
@@ -143,12 +143,12 @@ CON_COMMAND_F( ccs_create_convars_from_hwconfig, "Create convars from the curren
 	HWCFG( m_bScissorSupported );
 	HWCFG( m_bSupportsFloat32RenderTargets );
 	HWCFG( m_bSupportsBorderColor );
-	HWCFG( m_bDX10Card );							
-	HWCFG( m_bDX10Blending );						
-	HWCFG( m_bSupportsStaticControlFlow );			
-	HWCFG( m_FakeSRGBWrite );						
-	HWCFG( m_CanDoSRGBReadFromRTs );				
-	HWCFG( m_bSupportsGLMixedSizeTargets );			
+	HWCFG( m_bDX10Card );
+	HWCFG( m_bDX10Blending );
+	HWCFG( m_bSupportsStaticControlFlow );
+	HWCFG( m_FakeSRGBWrite );
+	HWCFG( m_CanDoSRGBReadFromRTs );
+	HWCFG( m_bSupportsGLMixedSizeTargets );
 	HWCFG( m_bCanStretchRectFromTextures );
 
 	HWCFG( m_MaxHDRType );
@@ -168,7 +168,7 @@ CHardwareConfig::CHardwareConfig()
 	m_bHDREnabled = false;
 
 	// FIXME: This is kind of a hack to deal with DX8 worldcraft startup.
-	// We can at least have this much texture 
+	// We can at least have this much texture
 	m_Caps.m_MaxTextureWidth = m_Caps.m_MaxTextureHeight = m_Caps.m_MaxTextureDepth = 256;
 }
 
@@ -222,7 +222,7 @@ void CHardwareConfig::ForceCapsToDXLevel( HardwareCaps_t *pCaps, int nDxLevel, c
 		//		m_MaxTextureAspectRatio;
 		//		int  m_MaxPrimitiveCount;
 		pCaps->m_ZBiasAndSlopeScaledDepthBiasSupported = false;
-		//		pCaps->m_SupportsMipmapping = 
+		//		pCaps->m_SupportsMipmapping =
 		//		bool m_SupportsOverbright;
 		pCaps->m_SupportsCubeMaps = false;
 		pCaps->m_NumPixelShaderConstants = 0;
@@ -304,7 +304,7 @@ void CHardwareConfig::ForceCapsToDXLevel( HardwareCaps_t *pCaps, int nDxLevel, c
 		//		m_MaxTextureAspectRatio;
 		//		int  m_MaxPrimitiveCount;
 		pCaps->m_ZBiasAndSlopeScaledDepthBiasSupported = false;
-		//		pCaps->m_SupportsMipmapping = 
+		//		pCaps->m_SupportsMipmapping =
 		//		bool m_SupportsOverbright;
 		//		pCaps->m_SupportsCubeMaps = false;
 		pCaps->m_NumPixelShaderConstants = 0;
@@ -380,7 +380,7 @@ void CHardwareConfig::ForceCapsToDXLevel( HardwareCaps_t *pCaps, int nDxLevel, c
 		//		m_MaxTextureAspectRatio;
 		//		int  m_MaxPrimitiveCount;
 		//		pCaps->m_ZBiasAndSlopeScaledDepthBiasSupported = false;
-		//		pCaps->m_SupportsMipmapping = 
+		//		pCaps->m_SupportsMipmapping =
 		//		bool m_SupportsOverbright;
 		//		pCaps->m_SupportsCubeMaps = false;
 		pCaps->m_NumPixelShaderConstants = 8;
@@ -406,7 +406,7 @@ void CHardwareConfig::ForceCapsToDXLevel( HardwareCaps_t *pCaps, int nDxLevel, c
 		//		pCaps->m_bSupportsSpheremapping = true;
 		//		pCaps->m_UseFastClipping = true;
 		//		pCaps->m_bNeedsATICentroidHack = false;
-		//		pCaps->m_bColorOnSecondStream = false;	
+		//		pCaps->m_bColorOnSecondStream = false;
 		pCaps->m_bSupportsStreamOffset = false;
 		pCaps->m_bFogColorSpecifiedInLinearSpace = false;
 		pCaps->m_bFogColorAlwaysLinearSpace = false;
@@ -467,7 +467,7 @@ void CHardwareConfig::ForceCapsToDXLevel( HardwareCaps_t *pCaps, int nDxLevel, c
 		//		m_MaxTextureAspectRatio;
 		//		int  m_MaxPrimitiveCount;
 		//		pCaps->m_ZBiasAndSlopeScaledDepthBiasSupported = false;
-		//		pCaps->m_SupportsMipmapping = 
+		//		pCaps->m_SupportsMipmapping =
 		//		bool m_SupportsOverbright;
 		//		pCaps->m_SupportsCubeMaps = false;
 		pCaps->m_NumPixelShaderConstants = 8;
@@ -659,7 +659,7 @@ void CHardwareConfig::SetupHardwareCaps( int nDXLevel, const HardwareCaps_t &act
 
 	// Clamp num texture stages to 2, since it's only used for fixed function
 	m_Caps.m_NumTextureStages = min( 2, m_Caps.m_NumTextureStages );
-	
+
 	// Read dxsupport.cfg which has config overrides for particular cards.
 	g_pShaderDeviceMgr->ReadHardwareCaps( m_Caps, m_Caps.m_nDXSupportLevel );
 
@@ -851,7 +851,7 @@ int CHardwareConfig::GetShadowFilterMode() const
 #ifdef DX_TO_GL_ABSTRACTION
 	if ( !m_Caps.m_bSupportsShadowDepthTextures )
 		return 0;
-#else	
+#else
 	if ( !m_Caps.m_bSupportsShadowDepthTextures || !ShaderUtil()->GetConfig().ShadowDepthTexture() )
 		return 0;
 #endif
@@ -1079,9 +1079,9 @@ bool CHardwareConfig::UseFastClipping() const
 {
 	// rbarris broke this up for easier view of outcome in debugger
 	bool fastclip = mat_fastclip.GetBool();
-	
+
 	bool result = m_Caps.m_UseFastClipping || fastclip;
-	
+
 	return result;
 }
 
@@ -1147,7 +1147,7 @@ bool CHardwareConfig::SupportsHDRMode( HDRType_t nHDRType ) const
 
 		case HDR_TYPE_FLOAT:
 			return ( m_Caps.m_MaxHDRType == HDR_TYPE_FLOAT );
-			
+
 	}
 	return false;
 
@@ -1243,7 +1243,7 @@ HDRType_t CHardwareConfig::GetHDRType() const
 	int dxsupp = dxlev >= 90;
 	HDRType_t caps_hdr = m_Caps.m_HDRType;
 	HDRType_t result = HDR_TYPE_NONE;
-	
+
 	//printf("\nCHardwareConfig::GetHDRType...");
 	if (enabled)
 	{
@@ -1254,7 +1254,7 @@ HDRType_t CHardwareConfig::GetHDRType() const
 			result = caps_hdr;
 		}
 	}
-	
+
 	//printf("-> result is %d.\n", result);
 	return result;
 

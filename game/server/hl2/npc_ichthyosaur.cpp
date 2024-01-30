@@ -126,7 +126,7 @@ private:
 	static const Vector	m_vecAccelerationMin;
 
 	Vector	m_vecLastMoveTarget;
-		
+
 	float	m_flNextBiteTime;
 	float	m_flHoldTime;
 	float	m_flSwimSpeed;
@@ -141,7 +141,7 @@ private:
 
 	//CSoundPatch	*m_pSwimSound;
 	//CSoundPatch	*m_pVoiceSound;
-	
+
 	DEFINE_CUSTOM_AI;
 };
 
@@ -196,9 +196,9 @@ int	ACT_ICH_BITE_HIT;
 int	ACT_ICH_BITE_MISS;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CNPC_Ichthyosaur::InitCustomSchedules( void ) 
+void CNPC_Ichthyosaur::InitCustomSchedules( void )
 {
 	INIT_CUSTOM_AI( CNPC_Ichthyosaur );
 
@@ -211,7 +211,7 @@ void CNPC_Ichthyosaur::InitCustomSchedules( void )
 	ADD_CUSTOM_SCHEDULE( CNPC_Ichthyosaur,	SCHED_ICH_DROWN_VICTIM );
 	ADD_CUSTOM_SCHEDULE( CNPC_Ichthyosaur,	SCHED_ICH_MELEE_ATTACK1 );
 	ADD_CUSTOM_SCHEDULE( CNPC_Ichthyosaur,	SCHED_ICH_THRASH );
-	
+
 	//Tasks
 	ADD_CUSTOM_TASK( CNPC_Ichthyosaur,		TASK_ICH_GET_PATH_TO_RANDOM_NODE );
 	ADD_CUSTOM_TASK( CNPC_Ichthyosaur,		TASK_ICH_GET_PATH_TO_DROWN_NODE );
@@ -236,7 +236,7 @@ LINK_ENTITY_TO_CLASS( npc_ichthyosaur, CNPC_Ichthyosaur );
 IMPLEMENT_CUSTOM_AI( npc_ichthyosaur, CNPC_Ichthyosaur );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Ichthyosaur::Precache( void )
 {
@@ -250,7 +250,7 @@ void CNPC_Ichthyosaur::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Ichthyosaur::Spawn( void )
 {
@@ -261,7 +261,7 @@ void CNPC_Ichthyosaur::Spawn( void )
 	SetHullType(HULL_LARGE_CENTERED);
 	SetHullSizeNormal();
 	SetDefaultEyeOffset();
-	
+
 	SetNavType( NAV_FLY );
 	m_NPCState				= NPC_STATE_NONE;
 	SetBloodColor( BLOOD_COLOR_RED );
@@ -315,8 +315,8 @@ void CNPC_Ichthyosaur::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOther - 
+// Purpose:
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 /*
 void CNPC_Ichthyosaur::IchTouch( CBaseEntity *pOther )
@@ -325,7 +325,7 @@ void CNPC_Ichthyosaur::IchTouch( CBaseEntity *pOther )
 */
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CNPC_Ichthyosaur::SelectSchedule( void )
 {
@@ -348,7 +348,7 @@ int CNPC_Ichthyosaur::SelectSchedule( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles movement towards the last move target.
-// Input  : flInterval - 
+// Input  : flInterval -
 //-----------------------------------------------------------------------------
 bool CNPC_Ichthyosaur::OverrideMove( float flInterval )
 {
@@ -366,8 +366,8 @@ bool CNPC_Ichthyosaur::OverrideMove( float flInterval )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &probe - 
+// Purpose:
+// Input  : &probe -
 // Output : Vector
 //-----------------------------------------------------------------------------
 #if FEELER_COLLISION
@@ -391,7 +391,7 @@ Vector CNPC_Ichthyosaur::DoProbe( const Vector &probe )
 	}
 
 	AI_TraceHull( GetAbsOrigin(), probe, GetHullMins(), GetHullMaxs(), MASK_NPCSOLID, this, COLLISION_GROUP_NONE, &tr );
-	
+
 	if ( ( collided == false ) || ( tr.fraction < fraction ) )
 	{
 		fraction	= tr.fraction;
@@ -403,7 +403,7 @@ Vector CNPC_Ichthyosaur::DoProbe( const Vector &probe )
 #if FEELER_COLLISION_VISUALIZE
 		NDebugOverlay::Line( GetLocalOrigin(), probe, 255, 0, 0, false, 0.1f );
 #endif
-		
+
 		Vector	probeDir = probe - GetLocalOrigin();
 
 		Vector	normalToProbeAndWallNormal = probeDir.Cross( normal );
@@ -423,7 +423,7 @@ Vector CNPC_Ichthyosaur::DoProbe( const Vector &probe )
 		VectorNormalize( velDir );
 
 		steeringVector = steeringForce * velDir;
-		
+
 		return steeringVector;
 	}
 
@@ -447,7 +447,7 @@ void CNPC_Ichthyosaur::DragVictim( float moveDist )
 {
 	Vector	mins, maxs;
 	float	width;
-	
+
 	mins	= WorldAlignMins();
 	maxs	= WorldAlignMaxs();
 	width	= ( maxs.y - mins.y ) * 0.5f;
@@ -490,7 +490,7 @@ void CNPC_Ichthyosaur::SetPoses( Vector moveRel, float speed )
 		moveBase = 1.0f;
 		movePerc = moveBase * ( speed / ICH_SWIM_SPEED_RUN );
 	}
-	
+
 	Vector	tailPosition;
 	float	flSwimSpeed = movePerc;
 
@@ -534,7 +534,7 @@ void CNPC_Ichthyosaur::SetPoses( Vector moveRel, float speed )
 		tailPosition[ROLL]	= 0.0f;
 		tailPosition[YAW]	= 0.0f;
 	}
-	
+
 	//Clamp
 	flSwimSpeed			= clamp( flSwimSpeed, 0.25f, 1.0f );
 	tailPosition[YAW]	= clamp( tailPosition[YAW], -90.0f, 90.0f );
@@ -549,7 +549,7 @@ void CNPC_Ichthyosaur::SetPoses( Vector moveRel, float speed )
 	SetPoseParameter( 0, m_flSwimSpeed );
 	SetPoseParameter( 1, m_flTailYaw );
 	SetPoseParameter( 2, m_flTailPitch );
-	
+
 	//FIXME: Until the sequence info is reset properly after SetPoseParameter
 	if ( ( GetActivity() == ACT_RUN ) || ( GetActivity() == ACT_WALK ) )
 	{
@@ -582,8 +582,8 @@ void CNPC_Ichthyosaur::SetPoses( Vector moveRel, float speed )
 #define	VERTICAL_NOISE_FREQ	1.0f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : velocity - 
+// Purpose:
+// Input  : velocity -
 //-----------------------------------------------------------------------------
 void CNPC_Ichthyosaur::AddSwimNoise( Vector *velocity )
 {
@@ -600,10 +600,10 @@ void CNPC_Ichthyosaur::AddSwimNoise( Vector *velocity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flInterval - 
-//			&m_LastMoveTarget - 
-//			eMoveType - 
+// Purpose:
+// Input  : flInterval -
+//			&m_LastMoveTarget -
+//			eMoveType -
 //-----------------------------------------------------------------------------
 void CNPC_Ichthyosaur::DoMovement( float flInterval, const Vector &MoveTarget, int eMoveType )
 {
@@ -633,7 +633,7 @@ void CNPC_Ichthyosaur::DoMovement( float flInterval, const Vector &MoveTarget, i
 			SteerSeek( Steer, MoveTarget );
 		}
 	}
-	
+
 #if FEELER_COLLISION
 
 	Vector f, u, l, r, d;
@@ -653,8 +653,8 @@ void CNPC_Ichthyosaur::DoMovement( float flInterval, const Vector &MoveTarget, i
 	d = DoProbe( GetLocalOrigin() + (probeLength/3 * (forward-up)) );
 
 	SteerAvoid = f+r+l+u+d;
-	
-	//NDebugOverlay::Line( GetLocalOrigin(), GetLocalOrigin()+SteerAvoid, 255, 255, 0, false, 0.1f );	
+
+	//NDebugOverlay::Line( GetLocalOrigin(), GetLocalOrigin()+SteerAvoid, 255, 255, 0, false, 0.1f );
 
 	if ( SteerAvoid.LengthSqr() )
 	{
@@ -684,7 +684,7 @@ void CNPC_Ichthyosaur::DoMovement( float flInterval, const Vector &MoveTarget, i
 	ClampSteer( Steer, SteerRel, forward, right, up );
 
 	ApplyAbsVelocityImpulse( Steer * flInterval );
-	
+
 #endif
 
 	Vector vecNewVelocity = GetAbsVelocity();
@@ -744,7 +744,7 @@ void CNPC_Ichthyosaur::SteerArrive(Vector &Steer, const Vector &Target)
 
 	float fIdealSpeed = m_flGroundSpeed * (fTargetDistance / ICH_WAYPOINT_DISTANCE);
 	float fClippedSpeed = MIN( fIdealSpeed, m_flGroundSpeed );
-	
+
 	Vector DesiredVelocity( 0, 0, 0 );
 
 	if ( fTargetDistance > ICH_WAYPOINT_DISTANCE )
@@ -765,17 +765,17 @@ void CNPC_Ichthyosaur::SteerArrive(Vector &Steer, const Vector &Target)
 void CNPC_Ichthyosaur::SteerSeek( Vector &Steer, const Vector &Target )
 {
 	Vector offset = Target - GetLocalOrigin();
-	
+
 	VectorNormalize( offset );
-	
+
 	Vector DesiredVelocity = m_flGroundSpeed * offset;
-	
+
 	Steer = DesiredVelocity - GetAbsVelocity();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &Steer - 
+// Purpose:
+// Input  : &Steer -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Ichthyosaur::SteerAvoidObstacles(Vector &Steer, const Vector &Velocity, const Vector &Forward, const Vector &Right, const Vector &Up)
@@ -800,7 +800,7 @@ bool CNPC_Ichthyosaur::SteerAvoidObstacles(Vector &Steer, const Vector &Velocity
 	if ( tr.fraction < 1.0f )
 	{
 		CBaseEntity *pBlocker = tr.m_pEnt;
-		
+
 		if ( ( pBlocker != NULL ) && ( pBlocker->MyNPCPointer() != NULL ) )
 		{
 			DevMsg( 2, "Avoiding an NPC\n" );
@@ -813,7 +813,7 @@ bool CNPC_Ichthyosaur::SteerAvoidObstacles(Vector &Steer, const Vector &Velocity
 
 			/*Vector probeDir = tr.endpos - GetAbsOrigin();
 			Vector normalToProbeAndWallNormal = probeDir.Cross( tr.plane.normal );
-			
+
 			Steer = normalToProbeAndWallNormal.Cross( probeDir );
 			VectorNormalize( Steer );*/
 
@@ -837,14 +837,14 @@ bool CNPC_Ichthyosaur::SteerAvoidObstacles(Vector &Steer, const Vector &Velocity
 			}
 
 			DevMsg( 2, "Avoiding the world\n" );
-			
+
 			Vector	steeringVector = tr.plane.normal;
 
 			if ( tr.fraction == 0.0f )
 				return false;
 
 			Steer = steeringVector * ( Velocity.Length() / tr.fraction );
-			
+
 			//NDebugOverlay::Line( GetLocalOrigin(), GetLocalOrigin()+Steer, 255, 0, 0, false, 0.1f );
 		}
 
@@ -860,7 +860,7 @@ bool CNPC_Ichthyosaur::SteerAvoidObstacles(Vector &Steer, const Vector &Velocity
 		Steer += Vector( 0, 0, m_vecAccelerationMax.z / tr.fraction );
 		collided = true;
 	}
-	
+
 	//Stay under the surface
 	if ( m_bIgnoreSurface == false )
 	{
@@ -929,11 +929,11 @@ void CNPC_Ichthyosaur::ClampSteer(Vector &SteerAbs, Vector &SteerRel, Vector &fo
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTargetEnt - 
-//			vecDir - 
-//			flDistance - 
-//			flInterval - 
+// Purpose:
+// Input  : *pTargetEnt -
+//			vecDir -
+//			flDistance -
+//			flInterval -
 //-----------------------------------------------------------------------------
 void CNPC_Ichthyosaur::MoveFlyExecute( CBaseEntity *pTargetEnt, const Vector &vecDir, float flDistance, float flInterval )
 {
@@ -966,8 +966,8 @@ void CNPC_Ichthyosaur::MoveFlyExecute( CBaseEntity *pTargetEnt, const Vector &ve
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
+// Purpose:
+// Input  : *pEntity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Ichthyosaur::FVisible( CBaseEntity *pEntity, int traceMask, CBaseEntity **ppBlocker )
@@ -981,15 +981,15 @@ bool CNPC_Ichthyosaur::FVisible( CBaseEntity *pEntity, int traceMask, CBaseEntit
 
 //-----------------------------------------------------------------------------
 // Purpose: Get our conditions for a melee attack
-// Input  : flDot - 
-//			flDist - 
+// Input  : flDot -
+//			flDist -
 // Output : int
 //-----------------------------------------------------------------------------
 int CNPC_Ichthyosaur::MeleeAttack1Conditions( float flDot, float flDist )
 {
-	Vector	predictedDir	= ( (GetEnemy()->GetAbsOrigin()+(GetEnemy()->GetSmoothedVelocity())) - GetAbsOrigin() );	
+	Vector	predictedDir	= ( (GetEnemy()->GetAbsOrigin()+(GetEnemy()->GetSmoothedVelocity())) - GetAbsOrigin() );
 	float	flPredictedDist = VectorNormalize( predictedDir );
-	
+
 	Vector	vBodyDir;
 	GetVectors( &vBodyDir, NULL, NULL );
 
@@ -1005,8 +1005,8 @@ int CNPC_Ichthyosaur::MeleeAttack1Conditions( float flDot, float flDist )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEvent - 
+// Purpose:
+// Input  : *pEvent -
 //-----------------------------------------------------------------------------
 void CNPC_Ichthyosaur::HandleAnimEvent( animevent_t *pEvent )
 {
@@ -1025,7 +1025,7 @@ void CNPC_Ichthyosaur::HandleAnimEvent( animevent_t *pEvent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Ichthyosaur::Bite( void )
 {
@@ -1034,7 +1034,7 @@ void CNPC_Ichthyosaur::Bite( void )
 		return;
 
 	CBaseEntity *pHurt;
-	
+
 	//FIXME: E3 HACK - Always damage bullseyes if we're scripted to hit them
 	if ( ( GetEnemy() != NULL ) && ( GetEnemy()->Classify() == CLASS_BULLSEYE ) )
 	{
@@ -1092,7 +1092,7 @@ void CNPC_Ichthyosaur::Bite( void )
 
 		//Bubbles!
 		UTIL_Bubbles( pHurt->GetAbsOrigin()+Vector(-32.0f,-32.0f,-32.0f), pHurt->GetAbsOrigin()+Vector(32.0f,32.0f,0.0f), random->RandomInt( 16, 32 ) );
-		
+
 		// Play a random attack hit sound
 		EmitSound( "NPC_Ichthyosaur.Bite" );
 
@@ -1100,7 +1100,7 @@ void CNPC_Ichthyosaur::Bite( void )
 		{
 			SetActivity( (Activity) ACT_ICH_BITE_HIT );
 		}
-		
+
 		return;
 	}
 
@@ -1115,7 +1115,7 @@ void CNPC_Ichthyosaur::Bite( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Ichthyosaur::Beached( void )
@@ -1124,19 +1124,19 @@ bool CNPC_Ichthyosaur::Beached( void )
 	Vector	testPos;
 
 	testPos = GetAbsOrigin() - Vector( 0, 0, ICH_DEPTH_PREFERENCE );
-	
+
 	AI_TraceHull( GetAbsOrigin(), testPos, GetHullMins(), GetHullMaxs(), MASK_NPCSOLID, this, COLLISION_GROUP_NONE, &tr );
 
 	return ( tr.fraction < 1.0f );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Ichthyosaur::PrescheduleThink( void )
 {
 	BaseClass::PrescheduleThink();
-	
+
 	//Ambient sounds
 	/*
 	if ( random->RandomInt( 0, 20 ) == 10 )
@@ -1157,7 +1157,7 @@ void CNPC_Ichthyosaur::PrescheduleThink( void )
 	{
 		m_flNextPingTime = gpGlobals->curtime + random->RandomFloat( 3.0f, 8.0f );
 	}
-	
+
 	//Growls
 	if ( ( m_NPCState == NPC_STATE_COMBAT || m_NPCState == NPC_STATE_ALERT ) && ( m_flNextGrowlTime < gpGlobals->curtime ) )
 	{
@@ -1176,7 +1176,7 @@ void CNPC_Ichthyosaur::PrescheduleThink( void )
 		if ( GetWaterLevel() < 2 )
 		{
 			DevMsg( 2, "Came out of water\n" );
-			
+
 			if ( Beached() )
 			{
 				SetSchedule( SCHED_ICH_THRASH );
@@ -1207,11 +1207,11 @@ void CNPC_Ichthyosaur::PrescheduleThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pevInflictor - 
-//			*pAttacker - 
-//			flDamage - 
-//			bitsDamageType - 
+// Purpose:
+// Input  : *pevInflictor -
+//			*pAttacker -
+//			flDamage -
+//			bitsDamageType -
 //-----------------------------------------------------------------------------
 int	CNPC_Ichthyosaur::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 {
@@ -1219,7 +1219,7 @@ int	CNPC_Ichthyosaur::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 	if ( m_flHoldTime > gpGlobals->curtime )
 	{
 		ReleaseVictim();
-		
+
 		//Don't give them as much time to flee
 		m_flNextBiteTime = gpGlobals->curtime + 2.0f;
 
@@ -1230,7 +1230,7 @@ int	CNPC_Ichthyosaur::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Ichthyosaur::EnsnareVictim( CBaseEntity *pVictim )
 {
@@ -1251,7 +1251,7 @@ void CNPC_Ichthyosaur::EnsnareVictim( CBaseEntity *pVictim )
 		{
 			m_flHoldTime	= gpGlobals->curtime + 4.0f;
 		}
-	
+
 		m_pVictim = pVictim;
 		m_pVictim->AddSolidFlags( FSOLID_NOT_SOLID );
 
@@ -1260,7 +1260,7 @@ void CNPC_Ichthyosaur::EnsnareVictim( CBaseEntity *pVictim )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Ichthyosaur::ReleaseVictim( void )
 {
@@ -1276,7 +1276,7 @@ void CNPC_Ichthyosaur::ReleaseVictim( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : speed to move at
 //-----------------------------------------------------------------------------
 float CNPC_Ichthyosaur::GetGroundSpeed( void )
@@ -1294,8 +1294,8 @@ float CNPC_Ichthyosaur::GetGroundSpeed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : type - 
+// Purpose:
+// Input  : type -
 // Output : int
 //-----------------------------------------------------------------------------
 int CNPC_Ichthyosaur::TranslateSchedule( int type )
@@ -1310,8 +1310,8 @@ int CNPC_Ichthyosaur::TranslateSchedule( int type )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CNPC_Ichthyosaur::StartTask( const Task_t *pTask )
 {
@@ -1332,7 +1332,7 @@ void CNPC_Ichthyosaur::StartTask( const Task_t *pTask )
 					return;
 				}
 			}
-					
+
 			TaskComplete();
 		}
 		break;
@@ -1363,8 +1363,8 @@ void CNPC_Ichthyosaur::StartTask( const Task_t *pTask )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CNPC_Ichthyosaur::RunTask( const Task_t *pTask )
 {
@@ -1385,7 +1385,7 @@ void CNPC_Ichthyosaur::RunTask( const Task_t *pTask )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : desired yaw speed
 //-----------------------------------------------------------------------------
 float CNPC_Ichthyosaur::MaxYawSpeed( void )
@@ -1401,10 +1401,10 @@ float CNPC_Ichthyosaur::MaxYawSpeed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEnemy - 
-//			&chasePosition - 
-//			&tolerance - 
+// Purpose:
+// Input  : *pEnemy -
+//			&chasePosition -
+//			&tolerance -
 //-----------------------------------------------------------------------------
 void CNPC_Ichthyosaur::TranslateNavGoal( CBaseEntity *pEnemy, Vector &chasePosition )
 {
@@ -1414,7 +1414,7 @@ void CNPC_Ichthyosaur::TranslateNavGoal( CBaseEntity *pEnemy, Vector &chasePosit
 
 float CNPC_Ichthyosaur::GetDefaultNavGoalTolerance()
 {
-	return GetHullWidth()*2.0f;	
+	return GetHullWidth()*2.0f;
 }
 
 
@@ -1449,7 +1449,7 @@ AI_DEFINE_SCHEDULE
 	"		COND_LOST_ENEMY"
 	"		COND_TASK_FAILED"
 );
-	
+
 //==================================================
 // SCHED_ICH_PATROL_RUN
 //==================================================

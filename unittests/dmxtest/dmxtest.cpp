@@ -24,7 +24,7 @@ public:
 	{
 	}
 
-	virtual bool Connect( CreateInterfaceFn factory ) 
+	virtual bool Connect( CreateInterfaceFn factory )
 	{
 		if ( !BaseClass::Connect( factory ) )
 			return false;
@@ -32,7 +32,7 @@ public:
 		if ( !g_pFullFileSystem || !g_pDataModel || !g_pDmElementFramework )
 			return false;
 
-		return true; 
+		return true;
 	}
 
 	virtual InitReturnVal_t Init()

@@ -73,7 +73,7 @@ void CAI_GoalEntity::DelayedRefresh()
 	}
 	else
 		InputUpdateActors( ignored );
-	
+
 	SetThink( NULL );
 }
 
@@ -93,7 +93,7 @@ void CAI_GoalEntity::PruneActors()
 void CAI_GoalEntity::ResolveNames()
 {
 	m_actors.SetCount( 0 );
-	
+
 	CBaseEntity *pEntity = NULL;
 	for (;;)
 	{
@@ -104,19 +104,19 @@ void CAI_GoalEntity::ResolveNames()
 				pEntity = gEntList.FindEntityByName( pEntity, m_iszActor );
 				break;
 			}
-			
+
 			case ST_CLASSNAME:
 			{
 				pEntity = gEntList.FindEntityByClassname( pEntity, STRING( m_iszActor ) );
 				break;
 			}
 		}
-		
+
 		if ( !pEntity )
 			break;
-			
+
 		CAI_BaseNPC *pActor = pEntity->MyNPCPointer();
-		
+
 		if ( pActor  && pActor->GetState() != NPC_STATE_DEAD )
 		{
 			AIHANDLE temp;
@@ -124,7 +124,7 @@ void CAI_GoalEntity::ResolveNames()
 			m_actors.AddToTail( temp );
 		}
 	}
-		
+
 	m_hGoalEntity = gEntList.FindEntityByName( NULL, m_iszGoal );
 }
 
@@ -135,10 +135,10 @@ void CAI_GoalEntity::InputActivate( inputdata_t &inputdata )
 	if ( !( m_flags & ACTIVE ) )
 	{
 		gEntList.AddListenerEntity( this );
-		
+
 		UpdateActors();
 		m_flags |= ACTIVE;
-		
+
 		for ( int i = 0; i < m_actors.Count(); i++ )
 		{
 			EnableGoal( m_actors[i] );
@@ -155,16 +155,16 @@ void CAI_GoalEntity::InputUpdateActors( inputdata_t &inputdata )
 	CUtlRBTree<CAI_BaseNPC *>::IndexType_t index;
 
 	SetDefLessFunc( prevActors );
-	
+
 	PruneActors();
-	
+
 	for ( i = 0; i < m_actors.Count(); i++ )
 	{
 		prevActors.Insert( m_actors[i] );
 	}
-	
+
 	ResolveNames();
-	
+
 	for ( i = 0; i < m_actors.Count(); i++ )
 	{
 		index = prevActors.Find( m_actors[i] );
@@ -176,7 +176,7 @@ void CAI_GoalEntity::InputUpdateActors( inputdata_t &inputdata )
 		else
 			prevActors.Remove( m_actors[i] );
 	}
-	
+
 	for ( index = prevActors.FirstInorder(); index != prevActors.InvalidIndex(); index = prevActors.NextInorder( index ) )
 	{
 		if ( m_flags & ACTIVE )
@@ -186,7 +186,7 @@ void CAI_GoalEntity::InputUpdateActors( inputdata_t &inputdata )
 
 //-------------------------------------
 
-void CAI_GoalEntity::InputDeactivate( inputdata_t &inputdata ) 	
+void CAI_GoalEntity::InputDeactivate( inputdata_t &inputdata )
 {
 	if ( m_flags & ACTIVE )
 	{
@@ -197,7 +197,7 @@ void CAI_GoalEntity::InputDeactivate( inputdata_t &inputdata )
 		for ( int i = 0; i < m_actors.Count(); i++ )
 		{
 			DisableGoal( m_actors[i] );
-		}		
+		}
 	}
 }
 
@@ -245,13 +245,13 @@ void CAI_GoalEntity::UpdateOnRemove()
 void CAI_GoalEntity::OnEntityCreated( CBaseEntity *pEntity )
 {
 	Assert( m_flags & ACTIVE );
-	
+
 	if ( pEntity->MyNPCPointer() )
 	{
 		SetThink( &CAI_GoalEntity::DelayedRefresh );
 		SetNextThink( gpGlobals->curtime + 0.1f );
 	}
-	
+
 }
 
 //-------------------------------------
@@ -271,8 +271,6 @@ int CAI_GoalEntity::DrawDebugTextOverlays()
 	Q_snprintf( tempstr, sizeof(tempstr), "Active: %s", IsActive() ? "yes" : "no" );
 	EntityText( offset, tempstr, 0 );
 	offset++;
-		
+
 	return offset;
 }
-
-

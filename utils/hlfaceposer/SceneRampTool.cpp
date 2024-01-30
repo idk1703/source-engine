@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -63,7 +63,7 @@ SceneRampTool::SceneRampTool( mxWindow *parent )
 	m_nClickedY			= 0;
 
 	m_hPrevCursor		= 0;
-	
+
 	m_nStartX			= 0;
 	m_nStartY			= 0;
 
@@ -94,7 +94,7 @@ SceneRampTool::~SceneRampTool( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CChoreoScene *SceneRampTool::GetSafeScene( void )
 {
@@ -109,8 +109,8 @@ CChoreoScene *SceneRampTool::GetSafeScene( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rcHandle - 
+// Purpose:
+// Input  : rcHandle -
 //-----------------------------------------------------------------------------
 void SceneRampTool::GetScrubHandleRect( RECT& rcHandle, float scrub, bool clipped )
 {
@@ -132,9 +132,9 @@ void SceneRampTool::GetScrubHandleRect( RECT& rcHandle, float scrub, bool clippe
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			rcHandle - 
+// Purpose:
+// Input  : drawHelper -
+//			rcHandle -
 //-----------------------------------------------------------------------------
 void SceneRampTool::DrawScrubHandle( CChoreoWidgetDrawHelper& drawHelper, RECT& rcHandle, float scrub, bool reference )
 {
@@ -149,7 +149,7 @@ void SceneRampTool::DrawScrubHandle( CChoreoWidgetDrawHelper& drawHelper, RECT& 
 
 	drawHelper.DrawFilledRect( br, rcHandle );
 
-	// 
+	//
 	char sz[ 32 ];
 	sprintf( sz, "%.3f", scrub );
 
@@ -181,8 +181,8 @@ void SceneRampTool::DrawScrubHandle( CChoreoWidgetDrawHelper& drawHelper, RECT& 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool SceneRampTool::IsMouseOverScrubHandle( mxEvent *event )
@@ -203,7 +203,7 @@ bool SceneRampTool::IsMouseOverScrubHandle( mxEvent *event )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool SceneRampTool::IsProcessing( void )
@@ -249,8 +249,8 @@ void SceneRampTool::SetScrubTargetTime( float t )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dt - 
+// Purpose:
+// Input  : dt -
 //-----------------------------------------------------------------------------
 void SceneRampTool::Think( float dt )
 {
@@ -262,8 +262,8 @@ void SceneRampTool::Think( float dt )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dt - 
+// Purpose:
+// Input  : dt -
 //-----------------------------------------------------------------------------
 void SceneRampTool::ScrubThink( float dt, bool scrubbing )
 {
@@ -300,7 +300,7 @@ void SceneRampTool::ScrubThink( float dt, bool scrubbing )
 			SetScrubTime( m_flScrub - maxmove );
 		}
 	}
-	
+
 	if ( scrubbing )
 	{
 		g_pMatSysWindow->Frame();
@@ -358,9 +358,9 @@ void SceneRampTool::redraw()
 		}
 
 		rcText.left += 60;
-		
+
 		// Found it, write out description
-		// 
+		//
 		RECT rcTextLine = rcText;
 
 		drawHelper.DrawColoredText( "Arial", 11, 900, RGB( 200, 0, 0 ), rcTextLine,
@@ -426,7 +426,7 @@ void SceneRampTool::redraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SceneRampTool::ShowContextMenu( mxEvent *event, bool include_track_menus )
 {
@@ -441,7 +441,7 @@ void SceneRampTool::ShowContextMenu( mxEvent *event, bool include_track_menus )
 		{
 			pop->add( va( "Undo %s", g_pChoreoView->GetUndoDescription() ), IDC_UNDO_SRT );
 		}
-		
+
 		if ( current <= total - 1 )
 		{
 			pop->add( va( "Redo %s", g_pChoreoView->GetRedoDescription() ), IDC_REDO_SRT );
@@ -474,7 +474,7 @@ void SceneRampTool::GetWorkspaceLeftRight( int& left, int& right )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SceneRampTool::DrawFocusRect( void )
 {
@@ -507,10 +507,10 @@ float SceneRampTool::GetTimeForClickedPos( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dragtype - 
-//			startx - 
-//			cursor - 
+// Purpose:
+// Input  : dragtype -
+//			startx -
+//			cursor -
 //-----------------------------------------------------------------------------
 void SceneRampTool::StartDragging( int dragtype, int startx, int starty, HCURSOR cursor )
 {
@@ -519,7 +519,7 @@ void SceneRampTool::StartDragging( int dragtype, int startx, int starty, HCURSOR
 	m_nLastX	= startx;
 	m_nStartY	= starty;
 	m_nLastY	= starty;
-	
+
 	if ( m_hPrevCursor )
 	{
 		SetCursor( m_hPrevCursor );
@@ -562,7 +562,7 @@ void SceneRampTool::StartDragging( int dragtype, int startx, int starty, HCURSOR
 	{
 		AddFocusRect( rcStart );
 	}
-	
+
 	DrawFocusRect();
 }
 
@@ -652,7 +652,7 @@ void SceneRampTool::OnMouseMove( mxEvent *event )
 			case DRAGTYPE_SELECTION:
 				{
 					RECT rcFocus;
-					
+
 					rcFocus.left = m_nStartX < m_nLastX ? m_nStartX : m_nLastX;
 					rcFocus.right = m_nStartX < m_nLastX ? m_nLastX : m_nStartX;
 
@@ -809,7 +809,7 @@ int	SceneRampTool::handleEvent( mxEvent *event )
 				{
 					if ( sample )
 					{
-						if  ( shiftdown ) 
+						if  ( shiftdown )
 						{
 							sample->selected = !sample->selected;
 							redraw();
@@ -818,14 +818,14 @@ int	SceneRampTool::handleEvent( mxEvent *event )
 						{
 							PreDataChanged( "move scene ramp points" );
 
-							StartDragging( 
-								rightbutton ? DRAGTYPE_MOVEPOINTS_TIME : DRAGTYPE_MOVEPOINTS_VALUE, 
-								m_nClickedX, m_nClickedY, 
+							StartDragging(
+								rightbutton ? DRAGTYPE_MOVEPOINTS_TIME : DRAGTYPE_MOVEPOINTS_VALUE,
+								m_nClickedX, m_nClickedY,
 								LoadCursor( NULL, rightbutton ? IDC_SIZEWE : IDC_SIZENS ) );
 						}
 						else
 						{
-							if  ( !shiftdown ) 
+							if  ( !shiftdown )
 							{
 								DeselectAll();
 							}
@@ -840,11 +840,11 @@ int	SceneRampTool::handleEvent( mxEvent *event )
 						{
 							// Add a sample point
 							float t = GetTimeValueForMouse( mx );
-							
+
 							t = FacePoser_SnapTime( t );
 							float value = 1.0f - (float)( (short)event->y - rcSamples.top ) / (float)( rcSamples.bottom - rcSamples.top );
 							value = clamp( value, 0.0f, 1.0f );
-							
+
 							PreDataChanged( "Add scene ramp point" );
 
 							s->AddSceneRamp( t, value, false );
@@ -864,7 +864,7 @@ int	SceneRampTool::handleEvent( mxEvent *event )
 						}
 						else
 						{
-							if  ( !shiftdown ) 
+							if  ( !shiftdown )
 							{
 								DeselectAll();
 							}
@@ -1137,7 +1137,7 @@ void SceneRampTool::ForceScrubPosition( float t )
 {
 	m_flScrub = t;
 	m_flScrubTarget = t;
-	
+
 	CChoreoScene *s = GetSafeScene();
 	if ( s && s->FindStopTime() )
 	{
@@ -1165,8 +1165,8 @@ void SceneRampTool::GetMouseOverPos( int &x, int& y )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rcPos - 
+// Purpose:
+// Input  : rcPos -
 //-----------------------------------------------------------------------------
 void SceneRampTool::GetMouseOverPosRect( RECT& rcPos )
 {
@@ -1177,9 +1177,9 @@ void SceneRampTool::GetMouseOverPosRect( RECT& rcPos )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			rcPos - 
+// Purpose:
+// Input  : drawHelper -
+//			rcPos -
 //-----------------------------------------------------------------------------
 void SceneRampTool::DrawMouseOverPos( CChoreoWidgetDrawHelper& drawHelper, RECT& rcPos )
 {
@@ -1192,7 +1192,7 @@ void SceneRampTool::DrawMouseOverPos( CChoreoWidgetDrawHelper& drawHelper, RECT&
 	float snapped = FacePoser_SnapTime( t );
 
 	// Found it, write out description
-	// 
+	//
 	char sz[ 128 ];
 	if ( t != snapped )
 	{
@@ -1212,7 +1212,7 @@ void SceneRampTool::DrawMouseOverPos( CChoreoWidgetDrawHelper& drawHelper, RECT&
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SceneRampTool::DrawMouseOverPos()
 {
@@ -1242,11 +1242,11 @@ void SceneRampTool::AddFocusRect( RECT& rc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			rc - 
-//			left - 
-//			right - 
+// Purpose:
+// Input  : drawHelper -
+//			rc -
+//			left -
+//			right -
 //-----------------------------------------------------------------------------
 void SceneRampTool::DrawTimeLine( CChoreoWidgetDrawHelper& drawHelper, RECT& rc, float left, float right )
 {
@@ -1267,7 +1267,7 @@ void SceneRampTool::DrawTimeLine( CChoreoWidgetDrawHelper& drawHelper, RECT& rc,
 
 			if ( f != left )
 			{
-				drawHelper.DrawColoredLine( RGB( 220, 220, 240 ), PS_DOT,  1, 
+				drawHelper.DrawColoredLine( RGB( 220, 220, 240 ), PS_DOT,  1,
 					rcLabel.left, rc.top, rcLabel.left, h2() );
 			}
 
@@ -1342,9 +1342,9 @@ void SceneRampTool::DrawTimingTags( CChoreoWidgetDrawHelper& drawHelper, RECT& r
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			&rc - 
+// Purpose:
+// Input  : drawHelper -
+//			&rc -
 //-----------------------------------------------------------------------------
 void SceneRampTool::DrawAbsoluteTagsForEvent( CChoreoWidgetDrawHelper& drawHelper, RECT &rc, CChoreoEvent *event, float starttime, float endtime )
 {
@@ -1385,7 +1385,7 @@ void SceneRampTool::DrawAbsoluteTagsForEvent( CChoreoWidgetDrawHelper& drawHelpe
 		RECT rcText;
 		rcText = rcMark;
 		rcText.top -= 12;
-		
+
 		int len = drawHelper.CalcTextWidth( "Arial", 9, FW_NORMAL, tag->GetName() );
 		rcText.left = left - len / 2;
 		rcText.right = rcText.left + len + 2;
@@ -1397,9 +1397,9 @@ void SceneRampTool::DrawAbsoluteTagsForEvent( CChoreoWidgetDrawHelper& drawHelpe
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			rc - 
+// Purpose:
+// Input  : drawHelper -
+//			rc -
 //-----------------------------------------------------------------------------
 void SceneRampTool::DrawRelativeTagsForEvent( CChoreoWidgetDrawHelper& drawHelper, RECT& rc, CChoreoEvent *event, float starttime, float endtime )
 {
@@ -1414,7 +1414,7 @@ void SceneRampTool::DrawRelativeTagsForEvent( CChoreoWidgetDrawHelper& drawHelpe
 		if ( !tag )
 			continue;
 
-		// 
+		//
 		float tagtime = ( event->GetStartTime() + tag->GetPercentage() * event->GetDuration() );
 		if ( tagtime < starttime || tagtime > endtime )
 			continue;
@@ -1443,7 +1443,7 @@ void SceneRampTool::DrawRelativeTagsForEvent( CChoreoWidgetDrawHelper& drawHelpe
 		rcText = rc;
 		rcText.bottom = rc.bottom - 10;
 		rcText.top = rcText.bottom - 10;
-	
+
 		int len = drawHelper.CalcTextWidth( "Arial", 9, FW_NORMAL, tag->GetName() );
 		rcText.left = left - len / 2;
 		rcText.right = rcText.left + len + 2;
@@ -1453,7 +1453,7 @@ void SceneRampTool::DrawRelativeTagsForEvent( CChoreoWidgetDrawHelper& drawHelpe
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int SceneRampTool::ComputeHPixelsNeeded( void )
@@ -1471,7 +1471,7 @@ int SceneRampTool::ComputeHPixelsNeeded( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SceneRampTool::RepositionHSlider( void )
 {
@@ -1498,7 +1498,7 @@ void SceneRampTool::RepositionHSlider( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float SceneRampTool::GetPixelsPerSecond( void )
@@ -1508,8 +1508,8 @@ float SceneRampTool::GetPixelsPerSecond( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
+// Purpose:
+// Input  : x -
 //-----------------------------------------------------------------------------
 void SceneRampTool::MoveTimeSliderToPos( int x )
 {
@@ -1520,7 +1520,7 @@ void SceneRampTool::MoveTimeSliderToPos( int x )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SceneRampTool::InvalidateLayout( void )
 {
@@ -1537,9 +1537,9 @@ void SceneRampTool::InvalidateLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : st - 
-//			ed - 
+// Purpose:
+// Input  : st -
+//			ed -
 //-----------------------------------------------------------------------------
 void SceneRampTool::GetStartAndEndTime( float& st, float& ed )
 {
@@ -1548,8 +1548,8 @@ void SceneRampTool::GetStartAndEndTime( float& st, float& ed )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : float
 //-----------------------------------------------------------------------------
 float SceneRampTool::GetEventEndTime()
@@ -1562,9 +1562,9 @@ float SceneRampTool::GetEventEndTime()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : time - 
-//			*clipped - 
+// Purpose:
+// Input  : time -
+//			*clipped -
 // Output : int
 //-----------------------------------------------------------------------------
 int SceneRampTool::GetPixelForTimeValue( float time, bool *clipped /*=NULL*/ )
@@ -1591,9 +1591,9 @@ int SceneRampTool::GetPixelForTimeValue( float time, bool *clipped /*=NULL*/ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			clip - 
+// Purpose:
+// Input  : mx -
+//			clip -
 // Output : float
 //-----------------------------------------------------------------------------
 float SceneRampTool::GetTimeValueForMouse( int mx, bool clip /*=false*/)
@@ -1750,7 +1750,7 @@ void SceneRampTool::DrawSamples( CChoreoWidgetDrawHelper& drawHelper, RECT &rcSa
 	float timestepperpixel = 1.0f / GetPixelsPerSecond();
 
 	float stoptime = min( endtime, s->FindStopTime() );
-	
+
 	float prev_t = starttime;
 	float prev_value = s->GetSceneRampIntensity( prev_t );
 
@@ -1799,9 +1799,9 @@ void SceneRampTool::DrawSamples( CChoreoWidgetDrawHelper& drawHelper, RECT &rcSa
 		COLORREF clr = dotColor;
 		COLORREF clrSelected = dotColorSelected;
 
-		drawHelper.DrawCircle( 
-			start->selected ? clrSelected : clr, 
-			x, y, 
+		drawHelper.DrawCircle(
+			start->selected ? clrSelected : clr,
+			x, y,
 			start->selected ? dotSizeSelected : dotsize,
 			true );
 
@@ -1869,15 +1869,15 @@ void SceneRampTool::DrawAutoHighlight( mxEvent *event )
 
 		if ( hover == start )
 		{
-			drawHelper.DrawCircle( 
-				bgColor, 
-				x, y, 
+			drawHelper.DrawCircle(
+				bgColor,
+				x, y,
 				dotSizeHighlighted,
 				true );
 
-			drawHelper.DrawCircle( 
-				clrHighlighted, 
-				x, y, 
+			drawHelper.DrawCircle(
+				clrHighlighted,
+				x, y,
 				dotSizeHighlighted,
 				false );
 
@@ -1885,9 +1885,9 @@ void SceneRampTool::DrawAutoHighlight( mxEvent *event )
 		}
 		else
 		{
-			drawHelper.DrawCircle( 
-				start->selected ? clrSelected : clr, 
-				x, y, 
+			drawHelper.DrawCircle(
+				start->selected ? clrSelected : clr,
+				x, y,
 				start->selected ? dotSizeSelected : dotsize,
 				true );
 		}
@@ -1942,8 +1942,8 @@ CExpressionSample *SceneRampTool::GetSampleUnderMouse( int mx, int my, float tol
 		Assert( sample );
 
 		bool clipped = false;
-		int px = GetPixelForTimeValue( sample->time, &clipped );		
-		int py = height * ( 1.0f - sample->value ); 
+		int px = GetPixelForTimeValue( sample->time, &clipped );
+		int py = height * ( 1.0f - sample->value );
 
 		int dx = px - pt.x;
 		int dy = py - pt.y;
@@ -1959,7 +1959,7 @@ CExpressionSample *SceneRampTool::GetSampleUnderMouse( int mx, int my, float tol
 	}
 
 	// Not close to any of them!!!
-	if ( ( tolerance != 0.0f ) && 
+	if ( ( tolerance != 0.0f ) &&
 		( closest_dist > tolerance ) )
 		return NULL;
 
@@ -1968,12 +1968,12 @@ CExpressionSample *SceneRampTool::GetSampleUnderMouse( int mx, int my, float tol
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SceneRampTool::SelectPoints( void )
 {
 	RECT rcSelection;
-	
+
 	rcSelection.left = m_nStartX < m_nLastX ? m_nStartX : m_nLastX;
 	rcSelection.right = m_nStartX < m_nLastX ? m_nLastX : m_nStartX;
 
@@ -2038,7 +2038,7 @@ void SceneRampTool::SelectPoints( void )
 	for ( int i = 0; i < s->GetSceneRampCount(); i++ )
 	{
 		CExpressionSample *sample = s->GetSceneRamp( i );
-		
+
 		if ( sample->time + epsx < fleft )
 			continue;
 
@@ -2058,7 +2058,7 @@ void SceneRampTool::SelectPoints( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int SceneRampTool::CountSelected( void )
@@ -2093,13 +2093,13 @@ void SceneRampTool::MoveSelectedSamples( float dfdx, float dfdy )
 		sample->value -= dfdy;
 		sample->value = clamp( sample->value, 0.0f, 1.0f );
 	}
-			
+
 	s->ResortSceneRamp();
 	redraw();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SceneRampTool::DeselectAll( void )
 {
@@ -2119,7 +2119,7 @@ void SceneRampTool::DeselectAll( void )
 		CExpressionSample *sample = s->GetSceneRamp( i );
 		sample->selected = false;
 	}
-	
+
 	redraw();
 }
 
@@ -2137,7 +2137,7 @@ void SceneRampTool::SelectAll( void )
 		CExpressionSample *sample = s->GetSceneRamp( i );
 		sample->selected = true;
 	}
-	
+
 	redraw();
 }
 
@@ -2173,8 +2173,8 @@ void SceneRampTool::OnModelChanged()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *undodescription - 
+// Purpose:
+// Input  : *undodescription -
 //-----------------------------------------------------------------------------
 void SceneRampTool::PreDataChanged( char const *undodescription )
 {
@@ -2187,8 +2187,8 @@ void SceneRampTool::PreDataChanged( char const *undodescription )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *redodescription - 
+// Purpose:
+// Input  : *redodescription -
 //-----------------------------------------------------------------------------
 void SceneRampTool::PostDataChanged( char const *redodescription )
 {
@@ -2228,7 +2228,7 @@ void SceneRampTool::OnEdgeProperties()
 	}
 
 	char *undotext = "Change Scene Ramp Edge Properties";
-	
+
 	PreDataChanged( undotext );
 
 	// Apply changes.

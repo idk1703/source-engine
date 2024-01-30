@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -40,8 +40,8 @@ IFileSystem* VMPI_FileSystem_Init( int maxMemoryUsage, IFileSystem *pPassThru )
 		extern CBaseVMPIFileSystem* CreateWorkerVMPIFileSystem();
 		CreateWorkerVMPIFileSystem();
 	}
-	
-	// The Create function should have set this. Normally, we'd set g_pBaseVMPIFileSystem right here, but 
+
+	// The Create function should have set this. Normally, we'd set g_pBaseVMPIFileSystem right here, but
 	// the create functions may want to receive some messages, in which case they need to set g_pBaseVMPIFileSystem
 	// so the packets get routed appropriately.
 	Assert( g_pBaseVMPIFileSystem );
@@ -64,7 +64,7 @@ IFileSystem* VMPI_FileSystem_Term()
 				Msg( "Multicast recv: %dk\n", (g_nMulticastBytesReceived + 511) / 1024 );
 		}
 	}
-	
+
 	IFileSystem *pRet = g_pOriginalPassThruFileSystem;
 	g_pOriginalPassThruFileSystem = NULL;
 	return pRet;
@@ -132,23 +132,23 @@ void CVMPIFile_Memory::Seek( int pos, FileSystemSeek_t seekType )
 
 unsigned int CVMPIFile_Memory::Tell()
 {
-	return m_iCurPos; 
+	return m_iCurPos;
 }
 
-unsigned int CVMPIFile_Memory::Size() 
+unsigned int CVMPIFile_Memory::Size()
 {
-	return m_DataLen; 
+	return m_DataLen;
 }
 
 void CVMPIFile_Memory::Flush()
 {
 }
 
-int CVMPIFile_Memory::Read( void* pOutput, int size ) 
-{ 
+int CVMPIFile_Memory::Read( void* pOutput, int size )
+{
 	Assert( m_iCurPos >= 0 );
 	int nToRead = min( (int)(m_DataLen - m_iCurPos), size );
-	
+
 	if ( m_chMode != 't' )
 	{
 		memcpy( pOutput, &m_pData[m_iCurPos], nToRead );
@@ -161,17 +161,17 @@ int CVMPIFile_Memory::Read( void* pOutput, int size )
 		int iRead = 0;
 		const char *pData = m_pData + m_iCurPos;
 		int len = m_DataLen - m_iCurPos;
-		
+
 		// Perform crlf translation
 		while ( const char *crlf = ( const char * ) memchr( pData, '\r', len ) )
 		{
 			int canCopy = min( size, crlf - pData );
 			memcpy( pOutput, pData, canCopy );
-			
+
 			m_iCurPos += canCopy;
 			pData += canCopy;
 			len -= canCopy;
-			
+
 			iRead += canCopy;
 			( char * & ) pOutput += canCopy;
 			size -= canCopy;
@@ -186,7 +186,7 @@ int CVMPIFile_Memory::Read( void* pOutput, int size )
 				}
 
 				* ( char * & ) pOutput = *pData;
-				
+
 				++ m_iCurPos;
 				++ pData;
 				-- len;
@@ -198,7 +198,7 @@ int CVMPIFile_Memory::Read( void* pOutput, int size )
 			else
 				break;
 		}
-		
+
 		if ( size && len )
 		{
 			// No crlf characters left
@@ -220,7 +220,7 @@ int CVMPIFile_Memory::Read( void* pOutput, int size )
 
 int CVMPIFile_Memory::Write( void const* pInput, int size )
 {
-	Assert( false ); return 0; 
+	Assert( false ); return 0;
 }
 
 
@@ -302,12 +302,12 @@ bool CBaseVMPIFileSystem::FileExists( const char *pFileName, const char *pPathID
 void CBaseVMPIFileSystem::Flush( FileHandle_t file )
 {
 	((IVMPIFile*)file)->Flush();
-}	
+}
 
 bool CBaseVMPIFileSystem::Precache( const char* pFileName, const char *pPathID )
 {
 	return false;
-} 
+}
 
 
 //-----------------------------------------------------------------------------
@@ -363,4 +363,3 @@ bool CBaseVMPIFileSystem::WriteFile( const char *pFileName, const char *pPath, C
 	Close( fp );
 	return (nBytesWritten != 0);
 }
-

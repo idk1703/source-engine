@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -32,9 +32,9 @@ using namespace vgui;
 
 extern ISoundEmitterSystemBase *soundemitterbase;
 
-// Floating delta text items, float off the top of the frame to 
+// Floating delta text items, float off the top of the frame to
 // show changes to the metal account value
-typedef struct 
+typedef struct
 {
 	enum eAccountDeltaType_t
 	{
@@ -50,7 +50,7 @@ typedef struct
 
 	// amount of delta
 	int m_iAmount;
-	
+
 	bool m_bLargeFont;		// display larger font
 	eAccountDeltaType_t m_eDataType;
 
@@ -170,7 +170,7 @@ ConVar tf_dingalingaling_effect( "tf_dingalingaling_effect", "0", FCVAR_ARCHIVE,
 ConVar tf_dingalingaling_last_effect( "tf_dingalingaling_last_effect", "0", FCVAR_ARCHIVE, "Which final hit sound to play when the target expires.", true, 0, true, ARRAYSIZE( g_LastHitSounds )-1 );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CAccountPanel : public EditablePanel
 {
@@ -226,14 +226,14 @@ protected:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudAccountPanel : public CHudElement, public CAccountPanel
 {
 	DECLARE_CLASS_SIMPLE( CHudAccountPanel, CAccountPanel );
 
 public:
-	CHudAccountPanel( const char *pElementName ) 
+	CHudAccountPanel( const char *pElementName )
 		: CHudElement( pElementName )
 		, CAccountPanel( NULL, pElementName )
 	{
@@ -279,7 +279,7 @@ public:
 		CTFPlayer *pTFPlayer = CTFPlayer::GetLocalTFPlayer();
 		if ( pTFPlayer && pTFPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) )
 			return false;
-		
+
 		if ( CTFMinigameLogic::GetMinigameLogic() && CTFMinigameLogic::GetMinigameLogic()->GetActiveMinigame() )
 			return false;
 
@@ -294,7 +294,7 @@ DECLARE_HUDELEMENT( CHudAccountPanel );
 
 // Derived account panels
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHealthAccountPanel : public CHudAccountPanel
 {
@@ -369,7 +369,7 @@ public:
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	bool ShouldDraw( void )
 	{
@@ -473,7 +473,7 @@ private:
 DECLARE_BUILD_FACTORY( CScoreAccountPanel );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDamageAccountPanel : public CHudAccountPanel
 {
@@ -497,7 +497,7 @@ public:
 
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	bool ShouldDrawDPSMeter( void )
 	{
@@ -505,7 +505,7 @@ public:
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	void DisplayDamageFeedback( CTFPlayer *pAttacker, CBaseCombatCharacter *pVictim, int iDamage, int iHealth, bool bIsCrit )
 	{
@@ -563,9 +563,9 @@ public:
 					// Always allow the last hit sound
 					m_flLastDingTime = 0.f;
 				}
-				
-				// Play hitbeeps 
-				if ( ( bHitEnabled || bLastHitEnabled ) && 
+
+				// Play hitbeeps
+				if ( ( bHitEnabled || bLastHitEnabled ) &&
 					 ( gpGlobals->curtime > ( m_flLastDingTime + tf_dingalingaling_repeat_delay.GetFloat() ) || tf_dingalingaling_repeat_delay.GetFloat() == 0.f ) )
 				{
 					m_flLastDingTime = gpGlobals->curtime;
@@ -648,14 +648,14 @@ public:
 					m_flDamagePerSecond = 0.f;
 					m_flDamageMeterTotal = 0.f;
 				}
-				
+
 				m_flDamageMeterTotal += iDamage;
 			}
 		}
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	void FireGameEvent( IGameEvent *event )
 	{
@@ -681,7 +681,7 @@ public:
 			C_TFPlayer *pAttacker = ToTFPlayer( UTIL_PlayerByIndex( iAttacker ) );
 
 			C_BaseCombatCharacter *pVictim = (C_BaseCombatCharacter *)ClientEntityList().GetClientEntity( event->GetInt( "entindex" ) );
-			
+
 			DisplayDamageFeedback( pAttacker, pVictim, iDamage, iHealth, event->GetBool( "crit", 0 ) );
 		}
 		else if ( FStrEq( event->GetName(), "player_healed" ) )
@@ -791,13 +791,13 @@ public:
 					pNewAccount->m_nHEnd = pNewAccount->m_nHStart + 32;		// Float 32 units up in worldspace
 					pNewAccount->m_bWorldSpace = true;
 				}
-				
+
 			}
 		}
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	bool ShouldDraw( void )
 	{
@@ -829,7 +829,7 @@ public:
 private:
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	void ResetDamageVars( void )
 	{
@@ -874,7 +874,7 @@ void CDamageAccountPanel::OnTick( void )
 		else
 		{
 			float flPeriod = hud_damagemeter_period.GetFloat();
-			
+
 			// Period-based calculation (averaged across a defined range)
 			if ( flPeriod > 0.f )
 			{
@@ -895,7 +895,7 @@ void CDamageAccountPanel::OnTick( void )
 					// What's left is within the period (sliding window)
 					m_flDamageMeterTotal += m_DamageHistory[i].flDamage;
 				}
-				
+
 				m_flDamagePerSecond = m_flDamageMeterTotal / flPeriod;
 			}
 			// Event-based calculation (absolute dps)
@@ -942,7 +942,7 @@ void CDamageAccountPanel::Paint( void )
 DECLARE_HUDELEMENT( CDamageAccountPanel );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAccountPanel::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -974,12 +974,12 @@ void CAccountPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 account_delta_t *CAccountPanel::OnAccountValueChanged( int iOldValue, int iNewValue, account_delta_t::eAccountDeltaType_t type )
 {
 	// update the account value
-	SetDialogVariable( "metal", iNewValue ); 
+	SetDialogVariable( "metal", iNewValue );
 
 	int iDelta = iNewValue - iOldValue;
 
@@ -1001,7 +1001,7 @@ account_delta_t *CAccountPanel::OnAccountValueChanged( int iOldValue, int iNewVa
 		pNewDeltaItem->m_bLargeFont = false;
 		pNewDeltaItem->m_eDataType = type;
 		pNewDeltaItem->m_wzText[0] = NULL;
-		pNewDeltaItem->m_color = GetColor( type ); 
+		pNewDeltaItem->m_color = GetColor( type );
 		pNewDeltaItem->m_bShadows = false;
 		return &m_AccountDeltaItems[index];
 	}
@@ -1031,7 +1031,7 @@ Color CAccountPanel::GetColor( const account_delta_t::eAccountDeltaType_t& type 
 	{
 		return m_DeltaRedRobotScoreColor;
 	}
-	
+
 	return Color( 255, 255, 255, 255 );
 }
 
@@ -1057,7 +1057,7 @@ void CAccountPanel::Paint( void )
 			// fade out after half our lifetime
 			int nAlpha = flLifetimePercent > 0.5 ? (int)( 255.0f * ( ( 0.5f - flLifetimePercent ) / 0.5f ) ) : 255;
 			c[3] = nAlpha;
-			
+
 
 
 			// Some items want to be batched together as they're super frequent (i.e. damage events from a flamethrower, or minigun)
@@ -1156,7 +1156,7 @@ void CAccountPanel::Paint( void )
 
 #ifdef STAGING_ONLY
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBountyAccountPanel : public CHudAccountPanel
 {
@@ -1202,7 +1202,7 @@ public:
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	bool ShouldDraw( void )
 	{

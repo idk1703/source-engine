@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,13 +10,13 @@
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
-// Input  : *parent - 
-//			x - 
-//			y - 
-//			w - 
-//			h - 
-//			id - 
-//			style - 
+// Input  : *parent -
+//			x -
+//			y -
+//			w -
+//			h -
+//			id -
+//			style -
 //-----------------------------------------------------------------------------
 CTabWindow::CTabWindow( mxWindow *parent, int x, int y, int w, int h, int id /*= 0*/, int style /*=0*/ )
 : mxWindow( parent, x, y, w, h, "", style )
@@ -44,7 +44,7 @@ CTabWindow::CTabWindow( mxWindow *parent, int x, int y, int w, int h, int id /*=
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CTabWindow::~CTabWindow
 //-----------------------------------------------------------------------------
 CTabWindow::~CTabWindow ( void )
@@ -53,9 +53,9 @@ CTabWindow::~CTabWindow ( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
-//			clr - 
+// Purpose:
+// Input  : index -
+//			clr -
 //-----------------------------------------------------------------------------
 void CTabWindow::SetColor( int index, COLORREF clr )
 {
@@ -79,9 +79,9 @@ void CTabWindow::SetRightJustify( bool rightjustify )
 
 //-----------------------------------------------------------------------------
 // Purpose: Tabs are sized to string content
-// Input  : rcClient - 
-//			tabRect - 
-//			tabNum - 
+// Input  : rcClient -
+//			tabRect -
+//			tabNum -
 //-----------------------------------------------------------------------------
 void CTabWindow::GetTabRect( const RECT& rcClient, RECT& tabRect, int tabNum )
 {
@@ -89,11 +89,11 @@ void CTabWindow::GetTabRect( const RECT& rcClient, RECT& tabRect, int tabNum )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			rcClient - 
-//			tabnum - 
-//			selected - 
+// Purpose:
+// Input  : drawHelper -
+//			rcClient -
+//			tabnum -
+//			selected -
 //-----------------------------------------------------------------------------
 void CTabWindow::DrawTab( CDrawHelper& drawHelper, RECT& rcClient, int tabnum, bool selected )
 {
@@ -153,7 +153,7 @@ void CTabWindow::DrawTab( CDrawHelper& drawHelper, RECT& rcClient, int tabnum, b
 	HRGN rgn = CreatePolygonRgn( region, cPoints, ALTERNATE );
 
 	int oldPF = SetPolyFillMode( dc, ALTERNATE );
-	
+
 	HBRUSH brBg = CreateSolidBrush( fgcolor );
 	HBRUSH brBorder = CreateSolidBrush( hilightcolor );
 	//HBRUSH brInset = CreateSolidBrush( fgcolor );
@@ -178,7 +178,7 @@ void CTabWindow::DrawTab( CDrawHelper& drawHelper, RECT& rcClient, int tabnum, b
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTabWindow::redraw( void )
 {
@@ -207,9 +207,9 @@ void CTabWindow::redraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			my - 
+// Purpose:
+// Input  : mx -
+//			my -
 // Output : int
 //-----------------------------------------------------------------------------
 int CTabWindow::GetItemUnderMouse( int mx, int my )
@@ -222,7 +222,7 @@ int CTabWindow::GetItemUnderMouse( int mx, int my )
 		RECT rcTab;
 		GetTabRect( rcClient, rcTab, i );
 
-		if ( mx < rcTab.left || 
+		if ( mx < rcTab.left ||
 			 mx > rcTab.right ||
 			 my < rcTab.top ||
 			 my > rcTab.bottom )
@@ -236,8 +236,8 @@ int CTabWindow::GetItemUnderMouse( int mx, int my )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 // Output : int CTabWindow::handleEvent
 //-----------------------------------------------------------------------------
 int CTabWindow::handleEvent (mxEvent *event)
@@ -287,7 +287,7 @@ int CTabWindow::handleEvent (mxEvent *event)
 
 //-----------------------------------------------------------------------------
 // Purpose: Add string to table
-// Input  : *item - 
+// Input  : *item -
 //-----------------------------------------------------------------------------
 void CTabWindow::add( const char *item )
 {
@@ -318,7 +318,7 @@ void CTabWindow::setPrefix( int item, char const *prefix )
 
 //-----------------------------------------------------------------------------
 // Purpose: Change selected item
-// Input  : index - 
+// Input  : index -
 //-----------------------------------------------------------------------------
 void CTabWindow::select( int index )
 {
@@ -331,13 +331,13 @@ void CTabWindow::select( int index )
 
 //-----------------------------------------------------------------------------
 // Purpose: Remove a string
-// Input  : index - 
+// Input  : index -
 //-----------------------------------------------------------------------------
 void CTabWindow::remove( int index )
 {
 	if ( index < 0 || index >= m_Items.Size() )
 		return;
-	
+
 	m_Items.Remove( index );
 
 	m_nSelected = min( m_nSelected, m_Items.Size() - 1 );
@@ -362,8 +362,8 @@ void CTabWindow::removeAll()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : int 
+// Purpose:
+// Output : int
 //-----------------------------------------------------------------------------
 int CTabWindow::getItemCount () const
 {
@@ -371,8 +371,8 @@ int CTabWindow::getItemCount () const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : int	
+// Purpose:
+// Output : int
 //-----------------------------------------------------------------------------
 int	CTabWindow::getSelectedIndex () const
 {

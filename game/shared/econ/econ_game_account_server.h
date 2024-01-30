@@ -37,7 +37,7 @@ enum eGameServerScoreStandingTrend
 #include "gcsdk/schemasharedobject.h"
 
 //---------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //---------------------------------------------------------------------------------
 class CEconGameServerAccount : public GCSDK::CSchemaSharedObject< CSchGameServerAccount, k_EEconTypeGameServerAccount >
 {
@@ -47,7 +47,7 @@ class CEconGameServerAccount : public GCSDK::CSchemaSharedObject< CSchGameServer
 
 public:
 	CEconGameServerAccount() {}
-	CEconGameServerAccount( uint32 unAccountID ) 
+	CEconGameServerAccount( uint32 unAccountID )
 	{
 		Obj().m_unAccountID = unAccountID;
 	}

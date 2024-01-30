@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -53,7 +53,7 @@ bool CHudAmmo::ShouldShowPrimaryClip() const
 	return true;
 }
 
-bool CHudAmmo::ShouldShowSecondary() const 
+bool CHudAmmo::ShouldShowSecondary() const
 {
 	if ( m_nAmmoType2 <= 0 )
 		return false;
@@ -203,7 +203,7 @@ private:
 DECLARE_HUDELEMENT( CHudAmmoPrimaryClip );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudAmmoSecondary : public CHudNumeric
 {

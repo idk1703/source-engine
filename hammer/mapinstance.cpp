@@ -1,13 +1,13 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
 #include "stdafx.h"
 #include "hammer_mathlib.h"
 #include "MainFrm.h"
-#include "ObjectProperties.h" 
+#include "ObjectProperties.h"
 #include "Box3D.h"
 #include "BSPFile.h"
 #include "const.h"
@@ -160,7 +160,7 @@ CMapInstance::CMapInstance( void )
 // Purpose: Constructor.
 // Input  : pszBaseFileName - the root path of where the instance will be loaded from.
 //			pszInstanceFileName - the relative name of the instance to be loaded.
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 CMapInstance::CMapInstance( const char *pszBaseFileName, const char *pszInstanceFileName )
 {
@@ -335,7 +335,7 @@ bool CMapInstance::OnApply( void )
 	if ( ent && ent->GetKeyValue( "file" ) )
 	{
 		DeterminePath( MapFileName, ent->GetKeyValue( "file" ), FileName );
-		if ( strcmpi( FileName, m_FileName ) != 0 ) 
+		if ( strcmpi( FileName, m_FileName ) != 0 )
 		{
 			bool	bSaveVisible = CHammer::IsNewDocumentVisible();
 
@@ -378,7 +378,7 @@ bool CMapInstance::OnApply( void )
 void CMapInstance::CalcBounds(BOOL bFullUpdate)
 {
 	CMapClass::CalcBounds(bFullUpdate);
-	
+
 	//
 	// Build our bounds for frustum culling in the 3D view.
 	//
@@ -435,7 +435,7 @@ void CMapInstance::UpdateChild(CMapClass *pChild)
 //			are supplied, the localized matrix will be built.
 // Input  : key - the key field to lookup
 //			value - the value to find
-// Output : returns the entity found 
+// Output : returns the entity found
 //			bIsInInstance - optional parameter to indicate if the found entity is inside of an instance
 //			InstanceMatrix - optional parameter to set the localized matrix of the instance stack
 //-----------------------------------------------------------------------------
@@ -657,8 +657,8 @@ void CMapInstance::SwitchTo( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: we do not want to serialize this
-// Input  : &File - 
-//			bRMF - 
+// Input  : &File -
+//			bRMF -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapInstance::SerializeRMF(std::fstream &File, BOOL bRMF)
@@ -669,8 +669,8 @@ int CMapInstance::SerializeRMF(std::fstream &File, BOOL bRMF)
 
 //-----------------------------------------------------------------------------
 // Purpose: we do not want to serialize this
-// Input  : &File - 
-//			bRMF - 
+// Input  : &File -
+//			bRMF -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapInstance::SerializeMAP(std::fstream &File, BOOL bRMF)
@@ -681,7 +681,7 @@ int CMapInstance::SerializeMAP(std::fstream &File, BOOL bRMF)
 
 //-----------------------------------------------------------------------------
 // Purpose: Canculate angles based upon the transform
-// Input  : pTransBox - 
+// Input  : pTransBox -
 //-----------------------------------------------------------------------------
 void CMapInstance::DoTransform(const VMatrix &matrix)
 {
@@ -771,7 +771,7 @@ void CMapInstance::Render2D(CRender2D *pRender)
 	}
 
 	// Draw the bounding box.
-		
+
 	pRender->DrawBox( vecMins, vecMaxs );
 
 	//

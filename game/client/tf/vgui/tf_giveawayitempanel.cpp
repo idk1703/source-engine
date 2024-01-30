@@ -25,7 +25,7 @@
 #include "tf_gamerules.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CGiveawayPlayerPanel::CGiveawayPlayerPanel( vgui::Panel *parent, const char *name ) : BaseClass(parent,name)
 {
@@ -37,15 +37,15 @@ CGiveawayPlayerPanel::CGiveawayPlayerPanel( vgui::Panel *parent, const char *nam
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CGiveawayPlayerPanel::PerformLayout( void ) 
+void CGiveawayPlayerPanel::PerformLayout( void )
 {
 	BaseClass::PerformLayout();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGiveawayPlayerPanel::SetPlayer( CTFPlayer *pPlayer )
 {
@@ -86,7 +86,7 @@ void CGiveawayPlayerPanel::SetPlayer( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGiveawayPlayerPanel::SpinBonus( void )
 {
@@ -94,7 +94,7 @@ void CGiveawayPlayerPanel::SpinBonus( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGiveawayPlayerPanel::LockBonus( int iRoll )
 {
@@ -106,7 +106,7 @@ void CGiveawayPlayerPanel::LockBonus( int iRoll )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFGiveawayItemPanel::CTFGiveawayItemPanel( IViewPort *pViewPort ) : Frame( NULL, PANEL_GIVEAWAY_ITEM )
 {
@@ -133,7 +133,7 @@ CTFGiveawayItemPanel::CTFGiveawayItemPanel( IViewPort *pViewPort ) : Frame( NULL
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFGiveawayItemPanel::~CTFGiveawayItemPanel( void )
 {
@@ -145,7 +145,7 @@ CTFGiveawayItemPanel::~CTFGiveawayItemPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGiveawayItemPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -164,7 +164,7 @@ void CTFGiveawayItemPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGiveawayItemPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -183,9 +183,9 @@ void CTFGiveawayItemPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFGiveawayItemPanel::PerformLayout( void ) 
+void CTFGiveawayItemPanel::PerformLayout( void )
 {
 	BaseClass::PerformLayout();
 
@@ -215,7 +215,7 @@ void CTFGiveawayItemPanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGiveawayItemPanel::ShowPanel(bool bShow)
 {
@@ -233,7 +233,7 @@ void CTFGiveawayItemPanel::ShowPanel(bool bShow)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGiveawayItemPanel::FireGameEvent( IGameEvent *event )
 {
@@ -246,7 +246,7 @@ void CTFGiveawayItemPanel::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGiveawayItemPanel::OnCommand( const char *command )
 {
@@ -269,7 +269,7 @@ void CTFGiveawayItemPanel::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGiveawayItemPanel::Update( void )
 {
@@ -334,7 +334,7 @@ void CTFGiveawayItemPanel::Update( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGiveawayItemPanel::BuildPlayerList( void )
 {
@@ -370,7 +370,7 @@ void CTFGiveawayItemPanel::BuildPlayerList( void )
 			if ( m_pPlayerListPanelKVs )
 			{
 				pPlayerPanel->ApplySettings( m_pPlayerListPanelKVs );
-			} 
+			}
 			pPlayerPanel->MakeReadyForUse();
 
 			vgui::IScheme *pScheme = vgui::scheme()->GetIScheme( GetScheme() );
@@ -392,7 +392,7 @@ void CTFGiveawayItemPanel::BuildPlayerList( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGiveawayItemPanel::SetItem( CEconItemView *pItem )
 {
@@ -402,7 +402,7 @@ void CTFGiveawayItemPanel::SetItem( CEconItemView *pItem )
 static vgui::DHANDLE<CTFGiveawayItemPanel> g_GiveawayItemPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFGiveawayItemPanel *OpenGiveawayItemPanel( CEconItemView *pItem )
 {
@@ -417,7 +417,7 @@ CTFGiveawayItemPanel *OpenGiveawayItemPanel( CEconItemView *pItem )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Test_GiveawayItemPanel( const CCommand &args )
 {

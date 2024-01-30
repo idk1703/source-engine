@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -94,7 +94,7 @@ void DoServerConnect()
 		return;
 	}
 	else if ( !pSocket->BindToAny( VMPI_SERVICE_PORT ) )
-	{	
+	{
 		printf( "Error binding a socket to port %d.\n", VMPI_SERVICE_PORT );
 		assert( false );
 		return;
@@ -119,13 +119,13 @@ void DoServerConnect()
 
 					static char ipString[128];
 					_snprintf( ipString, sizeof( ipString ), "%d.%d.%d.%d:%d", ipFrom.ip[0], ipFrom.ip[1], ipFrom.ip[2], ipFrom.ip[3], iListenPort );
-					
+
 					int argc = 3;
 					char *testargv[3];
 					testargv[0] = "<supposedly the executable name!>";
 					testargv[1] = "-mpi_worker";
 					testargv[2] = ipString;
-					
+
 					char **argv = testargv;
 					if ( MPI_Init( &argc, &argv ) )
 					{
@@ -144,7 +144,7 @@ void DoServerConnect()
 			}
 		}
 
-		Sleep( 100 );		
+		Sleep( 100 );
 	}
 
 	pSocket->Release();
@@ -175,7 +175,7 @@ void DoServerConnect()
 void SendData( const void *pBuf, int size )
 {
 #if defined( USE_MPI )
-    MPI_Send( (void*)pBuf, size, MPI_BYTE, !myProcId, 0, MPI_COMM_WORLD );
+	MPI_Send( (void*)pBuf, size, MPI_BYTE, !myProcId, 0, MPI_COMM_WORLD );
 #else
 	g_pSocket->Send( pBuf, size );
 #endif
@@ -187,7 +187,7 @@ void RecvData( CUtlVector<unsigned char> &recvBuf )
 #if defined( USE_MPI )
 	MPI_Status stat;
 	MPI_Probe(MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &stat);
-	
+
 	recvBuf.SetCount( stat.count );
 	MPI_Recv( recvBuf.Base(), stat.count, MPI_BYTE, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &stat);
 #else
@@ -229,7 +229,7 @@ int main( int argc, char* argv[] )
 
 		// Ok, now start blasting packets of different sizes and measure how long it takes to get an ack back.
 		int nIterations = 30;
-		
+
 		for ( int size=350; size <= 350000; size += 512 )
 		{
 			CUtlVector<unsigned char> buf;
@@ -244,22 +244,22 @@ int main( int argc, char* argv[] )
 			{
 				for ( int z=0; z < size; z++ )
 					buf[z] = (char)rand();
-				
+
 				SendData( buf.Base(), buf.Count() );
-				
+
 				CFastTimer timer;
 				timer.Start();
 					RecvData( recvBuf );
 				timer.End();
 
-				
+
 				// Make sure we got the same data back.
 				assert( recvBuf.Count() == buf.Count() );
 				for ( z=0; z < size; z++ )
 				{
 					assert( recvBuf[z] == buf[z] );
 				}
-					
+
 
 				//if ( i % 100 == 0 )
 				//	printf( "%05d\n", i );
@@ -270,9 +270,9 @@ printf( "%d\n", i );
 			double flTotalSeconds = throughputTimer.GetDuration().GetSeconds();
 
 			double flAvgRoundTripTime = flTotalRoundTripTime / nIterations;
-			printf( "%d: %.2f ms per roundtrip (%d bytes/sec) sec: %.2f megs: %.2f\n", 
-				size, 
-				flAvgRoundTripTime, 
+			printf( "%d: %.2f ms per roundtrip (%d bytes/sec) sec: %.2f megs: %.2f\n",
+				size,
+				flAvgRoundTripTime,
 				(int)((size*nIterations)/flTotalSeconds),
 				flTotalSeconds,
 				(double)(size*nIterations) / (1024*1024)  );
@@ -305,4 +305,3 @@ printf( "%d\n", i );
 
 	return 0;
 }
-

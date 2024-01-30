@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -53,7 +53,7 @@ struct Refract_DX9_Vars_t
 	int m_nForceAlphaWrite;
 };
 
-void InitParamsRefract_DX9( CBaseVSShader *pShader, IMaterialVar** params, const char *pMaterialName, 
+void InitParamsRefract_DX9( CBaseVSShader *pShader, IMaterialVar** params, const char *pMaterialName,
 						   Refract_DX9_Vars_t &info );
 void InitRefract_DX9( CBaseVSShader *pShader, IMaterialVar** params, Refract_DX9_Vars_t &info );
 void DrawRefract_DX9( CBaseVSShader *pShader, IMaterialVar** params, IShaderDynamicAPI *pShaderAPI,

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -28,7 +28,7 @@ public:
 	virtual			~CTEEnergySplash( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 	DECLARE_SERVERCLASS();
 
 public:
@@ -38,8 +38,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEEnergySplash::CTEEnergySplash( const char *name ) :
 	CBaseTempEntity( name )
@@ -50,24 +50,24 @@ CTEEnergySplash::CTEEnergySplash( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEEnergySplash::~CTEEnergySplash( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEEnergySplash::Test( const Vector& current_origin, const QAngle& current_angles )
 {
 	// Fill in data
 	m_vecPos = current_origin;
-	
+
 	AngleVectors( current_angles, &m_vecDir.GetForModify() );
-	
+
 	Vector forward;
 
 	m_vecPos.GetForModify()[2] += 24;
@@ -92,13 +92,13 @@ END_SEND_TABLE()
 static CTEEnergySplash g_TEEnergySplash( "Energy Splash" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//			*pos - 
-//			scale - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//			*pos -
+//			scale -
 //-----------------------------------------------------------------------------
 void TE_EnergySplash( IRecipientFilter& filter, float delay,
 	const Vector* pos, const Vector* dir, bool bExplosive )

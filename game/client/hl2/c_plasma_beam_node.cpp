@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -76,9 +76,9 @@ public:
 //##################################################################
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParticle - 
-//			timeDelta - 
+// Purpose:
+// Input  : *pParticle -
+//			timeDelta -
 // Output : float
 //-----------------------------------------------------------------------------
 CSmartPtr<CPlasmaSpray> CPlasmaSpray::Create( const char *pDebugName )
@@ -88,8 +88,8 @@ CSmartPtr<CPlasmaSpray> CPlasmaSpray::Create( const char *pDebugName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fTimeDelta - 
+// Purpose:
+// Input  : fTimeDelta -
 // Output : Vector
 //-----------------------------------------------------------------------------
 void CPlasmaSpray::UpdateVelocity( SimpleParticle *pParticle, float timeDelta )
@@ -185,7 +185,7 @@ C_PlasmaBeamNode::~C_PlasmaBeamNode(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PlasmaBeamNode::AddEntity( void )
 {
@@ -203,7 +203,7 @@ void C_PlasmaBeamNode::OnDataChanged(DataUpdateType_t updateType)
 	{
 		Vector vMoveDir = GetAbsVelocity();
 		float  flVel = VectorNormalize(vMoveDir);
-		m_pFirePlasmaSpray->m_ParticleCollision.Setup( GetAbsOrigin(), &vMoveDir, 0.3, 
+		m_pFirePlasmaSpray->m_ParticleCollision.Setup( GetAbsOrigin(), &vMoveDir, 0.3,
 											flVel-50, flVel+50, 800, 0.5 );
 		SetNextClientThink(gpGlobals->curtime + 0.01);
 	}
@@ -231,7 +231,7 @@ void C_PlasmaBeamNode::ClientThink(void)
 	{
 		return;
 	}
-	
+
 	trace_t trace;
 	Vector vEndTrace = GetAbsOrigin() + (0.3*GetAbsVelocity());
 	UTIL_TraceLine( GetAbsOrigin(), vEndTrace, MASK_SHOT, NULL, COLLISION_GROUP_NONE, &trace );
@@ -258,7 +258,7 @@ void C_PlasmaBeamNode::ClientThink(void)
 			vNewPos			+= vAdd;
 
 			sParticle = (SimpleParticle *) m_pFirePlasmaSpray->AddParticle( sizeof(SimpleParticle), handle, vNewPos );
-			
+
 			sParticle->m_flLifetime		= 0.0f;
 			sParticle->m_flDieTime		= PLASMASPARK_LIFETIME;
 

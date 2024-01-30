@@ -57,7 +57,7 @@ struct StaticPropBuild_t
 	int		m_LightmapResolutionX;
 	int		m_LightmapResolutionY;
 };
- 
+
 
 //-----------------------------------------------------------------------------
 // Used to cache collision model generation
@@ -311,7 +311,7 @@ static CPhysCollide* GetCollisionModel( char const* pModelName )
 // Tests a single leaf against the static prop
 //-----------------------------------------------------------------------------
 
-static bool TestLeafAgainstCollide( int depth, int* pNodeList, 
+static bool TestLeafAgainstCollide( int depth, int* pNodeList,
 	Vector const& origin, QAngle const& angles, CPhysCollide* pCollide )
 {
 	// Copy the planes in the node list into a list of planes
@@ -408,9 +408,9 @@ static void ComputeConvexHullLeaves_R( int node, int depth, int* pNodeList,
 			pNodeList[depth] = node;
 			++depth;
 
-			ComputeConvexHullLeaves_R( pNode->children[1], 
+			ComputeConvexHullLeaves_R( pNode->children[1],
 				depth, pNodeList, mins, maxs, origin, angles, pCollide, leafList );
-			
+
 			pNodeList[depth - 1] = - node - 1;
 			ComputeConvexHullLeaves_R( pNode->children[0],
 				depth, pNodeList, mins, maxs, origin, angles, pCollide, leafList );
@@ -434,7 +434,7 @@ static void ComputeConvexHullLeaves_R( int node, int depth, int* pNodeList,
 // Places Static Props in the level
 //-----------------------------------------------------------------------------
 
-static void ComputeStaticPropLeaves( CPhysCollide* pCollide, Vector const& origin, 
+static void ComputeStaticPropLeaves( CPhysCollide* pCollide, Vector const& origin,
 				QAngle const& angles, CUtlVector<unsigned short>& leafList )
 {
 	// Compute an axis-aligned bounding box for the collide
@@ -492,7 +492,7 @@ static void AddStaticPropToLump( StaticPropBuild_t const& build )
 	// Insert an element into the lump data...
 	int i = s_StaticPropLump.AddToTail( );
 	StaticPropLump_t& propLump = s_StaticPropLump[i];
-	propLump.m_PropType = AddStaticPropDictLump( build.m_pModelName ); 
+	propLump.m_PropType = AddStaticPropDictLump( build.m_pModelName );
 	VectorCopy( build.m_Origin, propLump.m_Origin );
 	VectorCopy( build.m_Angles, propLump.m_Angles );
 	propLump.m_FirstLeaf = s_StaticPropLeafLump.Count();
@@ -509,7 +509,7 @@ static void AddStaticPropToLump( StaticPropBuild_t const& build )
 	propLump.m_flForcedFadeScale = build.m_flForcedFadeScale;
 	propLump.m_nMinDXLevel = build.m_nMinDXLevel;
 	propLump.m_nMaxDXLevel = build.m_nMaxDXLevel;
-	
+
 	if (build.m_pLightingOrigin && *build.m_pLightingOrigin)
 	{
 		if (ComputeLightingOrigin( build, propLump.m_LightingOrigin ))
@@ -627,7 +627,7 @@ void EmitStaticProps()
 
 			if (IntForKey( &entities[i], "generatelightmaps") == 0)
 			{
-				build.m_Flags |= STATIC_PROP_NO_PER_TEXEL_LIGHTING;			
+				build.m_Flags |= STATIC_PROP_NO_PER_TEXEL_LIGHTING;
 				build.m_LightmapResolutionX = 0;
 				build.m_LightmapResolutionY = 0;
 			}
@@ -649,11 +649,11 @@ void EmitStaticProps()
 			build.m_FadesOut = (build.m_FadeMaxDist > 0);
 			build.m_pLightingOrigin = ValueForKey( &entities[i], "lightingorigin" );
 			if (build.m_FadesOut)
-			{			  
+			{
 				build.m_FadeMinDist = FloatForKey( &entities[i], "fademindist" );
 				if (build.m_FadeMinDist < 0)
 				{
-					build.m_FadeMinDist = build.m_FadeMaxDist; 
+					build.m_FadeMinDist = build.m_FadeMaxDist;
 				}
 			}
 			else
@@ -715,7 +715,7 @@ const vertexFileHeader_t * mstudiomodel_t::CacheVertexData( void * pModelData )
 
 	// mandatory callback to make requested data resident
 	// load and persist the vertex file
-	strcpy( fileName, "models/" );	
+	strcpy( fileName, "models/" );
 	strcat( fileName, g_pActiveStudioHdr->pszName() );
 	Q_StripExtension( fileName, fileName, sizeof( fileName ) );
 	strcat( fileName, ".vvd" );
@@ -756,4 +756,3 @@ const vertexFileHeader_t * mstudiomodel_t::CacheVertexData( void * pModelData )
 	g_pActiveStudioHdr->pVertexBase = (void*)pVvdHdr;
 	return pVvdHdr;
 }
-

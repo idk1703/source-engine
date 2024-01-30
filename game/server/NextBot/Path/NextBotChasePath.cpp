@@ -39,14 +39,14 @@ Vector ChasePath::PredictSubjectPosition( INextBot *bot, CBaseEntity *subject ) 
 
 	// estimate time to reach subject, assuming maximum speed
 	float leadTime = 0.5f + ( range / ( mover->GetRunSpeed() + 0.0001f ) );
-	
-	// estimate amount to lead the subject	
+
+	// estimate amount to lead the subject
 	Vector lead = leadTime * subject->GetAbsVelocity();
 	lead.z = 0.0f;
 
 	if ( DotProduct( to, lead ) < 0.0f )
 	{
-		// the subject is moving towards us - only pay attention 
+		// the subject is moving towards us - only pay attention
 		// to his perpendicular velocity for leading
 		Vector2D to2D = to.AsVector2D();
 		to2D.NormalizeInPlace();
@@ -141,9 +141,9 @@ Vector ChasePath::PredictSubjectPosition( INextBot *bot, CBaseEntity *subject ) 
 	if ( !leadArea || leadArea->GetZ( pathTarget.x, pathTarget.y ) < pathTarget.z - mover->GetMaxJumpHeight() )
 	{
 		// would fall off a cliff
-		return subjectPos;		
+		return subjectPos;
 	}
-	
+
 	/** This needs more thought - it is preventing bots from using dropdowns
 	if ( mover->HasPotentialGap( subjectPos, pathTarget, &fraction ) )
 	{
@@ -151,7 +151,7 @@ Vector ChasePath::PredictSubjectPosition( INextBot *bot, CBaseEntity *subject ) 
 		pathTarget = subjectPos + fraction * ( pathTarget - subjectPos );
 	}
 	*/
-	
+
 	return pathTarget;
 }
 
@@ -161,6 +161,6 @@ void DirectChasePath::NotifyVictim( INextBot *me, CBaseEntity *victim )
 	CBaseCombatCharacter *pBCCVictim = ToBaseCombatCharacter( victim );
 	if ( !pBCCVictim )
 		return;
-	
+
 	pBCCVictim->OnPursuedBy( me );
 }

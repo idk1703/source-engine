@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -30,7 +30,7 @@ IMPLEMENT_SERVERCLASS_ST( CWeaponCubemap, DT_WeaponCubemap )
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCubemap::Precache( void )
 {

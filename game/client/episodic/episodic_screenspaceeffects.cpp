@@ -30,7 +30,7 @@
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CStunEffect::Init( void ) 
+void CStunEffect::Init( void )
 {
 	m_flDuration = 0.0f;
 	m_flFinishTime = 0.0f;
@@ -71,7 +71,7 @@ void CStunEffect::Render( int x, int y, int w, int h )
 		return;
 
 	CMatRenderContextPtr pRenderContext( materials );
-	
+
 	// Set ourselves to the proper rendermode
 	pRenderContext->MatrixMode( MATERIAL_VIEW );
 	pRenderContext->PushMatrix();
@@ -121,7 +121,7 @@ void CStunEffect::Render( int x, int y, int w, int h )
 
 		// Draw full screen alpha-blended quad
 		pRenderContext->DrawScreenSpaceRectangle( m_EffectMaterial, 0, 0, w, h,
-			vX, 0, (m_StunTexture->GetActualWidth()-1)+vX, (m_StunTexture->GetActualHeight()-1), 
+			vX, 0, (m_StunTexture->GetActualWidth()-1)+vX, (m_StunTexture->GetActualHeight()-1),
 			m_StunTexture->GetActualWidth(), m_StunTexture->GetActualHeight() );
 	}
 
@@ -149,7 +149,7 @@ void CStunEffect::Render( int x, int y, int w, int h )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CEP1IntroEffect::Init( void ) 
+void CEP1IntroEffect::Init( void )
 {
 	m_flDuration = 0.0f;
 	m_flFinishTime = 0.0f;
@@ -162,7 +162,7 @@ void CEP1IntroEffect::Init( void )
 	m_StunTexture.Init( STUN_TEXTURE, TEXTURE_GROUP_CLIENT_EFFECTS );
 }
 
-void CEP1IntroEffect::Shutdown( void ) 
+void CEP1IntroEffect::Shutdown( void )
 {
 	m_EffectMaterial.Shutdown();
 	m_StunTexture.Shutdown();
@@ -224,7 +224,7 @@ void CEP1IntroEffect::Render( int x, int y, int w, int h )
 		return;
 
 	CMatRenderContextPtr pRenderContext( materials );
-	
+
 	// Set ourselves to the proper rendermode
 	pRenderContext->MatrixMode( MATERIAL_VIEW );
 	pRenderContext->PushMatrix();
@@ -247,7 +247,7 @@ void CEP1IntroEffect::Render( int x, int y, int w, int h )
 	}
 
 	byte overlaycolor[4] = { 255, 255, 255, 0 };
-	
+
 	// Get our fade value depending on our fade duration
 	overlaycolor[3] = GetFadeAlpha();
 	if ( g_pMaterialSystemHardwareConfig->UsesSRGBCorrectBlending() )
@@ -270,11 +270,11 @@ void CEP1IntroEffect::Render( int x, int y, int w, int h )
 
 	// Scale percentage
 	float flScalePerc = 0.02f + ( 0.01f * cosf( gpGlobals->curtime * 2.0f ) * cosf( gpGlobals->curtime * 0.5f ) );
-	
+
 	// Scaled offsets for the UVs (as texels)
 	float flUOffset = ( m_StunTexture->GetActualWidth() - 1 ) * flScalePerc * 0.5f;
 	float flVOffset = ( m_StunTexture->GetActualHeight() - 1 ) * flScalePerc * 0.5f;
-	
+
 	// New UVs with scaling offsets
 	float flU1 = flUOffset;
 	float flU2 = ( m_StunTexture->GetActualWidth() - 1 ) - flUOffset;
@@ -283,8 +283,8 @@ void CEP1IntroEffect::Render( int x, int y, int w, int h )
 
 	// Draw the "zoomed" overlay
 	pRenderContext->DrawScreenSpaceRectangle( m_EffectMaterial, vX, vY, w, h,
-		flU1, flV1, 
-		flU2, flV2, 
+		flU1, flV1,
+		flU2, flV2,
 		m_StunTexture->GetActualWidth(), m_StunTexture->GetActualHeight() );
 
 	render->ViewDrawFade( overlaycolor, m_EffectMaterial );
@@ -313,7 +313,7 @@ void CEP1IntroEffect::Render( int x, int y, int w, int h )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CEP2StunEffect::Init( void ) 
+void CEP2StunEffect::Init( void )
 {
 	m_flDuration = 0.0f;
 	m_flFinishTime = 0.0f;
@@ -326,7 +326,7 @@ void CEP2StunEffect::Init( void )
 	m_StunTexture.Init( STUN_TEXTURE, TEXTURE_GROUP_CLIENT_EFFECTS );
 }
 
-void CEP2StunEffect::Shutdown( void ) 
+void CEP2StunEffect::Shutdown( void )
 {
 	m_EffectMaterial.Shutdown();
 	m_StunTexture.Shutdown();
@@ -430,7 +430,7 @@ void CEP2StunEffect::Render( int x, int y, int w, int h )
 	// Scale percentage
 	float flScalePerc = flBaseScale + ( 0.01f * cosf( gpGlobals->curtime * 2.0f ) * cosf( gpGlobals->curtime * 0.5f ) );
 
-    // Scaled offsets for the UVs (as texels)
+	// Scaled offsets for the UVs (as texels)
 	float flUOffset = ( m_StunTexture->GetActualWidth() - 1 ) * flScalePerc * 0.5f;
 	float flVOffset = ( m_StunTexture->GetActualHeight() - 1 ) * flScalePerc * 0.5f;
 
@@ -442,8 +442,8 @@ void CEP2StunEffect::Render( int x, int y, int w, int h )
 
 	// Draw the "zoomed" overlay
 	pRenderContext->DrawScreenSpaceRectangle( m_EffectMaterial, vX, vY, w, h,
-		flU1, flV1, 
-		flU2, flV2, 
+		flU1, flV1,
+		flU2, flV2,
 		m_StunTexture->GetActualWidth(), m_StunTexture->GetActualHeight() );
 
 	render->ViewDrawFade( overlaycolor, m_EffectMaterial );

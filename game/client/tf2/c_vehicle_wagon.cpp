@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,7 +13,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_VehicleWagon : public C_BaseTFFourWheelVehicle
 {
@@ -34,7 +34,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_VehicleWagon::C_VehicleWagon()
 {
@@ -42,7 +42,7 @@ C_VehicleWagon::C_VehicleWagon()
 
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CVehicleWagonControlPanel : public CObjectControlPanel
 {
@@ -68,16 +68,16 @@ DECLARE_VGUI_SCREEN_FACTORY( CVehicleWagonControlPanel, "vehicle_wagon_control_p
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CVehicleWagonControlPanel::CVehicleWagonControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CVehicleBatteringRamControlPanel" ) 
+	: BaseClass( parent, "CVehicleBatteringRamControlPanel" )
 {
 }
 
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CVehicleWagonControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -126,7 +126,7 @@ void CVehicleWagonControlPanel::OnTick()
 	m_pPassengerLabel->SetText( buf );
 
 	// Update the get in button
-	if ( pWagon->IsPlayerInVehicle( C_BaseTFPlayer::GetLocalPlayer() ) ) 
+	if ( pWagon->IsPlayerInVehicle( C_BaseTFPlayer::GetLocalPlayer() ) )
 	{
 		m_pOccupyButton->SetEnabled( false );
 		return;
@@ -180,4 +180,3 @@ void CVehicleWagonControlPanel::OnCommand( const char *command )
 
 	BaseClass::OnCommand(command);
 }
-

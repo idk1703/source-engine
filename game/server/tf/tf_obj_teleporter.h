@@ -16,12 +16,12 @@
 
 class CTFPlayer;
 
-enum 
+enum
 {
 	TTYPE_NONE=0,
 	TTYPE_ENTRANCE,
 	TTYPE_EXIT,
-#ifdef STAGING_ONLY	
+#ifdef STAGING_ONLY
 	TTYPE_SPEEDPAD,
 #endif
 };
@@ -84,7 +84,7 @@ public:
 	}
 
 	// Wrench hits
-	virtual bool	Command_Repair( CTFPlayer *pActivator, float flRepairMod );   
+	virtual bool	Command_Repair( CTFPlayer *pActivator, float flRepairMod );
 	void			AddHealth( int nHealthToAdd )
 	{
 		SetHealth( MIN( GetMaxHealth(), GetHealth() + nHealthToAdd ) );

@@ -51,12 +51,12 @@ PRECACHE_REGISTER_FN(PrecacheSyringe);
 #define SYRINGE_VELOCITY	1000.0f
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFBaseProjectile *CTFProjectile_Syringe::Create( 
-	const Vector &vecOrigin, 
-	const QAngle &vecAngles, 
+CTFBaseProjectile *CTFProjectile_Syringe::Create(
+	const Vector &vecOrigin,
+	const QAngle &vecAngles,
 	CTFWeaponBaseGun *pLauncher /*= NULL*/,
-	CBaseEntity *pOwner /*= NULL*/, 
-	CBaseEntity *pScorer /*= NULL*/, 
+	CBaseEntity *pOwner /*= NULL*/,
+	CBaseEntity *pScorer /*= NULL*/,
 	bool bCritical /*= false */
 ) {
 	return CTFBaseProjectile::Create( "tf_projectile_syringe", vecOrigin, vecAngles, pOwner, SYRINGE_VELOCITY, g_sModelIndexSyringe, SYRINGE_DISPATCH_EFFECT, pScorer, bCritical );
@@ -66,7 +66,7 @@ CTFBaseProjectile *CTFProjectile_Syringe::Create(
 // Purpose:
 //-----------------------------------------------------------------------------
 unsigned int CTFProjectile_Syringe::PhysicsSolidMaskForEntity( void ) const
-{ 
+{
 	return BaseClass::PhysicsSolidMaskForEntity() | CONTENTS_REDTEAM | CONTENTS_BLUETEAM;
 }
 
@@ -187,7 +187,7 @@ void CTFProjectile_Tranq::ProjectileTouch( CBaseEntity *pOther )
 //-----------------------------------------------------------------------------
 void GetSyringeTrailParticleName( CTFPlayer *pPlayer, CAttribute_String *attrParticleName, bool bCritical )
 {
-	int iTeamNumber = TF_TEAM_RED;	
+	int iTeamNumber = TF_TEAM_RED;
 	if ( pPlayer )
 	{
 		iTeamNumber = pPlayer->GetTeamNumber();
@@ -212,7 +212,7 @@ void GetSyringeTrailParticleName( CTFPlayer *pPlayer, CAttribute_String *attrPar
 			}
 		}
 	}
-	
+
 	if ( iTeamNumber == TF_TEAM_BLUE )
 	{
 		attrParticleName->set_value( bCritical ? "nailtrails_medic_blue_crit" : "nailtrails_medic_blue" );
@@ -237,7 +237,7 @@ void ClientsideProjectileSyringeCallback( const CEffectData &data )
 		if ( pSyringe )
 		{
 			CAttribute_String attrParticleName;
-			
+
 			pSyringe->m_nSkin = ( pPlayer->GetTeamNumber() == TF_TEAM_RED ) ? 0 : 1;
 			bool bCritical = ( ( data.m_nDamageType & DMG_CRITICAL ) != 0 );
 			GetSyringeTrailParticleName( pPlayer, &attrParticleName, bCritical );

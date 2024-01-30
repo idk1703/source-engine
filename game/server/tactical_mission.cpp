@@ -18,7 +18,7 @@ CTacticalMissionManager &TheTacticalMissions( void )
 
 
 //---------------------------------------------------------------------------------------------
-class CListMissions : public CTacticalMissionManager::IForEachMission 
+class CListMissions : public CTacticalMissionManager::IForEachMission
 {
 public:
 	virtual bool Inspect( const CTacticalMission &mission )

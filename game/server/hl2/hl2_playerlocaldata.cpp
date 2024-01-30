@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -66,4 +66,3 @@ CHL2PlayerLocalData::CHL2PlayerLocalData()
 	m_flFlashBattery = 0.0f;
 #endif
 }
-

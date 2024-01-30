@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -247,7 +247,7 @@ public:
 		if ( pFoundPlayer )
 		{
 			// Crack open some attributes
-			
+
 			IGameEvent *event = gameeventmanager->CreateEvent( "item_found" );
 			if ( event )
 			{

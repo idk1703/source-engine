@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -80,23 +80,23 @@ void CTFModeManager::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 CTFModeManager::CTFModeManager( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 CTFModeManager::~CTFModeManager( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFModeManager::UserCmd_Commander( void )
 {
@@ -104,7 +104,7 @@ void CTFModeManager::UserCmd_Commander( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFModeManager::UserCmd_Normal( void )
 {
@@ -114,7 +114,7 @@ void CTFModeManager::UserCmd_Normal( void )
 //-----------------------------------------------------------------------------
 // Purpose: Switch to / from commander mode ( won't change if current mode is already
 //  correct
-// Input  : commander - 
+// Input  : commander -
 //-----------------------------------------------------------------------------
 void CTFModeManager::SwitchMode( bool commander, bool force )
 {
@@ -133,8 +133,8 @@ void CTFModeManager::SwitchMode( bool commander, bool force )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *newmap - 
+// Purpose:
+// Input  : *newmap -
 //-----------------------------------------------------------------------------
 void CTFModeManager::LevelInit( const char *newmap )
 {
@@ -153,7 +153,7 @@ void CTFModeManager::LevelInit( const char *newmap )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFModeManager::LevelShutdown( void )
 {

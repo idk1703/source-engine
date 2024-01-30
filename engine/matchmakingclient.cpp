@@ -25,7 +25,7 @@ extern IVEngineClient *engineClient;
 extern IXboxSystem *g_pXboxSystem;
 
 //-----------------------------------------------------------------------------
-// Purpose: Start a matchmaking client 
+// Purpose: Start a matchmaking client
 //-----------------------------------------------------------------------------
 void CMatchmaking::StartClient( bool bSystemLink )
 {
@@ -132,7 +132,7 @@ void CMatchmaking::HandleSystemLinkReply( netpacket_t *pPacket )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Search for a session to join 
+// Purpose: Search for a session to join
 //-----------------------------------------------------------------------------
 bool CMatchmaking::SearchForSession()
 {
@@ -146,7 +146,7 @@ bool CMatchmaking::SearchForSession()
 	uint ret = 0;
 
 	// Call once to get the necessary buffer size
-	ret = g_pXboxSystem->SessionSearch( 
+	ret = g_pXboxSystem->SessionSearch(
 		SESSION_MATCH_QUERY_PLAYER_MATCH,
 		XBX_GetPrimaryUserId(),
 		MAX_SEARCHRESULTS,
@@ -164,7 +164,7 @@ bool CMatchmaking::SearchForSession()
 
 	// Allocate the buffer and call again
 	m_pSearchResults = (XSESSION_SEARCHRESULT_HEADER*)malloc( cbResultsBytes );
-	ret = g_pXboxSystem->SessionSearch( 
+	ret = g_pXboxSystem->SessionSearch(
 		SESSION_MATCH_QUERY_PLAYER_MATCH,	// Procedure index
 		XBX_GetPrimaryUserId(),				// User index
 		MAX_SEARCHRESULTS,					// Maximum results
@@ -220,10 +220,10 @@ void CMatchmaking::UpdateSearch()
 				// Note: XNetQosLookup requires only 2 successful probes to be received from the host.
 				// This is much less than the recommended 8 probes because on a 10% data loss profile
 				// it is impossible to find the host when requiring 8 probes to be received.
-				XNetQosLookup(  m_pSearchResults->dwSearchResults, 
+				XNetQosLookup(  m_pSearchResults->dwSearchResults,
 								m_QoSxnaddr,
-								m_QoSxnkid, 
-								m_QoSxnkey, 
+								m_QoSxnkid,
+								m_QoSxnkey,
 								0,				// number of security gateways to probe
 								NULL,			// gateway ip addresses
 								NULL,			// gateway service ids
@@ -276,7 +276,7 @@ void CMatchmaking::UpdateSearch()
 				{
 					systemLinkInfo_s *pSearchInfo = (systemLinkInfo_s*)m_pSystemLinkResults[i];
 					XSESSION_SEARCHRESULT *pResult = &pSearchInfo->Result;
-					
+
 					hostData_s hostData;
 					hostData.gameState = pSearchInfo->gameState;
 					hostData.gameTime = pSearchInfo->gameTime;
@@ -338,7 +338,7 @@ void CMatchmaking::UpdateQosLookup()
 		// unsigned short ping = m_pQoSResult->axnqosinfo[i].wRttMedInMsecs;
 		unsigned short ping = m_pQoSResult->axnqosinfo[i].wRttMinInMsecs;	// Use min ping to suit better for traffic bursts and lossy connections
 		DevMsg( "Result #%d: ping min %d ms, med %d ms\n", i, m_pQoSResult->axnqosinfo[i].wRttMinInMsecs, m_pQoSResult->axnqosinfo[i].wRttMedInMsecs );
-		
+
 		// On X360 ping calculations are reported between 4 and 5 times bigger
 		// than the actual upstream/downstream latency of the connection to Xbox LIVE
 		const int pingFactor = 5;
@@ -764,7 +764,7 @@ void CMatchmaking::SendJoinRequest( netadr_t *adr )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Process the session host's response to our join request 
+// Purpose: Process the session host's response to our join request
 //-----------------------------------------------------------------------------
 bool CMatchmaking::ProcessJoinResponse( MM_JoinResponse *pMsg )
 {
@@ -803,7 +803,7 @@ bool CMatchmaking::ProcessJoinResponse( MM_JoinResponse *pMsg )
 		m_nHostOwnerId = pMsg->m_nOwnerId;
 
 		ApplySessionProperties( pMsg->m_ContextCount, pMsg->m_PropertyCount, pMsg->m_SessionContexts.Base(), pMsg->m_SessionProperties.Base() );
-		
+
 		for ( int i = 0; i < m_Local.m_cPlayers; ++i )
 		{
 			m_Local.m_iTeam[i] = pMsg->m_iTeam;
@@ -825,7 +825,7 @@ bool CMatchmaking::ProcessJoinResponse( MM_JoinResponse *pMsg )
 			{
 				return true;
 			}
-			
+
 			// Host has sent us some new session properties
 			ApplySessionProperties( pMsg->m_ContextCount, pMsg->m_PropertyCount, pMsg->m_SessionContexts.Base(), pMsg->m_SessionProperties.Base() );
 
@@ -924,7 +924,7 @@ void CMatchmaking::ApplySessionProperties( int numContexts, int numProperties, X
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Send a join request to the session host 
+// Purpose: Send a join request to the session host
 //-----------------------------------------------------------------------------
 bool CMatchmaking::ConnectToHost()
 {
@@ -958,7 +958,7 @@ bool CMatchmaking::ConnectToHost()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Waiting for a connection response from the session host 
+// Purpose: Waiting for a connection response from the session host
 //-----------------------------------------------------------------------------
 void CMatchmaking::UpdateConnecting()
 {
@@ -990,4 +990,3 @@ CON_COMMAND( mm_select_session, "Select a session" )
 		g_pMatchmaking->SelectSession( atoi( args[1] ) );
 	}
 }
-

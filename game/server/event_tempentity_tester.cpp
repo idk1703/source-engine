@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -17,10 +17,10 @@
 #define TEMPENT_TEST_GAP		1.0f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &vecOrigin - 
-//			&vecAngles - 
-//			*single_te - 
+// Purpose:
+// Input  : &vecOrigin -
+//			&vecAngles -
+//			*single_te -
 // Output : CBaseEntity
 //-----------------------------------------------------------------------------
 CBaseEntity *CTempEntTester::Create( const Vector &vecOrigin, const QAngle &vecAngles, const char *lifetime, const char *single_te )

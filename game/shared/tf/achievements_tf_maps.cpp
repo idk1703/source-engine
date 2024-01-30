@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -28,7 +28,7 @@
 class CAchievementTFFoundry_KillCappingEnemy : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -41,7 +41,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFFoundry_KillCappingEnemy, ACHIEVEMENT_TF_MAPS
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFFoundry_PlayGameFriends : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -70,7 +70,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFFoundry_PlayGameFriends, ACHIEVEMENT_TF_MAPS_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFFoundry_WinMinTime : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -103,7 +103,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFFoundry_WinMinTime, ACHIEVEMENT_TF_MAPS_FOUND
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFFoundry_WinRounds : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 137 );
@@ -134,7 +134,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFFoundry_WinRounds, ACHIEVEMENT_TF_MAPS_FOUNDR
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFFoundry_FastFinalCap : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -217,7 +217,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFFoundry_FastFinalCap, ACHIEVEMENT_TF_MAPS_FOU
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFFoundry_TeleportAndCap : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -265,7 +265,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFFoundry_TeleportAndCap, ACHIEVEMENT_TF_MAPS_F
 class CAchievementTFFoundry_PushIntoCauldron : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -278,7 +278,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFFoundry_PushIntoCauldron, ACHIEVEMENT_TF_MAPS
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFFoundry_PushBackAndWin : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -331,7 +331,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFFoundry_PushBackAndWin, ACHIEVEMENT_TF_MAPS_F
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFFoundry_PlayEachClass : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 1 );
@@ -345,7 +345,7 @@ class CAchievementTFFoundry_PlayEachClass : public CBaseTFAchievementSimple
 		ListenForGameEvent( "teamplay_round_start" );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pLocalPlayer = ToTFPlayer( C_BasePlayer::GetLocalPlayer() );
 		if ( pLocalPlayer && ( pLocalPlayer == pAttacker ) && ( pVictim != pAttacker ) && ( pLocalPlayer->m_Shared.GetDesiredPlayerClassIndex() > TF_CLASS_UNDEFINED ) )
@@ -376,7 +376,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFFoundry_PlayEachClass, ACHIEVEMENT_TF_MAPS_FO
 class CAchievementTFFoundry_KillEnemyOnRoof : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 1 );
@@ -391,7 +391,7 @@ public:
 		ListenForGameEvent( "player_killed_achievement_zone" );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pLocalPlayer = ToTFPlayer( C_BasePlayer::GetLocalPlayer() );
 		if ( pLocalPlayer && ( pLocalPlayer == pVictim ) )
@@ -433,7 +433,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFFoundry_KillEnemyOnRoof, ACHIEVEMENT_TF_MAPS_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFFoundry_BackAndForthBattle : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -485,7 +485,7 @@ class CAchievementTFFoundry_AchieveProgress1 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFFoundry_AchieveProgress1, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 7, ACHIEVEMENT_TF_MAPS_FOUNDRY_START_RANGE, ACHIEVEMENT_TF_MAPS_FOUNDRY_END_RANGE );
@@ -501,7 +501,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFFoundry_AchieveProgress1, ACHIEVEMENT_TF_MAPS
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDoomsday_SoloCapture : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -555,7 +555,7 @@ class CAchievementTFDoomsday_SoloCapture : public CBaseTFAchievementSimple
 		}
 	}
 
-private: 
+private:
 	bool	m_bCarriedFromHome;
 };
 DECLARE_ACHIEVEMENT( CAchievementTFDoomsday_SoloCapture, ACHIEVEMENT_TF_MAPS_DOOMSDAY_SOLO_CAPTURE, "TF_MAPS_DOOMSDAY_SOLO_CAPTURE", 5 );
@@ -563,7 +563,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDoomsday_SoloCapture, ACHIEVEMENT_TF_MAPS_DOO
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDoomsday_PlayGameFriends : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -592,7 +592,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDoomsday_PlayGameFriends, ACHIEVEMENT_TF_MAPS
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDoomsday_WinRounds : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 138 );
@@ -623,7 +623,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDoomsday_WinRounds, ACHIEVEMENT_TF_MAPS_DOOMS
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDoomsday_PlayEachClass : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_HAS_COMPONENTS );
 		SetGoal( ( TF_LAST_NORMAL_CLASS - 1 ) - TF_FIRST_NORMAL_CLASS + 1 ); //( TF_LAST_NORMAL_CLASS - 1 ) to exclude the new civilian class
@@ -641,7 +641,7 @@ class CAchievementTFDoomsday_PlayEachClass : public CBaseTFAchievementSimple
 		{
 			int iPlayer = event->GetInt( "player" );
 			int iType = event->GetInt( "eventtype" );
-	
+
 			switch( iType )
 			{
 			case TF_FLAGEVENT_CAPTURE:
@@ -653,10 +653,10 @@ class CAchievementTFDoomsday_PlayEachClass : public CBaseTFAchievementSimple
 						int iClass = pTFPlayer->GetPlayerClass()->GetClassIndex();
 						if ( iClass >= TF_FIRST_NORMAL_CLASS && iClass <= ( TF_LAST_NORMAL_CLASS - 1 ) ) //( TF_LAST_NORMAL_CLASS - 1 ) to exclude the new civilian class
 						{
-							// yes, the achievement is satisfied for this class, set the corresponding bit	    
+							// yes, the achievement is satisfied for this class, set the corresponding bit
 							int iBitNumber = ( iClass - TF_FIRST_NORMAL_CLASS );
 							EnsureComponentBitSetAndEvaluate( iBitNumber );
-						}							
+						}
 					}
 				}
 				break;
@@ -671,7 +671,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDoomsday_PlayEachClass, ACHIEVEMENT_TF_MAPS_D
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDoomsday_KillEnemiesOnElevator : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -726,7 +726,7 @@ class CAchievementTFDoomsday_KillEnemiesOnElevator : public CBaseTFAchievementSi
 			IncrementCount();
 		}
 	}
-	 
+
 private:
 	CUtlVector< float >	m_History;
 	float m_flTimeWindow;
@@ -737,7 +737,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDoomsday_KillEnemiesOnElevator, ACHIEVEMENT_T
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDoomsday_PushBackAndWin : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -790,7 +790,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDoomsday_PushBackAndWin, ACHIEVEMENT_TF_MAPS_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDoomsday_KillCarriers : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -818,7 +818,7 @@ class CAchievementTFDoomsday_KillCarriers : public CBaseTFAchievementSimple
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -846,7 +846,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDoomsday_KillCarriers, ACHIEVEMENT_TF_MAPS_DO
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDoomsday_RideTheElevator : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -859,7 +859,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDoomsday_RideTheElevator, ACHIEVEMENT_TF_MAPS
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDoomsday_DenyNeutralPickup : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -872,7 +872,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDoomsday_DenyNeutralPickup, ACHIEVEMENT_TF_MA
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDoomsday_PushIntoExhaust : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -885,7 +885,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDoomsday_PushIntoExhaust, ACHIEVEMENT_TF_MAPS
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDoomsday_DefendCarrier : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -900,7 +900,7 @@ class CAchievementTFDoomsday_AchieveProgress1 : public CAchievement_AchievedCoun
 {
 public:
 	DECLARE_CLASS( CAchievementTFDoomsday_AchieveProgress1, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 7, ACHIEVEMENT_TF_MAPS_DOOMSDAY_START_RANGE, ACHIEVEMENT_TF_MAPS_DOOMSDAY_END_RANGE );
@@ -911,7 +911,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDoomsday_AchieveProgress1, ACHIEVEMENT_TF_MAP
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFStandin_WinRounds : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 139 );
@@ -942,7 +942,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFStandin_WinRounds, ACHIEVEMENT_TF_MAPS_STANDI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFProcess_WinRounds : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 140 );
@@ -973,7 +973,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFProcess_WinRounds, ACHIEVEMENT_TF_MAPS_PROCES
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSnakewater_WinRounds : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 141 );
@@ -1004,7 +1004,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSnakewater_WinRounds, ACHIEVEMENT_TF_MAPS_SNA
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSnakewater_PushBackAndWin : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1056,14 +1056,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFSnakewater_PushBackAndWin, ACHIEVEMENT_TF_MAP
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSnakewater_TeamKill : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 		SetMapNameFilter( "cp_snakewater_final1" );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( TFGameRules() && ( TFGameRules()->State_Get() == GR_STATE_RND_RUNNING ) )
 		{
@@ -1071,7 +1071,7 @@ class CAchievementTFSnakewater_TeamKill : public CBaseTFAchievementSimple
 			{
 				C_TFPlayer *pTFAttacker = ToTFPlayer( pAttacker );
 				C_TFPlayer *pTFVictim = ToTFPlayer( pVictim );
-				
+
 				if ( pTFAttacker && pTFAttacker->GetTeam() && pTFVictim && pTFVictim->GetTeam() )
 				{
 					// must have 12 or more players on the server
@@ -1105,7 +1105,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSnakewater_TeamKill, ACHIEVEMENT_TF_MAPS_SNAK
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSnakewater_DoubleAirDeaths : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 1 );
@@ -1147,7 +1147,7 @@ class CAchievementTFSnakewater_DoubleAirDeaths : public CBaseTFAchievementSimple
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_TFPlayer *pTFAttacker = ToTFPlayer( pAttacker );
 		C_TFPlayer *pTFVictim = ToTFPlayer( pVictim );
@@ -1160,7 +1160,7 @@ class CAchievementTFSnakewater_DoubleAirDeaths : public CBaseTFAchievementSimple
 			{
 				int iWeaponID = event->GetInt( "weaponid" );
 				if ( ( iWeaponID == TF_WEAPON_ROCKETLAUNCHER ) || ( iWeaponID == TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT ) )
-				{		
+				{
 					if ( pTFAttacker == pTFLocalPlayer )
 					{
 						if ( m_PotentialPartners.Find( pTFVictim->GetUserID() ) == m_PotentialPartners.InvalidIndex() )
@@ -1191,7 +1191,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSnakewater_DoubleAirDeaths, ACHIEVEMENT_TF_MA
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSnakewater_KillEnemiesInMiddle : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 15 );

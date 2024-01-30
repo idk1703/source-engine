@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -27,12 +27,12 @@
 
 //-----------------------------------------------------------------------------
 // Purpose: Warning/Msg call back through this API
-// Input  : type - 
-//			*pMsg - 
+// Input  : type -
+//			*pMsg -
 // Output : SpewRetval_t
 //-----------------------------------------------------------------------------
 SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
-{	
+{
 	switch ( type )
 	{
 
@@ -50,7 +50,7 @@ SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
 		exit( -1 );
 		break;
 	}
-	
+
 	return SPEW_CONTINUE;
 }
 
@@ -98,7 +98,7 @@ bool CPanelZooApp::Create()
 	SpewOutputFunc( SpewFunc );
 	SpewActivate( "panelzoo", 2 );
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "inputsystem.dll",		INPUTSYSTEM_INTERFACE_VERSION },
 		{ "vgui2.dll",				VGUI_IVGUI_INTERFACE_VERSION },
@@ -170,9 +170,3 @@ int CPanelZooApp::Main()
 
 	return 1;
 }
-
-
-
-
-
-

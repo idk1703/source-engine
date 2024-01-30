@@ -27,7 +27,7 @@ class CSaveDocumentQuery : public vgui::Frame
 	DECLARE_CLASS_SIMPLE( CSaveDocumentQuery, vgui::Frame );
 
 public:
-	CSaveDocumentQuery(	vgui::Panel *pParent, const char *filename, const char *pFileType, int nContext, 
+	CSaveDocumentQuery(	vgui::Panel *pParent, const char *filename, const char *pFileType, int nContext,
 		vgui::Panel *pActionSignalTarget = 0, KeyValues *pKeyValues = 0 );
 	~CSaveDocumentQuery();
 
@@ -71,7 +71,7 @@ void ShowSaveDocumentQuery( vgui::Panel *pParent, const char *pFileName, const c
 //-----------------------------------------------------------------------------
 CSaveDocumentQuery::CSaveDocumentQuery( vgui::Panel *pParent, char const *pFileName, const char *pFileType, int nContext, vgui::Panel *pActionSignalTarget, KeyValues *pPostSaveCommand ) :
 	BaseClass( pParent, "SaveDocumentQuery" ),
-	m_nContext( nContext ), 
+	m_nContext( nContext ),
 	m_pActionSignalTarget( pActionSignalTarget )
 {
 	if ( !pFileName || !pFileName[0] )

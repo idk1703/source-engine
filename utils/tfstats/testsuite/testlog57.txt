@@ -321,7 +321,7 @@ L 07/22/1999 - 20:18:21: "sbd<63>" activated the goal "info_player_teamspawn"
 L 07/22/1999 - 20:18:24: "wfo-Nadz<72>" activated the goal "Team 1 dropoff"
 L 07/22/1999 - 20:18:32: "Laika<69>" killed "sbd<63>" with "sniperrifle"
 L 07/22/1999 - 20:18:32: =------= MATCH RESULTS =------=
-L 07/22/1999 - 20:18:32: "blue" defeated "red" 
+L 07/22/1999 - 20:18:32: "blue" defeated "red"
 L 07/22/1999 - 20:18:32: "blue" RESULTS: "4" players. "112" frags, "4" unaccounted for. "70" team score. Allies:
 L 07/22/1999 - 20:18:32: "red" RESULTS: "3" players. "30" frags, "3" unaccounted for. "20" team score. Allies:
 L 07/22/1999 - 20:18:37: "[MOE]<71>" say "gg"

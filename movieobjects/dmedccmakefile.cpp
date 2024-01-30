@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Describes an asset: something that is compiled from sources, 
+// Describes an asset: something that is compiled from sources,
 // in potentially multiple steps, to a compiled resource
 //
 //=============================================================================
@@ -19,9 +19,9 @@
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeSourceDCCFile, CDmeSourceDCCFile );
 
-				    
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeSourceDCCFile::OnConstruction()
 {
@@ -46,7 +46,7 @@ IMPLEMENT_ELEMENT_FACTORY( DmeSourceMayaAnimationFile, CDmeSourceMayaAnimationFi
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeSourceMayaFile::OnConstruction()
 {
@@ -82,7 +82,7 @@ IMPLEMENT_ELEMENT_FACTORY( DmeSourceXSIFile, CDmeSourceXSIFile );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeSourceXSIFile::OnConstruction()
 {
@@ -100,7 +100,7 @@ IMPLEMENT_ELEMENT_FACTORY( DmeDCCMakefile, CDmeDCCMakefile );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeDCCMakefile::OnConstruction()
 {
@@ -113,7 +113,7 @@ void CDmeDCCMakefile::OnDestruction()
 
 
 //-----------------------------------------------------------------------------
-// Compile assets 
+// Compile assets
 //-----------------------------------------------------------------------------
 void CDmeDCCMakefile::GetOutputs( CUtlVector<CUtlString> &fullPaths )
 {
@@ -136,14 +136,14 @@ void CDmeDCCMakefile::GetOutputs( CUtlVector<CUtlString> &fullPaths )
 	fullPaths.AddToTail( pFullPath );
 }
 
-  
+
 //-----------------------------------------------------------------------------
 // Creates, destroys the output element associated with this makefile
 //-----------------------------------------------------------------------------
 CDmElement *CDmeDCCMakefile::CreateOutputElement( )
 {
 	if ( m_bFlushFile )
-	{  
+	{
 		m_bFlushFile = false;
 		if ( GetFileId() != DMFILEID_INVALID )
 		{
@@ -156,7 +156,7 @@ CDmElement *CDmeDCCMakefile::CreateOutputElement( )
 			// NOTE NOTE NOTE
 			// UnloadFile essentially calls delete this!
 			// So don't refer to any state in this DmElement after that
-			DmFileId_t fileId = GetFileId(); 
+			DmFileId_t fileId = GetFileId();
 			g_pDataModel->UnloadFile( fileId );
 
 			CDmElement *pRoot = NULL;
@@ -197,7 +197,7 @@ IMPLEMENT_ELEMENT_FACTORY( DmeMayaAnimationMakefile, CDmeMayaAnimationMakefile )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeMayaMakefile::OnConstruction()
 {
@@ -227,7 +227,7 @@ void CDmeMayaAnimationMakefile::OnDestruction()
 //-----------------------------------------------------------------------------
 // Returns source types
 //-----------------------------------------------------------------------------
-static DmeMakefileType_t s_pMayaModelSourceTypes[] = 
+static DmeMakefileType_t s_pMayaModelSourceTypes[] =
 {
 	{ "DmeSourceMayaModelFile", "Maya Model File", true, "makefiledir:../maya", "*.ma;*.mb", "Maya File (*.ma,*.mb)" },
 	{ NULL, NULL, false, NULL, NULL, NULL },
@@ -238,7 +238,7 @@ DmeMakefileType_t* CDmeMayaModelMakefile::GetSourceTypes()
 	return s_pMayaModelSourceTypes;
 }
 
-static DmeMakefileType_t s_pMayaAnimationSourceTypes[] = 
+static DmeMakefileType_t s_pMayaAnimationSourceTypes[] =
 {
 	{ "DmeSourceMayaAnimationFile", "Maya Animation File", true, "makefiledir:../maya", "*.ma;*.mb", "Maya File (*.ma,*.mb)" },
 	{ NULL, NULL, false, NULL, NULL, NULL },
@@ -251,9 +251,9 @@ DmeMakefileType_t* CDmeMayaAnimationMakefile::GetSourceTypes()
 
 
 //-----------------------------------------------------------------------------
-// Makefile type 
+// Makefile type
 //-----------------------------------------------------------------------------
-static DmeMakefileType_t s_MayaModelMakefileType = 
+static DmeMakefileType_t s_MayaModelMakefileType =
 {
 	"DmeMayaModelMakefile", "Maya Model Component", true, "contentdir:models", "*.dmx", "DMX File (*.dmx)"
 };
@@ -263,7 +263,7 @@ DmeMakefileType_t *CDmeMayaModelMakefile::GetMakefileType()
 	return &s_MayaModelMakefileType;
 }
 
-static DmeMakefileType_t s_MayaAnimationMakefileType = 
+static DmeMakefileType_t s_MayaAnimationMakefileType =
 {
 	"DmeMayaAnimationMakefile", "Maya Animation Component", true, "contentdir:models", "*.dmx", "DMX File (*.dmx)"
 };
@@ -281,7 +281,7 @@ IMPLEMENT_ELEMENT_FACTORY( DmeXSIMakefile, CDmeXSIMakefile );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeXSIMakefile::OnConstruction()
 {
@@ -295,7 +295,7 @@ void CDmeXSIMakefile::OnDestruction()
 //-----------------------------------------------------------------------------
 // Returns source types
 //-----------------------------------------------------------------------------
-static DmeMakefileType_t s_pXSISourceTypes[] = 
+static DmeMakefileType_t s_pXSISourceTypes[] =
 {
 	{ "DmeSourceXSIFile", "XSI File", true, "makefiledir:../xsi", "*.xsi", "XSI File (*.xsi)" },
 	{ NULL, NULL, false, NULL, NULL, NULL },
@@ -308,9 +308,9 @@ DmeMakefileType_t* CDmeXSIMakefile::GetSourceTypes()
 
 
 //-----------------------------------------------------------------------------
-// Makefile type 
+// Makefile type
 //-----------------------------------------------------------------------------
-static DmeMakefileType_t s_XSIMakefileType = 
+static DmeMakefileType_t s_XSIMakefileType =
 {
 	"DmeXSIMakefile", "XSI Model Component", true, "contentdir:models", "*.dmx", "DMX File (*.dmx)",
 };
@@ -319,5 +319,3 @@ DmeMakefileType_t *CDmeXSIMakefile::GetMakefileType()
 {
 	return &s_XSIMakefileType;
 }
-
-

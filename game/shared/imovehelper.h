@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -57,7 +57,7 @@ abstract_class IMoveHelper
 public:
 	// Call this to set the singleton
 	static IMoveHelper* GetSingleton( ) { return sm_pSingleton; }
-	
+
 	// Methods associated with a particular entity
 	virtual	char const*		GetName( EntityHandle_t handle ) const = 0;
 
@@ -65,13 +65,13 @@ public:
 	virtual void	ResetTouchList( void ) = 0;
 	virtual bool	AddToTouched( const CGameTrace& tr, const Vector& impactvelocity ) = 0;
 	virtual void	ProcessImpacts( void ) = 0;
-	
+
 	// Numbered line printf
 	virtual void	Con_NPrintf( int idx, PRINTF_FORMAT_STRING char const* fmt, ... ) = 0;
 
 	// These have separate server vs client impementations
 	virtual void	StartSound( const Vector& origin, int channel, char const* sample, float volume, soundlevel_t soundlevel, int fFlags, int pitch ) = 0;
-	virtual void	StartSound( const Vector& origin, const char *soundname ) = 0; 
+	virtual void	StartSound( const Vector& origin, const char *soundname ) = 0;
 	virtual void	PlaybackEventFull( int flags, int clientindex, unsigned short eventindex, float delay, Vector& origin, Vector& angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2 ) = 0;
 
 	// Apply falling damage to m_pHostPlayer based on m_pHostPlayer->m_flFallVelocity.

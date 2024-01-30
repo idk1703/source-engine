@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,7 +12,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-// The server will still send entities through a window even after it opaque 
+// The server will still send entities through a window even after it opaque
 // to allow for net lag.
 #define FADE_DIST_BUFFER	10
 
@@ -37,7 +37,7 @@ BEGIN_DATADESC( CFuncAreaPortalWindow )
 	DEFINE_KEYFIELD( m_flTranslucencyLimit,	FIELD_FLOAT,	"TranslucencyLimit" ),
 	DEFINE_KEYFIELD( m_iBackgroundBModelName,FIELD_STRING,	"BackgroundBModel" ),
 //	DEFINE_KEYFIELD( m_iBackgroundModelIndex,FIELD_INTEGER ),
-	
+
 	DEFINE_INPUTFUNC( FIELD_FLOAT, "SetFadeStartDistance", InputSetFadeStartDistance ),
 	DEFINE_INPUTFUNC( FIELD_FLOAT, "SetFadeEndDistance", InputSetFadeEndDistance ),
 
@@ -68,7 +68,7 @@ void CFuncAreaPortalWindow::Spawn()
 void CFuncAreaPortalWindow::Activate()
 {
 	BaseClass::Activate();
-	
+
 	// Find our background model.
 	CBaseEntity *pBackground = gEntList.FindEntityByName( NULL, m_iBackgroundBModelName );
 	if( pBackground )
@@ -110,7 +110,7 @@ bool CFuncAreaPortalWindow::UpdateVisibility( const Vector &vOrigin, float fovDi
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Changes the fade start distance 
+// Purpose: Changes the fade start distance
 // Input: float distance in inches
 //-----------------------------------------------------------------------------
 void CFuncAreaPortalWindow::InputSetFadeStartDistance( inputdata_t &inputdata )

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -8,7 +8,7 @@
 #include "hud_technologytreedoc.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_InfoCustomTechnology : public C_BaseEntity
 {
@@ -29,7 +29,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_InfoCustomTechnology, DT_InfoCustomTechnology, CInfoC
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_InfoCustomTechnology::C_InfoCustomTechnology( void )
 {

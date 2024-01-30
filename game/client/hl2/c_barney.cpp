@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,7 +11,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_Barney : public C_AI_BaseNPC
 {
@@ -37,5 +37,3 @@ C_Barney::C_Barney()
 C_Barney::~C_Barney()
 {
 }
-
-

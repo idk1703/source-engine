@@ -221,7 +221,7 @@ void CNavigationPanel::PerformLayout()
 		}
 
 		if ( m_bAutoScale )
-		{		
+		{
 			m_vecButtons[i]->SetSize( nButtonWidth, nButtonHeight );
 			m_vecButtons[i]->GetImage()->SetSize( nButtonWidth, nButtonHeight );
 		}

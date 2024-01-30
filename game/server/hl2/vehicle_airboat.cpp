@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -117,7 +117,7 @@ public:
 
 	void VPhysicsUpdate( IPhysicsObject *pPhysics );
 
-	// Scraping noises for the various things we drive on. 
+	// Scraping noises for the various things we drive on.
 	virtual void	VPhysicsFriction( IPhysicsObject *pObject, float energy, int surfaceProps, int surfacePropsHit );
 
 	bool HeadlightIsOn( void ) { return m_bHeadlightIsOn; }
@@ -138,16 +138,16 @@ public:
 
 	// Allows the shooter to change the impact effect of his bullets
 	virtual void DoImpactEffect( trace_t &tr, int nDamageType );
-	
+
 	// Airboat passengers do not directly receive damage from blasts or radiation damage
-	virtual bool PassengerShouldReceiveDamage( CTakeDamageInfo &info ) 
-	{ 
+	virtual bool PassengerShouldReceiveDamage( CTakeDamageInfo &info )
+	{
 		if ( info.GetDamageType() & DMG_VEHICLE )
 			return true;
 
-		return (info.GetDamageType() & (DMG_RADIATION|DMG_BLAST|DMG_CRUSH) ) == 0; 
+		return (info.GetDamageType() & (DMG_RADIATION|DMG_BLAST|DMG_CRUSH) ) == 0;
 	}
-	
+
 	const char *GetTracerType( void );
 
 private:
@@ -171,14 +171,14 @@ private:
 	void			GetGunAimDirection( Vector *resultDir );
 
 	// Recharges the ammo based on speed
- 	void			RechargeAmmo();
+	void			RechargeAmmo();
 
 	// Removes the ammo...
 	void			RemoveAmmo( float flAmmoAmount );
 
-	// Purpose: 
+	// Purpose:
 	void			ComputeAimPoint( Vector *pVecAimPoint );
-	
+
 	// Do the right thing for the gun
 	void			UpdateGunState( CUserCmd *ucmd );
 
@@ -253,11 +253,11 @@ private:
 
 	float			m_flLastImpactEffectTime;
 	int				m_iNumberOfEntries;
-	
+
 	IPhysicsConstraint *m_pAntiFlipConstraint;	// A ragdoll constraint that prevents us from flipping.
-	
+
 	CHandle<CEntityBlocker>	m_hPlayerBlocker;
-	
+
 	CNetworkVar( Vector, m_vecPhysVelocity );
 
 	CNetworkVar( int, m_nExactWaterLevel );
@@ -337,7 +337,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAirboat::Precache( void )
 {
@@ -369,7 +369,7 @@ void CPropAirboat::Precache( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAirboat::Spawn( void )
 {
@@ -496,7 +496,7 @@ void CPropAirboat::CreatePlayerBlocker()
 {
 	Assert( m_hPlayerBlocker == NULL );
 	DestroyPlayerBlocker();
-	
+
 	m_hPlayerBlocker = CEntityBlocker::Create( GetAbsOrigin(), Vector( -84, -32, 0 ), Vector( 54, 32, 84 ), this, false );
 	if ( m_hPlayerBlocker != NULL )
 	{
@@ -510,7 +510,7 @@ void CPropAirboat::CreatePlayerBlocker()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAirboat::DestroyPlayerBlocker()
 {
@@ -524,8 +524,8 @@ void CPropAirboat::DestroyPlayerBlocker()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bEnable - 
+// Purpose:
+// Input  : bEnable -
 //-----------------------------------------------------------------------------
 void CPropAirboat::EnablePlayerBlocker( bool bEnable )
 {
@@ -642,7 +642,7 @@ void CPropAirboat::OnRestore()
 		PhysSetGameFlags( pPhysAirboat, FVPHYSICS_HEAVY_OBJECT );
 	}
 
-	// If the player's in the vehicle, NPCs should ignore it 
+	// If the player's in the vehicle, NPCs should ignore it
 	if ( GetDriver() )
 	{
 		SetNavIgnore();
@@ -702,7 +702,7 @@ void CPropAirboat::PreExitVehicle( CBaseCombatCharacter *pPlayer, int nRole )
 
 //-----------------------------------------------------------------------------
 // Purpose: Called when exiting, after completing the exit animation.
-// Input  : iRole - 
+// Input  : iRole -
 //-----------------------------------------------------------------------------
 void CPropAirboat::ExitVehicle( int nRole )
 {
@@ -750,7 +750,7 @@ void CPropAirboat::ExitVehicle( int nRole )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAirboat::HeadlightTurnOn( void )
 {
@@ -760,7 +760,7 @@ void CPropAirboat::HeadlightTurnOn( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAirboat::HeadlightTurnOff( void )
 {
@@ -772,7 +772,7 @@ void CPropAirboat::HeadlightTurnOff( void )
 //-----------------------------------------------------------------------------
 // position to shoot at
 //-----------------------------------------------------------------------------
-Vector CPropAirboat::BodyTarget( const Vector &posSrc, bool bNoisy ) 
+Vector CPropAirboat::BodyTarget( const Vector &posSrc, bool bNoisy )
 {
 	Vector vecPosition;
 	QAngle angles;
@@ -817,7 +817,7 @@ Vector CPropAirboat::GetSmoothedVelocity( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAirboat::TraceAttack( const CTakeDamageInfo &inputInfo, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator )
 {
@@ -834,11 +834,11 @@ void CPropAirboat::TraceAttack( const CTakeDamageInfo &inputInfo, const Vector &
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &info - 
-//			&vecEnd - 
-//			*pTraceFilter - 
-//			*pVecTracerDest - 
+// Purpose:
+// Input  : &info -
+//			&vecEnd -
+//			*pTraceFilter -
+//			*pVecTracerDest -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPropAirboat::ShouldDrawWaterImpacts( void )
@@ -869,10 +869,10 @@ void CPropAirboat::DoImpactEffect( trace_t &tr, int nDamageType )
 
 	m_flLastImpactEffectTime = gpGlobals->curtime;
 	UTIL_ImpactTrace( &tr, nDamageType, "AirboatGunImpact" );
-} 
- 
+}
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CPropAirboat::OnTakeDamage( const CTakeDamageInfo &info )
 {
@@ -907,7 +907,7 @@ int CPropAirboat::OnTakeDamage( const CTakeDamageInfo &info )
 
 
 //-----------------------------------------------------------------------------
-// Scraping noises for the various things we drive on. 
+// Scraping noises for the various things we drive on.
 //-----------------------------------------------------------------------------
 void CPropAirboat::VPhysicsFriction( IPhysicsObject *pObject, float energy, int surfaceProps, int surfacePropsHit )
 {
@@ -948,14 +948,14 @@ void CPropAirboat::AimGunAt( const Vector &aimPos, float flInterval )
 	// do a look at in gun space (essentially a delta-lookat)
 	QAngle localTargetAngles;
 	VectorAngles( localTargetPosition, localTargetAngles );
-	
+
 	// convert to +/- 180 degrees
-	localTargetAngles.x = UTIL_AngleDiff( localTargetAngles.x, 0 );	
+	localTargetAngles.x = UTIL_AngleDiff( localTargetAngles.x, 0 );
 	localTargetAngles.y = UTIL_AngleDiff( localTargetAngles.y, 0 );
 
 	float targetYaw = m_aimYaw + localTargetAngles.y;
 	float targetPitch = m_aimPitch + localTargetAngles.x;
-	
+
 	// Constrain our angles
 	float newTargetYaw = clamp( targetYaw, -CANNON_MAX_RIGHT_YAW, CANNON_MAX_LEFT_YAW );
 	float newTargetPitch = clamp( targetPitch, -CANNON_MAX_UP_PITCH, CANNON_MAX_DOWN_PITCH );
@@ -1046,7 +1046,7 @@ void CPropAirboat::RechargeAmmo(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAirboat::ComputeAimPoint( Vector *pVecAimPoint )
 {
@@ -1144,7 +1144,7 @@ void CPropAirboat::Think(void)
 			UTIL_HudHintText( m_hPlayer, "#Valve_Hint_BoatKeys" );
 			m_iNumberOfEntries++;
 		}
-		
+
 		GetServerVehicle()->HandleEntryExitFinish( m_bExitAnimOn, false );
 
 		// Start the vehicle's idle animation
@@ -1184,7 +1184,7 @@ void CPropAirboat::Think(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAirboat::UpdatePropeller()
 {
@@ -1281,7 +1281,7 @@ void CPropAirboat::UpdateGauge()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAirboat::CreateSounds()
 {
@@ -1328,7 +1328,7 @@ void CPropAirboat::CreateSounds()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAirboat::StopLoopingSounds()
 {
@@ -1368,7 +1368,7 @@ void CPropAirboat::UpdateEngineSound( CSoundEnvelopeController &controller, floa
 	#define ENGINE_DUCK_TIME	4.0
 
 	if ( controller.SoundGetVolume(m_pEngineSound ) == 0 )
-	{ 
+	{
 		if ( gpGlobals->curtime > m_flEngineIdleTime )
 		{
 			// If we've finished playing the engine start sound, start playing the idle sound.
@@ -1391,7 +1391,7 @@ void CPropAirboat::UpdateEngineSound( CSoundEnvelopeController &controller, floa
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAirboat::UpdateFanSound( CSoundEnvelopeController &controller, float speedRatio )
 {
@@ -1426,7 +1426,7 @@ void CPropAirboat::UpdateFanSound( CSoundEnvelopeController &controller, float s
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAirboat::UpdateWaterSound( CSoundEnvelopeController &controller, float speedRatio )
 {
@@ -1497,7 +1497,7 @@ void CPropAirboat::UpdateWaterSound( CSoundEnvelopeController &controller, float
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAirboat::UpdateSound()
 {
@@ -1533,19 +1533,19 @@ void CPropAirboat::UpdateSplashEffects( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-const char *CPropAirboat::GetTracerType( void ) 
+const char *CPropAirboat::GetTracerType( void )
 {
 	if ( gpGlobals->curtime >= m_flNextHeavyShotTime )
 		return "AirboatGunHeavyTracer";
 
-	return "AirboatGunTracer"; 
+	return "AirboatGunTracer";
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAirboat::DoMuzzleFlash( void )
 {
@@ -1572,7 +1572,7 @@ void CPropAirboat::FireGun( )
 	Vector	vecGunPosition;
 	Vector vecForward;
 	GetAttachment( m_nGunBarrelAttachment, vecGunPosition, &vecForward );
-	
+
 	// NOTE: For the airboat, unable to fire really means the aim is clamped
 	Vector vecAimPoint;
 	if ( !m_bUnableToFire )
@@ -1585,22 +1585,22 @@ void CPropAirboat::FireGun( )
 		// We hit the clamp; just fire whichever way the gun is facing
 		VectorMA( vecGunPosition, 1000.0f, vecForward, vecAimPoint );
 	}
-	
+
 	// Get a ray from the gun to the target.
 	Vector vecRay = vecAimPoint - vecGunPosition;
 	VectorNormalize( vecRay );
-	
+
 	/*
 	// Get the aiming direction
 	Vector vecRay;
 	AngleVectors( vecGunAngles, &vecRay );
 	VectorNormalize( vecRay );
 	*/
-	
+
 	CAmmoDef *pAmmoDef = GetAmmoDef();
 	int ammoType = pAmmoDef->Index( "AirboatGun" );
 
-#if defined( WIN32 ) && !defined( _X360 ) 
+#if defined( WIN32 ) && !defined( _X360 )
 	// NVNT punch the players haptics by the magnitude cvar each round fired
 	HapticPunch(m_hPlayer,0,0,hap_airboat_gun_mag.GetFloat());
 #endif
@@ -1642,17 +1642,17 @@ void CPropAirboat::FireGun( )
 	// NOTE: This must occur after FireBullets
 	if ( gpGlobals->curtime >= m_flNextHeavyShotTime )
 	{
-		m_flNextHeavyShotTime = gpGlobals->curtime + CANNON_HEAVY_SHOT_INTERVAL; 
+		m_flNextHeavyShotTime = gpGlobals->curtime + CANNON_HEAVY_SHOT_INTERVAL;
 	}
 
 	if ( gpGlobals->curtime >= m_flNextGunShakeTime )
 	{
 		UTIL_ScreenShakeObject( this, WorldSpaceCenter(), 0.2, 250.0, CANNON_SHAKE_INTERVAL, 250, SHAKE_START );
-		m_flNextGunShakeTime = gpGlobals->curtime + 0.5 * CANNON_SHAKE_INTERVAL; 
+		m_flNextGunShakeTime = gpGlobals->curtime + 0.5 * CANNON_SHAKE_INTERVAL;
 	}
 
 	// Specifically kill APC missiles in the cone. But we're going to totally cheat
-	// because it's hard to hit them when they are close. 
+	// because it's hard to hit them when they are close.
 	// Use the player's eye position as the center of the cone.
 	if ( !m_hPlayer )
 		return;
@@ -1708,7 +1708,7 @@ void CPropAirboat::FireGun( )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #define FIRING_DISCHARGE_RATE (1.0f / 3.0f)
 
@@ -1768,7 +1768,7 @@ void CPropAirboat::UpdateGunState( CUserCmd *ucmd )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAirboat::DriveVehicle( float flFrameTime, CUserCmd *ucmd, int iButtonsDown, int iButtonsReleased )
 {
@@ -1778,7 +1778,7 @@ void CPropAirboat::DriveVehicle( float flFrameTime, CUserCmd *ucmd, int iButtons
 		{
 			HeadlightTurnOff();
 		}
-        else 
+	else
 		{
 			HeadlightTurnOn();
 		}
@@ -1803,9 +1803,9 @@ void CPropAirboat::DriveVehicle( float flFrameTime, CUserCmd *ucmd, int iButtons
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
-//			*pMoveData - 
+// Purpose:
+// Input  : *pPlayer -
+//			*pMoveData -
 //-----------------------------------------------------------------------------
 void CPropAirboat::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMoveData )
 {
@@ -1827,7 +1827,7 @@ void CPropAirboat::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMoveData )
 	GetVelocity( &vecVelocityWorld, NULL );
 	Vector vecVelocityLocal;
 	WorldToEntitySpace( GetAbsOrigin() + vecVelocityWorld, &vecVelocityLocal );
-	
+
 	m_vecPhysVelocity = vecVelocityLocal;
 }
 
@@ -1890,7 +1890,7 @@ void CPropAirboat::CreateDangerSounds( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAirboat::DampenEyePosition( Vector &vecVehicleEyePos, QAngle &vecVehicleEyeAngles )
 {
@@ -1918,8 +1918,8 @@ void CPropAirboat::DampenEyePosition( Vector &vecVehicleEyePos, QAngle &vecVehic
 // speed += ( pCoefficientsOut[0] * ( targetPos - currentPos ) + pCoefficientsOut[1] * ( targetSpeed - currentSpeed ) ) * flDeltaTime;
 //-----------------------------------------------------------------------------
 void CPropAirboat::ComputePDControllerCoefficients( float *pCoefficientsOut,
-												  float flFrequency, float flDampening,
-												  float flDeltaTime )
+												float flFrequency, float flDampening,
+												float flDeltaTime )
 {
 	float flKs = 9.0f * flFrequency * flFrequency;
 	float flKd = 4.5f * flFrequency * flDampening;
@@ -1929,7 +1929,7 @@ void CPropAirboat::ComputePDControllerCoefficients( float *pCoefficientsOut,
 	pCoefficientsOut[0] = flKs * flScale;
 	pCoefficientsOut[1] = ( flKd + flKs * flDeltaTime ) * flScale;
 }
- 
+
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -1946,7 +1946,7 @@ void CPropAirboat::DampenForwardMotion( Vector &vecVehicleEyePos, QAngle &vecVeh
 
 	// Calculate target speed based on the current vehicle eye position and the last vehicle eye position and frametime.
 	Vector vecVehicleEyeSpeed = ( vecVehicleEyePos - m_vecLastEyeTarget ) / flFrameTime;
-	m_vecLastEyeTarget = vecVehicleEyePos;	
+	m_vecLastEyeTarget = vecVehicleEyePos;
 
 	// Calculate the speed and position deltas.
 	Vector vecDeltaSpeed = vecVehicleEyeSpeed - m_vecEyeSpeed;
@@ -1992,7 +1992,7 @@ void CPropAirboat::DampenUpMotion( Vector &vecVehicleEyePos, QAngle &vecVehicleE
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAirboat::CreateSplash( int nSplashType )
 {
@@ -2098,4 +2098,3 @@ void CPropAirboat::ApplyStressDamage( IPhysicsObject *pPhysics )
 		m_hPlayer->TakeDamage( dmgInfo );
 	}
 }
-

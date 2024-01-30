@@ -36,7 +36,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_ObjectSentrygun, DT_ObjectSentrygun, CObjectSentrygun
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectSentrygun::C_ObjectSentrygun()
 {
@@ -51,7 +51,7 @@ C_ObjectSentrygun::C_ObjectSentrygun()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::SetDormant( bool bDormant )
 {
@@ -60,7 +60,7 @@ void C_ObjectSentrygun::SetDormant( bool bDormant )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_ObjectSentrygun::DrawModel( int flags )
 {
@@ -85,7 +85,7 @@ int C_ObjectSentrygun::DrawModel( int flags )
 		{
 			float flTime = MIN( gpGlobals->curtime - m_flStartedUnTurtlingAt, SENTRY_TURTLE_TIME );
 			float flPercent = (SENTRY_TURTLE_TIME - flTime) / SENTRY_TURTLE_TIME;
-			
+
 		// FIXME: This is totally wrong!!!
 			Vector vNewOrigin = GetLocalOrigin();
 			vNewOrigin.z -= (CollisionProp()->OBBSize().z * flPercent);
@@ -107,7 +107,7 @@ int C_ObjectSentrygun::DrawModel( int flags )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::PreDataUpdate( DataUpdateType_t updateType )
 {
@@ -120,7 +120,7 @@ void C_ObjectSentrygun::PreDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -173,7 +173,7 @@ void C_ObjectSentrygun::PostDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -187,7 +187,7 @@ void C_ObjectSentrygun::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::FinishedBuilding( void )
 {
@@ -197,7 +197,7 @@ void C_ObjectSentrygun::FinishedBuilding( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectSentrygun::GetBoneControllers(float controllers[MAXSTUDIOBONECTRLS])
 {
@@ -274,7 +274,7 @@ bool C_ObjectSentrygun::MoveTurret(void)
 		{
 			if (m_vecCurAngles.x > m_vecGoalAngles.x)
 				m_vecCurAngles.x = m_vecGoalAngles.x;
-		} 
+		}
 		else
 		{
 			if (m_vecCurAngles.x < m_vecGoalAngles.x)
@@ -291,7 +291,7 @@ bool C_ObjectSentrygun::MoveTurret(void)
 		float flDir = m_vecGoalAngles.y > m_vecCurAngles.y ? 1 : -1 ;
 		float flDist = fabs(m_vecGoalAngles.y - m_vecCurAngles.y);
 		bool bReversed = false;
-		
+
 		if (flDist > 180)
 		{
 			flDist = 360 - flDist;
@@ -334,7 +334,7 @@ bool C_ObjectSentrygun::MoveTurret(void)
 		{
 			if ( (bReversed == false && m_vecGoalAngles.y > m_vecCurAngles.y) || (bReversed == true && m_vecGoalAngles.y < m_vecCurAngles.y) )
 				m_vecCurAngles.y = m_vecGoalAngles.y;
-		} 
+		}
 		else
 		{
 			if ( (bReversed == false && m_vecGoalAngles.y < m_vecCurAngles.y) || (bReversed == true && m_vecGoalAngles.y > m_vecCurAngles.y) )
@@ -383,7 +383,7 @@ void C_ObjectSentrygun::ClientThink( void )
 		Vector vecDirToEnemy = vecFireTarget - vecMid;
 		QAngle angToTarget;
 		VectorAngles(vecDirToEnemy, angToTarget);
-		
+
 		angToTarget.y = UTIL_AngleMod( angToTarget.y );
 		if (angToTarget.x < -180)
 			angToTarget.x += 360;
@@ -435,7 +435,7 @@ void C_ObjectSentrygun::ClientThink( void )
 
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CSentrygunControlPanel : public CRotatingObjectControlPanel
 {
@@ -458,15 +458,15 @@ DECLARE_VGUI_SCREEN_FACTORY( CSentrygunControlPanel, "sentrygun_control_panel" )
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CSentrygunControlPanel::CSentrygunControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CSentrygunControlPanel" ) 
+	: BaseClass( parent, "CSentrygunControlPanel" )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CSentrygunControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -484,7 +484,7 @@ bool CSentrygunControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* 
 void CSentrygunControlPanel::OnTick()
 {
 	BaseClass::OnTick();
-	
+
 	C_BaseObject *pObj = GetOwningObject();
 	if (!pObj)
 		return;
@@ -554,5 +554,3 @@ END_RECV_TABLE()
 C_ObjectSentrygunRocketlauncher::C_ObjectSentrygunRocketlauncher()
 {
 }
-
-

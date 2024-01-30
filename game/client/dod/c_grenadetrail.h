@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -29,7 +29,7 @@ class C_GrenadeTrail : public C_BaseParticleEntity, public IPrototypeAppEffect
 public:
 	DECLARE_CLASS( C_GrenadeTrail, C_BaseParticleEntity );
 	DECLARE_CLIENTCLASS();
-	
+
 					C_GrenadeTrail();
 	virtual			~C_GrenadeTrail();
 
@@ -69,10 +69,10 @@ public:
 
 	float			m_ParticleLifetime;		// How long do the particles live?
 	float			m_StopEmitTime;			// When do I stop emitting particles? (-1 = never)
-	
+
 	float			m_MinSpeed;				// Speed range.
 	float			m_MaxSpeed;
-	
+
 	float			m_MinDirectedSpeed;		// Directed speed range.
 	float			m_MaxDirectedSpeed;
 

@@ -123,4 +123,3 @@ inline EventDesiredResult< Actor > BehaviorMoveTo< Actor, PathCost >::OnMoveToFa
 
 
 #endif // _BEHAVIOR_MOVE_TO_H_
-

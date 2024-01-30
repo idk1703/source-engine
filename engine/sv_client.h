@@ -53,15 +53,15 @@ public:
 	// INetMsgHandler interface
 	void ConnectionClosing( const char *reason );
 	void ConnectionCrashed(const char *reason);
-	
+
 	void PacketStart	(int incoming_sequence, int outgoing_acknowledged);
 	void PacketEnd( void );
-	
+
 	void FileReceived( const char *fileName, unsigned int transferID );
 	void FileRequested(const char *fileName, unsigned int transferID );
 	void FileDenied( const char *fileName, unsigned int transferID );
 	void FileSent( const char *fileName, unsigned int transferID );
-	
+
 	bool ProcessConnectionlessPacket( netpacket_t *packet );
 
 	// IClient interface
@@ -69,10 +69,10 @@ public:
 	void	Inactivate( void );
 	void	Reconnect( void );
 	void	Disconnect( PRINTF_FORMAT_STRING const char *reason, ... );
-	
+
 	void	SetRate( int nRate, bool bForce );
 	void	SetUpdateRate( int nUpdateRate, bool bForce );
-	
+
 	virtual	bool	IsHearingClient( int index ) const;
 	virtual	bool	IsProximityHearingClient( int index ) const;
 
@@ -82,7 +82,7 @@ public:
 	bool	ExecuteStringCommand( const char *s );
 
 public: // IClientMessageHandlers
-	
+
 	PROCESS_CLC_MESSAGE( ClientInfo );
 	PROCESS_CLC_MESSAGE( Move );
 	PROCESS_CLC_MESSAGE( VoiceData );
@@ -93,7 +93,7 @@ public: // IClientMessageHandlers
 	PROCESS_CLC_MESSAGE( SaveReplay );
 #endif
 	PROCESS_CLC_MESSAGE( CmdKeyValues );
-	
+
 public:
 
 	void	UpdateUserSettings( void );
@@ -107,10 +107,10 @@ public:
 	void	SpawnPlayer( void );
 	bool	SendSignonData( void );
 	void	ActivatePlayer( void );
-	
+
 	void	SetupPackInfo( CFrameSnapshot *pSnapshot );
 	void	SetupPrevPackInfo();
-	
+
 	void	DownloadCustomizations();
 	void	WriteViewAngleUpdate( void );
 	CClientFrame *GetDeltaFrame( int nTick );
@@ -119,12 +119,12 @@ public:
 	void	GetReplayData( int& ticks, int& entity);
 	bool	IgnoreTempEntity( CEventInfo *event );
 	const CCheckTransmitInfo* GetPrevPackInfo();
-			
+
 
 private:
 	bool	IsEngineClientCommand( const CCommand &args ) const;
 	int		FillSoundsMessage( SVC_Sounds &msg );
-				
+
 public:
 
 	bool								m_bVoiceLoopback; // if true, client wants own voice loopback
@@ -138,7 +138,7 @@ public:
 	// Identity information.
 	edict_t					*edict;				// EDICT_NUM(clientnum+1)
 	CUtlVector<SoundInfo_t>	m_Sounds;			// game sounds
-		
+
 	const edict_t			*m_pViewEntity;		// View Entity (camera or the client itself)
 
 	CClientFrame			*m_pCurrentFrame;	// last added frame

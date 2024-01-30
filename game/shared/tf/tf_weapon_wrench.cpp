@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -158,7 +158,7 @@ void CTFWrench::Smack( void )
 	static Vector vecSwingMaxs( 18, 18, 18 );
 
 	// Setup the swing range.
-	Vector vecForward; 
+	Vector vecForward;
 	AngleVectors( pPlayer->EyeAngles(), &vecForward );
 	Vector vecSwingStart = pPlayer->Weapon_ShootPosition();
 	Vector vecSwingEnd = vecSwingStart + vecForward * 70;
@@ -166,7 +166,7 @@ void CTFWrench::Smack( void )
 	// only trace against objects
 
 	// See if we hit anything.
-	trace_t trace;	
+	trace_t trace;
 
 	CTraceFilterIgnorePlayers traceFilter( NULL, COLLISION_GROUP_NONE );
 	UTIL_TraceLine( vecSwingStart, vecSwingEnd, MASK_SOLID, &traceFilter, &trace );
@@ -184,7 +184,7 @@ void CTFWrench::Smack( void )
 #ifdef GAME_DLL
 		OnFriendlyBuildingHit( dynamic_cast< CBaseObject * >( trace.m_pEnt ), pPlayer, trace.endpos );
 #else
-		// NVNT if the local player is the owner of this wrench 
+		// NVNT if the local player is the owner of this wrench
 		//   Notify the haptics system we just repaired something.
 		if(pPlayer==C_TFPlayer::GetLocalTFPlayer() && haptics)
 			haptics->ProcessHapticEvent(2,"Weapons","tf_weapon_wrench_fix");
@@ -199,7 +199,7 @@ void CTFWrench::Smack( void )
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWrench::ItemPostFrame()
 {
@@ -322,7 +322,7 @@ void CTFWrench::ApplyBuildingHealthUpgrade( void )
 		if ( pObj )
 		{
 			pObj->ApplyHealthUpgrade();
-		}		
+		}
 	}
 }
 
@@ -422,7 +422,7 @@ void CTFRobotArm::Drop( const Vector &vecVelocity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRobotArm::UpdateOnRemove( void )
 {
@@ -432,7 +432,7 @@ void CTFRobotArm::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRobotArm::RemoveRobotArm( void )
 {
@@ -444,7 +444,7 @@ void CTFRobotArm::RemoveRobotArm( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRobotArm::OnActiveStateChanged( int iOldState )
 {
@@ -479,7 +479,7 @@ void CTFRobotArm::PrimaryAttack()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRobotArm::Smack( void )
 {
@@ -513,7 +513,7 @@ void CTFRobotArm::Smack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRobotArm::DoViewModelAnimation( void )
 {
@@ -528,7 +528,7 @@ void CTFRobotArm::DoViewModelAnimation( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #ifdef GAME_DLL
 int CTFRobotArm::GetDamageCustom()
@@ -544,7 +544,7 @@ int CTFRobotArm::GetDamageCustom()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFRobotArm::GetForceScale( void )
 {
@@ -561,7 +561,7 @@ float CTFRobotArm::GetForceScale( void )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRobotArm::WeaponIdle( void )
 {

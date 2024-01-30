@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -179,4 +179,3 @@ void CMatrixRotateProxy::OnBind( void *pC_BaseEntity )
 
 
 EXPOSE_INTERFACE( CMatrixRotateProxy, IMaterialProxy, "MatrixRotate" IMATERIAL_PROXY_INTERFACE_VERSION );
-

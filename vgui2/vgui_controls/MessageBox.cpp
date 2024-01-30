@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -44,7 +44,7 @@ MessageBox::MessageBox(const char *title, const char *text, Panel *parent) : Fra
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
 MessageBox::MessageBox(const wchar_t *wszTitle, const wchar_t *wszText, Panel *parent) : Frame(parent, NULL, false)
-{	
+{
 	SetTitle(wszTitle, true);
 	m_pMessageLabel = new Label(this, NULL, wszText);
 
@@ -64,7 +64,7 @@ void MessageBox::Init()
 	SetMinimizeButtonVisible(false);
 	SetCloseButtonVisible(false);
 	SetSizeable(false);
-	
+
 	m_pOkButton = new Button(this, NULL, "#MessageBox_OK");
 	m_pOkButton->SetCommand( "OnOk" );
 	m_pOkButton->AddActionSignalTarget(this);
@@ -134,7 +134,7 @@ void MessageBox::OnCommand( const char *pCommand )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: size the message label properly
 //-----------------------------------------------------------------------------
@@ -182,7 +182,7 @@ void MessageBox::ApplySchemeSettings(IScheme *pScheme)
 //-----------------------------------------------------------------------------
 void MessageBox::DoModal(Frame* pFrameOver)
 {
-    ShowWindow(pFrameOver);
+	ShowWindow(pFrameOver);
 /*
 	// move to the middle of the screen
 	// get the screen size
@@ -243,7 +243,7 @@ void MessageBox::ShowWindow(Frame *pFrameOver)
 // Purpose: Put the text and OK buttons in correct place
 //-----------------------------------------------------------------------------
 void MessageBox::PerformLayout()
-{	
+{
 	int x, y, wide, tall;
 	GetClientArea(x, y, wide, tall);
 	wide += x;
@@ -254,7 +254,7 @@ void MessageBox::PerformLayout()
 
 	int oldWide, oldTall;
 	m_pOkButton->GetSize(oldWide, oldTall);
-	
+
 	int btnWide, btnTall;
 	m_pOkButton->GetContentSize(btnWide, btnTall);
 	btnWide = max(oldWide, btnWide + 10);
@@ -265,7 +265,7 @@ void MessageBox::PerformLayout()
 	if ( m_pCancelButton->IsVisible() )
 	{
 		m_pCancelButton->GetSize(oldWide, oldTall);
-		
+
 		m_pCancelButton->GetContentSize(btnWide2, btnTall2);
 		btnWide2 = max(oldWide, btnWide2 + 10);
 		btnTall2 = max(oldTall, btnTall2 + 10);
@@ -319,7 +319,7 @@ void MessageBox::SetCommand(KeyValues *command)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void MessageBox::OnShutdownRequest()
 {
@@ -384,7 +384,7 @@ void MessageBox::SetCancelCommand( KeyValues *command )
 	m_CancelCommand = command;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Toggles visibility of the close box.
 //-----------------------------------------------------------------------------

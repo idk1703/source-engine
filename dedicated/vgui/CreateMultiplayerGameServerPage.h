@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -56,7 +56,7 @@ struct serveritem_t
 //-----------------------------------------------------------------------------
 class CCreateMultiplayerGameServerPage : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CCreateMultiplayerGameServerPage, vgui::Frame ); 
+	DECLARE_CLASS_SIMPLE( CCreateMultiplayerGameServerPage, vgui::Frame );
 public:
 	CCreateMultiplayerGameServerPage(vgui::Panel *parent, const char *name);
 	~CCreateMultiplayerGameServerPage();
@@ -72,8 +72,8 @@ public:
 	int LoadMaps( const char *pszMod );
 
 	virtual void OnCommand(const char *cmd);
-	
-	virtual void OnResetData(); 
+
+	virtual void OnResetData();
 
 	void GetServer(serveritem_t &s);
 	const char *GetRconPassword();
@@ -105,7 +105,7 @@ private:
 	vgui::CheckButton *m_pSecureCheck;
 
 	MESSAGE_FUNC_PTR( OnTextChanged, "TextChanged", panel );
-	
+
 	serveritem_t m_iServer;
 
 	char m_szHostName[DATA_STR_LENGTH];

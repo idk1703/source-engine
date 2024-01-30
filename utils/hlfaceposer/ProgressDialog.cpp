@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -46,7 +46,7 @@ private:
 static CProgressDialog g_ProgressDialog;
 IProgressDialog *g_pProgressDialog = &g_ProgressDialog;
 
-CProgressDialog::CProgressDialog() : 
+CProgressDialog::CProgressDialog() :
 	m_flFraction( 0.0f ), m_hwndDlg( 0 ), m_bShowCancel( false ), m_bWantsCancel( false ), m_flStartTime( 0.0f )
 {
 }
@@ -57,22 +57,22 @@ bool CProgressDialog::IsCancelled()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
-BOOL CALLBACK CProgressDialog::ProgressDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )  
+BOOL CALLBACK CProgressDialog::ProgressDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
-	return g_ProgressDialog.ProgressDialogProcImpl( hwndDlg, uMsg, wParam, lParam );	
+	return g_ProgressDialog.ProgressDialogProcImpl( hwndDlg, uMsg, wParam, lParam );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 void CProgressDialog::Start( char const *pchTitle, char const *pchText, bool bShowCancel )
@@ -90,7 +90,7 @@ void CProgressDialog::Start( char const *pchTitle, char const *pchText, bool bSh
 	m_bWantsCancel = false;
 	m_flStartTime = Plat_FloatTime();
 
-	m_hwndDlg = CreateDialog( (HINSTANCE)GetModuleHandle( 0 ), 
+	m_hwndDlg = CreateDialog( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_PROGRESS ),
 		(HWND)g_MDLViewer->getHandle(),
 		(DLGPROC)ProgressDialogProc );
@@ -211,7 +211,7 @@ BOOL CProgressDialog::ProgressDialogProcImpl( HWND hwndDlg, UINT uMsg, WPARAM wP
 			dlgleft = ( parentw - dialogw ) / 2;
 			dlgtop = ( parenth - dialogh ) / 2;
 
-			MoveWindow( hwndDlg, 
+			MoveWindow( hwndDlg,
 				dlgleft,
 				dlgtop,
 				dialogw,
@@ -229,7 +229,7 @@ BOOL CProgressDialog::ProgressDialogProcImpl( HWND hwndDlg, UINT uMsg, WPARAM wP
 
 			Update( 0.0f );
 		}
-		return FALSE;  
+		return FALSE;
 	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{

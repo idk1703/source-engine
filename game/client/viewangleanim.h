@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -14,7 +14,7 @@
 #define QAngleToVector(a,v) { v[0] = a[0]; v[1] = a[1]; v[2] = a[2]; }
 
 class CViewAngleKeyFrame
-{	
+{
 public:
 	CViewAngleKeyFrame( QAngle vecAngles, float flTime, int iFlags )
 	{
@@ -27,7 +27,7 @@ public:
 	QAngle m_vecAngles;
 
 	// time position of this keyframe
-	float m_flTime;	
+	float m_flTime;
 
 	int m_iFlags;
 };

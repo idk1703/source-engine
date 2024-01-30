@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@
 namespace vgui
 {
 
-// The grid control simply manages a grid of panels. You can adjust column sizes and spacings and 
+// The grid control simply manages a grid of panels. You can adjust column sizes and spacings and
 // configure and fill the panels however you want.
 // To use this control, call SetDimensions, SetSpacing and fill the controls.
 class CGrid : public Panel
@@ -31,7 +31,7 @@ public:
 
 	Panel*				GetEntry(int x, int y);						// Get the panel associated with a grid entry.
 	bool				SetEntry(int x, int y, Panel *pPanel);
-	
+
 	int					GetXSpacing();
 	int					GetYSpacing();
 	void				SetSpacing(int xSpacing, int ySpacing);		// Set spacing between rows and columns.
@@ -54,13 +54,13 @@ public:
 	bool				GetEntryBox(								// Returns the bounding box for the specified entry.
 		int col, int row, int &x, int &y, int &w, int &h);
 
-	bool				CopyColumnWidths(CGrid *pOther);			// Copy the column widths from the other grid. Fails if the 
+	bool				CopyColumnWidths(CGrid *pOther);			// Copy the column widths from the other grid. Fails if the
 																	// column count is different.
 
 	void				RepositionContents();						// Sets the size and position of all the grid entries based
 																	// on current spacings and row/column widths.
 																	// You usually only want to call this while setting up the control
-																	// if you want to get the position or dimensions of the child  
+																	// if you want to get the position or dimensions of the child
 																	// controls. This will set them.
 
 	void				SetRowUnderline(int row, bool enabled, int offset, int r, int g, int b, int a);	// sets underline color for a particular row
@@ -70,7 +70,7 @@ public:
 
 // Panel overrides.
 public:
-	
+
 	virtual void		Paint();
 	virtual void		PaintBackground();
 
@@ -81,7 +81,7 @@ protected:
 	public:
 				CGridEntry();
 				~CGridEntry();
-		
+
 		Panel	*m_pPanel;
 
 		bool	m_bUnderline;
@@ -102,7 +102,7 @@ protected:
 
 	int			m_xCols;
 	int			m_yRows;
-	
+
 	int			m_xSpacing;
 	int			m_ySpacing;
 
@@ -110,9 +110,9 @@ protected:
 	int			*m_Heights;
 	int			*m_ColOffsets;
 	int			*m_RowOffsets;
-	
+
 	CGridEntry	*m_GridEntries;
-	
+
 };
 
 };

@@ -52,7 +52,7 @@ public:
 	void TurnOn( void );
 	void TurnOff( void );
 	void Toggle( void );
-	
+
 	const char *GetDecalName( void ){ return STRING( m_iszDecal );}
 
 	inline bool ServerSide( void )
@@ -131,7 +131,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvBeam::Spawn( void )
 {
@@ -191,7 +191,7 @@ void CEnvBeam::Spawn( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvBeam::Precache( void )
 {
@@ -206,7 +206,7 @@ void CEnvBeam::Precache( void )
 		Q_strncpy( fixedname, STRING( m_iszSpriteName ), sizeof( fixedname ) );
 
 		Q_SetExtension( fixedname, ".vmt", sizeof( fixedname ) );
-		
+
 		m_iszSpriteName = AllocPooledString( fixedname );
 	}
 
@@ -218,7 +218,7 @@ void CEnvBeam::Precache( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvBeam::Activate( void )
 {
@@ -313,7 +313,7 @@ void CEnvBeam::TurnOn( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvBeam::TurnOff( void )
 {
@@ -382,7 +382,7 @@ void CEnvBeam::Strike( void )
 		return;
 
 	m_speed = clamp( (int) m_speed, 0, (int) MAX_BEAM_SCROLLSPEED );
-	
+
 	int pointStart = IsStaticPointEntity( pStart );
 	int pointEnd = IsStaticPointEntity( pEnd );
 
@@ -416,9 +416,9 @@ void CEnvBeam::Strike( void )
 		if ( m_spawnflags & SF_BEAM_RING)
 		{
 			te->BeamRing( filter, 0.0,
-				pStart->entindex(), 
-				pEnd->entindex(), 
-				m_spriteTexture, 
+				pStart->entindex(),
+				pEnd->entindex(),
+				m_spriteTexture,
 				0,	// No halo
 				m_frameStart,
 				(int)m_flFrameRate,
@@ -435,8 +435,8 @@ void CEnvBeam::Strike( void )
 		else
 		{
 			te->BeamEnts( filter, 0.0,
-				pStart->entindex(), 
-				pEnd->entindex(), 
+				pStart->entindex(),
+				pEnd->entindex(),
 				m_spriteTexture,
 				0,	// No halo
 				m_frameStart,
@@ -462,7 +462,7 @@ void CEnvBeam::Strike( void )
 		UTIL_TraceLine( pStart->GetAbsOrigin(), pEnd->GetAbsOrigin(), MASK_SOLID, NULL, COLLISION_GROUP_NONE, &tr );
 		BeamDamageInstant( &tr, m_flDamage );
 	}
-	
+
 }
 
 
@@ -547,7 +547,7 @@ bool CEnvBeam::PassesTouchFilters(CBaseEntity *pOther)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvBeam::UpdateThink( void )
 {
@@ -593,18 +593,18 @@ void CEnvBeam::UpdateThink( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &vecSrc - 
-//			&vecDest - 
+// Purpose:
+// Input  : &vecSrc -
+//			&vecDest -
 //-----------------------------------------------------------------------------
 void CEnvBeam::Zap( const Vector &vecSrc, const Vector &vecDest )
 {
 	CBroadcastRecipientFilter filter;
 
 	te->BeamPoints( filter, 0.0,
-		&vecSrc, 
-		&vecDest, 
-		m_spriteTexture, 
+		&vecSrc,
+		&vecDest,
+		m_spriteTexture,
 		0,	// No halo
 		m_frameStart,
 		(int)m_flFrameRate,
@@ -624,7 +624,7 @@ void CEnvBeam::Zap( const Vector &vecSrc, const Vector &vecDest )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvBeam::RandomArea( void )
 {
@@ -669,8 +669,8 @@ void CEnvBeam::RandomArea( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : vecSrc - 
+// Purpose:
+// Input  : vecSrc -
 //-----------------------------------------------------------------------------
 void CEnvBeam::RandomPoint( const Vector &vecSrc )
 {
@@ -696,7 +696,7 @@ void CEnvBeam::RandomPoint( const Vector &vecSrc )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvBeam::BeamUpdateVars( void )
 {

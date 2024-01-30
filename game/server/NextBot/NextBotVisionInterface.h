@@ -29,7 +29,7 @@ public:
 	//-- attention/short term memory interface follows ------------------------------------------
 
 	//
-	// WARNING: Do not keep CKnownEntity pointers returned by these methods, as they can be invalidated/freed 
+	// WARNING: Do not keep CKnownEntity pointers returned by these methods, as they can be invalidated/freed
 	//
 
 	/**
@@ -67,7 +67,7 @@ public:
 	//-- physical vision interface follows ------------------------------------------------------
 
 	/**
-	 * Populate "potentiallyVisible" with the set of all entities we could potentially see. 
+	 * Populate "potentiallyVisible" with the set of all entities we could potentially see.
 	 * Entities in this set will be tested for visibility/recognition in IVision::Update()
 	 */
 	virtual void CollectPotentiallyVisibleEntities( CUtlVector< CBaseEntity * > *potentiallyVisible );
@@ -79,7 +79,7 @@ public:
 	 * IsAbleToSee() returns true if the viewer can ACTUALLY SEE the subject or position,
 	 * taking into account blindness, smoke effects, invisibility, etc.
 	 * If 'visibleSpot' is non-NULL, the highest priority spot on the subject that is visible is returned.
-	 */ 
+	 */
 	enum FieldOfViewCheckType { USE_FOV, DISREGARD_FOV };
 	virtual bool IsAbleToSee( CBaseEntity *subject, FieldOfViewCheckType checkFOV, Vector *visibleSpot = NULL ) const;
 	virtual bool IsAbleToSee( const Vector &pos, FieldOfViewCheckType checkFOV ) const;
@@ -110,10 +110,10 @@ public:
 
 private:
 	CountdownTimer m_scanTimer;			// for throttling update rate
-	
+
 	float m_FOV;						// current FOV in degrees
 	float m_cosHalfFOV;					// the cosine of FOV/2
-	
+
 	CUtlVector< CKnownEntity > m_knownEntityVector;		// the set of enemies/friends we are aware of
 	void UpdateKnownEntities( void );
 	bool IsAwareOf( const CKnownEntity &known ) const;	// return true if our reaction time has passed for this entity
@@ -154,7 +154,7 @@ inline float IVision::GetTimeSinceVisible( int team ) const
 {
 	if ( team == TEAM_ANY )
 	{
-		// return minimum time	
+		// return minimum time
 		float time = 9999999999.9f;
 		for( int i=0; i<MAX_TEAMS; ++i )
 		{
@@ -168,12 +168,12 @@ inline float IVision::GetTimeSinceVisible( int team ) const
 		}
 		return time;
 	}
-	
+
 	if ( team >= 0 && team < MAX_TEAMS )
 	{
 		return m_notVisibleTimer[ team ].GetElapsedTime();
 	}
-	
+
 	return 0.0f;
 }
 
@@ -198,7 +198,7 @@ inline bool IVision::ForEachKnownEntity( IVision::IForEachKnownEntity &func )
 			}
 		}
 	}
-	
+
 	return true;
 }
 

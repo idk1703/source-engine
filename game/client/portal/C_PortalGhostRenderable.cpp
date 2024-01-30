@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,8 +12,8 @@
 #include "model_types.h"
 
 C_PortalGhostRenderable::C_PortalGhostRenderable( C_Prop_Portal *pOwningPortal, C_BaseEntity *pGhostSource, RenderGroup_t sourceRenderGroup, const VMatrix &matGhostTransform, float *pSharedRenderClipPlane, bool bLocalPlayer )
-: m_pGhostedRenderable( pGhostSource ), 
-	m_matGhostTransform( matGhostTransform ), 
+: m_pGhostedRenderable( pGhostSource ),
+	m_matGhostTransform( matGhostTransform ),
 	m_pSharedRenderClipPlane( pSharedRenderClipPlane ),
 	m_bLocalPlayer( bLocalPlayer ),
 	m_pOwningPortal( pOwningPortal )
@@ -39,8 +39,8 @@ void C_PortalGhostRenderable::PerFrameUpdate( void )
 	{
 		SetModelName( m_pGhostedRenderable->GetModelName() );
 		SetModelIndex( m_pGhostedRenderable->GetModelIndex() );
-		SetEffects( m_pGhostedRenderable->GetEffects() | EF_NOINTERP );		
-		m_flAnimTime = m_pGhostedRenderable->m_flAnimTime;		
+		SetEffects( m_pGhostedRenderable->GetEffects() | EF_NOINTERP );
+		m_flAnimTime = m_pGhostedRenderable->m_flAnimTime;
 
 		if( m_bSourceIsBaseAnimating )
 		{
@@ -54,7 +54,7 @@ void C_PortalGhostRenderable::PerFrameUpdate( void )
 
 
 	// Set position and angles relative to the object it's ghosting
-	Vector ptNewOrigin = m_matGhostTransform * m_pGhostedRenderable->GetAbsOrigin();		
+	Vector ptNewOrigin = m_matGhostTransform * m_pGhostedRenderable->GetAbsOrigin();
 	QAngle qNewAngles = TransformAnglesToWorldSpace( m_pGhostedRenderable->GetAbsAngles(), m_matGhostTransform.As3x4() );
 
 	SetAbsOrigin( ptNewOrigin );
@@ -89,7 +89,7 @@ bool C_PortalGhostRenderable::SetupBones( matrix3x4_t *pBoneToWorldOut, int nMax
 {
 	if( m_pGhostedRenderable == NULL )
 		return false;
-	
+
 	int nModelIndex = 0;
 	CBaseCombatWeapon *pParent = dynamic_cast<CBaseCombatWeapon*>( m_pGhostedRenderable );
 	if ( pParent )
@@ -109,7 +109,7 @@ bool C_PortalGhostRenderable::SetupBones( matrix3x4_t *pBoneToWorldOut, int nMax
 		}
 		return true;
 	}
-	
+
 	if ( pParent )
 	{
 		pParent->SetModelIndex( nModelIndex );
@@ -270,12 +270,12 @@ int C_PortalGhostRenderable::DrawModel( int flags )
 			mode = ( flags & STUDIO_TRANSPARENCY ) ? DBM_DRAW_TRANSLUCENT_ONLY : DBM_DRAW_OPAQUE_ONLY;
 		}
 
-		render->DrawBrushModelEx( m_pGhostedRenderable, 
-								(model_t *)m_pGhostedRenderable->GetModel(), 
-								GetRenderOrigin(), 
-								GetRenderAngles(), 
+		render->DrawBrushModelEx( m_pGhostedRenderable,
+								(model_t *)m_pGhostedRenderable->GetModel(),
+								GetRenderOrigin(),
+								GetRenderAngles(),
 								mode );
-		
+
 		return 1;
 	}
 
@@ -366,12 +366,3 @@ bool C_PortalGhostRenderable::IsTwoPass( void )
 
 	return m_pGhostedRenderable->IsTwoPass();
 }*/
-
-
-
-
-
-
-
-
-

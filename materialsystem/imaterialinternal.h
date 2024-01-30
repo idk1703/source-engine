@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -59,7 +59,7 @@ public:
 	virtual void	SetNeedsWhiteLightmap( bool val ) = 0;
 	virtual bool	GetNeedsWhiteLightmap( ) const = 0;
 
-	// load/unload 
+	// load/unload
 	virtual void	Uncache( bool bPreserveVars = false ) = 0;
 	virtual void	Precache() = 0;
 	// If supplied, pKeyValues and pPatchKeyValues should come from LoadVMTFile()
@@ -67,7 +67,7 @@ public:
 
 	// reload all textures used by this materals
 	virtual void	ReloadTextures() = 0;
-	
+
 	// lightmap pages associated with this material
 	virtual void	SetMinLightmapPageID( int pageID ) = 0;
 	virtual void	SetMaxLightmapPageID( int pageID ) = 0;;
@@ -140,7 +140,7 @@ public:
 
 	//easy swapping between the queue friendly and realtime versions of the material
 	virtual IMaterialInternal *GetRealTimeVersion( void ) = 0;
-	virtual IMaterialInternal *GetQueueFriendlyVersion( void ) = 0;	
+	virtual IMaterialInternal *GetQueueFriendlyVersion( void ) = 0;
 
 	virtual void PrecacheMappingDimensions( void ) = 0;
 	virtual void FindRepresentativeTexture( void ) = 0;

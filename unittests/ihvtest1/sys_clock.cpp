@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,7 +21,7 @@ static struct
 } g_fpenv;
 #pragma pack( pop, thing )
 
-	
+
 void __declspec ( naked ) MaskExceptions()
 {
 	_asm
@@ -107,7 +107,7 @@ private:
 static CSysClock g_Clock;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CSysClock::CSysClock( void )
 {
@@ -136,7 +136,7 @@ void CSysClock::Init( void )
 	// 1 microsecond resolution
 	lowpart		= (unsigned int)PerformanceFreq.LowPart;
 	highpart	= (unsigned int)PerformanceFreq.HighPart;
-	
+
 	m_nTimeSampleShift	= 0;
 
 	while ( highpart || ( lowpart > 2000000.0 ) )
@@ -146,7 +146,7 @@ void CSysClock::Init( void )
 		lowpart |= (highpart & 1) << 31;
 		highpart >>= 1;
 	}
-	
+
 	m_dClockFrequency = 1.0 / (double)lowpart;
 
 	// Get initial sample
@@ -161,7 +161,7 @@ void CSysClock::Init( void )
 	{
 		// Rotate counter to right by m_nTimeSampleShift places
 		temp = ((unsigned int)PerformanceCount.LowPart >> m_nTimeSampleShift) |
-			   ((unsigned int)PerformanceCount.HighPart << (32 - m_nTimeSampleShift));
+				((unsigned int)PerformanceCount.HighPart << (32 - m_nTimeSampleShift));
 	}
 
 	// Set first time stamp
@@ -186,7 +186,7 @@ double CSysClock::GetTime( void )
 	LARGE_INTEGER		PerformanceCount;
 	unsigned int		temp, t2;
 	double				time;
-	
+
 	if ( !m_bInitialized )
 	{
 		return 0.0;
@@ -205,11 +205,11 @@ double CSysClock::GetTime( void )
 	{
 		// Rotate counter to right by m_nTimeSampleShift places
 		temp = ((unsigned int)PerformanceCount.LowPart >> m_nTimeSampleShift) |
-			   ((unsigned int)PerformanceCount.HighPart << (32 - m_nTimeSampleShift));
+				((unsigned int)PerformanceCount.HighPart << (32 - m_nTimeSampleShift));
 	}
 
 	// check for turnover or backward time
-	if ( ( temp <= m_uiPreviousTime ) && 
+	if ( ( temp <= m_uiPreviousTime ) &&
 		( ( m_uiPreviousTime - temp ) < 0x10000000) )
 	{
 		m_uiPreviousTime = temp;	// so we can't get stuck
@@ -232,7 +232,7 @@ double CSysClock::GetTime( void )
 	Sys_PopFPCW();
 
 	// Convert to float
-    return m_dCurrentTime;
+	return m_dCurrentTime;
 
 }
 

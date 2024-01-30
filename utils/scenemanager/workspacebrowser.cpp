@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,7 +24,7 @@ enum
 class CBrowserTree : public mxTreeView
 {
 public:
-	CBrowserTree( mxWindow *parent, int id = 0 ) 
+	CBrowserTree( mxWindow *parent, int id = 0 )
 		: mxTreeView( parent, 0, 0, 0, 0, id )
 	{
 		// SendMessage ( (HWND)getHandle(), WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_FIXED_FONT), MAKELPARAM (TRUE, 0));
@@ -42,14 +42,14 @@ int CALLBACK CWorkspaceBrowser::CompareFunc(LPARAM lParam1, LPARAM lParam2, LPAR
 		return -1;
 	else if ( item1->GetOrdinal() > item2->GetOrdinal() )
 		return 1;
-	
+
 	// Ok, just compare pointers... sigh
 	return ( item1 < item2 ) ? -1 : 1;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
 CWorkspaceBrowser::CWorkspaceBrowser( mxWindow *parent, CWorkspaceManager *manager, int id ) :
 	BaseClass( parent, 0, 0, 0, 0, "Workspace Browser", id )
@@ -65,13 +65,13 @@ CWorkspaceBrowser::CWorkspaceBrowser( mxWindow *parent, CWorkspaceManager *manag
 
 	HIMAGELIST list = GetWorkspaceManager()->CreateImageList();
 
-	// Associate the image list with the tree-view control. 
-    m_pTree->setImageList( (void *)list ); 
+	// Associate the image list with the tree-view control.
+	m_pTree->setImageList( (void *)list );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 // Output : int
 //-----------------------------------------------------------------------------
 int CWorkspaceBrowser::handleEvent( mxEvent *event )
@@ -120,7 +120,7 @@ int CWorkspaceBrowser::handleEvent( mxEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CWorkspace
 //-----------------------------------------------------------------------------
 CWorkspace *CWorkspaceBrowser::GetWorkspace()
@@ -129,7 +129,7 @@ CWorkspace *CWorkspaceBrowser::GetWorkspace()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWorkspaceBrowser::PopulateTree()
 {
@@ -172,8 +172,8 @@ void CWorkspaceBrowser::PopulateTree()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *w - 
+// Purpose:
+// Input  : *w -
 //-----------------------------------------------------------------------------
 void CWorkspaceBrowser::SetWorkspace( CWorkspace *w )
 {
@@ -183,8 +183,8 @@ void CWorkspaceBrowser::SetWorkspace( CWorkspace *w )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *project - 
+// Purpose:
+// Input  : *project -
 //-----------------------------------------------------------------------------
 void CWorkspaceBrowser::AddProject( CProject *project )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,7 +16,7 @@ class CNPC_Scientist : public CHL1NPCTalker
 {
 	DECLARE_CLASS( CNPC_Scientist, CHL1NPCTalker );
 public:
-	
+
 //	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();
 
@@ -47,25 +47,25 @@ public:
 	int		SelectSchedule( void );
 	void	StartTask( const Task_t *pTask );
 	void	RunTask( const Task_t *pTask );
-	
+
 	NPC_STATE SelectIdealState ( void );
-	
+
 	int		FriendNumber( int arrayNumber );
-	
+
 	bool	DisregardEnemy( CBaseEntity *pEnemy ) { return !pEnemy->IsAlive() || (gpGlobals->curtime - m_flFearTime) > 15; }
-	
+
 	void	TalkInit( void );
-	
+
 	void	DeclineFollowing( void );
 
 	bool	CanBecomeRagdoll( void );
 	bool	ShouldGib( const CTakeDamageInfo &info );
-	
+
 	void	SUB_StartLVFadeOut( float delay = 10.0f, bool bNotSolid = true );
 	void	SUB_LVFadeOut( void  );
 
 	void	Scream( void );
-	
+
 	Activity GetStoppedActivity( void );
 	Activity NPC_TranslateActivity( Activity newActivity );
 
@@ -102,7 +102,7 @@ public:
 	DEFINE_CUSTOM_AI;
 
 private:
-	
+
 	float m_flFearTime;
 	float m_flHealTime;
 	float m_flPainTime;
@@ -125,11 +125,11 @@ public:
 	void  Precache( void );
 
 	int FriendNumber( int arrayNumber );
-	
+
 	void SittingThink( void );
 
 	virtual void SetAnswerQuestion( CNPCSimpleTalker *pSpeaker );
-	int		m_baseSequence;	
+	int		m_baseSequence;
 	int		m_iHeadTurn;
 	float	m_flResponseDelay;
 

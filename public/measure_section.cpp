@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -34,7 +34,7 @@ CMeasureSection::CMeasureSection( const char *name )
 {
 	// Just point at name since it's static
 	m_pszName		= name;
-	
+
 	// Clear accumulators
 	Reset();
 	SortReset();
@@ -57,7 +57,7 @@ CMeasureSection::~CMeasureSection( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMeasureSection::UpdateMax( void )
 {
@@ -69,7 +69,7 @@ void CMeasureSection::UpdateMax( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMeasureSection::Reset( void )
 {
@@ -77,7 +77,7 @@ void CMeasureSection::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMeasureSection::SortReset( void )
 {
@@ -85,7 +85,7 @@ void CMeasureSection::SortReset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CMeasureSection::GetName( void )
@@ -94,8 +94,8 @@ const char *CMeasureSection::GetName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 CCycleCount const& CMeasureSection::GetTotalTime( void )
 {
@@ -103,8 +103,8 @@ CCycleCount const& CMeasureSection::GetTotalTime( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 CCycleCount const& CMeasureSection::GetTime( void )
 {
@@ -112,8 +112,8 @@ CCycleCount const& CMeasureSection::GetTime( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 CCycleCount const& CMeasureSection::GetMaxTime( void )
 {
@@ -122,7 +122,7 @@ CCycleCount const& CMeasureSection::GetMaxTime( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Accumulates a timeslice
-// Input  : time - 
+// Input  : time -
 //-----------------------------------------------------------------------------
 void CMeasureSection::AddTime( CCycleCount const &rCount )
 {
@@ -131,7 +131,7 @@ void CMeasureSection::AddTime( CCycleCount const &rCount )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CMeasureSection
 //-----------------------------------------------------------------------------
 CMeasureSection *CMeasureSection::GetNext( void )
@@ -140,7 +140,7 @@ CMeasureSection *CMeasureSection::GetNext( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CMeasureSection
 //-----------------------------------------------------------------------------
 CMeasureSection *CMeasureSection::GetList( void )
@@ -150,8 +150,8 @@ CMeasureSection *CMeasureSection::GetList( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Compares accumulated time for two sections
-// Input  : ppms1 - 
-//			ppms2 - 
+// Input  : ppms1 -
+//			ppms2 -
 // Output : static int
 //-----------------------------------------------------------------------------
 static int SectionCompare( const void* ppms1,const void* ppms2 )
@@ -178,7 +178,7 @@ void CMeasureSection::SortSections( void )
 	CMeasureSection *ms;
 
 	memset(sortarray,sizeof(CMeasureSection*)*128,0);
-	
+
 	ms = GetList();
 	int i;
 	int c = 0;
@@ -204,7 +204,7 @@ void CMeasureSection::SortSections( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Creates an instance for timing a section
-// Input  : *ms - 
+// Input  : *ms -
 //-----------------------------------------------------------------------------
 CMeasureSectionInstance::CMeasureSectionInstance( CMeasureSection *ms )
 {
@@ -213,13 +213,13 @@ CMeasureSectionInstance::CMeasureSectionInstance( CMeasureSection *ms )
 
 	if ( host_speeds.GetInt() < 3 && !game_speeds.GetInt())
 		return;
-	
+
 	// Get initial timestamp
 	m_Timer.Start();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMeasureSectionInstance::~CMeasureSectionInstance( void )
 {

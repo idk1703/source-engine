@@ -82,10 +82,10 @@ static bool ReadFileData( ZIP_LocalFileHeader& fileHeader, char* filename, char*
 		FileError();
 		return false;
 	}
-	
+
 	filename[fileHeader.fileNameLength] = '\0';
 	printf("Reading file %s\n",filename);
-	
+
 	// Absorb any extra-field padding
 	fseek( g_fin, fileHeader.extraFieldLength, SEEK_CUR );
 
@@ -149,7 +149,7 @@ static bool AlignZipDirectory( const char* infile, const char* outfile )
 		// Get the original file
 		if( !ReadFileData( hdr, filename, data ) )
 			return false;
-		
+
 		if( data )
 		{
 			// Add to the zip file
@@ -179,7 +179,7 @@ static bool AlignZipDirectory( const char* infile, const char* outfile )
 
 	// Alignment complete
 	printf("\n%d Files successfully aligned.\n\n",g_fileCt);
-	
+
 	return true;
 }
 
@@ -304,4 +304,3 @@ static void FileError()
 	else
 		printf("\nUnknown file error.\n\n");
 }
-

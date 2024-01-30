@@ -143,7 +143,7 @@ static weapons_t g_Weapons[] =
 	{ WEAPON_EVERYTHING, 1250, WEAPON_NVG, 0, 0, },
 };
 
-const char * s_WeaponAliasInfo[] = 
+const char * s_WeaponAliasInfo[] =
 {
 		"none",		// WEAPON_NONE
 		"p228",		// WEAPON_P228
@@ -163,7 +163,7 @@ const char * s_WeaponAliasInfo[] =
 		"famas",	// WEAPON_FAMAS				// CT cheap m4a1
 		"usp",		// WEAPON_USP
 		"awp",		// WEAPON_AWP
-		"mp5navy",	// WEAPON_MP5N 
+		"mp5navy",	// WEAPON_MP5N
 		"m249",		// WEAPON_M249				// big machinegun
 		"m3",		// WEAPON_M3 				// cheap shotgun
 		"m4a1",		// WEAPON_M4A1
@@ -175,7 +175,7 @@ const char * s_WeaponAliasInfo[] =
 		"ak47",		// WEAPON_AK47
 		"knife",	// WEAPON_KNIFE
 		"p90",		// WEAPON_P90
-		"shield",	// WEAPON_SHIELDGUN 
+		"shield",	// WEAPON_SHIELDGUN
 		"kevlar",
 		"kev+helm",
 		"ngvision",
@@ -201,7 +201,7 @@ bool GetCurrentPurchaseCount( void )
 
 		//Get purchase counts.
 		mysql->Execute( "select * from weapons;" );
-	
+
 		bool bFoundNext = mysql->SeekToFirstRow();
 		int iIndex = WEAPON_P228;
 
@@ -227,7 +227,7 @@ bool GetCurrentPurchaseCount( void )
 		//Get reset snapshot counter.
 		g_iResetCounter = mysql->GetColumnValue_Int( mysql->GetColumnIndex( "counter" ) );
 
-		
+
 
 		//Get current price and purchase count
 		mysql->Execute( "select * from weapon_info;" );
@@ -238,7 +238,7 @@ bool GetCurrentPurchaseCount( void )
 		while( bFoundNext && iIndex < WEAPON_MAX )
 		{
 			bFoundNext = mysql->NextRow();
-			
+
 			int iWeaponID = mysql->GetColumnValue_Int( mysql->GetColumnIndex( "WeaponID" ) );
 			g_Weapons[iWeaponID].iCurrentPrice = mysql->GetColumnValue_Int( mysql->GetColumnIndex( "current_price" ) );
 
@@ -256,7 +256,7 @@ bool GetCurrentPurchaseCount( void )
 
 				g_Weapons[iWeaponID].iPurchaseCount =  g_iPurchaseDelta[iWeaponID] + iPurchasesThisWeek;
 			}
-			
+
 
 			iIndex++;
 		}
@@ -378,7 +378,7 @@ void SortWeaponRanks( int iWeaponType, weapons_t *pWeaponsArray, int iSortType )
 
 	if ( iWeaponType == WEAPON_EVERYTHING )
 	{
-		iTotalPurchases = g_flTotalWeaponPurchasesRifleEquipment; 
+		iTotalPurchases = g_flTotalWeaponPurchasesRifleEquipment;
 	}
 
 	bool bSorted = 1;
@@ -395,7 +395,7 @@ void SortWeaponRanks( int iWeaponType, weapons_t *pWeaponsArray, int iSortType )
 			if ( iSortType == SORT_PURCHASE )
 			{
 				flSize1 = pWeaponsArray[i].iPurchaseCount;
-				flSize2 = pWeaponsArray[i-1].iPurchaseCount; 
+				flSize2 = pWeaponsArray[i-1].iPurchaseCount;
 			}
 			else if ( iSortType == SORT_NEWPRICE )
 			{
@@ -433,7 +433,7 @@ void CalculateNewPrices( weapons_t *pWeaponsArray, int iWeaponType )
 	if ( iWeaponType == WEAPON_EVERYTHING )
 	{
 		iTotalDollars = g_flTotalDollarsRifleEquipment;
-		iTotalPurchases = g_flTotalWeaponPurchasesRifleEquipment; 
+		iTotalPurchases = g_flTotalWeaponPurchasesRifleEquipment;
 	}
 
 	SortWeaponRanks( iWeaponType, pWeaponsArray, SORT_PURCHASE );
@@ -541,7 +541,7 @@ void AddSnapshotToDatabase( void )
 			prices.iPreviousPrice[i] = g_Weapons[i].iCurrentPrice;
 			prices.iCurrentPrice[i] = g_iNewWeaponPrices[i];
 		}
-	
+
 
 		buf.Put( &prices, sizeof( weeklyprice_t ) );
 
@@ -562,7 +562,7 @@ void AddSnapshotToDatabase( void )
 	}
 
 	g_iCounter++;
-		
+
 	for ( int i = 1; i < WEAPON_MAX; i ++ )
 	{
 		Q_snprintf( szSnapshot, sizeof( szSnapshot ), "Insert into purchases_pricing ( snapshot, dt2, weapon_id, purchases, current_price, projected_price, reset_counter ) values ( \"%d_%d\", NOW(), %d, %d, %d, %d, %d );",
@@ -570,7 +570,7 @@ void AddSnapshotToDatabase( void )
 				   	i,
 					g_iPurchaseDelta[i],
 					g_Weapons[i].iCurrentPrice,
-					g_iNewWeaponPrices[i], 
+					g_iNewWeaponPrices[i],
 					g_iResetCounter );
 
 		int retcode = mysql->Execute( szSnapshot );
@@ -601,7 +601,7 @@ void AddSnapshotToDatabase( void )
 	}
 
 	Msg( "Added new snapshot to database\n", szSnapshot, retcode );
-	
+
 }
 
 int main(int argc, char* argv[])
@@ -661,7 +661,7 @@ int main(int argc, char* argv[])
 	{
 		AddSnapshotToDatabase();
 	}
-	
+
 	PrintNewPrices();
 
 	if ( mysql )
@@ -671,4 +671,3 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
-

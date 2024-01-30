@@ -85,7 +85,7 @@ void ParseTechnology( CBaseTechnology *pTechnology, KeyValues *pkvTech )
 		{
 			ParseClassResult( pTechnology, pkvClassResults->FindKey( GetTFClassInfo( iClass )->m_pClassName ), iClass );
 		}
-		
+
 		ParseClassResult( pTechnology, pkvClassResults->FindKey( "all" ), TFCLASS_CLASS_COUNT );
 	}
 
@@ -100,7 +100,7 @@ void ParseTechnology( CBaseTechnology *pTechnology, KeyValues *pkvTech )
 			if ( iContainedTechs >= MAX_CONTAINED_TECHNOLOGIES )
 				break;
 
-			pTechnology->AddContainedTechnology( pkvTechnology->GetString() ); 
+			pTechnology->AddContainedTechnology( pkvTechnology->GetString() );
 
 			iContainedTechs++;
 			pkvTechnology = pkvTechnology->GetNextKey();
@@ -118,7 +118,7 @@ void ParseTechnology( CBaseTechnology *pTechnology, KeyValues *pkvTech )
 			if ( iDependentTechs >= MAX_DEPENDANT_TECHNOLOGIES )
 				break;
 
-			pTechnology->AddDependentTechnology( pkvTechnology->GetString() ); 
+			pTechnology->AddDependentTechnology( pkvTechnology->GetString() );
 
 			iDependentTechs++;
 			pkvTechnology = pkvTechnology->GetNextKey();
@@ -135,7 +135,7 @@ bool ParseTechnologyFile( CUtlVector< CBaseTechnology * > &pTechnologyList, IFil
 	KeyValues *pkvTechTreeFile = new KeyValues( "TechTreeDataFile" );
 	if ( pkvTechTreeFile->LoadFromFile( filesystem, sFileName, "GAME" ) == false )
 		return false;
-	
+
 	// Parse the list of techs
 	KeyValues *pkvTech = pkvTechTreeFile->GetFirstSubKey();
 	while ( pkvTech )
@@ -180,4 +180,3 @@ bool ParseTechnologyFile( CUtlVector< CBaseTechnology * > &pTechnologyList, IFil
 	pkvTechTreeFile->deleteThis();
 	return true;
 }
-

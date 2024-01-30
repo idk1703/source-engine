@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -25,9 +25,9 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, 
+void CTFPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper,
 	CMoveData *move )
 {
 	C_TFPlayer *pTFPlayer = ToTFPlayer( player );
@@ -49,7 +49,7 @@ void CTFPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPrediction::FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *move )
 {
@@ -65,4 +65,3 @@ static CTFPrediction g_Prediction;
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CTFPrediction, IPrediction, VCLIENT_PREDICTION_INTERFACE_VERSION, g_Prediction );
 
 CPrediction *prediction = &g_Prediction;
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -133,7 +133,7 @@ bool CPublishedFiles::QueryHasTimedOut( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:	
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPublishedFiles::PopulateFileList( void )
 {
@@ -178,13 +178,13 @@ bool CPublishedFiles::EnumerateUserPublishedFiles( uint32 unPage )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:	
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPublishedFiles::DeletePublishedFile( uint64 nPublishedFileID )
 {
 	m_state = kState_DeletingFile;
 	SteamAPICall_t hSteamAPICall = steamapicontext->SteamRemoteStorage()->DeletePublishedFile( nPublishedFileID );
-	m_callbackDeletePublishedFile.Set( hSteamAPICall, this, &CPublishedFiles::Steam_OnDeletePublishedFile ); 
+	m_callbackDeletePublishedFile.Set( hSteamAPICall, this, &CPublishedFiles::Steam_OnDeletePublishedFile );
 }
 
 //-----------------------------------------------------------------------------
@@ -221,7 +221,7 @@ void CPublishedFiles::ViewPublishedFile( uint64 nPublishedFileID )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:	
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPublishedFiles::RefreshPublishedFileDetails( uint64 nPublishedFileID )
 {
@@ -243,7 +243,7 @@ void CPublishedFiles::RefreshPublishedFileDetails( uint64 nPublishedFileID )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPublishedFiles::Steam_OnDeletePublishedFile( RemoteStorageDeletePublishedFileResult_t *pResult, bool bError )
 {
@@ -263,14 +263,14 @@ void CPublishedFiles::Steam_OnDeletePublishedFile( RemoteStorageDeletePublishedF
 			m_FileDetails.Remove( pResult->m_nPublishedFileId );
 		}
 	}
-	else 
+	else
 	{
 		m_state = kState_ErrorOccurred;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:	
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPublishedFiles::Steam_OnEnumeratePublishedFiles( SteamUGCQueryCompleted_t *pResult, bool bError )
 {
@@ -344,7 +344,7 @@ static uint32 kNumOtherTags = ARRAYSIZE( kOtherTags );
 
 // Map Tags
 static TagPair_t kMapTags[] = {
-	{ "MapsCheckBox_CTF", "Capture the Flag" }, 
+	{ "MapsCheckBox_CTF", "Capture the Flag" },
 	{ "MapsCheckBox_CP", "Control Point" },
 	{ "MapsCheckBox_Escort", "Payload" },
 	{ "MapsCheckBox_EscortRace", "Payload Race" },
@@ -420,7 +420,7 @@ public:
 		{
 			return "#TF_SteamWorkshop_AcceptableFilesMaps";
 		}
-		return "#TF_SteamWorkshop_AcceptableFiles"; 
+		return "#TF_SteamWorkshop_AcceptableFiles";
 	}
 	virtual const char *GetResFile() const { return "Resource/UI/PublishFileDialog.res"; }
 
@@ -684,7 +684,7 @@ protected:
 	virtual void PopulateEditFields( void )
 	{
 		BaseClass::PopulateEditFields();
-		
+
 		// class tags
 		vgui::EditablePanel* pClassUsagePanel = dynamic_cast<vgui::EditablePanel*>( FindChildByName( "ClassUsagePanel" ) );
 		if ( pClassUsagePanel )
@@ -761,7 +761,7 @@ protected:
 	}
 
 	virtual void OnCommand( const char *command )
-	{	
+	{
 		if ( V_stricmp( command, "MainFileCosmetics" ) == 0 )
 		{
 #ifdef WORKSHOP_IMPORT_ENABLED
@@ -810,7 +810,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CUGCFileRequestCache
 {
@@ -840,7 +840,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CSteamWorkshopItemPanel : public vgui::EditablePanel
 {
@@ -855,7 +855,7 @@ public:
 
 	{
 		memset( &m_FileDetails, 0, sizeof( m_FileDetails ) );
-		m_pCroppedTextureImagePanel = new CBitmapPanel( this, "PreviewImage" );	
+		m_pCroppedTextureImagePanel = new CBitmapPanel( this, "PreviewImage" );
 		m_pHighlightPanel = new vgui::EditablePanel( this, "HighlightPanel" );
 		vgui::ivgui()->AddTickSignal( GetVPanel(), 100 );
 	}
@@ -934,7 +934,7 @@ public:
 	{
 		if ( code != MOUSE_LEFT )
 			return;
-		
+
 		PostActionSignal( new KeyValues( "ItemPanelMousePressed" ) );
 	}
 
@@ -973,7 +973,7 @@ protected:
 				m_bPreviewDownloadPending = true;
 			}
 			break;
-			
+
 			case UGCFILEREQUEST_FINISHED:
 			{
 				SetPreviewImage();
@@ -1023,7 +1023,7 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #define MAX_ITEMS_VIEWABLE 4
 
@@ -1031,7 +1031,7 @@ class CSteamWorkshopDialog : public vgui::EditablePanel
 {
 	DECLARE_CLASS_SIMPLE( CSteamWorkshopDialog, vgui::EditablePanel );
 public:
-	CSteamWorkshopDialog( vgui::Panel *parent ) 
+	CSteamWorkshopDialog( vgui::Panel *parent )
 		: vgui::EditablePanel( parent, "SteamWorkshopDialog" )
 		, m_lastPublishedFilesState( CPublishedFiles::kState_Initialized )
 	{
@@ -1090,7 +1090,7 @@ public:
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
 	{
 		BaseClass::ApplySchemeSettings( pScheme );
-		
+
 		LoadControlSettings( "Resource/ui/SteamWorkshopDialog.res" );
 
 		SetupButton( "LearnMoreButton" );
@@ -1262,7 +1262,7 @@ public:
 				}
 			}
 		}
-		else 
+		else
 		{
 			BaseClass::OnCommand( pCommand );
 		}
@@ -1479,7 +1479,7 @@ protected:
 
 	void DeletePublishedFile( uint64 nPublishedFileID )
 	{
-		ShowConfirmDialog( "#TF_SteamWorkshop_DeleteConfirmTitle", "#TF_SteamWorkshop_DeleteConfirmText", "#GameUI_OK", "#GameuI_CancelBold", &ConfirmDeletePublishedFile, this, this );	
+		ShowConfirmDialog( "#TF_SteamWorkshop_DeleteConfirmTitle", "#TF_SteamWorkshop_DeleteConfirmText", "#GameUI_OK", "#GameuI_CancelBold", &ConfirmDeletePublishedFile, this, this );
 	}
 
 	void SetupButton( const char *pPanelName )
@@ -1518,7 +1518,7 @@ static void CL_OpenSteamWorkshopDialog( const CCommand &args )
 	{
 		IViewPortPanel *pMMOverride = ( gViewPortInterface->FindPanelByName( PANEL_MAINMENUOVERRIDE ) );
 		g_pSteamWorkshopDialog = vgui::SETUP_PANEL( new CSteamWorkshopDialog( (CHudMainMenuOverride*)pMMOverride ) );
-	}								 
+	}
 	engine->ExecuteClientCmd( "gameui_activate" );
 	g_pSteamWorkshopDialog->Show();
 }
@@ -1532,7 +1532,7 @@ class CItemTestHUDPanel : public CHudElement, public vgui::EditablePanel
 {
 	DECLARE_CLASS_SIMPLE( CItemTestHUDPanel, vgui::EditablePanel );
 public:
-	CItemTestHUDPanel( const char *pElementName ) 
+	CItemTestHUDPanel( const char *pElementName )
 		: CHudElement( pElementName )
 		, BaseClass( NULL, "ItemTestHUDPanel" )
 	{
@@ -1608,13 +1608,13 @@ public:
 			}
 			break;
 			case KEY_F8:
-			{				
+			{
 				engine->ClientCmd_Unrestricted( "itemtest_botcontrols" );
 				return 0;
 			}
 			break;
 			case KEY_F9:
-			{				
+			{
 				InvalidateLayout( true, true );
 				return 0;
 			}
@@ -1643,4 +1643,3 @@ bool ItemTestHandlesKeyInput( int down, ButtonCode_t keynum, const char *pszCurr
 	}
 	return false;
 }
-

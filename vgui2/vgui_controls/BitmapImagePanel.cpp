@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -38,7 +38,7 @@ DECLARE_BUILD_FACTORY_DEFAULT_TEXT( CBitmapImagePanel, BitmapImagePanel );
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CBitmapImagePanel::CBitmapImagePanel( Panel *parent, char const *panelName, 
+CBitmapImagePanel::CBitmapImagePanel( Panel *parent, char const *panelName,
 	char const *filename /*= NULL*/ ) : Panel( parent, panelName )
 {
 	m_pImage = NULL;
@@ -68,7 +68,7 @@ CBitmapImagePanel::~CBitmapImagePanel()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBitmapImagePanel::ComputeImagePosition(int &x, int &y, int &w, int &h)
 {
@@ -152,7 +152,7 @@ void CBitmapImagePanel::ComputeImagePosition(int &x, int &y, int &w, int &h)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBitmapImagePanel::PaintBorder()
 {
@@ -165,7 +165,7 @@ void CBitmapImagePanel::PaintBorder()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBitmapImagePanel::PaintBackground()
 {
@@ -183,7 +183,7 @@ void CBitmapImagePanel::PaintBackground()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBitmapImagePanel::setTexture( char const *filename, bool hardwareFiltered )
 {
@@ -206,7 +206,7 @@ void CBitmapImagePanel::setTexture( char const *filename, bool hardwareFiltered 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBitmapImagePanel::SetContentAlignment(Label::Alignment alignment)
 {
@@ -239,7 +239,7 @@ void CBitmapImagePanel::GetSettings(KeyValues *outResourceData)
 	case Label::a_southwest:	alignmentString = "south-west";	break;
 	case Label::a_south:		alignmentString = "south";		break;
 	case Label::a_southeast:	alignmentString = "south-east";	break;
-	case Label::a_west:	
+	case Label::a_west:
 	default:			alignmentString = "center";	break;
 	}
 	outResourceData->SetString( "imageAlignment", alignmentString );

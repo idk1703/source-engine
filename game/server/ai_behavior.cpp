@@ -56,7 +56,7 @@ int CAI_BehaviorBase::DrawDebugTextOverlays( int text_offset )
 void CAI_BehaviorBase::GatherConditions()
 {
 	Assert( m_pBackBridge != NULL );
-	
+
 	m_pBackBridge->BackBridge_GatherConditions();
 }
 
@@ -83,7 +83,7 @@ void CAI_BehaviorBase::OnStartSchedule( int scheduleType )
 int CAI_BehaviorBase::SelectSchedule()
 {
 	Assert( m_pBackBridge != NULL );
-	
+
 	return m_pBackBridge->BackBridge_SelectSchedule();
 }
 
@@ -91,7 +91,7 @@ int CAI_BehaviorBase::SelectSchedule()
 
 int CAI_BehaviorBase::SelectFailSchedule( int failedSchedule, int failedTask, AI_TaskFailureCode_t taskFailCode )
 {
-	m_fOverrode = false; 
+	m_fOverrode = false;
 	return SCHED_NONE;
 }
 
@@ -121,7 +121,7 @@ void CAI_BehaviorBase::AimGun( void )
 int CAI_BehaviorBase::TranslateSchedule( int scheduleType )
 {
 	Assert( m_pBackBridge != NULL );
-	
+
 	return m_pBackBridge->BackBridge_TranslateSchedule( scheduleType );
 }
 
@@ -167,7 +167,7 @@ const char *CAI_BehaviorBase::GetSchedulingErrorName()
 Activity CAI_BehaviorBase::NPC_TranslateActivity( Activity activity )
 {
 	Assert( m_pBackBridge != NULL );
-	
+
 	return m_pBackBridge->BackBridge_NPC_TranslateActivity( activity );
 }
 
@@ -184,7 +184,7 @@ bool CAI_BehaviorBase::IsCurTaskContinuousMove()
 float CAI_BehaviorBase::GetDefaultNavGoalTolerance()
 {
 	Assert( m_pBackBridge != NULL );
-	
+
 	return m_pBackBridge->BackBridge_GetDefaultNavGoalTolerance();
 }
 
@@ -201,7 +201,7 @@ bool CAI_BehaviorBase::FValidateHintType( CAI_Hint *pHint )
 bool CAI_BehaviorBase::IsValidEnemy( CBaseEntity *pEnemy )
 {
 	Assert( m_pBackBridge != NULL );
-	
+
 	return m_pBackBridge->BackBridge_IsValidEnemy( pEnemy );
 }
 
@@ -210,7 +210,7 @@ bool CAI_BehaviorBase::IsValidEnemy( CBaseEntity *pEnemy )
 CBaseEntity *CAI_BehaviorBase::BestEnemy( void )
 {
 	Assert( m_pBackBridge != NULL );
-	
+
 	return m_pBackBridge->BackBridge_BestEnemy();
 }
 
@@ -219,7 +219,7 @@ CBaseEntity *CAI_BehaviorBase::BestEnemy( void )
 bool CAI_BehaviorBase::IsValidCover( const Vector &vLocation, CAI_Hint const *pHint )
 {
 	Assert( m_pBackBridge != NULL );
-	
+
 	return m_pBackBridge->BackBridge_IsValidCover( vLocation, pHint );
 }
 
@@ -228,7 +228,7 @@ bool CAI_BehaviorBase::IsValidCover( const Vector &vLocation, CAI_Hint const *pH
 bool CAI_BehaviorBase::IsValidShootPosition( const Vector &vLocation, CAI_Node *pNode, CAI_Hint const *pHint )
 {
 	Assert( m_pBackBridge != NULL );
-	
+
 	return m_pBackBridge->BackBridge_IsValidShootPosition( vLocation, pNode, pHint );
 }
 
@@ -246,7 +246,7 @@ float CAI_BehaviorBase::GetMaxTacticalLateralMovement( void )
 bool CAI_BehaviorBase::ShouldIgnoreSound( CSound *pSound )
 {
 	Assert( m_pBackBridge != NULL );
-	
+
 	return m_pBackBridge->BackBridge_ShouldIgnoreSound( pSound );
 }
 
@@ -273,7 +273,7 @@ void CAI_BehaviorBase::OnFriendDamaged( CBaseCombatCharacter *pSquadmate, CBaseE
 bool CAI_BehaviorBase::IsInterruptable( void )
 {
 	Assert( m_pBackBridge != NULL );
-	
+
 	return m_pBackBridge->BackBridge_IsInterruptable();
 }
 
@@ -336,7 +336,7 @@ bool CAI_BehaviorBase::CanRunAScriptedNPCInteraction( bool bForced )
 bool CAI_BehaviorBase::ShouldPlayerAvoid( void )
 {
 	Assert( m_pBackBridge != NULL );
-	
+
 	return m_pBackBridge->BackBridge_ShouldPlayerAvoid();
 }
 
@@ -345,7 +345,7 @@ bool CAI_BehaviorBase::ShouldPlayerAvoid( void )
 int CAI_BehaviorBase::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 {
 	Assert( m_pBackBridge != NULL );
-	
+
 	return m_pBackBridge->BackBridge_OnTakeDamage_Alive( info );
 }
 
@@ -354,7 +354,7 @@ int CAI_BehaviorBase::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 float CAI_BehaviorBase::GetReasonableFacingDist( void )
 {
 	Assert( m_pBackBridge != NULL );
-	
+
 	return m_pBackBridge->BackBridge_GetReasonableFacingDist();
 }
 
@@ -416,10 +416,10 @@ void CAI_BehaviorBase::HandleAnimEvent( animevent_t *pEvent )
 bool CAI_BehaviorBase::NotifyChangeBehaviorStatus( bool fCanFinishSchedule )
 {
 	bool fInterrupt = GetOuter()->OnBehaviorChangeStatus( this, fCanFinishSchedule );
-	
+
 	if ( !GetOuter()->IsInterruptable())
 		return false;
-		
+
 	if ( fInterrupt )
 	{
 		if ( GetOuter()->m_hCine )
@@ -446,16 +446,16 @@ bool CAI_BehaviorBase::NotifyChangeBehaviorStatus( bool fCanFinishSchedule )
 
 //-------------------------------------
 
-int	CAI_BehaviorBase::Save( ISave &save )				
-{ 
-	return save.WriteAll( this, GetDataDescMap() );	
+int	CAI_BehaviorBase::Save( ISave &save )
+{
+	return save.WriteAll( this, GetDataDescMap() );
 }
 
 //-------------------------------------
 
 int	CAI_BehaviorBase::Restore( IRestore &restore )
-{ 
-	return restore.ReadAll( this, GetDataDescMap() );	
+{
+	return restore.ReadAll( this, GetDataDescMap() );
 }
 
 //-------------------------------------
@@ -463,8 +463,8 @@ int	CAI_BehaviorBase::Restore( IRestore &restore )
 #define BEHAVIOR_SAVE_BLOCKNAME "AI_Behaviors"
 #define BEHAVIOR_SAVE_VERSION	2
 
-void CAI_BehaviorBase::SaveBehaviors(ISave &save, CAI_BehaviorBase *pCurrentBehavior, CAI_BehaviorBase **ppBehavior, int nBehaviors )		
-{ 
+void CAI_BehaviorBase::SaveBehaviors(ISave &save, CAI_BehaviorBase *pCurrentBehavior, CAI_BehaviorBase **ppBehavior, int nBehaviors )
+{
 	save.StartBlock( BEHAVIOR_SAVE_BLOCKNAME );
 	short temp = BEHAVIOR_SAVE_VERSION;
 	save.WriteShort( &temp );
@@ -489,8 +489,8 @@ void CAI_BehaviorBase::SaveBehaviors(ISave &save, CAI_BehaviorBase *pCurrentBeha
 
 //-------------------------------------
 
-int CAI_BehaviorBase::RestoreBehaviors(IRestore &restore, CAI_BehaviorBase **ppBehavior, int nBehaviors )	
-{ 
+int CAI_BehaviorBase::RestoreBehaviors(IRestore &restore, CAI_BehaviorBase **ppBehavior, int nBehaviors )
+{
 	int iCurrent = -1;
 	char szBlockName[SIZE_BLOCK_NAME_BUF];
 	restore.StartBlock( szBlockName );
@@ -526,7 +526,7 @@ int CAI_BehaviorBase::RestoreBehaviors(IRestore &restore, CAI_BehaviorBase **ppB
 		}
 	}
 	restore.EndBlock();
-	return iCurrent; 
+	return iCurrent;
 }
 
 

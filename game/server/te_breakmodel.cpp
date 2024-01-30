@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -25,7 +25,7 @@ public:
 	virtual			~CTEBreakModel( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 	virtual void	Precache( void );
 
 	DECLARE_SERVERCLASS();
@@ -43,8 +43,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEBreakModel::CTEBreakModel( const char *name ) :
 	CBaseTempEntity( name )
@@ -61,14 +61,14 @@ CTEBreakModel::CTEBreakModel( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEBreakModel::~CTEBreakModel( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTEBreakModel::Precache( void )
 {
@@ -76,9 +76,9 @@ void CTEBreakModel::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEBreakModel::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -94,7 +94,7 @@ void CTEBreakModel::Test( const Vector& current_origin, const QAngle& current_an
 	m_nCount = 10;
 	m_fTime = 5.0;
 	m_nFlags = 0;
-	
+
 	Vector forward, right;
 
 	m_vecOrigin += Vector( 0, 0, 24 );
@@ -135,7 +135,7 @@ void TE_BreakModel( IRecipientFilter& filter, float delay,
 	g_TEBreakModel.m_angRotation	= angles;
 	g_TEBreakModel.m_vecSize		= size;
 	g_TEBreakModel.m_vecVelocity	= vel;
-	g_TEBreakModel.m_nModelIndex	= modelindex;	
+	g_TEBreakModel.m_nModelIndex	= modelindex;
 	g_TEBreakModel.m_nRandomization	= randomization;
 	g_TEBreakModel.m_nCount			= count;
 	g_TEBreakModel.m_fTime			= time;

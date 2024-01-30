@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -227,7 +227,7 @@ void CollisionBSPData_LinkPhysics( void )
 void CollisionBSPData_PreLoad( CCollisionBSPData *pBSPData )
 {
 	// initialize the collision bsp data
-	CollisionBSPData_Init( pBSPData ); 
+	CollisionBSPData_Init( pBSPData );
 }
 
 
@@ -288,7 +288,7 @@ bool CollisionBSPData_Load( const char *pName, CCollisionBSPData *pBSPData )
 	CollisionBSPData_LoadPhysics( pBSPData );
 
 	COM_TimestampedLog( "  CollisionBSPData_LoadDispInfo" );
-    CollisionBSPData_LoadDispInfo( pBSPData );
+	CollisionBSPData_LoadDispInfo( pBSPData );
 
 	return true;
 }
@@ -334,7 +334,7 @@ void CollisionBSPData_LoadTextures( CCollisionBSPData *pBSPData )
 
 	pBSPData->map_texturenames = (char *)Hunk_Alloc( lhStringData.LumpSize() * sizeof(char), false );
 	memcpy( pBSPData->map_texturenames, pStringData, lhStringData.LumpSize() );
- 
+
 	for ( i=0 ; i<count ; i++, in++ )
 	{
 		Assert( in->nameStringTableID >= 0 );
@@ -342,7 +342,7 @@ void CollisionBSPData_LoadTextures( CCollisionBSPData *pBSPData )
 
 		const char *pInName = &pStringData[pStringTable[in->nameStringTableID]];
 		int index = pInName - pStringData;
-		
+
 		csurface_t *out = &pBSPData->map_surfaces[i];
 		out->name = &pBSPData->map_texturenames[index];
 		out->surfaceProps = 0;
@@ -366,7 +366,7 @@ void CollisionBSPData_LoadTextures( CCollisionBSPData *pBSPData )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CollisionBSPData_LoadTexinfo( CCollisionBSPData *pBSPData, 
+void CollisionBSPData_LoadTexinfo( CCollisionBSPData *pBSPData,
 									CUtlVector<unsigned short> &map_texinfo )
 {
 	CMapLoadHelper lh( LUMP_TEXINFO );
@@ -391,7 +391,7 @@ void CollisionBSPData_LoadTexinfo( CCollisionBSPData *pBSPData,
 	for ( i=0 ; i<count ; i++, in++ )
 	{
 		out = in->texdata;
-		
+
 		if ( out >= pBSPData->numtextures )
 			out = 0;
 
@@ -409,7 +409,7 @@ void CollisionBSPData_LoadLeafs_Version_0( CCollisionBSPData *pBSPData, CMapLoad
 	int			i;
 	dleaf_version_0_t 	*in;
 	int			count;
-	
+
 	in = (dleaf_version_0_t *)lh.LumpBase();
 	if (lh.LumpSize() % sizeof(*in))
 	{
@@ -438,7 +438,7 @@ void CollisionBSPData_LoadLeafs_Version_0( CCollisionBSPData *pBSPData, CMapLoad
 
 	for ( i=0 ; i<count ; i++, in++ )
 	{
-		cleaf_t	*out = &pBSPData->map_leafs[i];	
+		cleaf_t	*out = &pBSPData->map_leafs[i];
 		out->contents = in->contents;
 		out->cluster = in->cluster;
 		out->area = in->area;
@@ -472,7 +472,7 @@ void CollisionBSPData_LoadLeafs_Version_1( CCollisionBSPData *pBSPData, CMapLoad
 	int			i;
 	dleaf_t 	*in;
 	int			count;
-	
+
 	in = (dleaf_t *)lh.LumpBase();
 	if (lh.LumpSize() % sizeof(*in))
 	{
@@ -501,7 +501,7 @@ void CollisionBSPData_LoadLeafs_Version_1( CCollisionBSPData *pBSPData, CMapLoad
 
 	for ( i=0 ; i<count ; i++, in++ )
 	{
-		cleaf_t	*out = &pBSPData->map_leafs[i];	
+		cleaf_t	*out = &pBSPData->map_leafs[i];
 		out->contents = in->contents;
 		out->cluster = in->cluster;
 		out->area = in->area;
@@ -556,7 +556,7 @@ void CollisionBSPData_LoadLeafBrushes( CCollisionBSPData *pBSPData )
 	int			i;
 	unsigned short 	*in;
 	int			count;
-	
+
 	in = (unsigned short *)lh.LumpBase();
 	if (lh.LumpSize() % sizeof(*in))
 	{
@@ -595,7 +595,7 @@ void CollisionBSPData_LoadPlanes( CCollisionBSPData *pBSPData )
 	dplane_t 	*in;
 	int			count;
 	int			bits;
-	
+
 	in = (dplane_t *)lh.LumpBase();
 	if (lh.LumpSize() % sizeof(*in))
 	{
@@ -622,7 +622,7 @@ void CollisionBSPData_LoadPlanes( CCollisionBSPData *pBSPData )
 
 	for ( i=0 ; i<count ; i++, in++)
 	{
-		cplane_t *out = &pBSPData->map_planes[i];	
+		cplane_t *out = &pBSPData->map_planes[i];
 		bits = 0;
 		for (j=0 ; j<3 ; j++)
 		{
@@ -648,7 +648,7 @@ void CollisionBSPData_LoadBrushes( CCollisionBSPData *pBSPData )
 
 	dbrush_t	*in;
 	int			i, count;
-	
+
 	in = (dbrush_t *)lh.LumpBase();
 	if (lh.LumpSize() % sizeof(*in))
 	{
@@ -867,7 +867,7 @@ void CollisionBSPData_LoadNodes( CCollisionBSPData *pBSPData )
 
 	dnode_t		*in;
 	int			i, j, count;
-	
+
 	in = (dnode_t *)lh.LumpBase();
 	if (lh.LumpSize() % sizeof(*in))
 		Sys_Error( "CollisionBSPData_LoadNodes: funny lump size");
@@ -949,7 +949,7 @@ void CollisionBSPData_LoadAreaPortals( CCollisionBSPData *pBSPData )
 	{
 		Sys_Error( "CMod_LoadAreaPortals: funny lump size");
 	}
-		   
+
 	count = lh.LumpSize() / sizeof(*in);
 	if (count > MAX_MAP_AREAPORTALS)
 	{
@@ -970,7 +970,7 @@ void CollisionBSPData_LoadAreaPortals( CCollisionBSPData *pBSPData )
 	int nSize = count * sizeof(dareaportal_t);
 	pBSPData->map_areaportals.Attach( count, (dareaportal_t*)Hunk_Alloc( nSize ) );
 
-	Assert( nSize >= lh.LumpSize() ); 
+	Assert( nSize >= lh.LumpSize() );
 	memcpy( pBSPData->map_areaportals.Base(), in, lh.LumpSize() );
 }
 
@@ -1021,14 +1021,14 @@ void CollisionBSPData_LoadPhysics( CCollisionBSPData *pBSPData )
 #else
 	int nLoadLump = LUMP_PHYSCOLLIDE;
 	// backwards compat support for older game dlls
-	// they crash if they don't have vcollide data for terrain 
+	// they crash if they don't have vcollide data for terrain
 	// even though the new engine ignores it
 	if ( g_iServerGameDLLVersion >= 5 )
 	{
 		// if there's a linux lump present, go ahead and load it
 		// otherwise, the win32 lump will work as long as it doesn't have any
-		// mopp surfaces in it (if compiled with the current vbsp.exe or a map without any displacements).  
-		// The legacy server game DLLs will crash when mopps are present but since 
+		// mopp surfaces in it (if compiled with the current vbsp.exe or a map without any displacements).
+		// The legacy server game DLLs will crash when mopps are present but since
 		// they also crash with a NULL lump there's nothing lost in that case.
 		if ( CMapLoadHelper::LumpSize(LUMP_PHYSCOLLIDESURFACE) > 0 )
 		{
@@ -1064,7 +1064,7 @@ void CollisionBSPData_LoadPhysics( CCollisionBSPData *pBSPData )
 			ptr += physModel.dataSize;
 			ptr += physModel.keydataSize;
 		}
-		
+
 		// avoid infinite loop on badly formed file
 		if ( (int)(ptr - basePtr) > lh.LumpSize() )
 			break;
@@ -1080,35 +1080,35 @@ void CollisionBSPData_LoadDispInfo( CCollisionBSPData *pBSPData )
 	// How many displacements in the map?
 	int coreDispCount = CMapLoadHelper::LumpSize( LUMP_DISPINFO ) / sizeof( ddispinfo_t );
 	if ( coreDispCount == 0 )
-		return;	
+		return;
 
-    //
-    // get the vertex data
-    //
- 	CMapLoadHelper lhv( LUMP_VERTEXES );
+	//
+	// get the vertex data
+	//
+	CMapLoadHelper lhv( LUMP_VERTEXES );
 	dvertex_t *pVerts = ( dvertex_t* )lhv.LumpBase();
 	if ( lhv.LumpSize() % sizeof( dvertex_t ) )
 		Sys_Error( "CMod_LoadDispInfo: bad vertex lump size!" );
 
-    //
-    // get the edge data
-    //
- 	CMapLoadHelper lhe( LUMP_EDGES );
-    dedge_t *pEdges = ( dedge_t* )lhe.LumpBase();
-    if ( lhe.LumpSize() % sizeof( dedge_t ) )
-        Sys_Error( "CMod_LoadDispInfo: bad edge lump size!" );
+	//
+	// get the edge data
+	//
+	CMapLoadHelper lhe( LUMP_EDGES );
+	dedge_t *pEdges = ( dedge_t* )lhe.LumpBase();
+	if ( lhe.LumpSize() % sizeof( dedge_t ) )
+		Sys_Error( "CMod_LoadDispInfo: bad edge lump size!" );
 
-    //
-    // get surf edges data
-    //
- 	CMapLoadHelper lhs( LUMP_SURFEDGES );
-    int *pSurfEdges = ( int* )lhs.LumpBase();
-    if ( lhs.LumpSize() % sizeof( int ) )
-        Sys_Error( "CMod_LoadDispInfo: bad surf edge lump size!" );
+	//
+	// get surf edges data
+	//
+	CMapLoadHelper lhs( LUMP_SURFEDGES );
+	int *pSurfEdges = ( int* )lhs.LumpBase();
+	if ( lhs.LumpSize() % sizeof( int ) )
+		Sys_Error( "CMod_LoadDispInfo: bad surf edge lump size!" );
 
-    //
-    // get face data
-    //
+	//
+	// get face data
+	//
 	int face_lump_to_load = LUMP_FACES;
 	if ( g_pMaterialSystemHardwareConfig->GetHDRType() != HDR_TYPE_NONE &&
 		CMapLoadHelper::LumpSize( LUMP_FACES_HDR ) > 0 )
@@ -1116,22 +1116,22 @@ void CollisionBSPData_LoadDispInfo( CCollisionBSPData *pBSPData )
 		face_lump_to_load = LUMP_FACES_HDR;
 	}
 	CMapLoadHelper lhf( face_lump_to_load );
-    dface_t *pFaces = ( dface_t* )lhf.LumpBase();
-    if ( lhf.LumpSize() % sizeof( dface_t ) )
-        Sys_Error( "CMod_LoadDispInfo: bad face lump size!" );
-    int faceCount = lhf.LumpSize() / sizeof( dface_t );
+	dface_t *pFaces = ( dface_t* )lhf.LumpBase();
+	if ( lhf.LumpSize() % sizeof( dface_t ) )
+		Sys_Error( "CMod_LoadDispInfo: bad face lump size!" );
+	int faceCount = lhf.LumpSize() / sizeof( dface_t );
 
 	dface_t *pFaceList = pFaces;
 	if ( !pFaceList )
 		return;
 
-    //
-    // get texinfo data
-    //
- 	CMapLoadHelper lhti( LUMP_TEXINFO );
-    texinfo_t *pTexinfoList = ( texinfo_t* )lhti.LumpBase();
-    if ( lhti.LumpSize() % sizeof( texinfo_t ) )
-        Sys_Error( "CMod_LoadDispInfo: bad texinfo lump size!" );
+	//
+	// get texinfo data
+	//
+	CMapLoadHelper lhti( LUMP_TEXINFO );
+	texinfo_t *pTexinfoList = ( texinfo_t* )lhti.LumpBase();
+	if ( lhti.LumpSize() % sizeof( texinfo_t ) )
+		Sys_Error( "CMod_LoadDispInfo: bad texinfo lump size!" );
 
 	// allocate displacement collision trees
 	g_DispCollTreeCount = coreDispCount;
@@ -1142,20 +1142,20 @@ void CollisionBSPData_LoadDispInfo( CCollisionBSPData *pBSPData )
 	int nMemSize = coreDispCount * sizeof(unsigned short);
 	unsigned short *pDispIndexToFaceIndex = (unsigned short*)stackalloc( nMemSize );
 	memset( pDispIndexToFaceIndex, 0xFF, nMemSize );
-	
-	int i;
-    for ( i = 0; i < faceCount; ++i, ++pFaces )
-    {
-        // check face for displacement data
-        if ( pFaces->dispinfo == -1 )
-            continue;
 
-        // get the current displacement build surface
+	int i;
+	for ( i = 0; i < faceCount; ++i, ++pFaces )
+	{
+		// check face for displacement data
+		if ( pFaces->dispinfo == -1 )
+			continue;
+
+		// get the current displacement build surface
 		if ( pFaces->dispinfo >= coreDispCount )
 			continue;
 
 		pDispIndexToFaceIndex[pFaces->dispinfo] = (unsigned short)i;
-    }
+	}
 
 	// Load one dispinfo from disk at a time and set it up.
 	int iCurVert = 0;
@@ -1186,7 +1186,7 @@ void CollisionBSPData_LoadDispInfo( CCollisionBSPData *pBSPData )
 		int nVerts = NUM_DISP_POWER_VERTS( dispInfo.power );
 		lhDispVerts.LoadLumpData( iCurVert * sizeof(CDispVert), nVerts*sizeof(CDispVert), tempVerts );
 		iCurVert += nVerts;
-		
+
 		// Read in the tris.
 		int nTris = NUM_DISP_POWER_TRIS( dispInfo.power );
 		lhDispTris.LoadLumpData( iCurTri * sizeof( CDispTri ), nTris*sizeof( CDispTri), tempTris );
@@ -1196,7 +1196,7 @@ void CollisionBSPData_LoadDispInfo( CCollisionBSPData *pBSPData )
 		CCoreDispSurface *pDispSurf = coreDisp.GetSurface();
 		pDispSurf->SetPointStart( dispInfo.startPosition );
 		pDispSurf->SetContents( dispInfo.contents );
-	
+
 		coreDisp.InitDispInfo( dispInfo.power, dispInfo.minTess, dispInfo.smoothingAngle, tempVerts, tempTris );
 
 		// Hook the disp surface to the face

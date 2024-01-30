@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -67,7 +67,7 @@ void CPDumpPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPDumpPanel::ShouldDraw()
@@ -101,14 +101,14 @@ void CPDumpPanel::DumpComparision( const char *classname, const char *fieldname,
 
 //-----------------------------------------------------------------------------
 // Purpose: Callback function for dumping entity info to screen
-// Input  : *classname - 
-//			*fieldname - 
-//			*fieldtype - 
-//			networked - 
-//			noterrorchecked - 
-//			differs - 
-//			withintolerance - 
-//			*value - 
+// Input  : *classname -
+//			*fieldname -
+//			*fieldtype -
+//			networked -
+//			noterrorchecked -
+//			differs -
+//			withintolerance -
+//			*value -
 // Output : static void
 //-----------------------------------------------------------------------------
 static void DumpComparision( const char *classname, const char *fieldname, const char *fieldtype,
@@ -122,14 +122,14 @@ static void DumpComparision( const char *classname, const char *fieldname, const
 
 //-----------------------------------------------------------------------------
 // Purpose: Lookup color to use for data
-// Input  : networked - 
-//			errorchecked - 
-//			differs - 
-//			withintolerance - 
-//			r - 
-//			g - 
-//			b - 
-//			a - 
+// Input  : networked -
+//			errorchecked -
+//			differs -
+//			withintolerance -
+//			r -
+//			g -
+//			b -
+//			a -
 // Output : static void
 //-----------------------------------------------------------------------------
 void CPDumpPanel::PredictionDumpColor( bool networked, bool errorchecked, bool differs, bool withintolerance,
@@ -187,8 +187,8 @@ void CPDumpPanel::PredictionDumpColor( bool networked, bool errorchecked, bool d
 
 //-----------------------------------------------------------------------------
 // Purpose: Dump entity data to screen
-// Input  : *ent - 
-//			last_predicted - 
+// Input  : *ent -
+//			last_predicted -
 //-----------------------------------------------------------------------------
 void CPDumpPanel::DumpEntity( C_BaseEntity *ent, int commands_acknowledged )
 {
@@ -202,16 +202,16 @@ void CPDumpPanel::DumpEntity( C_BaseEntity *ent, int commands_acknowledged )
 #else
 	Assert( ent );
 
-	void *original_state_data = NULL;	
+	void *original_state_data = NULL;
 	const void *predicted_state_data	= NULL;
-	
+
 	bool data_type_original		= PC_DATA_PACKED;
 	bool data_type_predicted	= PC_DATA_PACKED;
 
 	if ( ent->GetPredictable() )
 	{
-		original_state_data		= ent->GetOriginalNetworkDataObject();	
-		predicted_state_data	= ent->GetPredictedFrame( commands_acknowledged - 1 );	
+		original_state_data		= ent->GetOriginalNetworkDataObject();
+		predicted_state_data	= ent->GetPredictedFrame( commands_acknowledged - 1 );
 	}
 	else
 	{
@@ -227,9 +227,9 @@ void CPDumpPanel::DumpEntity( C_BaseEntity *ent, int commands_acknowledged )
 
 	Clear();
 
-	CPredictionCopy datacompare( PC_EVERYTHING, 
-		original_state_data, data_type_original, 
-		predicted_state_data, data_type_predicted, 
+	CPredictionCopy datacompare( PC_EVERYTHING,
+		original_state_data, data_type_original,
+		predicted_state_data, data_type_predicted,
 		true,  // counterrors
 		true,  // reporterrors
 		false, // copy data
@@ -336,7 +336,7 @@ void CPDumpPanel::Paint()
 			Q_strncpy( currentclass, slot->classname, sizeof( currentclass ) );
 		}
 
-	
+
 		PredictionDumpColor( slot->networked, !slot->noterrorchecked, slot->differs, slot->withintolerance,
 			r, g, b, a );
 

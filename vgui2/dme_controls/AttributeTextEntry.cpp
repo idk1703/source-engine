@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -304,7 +304,7 @@ void CAttributeTextEntry::OnSetFocus()
 //-----------------------------------------------------------------------------
 // Called when focus is lost
 //-----------------------------------------------------------------------------
-template<class T> 
+template<class T>
 void CAttributeTextEntry::ApplyMouseWheel( T newValue, T originalValue )
 {
 	CAttributeTextPanel *pPanel = GetParentAttributePanel();
@@ -434,7 +434,7 @@ void CAttributeTextEntry::OnMouseWheeled( int delta )
 			}
 
 			{
-				// Note, these calls to Set won't create Undo Records, 
+				// Note, these calls to Set won't create Undo Records,
 				// since we'll check the value in SetFocus/KillFocus so that we
 				// don't gum up the undo system with hundreds of records...
 				CDisableUndoScopeGuard guard;
@@ -453,7 +453,7 @@ void CAttributeTextEntry::OnMouseWheeled( int delta )
 			int val = pPanel->GetAttributeValue<int>() + delta;
 
 			{
-				// Note, these calls to Set won't create Undo Records, 
+				// Note, these calls to Set won't create Undo Records,
 				// since we'll check the value in SetFocus/KillFocus so that we
 				// don't gum up the undo system with hundreds of records...
 				CDisableUndoScopeGuard guard;
@@ -467,7 +467,7 @@ void CAttributeTextEntry::OnMouseWheeled( int delta )
 			bool val = !pPanel->GetAttributeValue<bool>();
 
 			{
-				// Note, these calls to Set won't create Undo Records, 
+				// Note, these calls to Set won't create Undo Records,
 				// since we'll check the value in SetFocus/KillFocus so that we
 				// don't gum up the undo system with hundreds of records...
 				CDisableUndoScopeGuard guard;

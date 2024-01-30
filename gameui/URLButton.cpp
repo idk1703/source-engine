@@ -55,7 +55,7 @@ URLButton::URLButton(Panel *parent, const char *panelName, const wchar_t *wszTex
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void URLButton::Init()
 {
@@ -84,7 +84,7 @@ URLButton::~URLButton()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void URLButton::SetButtonActivationType(ActivationType_t activationType)
 {
@@ -236,7 +236,7 @@ void URLButton::DrawFocusBox( bool bEnable )
 	_buttonFlags.SetFlag( DRAW_FOCUS_BOX, bEnable );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose:	Paint button on screen
 //-----------------------------------------------------------------------------
@@ -246,13 +246,13 @@ void URLButton::Paint(void)
 
 	int x, y;
 	int controlWidth, controlHeight, textWidth, textHeight;
-   GetSize(controlWidth, controlHeight);
-   GetContentSize(textWidth, textHeight);
-   x = textWidth;
-   y = controlHeight - 4;
-   
-   surface()->DrawSetColor(GetButtonFgColor());
-   surface()->DrawLine(0, y, x, y); 
+	GetSize(controlWidth, controlHeight);
+	GetContentSize(textWidth, textHeight);
+	x = textWidth;
+	y = controlHeight - 4;
+
+	surface()->DrawSetColor(GetButtonFgColor());
+	surface()->DrawLine(0, y, x, y);
 }
 
 //-----------------------------------------------------------------------------
@@ -273,7 +273,7 @@ void URLButton::PerformLayout()
 //-----------------------------------------------------------------------------
 Color URLButton::GetButtonFgColor()
 {
-   return _defaultFgColor;
+	return _defaultFgColor;
 }
 
 //-----------------------------------------------------------------------------
@@ -303,7 +303,7 @@ void URLButton::OnKillFocus()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void URLButton::ApplySchemeSettings(IScheme *pScheme)
 {
@@ -330,7 +330,7 @@ void URLButton::SetMouseClickEnabled(MouseCode code,bool state)
 	{
 		//set bit to 0
 		_mouseClickMask&=~(1<<((int)(code+1)));
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -357,7 +357,7 @@ void URLButton::SetCommand( KeyValues *message )
 
 //-----------------------------------------------------------------------------
 // Purpose: Peeks at the message to send when button is pressed
-// Input  :  - 
+// Input  :  -
 // Output : KeyValues
 //-----------------------------------------------------------------------------
 KeyValues *URLButton::GetCommand()
@@ -431,7 +431,7 @@ void URLButton::GetSettings( KeyValues *outResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void URLButton::ApplySettings( KeyValues *inResourceData )
 {
@@ -465,7 +465,7 @@ const char *URLButton::GetDescription( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void URLButton::OnSetState(int state)
 {
@@ -474,7 +474,7 @@ void URLButton::OnSetState(int state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void URLButton::OnCursorEntered()
 {
@@ -485,7 +485,7 @@ void URLButton::OnCursorEntered()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void URLButton::OnCursorExited()
 {
@@ -496,13 +496,13 @@ void URLButton::OnCursorExited()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void URLButton::OnMousePressed(MouseCode code)
 {
 	if (!IsEnabled())
 		return;
-	
+
 	if (_activationType == ACTIVATE_ONPRESSED)
 	{
 		if ( IsKeyBoardInputEnabled() )
@@ -531,7 +531,7 @@ void URLButton::OnMousePressed(MouseCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void URLButton::OnMouseDoublePressed(MouseCode code)
 {
@@ -539,7 +539,7 @@ void URLButton::OnMouseDoublePressed(MouseCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void URLButton::OnMouseReleased(MouseCode code)
 {
@@ -571,7 +571,7 @@ void URLButton::OnMouseReleased(MouseCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void URLButton::OnKeyCodePressed(KeyCode code)
 {
@@ -593,7 +593,7 @@ void URLButton::OnKeyCodePressed(KeyCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void URLButton::OnKeyCodeReleased(KeyCode code)
 {
@@ -619,4 +619,3 @@ void URLButton::SizeToContents()
 	GetContentSize(wide, tall);
 	SetSize(wide + Label::Content, tall + Label::Content);
 }
-

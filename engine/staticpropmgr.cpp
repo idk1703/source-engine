@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Revision: $
 // $NoKeywords: $
@@ -709,14 +709,14 @@ const model_t* CStaticProp::GetModel( ) const
 //-----------------------------------------------------------------------------
 // Accessors
 //-----------------------------------------------------------------------------
-inline int CStaticProp::LeafCount() const 
-{ 
-	return m_LeafCount; 
+inline int CStaticProp::LeafCount() const
+{
+	return m_LeafCount;
 }
 
-inline int CStaticProp::FirstLeaf() const 
-{ 
-	return m_FirstLeaf; 
+inline int CStaticProp::FirstLeaf() const
+{
+	return m_FirstLeaf;
 }
 
 inline ModelInstanceHandle_t CStaticProp::GetModelInstance()
@@ -886,7 +886,7 @@ void CStaticProp::GetRenderBoundsWorldspace( Vector& mins, Vector& maxs )
 }
 
 bool CStaticProp::ShouldReceiveProjectedTextures( int flags )
-{ 
+{
 	if( flags & SHADOW_FLAGS_FLASHLIGHT )
 	{
 		return true;
@@ -1042,7 +1042,7 @@ int	CStaticProp::DrawModelSlow( int flags )
 		{
 			// This works because VCollideForModel only uses modelindex for mod_brush
 			// and props are always mod_Studio.
-			vcollide_t * pCollide = CM_VCollideForModel( -1, m_pModel ); 
+			vcollide_t * pCollide = CM_VCollideForModel( -1, m_pModel );
 			if ( pCollide && pCollide->solidCount == 1 )
 			{
 				static color32 debugColor = {0,255,255,0};
@@ -1107,7 +1107,7 @@ void CStaticProp::InsertPropIntoKDTree()
 	Vector mins, maxs;
 	matrix3x4_t propToWorld;
 	AngleMatrix( m_Angles, m_Origin, propToWorld );
-	TransformAABB( propToWorld, m_pModel->mins, m_pModel->maxs, mins, maxs ); 
+	TransformAABB( propToWorld, m_pModel->mins, m_pModel->maxs, mins, maxs );
 
 	// If it's using vphysics, get a good AABB
 	if ( m_nSolidType == SOLID_VPHYSICS )
@@ -1128,9 +1128,9 @@ void CStaticProp::InsertPropIntoKDTree()
 	}
 
 	// add the entity to the KD tree so we will collide against it
-	m_Partition = SpatialPartition()->CreateHandle( this, 
-		PARTITION_CLIENT_SOLID_EDICTS | PARTITION_CLIENT_STATIC_PROPS | 
-		PARTITION_ENGINE_SOLID_EDICTS | PARTITION_ENGINE_STATIC_PROPS, 
+	m_Partition = SpatialPartition()->CreateHandle( this,
+		PARTITION_CLIENT_SOLID_EDICTS | PARTITION_CLIENT_STATIC_PROPS |
+		PARTITION_ENGINE_SOLID_EDICTS | PARTITION_ENGINE_STATIC_PROPS,
 		mins, maxs );
 
 	Assert( m_Partition != PARTITION_INVALID_HANDLE );
@@ -1212,7 +1212,7 @@ void CStaticProp::CreateVPhysics( IPhysicsEnvironment *pPhysEnv, IVPhysicsKeyHan
 	solid.params.pName = "prop_static";
 
 	int surfaceData = physprop->GetSurfaceIndex( solid.surfaceprop );
-	pPhysEnv->CreatePolyObjectStatic( pPhysCollide, 
+	pPhysEnv->CreatePolyObjectStatic( pPhysCollide,
 		surfaceData, m_Origin, m_Angles, &solid.params );
 	//PhysCheckAdd( pPhys, "Static" );
 }
@@ -1242,7 +1242,7 @@ CStaticPropMgr::~CStaticPropMgr()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CStaticPropMgr::Init()
@@ -1251,7 +1251,7 @@ bool CStaticPropMgr::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStaticPropMgr::Shutdown()
 {
@@ -1298,7 +1298,7 @@ template <typename SerializedLumpType>
 void UnserializeLump( StaticPropLump_t* _output, CUtlBuffer& buf )
 {
 	Assert(_output != NULL);
-	
+
 	SerializedLumpType srcLump;
 	buf.Get( &srcLump, sizeof(SerializedLumpType) );
 
@@ -1337,7 +1337,7 @@ void CStaticPropMgr::UnserializeModels( CUtlBuffer& buf )
 			case 4: UnserializeLump<StaticPropLumpV4_t>(&lump, buf); break;
 			case 5: UnserializeLump<StaticPropLumpV5_t>(&lump, buf); break;
 			case 6: UnserializeLump<StaticPropLumpV6_t>(&lump, buf); break;
-			case 7: // Falls down to version 10. We promoted TF to version 10 to deal with SFM. 
+			case 7: // Falls down to version 10. We promoted TF to version 10 to deal with SFM.
 			case 10: UnserializeLump<StaticPropLump_t>(&lump, buf); break;
 
 				break;
@@ -1493,7 +1493,7 @@ void CStaticPropMgr::LevelShutdown()
 void CStaticPropMgr::LevelInitClient()
 {
 #ifndef SWDS
-	if ( sv.IsDedicated() ) 
+	if ( sv.IsDedicated() )
 		return;
 
 	extern ConVar r_proplightingfromdisk;
@@ -1521,7 +1521,7 @@ void CStaticPropMgr::LevelInitClient()
 		if ( prop.LeafCount() > 0 )
 		{
 			// Add the prop to all the leaves it lies in
-			clientleafsystem->AddRenderableToLeaves( handle, prop.LeafCount(), (unsigned short*)&m_StaticPropLeaves[prop.FirstLeaf()] ); 
+			clientleafsystem->AddRenderableToLeaves( handle, prop.LeafCount(), (unsigned short*)&m_StaticPropLeaves[prop.FirstLeaf()] );
 		}
 		else
 		{
@@ -1760,7 +1760,7 @@ void CStaticPropMgr::GetAllStaticPropsInOBB( const Vector &ptOrigin, const Vecto
 				{
 					//an extent of the prop is within the OBB halfspace, this halfspace does not eliminate our prop, move to the next halfspace
 					break;
-				}				
+				}
 			}
 			if( counter3 == 8 ) break; //if all 8 extents lie outside the halfspace, then the prop is not in the OBB
 		}
@@ -1820,7 +1820,7 @@ void CStaticPropMgr::PrecacheLighting()
 			int i = m_StaticProps.Count();
 			while ( --i >= 0 )
 			{
-				if ( PropHasBakedLightingDisabled( m_StaticProps[i].GetEntityHandle() ) ) 
+				if ( PropHasBakedLightingDisabled( m_StaticProps[i].GetEntityHandle() ) )
 				{
 					continue;
 				}
@@ -1997,7 +1997,7 @@ void CStaticPropMgr::DrawStaticProps( IClientRenderable **pProps, int count, boo
 	else
 	{
 		// the fast pipeline is only supported on dx8+
-		if ( pipeline_static_props.GetBool() &&	
+		if ( pipeline_static_props.GetBool() &&
 			g_pMaterialSystemHardwareConfig->GetDXSupportLevel() >= 80 &&
 			g_pMaterialSystemHardwareConfig->SupportsColorOnSecondStream() &&
 			g_pMaterialSystemHardwareConfig->SupportsStaticPlusDynamicLighting() )
@@ -2069,7 +2069,7 @@ void CStaticPropMgr::ChangeRenderGroup( CStaticProp &prop )
 	}
 	else
 	{
-		clientleafsystem->ChangeRenderableRenderGroup( renderHandle, RENDER_GROUP_TRANSLUCENT_ENTITY ); 
+		clientleafsystem->ChangeRenderableRenderGroup( renderHandle, RENDER_GROUP_TRANSLUCENT_ENTITY );
 	}
 #endif
 }
@@ -2145,7 +2145,7 @@ void CStaticPropMgr::ComputePropOpacity( CStaticProp &prop )
 		}
 		else
 		{
-			alpha = ComputeScreenFade( prop, fade.m_MinScreenWidth, fade.m_MaxScreenWidth, fade.m_FalloffFactor ); 
+			alpha = ComputeScreenFade( prop, fade.m_MinScreenWidth, fade.m_MaxScreenWidth, fade.m_FalloffFactor );
 		}
 
 		prop.SetAlpha( alpha );
@@ -2162,7 +2162,7 @@ void CStaticPropMgr::ComputePropOpacity( CStaticProp &prop )
 	{
 		// Fade all props, if we have a default level setting
 		// But only change the fade if it's more translucent than any other fades we might have
-		unsigned char alpha = modelinfoclient->ComputeLevelScreenFade( prop.GetRenderOrigin(), prop.Radius(), prop.ForcedFadeScale() ); 
+		unsigned char alpha = modelinfoclient->ComputeLevelScreenFade( prop.GetRenderOrigin(), prop.Radius(), prop.ForcedFadeScale() );
 		unsigned char nViewAlpha = modelinfoclient->ComputeViewScreenFade( prop.GetRenderOrigin(), prop.Radius(), prop.ForcedFadeScale() );
 		if ( nViewAlpha < alpha )
 		{
@@ -2231,7 +2231,7 @@ void CStaticPropMgr::AddColorDecalToStaticProp( Vector const& rayStart, Vector c
 	int staticPropIndex, int decalIndex, bool doTrace, trace_t& tr, bool bUseColor, Color cColor )
 {
 #ifndef SWDS
-	// Invalid static prop? Blow it off! 
+	// Invalid static prop? Blow it off!
 	if (staticPropIndex >= m_StaticProps.Size())
 	{
 		memset( &tr, 0, sizeof(trace_t) );
@@ -2280,7 +2280,7 @@ void CStaticPropMgr::AddColorDecalToStaticProp( Vector const& rayStart, Vector c
 	{
 		modelrender->AddDecal( prop.GetModelInstance(), ray, up, decalIndex, 0, noPokethru );
 	}
-	
+
 #endif
 }
 //-----------------------------------------------------------------------------
@@ -2317,7 +2317,7 @@ void CStaticPropMgr::GetStaticPropMaterialColorAndLighting( trace_t* pTrace,
 														   int staticPropIndex, Vector& lighting, Vector& matColor )
 {
 #ifndef SWDS
-	// Invalid static prop? Blow it off! 
+	// Invalid static prop? Blow it off!
 	if (staticPropIndex >= m_StaticProps.Size())
 	{
 		lighting.Init( 0, 0, 0 );
@@ -2329,7 +2329,7 @@ void CStaticPropMgr::GetStaticPropMaterialColorAndLighting( trace_t* pTrace,
 	CStaticProp& prop = m_StaticProps[staticPropIndex];
 
 	// Ask the model info about what we need to know
-	modelinfoclient->GetModelMaterialColorAndLighting( (model_t*)prop.GetModel(), 
+	modelinfoclient->GetModelMaterialColorAndLighting( (model_t*)prop.GetModel(),
 		prop.GetRenderOrigin(), prop.GetRenderAngles(), pTrace, lighting, matColor );
 #endif
 }
@@ -2349,11 +2349,10 @@ void Cmd_PropCrosshair_f (void)
 	CTraceFilterWorldAndPropsOnly traceFilter;
 	g_pEngineTraceServer->TraceRay( ray, MASK_ALL, &traceFilter, &tr );
 
-	if ( tr.hitbox > 0 ) 
+	if ( tr.hitbox > 0 )
 		Msg( "hit prop %d\n", tr.hitbox - 1 );
 	else
 		Msg( "didn't hit a prop\n" );
 }
 
 static ConCommand prop_crosshair( "prop_crosshair", Cmd_PropCrosshair_f, "Shows name for prop looking at", FCVAR_CHEAT );
-

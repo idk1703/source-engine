@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,12 +35,12 @@ char const *GetGlobalFlexControllerName( int index );
 int GetGlobalFlexControllerCount( void );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *classname - 
+// Purpose:
+// Input  : *classname -
 //-----------------------------------------------------------------------------
-CExpClass::CExpClass( const char *classname ) 
-{ 
-	Q_strncpy( m_szClassName, classname, sizeof( m_szClassName ) ); 
+CExpClass::CExpClass( const char *classname )
+{
+	Q_strncpy( m_szClassName, classname, sizeof( m_szClassName ) );
 	Q_FileBase( m_szClassName, m_szBaseName, sizeof( m_szBaseName ) );
 	m_szFileName[ 0 ] = 0;
 	m_bDirty = false;
@@ -49,7 +49,7 @@ CExpClass::CExpClass( const char *classname )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CExpClass::~CExpClass( void )
 {
@@ -57,8 +57,8 @@ CExpClass::~CExpClass( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *exp - 
+// Purpose:
+// Input  : *exp -
 //-----------------------------------------------------------------------------
 int	CExpClass::FindExpressionIndex( CExpression *exp )
 {
@@ -73,7 +73,7 @@ int	CExpClass::FindExpressionIndex( CExpression *exp )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExpClass::Save( void )
 {
@@ -109,7 +109,7 @@ void CExpClass::Save( void )
 			float *settings = expr->GetSettings();
 			float *weights = expr->GetWeights();
 
-			if ( settings[j] != 0 || 
+			if ( settings[j] != 0 ||
 				 weights[j] != 0 )
 			{
 				flexmap[ numflexmaps++ ] = j;
@@ -134,7 +134,7 @@ void CExpClass::Save( void )
 		buf.Printf( "\"%s\" ", expr->name );
 
 		// isalpha returns non zero for ents > 256
-		if (expr->index <= 'z') 
+		if (expr->index <= 'z')
 		{
 			buf.Printf( "\"%c\" ", expr->index );
 		}
@@ -164,7 +164,7 @@ void CExpClass::Save( void )
 
 	char relative[ 512 ];
 	filesystem->FullPathToRelativePath( filename, relative, sizeof( relative ) );
-	
+
 	MakeFileWriteable( relative );
 	FileHandle_t fh = filesystem->Open( relative, "wt" );
 	if ( !fh )
@@ -192,7 +192,7 @@ void CExpClass::Save( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExpClass::Export( void )
 {
@@ -237,7 +237,7 @@ void CExpClass::Export( void )
 	byte *pDataStart = pData;
 
 	flexsettinghdr_t *fhdr = (flexsettinghdr_t *)pData;
-	
+
 	fhdr->id = ('V' << 16) + ('F' << 8) + ('E');
 	fhdr->version = 0;
 	V_strncpy( fhdr->name, vfefilename, sizeof( fhdr->name ) );
@@ -319,7 +319,7 @@ void CExpClass::Export( void )
 	fhdr->numkeys = numflexmaps;
 	fhdr->keynameindex = pData - pDataStart;
 	pData += sizeof( char *) * numflexmaps;
-	
+
 	for (i = 0; i < numflexmaps; i++)
 	{
 		pKeynames[i] = (char *)(pData - pDataStart);
@@ -342,7 +342,7 @@ void CExpClass::Export( void )
 
 	char relative[ 512 ];
 	filesystem->FullPathToRelativePath( vfefilename, relative, sizeof( relative ) );
-	
+
 	MakeFileWriteable( relative );
 	FileHandle_t fh = filesystem->Open( relative, "wb" );
 	if ( !fh )
@@ -358,7 +358,7 @@ void CExpClass::Export( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CExpClass::GetBaseName( void ) const
@@ -367,7 +367,7 @@ const char *CExpClass::GetBaseName( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CExpClass::GetName( void ) const
@@ -376,7 +376,7 @@ const char *CExpClass::GetName( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CExpClass::GetFileName( void ) const
@@ -385,8 +385,8 @@ const char *CExpClass::GetFileName( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *filename - 
+// Purpose:
+// Input  : *filename -
 //-----------------------------------------------------------------------------
 void CExpClass::SetFileName( const char *filename )
 {
@@ -434,11 +434,11 @@ void CExpClass::ReloadBitmaps( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
-//			*description - 
-//			*flexsettings - 
-//			selectnewitem - 
+// Purpose:
+// Input  : *name -
+//			*description -
+//			*flexsettings -
+//			selectnewitem -
 // Output : CExpression
 //-----------------------------------------------------------------------------
 CExpression *CExpClass::AddExpression( const char *name, const char *description, float *flexsettings, float *flexweights, bool selectnewitem, bool bDirtyClass )
@@ -481,7 +481,7 @@ CExpression *CExpClass::AddExpression( const char *name, const char *description
 	{
 		exp->CreateNewBitmap( models->GetActiveModelIndex() );
 	}
-	
+
 	if ( selectnewitem )
 	{
 		SelectExpression( idx );
@@ -496,8 +496,8 @@ CExpression *CExpClass::AddExpression( const char *name, const char *description
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : CExpression
 //-----------------------------------------------------------------------------
 CExpression *CExpClass::FindExpression( const char *name )
@@ -515,8 +515,8 @@ CExpression *CExpClass::FindExpression( const char *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 void CExpClass::DeleteExpression( const char *name )
 {
@@ -535,7 +535,7 @@ void CExpClass::DeleteExpression( const char *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CExpClass::GetNumExpressions( void )
@@ -544,8 +544,8 @@ int CExpClass::GetNumExpressions( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : num - 
+// Purpose:
+// Input  : num -
 // Output : CExpression
 //-----------------------------------------------------------------------------
 CExpression *CExpClass::GetExpression( int num )
@@ -560,7 +560,7 @@ CExpression *CExpClass::GetExpression( int num )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CExpClass::GetDirty( void )
@@ -569,8 +569,8 @@ bool CExpClass::GetDirty( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dirty - 
+// Purpose:
+// Input  : dirty -
 //-----------------------------------------------------------------------------
 void CExpClass::SetDirty( bool dirty )
 {
@@ -578,7 +578,7 @@ void CExpClass::SetDirty( bool dirty )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CExpClass::GetIndex( void )
@@ -593,8 +593,8 @@ int CExpClass::GetIndex( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : num - 
+// Purpose:
+// Input  : num -
 //-----------------------------------------------------------------------------
 void CExpClass::SelectExpression( int num, bool deselect )
 {
@@ -606,7 +606,7 @@ void CExpClass::SelectExpression( int num, bool deselect )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CExpClass::GetSelectedExpression( void )
@@ -615,7 +615,7 @@ int CExpClass::GetSelectedExpression( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExpClass::DeselectExpression( void )
 {
@@ -623,9 +623,9 @@ void CExpClass::DeselectExpression( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : exp1 - 
-//			exp2 - 
+// Purpose:
+// Input  : exp1 -
+//			exp2 -
 //-----------------------------------------------------------------------------
 void CExpClass::SwapExpressionOrder( int exp1, int exp2 )
 {
@@ -679,7 +679,7 @@ void CExpClass::CheckBitmapConsistency( void )
 				CUtlString s = fn;
 				workList.AddToTail( s );
 
-				
+
 			}
 
 			fn = filesystem->FindNext( hFindFile );

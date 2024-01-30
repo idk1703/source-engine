@@ -92,7 +92,7 @@ public:
 			"fullPath" - Indicates the full path of the file read for OpenFile or written for SaveFile
 			"fileType" - Indicates the file type of the file read for OpenFile or written for SaveFile
 			Use GetFirstTrueSubKey() to get the context passed into the OpenFile/SaveFile methods
-	*/									  
+	*/
 
 private:
 	enum FOSMState_t

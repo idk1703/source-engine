@@ -70,7 +70,7 @@ const char *
 mx_getextension (const char *filename)
 {
 	static char ext[256];
-#ifdef WIN32	
+#ifdef WIN32
 	_splitpath (filename, 0, 0, 0, ext);
 #else
 	char *ptr = strrchr (filename, '.');

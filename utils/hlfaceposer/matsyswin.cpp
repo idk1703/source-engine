@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -107,7 +107,7 @@ MatSysWindow::MatSysWindow (mxWindow *parent, int x, int y, int w, int h, const 
 	config = g_pMaterialSystem->GetCurrentConfigForVideoCard();
 	InitMaterialSystemConfig(&config);
 	g_pMaterialSystem->OverrideConfig( config, false );
-	
+
 //	config.m_VideoMode.m_Width = config.m_VideoMode.m_Height = 0;
 	config.SetFlag( MATSYS_VIDCFG_FLAGS_WINDOWED, true );
 	config.SetFlag( MATSYS_VIDCFG_FLAGS_RESIZING, true );
@@ -199,7 +199,7 @@ void MatSysWindow::Frame( void )
 	static double prev = 0.0;
 	double curr = (double) mx::getTickCount () / 1000.0;
 	double dt = ( curr - prev );
-	
+
 	if ( recursion_guard )
 		return;
 
@@ -217,12 +217,12 @@ void MatSysWindow::Frame( void )
 	if ( prev != 0.0 )
 	{
 		dt = min( 0.1, dt );
-		
+
 		g_MDLViewer->Think( dt );
 
 		realtime += dt;
 	}
-	
+
 	prev = curr;
 
 	DrawFrame();
@@ -243,7 +243,7 @@ int MatSysWindow::handleEvent (mxEvent *event)
 	MDLCACHE_CRITICAL_SECTION_( g_pMDLCache );
 
 	int iret = 0;
-	
+
 	if ( HandleToolEvent( event ) )
 	{
 		return iret;
@@ -311,9 +311,9 @@ int MatSysWindow::handleEvent (mxEvent *event)
 					float rx = (float) (event->x - oldx);
 					oldx = event->x;
 					oldy = event->y;
-					
+
 					QAngle movement = QAngle( ry, rx, 0 );
-					
+
 					matrix3x4_t tmp1, tmp2, tmp3;
 					AngleMatrix( g_viewerSettings.lightrot, tmp1 );
 					AngleMatrix( movement, tmp2 );
@@ -328,16 +328,16 @@ int MatSysWindow::handleEvent (mxEvent *event)
 						float rx = (float) (event->x - oldx);
 						oldx = event->x;
 						oldy = event->y;
-						
+
 						QAngle movement;
 						matrix3x4_t tmp1, tmp2, tmp3;
-						
+
 						movement = QAngle( 0, rx, 0 );
 						AngleMatrix( pModel->m_angles, tmp1 );
 						AngleMatrix( movement, tmp2 );
 						ConcatTransforms( tmp1, tmp2, tmp3 );
 						MatrixAngles( tmp3, pModel->m_angles );
-						
+
 						movement = QAngle( ry, 0, 0 );
 						AngleMatrix( pModel->m_angles, tmp1 );
 						AngleMatrix( movement, tmp2 );
@@ -350,15 +350,15 @@ int MatSysWindow::handleEvent (mxEvent *event)
 						float ang2 = (180 / 3.1415) * atan2( event->x - w()/2.0, event->y - h()/2.0 );
 						oldx = event->x;
 						oldy = event->y;
-						
+
 						QAngle movement = QAngle( 0, 0, ang2 - ang1 );
-						
+
 						matrix3x4_t tmp1, tmp2, tmp3;
 						AngleMatrix( pModel->m_angles, tmp1 );
 						AngleMatrix( movement, tmp2 );
 						ConcatTransforms( tmp2, tmp1, tmp3 );
 						MatrixAngles( tmp3, pModel->m_angles );
-					}			
+					}
 				}
 			}
 			else if (event->buttons & mxEvent::MouseRightButton)
@@ -398,45 +398,45 @@ int MatSysWindow::handleEvent (mxEvent *event)
 					}
 				}
 				break;
-				
+
 			case 27:
 				if (!getParent ()) // fullscreen mode ?
 					mx::quit ();
 				break;
-				
+
 			case 'g':
 				g_viewerSettings.showGround = !g_viewerSettings.showGround;
 				break;
-				
+
 			case 'h':
 				g_viewerSettings.showHitBoxes = !g_viewerSettings.showHitBoxes;
 				break;
-				
+
 			case 'o':
 				g_viewerSettings.showBones = !g_viewerSettings.showBones;
 				break;
-				
+
 			case 'b':
 				g_viewerSettings.showBackground = !g_viewerSettings.showBackground;
 				break;
-				
+
 			case 'm':
 				g_viewerSettings.showMovement = !g_viewerSettings.showMovement;
 				break;
-				
+
 			case '1':
 			case '2':
 			case '3':
 			case '4':
 				g_viewerSettings.renderMode = event->key - '1';
 				break;
-				
+
 			case '-':
 				g_viewerSettings.speedScale -= 0.1f;
 				if (g_viewerSettings.speedScale < 0.0f)
 					g_viewerSettings.speedScale = 0.0f;
 				break;
-				
+
 			case '+':
 				g_viewerSettings.speedScale += 0.1f;
 				if (g_viewerSettings.speedScale > 5.0f)
@@ -470,7 +470,7 @@ drawFloor ()
 
 		float dist=-15000.0f;
 		float tMin=0, tMax=1;
-		
+
 		meshBuilder.Position3f(-dist, dist, dist);
 		meshBuilder.TexCoord2f( 0, tMin,tMax );
 		meshBuilder.Color4ub( 255, 255, 255, 255 );
@@ -546,7 +546,7 @@ void MatSysWindow::draw ()
 	pRenderContext->MatrixMode( MATERIAL_PROJECTION );
 	pRenderContext->LoadIdentity( );
 	pRenderContext->PerspectiveX(20.0f, (float)w2() / (float)viewh, 1.0f, 20000.0f);
-	
+
 	pRenderContext->MatrixMode( MATERIAL_VIEW );
 	pRenderContext->LoadIdentity( );
 	// FIXME: why is this needed?  Doesn't SetView() override this?
@@ -706,7 +706,7 @@ void MatSysWindow::TakeSnapshotRect( const char *pFilename, int x, int y, int w,
 
 	// bitmap bits
 	hp = (byte *) malloc(imageSize);
-	
+
 	if (hp == NULL)
 		Error( "Couldn't allocate bitmap header to snapshot.\n" );
 
@@ -752,7 +752,7 @@ void MatSysWindow::TakeSnapshotRect( const char *pFilename, int x, int y, int w,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool MatSysWindow::IsSuppressingResize( void )
@@ -761,8 +761,8 @@ bool MatSysWindow::IsSuppressingResize( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : suppress - 
+// Purpose:
+// Input  : suppress -
 //-----------------------------------------------------------------------------
 void MatSysWindow::SuppressResize( bool suppress )
 {

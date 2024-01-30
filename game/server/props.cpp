@@ -173,7 +173,7 @@ float GetBreakableDamage( const CTakeDamageInfo &inputInfo, IBreakableWithPropDa
 // BASE PROP
 //=============================================================================================================
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseProp::Spawn( void )
 {
@@ -231,7 +231,7 @@ void CBaseProp::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseProp::Precache( void )
 {
@@ -254,12 +254,12 @@ void CBaseProp::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseProp::Activate( void )
 {
 	BaseClass::Activate();
-	
+
 	// Make sure mapmakers haven't used the wrong prop type.
 	if ( m_takedamage == DAMAGE_NO && m_iHealth != 0 )
 	{
@@ -281,7 +281,7 @@ bool CBaseProp::KeyValue( const char *szKeyName, const char *szValue )
 		return true;
 	}
 	else
-	{ 
+	{
 		return BaseClass::KeyValue( szKeyName, szValue );
 	}
 
@@ -347,13 +347,13 @@ int CBaseProp::ParsePropData( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseProp::DrawDebugGeometryOverlays( void )
 {
 	BaseClass::DrawDebugGeometryOverlays();
 
-	if ( m_debugOverlays & OVERLAY_PROP_DEBUG )  
+	if ( m_debugOverlays & OVERLAY_PROP_DEBUG )
 	{
 		if ( m_takedamage == DAMAGE_NO )
 		{
@@ -463,7 +463,7 @@ void CBreakableProp::HandleFirstCollisionInteractions( int index, gamevcollision
 
 	if( HasInteraction( PROPINTER_PHYSGUN_FIRST_BREAK ) )
 	{
-		// Looks like it's best to break by having the object damage itself. 
+		// Looks like it's best to break by having the object damage itself.
 		CTakeDamageInfo info;
 
 		info.SetDamage( m_iHealth );
@@ -483,14 +483,14 @@ void CBreakableProp::HandleFirstCollisionInteractions( int index, gamevcollision
 		TakeDamage( info );
 		return;
 	}
-	
+
 	if( HasInteraction( PROPINTER_PHYSGUN_FIRST_PAINT ) )
 	{
 		IPhysicsObject *pObj = VPhysicsGetObject();
- 
+
 		Vector vecPos;
 		pObj->GetPosition( &vecPos, NULL );
- 
+
 		Vector vecVelocity = pEvent->preVelocity[0];
 		VectorNormalize(vecVelocity);
 
@@ -502,8 +502,8 @@ void CBreakableProp::HandleFirstCollisionInteractions( int index, gamevcollision
 #ifdef HL2_DLL
 			// Don't paintsplat friendlies
 			int iClassify = tr.m_pEnt->Classify();
-			if ( iClassify != CLASS_PLAYER_ALLY_VITAL && iClassify != CLASS_PLAYER_ALLY && 
-				 iClassify != CLASS_CITIZEN_PASSIVE && iClassify != CLASS_CITIZEN_REBEL ) 
+			if ( iClassify != CLASS_PLAYER_ALLY_VITAL && iClassify != CLASS_PLAYER_ALLY &&
+				iClassify != CLASS_CITIZEN_PASSIVE && iClassify != CLASS_CITIZEN_REBEL )
 #endif
 			{
 				switch( entindex() % 3 )
@@ -552,8 +552,8 @@ void CBreakableProp::CheckRemoveRagdolls()
 }
 //-----------------------------------------------------------------------------
 // Purpose: Handle special physgun interactions
-// Input  : index - 
-//			*pEvent - 
+// Input  : index -
+//			*pEvent -
 //-----------------------------------------------------------------------------
 void CPhysicsProp::HandleAnyCollisionInteractions( int index, gamevcollisionevent_t *pEvent )
 {
@@ -567,7 +567,7 @@ void CPhysicsProp::HandleAnyCollisionInteractions( int index, gamevcollisioneven
 		if ( GetPropDataAngles( "impale_forward", angImpaleForward ) )
 		{
 			Vector vecImpaleForward;
- 			AngleVectors( angImpaleForward, &vecImpaleForward );
+			AngleVectors( angImpaleForward, &vecImpaleForward );
 			VectorRotate( vecImpaleForward, EntityToWorldTransform(), forward );
 		}
 		else
@@ -655,9 +655,9 @@ void CBreakableProp::StickAtPosition( const Vector &stickPosition, const Vector 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
-//			*pEvent - 
+// Purpose:
+// Input  : index -
+//			*pEvent -
 //-----------------------------------------------------------------------------
 void CBreakableProp::HandleInteractionStick( int index, gamevcollisionevent_t *pEvent )
 {
@@ -734,8 +734,8 @@ END_SEND_TABLE()
 
 BEGIN_DATADESC( CBreakableProp )
 
-	DEFINE_KEYFIELD( m_explodeDamage, FIELD_FLOAT, "ExplodeDamage"),	
-	DEFINE_KEYFIELD( m_explodeRadius, FIELD_FLOAT, "ExplodeRadius"),	
+	DEFINE_KEYFIELD( m_explodeDamage, FIELD_FLOAT, "ExplodeDamage"),
+	DEFINE_KEYFIELD( m_explodeRadius, FIELD_FLOAT, "ExplodeRadius"),
 	DEFINE_KEYFIELD( m_iMinHealthDmg, FIELD_INTEGER, "minhealthdmg" ),
 	DEFINE_FIELD( m_createTick, FIELD_INTEGER ),
 	DEFINE_FIELD( m_hBreaker, FIELD_EHANDLE ),
@@ -806,7 +806,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CBreakableProp::CBreakableProp()
 {
@@ -815,13 +815,13 @@ CBreakableProp::CBreakableProp()
 	m_flFadeScale = 1;
 	m_flDefaultFadeScale = 1;
 	m_mpBreakMode = MULTIPLAYER_BREAK_DEFAULT;
-	
+
 	// This defaults to on. Most times mapmakers won't specify a punt sound to play.
 	m_bUsePuntSound = true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBreakableProp::Spawn()
 {
@@ -832,15 +832,15 @@ void CBreakableProp::Spawn()
 	m_flDmgModBullet = 1.0;
 	m_flDmgModClub = 1.0;
 	m_flDmgModExplosive = 1.0;
-	
+
 	//jmd: I am guessing that the call to Spawn will set any flags that should be set anyway; this
 	//clears flags we don't want (specifically the FL_ONFIRE for explosive barrels in HL2MP)]
 #ifdef HL2MP
 	ClearFlags();
-#endif 
+#endif
 
 	BaseClass::Spawn();
-	
+
 	if ( IsMarkedForDeletion() )
 		return;
 
@@ -866,12 +866,12 @@ void CBreakableProp::Spawn()
 
 	// Setup takedamage based upon the health we parsed earlier, and our interactions
 	if ( ( m_iHealth == 0 ) ||
-        ( !m_iNumBreakableChunks && 
-		    !HasInteraction( PROPINTER_PHYSGUN_BREAK_EXPLODE ) &&
-		    !HasInteraction( PROPINTER_PHYSGUN_FIRST_BREAK ) &&
-		    !HasInteraction( PROPINTER_FIRE_FLAMMABLE ) &&
-		    !HasInteraction( PROPINTER_FIRE_IGNITE_HALFHEALTH ) &&
-		    !HasInteraction( PROPINTER_FIRE_EXPLOSIVE_RESIST ) ) )
+	( !m_iNumBreakableChunks &&
+		!HasInteraction( PROPINTER_PHYSGUN_BREAK_EXPLODE ) &&
+		!HasInteraction( PROPINTER_PHYSGUN_FIRST_BREAK ) &&
+		!HasInteraction( PROPINTER_FIRE_FLAMMABLE ) &&
+		!HasInteraction( PROPINTER_FIRE_IGNITE_HALFHEALTH ) &&
+		!HasInteraction( PROPINTER_FIRE_EXPLOSIVE_RESIST ) ) )
 	{
 		m_iHealth = 0;
 		m_takedamage = DAMAGE_EVENTS_ONLY;
@@ -886,7 +886,7 @@ void CBreakableProp::Spawn()
 				HasInteraction( PROPINTER_FIRE_IGNITE_HALFHEALTH ) )
 			{
 				// Exploding barrels, exploding gas cans
-				AddFlag( FL_AIMTARGET );	
+				AddFlag( FL_AIMTARGET );
 			}
 		}
 	}
@@ -899,7 +899,7 @@ void CBreakableProp::Spawn()
 		m_impactEnergyScale = 0.1f;
 	}
 
- 	m_preferredCarryAngles = QAngle( -5, 0, 0 );
+	m_preferredCarryAngles = QAngle( -5, 0, 0 );
 
 	// The presence of this activity causes us to have to detach it before it can be grabbed.
 	if ( SelectWeightedSequence( ACT_PHYSCANNON_ANIMATE ) != ACTIVITY_NOT_AVAILABLE )
@@ -932,7 +932,7 @@ void CBreakableProp::DisableAutoFade()
 	m_flDefaultFadeScale = 0;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Copy fade from another breakable.
 //-----------------------------------------------------------------------------
@@ -967,14 +967,14 @@ void CBreakableProp::InputDisablePhyscannonPickup( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOther - 
+// Purpose:
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void CBreakableProp::BreakablePropTouch( CBaseEntity *pOther )
 {
 	if ( HasSpawnFlags( SF_PHYSPROP_TOUCH ) )
 	{
-		// can be broken when run into 
+		// can be broken when run into
 		float flDamage = pOther->GetSmoothedVelocity().Length() * 0.01;
 
 		if ( flDamage >= m_iHealth )
@@ -1002,8 +1002,8 @@ void CBreakableProp::BreakablePropTouch( CBaseEntity *pOther )
 		{
 			SetThink( &CBreakableProp::BreakThink );
 			//SetTouch( NULL );
-		
-			// Add optional delay 
+
+			// Add optional delay
 			SetNextThink( gpGlobals->curtime + m_flPressureDelay );
 		}
 	}
@@ -1038,7 +1038,7 @@ int CBreakableProp::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 	CTakeDamageInfo info = inputInfo;
 
 	// If attacker can't do at least the min required damage to us, don't take any damage from them
- 	if ( info.GetDamage() < m_iMinHealthDmg )
+	if ( info.GetDamage() < m_iMinHealthDmg )
 		return 0;
 
 	if (!PassesDamageFilter( info ))
@@ -1065,7 +1065,7 @@ int CBreakableProp::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 	}
 #endif
 
-	// don't take damage on the same frame you were created 
+	// don't take damage on the same frame you were created
 	// (avoids a set of explosions progressively vaporizing a compound breakable)
 	if ( m_createTick == (unsigned int)gpGlobals->tickcount )
 	{
@@ -1165,7 +1165,7 @@ int CBreakableProp::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBreakableProp::Event_Killed( const CTakeDamageInfo &info )
 {
@@ -1220,8 +1220,8 @@ void CBreakableProp::InputSetHealth( inputdata_t &inputdata )
 
 //-----------------------------------------------------------------------------
 // Purpose: Choke point for changes to breakable health. Ensures outputs are fired.
-// Input  : iNewHealth - 
-//			pActivator - 
+// Input  : iNewHealth -
+//			pActivator -
 // Output : Returns true if the breakable survived, false if it died (broke).
 //-----------------------------------------------------------------------------
 bool CBreakableProp::UpdateHealth( int iNewHealth, CBaseEntity *pActivator )
@@ -1266,7 +1266,7 @@ bool CBreakableProp::OnAttemptPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunP
 
 	if ( m_nPhysgunState == PHYSGUN_MUST_BE_DETACHED )
 	{
-		// A punt advances 
+		// A punt advances
 		ResetSequence( SelectWeightedSequence( ACT_PHYSCANNON_DETACH ) );
 		SetPlaybackRate( 0.0f );
 		ResetClientsideFrame();
@@ -1298,14 +1298,14 @@ bool CBreakableProp::OnAttemptPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunP
 			m_OnPhysCannonAnimatePullStarted.FireOutput( NULL,this );
 		}
 
- 		ResetSequence( iSequence );
+		ResetSequence( iSequence );
 		SetPlaybackRate( 1.0f );
 		ResetClientsideFrame();
 	}
 
 	// If we're running PRE or POST ANIMATE sequences, wait for them to be done
 	if ( m_nPhysgunState == PHYSGUN_ANIMATE_IS_PRE_ANIMATING ||
-		 m_nPhysgunState == PHYSGUN_ANIMATE_IS_POST_ANIMATING )
+		m_nPhysgunState == PHYSGUN_ANIMATE_IS_POST_ANIMATING )
 		return false;
 
 	if ( m_nPhysgunState == PHYSGUN_ANIMATE_IS_ANIMATING )
@@ -1315,7 +1315,7 @@ bool CBreakableProp::OnAttemptPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunP
 			return false;
 
 		StudioFrameAdvanceManual( gpGlobals->frametime );
- 		DispatchAnimEvents( this );
+		DispatchAnimEvents( this );
 
 		if ( IsActivityFinished() )
 		{
@@ -1390,7 +1390,7 @@ void CBreakableProp::AnimateThink( void )
 		}
 	}
 }
-	
+
 //-----------------------------------------------------------------------------
 // Physics Attacker
 //-----------------------------------------------------------------------------
@@ -1400,7 +1400,7 @@ void CBreakableProp::SetPhysicsAttacker( CBasePlayer *pEntity, float flTime )
 	m_flLastPhysicsInfluenceTime = flTime;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Prevents fade scale from happening
 //-----------------------------------------------------------------------------
@@ -1442,7 +1442,7 @@ void CBreakableProp::OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t
 
 	if( reason == PUNTED_BY_CANNON )
 	{
-		PlayPuntSound(); 
+		PlayPuntSound();
 	}
 
 	if ( IsX360() )
@@ -1509,7 +1509,7 @@ void CBreakableProp::CreateFlare( float flLifetime )
 #endif // HL2_EPISODIC
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBreakableProp::OnPhysGunDrop( CBasePlayer *pPhysGunUser, PhysGunDrop_t Reason )
 {
@@ -1519,7 +1519,7 @@ void CBreakableProp::OnPhysGunDrop( CBasePlayer *pPhysGunUser, PhysGunDrop_t Rea
 
 	if( (int)Reason == (int)PUNTED_BY_CANNON )
 	{
-		PlayPuntSound(); 
+		PlayPuntSound();
 	}
 
 	// Restore original BlockLOS
@@ -1552,7 +1552,7 @@ CBasePlayer *CBreakableProp::HasPhysicsAttacker( float dt )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBreakableProp::BreakThink( void )
 {
@@ -1576,7 +1576,7 @@ void CBreakableProp::PlayPuntSound()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBreakableProp::Precache()
 {
@@ -1693,7 +1693,7 @@ void CBreakableProp::Break( CBaseEntity *pBreaker, const CTakeDamageInfo &info )
 	{
 		if( HasInteraction( PROPINTER_PHYSGUN_BREAK_EXPLODE ) )
 		{
-			ExplosionCreate( WorldSpaceCenter(), angles, pAttacker, m_explodeDamage, m_explodeRadius, 
+			ExplosionCreate( WorldSpaceCenter(), angles, pAttacker, m_explodeDamage, m_explodeRadius,
 				SF_ENVEXPLOSION_NOSPARKS | SF_ENVEXPLOSION_NODLIGHTS | SF_ENVEXPLOSION_NOSMOKE | SF_ENVEXPLOSION_SURFACEONLY | SF_ENVEXPLOSION_NOSOUND,
 				0.0f, this );
 			EmitSound("PropaneTank.Burst");
@@ -1779,8 +1779,8 @@ void CBreakableProp::Break( CBaseEntity *pBreaker, const CTakeDamageInfo &info )
 	{
 		if ( bExploded == false )
 		{
-			ExplosionCreate( origin, angles, pAttacker, 1, m_explodeRadius, 
-				SF_ENVEXPLOSION_NOSPARKS | SF_ENVEXPLOSION_NODLIGHTS | SF_ENVEXPLOSION_NOSMOKE, 0.0f, this );			
+			ExplosionCreate( origin, angles, pAttacker, 1, m_explodeRadius,
+				SF_ENVEXPLOSION_NOSPARKS | SF_ENVEXPLOSION_NODLIGHTS | SF_ENVEXPLOSION_NOSMOKE, 0.0f, this );
 		}
 
 		// Find and ignite all NPC's within the radius
@@ -1808,18 +1808,18 @@ void CBreakableProp::Break( CBaseEntity *pBreaker, const CTakeDamageInfo &info )
 // DYNAMIC PROPS
 //=============================================================================================================
 LINK_ENTITY_TO_CLASS( dynamic_prop, CDynamicProp );
-LINK_ENTITY_TO_CLASS( prop_dynamic, CDynamicProp );	
-LINK_ENTITY_TO_CLASS( prop_dynamic_override, CDynamicProp );	
+LINK_ENTITY_TO_CLASS( prop_dynamic, CDynamicProp );
+LINK_ENTITY_TO_CLASS( prop_dynamic_override, CDynamicProp );
 
 IMPLEMENT_AUTO_LIST( IPhysicsPropAutoList );
 
 BEGIN_DATADESC( CDynamicProp )
 
 	// Fields
-	DEFINE_KEYFIELD( m_iszDefaultAnim, FIELD_STRING, "DefaultAnim"),	
+	DEFINE_KEYFIELD( m_iszDefaultAnim, FIELD_STRING, "DefaultAnim"),
 	DEFINE_FIELD(	 m_iGoalSequence, FIELD_INTEGER ),
 	DEFINE_FIELD(	 m_iTransitionDirection, FIELD_INTEGER ),
-	DEFINE_KEYFIELD( m_bRandomAnimator, FIELD_BOOLEAN, "RandomAnimation"),	
+	DEFINE_KEYFIELD( m_bRandomAnimator, FIELD_BOOLEAN, "RandomAnimation"),
 	DEFINE_FIELD(	 m_flNextRandAnim, FIELD_TIME ),
 	DEFINE_KEYFIELD( m_flMinRandAnimTime, FIELD_FLOAT, "MinAnimTime"),
 	DEFINE_KEYFIELD( m_flMaxRandAnimTime, FIELD_FLOAT, "MaxAnimTime"),
@@ -1827,7 +1827,7 @@ BEGIN_DATADESC( CDynamicProp )
 	DEFINE_KEYFIELD( m_bDisableBoneFollowers, FIELD_BOOLEAN, "DisableBoneFollowers" ),
 	DEFINE_FIELD(	 m_bUseHitboxesForRenderBox, FIELD_BOOLEAN ),
 	DEFINE_FIELD(	m_nPendingSequence, FIELD_SHORT ),
-		
+
 	// Inputs
 	DEFINE_INPUTFUNC( FIELD_STRING,	"SetAnimation",	InputSetAnimation ),
 	DEFINE_INPUTFUNC( FIELD_STRING,	"SetDefaultAnimation",	InputSetDefaultAnimation ),
@@ -1855,7 +1855,7 @@ IMPLEMENT_SERVERCLASS_ST(CDynamicProp, DT_DynamicProp)
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDynamicProp::CDynamicProp()
 {
@@ -1879,7 +1879,7 @@ void CDynamicProp::Spawn( )
 		SetClassname( "prop_dynamic" );
 	}
 
-	// If the prop is not-solid, the bounding box needs to be 
+	// If the prop is not-solid, the bounding box needs to be
 	// OBB to correctly surround the prop as it rotates.
 	// Check the classname so we don't mess with doors & other derived classes.
 	if ( GetSolid() == SOLID_NONE && FClassnameIs( this, "prop_dynamic" ) )
@@ -1954,7 +1954,7 @@ void CDynamicProp::Spawn( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDynamicProp::OnRestore( void )
 {
@@ -1980,7 +1980,7 @@ void CDynamicProp::BoneFollowerHierarchyChanged()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CDynamicProp::OverridePropdata( void )
 {
@@ -2106,7 +2106,7 @@ IPhysicsObject *CDynamicProp::GetRootPhysicsObjectForBreak()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDynamicProp::UpdateOnRemove( void )
 {
@@ -2118,7 +2118,7 @@ void CDynamicProp::UpdateOnRemove( void )
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void CDynamicProp::HandleAnimEvent( animevent_t *pEvent )
-{ 
+{
 	switch( pEvent->event )
 	{
 		case SCRIPT_EVENT_FIRE_INPUT:
@@ -2127,25 +2127,25 @@ void CDynamicProp::HandleAnimEvent( animevent_t *pEvent )
 			this->AcceptInput( pEvent->options, this, this, emptyVariant, 0 );
 			return;
 		}
-		
+
 		case SCRIPT_EVENT_SOUND:
 		{
 			EmitSound( pEvent->options );
 			break;
 		}
-		
+
 		default:
 		{
 			break;
 		}
 	}
 
-	BaseClass::HandleAnimEvent( pEvent ); 
+	BaseClass::HandleAnimEvent( pEvent );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDynamicProp::NotifyPositionChanged( CBaseEntity *pEntity )
 {
@@ -2192,12 +2192,12 @@ void CDynamicProp::AnimThink( void )
 			{
 				SetNextThink( gpGlobals->curtime + m_flNextRandAnim + 0.1 );
 			}
-			else 
+			else
 			{
 				if (m_iszDefaultAnim != NULL_STRING)
 				{
 					PropSetAnim( STRING( m_iszDefaultAnim ) );
-				}	
+				}
 			}
 		}
 	}
@@ -2256,7 +2256,7 @@ void CDynamicProp::InputSetDefaultAnimation( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDynamicProp::InputSetPlaybackRate( inputdata_t &inputdata )
 {
@@ -2265,7 +2265,7 @@ void CDynamicProp::InputSetPlaybackRate( inputdata_t &inputdata )
 
 //-----------------------------------------------------------------------------
 // Purpose: Helper in case we have to async load the sequence
-// Input  : nSequence - 
+// Input  : nSequence -
 //-----------------------------------------------------------------------------
 void CDynamicProp::FinishSetSequence( int nSequence )
 {
@@ -2281,7 +2281,7 @@ void CDynamicProp::FinishSetSequence( int nSequence )
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the sequence and starts thinking.
-// Input  : nSequence - 
+// Input  : nSequence -
 //-----------------------------------------------------------------------------
 void CDynamicProp::PropSetSequence( int nSequence )
 {
@@ -2347,7 +2347,7 @@ private:
 	string_t	m_initialOwner;
 };
 
-LINK_ENTITY_TO_CLASS( prop_dynamic_ornament, COrnamentProp );	
+LINK_ENTITY_TO_CLASS( prop_dynamic_ornament, COrnamentProp );
 
 BEGIN_DATADESC( COrnamentProp )
 
@@ -2375,7 +2375,7 @@ void COrnamentProp::DetachFromOwner()
 void COrnamentProp::Activate()
 {
 	BaseClass::Activate();
-	
+
 	if ( m_initialOwner != NULL_STRING )
 	{
 		AttachTo( STRING(m_initialOwner) );
@@ -2408,8 +2408,8 @@ void COrnamentProp::InputDetach( inputdata_t &inputdata )
 // PHYSICS PROPS
 //=============================================================================
 LINK_ENTITY_TO_CLASS( physics_prop, CPhysicsProp );
-LINK_ENTITY_TO_CLASS( prop_physics, CPhysicsProp );	
-LINK_ENTITY_TO_CLASS( prop_physics_override, CPhysicsProp );	
+LINK_ENTITY_TO_CLASS( prop_physics, CPhysicsProp );
+LINK_ENTITY_TO_CLASS( prop_physics_override, CPhysicsProp );
 
 BEGIN_DATADESC( CPhysicsProp )
 
@@ -2426,8 +2426,8 @@ BEGIN_DATADESC( CPhysicsProp )
 	DEFINE_KEYFIELD( m_damageType, FIELD_INTEGER, "Damagetype" ),
 	DEFINE_KEYFIELD( m_iszOverrideScript, FIELD_STRING, "overridescript" ),
 
-	DEFINE_KEYFIELD( m_damageToEnableMotion, FIELD_INTEGER, "damagetoenablemotion" ), 
-	DEFINE_KEYFIELD( m_flForceToEnableMotion, FIELD_FLOAT, "forcetoenablemotion" ), 
+	DEFINE_KEYFIELD( m_damageToEnableMotion, FIELD_INTEGER, "damagetoenablemotion" ),
+	DEFINE_KEYFIELD( m_flForceToEnableMotion, FIELD_FLOAT, "forcetoenablemotion" ),
 	DEFINE_OUTPUT( m_OnAwakened, "OnAwakened" ),
 	DEFINE_OUTPUT( m_MotionEnabled, "OnMotionEnabled" ),
 	DEFINE_OUTPUT( m_OnPhysGunPickup, "OnPhysGunPickup" ),
@@ -2523,11 +2523,11 @@ void CPhysicsProp::Spawn( )
 		SetFadeDistance( -1, 0 );
 		DisableAutoFade();
 	}
-	
+
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPhysicsProp::Precache( void )
 {
@@ -2544,7 +2544,7 @@ void CPhysicsProp::Precache( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CPhysicsProp::CreateVPhysics()
 {
@@ -2553,7 +2553,7 @@ bool CPhysicsProp::CreateVPhysics()
 
 	solid_t tmpSolid;
 	PhysModelParseSolid( tmpSolid, this, GetModelIndex() );
-	
+
 	if ( m_massScale > 0 )
 	{
 		tmpSolid.params.mass *= m_massScale;
@@ -2624,7 +2624,7 @@ bool CPhysicsProp::CreateVPhysics()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPhysicsProp::CanBePickedUpByPhyscannon( void )
@@ -2643,7 +2643,7 @@ bool CPhysicsProp::CanBePickedUpByPhyscannon( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CPhysicsProp::OverridePropdata( void )
 {
@@ -2701,7 +2701,7 @@ void CPhysicsProp::InputDisableFloating( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPhysicsProp::EnableMotion( void )
 {
@@ -2710,7 +2710,7 @@ void CPhysicsProp::EnableMotion( void )
 	{
 		Vector pos;
 		QAngle angles;
-	
+
 		if ( GetEnableMotionPosition( &pos, &angles ) )
 		{
 			ClearEnableMotionPosition();
@@ -2727,7 +2727,7 @@ void CPhysicsProp::EnableMotion( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPhysicsProp::OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason )
 {
@@ -2768,7 +2768,7 @@ void CPhysicsProp::OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t r
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPhysicsProp::OnPhysGunDrop( CBasePlayer *pPhysGunUser, PhysGunDrop_t Reason )
 {
@@ -2780,7 +2780,7 @@ void CPhysicsProp::OnPhysGunDrop( CBasePlayer *pPhysGunUser, PhysGunDrop_t Reaso
 		{
 			AngularImpulse angVel( 0, 0, 5000.0 );
 			VPhysicsGetObject()->AddVelocity( NULL, &angVel );
-			
+
 			// no angular drag on this object anymore
 			float angDrag = 0.0f;
 			VPhysicsGetObject()->SetDragCoefficient( NULL, &angDrag );
@@ -2796,7 +2796,7 @@ void CPhysicsProp::OnPhysGunDrop( CBasePlayer *pPhysGunUser, PhysGunDrop_t Reaso
 	}
 
 	m_OnPhysGunDrop.FireOutput( pPhysGunUser, this );
-	
+
 	if ( HasInteraction( PROPINTER_PHYSGUN_NOTIFY_CHILDREN ) )
 	{
 		CUtlVector<CBaseEntity *> children;
@@ -2840,7 +2840,7 @@ bool CPhysicsProp::GetPropDataAngles( const char *pKeyName, QAngle &vecAngles )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CPhysicsProp::GetCarryDistanceOffset( void )
 {
@@ -2861,10 +2861,10 @@ float CPhysicsProp::GetCarryDistanceOffset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CPhysicsProp::ObjectCaps()
-{ 
+{
 	int caps = BaseClass::ObjectCaps() | FCAP_WCEDIT_POSITION;
 
 	if ( HasSpawnFlags( SF_PHYSPROP_ENABLE_PICKUP_OUTPUT ) )
@@ -2890,11 +2890,11 @@ int CPhysicsProp::ObjectCaps()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pActivator - 
-//			*pCaller - 
-//			useType - 
-//			value - 
+// Purpose:
+// Input  : *pActivator -
+//			*pCaller -
+//			useType -
+//			value -
 //-----------------------------------------------------------------------------
 void CPhysicsProp::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
@@ -2911,8 +2911,8 @@ void CPhysicsProp::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPhysics - 
+// Purpose:
+// Input  : *pPhysics -
 //-----------------------------------------------------------------------------
 void CPhysicsProp::VPhysicsUpdate( IPhysicsObject *pPhysics )
 {
@@ -2941,7 +2941,7 @@ void CPhysicsProp::VPhysicsUpdate( IPhysicsObject *pPhysics )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPhysicsProp::ClearFlagsThink( void )
 {
@@ -2971,7 +2971,7 @@ void CPhysicsProp::ComputeEnablingImpulse( int index, gamevcollisionevent_t *pEv
 
 	Vector vecLocalContactVelocity, vecContactVelocity;
 
-	AngularImpulse vecAngularVelocity = pEvent->preAngularVelocity[!index]; 
+	AngularImpulse vecAngularVelocity = pEvent->preAngularVelocity[!index];
 	vecAngularVelocity *= M_PI / 180.0f;
 	CrossProduct( vecAngularVelocity, vecLocalContactPoint, vecLocalContactVelocity );
 	pImpactObject->LocalToWorldVector( &vecContactVelocity, vecLocalContactVelocity );
@@ -2991,7 +2991,7 @@ void CPhysicsProp::ComputeEnablingImpulse( int index, gamevcollisionevent_t *pEv
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPhysicsProp::VPhysicsCollision( int index, gamevcollisionevent_t *pEvent )
 {
@@ -3008,7 +3008,7 @@ void CPhysicsProp::VPhysicsCollision( int index, gamevcollisionevent_t *pEvent )
 		{
 			// Large enough to enable motion?
 			float flForce = pEvent->collisionSpeed * pPhysObj->GetMass();
-			
+
 			if ( flForce >= m_flForceToEnableMotion )
 			{
 				ComputeEnablingImpulse( index, pEvent );
@@ -3086,7 +3086,7 @@ void CPhysicsProp::VPhysicsCollision( int index, gamevcollisionevent_t *pEvent )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CPhysicsProp::OnTakeDamage( const CTakeDamageInfo &info )
 {
@@ -3110,10 +3110,10 @@ int CPhysicsProp::OnTakeDamage( const CTakeDamageInfo &info )
 				{
 					// In Episodic, burning items (such as destroyed APCs) are making very large
 					// danger sounds which frighten NPCs. This danger sound was designed to frighten
-					// NPCs away from burning objects that are about to explode (barrels, etc). 
-					// So if this item has no more health (ie, has died but hasn't exploded), 
-					// make a smaller danger sound, just to keep NPCs away from the flames. 
-					// I suspect this problem didn't appear in HL2 simply because we didn't have 
+					// NPCs away from burning objects that are about to explode (barrels, etc).
+					// So if this item has no more health (ie, has died but hasn't exploded),
+					// make a smaller danger sound, just to keep NPCs away from the flames.
+					// I suspect this problem didn't appear in HL2 simply because we didn't have
 					// NPCs in such close proximity to destroyed NPCs. (sjb)
 					if( GetHealth() < 1 )
 					{
@@ -3129,7 +3129,7 @@ int CPhysicsProp::OnTakeDamage( const CTakeDamageInfo &info )
 			}
 		}
 	}
-	
+
 	// If we have a force to enable motion, and we're still disabled, check to see if this should enable us
 	if ( m_flForceToEnableMotion )
 	{
@@ -3147,16 +3147,16 @@ int CPhysicsProp::OnTakeDamage( const CTakeDamageInfo &info )
 	{
 		// only do this once
 		m_damageToEnableMotion = 0;
-		
+
 		// The damage that enables motion may have been enough damage to kill me if I'm breakable
 		// in which case my physics object is gone.
 		if ( VPhysicsGetObject() != NULL )
 		{
-			EnableMotion(); 
+			EnableMotion();
 			VPhysicsTakeDamage( info );
 		}
 	}
-	
+
 	return ret;
 }
 
@@ -3181,16 +3181,16 @@ float CPhysicsProp::GetMass() const
 	return VPhysicsGetObject() ? VPhysicsGetObject()->GetMass() : 1.0f;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Draw any debug text overlays
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CPhysicsProp::DrawDebugTextOverlays(void) 
+int CPhysicsProp::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		if (VPhysicsGetObject())
 		{
@@ -3312,7 +3312,7 @@ static CBaseAnimating *BreakModelCreate_Ragdoll( CBaseEntity *pOwner, breakmodel
 	return pAnimating;
 }
 
-CBaseEntity *BreakModelCreateSingle( CBaseEntity *pOwner, breakmodel_t *pModel, const Vector &position, 
+CBaseEntity *BreakModelCreateSingle( CBaseEntity *pOwner, breakmodel_t *pModel, const Vector &position,
 	const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity, int nSkin, const breakablepropparams_t &params )
 {
 	CBaseAnimating *pEntity = NULL;
@@ -3454,7 +3454,7 @@ int PropBreakablePrecacheAll( string_t modelName )
 
 		PropBreakablePrecacheAll( breakModelName );
 	}
-	
+
 	return iBreakables;
 }
 
@@ -3465,7 +3465,7 @@ bool PropBreakableCapEdictsOnCreateAll(int modelindex, IPhysicsObject *pPhysics,
 
 	CUtlVector<breakmodel_t> list;
 	BreakModelList( list, modelindex, params.defBurstScale, params.defCollisionGroup );
-	
+
 	int numToCreate = 0;
 
 	if ( iPrecomputedBreakableCount != -1 )
@@ -3474,7 +3474,7 @@ bool PropBreakableCapEdictsOnCreateAll(int modelindex, IPhysicsObject *pPhysics,
 	}
 	else
 	{
-		if ( list.Count() ) 
+		if ( list.Count() )
 		{
 			for ( int i = 0; i < list.Count(); i++ )
 			{
@@ -3536,7 +3536,7 @@ END_DATADESC()
 
 BEGIN_DATADESC(CBasePropDoor)
 	//DEFINE_FIELD(m_bLockedSentence, FIELD_CHARACTER),
-	//DEFINE_FIELD(m_bUnlockedSentence, FIELD_CHARACTER),	
+	//DEFINE_FIELD(m_bUnlockedSentence, FIELD_CHARACTER),
 	DEFINE_KEYFIELD(m_nHardwareType, FIELD_INTEGER, "hardware"),
 	DEFINE_KEYFIELD(m_flAutoReturnDelay, FIELD_FLOAT, "returndelay"),
 	DEFINE_FIELD( m_hActivator, FIELD_EHANDLE ),
@@ -3554,7 +3554,7 @@ BEGIN_DATADESC(CBasePropDoor)
 	DEFINE_FIELD( m_hBlocker, FIELD_EHANDLE ),
 	DEFINE_FIELD( m_bFirstBlocked, FIELD_BOOLEAN ),
 	//DEFINE_FIELD(m_hDoorList, FIELD_CLASSPTR),	// Reconstructed
-	
+
 	DEFINE_INPUTFUNC(FIELD_VOID, "Open", InputOpen),
 	DEFINE_INPUTFUNC(FIELD_STRING, "OpenAwayFrom", InputOpenAwayFrom),
 	DEFINE_INPUTFUNC(FIELD_VOID, "Close", InputClose),
@@ -3588,7 +3588,7 @@ CBasePropDoor::CBasePropDoor( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePropDoor::Spawn()
 {
@@ -3605,12 +3605,12 @@ void CBasePropDoor::Spawn()
 	}
 
 	SetMoveType(MOVETYPE_PUSH);
-	
+
 	if (m_flSpeed == 0)
 	{
 		m_flSpeed = 100;
 	}
-	
+
 	RemoveFlag(FL_STATICPROP);
 
 	SetSolid(SOLID_VPHYSICS);
@@ -3646,7 +3646,7 @@ int	CBasePropDoor::ObjectCaps()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePropDoor::Precache(void)
 {
@@ -3657,7 +3657,7 @@ void CBasePropDoor::Precache(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePropDoor::RegisterPrivateActivities(void)
 {
@@ -3672,12 +3672,12 @@ void CBasePropDoor::RegisterPrivateActivities(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePropDoor::Activate( void )
 {
 	BaseClass::Activate();
-	
+
 	UpdateAreaPortals( !IsDoorClosed() );
 
 	// If we have a name, we may be linked
@@ -3717,7 +3717,7 @@ void CBasePropDoor::Activate( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePropDoor::HandleAnimEvent(animevent_t *pEvent)
 {
@@ -3735,7 +3735,7 @@ void CBasePropDoor::HandleAnimEvent(animevent_t *pEvent)
 	if ( ( str1 ) == NULL_STRING ) { ( str1 ) = ( str2 ); }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePropDoor::CalcDoorSounds()
 {
@@ -3786,7 +3786,7 @@ void CBasePropDoor::CalcDoorSounds()
 
 			// If any sounds were missing, try the "defaults" block.
 			if ( ( strSoundOpen == NULL_STRING ) || ( strSoundClose == NULL_STRING ) || ( strSoundMoving == NULL_STRING ) ||
-				 ( strSoundLocked == NULL_STRING ) || ( strSoundUnlocked == NULL_STRING ) )
+				( strSoundLocked == NULL_STRING ) || ( strSoundUnlocked == NULL_STRING ) )
 			{
 				KeyValues *pkvDefaults = pkvDoorSounds->FindKey( "defaults" );
 				if ( pkvDefaults )
@@ -3833,15 +3833,15 @@ void CBasePropDoor::CalcDoorSounds()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : isOpen - 
+// Purpose:
+// Input  : isOpen -
 //-----------------------------------------------------------------------------
 void CBasePropDoor::UpdateAreaPortals(bool isOpen)
 {
 	string_t name = GetEntityName();
 	if (!name)
 		return;
-	
+
 	CBaseEntity *pPortal = NULL;
 	while ((pPortal = gEntList.FindEntityByClassname(pPortal, "func_areaportal")) != NULL)
 	{
@@ -3854,12 +3854,12 @@ void CBasePropDoor::UpdateAreaPortals(bool isOpen)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : state - 
+// Purpose:
+// Input  : state -
 //-----------------------------------------------------------------------------
 void CBasePropDoor::SetDoorBlocker( CBaseEntity *pBlocker )
-{ 
-	m_hBlocker = pBlocker; 
+{
+	m_hBlocker = pBlocker;
 
 	if ( m_hBlocker == NULL )
 	{
@@ -3868,10 +3868,10 @@ void CBasePropDoor::SetDoorBlocker( CBaseEntity *pBlocker )
 }
 //-----------------------------------------------------------------------------
 // Purpose: Called when the player uses the door.
-// Input  : pActivator - 
-//			pCaller - 
-//			useType - 
-//			value - 
+// Input  : pActivator -
+//			pCaller -
+//			useType -
+//			value -
 //-----------------------------------------------------------------------------
 void CBasePropDoor::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
 {
@@ -3888,11 +3888,11 @@ void CBasePropDoor::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pActivator - 
-//			*pCaller - 
-//			useType - 
-//			value - 
+// Purpose:
+// Input  : *pActivator -
+//			*pCaller -
+//			useType -
+//			value -
 //-----------------------------------------------------------------------------
 void CBasePropDoor::OnUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
@@ -3948,7 +3948,7 @@ void CBasePropDoor::OnUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 void CBasePropDoor::InputClose(inputdata_t &inputdata)
 {
 	if (!IsDoorClosed())
-	{	
+	{
 		m_OnClose.FireOutput(inputdata.pActivator, this);
 		DoorClose();
 	}
@@ -3984,21 +3984,21 @@ void CBasePropDoor::InputOpenAwayFrom(inputdata_t &inputdata)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// 
-// FIXME: This function should be combined with DoorOpen, but doing that
-//		  could break existing content. Fix after shipping!	
+// Purpose:
 //
-// Input  : *pOpenAwayFrom - 
+// FIXME: This function should be combined with DoorOpen, but doing that
+//		  could break existing content. Fix after shipping!
+//
+// Input  : *pOpenAwayFrom -
 //-----------------------------------------------------------------------------
 void CBasePropDoor::OpenIfUnlocked(CBaseEntity *pActivator, CBaseEntity *pOpenAwayFrom)
 {
 	// I'm locked, can't open
 	if (m_bLocked)
-		return; 
+		return;
 
 	if (!IsDoorOpen() && !IsDoorOpening())
-	{	
+	{
 		// Play door unlock sounds.
 		PlayLockSounds(this, &m_ls, false, false);
 		m_OnOpen.FireOutput(pActivator, this);
@@ -4013,10 +4013,10 @@ void CBasePropDoor::OpenIfUnlocked(CBaseEntity *pActivator, CBaseEntity *pOpenAw
 void CBasePropDoor::InputToggle(inputdata_t &inputdata)
 {
 	if (IsDoorClosed())
-	{	
+	{
 		// I'm locked, can't open
 		if (m_bLocked)
-			return; 
+			return;
 
 		DoorOpen(NULL);
 	}
@@ -4103,7 +4103,7 @@ void CBasePropDoor::DoorOpen(CBaseEntity *pOpenAwayFrom)
 	}
 
 	SetDoorState( DOOR_STATE_OPENING );
-	
+
 	SetMoveDone(&CBasePropDoor::DoorOpenMoveDone);
 
 	// Virtual function that starts the door moving for whatever type of door this is.
@@ -4148,7 +4148,7 @@ void CBasePropDoor::DoorOpenMoveDone(void)
 
 	ASSERT(IsDoorOpening());
 	SetDoorState( DOOR_STATE_OPEN );
-	
+
 	if (WillAutoReturn())
 	{
 		// In flWait seconds, DoorClose will fire, unless wait is -1, then door stays open
@@ -4223,7 +4223,7 @@ void CBasePropDoor::DoorClose(void)
 			CSoundEnt::InsertSound( SOUND_PLAYER, GetAbsOrigin(), 512, 0.5, this );//<<TODO>>//magic number
 		}
 	}
-	
+
 	ASSERT(IsDoorOpen() || IsDoorOpening());
 	SetDoorState( DOOR_STATE_CLOSING );
 
@@ -4281,8 +4281,8 @@ void CBasePropDoor::DoorCloseMoveDone(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOther - 
+// Purpose:
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void CBasePropDoor::MasterStartBlocked( CBaseEntity *pOther )
 {
@@ -4328,8 +4328,8 @@ void CBasePropDoor::StartBlocked( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOther - 
+// Purpose:
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void CBasePropDoor::OnStartBlocked( CBaseEntity *pOther )
 {
@@ -4366,7 +4366,7 @@ void CBasePropDoor::OnStartBlocked( CBaseEntity *pOther )
 		}
 
 		CAI_BaseNPC *pNPC = dynamic_cast<CAI_BaseNPC *>(m_hActivator.Get());
-		
+
 		if ( pNPC != NULL )
 		{
 			// Notify the NPC that tried to open us.
@@ -4391,7 +4391,7 @@ void CBasePropDoor::Blocked(CBaseEntity *pOther)
 	//}
 
 	if ( m_bForceClosed && ( pOther->GetMoveType() == MOVETYPE_VPHYSICS ) &&
-		 ( pOther->m_takedamage == DAMAGE_NO || pOther->m_takedamage == DAMAGE_EVENTS_ONLY ) )
+		( pOther->m_takedamage == DAMAGE_NO || pOther->m_takedamage == DAMAGE_EVENTS_ONLY ) )
 	{
 		EntityPhysics_CreateSolver( this, pOther, true, 4.0f );
 	}
@@ -4523,7 +4523,7 @@ void CBasePropDoor::EndBlocked( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePropDoor::OnEndBlocked( void )
 {
@@ -4535,14 +4535,14 @@ void CBasePropDoor::OnEndBlocked( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pNPC - 
+// Purpose:
+// Input  : *pNPC -
 //-----------------------------------------------------------------------------
 bool CBasePropDoor::NPCOpenDoor( CAI_BaseNPC *pNPC )
 {
 	// dvs: TODO: use activator filter here
 	// dvs: TODO: outboard entity containing rules for whether door is operable?
-	
+
 	if ( IsDoorClosed() )
 	{
 		// Use the door
@@ -4586,12 +4586,12 @@ class CTraceFilterDoor : public CTraceFilterEntitiesOnly
 public:
 	// It does have a base, but we'll never network anything below here..
 	DECLARE_CLASS_NOBASE( CTraceFilterDoor );
-	
+
 	CTraceFilterDoor( const IHandleEntity *pDoor, const IHandleEntity *passentity, int collisionGroup )
 		: m_pDoor(pDoor), m_pPassEnt(passentity), m_collisionGroup(collisionGroup)
 	{
 	}
-	
+
 	virtual bool ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask )
 	{
 		if ( !StandardFilterRules( pHandleEntity, contentsMask ) )
@@ -4605,12 +4605,12 @@ public:
 
 		// Don't test if the game code tells us we should ignore this collision...
 		CBaseEntity *pEntity = EntityFromEntityHandle( pHandleEntity );
-		
+
 		if ( pEntity )
 		{
 			if ( !pEntity->ShouldCollide( m_collisionGroup, contentsMask ) )
 				return false;
-			
+
 			if ( !g_pGameRules->ShouldCollide( m_collisionGroup, pEntity->GetCollisionGroup() ) )
 				return false;
 
@@ -4619,7 +4619,7 @@ public:
 			{
 				IPhysicsObject *pPhysics = pEntity->VPhysicsGetObject();
 				Assert(pPhysics);
-				
+
 				// Must either be squashable or very light
 				if ( pPhysics->IsMoveable() && pPhysics->GetMass() < 32 )
 					return false;
@@ -4636,9 +4636,9 @@ private:
 	int m_collisionGroup;
 };
 
-inline void TraceHull_Door( const CBasePropDoor *pDoor, const Vector &vecAbsStart, const Vector &vecAbsEnd, const Vector &hullMin, 
-					 const Vector &hullMax,	unsigned int mask, const CBaseEntity *ignore, 
-					 int collisionGroup, trace_t *ptr )
+inline void TraceHull_Door( const CBasePropDoor *pDoor, const Vector &vecAbsStart, const Vector &vecAbsEnd, const Vector &hullMin,
+					const Vector &hullMax,	unsigned int mask, const CBaseEntity *ignore,
+					int collisionGroup, trace_t *ptr )
 {
 	Ray_t ray;
 	ray.Init( vecAbsStart, vecAbsEnd, hullMin, hullMax );
@@ -4720,7 +4720,7 @@ private:
 	void	CalculateDoorVolume( QAngle closedAngles, QAngle openAngles, Vector *destMins, Vector *destMaxs );
 
 	bool	CheckDoorClear( doorCheck_e state );
-	
+
 	doorCheck_e	GetOpenState( void );
 
 	void	InputSetRotationDistance ( inputdata_t &inputdata );			// Set the degree difference between open and closed
@@ -4783,13 +4783,13 @@ CPropDoorRotating::~CPropDoorRotating( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &mins1 - 
-//			&maxs1 - 
-//			&mins2 - 
-//			&maxs2 - 
-//			*destMins - 
-//			*destMaxs - 
+// Purpose:
+// Input  : &mins1 -
+//			&maxs1 -
+//			&mins2 -
+//			&maxs2 -
+//			*destMins -
+//			*destMaxs -
 //-----------------------------------------------------------------------------
 void UTIL_ComputeAABBForBounds( const Vector &mins1, const Vector &maxs1, const Vector &mins2, const Vector &maxs2, Vector *destMins, Vector *destMaxs )
 {
@@ -4805,7 +4805,7 @@ void UTIL_ComputeAABBForBounds( const Vector &mins1, const Vector &maxs1, const 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropDoorRotating::Spawn()
 {
@@ -4840,7 +4840,7 @@ void CPropDoorRotating::Spawn()
 void CPropDoorRotating::CalcOpenAngles()
 {
 	// HACK: convert the axis of rotation to dPitch dYaw dRoll
-	Vector vecMoveDir(m_vecAxis.y, m_vecAxis.z, m_vecAxis.x); 
+	Vector vecMoveDir(m_vecAxis.y, m_vecAxis.z, m_vecAxis.x);
 
 	if (m_flDistance == 0)
 	{
@@ -4901,11 +4901,11 @@ bool CPropDoorRotating::IsHingeOnLeft()
 	float flDot = DotProduct( vecPointCheck, vecRight );
 
 	return ( flDot > 0 );
-}	
+}
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 doorCheck_e CPropDoorRotating::GetOpenState( void )
@@ -4914,7 +4914,7 @@ doorCheck_e CPropDoorRotating::GetOpenState( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropDoorRotating::OnDoorOpened( void )
 {
@@ -4931,7 +4931,7 @@ void CPropDoorRotating::OnDoorOpened( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropDoorRotating::OnDoorClosed( void )
 {
@@ -4939,7 +4939,7 @@ void CPropDoorRotating::OnDoorClosed( void )
 	{
 		// Destroy the blocker that was preventing NPCs from getting in our way.
 		UTIL_Remove( m_hDoorBlocker );
-		
+
 		if ( g_debug_doors.GetBool() )
 		{
 			NDebugOverlay::Box( GetAbsOrigin(), m_hDoorBlocker->CollisionProp()->OBBMins(), m_hDoorBlocker->CollisionProp()->OBBMaxs(), 0, 255, 0, true, 1.0f );
@@ -4957,7 +4957,7 @@ bool CPropDoorRotating::DoorCanClose( bool bAutoClose )
 {
 	if ( GetMaster() != NULL )
 		return GetMaster()->DoorCanClose( bAutoClose );
-	
+
 	// Check all slaves
 	if ( HasSlaves() )
 	{
@@ -4977,18 +4977,18 @@ bool CPropDoorRotating::DoorCanClose( bool bAutoClose )
 			}
 		}
 	}
-	
+
 	// See if our path of movement is clear to allow us to shut
 	return CheckDoorClear( bAutoClose ? DOOR_CHECK_FULL : GetOpenState() );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : closedAngles - 
-//			openAngles - 
-//			*destMins - 
-//			*destMaxs - 
+// Purpose:
+// Input  : closedAngles -
+//			openAngles -
+//			*destMins -
+//			*destMaxs -
 //-----------------------------------------------------------------------------
 void CPropDoorRotating::CalculateDoorVolume( QAngle closedAngles, QAngle openAngles, Vector *destMins, Vector *destMaxs )
 {
@@ -4999,7 +4999,7 @@ void CPropDoorRotating::CalculateDoorVolume( QAngle closedAngles, QAngle openAng
 	// Find our AABB at the closed state
 	Vector	closedMins, closedMaxs;
 	CollisionProp()->WorldSpaceAABB( &closedMins, &closedMaxs );
-	
+
 	SetLocalAngles( openAngles );
 
 	// Find our AABB at the open state
@@ -5011,14 +5011,14 @@ void CPropDoorRotating::CalculateDoorVolume( QAngle closedAngles, QAngle openAng
 
 	// Find the minimum extents
 	UTIL_ComputeAABBForBounds( closedMins, closedMaxs, openMins, openMaxs, destMins, destMaxs );
-	
+
 	// Move this back into local space
 	*destMins -= GetAbsOrigin();
 	*destMaxs -= GetAbsOrigin();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropDoorRotating::OnRestore( void )
 {
@@ -5030,9 +5030,9 @@ void CPropDoorRotating::OnRestore( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : forward - 
-//			mask - 
+// Purpose:
+// Input  : forward -
+//			mask -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPropDoorRotating::CheckDoorClear( doorCheck_e state )
@@ -5142,13 +5142,13 @@ void CPropDoorRotating::MoveDone()
 //-----------------------------------------------------------------------------
 // Purpose: Calculate m_vecVelocity and m_flNextThink to reach vecDest from
 //			GetLocalOrigin() traveling at flSpeed. Just like LinearMove, but rotational.
-// Input  : vecDestAngle - 
-//			flSpeed - 
+// Input  : vecDestAngle -
+//			flSpeed -
 //-----------------------------------------------------------------------------
 void CPropDoorRotating::AngularMove(const QAngle &vecDestAngle, float flSpeed)
 {
 	ASSERTSZ(flSpeed != 0, "AngularMove:  no speed is defined!");
-	
+
 	m_angGoal = vecDestAngle;
 
 	// Already there?
@@ -5157,10 +5157,10 @@ void CPropDoorRotating::AngularMove(const QAngle &vecDestAngle, float flSpeed)
 		MoveDone();
 		return;
 	}
-	
+
 	// Set destdelta to the vector needed to move.
 	QAngle vecDestDelta = vecDestAngle - GetLocalAngles();
-	
+
 	// Divide by speed to get time to reach dest
 	float flTravelTime = vecDestDelta.Length() / flSpeed;
 
@@ -5173,7 +5173,7 @@ void CPropDoorRotating::AngularMove(const QAngle &vecDestAngle, float flSpeed)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropDoorRotating::BeginOpening(CBaseEntity *pOpenAwayFrom)
 {
@@ -5232,7 +5232,7 @@ void CPropDoorRotating::BeginOpening(CBaseEntity *pOpenAwayFrom)
 	else
 	{
 		mins = m_vecBackBoundsMin;
-		maxs = m_vecBackBoundsMax;		
+		maxs = m_vecBackBoundsMax;
 	}
 
 	if ( m_hDoorBlocker != NULL )
@@ -5242,7 +5242,7 @@ void CPropDoorRotating::BeginOpening(CBaseEntity *pOpenAwayFrom)
 
 	// Create a blocking entity to keep random entities out of our movement path
 	m_hDoorBlocker = CEntityBlocker::Create( GetAbsOrigin(), mins, maxs, pOpenAwayFrom, false );
-	
+
 	Vector	volumeCenter = ((mins+maxs) * 0.5f) + GetAbsOrigin();
 
 	// Ignoring the Z
@@ -5284,7 +5284,7 @@ void CPropDoorRotating::BeginOpening(CBaseEntity *pOpenAwayFrom)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropDoorRotating::BeginClosing( void )
 {
@@ -5295,7 +5295,7 @@ void CPropDoorRotating::BeginClosing( void )
 		{
 			m_hDoorBlocker->RemoveSolidFlags( FSOLID_NOT_SOLID );
 		}
-		
+
 		if ( g_debug_doors.GetBool() )
 		{
 			NDebugOverlay::Box( GetAbsOrigin(), m_hDoorBlocker->CollisionProp()->OBBMins(), m_hDoorBlocker->CollisionProp()->OBBMaxs(), 255, 0, 0, true, 1.0f );
@@ -5306,7 +5306,7 @@ void CPropDoorRotating::BeginClosing( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropDoorRotating::DoorStop( void )
 {
@@ -5324,9 +5324,9 @@ void CPropDoorRotating::DoorResume( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : vecMoveDir - 
-//			opendata - 
+// Purpose:
+// Input  : vecMoveDir -
+//			opendata -
 //-----------------------------------------------------------------------------
 void CPropDoorRotating::GetNPCOpenData(CAI_BaseNPC *pNPC, opendata_t &opendata)
 {
@@ -5368,7 +5368,7 @@ float CPropDoorRotating::GetOpenInterval()
 {
 	// set destdelta to the vector needed to move
 	QAngle vecDestDelta = m_angRotationOpenForward - GetLocalAngles();
-	
+
 	// divide by speed to get time to reach dest
 	return vecDestDelta.Length() / m_flSpeed;
 }
@@ -5378,11 +5378,11 @@ float CPropDoorRotating::GetOpenInterval()
 // Purpose: Draw any debug text overlays
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CPropDoorRotating::DrawDebugTextOverlays(void) 
+int CPropDoorRotating::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 		Q_snprintf(tempstr, sizeof(tempstr),"Avelocity: %.2f %.2f %.2f", GetLocalAngularVelocity().x,  GetLocalAngularVelocity().y,  GetLocalAngularVelocity().z);
@@ -5422,7 +5422,7 @@ int CPropDoorRotating::DrawDebugTextOverlays(void)
 void CPropDoorRotating::InputSetRotationDistance( inputdata_t &inputdata )
 {
 	m_flDistance = inputdata.value.Float();
-	
+
 	// Recalculate our open volume
 	CalcOpenAngles();
 	CalculateDoorVolume( GetLocalAngles(), m_angRotationOpenForward, &m_vecForwardBoundsMin, &m_vecForwardBoundsMax );
@@ -5448,7 +5448,7 @@ public:
 			SetMoveType( MOVETYPE_VPHYSICS );
 			pPhysicsObject->Wake();
 		}
-	
+
 		return true;
 	}
 };
@@ -5486,7 +5486,7 @@ public:
 		return VPhysicsGetObject()->IsAsleep();
 	}
 
-	CNetworkVar( int, m_iPhysicsMode );	// One of the PHYSICS_MULTIPLAYER_ defines.	
+	CNetworkVar( int, m_iPhysicsMode );	// One of the PHYSICS_MULTIPLAYER_ defines.
 	CNetworkVar( float, m_fMass );
 
 
@@ -5517,7 +5517,7 @@ class CPhysicsPropMultiplayer : public CPhysicsProp, public IMultiplayerPhysics
 {
 	DECLARE_CLASS( CPhysicsPropMultiplayer, CPhysicsProp );
 
-	CNetworkVar( int, m_iPhysicsMode );	// One of the PHYSICS_MULTIPLAYER_ defines.	
+	CNetworkVar( int, m_iPhysicsMode );	// One of the PHYSICS_MULTIPLAYER_ defines.
 	CNetworkVar( float, m_fMass );
 
 	DECLARE_SERVERCLASS();
@@ -5573,13 +5573,13 @@ class CPhysicsPropMultiplayer : public CPhysicsProp, public IMultiplayerPhysics
 	{
 		BaseClass::Spawn();
 
-		// if no physicsmode was defined by .QC or propdata.txt, 
+		// if no physicsmode was defined by .QC or propdata.txt,
 		// use auto detect based on size & mass
 		if ( m_iPhysicsMode == PHYSICS_MULTIPLAYER_AUTODETECT )
 		{
 			if ( VPhysicsGetObject() )
 			{
-				m_iPhysicsMode = GetAutoMultiplayerPhysicsMode( 
+				m_iPhysicsMode = GetAutoMultiplayerPhysicsMode(
 					CollisionProp()->OBBSize(), VPhysicsGetObject()->GetMass() );
 			}
 			else
@@ -5608,7 +5608,7 @@ class CPhysicsPropMultiplayer : public CPhysicsProp, public IMultiplayerPhysics
 				UTIL_Remove( this );
 				return;
 			}
-			
+
 		}
 
 		if ( GetCollisionGroup() == COLLISION_GROUP_NONE )
@@ -5801,7 +5801,7 @@ void CC_Prop_Dynamic_Create( const CCommand &args )
 
 	trace_t tr;
 	UTIL_TraceLine( pPlayer->EyePosition(),
-		pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH, MASK_NPCSOLID, 
+		pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH, MASK_NPCSOLID,
 		pPlayer, COLLISION_GROUP_NONE, &tr );
 
 	// No hit? We're done.
@@ -5915,16 +5915,16 @@ CPhysicsProp* CreatePhysicsProp( const char *pModelName, const Vector &vTraceSta
 	trace_t tr;
 	UTIL_TraceHull( vTraceStart, vTraceEnd,
 		vecSweepMins, vecSweepMaxs, MASK_NPCSOLID, pTraceIgnore, COLLISION_GROUP_NONE, &tr );
-		    
+
 	// No hit? We're done.
 	if ( (tr.fraction == 1.0 && (vTraceEnd-vTraceStart).Length() > 0.01) || tr.allsolid )
 		return NULL;
-		    
+
 	VectorMA( tr.endpos, 1.0f, tr.plane.normal, tr.endpos );
 
 	bool bAllowPrecache = CBaseEntity::IsPrecacheAllowed();
 	CBaseEntity::SetAllowPrecache( true );
-				  
+
 	// Try to create entity
 	CPhysicsProp *pProp = dynamic_cast< CPhysicsProp * >( CreateEntityByName( pClassName ) );
 	if ( pProp )
@@ -6043,7 +6043,7 @@ bool UTIL_CreateScaledPhysObject( CBaseAnimating *pInstance, float flScale )
 		}
 
 		PhysSolidOverride( tmpSolid, pPhysInstance->GetPhysOverrideScript() );
-	}			
+	}
 
 	// Scale our mass up as well
 	tmpSolid.params.mass *= flScale;
@@ -6118,7 +6118,7 @@ void CC_Ent_Rotate( const CCommand &args )
 
 	QAngle angles = pEntity->GetLocalAngles();
 	float flAngle = (args.ArgC() == 2) ? atof( args[1] ) : 7.5f;
-	   
+
 	VMatrix entToWorld, rot, newEntToWorld;
 	MatrixBuildRotateZ( rot, flAngle );
 	MatrixFromAngles( angles, entToWorld );

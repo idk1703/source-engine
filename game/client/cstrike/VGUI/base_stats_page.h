@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,15 +28,15 @@ struct RoundStatsDirectAverage_t;
 
 class CBaseStatsPage : public vgui::PropertyPage, public CGameEventListener
 {
-    DECLARE_CLASS_SIMPLE ( CBaseStatsPage, vgui::PropertyPage );
+	DECLARE_CLASS_SIMPLE ( CBaseStatsPage, vgui::PropertyPage );
 
 public:
-    CBaseStatsPage( vgui::Panel *parent, const char *name );
-	
+	CBaseStatsPage( vgui::Panel *parent, const char *name );
+
 	~CBaseStatsPage();
-	
-    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );    
-    virtual void MoveToFront();
+
+	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void MoveToFront();
 	virtual void OnSizeChanged(int wide, int tall);
 	virtual void OnThink();
 
@@ -51,8 +51,8 @@ protected:
 	CBaseStatGroupPanel* AddGroup( const wchar_t* name, const char* title_tag, const wchar_t* def = NULL );
 	const wchar_t* TranslateWeaponKillIDToAlias( int statKillID );
 	const wchar_t* LocalizeTagOrUseDefault( const char* tag, const wchar_t* def = NULL );
-	
-	virtual void RepopulateStats() = 0;	
+
+	virtual void RepopulateStats() = 0;
 
 	vgui::SectionedListPanel	*m_statsList;
 	vgui::HFont					m_listItemFont;
@@ -92,7 +92,7 @@ public:
 	~CBaseStatGroupPanel();
 
 	void SetGroupInfo ( const wchar_t* name, const wchar_t* title);
-	
+
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
 	void Update( vgui::IScheme* pScheme );
@@ -114,7 +114,7 @@ private:
 	vgui::PanelListPanel    *m_pParent;
 	CBaseStatsPage       *m_pOwner;
 
-	vgui::Label             *m_pBaseStatGroupLabel;	
+	vgui::Label             *m_pBaseStatGroupLabel;
 
 	CBaseStatGroupButton            *m_pGroupButton;
 

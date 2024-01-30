@@ -33,7 +33,7 @@ class INextBot;
 												\
 	public: virtual IIntention *GetIntentionInterface( void ) const 	{ return m_intention; }	\
 	private: Actor##Intention *m_intention;		\
-	public:										
+	public:
 
 
 //
@@ -63,7 +63,7 @@ class INextBot;
 /**
  * The interface for intentional thinking.
  * The assumption is that this is a container for one or more concurrent Behaviors.
- * The "primary" Behavior is the FirstContainedResponder, and so on.  
+ * The "primary" Behavior is the FirstContainedResponder, and so on.
  * IContextualQuery requests are prioritized in contained responder order, such that the first responder
  * that returns a definitive answer is accepted.  WITHIN a given responder (ie: a Behavior), the deepest child
  * Behavior in the active stack is asked first, then its parent, and so on, allowing the most specific active
@@ -86,9 +86,9 @@ public:
 	virtual QueryResultType			IsHindrance( const INextBot *me, CBaseEntity *blocker ) const;		// return true if we should wait for 'blocker' that is across our path somewhere up ahead.
 	virtual Vector					SelectTargetPoint( const INextBot *me, const CBaseCombatCharacter *subject ) const;		// given a subject, return the world space position we should aim at
 	virtual QueryResultType			IsPositionAllowed( const INextBot *me, const Vector &pos ) const;	// is the a place we can be?
-	virtual const CKnownEntity *	SelectMoreDangerousThreat( const INextBot *me, 
+	virtual const CKnownEntity *	SelectMoreDangerousThreat( const INextBot *me,
 															   const CBaseCombatCharacter *subject,		// the subject of the danger
-															   const CKnownEntity *threat1, 
+															   const CKnownEntity *threat1,
 															   const CKnownEntity *threat2 ) const;	// return the more dangerous of the two threats, or NULL if we have no opinion
 	// NOTE: As further queries are added, update the Behavior class to propagate them
 };
@@ -108,7 +108,7 @@ inline QueryResultType IIntention::ShouldPickUp( const INextBot *me, CBaseEntity
 				return result;
 			}
 		}
-	}	
+	}
 	return ANSWER_UNDEFINED;
 }
 
@@ -127,7 +127,7 @@ inline QueryResultType IIntention::ShouldHurry( const INextBot *me ) const
 				return result;
 			}
 		}
-	}	
+	}
 	return ANSWER_UNDEFINED;
 }
 
@@ -146,7 +146,7 @@ inline QueryResultType IIntention::ShouldRetreat( const INextBot *me ) const
 				return result;
 			}
 		}
-	}	
+	}
 	return ANSWER_UNDEFINED;
 }
 
@@ -165,7 +165,7 @@ inline QueryResultType IIntention::ShouldAttack( const INextBot *me, const CKnow
 				return result;
 			}
 		}
-	}	
+	}
 	return ANSWER_UNDEFINED;
 }
 
@@ -184,7 +184,7 @@ inline QueryResultType IIntention::IsHindrance( const INextBot *me, CBaseEntity 
 				return result;
 			}
 		}
-	}	
+	}
 	return ANSWER_UNDEFINED;
 }
 
@@ -203,7 +203,7 @@ inline QueryResultType IIntention::IsPositionAllowed( const INextBot *me, const 
 				return result;
 			}
 		}
-	}	
+	}
 	return ANSWER_UNDEFINED;
 }
 

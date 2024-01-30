@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -36,7 +36,7 @@ bool LoadFileIntoBuffer( const char *pFileName, CUtlBuffer &buf )
 	{
 		goto error;
 	}
-	
+
 	int nBytesRead = fread( buf.Base(), 1, statBuf.st_size, fp );
 	fclose( fp );
 
@@ -64,7 +64,7 @@ char const * ResourceToString( uint32 uiResType )
 		return "CRC";
 	case VTF_RSRC_TEXTURE_LOD_SETTINGS:
 		return "VTF_RSRC_TEXTURE_LOD_SETTINGS";
-	
+
 	default:
 		sprintf( chBuffer, "0x%08X", uiResType );
 		return chBuffer;
@@ -162,9 +162,9 @@ int main( int argc, char **argv )
 		pTexture1->Height() != pTexture2->Height() ||
 		pTexture1->Depth() != pTexture2->Depth() )
 	{
-		printf( "%s dimensions differ: %dx%dx%d != %dx%dx%d\n", 
+		printf( "%s dimensions differ: %dx%dx%d != %dx%dx%d\n",
 			argv[1],
-			( int )pTexture1->Width(), ( int )pTexture1->Height(), ( int )pTexture1->Depth(), 
+			( int )pTexture1->Width(), ( int )pTexture1->Height(), ( int )pTexture1->Depth(),
 			( int )pTexture2->Width(), ( int )pTexture2->Height(), ( int )pTexture2->Depth() );
 		bMatch = false;
 	}
@@ -172,7 +172,7 @@ int main( int argc, char **argv )
 	if( pTexture1->LowResWidth() != pTexture2->LowResWidth() ||
 		pTexture1->LowResHeight() != pTexture2->LowResHeight() )
 	{
-		printf( "%s lowres dimensions differ: %dx%d != %dx%d\n", 
+		printf( "%s lowres dimensions differ: %dx%d != %dx%d\n",
 			argv[1],
 			( int )pTexture1->LowResWidth(), ( int )pTexture1->LowResHeight(),
 			( int )pTexture2->LowResWidth(), ( int )pTexture2->LowResHeight() );
@@ -181,7 +181,7 @@ int main( int argc, char **argv )
 
 	if( pTexture1->MipCount() != pTexture2->MipCount() )
 	{
-		printf( "%s differing mipcounts: %d != %d\n", 
+		printf( "%s differing mipcounts: %d != %d\n",
 			argv[1],
 			( int )pTexture1->MipCount(), ( int )pTexture2->MipCount() );
 		bMatch = false;
@@ -189,7 +189,7 @@ int main( int argc, char **argv )
 
 	if( pTexture1->FaceCount() != pTexture2->FaceCount() )
 	{
-		printf( "%s differing facecount: %d != %d\n", 
+		printf( "%s differing facecount: %d != %d\n",
 			argv[1],
 			( int )pTexture1->FaceCount(), ( int )pTexture2->FaceCount() );
 		bMatch = false;
@@ -197,15 +197,15 @@ int main( int argc, char **argv )
 
 	if( pTexture1->FrameCount() != pTexture2->FrameCount() )
 	{
-		printf( "%s differing framecount: %d != %d\n", 
+		printf( "%s differing framecount: %d != %d\n",
 			argv[1],
 			( int )pTexture1->FrameCount(), ( int )pTexture2->FrameCount() );
 		bMatch = false;
 	}
-	
+
 	if( pTexture1->Flags() != pTexture2->Flags() )
 	{
-		printf( "%s differing flags: \"", 
+		printf( "%s differing flags: \"",
 			argv[1] );
 		PrintFlags( pTexture1->Flags() );
 		printf( "\" != \"" );
@@ -213,28 +213,28 @@ int main( int argc, char **argv )
 		printf( "\"\n" );
 		bMatch = false;
 	}
-	
+
 	if( pTexture1->BumpScale() != pTexture2->BumpScale() )
 	{
-		printf( "%s differing bumpscale: %f != %f\n", 
+		printf( "%s differing bumpscale: %f != %f\n",
 			argv[1],
 			( float )pTexture1->BumpScale(), ( float )pTexture2->BumpScale() );
 		bMatch = false;
 	}
-	
+
 	if( pTexture1->Format() != pTexture2->Format() )
 	{
-		printf( "%s differing image format: %s != %s\n", 
+		printf( "%s differing image format: %s != %s\n",
 			argv[1],
 			ImageLoader::GetName( pTexture1->Format() ),
 			ImageLoader::GetName( pTexture2->Format() ) );
 		bMatch = false;
 	}
-	
+
 	if( pTexture1->LowResFormat() != pTexture2->LowResFormat() )
 	{
 		Assert(0);
-		printf( "%s differing lowres image format: %s != %s\n", 
+		printf( "%s differing lowres image format: %s != %s\n",
 			argv[1],
 			ImageLoader::GetName( pTexture1->LowResFormat() ),
 			ImageLoader::GetName( pTexture2->LowResFormat() ) );
@@ -245,7 +245,7 @@ int main( int argc, char **argv )
 	const Vector &vReflectivity2 = pTexture2->Reflectivity();
 	if( !VectorsAreEqual( vReflectivity1, vReflectivity2, 0.0001f ) )
 	{
-		printf( "%s differing reflectivity: [%f,%f,%f] != [%f,%f,%f]\n", 
+		printf( "%s differing reflectivity: [%f,%f,%f] != [%f,%f,%f]\n",
 			argv[1],
 			( float )pTexture1->Reflectivity()[0],
 			( float )pTexture1->Reflectivity()[1],
@@ -258,12 +258,12 @@ int main( int argc, char **argv )
 
 	if ( pTexture1->ComputeTotalSize() != pTexture2->ComputeTotalSize() )
 	{
-		printf( "%s differing image data size: %d != %d\n", 
+		printf( "%s differing image data size: %d != %d\n",
 			argv[1],
 			( int )pTexture1->ComputeTotalSize(), ( int )pTexture2->ComputeTotalSize() );
 		bMatch = false;
 	}
-	
+
 	if ( bMatch )
 	{
 		unsigned char const *pData1 = pTexture1->ImageData();
@@ -313,7 +313,7 @@ int main( int argc, char **argv )
 								if ( memcmp( pData1, pData2, nMipSize ) )
 								{
 									bool bBreak = false;
-									
+
 									for ( int y = 0; y < nMipHeight; ++y )
 									{
 										for ( int x = 0; x < nMipWidth; ++x )
@@ -323,7 +323,7 @@ int main( int argc, char **argv )
 
 											if ( memcmp( pData1a, pData2a, ImageLoader::SizeInBytes( pTexture1->Format() ) ) )
 											{
-												printf( "Frame %d Mip level %d Face %d Z-slice %d texel (%d,%d) different!\n", 
+												printf( "Frame %d Mip level %d Face %d Z-slice %d texel (%d,%d) different!\n",
 													iFrame, iMipLevel, iCubeFace, z, x, y );
 												bBreak = true;
 												break;
@@ -360,7 +360,7 @@ int main( int argc, char **argv )
 		{
 			if ( memcmp( pTexture1->LowResImageData(), pTexture2->LowResImageData(), iSize1 ) != 0 )
 			{
-				printf( "%s differing low res image data\n", 
+				printf( "%s differing low res image data\n",
 					argv[1] );
 				bMatch = false;
 			}
@@ -400,7 +400,7 @@ int main( int argc, char **argv )
 
 				if ( !pvResData1 != !pvResData2 )
 				{
-					printf( "%s different resource %s %s\n", 
+					printf( "%s different resource %s %s\n",
 						argv[1],
 						ResourceToString( uiResType ),
 						pvResData1 ? "present" : "missing" );
@@ -408,7 +408,7 @@ int main( int argc, char **argv )
 				}
 				else if ( numBytes1 != numBytes2 )
 				{
-					printf( "%s different resource %s size %lld != %lld\n", 
+					printf( "%s different resource %s size %lld != %lld\n",
 						argv[1],
 						ResourceToString( uiResType ),
 						(long long)numBytes1, (long long)numBytes2 );
@@ -416,7 +416,7 @@ int main( int argc, char **argv )
 				}
 				else if ( memcmp( pvResData1, pvResData2, numBytes1 ) != 0 )
 				{
-					printf( "%s different resource %s data\n", 
+					printf( "%s different resource %s data\n",
 						argv[1],
 						ResourceToString( uiResType ) );
 					bMatch = false;

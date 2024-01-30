@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -44,7 +44,7 @@ bool CMdlStripInfo::Serialize( CUtlBuffer &bufStorage ) const
 	default:
 	case MODE_UNINITIALIZED:
 		return true;
-	
+
 	case MODE_NO_CHANGE:
 		bufStorage.PutInt( m_lChecksumOld );
 		bufStorage.PutInt( m_lChecksumNew );
@@ -88,7 +88,7 @@ bool CMdlStripInfo::UnSerialize( CUtlBuffer &bufData )
 	{
 	default:
 		return false;
-	
+
 	case MODE_UNINITIALIZED:
 		m_eMode = MODE_UNINITIALIZED;
 		m_lChecksumOld = 0;
@@ -225,7 +225,7 @@ bool CMdlStripInfo::StripHardwareVertsBuffer( CUtlBuffer &vhvBuffer )
 	CInsertionTracker vhvInsertPadding;
 	vhvInsertPadding.InsertBytes( BYTE_OFF_PTR( vhvHdr, vhvNewVertOffset ), vhvAlignedVertOffset - vhvNewVertOffset );
 	vhvInsertPadding.InsertBytes( BYTE_OFF_PTR( vhvHdr, vhvLength ), numAlignedNewLength - numBytesNewLength );
-	
+
 	vhvInsertPadding.Finalize();
 	DLog( "mdllib", 3, " Inserted %d alignment bytes.\n", vhvInsertPadding.GetNumBytesInserted() );
 
@@ -281,13 +281,13 @@ bool CMdlStripInfo::StripModelBuffer( CUtlBuffer &mdlBuffer )
 
 	ITERATE_CHILDREN( mstudiobodyparts_t, mdlBodyPart, mdlHdr, pBodypart, numbodyparts )
 		ITERATE_CHILDREN( mstudiomodel_t, mdlModel, mdlBodyPart, pModel, nummodels )
-			
+
 			DLog( "mdllib", 3, " Stripped %d vertexes (was: %d, now: %d).\n", mdlModel->numvertices - srcIndices.Count(), mdlModel->numvertices, srcIndices.Count() );
 
 			mdlModel->numvertices = srcIndices.Count();
 
 			ITERATE_CHILDREN( mstudiomesh_t, mdlMesh, mdlModel, pMesh, nummeshes )
-				
+
 				mdlMesh->numvertices = srcIndices.FindLess( mdlMesh->vertexoffset + mdlMesh->numvertices );
 				mdlMesh->vertexoffset = srcIndices.FindLess( mdlMesh->vertexoffset ) + 1;
 				mdlMesh->numvertices -= mdlMesh->vertexoffset - 1;
@@ -359,7 +359,7 @@ bool CMdlStripInfo::StripVertexDataBuffer( CUtlBuffer &vvdBuffer )
 
 	DECLARE_PTR( mstudiovertex_t, vvdVertexSrc, BYTE_OFF_PTR( vvdHdr, vvdHdr->vertexDataStart ) );
 	DECLARE_PTR( Vector4D, vvdTangentSrc, vvdHdr->tangentDataStart ? BYTE_OFF_PTR( vvdHdr, vvdHdr->tangentDataStart ) : NULL );
-	
+
 	// Apply the fixups first of all
 	if ( vvdHdr->numFixups )
 	{
@@ -382,7 +382,7 @@ bool CMdlStripInfo::StripVertexDataBuffer( CUtlBuffer &vvdBuffer )
 		vvdVertexSrc  ? memcpy( vvdVertexSrc, BYTE_OFF_PTR( memTempVVD.Get(), vvdHdr->vertexDataStart ), mdlNumVerticesOld * sizeof( *vvdVertexSrc ) ) : 0;
 		vvdTangentSrc ? memcpy( vvdTangentSrc, BYTE_OFF_PTR( memTempVVD.Get(), vvdHdr->tangentDataStart ), mdlNumVerticesOld * sizeof( *vvdTangentSrc ) ) : 0;
 	}
-	
+
 	vvdHdr->vertexDataStart -= ALIGN_VALUE( sizeof( vertexFileFixup_t ) * vvdHdr->numFixups, 16 );
 	vvdHdr->numFixups = 0;
 	DECLARE_PTR( mstudiovertex_t, vvdVertexNew, BYTE_OFF_PTR( vvdHdr, vvdHdr->vertexDataStart ) );
@@ -404,7 +404,7 @@ bool CMdlStripInfo::StripVertexDataBuffer( CUtlBuffer &vvdBuffer )
 
 		vvdLength += srcIndices.Count() * sizeof( Vector4D );
 	}
-	
+
 	vvdBuffer.SeekPut( CUtlBuffer::SEEK_CURRENT, vvdBuffer.TellGet() + vvdLength - vvdBuffer.TellPut() );
 
 	DLog( "mdllib", 3, " Stripped %d vvd bytes.\n", vvdLengthOld - vvdLength );
@@ -468,12 +468,12 @@ bool CMdlStripInfo::StripOptimizedModelBuffer( CUtlBuffer &vtxBuffer )
 
 	ITERATE_CHILDREN( OptimizedModel::BodyPartHeader_t, vtxBodyPart, vtxHdr, pBodyPart, numBodyParts )
 		ITERATE_CHILDREN( OptimizedModel::ModelHeader_t, vtxModel, vtxBodyPart, pModel, numModels )
-		
+
 			vtxRemove.RemoveElements( CHILD_AT( vtxModel, pLOD, 1 ), vtxModel->numLODs - 1 );
 			ITERATE_CHILDREN( OptimizedModel::ModelLODHeader_t, vtxLod, vtxModel, pLOD, numLODs )
 				if ( !vtxLod_idx )	// Process only lod1-N
 					continue;
-				
+
 				vtxRemove.RemoveElements( CHILD_AT( vtxLod, pMesh, 0 ), vtxLod->numMeshes );
 				ITERATE_CHILDREN( OptimizedModel::MeshHeader_t, vtxMesh, vtxLod, pMesh, numMeshes )
 					vtxRemove.RemoveElements( CHILD_AT( vtxMesh, pStripGroup, 0 ), vtxMesh->numStripGroups );
@@ -552,10 +552,10 @@ bool CMdlStripInfo::StripOptimizedModelBuffer( CUtlBuffer &vtxBuffer )
 			// Find the mesh where this index belongs
 			int iMesh = arrMdlOffsets.FindLessOrEqual( MdlRangeItem( 0, 0, vtxVertexElement - vtxVertexBuffer ) );
 			Assert( iMesh >= 0 && iMesh < arrMdlOffsets.Count() );
-			
+
 			MdlRangeItem &mri = arrMdlOffsets[ iMesh ];
 			Assert( ( vtxVertexElement - vtxVertexBuffer >= mri.m_offNew ) && ( vtxVertexElement - vtxVertexBuffer < mri.m_offNew + mri.m_numNew ) );
-			
+
 			Assert( m_vtxVerts.IsBitSet( vtxVertexElement->origMeshVertID + mri.m_offOld ) );
 			vtxVertexElement->origMeshVertID = srcIndices.Find( vtxVertexElement->origMeshVertID + mri.m_offOld ) - mri.m_offNew;
 			Assert( vtxVertexElement->origMeshVertID < mri.m_numNew );
@@ -608,7 +608,7 @@ bool CMdlStripInfo::StripOptimizedModelBuffer( CUtlBuffer &vtxBuffer )
 			ITERATE_CHILDREN( OptimizedModel::ModelLODHeader_t, vtxLod, vtxModel, pLOD, numLODs )
 				ITERATE_CHILDREN( OptimizedModel::MeshHeader_t, vtxMesh, vtxLod, pMesh, numMeshes )
 					ITERATE_CHILDREN( OptimizedModel::StripGroupHeader_t, vtxStripGroup, vtxMesh, pStripGroup, numStripGroups )
-						
+
 						ITERATE_CHILDREN( OptimizedModel::StripHeader_t, vtxStrip, vtxStripGroup, pStrip, numStrips )
 							vtxStrip->indexOffset =
 								vtxRemove.ComputeOffset( vtxStripGroup, vtxStripGroup->indexOffset + vtxStrip->indexOffset ) -
@@ -668,4 +668,3 @@ void CMdlStripInfo::Reset()
 	m_vtxVerts.Resize( 0 );
 	m_vtxIndices.RemoveAll();
 }
-

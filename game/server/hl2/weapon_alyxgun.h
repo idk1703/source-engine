@@ -23,7 +23,7 @@ public:
 	~CWeaponAlyxGun();
 
 	DECLARE_SERVERCLASS();
-	
+
 	void	Precache( void );
 
 	virtual int		GetMinBurst( void ) { return 4; }

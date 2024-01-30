@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -23,14 +23,14 @@ static bool ClipTracer( const Vector &start, const Vector &delta, Vector &clippe
 	// in camera space this is -start[2] since origin = 0 and vecForward = (0, 0, -1)
 	float dist1 = -start[2];
 	float dist2 = dist1 - delta[2];
-	
+
 	// Clipped, skip this tracer
 	if ( dist1 <= 0 && dist2 <= 0 )
 		return true;
 
 	clippedStart = start;
 	clippedDelta = delta;
-	
+
 	// Needs to be clipped
 	if ( dist1 <= 0 || dist2 <= 0 )
 	{
@@ -70,7 +70,7 @@ bool Tracer_ComputeVerts( const Vector &start, const Vector &delta, float width,
 	// Figure out direction in camera space of the normal
 	Vector normal;
 	CrossProduct( clippedDelta, clippedStart, normal );
-					  
+
 	// don't draw if they are parallel
 	float sqLength = DotProduct( normal, normal );
 	if (sqLength < 1e-3)
@@ -149,4 +149,4 @@ void Tracer_Draw( ParticleDraw* pDraw, Vector& start, Vector& delta, float width
 		return;
 
 	Tracer_Draw( pDraw->GetMeshBuilder(), start, delta, width, color, startV, endV );
-}	
+}

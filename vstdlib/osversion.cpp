@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -29,7 +29,7 @@ EOSType GetOSType()
 		OSVERSIONINFOEX osvi;
 		Q_memset( &osvi, 0x00, sizeof(osvi) );
 		osvi.dwOSVersionInfoSize = sizeof(osvi);
-		
+
 		if ( GetVersionEx( (OSVERSIONINFO *) &osvi ) )
 		{
 			switch ( osvi.dwPlatformId )
@@ -41,7 +41,7 @@ EOSType GetOSType()
 				}
 				else if ( osvi.dwMajorVersion == 5 )
 				{
-					switch(  osvi.dwMinorVersion ) 
+					switch(  osvi.dwMinorVersion )
 					{
 					case 0:
 						eOSVersion = k_eWin2000;
@@ -118,7 +118,7 @@ EOSType GetOSType()
 		err = Gestalt( gestaltSystemVersionBugFix, &PatchVer );
 		if ( err != noErr )
 			return k_eOSUnknown;
-		
+
 		switch ( MajorVer )
 		{
 			case 10:
@@ -129,11 +129,11 @@ EOSType GetOSType()
 						eOSVersion = k_eMacOS104;
 						break;
 					case 5:
-						eOSVersion = k_eMacOS105;						
+						eOSVersion = k_eMacOS105;
 						switch ( PatchVer )
 						{
 							case 8:
-								eOSVersion = k_eMacOS1058;								
+								eOSVersion = k_eMacOS1058;
 							default:
 								break;
 						}
@@ -147,14 +147,14 @@ EOSType GetOSType()
 								break;
 							case 3:
 							default:
-								// note the default here - 10.6.4 (5,6...) >= 10.6.3, so we want to 
+								// note the default here - 10.6.4 (5,6...) >= 10.6.3, so we want to
 								// identify as 10.6.3 for sysreqs purposes
 								eOSVersion = k_eMacOS1063;
 								break;
 						}
 						break;
 					case 7:
-						eOSVersion = k_eMacOS107;							
+						eOSVersion = k_eMacOS107;
 						break;
 					default:
 						break;
@@ -167,18 +167,18 @@ EOSType GetOSType()
 #elif defined(LINUX)
 	if ( eOSVersion == k_eOSUnknown )
 	{
-		
+
 		FILE *fpKernelVer = fopen( "/proc/version", "r" );
-		
+
 		if ( !fpKernelVer )
 			return k_eLinuxUnknown;
-		
+
 		char rgchVersionLine[1024];
 		char *pchRet = fgets( rgchVersionLine, sizeof(rgchVersionLine), fpKernelVer );
 		fclose( fpKernelVer );
-		
+
 		eOSVersion = k_eLinuxUnknown;
-		
+
 		// move past "Linux version "
 		const char *pchVersion = rgchVersionLine + Q_strlen( "Linux version " );
 		if ( pchRet && *pchVersion == '2' && *(pchVersion+1) == '.' )
@@ -198,12 +198,12 @@ EOSType GetOSType()
 
 //-----------------------------------------------------------------------------
 // Purpose: get platform-specific OS details (distro, on linux)
-// returns a pointer to the input buffer on success (for convenience), 
+// returns a pointer to the input buffer on success (for convenience),
 // NULL on failure.
 //-----------------------------------------------------------------------------
 const char *GetOSDetailString( char *pchOutBuf, int cchOutBuf )
 {
-#if defined WIN32 
+#if defined WIN32
 	(void)( pchOutBuf );
 	(void)( cchOutBuf );
 	// no interesting details
@@ -211,8 +211,8 @@ const char *GetOSDetailString( char *pchOutBuf, int cchOutBuf )
 #else
 #if defined LINUX
 	// we're about to go poking around to see if we can figure out distribution
-	// looking @ any /etc file is fragile (people can change 'em), 
-	// but since this is just hardware survey data, we're not super concerned.  
+	// looking @ any /etc file is fragile (people can change 'em),
+	// but since this is just hardware survey data, we're not super concerned.
 	// a bunch of OS-specific issue files
 	const char *pszIssueFile[] =
 	{
@@ -234,7 +234,7 @@ const char *GetOSDetailString( char *pchOutBuf, int cchOutBuf )
 		FILE *fdInfo = fopen( pszIssueFile[i], "r" );
 		if ( !fdInfo  )
 			continue;
-		
+
 		// prepend the buffer with the name of the file we found for easier grouping
 		snprintf( pchOutBuf, cchOutBuf, "%s\n", pszIssueFile[i] );
 		int cchIssueFile = strlen( pszIssueFile[i] ) + 1;
@@ -334,7 +334,7 @@ struct OSTypeNameTuple
 
 };
 
-const OSTypeNameTuple k_rgOSTypeToName[] = 
+const OSTypeNameTuple k_rgOSTypeToName[] =
 {
 	{ k_eOSUnknown, "unknown" },
 	{ k_eMacOSUnknown, "macos" },
@@ -375,13 +375,13 @@ EOSType GetOSTypeFromString_Deprecated( const char *pchName )
 #endif
 
 	// if this fires, make sure all OS types are in the map
-	Assert( Q_ARRAYSIZE( k_rgOSTypeToName ) == k_eOSTypeMax ); 
+	Assert( Q_ARRAYSIZE( k_rgOSTypeToName ) == k_eOSTypeMax );
 	if ( !pchName || Q_strlen( pchName ) == 0 )
 		return eOSType;
 
 	for ( int iOS = 0; iOS < Q_ARRAYSIZE( k_rgOSTypeToName ) ; iOS++ )
 	{
-		if ( !Q_stricmp( k_rgOSTypeToName[iOS].m_pchOSName, pchName ) ) 
+		if ( !Q_stricmp( k_rgOSTypeToName[iOS].m_pchOSName, pchName ) )
 			return k_rgOSTypeToName[iOS].m_OSType;
 	}
 	return eOSType;
@@ -414,8 +414,8 @@ const char *GetPlatformName( bool *pbIs64Bit )
 {
 	if ( pbIs64Bit )
 		*pbIs64Bit = Is64BitOS();
-	
-	EOSType eType = GetOSType(); 
+
+	EOSType eType = GetOSType();
 	if ( OSTypesAreCompatible( eType, k_eWinUnknown ) )
 		return "windows";
 	if ( OSTypesAreCompatible( eType, k_eMacOSUnknown ) )
@@ -424,4 +424,3 @@ const char *GetPlatformName( bool *pbIs64Bit )
 		return "linux";
 	return "unknown";
 }
-

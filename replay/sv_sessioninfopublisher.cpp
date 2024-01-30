@@ -47,7 +47,7 @@ void CSessionInfoPublisher::AbortPublish()
 	{
 		m_pFilePublisher->AbortAndCleanup();
 	}
-}	
+}
 
 void CSessionInfoPublisher::RefreshSessionInfoBlockData( CUtlBuffer &buf )
 {
@@ -113,9 +113,9 @@ void CSessionInfoPublisher::Think()
 
 	// Create as much of the header as possible now - the rest will be written in AdjustHeader()
 	// once the publisher knows the md5 digest and the compression result.
-	Assert( m_pSession->m_strName.Length() < MAX_SESSIONNAME_LENGTH );	// The only way this name is going to get very long is if 
+	Assert( m_pSession->m_strName.Length() < MAX_SESSIONNAME_LENGTH );	// The only way this name is going to get very long is if
 	V_strcpy_safe( m_SessionInfoHeader.m_szSessionName, m_pSession->m_strName.Get() );
-	m_SessionInfoHeader.m_nNumBlocks = m_pSession->GetNumBlocks();	
+	m_SessionInfoHeader.m_nNumBlocks = m_pSession->GetNumBlocks();
 	m_SessionInfoHeader.m_bRecording = m_pSession->m_bRecording;
 	m_SessionInfoHeader.m_uPayloadSizeUC = nPayloadSize;
 
@@ -131,7 +131,7 @@ void CSessionInfoPublisher::Think()
 	params.m_nCompressorType = COMPRESSORTYPE_LZSS;
 	params.m_bHash = true;
 	params.m_bFreeSrcData = false;
-	params.m_bDeleteFile = false; 
+	params.m_bDeleteFile = false;
 	params.m_pHeaderData = &m_SessionInfoHeader;
 	params.m_nHeaderSize = sizeof( SessionInfoHeader_t );
 	params.m_pUserData = NULL;

@@ -157,7 +157,7 @@ void CSessionBlockDownloader::Think()
 
 			// Next
 			it = m_lstDownloaders.Next( it );
-			
+
 			// Remove the downloader from the list
 			m_lstDownloaders.Remove( itRemove );
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -107,7 +107,7 @@ BEGIN_VS_SHADER( Bik, "Help for Bik" )
 			SET_DYNAMIC_VERTEX_SHADER_COMBO( DOWATERFOG,  fogIndex );
 			SET_DYNAMIC_VERTEX_SHADER( bik_vs20 );
 
-			pShaderAPI->SetPixelShaderFogParams( PSREG_FOG_PARAMS );		
+			pShaderAPI->SetPixelShaderFogParams( PSREG_FOG_PARAMS );
 
 			float vEyePos_SpecExponent[4];
 			pShaderAPI->GetWorldSpaceCameraPosition( vEyePos_SpecExponent );

@@ -27,7 +27,7 @@ public:
 
 	void	Spawn( void );
 	void	Precache( void );
-	
+
 	// Return true if the specified entity is touching this zone
 	bool	IsTouching( const CBaseEntity *pEntity ) const OVERRIDE;
 
@@ -47,15 +47,3 @@ private:
 bool InNoGrenadeZone( CBaseEntity *pEntity );
 
 #endif // FUNC_NOGRENADES_ZONE_H
-
-
-
-
-
-
-
-
-
-
-
-

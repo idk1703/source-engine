@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -26,7 +26,7 @@ END_MESSAGE_MAP()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityHelpDlg::ShowEntityHelpDialog(void)
 {
@@ -44,7 +44,7 @@ void CEntityHelpDlg::ShowEntityHelpDialog(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityHelpDlg::SetEditGameClass(GDclass *pClass)
 {
@@ -75,8 +75,8 @@ CEntityHelpDlg::~CEntityHelpDlg(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pDX - 
+// Purpose:
+// Input  : pDX -
 //-----------------------------------------------------------------------------
 void CEntityHelpDlg::DoDataExchange(CDataExchange *pDX)
 {
@@ -88,9 +88,9 @@ void CEntityHelpDlg::DoDataExchange(CDataExchange *pDX)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszText - 
-// Output : 
+// Purpose:
+// Input  : pszText -
+// Output :
 //-----------------------------------------------------------------------------
 int CEntityHelpDlg::GetTextWidth(const char *pszText, CDC *pDC)
 {
@@ -121,9 +121,9 @@ int CEntityHelpDlg::GetTextWidth(const char *pszText, CDC *pDC)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pClass - 
-// Output : 
+// Purpose:
+// Input  : pClass -
+// Output :
 //-----------------------------------------------------------------------------
 int CEntityHelpDlg::GetMaxVariableWidth(GDclass *pClass)
 {
@@ -150,7 +150,7 @@ int CEntityHelpDlg::GetMaxVariableWidth(GDclass *pClass)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityHelpDlg::OnClose(void)
 {
@@ -168,7 +168,7 @@ void CEntityHelpDlg::OnDestroy(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 BOOL CEntityHelpDlg::OnInitDialog(void)
 {
@@ -181,8 +181,8 @@ BOOL CEntityHelpDlg::OnInitDialog(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pClass - 
+// Purpose:
+// Input  : pClass -
 //-----------------------------------------------------------------------------
 void CEntityHelpDlg::UpdateClass(GDclass *pClass)
 {
@@ -193,7 +193,7 @@ void CEntityHelpDlg::UpdateClass(GDclass *pClass)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityHelpDlg::UpdateHelp(void)
 {
@@ -304,7 +304,7 @@ void CEntityHelpDlg::UpdateHelp(void)
 				b << write(*m_pHelpText);
 			}
 		}
-		
+
 		//
 		// Outputs section.
 		//
@@ -353,10 +353,10 @@ void CEntityHelpDlg::UpdateHelp(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nType - 
-//			cx - 
-//			cy - 
+// Purpose:
+// Input  : nType -
+//			cx -
+//			cy -
 // Output : afx_msg void
 //-----------------------------------------------------------------------------
 void CEntityHelpDlg::OnSize( UINT nType, int cx, int cy )
@@ -368,4 +368,3 @@ void CEntityHelpDlg::OnSize( UINT nType, int cx, int cy )
 		m_pHelpText->SetWindowPos(NULL, 0, 0, cx - 22, cy - 22, SWP_NOMOVE | SWP_NOZORDER);
 	}
 }
-

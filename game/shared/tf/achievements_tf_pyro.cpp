@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -55,14 +55,14 @@ public:
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_KillPlayersWhileDead : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 15 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 		if ( pAttacker == pLocalPlayer && pVictim && pVictim->IsPlayer() && pVictim != pLocalPlayer )
@@ -79,7 +79,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_KillPlayersWhileDead, ACHIEVEMENT_TF_PYR
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_BurnFlagCarriers : public CAchievementTFPyro_BaseBurn
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 5 );
@@ -90,7 +90,7 @@ class CAchievementTFPyro_BurnFlagCarriers : public CAchievementTFPyro_BaseBurn
 	{
 		if ( pTFVictim->HasTheFlag() )
 		{
-			IncrementCount(); 
+			IncrementCount();
 		}
 	}
 };
@@ -99,7 +99,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_BurnFlagCarriers, ACHIEVEMENT_TF_PYRO_KI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_BurnCloakedSpies : public CAchievementTFPyro_BaseBurn
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 10 );
@@ -110,7 +110,7 @@ class CAchievementTFPyro_BurnCloakedSpies : public CAchievementTFPyro_BaseBurn
 	{
 		if ( pTFVictim->IsPlayerClass(TF_CLASS_SPY) && pTFVictim->m_Shared.InCond( TF_COND_STEALTHED ) )
 		{
-			IncrementCount(); 
+			IncrementCount();
 		}
 	}
 };
@@ -119,7 +119,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_BurnCloakedSpies, ACHIEVEMENT_TF_PYRO_RE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_BurnSpiesAsMe : public CAchievementTFPyro_BaseBurn
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 10 );
@@ -130,7 +130,7 @@ class CAchievementTFPyro_BurnSpiesAsMe : public CAchievementTFPyro_BaseBurn
 	{
 		if ( pTFVictim->IsPlayerClass(TF_CLASS_SPY) && pTFVictim->m_Shared.InCond( TF_COND_DISGUISED ) )
 		{
-			IncrementCount(); 
+			IncrementCount();
 		}
 	}
 };
@@ -139,7 +139,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_BurnSpiesAsMe, ACHIEVEMENT_TF_PYRO_BURN_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_AxeKillsNoDeaths : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_KILL_EVENTS | ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -164,7 +164,7 @@ class CAchievementTFPyro_AxeKillsNoDeaths : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 		if ( pLocalPlayer == pVictim )
@@ -178,7 +178,7 @@ class CAchievementTFPyro_AxeKillsNoDeaths : public CBaseTFAchievement
 			{
 				IncrementCount();
 			}
-		}	
+		}
 	}
 
 	virtual int GetNumKillsNeeded( void )
@@ -203,7 +203,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_AxeKillsNoDeathsLarge, ACHIEVEMENT_TF_PY
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_BurnZoomedSnipers : public CAchievementTFPyro_BaseBurn
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 10 );
@@ -214,7 +214,7 @@ class CAchievementTFPyro_BurnZoomedSnipers : public CAchievementTFPyro_BaseBurn
 	{
 		if ( pTFVictim->IsPlayerClass(TF_CLASS_SNIPER) && pTFVictim->m_Shared.InCond( TF_COND_ZOOMED ) )
 		{
-			IncrementCount(); 
+			IncrementCount();
 		}
 	}
 };
@@ -223,7 +223,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_BurnZoomedSnipers, ACHIEVEMENT_TF_PYRO_B
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_BurnChargedMedics : public CAchievementTFPyro_BaseBurn
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 3 );
@@ -234,7 +234,7 @@ class CAchievementTFPyro_BurnChargedMedics : public CAchievementTFPyro_BaseBurn
 	{
 		if ( pTFVictim->IsPlayerClass(TF_CLASS_MEDIC) && pTFVictim->MedicGetChargeLevel() >= 1.0 )
 		{
-			IncrementCount(); 
+			IncrementCount();
 		}
 	}
 };
@@ -243,14 +243,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_BurnChargedMedics, ACHIEVEMENT_TF_PYRO_B
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_KillHeaviesWithFlamethrower : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 50 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 		if ( pAttacker == pLocalPlayer && pVictim && pVictim->IsPlayer() && pVictim != pLocalPlayer )
@@ -268,14 +268,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_KillHeaviesWithFlamethrower, ACHIEVEMENT
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_KillUnderwater : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 10 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 		if( pAttacker == pLocalPlayer && pVictim && pVictim->IsPlayer() && pVictim != pLocalPlayer )
@@ -292,7 +292,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_KillUnderwater, ACHIEVEMENT_TF_PYRO_KILL
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_AssistMedic : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 1 );
@@ -318,7 +318,7 @@ class CAchievementTFPyro_AssistMedic : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 		if ( pAttacker == pLocalPlayer && pVictim && pVictim->IsPlayer() && pVictim != pLocalPlayer )
@@ -343,7 +343,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_AssistMedic, ACHIEVEMENT_TF_PYRO_KILL_UB
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_DestroyBuildings : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 50 );
@@ -374,14 +374,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_DestroyBuildings, ACHIEVEMENT_TF_PYRO_DE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_KillGrind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 500 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 		if ( pAttacker == pLocalPlayer && pVictim && pVictim->IsPlayer() && pVictim != pLocalPlayer )
@@ -395,14 +395,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_KillGrind, ACHIEVEMENT_TF_PYRO_KILL_GRIN
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_KillGrindLarge : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 1000 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 		if ( pAttacker == pLocalPlayer && pVictim && pVictim->IsPlayer() && pVictim != pLocalPlayer )
@@ -416,7 +416,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_KillGrindLarge, ACHIEVEMENT_TF_PYRO_KILL
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_KillFromBehindWithFlamethrower : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 50 );
@@ -431,7 +431,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_KillFromBehindWithFlamethrower, ACHIEVEM
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_BurnTauntingSpy : public CAchievementTFPyro_BaseBurn
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -440,10 +440,10 @@ class CAchievementTFPyro_BurnTauntingSpy : public CAchievementTFPyro_BaseBurn
 	void BurnedVictim( CBaseEntity *pPyro, C_TFPlayer *pTFVictim, IGameEvent *event )
 	{
 		// This will 'fail' if we add new PDAs that have a different taunt
-		if ( pTFVictim->IsPlayerClass(TF_CLASS_SPY) && pTFVictim->IsTaunting() && 
+		if ( pTFVictim->IsPlayerClass(TF_CLASS_SPY) && pTFVictim->IsTaunting() &&
 			 pTFVictim->GetActiveTFWeapon() && pTFVictim->GetActiveTFWeapon()->GetWeaponID() == TF_WEAPON_PDA_SPY )
 		{
-			IncrementCount(); 
+			IncrementCount();
 		}
 	}
 };
@@ -452,14 +452,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_BurnTauntingSpy, ACHIEVEMENT_TF_PYRO_BUR
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_KillTaunters : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 3 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 		if ( pAttacker == pLocalPlayer && pVictim && pVictim->IsPlayer() && pVictim != pLocalPlayer )
@@ -477,7 +477,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_KillTaunters, ACHIEVEMENT_TF_PYRO_KILL_T
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_DoubleKO : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 1 );
@@ -489,7 +489,7 @@ class CAchievementTFPyro_DoubleKO : public CBaseTFAchievement
 		ResetDeaths();
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// Retire expired deaths
 		int iCount = m_DeathHistory.Count();
@@ -559,7 +559,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_DoubleKO, ACHIEVEMENT_TF_PYRO_DOUBLE_KO,
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_ForceEnemiesIntoWater : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 10 );
@@ -575,7 +575,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_ForceEnemiesIntoWater, ACHIEVEMENT_TF_PY
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_MultiWeaponKills : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 20 );
@@ -590,7 +590,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_MultiWeaponKills, ACHIEVEMENT_TF_PYRO_KI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_RageQuit : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -604,13 +604,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_RageQuit, ACHIEVEMENT_TF_PYRO_DOMINATE_L
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_KillWithTaunt : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 		if ( pAttacker == pLocalPlayer )
@@ -629,7 +629,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_KillWithTaunt, ACHIEVEMENT_TF_PYRO_KILL_
 class CAchievementTFPyro_BurnSimulScouts : public CAchievementTFPyro_BaseBurn
 {
 	DECLARE_CLASS( CAchievementTFPyro_BurnSimulScouts, CAchievementTFPyro_BaseBurn );
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -665,7 +665,7 @@ class CAchievementTFPyro_BurnSimulScouts : public CAchievementTFPyro_BaseBurn
 
 		if ( m_hBurnedScouts.Count() >= 2 )
 		{
-			IncrementCount(); 
+			IncrementCount();
 		}
 	}
 
@@ -677,7 +677,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_BurnSimulScouts, ACHIEVEMENT_TF_PYRO_SIM
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_BurnSappingSpies : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 5 );
@@ -692,7 +692,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_BurnSappingSpies, ACHIEVEMENT_TF_PYRO_KI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_BurnTeleportees : public CAchievementTFPyro_BaseBurn
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 10 );
@@ -703,7 +703,7 @@ class CAchievementTFPyro_BurnTeleportees : public CAchievementTFPyro_BaseBurn
 	{
 		if ( pTFVictim->m_Shared.InCond(TF_COND_TELEPORTED) )
 		{
-			IncrementCount(); 
+			IncrementCount();
 		}
 	}
 };
@@ -712,7 +712,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_BurnTeleportees, ACHIEVEMENT_TF_PYRO_CAM
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_KillCamping : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 1 );
@@ -723,7 +723,7 @@ class CAchievementTFPyro_KillCamping : public CBaseTFAchievement
 		m_iKills = -1;
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 		if ( pAttacker == pLocalPlayer && pVictim != pLocalPlayer )
@@ -756,7 +756,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_KillCamping, ACHIEVEMENT_TF_PYRO_CAMP_PO
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_DefendControlPoints : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 50 );
@@ -771,7 +771,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_DefendControlPoints, ACHIEVEMENT_TF_PYRO
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_BurnRJer : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -785,7 +785,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_BurnRJer, ACHIEVEMENT_TF_PYRO_BURN_RJ_SO
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_FreezeTaunts : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 3 );
@@ -801,7 +801,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_FreezeTaunts, ACHIEVEMENT_TF_PYRO_FREEZE
 class CAchievementTFPyro_BurnMedicPair : public CAchievementTFPyro_BaseBurn
 {
 	DECLARE_CLASS( CAchievementTFPyro_BurnMedicPair, CAchievementTFPyro_BaseBurn );
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -856,7 +856,7 @@ class CAchievementTFPyro_BurnMedicPair : public CAchievementTFPyro_BaseBurn
 
 		if ( bIgnitedPair )
 		{
-			IncrementCount(); 
+			IncrementCount();
 			m_hBurnVictims.Purge();
 		}
 		else
@@ -888,7 +888,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_BurnMedicPair, ACHIEVEMENT_TF_PYRO_BURN_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_KillTeamwork : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -902,7 +902,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_KillTeamwork, ACHIEVEMENT_TF_PYRO_KILL_T
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_IgniteFlaregun : public CAchievementTFPyro_BaseBurn
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 100 );
@@ -913,7 +913,7 @@ class CAchievementTFPyro_IgniteFlaregun : public CAchievementTFPyro_BaseBurn
 	{
 		if ( event->GetInt( "weaponid" ) == TF_WEAPON_FLAREGUN )
 		{
-			IncrementCount(); 
+			IncrementCount();
 		}
 	}
 };
@@ -922,7 +922,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_IgniteFlaregun, ACHIEVEMENT_TF_PYRO_IGNI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_ReflectProjectiles : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 100 );
@@ -936,13 +936,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_ReflectProjectiles, ACHIEVEMENT_TF_PYRO_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_ReflectCrocketKill : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 		if ( pAttacker == pLocalPlayer && (event->GetInt( "weaponid" ) == TF_WEAPON_ROCKETLAUNCHER) && (event->GetInt("damagebits") & DMG_CRITICAL) )
@@ -959,10 +959,10 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_ReflectCrocketKill, ACHIEVEMENT_TF_PYRO_
 
 class CAchievementTFPyro_DamageGrind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
-		SetGoal( 1000000 );		
+		SetGoal( 1000000 );
 	}
 
 	void OnPlayerStatsUpdate()
@@ -988,7 +988,7 @@ class CAchievementTFPyro_AchieveProgress1 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFPyro_AchieveProgress1, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 10, ACHIEVEMENT_TF_PYRO_START_RANGE, ACHIEVEMENT_TF_PYRO_END_RANGE );
@@ -1001,7 +1001,7 @@ class CAchievementTFPyro_AchieveProgress2 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFPyro_AchieveProgress2, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 16, ACHIEVEMENT_TF_PYRO_START_RANGE, ACHIEVEMENT_TF_PYRO_END_RANGE );
@@ -1014,7 +1014,7 @@ class CAchievementTFPyro_AchieveProgress3 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFPyro_AchieveProgress3, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 22, ACHIEVEMENT_TF_PYRO_START_RANGE, ACHIEVEMENT_TF_PYRO_END_RANGE );
@@ -1025,7 +1025,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPyro_AchieveProgress3, ACHIEVEMENT_TF_PYRO_AC
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFPyro_IgniteWithRainbow : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1049,6 +1049,3 @@ class CAchievementTFPyro_IgnitePlayerBeingFlipped : public CBaseTFAchievement
 DECLARE_ACHIEVEMENT( CAchievementTFPyro_IgnitePlayerBeingFlipped, ACHIEVEMENT_TF_PYRO_IGNITE_PLAYER_BEING_FLIPPED, "TF_PYRO_IGNITE_PLAYER_BEING_FLIPPED", 5 );
 
 #endif // CLIENT_DLL
-
-
-

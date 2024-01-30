@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -16,7 +16,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-BEGIN_VS_SHADER( Water_DX80, 
+BEGIN_VS_SHADER( Water_DX80,
 			  "Help for Water_DX80" )
 
 	BEGIN_SHADER_PARAMS
@@ -121,17 +121,17 @@ BEGIN_VS_SHADER( Water_DX80,
 	{
 		float flCheapWaterStartDistance = params[CHEAPWATERSTARTDISTANCE]->GetFloatValue();
 		float flCheapWaterEndDistance = params[CHEAPWATERENDDISTANCE]->GetFloatValue();
-		float flCheapWaterConstants[4] = 
-		{ 
-			flCheapWaterStartDistance, 
-			1.0f / ( flCheapWaterEndDistance - flCheapWaterStartDistance ), 
-			0.0f, 
-			0.0f 
+		float flCheapWaterConstants[4] =
+		{
+			flCheapWaterStartDistance,
+			1.0f / ( flCheapWaterEndDistance - flCheapWaterStartDistance ),
+			0.0f,
+			0.0f
 		};
 		pShaderAPI->SetVertexShaderConstant( nConstantReg, flCheapWaterConstants );
 	}
 
-	inline void DrawReflection( IMaterialVar **params, IShaderShadow* pShaderShadow, 
+	inline void DrawReflection( IMaterialVar **params, IShaderShadow* pShaderShadow,
 		                        IShaderDynamicAPI* pShaderAPI, bool bBlendReflection )
 	{
 		SHADOW_STATE
@@ -186,8 +186,8 @@ BEGIN_VS_SHADER( Water_DX80,
 		}
 		Draw();
 	}
-	
-	inline void DrawRefraction( IMaterialVar **params, IShaderShadow* pShaderShadow, 
+
+	inline void DrawRefraction( IMaterialVar **params, IShaderShadow* pShaderShadow,
 		                        IShaderDynamicAPI* pShaderAPI )
 	{
 		SHADOW_STATE
@@ -227,7 +227,7 @@ BEGIN_VS_SHADER( Water_DX80,
 		Draw();
 	}
 
-	inline void DrawRefractionForFresnel( IMaterialVar **params, IShaderShadow* pShaderShadow, 
+	inline void DrawRefractionForFresnel( IMaterialVar **params, IShaderShadow* pShaderShadow,
 		                        IShaderDynamicAPI* pShaderAPI )
 	{
 		SHADOW_STATE
@@ -274,7 +274,7 @@ BEGIN_VS_SHADER( Water_DX80,
 		Draw();
 	}
 
-	inline void DrawCheapWater( IMaterialVar **params, IShaderShadow* pShaderShadow, 
+	inline void DrawCheapWater( IMaterialVar **params, IShaderShadow* pShaderShadow,
 		                        IShaderDynamicAPI* pShaderAPI, bool bBlend, bool bBlendFresnel, bool bNoPerVertexFresnel )
 	{
 		SHADOW_STATE
@@ -301,7 +301,7 @@ BEGIN_VS_SHADER( Water_DX80,
 				}
 			}
 
-			pShaderShadow->VertexShaderVertexFormat( 
+			pShaderShadow->VertexShaderVertexFormat(
 				VERTEX_POSITION | VERTEX_NORMAL | VERTEX_TANGENT_S |
 				VERTEX_TANGENT_T, 1, 0, 0 );
 
@@ -316,7 +316,7 @@ BEGIN_VS_SHADER( Water_DX80,
 				pShaderShadow->SetVertexShader( "WaterCheapPerVertexFresnel_vs11", vshIndex.GetIndex() );
 			}
 
-			static const char *s_pPixelShaderName[] = 
+			static const char *s_pPixelShaderName[] =
 			{
 				"WaterCheapOpaque_ps11",
 				"WaterCheap_ps11",
@@ -416,4 +416,3 @@ BEGIN_VS_SHADER( Water_DX80,
 		}
 	}
 END_SHADER
-

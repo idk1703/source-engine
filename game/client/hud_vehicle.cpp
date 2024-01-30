@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,7 @@ using namespace vgui;
 DECLARE_HUDELEMENT( CHudVehicle );
 
 CHudVehicle::CHudVehicle( const char *pElementName ) :
-  CHudElement( pElementName ), BaseClass( NULL, "HudVehicle" )
+	CHudElement( pElementName ), BaseClass( NULL, "HudVehicle" )
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
 	SetParent( pParent );
@@ -40,7 +40,7 @@ void CHudVehicle::ApplySchemeSettings( IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : IClientVehicle
 //-----------------------------------------------------------------------------
 IClientVehicle *CHudVehicle::GetLocalPlayerVehicle()
@@ -55,7 +55,7 @@ IClientVehicle *CHudVehicle::GetLocalPlayerVehicle()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CHudVehicle::ShouldDraw()
@@ -65,7 +65,7 @@ bool CHudVehicle::ShouldDraw()
 	if ( pVehicle )
 	{
 		C_PropVehicleDriveable *pDrivable = dynamic_cast<C_PropVehicleDriveable*>(pVehicle);
-		
+
 		if ( ( pDrivable ) && ( pDrivable->IsRunningEnterExitAnim() ) )
 			return false;
 
@@ -73,10 +73,10 @@ bool CHudVehicle::ShouldDraw()
 	}
 
 	return false;
-}	
+}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudVehicle::Paint( void )
 {
@@ -87,4 +87,3 @@ void CHudVehicle::Paint( void )
 	// Vehicle-based hud...
 	v->DrawHudElements();
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -39,7 +39,7 @@ CTFRocketPack::CTFRocketPack()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRocketPack::PreCache( void )
 {
@@ -52,7 +52,7 @@ void CTFRocketPack::PreCache( void )
 
 #ifdef GAME_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFRocketPack::CanFire( void )
 {
@@ -86,7 +86,7 @@ bool CTFRocketPack::CanFire( void )
 #endif // GAME_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRocketPack::PrimaryAttack( void )
 {
@@ -163,4 +163,3 @@ bool CTFRocketPack::Holster( CBaseCombatWeapon *pSwitchingTo )
 
 	return BaseClass::Holster( pSwitchingTo );
 }
-

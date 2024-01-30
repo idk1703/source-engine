@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -30,7 +30,7 @@ public:
 	bool	Initialize( const char *pszModelName, C_BaseEntity *pParent, Vector vecOffset, QAngle angleOffset, float flAnimSpeed, float flLifetime, int iFlags );
 	void	SetLifetime( float flLifetime );
 	void	ClientThink( void );
-	
+
 protected:
 	float	m_flExpiresAt;
 	int		m_iFlags;

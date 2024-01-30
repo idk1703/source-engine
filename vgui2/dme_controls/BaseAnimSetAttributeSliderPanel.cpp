@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -71,7 +71,7 @@ static void BlendFlexValues( AttributeValue_t *pResult, const AttributeValue_t &
 	float flTargetLeft = flSrcLeft + flLeftFilter * ( flDestLeft - flSrcLeft );
 	float flTargetRight = flSrcRight + flRightFilter * ( flDestRight - flSrcRight );
 
-	LeftRightToValueBalance( &pResult->m_pValue[ANIM_CONTROL_VALUE], &pResult->m_pValue[ANIM_CONTROL_BALANCE], flTargetLeft, flTargetRight, 
+	LeftRightToValueBalance( &pResult->m_pValue[ANIM_CONTROL_VALUE], &pResult->m_pValue[ANIM_CONTROL_BALANCE], flTargetLeft, flTargetRight,
 		( flBlend <= 0.5f ) ? src.m_pValue[ANIM_CONTROL_BALANCE] : dest.m_pValue[ANIM_CONTROL_BALANCE] );
 
 	pResult->m_pValue[ANIM_CONTROL_MULTILEVEL] = src.m_pValue[ANIM_CONTROL_MULTILEVEL] + ( dest.m_pValue[ANIM_CONTROL_MULTILEVEL] - src.m_pValue[ANIM_CONTROL_MULTILEVEL] ) * flBlend;
@@ -208,7 +208,7 @@ void CPresetSideFilterSlider::PaintBackground()
 {
 	int w, h;
 	GetSize( w, h );
-			   
+
 	int tx, ty, tw, th;
 	GetTrackRect( tx, ty, tw, th );
 	surface()->DrawSetColor( m_ZeroColor );
@@ -244,8 +244,8 @@ CBaseAnimSetAttributeSliderPanel::CBaseAnimSetAttributeSliderPanel( vgui::Panel 
 	m_Sliders = new PanelListPanel( this, "AttributeSliders" );
 	m_Sliders->SetFirstColumnWidth( 0 );
 	m_Sliders->SetAutoResize
-		( 
-		Panel::PIN_TOPLEFT, 
+		(
+		Panel::PIN_TOPLEFT,
 		Panel::AUTORESIZE_DOWNANDRIGHT,
 		0, ANIMATION_SET_EDITOR_ATTRIBUTESLIDERS_BUTTONTRAY_HEIGHT,
 		0, 0
@@ -293,7 +293,7 @@ void CBaseAnimSetAttributeSliderPanel::PerformLayout()
 	GetSize( w, h );
 
 	int availH = ANIMATION_SET_EDITOR_ATTRIBUTESLIDERS_BUTTONTRAY_HEIGHT;
-				 	 
+
 	int btnSize = 9;
 	m_pLeftRightBoth[ 0 ]->SetBounds( 15, ( availH - btnSize ) / 2, btnSize, btnSize );
 	m_pLeftRightBoth[ 1 ]->SetBounds( w - 15, ( availH - btnSize ) / 2, btnSize, btnSize );
@@ -307,7 +307,7 @@ void CBaseAnimSetAttributeSliderPanel::PerformLayout()
 //  a) are we holding the ctrl key still, if so
 //     figures out the crossfade amount of each preset slider with non-zero influence
 //  b) not holding control, then just see if we are previewing whichever preset the mouse is over
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CBaseAnimSetAttributeSliderPanel::OnThink()
 {
@@ -328,7 +328,7 @@ void CBaseAnimSetAttributeSliderPanel::OnThink()
 	bool faderAmountChanged = fader.amount != m_Previous.amount ? true : false;
 
 	m_nFaderChangeFlags = 0;
-	if ( nameChanged ) 
+	if ( nameChanged )
 	{
 		m_nFaderChangeFlags |= FADER_NAME_CHANGED;
 	}
@@ -481,7 +481,7 @@ void CBaseAnimSetAttributeSliderPanel::ChangeAnimationSet( CDmeAnimationSet *new
 
 				bool bStereo =  control->GetValue< bool >( "combo" );
 				bool bIsMulti =  control->GetValue< bool >( "multi" );
-				if ( m_SliderList[ i ]->IsControlActive( ANIM_CONTROL_BALANCE ) != bStereo || 
+				if ( m_SliderList[ i ]->IsControlActive( ANIM_CONTROL_BALANCE ) != bStereo ||
 					 m_SliderList[ i ]->IsControlActive( ANIM_CONTROL_MULTILEVEL ) != bIsMulti )
 				{
 					rebuild = true;
@@ -640,7 +640,7 @@ void CBaseAnimSetAttributeSliderPanel::ApplyPreset( float flScale, AttributeDict
 	}
 }
 
-static const char *s_pAnimControlAttribute[ANIM_CONTROL_COUNT] = 
+static const char *s_pAnimControlAttribute[ANIM_CONTROL_COUNT] =
 {
 	"value", "balance", "multilevel"
 };
@@ -992,7 +992,7 @@ void CBaseAnimSetAttributeSliderPanel::ActivateControlSetInMode( int mode, int o
 		GetChannelsForControl( ctrl, ctrlChannels );
 
 		for ( j = 0 ; j < LOG_PREVIEW_MAX_CHANNEL_COUNT; ++j )
-		{								    
+		{
 			if ( !ctrlChannels[ j ] )
 				continue;
 
@@ -1094,7 +1094,7 @@ void CBaseAnimSetAttributeSliderPanel::ActivateControlSetInMode( int mode, int o
 	}
 }
 
-static const char *s_pDefaultAttributeName[ANIM_CONTROL_COUNT] = 
+static const char *s_pDefaultAttributeName[ANIM_CONTROL_COUNT] =
 {
 	"defaultValue", "defaultBalance", "defaultMultilevel"
 };
@@ -1231,7 +1231,7 @@ void CBaseAnimSetAttributeSliderPanel::PerformRecomputePreview()
 		return;
 
 #if 0
-	// Tracker 54528:  While this saves recomputing things all of the time, the delay is annoying so 
+	// Tracker 54528:  While this saves recomputing things all of the time, the delay is annoying so
 	//  we'll turn it off for now
 	float curtime = system()->GetFrameTime();
 	if ( curtime < m_flRecomputePreviewTime )
@@ -1241,7 +1241,7 @@ void CBaseAnimSetAttributeSliderPanel::PerformRecomputePreview()
 	m_bRequestedNewPreview = false;
 	m_flRecomputePreviewTime = -1.0f;
 	// list of bones/root transforms which are in the control set
-	m_ActiveTransforms.Purge(); 
+	m_ActiveTransforms.Purge();
 	if ( !m_AnimSet.Get() )
 		return;
 

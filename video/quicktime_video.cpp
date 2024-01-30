@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -43,7 +43,7 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CQuickTimeVideoSubSystem, IVideoSubSystem, VI
 
 // ===========================================================================
 // Convars used by Quicktime
-//  - these need to be referenced somewhere to keep the compiler from 
+//  - these need to be referenced somewhere to keep the compiler from
 //    optimizing them away
 // ===========================================================================
 
@@ -53,7 +53,7 @@ ConVar QuickTime_PlaybackGamma( "video_quicktime_decode_gamma", "0", FCVAR_ARCHI
 // ===========================================================================
 // List of file extensions and features supported by this subsystem
 // ===========================================================================
-VideoFileExtensionInfo_t s_QuickTimeExtensions[] = 
+VideoFileExtensionInfo_t s_QuickTimeExtensions[] =
 {
 	{ ".mov", VideoSystem::QUICKTIME,  VideoSystemFeature::FULL_PLAYBACK | VideoSystemFeature::FULL_ENCODE },
 	{ ".mp4", VideoSystem::QUICKTIME,  VideoSystemFeature::FULL_PLAYBACK | VideoSystemFeature::FULL_ENCODE },
@@ -103,7 +103,7 @@ bool CQuickTimeVideoSubSystem::Connect( CreateInterfaceFn factory )
 		return false;
 	}
 
-	if ( g_pFullFileSystem == nullptr || materials == nullptr ) 
+	if ( g_pFullFileSystem == nullptr || materials == nullptr )
 	{
 		Msg( "QuickTime video subsystem failed to connect to missing a required system\n" );
 		return false;
@@ -150,13 +150,13 @@ void CQuickTimeVideoSubSystem::Shutdown()
 {
 	// Make sure we shut down quicktime
 	ShutdownQuickTime();
-	
+
 	BaseClass::Shutdown();
 }
 
 
 // ===========================================================================
-// IVideoSubSystem identification methods  
+// IVideoSubSystem identification methods
 // ===========================================================================
 VideoSystem_t CQuickTimeVideoSubSystem::GetSystemID()
 {
@@ -188,10 +188,10 @@ const char* CQuickTimeVideoSubSystem::GetVideoSystemName()
 bool CQuickTimeVideoSubSystem::InitializeVideoSystem( IVideoCommonServices *pCommonServices )
 {
 	m_AvailableFeatures = DEFAULT_FEATURE_SET;			// Put here because of issue with static const int, binary OR and DEBUG builds
-	
+
 	AssertPtr( pCommonServices );
 	m_pCommonServices = pCommonServices;
-	
+
 #ifdef OSX
 	if ( !GetGWorldPixMap )
 		GetGWorldPixMap = (PFNGetGWorldPixMap)dlsym( RTLD_DEFAULT, "GetGWorldPixMap" );
@@ -223,19 +223,19 @@ bool CQuickTimeVideoSubSystem::ShutdownVideoSystem()
 
 VideoResult_t CQuickTimeVideoSubSystem::VideoSoundDeviceCMD( VideoSoundDeviceOperation_t operation, void *pDevice, void *pData )
 {
-	switch ( operation ) 
+	switch ( operation )
 	{
 		case VideoSoundDeviceOperation::SET_DIRECT_SOUND_DEVICE:
 		{
 			return SetResult( VideoResult::OPERATION_NOT_SUPPORTED );
 		}
-		
+
 		case VideoSoundDeviceOperation::SET_MILES_SOUND_DEVICE:
 		case VideoSoundDeviceOperation::HOOK_X_AUDIO:
 		{
 			return SetResult( VideoResult::OPERATION_NOT_SUPPORTED );
 		}
-		
+
 		default:
 		{
 			return SetResult( VideoResult::UNKNOWN_OPERATION );
@@ -252,16 +252,16 @@ int CQuickTimeVideoSubSystem::GetSupportedFileExtensionCount()
 	return s_QuickTimeExtensionCount;
 }
 
- 
+
 const char* CQuickTimeVideoSubSystem::GetSupportedFileExtension( int num )
 {
 	return ( num < 0 || num >= s_QuickTimeExtensionCount ) ? nullptr : s_QuickTimeExtensions[num].m_FileExtension;
 }
 
- 
+
 VideoSystemFeature_t CQuickTimeVideoSubSystem::GetSupportedFileExtensionFeatures( int num )
 {
-	 return ( num < 0 || num >= s_QuickTimeExtensionCount ) ? VideoSystemFeature::NO_FEATURES : s_QuickTimeExtensions[num].m_VideoFeatures;
+	return ( num < 0 || num >= s_QuickTimeExtensionCount ) ? VideoSystemFeature::NO_FEATURES : s_QuickTimeExtensions[num].m_VideoFeatures;
 }
 
 
@@ -285,12 +285,12 @@ VideoResult_t CQuickTimeVideoSubSystem::PlayVideoFileFullScreen( const char *fil
 	{
 		SetupQuickTime();
 	}
-	
+
 	AssertExitV( m_CurrentStatus == VideoSystemStatus::OK, SetResult( VideoResult::SYSTEM_NOT_AVAILABLE ) );
 
-	// Set graphics port 
+	// Set graphics port
 #if defined ( WIN32 )
-	SetGWorld ( (CGrafPtr) GetNativeWindowPort( nil ), nil ); 
+	SetGWorld ( (CGrafPtr) GetNativeWindowPort( nil ), nil );
 #elif defined ( OSX )
 	SystemUIMode oldMode;
 	SystemUIOptions oldOptions;
@@ -313,26 +313,26 @@ VideoResult_t CQuickTimeVideoSubSystem::PlayVideoFileFullScreen( const char *fil
 	Handle	MovieFileDataRef = nullptr;
 	OSType	MovieFileDataRefType = 0;
 
-	CFStringRef	imageStrRef = CFStringCreateWithCString ( NULL,  filename, 0 ); 
+	CFStringRef	imageStrRef = CFStringCreateWithCString ( NULL,  filename, 0 );
 	AssertExitV( imageStrRef != nullptr, SetResult( VideoResult::SYSTEM_ERROR_OCCURED ) );
-	
+
 	status = QTNewDataReferenceFromFullPathCFString( imageStrRef, (QTPathStyle) kQTNativeDefaultPathStyle, 0, &MovieFileDataRef, &MovieFileDataRefType );
 	AssertExitV( status == noErr, SetResult( VideoResult::FILE_ERROR_OCCURED ) );
 
 	CFRelease( imageStrRef );
 
-    status = NewMovieFromDataRef( &theQTMovie, newMovieActive, nil, MovieFileDataRef, MovieFileDataRefType );
+	status = NewMovieFromDataRef( &theQTMovie, newMovieActive, nil, MovieFileDataRef, MovieFileDataRefType );
 	SAFE_DISPOSE_HANDLE( MovieFileDataRef );
-	
-    if ( status != noErr )
-    {
+
+	if ( status != noErr )
+	{
 #if defined ( OSX )
 		SetSystemUIMode( oldMode, oldOptions );
 #endif
 		Assert( false );
 		return SetResult( VideoResult::FILE_ERROR_OCCURED );
-    }
-     
+	}
+
 	// Get info about the video
 	GetMovieNaturalBoundsRect(theQTMovie, &theQTMovieRect);
 
@@ -357,7 +357,7 @@ VideoResult_t CQuickTimeVideoSubSystem::PlayVideoFileFullScreen( const char *fil
 	// get the size of the target video output
 	int	nBufferWidth = nNewWidth;
 	int nBufferHeight = nNewHeight;
-	
+
 	int displayXOffset = 0;
 	int displayYOffset = 0;
 
@@ -388,7 +388,7 @@ VideoResult_t CQuickTimeVideoSubSystem::PlayVideoFileFullScreen( const char *fil
 	}
 
 	// need to get the graphics port associated with the main window
-#if defined( WIN32 )    
+#if defined( WIN32 )
 	CreatePortAssociation( mainWindow, NULL, 0 );
 	GrafPtr theGrafPtr = GetNativeWindowPort( mainWindow );
 #elif defined( OSX )
@@ -400,7 +400,7 @@ VideoResult_t CQuickTimeVideoSubSystem::PlayVideoFileFullScreen( const char *fil
 
 	// Assign the GWorld to this movie
 	SetMovieGWorld( theQTMovie, (CGrafPtr) theGrafPtr, NULL );
-	
+
 	// Setup the keyboard and message handler for fullscreen playback
 	if ( SetResult( m_pCommonServices->InitFullScreenPlaybackInputHandler( playbackFlags, forcedMinTime, windowed ) ) != VideoResult::SUCCESS )
 	{
@@ -414,19 +414,19 @@ VideoResult_t CQuickTimeVideoSubSystem::PlayVideoFileFullScreen( const char *fil
 	bool bPaused = false;
 
 	// Init Movie info
-    TimeRecord  movieStartTime;
+	TimeRecord  movieStartTime;
 	TimeRecord	moviePauseTime;
-    GoToBeginningOfMovie( theQTMovie );
-    GetMovieTime( theQTMovie, &movieStartTime );
+	GoToBeginningOfMovie( theQTMovie );
+	GetMovieTime( theQTMovie, &movieStartTime );
 
-	// Start movie playback 
+	// Start movie playback
 	StartMovie( theQTMovie );
 
 	// loop while movie is playing
 	while ( true )
 	{
 		bool bAbortEvent, bPauseEvent, bQuitEvent;
-	
+
 		if ( m_pCommonServices->ProcessFullScreenInput( bAbortEvent, bPauseEvent, bQuitEvent ) )
 		{
 			// check for aborting the movie
@@ -434,7 +434,7 @@ VideoResult_t CQuickTimeVideoSubSystem::PlayVideoFileFullScreen( const char *fil
 			{
 				goto abort_playback;
 			}
-	
+
 			// check for pausing the movie?
 			if ( bPauseEvent )
 			{
@@ -452,7 +452,7 @@ VideoResult_t CQuickTimeVideoSubSystem::PlayVideoFileFullScreen( const char *fil
 				}
 			}
 		}
-												  
+
 		// hit the end of the movie?
 		TimeValue now = GetMovieTime( theQTMovie, nullptr );
 		if ( now >= theQTMovieDuration )
@@ -470,7 +470,7 @@ VideoResult_t CQuickTimeVideoSubSystem::PlayVideoFileFullScreen( const char *fil
 				break;		// finished actually, exit loop
 			}
 		}
-		
+
 		// if the movie is paused, sleep for 5ms to keeps the CPU from spinning so hard
 		if ( bPaused )
 		{
@@ -485,7 +485,7 @@ VideoResult_t CQuickTimeVideoSubSystem::PlayVideoFileFullScreen( const char *fil
 	}
 
 	// Close it all down
-abort_playback:	
+abort_playback:
 	StopMovie( theQTMovie );
 
 	SAFE_RELEASE_AUDIOCONTEXT( theAudioContext );
@@ -497,7 +497,7 @@ abort_playback:
 	SetSystemUIMode( oldMode, oldOptions );
 #endif
 
-	return SetResult( VideoResult::SUCCESS );	
+	return SetResult( VideoResult::SUCCESS );
 }
 
 
@@ -520,7 +520,7 @@ IVideoMaterial* CQuickTimeVideoSubSystem::CreateVideoMaterial( const char *pMate
 
 	IVideoMaterial	*pInterface = (IVideoMaterial*) pVideoMaterial;
 	m_MaterialList.AddToTail( pInterface );
-	
+
 	SetResult( VideoResult::SUCCESS );
 	return pInterface;
 }
@@ -530,18 +530,18 @@ VideoResult_t CQuickTimeVideoSubSystem::DestroyVideoMaterial( IVideoMaterial *pV
 {
 	AssertExitV( m_CurrentStatus == VideoSystemStatus::OK, SetResult( VideoResult::SYSTEM_NOT_AVAILABLE ) );
 	AssertPtrExitV( pVideoMaterial, SetResult( VideoResult::BAD_INPUT_PARAMETERS ) );
-	
+
 	if ( m_MaterialList.Find( pVideoMaterial ) != -1 )
 	{
 		CQuickTimeMaterial *pObject = (CQuickTimeMaterial*) pVideoMaterial;
 		pObject->Shutdown();
 		delete pObject;
-		
+
 		m_MaterialList.FindAndFastRemove( pVideoMaterial );
-		
+
 		return SetResult( VideoResult::SUCCESS );
 	}
-	
+
 	return SetResult (VideoResult::MATERIAL_NOT_FOUND );
 
 }
@@ -556,12 +556,12 @@ IVideoRecorder* CQuickTimeVideoSubSystem::CreateVideoRecorder()
 	AssertExitN( m_CurrentStatus == VideoSystemStatus::OK );
 
 	CQuickTimeVideoRecorder *pVideoRecorder = new CQuickTimeVideoRecorder();
-	
+
 	if ( pVideoRecorder != nullptr )
 	{
 		IVideoRecorder *pInterface = (IVideoRecorder*) pVideoRecorder;
 		m_RecorderList.AddToTail( pInterface );
-		
+
 		SetResult( VideoResult::SUCCESS );
 		return pInterface;
 	}
@@ -580,12 +580,12 @@ VideoResult_t CQuickTimeVideoSubSystem::DestroyVideoRecorder( IVideoRecorder *pR
 	{
 		CQuickTimeVideoRecorder *pVideoRecorder = (CQuickTimeVideoRecorder*) pRecorder;
 		delete pVideoRecorder;
-		
+
 		m_RecorderList.FindAndFastRemove( pRecorder );
-		
+
 		return SetResult( VideoResult::SUCCESS );
 	}
-	
+
 	return SetResult( VideoResult::RECORDER_NOT_FOUND );
 }
 
@@ -594,7 +594,7 @@ VideoResult_t CQuickTimeVideoSubSystem::CheckCodecAvailability( VideoEncodeCodec
 	AssertExitV( m_CurrentStatus == VideoSystemStatus::OK, SetResult( VideoResult::SYSTEM_NOT_AVAILABLE ) );
 	AssertExitV( codec >= VideoEncodeCodec::DEFAULT_CODEC && codec < VideoEncodeCodec::CODEC_COUNT, SetResult( VideoResult::BAD_INPUT_PARAMETERS ) );
 
-	// map the requested codec in 
+	// map the requested codec in
 	CodecType	theCodec;
 	switch( codec )
 	{
@@ -652,7 +652,7 @@ VideoResult_t CQuickTimeVideoSubSystem::CheckCodecAvailability( VideoEncodeCodec
 
 	// Determine if codec is available...
 	CodecInfo	theInfo;
-	
+
 	OSErr status = GetCodecInfo( &theInfo, theCodec, 0 );
 	if ( status == noCodecErr )
 	{
@@ -689,83 +689,83 @@ bool CQuickTimeVideoSubSystem::SetupQuickTime()
 	AssertExitF( m_bQuickTimeInitialized == false );
 
 	// This is set early to indicate we have already been through here, even if we error out for some reason
-    m_bQuickTimeInitialized = true;
+	m_bQuickTimeInitialized = true;
 	m_CurrentStatus = VideoSystemStatus::NOT_INITIALIZED;
 	m_AvailableFeatures = VideoSystemFeature::NO_FEATURES;
-    
+
 	if ( CommandLine()->FindParm( "-noquicktime" ) )
 	{
 		// Don't even try. leave status as NOT_INITIALIZED
 		return true;
 	}
 
-  // Windows PC build 
+	// Windows PC build
 #if defined ( WIN32 )
-	OSErr status = InitializeQTML( 0 ); 
-    
-    // if -2903 (qtmlDllLoadErr) then quicktime not installed on this system
-    if ( status != noErr )
-    {
+	OSErr status = InitializeQTML( 0 );
+
+	// if -2903 (qtmlDllLoadErr) then quicktime not installed on this system
+	if ( status != noErr )
+	{
 		if  ( status == qtmlDllLoadErr )
 		{
 			m_CurrentStatus = VideoSystemStatus::NOT_INITIALIZED;
 			return true;
 		}
-		
+
 		Msg( "Unknown QuickTime Initialization Error = %d \n", (int) status );
 		Assert( false );
-		
+
 		m_CurrentStatus = VideoSystemStatus::NOT_INITIALIZED;
 		return true;
-    }
-    
-	// Make sure we have version 7.04 or greater of quicktime 
-    long version = 0;
-    status = Gestalt( gestaltQuickTime, &version );
-    if ( ( status != noErr ) || ( version < 0x07608000 ) )
-    {
+	}
+
+	// Make sure we have version 7.04 or greater of quicktime
+	long version = 0;
+	status = Gestalt( gestaltQuickTime, &version );
+	if ( ( status != noErr ) || ( version < 0x07608000 ) )
+	{
 		TerminateQTML();
 		m_CurrentStatus = VideoSystemStatus::NOT_CURRENT_VERSION;
 		Msg( "QuickTime Version reports to be ver= %8.8x, less than 7.6 (07608000) required\n", version );
 		Assert( false );
-		
-        return true;
-    }
-    
-#endif    
-  
+
+		return true;
+	}
+
+#endif
+
 	// Windows PC, or Mac OSX build
 	OSErr status2 = EnterMovies();           // Initialize QuickTime Movie Toolbox
 	if ( status2 != noErr )
 	{
 		// Windows PC -- shutdown Quicktime
-#if defined ( WIN32 )	
+#if defined ( WIN32 )
 		TerminateQTML();
 #endif
-		
+
 		Msg( "Quicktime Error when attempting to EnterMovies, err = %d \n", (int) status2 );
 		Assert( false );
-		
+
 		m_CurrentStatus = VideoSystemStatus::INITIALIZATION_ERROR;
 		return true;
 	}
-    
+
 	m_CurrentStatus	 = VideoSystemStatus::OK;
 	m_AvailableFeatures = DEFAULT_FEATURE_SET;
 
 	// if the Library load didn't hook up the compression functions, remove them from our feature list
 #pragma warning ( disable : 4551 )
-	
-    if ( !CompressImage )
-    {
+
+	if ( !CompressImage )
+	{
 		m_AvailableFeatures = m_AvailableFeatures & ~( VideoSystemFeature::ENCODE_VIDEO_TO_FILE | VideoSystemFeature::ENCODE_AUDIO_TO_FILE );
-    }
+	}
 #pragma warning ( default : 4551 )
 
-	// Note that we are now open for business....	
+	// Note that we are now open for business....
 	m_bQuickTimeInitialized = true;
 	SetResult( VideoResult::SUCCESS );
-    
+
 	return true;
 }
 
@@ -774,14 +774,14 @@ bool CQuickTimeVideoSubSystem::ShutdownQuickTime()
 {
 	if ( m_bQuickTimeInitialized && m_CurrentStatus == VideoSystemStatus::OK )
 	{
-		ExitMovies();                               // Terminate QuickTime  
+		ExitMovies();                               // Terminate QuickTime
 
-		// Windows PC only shutdown			
+		// Windows PC only shutdown
 #if defined ( WIN32 )
-		  TerminateQTML();                          // Terminate QTML  
+		TerminateQTML();                          // Terminate QTML
 #endif
 	}
-				
+
 	m_bQuickTimeInitialized = false;
 	m_CurrentStatus = VideoSystemStatus::NOT_INITIALIZED;
 	m_AvailableFeatures = VideoSystemFeature::NO_FEATURES;
@@ -804,7 +804,7 @@ char *COPY_STRING( const char *pString )
 	}
 
 	size_t strLen = V_strlen( pString );
-	
+
 	char *pNewStr = new char[ strLen+ 1 ];
 	if ( strLen > 0 )
 	{
@@ -844,15 +844,15 @@ bool MovieGetStaticFrameRate( Movie inMovie, VideoFrameRate_t &theFrameRate )
 	// get the media identifier for the media that contains the first
 	//  video track's sample data, and also get the media handler for this media.
 
-	Track videoTrack = GetMovieIndTrackType( inMovie, 1, kCharacteristicHasVideoFrameRate, movieTrackCharacteristic | movieTrackEnabledOnly ); 	// get first video track 
+	Track videoTrack = GetMovieIndTrackType( inMovie, 1, kCharacteristicHasVideoFrameRate, movieTrackCharacteristic | movieTrackEnabledOnly ); 	// get first video track
 	if ( videoTrack == nullptr || GetMoviesError() != noErr )
 		goto error_out;
-			
-	// get media ref. for track's sample data 
+
+	// get media ref. for track's sample data
 	movieMedia = GetTrackMedia( videoTrack );
 	if ( movieMedia == nullptr || GetMoviesError() != noErr )
 		goto error_out;
-		
+
 	// get a reference to the media handler component
 	movieMediaHandler = GetMediaHandler( movieMedia );
 	if ( movieMediaHandler == nullptr || GetMoviesError() != noErr )
@@ -861,7 +861,7 @@ bool MovieGetStaticFrameRate( Movie inMovie, VideoFrameRate_t &theFrameRate )
 	// is this the MPEG-1/MPEG-2 media handler?
 	if ( MediaHasCharacteristic( movieMediaHandler, kCharacteristicIsAnMpegTrack, &isMPEG ) != noErr )
 		goto error_out;
-		
+
 	if (isMPEG)	// working with MPEG-1/MPEG-2 media
 	{
 		MHInfoEncodedFrameRateRecord encodedFrameRate;
@@ -872,9 +872,9 @@ bool MovieGetStaticFrameRate( Movie inMovie, VideoFrameRate_t &theFrameRate )
 			goto error_out;
 
 		TimeScale 	MovieTimeScale = GetMovieTimeScale( inMovie );
-		
+
 		Assert( MovieTimeScale > 0 && encodedFrameRate.encodedFrameRate > 0 );
-		
+
 		theFrameRate.SetRaw( MovieTimeScale, int ( (double) MovieTimeScale / Fix2X( encodedFrameRate.encodedFrameRate ) + 0.5 ) );
 	}
 	else  // working with non-MPEG-1/MPEG-2 media
@@ -882,10 +882,10 @@ bool MovieGetStaticFrameRate( Movie inMovie, VideoFrameRate_t &theFrameRate )
 		if ( !MediaGetStaticFrameRate( movieMedia, theFrameRate, true ) )
 			goto error_out;
 	}
-		
-	
+
+
 	success = true;
-	
+
 error_out:
 
 	return success;
@@ -900,11 +900,11 @@ error_out:
 bool MediaGetStaticFrameRate( Media inMovieMedia, VideoFrameRate_t &theFrameRate, bool AssumeConstantIntervals )
 {
 	Assert( inMovieMedia != nullptr );
-	
+
 	theFrameRate.Clear();
 
-	// Method #1 - from Apple 
-	if ( !AssumeConstantIntervals )	
+	// Method #1 - from Apple
+	if ( !AssumeConstantIntervals )
 	{
 		// get the number of samples in the media
 		long sampleCount = GetMediaSampleCount( inMovieMedia );
@@ -927,13 +927,13 @@ bool MediaGetStaticFrameRate( Media inMovieMedia, VideoFrameRate_t &theFrameRate
 		theFrameRate.SetFPS( FPS );
 		return true;
 	}
-	
+
 	// FPS rate method #2 - assumes all frames are at a constant interval
 	// gets FPS in terms of units per second (preferred)
-		
+
 	TimeValue64  sample_time     = 0;
 	TimeValue64  sample_duration = -1;
-	
+
 	GetMediaNextInterestingDisplayTime( inMovieMedia, nextTimeMediaSample | nextTimeEdgeOK, (TimeValue64) 0 , fixed1, &sample_time, &sample_duration );
 	if ( sample_time == -1 || sample_duration == 0 || GetMoviesError() != noErr )
 		return false;
@@ -960,9 +960,9 @@ bool MediaGetStaticFrameRate( Media inMovieMedia, VideoFrameRate_t &theFrameRate
 
 
 // ============================================================================
-// SetGWorldDecodeGamma - configure a GWorld to perform any needed gamma 
+// SetGWorldDecodeGamma - configure a GWorld to perform any needed gamma
 //  correction
-// 
+//
 //   kQTUsePlatformDefaultGammaLevel = 0,  /* When decompressing into this PixMap, gamma-correct to the platform's standard gamma. */
 //   kQTUseSourceGammaLevel        = -1L,  /* When decompressing into this PixMap, don't perform gamma-correction. */
 //   kQTCCIR601VideoGammaLevel     = 0x00023333 /* 2.2, standard television video gamma.*/
@@ -980,13 +980,13 @@ bool SetGWorldDecodeGamma( CGrafPtr theGWorld, VideoPlaybackGamma_t gamma )
 	if ( gamma == VideoPlaybackGamma::USE_GAMMA_CONVAR )
 	{
 		int useGamma = QuickTime_PlaybackGamma.GetInt();
-		
+
 		if ( useGamma < (int) VideoPlaybackGamma::NO_GAMMA_ADJUST || useGamma >= VideoPlaybackGamma::GAMMA_COUNT )
 			return false;
-			
+
 		gamma = (VideoPlaybackGamma_t) useGamma;
 	}
-	
+
 	switch( gamma )
 	{
 		case VideoPlaybackGamma::NO_GAMMA_ADJUST:
@@ -1004,7 +1004,7 @@ bool SetGWorldDecodeGamma( CGrafPtr theGWorld, VideoPlaybackGamma_t gamma )
 			decodeGamma = 0x0001CCCC;		// Gamma 1.8
 			break;
 		}
-		
+
 		case VideoPlaybackGamma::GAMMA_2_2:
 		{
 			decodeGamma = 0x00023333;		// Gamma 2.2
@@ -1056,12 +1056,12 @@ bool CreateMovieAudioContext( bool enableAudio, Movie inMovie, QTAudioContextRef
 
 		OSStatus result = QTAudioContextCreateForAudioDevice( NULL, deviceNameStrRef, NULL, pAudioContext );
 		AssertExitF( result == noErr );
-		
+
 		SAFE_RELEASE_CFREF( deviceNameStrRef );
-		
+
 #elif defined ( OSX )
-	
-	    OSStatus result = QTAudioContextCreateForAudioDevice( NULL, NULL, NULL, pAudioContext );
+
+		OSStatus result = QTAudioContextCreateForAudioDevice( NULL, NULL, NULL, pAudioContext );
 		AssertExitF( result == noErr );
 #endif
 		// valid?
@@ -1071,24 +1071,24 @@ bool CreateMovieAudioContext( bool enableAudio, Movie inMovie, QTAudioContextRef
 	{
 		*pAudioContext = nullptr;
 	}
-	
+
 	// Set the audio context
-    OSStatus result = SetMovieAudioContext( inMovie, *pAudioContext );
-    AssertExitF( result == noErr );
-	
+	OSStatus result = SetMovieAudioContext( inMovie, *pAudioContext );
+	AssertExitF( result == noErr );
+
 	if ( setVolume && *pAudioContext != nullptr )
 	{
 		ConVarRef volumeConVar( "volume" );
 		float sysVolume = ( volumeConVar.IsValid() ) ? volumeConVar.GetFloat() : 1.0f;
 		clamp( sysVolume, 0.0f, 1.0f );
-		
+
 		if ( pCurrentVolume != nullptr )
 		{
 			*pCurrentVolume = sysVolume;
 		}
-	
+
 		short  movieVolume = (short) ( sysVolume * 256.0f );
-	
+
 		SetMovieVolume( inMovie, movieVolume );
 	}
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,7 +15,7 @@
 
 DEFINE_FALLBACK_SHADER( Portal, Portal_DX90 )
 
-BEGIN_VS_SHADER( Portal_DX90, 
+BEGIN_VS_SHADER( Portal_DX90,
 				"Help for Portal shader" )
 
 				BEGIN_SHADER_PARAMS
@@ -66,7 +66,7 @@ BEGIN_VS_SHADER( Portal_DX90,
 		}
 
 		if ( params[STATICBLENDTEXTURE]->IsDefined() )
-			LoadTexture( STATICBLENDTEXTURE );	
+			LoadTexture( STATICBLENDTEXTURE );
 		if ( params[ALPHAMASKTEXTURE]->IsDefined() )
 			LoadTexture( ALPHAMASKTEXTURE );
 
@@ -104,9 +104,9 @@ BEGIN_VS_SHADER( Portal_DX90,
 	{
 		bool bStaticBlendTexture = params[STATICBLENDTEXTURE]->IsTexture();
 		bool bAlphaMaskTexture = ( params[ALPHAMASKTEXTURE]->IsTexture()? 1 : 0 );
-		
+
 		float fStaticAmount = params[STATICAMOUNT]->GetFloatValue();
-		
+
 		SHADOW_STATE
 		{
 			SetInitialShadowState();
@@ -144,7 +144,7 @@ BEGIN_VS_SHADER( Portal_DX90,
 			int	iTexCoords = 1;
 			if( IS_FLAG_SET( MATERIAL_VAR_MODEL ) )
 			{
-				userDataSize = 4;				
+				userDataSize = 4;
 			}
 			else
 			{
@@ -160,7 +160,7 @@ BEGIN_VS_SHADER( Portal_DX90,
 
 			if( bStaticBlendTexture && bAlphaMaskTexture )
 				pShaderShadow->EnableTexture( SHADER_SAMPLER2, true );
-			
+
 			DECLARE_STATIC_VERTEX_SHADER( portal_vs20 );
 			SET_STATIC_VERTEX_SHADER_COMBO( HASALPHAMASK, bAlphaMaskTexture );
 			SET_STATIC_VERTEX_SHADER_COMBO( HASSTATICTEXTURE, bStaticBlendTexture );
@@ -221,7 +221,7 @@ BEGIN_VS_SHADER( Portal_DX90,
 			if ( params[USEALTERNATEVIEWMATRIX]->GetIntValue() != 0 )
 			{
 				const VMatrix &matCustomView = params[ALTERNATEVIEWMATRIX]->GetMatrixValue();
-				
+
 				VMatrix matProj;
 				pShaderAPI->GetMatrix( MATERIAL_PROJECTION, matProj.Base() );
 				MatrixTranspose( matProj, matProj );
@@ -254,9 +254,7 @@ BEGIN_VS_SHADER( Portal_DX90,
 			}
 		}
 
-		Draw();		
+		Draw();
 	}
 
 END_SHADER
-
-

@@ -129,7 +129,7 @@ END_SEND_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseHelicopter::CBaseHelicopter( void )
 {
@@ -170,7 +170,7 @@ void CBaseHelicopter::Spawn( void )
 	//******
 	// All of this stuff is specific to the individual type of aircraft. Handle it yourself.
 	//******
-	//	m_iAmmoType = g_pGameRules->GetAmmoDef()->Index("AR2"); 
+	//	m_iAmmoType = g_pGameRules->GetAmmoDef()->Index("AR2");
 	//	SetModel( "models/attack_helicopter.mdl" );
 	//	UTIL_SetSize( this, Vector( -32, -32, -64 ), Vector( 32, 32, 0 ) );
 	//	UTIL_SetOrigin( this, GetLocalOrigin() );
@@ -180,7 +180,7 @@ void CBaseHelicopter::Spawn( void )
 	//	m_iRockets			= 10;
 	//	Get the rotor sound started up.
 
-	// This base class assumes the helicopter has no guns or missiles. 
+	// This base class assumes the helicopter has no guns or missiles.
 	// Set the appropriate flags in your derived class' Spawn() function.
 	m_fHelicopterFlags &= ~BITS_HELICOPTER_MISSILE_ON;
 	m_fHelicopterFlags &= ~BITS_HELICOPTER_GUN_ON;
@@ -197,7 +197,7 @@ void CBaseHelicopter::Spawn( void )
 	m_flMaxSpeedFiring = BASECHOPPER_MAX_FIRING_SPEED;
 	m_takedamage = DAMAGE_AIM;
 
-	// Don't start up if the level designer has asked the 
+	// Don't start up if the level designer has asked the
 	// helicopter to start disabled.
 	if ( !(m_spawnflags & SF_AWAITINPUT) )
 	{
@@ -243,7 +243,7 @@ float CBaseHelicopter::GetMaxSpeed()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CBaseHelicopter::GetMaxSpeedFiring()
 {
@@ -253,25 +253,25 @@ float CBaseHelicopter::GetMaxSpeedFiring()
 
 	return m_flMaxSpeedFiring;
 }
-  
+
 
 //------------------------------------------------------------------------------
 // Enemy methods
 //------------------------------------------------------------------------------
-bool CBaseHelicopter::GetTrackPatherTarget( Vector *pPos ) 
-{ 
-	if ( GetEnemy() ) 
-	{ 
-		*pPos = GetEnemy()->BodyTarget( GetAbsOrigin(), false ); 
-		return true; 
+bool CBaseHelicopter::GetTrackPatherTarget( Vector *pPos )
+{
+	if ( GetEnemy() )
+	{
+		*pPos = GetEnemy()->BodyTarget( GetAbsOrigin(), false );
+		return true;
 	}
-	
-	return false; 
+
+	return false;
 }
 
-CBaseEntity *CBaseHelicopter::GetTrackPatherTargetEnt()	
-{ 
-	return GetEnemy(); 
+CBaseEntity *CBaseHelicopter::GetTrackPatherTargetEnt()
+{
+	return GetEnemy();
 }
 
 
@@ -381,12 +381,12 @@ void CBaseHelicopter::DrawRotorWash( float flAltitude, const Vector &vecRotorOri
 #define MAX_AIRBOAT_ROLL_COSANGLE		0.866f
 #define MAX_AIRBOAT_ROLL_COSANGLE_X2	0.5f
 
-void CBaseHelicopter::DoWashPushOnAirboat( CBaseEntity *pAirboat, 
+void CBaseHelicopter::DoWashPushOnAirboat( CBaseEntity *pAirboat,
 	const Vector &vecWashToAirboat, float flWashAmount )
 {
 	// For the airboat, simply produce a small roll and a push outwards.
 	// But don't produce a roll if we're too rolled in that direction already.
-	
+
 	// Get the actual up direction vector
 	Vector vecUp;
 	pAirboat->GetVectors( NULL, NULL, &vecUp );
@@ -449,7 +449,7 @@ bool CBaseHelicopter::DoWashPush( washentity_t *pWash, const Vector &vecWashOrig
 	IRotorWashShooter *pShooter = GetRotorWashShooter( pEntity );
 	IPhysicsObject *pPhysObject;
 
-	
+
 	float flPushTime = (gpGlobals->curtime - pWash->flWashStartTime);
 	flPushTime = clamp( flPushTime, 0, BASECHOPPER_WASH_RAMP_TIME );
 	float flWashAmount = RemapVal( flPushTime, 0, BASECHOPPER_WASH_RAMP_TIME, BASECHOPPER_WASH_PUSH_MIN, BASECHOPPER_WASH_PUSH_MAX );
@@ -466,7 +466,7 @@ bool CBaseHelicopter::DoWashPush( washentity_t *pWash, const Vector &vecWashOrig
 		Wash.flWashStartTime = pWash->flWashStartTime;
 		int i = m_hEntitiesPushedByWash.AddToTail( Wash );
 		pWash = &m_hEntitiesPushedByWash[i];
-		
+
 		pPhysObject = pEntity->VPhysicsGetObject();
 		if ( !pPhysObject )
 			return true;
@@ -490,7 +490,7 @@ bool CBaseHelicopter::DoWashPush( washentity_t *pWash, const Vector &vecWashOrig
 
 	// This used to be mass independent, which is a bad idea because it blows 200kg engine blocks
 	// as much as it blows cardboard and soda cans. Make this force mass-independent, but clamp at
-	// 30kg. 
+	// 30kg.
 	flMass = MIN( flMass, 30.0f );
 
 	Vector vecForce = (0.015f / 0.1f) * flWashAmount * flMass * vecToSpot * phys_pushscale.GetFloat();
@@ -503,8 +503,8 @@ bool CBaseHelicopter::DoWashPush( washentity_t *pWash, const Vector &vecWashOrig
 		NDebugOverlay::Line( pEntity->GetAbsOrigin(), pEntity->GetAbsOrigin() + vecForce, 255, 255, 0, true, 0.1f );
 
 		IPhysicsObject *pPhysObject = pEntity->VPhysicsGetObject();
-		Msg("Pushed %s (index %d) (mass %f) with force %f (min %.2f max %.2f) at time %.2f\n", 
-			pEntity->GetClassname(), pEntity->entindex(), pPhysObject->GetMass(), flWashAmount, 
+		Msg("Pushed %s (index %d) (mass %f) with force %f (min %.2f max %.2f) at time %.2f\n",
+			pEntity->GetClassname(), pEntity->entindex(), pPhysObject->GetMass(), flWashAmount,
 			BASECHOPPER_WASH_PUSH_MIN * flMass, BASECHOPPER_WASH_PUSH_MAX * flMass, gpGlobals->curtime );
 	}
 
@@ -516,7 +516,7 @@ bool CBaseHelicopter::DoWashPush( washentity_t *pWash, const Vector &vecWashOrig
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseHelicopter::DoRotorPhysicsPush( const Vector &vecRotorOrigin, float flAltitude )
 {
@@ -565,7 +565,7 @@ void CBaseHelicopter::DoRotorPhysicsPush( const Vector &vecRotorOrigin, float fl
 		if ( pEntity->IsEFlagSet( EFL_NO_ROTORWASH_PUSH ))
 			continue;
 
-		if ( pShooter || pEntity->GetMoveType() == MOVETYPE_VPHYSICS || (pEntity->VPhysicsGetObject() && !pEntity->IsPlayer()) ) 
+		if ( pShooter || pEntity->GetMoveType() == MOVETYPE_VPHYSICS || (pEntity->VPhysicsGetObject() && !pEntity->IsPlayer()) )
 		{
 			// Make sure it's not already in our wash
 			bool bAlreadyPushing = false;
@@ -613,7 +613,7 @@ void CBaseHelicopter::DoRotorPhysicsPush( const Vector &vecRotorOrigin, float fl
 			if ( flDist > BASECHOPPER_WASH_RADIUS )
 				continue;
 
-			
+
 			// Try to cast to the helicopter; if we can't, then we can't be hit.
 			if ( pEntity->GetServerVehicle() )
 			{
@@ -662,7 +662,7 @@ void CBaseHelicopter::DoRotorPhysicsPush( const Vector &vecRotorOrigin, float fl
 //------------------------------------------------------------------------------
 // Updates the enemy
 //------------------------------------------------------------------------------
-float CBaseHelicopter::EnemySearchDistance( ) 
+float CBaseHelicopter::EnemySearchDistance( )
 {
 	return 4092;
 }
@@ -678,7 +678,7 @@ void CBaseHelicopter::UpdateEnemy()
 		SetEnemy( NULL );
 	}
 
-	// Look for my best enemy. If I change enemies, 
+	// Look for my best enemy. If I change enemies,
 	// be sure and change my prevseen/lastseen timers.
 	if( m_lifeState == LIFE_ALIVE )
 	{
@@ -733,8 +733,8 @@ void CBaseHelicopter::UpdateFacingDirection()
 		Vector targetDir = m_vecTargetPosition - GetAbsOrigin();
 		Vector desiredDir = GetDesiredPosition() - GetAbsOrigin();
 
-		VectorNormalize( targetDir ); 
-		VectorNormalize( desiredDir ); 
+		VectorNormalize( targetDir );
+		VectorNormalize( desiredDir );
 
 		if ( !IsCrashing() && m_flLastSeen + 5 > gpGlobals->curtime ) //&& DotProduct( targetDir, desiredDir) > 0.25)
 		{
@@ -829,7 +829,7 @@ void CBaseHelicopter::UpdatePlayerDopplerShift( )
 	{
 		CBaseEntity *pPlayer = NULL;
 
-		// UNDONE: this needs to send different sounds to every player for multiplayer.	
+		// UNDONE: this needs to send different sounds to every player for multiplayer.
 		// FIXME: this isn't the correct way to find a player!!!
 		pPlayer = gEntList.FindEntityByName( NULL, "!player" );
 		if (pPlayer)
@@ -898,7 +898,7 @@ void CBaseHelicopter::ComputeActualTargetPosition( float flSpeed, float flTime, 
 	}
 	else if ( IsOnPathTrack() )
 	{
-		// Blend in a fake destination point based on the dest velocity 
+		// Blend in a fake destination point based on the dest velocity
 		Vector vecDestVelocity;
 		ComputeNormalizedDestVelocity( &vecDestVelocity );
 		vecDestVelocity *= flSpeed;
@@ -932,7 +932,7 @@ void CBaseHelicopter::Flight( void )
 	{
 		m_flGoalSpeed += GetAcceleration();
 	}
-	
+
 	//NDebugOverlay::Line(GetAbsOrigin(), m_vecDesiredPosition, 0,0,255, true, 0.1);
 
 	// tilt model 5 degrees (why?! sjb)
@@ -969,7 +969,7 @@ void CBaseHelicopter::Flight( void )
 
 	// add immediate force
 	AngleVectors( GetLocalAngles() + vecAdj, &forward, &right, &up );
-	
+
 	Vector vecImpulse( 0, 0, 0 );
 	vecImpulse.x += up.x * m_flForce;
 	vecImpulse.y += up.y * m_flForce;
@@ -1012,23 +1012,23 @@ void CBaseHelicopter::Flight( void )
 	// them virtual functions (sjb)
 	ApplySidewaysDrag( right );
 	ApplyGeneralDrag();
-	
+
 	// apply power to stay correct height
 	// FIXME: these need to be per class variables
 #define MAX_FORCE		80
-#define FORCE_POSDELTA	12	
+#define FORCE_POSDELTA	12
 #define FORCE_NEGDELTA	8
 
-	if (m_flForce < MAX_FORCE && vecEst.z < GetDesiredPosition().z) 
+	if (m_flForce < MAX_FORCE && vecEst.z < GetDesiredPosition().z)
 	{
 		m_flForce += FORCE_POSDELTA;
 	}
 	else if (m_flForce > 30)
 	{
-		if (vecEst.z > GetDesiredPosition().z) 
+		if (vecEst.z > GetDesiredPosition().z)
 			m_flForce -= FORCE_NEGDELTA;
 	}
-	
+
 	// pitch forward or back to get to target
 	//-----------------------------------------
 	// Pitch is reversed since Half-Life! (sjb)
@@ -1057,8 +1057,8 @@ void CBaseHelicopter::Flight( void )
 	}
 
 	SetLocalAngularVelocity( angVel );
-	// ALERT( at_console, "%.0f %.0f : %.0f %.0f : %.0f %.0f : %.0f\n", GetAbsOrigin().x, GetAbsVelocity().x, flDist, flSpeed, GetLocalAngles().x, m_vecAngVelocity.x, m_flForce ); 
-	// ALERT( at_console, "%.0f %.0f : %.0f %0.f : %.0f\n", GetAbsOrigin().z, GetAbsVelocity().z, vecEst.z, m_vecDesiredPosition.z, m_flForce ); 
+	// ALERT( at_console, "%.0f %.0f : %.0f %.0f : %.0f %.0f : %.0f\n", GetAbsOrigin().x, GetAbsVelocity().x, flDist, flSpeed, GetLocalAngles().x, m_vecAngVelocity.x, m_flForce );
+	// ALERT( at_console, "%.0f %.0f : %.0f %0.f : %.0f\n", GetAbsOrigin().z, GetAbsVelocity().z, vecEst.z, m_vecDesiredPosition.z, m_flForce );
 }
 
 
@@ -1074,9 +1074,9 @@ void CBaseHelicopter::UpdateRotorWashVolume()
 	float flVolDelta = GetRotorVolume()	- controller.SoundGetVolume( m_pRotorSound );
 	if ( flVolDelta )
 	{
-		// We can change from 0 to 1 in 3 seconds. 
+		// We can change from 0 to 1 in 3 seconds.
 		// Figure out how many seconds flVolDelta will take.
-		float flRampTime = fabs( flVolDelta ) * 3.0f; 
+		float flRampTime = fabs( flVolDelta ) * 3.0f;
 		controller.SoundChangeVolume( m_pRotorSound, GetRotorVolume(), flRampTime );
 	}
 }
@@ -1117,7 +1117,7 @@ void CBaseHelicopter::InputKill( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseHelicopter::StopRotorWash( void )
 {
@@ -1196,7 +1196,7 @@ void CBaseHelicopter::UpdateRotorSoundPitch( int iPitch )
 void CBaseHelicopter::FlyTouch( CBaseEntity *pOther )
 {
 	// bounce if we hit something solid
-	if ( pOther->GetSolid() == SOLID_BSP) 
+	if ( pOther->GetSolid() == SOLID_BSP)
 	{
 //		trace_t tr;
 //		tr = CBaseEntity::GetTouchTrace();
@@ -1216,7 +1216,7 @@ void CBaseHelicopter::FlyTouch( CBaseEntity *pOther )
 void CBaseHelicopter::CrashTouch( CBaseEntity *pOther )
 {
 	// only crash if we hit something solid
-	if ( pOther->GetSolid() == SOLID_BSP) 
+	if ( pOther->GetSolid() == SOLID_BSP)
 	{
 		SetTouch( NULL );
 		SetNextThink( gpGlobals->curtime );
@@ -1241,9 +1241,9 @@ void CBaseHelicopter::DyingThink( void )
 //-----------------------------------------------------------------------------
 // Purpose: Override base class to add display of fly direction
 // Input  :
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
-void CBaseHelicopter::DrawDebugGeometryOverlays(void) 
+void CBaseHelicopter::DrawDebugGeometryOverlays(void)
 {
 	if (m_pfnThink!= NULL)
 	{
@@ -1260,9 +1260,9 @@ void CBaseHelicopter::DrawDebugGeometryOverlays(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  :
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 void CBaseHelicopter::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator )
 {
@@ -1347,7 +1347,7 @@ void CBaseHelicopter::Event_Killed( const CTakeDamageInfo &info )
 	{
 		m_flNextRocket = gpGlobals->curtime + 15.0;
 	}
-*/	
+*/
 	StopRotorWash();
 
 	m_OnDeath.FireOutput( info.GetAttacker(), this );
@@ -1474,9 +1474,9 @@ void CBaseHelicopter::InputSetAngles( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  :
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 void CBaseHelicopter::ApplySidewaysDrag( const Vector &vecRight )
 {
@@ -1489,9 +1489,9 @@ void CBaseHelicopter::ApplySidewaysDrag( const Vector &vecRight )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  :
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 void CBaseHelicopter::ApplyGeneralDrag( void )
 {
@@ -1499,12 +1499,12 @@ void CBaseHelicopter::ApplyGeneralDrag( void )
 	vecNewVelocity *= 0.995;
 	SetAbsVelocity( vecNewVelocity );
 }
-	
+
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  :
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 bool CBaseHelicopter::ChooseEnemy( void )
 {
@@ -1536,9 +1536,9 @@ bool CBaseHelicopter::ChooseEnemy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  :
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 void CBaseHelicopter::GatherEnemyConditions( CBaseEntity *pEnemy )
 {
@@ -1555,9 +1555,9 @@ void CBaseHelicopter::GatherEnemyConditions( CBaseEntity *pEnemy )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pInfo - 
-//			bAlways - 
+// Purpose:
+// Input  : *pInfo -
+//			bAlways -
 //-----------------------------------------------------------------------------
 void CBaseHelicopter::SetTransmit( CCheckTransmitInfo *pInfo, bool bAlways )
 {
@@ -1566,7 +1566,7 @@ void CBaseHelicopter::SetTransmit( CCheckTransmitInfo *pInfo, bool bAlways )
 		return;
 
 	BaseClass::SetTransmit( pInfo, bAlways );
-	
+
 	// Make our smoke trail always come with us
 	if ( m_hRotorWash )
 	{
@@ -1575,7 +1575,7 @@ void CBaseHelicopter::SetTransmit( CCheckTransmitInfo *pInfo, bool bAlways )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ExpandBBox(Vector &vecMins, Vector &vecMaxs)
 {

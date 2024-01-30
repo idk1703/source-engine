@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ public:
 protected:
 
 	friend class CCriticalSectionLock;
-	
+
 	void	Lock();
 	void	Unlock();
 
@@ -69,7 +69,7 @@ public:
 		CCriticalSection::Lock();
 		return &m_Data;
 	}
-	
+
 	void	Unlock()
 	{
 		CCriticalSection::Unlock();
@@ -92,7 +92,7 @@ public:
 
 	bool Init( bool bManualReset, bool bInitialState );
 	void Term();
-	
+
 	void* GetEventHandle() const;
 
 	// Signal the event.

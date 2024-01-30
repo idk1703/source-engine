@@ -61,14 +61,14 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CConfirmGiftWrapDialog::CConfirmGiftWrapDialog( vgui::Panel *parent, CEconItemView *pTool, CEconItemView *pToolSubject ) : CBaseToolUsageDialog( parent, "ConfirmApplyGiftWrapDialog", pTool, pToolSubject )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmGiftWrapDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -106,7 +106,7 @@ void CConfirmGiftWrapDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmGiftWrapDialog::Apply( void )
 {
@@ -153,7 +153,7 @@ public:
 					KeyValues *pkv = new KeyValues( "GiftReceiverParams" );
 					KeyValuesAD kvad( pkv );
 
-					pkv->SetString( "receiver_account_name", msg.Body().receiver_account_name().c_str() ); 
+					pkv->SetString( "receiver_account_name", msg.Body().receiver_account_name().c_str() );
 					ShowMessageBox( "#TF_DeliverGiftResultDialog_Title", "#TF_DeliverGiftResultDialog_Success_WithAccount", pkv, "#GameUI_OK" );
 				}
 				else
@@ -228,13 +228,13 @@ static void UnwrapGiftConfirm( bool bConfirmed, void *pContext )
 		GCClientSystem()->BSendMessage( msg );
 
 		EconUI()->Gamestats_ItemTransaction( IE_ITEM_USED_TOOL, pItem, "unwrapped_gift" );
-	}	
+	}
 }
 
 void PerformToolAction_UnwrapGift( vgui::Panel* pParent, CEconItemView *pGiftItem )
 {
-	CTFGenericConfirmDialog *pDialog = ShowConfirmDialog( "#TF_UnwrapGift_Title", "#TF_UnwrapGift_Text", 
-		"#GameUI_OK", "#Cancel", 
+	CTFGenericConfirmDialog *pDialog = ShowConfirmDialog( "#TF_UnwrapGift_Title", "#TF_UnwrapGift_Text",
+		"#GameUI_OK", "#Cancel",
 		&UnwrapGiftConfirm );
 	pDialog->AddStringToken( "item_name", pGiftItem->GetItemName() );
 	pDialog->SetContext( pGiftItem );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 // The CUtlAllocation class:
 // A single allocation in the style of CUtlMemory/CUtlString/CUtlBuffer
 //			as compact as possible, no virtuals or extraneous data
@@ -20,19 +20,19 @@ class CUtlAllocation
 public:
 
 	// constructor, destructor
-	CUtlAllocation()			
-	{ 
+	CUtlAllocation()
+	{
 		m_pMemory = NULL;
 	}
 
-	CUtlAllocation( const void *pMemory, int cub )			
-	{ 
+	CUtlAllocation( const void *pMemory, int cub )
+	{
 		m_pMemory = NULL;
 		Copy( pMemory, cub );
 	}
 
 	CUtlAllocation( CUtlAllocation const &src )
-	{ 
+	{
 		m_pMemory = NULL;
 		Copy( src );
 	}
@@ -65,7 +65,7 @@ public:
 		if ( cub != Count() )
 		{
 			Purge();
-			m_pMemory = (ActualMemory_t *)malloc( cub + sizeof( int ) ); 										
+			m_pMemory = (ActualMemory_t *)malloc( cub + sizeof( int ) );
 			m_pMemory->cub = cub;
 		}
 		Q_memcpy( Base(), pMemory, cub );
@@ -73,33 +73,33 @@ public:
 
 	// Gets the base address
 	uint8* Base()
-	{ 
-		if ( m_pMemory == NULL ) 
-			return NULL; 
-		return m_pMemory->rgub; 
+	{
+		if ( m_pMemory == NULL )
+			return NULL;
+		return m_pMemory->rgub;
 	}
 
 	const uint8* Base() const
-	{ 
-		if ( m_pMemory == NULL ) 
-			return NULL; 
-		return m_pMemory->rgub; 
+	{
+		if ( m_pMemory == NULL )
+			return NULL;
+		return m_pMemory->rgub;
 	}
 
 	// Size
 	int Count() const
-	{ 
-		if ( m_pMemory == NULL ) 
-			return 0; 
-		return m_pMemory->cub; 
+	{
+		if ( m_pMemory == NULL )
+			return 0;
+		return m_pMemory->cub;
 	}
 
 	// Memory deallocation
-	void Purge()											
-	{ 
+	void Purge()
+	{
 		if ( m_pMemory )
-			free(m_pMemory); 
-		m_pMemory = NULL; 
+			free(m_pMemory);
+		m_pMemory = NULL;
 	}
 
 	void Copy( const CUtlAllocation &alloc )
@@ -117,7 +117,7 @@ public:
 	void Alloc( int cub )
 	{
 		Purge();
-		m_pMemory = (ActualMemory_t *)malloc( cub + sizeof( int ) ); 										
+		m_pMemory = (ActualMemory_t *)malloc( cub + sizeof( int ) );
 		m_pMemory->cub = cub;
 	}
 

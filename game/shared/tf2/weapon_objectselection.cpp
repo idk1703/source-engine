@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ BEGIN_NETWORK_TABLE( CWeaponObjectSelection, DT_WeaponObjectSelection )
 END_NETWORK_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponObjectSelection::CWeaponObjectSelection()
 {
@@ -115,7 +115,7 @@ bool CWeaponObjectSelection::HasAmmo( void )
 
 #if defined( CLIENT_DLL )
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponObjectSelection::PreDataUpdate( DataUpdateType_t updateType )
 {
@@ -125,15 +125,15 @@ void CWeaponObjectSelection::PreDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void CWeaponObjectSelection::PostDataUpdate( DataUpdateType_t updateType )
 {
 	BaseClass::PostDataUpdate( updateType );
 
 	// Note, can't do this in OnDataChanged since you can get multiple
-	//  predataupdates/postdataupdates in one frame but only one OnDataChanged just before 
+	//  predataupdates/postdataupdates in one frame but only one OnDataChanged just before
 	//  rendering
 	if ( m_iOldObjectType != m_iObjectType )
 	{
@@ -142,7 +142,7 @@ void CWeaponObjectSelection::PostDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponObjectSelection::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -159,20 +159,20 @@ void CWeaponObjectSelection::OnDataChanged( DataUpdateType_t updateType )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CWeaponObjectSelection::GetSubType( void )
-{ 
+{
 #if !defined( CLIENT_DLL )
 	return BaseClass::GetSubType();
 #else
 	// We don't network down the subtype, so use out object type
-	return m_iObjectType; 
+	return m_iObjectType;
 #endif
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CWeaponObjectSelection::GetSlot( void ) const
 {
@@ -180,7 +180,7 @@ int CWeaponObjectSelection::GetSlot( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CWeaponObjectSelection::GetPosition( void ) const
 {
@@ -188,7 +188,7 @@ int CWeaponObjectSelection::GetPosition( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *CWeaponObjectSelection::GetPrintName( void ) const
@@ -198,7 +198,7 @@ const char *CWeaponObjectSelection::GetPrintName( void ) const
 
 #if defined( CLIENT_DLL )
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTexture const * CWeaponObjectSelection::GetSpriteActive( void ) const
 {
@@ -206,7 +206,7 @@ CHudTexture const * CWeaponObjectSelection::GetSpriteActive( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTexture const * CWeaponObjectSelection::GetSpriteInactive( void ) const
 {

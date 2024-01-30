@@ -19,13 +19,13 @@
 #include "tier0/memdbgon.h"
 
 #define COLLISION_PLANE_OFFSET 6.0f
-		  
+
 //-----------------------------------------------------------------------------
 // constructor, destructor
 //-----------------------------------------------------------------------------
 
-CSheetSimulator::CSheetSimulator( TraceLineFunc_t traceline, 
-							 TraceHullFunc_t traceHull ) : 
+CSheetSimulator::CSheetSimulator( TraceLineFunc_t traceline,
+							 TraceHullFunc_t traceHull ) :
 	m_pFixedPoint(0), m_ControlPoints(0),
 	m_TraceLine(traceline), m_TraceHull(traceHull)
 {
@@ -156,7 +156,7 @@ void CSheetSimulator::SetBoundingBox( Vector& mins, Vector& maxs )
 //-----------------------------------------------------------------------------
 // bounding box for collision
 //-----------------------------------------------------------------------------
- 
+
 void CSheetSimulator::ComputeBounds( Vector& mins, Vector& maxs )
 {
 	VectorCopy( m_Particle[0].m_Position, mins );
@@ -208,7 +208,7 @@ int CSheetSimulator::NumVertical() const
 
 int CSheetSimulator::PointCount() const
 {
-	return m_HorizontalCount * m_VerticalCount; 
+	return m_HorizontalCount * m_VerticalCount;
 }
 
 const Vector& CSheetSimulator::GetPoint( int x, int y ) const
@@ -257,7 +257,7 @@ void CSheetSimulator::ComputeControlPoints()
 }
 
 //-----------------------------------------------------------------------------
-// Clear forces + velocities affecting each point 
+// Clear forces + velocities affecting each point
 //-----------------------------------------------------------------------------
 
 void CSheetSimulator::ClearForces()
@@ -270,7 +270,7 @@ void CSheetSimulator::ClearForces()
 }
 
 //-----------------------------------------------------------------------------
-// Update the shield positions 
+// Update the shield positions
 //-----------------------------------------------------------------------------
 
 void CSheetSimulator::ComputeForces()
@@ -289,7 +289,7 @@ void CSheetSimulator::ComputeForces()
 		if (m_Springs[i].m_Particle2 < 0)
 		{
 			// Case where we're connected to a control point
-			dx = m_Particle[m_Springs[i].m_Particle1].m_Position - 
+			dx = m_Particle[m_Springs[i].m_Particle1].m_Position -
 				m_ControlPoints[- m_Springs[i].m_Particle2 - 1];
 			dv = m_Particle[m_Springs[i].m_Particle1].m_Velocity;
 
@@ -298,9 +298,9 @@ void CSheetSimulator::ComputeForces()
 		else
 		{
 			// Case where we're connected to another part of the shield
-			dx = m_Particle[m_Springs[i].m_Particle1].m_Position - 
+			dx = m_Particle[m_Springs[i].m_Particle1].m_Position -
 				m_Particle[m_Springs[i].m_Particle2].m_Position;
-			dv = m_Particle[m_Springs[i].m_Particle1].m_Velocity - 
+			dv = m_Particle[m_Springs[i].m_Particle1].m_Velocity -
 				m_Particle[m_Springs[i].m_Particle2].m_Velocity;
 
 			springConstant = m_PointSpringConstant;
@@ -334,7 +334,7 @@ void CSheetSimulator::ComputeForces()
 	// viscous drag term
 	for (i = 0; i < NumParticles(); ++i)
 	{
-		// Factor out bad forces for surface contact 
+		// Factor out bad forces for surface contact
 		// Do this before the drag term otherwise the drag will be too large
 		if ((m_Particle[i].m_CollisionPlane) >= 0)
 		{
@@ -362,8 +362,8 @@ void CSheetSimulator::TestVertAgainstPlane( int vert, int plane, bool bFarTest )
 	cplane_t* pPlane = &m_pCollisionPlanes[plane];
 
 	Ray_t ray;
-	ray.Init( m_Origin, m_Particle[vert].m_Position ); 
-	float t = IntersectRayWithPlane( ray, *pPlane ); 
+	ray.Init( m_Origin, m_Particle[vert].m_Position );
+	float t = IntersectRayWithPlane( ray, *pPlane );
 
 	if (!bFarTest || (t <= 1.0f))
 	{
@@ -394,26 +394,26 @@ void CSheetSimulator::InitPosition( int i )
 		m_pCollisionPlanes[i].dist += COLLISION_PLANE_OFFSET;
 
 		// The trace endpos represents where the center of the box
-		// ends up being. We actually want to choose a point which is on the 
+		// ends up being. We actually want to choose a point which is on the
 		// collision plane
 		Vector delta;
 		VectorSubtract( m_ControlPoints[i], m_Origin, delta );
-		int maxdist = VectorNormalize( delta ); 
-		float dist = (m_pCollisionPlanes[i].dist - DotProduct( m_Origin, m_pCollisionPlanes[i].normal )) / 
+		int maxdist = VectorNormalize( delta );
+		float dist = (m_pCollisionPlanes[i].dist - DotProduct( m_Origin, m_pCollisionPlanes[i].normal )) /
 			DotProduct( delta, m_pCollisionPlanes[i].normal );
 
 		if (dist > maxdist)
 			dist = maxdist;
 
 		VectorMA( m_Origin, dist, delta, m_Particle[i].m_Position );
-		
+
 		m_pValidCollisionPlane[i] = true;
 	}
 	else if (tr.allsolid || tr.startsolid)
 	{
 		m_pValidCollisionPlane[i] = true;
 		VectorSubtract( m_Origin, m_ControlPoints[i], m_pCollisionPlanes[i].normal );
-		VectorNormalize( m_pCollisionPlanes[i].normal ); 
+		VectorNormalize( m_pCollisionPlanes[i].normal );
 		m_pCollisionPlanes[i].dist = DotProduct( m_Origin, m_pCollisionPlanes[i].normal ) - COLLISION_PLANE_OFFSET;
 		m_pCollisionPlanes[i].type = 3;
 	}
@@ -447,7 +447,7 @@ void CSheetSimulator::DetectCollision( int i, float flPlaneOffset )
 	{
 		m_pValidCollisionPlane[i] = true;
 		VectorSubtract( m_Origin, m_ControlPoints[i], m_pCollisionPlanes[i].normal );
-		VectorNormalize( m_pCollisionPlanes[i].normal ); 
+		VectorNormalize( m_pCollisionPlanes[i].normal );
 		m_pCollisionPlanes[i].dist = DotProduct( m_Origin, m_pCollisionPlanes[i].normal ) - flPlaneOffset;
 		m_pCollisionPlanes[i].type = 3;
 	}
@@ -502,7 +502,7 @@ void CSheetSimulator::SatisfyCollisionConstraints()
 	// Eliminate velocity perp to a collision plane
 	for ( int i = 0; i < NumParticles(); ++i )
 	{
-		// The actual collision plane 
+		// The actual collision plane
 		if (m_Particle[i].m_CollisionPlane >= 0)
 		{
 			cplane_t* pPlane = &m_pCollisionPlanes[m_Particle[i].m_CollisionPlane];
@@ -530,7 +530,7 @@ void CSheetSimulator::EulerStep( float dt )
 	// Update positions and velocities
 	for ( int i = 0; i < NumParticles(); ++i)
 	{
-		m_Particle[i].m_Position += m_Particle[i].m_Velocity * dt; 
+		m_Particle[i].m_Position += m_Particle[i].m_Velocity * dt;
 		m_Particle[i].m_Velocity += m_Particle[i].m_Force * dt / m_Particle[i].m_Mass;
 
 		assert( IsFinite( m_Particle[i].m_Velocity.x ) &&
@@ -548,7 +548,7 @@ void CSheetSimulator::EulerStep( float dt )
 }
 
 //-----------------------------------------------------------------------------
-// Update the shield position: 
+// Update the shield position:
 //-----------------------------------------------------------------------------
 
 void CSheetSimulator::Simulate( float dt )
@@ -561,7 +561,7 @@ void CSheetSimulator::Simulate( float dt )
 void CSheetSimulator::Simulate( float dt, int steps )
 {
 	ComputeControlPoints();
-	
+
 	// Initialize positions if necessary
 	dt /= steps;
 	for (int i = 0; i < steps; ++i)
@@ -585,7 +585,7 @@ void CSheetSimulator::ClampPointsToCollisionPlanes()
 	// Eliminate velocity perp to a collision plane
 	for ( int i = 0; i < NumParticles(); ++i )
 	{
-		// The actual collision plane 
+		// The actual collision plane
 		if (m_Particle[i].m_CollisionPlane >= 0)
 		{
 			cplane_t* pPlane = &m_pCollisionPlanes[m_Particle[i].m_CollisionPlane];
@@ -607,7 +607,7 @@ void CSheetSimulator::ClampPointsToCollisionPlanes()
 //-----------------------------------------------------------------------------
 CIterativeSheetSimulator::CIterativeSheetSimulator( TraceLineFunc_t traceline, TraceHullFunc_t traceHull ) :
 	CSheetSimulator( traceline, traceHull ),
-	m_SimulationSteps(0) 
+	m_SimulationSteps(0)
 {
 }
 
@@ -650,7 +650,7 @@ bool CIterativeSheetSimulator::Think( )
 	}
 }
 
-// Iterative collision detection 
+// Iterative collision detection
 void CIterativeSheetSimulator::DetectCollisions( void )
 {
 	for ( int i = 0; i < m_CollisionCount; ++i )

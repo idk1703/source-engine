@@ -32,8 +32,8 @@ public:
 
 private:
 	int m_currentActivity;
-	int m_moveXPoseParameter;	
-	int m_moveYPoseParameter;	
+	int m_moveXPoseParameter;
+	int m_moveYPoseParameter;
 };
 
 

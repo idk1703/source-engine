@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -218,7 +218,7 @@ public:
 	void GetTextureName(char *pszName) const;
 
 	inline IEditorTexture *GetTexture(void) const;
-		
+
 	// Renders opaque faces
 	static void			AddFaceToQueue( CMapFace* pMapFace, IEditorTexture* pTexture, EditorRenderMode_t renderMode, bool selected, SelectionState_t faceSelectionState );
 	static void			PushFaceQueue( void );
@@ -292,7 +292,7 @@ public:
 		Vector	tangent;
 		Vector	binormal;
 	};
-		
+
 	void CalcTangentSpaceAxes( void );
 	bool AllocTangentSpaceAxes( int count );
 	void FreeTangentSpaceAxes( void );
@@ -351,11 +351,11 @@ public:
 	virtual void AddShadowingTriangles( CUtlVector<Vector> &tri_list );
 
 	DetailObjects		*m_pDetailObjects;
-	
+
 protected:
 
 	void ComputeColor( CRender3D* pRender, bool bRenderAsSelected, SelectionState_t faceSelectionState,
-					   bool ignoreLighting, Color &pColor );
+						bool ignoreLighting, Color &pColor );
 
 	void DrawFace( Color &pColor, EditorRenderMode_t mode );
 	void RenderGridIfCloseEnough( CRender3D* pRender );
@@ -415,40 +415,40 @@ inline int CMapFace::GetFaceID(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : TexCoord - 
-//			nTexCoord - 
+// Purpose:
+// Input  : TexCoord -
+//			nTexCoord -
 //-----------------------------------------------------------------------------
 inline void CMapFace::GetLightmapCoord( Vector2D& LightmapCoord, int nIndex )
 {
-    Assert( nIndex < nPoints );
-    LightmapCoord[0] = m_pLightmapCoords[nIndex][0];
-    LightmapCoord[1] = m_pLightmapCoords[nIndex][1];
+	Assert( nIndex < nPoints );
+	LightmapCoord[0] = m_pLightmapCoords[nIndex][0];
+	LightmapCoord[1] = m_pLightmapCoords[nIndex][1];
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &LightmapCoord - 
-//			nIndex - 
+// Purpose:
+// Input  : &LightmapCoord -
+//			nIndex -
 // Output : inline void
 //-----------------------------------------------------------------------------
 inline void CMapFace::SetLightmapCoord( const Vector2D &LightmapCoord, int nIndex )
 {
-    Assert( nIndex < nPoints );
+	Assert( nIndex < nPoints );
 	m_pLightmapCoords[nIndex][0] = LightmapCoord[0];
 	m_pLightmapCoords[nIndex][1] = LightmapCoord[1];
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : TexCoord - 
-//			nTexCoord - 
+// Purpose:
+// Input  : TexCoord -
+//			nTexCoord -
 //-----------------------------------------------------------------------------
 inline void CMapFace::GetTexCoord( Vector2D& TexCoord, int nTexCoord )
 {
-    Assert( nTexCoord < nPoints );
-    TexCoord[0] = m_pTextureCoords[nTexCoord][0];
-    TexCoord[1] = m_pTextureCoords[nTexCoord][1];
+	Assert( nTexCoord < nPoints );
+	TexCoord[0] = m_pTextureCoords[nTexCoord][0];
+	TexCoord[1] = m_pTextureCoords[nTexCoord][1];
 }
 
 
@@ -510,7 +510,7 @@ inline void CMapFace::SetDisp( EditDispHandle_t handle, bool bDestroyPrevious )
 		// destroy old handle
 		EditDispMgr()->Destroy( m_DispHandle );
 	}
-		
+
 	Assert( ( handle == EDITDISPHANDLE_INVALID ) || ( EditDispMgr()->GetDisp( handle ) != NULL ) );
 
 	m_DispHandle = handle;
@@ -518,12 +518,12 @@ inline void CMapFace::SetDisp( EditDispHandle_t handle, bool bDestroyPrevious )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Returns the displacement surface applied to this face, 
+// Purpose: Returns the displacement surface applied to this face,
 //          DISPHANDLE_INVALID if none.
 //-----------------------------------------------------------------------------
 inline EditDispHandle_t CMapFace::GetDisp( void )
 {
-    return m_DispHandle;
+	return m_DispHandle;
 }
 
 
@@ -578,7 +578,7 @@ CMapFaceList::CMapFaceList(CMapFaceList const &other)
 
 //-----------------------------------------------------------------------------
 // Purpose: Assignment operator for copying face lists.
-// Input  : other - 
+// Input  : other -
 //-----------------------------------------------------------------------------
 CMapFaceList &CMapFaceList::operator =(CMapFaceList const &other)
 {
@@ -632,7 +632,7 @@ CMapFaceIDList::CMapFaceIDList(CMapFaceIDList const &other)
 
 //-----------------------------------------------------------------------------
 // Purpose: Assignment operator for copying face ID lists.
-// Input  : other - 
+// Input  : other -
 //-----------------------------------------------------------------------------
 CMapFaceIDList &CMapFaceIDList::operator =(CMapFaceIDList const &other)
 {

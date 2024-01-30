@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -22,7 +22,7 @@
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_DamageTaken : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -65,7 +65,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_DamageTaken, ACHIEVEMENT_TF_HEAVY_DAMAG
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_DamageTypesTaken : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -93,7 +93,7 @@ class CAchievementTFHeavy_DamageTypesTaken : public CBaseTFAchievement
 			m_iDamageTypesTaken |= iDmgType;
 
 			// Get the achievement once we've been shot, burned, clubbed, and exploded.
-			if ( (m_iDamageTypesTaken & (DMG_BULLET|DMG_BUCKSHOT)) && (m_iDamageTypesTaken & DMG_BLAST) && 
+			if ( (m_iDamageTypesTaken & (DMG_BULLET|DMG_BUCKSHOT)) && (m_iDamageTypesTaken & DMG_BLAST) &&
 				 (m_iDamageTypesTaken & (DMG_BURN|DMG_IGNITE)) && (m_iDamageTypesTaken & (DMG_CLUB|DMG_SLASH)) )
 			{
 				IncrementCount();
@@ -117,7 +117,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_DamageTypesTaken, ACHIEVEMENT_TF_HEAVY_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_SurviveCrocket : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -130,14 +130,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_SurviveCrocket, ACHIEVEMENT_TF_HEAVY_SU
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_UncoverSpies : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 10 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -165,10 +165,10 @@ class CAchievementTFHeavy_UncoverSpies : public CBaseTFAchievement
 					}
 				}
 			}
-			
+
 			if ( bSuccess )
 			{
-				IncrementCount(); 
+				IncrementCount();
 			}
 		}
 	}
@@ -178,14 +178,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_UncoverSpies, ACHIEVEMENT_TF_HEAVY_UNCO
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_AssistGrind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 1000 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -196,7 +196,7 @@ class CAchievementTFHeavy_AssistGrind : public CBaseTFAchievement
 		{
 			if ( iAssisterIndex == GetLocalPlayerIndex() )
 			{
-				IncrementCount(); 
+				IncrementCount();
 			}
 		}
 	}
@@ -206,14 +206,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_AssistGrind, ACHIEVEMENT_TF_HEAVY_ASSIS
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_KillHeaviesGloves : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 10 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -237,14 +237,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_KillHeaviesGloves, ACHIEVEMENT_TF_HEAVY
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_AssistHeavyGrind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 25 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -262,7 +262,7 @@ class CAchievementTFHeavy_AssistHeavyGrind : public CBaseTFAchievement
 				{
 					if ( pTFAssister && pTFAssister->IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) && pTFAttacker && pTFAttacker->IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) )
 					{
-						IncrementCount(); 
+						IncrementCount();
 					}
 				}
 			}
@@ -274,14 +274,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_AssistHeavyGrind, ACHIEVEMENT_TF_HEAVY_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_KillDominated : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 20 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -293,10 +293,10 @@ class CAchievementTFHeavy_KillDominated : public CBaseTFAchievement
 			if ( !bDomination ) // we didn't dominate them with *THIS* kill
 			{
 				CTFPlayer *pTFAttacker = ToTFPlayer( pAttacker );
-				
+
 				if ( pTFAttacker && pTFAttacker->m_Shared.IsPlayerDominated( pVictim->entindex() ) )
 				{
-					IncrementCount(); 
+					IncrementCount();
 				}
 			}
 		}
@@ -307,13 +307,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_KillDominated, ACHIEVEMENT_TF_HEAVY_KIL
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_KillCritPunch : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -322,7 +322,7 @@ class CAchievementTFHeavy_KillCritPunch : public CBaseTFAchievement
 		{
 			if ( event->GetInt( "damagebits" ) & DMG_CRITICAL )
 			{
-				IncrementCount(); 
+				IncrementCount();
 			}
 		}
 	}
@@ -332,14 +332,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_KillCritPunch, ACHIEVEMENT_TF_HEAVY_KIL
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_KillUnderwater : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 50 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -360,7 +360,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_KillUnderwater, ACHIEVEMENT_TF_HEAVY_KI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_HealMedikits : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -403,7 +403,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_HealMedikits, ACHIEVEMENT_TF_HEAVY_HEAL
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_ReceiveUberGrind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 50 );
@@ -417,7 +417,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_ReceiveUberGrind, ACHIEVEMENT_TF_HEAVY_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_KillWhileSpunup : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -431,7 +431,7 @@ class CAchievementTFHeavy_KillWhileSpunup : public CBaseTFAchievement
 		m_nNumKilled = 0;
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -465,7 +465,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_KillWhileSpunup, ACHIEVEMENT_TF_HEAVY_K
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_PayloadCapGrind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 50 );
@@ -479,14 +479,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_PayloadCapGrind, ACHIEVEMENT_TF_HEAVY_P
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_KillMidAirMinigun : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 10 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -505,7 +505,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_KillMidAirMinigun, ACHIEVEMENT_TF_HEAVY
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_DefendControlPoint : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 25 );
@@ -519,7 +519,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_DefendControlPoint, ACHIEVEMENT_TF_HEAV
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_FireLots : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -532,23 +532,23 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_FireLots, ACHIEVEMENT_TF_HEAVY_FIRE_LOT
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_KillWithShotgun : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
 
 		CTFPlayer *pAttackingPlayer = ToTFPlayer( pAttacker );
 
-		if ( pAttacker == C_BasePlayer::GetLocalPlayer() && pAttackingPlayer->GetAmmoCount( TF_AMMO_PRIMARY ) <= 0 && 
+		if ( pAttacker == C_BasePlayer::GetLocalPlayer() && pAttackingPlayer->GetAmmoCount( TF_AMMO_PRIMARY ) <= 0 &&
 			event->GetInt( "weaponid" ) == TF_WEAPON_SHOTGUN_HWG )
 		{
-				IncrementCount(); 
+				IncrementCount();
 		}
 	}
 };
@@ -557,7 +557,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_KillWithShotgun, ACHIEVEMENT_TF_HEAVY_K
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_EarnDominationForMedic : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -570,7 +570,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_EarnDominationForMedic, ACHIEVEMENT_TF_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_ClearStickybombs : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 20 );
@@ -584,7 +584,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_ClearStickybombs, ACHIEVEMENT_TF_HEAVY_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_FirstToCap : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -640,13 +640,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_FirstToCap, ACHIEVEMENT_TF_HEAVY_FIRST_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_KillTaunt : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 		if ( pAttacker == pLocalPlayer )
@@ -671,7 +671,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_TeleportFastKill, ACHIEVEMENT_TF_HEAVY_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_FreezecamTaunt : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -684,14 +684,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_FreezecamTaunt, ACHIEVEMENT_TF_HEAVY_FR
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_RevengeAssist : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 5 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -726,7 +726,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_RevengeAssist, ACHIEVEMENT_TF_HEAVY_REV
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_DefendMedic : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 50 );
@@ -740,7 +740,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_DefendMedic, ACHIEVEMENT_TF_HEAVY_DEFEN
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_KillCappingEnemies : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 15 );
@@ -754,7 +754,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_KillCappingEnemies, ACHIEVEMENT_TF_HEAV
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_BlockInvulnHeavy : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -767,14 +767,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_BlockInvulnHeavy, ACHIEVEMENT_TF_HEAVY_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_KillFlagCarriers : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 10 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -795,7 +795,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_KillFlagCarriers, ACHIEVEMENT_TF_HEAVY_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_StandNearDispenser : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 20 );
@@ -809,7 +809,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_StandNearDispenser, ACHIEVEMENT_TF_HEAV
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_EatSandwiches : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 100 );
@@ -823,14 +823,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_EatSandwiches, ACHIEVEMENT_TF_HEAVY_EAT
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_KillScouts : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 50 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -853,7 +853,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_KillScouts, ACHIEVEMENT_TF_HEAVY_KILL_S
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_BlockCart : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 25 );
@@ -886,7 +886,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_BlockCart, ACHIEVEMENT_TF_HEAVY_BLOCK_C
 #define MAX_PARTNERS 12
 class CAchievementTFHeavy_AssistMedicLarge : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 1 );
@@ -917,7 +917,7 @@ class CAchievementTFHeavy_AssistMedicLarge : public CBaseTFAchievement
 		return -1;
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -1037,7 +1037,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFHeavy_AssistMedicLarge, ACHIEVEMENT_TF_HEAVY_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFHeavy_KillMedicPair : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL  | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -1089,7 +1089,7 @@ class CAchievementTFHeavy_KillMedicPair : public CBaseTFAchievement
 		m_hTargets[iTargetIndex].flTimeToBeat = gpGlobals->curtime + 15.0f; // 15 seconds to kill the target
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -1143,7 +1143,7 @@ class CAchievementTFHeavy_KillMedicPair : public CBaseTFAchievement
 						{
 							pNewTarget = ToTFPlayer( pTFVictim->MedicGetHealTarget() );
 							if ( pNewTarget && pNewTarget->IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) )
-							{	
+							{
 								AddNewTarget( pNewTarget, pPartner );
 							}
 						}
@@ -1177,7 +1177,7 @@ class CAchievementTFHeavy_AchieveProgress1 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFHeavy_AchieveProgress1, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 10, ACHIEVEMENT_TF_HEAVY_START_RANGE, ACHIEVEMENT_TF_HEAVY_END_RANGE );
@@ -1190,7 +1190,7 @@ class CAchievementTFHeavy_AchieveProgress2 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFHeavy_AchieveProgress2, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 16, ACHIEVEMENT_TF_HEAVY_START_RANGE, ACHIEVEMENT_TF_HEAVY_END_RANGE );
@@ -1203,7 +1203,7 @@ class CAchievementTFHeavy_AchieveProgress3 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFHeavy_AchieveProgress3, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 22, ACHIEVEMENT_TF_HEAVY_START_RANGE, ACHIEVEMENT_TF_HEAVY_END_RANGE );
@@ -1212,6 +1212,3 @@ public:
 DECLARE_ACHIEVEMENT( CAchievementTFHeavy_AchieveProgress3, ACHIEVEMENT_TF_HEAVY_ACHIEVE_PROGRESS3, "TF_HEAVY_ACHIEVE_PROGRESS3", 5 );
 
 #endif // CLIENT_DLL
-
-
-

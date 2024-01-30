@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -30,7 +30,7 @@ void SendProxy_UInt64ToInt64( const SendProp *pProp, const void *pStruct, const 
 #endif
 const char *s_ElementNames[MAX_ARRAY_ELEMENTS] =
 {
-	"000", "001", "002", "003", "004", "005", "006", "007", "008", "009", 
+	"000", "001", "002", "003", "004", "005", "006", "007", "008", "009",
 	"010", "011", "012", "013", "014", "015", "016", "017", "018", "019",
 	"020", "021", "022", "023", "024", "025", "026", "027", "028", "029",
 	"030", "031", "032", "033", "034", "035", "036", "037", "038", "039",
@@ -160,17 +160,17 @@ CStandardSendProxiesV1::CStandardSendProxiesV1()
 #ifdef SUPPORTS_INT64
 	m_UInt64ToInt64 = SendProxy_UInt64ToInt64;
 #endif
-	
+
 	m_FloatToFloat = SendProxy_FloatToFloat;
 	m_VectorToVector = SendProxy_VectorToVector;
 }
 
 CStandardSendProxies::CStandardSendProxies()
-{	
+{
 	m_DataTableToDataTable = SendProxy_DataTableToDataTable;
 	m_SendLocalDataTable = SendProxy_SendLocalDataTable;
 	m_ppNonModifiedPointerProxies = &s_pNonModifiedPointerProxyHead;
-	
+
 }
 CStandardSendProxies g_StandardSendProxies;
 
@@ -297,9 +297,9 @@ static void SendProxy_Empty( const SendProp *pProp, const void *pStruct, const v
 // Purpose: If the recipient is the same as objectID, go ahead and iterate down
 //  the m_Local stuff, otherwise, act like it wasn't there at all.
 // This way, only the local player receives information about him/herself.
-// Input  : *pVarData - 
-//			*pOut - 
-//			objectID - 
+// Input  : *pVarData -
+//			*pOut -
+//			objectID -
 //-----------------------------------------------------------------------------
 
 void* SendProxy_SendLocalDataTable( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID )
@@ -326,7 +326,7 @@ float AssignRangeMultiplier( int nBits, double range )
 	float fHighLowMul = iHighValue / range;
 	if ( CloseEnough( range, 0 ) )
 		fHighLowMul = iHighValue;
-	
+
 	// If the precision is messing us up, then adjust it so it won't.
 	if ( (unsigned long)(fHighLowMul * range) > iHighValue ||
 		 (fHighLowMul * range) > (double)iHighValue )
@@ -362,7 +362,7 @@ float AssignRangeMultiplier( int nBits, double range )
 
 
 SendProp SendPropFloat(
-	const char *pVarName,		
+	const char *pVarName,
 	// Variable name.
 	int offset,			// Offset into container structure.
 	int sizeofVar,
@@ -587,7 +587,7 @@ SendProp SendPropQAngles(
 
 	return ret;
 }
-  
+
 SendProp SendPropInt(
 	const char *pVarName,
 	int offset,
@@ -638,7 +638,7 @@ SendProp SendPropInt(
 #else
 	ret.m_Type = DPT_Int;
 #endif
-	
+
 	ret.m_pVarName = pVarName;
 	ret.SetOffset( offset );
 	ret.m_nBits = nBits;
@@ -652,13 +652,13 @@ SendProp SendPropInt(
 	{
 		if( varProxy == SendProxy_Int8ToInt32 )
 			ret.SetProxyFn( SendProxy_UInt8ToInt32 );
-		
+
 		else if( varProxy == SendProxy_Int16ToInt32 )
 			ret.SetProxyFn( SendProxy_UInt16ToInt32 );
 
 		else if( varProxy == SendProxy_Int32ToInt32 )
 			ret.SetProxyFn( SendProxy_UInt32ToInt32 );
-			
+
 #ifdef SUPPORTS_INT64
 		else if( varProxy == SendProxy_Int64ToInt64 )
 			ret.SetProxyFn( SendProxy_UInt64ToInt64 );
@@ -678,7 +678,7 @@ SendProp SendPropString(
 	SendProp ret;
 
 	Assert( bufferLen <= DT_MAX_STRING_BUFFERSIZE ); // You can only have strings with 8-bits worth of length.
-	
+
 	ret.m_Type = DPT_String;
 	ret.m_pVarName = pVarName;
 	ret.SetOffset( offset );
@@ -705,11 +705,11 @@ SendProp SendPropArray3(
 	ret.m_pVarName = pVarName;
 	ret.SetOffset( offset );
 	ret.SetDataTableProxyFn( varProxy );
-	
+
 	SendProp *pArrayPropAllocated = new SendProp;
 	*pArrayPropAllocated = pArrayProp;
 	ret.SetArrayProp( pArrayPropAllocated );
-	
+
 	// Handle special proxy types where they always let all clients get the results.
 	if ( varProxy == SendProxy_DataTableToDataTable || varProxy == SendProxy_DataTablePtrToDataTable )
 	{
@@ -717,7 +717,7 @@ SendProp SendPropArray3(
 	}
 
 	SendProp *pProps = new SendProp[elements]; // TODO free that again
-	
+
 	for ( int i = 0; i < elements; i++ )
 	{
 		pProps[i] = pArrayProp;	// copy array element property setting
@@ -747,13 +747,13 @@ SendProp SendPropDataTable(
 	ret.SetOffset( offset );
 	ret.SetDataTable( pTable );
 	ret.SetDataTableProxyFn( varProxy );
-	
+
 	// Handle special proxy types where they always let all clients get the results.
 	if ( varProxy == SendProxy_DataTableToDataTable || varProxy == SendProxy_DataTablePtrToDataTable )
 	{
 		ret.SetFlags( SPROP_PROXY_ALWAYS_YES );
 	}
-	
+
 	if ( varProxy == SendProxy_DataTableToDataTable && offset == 0 )
 	{
 		ret.SetFlags( SPROP_COLLAPSIBLE );
@@ -780,7 +780,7 @@ SendProp InternalSendPropArray(
 	ret.m_pArrayProp = NULL;	// This gets set in SendTable_InitTable. It always points at the property that precedes
 								// this one in the datatable's list.
 	ret.SetArrayLengthProxy( arrayLengthFn );
-		
+
 	return ret;
 }
 
@@ -813,7 +813,7 @@ SendProp::SendProp()
 	m_pExcludeDTName = NULL;
 	m_pParentArrayPropName = NULL;
 
-	
+
 	m_Type = DPT_Int;
 	m_Flags = 0;
 	m_nBits = 0;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmecamera.h"
@@ -20,13 +20,13 @@
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeCamera, CDmeCamera );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeCamera::OnConstruction()
 {
@@ -49,7 +49,7 @@ void CDmeCamera::OnConstruction()
 void CDmeCamera::OnDestruction()
 {
 }
-	
+
 //-----------------------------------------------------------------------------
 // Loads the material system view matrix based on the transform
 //-----------------------------------------------------------------------------
@@ -284,5 +284,3 @@ void CDmeCamera::ComputeScreenSpacePosition( const Vector &vecWorldPosition, int
 	pScreenPosition->x = ( vecScreenPos.x + 1.0f ) * width / 2.0f;
 	pScreenPosition->y = ( -vecScreenPos.y + 1.0f ) * height / 2.0f;
 }
-
-

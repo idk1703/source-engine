@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2006, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: VPC
 //
@@ -83,7 +83,7 @@ void VPC_Config_Keyword( configKeyword_e keyword, const char *pkeywordToken )
 		pToken = g_pVPC->GetScript().GetToken( true );
 		if ( !pToken || !pToken[0] || V_stricmp( pToken, "{" ) )
 			g_pVPC->VPCSyntaxError();
-		
+
 		while ( 1 )
 		{
 			pToken = g_pVPC->GetScript().GetToken( true );
@@ -310,7 +310,7 @@ void VPC_Keyword_FileConfiguration()
 				g_pVPC->VPCSyntaxError();
 			}
 		}
-		
+
 		g_pVPC->GetProjectGenerator()->EndConfigurationBlock();
 	}
 }
@@ -392,7 +392,7 @@ void VPC_Keyword_FolderConfiguration( folderConfig_t *pFolderConfig )
 	{
 		g_pVPC->VPCSyntaxError();
 	}
-	
+
 	// save parser state so we remember where the block is.  We'll refer back to it when handlign individual files.
 	pFolderConfig->scriptSource = g_pVPC->GetScript().GetCurrentScript();
 
@@ -445,7 +445,7 @@ void VPC_ApplyFolderConfigurationToFile( const folderConfig_t &folderConfig )
 	for ( int i = 0; i < folderConfig.vecConfigurationNames.Count(); i++ )
 	{
 		g_pVPC->GetScript().RestoreScript( folderConfig.scriptSource );
-		
+
 		// Tell the generator we're about to feed it configuration data for this file.
 		g_pVPC->GetProjectGenerator()->StartConfigurationBlock( folderConfig.vecConfigurationNames[i].String(), true );
 
@@ -479,7 +479,7 @@ void VPC_ApplyFolderConfigurationToFile( const folderConfig_t &folderConfig )
 				g_pVPC->VPCSyntaxError();
 			}
 		}
-		
+
 		g_pVPC->GetProjectGenerator()->EndConfigurationBlock();
 	}
 

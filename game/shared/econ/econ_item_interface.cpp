@@ -109,11 +109,11 @@ bool IEconItemInterface::IsPermanentlyUntradable() const
 		return true;
 
 	// check attributes
-	
+
 	static CSchemaAttributeDefHandle pAttrib_AlwaysTradable( "always tradable" );
 	static CSchemaAttributeDefHandle pAttrib_CannotTrade( "cannot trade" );
 	static CSchemaAttributeDefHandle pAttrib_NonEconomy( "non economy" );
-	
+
 	Assert( pAttrib_AlwaysTradable != NULL );
 	Assert( pAttrib_CannotTrade != NULL );
 
@@ -121,7 +121,7 @@ bool IEconItemInterface::IsPermanentlyUntradable() const
 		return true;
 
 	// Order matters, check for nonecon first.  Always tradable overrides cannot trade.
-	if ( FindAttribute( pAttrib_NonEconomy ) )			
+	if ( FindAttribute( pAttrib_NonEconomy ) )
 		return true;
 
 	if ( FindAttribute( pAttrib_AlwaysTradable ) )		// *sigh*
@@ -206,7 +206,7 @@ int IEconItemInterface::GetUntradabilityFlags() const
 	{
 		nFlags |= k_Untradability_Temporary;
 	}
-	
+
 	if ( IsPermanentlyUntradable() )
 	{
 		nFlags |= k_Untradability_Permanent;

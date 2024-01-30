@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -23,10 +23,10 @@ class CWeaponPistol : public CWeaponSDKBase
 {
 public:
 	DECLARE_CLASS( CWeaponPistol, CWeaponSDKBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponPistol();
 
 	virtual SDKWeaponID GetWeaponID( void ) const		{ return SDK_WEAPON_PISTOL; }
@@ -55,7 +55,7 @@ CWeaponPistol::CWeaponPistol()
 }
 
 //Tony; todo; add ACT_MP_PRONE* activities, so we have them.
-acttable_t CWeaponPistol::m_acttable[] = 
+acttable_t CWeaponPistol::m_acttable[] =
 {
 	{ ACT_MP_STAND_IDLE,					ACT_DOD_STAND_IDLE_PISTOL,				false },
 	{ ACT_MP_CROUCH_IDLE,					ACT_DOD_CROUCH_IDLE_PISTOL,				false },
@@ -77,4 +77,3 @@ acttable_t CWeaponPistol::m_acttable[] =
 };
 
 IMPLEMENT_ACTTABLE( CWeaponPistol );
-

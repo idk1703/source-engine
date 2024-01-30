@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -14,7 +14,7 @@ const float BROADCAST_LIST_TIMEOUT = 0.4f;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CLanGames::CLanGames(vgui::Panel *parent, bool bAutoRefresh, const char *pCustomResFilename ) : 
+CLanGames::CLanGames(vgui::Panel *parent, bool bAutoRefresh, const char *pCustomResFilename ) :
 	CBaseGamesPage(parent, "LanGames", eLANServer, pCustomResFilename)
 {
 	m_iServerRefreshCount = 0;
@@ -157,4 +157,3 @@ void CLanGames::OnOpenContextMenu(int row)
 	CServerContextMenu *menu = ServerBrowserDialog().GetContextMenu(GetActiveList());
 	menu->ShowMenu(this, serverID, true, true, true, false);
 }
-

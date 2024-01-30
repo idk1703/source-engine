@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,8 +22,8 @@
 
 //
 // These classes pass all filesystem interface calls through to another filesystem
-// interface. They can be used anytime you want to override a couple things in 
-// a filesystem. VMPI uses this to override the base filesystem calls while 
+// interface. They can be used anytime you want to override a couple things in
+// a filesystem. VMPI uses this to override the base filesystem calls while
 // allowing the rest of the filesystem functionality to work on the master.
 //
 
@@ -81,12 +81,12 @@ public:
 	{
 		if ( !bBaseOnly )
 			m_pFileSystemPassThru = pFileSystemPassThru;
-		
+
 		BaseClass::InitPassThru( pFileSystemPassThru );
 	}
 
 	// IAppSystem stuff.
-	// Here's where the app systems get to learn about each other 
+	// Here's where the app systems get to learn about each other
 	virtual bool Connect( CreateInterfaceFn factory )															{ return m_pFileSystemPassThru->Connect( factory ); }
 	virtual void Disconnect()																					{ m_pFileSystemPassThru->Disconnect(); }
 	virtual void *QueryInterface( const char *pInterfaceName )													{ return m_pFileSystemPassThru->QueryInterface( pInterfaceName ); }
@@ -105,8 +105,8 @@ public:
 	virtual bool			IsOk( FileHandle_t file )															{ return m_pFileSystemPassThru->IsOk( file ); }
 	virtual bool			EndOfFile( FileHandle_t file )														{ return m_pFileSystemPassThru->EndOfFile( file ); }
 	virtual char			*ReadLine( char *pOutput, int maxChars, FileHandle_t file )							{ return m_pFileSystemPassThru->ReadLine( pOutput, maxChars, file ); }
-	virtual int				FPrintf( FileHandle_t file, PRINTF_FORMAT_STRING const char *pFormat, ... ) 
-	{ 
+	virtual int				FPrintf( FileHandle_t file, PRINTF_FORMAT_STRING const char *pFormat, ... )
+	{
 		char str[8192];
 		va_list marker;
 		va_start( marker, pFormat );
@@ -127,7 +127,7 @@ public:
 	virtual void			PrintOpenedFiles( void )															{ m_pFileSystemPassThru->PrintOpenedFiles(); }
 	virtual void			PrintSearchPaths( void )															{ m_pFileSystemPassThru->PrintSearchPaths(); }
 	virtual void			SetWarningFunc( void (*pfnWarning)( PRINTF_FORMAT_STRING const char *fmt, ... ) )						{ m_pFileSystemPassThru->SetWarningFunc( pfnWarning ); }
-	virtual void			SetWarningLevel( FileWarningLevel_t level )											{ m_pFileSystemPassThru->SetWarningLevel( level ); } 
+	virtual void			SetWarningLevel( FileWarningLevel_t level )											{ m_pFileSystemPassThru->SetWarningLevel( level ); }
 	virtual void			AddLoggingFunc( void (*pfnLogFunc)( const char *fileName, const char *accessType ) ){ m_pFileSystemPassThru->AddLoggingFunc( pfnLogFunc ); }
 	virtual void			RemoveLoggingFunc( FileSystemLoggingFunc_t logFunc )								{ m_pFileSystemPassThru->RemoveLoggingFunc( logFunc ); }
 	virtual FSAsyncStatus_t	AsyncReadMultiple( const FileAsyncRequest_t *pRequests, int nRequests, FSAsyncControl_t *pControls )			{ return m_pFileSystemPassThru->AsyncReadMultiple( pRequests, nRequests, pControls ); }
@@ -145,7 +145,7 @@ public:
 	virtual void			AsyncRemoveFetcher( IAsyncFileFetch *pFetcher )										{ m_pFileSystemPassThru->AsyncRemoveFetcher( pFetcher ); }
 	virtual const FileSystemStatistics *GetFilesystemStatistics()												{ return m_pFileSystemPassThru->GetFilesystemStatistics(); }
 	virtual WaitForResourcesHandle_t WaitForResources( const char *resourcelist )								{ return m_pFileSystemPassThru->WaitForResources( resourcelist ); }
-	virtual bool			GetWaitForResourcesProgress( WaitForResourcesHandle_t handle, 
+	virtual bool			GetWaitForResourcesProgress( WaitForResourcesHandle_t handle,
 								float *progress, bool *complete )												{ return m_pFileSystemPassThru->GetWaitForResourcesProgress( handle, progress, complete ); }
 	virtual void			CancelWaitForResources( WaitForResourcesHandle_t handle )							{ m_pFileSystemPassThru->CancelWaitForResources( handle ); }
 	virtual int				HintResourceNeed( const char *hintlist, int forgetEverything )						{ return m_pFileSystemPassThru->HintResourceNeed( hintlist, forgetEverything ); }
@@ -158,9 +158,9 @@ public:
 	virtual void			RemoveSearchPaths( const char *szPathID )											{ m_pFileSystemPassThru->RemoveSearchPaths( szPathID ); }
 	virtual bool			IsSteam() const																		{ return m_pFileSystemPassThru->IsSteam(); }
 	virtual	FilesystemMountRetval_t MountSteamContent( int nExtraAppId = -1 )									{ return m_pFileSystemPassThru->MountSteamContent( nExtraAppId ); }
-	
-	virtual const char		*FindFirstEx( 
-		const char *pWildCard, 
+
+	virtual const char		*FindFirstEx(
+		const char *pWildCard,
 		const char *pPathID,
 		FileFindHandle_t *pHandle
 		)																										{ return m_pFileSystemPassThru->FindFirstEx( pWildCard, pPathID, pHandle ); }

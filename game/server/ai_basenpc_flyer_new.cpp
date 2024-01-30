@@ -37,13 +37,13 @@ void CAI_BaseNPCFlyerNew::SpawnFlyer()
 {
 	SetNavType( NAV_FLY );
 	AddFlag(  FL_FLY );
-	SetMoveType( MOVETYPE_STEP );			
+	SetMoveType( MOVETYPE_STEP );
 	CapabilitiesAdd( bits_CAP_MOVE_FLY );
 }
 
 
 /*
-void CAI_BaseNPCFlyerNew::InitCustomSchedules(void) 
+void CAI_BaseNPCFlyerNew::InitCustomSchedules(void)
 {
 	INIT_CUSTOM_AI(CAI_BaseNPCFlyerNew);
 
@@ -53,7 +53,7 @@ void CAI_BaseNPCFlyerNew::InitCustomSchedules(void)
 */
 
 //------------------------------------------------------------------------------
-// Should be called during Select Schedule (BLEAH!) 
+// Should be called during Select Schedule (BLEAH!)
 //------------------------------------------------------------------------------
 void CAI_BaseNPCFlyerNew::ClearFlyerConditions(void)
 {
@@ -75,7 +75,7 @@ float CAI_BaseNPCFlyerNew::MinGroundDist(void)
 
 
 //-----------------------------------------------------------------------------
-// Sets the ground speed appropriately: 
+// Sets the ground speed appropriately:
 //-----------------------------------------------------------------------------
 float CAI_BaseNPCFlyerNew::GetIdealSpeed( )	const
 {
@@ -91,7 +91,7 @@ float CAI_BaseNPCFlyerNew::GetIdealSpeed( )	const
 void CAI_BaseNPCFlyerNew::StartTask( const Task_t *pTask )
 {
 	switch (pTask->iTask)
-	{	
+	{
 		// Activity is just idle (have no run)
 		case TASK_RUN_PATH:
 		{
@@ -108,7 +108,7 @@ void CAI_BaseNPCFlyerNew::StartTask( const Task_t *pTask )
 			{
 				TaskFail(FAIL_NO_TARGET);
 			}
-			else 
+			else
 			{
 				if (!GetNavigator()->SetGoal( GOALTYPE_TARGETENT ) )
 				{
@@ -130,11 +130,9 @@ void CAI_BaseNPCFlyerNew::StartTask( const Task_t *pTask )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_BaseNPCFlyerNew::RunTask( const Task_t *pTask )
 {
 	BaseClass::RunTask(pTask);
 }
-
-

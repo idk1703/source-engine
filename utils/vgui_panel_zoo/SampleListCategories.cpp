@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,10 +22,10 @@ class SampleListPanelCats: public DemoPage
 		~SampleListPanelCats();
 
 		void OnButtonClicked();
-	
+
 	private:
 		SectionedListPanel *m_pSectionedListPanel;
-		
+
 };
 
 //-----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ SampleListPanelCats::SampleListPanelCats(Panel *parent, const char *name) : Demo
 	// Set its position.
 	m_pSectionedListPanel->SetPos(90, 25);
 	m_pSectionedListPanel->SetSize(200, 150);
-	
+
 }
 
 //-----------------------------------------------------------------------------
@@ -99,5 +99,3 @@ Panel* SampleListPanelCats_Create(Panel *parent)
 {
 	return new SampleListPanelCats(parent, "List Panel - categories");
 }
-
-

@@ -42,7 +42,7 @@ class	CAI_BaseNPC;
 #define	MAX_AIR_NODE_LINK_DIST_SQ   (MAX_AIR_NODE_LINK_DIST*MAX_AIR_NODE_LINK_DIST)	//   distance allowed to travel to node via local moves
 
 
-	
+
 #define	NODE_HEIGHT			8	// how high to lift nodes off the ground after we drop them all (make stair/ramp mapping easier)
 #define NODE_CLIMB_OFFSET	8
 
@@ -54,11 +54,11 @@ class	CAI_BaseNPC;
 enum NodeType_e
 {
 	NODE_ANY,			// Used to specify any type of node (for search)
-	NODE_DELETED,		// Used in wc_edit mode to remove nodes during runtime     
-	NODE_GROUND,     
-	NODE_AIR,       
-	NODE_CLIMB,  
-	NODE_WATER     
+	NODE_DELETED,		// Used in wc_edit mode to remove nodes during runtime
+	NODE_GROUND,
+	NODE_AIR,
+	NODE_CLIMB,
+	NODE_WATER
 };
 
 enum NodeInfoBits_e
@@ -71,7 +71,7 @@ enum NodeInfoBits_e
 
 	bits_NODE_CLIMB_EXIT		=	bits_NODE_CLIMB_OFF_FORWARD| bits_NODE_CLIMB_OFF_LEFT | bits_NODE_CLIMB_OFF_RIGHT,
 
-	NODE_ENT_FLAGS_SHIFT			= 5, 
+	NODE_ENT_FLAGS_SHIFT			= 5,
 
 	//bits_HUMAN_HULL				5
 	//bits_SMALL_CENTERED_HULL		6
@@ -84,7 +84,7 @@ enum NodeInfoBits_e
 	//bits_LARGE_CENTERED_HULL		13
 
 	bits_DONT_DROP				=	( 1 << 14 ),
-	
+
 	/****** NOTE: will need to change node graph save/load code if exceed 16 bits here ******/
 
 
@@ -106,7 +106,7 @@ class CAI_Node
 public:
 
 	CAI_Node( int id, const Vector &origin, float yaw );
-	
+
 	CAI_Hint*		GetHint()					{ return m_pHint; }
 	void			SetHint( CAI_Hint *pHint )	{ m_pHint = pHint; }
 
@@ -121,15 +121,15 @@ public:
 
 	int 			GetZone() const			{ return m_zone; }
 	void 			SetZone( int zone )		{ m_zone = zone; }
-	
+
 	Vector			GetPosition(int hull);		// Hull specific position for a node
 	CAI_Link*		HasLink(int nNodeID);				// Return link to nNodeID or NULL
 
-	void			ShuffleLinks();						// Called before GetShuffeledLinks to reorder 
+	void			ShuffleLinks();						// Called before GetShuffeledLinks to reorder
 	CAI_Link*		GetShuffeledLink(int nNum);			// Used to get links in different order each time
 
 	int 			GetId() const			{ return m_iID; }
-	
+
 	const Vector &	GetOrigin() const		{ return m_vOrigin; }
 	Vector &		AccessOrigin()			{ return m_vOrigin; }
 	float			GetYaw() const			{ return m_flYaw;	}

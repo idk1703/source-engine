@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -68,7 +68,7 @@ MessageBoxDemo::~MessageBoxDemo()
 
 //-----------------------------------------------------------------------------
 // Purpose:	 Respond to a message based action signal
-//  
+//
 //-----------------------------------------------------------------------------
 void MessageBoxDemo::OnButtonClicked()
 {
@@ -103,7 +103,7 @@ void MessageBoxDemo::ShowMessageBox()
 
 MessageMapItem_t MessageBoxDemo::m_MessageMap[] =
 {
-	MAP_MESSAGE( MessageBoxDemo, "ButtonClicked", OnButtonClicked ), 
+	MAP_MESSAGE( MessageBoxDemo, "ButtonClicked", OnButtonClicked ),
 };
 
 IMPLEMENT_PANELMAP(MessageBoxDemo, DemoPage);
@@ -114,5 +114,3 @@ Panel* MessageBoxDemo_Create(Panel *parent)
 {
 	return new MessageBoxDemo(parent, "MessageBoxDemo");
 }
-
-

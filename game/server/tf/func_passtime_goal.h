@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ class CFuncPasstimeGoalShim : public CBaseTrigger
 public:
 	virtual void StartTouch(CBaseEntity *pOther) OVERRIDE { CBaseTrigger::StartTouch(pOther); ShimStartTouch(pOther); }
 	virtual void EndTouch(CBaseEntity *pOther) OVERRIDE { CBaseTrigger::EndTouch(pOther); ShimEndTouch(pOther); }
-	
+
 private:
 	virtual void ShimStartTouch( CBaseEntity* pOther ) = 0;
 	virtual void ShimEndTouch( CBaseEntity* pOther ) = 0;
@@ -44,7 +44,7 @@ public:
 	int Points() const { return m_iPoints; }
 	bool IsDisabled() const { return m_bTriggerDisabled; }
 
-	enum SpawnFlags 
+	enum SpawnFlags
 	{
 		WIN_ON_SCORE = 1,
 		DISABLE_BALL_SCORE = 2,
@@ -67,7 +67,7 @@ public:
 
 private:
 	virtual void ShimStartTouch( CBaseEntity *pOther ) OVERRIDE;
-	virtual void ShimEndTouch( CBaseEntity *pOther ) OVERRIDE; 
+	virtual void ShimEndTouch( CBaseEntity *pOther ) OVERRIDE;
 	bool CanTouchMe( CBaseEntity *pOther );
 	void GoalThink();
 
@@ -78,4 +78,4 @@ private:
 	CNetworkVar( int, m_iGoalType );
 };
 
-#endif // FUNC_PASSTIME_GOAL_H  
+#endif // FUNC_PASSTIME_GOAL_H

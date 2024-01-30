@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -34,7 +34,7 @@ bool ToolFramework_IsThirdPersonCamera( );
 
 
 //-----------------------------------------------------------------------------
-// Are tools enabled? 
+// Are tools enabled?
 //-----------------------------------------------------------------------------
 #ifndef NO_TOOLFRAMEWORK
 bool ToolsEnabled();

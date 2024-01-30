@@ -19,7 +19,7 @@
 
 #define	BARNACLE_BODY_HEIGHT	44 // how 'tall' the barnacle's model is.
 #define BARNACLE_PULL_SPEED			8
-#define BARNACLE_KILL_VICTIM_DELAY	5 // how many seconds after pulling prey in to gib them. 
+#define BARNACLE_KILL_VICTIM_DELAY	5 // how many seconds after pulling prey in to gib them.
 
 //=========================================================
 // Monster's Anim Events Go Here
@@ -28,7 +28,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CNPC_Barnacle : public CHL1BaseNPC
 {

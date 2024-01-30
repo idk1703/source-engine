@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -47,8 +47,8 @@ void InstallSFMV2Importer( IDataModel *pFactory )
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CImportSFMV2::CImportSFMV2( char const *formatName, char const *nextFormatName ) : 
-	BaseClass( formatName, nextFormatName )	
+CImportSFMV2::CImportSFMV2( char const *formatName, char const *nextFormatName ) :
+	BaseClass( formatName, nextFormatName )
 {
 }
 
@@ -60,7 +60,7 @@ struct LayerType_t
 	char const *logtype;
 };
 
-static LayerType_t g_LayerTypes[] = 
+static LayerType_t g_LayerTypes[] =
 {
 	{ "DmeIntLogLayer",	AT_INT_ARRAY, "DmeIntLog" },
 	{ "DmeFloatLogLayer", AT_FLOAT_ARRAY, "DmeFloatLog" },

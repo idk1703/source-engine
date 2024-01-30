@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. =======
 //
 //
 //=============================================================================
@@ -123,7 +123,7 @@ public:
 
 	CUtlStack< CFileConfig* >			m_CurFileConfig;			// Either m_BaseConfigData or one of the files.
 	CUtlStack< CSpecificConfig* >		m_CurSpecificConfig;		// Debug, release?
-    CUtlStack< configKeyword_e >		m_CurPropertySection;
+	CUtlStack< configKeyword_e >		m_CurPropertySection;
 	CRelevantPropertyNames				m_RelevantPropertyNames;
 };
 

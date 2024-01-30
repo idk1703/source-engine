@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,4 +36,4 @@ private:
 	CNetworkVar( int, m_iGoalType );
 };
 
-#endif // C_FUNC_PASSTIME_GOAL_H  
+#endif // C_FUNC_PASSTIME_GOAL_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,10 +14,10 @@
 extern bool uselogfile;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : depth - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : depth -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void vprint( int depth, const char *fmt, ... )
 {
@@ -65,9 +65,9 @@ void vprint( int depth, const char *fmt, ... )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
-//			*len - 
+// Purpose:
+// Input  : *name -
+//			*len -
 // Output : unsigned char
 //-----------------------------------------------------------------------------
 unsigned char *COM_LoadFile( const char *name, int *len)
@@ -83,7 +83,7 @@ unsigned char *COM_LoadFile( const char *name, int *len)
 	fseek( fp, 0, SEEK_END );
 	*len = ftell( fp );
 	fseek( fp, 0, SEEK_SET );
-	
+
 	unsigned char *buffer = new unsigned char[ *len + 1 ];
 	fread( buffer, *len, 1, fp );
 	fclose( fp );
@@ -93,8 +93,8 @@ unsigned char *COM_LoadFile( const char *name, int *len)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *buffer - 
+// Purpose:
+// Input  : *buffer -
 //-----------------------------------------------------------------------------
 void COM_FreeFile( unsigned char *buffer )
 {
@@ -102,8 +102,8 @@ void COM_FreeFile( unsigned char *buffer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *dir - 
+// Purpose:
+// Input  : *dir -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool COM_DirectoryExists( const char *dir )

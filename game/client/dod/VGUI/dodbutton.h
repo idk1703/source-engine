@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -43,7 +43,7 @@ class CDODButton : public vgui::Button, public CDODButtonShape
 {
 private:
 	DECLARE_CLASS_SIMPLE( CDODButton, vgui::Button );
-	
+
 public:
 	CDODButton(vgui::Panel *parent ) :
 					vgui::Button( parent, "DODButton", "" )
@@ -75,7 +75,7 @@ class CDODProgressBar : public vgui::ProgressBar
 {
 private:
 	DECLARE_CLASS_SIMPLE( CDODProgressBar, vgui::ProgressBar );
-	
+
 public:
 	CDODProgressBar(vgui::Panel *parent) : vgui::ProgressBar( parent, "statBar" )
 	{

@@ -56,11 +56,11 @@ void InitPortalRefract( CBaseVSShader *pShader, IMaterialVar** params, PortalRef
 	}
 }
 
-void DrawPortalRefract( CBaseVSShader *pShader, IMaterialVar** params, 
+void DrawPortalRefract( CBaseVSShader *pShader, IMaterialVar** params,
 						   IShaderDynamicAPI *pShaderAPI, IShaderShadow* pShaderShadow, PortalRefractVars_t &info )
 {
 	int nStage = IS_PARAM_DEFINED( info.m_nStage ) ? params[info.m_nStage]->GetIntValue() : 0;
-		
+
 	SHADOW_STATE
 	{
 		// Set stream format
@@ -73,7 +73,7 @@ void DrawPortalRefract( CBaseVSShader *pShader, IMaterialVar** params,
 
 		// On Leopard / 10.5.8, we can't do an sRGB read from a render target, so we must fake it in shader code
 		bool bShaderSRGBRead = IsOSX() && !g_pHardwareConfig->CanDoSRGBReadFromRTs();
-		
+
 		// Pixel Shader
 		if( g_pHardwareConfig->SupportsPixelShaders_2_b() || g_pHardwareConfig->ShouldAlwaysUseShaderModel2bShaders() ) // Always send OpenGL / Posix down this path
 		{
@@ -121,7 +121,7 @@ void DrawPortalRefract( CBaseVSShader *pShader, IMaterialVar** params,
 		DECLARE_DYNAMIC_VERTEX_SHADER( portal_refract_vs20 );
 		SET_DYNAMIC_VERTEX_SHADER( portal_refract_vs20 );
 
-		// Set Vertex Shader Constants 
+		// Set Vertex Shader Constants
 		if ( IS_PARAM_DEFINED( info.m_nTextureTransform ) )
 		{
 			pShader->SetVertexShaderTextureTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_1, info.m_nTextureTransform );
@@ -158,7 +158,7 @@ void DrawPortalRefract( CBaseVSShader *pShader, IMaterialVar** params,
 			pShader->BindTexture( SHADER_SAMPLER2, info.m_nPortalColorTexture );
 		}
 
-		// Set Pixel Shader Constants 
+		// Set Pixel Shader Constants
 		pShaderAPI->SetPixelShaderFogParams( 6 );
 
 		// Set c0-c3 to contain four rows of ViewProj matrix
@@ -174,7 +174,7 @@ void DrawPortalRefract( CBaseVSShader *pShader, IMaterialVar** params,
 		vPackedConst4[0] = ( IS_PARAM_DEFINED( info.m_nPortalOpenAmount ) ? params[info.m_nPortalOpenAmount]->GetFloatValue() : kDefaultPortalOpenAmount );
 		vPackedConst4[1] = 1.0f - ( IS_PARAM_DEFINED( info.m_nPortalStatic ) ? params[info.m_nPortalStatic]->GetFloatValue() : kDefaultPortalStatic );
 		vPackedConst4[2] = ( IS_PARAM_DEFINED( info.m_nPortalColorScale ) ? params[info.m_nPortalColorScale]->GetFloatValue() : kDefaultPortalColorScale );
-		
+
 		//vPackedConst4[0] = 0.6f;
 		//DevMsg( "Refract Time: %f\n", vPackedConst4[0] );
 

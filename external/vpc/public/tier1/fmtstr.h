@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: A simple class for performing safe and in-expression sprintf-style
 //			string formatting
@@ -53,13 +53,13 @@ template <int SIZE_BUF>
 class CFmtStrN
 {
 public:
-	CFmtStrN()	
-	{ 
+	CFmtStrN()
+	{
 		InitQuietTruncation();
-		m_szBuf[0] = 0; 
+		m_szBuf[0] = 0;
 		m_nLength = 0;
 	}
-	
+
 	// Standard C formatting
 	CFmtStrN(const char *pszFormat, ...) FMTFUNCTION( 2, 3 )
 	{
@@ -80,7 +80,7 @@ public:
 	const char *sprintf(const char *pszFormat, ...)	FMTFUNCTION( 2, 3 )
 	{
 		InitQuietTruncation();
-		FmtStrVSNPrintf(m_szBuf, SIZE_BUF, m_bQuietTruncation, &pszFormat); 
+		FmtStrVSNPrintf(m_szBuf, SIZE_BUF, m_bQuietTruncation, &pszFormat);
 		FixLength();
 		return m_szBuf;
 	}
@@ -111,7 +111,7 @@ protected:
 	virtual void InitQuietTruncation()
 	{
 #ifdef _DEBUG
-		m_bQuietTruncation = false; 
+		m_bQuietTruncation = false;
 #else
 		m_bQuietTruncation = true;	// Force quiet for release builds
 #endif

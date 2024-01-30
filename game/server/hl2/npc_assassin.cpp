@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -23,7 +23,7 @@ ConVar	sk_assassin_health( "sk_assassin_health","150");
 ConVar	g_debug_assassin( "g_debug_assassin", "0" );
 
 //=========================================================
-// Anim Events	
+// Anim Events
 //=========================================================
 #define	ASSASSIN_AE_FIRE_PISTOL_RIGHT	1
 #define	ASSASSIN_AE_FIRE_PISTOL_LEFT	2
@@ -45,7 +45,7 @@ int ACT_ASSASSIN_PERCH;
 //=========================================================
 // Flip types
 //=========================================================
-enum 
+enum
 {
 	FLIP_LEFT,
 	FLIP_RIGHT,
@@ -76,7 +76,7 @@ enum
 //=========================================================
 // Assassin tasks
 //=========================================================
-enum 
+enum
 {
 	TASK_ASSASSIN_GET_PATH_TO_VANTAGE_POINT = LAST_SHARED_TASK,
 	TASK_ASSASSIN_EVADE,
@@ -122,7 +122,7 @@ BEGIN_DATADESC( CNPC_Assassin )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -142,7 +142,7 @@ void CNPC_Assassin::Precache( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -159,7 +159,7 @@ void CNPC_Assassin::Spawn( void )
 	AddSolidFlags( FSOLID_NOT_STANDABLE );
 	SetMoveType( MOVETYPE_STEP );
 	SetBloodColor( BLOOD_COLOR_RED );
-	
+
 	m_iHealth			= sk_assassin_health.GetFloat();
 	m_flFieldOfView		= 0.1;
 	m_NPCState			= NPC_STATE_NONE;
@@ -215,16 +215,16 @@ bool CNPC_Assassin::IsJumpLegal(const Vector &startPos, const Vector &apex, cons
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flDot - 
-//			flDist - 
+// Purpose:
+// Input  : flDot -
+//			flDist -
 // Output : int CNPC_Assassin::MeleeAttack1Conditions
 //-----------------------------------------------------------------------------
 int CNPC_Assassin::MeleeAttack1Conditions ( float flDot, float flDist )
 {
 	if ( flDist > 84 )
 		return COND_TOO_FAR_TO_ATTACK;
-	
+
 	if ( flDot < 0.7f )
 		return 0;
 
@@ -235,9 +235,9 @@ int CNPC_Assassin::MeleeAttack1Conditions ( float flDot, float flDist )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flDot - 
-//			flDist - 
+// Purpose:
+// Input  : flDot -
+//			flDist -
 // Output : int CNPC_Assassin::RangeAttack1Conditions
 //-----------------------------------------------------------------------------
 int CNPC_Assassin::RangeAttack1Conditions ( float flDot, float flDist )
@@ -255,9 +255,9 @@ int CNPC_Assassin::RangeAttack1Conditions ( float flDot, float flDist )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flDot - 
-//			flDist - 
+// Purpose:
+// Input  : flDot -
+//			flDist -
 // Output : int CNPC_Assassin::RangeAttack1Conditions
 //-----------------------------------------------------------------------------
 int CNPC_Assassin::RangeAttack2Conditions ( float flDot, float flDist )
@@ -282,7 +282,7 @@ int CNPC_Assassin::RangeAttack2Conditions ( float flDot, float flDist )
 	// Check for a clear path
 	trace_t	tr;
 	UTIL_TraceHull( GetAbsOrigin(), GetEnemy()->GetAbsOrigin(), GetHullMins(), GetHullMaxs(), MASK_NPCSOLID, this, COLLISION_GROUP_NONE, &tr );
-	
+
 	if ( tr.fraction == 1.0f || tr.m_pEnt == GetEnemy() )
 		return COND_CAN_RANGE_ATTACK2;
 
@@ -290,8 +290,8 @@ int CNPC_Assassin::RangeAttack2Conditions ( float flDot, float flDist )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hand - 
+// Purpose:
+// Input  : hand -
 //-----------------------------------------------------------------------------
 void CNPC_Assassin::FirePistol( int hand )
 {
@@ -308,7 +308,7 @@ void CNPC_Assassin::FirePistol( int hand )
 	GetAttachment( handName, muzzlePos, muzzleAngle );
 
 	Vector	muzzleDir;
-	
+
 	if ( GetEnemy() == NULL )
 	{
 		AngleVectors( muzzleAngle, &muzzleDir );
@@ -333,7 +333,7 @@ void CNPC_Assassin::FirePistol( int hand )
 //---------------------------------------------------------
 void CNPC_Assassin::HandleAnimEvent( animevent_t *pEvent )
 {
-	
+
 	if ( pEvent->event == AE_ASSASIN_FIRE_PISTOL_RIGHT )
 	{
 		FirePistol( 0 );
@@ -345,7 +345,7 @@ void CNPC_Assassin::HandleAnimEvent( animevent_t *pEvent )
 		FirePistol( 1 );
 		return;
 	}
-	
+
 	if ( pEvent->event == AE_ASSASIN_KICK_HIT )
 	{
 		Vector	attackDir = BodyDirection2D();
@@ -424,7 +424,7 @@ int CNPC_Assassin::SelectSchedule ( void )
 		{
 			if ( HasCondition ( COND_HEAR_DANGER ) )
 				 return SCHED_TAKE_COVER_FROM_BEST_SOUND;
-				
+
 			if ( HasCondition ( COND_HEAR_COMBAT ) )
 				return SCHED_INVESTIGATE_SOUND;
 		}
@@ -441,7 +441,7 @@ int CNPC_Assassin::SelectSchedule ( void )
 
 			// Need to move
 			if ( /*(	HasCondition( COND_SEE_ENEMY ) && HasCondition( COND_ASSASSIN_ENEMY_TARGETTING_ME ) && random->RandomInt( 0, 32 ) == 0 && m_flNextFlipTime < gpGlobals->curtime ) )*/
-					( m_nNumFlips > 0 ) || 
+					( m_nNumFlips > 0 ) ||
 					( ( HasCondition ( COND_LIGHT_DAMAGE ) && random->RandomInt( 0, 2 ) == 0 ) ) || ( HasCondition ( COND_HEAVY_DAMAGE ) ) )
 			{
 				if ( m_nNumFlips <= 0 )
@@ -487,7 +487,7 @@ int CNPC_Assassin::SelectSchedule ( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Assassin::PrescheduleThink( void )
 {
@@ -505,8 +505,8 @@ void CNPC_Assassin::PrescheduleThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : right - 
+// Purpose:
+// Input  : right -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Assassin::CanFlip( int flipType, Activity &activity, const Vector *avoidPosition )
@@ -518,7 +518,7 @@ bool CNPC_Assassin::CanFlip( int flipType, Activity &activity, const Vector *avo
 	{
 	case FLIP_RIGHT:
 		GetVectors( NULL, &testDir, NULL );
-		act = NPC_TranslateActivity( (Activity) ACT_ASSASSIN_FLIP_RIGHT ); 
+		act = NPC_TranslateActivity( (Activity) ACT_ASSASSIN_FLIP_RIGHT );
 		break;
 
 	case FLIP_LEFT:
@@ -531,7 +531,7 @@ bool CNPC_Assassin::CanFlip( int flipType, Activity &activity, const Vector *avo
 		GetVectors( &testDir, NULL, NULL );
 		act = NPC_TranslateActivity( (Activity) ACT_ASSASSIN_FLIP_FORWARD );
 		break;
-	
+
 	case FLIP_BACKWARD:
 		GetVectors( &testDir, NULL, NULL );
 		testDir.Negate();
@@ -559,7 +559,7 @@ bool CNPC_Assassin::CanFlip( int flipType, Activity &activity, const Vector *avo
 
 	// Find out the length of this sequence
 	float	testDist = GetSequenceMoveDist( seq );
-	
+
 	// Find the resulting end position from the sequence's movement
 	Vector	endPos = GetAbsOrigin() + ( testDir * testDist );
 
@@ -568,7 +568,7 @@ bool CNPC_Assassin::CanFlip( int flipType, Activity &activity, const Vector *avo
 	if ( ( flipType != FLIP_BACKWARD ) && ( avoidPosition != NULL ) )
 	{
 		UTIL_TraceLine( (*avoidPosition), endPos, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
-		
+
 		if ( tr.fraction == 1.0f )
 			return false;
 	}
@@ -594,7 +594,7 @@ bool CNPC_Assassin::CanFlip( int flipType, Activity &activity, const Vector *avo
 	for ( int i = 1; i <= NUM_STEPS; i++ )
 	{
 		endPos = GetAbsOrigin() + ( testDir * (stepLength*i) );
-		
+
 		// Also check for a cliff edge
 		UTIL_TraceHull( endPos, endPos - Vector( 0, 0, StepHeight() * 4.0f ), NAI_Hull::Mins(m_eHull) + Vector( 0, 0, StepHeight() ), NAI_Hull::Maxs(m_eHull), MASK_NPCSOLID, this, COLLISION_GROUP_NONE, &tr );
 
@@ -614,7 +614,7 @@ bool CNPC_Assassin::CanFlip( int flipType, Activity &activity, const Vector *avo
 		NDebugOverlay::BoxDirection( GetAbsOrigin(), NAI_Hull::Mins(m_eHull) + Vector( 0, 0, StepHeight() ), NAI_Hull::Maxs(m_eHull) + Vector( testDist, 0, StepHeight() ), testDir, 0, 255, 0, true, 2.0f );
 	}
 	*/
-	
+
 	AIMoveTrace_t moveTrace;
 	GetMoveProbe()->TestGroundMove( GetAbsOrigin(), endPos, MASK_NPCSOLID, AITGM_DEFAULT, &moveTrace );
 
@@ -628,7 +628,7 @@ bool CNPC_Assassin::CanFlip( int flipType, Activity &activity, const Vector *avo
 }
 
 //---------------------------------------------------------
-// Purpose: 
+// Purpose:
 //---------------------------------------------------------
 void CNPC_Assassin::StartTask( const Task_t *pTask )
 {
@@ -705,7 +705,7 @@ void CNPC_Assassin::StartTask( const Task_t *pTask )
 					hint.AddExcludePosition( pSquadMember->GetAbsOrigin(), 128 );
 				}
 			}
-	
+
 			hint.SetFlag( bits_HINT_NODE_NEAREST );
 
 			CAI_Hint *pHint = CAI_HintManager::FindHint( this, GetEnemy()->GetAbsOrigin(), &hint );
@@ -719,14 +719,14 @@ void CNPC_Assassin::StartTask( const Task_t *pTask )
 			pHint->GetPosition( this, &goalPos );
 
 			AI_NavGoal_t goal( goalPos );
-			
+
 			//Try to run directly there
 			if ( GetNavigator()->SetGoal( goal ) == false )
 			{
 				TaskFail( "Unable to find path to vantage point!\n" );
 				break;
 			}
-			
+
 			TaskComplete();
 		}
 		break;
@@ -738,7 +738,7 @@ void CNPC_Assassin::StartTask( const Task_t *pTask )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -779,7 +779,7 @@ void CNPC_Assassin::RunTask( const Task_t *pTask )
 		}
 
 		break;
-		
+
 	default:
 		BaseClass::RunTask( pTask );
 		break;
@@ -821,7 +821,7 @@ bool CNPC_Assassin::FValidateHintType ( CAI_Hint *pHint )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const Vector
 //-----------------------------------------------------------------------------
 const Vector &CNPC_Assassin::GetViewOffset( void )
@@ -844,7 +844,7 @@ const Vector &CNPC_Assassin::GetViewOffset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Assassin::OnScheduleChange( void )
 {
@@ -854,8 +854,8 @@ void CNPC_Assassin::OnScheduleChange( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : state - 
+// Purpose:
+// Input  : state -
 //-----------------------------------------------------------------------------
 void CNPC_Assassin::SetEyeState( eyeState_t state )
 {
@@ -879,7 +879,7 @@ void CNPC_Assassin::SetEyeState( eyeState_t state )
 		break;
 
 	case ASSASSIN_EYE_SEEKING_TARGET: //Ping-pongs
-		
+
 		//Toggle our state
 		m_bBlinkState = !m_bBlinkState;
 		m_pEyeSprite->SetColor( 255, 128, 0 );
@@ -902,7 +902,7 @@ void CNPC_Assassin::SetEyeState( eyeState_t state )
 	case ASSASSIN_EYE_DORMANT: //Fade out and scale down
 		m_pEyeSprite->SetScale( 0.5f, 0.5f );
 		m_pEyeSprite->SetBrightness( 64, 0.5f );
-		
+
 		m_pEyeTrail->SetScale( 2.0f );
 		m_pEyeTrail->SetBrightness( 64 );
 		break;
@@ -926,7 +926,7 @@ void CNPC_Assassin::SetEyeState( eyeState_t state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Assassin::GatherEnemyConditions( CBaseEntity *pEnemy )
 {
@@ -963,7 +963,7 @@ void CNPC_Assassin::GatherEnemyConditions( CBaseEntity *pEnemy )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Assassin::BuildScheduleTestBits( void )
 {
@@ -978,12 +978,12 @@ void CNPC_Assassin::BuildScheduleTestBits( void )
 	{
 		SetCustomInterruptCondition( COND_ASSASSIN_ENEMY_TARGETTING_ME );
 	}
-	
+
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &info - 
+// Purpose:
+// Input  : &info -
 //-----------------------------------------------------------------------------
 void CNPC_Assassin::Event_Killed( const CTakeDamageInfo &info )
 {
@@ -991,7 +991,7 @@ void CNPC_Assassin::Event_Killed( const CTakeDamageInfo &info )
 
 	// Turn off the eye
 	SetEyeState( ASSASSIN_EYE_DEAD );
-	
+
 	// Turn off the pistols
 	SetBodygroup( 1, 0 );
 
@@ -1079,7 +1079,7 @@ AI_BEGIN_CUSTOM_NPC( npc_assassin, CNPC_Assassin )
 		"	"
 		"	Interrupts"
 		"		COND_TASK_FAILED"
-	)	
+	)
 
 	//=========================================================
 	// Assassin needs to avoid the player
@@ -1096,6 +1096,6 @@ AI_BEGIN_CUSTOM_NPC( npc_assassin, CNPC_Assassin )
 		"	"
 		"	Interrupts"
 		"		COND_TASK_FAILED"
-	)	
+	)
 
 AI_END_CUSTOM_NPC()

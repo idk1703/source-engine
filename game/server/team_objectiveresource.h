@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -82,10 +82,10 @@ public:
 		Assert( 0 <= index && index <= MAX_CONTROL_POINTS && index < m_iNumControlPoints );
 	}
 
-	int GetBaseControlPointForTeam( int iTeam ) 
-	{ 
+	int GetBaseControlPointForTeam( int iTeam )
+	{
 		Assert( iTeam < MAX_TEAMS );
-		return m_iBaseControlPoints[iTeam]; 
+		return m_iBaseControlPoints[iTeam];
 	}
 
 	int GetCappingTeam( int index )
@@ -134,7 +134,7 @@ public:
 		{
 			m_nNumNodeHillData.Set( team, 0 );
 
-			int nNumEntriesPerTeam = TEAM_TRAIN_MAX_HILLS * TEAM_TRAIN_FLOATS_PER_HILL; 
+			int nNumEntriesPerTeam = TEAM_TRAIN_MAX_HILLS * TEAM_TRAIN_FLOATS_PER_HILL;
 			int iStartingIndex = team * nNumEntriesPerTeam;
 			for ( int i = 0 ; i < nNumEntriesPerTeam ; i++ )
 			{
@@ -170,11 +170,11 @@ public:
 	}
 
 private:
-	CNetworkVar( int, m_iTimerToShowInHUD );	
-	CNetworkVar( int, m_iStopWatchTimer );	
+	CNetworkVar( int, m_iTimerToShowInHUD );
+	CNetworkVar( int, m_iStopWatchTimer );
 
-	CNetworkVar( int, m_iNumControlPoints );	
-	CNetworkVar( bool, m_bPlayingMiniRounds );	
+	CNetworkVar( int, m_iNumControlPoints );
+	CNetworkVar( bool, m_bPlayingMiniRounds );
 	CNetworkVar( bool, m_bControlPointsReset );
 	CNetworkVar( int, m_iUpdateCapHudParity );
 

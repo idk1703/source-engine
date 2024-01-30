@@ -80,7 +80,7 @@ static void RconAddressChanged_f( IConVar *pConVar, const char *pOldString, floa
 	ConVarRef var( pConVar );
 	netadr_t to;
 
-	const char *cmdargs = var.GetString(); 
+	const char *cmdargs = var.GetString();
 	if ( ( !cmdargs || !cmdargs[ 0 ] ) && cl.m_NetChannel )
 	{
 		to = cl.m_NetChannel->GetRemoteAddress();
@@ -150,7 +150,7 @@ void CRConVProfExport::ResumeProfile()
 	// NOTE: This only has effect when testing on a listen server
 	// it shouldn't do anything in the wild
 	VProfExport_Resume();
-}		
+}
 
 void CRConVProfExport::CleanupGroupData()
 {
@@ -381,7 +381,7 @@ void CRConClient::SendQueuedData()
 
 		if ( !SocketWouldBlock() )
 		{
-			Warning( "Lost RCON connection, please retry command.\n"); 
+			Warning( "Lost RCON connection, please retry command.\n");
 			CloseSocket();
 		}
 		break;
@@ -552,7 +552,7 @@ void CRConClient::RunFrame()
 		CloseSocket();
 		return;
 	}
-	
+
 	if ( pendingLen < 0 )
 	{
 		CloseSocket();
@@ -563,7 +563,7 @@ void CRConClient::RunFrame()
 	// find out how much we have to read
 	unsigned long readLen = 0;
 	ioctlsocket( hSocket, FIONREAD, &readLen );
-	if ( readLen <= sizeof(int) ) 
+	if ( readLen <= sizeof(int) )
 		return;
 
 	// we have a command to process
@@ -579,7 +579,7 @@ void CRConClient::RunFrame()
 			CloseSocket();
 			break;
 		}
-		
+
 		if ( recvLen < 0 && !SocketWouldBlock() )
 		{
 			Warning( "RCON Cmd: recv error (%s)\n", NET_ErrorString( WSAGetLastError() ) );
@@ -589,7 +589,7 @@ void CRConClient::RunFrame()
 		m_RecvBuffer.Put( recvbuffer, recvLen );
 		len += recvLen;
 	}
-	
+
 	ParseReceivedData();
 }
 
@@ -618,7 +618,7 @@ void CRConClient::SendResponse( CUtlBuffer &response, bool bAutoAuthenticate )
 		}
 		else
 		{
-			Warning( "Lost RCON connection, please retry command\n" ); 
+			Warning( "Lost RCON connection, please retry command\n" );
 			CloseSocket();
 		}
 	}
@@ -636,7 +636,7 @@ void CRConClient::BuildResponse( CUtlBuffer &response, ServerDataRequestType_t m
 	response.PutInt(msg);
 	response.PutString(pString1);
 	response.PutString(pString2);
-	int nSize = response.TellPut() - sizeof(int); 
+	int nSize = response.TellPut() - sizeof(int);
 	response.SeekPut( CUtlBuffer::SEEK_HEAD, 0 );
 	response.PutInt( nSize ); // the size
 	response.SeekPut( CUtlBuffer::SEEK_CURRENT, nSize );
@@ -681,7 +681,7 @@ void CRConClient::Authenticate()
 	{
 		response.PutString( "" );
 	}
-	int size = response.TellPut() - sizeof(int); 
+	int size = response.TellPut() - sizeof(int);
 	response.SeekPut( CUtlBuffer::SEEK_HEAD, 0 );
 	response.PutInt(size); // the size
 	response.SeekPut( CUtlBuffer::SEEK_CURRENT, size );
@@ -781,9 +781,9 @@ void CRConClient::GrabConsoleLog()
 void CRConClient::SaveRemoteScreenshot( const void* pBuffer, int nBufLen )
 {
 	char pScreenshotPath[MAX_PATH];
-	do 
+	do
 	{
-		Q_snprintf( pScreenshotPath, sizeof( pScreenshotPath ), "%s/screenshot%04d.jpg", m_RemoteFileDir.Get(), m_nScreenShotIndex++ );	
+		Q_snprintf( pScreenshotPath, sizeof( pScreenshotPath ), "%s/screenshot%04d.jpg", m_RemoteFileDir.Get(), m_nScreenShotIndex++ );
 	} while ( g_pFullFileSystem->FileExists( pScreenshotPath, "MOD" ) );
 
 	char pFullPath[MAX_PATH];
@@ -806,9 +806,9 @@ void CRConClient::SaveRemoteConsoleLog( const void* pBuffer, int nBufLen )
 		return;
 
 	char pLogPath[MAX_PATH];
-	do 
+	do
 	{
-		Q_snprintf( pLogPath, sizeof( pLogPath ), "%s/console%04d.log", m_RemoteFileDir.Get(), m_nConsoleLogIndex++ );	
+		Q_snprintf( pLogPath, sizeof( pLogPath ), "%s/console%04d.log", m_RemoteFileDir.Get(), m_nConsoleLogIndex++ );
 	} while ( g_pFullFileSystem->FileExists( pLogPath, "MOD" ) );
 
 	char pFullPath[MAX_PATH];

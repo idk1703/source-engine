@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,7 +33,7 @@ private:
 
 	void PerformFlashbangEffect( const CViewSetup &view );
 	void PerformNightVisionEffect( const CViewSetup &view );
-	
+
 	ITexture *m_pFlashTexture;
 };
 

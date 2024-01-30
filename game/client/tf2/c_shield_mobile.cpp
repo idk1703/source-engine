@@ -17,7 +17,7 @@ enum
 #define EMP_WAVE_AMPLITUDE 8.0f
 
 //-----------------------------------------------------------------------------
-// Mobile version of the shield 
+// Mobile version of the shield
 //-----------------------------------------------------------------------------
 
 class C_ShieldMobile;
@@ -52,7 +52,7 @@ public:
 
 	virtual void AddEntity( );
 
-	// Return true if the panel is active 
+	// Return true if the panel is active
 	virtual bool IsPanelActive( int x, int y );
 
 	// Gets at the control point data; who knows how it was made?
@@ -114,9 +114,9 @@ void C_ShieldMobileActiveVertList::SetActiveVertState( int iVert, int bOn )
 IMPLEMENT_CLIENTCLASS_DT(C_ShieldMobile, DT_Shield_Mobile, CShieldMobile)
 
 	RecvPropInt( RECVINFO(m_ShieldState) ),
-	RecvPropArray( 
-		RecvPropInt( RECVINFO(m_pVertsActive[0])), 
-		m_pVertsActive 
+	RecvPropArray(
+		RecvPropInt( RECVINFO(m_pVertsActive[0])),
+		m_pVertsActive
 	),
 	RecvPropFloat( RECVINFO(m_flTheta) ),
 	RecvPropFloat( RECVINFO(m_flPhi) ),
@@ -129,14 +129,14 @@ END_RECV_TABLE()
 //-----------------------------------------------------------------------------
 
 
-void ShieldTraceLine(const Vector &vecStart, const Vector &vecEnd, 
+void ShieldTraceLine(const Vector &vecStart, const Vector &vecEnd,
 					 unsigned int mask, int collisionGroup, trace_t *ptr)
 {
 	UTIL_TraceLine(vecStart, vecEnd, mask, NULL, collisionGroup, ptr );
 }
 
-void ShieldTraceHull(const Vector &vecStart, const Vector &vecEnd, 
-					 const Vector &hullMin, const Vector &hullMax, 
+void ShieldTraceHull(const Vector &vecStart, const Vector &vecEnd,
+					 const Vector &hullMin, const Vector &hullMax,
 					 unsigned int mask, int collisionGroup, trace_t *ptr)
 {
 	CTraceFilterWorldOnly traceFilter;
@@ -241,7 +241,7 @@ void C_ShieldMobile::GetBounds( Vector& mins, Vector& maxs )
 }
 
 //-----------------------------------------------------------------------------
-// Return true if the panel is active 
+// Return true if the panel is active
 //-----------------------------------------------------------------------------
 
 bool C_ShieldMobile::IsPanelActive( int x, int y )
@@ -271,4 +271,3 @@ void C_ShieldMobile::GetShieldData( Vector const** ppVerts, float* pOpacity, flo
 		}
 	}
 }
-

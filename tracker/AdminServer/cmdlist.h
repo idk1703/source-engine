@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -21,7 +21,7 @@
 class CSocket;
 class IResponse;
 
-class CCMDList: public IResponse 
+class CCMDList: public IResponse
 {
 public:
 

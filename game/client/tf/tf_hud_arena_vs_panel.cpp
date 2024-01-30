@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -32,7 +32,7 @@ DECLARE_HUDELEMENT( CHudArenaVsPanel );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudArenaVsPanel::CHudArenaVsPanel( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudArenaVsPanel" )
 {
@@ -48,7 +48,7 @@ CHudArenaVsPanel::CHudArenaVsPanel( const char *pElementName ) : CHudElement( pE
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaVsPanel::Init( void )
 {
@@ -58,7 +58,7 @@ void CHudArenaVsPanel::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaVsPanel::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -81,7 +81,7 @@ void CHudArenaVsPanel::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudArenaVsPanel::ShouldDraw( void )
 {
@@ -94,7 +94,7 @@ bool CHudArenaVsPanel::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaVsPanel::OnTick( void )
 {
@@ -109,7 +109,7 @@ void CHudArenaVsPanel::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaVsPanel::FireGameEvent( IGameEvent * event )
 {
@@ -121,7 +121,7 @@ void CHudArenaVsPanel::FireGameEvent( IGameEvent * event )
 
 		if ( m_bVisible )
 		{
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "ArenaVsPanelOnShow" );			
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "ArenaVsPanelOnShow" );
 
 			m_flHideTime = gpGlobals->curtime + 10.0f;
 
@@ -169,5 +169,5 @@ void CHudArenaVsPanel::FireGameEvent( IGameEvent * event )
 				m_pRedAvatar->SetPlayer( pRedLeader );
 			}
 		}
-	}	
+	}
 }

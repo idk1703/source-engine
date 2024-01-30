@@ -28,7 +28,7 @@ static ConVar hud_showtargetpos( "hud_showtargetpos", "0", FCVAR_ARCHIVE, "0: ce
 static ConVar hud_showtargetid( "hud_showtargetid", "1", FCVAR_ARCHIVE, "Enables display of target names" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTargetID : public CHudElement, public vgui::Panel
 {
@@ -58,7 +58,7 @@ DECLARE_HUDELEMENT( CTargetID );
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTargetID::CTargetID( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass( NULL, "TargetID" )
@@ -122,7 +122,7 @@ Color CTargetID::GetColorForTargetTeam( int iTeamNumber )
 		return m_cHostageColor;
 		break;
 	}
-} 
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: Draw function for the element
@@ -151,10 +151,10 @@ void CTargetID::Paint()
 	// HPE_BEGIN:
 	// [menglish] Don't show target ID's when in freezecam mode
 	//=============================================================================
-	
+
 	if ( pPlayer->GetObserverMode() == OBS_MODE_FREEZECAM )
 		return;
-	 
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
@@ -225,7 +225,7 @@ void CTargetID::Paint()
 					szClan[ 0 ] = 0;
 				}
 				g_pVGuiLocalize->ConvertANSIToUnicode( szClan, wszClanTag, sizeof( wszClanTag ) );
-				
+
 				if ( pPlayer->InSameTeam(pLocalPlayer) )
 				{
 					printFormatString = "#Cstrike_playerid_sameteam";
@@ -283,7 +283,7 @@ void CTargetID::Paint()
 
 			for( int i=0;i<g_Hostages.Count();i++ )
 			{
-				// compare entity pointers			
+				// compare entity pointers
 				if( g_Hostages[i] == pEnt )
 				{
 					pHostage = g_Hostages[i];

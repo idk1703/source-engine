@@ -13,7 +13,7 @@
 // owner recv proxy
 void RecvProxy_Owner( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
-	// hacks? Not sure how else to get the index of the integer that is 
+	// hacks? Not sure how else to get the index of the integer that is
 	// being transmitted.
 	int index = pData->m_pRecvProp->GetOffset() / sizeof(int);
 
@@ -36,7 +36,7 @@ void RecvProxy_BombPlanted( const CRecvProxyData *pData, void *pStruct, void *pO
 }
 
 IMPLEMENT_CLIENTCLASS_DT_NOBASE(C_DODObjectiveResource, DT_DODObjectiveResource, CDODObjectiveResource)
-	
+
 	RecvPropInt( RECVINFO(m_iNumControlPoints) ),
 
 	// data variables
@@ -67,7 +67,7 @@ END_RECV_TABLE()
 C_DODObjectiveResource *g_pObjectiveResource;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_DODObjectiveResource::C_DODObjectiveResource()
 {
@@ -90,7 +90,7 @@ C_DODObjectiveResource::C_DODObjectiveResource()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_DODObjectiveResource::~C_DODObjectiveResource()
 {

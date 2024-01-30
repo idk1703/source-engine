@@ -20,18 +20,18 @@
 DECLARE_BUILD_FACTORY( CCSHudPlayerHealth );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCSHudPlayerHealth::CCSHudPlayerHealth( Panel *parent, const char *name ) : EditablePanel( parent, name )
 {
-	m_pHealthImage = new CCSHealthPanel( this, "PlayerStatusHealthImage" );	
+	m_pHealthImage = new CCSHealthPanel( this, "PlayerStatusHealthImage" );
 	m_pHealthImageBG = new ImagePanel( this, "PlayerStatusHealthImageBG" );
 
 	m_flNextThink = 0.0f;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSHudPlayerHealth::Reset()
 {
@@ -40,7 +40,7 @@ void CCSHudPlayerHealth::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSHudPlayerHealth::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -53,7 +53,7 @@ void CCSHudPlayerHealth::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSHudPlayerHealth::SetHealth( int iNewHealth, int iMaxHealth, int	iMaxBuffedHealth )
 {
@@ -94,12 +94,12 @@ void CCSHudPlayerHealth::SetHealth( int iNewHealth, int iMaxHealth, int	iMaxBuff
 		else
 		{
 			SetDialogVariable( "Health", "" );
-		}	
+		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCSHealthPanel::CCSHealthPanel( Panel *parent, const char *name ) : vgui::Panel( parent, name )
 {
@@ -108,7 +108,7 @@ CCSHealthPanel::CCSHealthPanel( Panel *parent, const char *name ) : vgui::Panel(
 	m_iMaterialIndex = surface()->DrawGetTextureId( "hud/health_color" );
 	if ( m_iMaterialIndex == -1 ) // we didn't find it, so create a new one
 	{
-		m_iMaterialIndex = surface()->CreateNewTextureID();	
+		m_iMaterialIndex = surface()->CreateNewTextureID();
 	}
 
 	surface()->DrawSetTextureFile( m_iMaterialIndex, "hud/health_color", true, false );
@@ -116,13 +116,13 @@ CCSHealthPanel::CCSHealthPanel( Panel *parent, const char *name ) : vgui::Panel(
 	m_iDeadMaterialIndex = surface()->DrawGetTextureId( "hud/health_dead" );
 	if ( m_iDeadMaterialIndex == -1 ) // we didn't find it, so create a new one
 	{
-		m_iDeadMaterialIndex = surface()->CreateNewTextureID();	
+		m_iDeadMaterialIndex = surface()->CreateNewTextureID();
 	}
 	surface()->DrawSetTextureFile( m_iDeadMaterialIndex, "hud/health_dead", true, false );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSHealthPanel::Paint()
 {
@@ -131,7 +131,7 @@ void CCSHealthPanel::Paint()
 	int x, y, w, h;
 	GetBounds( x, y, w, h );
 
-	Vertex_t vert[4];	
+	Vertex_t vert[4];
 	float uv1 = 0.0f;
 	float uv2 = 1.0f;
 	int xpos = 0, ypos = 0;
@@ -143,7 +143,7 @@ void CCSHealthPanel::Paint()
 
 		vert[0].Init( Vector2D( xpos, ypos ), Vector2D( uv1, uv1 ) );
 		vert[1].Init( Vector2D( xpos + w, ypos ), Vector2D( uv2, uv1 ) );
-		vert[2].Init( Vector2D( xpos + w, ypos + h ), Vector2D( uv2, uv2 ) );				
+		vert[2].Init( Vector2D( xpos + w, ypos + h ), Vector2D( uv2, uv2 ) );
 		vert[3].Init( Vector2D( xpos, ypos + h ), Vector2D( uv1, uv2 ) );
 
 		surface()->DrawSetColor( Color(255,255,255,255) );
@@ -162,7 +162,7 @@ void CCSHealthPanel::Paint()
 
 		vert[0].Init( Vector2D( xpos, flDamageY ), uv11 );
 		vert[1].Init( Vector2D( xpos + w, flDamageY ), uv21 );
-		vert[2].Init( Vector2D( xpos + w, ypos + h ), uv22 );				
+		vert[2].Init( Vector2D( xpos + w, ypos + h ), uv22 );
 		vert[3].Init( Vector2D( xpos, ypos + h ), uv12 );
 
 		surface()->DrawSetColor( GetFgColor() );

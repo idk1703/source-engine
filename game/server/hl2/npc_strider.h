@@ -154,8 +154,8 @@ public:
 	void			InputEnableMinigun( inputdata_t &inputdata );
 	void			InputSetCannonTarget( inputdata_t &inputdata );
 	void			InputFlickRagdoll( inputdata_t &inputdata );
-	void			InputDisableCollisionWith( inputdata_t &inputdata ); 
-	void			InputEnableCollisionWith( inputdata_t &inputdata ); 
+	void			InputDisableCollisionWith( inputdata_t &inputdata );
+	void			InputEnableCollisionWith( inputdata_t &inputdata );
 	void			InputCrouch( inputdata_t &inputdata );
 	void			InputCrouchInstantly( inputdata_t &inputdata );
 	void			InputStand( inputdata_t &inputdata );
@@ -227,7 +227,7 @@ public:
 	void			StopSmoking( float flDelay = 0.1 );
 	bool			IsSmoking() { return m_hSmoke != NULL; }
 	void			Explode();
-	
+
 	//---------------------------------
 	// Posture
 	//---------------------------------
@@ -249,7 +249,7 @@ public:
 	void			SetupGlobalModelData();
 
 	virtual bool	CanBecomeServerRagdoll( void ) { return false;	}
-	
+
 	//---------------------------------
 	// Navigation & Movement
 	//---------------------------------
@@ -375,14 +375,14 @@ protected:
 	virtual void	PopulatePoseParameters( void );
 
 private:
-	
+
 	bool	ShouldExplodeFromDamage( const CTakeDamageInfo &info );
 	bool	m_bExploding;
-	
+
 	//-----------------------------------------------------
 	// Conditions, Schedules, Tasks
 	//-----------------------------------------------------
-	enum 
+	enum
 	{
 		SCHED_STRIDER_RANGE_ATTACK1 = BaseClass::NEXT_SCHEDULE,
 		SCHED_STRIDER_RANGE_ATTACK2, // Immolator
@@ -499,7 +499,7 @@ private:
 	CSimpleSimTimer	m_EnemyUpdatedTimer;
 
 	CAI_FreePass m_PlayerFreePass;
-	
+
 #ifdef HL2_EPISODIC
 	CUtlVector< EHANDLE >	m_hAttachedBusters;		// List of busters attached to us
 #endif // HL2_EPISODIC

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,10 +19,10 @@ class CWeaponAmerKnife : public CWeaponDODBaseMelee
 {
 public:
 	DECLARE_CLASS( CWeaponAmerKnife, CWeaponDODBaseMelee );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponAmerKnife()  {}
 
 	virtual Activity GetMeleeActivity( void ) { return ACT_VM_PRIMARYATTACK; }
@@ -49,7 +49,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_amerknife, CWeaponAmerKnife );
 PRECACHE_WEAPON_REGISTER( weapon_amerknife );
 
-acttable_t CWeaponAmerKnife::m_acttable[] = 
+acttable_t CWeaponAmerKnife::m_acttable[] =
 {
 	{ ACT_DOD_STAND_AIM,					ACT_DOD_STAND_AIM_KNIFE,				false },
 	{ ACT_DOD_CROUCH_AIM,					ACT_DOD_CROUCH_AIM_KNIFE,				false },

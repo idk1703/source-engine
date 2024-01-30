@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -29,9 +29,9 @@
 
 DEFINE_FALLBACK_SHADER( Sprite, Sprite_DX9 )
 
-BEGIN_VS_SHADER( Sprite_DX9, 
+BEGIN_VS_SHADER( Sprite_DX9,
 			  "Help for Sprite_DX9" )
-			  
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( SPRITEORIGIN, SHADER_PARAM_TYPE_VEC3, "[0 0 0]", "sprite origin" )
 		SHADER_PARAM( SPRITEORIENTATION, SHADER_PARAM_TYPE_INTEGER, "0", "sprite orientation" )
@@ -246,7 +246,7 @@ BEGIN_VS_SHADER( Sprite_DX9,
 				pShaderShadow->EnableDepthWrites( false );
 				pShaderShadow->EnableBlending( true );
 				pShaderShadow->BlendFunc( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE_MINUS_SRC_ALPHA );
-				
+
 				FogToFogColor();
 
 				SetSpriteCommonShadowState( SHADER_USE_VERTEX_COLOR );
@@ -265,7 +265,7 @@ BEGIN_VS_SHADER( Sprite_DX9,
 				pShaderShadow->EnableDepthTest( false );
 				pShaderShadow->EnableBlending( true );
 				pShaderShadow->BlendFunc( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE );
-				
+
 				FogToBlack();
 
 				SetSpriteCommonShadowState( SHADER_USE_VERTEX_COLOR );
@@ -283,7 +283,7 @@ BEGIN_VS_SHADER( Sprite_DX9,
 				pShaderShadow->EnableDepthWrites( false );
 				pShaderShadow->EnableBlending( true );
 				pShaderShadow->BlendFunc( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE_MINUS_SRC_ALPHA );
-				
+
 				FogToFogColor();
 
 				SetSpriteCommonShadowState( SHADER_USE_VERTEX_COLOR );
@@ -300,7 +300,7 @@ BEGIN_VS_SHADER( Sprite_DX9,
 				pShaderShadow->EnableDepthWrites( false );
 				pShaderShadow->EnableBlending( true );
 				pShaderShadow->BlendFunc( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE_MINUS_SRC_ALPHA );
-				
+
 				FogToFogColor();
 
 				SetSpriteCommonShadowState( SHADER_USE_VERTEX_COLOR );
@@ -317,7 +317,7 @@ BEGIN_VS_SHADER( Sprite_DX9,
 				pShaderShadow->EnableDepthWrites( false );
 				pShaderShadow->EnableBlending( true );
 				pShaderShadow->BlendFunc( SHADER_BLEND_ONE_MINUS_SRC_ALPHA, SHADER_BLEND_ONE );
-				
+
 				FogToBlack();
 
 				SetSpriteCommonShadowState( SHADER_USE_VERTEX_COLOR );
@@ -341,7 +341,7 @@ BEGIN_VS_SHADER( Sprite_DX9,
 					pShaderShadow->EnableDepthWrites( false );
 					pShaderShadow->EnableBlending( true );
 					pShaderShadow->BlendFunc( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE );
-					
+
 					FogToBlack();
 
 					SetSpriteCommonShadowState( flags );
@@ -367,7 +367,7 @@ BEGIN_VS_SHADER( Sprite_DX9,
 					pShaderShadow->EnableDepthWrites( false );
 					pShaderShadow->EnableBlending( true );
 					pShaderShadow->BlendFunc( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE );
-					
+
 					FogToBlack();
 
 					SetSpriteCommonShadowState( flags );

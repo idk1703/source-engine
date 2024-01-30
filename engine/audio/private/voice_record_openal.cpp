@@ -1,11 +1,11 @@
 //========= Copyright 1996-2009, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
-// This module implements the voice record and compression functions 
+// This module implements the voice record and compression functions
 
 //#include "audio_pch.h"
 //#include "voice.h"
@@ -47,37 +47,37 @@ IVoiceRecord* CreateVoiceRecord_DSound(int sampleRate) { return new VoiceRecord_
 class VoiceRecord_OpenAL : public IVoiceRecord
 {
 protected:
-	
+
 	virtual				~VoiceRecord_OpenAL();
-	
-	
+
+
 	// IVoiceRecord.
 public:
-	
+
 	VoiceRecord_OpenAL();
 	virtual void		Release();
-	
+
 	virtual bool		RecordStart();
 	virtual void		RecordStop();
-	
+
 	// Initialize. The format of the data we expect from the provider is
 	// 8-bit signed mono at the specified sample rate.
 	virtual bool		Init(int sampleRate);
-	
+
 	virtual void		Idle();
-	
+
 	// Get the most recent N samples.
 	virtual int			GetRecordedData(short *pOut, int nSamplesWanted );
-	
+
 private:
 	bool				InitalizeInterfaces();	// Initialize the openal capture buffers and other interfaces
 	void				ReleaseInterfaces();	// Release openal buffers and other interfaces
 	void				ClearInterfaces();				// Clear members.
-	
-	
+
+
 private:
 	ALCdevice    *m_Device;
-	
+
 	int	m_nSampleRate;
 };
 
@@ -108,12 +108,12 @@ bool VoiceRecord_OpenAL::RecordStart()
 	{
 		InitalizeInterfaces();
 	}
-	
+
 	if ( !m_Device )
 		return false;
 
 	alcGetError(m_Device);
-	
+
 	alcCaptureStart(m_Device);
 
 	const ALenum error = alcGetError(m_Device);
@@ -128,14 +128,14 @@ void VoiceRecord_OpenAL::RecordStop()
 	{
 		alcCaptureStop( m_Device );
 	}
-	
+
 	// Release the capture buffer interface and any other resources that are no
 	// longer needed
 	ReleaseInterfaces();
 }
 
 bool VoiceRecord_OpenAL::InitalizeInterfaces()
-{	
+{
 	m_Device = alcCaptureOpenDevice( NULL, m_nSampleRate, AL_FORMAT_MONO16, m_nSampleRate * 10 * 2);
 	const ALenum error = alcGetError(m_Device);
 	const bool result = error == AL_NO_ERROR;
@@ -145,16 +145,16 @@ bool VoiceRecord_OpenAL::InitalizeInterfaces()
 bool VoiceRecord_OpenAL::Init(int sampleRate)
 {
 	m_nSampleRate = sampleRate;
-	
+
 	ReleaseInterfaces();
-	
+
 	return true;
 }
 
 
 void VoiceRecord_OpenAL::ReleaseInterfaces()
 {
-    alcCaptureCloseDevice(m_Device);	
+	alcCaptureCloseDevice(m_Device);
 	ClearInterfaces();
 }
 

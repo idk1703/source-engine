@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -17,10 +17,10 @@ class C_FuncPhysicsRespawnZone;
 
 class C_PhysPropClientside : public C_BreakableProp, public IBreakableWithPropData, public IMultiplayerPhysics
 {
-	
+
 public:
 	DECLARE_CLASS( C_PhysPropClientside, C_BreakableProp );
-	
+
 	C_PhysPropClientside();
 	virtual ~C_PhysPropClientside();
 
@@ -37,7 +37,7 @@ public:
 	virtual int				GetMultiplayerPhysicsMode() { return m_iPhysicsMode; }
 	virtual float			GetMass();
 	virtual bool			IsAsleep();
-	
+
 	virtual bool			KeyValue( const char *szKeyName, const char *szValue );
 
 	virtual	void			OnTakeDamage( int iDamage ); // very simple version
@@ -47,7 +47,7 @@ public:
 	virtual void			SetHealth(int iHealth) { m_iHealth = iHealth; }
 	virtual int				GetHealth() const { return m_iHealth; }
 			int				GetNumBreakableChunks( void ) { return m_iNumBreakableChunks; }
-	
+
 			void			SetRespawnZone( C_FuncPhysicsRespawnZone *pZone );
 
 // IBreakableWithPropData interface:
@@ -91,16 +91,16 @@ public:
 	static C_PhysPropClientside *CreateNew(bool bForce = false);
 
 protected:
-	
+
 	static void ParseAllEntities(const char *pMapData);
 	static const char *ParseEntity( const char *pEntData );
 	static void InitializePropRespawnZones(void);
-		
+
 public:
-	
+
 	int		m_iPhysicsMode;		// should always be PHYSICS_MULTIPLAYER_CLIENTSIDE
 	float	m_flTouchDelta;		// Amount of time that must pass before another touch function can be called
-	float 	m_fDeathTime;		// Point at which this object self destructs.  
+	float 	m_fDeathTime;		// Point at which this object self destructs.
 								// The default of -1 indicates the object shouldn't destruct.
 
 // properties from serverclass CPhysicsProp
@@ -118,7 +118,7 @@ protected:
 	int				m_iBreakableSkin;
 	int				m_iBreakableCount;
 	int				m_iMaxBreakableSize;
-	string_t		m_iszBasePropData;	
+	string_t		m_iszBasePropData;
 	int				m_iInteractions;
 	float			m_explodeDamage;
 	float			m_explodeRadius;

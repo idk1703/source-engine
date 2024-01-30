@@ -33,7 +33,7 @@ CBitmapPanel::CBitmapPanel( ) :	BaseClass( NULL, "CBitmapPanel" ), m_pImage(0)
 	m_bOwnsImage = true;
 }
 
-CBitmapPanel::CBitmapPanel( vgui::Panel *pParent, const char *pName ) : 
+CBitmapPanel::CBitmapPanel( vgui::Panel *pParent, const char *pName ) :
 	BaseClass( pParent, pName ), m_pImage(0)
 {
 	SetPaintBackgroundEnabled( false );
@@ -148,7 +148,7 @@ void CBitmapPanel::Paint( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBitmapPanel::OnCursorEntered()
 {
@@ -162,7 +162,7 @@ void CBitmapPanel::OnCursorEntered()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBitmapPanel::OnCursorExited()
 {
@@ -176,7 +176,7 @@ void CBitmapPanel::OnCursorExited()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *CBitmapPanel::GetMouseOverText( void )

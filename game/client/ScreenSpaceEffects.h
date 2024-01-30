@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -49,7 +49,7 @@ public:
 
 	virtual void SetScreenSpaceEffectParams( const char *pEffectName, KeyValues *params ) = 0;
 	virtual void SetScreenSpaceEffectParams( IScreenSpaceEffect *pEffect, KeyValues *params ) = 0;
-    
+
 	virtual void EnableScreenSpaceEffect( const char *pEffectName ) = 0;
 	virtual void EnableScreenSpaceEffect( IScreenSpaceEffect *pEffect ) = 0;
 
@@ -81,7 +81,7 @@ public:
 };
 
 #define ADD_SCREENSPACE_EFFECT( CEffect, pEffectName )			CEffect pEffectName##_effect;														\
-																CScreenSpaceEffectRegistration pEffectName##_reg( #pEffectName, &pEffectName##_effect );	
+																CScreenSpaceEffectRegistration pEffectName##_reg( #pEffectName, &pEffectName##_effect );
 
 
 

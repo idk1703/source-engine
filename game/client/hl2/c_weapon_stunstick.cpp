@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -63,7 +63,7 @@ public:
 	void ClientThink( void )
 	{
 		// Update our effects
-		if ( m_bActive && 
+		if ( m_bActive &&
 			gpGlobals->frametime != 0.0f &&
 			( random->RandomInt( 0, 5 ) == 0 ) )
 		{
@@ -90,7 +90,7 @@ public:
 			beamInfo.m_pEndEnt	= cl_entitylist->GetEnt( BEAMENT_ENTITY( entindex() ) );
 			beamInfo.m_nStartAttachment = 1;
 			beamInfo.m_nEndAttachment = 2;
-			
+
 			beamInfo.m_nType = TE_BEAMTESLA;
 			beamInfo.m_pszModelName = "sprites/physbeam.vmt";
 			beamInfo.m_flHaloScale = 0.0f;
@@ -109,7 +109,7 @@ public:
 			beamInfo.m_nSegments = 8;
 			beamInfo.m_bRenderable = true;
 			beamInfo.m_nFlags = (FBEAM_ONLYNOISEONCE|FBEAM_SHADEOUT);
-			
+
 			beams->CreateBeamPoints( beamInfo );
 		}
 	}
@@ -122,9 +122,9 @@ public:
 			SetNextClientThink( CLIENT_THINK_ALWAYS );
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	void StartStunEffect( void )
 	{
@@ -132,7 +132,7 @@ public:
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	void StopStunEffect( void )
 	{
@@ -140,7 +140,7 @@ public:
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	// Output : RenderGroup_t
 	//-----------------------------------------------------------------------------
 	RenderGroup_t GetRenderGroup( void )
@@ -154,10 +154,10 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pData - 
-//			*pStruct - 
-//			*pOut - 
+// Purpose:
+// Input  : *pData -
+//			*pStruct -
+//			*pOut -
 //-----------------------------------------------------------------------------
 void RecvProxy_StunActive( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
@@ -184,4 +184,3 @@ STUB_WEAPON_CLASS_IMPLEMENT( weapon_stunstick, C_WeaponStunStick );
 IMPLEMENT_CLIENTCLASS_DT( C_WeaponStunStick, DT_WeaponStunStick, CWeaponStunStick )
 	RecvPropInt( RECVINFO(m_bActive), 0, RecvProxy_StunActive ),
 END_RECV_TABLE()
-

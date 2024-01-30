@@ -72,7 +72,7 @@ private:
 	void					CleanTmpDir();
 	void					ConVarSanityThink();
 
-	float					m_flConVarSanityCheckTime; 
+	float					m_flConVarSanityCheckTime;
 	bool					m_bShouldAbortRecording;
 };
 

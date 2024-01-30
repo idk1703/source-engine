@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ public:
 	void InputClose( inputdata_t &inputdata );
 	void InputSetPosition( inputdata_t &inputdata );
 	void InputSetSpeed( inputdata_t &inputdata );
-	
+
 	DECLARE_DATADESC();
 
 	Vector		m_vecMoveDir;			// Move direction.

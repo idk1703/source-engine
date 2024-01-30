@@ -1,4 +1,4 @@
-//======= Copyright © 1996-2006, Valve Corporation, All rights reserved. ======
+//======= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ======
 //
 // Purpose: Win32 Console API helpers
 //
@@ -27,7 +27,7 @@
 // Attach a console to a Win32 GUI process and setup stdin, stdout & stderr
 // along with the std::iostream (cout, cin, cerr) equivalents to read and
 // write to and from that console
-// 
+//
 // 1. Ensure the handle associated with stdio is FILE_TYPE_UNKNOWN
 //    if it's anything else just return false.  This supports cygwin
 //    style command shells like rxvt which setup pipes to processes
@@ -41,7 +41,7 @@
 //    command window and having the output go to the parent window.
 //    It's a little funny because a GUI app detaches so the command
 //    prompt gets intermingled with output from this process
-//    
+//
 // 3. If things get to here call AllocConsole which will pop open
 //    a new window and allow output to go to that window.  The
 //    window will disappear when the process exists so if it's used
@@ -50,7 +50,7 @@
 //    true is returned.
 //
 // Return: true if AllocConsole() was used to pop open a new windows console
-// 
+//
 //-----------------------------------------------------------------------------
 bool SetupWin32ConsoleIO()
 {
@@ -121,9 +121,9 @@ void InitWin32ConsoleColorContext( Win32ConsoleColorContext_t *pContext )
 }
 
 //-----------------------------------------------------------------------------
-// Sets the active console foreground color. This function is smart enough to 
+// Sets the active console foreground color. This function is smart enough to
 // avoid setting the color to something that would be unreadable given
-// the user's potentially customized background color. It leaves the 
+// the user's potentially customized background color. It leaves the
 // background color unchanged.
 // Returns: The console's previous foreground color.
 //-----------------------------------------------------------------------------
@@ -143,7 +143,7 @@ uint16 SetWin32ConsoleColor( Win32ConsoleColorContext_t *pContext, int nRed, int
 
 	SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), pContext->m_LastColor | pContext->m_BackgroundFlags );
 	return ret;
-#else	
+#else
 	return 0;
 #endif
 }

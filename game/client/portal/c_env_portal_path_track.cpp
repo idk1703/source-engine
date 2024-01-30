@@ -23,7 +23,7 @@ public:
 
 	void			UpdateParticles_Inactive( void );
 	void			UpdateParticles_Active( void );
-private:	
+private:
 
 	float			m_flScale;
 	int				m_nState;
@@ -48,7 +48,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_EnvPortalPathTrack, DT_EnvPortalPathTrack, CEnvPorta
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : RenderGroup_t
 //-----------------------------------------------------------------------------
 RenderGroup_t C_EnvPortalPathTrack::GetRenderGroup( void )
@@ -57,8 +57,8 @@ RenderGroup_t C_EnvPortalPathTrack::GetRenderGroup( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_EnvPortalPathTrack::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -71,7 +71,7 @@ void C_EnvPortalPathTrack::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_EnvPortalPathTrack::SetupEmitters( void )
 {
@@ -97,7 +97,7 @@ bool C_EnvPortalPathTrack::SetupEmitters( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EnvPortalPathTrack::ClientThink( void )
 {
@@ -161,7 +161,7 @@ void C_EnvPortalPathTrack::UpdateParticles_Active ( void )
 
 		if ( sParticle == NULL )
 			return;
-		
+
 		sParticle->m_vecVelocity	= Vector(0,0,8);
 		sParticle->m_flDieTime		= 0.5f;
 		sParticle->m_flLifetime		= 0.0f;
@@ -183,7 +183,7 @@ void C_EnvPortalPathTrack::UpdateParticles_Active ( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EnvPortalPathTrack::NotifyShouldTransmit( ShouldTransmitState_t state )
 {

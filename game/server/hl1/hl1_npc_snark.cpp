@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		Projectile shot from the MP5 
+// Purpose:		Projectile shot from the MP5
 //
 // $Workfile:     $
 // $Date:         $
@@ -80,7 +80,7 @@ void CSnark::Spawn( void )
 	SetSolid( SOLID_BBOX );
 	AddSolidFlags( FSOLID_NOT_STANDABLE );
 	SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_CUSTOM );
-	SetFriction(1.0);	
+	SetFriction(1.0);
 
 	SetModel( "models/w_squeak2.mdl" );
 	UTIL_SetSize( this, Vector( -4, -4, 0 ), Vector( 4, 4, 8 ) );
@@ -205,10 +205,10 @@ void CSnark::HuntThink( void )
 		UTIL_Remove( this );
 		return;
 	}
-	
+
 	StudioFrameAdvance( );
 	SetNextThink( gpGlobals->curtime + 0.1f );
-	
+
 	//FIXME: There's a problem in this movetype that causes it to set a ground entity but never recheck to clear it
 	//		 For now, we stomp it clear and force it to revalidate -- jdw
 
@@ -249,7 +249,7 @@ void CSnark::HuntThink( void )
 		return;
 
 	m_flNextHunt = gpGlobals->curtime + 2.0;
-	
+
 	Vector vecFlat = GetAbsVelocity();
 	vecFlat.z = 0;
 	VectorNormalize( vecFlat );
@@ -287,7 +287,7 @@ void CSnark::HuntThink( void )
 
 		if ( flAdj > 1.2 )
 			flAdj = 1.2;
-		
+
 		// ALERT( at_console, "think : enemy\n");
 
 		// ALERT( at_console, "%.0f %.2f %.2f %.2f\n", flVel, m_vecTarget.x, m_vecTarget.y, m_vecTarget.z );
@@ -357,9 +357,9 @@ void CSnark::ResolveFlyCollisionCustom( trace_t &trace, Vector &vecVelocity )
 		VectorNormalize( vecDir );
 
 		float hitDot = DotProduct( trace.plane.normal, -vecDir );
-			
+
 		Vector vReflection = 2.0f * trace.plane.normal * hitDot + vecDir;
-		
+
 		SetAbsVelocity( vReflection * speed * 0.6f );
 
 		return;
@@ -422,7 +422,7 @@ void CSnark::SuperBounceTouch( CBaseEntity *pOther )
 	SetAbsAngles( angles );
 
 	// avoid bouncing too much
-	if ( m_flNextHit > gpGlobals->curtime) 
+	if ( m_flNextHit > gpGlobals->curtime)
 		return;
 
 	// higher pitch as squeeker gets closer to detonation time
@@ -524,4 +524,3 @@ bool CSnark::IsValidEnemy( CBaseEntity *pEnemy )
 {
 	return CHL1BaseNPC::IsValidEnemy( pEnemy );
 }
-

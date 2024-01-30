@@ -44,7 +44,7 @@ public:
 class PortalMPViewVectors : public CViewVectors
 {
 public:
-	PortalMPViewVectors( 
+	PortalMPViewVectors(
 		Vector vView,
 		Vector vHullMin,
 		Vector vHullMax,
@@ -56,7 +56,7 @@ public:
 		Vector vDeadViewHeight,
 		Vector vCrouchTraceMin,
 		Vector vCrouchTraceMax ) :
-	CViewVectors( 
+	CViewVectors(
 		vView,
 		vHullMin,
 		vHullMax,
@@ -72,7 +72,7 @@ public:
 	}
 
 	Vector m_vCrouchTraceMin;
-	Vector m_vCrouchTraceMax;	
+	Vector m_vCrouchTraceMax;
 };
 
 class CPortalMPGameRules : public CTeamplayRules

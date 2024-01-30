@@ -16,9 +16,9 @@ class CTriggerFall : public CBaseTrigger
 public:
 	void Spawn( void );
 	void FallTouch( CBaseEntity *pOther );
-	
+
 	DECLARE_DATADESC();
-	
+
 	// Outputs
 	COutputEvent m_OnFallingObject;
 };
@@ -61,7 +61,7 @@ void CTriggerFall::FallTouch( CBaseEntity *pOther )
 
 		pOther->TakeDamage( CTakeDamageInfo( this, this, 200, DMG_FALL ) );
 	}
-	else 
+	else
 	{
 		// Just remove the entity
 		UTIL_Remove( pOther );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -66,7 +66,7 @@ int ProgressBar::GetDrawnSegmentCount()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ProgressBar::PaintBackground()
 {
@@ -106,7 +106,7 @@ void ProgressBar::PaintSegment( int &x, int &y, int tall, int wide )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ProgressBar::Paint()
 {
@@ -160,7 +160,7 @@ void ProgressBar::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ProgressBar::SetProgress(float progress)
 {
@@ -190,7 +190,7 @@ float ProgressBar::GetProgress()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ProgressBar::ApplySchemeSettings(IScheme *pScheme)
 {
@@ -237,10 +237,10 @@ bool ProgressBar::ConstructTimeRemainingString(wchar_t *output, int outputBuffer
 		secondsRemaining -= 60;
 	}
 
-    char minutesBuf[16];
-    Q_snprintf(minutesBuf, sizeof( minutesBuf ), "%d", minutesRemaining);
-    char secondsBuf[16];
-    Q_snprintf(secondsBuf, sizeof( secondsBuf ), "%d", secondsRemaining);
+	char minutesBuf[16];
+	Q_snprintf(minutesBuf, sizeof( minutesBuf ), "%d", minutesRemaining);
+	char secondsBuf[16];
+	Q_snprintf(secondsBuf, sizeof( secondsBuf ), "%d", secondsRemaining);
 
 	if (minutesRemaining > 0)
 	{
@@ -301,7 +301,7 @@ bool ProgressBar::ConstructTimeRemainingString(wchar_t *output, int outputBuffer
 // Purpose: data accessor
 //-----------------------------------------------------------------------------
 void ProgressBar::SetBarInset( int pixels )
-{ 
+{
 	m_iBarInset = pixels;
 }
 
@@ -317,7 +317,7 @@ int ProgressBar::GetBarInset( void )
 // Purpose: data accessor
 //-----------------------------------------------------------------------------
 void ProgressBar::SetMargin( int pixels )
-{ 
+{
 	m_iBarMargin = pixels;
 }
 
@@ -330,7 +330,7 @@ int ProgressBar::GetMargin()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ProgressBar::ApplySettings(KeyValues *inResourceData)
 {
@@ -347,7 +347,7 @@ void ProgressBar::ApplySettings(KeyValues *inResourceData)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ProgressBar::GetSettings(KeyValues *outResourceData)
 {
@@ -399,7 +399,7 @@ ContinuousProgressBar::ContinuousProgressBar(Panel *parent, const char *panelNam
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ContinuousProgressBar::SetPrevProgress( float progress )
 {
@@ -411,7 +411,7 @@ void ContinuousProgressBar::SetPrevProgress( float progress )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ContinuousProgressBar::Paint()
 {

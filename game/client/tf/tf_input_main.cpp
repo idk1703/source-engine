@@ -43,7 +43,7 @@ static CTFInput g_Input;
 IInput *input = ( IInput * )&g_Input;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFInput::CAM_CapYaw( float fVal ) const
 {
@@ -66,7 +66,7 @@ float CTFInput::CAM_CapYaw( float fVal ) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFInput::CAM_CapPitch( float fVal ) const
 {
@@ -79,7 +79,7 @@ float CTFInput::CAM_CapPitch( float fVal ) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFInput::AdjustYaw( float speed, QAngle& viewangles )
 {
@@ -127,7 +127,7 @@ void CTFInput::AdjustYaw( float speed, QAngle& viewangles )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFInput::JoyStickAdjustYaw( float flSpeed )
 {
@@ -138,7 +138,7 @@ float CTFInput::JoyStickAdjustYaw( float flSpeed )
 		if ( pPlayer && pPlayer->m_Shared.InCond( TF_COND_SHIELD_CHARGE ) )
 		{
 			float flChargeYawCap = pPlayer->m_Shared.CalculateChargeCap();
-			
+
 			if ( flSpeed > 0.f && flSpeed > flChargeYawCap )
 				flSpeed = flChargeYawCap;
 			else if ( flSpeed < 0.f && flSpeed < -flChargeYawCap )

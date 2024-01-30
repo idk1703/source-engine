@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,4 +32,3 @@ ShadowType_t C_PhysBox::ShadowCastType()
 C_PhysBox::~C_PhysBox()
 {
 }
-

@@ -24,9 +24,9 @@ Color g_rgbaHolidayYellow( 2, 110, 197, 255 );
 Color g_rgbaHolidayGreen( 117, 193, 8, 255 );
 Color g_rgbaHolidayBlue( 255, 151, 29, 255 );
 
-Color *(rgbaHolidayLightColors[]) = { &g_rgbaHolidayRed, 
-									  &g_rgbaHolidayYellow, 
-									  &g_rgbaHolidayGreen, 
+Color *(rgbaHolidayLightColors[]) = { &g_rgbaHolidayRed,
+									  &g_rgbaHolidayYellow,
+									  &g_rgbaHolidayGreen,
 									  &g_rgbaHolidayBlue };
 
 
@@ -162,9 +162,9 @@ void CreateHolidayLight( const HolidayLightData_t &holidayLight )
 		pTemp->m_nHitboxSet = g_nHolidayLightColor;
 
 		// Set the color
-		pTemp->SetRenderColor( rgbaHolidayLightColors[ g_nHolidayLightColor ]->r(), 
-							   rgbaHolidayLightColors[ g_nHolidayLightColor ]->g(), 
-							   rgbaHolidayLightColors[ g_nHolidayLightColor ]->b(), 
+		pTemp->SetRenderColor( rgbaHolidayLightColors[ g_nHolidayLightColor ]->r(),
+							   rgbaHolidayLightColors[ g_nHolidayLightColor ]->g(),
+							   rgbaHolidayLightColors[ g_nHolidayLightColor ]->b(),
 							   rgbaHolidayLightColors[ g_nHolidayLightColor ]->a() );
 
 		// Next color in the pattern

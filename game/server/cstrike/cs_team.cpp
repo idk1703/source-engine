@@ -39,14 +39,14 @@ void CCSTeam::Init( const char *pName, int iNumber )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCSTeam::~CCSTeam( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSTeam::Precache( void )
 {
@@ -85,7 +85,7 @@ void CCSTeam::RemovePlayer( CBasePlayer *pPlayer )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCSTeam* CCSTeam::GetEnemyTeam()
 {
@@ -97,5 +97,3 @@ CCSTeam* CCSTeam::GetEnemyTeam()
 	int iEnemyTeam = !(iMyTeam - 1) + 1;
 	return (CCSTeam*)GetGlobalTeam( iEnemyTeam );
 }
-
-

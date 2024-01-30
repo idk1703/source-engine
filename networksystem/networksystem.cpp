@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -22,8 +22,8 @@
 // Singleton instance
 //-----------------------------------------------------------------------------
 static CNetworkSystem g_NetworkSystem;
-CNetworkSystem *g_pNetworkSystemImp = &g_NetworkSystem; 
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CNetworkSystem, INetworkSystem, 
+CNetworkSystem *g_pNetworkSystemImp = &g_NetworkSystem;
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CNetworkSystem, INetworkSystem,
 						NETWORKSYSTEM_INTERFACE_VERSION, g_NetworkSystem );
 
 
@@ -57,7 +57,7 @@ InitReturnVal_t CNetworkSystem::Init()
 
 	// initialize winsock 2.0
 	WSAData wsaData;
-	
+
 	if ( WSAStartup( MAKEWORD(2,0), &wsaData ) != 0 )
 	{
 		Warning( "Error! Failed to load network socket library.\n");
@@ -115,7 +115,7 @@ bool CNetworkSystem::Connect( CreateInterfaceFn factory )
 		return false;
 	}
 
-	return INIT_OK; 
+	return INIT_OK;
 }
 
 
@@ -149,7 +149,7 @@ bool CNetworkSystem::RegisterMessage( INetworkMessage *pMessage )
 	if ( m_NetworkMessages.Find( pMessage ) >= 0 )
 		return false;
 
-	// Allocate more space in messages 
+	// Allocate more space in messages
 	int nGroupBits = LargestPowerOfTwoLessThanOrEqual( pMessage->GetGroup() );
 	int nTypeBits = LargestPowerOfTwoLessThanOrEqual( pMessage->GetType() );
 	m_nGroupBits = max( nGroupBits, m_nGroupBits );
@@ -187,14 +187,14 @@ INetworkMessage* CNetworkSystem::FindNetworkMessage( int group, int type )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNetworkSystem::StringToSockaddr( const char *s, struct sockaddr *sadr )
 {
 	struct hostent	*h;
 	char	*colon;
 	char	copy[128];
-	
+
 	Q_memset (sadr, 0, sizeof(*sadr));
 	((struct sockaddr_in *)sadr)->sin_family = AF_INET;
 	((struct sockaddr_in *)sadr)->sin_port = 0;
@@ -205,9 +205,9 @@ bool CNetworkSystem::StringToSockaddr( const char *s, struct sockaddr *sadr )
 		if (*colon == ':')
 		{
 			*colon = 0;
-			((struct sockaddr_in *)sadr)->sin_port = htons((short)atoi(colon+1));	
+			((struct sockaddr_in *)sadr)->sin_port = htons((short)atoi(colon+1));
 		}
-	
+
 	if (copy[0] >= '0' && copy[0] <= '9' && Q_strstr( copy, "." ) )
 	{
 		*(int *)&((struct sockaddr_in *)sadr)->sin_addr = inet_addr(copy);
@@ -222,7 +222,7 @@ bool CNetworkSystem::StringToSockaddr( const char *s, struct sockaddr *sadr )
 
 		*(int *)&((struct sockaddr_in *)sadr)->sin_addr = *(int *)h->h_addr_list[0];
 	}
-	
+
 	return true;
 }
 
@@ -488,4 +488,3 @@ bool CNetworkSystem::IsNetworkEventCreated()
 {
 	return m_bNetworkEventCreated;
 }
-	

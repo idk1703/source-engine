@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -72,8 +72,8 @@ void CDialogKickPlayer::Activate(const char *playerName,const char *question,con
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *command - 
+// Purpose:
+// Input  : *command -
 //-----------------------------------------------------------------------------
 void CDialogKickPlayer::OnCommand(const char *command)
 {
@@ -109,7 +109,7 @@ void CDialogKickPlayer::OnCommand(const char *command)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDialogKickPlayer::PerformLayout()
 {
@@ -124,7 +124,3 @@ void CDialogKickPlayer::OnClose()
 	BaseClass::OnClose();
 	MarkForDeletion();
 }
-
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -31,8 +31,8 @@ CLIENTEFFECT_MATERIAL( "effects/bluespark" )
 CLIENTEFFECT_REGISTER_END()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &data - 
+// Purpose:
+// Input  : &data -
 //-----------------------------------------------------------------------------
 void FX_AddLine( const FXLineData_t &data )
 {
@@ -74,7 +74,7 @@ void FX_AddDiscreetLine( const Vector& start, const Vector& direction, float vel
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void FX_AddQuad( const FXQuadData_t &data )
 {
@@ -87,19 +87,19 @@ void FX_AddQuad( const FXQuadData_t &data )
 //-----------------------------------------------------------------------------
 // Purpose: Parameter heavy version
 //-----------------------------------------------------------------------------
-void FX_AddQuad( const Vector &origin, 
-				 const Vector &normal, 
-				 float startSize, 
-				 float endSize, 
+void FX_AddQuad( const Vector &origin,
+				 const Vector &normal,
+				 float startSize,
+				 float endSize,
 				 float sizeBias,
-				 float startAlpha, 
+				 float startAlpha,
 				 float endAlpha,
 				 float alphaBias,
 				 float yaw,
 				 float deltaYaw,
-				 const Vector &color, 
-				 float lifeTime, 
-				 const char *shader, 
+				 const Vector &color,
+				 float lifeTime,
+				 const char *shader,
 				 unsigned int flags )
 {
 	FXQuadData_t data;
@@ -201,10 +201,10 @@ public:
 CBulletWhizTimer g_BulletWhiz( "CBulletWhizTimer" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &vecStart - 
-//			&vecDir - 
-//			iTracerType - 
+// Purpose:
+// Input  : &vecStart -
+//			&vecDir -
+//			iTracerType -
 //-----------------------------------------------------------------------------
 #define LISTENER_HEIGHT 24
 
@@ -277,7 +277,7 @@ void FX_TracerSound( const Vector &start, const Vector &end, int iTracerType )
 		VectorNormalize( shotDir );
 
 		CLocalPlayerFilter filter;
-		enginesound->EmitSound(	filter, SOUND_FROM_WORLD, CHAN_STATIC, params.soundname, 
+		enginesound->EmitSound(	filter, SOUND_FROM_WORLD, CHAN_STATIC, params.soundname,
 			params.volume, SNDLVL_TO_ATTN(params.soundlevel), 0, params.pitch, 0, &start, &shotDir, NULL);
 	}
 
@@ -304,13 +304,13 @@ void FX_Tracer( Vector& start, Vector& end, int velocity, bool makeWhiz )
 	{
 		float length = random->RandomFloat( 64.0f, 128.0f );
 		float life = ( dist + length ) / velocity;	//NOTENOTE: We want the tail to finish its run as well
-		
+
 		//Add it
 		FX_AddDiscreetLine( start, dir, velocity, length, dist, random->RandomFloat( 0.75f, 0.9f ), life, "effects/spark" );
 	}
 
 	if( makeWhiz )
 	{
-		FX_TracerSound( start, end, TRACER_TYPE_DEFAULT );	
+		FX_TracerSound( start, end, TRACER_TYPE_DEFAULT );
 	}
 }

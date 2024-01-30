@@ -5,7 +5,7 @@
 // Valve, L.L.C., or in accordance with the terms and conditions stipulated in
 // the agreement/contract under which the contents have been supplied.
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -18,7 +18,7 @@
 #endif
 
 #include <vgui/VGUI.h>
-#include <vgui/IHTML.h> // CreateHTML, PaintHTML 
+#include <vgui/IHTML.h> // CreateHTML, PaintHTML
 #include "interface.h"
 #include "IVguiMatInfo.h"
 
@@ -145,7 +145,7 @@ namespace SurfaceV30
 	// rendering functions
 	virtual void DrawSetColor(int r, int g, int b, int a) = 0;
 	virtual void DrawSetColor(Color col) = 0;
-	
+
 	virtual void DrawFilledRect(int x0, int y0, int x1, int y1) = 0;
 	virtual void DrawFilledRectArray( IntRect *pRects, int numRects ) = 0;
 	virtual void DrawOutlinedRect(int x0, int y0, int x1, int y1) = 0;
@@ -203,7 +203,7 @@ namespace SurfaceV30
 	virtual void ApplyChanges() = 0;
 	virtual bool IsWithin(int x, int y) = 0;
 	virtual bool HasFocus() = 0;
-	
+
 	// returns true if the surface supports minimize & maximize capabilities
 	enum SurfaceFeature_e
 	{

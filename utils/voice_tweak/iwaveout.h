@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,7 +10,7 @@
 #pragma once
 
 
-// Interface by the voice_tweak app for simple wave output. You must extern a 
+// Interface by the voice_tweak app for simple wave output. You must extern a
 // specific factory function to create and initialize an instance.
 class IWaveOut
 {
@@ -24,7 +24,7 @@ public:
 	// Do idle time processing.
 	virtual void	Idle() = 0;
 
-	// Returns the number of samples you've put that haven't been played yet (sitting in the buffer 
+	// Returns the number of samples you've put that haven't been played yet (sitting in the buffer
 	// waiting to be played).
 	virtual int		GetNumBufferedSamples() = 0;
 };

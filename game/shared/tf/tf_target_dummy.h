@@ -25,7 +25,7 @@ public:
 	~CTFTargetDummy() {}
 
 	virtual void	Precache( void );
-	
+
 	virtual void	Spawn( void );
 	virtual void	Event_Killed( const CTakeDamageInfo &info );
 	virtual int		OnTakeDamage( const CTakeDamageInfo &info );

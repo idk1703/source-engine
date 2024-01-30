@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -53,7 +53,7 @@ CServerBrowser::~CServerBrowser()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CServerBrowser::CreateDialog()
 {
@@ -83,7 +83,7 @@ bool CServerBrowser::Initialize(CreateInterfaceFn *factorylist, int factoryCount
 			g_pEngineReplay = ( IEngineReplay * )factorylist[ i ]( ENGINE_REPLAY_INTERFACE_VERSION, NULL );
 		}
 	}
-	
+
 	SteamAPI_InitSafe();
 	SteamAPI_SetTryCatchCallbacks( false ); // We don't use exceptions, so tell steam not to use try/catch in callback handlers
 	steamapicontext->Init();
@@ -184,7 +184,7 @@ bool CServerBrowser::IsWorkshopSubscribedMap( const char *pszMapName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CServerBrowser::IsValid()
 {
@@ -193,7 +193,7 @@ bool CServerBrowser::IsValid()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CServerBrowser::Activate()
 {
@@ -248,7 +248,7 @@ void CServerBrowser::Reactivate()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CServerBrowser::Open()
 {
@@ -352,7 +352,7 @@ bool CServerBrowser::JoinGame( uint64 ulSteamIDFriend, const char *pszConnectCod
 //-----------------------------------------------------------------------------
 bool CServerBrowser::JoinGame( uint32 unGameIP, uint16 usGamePort, const char *pszConnectCode )
 {
-    m_hInternetDlg->JoinGame( unGameIP, usGamePort, pszConnectCode );
+	m_hInternetDlg->JoinGame( unGameIP, usGamePort, pszConnectCode );
 	return true;
 }
 
@@ -384,7 +384,7 @@ void CServerBrowser::CloseAllGameInfoDialogs()
 CUtlVector< gametypes_t > g_GameTypes;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void LoadGameTypes( void )
 {
@@ -411,7 +411,7 @@ void LoadGameTypes( void )
 		gametype.pGametypeName = CloneString( pData->GetString( "name", "" ) );
 		g_GameTypes.AddToTail( gametype );
 	}
-	
+
 
 	kv->deleteThis();
 }
@@ -486,4 +486,3 @@ const char *CServerBrowser::GetMapFriendlyNameAndGameType( const char *pszMapNam
 	// Result should be the friendly game type name
 	return pszFriendlyGameTypeName;
 }
-

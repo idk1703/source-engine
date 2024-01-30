@@ -1,23 +1,23 @@
 /* Copyright (C) 2000 MySQL AB & MySQL Finland AB & TCX DataKonsult AB
-   
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-   
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-   
-   You should have received a copy of the GNU Library General Public
-   License along with this library; if not, write to the Free
-   Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
-   MA 02111-1307, USA */
+
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Library General Public
+	License as published by the Free Software Foundation; either
+	version 2 of the License, or (at your option) any later version.
+
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Library General Public License for more details.
+
+	You should have received a copy of the GNU Library General Public
+	License along with this library; if not, write to the Free
+	Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+	MA 02111-1307, USA */
 
 /*
-  A better inplementation of the UNIX ctype(3) library.
-  Notes:   global.h should be included before ctype.h
+	A better inplementation of the UNIX ctype(3) library.
+	Notes:   global.h should be included before ctype.h
 */
 
 #ifndef _m_ctype_h
@@ -31,25 +31,25 @@ extern "C" {
 
 typedef struct charset_info_st
 {
-    uint      number;
-    const char *name;
-    uchar    *ctype;
-    uchar    *to_lower;
-    uchar    *to_upper;
-    uchar    *sort_order;
+	uint      number;
+	const char *name;
+	uchar    *ctype;
+	uchar    *to_lower;
+	uchar    *to_upper;
+	uchar    *sort_order;
 
-    uint      strxfrm_multiply;
-    int     (*strcoll)(const uchar *, const uchar *);
-    int     (*strxfrm)(uchar *, const uchar *, int);
-    int     (*strnncoll)(const uchar *, int, const uchar *, int);
-    int     (*strnxfrm)(uchar *, const uchar *, int, int);
-    my_bool (*like_range)(const char *, uint, pchar, uint,
-                          char *, char *, uint *, uint *);
+	uint      strxfrm_multiply;
+	int     (*strcoll)(const uchar *, const uchar *);
+	int     (*strxfrm)(uchar *, const uchar *, int);
+	int     (*strnncoll)(const uchar *, int, const uchar *, int);
+	int     (*strnxfrm)(uchar *, const uchar *, int, int);
+	my_bool (*like_range)(const char *, uint, pchar, uint,
+									char *, char *, uint *, uint *);
 
-    uint      mbmaxlen;
-    int     (*ismbchar)(const char *, const char *);
-    my_bool (*ismbhead)(uint);
-    int     (*mbcharlen)(uint);
+	uint      mbmaxlen;
+	int     (*ismbchar)(const char *, const char *);
+	my_bool (*ismbhead)(uint);
+	int     (*mbcharlen)(uint);
 } CHARSET_INFO;
 
 /* strings/ctype.c */
@@ -130,7 +130,7 @@ extern CHARSET_INFO  compiled_charsets[];
 #define my_strxfrm(s, a, b, c, d)     ((s)->strnxfrm((a), (b), (c)))
 #define my_strcoll(s, a, b)           ((s)->strcoll((a), (b)))
 #define my_like_range(s, a, b, c, d, e, f, g, h) \
-                ((s)->like_range((a), (b), (c), (d), (e), (f), (g), (h)))
+					((s)->like_range((a), (b), (c), (d), (e), (f), (g), (h)))
 
 #define use_mb(s)                     ((s)->ismbchar != NULL)
 #define MBMAXLEN                      (default_charset_info->mbmaxlen)

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -112,7 +112,7 @@ static void DrawLightSprite( dworldlight_t *pLight, float angleAttenFactor )
 
 	//	float distFactor = 1.0f / ( pLight->constant_attn + dist * pLight->linear_attn + dist * dist * pLight->quadratic_attn );
 	//float distFactor = 1.0f;
-	
+
 	Vector color = pLight->intensity;
 	VectorNormalize( color );
 	color *= angleAttenFactor;
@@ -120,7 +120,7 @@ static void DrawLightSprite( dworldlight_t *pLight, float angleAttenFactor )
 	color[0] = pow( color[0], 1.0f / 2.2f );
 	color[1] = pow( color[1], 1.0f / 2.2f );
 	color[2] = pow( color[2], 1.0f / 2.2f );
-	
+
 	CMatRenderContextPtr pRenderContext( materials );
 
 	pRenderContext->Bind( g_pMaterialLightSprite );
@@ -130,9 +130,9 @@ static void DrawLightSprite( dworldlight_t *pLight, float angleAttenFactor )
 
 	float radius = 16.0f;
 	Vector p;
-	
+
 	ColorClamp( color );
-	
+
 	p = pLight->origin + right * radius + up * radius;
 	meshBuilder.TexCoord2f( 0, 1.0f, 1.0f );
 	meshBuilder.Color3fv( color.Base() );
@@ -258,7 +258,7 @@ void DrawSpotLight( dworldlight_t *pLight )
 	perp[nMinIndex] = 1.0f;
 	CrossProduct( perp, pLight->normal, xaxis );
 	VectorNormalize( xaxis );
-	CrossProduct( pLight->normal, xaxis, yaxis ); 
+	CrossProduct( pLight->normal, xaxis, yaxis );
 
 	CMatRenderContextPtr pRenderContext( materials );
 
@@ -277,7 +277,7 @@ void DrawSpotLight( dworldlight_t *pLight )
 	{
 		Vector pt, vecCenter;
 		VectorMA( pLight->origin, flDist, pLight->normal, vecCenter );
-		
+
 		float flRadius = flDist * flTanAngle;
 
 		float flTempAngle = 0;
@@ -339,7 +339,7 @@ void DrawLightSprites( void )
 	if (!s_bActivateLightSprites)
 		return;
 
-	int i;	
+	int i;
 	for (i = 0; i < host_state.worldbrush->numworldlights; i++)
 	{
 		dworldlight_t *pLight = &host_state.worldbrush->worldlights[i];
@@ -398,14 +398,14 @@ void DrawLightDebuggingInfo( void )
 	if ( r_drawlightinfo.GetBool() )
 	{
 		for (i = 0; i < host_state.worldbrush->numworldlights; i++)
-		{	
+		{
 			dworldlight_t *pLight = &host_state.worldbrush->worldlights[i];
 
 			lineOffset = 0;
 			Q_snprintf( buf, sizeof( buf ), "light:  %d\n", i+1 );
-			CDebugOverlay::AddTextOverlay( pLight->origin, lineOffset++, 0, buf );	
+			CDebugOverlay::AddTextOverlay( pLight->origin, lineOffset++, 0, buf );
 			Q_snprintf( buf, sizeof( buf ), "origin: <%d, %d, %d>\n", (int)pLight->origin[0], (int)pLight->origin[1], (int)pLight->origin[2] );
-			CDebugOverlay::AddTextOverlay( pLight->origin, lineOffset++, 0, buf );	
+			CDebugOverlay::AddTextOverlay( pLight->origin, lineOffset++, 0, buf );
 
 			if (!nLight)
 			{

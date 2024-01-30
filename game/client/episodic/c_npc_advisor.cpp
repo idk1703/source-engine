@@ -166,7 +166,7 @@ void C_NPC_Advisor::StartBeamFX( C_BaseEntity *pOnEntity )
 
 	CNewParticleEffect *pEffect = ParticleProp()->Create( "Advisor_Psychic_Beam", PATTACH_ABSORIGIN_FOLLOW );
 
-	Assert(pEffect); 
+	Assert(pEffect);
 	if (!pEffect) return;
 
 	ParticleProp()->AddControlPoint( pEffect, 1, pOnEntity, PATTACH_ABSORIGIN_FOLLOW );
@@ -230,7 +230,7 @@ void C_NPC_Advisor::StopElight()
 	AssertMsg( m_ElightKey != 0, "Advisor tried to stop elight when none existed!");
 	dlight_t * el;
 	// note: the following conditional sets el if not short-circuited
-	if ( m_ElightKey == 0 || (el = effects->GetElightByKey(m_ElightKey)) == NULL ) 
+	if ( m_ElightKey == 0 || (el = effects->GetElightByKey(m_ElightKey)) == NULL )
 	{
 		Warning("Advisor tried to stop its elight when it had none.\n");
 	}

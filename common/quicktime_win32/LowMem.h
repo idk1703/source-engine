@@ -1,17 +1,17 @@
 /*
-     File:       LowMem.h
- 
-     Contains:   Low Memory Accessor Interfaces.
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1993-2001 by Apple Computer, Inc., all rights reserved
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+	File:       LowMem.h
+
+	Contains:   Low Memory Accessor Interfaces.
+
+	Version:    QuickTime 7.3
+
+	Copyright:  (c) 2007 (c) 1993-2001 by Apple Computer, Inc., all rights reserved
+
+	Bugs?:      For bug reports, consult the following page on
+				the World Wide Web:
+
+					http://developer.apple.com/bugreporter/
+
 */
 #ifndef __LOWMEM__
 #define __LOWMEM__
@@ -60,77 +60,77 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=mac68k
+	#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+	#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+	#pragma pack(2)
 #endif
 
 /**************************************************************************************
 
-    SIMPLE LOWMEM ACCESSORS
+	SIMPLE LOWMEM ACCESSORS
 
 **************************************************************************************/
 /*
-    The following functions were moved to Quickdraw.h:
-    
-        LMSetDeviceList
-        LMSetLastSPExtra
-        LMGetWidthListHand
-        LMSetWidthListHand
-        LMGetScrHRes
-        LMSetScrHRes
-        LMSetScrVRes
-        LMGetScrVRes
-        LMGetHiliteMode
-        LMSetHiliteMode
-        LMGetMainDevice
-        LMSetMainDevice
-        LMGetDeviceList
-        LMGetQDColors
-        LMSetQDColors
-        LMGetWidthPtr
-        LMSetWidthPtr
-        LMGetWidthTabHandle
-        LMSetWidthTabHandle
-        LMGetLastSPExtra
-        LMGetLastFOND
-        LMSetLastFOND
-        LMGetFractEnable
-        LMSetFractEnable
-        LMGetTheGDevice
-        LMSetTheGDevice
-        LMGetCursorNew
-        LMSetCursorNew
-        LMGetHiliteRGB
-        LMSetHiliteRGB
-    
-    The following functions were moved to TextEdit.h:
-    
-        LMGetWordRedraw
-        LMSetWordRedraw
+	The following functions were moved to Quickdraw.h:
 
-    The following functions were moved to Menus.h:
-    
-        LMGetTheMenu
-    
-    The following functions were moved to Events.h:
-    
-        LMGetKeyRepThresh
-        LMSetKeyRepThresh
-        LMGetKeyThresh
-        LMSetKeyRepThresh
-        LMGetKbdLast
-        LMSetKbdLast
-        LMGetKbdType
-        LMSetKbdType
+		LMSetDeviceList
+		LMSetLastSPExtra
+		LMGetWidthListHand
+		LMSetWidthListHand
+		LMGetScrHRes
+		LMSetScrHRes
+		LMSetScrVRes
+		LMGetScrVRes
+		LMGetHiliteMode
+		LMSetHiliteMode
+		LMGetMainDevice
+		LMSetMainDevice
+		LMGetDeviceList
+		LMGetQDColors
+		LMSetQDColors
+		LMGetWidthPtr
+		LMSetWidthPtr
+		LMGetWidthTabHandle
+		LMSetWidthTabHandle
+		LMGetLastSPExtra
+		LMGetLastFOND
+		LMSetLastFOND
+		LMGetFractEnable
+		LMSetFractEnable
+		LMGetTheGDevice
+		LMSetTheGDevice
+		LMGetCursorNew
+		LMSetCursorNew
+		LMGetHiliteRGB
+		LMSetHiliteRGB
+
+	The following functions were moved to TextEdit.h:
+
+		LMGetWordRedraw
+		LMSetWordRedraw
+
+	The following functions were moved to Menus.h:
+
+		LMGetTheMenu
+
+	The following functions were moved to Events.h:
+
+		LMGetKeyRepThresh
+		LMSetKeyRepThresh
+		LMGetKeyThresh
+		LMSetKeyRepThresh
+		LMGetKbdLast
+		LMSetKbdLast
+		LMGetKbdType
+		LMSetKbdType
 
 */
 
 /*
  *  LMGetMemTop()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -141,7 +141,7 @@ EXTERN_API( Ptr ) LMGetMemTop(void)                           TWOWORDINLINE(0x2E
 
 /*
  *  LMSetMemTop()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -153,7 +153,7 @@ EXTERN_API( void ) LMSetMemTop(Ptr value)                     TWOWORDINLINE(0x21
 
 /*
  *  LMGetBufPtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -164,7 +164,7 @@ EXTERN_API( Ptr ) LMGetBufPtr(void)                           TWOWORDINLINE(0x2E
 
 /*
  *  LMSetBufPtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -176,7 +176,7 @@ EXTERN_API( void ) LMSetBufPtr(Ptr value)                     TWOWORDINLINE(0x21
 
 /*
  *  LMGetHeapEnd()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -187,7 +187,7 @@ EXTERN_API( Ptr ) LMGetHeapEnd(void)                          TWOWORDINLINE(0x2E
 
 /*
  *  LMSetHeapEnd()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -200,7 +200,7 @@ EXTERN_API( void ) LMSetHeapEnd(Ptr value)                    TWOWORDINLINE(0x21
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetTheZone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -211,7 +211,7 @@ EXTERN_API( THz ) LMGetTheZone(void)                          TWOWORDINLINE(0x2E
 
 /*
  *  LMSetTheZone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -223,7 +223,7 @@ EXTERN_API( void ) LMSetTheZone(THz value)                    TWOWORDINLINE(0x21
 
 /*
  *  LMGetUTableBase()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -234,7 +234,7 @@ EXTERN_API( Ptr ) LMGetUTableBase(void)                       TWOWORDINLINE(0x2E
 
 /*
  *  LMSetUTableBase()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -248,7 +248,7 @@ EXTERN_API( void ) LMSetUTableBase(Ptr value)                 TWOWORDINLINE(0x21
 
 /*
  *  LMGetCPUFlag()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -259,7 +259,7 @@ EXTERN_API( UInt8 ) LMGetCPUFlag(void)                        TWOWORDINLINE(0x1E
 
 /*
  *  LMSetCPUFlag()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -272,7 +272,7 @@ EXTERN_API( void ) LMSetCPUFlag(UInt8 value)                  TWOWORDINLINE(0x11
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetApplLimit()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -283,7 +283,7 @@ EXTERN_API( Ptr ) LMGetApplLimit(void)                        TWOWORDINLINE(0x2E
 
 /*
  *  LMSetApplLimit()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -295,7 +295,7 @@ EXTERN_API( void ) LMSetApplLimit(Ptr value)                  TWOWORDINLINE(0x21
 
 /*
  *  LMGetSysEvtMask()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -307,7 +307,7 @@ EXTERN_API( SInt16 ) LMGetSysEvtMask(void)                    TWOWORDINLINE(0x3E
 /* Carbon Usage: use SetEventMask*/
 /*
  *  LMSetSysEvtMask()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -321,7 +321,7 @@ EXTERN_API( void ) LMSetSysEvtMask(SInt16 value)              TWOWORDINLINE(0x31
 
 /*
  *  LMGetRndSeed()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -332,7 +332,7 @@ EXTERN_API( SInt32 ) LMGetRndSeed(void)                       TWOWORDINLINE(0x2E
 
 /*
  *  LMSetRndSeed()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -344,7 +344,7 @@ EXTERN_API( void ) LMSetRndSeed(SInt32 value)                 TWOWORDINLINE(0x21
 
 /*
  *  LMGetSEvtEnb()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -355,7 +355,7 @@ EXTERN_API( UInt8 ) LMGetSEvtEnb(void)                        TWOWORDINLINE(0x1E
 
 /*
  *  LMSetSEvtEnb()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -368,7 +368,7 @@ EXTERN_API( void ) LMSetSEvtEnb(UInt8 value)                  TWOWORDINLINE(0x11
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetTicks()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -379,7 +379,7 @@ EXTERN_API( UInt32 ) LMGetTicks(void)                         TWOWORDINLINE(0x2E
 
 /*
  *  LMSetTicks()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -391,7 +391,7 @@ EXTERN_API( void ) LMSetTicks(UInt32 value)                   TWOWORDINLINE(0x21
 
 /*
  *  LMGetVIA()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -402,7 +402,7 @@ EXTERN_API( Ptr ) LMGetVIA(void)                              TWOWORDINLINE(0x2E
 
 /*
  *  LMSetVIA()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -414,7 +414,7 @@ EXTERN_API( void ) LMSetVIA(Ptr value)                        TWOWORDINLINE(0x21
 
 /*
  *  LMGetSCCRd()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -425,7 +425,7 @@ EXTERN_API( Ptr ) LMGetSCCRd(void)                            TWOWORDINLINE(0x2E
 
 /*
  *  LMSetSCCRd()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -437,7 +437,7 @@ EXTERN_API( void ) LMSetSCCRd(Ptr value)                      TWOWORDINLINE(0x21
 
 /*
  *  LMGetSCCWr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -448,7 +448,7 @@ EXTERN_API( Ptr ) LMGetSCCWr(void)                            TWOWORDINLINE(0x2E
 
 /*
  *  LMSetSCCWr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -460,7 +460,7 @@ EXTERN_API( void ) LMSetSCCWr(Ptr value)                      TWOWORDINLINE(0x21
 
 /*
  *  LMGetSPValid()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -471,7 +471,7 @@ EXTERN_API( UInt8 ) LMGetSPValid(void)                        TWOWORDINLINE(0x1E
 
 /*
  *  LMSetSPValid()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -483,7 +483,7 @@ EXTERN_API( void ) LMSetSPValid(UInt8 value)                  TWOWORDINLINE(0x11
 
 /*
  *  LMGetSPATalkA()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -494,7 +494,7 @@ EXTERN_API( UInt8 ) LMGetSPATalkA(void)                       TWOWORDINLINE(0x1E
 
 /*
  *  LMSetSPATalkA()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -506,7 +506,7 @@ EXTERN_API( void ) LMSetSPATalkA(UInt8 value)                 TWOWORDINLINE(0x11
 
 /*
  *  LMGetSPATalkB()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -517,7 +517,7 @@ EXTERN_API( UInt8 ) LMGetSPATalkB(void)                       TWOWORDINLINE(0x1E
 
 /*
  *  LMSetSPATalkB()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -529,7 +529,7 @@ EXTERN_API( void ) LMSetSPATalkB(UInt8 value)                 TWOWORDINLINE(0x11
 
 /*
  *  LMGetSPConfig()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -540,7 +540,7 @@ EXTERN_API( UInt8 ) LMGetSPConfig(void)                       TWOWORDINLINE(0x1E
 
 /*
  *  LMSetSPConfig()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -552,7 +552,7 @@ EXTERN_API( void ) LMSetSPConfig(UInt8 value)                 TWOWORDINLINE(0x11
 
 /*
  *  LMGetSPPortA()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -563,7 +563,7 @@ EXTERN_API( SInt16 ) LMGetSPPortA(void)                       TWOWORDINLINE(0x3E
 
 /*
  *  LMSetSPPortA()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -575,7 +575,7 @@ EXTERN_API( void ) LMSetSPPortA(SInt16 value)                 TWOWORDINLINE(0x31
 
 /*
  *  LMGetSPPortB()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -586,7 +586,7 @@ EXTERN_API( SInt16 ) LMGetSPPortB(void)                       TWOWORDINLINE(0x3E
 
 /*
  *  LMSetSPPortB()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -598,7 +598,7 @@ EXTERN_API( void ) LMSetSPPortB(SInt16 value)                 TWOWORDINLINE(0x31
 
 /*
  *  LMGetSPAlarm()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -609,7 +609,7 @@ EXTERN_API( SInt32 ) LMGetSPAlarm(void)                       TWOWORDINLINE(0x2E
 
 /*
  *  LMSetSPAlarm()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -621,7 +621,7 @@ EXTERN_API( void ) LMSetSPAlarm(SInt32 value)                 TWOWORDINLINE(0x21
 
 /*
  *  LMGetSPFont()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -632,7 +632,7 @@ EXTERN_API( SInt16 ) LMGetSPFont(void)                        TWOWORDINLINE(0x3E
 
 /*
  *  LMSetSPFont()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -644,7 +644,7 @@ EXTERN_API( void ) LMSetSPFont(SInt16 value)                  TWOWORDINLINE(0x31
 
 /*
  *  LMGetSPKbd()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -655,7 +655,7 @@ EXTERN_API( UInt8 ) LMGetSPKbd(void)                          TWOWORDINLINE(0x1E
 
 /*
  *  LMSetSPKbd()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -667,7 +667,7 @@ EXTERN_API( void ) LMSetSPKbd(UInt8 value)                    TWOWORDINLINE(0x11
 
 /*
  *  LMGetSPPrint()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -678,7 +678,7 @@ EXTERN_API( UInt8 ) LMGetSPPrint(void)                        TWOWORDINLINE(0x1E
 
 /*
  *  LMSetSPPrint()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -690,7 +690,7 @@ EXTERN_API( void ) LMSetSPPrint(UInt8 value)                  TWOWORDINLINE(0x11
 
 /*
  *  LMGetSPVolCtl()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -701,7 +701,7 @@ EXTERN_API( UInt8 ) LMGetSPVolCtl(void)                       TWOWORDINLINE(0x1E
 
 /*
  *  LMSetSPVolCtl()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -713,7 +713,7 @@ EXTERN_API( void ) LMSetSPVolCtl(UInt8 value)                 TWOWORDINLINE(0x11
 
 /*
  *  LMGetSPClikCaret()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -724,7 +724,7 @@ EXTERN_API( UInt8 ) LMGetSPClikCaret(void)                    TWOWORDINLINE(0x1E
 
 /*
  *  LMSetSPClikCaret()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -736,7 +736,7 @@ EXTERN_API( void ) LMSetSPClikCaret(UInt8 value)              TWOWORDINLINE(0x11
 
 /*
  *  LMGetSPMisc2()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -747,7 +747,7 @@ EXTERN_API( UInt8 ) LMGetSPMisc2(void)                        TWOWORDINLINE(0x1E
 
 /*
  *  LMSetSPMisc2()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -761,7 +761,7 @@ EXTERN_API( void ) LMSetSPMisc2(UInt8 value)                  TWOWORDINLINE(0x11
 /* Carbon Usage: use GetDateTime*/
 /*
  *  LMGetTime()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -773,7 +773,7 @@ EXTERN_API( SInt32 ) LMGetTime(void)                          TWOWORDINLINE(0x2E
 /* Carbon Usage: use SetDateTime*/
 /*
  *  LMSetTime()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -787,7 +787,7 @@ EXTERN_API( void ) LMSetTime(SInt32 value)                    TWOWORDINLINE(0x21
 
 /*
  *  LMGetBootDrive()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -798,7 +798,7 @@ EXTERN_API( SInt16 ) LMGetBootDrive(void)                     TWOWORDINLINE(0x3E
 
 /*
  *  LMSetBootDrive()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -811,7 +811,7 @@ EXTERN_API( void ) LMSetBootDrive(SInt16 value)               TWOWORDINLINE(0x31
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetSFSaveDisk()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -822,7 +822,7 @@ EXTERN_API( SInt16 ) LMGetSFSaveDisk(void)                    TWOWORDINLINE(0x3E
 
 /*
  *  LMSetSFSaveDisk()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -836,7 +836,7 @@ EXTERN_API( void ) LMSetSFSaveDisk(SInt16 value)              TWOWORDINLINE(0x31
 
 /*
  *  LMGetMemErr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -847,7 +847,7 @@ EXTERN_API( SInt16 ) LMGetMemErr(void)                        TWOWORDINLINE(0x3E
 
 /*
  *  LMSetMemErr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -859,7 +859,7 @@ EXTERN_API( void ) LMSetMemErr(SInt16 value)                  TWOWORDINLINE(0x31
 
 /*
  *  LMGetSdVolume()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -870,7 +870,7 @@ EXTERN_API( UInt8 ) LMGetSdVolume(void)                       TWOWORDINLINE(0x1E
 
 /*
  *  LMSetSdVolume()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -882,7 +882,7 @@ EXTERN_API( void ) LMSetSdVolume(UInt8 value)                 TWOWORDINLINE(0x11
 
 /*
  *  LMGetSoundPtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -893,7 +893,7 @@ EXTERN_API( Ptr ) LMGetSoundPtr(void)                         TWOWORDINLINE(0x2E
 
 /*
  *  LMSetSoundPtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -905,7 +905,7 @@ EXTERN_API( void ) LMSetSoundPtr(Ptr value)                   TWOWORDINLINE(0x21
 
 /*
  *  LMGetSoundBase()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -916,7 +916,7 @@ EXTERN_API( Ptr ) LMGetSoundBase(void)                        TWOWORDINLINE(0x2E
 
 /*
  *  LMSetSoundBase()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -928,7 +928,7 @@ EXTERN_API( void ) LMSetSoundBase(Ptr value)                  TWOWORDINLINE(0x21
 
 /*
  *  LMGetSoundLevel()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -939,7 +939,7 @@ EXTERN_API( UInt8 ) LMGetSoundLevel(void)                     TWOWORDINLINE(0x1E
 
 /*
  *  LMSetSoundLevel()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -951,7 +951,7 @@ EXTERN_API( void ) LMSetSoundLevel(UInt8 value)               TWOWORDINLINE(0x11
 
 /*
  *  LMGetCurPitch()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -962,7 +962,7 @@ EXTERN_API( SInt16 ) LMGetCurPitch(void)                      TWOWORDINLINE(0x3E
 
 /*
  *  LMSetCurPitch()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -975,7 +975,7 @@ EXTERN_API( void ) LMSetCurPitch(SInt16 value)                TWOWORDINLINE(0x31
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetROM85()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -986,7 +986,7 @@ EXTERN_API( SInt16 ) LMGetROM85(void)                         TWOWORDINLINE(0x3E
 
 /*
  *  LMSetROM85()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -998,7 +998,7 @@ EXTERN_API( void ) LMSetROM85(SInt16 value)                   TWOWORDINLINE(0x31
 
 /*
  *  LMGetPortBUse()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1009,7 +1009,7 @@ EXTERN_API( UInt8 ) LMGetPortBUse(void)                       TWOWORDINLINE(0x1E
 
 /*
  *  LMSetPortBUse()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1021,7 +1021,7 @@ EXTERN_API( void ) LMSetPortBUse(UInt8 value)                 TWOWORDINLINE(0x11
 
 /*
  *  LMGetGNEFilter()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1032,7 +1032,7 @@ EXTERN_API( GetNextEventFilterUPP ) LMGetGNEFilter(void)      TWOWORDINLINE(0x2E
 
 /*
  *  LMSetGNEFilter()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1046,7 +1046,7 @@ EXTERN_API( void ) LMSetGNEFilter(GetNextEventFilterUPP value) TWOWORDINLINE(0x2
 
 /*
  *  LMGetSysZone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1057,7 +1057,7 @@ EXTERN_API( THz ) LMGetSysZone(void)                          TWOWORDINLINE(0x2E
 
 /*
  *  LMSetSysZone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1069,7 +1069,7 @@ EXTERN_API( void ) LMSetSysZone(THz value)                    TWOWORDINLINE(0x21
 
 /*
  *  LMGetApplZone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1080,7 +1080,7 @@ EXTERN_API( THz ) LMGetApplZone(void)                         TWOWORDINLINE(0x2E
 
 /*
  *  LMSetApplZone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1093,7 +1093,7 @@ EXTERN_API( void ) LMSetApplZone(THz value)                   TWOWORDINLINE(0x21
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetROMBase()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1104,7 +1104,7 @@ EXTERN_API( Ptr ) LMGetROMBase(void)                          TWOWORDINLINE(0x2E
 
 /*
  *  LMSetROMBase()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1116,7 +1116,7 @@ EXTERN_API( void ) LMSetROMBase(Ptr value)                    TWOWORDINLINE(0x21
 
 /*
  *  LMGetRAMBase()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1127,7 +1127,7 @@ EXTERN_API( Ptr ) LMGetRAMBase(void)                          TWOWORDINLINE(0x2E
 
 /*
  *  LMSetRAMBase()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1140,7 +1140,7 @@ EXTERN_API( void ) LMSetRAMBase(Ptr value)                    TWOWORDINLINE(0x21
 
 /*
  *  LMGetDSAlertTab()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1151,7 +1151,7 @@ EXTERN_API( Ptr ) LMGetDSAlertTab(void)                       TWOWORDINLINE(0x2E
 
 /*
  *  LMSetDSAlertTab()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1163,22 +1163,22 @@ EXTERN_API( void ) LMSetDSAlertTab(Ptr value)                 TWOWORDINLINE(0x21
 
 
 /*
-    NOTE:   LMGetABusVars and LMSetABusVars have been removed.
-            Their implememtation in InterfaceLib was inconsistent
-            with their prototypes here.  In InterfaceLib LMSetABusVars 
-            would copy eight bytes and LMGetABusVars would return the
-            value 0x02D8 instead of the long at that location.
-            
-            Use LMGetABusGlobals/LMSetABusGlobals to get/set the
-            long at location 0x02D8 which is a pointer to the AppleTalk
-            globals.  Use LMGetABusDCE/LMSetABusDCE to get/set the
-            long at location 0x02DC which is the .MPP driver
-            Device Control Entry. 
-            
+	NOTE:   LMGetABusVars and LMSetABusVars have been removed.
+			Their implememtation in InterfaceLib was inconsistent
+			with their prototypes here.  In InterfaceLib LMSetABusVars
+			would copy eight bytes and LMGetABusVars would return the
+			value 0x02D8 instead of the long at that location.
+
+			Use LMGetABusGlobals/LMSetABusGlobals to get/set the
+			long at location 0x02D8 which is a pointer to the AppleTalk
+			globals.  Use LMGetABusDCE/LMSetABusDCE to get/set the
+			long at location 0x02DC which is the .MPP driver
+			Device Control Entry.
+
 */
 /*
  *  LMGetABusGlobals()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -1189,7 +1189,7 @@ EXTERN_API( Ptr ) LMGetABusGlobals(void)                      TWOWORDINLINE(0x2E
 
 /*
  *  LMGetABusDCE()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -1201,7 +1201,7 @@ EXTERN_API( Ptr ) LMGetABusDCE(void)                          TWOWORDINLINE(0x2E
 
 /*
  *  LMSetABusGlobals()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -1212,7 +1212,7 @@ EXTERN_API( void ) LMSetABusGlobals(Ptr value)                TWOWORDINLINE(0x21
 
 /*
  *  LMSetABusDCE()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -1225,7 +1225,7 @@ EXTERN_API( void ) LMSetABusDCE(Ptr value)                    TWOWORDINLINE(0x21
 /* Carbon Usage: use GetDblTime*/
 /*
  *  LMGetDoubleTime()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1236,7 +1236,7 @@ EXTERN_API( UInt32 ) LMGetDoubleTime(void)                    TWOWORDINLINE(0x2E
 
 /*
  *  LMSetDoubleTime()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1248,7 +1248,7 @@ EXTERN_API( void ) LMSetDoubleTime(UInt32 value)              TWOWORDINLINE(0x21
 /* Carbon Usage: use GetCaretTime*/
 /*
  *  LMGetCaretTime()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1259,7 +1259,7 @@ EXTERN_API( UInt32 ) LMGetCaretTime(void)                     TWOWORDINLINE(0x2E
 
 /*
  *  LMSetCaretTime()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1273,7 +1273,7 @@ EXTERN_API( void ) LMSetCaretTime(UInt32 value)               TWOWORDINLINE(0x21
 
 /*
  *  LMGetScrDmpEnb()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1284,7 +1284,7 @@ EXTERN_API( UInt8 ) LMGetScrDmpEnb(void)                      TWOWORDINLINE(0x1E
 
 /*
  *  LMSetScrDmpEnb()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1296,7 +1296,7 @@ EXTERN_API( void ) LMSetScrDmpEnb(UInt8 value)                TWOWORDINLINE(0x11
 
 /*
  *  LMGetBufTgFNum()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1307,7 +1307,7 @@ EXTERN_API( SInt32 ) LMGetBufTgFNum(void)                     TWOWORDINLINE(0x2E
 
 /*
  *  LMSetBufTgFNum()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1319,7 +1319,7 @@ EXTERN_API( void ) LMSetBufTgFNum(SInt32 value)               TWOWORDINLINE(0x21
 
 /*
  *  LMGetBufTgFFlg()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1330,7 +1330,7 @@ EXTERN_API( SInt16 ) LMGetBufTgFFlg(void)                     TWOWORDINLINE(0x3E
 
 /*
  *  LMSetBufTgFFlg()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1342,7 +1342,7 @@ EXTERN_API( void ) LMSetBufTgFFlg(SInt16 value)               TWOWORDINLINE(0x31
 
 /*
  *  LMGetBufTgFBkNum()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1353,7 +1353,7 @@ EXTERN_API( SInt16 ) LMGetBufTgFBkNum(void)                   TWOWORDINLINE(0x3E
 
 /*
  *  LMSetBufTgFBkNum()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1365,7 +1365,7 @@ EXTERN_API( void ) LMSetBufTgFBkNum(SInt16 value)             TWOWORDINLINE(0x31
 
 /*
  *  LMGetBufTgDate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1376,7 +1376,7 @@ EXTERN_API( SInt32 ) LMGetBufTgDate(void)                     TWOWORDINLINE(0x2E
 
 /*
  *  LMSetBufTgDate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1389,7 +1389,7 @@ EXTERN_API( void ) LMSetBufTgDate(SInt32 value)               TWOWORDINLINE(0x21
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetLo3Bytes()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1400,7 +1400,7 @@ EXTERN_API( SInt32 ) LMGetLo3Bytes(void)                      TWOWORDINLINE(0x2E
 
 /*
  *  LMSetLo3Bytes()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1414,7 +1414,7 @@ EXTERN_API( void ) LMSetLo3Bytes(SInt32 value)                TWOWORDINLINE(0x21
 
 /*
  *  LMGetMinStack()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1425,7 +1425,7 @@ EXTERN_API( SInt32 ) LMGetMinStack(void)                      TWOWORDINLINE(0x2E
 
 /*
  *  LMSetMinStack()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1437,7 +1437,7 @@ EXTERN_API( void ) LMSetMinStack(SInt32 value)                TWOWORDINLINE(0x21
 
 /*
  *  LMGetDefltStack()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1448,7 +1448,7 @@ EXTERN_API( SInt32 ) LMGetDefltStack(void)                    TWOWORDINLINE(0x2E
 
 /*
  *  LMSetDefltStack()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1460,7 +1460,7 @@ EXTERN_API( void ) LMSetDefltStack(SInt32 value)              TWOWORDINLINE(0x21
 
 /*
  *  LMGetGZRootHnd()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1471,7 +1471,7 @@ EXTERN_API( Handle ) LMGetGZRootHnd(void)                     TWOWORDINLINE(0x2E
 
 /*
  *  LMSetGZRootHnd()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1483,7 +1483,7 @@ EXTERN_API( void ) LMSetGZRootHnd(Handle value)               TWOWORDINLINE(0x21
 
 /*
  *  LMGetGZMoveHnd()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1494,7 +1494,7 @@ EXTERN_API( Handle ) LMGetGZMoveHnd(void)                     TWOWORDINLINE(0x2E
 
 /*
  *  LMSetGZMoveHnd()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1505,16 +1505,16 @@ EXTERN_API( void ) LMSetGZMoveHnd(Handle value)               TWOWORDINLINE(0x21
 
 
 /*
-   LMGetFCBSPtr, LMSetFCBSPtr and LMSetFSFCBLen are not supported with Mac OS 9
-   and later. Access to information in File Control Blocks or Fork Control Blocks
-   (FCBs) should, if at all possible, be made with the GetFCBInfo or GetForkCBInfo
-   routines. See the Technote "FCBs, Now and Forever" or the Technical Q&A
-   "Accessing File Control Blocks" for complete information on this subject.
-   Direct access to FCBs is not allowed by Carbon. Non-Carbon programs that
-   require direct access to FCBs should use the File System Manager (FSM) FCB accessor
-   functions if FSM is available (use the Gestalt selector gestaltFSAttr to determine
-   this). Non-Carbon programs needing direct access to FCBs when FSM is not available
-   can define ENABLE_FCB_ARRAY_ACCESS to be true when compiling.
+	LMGetFCBSPtr, LMSetFCBSPtr and LMSetFSFCBLen are not supported with Mac OS 9
+	and later. Access to information in File Control Blocks or Fork Control Blocks
+	(FCBs) should, if at all possible, be made with the GetFCBInfo or GetForkCBInfo
+	routines. See the Technote "FCBs, Now and Forever" or the Technical Q&A
+	"Accessing File Control Blocks" for complete information on this subject.
+	Direct access to FCBs is not allowed by Carbon. Non-Carbon programs that
+	require direct access to FCBs should use the File System Manager (FSM) FCB accessor
+	functions if FSM is available (use the Gestalt selector gestaltFSAttr to determine
+	this). Non-Carbon programs needing direct access to FCBs when FSM is not available
+	can define ENABLE_FCB_ARRAY_ACCESS to be true when compiling.
 */
 #ifndef ENABLE_FCB_ARRAY_ACCESS
 #define ENABLE_FCB_ARRAY_ACCESS 0
@@ -1524,7 +1524,7 @@ EXTERN_API( void ) LMSetGZMoveHnd(Handle value)               TWOWORDINLINE(0x21
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetFCBSPtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1535,7 +1535,7 @@ EXTERN_API( Ptr ) LMGetFCBSPtr(void)                          TWOWORDINLINE(0x2E
 
 /*
  *  LMSetFCBSPtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1546,7 +1546,7 @@ EXTERN_API( void ) LMSetFCBSPtr(Ptr value)                    TWOWORDINLINE(0x21
 
 /*
  *  LMSetFSFCBLen()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1560,15 +1560,15 @@ EXTERN_API( void ) LMSetFSFCBLen(SInt16 value)                TWOWORDINLINE(0x31
 #endif  /* ENABLE_FCB_ARRAY_ACCESS */
 
 /*
-   LMGetFSFCBLen is supported only for the purpose of determining that the HFS
-   file system is available as documented in developer Technotes (the HFS file system
-   is available in System 3.2 and later). There is no documented use of FSFCBLen
-   other than testing it for a positive value.
+	LMGetFSFCBLen is supported only for the purpose of determining that the HFS
+	file system is available as documented in developer Technotes (the HFS file system
+	is available in System 3.2 and later). There is no documented use of FSFCBLen
+	other than testing it for a positive value.
 */
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetFSFCBLen()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1580,7 +1580,7 @@ EXTERN_API( SInt16 ) LMGetFSFCBLen(void)                      TWOWORDINLINE(0x3E
 
 /*
  *  LMGetDefVCBPtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1591,7 +1591,7 @@ EXTERN_API( Ptr ) LMGetDefVCBPtr(void)                        TWOWORDINLINE(0x2E
 
 /*
  *  LMSetDefVCBPtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1603,7 +1603,7 @@ EXTERN_API( void ) LMSetDefVCBPtr(Ptr value)                  TWOWORDINLINE(0x21
 
 /*
  *  LMGetCurDirStore()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1614,7 +1614,7 @@ EXTERN_API( SInt32 ) LMGetCurDirStore(void)                   TWOWORDINLINE(0x2E
 
 /*
  *  LMSetCurDirStore()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1628,7 +1628,7 @@ EXTERN_API( void ) LMSetCurDirStore(SInt32 value)             TWOWORDINLINE(0x21
 
 /*
  *  LMGetToExtFS()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1639,7 +1639,7 @@ EXTERN_API( UniversalProcPtr ) LMGetToExtFS(void)             TWOWORDINLINE(0x2E
 
 /*
  *  LMSetToExtFS()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1651,7 +1651,7 @@ EXTERN_API( void ) LMSetToExtFS(UniversalProcPtr value)       TWOWORDINLINE(0x21
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetScrnBase()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1662,7 +1662,7 @@ EXTERN_API( Ptr ) LMGetScrnBase(void)                         TWOWORDINLINE(0x2E
 
 /*
  *  LMSetScrnBase()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1675,7 +1675,7 @@ EXTERN_API( void ) LMSetScrnBase(Ptr value)                   TWOWORDINLINE(0x21
 
 /*
  *  LMGetCrsrBusy()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1686,7 +1686,7 @@ EXTERN_API( UInt8 ) LMGetCrsrBusy(void)                       TWOWORDINLINE(0x1E
 
 /*
  *  LMSetCrsrBusy()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1698,7 +1698,7 @@ EXTERN_API( void ) LMSetCrsrBusy(UInt8 value)                 TWOWORDINLINE(0x11
 
 /*
  *  LMGetJournalRef()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1709,7 +1709,7 @@ EXTERN_API( SInt16 ) LMGetJournalRef(void)                    TWOWORDINLINE(0x3E
 
 /*
  *  LMSetJournalRef()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1721,7 +1721,7 @@ EXTERN_API( void ) LMSetJournalRef(SInt16 value)              TWOWORDINLINE(0x31
 
 /*
  *  LMGetCrsrThresh()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1732,7 +1732,7 @@ EXTERN_API( SInt16 ) LMGetCrsrThresh(void)                    TWOWORDINLINE(0x3E
 
 /*
  *  LMSetCrsrThresh()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1744,7 +1744,7 @@ EXTERN_API( void ) LMSetCrsrThresh(SInt16 value)              TWOWORDINLINE(0x31
 
 /*
  *  LMGetJFetch()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1755,7 +1755,7 @@ EXTERN_API( UniversalProcPtr ) LMGetJFetch(void)              TWOWORDINLINE(0x2E
 
 /*
  *  LMSetJFetch()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1769,7 +1769,7 @@ EXTERN_API( void ) LMSetJFetch(UniversalProcPtr value)        TWOWORDINLINE(0x21
 
 /*
  *  LMGetJStash()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1780,7 +1780,7 @@ EXTERN_API( UniversalProcPtr ) LMGetJStash(void)              TWOWORDINLINE(0x2E
 
 /*
  *  LMSetJStash()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1793,7 +1793,7 @@ EXTERN_API( void ) LMSetJStash(UniversalProcPtr value)        TWOWORDINLINE(0x21
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetJIODone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1804,7 +1804,7 @@ EXTERN_API( UniversalProcPtr ) LMGetJIODone(void)             TWOWORDINLINE(0x2E
 
 /*
  *  LMSetJIODone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1818,7 +1818,7 @@ EXTERN_API( void ) LMSetJIODone(UniversalProcPtr value)       TWOWORDINLINE(0x21
 
 /*
  *  LMGetCurApRefNum()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1829,7 +1829,7 @@ EXTERN_API( SInt16 ) LMGetCurApRefNum(void)                   TWOWORDINLINE(0x3E
 
 /*
  *  LMSetCurApRefNum()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1842,7 +1842,7 @@ EXTERN_API( void ) LMSetCurApRefNum(SInt16 value)             TWOWORDINLINE(0x31
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetCurrentA5()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1853,7 +1853,7 @@ EXTERN_API( Ptr ) LMGetCurrentA5(void)                        TWOWORDINLINE(0x2E
 
 /*
  *  LMSetCurrentA5()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1867,7 +1867,7 @@ EXTERN_API( void ) LMSetCurrentA5(Ptr value)                  TWOWORDINLINE(0x21
 
 /*
  *  LMGetCurStackBase()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1878,7 +1878,7 @@ EXTERN_API( Ptr ) LMGetCurStackBase(void)                     TWOWORDINLINE(0x2E
 
 /*
  *  LMSetCurStackBase()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1891,7 +1891,7 @@ EXTERN_API( void ) LMSetCurStackBase(Ptr value)               TWOWORDINLINE(0x21
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetCurJTOffset()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1902,7 +1902,7 @@ EXTERN_API( SInt16 ) LMGetCurJTOffset(void)                   TWOWORDINLINE(0x3E
 
 /*
  *  LMSetCurJTOffset()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1916,7 +1916,7 @@ EXTERN_API( void ) LMSetCurJTOffset(SInt16 value)             TWOWORDINLINE(0x31
 
 /*
  *  LMGetCurPageOption()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1927,7 +1927,7 @@ EXTERN_API( SInt16 ) LMGetCurPageOption(void)                 TWOWORDINLINE(0x3E
 
 /*
  *  LMSetCurPageOption()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1940,7 +1940,7 @@ EXTERN_API( void ) LMSetCurPageOption(SInt16 value)           TWOWORDINLINE(0x31
 
 /*
  *  LMGetPrintErr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1951,7 +1951,7 @@ EXTERN_API( SInt16 ) LMGetPrintErr(void)                      TWOWORDINLINE(0x3E
 
 /*
  *  LMSetPrintErr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1967,7 +1967,7 @@ EXTERN_API( void ) LMSetPrintErr(SInt16 value)                TWOWORDINLINE(0x31
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetScrapSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1978,7 +1978,7 @@ EXTERN_API( SInt32 ) LMGetScrapSize(void)                     TWOWORDINLINE(0x2E
 
 /*
  *  LMSetScrapSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1989,7 +1989,7 @@ EXTERN_API( void ) LMSetScrapSize(SInt32 value)               TWOWORDINLINE(0x21
 
 /*
  *  LMGetScrapHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2000,7 +2000,7 @@ EXTERN_API( Handle ) LMGetScrapHandle(void)                   TWOWORDINLINE(0x2E
 
 /*
  *  LMSetScrapHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2011,7 +2011,7 @@ EXTERN_API( void ) LMSetScrapHandle(Handle value)             TWOWORDINLINE(0x21
 
 /*
  *  LMGetScrapCount()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2022,7 +2022,7 @@ EXTERN_API( SInt16 ) LMGetScrapCount(void)                    TWOWORDINLINE(0x3E
 
 /*
  *  LMSetScrapCount()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2033,7 +2033,7 @@ EXTERN_API( void ) LMSetScrapCount(SInt16 value)              TWOWORDINLINE(0x31
 
 /*
  *  LMGetScrapState()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2044,7 +2044,7 @@ EXTERN_API( SInt16 ) LMGetScrapState(void)                    TWOWORDINLINE(0x3E
 
 /*
  *  LMSetScrapState()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2055,7 +2055,7 @@ EXTERN_API( void ) LMSetScrapState(SInt16 value)              TWOWORDINLINE(0x31
 
 /*
  *  LMGetScrapName()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2066,7 +2066,7 @@ EXTERN_API( StringPtr ) LMGetScrapName(void)                  TWOWORDINLINE(0x2E
 
 /*
  *  LMSetScrapName()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2078,7 +2078,7 @@ EXTERN_API( void ) LMSetScrapName(StringPtr value)            TWOWORDINLINE(0x21
 
 /*
  *  LMGetROMFont0()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2089,7 +2089,7 @@ EXTERN_API( Handle ) LMGetROMFont0(void)                      TWOWORDINLINE(0x2E
 
 /*
  *  LMSetROMFont0()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2102,7 +2102,7 @@ EXTERN_API( void ) LMSetROMFont0(Handle value)                TWOWORDINLINE(0x21
 
 /*
  *  LMGetApFontID()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2113,7 +2113,7 @@ EXTERN_API( SInt16 ) LMGetApFontID(void)                      TWOWORDINLINE(0x3E
 
 /*
  *  LMSetApFontID()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2129,7 +2129,7 @@ EXTERN_API( void ) LMSetApFontID(SInt16 value)                TWOWORDINLINE(0x31
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetWindowList()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2140,7 +2140,7 @@ EXTERN_API( WindowRef ) LMGetWindowList(void)                 TWOWORDINLINE(0x2E
 
 /*
  *  LMGetSaveUpdate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2151,7 +2151,7 @@ EXTERN_API( SInt16 ) LMGetSaveUpdate(void)                    TWOWORDINLINE(0x3E
 
 /*
  *  LMSetSaveUpdate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2162,7 +2162,7 @@ EXTERN_API( void ) LMSetSaveUpdate(SInt16 value)              TWOWORDINLINE(0x31
 
 /*
  *  LMGetPaintWhite()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2174,7 +2174,7 @@ EXTERN_API( SInt16 ) LMGetPaintWhite(void)                    TWOWORDINLINE(0x3E
 /* Carbon Usage : use InstallWindowContentPaintProc*/
 /*
  *  LMSetPaintWhite()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2185,7 +2185,7 @@ EXTERN_API( void ) LMSetPaintWhite(SInt16 value)              TWOWORDINLINE(0x31
 
 /*
  *  LMGetWMgrPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2196,7 +2196,7 @@ EXTERN_API( GrafPtr ) LMGetWMgrPort(void)                     TWOWORDINLINE(0x2E
 
 /*
  *  LMSetWMgrPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2208,7 +2208,7 @@ EXTERN_API( void ) LMSetWMgrPort(GrafPtr value)               TWOWORDINLINE(0x21
 /* Carbon Usage: use GetGrayRgn*/
 /*
  *  LMGetGrayRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2219,7 +2219,7 @@ EXTERN_API( RgnHandle ) LMGetGrayRgn(void)                    TWOWORDINLINE(0x2E
 
 /*
  *  LMGetDragHook()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2230,7 +2230,7 @@ EXTERN_API( DragGrayRgnUPP ) LMGetDragHook(void)              TWOWORDINLINE(0x2E
 
 /*
  *  LMSetDragHook()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2241,7 +2241,7 @@ EXTERN_API( void ) LMSetDragHook(DragGrayRgnUPP value)        TWOWORDINLINE(0x21
 
 /*
  *  LMSetWindowList()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2252,7 +2252,7 @@ EXTERN_API( void ) LMSetWindowList(WindowRef value)           TWOWORDINLINE(0x21
 
 /*
  *  LMGetGhostWindow()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2263,7 +2263,7 @@ EXTERN_API( WindowRef ) LMGetGhostWindow(void)                TWOWORDINLINE(0x2E
 
 /*
  *  LMSetGhostWindow()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2278,7 +2278,7 @@ EXTERN_API( void ) LMSetGhostWindow(WindowRef value)          TWOWORDINLINE(0x21
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetAuxWinHead()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2289,7 +2289,7 @@ EXTERN_API( AuxWinHandle ) LMGetAuxWinHead(void)              TWOWORDINLINE(0x2E
 
 /*
  *  LMSetAuxWinHead()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2305,7 +2305,7 @@ EXTERN_API( void ) LMSetAuxWinHead(AuxWinHandle value)        TWOWORDINLINE(0x21
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetCurActivate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2316,7 +2316,7 @@ EXTERN_API( WindowRef ) LMGetCurActivate(void)                TWOWORDINLINE(0x2E
 
 /*
  *  LMSetCurActivate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2327,7 +2327,7 @@ EXTERN_API( void ) LMSetCurActivate(WindowRef value)          TWOWORDINLINE(0x21
 
 /*
  *  LMGetCurDeactive()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2338,7 +2338,7 @@ EXTERN_API( WindowRef ) LMGetCurDeactive(void)                TWOWORDINLINE(0x2E
 
 /*
  *  LMSetCurDeactive()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2349,7 +2349,7 @@ EXTERN_API( void ) LMSetCurDeactive(WindowRef value)          TWOWORDINLINE(0x21
 
 /*
  *  LMGetOldStructure()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2360,7 +2360,7 @@ EXTERN_API( RgnHandle ) LMGetOldStructure(void)               TWOWORDINLINE(0x2E
 
 /*
  *  LMSetOldStructure()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2371,7 +2371,7 @@ EXTERN_API( void ) LMSetOldStructure(RgnHandle value)         TWOWORDINLINE(0x21
 
 /*
  *  LMGetOldContent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2382,7 +2382,7 @@ EXTERN_API( RgnHandle ) LMGetOldContent(void)                 TWOWORDINLINE(0x2E
 
 /*
  *  LMSetOldContent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2393,7 +2393,7 @@ EXTERN_API( void ) LMSetOldContent(RgnHandle value)           TWOWORDINLINE(0x21
 
 /*
  *  LMSetGrayRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2404,7 +2404,7 @@ EXTERN_API( void ) LMSetGrayRgn(RgnHandle value)              TWOWORDINLINE(0x21
 
 /*
  *  LMGetSaveVisRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2415,7 +2415,7 @@ EXTERN_API( RgnHandle ) LMGetSaveVisRgn(void)                 TWOWORDINLINE(0x2E
 
 /*
  *  LMSetSaveVisRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2429,7 +2429,7 @@ EXTERN_API( void ) LMSetSaveVisRgn(RgnHandle value)           TWOWORDINLINE(0x21
 
 /*
  *  LMGetOneOne()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2440,7 +2440,7 @@ EXTERN_API( SInt32 ) LMGetOneOne(void)                        TWOWORDINLINE(0x2E
 
 /*
  *  LMSetOneOne()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2452,7 +2452,7 @@ EXTERN_API( void ) LMSetOneOne(SInt32 value)                  TWOWORDINLINE(0x21
 
 /*
  *  LMGetMinusOne()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2463,7 +2463,7 @@ EXTERN_API( SInt32 ) LMGetMinusOne(void)                      TWOWORDINLINE(0x2E
 
 /*
  *  LMSetMinusOne()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2477,7 +2477,7 @@ EXTERN_API( void ) LMSetMinusOne(SInt32 value)                TWOWORDINLINE(0x21
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetTopMenuItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2489,7 +2489,7 @@ EXTERN_API( SInt16 ) LMGetTopMenuItem(void)                   TWOWORDINLINE(0x3E
 /* Carbon Usage: replaced by MDEF messages and GetMenuTrackingData API*/
 /*
  *  LMSetTopMenuItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2502,7 +2502,7 @@ EXTERN_API( void ) LMSetTopMenuItem(SInt16 value)             TWOWORDINLINE(0x31
 /* Carbon Usage: use GetMenuTrackingData*/
 /*
  *  LMGetAtMenuBottom()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2514,7 +2514,7 @@ EXTERN_API( SInt16 ) LMGetAtMenuBottom(void)                  TWOWORDINLINE(0x3E
 /* Carbon Usage: replaced by MDEF messages and GetMenuTrackingData API*/
 /*
  *  LMSetAtMenuBottom()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2525,13 +2525,13 @@ EXTERN_API( void ) LMSetAtMenuBottom(SInt16 value)            TWOWORDINLINE(0x31
 
 
 /*
-   Carbon usage: use GetMenuBar (which returns a newly allocated handle in
-   the same format as that returned by LMGetMenuList; dispose with DisposeMenuBar)
-   or GetRootMenu.
+	Carbon usage: use GetMenuBar (which returns a newly allocated handle in
+	the same format as that returned by LMGetMenuList; dispose with DisposeMenuBar)
+	or GetRootMenu.
 */
 /*
  *  LMGetMenuList()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2542,7 +2542,7 @@ EXTERN_API( Handle ) LMGetMenuList(void)                      TWOWORDINLINE(0x2E
 
 /*
  *  LMSetMenuList()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2555,7 +2555,7 @@ EXTERN_API( void ) LMSetMenuList(Handle value)                TWOWORDINLINE(0x21
 /* Carbon usage: no replacement*/
 /*
  *  LMGetMBarEnable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2566,7 +2566,7 @@ EXTERN_API( SInt16 ) LMGetMBarEnable(void)                    TWOWORDINLINE(0x3E
 
 /*
  *  LMSetMBarEnable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2579,7 +2579,7 @@ EXTERN_API( void ) LMSetMBarEnable(SInt16 value)              TWOWORDINLINE(0x31
 /* Carbon usage: no replacement*/
 /*
  *  LMGetMenuFlash()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2590,7 +2590,7 @@ EXTERN_API( SInt16 ) LMGetMenuFlash(void)                     TWOWORDINLINE(0x3E
 
 /*
  *  LMSetMenuFlash()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2603,7 +2603,7 @@ EXTERN_API( void ) LMSetMenuFlash(SInt16 value)               TWOWORDINLINE(0x31
 /* LMGetTheMenu() moved to Menus.h */
 /*
  *  LMSetTheMenu()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2614,7 +2614,7 @@ EXTERN_API( void ) LMSetTheMenu(SInt16 value)                 TWOWORDINLINE(0x31
 
 /*
  *  LMGetMBarHook()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2625,7 +2625,7 @@ EXTERN_API( MBarHookUPP ) LMGetMBarHook(void)                 TWOWORDINLINE(0x2E
 
 /*
  *  LMSetMBarHook()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2637,7 +2637,7 @@ EXTERN_API( void ) LMSetMBarHook(MBarHookUPP value)           TWOWORDINLINE(0x21
 
 /*
  *  LMGetMenuHook()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2648,7 +2648,7 @@ EXTERN_API( MenuHookUPP ) LMGetMenuHook(void)                 TWOWORDINLINE(0x2E
 
 /*
  *  LMSetMenuHook()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2659,7 +2659,7 @@ EXTERN_API( void ) LMSetMenuHook(MenuHookUPP value)           TWOWORDINLINE(0x21
 
 /*
  *  LMGetTopMapHndl()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2670,7 +2670,7 @@ EXTERN_API( Handle ) LMGetTopMapHndl(void)                    TWOWORDINLINE(0x2E
 
 /*
  *  LMSetTopMapHndl()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2682,7 +2682,7 @@ EXTERN_API( void ) LMSetTopMapHndl(Handle value)              TWOWORDINLINE(0x21
 
 /*
  *  LMGetSysMapHndl()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2693,7 +2693,7 @@ EXTERN_API( Handle ) LMGetSysMapHndl(void)                    TWOWORDINLINE(0x2E
 
 /*
  *  LMSetSysMapHndl()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2707,7 +2707,7 @@ EXTERN_API( void ) LMSetSysMapHndl(Handle value)              TWOWORDINLINE(0x21
 
 /*
  *  LMGetSysMap()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2718,7 +2718,7 @@ EXTERN_API( SInt16 ) LMGetSysMap(void)                        TWOWORDINLINE(0x3E
 
 /*
  *  LMSetSysMap()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2732,7 +2732,7 @@ EXTERN_API( void ) LMSetSysMap(SInt16 value)                  TWOWORDINLINE(0x31
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetCurMap()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2743,7 +2743,7 @@ EXTERN_API( SInt16 ) LMGetCurMap(void)                        TWOWORDINLINE(0x3E
 
 /*
  *  LMSetCurMap()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2757,7 +2757,7 @@ EXTERN_API( void ) LMSetCurMap(SInt16 value)                  TWOWORDINLINE(0x31
 
 /*
  *  LMGetResLoad()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2768,7 +2768,7 @@ EXTERN_API( UInt8 ) LMGetResLoad(void)                        TWOWORDINLINE(0x1E
 
 /*
  *  LMSetResLoad()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2780,7 +2780,7 @@ EXTERN_API( void ) LMSetResLoad(UInt8 value)                  TWOWORDINLINE(0x11
 
 /*
  *  LMGetResErr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2791,7 +2791,7 @@ EXTERN_API( SInt16 ) LMGetResErr(void)                        TWOWORDINLINE(0x3E
 
 /*
  *  LMSetResErr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2804,7 +2804,7 @@ EXTERN_API( void ) LMSetResErr(SInt16 value)                  TWOWORDINLINE(0x31
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetFScaleDisable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2815,7 +2815,7 @@ EXTERN_API( UInt8 ) LMGetFScaleDisable(void)                  TWOWORDINLINE(0x1E
 
 /*
  *  LMSetFScaleDisable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2828,7 +2828,7 @@ EXTERN_API( void ) LMSetFScaleDisable(UInt8 value)            TWOWORDINLINE(0x11
 
 /*
  *  LMGetDeskHook()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2839,7 +2839,7 @@ EXTERN_API( UniversalProcPtr ) LMGetDeskHook(void)            TWOWORDINLINE(0x2E
 
 /*
  *  LMSetDeskHook()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2852,7 +2852,7 @@ EXTERN_API( void ) LMSetDeskHook(UniversalProcPtr value)      TWOWORDINLINE(0x21
 /* Carbon Usage: Use TEGetDoTextHook.*/
 /*
  *  LMGetTEDoText()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2864,7 +2864,7 @@ EXTERN_API( UniversalProcPtr ) LMGetTEDoText(void)            TWOWORDINLINE(0x2E
 /* Carbon Usage: Use TESetDoTextHook.*/
 /*
  *  LMSetTEDoText()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2877,7 +2877,7 @@ EXTERN_API( void ) LMSetTEDoText(UniversalProcPtr value)      TWOWORDINLINE(0x21
 /* Carbon Usage: Use TEGetRecalcHook.*/
 /*
  *  LMGetTERecal()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2889,7 +2889,7 @@ EXTERN_API( UniversalProcPtr ) LMGetTERecal(void)             TWOWORDINLINE(0x2E
 /* Carbon Usage: Use TESetRecalcHook.*/
 /*
  *  LMSetTERecal()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2900,7 +2900,7 @@ EXTERN_API( void ) LMSetTERecal(UniversalProcPtr value)       TWOWORDINLINE(0x21
 
 /*
  *  LMGetResumeProc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2911,7 +2911,7 @@ EXTERN_API( UniversalProcPtr ) LMGetResumeProc(void)          TWOWORDINLINE(0x2E
 
 /*
  *  LMSetResumeProc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2922,7 +2922,7 @@ EXTERN_API( void ) LMSetResumeProc(UniversalProcPtr value)    TWOWORDINLINE(0x21
 
 /*
  *  LMGetANumber()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2933,7 +2933,7 @@ EXTERN_API( SInt16 ) LMGetANumber(void)                       TWOWORDINLINE(0x3E
 
 /*
  *  LMSetANumber()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2945,7 +2945,7 @@ EXTERN_API( void ) LMSetANumber(SInt16 value)                 TWOWORDINLINE(0x31
 /* Carbon Usage: Use GetAlertStage.*/
 /*
  *  LMGetACount()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2957,7 +2957,7 @@ EXTERN_API( SInt16 ) LMGetACount(void)                        TWOWORDINLINE(0x3E
 /* Carbon Usage: Use ResetAlertStage.*/
 /*
  *  LMSetACount()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2968,7 +2968,7 @@ EXTERN_API( void ) LMSetACount(SInt16 value)                  TWOWORDINLINE(0x31
 
 /*
  *  LMGetDABeeper()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2979,7 +2979,7 @@ EXTERN_API( UniversalProcPtr ) LMGetDABeeper(void)            TWOWORDINLINE(0x2E
 
 /*
  *  LMSetDABeeper()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2991,7 +2991,7 @@ EXTERN_API( void ) LMSetDABeeper(UniversalProcPtr value)      TWOWORDINLINE(0x21
 /* Carbon Usage: use TEGetScrapLength*/
 /*
  *  LMGetTEScrpLength()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3003,7 +3003,7 @@ EXTERN_API( UInt16 ) LMGetTEScrpLength(void)                  TWOWORDINLINE(0x3E
 /* Carbon Usage: use TESetScrapLength*/
 /*
  *  LMSetTEScrpLength()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3016,7 +3016,7 @@ EXTERN_API( void ) LMSetTEScrpLength(UInt16 value)            TWOWORDINLINE(0x31
 /* Carbon Usage: use TEGetScrapHandle*/
 /*
  *  LMGetTEScrpHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3028,7 +3028,7 @@ EXTERN_API( Handle ) LMGetTEScrpHandle(void)                  TWOWORDINLINE(0x2E
 /* Carbon Usage: use TESetScrapHandle*/
 /*
  *  LMSetTEScrpHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3040,7 +3040,7 @@ EXTERN_API( void ) LMSetTEScrpHandle(Handle value)            TWOWORDINLINE(0x21
 
 /*
  *  LMGetAppParmHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3051,7 +3051,7 @@ EXTERN_API( Handle ) LMGetAppParmHandle(void)                 TWOWORDINLINE(0x2E
 
 /*
  *  LMSetAppParmHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3063,7 +3063,7 @@ EXTERN_API( void ) LMSetAppParmHandle(Handle value)           TWOWORDINLINE(0x21
 
 /*
  *  LMGetDSErrCode()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3074,7 +3074,7 @@ EXTERN_API( SInt16 ) LMGetDSErrCode(void)                     TWOWORDINLINE(0x3E
 
 /*
  *  LMSetDSErrCode()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3086,7 +3086,7 @@ EXTERN_API( void ) LMSetDSErrCode(SInt16 value)               TWOWORDINLINE(0x31
 
 /*
  *  LMGetResErrProc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3097,7 +3097,7 @@ EXTERN_API( ResErrUPP ) LMGetResErrProc(void)                 TWOWORDINLINE(0x2E
 
 /*
  *  LMSetResErrProc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3109,7 +3109,7 @@ EXTERN_API( void ) LMSetResErrProc(ResErrUPP value)           TWOWORDINLINE(0x21
 
 /*
  *  LMGetDlgFont()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3121,7 +3121,7 @@ EXTERN_API( SInt16 ) LMGetDlgFont(void)                       TWOWORDINLINE(0x3E
 /* Carbon Usage: use SetDialogFont*/
 /*
  *  LMSetDlgFont()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3132,7 +3132,7 @@ EXTERN_API( void ) LMSetDlgFont(SInt16 value)                 TWOWORDINLINE(0x31
 
 /*
  *  LMGetATalkHk2()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3143,7 +3143,7 @@ EXTERN_API( Ptr ) LMGetATalkHk2(void)                         TWOWORDINLINE(0x2E
 
 /*
  *  LMSetATalkHk2()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3155,7 +3155,7 @@ EXTERN_API( void ) LMSetATalkHk2(Ptr value)                   TWOWORDINLINE(0x21
 
 /*
  *  LMGetHWCfgFlags()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3166,7 +3166,7 @@ EXTERN_API( SInt16 ) LMGetHWCfgFlags(void)                    TWOWORDINLINE(0x3E
 
 /*
  *  LMSetHWCfgFlags()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3180,7 +3180,7 @@ EXTERN_API( void ) LMSetHWCfgFlags(SInt16 value)              TWOWORDINLINE(0x31
 /* Carbon Usage: use GetMenuTrackingData*/
 /*
  *  LMGetMenuDisable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3192,7 +3192,7 @@ EXTERN_API( SInt32 ) LMGetMenuDisable(void)                   TWOWORDINLINE(0x2E
 /* Carbon Usage: use new MDEF messages*/
 /*
  *  LMSetMenuDisable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3204,7 +3204,7 @@ EXTERN_API( void ) LMSetMenuDisable(SInt32 value)             TWOWORDINLINE(0x21
 
 /*
  *  LMGetROMMapInsert()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3215,7 +3215,7 @@ EXTERN_API( UInt8 ) LMGetROMMapInsert(void)                   TWOWORDINLINE(0x1E
 
 /*
  *  LMSetROMMapInsert()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3229,7 +3229,7 @@ EXTERN_API( void ) LMSetROMMapInsert(UInt8 value)             TWOWORDINLINE(0x11
 
 /*
  *  LMGetTmpResLoad()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3240,7 +3240,7 @@ EXTERN_API( UInt8 ) LMGetTmpResLoad(void)                     TWOWORDINLINE(0x1E
 
 /*
  *  LMSetTmpResLoad()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3252,7 +3252,7 @@ EXTERN_API( void ) LMSetTmpResLoad(UInt8 value)               TWOWORDINLINE(0x11
 
 /*
  *  LMGetIntlSpec()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3263,7 +3263,7 @@ EXTERN_API( Ptr ) LMGetIntlSpec(void)                         TWOWORDINLINE(0x2E
 
 /*
  *  LMSetIntlSpec()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3275,7 +3275,7 @@ EXTERN_API( void ) LMSetIntlSpec(Ptr value)                   TWOWORDINLINE(0x21
 /* LMGetWordRedraw and LMSetWordRedraw moved to TextEdit.h */
 /*
  *  LMGetSysFontFam()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3286,7 +3286,7 @@ EXTERN_API( SInt16 ) LMGetSysFontFam(void)                    TWOWORDINLINE(0x3E
 
 /*
  *  LMSetSysFontFam()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3297,7 +3297,7 @@ EXTERN_API( void ) LMSetSysFontFam(SInt16 value)              TWOWORDINLINE(0x31
 
 /*
  *  LMGetSysFontSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3308,7 +3308,7 @@ EXTERN_API( SInt16 ) LMGetSysFontSize(void)                   TWOWORDINLINE(0x3E
 
 /*
  *  LMSetSysFontSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3322,7 +3322,7 @@ EXTERN_API( void ) LMSetSysFontSize(SInt16 value)             TWOWORDINLINE(0x31
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetMBarHeight()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3334,7 +3334,7 @@ EXTERN_API( SInt16 ) LMGetMBarHeight(void)                    TWOWORDINLINE(0x3E
 /* Carbon Usage: use Hide/ShowMenuBar*/
 /*
  *  LMSetMBarHeight()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3346,7 +3346,7 @@ EXTERN_API( void ) LMSetMBarHeight(SInt16 value)              TWOWORDINLINE(0x31
 
 /*
  *  LMGetTESysJust()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3357,7 +3357,7 @@ EXTERN_API( SInt16 ) LMGetTESysJust(void)                     TWOWORDINLINE(0x3E
 
 /*
  *  LMSetTESysJust()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3370,7 +3370,7 @@ EXTERN_API( void ) LMSetTESysJust(SInt16 value)               TWOWORDINLINE(0x31
 
 /*
  *  LMGetMMU32Bit()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3381,7 +3381,7 @@ EXTERN_API( UInt8 ) LMGetMMU32Bit(void)                       TWOWORDINLINE(0x1E
 
 /*
  *  LMSetMMU32Bit()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3394,7 +3394,7 @@ EXTERN_API( void ) LMSetMMU32Bit(UInt8 value)                 TWOWORDINLINE(0x11
 
 /*
  *  LMGetDeskCPat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3405,7 +3405,7 @@ EXTERN_API( PixPatHandle ) LMGetDeskCPat(void)                TWOWORDINLINE(0x2E
 
 /*
  *  LMSetDeskCPat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3417,7 +3417,7 @@ EXTERN_API( void ) LMSetDeskCPat(PixPatHandle value)          TWOWORDINLINE(0x21
 
 /*
  *  LMGetTimeDBRA()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3428,7 +3428,7 @@ EXTERN_API( SInt16 ) LMGetTimeDBRA(void)                      TWOWORDINLINE(0x3E
 
 /*
  *  LMSetTimeDBRA()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3440,7 +3440,7 @@ EXTERN_API( void ) LMSetTimeDBRA(SInt16 value)                TWOWORDINLINE(0x31
 
 /*
  *  LMGetTimeSCCDB()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3451,7 +3451,7 @@ EXTERN_API( SInt16 ) LMGetTimeSCCDB(void)                     TWOWORDINLINE(0x3E
 
 /*
  *  LMSetTimeSCCDB()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3463,7 +3463,7 @@ EXTERN_API( void ) LMSetTimeSCCDB(SInt16 value)               TWOWORDINLINE(0x31
 
 /*
  *  LMGetJVBLTask()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3474,7 +3474,7 @@ EXTERN_API( UniversalProcPtr ) LMGetJVBLTask(void)            TWOWORDINLINE(0x2E
 
 /*
  *  LMSetJVBLTask()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3486,7 +3486,7 @@ EXTERN_API( void ) LMSetJVBLTask(UniversalProcPtr value)      TWOWORDINLINE(0x21
 
 /*
  *  LMGetSynListHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3497,7 +3497,7 @@ EXTERN_API( Handle ) LMGetSynListHandle(void)                 TWOWORDINLINE(0x2E
 
 /*
  *  LMSetSynListHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3509,7 +3509,7 @@ EXTERN_API( void ) LMSetSynListHandle(Handle value)           TWOWORDINLINE(0x21
 
 /*
  *  LMGetMenuCInfo()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3520,7 +3520,7 @@ EXTERN_API( MCTableHandle ) LMGetMenuCInfo(void)              TWOWORDINLINE(0x2E
 
 /*
  *  LMSetMenuCInfo()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3532,7 +3532,7 @@ EXTERN_API( void ) LMSetMenuCInfo(MCTableHandle value)        TWOWORDINLINE(0x21
 
 /*
  *  LMGetJDTInstall()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3543,7 +3543,7 @@ EXTERN_API( UniversalProcPtr ) LMGetJDTInstall(void)          TWOWORDINLINE(0x2E
 
 /*
  *  LMSetJDTInstall()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3555,7 +3555,7 @@ EXTERN_API( void ) LMSetJDTInstall(UniversalProcPtr value)    TWOWORDINLINE(0x21
 
 /*
  *  LMGetTimeSCSIDB()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3566,7 +3566,7 @@ EXTERN_API( SInt16 ) LMGetTimeSCSIDB(void)                    TWOWORDINLINE(0x3E
 
 /*
  *  LMSetTimeSCSIDB()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3579,16 +3579,16 @@ EXTERN_API( void ) LMSetTimeSCSIDB(SInt16 value)              TWOWORDINLINE(0x31
 
 /**************************************************************************************
 
-    MORE COMPLEX LOWMEM ACCESSORS
+	MORE COMPLEX LOWMEM ACCESSORS
 
 **************************************************************************************/
 #endif  /* CALL_NOT_IN_CARBON */
 
 #if TARGET_CPU_68K && !TARGET_RT_MAC_CFM
 /**************************************************************************************
-    "BIG DATA"
-    
-        These lowmem accessors access big (> 4 bytes) values.
+	"BIG DATA"
+
+		These lowmem accessors access big (> 4 bytes) values.
 **************************************************************************************/
 #define LMGetDSAlertRect(dsAlertRectValue)  (*(dsAlertRectValue) = * (Rect*) 0x03F8)
 #define LMSetDSAlertRect(dsAlertRectValue)  ((* (Rect *) 0x03F8) = *(dsAlertRectValue))
@@ -3608,9 +3608,9 @@ EXTERN_API( void ) LMSetTimeSCSIDB(SInt16 value)              TWOWORDINLINE(0x31
 #define LMSetDTQueue(dtQueueValue)  ((* (QHdrPtr) 0x0D92) = *(QHdrPtr)(dtQueueValue))
 #define LMGetFSQHdr()   ( (QHdrPtr) 0x0360)
 /**************************************************************************************
-    "BLOCKMOVE ACCESSORS"
-    
-        These lowmem accessors use the BlockMove to set
+	"BLOCKMOVE ACCESSORS"
+
+		These lowmem accessors use the BlockMove to set
 **************************************************************************************/
 #define LMGetCurApName()    ((StringPtr) 0x0910)
 #define LMSetCurApName(curApNameValue)  (BlockMoveData((Ptr)(curApNameValue), (Ptr)0x0910, sizeof(Str31)))
@@ -3625,14 +3625,14 @@ EXTERN_API( void ) LMSetTimeSCSIDB(SInt16 value)              TWOWORDINLINE(0x31
 #define LMGetApplScratch()  ((Ptr) 0x0A78)
 #define LMSetApplScratch(applScratchValue)  (BlockMoveData((Ptr) (applScratchValue), (Ptr) 0x0A78, 12))
 /**************************************************************************************
-    "INDEXED ACCESSORS"
-    
-        These lowmem accessors take an index parameter to get/set an indexed
-        lowmem global.
+	"INDEXED ACCESSORS"
+
+		These lowmem accessors take an index parameter to get/set an indexed
+		lowmem global.
 **************************************************************************************/
 /*************************************************************************************
-    The DAString accessors are gone with Carbon. Please use ParamText and
-    GetParamText instead.
+	The DAString accessors are gone with Carbon. Please use ParamText and
+	GetParamText instead.
 **************************************************************************************/
 #define LMGetDAStrings(whichString) ( ((StringHandle*)0x0AA0)[whichString] )
 #define LMSetDAStrings(stringsValue, whichString) ( ((StringHandle*)0x0AA0)[whichString] = (stringsValue) )
@@ -3643,15 +3643,15 @@ EXTERN_API( void ) LMSetTimeSCSIDB(SInt16 value)              TWOWORDINLINE(0x31
 
 #else
 /**************************************************************************************
-    "BIG DATA"
-    
-        These lowmem accessors access big (> 4 bytes) values.
+	"BIG DATA"
+
+		These lowmem accessors access big (> 4 bytes) values.
 **************************************************************************************/
 
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetDSAlertRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3662,7 +3662,7 @@ EXTERN_API( void ) LMGetDSAlertRect(Rect * dsAlertRectValue);
 
 /*
  *  LMSetDSAlertRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3673,7 +3673,7 @@ EXTERN_API( void ) LMSetDSAlertRect(const Rect * dsAlertRectValue);
 
 /*
  *  LMGetDragPattern()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3684,7 +3684,7 @@ EXTERN_API( void ) LMGetDragPattern(Pattern * dragPatternValue);
 
 /*
  *  LMSetDragPattern()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3695,7 +3695,7 @@ EXTERN_API( void ) LMSetDragPattern(const Pattern * dragPatternValue);
 
 /*
  *  LMGetDeskPattern()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3706,7 +3706,7 @@ EXTERN_API( void ) LMGetDeskPattern(Pattern * deskPatternValue);
 
 /*
  *  LMSetDeskPattern()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3717,7 +3717,7 @@ EXTERN_API( void ) LMSetDeskPattern(const Pattern * deskPatternValue);
 
 /*
  *  LMGetEventQueue()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3728,7 +3728,7 @@ EXTERN_API( QHdrPtr ) LMGetEventQueue(void);
 
 /*
  *  LMSetEventQueue()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3740,7 +3740,7 @@ EXTERN_API( void ) LMSetEventQueue(QHdrPtr eventQueueValue);
 
 /*
  *  LMGetVBLQueue()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3751,7 +3751,7 @@ EXTERN_API( QHdrPtr ) LMGetVBLQueue(void);
 
 /*
  *  LMSetVBLQueue()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3762,7 +3762,7 @@ EXTERN_API( void ) LMSetVBLQueue(QHdrPtr vblQueueValue);
 
 /*
  *  LMGetDrvQHdr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3773,7 +3773,7 @@ EXTERN_API( QHdrPtr ) LMGetDrvQHdr(void);
 
 /*
  *  LMSetDrvQHdr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3784,7 +3784,7 @@ EXTERN_API( void ) LMSetDrvQHdr(QHdrPtr drvQHdrValue);
 
 /*
  *  LMGetVCBQHdr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3795,7 +3795,7 @@ EXTERN_API( QHdrPtr ) LMGetVCBQHdr(void);
 
 /*
  *  LMSetVCBQHdr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3806,7 +3806,7 @@ EXTERN_API( void ) LMSetVCBQHdr(QHdrPtr vcbQHdrValue);
 
 /*
  *  LMGetDTQueue()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3817,7 +3817,7 @@ EXTERN_API( QHdrPtr ) LMGetDTQueue(void);
 
 /*
  *  LMSetDTQueue()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3828,7 +3828,7 @@ EXTERN_API( void ) LMSetDTQueue(QHdrPtr dtQueueValue);
 
 /*
  *  LMGetFSQHdr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3838,15 +3838,15 @@ EXTERN_API( QHdrPtr ) LMGetFSQHdr(void);
 
 
 /**************************************************************************************
-    "BLOCKMOVE ACCESSORS"
-    
-        These lowmem accessors use the BlockMove to set
+	"BLOCKMOVE ACCESSORS"
+
+		These lowmem accessors use the BlockMove to set
 **************************************************************************************/
 #endif  /* CALL_NOT_IN_CARBON */
 
 /*
  *  LMGetCurApName()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3857,7 +3857,7 @@ EXTERN_API( StringPtr ) LMGetCurApName(void);
 
 /*
  *  LMSetCurApName()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3868,7 +3868,7 @@ EXTERN_API( void ) LMSetCurApName(ConstStr31Param curApNameValue);
 
 /*
  *  LMGetSysResName()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3879,7 +3879,7 @@ EXTERN_API( StringPtr ) LMGetSysResName(void);
 
 /*
  *  LMSetSysResName()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3890,7 +3890,7 @@ EXTERN_API( void ) LMSetSysResName(ConstStr15Param sysResNameValue);
 
 /*
  *  LMGetFinderName()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3901,7 +3901,7 @@ EXTERN_API( StringPtr ) LMGetFinderName(void);
 
 /*
  *  LMSetFinderName()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3913,7 +3913,7 @@ EXTERN_API( void ) LMSetFinderName(ConstStr15Param finderNameValue);
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetScratch20()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3924,7 +3924,7 @@ EXTERN_API( Ptr ) LMGetScratch20(void);
 
 /*
  *  LMSetScratch20()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3937,7 +3937,7 @@ EXTERN_API( void ) LMSetScratch20(const void * scratch20Value);
 
 /*
  *  LMGetToolScratch()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3948,7 +3948,7 @@ EXTERN_API( Ptr ) LMGetToolScratch(void);
 
 /*
  *  LMSetToolScratch()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3960,7 +3960,7 @@ EXTERN_API( void ) LMSetToolScratch(const void * toolScratchValue);
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetApplScratch()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3971,7 +3971,7 @@ EXTERN_API( Ptr ) LMGetApplScratch(void);
 
 /*
  *  LMSetApplScratch()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -3982,16 +3982,16 @@ EXTERN_API( void ) LMSetApplScratch(const void * applScratchValue);
 
 
 /**************************************************************************************
-    "INDEXED ACCESSORS"
-    
-        These lowmem accessors take an index parameter to get/set an indexed
-        lowmem global.
+	"INDEXED ACCESSORS"
+
+		These lowmem accessors take an index parameter to get/set an indexed
+		lowmem global.
 **************************************************************************************/
 
 /* Carbon Usage: use GetParamText*/
 /*
  *  LMGetDAStrings()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -4003,7 +4003,7 @@ EXTERN_API( StringHandle ) LMGetDAStrings(short whichString);
 /* Carbon Usage: use ParamText*/
 /*
  *  LMSetDAStrings()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -4017,7 +4017,7 @@ EXTERN_API( void ) LMSetDAStrings(StringHandle stringsValue, short whichString);
 
 /*
  *  LMGetLvl2DT()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4028,7 +4028,7 @@ EXTERN_API( UniversalProcPtr ) LMGetLvl2DT(short vectorNumber);
 
 /*
  *  LMSetLvl2DT()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4040,7 +4040,7 @@ EXTERN_API( void ) LMSetLvl2DT(UniversalProcPtr Lvl2DTValue, short vectorNumber)
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetExtStsDT()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -4051,7 +4051,7 @@ EXTERN_API( UniversalProcPtr ) LMGetExtStsDT(short vectorNumber);
 
 /*
  *  LMSetExtStsDT()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -4065,21 +4065,21 @@ EXTERN_API( void ) LMSetExtStsDT(UniversalProcPtr ExtStsDTValue, short vectorNum
 #endif  /* TARGET_CPU_68K && !TARGET_RT_MAC_CFM */
 
 /**************************************************************************************
-    "Missing Accessors"
-    
-        These lowmem accessors are not in the original InterfaceLib.  They were
-        added to InterfaceLib in Mac OS 8.5.  In Universal Interfaces 3.2 they
-        were defined via a macro. In you want to use these functions on a pre-8.5
-        systems, you must write your own macros to override the function prototype
-        or write your own implementation.
-    
+	"Missing Accessors"
+
+		These lowmem accessors are not in the original InterfaceLib.  They were
+		added to InterfaceLib in Mac OS 8.5.  In Universal Interfaces 3.2 they
+		were defined via a macro. In you want to use these functions on a pre-8.5
+		systems, you must write your own macros to override the function prototype
+		or write your own implementation.
+
 **************************************************************************************/
 
 
 #if CALL_NOT_IN_CARBON
 /*
  *  LMSetMouseTemp()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4092,7 +4092,7 @@ EXTERN_API( void ) LMSetMouseTemp(Point value)                TWOWORDINLINE(0x21
 /* accesses "MTemp"*/
 /*
  *  LMGetMouseTemp()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4102,12 +4102,12 @@ EXTERN_API( Point ) LMGetMouseTemp(void)                      TWOWORDINLINE(0x2E
 
 
 /*
-   accesses "MBState"
-   Carbon Usage: use Button()
+	accesses "MBState"
+	Carbon Usage: use Button()
 */
 /*
  *  LMGetMouseButtonState()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4118,7 +4118,7 @@ EXTERN_API( UInt8 ) LMGetMouseButtonState(void)               TWOWORDINLINE(0x1E
 
 /*
  *  LMSetMouseButtonState()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4128,12 +4128,12 @@ EXTERN_API( void ) LMSetMouseButtonState(UInt8 value)         TWOWORDINLINE(0x11
 
 
 /*
-   accesses "RawMouse"
-   Carbon Usage: use GetGlobalMouse
+	accesses "RawMouse"
+	Carbon Usage: use GetGlobalMouse
 */
 /*
  *  LMGetRawMouseLocation()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4145,7 +4145,7 @@ EXTERN_API( Point ) LMGetRawMouseLocation(void)               TWOWORDINLINE(0x2E
 /* Carbon Usage: use GetGlobalMouse*/
 /*
  *  LMSetRawMouseLocation()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4156,12 +4156,12 @@ EXTERN_API( void ) LMSetRawMouseLocation(Point value)         TWOWORDINLINE(0x21
 
 
 /*
-   accesses "Mouse"
-   Carbon Usage: use GetGlobalMouse
+	accesses "Mouse"
+	Carbon Usage: use GetGlobalMouse
 */
 /*
  *  LMGetMouseLocation()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4172,7 +4172,7 @@ EXTERN_API( Point ) LMGetMouseLocation(void)                  TWOWORDINLINE(0x2E
 
 /*
  *  LMSetMouseLocation()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4184,7 +4184,7 @@ EXTERN_API( void ) LMSetMouseLocation(Point value)            TWOWORDINLINE(0x21
 /* accesses "TheCrsr"*/
 /*
  *  LMGetTheCursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4195,7 +4195,7 @@ EXTERN_API_C( void ) LMGetTheCursor(Cursor * currentCursor);
 
 /*
  *  LMSetTheCursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4210,7 +4210,7 @@ EXTERN_API_C( void ) LMSetTheCursor(const Cursor * newCursor);
 
 /*
  *  LMGetHighHeapMark()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4221,7 +4221,7 @@ EXTERN_API( Ptr ) LMGetHighHeapMark(void)                     TWOWORDINLINE(0x2E
 
 /*
  *  LMSetHighHeapMark()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4234,7 +4234,7 @@ EXTERN_API( void ) LMSetHighHeapMark(Ptr value)               TWOWORDINLINE(0x21
 /* accesses "StkLowPt"*/
 /*
  *  LMGetStackLowPoint()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4245,7 +4245,7 @@ EXTERN_API( Ptr ) LMGetStackLowPoint(void)                    TWOWORDINLINE(0x2E
 
 /*
  *  LMSetStackLowPoint()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4259,7 +4259,7 @@ EXTERN_API( void ) LMSetStackLowPoint(Ptr value)              TWOWORDINLINE(0x21
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetROMMapHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4270,7 +4270,7 @@ EXTERN_API( Handle ) LMGetROMMapHandle(void)                  TWOWORDINLINE(0x2E
 
 /*
  *  LMSetROMMapHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4283,7 +4283,7 @@ EXTERN_API( void ) LMSetROMMapHandle(Handle value)            TWOWORDINLINE(0x21
 /* accesses "UnitNtryCnt"*/
 /*
  *  LMGetUnitTableEntryCount()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4294,7 +4294,7 @@ EXTERN_API( short ) LMGetUnitTableEntryCount(void)            TWOWORDINLINE(0x3E
 
 /*
  *  LMSetUnitTableEntryCount()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4309,7 +4309,7 @@ EXTERN_API( void ) LMSetUnitTableEntryCount(short value)      TWOWORDINLINE(0x31
 
 /*
  *  LMGetDiskFormatingHFSDefaults()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4320,7 +4320,7 @@ EXTERN_API( Ptr ) LMGetDiskFormatingHFSDefaults(void)         TWOWORDINLINE(0x2E
 
 /*
  *  LMSetDiskFormatingHFSDefaults()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4334,7 +4334,7 @@ EXTERN_API( void ) LMSetDiskFormatingHFSDefaults(Ptr value)   TWOWORDINLINE(0x21
 #if CALL_NOT_IN_CARBON
 /*
  *  LMGetPortAInfo()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4345,7 +4345,7 @@ EXTERN_API( UInt8 ) LMGetPortAInfo(void)                      TWOWORDINLINE(0x1E
 
 /*
  *  LMSetPortAInfo()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4357,7 +4357,7 @@ EXTERN_API( void ) LMSetPortAInfo(UInt8 value)                TWOWORDINLINE(0x11
 
 /*
  *  LMGetMBTicks()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4368,7 +4368,7 @@ EXTERN_API( long ) LMGetMBTicks(void)                         TWOWORDINLINE(0x2E
 
 /*
  *  LMSetMBTicks()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4380,7 +4380,7 @@ EXTERN_API( void ) LMSetMBTicks(long value)                   TWOWORDINLINE(0x21
 
 /*
  *  LMGetKeyTime()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4391,7 +4391,7 @@ EXTERN_API( long ) LMGetKeyTime(void)                         TWOWORDINLINE(0x2E
 
 /*
  *  LMSetKeyTime()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -4406,11 +4406,11 @@ EXTERN_API( void ) LMSetKeyTime(long value)                   TWOWORDINLINE(0x21
 
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+	#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+	#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+	#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -4424,4 +4424,3 @@ EXTERN_API( void ) LMSetKeyTime(long value)                   TWOWORDINLINE(0x21
 #endif
 
 #endif /* __LOWMEM__ */
-

@@ -29,7 +29,7 @@
 #include "xbox/xbox_win32stubs.h"
 #endif
 
-#if defined( USE_SDL ) 
+#if defined( USE_SDL )
 #include "materialsystem/imaterialsystem.h"
 #endif
 
@@ -47,7 +47,7 @@ static SDL_Cursor *s_hCurrentlySetCursor = NULL;
 static HICON s_pDefaultCursor[ dc_last ];
 static HICON s_hCurrentCursor = NULL;
 #endif
-static bool s_bCursorLocked = false; 
+static bool s_bCursorLocked = false;
 static bool s_bCursorVisible = true;
 static int s_nForceCursorVisibleCount = 0;
 static bool s_bSoftwareCursorActive = false;
@@ -142,7 +142,7 @@ vgui::HCursor CUserCursorManager::CreateCursorFromFile( char const *curOrAniFile
 	Q_strncpy( fn, curOrAniFile, sizeof( fn ) );
 	Q_strlower( fn );
 	Q_FixSlashes( fn );
-	
+
 	int cursorIndex = m_UserCursors.Find( fn );
 	if ( cursorIndex != m_UserCursors.InvalidIndex() )
 	{
@@ -153,7 +153,7 @@ vgui::HCursor CUserCursorManager::CreateCursorFromFile( char const *curOrAniFile
 
 	char fullpath[ 512 ];
 	g_pFullFileSystem->RelativePathToFullPath( fn, pPathID, fullpath, sizeof( fullpath ) );
-	
+
 	HCURSOR newCursor = (HCURSOR)LoadCursorFromFile( fullpath );
 	cursorIndex = m_UserCursors.Insert( fn, newCursor );
 	return cursorIndex | USER_CURSOR_MASK;
@@ -183,7 +183,7 @@ static CUserCursorManager g_UserCursors;
 
 vgui::HCursor Cursor_CreateCursorFromFile( char const *curOrAniFile, char const *pPathID )
 {
-#ifdef WIN32 
+#ifdef WIN32
 	return g_UserCursors.CreateCursorFromFile( curOrAniFile, pPathID );
 #else
 	return dc_user;
@@ -193,7 +193,7 @@ vgui::HCursor Cursor_CreateCursorFromFile( char const *curOrAniFile, char const 
 
 void Cursor_ClearUserCursors()
 {
-#ifdef WIN32 
+#ifdef WIN32
 	g_UserCursors.Shutdown();
 #endif
 }
@@ -499,16 +499,16 @@ void CursorGetPos(void *hwnd, int &x, int &y)
 		CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
 		int rx, ry, width, height;
 		pRenderContext->GetViewport( rx, ry, width, height );
-	
+
 		if ( !s_bSoftwareCursorActive && (width != windowWidth || height != windowHeight )  )
 		{
-			// scale the x/y back into the co-ords of the back buffer, not the scaled up window 
+			// scale the x/y back into the co-ords of the back buffer, not the scaled up window
 			//DevMsg( "Mouse x:%d y:%d %d %d %d %d\n", x, y, width, windowWidth, height, abs( height - windowHeight ) );
 			x = x * (float)width/windowWidth;
 			y = y * (float)height/windowHeight;
 		}
 	}
-	else 
+	else
 	{
 		// cursor is invisible, just say we have it pinned to the middle of the screen
 		CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
@@ -561,5 +561,3 @@ int  GetSoftwareCursorTexture( float *px, float *py )
 	}
 	return s_nSoftwareCursorTexture;
 }
-
-

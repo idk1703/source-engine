@@ -4,9 +4,9 @@
 // Any number of commands can be added in a frame, from several different sources.
 // Most commands come from either keybindings or console line input, but remote
 // servers can also send across commands and entire text files can be execed.
-// 
+//
 // The + command line options are also added to the command buffer.
-// 
+//
 // The game starts with a Cbuf_AddText ("exec quake.rc\n"); Cbuf_Execute ();
 //
 // $NoKeywords: $
@@ -33,7 +33,7 @@ typedef enum
 {
 	eCmdExecutionMarker_Enable_FCVAR_SERVER_CAN_EXECUTE='a',
 	eCmdExecutionMarker_Disable_FCVAR_SERVER_CAN_EXECUTE='b',
-	
+
 	eCmdExecutionMarker_Enable_FCVAR_CLIENTCMD_CAN_EXECUTE='c',
 	eCmdExecutionMarker_Disable_FCVAR_CLIENTCMD_CAN_EXECUTE='d'
 } ECmdExecutionMarker;
@@ -79,9 +79,9 @@ void Cbuf_InsertText( const char *text );
 // ONLY use Cbuf_AddText in between execution markers. If you use Cbuf_InsertText,
 // it will put that stuff before the execution marker and the execution marker won't apply.
 //
-// cl_restrict_server_commands uses this. It inserts a marker that says, "don't run 
+// cl_restrict_server_commands uses this. It inserts a marker that says, "don't run
 // anything unless it's marked with FCVAR_SERVER_CAN_EXECUTE", then inserts some commands,
-// then removes the execution marker. That way, ANYTIME Cbuf_Execute() is called, 
+// then removes the execution marker. That way, ANYTIME Cbuf_Execute() is called,
 // it will apply the cl_restrict_server_commands rules correctly.
 //-----------------------------------------------------------------------------
 bool Cbuf_AddTextWithMarkers( ECmdExecutionMarker markerLeft, const char *text, ECmdExecutionMarker markerRight );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -86,7 +86,7 @@ CServerList::~CServerList()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CServerList::RunFrame()
 {
@@ -200,7 +200,7 @@ void CServerList::AddServerToRefreshList(unsigned int serverID)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CServerList::StartRefresh()
 {
@@ -219,7 +219,7 @@ void CServerList::ServerResponded()
 			serveritem_t &server = m_Servers[i]->GetServer();
 			// copy in data necessary for filters
 
-			// add to ping times list 
+			// add to ping times list
 			server.pings[0] = server.pings[1];
 			server.pings[1] = server.pings[2];
 			server.pings[2] = server.ping;
@@ -250,9 +250,9 @@ void CServerList::ServerResponded()
 			// notify the UI of the new server info
 			m_pResponseTarget->ServerResponded(server);
 		}
-	
+
 	}
-		
+
 
 }
 
@@ -378,7 +378,7 @@ void CServerList::QueryFrame()
 
 			// get the next server now, since we're about to delete it from query list
 			unsigned short nextidx = m_Queries.NextInorder(idx);
-			
+
 			// delete the query
 			m_Queries.RemoveAt(idx);
 
@@ -391,7 +391,7 @@ void CServerList::QueryFrame()
 			idx = m_Queries.NextInorder(idx);
 		}
 	}
-	
+
 
 	// increment the number of sockets to use
 	m_nMaxRampUp = min(m_nMaxActive, m_nMaxRampUp + m_nRampUpSpeed);
@@ -409,9 +409,9 @@ void CServerList::QueryFrame()
 
 		//QueryServer(m_pQuery, currentServer);
 		m_Servers[currentServer]->Query();
-		
+
 		query_t query;
-	
+
 		netadr_t adr;
 		adr.ip[0] = item.ip[0];
 		adr.ip[1] = item.ip[1];
@@ -440,7 +440,3 @@ void CServerList::QueryFrame()
 		m_iUpdateSerialNumber++;
 	}
 }
-
-
-
-

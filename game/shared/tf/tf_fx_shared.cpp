@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-//  
+//
 //
 //=============================================================================
 #include "cbase.h"
@@ -69,15 +69,15 @@ void ImpactSoundGroup( const char *pSoundName, const Vector &vecEndPos )
 void FX_WeaponSound( int iPlayer, WeaponSound_t soundType, const Vector &vecOrigin, CTFWeaponInfo *pWeaponInfo )
 {
 	// If we have some sounds from the weapon classname.txt file, play a random one of them
-	const char *pShootSound = pWeaponInfo->aShootSounds[soundType]; 
+	const char *pShootSound = pWeaponInfo->aShootSounds[soundType];
 	if ( !pShootSound || !pShootSound[0] )
 		return;
 
-	CBroadcastRecipientFilter filter; 
+	CBroadcastRecipientFilter filter;
 	if ( !te->CanPredict() )
 		return;
 
-	CBaseEntity::EmitSound( filter, iPlayer, pShootSound, &vecOrigin ); 
+	CBaseEntity::EmitSound( filter, iPlayer, pShootSound, &vecOrigin );
 }
 
 //-----------------------------------------------------------------------------
@@ -108,22 +108,22 @@ void EndGroupingSounds() {}
 
 #endif
 
-Vector g_vecFixedWpnSpreadPellets[] = 
+Vector g_vecFixedWpnSpreadPellets[] =
 {
 	Vector( 0,0,0 ),	// First pellet goes down the middle
-	Vector( 1,0,0 ),	
-	Vector( -1,0,0 ),	
-	Vector( 0,-1,0 ),	
-	Vector( 0,1,0 ),	
-	Vector( 0.85,-0.85,0 ),	
-	Vector( 0.85,0.85,0 ),	
-	Vector( -0.85,-0.85,0 ),	
-	Vector( -0.85,0.85,0 ),	
+	Vector( 1,0,0 ),
+	Vector( -1,0,0 ),
+	Vector( 0,-1,0 ),
+	Vector( 0,1,0 ),
+	Vector( 0.85,-0.85,0 ),
+	Vector( 0.85,0.85,0 ),
+	Vector( -0.85,-0.85,0 ),
+	Vector( -0.85,0.85,0 ),
 	Vector( 0,0,0 ),	// last pellet goes down the middle as well to reward fine aim
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: This runs on both the client and the server.  On the server, it 
+// Purpose: This runs on both the client and the server.  On the server, it
 // only does the damage calculations.  On the client, it does all the effects.
 //-----------------------------------------------------------------------------
 void FX_FireBullets( CTFWeaponBase *pWpn, int iPlayer, const Vector &vecOrigin, const QAngle &vecAngles,
@@ -163,7 +163,7 @@ void FX_FireBullets( CTFWeaponBase *pWpn, int iPlayer, const Vector &vecOrigin, 
 	bDoEffects = true;
 
 	// The minigun has custom sound & animation code to deal with its windup/down.
-	if ( !pPlayer->IsLocalPlayer() 
+	if ( !pPlayer->IsLocalPlayer()
 		&& iWeapon != TF_WEAPON_MINIGUN )
 	{
 		// Fire the animation event.
@@ -184,7 +184,7 @@ void FX_FireBullets( CTFWeaponBase *pWpn, int iPlayer, const Vector &vecOrigin, 
 
 // Server specific.
 #else
-	// If this is server code, send the effect over to client as temp entity and 
+	// If this is server code, send the effect over to client as temp entity and
 	// dispatch one message for all the bullet impacts and sounds.
 	TE_FireBullets( pPlayer->entindex(), vecOrigin, vecAngles, iWeapon, iMode, iSeed, flSpread, bCritical );
 
@@ -199,7 +199,7 @@ void FX_FireBullets( CTFWeaponBase *pWpn, int iPlayer, const Vector &vecOrigin, 
 #if !defined (CLIENT_DLL)
 	// Move other players back to history positions based on local player's lag
 	lagcompensation->StartLagCompensation( pPlayer, pPlayer->GetCurrentCommand() );
-	
+
 	// PASSTIME custom lag compensation for the ball; see also tf_weapon_flamethrower.cpp
 	// it would be better if all entities could opt-in to this, or a way for lagcompensation to handle non-players automatically
 	if ( g_pPasstimeLogic && g_pPasstimeLogic->GetBall() )
@@ -278,7 +278,7 @@ void FX_FireBullets( CTFWeaponBase *pWpn, int iPlayer, const Vector &vecOrigin, 
 	for ( int iBullet = 0; iBullet < nBulletsPerShot; ++iBullet )
 	{
 		// Initialize random system with this seed.
-		RandomSeed( iSeed );	
+		RandomSeed( iSeed );
 
 		// Get circular gaussian spread. Under some cases we fire a bullet right down the crosshair:
 		//	- The first bullet of a spread weapon (except for rapid fire spread weapons like the minigun)
@@ -328,7 +328,7 @@ void FX_FireBullets( CTFWeaponBase *pWpn, int iPlayer, const Vector &vecOrigin, 
 		pPlayer->FireBullet( pWpn, fireInfo, bDoEffects, nDamageType, nCustomDamageType );
 
 		// Use new seed for next bullet.
-		++iSeed; 
+		++iSeed;
 	}
 
 #if !defined (CLIENT_DLL)

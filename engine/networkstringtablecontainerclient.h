@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,11 +30,11 @@ public:
 							CNetworkStringTableContainerClient( void );
 							~CNetworkStringTableContainerClient( void );
 
-public: 
+public:
 	// implemenatation INetworkStringTableContainer
 	virtual INetworkStringTable	*CreateStringTable( const char *tableName, int maxentries );
 	virtual void				RemoveAllTables( void );
-	
+
 	virtual INetworkStringTable	*FindTable( const char *tableName ) const;
 	virtual INetworkStringTable	*GetTable( TABLEID stringTable ) const;
 	virtual int					GetNumTables( void ) const;

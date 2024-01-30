@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -41,8 +41,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEFizz::CTEFizz( const char *name ) :
 	CBaseTempEntity( name )
@@ -54,16 +54,16 @@ CTEFizz::CTEFizz( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEFizz::~CTEFizz( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEFizz::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -78,7 +78,7 @@ void CTEFizz::Test( const Vector& current_origin, const QAngle& current_angles )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTEFizz::Precache( void )
 {
@@ -103,7 +103,7 @@ void TE_Fizz( IRecipientFilter& filter, float delay,
 	Assert( entity );
 
 	g_TEFizz.m_nEntity		= ENTINDEX( (edict_t *)entity->edict() );
-	g_TEFizz.m_nModelIndex	= modelindex;	
+	g_TEFizz.m_nModelIndex	= modelindex;
 	g_TEFizz.m_nDensity		= density;
 	g_TEFizz.m_nCurrent		= current;
 

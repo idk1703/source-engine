@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "keyvaluescompiler.h"
@@ -22,7 +22,7 @@ bool CRunTimeKeyValuesStringTable::ReadStringTable( int numStrings, CUtlBuffer& 
 	buf.SeekGet( CUtlBuffer::SEEK_HEAD, buf.TellGet() + numStrings * sizeof( int ) );
 
 	int stringSize = buf.GetInt();
-	
+
 	// Read in the string table
 	m_Strings.EnsureCapacity( numStrings );
 	int i;

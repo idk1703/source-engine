@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,12 +29,12 @@ extern const char *s_pszMatchGroups[];
 
 
 // For a particular set of KeyValues, ensure that all of the one-level-deep subkeys are a subset of the values in testKeys.
-// This ensures that there are no typos in the keynames. 
+// This ensures that there are no typos in the keynames.
 static bool ValidateKeysAreSubset( KeyValues* kv, const CUtlVector<const char *>& testKeys, CUtlVector<CUtlString> *pVecErrors )
 {
 	int numTestEntries = testKeys.Count();
 	Assert(numTestEntries >= 0);
-	if (numTestEntries == 0) 
+	if (numTestEntries == 0)
 		return true;
 
 	// This currently is inefficient, it's O(len(_keyvalues) * len(_testKeys)). It could easily be made faster for large N, but for small lengths
@@ -51,13 +51,13 @@ static bool ValidateKeysAreSubset( KeyValues* kv, const CUtlVector<const char *>
 			}
 		}
 
-		if (!matchAny) 
+		if (!matchAny)
 		{
-			if (pVecErrors) 
+			if (pVecErrors)
 			{
 				CUtlString choices(CFmtStr("Unexpected key '%s', expected one of: ", testVal));
 				int numTestEntriesLessOne = numTestEntries - 1;
-				for (int i = 0; i < numTestEntriesLessOne; ++i) 
+				for (int i = 0; i < numTestEntriesLessOne; ++i)
 				{
 					choices.Append(CFmtStr("\"%s\", ", testKeys[i]));
 				}
@@ -278,7 +278,7 @@ bool CTFCraftingRecipeDefinition::ItemListMatchesInputs( CUtlVector<CEconItem*> 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFCraftingRecipeDefinition::CanMatchAgainstBackpack( CUtlVector<CEconItem*> *vecAllItems, CUtlVector<CEconItem*> vecItemsByClass[ LOADOUT_COUNT ], CUtlVector<CEconItem*> vecItemsBySlot[ CLASS_LOADOUT_POSITION_COUNT ], CUtlVector<uint64> *vecChosenItems ) const
 {
@@ -316,7 +316,7 @@ bool CTFCraftingRecipeDefinition::CanMatchAgainstBackpack( CUtlVector<CEconItem*
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFCraftingRecipeDefinition::CheckSubItemListAgainstBackpack( CUtlVector<CEconItem*> *vecCraftingItems, CUtlVector<uint64> *vecChosenItems ) const
 {
@@ -462,7 +462,7 @@ bool CTFCraftingRecipeDefinition::CheckSubItemListAgainstBackpack( CUtlVector<CE
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static void InitPerClassStringArray( KeyValues *pPerClassData, const char *(&outputArray)[LOADOUT_COUNT] )
 {
@@ -479,7 +479,7 @@ static void InitPerClassStringArray( KeyValues *pPerClassData, const char *(&out
 			}
 
 			char* pszOut = NULL;
-	
+
 			CUtlString strClassString( pPerClassData->GetString( GetItemSchema()->GetClassUsabilityStrings()[i], NULL ) );
 
 			// If there's a class specific string defined, use that
@@ -495,7 +495,7 @@ static void InitPerClassStringArray( KeyValues *pPerClassData, const char *(&out
 				// ( ex. models/badge_%s.mdl turns into models/badge_scout.mdl, etc. )
 
 				// So this is fun.  ClassUsabilityStrings refers to the "Demoman", but the vast majority of his models are whatever_demo.mdl
-				// The RIGHT fix would be to either: 
+				// The RIGHT fix would be to either:
 				//		1) change all the model and content files to whatever_demoman.mdl
 				//		2) fixup the schema so every reference to "demoman" is changed to "demo" and update GetClassUsabilityStrings
 				//				and fix everything that breaks
@@ -527,7 +527,7 @@ static void InitPerClassStringArray( KeyValues *pPerClassData, const char *(&out
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static bool InitPerClassStringVectorArray( KeyValues *pPerClassData, CUtlVector< const char * > (&outputArray)[LOADOUT_COUNT], CUtlVector<CUtlString>* pVecErrors )
 {
@@ -549,7 +549,7 @@ static bool InitPerClassStringVectorArray( KeyValues *pPerClassData, CUtlVector<
 				{
 					outputArray[i].AddToTail( pszValue );
 				}
-				
+
 				// check multi line case
 				FOR_EACH_SUBKEY( pClassKey, pValueKey )
 				{
@@ -568,7 +568,7 @@ static bool InitPerClassStringVectorArray( KeyValues *pPerClassData, CUtlVector<
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CRandomChanceString::CRandomChanceString()
 {
@@ -577,7 +577,7 @@ CRandomChanceString::CRandomChanceString()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRandomChanceString::AddString( const char *pszString, int nChance )
 {
@@ -589,7 +589,7 @@ void CRandomChanceString::AddString( const char *pszString, int nChance )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CRandomChanceString::GetRandomString() const
 {
@@ -610,7 +610,7 @@ const char *CRandomChanceString::GetRandomString() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static bool ParseRandomChanceStringFromKV( KeyValues *pClassKey, CRandomChanceString *pOut )
 {
@@ -643,7 +643,7 @@ static bool ParseRandomChanceStringFromKV( KeyValues *pClassKey, CRandomChanceSt
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static bool InitPerClassRandomChanceStringArray( KeyValues *pPerClassData, CRandomChanceString (&outputArray)[LOADOUT_COUNT], CUtlVector<CUtlString>* pVecErrors )
 {
@@ -692,7 +692,7 @@ CTFTauntInfo::CTFTauntInfo()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFTauntInfo::InitTauntInputRemap( KeyValues *pKV, CUtlVector<CUtlString> *pVecErrors )
 {
@@ -751,7 +751,7 @@ bool CTFTauntInfo::InitTauntInputRemap( KeyValues *pKV, CUtlVector<CUtlString> *
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFTauntInfo::BInitFromKV( KeyValues *pKV, CUtlVector<CUtlString> *pVecErrors )
 {
@@ -765,12 +765,12 @@ bool CTFTauntInfo::BInitFromKV( KeyValues *pKV, CUtlVector<CUtlString> *pVecErro
 		}
 		else if ( !V_strcmp( pszKeyName, "custom_taunt_outro_scene_per_class" ) )
 		{
-			if ( !InitPerClassStringVectorArray( pSubKey, m_vecOutroScenes, pVecErrors ) ) 
+			if ( !InitPerClassStringVectorArray( pSubKey, m_vecOutroScenes, pVecErrors ) )
 				return false;
 		}
 		else if ( !V_strcmp( pszKeyName, "custom_partner_taunt_per_class" ) )
 		{
-			if ( !InitPerClassStringVectorArray( pSubKey, m_vecPartnerTauntInitiatorScenes, pVecErrors ) ) 
+			if ( !InitPerClassStringVectorArray( pSubKey, m_vecPartnerTauntInitiatorScenes, pVecErrors ) )
 				return false;
 			if ( !InitPerClassStringVectorArray( pSubKey, m_vecPartnerTauntReceiverScenes, pVecErrors ) )
 				return false;
@@ -854,7 +854,7 @@ CQuestThemeDefinition::CQuestThemeDefinition()
 	: m_pRawKVs( NULL )
 	, m_pszName( NULL )
 	, m_pszNotificationRes( NULL )
-	, m_pszQuestItemRes( NULL )	
+	, m_pszQuestItemRes( NULL )
 	, m_pszRewardString( NULL )
 	, m_pszDiscardString( NULL )
 	, m_pszInGameTrackerRes( NULL )
@@ -929,13 +929,13 @@ bool CQuestThemeDefinition::BInitFromKV( KeyValues *pKV, CUtlVector<CUtlString> 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CQuestDefinition::CQuestDefinition( void )
 {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CQuestDefinition::BInitFromKV( KeyValues *pKVItem, CUtlVector<CUtlString> *pVecErrors )
 {
@@ -947,7 +947,7 @@ bool CQuestDefinition::BInitFromKV( KeyValues *pKVItem, CUtlVector<CUtlString> *
 			const CQuestObjectiveDefinition* pObjective = NULL;
 			SCHEMA_INIT_SUBSTEP( GEconItemSchema().AddQuestObjective( &pObjective, pKVObj, pVecErrors ) );
 			SCHEMA_INIT_CHECK( pObjective != NULL, "Could not create quest objective" );
-			
+
 			m_vecObjectiveDefinitions.AddToTail( (CTFQuestObjectiveDefinition*)pObjective );
 		}
 	}
@@ -968,7 +968,7 @@ bool CQuestDefinition::BInitFromKV( KeyValues *pKVItem, CUtlVector<CUtlString> *
 
 	m_pszCorrespondingOperationName = pKVItem->GetString( "operation", NULL );
 	SCHEMA_INIT_CHECK( m_pszCorrespondingOperationName != NULL, "Quest missing \"operation\"!" );
-	
+
 	KeyValues* pKVSDescriptions = pKVItem->FindKey( "descriptions" );
 	if ( pKVSDescriptions )
 	{
@@ -1113,7 +1113,7 @@ const CQuestThemeDefinition *CQuestDefinition::GetQuestTheme() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFItemDefinition::InternalInitialize()
 {
@@ -1144,7 +1144,7 @@ void CTFItemDefinition::InternalInitialize()
 #include "filesystem.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFItemDefinition::BInitFromKV( KeyValues *pKVItem, CUtlVector<CUtlString> *pVecErrors )
 {
@@ -1184,7 +1184,7 @@ bool CTFItemDefinition::BInitFromKV( KeyValues *pKVItem, CUtlVector<CUtlString> 
 			m_iDefaultLoadoutSlot >= 0,
 			"Item definition %i \"%s\" used unknown loadout slot: %s!", GetDefinitionIndex(), GetItemBaseName(), pszLoadoutSlot );
 	}
-	
+
 	// Class usability--use our copy of kv item
 	KeyValues *pClasses = pKVInitValues->FindKey( "used_by_classes" );
 	if ( pClasses )
@@ -1226,7 +1226,7 @@ bool CTFItemDefinition::BInitFromKV( KeyValues *pKVItem, CUtlVector<CUtlString> 
 	// non-wearable slot other times. "Is this in a wearable slot?" is used to determine whether
 	// or not content can be allowed to stream, so we don't allow an item to overlap.
 	bool bHasAnyWearableSlots = false,
-		 bHasAnyNonwearableSlots = false;
+		bHasAnyNonwearableSlots = false;
 
 	for ( int i = 0; i < LOADOUT_COUNT; i++ )
 	{
@@ -1276,9 +1276,9 @@ bool CTFItemDefinition::BInitFromKV( KeyValues *pKVItem, CUtlVector<CUtlString> 
 		m_pTauntData = new CTFTauntInfo();
 		SCHEMA_INIT_CHECK(
 			m_pTauntData->BInitFromKV( pTauntKV, pVecErrors ),
-			"Item definition %i \"%s\" failed to initialize taunt data!", GetDefinitionIndex(), GetItemBaseName() 
+			"Item definition %i \"%s\" failed to initialize taunt data!", GetDefinitionIndex(), GetItemBaseName()
 		);
-	}	
+	}
 
 	// Init quest data if we have any
 	KeyValues *pQuestKV = pKVInitValues->FindKey( "quest" );
@@ -1319,8 +1319,8 @@ bool CTFItemDefinition::BInitFromKV( KeyValues *pKVItem, CUtlVector<CUtlString> 
 			GetItemSchema()->GetItemPaintKits().IsValidIndex( iPaintIndex ),
 			"Item paintkit [%s] in definition %i \"%s\" does not exist", pszPaintKit, GetDefinitionIndex(), GetItemBaseName()
 		);
-		
-		SetItemPaintKitDefinition( GetItemSchema()->GetItemPaintKits()[iPaintIndex] );	
+
+		SetItemPaintKitDefinition( GetItemSchema()->GetItemPaintKits()[iPaintIndex] );
 	}
 
 #ifdef CLIENT_DLL
@@ -1332,7 +1332,7 @@ bool CTFItemDefinition::BInitFromKV( KeyValues *pKVItem, CUtlVector<CUtlString> 
 
 #if defined(CLIENT_DLL) || defined(GAME_DLL)
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFItemDefinition::BInitFromTestItemKVs( int iNewDefIndex, KeyValues *pKVItem, CUtlVector<CUtlString>* pVecErrors )
 {
@@ -1380,7 +1380,7 @@ bool CTFItemDefinition::BInitFromTestItemKVs( int iNewDefIndex, KeyValues *pKVIt
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFItemDefinition::CopyPolymorphic( const CEconItemDefinition *pSourceDef )
 {
@@ -1391,7 +1391,7 @@ void CTFItemDefinition::CopyPolymorphic( const CEconItemDefinition *pSourceDef )
 #endif // defined(CLIENT_DLL) || defined(GAME_DLL)
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStyleInfo::BInitFromKV( KeyValues *pKVStyle, CUtlVector<CUtlString> *pVecErrors )
 {
@@ -1412,7 +1412,7 @@ void CTFStyleInfo::BInitFromKV( KeyValues *pKVStyle, CUtlVector<CUtlString> *pVe
 		}
 	}
 	else
-	{	
+	{
 		InitPerClassStringArray( pKVStyle->FindKey( "model_player_per_class" ), m_pszPlayerDisplayModel[0] );
 		InitPerClassStringArray( pKVStyle->FindKey( "model_player_per_class_red" ), m_pszPlayerDisplayModel[0] );
 		InitPerClassStringArray( pKVStyle->FindKey( "model_player_per_class_blue" ), m_pszPlayerDisplayModel[1] );
@@ -1443,7 +1443,7 @@ void CTFItemDefinition::GeneratePrecacheModelStrings( bool bDynamicLoad, CUtlVec
 			{
 				out_pVecModelStrings->AddToTail( pszModel );
 			}
-			
+
 			// Per-class alt-models
 			const char *pszModelAlt = GetPlayerDisplayModelAlt(i);
 			if ( pszModelAlt && pszModelAlt[0] )
@@ -1551,23 +1551,23 @@ ConVar item_enable_content_streaming( "item_enable_content_streaming", "1", FCVA
 bool CTFItemDefinition::IsContentStreamable() const
 {
 #if defined( WITH_STREAMABLE_WEAPONS )
-    extern ConVar tf_loadondemand_default;
+	extern ConVar tf_loadondemand_default;
 
-    // If we support streamable weapons and loadondemand_default is true, then we do not want to restrict demand loading
-    // to wearables only, so skip that check.
-    if (!tf_loadondemand_default.GetBool())
+	// If we support streamable weapons and loadondemand_default is true, then we do not want to restrict demand loading
+	// to wearables only, so skip that check.
+	if (!tf_loadondemand_default.GetBool())
 #endif
-    {
-        if (!IsAWearable())
-            return false;
-    }
+	{
+		if (!IsAWearable())
+			return false;
+	}
 	return item_enable_content_streaming.GetBool()
 		&& CEconItemDefinition::IsContentStreamable();
 }
 #endif // !GC_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFItemDefinition::FilloutSlotUsage( CBitVec<LOADOUT_COUNT> *pBV ) const
 {
@@ -1583,7 +1583,7 @@ void CTFItemDefinition::FilloutSlotUsage( CBitVec<LOADOUT_COUNT> *pBV ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFItemDefinition::CanBeUsedByAllClasses( void ) const
 {
@@ -1597,7 +1597,7 @@ bool CTFItemDefinition::CanBeUsedByAllClasses( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFItemDefinition::CanBePlacedInSlot( int nSlot ) const
 {
@@ -1630,11 +1630,11 @@ const char *CTFItemDefinition::GetPaintKitName() const
 		return pPaintKit->GetName( );
 	}
 
-	return NULL;	
+	return NULL;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFRequiredQuestItemsSet::BInitFromKV( KeyValues *pKV, CUtlVector<CUtlString> *pVecErrors )
 {
@@ -1688,7 +1688,7 @@ bool CTFRequiredQuestItemsSet::OwnsRequiredItems( const CUtlVector< item_definit
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFQuestObjectiveConditionsDefinition::CTFQuestObjectiveConditionsDefinition( void )
 	: m_nDefIndex( INVALID_QUEST_OBJECTIVE_CONDITIONS_INDEX )
@@ -1698,13 +1698,13 @@ CTFQuestObjectiveConditionsDefinition::CTFQuestObjectiveConditionsDefinition( vo
 {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFQuestObjectiveConditionsDefinition::~CTFQuestObjectiveConditionsDefinition( void )
 {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFQuestObjectiveConditionsDefinition::BInitFromKV( KeyValues *pKVItem, CUtlVector<CUtlString> *pVecErrors )
 {
@@ -1732,7 +1732,7 @@ bool CTFQuestObjectiveConditionsDefinition::BInitFromKV( KeyValues *pKVItem, CUt
 
 	const char *pszType = m_pConditionsKey->GetString( "type" );
 	pTempConditions = CreateEvaluatorByName( pszType, NULL );
-		
+
 	SCHEMA_INIT_CHECK( pTempConditions != NULL, "Failed to create evaluators" );
 
 	if ( !pTempConditions->BInitFromKV( m_pConditionsKey, pVecErrors ) )
@@ -1756,7 +1756,7 @@ bool CTFQuestObjectiveConditionsDefinition::BInitFromKV( KeyValues *pKVItem, CUt
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFQuestObjectiveConditionsDefinition::BPostInit( CUtlVector<CUtlString> *pVecErrors )
 {
@@ -1770,14 +1770,14 @@ bool CTFQuestObjectiveConditionsDefinition::BPostInit( CUtlVector<CUtlString> *p
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFQuestObjectiveDefinition::CTFQuestObjectiveDefinition( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFQuestObjectiveDefinition::~CTFQuestObjectiveDefinition()
 {
@@ -1817,7 +1817,7 @@ KeyValues *CTFQuestObjectiveDefinition::GetConditionsKeyValues() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 // Used to convert strings to ints for class usability
 struct PlayerClassInfo_t
@@ -1883,7 +1883,7 @@ itemid_t GetAssociatedQuestItemID( const IEconItemInterface *pEconItem )
 }
 
 // Loadout positions
-const char *g_szLoadoutStrings[] = 
+const char *g_szLoadoutStrings[] =
 {
 	// Weapons & Equipment
 	"primary",		// LOADOUT_POSITION_PRIMARY = 0,
@@ -1944,7 +1944,7 @@ const char *g_szLoadoutStringsForDisplay[] =
 	"#LoadoutSlot_Misc",		// LOADOUT_POSITION_MISC
 	"#LoadoutSlot_Action",		// LOADOUT_POSITION_ACTION
 	"#LoadoutSlot_Misc",		// LOADOUT_POSITION_MISC2
-	
+
 	"#LoadoutSlot_Taunt",		// LOADOUT_POSITION_TAUNT,
 	"#LoadoutSlot_Taunt2",		// LOADOUT_POSITION_TAUNT2,
 	"#LoadoutSlot_Taunt3",		// LOADOUT_POSITION_TAUNT3,
@@ -1973,7 +1973,7 @@ const char *g_szLoadoutStringsForDisplay[] =
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_szLoadoutStringsForDisplay ) == CLASS_LOADOUT_POSITION_COUNT );
 
 // Loadout positions
-const char *g_szAccountLoadoutStrings[] = 
+const char *g_szAccountLoadoutStrings[] =
 {
 	"quest",
 	""
@@ -2021,7 +2021,7 @@ CTFItemSchema::CTFItemSchema()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFItemSchema::Reset()
 {
@@ -2037,7 +2037,7 @@ void CTFItemSchema::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFItemSchema::InitializeStringTable( const char **ppStringTable, unsigned int unStringCount, CUtlVector<const char *> *out_pvecStringTable )
 {
@@ -2066,7 +2066,7 @@ bool CTFItemSchema::BInitSchema( KeyValues *pKVRawDefinition, CUtlVector<CUtlStr
 			m_vecClassUsabilityStrings.AddToTail( gs_PlayerClassData[i].m_pchName );
 		}
 		Assert( m_vecClassUsabilityStrings.Size() == LOADOUT_COUNT );
-	
+
 		InitializeStringTable( &g_szLoadoutStrings[0],				ARRAYSIZE(g_szLoadoutStrings),				&m_vecClassLoadoutStrings );
 		Assert( m_vecClassLoadoutStrings.Size() <= CLASS_LOADOUT_POSITION_COUNT );
 
@@ -2086,7 +2086,7 @@ bool CTFItemSchema::BInitSchema( KeyValues *pKVRawDefinition, CUtlVector<CUtlStr
 	// This needs to happen BEFORE we get the quest objectives since they're going to reference these.
 	KeyValues *pKVQuestObjectiveConditions = pKVRawDefinition->FindKey( "quest_objective_conditions" );
 	SCHEMA_INIT_SUBSTEP( BInitQuestObjectiveConditions( pKVQuestObjectiveConditions, pVecErrors ) );
-	
+
 	SCHEMA_INIT_SUBSTEP( CEconItemSchema::BInitSchema( pKVRawDefinition, pVecErrors ) );
 
 	KeyValues *pKVMvmMaps = pKVRawDefinition->FindKey( "mvm_maps" );
@@ -2393,13 +2393,13 @@ bool CTFItemSchema::BInitMaps( KeyValues *pKVMaps, CUtlVector<CUtlString> *pVecE
 		pMap->pszMapName = pKVMap->GetString( "name", NULL );
 		SCHEMA_INIT_CHECK( pMap->pszMapName != NULL,
 			"BInitMaps(): missing map name for master map entry %s.", pKVMap->GetName() );
-	
+
 		pMap->m_nDefIndex				= V_atoi( pKVMap->GetName() );
 		pMap->pszMapNameLocKey			= pKVMap->GetString( "localizedname", NULL );
 
 		SCHEMA_INIT_CHECK( (pMap->mapStampDef == NULL) == (pszMapStampname[0] == '\0'),
 			"BInitGameModes(): unable to find map stamp definition '%s' for map '%s'.", pszMapStampname, pMap->pszMapName );
-				
+
 		pMap->pszMapNameLocKey			= pKVMap->GetString( "localizedname", NULL );
 		pMap->pszAuthorsLocKey			= pKVMap->GetString( "authors", NULL );
 		pMap->pszStrangePrefixLocKey	= pKVMap->GetString( "strangeprefixtoken", NULL );
@@ -2424,7 +2424,7 @@ bool CTFItemSchema::BInitMaps( KeyValues *pKVMaps, CUtlVector<CUtlString> *pVecE
 				pMap->m_vecRollingMatchTags.AddToTail( GetHandleForTag( pKVTag->GetName() ) );
 			}
 		}
-		
+
 		// Init rolling match targets
 		pKVTags = pKVMap->FindKey( "rolling_match_target_tags" );
 		if ( pKVTags )
@@ -2550,7 +2550,7 @@ bool CTFItemSchema::BPostInitMaps( CUtlVector<CUtlString> *pVecErrors )
 
 		// We only have to roll one-less than the amount needed because the current map is always selected
 		SCHEMA_INIT_CHECK( pMapOuter->m_vecRollingMatchMaps.Count() >= NEXT_MAP_VOTE_OPTIONS - 1, "Not enough maps with matching tags for map %s",
-						   pMapOuter->pszMapName );
+							pMapOuter->pszMapName );
 	}
 
 	return true;
@@ -2640,7 +2640,7 @@ bool CTFItemSchema::BInitMvmMissions( KeyValues *pKVMvmMaps, CUtlVector<CUtlStri
 
 	// initialize the rewards sections
 	bool bResult = true;
-	
+
 	FOR_EACH_TRUE_SUBKEY( pKVMvmMaps, pKVMap )
 	{
 		int nMapIndex = m_vecMvMMaps.AddToTail();
@@ -2706,7 +2706,7 @@ bool CTFItemSchema::BInitMvmTours( KeyValues *pKVMvmTours, CUtlVector<CUtlString
 
 	// initialize the rewards sections
 	bool bResult = true;
-	
+
 	FOR_EACH_TRUE_SUBKEY( pKVMvmTours, pKVTour )
 	{
 		MvMTour_t tour;
@@ -2717,7 +2717,7 @@ bool CTFItemSchema::BInitMvmTours( KeyValues *pKVMvmTours, CUtlVector<CUtlString
 		tour.m_sTourNameLocalizationToken = pKVTour->GetString( "tour_name" );
 		SCHEMA_INIT_CHECK( tour.m_sTourNameLocalizationToken.Get() && tour.m_sTourNameLocalizationToken.Get()[0] == '#',
 			"MvM tour \"%s\" didn't specify valid localization token for 'tour_name'", tour.m_sTourInternalName.Get() );
-				
+
 		const char *pszBadgeItemDefName = pKVTour->GetString( "badge_item_def" );
 		tour.m_pBadgeItemDef = pszBadgeItemDefName ? GetItemSchema()->GetItemDefinitionByName( pszBadgeItemDefName ) : NULL;
 		SCHEMA_INIT_CHECK( (pszBadgeItemDefName == NULL) == (tour.m_pBadgeItemDef == NULL),
@@ -2877,7 +2877,7 @@ const char *CTFItemSchema::GetMvmMissionName( int iChallengeIndex ) const
 
 	Assert( iChallengeIndex == k_iMvmMissionIndex_NotInSchema );
 	return "(invalid)";
-	
+
 }
 
 //-----------------------------------------------------------------------------
@@ -3131,7 +3131,7 @@ IEconTool *CTFItemSchema::CreateEconToolImpl( const char *pszToolType, const cha
 		{
 			// Error checking -- make sure we aren't setting properties in the schema that we don't support.
 			if ( pszUsageRestriction )					return NULL;
-				
+
 			return new CEconTool_TFSpellbookPage( pszToolType, unCapabilities );
 		}
 
@@ -3164,7 +3164,7 @@ int PaintkitAutocomplete( char const *partial, char commands[ COMMAND_COMPLETION
 	// Don't autocomplete until there are at least 3 characters to guess on.
 	if ( partialLen < 3 )
 		return 0;
-	
+
 	Assert( GetItemSchema() );
 	const CEconItemSchema::ItemPaintKitMap_t& paintKits = GetItemSchema()->GetItemPaintKits();
 
@@ -3190,8 +3190,8 @@ CON_COMMAND_F_COMPLETION( r_texcomp_debug, "Usage: r_texcomp_debug <paintkit_nam
 	}
 
 	int wearlevel = ( args.ArgC() >= 3 )
-	              ?	atoi( args[ 2 ] )
-				  : 1;
+				?	atoi( args[ 2 ] )
+				: 1;
 
 	Assert( GetItemSchema() );
 	const CEconItemSchema::ItemPaintKitMap_t& paintKits = GetItemSchema()->GetItemPaintKits();
@@ -3210,10 +3210,9 @@ CON_COMMAND_F_COMPLETION( r_texcomp_debug, "Usage: r_texcomp_debug <paintkit_nam
 		Msg( "Couldn't find wear level %d for painkit %s\n", wearlevel, args[ 1 ] );
 		return;
 	}
-	
+
 	ITextureCompositor* pWeaponSkinBaseCompositor = materials->NewTextureCompositor( 1, 1, args[ 1 ], TF_TEAM_RED, 0, pKV, TEX_COMPOSITE_CREATE_FLAGS_LOG_NODES_ONLY );
 	Assert( pWeaponSkinBaseCompositor == NULL ); pWeaponSkinBaseCompositor;
 }
 
-#endif // STAGING_ONLY && CLIENT_DLL 
-
+#endif // STAGING_ONLY && CLIENT_DLL

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -247,7 +247,7 @@ CSystem::~CSystem()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSystem::Shutdown()
 {
@@ -390,7 +390,7 @@ void CSystem::SetClipboardText(const char *text, int textLen)
 			SetClipboardData(CF_TEXT, hmem);
 		}
 	}
-	
+
 	CloseClipboard();
 #endif
 }
@@ -426,7 +426,7 @@ void CSystem::SetClipboardText(const wchar_t *text, int textLen)
 			SetClipboardData( CF_UNICODETEXT, hmem );
 		}
 	}
-	
+
 	CloseClipboard();
 #endif
 }
@@ -435,7 +435,7 @@ int CSystem::GetClipboardTextCount()
 {
 #ifndef _X360
 	int count = 0;
-	
+
 	if ( VCRGetMode() != VCR_Playback )
 	{
 		if (OpenClipboard(GetDesktopWindow() ))
@@ -552,7 +552,7 @@ static bool staticSplitRegistryKey(const char *key, char *key0, int key0Len, cha
 	{
 		return false;
 	}
-	
+
 	int len=strlen(key);
 	if(len<=0)
 	{
@@ -576,7 +576,7 @@ static bool staticSplitRegistryKey(const char *key, char *key0, int key0Len, cha
 	{
 		return false;
 	}
-	
+
 	vgui_strcpy(key0,Start+1,key);
 	vgui_strcpy(key1,(len-Start)+1,key+Start);
 
@@ -657,7 +657,7 @@ bool CSystem::GetRegistryString(const char *key, char *value, int valueLen)
 
 	ulong len=valueLen;
 	if(VCRHook_RegQueryValueEx(hKey,key1,null,null,(uchar*)value,&len)==ERROR_SUCCESS)
-	{		
+	{
 		VCRHook_RegCloseKey(hKey);
 		return true;
 	}
@@ -694,7 +694,7 @@ bool CSystem::SetRegistryInteger(const char *key, int value)
 	{
 		return false;
 	}
-		
+
 	if(VCRHook_RegSetValueEx(hKey,key1,null,REG_DWORD,(uchar*)&value,4)==ERROR_SUCCESS)
 	{
 		VCRHook_RegCloseKey(hKey);
@@ -735,7 +735,7 @@ bool CSystem::GetRegistryInteger(const char *key, int &value)
 
 	ulong len=4;
 	if(VCRHook_RegQueryValueEx(hKey,key1,null,null,(uchar*)&value,&len)==ERROR_SUCCESS)
-	{		
+	{
 		VCRHook_RegCloseKey(hKey);
 		return true;
 	}
@@ -789,7 +789,7 @@ bool CSystem::SetWatchForComputerUse(bool state)
 	{
 		// disable watching
 	}
-	
+
 	return true;
 }
 
@@ -916,7 +916,7 @@ bool CSystem::GetCommandLineParamValue(const char *paramName, char *value, int v
 
 	strncpy(value, token, valueBufferSize - 1);
 	value[valueBufferSize - 1] = 0;
-	
+
 	return true;
 }
 
@@ -1053,10 +1053,10 @@ bool CSystem::GetShortcutTarget(const char *linkFileName, char *targetPath, char
 			wchar_t wsz[MAX_PATH];
 			// Get a UNICODE wide string wsz from the link path
 			MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, temp, -1, wsz, MAX_PATH);
-			
+
 			// Read the link into the persistent file
 			hres = ppf->Load(wsz, 0);
-			
+
 			if (SUCCEEDED(hres))
 			{
 				//Read the target information from the link object
@@ -1100,12 +1100,12 @@ bool CSystem::ModifyShortcutTarget(const char *linkFileName, const char *targetP
 			wchar_t wsz[MAX_PATH];
 			// Get a UNICODE wide string wsz from the link path
 			MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, temp, -1, wsz, MAX_PATH);
-			
+
 			// Read the link into the persistent file
 			hres = ppf->Load(wsz, 0);
-			
+
 			if (SUCCEEDED(hres))
-			{ 
+			{
 				// Set the target information from the link object
 				psl->SetPath(targetPath);
 				psl->SetArguments(arguments);
@@ -1133,15 +1133,15 @@ const char *CSystem::GetDesktopFolderPath()
 	folderPath[0] = 0;
 
 	// try the custom regkey
-	if ( GetRegistryString( "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\\Desktop", folderPath, sizeof(folderPath) ) 
+	if ( GetRegistryString( "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\\Desktop", folderPath, sizeof(folderPath) )
 		&& strlen(folderPath) > 6 )
 	{
 		return folderPath;
 	}
 
 
-	// try the default 
-	if ( ::SHGetSpecialFolderPath( NULL, folderPath, CSIDL_DESKTOP, false ) 
+	// try the default
+	if ( ::SHGetSpecialFolderPath( NULL, folderPath, CSIDL_DESKTOP, false )
 		&& strlen(folderPath) > 6 )
 	{
 		return folderPath;

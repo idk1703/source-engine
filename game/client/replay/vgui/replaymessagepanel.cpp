@@ -210,7 +210,7 @@ CReplayMessagePanel::~CReplayMessagePanel()
 	// Remove, if found.
 	if ( iFind != g_vecReplayMessagePanels.InvalidIndex() )
 	{
-		g_vecReplayMessagePanels.FastRemove( iFind );	
+		g_vecReplayMessagePanels.FastRemove( iFind );
 	}
 
 	ivgui()->RemoveTickSignal( GetVPanel() );

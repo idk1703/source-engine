@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -482,7 +482,7 @@ void CCSBot::StuckCheck( void )
 			if (avgVel < stuckVel)
 			{
 				// we are stuck - note when and where we initially become stuck
-				m_stuckTimestamp = gpGlobals->curtime;			
+				m_stuckTimestamp = gpGlobals->curtime;
 				m_stuckSpot = GetAbsOrigin();
 				m_stuckJumpTimer.Start( RandomFloat( 0.3f, 0.75f ) );		// 1.0
 
@@ -582,7 +582,7 @@ void CCSBot::MoveTowardsPosition( const Vector &pos )
 	// Can't look too far ahead, or bots will try to jump up slopes.
 	//
 	// NOTE: We need to do this frequently to catch edges at the right time
-	// @todo Look ahead *along path* instead of straight line 
+	// @todo Look ahead *along path* instead of straight line
 	//
 	if ((m_lastKnownArea == NULL || !(m_lastKnownArea->GetAttributes() & NAV_MESH_NO_JUMP)) &&
 		!IsOnLadder())
@@ -932,7 +932,7 @@ bool CCSBot::FindApproachPointNearestPath( Vector *pos )
 	if (found)
 	{
 		*pos = target + Vector( 0, 0, HalfHumanHeight );
-		return true;	
+		return true;
 	}
 
 	return false;
@@ -960,4 +960,3 @@ bool CCSBot::IsAtEnemySpawn( void ) const
 
 	return false;
 }
-

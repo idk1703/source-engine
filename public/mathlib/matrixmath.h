@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //  A set of generic, template-based matrix functions.
 //===========================================================================//
@@ -126,7 +126,7 @@ namespace MatrixMath
 
 
 	// simple way to initialize a matrix with constants from code.
-	template<class MATRIXCLASSOUT> 
+	template<class MATRIXCLASSOUT>
 	void SetMatrixToIdentity( MATRIXCLASSOUT *pMatrixOut, float flDiagonalValue = 1.0 )
 	{
 		for( int i = 0; i < pMatrixOut->Height(); i++ )
@@ -140,7 +140,7 @@ namespace MatrixMath
 	}
 
 	//// simple way to initialize a matrix with constants from code
-	template<class MATRIXCLASSOUT> 
+	template<class MATRIXCLASSOUT>
 	void SetMatrixValues( MATRIXCLASSOUT *pMatrix, int nRows, int nCols, ... )
 	{
 		va_list argPtr;
@@ -348,7 +348,7 @@ namespace MatrixMath
 		}
 	}
 
-	
+
 	template<class ATYPE,  class XTYPE, class BTYPE>
 	void LeastSquaresFit( ATYPE const &matA, BTYPE const &vecB, XTYPE &vecX )
 	{

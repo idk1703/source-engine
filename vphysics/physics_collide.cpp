@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -58,14 +58,14 @@ public:
 	CPhysCollide *ConvertConvexToCollide( CPhysConvex **pConvex, int convexCount );
 	CPhysCollide *ConvertConvexToCollideParams( CPhysConvex **pConvex, int convexCount, const convertconvexparams_t &convertParams );
 
-	
+
 	CPolyhedron *PolyhedronFromConvex( CPhysConvex * const pConvex, bool bUseTempPolyhedron );
 	int GetConvexesUsedInCollideable( const CPhysCollide *pCollideable, CPhysConvex **pOutputArray, int iOutputArrayLimit );
 
 	// store game-specific data in a convex solid
 	void SetConvexGameData( CPhysConvex *pConvex, unsigned int gameData );
 	void ConvexFree( CPhysConvex *pConvex );
-	
+
 	CPhysPolysoup *PolysoupCreate( void );
 	void PolysoupDestroy( CPhysPolysoup *pSoup );
 	void PolysoupAddTriangle( CPhysPolysoup *pSoup, const Vector &a, const Vector &b, const Vector &c, int materialIndex7bits );
@@ -171,7 +171,7 @@ struct physcollideheader_t
 	void Defaults( short inputModelType )
 	{
 		vphysicsID = VPHYSICS_COLLISION_ID;
-		
+
 		version = VPHYSICS_COLLISION_VERSION;
 		modelType = inputModelType;
 	}
@@ -250,7 +250,7 @@ public:
 	CPhysCollideCompactSurface( const char *pBuffer, unsigned int size, int index, bool swap = false );
 	CPhysCollideCompactSurface( const compactsurfaceheader_t *pHeader, int index, bool swap = false );
 	CPhysCollideCompactSurface( IVP_Compact_Surface *pSurface );
-	
+
 	void Init( const char *pBuffer, unsigned int size, int index, bool swap = false );
 
 	// IPhysCollide
@@ -339,9 +339,9 @@ CPhysCollide *CPhysCollide::UnserializeFromBuffer( const char *pBuffer, unsigned
 		return NULL;
 #endif
 	}
-	if ( pSurface->dummy[2] == IVP_COMPACT_SURFACE_ID || 
-		 pSurface->dummy[2] == IVP_COMPACT_SURFACE_ID_SWAPPED || 
-		 pSurface->dummy[2] == 0 )
+	if ( pSurface->dummy[2] == IVP_COMPACT_SURFACE_ID ||
+		pSurface->dummy[2] == IVP_COMPACT_SURFACE_ID_SWAPPED ||
+		pSurface->dummy[2] == 0 )
 	{
 		if ( pSurface->dummy[2] == 0 )
 		{
@@ -589,7 +589,7 @@ void CPhysCollideCompactSurface::ComputeOrthographicAreas( float epsilon )
 				total++;
 			}
 		}
-	
+
 		if ( total <= 0 )
 			total = 1;
 		m_orthoAreas[axis] = (float)hits / (float)total;
@@ -641,7 +641,7 @@ CPhysConvex	*CPhysicsCollision::ConvexFromVertsFast( Vector **pVerts, int vertCo
 	for ( i = 0; i < vertCount; i++ )
 	{
 		IVP_U_Point *tmp = new IVP_U_Point;
-		
+
 		ConvertPositionToIVP( *pVerts[i], *tmp );
 
 		BEGIN_IVP_ALLOCATION();
@@ -666,14 +666,14 @@ CPhysConvex *CPhysicsCollision::RebuildConvexFromPlanes( CPhysConvex *pConvex, f
 {
 	if ( !pConvex )
 		return NULL;
-	
+
 	IVP_Compact_Ledge *pLedge = (IVP_Compact_Ledge *)pConvex;
 	int triangleCount = pLedge->get_n_triangles();
-	
+
 	IVP_Compact_Triangle *pTri = pLedge->get_first_triangle();
 	IVP_U_Hesse plane;
-    IVP_Halfspacesoup halfspaces;
-	
+	IVP_Halfspacesoup halfspaces;
+
 	for ( int j = 0; j < triangleCount; j++ )
 	{
 		const IVP_Compact_Edge *pEdge = pTri->get_edge( 0 );
@@ -688,11 +688,11 @@ CPhysConvex *CPhysicsCollision::RebuildConvexFromPlanes( CPhysConvex *pConvex, f
 			plane.normize();
 			halfspaces.add_halfspace( &plane );
 		}
-		
+
 		pTri = pTri->get_next_tri();
 	}
-	
-    IVP_Compact_Ledge *pLedgeOut = IVP_SurfaceBuilder_Halfspacesoup::convert_halfspacesoup_to_compact_ledge( &halfspaces, mergeTolerance );
+
+	IVP_Compact_Ledge *pLedgeOut = IVP_SurfaceBuilder_Halfspacesoup::convert_halfspacesoup_to_compact_ledge( &halfspaces, mergeTolerance );
 	return reinterpret_cast<CPhysConvex *>( pLedgeOut );
 }
 
@@ -721,18 +721,18 @@ CPhysConvex	*CPhysicsCollision::ConvexFromPlanes( float *pPlanes, int planeCount
 
 	listplane_t *pList = (listplane_t *)pPlanes;
 	IVP_U_Hesse plane;
-    IVP_Halfspacesoup halfspaces;
+	IVP_Halfspacesoup halfspaces;
 
 	mergeDistance = ConvertDistanceToIVP( mergeDistance );
 
 	for ( int i = 0; i < planeCount; i++ )
 	{
-		Vector tmp( -pList[i].normal[0], -pList[i].normal[1], -pList[i].normal[2] ); 
+		Vector tmp( -pList[i].normal[0], -pList[i].normal[1], -pList[i].normal[2] );
 		ConvertPlaneToIVP( tmp, -pList[i].dist, plane );
 		halfspaces.add_halfspace( &plane );
 	}
-	
-    IVP_Compact_Ledge *pLedge = IVP_SurfaceBuilder_Halfspacesoup::convert_halfspacesoup_to_compact_ledge( &halfspaces, mergeDistance );
+
+	IVP_Compact_Ledge *pLedge = IVP_SurfaceBuilder_Halfspacesoup::convert_halfspacesoup_to_compact_ledge( &halfspaces, mergeDistance );
 	return reinterpret_cast<CPhysConvex *>( pLedge );
 }
 
@@ -797,7 +797,7 @@ CPolyhedron *CPhysicsCollision::PolyhedronFromConvex( CPhysConvex * const pConve
 	int iTriangles = pLedge->get_n_triangles();
 
 	PolyhedronMesh_Triangle *pTriangles = (PolyhedronMesh_Triangle *)stackalloc( iTriangles * sizeof( PolyhedronMesh_Triangle ) );
-	
+
 	int iHighestPointIndex = 0;
 	const IVP_Compact_Triangle *pTri = pLedge->get_first_triangle();
 	for( int i = 0; i != iTriangles; ++i )
@@ -813,7 +813,7 @@ CPolyhedron *CPhysicsCollision::PolyhedronFromConvex( CPhysConvex * const pConve
 			if( pTriangles[i].Edges[j].iPointIndices[0] > iHighestPointIndex )
 				iHighestPointIndex = pTriangles[i].Edges[j].iPointIndices[0];
 		}
-		
+
 		pTri = pTri->get_next_tri();
 	}
 
@@ -853,7 +853,7 @@ CPolyhedron *CPhysicsCollision::PolyhedronFromConvex( CPhysConvex * const pConve
 				pTriangles[i].Edges[j].iPointIndices[k] = pPointRemapping[pTriangles[i].Edges[j].iPointIndices[k]];
 		}
 	}
-	
+
 
 	bool *bLinks = (bool *)stackalloc( iNumPoints * iNumPoints * sizeof( bool ) );
 	memset( bLinks, 0, iNumPoints * iNumPoints * sizeof( bool ) );
@@ -887,7 +887,7 @@ CPolyhedron *CPhysicsCollision::PolyhedronFromConvex( CPhysConvex * const pConve
 			ConvertPositionToHL( pLedgePoints[i], pWriteVertices[pPointRemapping[i]] );
 	}
 
-    
+
 	//convert lines
 	iInsertIndex = 0;
 	for( int i = 0; i != iNumPoints; ++i )
@@ -903,7 +903,7 @@ CPolyhedron *CPhysicsCollision::PolyhedronFromConvex( CPhysConvex * const pConve
 		}
 	}
 
-	
+
 	int *pStartIndices = (int *)stackalloc( iNumPoints * sizeof( int ) ); //for quicker lookup of which edges to use in polygons
 
 	pStartIndices[0] = 0; //the lowest index point drives links, so if the first point isn't the first link, then something is extremely messed up
@@ -1059,9 +1059,9 @@ static void LedgeInsidePoint( IVP_Compact_Ledge *pLedge, Vector& out )
 //-----------------------------------------------------------------------------
 // Purpose: Calculate the volume of a tetrahedron with these vertices
 // Input  : p0 - points of tetrahedron
-//			p1 - 
-//			p2 - 
-//			p3 - 
+//			p1 -
+//			p2 -
+//			p3 -
 // Output : float (volume in units^3)
 //-----------------------------------------------------------------------------
 static float TetrahedronVolume( const Vector &p0, const Vector &p1, const Vector &p2, const Vector &p3 )
@@ -1270,7 +1270,7 @@ void CPhysicsCollision::InitBBoxCache()
 				nearest = j;
 			}
 		}
-		
+
 		m_bboxVertMap[i] = nearest;
 
 #if _DEBUG
@@ -1396,9 +1396,9 @@ public:
 CPhysPolysoup::CPhysPolysoup()
 {
 	m_isValid = false;
-    m_points.add( &m_triangle[0] );
-    m_points.add( &m_triangle[1] );
-    m_points.add( &m_triangle[2] );
+	m_points.add( &m_triangle[0] );
+	m_points.add( &m_triangle[1] );
+	m_points.add( &m_triangle[2] );
 }
 
 CPhysPolysoup *CPhysicsCollision::PolysoupCreate( void )
@@ -1443,13 +1443,13 @@ CPhysCollide *CPhysicsCollision::ConvertPolysoupToCollide( CPhysPolysoup *pSoup,
 #if ENABLE_IVP_MOPP
 	if ( useMOPP )
 	{
-	    IVP_Compact_Mopp *pSurface = pSoup->m_builder.compile();
+		IVP_Compact_Mopp *pSurface = pSoup->m_builder.compile();
 		pCollide = new CPhysCollideMopp( pSurface );
 	}
 	else
 #endif
 	{
-	    IVP_Compact_Surface *pSurface = pSoup->m_builderSoup.compile();
+		IVP_Compact_Surface *pSurface = pSoup->m_builderSoup.compile();
 		pCollide = new CPhysCollideCompactSurface( pSurface );
 	}
 
@@ -1496,14 +1496,14 @@ int CPhysicsCollision::CreateDebugMesh( const CPhysCollide *pCollisionModel, Vec
 	pCollisionModel->GetAllLedges( ledges );
 
 	int vertCount = 0;
-	
+
 	for ( i = 0; i < ledges.len(); i++ )
 	{
 		IVP_Compact_Ledge *pLedge = ledges.element_at( i );
 		vertCount += pLedge->get_n_triangles() * 3;
 	}
 	Vector *verts = new Vector[ vertCount ];
-		
+
 	int vertIndex = 0;
 	for ( i = 0; i < ledges.len(); i++ )
 	{
@@ -1670,7 +1670,7 @@ void CPhysicsCollision::VCollideUnload( vcollide_t *pVCollide )
 
 			if ( pEnv->IsCollisionModelUsed( (CPhysCollide *)pVCollide->solids[i] ) )
 			{
- 				AssertMsg(0, "Freed collision model while in use!!!\n");
+				AssertMsg(0, "Freed collision model while in use!!!\n");
 				return;
 			}
 		}
@@ -1696,7 +1696,7 @@ void CPhysicsCollision::VPhysicsKeyParserDestroy( IVPhysicsKeyParser *pParser )
 }
 
 IPhysicsCollision *CPhysicsCollision::ThreadContextCreate( void )
-{ 
+{
 	return this;
 }
 
@@ -1762,16 +1762,16 @@ public:
 	virtual int		ConvexCount( void );
 	// triangle count for this convex piece
 	virtual int		TriangleCount( int convexIndex );
-	
+
 	// get the stored game data
 	virtual unsigned int GetGameData( int convexIndex );
 
 	// Gets the triangle's verts to an array
 	virtual void	GetTriangleVerts( int convexIndex, int triangleIndex, Vector *verts );
-	
+
 	// UNDONE: This doesn't work!!!
 	virtual void	SetTriangleVerts( int convexIndex, int triangleIndex, const Vector *verts );
-	
+
 	// returns the 7-bit material index
 	virtual int		GetTriangleMaterialIndex( int convexIndex, int triangleIndex );
 	// sets a 7-bit material index for this triangle
@@ -1855,7 +1855,7 @@ void CCollisionQuery::SetTriangleVerts( int convexIndex, int triangleIndex, cons
 	Triangle( pLedge, triangleIndex );
 }
 
-	
+
 int CCollisionQuery::GetTriangleMaterialIndex( int convexIndex, int triangleIndex )
 {
 	IVP_Compact_Ledge *pLedge = m_ledges.element_at( convexIndex );
@@ -1886,12 +1886,12 @@ void TestCubeVolume( void )
 {
 	float volume = 0;
 	Vector verts[8];
-	typedef struct 
+	typedef struct
 	{
 		int a, b, c;
 	} triangle_t;
 
-	triangle_t triangles[12] = 
+	triangle_t triangles[12] =
 	{
 		{0,1,3}, // front	0123
 		{0,3,2},
@@ -1928,5 +1928,3 @@ void TestCubeVolume( void )
 	printf("Test volume %.4f\n", volume );
 }
 #endif
-
-

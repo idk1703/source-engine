@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmemdl.h"
@@ -19,13 +19,13 @@
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeMDL, CDmeMDL );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeMDL::OnConstruction()
 {
@@ -66,7 +66,7 @@ MDLHandle_t CDmeMDL::GetMDL( ) const
 	return m_MDL.GetMDL();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Loads the model matrix based on the transform
 //-----------------------------------------------------------------------------
@@ -79,7 +79,7 @@ bool CDmeMDL::IsDrawingInEngine() const
 {
 	return m_bDrawInEngine;
 }
-	
+
 
 //-----------------------------------------------------------------------------
 // Returns the bounding box for the model
@@ -110,7 +110,7 @@ float CDmeMDL::GetRadius() const
 	return GetMDLRadius( m_MDL.GetMDL(), m_nSequence );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns a more accurate bounding sphere
 //-----------------------------------------------------------------------------
@@ -133,7 +133,7 @@ void CDmeMDL::GetBoundingSphere( Vector &vecCenter, float &flRadius )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Updates the MDL rendering helper
 //-----------------------------------------------------------------------------

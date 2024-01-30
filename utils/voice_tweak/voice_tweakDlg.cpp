@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -34,8 +34,8 @@ void TermDPlayVoice( HINSTANCE &hInst, IDirectPlayVoiceTest* &pVoice )
 bool InitDPlayVoice( HINSTANCE &hInst, IDirectPlayVoiceTest* &pVoice )
 {
 	typedef HRESULT (WINAPI *DirectPlayVoiceCreateFn)(
-	  GUID* pcIID, 
-	  void** ppvInterface, 
+	  GUID* pcIID,
+	  void** ppvInterface,
 	  IUnknown* pUnknown
 	);
 
@@ -47,7 +47,7 @@ bool InitDPlayVoice( HINSTANCE &hInst, IDirectPlayVoiceTest* &pVoice )
 	{
 		DirectPlayVoiceCreateFn fn = (DirectPlayVoiceCreateFn)GetProcAddress(hInst, "DirectPlayVoiceCreate");
 		if(fn)
-		{			
+		{
 			HRESULT hr = fn((GUID*)&IID_IDirectPlayVoiceTest, (void**)&pVoice, NULL);
 			if( SUCCEEDED( hr ) )
 				return true;
@@ -84,7 +84,7 @@ static char THIS_FILE[] = __FILE__;
 CVoiceTweakApp*	TweakApp()	{return (CVoiceTweakApp*)AfxGetApp();}
 
 
-extern "C" 
+extern "C"
 {
 	void Con_DPrintf (char *fmt, ...);
 	void Con_Printf (char *fmt, ...);
@@ -190,7 +190,7 @@ BOOL CVoiceTweakDlg::OnInitDialog()
 	//  when the application's main window is not a dialog
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
-	
+
 	CString str;
 	str.LoadString( MapLanguageStringID(IDS_HELPTEXT) );
 	m_InstructionText.SetWindowText(str);
@@ -227,7 +227,7 @@ BOOL CVoiceTweakDlg::OnInitDialog()
 	SetString(IDC_HARDWAREGAIN, MapLanguageStringID(IDS_ENABLEGAIN));
 	SetString(IDSYSTEMSETUP, MapLanguageStringID(IDS_SYSTEMSETUP));
 	SetString(IDFURTHERHELP, MapLanguageStringID(IDS_HELP));
-	
+
 	CString titleStr;
 	titleStr.LoadString( MapLanguageStringID(IDS_WINDOWTITLE) );
 	SetWindowText(titleStr);
@@ -238,7 +238,7 @@ BOOL CVoiceTweakDlg::OnInitDialog()
 		if( pWnd )
 			pWnd->EnableWindow( false );
 	}
-	
+
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -246,7 +246,7 @@ BOOL CVoiceTweakDlg::OnInitDialog()
 //  to draw the icon.  For MFC applications using the document/view model,
 //  this is automatically done for you by the framework.
 
-void CVoiceTweakDlg::OnPaint() 
+void CVoiceTweakDlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -278,7 +278,7 @@ HCURSOR CVoiceTweakDlg::OnQueryDragIcon()
 	return (HCURSOR) m_hIcon;
 }
 
-BOOL CVoiceTweakDlg::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult) 
+BOOL CVoiceTweakDlg::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 {
 	NMHDR *pHdr = (NMHDR*)lParam;
 	if(pHdr->hwndFrom == m_VolumeSlider.m_hWnd)
@@ -297,7 +297,7 @@ LONG CVoiceTweakDlg::OnIdle(UINT a, LONG b)
 	if( TweakApp()->m_pVoiceRecord )
 	{
 		short samples[22 * 1024];
-	
+
 		// If the output has too many buffered samples, skip some data.
 		TweakApp()->m_pWaveOut->Idle();
 		int nBufferedSamples = TweakApp()->m_pWaveOut->GetNumBufferedSamples();
@@ -328,7 +328,7 @@ LONG CVoiceTweakDlg::OnIdle(UINT a, LONG b)
 				// Give the samples to the wave output...
 				if(TweakApp()->m_pWaveOut)
 				{
-					// Ignore the first second or so.. it's usually garbage.				
+					// Ignore the first second or so.. it's usually garbage.
 					DWORD curTime = GetTickCount();
 					static DWORD silentTime = 500;
 					static DWORD fadeInTime = 1000;
@@ -342,8 +342,8 @@ LONG CVoiceTweakDlg::OnIdle(UINT a, LONG b)
 						flFade = flFade*flFade;
 						for( int i=0; i < nSamples; i++ )
 							samples[i] = (short)( samples[i] * flFade );
-					}					
-					
+					}
+
 					TweakApp()->m_pWaveOut->PutSamples(samples, nSamples);
 				}
 			}
@@ -356,14 +356,14 @@ LONG CVoiceTweakDlg::OnIdle(UINT a, LONG b)
 }
 
 
-void CVoiceTweakDlg::OnDestroy() 
+void CVoiceTweakDlg::OnDestroy()
 {
 	Term();
 
 	CDialog::OnDestroy();
 }
 
-void CVoiceTweakDlg::OnHardwareGain() 
+void CVoiceTweakDlg::OnHardwareGain()
 {
 	if(m_HardwareGain.GetCheck())
 		GetAppMixerControls()->SetValue_Float(IMixerControls::Control::MicBoost, true);
@@ -371,20 +371,20 @@ void CVoiceTweakDlg::OnHardwareGain()
 		GetAppMixerControls()->SetValue_Float(IMixerControls::Control::MicBoost, false);
 }
 
-void CVoiceTweakDlg::OnCancel() 
+void CVoiceTweakDlg::OnCancel()
 {
 	// Restore old settings.
 	GetAppMixerControls()->SetValue_Float(IMixerControls::Control::MicVolume, m_OldVolume);
-	
+
 	CDialog::OnCancel();
 }
 
-void CVoiceTweakDlg::OnFurtherhelp() 
+void CVoiceTweakDlg::OnFurtherhelp()
 {
 }
 
 
-void CVoiceTweakDlg::OnSystemSetup() 
+void CVoiceTweakDlg::OnSystemSetup()
 {
 	TweakApp()->StopDevices();
 

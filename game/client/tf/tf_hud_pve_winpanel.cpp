@@ -1,7 +1,7 @@
 
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -53,7 +53,7 @@ CTFPVEWinPanel::CTFPVEWinPanel( IViewPort *pViewPort ) : EditablePanel( NULL, "P
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPVEWinPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -61,15 +61,15 @@ void CTFPVEWinPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPVEWinPanel::FireGameEvent( IGameEvent * event )
 {
 	const char *pEventName = event->GetName();
 
-	if ( Q_strcmp( "teamplay_round_start", pEventName ) == 0 || 
-		 Q_strcmp( "teamplay_game_over", pEventName ) == 0 || 
-		 Q_strcmp( "tf_game_over", pEventName ) == 0 || 
+	if ( Q_strcmp( "teamplay_round_start", pEventName ) == 0 ||
+		 Q_strcmp( "teamplay_game_over", pEventName ) == 0 ||
+		 Q_strcmp( "tf_game_over", pEventName ) == 0 ||
 		 Q_strcmp( "training_complete", pEventName ) == 0 )
 	{
 		m_bShouldBeVisible = false;
@@ -88,7 +88,7 @@ void CTFPVEWinPanel::FireGameEvent( IGameEvent * event )
 			return;
 		}
 
-		LoadControlSettings( "resource/UI/HudPVEWinPanel.res" );	
+		LoadControlSettings( "resource/UI/HudPVEWinPanel.res" );
 		InvalidateLayout( false, true );
 
 		SetDialogVariable( "WinningTeamLabel", "" );
@@ -168,7 +168,7 @@ void CTFPVEWinPanel::OnTick()
 				if ( bRespecVisible && !m_pRespecBackground->IsVisible() )
 				{
 					g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "RespecEarnedPulseLoss" );
-				
+
 					C_TFPlayer *pLocalTFPlayer = C_TFPlayer::GetLocalTFPlayer();
 					if ( pLocalTFPlayer )
 					{

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -66,7 +66,7 @@ void CNPC_Hornet::Spawn( void )
 	AddFlag( FL_NPC );
 	m_iHealth		= 1;// weak!
 	m_bloodColor	= DONT_BLEED;
-	
+
 	if ( g_pGameRules->IsMultiplayer() )
 	{
 		// hornets don't live as long in multiplayer
@@ -102,10 +102,10 @@ void CNPC_Hornet::Spawn( void )
 	}
 	else
 	{
-		// no real owner, or owner isn't a client. 
+		// no real owner, or owner isn't a client.
 		m_flDamage = sk_npc_dmg_hornet.GetFloat();
 	}
-	
+
 	SetNextThink( gpGlobals->curtime + 0.1f );
 	ResetSequenceInfo();
 
@@ -122,7 +122,7 @@ void CNPC_Hornet::Precache()
 
 	PrecacheScriptSound( "Hornet.Die" );
 	PrecacheScriptSound( "Hornet.Buzz" );
-}	
+}
 
 //=========================================================
 // hornets will never get mad at each other, no matter who the owner is.
@@ -173,7 +173,7 @@ void CNPC_Hornet::DieTouch ( CBaseEntity *pOther )
 
 	CPASAttenuationFilter filter( this );
 	EmitSound( filter, entindex(), "Hornet.Die" );
-			
+
 	CTakeDamageInfo info( this, GetOwnerEntity(), m_flDamage, DMG_BULLET );
 	CalculateBulletDamageForce( &info, GetAmmoDef()->Index("Hornet"), GetAbsVelocity(), GetAbsOrigin() );
 	pOther->TakeDamage( info );
@@ -203,7 +203,7 @@ void CNPC_Hornet:: StartTrack ( void )
 }
 
 void TE_BeamFollow( IRecipientFilter& filter, float delay,
-	int iEntIndex, int modelIndex, int haloIndex, float life, float width, float endWidth, 
+	int iEntIndex, int modelIndex, int haloIndex, float life, float width, float endWidth,
 	float fadeLength,float r, float g, float b, float a );
 
 void CNPC_Hornet::IgniteTrail( void )
@@ -306,7 +306,7 @@ void CNPC_Hornet::TrackTarget ( void )
 		GetSenses()->Look( 1024 );
 		SetEnemy( BestEnemy() );
 	}
-	
+
 	if ( GetEnemy() != NULL && FVisible( GetEnemy() ))
 	{
 		m_vecEnemyLKP = GetEnemy()->BodyTarget( GetAbsOrigin() );
@@ -321,7 +321,7 @@ void CNPC_Hornet::TrackTarget ( void )
 
 	if ( GetAbsVelocity().Length() < 0.1 )
 		vecFlightDir = vecDirToEnemy;
-	else 
+	else
 	{
 		vecFlightDir = GetAbsVelocity();
 		VectorNormalize( vecFlightDir );
@@ -331,7 +331,7 @@ void CNPC_Hornet::TrackTarget ( void )
 
 	// measure how far the turn is, the wider the turn, the slow we'll go this time.
 	flDelta = DotProduct ( vecFlightDir, vecDirToEnemy );
-	
+
 	if ( flDelta < 0.5 )
 	{// hafta turn wide again. play sound
 		CPASAttenuationFilter filter( this );
@@ -348,13 +348,13 @@ void CNPC_Hornet::TrackTarget ( void )
 
 	if ( GetOwnerEntity() && (GetOwnerEntity()->GetFlags() & FL_NPC) )
 	{
-		// random pattern only applies to hornets fired by monsters, not players. 
+		// random pattern only applies to hornets fired by monsters, not players.
 
 		vecVel.x += random->RandomFloat ( -0.10, 0.10 );// scramble the flight dir a bit.
 		vecVel.y += random->RandomFloat ( -0.10, 0.10 );
 		vecVel.z += random->RandomFloat ( -0.10, 0.10 );
 	}
-	
+
 	switch ( m_iHornetType )
 	{
 		case HORNET_TYPE_RED:
@@ -372,7 +372,7 @@ void CNPC_Hornet::TrackTarget ( void )
 	QAngle angNewAngles;
 	VectorAngles( GetAbsVelocity(), angNewAngles );
 	SetAbsAngles( angNewAngles );
-	
+
 	SetSolid( SOLID_BBOX );
 
 	// if hornet is close to the enemy, jet in a straight line for a half second.

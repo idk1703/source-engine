@@ -14,7 +14,7 @@ CClientSteamContext  &ClientSteamContext()
 CSteamAPIContext *steamapicontext = &g_ClientSteamContext;
 
 //-----------------------------------------------------------------------------
-CClientSteamContext::CClientSteamContext() 
+CClientSteamContext::CClientSteamContext()
 #if !defined(NO_STEAM)
 :
 	m_CallbackSteamServersDisconnected( this, &CClientSteamContext::OnSteamServersDisconnected ),
@@ -41,7 +41,7 @@ CClientSteamContext::~CClientSteamContext()
 // Purpose: Unload the steam3 engine
 //-----------------------------------------------------------------------------
 void CClientSteamContext::Shutdown()
-{	
+{
 	if ( !m_bActive )
 		return;
 
@@ -66,7 +66,7 @@ void CClientSteamContext::Activate()
 	SteamAPI_InitSafe(); // ignore failure, that will fall out later when they don't get a valid logon cookie
 	SteamAPI_SetTryCatchCallbacks( false ); // We don't use exceptions, so tell steam not to use try/catch in callback handlers
 	Init(); // Steam API context init
-	
+
 	UpdateLoggedOnState();
 	Msg( "CClientSteamContext logged on = %d\n", m_bLoggedOn );
 #endif

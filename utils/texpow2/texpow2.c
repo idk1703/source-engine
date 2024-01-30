@@ -14,7 +14,7 @@ careful and make backups.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <memory.h>   
+#include <memory.h>
 #include <math.h>
 
 #include "texpow2.h"
@@ -34,52 +34,52 @@ long width, height;
 
 void main(int argc, char *argv[])
 {
-  unsigned char *animname=NULL;
-  unsigned char odname[256];
+	unsigned char *animname=NULL;
+	unsigned char odname[256];
 	unsigned char ofname[256];
-  unsigned char *fname[FLIST_LEN];
-  long flags=0, contents=0, value=0;
-  long x;
-  unsigned char ignpal=0;
-  short opn=0, numsrc=0;
+	unsigned char *fname[FLIST_LEN];
+	long flags=0, contents=0, value=0;
+	long x;
+	unsigned char ignpal=0;
+	short opn=0, numsrc=0;
 	t_i_image *in;
 	t_i_image *out;
 
-  printf("TEXPOW2 by Iikka Ker„nen 2001\n\n");
-  if (argc<2)
+	printf("TEXPOW2 by Iikka Kerï¿½nen 2001\n\n");
+	if (argc<2)
 	{
-    printf("Usage: TEXPOW2 <source> [source2] [source3] ... [options]\n");
-    printf("Options:\n");
-    printf("-o output dir -- output directory (by default, replaces original)\n\n");
-    return;
-  }
+		printf("Usage: TEXPOW2 <source> [source2] [source3] ... [options]\n");
+		printf("Options:\n");
+		printf("-o output dir -- output directory (by default, replaces original)\n\n");
+		return;
+	}
 
-  for (x=1;x<argc;x++)
-  {
-    if (!stricmp(argv[x]+strlen(argv[x])-4,".tga"))
-    {
-      fname[numsrc]=argv[x];
-      numsrc++;
-    }
-    if (x<argc-1)
-    {
-      if (!strcmp(argv[x],"-o"))
-      {
-        strcpy(odname, argv[x+1]);
-        opn=1;
-      }
-    }
-  }
+	for (x=1;x<argc;x++)
+	{
+		if (!stricmp(argv[x]+strlen(argv[x])-4,".tga"))
+		{
+			fname[numsrc]=argv[x];
+			numsrc++;
+		}
+		if (x<argc-1)
+		{
+			if (!strcmp(argv[x],"-o"))
+			{
+				strcpy(odname, argv[x+1]);
+				opn=1;
+			}
+		}
+	}
 
-  if (numsrc==1)
-    printf("%d texture to be converted...\n", numsrc);
-  else
-    printf("%d textures to be converted...\n", numsrc);
+	if (numsrc==1)
+		printf("%d texture to be converted...\n", numsrc);
+	else
+		printf("%d textures to be converted...\n", numsrc);
 
-  for (x=0;x<numsrc;x++)
-  {
-    printf("%s ... ",fname[x]);
-    if (!opn)  strcpy(ofname, fname[x]);
+	for (x=0;x<numsrc;x++)
+	{
+		printf("%s ... ",fname[x]);
+		if (!opn)  strcpy(ofname, fname[x]);
 		else sprintf(ofname, "%s/%s", odname, fname[x]);
 
 		in = i_load_tga(fname[x]);
@@ -96,7 +96,7 @@ void main(int argc, char *argv[])
 				printf("Error!\n");
 			}
 		}
-  }
+	}
 }
 
 /*
@@ -255,7 +255,7 @@ t_i_image *i_load_tga(char *fname)
 
 	if (die)
 	{
-		fclose(img);	
+		fclose(img);
 		return NULL;
 	}
 
@@ -271,9 +271,9 @@ t_i_image *i_load_tga(char *fname)
 	if (!line)
 	{
 		del_image(image);
-		fclose(img);	
+		fclose(img);
 		return NULL;
-	}	
+	}
 
 	image->data32=(uint32 *)image->data;
 
@@ -334,16 +334,16 @@ void i_save_tga(t_i_image *image, char *fname)
 	fputc(0, img);    // id_len
 	fputc(0, img);    // pal_type
 	fputc(2, img);    // img_type
-  fputc(0, img); fputc(0, img);   // f_color
-  fputc(0, img); fputc(0, img);   // pal_colors
-  fputc(0, img); 									// pal_size
-  fputc(0, img); fputc(0, img);   // left
-  fputc(0, img); fputc(0, img);   // top
-  fputc(img_w&255, img); fputc(img_w>>8, img);   // width
-  fputc(img_h&255, img); fputc(img_h>>8, img);   // height
+	fputc(0, img); fputc(0, img);   // f_color
+	fputc(0, img); fputc(0, img);   // pal_colors
+	fputc(0, img); 									// pal_size
+	fputc(0, img); fputc(0, img);   // left
+	fputc(0, img); fputc(0, img);   // top
+	fputc(img_w&255, img); fputc(img_w>>8, img);   // width
+	fputc(img_h&255, img); fputc(img_h>>8, img);   // height
 	fputc(24, img); 	// bpp
 	fputc(0, img);    // des_bits
-	
+
 	buffer=image->data;
 
 	// save the image data to file
@@ -428,7 +428,7 @@ int32 i_getpixel_ch(t_i_image *img, int32 x, int32 y, int32 ch)
 
 uint32 i_pixel_alphamix(uint32 c1, uint32 c2, uint32 p)
 {
-	uint32 co; 
+	uint32 co;
 
 	co=i_pixel_add(i_pixel_multiply_n(c1,256-p), i_pixel_multiply_n(c2,p));
 
@@ -471,7 +471,7 @@ MISC
 
 long countval(char *str)
 {
-  long val=0,n,l;
+	long val=0,n,l;
 
 	l=strlen(str);
 	for (n=0;n<l;n++)

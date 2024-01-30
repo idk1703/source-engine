@@ -1,17 +1,17 @@
 /*
-     File:       CGDirectPalette.h
- 
-     Contains:   CoreGraphics direct palette
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       CGDirectPalette.h
+
+		Contains:   CoreGraphics direct palette
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef CGDIRECTPALETTE_H_
 #define CGDIRECTPALETTE_H_
@@ -36,11 +36,11 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=mac68k
+		#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+		#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+		#pragma pack(2)
 #endif
 
 typedef float                           CGPaletteBlendFraction;
@@ -51,15 +51,15 @@ typedef float                           CGPaletteBlendFraction;
  * is full on for each channel.
  */
 struct CGDeviceColor {
-  float               red;
-  float               green;
-  float               blue;
+	float               red;
+	float               green;
+	float               blue;
 };
 typedef struct CGDeviceColor            CGDeviceColor;
 struct CGDeviceByteColor {
-  CGByteValue         red;
-  CGByteValue         green;
-  CGByteValue         blue;
+	CGByteValue         red;
+	CGByteValue         green;
+	CGByteValue         blue;
 };
 typedef struct CGDeviceByteColor        CGDeviceByteColor;
 /*
@@ -68,7 +68,7 @@ typedef struct CGDeviceByteColor        CGDeviceByteColor;
  */
 /*
  *  CGPaletteCreateDefaultColorPalette()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -85,7 +85,7 @@ CGPaletteCreateDefaultColorPalette(void);
  */
 /*
  *  CGPaletteCreateWithDisplay()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -101,7 +101,7 @@ CGPaletteCreateWithDisplay(CGDirectDisplayID display);
  */
 /*
  *  CGPaletteCreateWithCapacity()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -117,7 +117,7 @@ CGPaletteCreateWithCapacity(CGTableCount capacity);
  */
 /*
  *  CGPaletteCreateWithSamples()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -125,8 +125,8 @@ CGPaletteCreateWithCapacity(CGTableCount capacity);
  */
 EXTERN_API_C( CGDirectPaletteRef )
 CGPaletteCreateWithSamples(
-  CGDeviceColor *  sampleTable,
-  CGTableCount     sampleCount);
+	CGDeviceColor *  sampleTable,
+	CGTableCount     sampleCount);
 
 
 /*
@@ -136,7 +136,7 @@ CGPaletteCreateWithSamples(
  */
 /*
  *  CGPaletteCreateWithByteSamples()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -144,8 +144,8 @@ CGPaletteCreateWithSamples(
  */
 EXTERN_API_C( CGDirectPaletteRef )
 CGPaletteCreateWithByteSamples(
-  CGDeviceByteColor *  sampleTable,
-  CGTableCount         sampleCount);
+	CGDeviceByteColor *  sampleTable,
+	CGTableCount         sampleCount);
 
 
 /*
@@ -153,7 +153,7 @@ CGPaletteCreateWithByteSamples(
  */
 /*
  *  CGPaletteRelease()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -168,7 +168,7 @@ CGPaletteRelease(CGDirectPaletteRef palette);
  */
 /*
  *  CGPaletteGetColorAtIndex()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -176,8 +176,8 @@ CGPaletteRelease(CGDirectPaletteRef palette);
  */
 EXTERN_API_C( CGDeviceColor )
 CGPaletteGetColorAtIndex(
-  CGDirectPaletteRef   palette,
-  CGTableCount         index);
+	CGDirectPaletteRef   palette,
+	CGTableCount         index);
 
 
 /*
@@ -187,7 +187,7 @@ CGPaletteGetColorAtIndex(
  */
 /*
  *  CGPaletteGetIndexForColor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -195,8 +195,8 @@ CGPaletteGetColorAtIndex(
  */
 EXTERN_API_C( CGTableCount )
 CGPaletteGetIndexForColor(
-  CGDirectPaletteRef   palette,
-  CGDeviceColor        color);
+	CGDirectPaletteRef   palette,
+	CGDeviceColor        color);
 
 
 /*
@@ -204,7 +204,7 @@ CGPaletteGetIndexForColor(
  */
 /*
  *  CGPaletteGetNumberOfSamples()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -220,7 +220,7 @@ CGPaletteGetNumberOfSamples(CGDirectPaletteRef palette);
  */
 /*
  *  CGPaletteSetColorAtIndex()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -228,9 +228,9 @@ CGPaletteGetNumberOfSamples(CGDirectPaletteRef palette);
  */
 EXTERN_API_C( void )
 CGPaletteSetColorAtIndex(
-  CGDirectPaletteRef   palette,
-  CGDeviceColor        color,
-  CGTableCount         index);
+	CGDirectPaletteRef   palette,
+	CGDeviceColor        color,
+	CGTableCount         index);
 
 
 /*
@@ -238,7 +238,7 @@ CGPaletteSetColorAtIndex(
  */
 /*
  *  CGPaletteCreateCopy()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -253,7 +253,7 @@ CGPaletteCreateCopy(CGDirectPaletteRef palette);
  */
 /*
  *  CGPaletteIsEqualToPalette()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -261,8 +261,8 @@ CGPaletteCreateCopy(CGDirectPaletteRef palette);
  */
 EXTERN_API_C( Boolean )
 CGPaletteIsEqualToPalette(
-  CGDirectPaletteRef   palette1,
-  CGDirectPaletteRef   palette2);
+	CGDirectPaletteRef   palette1,
+	CGDirectPaletteRef   palette2);
 
 
 /*
@@ -271,7 +271,7 @@ CGPaletteIsEqualToPalette(
  */
 /*
  *  CGPaletteCreateFromPaletteBlendedWithColor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -279,18 +279,18 @@ CGPaletteIsEqualToPalette(
  */
 EXTERN_API_C( CGDirectPaletteRef )
 CGPaletteCreateFromPaletteBlendedWithColor(
-  CGDirectPaletteRef       palette,
-  CGPaletteBlendFraction   fraction,
-  CGDeviceColor            color);
+	CGDirectPaletteRef       palette,
+	CGPaletteBlendFraction   fraction,
+	CGDeviceColor            color);
 
 
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+		#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+		#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+		#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -304,4 +304,3 @@ CGPaletteCreateFromPaletteBlendedWithColor(
 #endif
 
 #endif /* CGDIRECTPALETTE_H_ */
-

@@ -20,9 +20,9 @@ static bool spewed = false;
 
 //-----------------------------------------------------------------------------
 // Purpose: Prints to stdout and to the developer console and optionally to a log file
-// Input  : depth - 
-//			*fmt - 
-//			... - 
+// Input  : depth -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void vprint( int depth, const char *fmt, ... )
 {
@@ -70,12 +70,12 @@ void vprint( int depth, const char *fmt, ... )
 
 //-----------------------------------------------------------------------------
 // Purpose: Warning/Msg call back through this API
-// Input  : type - 
-//			*pMsg - 
+// Input  : type -
+//			*pMsg -
 // Output : SpewRetval_t
 //-----------------------------------------------------------------------------
 SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
-{	
+{
 	spewed = true;
 
 	switch ( type )
@@ -88,7 +88,7 @@ SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
 		vprint( 0, "%s", pMsg );
 		break;
 	case SPEW_WARNING:
-	
+
 		if ( verbose )
 		{
 			vprint( 0, "%s", pMsg );
@@ -98,7 +98,7 @@ SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
 		vprint( 0, "%s\n", pMsg );
 		break;
 	}
-	
+
 	return SPEW_CONTINUE;
 }
 
@@ -139,8 +139,8 @@ void PrintHeader()
 
 //-----------------------------------------------------------------------------
 // Purpose: Parses all "smoothing" info from .dem file
-// Input  : &demoFile - 
-//			smooth - 
+// Input  : &demoFile -
+//			smooth -
 //-----------------------------------------------------------------------------
 void ParseSmoothingInfo( CToolDemoFile &demoFile, CUtlVector< demosmoothing_t >& smooth )
 {
@@ -182,7 +182,7 @@ void ParseSmoothingInfo( CToolDemoFile &demoFile, CUtlVector< demosmoothing_t >&
 			case dem_usercmd:
 				{
 					demoFile.ReadUserCmd( NULL, dummy );
-					
+
 				}
 				break;
 			default:
@@ -203,13 +203,13 @@ void ParseSmoothingInfo( CToolDemoFile &demoFile, CUtlVector< demosmoothing_t >&
 		int curpos = demoFile.GetCurPos();
 
 		demoFile.ReadCmdInfo( info );
-		demoFile.ReadSequenceInfo( dummy, dummy ); 
+		demoFile.ReadSequenceInfo( dummy, dummy );
 		demoFile.ReadRawData( NULL, 0 );
 
 		demosmoothing_t smoothing_entry;
 
 		smoothing_entry.file_offset = curpos;
-		smoothing_entry.frametick = tick; 
+		smoothing_entry.frametick = tick;
 		smoothing_entry.info = info;
 		smoothing_entry.samplepoint = false;
 		smoothing_entry.vecmoved = 	info.GetViewOrigin();
@@ -225,7 +225,7 @@ void ParseSmoothingInfo( CToolDemoFile &demoFile, CUtlVector< demosmoothing_t >&
 
 //-----------------------------------------------------------------------------
 // Purpose: Resets all smoothing data back to original values
-// Input  : smoothing - 
+// Input  : smoothing -
 //-----------------------------------------------------------------------------
 void ClearSmoothingInfo( CSmoothingContext& smoothing )
 {
@@ -246,9 +246,9 @@ void ClearSmoothingInfo( CSmoothingContext& smoothing )
 
 //-----------------------------------------------------------------------------
 // Purpose: Helper for copying sub-chunk of file
-// Input  : dst - 
-//			src - 
-//			nSize - 
+// Input  : dst -
+//			src -
+//			nSize -
 //-----------------------------------------------------------------------------
 void COM_CopyFileChunk( FileHandle_t dst, FileHandle_t src, int nSize )
 {
@@ -272,8 +272,8 @@ void COM_CopyFileChunk( FileHandle_t dst, FileHandle_t src, int nSize )
 //-----------------------------------------------------------------------------
 // Purpose: Writes out a new .dem file based on the existing dem file with new camera positions saved into the dem file
 //  Note:  The new file is named filename_smooth.dem
-// Input  : *filename - 
-//			smoothing - 
+// Input  : *filename -
+//			smoothing -
 //-----------------------------------------------------------------------------
 void SaveSmoothingInfo( char const *filename, CSmoothingContext& smoothing )
 {
@@ -317,7 +317,7 @@ void SaveSmoothingInfo( char const *filename, CSmoothingContext& smoothing )
 
 		fs->Seek( infile, p->file_offset, FILESYSTEM_SEEK_HEAD );
 
-		// wacky hacky overwriting 
+		// wacky hacky overwriting
 		fs->Write( &p->info, sizeof( democmdinfo_t ), outfile );
 
 		lastwritepos = fs->Tell( outfile );
@@ -335,7 +335,7 @@ void SaveSmoothingInfo( char const *filename, CSmoothingContext& smoothing )
 
 //-----------------------------------------------------------------------------
 // Purpose: Helper for spewing verbose sample information
-// Input  : flags - 
+// Input  : flags -
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *DescribeFlags( int flags )
@@ -371,8 +371,8 @@ char const *DescribeFlags( int flags )
 
 //-----------------------------------------------------------------------------
 // Purpose: Loads up all camera samples from a .dem file into the passed in context.
-// Input  : *filename - 
-//			smoothing - 
+// Input  : *filename -
+//			smoothing -
 //-----------------------------------------------------------------------------
 void LoadSmoothingInfo( const char *filename, CSmoothingContext& smoothing )
 {
@@ -448,14 +448,14 @@ void LoadSmoothingInfo( const char *filename, CSmoothingContext& smoothing )
 
 		}
 	}
-	
+
 	demoFile.Close();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : argc - 
-//			argv[] - 
+// Purpose:
+// Input  : argc -
+//			argv[] -
 // Output : int
 //-----------------------------------------------------------------------------
 int main( int argc, char* argv[] )
@@ -513,7 +513,7 @@ int main( int argc, char* argv[] )
 
 	LoadSmoothingInfo( argv[ i - 1 ], context );
 
-	// Note to tool makers:  
+	// Note to tool makers:
 	// Do your work here!!!
 	//Performsmoothing( context );
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -94,7 +94,7 @@ int SortByWUCount( const void *elem1, const void *elem2 )
 		return 1;
 	else if ( a == b )
 		return 0;
-	else	   
+	else
 		return -1;
 }
 
@@ -107,11 +107,11 @@ void PrepareDistributeWorkHeader( MessageBuffer *pBuf, unsigned char cSubpacketI
 }
 
 
-void ShowMPIStats( 
+void ShowMPIStats(
 	double flTimeSpent,
-	unsigned long nBytesSent, 
-	unsigned long nBytesReceived, 
-	unsigned long nMessagesSent, 
+	unsigned long nBytesSent,
+	unsigned long nBytesReceived,
+	unsigned long nMessagesSent,
 	unsigned long nMessagesReceived )
 {
 	double flKSent = (nBytesSent + 511) / 1024;
@@ -133,7 +133,7 @@ void ShowMPIStats(
 			Msg( "\nWU count by proc:\n" );
 
 			int nProcs = VMPI_GetCurrentNumberOfConnections();
-			
+
 			CUtlVector<int> sortedProcs;
 			sortedProcs.SetSize( nProcs );
 			for ( int i=0; i < nProcs; i++ )
@@ -145,7 +145,7 @@ void ShowMPIStats(
 			{
 				const char *pMachineName = VMPI_GetMachineName( sortedProcs[i] );
 				Msg( "%s", pMachineName );
-				
+
 				char formatStr[512];
 				Q_snprintf( formatStr, sizeof( formatStr ), "%%%ds %I64u\n", 30 - strlen( pMachineName ), g_wuCountByProcess[ sortedProcs[i] ] );
 				Msg( formatStr, ":" );
@@ -166,7 +166,7 @@ void VMPI_DistributeWork_DisconnectHandler( int procID, const char *pReason )
 		g_bSuppressPrintfOutput = true;
 		Msg( "VMPI_DistributeWork_DisconnectHandler( %d )\n", procID );
 		g_bSuppressPrintfOutput = bOldSuppress;
-	
+
 		// Redistribute the WUs from this guy's partition to another worker.
 		g_pCurDistributorMaster->DisconnectHandler( procID );
 	}
@@ -183,7 +183,7 @@ uint64 VMPI_GetNumWorkUnitsCompleted( int iProc )
 void HandleWorkUnitCompleted( CDSInfo *pInfo, int iSource, WUIndexType iWorkUnit, MessageBuffer *pBuf )
 {
 	VMPITracker_WorkUnitCompleted( ( int ) iWorkUnit, iSource );
-	
+
 	if ( g_pCurDistributorMaster->HandleWorkUnitResults( iWorkUnit ) )
 	{
 		if ( g_iVMPIVerboseLevel >= 1 )
@@ -212,15 +212,15 @@ void HandleWorkUnitCompleted( CDSInfo *pInfo, int iSource, WUIndexType iWorkUnit
 
 
 bool DistributeWorkDispatch( MessageBuffer *pBuf, int iSource, int iPacketID )
-{											  
+{
 	unsigned short iCurDistributeWorkCall = *((unsigned short*)&pBuf->data[2]);
 	if ( iCurDistributeWorkCall >= MAX_DW_CALLS )
 		Error( "Got an invalid DistributeWork packet (id: %d, sub: %d) (iCurDW: %d).", pBuf->data[0], pBuf->data[1], iCurDistributeWorkCall );
 
 	CDSInfo *pInfo = &g_DSInfo;
-		
+
 	pBuf->setOffset( 4 );
-	
+
 	switch ( pBuf->data[1] )
 	{
 		case DW_SUBPACKETID_MASTER_READY:
@@ -249,7 +249,7 @@ bool DistributeWorkDispatch( MessageBuffer *pBuf, int iSource, int iPacketID )
 			g_iMasterFinishedDistributeWorkCall = iCurDistributeWorkCall;
 			return true;
 		}
-		
+
 		// Worker sends this to tell the master it has started on a work unit.
 		case DW_SUBPACKETID_WU_STARTED:
 		{
@@ -261,7 +261,7 @@ bool DistributeWorkDispatch( MessageBuffer *pBuf, int iSource, int iPacketID )
 			VMPITracker_WorkUnitStarted( ( int ) iWU, iSource );
 			return true;
 		}
-		
+
 
 		case DW_SUBPACKETID_WU_RESULTS:
 		{
@@ -358,7 +358,7 @@ void DistributeWork_Master( CDSInfo *pInfo, ProcessWorkUnitFn processFn, Receive
 	g_bMasterDistributingWork = false;
 
 	VMPITracker_End();
-		
+
 	// Tell all workers to move on.
 	MessageBuffer mb;
 	PrepareDistributeWorkHeader( &mb, DW_SUBPACKETID_MASTER_FINISHED );
@@ -366,7 +366,7 @@ void DistributeWork_Master( CDSInfo *pInfo, ProcessWorkUnitFn processFn, Receive
 
 	// Clear the master's local completed work unit list.
 	CMasterWorkUnitCompletedList *pList = g_MasterWorkUnitCompletedList.Lock();
-	pList->m_CompletedWUs.RemoveAll();	
+	pList->m_CompletedWUs.RemoveAll();
 	g_MasterWorkUnitCompletedList.Unlock();
 }
 
@@ -381,13 +381,13 @@ void NotifyLocalMasterCompletedWorkUnit( WUIndexType iWorkUnit )
 void CheckLocalMasterCompletedWorkUnits()
 {
 	CMasterWorkUnitCompletedList *pList = g_MasterWorkUnitCompletedList.Lock();
-	
+
 	for ( int i=0; i < pList->m_CompletedWUs.Count(); i++ )
 	{
 		HandleWorkUnitCompleted( &g_DSInfo, 0, pList->m_CompletedWUs[i], NULL );
 	}
-	pList->m_CompletedWUs.RemoveAll();	
-		
+	pList->m_CompletedWUs.RemoveAll();
+
 	g_MasterWorkUnitCompletedList.Unlock();
 }
 
@@ -406,7 +406,7 @@ void VMPI_WorkerThread( int iThread, void *pUserData )
 	CDSInfo *pInfo = (CDSInfo*)pUserData;
 	CWorkerInfo *pWorkerInfo = &pInfo->m_WorkerInfo;
 
-	
+
 	// Get our index for running work units
 	uint64 idxRunningWorkUnit = (uint64) iThread;
 	{
@@ -433,7 +433,7 @@ void VMPI_WorkerThread( int iThread, void *pUserData )
 			VMPI_Sleep( 10 );
 			continue;
 		}
-			
+
 		CCriticalSectionLock csLock( &pWorkerInfo->m_WorkUnitsRunningCS );
 		csLock.Lock();
 
@@ -445,7 +445,7 @@ void VMPI_WorkerThread( int iThread, void *pUserData )
 
 			// We are running it
 			pWorkerInfo->m_WorkUnitsRunning.Get( idxRunningWorkUnit ) = iWU;
-	
+
 		csLock.Unlock();
 
 
@@ -461,11 +461,11 @@ void VMPI_WorkerThread( int iThread, void *pUserData )
 
 		// Tell the master we're starting on this WU.
 		TellMasterThatWorkerStartedAWorkUnit( mbStartedWorkUnit, pInfo, iWU );
-		
+
 
 		pWorkerInfo->m_pProcessFn( iThread, iWU, &mb );
 		g_pCurDistributorWorker->NoteLocalWorkUnitCompleted( iWU );
-		
+
 		VMPI_SendData( mb.data, mb.getLen(), VMPI_MASTER_ID, /*k_eVMPISendFlags_GroupPackets*/0 );
 
 		// Flush grouped packets every once in a while.
@@ -499,7 +499,7 @@ void DistributeWork_Worker( CDSInfo *pInfo, ProcessWorkUnitFn processFn )
 		while ( g_iMasterFinishedDistributeWorkCall < g_iCurDSInfo )
 		{
 			VMPI_DispatchNextMessage( 300 );
-			
+
 			Msg( "\rThreads status: " );
 			for ( int i=0; i < ARRAYSIZE( g_ThreadWUs ); i++ )
 			{
@@ -518,7 +518,7 @@ void DistributeWork_Worker( CDSInfo *pInfo, ProcessWorkUnitFn processFn )
 			VMPI_DispatchNextMessage();
 		}
 	}
-	
+
 
 	// Close the threads.
 	g_pCurWorkerThreadsInfo = NULL;
@@ -545,7 +545,7 @@ void DistributeWork_Cancel()
 
 
 // Returns time it took to finish the work.
-double DistributeWork( 
+double DistributeWork(
 	uint64 nWorkUnits,				// how many work units to dole out
 	char cPacketID,
 	ProcessWorkUnitFn processFn,	// workers implement this to process a work unit and send results back
@@ -568,7 +568,7 @@ double DistributeWork(
 	}
 
 	CDSInfo *pInfo = &g_DSInfo;
-	
+
 	pInfo->m_cPacketID = cPacketID;
 	pInfo->m_nWorkUnits = nWorkUnits;
 
@@ -583,7 +583,7 @@ double DistributeWork(
 	double flMPIStartTime = Plat_FloatTime();
 	g_wuCountByProcess.SetCount( 512 );
 	memset( g_wuCountByProcess.Base(), 0, sizeof( int ) * g_wuCountByProcess.Count() );
-	
+
 	unsigned long nBytesSentStart = g_nBytesSent;
 	unsigned long nBytesReceivedStart = g_nBytesReceived;
 	unsigned long nMessagesSentStart = g_nMessagesSent;
@@ -594,25 +594,25 @@ double DistributeWork(
 	{
 		Assert( !g_pCurDistributorMaster );
 		g_pCurDistributorMaster = ( eWorkUnitDistributor == k_eWorkUnitDistributor_SDK ? CreateWUDistributor_SDKMaster() : CreateWUDistributor_DefaultMaster() );
-		
+
 		DistributeWork_Master( pInfo, processFn, receiveFn );
-		
+
 		g_pCurDistributorMaster->Release();
 		g_pCurDistributorMaster = NULL;
 	}
-	else 
+	else
 	{
 		Assert( !g_pCurDistributorWorker );
 		g_pCurDistributorWorker = ( eWorkUnitDistributor == k_eWorkUnitDistributor_SDK ? CreateWUDistributor_SDKWorker() : CreateWUDistributor_DefaultWorker() );
 
 		DistributeWork_Worker( pInfo, processFn );
-		
+
 		g_pCurDistributorWorker->Release();
 		g_pCurDistributorWorker = NULL;
 	}
 
 	double flTimeSpent = Plat_FloatTime() - flMPIStartTime;
-	ShowMPIStats( 
+	ShowMPIStats(
 		flTimeSpent,
 		g_nBytesSent - nBytesSentStart,
 		g_nBytesReceived - nBytesReceivedStart,
@@ -623,6 +623,6 @@ double DistributeWork(
 	// Mark that the threads aren't working on anything at the moment.
 	for ( int i=0; i < ARRAYSIZE( g_ThreadWUs ); i++ )
 		g_ThreadWUs[i] = ~0ull;
-	
+
 	return flTimeSpent;
 }

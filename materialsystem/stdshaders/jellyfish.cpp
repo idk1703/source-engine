@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -13,9 +13,9 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-BEGIN_VS_SHADER( JellyFish, 
+BEGIN_VS_SHADER( JellyFish,
 			  "Help for JellyFish" )
-			  
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( GRADIENTTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "1D texture for silhouette glowy bits" )
 		SHADER_PARAM( ENVMAP, SHADER_PARAM_TYPE_TEXTURE, "shadertest/cubemap", "envmap" )
@@ -55,13 +55,13 @@ BEGIN_VS_SHADER( JellyFish,
 		}
 
 		SHADOW_STATE
-		{				
+		{
 			pShaderShadow->EnableDepthWrites( false );
 			pShaderShadow->EnableBlending( true );
 			pShaderShadow->BlendFunc( SHADER_BLEND_ONE, SHADER_BLEND_ONE );
 			pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
 			pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );
-			pShaderShadow->VertexShaderVertexFormat( 
+			pShaderShadow->VertexShaderVertexFormat(
 				VERTEX_POSITION | VERTEX_NORMAL, 1, 0, 0 );
 			jellyfish_Static_Index vshIndex;
 			pShaderShadow->SetVertexShader( "JellyFish", vshIndex.GetIndex() );

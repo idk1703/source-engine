@@ -14,13 +14,13 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeGlobalFlexControllerOperator, CDmeGlobalFlexControllerOperator );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeGlobalFlexControllerOperator::OnConstruction()
 {
@@ -53,7 +53,7 @@ void CDmeGlobalFlexControllerOperator::OnAttributeChanged( CDmAttribute *pAttrib
 	if ( pAttribute == m_gameModel.GetAttribute() && m_gameModel.GetElement() )
 	{
 		m_nFlexControllerIndex = FindGlobalFlexControllerIndex();
-		
+
 		SetupToAttribute();
 	}
 }
@@ -183,13 +183,13 @@ int CDmeGlobalFlexControllerOperator::FindGlobalFlexControllerIndex() const
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeGameModel, CDmeGameModel );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeGameModel::OnConstruction()
 {
@@ -591,13 +591,13 @@ const char *CDmeGameModel::GetModelName() const
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeGameSprite, CDmeGameSprite );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeGameSprite::OnConstruction()
 {
@@ -671,13 +671,13 @@ void CDmeGameSprite::SetState( bool bVisible, float nFrame, int nRenderMode, int
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeGamePortal, CDmeGamePortal );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeGamePortal::OnConstruction()
 {

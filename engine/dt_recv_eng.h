@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -44,10 +44,10 @@ bool		RecvTable_CreateDecoders( const CStandardSendProxies *pSendProxies, bool b
 // objectID gets passed into proxies and can be used to track data on particular objects.
 // NOTE: this function can ONLY decode a buffer outputted from RecvTable_MergeDeltas
 //       or RecvTable_CopyEncoding because if the way it follows the exclude prop bits.
-bool		RecvTable_Decode( 
-	RecvTable *pTable, 
-	void *pStruct, 
-	bf_read *pIn, 
+bool		RecvTable_Decode(
+	RecvTable *pTable,
+	void *pStruct,
+	bf_read *pIn,
 	int objectID,
 	bool updateDTI = true
 	);
@@ -68,7 +68,7 @@ int RecvTable_MergeDeltas(
 	bf_write *pOut,
 
 	int objectID = - 1,
-	
+
 	int	*pChangedProps = NULL,
 
 	bool updateDTI = false // enclude merge from newState in the DTI reports
@@ -77,9 +77,9 @@ int RecvTable_MergeDeltas(
 
 // Just copies the bits from the bf_read into the bf_write (this function is used
 // when you don't know the length of the encoded data).
-void RecvTable_CopyEncoding( 
-	RecvTable *pRecvTable, 
-	bf_read *pIn, 
+void RecvTable_CopyEncoding(
+	RecvTable *pRecvTable,
+	bf_read *pIn,
 	bf_write *pOut,
 	int objectID
 	);

@@ -9,9 +9,9 @@
  *
  * \author mdurand
  *
- * \todo 
+ * \todo
  *
- * \bug 
+ * \bug
  *
  */
 #include "ModConfigsHelper.h"
@@ -25,7 +25,7 @@ ModConfigsHelper::ModConfigsHelper()
 
 
 /**
-* Default destructor. 
+* Default destructor.
 */
 ModConfigsHelper::~ModConfigsHelper()
 {

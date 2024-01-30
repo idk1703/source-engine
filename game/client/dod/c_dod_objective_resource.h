@@ -55,7 +55,7 @@ public:
 			return TEAM_UNASSIGNED;
 
 		return m_iOwner[index];
-	}	
+	}
 
 	int GetCappingTeam( int index )
 	{
@@ -90,7 +90,7 @@ public:
 	{
 		Assert( index < m_iNumControlPoints );
 
-        return m_iTimerCapIcons[index];
+	return m_iTimerCapIcons[index];
 	}
 
 	int GetCPBombedIcon( int index )
@@ -145,7 +145,7 @@ public:
 
 		return num;
 	}
-	
+
 	// get the required cappers for the passed team
 	int GetRequiredCappers( int index, int team )
 	{

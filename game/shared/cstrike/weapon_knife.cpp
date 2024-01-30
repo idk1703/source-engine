@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -27,10 +27,10 @@ Vector head_hull_maxs( 16, 16, 18 );
 #ifndef CLIENT_DLL
 	//-----------------------------------------------------------------------------
 	// Purpose: Only send to local player if this weapon is the active weapon
-	// Input  : *pStruct - 
-	//			*pVarData - 
-	//			*pRecipients - 
-	//			objectID - 
+	// Input  : *pStruct -
+	//			*pVarData -
+	//			*pRecipients -
+	//			objectID -
 	// Output : void*
 	//-----------------------------------------------------------------------------
 	void* SendProxy_SendActiveLocalKnifeDataTable( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID )
@@ -47,7 +47,7 @@ Vector head_hull_maxs( 16, 16, 18 );
 				return (void*)pVarData;
 			}
 		}
-		
+
 		return NULL;
 	}
 	REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_SendActiveLocalKnifeDataTable );
@@ -162,7 +162,7 @@ void CKnife::WeaponAnimation ( int iAnimation )
 	#endif
 
 	PLAYBACK_EVENT_FULL( flag, pPlayer->edict(), m_usKnife,
-		0.0, (float *)&g_vecZero, (float *)&g_vecZero, 
+		0.0, (float *)&g_vecZero, (float *)&g_vecZero,
 		0.0,
 		0.0,
 		iAnimation, 2, 3, 4 );
@@ -289,7 +289,7 @@ void CKnife::Smack( void )
 #endif
 
 	CPASFilter filter( data.m_vOrigin );
-	
+
 #ifndef CLIENT_DLL
 	filter.RemoveRecipient( GetPlayerOwner() );
 #endif
@@ -309,7 +309,7 @@ void CKnife::WeaponIdle()
 		return;
 
 	if ( pPlayer->IsShieldDrawn() )
-		 return;
+		return;
 
 	SetWeaponIdleTime( gpGlobals->curtime + 20 );
 
@@ -337,7 +337,7 @@ bool CKnife::SwingOrStab( bool bStab )
 		return false;
 
 	float fRange = bStab ? 32 : 48; // knife range
-	
+
 	Vector vForward; AngleVectors( pPlayer->EyeAngles(), &vForward );
 	Vector vecSrc	= pPlayer->Weapon_ShootPosition();
 	Vector vecEnd	= vecSrc + vForward * fRange;
@@ -400,7 +400,7 @@ bool CKnife::SwingOrStab( bool bStab )
 	m_flNextPrimaryAttack = gpGlobals->curtime + fPrimDelay;
 	m_flNextSecondaryAttack = gpGlobals->curtime + fSecDelay;
 	SetWeaponIdleTime( gpGlobals->curtime + 2 );
-	
+
 	if ( !bDidHit )
 	{
 		// play wiff or swish sound
@@ -417,12 +417,12 @@ bool CKnife::SwingOrStab( bool bStab )
 		// play thwack, smack, or dong sound
 
 		CBaseEntity *pEntity = tr.m_pEnt;
-				
+
 		// player "shoot" animation
 		pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
 		ClearMultiDamage();
-		
+
 		flDamage = 42.0f;
 
 		if ( bStab )
@@ -434,7 +434,7 @@ bool CKnife::SwingOrStab( bool bStab )
 				Vector vTragetForward;
 
 				AngleVectors( pEntity->GetAbsAngles(), &vTragetForward );
-				
+
 				Vector2D vecLOS = (pEntity->GetAbsOrigin() - pPlayer->GetAbsOrigin()).AsVector2D();
 				Vector2DNormalize( vecLOS );
 
@@ -442,7 +442,7 @@ bool CKnife::SwingOrStab( bool bStab )
 
 				//Triple the damage if we are stabbing them in the back.
 				if ( flDot > 0.80f )
-					 flDamage *= 3;
+					flDamage *= 3;
 			}
 		}
 		else
@@ -454,27 +454,27 @@ bool CKnife::SwingOrStab( bool bStab )
 			}
 			else
 			{
-				// subsequent swings do less	
+				// subsequent swings do less
 				flDamage = 15;
 			}
 		}
 
-        //=============================================================================
-        // HPE_BEGIN:
-        // [tj] Hacky cheat to lower knife damage for testing
-        //=============================================================================
-         
-        flDamage *= (KnifeDamageScale.GetInt() / 100.0f);
-         
-        //=============================================================================
-        // HPE_END
-        //=============================================================================
-        
+	//=============================================================================
+	// HPE_BEGIN:
+	// [tj] Hacky cheat to lower knife damage for testing
+	//=============================================================================
+
+	flDamage *= (KnifeDamageScale.GetInt() / 100.0f);
+
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
+
 
 		CTakeDamageInfo info( pPlayer, pPlayer, flDamage, DMG_BULLET | DMG_NEVERGIB );
 
 		CalculateMeleeDamageForce( &info, vForward, tr.endpos, 1.0f/flDamage );
-		pEntity->DispatchTraceAttack( info, vForward, &tr ); 
+		pEntity->DispatchTraceAttack( info, vForward, &tr );
 		ApplyMultiDamage();
 	}
 
@@ -486,9 +486,9 @@ bool CKnife::SwingOrStab( bool bStab )
 	{
 		// delay the decal a bit
 		m_trHit = tr;
-		
+
 		// Store the ent in an EHANDLE, just in case it goes away by the time we get into our think function.
-		m_pTraceHitEnt = tr.m_pEnt; 
+		m_pTraceHitEnt = tr.m_pEnt;
 
 		m_bStab = bStab;	//store this so we know what hit sound to play
 
@@ -513,5 +513,3 @@ bool CKnife::CanDrop()
 {
 	return false;
 }
-
-

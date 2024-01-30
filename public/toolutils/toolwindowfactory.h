@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -23,10 +23,10 @@ class CToolWindowFactory : public vgui::IToolWindowFactory
 {
 public:
 	virtual	vgui::ToolWindow *InstanceToolWindow
-	( 
+	(
 		vgui::Panel *parent,
 		bool contextLabel,		// Tool window shows context button for pages with context menus?
-		vgui::Panel *firstPage, 
+		vgui::Panel *firstPage,
 		char const *title,
 		bool contextMenu		// Page has context menu
 	);

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -207,7 +207,7 @@ struct Extent
 				pos.y >= lo.y && pos.y <= hi.y &&
 				pos.z >= lo.z && pos.z <= hi.z);
 	}
-	
+
 	// return true if this extent overlaps the given one
 	bool IsOverlapping( const Extent &other ) const
 	{

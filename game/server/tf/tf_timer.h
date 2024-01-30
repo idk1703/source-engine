@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -22,7 +22,7 @@ class CTimer
 {
 public:
 	CTimer();
-	
+
 	int GetTeamNumber() const;
 
 public:
@@ -32,7 +32,7 @@ public:
 	int m_iTeamNumber;
 	float m_flNextThink;
 	int weapon; // GI_RET_ define.
-	
+
 	// For g_Timers.
 	int m_iListIndex;
 };

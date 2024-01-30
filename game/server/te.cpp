@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,18 +17,18 @@ void TE_ArmorRicochet( IRecipientFilter& filter, float delay,
 	const Vector* pos, const Vector* dir );
 void TE_BeamEntPoint( IRecipientFilter& filter, float delay,
 	int	nStartEntity, const Vector *start, int nEndEntity, const Vector* end, int modelindex, int haloindex, int startframe, int framerate,
-	float life, float width, float endWidth, int fadeLength, float amplitude, 
+	float life, float width, float endWidth, int fadeLength, float amplitude,
 	int r, int g, int b, int a, int speed );
 void TE_BeamEnts( IRecipientFilter& filter, float delay,
 	int	start, int end, int modelindex, int haloindex, int startframe, int framerate,
-	float life, float width, float endWidth, int fadeLength, float amplitude, 
+	float life, float width, float endWidth, int fadeLength, float amplitude,
 	int r, int g, int b, int a, int speed );
 void TE_BeamFollow( IRecipientFilter& filter, float delay,
-	int iEntIndex, int modelIndex, int haloIndex, float life, float width, float endWidth, 
+	int iEntIndex, int modelIndex, int haloIndex, float life, float width, float endWidth,
 	float fadeLength,float r, float g, float b, float a );
 void TE_BeamPoints( IRecipientFilter& filter, float delay,
 	const Vector* start, const Vector* end, int modelindex, int haloindex, int startframe, int framerate,
-	float life, float width, float endWidth, int fadeLength, float amplitude, 
+	float life, float width, float endWidth, int fadeLength, float amplitude,
 	int r, int g, int b, int a, int speed );
 void TE_BeamLaser( IRecipientFilter& filter, float delay,
 	int	start, int end, int modelindex, int haloindex, int startframe, int framerate,
@@ -46,7 +46,7 @@ void TE_BloodStream( IRecipientFilter& filter, float delay,
 void TE_BloodSprite( IRecipientFilter& filter, float delay,
 	const Vector* org, const Vector *dir, int r, int g, int b, int a, int size );
 void TE_BreakModel( IRecipientFilter& filter, float delay,
-	const Vector& pos, const QAngle &angles, const Vector& size, const Vector& vel, 
+	const Vector& pos, const QAngle &angles, const Vector& size, const Vector& vel,
 	int modelindex, int randomization, int count, float time, int flags );
 void TE_BSPDecal( IRecipientFilter& filter, float delay,
 	const Vector* pos, int entity, int index );
@@ -63,12 +63,12 @@ void TE_DynamicLight( IRecipientFilter& filter, float delay,
 void TE_Explosion( IRecipientFilter& filter, float delay,
 	const Vector* pos, int modelindex, float scale, int framerate, int flags, int radius, int magnitude, const Vector* normal = NULL, unsigned char materialType = 'C' );
 void TE_ShatterSurface( IRecipientFilter& filter, float delay,
-	const Vector* pos, const QAngle* angle, const Vector* vForce, const Vector* vForcePos, 
+	const Vector* pos, const QAngle* angle, const Vector* vForce, const Vector* vForcePos,
 	float width, float height, float shardsize, ShatterSurface_t surfacetype,
 	int front_r, int front_g, int front_b, int back_r, int back_g, int back_b);
 void TE_GlowSprite( IRecipientFilter& filter, float delay,
 	const Vector* pos, int modelindex, float life, float size, int brightness );
-void TE_FootprintDecal( IRecipientFilter& filter, float delay, const Vector *origin, const Vector* right, 
+void TE_FootprintDecal( IRecipientFilter& filter, float delay, const Vector *origin, const Vector* right,
 	int entity, int index, unsigned char materialType );
 void TE_Fizz( IRecipientFilter& filter, float delay,
 	const CBaseEntity *ed, int modelindex, int density, int current );
@@ -115,8 +115,8 @@ class CTempEntsSystem : public ITempEntsSystem
 private:
 	//-----------------------------------------------------------------------------
 	// Purpose: Returning true means don't even call TE func
-	// Input  : filter - 
-	//			*suppress_host - 
+	// Input  : filter -
+	//			*suppress_host -
 	// Output : static bool
 	//-----------------------------------------------------------------------------
 	bool SuppressTE( IRecipientFilter& filter )
@@ -152,9 +152,9 @@ public:
 	}
 
 	virtual void BeamEntPoint( IRecipientFilter& filter, float delay,
-		int	nStartEntity, const Vector *pStart, int nEndEntity, const Vector* pEnd, 
+		int	nStartEntity, const Vector *pStart, int nEndEntity, const Vector* pEnd,
 		int modelindex, int haloindex, int startframe, int framerate,
-		float life, float width, float endWidth, int fadeLength, float amplitude, 
+		float life, float width, float endWidth, int fadeLength, float amplitude,
 		int r, int g, int b, int a, int speed )
 	{
 		if ( !SuppressTE( filter ) )
@@ -166,38 +166,38 @@ public:
 
 	virtual void BeamEnts( IRecipientFilter& filter, float delay,
 		int	start, int end, int modelindex, int haloindex, int startframe, int framerate,
-		float life, float width, float endWidth, int fadeLength, float amplitude, 
+		float life, float width, float endWidth, int fadeLength, float amplitude,
 		int r, int g, int b, int a, int speed )
 	{
 		if ( !SuppressTE( filter ) )
 		{
 			TE_BeamEnts( filter, delay,
 				start, end, modelindex, haloindex, startframe, framerate,
-				life, width, endWidth, fadeLength, amplitude, 
+				life, width, endWidth, fadeLength, amplitude,
 				r, g, b, a, speed );
 		}
 	}
 	virtual void BeamFollow( IRecipientFilter& filter, float delay,
-		int iEntIndex, int modelIndex, int haloIndex, float life, float width, float endWidth, 
+		int iEntIndex, int modelIndex, int haloIndex, float life, float width, float endWidth,
 		float fadeLength, float r, float g, float b, float a )
 	{
 		if ( !SuppressTE( filter ) )
 		{
 			TE_BeamFollow( filter, delay,
-				iEntIndex, modelIndex, haloIndex, life, width, endWidth, fadeLength, 
+				iEntIndex, modelIndex, haloIndex, life, width, endWidth, fadeLength,
 				r, g, b, a );
 		}
 	}
 	virtual void BeamPoints( IRecipientFilter& filter, float delay,
 		const Vector* start, const Vector* end, int modelindex, int haloindex, int startframe, int framerate,
-		float life, float width, float endWidth, int fadeLength, float amplitude, 
+		float life, float width, float endWidth, int fadeLength, float amplitude,
 		int r, int g, int b, int a, int speed )
 	{
 		if ( !SuppressTE( filter ) )
 		{
 			TE_BeamPoints( filter, delay,
 				start, end, modelindex, haloindex, startframe, framerate,
-				life, width, endWidth, fadeLength, amplitude, 
+				life, width, endWidth, fadeLength, amplitude,
 				r, g, b, a, speed );
 		}
 	}
@@ -217,7 +217,7 @@ public:
 		float life, float width, int spread, float amplitude, int r, int g, int b, int a, int speed, int flags )
 	{
 		if ( !SuppressTE( filter ) )
-		{	
+		{
 			TE_BeamRing( filter, delay,
 				start, end, modelindex, haloindex, startframe, framerate,
 				life, width, spread, amplitude, r, g, b, a, speed, flags );
@@ -259,7 +259,7 @@ public:
 		}
 	}
 	virtual void BreakModel( IRecipientFilter& filter, float delay,
-		const Vector& pos, const QAngle &angle, const Vector& size, const Vector& vel, 
+		const Vector& pos, const QAngle &angle, const Vector& size, const Vector& vel,
 		int modelindex, int randomization, int count, float time, int flags )
 	{
 		if ( !SuppressTE( filter ) )
@@ -326,7 +326,7 @@ public:
 		}
 	}
 	virtual void ShatterSurface( IRecipientFilter& filter, float delay,
-		const Vector* pos, const QAngle* angle, const Vector* vForce, const Vector* vForcePos, 
+		const Vector* pos, const QAngle* angle, const Vector* vForce, const Vector* vForcePos,
 		float width, float height, float shardsize, ShatterSurface_t surfacetype,
 		int front_r, int front_g, int front_b, int back_r, int back_g, int back_b)
 	{
@@ -344,12 +344,12 @@ public:
 			TE_GlowSprite( filter, delay, pos, modelindex, life, size, brightness );
 		}
 	}
-	virtual void FootprintDecal( IRecipientFilter& filter, float delay, const Vector *origin, const Vector* right, 
+	virtual void FootprintDecal( IRecipientFilter& filter, float delay, const Vector *origin, const Vector* right,
 		int entity, int index, unsigned char materialType )
 	{
 		if ( !SuppressTE( filter ) )
 		{
-			TE_FootprintDecal( filter, delay, origin, right, 
+			TE_FootprintDecal( filter, delay, origin, right,
 				entity, index, materialType );
 		}
 	}
@@ -426,7 +426,7 @@ public:
 		const Vector* pos, int nMagnitude, int nTrailLength, const Vector *pDir )
 	{
 		if ( !SuppressTE( filter ) )
-		{	
+		{
 			TE_Sparks( filter, delay,
 				pos, nMagnitude, nTrailLength, pDir );
 		}

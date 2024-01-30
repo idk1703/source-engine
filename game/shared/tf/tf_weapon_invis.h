@@ -15,7 +15,7 @@
 #include "tf_gamerules.h"
 
 // Client specific.
-#if defined( CLIENT_DLL ) 
+#if defined( CLIENT_DLL )
 #define CTFWeaponInvis C_TFWeaponInvis
 #endif
 
@@ -30,10 +30,10 @@ class CTFWeaponInvis : public CTFWeaponBase
 {
 public:
 	DECLARE_CLASS( CTFWeaponInvis, CTFWeaponBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
-#if !defined( CLIENT_DLL ) 
+#if !defined( CLIENT_DLL )
 	DECLARE_DATADESC();
 #endif
 
@@ -63,7 +63,7 @@ public:
 
 	int				GetInvisType( void ) { int iMode = 0; CALL_ATTRIB_HOOK_INT( iMode, set_weapon_mode ); return iMode; };
 	virtual bool	HasFeignDeath( void ) { return (GetInvisType() == INVIS_FEIGN_DEATH); }
-	virtual bool	HasMotionCloak( void ) { return (GetInvisType() == INVIS_MOTION_CLOAK); } 
+	virtual bool	HasMotionCloak( void ) { return (GetInvisType() == INVIS_MOTION_CLOAK); }
 
 	virtual void	SetFeignDeathState( bool bEnabled );
 	virtual void	SetCloakRates( void );

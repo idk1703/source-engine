@@ -26,7 +26,7 @@ public:
 
 	virtual void	OnPublishComplete( const IFilePublisher *pPublisher, void *pUserData ) = 0;
 	virtual void	OnPublishAborted( const IFilePublisher *pPublisher ) = 0;
-	virtual void	AdjustHeader( const IFilePublisher *pPublisher, void *pHeaderData ) = 0; 
+	virtual void	AdjustHeader( const IFilePublisher *pPublisher, void *pHeaderData ) = 0;
 };
 
 //----------------------------------------------------------------------------------------

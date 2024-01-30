@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -471,4 +471,3 @@ CRTFBuilder &CRTFBuilder::operator>>(CRichEditCtrl &e)
 	write(e);
 	return *this;
 }
-

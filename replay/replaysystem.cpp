@@ -86,7 +86,7 @@ public:
 		REPLAY_INIT( g_pEngine );
 
 		REPLAY_INIT( g_pEngine->IsSupportedModAndPlatform() );
-		
+
 #if !defined( DEDICATED )
 		g_pEngineClient = (IEngineClientReplay *)fnFactory( ENGINE_REPLAY_CLIENT_INTERFACE_VERSION, NULL );
 		REPLAY_INIT( g_pEngineClient );
@@ -137,7 +137,7 @@ public:
 
 	virtual void Disconnect()
 	{
-		BaseClass::Disconnect(); 
+		BaseClass::Disconnect();
 	}
 
 	virtual InitReturnVal_t Init()
@@ -195,7 +195,7 @@ public:
 	//----------------------------------------------------------------------------------------
 	// Client-specific implementation:
 	//----------------------------------------------------------------------------------------
-	
+
 	virtual bool CL_Init( CreateInterfaceFn fnClientFactory )
 	{
 #if !defined( DEDICATED )
@@ -257,7 +257,7 @@ public:
 	//----------------------------------------------------------------------------------------
 	// Server-specific implementation:
 	//----------------------------------------------------------------------------------------
-	
+
 	virtual bool SV_Init( CreateInterfaceFn fnServerFactory )
 	{
 		if ( !g_pEngine->IsDedicated() || !g_pServerReplayContext )
@@ -397,7 +397,7 @@ public:
 	void Test()
 	{
 #if !defined( DEDICATED ) && _DEBUG
-		// This gets called after interfaces are hooked up, and before any of the 
+		// This gets called after interfaces are hooked up, and before any of the
 		// internal replay systems get init'd.
 		CTestManager::Test();
 #endif

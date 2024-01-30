@@ -56,7 +56,7 @@ public:
 
 	virtual HalloweenBossType GetBossType() const { return HALLOWEEN_BOSS_INVALID; }
 	static CHalloweenBaseBoss* SpawnBossAtPos( HalloweenBossType bossType, const Vector& vSpawnPos, int nTeam = TF_TEAM_HALLOWEEN, CBaseEntity* pOwner = NULL );
-	
+
 	bool IsSpell() const { return GetTeamNumber() != TF_TEAM_HALLOWEEN; }
 
 	enum HalloweenStatsEventType

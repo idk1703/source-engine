@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -23,7 +23,7 @@ END_DATADESC()
 
 
 IMPLEMENT_SERVERCLASS_ST( CDODBaseRocket, DT_DODBaseRocket )
-	SendPropVector( SENDINFO( m_vInitialVelocity ), 
+	SendPropVector( SENDINFO( m_vInitialVelocity ),
 		20,		// nbits
 		0,		// flags
 		-3000,	// low value
@@ -48,11 +48,11 @@ CDODBaseRocket::~CDODBaseRocket()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODBaseRocket::Precache( void )
 {
-	PrecacheScriptSound( "Weapon_Bazooka.Shoot" );	
+	PrecacheScriptSound( "Weapon_Bazooka.Shoot" );
 	PrecacheParticleSystem( "rockettrail" );
 }
 
@@ -60,7 +60,7 @@ ConVar mp_rocketdamage( "mp_rocketdamage", "150", FCVAR_GAMEDLL | FCVAR_CHEAT );
 ConVar mp_rocketradius( "mp_rocketradius", "200", FCVAR_GAMEDLL | FCVAR_CHEAT );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODBaseRocket::Spawn( void )
 {
@@ -75,10 +75,10 @@ void CDODBaseRocket::Spawn( void )
 	SetTouch( &CDODBaseRocket::RocketTouch );
 
 	SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_CUSTOM );
-	
+
 	m_takedamage = DAMAGE_NO;
 	SetGravity( 0.1 );
-	SetDamage( mp_rocketdamage.GetFloat() );	
+	SetDamage( mp_rocketdamage.GetFloat() );
 
 	AddFlag( FL_OBJECT );
 
@@ -94,7 +94,7 @@ void CDODBaseRocket::Spawn( void )
 }
 
 unsigned int CDODBaseRocket::PhysicsSolidMaskForEntity( void ) const
-{ 
+{
 	int teamContents = 0;
 
 	if ( m_bCollideWithTeammates == false )
@@ -126,13 +126,13 @@ void CDODBaseRocket::Fire( void )
 }
 
 //-----------------------------------------------------------------------------
-// The actual explosion 
+// The actual explosion
 //-----------------------------------------------------------------------------
 void CDODBaseRocket::DoExplosion( trace_t *pTrace )
 {
 /*
 	// Explode
-	ExplosionCreate( 
+	ExplosionCreate(
 		GetAbsOrigin(),	//DMG_ROCKET
 		GetAbsAngles(),
 		GetOwnerEntity(),
@@ -167,11 +167,11 @@ void CDODBaseRocket::DoExplosion( trace_t *pTrace )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODBaseRocket::Explode( void )
 {
-	// Don't explode against the skybox. Just pretend that 
+	// Don't explode against the skybox. Just pretend that
 	// the missile flies off into the distance.
 	const trace_t &tr = CBaseEntity::GetTouchTrace();
 	const trace_t *p = &tr;
@@ -187,8 +187,8 @@ void CDODBaseRocket::Explode( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOther - 
+// Purpose:
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void CDODBaseRocket::RocketTouch( CBaseEntity *pOther )
 {
@@ -252,17 +252,17 @@ void CDODBaseRocket::FlyThink( void )
 	{
 		m_bCollideWithTeammates = true;
 	}
-	
+
 	SetNextThink( gpGlobals->curtime + 0.1f );
 }
 
-	
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
-// Input  : &vecOrigin - 
-//			&vecAngles - 
-//			NULL - 
+// Input  : &vecOrigin -
+//			&vecAngles -
+//			NULL -
 //
 // Output : CDODBaseRocket
 //-----------------------------------------------------------------------------
@@ -271,13 +271,13 @@ CDODBaseRocket *CDODBaseRocket::Create( const char *szClassname, const Vector &v
 	CDODBaseRocket *pMissile = (CDODBaseRocket *) CBaseEntity::Create( szClassname, vecOrigin, vecAngles, pOwner );
 	pMissile->SetOwnerEntity( pOwner );
 	pMissile->Spawn();
-	
+
 	Vector vecForward;
 	AngleVectors( vecAngles, &vecForward );
 
 	Vector vRocket = vecForward * 1300;
 
-	pMissile->SetAbsVelocity( vRocket );	
+	pMissile->SetAbsVelocity( vRocket );
 	pMissile->SetupInitialTransmittedGrenadeVelocity( vRocket );
 
 	pMissile->SetAbsAngles( vecAngles );

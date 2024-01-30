@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -38,7 +38,7 @@ public:
 	virtual	void			ParseChunk( IterateRIFF &walk, int chunkName );
 
 	virtual void			ParseSentence( IterateRIFF &walk );
-	
+
 	void					ConvertSamples( char *pData, int sampleCount );
 	bool					IsLooped( void ) { return (m_loopStart >= 0) ? true : false; }
 	bool					IsStreaming( void ) { return false; }
@@ -48,13 +48,13 @@ public:
 	int						SampleCount( void );
 
 	virtual float			GetRunningLength( void )
-							{ 
-								if ( m_rate > 0.0 ) 
+							{
+								if ( m_rate > 0.0 )
 								{
 									return (float)SampleCount() / m_rate;
 								}
 								return 0.0f; }
-		
+
 	CSentence				*GetSentence( void );
 
 protected:

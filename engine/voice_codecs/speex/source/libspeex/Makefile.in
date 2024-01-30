@@ -112,15 +112,15 @@ testenc_wb_LDADD = libspeex.la
 testenc_uwb_SOURCES = testenc_uwb.c
 testenc_uwb_LDADD = libspeex.la
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
-CONFIG_CLEAN_FILES = 
+CONFIG_CLEAN_FILES =
 LTLIBRARIES =  $(lib_LTLIBRARIES)
 
 
-DEFS = @DEFS@ -I. -I$(srcdir) 
+DEFS = @DEFS@ -I. -I$(srcdir)
 CPPFLAGS = @CPPFLAGS@
 LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
-libspeex_la_LIBADD = 
+libspeex_la_LIBADD =
 libspeex_la_OBJECTS =  nb_celp.lo sb_celp.lo lpc.lo ltp.lo lsp.lo \
 quant_lsp.lo lsp_tables_nb.lo gain_table.lo gain_table_lbr.lo \
 cb_search.lo filters.lo bits.lo modes.lo vq.lo high_lsp_tables.lo \
@@ -134,13 +134,13 @@ PROGRAMS =  $(noinst_PROGRAMS)
 
 testenc_OBJECTS =  testenc.$(OBJEXT)
 testenc_DEPENDENCIES =  libspeex.la
-testenc_LDFLAGS = 
+testenc_LDFLAGS =
 testenc_wb_OBJECTS =  testenc_wb.$(OBJEXT)
 testenc_wb_DEPENDENCIES =  libspeex.la
-testenc_wb_LDFLAGS = 
+testenc_wb_LDFLAGS =
 testenc_uwb_OBJECTS =  testenc_uwb.$(OBJEXT)
 testenc_uwb_DEPENDENCIES =  libspeex.la
-testenc_uwb_LDFLAGS = 
+testenc_uwb_LDFLAGS =
 CFLAGS = @CFLAGS@
 COMPILE = $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -161,7 +161,7 @@ OBJECTS = $(libspeex_la_OBJECTS) $(testenc_OBJECTS) $(testenc_wb_OBJECTS) $(test
 all: all-redirect
 .SUFFIXES:
 .SUFFIXES: .S .c .lo .o .obj .s
-$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
+$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4)
 	cd $(top_srcdir) && $(AUTOMAKE) --gnu --include-deps libspeex/Makefile
 
 Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status

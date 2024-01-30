@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -164,7 +164,7 @@ CWorkspaceManager::CWorkspaceManager()
 	m_pMenuBar->addMenu ("File", m_pFileMenu );
 	m_pMenuBar->addMenu( "Project", m_pProjectMenu );
 	m_pMenuBar->addMenu ( "Options", m_pOptionsMenu );
-	
+
 	CreateFileMenu( m_pFileMenu );
 	CreateProjectMenu( m_pProjectMenu );
 
@@ -231,7 +231,7 @@ bool CWorkspaceManager::Closing()
 			{
 				int retval = MultipleRequest( va( "Check out '%s'?", scriptname ));
 				// Cancel
-				if ( retval == 2 ) 
+				if ( retval == 2 )
 					return false;
 
 				if ( retval == 0 )
@@ -255,7 +255,7 @@ bool CWorkspaceManager::Closing()
 			{
 				int retval = mxMessageBox( NULL, va( "Save changes to out '%s'?", scriptname ), g_appTitle, MX_MB_YESNOCANCEL );
 				// Cancel
-				if ( retval == 2 ) 
+				if ( retval == 2 )
 					return false;
 
 				if ( retval == 0 )
@@ -327,7 +327,7 @@ void CWorkspaceManager::UpdateMenus()
 	m_pMenuBar->setEnabled( IDC_WSM_FILE_WS_SAVE, true );
 	m_pMenuBar->setEnabled( IDC_WSM_FILE_WS_CLOSE, hasworkspace );
 
-	
+
 	if ( hasproject )
 	{
 		m_pMenuBar->modify( IDC_WSM_FILE_SCENE_NEW, IDC_WSM_FILE_SCENE_NEW, va( "&Create Scene in '%s'", item->GetProject()->GetName() ) );
@@ -393,7 +393,7 @@ void CWorkspaceManager::Frame( void )
 	static double prev = 0.0;
 	double curr = (double) mx::getTickCount () / 1000.0;
 	double dt = ( curr - prev );
-	
+
 	if ( recursion_guard )
 		return;
 
@@ -411,12 +411,12 @@ void CWorkspaceManager::Frame( void )
 	if ( prev != 0.0 )
 	{
 		dt = min( 0.1, dt );
-		
+
 		Think( dt );
 
 		realtime += dt;
 	}
-	
+
 	prev = curr;
 
 	recursion_guard = false;
@@ -465,8 +465,8 @@ int CWorkspaceManager::handleEvent( mxEvent *event )
 			{
 			default:
 				{
-					if ( event->action >= IDC_WSM_FILE_RECENT_WORKSPACE_START && 
-						 event->action < IDC_WSM_FILE_RECENT_WORKSPACE_END )
+					if ( event->action >= IDC_WSM_FILE_RECENT_WORKSPACE_START &&
+						event->action < IDC_WSM_FILE_RECENT_WORKSPACE_END )
 					{
 						OnRecentWorkspace( event->action - IDC_WSM_FILE_RECENT_WORKSPACE_START );
 					}
@@ -641,7 +641,7 @@ int CWorkspaceManager::handleEvent( mxEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWorkspaceManager::PerformLayout( bool movebrowsers )
 {
@@ -657,7 +657,7 @@ void CWorkspaceManager::PerformLayout( bool movebrowsers )
 		{
 			GetSoundBrowser()->setBounds( 0, m_pWorkArea->h2() / 3, m_pWorkArea->w2(), m_pWorkArea->h2() / 3 );
 		}
-		if ( GetWaveBrowser() ) 
+		if ( GetWaveBrowser() )
 		{
 			GetWaveBrowser()->setBounds( 0, 2 * m_pWorkArea->h2() / 3, m_pWorkArea->w2(), m_pWorkArea->h2() / 3 );
 		}
@@ -668,7 +668,7 @@ void CWorkspaceManager::PerformLayout( bool movebrowsers )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWorkspaceManager::CloseWorkspace()
@@ -688,7 +688,7 @@ bool CWorkspaceManager::CloseWorkspace()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWorkspaceManager::OnUpdateTitle( void )
 {
@@ -715,8 +715,8 @@ void CWorkspaceManager::OnUpdateTitle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *ws - 
+// Purpose:
+// Input  : *ws -
 //-----------------------------------------------------------------------------
 void CWorkspaceManager::SetWorkspace( CWorkspace *ws )
 {
@@ -726,14 +726,14 @@ void CWorkspaceManager::SetWorkspace( CWorkspace *ws )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWorkspaceManager::OnNewWorkspace()
 {
 	// Show file io
-	const char *fullpath = mxGetSaveFileName( 
-		0, 
-		".", 
+	const char *fullpath = mxGetSaveFileName(
+		0,
+		".",
 		"*.vsw" );
 
 	if ( !fullpath || !fullpath[ 0 ] )
@@ -875,7 +875,7 @@ void CWorkspaceManager::LoadWorkspace( char const *filename )
 		return;
 
 	Con_Printf( "Loading workspace %s\n", filename );
-	
+
 	CWorkspace *wks = new CWorkspace( filename );
 	SetWorkspace( wks );
 
@@ -887,14 +887,14 @@ void CWorkspaceManager::LoadWorkspace( char const *filename )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWorkspaceManager::OnOpenWorkspace()
 {
 	// Show file io
-	const char *fullpath = mxGetOpenFileName( 
-		0, 
-		".", 
+	const char *fullpath = mxGetOpenFileName(
+		0,
+		".",
 		"*.vsw" );
 
 	if ( !fullpath || !fullpath[ 0 ] )
@@ -908,7 +908,7 @@ void CWorkspaceManager::OnOpenWorkspace()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWorkspaceManager::OnCloseWorkspace()
 {
@@ -919,7 +919,7 @@ void CWorkspaceManager::OnCloseWorkspace()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWorkspaceManager::OnSaveWorkspace()
 {
@@ -933,16 +933,16 @@ void CWorkspaceManager::OnSaveWorkspace()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWorkspaceManager::OnNewProject()
 {
 	Con_Printf( "OnNewProject()\n" );
 
 	// Show file io
-	const char *fullpath = mxGetSaveFileName( 
-		0, 
-		".", 
+	const char *fullpath = mxGetSaveFileName(
+		0,
+		".",
 		"*.vsp" );
 
 	if ( !fullpath || !fullpath[ 0 ] )
@@ -1009,16 +1009,16 @@ void CWorkspaceManager::OnNewProject()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWorkspaceManager::OnInsertProject()
 {
 	Con_Printf( "OnInsertProject()\n" );
 
 	// Show file io
-	const char *fullpath = mxGetOpenFileName( 
-		0, 
-		".", 
+	const char *fullpath = mxGetOpenFileName(
+		0,
+		".",
 		"*.vsp" );
 
 	if ( !fullpath || !fullpath[ 0 ] )
@@ -1078,7 +1078,7 @@ void CWorkspaceManager::OnInsertProject()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWorkspaceManager::OnRemoveProject()
 {
@@ -1188,7 +1188,7 @@ void CWorkspaceManager::OnNewScene()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWorkspaceManager::OnModifyProjectComments()
 {
@@ -1225,8 +1225,8 @@ void CWorkspaceManager::OnModifyProjectComments()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 //-----------------------------------------------------------------------------
 void CWorkspaceManager::OnRecentWorkspace( int index )
 {
@@ -1265,7 +1265,7 @@ void CWorkspaceManager::OnChangeLanguage( int lang_index, bool force /* = false 
 
 			long filetimestamp = filesystem->GetFileTime( fn );
 
-			
+
 			if ( filesystem->FileExists( fn ) )
 			{
 				if ( m_lEnglishCaptionsFileChangeTime != filetimestamp )
@@ -1350,7 +1350,7 @@ void CWorkspaceManager::OnSoundEditText()
 	}
 
 	s->SetSentenceText( params.m_szInputText );
-	
+
 	GetBrowser()->PopulateTree();
 
 	OnUpdateTitle();
@@ -1368,9 +1368,9 @@ void CWorkspaceManager::OnSceneAddVCD()
 		return;
 
 	// Show file io
-	const char *fullpath = mxGetOpenFileName( 
-		0, 
-		".", 
+	const char *fullpath = mxGetOpenFileName(
+		0,
+		".",
 		"*.vcd" );
 
 	if ( !fullpath || !fullpath[ 0 ] )
@@ -1567,7 +1567,7 @@ void CWorkspaceManager::ShowContextMenu_Project( int x, int y, CProject *project
 		{
 			pop->add( va( "Move '%s' Up", project->GetName() ), IDC_WSM_SELECTION_MOVEUP );
 		}
-		if( !project->IsLastChild() ) 
+		if( !project->IsLastChild() )
 		{
 			pop->add( va( "Move '%s' Down", project->GetName() ), IDC_WSM_SELECTION_MOVEDOWN );
 		}
@@ -1603,7 +1603,7 @@ void CWorkspaceManager::ShowContextMenu_Scene( int x, int y, CScene *scene )
 		{
 			pop->add( va( "Move '%s' Up", scene->GetName() ), IDC_WSM_SELECTION_MOVEUP );
 		}
-		if( !scene->IsLastChild() ) 
+		if( !scene->IsLastChild() )
 		{
 			pop->add( va( "Move '%s' Down", scene->GetName() ), IDC_WSM_SELECTION_MOVEDOWN );
 		}
@@ -1627,7 +1627,7 @@ void CWorkspaceManager::ShowContextMenu_VCD( int x, int y, CVCDFile *vcd )
 		{
 			pop->add( va( "Move '%s' Up", vcd->GetName() ), IDC_WSM_SELECTION_MOVEUP );
 		}
-		if( !vcd->IsLastChild() ) 
+		if( !vcd->IsLastChild() )
 		{
 			pop->add( va( "Move '%s' Down", vcd->GetName() ), IDC_WSM_SELECTION_MOVEDOWN );
 		}
@@ -1754,86 +1754,86 @@ void CWorkspaceManager::OnCheckinWorkspace()
 
 
 #define CX_ICON  16
-#define CY_ICON  16 
+#define CY_ICON  16
 
 HIMAGELIST CWorkspaceManager::CreateImageList()
 {
 	HIMAGELIST list;
-	
-	list = ImageList_Create( CX_ICON, CY_ICON, 
+
+	list = ImageList_Create( CX_ICON, CY_ICON,
 		FALSE, NUM_IMAGES, 0 );
 
-    // Load the icon resources, and add the icons to the image list. 
-    HICON hicon;
+	// Load the icon resources, and add the icons to the image list.
+	HICON hicon;
 	int slot;
 #if defined( DBGFLAG_ASSERT )
 	int c = 0;
 #endif
 
-	hicon = LoadIcon( GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_WORKSPACE)); 
-	slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon( GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_WORKSPACE));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
-	hicon = LoadIcon( GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_WORKSPACE_CHECKEDOUT)); 
-	slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon( GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_WORKSPACE_CHECKEDOUT));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
-	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_PROJECT)); 
-    slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_PROJECT));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
-	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_PROJECT_CHECKEDOUT)); 
-    slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_PROJECT_CHECKEDOUT));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
-	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_SCENE)); 
-	slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_SCENE));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
-//	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_SCENE_CHECKEDOUT)); 
-//	slot = ImageList_AddIcon(list, hicon); 
+//	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_SCENE_CHECKEDOUT));
+//	slot = ImageList_AddIcon(list, hicon);
 //	Assert( slot == c++ );
 //	DeleteObject( hicon );
 
-	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_VCD)); 
-    slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_VCD));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
-	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_VCD_CHECKEDOUT )); 
-    slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_VCD_CHECKEDOUT ));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
-	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_WAV)); 
-    slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_WAV));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
-	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_WAV_CHECKEDOUT)); 
-    slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_WAV_CHECKEDOUT));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
-	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_SPEAK)); 
-    slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_SPEAK));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
-	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_SPEAK_CHECKEDOUT)); 
-    slot = ImageList_AddIcon(list, hicon); 
+	hicon = LoadIcon(GetModuleHandle( 0 ), MAKEINTRESOURCE(IDI_SPEAK_CHECKEDOUT));
+	slot = ImageList_AddIcon(list, hicon);
 	Assert( slot == c++ );
 	DeleteObject( hicon );
 
 	return list;
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWorkspaceManager::RefreshBrowsers()
 {
@@ -1956,7 +1956,7 @@ void CWorkspaceManager::SetWorkspaceDirty()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWorkspaceManager::OnSoundProperties()
 {
@@ -1981,7 +1981,7 @@ void CWorkspaceManager::OnSoundProperties()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWorkspaceManager::OnWaveProperties()
 {

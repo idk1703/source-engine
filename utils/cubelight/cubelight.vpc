@@ -23,7 +23,7 @@ $Project "Cubelight"
 	{
 		$File	"cubelight.cpp"
 	}
-	
+
 	$Folder	"Link Libraries"
 	{
 		$Lib bitmap

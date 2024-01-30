@@ -43,11 +43,11 @@ IMPLEMENT_SERVERCLASS_ST_NOBASE(CTeam, DT_Team)
 	SendPropInt( SENDINFO(m_iRoundsWon), 8 ),
 	SendPropString( SENDINFO( m_szTeamname ) ),
 
-	SendPropArray2( 
+	SendPropArray2(
 		SendProxyArrayLength_PlayerArray,
-		SendPropInt("player_array_element", 0, 4, 10, SPROP_UNSIGNED, SendProxy_PlayerList), 
-		MAX_PLAYERS, 
-		0, 
+		SendPropInt("player_array_element", 0, 4, 10, SPROP_UNSIGNED, SendProxy_PlayerList),
+		MAX_PLAYERS,
+		0,
 		"player_array"
 		)
 END_SEND_TABLE()
@@ -83,7 +83,7 @@ CTeam::CTeam( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTeam::~CTeam( void )
 {
@@ -159,7 +159,7 @@ void CTeam::UpdateClientData( CBasePlayer *pPlayer )
 //------------------------------------------------------------------------------------------------------------------
 // SPAWNPOINTS
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeam::InitializeSpawnpoints( void )
 {
@@ -167,7 +167,7 @@ void CTeam::InitializeSpawnpoints( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeam::AddSpawnpoint( CTeamSpawnPoint *pSpawnpoint )
 {
@@ -175,7 +175,7 @@ void CTeam::AddSpawnpoint( CTeamSpawnPoint *pSpawnpoint )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeam::RemoveSpawnpoint( CTeamSpawnPoint *pSpawnpoint )
 {
@@ -205,7 +205,7 @@ CBaseEntity *CTeam::SpawnPlayer( CBasePlayer *pPlayer )
 
 	// Now loop through the spawnpoints and pick one
 	int loopCount = 0;
-	do 
+	do
 	{
 		if ( iSpawn >= m_aSpawnPoints.Size() )
 		{
@@ -232,7 +232,7 @@ CBaseEntity *CTeam::SpawnPlayer( CBasePlayer *pPlayer )
 //------------------------------------------------------------------------------------------------------------------
 // PLAYERS
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeam::InitializePlayers( void )
 {
@@ -297,7 +297,7 @@ int CTeam::GetScore( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeam::ResetScores( void )
 {
@@ -305,11 +305,11 @@ void CTeam::ResetScores( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeam::AwardAchievement( int iAchievement )
 {
-	Assert( iAchievement >= 0 && iAchievement < 255 );	// must fit in short 
+	Assert( iAchievement >= 0 && iAchievement < 255 );	// must fit in short
 
 	CRecipientFilter filter;
 

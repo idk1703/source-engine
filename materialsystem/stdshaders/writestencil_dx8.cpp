@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -58,4 +58,3 @@ BEGIN_VS_SHADER_FLAGS( WriteStencil_DX8, "Help for WriteStencil", SHADER_NOT_EDI
 		Draw();
 	}
 END_SHADER
-

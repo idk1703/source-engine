@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -66,8 +66,8 @@ void SceneManager_RemoveWindowExStyle( mxWindow *w, int removebits )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *w - 
+// Purpose:
+// Input  : *w -
 //-----------------------------------------------------------------------------
 void SceneManager_MakeToolWindow( mxWindow *w, bool smallcaption )
 {
@@ -150,8 +150,8 @@ void Con_ColorPrintf( int r, int g, int b, const char *fmt, ... )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pname - 
+// Purpose:
+// Input  : *pname -
 // Output : char
 //-----------------------------------------------------------------------------
 char *SceneManager_MakeWindowsSlashes( char *pname )
@@ -170,7 +170,7 @@ char *SceneManager_MakeWindowsSlashes( char *pname )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *SceneManager_GetGameDirectory( void )
@@ -181,7 +181,7 @@ const char *SceneManager_GetGameDirectory( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Takes a full path and determines if the file exists on the disk
-// Input  : *filename - 
+// Input  : *filename -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool SceneManager_FullpathFileExists( const char *filename )
@@ -236,7 +236,7 @@ int Sys_Exec( const char *pProgName, const char *pCmdLine, bool verbose )
 	{
 		WaitForSingleObject( pi.hProcess, INFINITE );
 		/*
-		do 
+		do
 		{
 			WaitForInputIdle( pi.hProcess, 100 );
 			count++;
@@ -245,7 +245,7 @@ int Sys_Exec( const char *pProgName, const char *pCmdLine, bool verbose )
 
 		/*
 		DWORD exitCode = STILL_ACTIVE;
-		do 
+		do
 		{
 			BOOL ok = GetExitCodeProcess( pi.hProcess, &exitCode );
 			if ( !ok )
@@ -253,30 +253,30 @@ int Sys_Exec( const char *pProgName, const char *pCmdLine, bool verbose )
 			Sleep( 100 );
 		} while ( exitCode == STILL_ACTIVE );
 		*/
-		
+
 		DWORD exitCode;
-		
+
 		GetExitCodeProcess( pi.hProcess, &exitCode );
 
 		Con_Printf( "Finished\n" );
-		
+
 		CloseHandle( pi.hProcess );
 		return (int)exitCode;
 	}
 	else
 	{
 			char *lpMsgBuf;
-			
-			FormatMessage( 
-				FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-				FORMAT_MESSAGE_FROM_SYSTEM | 
+
+			FormatMessage(
+				FORMAT_MESSAGE_ALLOCATE_BUFFER |
+				FORMAT_MESSAGE_FROM_SYSTEM |
 				FORMAT_MESSAGE_IGNORE_INSERTS,
 				NULL,
 				GetLastError(),
 				MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
 				(LPTSTR) &lpMsgBuf,
 				0,
-				NULL 
+				NULL
 			);
 
 			Con_Printf( "error %s\n", lpMsgBuf );
@@ -296,7 +296,7 @@ int Sys_Exec( const char *pProgName, const char *pCmdLine, bool verbose )
 	{
 		Con_Printf( "Execution failed: %s\n", tmp );
 	}
-	
+
 	return iret;
 #endif
 }
@@ -305,7 +305,7 @@ int Sys_Exec( const char *pProgName, const char *pCmdLine, bool verbose )
 // Checks it out/ checks it in baby
 //-----------------------------------------------------------------------------
 
-static void SceneManager_VSSCheckout( char const *pUserName, char const *pProjectDir, 
+static void SceneManager_VSSCheckout( char const *pUserName, char const *pProjectDir,
 	char const* pRelativeDir, char const* pDestPath, char const* pFileNameWithExtension )
 {
 	char buf[1024];
@@ -332,7 +332,7 @@ static void SceneManager_VSSCheckout( char const *pUserName, char const *pProjec
 // Checks it out/ checks it in baby
 //-----------------------------------------------------------------------------
 
-static void SceneManager_VSSCheckin( char const *pUserName, char const *pProjectDir, 
+static void SceneManager_VSSCheckin( char const *pUserName, char const *pProjectDir,
 	char const* pRelativeDir, char const* pDestPath, char const* pFileNameWithExtension )
 {
 	char buf[1024];
@@ -374,22 +374,22 @@ static void SceneManager_VSSCheckin( char const *pUserName, char const *pProject
 
 void SplitFileName( char const *in, char *path, int maxpath, char *filename, int maxfilename )
 {
-   char drive[_MAX_DRIVE];
-   char dir[_MAX_DIR];
-   char fname[_MAX_FNAME];
-   char ext[_MAX_EXT];
+	char drive[_MAX_DRIVE];
+	char dir[_MAX_DIR];
+	char fname[_MAX_FNAME];
+	char ext[_MAX_EXT];
 
-   _splitpath( in, drive, dir, fname, ext );
+	_splitpath( in, drive, dir, fname, ext );
 
-   if ( dir[0] )
-   {
+	if ( dir[0] )
+	{
 		Q_snprintf( path, maxpath, "\\%s", dir );
-   }
-   else
-   {
-	   path[0] = 0;
-   }
-   Q_snprintf( filename, maxfilename, "%s%s", fname, ext );
+	}
+	else
+	{
+		path[0] = 0;
+	}
+	Q_snprintf( filename, maxfilename, "%s%s", fname, ext );
 }
 
 
@@ -413,7 +413,7 @@ void VSS_Checkout( char const *name, bool updatestaticons /*= true*/ )
 
 	Con_ColorPrintf( 200, 200, 100, "VSS Checkout:  '%s'\n", name );
 
-	SceneManager_VSSCheckout( 
+	SceneManager_VSSCheckout(
 		ws->GetVSSUserName(),
 		ws->GetVSSProject(),
 		path,
@@ -446,7 +446,7 @@ void VSS_Checkin( char const *name, bool updatestaticons /*= true*/ )
 
 	Con_ColorPrintf( 200, 200, 100, "VSS Checkin:  '%s'\n", name );
 
-	SceneManager_VSSCheckin( 
+	SceneManager_VSSCheckin(
 		ws->GetVSSUserName(),
 		ws->GetVSSProject(),
 		path,
@@ -551,8 +551,8 @@ static StdIOWriteBinary io_out;
 #define WAVE_CUE			MAKEID('c','u','e',' ')
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &walk - 
+// Purpose:
+// Input  : &walk -
 //-----------------------------------------------------------------------------
 static void SceneManager_ParseSentence( CSentence& sentence, IterateRIFF &walk )
 {
@@ -606,8 +606,8 @@ bool SceneManager_LoadSentenceFromWavFile( char const *wavfile, CSentence& sente
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : store - 
+// Purpose:
+// Input  : store -
 //-----------------------------------------------------------------------------
 static void SceneManager_StoreValveDataChunk( CSentence& sentence, IterateOutputRIFF& store )
 {
@@ -646,7 +646,7 @@ bool SceneManager_SaveSentenceToWavFile( char const *wavfile, CSentence& sentenc
 		Con_Printf( "%s is not writable, can't save sentence data to file\n", wavfile );
 		return false;
 	}
-	
+
 	// Rename original wavfile to temp
 	filesystem->RenameFile( wavfile, tempfile, "GAME" );
 
@@ -792,7 +792,7 @@ char *Q_stristr_slash( char const *pStr, char const *pSearch )
 	AssertValidStringPtr(pStr);
 	AssertValidStringPtr(pSearch);
 
-	if (!pStr || !pSearch) 
+	if (!pStr || !pSearch)
 		return 0;
 
 	char const* pLetter = pStr;
@@ -831,8 +831,8 @@ char *Q_stristr_slash( char const *pStr, char const *pSearch )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *filename - 
+// Purpose:
+// Input  : *filename -
 //-----------------------------------------------------------------------------
 void MakeFileWriteable( const char *filename )
 {

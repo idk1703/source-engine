@@ -50,10 +50,10 @@ public:
 	float m_flTimeTillCaptured;			// time that the control zone has to be uncontested for it to succesfully change teams
 	float m_flTimeTillContested;		// time that the control zone has to be contested for for it to change to Contested mode (no team)
 	int m_iTryingToChangeToTeam;		// the team is trying to change to
-	
+
 	CUtlVector< CHandle<CBaseTFPlayer> > m_ZonePlayerList; // List of all players in the zone at the moment
 	int m_iPlayersInZone[MAX_TF_TEAMS+1];	// count of players in the zone divided by team
-	
+
 	DECLARE_DATADESC();
 };
 

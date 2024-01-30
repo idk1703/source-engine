@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -84,7 +84,7 @@ void DmElementReference_t::RemoveAttribute( CDmAttribute *pAttribute )
 
 
 //-----------------------------------------------------------------------------
-// Class factory 
+// Class factory
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmElement, CDmElement );
 
@@ -97,9 +97,9 @@ CDmElementFactoryHelper g_CDmeElement_Helper( "DmeElement", &g_CDmeElement_Facto
 
 
 //-----------------------------------------------------------------------------
-// Constructor, destructor 
+// Constructor, destructor
 //-----------------------------------------------------------------------------
-CDmElement::CDmElement( DmElementHandle_t handle, const char *pElementType, const DmObjectId_t &id, const char *pElementName, DmFileId_t fileid ) : 
+CDmElement::CDmElement( DmElementHandle_t handle, const char *pElementType, const DmObjectId_t &id, const char *pElementName, DmFileId_t fileid ) :
 	m_ref( handle ), m_Type( g_pDataModel->GetSymbol( pElementType ) ), m_fileId( fileid ),
 	m_pAttributes( NULL ), m_bDirty( false ), m_bBeingUnserialized( false ), m_bIsAcessible( true )
 {
@@ -164,27 +164,27 @@ void CDmElement::SetTypeSymbol( CUtlSymbol sym )
 	m_classType = sym;
 }
 
-bool CDmElement::IsA( UtlSymId_t typeSymbol ) const 
+bool CDmElement::IsA( UtlSymId_t typeSymbol ) const
 {
 	// NOTE: This pattern here is used to avoid a zillion virtual function
-	// calls in the implementation of IsA. The IsA_Implementation is 
+	// calls in the implementation of IsA. The IsA_Implementation is
 	// all static function calls.
-	return IsA_Implementation( typeSymbol ); 
+	return IsA_Implementation( typeSymbol );
 }
 
 int	CDmElement::GetInheritanceDepth( UtlSymId_t typeSymbol ) const
 {
 	// NOTE: This pattern here is used to avoid a zillion virtual function
-	// calls in the implementation of IsA. The IsA_Implementation is 
+	// calls in the implementation of IsA. The IsA_Implementation is
 	// all static function calls.
-	return GetInheritanceDepth_Implementation( typeSymbol, 0 ); 
+	return GetInheritanceDepth_Implementation( typeSymbol, 0 );
 }
 
 // Helper for GetInheritanceDepth
 int CDmElement::GetInheritanceDepth( const char *pTypeName ) const
 {
 	CUtlSymbol typeSymbol = g_pDataModel->GetSymbol( pTypeName );
-	return GetInheritanceDepth( typeSymbol ); 
+	return GetInheritanceDepth( typeSymbol );
 }
 
 
@@ -621,7 +621,7 @@ void CDmElement::CopyElementArrayAttribute( const CDmAttribute *pAttr, CDmAttrib
 	}
 }
 
-			
+
 //-----------------------------------------------------------------------------
 // internal recursive copy method
 // builds refmap of old element's handle -> copy's handle, and uses it to fixup references
@@ -827,7 +827,7 @@ void CDmElement::SetFileId_R( CUtlHashFast< DmElementHandle_t > &visited, DmFile
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 DmElementHandle_t CDmElement::GetHandle() const
 {
@@ -864,7 +864,7 @@ bool CDmElement::HasAttribute( const char *pAttributeName, DmAttributeType_t typ
 	CDmAttribute *pAttribute = FindAttribute( pAttributeName );
 	if ( !pAttribute )
 		return false;
-	
+
 	return ( type == AT_UNKNOWN || ( pAttribute->GetType() == type ) );
 }
 
@@ -1018,7 +1018,7 @@ void CDmElement::SetValueFromString( const char *pAttributeName, const char *pVa
 const char *CDmElement::GetValueAsString( const char *pAttributeName, char *pBuffer, size_t nBufLen ) const
 {
 	Assert( pBuffer );
-														    
+
 	const CDmAttribute *pAttribute = FindAttribute( pAttributeName );
 	if ( pAttribute )
 		return pAttribute->GetValueAsString( pBuffer, nBufLen );
@@ -1259,7 +1259,7 @@ void DestroyElement( CDmElement *pElement, TraversalDepth_t depth )
 		if ( !ShouldTraverse( pAttribute, depth ) )
 			continue;
 
-		switch( pAttribute->GetType() )	
+		switch( pAttribute->GetType() )
 		{
 		case AT_ELEMENT:
 			{

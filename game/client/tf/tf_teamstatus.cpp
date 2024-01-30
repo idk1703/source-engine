@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -35,7 +35,7 @@ CTFTeamStatusPlayerPanel::CTFTeamStatusPlayerPanel( vgui::Panel *parent, const c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamStatusPlayerPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -43,7 +43,7 @@ void CTFTeamStatusPlayerPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamStatusPlayerPanel::UpdateBorder( void )
 {
@@ -51,7 +51,7 @@ void CTFTeamStatusPlayerPanel::UpdateBorder( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFTeamStatusPlayerPanel::Update( void )
 {
@@ -128,7 +128,7 @@ bool CTFTeamStatusPlayerPanel::Update( void )
 				{
 					bgColor = bAlive ? m_ColorPortraitBGRed : m_ColorPortraitBGRedDead;
 				}
-				
+
 				m_pClassImageBG->SetBgColor( bgColor );
 			}
 			else
@@ -309,7 +309,7 @@ CTFTeamStatus::CTFTeamStatus( Panel *parent, const char *panelName ) : BaseClass
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFTeamStatus::~CTFTeamStatus()
 {
@@ -337,7 +337,7 @@ void SetGrowDir( CTFTeamStatus::EGrowDir* pGrowDir, const char* pszString )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamStatus::ApplySettings( KeyValues *inResourceData )
 {
@@ -359,7 +359,7 @@ void CTFTeamStatus::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamStatus::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -369,7 +369,7 @@ void CTFTeamStatus::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamStatus::PerformLayout( void )
 {
@@ -427,7 +427,7 @@ void CTFTeamStatus::PerformLayout( void )
 
 		// Local player is always the innermost panel
 		int nTeamPanelIndex = bIsLocalPlayerPanel ? 0
-							: iTeam == nLocalPlayerTeam ? iProcessed + 1 
+							: iTeam == nLocalPlayerTeam ? iProcessed + 1
 							: iProcessed;
 
 		// Setup X-position and widths
@@ -468,7 +468,7 @@ void CTFTeamStatus::PerformLayout( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamStatus::Reset()
 {
@@ -481,7 +481,7 @@ void CTFTeamStatus::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFTeamStatus::ShouldDraw( void )
 {
@@ -502,14 +502,14 @@ bool CTFTeamStatus::ShouldDraw( void )
 			return false;
 
 		if ( TFGameRules()->ShowMatchSummary() )
-			return false; 
+			return false;
 	}
 
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamStatus::OnTick()
 {
@@ -525,7 +525,7 @@ void CTFTeamStatus::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFTeamStatusPlayerPanel *CTFTeamStatus::GetOrAddPanel( int iPanelIndex )
 {
@@ -546,7 +546,7 @@ CTFTeamStatusPlayerPanel *CTFTeamStatus::GetOrAddPanel( int iPanelIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamStatus::RecalculatePlayerPanels( void )
 {
@@ -602,12 +602,12 @@ void CTFTeamStatus::RecalculatePlayerPanels( void )
 
 	if ( bNeedsLayout )
 	{
-		InvalidateLayout();	
+		InvalidateLayout();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamStatus::UpdatePlayerPanels( void )
 {

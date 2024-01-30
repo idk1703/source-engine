@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,9 +24,9 @@ extern void ComputeController( IVP_U_Float_Point &currentSpeed, const IVP_U_Floa
 
 struct shadowcontrol_params_t
 {
-	shadowcontrol_params_t() 
-	{ 
-		lastPosition.set_to_zero(); 
+	shadowcontrol_params_t()
+	{
+		lastPosition.set_to_zero();
 		lastImpulse.set_to_zero();
 	}
 

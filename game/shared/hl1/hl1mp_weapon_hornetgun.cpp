@@ -39,7 +39,7 @@ class CWeaponHgun : public CBaseHL1MPCombatWeapon
 	DECLARE_CLASS( CWeaponHgun, CBaseHL1MPCombatWeapon );
 public:
 
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponHgun( void );
@@ -109,7 +109,7 @@ CWeaponHgun::CWeaponHgun( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponHgun::Precache( void )
 {
@@ -157,7 +157,7 @@ void CWeaponHgun::PrimaryAttack( void )
 #endif
 
 	m_flRechargeTime = gpGlobals->curtime + 0.5;
-	
+
 	pPlayer->RemoveAmmo( 1, m_iPrimaryAmmoType );
 
 	pPlayer->ViewPunch( QAngle( -2, 0, 0 ) );
@@ -289,14 +289,14 @@ bool CWeaponHgun::Holster( CBaseCombatWeapon *pSwitchingTo )
 		CHL1_Player *pPlayer = ToHL1Player( GetOwner() );
 		if ( pPlayer )
 		{
-#if !defined(CLIENT_DLL)            
+#if !defined(CLIENT_DLL)
 			//!!!HACKHACK - can't select hornetgun if it's empty! no way to get ammo for it, either.
-            int iCount = pPlayer->GetAmmoCount( m_iPrimaryAmmoType );
-            if ( iCount <= 0 )
-            {
-                pPlayer->GiveAmmo( iCount+1, m_iPrimaryAmmoType, true );
-            }
-#endif            
+	int iCount = pPlayer->GetAmmoCount( m_iPrimaryAmmoType );
+	if ( iCount <= 0 )
+	{
+	pPlayer->GiveAmmo( iCount+1, m_iPrimaryAmmoType, true );
+	}
+#endif
 		}
 	}
 

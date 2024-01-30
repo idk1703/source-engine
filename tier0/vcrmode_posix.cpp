@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -41,7 +41,7 @@ VCRMode_t		g_OldVCRMode = (VCRMode_t)-1;		// Stored temporarily between SetEnabl
 int			g_iCurEvent = 0;
 
 int			g_CurFilePos = 0;				// So it knows when we're done playing back.
-int			g_FileLen = 0;					
+int			g_FileLen = 0;
 
 VCREvent	g_LastReadEvent = (VCREvent)-1;	// Last VCR_ReadEvent() call.
 
@@ -83,11 +83,11 @@ static void VCR_Read(void *pDest, int size)
 	}
 
 	fread(pDest, 1, size, g_pVCRFile);
-	
+
 	g_CurFilePos += size;
-	
+
 	VCR_RuntimeAssert(g_CurFilePos <= g_FileLen);
-	
+
 	if(g_CurFilePos >= g_FileLen)
 	{
 		VCREnd();
@@ -123,7 +123,7 @@ void OutputDebugStringFormat( const char *pMsg, ... )
 	_vsnprintf( msg, sizeof( msg )-1, pMsg, marker );
 	va_end( marker );
 	int len = strlen( msg );
-	
+
 	if ( g_bTraceRead )
 	{
 		char tempData[4096];
@@ -221,7 +221,7 @@ static int VCR_Start( char const *pFilename, bool bRecord, IVCRHelpers *pHelpers
 	unsigned long version;
 
 	g_pHelpers = pHelpers;
-	
+
 	VCREnd();
 
 	EXTENDEDTRACEINITIALIZE( "/tmp/hl2" );
@@ -263,7 +263,7 @@ static int VCR_Start( char const *pFilename, bool bRecord, IVCRHelpers *pHelpers
 				VCREnd();
 				return FALSE;
 			}
-			
+
 			g_VCRMode = VCR_Playback;
 			return TRUE;
 		}
@@ -329,7 +329,7 @@ static void VCR_SyncToken(char const *pToken)
 		assert( intLen <= 255 );
 
 		len = (unsigned char)intLen;
-		
+
 		VCR_Write(&len, 1);
 		VCR_Write(pToken, len);
 	}
@@ -339,7 +339,7 @@ static void VCR_SyncToken(char const *pToken)
 
 		VCR_Read(&len, 1);
 		VCR_Read(test, len);
-		
+
 		VCR_RuntimeAssert( len == (unsigned char)strlen(pToken) );
 		VCR_RuntimeAssert( memcmp(pToken, test, len) == 0 );
 	}
@@ -365,10 +365,10 @@ static double VCR_Hook_Sys_FloatTime(double time)
 
 
 static int VCR_Hook_PeekMessage(
-	struct tagMSG *msg, 
-	void *hWnd, 
-	unsigned int wMsgFilterMin, 
-	unsigned int wMsgFilterMax, 
+	struct tagMSG *msg,
+	void *hWnd,
+	unsigned int wMsgFilterMin,
+	unsigned int wMsgFilterMax,
 	unsigned int wRemoveMsg
 	)
 {
@@ -382,7 +382,7 @@ void VCR_Hook_RecordGameMsg( const InputEvent_t& event )
 	if ( g_VCRMode == VCR_Record )
 	{
 		VCR_Event( VCREvent_GameMsg );
-		
+
 		char val = 1;
 		VCR_WriteVal( val );
 		VCR_WriteVal( event.m_nType );
@@ -409,7 +409,7 @@ bool VCR_Hook_PlaybackGameMsg( InputEvent_t* pEvent  )
 	if ( g_VCRMode == VCR_Playback )
 	{
 		VCR_Event( VCREvent_GameMsg );
-		
+
 		char bMsg;
 		VCR_ReadVal( bMsg );
 		if ( bMsg )
@@ -421,7 +421,7 @@ bool VCR_Hook_PlaybackGameMsg( InputEvent_t* pEvent  )
 			return true;
 		}
 	}
-	
+
 	return false;
 }
 
@@ -481,7 +481,7 @@ static int VCR_Hook_recvfrom(int s, char *buf, int len, int flags, struct sockad
 			else
 			{
 				VCR_Write( buf, ret );
-				
+
 				char bFrom = !!from;
 				VCR_WriteVal( bFrom );
 				if ( bFrom )
@@ -600,7 +600,7 @@ static char* VCR_Hook_GetCommandLine()
 			VCR_Write(ret, len);
 		}
 	}
-	
+
 	return ret;
 }
 
@@ -626,7 +626,7 @@ static long VCR_Hook_RegQueryValueEx(void *hKey, char const *lpValueName, unsign
 }
 
 
-static long VCR_Hook_RegCreateKeyEx(void *hKey, char const *lpSubKey, unsigned long Reserved, char *lpClass, unsigned long dwOptions, 
+static long VCR_Hook_RegCreateKeyEx(void *hKey, char const *lpSubKey, unsigned long Reserved, char *lpClass, unsigned long dwOptions,
 	unsigned long samDesired, void *lpSecurityAttributes, void *phkResult, unsigned long *lpdwDisposition)
 {
 	Assert( "VCR_Hook_RegCreateKeyEx unsupported" );
@@ -690,153 +690,153 @@ short VCR_Hook_GetKeyState( int nVirtKey )
 
 void VCR_GenericRecord( const char *pEventName, const void *pData, int len )
 {
-        VCR_Event( VCREvent_Generic );
+	VCR_Event( VCREvent_Generic );
 
-        if ( g_VCRMode != VCR_Record )
-                Error( "VCR_GenericRecord( %s ): not recording a VCR file", pEventName );
+	if ( g_VCRMode != VCR_Record )
+		Error( "VCR_GenericRecord( %s ): not recording a VCR file", pEventName );
 
-        // Write the event name (or 255 if none).
-        int nameLen = 255;
-        if ( pEventName )
-        {
-                nameLen = strlen( pEventName ) + 1;
-                if ( nameLen >= 255 )
-                {
-                        VCR_Error( "VCR_GenericRecord( %s ): nameLen too long (%d)", pEventName, nameLen );
-                        return;
-                }
-        }
-        unsigned char ucNameLen = (unsigned char)nameLen;
-        VCR_WriteVal( ucNameLen );
-        VCR_Write( pEventName, ucNameLen );
+	// Write the event name (or 255 if none).
+	int nameLen = 255;
+	if ( pEventName )
+	{
+		nameLen = strlen( pEventName ) + 1;
+		if ( nameLen >= 255 )
+		{
+			VCR_Error( "VCR_GenericRecord( %s ): nameLen too long (%d)", pEventName, nameLen );
+			return;
+		}
+	}
+	unsigned char ucNameLen = (unsigned char)nameLen;
+	VCR_WriteVal( ucNameLen );
+	VCR_Write( pEventName, ucNameLen );
 
-        // Write the data.
-        VCR_WriteVal( len );
-        VCR_Write( pData, len );
+	// Write the data.
+	VCR_WriteVal( len );
+	VCR_Write( pData, len );
 }
 
 
 int VCR_GenericPlayback( const char *pEventName, void *pOutData, int maxLen, bool bForceSameLen )
 {
-        VCR_Event( VCREvent_Generic );
+	VCR_Event( VCREvent_Generic );
 
-        if ( g_VCRMode != VCR_Playback )
-                Error( "VCR_Playback( %s ): not playing back a VCR file", pEventName );
+	if ( g_VCRMode != VCR_Playback )
+		Error( "VCR_Playback( %s ): not playing back a VCR file", pEventName );
 
-        unsigned char nameLen;
-        VCR_ReadVal( nameLen );
-        if ( nameLen != 255 )
-        {
-                char testName[512];
-                VCR_Read( testName, nameLen );
-                if ( strcmp( pEventName, testName ) != 0 )
-                {
-                        VCR_Error( "VCR_GenericPlayback( %s ) - event name does not match '%s'", pEventName, testName );
-                        return 0;
-                }
-        }
+	unsigned char nameLen;
+	VCR_ReadVal( nameLen );
+	if ( nameLen != 255 )
+	{
+		char testName[512];
+		VCR_Read( testName, nameLen );
+		if ( strcmp( pEventName, testName ) != 0 )
+		{
+			VCR_Error( "VCR_GenericPlayback( %s ) - event name does not match '%s'", pEventName, testName );
+			return 0;
+		}
+	}
 
-        int dataLen;
-        VCR_ReadVal( dataLen );
-        if ( dataLen > maxLen )
-        {
-                VCR_Error( "VCR_GenericPlayback( %s ) - generic data too long (greater than maxLen: %d)", pEventName, maxLen );
-                return 0;
-        }
-        else if ( bForceSameLen && dataLen != maxLen )
-        {
-                VCR_Error( "VCR_GenericPlayback( %s ) - data size in file (%d) different than desired (%d)", pEventName, dataLen, maxLen );
-                return 0;
-        }
+	int dataLen;
+	VCR_ReadVal( dataLen );
+	if ( dataLen > maxLen )
+	{
+		VCR_Error( "VCR_GenericPlayback( %s ) - generic data too long (greater than maxLen: %d)", pEventName, maxLen );
+		return 0;
+	}
+	else if ( bForceSameLen && dataLen != maxLen )
+	{
+		VCR_Error( "VCR_GenericPlayback( %s ) - data size in file (%d) different than desired (%d)", pEventName, dataLen, maxLen );
+		return 0;
+	}
 
-        VCR_Read( pOutData, dataLen );
-        return dataLen;
+	VCR_Read( pOutData, dataLen );
+	return dataLen;
 }
 
 
 void VCR_GenericValue( const char *pEventName, void *pData, int maxLen )
 {
-        if ( g_VCRMode == VCR_Record )
-                VCR_GenericRecord( pEventName, pData, maxLen );
-        else if ( g_VCRMode == VCR_Playback )
-                VCR_GenericPlayback( pEventName, pData, maxLen, true );
+	if ( g_VCRMode == VCR_Record )
+		VCR_GenericRecord( pEventName, pData, maxLen );
+	else if ( g_VCRMode == VCR_Playback )
+		VCR_GenericPlayback( pEventName, pData, maxLen, true );
 }
 
 
 static int VCR_Hook_recv(int s, char *buf, int len, int flags)
 {
-        VCR_Event(VCREvent_recv);
+	VCR_Event(VCREvent_recv);
 
-        int ret;
-        if ( g_VCRMode == VCR_Playback )
-        {
-                // Get the result from our file.
-                VCR_Read(&ret, sizeof(ret));
-                if(ret == -1)
-                {
-                        int err;
-                        VCR_ReadVal(err);
-                        errno = err;
-                }
-                else
-                {
-                        VCR_Read( buf, ret );
-                }
-        }
-        else
-        {
-                ret = recv( s, buf, len, flags );
+	int ret;
+	if ( g_VCRMode == VCR_Playback )
+	{
+		// Get the result from our file.
+		VCR_Read(&ret, sizeof(ret));
+		if(ret == -1)
+		{
+			int err;
+			VCR_ReadVal(err);
+			errno = err;
+		}
+		else
+		{
+			VCR_Read( buf, ret );
+		}
+	}
+	else
+	{
+		ret = recv( s, buf, len, flags );
 
-                if ( g_VCRMode == VCR_Record )
-                {
-                        // Record the result.
-                        VCR_Write(&ret, sizeof(ret));
-                        if(ret == -1)
-                        {
-                                VCR_WriteVal(errno);
-                        }
-                        else
-                        {
-                                VCR_Write( buf, ret );
-                        }
-                }
-        }
+		if ( g_VCRMode == VCR_Record )
+		{
+			// Record the result.
+			VCR_Write(&ret, sizeof(ret));
+			if(ret == -1)
+			{
+				VCR_WriteVal(errno);
+			}
+			else
+			{
+				VCR_Write( buf, ret );
+			}
+		}
+	}
 
-        return ret;
+	return ret;
 }
 
 static int VCR_Hook_send(int s, const char *buf, int len, int flags)
 {
-        VCR_Event(VCREvent_send);
+	VCR_Event(VCREvent_send);
 
-        int ret;
-        if ( g_VCRMode == VCR_Playback )
-        {
-                // Get the result from our file.
-                VCR_Read(&ret, sizeof(ret));
-                if(ret == -1)
-                {
-                        int err;
-                        VCR_ReadVal(err);
+	int ret;
+	if ( g_VCRMode == VCR_Playback )
+	{
+		// Get the result from our file.
+		VCR_Read(&ret, sizeof(ret));
+		if(ret == -1)
+		{
+			int err;
+			VCR_ReadVal(err);
 			errno = err;
-                }
-        }
-        else
-        {
-                ret = send( s, buf, len, flags );
+		}
+	}
+	else
+	{
+		ret = send( s, buf, len, flags );
 
-                if ( g_VCRMode == VCR_Record )
-                {
-                        // Record the result.
-                        VCR_Write(&ret, sizeof(ret));
-                        if(ret == -1)
-                        {
-                                VCR_WriteVal(errno);
-                        }
-                }
-        }
+		if ( g_VCRMode == VCR_Record )
+		{
+			// Record the result.
+			VCR_Write(&ret, sizeof(ret));
+			if(ret == -1)
+			{
+				VCR_WriteVal(errno);
+			}
+		}
+	}
 
-        return ret;
+	return ret;
 }
 
 
@@ -853,22 +853,22 @@ double VCR_GetPercentCompleted()
 	}
 }
 
-void* VCR_CreateThread( 
-					   void *lpThreadAttributes,
-					   unsigned long dwStackSize,
-					   void *lpStartAddress,
-					   void *lpParameter,
-					   unsigned long dwCreationFlags,
-					   unsigned long *lpThreadID )
-{	
+void* VCR_CreateThread(
+					void *lpThreadAttributes,
+					unsigned long dwStackSize,
+					void *lpStartAddress,
+					void *lpParameter,
+					unsigned long dwCreationFlags,
+					unsigned long *lpThreadID )
+{
 	return CreateSimpleThread( (ThreadFunc_t)lpStartAddress, lpParameter, lpThreadID, 0 );
 }
-					   
+
 
 
 unsigned long VCR_WaitForSingleObject(
-									  void *handle,
-									  unsigned long dwMilliseconds )
+									void *handle,
+									unsigned long dwMilliseconds )
 {
 	return -1;
 }
@@ -890,7 +890,7 @@ void VCR_Hook_Time( long *today )
 	//       until about 2038 to do that before we overflow a long.
 	time_t curTime;
 	time( &curTime );
-			
+
 	VCR_Event( VCREvent_Time );
 	if ( g_VCRMode == VCR_Playback )
 	{
@@ -900,7 +900,7 @@ void VCR_Hook_Time( long *today )
 	{
 		VCR_Write( &curTime, sizeof( curTime ) );
 	}
-	
+
 	*today = (long)curTime;
 }
 
@@ -949,10 +949,10 @@ VCR_t g_VCR =
 	VCR_Hook_LocalTime,
 	VCR_Hook_GetKeyState,
 	VCR_Hook_recv,
-        VCR_Hook_send,
-        VCR_GenericRecord,
-        VCR_GenericPlayback,
-        VCR_GenericValue,
+	VCR_Hook_send,
+	VCR_GenericRecord,
+	VCR_GenericPlayback,
+	VCR_GenericValue,
 
 	VCR_GetPercentCompleted,
 	VCR_CreateThread,
@@ -962,9 +962,7 @@ VCR_t g_VCR =
 	VCR_GenericString,
 	VCR_GenericValueVerify,
 	VCR_WaitForMultipleObjects,
-	
+
 };
 
 VCR_t *g_pVCR = &g_VCR;
-
-

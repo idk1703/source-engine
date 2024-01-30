@@ -106,7 +106,7 @@ struct AI_MoveSuggestion_t
 
 	// The causing entity, if any
 	EHANDLE				hObstacleEntity;
-	
+
 	// Flags
 	unsigned			flags;
 

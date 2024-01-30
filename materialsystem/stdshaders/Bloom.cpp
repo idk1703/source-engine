@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -28,7 +28,7 @@ BEGIN_VS_SHADER_FLAGS( Bloom, "Help for Bloom", SHADER_NOT_EDITABLE )
 			LoadTexture( BLURTEXTURE );
 		}
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		// Requires DX9 + above

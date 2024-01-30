@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,4 +37,4 @@ private:
 	bool m_bDisabled;
 };
 
-#endif // ENTITY_PASSTIME_BALL_SPAWN_H  
+#endif // ENTITY_PASSTIME_BALL_SPAWN_H

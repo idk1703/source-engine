@@ -1,19 +1,19 @@
 /* Copyright (C) 2000 MySQL AB & MySQL Finland AB & TCX DataKonsult AB
-   
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-   
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-   
-   You should have received a copy of the GNU Library General Public
-   License along with this library; if not, write to the Free
-   Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
-   MA 02111-1307, USA */
+
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Library General Public
+	License as published by the Free Software Foundation; either
+	version 2 of the License, or (at your option) any later version.
+
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Library General Public License for more details.
+
+	You should have received a copy of the GNU Library General Public
+	License along with this library; if not, write to the Free
+	Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+	MA 02111-1307, USA */
 
 /*
 ** Common definition between mysql server & client
@@ -37,12 +37,12 @@
 #endif /* __WIN__ */
 
 enum enum_server_command {COM_SLEEP,COM_QUIT,COM_INIT_DB,COM_QUERY,
-			  COM_FIELD_LIST,COM_CREATE_DB,COM_DROP_DB,COM_REFRESH,
-			  COM_SHUTDOWN,COM_STATISTICS,
-			  COM_PROCESS_INFO,COM_CONNECT,COM_PROCESS_KILL,
-			  COM_DEBUG,COM_PING,COM_TIME,COM_DELAYED_INSERT,
-			  COM_CHANGE_USER, COM_BINLOG_DUMP,
-                          COM_TABLE_DUMP, COM_CONNECT_OUT};
+				COM_FIELD_LIST,COM_CREATE_DB,COM_DROP_DB,COM_REFRESH,
+				COM_SHUTDOWN,COM_STATISTICS,
+				COM_PROCESS_INFO,COM_CONNECT,COM_PROCESS_KILL,
+				COM_DEBUG,COM_PING,COM_TIME,COM_DELAYED_INSERT,
+				COM_CHANGE_USER, COM_BINLOG_DUMP,
+													COM_TABLE_DUMP, COM_CONNECT_OUT};
 
 #define NOT_NULL_FLAG	1		/* Field can't be NULL */
 #define PRI_KEY_FLAG	2		/* Field is part of a primary key */
@@ -69,9 +69,9 @@ enum enum_server_command {COM_SLEEP,COM_QUIT,COM_INIT_DB,COM_QUERY,
 #define REFRESH_STATUS		16	/* Flush status variables */
 #define REFRESH_THREADS		32	/* Flush thread cache */
 #define REFRESH_SLAVE           64      /* Reset master info and restart slave
-					   thread */
+						thread */
 #define REFRESH_MASTER          128     /* Remove all bin logs in the index
-					   and truncate the index */
+						and truncate the index */
 
 /* The following can't be set with mysql_refresh() */
 #define REFRESH_READ_LOCK	16384	/* Lock tables for read */
@@ -114,22 +114,22 @@ typedef struct st_vio Vio;
 #define MAX_BLOB_WIDTH		8192	/* Default width for blob */
 
 typedef struct st_net {
-  Vio* vio;
-  my_socket fd;					/* For Perl DBI/dbd */
-  int fcntl;
-  unsigned char *buff,*buff_end,*write_pos,*read_pos;
-  char last_error[MYSQL_ERRMSG_SIZE];
-  unsigned int last_errno,max_packet,timeout,pkt_nr;
-  unsigned char error;
-  my_bool return_errno,compress;
-  my_bool no_send_ok; /* needed if we are doing several
-   queries in one command ( as in LOAD TABLE ... FROM MASTER ),
-   and do not want to confuse the client with OK at the wrong time
-		      */
-  unsigned long remain_in_buf,length, buf_length, where_b;
-  unsigned int *return_status;
-  unsigned char reading_or_writing;
-  char save_char;
+	Vio* vio;
+	my_socket fd;					/* For Perl DBI/dbd */
+	int fcntl;
+	unsigned char *buff,*buff_end,*write_pos,*read_pos;
+	char last_error[MYSQL_ERRMSG_SIZE];
+	unsigned int last_errno,max_packet,timeout,pkt_nr;
+	unsigned char error;
+	my_bool return_errno,compress;
+	my_bool no_send_ok; /* needed if we are doing several
+	queries in one command ( as in LOAD TABLE ... FROM MASTER ),
+	and do not want to confuse the client with OK at the wrong time
+					*/
+	unsigned long remain_in_buf,length, buf_length, where_b;
+	unsigned int *return_status;
+	unsigned char reading_or_writing;
+	char save_char;
 } NET;
 
 #define packet_error ((unsigned int) -1)
@@ -166,49 +166,49 @@ void	net_clear(NET *net);
 int	net_flush(NET *net);
 int	my_net_write(NET *net,const char *packet,unsigned long len);
 int	net_write_command(NET *net,unsigned char command,const char *packet,
-			  unsigned long len);
+				unsigned long len);
 int	net_real_write(NET *net,const char *packet,unsigned long len);
 unsigned int	my_net_read(NET *net);
 
 struct rand_struct {
-  unsigned long seed1,seed2,max_value;
-  double max_value_dbl;
+	unsigned long seed1,seed2,max_value;
+	double max_value_dbl;
 };
 
-  /* The following is for user defined functions */
+	/* The following is for user defined functions */
 
 enum Item_result {STRING_RESULT,REAL_RESULT,INT_RESULT};
 
 typedef struct st_udf_args
 {
-  unsigned int arg_count;		/* Number of arguments */
-  enum Item_result *arg_type;		/* Pointer to item_results */
-  char **args;				/* Pointer to argument */
-  unsigned long *lengths;		/* Length of string arguments */
-  char *maybe_null;			/* Set to 1 for all maybe_null args */
+	unsigned int arg_count;		/* Number of arguments */
+	enum Item_result *arg_type;		/* Pointer to item_results */
+	char **args;				/* Pointer to argument */
+	unsigned long *lengths;		/* Length of string arguments */
+	char *maybe_null;			/* Set to 1 for all maybe_null args */
 } UDF_ARGS;
 
-  /* This holds information about the result */
+	/* This holds information about the result */
 
 typedef struct st_udf_init
 {
-  my_bool maybe_null;			/* 1 if function can return NULL */
-  unsigned int decimals;		/* for real functions */
-  unsigned int max_length;		/* For string functions */
-  char	  *ptr;				/* free pointer for function data */
-  my_bool const_item;			/* 0 if result is independent of arguments */
+	my_bool maybe_null;			/* 1 if function can return NULL */
+	unsigned int decimals;		/* for real functions */
+	unsigned int max_length;		/* For string functions */
+	char	  *ptr;				/* free pointer for function data */
+	my_bool const_item;			/* 0 if result is independent of arguments */
 } UDF_INIT;
 
-  /* Constants when using compression */
+	/* Constants when using compression */
 #define NET_HEADER_SIZE 4		/* standard header size */
 #define COMP_HEADER_SIZE 3		/* compression header extra size */
 
-  /* Prototypes to password functions */
+	/* Prototypes to password functions */
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-  
+
 void randominit(struct rand_struct *,unsigned long seed1,
 		unsigned long seed2);
 double rnd(struct rand_struct *);
@@ -216,9 +216,9 @@ void make_scrambled_password(char *to,const char *password);
 void get_salt_from_password(unsigned long *res,const char *password);
 void make_password_from_salt(char *to, unsigned long *hash_res);
 char *scramble(char *to,const char *message,const char *password,
-	       my_bool old_ver);
+				my_bool old_ver);
 my_bool check_scramble(const char *, const char *message,
-		       unsigned long *salt,my_bool old_ver);
+					unsigned long *salt,my_bool old_ver);
 char *get_tty_password(char *opt_message);
 void hash_password(unsigned long *result, const char *password);
 
@@ -226,7 +226,7 @@ void hash_password(unsigned long *result, const char *password);
 
 void my_init(void);
 void load_defaults(const char *conf_file, const char **groups,
-		   int *argc, char ***argv);
+			int *argc, char ***argv);
 my_bool my_thread_init(void);
 void my_thread_end(void);
 

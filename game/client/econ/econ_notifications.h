@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -42,7 +42,7 @@ public:
 	virtual float GetExpireTime() const;
 
 	virtual float GetInGameLifeTime() const;
-	
+
 	void SetIsInUse( bool bInUse );
 	bool GetIsInUse() const;
 

@@ -59,16 +59,16 @@ public:
 
 	virtual const char *GetName() = 0;
 
-	virtual bool KeyValue( const char *szKeyName, const char *szValue ) 
+	virtual bool KeyValue( const char *szKeyName, const char *szValue )
 	{
 		return false;
 	}
-	
+
 	bool IsRunning()								{ Assert( GetOuter() ); return ( GetOuter()->GetRunningBehavior() == this ); }
 	virtual bool CanSelectSchedule()				{ return true; }
 	virtual void BeginScheduleSelection() 			{}
 	virtual void EndScheduleSelection() 			{}
-	
+
 	void SetBackBridge( IBehaviorBackBridge *pBackBridge )
 	{
 		Assert( m_pBackBridge == NULL || pBackBridge == NULL );
@@ -154,7 +154,7 @@ protected:
 	virtual void UpdateOnRemove()								{}
 	virtual void Event_Killed( const CTakeDamageInfo &info )	{}
 	virtual void CleanupOnDeath( CBaseEntity *pCulprit, bool bFireDeathOutput ) {}
-	
+
 	virtual void PrescheduleThink();
 	virtual void OnScheduleChange();
 	virtual void OnStartSchedule( int scheduleType );
@@ -177,7 +177,7 @@ protected:
 	void			ClearHintNode( float reuseDelay = 0.0 )	{ GetOuter()->ClearHintNode( reuseDelay ); }
 
 protected:
-	// Used by derived classes to chain a task to a task that might not be the 
+	// Used by derived classes to chain a task to a task that might not be the
 	// one they are currently handling:
 	void	ChainStartTask( int task, float taskData = 0 );
 	void	ChainRunTask( int task, float taskData = 0 );
@@ -220,13 +220,13 @@ protected:
 
 	virtual void OnChangeActiveWeapon( CBaseCombatWeapon *pOldWeapon, CBaseCombatWeapon *pNewWeapon ) {};
 	virtual bool SpeakMapmakerInterruptConcept( string_t iszConcept ) { return false; };
-	
+
 	virtual void OnRestore() {};
-	
+
 	bool NotifyChangeBehaviorStatus( bool fCanFinishSchedule = false );
 
 	bool HaveSequenceForActivity( Activity activity )		{ return GetOuter()->HaveSequenceForActivity( activity ); }
-	
+
 	//---------------------------------
 
 	string_t			GetHintGroup()			{ return GetOuter()->GetHintGroup();	}
@@ -253,7 +253,7 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: Template provides provides back bridge to owning class and 
+// Purpose: Template provides provides back bridge to owning class and
 //			establishes namespace settings
 //-----------------------------------------------------------------------------
 
@@ -262,7 +262,7 @@ class CAI_Behavior : public CAI_ComponentWithOuter<NPC_CLASS, CAI_BehaviorBase>
 {
 public:
 	DECLARE_CLASS_NOFRIEND( CAI_Behavior, NPC_CLASS );
-	
+
 	enum
 	{
 		NEXT_TASK 			= ID_SPACE_OFFSET,
@@ -324,7 +324,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Some bridges a little more complicated to allow behavior to see 
+// Purpose: Some bridges a little more complicated to allow behavior to see
 //			what base class would do or control order in which it's donw
 //-----------------------------------------------------------------------------
 
@@ -399,7 +399,7 @@ public:
 
 	// Automatically called during entity construction, derived class calls AddBehavior()
 	virtual bool 	CreateBehaviors()	{ return true; }
-	
+
 	// forces movement and sets a new schedule
 	virtual bool	ScheduledMoveToGoalEntity( int scheduleType, CBaseEntity *pGoalEntity, Activity movementActivity );
 	virtual bool	ScheduledFollowPath( int scheduleType, CBaseEntity *pPathStart, Activity movementActivity );
@@ -427,7 +427,7 @@ public:
 	void			BuildScheduleTestBits();
 
 	void			OnChangeHintGroup( string_t oldGroup, string_t newGroup );
-	
+
 	Activity 		NPC_TranslateActivity( Activity activity );
 
 	bool			IsCurTaskContinuousMove();
@@ -457,7 +457,7 @@ public:
 	Activity		GetFlinchActivity( bool bHeavyDamage, bool bGesture );
 	bool			OnCalcBaseMove( AILocalMoveGoal_t *pMoveGoal, float distClear, AIMoveResult_t *pResult );
 	void			HandleAnimEvent( animevent_t *pEvent );
-	
+
 	bool			ShouldAlwaysThink();
 
 	void			OnChangeActiveWeapon( CBaseCombatWeapon *pOldWeapon, CBaseCombatWeapon *pNewWeapon );
@@ -475,7 +475,7 @@ public:
 
 protected:
 	void			AddBehavior( CAI_BehaviorBase *pBehavior );
-	
+
 	bool			BehaviorSelectSchedule();
 	virtual bool	ShouldBehaviorSelectSchedule( CAI_BehaviorBase *pBehavior ) { return true; }
 
@@ -524,11 +524,11 @@ private:
 	CUtlVector<CAI_BehaviorBase *> m_Behaviors;
 
 	bool			m_bCalledBehaviorSelectSchedule;
-	
+
 #ifdef DEBUG
 	bool 			m_fDebugInCreateBehaviors;
 #endif
-	
+
 };
 
 //-----------------------------------------------------------------------------
@@ -610,7 +610,7 @@ inline bool CAI_BehaviorBase::BridgeAimGun( void )
 
 inline void CAI_BehaviorBase::ChainStartTask( int task, float taskData )
 {
-	Task_t tempTask = { task, taskData }; 
+	Task_t tempTask = { task, taskData };
 
 	bool fPrevOverride = m_fOverrode;
 	GetOuter()->StartTask( (const Task_t *)&tempTask );
@@ -620,8 +620,8 @@ inline void CAI_BehaviorBase::ChainStartTask( int task, float taskData )
 //-------------------------------------
 
 inline void CAI_BehaviorBase::ChainRunTask( int task, float taskData )
-{ 
-	Task_t tempTask = { task, taskData }; 
+{
+	Task_t tempTask = { task, taskData };
 	bool fPrevOverride = m_fOverrode;
 	GetOuter()->RunTask( (const Task_t *)	&tempTask );
 	m_fOverrode = fPrevOverride;;
@@ -633,7 +633,7 @@ inline int CAI_BehaviorBase::BridgeTranslateSchedule( int scheduleType )
 {
 	int localId = AI_IdIsGlobal( scheduleType ) ? GetClassScheduleIdSpace()->ScheduleGlobalToLocal( scheduleType ) : scheduleType;
 	int result = TranslateSchedule( localId );
-	
+
 	return result;
 }
 
@@ -903,8 +903,8 @@ inline void CAI_BehaviorHost<BASE_NPC>::CleanupOnDeath( CBaseEntity *pCulprit, b
 //-------------------------------------
 
 template <class BASE_NPC>
-inline void CAI_BehaviorHost<BASE_NPC>::GatherConditions()					
-{ 
+inline void CAI_BehaviorHost<BASE_NPC>::GatherConditions()
+{
 	// Iterate over behaviors and call GatherConditionsNotActive() on each behavior
 	// not currently active.
 	for( int i = 0; i < m_Behaviors.Count(); i++ )
@@ -916,7 +916,7 @@ inline void CAI_BehaviorHost<BASE_NPC>::GatherConditions()
 	}
 
 	if ( m_pCurBehavior )
-		m_pCurBehavior->BridgeGatherConditions(); 
+		m_pCurBehavior->BridgeGatherConditions();
 	else
 		BaseClass::GatherConditions();
 }
@@ -936,9 +936,9 @@ inline void CAI_BehaviorHost<BASE_NPC>::BackBridge_GatherConditions()
 
 template <class BASE_NPC>
 inline void CAI_BehaviorHost<BASE_NPC>::OnScheduleChange()
-{ 
+{
 	if ( m_pCurBehavior )
-		m_pCurBehavior->BridgeOnScheduleChange(); 
+		m_pCurBehavior->BridgeOnScheduleChange();
 	BaseClass::OnScheduleChange();
 }
 
@@ -948,14 +948,14 @@ template <class BASE_NPC>
 inline void CAI_BehaviorHost<BASE_NPC>::OnStartSchedule( int scheduleType )
 {
 	if ( m_pCurBehavior )
-		m_pCurBehavior->BridgeOnStartSchedule( scheduleType ); 
+		m_pCurBehavior->BridgeOnStartSchedule( scheduleType );
 	BaseClass::OnStartSchedule( scheduleType );
 }
 
 //-------------------------------------
 
 template <class BASE_NPC>
-inline int CAI_BehaviorHost<BASE_NPC>::BackBridge_SelectSchedule() 
+inline int CAI_BehaviorHost<BASE_NPC>::BackBridge_SelectSchedule()
 {
 	return BaseClass::SelectSchedule();
 }
@@ -973,7 +973,7 @@ inline bool CAI_BehaviorHost<BASE_NPC>::BehaviorSelectSchedule()
 			return true;
 		}
 	}
-	
+
 	DeferSchedulingToBehavior( NULL );
 	return false;
 }
@@ -1026,8 +1026,8 @@ inline void CAI_BehaviorHost<BASE_NPC>::ChangeBehaviorTo( CAI_BehaviorBase *pNew
 	bool change = ( m_pCurBehavior != pNewBehavior );
 	CAI_BehaviorBase *pOldBehavior = m_pCurBehavior;
 	m_pCurBehavior = pNewBehavior;
-	
-	if ( change ) 
+
+	if ( change )
 	{
 		if ( m_pCurBehavior )
 		{
@@ -1061,7 +1061,7 @@ inline CAI_BehaviorBase *CAI_BehaviorHost<BASE_NPC>::DeferSchedulingToBehavior( 
 //-------------------------------------
 
 template <class BASE_NPC>
-inline int CAI_BehaviorHost<BASE_NPC>::BackBridge_TranslateSchedule( int scheduleType ) 
+inline int CAI_BehaviorHost<BASE_NPC>::BackBridge_TranslateSchedule( int scheduleType )
 {
 	return BaseClass::TranslateSchedule( scheduleType );
 }
@@ -1069,7 +1069,7 @@ inline int CAI_BehaviorHost<BASE_NPC>::BackBridge_TranslateSchedule( int schedul
 //-------------------------------------
 
 template <class BASE_NPC>
-inline int CAI_BehaviorHost<BASE_NPC>::TranslateSchedule( int scheduleType ) 
+inline int CAI_BehaviorHost<BASE_NPC>::TranslateSchedule( int scheduleType )
 {
 	if ( m_pCurBehavior )
 	{
@@ -1086,7 +1086,7 @@ inline void CAI_BehaviorHost<BASE_NPC>::PrescheduleThink()
 	BaseClass::PrescheduleThink();
 	if ( m_pCurBehavior )
 		m_pCurBehavior->BridgePrescheduleThink();
-}	
+}
 
 //-------------------------------------
 
@@ -1181,7 +1181,7 @@ template <class BASE_NPC>
 inline void CAI_BehaviorHost<BASE_NPC>::BuildScheduleTestBits()
 {
 	if ( m_pCurBehavior )
-		m_pCurBehavior->BridgeBuildScheduleTestBits(); 
+		m_pCurBehavior->BridgeBuildScheduleTestBits();
 	BaseClass::BuildScheduleTestBits();
 }
 
@@ -1232,9 +1232,9 @@ inline bool CAI_BehaviorHost<BASE_NPC>::IsCurTaskContinuousMove()
 
 template <class BASE_NPC>
 inline void CAI_BehaviorHost<BASE_NPC>::OnMovementFailed()
-{ 
+{
 	if ( m_pCurBehavior )
-		m_pCurBehavior->BridgeOnMovementFailed(); 
+		m_pCurBehavior->BridgeOnMovementFailed();
 	BaseClass::OnMovementFailed();
 }
 
@@ -1242,9 +1242,9 @@ inline void CAI_BehaviorHost<BASE_NPC>::OnMovementFailed()
 
 template <class BASE_NPC>
 inline void CAI_BehaviorHost<BASE_NPC>::OnMovementComplete()
-{ 
+{
 	if ( m_pCurBehavior )
-		m_pCurBehavior->BridgeOnMovementComplete(); 
+		m_pCurBehavior->BridgeOnMovementComplete();
 	BaseClass::OnMovementComplete();
 }
 
@@ -1261,7 +1261,7 @@ inline float CAI_BehaviorHost<BASE_NPC>::GetDefaultNavGoalTolerance()
 //-------------------------------------
 
 template <class BASE_NPC>
-inline float CAI_BehaviorHost<BASE_NPC>::BackBridge_GetDefaultNavGoalTolerance() 
+inline float CAI_BehaviorHost<BASE_NPC>::BackBridge_GetDefaultNavGoalTolerance()
 {
 	return BaseClass::GetDefaultNavGoalTolerance();
 }
@@ -1469,7 +1469,7 @@ inline bool CAI_BehaviorHost<BASE_NPC>::IsValidEnemy( CBaseEntity *pEnemy )
 {
 	if ( m_pCurBehavior )
 		return m_pCurBehavior->BridgeIsValidEnemy( pEnemy );
-	
+
 	return BaseClass::IsValidEnemy( pEnemy );
 }
 
@@ -1480,10 +1480,10 @@ inline CBaseEntity *CAI_BehaviorHost<BASE_NPC>::BestEnemy()
 {
 	if ( m_pCurBehavior )
 		return m_pCurBehavior->BridgeBestEnemy();
-	
+
 	return BaseClass::BestEnemy();
 }
-	
+
 //-------------------------------------
 
 template <class BASE_NPC>
@@ -1540,10 +1540,10 @@ inline bool CAI_BehaviorHost<BASE_NPC>::IsValidCover( const Vector &vLocation, C
 {
 	if ( m_pCurBehavior )
 		return m_pCurBehavior->BridgeIsValidCover( vLocation, pHint );
-	
+
 	return BaseClass::IsValidCover( vLocation, pHint );
 }
-	
+
 //-------------------------------------
 
 template <class BASE_NPC>
@@ -1551,7 +1551,7 @@ inline bool CAI_BehaviorHost<BASE_NPC>::IsValidShootPosition( const Vector &vLoc
 {
 	if ( m_pCurBehavior )
 		return m_pCurBehavior->BridgeIsValidShootPosition( vLocation, pNode, pHint );
-	
+
 	return BaseClass::IsValidShootPosition( vLocation, pNode, pHint );
 }
 
@@ -1573,7 +1573,7 @@ inline bool CAI_BehaviorHost<BASE_NPC>::ShouldIgnoreSound( CSound *pSound )
 {
 	if ( m_pCurBehavior )
 		return m_pCurBehavior->BridgeShouldIgnoreSound( pSound );
-	
+
 	return BaseClass::ShouldIgnoreSound( pSound );
 }
 
@@ -1606,7 +1606,7 @@ inline bool CAI_BehaviorHost<BASE_NPC>::IsInterruptable( void )
 {
 	if ( m_pCurBehavior )
 		return m_pCurBehavior->BridgeIsInterruptable();
-	
+
 	return BaseClass::IsInterruptable();
 }
 
@@ -1683,7 +1683,7 @@ inline bool CAI_BehaviorHost<BASE_NPC>::ShouldPlayerAvoid( void )
 {
 	if ( m_pCurBehavior )
 		return m_pCurBehavior->BridgeShouldPlayerAvoid();
-	
+
 	return BaseClass::ShouldPlayerAvoid();
 }
 
@@ -1694,18 +1694,18 @@ inline int CAI_BehaviorHost<BASE_NPC>::OnTakeDamage_Alive( const CTakeDamageInfo
 {
 	if ( m_pCurBehavior )
 		return m_pCurBehavior->BridgeOnTakeDamage_Alive( info );
-	
+
 	return BaseClass::OnTakeDamage_Alive( info );
 }
 
 //-------------------------------------
 
 template <class BASE_NPC>
-inline float CAI_BehaviorHost<BASE_NPC>::GetReasonableFacingDist( void )	
+inline float CAI_BehaviorHost<BASE_NPC>::GetReasonableFacingDist( void )
 {
 	if ( m_pCurBehavior )
 		return m_pCurBehavior->BridgeGetReasonableFacingDist();
-	
+
 	return BaseClass::GetReasonableFacingDist();
 }
 
@@ -1834,7 +1834,7 @@ inline void CAI_BehaviorHost<BASE_NPC>::ModifyOrAppendCriteria( AI_CriteriaSet &
 	{
 		// Append active behavior name
 		criteriaSet.AppendCriteria( "active_behavior", GetRunningBehavior()->GetName() );
-		
+
 		m_pCurBehavior->BridgeModifyOrAppendCriteria( criteriaSet );
 		return;
 	}

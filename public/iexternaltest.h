@@ -99,7 +99,7 @@ public:
 	// returns the ISteamClient object so the test can fetch other ISteam interfaces.
 	virtual ISteamClient *SteamClient() = 0;
 
-	// deploys the gctest dll at the current AppID. This is probably not useful outside of the 
+	// deploys the gctest dll at the current AppID. This is probably not useful outside of the
 	// gctest tests.
 	virtual void YieldingDeployGC( ) = 0;
 
@@ -115,7 +115,7 @@ public:
 	// spews some text in the output
 	virtual void EmitTestOutput( const char *pchMessage ) = 0;
 
-	// used by the external test framework to clean up some things between 
+	// used by the external test framework to clean up some things between
 	// test cases. Test cases should not call this.
 	virtual void YieldingResetBetweenTests() = 0;
 
@@ -127,7 +127,7 @@ public:
 	// regression test, this will return immediately.
 	virtual void YieldingWaitForTestToFinish() = 0;
 
-	// used by the external test framework to record test success/failure in 
+	// used by the external test framework to record test success/failure in
 	// a file that buildbot can use to build reports. Tests should not call this directly.
 	virtual void UpdateProgressFile( const char *pchTestName, const char *pchStatus ) = 0;
 
@@ -233,7 +233,7 @@ public:
 	// returns the flags for the specified test
 	virtual uint32 GetTestFlags( uint32 unTest ) = 0;
 
-	// runs the specified tests. The tests should run to completion 
+	// runs the specified tests. The tests should run to completion
 	// (yielding on a regular basis) and call pETestUtils->BCheck(false)
 	// on failure
 	virtual void BRunTests( uint32 *punTests, uint32 unTestCount, IExternalTestUtils * pETestUtils ) = 0;
@@ -264,7 +264,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Allows an external test DLL to export its ability to validate its 
+// Purpose: Allows an external test DLL to export its ability to validate its
 // own allocations
 //-----------------------------------------------------------------------------
 class IExternalTestValidation

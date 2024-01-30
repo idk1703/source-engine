@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -91,7 +91,7 @@ extern int build_number( void );
 
 
 // Choke local client's/server's packets?
-extern  ConVar		host_limitlocal;      
+extern  ConVar		host_limitlocal;
 // Print a debug message when the client or server cache is missed
 extern	ConVar		host_showcachemiss;
 
@@ -172,4 +172,3 @@ extern EUniverse GetSteamUniverse();
 #define STEAMREMOTESTORAGE_CLOUD_ON		1
 
 #endif // HOST_H
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,10 +22,10 @@ class CWeaponPschreck : public CDODBaseRocketWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponPschreck, CDODBaseRocketWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponPschreck()  {}
 
 	virtual DODWeaponID GetWeaponID( void ) const		{ return WEAPON_PSCHRECK; }
@@ -47,7 +47,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_pschreck, CWeaponPschreck );
 PRECACHE_WEAPON_REGISTER( weapon_pschreck );
 
-acttable_t CWeaponPschreck::m_acttable[] = 
+acttable_t CWeaponPschreck::m_acttable[] =
 {
 	{ ACT_PRONE_IDLE,						ACT_DOD_PRONE_AIM_PSCHRECK,				false },
 	{ ACT_PRONE_FORWARD,					ACT_DOD_PRONEWALK_IDLE_PSCHRECK,		false },
@@ -74,7 +74,7 @@ acttable_t CWeaponPschreck::m_acttable[] =
 	// Reload ( zoomed or not, prone or not )
 	{ ACT_RELOAD,							ACT_DOD_RELOAD_PSCHRECK,				false },
 	{ ACT_DOD_RELOAD_CROUCH,				ACT_DOD_RELOAD_CROUCH_PSCHRECK,			false },
-	{ ACT_DOD_RELOAD_PRONE,					ACT_DOD_RELOAD_PRONE_PSCHRECK,			false },	
+	{ ACT_DOD_RELOAD_PRONE,					ACT_DOD_RELOAD_PRONE_PSCHRECK,			false },
 	{ ACT_DOD_RELOAD_DEPLOYED,				ACT_DOD_ZOOMLOAD_PSCHRECK,				false },
 	{ ACT_DOD_RELOAD_PRONE_DEPLOYED,		ACT_DOD_ZOOMLOAD_PRONE_PSCHRECK,		false },
 
@@ -92,8 +92,8 @@ void CWeaponPschreck::FireRocket( void )
 	CBasePlayer *pPlayer = GetPlayerOwner();
 
 #ifdef DBGFLAG_ASSERT
-	CPschreckRocket *pRocket = 
-#endif //DEBUG		
+	CPschreckRocket *pRocket =
+#endif //DEBUG
 		CPschreckRocket::Create( pPlayer->Weapon_ShootPosition(), pPlayer->GetAbsAngles(), pPlayer );
 
 	Assert( pRocket );

@@ -14,11 +14,11 @@ extern "C" {
 #endif
 
 typedef enum {
-    kCFURLPOSIXPathStyle = 0,
-    kCFURLHFSPathStyle,
-    kCFURLWindowsPathStyle
+	kCFURLPOSIXPathStyle = 0,
+	kCFURLHFSPathStyle,
+	kCFURLWindowsPathStyle
 } CFURLPathStyle;
-    
+
 typedef const struct __CFURL * CFURLRef;
 
 /* CFURLs are composed of two fundamental pieces - their string, and a */
@@ -83,11 +83,11 @@ CF_EXPORT
 CFURLRef CFURLCreateFromFileSystemRepresentation(CFAllocatorRef allocator, const UInt8 *buffer, CFIndex bufLen, Boolean isDirectory);
 
 CF_EXPORT
-CFURLRef CFURLCreateWithFileSystemPathRelativeToBase(CFAllocatorRef allocator, CFStringRef filePath, CFURLPathStyle pathStyle, Boolean isDirectory, CFURLRef baseURL); 
+CFURLRef CFURLCreateWithFileSystemPathRelativeToBase(CFAllocatorRef allocator, CFStringRef filePath, CFURLPathStyle pathStyle, Boolean isDirectory, CFURLRef baseURL);
 
 CF_EXPORT
 CFURLRef CFURLCreateFromFileSystemRepresentationRelativeToBase(CFAllocatorRef allocator, const UInt8 *buffer, CFIndex bufLen, Boolean isDirectory, CFURLRef baseURL);
-                                                                         
+
 /* Fills buffer with the file system's native representation of */
 /* url's path. No more than maxBufLen bytes are written to buffer. */
 /* The buffer should be at least the maximum path length for */
@@ -171,7 +171,7 @@ to request that none be.
 
 /* Returns true if anURL conforms to RFC 1808 */
 CF_EXPORT
-Boolean CFURLCanBeDecomposed(CFURLRef anURL); 
+Boolean CFURLCanBeDecomposed(CFURLRef anURL);
 
 /* The next several methods leave any percent escape sequences intact */
 
@@ -180,7 +180,7 @@ CFStringRef CFURLCopyScheme(CFURLRef anURL);
 
 /* NULL if CFURLCanBeDecomposed(anURL) is false */
 CF_EXPORT
-CFStringRef CFURLCopyNetLocation(CFURLRef anURL); 
+CFStringRef CFURLCopyNetLocation(CFURLRef anURL);
 
 /* NULL if CFURLCanBeDecomposed(anURL) is false; also does not resolve the URL */
 /* against its base.  See also CFURLCopyAbsoluteURL().  Note that, strictly */
@@ -210,7 +210,7 @@ Boolean CFURLHasDirectoryPath(CFURLRef anURL);
 /* Any additional resource specifiers after the path.  For URLs */
 /* that cannot be decomposed, this is everything except the scheme itself. */
 CF_EXPORT
-CFStringRef CFURLCopyResourceSpecifier(CFURLRef anURL); 
+CFStringRef CFURLCopyResourceSpecifier(CFURLRef anURL);
 
 CF_EXPORT
 CFStringRef CFURLCopyHostName(CFURLRef anURL);
@@ -264,7 +264,7 @@ CFURLRef CFURLCreateCopyDeletingPathExtension(CFAllocatorRef allocator, CFURLRef
 /* Fills buffer with the bytes for url, returning the number of bytes */
 /* filled.  If buffer is of insufficient size, returns -1 and no bytes */
 /* are placed in buffer.  If buffer is NULL, the needed length is */
-/* computed and returned.  The returned bytes are the original bytes */ 
+/* computed and returned.  The returned bytes are the original bytes */
 /* from which the URL was created; if the URL was created from a */
 /* string, the bytes will be the bytes of the string encoded via UTF-8  */
 CF_EXPORT
@@ -285,8 +285,8 @@ typedef enum {
 	kCFURLComponentQuery = 11,
 	kCFURLComponentFragment = 12
 } CFURLComponentType;
- 
-/* 
+
+/*
 Gets the  range of the requested component in the bytes of url, as
 returned by CFURLGetBytes().  This range is only good for use in the
 bytes returned by CFURLGetBytes!
@@ -304,7 +304,7 @@ For the URL http://www.apple.com/hotnews/
 Component           returned range      rangeIncludingSeparators
 scheme              (0, 4)              (0, 7)
 net location        (7, 13)             (4, 16)
-path                (20, 9)             (20, 9)    
+path                (20, 9)             (20, 9)
 resource specifier  (kCFNotFound, 0)    (29, 0)
 user                (kCFNotFound, 0)    (7, 0)
 password            (kCFNotFound, 0)    (7, 0)
@@ -338,7 +338,7 @@ For the URL scheme://user:pass@host:1/path/path2/file.html;params?query#fragment
 Component           returned range      rangeIncludingSeparators
 scheme              (0, 6)              (0, 9)
 net location        (9, 16)             (6, 19)
-path                (25, 21)            (25, 22) 
+path                (25, 21)            (25, 22)
 resource specifier  (47, 21)            (46, 22)
 user                (9, 4)              (6, 8)
 password            (14, 4)             (13, 6)
@@ -400,4 +400,3 @@ Boolean CFURLGetFSRef(CFURLRef url, struct FSRef *fsRef);
 #endif
 
 #endif /* !__COREFOUNDATION_CFURL__ */
-

@@ -83,12 +83,12 @@ IViewPortPanel* CHudViewport::CreatePanelByName( const char *szPanelName )
 	}
 	else if ( Q_strcmp(PANEL_SPECGUI, szPanelName) == 0 )
 	{
-		newpanel = new CHL2MPSpectatorGUI( this );	
+		newpanel = new CHL2MPSpectatorGUI( this );
 		return newpanel;
 	}
 
-	
-	return BaseClass::CreatePanelByName( szPanelName ); 
+
+	return BaseClass::CreatePanelByName( szPanelName );
 }
 
 //-----------------------------------------------------------------------------
@@ -102,7 +102,7 @@ ClientModeHL2MPNormal::ClientModeHL2MPNormal()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ClientModeHL2MPNormal::~ClientModeHL2MPNormal()
 {
@@ -110,7 +110,7 @@ ClientModeHL2MPNormal::~ClientModeHL2MPNormal()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ClientModeHL2MPNormal::Init()
 {
@@ -123,6 +123,3 @@ void ClientModeHL2MPNormal::Init()
 		Warning( "Couldn't load combine panel scheme!\n" );
 	}
 }
-
-
-

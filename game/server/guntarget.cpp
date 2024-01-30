@@ -156,7 +156,7 @@ void CGunTarget::Next( void )
 
 	m_hTargetEnt = GetNextTarget();
 	CBaseEntity *pTarget = m_hTargetEnt;
-	
+
 	if ( !pTarget )
 	{
 		Stop();
@@ -171,7 +171,7 @@ void CGunTarget::Next( void )
 void CGunTarget::Wait( void )
 {
 	CBaseEntity *pTarget = m_hTargetEnt;
-	
+
 	if ( !pTarget )
 	{
 		Stop();
@@ -180,13 +180,13 @@ void CGunTarget::Wait( void )
 
 	variant_t emptyVariant;
 	pTarget->AcceptInput( "InPass", this, this, emptyVariant, 0 );
-		
+
 	m_flWait = pTarget->GetDelay();
 
 	m_target = pTarget->m_target;
 	SetMoveDone( &CGunTarget::Next );
 	if (m_flWait != 0)
-	{// -1 wait will wait forever!		
+	{// -1 wait will wait forever!
 		SetMoveDoneTime( m_flWait );
 	}
 	else

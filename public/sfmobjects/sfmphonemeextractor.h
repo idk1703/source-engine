@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -38,7 +38,7 @@ public:
 
 	// Filled in by caller
 	CDmeSoundClip	*m_pClip;
-	CDmeGameSound	*m_pSound; 
+	CDmeGameSound	*m_pSound;
 	CUtlString		m_sHintText;
 	bool			m_bUseSentence;
 
@@ -88,8 +88,8 @@ struct ExtractDesc_t
 	CUtlVector< LogPreview_t > m_ControlList;	// List of facial controls
 	CDmeFilmClip *m_pMovie;
 	CDmeFilmClip *m_pShot;
-	CDmeAnimationSet *m_pSet; 
-	float m_flSampleRateHz; 
+	CDmeAnimationSet *m_pSet;
+	float m_flSampleRateHz;
 	float m_flSampleFilterSize;
 };
 

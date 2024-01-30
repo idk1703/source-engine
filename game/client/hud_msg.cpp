@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -45,14 +45,14 @@ void CHud::ResetHUD()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 void CHud::MsgFunc_SendAudio( bf_read &msg )
 {
 	char szString[2048];
 	msg.ReadString( szString, sizeof(szString) );
-	
+
 	CLocalPlayerFilter filter;
 	C_BaseEntity::EmitSound( filter, SOUND_FROM_LOCAL_PLAYER, szString );
 }

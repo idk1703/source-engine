@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -15,7 +15,7 @@
 
 enum ESimpleAnchor
 {
-	k_eSimpleAnchorAllSides,	
+	k_eSimpleAnchorAllSides,
 	k_eSimpleAnchorBottomRight,		// The whole control follows the bottom right.
 	k_eSimpleAnchorStretchRight,	// Only grow in width.
 	k_eSimpleAnchorRightSide,
@@ -36,7 +36,7 @@ class CAnchorDef
 {
 public:
 	friend class CAnchorMgr;
-	
+
 	// You can use the first constructor for simple cases.
 	CAnchorDef() {}
 	CAnchorDef( int dlgItemID, ESimpleAnchor eSimpleAnchor );
@@ -75,9 +75,9 @@ public:
 
 	// Call this when the parent window's size changes and it'll resize all the subcontrols.
 	void OnSize();
-	
+
 private:
-	CUtlVector<CAnchorMgr::CAnchorDef> m_Anchors;	
+	CUtlVector<CAnchorMgr::CAnchorDef> m_Anchors;
 	HWND m_hParentWnd;
 	int m_OriginalParentSize[2];	// wide, tall
 };

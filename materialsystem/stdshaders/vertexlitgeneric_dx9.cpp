@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -39,7 +39,7 @@ BEGIN_VS_SHADER( VertexLitGeneric, "Help for VertexLitGeneric" )
  	    SHADER_PARAM( SELFILLUM_ENVMAPMASK_ALPHA, SHADER_PARAM_TYPE_FLOAT,"0.0","defines that self illum value comes from env map mask alpha" )
 		SHADER_PARAM( SELFILLUMFRESNEL, SHADER_PARAM_TYPE_BOOL, "0", "Self illum fresnel" )
 		SHADER_PARAM( SELFILLUMFRESNELMINMAXEXP, SHADER_PARAM_TYPE_VEC4, "0", "Self illum fresnel min, max, exp" )
-		SHADER_PARAM( ALPHATESTREFERENCE, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )	
+		SHADER_PARAM( ALPHATESTREFERENCE, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )
 		SHADER_PARAM( FLASHLIGHTNOLAMBERT, SHADER_PARAM_TYPE_BOOL, "0", "Flashlight pass sets N.L=1.0" )
 		SHADER_PARAM( LIGHTMAP, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "lightmap texture--will be bound by the engine")
 
@@ -247,8 +247,8 @@ BEGIN_VS_SHADER( VertexLitGeneric, "Help for VertexLitGeneric" )
 		info.m_nBumpTransform = BUMPTRANSFORM;
 	}
 
-	bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const 
-	{ 
+	bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const
+	{
 		if ( params[CLOAKPASSENABLED]->GetIntValue() ) // If material supports cloaking
 		{
 			if ( bCheckSpecificToThisFrame == false ) // For setting model flag at load time
@@ -261,7 +261,7 @@ BEGIN_VS_SHADER( VertexLitGeneric, "Help for VertexLitGeneric" )
 			return true;
 
 		// Check flag2 if not drawing cloak pass
-		return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE ); 
+		return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE );
 	}
 
 	bool IsTranslucent( IMaterialVar **params ) const
@@ -274,7 +274,7 @@ BEGIN_VS_SHADER( VertexLitGeneric, "Help for VertexLitGeneric" )
 		}
 
 		// Check flag if not drawing cloak pass
-		return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT ); 
+		return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT );
 	}
 
 	// Emissive Scroll Pass
@@ -346,7 +346,7 @@ BEGIN_VS_SHADER( VertexLitGeneric, "Help for VertexLitGeneric" )
 			SetupVarsWeaponSheenPass( info );
 			InitParamsWeaponSheenPass( this, params, pMaterialName, info );
 		}
-		
+
 		// Emissive Scroll Pass
 		if ( !params[EMISSIVEBLENDENABLED]->IsDefined() )
 		{
@@ -453,7 +453,7 @@ BEGIN_VS_SHADER( VertexLitGeneric, "Help for VertexLitGeneric" )
 			Draw( false );
 		}
 
-		// Weapon sheen pass 
+		// Weapon sheen pass
 		// only if doing standard as well (don't do it if cloaked)
 		if ( params[SHEENPASSENABLED]->GetIntValue() )
 		{

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -45,9 +45,9 @@ CLIENTEFFECT_MATERIAL( PORTALGUN_PORTAL_TUBE_BEAM_SPRITE )
 CLIENTEFFECT_REGISTER_END()
 
 
-CPortalgunEffectBeam::CPortalgunEffectBeam( void ) 
-	: m_pBeam( NULL ), 
-	  m_fBrightness( 255.0f )
+CPortalgunEffectBeam::CPortalgunEffectBeam( void )
+	: m_pBeam( NULL ),
+	m_fBrightness( 255.0f )
 {}
 
 CPortalgunEffectBeam::~CPortalgunEffectBeam( void )
@@ -202,7 +202,7 @@ void C_WeaponPortalgun::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_WeaponPortalgun::StartEffects( void )
 {
@@ -210,7 +210,7 @@ void C_WeaponPortalgun::StartEffects( void )
 
 	CBaseEntity *pModelView = ( ( GetOwner() ) ? ( ToBasePlayer( GetOwner() )->GetViewModel() ) : ( 0 ) );
 	CBaseEntity *pModelWorld = this;
-	
+
 	if ( !pModelView )
 	{
 		pModelView = pModelWorld;
@@ -308,7 +308,7 @@ void C_WeaponPortalgun::StartEffects( void )
 	// Glows
 	// ------------------------------------------
 
-	const char *attachNamesGlow[NUM_GLOW_SPRITES] = 
+	const char *attachNamesGlow[NUM_GLOW_SPRITES] =
 	{
 		"Arm1_attach1",
 		"Arm1_attach2",
@@ -364,7 +364,7 @@ void C_WeaponPortalgun::StartEffects( void )
 	// End caps
 	// ------------------------------------------
 
-	const char *attachNamesEndCap[NUM_ENDCAP_SPRITES] = 
+	const char *attachNamesEndCap[NUM_ENDCAP_SPRITES] =
 	{
 		"Arm1_attach3",
 		"Arm2_attach3",
@@ -430,7 +430,7 @@ void C_WeaponPortalgun::StartEffects( void )
 
 	//Create the world muzzle glow sprites
 	i = PORTALGUN_MUZZLE_GLOW_WORLD;
-	
+
 	if ( m_Parameters[i].GetMaterial() == NULL )
 	{
 		m_Parameters[i].GetScale().SetAbsolute( 0.025f * SPRITE_SCALE );
@@ -449,7 +449,7 @@ void C_WeaponPortalgun::StartEffects( void )
 	// Tube sprites
 	// ------------------------------------------
 
-	const char *attachNamesTubeBeam[NUM_TUBE_BEAM_SPRITES] = 
+	const char *attachNamesTubeBeam[NUM_TUBE_BEAM_SPRITES] =
 	{
 		"Beam_point1",
 		"Beam_point2",
@@ -565,11 +565,11 @@ void C_WeaponPortalgun::DoEffectReady( void )
 
 	// Turn on the internal sprites
 	i = PORTALGUN_MUZZLE_GLOW;
-	
+
 	Vector colorMagSprites = GetEffectColor( i );
 	m_Parameters[i].SetColor( colorMagSprites );
 	m_Parameters[i].SetVisibleViewModel();
-	
+
 	// Turn on the world internal sprites
 	i = PORTALGUN_MUZZLE_GLOW_WORLD;
 
@@ -590,7 +590,7 @@ void C_WeaponPortalgun::DoEffectReady( void )
 		m_Parameters[i].SetVisible3rdPerson();
 	}
 
-    // Turn off beams off
+	// Turn off beams off
 	for ( i = 0; i < NUM_PORTALGUN_BEAMS; ++i )
 	{
 		m_Beams[i].SetVisibleViewModel( false );
@@ -648,7 +648,7 @@ void C_WeaponPortalgun::DoEffectHolding( void )
 
 	// Turn on the world internal sprites
 	i = PORTALGUN_MUZZLE_GLOW_WORLD;
-	
+
 	m_Parameters[i].SetColor( colorMagSprites );
 	m_Parameters[i].SetVisible3rdPerson();
 

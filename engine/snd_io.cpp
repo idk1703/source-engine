@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -36,7 +36,7 @@ int COM_IOReadBinary::open( const char *pFileName )
 	FileHandle_t hFile;
 	Q_strncpy( namebuffer, "sound", sizeof( namebuffer ) );
 
-	// the server is sending back sound names with slashes in front... 
+	// the server is sending back sound names with slashes in front...
 	if ( pFileName[0] != '/' && pFileName[0] != '\\' )
 	{
 		Q_strncat( namebuffer, "/", sizeof( namebuffer ), COPY_ALL_CHARACTERS );
@@ -91,4 +91,3 @@ void COM_IOReadBinary::close( int file )
 
 static COM_IOReadBinary io;
 IFileReadBinary *g_pSndIO = &io;
-

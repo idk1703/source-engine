@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -31,7 +31,7 @@ void R_DecalsGetMaxMesh( IMatRenderContext *pRenderContext, int &nDecalSortMaxVe
 // --------------------------------------------------------------- //
 
 // Figure out where the decal maps onto the surface.
-void R_SetupDecalClip( 
+void R_SetupDecalClip(
 	CDecalVert* &pOutVerts,
 	decal_t *pDecal,
 	Vector &vSurfNormal,
@@ -50,7 +50,7 @@ void R_DecalGetMaterialAndSize( int decalIndex, IMaterial*& pDecalMaterial, floa
 //
 #define DECALSORT_RBTREE_SIZE	16
 
-enum 
+enum
 {
 	PERMANENT_LIGHTMAP = 0,
 	LIGHTMAP,
@@ -68,7 +68,7 @@ struct DecalSortVertexFormat_t
 struct DecalMaterialSortData_t
 {
 	IMaterial	*m_pMaterial;
-	int			m_iLightmapPage; 
+	int			m_iLightmapPage;
 	int			m_iBucket;			// Index into the s_aDecalMaterialHead list.
 };
 

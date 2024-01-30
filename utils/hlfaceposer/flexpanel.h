@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -83,7 +83,7 @@ public:
 
 	// MANIPULATORS
 	int handleEvent (mxEvent *event);
-	
+
 	void initFlexes ();
 
 	bool	IsValidSlider( int iFlexController ) const;

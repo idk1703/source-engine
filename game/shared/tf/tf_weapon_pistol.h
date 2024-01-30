@@ -37,7 +37,7 @@ class CTFPistol : public CTFWeaponBaseGun
 public:
 
 	DECLARE_CLASS( CTFPistol, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 // Server specific.
@@ -59,7 +59,7 @@ class CTFPistol_Scout : public CTFPistol
 {
 public:
 	DECLARE_CLASS( CTFPistol_Scout, CTFPistol );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_PISTOL_SCOUT; }
@@ -69,9 +69,9 @@ class CTFPistol_ScoutPrimary : public CTFPistol_Scout
 {
 public:
 	DECLARE_CLASS( CTFPistol_ScoutPrimary, CTFPistol_Scout );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CTFPistol_ScoutPrimary();
 
 	virtual int		GetViewModelWeaponRole() { return TF_WPN_TYPE_SECONDARY; }
@@ -92,7 +92,7 @@ class CTFPistol_ScoutSecondary : public CTFPistol_Scout
 {
 public:
 	DECLARE_CLASS( CTFPistol_ScoutSecondary, CTFPistol_Scout );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual int		GetViewModelWeaponRole() { return TF_WPN_TYPE_SECONDARY; }

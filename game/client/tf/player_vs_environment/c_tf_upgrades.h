@@ -82,7 +82,7 @@ public:
 
 public:
 
-	KeyValues *m_pSkillTreeButtonKVs;	
+	KeyValues *m_pSkillTreeButtonKVs;
 
 	vgui::ImagePanel *m_pIcon;
 	vgui::Label	*m_pPriceLabel;
@@ -222,7 +222,7 @@ protected:
 	vgui::Panel *m_pPlayerRespecButton;
 
 	CUtlVector< CItemModelPanel* > m_pItemPanels;
-	KeyValues			*m_pItemModelPanelKVs;	
+	KeyValues			*m_pItemModelPanelKVs;
 	int					m_iVisibleItemPanels;
 
 	int		m_iWeaponSlotBeingUpgraded;

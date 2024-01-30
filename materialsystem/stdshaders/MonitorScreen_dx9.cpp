@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -67,7 +67,7 @@ BEGIN_VS_SHADER( MonitorScreen_DX9,
 			(g_pHardwareConfig->GetDXSupportLevel() < 90) )
 		{
 			return "MonitorScreen_DX8";
-		}		
+		}
 
 		return 0;
 	}

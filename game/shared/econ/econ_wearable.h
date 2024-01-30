@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -130,7 +130,7 @@ public:
 private:
 	bool	m_bParented;
 	bool	m_bDelayedInit;
-	float 	m_fDeathTime;		// Point at which this object self destructs.  
+	float 	m_fDeathTime;		// Point at which this object self destructs.
 								// The default of -1 indicates the object shouldn't destruct.
 };
 #endif

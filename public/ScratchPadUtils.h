@@ -26,7 +26,7 @@ public:
 
 	// Initialze the orientation and scales of the two axes.
 	// Axis indices are 0, 1, or 2 for x, y, and z.
-	void Init( 
+	void Init(
 		IScratchPad3D *pPad,
 
 		Vector vTimeAxis = Vector(0,-1,0),
@@ -35,7 +35,7 @@ public:
 		float flTimeOrigin=0,				// Where the origin of the graph is.
 
 		float flTimeLabelEveryNSeconds=1,
-		
+
 		Vector vValueAxis = Vector(0,0,1),
 		float flInchesPerValue=1,
 		Vector vValueLineColor=Vector(1,0,0),
@@ -49,7 +49,7 @@ public:
 	LineID AddLine( Vector vColor );
 	void AddSample( LineID iLine, float flTime, float flValue );
 	void AddVerticalLine( float flTime, float flMinValue, float flMaxValue, const CSPColor &vColor );
-	
+
 	// Get the 3D position of a sample on the graph (so you can draw other things there).
 	Vector GetSamplePosition( float flTime, float flValue );
 
@@ -58,7 +58,7 @@ private:
 
 	void UpdateTicksAndStuff( float flTime, float flValue );
 
-		
+
 
 private:
 	class CLineInfo
@@ -89,7 +89,7 @@ private:
 
 	float m_flTimeOrigin;
 	float m_flValueOrigin;
-	
+
 	// Used to extend the value border.
 	float m_flHighestValue;
 	float m_flHighestTime;
@@ -98,7 +98,7 @@ private:
 
 
 // Draw a cone.
-void ScratchPad_DrawLitCone( 
+void ScratchPad_DrawLitCone(
 	IScratchPad3D *pPad,
 	const Vector &vBaseCenter,
 	const Vector &vTip,
@@ -110,7 +110,7 @@ void ScratchPad_DrawLitCone(
 
 
 // Draw a cylinder.
-void ScratchPad_DrawLitCylinder( 
+void ScratchPad_DrawLitCylinder(
 	IScratchPad3D *pPad,
 	const Vector &v1,
 	const Vector &v2,
@@ -122,12 +122,12 @@ void ScratchPad_DrawLitCylinder(
 
 
 // Draw an arrow.
-void ScratchPad_DrawArrow( 
+void ScratchPad_DrawArrow(
 	IScratchPad3D *pPad,
-	const Vector &vPos, 
+	const Vector &vPos,
 	const Vector &vDirection,
-	const Vector &vColor, 
-	float flLength=20, 
+	const Vector &vColor,
+	float flLength=20,
 	float flLineWidth=3,
 	float flHeadWidth=8,
 	int nCylinderSegments=5,
@@ -138,11 +138,11 @@ void ScratchPad_DrawArrow(
 
 // Draw an arrow with less parameters.. it generates parameters based on length
 // automatically to make the arrow look good.
-void ScratchPad_DrawArrowSimple( 
+void ScratchPad_DrawArrowSimple(
 	IScratchPad3D *pPad,
-	const Vector &vPos, 
+	const Vector &vPos,
 	const Vector &vDirection,
-	const Vector &vColor, 
+	const Vector &vColor,
 	float flLength );
 
 void ScratchPad_DrawSphere(

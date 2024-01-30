@@ -49,13 +49,13 @@ public:
 
 	virtual void Update( void );
 
-	virtual void AimHeadTowards( const Vector &lookAtPos, 
-								 LookAtPriorityType priority = BORING, 
+	virtual void AimHeadTowards( const Vector &lookAtPos,
+								 LookAtPriorityType priority = BORING,
 								 float duration = 0.0f,
 								 INextBotReply *replyWhenAimed = NULL,
 								 const char *reason = NULL );		// aim the bot's head towards the given goal
 	virtual void AimHeadTowards( CBaseEntity *subject,
-								 LookAtPriorityType priority = BORING, 
+								 LookAtPriorityType priority = BORING,
 								 float duration = 0.0f,
 								 INextBotReply *replyWhenAimed = NULL,
 								 const char *reason = NULL );		// continually aim the bot's head towards the given subject
@@ -117,7 +117,7 @@ public:
 
 	// return position of "feet" - the driving point where the bot contacts the ground
 	// for this floating boss, "feet" refers to the ground directly underneath him
-	virtual const Vector &GetFeet( void ) const;			
+	virtual const Vector &GetFeet( void ) const;
 
 protected:
 	float m_desiredSpeed;
@@ -207,7 +207,7 @@ public:
 	bool IsGrumpy( void ) const;
 
 	void SetLookAtTarget( const Vector &spot );
-	
+
 	void SetVictim( CBaseCombatCharacter *victim );
 	CBaseCombatCharacter *GetVictim( void ) const;
 

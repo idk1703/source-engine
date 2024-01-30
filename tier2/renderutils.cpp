@@ -91,7 +91,7 @@ void RenderWireframeSphere( const Vector &vCenter, float flRadius, int nTheta, i
 	// Make one more coordinate because (u,v) is discontinuous.
 	++nTheta;
 
-	int nVertices = nPhi * nTheta; 
+	int nVertices = nPhi * nTheta;
 	int nIndices = ( nTheta - 1 ) * 4 * ( nPhi - 1 );
 
 	CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
@@ -118,7 +118,7 @@ void RenderWireframeSphere( const Vector &vCenter, float flRadius, int nTheta, i
 			float phi = M_PI * v;
 
 			meshBuilder.Position3f( vCenter.x + ( flRadius * sin(phi) * cos(theta) ),
-				vCenter.y + ( flRadius * sin(phi) * sin(theta) ), 
+				vCenter.y + ( flRadius * sin(phi) * sin(theta) ),
 				vCenter.z + ( flRadius * cos(phi) ) );
 			meshBuilder.Color4ub( chRed, chGreen, chBlue, chAlpha );
 			meshBuilder.AdvanceVertex();
@@ -165,7 +165,7 @@ void RenderSphere( const Vector &vCenter, float flRadius, int nTheta, int nPhi, 
 	unsigned char chAlpha = c.a();
 
 	// Two extra degenerate triangles per row (except the last one)
-	int nTriangles = 2 * nTheta * ( nPhi - 1 ); 
+	int nTriangles = 2 * nTheta * ( nPhi - 1 );
 	int nIndices = 2 * ( nTheta + 1 ) * ( nPhi - 1 );
 	if ( nTriangles == 0 )
 		return;
@@ -192,7 +192,7 @@ void RenderSphere( const Vector &vCenter, float flRadius, int nTheta, int nPhi, 
 
 			Vector vecPos;
 			vecPos.x = flRadius * sin(phi) * cos(theta);
-			vecPos.y = flRadius * sin(phi) * sin(theta); 
+			vecPos.y = flRadius * sin(phi) * sin(theta);
 			vecPos.z = flRadius * cos(phi);
 
 			Vector vecNormal = vecPos;
@@ -249,7 +249,7 @@ void RenderSphere( const Vector &vCenter, float flRadius, int nTheta, int nPhi, 
 //-----------------------------------------------------------------------------
 // Box vertices
 //-----------------------------------------------------------------------------
-static int s_pBoxFaceIndices[6][4] = 
+static int s_pBoxFaceIndices[6][4] =
 {
 	{ 0, 4, 6, 2 }, // -x
 	{ 5, 1, 3, 7 }, // +x
@@ -259,7 +259,7 @@ static int s_pBoxFaceIndices[6][4] =
 	{ 4, 5, 7, 6 }	// +z
 };
 
-static int s_pBoxFaceIndicesInsideOut[6][4] = 
+static int s_pBoxFaceIndicesInsideOut[6][4] =
 {
 	{ 0, 2, 6, 4 }, // -x
 	{ 5, 7, 3, 1 }, // +x
@@ -289,7 +289,7 @@ static void GenerateBoxVertices( const Vector &vOrigin, const QAngle& angles, co
 
 
 //-----------------------------------------------------------------------------
-// Renders a wireframe box relative to an origin 
+// Renders a wireframe box relative to an origin
 //-----------------------------------------------------------------------------
 void RenderWireframeBox( const Vector &vOrigin, const QAngle& angles, const Vector &vMins, const Vector &vMaxs, Color c, bool bZBuffer )
 {
@@ -333,7 +333,7 @@ void RenderWireframeBox( const Vector &vOrigin, const QAngle& angles, const Vect
 
 
 //-----------------------------------------------------------------------------
-// Renders a solid box 
+// Renders a solid box
 //-----------------------------------------------------------------------------
 void RenderBox( const Vector& vOrigin, const QAngle& angles, const Vector& vMins, const Vector& vMaxs, Color c, IMaterial *pMaterial, bool bInsideOut )
 {
@@ -360,7 +360,7 @@ void RenderBox( const Vector& vOrigin, const QAngle& angles, const Vector& vMins
 	{
 		vecNormal.Init();
 		vecNormal[ i/2 ] = ( i & 0x1 ) ? 1.0f : -1.0f;
-				 
+
 		int *ppFaceIndices = bInsideOut ? s_pBoxFaceIndicesInsideOut[i] : s_pBoxFaceIndices[i];
 		for ( int j = 1; j < 3; ++j )
 		{
@@ -731,7 +731,7 @@ void RenderWireframeSweptBox( const Vector &vStart, const Vector &vEnd, const QA
 //-----------------------------------------------------------------------------
 // Draws a axis-aligned quad
 //-----------------------------------------------------------------------------
-void RenderQuad( IMaterial *pMaterial, float x, float y, float w, float h, 
+void RenderQuad( IMaterial *pMaterial, float x, float y, float w, float h,
 	float z, float s0, float t0, float s1, float t1, const Color& clr )
 {
 	CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
@@ -769,7 +769,7 @@ void RenderQuad( IMaterial *pMaterial, float x, float y, float w, float h,
 // Renders a screen space quad
 //-----------------------------------------------------------------------------
 
-void DrawScreenSpaceRectangle( IMaterial *pMaterial, 
+void DrawScreenSpaceRectangle( IMaterial *pMaterial,
 								  int nDestX, int nDestY, int nWidth, int nHeight,	// Rect to draw into in screen space
 								  float flSrcTextureX0, float flSrcTextureY0,		// which texel you want to appear at destx/y
 								  float flSrcTextureX1, float flSrcTextureY1,		// which texel you want to appear at destx+width-1, desty+height-1
@@ -799,7 +799,7 @@ void DrawScreenSpaceRectangle( IMaterial *pMaterial,
 	int ySegments = max( nYDice, 1);
 
 	CMeshBuilder meshBuilder;
-	
+
 	IMesh* pMesh = pRenderContext->GetDynamicMesh( true );
 	meshBuilder.Begin( pMesh, MATERIAL_QUADS, xSegments * ySegments );
 
@@ -807,7 +807,7 @@ void DrawScreenSpaceRectangle( IMaterial *pMaterial,
 	pRenderContext->GetRenderTargetDimensions( nScreenWidth, nScreenHeight );
 
 	float flOffset = 0.5f;
-	
+
 	float flLeftX = nDestX - flOffset;
 	float flRightX = nDestX + nWidth - flOffset;
 

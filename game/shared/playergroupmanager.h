@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose:  Manages CPlayerGroups (A group of players stored on the GC)
-//			
+//
 //=============================================================================
 
 #ifndef PLAYERGROUPMANAGER_H
@@ -68,7 +68,7 @@ namespace GCSDK
 		virtual IPlayerGroup* YldCreateAndLockPlayerGroup() = 0;					// game specific derived class will implement this to create a game specific playergroup
 		virtual IPlayerGroup* YldCreateAndLockPlayerGroupFromMemcached( const CUtlBuffer &buf ) = 0;		// game specific derived class will implement this to create a game specific playergroup
 		PlayerGroupID_t GeneratePlayerGroupID();
-		void YldDestroyGroupIfEmpty( PlayerGroupID_t nPlayerGroupID );		
+		void YldDestroyGroupIfEmpty( PlayerGroupID_t nPlayerGroupID );
 
 		void MemcachedUpdateAllMemberAssocation( IPlayerGroup *pPlayerGroup );
 		void MemcachedRemoveAllMemberAssocation( IPlayerGroup *pPlayerGroup );

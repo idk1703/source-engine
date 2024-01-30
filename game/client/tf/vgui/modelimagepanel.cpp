@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "cbase.h"
@@ -45,7 +45,7 @@ void CModelImagePanel::PerformLayout()
 void CModelImagePanel::OnSizeChanged( int wide, int tall )
 {
 	BaseClass::OnSizeChanged( wide, tall );
-	
+
 	InvalidateImage();
 }
 
@@ -128,7 +128,7 @@ void CModelImagePanel::Paint()
 		surface()->DrawTexturedSubRect( 0, 0, iWidth, iHeight, 0.f, 0.f, flTexW, flTexH );
 		return;
 	}
-	
+
 	// can't find available cache render target, don't do anything
 	if ( s_hModelImageLockPanel != NULL && s_hModelImageLockPanel != this )
 	{
@@ -155,9 +155,9 @@ void CModelImagePanel::Paint()
 	SafeAssign( &m_pCachedIcon, new CIconRenderReceiver() );
 
 	// If the icon still exists in the material system, don't bother regenerating it.
-	if ( materials->IsTextureLoaded( buffer ) 
+	if ( materials->IsTextureLoaded( buffer )
 #ifdef STAGING_ONLY
-	&& !tf_modelimagepanel_ignore_cache.GetBool()	
+	&& !tf_modelimagepanel_ignore_cache.GetBool()
 #endif
 		)
 	{
@@ -174,7 +174,7 @@ void CModelImagePanel::Paint()
 		if ( pRenderTarget )
 		{
 			pRenderContext->AsyncCreateTextureFromRenderTarget( pRenderTarget, buffer, IMAGE_FORMAT_RGBA8888, false, TEXTUREFLAGS_IMMEDIATE_CLEANUP, m_pCachedIcon, NULL );
-			
+
 			// make this panel lock the render target
 			s_hModelImageLockPanel = this;
 		}

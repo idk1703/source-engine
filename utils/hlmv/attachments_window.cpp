@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -45,19 +45,19 @@ void CAttachmentsWindow::Init( )
 	m_cBoneList->select( 0 );
 	mxToolTip::add( m_cBoneList, "Select a bone to attach to" );
 
-	
+
 	left = 5;
 	top = 120;
 	new mxLabel( this, left + 3, top + 4, 60, 18, "Translation" );
 	m_cTranslation = new mxLineEdit2( this, left + 70, top, 90, 25, "10 20 30", IDC_ATTACHMENT_TRANSLATION );
 
-	
+
 	left = 170;
 	top = 120;
 	new mxLabel( this, left + 3, top + 4, 60, 18, "Rotation" );
 	m_cRotation = new mxLineEdit2( this, left + 70, top, 90, 25, "0 90 180", IDC_ATTACHMENT_ROTATION );
 
-	
+
 	top = 145;
 	left = 5;
 	new mxLabel( this, left, top, 60, 18, "QC String" );
@@ -165,14 +165,14 @@ int CAttachmentsWindow::handleEvent (mxEvent *event)
 			int iAttachment = g_viewerSettings.m_iEditAttachment;
 			int iBone = m_cBoneList->getSelectedIndex();
 
-			if ( iAttachment >= 0 && 
-				iAttachment < pHdr->GetNumAttachments() && 
-				iBone >= 0 && 
+			if ( iAttachment >= 0 &&
+				iAttachment < pHdr->GetNumAttachments() &&
+				iBone >= 0 &&
 				iBone < pHdr->numbones() )
 			{
 				pHdr->SetAttachmentBone( iAttachment, iBone );
 				UpdateStrings();
-			} 
+			}
 		}
 		break;
 
@@ -180,16 +180,16 @@ int CAttachmentsWindow::handleEvent (mxEvent *event)
 		{
 			int iAttachment = g_viewerSettings.m_iEditAttachment;
 
-			if ( iAttachment >= 0 && 
+			if ( iAttachment >= 0 &&
 				iAttachment < pHdr->GetNumAttachments() )
 			{
 				mstudioattachment_t &pAttachment = (mstudioattachment_t &)pHdr->pAttachment( iAttachment );
-				
+
 				Vector vTrans( 0, 0, 0 );
 				char curText[512];
 				m_cTranslation->getText( curText, sizeof( curText ) );
 				sscanf( curText, "%f %f %f", &vTrans.x, &vTrans.y, &vTrans.z );
-				
+
 				pAttachment.local[0][3] = vTrans.x;
 				pAttachment.local[1][3] = vTrans.y;
 				pAttachment.local[2][3] = vTrans.z;
@@ -198,29 +198,29 @@ int CAttachmentsWindow::handleEvent (mxEvent *event)
 			}
 		}
 		break;
-	
+
 		case IDC_ATTACHMENT_ROTATION:
 		{
 			int iAttachment = g_viewerSettings.m_iEditAttachment;
 
-			if ( iAttachment >= 0 && 
+			if ( iAttachment >= 0 &&
 				iAttachment < pHdr->GetNumAttachments() )
 			{
 				mstudioattachment_t &pAttachment = (mstudioattachment_t &)pHdr->pAttachment( iAttachment );
-				
+
 				QAngle vRotation( 0, 0, 0 );
 				char curText[512];
 				m_cRotation->getText( curText, sizeof( curText ) );
 				sscanf( curText, "%f %f %f", &vRotation.x, &vRotation.y, &vRotation.z );
-				
+
 				Vector vTrans = GetCurrentTranslation();
 				AngleMatrix( vRotation, vTrans, pAttachment.local );
-				
+
 				UpdateStrings( true, false, false );
 			}
 		}
 		break;
-	
+
 		default:
 			return 0;
 	}
@@ -232,7 +232,7 @@ int CAttachmentsWindow::handleEvent (mxEvent *event)
 void CAttachmentsWindow::OnSelChangeAttachmentList()
 {
 	CStudioHdr *pStudioHdr = g_pStudioModel ? g_pStudioModel->GetStudioHdr() : NULL;
-	
+
 	if ( !pStudioHdr )
 		return;
 
@@ -257,7 +257,7 @@ void CAttachmentsWindow::OnSelChangeAttachmentList()
 Vector CAttachmentsWindow::GetCurrentTranslation()
 {
 	CStudioHdr *pStudioHdr = g_pStudioModel ? g_pStudioModel->GetStudioHdr() : NULL;
-	
+
 	int iAttachment = m_cAttachmentList->getSelectedIndex() - 1;
 	if ( pStudioHdr && iAttachment >= 0 && iAttachment < pStudioHdr->GetNumAttachments() )
 	{
@@ -277,7 +277,7 @@ Vector CAttachmentsWindow::GetCurrentTranslation()
 Vector CAttachmentsWindow::GetCurrentRotation()
 {
 	CStudioHdr *pStudioHdr = g_pStudioModel ? g_pStudioModel->GetStudioHdr() : NULL;
-	
+
 	int iAttachment = m_cAttachmentList->getSelectedIndex() - 1;
 	if ( pStudioHdr && iAttachment >= 0 && iAttachment < pStudioHdr->GetNumAttachments() )
 	{
@@ -323,7 +323,7 @@ void CAttachmentsWindow::UpdateStrings( bool bUpdateQC, bool bUpdateTranslation,
 
 		if ( bUpdateQC )
 		{
-			sprintf( str, "$attachment \"%s\" \"%s\" %.2f %.2f %.2f rotate %.0f %.0f %.0f", 
+			sprintf( str, "$attachment \"%s\" \"%s\" %.2f %.2f %.2f rotate %.0f %.0f %.0f",
 				pAttachment.pszName(),
 				pHdr->pBone( iBone )->pszName(),
 				VectorExpand( vTranslation ),
@@ -345,5 +345,3 @@ void CAttachmentsWindow::UpdateStrings( bool bUpdateQC, bool bUpdateTranslation,
 		}
 	}
 }
-
-

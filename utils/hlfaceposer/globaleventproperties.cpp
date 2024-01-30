@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -62,21 +62,21 @@ static void CreateAutoStateFromControls( CGlobalEventParams *params )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
 static BOOL CALLBACK GlobalEventPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	switch(uMsg)
 	{
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		{
 			g_Params.PositionSelf( hwndDlg );
-			
+
 			SetDlgItemText( hwndDlg, IDC_EVENTNAME, g_Params.m_szName );
 
 			SetDlgItemText( hwndDlg, IDC_STARTTIME, va( "%f", g_Params.m_flStartTime ) );
@@ -125,9 +125,9 @@ static BOOL CALLBACK GlobalEventPropertiesDialogProc( HWND hwndDlg, UINT uMsg, W
 				}
 				break;
 			}
-	
 
-			SendMessage( GetDlgItem( hwndDlg, IDC_CHECK_AUTOCHECK ), BM_SETCHECK, 
+
+			SendMessage( GetDlgItem( hwndDlg, IDC_CHECK_AUTOCHECK ), BM_SETCHECK,
 				( WPARAM ) g_Params.m_bAutomate ? BST_CHECKED : BST_UNCHECKED,
 				( LPARAM )0 );
 
@@ -135,17 +135,17 @@ static BOOL CALLBACK GlobalEventPropertiesDialogProc( HWND hwndDlg, UINT uMsg, W
 
 			SendMessage( GetDlgItem( hwndDlg, IDC_CB_AUTOACTION ), WM_SETTEXT , 0, (LPARAM)g_Params.m_szType );
 			// add text to combo box
-			SendMessage( GetDlgItem( hwndDlg, IDC_CB_AUTOACTION ), CB_ADDSTRING, 0, (LPARAM)"Cancel" ); 
-			SendMessage( GetDlgItem( hwndDlg, IDC_CB_AUTOACTION ), CB_ADDSTRING, 0, (LPARAM)"Resume" ); 
+			SendMessage( GetDlgItem( hwndDlg, IDC_CB_AUTOACTION ), CB_ADDSTRING, 0, (LPARAM)"Cancel" );
+			SendMessage( GetDlgItem( hwndDlg, IDC_CB_AUTOACTION ), CB_ADDSTRING, 0, (LPARAM)"Resume" );
 
 
 			SetWindowText( hwndDlg, g_Params.m_szDialogTitle );
 
 			SetFocus( GetDlgItem( hwndDlg, IDC_EVENTNAME ) );
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -165,7 +165,7 @@ static BOOL CALLBACK GlobalEventPropertiesDialogProc( HWND hwndDlg, UINT uMsg, W
 
 				GetDlgItemText( hwndDlg, IDC_STARTTIME, szTime, sizeof( szTime ) );
 				g_Params.m_flStartTime = atof( szTime );
-				
+
 				char szLoop[ 32 ];
 				GetDlgItemText( hwndDlg, IDC_LOOPCOUNT, szLoop, sizeof( szLoop ) );
 				g_Params.m_nLoopCount = atoi( szLoop );
@@ -175,7 +175,7 @@ static BOOL CALLBACK GlobalEventPropertiesDialogProc( HWND hwndDlg, UINT uMsg, W
 				EndDialog( hwndDlg, 1 );
 			}
 			break;
-        case IDCANCEL:
+		case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		}
@@ -185,16 +185,16 @@ static BOOL CALLBACK GlobalEventPropertiesDialogProc( HWND hwndDlg, UINT uMsg, W
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int GlobalEventProperties( CGlobalEventParams *params )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_GLOBALEVENTPROPERTIES ),
 		(HWND)g_MDLViewer->getHandle(),
 		(DLGPROC)GlobalEventPropertiesDialogProc );

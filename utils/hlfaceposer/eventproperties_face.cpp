@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,12 +35,12 @@ void CEventPropertiesFaceDialog::InitControlData( CEventParams *params )
 	BaseClass::InitControlData( params );
 
 	HWND choices1 = GetControl( IDC_EVENTCHOICES );
-	SendMessage( choices1, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( choices1, CB_RESETCONTENT, 0, 0 );
 	SendMessage( choices1, WM_SETTEXT , 0, (LPARAM)params->m_szParameters );
 
 	PopulateNamedActorList( choices1, params );
 
-	SendMessage( GetControl( IDC_CHECK_LOCKBODYFACING ), BM_SETCHECK, 
+	SendMessage( GetControl( IDC_CHECK_LOCKBODYFACING ), BM_SETCHECK,
 		( WPARAM ) params->m_bLockBodyFacing ? BST_CHECKED : BST_UNCHECKED,
 		( LPARAM )0 );
 
@@ -52,7 +52,7 @@ void CEventPropertiesFaceDialog::InitDialog( HWND hwndDlg )
 	m_hDialog = hwndDlg;
 
 	g_Params.PositionSelf( m_hDialog );
-	
+
 	// Set working title for dialog, etc.
 	SetTitle();
 
@@ -68,9 +68,9 @@ void CEventPropertiesFaceDialog::InitDialog( HWND hwndDlg )
 static CEventPropertiesFaceDialog g_EventPropertiesFaceDialog;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wnd - 
-//			*params - 
+// Purpose:
+// Input  : wnd -
+//			*params -
 // Output : static
 //-----------------------------------------------------------------------------
 
@@ -80,11 +80,11 @@ void CEventPropertiesFaceDialog::ShowControlsForEventType( CEventParams *params 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
 static BOOL CALLBACK EventPropertiesFaceDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
@@ -105,14 +105,14 @@ BOOL CEventPropertiesFaceDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARAM 
 	{
 	case WM_PAINT:
 		{
-			PAINTSTRUCT ps; 
+			PAINTSTRUCT ps;
 			HDC hdc;
-			
-            hdc = BeginPaint(hwndDlg, &ps); 
-			DrawSpline( hdc, GetControl( IDC_STATIC_SPLINE ), g_Params.m_pEvent );
-            EndPaint(hwndDlg, &ps); 
 
-            return FALSE; 
+	hdc = BeginPaint(hwndDlg, &ps);
+			DrawSpline( hdc, GetControl( IDC_STATIC_SPLINE ), g_Params.m_pEvent );
+	EndPaint(hwndDlg, &ps);
+
+	return FALSE;
 		}
 		break;
 	case WM_VSCROLL:
@@ -125,13 +125,13 @@ BOOL CEventPropertiesFaceDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARAM 
 			return FALSE;
 		}
 		break;
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		{
 			InitDialog( hwndDlg );
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -142,7 +142,7 @@ BOOL CEventPropertiesFaceDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARAM 
 					SendMessage( control, WM_GETTEXT, (WPARAM)sizeof( g_Params.m_szParameters ), (LPARAM)g_Params.m_szParameters );
 				}
 				GetDlgItemText( m_hDialog, IDC_EVENTNAME, g_Params.m_szName, sizeof( g_Params.m_szName ) );
-				
+
 				if ( !g_Params.m_szName[ 0 ] )
 				{
 					Q_snprintf( g_Params.m_szName, sizeof( g_Params.m_szName ), "Face %s", g_Params.m_szParameters );
@@ -160,7 +160,7 @@ BOOL CEventPropertiesFaceDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARAM 
 				EndDialog( hwndDlg, 1 );
 			}
 			break;
-        case IDCANCEL:
+	case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		case IDC_CHECK_ENDTIME:
@@ -214,16 +214,16 @@ BOOL CEventPropertiesFaceDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARAM 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int EventProperties_Face( CEventParams *params )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_EVENTPROPERTIES_FACE ),
 		(HWND)g_MDLViewer->getHandle(),
 		(DLGPROC)EventPropertiesFaceDialogProc );

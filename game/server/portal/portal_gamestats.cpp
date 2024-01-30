@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -46,7 +46,7 @@ public:
 			(s_DummyStats.m_pUseEvents->Count() == 0) &&
 			(s_DummyStats.m_pStuckSpots->Count() == 0) &&
 			(s_DummyStats.m_pJumps->Count() == 0) &&
-			(s_DummyStats.m_pTimeSpentInVisLeafs->Count() == 0)), 
+			(s_DummyStats.m_pTimeSpentInVisLeafs->Count() == 0)),
 			"Some stats were deferred to the dummy entry." );
 		DestroyLevelStatPointers( &s_DummyStats );
 	}
@@ -78,7 +78,7 @@ void Portal_Gamestats_LevelStats_t::AppendSubChunksToBuffer( CUtlBuffer &SaveBuf
 		for( int i = 0; i != iDeathStatsCount; ++i )
 		{
 			PlayerDeaths_t &DeathStat = m_pDeaths->Element( i );
-			
+
 			SaveBuffer.PutFloat( DeathStat.ptPositionOfDeath.x );
 			SaveBuffer.PutFloat( DeathStat.ptPositionOfDeath.y );
 			SaveBuffer.PutFloat( DeathStat.ptPositionOfDeath.z );
@@ -165,7 +165,7 @@ void Portal_Gamestats_LevelStats_t::AppendSubChunksToBuffer( CUtlBuffer &SaveBuf
 			if( StuckStat.bDucking )
 				bitFlags |= (1 << 1);
 
-			SaveBuffer.PutUnsignedChar( bitFlags );			
+			SaveBuffer.PutUnsignedChar( bitFlags );
 		}
 
 		PORTALSTATS_WRITECHUNKSIZE( SaveBuffer, iSubChunkSizePosition );
@@ -193,7 +193,7 @@ void Portal_Gamestats_LevelStats_t::AppendSubChunksToBuffer( CUtlBuffer &SaveBuf
 
 		PORTALSTATS_WRITECHUNKSIZE( SaveBuffer, iSubChunkSizePosition );
 	}
-	
+
 	if( m_pTimeSpentInVisLeafs->Count() != 0 )
 	{
 		PORTALSTATS_TRIMEVENT( m_pTimeSpentInVisLeafs, LeafTimes_t );
@@ -226,7 +226,7 @@ void Portal_Gamestats_LevelStats_t::LoadSubChunksFromBuffer( CUtlBuffer &LoadBuf
 		unsigned int iChunkEndPosition = LoadBuffer.TellGet() + iChunkSize; //used in an assert later
 #endif
 
-		
+
 		switch( iChunkID )
 		{
 #ifdef PORTAL_GAMESTATS_VERBOSE //don't bother loading verbose chunks if we're not going to save them back out
@@ -277,7 +277,7 @@ void Portal_Gamestats_LevelStats_t::LoadSubChunksFromBuffer( CUtlBuffer &LoadBuf
 				{
 					int index = m_pUseEvents->AddToTail();
 					PlayerUse_t &UseEvent = m_pUseEvents->Element( index );
-					
+
 					UseEvent.ptTraceStart.x = LoadBuffer.GetFloat();
 					UseEvent.ptTraceStart.y = LoadBuffer.GetFloat();
 					UseEvent.ptTraceStart.z = LoadBuffer.GetFloat();
@@ -312,7 +312,7 @@ void Portal_Gamestats_LevelStats_t::LoadSubChunksFromBuffer( CUtlBuffer &LoadBuf
 
 					StuckEvent.bNearPortal = ( (bitFlags & (1 << 0)) != 0 );
 					StuckEvent.bDucking = ( (bitFlags & (1 << 1)) != 0 );
-				}	
+				}
 
 				break;
 			}
@@ -370,7 +370,7 @@ void Portal_Gamestats_LevelStats_t::LoadSubChunksFromBuffer( CUtlBuffer &LoadBuf
 
 void Portal_Gamestats_LevelStats_t::Clear( void )
 {
-	m_pDeaths->RemoveAll();	
+	m_pDeaths->RemoveAll();
 	m_pPlacements->RemoveAll();
 	m_pStuckSpots->RemoveAll();
 	m_pJumps->RemoveAll();
@@ -384,7 +384,7 @@ void Portal_Gamestats_LevelStats_t::Clear( void )
 void CPortalGameStats::AppendCustomDataToSaveBuffer( CUtlBuffer &SaveBuffer )
 {
 #ifdef PORTAL_GAMESTATS_VERBOSE //we only have verbose chunks for now, so only write custom data if we're verbosely tracking
-	
+
 	SaveBuffer.PutUnsignedShort( PORTAL_GAMESTATS_VERSION );
 
 	//no headers allowed, chunks were chosen for their flexibility in loading even when parts of the data are unknown
@@ -410,7 +410,7 @@ void CPortalGameStats::AppendCustomDataToSaveBuffer( CUtlBuffer &SaveBuffer )
 
 			//write out the map stats chunk size
 			{
-				int iChunkSize = SaveBuffer.TellPut() - iChunkSizePosition; 
+				int iChunkSize = SaveBuffer.TellPut() - iChunkSizePosition;
 				Assert( iChunkSize >= sizeof( int ) ); //minimum sizeof( int )
 
 #ifdef _DEBUG
@@ -423,7 +423,7 @@ void CPortalGameStats::AppendCustomDataToSaveBuffer( CUtlBuffer &SaveBuffer )
 
 				Assert( iOldTellPut == SaveBuffer.TellPut() ); //writing the chunk size should have overwritten, not inserted
 			}
-		}		
+		}
 	}
 
 #endif //#ifdef PORTAL_GAMESTATS_VERBOSE
@@ -455,7 +455,7 @@ void CPortalGameStats::LoadCustomDataFromBuffer( CUtlBuffer &LoadBuffer )
 #ifdef PORTAL_GAMESTATS_VERBOSE //levelstats only have verbose data for the time being, so only bother to load verboseness if we're still tracking it
 		case Portal_Gamestats_LevelStats_t::CHUNKID:
 			{
-				//map chunk				
+				//map chunk
 				char szMapName[256];
 				LoadBuffer.GetString( szMapName );
 
@@ -493,7 +493,7 @@ void CPortalGameStats::Event_PlayerKilled( CBasePlayer *pPlayer, const CTakeDama
 	DeathStat.ptPositionOfDeath = pPlayer->GetAbsOrigin();
 	DeathStat.iDamageType = info.GetDamageType();
 	DeathStat.szAttackerClassName[0] = '\0';
-	
+
 	CBaseEntity *pInflictor = info.GetInflictor();
 	if( pInflictor )
 		Q_strncpy( DeathStat.szAttackerClassName, pInflictor->GetClassname(), sizeof( DeathStat.szAttackerClassName ) );
@@ -508,7 +508,7 @@ void CPortalGameStats::Event_PlayerJump( const Vector &ptStartPosition, const Ve
 
 	int index = m_pCurrentMapStats->m_pJumps->AddToTail();
 	Portal_Gamestats_LevelStats_t::JumpEvent_t &JumpStat = m_pCurrentMapStats->m_pJumps->Element( index );
-	
+
 	JumpStat.ptPlayerPositionAtJumpStart = ptStartPosition;
 	JumpStat.vPlayerVelocityAtJumpStart = vStartVelocity;
 #endif
@@ -536,7 +536,7 @@ void CPortalGameStats::Event_PlayerUsed( const Vector &ptTraceStart, const Vecto
 		return;
 
 	static float fLastUseTime = 0.0f;
-	
+
 	if( fLastUseTime > gpGlobals->curtime ) //I'm not positive, but I think curtime resets between levels, cheap to do this
 		fLastUseTime = 0.0f;
 
@@ -615,7 +615,7 @@ Portal_Gamestats_LevelStats_t *CPortalGameStats::FindOrAddMapStats( const char *
 		idx = m_CustomMapStats.Insert( szMapName );
 
 		CreateLevelStatPointers( &m_CustomMapStats[idx] );
-	}	
+	}
 
 	return &m_CustomMapStats[ idx ];
 }
@@ -679,5 +679,3 @@ bool CPortalGameStats::UserPlayedAllTheMaps( void )
 
 	return true;
 }
-
-

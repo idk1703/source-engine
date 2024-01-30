@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Deals with singleton  
+// Purpose: Deals with singleton
 //
 // $Revision: $
 // $NoKeywords: $
@@ -27,7 +27,7 @@ struct model_t;
 abstract_class IDetailObjectSystem : public IGameSystem
 {
 public:
-    // Gets a particular detail object
+	// Gets a particular detail object
 	virtual IClientRenderable* GetDetailModel( int idx ) = 0;
 
 	// Gets called each view
@@ -54,4 +54,3 @@ IDetailObjectSystem* DetailObjectSystem();
 
 
 #endif // DETAILOBJECTSYSTEM_H
-

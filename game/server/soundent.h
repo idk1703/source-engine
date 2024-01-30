@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
-// Soundent.h - the entity that spawns when the world 
+// Soundent.h - the entity that spawns when the world
 // spawns, and handles the world's active and free sound
 // lists.
 
@@ -65,7 +65,7 @@ enum
 
 };
 
-// Make as many of these as you want. 
+// Make as many of these as you want.
 enum
 {
 	SOUNDENT_CHANNEL_UNSPECIFIED = 0,
@@ -207,7 +207,7 @@ inline bool CSound::ValidateOwner( void ) const
 
 //=========================================================
 // CSoundEnt - a single instance of this entity spawns when
-// the world spawns. The SoundEnt's job is to update the 
+// the world spawns. The SoundEnt's job is to update the
 // world's Free and Active sound lists.
 //=========================================================
 class CSoundEnt : public CPointEntity
@@ -243,7 +243,7 @@ public:
 	int		ISoundsInList ( int iListType );
 	int		IAllocSound ( void );
 	int		FindOrAllocateSound( CBaseEntity *pOwner, int soundChannelIndex );
-	
+
 private:
 	int		m_iFreeSound;	// index of the first sound in the free sound list
 	int		m_iActiveSound; // indes of the first sound in the active sound list
@@ -255,9 +255,9 @@ private:
 //-----------------------------------------------------------------------------
 // Inline methods
 //-----------------------------------------------------------------------------
-inline bool CSoundEnt::IsEmpty( void ) 
-{ 
-	return m_iActiveSound == SOUNDLIST_EMPTY; 
+inline bool CSoundEnt::IsEmpty( void )
+{
+	return m_iActiveSound == SOUNDLIST_EMPTY;
 }
 
 

@@ -65,4 +65,3 @@ void CTFDecoy::PrimaryAttack( void )
 	}
 #endif // CLIENT_DLL
 }
-

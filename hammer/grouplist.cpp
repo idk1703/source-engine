@@ -51,7 +51,7 @@ END_MESSAGE_MAP()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CGroupList::CGroupList(void)
 {
@@ -62,7 +62,7 @@ CGroupList::CGroupList(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CGroupList::~CGroupList(void)
 {
@@ -70,7 +70,7 @@ CGroupList::~CGroupList(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGroupList::EnableChecks(void)
 {
@@ -86,9 +86,9 @@ void CGroupList::EnableChecks(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pVisGroup - 
-//			hItemParent - 
+// Purpose:
+// Input  : pVisGroup -
+//			hItemParent -
 //-----------------------------------------------------------------------------
 void CGroupList::AddVisGroupRecursive(CVisGroup *pVisGroup, HTREEITEM hItemParent)
 {
@@ -103,7 +103,7 @@ void CGroupList::AddVisGroupRecursive(CVisGroup *pVisGroup, HTREEITEM hItemParen
 //		item.hItem = hItem;
 //		m_TreeItems.AddToTail(item);
 		m_VisGroups.AddToTail(pVisGroup);
-		
+
 		int nCount = pVisGroup->GetChildCount();
 		for (int i = 0; i < nCount; i++)
 		{
@@ -115,8 +115,8 @@ void CGroupList::AddVisGroupRecursive(CVisGroup *pVisGroup, HTREEITEM hItemParen
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pGroup - 
+// Purpose:
+// Input  : pGroup -
 //-----------------------------------------------------------------------------
 void CGroupList::AddVisGroup(CVisGroup *pGroup)
 {
@@ -127,7 +127,7 @@ void CGroupList::AddVisGroup(CVisGroup *pGroup)
 static void UnsetItemData_R( CTreeCtrl *pCtrl, HTREEITEM hItem )
 {
 	pCtrl->SetItemData( hItem, 0 );
-	
+
 	HTREEITEM hChildItem = pCtrl->GetChildItem( hItem );
 
 	while( hChildItem != NULL )
@@ -139,7 +139,7 @@ static void UnsetItemData_R( CTreeCtrl *pCtrl, HTREEITEM hItem )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGroupList::DeleteAllItems(void)
 {
@@ -149,14 +149,14 @@ void CGroupList::DeleteAllItems(void)
 	{
 		UnsetItemData_R( this, TVI_ROOT );
 	}
-	
+
 	DeleteItem(TVI_ROOT);
 	m_VisGroups.RemoveAll();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGroupList::EnsureVisible(CVisGroup *pVisGroup)
 {
@@ -170,7 +170,7 @@ void CGroupList::EnsureVisible(CVisGroup *pVisGroup)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGroupList::ExpandRecursive(HTREEITEM hItem)
 {
@@ -192,7 +192,7 @@ void CGroupList::ExpandRecursive(HTREEITEM hItem)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGroupList::ExpandAll(void)
 {
@@ -276,11 +276,11 @@ CVisGroup *CGroupList::GetSelectedVisGroup(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nFlags - 
-//			point - 
+// Purpose:
+// Input  : nFlags -
+//			point -
 //-----------------------------------------------------------------------------
-void CGroupList::OnLButtonDown(UINT nFlags, CPoint point) 
+void CGroupList::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	unsigned int uFlags;
 	HTREEITEM hItemHit = HitTest(point, &uFlags);
@@ -299,11 +299,11 @@ void CGroupList::OnLButtonDown(UINT nFlags, CPoint point)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nFlags - 
-//			point - 
+// Purpose:
+// Input  : nFlags -
+//			point -
 //-----------------------------------------------------------------------------
-void CGroupList::OnLButtonUp(UINT nFlags, CPoint point) 
+void CGroupList::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	KillTimer(TIMER_GROUP_DRAG_SCROLL);
 	ReleaseCapture();
@@ -351,11 +351,11 @@ void CGroupList::OnLButtonUp(UINT nFlags, CPoint point)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nFlags - 
-//			point - 
+// Purpose:
+// Input  : nFlags -
+//			point -
 //-----------------------------------------------------------------------------
-void CGroupList::OnLButtonDblClk(UINT nFlags, CPoint point) 
+void CGroupList::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
 	unsigned int uFlags;
 	HTREEITEM hItemHit = HitTest(point, &uFlags);
@@ -375,8 +375,8 @@ void CGroupList::OnLButtonDblClk(UINT nFlags, CPoint point)
 
 //-----------------------------------------------------------------------------
 // Purpose: Forwards selection change notifications to our parent window.
-// Input  : pNMHDR - 
-//			pResult - 
+// Input  : pNMHDR -
+//			pResult -
 //-----------------------------------------------------------------------------
 void CGroupList::OnSelChange(NMHDR *pNMHDR, LRESULT *pResult)
 {
@@ -389,11 +389,11 @@ void CGroupList::OnSelChange(NMHDR *pNMHDR, LRESULT *pResult)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pNMHDR - 
-//			pResult - 
+// Purpose:
+// Input  : pNMHDR -
+//			pResult -
 //-----------------------------------------------------------------------------
-void CGroupList::OnEndlabeledit(NMHDR *pNMHDR, LRESULT *pResult) 
+void CGroupList::OnEndlabeledit(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	NMTVDISPINFO *pInfo = (NMTVDISPINFO *)pNMHDR;
 	if (!pInfo->item.pszText)
@@ -412,10 +412,10 @@ void CGroupList::OnEndlabeledit(NMHDR *pNMHDR, LRESULT *pResult)
 //-----------------------------------------------------------------------------
 // Purpose: Begins dragging an item in the visgroup list. The drag image is
 //			created and anchored relative to the mouse cursor.
-// Input  : pNMHDR - 
-//			pResult - 
+// Input  : pNMHDR -
+//			pResult -
 //-----------------------------------------------------------------------------
-void CGroupList::OnBegindrag(NMHDR *pNMHDR, LRESULT *pResult) 
+void CGroupList::OnBegindrag(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	NMTREEVIEW *ptv = (NMTREEVIEW *)pNMHDR;
 	BeginDrag(ptv->ptDrag, ptv->itemNew.hItem);
@@ -424,11 +424,11 @@ void CGroupList::OnBegindrag(NMHDR *pNMHDR, LRESULT *pResult)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pt - 
-//			hItem - 
+// Purpose:
+// Input  : pt -
+//			hItem -
 //-----------------------------------------------------------------------------
-void CGroupList::BeginDrag(CPoint point, HTREEITEM hItem) 
+void CGroupList::BeginDrag(CPoint point, HTREEITEM hItem)
 {
 	m_hDragItem = hItem;
 	if (m_hDragItem)
@@ -451,9 +451,9 @@ void CGroupList::BeginDrag(CPoint point, HTREEITEM hItem)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nFlags - 
-//			point - 
+// Purpose:
+// Input  : nFlags -
+//			point -
 //-----------------------------------------------------------------------------
 void CGroupList::OnRButtonDown(UINT nFlags, CPoint point)
 {
@@ -469,9 +469,9 @@ void CGroupList::OnRButtonDown(UINT nFlags, CPoint point)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pWnd - 
-//			point - 
+// Purpose:
+// Input  : pWnd -
+//			point -
 //-----------------------------------------------------------------------------
 void CGroupList::OnContextMenu(CWnd *pWnd, CPoint point)
 {
@@ -491,9 +491,9 @@ void CGroupList::OnContextMenu(CWnd *pWnd, CPoint point)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nFlags - 
-//			point - 
+// Purpose:
+// Input  : nFlags -
+//			point -
 //-----------------------------------------------------------------------------
 void CGroupList::OnRButtonUp(UINT nFlags, CPoint point)
 {
@@ -513,10 +513,10 @@ void CGroupList::OnRButtonUp(UINT nFlags, CPoint point)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : eDropType - 
-//			nFlags - 
-//			point - 
+// Purpose:
+// Input  : eDropType -
+//			nFlags -
+//			point -
 //-----------------------------------------------------------------------------
 void CGroupList::Drop(DropType_t eDropType, UINT nFlags, CPoint point)
 {
@@ -578,10 +578,10 @@ void CGroupList::Drop(DropType_t eDropType, UINT nFlags, CPoint point)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nIDEvent - 
+// Purpose:
+// Input  : nIDEvent -
 //-----------------------------------------------------------------------------
-void CGroupList::OnTimer(UINT nIDEvent) 
+void CGroupList::OnTimer(UINT nIDEvent)
 {
 	//DBG("OnTimer\n");
 	switch (nIDEvent)
@@ -627,7 +627,7 @@ void CGroupList::OnTimer(UINT nIDEvent)
 
 			break;
 		}
-	
+
 		default:
 		{
 			CTreeCtrl::OnTimer(nIDEvent);
@@ -637,11 +637,11 @@ void CGroupList::OnTimer(UINT nIDEvent)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nFlags - 
-//			point - 
+// Purpose:
+// Input  : nFlags -
+//			point -
 //-----------------------------------------------------------------------------
-void CGroupList::OnMouseMove(UINT nFlags, CPoint point) 
+void CGroupList::OnMouseMove(UINT nFlags, CPoint point)
 {
 	CTreeCtrl::OnMouseMove(nFlags, point);
 
@@ -688,7 +688,7 @@ void CGroupList::OnMouseMove(UINT nFlags, CPoint point)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGroupList::SelectVisGroup(CVisGroup *pVisGroup)
 {
@@ -703,7 +703,7 @@ void CGroupList::SelectVisGroup(CVisGroup *pVisGroup)
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the check status for the given group.
-// Input  : pVisGroup - 
+// Input  : pVisGroup -
 //			nCheckState - 0=not checked, 1=checked, -1=gray check (undefined)
 //-----------------------------------------------------------------------------
 void CGroupList::SetCheck(CVisGroup *pVisGroup, int nCheckState)
@@ -728,7 +728,7 @@ void CGroupList::SetCheck(CVisGroup *pVisGroup, int nCheckState)
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the check state for the given visgroup.
-// Input  : pVisGroup - 
+// Input  : pVisGroup -
 //-----------------------------------------------------------------------------
 int CGroupList::GetCheck(CVisGroup *pVisGroup)
 {
@@ -743,7 +743,7 @@ int CGroupList::GetCheck(CVisGroup *pVisGroup)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CGroupList::GetCheck(HTREEITEM hItem)
 {
@@ -771,7 +771,7 @@ int CGroupList::GetVisGroupCount()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CVisGroup *CGroupList::GetVisGroup(int nIndex)
 {
@@ -838,7 +838,7 @@ void CGroupList::RestoreVisGroupExpandStates()
 			}
 			else
 			{
-				Expand( thisItem, TVE_COLLAPSE );				
+				Expand( thisItem, TVE_COLLAPSE );
 			}
 		}
 	}

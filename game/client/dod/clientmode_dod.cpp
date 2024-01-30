@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -51,7 +51,7 @@ ConVar dod_playwinmusic( "dod_playwinmusic", "1", FCVAR_ARCHIVE );
 
 IClientMode *g_pClientMode = NULL;
 
-void MsgFunc_KillCam(bf_read &msg) 
+void MsgFunc_KillCam(bf_read &msg)
 {
 	C_DODPlayer *pPlayer = C_DODPlayer::GetLocalDODPlayer();
 
@@ -107,7 +107,7 @@ IVModeManager *modemanager = ( IVModeManager * )&g_ModeManager;
 void CDODModeManager::Init()
 {
 	g_pClientMode = GetClientModeNormal();
-	
+
 	PanelMetaClassMgr()->LoadMetaClassDefinitionFile( SCREEN_FILE );
 }
 
@@ -133,7 +133,7 @@ void CDODModeManager::LevelShutdown( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ClientModeDODNormal::ClientModeDODNormal()
 {
@@ -225,7 +225,7 @@ void ClientModeDODNormal::FireGameEvent( IGameEvent * event)
 		// if we get this message before fully connecting
 		if ( physenv )
 		{
-            C_PhysPropClientside::RecreateAll();
+	C_PhysPropClientside::RecreateAll();
 		}
 	}
 	else if( Q_strcmp( "dod_broadcast_audio", eventname ) == 0 )
@@ -305,7 +305,7 @@ void ClientModeDODNormal::FireGameEvent( IGameEvent * event)
 			// Only show the planter name if its a team plant, not enemy plant
 			iPlanterIndex = engine->GetPlayerForUserID( event->GetInt("userid") );
 			pPlanterName = g_PR->GetPlayerName( iPlanterIndex );
-		}		
+		}
 
 		RadioMessage( pszSound, pszMessage, pPlanterName, iPlanterIndex );
 	}
@@ -388,7 +388,7 @@ void ClientModeDODNormal::FireGameEvent( IGameEvent * event)
 		else
 		{
 			pTemplate = "#game_joined_spectators";
-		} 
+		}
 
 		wchar_t szPlayerName[MAX_PLAYER_NAME_LENGTH];
 		g_pVGuiLocalize->ConvertANSIToUnicode( pPlayer->GetPlayerName(), szPlayerName, sizeof(szPlayerName) );
@@ -473,7 +473,7 @@ void ClientModeDODNormal::PostRenderVGui()
 bool ClientModeDODNormal::ShouldDrawViewModel()
 {
 	C_DODPlayer *pPlayer = C_DODPlayer::GetLocalDODPlayer();
-	
+
 	CWeaponDODBase *pWpn = pPlayer->GetActiveDODWeapon();
 
 	if( pWpn && pWpn->ShouldDrawViewModel() == false )
@@ -523,7 +523,7 @@ void ClientModeDODNormal::RadioMessage( const char *pszSoundName, const char *ps
 
 	if ( !hudChat )
 		return;
-	
+
 	wchar_t *pwLoc = g_pVGuiLocalize->Find( "#dod_radio_prefix" );
 	char szPrefix[16];
 	g_pVGuiLocalize->ConvertUnicodeToANSI( pwLoc, szPrefix, sizeof(szPrefix) );

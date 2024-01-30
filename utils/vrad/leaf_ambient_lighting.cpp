@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -17,19 +17,19 @@
 #include "vmpi.h"
 #include "vmpi_distribute_work.h"
 
-static TableVector g_BoxDirections[6] = 
+static TableVector g_BoxDirections[6] =
 {
-	{  1,  0,  0 }, 
+	{  1,  0,  0 },
 	{ -1,  0,  0 },
-	{  0,  1,  0 }, 
-	{  0, -1,  0 }, 
-	{  0,  0,  1 }, 
-	{  0,  0, -1 }, 
+	{  0,  1,  0 },
+	{  0, -1,  0 },
+	{  0,  0,  1 },
+	{  0,  0, -1 },
 };
 
 
 
-static void ComputeAmbientFromSurface( dface_t *surfID, dworldlight_t* pSkylight, 
+static void ComputeAmbientFromSurface( dface_t *surfID, dworldlight_t* pSkylight,
 									   Vector& radcolor )
 {
 	if ( !surfID )
@@ -132,7 +132,7 @@ void AddEmitSurfaceLights( const Vector &vStart, Vector lightBoxColor[6] )
 				lightBoxColor[i] += wl->intensity * (t * ratio);
 			}
 		}
-	}	
+	}
 }
 
 
@@ -150,7 +150,7 @@ void ComputeAmbientFromSphericalSamples( int iThread, const Vector &vStart, Vect
 		Vector lightStyleColors[MAX_LIGHTSTYLES];
 		lightStyleColors[0].Init();	// We only care about light style 0 here.
 		CalcRayAmbientLighting( iThread, vStart, vEnd, tanTheta, lightStyleColors );
-	
+
 		radcolor[i] = lightStyleColors[0];
 	}
 
@@ -170,7 +170,7 @@ void ComputeAmbientFromSphericalSamples( int iThread, const Vector &vStart, Vect
 				lightBoxColor[j] += radcolor[i] * c;
 			}
 		}
-		
+
 		lightBoxColor[j] *= 1/t;
 	}
 
@@ -193,7 +193,7 @@ bool IsLeafAmbientSurfaceLight( dworldlight_t *wl )
 
 	float intensity = max( wl->intensity[0], wl->intensity[1] );
 	intensity = max( intensity, wl->intensity[2] );
-	
+
 	return (intensity * g_flWorldLightMinEmitSurfaceDistanceRatio) < g_flWorldLightMinEmitSurface;
 }
 
@@ -205,7 +205,7 @@ public:
 
 	// Generate a random point in the leaf's bounding volume
 	// reject any points that aren't actually in the leaf
-	// do a couple of tracing heuristics to eliminate points that are inside detail brushes 
+	// do a couple of tracing heuristics to eliminate points that are inside detail brushes
 	// or underneath displacement surfaces in the leaf
 	// return once we have a valid point, use the center if one can't be computed quickly
 	void GenerateLeafSamplePosition( int leafIndex, const CUtlVector<dplane_t> &leafPlanes, Vector &samplePosition )
@@ -228,7 +228,7 @@ public:
 				float d = DotProduct(leafPlanes[j].normal, samplePosition) - leafPlanes[j].dist;
 				if ( d < DIST_EPSILON )
 				{
-					// not inside the leaf, try again 
+					// not inside the leaf, try again
 					bValid = false;
 					break;
 				}
@@ -412,7 +412,7 @@ void Mod_LeafAmbientColorAtPos( Vector *pOut, const Vector &pos, const CUtlVecto
 	{
 		if ( i == skipIndex )
 			continue;
-		// do an inverse squared distance weighted average of the samples to reconstruct 
+		// do an inverse squared distance weighted average of the samples to reconstruct
 		// the original function
 		float dist = (list[i].pos - pos).LengthSqr();
 		float factor = 1.0f / (dist + 1.0f);
@@ -625,12 +625,12 @@ void ComputePerLeafAmbientLighting()
 	for ( int i=0; i < *pNumworldlights; i++ )
 	{
 		dworldlight_t *wl = &dworldlights[i];
-		
+
 		if ( IsLeafAmbientSurfaceLight( wl ) )
 			wl->flags |= DWL_FLAGS_INAMBIENTCUBE;
 		else
 			wl->flags &= ~DWL_FLAGS_INAMBIENTCUBE;
-	
+
 		if ( wl->type == emit_surface )
 			++nSurfaceLights;
 
@@ -705,4 +705,3 @@ void ComputePerLeafAmbientLighting()
 	}
 	Msg("done\n");
 }
-

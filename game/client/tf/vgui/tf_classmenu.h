@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,7 +34,7 @@ using namespace vgui;
 class CTFClassTipsPanel;
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 class CTFClassTipsItemPanel : public vgui::EditablePanel
 {
@@ -53,7 +53,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 class CTFClassMenu : public CClassMenu, public CGameEventListener
 {
@@ -168,10 +168,9 @@ private:
 public:
 	CTFClassMenu_Red( IViewPort *pViewPort ) : BaseClass( pViewPort ) {}
 
-	virtual const char *GetName( void ) { return PANEL_CLASS_RED; } 
+	virtual const char *GetName( void ) { return PANEL_CLASS_RED; }
 	virtual int GetTeamNumber( void ) { return TF_TEAM_RED; }
 	virtual void UpdateClassCounts( void ){ UpdateNumClassLabels( TF_TEAM_RED ); }
 };
 
 #endif // TF_CLASSMENU_H
-

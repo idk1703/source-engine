@@ -34,13 +34,13 @@ IMPLEMENT_CLIENTCLASS_DT(C_CS_PlayerResource, DT_CSPlayerResource, CCSPlayerReso
 	RecvPropArray3( RECVINFO_ARRAY(m_bHasDefuser), RecvPropInt( RECVINFO(m_bHasDefuser[0]))),
 	RecvPropArray3( RECVINFO_ARRAY(m_szClan), RecvPropString( RECVINFO(m_szClan[0]))),
 END_RECV_TABLE()
- 
+
 //=============================================================================
 // HPE_END
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_CS_PlayerResource::C_CS_PlayerResource()
 {
@@ -51,7 +51,7 @@ C_CS_PlayerResource::C_CS_PlayerResource()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_CS_PlayerResource::~C_CS_PlayerResource()
 {
@@ -194,7 +194,7 @@ int C_CS_PlayerResource::GetNumMVPs( int iIndex )
 		return false;
 
 	return m_iMVPs[iIndex];
-} 
+}
 
 //-----------------------------------------------------------------------------
 bool C_CS_PlayerResource::HasDefuser( int iIndex )
@@ -203,4 +203,4 @@ bool C_CS_PlayerResource::HasDefuser( int iIndex )
 		return false;
 
 	return m_bHasDefuser[iIndex];
-} 
+}

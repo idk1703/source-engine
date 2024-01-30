@@ -73,19 +73,19 @@ static void Q_FileBase( const char *in, char *out, int maxlen )
 	int len, start, end;
 
 	len = Q_strlen( in );
-	
+
 	// scan backward for '.'
 	end = len - 1;
 	while ( end&& in[end] != '.' && !PATHSEPARATOR( in[end] ) )
 	{
 		end--;
 	}
-	
+
 	if ( in[end] != '.' )		// no '.', copy to end
 	{
 		end = len-1;
 	}
-	else 
+	else
 	{
 		end--;					// Found ',', copy to left of '.'
 	}
@@ -101,7 +101,7 @@ static void Q_FileBase( const char *in, char *out, int maxlen )
 	{
 		start = 0;
 	}
-	else 
+	else
 	{
 		start++;
 	}
@@ -151,7 +151,7 @@ static char *Q_strncat(char *pDest, const char *pSrc, size_t destBufferSize, int
 //-----------------------------------------------------------------------------
 static char const* Q_stristr( char const* pStr, char const* pSearch )
 {
-	if (!pStr || !pSearch) 
+	if (!pStr || !pSearch)
 		return 0;
 
 	char const* pLetter = pStr;
@@ -200,7 +200,7 @@ static int	Q_stricmp( const char *s1, const char *s2 )
 static void SplitP4Output(const_char *data, char *pszCmd, char *pszInfo, int bufLen)
 {
 	Q_strncpy(pszCmd, data, bufLen);
-	
+
 	char *mid = (char *)Q_stristr(pszCmd, " ");
 	if (mid)
 	{
@@ -218,7 +218,7 @@ static int Q_atoi (const char *str)
 	int             val;
 	int             sign;
 	int             c;
-	
+
 	if (*str == '-')
 	{
 		sign = -1;
@@ -226,7 +226,7 @@ static int Q_atoi (const char *str)
 	}
 	else
 		sign = 1;
-		
+
 	val = 0;
 
 //
@@ -248,7 +248,7 @@ static int Q_atoi (const char *str)
 				return val*sign;
 		}
 	}
-	
+
 //
 // check for character
 //
@@ -256,7 +256,7 @@ static int Q_atoi (const char *str)
 	{
 		return sign * str[1];
 	}
-	
+
 //
 // assume decimal
 //
@@ -267,7 +267,7 @@ static int Q_atoi (const char *str)
 			return val*sign;
 		val = val*10 + c - '0';
 	}
-	
+
 	return 0;
 }
 
@@ -358,7 +358,7 @@ class CP4Counter
 {
 public:
 	CP4Counter() :
-	  m_nValue( 0 )
+	m_nValue( 0 )
 	{
 		m_szName[ 0 ] = 0;
 	}
@@ -407,7 +407,7 @@ private:
 	{
 		if ( !Q_stricmp( szCmd, "counter" ) )
 		{
-            counter.SetName( szInfo );
+	counter.SetName( szInfo );
 		}
 		else if ( !Q_stricmp( szCmd, "value" ) )
 		{
@@ -512,7 +512,7 @@ int FindLockUsers( CCountersUser& counters, char const *branchspec, std::vector<
 	int count = list.Count();
 	for ( int i = 0; i < count; ++i )
 	{
-		char const *name = list[ i ].GetCounterName(); 
+		char const *name = list[ i ].GetCounterName();
 		int value = list[ i ].GetValue();
 
 		char const *p = Q_stristr( name, lockstr );
@@ -549,7 +549,7 @@ static void GetHourMinuteSecondsString( int nInputSeconds, char *pOut, int outLe
 	nMinutes -= nHours * 60;
 
 	char *extra[2] = { "", "s" };
-	
+
 	if ( nHours > 0 )
 		Q_snprintf( pOut, outLen, "%d hour%s, %d minute%s, %d second%s", nHours, extra[nHours != 1], nMinutes, extra[nMinutes != 1], nSeconds, extra[nSeconds != 1] );
 	else if ( nMinutes > 0 )
@@ -571,7 +571,7 @@ static void ComputeHoldTime( int holdtime, char *buf, size_t bufsize )
 		// Prepend the time.
 		time_t aclock = (time_t)holdtime;
 		struct tm *newtime = localtime( &aclock );
-		
+
 		// Get rid of the \n.
 		Q_strncpy( buf, asctime( newtime ), bufsize );
 		char *pEnd = (char *)Q_stristr( buf, "\n" );
@@ -632,7 +632,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			{
 				action = MUTEX_LOCK;
 			}
-			else 
+			else
 			{
 				validAction = false;
 			}
@@ -666,9 +666,9 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	bool describeLocksOnly = false;
 	if ( !validBranch ||
-		 !validSleepSeconds ||
-		 !validClient ||
-		 !validIP )
+		!validSleepSeconds ||
+		!validClient ||
+		!validIP )
 	{
 		if ( !validAction || action != MUTEX_QUERY )
 		{
@@ -830,7 +830,7 @@ int _tmain(int argc, _TCHAR* argv[])
 					if ( isHeldByLocal )
 					{
 						// Success: 'main_src' codeline lock released.
-						
+
 						// Set the counter
 						g_SetCounterUser.SetCounter( setcountername, 0 );
 
@@ -845,7 +845,7 @@ int _tmain(int argc, _TCHAR* argv[])
 				else if ( holdCount == 0 )
 				{
 					// Success: The 'main_src' codeline lock is already free.
-					
+
 					printf( "Success: The '%s' codeline lock is already free\n", branchspec.String() );
 				}
 			}
@@ -860,7 +860,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		int elapsed = 0;
 
-		do 
+		do
 		{
 			time_t curtime;
 			time( &curtime );
@@ -873,4 +873,3 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	return 0;
 }
-

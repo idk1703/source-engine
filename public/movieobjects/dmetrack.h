@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -42,7 +42,7 @@ public:
 
 	void			SetCollapsed( bool state );
 	bool			IsCollapsed() const;
-	
+
 	void			SetVolume( float state );
 	float			GetVolume() const;
 
@@ -92,7 +92,7 @@ public:
 	void			FixOverlaps();
 
 	// Can this track contain clips that overlap in time?
-	// NOTE: Non-overlapping clips will be 
+	// NOTE: Non-overlapping clips will be
 	bool			IsNonoverlapping() const;
 
 	// Is this a film track?
@@ -129,12 +129,12 @@ private:
 	public:
 		CSuppressAutoFixup( CDmeTrack *pTrack, int nFlags ) : m_pTrack( pTrack ), m_nFlags( nFlags )
 		{
-			m_pTrack->m_Flags.SetFlag( m_nFlags ); 
+			m_pTrack->m_Flags.SetFlag( m_nFlags );
 		}
 
 		~CSuppressAutoFixup()
 		{
-			m_pTrack->m_Flags.ClearFlag( m_nFlags ); 
+			m_pTrack->m_Flags.ClearFlag( m_nFlags );
 		}
 
 	private:

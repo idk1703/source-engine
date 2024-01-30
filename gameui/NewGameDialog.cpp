@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -386,7 +386,7 @@ CNewGameDialog::CNewGameDialog(vgui::Panel *parent, bool bCommentaryMode) : Base
 				Q_snprintf( szFullFileName, sizeof(szFullFileName), "cfg/%s", fileName );
 				FileHandle_t f = g_pFullFileSystem->Open( szFullFileName, "rb", "MOD" );
 				if ( f )
-				{	
+				{
 					// don't load chapter files that are empty, used in the demo
 					if ( g_pFullFileSystem->Size(f) > 0	)
 					{
@@ -409,7 +409,7 @@ CNewGameDialog::CNewGameDialog(vgui::Panel *parent, bool bCommentaryMode) : Base
 
 			FileHandle_t f = g_pFullFileSystem->Open( szFullFileName, "rb", "MOD" );
 			if ( f )
-			{		
+			{
 				Q_strncpy(chapters[chapterIndex].filename, szFullFileName + 4, sizeof(chapters[chapterIndex].filename));
 				++chapterIndex;
 				++ChapterStringIndex;
@@ -418,22 +418,22 @@ CNewGameDialog::CNewGameDialog(vgui::Panel *parent, bool bCommentaryMode) : Base
 			else
 			{
 				bExists = false;
-			}	
+			}
 			//Hack to account for xbox360 missing chapter9a
 			if ( ChapterStringIndex == 10 )
-			{				
+			{
 				Q_snprintf( szFullFileName, sizeof( szFullFileName ), "cfg/chapter9a.cfg" );
 				FileHandle_t fChap = g_pFullFileSystem->Open( szFullFileName, "rb", "MOD" );
 				if ( fChap )
-				{		
+				{
 					Q_strncpy(chapters[chapterIndex].filename, szFullFileName + 4, sizeof(chapters[chapterIndex].filename));
 					++chapterIndex;
 					g_pFullFileSystem->Close( fChap );
-				}		
+				}
 			}
 
 		}
-		
+
 	}
 
 	bool bBonusesUnlocked = false;
@@ -528,9 +528,9 @@ CNewGameDialog::CNewGameDialog(vgui::Panel *parent, bool bCommentaryMode) : Base
 	// Layout panel positions relative to the dialog center.
 	int panelWidth = m_ChapterPanels[0]->GetWide() + 16;
 	int dialogWidth = GetWide();
-	
+
 	m_PanelXPos[2] = ( dialogWidth - panelWidth ) / 2 + 8;
-	
+
 	if (m_ChapterPanels.Count() > 1)
 	{
 		m_PanelXPos[1] = m_PanelXPos[2] - panelWidth;
@@ -665,7 +665,7 @@ static float GetArrowAlpha( void )
 //-----------------------------------------------------------------------------
 void CNewGameDialog::UpdateMenuComponents( EScrollDirection dir )
 {
-	// This is called prior to any scrolling, 
+	// This is called prior to any scrolling,
 	// so we need to look ahead to the post-scroll state
 	int centerIdx = SLOT_CENTER;
 	if ( dir == SCROLL_LEFT )
@@ -1139,7 +1139,7 @@ void CNewGameDialog::ScrollBonusSelection( EScrollDirection dir )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Initiates the scripted scroll and fade effects of all five slotted panels 
+// Purpose: Initiates the scripted scroll and fade effects of all five slotted panels
 //-----------------------------------------------------------------------------
 void CNewGameDialog::AnimateSelectionPanels( void )
 {
@@ -1193,12 +1193,12 @@ void CNewGameDialog::AnimateSelectionPanels( void )
 
 		// Animate the center background panel
 		GetAnimationController()->RunAnimationCommand( m_pCenterBg, "alpha", 0, 0, m_ScrollSpeed * 0.25f, vgui::AnimationController::INTERPOLATOR_LINEAR );
-		
+
 		// Crossfade the chapter title labels
 		int inactiveTitleIdx = m_ActiveTitleIdx ^ 0x01;
 		GetAnimationController()->RunAnimationCommand( m_pChapterTitleLabels[(unsigned)m_ActiveTitleIdx], "alpha", 255, 0, m_ScrollSpeed, vgui::AnimationController::INTERPOLATOR_LINEAR );
 		GetAnimationController()->RunAnimationCommand( m_pChapterTitleLabels[inactiveTitleIdx], "alpha", 0, 0, m_ScrollSpeed, vgui::AnimationController::INTERPOLATOR_LINEAR );
-		
+
 		// Scrolling up through chapters, offset is negative
 		m_iSelectedChapter -= idxOffset;
 	}
@@ -1207,7 +1207,7 @@ void CNewGameDialog::AnimateSelectionPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: After a scroll, each panel slot holds the index of a panel that has 
+// Purpose: After a scroll, each panel slot holds the index of a panel that has
 //			scrolled to an adjacent slot. This function updates each slot so
 //			it holds the index of the panel that is actually in that slot's position.
 //-----------------------------------------------------------------------------
@@ -1302,7 +1302,7 @@ void CNewGameDialog::SetFastScroll( bool fast )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Checks if a button is being held down, and speeds up the scroll 
+// Purpose: Checks if a button is being held down, and speeds up the scroll
 //-----------------------------------------------------------------------------
 void CNewGameDialog::ContinueScrolling( void )
 {
@@ -1344,7 +1344,7 @@ void CNewGameDialog::FinishScroll( void )
 	ShiftPanelIndices( m_ScrollDirection );
 	m_bScrolling = false;
 	m_ScrollCt = 0;
-	
+
 	// End of scroll step
 	PostScroll( m_ScrollDirection );
 
@@ -1441,7 +1441,7 @@ void CNewGameDialog::OnClose( void )
 
 	if ( GameUI().IsConsoleUI() && !m_bMapStarting )
 	{
-		BasePanel()->RunCloseAnimation( "CloseNewGameDialog_OpenMainMenu" );			
+		BasePanel()->RunCloseAnimation( "CloseNewGameDialog_OpenMainMenu" );
 		BonusMapsDatabase()->WriteSaveData();	// Closing this dialog is a good time to save
 	}
 	BaseClass::OnClose();
@@ -1503,7 +1503,7 @@ void CNewGameDialog::OnCommand( const char *command )
 		}
 		else
 		{
-			if ( XBX_GetStorageDeviceId() == XBX_INVALID_STORAGE_ID || XBX_GetStorageDeviceId() == XBX_STORAGE_DECLINED || 
+			if ( XBX_GetStorageDeviceId() == XBX_INVALID_STORAGE_ID || XBX_GetStorageDeviceId() == XBX_STORAGE_DECLINED ||
 				 !ModInfo().IsSinglePlayerOnly() )
 			{
 				// Multiplayer or no storage device so don't bore them with autosave details
@@ -1612,7 +1612,7 @@ void CNewGameDialog::PaintBackground()
 	{
 		// offset by title
 		int titleX, titleY, titleWide, titleTall;
-		m_pChapterTitleLabels[0]->GetBounds( titleX, titleY, titleWide, titleTall );	
+		m_pChapterTitleLabels[0]->GetBounds( titleX, titleY, titleWide, titleTall );
 		y += titleY + titleTall;
 	}
 	else

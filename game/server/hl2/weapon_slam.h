@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		SLAM 
+// Purpose:		SLAM
 //
 // $Workfile:     $
 // $Date:         $
@@ -52,10 +52,10 @@ public:
 	void				WeaponIdle( void );
 	void				WeaponSwitch( void );
 	void				SLAMThink( void );
-	
+
 	void				SetPickupTouch( void );
 	void				SlamTouch( CBaseEntity *pOther );	// default weapon touch
-	void				ItemPostFrame( void );	
+	void				ItemPostFrame( void );
 	bool				Reload( void );
 	void				SetSlamState( SlamState_t newState );
 	bool				CanAttachSLAM(void);		// In position where can attach SLAM?

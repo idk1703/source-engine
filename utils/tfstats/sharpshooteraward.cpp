@@ -22,7 +22,7 @@ double CSharpshooterAward::SHOT_VALUE = 1.00;
 void CSharpshooterAward::getWinner()
 {
 	CEventListIterator it;
-	
+
 	for (it=g_pMatchInfo->eventList()->begin(); it != g_pMatchInfo->eventList()->end(); ++it)
 	{
 		if ((*it)->getType()==CLogEvent::FRAG)
@@ -41,7 +41,7 @@ void CSharpshooterAward::getWinner()
 			}
 		}
 	}
-	
+
 	int winnerScore=0;
 	winnerID=-1;
 	fNoWinner=true;
@@ -88,4 +88,3 @@ void CSharpshooterAward::extendedinfo(CHTMLFile& html)
 	else if (shots && !hs)
 		html.write("%s sniped %li people!",winnerName.c_str(),shots);
 }
-

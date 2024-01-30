@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -43,10 +43,10 @@ void DumpAABBToGLView( const Vector &vCenter, const Vector &vExtents, const Vect
 #include "winlite.h"
 #endif
 
-static VMatrix s_matIdentity( 1.0f, 0.0f, 0.0f, 0.0f, 
-							 0.0f, 1.0f, 0.0f, 0.0f, 
-							 0.0f, 0.0f, 1.0f, 0.0f, 
-							 0.0f, 0.0f, 0.0f, 1.0f );
+static VMatrix s_matIdentity( 1.0f, 0.0f, 0.0f, 0.0f,
+							0.0f, 1.0f, 0.0f, 0.0f,
+							0.0f, 0.0f, 1.0f, 0.0f,
+							0.0f, 0.0f, 0.0f, 1.0f );
 #endif
 
 #if defined( DEBUG_DUMP_POLYHEDRONS_TO_NUMBERED_GLVIEWS )
@@ -77,9 +77,9 @@ void CPolyhedron_AllocByNew::Release( void )
 CPolyhedron_AllocByNew *CPolyhedron_AllocByNew::Allocate( unsigned short iVertices, unsigned short iLines, unsigned short iIndices, unsigned short iPolygons ) //creates the polyhedron along with enough memory to hold all it's data in a single allocation
 {
 	void *pMemory = new unsigned char [ sizeof( CPolyhedron_AllocByNew ) +
-										(iVertices * sizeof(Vector)) + 
-										(iLines * sizeof(Polyhedron_IndexedLine_t)) + 
-										(iIndices * sizeof( Polyhedron_IndexedLineReference_t )) + 
+										(iVertices * sizeof(Vector)) +
+										(iLines * sizeof(Polyhedron_IndexedLine_t)) +
+										(iIndices * sizeof( Polyhedron_IndexedLineReference_t )) +
 										(iPolygons * sizeof( Polyhedron_IndexedPolygon_t ))];
 
 #include "tier0/memdbgoff.h" //the following placement new doesn't compile with memory debugging
@@ -180,7 +180,7 @@ enum PolyhedronPointPlanarity
 {
 	POINT_DEAD,
 	POINT_ONPLANE,
-	POINT_ALIVE	
+	POINT_ALIVE
 };
 
 struct GeneratePolyhedronFromPlanes_Point
@@ -217,9 +217,9 @@ struct GeneratePolyhedronFromPlanes_LineLL
 
 struct GeneratePolyhedronFromPlanes_Polygon
 {
-	Vector vSurfaceNormal; 
+	Vector vSurfaceNormal;
 	GeneratePolyhedronFromPlanes_LineLL *pLines; //keep these in a clockwise order, circular linking
-	
+
 	bool bMissingASide;
 };
 
@@ -272,7 +272,7 @@ CPolyhedron *ClipPolyhedron( const CPolyhedron *pExistingPolyhedron, const float
 			for( int j = 0; j != pExistingPolyhedron->iVertexCount; ++j )
 			{
 				float fPointDist = vNormal.Dot( pExistingVertices[j] ) - fPlaneDist;
-				
+
 				if( fPointDist <= fNegativeOnPlaneEpsilon )
 					++iLiveCount;
 				else if( fPointDist > fOnPlaneEpsilon )
@@ -304,16 +304,16 @@ CPolyhedron *ClipPolyhedron( const CPolyhedron *pExistingPolyhedron, const float
 		CPolyhedron *pReturn;
 		if( bUseTemporaryMemory )
 		{
-			pReturn = GetTempPolyhedron( pExistingPolyhedron->iVertexCount, 
-											pExistingPolyhedron->iLineCount, 
-											pExistingPolyhedron->iIndexCount, 
+			pReturn = GetTempPolyhedron( pExistingPolyhedron->iVertexCount,
+											pExistingPolyhedron->iLineCount,
+											pExistingPolyhedron->iIndexCount,
 											pExistingPolyhedron->iPolygonCount );
 		}
 		else
 		{
-			pReturn = CPolyhedron_AllocByNew::Allocate( pExistingPolyhedron->iVertexCount, 
-														pExistingPolyhedron->iLineCount, 
-														pExistingPolyhedron->iIndexCount, 
+			pReturn = CPolyhedron_AllocByNew::Allocate( pExistingPolyhedron->iVertexCount,
+														pExistingPolyhedron->iLineCount,
+														pExistingPolyhedron->iIndexCount,
 														pExistingPolyhedron->iPolygonCount );
 		}
 
@@ -333,7 +333,7 @@ CPolyhedron *ClipPolyhedron( const CPolyhedron *pExistingPolyhedron, const float
 	GeneratePolyhedronFromPlanes_Polygon *pStartPolygons = (GeneratePolyhedronFromPlanes_Polygon *)stackalloc( pExistingPolyhedron->iPolygonCount * sizeof( GeneratePolyhedronFromPlanes_Polygon ) );
 
 	GeneratePolyhedronFromPlanes_LineLL *pStartLineLinks = (GeneratePolyhedronFromPlanes_LineLL *)stackalloc( pExistingPolyhedron->iLineCount * 4 * sizeof( GeneratePolyhedronFromPlanes_LineLL ) );
-	
+
 	int iCurrentLineLinkIndex = 0;
 
 	//setup points
@@ -368,7 +368,7 @@ CPolyhedron *ClipPolyhedron( const CPolyhedron *pExistingPolyhedron, const float
 		pStartPolygons[i].vSurfaceNormal = pExistingPolyhedron->pPolygons[i].polyNormal;
 		Polyhedron_IndexedLineReference_t *pOffsetPolyhedronLines = &pExistingPolyhedron->pIndices[pExistingPolyhedron->pPolygons[i].iFirstIndex];
 
-		
+
 		GeneratePolyhedronFromPlanes_LineLL *pFirstLink = &pStartLineLinks[iCurrentLineLinkIndex];
 		pStartPolygons[i].pLines = pFirstLink; //technically going to link to itself on first pass, then get linked properly immediately afterward
 		for( int j = 0; j != pExistingPolyhedron->pPolygons[i].iIndexCount; ++j )
@@ -376,15 +376,15 @@ CPolyhedron *ClipPolyhedron( const CPolyhedron *pExistingPolyhedron, const float
 			GeneratePolyhedronFromPlanes_LineLL *pLineLink = &pStartLineLinks[iCurrentLineLinkIndex++];
 			pLineLink->pLine = &pStartLines[pOffsetPolyhedronLines[j].iLineIndex];
 			pLineLink->iReferenceIndex = pOffsetPolyhedronLines[j].iEndPointIndex;
-			
+
 			pLineLink->pLine->pPolygons[pLineLink->iReferenceIndex] = &pStartPolygons[i];
-			pLineLink->pLine->pPolygonLineLinks[pLineLink->iReferenceIndex] = pLineLink;			
+			pLineLink->pLine->pPolygonLineLinks[pLineLink->iReferenceIndex] = pLineLink;
 
 			pLineLink->pPrev = pStartPolygons[i].pLines;
 			pStartPolygons[i].pLines->pNext = pLineLink;
 			pStartPolygons[i].pLines = pLineLink;
 		}
-		
+
 		pFirstLink->pPrev = pStartPolygons[i].pLines;
 		pStartPolygons[i].pLines->pNext = pFirstLink;
 	}
@@ -398,7 +398,7 @@ CPolyhedron *ClipPolyhedron( const CPolyhedron *pExistingPolyhedron, const float
 		{
 			GeneratePolyhedronFromPlanes_LineLL *pLastVisitedLink = pStartPoints[i].pConnectedLines;
 			GeneratePolyhedronFromPlanes_LineLL *pCurrentLink = pLastVisitedLink;
-			
+
 			do
 			{
 				pCurrentLink->pPrev = pLastVisitedLink;
@@ -432,10 +432,10 @@ CPolyhedron *ClipPolyhedron( const CPolyhedron *pExistingPolyhedron, const float
 			pSearchLink->pPrev->pNext = pSearchLink->pNext;
 			pSearchLink->pNext->pPrev = pSearchLink->pPrev;
 
-			//insert the search link just before the work link			
+			//insert the search link just before the work link
 			pSearchLink->pPrev = pWorkLink->pPrev;
 			pSearchLink->pNext = pWorkLink;
-			
+
 			pSearchLink->pPrev->pNext = pSearchLink;
 			pWorkLink->pPrev = pSearchLink;
 
@@ -542,8 +542,8 @@ bool FindConvexShapeLooseAABB( const float *pInwardFacingPlanes, int iPlaneCount
 		pMovedPlanes[(i * 4) + 2] = pInwardFacingPlanes[(i * 4) + 2];
 		pMovedPlanes[(i * 4) + 3] = pInwardFacingPlanes[(i * 4) + 3] - 100.0f; //move planes out a lot to kill some imprecision problems
 	}
-	
-	
+
+
 
 	//vAABBMins = vAABBMaxs = FindPointInPlanes( pPlanes, iPlaneCount );
 	float *vertsIn = NULL; //we'll be allocating a new buffer for this with each new polygon, and moving it off to the polygon array
@@ -605,18 +605,18 @@ bool FindConvexShapeLooseAABB( const float *pInwardFacingPlanes, int iPlaneCount
 			Vector *PolyVerts = (Vector *)pPolygons[i].verts;
 			for( int j = 0; j != pPolygons[i].iVertCount; ++j )
 			{
-				if( PolyVerts[j].x < vAABBMins.x ) 
+				if( PolyVerts[j].x < vAABBMins.x )
 					vAABBMins.x = PolyVerts[j].x;
-				if( PolyVerts[j].y < vAABBMins.y ) 
+				if( PolyVerts[j].y < vAABBMins.y )
 					vAABBMins.y = PolyVerts[j].y;
-				if( PolyVerts[j].z < vAABBMins.z ) 
+				if( PolyVerts[j].z < vAABBMins.z )
 					vAABBMins.z = PolyVerts[j].z;
 
-				if( PolyVerts[j].x > vAABBMaxs.x ) 
+				if( PolyVerts[j].x > vAABBMaxs.x )
 					vAABBMaxs.x = PolyVerts[j].x;
-				if( PolyVerts[j].y > vAABBMaxs.y ) 
+				if( PolyVerts[j].y > vAABBMaxs.y )
 					vAABBMaxs.y = PolyVerts[j].y;
-				if( PolyVerts[j].z > vAABBMaxs.z ) 
+				if( PolyVerts[j].z > vAABBMaxs.z )
 					vAABBMaxs.z = PolyVerts[j].z;
 			}
 		}
@@ -630,11 +630,11 @@ bool FindConvexShapeLooseAABB( const float *pInwardFacingPlanes, int iPlaneCount
 			Vector *PolyVerts = (Vector *)pPolygons[i].verts;
 			for( int j = 0; j != pPolygons[i].iVertCount; ++j )
 			{
-				if( PolyVerts[j].x < vAABBMins.x ) 
+				if( PolyVerts[j].x < vAABBMins.x )
 					vAABBMins.x = PolyVerts[j].x;
-				if( PolyVerts[j].y < vAABBMins.y ) 
+				if( PolyVerts[j].y < vAABBMins.y )
 					vAABBMins.y = PolyVerts[j].y;
-				if( PolyVerts[j].z < vAABBMins.z ) 
+				if( PolyVerts[j].z < vAABBMins.z )
 					vAABBMins.z = PolyVerts[j].z;
 			}
 		}
@@ -647,11 +647,11 @@ bool FindConvexShapeLooseAABB( const float *pInwardFacingPlanes, int iPlaneCount
 			Vector *PolyVerts = (Vector *)pPolygons[i].verts;
 			for( int j = 0; j != pPolygons[i].iVertCount; ++j )
 			{
-				if( PolyVerts[j].x > vAABBMaxs.x ) 
+				if( PolyVerts[j].x > vAABBMaxs.x )
 					vAABBMaxs.x = PolyVerts[j].x;
-				if( PolyVerts[j].y > vAABBMaxs.y ) 
+				if( PolyVerts[j].y > vAABBMaxs.y )
 					vAABBMaxs.y = PolyVerts[j].y;
-				if( PolyVerts[j].z > vAABBMaxs.z ) 
+				if( PolyVerts[j].z > vAABBMaxs.z )
 					vAABBMaxs.z = PolyVerts[j].z;
 			}
 		}
@@ -672,14 +672,14 @@ CPolyhedron *ConvertLinkedGeometryToPolyhedron( GeneratePolyhedronFromPlanes_Uno
 	Assert( (pPolygons != NULL) && (pLines != NULL) && (pPoints != NULL) );
 	unsigned int iPolyCount = 0, iLineCount = 0, iPointCount = 0, iIndexCount = 0;
 
-	GeneratePolyhedronFromPlanes_UnorderedPolygonLL *pActivePolygonWalk = pPolygons;	
+	GeneratePolyhedronFromPlanes_UnorderedPolygonLL *pActivePolygonWalk = pPolygons;
 	do
 	{
 		++iPolyCount;
 		GeneratePolyhedronFromPlanes_LineLL *pLineWalk = pActivePolygonWalk->pPolygon->pLines;
 		GeneratePolyhedronFromPlanes_LineLL *pFirstLine = pLineWalk;
 		Assert( pLineWalk != NULL );
-		
+
 		do
 		{
 			++iIndexCount;
@@ -701,8 +701,8 @@ CPolyhedron *ConvertLinkedGeometryToPolyhedron( GeneratePolyhedronFromPlanes_Uno
 	{
 		++iPointCount;
 		pActivePointWalk = pActivePointWalk->pNext;
-	} while( pActivePointWalk );	
-	
+	} while( pActivePointWalk );
+
 	CPolyhedron *pReturn;
 	if( bUseTemporaryMemory )
 	{
@@ -745,8 +745,8 @@ CPolyhedron *ConvertLinkedGeometryToPolyhedron( GeneratePolyhedronFromPlanes_Uno
 	for( unsigned int i = 0; i != iPolyCount; ++i )
 	{
 		pPolyArray[i].polyNormal = pActivePolygonWalk->pPolygon->vSurfaceNormal;
-		pPolyArray[i].iFirstIndex = iIndexCount;		
-		
+		pPolyArray[i].iFirstIndex = iIndexCount;
+
 		GeneratePolyhedronFromPlanes_LineLL *pLineWalk = pActivePolygonWalk->pPolygon->pLines;
 		GeneratePolyhedronFromPlanes_LineLL *pFirstLine = pLineWalk;
 		do
@@ -754,14 +754,14 @@ CPolyhedron *ConvertLinkedGeometryToPolyhedron( GeneratePolyhedronFromPlanes_Uno
 			//pIndexArray[iIndexCount] = pLineWalk->pLine->pPoints[pLineWalk->iReferenceIndex]->iWorkData; //startpoint of each line, iWorkData is the index of the vertex
 			pIndexArray[iIndexCount].iLineIndex = pLineWalk->pLine->iSaveIndices;
 			pIndexArray[iIndexCount].iEndPointIndex = pLineWalk->iReferenceIndex;
-			
+
 			++iIndexCount;
 			pLineWalk = pLineWalk->pNext;
 		} while( pLineWalk != pFirstLine );
 
 		pPolyArray[i].iIndexCount = iIndexCount - pPolyArray[i].iFirstIndex;
 
-		pActivePolygonWalk = pActivePolygonWalk->pNext;	
+		pActivePolygonWalk = pActivePolygonWalk->pNext;
 	}
 
 #if defined( _DEBUG ) && defined( ENABLE_DEBUG_POLYHEDRON_DUMPS ) && defined( DEBUG_DUMP_POLYHEDRONS_TO_NUMBERED_GLVIEWS )
@@ -787,9 +787,9 @@ void DumpPointListToGLView( GeneratePolyhedronFromPlanes_UnorderedPointLL *pHead
 #ifdef ENABLE_DEBUG_POLYHEDRON_DUMPS
 	if( pTransform == NULL )
 		pTransform = &s_matIdentity;
-	
+
 	FILE *pFile = fopen( szDumpFile, "ab" );
-	
+
 	while( pHead )
 	{
 		if( pHead->pPoint->planarity == planarity )
@@ -873,7 +873,7 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 
 	static int iPolyhedronClipCount = 0;
 	++iPolyhedronClipCount;
-	
+
 	DebugCutHistory.AddToTail( ConvertLinkedGeometryToPolyhedron( pAllPolygons, pAllLines, pAllPoints, false ) );
 #endif
 
@@ -908,9 +908,9 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 				pActiveLineWalk = pActiveLineWalk->pNext;
 			} while( pActiveLineWalk );
 		}
-		
+
 		//TODO: Move these pointers into a reallocation pool
-		pDeadPointCollection = NULL; 
+		pDeadPointCollection = NULL;
 		pDeadLineCollection = NULL;
 		pDeadLineLinkCollection = NULL;
 		pDeadPolygonCollection = NULL;
@@ -987,7 +987,7 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 						AssertMsg( fabs( fDebugDist ) < fabs(fPointDist), "Projected point is further from plane than unprojected." );
 #endif
 						fPointDist = vNormal.Dot( pPoint->ptPosition ) - fPlaneDist; //recompute dist (not guaranteed to be 0.0 like we want)
-					}*/				
+					}*/
 				}
 
 				pPoint->fPlaneDist = fPointDist;
@@ -1006,7 +1006,7 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 				DebugCutHistory.RemoveAll();
 #endif
 
-				return NULL; 
+				return NULL;
 			}
 
 			if( bAllPointsAlive )
@@ -1035,7 +1035,7 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 								if( pOnPlaneLineWalk->pNext->pLine->bCut || pOnPlaneLineWalk->pPrev->pLine->bCut )
 								{
 									//This on-plane point is surrounded by dead points on one polygon of the polyhedron.
-									//	We have to downgrade this point to dead to avoid situations where float imprecision 
+									//	We have to downgrade this point to dead to avoid situations where float imprecision
 									//	turns the polyhedron into a *slightly* concave shape. Concave shapes might break this algorithm, even falsely concave shapes.
 									bDead = true;
 									break;
@@ -1067,7 +1067,7 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 #endif
 		}
 
-		
+
 
 
 #ifdef _DEBUG
@@ -1084,7 +1084,7 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 				do
 				{
 					PolyhedronPointPlanarity currentPlanarity = pDebugLineWalk->pLine->pPoints[pDebugLineWalk->iReferenceIndex]->planarity;
-					
+
 					GeneratePolyhedronFromPlanes_LineLL *pNext = pDebugLineWalk->pNext;
 					PolyhedronPointPlanarity nextPlanarity = pNext->pLine->pPoints[pNext->iReferenceIndex]->planarity;
 
@@ -1123,7 +1123,7 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 					{
 						GeneratePolyhedronFromPlanes_Polygon *pPolygon = pLine->pPolygons[i];
 						GeneratePolyhedronFromPlanes_LineLL *pLineLink = pLine->pPolygonLineLinks[i];
-                        
+
 						pPolygon->bMissingASide = true;
 
 						if( pLineLink->pNext == pLineLink )
@@ -1149,9 +1149,9 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 					{
 						GeneratePolyhedronFromPlanes_Point *pPoint = pLine->pPoints[i];
 						GeneratePolyhedronFromPlanes_LineLL *pLineLink = pLine->pPointLineLinks[i];
-						
+
 						if( pLineLink->pNext == pLineLink )
-						{					
+						{
 							//this is the last line
 							pPoint->pConnectedLines = NULL;
 							Assert( pPoint->planarity != POINT_ALIVE );
@@ -1182,11 +1182,11 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 							pActiveLineWalk->pNext->pPrev = pActiveLineWalk->pPrev;
 
 						GeneratePolyhedronFromPlanes_UnorderedLineLL *pNextLineWalk = pActiveLineWalk->pNext;
-						
+
 						//add to the dead list
 						pActiveLineWalk->pNext = pDeadLineCollection;
 						pDeadLineCollection = pActiveLineWalk;
-						
+
 						//next
 						pActiveLineWalk = pNextLineWalk;
 					}
@@ -1223,7 +1223,7 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 							bDead = false;
 							break;
 						}
-							
+
 						pTestLineWalk = pTestLineWalk->pNext;
 					} while( pTestLineWalk != pHeadLine );
 				}
@@ -1252,9 +1252,9 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 				}
 				else
 				{
-					AssertMsg_DumpPolyhedron( (pActivePolygonWalk->pPolygon->pLines != NULL) && 
+					AssertMsg_DumpPolyhedron( (pActivePolygonWalk->pPolygon->pLines != NULL) &&
 						(pActivePolygonWalk->pPolygon->pLines != pActivePolygonWalk->pPolygon->pLines->pNext), "Living polygon with less than 2 lines" );
-					
+
 					pActivePolygonWalk = pActivePolygonWalk->pNext;
 				}
 			} while( pActivePolygonWalk );
@@ -1287,7 +1287,7 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 				else
 				{
 					pActivePointWalk = pActivePointWalk->pNext;
-				}				
+				}
 			} while( pActivePointWalk );
 		}
 
@@ -1301,7 +1301,7 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 			{
 				GeneratePolyhedronFromPlanes_Line *pWorkLine = pActiveLineWalk->pLine;
 				Assert_DumpPolyhedron( (pWorkLine->bAlive == true) || (pWorkLine->bCut == false) ); //all dead lines should have already been removed
-				
+
 				if( pWorkLine->bCut )
 				{
 					GeneratePolyhedronFromPlanes_Point **pLinePoints = pWorkLine->pPoints;
@@ -1316,7 +1316,7 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 					Assert_DumpPolyhedron( pLivingPoint->planarity == POINT_ALIVE ); //if this point were on-plane or dead, the line should be dead
 
 					//We'll be de-linking from the old point and generating a new one. We do this so other lines can still access the dead point's untouched data.
-					
+
 					//Generate a new point
 					GeneratePolyhedronFromPlanes_Point *pNewPoint = (GeneratePolyhedronFromPlanes_Point *)stackalloc( sizeof( GeneratePolyhedronFromPlanes_Point ) );
 					{
@@ -1354,7 +1354,7 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 						pNewPoint->planarity = POINT_ONPLANE;
 						pNewPoint->fPlaneDist = 0.0f;
 					}
-					
+
 					GeneratePolyhedronFromPlanes_LineLL *pNewLineLink = pNewPoint->pConnectedLines = (GeneratePolyhedronFromPlanes_LineLL *)stackalloc( sizeof( GeneratePolyhedronFromPlanes_LineLL ) );
 					pNewLineLink->pLine = pWorkLine;
 					pNewLineLink->pNext = pNewLineLink;
@@ -1365,13 +1365,13 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 					pWorkLine->pPointLineLinks[iDeadIndex] = pNewLineLink;
 					pNewPoint->pConnectedLines = pNewLineLink;
 
-					//A new line is needed on each polygon touching the dead point to connect the two new endpoints for split lines. 
+					//A new line is needed on each polygon touching the dead point to connect the two new endpoints for split lines.
 					// So mark connected polygons as missing a side.
 					for( int i = 0; i != 2; ++i )
 						pWorkLine->pPolygons[i]->bMissingASide = true;
-					
 
-					//Always have a cut polygon's head line be just before the gap in the polygon. 
+
+					//Always have a cut polygon's head line be just before the gap in the polygon.
 					// In this case, we know that one of the two polygons goes clockwise into the dead point, so have that polygon point at this line.
 					// We don't know enough about the other polygon to do anything here, but another cut line will handle that polygon. So it all works out in the end.
 					pWorkLine->pPolygons[iDeadIndex]->pLines = pWorkLine->pPolygonLineLinks[iDeadIndex];
@@ -1402,7 +1402,7 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 #endif
 
 			GeneratePolyhedronFromPlanes_LineLL *pLastLineLink;
-			GeneratePolyhedronFromPlanes_Polygon *pWorkPolygon;			
+			GeneratePolyhedronFromPlanes_Polygon *pWorkPolygon;
 			GeneratePolyhedronFromPlanes_LineLL *pTestLine;
 
 #ifdef _DEBUG
@@ -1414,7 +1414,7 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 			{
 				//grab the polygon we'll be starting with
 				GeneratePolyhedronFromPlanes_Polygon *pBrokenPolygon = pActivePolygonWalk->pPolygon;
-				
+
 				{
 					GeneratePolyhedronFromPlanes_LineLL *pTemp = pBrokenPolygon->pLines->pNext;
 					pStartPoint = pTemp->pLine->pPoints[1 - pTemp->iReferenceIndex];
@@ -1429,7 +1429,7 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 			else
 			{
 				//apparently the plane was entirely through existing polygonal borders, extremely rare but it can happen with inefficient cutting planes
-                GeneratePolyhedronFromPlanes_UnorderedPointLL *pActivePointWalk = pAllPoints;
+	GeneratePolyhedronFromPlanes_UnorderedPointLL *pActivePointWalk = pAllPoints;
 				while( (pActivePointWalk != NULL) && (pActivePointWalk->pPoint->planarity != POINT_ONPLANE) )
 				{
 					pActivePointWalk = pActivePointWalk->pNext;
@@ -1439,7 +1439,7 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 
 				pStartPoint = pWorkPoint = pActivePointWalk->pPoint;
 				GeneratePolyhedronFromPlanes_LineLL *pLines = pWorkPoint->pConnectedLines;
-				
+
 				while( !pLines->pLine->bAlive ) //seek clockwise until we find a line not on the plane
 					pLines = pLines->pNext;
 
@@ -1494,7 +1494,7 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 					{
 						//ensure that the space between the gap lines is the only space where fixing is required
 						GeneratePolyhedronFromPlanes_LineLL *pDebugLineWalk = pGapLines[1]->pNext;
-						
+
 						while( pDebugLineWalk != pGapLines[0] )
 						{
 							Assert_DumpPolyhedron( pDebugLineWalk->pLine->bCut == false );
@@ -1553,7 +1553,7 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 						pPointLinks[0]->pNext = pWorkLink;
 
 						pWorkLink->pPrev->pNext = pPointLinks[0];
-						pWorkLink->pPrev = pPointLinks[0];						
+						pWorkLink->pPrev = pPointLinks[0];
 					}
 
 					//Insert after the link from point 1 to gap line 1 (clockwise rotation)
@@ -1563,9 +1563,9 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 
 						pPointLinks[1]->pNext = pWorkLink->pNext;
 						pPointLinks[1]->pPrev = pWorkLink;
-						
+
 						pWorkLink->pNext->pPrev = pPointLinks[1];
-						pWorkLink->pNext = pPointLinks[1];						
+						pWorkLink->pNext = pPointLinks[1];
 					}
 
 
@@ -1616,16 +1616,16 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 					pWorkPoint = pJoinLine->pPoints[0];
 					pLastLineLink = pJoinLine->pPointLineLinks[0];
 					Assert_DumpPolyhedron( pWorkPoint->planarity == POINT_ONPLANE ); //every working point should be coplanar
-					
+
 					pTestLine = pLastLineLink->pPrev;
 					if( pTestLine->pLine->pPoints[pTestLine->iReferenceIndex]->planarity == POINT_ALIVE )
 						pWorkPolygon = pTestLine->pLine->pPolygons[pTestLine->iReferenceIndex];
 					else
 						pWorkPolygon = pTestLine->pLine->pPolygons[1 - pTestLine->iReferenceIndex];
-					
+
 					Assert_DumpPolyhedron( pWorkPolygon != pLastWorkPolygon );
 					Assert_DumpPolyhedron( (pWorkPoint == pStartPoint) ||
-											(pGapLines[0]->pLine->bCut == false) || 
+											(pGapLines[0]->pLine->bCut == false) ||
 											(pWorkPolygon->bMissingASide == true) ); //if we're not done fixing, and if the shared line was cut, the next polygon must be missing a side
 				}
 				else
@@ -1634,11 +1634,11 @@ CPolyhedron *ClipLinkedGeometry( GeneratePolyhedronFromPlanes_UnorderedPolygonLL
 					Assert_DumpPolyhedron( pTestLine->pLine->bCut == false );
 					Assert_DumpPolyhedron( (pTestLine->pLine->pPoints[0]->planarity == POINT_ONPLANE) && (pTestLine->pLine->pPoints[1]->planarity == POINT_ONPLANE) );
 
-					
+
 					//link to this line from the new polygon
 					GeneratePolyhedronFromPlanes_LineLL *pNewLineLink;
 					pNewLineLink = (GeneratePolyhedronFromPlanes_LineLL *)stackalloc( sizeof( GeneratePolyhedronFromPlanes_LineLL ) );
-					
+
 					pNewLineLink->pLine = pTestLine->pLine;
 					pNewLineLink->iReferenceIndex = pTestLine->iReferenceIndex;
 
@@ -1780,7 +1780,7 @@ CPolyhedron *GeneratePolyhedronFromPlanes( const float *pOutwardFacingPlanes, in
 {
 	//this is version 2 of the polyhedron generator, version 1 made individual polygons and joined points together, some guesswork is involved and it therefore isn't a solid method
 	//this version will start with a cube and hack away at it (retaining point connection information) to produce a polyhedron with no guesswork involved, this method should be rock solid
-	
+
 	//the polygon clipping functions we're going to use want inward facing planes
 	float *pFlippedPlanes = (float *)stackalloc( (iPlaneCount * 4) * sizeof( float ) );
 	for( int i = 0; i != iPlaneCount * 4; ++i )
@@ -1793,7 +1793,7 @@ CPolyhedron *GeneratePolyhedronFromPlanes( const float *pOutwardFacingPlanes, in
 	if( FindConvexShapeLooseAABB( pFlippedPlanes, iPlaneCount, &vAABBMins, &vAABBMaxs ) == false )
 		return NULL; //no shape to work with apparently
 
-	
+
 	//grow the bounding box to a larger size since it's probably inaccurate a bit
 	{
 		Vector vGrow = (vAABBMaxs - vAABBMins) * 0.5f;
@@ -1806,8 +1806,8 @@ CPolyhedron *GeneratePolyhedronFromPlanes( const float *pOutwardFacingPlanes, in
 	}
 
 	//generate our starting cube using the 2x AABB so we can start hacking away at it
-	
-	
+
+
 
 	//create our starting box on the stack
 	GeneratePolyhedronFromPlanes_Point StartingBoxPoints[8];
@@ -1815,7 +1815,7 @@ CPolyhedron *GeneratePolyhedronFromPlanes( const float *pOutwardFacingPlanes, in
 	GeneratePolyhedronFromPlanes_Polygon StartingBoxPolygons[6];
 	GeneratePolyhedronFromPlanes_LineLL StartingPoints_To_Lines_Links[24]; //8 points, 3 lines per point
 	GeneratePolyhedronFromPlanes_LineLL StartingPolygon_To_Lines_Links[24]; //6 polygons, 4 lines per poly
-	
+
 	GeneratePolyhedronFromPlanes_UnorderedPolygonLL StartingPolygonList[6]; //6 polygons
 	GeneratePolyhedronFromPlanes_UnorderedLineLL StartingLineList[12]; //12 lines
 	GeneratePolyhedronFromPlanes_UnorderedPointLL StartingPointList[8]; //8 points
@@ -2061,7 +2061,7 @@ void DumpAABBToGLView( const Vector &vCenter, const Vector &vExtents, const Vect
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMins.x, vMaxs.y, vMaxs.z, vColor.x, vColor.y, vColor.z );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMins.x, vMaxs.y, vMins.z, vColor.x, vColor.y, vColor.z );
 
-	fprintf( pFile, "4\n" );	
+	fprintf( pFile, "4\n" );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMins.x, vMaxs.y, vMins.z, vColor.x, vColor.y, vColor.z );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMins.x, vMaxs.y, vMaxs.z, vColor.x, vColor.y, vColor.z );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMins.x, vMins.y, vMaxs.z, vColor.x, vColor.y, vColor.z );
@@ -2074,7 +2074,7 @@ void DumpAABBToGLView( const Vector &vCenter, const Vector &vExtents, const Vect
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMaxs.z, vColor.x, vColor.y, vColor.z );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMins.z, vColor.x, vColor.y, vColor.z );
 
-	fprintf( pFile, "4\n" );	
+	fprintf( pFile, "4\n" );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMins.z, vColor.x, vColor.y, vColor.z );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMaxs.z, vColor.x, vColor.y, vColor.z );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMins.y, vMaxs.z, vColor.x, vColor.y, vColor.z );
@@ -2088,7 +2088,7 @@ void DumpAABBToGLView( const Vector &vCenter, const Vector &vExtents, const Vect
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMins.y, vMaxs.z, vColor.x, vColor.y, vColor.z );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMins.y, vMins.z, vColor.x, vColor.y, vColor.z );
 
-	fprintf( pFile, "4\n" );	
+	fprintf( pFile, "4\n" );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMins.y, vMins.z, vColor.x, vColor.y, vColor.z );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMins.y, vMaxs.z, vColor.x, vColor.y, vColor.z );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMins.x, vMins.y, vMaxs.z, vColor.x, vColor.y, vColor.z );
@@ -2103,7 +2103,7 @@ void DumpAABBToGLView( const Vector &vCenter, const Vector &vExtents, const Vect
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMaxs.z, vColor.x, vColor.y, vColor.z );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMins.z, vColor.x, vColor.y, vColor.z );
 
-	fprintf( pFile, "4\n" );	
+	fprintf( pFile, "4\n" );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMins.z, vColor.x, vColor.y, vColor.z );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMaxs.z, vColor.x, vColor.y, vColor.z );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMins.x, vMaxs.y, vMaxs.z, vColor.x, vColor.y, vColor.z );
@@ -2118,7 +2118,7 @@ void DumpAABBToGLView( const Vector &vCenter, const Vector &vExtents, const Vect
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMins.z, vColor.x, vColor.y, vColor.z );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMins.y, vMins.z, vColor.x, vColor.y, vColor.z );
 
-	fprintf( pFile, "4\n" );	
+	fprintf( pFile, "4\n" );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMins.y, vMins.z, vColor.x, vColor.y, vColor.z );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMins.z, vColor.x, vColor.y, vColor.z );
 	fprintf( pFile, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMins.x, vMaxs.y, vMins.z, vColor.x, vColor.y, vColor.z );
@@ -2215,7 +2215,7 @@ void DumpPolyhedronToGLView( const CPolyhedron *pPolyhedron, const char *pFilena
 	FILE *pFile = fopen( pFilename, "ab" );
 
 	//randomizing an array of colors to help spot shared/unshared vertices
-	Vector *pColors = (Vector *)stackalloc( sizeof( Vector ) * pPolyhedron->iVertexCount );	
+	Vector *pColors = (Vector *)stackalloc( sizeof( Vector ) * pPolyhedron->iVertexCount );
 	int counter;
 	for( counter = 0; counter != pPolyhedron->iVertexCount; ++counter )
 	{
@@ -2246,7 +2246,7 @@ void DumpPolyhedronToGLView( const CPolyhedron *pPolyhedron, const char *pFilena
 	{
 		const Vector vOne( 1.0f, 1.0f, 1.0f );
 		DumpLineToGLView( pTransformedPoints[pPolyhedron->pLines[counter].iPointIndices[0]], vOne - pColors[pPolyhedron->pLines[counter].iPointIndices[0]],
-							pTransformedPoints[pPolyhedron->pLines[counter].iPointIndices[1]], vOne - pColors[pPolyhedron->pLines[counter].iPointIndices[1]], 
+							pTransformedPoints[pPolyhedron->pLines[counter].iPointIndices[1]], vOne - pColors[pPolyhedron->pLines[counter].iPointIndices[1]],
 							0.1f, pFile );
 	}
 
@@ -2273,7 +2273,7 @@ void DumpPlaneToGlView( const float *pPlane, float fGrayScale, const char *pszFi
 	Vector vNormal = pTransform->ApplyRotation( *(Vector *)pPlane );
 	float fDist = pPlane[3] * vNormal.NormalizeInPlace(); //possible scaling going on
 	fDist += vNormal.Dot( pTransform->GetTranslation() );
-	
+
 	Vector vPlaneVerts[4];
 
 	PolyFromPlane( vPlaneVerts, vNormal, fDist, 100000.0f );
@@ -2289,5 +2289,3 @@ void DumpPlaneToGlView( const float *pPlane, float fGrayScale, const char *pszFi
 #endif
 }
 #endif
-
-

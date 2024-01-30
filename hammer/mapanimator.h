@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -52,7 +52,7 @@ public:
 private:
 	// Used by the keys to detect when changes need to be sent to the position interpolators.
 	int			m_nKeysChanged;
-	
+
 	VMatrix m_CoordFrame;
 	bool m_bCurrentlyAnimating;
 	CMapKeyFrame *m_pCurrentKeyFrame;	// keyframe it's currently at

@@ -22,7 +22,7 @@ class CTFRaygun : public CTFRocketLauncher
 {
 public:
 	DECLARE_CLASS( CTFRaygun, CTFRocketLauncher );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFRaygun();
@@ -58,7 +58,7 @@ public:
 			return 0.0f;
 		}
 
-		return 5.f; 
+		return 5.f;
 	}
 	virtual float		Energy_GetRechargeCost( void ) const { return 5.f; }
 
@@ -85,7 +85,7 @@ class CTFDRGPomson : public CTFRaygun
 {
 public:
 	DECLARE_CLASS( CTFDRGPomson, CTFRaygun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual void		Precache();

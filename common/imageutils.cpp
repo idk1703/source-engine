@@ -47,7 +47,7 @@ extern void longjmp( jmp_buf, int ) __attribute__((noreturn));
 	extern class IEngineSound *enginesound;
 	extern class IMatchmaking *matchmaking;
 	extern class IXboxSystem  *xboxsystem;
-	extern class IAchievementMgr *achievementmgr; 
+	extern class IAchievementMgr *achievementmgr;
 	extern class CSteamAPIContext *steamapicontext;
 #elif REPLAY_DLL
 	#include "replay/ienginereplay.h"
@@ -91,9 +91,9 @@ extern void longjmp( jmp_buf, int ) __attribute__((noreturn));
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-struct ValveJpegErrorHandler_t 
+struct ValveJpegErrorHandler_t
 {
 	// The default manager
 	struct jpeg_error_mgr	m_Base;
@@ -101,7 +101,7 @@ struct ValveJpegErrorHandler_t
 	jmp_buf					m_ErrorContext;
 };
 
-#define JPEG_OUTPUT_BUF_SIZE  4096   
+#define JPEG_OUTPUT_BUF_SIZE  4096
 
 struct JPEGDestinationManager_t
 {
@@ -240,7 +240,7 @@ ConversionErrorType ImgUtl_ConvertJPEGToTGA( const char *jpegpath, const char *t
 	jpeg_finish_decompress(&jpegInfo);
 
 	fclose(infile);
-	
+
 	// ok, at this point we have read in the JPEG image to our buffer, now we need to write it out as a TGA file.
 	CUtlBuffer outBuf;
 	bool bRetVal = TGAWriter::WriteToBuffer( buf, outBuf, image_width, image_height, IMAGE_FORMAT_RGB888, IMAGE_FORMAT_RGB888 );
@@ -684,58 +684,58 @@ unsigned char		*ImgUtl_ReadPNGAsRGBAFromBuffer( CUtlBuffer &buffer, int &width, 
 	png_const_bytep pngData = (png_const_bytep)buffer.Base();
 	if (png_sig_cmp( pngData, 0, 8))
 	{
-        errcode = CE_ERROR_PARSING_SOURCE;
+		errcode = CE_ERROR_PARSING_SOURCE;
 		return NULL;
 	}
 
 	png_structp png_ptr = NULL;
 	png_infop info_ptr = NULL;
 
-    /* could pass pointers to user-defined error handlers instead of NULLs: */
+	/* could pass pointers to user-defined error handlers instead of NULLs: */
 
-    png_ptr = png_create_read_struct( PNG_LIBPNG_VER_STRING, NULL, NULL, NULL );
-    if (!png_ptr)
-    {
-        errcode = CE_MEMORY_ERROR;
+	png_ptr = png_create_read_struct( PNG_LIBPNG_VER_STRING, NULL, NULL, NULL );
+	if (!png_ptr)
+	{
+		errcode = CE_MEMORY_ERROR;
 		return NULL;
 	}
 
 	unsigned char *pResultData = NULL;
 	png_bytepp  row_pointers = NULL;
 
-    info_ptr = png_create_info_struct( png_ptr );
-    if ( !info_ptr ) 
+	info_ptr = png_create_info_struct( png_ptr );
+	if ( !info_ptr )
 	{
-        errcode = CE_MEMORY_ERROR;
+		errcode = CE_MEMORY_ERROR;
 fail:
-        png_destroy_read_struct( &png_ptr, &info_ptr, NULL );
-        if ( row_pointers )
-        {
+		png_destroy_read_struct( &png_ptr, &info_ptr, NULL );
+		if ( row_pointers )
+		{
 			free( row_pointers );
 		}
-        if ( pResultData )
-        {
+		if ( pResultData )
+		{
 			free( pResultData );
 		}
-        return NULL;
-    }
+		return NULL;
+	}
 
-    /* setjmp() must be called in every function that calls a PNG-reading
-     * libpng function */
+	/* setjmp() must be called in every function that calls a PNG-reading
+	* libpng function */
 
-    if ( setjmp( png_jmpbuf(png_ptr) ) ) 
+	if ( setjmp( png_jmpbuf(png_ptr) ) )
 	{
-        errcode = CE_ERROR_PARSING_SOURCE;
-        goto fail;
-    }
+		errcode = CE_ERROR_PARSING_SOURCE;
+		goto fail;
+	}
 
 	png_set_read_fn( png_ptr, &buffer, ReadPNGData );
-    png_read_info( png_ptr, info_ptr );  /* read all PNG info up to image data */
+	png_read_info( png_ptr, info_ptr );  /* read all PNG info up to image data */
 
 
-    /* alternatively, could make separate calls to png_get_image_width(),
-     * etc., but want bit_depth and color_type for later [don't care about
-     * compression_type and filter_type => NULLs] */
+	/* alternatively, could make separate calls to png_get_image_width(),
+	* etc., but want bit_depth and color_type for later [don't care about
+	* compression_type and filter_type => NULLs] */
 
 	int bit_depth;
 	int color_type;
@@ -747,23 +747,23 @@ fail:
 	width = png_width;
 	height = png_height;
 
-    png_uint_32 rowbytes;
+	png_uint_32 rowbytes;
 
-    /* expand palette images to RGB, low-bit-depth grayscale images to 8 bits,
-     * transparency chunks to full alpha channel; strip 16-bit-per-sample
-     * images to 8 bits per sample; and convert grayscale to RGB[A] */
+	/* expand palette images to RGB, low-bit-depth grayscale images to 8 bits,
+	* transparency chunks to full alpha channel; strip 16-bit-per-sample
+	* images to 8 bits per sample; and convert grayscale to RGB[A] */
 
-    if (color_type == PNG_COLOR_TYPE_PALETTE)
-        png_set_expand( png_ptr );
-    if (color_type == PNG_COLOR_TYPE_GRAY && bit_depth < 8)
-        png_set_expand( png_ptr );
-    if (png_get_valid( png_ptr, info_ptr, PNG_INFO_tRNS ) )
-        png_set_expand( png_ptr );
-    if (bit_depth == 16)
-        png_set_strip_16( png_ptr );
-    if (color_type == PNG_COLOR_TYPE_GRAY ||
-        color_type == PNG_COLOR_TYPE_GRAY_ALPHA)
-        png_set_gray_to_rgb( png_ptr );
+	if (color_type == PNG_COLOR_TYPE_PALETTE)
+		png_set_expand( png_ptr );
+	if (color_type == PNG_COLOR_TYPE_GRAY && bit_depth < 8)
+		png_set_expand( png_ptr );
+	if (png_get_valid( png_ptr, info_ptr, PNG_INFO_tRNS ) )
+		png_set_expand( png_ptr );
+	if (bit_depth == 16)
+		png_set_strip_16( png_ptr );
+	if (color_type == PNG_COLOR_TYPE_GRAY ||
+		color_type == PNG_COLOR_TYPE_GRAY_ALPHA)
+		png_set_gray_to_rgb( png_ptr );
 
 	// Force in an alpha channel
 	if ( !( color_type & PNG_COLOR_MASK_ALPHA ) )
@@ -771,45 +771,45 @@ fail:
 		png_set_add_alpha(png_ptr, 255, PNG_FILLER_AFTER);
 	}
 
-  /*
+	/*
 	double gamma;
-  if (png_get_gAMA(png_ptr, info_ptr, &gamma))
-        png_set_gamma(png_ptr, display_exponent, gamma);
+	if (png_get_gAMA(png_ptr, info_ptr, &gamma))
+		png_set_gamma(png_ptr, display_exponent, gamma);
 
 */
-    /* all transformations have been registered; now update info_ptr data,
-     * get rowbytes and channels, and allocate image memory */
+	/* all transformations have been registered; now update info_ptr data,
+	* get rowbytes and channels, and allocate image memory */
 
-    png_read_update_info( png_ptr, info_ptr );
+	png_read_update_info( png_ptr, info_ptr );
 
-    rowbytes = png_get_rowbytes( png_ptr, info_ptr );
-    png_byte channels = (int)png_get_channels( png_ptr, info_ptr );
+	rowbytes = png_get_rowbytes( png_ptr, info_ptr );
+	png_byte channels = (int)png_get_channels( png_ptr, info_ptr );
 	if ( channels != 4 )
 	{
 		Assert( channels == 4 );
-        errcode = CE_SOURCE_FILE_FORMAT_NOT_SUPPORTED;
-        goto fail;
+		errcode = CE_SOURCE_FILE_FORMAT_NOT_SUPPORTED;
+		goto fail;
 	}
 
 	row_pointers = (png_bytepp)malloc( height*sizeof(png_bytep) );
 	pResultData = (unsigned char *)malloc( rowbytes*height );
 
-	if ( row_pointers == NULL || pResultData == NULL ) 
+	if ( row_pointers == NULL || pResultData == NULL )
 	{
-        errcode = CE_MEMORY_ERROR;
-        goto fail;
-    }
+		errcode = CE_MEMORY_ERROR;
+		goto fail;
+	}
 
-    /* set the individual row_pointers to point at the correct offsets */
+	/* set the individual row_pointers to point at the correct offsets */
 
-    for ( int i = 0;  i < height;  ++i)
-        row_pointers[i] = pResultData + i*rowbytes;
+	for ( int i = 0;  i < height;  ++i)
+		row_pointers[i] = pResultData + i*rowbytes;
 
-    /* now we can go ahead and just read the whole image */
+	/* now we can go ahead and just read the whole image */
 
-    png_read_image( png_ptr, row_pointers );
+	png_read_image( png_ptr, row_pointers );
 
-    png_read_end(png_ptr, NULL);
+	png_read_end(png_ptr, NULL);
 
 	free( row_pointers );
 	row_pointers = NULL;
@@ -1270,7 +1270,7 @@ ConversionErrorType ImgUtl_ConvertTGA(const char *tgaPath, int nMaxWidth/*=-1*/,
 // resize by stretching (or compressing) an RGBA image pointed to by srcBuf into the buffer pointed to by destBuf.
 // the buffers are assumed to be sized appropriately to accomidate RGBA images of the given widths and heights.
 ConversionErrorType ImgUtl_StretchRGBAImage(const unsigned char *srcBuf, const int srcWidth, const int srcHeight,
-									 unsigned char *destBuf, const int destWidth, const int destHeight)
+									unsigned char *destBuf, const int destWidth, const int destHeight)
 {
 	if ((srcBuf == NULL) || (destBuf == NULL))
 	{
@@ -1384,7 +1384,7 @@ ConversionErrorType ImgUtl_StretchRGBAImage(const unsigned char *srcBuf, const i
 }
 
 ConversionErrorType ImgUtl_PadRGBAImage(const unsigned char *srcBuf, const int srcWidth, const int srcHeight,
-								 unsigned char *destBuf, const int destWidth, const int destHeight)
+								unsigned char *destBuf, const int destWidth, const int destHeight)
 {
 	if ((srcBuf == NULL) || (destBuf == NULL))
 	{
@@ -1623,11 +1623,11 @@ ConversionErrorType	ImgUtl_ConvertToVTFAndDumpVMT( const char *pInPath, const ch
 		{
 			// if the file is already in the vtf format there's no need to convert it.
 			convertTGAToVTF = false;
-			
+
 		}
 	}
 
-	// if we now have a TGA file, convert it to VTF 
+	// if we now have a TGA file, convert it to VTF
 	if (convertTGAToVTF && !failed)
 	{
 		nErrorCode = ImgUtl_ConvertTGA( tgaPath, nMaxWidth, nMaxHeight ); // resize TGA so that it has power-of-two dimensions with a max size of (nMaxWidth)x(nMaxHeight).
@@ -1662,7 +1662,7 @@ ConversionErrorType	ImgUtl_ConvertToVTFAndDumpVMT( const char *pInPath, const ch
 	vtfPath[0] = 0;
 
 
-	//  If we haven't failed so far, create a VMT to go with this VTF 
+	//  If we haven't failed so far, create a VMT to go with this VTF
 	if (!failed)
 	{
 
@@ -1681,7 +1681,7 @@ ConversionErrorType	ImgUtl_ConvertToVTFAndDumpVMT( const char *pInPath, const ch
 			*c = 0;
 			Q_strncat(vtfPath, "vtf", sizeof(vtfPath), COPY_ALL_CHARACTERS);
 
-		} 
+		}
 		else
 		{
 			// We were handed a vtf file originally, so use it.
@@ -1714,7 +1714,7 @@ ConversionErrorType	ImgUtl_ConvertToVTFAndDumpVMT( const char *pInPath, const ch
 #endif
 		Q_strncat(finalPath, szOutDir, sizeof(finalPath), COPY_ALL_CHARACTERS);
 		Q_strncat(finalPath, vtfFilename, sizeof(finalPath), COPY_ALL_CHARACTERS);
-	
+
 		c = finalPath + strlen(finalPath);
 		while ((c > finalPath) && (*(c-1) != '.'))
 		{
@@ -1749,7 +1749,7 @@ ConversionErrorType	ImgUtl_ConvertToVTFAndDumpVMT( const char *pInPath, const ch
 	if (deleteIntermediateVTF)
 	{
 		DoDeleteFile( vtfPath );
-		
+
 		// the TGA->VTF conversion process generates a .txt file if one wasn't already there.
 		// in this case, delete the .txt file.
 		c = vtfPath + strlen(vtfPath);
@@ -1853,7 +1853,7 @@ ConversionErrorType ImgUtl_WriteRGBAAsPNGToBuffer( const unsigned char *pRGBADat
 		nStride = nWidth*4;
 	}
 
-    /* could pass pointers to user-defined error handlers instead of NULLs: */
+	/* could pass pointers to user-defined error handlers instead of NULLs: */
 	png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,
 		NULL, NULL, NULL);
 	if (png_ptr == NULL)
@@ -1866,26 +1866,26 @@ ConversionErrorType ImgUtl_WriteRGBAAsPNGToBuffer( const unsigned char *pRGBADat
 	png_bytepp  row_pointers = NULL;
 
 	png_infop info_ptr = png_create_info_struct(png_ptr);
-    if ( !info_ptr ) 
+	if ( !info_ptr )
 	{
-        errcode = CE_MEMORY_ERROR;
+		errcode = CE_MEMORY_ERROR;
 fail:
 		if ( row_pointers )
 		{
 			free( row_pointers );
 		}
-        png_destroy_write_struct( &png_ptr, &info_ptr );
-        return errcode;
-    }
+		png_destroy_write_struct( &png_ptr, &info_ptr );
+		return errcode;
+	}
 
 	// We'll use the default setjmp / longjmp error handling.
-    if ( setjmp( png_jmpbuf(png_ptr) ) ) 
+	if ( setjmp( png_jmpbuf(png_ptr) ) )
 	{
 		// Error "writing".  But since we're writing to a memory bufferm,
 		// that just means we must have run out of memory
-        errcode = CE_MEMORY_ERROR;
-        goto fail;
-    }
+		errcode = CE_MEMORY_ERROR;
+		goto fail;
+	}
 
 	// Setup stream writing callbacks
 	png_set_write_fn(png_ptr, (void *)&bufOutData, WritePNGData, FlushPNGData);
@@ -1902,15 +1902,15 @@ fail:
 	png_write_info(png_ptr, info_ptr);
 
 	row_pointers = (png_bytepp)malloc( nHeight*sizeof(png_bytep) );
-	if ( row_pointers == NULL  ) 
+	if ( row_pointers == NULL  )
 	{
-        errcode = CE_MEMORY_ERROR;
-        goto fail;
-    }
+		errcode = CE_MEMORY_ERROR;
+		goto fail;
+	}
 
-    /* set the individual row_pointers to point at the correct offsets */
-    for ( int i = 0;  i < nHeight;  ++i)
-        row_pointers[i] = const_cast<unsigned char *>(pRGBAData + i*nStride);
+	/* set the individual row_pointers to point at the correct offsets */
+	for ( int i = 0;  i < nHeight;  ++i)
+		row_pointers[i] = const_cast<unsigned char *>(pRGBAData + i*nStride);
 
 	// Write the image
 	png_write_image(png_ptr, row_pointers);
@@ -1947,7 +1947,7 @@ METHODDEF(void) init_destination (j_compress_ptr cinfo)
 
 //-----------------------------------------------------------------------------
 // Purpose: Empty the output buffer --- called whenever buffer fills up.
-// Input  : boolean - 
+// Input  : boolean -
 //-----------------------------------------------------------------------------
 METHODDEF(boolean) empty_output_buffer (j_compress_ptr cinfo)
 {
@@ -1980,7 +1980,7 @@ METHODDEF(void) term_destination (j_compress_ptr cinfo)
 	CUtlBuffer *buf = dest->pBuffer;
 
 	/* Write any data remaining in the buffer */
-	if (datacount > 0) 
+	if (datacount > 0)
 	{
 		buf->Put( dest->buffer, datacount );
 	}
@@ -1991,26 +1991,26 @@ METHODDEF(void) term_destination (j_compress_ptr cinfo)
 //-----------------------------------------------------------------------------
 GLOBAL(void) jpeg_UtlBuffer_dest (j_compress_ptr cinfo, CUtlBuffer *pBuffer )
 {
-    JPEGDestinationManager_t *dest;
-    
-    /* The destination object is made permanent so that multiple JPEG images
-    * can be written to the same file without re-executing jpeg_stdio_dest.
-    * This makes it dangerous to use this manager and a different destination
-    * manager serially with the same JPEG object, because their private object
-    * sizes may be different.  Caveat programmer.
-    */
-    if (cinfo->dest == NULL) {  /* first time for this JPEG object? */
-        cinfo->dest = (struct jpeg_destination_mgr *)
-            (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT,
-            sizeof(JPEGDestinationManager_t));
-    }
-    
-    dest = ( JPEGDestinationManager_t * ) cinfo->dest;
+	JPEGDestinationManager_t *dest;
 
-    dest->pub.init_destination      = init_destination;
-    dest->pub.empty_output_buffer   = empty_output_buffer;
-    dest->pub.term_destination      = term_destination;
-    dest->pBuffer                   = pBuffer;
+	/* The destination object is made permanent so that multiple JPEG images
+	* can be written to the same file without re-executing jpeg_stdio_dest.
+	* This makes it dangerous to use this manager and a different destination
+	* manager serially with the same JPEG object, because their private object
+	* sizes may be different.  Caveat programmer.
+	*/
+	if (cinfo->dest == NULL) {  /* first time for this JPEG object? */
+		cinfo->dest = (struct jpeg_destination_mgr *)
+			(*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT,
+			sizeof(JPEGDestinationManager_t));
+	}
+
+	dest = ( JPEGDestinationManager_t * ) cinfo->dest;
+
+	dest->pub.init_destination      = init_destination;
+	dest->pub.empty_output_buffer   = empty_output_buffer;
+	dest->pub.term_destination      = term_destination;
+	dest->pBuffer                   = pBuffer;
 }
 
 //-----------------------------------------------------------------------------
@@ -2056,7 +2056,7 @@ bool ImgUtl_WriteRGBToJPEG( unsigned char *pSrcBuf, unsigned int nSrcWidth, unsi
 	jpeg_start_compress(&cinfo, TRUE);
 
 	// Write scanlines
-	while ( cinfo.next_scanline < cinfo.image_height ) 
+	while ( cinfo.next_scanline < cinfo.image_height )
 	{
 		row_pointer[ 0 ] = &pSrcBuf[ cinfo.next_scanline * row_stride ];
 		jpeg_write_scanlines( &cinfo, row_pointer, 1 );
@@ -2067,7 +2067,7 @@ bool ImgUtl_WriteRGBToJPEG( unsigned char *pSrcBuf, unsigned int nSrcWidth, unsi
 
 	// Cleanup
 	jpeg_destroy_compress(&cinfo);
-	
+
 	return CE_SUCCESS;
 }
 
@@ -2112,7 +2112,7 @@ ConversionErrorType ImgUtl_WriteRGBAAsJPEGToBuffer( const unsigned char *pRGBADa
 
 	// Write scanlines
 	unsigned char *pDstRow = (unsigned char *)malloc( sizeof(unsigned char) * nWidth * 4 );
-	while ( cinfo.next_scanline < cinfo.image_height ) 
+	while ( cinfo.next_scanline < cinfo.image_height )
 	{
 		const unsigned char *pSrcRow = &(pRGBAData[cinfo.next_scanline * row_stride]);
 		// convert row from RGBA to RGB

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -75,7 +75,7 @@ CDODHudWarmupLabel::CDODHudWarmupLabel( const char *pElementName ) : BaseClass(N
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODHudWarmupLabel::Reset()
 {
@@ -85,7 +85,7 @@ void CDODHudWarmupLabel::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODHudWarmupLabel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {

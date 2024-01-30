@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,7 +15,7 @@
 #include "ai_condition.h"
 
 
-enum BaseNPCFlyerConditions_t 
+enum BaseNPCFlyerConditions_t
 {
 	COND_FLYER_MOVE_BLOCKED = LAST_SHARED_CONDITION,
 	COND_FLYER_MOVE_IMPOSSIBLE,

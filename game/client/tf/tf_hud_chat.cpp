@@ -85,7 +85,7 @@ void CHudChat::CreateChatLines( void )
 {
 #ifndef _XBOX
 	m_ChatLine = new CHudChatLine( this, "ChatLine1" );
-	m_ChatLine->SetVisible( false );		
+	m_ChatLine->SetVisible( false );
 
 #endif
 }
@@ -124,7 +124,7 @@ void CHudChat::Reset( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CHudChat::GetChatInputOffset( void )
 {
@@ -144,7 +144,7 @@ int CHudChat::GetFilterForString( const char *pString )
 
 	if ( iFilter == CHAT_FILTER_NONE )
 	{
-		if ( !Q_stricmp( pString, "#TF_Name_Change" ) ) 
+		if ( !Q_stricmp( pString, "#TF_Name_Change" ) )
 		{
 			return CHAT_FILTER_NAMECHANGE;
 		}
@@ -193,7 +193,7 @@ Color CHudChat::GetClientColor( int clientIndex )
 	return g_ColorYellow;
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudChat::IsVisible( void )
 {
@@ -213,7 +213,7 @@ const char *CHudChat::GetDisplayedSubtitlePlayerName( int clientIndex )
 
 	// If they are disguised as the enemy, and not on our team
 	if ( pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) &&
-		pPlayer->m_Shared.GetDisguiseTeam() != pPlayer->GetTeamNumber() && 
+		pPlayer->m_Shared.GetDisguiseTeam() != pPlayer->GetTeamNumber() &&
 		!pLocalPlayer->InSameTeam( pPlayer ) )
 	{
 		C_TFPlayer *pDisguiseTarget = ToTFPlayer( pPlayer->m_Shared.GetDisguiseTarget() );
@@ -232,7 +232,7 @@ const char *CHudChat::GetDisplayedSubtitlePlayerName( int clientIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Color CHudChat::GetTextColorForClient( TextColor colorNum, int clientIndex )
 {
@@ -258,7 +258,7 @@ Color CHudChat::GetTextColorForClient( TextColor colorNum, int clientIndex )
 
 	case COLOR_ACHIEVEMENT:
 		{
-			IScheme *pSourceScheme = scheme()->GetIScheme( scheme()->GetScheme( "SourceScheme" ) ); 
+			IScheme *pSourceScheme = scheme()->GetIScheme( scheme()->GetScheme( "SourceScheme" ) );
 			if ( pSourceScheme )
 			{
 				c = pSourceScheme->GetColor( "SteamLightGreen", GetBgColor() );
@@ -296,6 +296,6 @@ int CHudChat::GetFilterFlags( void )
 	{
 		return iFlags &= ~CHAT_FILTER_TEAMCHANGE;
 	}
-	
+
 	return iFlags;
 }

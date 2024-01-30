@@ -85,7 +85,7 @@ private:
 	IReplayMovie		*m_pMovie;
 	RenderMovieParams_t	m_RenderParams;
 	CTextureReference	m_AccumBuffSample;
-	CTextureReference	m_LayoffResult;	
+	CTextureReference	m_LayoffResult;
 	CTextureReference	m_AccumBuffPingPong[2];				// Buffers and materials for ping-pong accumulation buffer
 	CMaterialReference	m_FourSampleResolveMatRef;
 	bool				m_bForceCheapDoF;

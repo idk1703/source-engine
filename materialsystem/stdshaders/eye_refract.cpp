@@ -86,8 +86,8 @@ BEGIN_VS_SHADER( EyeRefract_dx9, "Help for Eyes" )
 		info.m_nRefractAmount = REFRACTAMOUNT;
 	}
 
-	bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const 
-	{ 
+	bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const
+	{
 		if ( params[CLOAKPASSENABLED]->GetIntValue() ) // If material supports cloaking
 		{
 			if ( bCheckSpecificToThisFrame == false ) // For setting model flag at load time
@@ -98,7 +98,7 @@ BEGIN_VS_SHADER( EyeRefract_dx9, "Help for Eyes" )
 		}
 
 		// Check flag2 if not drawing cloak pass
-		return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE ); 
+		return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE );
 	}
 
 	bool IsTranslucent( IMaterialVar **params ) const
@@ -111,7 +111,7 @@ BEGIN_VS_SHADER( EyeRefract_dx9, "Help for Eyes" )
 		}
 
 		// Check flag if not drawing cloak pass
-		return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT ); 
+		return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT );
 	}
 
 	// Emissive Scroll Pass

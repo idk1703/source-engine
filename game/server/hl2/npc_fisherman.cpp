@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -109,7 +109,7 @@ public:
 LINK_ENTITY_TO_CLASS( npc_fisherman, CNPC_Fisherman );
 
 //---------------------------------------------------------
-// 
+//
 //---------------------------------------------------------
 /*
 IMPLEMENT_SERVERCLASS_ST(CNPC_Fisherman, DT_NPC_Fisherman)
@@ -127,7 +127,7 @@ BEGIN_DATADESC( CNPC_Fisherman )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Fisherman::SelectModel()
 {
@@ -135,7 +135,7 @@ void CNPC_Fisherman::SelectModel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Fisherman::Spawn( void )
 {
@@ -158,8 +158,8 @@ void CNPC_Fisherman::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 Class_T	CNPC_Fisherman::Classify( void )
 {

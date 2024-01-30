@@ -165,7 +165,7 @@ static bool TrainingHandlesKeyInput( int down, ButtonCode_t keynum, const char *
 	if ( TFGameRules() != NULL && TFGameRules()->IsInTraining() && TFGameRules()->IsWaitingForTrainingContinue() )
 	{
 		if ( down && keynum == KEY_SPACE )
-		{								  
+		{
 			engine->ClientCmd_Unrestricted( "training_continue" );
 			return true;
 		}
@@ -339,7 +339,7 @@ IVModeManager *modemanager = ( IVModeManager * )&g_ModeManager;
 void CTFModeManager::Init()
 {
 	g_pClientMode = GetClientModeNormal();
-	
+
 	PanelMetaClassMgr()->LoadMetaClassDefinitionFile( SCREEN_FILE );
 
 	// Load the objects.txt file.
@@ -377,7 +377,7 @@ void CTFModeManager::LevelShutdown( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ClientModeTFNormal::ClientModeTFNormal()
 {
@@ -434,7 +434,7 @@ ClientModeTFNormal::ClientModeTFNormal()
 	HOOK_MESSAGE( BonusDucks );
 	HOOK_MESSAGE( PlayerPickupWeapon );
 	HOOK_MESSAGE( QuestObjectiveCompleted );
-	
+
 #if !defined(NO_STEAM)
 	m_CallbackScreenshotRequested.Register( this, &ClientModeTFNormal::OnScreenshotRequested );
 #endif
@@ -448,12 +448,12 @@ ClientModeTFNormal::~ClientModeTFNormal()
 {
 }
 
-// See interface.h/.cpp for specifics:  basically this ensures that we actually Sys_UnloadModule the dll and that we don't call Sys_LoadModule 
+// See interface.h/.cpp for specifics:  basically this ensures that we actually Sys_UnloadModule the dll and that we don't call Sys_LoadModule
 //  over and over again.
 static CDllDemandLoader g_GameUI( "GameUI" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ClientModeTFNormal::Init()
 {
@@ -522,9 +522,9 @@ void ClientModeTFNormal::Init()
 			IViewPortPanel *pMMOverride = ( gViewPortInterface->FindPanelByName( PANEL_MAINMENUOVERRIDE ) );
 			if ( pMMOverride )
 			{
-				((CHudMainMenuOverride*)pMMOverride)->AttachToGameUI();	
+				((CHudMainMenuOverride*)pMMOverride)->AttachToGameUI();
 			}
-		}		
+		}
 	}
 
 #if defined( _X360 )
@@ -538,7 +538,7 @@ void ClientModeTFNormal::Init()
 	ListenForGameEvent( "raid_spawn_mob" );
 	ListenForGameEvent( "raid_spawn_squad" );
 #endif // TF_RAID_MODE
-	
+
 	ListenForGameEvent( "player_upgraded" );
 	ListenForGameEvent( "player_buyback" );
 	ListenForGameEvent( "player_death" );
@@ -582,7 +582,7 @@ void ClientModeTFNormal::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ClientModeTFNormal::Shutdown()
 {
@@ -606,7 +606,7 @@ void ClientModeTFNormal::LevelInit( const char *newmap )
 IClientMode *GetClientModeNormal()
 {
 	static ClientModeTFNormal g_ClientModeNormal;
-	
+
 	return &g_ClientModeNormal;
 }
 
@@ -631,7 +631,7 @@ float ClientModeTFNormal::GetViewModelFOV( void )
 
 extern ConVar r_drawviewmodel;
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool ClientModeTFNormal::ShouldDrawViewModel()
 {
@@ -681,11 +681,11 @@ bool ClientModeTFNormal::ShouldBlackoutAroundHUD()
 	return ClientModeShared::ShouldBlackoutAroundHUD();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Allows the client mode to override mouse control stuff in sourcevr
 //-----------------------------------------------------------------------------
-HeadtrackMovementMode_t ClientModeTFNormal::ShouldOverrideHeadtrackControl() 
+HeadtrackMovementMode_t ClientModeTFNormal::ShouldOverrideHeadtrackControl()
 {
 	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
 	if ( !pPlayer )
@@ -736,10 +736,10 @@ void ClientModeTFNormal::FireGameEvent( IGameEvent *event )
 			// have the player to exec a <class>.cfg file for the class they have selected
 			char szCmd[128];
 			Q_snprintf( szCmd, sizeof( szCmd ), "exec %s.cfg", GetPlayerClassData( iClass )->m_szClassName );
-			engine->ExecuteClientCmd( szCmd ); 
+			engine->ExecuteClientCmd( szCmd );
 		}
 	}
-	
+
 #ifdef TF_RAID_MODE
 	else if ( FStrEq( "raid_spawn_mob", eventname ) )
 	{
@@ -766,7 +766,7 @@ void ClientModeTFNormal::FireGameEvent( IGameEvent *event )
 			return;
 	}
 	else if ( FStrEq( "server_cvar", eventname ) )
-	{		
+	{
 		if ( TFGameRules() && TFGameRules()->IsPVEModeActive() && !Q_strcmp( event->GetString("cvarname"), "tf_bot_count" ) )
 			return;
 	}
@@ -892,7 +892,7 @@ void ClientModeTFNormal::FireGameEvent( IGameEvent *event )
 			}
 		}
 	}
-	else if ( 
+	else if (
 			  FStrEq( "pve_win_panel", eventname ) ||
 			  FStrEq( "arena_win_panel", eventname ) ||
 			  FStrEq( "teamplay_win_panel", eventname )  )
@@ -1023,7 +1023,7 @@ void ClientModeTFNormal::FireGameEvent( IGameEvent *event )
 			wchar_t	*pszBaseString = g_pVGuiLocalize->Find( "TF_Halloween_Eyeball_Boss_LevelUp_Appeared" );
 			if ( pszBaseString )
 			{
-				KeyValuesAD pKeyValues( "data" );			
+				KeyValuesAD pKeyValues( "data" );
 				pKeyValues->SetInt( "level", iLevel );
 
 				wchar_t	wTemp[256];
@@ -1090,7 +1090,7 @@ void ClientModeTFNormal::FireGameEvent( IGameEvent *event )
 			wchar_t	*pszBaseString = g_pVGuiLocalize->Find( "TF_Halloween_Eyeball_Boss_LevelUp_Killed" );
 			if ( pszBaseString )
 			{
-				KeyValuesAD pKeyValues( "data" );			
+				KeyValuesAD pKeyValues( "data" );
 				pKeyValues->SetInt( "level", iLevel );
 
 				wchar_t	wTemp[256];
@@ -1196,7 +1196,7 @@ void ClientModeTFNormal::FireGameEvent( IGameEvent *event )
 			wchar_t	*pszBaseString = g_pVGuiLocalize->Find( "TF_Halloween_Eyeball_Boss_LevelUp_Escaped" );
 			if ( pszBaseString )
 			{
-				KeyValuesAD pKeyValues( "data" );			
+				KeyValuesAD pKeyValues( "data" );
 				pKeyValues->SetInt( "level", iLevel );
 
 				wchar_t	wTemp[256];
@@ -1238,7 +1238,7 @@ void ClientModeTFNormal::FireGameEvent( IGameEvent *event )
 			wchar_t	*pszBaseString = g_pVGuiLocalize->Find( "TF_Halloween_Merasmus_LevelUp_Appeared" );
 			if ( pszBaseString )
 			{
-				KeyValuesAD pKeyValues( "data" );			
+				KeyValuesAD pKeyValues( "data" );
 				pKeyValues->SetInt( "level", iLevel );
 
 				wchar_t	wTemp[256];
@@ -1274,7 +1274,7 @@ void ClientModeTFNormal::FireGameEvent( IGameEvent *event )
 			wchar_t	*pszBaseString = g_pVGuiLocalize->Find( "TF_Halloween_Merasmus_LevelUp_Killed" );
 			if ( pszBaseString )
 			{
-				KeyValuesAD pKeyValues( "data" );			
+				KeyValuesAD pKeyValues( "data" );
 				pKeyValues->SetInt( "level", iLevel );
 
 				wchar_t	wTemp[256];
@@ -1353,7 +1353,7 @@ void ClientModeTFNormal::FireGameEvent( IGameEvent *event )
 			wchar_t	*pszBaseString = g_pVGuiLocalize->Find( "TF_Halloween_Merasmus_LevelUp_Escaped" );
 			if ( pszBaseString )
 			{
-				KeyValuesAD pKeyValues( "data" );			
+				KeyValuesAD pKeyValues( "data" );
 				pKeyValues->SetInt( "level", iLevel );
 
 				wchar_t	wTemp[256];
@@ -1483,7 +1483,7 @@ void ClientModeTFNormal::PostRenderVGui()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool ClientModeTFNormal::CreateMove( float flInputSampleTime, CUserCmd *cmd )
 {
@@ -1647,7 +1647,7 @@ int ClientModeTFNormal::HandleSpectatorKeyInput( int down, ButtonCode_t keynum, 
 #endif
 
 	// @note Tom Bui: Coaching, so override all input
-	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();	
+	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 	if ( pLocalPlayer && pLocalPlayer->m_bIsCoaching  )
 	{
 		if ( down && pszCurrentBinding && Q_strcmp( pszCurrentBinding, "+jump" ) == 0 )
@@ -1667,7 +1667,7 @@ bool ClientModeTFNormal::DoPostScreenSpaceEffects( const CViewSetup *pSetup )
 {
 	if ( !BaseClass::DoPostScreenSpaceEffects( pSetup ) )
 		return false;
-	
+
 	if( IsInFreezeCam() )
 		return false;
 
@@ -1709,7 +1709,7 @@ void OnAskFavoriteDialogButtonPressed( bool bConfirm, void *pContext )
 															  GetClientModeTFNormal()->GetLastConnectedServerIP(),
 															  GetClientModeTFNormal()->GetLastConnectedServerPort(),
 															  GetClientModeTFNormal()->GetLastConnectedServerPort(),
-															  k_unFavoriteFlagFavorite, 
+															  k_unFavoriteFlagFavorite,
 															  CRTime::RTime32TimeCur() );
 
 		// Send it to the GC
@@ -1793,7 +1793,7 @@ void ClientModeTFNormal::AskFavoriteOrBlacklist() const
 						continue;
 					}
 
-					if ( ( appID == 0 || appID == steamapicontext->SteamUtils()->GetAppID() ) && 
+					if ( ( appID == 0 || appID == steamapicontext->SteamUtils()->GetAppID() ) &&
 						 IP == GetLastConnectedServerIP() &&
 						 connPort == GetLastConnectedServerPort() )
 					{
@@ -1804,9 +1804,9 @@ void ClientModeTFNormal::AskFavoriteOrBlacklist() const
 			}
 
 			// new potential favorite - ask
-			ShowConfirmOptOutDialog( "#TF_Serverlist_Ask_Favorite_Title", "#TF_Serverlist_Ask_Favorite_Text", 
-				"#TF_Serverlist_Ask_Yes", "#TF_Serverlist_Ask_No", 
-				"#TF_ServerList_Ask_Favorite_Opt_Out", "cl_ask_favorite_opt_out", 
+			ShowConfirmOptOutDialog( "#TF_Serverlist_Ask_Favorite_Title", "#TF_Serverlist_Ask_Favorite_Text",
+				"#TF_Serverlist_Ask_Yes", "#TF_Serverlist_Ask_No",
+				"#TF_ServerList_Ask_Favorite_Opt_Out", "cl_ask_favorite_opt_out",
 				OnAskFavoriteDialogButtonPressed, NULL );
 		}
 
@@ -1833,9 +1833,9 @@ void ClientModeTFNormal::AskFavoriteOrBlacklist() const
 			}
 
 			// new potential blacklist - ask
-			ShowConfirmOptOutDialog( "#TF_Serverlist_Ask_Blacklist_Title", "#TF_Serverlist_Ask_Blacklist_Text", 
+			ShowConfirmOptOutDialog( "#TF_Serverlist_Ask_Blacklist_Title", "#TF_Serverlist_Ask_Blacklist_Text",
 				"#TF_Serverlist_Ask_Yes", "#TF_Serverlist_Ask_No",
-				"#TF_ServerList_Ask_Blacklist_Opt_Out", "cl_ask_blacklist_opt_out", 
+				"#TF_ServerList_Ask_Blacklist_Opt_Out", "cl_ask_blacklist_opt_out",
 				OnAskBlacklistDialogButtonPressed, NULL );
 		}
 	}
@@ -1963,7 +1963,7 @@ void ClientModeTFNormal::Update()
 
 
 //----------------------------------------------------------------------------
-void	ClientModeTFNormal::ComputeVguiResConditions( KeyValues *pkvConditions ) 
+void	ClientModeTFNormal::ComputeVguiResConditions( KeyValues *pkvConditions )
 {
 	BaseClass::ComputeVguiResConditions( pkvConditions );
 }
@@ -2059,9 +2059,9 @@ void ClientModeTFNormal::PrintTextToChatPlayer( int iPlayerIndex, const char *pT
 	}
 }
 
-void ClientModeTFNormal::OnDemoRecordStart( char const* pDemoBaseName ) 
+void ClientModeTFNormal::OnDemoRecordStart( char const* pDemoBaseName )
 {
-	BaseClass::OnDemoRecordStart( pDemoBaseName );	
+	BaseClass::OnDemoRecordStart( pDemoBaseName );
 }
 
 void ClientModeTFNormal::OnDemoRecordStop()
@@ -2201,7 +2201,7 @@ void __MsgFunc_BonusDucks( bf_read &msg )
 
 	sflNextBonusDucks = Plat_FloatTime() + tf_halloween_bonus_ducks_cooldown.GetFloat();
 
-	
+
 	C_TFPlayer *pPlayer = ToTFPlayer( UTIL_PlayerByIndex( iPlayerEntIndex ) );
 	if ( pPlayer )
 	{
@@ -2228,7 +2228,7 @@ void __MsgFunc_AutoBalanceVolunteer( bf_read &msg )
 
 	if ( cl_notifications_show_ingame.GetInt() == 0 )
 	{
-		// player has turned off the in-game notifications so let's throw a chat 
+		// player has turned off the in-game notifications so let's throw a chat
 		// message to see if they will check their notifications in the main menu
 		C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
 		CBaseHudChat *pHUDChat = (CBaseHudChat *)GET_HUDELEMENT( CHudChat );
@@ -2268,7 +2268,7 @@ void __MsgFunc_QuestObjectiveCompleted( bf_read &msg )
 			pEvent->SetInt( "quest_item_id_hi", itemID >> 32 );
 			pEvent->SetInt( "quest_objective_id", nObjectiveDefIndex );
 			gameeventmanager->FireEventClientSide( pEvent );
-		}	
+		}
 	}
 }
 
@@ -2290,7 +2290,7 @@ float PlaySoundEntry( const char* pszSoundEntryName )
 #pragma warning (push)
 #pragma warning(disable:4201)	// nameless struct/union
 #include <mmsystem.h>
-#pragma warning (pop) 
+#pragma warning (pop)
 #endif
 //
 void PlayOutOfGameSound( const char *pszSound )

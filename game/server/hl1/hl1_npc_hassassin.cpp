@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -44,7 +44,7 @@ enum
 	SCHED_ASSASSIN_JUMP,	// fly through the air
 	SCHED_ASSASSIN_JUMP_ATTACK,	// fly through the air and shoot
 	SCHED_ASSASSIN_JUMP_LAND, // hit and run away
-	SCHED_ASSASSIN_FAIL, 
+	SCHED_ASSASSIN_FAIL,
 	SCHED_ASSASSIN_TAKE_COVER_FROM_ENEMY1,
 	SCHED_ASSASSIN_TAKE_COVER_FROM_ENEMY2,
 	SCHED_ASSASSIN_TAKE_COVER_FROM_BEST_SOUND,
@@ -94,7 +94,7 @@ public:
 	int  MeleeAttack1Conditions ( float flDot, float flDist );
 	int	 RangeAttack1Conditions ( float flDot, float flDist );
 	int	 RangeAttack2Conditions ( float flDot, float flDist );
-	
+
 	int	 SelectSchedule ( void );
 
 	void RunTask ( const Task_t *pTask );
@@ -156,7 +156,7 @@ void CNPC_HAssassin::Spawn()
 	Precache( );
 
 	SetModel( "models/hassassin.mdl");
-	
+
 	SetHullType(HULL_HUMAN);
 	SetHullSizeNormal();
 
@@ -166,11 +166,11 @@ void CNPC_HAssassin::Spawn()
 	AddSolidFlags( FSOLID_NOT_STANDABLE );
 	SetMoveType( MOVETYPE_STEP );
 	m_bloodColor		= BLOOD_COLOR_RED;
-    ClearEffects();
+	ClearEffects();
 	m_iHealth			= sk_hassassin_health.GetFloat();
 	m_flFieldOfView		= VIEW_FIELD_WIDE; // indicates the width of this monster's forward view cone ( as a dotproduct result )
 	m_NPCState			= NPC_STATE_NONE;
-	
+
 	m_HackedGunPos		= Vector( 0, 24, 48 );
 
 	m_iTargetRanderamt	= 20;
@@ -206,7 +206,7 @@ int CNPC_HAssassin::GetSoundInterests( void )
 			SOUND_COMBAT	|
 			SOUND_PLAYER	|
 			SOUND_DANGER;
-}	
+}
 
 Class_T	CNPC_HAssassin::Classify ( void )
 {
@@ -214,7 +214,7 @@ Class_T	CNPC_HAssassin::Classify ( void )
 }
 
 //=========================================================
-// CheckMeleeAttack1 - jump like crazy if the enemy gets too close. 
+// CheckMeleeAttack1 - jump like crazy if the enemy gets too close.
 //=========================================================
 int CNPC_HAssassin::MeleeAttack1Conditions ( float flDot, float flDist )
 {
@@ -246,8 +246,8 @@ int CNPC_HAssassin::MeleeAttack1Conditions ( float flDot, float flDist )
 	}
 
 	if ( flDist > 128 )
-		 return COND_TOO_FAR_TO_ATTACK;
-	
+		return COND_TOO_FAR_TO_ATTACK;
+
 	return COND_NONE;
 }
 
@@ -276,7 +276,7 @@ int CNPC_HAssassin::RangeAttack1Conditions ( float flDot, float flDist )
 }
 
 //=========================================================
-// CheckRangeAttack2 - toss grenade is enemy gets in the way and is too close. 
+// CheckRangeAttack2 - toss grenade is enemy gets in the way and is too close.
 //=========================================================
 int CNPC_HAssassin::RangeAttack2Conditions ( float flDot, float flDist )
 {
@@ -342,7 +342,7 @@ void CNPC_HAssassin::StartTask ( const Task_t *pTask )
 
 
 //=========================================================
-// RunTask 
+// RunTask
 //=========================================================
 void CNPC_HAssassin::RunTask ( const Task_t *pTask )
 {
@@ -367,7 +367,7 @@ void CNPC_HAssassin::RunTask ( const Task_t *pTask )
 				SetActivity( ACT_ASSASSIN_FLY_DOWN );
 				SetCycle( 0 );
 			}
-						
+
 			ResetSequenceInfo( );
 		}
 
@@ -392,7 +392,7 @@ void CNPC_HAssassin::RunTask ( const Task_t *pTask )
 			}
 		}
 		break;
-	default: 
+	default:
 		BaseClass::RunTask ( pTask );
 		break;
 	}
@@ -414,10 +414,10 @@ int CNPC_HAssassin::SelectSchedule ( void )
 			if ( HasCondition ( COND_HEAR_DANGER ) || HasCondition ( COND_HEAR_COMBAT ) )
 			{
 				if ( HasCondition ( COND_HEAR_DANGER ) )
-					 return SCHED_TAKE_COVER_FROM_BEST_SOUND;
-				
+					return SCHED_TAKE_COVER_FROM_BEST_SOUND;
+
 				else
-				 	 return SCHED_INVESTIGATE_SOUND;
+					return SCHED_INVESTIGATE_SOUND;
 			}
 		}
 		break;
@@ -580,7 +580,7 @@ void CNPC_HAssassin::Shoot ( void )
 	}
 
 	GetAttachment( "guntip", vecShootOrigin, vAngles );
-	
+
 	Vector vecShootDir = GetShootEnemyDir( vecShootOrigin );
 
 	if (m_flLastShot + 2 < gpGlobals->curtime)
@@ -598,7 +598,7 @@ void CNPC_HAssassin::Shoot ( void )
 	AngleVectors( GetAbsAngles(), &vForward, &vRight, &vUp );
 
 	Vector	vecShellVelocity = vRight * random->RandomFloat(40,90) + vUp * random->RandomFloat(75,200) + vForward * random->RandomFloat(-40, 40);
-	EjectShell( GetAbsOrigin() + vUp * 32 + vForward * 12, vecShellVelocity, GetAbsAngles().y, 0 ); 
+	EjectShell( GetAbsOrigin() + vUp * 32 + vForward * 12, vecShellVelocity, GetAbsAngles().y, 0 );
 	FireBullets( 1, vecShootOrigin, vecShootDir, Vector( m_flDiviation, m_flDiviation, m_flDiviation ), 2048, m_iAmmoType ); // shoot +-8 degrees
 
 	//NDebugOverlay::Line( vecShootOrigin, vecShootOrigin + vecShootDir * 2048, 255, 0, 0, true, 2.0 );
@@ -616,7 +616,7 @@ void CNPC_HAssassin::Shoot ( void )
 
 //=========================================================
 //=========================================================
-int CNPC_HAssassin::TranslateSchedule ( int scheduleType ) 
+int CNPC_HAssassin::TranslateSchedule ( int scheduleType )
 {
 //	Msg( "%d\n", m_iFrustration );
 	switch	( scheduleType )
@@ -707,7 +707,7 @@ void CNPC_HAssassin::RunAI( void )
 		iStep = ! iStep;
 		if (iStep)
 		{
-			EmitSound( filter, entindex(), "HAssassin.Footstep" );	
+			EmitSound( filter, entindex(), "HAssassin.Footstep" );
 		}
 	}
 }
@@ -734,7 +734,7 @@ AI_BEGIN_CUSTOM_NPC( monster_human_assassin, CNPC_HAssassin )
 	DEFINE_SCHEDULE
 	(
 		SCHED_ASSASSIN_EXPOSED,
-	
+
 		"	Tasks"
 		"		TASK_STOP_MOVING		0"
 		"		TASK_RANGE_ATTACK1		0"
@@ -743,7 +743,7 @@ AI_BEGIN_CUSTOM_NPC( monster_human_assassin, CNPC_HAssassin )
 		"	"
 		"	Interrupts"
 		"	COND_CAN_MELEE_ATTACK1"
-		
+
 	)
 
 	//=========================================================
@@ -752,7 +752,7 @@ AI_BEGIN_CUSTOM_NPC( monster_human_assassin, CNPC_HAssassin )
 	DEFINE_SCHEDULE
 	(
 		SCHED_ASSASSIN_JUMP,
-	
+
 		"	Tasks"
 		"		TASK_STOP_MOVING		0"
 		"		TASK_PLAY_SEQUENCE		ACTIVITY:ACT_HOP"
@@ -767,7 +767,7 @@ AI_BEGIN_CUSTOM_NPC( monster_human_assassin, CNPC_HAssassin )
 	DEFINE_SCHEDULE
 	(
 		SCHED_ASSASSIN_JUMP_ATTACK,
-	
+
 		"	Tasks"
 		"		TASK_SET_FAIL_SCHEDULE		SCHEDULE:SCHED_ASSASSIN_JUMP_LAND"
 		"		TASK_ASSASSIN_FALL_TO_GROUND	0"
@@ -781,7 +781,7 @@ AI_BEGIN_CUSTOM_NPC( monster_human_assassin, CNPC_HAssassin )
 	DEFINE_SCHEDULE
 	(
 		SCHED_ASSASSIN_JUMP_LAND,
-	
+
 		"	Tasks"
 		"		TASK_SET_FAIL_SCHEDULE		SCHEDULE:SCHED_ASSASSIN_EXPOSED"
 		"		TASK_SET_ACTIVITY			ACTIVITY:ACT_IDLE"
@@ -808,7 +808,7 @@ AI_BEGIN_CUSTOM_NPC( monster_human_assassin, CNPC_HAssassin )
 	DEFINE_SCHEDULE
 	(
 		SCHED_ASSASSIN_FAIL,
-	
+
 		"	Tasks"
 		"		TASK_STOP_MOVING		0"
 		"		TASK_SET_ACTIVITY		ACTIVITY:ACT_IDLE"
@@ -826,7 +826,7 @@ AI_BEGIN_CUSTOM_NPC( monster_human_assassin, CNPC_HAssassin )
 	)
 
 
-	
+
 
 	//=========================================================
 	// > SCHED_ASSASSIN_TAKE_COVER_FROM_ENEMY1
@@ -834,7 +834,7 @@ AI_BEGIN_CUSTOM_NPC( monster_human_assassin, CNPC_HAssassin )
 	DEFINE_SCHEDULE
 	(
 		SCHED_ASSASSIN_TAKE_COVER_FROM_ENEMY1,
-	
+
 		"	Tasks"
 		"		TASK_STOP_MOVING		0"
 		"		TASK_WAIT				0.2"
@@ -849,7 +849,7 @@ AI_BEGIN_CUSTOM_NPC( monster_human_assassin, CNPC_HAssassin )
 		"	COND_CAN_MELEE_ATTACK1"
 		"	COND_NEW_ENEMY"
 		"	COND_HEAR_DANGER"
-		
+
 	)
 
 	//=========================================================
@@ -858,7 +858,7 @@ AI_BEGIN_CUSTOM_NPC( monster_human_assassin, CNPC_HAssassin )
 	DEFINE_SCHEDULE
 	(
 		SCHED_ASSASSIN_TAKE_COVER_FROM_ENEMY2,
-	
+
 		"	Tasks"
 		"		TASK_STOP_MOVING		0"
 		"		TASK_WAIT				0.2"
@@ -875,7 +875,7 @@ AI_BEGIN_CUSTOM_NPC( monster_human_assassin, CNPC_HAssassin )
 		"	COND_CAN_MELEE_ATTACK1"
 		"	COND_NEW_ENEMY"
 		"	COND_HEAR_DANGER"
-		
+
 	)
 
 
@@ -890,7 +890,7 @@ AI_BEGIN_CUSTOM_NPC( monster_human_assassin, CNPC_HAssassin )
 	DEFINE_SCHEDULE
 	(
 		SCHED_ASSASSIN_TAKE_COVER_FROM_BEST_SOUND,
-	
+
 		"	Tasks"
 		"		TASK_SET_FAIL_SCHEDULE	SCHEDULE:SCHED_MELEE_ATTACK1"
 		"		TASK_STOP_MOVING		0"
@@ -902,7 +902,7 @@ AI_BEGIN_CUSTOM_NPC( monster_human_assassin, CNPC_HAssassin )
 		"	"
 		"	Interrupts"
 		"	COND_NEW_ENEMY"
-		
+
 	)
 
 	//=========================================================
@@ -911,13 +911,13 @@ AI_BEGIN_CUSTOM_NPC( monster_human_assassin, CNPC_HAssassin )
 	DEFINE_SCHEDULE
 	(
 		SCHED_ASSASSIN_HIDE,
-	
+
 		"	Tasks"
 		"		TASK_STOP_MOVING		0"
 		"		TASK_SET_ACTIVITY		ACTIVITY:ACT_IDLE"
 		"		TASK_WAIT				2.0"
 		"		TASK_SET_SCHEDULE		SCHEDULE:SCHED_CHASE_ENEMY"
-	
+
 		"	Interrupts"
 		"		COND_NEW_ENEMY"
 		"		COND_SEE_ENEMY"
@@ -934,14 +934,14 @@ AI_BEGIN_CUSTOM_NPC( monster_human_assassin, CNPC_HAssassin )
 	DEFINE_SCHEDULE
 	(
 		SCHED_ASSASSIN_HUNT,
-	
+
 		"	Tasks"
 		"		TASK_STOP_MOVING			0"
 		"		TASK_SET_FAIL_SCHEDULE		SCHEDULE:SCHED_ASSASSIN_TAKE_COVER_FROM_ENEMY2"
 		"		TASK_GET_PATH_TO_ENEMY		0"
 		"		TASK_RUN_PATH				0"
 		"		TASK_WAIT_FOR_MOVEMENT		0"
-		
+
 		"	Interrupts"
 		"		COND_NEW_ENEMY"
 		"		COND_CAN_RANGE_ATTACK1"

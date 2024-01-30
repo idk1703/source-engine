@@ -10,17 +10,17 @@
 
 #pragma once
 
-class IObjectContainer  
+class IObjectContainer
 {
 public:
 	virtual ~IObjectContainer() {};
-	
+
 	virtual void		Init() = 0;
 
 	virtual bool		Add(void * newObject) = 0;
 	virtual bool		Remove(void * object) = 0;
 	virtual void		Clear(bool freeElementsMemory) = 0;
-	
+
 	virtual void *		GetFirst() = 0;
 	virtual void *		GetNext() = 0;
 

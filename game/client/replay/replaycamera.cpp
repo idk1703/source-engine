@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -88,7 +88,7 @@ C_ReplayCamera::~C_ReplayCamera()
 void C_ReplayCamera::Init()
 {
 	ListenForGameEvent( "game_newmap" );
-		
+
 	Reset();
 
 	m_nNumSpectators = 0;
@@ -118,7 +118,7 @@ void C_ReplayCamera::Reset()
 	m_flRoamingShakeSpeed = 0.0f;
 	m_flNoiseSample = 0.0f;
 	m_flRoamingShakeDir = Lerp( 0.5f, FREE_CAM_SHAKE_DIR_MIN, FREE_CAM_SHAKE_DIR_MAX );
-	
+
 	m_vCamOrigin.Init();
 	m_aCamAngle.Init();
 	m_aSmoothedRoamingAngles.Init();
@@ -151,18 +151,18 @@ bool C_ReplayCamera::ShouldUseDefaultRoamingSettings() const
 void C_ReplayCamera::CalcChaseCamView( Vector& eyeOrigin, QAngle& eyeAngles, float& fov, float flDelta )
 {
 	bool bManual = true;
-	
- 	Vector targetOrigin1, targetOrigin2, cameraOrigin, forward;
 
- 	if ( m_iTarget1 == 0 )
+	Vector targetOrigin1, targetOrigin2, cameraOrigin, forward;
+
+	if ( m_iTarget1 == 0 )
 		return;
 
 	// get primary target, also translates to ragdoll
 	C_BaseEntity *target1 = GetPrimaryTarget();
 
- 	if ( !target1 ) 
+	if ( !target1 )
 		return;
-	
+
 	if ( target1->IsAlive() && target1->IsDormant() )
 		return;
 
@@ -218,14 +218,14 @@ void C_ReplayCamera::CalcChaseCamView( Vector& eyeOrigin, QAngle& eyeAngles, flo
 	if ( bManual )
 	{
 		// let spectator choose the view angles
- 		engine->GetViewAngles( cameraAngles );
+		engine->GetViewAngles( cameraAngles );
 	}
 	else if ( target2 )
 	{
 		// look into direction of second target
- 		forward = targetOrigin2 - targetOrigin1;
-        VectorAngles( forward, cameraAngles );
-        cameraAngles.z = 0; // no ROLL
+		forward = targetOrigin2 - targetOrigin1;
+	VectorAngles( forward, cameraAngles );
+	cameraAngles.z = 0; // no ROLL
 	}
 	else if ( m_iTarget2 == 0 || m_iTarget2 == m_iTarget1)
 	{
@@ -257,37 +257,37 @@ void C_ReplayCamera::CalcChaseCamView( Vector& eyeOrigin, QAngle& eyeAngles, flo
 	// calc optimal camera position
 	VectorMA(targetOrigin1, -m_flDistance, forward, cameraOrigin );
 
- 	targetOrigin1.z += m_flOffset; // add offset
+	targetOrigin1.z += m_flOffset; // add offset
 
 	// clip against walls
-  	trace_t trace;
+	trace_t trace;
 	C_BaseEntity::PushEnableAbsRecomputations( false ); // HACK don't recompute positions while doing RayTrace
 	UTIL_TraceHull( targetOrigin1, cameraOrigin, WALL_MIN, WALL_MAX, MASK_SOLID, target1, COLLISION_GROUP_NONE, &trace );
 	C_BaseEntity::PopEnableAbsRecomputations();
 
-  	float dist = VectorLength( trace.endpos -  targetOrigin1 );
+	float dist = VectorLength( trace.endpos -  targetOrigin1 );
 
 	// grow distance by 32 unit a second
-  	m_flLastDistance += flDelta * 32.0f; 
+	m_flLastDistance += flDelta * 32.0f;
 
-  	if ( dist > m_flLastDistance )
+	if ( dist > m_flLastDistance )
 	{
 		VectorMA(targetOrigin1, -m_flLastDistance, forward, cameraOrigin );
 	}
- 	else
+	else
 	{
 		cameraOrigin = trace.endpos;
 		m_flLastDistance = dist;
 	}
-	
-  	if ( target2 )
+
+	if ( target2 )
 	{
 		// if we have 2 targets look at point between them
 		forward = (targetOrigin1+targetOrigin2)/2 - cameraOrigin;
- 		QAngle angle;
+		QAngle angle;
 		VectorAngles( forward, angle );
 		cameraAngles.y = angle.y;
-		
+
 		NormalizeAngles( cameraAngles );
 		cameraAngles.x = clamp( cameraAngles.x, -60.f, 60.f );
 
@@ -297,7 +297,7 @@ void C_ReplayCamera::CalcChaseCamView( Vector& eyeOrigin, QAngle& eyeAngles, flo
 	{
 		SetCameraAngle( cameraAngles );
 	}
- 	
+
 	VectorCopy( cameraOrigin, m_vCamOrigin );
 	VectorCopy( m_aCamAngle, eyeAngles );
 	VectorCopy( m_vCamOrigin, eyeOrigin );
@@ -307,7 +307,7 @@ void C_ReplayCamera::CalcChaseCamView( Vector& eyeOrigin, QAngle& eyeAngles, flo
 
 int C_ReplayCamera::GetMode()
 {
-	return m_nCameraMode;	
+	return m_nCameraMode;
 }
 
 C_BaseEntity* C_ReplayCamera::GetPrimaryTarget()
@@ -390,7 +390,7 @@ void C_ReplayCamera::Accelerate( Vector& wishdir, float wishspeed, float accel, 
 	// Adjust velocity.
 	for (int i=0 ; i<3 ; i++)
 	{
-		m_vecVelocity[i] += accelspeed * wishdir[i];	
+		m_vecVelocity[i] += accelspeed * wishdir[i];
 	}
 }
 
@@ -493,7 +493,7 @@ void C_ReplayCamera::CalcRoamingView(Vector& eyeOrigin, QAngle& eyeAngles, float
 			Accelerate ( wishdir, wishspeed, flRoamingAccel, flDelta );
 
 			float spd = VectorLength( m_vecVelocity );
-			if ( CloseEnough( spd, 0.0f ) ) 
+			if ( CloseEnough( spd, 0.0f ) )
 			{
 				m_vecVelocity.Init();
 			}
@@ -525,7 +525,7 @@ void C_ReplayCamera::CalcRoamingView(Vector& eyeOrigin, QAngle& eyeAngles, float
 
 		// Just move ( don't clip or anything )
 		VectorMA( m_vCamOrigin, flDelta, m_vecVelocity, m_vCamOrigin );
-		
+
 		// get camera angle directly from engine
 		engine->GetViewAngles( m_aCamAngle );
 
@@ -618,8 +618,8 @@ void C_ReplayCamera::CalcFixedView(Vector& eyeOrigin, QAngle& eyeAngles, float& 
 	if ( m_iTarget1 == 0 )
 		return;
 
- 	C_BaseEntity * target = ClientEntityList().GetBaseEntity( m_iTarget1 );
-	
+	C_BaseEntity * target = ClientEntityList().GetBaseEntity( m_iTarget1 );
+
 	if ( target && target->IsAlive() )
 	{
 		// if we're chasing a target, change viewangles
@@ -647,7 +647,7 @@ void C_ReplayCamera::SmoothFov( float flDelta )
 void C_ReplayCamera::FixupMovmentParents()
 {
 	// Find resource zone
-	
+
 	for (	ClientEntityHandle_t e = ClientEntityList().FirstHandle();
 			e != ClientEntityList().InvalidHandle(); e = ClientEntityList().NextHandle( e ) )
 	{
@@ -746,7 +746,7 @@ void C_ReplayCamera::SetMode(int iMode)
 	if ( m_nCameraMode == iMode )
 		return;
 
-    Assert( iMode > OBS_MODE_NONE && iMode <= LAST_PLAYER_OBSERVERMODE );
+	Assert( iMode > OBS_MODE_NONE && iMode <= LAST_PLAYER_OBSERVERMODE );
 
 	m_nCameraMode = iMode;
 
@@ -756,9 +756,9 @@ void C_ReplayCamera::SetMode(int iMode)
 	}
 }
 
-void C_ReplayCamera::SetPrimaryTarget( int nEntity ) 
+void C_ReplayCamera::SetPrimaryTarget( int nEntity )
 {
- 	if ( m_iTarget1 == nEntity )
+	if ( m_iTarget1 == nEntity )
 		return;
 
 	m_iTarget1 = nEntity;
@@ -795,7 +795,7 @@ void C_ReplayCamera::SpecNextPlayer( bool bInverse )
 	int index = start;
 
 	while ( true )
-	{	
+	{
 		// got next/prev player
 		if ( bInverse )
 			index--;
@@ -816,7 +816,7 @@ void C_ReplayCamera::SpecNextPlayer( bool bInverse )
 		if ( !pPlayer )
 			continue;
 
-		// only follow living players 
+		// only follow living players
 		if ( pPlayer->IsObserver() )
 			continue;
 
@@ -853,7 +853,7 @@ void C_ReplayCamera::FireGameEvent( IGameEvent * event)
 	if ( Q_strcmp( "game_newmap", type ) == 0 )
 	{
 		// Do not reset the camera, since we reload the map when "rewinding"
-		// and want to keep our camera settings intact. 
+		// and want to keep our camera settings intact.
 		// Reset();	// reset all camera settings
 
 		// show spectator UI
@@ -861,7 +861,7 @@ void C_ReplayCamera::FireGameEvent( IGameEvent * event)
 			return;
 
 		if ( g_pEngineClientReplay->IsPlayingReplayDemo() )
-        {
+	{
 			SetMode( OBS_MODE_IN_EYE );
 
 			CReplay *pReplay = g_pReplayManager->GetPlayingReplay();
@@ -894,7 +894,7 @@ void C_ReplayCamera::CreateMove( CUserCmd *cmd)
 void C_ReplayCamera::SetCameraAngle( QAngle& targetAngle )
 {
 	m_aCamAngle	= targetAngle;
- 	NormalizeAngles( m_aCamAngle );
+	NormalizeAngles( m_aCamAngle );
 	m_flLastAngleUpdateTime = gpGlobals->realtime;
 }
 

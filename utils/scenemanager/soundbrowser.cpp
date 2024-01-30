@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -67,7 +67,7 @@ enum
 class CSoundList : public mxListView
 {
 public:
-	CSoundList( mxWindow *parent, int id = 0 ) 
+	CSoundList( mxWindow *parent, int id = 0 )
 		: mxListView( parent, 0, 0, 0, 0, id )
 	{
 		// SendMessage ( (HWND)getHandle(), WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_FIXED_FONT), MAKELPARAM (TRUE, 0));
@@ -163,7 +163,7 @@ public:
 			IDC_STOP_SOUNDS,
 			IDC_SEARCH,
 	};
-	
+
 	COptionsWindow( CSoundBrowser *browser ) : BaseClass( browser, 0, 0, 0, 0 ), m_pBrowser( browser )
 	{
 		SceneManager_AddWindowStyle( this, WS_CLIPSIBLINGS | WS_CLIPCHILDREN );
@@ -172,16 +172,16 @@ public:
 
 		m_pChanVoiceOnly = new mxCheckBox( this, 0, 0, 0, 0, "CHAN_VOICE only", IDC_VOICE_ONLY );
 		m_pChanVoiceOnly->setChecked( true );
-		
+
 		m_pPlay = new mxButton( this, 0, 0, 0, 0, "Play", IDC_PLAY_SOUND );
-		
+
 		m_pStopSounds = new mxButton( this, 0, 0, 0, 0, "Stop Sounds", IDC_STOP_SOUNDS );
-		
+
 		m_pSearch = new mxButton( this, 0, 0, 0, 0, "Search...", IDC_SEARCH );
 
 		m_pSearchString = new mxLabel( this, 0, 0, 0, 0, "" );
 	}
-	
+
 	bool PaintBackground( void )
 	{
 		redraw();
@@ -204,23 +204,23 @@ public:
 		case mxEvent::Size:
 			{
 				iret = 1;
-				
+
 				int split = 120;
-				
+
 				int x = 1;
-				
+
 				m_pPlay->setBounds( x, 1, split, h2() - 2 );
-				
+
 				x += split + 10;
-				
+
 				m_pStopSounds->setBounds( x, 1, split, h2()-2 );
-				
+
 				x += split + 10;
-				
+
 				m_pChanVoiceOnly->setBounds( x, 1, split, h2() - 2 );
-								
+
 				x += split + 10;
-				
+
 				m_pSearch->setBounds( x, 1, split, h2() - 2 );
 
 				x += split + 10;
@@ -265,15 +265,15 @@ public:
 			}
 			break;
 		}
-		
+
 		return iret;
 	}
-	
+
 	bool IsChanVoiceOnly() const
 	{
 		return m_pChanVoiceOnly->isChecked();
 	}
-	
+
 	char const	*GetSearchString()
 	{
 		return m_szSearchString;
@@ -296,29 +296,29 @@ public:
 
 		m_pBrowser->OnSearch();
 	}
-	
+
 private:
-	
+
 	mxCheckBox		*m_pChanVoiceOnly;
 	mxButton		*m_pStopSounds;
 	mxButton		*m_pPlay;
 	mxButton		*m_pSearch;
 	mxLabel			*m_pSearchString;
-	
+
 	CSoundBrowser	*m_pBrowser;
 
 	char			m_szSearchString[ 256 ];
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
 CSoundBrowser::CSoundBrowser( mxWindow *parent, CWorkspaceManager *manager, int id ) :
 	BaseClass( parent, 0, 0, 0, 0, "Sound Browser", id )
 {
 	m_pManager = manager;
-	
+
 	SceneManager_MakeToolWindow( this, false );
 
 	m_pListView = new CSoundList( this, IDC_SB_LISTVIEW );
@@ -327,8 +327,8 @@ CSoundBrowser::CSoundBrowser( mxWindow *parent, CWorkspaceManager *manager, int 
 
 	HIMAGELIST list = GetWorkspaceManager()->CreateImageList();
 
-	// Associate the image list with the tree-view control. 
-    m_pListView->setImageList( (void *)list ); 
+	// Associate the image list with the tree-view control.
+	m_pListView->setImageList( (void *)list );
 
 	LoadAllSounds();
 
@@ -337,7 +337,7 @@ CSoundBrowser::CSoundBrowser( mxWindow *parent, CWorkspaceManager *manager, int 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSoundBrowser::OnDelete()
 {
@@ -345,8 +345,8 @@ void CSoundBrowser::OnDelete()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 // Output : int
 //-----------------------------------------------------------------------------
 int CSoundBrowser::handleEvent( mxEvent *event )
@@ -523,7 +523,7 @@ void CSoundBrowser::RemoveAllSounds()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSoundBrowser::PopulateTree( bool voiceonly, char const *scriptonly )
 {
@@ -652,7 +652,7 @@ void CSoundBrowser::PopulateTree( bool voiceonly, char const *scriptonly )
 		m_pListView->setLabel( slot, COL_CC, buf );
 
 		char filebase [ 512 ];
-		
+
 		int soundIndex = g_pSoundEmitterSystem->GetSoundIndex( name );
 
 		Q_FileBase( g_pSoundEmitterSystem->GetSourceFileForSound( soundIndex ), filebase, sizeof( filebase ) );
@@ -695,7 +695,7 @@ void CSoundBrowser::BuildSelectionList( CUtlVector< CSoundEntry * >& selected )
 	selected.RemoveAll();
 
 	int idx = -1;
-	do 
+	do
 	{
 		idx = m_pListView->getNextSelectedItem( idx );
 		if ( idx != -1 )
@@ -707,7 +707,7 @@ void CSoundBrowser::BuildSelectionList( CUtlVector< CSoundEntry * >& selected )
 			}
 		}
 	} while ( idx != -1 );
-	
+
 }
 
 void CSoundBrowser::ShowContextMenu( void )
@@ -762,7 +762,7 @@ void CSoundBrowser::OnPlay()
 void CSoundBrowser::JumpToItem( CSoundEntry *se )
 {
 	char const *script = se->GetScriptFile();
-	
+
 	bool voiceonly = m_pOptions->IsChanVoiceOnly();
 
 	if ( !script || !script[ 0 ] )

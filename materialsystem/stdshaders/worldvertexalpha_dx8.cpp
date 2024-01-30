@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -15,7 +15,7 @@
 
 DEFINE_FALLBACK_SHADER( WorldVertexAlpha, WorldVertexAlpha_DX8 )
 
-BEGIN_VS_SHADER( WorldVertexAlpha_DX8, 
+BEGIN_VS_SHADER( WorldVertexAlpha_DX8,
 			  "Help for WorldVertexAlpha_DX8" )
 
 	BEGIN_SHADER_PARAMS
@@ -98,7 +98,7 @@ BEGIN_VS_SHADER( WorldVertexAlpha_DX8,
 					colorFlag |= SHADER_DRAW_COLOR;
 				}
 
-				pShaderShadow->DrawFlags( colorFlag | SHADER_DRAW_POSITION | SHADER_DRAW_TEXCOORD1 | 
+				pShaderShadow->DrawFlags( colorFlag | SHADER_DRAW_POSITION | SHADER_DRAW_TEXCOORD1 |
 					                      SHADER_DRAW_LIGHTMAP_TEXCOORD0 );
 			}
 			DYNAMIC_STATE

@@ -120,14 +120,14 @@ void CPathKeyFrame::Spawn( void )
 void CPathKeyFrame::Activate( void )
 {
 	BaseClass::Activate();
-	
+
 	Link();
 
 	CalculateFrameDuration();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPathKeyFrame::CalculateFrameDuration( void )
 {
@@ -172,8 +172,8 @@ void CPathKeyFrame::Link( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : angles - 
+// Purpose:
+// Input  : angles -
 //-----------------------------------------------------------------------------
 void CPathKeyFrame::SetKeyAngles( QAngle angles )
 {
@@ -183,8 +183,8 @@ void CPathKeyFrame::SetKeyAngles( QAngle angles )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : direction - 
+// Purpose:
+// Input  : direction -
 // Output : CPathKeyFrame
 //-----------------------------------------------------------------------------
 CPathKeyFrame* CPathKeyFrame::NextKey( int direction )
@@ -197,13 +197,13 @@ CPathKeyFrame* CPathKeyFrame::NextKey( int direction )
 	{
 		return m_pPrevKey;
 	}
-	
+
 	return this;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : direction - 
+// Purpose:
+// Input  : direction -
 // Output : CPathKeyFrame
 //-----------------------------------------------------------------------------
 CPathKeyFrame *CPathKeyFrame::PrevKey( int direction )
@@ -216,19 +216,19 @@ CPathKeyFrame *CPathKeyFrame::PrevKey( int direction )
 	{
 		return m_pNextKey;
 	}
-	
+
 	return this;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Creates and insterts a new keyframe into the sequence
-// Input  : newPos - 
-//			newAngles - 
+// Input  : newPos -
+//			newAngles -
 // Output : CPathKeyFrame
 //-----------------------------------------------------------------------------
 CPathKeyFrame *CPathKeyFrame::InsertNewKey( Vector newPos, QAngle newAngles )
 {
-	CPathKeyFrame *newKey = CREATE_ENTITY( CPathKeyFrame, "keyframe_track" ); 
+	CPathKeyFrame *newKey = CREATE_ENTITY( CPathKeyFrame, "keyframe_track" );
 
 	// copy data across
 	newKey->SetKeyAngles( newAngles );
@@ -315,7 +315,7 @@ BEGIN_DATADESC( CBaseMoveBehavior )
 	DEFINE_FIELD( m_pTargetKeyFrame, FIELD_CLASSPTR ),
 	DEFINE_FIELD( m_pPreKeyFrame, FIELD_CLASSPTR ),
 	DEFINE_FIELD( m_pPostKeyFrame, FIELD_CLASSPTR ),
-	
+
 	DEFINE_FIELD( m_flAnimStartTime, FIELD_FLOAT ),
 	DEFINE_FIELD( m_flAnimEndTime, FIELD_FLOAT ),
 	DEFINE_FIELD( m_flAverageSpeedAcrossFrame, FIELD_FLOAT ),
@@ -385,7 +385,7 @@ bool CBaseMoveBehavior::IsAtSequenceEnd( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseMoveBehavior::IsMoving( void )
@@ -410,7 +410,7 @@ bool CBaseMoveBehavior::StartMoving( int direction )
 		StopMoving();
 		return false;
 	}
-	
+
 	// check to see if we should keep moving in the current direction
 	if ( m_iDirection == direction )
 	{
@@ -419,7 +419,7 @@ bool CBaseMoveBehavior::StartMoving( int direction )
 		{
 			m_pCurrentKeyFrame = m_pTargetKeyFrame;
 			m_flTimeIntoFrame = 0;
-			
+
 			if ( !m_pTargetKeyFrame->NextKey(direction) )
 			{
 				// we've hit the end of the sequence
@@ -487,7 +487,7 @@ bool CBaseMoveBehavior::StartMoving( int direction )
 	// no target, can't move
 	if ( !m_pTargetKeyFrame )
 		return false;
-	
+
 	// calculate start/end time
 	// ->m_flNextTime is the time to traverse to the NEXT key, so we need the opposite if travelling backwards
 	if ( m_iDirection == 1 )
@@ -505,7 +505,7 @@ bool CBaseMoveBehavior::StartMoving( int direction )
 		m_flAnimEndTime = GetLocalTime() + m_pTargetKeyFrame->m_flNextTime - m_flTimeIntoFrame;
 	}
 
-	// calculate the average speed at which we cross 
+	// calculate the average speed at which we cross
 	float animDuration = (m_flAnimEndTime - m_flAnimStartTime);
 	float dist = (m_pCurrentKeyFrame->m_Origin - m_pTargetKeyFrame->m_Origin).Length();
 	m_flAverageSpeedAcrossFrame = animDuration / dist;
@@ -586,7 +586,7 @@ void CBaseMoveBehavior::MoveDone( void )
 // Purpose: Calculates a new moveTime based on the speed and the current point
 //			in the animation.
 //			used to advance keyframed objects that have dynamic speeds.
-// Input  : moveTime - 
+// Input  : moveTime -
 // Output : float - the new time in the keyframing sequence
 //-----------------------------------------------------------------------------
 float CBaseMoveBehavior::CalculateTimeAdvancementForSpeed( float moveTime, float speed )
@@ -596,7 +596,7 @@ float CBaseMoveBehavior::CalculateTimeAdvancementForSpeed( float moveTime, float
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //			GetLocalTime() is the objects local current time
 // Input  : destTime - new time that is being moved to
 //			moveTime - amount of time to be advanced this frame
@@ -611,7 +611,7 @@ float CBaseMoveBehavior::SetObjectPhysicsVelocity( float moveTime )
 	// if we're not moving, we're not moving
 	if ( !IsMoving() )
 		return moveTime;
-	
+
 	float destTime = moveTime + GetLocalTime();
 
 	// work out where we want to be, using destTime
@@ -655,4 +655,3 @@ float CBaseMoveBehavior::SetObjectPhysicsVelocity( float moveTime )
 
 	return moveTime;
 }
-

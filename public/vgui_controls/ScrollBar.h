@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,13 +41,13 @@ public:
 	// Set the rangeof numbers the slider can scroll through
 	virtual void    SetRange(int min,int max);
 
-    virtual void    GetRange(int &min, int &max);
+	virtual void    GetRange(int &min, int &max);
 
-	// Set how many lines are displayed at one time 
+	// Set how many lines are displayed at one time
 	// in the window the scroll bar is attached to.
 	virtual void    SetRangeWindow(int rangeWindow);
-	
-	// Get how many lines are displayed at one time 
+
+	// Get how many lines are displayed at one time
 	// in the window the scroll bar is attached to.
 	virtual int    GetRangeWindow();
 
@@ -66,12 +66,12 @@ public:
 	virtual void    SetSlider(ScrollBarSlider* slider);
 	// Return a pointer to the slider.
 	virtual ScrollBarSlider *GetSlider();
-	// Set how far the scroll bar slider moves 
+	// Set how far the scroll bar slider moves
 	// when a scroll bar button is pressed
 	virtual void    SetButtonPressedScrollValue(int value);
 
 	virtual void    Validate();
-	
+
 	// Update and look for clicks when mouse is in the scroll bar window.
 	virtual void	OnMouseFocusTicked();
 

@@ -52,7 +52,7 @@ class CTFGrenadeMirv_Demoman : public CTFGrenadeMirv
 {
 public:
 	DECLARE_CLASS( CTFGrenadeMirv_Demoman, CTFGrenadeMirv );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual int		GetWeaponID( void ) const		{ return TF_WEAPON_GRENADE_MIRV_DEMOMAN; }
@@ -74,7 +74,7 @@ public:
 	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_GRENADE_MIRV; }
 
 	// Creation.
-	static CTFGrenadeMirvProjectile *Create( const Vector &position, const QAngle &angles, const Vector &velocity, 
+	static CTFGrenadeMirvProjectile *Create( const Vector &position, const QAngle &angles, const Vector &velocity,
 		                                     const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags = 0 );
 
 	// Overrides.
@@ -99,7 +99,7 @@ public:
 	DECLARE_CLASS( CTFGrenadeMirvBomb, CTFWeaponBaseGrenadeProj );
 
 	// Creation.
-	static CTFGrenadeMirvBomb *Create( const Vector &position, const QAngle &angles, const Vector &velocity, 
+	static CTFGrenadeMirvBomb *Create( const Vector &position, const QAngle &angles, const Vector &velocity,
 		                               const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, float timer );
 
 	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_GRENADE_MIRVBOMB; }

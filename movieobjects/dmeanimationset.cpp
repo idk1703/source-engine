@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmeanimationset.h"
@@ -254,7 +254,7 @@ int CDmePresetGroup::FindPresetIndex( CDmePreset *pPreset )
 		if ( pPreset == e )
 			return i;
 	}
-	return -1; 
+	return -1;
 }
 
 
@@ -324,7 +324,7 @@ void CDmePresetGroup::MovePresetInFrontOf( CDmePreset *pPreset, CDmePreset *pInF
 
 	int nEnd = pInFrontOf ? FindPresetIndex( pInFrontOf ) : m_Presets.Count();
 	Assert( nEnd >= 0 );
-	 
+
 	RemovePreset( pPreset );
 	if ( nEnd > m_Presets.Count() )
 	{
@@ -441,7 +441,7 @@ static int BuildExportedControlList( CDmeAnimationSet *pAnimationSet, const CDme
 //-----------------------------------------------------------------------------
 // Exports this preset group to a faceposer .txt expression file
 // Either an animation set or a combination operator are required so that
-// the default value for unspecified 
+// the default value for unspecified
 //-----------------------------------------------------------------------------
 bool CDmePresetGroup::ExportToTXT( const char *pFileName, CDmeAnimationSet *pAnimationSet /* = NULL */, CDmeCombinationOperator *pComboOp /* = NULL */ ) const
 {
@@ -609,7 +609,7 @@ bool CDmePresetGroup::ExportToTXT( const char *pFileName, CDmeAnimationSet *pAni
 // Exports this preset group to a faceposer .vfe expression file
 //-----------------------------------------------------------------------------
 bool CDmePresetGroup::ExportToVFE( const char *pFileName, CDmeAnimationSet *pAnimationSet /* = NULL */, CDmeCombinationOperator *pComboOp /* = NULL */ ) const
-{	  
+{
 	const CDmePresetGroup *pPresetGroup = this;
 
 	int i;
@@ -966,7 +966,7 @@ int CDmeAnimationSet::FindPresetGroupIndex( CDmePresetGroup *pPresetGroup )
 		if ( pPresetGroup == e )
 			return i;
 	}
-	return -1; 
+	return -1;
 }
 
 int CDmeAnimationSet::FindPresetGroupIndex( const char *pGroupName )
@@ -978,7 +978,7 @@ int CDmeAnimationSet::FindPresetGroupIndex( const char *pGroupName )
 		if ( e && !Q_stricmp( e->GetName(), pGroupName ) )
 			return i;
 	}
-	return -1; 
+	return -1;
 }
 
 
@@ -1154,7 +1154,7 @@ CDmePhonemeMapping *CDmeAnimationSet::FindMapping( const char *pRawPhoneme )
 
 
 //-----------------------------------------------------------------------------
-// Finds a control 
+// Finds a control
 //-----------------------------------------------------------------------------
 CDmElement *CDmeAnimationSet::FindControl( const char *pControlName )
 {
@@ -1170,7 +1170,7 @@ CDmElement *CDmeAnimationSet::FindControl( const char *pControlName )
 
 
 //-----------------------------------------------------------------------------
-// Finds or adds a control 
+// Finds or adds a control
 //-----------------------------------------------------------------------------
 CDmElement *CDmeAnimationSet::FindOrAddControl( const char *pControlName )
 {
@@ -1270,7 +1270,7 @@ private:
 	};
 
 	typedef CUtlVector< CDmeHandle< CDmePresetGroup, true > > PresetGroupList_t;
-	
+
 	// Loads model presets from .pre files matching the model name
 	void LoadModelPresets( const char *pModelName, PresetGroupList_t &list );
 

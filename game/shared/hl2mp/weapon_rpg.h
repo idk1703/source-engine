@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@
 class CWeaponRPG;
 class CLaserDot;
 class RocketTrail;
- 
+
 //###########################################################################
 //	>> CMissile		(missile launcher class is below this one!)
 //###########################################################################
@@ -45,7 +45,7 @@ public:
 #else
 	Class_T Classify( void ) { return CLASS_MISSILE; }
 #endif
-	
+
 	void	Spawn( void );
 	void	Precache( void );
 	void	MissileTouch( CBaseEntity *pOther );
@@ -60,7 +60,7 @@ public:
 
 	int		OnTakeDamage_Alive( const CTakeDamageInfo &info );
 	void	Event_Killed( const CTakeDamageInfo &info );
-	
+
 	virtual float	GetDamage() { return m_flDamage; }
 	virtual void	SetDamage(float flDamage) { m_flDamage = flDamage; }
 
@@ -71,14 +71,14 @@ public:
 	static CMissile *Create( const Vector &vecOrigin, const QAngle &vecAngles, edict_t *pentOwner );
 
 protected:
-	virtual void DoExplosion();	
+	virtual void DoExplosion();
 	virtual void ComputeActualDotPosition( CLaserDot *pLaserDot, Vector *pActualDotPosition, float *pHomingSpeed );
 	virtual int AugerHealth() { return m_iMaxHealth - 20; }
 
 	// Creates the smoke trail
 	void CreateSmokeTrail( void );
 
-	// Gets the shooting position 
+	// Gets the shooting position
 	void GetShootPosition( CLaserDot *pLaserDot, Vector *pShootPosition );
 
 	CHandle<RocketTrail>	m_hRocketTrail;
@@ -128,7 +128,7 @@ public:
 	CAPCMissile			*m_pNext;
 
 protected:
-	virtual void DoExplosion();	
+	virtual void DoExplosion();
 	virtual void ComputeActualDotPosition( CLaserDot *pLaserDot, Vector *pActualDotPosition, float *pHomingSpeed );
 	virtual int AugerHealth();
 
@@ -172,7 +172,7 @@ public:
 	CWeaponRPG();
 	~CWeaponRPG();
 
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	void	Precache( void );
@@ -218,7 +218,7 @@ public:
 	void	UpdateNPCLaserPosition( const Vector &vecTarget );
 	void	SetNPCLaserPosition( const Vector &vecTarget );
 	const Vector &GetNPCLaserPosition( void );
-	
+
 #ifdef CLIENT_DLL
 
 	// We need to render opaque and translucent pieces
@@ -245,7 +245,7 @@ public:
 #ifndef CLIENT_DLL
 	DECLARE_ACTTABLE();
 #endif
-	
+
 protected:
 
 	CNetworkVar( bool, m_bInitialStateUpdate );
@@ -260,7 +260,7 @@ protected:
 #endif
 
 private:
-	
+
 	CWeaponRPG( const CWeaponRPG & );
 };
 

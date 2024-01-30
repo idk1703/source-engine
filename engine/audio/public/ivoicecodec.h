@@ -21,9 +21,9 @@
 // Codecs are guaranteed to be called with the exact output from Compress into Decompress (ie:
 // data won't be stuck together and sent to Decompress).
 
-// Decompress is not guaranteed to be called in any specific order relative to Compress, but 
+// Decompress is not guaranteed to be called in any specific order relative to Compress, but
 // Codecs maintain state between calls, so it is best to call Compress with consecutive voice data
-// and decompress likewise. If you call it out of order, it will sound wierd. 
+// and decompress likewise. If you call it out of order, it will sound wierd.
 
 // In the same vein, calling Decompress twice with the same data is a bad idea since the state will be
 // expecting the next block of data, not the same block.

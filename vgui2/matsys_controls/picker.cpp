@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -38,7 +38,7 @@ static int __cdecl PickerBrowserSortFunc( vgui::ListPanel *pPanel, const ListPan
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CPicker::CPicker( vgui::Panel *pParent, const char *pColumnHeader, const char *pTextType ) : 
+CPicker::CPicker( vgui::Panel *pParent, const char *pColumnHeader, const char *pTextType ) :
 	BaseClass( pParent, "Picker" )
 {
 	m_pPickerType = pColumnHeader;
@@ -46,14 +46,14 @@ CPicker::CPicker( vgui::Panel *pParent, const char *pColumnHeader, const char *p
 
 	// FIXME: Make this an image browser
 	m_pPickerBrowser = new vgui::ListPanel( this, "Browser" );
- 	m_pPickerBrowser->AddColumnHeader( 0, "choice", m_pPickerType, 52, 0 );
-    m_pPickerBrowser->SetSelectIndividualCells( true );
+	m_pPickerBrowser->AddColumnHeader( 0, "choice", m_pPickerType, 52, 0 );
+	m_pPickerBrowser->SetSelectIndividualCells( true );
 	m_pPickerBrowser->SetEmptyListText( "Nothing to pick" );
- 	m_pPickerBrowser->SetDragEnabled( true );
- 	m_pPickerBrowser->AddActionSignalTarget( this );
+	m_pPickerBrowser->SetDragEnabled( true );
+	m_pPickerBrowser->AddActionSignalTarget( this );
 	m_pPickerBrowser->SetSortFunc( 0, PickerBrowserSortFunc );
 	m_pPickerBrowser->SetSortColumn( 0 );
-						 
+
 	// filter selection
 	m_pFilterList = new TextEntry( this, "FilterList" );
 	m_pFilterList->AddActionSignalTarget( this );
@@ -72,7 +72,7 @@ CPicker::~CPicker()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPicker::OnKeyCodePressed( KeyCode code )
 {
@@ -92,10 +92,10 @@ void CPicker::OnKeyCodePressed( KeyCode code )
 //-----------------------------------------------------------------------------
 // Purpose: refreshes the asset list
 //-----------------------------------------------------------------------------
-void CPicker::SetStringList( const PickerList_t &list ) 
+void CPicker::SetStringList( const PickerList_t &list )
 {
 	m_Type = list.m_Type;
-	m_pPickerBrowser->RemoveAll();	
+	m_pPickerBrowser->RemoveAll();
 
 	int nCount = list.Count();
 	for ( int i = 0; i < nCount; ++i )
@@ -104,11 +104,11 @@ void CPicker::SetStringList( const PickerList_t &list )
 		KeyValues *kv = new KeyValues( "node", "choice", pPickerName );
 		if ( m_Type == PICKER_CHOICE_STRING )
 		{
-			kv->SetString( "value", list[i].m_pChoiceValue ); 
+			kv->SetString( "value", list[i].m_pChoiceValue );
 		}
 		else
 		{
-			kv->SetPtr( "value", list[i].m_pChoiceValuePtr ); 
+			kv->SetPtr( "value", list[i].m_pChoiceValuePtr );
 		}
 		int nItemID = m_pPickerBrowser->AddItem( kv, 0, false, false );
 
@@ -129,7 +129,7 @@ void CPicker::SetStringList( const PickerList_t &list )
 //-----------------------------------------------------------------------------
 // Purpose: refreshes the choice list
 //-----------------------------------------------------------------------------
-void CPicker::RefreshChoiceList( ) 
+void CPicker::RefreshChoiceList( )
 {
 	// Check the filter matches
 	int nMatchingCount = 0;
@@ -222,13 +222,13 @@ int CPicker::GetSelectedIndex()
 	return m_pPickerBrowser->GetSelectedItem( 0 );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 //
 // Purpose: Modal picker frame
 //
 //-----------------------------------------------------------------------------
-CPickerFrame::CPickerFrame( vgui::Panel *pParent, const char *pTitle, const char *pPickerType, const char *pTextType ) : 
+CPickerFrame::CPickerFrame( vgui::Panel *pParent, const char *pTitle, const char *pPickerType, const char *pTextType ) :
 	BaseClass( pParent, "PickerFrame" )
 {
 	m_pContextKeyValues = NULL;
@@ -270,7 +270,7 @@ void CPickerFrame::DoModal( const PickerList_t &list, KeyValues *pContextKeyValu
 {
 	CleanUpMessage();
 	m_pContextKeyValues = pContextKeyValues;
- 	m_pPicker->SetStringList( list );
+	m_pPicker->SetStringList( list );
 	BaseClass::DoModal();
 }
 
@@ -314,5 +314,3 @@ void CPickerFrame::OnCommand( const char *pCommand )
 
 	BaseClass::OnCommand( pCommand );
 }
-
-	

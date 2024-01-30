@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -42,9 +42,9 @@ class CTFPlayer;
 
 
 // Defines for Goal States
-#define TFGS_ACTIVE		1 
-#define TFGS_INACTIVE	2 
-#define TFGS_REMOVED	3 
+#define TFGS_ACTIVE		1
+#define TFGS_INACTIVE	2
+#define TFGS_REMOVED	3
 #define TFGS_DELAYED	4
 
 
@@ -179,9 +179,9 @@ public:
 	float	wait;
 
 	float	search_time;		// Timer goal delay
-	int	    item_list;			// Used to keep track of which goalitems are 
+	int	    item_list;			// Used to keep track of which goalitems are
 								// affecting the player at any time.
-								// GoalItems use it to keep track of their own 
+								// GoalItems use it to keep track of their own
 								// mask to apply to a player's item_list
 
 	float	drop_time;		// Time spent untouched before item return
@@ -190,16 +190,16 @@ public:
 	int			armorclass;			// Type of armor being worn;
 
 	int		count;			// Change teamscores
-	
+
 	// Goal Size
 	Vector  goal_min;
 	Vector  goal_max;
 
 	bool m_bAddBonuses;
-	
+
 	int items;
 	int items_allowed;
-	
+
 	int else_goal;
 	int if_goal_is_active;
 	int if_goal_is_inactive;
@@ -209,21 +209,21 @@ public:
 	int if_group_is_removed;
 
 	int		speed_reduction;
-	
+
 	int return_item_no;
 	int if_item_has_moved;
 	int if_item_hasnt_moved;
-	
+
 	int has_item_from_group;
 	int hasnt_item_from_group;
-	
+
 	int goal_activation;
 	int delay_time;
 	int weapon;
 	string_t owned_by_teamcheck;
 	int owned_by;
 	string_t noise;
-	
+
 	// Spawnpoint behaviour
 	int     remove_spawnpoint;
 	int     restore_spawnpoint;
@@ -295,7 +295,7 @@ public:
 
 	BOOL    do_triggerwork;		// Overrides for trigger handling in TF Goals
 	string_t killtarget;	// Remove ents with this target
-	string_t	target;	
+	string_t	target;
 
 	string_t	message;
 
@@ -310,7 +310,7 @@ public:
 
 	int remove_item_group;
 };
- 
+
 
 class CTFGoalItem : public CTFGoal
 {

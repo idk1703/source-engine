@@ -29,9 +29,9 @@ BEGIN_MESSAGE_MAP(CTargetNameComboBox, CFilteredComboBox)
 END_MESSAGE_MAP()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTargetNameComboBox::CTargetNameComboBox( CFilteredComboBox::ICallbacks *pPassThru ) : 
+CTargetNameComboBox::CTargetNameComboBox( CFilteredComboBox::ICallbacks *pPassThru ) :
 	BaseClass( this )
 {
 	m_pEntityList = NULL;
@@ -49,7 +49,7 @@ CTargetNameComboBox::~CTargetNameComboBox(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTargetNameComboBox::FreeSubLists(void)
 {
@@ -72,7 +72,7 @@ void CTargetNameComboBox::CreateFonts()
 	if (!m_BoldFont.m_hObject)
 	{
 		CFont &nf = GetNormalFont();
-		
+
 		if ( nf.m_hObject )
 		{
 			LOGFONT LogFont;
@@ -102,7 +102,7 @@ void CTargetNameComboBox::SetEntityList(const CMapEntityList *pEntityList)
 {
 	// We want all notifications, even if the current text doesn't match an exact entity name.
 	SetOnlyProvideSuggestions( false );
-	
+
 	// Setup the list.
 	m_pEntityList = pEntityList;
 
@@ -165,8 +165,8 @@ CMapEntityList* CTargetNameComboBox::GetSubEntityList( const char *pName )
 	{
 		return m_EntityLists[testIndex];
 	}
-	
-	return NULL;	
+
+	return NULL;
 }
 
 
@@ -174,13 +174,13 @@ void CTargetNameComboBox::OnTextChanged( const char *pText )
 {
 	// Make sure our fonts are created.
 	CreateFonts();
-	
+
 	// Update the fonts.
 	int nCount = 0;
 	CMapEntityList *pList = GetSubEntityList( pText );
 	if ( pList )
 		nCount = pList->Count();
-	
+
 	// Figure out the font and color that we want.
 	CFont *pWantedFont = &m_BoldFont;
 	if ( (nCount == 0) || (nCount == 1) )
@@ -195,5 +195,5 @@ void CTargetNameComboBox::OnTextChanged( const char *pText )
 
 	// Pass it through to the owner if they want notification.
 	if ( m_pPassThru )
-		m_pPassThru->OnTextChanged( pText );	
+		m_pPassThru->OnTextChanged( pText );
 }

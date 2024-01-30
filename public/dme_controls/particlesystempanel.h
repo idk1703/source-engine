@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -86,7 +86,7 @@ private:
 	// Draw bounds
 	void DrawBounds();
 	void DrawCullBounds();
- 
+
 	// paint it!
 	virtual void OnPaint3D();
 
@@ -171,4 +171,3 @@ private:
 
 
 #endif // DMEPARTICLEPANEL_H
-	    

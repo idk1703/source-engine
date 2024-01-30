@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -37,7 +37,7 @@ BEGIN_SHADER( FilmDust_DX7, "Help for FilmDust_DX7" )
 
 	SHADER_INIT
 	{
-		LoadTexture( DUST_TEXTURE );								 
+		LoadTexture( DUST_TEXTURE );
 	}
 
 	SHADER_DRAW
@@ -58,7 +58,7 @@ BEGIN_SHADER( FilmDust_DX7, "Help for FilmDust_DX7" )
 		{
 			float color[4];
 			params[CHANNEL_SELECT]->GetVecValue( color, 4 );
-			s_pShaderAPI->Color4fv( color );	
+			s_pShaderAPI->Color4fv( color );
 
 			BindTexture( SHADER_SAMPLER0, DUST_TEXTURE, -1 );
 		}

@@ -24,7 +24,7 @@ public:
 	DECLARE_CLASS( CCrossbowAmmo, CHL1Item );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache();
 		SetModel( AMMO_CROSSBOW_MODEL );
 		BaseClass::Spawn();
@@ -62,7 +62,7 @@ public:
 	DECLARE_CLASS( CEgonAmmo, CHL1Item );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache();
 		SetModel( AMMO_EGON_MODEL );
 		BaseClass::Spawn();
@@ -77,7 +77,7 @@ public:
 		{
 			if ( g_pGameRules->ItemShouldRespawn( this ) == GR_ITEM_RESPAWN_NO )
 			{
-				UTIL_Remove( this );	
+				UTIL_Remove( this );
 			}
 			return true;
 		}
@@ -100,7 +100,7 @@ public:
 	DECLARE_CLASS( CGaussAmmo, CHL1Item );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache();
 		SetModel( AMMO_GAUSS_MODEL );
 		BaseClass::Spawn();
@@ -138,7 +138,7 @@ public:
 	DECLARE_CLASS( CGlockAmmo, CHL1Item );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache();
 		SetModel( AMMO_GLOCK_MODEL );
 		BaseClass::Spawn();
@@ -178,7 +178,7 @@ public:
 	DECLARE_CLASS( CMP5AmmoClip, CHL1Item );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache();
 		SetModel( AMMO_MP5_MODEL );
 		BaseClass::Spawn();
@@ -218,7 +218,7 @@ public:
 	DECLARE_CLASS( CMP5Chainammo, CHL1Item );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache();
 		SetModel( AMMO_MP5CHAIN_MODEL );
 		BaseClass::Spawn();
@@ -256,7 +256,7 @@ public:
 	DECLARE_CLASS( CMP5AmmoGrenade, CHL1Item );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache();
 		SetModel( AMMO_MP5GRENADE_MODEL );
 		BaseClass::Spawn();
@@ -296,7 +296,7 @@ public:
 	DECLARE_CLASS( CPythonAmmo, CHL1Item );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache();
 		SetModel( AMMO_357_MODEL );
 		BaseClass::Spawn();
@@ -334,7 +334,7 @@ public:
 	DECLARE_CLASS( CRpgAmmo, CHL1Item );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache();
 		SetModel( AMMO_RPG_MODEL );
 		BaseClass::Spawn();
@@ -384,7 +384,7 @@ public:
 	DECLARE_CLASS( CShotgunAmmo, CHL1Item );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache();
 		SetModel( AMMO_SHOTGUN_MODEL );
 		BaseClass::Spawn();

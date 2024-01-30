@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -53,7 +53,7 @@ void CCommandBuffer::SetWaitDelayTime( int nTickDelay )
 	m_nWaitDelayTicks = nTickDelay;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Specifies a max limit of the args buffer. For unittesting. Size == 0 means use default
 //-----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ void CCommandBuffer::LimitArgumentBufferSize( int nSize )
 	m_nMaxArgSBufferLength = ( nSize == 0 ) ? ARGS_BUFFER_LENGTH : nSize;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Parses argv0 out of the buffer
 //-----------------------------------------------------------------------------
@@ -132,7 +132,7 @@ bool CCommandBuffer::InsertCommand( const char *pArgS, int nCommandSize, int nTi
 		if ( m_nArgSBufferSize + nCommandSize + 1 > m_nMaxArgSBufferLength )
 			return false;
 	}
-	
+
 	memcpy( &m_pArgSBuffer[m_nArgSBufferSize], pArgS, nCommandSize );
 	m_pArgSBuffer[m_nArgSBufferSize + nCommandSize] = 0;
 	++nCommandSize;
@@ -156,7 +156,7 @@ bool CCommandBuffer::InsertCommand( const char *pArgS, int nCommandSize, int nTi
 	return true;
 }
 
-		
+
 //-----------------------------------------------------------------------------
 // Returns the length of the next command
 //-----------------------------------------------------------------------------
@@ -190,7 +190,7 @@ void CCommandBuffer::GetNextCommandLength( const char *pText, int nMaxLen, int *
 
 			// don't break if inside a quoted string
 			if ( !bIsQuoted && c == ';' )
-				break;	
+				break;
 		}
 
 		// FIXME: This is legacy behavior; should we not break if a \n is inside a quoted string?
@@ -226,7 +226,7 @@ bool CCommandBuffer::AddText( const char *pText, int nTickDelay )
 
 		const char *pArgS;
 		char *pArgV0 = (char*)_alloca( nCommandLength+1 );
-		CUtlBuffer bufParse( pCurrentCommand, nCommandLength, CUtlBuffer::TEXT_BUFFER | CUtlBuffer::READ_ONLY ); 
+		CUtlBuffer bufParse( pCurrentCommand, nCommandLength, CUtlBuffer::TEXT_BUFFER | CUtlBuffer::READ_ONLY );
 		ParseArgV0( bufParse, pArgV0, nCommandLength+1, &pArgS );
 		if ( pArgV0[0] == 0 )
 			continue;
@@ -254,8 +254,8 @@ bool CCommandBuffer::IsProcessingCommands()
 {
 	return m_bIsProcessingCommands;
 }
-	
-	
+
+
 //-----------------------------------------------------------------------------
 // Delays all queued commands to execute at a later time
 //-----------------------------------------------------------------------------
@@ -266,11 +266,11 @@ void CCommandBuffer::DelayAllQueuedCommands( int nDelay )
 
 	for ( int i = m_Commands.Head(); i != m_Commands.InvalidIndex(); i = m_Commands.Next(i) )
 	{
-		m_Commands[i].m_nTick += nDelay;			
+		m_Commands[i].m_nTick += nDelay;
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Call this to begin iterating over all commands up to flCurrentTime
 //-----------------------------------------------------------------------------
@@ -322,7 +322,7 @@ bool CCommandBuffer::DequeueNextCommand( )
 //	Msg("Dequeue : ");
 //	for ( int i = 0; i < nArgc; ++i )
 //	{
-//		Msg("%s ", m_pCurrentArgv[i] ); 
+//		Msg("%s ", m_pCurrentArgv[i] );
 //	}
 //	Msg("\n");
 	return true;
@@ -348,8 +348,8 @@ void CCommandBuffer::Compact()
 	// Compress argvbuffer + argv
 	// NOTE: I'm using this choice instead of calling malloc + free
 	// per command to allocate arguments because I expect to post a
-	// bunch of commands but not have many delayed commands; 
-	// avoiding the allocation cost seems more important that the memcpy 
+	// bunch of commands but not have many delayed commands;
+	// avoiding the allocation cost seems more important that the memcpy
 	// cost here since I expect to not have much to copy.
 	m_nArgSBufferSize = 0;
 
@@ -381,7 +381,7 @@ void CCommandBuffer::EndProcessingCommands()
 	m_hNextCommand = m_Commands.InvalidIndex();
 
 	// Extract commands that are before the end time
-	// NOTE: This is a bug for this to 
+	// NOTE: This is a bug for this to
 	int i = m_Commands.Head();
 	if ( i == m_Commands.InvalidIndex() )
 	{
@@ -477,13 +477,13 @@ void Cmd_Alias_f (void)
 		a->next = cmd_alias;
 		cmd_alias = a;
 	}
-	Q_strncpy (a->name, s, sizeof( a->name ) );	
+	Q_strncpy (a->name, s, sizeof( a->name ) );
 
 	a->value = COM_StringCopy(cmd);
 }
 
 
-	
+
 /*
 =============================================================================
 
@@ -502,12 +502,12 @@ static	const char	*cmd_args = NULL;
 cmd_source_t	cmd_source;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : void Cmd_Init
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Cmd_Shutdown( void )
 {
@@ -532,12 +532,12 @@ FIXME: lookupnoadd the token to speed search?
 ============
 */
 const ConCommandBase *Cmd_ExecuteString (const char *text, cmd_source_t src)
-{	
+{
 	cmdalias_t		*a;
 
 	cmd_source = src;
 	Cmd_TokenizeString (text);
-			
+
 // execute the command line
 	if (!Cmd_Argc())
 		return NULL;		// no tokens
@@ -551,12 +551,12 @@ const ConCommandBase *Cmd_ExecuteString (const char *text, cmd_source_t src)
 			return NULL;
 		}
 	}
-	
+
 // check ConCommands
 	ConCommandBase const *pCommand = ConCommandBase::FindCommand( cmd_argv[ 0 ] );
 	if ( pCommand && pCommand->IsCommand() )
 	{
-		bool isServerCommand = ( pCommand->IsBitSet( FCVAR_GAMEDLL ) && 
+		bool isServerCommand = ( pCommand->IsBitSet( FCVAR_GAMEDLL ) &&
 								// Typed at console
 								cmd_source == src_command &&
 								// Not HLDS
@@ -569,7 +569,7 @@ const ConCommandBase *Cmd_ExecuteString (const char *text, cmd_source_t src)
 			if ( sv.IsActive() )
 			{
 				g_pServerPluginHandler->SetCommandClient( -1 );
-						
+
 #ifndef SWDS
 				// Special processing for listen server player
 				if ( isServerCommand )
@@ -628,7 +628,7 @@ const ConCommandBase *Cmd_ExecuteString (const char *text, cmd_source_t src)
 			return NULL;
 		}
 	}
-	
+
 	Msg("Unknown command \"%s\"\n", Cmd_Argv(0));
 
 	return NULL;

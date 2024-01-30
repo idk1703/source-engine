@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -15,7 +15,7 @@ CClickableTabbedPanel::CClickableTabbedPanel(vgui2::Panel *parent, const char *p
 {
 
 	//PropertySheet::onTabPressed
-	
+
 }
 
 CClickableTabbedPanel::~CClickableTabbedPanel()
@@ -26,8 +26,8 @@ CClickableTabbedPanel::~CClickableTabbedPanel()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : code - 
+// Purpose:
+// Input  : code -
 //-----------------------------------------------------------------------------
 /*void CClickableTabbedPanel::onMousePressed(MouseCode code)
 {

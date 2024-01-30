@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -86,7 +86,7 @@ public:
 		int i;
 		for ( i = other.m_dictEntityDeaths.First(); i != other.m_dictEntityDeaths.InvalidIndex(); i = other.m_dictEntityDeaths.Next( i ) )
 		{
-            m_dictEntityDeaths.Insert( other.m_dictEntityDeaths.GetElementName( i ), other.m_dictEntityDeaths[ i ] );
+	m_dictEntityDeaths.Insert( other.m_dictEntityDeaths.GetElementName( i ), other.m_dictEntityDeaths[ i ] );
 		}
 		for ( i = other.m_dictWeapons.First(); i != other.m_dictWeapons.InvalidIndex(); i = other.m_dictWeapons.Next( i ) )
 		{
@@ -177,12 +177,12 @@ public:
 		unsigned short iLumpCount = 0;
 
 		Ep2LevelStats_t *pItem = NULL;
- 
+
 		while( CBaseGameStats::GetLumpHeader( EP2_MAX_LUMP_COUNT, LoadBuffer, iLump, iLumpCount, true ) )
 		{
 			switch ( iLump )
 			{
-			case EP2STATS_LUMP_HEADER: 
+			case EP2STATS_LUMP_HEADER:
 				{
 					Ep2LevelStats_t::LevelHeader_t header;
 					CBaseGameStats::LoadLump( LoadBuffer, iLumpCount, sizeof( Ep2LevelStats_t::LevelHeader_t ), &header );
@@ -191,7 +191,7 @@ public:
 					pItem->m_Tag.Clear();
 					Assert( pItem );
 				}
-				break; 
+				break;
 			case EP2STATS_LUMP_TAG:
 				{
 					Assert( pItem );
@@ -305,7 +305,7 @@ public:
 	// Simple "tag" applied to all data in database (e.g., "PLAYTEST")
 	struct Tag_t
 	{
-		static const unsigned short LumpId = EP2STATS_LUMP_TAG;	
+		static const unsigned short LumpId = EP2STATS_LUMP_TAG;
 
 		void Clear()
 		{
@@ -398,7 +398,7 @@ public:
 			TYPE_USERSAVE
 		};
 
-		SaveGameInfoRecord2_t() : 
+		SaveGameInfoRecord2_t() :
 			m_SaveType( (byte)TYPE_UNKNOWN )
 		{
 		}
@@ -435,11 +435,11 @@ public:
 		static const unsigned short LumpId = EP2STATS_LUMP_GENERIC;
 		static const unsigned short LumpVersion = 1;
 
-		GenericStatsLump_t() : 
+		GenericStatsLump_t() :
 			m_unCount( 0u ),
-			m_flCurrentValue( 0.0 ) 
-		{ 
-			m_Pos[ 0 ] = m_Pos[ 1 ] = m_Pos[ 2 ] = 0; 
+			m_flCurrentValue( 0.0 )
+		{
+			m_Pos[ 0 ] = m_Pos[ 1 ] = m_Pos[ 2 ] = 0;
 		}
 
 		short						m_Pos[ 3 ];
@@ -506,7 +506,7 @@ public:
 
 public:	//FIXME: temporary used for CC_ListDeaths command
 	Ep2LevelStats_t	*FindOrAddMapStats( const char *szMapName );
-	
+
 public:
 
 	Ep2LevelStats_t::EntityDeathsLump_t *FindDeathsLump( char const *npcName );

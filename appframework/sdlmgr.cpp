@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: An application framework  
+// Purpose: An application framework
 //
 //=============================================================================//
 
@@ -56,7 +56,7 @@ const int kBogusSwapInterval = INT_MAX;
 
 /*
 From Ryan Gordon:
- 
+
 SDL's FULLSCREEN_DESKTOP mode on the mac now
 puts the game in its own fullscreen Space on OS X 10.7 and later, as of
 SDL 2.0.3, I think.
@@ -72,14 +72,14 @@ wouldn't recommend a drastic change like that.
 
 - You can force the old behavior with this hint:
 
-     SDL_SetHint(SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES, "1");
+	SDL_SetHint(SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES, "1");
 
 ...which must be called before SDL_Init(SDL_INIT_VIDEO) at the moment
 (that can be changed if you'd like to add a menu option that wants to
 toggle this setting at runtime, though). One can also force this with an
 environment variable, for what that's worth to most Mac users:
 
-     export SDL_VIDEO_MAC_FULLSCREEN_SPACES=0
+	export SDL_VIDEO_MAC_FULLSCREEN_SPACES=0
 
 - I haven't tried it, but maybe one can force vsync off with
 SDL_GL_SetSwapInterval(), and it's just that the default is different
@@ -92,7 +92,7 @@ Vsync, we found that a Fullscreen Space got a slightly faster framerate,
 too (plus it's how Apple "wants" you to do fullscreen at this point, etc).
 
 And of course, this is Mac-specific: this is in the Cocoa backend, and
-thus doesn't affect Windows or Linux, etc. 
+thus doesn't affect Windows or Linux, etc.
 */
 
 static void DebugPrintf( const char *pMsg, ... )
@@ -115,7 +115,7 @@ class LinuxAppFuncLogger
 		{
 			printf( ">%s\n", m_funcName );
 		};
-		
+
 		LinuxAppFuncLogger( const char *funcName, char *fmt, ... )
 		{
 			m_funcName = funcName;
@@ -125,12 +125,12 @@ class LinuxAppFuncLogger
 			vprintf( fmt, vargs );
 			va_end( vargs );
 		}
-		
+
 		~LinuxAppFuncLogger( )
 		{
 			printf( "<%s\n", m_funcName );
 		};
-	
+
 		const char *m_funcName;
 };
 #define	SDLAPP_FUNC			LinuxAppFuncLogger _logger_( __FUNCTION__ )
@@ -149,8 +149,8 @@ void	CheckGLError( int line )
 	//char errbuf[1024];
 
 	//borrowed from GLMCheckError.. slightly different
-	
-	
+
+
 	GLenum errorcode = (GLenum)gGL->glGetError();
 	//GLenum errorcode2 = 0;
 	if ( errorcode != GL_NO_ERROR )
@@ -194,7 +194,7 @@ void *VoidFnPtrLookup_GlMgr(const char *fn, bool &okay, const bool bRequired, vo
 		// We can't continue execution, because one or more GL function pointers will be NULL.
 		Error( "Could not find required OpenGL entry point '%s'! Either your video card is unsupported, or your OpenGL driver needs to be updated.\n", fn);
 	}
-	
+
 	return retval;
 }
 
@@ -208,18 +208,18 @@ public:
 public:
 	virtual bool Connect( CreateInterfaceFn factory );
 	virtual void Disconnect();
-	
+
 	virtual void *QueryInterface( const char *pInterfaceName );
-	
+
 	// Init, shutdown
 	virtual InitReturnVal_t Init();
 	virtual void Shutdown();
 
 	virtual bool CreateGameWindow( const char *pTitle, bool bWindowed, int width, int height );
-	
+
 	virtual void IncWindowRefCount();
 	virtual void DecWindowRefCount();
-				
+
 	// Get the next N events. The function returns the number of events that were filled into your array.
 	virtual int GetEvents( CCocoaEvent *pEvents, int nMaxEventsToReturn, bool debugEvents = false );
 #ifdef LINUX
@@ -228,7 +228,7 @@ public:
 
 	// Set the mouse cursor position.
 	virtual void SetCursorPosition( int x, int y );
-	
+
 	virtual void *GetWindowRef() { return (void *)m_Window; }
 
 	virtual void SetWindowFullScreen( bool bFullScreen, int nWidth, int nHeight );
@@ -236,10 +236,10 @@ public:
 	virtual void MoveWindow( int x, int y );
 	virtual void SizeWindow( int width, int tall );
 	virtual void PumpWindowsMessageLoop();
-		
+
 	virtual void DestroyGameWindow();
 	virtual void SetApplicationIcon( const char *pchAppIconFile );
-	
+
 	virtual void GetMouseDelta( int &x, int &y, bool bIgnoreNextMouseDelta = false );
 
 	virtual void GetNativeDisplayInfo( int nDisplay, uint &nWidth, uint &nHeight, uint &nRefreshHz ); // Retrieve the size of the monitor (desktop)
@@ -278,13 +278,13 @@ public:
 	virtual void OnFrameRendered();
 
 	virtual void SetGammaRamp( const uint16 *pRed, const uint16 *pGreen, const uint16 *pBlue );
-			
+
 	virtual double GetPrevGLSwapWindowTime() { return m_flPrevGLSwapWindowTime; }
 
 	// Called to create a game window that will be hidden, designed for
 	// getting an OpenGL context going so we can begin initializing things.
 	bool CreateHiddenGameWindow( const char *pTitle, int width, int height );
-					
+
 private:
 	void handleKeyInput( const SDL_Event &event );
 
@@ -327,7 +327,7 @@ private:
 	int m_WindowWidth;
 	int m_WindowHeight;
 
-  	bool m_bExpectSyntheticMouseMotion;
+	bool m_bExpectSyntheticMouseMotion;
 	int m_nMouseTargetX;
 	int m_nMouseTargetY;
 	int m_nWarpDelta;
@@ -355,7 +355,7 @@ private:
 	Uint32 m_MouseButtonDownTimeStamp;
 	int m_MouseButtonDownX;
 	int m_MouseButtonDownY;
-			
+
 	double m_flPrevGLSwapWindowTime;
 };
 
@@ -525,22 +525,22 @@ InitReturnVal_t CSDLMgr::Init()
 	m_MouseButtonDownTimeStamp = 0;
 	m_MouseButtonDownX = 0;
 	m_MouseButtonDownY = 0;
-		
+
 	m_bExpectSyntheticMouseMotion = false;
 	m_nMouseTargetX = 0;
 	m_nMouseTargetY = 0;
 	m_nWarpDelta = 0;
 	m_bRawInput = false;
-			
+
 	m_flPrevGLSwapWindowTime = 0.0f;
-		
+
 	memset(m_pixelFormatAttribs, '\0', sizeof (m_pixelFormatAttribs));
 
 	int *attCursor = m_pixelFormatAttribs;
 
 	#define SET_GL_ATTR(key,value) \
-	    *(attCursor++) = (int) (key); \
-	    *(attCursor++) = (int) (value);
+		*(attCursor++) = (int) (key); \
+		*(attCursor++) = (int) (value);
 
 	SET_GL_ATTR(SDL_GL_RED_SIZE, 8);
 	SET_GL_ATTR(SDL_GL_GREEN_SIZE, 8);
@@ -567,9 +567,9 @@ InitReturnVal_t CSDLMgr::Init()
 	//  to really actually make a window, we just resize the one we built here.
 	if ( !CreateHiddenGameWindow( "", 640, 480 ) )
 		Error( "CreateGameWindow failed" );
-	
+
 	SDL_HideWindow( m_Window );
-	
+
 	return INIT_OK;
 }
 
@@ -650,7 +650,7 @@ bool CSDLMgr::CreateGameWindow( const char *pTitle, bool bWindowed, int width, i
 		}
 
 		if ( ( m_bFullScreen != !bWindowed ) ||
-			 ( !bWindowed && ( sdl_displayindex.GetInt() != sdl_displayindex_fullscreen.GetInt() ) ) )
+			( !bWindowed && ( sdl_displayindex.GetInt() != sdl_displayindex_fullscreen.GetInt() ) ) )
 		{
 			SetWindowFullScreen( !bWindowed, width, height );
 		}
@@ -760,7 +760,7 @@ bool CSDLMgr::CreateHiddenGameWindow( const char *pTitle, int width, int height 
 #endif // DBGFLAG_ASSERT
 
 	gGL = GetOpenGLEntryPoints(VoidFnPtrLookup_GlMgr);
-	
+
 	// It is now safe to call any base GL entry point that's supplied by gGL.
 	// You still need to explicitly test for extension entry points, though!
 
@@ -831,7 +831,7 @@ void CSDLMgr::DeleteContext( PseudoGLContextPtr hContext )
 {
 	SDLAPP_FUNC;
 	Assert( (SDL_GLContext)hContext != m_GLContext );
-	
+
 	// Don't delete the main one.
 	if ( (SDL_GLContext)hContext != m_GLContext )
 	{
@@ -957,10 +957,10 @@ void CSDLMgr::PostEvent( const CCocoaEvent &theEvent, bool debugEvent )
 	SDLAPP_FUNC;
 
 	m_CocoaEventsMutex.Lock();
-	
+
 	CUtlLinkedList<CCocoaEvent,int> &queue = debugEvent ? m_CocoaEvents : m_DebugEvents;
 	queue.AddToTail( theEvent );
-	
+
 	m_CocoaEventsMutex.Unlock();
 }
 
@@ -1014,7 +1014,7 @@ void CSDLMgr::OnFrameRendered()
 
 		ConVarRef rawinput( "m_rawinput" );
 
-		
+
 #ifdef OSX
 		// We default raw input to on on Mac and set it one time for all users since
 		// it didn't used to be the default.
@@ -1057,7 +1057,7 @@ void CSDLMgr::OnFrameRendered()
 void CSDLMgr::ShowPixels( CShowPixelsParams *params )
 {
 	SDLAPP_FUNC;
-	
+
 	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, __FUNCTION__ );
 
 	if (params->m_onlySyncView)
@@ -1070,7 +1070,7 @@ void CSDLMgr::ShowPixels( CShowPixelsParams *params )
 	{
 		// just jam through these debug convars every frame
 		// but they will be shock absorbed below
-			
+
 		swapInterval	= gl_swapinterval.GetInt();
 		swapLimit		= gl_swaplimit.GetInt();
 	}
@@ -1095,15 +1095,15 @@ void CSDLMgr::ShowPixels( CShowPixelsParams *params )
 		}
 #endif
 	}
-		
+
 	// only touch them on changes, or right after a change in windowed/FS state
 	if ( (swapInterval!=m_lastKnownSwapInterval) || (swapLimit!=m_lastKnownSwapLimit) )
 	{
-		
+
 		if (swapInterval!=m_lastKnownSwapInterval)
 		{
 			// This code hits when we turn on vsync, if we're going to swap tear.
-			// We want to do one frame of real vsync to get the engine to sync at the top 
+			// We want to do one frame of real vsync to get the engine to sync at the top
 			// of the frame refresh.
 			if (swapInterval < 0 && (m_lastKnownSwapInterval == 0 || m_lastKnownSwapInterval == kBogusSwapInterval))  {
 				swapInterval = -swapInterval;
@@ -1317,7 +1317,7 @@ void CSDLMgr::SetWindowFullScreen( bool bFullScreen, int nWidth, int nHeight )
 	SDL_SetWindowDisplayMode( m_Window, &mode );
 
 	if ( ( m_bFullScreen != bFullScreen ) ||
-		 ( bFullScreen && ( sdl_displayindex_fullscreen.GetInt() != displayIndex ) ) )
+		( bFullScreen && ( sdl_displayindex_fullscreen.GetInt() != displayIndex ) ) )
 	{
 		if ( bFullScreen )
 		{
@@ -1373,9 +1373,9 @@ void CSDLMgr::SizeWindow( int width, int tall )
 	SDLAPP_FUNC;
 
 	if ( ( m_WindowWidth == width ) &&
-		 ( m_WindowHeight == tall ) &&
-		 ( m_SizeWindowFullScreenState == m_bFullScreen ) &&
-		 m_WindowShownAndRaised )
+		( m_WindowHeight == tall ) &&
+		( m_SizeWindowFullScreenState == m_bFullScreen ) &&
+		m_WindowShownAndRaised )
 	{
 		return;
 	}
@@ -1422,7 +1422,7 @@ void CSDLMgr::handleKeyInput( const SDL_Event &event )
 
 #ifdef OSX
 	if ( event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_TAB &&
-	     SDL_GetModState()&KMOD_GUI && CommandLine()->FindParm( "-exclusivefs" ) )
+		SDL_GetModState()&KMOD_GUI && CommandLine()->FindParm( "-exclusivefs" ) )
 	{
 		// If we're in exclusive fullscreen mode, and they command-tab, handle
 		// that by forcing minimization of the window.
@@ -1560,7 +1560,7 @@ void CSDLMgr::handleKeyInput( const SDL_Event &event )
 			case '.':
 				theEvent.m_UnicodeKeyUnmodified = '>';
 				break;
-		}		
+		}
 	}
 #endif
 
@@ -1593,8 +1593,8 @@ void CSDLMgr::PumpWindowsMessageLoop()
 				// event is sent. We want to ignore such 'synthetic'
 				// mouse motion events.
 				if ( m_bExpectSyntheticMouseMotion &&
-					 event.motion.x == m_nMouseTargetX &&
-					 event.motion.y == m_nMouseTargetY )
+					event.motion.x == m_nMouseTargetX &&
+					event.motion.y == m_nMouseTargetY )
 				{
 					m_bExpectSyntheticMouseMotion = false;
 					break;
@@ -1605,9 +1605,9 @@ void CSDLMgr::PumpWindowsMessageLoop()
 
 				if ( !m_bRawInput && !m_bCursorVisible &&
 					(event.motion.x < m_nMouseTargetX - m_nWarpDelta ||
-					 event.motion.x > m_nMouseTargetX + m_nWarpDelta ||
-					 event.motion.y < m_nMouseTargetY - m_nWarpDelta ||
-					 event.motion.y > m_nMouseTargetY + m_nWarpDelta) )
+					event.motion.x > m_nMouseTargetX + m_nWarpDelta ||
+					event.motion.y < m_nMouseTargetY - m_nWarpDelta ||
+					event.motion.y > m_nMouseTargetY + m_nWarpDelta) )
 				{
 					// We have strayed outside of our desired area, so
 					// warp the cursor back to the middle of the window.
@@ -1675,9 +1675,9 @@ void CSDLMgr::PumpWindowsMessageLoop()
 				if ( bPressed )
 				{
 					if ( m_bGotMouseButtonDown &&
-						 ( (int)( event.button.timestamp - m_MouseButtonDownTimeStamp ) <= sdl_double_click_time.GetInt() ) &&
-						 ( abs( event.button.x - m_MouseButtonDownX ) <= sdl_double_click_size.GetInt() ) &&
-						 ( abs( event.button.y - m_MouseButtonDownY ) <= sdl_double_click_size.GetInt() ) )
+						( (int)( event.button.timestamp - m_MouseButtonDownTimeStamp ) <= sdl_double_click_time.GetInt() ) &&
+						( abs( event.button.x - m_MouseButtonDownX ) <= sdl_double_click_size.GetInt() ) &&
+						( abs( event.button.y - m_MouseButtonDownY ) <= sdl_double_click_size.GetInt() ) )
 					{
 						bDoublePress = true;
 						m_bGotMouseButtonDown = false;
@@ -1852,7 +1852,7 @@ void CSDLMgr::DecWindowRefCount()
 			gGL->glDeleteFramebuffersEXT( 1, &m_readFBO );
 		}
 		m_readFBO = 0;
-								
+
 		SDL_GL_DeleteContext( m_GLContext );
 #if !defined( OSX ) && defined( DBGFLAG_ASSERT )
 		// Clear the GL entrypoint pointers, ensuring we crash if someone tries to call GL after we delete the context.
@@ -1953,7 +1953,7 @@ void CSDLMgr::RenderedSize( uint &width, uint &height, bool set )
 	}
 }
 
-void CSDLMgr::DisplayedSize( uint &width, uint &height ) 
+void CSDLMgr::DisplayedSize( uint &width, uint &height )
 {
 	SDLAPP_FUNC;
 
@@ -1982,7 +1982,7 @@ void CSDLMgr::SetGammaRamp( const uint16 *pRed, const uint16 *pGreen, const uint
 	if ( m_Window )
 	{
 		int nResult = SDL_SetWindowGammaRamp( m_Window, pRed, pGreen, pBlue );
-		
+
 		if ( nResult != 0 )
 		{
 			ConMsg( "SDL_SetWindowGammaRamp failed: %d\n", nResult );
@@ -2041,7 +2041,7 @@ void GLMDisplayMode::Dump( int which )
 	SDLAPP_FUNC;
 
 	GLMPRINTF(("\n             # %-2d  width=%-4d  height=%-4d  refreshHz=%-2d",
-			   which, m_info.m_modePixelWidth, m_info.m_modePixelHeight, m_info.m_modeRefreshHz ));
+				which, m_info.m_modePixelWidth, m_info.m_modePixelHeight, m_info.m_modeRefreshHz ));
 }
 
 GLMDisplayDB *CSDLMgr::GetDisplayDB( void )
@@ -2075,4 +2075,3 @@ GLMDisplayDB *CSDLMgr::GetDisplayDB( void )
 #endif // DX_TO_GL_ABSTRACTION
 
 #endif  // !DEDICATED
-

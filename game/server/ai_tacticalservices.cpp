@@ -69,7 +69,7 @@ void CAI_TacticalServices::Init( CAI_Network *pNetwork )
 	m_pPathfinder = GetOuter()->GetPathfinder();
 	Assert( m_pPathfinder );
 }
-	
+
 //-------------------------------------
 
 bool CAI_TacticalServices::FindLos(const Vector &threatPos, const Vector &threatEyePos, float minThreatDist, float maxThreatDist, float blockTime, FlankType_t eFlankType, const Vector &vecFlankRefPos, float flFlankParam, Vector *pResult)
@@ -78,10 +78,10 @@ bool CAI_TacticalServices::FindLos(const Vector &threatPos, const Vector &threat
 
 	MARK_TASK_EXPENSIVE();
 
-	int node = FindLosNode( threatPos, threatEyePos, 
-											 minThreatDist, maxThreatDist, 
+	int node = FindLosNode( threatPos, threatEyePos,
+											 minThreatDist, maxThreatDist,
 											 blockTime, eFlankType, vecFlankRefPos, flFlankParam );
-	
+
 	if (node == NO_NODE)
 		return false;
 
@@ -109,7 +109,7 @@ bool CAI_TacticalServices::FindBackAwayPos( const Vector &vecThreat, Vector *pRe
 		return true;
 
 	int node = FindBackAwayNode( vecThreat );
-	
+
 	if (node != NO_NODE)
 	{
 		*pResult = GetNodePos( node );
@@ -138,7 +138,7 @@ bool CAI_TacticalServices::FindCoverPos( const Vector &vNearPos, const Vector &v
 	MARK_TASK_EXPENSIVE();
 
 	int node = FindCoverNode( vNearPos, vThreatPos, vThreatEyePos, flMinDist, flMaxDist );
-	
+
 	if (node == NO_NODE)
 		return false;
 
@@ -215,7 +215,7 @@ bool CAI_TacticalServices::FindLateralCover( const Vector &vNearPos, const Vecto
 	if( !ai_find_lateral_cover.GetBool() )
 	{
 		// Force the NPC to use the nodegraph to find cover. NOTE: We let the above code run
-		// to detect the case where the NPC may already be standing in cover, but we don't 
+		// to detect the case where the NPC may already be standing in cover, but we don't
 		// make any additional lateral checks.
 		return false;
 	}
@@ -259,7 +259,7 @@ bool CAI_TacticalServices::FindLateralCover( const Vector &vNearPos, const Vecto
 //-------------------------------------
 // Purpose: Find a nearby node that further away from the enemy than the
 //			min range of my current weapon if there is one or just futher
-//			away than my current location if I don't have a weapon.  
+//			away than my current location if I don't have a weapon.
 //			Used to back away for attacks
 //-------------------------------------
 
@@ -294,7 +294,7 @@ int CAI_TacticalServices::FindBackAwayNode(const Vector &vecThreat )
 	float flCurDist = VectorNormalize( vecToThreat );
 
 	// Check my neighbors to find a node that's further away
-	for (int link = 0; link < GetNetwork()->GetNode(iMyNode)->NumLinks(); link++) 
+	for (int link = 0; link < GetNetwork()->GetNode(iMyNode)->NumLinks(); link++)
 	{
 		CAI_Link *nodeLink = GetNetwork()->GetNode(iMyNode)->GetLinkByIndex(link);
 
@@ -311,7 +311,7 @@ int CAI_TacticalServices::FindBackAwayNode(const Vector &vecThreat )
 			Vector vecToNode;
 			vecToNode = GetNetwork()->GetNode(destID)->GetPosition(GetHullType()) - GetLocalOrigin();
 			VectorNormalize( vecToNode );
-		
+
 			if( DotProduct( vecToNode, vecToThreat ) < 0.0 )
 			{
 				return destID;
@@ -323,11 +323,11 @@ int CAI_TacticalServices::FindBackAwayNode(const Vector &vecThreat )
 
 //-------------------------------------
 // FindCover - tries to find a nearby node that will hide
-// the caller from its enemy. 
+// the caller from its enemy.
 //
 // If supplied, search will return a node at least as far
-// away as MinDist, but no farther than MaxDist. 
-// if MaxDist isn't supplied, it defaults to a reasonable 
+// away as MinDist, but no farther than MaxDist.
+// if MaxDist isn't supplied, it defaults to a reasonable
 // value
 //-------------------------------------
 
@@ -378,7 +378,7 @@ int CAI_TacticalServices::FindCoverNode(const Vector &vNearPos, const Vector &vT
 	CVarBitVec wasVisited(GetNetwork()->NumNodes());	// Nodes visited
 
 	// mark start as visited
-	list.Insert( AI_NearNode_t(iMyNode, 0) ); 
+	list.Insert( AI_NearNode_t(iMyNode, 0) );
 	wasVisited.Set( iMyNode );
 	float flMinDistSqr = flMinDist*flMinDist;
 	float flMaxDistSqr = flMaxDist*flMaxDist;
@@ -441,7 +441,7 @@ int CAI_TacticalServices::FindCoverNode(const Vector &vNearPos, const Vector &vT
 		// Add its children to the search list
 		// Go through each link
 		// UNDONE: Pass in a cost function to measure each link?
-		for ( int link = 0; link < GetNetwork()->GetNode(nodeIndex)->NumLinks(); link++ ) 
+		for ( int link = 0; link < GetNetwork()->GetNode(nodeIndex)->NumLinks(); link++ )
 		{
 			int index = (link + nSearchRandomizer) % GetNetwork()->GetNode(nodeIndex)->NumLinks();
 			CAI_Link *nodeLink = GetNetwork()->GetNode(nodeIndex)->GetLinkByIndex(index);
@@ -490,7 +490,7 @@ int CAI_TacticalServices::FindCoverNode(const Vector &vNearPos, const Vector &vT
 //
 // Input  :	pNPC			- npc that's looking for a place to shoot from
 //			vThreatPos		- position of entity/location I'm trying to shoot
-//			vThreatEyePos	- eye position of entity I'm trying to shoot. If 
+//			vThreatEyePos	- eye position of entity I'm trying to shoot. If
 //							  entity has no eye position, just give vThreatPos again
 //			flMinThreatDist	- minimum distance that node must be from vThreatPos
 //			flMaxThreadDist	- maximum distance that node can be from vThreadPos
@@ -550,7 +550,7 @@ int CAI_TacticalServices::FindLosNode(const Vector &vThreatPos, const Vector &vT
 			{
 				case FLANKTYPE_NONE:
 					break;
-					
+
 				case FLANKTYPE_RADIUS:
 				{
 					Vector vecDist = nodeOrigin - vecFlankRefPos;
@@ -558,10 +558,10 @@ int CAI_TacticalServices::FindLosNode(const Vector &vThreatPos, const Vector &vT
 					{
 						skip = true;
 					}
-					
+
 					break;
 				}
-				
+
 				case FLANKTYPE_ARC:
 				{
 					Vector vecEnemyToRef = vecFlankRefPos - vThreatPos;
@@ -569,14 +569,14 @@ int CAI_TacticalServices::FindLosNode(const Vector &vThreatPos, const Vector &vT
 
 					Vector vecEnemyToNode = nodeOrigin - vThreatPos;
 					VectorNormalize( vecEnemyToNode );
-					
+
 					float flDot = DotProduct( vecEnemyToRef, vecEnemyToNode );
-					
+
 					if ( RAD2DEG( acos( flDot ) ) < flFlankParam )
 					{
 						skip = true;
 					}
-					
+
 					break;
 				}
 			}
@@ -597,7 +597,7 @@ int CAI_TacticalServices::FindLosNode(const Vector &vThreatPos, const Vector &vT
 					{
 						if (GetOuter()->TestShootPosition(nodeOrigin,vThreatEyePos))
 						{
-							// Note when this node was used, so we don't try 
+							// Note when this node was used, so we don't try
 							// to use it again right away.
 							GetNetwork()->GetNode(nodeIndex)->Lock( flBlockTime );
 
@@ -653,7 +653,7 @@ int CAI_TacticalServices::FindLosNode(const Vector &vThreatPos, const Vector &vT
 		}
 
 		// Go through each link and add connected nodes to the list
-		for (int link=0; link < GetNetwork()->GetNode(nodeIndex)->NumLinks();link++) 
+		for (int link=0; link < GetNetwork()->GetNode(nodeIndex)->NumLinks();link++)
 		{
 			int index = (link + nSearchRandomizer) % GetNetwork()->GetNode(nodeIndex)->NumLinks();
 			CAI_Link *nodeLink = GetNetwork()->GetNode(nodeIndex)->GetLinkByIndex(index);
@@ -726,7 +726,7 @@ bool CAI_TacticalServices::FindLateralLos( const Vector &vecThreat, Vector *pRes
 	bool	bLookingForEnemy = GetEnemy() && VectorsAreEqual(vecThreat, GetEnemy()->EyePosition(), 0.1f);
 	int		i;
 
-	if(  !bLookingForEnemy || GetOuter()->HasCondition(COND_SEE_ENEMY) || GetOuter()->HasCondition(COND_HAVE_ENEMY_LOS) || 
+	if(  !bLookingForEnemy || GetOuter()->HasCondition(COND_SEE_ENEMY) || GetOuter()->HasCondition(COND_HAVE_ENEMY_LOS) ||
 		 GetOuter()->GetTimeScheduleStarted() == gpGlobals->curtime ) // Conditions get nuked before tasks run, assume should try
 	{
 		// My current position might already be valid.
@@ -739,7 +739,7 @@ bool CAI_TacticalServices::FindLateralLos( const Vector &vecThreat, Vector *pRes
 
 	if( !ai_find_lateral_los.GetBool() )
 	{
-		// Allows us to turn off lateral LOS at the console. Allow the above code to run 
+		// Allows us to turn off lateral LOS at the console. Allow the above code to run
 		// just in case the NPC has line of sight to begin with.
 		return false;
 	}

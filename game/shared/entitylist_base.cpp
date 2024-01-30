@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -31,13 +31,13 @@ CBaseEntityList::CEntInfoList::CEntInfoList()
 void CBaseEntityList::CEntInfoList::LinkBefore( CEntInfo *pBefore, CEntInfo *pElement )
 {
 	Assert( pElement );
-	
+
 	// Unlink it if it's in the list at the moment
 	Unlink(pElement);
-	
+
 	// The element *after* our newly linked one is the one we linked before.
 	pElement->m_pNext = pBefore;
-	
+
 	if (pBefore == NULL)
 	{
 		// In this case, we're linking to the end of the list, so reset the tail
@@ -52,7 +52,7 @@ void CBaseEntityList::CEntInfoList::LinkBefore( CEntInfo *pBefore, CEntInfo *pEl
 		pElement->m_pPrev = pBefore->m_pPrev;
 		pBefore->m_pPrev = pElement;
 	}
-	
+
 	// Reset the head if we linked to the head of the list
 	if (pElement->m_pPrev == NULL)
 	{
@@ -67,11 +67,11 @@ void CBaseEntityList::CEntInfoList::LinkBefore( CEntInfo *pBefore, CEntInfo *pEl
 void CBaseEntityList::CEntInfoList::LinkAfter( CEntInfo *pAfter, CEntInfo *pElement )
 {
 	Assert( pElement );
-	
+
 	// Unlink it if it's in the list at the moment
 	if ( IsInList(pElement) )
 		Unlink(pElement);
-	
+
 	// The element *before* our newly linked one is the one we linked after
 	pElement->m_pPrev = pAfter;
 	if (pAfter == NULL)
@@ -88,7 +88,7 @@ void CBaseEntityList::CEntInfoList::LinkAfter( CEntInfo *pAfter, CEntInfo *pElem
 		pElement->m_pNext = pAfter->m_pNext;
 		pAfter->m_pNext = pElement;
 	}
-	
+
 	// Reset the tail if we linked to the tail of the list
 	if (pElement->m_pNext == NULL )
 	{
@@ -114,7 +114,7 @@ void CBaseEntityList::CEntInfoList::Unlink( CEntInfo *pElement )
 		{
 			m_pHead = pElement->m_pNext;
 		}
-		
+
 		// If we're the last guy, reset the tail
 		// otherwise, make our next node's prev pointer = our prev
 		if ( pElement->m_pNext )
@@ -125,8 +125,8 @@ void CBaseEntityList::CEntInfoList::Unlink( CEntInfo *pElement )
 		{
 			m_pTail = pElement->m_pPrev;
 		}
-		
-		// This marks this node as not in the list, 
+
+		// This marks this node as not in the list,
 		// but not in the free list either
 		pElement->ClearLinks();
 	}
@@ -192,7 +192,7 @@ CBaseHandle CBaseEntityList::AddNonNetworkableEntity( IHandleEntity *pEnt )
 	// Move from the free list into the allocated list.
 	m_freeNonNetworkableList.Unlink( pSlot );
 	int iSlot = GetEntInfoIndex( pSlot );
-	
+
 	return AddEntityAtSlot( pEnt, iSlot, -1 );
 }
 
@@ -214,13 +214,13 @@ CBaseHandle CBaseEntityList::AddEntityAtSlot( IHandleEntity *pEnt, int iSlot, in
 	if ( iForcedSerialNum != -1 )
 	{
 		pSlot->m_SerialNumber = iForcedSerialNum;
-		
+
 		#if !defined( CLIENT_DLL )
 			// Only the client should force the serial numbers.
 			Assert( false );
 		#endif
 	}
-	
+
 	// Update our list of active entities.
 	m_activeList.AddToTail( pSlot );
 	CBaseHandle retVal( iSlot, pSlot->m_SerialNumber );

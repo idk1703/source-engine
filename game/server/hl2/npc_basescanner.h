@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -60,7 +60,7 @@ enum ScannerInspectAct_t
 #define SCANNER_SQUAD_HELP_DIST			4000	// How far will I fly to help
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CNPC_BaseScanner : public CAI_BasePhysicsFlyingBot, public CDefaultPlayerPickupVPhysics
 {
@@ -157,7 +157,7 @@ private:
 
 	void	StartSmokeTrail( void );
 
-	// Take damage from being thrown by a physcannon 
+	// Take damage from being thrown by a physcannon
 	void TakeDamageFromPhyscannon( CBasePlayer *pPlayer );
 
 	// Take damage from physics impacts
@@ -217,7 +217,7 @@ protected:
 	enum
 	{
 		COND_SCANNER_FLY_CLEAR = BaseClass::NEXT_CONDITION,
-		COND_SCANNER_FLY_BLOCKED,							
+		COND_SCANNER_FLY_BLOCKED,
 		COND_SCANNER_GRABBED_BY_PHYSCANNON,
 		COND_SCANNER_RELEASED_FROM_PHYSCANNON,
 

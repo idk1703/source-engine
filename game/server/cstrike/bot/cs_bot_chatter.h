@@ -34,7 +34,7 @@ const Vector *GetRandomSpotAtPlace( Place place );
 
 //----------------------------------------------------------------------------------------------------
 /**
- * A meme is a unit information that bots use to 
+ * A meme is a unit information that bots use to
  * transmit information to each other via the radio
  */
 class BotMeme
@@ -407,7 +407,7 @@ public:
 	bool IsRedundant( const BotStatement *say ) const;			///< return true if this statement is the same as the given one
 	bool IsObsolete( void ) const;								///< return true if this statement is no longer appropriate to say
 	void Convert( const BotStatement *say );					///< possibly change what were going to say base on what teammate is saying
-	
+
 	void AppendPhrase( const BotPhrase *phrase );
 
 	void SetStartTime( float timestamp )	{ m_startTime = timestamp; }	///< define the earliest time this statement can be spoken
@@ -423,7 +423,7 @@ public:
 	};
 
 	void AddCondition( ConditionType condition );				///< conditions must be true for the statement to be spoken
-	bool IsValid( void ) const;									///< verify all attached conditions 
+	bool IsValid( void ) const;									///< verify all attached conditions
 
 	enum ContextType
 	{
@@ -624,8 +624,8 @@ inline BotChatterInterface::VerbosityType BotChatterInterface::GetVerbosity( voi
 }
 
 
-inline bool BotChatterInterface::IsTalking( void ) const	
-{ 
+inline bool BotChatterInterface::IsTalking( void ) const
+{
 	if (m_statementList)
 		return m_statementList->IsSpeaking();
 

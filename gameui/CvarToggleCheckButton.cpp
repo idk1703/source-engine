@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,7 @@ vgui::Panel *CvarToggleCheckButton_Factory()
 }
 DECLARE_BUILD_FACTORY_CUSTOM( CCvarToggleCheckButton, CvarToggleCheckButton_Factory );
 
-CCvarToggleCheckButton::CCvarToggleCheckButton( Panel *parent, const char *panelName, const char *text, 
+CCvarToggleCheckButton::CCvarToggleCheckButton( Panel *parent, const char *panelName, const char *text,
 	char const *cvarname )
  : CheckButton( parent, panelName, text )
 {
@@ -46,7 +46,7 @@ CCvarToggleCheckButton::~CCvarToggleCheckButton()
 
 void CCvarToggleCheckButton::Paint()
 {
-	if ( !m_pszCvarName || !m_pszCvarName[ 0 ] ) 
+	if ( !m_pszCvarName || !m_pszCvarName[ 0 ] )
 	{
 		BaseClass::Paint();
 		return;
@@ -58,7 +58,7 @@ void CCvarToggleCheckButton::Paint()
 	if ( !var.IsValid() )
 		return;
 	bool value = var.GetBool();
-	
+
 	if ( value != m_bStartValue )
 	//if ( value != IsSelected() )
 	{
@@ -70,7 +70,7 @@ void CCvarToggleCheckButton::Paint()
 
 void CCvarToggleCheckButton::ApplyChanges()
 {
-	if ( !m_pszCvarName || !m_pszCvarName[ 0 ] ) 
+	if ( !m_pszCvarName || !m_pszCvarName[ 0 ] )
 		return;
 
 	m_bStartValue = IsSelected();
@@ -85,7 +85,7 @@ void CCvarToggleCheckButton::Reset()
 {
 //	m_bStartValue = engine->pfnGetCvarFloat( m_pszCvarName ) > 0.0f ? true : false;
 
-	if ( !m_pszCvarName || !m_pszCvarName[ 0 ] ) 
+	if ( !m_pszCvarName || !m_pszCvarName[ 0 ] )
 		return;
 
 	ConVarRef var( m_pszCvarName, true );
@@ -101,14 +101,14 @@ bool CCvarToggleCheckButton::HasBeenModified()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *panel - 
+// Purpose:
+// Input  : *panel -
 //-----------------------------------------------------------------------------
 void CCvarToggleCheckButton::SetSelected( bool state )
 {
 	BaseClass::SetSelected( state );
 
-	if ( !m_pszCvarName || !m_pszCvarName[ 0 ] ) 
+	if ( !m_pszCvarName || !m_pszCvarName[ 0 ] )
 		return;
 /*
 	// Look up current value

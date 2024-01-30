@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,7 +25,7 @@ class NMatrix
 public:
 
 						NMatrixMN() {}
-	
+
 	static NMatrixMN	SetupNMatrixNull();					// Return a matrix of all zeros.
 	static NMatrixMN	SetupNMatrixIdentity();				// Return an identity matrix.
 
@@ -44,7 +44,7 @@ public:
 	NMatrix<M,M>		operator*( NMatrix<N,M> const &b ) const;
 
 	NMatrixMN			operator*( float val ) const;
-	
+
 	bool				InverseGeneral( NMatrixMN &mInverse ) const;
 	NMatrix<N,M>		Transpose() const;
 
@@ -131,10 +131,10 @@ template<int M, int N>
 inline NMatrixMN NMatrixMN::operator-() const
 {
 	NMatrixMN ret;
-	
+
 	for( int i=0; i < M*N; i++ )
 		((float*)ret.m)[i] = -((float*)m)[i];
-	
+
 	return ret;
 }
 
@@ -162,7 +162,7 @@ inline NVector<M> NMatrixMN::operator*( NVectorN const &v ) const
 		for( int j=0; j < N; j++ )
 			ret.v[i] += m[i][j] * v.v[j];
 	}
-	
+
 	return ret;
 }
 
@@ -207,7 +207,7 @@ bool NMatrixMN::InverseGeneral( NMatrixMN &mInverse ) const
 	int rowMap[N], iLargest;
 	float *pOut, *pRow, *pScaleRow;
 
-	
+
 	// Can only invert square matrices.
 	if( M != N )
 	{
@@ -235,7 +235,7 @@ bool NMatrixMN::InverseGeneral( NMatrixMN &mInverse ) const
 
 		for(j=N; j < 2*N; j++)
 			pOut[j] = 0;
-		
+
 		pOut[i+N] = 1.0f;
 
 		rowMap[i] = i;
@@ -280,7 +280,7 @@ bool NMatrixMN::InverseGeneral( NMatrixMN &mInverse ) const
 			pRow[j] *= mul;
 
 		pRow[iRow] = 1.0f; // Preserve accuracy...
-		
+
 		// Eliminate this element from the other rows using operation 2.
 		for(i=0; i < N; i++)
 		{
@@ -288,7 +288,7 @@ bool NMatrixMN::InverseGeneral( NMatrixMN &mInverse ) const
 				continue;
 
 			pScaleRow = mat[rowMap[i]];
-		
+
 			// Multiply this row by -(iRow*the element).
 			mul = -pScaleRow[iRow];
 			for(j=0; j < 2*N; j++)
@@ -320,13 +320,12 @@ template<int M, int N>
 inline NMatrix<N,M> NMatrixMN::Transpose() const
 {
 	NMatrix<N,M> ret;
-	
+
 	for( int i=0; i < M; i++ )
 		for( int j=0; j < N; j++ )
 			ret.m[j][i] = m[i][j];
-	
+
 	return ret;
 }
 
 #endif // NMATRIX_H
-

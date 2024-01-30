@@ -50,7 +50,7 @@ public:
 			if ( !area->HasAttributeTF( TF_NAV_SPAWN_ROOM_BLUE | TF_NAV_SPAWN_ROOM_RED ) )
 			{
 				// Assume any resupply cabinets not in a teamed spawn room are inaccessible.
-				// Ex: pl_upward has forward spawn rooms that neither team can use until 
+				// Ex: pl_upward has forward spawn rooms that neither team can use until
 				// certain checkpoints are reached.
 				return false;
 			}
@@ -99,7 +99,7 @@ static int s_possibleFrame = 0;
 
 
 //---------------------------------------------------------------------------------------------
-/** 
+/**
  * Return true if this Action has what it needs to perform right now
  */
 bool CTFBotGetHealth::IsPossible( CTFBot *me )

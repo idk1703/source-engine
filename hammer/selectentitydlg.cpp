@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile: SelectEntityDlg.cpp $
 // $Date: 8/03/99 6:57p $
@@ -47,9 +47,9 @@ END_MESSAGE_MAP()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CSelectEntityDlg::OnSelchangeEntities() 
+void CSelectEntityDlg::OnSelchangeEntities()
 {
 	int iSel = m_cEntities.GetCurSel();
 
@@ -60,7 +60,7 @@ void CSelectEntityDlg::OnSelchangeEntities()
 }
 
 
-BOOL CSelectEntityDlg::OnInitDialog() 
+BOOL CSelectEntityDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
@@ -83,10 +83,10 @@ BOOL CSelectEntityDlg::OnInitDialog()
 	return TRUE;
 }
 
-void CSelectEntityDlg::OnOK() 
+void CSelectEntityDlg::OnOK()
 {
 	int iSel = m_cEntities.GetCurSel();
 	m_pFinalEntity = (CMapEntity*) m_cEntities.GetItemData(iSel);
-	
+
 	CDialog::OnOK();
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -44,8 +44,8 @@ static bool			g_bSupportsD15S1;
 //-----------------------------------------------------------------------------
 // Determines what formats we actually *do* support
 //-----------------------------------------------------------------------------
-static bool TestTextureFormat( D3DFORMAT format, bool bIsRenderTarget, 
-							   bool bIsVertexTexture, bool bIsFilterableRequired ) 
+static bool TestTextureFormat( D3DFORMAT format, bool bIsRenderTarget,
+								bool bIsVertexTexture, bool bIsFilterableRequired )
 {
 	int nUsage = bIsRenderTarget ? D3DUSAGE_RENDERTARGET : 0;
 	if ( bIsVertexTexture )
@@ -62,8 +62,8 @@ static bool TestTextureFormat( D3DFORMAT format, bool bIsRenderTarget,
 
 	// IHV depth texture formats require a slightly different check...
 	if ( !IsX360() && bIsRenderTarget && ( ( format == NVFMT_RAWZ ) || ( format == NVFMT_INTZ   ) ||
-										   ( format == D3DFMT_D16 ) || ( format == D3DFMT_D24S8 ) ||
-										   ( format == ATIFMT_D16 ) || ( format == ATIFMT_D24S8 ) ) )
+											( format == D3DFMT_D16 ) || ( format == D3DFMT_D24S8 ) ||
+											( format == ATIFMT_D16 ) || ( format == ATIFMT_D24S8 ) ) )
 	{
 		hr = D3D()->CheckDeviceFormat(
 			g_DisplayAdapter, g_DeviceType, ImageLoader::ImageFormatToD3DFormat( g_DeviceFormat ),
@@ -72,7 +72,7 @@ static bool TestTextureFormat( D3DFORMAT format, bool bIsRenderTarget,
 	else if ( !IsX360() || !bIsRenderTarget )
 	{
 		// See if we can do it!
-		hr = D3D()->CheckDeviceFormat( 
+		hr = D3D()->CheckDeviceFormat(
 			g_DisplayAdapter, g_DeviceType, ImageLoader::ImageFormatToD3DFormat( g_DeviceFormat ),
 			nUsage, D3DRTYPE_TEXTURE, format );
 	}
@@ -82,7 +82,7 @@ static bool TestTextureFormat( D3DFORMAT format, bool bIsRenderTarget,
 		hr = D3D()->CheckDeviceFormat( g_DisplayAdapter, g_DeviceType, format, 0, D3DRTYPE_SURFACE, format );
 	}
 
-    return SUCCEEDED( hr );
+	return SUCCEEDED( hr );
 }
 
 D3DFORMAT GetNearestD3DColorFormat( ImageFormat fmt,
@@ -361,8 +361,8 @@ D3DFORMAT GetNearestD3DColorFormat( ImageFormat fmt,
 	return D3DFMT_UNKNOWN;
 }
 
-void InitializeColorInformation( UINT displayAdapter, D3DDEVTYPE deviceType, 
-								 ImageFormat displayFormat )
+void InitializeColorInformation( UINT displayAdapter, D3DDEVTYPE deviceType,
+								ImageFormat displayFormat )
 {
 	g_DisplayAdapter = displayAdapter;
 	g_DeviceType = deviceType;
@@ -377,7 +377,7 @@ void InitializeColorInformation( UINT displayAdapter, D3DDEVTYPE deviceType,
 			{
 				for ( int nFilterable = 0; nFilterable <= 1; ++nFilterable )
 				{
-					g_D3DColorFormat[fmt][nVertexTexture][nRenderTarget][nFilterable] = 
+					g_D3DColorFormat[fmt][nVertexTexture][nRenderTarget][nFilterable] =
 						GetNearestD3DColorFormat( (ImageFormat)fmt, nRenderTarget != 0, nVertexTexture != 0, nFilterable != 0 );
 				}
 			}
@@ -386,23 +386,23 @@ void InitializeColorInformation( UINT displayAdapter, D3DDEVTYPE deviceType,
 	}
 
 	// Check the depth formats
-    HRESULT hr = D3D()->CheckDeviceFormat( 
+	HRESULT hr = D3D()->CheckDeviceFormat(
 		g_DisplayAdapter, g_DeviceType, ImageLoader::ImageFormatToD3DFormat( g_DeviceFormat ),
-        D3DUSAGE_DEPTHSTENCIL, D3DRTYPE_SURFACE, D3DFMT_D24S8 );
+		D3DUSAGE_DEPTHSTENCIL, D3DRTYPE_SURFACE, D3DFMT_D24S8 );
 	g_bSupportsD24S8 = !FAILED(hr);
 
-    hr = D3D()->CheckDeviceFormat( 
+	hr = D3D()->CheckDeviceFormat(
 		g_DisplayAdapter, g_DeviceType, ImageLoader::ImageFormatToD3DFormat( g_DeviceFormat ),
-        D3DUSAGE_DEPTHSTENCIL, D3DRTYPE_SURFACE, D3DFMT_D24X8 );
+		D3DUSAGE_DEPTHSTENCIL, D3DRTYPE_SURFACE, D3DFMT_D24X8 );
 	g_bSupportsD24X8 = !FAILED(hr);
 
-    hr = D3D()->CheckDeviceFormat( 
+	hr = D3D()->CheckDeviceFormat(
 		g_DisplayAdapter, g_DeviceType, ImageLoader::ImageFormatToD3DFormat( g_DeviceFormat ),
-        D3DUSAGE_DEPTHSTENCIL, D3DRTYPE_SURFACE, D3DFMT_D16 );
+		D3DUSAGE_DEPTHSTENCIL, D3DRTYPE_SURFACE, D3DFMT_D16 );
 	g_bSupportsD16 = !FAILED(hr);
 
 #if !defined( _X360 )
-	hr = D3D()->CheckDeviceFormat( 
+	hr = D3D()->CheckDeviceFormat(
 		g_DisplayAdapter, g_DeviceType, ImageLoader::ImageFormatToD3DFormat( g_DeviceFormat ),
 		D3DUSAGE_DEPTHSTENCIL, D3DRTYPE_SURFACE, D3DFMT_D24X4S4 );
 	g_bSupportsD24X4S4 = !FAILED(hr);
@@ -411,7 +411,7 @@ void InitializeColorInformation( UINT displayAdapter, D3DDEVTYPE deviceType,
 #endif
 
 #if !defined( _X360 )
-	hr = D3D()->CheckDeviceFormat( 
+	hr = D3D()->CheckDeviceFormat(
 		g_DisplayAdapter, g_DeviceType, ImageLoader::ImageFormatToD3DFormat( g_DeviceFormat ),
 		D3DUSAGE_DEPTHSTENCIL, D3DRTYPE_SURFACE, D3DFMT_D15S1 );
 	g_bSupportsD15S1 = !FAILED(hr);
@@ -447,9 +447,9 @@ ImageFormat FindNearestSupportedFormat( ImageFormat format, bool bIsVertexTextur
 bool D3DSupportsDepthTexture(D3DFORMAT format)
 {
 	// See if we can do it!
-    HRESULT hr = D3D()->CheckDeviceFormat( 
+	HRESULT hr = D3D()->CheckDeviceFormat(
 		g_DisplayAdapter, g_DeviceType, ImageLoader::ImageFormatToD3DFormat(g_DeviceFormat),
-        D3DUSAGE_DEPTHSTENCIL, D3DRTYPE_TEXTURE, format);
+		D3DUSAGE_DEPTHSTENCIL, D3DRTYPE_TEXTURE, format);
 
 	return !FAILED(hr);
 }
@@ -511,7 +511,7 @@ D3DFORMAT FindNearestSupportedDepthFormat( int nAdapter, ImageFormat displayForm
 		if ( g_bSupportsD24X4S4 && IsDepthFormatCompatible( nAdapter, displayFormat, renderTargetFormat, D3DFMT_D24X4S4 ) )
 			return D3DFMT_D24X4S4;
 #endif
-        if ( g_bSupportsD16 && IsDepthFormatCompatible( nAdapter, displayFormat, renderTargetFormat, D3DFMT_D16 ) )
+		if ( g_bSupportsD16 && IsDepthFormatCompatible( nAdapter, displayFormat, renderTargetFormat, D3DFMT_D16 ) )
 			return D3DFMT_D16;
 #if !defined( _X360 )
 		if ( g_bSupportsD15S1 && IsDepthFormatCompatible( nAdapter, displayFormat, renderTargetFormat, D3DFMT_D15S1 ) )
@@ -545,11 +545,11 @@ D3DFORMAT FindNearestSupportedDepthFormat( int nAdapter, ImageFormat displayForm
 //-----------------------------------------------------------------------------
 // Is a display buffer valid?
 //-----------------------------------------------------------------------------
-static inline bool IsFrameBufferFormatValid( UINT displayAdapter, D3DDEVTYPE deviceType, 
+static inline bool IsFrameBufferFormatValid( UINT displayAdapter, D3DDEVTYPE deviceType,
 	D3DFORMAT displayFormat, D3DFORMAT backBufferFormat, bool bIsWindowed )
 {
-	HRESULT hr = D3D()->CheckDeviceType( displayAdapter, deviceType, displayFormat, 
-                                        backBufferFormat, bIsWindowed );
+	HRESULT hr = D3D()->CheckDeviceType( displayAdapter, deviceType, displayFormat,
+										backBufferFormat, bIsWindowed );
 	return !FAILED(hr);
 }
 
@@ -557,8 +557,8 @@ static inline bool IsFrameBufferFormatValid( UINT displayAdapter, D3DDEVTYPE dev
 //-----------------------------------------------------------------------------
 // Finds the nearest supported frame buffer format
 //-----------------------------------------------------------------------------
-ImageFormat FindNearestSupportedBackBufferFormat( UINT displayAdapter, 
-	  D3DDEVTYPE deviceType, ImageFormat displayFormat, ImageFormat backBufferFormat, bool bIsWindowed )
+ImageFormat FindNearestSupportedBackBufferFormat( UINT displayAdapter,
+	D3DDEVTYPE deviceType, ImageFormat displayFormat, ImageFormat backBufferFormat, bool bIsWindowed )
 {
 	D3DFORMAT d3dDisplayFormat = ImageLoader::ImageFormatToD3DFormat( displayFormat );
 	switch (backBufferFormat)

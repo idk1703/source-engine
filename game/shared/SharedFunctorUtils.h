@@ -4,7 +4,7 @@
 
 //--------------------------------------------------------------------------------------------------------
 /**
-* NOTE: The functors in this file should ideally be game-independant, 
+* NOTE: The functors in this file should ideally be game-independant,
 * and work for any Source based game
 */
 //--------------------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 //--------------------------------------------------------------------------------------------------------
 /**
  * Finds visible player on given team that we are pointing at.
- * "team" can be TEAM_ANY 
+ * "team" can be TEAM_ANY
  * Use with ForEachPlayer()
  */
 template < class PlayerType >
@@ -41,8 +41,8 @@ public:
 	virtual bool operator() ( PlayerType *them )
 	{
 		VPROF( "TargetScan()" );
-		if ( them != m_me && 
-			 them->IsAlive() && 
+		if ( them != m_me &&
+			 them->IsAlive() &&
 			 (m_team == TEAM_ANY || them->GetTeamNumber() == m_team) &&
 			 IsPotentialTarget( them ) )
 		{
@@ -138,7 +138,7 @@ protected:
 		return true;
 	}
 
-	PlayerType *m_me;	
+	PlayerType *m_me;
 	Vector m_viewForward;
 	int m_team;
 

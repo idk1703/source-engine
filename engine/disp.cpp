@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -67,7 +67,7 @@ public:
 		m_pDisp->m_Indices[m_nIndices]   = m_TempIndices[0] + iVertOffset;
 		m_pDisp->m_Indices[m_nIndices+1] = m_TempIndices[1] + iVertOffset;
 		m_pDisp->m_Indices[m_nIndices+2] = m_TempIndices[2] + iVertOffset;
-		
+
 		m_nIndices += 3;
 	}
 
@@ -138,17 +138,17 @@ void CDispInfo::TestAddDecalTri( int iIndexStart, unsigned short decalHandle, CD
 	decal_t *pDecal = pDispDecal->m_pDecal;
 
 	// If the decal is too far away from the plane of this triangle, reject it.
-	unsigned short tempIndices[3] = 
+	unsigned short tempIndices[3] =
 	{
 		(unsigned short)(m_MeshReader.Index( iIndexStart+0 ) - m_iVertOffset),
 		(unsigned short)(m_MeshReader.Index( iIndexStart+1 ) - m_iVertOffset),
 		(unsigned short)(m_MeshReader.Index( iIndexStart+2 ) - m_iVertOffset)
 	};
-	
+
 	const Vector &v0 = m_MeshReader.Position( tempIndices[0] );
 	const Vector &v1 = m_MeshReader.Position( tempIndices[1] );
 	const Vector &v2 = m_MeshReader.Position( tempIndices[2] );
-	
+
 	Vector vNormal = (v2 - v0).Cross( v1 - v0 );
 	VectorNormalize( vNormal );
 	if ( vNormal.Dot( pDecal->position - v0 ) >= pDispDecal->m_flSize )
@@ -160,7 +160,7 @@ void CDispInfo::TestAddDecalTri( int iIndexStart, unsigned short decalHandle, CD
 	for( iVert=0; iVert < 3; iVert++ )
 	{
 		CDecalVert *pOutVert = &verts[iVert];
-		
+
 		pOutVert->m_vPos = m_MeshReader.Position( tempIndices[iVert] );
 
 		{
@@ -185,7 +185,7 @@ void CDispInfo::TestAddDecalTri( int iIndexStart, unsigned short decalHandle, CD
 	pClipped = R_DoDecalSHClip( &verts[0], pOutVerts, pDecal, 3, vec3_origin );
 	int outCount = pDecal->clippedVertCount;
 
-	if ( outCount > 2 ) 
+	if ( outCount > 2 )
 	{
 		outCount = min( outCount, (int)CDispDecalFragment::MAX_VERTS );
 
@@ -232,7 +232,7 @@ void CDispInfo::TestAddDecalTri( int iIndexStart, unsigned short decalHandle, CD
 // ----------------------------------------------------------------------------- //
 void CDispInfo::TestAddDecalTri( int iIndexStart, unsigned short decalHandle, CDispShadowDecal *pDecal )
 {
-	unsigned short tempIndices[3] = 
+	unsigned short tempIndices[3] =
 	{
 		(unsigned short)(m_MeshReader.Index( iIndexStart+0 ) - m_iVertOffset),
 		(unsigned short)(m_MeshReader.Index( iIndexStart+1 ) - m_iVertOffset),
@@ -281,11 +281,11 @@ void CDispInfo::TestAddDecalTri( int iIndexStart, unsigned short decalHandle, CD
 }
 
 
-void CDispInfo::CullDecals( 
+void CDispInfo::CullDecals(
 	int iNodeBit,
-	CDispDecal **decals, 
-	int nDecals, 
-	CDispDecal **childDecals, 
+	CDispDecal **decals,
+	int nDecals,
+	CDispDecal **childDecals,
 	int &nChildDecals )
 {
 	// Only let the decals through that can affect this node or its children.
@@ -350,11 +350,11 @@ void CDispInfo::SpecifyDynamicMesh()
 			builder.TexCoord2fv( 0, pVert->m_vTexCoord.Base() );
 			builder.TexCoord2fv( 1, pVert->m_LMCoords.Base() );
 			builder.TexCoord2f( 2, m_BumpSTexCoordOffset, 0 );
-			
+
 			builder.Normal3fv( pVert->m_vNormal.Base() );
 			builder.TangentS3fv( pVert->m_vSVector.Base() );
 			builder.TangentT3fv( pVert->m_vTVector.Base() );
-			
+
 			builder.AdvanceVertex();
 		}
 
@@ -390,7 +390,7 @@ void CDispInfo::SpecifyWalkableDynamicMesh( void )
 			builder.Position3fv( m_Verts[iVert].m_vPos.Base() );
 			builder.AdvanceVertex();
 		}
-		
+
 		for( int iIndex=0; iIndex < m_nWalkIndexCount; iIndex++ )
 		{
 			builder.Index( m_pWalkIndices[iIndex] );
@@ -438,7 +438,7 @@ void CDispInfo::InitializeActiveVerts()
 {
 	// Mark the corners vertices and root node by default..
 	m_ActiveVerts.ClearAll();
-	
+
 	m_ActiveVerts.Set( VertIndex( 0, 0 ) );
 	m_ActiveVerts.Set( VertIndex( GetSideLength()-1, 0 ) );
 	m_ActiveVerts.Set( VertIndex( GetSideLength()-1, GetSideLength()-1 ) );
@@ -455,7 +455,7 @@ void CDispInfo::InitializeActiveVerts()
 			(pSide->m_SubNeighbors[1].IsValid() && pSide->m_SubNeighbors[1].m_Span != CORNER_TO_CORNER) )
 		{
 			int iEdgeDim = g_EdgeDims[iSide];
-			
+
 			CVertIndex nodeIndex;
 			nodeIndex[iEdgeDim] = g_EdgeSideLenMul[iSide] * m_pPowerInfo->m_SideLengthM1;
 			nodeIndex[!iEdgeDim] = m_pPowerInfo->m_MidPoint;
@@ -476,8 +476,8 @@ extern ConVar mat_surfacemat;
 
 bool DispInfoRenderDebugModes()
 {
-	if( ShouldDrawInWireFrameMode() || mat_luxels.GetInt() || r_DispWalkable.GetInt() || 
-		r_DispBuildable.GetInt() 
+	if( ShouldDrawInWireFrameMode() || mat_luxels.GetInt() || r_DispWalkable.GetInt() ||
+		r_DispBuildable.GetInt()
 #if !defined( SWDS )
 		|| mat_surfaceid.GetInt() || mat_surfacemat.GetInt()
 #endif // SWDS
@@ -498,21 +498,21 @@ bool CDispInfo::Render( CGroupMesh *pGroup, bool bAllowDebugModes )
 
 	// Trivial reject?
 	if( R_CullBox(m_BBoxMin, m_BBoxMax, g_Frustum) )
-		return false; 
+		return false;
 
 	bool bNormalRender = true;
 	if ( bAllowDebugModes )
 	{
 		CMatRenderContextPtr pRenderContext( materials );
 
-		// Wireframe? 
+		// Wireframe?
 		if( ShouldDrawInWireFrameMode() )
 		{
 			pRenderContext->Bind( g_materialWireframe );
 			SpecifyDynamicMesh();
 			bNormalRender = false;
 		}
-		
+
 		if( mat_luxels.GetInt() )
 		{
 			pRenderContext->Bind( MSurf_TexInfo( m_ParentSurfID )->material );
@@ -632,7 +632,7 @@ static void	ProcessLightmapSample( const ProcessLightmapSampleData_t &data, cons
 			scale = 2.0f;
 
 		int index = t*smax + s;
-		VectorMA( blocklights[0][index].AsVector3D(), 
+		VectorMA( blocklights[0][index].AsVector3D(),
 			scale, data.m_Intensity,
 			blocklights[0][index].AsVector3D() );
 	}
@@ -644,7 +644,7 @@ static void	ProcessLightmapSampleBumped( const ProcessLightmapSampleData_t &data
 	if( distSqr < data.m_LightDistSqr )
 	{
 		float scale = (distSqr != 0.0f) ? data.m_ooQuadraticAttn / distSqr : 1.0f;
-		
+
 		// Get the vector from the surface to the light in world space
 		Vector vLightVecWorld;
 		VectorSubtract( data.m_vLightOrigin, vPos, vLightVecWorld );
@@ -665,20 +665,20 @@ static void	ProcessLightmapSampleBumped( const ProcessLightmapSampleData_t &data
 		int index = t*smax + s;
 		float directionalAtten;
 		directionalAtten = fpmax( 0.0f, vLightVecTangent.z );
-		VectorMA( blocklights[0][index].AsVector3D(), scale * directionalAtten, 
+		VectorMA( blocklights[0][index].AsVector3D(), scale * directionalAtten,
 			data.m_Intensity,
 			blocklights[0][index].AsVector3D() );
 		directionalAtten = fpmax( 0.0f, DotProduct( vLightVecTangent, g_localBumpBasis[0] ) );
-		VectorMA( blocklights[1][index].AsVector3D(), scale * directionalAtten, 
-			data.m_Intensity, 
+		VectorMA( blocklights[1][index].AsVector3D(), scale * directionalAtten,
+			data.m_Intensity,
 			blocklights[1][index].AsVector3D() );
 		directionalAtten = fpmax( 0.0f, DotProduct( vLightVecTangent, g_localBumpBasis[1] ) );
 		VectorMA( blocklights[2][index].AsVector3D(), scale * directionalAtten,
-			data.m_Intensity, 
+			data.m_Intensity,
 			blocklights[2][index].AsVector3D() );
 		directionalAtten = fpmax( 0.0f, DotProduct( vLightVecTangent, g_localBumpBasis[2] ) );
 		VectorMA( blocklights[3][index].AsVector3D(), scale * directionalAtten,
-			data.m_Intensity, 
+			data.m_Intensity,
 			blocklights[3][index].AsVector3D() );
 	}
 }
@@ -741,22 +741,22 @@ void IterateLightmapSamples( CDispInfo *pDisp, const ProcessLightmapSampleData_t
 			float c = (float)*(pCurSample++) / 255.0f;
 
 			CTriInfo *pTri = &pDisp->m_pPowerInfo->m_pTriInfos[iTri];
-			Vector vPos = 
+			Vector vPos =
 				pDisp->m_MeshReader.Position( pTri->m_Indices[0] ) * a +
 				pDisp->m_MeshReader.Position( pTri->m_Indices[1] ) * b +
 				pDisp->m_MeshReader.Position( pTri->m_Indices[2] ) * c;
 			Vector vNormal, vTangentS, vTangentT;
 			if( pDisp->NumLightMaps() > 1 )
 			{
-				vNormal = 
+				vNormal =
 					pDisp->m_MeshReader.Normal( pTri->m_Indices[0] ) * a +
 					pDisp->m_MeshReader.Normal( pTri->m_Indices[1] ) * b +
 					pDisp->m_MeshReader.Normal( pTri->m_Indices[2] ) * c;
-				vTangentS = 
+				vTangentS =
 					pDisp->m_MeshReader.TangentS( pTri->m_Indices[0] ) * a +
 					pDisp->m_MeshReader.TangentS( pTri->m_Indices[1] ) * b +
 					pDisp->m_MeshReader.TangentS( pTri->m_Indices[2] ) * c;
-				vTangentT = 
+				vTangentT =
 					pDisp->m_MeshReader.TangentT( pTri->m_Indices[0] ) * a +
 					pDisp->m_MeshReader.TangentT( pTri->m_Indices[1] ) * b +
 					pDisp->m_MeshReader.TangentT( pTri->m_Indices[2] ) * c;
@@ -856,7 +856,7 @@ public:
 
 	bool IsCached( int v )		{ return m_CacheIndex[v] == m_CurrentCacheIndex; }
 	void MarkCached( int v )	{ m_CacheIndex[v] = m_CurrentCacheIndex; }
-	
+
 	void ResetCache() { ++m_CurrentCacheIndex; }
 
 private:
@@ -868,9 +868,9 @@ private:
 // Check to see which nodes are hit by a decal
 //-----------------------------------------------------------------------------
 bool CDispInfo::SetupDecalNodeIntersect_R( CVertIndex const &nodeIndex,
-	int iNodeBitIndex, CDispDecalBase *pDispDecal, ShadowInfo_t const* pInfo, 
+	int iNodeBitIndex, CDispDecalBase *pDispDecal, ShadowInfo_t const* pInfo,
 	int iLevel, CDecalNodeSetupCache* pCache )
-{	
+{
 	int iNodeIndex = VertIndex( nodeIndex );
 
 	if( iLevel+1 < m_Power )
@@ -963,7 +963,7 @@ void CDispInfo::SetupDecalNodeIntersect( CVertIndex const &nodeIndex, int iNodeB
 	static CDecalNodeSetupCache cache;
 	cache.ResetCache();
 
-	bool anyIntersection = SetupDecalNodeIntersect_R( 
+	bool anyIntersection = SetupDecalNodeIntersect_R(
 		nodeIndex, iNodeBitIndex, pDispDecal, pInfo, 0, &cache );
 
 	pDispDecal->m_Flags |= CDispDecalBase::NODE_BITFIELD_COMPUTED;
@@ -979,14 +979,14 @@ Vector CDispInfo::GetFlatVert( int iVertex )
 	int sideLength = m_pPowerInfo->GetSideLength();
 	int x = iVertex % sideLength;
 	int y = iVertex / sideLength;
-	
+
 	float ooInt = 1.0f / ( float )( sideLength - 1 );
 
 	// Lerp between the left and right edges to get a line along 'x'.
 	Vector endPts[2];
 	VectorLerp( m_BaseSurfacePositions[0], m_BaseSurfacePositions[1], y*ooInt, endPts[0] );
 	VectorLerp( m_BaseSurfacePositions[3], m_BaseSurfacePositions[2], y*ooInt, endPts[1] );
-	
+
 	// Lerp along the X line.
 	Vector vOutputPos;
 	VectorLerp( endPts[0], endPts[1], x*ooInt, vOutputPos );
@@ -994,7 +994,7 @@ Vector CDispInfo::GetFlatVert( int iVertex )
 	// This can be used to verify that the position generated here is correct.
 	// It should be the same as CCoreDispInfo::GetFlatVert.
 	// Assert( vOutputPos.DistTo( m_Verts[iVertex].m_vFlatPos ) < 0.1f );
-	
+
 	// Voila!
 	return vOutputPos;
 }
@@ -1004,14 +1004,14 @@ Vector CDispInfo::GetFlatVert( int iVertex )
 // Computes the texture + lightmap coordinate given a displacement uv
 //-----------------------------------------------------------------------------
 
-void CDispInfo::ComputeLightmapAndTextureCoordinate( RayDispOutput_t const& output, 
+void CDispInfo::ComputeLightmapAndTextureCoordinate( RayDispOutput_t const& output,
 													Vector2D* luv, Vector2D* tuv )
-{	
+{
 #ifndef SWDS
 	// lightmap coordinate
 	if( luv )
 	{
-		ComputePointFromBarycentric( 
+		ComputePointFromBarycentric(
 			m_MeshReader.TexCoordVector2D( output.ndxVerts[0], DISP_LMCOORDS_STAGE ),
 			m_MeshReader.TexCoordVector2D( output.ndxVerts[1], DISP_LMCOORDS_STAGE ),
 			m_MeshReader.TexCoordVector2D( output.ndxVerts[2], DISP_LMCOORDS_STAGE ),
@@ -1020,7 +1020,7 @@ void CDispInfo::ComputeLightmapAndTextureCoordinate( RayDispOutput_t const& outp
 		// luv is in the space of the accumulated lightmap page; we need to convert
 		// it to be in the space of the surface
 		int lightmapPageWidth, lightmapPageHeight;
-		materials->GetLightmapPageSize( 
+		materials->GetLightmapPageSize(
 			SortInfoToLightmapPage(MSurf_MaterialSortID( m_ParentSurfID ) ),
 			&lightmapPageWidth, &lightmapPageHeight );
 
@@ -1035,7 +1035,7 @@ void CDispInfo::ComputeLightmapAndTextureCoordinate( RayDispOutput_t const& outp
 	if( tuv )
 	{
 		// Compute base face (u,v) at each of the three vertices
-		int size = (1 << m_Power) + 1; 
+		int size = (1 << m_Power) + 1;
 
 		Vector2D baseUV[3];
 		for (int i = 0; i < 3; ++i )
@@ -1052,7 +1052,7 @@ void CDispInfo::ComputeLightmapAndTextureCoordinate( RayDispOutput_t const& outp
 		// Convert the base face uv to a texture uv based on the base face texture coords
 		TexCoordInQuadFromBarycentric( m_BaseSurfaceTexCoords[0],
 			m_BaseSurfaceTexCoords[3], m_BaseSurfaceTexCoords[2], m_BaseSurfaceTexCoords[1],
-			basefaceUV, *tuv ); 
+			basefaceUV, *tuv );
 	}
 #endif
 }
@@ -1063,7 +1063,7 @@ void CDispInfo::ComputeLightmapAndTextureCoordinate( RayDispOutput_t const& outp
 // Cast a ray against this surface
 //-----------------------------------------------------------------------------
 
-bool CDispInfo::TestRay( Ray_t const& ray, float start, float end, float& dist, 
+bool CDispInfo::TestRay( Ray_t const& ray, float start, float end, float& dist,
 						Vector2D* luv, Vector2D* tuv )
 {
 	// Get the index associated with this disp info....
@@ -1123,7 +1123,5 @@ CDispCornerNeighbors* CDispInfo::GetCornerNeighbors( int index )
 
 CDispUtilsHelper* CDispInfo::GetDispUtilsByIndex( int index )
 {
-	return GetDispByIndex( index );	
+	return GetDispByIndex( index );
 }
-
-

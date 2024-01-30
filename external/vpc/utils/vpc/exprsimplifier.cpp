@@ -21,10 +21,10 @@ static char GetNextToken( void )
 	// while whitespace, Increment CurrentPosition
 	while( mExpression[mCurPosition] == ' ' )
 		++mCurPosition;
-    
+
 	// CurrentToken = Expression[CurrentPosition]
 	mCurToken = mExpression[mCurPosition++];
-  
+
 	return mCurToken;
 }
 
@@ -167,7 +167,7 @@ static void MakeFactor( ExprTree& tree )
 	}
 	else if ( IsIdentifierOrConstant( mCurToken ) )
 	{
-		// Make a literal node, set Tree to point to it, set left/right children to NULL. 
+		// Make a literal node, set Tree to point to it, set left/right children to NULL.
 		MakeExprNode( tree, mCurToken, LITERAL, NULL, NULL );
 	}
 	else if ( IsNotOp( mCurToken ) )
@@ -263,14 +263,14 @@ static bool SimplifyNode( ExprTree& node )
 		// the child of '!' is always to the right
 		node->data.value = !rightVal;
 		break;
-	
+
 	case CONDITIONAL:
 		if ( node->data.cond == AND_OP )
 		{
 			node->data.value = leftVal && rightVal;
 		}
 		else // OR_OP
-		{	
+		{
 			node->data.value = leftVal || rightVal;
 		}
 		break;
@@ -310,15 +310,3 @@ bool EvaluateExpression( bool &result, const char *InfixExpression, GetSymbolPro
 	FreeTree( mExprTree );
 	return success;
 }
-
-
-
-
-
-
-
-
-
-
-
-

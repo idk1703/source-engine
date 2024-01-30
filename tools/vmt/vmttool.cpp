@@ -81,14 +81,14 @@ public:
 	virtual char const *GetToolName() { return "Material Editor"; }
 	virtual const char *GetBindingsContextFile() { return "cfg/VMTTool.kb"; }
 	virtual bool	Init();
-    virtual void	Shutdown();
+	virtual void	Shutdown();
 	virtual bool	CanQuit( );
 	virtual void	PostMessage( HTOOLHANDLE hEntity, KeyValues *message );
 
 	// Inherited from IFileMenuCallbacks
 	virtual int		GetFileMenuItemsEnabled( );
 	virtual void	AddRecentFilesToMenu( vgui::Menu *menu );
-	virtual bool	GetPerforceFileName( char *pFileName, int nMaxLen ); 
+	virtual bool	GetPerforceFileName( char *pFileName, int nMaxLen );
 	virtual vgui::Panel* GetRootPanel() { return this; }
 
 	// Inherited from IVMTDocCallback
@@ -143,7 +143,7 @@ public:
 
 	// Methods related to the material menu
 	MESSAGE_FUNC( OnSetParamsToDefault, "OnSetParamsToDefault" );
-	
+
 	// Returns the VMT preview window
 	CVMTPanel *GetVMTPreview();
 
@@ -189,7 +189,7 @@ private:
 
 	virtual char const *GetLogoTextureName();
 
-private:	
+private:
 	// All editable data
 	CVMTDoc			*m_pDoc;
 
@@ -303,7 +303,7 @@ void CVMTTool::HideStandardFields( CDmeEditorType *pEditorType, int nFieldFlags 
 	if ( nFieldFlags & EDITOR_FIELD_NAME )
 	{
 		pInfo = CreateElement< CDmeEditorAttributeInfo >( "name info", pEditorType->GetFileId() );
-		pEditorType->AddAttributeInfo( "name", pInfo ); 
+		pEditorType->AddAttributeInfo( "name", pInfo );
 		pInfo->m_bIsVisible = false;
 		m_toolElements.AddToTail( pInfo->GetHandle() );
 	}
@@ -312,7 +312,7 @@ void CVMTTool::HideStandardFields( CDmeEditorType *pEditorType, int nFieldFlags 
 	{
 		pInfo = CreateElement< CDmeEditorAttributeInfo >( "type info", pEditorType->GetFileId() );
 		pInfo->m_bIsVisible = false;
-		pEditorType->AddAttributeInfo( "type", pInfo ); 
+		pEditorType->AddAttributeInfo( "type", pInfo );
 		m_toolElements.AddToTail( pInfo->GetHandle() );
 	}
 
@@ -320,7 +320,7 @@ void CVMTTool::HideStandardFields( CDmeEditorType *pEditorType, int nFieldFlags 
 	{
 		pInfo = CreateElement< CDmeEditorAttributeInfo >( "id info", pEditorType->GetFileId() );
 		pInfo->m_bIsVisible = false;
-		pEditorType->AddAttributeInfo( "id", pInfo ); 
+		pEditorType->AddAttributeInfo( "id", pInfo );
 		m_toolElements.AddToTail( pInfo->GetHandle() );
 	}
 
@@ -328,7 +328,7 @@ void CVMTTool::HideStandardFields( CDmeEditorType *pEditorType, int nFieldFlags 
 	{
 		pInfo = CreateElement< CDmeEditorAttributeInfo >( "editor type info", pEditorType->GetFileId() );
 		pInfo->m_bIsVisible = false;
-		pEditorType->AddAttributeInfo( "editorType", pInfo ); 
+		pEditorType->AddAttributeInfo( "editorType", pInfo );
 		m_toolElements.AddToTail( pInfo->GetHandle() );
 	}
 }
@@ -341,7 +341,7 @@ void CVMTTool::AddShaderParameter( const char *pParam, const char *pWidget, cons
 {
 	// anims only accept activity names
 	CDmeEditorAttributeInfo *pInfo = CreateElement< CDmeEditorAttributeInfo >( "shader param info", m_pVMTType->GetFileId() );
-	m_pVMTType->AddAttributeInfo( pParam, pInfo ); 
+	m_pVMTType->AddAttributeInfo( pParam, pInfo );
 	pInfo->m_Widget = pWidget;
 	if ( pTextType )
 	{
@@ -373,7 +373,7 @@ inline bool CVMTTool::IsToolParamsVisible() const
 	return m_bToolParamsVisible;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Adds flags, tool parameters
 //-----------------------------------------------------------------------------
@@ -385,7 +385,7 @@ void CVMTTool::AddFlagParameter( const char *pParam )
 	m_FlagParams[i] = pParam;
 
 	CDmeEditorAttributeInfo *pInfo = CreateElement< CDmeEditorAttributeInfo >( "flag param info", m_pVMTType->GetFileId() );
-	m_pVMTType->AddAttributeInfo( pParam, pInfo ); 
+	m_pVMTType->AddAttributeInfo( pParam, pInfo );
 	pInfo->m_bIsVisible = m_bFlagParamsVisible;
 	pInfo->m_Widget = NULL;
 	m_toolElements.AddToTail( pInfo->GetHandle() );
@@ -399,7 +399,7 @@ void CVMTTool::AddToolParameter( const char *pParam, const char *pWidget, const 
 	m_ToolParams[i] = pParam;
 
 	CDmeEditorAttributeInfo *pInfo = CreateElement< CDmeEditorAttributeInfo >( "tool param info", m_pVMTType->GetFileId() );
-	m_pVMTType->AddAttributeInfo( pParam, pInfo ); 
+	m_pVMTType->AddAttributeInfo( pParam, pInfo );
 	pInfo->m_bIsVisible = m_bToolParamsVisible;
 	pInfo->m_Widget = pWidget;
 	if ( pTextType )
@@ -429,7 +429,7 @@ void CVMTTool::RemoveAllToolParameters()
 	m_ToolParams.RemoveAll();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Create custom editors
 //-----------------------------------------------------------------------------
@@ -448,7 +448,7 @@ void CVMTTool::InitEditorDict()
 
 	// Create a picker for the shader name
 	pInfo = CreateElement< CDmeEditorAttributeInfo >( "shader name info", DMFILEID_INVALID );
-	m_pVMTType->AddAttributeInfo( "shader", pInfo ); 
+	m_pVMTType->AddAttributeInfo( "shader", pInfo );
 	pInfo->m_Widget = "shaderpicker";
 	pInfo->SetValue( "texttype", "shaderName" );
 	m_toolElements.AddToTail( pInfo->GetHandle() );
@@ -548,7 +548,7 @@ void CVMTViewMenuButton::OnShowMenu(vgui::Menu *menu)
 
 		id = m_Items.Find( "preview" );
 		m_pMenu->SetItemEnabled( id, true );
-		
+
 		p = g_pVMTTool->GetVMTPreview();
 		Assert( p );
 		m_pMenu->SetMenuItemChecked( id, ( p && p->GetParent() ) ? true : false );
@@ -578,14 +578,14 @@ void CVMTViewMenuButton::OnShowMenu(vgui::Menu *menu)
 //-----------------------------------------------------------------------------
 // Initializes the menu bar
 //-----------------------------------------------------------------------------
-vgui::MenuBar *CVMTTool::CreateMenuBar( CBaseToolSystem *pParent ) 
+vgui::MenuBar *CVMTTool::CreateMenuBar( CBaseToolSystem *pParent )
 {
 	m_pMenuBar = new CToolFileMenuBar( pParent, "VMTMenuBar" );
 
 	// Sets info in the menu bar
 	char title[ 64 ];
 	ComputeMenuBarTitle( title, sizeof( title ) );
-    m_pMenuBar->SetInfo( title );
+	m_pMenuBar->SetInfo( title );
 	m_pMenuBar->SetToolName( GetToolName() );
 	UpdateMenuBar();
 
@@ -657,15 +657,15 @@ void CVMTTool::AddRecentFilesToMenu( vgui::Menu *pMenu )
 	m_RecentFiles.AddToMenu( pMenu, GetActionTarget(), "OnRecent" );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the file name for perforce
 //-----------------------------------------------------------------------------
-bool CVMTTool::GetPerforceFileName( char *pFileName, int nMaxLen ) 
-{ 
+bool CVMTTool::GetPerforceFileName( char *pFileName, int nMaxLen )
+{
 	if ( !m_pDoc )
 		return false;
-    Q_strncpy( pFileName, m_pDoc->GetFileName(), nMaxLen );
+	Q_strncpy( pFileName, m_pDoc->GetFileName(), nMaxLen );
 	return true;
 }
 
@@ -673,8 +673,8 @@ bool CVMTTool::GetPerforceFileName( char *pFileName, int nMaxLen )
 //-----------------------------------------------------------------------------
 // Derived classes can implement this to get a new scheme to be applied to this tool
 //-----------------------------------------------------------------------------
-vgui::HScheme CVMTTool::GetToolScheme() 
-{ 
+vgui::HScheme CVMTTool::GetToolScheme()
+{
 	return vgui::scheme()->LoadSchemeFromFile( "Resource/BoxRocket.res", "BoxRocket" );
 }
 
@@ -690,8 +690,8 @@ vgui::Menu *CVMTTool::CreateActionMenu( vgui::Panel *pParent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CVMTTool::OnExit()
 {
@@ -755,7 +755,7 @@ void CVMTTool::PostMessage( HTOOLHANDLE hEntity, KeyValues *message )
 		if ( pMaterialName[0] == '/' && pMaterialName[1] == '/' && pMaterialName[2] != '/' )
 		{
 			Q_strncpy( pAbsPath, pMaterialName, sizeof(pAbsPath) );
-			Q_DefaultExtension( pAbsPath, ".vmt", sizeof(pAbsPath) ); 
+			Q_DefaultExtension( pAbsPath, ".vmt", sizeof(pAbsPath) );
 		}
 		else
 		{
@@ -846,7 +846,7 @@ bool CVMTTool::OnReadFileFromDisk( const char *pFileName, const char *pFileForma
 	return true;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Called by SaveFile to allow clients to actually write the file out
 //-----------------------------------------------------------------------------
@@ -919,7 +919,7 @@ void CVMTTool::OnClose()
 {
 	if ( m_pDoc && m_pDoc->IsDirty() )
 	{
-		SaveFile( m_pDoc->GetFileName(), "vmt", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY, 
+		SaveFile( m_pDoc->GetFileName(), "vmt", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY,
 			new KeyValues( "OnClose" ) );
 		return;
 	}
@@ -943,7 +943,7 @@ void CVMTTool::OnCloseNoSave()
 			m_hProperties->SetObject( NULL );
 		}
 	}
-	
+
 	UpdateMenuBar( );
 }
 
@@ -996,7 +996,7 @@ bool CVMTTool::CanQuit()
 	if ( m_pDoc && m_pDoc->IsDirty() )
 	{
 		// Show Save changes Yes/No/Cancel and re-quit if hit yes/no
-		SaveFile( m_pDoc->GetFileName(), "vmt", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY, 
+		SaveFile( m_pDoc->GetFileName(), "vmt", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY,
 			new KeyValues( "OnQuit" ) );
 		return false;
 	}
@@ -1053,8 +1053,8 @@ void CVMTTool::OnDocChanged( const char *pReason, int nNotifySource, int nNotify
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : CVMTDoc
 //-----------------------------------------------------------------------------
 CVMTDoc *CVMTTool::GetDocument()
@@ -1063,8 +1063,8 @@ CVMTDoc *CVMTTool::GetDocument()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : virtual CBasePropertiesContainer
 //-----------------------------------------------------------------------------
 CBasePropertiesContainer *CVMTTool::GetProperties()
@@ -1268,7 +1268,7 @@ void CVMTTool::OnDefaultLayout()
 void CVMTTool::OnToggleProperties()
 {
 	if ( m_hProperties.Get() )
-	{ 
+	{
 		ToggleToolWindow( m_hProperties.Get(), "#VMTProperties" );
 	}
 }
@@ -1276,7 +1276,7 @@ void CVMTTool::OnToggleProperties()
 void CVMTTool::OnToggleVMTPreview()
 {
 	if ( m_hVMTPreview.Get() )
-	{ 
+	{
 		ToggleToolWindow( m_hVMTPreview.Get(), "#VMTPreview" );
 	}
 }

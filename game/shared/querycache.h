@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,7 +14,7 @@
 #include "mathlib/vector.h"
 
 // this system provides several piece of functionality to ai or other systems which wish to do
-// traces and other trace-like queries. 
+// traces and other trace-like queries.
 
 // a. By maintaining a set of incrementally updated trace results, it makes it simple to have ai
 // code use hyteresis on traces as an optimization method.

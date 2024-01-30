@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -38,7 +38,7 @@ public:
 
 
 public:
-	
+
 	CTFCPlayerShared m_Shared;
 
 

@@ -67,7 +67,7 @@ CTFPlayerClassShared::CTFPlayerClassShared()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerClassShared::Reset( void )
 {
@@ -90,7 +90,7 @@ void CTFPlayerClassShared::Reset( void )
 
 #ifndef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerClassShared::SetCustomModel( const char *pszModelName, bool isUsingClassAnimations )
 {
@@ -117,7 +117,7 @@ void CTFPlayerClassShared::SetCustomModel( const char *pszModelName, bool isUsin
 #endif // #ifndef CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFPlayerClassShared::CustomModelHasChanged( void )
 {
@@ -136,8 +136,8 @@ bool CTFPlayerClassShared::CustomModelHasChanged( void )
 ConVar tf_player_use_female_models( "tf_player_use_female_models", "0", FCVAR_CHEAT | FCVAR_REPLICATED, "For testing. Appends '_female' to the model filename loaded" );
 #endif
 
-const char	*CTFPlayerClassShared::GetModelName( void ) const						
-{ 
+const char	*CTFPlayerClassShared::GetModelName( void ) const
+{
 	// Does this play have an overridden model?
 #ifdef CLIENT_DLL
 	if ( m_iszCustomModel[0] )
@@ -151,7 +151,7 @@ const char	*CTFPlayerClassShared::GetModelName( void ) const
 	static char modelFilename[ MAX_MODEL_FILENAME_LENGTH ];
 
 	Q_strncpy( modelFilename, GetPlayerClassData( m_iClass )->GetModelName(), sizeof( modelFilename ) );
-	
+
 #ifdef STAGING_ONLY
 	if ( tf_player_use_female_models.GetBool() )
 	{

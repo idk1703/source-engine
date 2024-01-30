@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -44,7 +44,7 @@ public:
 	void	HandleAnimEvent( animevent_t *pEvent );
 	int		GetSoundInterests ( void );
 
-	
+
 	void	TempGunEffect( void );
 
 	string_t			m_strHullName;
@@ -61,7 +61,7 @@ END_DATADESC()
 
 
 //=========================================================
-// Classify - indicates this NPC's place in the 
+// Classify - indicates this NPC's place in the
 // relationship table.
 //=========================================================
 Class_T	CGenericActor::Classify ( void )
@@ -111,7 +111,7 @@ void CGenericActor::Spawn()
 		UTIL_SetSize(this, VEC_HULL_MIN, VEC_HULL_MAX);
 */
 
-	if ( FStrEq( STRING( GetModelName() ), "models/player.mdl" ) || 
+	if ( FStrEq( STRING( GetModelName() ), "models/player.mdl" ) ||
 		 FStrEq( STRING( GetModelName() ), "models/holo.mdl" ) ||
 		 FStrEq( STRING( GetModelName() ), "models/blackout.mdl" ) )
 	{
@@ -137,11 +137,11 @@ void CGenericActor::Spawn()
 	m_iHealth			= 8;
 	m_flFieldOfView		= 0.5;// indicates the width of this NPC's forward view cone ( as a dotproduct result )
 	m_NPCState			= NPC_STATE_NONE;
-	
+
 	CapabilitiesAdd( bits_CAP_MOVE_GROUND | bits_CAP_OPEN_DOORS );
-	
+
 	// remove head turn if no eyes or forward attachment
-	if (LookupAttachment( "eyes" ) > 0 && LookupAttachment( "forward" ) > 0) 
+	if (LookupAttachment( "eyes" ) > 0 && LookupAttachment( "forward" ) > 0)
 	{
 		CapabilitiesAdd(  bits_CAP_TURN_HEAD | bits_CAP_ANIMATEDFACE );
 	}
@@ -165,7 +165,7 @@ void CGenericActor::Spawn()
 void CGenericActor::Precache()
 {
 	PrecacheModel( STRING( GetModelName() ) );
-}	
+}
 
 //=========================================================
 // AI Schedules Specific to this NPC
@@ -306,7 +306,7 @@ void CFlextalkActor::ProcessSceneEvents( void )
 		BaseClass::ProcessSceneEvents( );
 		return;
 	}
-	
+
 	// only do this if they have more than eyelid movement
 	if (GetNumFlexControllers() > 2)
 	{
@@ -340,7 +340,7 @@ void CFlextalkActor::ProcessSceneEvents( void )
 			{
 				if (*pszExpression == '+')
 					*pszExpression = ' ';
-				
+
 				pszExpression++;
 			}
 
@@ -383,7 +383,7 @@ void CFlextalkActor::ProcessSceneEvents( void )
 				}
 				pszExpression++;
 			}
-		} 
+		}
 		else if (m_flextime < gpGlobals->curtime)
 		{
 			m_flextime = gpGlobals->curtime + random->RandomFloat( 0.3, 0.5 ) * (30.0 / GetNumFlexControllers());

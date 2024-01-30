@@ -42,4 +42,3 @@ public:
 };
 
 #endif // TFMAPCONTRIBUTION_H
-

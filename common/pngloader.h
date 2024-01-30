@@ -12,5 +12,3 @@ bool GetPNGDimensions( const byte *pubPNGData, int cubPNGData, uint32 &width, ui
 
 // parses out a png file into an RGBA memory buffer
 bool ConvertPNGToRGBA( const byte *pubPNGData, int cubPNGData, CUtlBuffer &bufOutput, int &width, int &height );
-
-

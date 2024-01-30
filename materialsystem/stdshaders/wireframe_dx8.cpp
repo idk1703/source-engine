@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -41,10 +41,9 @@ BEGIN_VS_SHADER( Wireframe_DX8,
 
 	SHADER_DRAW
 	{
-		VertexShaderUnlitGenericPass( 
+		VertexShaderUnlitGenericPass(
 			-1, -1, -1,
 			-1, -1, true, -1, -1, -1,
 			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1 );
 	}
 END_SHADER
-

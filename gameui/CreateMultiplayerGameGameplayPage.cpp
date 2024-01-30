@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ public:
 	CServerDescription( void );
 
 	void WriteScriptHeader( FileHandle_t fp );
-	void WriteFileHeader( FileHandle_t fp ); 
+	void WriteFileHeader( FileHandle_t fp );
 };
 
 //-----------------------------------------------------------------------------
@@ -71,7 +71,7 @@ CCreateMultiplayerGameGameplayPage::~CCreateMultiplayerGameGameplayPage()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CCreateMultiplayerGameGameplayPage::GetMaxPlayers()
 {
@@ -79,7 +79,7 @@ int CCreateMultiplayerGameGameplayPage::GetMaxPlayers()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CCreateMultiplayerGameGameplayPage::GetPassword()
 {
@@ -87,15 +87,15 @@ const char *CCreateMultiplayerGameGameplayPage::GetPassword()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CCreateMultiplayerGameGameplayPage::GetHostName()
 {
-	return GetValue("hostname", "Half-Life");	
+	return GetValue("hostname", "Half-Life");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CCreateMultiplayerGameGameplayPage::GetValue(const char *cvarName, const char *defaultValue)
 {
@@ -208,7 +208,7 @@ void CCreateMultiplayerGameGameplayPage::LoadGameOptionsList()
 		case O_BOOL:
 			pBox = new CheckButton( pCtrl, "DescCheckButton", pObj->prompt );
 			pBox->SetSelected( pObj->fdefValue != 0.0f ? true : false );
-			
+
 			pCtrl->pControl = (Panel *)pBox;
 			break;
 		case O_STRING:
@@ -327,14 +327,14 @@ void CCreateMultiplayerGameGameplayPage::GatherCurrentValues()
 		case O_LIST:
 			pCombo = ( ComboBox *)pList->pControl;
 			pCombo->GetText( w_szStrValue, sizeof( w_szStrValue ) / sizeof( wchar_t ) );
-			
+
 			pItem = pObj->pListItems;
 
 			while ( pItem )
 			{
 				wchar_t *wLocalizedString = NULL;
 				wchar_t w_szStrTemp[256];
-				
+
 				// Localized string?
 				if ( pItem->szItemText[0] == '#' )
 				{
@@ -425,15 +425,15 @@ CServerDescription::CServerDescription( void ) : CDescription()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CServerDescription::WriteScriptHeader( FileHandle_t fp )
 {
-    char am_pm[] = "AM";
-    tm newtime;
+	char am_pm[] = "AM";
+	tm newtime;
 	VCRHook_LocalTime( &newtime );
 
-    if( newtime.tm_hour > 12 )        /* Set up extension. */
+	if( newtime.tm_hour > 12 )        /* Set up extension. */
 		Q_strncpy( am_pm, "PM", sizeof( am_pm ) );
 	if( newtime.tm_hour > 12 )        /* Convert from 24-hour */
 		newtime.tm_hour -= 12;    /*   to 12-hour clock.  */
@@ -453,15 +453,15 @@ void CServerDescription::WriteScriptHeader( FileHandle_t fp )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CServerDescription::WriteFileHeader( FileHandle_t fp )
 {
-    char am_pm[] = "AM";
-    tm newtime;
+	char am_pm[] = "AM";
+	tm newtime;
 	VCRHook_LocalTime( &newtime );
 
-    if( newtime.tm_hour > 12 )        /* Set up extension. */
+	if( newtime.tm_hour > 12 )        /* Set up extension. */
 		Q_strncpy( am_pm, "PM", sizeof( am_pm ) );
 	if( newtime.tm_hour > 12 )        /* Convert from 24-hour */
 		newtime.tm_hour -= 12;    /*   to 12-hour clock.  */

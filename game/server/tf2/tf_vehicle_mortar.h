@@ -53,10 +53,10 @@ protected:
 
 	void UpdateElevation( const Vector &vecTargetVel );
 
-	bool CalcFireInfo( 
-		float flFiringPower, 
-		float flFiringAccuracy, 
-		bool bRangeUpgraded, 
+	bool CalcFireInfo(
+		float flFiringPower,
+		float flFiringAccuracy,
+		bool bRangeUpgraded,
 		bool bAccuracyUpgraded,
 		Vector &vStartPt,
 		Vector &vecTargetVel,
@@ -67,7 +67,7 @@ protected:
 
 private:
 	void NextFireThink();
-	
+
 	// Start/end the attack
 	void StartAttack();
 	void FinishAttack();

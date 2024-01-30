@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -34,7 +34,7 @@ class CHudZoom : public vgui::Panel, public CHudElement
 
 public:
 	CHudZoom( const char *pElementName );
-	
+
 	bool	ShouldDraw( void );
 	void	Init( void );
 	void	LevelInit( void );
@@ -67,7 +67,7 @@ CHudZoom::CHudZoom( const char *pElementName ) : CHudElement(pElementName), Base
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
 	SetParent( pParent );
-	
+
 	SetHiddenBits( HIDEHUD_HEALTH | HIDEHUD_PLAYERDEAD | HIDEHUD_NEEDSUIT );
 }
 
@@ -110,7 +110,7 @@ void CHudZoom::ApplySchemeSettings( vgui::IScheme *scheme )
 
 //-----------------------------------------------------------------------------
 // Purpose: Save CPU cycles by letting the HUD system early cull
-// costly traversal.  Called per frame, return true if thinking and 
+// costly traversal.  Called per frame, return true if thinking and
 // painting need to occur.
 //-----------------------------------------------------------------------------
 bool CHudZoom::ShouldDraw( void )
@@ -162,7 +162,7 @@ void CHudZoom::Paint( void )
 	// draw the appropriately scaled zoom animation
 	float deltaTime = ( gpGlobals->curtime - m_flZoomStartTime );
 	float scale = clamp( deltaTime / ZOOM_FADE_TIME, 0.0f, 1.0f );
-	
+
 	float alpha;
 
 	if ( m_bZoomOn )
@@ -182,7 +182,7 @@ void CHudZoom::Paint( void )
 	col[3] = alpha * 64;
 
 	surface()->DrawSetColor( col );
-	
+
 	// draw zoom circles
 	float fX, fY;
 	bool bBehindCamera = false;
@@ -227,7 +227,7 @@ void CHudZoom::Paint( void )
 		float x, y;
 		float u, v;
 	};
-	coord_t coords[16] = 
+	coord_t coords[16] =
 	{
 		// top-left
 		{ x0, y0, uv1, uv2 },

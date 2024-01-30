@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,17 +12,17 @@
 #endif
 
 // Debug history should be disabled in release builds
-//#define DISABLE_DEBUG_HISTORY	
+//#define DISABLE_DEBUG_HISTORY
 
 #ifdef CLIENT_DLL
 
 	#include "c_baseentity.h"
-	
+
 	#define CGameRules C_GameRules
 	#define CGameRulesProxy C_GameRulesProxy
 
 #else
-	
+
 	#include "baseentity.h"
 	#include "recipientfilter.h"
 
@@ -52,15 +52,15 @@ enum
 
 // weapon respawning return codes
 enum
-{	
+{
 	GR_NONE = 0,
-	
+
 	GR_WEAPON_RESPAWN_YES,
 	GR_WEAPON_RESPAWN_NO,
-	
+
 	GR_AMMO_RESPAWN_YES,
 	GR_AMMO_RESPAWN_NO,
-	
+
 	GR_ITEM_RESPAWN_YES,
 	GR_ITEM_RESPAWN_NO,
 
@@ -106,7 +106,7 @@ public:
 	static void NotifyNetworkStateChanged();
 
 private:
-	
+
 	static CGameRulesProxy *s_pGameRulesProxy;
 };
 
@@ -133,7 +133,7 @@ public:
 	//Temp: These will go away once DamageTypes become enums.
 	virtual int		Damage_GetTimeBased( void ) = 0;				// Actual bit-fields.
 	virtual int		Damage_GetShouldGibCorpse( void ) = 0;
-	virtual int		Damage_GetShowOnHud( void ) = 0;					
+	virtual int		Damage_GetShowOnHud( void ) = 0;
 	virtual int		Damage_GetNoPhysicsForce( void )= 0;
 	virtual int		Damage_GetShouldNotBleed( void ) = 0;
 
@@ -164,7 +164,7 @@ public:
 
 // Damage rules for ammo types
 	virtual float GetAmmoDamage( CBaseEntity *pAttacker, CBaseEntity *pVictim, int nAmmoType );
-    virtual float GetDamageMultiplier( void ) { return 1.0f; }    
+	virtual float GetDamageMultiplier( void ) { return 1.0f; }
 
 // Functions to verify the single/multiplayer status of a game
 	virtual bool IsMultiplayer( void ) = 0;// is this a multiplayer game? (either coop or deathmatch)
@@ -176,14 +176,14 @@ public:
 	//Allow thirdperson camera.
 	virtual bool AllowThirdPersonCamera( void ) { return false; }
 
-	virtual void ClientCommandKeyValues( edict_t *pEntity, KeyValues *pKeyValues ) {} 
+	virtual void ClientCommandKeyValues( edict_t *pEntity, KeyValues *pKeyValues ) {}
 
 	// IsConnectedUserInfoChangeAllowed allows the clients to change
 	// cvars with the FCVAR_NOT_CONNECTED rule if it returns true
 	virtual bool IsConnectedUserInfoChangeAllowed( CBasePlayer *pPlayer )
-	{ 
+	{
 		Assert( !IsMultiplayer() );
-		return true; 
+		return true;
 	}
 
 #ifdef CLIENT_DLL
@@ -202,7 +202,7 @@ public:
 	virtual void ModifySentChat( char *pBuf, int iBufSize ) { return; }
 
 	virtual bool ShouldConfirmOnDisconnect() { return false; }
-	
+
 #else
 
 	virtual void Status( void (*print) (const char *fmt, ...) ) {}
@@ -216,14 +216,14 @@ public:
 public:
 
 // Setup
-	
+
 	// Called when game rules are destroyed by CWorld
 	virtual void LevelShutdown( void ) { return; };
 
 	virtual void Precache( void ) { return; };
 
 	virtual void RefreshSkillData( bool forceUpdate );// fill skill data struct with proper values
-	
+
 	// Called each frame. This just forwards the call to Think().
 	virtual void FrameUpdatePostEntityThink();
 
@@ -238,7 +238,7 @@ public:
 	virtual void OnSkillLevelChanged( int iNewLevel ) {};
 	virtual void SetSkillLevel( int iLevel )
 	{
-		int oldLevel = g_iSkillLevel; 
+		int oldLevel = g_iSkillLevel;
 
 		if ( iLevel < 1 )
 		{
@@ -246,7 +246,7 @@ public:
 		}
 		else if ( iLevel > 3 )
 		{
-			iLevel = 3; 
+			iLevel = 3;
 		}
 
 		g_iSkillLevel = iLevel;
@@ -265,12 +265,12 @@ public:
 	virtual bool IsTeamplay( void ) { return FALSE; };// is this deathmatch game being played with team rules?
 	virtual bool IsCoOp( void ) = 0;// is this a coop game?
 	virtual const char *GetGameDescription( void ) { return "Half-Life 2"; }  // this is the game name that gets seen in the server browser
-	
+
 // Client connection/disconnection
 	virtual bool ClientConnected( edict_t *pEntity, const char *pszName, const char *pszAddress, char *reject, int maxrejectlen ) = 0;// a client just connected to the server (player hasn't spawned yet)
 	virtual void InitHUD( CBasePlayer *pl ) = 0;		// the client dll is ready for updating
 	virtual void ClientDisconnected( edict_t *pClient ) = 0;// a client just disconnected from the server
-	
+
 // Client damage rules
 	virtual float FlPlayerFallDamage( CBasePlayer *pPlayer ) = 0;// this client just hit the ground after a fall. How much damage?
 	virtual bool  FPlayerCanTakeDamage( CBasePlayer *pPlayer, CBaseEntity *pAttacker, const CTakeDamageInfo &info ) {return TRUE;};// can this player take damage from this attacker?
@@ -345,7 +345,7 @@ public:
 // What happens to a dead player's weapons
 	virtual int DeadPlayerWeapons( CBasePlayer *pPlayer ) = 0;// what do I do with a player's weapons when he's killed?
 
-// What happens to a dead player's ammo	
+// What happens to a dead player's ammo
 	virtual int DeadPlayerAmmo( CBasePlayer *pPlayer ) = 0;// Do I drop ammo when the player dies? How much?
 
 // Teamplay stuff
@@ -370,7 +370,7 @@ public:
 
 	// Immediately end a multiplayer game
 	virtual void EndMultiplayerGame( void ) {}
-				    
+
 	// trace line rules
 	virtual float WeaponTraceEntity( CBaseEntity *pEntity, const Vector &vecStart, const Vector &vecEnd, unsigned int mask, trace_t *ptr );
 
@@ -429,7 +429,7 @@ private:
 
 #ifndef CLIENT_DLL
 	void InstallGameRules();
-	
+
 	// Create user messages for game here, calls into static player class creation functions
 	void RegisterUserMessages( void );
 #endif

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,7 @@ static C_TFHintManager *g_pHintManager = NULL;
 static float g_flLastEscapeKeyTime = -1.0f;
 //-----------------------------------------------------------------------------
 // Purpose: Helper to create panel in center and then shift toward right edge of screen
-// Input  : *panel - 
+// Input  : *panel -
 // Output : static void
 //-----------------------------------------------------------------------------
 static void PositionPanel( C_TFBaseHint *panel )
@@ -43,7 +43,7 @@ IMPLEMENT_CLIENTCLASS_DT_NOBASE(C_TFHintManager, DT_TFHintManager, CTFHintManage
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFHintManager::C_TFHintManager( void )
 {
@@ -68,7 +68,7 @@ C_TFHintManager::C_TFHintManager( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : KeyValues
 //-----------------------------------------------------------------------------
 KeyValues *C_TFHintManager::GetHintKeyValues( void )
@@ -140,11 +140,11 @@ void C_TFHintManager::ClientThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : playerIndex - 
-//			hintID - 
-//			priority - 
-//			entityIndex - 
+// Purpose:
+// Input  : playerIndex -
+//			hintID -
+//			priority -
+//			entityIndex -
 //-----------------------------------------------------------------------------
 C_TFBaseHint *C_TFHintManager::AddHint( int hintID, const char *subsection, int entityIndex, int maxduplicates )
 {
@@ -173,7 +173,7 @@ C_TFBaseHint *C_TFHintManager::AddHint( int hintID, const char *subsection, int 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFHintManager::ClearHints( void )
 {
@@ -187,9 +187,9 @@ void C_TFHintManager::ClearHints( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : playerIndex - 
-//			hintID - 
+// Purpose:
+// Input  : playerIndex -
+//			hintID -
 //-----------------------------------------------------------------------------
 void C_TFHintManager::CompleteHint( int hintID, bool visibleOnly )
 {
@@ -212,9 +212,9 @@ void C_TFHintManager::CompleteHint( int hintID, bool visibleOnly )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : playerIndex - 
-//			hintID - 
+// Purpose:
+// Input  : playerIndex -
+//			hintID -
 // Output :	Number of instances in list
 //-----------------------------------------------------------------------------
 int C_TFHintManager::CountInstancesOfHintID( int hintID )
@@ -233,8 +233,8 @@ int C_TFHintManager::CountInstancesOfHintID( int hintID )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : playerIndex - 
+// Purpose:
+// Input  : playerIndex -
 // Output : int
 //-----------------------------------------------------------------------------
 int C_TFHintManager::GetCurrentHintID( void )
@@ -252,7 +252,7 @@ int C_TFHintManager::GetCurrentHintID( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFHintManager::ResetDisplayStats( void )
 {
@@ -284,11 +284,11 @@ void C_TFHintManager::ResetDisplayStats( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hintid - 
-//			100 - 
-//			1 - 
-//			-1 - 
+// Purpose:
+// Input  : hintid -
+//			100 -
+//			1 -
+//			-1 -
 //-----------------------------------------------------------------------------
 C_TFBaseHint *CreateGlobalHint( int hintid, const char *subsection /*=NULL*/, int entity /*= -1*/, int maxduplicates /*=0*/ )
 {
@@ -301,11 +301,11 @@ C_TFBaseHint *CreateGlobalHint( int hintid, const char *subsection /*=NULL*/, in
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hintid - 
-//			100 - 
-//			1 - 
-//			-1 - 
+// Purpose:
+// Input  : hintid -
+//			100 -
+//			1 -
+//			-1 -
 //-----------------------------------------------------------------------------
 C_TFBaseHint *CreateGlobalHint_Panel( vgui::Panel *targetPanel, int hintid, const char *subsection /*=NULL*/, int entity /*= -1*/, int maxduplicates /*=0*/ )
 {
@@ -363,8 +363,8 @@ bool HintSystemEscapeKey( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hindid - 
+// Purpose:
+// Input  : hindid -
 //-----------------------------------------------------------------------------
 void DestroyGlobalHint( int hintid )
 {
@@ -375,7 +375,7 @@ void DestroyGlobalHint( int hintid )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : KeyValues
 //-----------------------------------------------------------------------------
 KeyValues *GetHintKeyValues( void )
@@ -387,7 +387,7 @@ KeyValues *GetHintKeyValues( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : KeyValues
 //-----------------------------------------------------------------------------
 KeyValues *GetHintDisplayStats( void )
@@ -399,7 +399,7 @@ KeyValues *GetHintDisplayStats( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ResetDisplayStats( void )
 {
@@ -412,7 +412,7 @@ void ResetDisplayStats( void )
 static ConCommand tf2_hintreset( "tf2_hintreset", ResetDisplayStats, 0, FCVAR_CHEAT );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFHintManager::~C_TFHintManager( void )
 {

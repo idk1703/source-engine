@@ -11,7 +11,7 @@
 #define MAX_LINE_TOKENS		128
 #define MAX_LINE_CHARS		2048
 
-class TokenLine  
+class TokenLine
 {
 
 public:

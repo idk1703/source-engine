@@ -213,7 +213,7 @@ void CAI_DynamicLink::GenerateControllerLinks()
 
 //------------------------------------------------------------------------------
 // Purpose : Initializes src and dest IDs for all dynamic links
-//			 	
+//
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
@@ -325,7 +325,7 @@ void CAI_DynamicLink::InitDynamicLinks(void)
 
 //------------------------------------------------------------------------------
 // Purpose : Goes through each dynamic link and updates the state of all
-//			 AINetwork links	
+//			 AINetwork links
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
@@ -476,7 +476,7 @@ void CAI_DynamicLink::SetLinkState(void)
 
 	// ------------------------------------------------------------------
 	// Now update the node links...
-	//  Nodes share links so we only have to find the node from the src 
+	//  Nodes share links so we only have to find the node from the src
 	//  For now just using one big AINetwork so find src node on that network
 	// ------------------------------------------------------------------
 	CAI_Node *	pSrcNode = g_pBigAINet->GetNode(m_nSrcID, false);
@@ -505,7 +505,7 @@ void CAI_DynamicLink::SetLinkState(void)
 
 //------------------------------------------------------------------------------
 // Purpose : Given two node ID's return the related dynamic link if any or NULL
-//			 	
+//
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
@@ -516,7 +516,7 @@ CAI_DynamicLink* CAI_DynamicLink::GetDynamicLink(int nSrcID, int nDstID)
 	while (pDynamicLink)
 	{
 		if ((nSrcID == pDynamicLink->m_nSrcID  && nDstID == pDynamicLink->m_nDestID) ||
-			(nSrcID == pDynamicLink->m_nDestID && nDstID == pDynamicLink->m_nSrcID ) ) 
+			(nSrcID == pDynamicLink->m_nDestID && nDstID == pDynamicLink->m_nSrcID ) )
 		{
 			return pDynamicLink;
 		}
@@ -649,7 +649,7 @@ void CAI_RadialLinkController::PollMotionThink()
 		{
 			if( m_bAtRest )
 			{
-				float flDist; 
+				float flDist;
 
 				flDist = GetAbsOrigin().DistTo(m_vecAtRestOrigin);
 

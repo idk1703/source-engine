@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -30,12 +30,12 @@ public:
 
 	void SetAmmo(int ammo, bool playAnimation);
 	void SetAmmo2(int ammo2, bool playAnimation);
-		
+
 protected:
 	virtual void OnThink();
 	virtual void Paint( void );
 	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
-	
+
 private:
 	void DrawText( char *text, int x, int y, Color clrText );
 	void DrawNumbers( int num, int x, int y );
@@ -95,7 +95,7 @@ CHudAmmo::CHudAmmo( const char *pElementName ) : vgui::Panel( NULL, "HudAmmo" ),
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAmmo::Init( void )
 {
@@ -109,7 +109,7 @@ void CHudAmmo::ApplySchemeSettings(vgui::IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAmmo::VidInit( void )
 {
@@ -257,7 +257,7 @@ void CHudAmmo::PaintRifleGrenadeAmmo( CWeaponDODBase *pWpn )
 }
 
 void CHudAmmo::PaintBazookaAmmo( CWeaponDODBase *pWpn )
-{	
+{
 	const CHudTexture *pTubeIcon = pWpn->GetSpriteAmmo2();
 	const CHudTexture *pRocketIcon = pWpn->GetSpriteAmmo();
 	const CHudTexture *pExtraIcon = pWpn->GetSpriteAutoaim();
@@ -302,7 +302,7 @@ void CHudAmmo::PaintBazookaAmmo( CWeaponDODBase *pWpn )
 		pExtraIcon->DrawSelf( xpos, ypos, m_clrIcon );
 
 		xpos += pExtraIcon->Width();
-		
+
 		char buf[16];
 		Q_snprintf( buf, sizeof(buf), "x %d", m_iAmmo2 );
 		DrawText( buf, xpos, ypos + ( pExtraIcon->Height() * 0.75 ), m_clrIcon );
@@ -316,7 +316,7 @@ void CHudAmmo::PaintMGAmmo( CWeaponDODBase *pWpn )
 
 	int xpos = 0;
 	int ypos = 0;
-	
+
 	int x, y, w, h;
 	GetBounds(x,y,w,h);
 
@@ -329,7 +329,7 @@ void CHudAmmo::PaintMGAmmo( CWeaponDODBase *pWpn )
 		//Haxoration! The box that contains the numbers must be in the same position
 		// in both the webley and mg34/mg42/30cal sprites.
 		DrawNumbers( m_iAmmo, xpos + 36, ypos + pFullClip->Height() - 16 );
-		
+
 		xpos += pFullClip->Width();
 		ypos += pFullClip->Height();
 	}
@@ -382,7 +382,7 @@ void CHudAmmo::PaintGunAmmo( CWeaponDODBase *pWpn )
 	if( pEmptyClip )
 	{
 		// base percent is how much of the bullet clip to always draw.
-		// total cropped height of the bullet sprite will be 
+		// total cropped height of the bullet sprite will be
 		// base percent + bullet height * bullets
 		float flBasePercent			= (float)pWpn->GetDODWpnData().m_iHudClipBaseHeight / (float)pWpn->GetDODWpnData().m_iHudClipHeight;
 		float flBulletHeightPercent = (float)pWpn->GetDODWpnData().m_iHudClipBulletHeight / (float)pWpn->GetDODWpnData().m_iHudClipHeight;
@@ -395,10 +395,10 @@ void CHudAmmo::PaintGunAmmo( CWeaponDODBase *pWpn )
 		int nOffset = (int)flDrawHeight;
 
 		pEmptyClip->DrawSelfCropped( xpos, ypos + nOffset, 0, nOffset, pEmptyClip->Width(), pEmptyClip->Height() - nOffset, Color(255,255,255,255) );
-		
+
 		ypos += pEmptyClip->Height();
 
-		xpos += pEmptyClip->Width() + 10;					
+		xpos += pEmptyClip->Width() + 10;
 	}
 
 	//how many full or partially full clips do we have?
@@ -432,7 +432,7 @@ void CHudAmmo::Paint( void )
 
 	if( !pWpn )
 		return;
-	
+
 	switch( pWpn->GetDODWpnData().m_WeaponType )
 	{
 	case WPN_TYPE_GRENADE:
@@ -452,7 +452,7 @@ void CHudAmmo::Paint( void )
 		break;
 
 	default:
-		PaintGunAmmo(pWpn);					
+		PaintGunAmmo(pWpn);
 		break;
 	}
 }
@@ -505,4 +505,3 @@ void CHudAmmo::DrawNumbers( int num, int x, int y )
 	m_pMGNumbers[num_working]->DrawSelf( xpos, ypos, m_clrIcon );
 	xpos += iconWidth;
 }
-

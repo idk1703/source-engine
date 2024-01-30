@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -20,7 +20,7 @@ class CAchievementPortalInfiniteFall : public CBaseAchievement
 	DECLARE_CLASS( CAchievementPortalInfiniteFall, CBaseAchievement );
 
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_WITH_GAME );
 		SetGameDirFilter( "portal" );
@@ -99,7 +99,7 @@ class CAchievementPortalLongJump : public CBaseAchievement
 	DECLARE_CLASS( CAchievementPortalLongJump, CBaseAchievement );
 
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_WITH_GAME );
 		SetGameDirFilter( "portal" );
@@ -136,7 +136,7 @@ protected:
 				{
 					// Add up how far we traveled since the last teleport
 					float flDist = pInPortal->GetAbsOrigin().AsVector2D().DistTo( m_vec2DPortalPosition );
-				
+
 					// Ignore small distances that can be caused by microadjustments in infinite falls
 					if ( flDist > 63.0f )
 					{
@@ -410,7 +410,7 @@ public:
 	{
 		ListenForGameEvent( "challenge_map_complete" );
 	}
-	
+
 protected:
 	virtual void FireGameEvent( IGameEvent* event )
 	{
@@ -497,7 +497,7 @@ DECLARE_ACHIEVEMENT( CAchievementPortalHitTurretWithTurret, ACHIEVEMENT_PORTAL_H
 class CAchievementPortalFindAllDinosaurs : public CBaseAchievement
 {
 	DECLARE_CLASS( CAchievementPortalFindAllDinosaurs, CBaseAchievement );
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_HAS_COMPONENTS | ACH_SAVE_GLOBAL );
 		m_iNumComponents = 26;
@@ -519,7 +519,7 @@ class CAchievementPortalFindAllDinosaurs : public CBaseAchievement
 			if ( id >= 0 && id < m_iNumComponents )
 			{
 				EnsureComponentBitSetAndEvaluate( id );
-				
+
 				// Update our Steam stat
 				steamapicontext->SteamUserStats()->SetStat( "PORTAL_TRANSMISSION_RECEIVED_STAT", m_iCount );
 			}

@@ -110,7 +110,7 @@ void CMDL::SetMDL( MDLHandle_t h )
 	if ( m_MDLHandle != MDLHANDLE_INVALID )
 	{
 		g_pMDLCache->AddRef( m_MDLHandle );
-		
+
 		studiohdr_t *pHdr = g_pMDLCache->LockStudioHdr( m_MDLHandle );
 
 		if ( pHdr )
@@ -229,7 +229,7 @@ void CMDL::Draw( const matrix3x4_t& rootToWorld, const matrix3x4_t *pBoneToWorld
 
 	Vector vecModelOrigin;
 	MatrixGetColumn( rootToWorld, 3, vecModelOrigin );
-	g_pStudioRender->DrawModel( NULL, info, const_cast<matrix3x4_t*>( pBoneToWorld ), 
+	g_pStudioRender->DrawModel( NULL, info, const_cast<matrix3x4_t*>( pBoneToWorld ),
 		pFlexWeights, NULL, vecModelOrigin, STUDIORENDER_DRAW_ENTIRE_MODEL );
 }
 
@@ -306,7 +306,7 @@ void CMDL::SetUpBones( const matrix3x4_t& rootToWorld, int nMaxBoneCount, matrix
 		{
 			int nSeqIndex = pSequenceLayers[ i ].m_nSequenceIndex;
 			if ( ( nSeqIndex >= 0 ) && ( nSeqIndex < nNumSeq ) )
-			{				
+			{
 				float flWeight = pSequenceLayers[ i ].m_flWeight;
 
 				float flLayerCycle;
@@ -349,7 +349,7 @@ void CMDL::SetUpBones( const matrix3x4_t& rootToWorld, int nMaxBoneCount, matrix
 		nMaxBoneCount = studioHdr.numbones();
 	}
 
-	for ( int i = 0; i < nMaxBoneCount; i++ ) 
+	for ( int i = 0; i < nMaxBoneCount; i++ )
 	{
 		// If it's not being used, fill with NAN for errors
 #ifdef _DEBUG
@@ -371,11 +371,11 @@ void CMDL::SetUpBones( const matrix3x4_t& rootToWorld, int nMaxBoneCount, matrix
 		QuaternionMatrix( q[i], boneMatrix );
 		MatrixSetColumn( pos[i], 3, boneMatrix );
 
-		if ( studioHdr.pBone(i)->parent == -1 ) 
+		if ( studioHdr.pBone(i)->parent == -1 )
 		{
 			ConcatTransforms( rootToWorld, boneMatrix, pBoneToWorld[i] );
-		} 
-		else 
+		}
+		else
 		{
 			ConcatTransforms( pBoneToWorld[ studioHdr.pBone(i)->parent ], boneMatrix, pBoneToWorld[i] );
 		}
@@ -386,7 +386,7 @@ void CMDL::SetUpBones( const matrix3x4_t& rootToWorld, int nMaxBoneCount, matrix
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CMDL::SetupBonesWithBoneMerge( const CStudioHdr *pMergeHdr, matrix3x4_t *pMergeBoneToWorld, 
+void CMDL::SetupBonesWithBoneMerge( const CStudioHdr *pMergeHdr, matrix3x4_t *pMergeBoneToWorld,
 								    const CStudioHdr *pFollow, const matrix3x4_t *pFollowBoneToWorld,
 									const matrix3x4_t &matModelToWorld )
 {
@@ -445,15 +445,14 @@ void CMDL::SetupBonesWithBoneMerge( const CStudioHdr *pMergeHdr, matrix3x4_t *pM
 			matrix3x4_t matBone;
 			QuaternionMatrix( q[iMergeBone], pos[iMergeBone], matBone );
 
-			if ( pMergeBones[iMergeBone].parent == -1 ) 
+			if ( pMergeBones[iMergeBone].parent == -1 )
 			{
 				ConcatTransforms( matModelToWorld, matBone, pMergeBoneToWorld[iMergeBone] );
-			} 
-			else 
+			}
+			else
 			{
 				ConcatTransforms( pMergeBoneToWorld[pMergeBones[iMergeBone].parent], matBone, pMergeBoneToWorld[iMergeBone] );
 			}
 		}
 	}
 }
-

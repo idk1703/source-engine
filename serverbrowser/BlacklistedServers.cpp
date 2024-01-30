@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -19,7 +19,7 @@ int __cdecl BlacklistedServerNameCompare(ListPanel *pPanel, const ListPanelItem 
 	blacklisted_server_t *pSvr1 = ServerBrowserDialog().GetBlacklistPage()->GetBlacklistedServer( p1.userData );
 	blacklisted_server_t *pSvr2 = ServerBrowserDialog().GetBlacklistPage()->GetBlacklistedServer( p2.userData );
 
-	if ( !pSvr1 && pSvr2 ) 
+	if ( !pSvr1 && pSvr2 )
 		return -1;
 	if ( !pSvr2 && pSvr1 )
 		return 1;
@@ -37,7 +37,7 @@ int __cdecl BlacklistedIPAddressCompare(ListPanel *pPanel, const ListPanelItem &
 	blacklisted_server_t *pSvr1 = ServerBrowserDialog().GetBlacklistPage()->GetBlacklistedServer( p1.userData );
 	blacklisted_server_t *pSvr2 = ServerBrowserDialog().GetBlacklistPage()->GetBlacklistedServer( p2.userData );
 
-	if ( !pSvr1 && pSvr2 ) 
+	if ( !pSvr1 && pSvr2 )
 		return -1;
 	if ( !pSvr2 && pSvr1 )
 		return 1;
@@ -60,7 +60,7 @@ int __cdecl BlacklistedAtCompare(ListPanel *pPanel, const ListPanelItem &p1, con
 	blacklisted_server_t *pSvr1 = ServerBrowserDialog().GetBlacklistPage()->GetBlacklistedServer( p1.userData );
 	blacklisted_server_t *pSvr2 = ServerBrowserDialog().GetBlacklistPage()->GetBlacklistedServer( p2.userData );
 
-	if ( !pSvr1 && pSvr2 ) 
+	if ( !pSvr1 && pSvr2 )
 		return -1;
 	if ( !pSvr2 && pSvr1 )
 		return 1;
@@ -78,7 +78,7 @@ int __cdecl BlacklistedAtCompare(ListPanel *pPanel, const ListPanelItem &p1, con
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CBlacklistedServers::CBlacklistedServers( vgui::Panel *parent ) : 
+CBlacklistedServers::CBlacklistedServers( vgui::Panel *parent ) :
 	vgui::PropertyPage( parent, "BlacklistedGames" )
 {
 	SetSize( 624, 278 );
@@ -184,7 +184,7 @@ void CBlacklistedServers::SaveBlacklistedList()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBlacklistedServers::AddServer( gameserveritem_t &server )
 {
@@ -209,7 +209,7 @@ void CBlacklistedServers::AddServer( gameserveritem_t &server )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 blacklisted_server_t *CBlacklistedServers::GetBlacklistedServer( int iServerID )
 {
@@ -217,7 +217,7 @@ blacklisted_server_t *CBlacklistedServers::GetBlacklistedServer( int iServerID )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBlacklistedServers::IsServerBlacklisted( gameserveritem_t &server )
 {
@@ -231,7 +231,7 @@ bool CBlacklistedServers::IsServerBlacklisted( gameserveritem_t &server )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBlacklistedServers::UpdateBlacklistUI( blacklisted_server_t *blackServer )
 {
@@ -257,7 +257,7 @@ void CBlacklistedServers::UpdateBlacklistUI( blacklisted_server_t *blackServer )
 	// construct a time string for blacklisted time
 	struct tm *now;
 	now = localtime( (time_t*)&blackServer->m_ulTimeBlacklistedAt );
-	if ( now ) 
+	if ( now )
 	{
 		char buf[64];
 		strftime(buf, sizeof(buf), "%a %d %b %I:%M%p", now);
@@ -281,7 +281,7 @@ void CBlacklistedServers::UpdateBlacklistUI( blacklisted_server_t *blackServer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBlacklistedServers::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
@@ -292,7 +292,7 @@ void CBlacklistedServers::ApplySchemeSettings(vgui::IScheme *pScheme)
 	if ( g_pFullFileSystem->FileExists( pszFileName, "MOD" ) )
 	{
 		pPathID = "MOD";
-	}	
+	}
 	LoadControlSettings( pszFileName, pPathID );
 
 	vgui::HFont hFont = pScheme->GetFont( "ListSmall", IsProportional() );
@@ -304,7 +304,7 @@ void CBlacklistedServers::ApplySchemeSettings(vgui::IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBlacklistedServers::OnPageShow( void )
 {
@@ -318,7 +318,7 @@ void CBlacklistedServers::OnPageShow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBlacklistedServers::GetSelectedServerID( void )
 {
@@ -386,7 +386,7 @@ void CBlacklistedServers::OnRemoveFromBlacklist()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBlacklistedServers::ClearServerList( void )
 {
@@ -428,7 +428,7 @@ void CBlacklistedServers::OnAddCurrentServer()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBlacklistedServers::OnImportBlacklist()
 {
@@ -447,7 +447,7 @@ void CBlacklistedServers::OnImportBlacklist()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBlacklistedServers::OnFileSelected( char const *fullpath )
 {
@@ -461,7 +461,7 @@ void CBlacklistedServers::OnFileSelected( char const *fullpath )
 
 //-----------------------------------------------------------------------------
 // Purpose: Parse posted messages
-//			 
+//
 //-----------------------------------------------------------------------------
 void CBlacklistedServers::OnCommand(const char *command)
 {

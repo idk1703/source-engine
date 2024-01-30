@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,7 +32,7 @@ static 	CSendProxyRecipients s_Recipients; // avoid calling constructor each tim
 abstract_class CDatatableStack
 {
 public:
-	
+
 							CDatatableStack( CSendTablePrecalc *pPrecalc, unsigned char *pStructBase, int objectID );
 
 	// This must be called before accessing properties.
@@ -45,9 +45,9 @@ public:
 	bool			IsCurProxyValid() const;
 	bool			IsPropProxyValid(int iProp ) const;
 	int				GetCurPropIndex() const;
-	
+
 	unsigned char*	GetCurStructBase() const;
-	
+
 	int				GetObjectID() const;
 
 	// Derived classes must implement this. The server gets one and the client gets one.
@@ -57,13 +57,13 @@ public:
 
 public:
 	CSendTablePrecalc *m_pPrecalc;
-	
+
 	enum
 	{
 		MAX_PROXY_RESULTS = 256
 	};
 
-	// These point at the various values that the proxies returned. They are setup once, then 
+	// These point at the various values that the proxies returned. They are setup once, then
 	// the properties index them.
 	unsigned char *m_pProxies[MAX_PROXY_RESULTS];
 	unsigned char *m_pStructBase;
@@ -72,7 +72,7 @@ public:
 protected:
 
 	const SendProp *m_pCurProp;
-	
+
 	int m_ObjectID;
 
 	bool m_bInitted;
@@ -95,13 +95,13 @@ inline int CDatatableStack::GetCurPropIndex() const
 
 inline unsigned char* CDatatableStack::GetCurStructBase() const
 {
-	return m_pProxies[m_pPrecalc->m_PropProxyIndices[m_iCurProp]]; 
+	return m_pProxies[m_pPrecalc->m_PropProxyIndices[m_iCurProp]];
 }
 
 inline void CDatatableStack::SeekToProp( int iProp )
 {
 	Assert( m_bInitted );
-	
+
 	m_iCurProp = iProp;
 	m_pCurProp = m_pPrecalc->GetProp( iProp );
 }
@@ -123,16 +123,16 @@ inline unsigned char* UpdateRoutesExplicit_Template( DTStack *pStack, ProxyCalle
 	unsigned char **pTest = &pStack->m_pProxies[iPropProxyIndex];
 	if ( *pTest != (unsigned char*)0xFFFFFFFF )
 		return *pTest;
-	
+
 	// Ok.. setup this proxy.
 	unsigned char *pStructBase = pStack->m_pStructBase;
-	
+
 	CSendTablePrecalc::CProxyPath &proxyPath = pStack->m_pPrecalc->m_ProxyPaths[iPropProxyIndex];
 	for ( unsigned short i=0; i < proxyPath.m_nEntries; i++ )
 	{
 		CSendTablePrecalc::CProxyPathEntry *pEntry = &pStack->m_pPrecalc->m_ProxyPathEntries[proxyPath.m_iFirstEntry + i];
 		int iProxy = pEntry->m_iProxy;
-		
+
 		if ( pStack->m_pProxies[iProxy] == (unsigned char*)0xFFFFFFFF )
 		{
 			pStack->m_pProxies[iProxy] = ProxyCaller::CallProxy( pStack, pStructBase, pEntry->m_iDatatableProp );
@@ -140,12 +140,12 @@ inline unsigned char* UpdateRoutesExplicit_Template( DTStack *pStack, ProxyCalle
 			{
 				*pTest = NULL;
 				break;
-			}			
+			}
 		}
-		
+
 		pStructBase = pStack->m_pProxies[iProxy];
 	}
-	
+
 	return pStructBase;
 }
 
@@ -174,10 +174,10 @@ public:
 		if ( !pProp )
 			return NULL;
 
-		pProp->GetDataTableProxyFn()( 
+		pProp->GetDataTableProxyFn()(
 			pProp,
 			&pVal,
-			pStructBase + pProp->GetOffset(), 
+			pStructBase + pProp->GetOffset(),
 			GetObjectID()
 			);
 
@@ -186,13 +186,13 @@ public:
 
 	virtual void RecurseAndCallProxies( CSendNode *pNode, unsigned char *pStructBase )
 	{
-		// Remember where the game code pointed us for this datatable's data so 
+		// Remember where the game code pointed us for this datatable's data so
 		m_pProxies[pNode->GetRecursiveProxyIndex()] = pStructBase;
 
 		for ( int iChild=0; iChild < pNode->GetNumChildren(); iChild++ )
 		{
 			CSendNode *pCurChild = pNode->GetChild( iChild );
-			
+
 			unsigned char *pNewStructBase = NULL;
 			if ( pStructBase )
 			{
@@ -211,25 +211,25 @@ public:
 			const RecvProp *pProp = pStack->m_pDecoder->GetDatatableProp( iDatatableProp );
 
 			void *pVal = NULL;
-			pProp->GetDataTableProxyFn()( 
+			pProp->GetDataTableProxyFn()(
 				pProp,
-				&pVal, 
-				pStructBase + pProp->GetOffset(), 
+				&pVal,
+				pStructBase + pProp->GetOffset(),
 				pStack->m_ObjectID
 				);
-				
+
 			return (unsigned char*)pVal;
 		}
 	};
-	
+
 	inline unsigned char* UpdateRoutesExplicit()
 	{
 		return UpdateRoutesExplicit_Template( this, (CRecvProxyCaller*)NULL );
 	}
-			
+
 
 public:
-	
+
 	CRecvDecoder	*m_pDecoder;
 };
 
@@ -259,29 +259,29 @@ public:
 		else
 		{
 			// we don't care about recipients, just provide a valid pointer
-			pRecipients = &s_Recipients; 
+			pRecipients = &s_Recipients;
 		}
 
-		unsigned char *pRet = (unsigned char*)pProp->GetDataTableProxyFn()( 
+		unsigned char *pRet = (unsigned char*)pProp->GetDataTableProxyFn()(
 			pProp,
-			pStructBase, 
-			pStructBase + pProp->GetOffset(), 
+			pStructBase,
+			pStructBase + pProp->GetOffset(),
 			pRecipients,
 			GetObjectID()
 			);
-	
+
 		return pRet;
 	}
 
 	virtual void RecurseAndCallProxies( CSendNode *pNode, unsigned char *pStructBase )
 	{
-		// Remember where the game code pointed us for this datatable's data so 
+		// Remember where the game code pointed us for this datatable's data so
 		m_pProxies[pNode->GetRecursiveProxyIndex()] = pStructBase;
 
 		for ( int iChild=0; iChild < pNode->GetNumChildren(); iChild++ )
 		{
 			CSendNode *pCurChild = pNode->GetChild( iChild );
-			
+
 			unsigned char *pNewStructBase = NULL;
 			if ( pStructBase )
 			{
@@ -301,28 +301,28 @@ public:
 		static inline unsigned char* CallProxy( CServerDatatableStack *pStack, unsigned char *pStructBase, unsigned short iDatatableProp )
 		{
 			const SendProp *pProp = pStack->m_pPrecalc->GetDatatableProp( iDatatableProp );
-			
-			return (unsigned char*)pProp->GetDataTableProxyFn()( 
+
+			return (unsigned char*)pProp->GetDataTableProxyFn()(
 				pProp,
-				pStructBase, 
-				pStructBase + pProp->GetOffset(), 
+				pStructBase,
+				pStructBase + pProp->GetOffset(),
 				&s_Recipients,
 				pStack->GetObjectID()
 				);
 		}
 	};
-	
+
 	inline unsigned char* UpdateRoutesExplicit()
 	{
 		return UpdateRoutesExplicit_Template( this, (CSendProxyCaller*)NULL );
 	}
 
-	
+
 	const SendProp*	GetCurProp() const;
 
 
 public:
-	
+
 	CSendTablePrecalc					*m_pPrecalc;
 	CUtlMemory<CSendProxyRecipients>	*m_pRecipients;
 };

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -11,8 +11,8 @@
 #endif
 
 
-#include "cbase.h" 
-#include "shake.h" 
+#include "cbase.h"
+#include "shake.h"
 #include "weapon_dodsemiauto.h"
 #include "dod_shareddefs.h"
 
@@ -26,7 +26,7 @@ class CDODSniperWeapon : public CDODSemiAutoWeapon
 {
 public:
 	DECLARE_CLASS( CDODSniperWeapon, CDODSemiAutoWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 #ifndef CLIENT_DLL
@@ -56,7 +56,7 @@ public:
 
 	// Is the weapon completely zoomed, finished the raising animation
 	bool IsFullyZoomed( void );
-	
+
 	virtual bool ShouldDrawCrosshair( void );
 
 	virtual bool HideViewModelWhenZoomed( void ) { return true; }
@@ -101,7 +101,7 @@ private:
 	float m_flRezoomTime;
 
 	float m_flZoomInTime;
-	float m_flZoomOutTime;	 
+	float m_flZoomOutTime;
 
 	bool m_bRezoomAfterReload;
 	float m_flZoomChangeTime;

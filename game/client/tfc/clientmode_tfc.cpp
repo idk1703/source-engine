@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -63,7 +63,7 @@ IVModeManager *modemanager = ( IVModeManager * )&g_ModeManager;
 void CTFCModeManager::Init()
 {
 	g_pClientMode = GetClientModeNormal();
-	
+
 	PanelMetaClassMgr()->LoadMetaClassDefinitionFile( SCREEN_FILE );
 }
 
@@ -78,7 +78,7 @@ void CTFCModeManager::LevelShutdown( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ClientModeTFCNormal::ClientModeTFCNormal()
 {
@@ -133,7 +133,3 @@ void ClientModeTFCNormal::FireGameEvent( KeyValues * event)
 void ClientModeTFCNormal::PostRenderVGui()
 {
 }
-
-
-
-

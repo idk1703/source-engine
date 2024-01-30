@@ -12,7 +12,7 @@
 #endif
 
 // Maximum string length in item create APIs
-const int k_cchCreateItemLen	= 64;	
+const int k_cchCreateItemLen	= 64;
 
 // Operators for BAddNewItemCriteria
 enum EItemCriteriaOperator
@@ -59,16 +59,16 @@ class CItemSelectionCriteria
 {
 public:
 	// Constructors and destructor
-	CItemSelectionCriteria() : 
+	CItemSelectionCriteria() :
 	  m_bItemLevelSet( false ),
 		  m_unItemLevel( 0 ),
 		  m_bQualitySet( false ),
-		  m_nItemQuality( k_unItemQuality_Any ), 
+		  m_nItemQuality( k_unItemQuality_Any ),
 		  m_unInitialInventory( 0 ),
 		  m_bInitialQuantitySet( false ),
 		  m_unInitialQuantity( 1 ),
 		  m_bIgnoreEnabledFlag( false )
-	  { 
+	  {
 	  }
 
 	  CItemSelectionCriteria( const CItemSelectionCriteria &that );
@@ -122,7 +122,7 @@ public:
 	  bool			BSerializeToMsg( CSOItemCriteria & msg ) const;
 	  bool			BDeserializeFromMsg( const CSOItemCriteria & msg );
 
-	  // Evaluates an item definition against this criteria. Returns true if 
+	  // Evaluates an item definition against this criteria. Returns true if
 	  // the definition passes the filter
 	  bool			BEvaluate( const CEconItemDefinition* pItemDef ) const;
 
@@ -160,7 +160,7 @@ private:
 		virtual	const char		*GetValue( void ) const OVERRIDE  { Assert(0); return NULL; }
 
 	private:
-		// Returns if the given KeyValues block passes this condition 
+		// Returns if the given KeyValues block passes this condition
 		// Performs common checks and calls BInternalEvaluate
 		bool BEvaluate( KeyValues *pKVItem ) const;
 

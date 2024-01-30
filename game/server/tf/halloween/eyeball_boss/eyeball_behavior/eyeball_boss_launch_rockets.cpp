@@ -160,7 +160,7 @@ ActionResult< CEyeballBoss > CEyeballBossLaunchRockets::Update( CEyeballBoss *me
 			AngleVectors( launchAngles, &forward, NULL, NULL );
 
 			Vector vecVelocity = forward * rocketSpeed;
-			pRocket->SetAbsVelocity( vecVelocity );	
+			pRocket->SetAbsVelocity( vecVelocity );
 			pRocket->SetupInitialTransmittedGrenadeVelocity( vecVelocity );
 
 			pRocket->EmitSound( "Weapon_RPG.SingleCrit" );
@@ -179,4 +179,3 @@ ActionResult< CEyeballBoss > CEyeballBossLaunchRockets::Update( CEyeballBoss *me
 
 	return Continue();
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -46,7 +46,7 @@ public:
 	void Init( CBaseEntity *pEntity );
 
 	void AttachEdict( edict_t *pRequiredEdict = NULL );
-	
+
 	// Methods to get the entindex + edict
 	int	entindex() const;
 	edict_t *edict();
@@ -55,7 +55,7 @@ public:
 	// Sets the edict pointer (for swapping edicts)
 	void SetEdict( edict_t *pEdict );
 
-	// All these functions call through to CNetStateMgr. 
+	// All these functions call through to CNetStateMgr.
 	// See CNetStateMgr for details about these functions.
 	void NetworkStateForceUpdate();
 	void NetworkStateChanged();
@@ -80,7 +80,7 @@ public:
 	//
 	// Set back to zero to disable the feature.
 	//
-	// This feature works on top of manual mode. 
+	// This feature works on top of manual mode.
 	// - If you turn it on and manual mode is off, it will autodetect changes every N seconds.
 	// - If you turn it on and manual mode is on, then every N seconds it will only say there
 	//   is a change if you've called NetworkStateChanged.
@@ -177,13 +177,13 @@ inline void CServerNetworkProperty::SetNetworkParent( EHANDLE hParent )
 // Methods related to the net state mgr
 //-----------------------------------------------------------------------------
 inline void CServerNetworkProperty::NetworkStateForceUpdate()
-{ 
+{
 	if ( m_pPev )
 		m_pPev->StateChanged();
 }
 
 inline void CServerNetworkProperty::NetworkStateChanged()
-{ 
+{
 	// If we're using the timer, then ignore this call.
 	if ( m_TimerEvent.IsRegistered() )
 	{
@@ -199,7 +199,7 @@ inline void CServerNetworkProperty::NetworkStateChanged()
 }
 
 inline void CServerNetworkProperty::NetworkStateChanged( unsigned short varOffset )
-{ 
+{
 	// If we're using the timer, then ignore this call.
 	if ( m_TimerEvent.IsRegistered() )
 	{

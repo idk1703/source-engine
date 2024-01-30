@@ -34,7 +34,7 @@ void CSparseMatrix::SetDimensions( int nNumRows, int nNumCols )
 }
 
 
-void CSparseMatrix::SetElement( int nRow, int nCol, float flValue ) 
+void CSparseMatrix::SetElement( int nRow, int nCol, float flValue )
 {
 	Assert( nCol < m_nNumCols );
 	int nCount = m_rowDescriptors[nRow].m_nNonZeroCount;
@@ -135,7 +135,3 @@ void CSparseMatrix::AppendElement( int nRow, int nColumn, float flValue )
 		m_entries.AddToTail( newDesc );
 	}
 }
-	
-	
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -125,7 +125,7 @@ public:
 	// Schedules a piece of memory for removal
 public:
 	void RemoveBytes( void *pos, int length );
-	
+
 	template< typename T >
 	void RemoveElements( T *ptr, int count = 1 ) { RemoveBytes( ( byte * ) ptr, count * sizeof( T ) ); }
 

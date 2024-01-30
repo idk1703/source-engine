@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -25,7 +25,7 @@ public:
 	void			UpdateCharging( float percentage );
 	void			UpdateDischarging( void );
 
-private:	
+private:
 
 	bool			SetupEmitters( void );
 	inline float	GetStateDurationPercentage( void );
@@ -34,7 +34,7 @@ private:
 	float			m_flDuration;
 	float			m_flStartTime;
 	TimedEvent		m_tParticleSpawn;
-	
+
 	CSmartPtr<CSimpleEmitter>		m_pSimpleEmitter;
 	CSmartPtr<CParticleAttractor>	m_pAttractorEmitter;
 };
@@ -46,7 +46,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_AlyxEmpEffect, DT_AlyxEmpEffect, CAlyxEmpEffect )
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : RenderGroup_t
 //-----------------------------------------------------------------------------
 RenderGroup_t C_AlyxEmpEffect::GetRenderGroup( void )
@@ -55,8 +55,8 @@ RenderGroup_t C_AlyxEmpEffect::GetRenderGroup( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_AlyxEmpEffect::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -71,7 +71,7 @@ void C_AlyxEmpEffect::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_AlyxEmpEffect::SetupEmitters( void )
 {
@@ -101,8 +101,8 @@ bool C_AlyxEmpEffect::SetupEmitters( void )
 #define	EMP_PARTICLES "effects/ar2_altfire1b"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : percentage - 
+// Purpose:
+// Input  : percentage -
 //-----------------------------------------------------------------------------
 void C_AlyxEmpEffect::UpdateIdle( float percentage )
 {
@@ -133,7 +133,7 @@ void C_AlyxEmpEffect::UpdateIdle( float percentage )
 	int numParticles = floor( 4.0f * percentage );
 
 	float dTime = gpGlobals->frametime;
-	
+
 	while ( m_tParticleSpawn.NextEvent( dTime ) )
 	{
 		for ( int i = 0; i < numParticles; i++ )
@@ -152,7 +152,7 @@ void C_AlyxEmpEffect::UpdateIdle( float percentage )
 
 			if ( sParticle == NULL )
 				return;
-			
+
 			sParticle->m_vecVelocity	= Vector(0,0,8);
 			sParticle->m_flDieTime		= 0.5f;
 			sParticle->m_flLifetime		= 0.0f;
@@ -178,8 +178,8 @@ void C_AlyxEmpEffect::UpdateIdle( float percentage )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : percentage - 
+// Purpose:
+// Input  : percentage -
 //-----------------------------------------------------------------------------
 void C_AlyxEmpEffect::UpdateCharging( float percentage )
 {
@@ -198,7 +198,7 @@ void C_AlyxEmpEffect::UpdateCharging( float percentage )
 	SimpleParticle *sParticle;
 
 	float dTime = gpGlobals->frametime;
-	
+
 	while ( m_tParticleSpawn.NextEvent( dTime ) )
 	{
 		// Do the core effects
@@ -206,7 +206,7 @@ void C_AlyxEmpEffect::UpdateCharging( float percentage )
 
 		if ( sParticle == NULL )
 			return;
-		
+
 		sParticle->m_vecVelocity	= vec3_origin;
 		sParticle->m_flDieTime		= 0.1f;
 		sParticle->m_flLifetime		= 0.0f;
@@ -255,7 +255,7 @@ void C_AlyxEmpEffect::UpdateCharging( float percentage )
 
 		if ( sParticle == NULL )
 			return;
-		
+
 		sParticle->m_vecVelocity	= Vector(0,0,8);
 		sParticle->m_flDieTime		= 0.5f;
 		sParticle->m_flLifetime		= 0.0f;
@@ -280,8 +280,8 @@ void C_AlyxEmpEffect::UpdateCharging( float percentage )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : percentage - 
+// Purpose:
+// Input  : percentage -
 //-----------------------------------------------------------------------------
 void C_AlyxEmpEffect::UpdateDischarging( void )
 {
@@ -300,7 +300,7 @@ void C_AlyxEmpEffect::UpdateDischarging( void )
 	SimpleParticle *sParticle;
 
 	float dTime = gpGlobals->frametime;
-	
+
 	while ( m_tParticleSpawn.NextEvent( dTime ) )
 	{
 		// Base of the core effect
@@ -308,7 +308,7 @@ void C_AlyxEmpEffect::UpdateDischarging( void )
 
 		if ( sParticle == NULL )
 			return;
-		
+
 		sParticle->m_vecVelocity	= vec3_origin;
 		sParticle->m_flDieTime		= 0.25f;
 		sParticle->m_flLifetime		= 0.0f;
@@ -332,7 +332,7 @@ void C_AlyxEmpEffect::UpdateDischarging( void )
 
 		if ( sParticle == NULL )
 			return;
-		
+
 		sParticle->m_vecVelocity	= vec3_origin;
 		sParticle->m_flDieTime		= 0.1f;
 		sParticle->m_flLifetime		= 0.0f;
@@ -359,7 +359,7 @@ void C_AlyxEmpEffect::UpdateDischarging( void )
 
 		if ( sParticle == NULL )
 			return;
-		
+
 		sParticle->m_vecVelocity	= RandomVector( -32.0f, 32.0f );
 		sParticle->m_flDieTime		= 0.2f;
 		sParticle->m_flLifetime		= 0.0f;
@@ -403,7 +403,7 @@ void C_AlyxEmpEffect::UpdateDischarging( void )
 
 		if ( sParticle == NULL )
 			return;
-		
+
 		sParticle->m_vecVelocity	= Vector(0,0,2);
 		sParticle->m_flDieTime		= 0.5f;
 		sParticle->m_flLifetime		= 0.0f;
@@ -428,7 +428,7 @@ void C_AlyxEmpEffect::UpdateDischarging( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : inline float
 //-----------------------------------------------------------------------------
 inline float C_AlyxEmpEffect::GetStateDurationPercentage( void )
@@ -440,7 +440,7 @@ inline float C_AlyxEmpEffect::GetStateDurationPercentage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_AlyxEmpEffect::NotifyShouldTransmit( ShouldTransmitState_t state )
 {
@@ -460,7 +460,7 @@ void C_AlyxEmpEffect::NotifyShouldTransmit( ShouldTransmitState_t state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_AlyxEmpEffect::ClientThink( void )
 {

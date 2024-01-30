@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -47,7 +47,7 @@ public:
 typedef void (*RecvVarProxyFn)( const CRecvProxyData *pData, void *pStruct, void *pOut );
 
 // ------------------------------------------------------------------------ //
-// ArrayLengthRecvProxies are optionally used to get the length of the 
+// ArrayLengthRecvProxies are optionally used to get the length of the
 // incoming array when it changes.
 // ------------------------------------------------------------------------ //
 typedef void (*ArrayLengthRecvProxyFn)( void *pStruct, int objectID, int currentArrayLength );
@@ -153,13 +153,13 @@ private:
 	// If this is an array (DPT_Array).
 	RecvProp				*m_pArrayProp;
 	ArrayLengthRecvProxyFn	m_ArrayLengthProxy;
-	
+
 	RecvVarProxyFn			m_ProxyFn;
 	DataTableRecvVarProxyFn	m_DataTableProxyFn;	// For RDT_DataTable.
 
 	RecvTable				*m_pDataTable;		// For RDT_DataTable.
 	int						m_Offset;
-	
+
 	int						m_ElementStride;
 	int						m_nElements;
 
@@ -222,13 +222,13 @@ inline int RecvTable::GetNumProps()
 
 inline RecvProp* RecvTable::GetProp( int i )
 {
-	Assert( i >= 0 && i < m_nProps ); 
-	return &m_pProps[i]; 
+	Assert( i >= 0 && i < m_nProps );
+	return &m_pProps[i];
 }
 
 inline const char* RecvTable::GetName()
 {
-	return m_pNetTableName; 
+	return m_pNetTableName;
 }
 
 inline void RecvTable::SetInitialized( bool bInitialized )
@@ -316,28 +316,28 @@ void DataTableRecvProxy_StaticDataTable(const RecvProp *pProp, void **pOut, void
 // PointerDataTable does *pOut = *((void**)pData)   (ie: pData is a pointer to the object to decode into).
 void DataTableRecvProxy_PointerDataTable(const RecvProp *pProp, void **pOut, void *pData, int objectID);
 
-	
+
 RecvProp RecvPropFloat(
-	const char *pVarName, 
+	const char *pVarName,
 	int offset,
 	int sizeofVar=SIZEOF_IGNORE,	// Handled by RECVINFO macro, but set to SIZEOF_IGNORE if you don't want to bother.
-	int flags=0, 
+	int flags=0,
 	RecvVarProxyFn varProxy=RecvProxy_FloatToFloat
 	);
 
 RecvProp RecvPropVector(
-	const char *pVarName, 
-	int offset, 
+	const char *pVarName,
+	int offset,
 	int sizeofVar=SIZEOF_IGNORE,	// Handled by RECVINFO macro, but set to SIZEOF_IGNORE if you don't want to bother.
-	int flags=0, 
+	int flags=0,
 	RecvVarProxyFn varProxy=RecvProxy_VectorToVector
 	);
 
 RecvProp RecvPropVectorXY(
-	const char *pVarName, 
-	int offset, 
+	const char *pVarName,
+	int offset,
 	int sizeofVar=SIZEOF_IGNORE,	// Handled by RECVINFO macro, but set to SIZEOF_IGNORE if you don't want to bother.
-	int flags=0, 
+	int flags=0,
 	RecvVarProxyFn varProxy=RecvProxy_VectorXYToVectorXY
 	);
 
@@ -347,19 +347,19 @@ RecvProp RecvPropVectorXY(
 #if 0 // We can't ship this since it changes the size of DTVariant to be 20 bytes instead of 16 and that breaks MODs!!!
 
 RecvProp RecvPropQuaternion(
-	const char *pVarName, 
-	int offset, 
+	const char *pVarName,
+	int offset,
 	int sizeofVar=SIZEOF_IGNORE,	// Handled by RECVINFO macro, but set to SIZEOF_IGNORE if you don't want to bother.
-	int flags=0, 
+	int flags=0,
 	RecvVarProxyFn varProxy=RecvProxy_QuaternionToQuaternion
 	);
 #endif
 
 RecvProp RecvPropInt(
-	const char *pVarName, 
-	int offset, 
+	const char *pVarName,
+	int offset,
 	int sizeofVar=SIZEOF_IGNORE,	// Handled by RECVINFO macro, but set to SIZEOF_IGNORE if you don't want to bother.
-	int flags=0, 
+	int flags=0,
 	RecvVarProxyFn varProxy=0
 	);
 
@@ -388,7 +388,7 @@ RecvProp RecvPropArray3(
 	DataTableRecvVarProxyFn varProxy=DataTableRecvProxy_StaticDataTable
 	);
 
-// Use the macro to let it automatically generate a table name. You shouldn't 
+// Use the macro to let it automatically generate a table name. You shouldn't
 // ever need to reference the table name. If you want to exclude this array, then
 // reference the name of the variable in varTemplate.
 RecvProp InternalRecvPropArray(
@@ -474,52 +474,52 @@ inline int RecvProp::GetFlags() const
 
 inline const char* RecvProp::GetName() const
 {
-	return m_pVarName; 
+	return m_pVarName;
 }
 
 inline SendPropType RecvProp::GetType() const
 {
-	return m_RecvType; 
+	return m_RecvType;
 }
 
-inline RecvTable* RecvProp::GetDataTable() const 
+inline RecvTable* RecvProp::GetDataTable() const
 {
-	return m_pDataTable; 
+	return m_pDataTable;
 }
 
 inline void RecvProp::SetDataTable( RecvTable *pTable )
 {
-	m_pDataTable = pTable; 
+	m_pDataTable = pTable;
 }
 
-inline RecvVarProxyFn RecvProp::GetProxyFn() const 
+inline RecvVarProxyFn RecvProp::GetProxyFn() const
 {
-	return m_ProxyFn; 
+	return m_ProxyFn;
 }
 
 inline void RecvProp::SetProxyFn( RecvVarProxyFn fn )
 {
-	m_ProxyFn = fn; 
+	m_ProxyFn = fn;
 }
 
 inline DataTableRecvVarProxyFn RecvProp::GetDataTableProxyFn() const
 {
-	return m_DataTableProxyFn; 
+	return m_DataTableProxyFn;
 }
 
 inline void RecvProp::SetDataTableProxyFn( DataTableRecvVarProxyFn fn )
 {
-	m_DataTableProxyFn = fn; 
+	m_DataTableProxyFn = fn;
 }
 
-inline int RecvProp::GetOffset() const	
+inline int RecvProp::GetOffset() const
 {
-	return m_Offset; 
+	return m_Offset;
 }
 
 inline void RecvProp::SetOffset( int o )
 {
-	m_Offset = o; 
+	m_Offset = o;
 }
 
 inline RecvProp* RecvProp::GetArrayProp() const

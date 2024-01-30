@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@ END_RECV_TABLE()
 void C_OrderPlayer::GetTargetDescription( char *pDest, int bufferSize )
 {
 	pDest[0] = 0;
-	
+
 	// Order target
 	if ( !m_iTargetEntIndex )
 		return;
@@ -32,7 +32,3 @@ void C_OrderPlayer::GetTargetDescription( char *pDest, int bufferSize )
 		pPlayer->GetTargetDescription( pDest, bufferSize );
 	}
 }
-
-
-
-

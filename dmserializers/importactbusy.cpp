@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -52,7 +52,7 @@ void InstallActBusyImporter( IDataModel *pFactory )
 void CImportActBusy::SerializeHeader( CUtlBuffer &buf )
 {
 	buf.Printf( "// \"act busy name\"\t\tThis is the name that a mapmaker must specify in the hint node.\n" );
-	buf.Printf( "// {\n" ); 
+	buf.Printf( "// {\n" );
 	buf.Printf( "// \t\"busy_anim\"\t\t\t\"Activity Name\".\n" );
 	buf.Printf( "// \t\"entry_anim\"\t\t\"Activity Name\"\n" );
 	buf.Printf( "// \t\"exit_anim\"\t\t\t\"Activity Name\"\n" );

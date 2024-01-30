@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -23,7 +23,7 @@ ScrollableEditablePanel::ScrollableEditablePanel( vgui::Panel *pParent, vgui::Ed
 	m_pChild = pChild;
 	m_pChild->SetParent( this );
 
-	m_pScrollBar = new vgui::ScrollBar( this, "VerticalScrollBar", true ); 
+	m_pScrollBar = new vgui::ScrollBar( this, "VerticalScrollBar", true );
 	m_pScrollBar->SetWide( 16 );
 	m_pScrollBar->SetAutoResize( PIN_TOPRIGHT, AUTORESIZE_DOWN, 0, 0, -16, 0 );
 	m_pScrollBar->AddActionSignalTarget( this );
@@ -71,7 +71,7 @@ void ScrollableEditablePanel::OnScrollBarSliderMoved()
 	InvalidateLayout();
 
 	int nScrollAmount = m_pScrollBar->GetValue();
-	m_pChild->SetPos( 0, -nScrollAmount ); 
+	m_pChild->SetPos( 0, -nScrollAmount );
 }
 
 //-----------------------------------------------------------------------------
@@ -83,4 +83,3 @@ void ScrollableEditablePanel::OnMouseWheeled(int delta)
 	val -= (delta * 50);
 	m_pScrollBar->SetValue( val );
 }
-

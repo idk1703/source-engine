@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -83,7 +83,7 @@ public:
 abstract_class IShaderDLLInternal
 {
 public:
-	// Here's where the app systems get to learn about each other 
+	// Here's where the app systems get to learn about each other
 	virtual bool Connect( CreateInterfaceFn factory, bool bIsMaterialSystem ) = 0;
 	virtual void Disconnect( bool bIsMaterialSystem ) = 0;
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -78,4 +78,3 @@ inline CMeshBuilder* ParticleDraw::GetMeshBuilder()
 }
 
 #endif
-

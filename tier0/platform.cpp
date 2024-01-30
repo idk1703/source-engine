@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -42,7 +42,7 @@ static double g_PerformanceCounterToUS;
 static LARGE_INTEGER g_ClockStart;
 static bool s_bTimeInitted;
 
-// Benchmark mode uses this heavy-handed method 
+// Benchmark mode uses this heavy-handed method
 static bool g_bBenchmarkMode = false;
 static double g_FakeBenchmarkTime = 0;
 static double g_FakeBenchmarkTimeInc = 1.0 / 66.0;
@@ -137,7 +137,7 @@ void GetCurrentDate( int *pDay, int *pMonth, int *pYear )
 }
 
 
-// Wraps the thread-safe versions of ctime. buf must be at least 26 bytes 
+// Wraps the thread-safe versions of ctime. buf must be at least 26 bytes
 char *Plat_ctime( const time_t *timep, char *buf, size_t bufsize )
 {
 	if ( EINVAL == ctime_s( buf, bufsize, timep ) )
@@ -176,7 +176,7 @@ void Plat_ExitProcess( int nCode )
 #elif defined(_PS3)
 	// We do not use this path to exit on PS3 (naturally), rather we want a clear crash:
 	int *x = NULL; *x = 1;
-#else	
+#else
 	_exit( nCode );
 #endif
 }
@@ -206,7 +206,7 @@ void Plat_ExitProcessWithError( int nCode, bool bGenerateMinidump )
 
 void Plat_SetExitProcessWithErrorCB( ExitProcessWithErrorCBFn pfnCB )
 {
-	g_pfnExitProcessWithErrorCB = pfnCB;	
+	g_pfnExitProcessWithErrorCB = pfnCB;
 }
 
 // Wraps the thread-safe versions of gmtime
@@ -262,7 +262,7 @@ bool vtune( bool resume )
 		VTResume();
 		return true;
 
-	} 
+	}
 	else if( !resume && VTPause )
 	{
 		VTPause();
@@ -306,14 +306,14 @@ const tchar *Plat_GetCommandLine()
 
 bool GetMemoryInformation( MemoryInformation *pOutMemoryInfo )
 {
-	if ( !pOutMemoryInfo ) 
+	if ( !pOutMemoryInfo )
 		return false;
 
 	MEMORYSTATUSEX	memStat;
 	ZeroMemory( &memStat, sizeof( MEMORYSTATUSEX ) );
 	memStat.dwLength = sizeof( MEMORYSTATUSEX );
 
-	if ( !GlobalMemoryStatusEx( &memStat ) ) 
+	if ( !GlobalMemoryStatusEx( &memStat ) )
 		return false;
 
 	const uint cOneMb = 1024 * 1024;
@@ -365,7 +365,7 @@ bool Is64BitOS()
 
 	static BOOL bIs64bit = FALSE;
 	static bool bInitialized = false;
-	if ( bInitialized ) 
+	if ( bInitialized )
 		return bIs64bit == (BOOL)TRUE;
 	else
 	{
@@ -376,7 +376,7 @@ bool Is64BitOS()
 
 
 // -------------------------------------------------------------------------------------------------- //
-// Memory stuff. 
+// Memory stuff.
 //
 // DEPRECATED. Still here to support binary back compatability of tier0.dll
 //

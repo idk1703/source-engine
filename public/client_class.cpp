@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -12,5 +12,3 @@
 #include "tier0/memdbgon.h"
 
 ClientClass *g_pClientClassHead=0;
-
-

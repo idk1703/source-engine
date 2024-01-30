@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,7 @@ CLIENTEFFECT_REGISTER_BEGIN( PrecacheGroundLine )
 CLIENTEFFECT_MATERIAL( "player/support/mortarline" )
 CLIENTEFFECT_REGISTER_END()
 
-static CUtlLinkedList< CGroundLine*, unsigned short >	s_GroundLines; 
+static CUtlLinkedList< CGroundLine*, unsigned short >	s_GroundLines;
 
 // ---------------------------------------------------------------------- //
 // Helpers.
@@ -100,7 +100,7 @@ Vector FindBestSurfacePoint(const Vector &vPos)
 bool BinSearchSegments(const Vector &vStart, const Vector &vEnd1, const Vector &vEnd2, int nIterations, Vector *out)
 {
 	trace_t trace;
-	
+
 	// If what was passed into us already intersects then there's nothing we can do.
 	UTIL_TraceLine(vStart, vEnd2, MASK_SOLID_BRUSHONLY, NULL, COLLISION_GROUP_NONE, &trace);
 	if(trace.fraction < 1)
@@ -129,7 +129,7 @@ Vector SnapToPlane(const Vector &v)
 return v;
 
 	trace_t trace;
-	UTIL_TraceLine(Vector(v[0], v[1], v[2] + 50), Vector(v[0], v[1], v[2] - 50), 
+	UTIL_TraceLine(Vector(v[0], v[1], v[2] + 50), Vector(v[0], v[1], v[2] - 50),
 		MASK_SOLID_BRUSHONLY, NULL, COLLISION_GROUP_NONE, &trace);
 	if(trace.fraction < 1)
 		return Vector(v[0], v[1], trace.endpos[2] + 3);
@@ -160,7 +160,7 @@ CGroundLine::CGroundLine()
 CGroundLine::~CGroundLine()
 {
 	s_GroundLines.Remove( m_ListHandle );
-	
+
 	m_vStart.Init();
 	m_vEnd.Init();
 	m_LineWidth = 1;
@@ -175,8 +175,8 @@ bool CGroundLine::Init(const char *pMaterialName)
 
 
 void CGroundLine::SetParameters(
-	const Vector &vStart, 
-	const Vector &vEnd, 
+	const Vector &vStart,
+	const Vector &vEnd,
 	const Vector &vStartColor,	// Color values 0-1
 	const Vector &vEndColor,
 	float alpha,
@@ -296,7 +296,7 @@ void CGroundLine::Draw()
 		return;
 	if ( !IsVisible() )
 		return;
-	
+
 	float flAlpha = m_Alpha;
 	if( g_pClientMode == ClientModeCommander() )
 	{
@@ -305,7 +305,7 @@ void CGroundLine::Draw()
 
 	CBeamSegDraw beamDraw;
 	beamDraw.Start( m_nPoints, m_pMaterial );
-	
+
 		for( unsigned int i=0; i < m_nPoints; i++ )
 		{
 			float t = (float)i / (m_nPoints - 1);
@@ -319,7 +319,7 @@ void CGroundLine::Draw()
 
 			beamDraw.NextSeg( &seg );
 		}
-	
+
 	beamDraw.End();
 }
 
@@ -352,7 +352,7 @@ static inline bool ClipLine( float &x1, float &y1, float &x2, float &y2, float x
 			return false;
 		}
 	}
-	
+
 	return true;
 }
 
@@ -362,7 +362,7 @@ void CGroundLine::Paint( )
 	vgui::Panel *pPanel = GetParent();
 	int wide, tall;
 	pPanel->GetSize( wide, tall );
-	
+
 	float tPrev = 0;
 	float xPrev, yPrev;
 	CMinimapPanel::MinimapPanel()->WorldToMinimap( MINIMAP_NOCLIP, m_vStart, xPrev, yPrev );
@@ -388,10 +388,10 @@ void CGroundLine::Paint( )
 			VectorLerp( m_vStartColor, m_vEndColor, t, vColor );
 			vColor *= 255.9f;
 
-			vgui::surface()->DrawSetColor( 
-				(unsigned char)RoundFloatToInt( vColor.x ), 
-				(unsigned char)RoundFloatToInt( vColor.y ), 
-				(unsigned char)RoundFloatToInt( vColor.z ), 
+			vgui::surface()->DrawSetColor(
+				(unsigned char)RoundFloatToInt( vColor.x ),
+				(unsigned char)RoundFloatToInt( vColor.y ),
+				(unsigned char)RoundFloatToInt( vColor.z ),
 				255 );
 
 			vgui::surface()->DrawLine( xPrev, yPrev, x, y );
@@ -414,5 +414,3 @@ void CGroundLine::Paint( )
 		vgui::surface()->DrawOutlinedRect( ix-rectSize, iy-rectSize, ix+rectSize, iy+rectSize );
 	}
 }
-
-

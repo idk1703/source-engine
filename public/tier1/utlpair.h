@@ -36,9 +36,9 @@ public:
 
 // utility to make a CUtlPair without having to specify template parameters
 template<typename T1, typename T2>
-inline CUtlPair<T1,T2> MakeUtlPair( T1 t1, T2 t2 ) 
-{ 
-	return CUtlPair<T1,T2>(t1, t2); 
+inline CUtlPair<T1,T2> MakeUtlPair( T1 t1, T2 t2 )
+{
+	return CUtlPair<T1,T2>(t1, t2);
 }
 
 //// HashItem() overload that works automatically with our hash containers

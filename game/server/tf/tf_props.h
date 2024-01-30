@@ -26,7 +26,7 @@ public:
 	virtual void Spawn();
 
 	// Here's the deal.  The ball is a trigger, but triggers are not allowed to touch other triggers.  To get around this,
-	// we're going to specify the names of the triggers we actually want to touch and then we're going to manually try to 
+	// we're going to specify the names of the triggers we actually want to touch and then we're going to manually try to
 	// touch them.  Our collision system is a vortex of insanity.
 	void TriggerTouchThink();
 	virtual void Activate() OVERRIDE;

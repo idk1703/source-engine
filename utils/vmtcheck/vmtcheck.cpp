@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,12 +28,12 @@ static AnalysisData g_Analysis;
 static bool spewed = false;
 
 SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
-{	
+{
 	spewed = true;
 
 	printf( "%s", pMsg );
 	OutputDebugString( pMsg );
-	
+
 	if ( type == SPEW_ERROR )
 	{
 		printf( "\n" );
@@ -46,7 +46,7 @@ SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void printusage( void )
 {
@@ -132,7 +132,7 @@ bool ValidateVMTFile( char const *vmtname, int offset )
 		valid = false;
 	}
 	kv->deleteThis();
-	
+
 	return valid;
 }
 
@@ -189,7 +189,7 @@ void ProcessMaterialsDirectory( char const *basedir )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CheckLogFile( void )
 {
@@ -207,9 +207,9 @@ void PrintHeader()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : argc - 
-//			argv[] - 
+// Purpose:
+// Input  : argc -
+//			argv[] -
 // Output : int
 //-----------------------------------------------------------------------------
 int main( int argc, char* argv[] )

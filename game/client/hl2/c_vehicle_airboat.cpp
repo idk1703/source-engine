@@ -48,7 +48,7 @@ ConVar r_AirboatPitchCurveLinear( "r_AirboatPitchCurveLinear", "60.0", FCVAR_CHE
 																						// Spline in between.
 
 ConVar airboat_joy_response_move( "airboat_joy_response_move", "1" );					// Quadratic steering response
-																						
+
 
 #define AIRBOAT_DELTA_LENGTH_MAX	12.0f			// 1 foot
 #define AIRBOAT_FRAMETIME_MIN		1e-6
@@ -132,7 +132,7 @@ private:
 	CHeadlightEffect *m_pHeadlight;
 
 	int				m_nExactWaterLevel;
-	
+
 	TrailPoint_t	m_vecSteps[MAX_WAKE_POINTS];
 	int				m_nFirstStep;
 	int				m_nStepCount;
@@ -208,22 +208,22 @@ int C_PropAirboat::GetPrimaryAmmoType() const
 		return -1;
 
 	int nAmmoType = GetAmmoDef()->Index( "AirboatGun" );
-	return nAmmoType; 
+	return nAmmoType;
 }
 
 int C_PropAirboat::GetPrimaryAmmoCount() const
-{ 
-	return m_nAmmoCount; 
+{
+	return m_nAmmoCount;
 }
 
 bool C_PropAirboat::PrimaryAmmoUsesClips() const
-{ 
-	return false; 
+{
+	return false;
 }
 
 int C_PropAirboat::GetPrimaryAmmoClip() const
-{ 
-	return -1; 
+{
+	return -1;
 }
 
 //-----------------------------------------------------------------------------
@@ -253,7 +253,7 @@ void C_PropAirboat::DrawHudElements( )
 		vgui::surface()->GetFullscreenViewport( vx, vy, vw, vh );
 		float screenWidth = vw;
 		float screenHeight = vh;
-		
+
 		x = screenWidth/2;
 		y = screenHeight/2;
 
@@ -273,9 +273,9 @@ void C_PropAirboat::DrawHudElements( )
 		x += 0.5 * screen[0] * screenWidth + 0.5;
 		y -= 0.5 * screen[1] * screenHeight + 0.5;
 
-		x -= pIcon->Width() / 2; 
-		y -= pIcon->Height() / 2; 
-		
+		x -= pIcon->Width() / 2;
+		y -= pIcon->Height() / 2;
+
 		pIcon->DrawSelf( x, y, gHUD.m_clrNormal );
 	}
 }
@@ -331,7 +331,7 @@ void C_PropAirboat::UpdateViewAngles( C_BasePlayer *pLocalPlayer, CUserCmd *pCmd
 			Vector vehicleEyeOrigin;
 			QAngle vehicleEyeAngles;
 			GetAttachmentLocal( eyeAttachmentIndex, vehicleEyeOrigin, vehicleEyeAngles );
-			
+
 			QAngle outAngles;
 			InterpolateAngles( pCmd->viewangles, vehicleEyeAngles, outAngles, r_AirboatViewBlendToScale.GetFloat() );
 			pCmd->viewangles = outAngles;
@@ -382,7 +382,7 @@ void C_PropAirboat::ComputePDControllerCoefficients( float *pCoefficientsOut,
 	pCoefficientsOut[0] = flKs * flScale;
 	pCoefficientsOut[1] = ( flKd + flKs * flDeltaTime ) * flScale;
 }
- 
+
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -447,10 +447,10 @@ void C_PropAirboat::DampenForwardMotion( Vector &vecVehicleEyePos, QAngle &vecVe
 		float flCoefficients[2];
 		ComputePDControllerCoefficients( flCoefficients, r_AirboatViewDampenFreq.GetFloat(), r_AirboatViewDampenDamp.GetFloat(), flFrameTime );
 		m_vecEyeSpeed += ( ( flCoefficients[0] * vecDeltaPos + flCoefficients[1] * vecDeltaSpeed ) * flFrameTime );
-		
+
 		// Save off data for next frame.
 		m_vecLastEyePos = vecPredEyePos;
-		
+
 		// Move eye forward/backward.
 		Vector vecForwardOffset = vecForward * ( vecForward.Dot( vecDeltaPos ) );
 		vecVehicleEyePos -= vecForwardOffset;
@@ -474,7 +474,7 @@ void C_PropAirboat::DampenUpMotion( Vector &vecVehicleEyePos, QAngle &vecVehicle
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PropAirboat::OnEnteredVehicle( C_BasePlayer *pPlayer )
 {
@@ -490,7 +490,7 @@ void C_PropAirboat::OnEnteredVehicle( C_BasePlayer *pPlayer )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PropAirboat::Simulate()
 {
@@ -530,7 +530,7 @@ void C_PropAirboat::UpdateHeadlight()
 		Vector vecLightDir, vecLightRight, vecLightUp;
 		AngleVectors( angLightDir, &vecLightDir, &vecLightRight, &vecLightUp );
 
-		// Update the light with the new position and direction.		
+		// Update the light with the new position and direction.
 		m_pHeadlight->UpdateLight( vecLightPos, vecLightDir, vecLightRight, vecLightUp, HEADLIGHT_DISTANCE );
 	}
 	else if (m_pHeadlight)
@@ -542,7 +542,7 @@ void C_PropAirboat::UpdateHeadlight()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PropAirboat::UpdateWake( void )
 {
@@ -571,7 +571,7 @@ void C_PropAirboat::UpdateWake( void )
 		pNewPoint->m_vecScreenPos = screenPos + Vector( 0, 0, 2 );
 		pNewPoint->m_flDieTime	= gpGlobals->curtime + WAKE_LIFETIME;
 		pNewPoint->m_flWidthVariance = random->RandomFloat( -16, 16 );
-		
+
 		if ( pLast )
 		{
 			pNewPoint->m_flTexCoord	= pLast->m_flTexCoord + pLast->m_vecScreenPos.DistTo( screenPos );
@@ -590,8 +590,8 @@ void C_PropAirboat::UpdateWake( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &beamSeg - 
+// Purpose:
+// Input  : &beamSeg -
 //-----------------------------------------------------------------------------
 void C_PropAirboat::DrawSegment( const BeamSeg_t &beamSeg, const Vector &vNormal )
 {
@@ -615,13 +615,13 @@ void C_PropAirboat::DrawSegment( const BeamSeg_t &beamSeg, const Vector &vNormal
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : position - 
+// Purpose:
+// Input  : position -
 //-----------------------------------------------------------------------------
 void C_PropAirboat::DrawPontoonSplash( Vector origin, Vector direction, float speed )
 {
 	Vector	offset;
-	
+
 	CSmartPtr<CSplashParticle> pSimple = CSplashParticle::Create( "splish" );
 	pSimple->SetSortOrigin( origin );
 
@@ -633,7 +633,7 @@ void C_PropAirboat::DrawPontoonSplash( Vector origin, Vector direction, float sp
 	float	flScale = RemapVal( speed, 64, 256, 0.75f, 1.0f );
 
 	PMaterialHandle	hMaterial;
-	
+
 	float tempDelta = gpGlobals->frametime;
 
 	while( m_SplashTime.NextEvent( tempDelta ) )
@@ -655,39 +655,39 @@ void C_PropAirboat::DrawPontoonSplash( Vector origin, Vector direction, float sp
 
 		if ( pParticle == NULL )
 			continue;
-		
+
 		pParticle->m_flLifetime = 0.0f;
 		pParticle->m_flDieTime	= 0.25f;
 
 		pParticle->m_vecVelocity.Random( -0.4f, 0.4f );
 		pParticle->m_vecVelocity += (direction*5.0f+Vector(0,0,1));
-		
+
 		VectorNormalize( pParticle->m_vecVelocity );
 
 		pParticle->m_vecVelocity *= speed + random->RandomFloat( -128.0f, 128.0f );
-		
+
 		colorRamp = random->RandomFloat( 0.75f, 1.25f );
 
 		pParticle->m_uchColor[0]	= MIN( 1.0f, color[0] * colorRamp ) * 255.0f;
 		pParticle->m_uchColor[1]	= MIN( 1.0f, color[1] * colorRamp ) * 255.0f;
 		pParticle->m_uchColor[2]	= MIN( 1.0f, color[2] * colorRamp ) * 255.0f;
-		
+
 		pParticle->m_uchStartSize	= random->RandomFloat( 8, 16 ) * flScale;
 		pParticle->m_uchEndSize		= pParticle->m_uchStartSize * 2;
-		
+
 		pParticle->m_uchStartAlpha	= 255;
 		pParticle->m_uchEndAlpha	= 0;
-		
+
 		pParticle->m_flRoll			= random->RandomInt( 0, 360 );
 		pParticle->m_flRollDelta	= random->RandomFloat( -4.0f, 4.0f );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : Vector	startPos - 
-//			wakeDir - 
-//			wakeLength - 
+// Purpose:
+// Input  : Vector	startPos -
+//			wakeDir -
+//			wakeLength -
 //-----------------------------------------------------------------------------
 void C_PropAirboat::DrawPontoonWake( Vector	startPos, Vector wakeDir, float wakeLength, float speed )
 {
@@ -713,10 +713,10 @@ void C_PropAirboat::DrawPontoonWake( Vector	startPos, Vector wakeDir, float wake
 
 		float scaleRange = RemapVal( i, 0, WAKE_STEPS-1, 32, 64 );
 		scale = scaleRange + ( 8.0f * sin( gpGlobals->curtime * 5 * i ) );
-		
+
 		float alpha = RemapValClamped( speed, 128, 600, 0.05f, 0.25f );
 		float color[4] = { 1.0f, 1.0f, 1.0f, alpha };
-		
+
 		// Needs to be time based so it'll freeze when the game is frozen
 		float yaw = random->RandomFloat( 0, 360 );
 
@@ -758,7 +758,7 @@ void C_PropAirboat::DrawPontoonWake( Vector	startPos, Vector wakeDir, float wake
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int C_PropAirboat::DrawWake( void )
@@ -844,15 +844,15 @@ int C_PropAirboat::DrawWake( void )
 		return 1;
 
 	IMaterial *pMaterial = materials->FindMaterial( "effects/splashwake4", 0);
-		
+
 	//Bind the material
 	CMatRenderContextPtr pRenderContext( materials );
 	IMesh *pMesh = pRenderContext->GetDynamicMesh( true, NULL, NULL, pMaterial );
-	
+
 	m_Mesh.Begin( pMesh, MATERIAL_TRIANGLE_STRIP, (m_nStepCount-1) * 2 );
 
 	TrailPoint_t *pLast = GetTrailPoint( m_nStepCount - 1 );
-	
+
 	TrailPoint_t currentPoint;
 	currentPoint.m_flDieTime = gpGlobals->curtime + 0.5f;
 	currentPoint.m_vecScreenPos = GetAbsOrigin();
@@ -862,7 +862,7 @@ int C_PropAirboat::DrawWake( void )
 	currentPoint.m_flWidthVariance = 0.0f;
 
 	TrailPoint_t *pPrevPoint = NULL;
-	
+
 	Vector segDir, normal;
 
 	for ( int i = 0; i <= m_nStepCount; ++i )
@@ -882,7 +882,7 @@ int C_PropAirboat::DrawWake( void )
 		curSeg.m_flAlpha *= flAlphaFade * alpha;
 
 		curSeg.m_vPos = pPoint->m_vecScreenPos;
-		
+
 		float widthBase = SimpleSplineRemapVal( fabs( m_vecPhysVelocity.y ), 128, 600, 32, 48 );
 
 		curSeg.m_flWidth = Lerp( flLifePerc, widthBase*6, widthBase );
@@ -915,15 +915,15 @@ int C_PropAirboat::DrawWake( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flags - 
+// Purpose:
+// Input  : flags -
 // Output : int
 //-----------------------------------------------------------------------------
 int C_PropAirboat::DrawModel( int flags )
 {
 	if ( BaseClass::DrawModel( flags ) == false )
 		return 0;
-	
+
 	if ( !m_bReadyToDraw )
 		return 0;
 

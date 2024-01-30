@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -21,7 +21,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Sort functor class for attributes 
+// Sort functor class for attributes
 //-----------------------------------------------------------------------------
 class CDmxAttributeLess
 {
@@ -203,7 +203,7 @@ inline const char *CDmxElement::GetValueString( const char *pAttributeName ) con
 	return "";
 }
 
-template< class T > 
+template< class T >
 inline const T& CDmxElement::GetValue( const char *pAttributeName ) const
 {
 	const CDmxAttribute* pAttribute = GetAttribute( pAttributeName );
@@ -224,7 +224,7 @@ inline const T& CDmxElement::GetValue( const char *pAttributeName, const T& defa
 	return defaultValue;
 }
 
-template< class T > 
+template< class T >
 inline const CUtlVector<T>& CDmxElement::GetArray( const char *pAttributeName ) const
 {
 	const CDmxAttribute* pAttribute = GetAttribute( pAttributeName );
@@ -235,7 +235,7 @@ inline const CUtlVector<T>& CDmxElement::GetArray( const char *pAttributeName ) 
 	return defaultValue;
 }
 
-template< class T > 
+template< class T >
 inline const CUtlVector<T>& CDmxElement::GetArray( const char *pAttributeName, const CUtlVector<T>& defaultValue ) const
 {
 	const CDmxAttribute* pAttribute = GetAttribute( pAttributeName );
@@ -297,7 +297,7 @@ inline CDmxAttribute* CDmxElement::SetValue( const char *pAttributeName, void *p
 	return pAttribute;
 }
 
-template< class T > 
+template< class T >
 inline CDmxAttribute* CDmxElement::SetValue( const char *pAttributeName, const T& value )
 {
 	CDmxElementModifyScope modify( this );

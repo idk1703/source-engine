@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,7 +33,7 @@ public:
 
 	// Inherited from IMotionEvent
 	virtual simresult_e	Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular );
-	
+
 	void			SetupEmitter( void );
 
 	void			ClientThink( void );
@@ -64,7 +64,7 @@ protected:
 	float GetModelFadeOutPercentage( void );// Mode fade out amount
 
 	// Compute the bounding box's center, size, and basis
-	void ComputeRenderInfo( mstudiobbox_t *pHitBox, const matrix3x4_t &hitboxToWorld, 
+	void ComputeRenderInfo( mstudiobbox_t *pHitBox, const matrix3x4_t &hitboxToWorld,
 								Vector *pVecAbsOrigin, Vector *pXVec, Vector *pYVec );
 	void BuildTeslaEffect( mstudiobbox_t *pHitBox, const matrix3x4_t &hitboxToWorld, bool bRandom, float flYawOffset );
 
@@ -79,4 +79,3 @@ private:
 };
 
 #endif // C_ENTITY_DISSOLVE_H
-

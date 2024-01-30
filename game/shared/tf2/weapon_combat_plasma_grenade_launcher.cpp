@@ -34,7 +34,7 @@ ConVar	weapon_combat_plasmagrenadelauncher_radius( "weapon_combat_plasmagrenadel
 #define RIFLE_CHARGE_TIME	2.0
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CWeaponCombatPlasmaGrenadeLauncher : public CWeaponCombatUsedWithShieldBase
 {
@@ -51,13 +51,13 @@ public:
 	virtual void	Precache( void );
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 #if defined( CLIENT_DLL )
 	virtual bool	ShouldPredict( void )
 	{
-		if ( GetOwner() && 
+		if ( GetOwner() &&
 			GetOwner() == C_BasePlayer::GetLocalPlayer() )
 			return true;
 
@@ -81,7 +81,7 @@ LINK_ENTITY_TO_CLASS( weapon_combat_plasmagrenadelauncher, CWeaponCombatPlasmaGr
 PRECACHE_WEAPON_REGISTER(weapon_combat_plasmagrenadelauncher);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponCombatPlasmaGrenadeLauncher::CWeaponCombatPlasmaGrenadeLauncher()
 {
@@ -90,7 +90,7 @@ CWeaponCombatPlasmaGrenadeLauncher::CWeaponCombatPlasmaGrenadeLauncher()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatPlasmaGrenadeLauncher::Precache( void )
 {
@@ -129,9 +129,9 @@ void CWeaponCombatPlasmaGrenadeLauncher::ItemPostFrame( void )
 		}
 
 		// Reload button (or fire button when we're out of ammo)
-		if ( m_flNextPrimaryAttack <= gpGlobals->curtime ) 
+		if ( m_flNextPrimaryAttack <= gpGlobals->curtime )
 		{
-			if ( pOwner->m_nButtons & IN_RELOAD ) 
+			if ( pOwner->m_nButtons & IN_RELOAD )
 			{
 				Reload();
 			}
@@ -150,14 +150,14 @@ void CWeaponCombatPlasmaGrenadeLauncher::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatPlasmaGrenadeLauncher::PrimaryAttack( void )
 {
 	CBaseTFPlayer *pPlayer = (CBaseTFPlayer*)GetOwner();
 	if (!pPlayer)
 		return;
-	
+
 	WeaponSound(SINGLE);
 
 	// Fire the bullets
@@ -187,9 +187,9 @@ void CWeaponCombatPlasmaGrenadeLauncher::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponCombatPlasmaGrenadeLauncher::GetFireRate( void )
-{	
+{
 	return SequenceDuration() * 3;
 }

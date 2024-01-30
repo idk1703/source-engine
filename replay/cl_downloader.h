@@ -47,7 +47,7 @@ public:
 class CHttpDownloader
 {
 public:
-	// Pass in a callback 
+	// Pass in a callback
 	CHttpDownloader( IDownloadHandler *pHandler = NULL );
 	~CHttpDownloader();
 

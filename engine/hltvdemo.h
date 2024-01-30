@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -33,13 +33,13 @@ public:
 	void	PauseRecording( void ) {};
 	void	ResumeRecording( void ) {};
 	void	StopRecording( void );
-	
+
 	void	RecordCommand( const char *cmdstring );
 	void	RecordUserInput( int cmdnumber ) {} ;  // not need by HLTV recorder
 	void	RecordMessages( bf_read &data, int bits );
-	void	RecordPacket( void ); 
+	void	RecordPacket( void );
 	void	RecordServerClasses( ServerClass *pClasses );
-	void	RecordStringTables(); 
+	void	RecordStringTables();
 
 	void	ResetDemoInterpolation( void ) {};
 
@@ -60,7 +60,7 @@ public:
 	int				m_nFrameCount;
 	float			m_nStartTick;
 	int				m_SequenceInfo;
-	int				m_nDeltaTick;	
+	int				m_nDeltaTick;
 	int				m_nSignonTick;
 	bf_write		m_MessageData; // temp buffer for all network messages
 };

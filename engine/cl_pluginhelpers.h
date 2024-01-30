@@ -47,4 +47,3 @@ extern CPluginUIManager *g_PluginManager;
 
 
 void PluginHelpers_Menu( SVC_Menu *msg );
-

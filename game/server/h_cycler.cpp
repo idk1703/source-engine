@@ -79,7 +79,7 @@ void CCycler::Precache()
 void CCycler::Spawn( )
 {
 	InitBoneControllers();
-	
+
 	SetSolid( SOLID_BBOX );
 	if ( m_spawnflags & FCYCLER_NOTSOLID )
 	{
@@ -95,7 +95,7 @@ void CCycler::Spawn( )
 	m_iHealth			= 80000;// no cycler should die
 	GetMotor()->SetIdealYaw( GetLocalAngles().y );
 	GetMotor()->SnapYaw();
-	
+
 	m_flPlaybackRate	= 1.0;
 	m_flGroundSpeed		= 0;
 
@@ -394,11 +394,11 @@ void CWreckage::Think( void )
 			return;
 		}
 	}
-	
+
 	Vector vecSrc;
-	CollisionProp()->RandomPointInBounds( vec3_origin, Vector(1, 1, 1), &vecSrc );	
+	CollisionProp()->RandomPointInBounds( vec3_origin, Vector(1, 1, 1), &vecSrc );
 	CPVSFilter filter( vecSrc );
-	te->Smoke( filter, 0.0, 
+	te->Smoke( filter, 0.0,
 		&vecSrc, g_sModelIndexSmoke,
 		random->RandomFloat(0,4.9) + 5.0,
 		random->RandomInt(0, 3) + 8 );
@@ -424,7 +424,7 @@ public:
 	string_t m_iszSequence;
 };
 LINK_ENTITY_TO_CLASS( cycler_blender, CBlendingCycler );
- 
+
 //---------------------------------------------------------
 // Save/Restore
 //---------------------------------------------------------
@@ -514,5 +514,3 @@ void CBlendingCycler::Think( void )
 		}
 	}
 }
-
-

@@ -30,13 +30,13 @@ ConVar	weapon_combat_shotgun_energy_cost( "weapon_combat_shotgun_energy_cost", "
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CWeaponCombatShotgun : public CWeaponCombatUsedWithShieldBase
 {
 	DECLARE_CLASS( CWeaponCombatShotgun, CWeaponCombatUsedWithShieldBase );
 public:
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponCombatShotgun( void );
@@ -49,7 +49,7 @@ public:
 
 	// All predicted weapons need to implement and return true
 	virtual bool	IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 private:
@@ -59,7 +59,7 @@ public:
 #if defined( CLIENT_DLL )
 	virtual bool	ShouldPredict( void )
 	{
-		if ( GetOwner() && 
+		if ( GetOwner() &&
 			GetOwner() == C_BasePlayer::GetLocalPlayer() )
 			return true;
 
@@ -77,7 +77,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponCombatShotgun::CWeaponCombatShotgun( void )
 {
@@ -112,7 +112,7 @@ const Vector& CWeaponCombatShotgun::GetBulletSpread( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatShotgun::ItemPostFrame( void )
 {
@@ -152,9 +152,9 @@ void CWeaponCombatShotgun::ItemPostFrame( void )
 		}
 
 		// Reload button (or fire button when we're out of ammo)
-		if ( m_flNextPrimaryAttack <= gpGlobals->curtime ) 
+		if ( m_flNextPrimaryAttack <= gpGlobals->curtime )
 		{
-			if ( pOwner->m_nButtons & IN_RELOAD ) 
+			if ( pOwner->m_nButtons & IN_RELOAD )
 			{
 				Reload();
 			}
@@ -175,14 +175,14 @@ void CWeaponCombatShotgun::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatShotgun::PrimaryAttack( void )
 {
 	CBaseTFPlayer *pPlayer = (CBaseTFPlayer*)GetOwner();
 	if (!pPlayer)
 		return;
-	
+
 	WeaponSound(SINGLE);
 
 	// Fire the bullets
@@ -215,7 +215,7 @@ void CWeaponCombatShotgun::PrimaryAttack( void )
 	Vector vecForce = vecAiming;
 	vecForce.z += 0.7;
 	vecForce *= flForceScale;
-	
+
 	CTakeDamageInfo info( this, pPlayer, vecForce, vec3_origin, flDamage, DMG_BULLET | DMG_BUCKSHOT);
 	TFGameRules()->FireBullets( info, weapon_combat_shotgun_pellets.GetFloat(), vecSrc, vecAiming, GetBulletSpread(), weapon_combat_shotgun_range.GetFloat(), m_iPrimaryAmmoType, 2, entindex(), 0 );
 
@@ -224,10 +224,10 @@ void CWeaponCombatShotgun::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponCombatShotgun::GetFireRate( void )
-{	
+{
 	float flFireRate = ( SequenceDuration() * 2) + SHARED_RANDOMFLOAT( 0.0, 0.035f );
 
 	CBaseTFPlayer *pPlayer = static_cast<CBaseTFPlayer*>( GetOwner() );
@@ -239,7 +239,7 @@ float CWeaponCombatShotgun::GetFireRate( void )
 			flFireRate *= weapon_combat_shotgun_ducking_mod.GetFloat();
 		}
 	}
-	
+
 	return flFireRate;
 }
 
@@ -259,7 +259,7 @@ float CWeaponCombatShotgun::GetDefaultAnimSpeed( void )
 
 #if defined ( CLIENT_DLL )
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponCombatShotgun::OnFireEvent( C_BaseViewModel *pViewModel, const Vector& origin, const QAngle& angles, int event, const char *options )
 {
@@ -273,16 +273,16 @@ bool CWeaponCombatShotgun::OnFireEvent( C_BaseViewModel *pViewModel, const Vecto
 		QAngle angMuzzle;
 		int iAttachment = pViewModel->LookupAttachment( "0" );
 		pViewModel->GetAttachment( iAttachment, vecBarrelPos, angMuzzle );
-		//pViewModel->UncorrectViewModelAttachment( vecBarrelPos );	
+		//pViewModel->UncorrectViewModelAttachment( vecBarrelPos );
 		iAttachment = pViewModel->LookupAttachment( "muzzle" );
 		pViewModel->GetAttachment( 0, vecMuzzlePos, angMuzzle );
-		
+
 		unsigned char color[3];
 		color[0] = 50;
 		color[1] = 255;
 		color[2] = 50;
 		FX_MuzzleEffect( vecBarrelPos, angMuzzle, 1.0, GetRefEHandle(), &color[0] );
-	
+
 		return true;
 	}
 
@@ -290,7 +290,7 @@ bool CWeaponCombatShotgun::OnFireEvent( C_BaseViewModel *pViewModel, const Vecto
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatShotgun::ViewModelDrawn( C_BaseViewModel *pViewModel )
 {
@@ -299,12 +299,12 @@ void CWeaponCombatShotgun::ViewModelDrawn( C_BaseViewModel *pViewModel )
 		return;
 
 	if ( m_flOwnersEnergyLevel )
-	{			
+	{
 		Vector vecMuzzlePos, vecBarrelPos;
 		QAngle angMuzzle;
 		int iAttachment = pViewModel->LookupAttachment( "0" );
 		pViewModel->GetAttachment( iAttachment, vecBarrelPos, angMuzzle );
-		//pViewModel->UncorrectViewModelAttachment( vecBarrelPos );	
+		//pViewModel->UncorrectViewModelAttachment( vecBarrelPos );
 		iAttachment = pViewModel->LookupAttachment( "muzzle" );
 		pViewModel->GetAttachment( 0, vecMuzzlePos, angMuzzle );
 

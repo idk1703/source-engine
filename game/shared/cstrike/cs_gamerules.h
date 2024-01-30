@@ -202,16 +202,16 @@ public:
 	// HPE_END
 	//=============================================================================
 
-    //=============================================================================
-    // HPE_BEGIN:
-    // [tj] So game rules can react to damage taken
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [tj] So game rules can react to damage taken
+	//=============================================================================
 
-    void PlayerTookDamage(CCSPlayer* player, const CTakeDamageInfo &damageInfo);
+	void PlayerTookDamage(CCSPlayer* player, const CTakeDamageInfo &damageInfo);
 
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
 
 	virtual bool PlayTextureSounds( void ) { return true; }
@@ -399,21 +399,21 @@ public:
 	int		m_iHostagesTouched;
 	float	m_flNextHostageAnnouncement;
 
-    //=============================================================================
-    // HPE_BEGIN
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN
+	//=============================================================================
 
-    // [tj] Accessor for weapons donation ability
-    bool GetCanDonateWeapon() { return m_bCanDonateWeapons; }
+	// [tj] Accessor for weapons donation ability
+	bool GetCanDonateWeapon() { return m_bCanDonateWeapons; }
 
-    // [tj] flawless and lossless round related flags
-    bool m_bNoTerroristsKilled;
-    bool m_bNoCTsKilled;
-    bool m_bNoTerroristsDamaged;
-    bool m_bNoCTsDamaged;
+	// [tj] flawless and lossless round related flags
+	bool m_bNoTerroristsKilled;
+	bool m_bNoCTsKilled;
+	bool m_bNoTerroristsDamaged;
+	bool m_bNoCTsDamaged;
 
-    // [tj] Find out if dropped weapons count as donations
-    bool m_bCanDonateWeapons;
+	// [tj] Find out if dropped weapons count as donations
+	bool m_bCanDonateWeapons;
 
 	// [tj] Keep track of first kill
 	CHandle<CCSPlayer> m_pFirstKill;
@@ -424,9 +424,9 @@ public:
 	float m_firstBloodTime;
 
 
-    // [dwenger] Rescue-related achievement values
-    CHandle<CCSPlayer> m_pLastRescuer;
-    int     m_iNumRescuers;
+	// [dwenger] Rescue-related achievement values
+	CHandle<CCSPlayer> m_pLastRescuer;
+	int     m_iNumRescuers;
 
 	bool m_hostageWasInjured;
 	bool m_hostageWasKilled;
@@ -448,9 +448,9 @@ public:
 
 	void GetPlayerCounts(TeamPlayerCounts teamCounts[TEAM_MAXCOUNT]);
 
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
 
 	// PRISON ESCAPE VARIABLES

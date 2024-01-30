@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -146,7 +146,7 @@ void StudioModel::AdvanceFrame( float dt )
 		m_cycle = 0;
 	}
 
-	
+
 	for (int i = 0; i < MAXSTUDIOANIMLAYERS; i++)
 	{
 		t = GetDuration( m_Layer[i].m_sequence );
@@ -326,7 +326,7 @@ void StudioModel::OverrideBones( bool *override )
 		CPhysmesh *pmesh = m_pPhysics->GetMesh( i );
 		// BUGBUG: Cache this if you care about performance!
 		int boneIndex = FindBone(pmesh->m_boneName);
-		
+
 		// bone is not constrained, don't override rotations
 		if ( pmesh->m_constraint.parentIndex == 0 && pmesh->m_constraint.childIndex == 0 )
 		{
@@ -426,11 +426,11 @@ void StudioModel::SetUpBones( bool mergeBones )
 	IBoneSetup boneSetup( pStudioHdr, BoneMask(), m_poseparameter );
 
 	boneSetup.InitPose( pos, q );
-	
+
 	boneSetup.AccumulatePose( pos, q, m_sequence, m_cycle, 1.0, GetRealtimeTime(), pIK );
 
 	if ( g_viewerSettings.blendSequenceChanges &&
-		m_sequencetime < m_blendtime && 
+		m_sequencetime < m_blendtime &&
 		m_prevsequence != m_sequence &&
 		m_prevsequence < pStudioHdr->GetNumSeq() &&
 		!(seqdesc.flags & STUDIO_SNAP) )
@@ -561,7 +561,7 @@ void StudioModel::SetUpBones( bool mergeBones )
 
 			// drawLine( pTarget->est.pos, pTarget->latched.pos, 255, 0, 0 );
 		}
-		
+
 		pIK->SolveDependencies( pos, q, m_pBoneToWorld, boneComputed );
 	}
 
@@ -574,7 +574,7 @@ void StudioModel::SetUpBones( bool mergeBones )
 		OverrideBones( override );
 	}
 
-	for (i = 0; i < pStudioHdr->numbones(); i++) 
+	for (i = 0; i < pStudioHdr->numbones(); i++)
 	{
 		if ( !(pStudioHdr->pBone( i )->flags & BoneMask()))
 		{
@@ -609,8 +609,8 @@ void StudioModel::SetUpBones( bool mergeBones )
 			bonematrix[1][3] = pos[i][1];
 			bonematrix[2][3] = pos[i][2];
 
-			if ( (pStudioHdr->pBone( 0 )[i].flags & BONE_ALWAYS_PROCEDURAL) && 
-				 (pStudioHdr->pBone( 0 )[i].proctype & STUDIO_PROC_JIGGLE) )
+			if ( (pStudioHdr->pBone( 0 )[i].flags & BONE_ALWAYS_PROCEDURAL) &&
+				(pStudioHdr->pBone( 0 )[i].proctype & STUDIO_PROC_JIGGLE) )
 			{
 				//
 				// Physics-based "jiggle" bone
@@ -621,11 +621,11 @@ void StudioModel::SetUpBones( bool mergeBones )
 				// compute desired bone orientation
 				matrix3x4_t goalMX;
 
-				if (pbones[i].parent == -1) 
+				if (pbones[i].parent == -1)
 				{
 					ConcatTransforms( g_viewtransform, bonematrix, goalMX );
-				} 
-				else 
+				}
+				else
 				{
 					ConcatTransforms( m_pBoneToWorld[ pbones[i].parent ], bonematrix, goalMX );
 				}
@@ -641,12 +641,12 @@ void StudioModel::SetUpBones( bool mergeBones )
 				// do jiggle physics
 				m_pJiggleBones->BuildJiggleTransformations( i, GetRealtimeTime(), jiggleInfo, goalMX, m_pBoneToWorld[ i ] );
 			}
-			else if (pbones[i].parent == -1) 
+			else if (pbones[i].parent == -1)
 			{
 				ConcatTransforms( g_viewtransform, bonematrix, m_pBoneToWorld[ i ] );
 				// MatrixCopy(bonematrix, g_bonetoworld[i]);
-			} 
-			else 
+			}
+			else
 			{
 				ConcatTransforms( m_pBoneToWorld[ pbones[i].parent ], bonematrix, m_pBoneToWorld[ i ] );
 			}
@@ -1029,7 +1029,7 @@ void StudioModel::drawLine( Vector const &p1, Vector const &p2, int r, int g, in
 //-----------------------------------------------------------------------------
 // Draws a transparent box with a wireframe outline
 //-----------------------------------------------------------------------------
-void StudioModel::drawTransparentBox( Vector const &bbmin, Vector const &bbmax, 
+void StudioModel::drawTransparentBox( Vector const &bbmin, Vector const &bbmax,
 					const matrix3x4_t& m, float const *color, float const *wirecolor )
 {
 	Vector v[8], v2[8];
@@ -1074,7 +1074,7 @@ void StudioModel::drawTransparentBox( Vector const &bbmin, Vector const &bbmax,
 	VectorTransform (v[5], m, v2[5]);
 	VectorTransform (v[6], m, v2[6]);
 	VectorTransform (v[7], m, v2[7]);
-	
+
 	CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
 	pRenderContext->Bind( g_pAlpha );
 	drawBox( v2, color );
@@ -1295,11 +1295,11 @@ void StudioModel::DrawOriginAxis( )
 	pRenderContext->Rotate( -90,  1, 0, 0 );	    // put Z going up
 	pRenderContext->Rotate( -90,  0, 0, 1 );
 
-    pRenderContext->Translate( -g_pStudioModel->m_origin[0],  -g_pStudioModel->m_origin[1],  -g_pStudioModel->m_origin[2] );
+	pRenderContext->Translate( -g_pStudioModel->m_origin[0],  -g_pStudioModel->m_origin[1],  -g_pStudioModel->m_origin[2] );
 
 	pRenderContext->Rotate( g_pStudioModel->m_angles[1],  0, 0, 1 );
-    pRenderContext->Rotate( g_pStudioModel->m_angles[0],  0, 1, 0 );
-    pRenderContext->Rotate( g_pStudioModel->m_angles[2],  1, 0, 0 );
+	pRenderContext->Rotate( g_pStudioModel->m_angles[0],  0, 1, 0 );
+	pRenderContext->Rotate( g_pStudioModel->m_angles[2],  1, 0, 0 );
 
 	IMesh *pMesh = pRenderContext->GetDynamicMesh( );
 
@@ -1348,7 +1348,7 @@ void StudioModel::DrawEditAttachment()
 	{
 		CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
 		pRenderContext->Bind( g_materialBones );
-		
+
 		mstudioattachment_t &pAttachment = (mstudioattachment_t &)pStudioHdr->pAttachment( iEditAttachment );
 
 		matrix3x4_t world;
@@ -1364,7 +1364,7 @@ void StudioModel::DrawEditAttachment()
 //-----------------------------------------------------------------------------
 
 
-static float hullcolor[8][4] = 
+static float hullcolor[8][4] =
 {
 	{ 1.0, 1.0, 1.0, 1.0 },
 	{ 1.0, 0.5, 0.5, 1.0 },
@@ -1397,7 +1397,7 @@ void StudioModel::DrawHitboxes( )
 		for (unsigned short j = list.Head(); j != list.InvalidIndex(); j = list.Next(j) )
 		{
 			// Only draw one hitbox if we've selected it.
-			if ((g_viewerSettings.highlightHitbox >= 0) && 
+			if ((g_viewerSettings.highlightHitbox >= 0) &&
 				(g_viewerSettings.highlightHitbox != j))
 				continue;
 
@@ -1527,7 +1527,7 @@ void StudioModel::SetViewTarget( void )
 	}
 
 	int iEyeAttachment = LookupAttachment( "eyes" );
-	
+
 	if (iEyeAttachment == -1)
 		return;
 
@@ -1538,7 +1538,7 @@ void StudioModel::SetViewTarget( void )
 	CStudioHdr *pStudioHdr = GetStudioHdr();
 	mstudioattachment_t &patt = (mstudioattachment_t &)pStudioHdr->pAttachment( iEyeAttachment );
 	matrix3x4_t attToWorld;
-	ConcatTransforms( m_pBoneToWorld[ pStudioHdr->GetAttachmentBone( iEyeAttachment ) ], patt.local, attToWorld ); 
+	ConcatTransforms( m_pBoneToWorld[ pStudioHdr->GetAttachmentBone( iEyeAttachment ) ], patt.local, attToWorld );
 	local = Vector( 32, 0, 0 );
 	Vector vEyes;
 	MatrixPosition( attToWorld, vEyes );
@@ -1548,7 +1548,7 @@ void StudioModel::SetViewTarget( void )
 	{
 		VectorITransform( m_vecHeadTargets.Tail().m_vecPosition - vEyes, attToWorld, local );
 	}
-	
+
 	float flDist = local.Length();
 
 	VectorNormalize( local );
@@ -1605,7 +1605,7 @@ float UTIL_VecToYaw( const matrix3x4_t& matrix, const Vector &vec )
 
 	if (x == 0.0f && y == 0.0f)
 		return 0.0f;
-	
+
 	float yaw = atan2( -y, x );
 
 	yaw = RAD2DEG(yaw);
@@ -1627,7 +1627,7 @@ float UTIL_VecToPitch( const matrix3x4_t& matrix, const Vector &vec )
 
 	if (x == 0.0f && z == 0.0f)
 		return 0.0f;
-	
+
 	float pitch = atan2( z, x );
 
 	pitch = RAD2DEG(pitch);
@@ -1659,8 +1659,8 @@ float UTIL_AngleDiff( float destAngle, float srcAngle )
 
 
 void StudioModel::UpdateBoneChain(
-	Vector pos[], 
-	Quaternion q[], 
+	Vector pos[],
+	Quaternion q[],
 	int	iBone,
 	matrix3x4_t *pBoneToWorld )
 {
@@ -1670,7 +1670,7 @@ void StudioModel::UpdateBoneChain(
 
 	CStudioHdr *pStudioHdr = GetStudioHdr();
 	int parent = pStudioHdr->pBone( iBone )->parent;
-	if (parent == -1) 
+	if (parent == -1)
 	{
 		ConcatTransforms( g_viewtransform, bonematrix, pBoneToWorld[iBone] );
 	}
@@ -1691,7 +1691,7 @@ void StudioModel::GetBodyPoseParametersFromFlex( )
 
 	flGoal = GetFlexController( "move_rightleft" );
 	SetPoseParameter( "body_trans_Y", flGoal );
-	
+
 	flGoal = GetFlexController( "move_forwardback" );
 	SetPoseParameter( "body_trans_X", flGoal );
 
@@ -1758,15 +1758,15 @@ void StudioModel::CalcHeadRotation( Vector pos[], Quaternion q[] )
 	Vector vForward;
 	VectorRotate( Vector( 1, 0, 0 ), attToWorld, vForward );
 
-  	float dt = m_dt;
-  	if (m_nSolveHeadTurn == 2)
-  	{
-  		dt = 0.1;
-  	}
+	float dt = m_dt;
+	if (m_nSolveHeadTurn == 2)
+	{
+		dt = 0.1;
+	}
 
 	Vector vEyes;
 	MatrixPosition( attToWorld, vEyes );
- 
+
 	Vector vHead = vForward;
 	float flHeadInfluence = 0.0;
 	int i;
@@ -1918,8 +1918,8 @@ int StudioModel::DrawModel( bool mergeBones )
 
 	// JasonM & garymcthack - should really only do this once a frame and at init time.
 	UpdateStudioRenderConfig( g_viewerSettings.renderMode == RM_WIREFRAME, false,
-							  g_viewerSettings.showNormals,
-							  g_viewerSettings.showTangentFrame );
+							g_viewerSettings.showNormals,
+							g_viewerSettings.showTangentFrame );
 
 	// NOTE: UpdateStudioRenderConfig can delete the studio hdr
 	pStudioHdr = GetStudioHdr();
@@ -1934,13 +1934,13 @@ int StudioModel::DrawModel( bool mergeBones )
 		VectorMultiply( m_origin, -1.0f, vecModelOrigin );
 		MatrixSetColumn( vecModelOrigin, 3, g_viewtransform );
 	}
-	
+
 	// These values HAVE to be sent down for LOD to work correctly.
 	Vector viewOrigin, viewRight, viewUp, viewPlaneNormal;
 	g_pStudioRender->SetViewState( vec3_origin, Vector(0, 1, 0), Vector(0, 0, 1), Vector( 1, 0, 0 ) );
 
 	//	g_pStudioRender->SetEyeViewTarget( viewOrigin );
-	
+
 	SetUpBones( mergeBones );
 
 	SetupLighting( );
@@ -1979,7 +1979,7 @@ int StudioModel::DrawModel( bool mergeBones )
 
 	g_pStudioRender->UnlockFlexWeights( );
 
-	
+
 	// draw
 
 	g_pStudioRender->SetAlphaModulation( 1.0f );
@@ -2015,7 +2015,7 @@ int StudioModel::DrawModel( bool mergeBones )
 		UpdateStudioRenderConfig( true, true, false, false );
 
 		// Draw wireframe
-		count = g_pStudioRender->DrawModel( &g_DrawModelResults, g_DrawModelInfo, m_pBoneToWorld, 
+		count = g_pStudioRender->DrawModel( &g_DrawModelResults, g_DrawModelInfo, m_pBoneToWorld,
 			pFlexWeights, pFlexDelayedWeights, vecModelOrigin, STUDIORENDER_DRAW_ENTIRE_MODEL );
 		m_LodUsed = g_DrawModelResults.m_nLODUsed;
 		m_LodMetric = g_DrawModelResults.m_flLodMetric;
@@ -2048,7 +2048,7 @@ int StudioModel::DrawModel( bool mergeBones )
 	else
 	{
 		// Draw the model normally (may include normal and/or tangent line segments)
-		g_pStudioRender->DrawModel( &g_DrawModelResults, g_DrawModelInfo, m_pBoneToWorld, 
+		g_pStudioRender->DrawModel( &g_DrawModelResults, g_DrawModelInfo, m_pBoneToWorld,
 			pFlexWeights, pFlexDelayedWeights, vecModelOrigin );
 		m_LodUsed = g_DrawModelResults.m_nLODUsed;
 		m_LodMetric = g_DrawModelResults.m_flLODMetric;
@@ -2062,7 +2062,7 @@ int StudioModel::DrawModel( bool mergeBones )
 			UpdateStudioRenderConfig( true, true, false, false );
 
 			// Draw the wireframe over top of the model
-			g_pStudioRender->DrawModel( NULL, g_DrawModelInfo, m_pBoneToWorld, 
+			g_pStudioRender->DrawModel( NULL, g_DrawModelInfo, m_pBoneToWorld,
 				pFlexWeights, pFlexDelayedWeights, vecModelOrigin );
 
 			// Restore the studio render config
@@ -2089,7 +2089,7 @@ int StudioModel::DrawModel( bool mergeBones )
 
 		MatrixInvert( g_viewtransform, invViewTransform );
 
-		for (int i = 0; i < pStudioHdr->numbones(); i++) 
+		for (int i = 0; i < pStudioHdr->numbones(); i++)
 		{
 			matrix3x4_t *pMatrix = &m_pBoneToWorld[ i ];
 
@@ -2111,13 +2111,13 @@ int StudioModel::DrawModel( bool mergeBones )
 		// Turn off any wireframe, normals or tangent frame display for the drop shadow
 		UpdateStudioRenderConfig( false, false, false, false );
 
-		g_pStudioRender->DrawModel( NULL, g_DrawModelInfo, m_pBoneToWorld, 
+		g_pStudioRender->DrawModel( NULL, g_DrawModelInfo, m_pBoneToWorld,
 			pFlexWeights, pFlexDelayedWeights, vecModelOrigin );
 
 		// Restore the studio render config
 		UpdateStudioRenderConfig( g_viewerSettings.renderMode == RM_WIREFRAME, false,
-								  g_viewerSettings.showNormals,
-								  g_viewerSettings.showTangentFrame );
+								g_viewerSettings.showNormals,
+								g_viewerSettings.showTangentFrame );
 
 		g_pStudioRender->ForcedMaterialOverride( NULL );
 		float one[4] = { 1, 1, 1, 1 };
@@ -2151,7 +2151,7 @@ void StudioModel::DrawPhysmesh( CPhysmesh *pMesh, int boneIndex, IMaterial* pMat
 	for ( int i = 0; i < pMesh->m_vertCount; i+=3 )
 	{
 		Vector v;
-		
+
 		VectorTransform (pMesh->m_pVerts[vertIndex], *pMatrix, v);
 		meshBuilder.Position3fv( v.Base() );
 		meshBuilder.Color4fv( color );
@@ -2165,7 +2165,7 @@ void StudioModel::DrawPhysmesh( CPhysmesh *pMesh, int boneIndex, IMaterial* pMat
 
 		vertIndex ++;
 		VectorTransform (pMesh->m_pVerts[vertIndex], *pMatrix, v);
-		meshBuilder.Position3fv( v.Base() );							 
+		meshBuilder.Position3fv( v.Base() );
 		meshBuilder.Color4fv( color );
 		meshBuilder.AdvanceVertex();
 
@@ -2187,7 +2187,7 @@ void RandomColor( float *color, int key )
 		first = false;
 		for ( int i = 0; i < 256; i++ )
 		{
-			do 
+			do
 			{
 				r = rand()&255;
 				g = rand()&255;
@@ -2231,7 +2231,7 @@ void StudioModel::DrawPhysConvex( CPhysmesh *pMesh, IMaterial* pMaterial )
 			for ( int k = 0; k < 3; k++ )
 			{
 				Vector v;
-				
+
 				VectorTransform (objectSpaceVerts[k], matrix, v);
 				meshBuilder.Position3fv( v.Base() );
 				meshBuilder.Color4fv( color );
@@ -2271,8 +2271,8 @@ const char *StudioModel::GetKeyValueText( int iSequence )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : solve - 
+// Purpose:
+// Input  : solve -
 //-----------------------------------------------------------------------------
 void StudioModel::SetSolveHeadTurn( int solve )
 {
@@ -2280,7 +2280,7 @@ void StudioModel::SetSolveHeadTurn( int solve )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int StudioModel::GetSolveHeadTurn() const
@@ -2290,8 +2290,8 @@ int StudioModel::GetSolveHeadTurn() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : target - 
+// Purpose:
+// Input  : target -
 //-----------------------------------------------------------------------------
 void StudioModel::ClearLookTargets( void )
 {
@@ -2299,8 +2299,8 @@ void StudioModel::ClearLookTargets( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : target - 
+// Purpose:
+// Input  : target -
 //-----------------------------------------------------------------------------
 void StudioModel::AddLookTarget( const Vector& vecPosition, float flWeight )
 {
@@ -2333,7 +2333,7 @@ void StudioModel::AddLookTargetSelf( float flWeight )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output :
 //-----------------------------------------------------------------------------
 void StudioModel::SetModelYaw( float flYaw )
@@ -2341,7 +2341,7 @@ void StudioModel::SetModelYaw( float flYaw )
 	m_flModelYaw = flYaw;
 }
 
-float StudioModel::GetModelYaw( void ) const 
+float StudioModel::GetModelYaw( void ) const
 {
 	return m_flModelYaw;
 }
@@ -2351,7 +2351,7 @@ void StudioModel::SetBodyYaw( float flYaw )
 	m_flBodyYaw = flYaw;
 }
 
-float StudioModel::GetBodyYaw( void ) const 
+float StudioModel::GetBodyYaw( void ) const
 {
 	return m_flBodyYaw;
 }
@@ -2361,8 +2361,7 @@ void StudioModel::SetSpineYaw( float flYaw )
 	m_flSpineYaw = flYaw;
 }
 
-float StudioModel::GetSpineYaw( void ) const 
+float StudioModel::GetSpineYaw( void ) const
 {
 	return m_flSpineYaw;
 }
-

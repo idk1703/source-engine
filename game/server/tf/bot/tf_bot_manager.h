@@ -91,7 +91,7 @@ public:
 	bool IsMeleeOnly() const;
 
 	CTFBot* GetAvailableBotFromPool();
-	
+
 	void OnForceAddedBots( int iNumAdded );
 	void OnForceKickedBots( int iNumKicked );
 

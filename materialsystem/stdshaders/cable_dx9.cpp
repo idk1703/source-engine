@@ -20,7 +20,7 @@ extern ConVar mat_fullbright;
 
 DEFINE_FALLBACK_SHADER( Cable, Cable_DX9 )
 
-BEGIN_VS_SHADER( Cable_DX9, 
+BEGIN_VS_SHADER( Cable_DX9,
 			  "Help for Cable shader" )
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( BUMPMAP, SHADER_PARAM_TYPE_TEXTURE, "cable/cablenormalmap", "bumpmap texture" )
@@ -67,10 +67,10 @@ BEGIN_VS_SHADER( Cable_DX9,
 			{
 				pShaderShadow->EnableSRGBRead( SHADER_SAMPLER1, true );
 			}
-			
+
 			int tCoordDimensions[] = {2,2};
-			pShaderShadow->VertexShaderVertexFormat( 
-				VERTEX_POSITION | VERTEX_COLOR | VERTEX_TANGENT_S | VERTEX_TANGENT_T, 
+			pShaderShadow->VertexShaderVertexFormat(
+				VERTEX_POSITION | VERTEX_COLOR | VERTEX_TANGENT_S | VERTEX_TANGENT_T,
 				2, tCoordDimensions, 0 );
 
 			DECLARE_STATIC_VERTEX_SHADER( cable_vs20 );
@@ -89,7 +89,7 @@ BEGIN_VS_SHADER( Cable_DX9,
 
 			// we are writing linear values from this shader.
 			// This is kinda wrong.  We are writing linear or gamma depending on "IsHDREnabled" below.
-			// The COLOR really decides if we are gamma or linear.  
+			// The COLOR really decides if we are gamma or linear.
 			pShaderShadow->EnableSRGBWrite( true );
 
 			FogToFogColor();
@@ -108,10 +108,10 @@ BEGIN_VS_SHADER( Cable_DX9,
 			}
 			else
 			{
-				BindTexture( SHADER_SAMPLER1, BASETEXTURE );			
+				BindTexture( SHADER_SAMPLER1, BASETEXTURE );
 			}
 
-			pShaderAPI->SetPixelShaderFogParams( PSREG_FOG_PARAMS );		
+			pShaderAPI->SetPixelShaderFogParams( PSREG_FOG_PARAMS );
 
 			float vEyePos_SpecExponent[4];
 			pShaderAPI->GetWorldSpaceCameraPosition( vEyePos_SpecExponent );

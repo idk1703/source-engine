@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -52,7 +52,7 @@ BEGIN_MESSAGE_MAP( CFaceSmoothingDlg, CDialog )
 	ON_COMMAND_EX( ID_SMOOTHING_GROUP_32, OnButtonGroup )
 
 	ON_WM_CLOSE()
-	ON_WM_DESTROY()	
+	ON_WM_DESTROY()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -72,7 +72,7 @@ CFaceSmoothingDlg::~CFaceSmoothingDlg()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 BOOL CFaceSmoothingDlg::OnInitDialog( void )
 {
@@ -96,7 +96,7 @@ BOOL CFaceSmoothingDlg::OnInitDialog( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFaceSmoothingDlg::OnClose( void )
 {
@@ -109,7 +109,7 @@ void CFaceSmoothingDlg::OnClose( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFaceSmoothingDlg::OnDestroy( void )
 {
@@ -118,7 +118,7 @@ void CFaceSmoothingDlg::OnDestroy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFaceSmoothingDlg::InitButtonIDs( void )
 {
@@ -158,7 +158,7 @@ void CFaceSmoothingDlg::InitButtonIDs( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 BOOL CFaceSmoothingDlg::OnButtonGroup( UINT uCmd )
 {
@@ -201,7 +201,7 @@ BOOL CFaceSmoothingDlg::OnButtonGroup( UINT uCmd )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 UINT CFaceSmoothingDlg::GetSmoothingGroup( UINT uCmd )
 {
@@ -215,7 +215,7 @@ UINT CFaceSmoothingDlg::GetSmoothingGroup( UINT uCmd )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CFaceSmoothingDlg::GetActiveSmoothingGroup( void )
 {
@@ -233,7 +233,7 @@ int CFaceSmoothingDlg::GetActiveSmoothingGroup( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFaceSmoothingDlg::UpdateControls( void )
 {
@@ -273,7 +273,7 @@ void CFaceSmoothingDlg::UpdateControls( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFaceSmoothingDlg::CheckGroupButtons( int *pGroupCounts, int nFaceCount )
 {
@@ -284,7 +284,7 @@ void CFaceSmoothingDlg::CheckGroupButtons( int *pGroupCounts, int nFaceCount )
 		CButton *pGroupButton = ( CButton* )GetDlgItem( m_ButtonIDs[iButton] );
 		if ( !pGroupButton )
 			continue;
-		
+
 		pGroupButton->SetCheck( FALSE );
 
 		if ( pGroupCounts[iButton] == 0 )
@@ -365,7 +365,7 @@ CFaceSmoothingVisualDlg::~CFaceSmoothingVisualDlg()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 BOOL CFaceSmoothingVisualDlg::OnInitDialog( void )
 {
@@ -378,7 +378,7 @@ BOOL CFaceSmoothingVisualDlg::OnInitDialog( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 BOOL CFaceSmoothingVisualDlg::OnButtonGroup( UINT uCmd )
 {
@@ -396,7 +396,7 @@ BOOL CFaceSmoothingVisualDlg::OnButtonGroup( UINT uCmd )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFaceSmoothingVisualDlg::InitButtonIDs( void )
 {
@@ -436,7 +436,7 @@ void CFaceSmoothingVisualDlg::InitButtonIDs( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 UINT CFaceSmoothingVisualDlg::GetSmoothingGroup( UINT uCmd )
 {

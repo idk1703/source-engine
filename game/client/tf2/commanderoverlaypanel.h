@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,7 +14,7 @@
 #include "CommanderOverlay.h"
 #include <vgui_controls/Panel.h>
 
-#define TACTICAL_ZOFFSET	100	
+#define TACTICAL_ZOFFSET	100
 #define TACTICAL_MIN_VIEWABLE_SIZE 1000
 #define TACTICAL_SPACEBAR_VIEWABLE_SIZE 4000
 
@@ -39,7 +39,7 @@ public:
 	virtual void	OnCursorMoved(int x, int y);
 	virtual void	OnMouseWheeled(int delta);
 	virtual void	OnKeyPressed(vgui::KeyCode code);
-	
+
 	// Call on enable
 	void	Enable();
 	void	Disable();
@@ -53,7 +53,7 @@ public:
 
 	// Returns the visible area (not including the tech tree)
 	void	GetVisibleSize( int& w, int& h );
-	
+
 	// Returns the visible area in world units
 	void	GetVisibleArea( Vector& mins, Vector& maxs );
 
@@ -68,10 +68,10 @@ public:
 
 	void BoundOrigin( Vector& camera );
 
-	void			CreatePickingRay( int mousex, int mousey, 
+	void			CreatePickingRay( int mousex, int mousey,
 		int screenwidth, int screenheight,
-		const Vector& vecRenderOrigin, 
-		const QAngle& vecRenderAngles, 
+		const Vector& vecRenderOrigin,
+		const QAngle& vecRenderAngles,
 		Vector &rayOrigin,
 		Vector &rayDirection
 		);

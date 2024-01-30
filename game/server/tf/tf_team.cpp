@@ -45,11 +45,11 @@ IMPLEMENT_SERVERCLASS_ST( CTFTeam, DT_TFTeam )
 	SendPropInt( SENDINFO( m_nFlagCaptures ), 8 ),
 	SendPropInt( SENDINFO( m_iRole ), 4, SPROP_UNSIGNED ),
 
-	SendPropArray2( 
+	SendPropArray2(
 	SendProxyArrayLength_TeamObjects,
-	SendPropInt( "team_object_array_element", 0, SIZEOF_IGNORE, NUM_NETWORKED_EHANDLE_BITS, SPROP_UNSIGNED, SendProxy_TeamObjectList ), 
-	MAX_PLAYERS * MAX_OBJECTS_PER_PLAYER, 
-	0, 
+	SendPropInt( "team_object_array_element", 0, SIZEOF_IGNORE, NUM_NETWORKED_EHANDLE_BITS, SPROP_UNSIGNED, SendProxy_TeamObjectList ),
+	MAX_PLAYERS * MAX_OBJECTS_PER_PLAYER,
+	0,
 	"team_object_array"
 	),
 
@@ -110,7 +110,7 @@ bool CTFTeamManager::Init( void )
 //-----------------------------------------------------------------------------
 void CTFTeamManager::Shutdown( void )
 {
-	// Note, don't delete each team since they are in the gEntList and will 
+	// Note, don't delete each team since they are in the gEntList and will
 	// automatically be deleted from there, instead.
 	g_Teams.Purge();
 }
@@ -327,7 +327,7 @@ void CTFTeam::ShowScore( CBasePlayer *pPlayer )
 //-----------------------------------------------------------------------------
 void CTFTeam::AddObject( CBaseObject *pObject )
 {
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::AddObject adding object %p:%s to team %s\n", gpGlobals->curtime, 
+	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::AddObject adding object %p:%s to team %s\n", gpGlobals->curtime,
 		pObject, pObject->GetClassname(), GetName() ) );
 
 	bool alreadyInList = IsObjectOnTeam( pObject );
@@ -353,20 +353,20 @@ bool CTFTeam::IsObjectOnTeam( CBaseObject *pObject ) const
 //  Removes all references from all sublists as well
 //-----------------------------------------------------------------------------
 void CTFTeam::RemoveObject( CBaseObject *pObject )
-{									   
+{
 	if ( m_aObjects.Count() <= 0 )
 		return;
 
 	if ( m_aObjects.Find( pObject ) != -1 )
 	{
-		TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::RemoveObject removing %p:%s from %s\n", gpGlobals->curtime, 
+		TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::RemoveObject removing %p:%s from %s\n", gpGlobals->curtime,
 			pObject, pObject->GetClassname(), GetName() ) );
 
 		m_aObjects.FindAndRemove( pObject );
 	}
 	else
 	{
-		TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::RemoveObject couldn't remove %p:%s from %s\n", gpGlobals->curtime, 
+		TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::RemoveObject couldn't remove %p:%s from %s\n", gpGlobals->curtime,
 			pObject, pObject->GetClassname(), GetName() ) );
 	}
 
@@ -374,7 +374,7 @@ void CTFTeam::RemoveObject( CBaseObject *pObject )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFTeam::GetNumObjects( int iObjectType )
 {
@@ -397,7 +397,7 @@ int CTFTeam::GetNumObjects( int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseObject *CTFTeam::GetObject( int num )
 {

@@ -25,7 +25,7 @@ public:
 	float m_flLeftLowerLidRaised;
 	float m_flLeftLowerLidNeutral;
 	float m_flLeftLowerLidLowered;
-	
+
 	float m_flRightUpperLidRaised;
 	float m_flRightUpperLidNeutral;
 	float m_flRightUpperLidLowered;
@@ -33,7 +33,7 @@ public:
 	float m_flRightLowerLidRaised;
 	float m_flRightLowerLidNeutral;
 	float m_flRightLowerLidLowered;
-	
+
 	char m_ReferenceFilename[1024];
 	char m_ExpressionsFilename[1024];
 	char m_ModelFilename[1024];
@@ -77,7 +77,7 @@ protected:
 
 	HWND m_hOutputText;
 
-	
+
 	// Cached list of bitmaps.
 	class CBitmapRef
 	{

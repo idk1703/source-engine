@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -53,7 +53,7 @@ public:
 	void TraceAttack( CBaseEntity *pAttacker, float flDamage, const Vector &vecDir, trace_t *ptr, int bitsDamageType);
 
 	virtual int PlayScriptedSentence( const char *pszSentence, float duration, float volume, soundlevel_t soundlevel, bool bConcurrent, CBaseEntity *pListener );
-	
+
 	EHANDLE m_hPlayer;
 	EHANDLE m_hTalkTarget;
 	float   m_flTalkTime;
@@ -77,7 +77,7 @@ bool CNPC_GMan::IsInC5A1()
 }
 
 //=========================================================
-// Classify - indicates this monster's place in the 
+// Classify - indicates this monster's place in the
 // relationship table.
 //=========================================================
 Class_T	CNPC_GMan::Classify ( void )
@@ -130,7 +130,7 @@ void CNPC_GMan::Spawn()
 	m_iHealth			= 8;
 	m_flFieldOfView		= 0.5;// indicates the width of this NPC's forward view cone ( as a dotproduct result )
 	m_NPCState			= NPC_STATE_NONE;
-	
+
 	CapabilitiesAdd( bits_CAP_MOVE_GROUND | bits_CAP_OPEN_DOORS | bits_CAP_USE_WEAPONS | bits_CAP_ANIMATEDFACE | bits_CAP_TURN_HEAD);
 
 	NPCInit();
@@ -142,7 +142,7 @@ void CNPC_GMan::Spawn()
 void CNPC_GMan::Precache()
 {
 	PrecacheModel( "models/gman.mdl" );
-}	
+}
 
 
 //=========================================================
@@ -180,7 +180,7 @@ void CNPC_GMan::RunTask( const Task_t *pTask )
 		{
 			 AddLookTarget( m_hPlayer->EyePosition(), 1.0, 3.0 );
 		}
-		else 
+		else
 		{
 			// Just center the head forward.
 			Vector forward;
@@ -207,10 +207,10 @@ int CNPC_GMan::OnTakeDamage_Alive( const CTakeDamageInfo &inputInfo )
 
 	if ( inputInfo.GetDamage() > 0 )
 		 SetCondition( COND_LIGHT_DAMAGE );
-	
+
 	if ( inputInfo.GetDamage() >= 20 )
 		 SetCondition( COND_HEAVY_DAMAGE );
-	
+
 	return TRUE;
 }
 

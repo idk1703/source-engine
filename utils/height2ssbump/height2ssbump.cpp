@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -86,7 +86,7 @@ void main(int argc,char **argv)
 				PrintArgSummaryAndExit();
 		}
 		nCurArg++;
-		
+
 	}
 	argc -= ( nCurArg - 1 );
 	argv += ( nCurArg - 1 );
@@ -106,7 +106,7 @@ void main(int argc,char **argv)
 	if ( bNormalOnly )
 		out = src_texture.ComputeBumpmapFromHeightInAlphaChannel( atof( argv[2] ) );
 	else
-		out = src_texture.ComputeSelfShadowedBumpmapFromHeightInAlphaChannel( 
+		out = src_texture.ComputeSelfShadowedBumpmapFromHeightInAlphaChannel(
 			atof( argv[2] ), nNumRays, nSSBumpFlags );
 
 	char oname[1024];

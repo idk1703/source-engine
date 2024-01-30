@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -21,11 +21,11 @@ FilePlayerClassInfo_t* CreatePlayerClassInfo()
 CDODPlayerClassInfo::CDODPlayerClassInfo()
 {
 	m_iTeam= TEAM_UNASSIGNED;
-	
+
 	m_iPrimaryWeapon= WEAPON_NONE;
 	m_iSecondaryWeapon= WEAPON_NONE;
 	m_iMeleeWeapon= WEAPON_NONE;
-	
+
 	m_iNumGrensType1 = 0;
 	m_iGrenType1 = WEAPON_NONE;
 
@@ -33,7 +33,7 @@ CDODPlayerClassInfo::CDODPlayerClassInfo()
 	m_iGrenType2 = WEAPON_NONE;
 
 	m_iNumBandages = 0;
-		
+
 	m_iHelmetGroup= HELMET_GROUP_0;
 	m_iHairGroup= HELMET_GROUP_0;
 
@@ -83,7 +83,7 @@ void CDODPlayerClassInfo::Parse( KeyValues *pKeyValuesData, const char *szWeapon
 	{
 		Assert( false );
 	}
-	
+
 	const char *pszPrimaryWeapon = pKeyValuesData->GetString( "primaryweapon", NULL );
 	m_iPrimaryWeapon = AliasToWeaponID( pszPrimaryWeapon );
 	Assert( m_iPrimaryWeapon != WEAPON_NONE );	// require player to have a primary weapon
@@ -92,17 +92,17 @@ void CDODPlayerClassInfo::Parse( KeyValues *pKeyValuesData, const char *szWeapon
 
 	if ( pszSecondaryWeapon )
 	{
-        m_iSecondaryWeapon = AliasToWeaponID( pszSecondaryWeapon );
+	m_iSecondaryWeapon = AliasToWeaponID( pszSecondaryWeapon );
 		Assert( m_iSecondaryWeapon != WEAPON_NONE );
 	}
-	else 
+	else
 		m_iSecondaryWeapon = WEAPON_NONE;
 
 	const char *pszMeleeWeapon = pKeyValuesData->GetString( "meleeweapon", NULL );
 	if ( pszMeleeWeapon )
 	{
 		m_iMeleeWeapon = AliasToWeaponID( pszMeleeWeapon );
-        Assert( m_iMeleeWeapon != WEAPON_NONE );
+	Assert( m_iMeleeWeapon != WEAPON_NONE );
 	}
 	else
 		m_iMeleeWeapon = WEAPON_NONE;
@@ -128,7 +128,7 @@ void CDODPlayerClassInfo::Parse( KeyValues *pKeyValuesData, const char *szWeapon
 	m_iHelmetGroup	= pKeyValuesData->GetInt( "helmetgroup", 0 );
 	m_iHairGroup	= pKeyValuesData->GetInt( "hairgroup", 0 );
 
-	// Which helmet model to generate 
+	// Which helmet model to generate
 	const char *pszHelmetModel = pKeyValuesData->GetString( "drophelmet", "HELMET_ALLIES" );
 
 	if( pszHelmetModel )

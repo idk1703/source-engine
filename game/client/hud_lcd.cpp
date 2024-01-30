@@ -116,7 +116,7 @@ void CLCDItemAggregate::WipeChildrenOnly( IG15 *lcd )
 }
 
 void CLCDItemIcon::Create( IG15 *lcd )
-{	
+{
 #ifdef WIN32
 	m_Handle = lcd->AddIcon( (HICON)m_icon, w, h );
 #else
@@ -127,7 +127,7 @@ void CLCDItemIcon::Create( IG15 *lcd )
 }
 
 void CLCDItemText::Create( IG15 *lcd )
-{	
+{
 	m_Handle = lcd->AddText( G15_STATIC_TEXT, (G15TextSize)m_iSize, m_iAlign, w );
 	lcd->SetOrigin( m_Handle, x, y );
 	lcd->SetText( m_Handle, m_OriginalText );
@@ -175,7 +175,7 @@ void CLCD::Init( void )
 	if ( !CommandLine()->FindParm( "-g15" ) )
 		return;
 
-	if ( m_lcd ) 
+	if ( m_lcd )
 		return;
 
 	m_pG15Module = Sys_LoadModule( G15_MODULE_NAME );
@@ -184,7 +184,7 @@ void CLCD::Init( void )
 		return;
 	}
 
-    m_G15Factory = Sys_GetFactory( m_pG15Module );
+	m_G15Factory = Sys_GetFactory( m_pG15Module );
 	if ( !m_G15Factory )
 	{
 		Shutdown();
@@ -197,9 +197,9 @@ void CLCD::Init( void )
 		Shutdown();
 		return;
 	}
-	
+
 	m_lcd->GetLCDSize( m_Size[ 0 ], m_Size[ 1 ] );
-	
+
 	m_nCurrentPage = 0;
 	m_nSubPage = 0;
 
@@ -273,7 +273,7 @@ void CLCD::Shutdown( void )
 	m_GlobalStats.Purge();
 
 	m_G15Factory = 0;
-	
+
 	if ( m_pG15Module )
 	{
 		Sys_UnloadModule( m_pG15Module );
@@ -308,7 +308,7 @@ bool CLCD::IsPageValid( int currentPage, C_BasePlayer *player )
 ///---------------------------------------------------------------------
 void CLCD::Update( void )
 {
-	if ( !m_lcd ) 
+	if ( !m_lcd )
 		return ;
 
 	C_BasePlayer *player = C_BasePlayer::GetLocalPlayer();
@@ -335,14 +335,14 @@ void CLCD::Update( void )
 		{
 			force = true;
 		}
-		
+
 		if ( m_lcd->ButtonTriggered( G15_BUTTON_1 ) || force )
 		{
 			m_nSubPage = 0;
 
 			for ( int i = 0; i < pageCount; ++i )
 			{
-                m_nCurrentPage = ( m_nCurrentPage + 1 ) % pageCount;
+				m_nCurrentPage = ( m_nCurrentPage + 1 ) % pageCount;
 				if ( !IsPageValid( m_nCurrentPage, player ) )
 					continue;
 
@@ -374,7 +374,7 @@ void CLCD::Update( void )
 		if ( dwCurTime >= m_dwNextUpdateTime || pageChanged )
 		{
 			m_dwNextUpdateTime = dwCurTime + g15_update_msec.GetInt();
-            DisplayCurrentPage( dwCurTime );
+			DisplayCurrentPage( dwCurTime );
 		}
 	}
 
@@ -459,7 +459,7 @@ void CLCD::ShowItems_R( CLCDPage *page, unsigned int dwCurTime, CUtlVector< CLCD
 
 					// Blow away current data
 					ag->WipeChildrenOnly( m_lcd );
-									
+
 					CUtlVector< int >	validIndices;
 					char prefix[ 256 ];
 					char altprefix[ 256 ];
@@ -522,7 +522,7 @@ void CLCD::ShowItems_R( CLCDPage *page, unsigned int dwCurTime, CUtlVector< CLCD
 						char s1[ 512 ], s2[ 512 ];
 						Q_snprintf( s1, sizeof( s1 ), "%d", index );
 						Q_snprintf( s2, sizeof( s2 ), "%d", index + 1 );
-						
+
 						// Now replace "playerindex" with the index as needed
 						for( int r = 0; r < ag->m_Definition.Count(); ++r )
 						{
@@ -609,7 +609,7 @@ void CLCD::ShowItems_R( CLCDPage *page, unsigned int dwCurTime, CUtlVector< CLCD
 		}
 
 		m_lcd->SetVisible( item->m_Handle, bShowItems && ( ( item->m_nSubPage == -1 ) || item->m_nSubPage == m_nSubPage ) );
-		
+
 		ShowItems_R( page, dwCurTime, item->m_Children, bShowItems );
 	}
 }
@@ -696,7 +696,7 @@ void CLCD::ParseItems_R( CLCDPage *page, bool bCreateHandles, KeyValues *kv, CUt
 	{
 		char const *keyName = sub->GetName();
 		if ( !Q_stricmp( keyName, "iterate_players" ) ||
-			      !Q_stricmp( keyName, "iterate_team" ) )
+				!Q_stricmp( keyName, "iterate_team" ) )
 		{
 			int aggType = AGGTYPE_UNKNOWN;
 			if ( !Q_stricmp( keyName, "iterate_players" ) )
@@ -792,13 +792,13 @@ public:
 	CDescribeData( void const *src );
 
 	void	DescribeShort( const short *invalue, int count );
-	void	DescribeInt( const int *invalue, int count );		
-	void	DescribeBool( const bool *invalue, int count );	
-	void	DescribeFloat( const float *invalue, int count );	
-	void	DescribeSimpleString( const char *indata, int length );		
-	void	DescribeString( const string_t *instring, int count );			
+	void	DescribeInt( const int *invalue, int count );
+	void	DescribeBool( const bool *invalue, int count );
+	void	DescribeFloat( const float *invalue, int count );
+	void	DescribeSimpleString( const char *indata, int length );
+	void	DescribeString( const string_t *instring, int count );
 	void	DescribeVector( const Vector *inValue, int count );
-	void	DescribeColor( const Color *invalue, int count );	
+	void	DescribeColor( const Color *invalue, int count );
 	void	DumpDescription( datamap_t *pMap );
 
 	void	GetValueForField( char const *fieldName, char *buf, size_t bufsize );
@@ -806,7 +806,7 @@ public:
 private:
 	void	DescribeFields_R( int chain_count, datamap_t *pMap, typedescription_t *pFields, int fieldCount );
 	bool	BuildFieldPath( CUtlString& path );
-	
+
 	void const		*m_pSrc;
 	int				m_nSrcOffsetIndex;
 
@@ -883,9 +883,9 @@ bool CDescribeData::BuildFieldPath( CUtlString& path )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fmt - 
-//			... - 
+// Purpose:
+// Input  : *fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CDescribeData::Describe( const char *fmt, ... )
 {
@@ -923,10 +923,10 @@ void CDescribeData::Describe( const char *fmt, ... )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : size - 
-//			*outdata - 
-//			*indata - 
+// Purpose:
+// Input  : size -
+//			*outdata -
+//			*indata -
 //-----------------------------------------------------------------------------
 void CDescribeData::DescribeSimpleString( char const *invalue, int count )
 {
@@ -1031,12 +1031,12 @@ void CDescribeData::DescribeVector( const Vector *inValue, int count )
 	{
 		if ( count == 1 )
 		{
-			Describe( " vector (%f %f %f)\n", 
+			Describe( " vector (%f %f %f)\n",
 				inValue[i].x, inValue[i].y, inValue[i].z );
 		}
 		else
 		{
-			Describe( "[%i] vector (%f %f %f)\n", 
+			Describe( "[%i] vector (%f %f %f)\n",
 				i,
 				inValue[i].x, inValue[i].y, inValue[i].z );
 		}
@@ -1064,7 +1064,7 @@ void CDescribeData::DescribeFields_R( int chain_count, datamap_t *pRootMap, type
 		// Skip this field
 		if ( flags & FTYPEDESC_VIEW_NEVER )
 			continue;
-		
+
 		// Mark any subchains first
 		if ( m_pCurrentField->override_field != NULL )
 		{
@@ -1078,12 +1078,12 @@ void CDescribeData::DescribeFields_R( int chain_count, datamap_t *pRootMap, type
 		}
 
 		void const *pInputData;
-		
+
 		fieldOffsetSrc = m_pCurrentField->fieldOffset[ m_nSrcOffsetIndex ];
 		fieldSize = m_pCurrentField->fieldSize;
-		
+
 		pInputData = (void const *)((char *)m_pSrc + fieldOffsetSrc );
-		
+
 		switch( m_pCurrentField->fieldType )
 		{
 		default:
@@ -1093,9 +1093,9 @@ void CDescribeData::DescribeFields_R( int chain_count, datamap_t *pRootMap, type
 				typedescription_t *save = m_pCurrentField;
 				void const *saveSrc = m_pSrc;
 				const char *saveName = m_pCurrentClassName;
-				
+
 				m_pCurrentClassName = m_pCurrentField->td->dataClassName;
-				
+
 				CUtlString str;
 				str = m_pCurrentField->fieldName;
 
@@ -1108,7 +1108,7 @@ void CDescribeData::DescribeFields_R( int chain_count, datamap_t *pRootMap, type
 				}
 
 				DescribeFields_R( chain_count, pRootMap, m_pCurrentField->td->dataDesc, m_pCurrentField->td->dataNumFields );
-				
+
 				m_FieldPath.Remove( m_FieldPath.Count() - 1 );
 
 				m_pCurrentClassName = saveName;
@@ -1128,18 +1128,18 @@ void CDescribeData::DescribeFields_R( int chain_count, datamap_t *pRootMap, type
 		case FIELD_COLOR32:
 			DescribeColor( (const Color *)pInputData, fieldSize );
 			break;
-			
+
 		case FIELD_BOOLEAN:
 			DescribeBool( (bool const *)pInputData, fieldSize );
 			break;
 		case FIELD_INTEGER:
 			DescribeInt( (int const *)pInputData, fieldSize );
 			break;
-			
+
 		case FIELD_SHORT:
 			DescribeShort( (short const *)pInputData, fieldSize );
 			break;
-			
+
 		case FIELD_CHARACTER:
 			DescribeSimpleString( (const char *)pInputData, fieldSize );
 			break;
@@ -1163,7 +1163,7 @@ void CDescribeData::DumpDescription( datamap_t *pMap )
 
 	while ( pMap )
 	{
-        DescribeFields_R( g_nChainCount, pMap, pMap->dataDesc, pMap->dataNumFields );
+		DescribeFields_R( g_nChainCount, pMap, pMap->dataDesc, pMap->dataNumFields );
 
 		pMap = pMap->baseMap;
 	}
@@ -1331,7 +1331,7 @@ void CLCD::LookupToken( char const *in, CUtlString& value )
 
 	int iIndex = 0;
 	ExtractArrayIndex( outbuf, sizeof( outbuf ), &iIndex );
-	
+
 	typedescription_t *td = FindField( ref->GetPredDescMap(), outbuf );
 	if ( !td )
 	{
@@ -1346,7 +1346,7 @@ void CLCD::LookupToken( char const *in, CUtlString& value )
 
 	int fieldOffsetSrc = td->fieldOffset[ TD_OFFSET_NORMAL ];
 	// int fieldSize = td->fieldSize;
-		
+
 	void const *pInputData = (void const *)((char *)ref + fieldOffsetSrc );
 
 	char sz[ 256 ];
@@ -1366,7 +1366,7 @@ void CLCD::LookupToken( char const *in, CUtlString& value )
 	case FIELD_VECTOR:
 		{
 			Vector v = *((Vector *)pInputData + iIndex );
-            Q_snprintf( sz, sizeof( sz ), "%.2f %.2f %.2f", v.x, v.y, v.z );
+			Q_snprintf( sz, sizeof( sz ), "%.2f %.2f %.2f", v.x, v.y, v.z );
 		}
 		break;
 	case FIELD_COLOR32:
@@ -1375,18 +1375,18 @@ void CLCD::LookupToken( char const *in, CUtlString& value )
 			Q_snprintf( sz, sizeof( sz ), "%d %d %d %d", c.r(), c.g(), c.b(), c.a() );
 		}
 		break;
-		
+
 	case FIELD_BOOLEAN:
 		Q_snprintf( sz, sizeof( sz ), "%s", *( ( bool *)pInputData + iIndex ) ? "true" : "false" );
 		break;
 	case FIELD_INTEGER:
 		Q_snprintf( sz, sizeof( sz ), "%i", *( (int *)pInputData + iIndex ));
 		break;
-		
+
 	case FIELD_SHORT:
 		Q_snprintf( sz, sizeof( sz ), "%i", *( (short *)pInputData + iIndex ) );
 		break;
-		
+
 	case FIELD_CHARACTER:
 		Q_snprintf( sz, sizeof( sz ), "%s", ((const char *)pInputData + iIndex ) );
 		break;

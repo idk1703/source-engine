@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,7 +16,7 @@
 #undef SetPort
 
 typedef enum
-{ 
+{
 	NA_NULL = 0,
 	NA_LOOPBACK,
 	NA_BROADCAST,
@@ -38,7 +38,7 @@ public:
 	void	SetIP(uint unIP);									// Sets IP.  unIP is in host order (little-endian)
 	void    SetIPAndPort( uint unIP, unsigned short usPort ) { SetIP( unIP ); SetPort( usPort ); }
 	void	SetFromString(const char *pch, bool bUseDNS = false ); // if bUseDNS is true then do a DNS lookup if needed
-	
+
 	bool	CompareAdr (const netadr_t &a, bool onlyBase = false) const;
 	bool	CompareClassBAdr (const netadr_t &a) const;
 	bool	CompareClassCAdr (const netadr_t &a) const;
@@ -49,7 +49,7 @@ public:
 	void			ToSockadr(struct sockaddr *s) const;
 	unsigned int	GetIP() const;
 
-	bool	IsLocalhost() const; // true, if this is the localhost IP 
+	bool	IsLocalhost() const; // true, if this is the localhost IP
 	bool	IsLoopback() const;	// true if engine loopback buffers are used
 	bool	IsReservedAdr() const; // true, if this is a private LAN IP
 	bool	IsValid() const;	// ip & port != 0

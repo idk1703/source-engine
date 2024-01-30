@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -26,7 +26,7 @@ BEGIN_DATADESC( CFuncFlagAlertZone )
 END_DATADESC();
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFuncFlagAlertZone::CFuncFlagAlertZone()
 {
@@ -34,13 +34,13 @@ CFuncFlagAlertZone::CFuncFlagAlertZone()
 	{
 		m_flNextAlertTime[i] = 0.0f;
 	}
-	
+
 	m_bPlaySound = true;
 	m_nAlertDelay = 10;
 }
 
 //-----------------------------------------------------------------------------`
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncFlagAlertZone::Spawn( void )
 {
@@ -51,7 +51,7 @@ void CFuncFlagAlertZone::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncFlagAlertZone::StartTouch( CBaseEntity *pOther )
 {

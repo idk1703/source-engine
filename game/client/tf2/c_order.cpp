@@ -45,12 +45,12 @@ public:
 			int wantedWidth, dummy;
 			GetContentSize( wantedWidth, dummy );
 			wantedWidth += 10;
-			
+
 			float flPercent = m_flAnimCounter / NEW_ORDER_ANIM_DURATION;
 			int newWidth = (int)(NEW_ORDERS_WIDTH + (wantedWidth - NEW_ORDERS_WIDTH) * flPercent);
-		
+
 			GetBounds( x, y, w, h );
-			
+
 			m_flAnimCounter += gpGlobals->frametime;
 			if( m_flAnimCounter >= NEW_ORDER_ANIM_DURATION )
 			{
@@ -88,7 +88,7 @@ class CMinimapOrderPanel : public CMinimapTraceBitmapPanel
 	DECLARE_CLASS( CMinimapOrderPanel, CMinimapTraceBitmapPanel );
 
 public:
-	CMinimapOrderPanel( vgui::Panel *parent, const char *panelName ) 
+	CMinimapOrderPanel( vgui::Panel *parent, const char *panelName )
 		: BaseClass( parent, "CMinimapOrderPanel" )
 	{
 	}
@@ -120,7 +120,7 @@ bool CMinimapOrderPanel::Init( KeyValues* pKeyValues, MinimapInitData_t* pInitDa
 //-----------------------------------------------------------------------------
 void CMinimapOrderPanel::OnTick()
 {
-	// NOTE: Do *not* chain down the the base OnTick; it's going to do 
+	// NOTE: Do *not* chain down the the base OnTick; it's going to do
 	// a totally different computation that will conflict with ours
 	Assert( m_pOrder );
 	if( m_pOrder->GetTarget() <= 0 )
@@ -155,11 +155,11 @@ void CMinimapOrderPanel::Paint( )
 		return;
 
 	g_pMatSystemSurface->DisableClipping( true );
-	
+
 	static float flStrobeDuration = 0.5;
 	float flShade = sin( gpGlobals->curtime * M_PI / flStrobeDuration ) * 0.5f + 0.5f;
 
-	Color color(255*flShade, 0, 0, 255); 
+	Color color(255*flShade, 0, 0, 255);
 	m_Image.SetColor( color );
 	m_Image.Paint();
 
@@ -211,19 +211,19 @@ IMPLEMENT_CLIENTCLASS_DT(C_Order, DT_Order, COrder)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_Order::C_Order( void )
 {
 	m_nHintID = TF_HINT_UNDEFINED;
 
 	m_pNameLabel = NULL;
-	
+
 	CONSTRUCT_MINIMAP_PANEL( "minimap_order", MINIMAP_PERSONAL_ORDERS );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_Order::~C_Order( void )
 {
@@ -231,7 +231,7 @@ C_Order::~C_Order( void )
 
 	if( C_BaseTFPlayer::GetLocalPlayer() )
 		C_BaseTFPlayer::GetLocalPlayer()->RemoveOrderTarget();
-	
+
 
 	if ( m_nHintID != TF_HINT_UNDEFINED )
 	{
@@ -263,7 +263,7 @@ void C_Order::ClientThink( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_Order::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -282,7 +282,7 @@ void C_Order::OnDataChanged( DataUpdateType_t updateType )
 		GetHudOrderList()->RecalculateOrderList();
 		UpdateStatus();
 	}
-	
+
 	if( m_iTargetEntIndex > 0 )
 	{
 		C_BaseEntity *pTarget = ClientEntityList().GetEnt( m_iTargetEntIndex );
@@ -374,7 +374,7 @@ void C_Order::GetTargetDescription( char *pDest, int bufferSize )
 //-----------------------------------------------------------------------------
 void C_Order::CreateStatus( vgui::Panel *pParent )
 {
-	// If we already have our elements, we're just moving. 
+	// If we already have our elements, we're just moving.
 	if ( m_pNameLabel )
 	{
 		m_pNameLabel->SetParent( pParent );
@@ -403,7 +403,7 @@ void C_Order::DestroyStatus( void )
 		delete m_pNameLabel;
 		m_pNameLabel = NULL;
 	}
-} 
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: Update all elements in the status panel for this order
@@ -414,7 +414,7 @@ void C_Order::UpdateStatus( void )
 	{
 		char desc[512];
 		GetDescription( desc, sizeof( desc ) );
-		
+
 		m_pNameLabel->SetText( desc );
 		m_pNameLabel->m_flAnimCounter = 0;
 	}
@@ -429,7 +429,7 @@ bool C_Order::ShouldDrawReticle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_Order::GetPriority( void )
 {
@@ -437,7 +437,7 @@ int C_Order::GetPriority( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_Order::GetType( void )
 {
@@ -445,7 +445,7 @@ int C_Order::GetType( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_Order::GetTarget( void )
 {
@@ -459,4 +459,3 @@ bool C_Order::IsPersonalOrder( void )
 {
 	return (GetPriority() == 0);
 }
-

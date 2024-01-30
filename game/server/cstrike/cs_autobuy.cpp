@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Data for Autobuy and Rebuy 
+// Purpose: Data for Autobuy and Rebuy
 //
 //=============================================================================//
 
@@ -8,7 +8,7 @@
 #include "cs_autobuy.h"
 
 // Weapon class information for each weapon including the class name and the buy command alias.
-AutoBuyInfoStruct g_autoBuyInfo[] = 
+AutoBuyInfoStruct g_autoBuyInfo[] =
 {
 	{ (AutoBuyClassType)(AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_RIFLE), "galil", "weapon_galil" }, // galil
 	{ (AutoBuyClassType)(AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_RIFLE), "ak47", "weapon_ak47" },  // ak47

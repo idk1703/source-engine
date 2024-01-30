@@ -331,7 +331,7 @@ public:
 class CJobThread : public CWorkerThread
 {
 public:
-	CJobThread( CThreadPool *pOwner, int iThread ) : 
+	CJobThread( CThreadPool *pOwner, int iThread ) :
 		m_SharedQueue( pOwner->m_SharedQueue ),
 		m_pOwner( pOwner ),
 		m_iThread( iThread )
@@ -344,7 +344,7 @@ public:
 	}
 
 	CJobQueue &AccessDirectQueue()
-	{ 
+	{
 		return m_DirectQueue;
 	}
 
@@ -364,11 +364,11 @@ private:
 		};
 
 		HANDLE	 waitHandles[NUM_EVENTS];
-		
+
 		waitHandles[CALL_FROM_MASTER]	= GetCallHandle().GetHandle();
 		waitHandles[SHARED_QUEUE]		= m_SharedQueue.GetEventHandle().GetHandle();
 		waitHandles[DIRECT_QUEUE] 		= m_DirectQueue.GetEventHandle().GetHandle();
-		
+
 #ifdef _DEBUG
 		while ( ( waitResult = WaitForMultipleObjects( ARRAYSIZE(waitHandles), waitHandles, FALSE, 10 ) ) == WAIT_TIMEOUT )
 		{
@@ -520,7 +520,7 @@ CThreadPool::~CThreadPool()
 }
 
 //---------------------------------------------------------
-// 
+//
 //---------------------------------------------------------
 int CThreadPool::NumThreads()
 {
@@ -528,7 +528,7 @@ int CThreadPool::NumThreads()
 }
 
 //---------------------------------------------------------
-// 
+//
 //---------------------------------------------------------
 int CThreadPool::NumIdleThreads()
 {
@@ -1157,7 +1157,7 @@ CJob *CThreadPool::GetDummyJob()
 //-----------------------------------------------------------------------------
 
 
-namespace ThreadPoolTest 
+namespace ThreadPoolTest
 {
 int g_iSleep;
 
@@ -1264,7 +1264,7 @@ void Test( bool bDistribute, bool bSleep = true, bool bFinishExecute = false, bo
 					}
 				}
 
-				Msg( "ThreadPoolTest:         %d threads -- %d (%d) jobs processed in %fms, %fms to suspend (%f/%f) [%d, %d, %d, %d, %d, %d, %d, %d]\n", 
+				Msg( "ThreadPoolTest:         %d threads -- %d (%d) jobs processed in %fms, %fms to suspend (%f/%f) [%d, %d, %d, %d, %d, %d, %d, %d]\n",
 					i, g_nTotalAtFinish, (int)CCountJob::m_nCount, timer.GetDuration().GetMillisecondsF(), suspendTimer.GetDuration().GetMillisecondsF() - timer.GetDuration().GetMillisecondsF(),
 					timer.GetDuration().GetMillisecondsF() / (float)CCountJob::m_nCount, (suspendTimer.GetDuration().GetMillisecondsF())/(float)g_nTotalAtFinish,
 					counts[0], counts[1], counts[2], counts[3], counts[4], counts[5], counts[6], counts[7] );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -97,6 +97,3 @@ bool VGui_InitDmeInterfacesList( const char *moduleName, CreateInterfaceFn *fact
 
 
 } // namespace vgui
-
-
-

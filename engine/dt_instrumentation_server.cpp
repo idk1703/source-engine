@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -89,25 +89,25 @@ void ServerDTI_Flush()
 
 	CCycleCount curTime;
 	curTime.Sample();
-	
+
 	CCycleCount runningTime;
 	CCycleCount::Sub( curTime, g_ServerDTITimer, runningTime );
 
 	// Write out a file that can be used by Excel.
 	FileHandle_t fp = g_pFileSystem->Open( g_pServerDTIFilename, "wt", "LOGDIR" );
-	
+
 	if( fp != FILESYSTEM_INVALID_HANDLE )
 	{
 		// Write the header.
-		g_pFileSystem->FPrintf( fp, 
+		g_pFileSystem->FPrintf( fp,
 			"DTName"
-			
+
 			"\tCalcDelta calls"
 			"\tCalcDelta ms"
-			
+
 			"\tEncode calls"
 			"\tEncode ms"
-			
+
 			"\tShouldTransmit calls"
 			"\tShouldTransmit ms"
 
@@ -125,17 +125,17 @@ void ServerDTI_Flush()
 		totalCalcDelta.Init();
 		totalEncode.Init();
 		totalShouldTransmit.Init();
-		
+
 		FOR_EACH_LL( g_DTISendTables, i )
 		{
 			CDTISendTable *pTable = g_DTISendTables[i];
-			
+
 			CCycleCount::Add( pTable->m_nCalcDeltaCycles, totalCalcDelta, totalCalcDelta );
 			CCycleCount::Add( pTable->m_nEncodeCycles, totalEncode, totalEncode );
 			CCycleCount::Add( pTable->m_nShouldTransmitCycles, totalShouldTransmit, totalShouldTransmit );
 			CCycleCount::Add( pTable->m_nWriteDeltaPropsCycles, totalDeltaProps, totalDeltaProps );
 		}
-	
+
 
 		FOR_EACH_LL( g_DTISendTables, j )
 		{
@@ -148,7 +148,7 @@ void ServerDTI_Flush()
 			CCycleCount::Add( pTable->m_nEncodeCycles, pTable->m_nCalcDeltaCycles, total );
 			CCycleCount::Add( pTable->m_nShouldTransmitCycles, total, total );
 
-			g_pFileSystem->FPrintf( fp, 
+			g_pFileSystem->FPrintf( fp,
 				"%s"
 
 				"\t%d"
@@ -168,18 +168,18 @@ void ServerDTI_Flush()
 				"\t%.3f"
 				"\n",
 				pTable->m_NetTableName.String(),
-				
+
 				pTable->m_nCalcDeltaCalls,
 				pTable->m_nCalcDeltaCycles.GetMillisecondsF(),
-				
+
 				pTable->m_nEncodeCalls,
 				pTable->m_nEncodeCycles.GetMillisecondsF(),
-				
+
 				pTable->m_nShouldTransmitCalls,
 				pTable->m_nShouldTransmitCycles.GetMillisecondsF(),
 
 				pTable->m_nWriteDeltaPropsCycles.GetMillisecondsF(),
-				
+
 				(float)pTable->m_nNoChanges * 100.0f / (pTable->m_nNoChanges + pTable->m_nChangeAutoDetects),
 
 				total.GetMillisecondsF(),
@@ -194,23 +194,23 @@ void ServerDTI_Flush()
 			"\t%.3f\n",
 			runningTime.GetMillisecondsF()
 			);
-		
-		g_pFileSystem->FPrintf( fp, 
+
+		g_pFileSystem->FPrintf( fp,
 			"Total CalcDelta ms:"
 			"\t%.3f"
 			"\tPercent:"
 			"\t%.3f\n",
 			totalCalcDelta.GetMillisecondsF(),
-			totalCalcDelta.GetMillisecondsF() * 100.0 / runningTime.GetMillisecondsF() 
+			totalCalcDelta.GetMillisecondsF() * 100.0 / runningTime.GetMillisecondsF()
 			);
 
-		g_pFileSystem->FPrintf( fp, 
+		g_pFileSystem->FPrintf( fp,
 			"Total Encode ms:"
 			"\t%.3f"
 			"\tPercent:"
 			"\t%.3f\n",
 			totalEncode.GetMillisecondsF(),
-			totalEncode.GetMillisecondsF() * 100.0 / runningTime.GetMillisecondsF() 
+			totalEncode.GetMillisecondsF() * 100.0 / runningTime.GetMillisecondsF()
 			);
 
 		g_pFileSystem->FPrintf( fp,
@@ -221,7 +221,7 @@ void ServerDTI_Flush()
 			totalShouldTransmit.GetMillisecondsF(),
 			totalShouldTransmit.GetMillisecondsF() * 100.0 / runningTime.GetMillisecondsF()
 			);
-		
+
 		g_pFileSystem->FPrintf( fp,
 			"Total WriteDeltaProps ms:"
 			"\t%.3f"
@@ -230,13 +230,13 @@ void ServerDTI_Flush()
 			totalDeltaProps.GetMillisecondsF(),
 			totalDeltaProps.GetMillisecondsF() * 100.0 / runningTime.GetMillisecondsF()
 			);
-		
+
 		g_pFileSystem->Close( fp );
 
 		Msg( "DTI: Wrote delta distances into %s.\n", g_pServerDTIFilename );
 	}
 
-	
+
 	// Write the delta distances.
 	const char *pDeltaDistancesFilename = "dti_delta_distances.txt";
 	fp = g_pFileSystem->Open( pDeltaDistancesFilename, "wt", "LOGDIR" );
@@ -249,7 +249,7 @@ void ServerDTI_Flush()
 			g_pFileSystem->FPrintf( fp, "\t<%d", (i+1) * DELTA_DISTANCE_BAND );
 		}
 		g_pFileSystem->FPrintf( fp, "\n" );
-		
+
 		// Now write the data.
 		FOR_EACH_LL( g_DTISendTables, j )
 		{
@@ -264,10 +264,10 @@ void ServerDTI_Flush()
 				g_pFileSystem->FPrintf( fp, "\t%d", pTable->m_DistanceDeltaCounts[i] );
 			}
 			g_pFileSystem->FPrintf( fp, "\n" );
-		}		
+		}
 
 		g_pFileSystem->Close( fp );
-		
+
 		Msg( "DTI: Wrote instrumentation data into %s.\n", pDeltaDistancesFilename );
 	}
 }
@@ -294,7 +294,7 @@ void ServerDTI_AddEntityEncodeEvent( SendTable *pSendTable, float distToPlayer )
 	if ( !pPrecalc || !pPrecalc->m_pDTITable )
 		return;
 
-	CDTISendTable *pTable = pPrecalc->m_pDTITable;		
+	CDTISendTable *pTable = pPrecalc->m_pDTITable;
 	if ( !pTable )
 		return;
 
@@ -309,7 +309,7 @@ void _ServerDTI_HookTimer( const SendTable *pSendTable, ServerDTITimerType timer
 	if ( !pPrecalc || !pPrecalc->m_pDTITable )
 		return;
 
-	CDTISendTable *pTable = pPrecalc->m_pDTITable;		
+	CDTISendTable *pTable = pPrecalc->m_pDTITable;
 
 	if ( g_bFirstHookTimer )
 	{
@@ -347,11 +347,10 @@ void _ServerDTI_RegisterNetworkStateChange( SendTable *pSendTable, bool bStateCh
 	if ( !pPrecalc || !pPrecalc->m_pDTITable )
 		return;
 
-	CDTISendTable *pTable = pPrecalc->m_pDTITable;		
+	CDTISendTable *pTable = pPrecalc->m_pDTITable;
 
 	if ( bStateChanged )
 		++pTable->m_nChangeAutoDetects;
 	else
 		++pTable->m_nNoChanges;
 }
-

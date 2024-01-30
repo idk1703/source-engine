@@ -13,7 +13,7 @@
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ITexture *CTFRenderTargets::CreateItemModelPanelTexture( const char *pszName, IMaterialSystem* pMaterialSystem, int iSize )
 {
@@ -21,7 +21,7 @@ ITexture *CTFRenderTargets::CreateItemModelPanelTexture( const char *pszName, IM
 		pszName,
 		iSize, iSize, RT_SIZE_DEFAULT,
 		pMaterialSystem->GetBackBufferFormat(),
-		MATERIAL_RT_DEPTH_SHARED, 
+		MATERIAL_RT_DEPTH_SHARED,
 		TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT,
 		0 );
 }
@@ -53,7 +53,7 @@ void CTFRenderTargets::InitClientRenderTargets( IMaterialSystem* pMaterialSystem
 
 //-----------------------------------------------------------------------------
 // Purpose: Shutdown client render targets. This gets called during shutdown in the engine
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CTFRenderTargets::ShutdownClientRenderTargets()
 {
@@ -68,6 +68,6 @@ void CTFRenderTargets::ShutdownClientRenderTargets()
 
 
 static CTFRenderTargets g_TFRenderTargets;
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CTFRenderTargets, IClientRenderTargets, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CTFRenderTargets, IClientRenderTargets,
 	CLIENTRENDERTARGETS_INTERFACE_VERSION, g_TFRenderTargets );
 CTFRenderTargets* g_pTFRenderTargets = &g_TFRenderTargets;

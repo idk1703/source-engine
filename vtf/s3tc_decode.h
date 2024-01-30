@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -39,7 +39,7 @@ void S3TC_SetPixelPaletteIndex( ImageFormat format, char *pS3Block, int x, int y
 
 
 // Note: width, x, and y are in texels, not S3 blocks.
-S3PaletteIndex S3TC_GetPaletteIndex( 
+S3PaletteIndex S3TC_GetPaletteIndex(
 	unsigned char *pFaceData,
 	ImageFormat format,
 	int imageWidth,
@@ -48,7 +48,7 @@ S3PaletteIndex S3TC_GetPaletteIndex(
 
 
 // Note: width, x, and y are in texels, not S3 blocks.
-void S3TC_SetPaletteIndex( 
+void S3TC_SetPaletteIndex(
 	unsigned char *pFaceData,
 	ImageFormat format,
 	int imageWidth,
@@ -57,24 +57,24 @@ void S3TC_SetPaletteIndex(
 	S3PaletteIndex paletteIndex );
 
 
-const char* S3TC_GetBlock( 
-	const void *pCompressed, 
-	ImageFormat format, 
+const char* S3TC_GetBlock(
+	const void *pCompressed,
+	ImageFormat format,
 	int nBlocksWide, // How many blocks wide is the image (pixels wide / 4).
 	int xBlock,
 	int yBlock );
 
 
-char* S3TC_GetBlock( 
-	void *pCompressed, 
-	ImageFormat format, 
+char* S3TC_GetBlock(
+	void *pCompressed,
+	ImageFormat format,
 	int nBlocksWide, // How many blocks wide is the image (pixels wide / 4).
 	int xBlock,
 	int yBlock );
 
 
 // Merge the two palettes and copy the colors
-void S3TC_MergeBlocks( 
+void S3TC_MergeBlocks(
 	char **blocks,
 	S3RGBA **pOriginals,	// Original RGBA colors in the texture. This allows it to avoid doubly compressing.
 	int nBlocks,

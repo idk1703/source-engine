@@ -46,12 +46,12 @@ public:
 		if ( pFonts )
 		{
 			vgui::IScheme *pScheme = scheme()->GetIScheme( GetScheme() );
-	
+
 			// Get all the fonts
 			FOR_EACH_SUBKEY( pFonts, pFont )
 			{
 				const HFont& font = pScheme->GetFont( pFont->GetString( "font" ), true );
-				m_vecFonts.AddToTail( font );			
+				m_vecFonts.AddToTail( font );
 			}
 		}
 	}
@@ -99,7 +99,7 @@ CRepeatingContainer::~CRepeatingContainer()
 {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRepeatingContainer::ApplySettings( KeyValues *inResourceData )
 {
@@ -123,7 +123,7 @@ void CRepeatingContainer::ApplySettings( KeyValues *inResourceData )
 			Panel *pNewPanel = CreateControlByName( pSubKey->GetString( "ControlName" ) );
 			if ( pNewPanel )
 			{
-				pNewPanel->SetParent( this );	
+				pNewPanel->SetParent( this );
 				pNewPanel->SetBuildGroup( GetBuildGroup() );
 				pNewPanel->ApplySettings( pSubKey );
 				m_vecChildren.AddToTail( pNewPanel );
@@ -175,7 +175,7 @@ void CRepeatingContainer::PerformLayout()
 		{
 			nTotalChildWide += m_vecChildren[i]->GetWide();
 		}
-		
+
 		int nXStep = 0;
 		if ( nTotalChildWide < nParentWide )
 		{
@@ -331,7 +331,7 @@ void CTFItemCardPanel::SetVisible( bool bVisible )
 		x += xTemp; y += yTemp;
 		GetPos( xTemp, yTemp );
 		x += xTemp; y += yTemp;
-		
+
 		m_pDropShadow->SetBounds( x + m_iShadowOffset, y + m_iShadowOffset, wide * 1.15f, tall * 1.15f );
 	}
 
@@ -368,7 +368,7 @@ void CTFItemCardPanel::SetItem( CEconItemView* pItem )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFItemCardPanel::PinCard( bool bPin ) 
+void CTFItemCardPanel::PinCard( bool bPin )
 {
 #ifdef STAGING_ONLY
 	if ( !tf_use_card_tooltips.GetBool() )
@@ -378,7 +378,7 @@ void CTFItemCardPanel::PinCard( bool bPin )
 #endif // STAGING_ONLY
 
 	bool bDiff = bPin != m_bPinned;
-	m_bPinned = bPin; 
+	m_bPinned = bPin;
 
 	if ( bDiff && bPin )
 	{
@@ -467,7 +467,7 @@ void CTFItemCardPanel::UpdateDescription()
 		{
 			pszRarityName = pItemRarity->GetLocKey();
 		}
-		
+
 		m_pRarityName->SetText( g_pVGuiLocalize->Find( pszRarityName ) );
 	}
 
@@ -523,7 +523,7 @@ void CTFItemCardPanel::UpdateDescription()
 					pTextImage->AddColorChange( col, unCurrentTextStreamIndex );
 					prevCol = col;
 				}
-			
+
 				unCurrentTextStreamIndex += StringFuncs<locchar_t>::Length( line.sText.Get() ) + 1;	// add one character to deal with newlines
 			}
 
@@ -627,7 +627,7 @@ void CTFItemCardPanel::LoadResFileForCurrentItem()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CItemCardPanelToolTip::CItemCardPanelToolTip( Panel *parent, const char *text ) 
+CItemCardPanelToolTip::CItemCardPanelToolTip( Panel *parent, const char *text )
 : BaseTooltip( parent, text )
 , m_pMouseOverItemPanel( NULL )
 , m_iPositioningStrategy( IPTTP_BOTTOM_SIDE )
@@ -647,7 +647,7 @@ void CItemCardPanelToolTip::GetPosition( itempanel_tooltippos_t iTooltipPosition
 		*iXPos = ( iItemX - m_pMouseOverItemPanel->GetWide() );
 		*iYPos = ( iItemY + pItemPanel->GetTall() * 0.5f ) - ( m_pMouseOverItemPanel->GetTall() * 0.5f );
 		break;
-	case IPTTP_RIGHT: 
+	case IPTTP_RIGHT:
 		*iXPos = ( iItemX + pItemPanel->GetWide() );
 		*iYPos = ( iItemY + pItemPanel->GetTall() * 0.5f ) - ( m_pMouseOverItemPanel->GetTall() * 0.5f );
 		break;
@@ -673,7 +673,7 @@ bool CItemCardPanelToolTip::ValidatePosition( CItemModelPanel *pItemPanel, int i
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CItemCardPanelToolTip::PerformLayout() 
+void CItemCardPanelToolTip::PerformLayout()
 {
 	BaseClass::PerformLayout();
 
@@ -683,13 +683,13 @@ void CItemCardPanelToolTip::PerformLayout()
 	_isDirty = false;
 
 	CItemModelPanel *pItemPanel = m_hCurrentPanel.Get();
-	if ( m_pMouseOverItemPanel && pItemPanel && !m_pMouseOverItemPanel->IsPinned() ) 
-	{		
+	if ( m_pMouseOverItemPanel && pItemPanel && !m_pMouseOverItemPanel->IsPinned() )
+	{
 		CEconItemView *pItem = pItemPanel->GetItem();
 		if ( pItem )
 		{
 			m_pMouseOverItemPanel->SetItem( pItem );
-			
+
 
 			int x,y;
 
@@ -726,7 +726,7 @@ void CItemCardPanelToolTip::PerformLayout()
 			}
 
 			m_pMouseOverItemPanel->SetPos( iXPos, iYPos );
-			m_pMouseOverItemPanel->SetVisible( true );			
+			m_pMouseOverItemPanel->SetVisible( true );
 		}
 	}
 }
@@ -734,29 +734,29 @@ void CItemCardPanelToolTip::PerformLayout()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CItemCardPanelToolTip::ShowTooltip( Panel *currentPanel ) 
-{ 
-	if ( m_pMouseOverItemPanel && currentPanel != m_hCurrentPanel.Get() ) 
+void CItemCardPanelToolTip::ShowTooltip( Panel *currentPanel )
+{
+	if ( m_pMouseOverItemPanel && currentPanel != m_hCurrentPanel.Get() )
 	{
 		CItemModelPanel *pItemPanel = assert_cast<CItemModelPanel *>(currentPanel);
 		m_hCurrentPanel.Set( pItemPanel );
 		pItemPanel->PostActionSignal( new KeyValues("ItemPanelEntered") );
 		vgui::surface()->PlaySound( "ui/item_info_mouseover.wav" );
 	}
-	BaseClass::ShowTooltip( currentPanel );	
+	BaseClass::ShowTooltip( currentPanel );
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CItemCardPanelToolTip::HideTooltip() 
-{ 
-	if ( m_pMouseOverItemPanel ) 
+void CItemCardPanelToolTip::HideTooltip()
+{
+	if ( m_pMouseOverItemPanel )
 	{
 		if ( m_pMouseOverItemPanel->IsPinned() )
 			return;
 
-		m_pMouseOverItemPanel->SetVisible( false ); 
+		m_pMouseOverItemPanel->SetVisible( false );
 	}
 
 	if ( m_hCurrentPanel )

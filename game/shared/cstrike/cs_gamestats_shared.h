@@ -50,10 +50,10 @@ private:
 //
 // CS Game Stats Enums
 //
-// WARNING! ANY CHANGE TO THE ORDERING OR NUMBER OF STATS WILL REQUIRE 
+// WARNING! ANY CHANGE TO THE ORDERING OR NUMBER OF STATS WILL REQUIRE
 // SYNCHRONOUS UPDATE OF CLIENT AND SERVER DLLS. If you change these enums
-// (including adding new stats) without forcing an update of both the client 
-// and server, stats will become corrupted on the game client and these 
+// (including adding new stats) without forcing an update of both the client
+// and server, stats will become corrupted on the game client and these
 // corrupted values will be uploaded to steam, which is very very bad.
 //
 // If you add new stats, if will be safest to add them at the end of the enum
@@ -69,8 +69,8 @@ enum CSStatType_t
 	CSSTAT_KILLS,
 	CSSTAT_DEATHS,
 	CSSTAT_DAMAGE,
-    CSSTAT_NUM_BOMBS_PLANTED,
-    CSSTAT_NUM_BOMBS_DEFUSED,
+	CSSTAT_NUM_BOMBS_PLANTED,
+	CSSTAT_NUM_BOMBS_DEFUSED,
 	CSSTAT_PLAYTIME,
 	CSSTAT_ROUNDS_WON,
 	CSSTAT_T_ROUNDS_WON,
@@ -187,7 +187,7 @@ enum CSStatType_t
 	CSSTAT_DAMAGE_XM1014,
 	CSSTAT_DAMAGE_M249,
 	CSSTAT_DAMAGE_KNIFE,
-	CSSTAT_DAMAGE_HEGRENADE,	
+	CSSTAT_DAMAGE_HEGRENADE,
 
 	CSSTAT_KILLS_HEADSHOT,
 	CSSTAT_KILLS_ENEMY_BLINDED,
@@ -231,7 +231,7 @@ enum CSStatType_t
 	CSSTAT_GRENADE_POSTHUMOUSKILLS,
 	CSSTAT_GRENADES_THROWN,
 
-    CSTAT_ITEMS_DROPPED_VALUE,
+	CSTAT_ITEMS_DROPPED_VALUE,
 
 	//Map win stats
 	CSSTAT_MAP_WINS_CS_ASSAULT,
@@ -422,63 +422,63 @@ struct RoundStatsDirectAverage_t
 
 struct RoundStatsRollingAverage_t
 {
-    float m_fStat[CSSTAT_MAX];
-    int m_numberOfDataSets;
+	float m_fStat[CSSTAT_MAX];
+	int m_numberOfDataSets;
 
-    RoundStatsRollingAverage_t()
-    {
-        Reset();
-    }
+	RoundStatsRollingAverage_t()
+	{
+		Reset();
+	}
 
-    void Reset()
-    {
-        for ( int i = 0; i < ARRAYSIZE( m_fStat ); i++ )
-        {
-            m_fStat[i] = 0;
-        }
-        m_numberOfDataSets = 0;
-    }
+	void Reset()
+	{
+		for ( int i = 0; i < ARRAYSIZE( m_fStat ); i++ )
+		{
+			m_fStat[i] = 0;
+		}
+		m_numberOfDataSets = 0;
+	}
 
-    RoundStatsRollingAverage_t& operator +=( const RoundStatsRollingAverage_t &other )
-    {
-        for ( int i = 0; i < ARRAYSIZE( m_fStat ); i++ )
-        {
-            m_fStat[i] += other.m_fStat[i];
-        }
-        return *this;
-    }
+	RoundStatsRollingAverage_t& operator +=( const RoundStatsRollingAverage_t &other )
+	{
+		for ( int i = 0; i < ARRAYSIZE( m_fStat ); i++ )
+		{
+			m_fStat[i] += other.m_fStat[i];
+		}
+		return *this;
+	}
 
-    RoundStatsRollingAverage_t& operator +=( const StatsCollection_t &other )
-    {
-        for ( int i = 0; i < ARRAYSIZE( m_fStat ); i++ )
-        {
-            m_fStat[i] += other[i];
-        }
-        return *this;
-    }
+	RoundStatsRollingAverage_t& operator +=( const StatsCollection_t &other )
+	{
+		for ( int i = 0; i < ARRAYSIZE( m_fStat ); i++ )
+		{
+			m_fStat[i] += other[i];
+		}
+		return *this;
+	}
 
-    RoundStatsRollingAverage_t& operator /=( const float &divisor)
-    {
-        if (divisor > 0)
-        {
-            for ( int i = 0; i < ARRAYSIZE( m_fStat ); i++ )
-            {
-                m_fStat[i] /= divisor;
-            }
-        }
-        return *this;
-    }
+	RoundStatsRollingAverage_t& operator /=( const float &divisor)
+	{
+		if (divisor > 0)
+		{
+			for ( int i = 0; i < ARRAYSIZE( m_fStat ); i++ )
+			{
+				m_fStat[i] /= divisor;
+			}
+		}
+		return *this;
+	}
 
-    void RollDataSetIntoAverage ( const RoundStatsRollingAverage_t &other )
-    {
-        for ( int i = 0; i < ARRAYSIZE( m_fStat ); i++ )
-        {
-            m_fStat[i] *= m_numberOfDataSets;
-            m_fStat[i] += other.m_fStat[i];
-            m_fStat[i] /= (m_numberOfDataSets + 1);
-        }
-        m_numberOfDataSets++;
-    }
+	void RollDataSetIntoAverage ( const RoundStatsRollingAverage_t &other )
+	{
+		for ( int i = 0; i < ARRAYSIZE( m_fStat ); i++ )
+		{
+			m_fStat[i] *= m_numberOfDataSets;
+			m_fStat[i] += other.m_fStat[i];
+			m_fStat[i] /= (m_numberOfDataSets + 1);
+		}
+		m_numberOfDataSets++;
+	}
 };
 //=============================================================================
 // HPE_END
@@ -542,7 +542,7 @@ struct PlayerStats_t
 	StatsCollection_t	statsDelta;
 	StatsCollection_t	statsCurrentRound;
 	StatsCollection_t	statsCurrentMatch;
- 	KillStats_t		statsKills;
+	KillStats_t		statsKills;
 };
 
 
@@ -604,7 +604,7 @@ void AddStringDataToKV( KeyValues* pKV, const char* name, const char *data );
 	static const char* GetStatTableName( void ) { return tableName; } \
 	void BuildGamestatDataTable( KeyValues* pKV ) \
 { \
-	pKV->SetName( GetStatTableName() ); 
+	pKV->SetName( GetStatTableName() );
 
 #define REGISTER_STAT( varName ) \
 	AddDataToKV(pKV, #varName, varName);

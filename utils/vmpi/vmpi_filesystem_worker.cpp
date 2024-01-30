@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -56,7 +56,7 @@ public:
 public:
 	CFastTimer m_Timer; // To see how long it takes to download the file.
 
-	// This has to be sent explicitly as part of the file info or else the protocol 
+	// This has to be sent explicitly as part of the file info or else the protocol
 	// breaks on empty files.
 	bool m_bZeroLength;
 
@@ -72,7 +72,7 @@ public:
 
 	// First data comes in here, then when it's all there, it is inflated into m_UncompressedData.
 	CUtlVector<char> m_CompressedData;
-	
+
 	// 1 bit for each chunk.
 	CUtlVector<unsigned char> m_ChunksReceived;
 
@@ -103,9 +103,9 @@ static bool ZLibDecompress( const void *pInput, int inputLen, void *pOut, int ou
 		// Zero-length file?
 		return true;
 	}
-	
+
 	z_stream decompressStream;
-	
+
 	// Initialize the decompression stream.
 	memset( &decompressStream, 0, sizeof( decompressStream ) );
 	if ( inflateInit( &decompressStream ) != Z_OK )
@@ -156,10 +156,10 @@ class CWorkerMulticastListener
 {
 public:
 	CWorkerMulticastListener()
-	{	   
+	{
 		m_nUnfinishedFiles = 0;
 	}
-	
+
 	~CWorkerMulticastListener()
 	{
 		Term();
@@ -177,7 +177,7 @@ public:
 		m_WorkerFiles.PurgeAndDeleteElements();
 	}
 
-	
+
 	CWorkerFile* RequestFileFromServer( const char *pFilename, const char *pPathID )
 	{
 		Assert( pPathID );
@@ -225,14 +225,14 @@ public:
 			else
 				Sleep( 20 );
 		}
-	
+
 		// If we get -1 back, it means the file doesn't exist.
 		int fileID = response.m_Response;
 		if ( fileID == -1 )
 			return NULL;
 
 		CWorkerFile *pTestFile = new CWorkerFile;
-		
+
 		pTestFile->m_Filename.SetSize( strlen( pFilename ) + 1 );
 		strcpy( pTestFile->m_Filename.Base(), pFilename );
 
@@ -272,8 +272,8 @@ public:
 			FlushAckChunks( chunksToAck, nChunksToAck, lastAckTime );
 	}
 
-	void AddAckChunk( 
-		unsigned short chunksToAck[NUM_BUFFERED_CHUNK_ACKS][2], 
+	void AddAckChunk(
+		unsigned short chunksToAck[NUM_BUFFERED_CHUNK_ACKS][2],
 		int &nChunksToAck,
 		DWORD &lastAckTime,
 		int fileID,
@@ -301,7 +301,7 @@ public:
 
 		CFileChunkPacket *pPacket = g_FileChunkPackets[ g_FileChunkPackets.Head() ];
 		g_FileChunkPackets.Remove( g_FileChunkPackets.Head() );
-		
+
 		// Yes, this is inefficient, but the amount of data we're handling here is tiny so the
 		// effect is negligible.
 		int len;
@@ -315,11 +315,11 @@ public:
 			memcpy( data, pPacket->m_Data, pPacket->m_Len );
 			len = pPacket->m_Len;
 		}
-		
+
 		free( pPacket );
 		return len;
 	}
-	
+
 	void ShowSDKWorkerMsg( const char *pMsg, ... )
 	{
 		if ( !g_bMPIMaster && VMPI_IsSDKMode() )
@@ -334,7 +334,7 @@ public:
 	}
 
 	// This is the main function the workers use to pick files out of the multicast stream.
-	// The app is waiting for a specific file, but we receive and ack any files we can until 
+	// The app is waiting for a specific file, but we receive and ack any files we can until
 	// we get the file they're looking for, then we return.
 	//
 	// NOTE: ideally, this would be in a thread, but it adds lots of complications and may
@@ -379,7 +379,7 @@ public:
 		if ( VMPI_GetFileSystemMode() == VMPI_FILESYSTEM_MULTICAST )
 		{
 			pSocket = CreateMulticastListenSocket( m_MulticastAddr );
-			
+
 			if ( !pSocket )
 			{
 				char str[512];
@@ -407,7 +407,7 @@ public:
 		{
 			char data[MAX_CHUNK_PAYLOAD_SIZE+1024];
 			int len = -1;
-			
+
 			if ( pSocket )
 			{
 				CIPAddr ipFrom;
@@ -489,7 +489,7 @@ public:
 					Error( "ListenFor(): invalid compressed or uncompressed size.\n"
 						"pInfo = '%s', pTestFile = '%s'\n"
 						"Compressed   (pInfo = %d, pTestFile = %d)\n"
-						"Uncompressed (pInfo = %d, pTestFile = %d)\n", 
+						"Uncompressed (pInfo = %d, pTestFile = %d)\n",
 						pTestFilename,
 						pTestFile->GetFilename(),
 						pInfo->m_CompressedSize,
@@ -498,7 +498,7 @@ public:
 						pTestFile->m_UncompressedData.Count()
 						);
 				}
-				
+
 				int iChunkStart = iChunk * iChunkPayloadSize;
 				int iChunkEnd = min( iChunkStart + iChunkPayloadSize, pTestFile->m_CompressedData.Count() );
 				int chunkLen = iChunkEnd - iChunkStart;
@@ -507,9 +507,9 @@ public:
 				{
 					Error( "ListenFor(): invalid payload length for '%s' (%d should be %d)\n"
 						"pInfo = '%s', pTestFile = '%s'\n"
-						"Chunk %d out of %d. Compressed size: %d\n", 
+						"Chunk %d out of %d. Compressed size: %d\n",
 						pTestFile->GetFilename(),
-						payloadLen, 
+						payloadLen,
 						chunkLen,
 						pTestFilename,
 						pTestFile->GetFilename(),
@@ -532,11 +532,11 @@ public:
 
 				// Remember to ack what we received.
 				AddAckChunk( chunksToAck, nChunksToAck, lastAckTime, pInfo->m_FileID, iChunk );
-				
+
 				// If we're done receiving the data, unpack it.
 				if ( pTestFile->m_nChunksToReceive == 0 )
 				{
-					// Ack the file.				   
+					// Ack the file.
 					FlushAckChunks( chunksToAck, nChunksToAck, lastAckTime );
 
 					pTestFile->m_Timer.End();
@@ -544,8 +544,8 @@ public:
 					pTestFile->m_UncompressedData.SetSize( pInfo->m_UncompressedSize );
 					--m_nUnfinishedFiles;
 
-					if ( !ZLibDecompress( 
-						pTestFile->m_CompressedData.Base(), 
+					if ( !ZLibDecompress(
+						pTestFile->m_CompressedData.Base(),
 						pTestFile->m_CompressedData.Count(),
 						pTestFile->m_UncompressedData.Base(),
 						pTestFile->m_UncompressedData.Count() ) )
@@ -558,8 +558,8 @@ public:
 					}
 
 					char str[512];
-					V_snprintf( str, sizeof( str ), "Got %s (%dk) in %.2fs", 
-						printableFilename, 
+					V_snprintf( str, sizeof( str ), "Got %s (%dk) in %.2fs",
+						printableFilename,
 						(pTestFile->m_UncompressedData.Count() + 511) / 1024,
 						pTestFile->m_Timer.GetDuration().GetSeconds()
 						);
@@ -581,7 +581,7 @@ public:
 		return pFile;
 	}
 
-	CWorkerFile* FindWorkerFile( const char *pFilename, const char *pPathID ) 
+	CWorkerFile* FindWorkerFile( const char *pFilename, const char *pPathID )
 	{
 		FOR_EACH_LL( m_WorkerFiles, i )
 		{
@@ -593,7 +593,7 @@ public:
 		return NULL;
 	}
 
-	CWorkerFile* FindWorkerFile( int fileID ) 
+	CWorkerFile* FindWorkerFile( int fileID )
 	{
 		FOR_EACH_LL( m_WorkerFiles, i )
 		{
@@ -698,10 +698,10 @@ FileHandle_t CWorkerVMPIFileSystem::Open( const char *pFilename, const char *pOp
 	if ( !pFile || !pFile->IsReadyToRead() )
 	{
 		// Ok, start listening to the multicast stream until we get the file we want.
-		
+
 		// NOTE: it might make sense here to have the client ask for a list of ALL the files that
 		// the master currently has and wait to receive all of them (so we don't come back a bunch
-		// of times and listen 
+		// of times and listen
 
 		// NOTE NOTE: really, the best way to do this is to have a thread on the workers that sits there
 		// and listens to the multicast stream. Any time the master opens a new file up, it assumes
@@ -711,7 +711,7 @@ FileHandle_t CWorkerVMPIFileSystem::Open( const char *pFilename, const char *pOp
 		// (NOTE: this probably means that the clients would have to ack the chunks on a UDP socket that
 		// the thread owns).
 		//
-		// This would simplify all the worries about a client missing half the stream and having to 
+		// This would simplify all the worries about a client missing half the stream and having to
 		// wait for another cycle through it.
 		pFile = m_Listener.ListenFor( pFilename, pathID );
 
@@ -763,10 +763,10 @@ bool CWorkerVMPIFileSystem::HandleFileSystemPacket( MessageBuffer *pBuf, int iSo
 		case VMPI_FSPACKETID_MULTICAST_ADDR:
 		{
 			char *pInPos = &pBuf->data[2];
-			
+
 			g_MulticastIP = *((CIPAddr*)pInPos);
 			pInPos += sizeof( g_MulticastIP );
-			
+
 			g_bReceivedMulticastIP = true;
 		}
 		return true;
@@ -775,7 +775,7 @@ bool CWorkerVMPIFileSystem::HandleFileSystemPacket( MessageBuffer *pBuf, int iSo
 		{
 			CCriticalSectionLock csLock( &g_FileResponsesCS );
 			csLock.Lock();
-			
+
 			CFileResponse res;
 			res.m_RequestID = *((int*)&pBuf->data[2]);
 			res.m_Response = *((int*)&pBuf->data[6]);
@@ -784,11 +784,11 @@ bool CWorkerVMPIFileSystem::HandleFileSystemPacket( MessageBuffer *pBuf, int iSo
 			g_FileResponses.AddToTail( res );
 		}
 		return true;
-	
+
 		case VMPI_FSPACKETID_FILE_CHUNK:
 		{
 			int nDataBytes = pBuf->getLen() - 2;
-			
+
 			CFileChunkPacket *pPacket = (CFileChunkPacket*)malloc( sizeof( CFileChunkPacket ) + nDataBytes - 1 );
 			memcpy( pPacket->m_Data, &pBuf->data[2], nDataBytes );
 			pPacket->m_Len = nDataBytes;
@@ -798,7 +798,7 @@ bool CWorkerVMPIFileSystem::HandleFileSystemPacket( MessageBuffer *pBuf, int iSo
 			g_FileChunkPackets.AddToTail( pPacket );
 		}
 		return true;
-		
+
 		default:
 			return false;
 	}

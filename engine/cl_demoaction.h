@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -63,7 +63,7 @@ typedef enum
 } DEMOACTION;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 typedef enum
 {
@@ -75,7 +75,7 @@ typedef enum
 } DEMOACTIONTIMINGTYPE;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct DemoActionTimingContext
 {
@@ -115,7 +115,7 @@ public:
 
 	DEMOACTIONTIMINGTYPE	GetTimingType( void ) const;
 	void					SetTimingType( DEMOACTIONTIMINGTYPE timingtype );
-	
+
 	void					SetActionFired( bool fired );
 	bool					GetActionFired( void ) const;
 
@@ -168,7 +168,7 @@ private:
 
 	bool					m_bActionFired;
 	bool					m_bActionFinished;
-	
+
 	char					m_szActionName[ MAX_ACTION_NAME ];
 
 	char					m_szActionTarget[ MAX_ACTION_NAME ];

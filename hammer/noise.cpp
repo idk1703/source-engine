@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,7 +18,7 @@ float RandomNoise2D( int x, int y )
 {
 	int n = x + y * 57;
 	n = ( n << 13 ) ^ n;
-	
+
 	float value ( 1.0f - ( float )( ( n * ( n * n * 15731 + 789221 ) + 1376312589 ) & 0x7fffffff ) / 1073741824.0f );
 
 	return value;
@@ -30,7 +30,7 @@ float RandomNoise2D( int x, int y )
 //-----------------------------------------------------------------------------
 float SmoothNoise2D( int x, int y )
 {
-	float corners = ( RandomNoise2D( x-1, y-1 ) + RandomNoise2D( x+1, y-1 ) + 
+	float corners = ( RandomNoise2D( x-1, y-1 ) + RandomNoise2D( x+1, y-1 ) +
 		              RandomNoise2D( x-1, y+1 ) + RandomNoise2D( x+1, y+1 ) ) / 16.0f;
 	float sides = ( RandomNoise2D( x-1, y ) + RandomNoise2D( x+1, y ) +
 		            RandomNoise2D( x, y-1 ) + RandomNoise2D( x, y+1 ) ) / 8.0f;
@@ -71,7 +71,7 @@ inline float InterpCubic( float a, float b, float c, float d, float x )
 
 	return ( ( P * x * 3.0f ) + ( Q * x * 2.0f ) + ( R * x ) + S );
 }
-  
+
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -99,7 +99,7 @@ float InterpNoise2D( float x, float y )
 
 //-----------------------------------------------------------------------------
 // Purpose:
-//   Input: x - 
+//   Input: x -
 //          y -
 //          rockiness - 0.0f - 1.0f (0.0 = smooth, 1.0f = jagged)
 //  Output:
@@ -113,7 +113,7 @@ float PerlinNoise2D( float x, float y, float rockiness )
 	{
 		float frequency = ( float )pow( 2.f, ndxOctave );
 		float amplitude = ( float )pow( persistence, ndxOctave );
-	
+
 		total += InterpNoise2D( x * frequency, y * frequency ) * amplitude;
 	}
 
@@ -123,7 +123,7 @@ float PerlinNoise2D( float x, float y, float rockiness )
 
 //-----------------------------------------------------------------------------
 // Purpose:
-//   Input: x - 
+//   Input: x -
 //          y -
 //          rockiness - 0.0f - 1.0f (0.0 = smooth, 1.0f = jagged)
 //  Output: is between -1.0f and 1.0f
@@ -137,7 +137,7 @@ float PerlinNoise2DScaled( float x, float y, float rockiness )
 	{
 		float frequency = ( float )pow( 2.f, ndxOctave );
 		float amplitude = ( float )pow( persistence, ndxOctave );
-	
+
 		total += InterpNoise2D( x * frequency, y * frequency ) * amplitude;
 	}
 

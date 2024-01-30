@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -74,7 +74,7 @@ public:
 	virtual bool IsKeyDown(KeyCode code) = 0;
 	virtual bool WasKeyTyped(KeyCode code) = 0;
 	virtual bool WasKeyReleased(KeyCode code) = 0;
-	
+
 	virtual VPANEL GetAppModalSurface() = 0;
 	// set the modal dialog panel.
 	// all events will go only to this panel and its children.
@@ -143,7 +143,7 @@ public:
 	virtual int  GetCandidateListSelectedItem() = 0;
 	virtual int  GetCandidateListPageSize() = 0;
 	virtual int  GetCandidateListPageStart() = 0;
-	
+
 	//NOTE:  We render our own candidate lists most of the time...
 	virtual void SetCandidateWindowPos( int x, int y ) = 0;
 

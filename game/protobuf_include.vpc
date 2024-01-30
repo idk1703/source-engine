@@ -37,7 +37,7 @@ $Project
 		{
 			$Configuration "Release" { $ExcludedFromBuild "Yes" }
 		}
-		
+
 		$File "$SRCDIR\thirdparty\protobuf-2.6.1\bin\win64\2015\staticcrt\release\libprotobuf.lib" [$WIN64]
 		{
 			$Configuration "Debug" 	{ $ExcludedFromBuild "Yes" }
@@ -48,4 +48,3 @@ $Project
 		}
 	}
 }
-

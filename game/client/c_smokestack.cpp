@@ -90,7 +90,7 @@ public:
 		float		m_flIntensity;
 	};
 
-	// Note: there are two ways the directional light can be specified. The default is to use 
+	// Note: there are two ways the directional light can be specified. The default is to use
 	// DirLightColor and a default dirlight source (from above or below).
 	//		In this case, m_DirLight.m_vPos and m_DirLight.m_flIntensity are ignored.
 	//
@@ -100,7 +100,7 @@ public:
 	CParticleLightInfo	m_DirLight;
 
 	Vector			m_vBaseColor;
-	
+
 	Vector			m_vWind;
 	float			m_flTwist;
 	int				m_iMaterialModel;
@@ -165,7 +165,7 @@ C_SmokeStack::C_SmokeStack()
 	m_pParticleMgr = NULL;
 	m_MaterialHandle[0] = INVALID_MATERIAL_HANDLE;
 	m_iMaterialModel = -1;
-	
+
 	m_SpreadSpeed = 15;
 	m_Speed = 30;
 	m_StartSize = 10;
@@ -186,7 +186,7 @@ C_SmokeStack::C_SmokeStack()
 	m_AmbientLight.m_flIntensity = 8000;
 
 	m_DirLight.m_vColor.Init( 255, 128, 0 );
-	
+
 	m_vWind.Init();
 
 	m_flTwist = 0;
@@ -202,7 +202,7 @@ C_SmokeStack::~C_SmokeStack()
 
 //-----------------------------------------------------------------------------
 // Purpose: Called after a data update has occured
-// Input  : bnewentity - 
+// Input  : bnewentity -
 //-----------------------------------------------------------------------------
 void C_SmokeStack::OnDataChanged(DataUpdateType_t updateType)
 {
@@ -222,13 +222,13 @@ static ConVar mat_reduceparticles( "mat_reduceparticles", "0" );
 
 //-----------------------------------------------------------------------------
 // Purpose: Starts the effect
-// Input  : *pParticleMgr - 
-//			*pArgs - 
+// Input  : *pParticleMgr -
+//			*pArgs -
 //-----------------------------------------------------------------------------
 void C_SmokeStack::Start(CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs)
 {
 	pParticleMgr->AddEffect( &m_ParticleEffect, this );
-	
+
 	// Figure out the material name.
 	char str[512] = "unset_material";
 	const model_t *pModel = modelinfo->GetModel( m_iMaterialModel );
@@ -280,7 +280,7 @@ void C_SmokeStack::Start(CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs)
 	{
 		m_Renderer.Init( pParticleMgr, pMaterial );
 	}
-	
+
 	QueueLightParametersInRenderer();
 
 	// For the first N seconds, always simulate so it can build up the smokestack.
@@ -297,9 +297,9 @@ void C_SmokeStack::ClientThink()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : **ppTable - 
-//			**ppObj - 
+// Purpose:
+// Input  : **ppTable -
+//			**ppObj -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_SmokeStack::GetPropEditInfo( RecvTable **ppTable, void **ppObj )
@@ -310,8 +310,8 @@ bool C_SmokeStack::GetPropEditInfo( RecvTable **ppTable, void **ppObj )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fTimeDelta - 
+// Purpose:
+// Input  : fTimeDelta -
 //-----------------------------------------------------------------------------
 void C_SmokeStack::Update(float fTimeDelta)
 {
@@ -324,9 +324,9 @@ void C_SmokeStack::Update(float fTimeDelta)
 	// Don't spawn particles unless we're visible.
 	if( m_bEmit && (m_ParticleEffect.WasDrawnPrevFrame() || m_ParticleEffect.GetAlwaysSimulate()) )
 	{
-		// Add new particles.																	
+		// Add new particles.
 		Vector forward, right, up;
-		AngleVectors(GetAbsAngles(), &forward, &right, &up);			
+		AngleVectors(GetAbsAngles(), &forward, &right, &up);
 
 		float tempDelta = fTimeDelta;
 		while(m_ParticleSpawn.NextEvent(tempDelta))
@@ -336,17 +336,17 @@ void C_SmokeStack::Update(float fTimeDelta)
 #ifndef HL2_EPISODIC
 			iRandomFrame = 0;
 #endif
-	
+
 			// Make a new particle.
 			if(SmokeStackParticle *pParticle = (SmokeStackParticle*)m_ParticleEffect.AddParticle(sizeof(SmokeStackParticle), m_MaterialHandle[iRandomFrame]))
 			{
 				float angle = FRand( 0, 2.0f*M_PI_F );
-				
+
 				pParticle->m_Pos = GetAbsOrigin() +
 					right * (cos( angle ) * m_flBaseSpread) +
 					forward * (sin( angle ) * m_flBaseSpread);
 
-				pParticle->m_Velocity = 
+				pParticle->m_Velocity =
 					FRand(-m_SpreadSpeed,m_SpreadSpeed) * right +
 					FRand(-m_SpreadSpeed,m_SpreadSpeed) * forward +
 					m_Speed * up;
@@ -390,7 +390,7 @@ void C_SmokeStack::QueueLightParametersInRenderer()
 	m_Renderer.SetAmbientLight( m_AmbientLight );
 	m_Renderer.SetDirectionalLight( m_DirLight );
 	m_flAlphaScale = (float)m_clrRender->a;
-} 
+}
 
 
 void C_SmokeStack::RenderParticles( CParticleRenderIterator *pIterator )
@@ -398,7 +398,7 @@ void C_SmokeStack::RenderParticles( CParticleRenderIterator *pIterator )
 	const SmokeStackParticle *pParticle = (const SmokeStackParticle*)pIterator->GetFirst();
 	while ( pParticle )
 	{
-		// Transform.						   
+		// Transform.
 		Vector tPos;
 		TransformParticle( m_pParticleMgr->GetModelView(), pParticle->m_Pos, tPos );
 
@@ -418,7 +418,7 @@ void C_SmokeStack::RenderParticles( CParticleRenderIterator *pIterator )
 			FLerp(m_StartSize, m_EndSize, tLifetime),
 			DEG2RAD( pParticle->m_flAngle )
 		);
-		
+
 		pParticle = (const SmokeStackParticle*)pIterator->GetNext( pParticle->m_flSortPos );
 	}
 }
@@ -462,7 +462,7 @@ void C_SmokeStack::SimulateParticles( CParticleSimulateIterator *pIterator )
 		}
 		else
 		{
-			// Transform.						   
+			// Transform.
 			if( m_bTwist )
 			{
 				Vector vTwist(
@@ -475,8 +475,8 @@ void C_SmokeStack::SimulateParticles( CParticleSimulateIterator *pIterator )
 			}
 
 #ifndef HL2_EPISODIC
-			pParticle->m_Pos = pParticle->m_Pos + 
-				pParticle->m_Velocity * pIterator->GetTimeDelta() + 
+			pParticle->m_Pos = pParticle->m_Pos +
+				pParticle->m_Velocity * pIterator->GetTimeDelta() +
 				pParticle->m_vAccel * (0.5f * pIterator->GetTimeDelta() * pIterator->GetTimeDelta());
 
 			pParticle->m_Velocity += pParticle->m_vAccel * pIterator->GetTimeDelta();
@@ -499,5 +499,3 @@ void C_SmokeStack::SimulateParticles( CParticleSimulateIterator *pIterator )
 
 	m_bInView = bDrawn;
 }
-
-

@@ -44,7 +44,7 @@ bool OrderCreator_BuildSentryGun( CPlayerClassDefender *pClass )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CPlayerClassDefender::GetClassModelString( int nTeam )
@@ -62,7 +62,7 @@ CPlayerClassDefender::CPlayerClassDefender( CBaseTFPlayer *pPlayer, TFClass iCla
 {
 	for (int i = 0; i < MAX_TF_TEAMS; ++i)
 	{
-		SetClassModel( MAKE_STRING(GetClassModelString(i)), i ); 
+		SetClassModel( MAKE_STRING(GetClassModelString(i)), i );
 	}
 }
 
@@ -71,7 +71,7 @@ CPlayerClassDefender::~CPlayerClassDefender()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassDefender::ClassActivate( void )
 {
@@ -93,7 +93,7 @@ void CPlayerClassDefender::ClassActivate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassDefender::ClassDeactivate( void )
 {
@@ -101,7 +101,7 @@ void CPlayerClassDefender::ClassDeactivate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassDefender::CreateClass( void )
 {
@@ -123,7 +123,7 @@ void CPlayerClassDefender::CreateClass( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CPlayerClassDefender::ResupplyAmmo( float flFraction, ResupplyReason_t reason )
 {
@@ -172,7 +172,7 @@ void CPlayerClassDefender::SetupSizeData( void )
 	// Initially set the player to the base player class standing hull size.
 	m_pPlayer->SetCollisionBounds( DEFENDERCLASS_HULL_STAND_MIN, DEFENDERCLASS_HULL_STAND_MAX );
 	m_pPlayer->SetViewOffset( DEFENDERCLASS_VIEWOFFSET_STAND );
-	m_pPlayer->m_Local.m_flStepSize = DEFENDERCLASS_STEPSIZE;	
+	m_pPlayer->m_Local.m_flStepSize = DEFENDERCLASS_STEPSIZE;
 }
 
 
@@ -243,7 +243,7 @@ int CPlayerClassDefender::CanBuild( int iObjectType )
 	// First, check to see if we've got the technology
 	if ( iObjectType == OBJ_SENTRYGUN_ROCKET_LAUNCHER )
 	{
-		if ( !m_bHasRocketlauncher ) 
+		if ( !m_bHasRocketlauncher )
 			return CB_NOT_RESEARCHED;
 	}
 
@@ -253,7 +253,7 @@ int CPlayerClassDefender::CanBuild( int iObjectType )
 
 int CPlayerClassDefender::CanBuildSentryGun()
 {
-	return 
+	return
 		CanBuild( OBJ_SENTRYGUN_ROCKET_LAUNCHER ) == CB_CAN_BUILD ||
 		CanBuild( OBJ_SENTRYGUN_PLASMA ) == CB_CAN_BUILD;
 }
@@ -268,7 +268,7 @@ void CPlayerClassDefender::FinishedObject( CBaseObject *pObject )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassDefender::PlayerDied( CBaseEntity *pAttacker )
 {
@@ -282,7 +282,7 @@ void CPlayerClassDefender::PlayerDied( CBaseEntity *pAttacker )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassDefender::SetPlayerHull( void )
 {
@@ -297,7 +297,7 @@ void CPlayerClassDefender::SetPlayerHull( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassDefender::GetPlayerHull( bool bDucking, Vector &vecMin, Vector &vecMax )
 {
@@ -314,7 +314,7 @@ void CPlayerClassDefender::GetPlayerHull( bool bDucking, Vector &vecMin, Vector 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassDefender::ResetViewOffset( void )
 {
@@ -337,12 +337,12 @@ void CPlayerClassDefender::CreatePersonalOrder()
 	{
 		return;
 	}
-	
+
 	BaseClass::CreatePersonalOrder();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassDefender::InitVCollision( void )
 {

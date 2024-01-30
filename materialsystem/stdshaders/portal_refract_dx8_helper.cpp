@@ -44,11 +44,11 @@ void InitPortalRefract_DX8( CBaseVSShader *pShader, IMaterialVar** params, Porta
 	}
 }
 
-void DrawPortalRefract_DX8( CBaseVSShader *pShader, IMaterialVar** params, 
+void DrawPortalRefract_DX8( CBaseVSShader *pShader, IMaterialVar** params,
 						   IShaderDynamicAPI *pShaderAPI, IShaderShadow* pShaderShadow, PortalRefractVarsDX8_t &info )
 {
 	int nStage = IS_PARAM_DEFINED( info.m_nStage ) ? params[info.m_nStage]->GetIntValue() : 0;
-		
+
 	SHADOW_STATE
 	{
 		// Set stream format
@@ -93,7 +93,7 @@ void DrawPortalRefract_DX8( CBaseVSShader *pShader, IMaterialVar** params,
 		DECLARE_DYNAMIC_VERTEX_SHADER( portal_refract_vs11 );
 		SET_DYNAMIC_VERTEX_SHADER( portal_refract_vs11 );
 
-		// Set Vertex Shader Constants 
+		// Set Vertex Shader Constants
 		if ( IS_PARAM_DEFINED( info.m_nTextureTransform ) )
 		{
 			pShader->SetVertexShaderTextureTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_1, info.m_nTextureTransform );
@@ -113,7 +113,7 @@ void DrawPortalRefract_DX8( CBaseVSShader *pShader, IMaterialVar** params,
 		pShader->BindTexture( SHADER_SAMPLER0, info.m_nPortalColorTexture );
 		pShader->BindTexture( SHADER_SAMPLER1, info.m_nPortalMaskTexture );
 
-		// Set Pixel Shader Constants 
+		// Set Pixel Shader Constants
 		pShaderAPI->SetPixelShaderFogParams( 6 );
 
 		// Set c0-c3 to contain four rows of ViewProj matrix
@@ -129,7 +129,7 @@ void DrawPortalRefract_DX8( CBaseVSShader *pShader, IMaterialVar** params,
 		vPackedConst1[0] = ( IS_PARAM_DEFINED( info.m_nPortalOpenAmount ) ? params[info.m_nPortalOpenAmount]->GetFloatValue() : kDefaultPortalOpenAmount );
 		vPackedConst1[1] = 1.0f - ( IS_PARAM_DEFINED( info.m_nPortalStatic ) ? params[info.m_nPortalStatic]->GetFloatValue() : kDefaultPortalStatic );
 		vPackedConst1[2] = ( IS_PARAM_DEFINED( info.m_nPortalColorScale ) ? params[info.m_nPortalColorScale]->GetFloatValue() : kDefaultPortalColorScale ) / 4.0f; // Will scale by 4 in ps
-		
+
 		//vPackedConst4[0] = 0.6f;
 		//DevMsg( "Refract Time: %f\n", vPackedConst4[0] );
 

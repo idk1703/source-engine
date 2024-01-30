@@ -69,7 +69,7 @@ BEGIN_DATADESC( CAI_ScriptedSequence )
 	DEFINE_FIELD( m_saved_effects, FIELD_INTEGER ),
 	DEFINE_FIELD( m_savedFlags, FIELD_INTEGER ),
 	DEFINE_FIELD( m_savedCollisionGroup, FIELD_INTEGER ),
-	
+
 	DEFINE_FIELD( m_interruptable, FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_sequenceStarted, FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_hTargetEnt, FIELD_EHANDLE ),
@@ -78,7 +78,7 @@ BEGIN_DATADESC( CAI_ScriptedSequence )
 	DEFINE_FIELD( m_hForcedTarget, FIELD_EHANDLE ),
 	DEFINE_FIELD( m_bDontCancelOtherSequences, FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_bForceSynch, FIELD_BOOLEAN ),
-	
+
 	DEFINE_FIELD( m_bThinking, FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_bInitiatedSelfDelete, FIELD_BOOLEAN ),
 
@@ -123,7 +123,7 @@ LINK_ENTITY_TO_CLASS( scripted_sequence, CAI_ScriptedSequence );
 
 //-----------------------------------------------------------------------------
 // Purpose: Cancels the given scripted sequence.
-// Input  : pentCine - 
+// Input  : pentCine -
 //-----------------------------------------------------------------------------
 void CAI_ScriptedSequence::ScriptEntityCancel( CBaseEntity *pentCine, bool bPretendSuccess )
 {
@@ -151,12 +151,12 @@ void CAI_ScriptedSequence::ScriptEntityCancel( CBaseEntity *pentCine, bool bPret
 
 #ifdef HL1_DLL
 				//if we didn't have FL_FLY before the script, remove it
-				// for some reason hl2 doesn't have to do this *before* 
+				// for some reason hl2 doesn't have to do this *before*
 				// restoring the position ( which checks FL_FLY ) in CineCleanup
 				// Let's not risk breaking anything at this stage and just remove it.
 				pCineTarget->FixFlyFlag( pTarget, iSavedFlags );
 #endif
-				// do it now				
+				// do it now
 				pTarget->CineCleanup( );
 				pCineTarget->FixScriptNPCSchedule( pTarget, iSavedFlags );
 			}
@@ -185,7 +185,7 @@ void CAI_ScriptedSequence::ScriptEntityCancel( CBaseEntity *pentCine, bool bPret
 		else
 		{
 			// Fire the cancel
- 			pCineTarget->m_OnCancelSequence.FireOutput(NULL, pCineTarget);
+			pCineTarget->m_OnCancelSequence.FireOutput(NULL, pCineTarget);
 
 			if ( pCineTarget->m_startTime == 0 )
 			{
@@ -297,7 +297,7 @@ void CAI_ScriptedSequence::InputMoveToPosition( inputdata_t &inputdata )
 {
 	if ( m_bInitiatedSelfDelete )
 		return;
-		
+
 	// Have I already grabbed an NPC?
 	CBaseEntity *pEntity = GetTarget();
 	CAI_BaseNPC	*pTarget = NULL;
@@ -307,7 +307,7 @@ void CAI_ScriptedSequence::InputMoveToPosition( inputdata_t &inputdata )
 		pTarget = pEntity->MyNPCPointer();
 	}
 
-	if ( pTarget != NULL ) 
+	if ( pTarget != NULL )
 	{
 		// Yes, are they already playing this script?
 		if ( pTarget->m_scriptState == CAI_BaseNPC::SCRIPT_PLAYING || pTarget->m_scriptState == CAI_BaseNPC::SCRIPT_POST_IDLE )
@@ -343,7 +343,7 @@ void CAI_ScriptedSequence::InputBeginSequence( inputdata_t &inputdata )
 
 	// Start the script as soon as possible.
 	m_bWaitForBeginSequence = false;
-		
+
 	// do I already know who I should use?
 	CBaseEntity *pEntity = GetTarget();
 	CAI_BaseNPC	*pTarget = NULL;
@@ -361,7 +361,7 @@ void CAI_ScriptedSequence::InputBeginSequence( inputdata_t &inputdata )
 		pTarget = pEntity->MyNPCPointer();
 	}
 
-	if ( pTarget ) 
+	if ( pTarget )
 	{
 		// Are they already playing a script?
 		if ( pTarget->m_scriptState == CAI_BaseNPC::SCRIPT_PLAYING || pTarget->m_scriptState == CAI_BaseNPC::SCRIPT_POST_IDLE )
@@ -378,7 +378,7 @@ void CAI_ScriptedSequence::InputBeginSequence( inputdata_t &inputdata )
 		// if not, try finding them
 		StartThink();
 
-		// Because we are directly calling the new "think" function ScriptThink, assume we're done 
+		// Because we are directly calling the new "think" function ScriptThink, assume we're done
 		// This fixes the following bug (along with the WokeThisTick() code herein:
 		//  A zombie is created in the asleep state and then, the mapper fires both Wake and BeginSequence
 		//  messages to have it jump up out of the slime, e.g.  What happens before this change is that
@@ -414,7 +414,7 @@ void CAI_ScriptedSequence::InputCancelSequence( inputdata_t &inputdata )
 
 void CAI_ScriptedSequence::InputScriptPlayerDeath( inputdata_t &inputdata )
 {
-    if ( m_iPlayerDeathBehavior == SCRIPT_CANCEL )
+	if ( m_iPlayerDeathBehavior == SCRIPT_CANCEL )
 	{
 		if ( m_bInitiatedSelfDelete )
 			return;
@@ -466,7 +466,7 @@ void CAI_ScriptedSequence::Blocked( CBaseEntity *pOther )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : pOther - The entity touching us.
 //-----------------------------------------------------------------------------
 void CAI_ScriptedSequence::Touch( CBaseEntity *pOther )
@@ -483,7 +483,7 @@ void CAI_ScriptedSequence::Touch( CBaseEntity *pOther )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_ScriptedSequence::Die( void )
 {
@@ -494,7 +494,7 @@ void CAI_ScriptedSequence::Die( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_ScriptedSequence::Pain( void )
 {
@@ -502,8 +502,8 @@ void CAI_ScriptedSequence::Pain( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : eMode - 
+// Purpose:
+// Input  : eMode -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 CAI_BaseNPC *CAI_ScriptedSequence::FindScriptEntity( )
@@ -520,7 +520,7 @@ CAI_BaseNPC *CAI_ScriptedSequence::FindScriptEntity( )
 	else
 	{
 		interrupt = SS_INTERRUPT_BY_NAME;
-		
+
 		pEntity = gEntList.FindEntityByNameWithin( m_hLastFoundEntity, STRING( m_iszEntity ), GetAbsOrigin(), m_flRadius );
 		if (!pEntity)
 		{
@@ -557,14 +557,14 @@ CAI_BaseNPC *CAI_ScriptedSequence::FindScriptEntity( )
 
 		if ( m_hForcedTarget )
 		{
-			Warning( "Code forced %s(%s), to be the target of scripted sequence %s, but it can't play it.\n", 
+			Warning( "Code forced %s(%s), to be the target of scripted sequence %s, but it can't play it.\n",
 						pEntity->GetClassname(), pEntity->GetDebugName(), GetDebugName() );
 			pEntity = NULL;
 			UTIL_Remove( this );
 			return NULL;
 		}
 		else
-		{		
+		{
 			if ( interrupt == SS_INTERRUPT_BY_NAME )
 				pEntity = gEntList.FindEntityByNameWithin( pEntity, STRING( m_iszEntity ), GetAbsOrigin(), m_flRadius );
 			else
@@ -585,7 +585,7 @@ CAI_BaseNPC *CAI_ScriptedSequence::FindScriptEntity( )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_ScriptedSequence::FindEntity( void )
@@ -661,7 +661,7 @@ void CAI_ScriptedSequence::StartScript( void )
 		pTarget->ForceDecisionThink();
 		pTarget->m_hCine = this;
 		pTarget->SetTarget( this );
-		
+
 		// Notify the NPC tat we're stomping them into a scene!
 		pTarget->OnStartScene();
 
@@ -690,7 +690,7 @@ void CAI_ScriptedSequence::StartScript( void )
 		pTarget->AddEffects( GetEffects() );
 		m_savedFlags = pTarget->GetFlags();
 		m_savedCollisionGroup = pTarget->GetCollisionGroup();
-		
+
 		if ( m_bDisableNPCCollisions )
 		{
 			pTarget->SetCollisionGroup( COLLISION_GROUP_NPC_SCRIPTED );
@@ -698,9 +698,9 @@ void CAI_ScriptedSequence::StartScript( void )
 
 		switch (m_fMoveTo)
 		{
-		case CINE_MOVETO_WAIT: 
+		case CINE_MOVETO_WAIT:
 		case CINE_MOVETO_WAIT_FACING:
-			pTarget->m_scriptState = CAI_BaseNPC::SCRIPT_WAIT; 
+			pTarget->m_scriptState = CAI_BaseNPC::SCRIPT_WAIT;
 
 			if ( m_bIgnoreGravity )
 			{
@@ -714,15 +714,15 @@ void CAI_ScriptedSequence::StartScript( void )
 			pTarget->m_scriptState = CAI_BaseNPC::SCRIPT_WALK_TO_MARK;
 			break;
 
-		case CINE_MOVETO_RUN: 
-			pTarget->m_scriptState = CAI_BaseNPC::SCRIPT_RUN_TO_MARK; 
+		case CINE_MOVETO_RUN:
+			pTarget->m_scriptState = CAI_BaseNPC::SCRIPT_RUN_TO_MARK;
 			break;
 
 		case CINE_MOVETO_CUSTOM:
-			pTarget->m_scriptState = CAI_BaseNPC::SCRIPT_CUSTOM_MOVE_TO_MARK; 
+			pTarget->m_scriptState = CAI_BaseNPC::SCRIPT_CUSTOM_MOVE_TO_MARK;
 			break;
 
-		case CINE_MOVETO_TELEPORT: 
+		case CINE_MOVETO_TELEPORT:
 			m_bIsTeleportingDueToMoveTo = true;
 			pTarget->Teleport( &GetAbsOrigin(), NULL, &vec3_origin );
 			m_bIsTeleportingDueToMoveTo = false;
@@ -749,7 +749,7 @@ void CAI_ScriptedSequence::StartScript( void )
 
 		// Wait until all scripts of the same name are ready to play.
 		m_bDelayed = false;
-		DelayStart( true ); 
+		DelayStart( true );
 
 		pTarget->SetIdealState(NPC_STATE_SCRIPT);
 
@@ -800,9 +800,9 @@ void CAI_ScriptedSequence::OnBeginSequence( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Look up a sequence name and setup the target NPC to play it.
-// Input  : pTarget - 
-//			iszSeq - 
-//			completeOnEmpty - 
+// Input  : pTarget -
+//			iszSeq -
+//			completeOnEmpty -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_ScriptedSequence::StartSequence( CAI_BaseNPC *pTarget, string_t iszSeq, bool completeOnEmpty )
@@ -832,7 +832,7 @@ bool CAI_ScriptedSequence::StartSequence( CAI_BaseNPC *pTarget, string_t iszSeq,
 	pTarget->SetActivityAndSequence( act, nSequence, act, act );
 
 	// If the target was hidden even though we woke it up, only make it drawable if we're not still on the preidle seq...
-	if ( m_bTargetWasAsleep && 
+	if ( m_bTargetWasAsleep &&
 		iszSeq != m_iszPreIdle )
 	{
 		m_bTargetWasAsleep = false;
@@ -955,7 +955,7 @@ void CAI_ScriptedSequence::SequenceDone( CAI_BaseNPC *pNPC )
 			// First time we've gotten here for this script. Start playing the post idle
 			// if one is specified.
 			//
-			pNPC->m_scriptState = CAI_BaseNPC::SCRIPT_POST_IDLE; 
+			pNPC->m_scriptState = CAI_BaseNPC::SCRIPT_POST_IDLE;
 			StartSequence( pNPC, m_iszPostIdle, false ); // false to prevent recursion here!
 		}
 		else
@@ -968,16 +968,16 @@ void CAI_ScriptedSequence::SequenceDone( CAI_BaseNPC *pNPC )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_ScriptedSequence::SynchNewSequence( CAI_BaseNPC::SCRIPTSTATE newState, string_t iszSequence, bool bSynchOtherScenes )
 {
 	// Do we need to synchronize all our matching scripted scenes?
- 	if ( bSynchOtherScenes )
+	if ( bSynchOtherScenes )
 	{
 		//Msg("%s (for %s) forcing synch of %s at %0.2f\n", GetTarget()->GetDebugName(), GetDebugName(), iszSequence, gpGlobals->curtime);
 
- 		CBaseEntity *pentCine = gEntList.FindEntityByName( NULL, GetEntityName(), NULL );
+		CBaseEntity *pentCine = gEntList.FindEntityByName( NULL, GetEntityName(), NULL );
 		while ( pentCine )
 		{
 			CAI_ScriptedSequence *pScene = dynamic_cast<CAI_ScriptedSequence *>(pentCine);
@@ -996,11 +996,11 @@ void CAI_ScriptedSequence::SynchNewSequence( CAI_BaseNPC::SCRIPTSTATE newState, 
 	if ( !pNPC )
 		return;
 
- 	//Msg("%s (for %s) starting %s seq at %0.2f\n", pNPC->GetDebugName(), GetDebugName(), iszSequence, gpGlobals->curtime);
+	//Msg("%s (for %s) starting %s seq at %0.2f\n", pNPC->GetDebugName(), GetDebugName(), iszSequence, gpGlobals->curtime);
 
 	m_startTime = gpGlobals->curtime;
-	pNPC->m_scriptState = newState; 
- 	StartSequence( pNPC, iszSequence, false );
+	pNPC->m_scriptState = newState;
+	StartSequence( pNPC, iszSequence, false );
 
 	// Force the NPC to synchronize animations on their next think
 	m_bForceSynch = true;
@@ -1030,7 +1030,7 @@ void CAI_ScriptedSequence::PostIdleDone( CAI_BaseNPC *pNPC )
 			DevMsg( 2, "Post Idle %s finished for %s\n", STRING( pNPC->m_hCine->m_iszPostIdle ), pNPC->GetDebugName() );
 		}
 
-		pNPC->m_scriptState = CAI_BaseNPC::SCRIPT_POST_IDLE; 
+		pNPC->m_scriptState = CAI_BaseNPC::SCRIPT_POST_IDLE;
 		StartSequence( pNPC, m_iszPostIdle, false );
 	}
 	else
@@ -1081,7 +1081,7 @@ void CAI_ScriptedSequence::PostIdleDone( CAI_BaseNPC *pNPC )
 // Purpose: When a NPC finishes a scripted sequence, we have to fix up its state
 //			and schedule for it to return to a normal AI NPC.
 //			Scripted sequences just dirty the Schedule and drop the NPC in Idle State.
-// Input  : *pNPC - 
+// Input  : *pNPC -
 //-----------------------------------------------------------------------------
 void CAI_ScriptedSequence::FixScriptNPCSchedule( CAI_BaseNPC *pNPC, int iSavedCineFlags )
 {
@@ -1091,7 +1091,7 @@ void CAI_ScriptedSequence::FixScriptNPCSchedule( CAI_BaseNPC *pNPC, int iSavedCi
 	}
 
 	if ( pNPC == NULL )
-		 return;
+		return;
 
 	FixFlyFlag( pNPC, iSavedCineFlags );
 
@@ -1107,7 +1107,7 @@ void CAI_ScriptedSequence::FixFlyFlag( CAI_BaseNPC *pNPC, int iSavedCineFlags )
 		{
 			if ( pNPC->GetFlags() & FL_FLY )
 			{
-				 pNPC->RemoveFlag( FL_FLY );
+				pNPC->RemoveFlag( FL_FLY );
 			}
 		}
 	}
@@ -1115,8 +1115,8 @@ void CAI_ScriptedSequence::FixFlyFlag( CAI_BaseNPC *pNPC, int iSavedCineFlags )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fAllow - 
+// Purpose:
+// Input  : fAllow -
 //-----------------------------------------------------------------------------
 void CAI_ScriptedSequence::AllowInterrupt( bool fAllow )
 {
@@ -1127,7 +1127,7 @@ void CAI_ScriptedSequence::AllowInterrupt( bool fAllow )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_ScriptedSequence::CanInterrupt( void )
@@ -1145,11 +1145,11 @@ bool CAI_ScriptedSequence::CanInterrupt( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_ScriptedSequence::RemoveIgnoredConditions( void )
 {
-	if ( CanInterrupt() ) 
+	if ( CanInterrupt() )
 	{
 		return;
 	}
@@ -1200,11 +1200,11 @@ bool CAI_ScriptedSequence::CanEnqueueAfter( void )
 
 	DevMsg( 2, "%s is a priority script and cannot be kicked out of the queue\n",  m_hNextCine->GetDebugName() );
 
-	return false;	
+	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_ScriptedSequence::StopActionLoop( bool bStopSynchronizedScenes )
 {
@@ -1255,11 +1255,11 @@ extern ConVar ai_debug_dyninteractions;
 // Purpose: Modify the target AutoMovement() position before the NPC moves.
 //-----------------------------------------------------------------------------
 void CAI_ScriptedSequence::ModifyScriptedAutoMovement( Vector *vecNewPos )
-{  
-   	if ( m_hInteractionRelativeEntity )
+{
+		if ( m_hInteractionRelativeEntity )
 	{
 		// If we have an entry animation, only do it on the entry
-   		if ( m_iszEntry != NULL_STRING && !m_bIsPlayingEntry )
+			if ( m_iszEntry != NULL_STRING && !m_bIsPlayingEntry )
 			return;
 
 		Vector vecRelativeOrigin = m_hInteractionRelativeEntity->GetAbsOrigin();
@@ -1283,8 +1283,8 @@ void CAI_ScriptedSequence::ModifyScriptedAutoMovement( Vector *vecNewPos )
 		{
 			Vector vecDeltaPos;
 			QAngle vecDeltaAngles;
- 			pAnimating->GetSequenceMovement( pAnimating->GetSequence(), 0.0f, pAnimating->GetCycle(), vecDeltaPos, vecDeltaAngles );
- 			VectorYawRotate( vecDeltaPos, pAnimating->GetLocalAngles().y, vecDeltaPos );
+			pAnimating->GetSequenceMovement( pAnimating->GetSequence(), 0.0f, pAnimating->GetCycle(), vecDeltaPos, vecDeltaAngles );
+			VectorYawRotate( vecDeltaPos, pAnimating->GetLocalAngles().y, vecDeltaPos );
 
 			if ( bDebug )
 			{
@@ -1300,7 +1300,7 @@ void CAI_ScriptedSequence::ModifyScriptedAutoMovement( Vector *vecNewPos )
 
 		// We've been asked to maintain a specific position relative to the other NPC
 		// we're interacting with. Lerp towards the relative position.
- 		VMatrix matMeToWorld, matLocalToWorld;
+		VMatrix matMeToWorld, matLocalToWorld;
 		matMeToWorld.SetupMatrixOrgAngles( vecRelativeOrigin, angRelativeAngles );
 		MatrixMultiply( matMeToWorld, m_matInteractionPosition, matLocalToWorld );
 
@@ -1308,7 +1308,7 @@ void CAI_ScriptedSequence::ModifyScriptedAutoMovement( Vector *vecNewPos )
 		Vector vecOrigin;
 		QAngle angAngles;
 		vecOrigin = matLocalToWorld.GetTranslation();
- 		MatrixToAngles( matLocalToWorld, angAngles );
+		MatrixToAngles( matLocalToWorld, angAngles );
 
 		if ( bDebug )
 		{
@@ -1317,7 +1317,7 @@ void CAI_ScriptedSequence::ModifyScriptedAutoMovement( Vector *vecNewPos )
 		}
 
 		// Lerp to it over time
-   		Vector vecToTarget = (vecOrigin - *vecNewPos);
+			Vector vecToTarget = (vecOrigin - *vecNewPos);
 		if ( bDebug )
 		{
 			Msg("Automovement's output origin: %f %f\n", (*vecNewPos).x, (*vecNewPos).y );
@@ -1334,7 +1334,7 @@ void CAI_ScriptedSequence::ModifyScriptedAutoMovement( Vector *vecNewPos )
 void CAI_ScriptedSequence::CancelScript( void )
 {
 	DevMsg( 2,  "Cancelling script: %s\n", STRING( m_iszPlay ));
-	
+
 	// Don't cancel matching sequences if we're asked not to, unless we didn't actually
 	// succeed in starting, in which case we should always cancel. This fixes
 	// dynamic interactions where an NPC was killed the same frame another NPC
@@ -1371,12 +1371,12 @@ void CAI_ScriptedSequence::CancelScript( void )
 void CAI_ScriptedSequence::DelayStart( bool bDelay )
 {
 	//Msg("SSEQ: %.2f \"%s\" (%d) DelayStart( %d ). Current m_iDelay is: %d\n", gpGlobals->curtime, GetDebugName(), entindex(), bDelay, m_iDelay );
-	
+
 	if ( ai_task_pre_script.GetBool() )
 	{
 		if ( bDelay == m_bDelayed )
 			return;
-	
+
 		m_bDelayed = bDelay;
 	}
 
@@ -1445,7 +1445,7 @@ void CAI_ScriptedSequence::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_ScriptedSequence::DrawDebugGeometryOverlays( void )
 {
@@ -1465,11 +1465,11 @@ void CAI_ScriptedSequence::DrawDebugGeometryOverlays( void )
 // Input  :
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CAI_ScriptedSequence::DrawDebugTextOverlays( void ) 
+int CAI_ScriptedSequence::DrawDebugTextOverlays( void )
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 
@@ -1479,7 +1479,7 @@ int CAI_ScriptedSequence::DrawDebugTextOverlays( void )
 
 		switch (m_fMoveTo)
 		{
-		case CINE_MOVETO_WAIT: 
+		case CINE_MOVETO_WAIT:
 			Q_snprintf(tempstr,sizeof(tempstr),"Moveto: Wait" );
 			break;
 		case CINE_MOVETO_WAIT_FACING:
@@ -1488,13 +1488,13 @@ int CAI_ScriptedSequence::DrawDebugTextOverlays( void )
 		case CINE_MOVETO_WALK:
 			Q_snprintf(tempstr,sizeof(tempstr),"Moveto: Walk to Mark" );
 			break;
-		case CINE_MOVETO_RUN: 
+		case CINE_MOVETO_RUN:
 			Q_snprintf(tempstr,sizeof(tempstr),"Moveto: Run to Mark" );
 			break;
 		case CINE_MOVETO_CUSTOM:
 			Q_snprintf(tempstr,sizeof(tempstr),"Moveto: Custom move to Mark" );
 			break;
-		case CINE_MOVETO_TELEPORT: 
+		case CINE_MOVETO_TELEPORT:
 			Q_snprintf(tempstr,sizeof(tempstr),"Moveto: Teleport to Mark" );
 			break;
 		}
@@ -1580,7 +1580,7 @@ private:
 	CAI_BaseNPC *FindScriptEntity(  bool bCyclic );
 
 	//---------------------------------
-	
+
 	enum Schedule_t
 	{
 		SCHED_SCRIPT_NONE = 0,
@@ -1591,7 +1591,7 @@ private:
 		SCHED_SCRIPT_RUN_PATH_GOAL,
 		SCHED_SCRIPT_ENEMY_IS_GOAL_AND_RUN_TO_GOAL,
 	};
-	
+
 	//---------------------------------
 
 	EHANDLE 	m_hLastFoundEntity;
@@ -1603,13 +1603,13 @@ private:
 	string_t 	m_sGoalEnt;
 	Schedule_t	m_nSchedule;
 	int 		m_nForceState;
-	
+
 	bool		m_bGrabAll;
 
 	Interruptability_t m_Interruptability;
 
 	bool		m_bDidFireOnce;
-	
+
 	//---------------------------------
 
 	DECLARE_DATADESC();
@@ -1620,7 +1620,7 @@ BEGIN_DATADESC( CAI_ScriptedSchedule )
 
 	DEFINE_FIELD( m_hLastFoundEntity, FIELD_EHANDLE ),
 	DEFINE_KEYFIELD( m_flRadius, FIELD_FLOAT, "m_flRadius" ),
-	
+
 	DEFINE_KEYFIELD( m_iszEntity, FIELD_STRING, "m_iszEntity" ),
 	DEFINE_KEYFIELD( m_nSchedule, FIELD_INTEGER, "schedule" ),
 	DEFINE_KEYFIELD( m_nForceState, FIELD_INTEGER, "forcestate" ),
@@ -1642,7 +1642,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( aiscripted_schedule, CAI_ScriptedSchedule );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CAI_ScriptedSchedule::CAI_ScriptedSchedule( void ) : m_hActivator( NULL )
 {
@@ -1654,7 +1654,7 @@ void CAI_ScriptedSchedule::ScriptThink( void )
 {
 	bool success = false;
 	CAI_BaseNPC *pTarget;
-	
+
 	if ( !m_bGrabAll )
 	{
 		pTarget = FindScriptEntity( (m_spawnflags & SF_SCRIPT_SEARCH_CYCLICALLY) != 0 );
@@ -1675,7 +1675,7 @@ void CAI_ScriptedSchedule::ScriptThink( void )
 			success = true;
 		}
 	}
-	
+
 	if ( !success )
 	{
 		DevMsg( 2,  "scripted_schedule \"%s\" can't find NPC \"%s\"\n", GetDebugName(), STRING( m_iszEntity ) );
@@ -1689,7 +1689,7 @@ void CAI_ScriptedSchedule::ScriptThink( void )
 		m_bDidFireOnce = true;
 	}
 }
-	
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 CAI_BaseNPC *CAI_ScriptedSchedule::FindScriptEntity( bool bCyclic )
@@ -1730,7 +1730,7 @@ void CAI_ScriptedSchedule::StartSchedule( CAI_BaseNPC *pTarget )
 	CBaseEntity *pGoalEnt = gEntList.FindEntityGeneric( NULL, STRING( m_sGoalEnt ), this, NULL );
 
 	// NOTE: !!! all possible choices require a goal ent currently
-	if ( !pGoalEnt ) 
+	if ( !pGoalEnt )
 	{
 		CHintCriteria hintCriteria;
 		hintCriteria.SetGroup( m_sGoalEnt );
@@ -1744,8 +1744,8 @@ void CAI_ScriptedSchedule::StartSchedule( CAI_BaseNPC *pTarget )
 		}
 		pGoalEnt = pHint;
 	}
-	
-	static NPC_STATE forcedStatesMap[] = 
+
+	static NPC_STATE forcedStatesMap[] =
 	{
 		NPC_STATE_NONE,
 		NPC_STATE_IDLE,
@@ -1755,11 +1755,11 @@ void CAI_ScriptedSchedule::StartSchedule( CAI_BaseNPC *pTarget )
 
 	if ( pTarget->GetSleepState() > AISS_AWAKE )
 		pTarget->Wake();
-	
+
 	pTarget->ForceDecisionThink();
 
 	Assert( m_nForceState >= 0 && m_nForceState < ARRAYSIZE(forcedStatesMap) );
-	
+
 	NPC_STATE forcedState = forcedStatesMap[m_nForceState];
 
 	// trap if this isn't a legal thing to do
@@ -1854,7 +1854,7 @@ void CAI_ScriptedSchedule::InputStartSchedule( inputdata_t &inputdata )
 	{
 		DevMsg( 2,  "aiscripted_schedule - no schedule or state has been set!\n" );
 	}
-	
+
 	if ( !m_bDidFireOnce || ( m_spawnflags & SF_SCRIPT_REPEATABLE ) )
 	{
 		// DVS TODO: Is the NPC already playing the script?
@@ -1869,7 +1869,7 @@ void CAI_ScriptedSchedule::InputStartSchedule( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Input handler to stop a previously activated scripted schedule. 
+// Purpose: Input handler to stop a previously activated scripted schedule.
 //-----------------------------------------------------------------------------
 void CAI_ScriptedSchedule::InputStopSchedule( inputdata_t &inputdata )
 {
@@ -1989,9 +1989,9 @@ LINK_ENTITY_TO_CLASS( scripted_sentence, CAI_ScriptedSentence );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : szKeyName - 
-//			szValue - 
+// Purpose:
+// Input  : szKeyName -
+//			szValue -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_ScriptedSentence::KeyValue( const char *szKeyName, const char *szValue )
@@ -2026,12 +2026,12 @@ void CAI_ScriptedSentence::InputBeginSentence( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_ScriptedSentence::Spawn( void )
 {
 	SetSolid( SOLID_NONE );
-	
+
 	m_active = true;
 	// if no targetname, start now
 	if ( !GetEntityName() )
@@ -2045,7 +2045,7 @@ void CAI_ScriptedSentence::Spawn( void )
 	case 1: // Medium radius
 		m_iSoundLevel = SNDLVL_80dB;
 		break;
-	
+
 	case 2:	// Large radius
 		m_iSoundLevel = SNDLVL_85dB;
 		break;
@@ -2053,7 +2053,7 @@ void CAI_ScriptedSentence::Spawn( void )
 	case 3:	//EVERYWHERE
 		m_iSoundLevel = SNDLVL_NONE;
 		break;
-	
+
 	default:
 	case 0: // Small radius
 		m_iSoundLevel = SNDLVL_70dB;
@@ -2068,7 +2068,7 @@ void CAI_ScriptedSentence::Spawn( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_ScriptedSentence::FindThink( void )
 {
@@ -2077,12 +2077,12 @@ void CAI_ScriptedSentence::FindThink( void )
 	{
 		int index = StartSentence( pNPC );
 		float length = engine->SentenceLength(index);
-		
+
 		m_OnEndSentence.FireOutput(NULL, this, length + m_flRepeat);
 
 		if ( m_spawnflags & SF_SENTENCE_ONCE )
 			UTIL_Remove( this );
-		
+
 		float delay = m_flDelay + length + 0.1;
 		if ( delay < 0 )
 			delay = 0;
@@ -2104,7 +2104,7 @@ void CAI_ScriptedSentence::FindThink( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_ScriptedSentence::DelayThink( void )
 {
@@ -2116,8 +2116,8 @@ void CAI_ScriptedSentence::DelayThink( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pNPC - 
+// Purpose:
+// Input  : *pNPC -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_ScriptedSentence::AcceptableSpeaker( CAI_BaseNPC *pNPC )
@@ -2142,8 +2142,8 @@ bool CAI_ScriptedSentence::AcceptableSpeaker( CAI_BaseNPC *pNPC )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 CAI_BaseNPC *CAI_ScriptedSentence::FindEntity( void )
 {
@@ -2164,7 +2164,7 @@ CAI_BaseNPC *CAI_ScriptedSentence::FindEntity( void )
 		}
 		pentTarget = gEntList.FindEntityByName( pentTarget, m_iszEntity );
 	}
-	
+
 	CBaseEntity *pEntity = NULL;
 	for ( CEntitySphereQuery sphere( GetAbsOrigin(), m_flRadius, FL_NPC ); ( pEntity = sphere.GetCurrentEntity() ) != NULL; sphere.NextEntity() )
 	{
@@ -2175,15 +2175,15 @@ CAI_BaseNPC *CAI_ScriptedSentence::FindEntity( void )
 				return pNPC;
 		}
 	}
-	
+
 	return NULL;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pTarget - 
-// Output : 
+// Purpose:
+// Input  : pTarget -
+// Output :
 //-----------------------------------------------------------------------------
 int CAI_ScriptedSentence::StartSentence( CAI_BaseNPC *pTarget )
 {
@@ -2242,4 +2242,3 @@ const char *CAI_ScriptedSequence::GetSpawnPreIdleSequenceForScript( CBaseEntity 
 	}
 	return NULL;
 }
-

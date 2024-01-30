@@ -40,8 +40,8 @@ static ConCommand dod_reloadplayerclasses("dod_reloadplayerclasses", CC_ReloadPl
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : FilePlayerClassInfo_t
 //-----------------------------------------------------------------------------
 static PLAYERCLASS_FILE_INFO_HANDLE FindPlayerClassInfoSlot( const char *name )
@@ -73,8 +73,8 @@ static FilePlayerClassInfo_t gNullPlayerClassInfo;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : handle - 
+// Purpose:
+// Input  : handle -
 // Output : FilePlayerClassInfo_t
 //-----------------------------------------------------------------------------
 FilePlayerClassInfo_t *GetFilePlayerClassInfoFromHandle( PLAYERCLASS_FILE_INFO_HANDLE handle )
@@ -89,7 +89,7 @@ FilePlayerClassInfo_t *GetFilePlayerClassInfoFromHandle( PLAYERCLASS_FILE_INFO_H
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : PLAYERCLASS_FILE_INFO_HANDLE
 //-----------------------------------------------------------------------------
 PLAYERCLASS_FILE_INFO_HANDLE GetInvalidPlayerClassInfoHandle( void )
@@ -133,9 +133,9 @@ KeyValues* ReadEncryptedKVPlayerClassFile( IFileSystem *pFilesystem, const char 
 			// load file into a null-terminated buffer
 			int fileSize = pFilesystem->Size(f);
 			char *buffer = (char*)MemAllocScratch(fileSize + 1);
-		
+
 			Assert(buffer);
-		
+
 			pFilesystem->Read(buffer, fileSize, f); // read into local buffer
 			buffer[fileSize] = 0; // null terminate file as EOF
 			pFilesystem->Close( f );	// close file after reading
@@ -244,4 +244,3 @@ void FilePlayerClassInfo_t::Parse( KeyValues *pKeyValuesData, const char *szPlay
 	*/
 #endif
 }
-

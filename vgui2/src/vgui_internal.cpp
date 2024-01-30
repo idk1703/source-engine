@@ -25,7 +25,7 @@ ISurface *g_pSurface = NULL;
 IPanel *g_pIPanel = NULL;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static void *InitializeInterface( char const *interfaceName, CreateInterfaceFn *factoryList, int numFactories )
 {
@@ -49,7 +49,7 @@ static void *InitializeInterface( char const *interfaceName, CreateInterfaceFn *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool VGui_InternalLoadInterfaces( CreateInterfaceFn *factoryList, int numFactories )

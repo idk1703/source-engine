@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -22,8 +22,8 @@
 class CBuoyancyAttacher : public IVP_Attacher_To_Cores_Buoyancy
 {
 public:
-    virtual IVP_Template_Buoyancy *get_parameters_per_core( IVP_Core *pCore );
-    CBuoyancyAttacher(IVP_Template_Buoyancy &templ, IVP_U_Set_Active<IVP_Core> *set_of_cores_, IVP_Liquid_Surface_Descriptor *liquid_surface_descriptor_);
+	virtual IVP_Template_Buoyancy *get_parameters_per_core( IVP_Core *pCore );
+	CBuoyancyAttacher(IVP_Template_Buoyancy &templ, IVP_U_Set_Active<IVP_Core> *set_of_cores_, IVP_Liquid_Surface_Descriptor *liquid_surface_descriptor_);
 
 	float m_density;
 };
@@ -41,23 +41,23 @@ CPhysicsFluidController::~CPhysicsFluidController( void )
 	delete m_pLiquidSurface;
 }
 
-void CPhysicsFluidController::SetGameData( void *pGameData ) 
-{ 
-	m_pGameData = pGameData; 
+void CPhysicsFluidController::SetGameData( void *pGameData )
+{
+	m_pGameData = pGameData;
 }
 
-void *CPhysicsFluidController::GetGameData( void ) const 
-{ 
-	return m_pGameData; 
+void *CPhysicsFluidController::GetGameData( void ) const
+{
+	return m_pGameData;
 }
 
-void CPhysicsFluidController::GetSurfacePlane( Vector *pNormal, float *pDist ) const 
+void CPhysicsFluidController::GetSurfacePlane( Vector *pNormal, float *pDist ) const
 {
 	IVP_U_Float_Hesse surface;
 	IVP_U_Float_Point abs_speed_of_current;
 
-	m_pLiquidSurface->calc_liquid_surface( GetIVPObject()->get_core()->environment, 
-		GetIVPObject()->get_core(), &surface, &abs_speed_of_current );  
+	m_pLiquidSurface->calc_liquid_surface( GetIVPObject()->get_core()->environment,
+		GetIVPObject()->get_core(), &surface, &abs_speed_of_current );
 	ConvertPlaneToHL( surface, pNormal, pDist );
 	if ( pNormal )
 	{
@@ -69,13 +69,13 @@ void CPhysicsFluidController::GetSurfacePlane( Vector *pNormal, float *pDist ) c
 	}
 }
 
-IVP_Real_Object *CPhysicsFluidController::GetIVPObject() 
-{ 
+IVP_Real_Object *CPhysicsFluidController::GetIVPObject()
+{
 	return m_pObject->GetObject();
 }
 
 const IVP_Real_Object *CPhysicsFluidController::GetIVPObject() const
-{ 
+{
 	return m_pObject->GetObject();
 }
 
@@ -84,7 +84,7 @@ float CPhysicsFluidController::GetDensity() const
 	return m_pBuoyancy->m_density;
 }
 
-void CPhysicsFluidController::WakeAllSleepingObjects() 
+void CPhysicsFluidController::WakeAllSleepingObjects()
 {
 	GetIVPObject()->get_controller_phantom()->wake_all_sleeping_objects();
 }
@@ -151,7 +151,7 @@ public:
 		VectorIRotate( current, matObjectToWorld, m_vecObjectSpaceCurrent );
 		m_pFluidObject = pFluidObject;
 	}
-	
+
 	virtual void calc_liquid_surface( IVP_Environment * /*environment*/,
 								IVP_Core * /*core*/,
 								IVP_U_Float_Hesse *surface_normal_out,
@@ -171,9 +171,9 @@ public:
 		surface_normal_out->hesse_val = worldSurface.hesse_val;
 
 		Vector worldSpaceCurrent;
-		VectorRotate( m_vecObjectSpaceCurrent, matObjectToWorld, worldSpaceCurrent );  
+		VectorRotate( m_vecObjectSpaceCurrent, matObjectToWorld, worldSpaceCurrent );
 
-		IVP_U_Float_Point ivpWorldSpaceCurrent; 
+		IVP_U_Float_Point ivpWorldSpaceCurrent;
 		ConvertDirectionToIVP( worldSpaceCurrent, ivpWorldSpaceCurrent );
 		abs_speed_of_current_out->set( &ivpWorldSpaceCurrent );
 	}
@@ -193,23 +193,23 @@ CPhysicsFluidController *CreateFluidController( IVP_Environment *pEnvironment, C
 	if ( !pPhantom )
 		return NULL;
 
-    IVP_Liquid_Surface_Descriptor *lsd = new CLiquidSurfaceDescriptor( pFluidObject, pParams->surfacePlane, pParams->currentVelocity );
+	IVP_Liquid_Surface_Descriptor *lsd = new CLiquidSurfaceDescriptor( pFluidObject, pParams->surfacePlane, pParams->currentVelocity );
 	int surfaceprops = pFluidObject->GetMaterialIndex();
 	float density = physprops->GetSurfaceData( surfaceprops )->physics.density;
-    // ---------------------------------------------
-    // create parameter template for Buoyancy_Solver
-    // ---------------------------------------------
+	// ---------------------------------------------
+	// create parameter template for Buoyancy_Solver
+	// ---------------------------------------------
 	// UNDONE: Expose these other parametersd
-    IVP_Template_Buoyancy buoyancy_input;
-    buoyancy_input.medium_density			= ConvertDensityToIVP(density); // density of water (unit: kg/m^3)
-    buoyancy_input.pressure_damp_factor     = pParams->damping;
-    buoyancy_input.viscosity_factor       = 0.0f;
-    buoyancy_input.torque_factor          = 0.01f;
-    buoyancy_input.viscosity_input_factor = 0.1f;
-    // -------------------------------------------------------------------------------
-    // create "water" (i.e. buoyancy solver) and attach a dynamic list of object cores
-    // -------------------------------------------------------------------------------
-    CBuoyancyAttacher *attacher_to_cores_buoyancy = new CBuoyancyAttacher( buoyancy_input, pPhantom->get_intruding_cores(), lsd );
+	IVP_Template_Buoyancy buoyancy_input;
+	buoyancy_input.medium_density			= ConvertDensityToIVP(density); // density of water (unit: kg/m^3)
+	buoyancy_input.pressure_damp_factor     = pParams->damping;
+	buoyancy_input.viscosity_factor       = 0.0f;
+	buoyancy_input.torque_factor          = 0.01f;
+	buoyancy_input.viscosity_input_factor = 0.1f;
+	// -------------------------------------------------------------------------------
+	// create "water" (i.e. buoyancy solver) and attach a dynamic list of object cores
+	// -------------------------------------------------------------------------------
+	CBuoyancyAttacher *attacher_to_cores_buoyancy = new CBuoyancyAttacher( buoyancy_input, pPhantom->get_intruding_cores(), lsd );
 
 	CPhysicsFluidController *pFluid = new CPhysicsFluidController( attacher_to_cores_buoyancy, lsd, pFluidObject, pParams->contents );
 	pFluid->SetGameData( pParams->pGameData );
@@ -228,4 +228,3 @@ bool RestorePhysicsFluidController( const physrestoreparams_t &params, CPhysicsF
 {
 	return false;
 }
-

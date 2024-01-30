@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -158,7 +158,7 @@ void CMDLPanel::SetMDL( MDLHandle_t handle, void *pProxyData )
 
 	// Set the pose parameters to the default for the mdl
 	SetPoseParameters( NULL, 0 );
-	
+
 	// Clear any sequence layers
 	SetSequenceLayers( NULL, 0 );
 
@@ -277,7 +277,7 @@ void CMDLPanel::UpdateStudioRenderConfig( void )
 	s_StudioRenderConfig.fEyeShiftX = r_eyeshift_x.GetFloat();
 	s_StudioRenderConfig.fEyeShiftY = r_eyeshift_y.GetFloat();
 	s_StudioRenderConfig.fEyeShiftZ = r_eyeshift_z.GetFloat();
-	s_StudioRenderConfig.fEyeSize = r_eyesize.GetFloat();	
+	s_StudioRenderConfig.fEyeSize = r_eyesize.GetFloat();
 	if( mat_softwareskin.GetInt() || m_bWireFrame )
 	{
 		s_StudioRenderConfig.bSoftwareSkin = true;
@@ -297,7 +297,7 @@ void CMDLPanel::UpdateStudioRenderConfig( void )
 	s_StudioRenderConfig.skin = r_skin.GetInt();
 	s_StudioRenderConfig.maxDecalsPerModel = r_maxmodeldecal.GetInt();
 	s_StudioRenderConfig.bWireframeDecals = r_modelwireframedecal.GetInt() != 0;
-	
+
 	s_StudioRenderConfig.fullbright = false;
 	s_StudioRenderConfig.bSoftwareLighting = false;
 
@@ -313,7 +313,7 @@ void CMDLPanel::DrawCollisionModel()
 
 	if ( !pCollide || pCollide->solidCount <= 0 )
 		return;
-	
+
 	static color32 color = {255,0,0,0};
 
 	IVPhysicsKeyParser *pParser = g_pPhysicsCollision->VPhysicsKeyParserCreate( pCollide->pKeyValues );
@@ -473,10 +473,10 @@ void CMDLPanel::OnPaint3D()
 		if ( pStudioHdr != NULL )
 		{
 			CStudioHdr mergeHdr( pStudioHdr, g_pMDLCache );
-			m_aMergeMDLs[iMerge].m_MDL.SetupBonesWithBoneMerge( &mergeHdr, pMergeBoneToWorld, &studioHdr, pBoneToWorld, m_RootMDL.m_MDLToWorld );		
+			m_aMergeMDLs[iMerge].m_MDL.SetupBonesWithBoneMerge( &mergeHdr, pMergeBoneToWorld, &studioHdr, pBoneToWorld, m_RootMDL.m_MDLToWorld );
 
 			pOverrideMaterial = GetOverrideMaterial( m_aMergeMDLs[iMerge].m_MDL.GetMDL() );
-			if ( pOverrideMaterial != NULL ) 
+			if ( pOverrideMaterial != NULL )
 				g_pStudioRender->ForcedMaterialOverride( pOverrideMaterial );
 
 			m_aMergeMDLs[iMerge].m_MDL.Draw( m_aMergeMDLs[iMerge].m_MDLToWorld, pMergeBoneToWorld );
@@ -613,7 +613,7 @@ void CMDLPanel::OnTick()
 	if ( m_RootMDL.m_MDL.GetMDL() != MDLHANDLE_INVALID )
 	{
 		m_RootMDL.m_MDL.m_flTime = ( GetAutoPlayTime() - m_RootMDL.m_flCycleStartTime );
-	
+
 		DoAnimationEvents();
 	}
 }
@@ -663,7 +663,7 @@ void CMDLPanel::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMDLPanel::DoAnimationEvents()
 {
@@ -687,7 +687,7 @@ void CMDLPanel::DoAnimationEvents()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMDLPanel::DoAnimationEvents( CStudioHdr *pStudioHdr, int nSeqNum, float flTime, bool bNoLoop, MDLAnimEventState_t *pEventState )
 {
@@ -771,7 +771,7 @@ void CMDLPanel::FireEvent( const char *pszEventName, const char *pszEventOptions
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMDLPanel::ResetAnimationEventState( MDLAnimEventState_t *pEventState )
 {
@@ -796,7 +796,7 @@ void CMDLPanel::OnMouseDoublePressed( vgui::MouseCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMDLPanel::SetMergeMDL( MDLHandle_t handle, void *pProxyData, int nSkin /*= -1 */ )
 {
@@ -849,7 +849,7 @@ MDLHandle_t CMDLPanel::SetMergeMDL( const char *pMDLName, void *pProxyData, int 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CMDLPanel::GetMergeMDLIndex( void *pProxyData )
 {
@@ -864,7 +864,7 @@ int CMDLPanel::GetMergeMDLIndex( void *pProxyData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CMDLPanel::GetMergeMDLIndex( MDLHandle_t handle )
 {
@@ -879,7 +879,7 @@ int CMDLPanel::GetMergeMDLIndex( MDLHandle_t handle )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMDL *CMDLPanel::GetMergeMDL( MDLHandle_t handle )
 {
@@ -894,7 +894,7 @@ CMDL *CMDLPanel::GetMergeMDL( MDLHandle_t handle )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMDLPanel::ClearMergeMDLs( void )
 {

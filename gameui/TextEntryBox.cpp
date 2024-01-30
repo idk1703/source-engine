@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -98,7 +98,7 @@ void CTextEntryBox::OnCommand(const char *command)
 	}
 
 	BaseClass::OnCommand(command);
-	
+
 }
 
 //--------------------------------------------------------------------------------------------------------------
@@ -117,4 +117,3 @@ void CTextEntryBox::OnKeyCodeTyped(KeyCode code)
 		BaseClass::OnKeyCodeTyped(code);
 	}
 }
-

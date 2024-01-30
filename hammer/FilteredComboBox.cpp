@@ -1,7 +1,7 @@
 
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -34,14 +34,14 @@ public:
 	{
 #if 0
 		m_iEvent = g_iFunctionMarkerEvent++;
-		
+
 		char str[512];
 		Q_snprintf( str, sizeof( str ), "enter %d: %s\n", m_iEvent, p );
 		OutputDebugString( str );
 		m_p = p;
 #endif
 	}
-	
+
 	~CFunctionMarker()
 	{
 #if 0
@@ -73,14 +73,14 @@ CFilteredComboBox::CFilteredComboBox( CFilteredComboBox::ICallbacks *pCallbacks 
 void CFilteredComboBox::SetSuggestions( CUtlVector<CString> &suggestions, int flags )
 {
 	CreateFonts();
-	
+
 	// Verify some of the window styles. This class requires these, and it doesn't get a change to set them
 	// unless you call Create on it.
 	// If we use owner draw variable, we get the bug described here: http://support.microsoft.com/kb/813791.
 	Assert( GetStyle() & CBS_OWNERDRAWFIXED );
 	Assert( GetStyle() & CBS_HASSTRINGS );
 	Assert( !( GetStyle() & CBS_SORT ) );
-	
+
 	// Copy the list.
 	m_Suggestions = suggestions;
 
@@ -89,7 +89,7 @@ void CFilteredComboBox::SetSuggestions( CUtlVector<CString> &suggestions, int fl
 	DWORD sel = GetEditSel();
 
 	FillDropdownList( NULL, false );
-	
+
 	// Force it to provide the first one if they only want suggestions and the current text in there is not valid.
 	bool bSelectFirst = ((flags & SETSUGGESTIONS_SELECTFIRST) != 0);
 	bool bCallback = ((flags & SETSUGGESTIONS_CALLBACK) != 0);
@@ -97,7 +97,7 @@ void CFilteredComboBox::SetSuggestions( CUtlVector<CString> &suggestions, int fl
 	if ( bSelectFirst || bForceFirst )
 	{
 		SetCurSel( 0 );
-		
+
 		if ( GetCount() > 0 )
 		{
 			CString strLB;
@@ -111,13 +111,13 @@ void CFilteredComboBox::SetSuggestions( CUtlVector<CString> &suggestions, int fl
 		}
 	}
 	else
-	{	
+	{
 		SetWindowText( str );
 		SetEditSel( LOWORD( sel ), HIWORD( sel ) );
 		if ( bCallback )
 			DoTextChangedCallback( str );
 	}
-	
+
 	SetRedraw( true );
 	Invalidate();
 }
@@ -150,7 +150,7 @@ void CFilteredComboBox::SelectItem( const char *pStr )
 		SetEditControlText( "" );
 		return;
 	}
-	
+
 	// See if we already have this item selected. If so, don't do anything.
 	int iCurSel = GetCurSel();
 	if ( iCurSel != CB_ERR )
@@ -166,13 +166,13 @@ void CFilteredComboBox::SelectItem( const char *pStr )
 			if ( Q_stricmp( strWindow, pStr ) != 0 )
 			{
 				SetWindowText( pStr );
-			}			
-			
+			}
+
 			m_LastTextChangedValue = pStr;
 			return;
 		}
 	}
-	
+
 	if ( m_bOnlyProvideSuggestions && FindSuggestion( pStr ) == -1 )
 	{
 		// This item doesn't match any suggestion. We can get rid of this assert
@@ -182,7 +182,7 @@ void CFilteredComboBox::SelectItem( const char *pStr )
 		SetEditControlText( pStr );
 		return;
 	}
-	
+
 	FillDropdownList( pStr );
 }
 
@@ -197,7 +197,7 @@ void CFilteredComboBox::SetEditControlFont( HFONT hFont )
 {
 	if ( !hFont )
 		return;
-	
+
 	if ( m_bInSelChange )
 	{
 		m_hQueuedFont = hFont;
@@ -207,43 +207,43 @@ void CFilteredComboBox::SetEditControlFont( HFONT hFont )
 	CString str;
 	GetWindowText( str );
 	DWORD sel = GetEditSel();
-	
+
 	InternalSetEditControlFont( hFont, str, sel );
 }
 
 
 void CFilteredComboBox::InternalSetEditControlFont( HFONT hFont, const char *pEditText, DWORD sel )
-{	
+{
 	if ( hFont != m_hEditControlFont )
 	{
 		CFunctionMarker marker( "InternalSetEditControlFont" );
 
 		// Don't let it mess with everything here.
 		SetRedraw( false );
-		
+
 		CRect rcMyRect;
 		GetWindowRect( rcMyRect );
 		CWnd *pParent = GetParent();
 		if ( pParent )
 			pParent->ScreenToClient( &rcMyRect );
-		
+
 		BOOL bWasDropped = GetDroppedState();
-		
-		
+
+
 		m_hEditControlFont = hFont;
 		SetFont( CFont::FromHandle( m_hEditControlFont ), false );
 
-		
+
 		SetWindowText( pEditText );
 		SetEditSel( LOWORD( sel ), HIWORD( sel ) );
-	
+
 		if ( pParent )
 			MoveWindow( rcMyRect );
 
 		if ( bWasDropped )
 			ShowDropDown( true );
-			
-					
+
+
 		SetRedraw( true );
 		Invalidate();
 	}
@@ -305,11 +305,11 @@ void CFilteredComboBox::FillDropdownList( const char *pInitialSel, bool bEnableR
 
 	SetRedraw( FALSE );
 	ResetContent();
-	
+
 	// Fill the box with the initial set of values.
 	CUtlVector<CString> items;
 	GetItemsMatchingString( "", items );
-	
+
 	for ( int i=0; i < items.Count(); i++ )
 		AddString( items[i] );
 
@@ -347,9 +347,9 @@ void CFilteredComboBox::FillDropdownList( const char *pInitialSel, bool bEnableR
 
 
 LRESULT CFilteredComboBox::DefWindowProc(
-   UINT message,
-   WPARAM wParam,
-   LPARAM lParam 
+	UINT message,
+	WPARAM wParam,
+	LPARAM lParam
 )
 {
 	// We handle the enter key specifically because the default combo box behavior is to
@@ -368,7 +368,7 @@ LRESULT CFilteredComboBox::DefWindowProc(
 			return 0;
 		}
 	}
-	
+
 	return BaseClass::DefWindowProc( message, wParam, lParam );
 }
 
@@ -388,9 +388,9 @@ void CFilteredComboBox::OnEnterKeyPressed( const char *pForceText )
 		return;
 
 	CFunctionMarker marker( "OnEnterKeyPressed" );
-		
+
 	m_bInEnterKeyPressedHandler = true;
-	
+
 	// Must do this before ShowDropDown because that will change these variables underneath us.
 	CString szTypedText;
 	DWORD sel;
@@ -411,7 +411,7 @@ void CFilteredComboBox::OnEnterKeyPressed( const char *pForceText )
 	if ( pParent )
 		pParent->ScreenToClient( &rcMyRect );
 
-	SetRedraw( false );	
+	SetRedraw( false );
 	ShowDropDown( FALSE );
 
 	// They can get into here a variety of ways. Editing followed by enter. Editing+arrow keys, followed by enter, etc.
@@ -429,7 +429,7 @@ void CFilteredComboBox::OnEnterKeyPressed( const char *pForceText )
 			// They returned false, so do the default behavior: go to the best match we can find.
 			str = GetBestSuggestion( szTypedText );
 		}
-		
+
 		DoTextChangedCallback( str );
 		FillDropdownList( str, false );
 
@@ -460,7 +460,7 @@ void CFilteredComboBox::OnEscapeKeyPressed()
 	m_bInEnterKeyPressedHandler = true;
 	ShowDropDown( FALSE );
 	m_bInEnterKeyPressedHandler = false;
-	
+
 	FillDropdownList( m_LastTextChangedValue, true );
 }
 
@@ -504,10 +504,10 @@ BOOL CFilteredComboBox::OnSelChange()
 		CString strOriginalText;
 		GetWindowText( strOriginalText );
 		DWORD dwOriginalEditSel = GetEditSel();
-		
-		
+
+
 		m_bInSelChange = true;
-		
+
 		int iSel = GetCurSel();
 		if ( iSel != CB_ERR )
 		{
@@ -527,7 +527,7 @@ BOOL CFilteredComboBox::OnSelChange()
 			InternalSetEditControlFont( hFont, strOriginalText, dwOriginalEditSel );
 		}
 	}
-	
+
 	//
 	// Despite MSDN's lies, returning FALSE here allows the parent
 	// window to hook the notification message as well, not TRUE.
@@ -645,7 +645,7 @@ CString CFilteredComboBox::GetBestSuggestion( const char *pTest )
 	GetItemsMatchingString( pTest, matches );
 	if ( matches.Count() > 0 )
 		return matches[0];
-	
+
 	// Ok, fall back to the last known good one.
 	return m_LastTextChangedValue;
 }
@@ -666,7 +666,7 @@ void CFilteredComboBox::GetItemsMatchingString( const char *pStringToMatch, CUtl
 			matchingItems.AddToTail( m_Suggestions[i] );
 	}
 
-	s_pStringToMatch = pStringToMatch;	
+	s_pStringToMatch = pStringToMatch;
 	s_iStringToMatchLen = V_strlen( pStringToMatch );
 	matchingItems.Sort( &CFilteredComboBox::SortFn );
 	s_pStringToMatch = NULL;
@@ -683,7 +683,7 @@ int CFilteredComboBox::SortFn( const CString *pItem1, const CString *pItem2 )
 		bPrefixMatch1 = ( V_strnistr( *pItem1, s_pStringToMatch, s_iStringToMatchLen ) != NULL );
 		bPrefixMatch2 = ( V_strnistr( *pItem2, s_pStringToMatch, s_iStringToMatchLen ) != NULL );
 	}
-	
+
 	if ( bPrefixMatch1 == bPrefixMatch2 )
 	{
 		return Q_stricmp( *pItem1, *pItem2 );
@@ -699,39 +699,39 @@ bool CFilteredComboBox::MatchString( const char *pStringToMatchStart, const char
 {
 	if ( !pStringToMatchStart || pStringToMatchStart[0] == 0 )
 		return true;
-	
+
 	while ( *pTestStringStart )
 	{
 		const char *pStringToMatch = pStringToMatchStart;
 		const char *pTestString = pTestStringStart;
-		
+
 		while ( 1 )
 		{
 			// Skip underscores in both strings.
 			while ( *pStringToMatch == '_' )
 				++pStringToMatch;
-			
+
 			while ( *pTestString == '_' )
 				++pTestString;
-			
+
 			// If we're at the end of pStringToMatch with no mismatch, then treat this as a prefix match.
 			// If we're at the end of pTestString, but pStringToMatch has more to go, then it's not a match.
 			if ( *pStringToMatch == 0 )
 				return true;
 			else if ( *pTestString == 0 )
 				break;
-			
+
 			// Match this character.
 			if ( toupper( *pStringToMatch ) != toupper( *pTestString ) )
 				break;
-			
+
 			++pStringToMatch;
 			++pTestString;
 		}
-		
+
 		++pTestStringStart;
 	}
-	
+
 	return false;
 }
 
@@ -762,7 +762,7 @@ void CFilteredComboBox::DoTextChangedCallback( const char *pText )
 	// to the owner once.
 	if ( Q_stricmp( pText, m_LastTextChangedValue ) == 0 )
 		return;
-		
+
 	m_LastTextChangedValue = pText;
 	m_pCallbacks->OnTextChanged( pText );
 }
@@ -809,11 +809,11 @@ void CFilteredComboBox::MeasureItem(LPMEASUREITEMSTRUCT pStruct)
 }
 
 
-void CFilteredComboBox::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
+void CFilteredComboBox::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	if ( GetCount() == 0 )
 		return;
-		
+
 	CString str;
 	GetLBText( lpDrawItemStruct->itemID, str );
 
@@ -824,7 +824,7 @@ void CFilteredComboBox::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	COLORREF crOldTextColor = dc.GetTextColor();
 	COLORREF crOldBkColor = dc.GetBkColor();
 
-	// If this item is selected, set the background color 
+	// If this item is selected, set the background color
 	// and the text color to appropriate values. Erase
 	// the rect by filling it with the background color.
 	// The left side of this expression was originally
@@ -868,12 +868,12 @@ bool CFilteredComboBox::InternalSelectItemByName( const char *pName )
 	else
 	{
 		SetCurSel( i );
-		
+
 		CString str;
 		GetWindowText( str );
 		if ( Q_stricmp( str, pName ) != 0 )
 			SetWindowText( pName );
-		
+
 		return true;
 	}
 }

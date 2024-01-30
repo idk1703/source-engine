@@ -127,7 +127,7 @@ bool ConvertNumberToMantissaSuffixForm(float fNum, wchar_t* textBuffer, int text
 		int retVal = V_snwprintf( textBuffer, textBufferLen, L"%s%s", textBuffer, pSuffix );
 #else
 		int retVal = V_snwprintf( textBuffer, textBufferLen, L"%S%S", textBuffer, pSuffix );
-#endif 
+#endif
 
 		if ( retVal < 0 )
 		{
@@ -257,7 +257,7 @@ void CStatsSummary::ApplySettings(KeyValues *pResourceData)
 // Preserve our width to the one in the .res file
 //----------------------------------------------------------
 void CStatsSummary::OnSizeChanged(int newWide, int newTall)
-{	
+{
 	// Lock the width, but allow height scaling
 	if (newWide != m_iFixedWidth)
 	{
@@ -280,9 +280,9 @@ void CStatsSummary::OnThink()
 
 
 void CStatsSummary::OnPageShow()
-{	
+{
 	UpdateStatsData();
-	UpdateRecentAchievements();	
+	UpdateRecentAchievements();
 }
 
 //----------------------------------------------------------
@@ -313,28 +313,28 @@ void CStatsSummary::UpdateStatsSummary()
 	DisplayCompressedLocalizedStat(CSSTAT_SHOTS_FIRED, "shotsfired");
 
 	wchar_t tempWNumString[STAT_NUM_ARRAY_LENGTH];
-	
+
 	//Calculate Win Ratio
 	int wins = g_CSClientGameStats.GetStatById(CSSTAT_ROUNDS_WON).iStatValue;
 	int rounds = g_CSClientGameStats.GetStatById(CSSTAT_ROUNDS_PLAYED).iStatValue;
-	float winRatio = 0;	
+	float winRatio = 0;
 	if (rounds > 0)
 	{
 		winRatio = ((float)wins / (float)rounds) * 100.0f;
 	}
-	V_snwprintf(tempWNumString, ARRAYSIZE(tempWNumString), L"%.1f%%", winRatio);	
+	V_snwprintf(tempWNumString, ARRAYSIZE(tempWNumString), L"%.1f%%", winRatio);
 	SetDialogVariable("winratio", tempWNumString);
 
-	
+
 	//Calculate accuracy
 	int hits = g_CSClientGameStats.GetStatById(CSSTAT_SHOTS_HIT).iStatValue;
 	int shots = g_CSClientGameStats.GetStatById(CSSTAT_SHOTS_FIRED).iStatValue;
-	float accuracy = 0;	
+	float accuracy = 0;
 	if (shots > 0)
 	{
 		accuracy = ((float)hits / (float)shots) * 100.0f;
 	}
-	V_snwprintf(tempWNumString, ARRAYSIZE(tempWNumString), L"%.1f%%", accuracy);	
+	V_snwprintf(tempWNumString, ARRAYSIZE(tempWNumString), L"%.1f%%", accuracy);
 	SetDialogVariable("hitratio", tempWNumString);
 }
 
@@ -351,12 +351,12 @@ void CStatsSummary::UpdateKillHistory()
 	//Calculate Win Ratio
 	int kills = g_CSClientGameStats.GetStatById(CSSTAT_KILLS).iStatValue;
 	int deaths = g_CSClientGameStats.GetStatById(CSSTAT_DEATHS).iStatValue;
-	float killDeathRatio = 0;	
+	float killDeathRatio = 0;
 	if (deaths > 0)
 	{
 		killDeathRatio = (float)kills / (float)deaths;
 	}
-	V_snwprintf(tempWNumString, ARRAYSIZE(tempWNumString), L"%.1f", killDeathRatio);	
+	V_snwprintf(tempWNumString, ARRAYSIZE(tempWNumString), L"%.1f", killDeathRatio);
 	SetDialogVariable("killdeathratio", tempWNumString);
 }
 //----------------------------------------------------------
@@ -388,13 +388,13 @@ void CStatsSummary::UpdateFavoriteWeaponData()
 		}
 
 		if (pFavoriteWeaponStatEntry)
-		{			
+		{
 			CUtlMap<CSStatType_t, int>::IndexType_t idx = m_StatImageMap.Find((CSStatType_t)pFavoriteWeaponStatEntry->killStatId);
 			if (m_StatImageMap.IsValidIndex(idx))
 			{
 				m_pImagePanelFavWeapon->SetImage(m_pImageList->GetImage(m_StatImageMap[idx]));
 			}
-			
+
 			DisplayCompressedLocalizedStat(pFavoriteWeaponStatEntry->hitStatId, "weaponhits", "#GameUI_Stats_WeaponShotsHit");
 			DisplayCompressedLocalizedStat(pFavoriteWeaponStatEntry->shotStatId, "weaponshotsfired", "#GameUI_Stats_WeaponShotsFired");
 			DisplayCompressedLocalizedStat(pFavoriteWeaponStatEntry->killStatId, "weaponkills", "#GameUI_Stats_WeaponKills");
@@ -402,7 +402,7 @@ void CStatsSummary::UpdateFavoriteWeaponData()
 			//Calculate accuracy
 			int kills = g_CSClientGameStats.GetStatById(pFavoriteWeaponStatEntry->killStatId).iStatValue;
 			int shots = g_CSClientGameStats.GetStatById(pFavoriteWeaponStatEntry->shotStatId).iStatValue;
-			float killsPerShot = 0;	
+			float killsPerShot = 0;
 			if (shots > 0)
 			{
 				killsPerShot = (float)kills / (float)shots;
@@ -420,7 +420,7 @@ void CStatsSummary::UpdateFavoriteWeaponData()
 			DisplayFormattedLabel("#GameUI_Stats_WeaponShotsHit", L"0", "weaponhits");
 			DisplayFormattedLabel("#GameUI_Stats_WeaponShotsFired", L"0", "weaponshotsfired");
 			DisplayFormattedLabel("#GameUI_Stats_WeaponKills", L"0", "weaponkills");
-			DisplayFormattedLabel("#GameUI_Stats_WeaponKillRatio", L"0", "weaponkillratio");		
+			DisplayFormattedLabel("#GameUI_Stats_WeaponKillRatio", L"0", "weaponkillratio");
 		}
 	}
 }
@@ -445,13 +445,13 @@ void CStatsSummary::UpdateMapsData()
 	}
 
 	if (pFavoriteMapStat)
-	{	
+	{
 		CUtlMap<CSStatType_t, int>::IndexType_t idx = m_StatImageMap.Find((CSStatType_t)pFavoriteMapStat->statWinsId);
 		if (m_StatImageMap.IsValidIndex(idx))
 		{
 			m_pImagePanelFavMap->SetImage(m_pImageList->GetImage(m_StatImageMap[idx]));
 		}
-		
+
 		// map name
 		SetDialogVariable("mapname", pFavoriteMapStat->szMapName);
 
@@ -462,14 +462,14 @@ void CStatsSummary::UpdateMapsData()
 		//Calculate Win Ratio
 		int wins = g_CSClientGameStats.GetStatById(pFavoriteMapStat->statWinsId).iStatValue;
 		int rounds = g_CSClientGameStats.GetStatById(pFavoriteMapStat->statRoundsId).iStatValue;
-		float winRatio = 0;	
+		float winRatio = 0;
 		if (rounds > 0)
 		{
 			winRatio = ((float)wins / (float)rounds) * 100.0f;
 		}
 		wchar_t tempWNumString[STAT_NUM_ARRAY_LENGTH];
-		V_snwprintf(tempWNumString, ARRAYSIZE(tempWNumString), L"%.1f%%", winRatio);	
-		DisplayFormattedLabel("#GameUI_Stats_MapWinRatio", tempWNumString, "mapwinratio");				
+		V_snwprintf(tempWNumString, ARRAYSIZE(tempWNumString), L"%.1f%%", winRatio);
+		DisplayFormattedLabel("#GameUI_Stats_MapWinRatio", tempWNumString, "mapwinratio");
 	}
 	else
 	{
@@ -478,9 +478,9 @@ void CStatsSummary::UpdateMapsData()
 			m_pImagePanelFavMap->SetImage(m_pImageList->GetImage(m_iDefaultMapImage));
 		}
 		SetDialogVariable("mapname", L"");
-		DisplayFormattedLabel("#GameUI_Stats_MapPlayed", L"0", "mapplayed");				
-		DisplayFormattedLabel("#GameUI_Stats_MapWins", L"0", "mapwins");				
-		DisplayFormattedLabel("#GameUI_Stats_MapWinRatio", L"0", "mapwinratio");	
+		DisplayFormattedLabel("#GameUI_Stats_MapPlayed", L"0", "mapplayed");
+		DisplayFormattedLabel("#GameUI_Stats_MapWins", L"0", "mapwins");
+		DisplayFormattedLabel("#GameUI_Stats_MapWinRatio", L"0", "mapwinratio");
 	}
 }
 
@@ -526,7 +526,7 @@ void CStatsSummary::UpdateRecentAchievements()
 	sortedAchivementList.Sort(AchivementDateSortPredicate);
 
 	//Clear the UI list
-	m_pRecentAchievementsList->DeleteAllItems();	
+	m_pRecentAchievementsList->DeleteAllItems();
 
 	// Add each achievement in the sorted list as a panel.
 	int numPanelsToAdd = MIN(maxRecentAchievementToDisplay, sortedAchivementList.Count());
@@ -550,14 +550,14 @@ void CStatsSummary::UpdateRecentAchievements()
 
 void CStatsSummary::UpdateLastMatchStats()
 {
-	DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_T_ROUNDS_WON, "lastmatchtwins", "#GameUI_Stats_LastMatch_TWins");			
-	DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_CT_ROUNDS_WON, "lastmatchctwins", "#GameUI_Stats_LastMatch_CTWins");			
-	DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_ROUNDS_WON, "lastmatchwins", "#GameUI_Stats_LastMatch_RoundsWon");			
-	DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_MAX_PLAYERS, "lastmatchmaxplayers", "#GameUI_Stats_LastMatch_MaxPlayers");		
+	DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_T_ROUNDS_WON, "lastmatchtwins", "#GameUI_Stats_LastMatch_TWins");
+	DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_CT_ROUNDS_WON, "lastmatchctwins", "#GameUI_Stats_LastMatch_CTWins");
+	DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_ROUNDS_WON, "lastmatchwins", "#GameUI_Stats_LastMatch_RoundsWon");
+	DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_MAX_PLAYERS, "lastmatchmaxplayers", "#GameUI_Stats_LastMatch_MaxPlayers");
 	DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_MVPS, "lastmatchstars", "#GameUI_Stats_LastMatch_MVPS");
 	DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_KILLS, "lastmatchkills", "#GameUI_Stats_WeaponKills");
-	DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_DEATHS, "lastmatchdeaths", "#GameUI_Stats_LastMatch_Deaths");	
-	DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_DAMAGE, "lastmatchtotaldamage", "#GameUI_Stats_LastMatch_Damage");	
+	DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_DEATHS, "lastmatchdeaths", "#GameUI_Stats_LastMatch_Deaths");
+	DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_DAMAGE, "lastmatchtotaldamage", "#GameUI_Stats_LastMatch_Damage");
 	DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_DOMINATIONS, "lastmatchdominations", "#GameUI_Stats_LastMatch_Dominations");
 	DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_REVENGES, "lastmatchrevenges", "#GameUI_Stats_LastMatch_Revenges");
 
@@ -568,13 +568,13 @@ void CStatsSummary::UpdateLastMatchStats()
 	//Calculate Kill:Death ratio
 	int deaths = g_CSClientGameStats.GetStatById(CSSTAT_LASTMATCH_DEATHS).iStatValue;
 	int kills = g_CSClientGameStats.GetStatById(CSSTAT_LASTMATCH_KILLS).iStatValue;
-	float killDeathRatio = deaths;	
+	float killDeathRatio = deaths;
 	if (deaths != 0)
 	{
 		killDeathRatio = (float)kills / (float)deaths;
-	}	
-	V_snwprintf(tempWNumString, ARRAYSIZE(tempWNumString), L"%.1f", killDeathRatio);	
-	DisplayFormattedLabel("#GameUI_Stats_LastMatch_KDRatio", tempWNumString, "lastmatchkilldeathratio");		
+	}
+	V_snwprintf(tempWNumString, ARRAYSIZE(tempWNumString), L"%.1f", killDeathRatio);
+	DisplayFormattedLabel("#GameUI_Stats_LastMatch_KDRatio", tempWNumString, "lastmatchkilldeathratio");
 
 	//Calculate cost per kill
 	PlayerStatData_t statMoneySpent = g_CSClientGameStats.GetStatById(CSSTAT_LASTMATCH_MONEYSPENT);
@@ -582,9 +582,9 @@ void CStatsSummary::UpdateLastMatchStats()
 	if (kills > 0)
 	{
 		costPerKill = statMoneySpent.iStatValue / kills;
-	}	
+	}
 	ConvertNumberToMantissaSuffixForm(costPerKill, tempWNumString, STAT_NUM_ARRAY_LENGTH);
-	DisplayFormattedLabel("#GameUI_Stats_LastMatch_MoneySpentPerKill", tempWNumString, "lastmatchmoneyspentperkill");	
+	DisplayFormattedLabel("#GameUI_Stats_LastMatch_MoneySpentPerKill", tempWNumString, "lastmatchmoneyspentperkill");
 }
 
 void CStatsSummary::UpdateLastMatchFavoriteWeaponStats()
@@ -614,8 +614,8 @@ void CStatsSummary::UpdateLastMatchFavoriteWeaponStats()
 			SetDialogVariable("lastmatchfavweaponname", L"");
 		}
 
-		DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_FAVWEAPON_KILLS, "lastmatchfavweaponkills", "#GameUI_Stats_WeaponKills");			
-		DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_FAVWEAPON_HITS, "lastmatchfavweaponhits", "#GameUI_Stats_WeaponShotsHit");			
+		DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_FAVWEAPON_KILLS, "lastmatchfavweaponkills", "#GameUI_Stats_WeaponKills");
+		DisplayCompressedLocalizedStat(CSSTAT_LASTMATCH_FAVWEAPON_HITS, "lastmatchfavweaponhits", "#GameUI_Stats_WeaponShotsHit");
 
 		int shots = g_CSClientGameStats.GetStatById(CSSTAT_LASTMATCH_FAVWEAPON_SHOTS).iStatValue;
 		int hits = g_CSClientGameStats.GetStatById(CSSTAT_LASTMATCH_FAVWEAPON_HITS).iStatValue;
@@ -625,7 +625,7 @@ void CStatsSummary::UpdateLastMatchFavoriteWeaponStats()
 			accuracy = ((float)hits / (float)shots) * 100.0f;
 		}
 		V_snwprintf(tempWNumString, ARRAYSIZE(tempWNumString), L"%.1f%%", accuracy);
-		DisplayFormattedLabel("#GameUI_Stats_LastMatch_FavWeaponAccuracy", tempWNumString, "lastmatchfavweaponaccuracy");	
+		DisplayFormattedLabel("#GameUI_Stats_LastMatch_FavWeaponAccuracy", tempWNumString, "lastmatchfavweaponaccuracy");
 	}
 	else
 	{
@@ -656,7 +656,7 @@ void CStatsSummary::FireGameEvent( IGameEvent *event )
 	else if ( 0 == Q_strcmp( type, "player_stats_updated" ) )
 	{
 		m_bStatsDirty = true;
-	}	
+	}
 }
 
 void CStatsSummary::DisplayCompressedLocalizedStat(CSStatType_t stat, const char* dialogVariable, const char* localizationToken /* = NULL */)
@@ -666,7 +666,7 @@ void CStatsSummary::DisplayCompressedLocalizedStat(CSStatType_t stat, const char
 	ConvertNumberToMantissaSuffixForm(statValue, tempWNumString, STAT_NUM_ARRAY_LENGTH);
 	if (localizationToken)
 	{
-		DisplayFormattedLabel(localizationToken, tempWNumString, dialogVariable);	
+		DisplayFormattedLabel(localizationToken, tempWNumString, dialogVariable);
 	}
 	else
 	{

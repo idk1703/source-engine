@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -251,7 +251,7 @@ int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 				strcpy(texture.texture, psz);
 			}
 		}
-		
+
 		if (fThisVersion < 0.6f)
 		{
 			float light;
@@ -285,10 +285,10 @@ int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 			}
 		}
 
-        if (fThisVersion < 2.2f)
-        {
-            CreateFace(CreatePoints, iSize);
-        }
+		if (fThisVersion < 2.2f)
+		{
+			CreateFace(CreatePoints, iSize);
+		}
 
 		//
 		// Load the plane points. We don't really need them, but they can fix the face if, somehow, it
@@ -303,7 +303,7 @@ int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 			//
 			float LoadPlanePoints[3][3];
 			file.read((char *)LoadPlanePoints, sizeof(LoadPlanePoints));
-			
+
 			for (int i = 0; i < 3; i++)
 			{
 				plane.planepts[i].x = LoadPlanePoints[i][0];
@@ -320,48 +320,48 @@ int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 			}
 		}
 
-        if( fThisVersion < 2.2f )
-        {
-            SetTexture(texture.texture);
-        }
+		if( fThisVersion < 2.2f )
+		{
+			SetTexture(texture.texture);
+		}
 
-        //
-        // version 3.4 -- added displacement info to faces
-        //
-        if( ( fThisVersion >= 3.4f ) && ( fThisVersion <= 3.6f ) )
-        {
+		//
+		// version 3.4 -- added displacement info to faces
+		//
+		if( ( fThisVersion >= 3.4f ) && ( fThisVersion <= 3.6f ) )
+		{
 			bool bHasMapDisp;
 
-            if( fThisVersion >= 3.5f )
-            {
-                int nLoadHasMapDisp;
+			if( fThisVersion >= 3.5f )
+			{
+				int nLoadHasMapDisp;
 
-                // check displacement mapping flag
-                file.read( ( char* )&nLoadHasMapDisp, sizeof( int ) );
+				// check displacement mapping flag
+				file.read( ( char* )&nLoadHasMapDisp, sizeof( int ) );
 				bHasMapDisp = nLoadHasMapDisp != 0;
-			}                
-            else
-            {
-                // check displacement mapping flag
-                file.read( ( char* )&bHasMapDisp, sizeof( bool ) );
-            }
+			}
+			else
+			{
+				// check displacement mapping flag
+				file.read( ( char* )&bHasMapDisp, sizeof( bool ) );
+			}
 
-            if( bHasMapDisp )
-            {
+			if( bHasMapDisp )
+			{
 				EditDispHandle_t handle = EditDispMgr()->Create();
 				SetDisp( handle );
 
 				CMapDisp *pDisp = EditDispMgr()->GetDisp( handle );
 				pDisp->SetParent( this );
 				pDisp->SerializedLoadRMF( file, this, fThisVersion );
-            }
-        }
+			}
+		}
 
-        if (fThisVersion >= 2.2f)
-        {
-            CreateFace(CreatePoints, iSize); 
-            SetTexture(texture.texture);
-        }
+		if (fThisVersion >= 2.2f)
+		{
+			CreateFace(CreatePoints, iSize);
+			SetTexture(texture.texture);
+		}
 	}
 
 	if (file.bad())
@@ -424,7 +424,7 @@ int CMapSolid::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		// read Faces
 		file.read((char*) &iSize, sizeof(int));
 		Faces.SetCount(iSize);
-	
+
 		for(int i = 0; i < iSize; i++)
 		{
 			// extract face
@@ -450,15 +450,15 @@ int CMapSolid::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 	{
 		return -1;
 	}
-	
+
 	return 0;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			fIsStoring - 
+// Purpose:
+// Input  : file -
+//			fIsStoring -
 // Output : int
 //-----------------------------------------------------------------------------
 int CEditGameClass::SerializeRMF(std::fstream& file, BOOL fIsStoring)
@@ -576,12 +576,12 @@ int CMapClass::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		// Write the visgroup ID (zero if none).
 		//
 		DWORD dwID = 0;
-		
+
 		/*if (m_pVisGroup)
 		{
 			// visgroupfixme: how to handle saving RMF? save the first group??
 			dwID = m_pVisGroup->GetID();
-		}*/ 
+		}*/
 
 		file.write((char *)&dwID, sizeof(dwID));
 
@@ -668,10 +668,10 @@ int CMapClass::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			fIsStoring - 
-// Output : 
+// Purpose:
+// Input  : file -
+//			fIsStoring -
+// Output :
 //-----------------------------------------------------------------------------
 int CMapEntity::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 {
@@ -683,7 +683,7 @@ int CMapEntity::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 	//
 	CMapClass::SerializeRMF(file, fIsStoring);
 	CEditGameClass::SerializeRMF(file, fIsStoring);
-	
+
 	if (fIsStoring)
 	{
 		// Write flags
@@ -693,7 +693,7 @@ int CMapEntity::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 		GetOrigin(Origin);
 		file.write((char *)Origin.Base(), 3 * sizeof(float));
 
-		// Save padding for unused "complex" field 
+		// Save padding for unused "complex" field
 		iSize = 0;
 		file.write((char*) &iSize, sizeof(int));
 	}
@@ -748,16 +748,16 @@ int CMapEntity::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 	{
 		return -1;
 	}
-	
+
 	return 0;
 }
 
 
 int CMapWorld::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 {
-    float fVersion = 3.7f;
+	float fVersion = 3.7f;
 	float fLastCompat = 0.3f;
-	
+
 	int nSolids = 0;
 	int iSize;
 
@@ -765,7 +765,7 @@ int CMapWorld::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 	bCorrupt = FALSE;
 
 	// load/save a world
-	if(fIsStoring)	
+	if(fIsStoring)
 	{
 		// write version
 		file.write((char*) &fVersion, sizeof(fVersion));
@@ -773,7 +773,7 @@ int CMapWorld::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 		file.write("RMF", 3);
 
 		// we don't save vis groups
-		iSize = 0; 
+		iSize = 0;
 		file.write((char*) &iSize, sizeof(int));
 
 		// save children & local data
@@ -889,7 +889,7 @@ int CMapWorld::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 			goto FatalError;
 
 		PostloadWorld();
-		
+
 		if (g_pGameConfig->GetTextureFormat() == tfVMT)
 		{
 			// do batch search and replace of textures from trans.txt if it exists.
@@ -913,7 +913,7 @@ FatalError:
 		// file-is-corrupt error
 		str.Format("The file is corrupt.");
 		AfxMessageBox(str);
-		
+
 		return -1;
 	}
 

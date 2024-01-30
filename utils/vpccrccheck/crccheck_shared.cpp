@@ -28,7 +28,7 @@
 void Sys_Error( const char* format, ... )
 {
 	va_list argptr;
-		
+
 	va_start( argptr,format );
 	vfprintf( stderr, format, argptr );
 	va_end( argptr );
@@ -49,7 +49,7 @@ void SafeSnprintf( char *pOut, int nOutLen, const char *pFormat, ... )
 
 
 // for linked lists of strings
-struct StringNode_t 
+struct StringNode_t
 {
 	StringNode_t *m_pNext;
 	char m_Text[1];											// the string data
@@ -71,9 +71,9 @@ int Sys_LoadTextFileWithIncludes( const char* filename, char** bufferptr )
 {
 	FILE *pFileStack[MAX_INCLUDE_STACK_DEPTH];
 	int nSP = MAX_INCLUDE_STACK_DEPTH;
-	
+
 	StringNode_t *pFileLines = NULL;		// tail ptr for fast adds
-	
+
 	size_t nTotalFileBytes = 0;
 	FILE *handle = fopen( filename, "r" );
 	if ( !handle )
@@ -87,23 +87,23 @@ int Sys_LoadTextFileWithIncludes( const char* filename, char** bufferptr )
 		{
 			char lineBuffer[2048];
 			char *ln = fgets( lineBuffer, sizeof( lineBuffer ), pFileStack[nSP] );
-			if ( !ln ) 
+			if ( !ln )
 				break;										// out of text
-			
+
 			ln += strspn( ln, "\t " );						// skip white space
 			if ( memcmp( ln, "#include", 8 ) == 0 )
 			{
 				// omg, an include
 				ln += 8;
 				ln += strspn( ln, " \t\"<" );				// skip whitespace, ", and <
-				
+
 				size_t nPathNameLength = strcspn( ln, " \t\">\n" );
 				if ( !nPathNameLength )
 				{
 					Sys_Error( "bad include %s via %s\n", lineBuffer, filename );
 				}
 				ln[nPathNameLength] = 0;					// kill everything after end of filename
-				
+
 				FILE *inchandle = fopen( ln, "r" );
 				if ( !inchandle )
 				{
@@ -128,8 +128,8 @@ int Sys_LoadTextFileWithIncludes( const char* filename, char** bufferptr )
 		fclose( pFileStack[nSP] );
 		nSP++;												// pop stack
 	}
-	
-	
+
+
 	// Reverse the pFileLines list so it goes the right way.
 	StringNode_t *pPrev = NULL;
 	StringNode_t *pCur;
@@ -157,7 +157,7 @@ int Sys_LoadTextFileWithIncludes( const char* filename, char** bufferptr )
 		memcpy( buffer, pCur->m_Text, nLen );
 		buffer += nLen;
 		nLine++;
-		
+
 		// Cleanup the line..
 		//delete [] (unsigned char*)pCur;
 	}
@@ -188,14 +188,14 @@ char* ChompLineFromFile( char *pOut, int nOutBytes, FILE *fp )
 
 bool CheckSupplementalString( const char *pSupplementalString, const char *pReferenceSupplementalString )
 {
-	// The supplemental string is only checked while VPC is determining if a project file is stale or not. 
+	// The supplemental string is only checked while VPC is determining if a project file is stale or not.
 	// It's not used by the pre-build event's CRC check.
 	// The supplemental string contains various options that tell how the project was built. It's generated in VPC_GenerateCRCOptionString.
 	//
 	// If there's no reference supplemental string (which is the case if we're running vpccrccheck.exe), then we ignore it and continue.
 	if ( !pReferenceSupplementalString )
 		return true;
-	
+
 	return ( pSupplementalString && pReferenceSupplementalString && stricmp( pSupplementalString, pReferenceSupplementalString ) == 0 );
 }
 
@@ -205,7 +205,7 @@ bool VPC_CheckProjectDependencyCRCs( const char *pProjectFilename, const char *p
 	// Build the xxxxx.vcproj.vpc_crc filename
 	char szFilename[512];
 	SafeSnprintf( szFilename, sizeof( szFilename ), "%s.%s", pProjectFilename, VPCCRCCHECK_FILE_EXTENSION );
-	
+
 	// Open it up.
 	FILE *fp = fopen( szFilename, "rt" );
 	if ( !fp )
@@ -246,12 +246,12 @@ bool VPC_CheckProjectDependencyCRCs( const char *pProjectFilename, const char *p
 				// Null-terminate it so we have the CRC by itself and the filename follows the space.
 				*pSpace = 0;
 				const char *pVPCFilename = pSpace + 1;
-			
+
 				// Parse the CRC out.
 				unsigned int nReferenceCRC;
 				sscanf( pLine, "%x", &nReferenceCRC );
 
-				
+
 				// Calculate the CRC from the contents of the file.
 				char *pBuffer;
 				int nTotalFileBytes = Sys_LoadTextFileWithIncludes( pVPCFilename, &pBuffer );
@@ -263,7 +263,7 @@ bool VPC_CheckProjectDependencyCRCs( const char *pProjectFilename, const char *p
 
 				CRC32_t nCRCFromTextContents = CRC32_ProcessSingleBuffer( pBuffer, nTotalFileBytes );
 				delete [] pBuffer;
-				
+
 				// Compare them.
 				if ( nCRCFromTextContents != nReferenceCRC )
 				{
@@ -299,7 +299,7 @@ int VPC_OldeStyleCRCChecks( int argc, char **argv )
 		}
 
 		const char *pVPCFilename = argv[i+1];
-		
+
 		// Get the CRC value on the command line.
 		const char *pTestCRC = argv[i+2];
 		unsigned int nCRCFromCommandLine;
@@ -315,7 +315,7 @@ int VPC_OldeStyleCRCChecks( int argc, char **argv )
 
 		CRC32_t nCRCFromTextContents = CRC32_ProcessSingleBuffer( pBuffer, nTotalFileBytes );
 		delete [] pBuffer;
-		
+
 		// Compare them.
 		if ( nCRCFromTextContents != nCRCFromCommandLine )
 		{
@@ -367,4 +367,3 @@ int VPC_CommandLineCRCChecks( int argc, char **argv )
 		return 1;
 	}
 }
-

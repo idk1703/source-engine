@@ -25,7 +25,7 @@ CLIENTEFFECT_MATERIAL( "effects/energywave/energywave" )
 CLIENTEFFECT_REGISTER_END()
 
 //-----------------------------------------------------------------------------
-// Energy Wave: 
+// Energy Wave:
 //-----------------------------------------------------------------------------
 
 class C_EnergyWave : public C_BaseEntity
@@ -99,7 +99,7 @@ static void ComputeIndices( int is, int it, int* idx )
 	int it0 = (it > 0) ? (it - 1) : it;
 	int is1 = (is < EWAVE_NUM_HORIZONTAL_POINTS - 1) ? is + 1 : is;
 	int it1 = (it < EWAVE_NUM_HORIZONTAL_POINTS - 1) ? it + 1 : it;
-	int is2 = is + 2; 
+	int is2 = is + 2;
 	int it2 = it + 2;
 	if (is2 >= EWAVE_NUM_HORIZONTAL_POINTS)
 		is2 = EWAVE_NUM_HORIZONTAL_POINTS - 1;
@@ -141,9 +141,9 @@ void C_EnergyWave::ComputePoint( float s, float t, Vector& pt, Vector& normal, f
 	ComputeIndices( is, it, idx );
 
 	// The patch equation is:
-	// px = S * M * Gx * M^T * T^T 
-	// py = S * M * Gy * M^T * T^T 
-	// pz = S * M * Gz * M^T * T^T 
+	// px = S * M * Gx * M^T * T^T
+	// py = S * M * Gy * M^T * T^T
+	// pz = S * M * Gz * M^T * T^T
 	// where S = [s^3 s^2 s 1], T = [t^3 t^2 t 1]
 	// M is the patch type matrix, in my case I'm using a catmull-rom
 	// G is the array of control points. rows have constant t
@@ -188,7 +188,7 @@ void C_EnergyWave::ComputePoint( float s, float t, Vector& pt, Vector& normal, f
 	float ft2 = ft * ft;
 	tvec[0] = ft2 * ft; tvec[1] = ft2; tvec[2] = ft; tvec[3] = 1.0f;
 
- 	float fs2 = fs * fs;
+	float fs2 = fs * fs;
 	svec[0] = fs2 * fs; svec[1] = fs2; svec[2] = fs; svec[3] = 1.0f;
 
 	Vector4D tmp;
@@ -392,7 +392,7 @@ int	C_EnergyWave::DrawModel( int flags )
 		return 0;
 
 	// NOTE: We've got a stiff spring case here, we need to simulate at
-	// a fairly fast timestep. A better solution would be to use an 
+	// a fairly fast timestep. A better solution would be to use an
 	// implicit method, which I'm going to not implement for the moment
 
 	float dt = gpGlobals->frametime;
@@ -405,12 +405,7 @@ int	C_EnergyWave::DrawModel( int flags )
 
 	ComputeEWavePoints( pt, normal, opacity );
 
-    DrawEWavePoints( pt, normal, opacity );
+	DrawEWavePoints( pt, normal, opacity );
 
 	return 1;
 }
-
-
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,7 +15,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_NPC_Hydra : public C_AI_BaseNPC
 {
@@ -51,7 +51,7 @@ public:
 	//Vector			m_vecInterpHeadDir;
 
 	float			m_flRelaxedLength;
-	
+
 	Vector			*m_vecPos;	// current animation
 	CInterpolatedVar< Vector >	*m_iv_vecPos;
 
@@ -183,7 +183,7 @@ void  C_NPC_Hydra::StandardBlendingRules( Vector pos[], Quaternion q[], float cu
 			delete[] m_vecPos;
 		}
 		m_vecPos = new Vector [m_numHydraBones];
-		
+
 		if (m_iv_vecPos)
 		{
 			delete m_iv_vecPos;
@@ -236,7 +236,7 @@ void  C_NPC_Hydra::StandardBlendingRules( Vector pos[], Quaternion q[], float cu
 	for (i = 0; i < m_numHydraBones; i++)
 	{
 		m_iv_vecPos[i].Interpolate( currentTime );
-		pos[ i ] = m_vecPos[ i ]; 
+		pos[ i ] = m_vecPos[ i ];
 	}
 
 	// calculate bone angles
@@ -252,7 +252,7 @@ void  C_NPC_Hydra::StandardBlendingRules( Vector pos[], Quaternion q[], float cu
 
 //-----------------------------------------------------------------------------
 // Purpose: Fits skeleton of hydra to the variable segment length "chain" array
-//			Adjusts overall hydra so that "m_flRelaxedLength" of texture fits over 
+//			Adjusts overall hydra so that "m_flRelaxedLength" of texture fits over
 //			the actual length of the chain
 //-----------------------------------------------------------------------------
 
@@ -383,4 +383,3 @@ bool C_NPC_Hydra::GetSoundSpatialization( SpatializationInfo_t& info )
 
 	return bret;
 }
-

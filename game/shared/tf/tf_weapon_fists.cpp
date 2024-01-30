@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -118,7 +118,7 @@ void CTFFists::Punch( void )
 
 	m_flNextSecondaryAttack = m_flNextPrimaryAttack;
 
-#if !defined( CLIENT_DLL ) 
+#if !defined( CLIENT_DLL )
 	pPlayer->SpeakWeaponFire();
 	CTF_GameStats.Event_PlayerFiredWeapon( pPlayer, IsCurrentAttackACrit() );
 
@@ -133,7 +133,7 @@ void CTFFists::Punch( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Allow melee weapons to send different anim events
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CTFFists::SendPlayerAnimEvent( CTFPlayer *pPlayer )
 {
@@ -149,7 +149,7 @@ void CTFFists::SendPlayerAnimEvent( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFists::DoViewModelAnimation( void )
 {
@@ -178,7 +178,7 @@ void CTFFists::DoViewModelAnimation( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFists::AllowTaunts( void )
 {
@@ -188,7 +188,7 @@ bool CTFFists::AllowTaunts( void )
 
 #ifdef GAME_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFists::OnEntityHit( CBaseEntity *pEntity, CTakeDamageInfo *info )
 {
@@ -217,7 +217,7 @@ void CTFFists::OnEntityHit( CBaseEntity *pEntity, CTakeDamageInfo *info )
 			// if it's a medic and that medic is releasing charge
 			if ( pMedic && pMedic->GetChargeEffectBeingProvided() == MEDIGUN_CHARGE_INVULN )
 			{
-				// they are invulning me - add pEntity to their list of people punched 
+				// they are invulning me - add pEntity to their list of people punched
 				pMedic->HandleAchievement_Medic_AssistHeavy( pHitPlayer );
 			}
 		}

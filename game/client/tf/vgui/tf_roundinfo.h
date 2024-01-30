@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -54,7 +54,7 @@ protected:
 
 	CExLabel			*m_pTitle;
 	vgui::ImagePanel	*m_pMapImage;
-	
+
 #ifdef _X360
 	CTFFooter			*m_pFooter;
 #else

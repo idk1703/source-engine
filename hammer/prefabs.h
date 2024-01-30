@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -109,7 +109,7 @@ protected:
 	char szNotes[MAX_NOTES];
 	DWORD dwID;
 	DWORD dwLibID;	// library id
-	
+
 	DWORD dwFileOffset;
 	DWORD dwFileSize;	// size in file - for copying purposes
 

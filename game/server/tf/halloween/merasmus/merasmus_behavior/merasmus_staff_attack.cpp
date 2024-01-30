@@ -37,7 +37,7 @@ ActionResult< CMerasmus >	CMerasmusStaffAttack::OnStart( CMerasmus *me, Action< 
 		}
 		else
 		{
-			me->PlayLowPrioritySound( filter, "Halloween.MerasmusStaffAttack" ); 
+			me->PlayLowPrioritySound( filter, "Halloween.MerasmusStaffAttack" );
 		}
 	}
 

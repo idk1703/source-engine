@@ -96,14 +96,14 @@ public:
 	virtual void *Realloc( void *pMem, size_t nSize ) = 0;
 
 	virtual void Free( void *pMem ) = 0;
-    virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize ) = 0;
+	virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize ) = 0;
 
 	// Debug versions
-    virtual void *Alloc( size_t nSize, const char *pFileName, int nLine ) = 0;
+	virtual void *Alloc( size_t nSize, const char *pFileName, int nLine ) = 0;
 public:
-    virtual void *Realloc( void *pMem, size_t nSize, const char *pFileName, int nLine ) = 0;
-    virtual void  Free( void *pMem, const char *pFileName, int nLine ) = 0;
-    virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize, const char *pFileName, int nLine ) = 0;
+	virtual void *Realloc( void *pMem, size_t nSize, const char *pFileName, int nLine ) = 0;
+	virtual void  Free( void *pMem, const char *pFileName, int nLine ) = 0;
+	virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize, const char *pFileName, int nLine ) = 0;
 
 #ifdef MEMALLOC_SUPPORTS_ALIGNED_ALLOCATIONS
 	virtual void *AllocAlign( size_t nSize, size_t align ) = 0;
@@ -117,9 +117,9 @@ public:
 	// Returns the size of a particular allocation (NOTE: may be larger than the size requested!)
 	virtual size_t GetSize( void *pMem ) = 0;
 
-    // Force file + line information for an allocation
-    virtual void PushAllocDbgInfo( const char *pFileName, int nLine ) = 0;
-    virtual void PopAllocDbgInfo() = 0;
+	// Force file + line information for an allocation
+	virtual void PushAllocDbgInfo( const char *pFileName, int nLine ) = 0;
+	virtual void PopAllocDbgInfo() = 0;
 
 	// FIXME: Remove when we have our own allocator
 	// these methods of the Crt debug code is used in our codebase currently
@@ -164,7 +164,7 @@ public:
 	// Returns 0 if no failure, otherwise the size_t of the last requested chunk
 	virtual size_t MemoryAllocFailed() = 0;
 
-	virtual void CompactIncremental() = 0; 
+	virtual void CompactIncremental() = 0;
 
 	virtual void OutOfMemory( size_t nBytesAttempted = 0 ) = 0;
 
@@ -186,7 +186,7 @@ public:
 	// handles storing allocation info for coroutines
 	virtual uint32 GetDebugInfoSize() = 0;
 	virtual void SaveDebugInfo( void *pvDebugInfo ) = 0;
-	virtual void RestoreDebugInfo( const void *pvDebugInfo ) = 0;	
+	virtual void RestoreDebugInfo( const void *pvDebugInfo ) = 0;
 	virtual void InitDebugInfo( void *pvDebugInfo, const char *pchRootFileName, int nLine ) = 0;
 };
 
@@ -215,23 +215,23 @@ MEM_INTERFACE IMemAlloc *g_pMemAlloc;
 #define MEMALLOC_REGION 0
 #endif
 inline void *MemAlloc_Alloc( size_t nSize )
-{ 
+{
 	return g_pMemAlloc->RegionAlloc( MEMALLOC_REGION, nSize );
 }
 
 inline void *MemAlloc_Alloc( size_t nSize, const char *pFileName, int nLine )
-{ 
+{
 	return g_pMemAlloc->RegionAlloc( MEMALLOC_REGION, nSize, pFileName, nLine );
 }
 #else
 #undef MEMALLOC_REGION
 inline void *MemAlloc_Alloc( size_t nSize )
-{ 
+{
 	return g_pMemAlloc->IndirectAlloc( nSize );
 }
 
 inline void *MemAlloc_Alloc( size_t nSize, const char *pFileName, int nLine )
-{ 
+{
 	return g_pMemAlloc->IndirectAlloc( nSize, pFileName, nLine );
 }
 #endif
@@ -312,7 +312,7 @@ inline void *MemAlloc_AllocAlignedFileLine( size_t size, size_t align, const cha
 #ifdef USE_MEM_DEBUG
 #define MemAlloc_AllocAligned( s, a )	MemAlloc_AllocAlignedFileLine( s, a, __FILE__, __LINE__ )
 #elif defined(USE_LIGHT_MEM_DEBUG)
-extern const char *g_pszModule; 
+extern const char *g_pszModule;
 #define MemAlloc_AllocAligned( s, a )	MemAlloc_AllocAlignedFileLine( s, a, g_pszModule, 0 )
 #else
 #define MemAlloc_AllocAligned( s, a )	MemAlloc_AllocAlignedUnattributed( s, a )
@@ -493,11 +493,11 @@ public:
 class CMemAllocAttributeAlloction
 {
 public:
-	CMemAllocAttributeAlloction( const char *pszFile, int line ) 
+	CMemAllocAttributeAlloction( const char *pszFile, int line )
 	{
 		MemAlloc_PushAllocDbgInfo( pszFile, line );
 	}
-	
+
 	~CMemAllocAttributeAlloction()
 	{
 		MemAlloc_PopAllocDbgInfo();
@@ -543,7 +543,7 @@ public:
 #else
 	#define MEM_ALLOC_CREDIT_CLASS()
 	#define MEM_ALLOC_CLASSNAME(type) NULL
-	#define MEM_ALLOC_CREDIT_FUNCTION() 
+	#define MEM_ALLOC_CREDIT_FUNCTION()
 #endif
 
 //-----------------------------------------------------------------------------

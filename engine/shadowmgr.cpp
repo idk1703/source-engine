@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -41,7 +41,7 @@
 // Shadow-related functionality exported by the engine
 //
 // We have two shadow-related caches in this system
-//	1) A surface cache. We keep track of which surfaces the shadows can 
+//	1) A surface cache. We keep track of which surfaces the shadows can
 //		potentially hit. The computation of the surface cache should be
 //		as fast as possible
 //	2) A surface vertex cache. Once we know what surfaces the shadow
@@ -146,9 +146,9 @@ public:
 		float maxHeight, float falloffOffset, float falloffAmount, const Vector &vecCasterOrigin );
 	virtual const Frustum_t &GetFlashlightFrustum( ShadowHandle_t handle );
 	virtual const FlashlightState_t &GetFlashlightState( ShadowHandle_t handle );
-	virtual int ProjectAndClipVertices( ShadowHandle_t handle, int count, 
+	virtual int ProjectAndClipVertices( ShadowHandle_t handle, int count,
 		Vector** ppPosition, ShadowVertex_t*** ppOutVertex );
-	virtual void AddShadowToBrushModel( ShadowHandle_t handle, model_t* pModel, 	
+	virtual void AddShadowToBrushModel( ShadowHandle_t handle, model_t* pModel,
 										const Vector& origin, const QAngle& angles );
 	virtual void RemoveAllShadowsFromBrushModel( model_t* pModel );
 	virtual void AddShadowToModel( ShadowHandle_t shadow, ModelInstanceHandle_t handle );
@@ -178,7 +178,7 @@ public:
 
 	// Gets the first model associated with a shadow
 	unsigned short& FirstModelInShadow( ShadowHandle_t h ) { return m_Shadows[h].m_FirstModel; }
-	
+
 	// Set the darkness falloff bias
 	virtual void SetFalloffBias( ShadowHandle_t shadow, unsigned char ucBias );
 
@@ -258,13 +258,13 @@ private:
 		unsigned short	m_ClipPlaneCount;
 		Vector			m_ClipPlane[MAX_CLIP_PLANE_COUNT];
 		float			m_ClipDist[MAX_CLIP_PLANE_COUNT];
-		
+
 		// First shadow decal the shadow has
 		ShadowSurfaceIndex_t m_FirstDecal;
 
 		// First model the shadow is projected onto
 		unsigned short	m_FirstModel;
-		
+
 		// Stencil bit used to mask this shadow
 		unsigned char	m_ucShadowStencilBit;
 	};
@@ -354,7 +354,7 @@ private:
 	void RemoveDecalFromShadowList( ShadowHandle_t handle, ShadowDecalHandle_t decalHandle );
 
 	// Actually projects + clips vertices
-	int ProjectAndClipVertices( const Shadow_t& shadow, const VMatrix& worldToShadow, 
+	int ProjectAndClipVertices( const Shadow_t& shadow, const VMatrix& worldToShadow,
 		const VMatrix *pWorldToModel, int count, Vector** ppPosition, ShadowVertex_t*** ppOutVertex );
 
 	// These functions hook/unhook shadows up to surfaces + vice versa
@@ -388,14 +388,14 @@ private:
 	int AddNormalShadowsToMeshBuilder( CMeshBuilder& meshBuilder, ShadowRenderInfo_t& info );
 
 	// Adds displacement shadows to the mesh builder
-	int AddDisplacementShadowsToMeshBuilder( CMeshBuilder& meshBuilder, 
+	int AddDisplacementShadowsToMeshBuilder( CMeshBuilder& meshBuilder,
 									ShadowRenderInfo_t& info, int baseIndex );
 
 	// Does the actual work of computing shadow vertices
 	bool ComputeShadowVertices( ShadowDecal_t& decal, const VMatrix* pModelToWorld, const VMatrix* pWorldToModel, ShadowVertexCache_t* pVertexCache );
 
 	// Project vertices into shadow space
-	bool ProjectVerticesIntoShadowSpace( const VMatrix& modelToShadow, 
+	bool ProjectVerticesIntoShadowSpace( const VMatrix& modelToShadow,
 		float maxDist, int count, Vector** RESTRICT ppPosition, ShadowClipState_t& clip );
 
 	// Copies vertex info from the clipped vertices
@@ -446,7 +446,7 @@ private:
 	// List of all shadows (one per cast shadow)
 	// Align it so the Ray in the Shadow_t is aligned
 	CUtlLinkedList< Shadow_t, ShadowHandle_t, false, int, CUtlMemoryAligned< UtlLinkedListElem_t< Shadow_t, ShadowHandle_t >, 16 > > m_Shadows;
-	
+
 	// List of all shadow decals (one per surface hit by a shadow)
 	CUtlLinkedList< ShadowDecal_t, ShadowDecalHandle_t, true, int > m_ShadowDecals;
 
@@ -502,7 +502,7 @@ private:
 //-----------------------------------------------------------------------------
 static CShadowMgr s_ShadowMgr;
 IShadowMgrInternal* g_pShadowMgr = &s_ShadowMgr;
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CShadowMgr, IShadowMgr, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CShadowMgr, IShadowMgr,
 			ENGINE_SHADOWMGR_INTERFACE_VERSION, s_ShadowMgr);
 
 
@@ -517,7 +517,7 @@ unsigned short& FirstShadowOnModel( ModelInstanceHandle_t h )
 
 unsigned short& FirstModelInShadow( ShadowHandle_t h )
 {
-	return s_ShadowMgr.FirstModelInShadow(h); 
+	return s_ShadowMgr.FirstModelInShadow(h);
 }
 
 
@@ -693,7 +693,7 @@ ShadowHandle_t CShadowMgr::CreateShadowEx( IMaterial* pMaterial, IMaterial* pMod
 	SetMaterial( shadow, pMaterial, pModelMaterial, pBindProxy );
 	shadow.m_Flags = creationFlags;
 	shadow.m_FirstDecal = m_ShadowSurfaces.InvalidIndex();
-	shadow.m_FirstModel = m_ShadowsOnModels.InvalidIndex(); 
+	shadow.m_FirstModel = m_ShadowsOnModels.InvalidIndex();
 	shadow.m_ProjectionDir.Init( 0, 0, 1 );
 	shadow.m_TexOrigin.Init( 0, 0 );
 	shadow.m_TexSize.Init( 1, 1 );
@@ -732,7 +732,7 @@ void CShadowMgr::DestroyShadow( ShadowHandle_t handle )
 
 
 //-----------------------------------------------------------------------------
-// Resets the shadow material (useful for shadow LOD.. doing blobby at distance) 
+// Resets the shadow material (useful for shadow LOD.. doing blobby at distance)
 //-----------------------------------------------------------------------------
 void CShadowMgr::SetShadowMaterial( ShadowHandle_t handle, IMaterial* pMaterial, IMaterial* pModelMaterial, void* pBindProxy )
 {
@@ -855,7 +855,7 @@ inline void CShadowMgr::FreeVertices( ShadowVertexCache_t& cache )
 void CShadowMgr::ClearTempCache( )
 {
 	// Clear out the vertices
-	for (int i = m_TempVertexCache.Count(); --i >= 0; ) 
+	for (int i = m_TempVertexCache.Count(); --i >= 0; )
 	{
 		FreeVertices( m_TempVertexCache[i] );
 	}
@@ -992,7 +992,7 @@ const CShadowMgr::SurfaceBounds_t* CShadowMgr::GetSurfaceBounds( SurfaceHandle_t
 //-----------------------------------------------------------------------------
 // Is the shadow near the surface?
 //-----------------------------------------------------------------------------
-bool CShadowMgr::IsShadowNearSurface( ShadowHandle_t h, SurfaceHandle_t nSurfID, 
+bool CShadowMgr::IsShadowNearSurface( ShadowHandle_t h, SurfaceHandle_t nSurfID,
 	const VMatrix* pModelToWorld, const VMatrix* pWorldToModel )
 {
 	const Shadow_t &shadow = m_Shadows[h];
@@ -1065,7 +1065,7 @@ inline ShadowDecalHandle_t CShadowMgr::AddShadowDecalToSurface( SurfaceHandle_t 
 
 	//=============================================================================
 	// HPE_BEGIN:
-	// [smessick] Check the return value of AddDecalToShadowList and make sure 
+	// [smessick] Check the return value of AddDecalToShadowList and make sure
 	// to delete the newly created shadow decal if there is a failure.
 	//=============================================================================
 	if ( !AddDecalToShadowList( handle, decalHandle ) )
@@ -1113,7 +1113,7 @@ void CShadowMgr::AddSurfaceToFlashlightMaterialBuckets( ShadowHandle_t handle, S
 {
 	// Make sure that this is a flashlight.
 	Assert( m_Shadows[handle].m_Flags & SHADOW_FLASHLIGHT );
-	
+
 	// Get the flashlight id for this particular shadow handle and make sure that it's valid.
 	FlashlightHandle_t flashlightID = m_Shadows[handle].m_FlashlightHandle;
 	Assert( flashlightID != m_FlashlightStates.InvalidIndex() );
@@ -1133,7 +1133,7 @@ void CShadowMgr::AddSurfaceToShadow( ShadowHandle_t handle, SurfaceHandle_t surf
 	// each translucent material the shadow is projected onto. The
 	// material alpha would have to be taken into account, so that
 	// no multiplication occurs where the alpha == 0
-	// FLASHLIGHTFIXME: get rid of some of these checks for the ones that will work just fine with the flashlight.	
+	// FLASHLIGHTFIXME: get rid of some of these checks for the ones that will work just fine with the flashlight.
 	bool bIsFlashlight = ( ( m_Shadows[handle].m_Flags & SHADOW_FLASHLIGHT ) != 0 );
 	if ( !bIsFlashlight && MSurf_Flags(surfID) & (SURFDRAW_TRANS | SURFDRAW_ALPHATEST | SURFDRAW_NOSHADOWS) )
 		return;
@@ -1178,7 +1178,7 @@ void CShadowMgr::RemoveSurfaceFromShadow( ShadowHandle_t handle, SurfaceHandle_t
 			RemoveShadowDecalFromSurface( surfID, decalHandle );
 
 			// FIXME: Could check the shadow doesn't appear again in the list
-			return;			
+			return;
 		}
 
 		i = m_ShadowSurfaces.Next(i);
@@ -1224,7 +1224,7 @@ void CShadowMgr::RemoveAllShadowsFromSurface( SurfaceHandle_t surfID )
 	ShadowDecalHandle_t	dh = MSurf_ShadowDecals( surfID );
 	while (dh != m_ShadowDecals.InvalidIndex() )
 	{
-		// Remove this shadow from the surface 
+		// Remove this shadow from the surface
 		ShadowDecalHandle_t next = m_ShadowDecals.Next(dh);
 
 		// Remove the surface from the shadow
@@ -1249,8 +1249,8 @@ void CShadowMgr::AddShadowToModel( ShadowHandle_t handle, ModelInstanceHandle_t 
 	// Trivial bbox reject.
 	Vector bbMin, bbMax;
 	pDisp->GetBoundingBox( bbMin, bbMax );
-	if( decalinfo->m_Position.x - decalinfo->m_Size < bbMax.x && decalinfo->m_Position.x + decalinfo->m_Size > bbMin.x && 
-		decalinfo->m_Position.y - decalinfo->m_Size < bbMax.y && decalinfo->m_Position.y + decalinfo->m_Size > bbMin.y && 
+	if( decalinfo->m_Position.x - decalinfo->m_Size < bbMax.x && decalinfo->m_Position.x + decalinfo->m_Size > bbMin.x &&
+		decalinfo->m_Position.y - decalinfo->m_Size < bbMax.y && decalinfo->m_Position.y + decalinfo->m_Size > bbMin.y &&
 		decalinfo->m_Position.z - decalinfo->m_Size < bbMax.z && decalinfo->m_Position.z + decalinfo->m_Size > bbMin.z )
 	*/
 
@@ -1303,7 +1303,7 @@ void CShadowMgr::RemoveAllModelsFromShadow( ShadowHandle_t handle )
 			info.m_Renderables.RemoveAll();
 		}
 	}
-}						   
+}
 
 
 //-----------------------------------------------------------------------------
@@ -1386,9 +1386,9 @@ void CShadowMgr::ApplyShadowToSurface( ShadowBuildInfo_t& build, SurfaceHandle_t
 	Vector4D &textureV = tex->textureVecsTexelsPerWorldUnits[1];
 
 	// project decal center into the texture space of the surface
-	float s = DotProduct( decalinfo->m_Position, textureU.AsVector3D() ) + 
+	float s = DotProduct( decalinfo->m_Position, textureU.AsVector3D() ) +
 		textureU.w - surf->textureMins[0];
-	float t = DotProduct( decalinfo->m_Position, textureV.AsVector3D() ) + 
+	float t = DotProduct( decalinfo->m_Position, textureV.AsVector3D() ) +
 		textureV.w - surf->textureMins[1];
 	*/
 
@@ -1452,8 +1452,8 @@ void CShadowMgr::EnableShadow( ShadowHandle_t handle, bool bEnable )
 
 //-----------------------------------------------------------------------------
 // Purpose: Set the darkness falloff bias
-// Input  : shadow - 
-//			ucBias - 
+// Input  : shadow -
+//			ucBias -
 //-----------------------------------------------------------------------------
 void CShadowMgr::SetFalloffBias( ShadowHandle_t shadow, unsigned char ucBias )
 {
@@ -1461,8 +1461,8 @@ void CShadowMgr::SetFalloffBias( ShadowHandle_t shadow, unsigned char ucBias )
 }
 
 //-----------------------------------------------------------------------------
-// Recursive routine to find surface to apply a decal to.  World coordinates of 
-// the decal are passed in r_recalpos like the rest of the engine.  This should 
+// Recursive routine to find surface to apply a decal to.  World coordinates of
+// the decal are passed in r_recalpos like the rest of the engine.  This should
 // be called through R_DecalShoot()
 //-----------------------------------------------------------------------------
 void CShadowMgr::ProjectShadow( ShadowHandle_t handle, const Vector &origin,
@@ -1518,7 +1518,7 @@ void CShadowMgr::ProjectShadow( ShadowHandle_t handle, const Vector &origin,
 		return;
 
 	// We're hijacking the surface vis frame to make sure we enumerate
-	// surfaces only once; 
+	// surfaces only once;
 	++r_surfacevisframe;
 
 	// Clear out the displacement tags also
@@ -1572,16 +1572,16 @@ void DrawFrustum( Frustum_t &frustum )
 	}
 }
 
-//static void LineDrawHelper( const Vector &startShadowSpace, const Vector &endShadowSpace, 
-//						   const VMatrix &shadowToWorld, unsigned char r, unsigned char g, 
+//static void LineDrawHelper( const Vector &startShadowSpace, const Vector &endShadowSpace,
+//						   const VMatrix &shadowToWorld, unsigned char r, unsigned char g,
 //						   unsigned char b, bool ignoreZ )
 //{
 //	Vector startWorldSpace, endWorldSpace;
 //	Vector3DMultiplyPositionProjective( shadowToWorld, startShadowSpace, startWorldSpace );
 //	Vector3DMultiplyPositionProjective( shadowToWorld, endShadowSpace, endWorldSpace );
 //
-//	CDebugOverlay::AddLineOverlay( startWorldSpace, 
-//		endWorldSpace, 
+//	CDebugOverlay::AddLineOverlay( startWorldSpace,
+//		endWorldSpace,
 //		r, g, b, ignoreZ
 //		, 0.0 );
 //}
@@ -1626,7 +1626,7 @@ void CShadowMgr::ProjectFlashlight( ShadowHandle_t handle, const VMatrix& worldT
 		return;
 
 	// We're hijacking the surface vis frame to make sure we enumerate
-	// surfaces only once; 
+	// surfaces only once;
 	++r_surfacevisframe;
 
 	// Clear out the displacement tags also
@@ -1643,10 +1643,10 @@ void CShadowMgr::ProjectFlashlight( ShadowHandle_t handle, const VMatrix& worldT
 	{
 		Vector mins, maxs;
 		CalculateAABBFromProjectionMatrixInverse( shadowToWorld, &mins, &maxs );
-		CDebugOverlay::AddBoxOverlay( Vector( 0.0f, 0.0f, 0.0f ), mins, maxs, QAngle( 0, 0, 0 ), 
+		CDebugOverlay::AddBoxOverlay( Vector( 0.0f, 0.0f, 0.0f ), mins, maxs, QAngle( 0, 0, 0 ),
 			0, 0, 255, 100, 0.0f );
 	}
-	
+
 	for ( int i = 0; i < nLeafCount; ++i )
 	{
 		// NOTE: Scope specifier eliminates virtual function call
@@ -1682,14 +1682,14 @@ void CShadowMgr::ApplyFlashlightToLeaf( const Shadow_t &shadow, mleaf_t* pLeaf, 
 	for ( int i = 0; i < pLeaf->nummarksurfaces; i++ )
 	{
 		SurfaceHandle_t surfID = pHandle[i];
-		
+
 		// only process each surface once;
 		if( MSurf_VisFrame( surfID ) == r_surfacevisframe )
 			continue;
-		
+
 		MSurf_VisFrame( surfID ) = r_surfacevisframe;
 		Assert( !MSurf_DispInfo( surfID ) );
-		
+
 		// perspective projection
 
 		// world-space vertex
@@ -1749,18 +1749,18 @@ void CShadowMgr::ApplyShadowToLeaf( const Shadow_t &shadow, mleaf_t* RESTRICT pL
 	for ( int i = 0; i < pLeaf->nummarksurfaces; i++ )
 	{
 		SurfaceHandleRestrict_t surfID = pHandle[i];
-		
+
 		// only process each surface once;
 		if( MSurf_VisFrame( surfID ) == r_surfacevisframe )
 			continue;
-		
+
 		MSurf_VisFrame( surfID ) = r_surfacevisframe;
 		Assert( !MSurf_DispInfo( surfID ) );
 
 		// If this surface has specifically had dynamic shadows disabled on it, then get out!
 		if ( !MSurf_AreDynamicShadowsEnabled( surfID ) )
 			continue;
-		
+
 		// Backface cull
 		const cplane_t * RESTRICT pSurfPlane = &MSurf_Plane( surfID );
 		bool bInFront;
@@ -1768,7 +1768,7 @@ void CShadowMgr::ApplyShadowToLeaf( const Shadow_t &shadow, mleaf_t* RESTRICT pL
 		{
 			if ( DotProduct( pSurfPlane->normal, pBuild->m_ProjectionDirection) > -BACKFACE_EPSILON )
 				continue;
-			
+
 			bInFront = true;
 		}
 		else
@@ -1777,10 +1777,10 @@ void CShadowMgr::ApplyShadowToLeaf( const Shadow_t &shadow, mleaf_t* RESTRICT pL
 			float dot = DotProduct( pSurfPlane->normal, pBuild->m_ProjectionDirection );
 			if (fabs(dot) < BACKFACE_EPSILON)
 				continue;
-			
-			bInFront = (dot < 0); 
+
+			bInFront = (dot < 0);
 		}
-		
+
 		// Here, it's front facing...
 		// Discard stuff on the wrong side of the ray start
 		if (bInFront)
@@ -1823,7 +1823,7 @@ bool CShadowMgr::EnumerateLeaf( int leaf, int context )
 	}
 
 	const Shadow_t &shadow = m_Shadows[pBuild->m_Shadow];
-	
+
 	mleaf_t* pLeaf = &host_state.worldbrush->leafs[leaf];
 
 	bool bIsFlashlight;
@@ -1842,16 +1842,16 @@ bool CShadowMgr::EnumerateLeaf( int leaf, int context )
 	for ( int i = 0; i < pLeaf->dispCount; i++ )
 	{
 		IDispInfo *pDispInfo = MLeaf_Disaplcement( pLeaf, i );
-		
+
 		// Make sure the decal hasn't already been added to it.
 		if( pDispInfo->GetTag() )
 			continue;
 
 		pDispInfo->SetTag();
-		
+
 		ApplyShadowToDisplacement( *pBuild, pDispInfo, bIsFlashlight );
 	}
-	
+
 	return true;
 }
 
@@ -1859,7 +1859,7 @@ bool CShadowMgr::EnumerateLeaf( int leaf, int context )
 //-----------------------------------------------------------------------------
 // Adds a shadow to a brush model
 //-----------------------------------------------------------------------------
-void CShadowMgr::AddShadowToBrushModel( ShadowHandle_t handle, model_t* pModel, 	
+void CShadowMgr::AddShadowToBrushModel( ShadowHandle_t handle, model_t* pModel,
 									const Vector& origin, const QAngle& angles )
 {
 	// Don't compute the surface cache if shadows are off..
@@ -1888,7 +1888,7 @@ void CShadowMgr::AddShadowToBrushModel( ShadowHandle_t handle, model_t* pModel,
 		int nFlags = MSurf_Flags( surfID );
 		if ( nFlags & SURFDRAW_NODRAW )
 			continue;
-			
+
 		if( !bIsFlashlight )
 		{
 			// FLASHLIGHTFIXME: should do backface culling for projective light sources.
@@ -1908,7 +1908,7 @@ void CShadowMgr::AddShadowToBrushModel( ShadowHandle_t handle, model_t* pModel,
 	}
 }
 
-				 
+
 //-----------------------------------------------------------------------------
 // Removes all shadows from a brush model
 //-----------------------------------------------------------------------------
@@ -2048,12 +2048,12 @@ public:
 class CClipPlane
 {
 public:
-	static inline bool Inside( ShadowVertex_t const& vert )						
+	static inline bool Inside( ShadowVertex_t const& vert )
 	{
 		return DotProduct( vert.m_Position, *m_pNormal ) < m_Dist;
 	}
 
-	static inline float Clip( const Vector& one, const Vector& two )	
+	static inline float Clip( const Vector& one, const Vector& two )
 	{
 		Vector dir;
 		VectorSubtract( two, one, dir );
@@ -2150,12 +2150,12 @@ static void ShadowClip( ShadowClipState_t& clip, Clipper& clipper )
 				// Started outside, ended inside, need to clip the edge
 				if ( clip.m_TempCount >= SHADOW_VERTEX_TEMP_COUNT )
 					return;
-				
-				// Allocate a new clipped vertex 
+
+				// Allocate a new clipped vertex
 				pDestVert[numOutVerts] = &clip.m_pTempVertices[clip.m_TempCount++];
 
 				// Clip the edge to the clip plane
-				Intersect( pStart, pEnd, pDestVert[numOutVerts], startInside, clipper ); 
+				Intersect( pStart, pEnd, pDestVert[numOutVerts], startInside, clipper );
 				++numOutVerts;
 			}
 			pDestVert[numOutVerts++] = pEnd;
@@ -2168,11 +2168,11 @@ static void ShadowClip( ShadowClipState_t& clip, Clipper& clipper )
 				if ( clip.m_TempCount >= SHADOW_VERTEX_TEMP_COUNT )
 					return;
 
-				// Allocate a new clipped vertex 
+				// Allocate a new clipped vertex
 				pDestVert[numOutVerts] = &clip.m_pTempVertices[clip.m_TempCount++];
 
 				// Clip the edge to the clip plane
-				Intersect( pStart, pEnd, pDestVert[numOutVerts], startInside, clipper ); 
+				Intersect( pStart, pEnd, pDestVert[numOutVerts], startInside, clipper );
 				++numOutVerts;
 			}
 		}
@@ -2183,14 +2183,14 @@ static void ShadowClip( ShadowClipState_t& clip, Clipper& clipper )
 	// Switch source lists
 	clip.m_CurrVert = 1 - clip.m_CurrVert;
 	clip.m_ClipCount = numOutVerts;
-	Assert( clip.m_ClipCount <= SHADOW_VERTEX_TEMP_COUNT ); 
+	Assert( clip.m_ClipCount <= SHADOW_VERTEX_TEMP_COUNT );
 }
 
 
 //-----------------------------------------------------------------------------
 // Project vertices into shadow space
 //-----------------------------------------------------------------------------
-bool CShadowMgr::ProjectVerticesIntoShadowSpace( const VMatrix& modelToShadow, 
+bool CShadowMgr::ProjectVerticesIntoShadowSpace( const VMatrix& modelToShadow,
 	float maxDist, int count, Vector** RESTRICT ppPosition, ShadowClipState_t& clip )
 {
 	bool insideVolume = false;
@@ -2254,7 +2254,7 @@ int CShadowMgr::ProjectAndClipVertices( const Shadow_t& shadow, const VMatrix& w
 		{
 			cplane_t worldPlane, modelPlane;
 			worldPlane.normal = shadow.m_ClipPlane[i];
-			worldPlane.dist = shadow.m_ClipDist[i]; 
+			worldPlane.dist = shadow.m_ClipDist[i];
 			MatrixTransformPlane( *pWorldToModel, worldPlane, modelPlane );
 			plane.SetPlane( modelPlane.normal, modelPlane.dist );
 		}
@@ -2278,10 +2278,10 @@ int CShadowMgr::ProjectAndClipVertices( const Shadow_t& shadow, const VMatrix& w
 //-----------------------------------------------------------------------------
 // Accessor for use by the displacements
 //-----------------------------------------------------------------------------
-int CShadowMgr::ProjectAndClipVertices( ShadowHandle_t handle, int count, 
+int CShadowMgr::ProjectAndClipVertices( ShadowHandle_t handle, int count,
 	Vector** ppPosition, ShadowVertex_t*** ppOutVertex )
 {
-	return ProjectAndClipVertices( m_Shadows[handle], 
+	return ProjectAndClipVertices( m_Shadows[handle],
 		m_Shadows[handle].m_WorldToShadow, NULL, count, ppPosition, ppOutVertex );
 }
 
@@ -2309,7 +2309,7 @@ inline void CShadowMgr::CopyClippedVertices( int count, ShadowVertex_t** ppSrcVe
 //-----------------------------------------------------------------------------
 // Does the actual work of computing shadow vertices
 //-----------------------------------------------------------------------------
-bool CShadowMgr::ComputeShadowVertices( ShadowDecal_t& decal, 
+bool CShadowMgr::ComputeShadowVertices( ShadowDecal_t& decal,
 	const VMatrix* pModelToWorld, const VMatrix *pWorldToModel, ShadowVertexCache_t* pVertexCache )
 {
 	VPROF( "CShadowMgr::ComputeShadowVertices" );
@@ -2338,14 +2338,14 @@ bool CShadowMgr::ComputeShadowVertices( ShadowDecal_t& decal,
 
 	// Create vertices to clip to...
 	ShadowVertex_t** ppSrcVert;
-	int clipCount = ProjectAndClipVertices( m_Shadows[decal.m_Shadow], *pModelToShadow, pWorldToModel, 
+	int clipCount = ProjectAndClipVertices( m_Shadows[decal.m_Shadow], *pModelToShadow, pWorldToModel,
 		MSurf_VertCount( decal.m_SurfID ), ppVec, &ppSrcVert );
 	if (clipCount == 0)
 	{
 		pVertexCache->m_Count = 0;
 		return false;
 	}
-	
+
 	// Allocate the vertices we're going to use for the decal
 	ShadowVertex_t* pDstVert = AllocateVertices( *pVertexCache, clipCount );
 	Assert( pDstVert );
@@ -2462,7 +2462,7 @@ inline bool CShadowMgr::GenerateNormalShadowRenderInfo( IMatRenderContext *pRend
 
 	// Catch overflows....
 	int nAdditionalIndices = 3 * (pVertexCache->m_Count - 2);
-	if ( ( info.m_VertexCount + pVertexCache->m_Count >= info.m_nMaxVertices ) || 
+	if ( ( info.m_VertexCount + pVertexCache->m_Count >= info.m_nMaxVertices ) ||
 		( info.m_IndexCount + nAdditionalIndices >= info.m_nMaxIndices ) )
 	{
 		return true;
@@ -2472,7 +2472,7 @@ inline bool CShadowMgr::GenerateNormalShadowRenderInfo( IMatRenderContext *pRend
 	info.m_VertexCount += pVertexCache->m_Count;
 	info.m_IndexCount += nAdditionalIndices;
 	++info.m_Count;
-	
+
 	return true;
 }
 
@@ -2494,7 +2494,7 @@ void CShadowMgr::GenerateShadowRenderInfo( IMatRenderContext *pRenderContext, Sh
 	{
 		ShadowDecal_t& decal = m_ShadowDecals[decalHandle];
 		next = m_ShadowDecals[decalHandle].m_NextRender;
-					 
+
 		// Skip translucent shadows [ don't add their verts + indices to the render lists ]
 		Shadow_t &shadow = m_Shadows[ decal.m_Shadow ];
 		if ( shadow.m_FalloffBias == 255 )
@@ -2511,7 +2511,7 @@ void CShadowMgr::GenerateShadowRenderInfo( IMatRenderContext *pRenderContext, Sh
 			// Handle shadows on normal surfaces
 			keepShadow = GenerateNormalShadowRenderInfo( pRenderContext, decal, info );
 		}
-		
+
 		// Retire the surface if the shadow didn't actually hit it
 		if ( !keepShadow && ShouldCacheVertices( decal ) )
 		{
@@ -2608,9 +2608,9 @@ int CShadowMgr::AddNormalShadowsToMeshBuilder( CMeshBuilder& meshBuilder, Shadow
 		meshBuilder.AdvanceVertex();
 
 		// Update the base index
-		baseIndex += vCount + 2; 
+		baseIndex += vCount + 2;
 	}
-	
+
 	return baseIndex;
 }
 
@@ -2618,7 +2618,7 @@ int CShadowMgr::AddNormalShadowsToMeshBuilder( CMeshBuilder& meshBuilder, Shadow
 //-----------------------------------------------------------------------------
 // Adds displacement shadows to the mesh builder
 //-----------------------------------------------------------------------------
-int CShadowMgr::AddDisplacementShadowsToMeshBuilder( CMeshBuilder& meshBuilder, 
+int CShadowMgr::AddDisplacementShadowsToMeshBuilder( CMeshBuilder& meshBuilder,
 								ShadowRenderInfo_t& info, int baseIndex )
 {
 	if ( !r_DrawDisp.GetBool() )
@@ -2805,13 +2805,13 @@ void CShadowMgr::SetNumWorldMaterialBuckets( int numMaterialSortBins )
 {
 	m_NumWorldMaterialBuckets = numMaterialSortBins;
 	FlashlightHandle_t flashlightID;
-	for( flashlightID = m_FlashlightStates.Head(); 
-	     flashlightID != m_FlashlightStates.InvalidIndex(); 
+	for( flashlightID = m_FlashlightStates.Head();
+	     flashlightID != m_FlashlightStates.InvalidIndex();
 		 flashlightID = m_FlashlightStates.Next( flashlightID ) )
 	{
 		m_FlashlightStates[flashlightID].m_MaterialBuckets.SetNumMaterialSortIDs( numMaterialSortBins );
 		m_FlashlightStates[flashlightID].m_OccluderBuckets.SetNumMaterialSortIDs( numMaterialSortBins );
-	}	
+	}
 	ClearAllFlashlightMaterialBuckets();
 }
 
@@ -2824,8 +2824,8 @@ void CShadowMgr::ClearAllFlashlightMaterialBuckets( void )
 		return;
 
 	FlashlightHandle_t flashlightID;
-	for( flashlightID = m_FlashlightStates.Head(); 
-	     flashlightID != m_FlashlightStates.InvalidIndex(); 
+	for( flashlightID = m_FlashlightStates.Head();
+	     flashlightID != m_FlashlightStates.InvalidIndex();
 		 flashlightID = m_FlashlightStates.Next( flashlightID ) )
 	{
 		m_FlashlightStates[flashlightID].m_MaterialBuckets.Flush();
@@ -2888,9 +2888,9 @@ bool ScreenSpaceRectFromPoints( IMatRenderContext *pRenderContext, Vector vClipp
 	g_pMaterialSystem->GetBackBufferDimensions( nWidth, nHeight );	// Get render target dimensions
 
 	*nLeft	 = ((fMinX * 0.5f + 0.5f) * (float) nWidth ) - 1;		// Convert to render target pixel units
-	*nTop    = ((fMinY * 0.5f + 0.5f) * (float) nHeight) - 1; 
+	*nTop    = ((fMinY * 0.5f + 0.5f) * (float) nHeight) - 1;
 	*nRight  = ((fMaxX * 0.5f + 0.5f) * (float) nWidth ) + 1;
-	*nBottom = ((fMaxY * 0.5f + 0.5f) * (float) nHeight) + 1;  
+	*nBottom = ((fMaxY * 0.5f + 0.5f) * (float) nHeight) + 1;
 
 	*nLeft   = clamp( *nLeft,   0, nWidth  );						// Clamp to render target dimensions
 	*nTop    = clamp( *nTop,    0, nHeight );
@@ -2900,7 +2900,7 @@ bool ScreenSpaceRectFromPoints( IMatRenderContext *pRenderContext, Vector vClipp
 	Assert( (*nLeft <= *nRight) && (*nTop <= *nBottom) );
 
 	// Do we have an actual subrect of the whole screen?
-	bool bWithinBounds = ((*nLeft > 0 ) || (*nTop > 0) || (*nRight < nWidth) || (*nBottom < nHeight));	
+	bool bWithinBounds = ((*nLeft > 0 ) || (*nTop > 0) || (*nRight < nWidth) || (*nBottom < nHeight));
 
 	// Compute valid area
 	nWidth  = (*nRight - *nLeft);
@@ -2981,7 +2981,7 @@ void DrawDebugPolygon( int nNumVerts, Vector *pVecPoints, bool bFrontFacing, boo
 	if ( bFrontFacing )
 		b = 255;
 	else
-		r = 255; 
+		r = 255;
 
 	if ( bNearPlane )	// Draw near plane green for visualization
 	{
@@ -3077,7 +3077,7 @@ int ClipPlaneToFrustum( Vector *pInPoints, Vector *pOutPoints, Vector *pVecWorld
 	{
 		Vector vNormal;
 		float flDist;
-		
+
 		if ( nNumPoints < 3 )	// If we're already clipped away, bail out entirely
 			break;
 
@@ -3300,8 +3300,8 @@ void CShadowMgr::SetFlashlightStencilMasks( bool bDoMasking )
 
 	CMatRenderContextPtr pRenderContext( materials );
 
-	for( ; 
-		 flashlightID != m_FlashlightStates.InvalidIndex(); 
+	for( ;
+		 flashlightID != m_FlashlightStates.InvalidIndex();
 		 flashlightID = m_FlashlightStates.Next( flashlightID ) )
 	{
 		FlashlightInfo_t &flashlightInfo = m_FlashlightStates[flashlightID];
@@ -3415,8 +3415,8 @@ void CShadowMgr::RenderFlashlights( bool bDoMasking, const VMatrix* pModelToWorl
 
 	pRenderContext->SetFlashlightMode( true );
 
-	for( ; 
-		 flashlightID != m_FlashlightStates.InvalidIndex(); 
+	for( ;
+		 flashlightID != m_FlashlightStates.InvalidIndex();
 		 flashlightID = m_FlashlightStates.Next( flashlightID ) )
 	{
 		FlashlightInfo_t &flashlightInfo = m_FlashlightStates[flashlightID];
@@ -3470,7 +3470,7 @@ void CShadowMgr::RenderFlashlights( bool bDoMasking, const VMatrix* pModelToWorl
 				IMesh *pMesh = pRenderContext->GetDynamicMesh( false, g_WorldStaticMeshes[sortID], 0 );
 				CMeshBuilder meshBuilder;
 				meshBuilder.Begin( pMesh, MATERIAL_TRIANGLES, 0, numIndices );
-#endif				
+#endif
 				for( elemHandle = materialBuckets.GetElementListHead( sortID );
 					 elemHandle != materialBuckets.InvalidElementHandle();
 					 elemHandle = materialBuckets.GetElementListNext( elemHandle ) )
@@ -3482,7 +3482,7 @@ void CShadowMgr::RenderFlashlights( bool bDoMasking, const VMatrix* pModelToWorl
 						BuildIndicesForWorldSurface( indexBufferBuilder, surfID, host_state.worldbrush );
 #else
 						BuildIndicesForWorldSurface( meshBuilder, surfID, host_state.worldbrush );
-#endif				
+#endif
 					}
 				}
 				// close out the index buffer
@@ -3495,7 +3495,7 @@ void CShadowMgr::RenderFlashlights( bool bDoMasking, const VMatrix* pModelToWorl
 				pRenderContext->Draw( MATERIAL_TRIANGLES, 0, numIndices );
 #else
 				meshBuilder.End( false, true );
-#endif				
+#endif
 			}
 
 			// NOTE: If we ever need to make this faster, we could get larger batches here.
@@ -3560,8 +3560,8 @@ void CShadowMgr::DrawFlashlightDecals( int sortGroup, bool bDoMasking )
 
 	pRenderContext->SetFlashlightMode( true );
 
-	for( ; 
-		 flashlightID != m_FlashlightStates.InvalidIndex(); 
+	for( ;
+		 flashlightID != m_FlashlightStates.InvalidIndex();
 		 flashlightID = m_FlashlightStates.Next( flashlightID ) )
 	{
 		FlashlightInfo_t &flashlightInfo = m_FlashlightStates[flashlightID];
@@ -3571,7 +3571,7 @@ void CShadowMgr::DrawFlashlightDecals( int sortGroup, bool bDoMasking )
 
 		DecalSurfaceDraw( pRenderContext, sortGroup );
 	}
-	
+
 	// Tell the materialsystem that we are finished drawing additive flashlight lighting.
 	pRenderContext->SetFlashlightMode( false );
 
@@ -3596,8 +3596,8 @@ void CShadowMgr::DrawFlashlightDecalsOnDisplacements( int sortGroup, CDispInfo *
 
 	DispInfo_BatchDecals( visibleDisps, nVisibleDisps );
 
-	for( ; 
-		flashlightID != m_FlashlightStates.InvalidIndex(); 
+	for( ;
+		flashlightID != m_FlashlightStates.InvalidIndex();
 		flashlightID = m_FlashlightStates.Next( flashlightID ) )
 	{
 		FlashlightInfo_t &flashlightInfo = m_FlashlightStates[flashlightID];
@@ -3630,8 +3630,8 @@ void CShadowMgr::DrawFlashlightDecalsOnSingleSurface( SurfaceHandle_t surfID, bo
 
 	pRenderContext->SetFlashlightMode( true );
 
-	for( ; 
-		 flashlightID != m_FlashlightStates.InvalidIndex(); 
+	for( ;
+		 flashlightID != m_FlashlightStates.InvalidIndex();
 		 flashlightID = m_FlashlightStates.Next( flashlightID ) )
 	{
 		FlashlightInfo_t &flashlightInfo = m_FlashlightStates[flashlightID];
@@ -3641,7 +3641,7 @@ void CShadowMgr::DrawFlashlightDecalsOnSingleSurface( SurfaceHandle_t surfID, bo
 
 		DrawDecalsOnSingleSurface( pRenderContext, surfID );
 	}
-	
+
 	// Tell the materialsystem that we are finished drawing additive flashlight lighting.
 	pRenderContext->SetFlashlightMode( false );
 
@@ -3667,8 +3667,8 @@ void CShadowMgr::DrawFlashlightOverlays( int nSortGroup, bool bDoMasking )
 
 	pRenderContext->SetFlashlightMode( true );
 
-	for( ; 
-		 flashlightID != m_FlashlightStates.InvalidIndex(); 
+	for( ;
+		 flashlightID != m_FlashlightStates.InvalidIndex();
 		 flashlightID = m_FlashlightStates.Next( flashlightID ) )
 	{
 		FlashlightInfo_t &flashlightInfo = m_FlashlightStates[flashlightID];
@@ -3678,7 +3678,7 @@ void CShadowMgr::DrawFlashlightOverlays( int nSortGroup, bool bDoMasking )
 
 		OverlayMgr()->RenderOverlays( nSortGroup );
 	}
-	
+
 	// Tell the materialsystem that we are finished drawing additive flashlight lighting.
 	pRenderContext->SetFlashlightMode( false );
 
@@ -3749,7 +3749,7 @@ void CShadowMgr::DrawFlashlightDepthTexture( )
 			meshBuilder.TexCoord2f( 0, 1.0f, 1.0f );
 #else
 			meshBuilder.TexCoord2f( 0, 0.0f, 1.0f );
-#endif			
+#endif
 			meshBuilder.AdvanceVertex();
 
 			meshBuilder.End();

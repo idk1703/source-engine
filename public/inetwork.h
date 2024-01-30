@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,14 +18,14 @@ public:
 	virtual	~INetwork( void ) {};
 
 	virtual void Init( void ) = 0;
-	virtual void Config (bool multiplayer);	
+	virtual void Config (bool multiplayer);
 	virtual void IsMultiplayer( void ) = 0; // true = full MP mode, false = loopback SP mode
-	virtual void IsEnabled( void ) = 0;	
+	virtual void IsEnabled( void ) = 0;
 
 	// shuts down Network, closes all UPD/TCP channels
 	virtual void Shutdown( void ) = 0;
 
-	// must be called each system frame to do any asynchronouse TCP stuff 
+	// must be called each system frame to do any asynchronouse TCP stuff
 	virtual void RunFrame( double time ) = 0;
 
 	virtual void ProcessSocket( netsrc_t sock, IConnectionlessPacketHandler * handler ) = 0;
@@ -34,7 +34,7 @@ public:
 	virtual void SendConnectionless(netsrc_t sock, netadr_t &adr, unsigned char * data, int length ) = 0;
 
 	virtual void LogBadPacket(netpacket_t * packet) = 0;
-	
+
 	// Address conversion
 	virtual bool StringToAdr ( const char *s, netadr_t *a) = 0;
 
@@ -43,9 +43,9 @@ public:
 
 	// and vice versa
 	virtual unsigned short NetToHostShort( unsigned short us_in );
-	
 
-	
+
+
 };
 
 

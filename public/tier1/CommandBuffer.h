@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -46,7 +46,7 @@ public:
 	CCommandBuffer( );
 	~CCommandBuffer();
 
-    // Inserts text into the command buffer
+	// Inserts text into the command buffer
 	bool AddText( const char *pText, int nTickDelay = 0 );
 
 	// Used to iterate over all commands appropriate for the current time
@@ -75,7 +75,7 @@ public:
 	// most relevantly, to implement a feature where you stream a file
 	// worth of commands into the buffer, where the file size is too large
 	// to entirely contain in the buffer).
-    CommandHandle_t GetNextCommandHandle();
+	CommandHandle_t GetNextCommandHandle();
 
 	// Specifies a max limit of the args buffer. For unittesting. Size == 0 means use default
 	void LimitArgumentBufferSize( int nSize );
@@ -101,7 +101,7 @@ private:
 
 	// Insert a command into the command queue at the appropriate time
 	void InsertCommandAtAppropriateTime( int hCommand );
-						   
+
 	// Insert a command into the command queue
 	// Only happens if it's inserted while processing other commands
 	void InsertImmediateCommand( int hCommand );

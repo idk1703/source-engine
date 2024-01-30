@@ -19,12 +19,12 @@ public:
 	bool operator() ( CNavArea *baseArea )
 	{
 		CTFNavArea *area = (CTFNavArea *)baseArea;
-		
+
 		area->ClearAttributeTF( m_attribute );
-		
+
 		return true;
 	}
-	
+
 	TFNavAttributeType m_attribute;
 };
 
@@ -41,7 +41,7 @@ static ConCommand ClearAllAttributes( "tf_wipe_attributes", TF_EditClearAllAttri
 struct AttributeLookup
 {
 	const char *name;
-	TFNavAttributeType attribute;	
+	TFNavAttributeType attribute;
 };
 
 static AttributeLookup s_TFAttributeTable[] =
@@ -80,21 +80,21 @@ static int AttributeAutocomplete( const char *input, char commands[ COMMAND_COMP
 	{
 		return 0;
 	}
-	
+
 	char command[ COMMAND_COMPLETION_ITEM_LENGTH+1 ];
 	Q_strncpy( command, input, sizeof( command ) );
-	
+
 	// skip to start of argument
 	char *partialArg = Q_strrchr( command, ' ' );
 	if ( partialArg == NULL )
 	{
 		return 0;
 	}
-	
+
 	// chop command from partial argument
 	*partialArg = '\000';
 	++partialArg;
-	
+
 	int partialArgLength = Q_strlen( partialArg );
 
 	int count = 0;
@@ -131,7 +131,7 @@ TFNavAttributeType NameToTFAttribute( const char *name )
 			return s_TFAttributeTable[i].attribute;
 		}
 	}
-	
+
 	return TF_NAV_INVALID;
 }
 
@@ -158,7 +158,7 @@ void TF_EditClearAttribute( const CCommand &args )
 		Msg( "Usage: %s <attribute1> [attribute2...]\n", args[0] );
 		return;
 	}
-	
+
 	for ( int i = 1; i < args.ArgC(); ++i )
 	{
 		TFNavAttributeType spawnAttribute = NameToTFAttribute( args[i] );
@@ -176,7 +176,7 @@ void TF_EditClearAttribute( const CCommand &args )
 		}
 		else
 		{
-			Msg( "Unknown attribute '%s'", args[i] );		
+			Msg( "Unknown attribute '%s'", args[i] );
 		}
 	}
 
@@ -193,11 +193,11 @@ public:
 	{
 		m_attribute = attribute;
 	}
-	
+
 	bool operator() ( CNavArea *baseArea )
 	{
 		CTFNavArea *area = (CTFNavArea *)baseArea;
-		
+
 		// only toggle if dealing with a single selected area
 		if ( TheNavMesh->IsSelectedSetEmpty() && area->HasAttributeTF( m_attribute ) )
 		{
@@ -207,10 +207,10 @@ public:
 		{
 			area->SetAttributeTF( m_attribute );
 		}
-		
+
 		return true;
 	}
-		
+
 	TFNavAttributeType m_attribute;
 };
 
@@ -231,7 +231,7 @@ void TF_EditMarkAttribute( const CCommand &args )
 
 		if ( spawnAttribute != TF_NAV_INVALID )
 		{
-			CTFAttributeToggler toggle( spawnAttribute );	
+			CTFAttributeToggler toggle( spawnAttribute );
 			TheNavMesh->ForAllSelectedAreas( toggle );
 		}
 		else if ( navAttribute != NAV_MESH_INVALID )
@@ -241,7 +241,7 @@ void TF_EditMarkAttribute( const CCommand &args )
 		}
 		else
 		{
-			Msg( "Unknown attribute '%s'", args[i] );	
+			Msg( "Unknown attribute '%s'", args[i] );
 		}
 	}
 
@@ -296,11 +296,10 @@ void TF_EditSelectWithAttribute( const CCommand &args )
 		}
 		else
 		{
-			Msg( "Unknown attribute '%s'", args[1] );		
+			Msg( "Unknown attribute '%s'", args[1] );
 		}
 	}
 
 	Msg( "%d areas added to selection\n", count );
 }
 static ConCommand SelectWithAttribute( "tf_select_with_attribute", TF_EditSelectWithAttribute, "Selects areas with the given attribute.", FCVAR_CHEAT, AttributeAutocomplete );
-

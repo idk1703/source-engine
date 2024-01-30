@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -44,7 +44,7 @@ protected:
 	void UpdateAmmoDisplays();
 	void UpdatePlayerAmmo( C_BasePlayer *player );
 	void UpdateVehicleAmmo( C_BasePlayer *player, IClientVehicle *pVehicle );
-	
+
 private:
 	CHandle< C_BaseCombatWeapon > m_hCurrentActiveWeapon;
 	CHandle< C_BaseEntity > m_hCurrentVehicle;
@@ -69,13 +69,13 @@ CHudAmmo::CHudAmmo( const char *pElementName ) : BaseClass(NULL, "HudAmmo"), CHu
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAmmo::Init( void )
 {
 	m_iAmmo		= -1;
 	m_iAmmo2	= -1;
-	
+
 	m_iconPrimaryAmmo = NULL;
 
 	wchar_t *tempString = g_pVGuiLocalize->Find("#Valve_Hud_AMMO");
@@ -90,7 +90,7 @@ void CHudAmmo::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAmmo::VidInit( void )
 {
@@ -127,7 +127,7 @@ void CHudAmmo::UpdatePlayerAmmo( C_BasePlayer *player )
 	if ( !wpn || !player || !wpn->UsesPrimaryAmmo() )
 	{
 		hudlcd->SetGlobalStat( "(ammo_primary)", "n/a" );
-        hudlcd->SetGlobalStat( "(ammo_secondary)", "n/a" );
+	hudlcd->SetGlobalStat( "(ammo_secondary)", "n/a" );
 
 		SetPaintEnabled(false);
 		SetPaintBackgroundEnabled(false);
@@ -329,7 +329,7 @@ void CHudAmmo::SetAmmo2(int ammo2, bool playAnimation)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: We add an icon into the 
+// Purpose: We add an icon into the
 //-----------------------------------------------------------------------------
 void CHudAmmo::Paint( void )
 {
@@ -345,7 +345,7 @@ void CHudAmmo::Paint( void )
 		// Figure out where we're going to put this
 		int x = text_xpos + ( nLabelWidth - m_iconPrimaryAmmo->Width() ) / 2;
 		int y = text_ypos - ( nLabelHeight + ( m_iconPrimaryAmmo->Height() / 2 ) );
-		
+
 		m_iconPrimaryAmmo->DrawSelf( x, y, GetFgColor() );
 	}
 #endif // HL2MP
@@ -480,18 +480,18 @@ protected:
 				// we've changed to a weapon that uses secondary ammo
 				g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("WeaponUsesSecondaryAmmo");
 			}
-			else 
+			else
 			{
 				// we've changed away from a weapon that uses secondary ammo
 				g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("WeaponDoesNotUseSecondaryAmmo");
 			}
 			m_hCurrentActiveWeapon = wpn;
-			
+
 			// Get the icon we should be displaying
 			m_iconSecondaryAmmo = gWR.GetAmmoIconFromWeapon( m_hCurrentActiveWeapon->GetSecondaryAmmoType() );
 		}
 	}
-	
+
 private:
 	CHandle< C_BaseCombatWeapon > m_hCurrentActiveWeapon;
 	CHudTexture *m_iconSecondaryAmmo;
@@ -499,4 +499,3 @@ private:
 };
 
 DECLARE_HUDELEMENT( CHudSecondaryAmmo );
-

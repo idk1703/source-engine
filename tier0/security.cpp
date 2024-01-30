@@ -25,7 +25,7 @@
 	// Include the key's API:
 	#include "DESKey/algo.h"
 	#include "DESKey/dk2win32.h"
-	
+
 	#pragma comment(lib, "DESKey/algo32.lib" )
 	#pragma comment(lib, "DESKey/dk2win32.lib" )
 #endif
@@ -33,13 +33,13 @@
 bool Plat_VerifyHardwareKey()
 {
 #ifdef REQUIRE_HARDWARE_KEY
-		
+
 	// Ensure that a key with our ID exists:
 	if ( FindDK2( VALVE_DESKEY_ID, NULL ) )
 		return true;
 
 	return false;
-#else 
+#else
 	return true;
 #endif
 }
@@ -48,7 +48,7 @@ bool Plat_VerifyHardwareKeyDriver()
 {
 #ifdef REQUIRE_HARDWARE_KEY
 	// Ensure that the driver is at least installed:
-	return DK2DriverInstalled() != 0; 
+	return DK2DriverInstalled() != 0;
 #else
 	return true;
 #endif
@@ -95,7 +95,7 @@ bool Plat_FastVerifyHardwareKey()
 {
 #ifdef REQUIRE_HARDWARE_KEY
 	static int nIterations = 0;
-	
+
 	nIterations++;
 	if( nIterations > 100 )
 	{
@@ -108,4 +108,3 @@ bool Plat_FastVerifyHardwareKey()
 	return true;
 #endif
 }
-

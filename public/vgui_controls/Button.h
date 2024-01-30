@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -22,7 +22,7 @@ namespace vgui
 {
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class Button : public Label
 {
@@ -88,7 +88,7 @@ public:
 
 	virtual bool RequestInfo(KeyValues *data);
 
-    virtual bool CanBeDefaultButton(void);
+	virtual bool CanBeDefaultButton(void);
 
 	// Set this button to be the button that is accessed by default when the user hits ENTER or SPACE
 	MESSAGE_FUNC_INT( SetAsDefaultButton, "SetAsDefaultButton", state );
@@ -151,7 +151,7 @@ public:
 
 	/* CUSTOM MESSAGE HANDLING
 		"PressButton"	- makes the button act as if it had just been pressed by the user (just like DoClick())
-			input: none		
+			input: none
 	*/
 
 	virtual void OnCursorEntered();
@@ -179,8 +179,8 @@ protected:
 	virtual IBorder *GetBorder(bool depressed, bool armed, bool selected, bool keyfocus);
 
 	virtual void ApplySchemeSettings(IScheme *pScheme);
-	MESSAGE_FUNC_INT( OnSetState, "SetState", state );		
-	
+	MESSAGE_FUNC_INT( OnSetState, "SetState", state );
+
 	virtual void OnMousePressed(MouseCode code);
 	virtual void OnMouseDoublePressed(MouseCode code);
 	virtual void OnMouseReleased(MouseCode code);

@@ -72,7 +72,7 @@ class C_OP_BasicMovement : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_BasicMovement, "Movement Basic", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_BasicMovement ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_BasicMovement )
 	DMXELEMENT_UNPACK_FIELD( "gravity", "0 0 0", Vector, m_Gravity )
 	DMXELEMENT_UNPACK_FIELD( "drag", "0", float, m_fDrag )
 	DMXELEMENT_UNPACK_FIELD( "max constraint passes", "3", int, m_nMaxConstraintPasses )
@@ -136,7 +136,7 @@ void C_OP_BasicMovement::Operate( CParticleCollection *pParticles, float flStren
 			pAccOut->y = accFactorY;
 			pAccOut->z = accFactorZ;
 			pAccOut++;
-		} 
+		}
 		// now, call all force accumulators
 		for(int i=0;i < nAccumulators ; i++ )
 		{
@@ -150,7 +150,7 @@ void C_OP_BasicMovement::Operate( CParticleCollection *pParticles, float flStren
 					pParticles,
 					nblocks,
 					flStrengthOp,
-					pParticles->m_pOperatorContextData + 
+					pParticles->m_pOperatorContextData +
 					pParticles->m_pDef->m_nForceGeneratorsCtxOffsets[i] );
 				END_OP;
 			}
@@ -163,7 +163,7 @@ void C_OP_BasicMovement::Operate( CParticleCollection *pParticles, float flStren
 		pAccOut->z = accFactorZ;
 		// we just have gravity
 	}
-	
+
 	CHECKSYSTEM( pParticles );
 	fltx4 DtSquared = ReplicateX4( pParticles->m_flDt * pParticles->m_flDt );
 	int ctr = pParticles->m_nPaddedActiveParticles;
@@ -173,7 +173,7 @@ void C_OP_BasicMovement::Operate( CParticleCollection *pParticles, float flStren
 		accFactorX = MulSIMD( pAccIn->x, DtSquared );
 		accFactorY = MulSIMD( pAccIn->y, DtSquared );
 		accFactorZ = MulSIMD( pAccIn->z, DtSquared );
-		
+
 		// we will write prev xyz, and swap prev and cur at the end
 		prev_xyz->x = AddSIMD( xyz->x,
 							   AddSIMD( accFactorX, MulSIMD( adj_dt, SubSIMD( xyz->x, prev_xyz->x ) ) ) );
@@ -201,7 +201,7 @@ void C_OP_BasicMovement::Operate( CParticleCollection *pParticles, float flStren
 
 			bConstraintSatisfied[i] = false;
 			pParticles->m_pDef->m_Constraints[i]->SetupConstraintPerFrameData(
-				pParticles, pParticles->m_pOperatorContextData + 
+				pParticles, pParticles->m_pOperatorContextData +
 				pParticles->m_pDef->m_nConstraintsCtxOffsets[i] );
 		}
 
@@ -221,7 +221,7 @@ void C_OP_BasicMovement::Operate( CParticleCollection *pParticles, float flStren
 						START_OP;
 						bool bDidSomething = pOp->EnforceConstraint(
 								0, pParticles->m_nPaddedActiveParticles, pParticles,
-								pParticles->m_pOperatorContextData + 
+								pParticles->m_pOperatorContextData +
 								pParticles->m_pDef->m_nConstraintsCtxOffsets[i],
 								pParticles->m_nActiveParticles );
 						END_OP;
@@ -247,13 +247,13 @@ void C_OP_BasicMovement::Operate( CParticleCollection *pParticles, float flStren
 		{
 			CParticleOperatorInstance *pOp = pParticles->m_pDef->m_Constraints[i];
 			if ( ( bFinalConstraint[i] ) &&
-				 ( pParticles->CheckIfOperatorShouldRun( 
+				 ( pParticles->CheckIfOperatorShouldRun(
 					 pOp ) ) )
 			{
 				START_OP;
 				pOp->EnforceConstraint(
 					0, pParticles->m_nPaddedActiveParticles, pParticles,
-					pParticles->m_pOperatorContextData + 
+					pParticles->m_pOperatorContextData +
 					pParticles->m_pDef->m_nConstraintsCtxOffsets[i],
 					pParticles->m_nActiveParticles );
 				END_OP;
@@ -300,7 +300,7 @@ class C_OP_FadeAndKill : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_FadeAndKill, "Alpha Fade and Decay", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_FadeAndKill ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_FadeAndKill )
 	DMXELEMENT_UNPACK_FIELD( "start_alpha","1", float, m_flStartAlpha )
 	DMXELEMENT_UNPACK_FIELD( "end_alpha","0", float, m_flEndAlpha )
 	DMXELEMENT_UNPACK_FIELD( "start_fade_in_time","0", float, m_flStartFadeInTime )
@@ -320,7 +320,7 @@ void C_OP_FadeAndKill::InitParams( CParticleSystemDefinition *pDef, CDmxElement 
 	{
 		m_flEndFadeOutTime = m_flStartFadeOutTime;
 	}
-	
+
 	if ( m_flStartFadeOutTime < m_flStartFadeInTime )
 	{
 		V_swap( m_flStartFadeInTime, m_flStartFadeOutTime );
@@ -348,7 +348,7 @@ void C_OP_FadeAndKill::Operate( CParticleCollection *pParticles, float flStrengt
 
 	fltx4 fl4CurTime = pParticles->m_fl4CurTime;
 	int nLimit = pParticles->m_nPaddedActiveParticles << 2;
-	
+
 	fltx4 fl4FadeInDuration = ReplicateX4( m_flEndFadeInTime - m_flStartFadeInTime );
 	fltx4 fl4OOFadeInDuration = ReciprocalEstSIMD( fl4FadeInDuration );
 
@@ -361,11 +361,11 @@ void C_OP_FadeAndKill::Operate( CParticleCollection *pParticles, float flStrengt
 		fltx4 fl4ParticleLifeTime = *pLifeDuration;
 		fltx4 fl4KillMask = CmpGeSIMD( fl4Age, *pLifeDuration );	// takes care of lifeduration = 0 div 0
 		fl4Age = MulSIMD( fl4Age, ReciprocalEstSIMD( fl4ParticleLifeTime ) );	// age 0..1
-		fltx4 fl4FadingInMask = AndNotSIMD( fl4KillMask, 
+		fltx4 fl4FadingInMask = AndNotSIMD( fl4KillMask,
 											AndSIMD(
 												CmpLeSIMD( fl4StartFadeInTime, fl4Age ), CmpGtSIMD(fl4EndFadeInTime, fl4Age ) ) );
 		fltx4 fl4FadingOutMask = AndNotSIMD( fl4KillMask,
-										  AndSIMD( 
+										  AndSIMD(
 											  CmpLeSIMD( fl4StartFadeOutTime, fl4Age ), CmpGtSIMD(fl4EndFadeOutTime, fl4Age ) ) );
 		if ( IsAnyNegative( fl4FadingInMask ) )
 		{
@@ -434,7 +434,7 @@ class C_OP_FadeIn : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_FadeIn, "Alpha Fade In Random", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_FadeIn ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_FadeIn )
 	DMXELEMENT_UNPACK_FIELD( "fade in time min",".25", float, m_flFadeInTimeMin )
 	DMXELEMENT_UNPACK_FIELD( "fade in time max",".25", float, m_flFadeInTimeMax )
 	DMXELEMENT_UNPACK_FIELD( "fade in time exponent","1", float, m_flFadeInTimeExp )
@@ -459,13 +459,13 @@ void C_OP_FadeIn::Operate( CParticleCollection *pParticles, float flStrength,  v
 	fltx4 FadeTimeMin = ReplicateX4( m_flFadeInTimeMin );
 	fltx4 FadeTimeWidth = ReplicateX4( m_flFadeInTimeMax - m_flFadeInTimeMin );
 
-	do 
+	do
 	{
 		fltx4 FadeInTime= Pow_FixedPoint_Exponent_SIMD(
 			pParticles->RandomFloat( *pParticleID, nRandomOffset ),
 			nSSEFixedExponent);
 		FadeInTime = AddSIMD( FadeTimeMin, MulSIMD( FadeTimeWidth, FadeInTime ) );
-		
+
 		// Find our life percentage
 		fltx4 flLifeTime = SubSIMD( CurTime, *pCreationTime );
 		if ( m_bProportional )
@@ -475,7 +475,7 @@ void C_OP_FadeIn::Operate( CParticleCollection *pParticles, float flStrength,  v
 						 MinSIMD( Four_Ones,
 								  MulSIMD( flLifeTime, ReciprocalEstSIMD( *pLifeDuration ) ) ) );
 		}
-		
+
 		fltx4 ApplyMask = CmpGtSIMD( FadeInTime, flLifeTime );
 		if ( IsAnyNegative( ApplyMask ) )
 		{
@@ -483,7 +483,7 @@ void C_OP_FadeIn::Operate( CParticleCollection *pParticles, float flStrength,  v
 			fltx4 NewAlpha =
 				SimpleSplineRemapValWithDeltasClamped(
 					flLifeTime, Four_Zeros,
-					FadeInTime, ReciprocalEstSIMD( FadeInTime ), 
+					FadeInTime, ReciprocalEstSIMD( FadeInTime ),
 					Four_Zeros, *pInitialAlpha );
 			*( pAlpha ) = MaskedAssign( ApplyMask, NewAlpha, *( pAlpha ) );
 		}
@@ -542,7 +542,7 @@ class C_OP_FadeOut : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_FadeOut, "Alpha Fade Out Random", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_FadeOut ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_FadeOut )
 	DMXELEMENT_UNPACK_FIELD( "fade out time min",".25", float, m_flFadeOutTimeMin )
 	DMXELEMENT_UNPACK_FIELD( "fade out time max",".25", float, m_flFadeOutTimeMax )
 	DMXELEMENT_UNPACK_FIELD( "fade out time exponent","1", float, m_flFadeOutTimeExp )
@@ -569,7 +569,7 @@ void C_OP_FadeOut::Operate( CParticleCollection *pParticles, float flStrength,  
 	fltx4 FadeTimeMin = ReplicateX4( m_flFadeOutTimeMin );
 	fltx4 FadeTimeWidth = ReplicateX4( m_flFadeOutTimeMax - m_flFadeOutTimeMin );
 
-	do 
+	do
 	{
 		fltx4 fl4FadeOutTime = Pow_FixedPoint_Exponent_SIMD(
 			pParticles->RandomFloat( *pParticleID, nRandomOffset ),
@@ -603,7 +603,7 @@ void C_OP_FadeOut::Operate( CParticleCollection *pParticles, float flStrength,  
 			{
 				NewAlpha = SimpleSplineRemapValWithDeltasClamped(
 					fl4LifeTime, fl4FadeOutTime,
-					fl4Lifespan, ReciprocalEstSIMD( fl4Lifespan ), 
+					fl4Lifespan, ReciprocalEstSIMD( fl4Lifespan ),
 					*pInitialAlpha, SubSIMD ( Four_Zeros, *pInitialAlpha ) );
 				NewAlpha = MaxSIMD( Four_Zeros, NewAlpha );
 			}
@@ -615,7 +615,7 @@ void C_OP_FadeOut::Operate( CParticleCollection *pParticles, float flStrength,  
 				fl4Frac	= SubSIMD( Four_Ones, fl4Frac );
 				NewAlpha = MulSIMD( *pInitialAlpha, fl4Frac );
 			}
-			
+
 			*( pAlpha ) = MaskedAssign( ApplyMask, NewAlpha, *( pAlpha ) );
 		}
 		++pCreationTime;
@@ -681,7 +681,7 @@ BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_OscillateScalar )
 	DMXELEMENT_UNPACK_FIELD( "oscillation multiplier", "2", float, m_flOscMult )
 	DMXELEMENT_UNPACK_FIELD( "oscillation start phase", ".5", float, m_flOscAdd )
 END_PARTICLE_OPERATOR_UNPACK( C_OP_OscillateScalar )
-																    
+
 void C_OP_OscillateScalar::Operate( CParticleCollection *pParticles, float flStrength,  void *pContext ) const
 {
 	CM128AttributeIterator pCreationTime( PARTICLE_ATTRIBUTE_CREATION_TIME, pParticles );
@@ -716,7 +716,7 @@ void C_OP_OscillateScalar::Operate( CParticleCollection *pParticles, float flStr
 	int nCtr = pParticles->m_nPaddedActiveParticles;
 
 
-	do 
+	do
 	{
 		fltx4 fl4LifeDuration = *pLifeDuration;
 		fltx4 fl4GoodMask = CmpGtSIMD( fl4LifeDuration, Four_Zeros );
@@ -727,7 +727,7 @@ void C_OP_OscillateScalar::Operate( CParticleCollection *pParticles, float flStr
 		}
 		else
 		{
-			fl4LifeTime = SubSIMD( fl4CurTime, *pCreationTime ); 
+			fl4LifeTime = SubSIMD( fl4CurTime, *pCreationTime );
 		}
 
 		fltx4 fl4StartTime= pParticles->RandomFloat( *pParticleId, nRandomOffset + 11);
@@ -756,7 +756,7 @@ void C_OP_OscillateScalar::Operate( CParticleCollection *pParticles, float flStr
 			fl4OscVal = AddSIMD ( *pOscField, MulSIMD ( fl4OscMultiplier, SinEst01SIMD( fl4Cos ) ) );
 			if ( m_nField == 7)
 			{
-				*pOscField = MaskedAssign( fl4GoodMask, 
+				*pOscField = MaskedAssign( fl4GoodMask,
 					MaxSIMD( MinSIMD( fl4OscVal, Four_Ones), Four_Zeros ), *pOscField );
 			}
 			else
@@ -769,7 +769,7 @@ void C_OP_OscillateScalar::Operate( CParticleCollection *pParticles, float flStr
 		++pOscField;
 		++pParticleId;
 	} while (--nCtr );
-	
+
 };
 
 
@@ -795,7 +795,7 @@ class C_OP_OscillateVector : public CParticleOperatorInstance
 	}
 
 	virtual void Operate( CParticleCollection *pParticles, float flStrength,  void *pContext ) const;
-	
+
 	Vector	m_RateMin;
 	Vector	m_RateMax;
 	Vector	m_FrequencyMin;
@@ -829,7 +829,7 @@ BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_OscillateVector )
 	DMXELEMENT_UNPACK_FIELD( "oscillation start phase", ".5", float, m_flOscAdd )
 END_PARTICLE_OPERATOR_UNPACK( C_OP_OscillateVector )
 
-														    
+
 void C_OP_OscillateVector::Operate( CParticleCollection *pParticles, float flStrength,  void *pContext ) const
 {
 	CM128AttributeIterator pCreationTime( PARTICLE_ATTRIBUTE_CREATION_TIME, pParticles );
@@ -868,7 +868,7 @@ void C_OP_OscillateVector::Operate( CParticleCollection *pParticles, float flStr
 	int nCtr = pParticles->m_nPaddedActiveParticles;
 
 
-	do 
+	do
 	{
 		fltx4 fl4LifeDuration = *pLifeDuration;
 		fltx4 fl4GoodMask = CmpGtSIMD( fl4LifeDuration, Four_Zeros );
@@ -879,7 +879,7 @@ void C_OP_OscillateVector::Operate( CParticleCollection *pParticles, float flStr
 		}
 		else
 		{
-			fl4LifeTime = SubSIMD( fl4CurTime, *pCreationTime ); 
+			fl4LifeTime = SubSIMD( fl4CurTime, *pCreationTime );
 		}
 
 		fltx4 fl4StartTime= pParticles->RandomFloat( *pParticleId, nRandomOffset + 11);
@@ -895,7 +895,7 @@ void C_OP_OscillateVector::Operate( CParticleCollection *pParticles, float flStr
 			fvFrequency.y = pParticles->RandomFloat( *pParticleId, nRandomOffset + 12 );
 			fvFrequency.z = pParticles->RandomFloat( *pParticleId, nRandomOffset + 15 );
 			fvFrequency.VProduct( fvFrequencyWidth );
-			fvFrequency += fvFrequencyMin; 
+			fvFrequency += fvFrequencyMin;
 
 			FourVectors fvRate;
 			fvRate.x = pParticles->RandomFloat( *pParticleId, nRandomOffset + 3);
@@ -935,11 +935,11 @@ void C_OP_OscillateVector::Operate( CParticleCollection *pParticles, float flStr
 
 			if ( m_nField == 6)
 			{
-				pOscField->x = MaskedAssign( fl4GoodMask, 
+				pOscField->x = MaskedAssign( fl4GoodMask,
 					MaxSIMD( MinSIMD( fvOscVal.x, Four_Ones), Four_Zeros ), fvOutput.x );
-				pOscField->y = MaskedAssign( fl4GoodMask, 
+				pOscField->y = MaskedAssign( fl4GoodMask,
 					MaxSIMD( MinSIMD( fvOscVal.y, Four_Ones), Four_Zeros ), fvOutput.y );
-				pOscField->z = MaskedAssign( fl4GoodMask, 
+				pOscField->z = MaskedAssign( fl4GoodMask,
 					MaxSIMD( MinSIMD( fvOscVal.z, Four_Ones), Four_Zeros ), fvOutput.z );
 			}
 			else
@@ -1056,11 +1056,11 @@ END_PARTICLE_OPERATOR_UNPACK( C_OP_Noise );
 void C_OP_Noise::Operate( CParticleCollection *pParticles, float flStrength, void *pContext ) const
 {
 	CM128AttributeWriteIterator pAttr( m_nFieldOutput, pParticles );
-		
+
 	C4VAttributeIterator pXYZ( PARTICLE_ATTRIBUTE_XYZ, pParticles );
 
 	fltx4 CoordScale=m_fl4NoiseScale;
-	
+
 	float fMin = m_flOutputMin;
 	float fMax = m_flOutputMax;
 
@@ -1120,11 +1120,11 @@ END_PARTICLE_OPERATOR_UNPACK( C_OP_VectorNoise );
 void C_OP_VectorNoise::Operate( CParticleCollection *pParticles, float flStrength, void *pContext ) const
 {
 	C4VAttributeWriteIterator pAttr( m_nFieldOutput, pParticles );
-		
+
 	C4VAttributeIterator pXYZ( PARTICLE_ATTRIBUTE_XYZ, pParticles );
 
 	fltx4 CoordScale = m_fl4NoiseScale;
-	
+
 	// calculate coefficients. noise retuns -1..1
 	fltx4 ValueScaleX = ReplicateX4( 0.5*(m_vecOutputMax.x-m_vecOutputMin.x ) );
 	fltx4 ValueBaseX = ReplicateX4(m_vecOutputMin.x+0.5*( m_vecOutputMax.x-m_vecOutputMin.x ) );
@@ -1179,7 +1179,7 @@ class C_OP_Decay : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_Decay, "Lifespan Decay", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_Decay ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_Decay )
 END_PARTICLE_OPERATOR_UNPACK( C_OP_Decay )
 
 
@@ -1195,11 +1195,11 @@ void C_OP_Decay::Operate( CParticleCollection *pParticles, float flStrength,  vo
 	for ( int i = 0; i < nLimit; i+= 4 )
 	{
 		fltx4 fl4LifeDuration = *pLifeDuration;
-		
+
 		fltx4 fl4KillMask = CmpLeSIMD( fl4LifeDuration, Four_Zeros );
 
 		fltx4 fl4Age = SubSIMD( fl4CurTime, *pCreationTime );
-		
+
 		fl4KillMask = OrSIMD( fl4KillMask, CmpGeSIMD( fl4Age, fl4LifeDuration ) );
 		if ( IsAnyNegative( fl4KillMask ) )
 		{
@@ -1312,7 +1312,7 @@ class C_OP_Cull : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_Cull, "Cull Random", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_Cull ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_Cull )
 	DMXELEMENT_UNPACK_FIELD( "Cull Start Time", "0", float, m_flCullStart )
 	DMXELEMENT_UNPACK_FIELD( "Cull End Time", "1", float, m_flCullEnd )
 	DMXELEMENT_UNPACK_FIELD( "Cull Time Exponent", "1", float, m_flCullExp )
@@ -1326,7 +1326,7 @@ void C_OP_Cull::Operate( CParticleCollection *pParticles, float flStrength,  voi
 	const float *pLifeDuration;
 	float flLifeTime;
 	int nRandomOffset = pParticles->OperatorRandomSampleOffset();
-	
+
 	// FIXME: SSE-ize
 	for ( int i = 0; i < pParticles->m_nActiveParticles; ++i )
 	{
@@ -1410,14 +1410,14 @@ void CGeneralSpin::Operate( CParticleCollection *pParticles, float flStrength,  
 	fltx4 minSpeedRadians = ReplicateX4( dt * fabs( m_fSpinRateMinRadians * 2.0f * M_PI ) );
 
 	fltx4 now = pParticles->m_fl4CurTime;
-	fltx4 SpinRateStopTime = ReplicateX4( m_fSpinRateStopTime ); 
+	fltx4 SpinRateStopTime = ReplicateX4( m_fSpinRateStopTime );
 
 	CM128AttributeIterator pCreationTimeStamp( PARTICLE_ATTRIBUTE_CREATION_TIME, pParticles );
-	
+
 	CM128AttributeIterator pLifeDuration( PARTICLE_ATTRIBUTE_LIFE_DURATION, pParticles );
 
 	CM128AttributeWriteIterator pRot( GetAttributeToSpin(), pParticles );
-		
+
 	int nActive = pParticles->m_nActiveParticles;
 	for( int i=0; i < nActive; i+=4 )
 	{
@@ -1430,9 +1430,9 @@ void CGeneralSpin::Operate( CParticleCollection *pParticles, float flStrength,  
 			SpinFadePerc = MulSIMD( LifeSpan, SpinRateStopTime );
 			OOSpinFadeRate = DivSIMD( Four_Ones,  SpinFadePerc );
 		}
-		
+
 		fltx4 Age = SubSIMD( now, *pCreationTimeStamp );
-		fltx4 RScale = MaxSIMD( Four_Zeros, 
+		fltx4 RScale = MaxSIMD( Four_Zeros,
 								  SubSIMD( Four_Ones, MulSIMD( Age, OOSpinFadeRate ) ) );
 
 		// Cap the rotation at a minimum speed
@@ -1441,13 +1441,13 @@ void CGeneralSpin::Operate( CParticleCollection *pParticles, float flStrength,  
 		deltaRot = OrSIMD( AndSIMD( Tooslow, minSpeedRadians ), AndNotSIMD( Tooslow, deltaRot ) );
 		fltx4 NewRot = AddSIMD( *pRot, deltaRot );
 
-		// now, cap at +/- 2*pi		
+		// now, cap at +/- 2*pi
 		fltx4 Toobig =CmpGeSIMD( NewRot, Pi_2 );
 		fltx4 Toosmall = CmpLeSIMD( NewRot, nPi_2 );
-		
+
 		NewRot = OrSIMD( AndSIMD( Toobig, SubSIMD( NewRot, Pi_2 ) ),
 							AndNotSIMD( Toobig, NewRot ) );
-		
+
 		NewRot = OrSIMD( AndSIMD( Toosmall, AddSIMD( NewRot, Pi_2 ) ),
 							AndNotSIMD( Toosmall, NewRot ) );
 
@@ -1519,7 +1519,7 @@ class C_OP_Spin : public CGeneralSpin
 
 DEFINE_PARTICLE_OPERATOR( C_OP_Spin, "Rotation Spin Roll", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_Spin ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_Spin )
 	DMXELEMENT_UNPACK_FIELD( "spin_rate_degrees", "0", int, m_nSpinRateDegrees )
 	DMXELEMENT_UNPACK_FIELD( "spin_stop_time", "0", float, m_fSpinRateStopTime )
 	DMXELEMENT_UNPACK_FIELD( "spin_rate_min", "0", int, m_nSpinRateMinDegrees )
@@ -1542,7 +1542,7 @@ class C_OP_SpinUpdate : public CSpinUpdateBase
 
 DEFINE_PARTICLE_OPERATOR( C_OP_SpinUpdate, "Rotation Basic", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_SpinUpdate ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_SpinUpdate )
 END_PARTICLE_OPERATOR_UNPACK( C_OP_SpinUpdate )
 
 class C_OP_SpinYaw : public CGeneralSpin
@@ -1557,7 +1557,7 @@ class C_OP_SpinYaw : public CGeneralSpin
 
 DEFINE_PARTICLE_OPERATOR( C_OP_SpinYaw, "Rotation Spin Yaw", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_SpinYaw ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_SpinYaw )
 	DMXELEMENT_UNPACK_FIELD( "yaw_rate_degrees", "0", int, m_nSpinRateDegrees )
 	DMXELEMENT_UNPACK_FIELD( "yaw_stop_time", "0", float, m_fSpinRateStopTime )
 	DMXELEMENT_UNPACK_FIELD( "yaw_rate_min", "0", int, m_nSpinRateMinDegrees )
@@ -1606,7 +1606,7 @@ class C_OP_InterpolateRadius : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_InterpolateRadius, "Radius Scale", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_InterpolateRadius ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_InterpolateRadius )
 	DMXELEMENT_UNPACK_FIELD( "start_time", "0", float, m_flStartTime )
 	DMXELEMENT_UNPACK_FIELD( "end_time", "1", float, m_flEndTime )
 	DMXELEMENT_UNPACK_FIELD( "radius_start_scale", "1", float, m_flStartScale )
@@ -1637,7 +1637,7 @@ void C_OP_InterpolateRadius::Operate( CParticleCollection *pParticles, float flS
 
 	if ( m_bEaseInAndOut )
 	{
-		do 
+		do
 		{
 			fltx4 fl4LifeDuration = *pLifeDuration;
 			fltx4 fl4GoodMask = CmpGtSIMD( fl4LifeDuration, Four_Zeros );
@@ -1649,7 +1649,7 @@ void C_OP_InterpolateRadius::Operate( CParticleCollection *pParticles, float flS
 				fltx4 fl4FadeWindow = MulSIMD( SubSIMD( fl4LifeTime, fl4StartTime ), fl4OOTimeWidth );
 				fl4FadeWindow = AddSIMD( fl4StartScale, MulSIMD( SimpleSpline( fl4FadeWindow ), fl4ScaleWidth ) );
 				// !!speed!! - can anyone really tell the diff between spline and lerp here?
-				*pRadius = MaskedAssign( 
+				*pRadius = MaskedAssign(
 					fl4GoodMask, MulSIMD( *pInitialRadius, fl4FadeWindow ), *pRadius );
 			}
 			++pCreationTime;
@@ -1662,7 +1662,7 @@ void C_OP_InterpolateRadius::Operate( CParticleCollection *pParticles, float flS
 	{
 		if ( m_flBias == 0.5f )        // no bias case
 		{
-			do 
+			do
 			{
 				fltx4 fl4LifeDuration = *pLifeDuration;
 				fltx4 fl4GoodMask = CmpGtSIMD( fl4LifeDuration, Four_Zeros );
@@ -1684,7 +1684,7 @@ void C_OP_InterpolateRadius::Operate( CParticleCollection *pParticles, float flS
 		else
 		{
 			// use rational approximation to bias
-			do 
+			do
 			{
 				fltx4 fl4LifeDuration = *pLifeDuration;
 				fltx4 fl4GoodMask = CmpGtSIMD( fl4LifeDuration, Four_Zeros );
@@ -1701,8 +1701,8 @@ void C_OP_InterpolateRadius::Operate( CParticleCollection *pParticles, float flS
 					fl4FadeWindow = OrSIMD( AndSIMD( fl4GoodMask, fl4EndTime ), AndNotSIMD( fl4GoodMask, fl4EndTime ) );
 #endif
 					fl4FadeWindow = AddSIMD( fl4StartScale, MulSIMD( BiasSIMD( fl4FadeWindow, m_fl4BiasParam ), fl4ScaleWidth ) );
-					*pRadius = MaskedAssign( 
-						fl4GoodMask, 
+					*pRadius = MaskedAssign(
+						fl4GoodMask,
 						MulSIMD( *pInitialRadius, fl4FadeWindow ), *pRadius );
 				}
 				++pCreationTime;
@@ -1778,13 +1778,13 @@ void C_OP_ColorInterpolate::Operate( CParticleCollection *pParticles, float flSt
 
 	if ( m_bEaseInOut )
 	{
-		do 
+		do
 		{
 			fltx4 goodMask = CmpGtSIMD( *pLifeDuration, Four_Zeros );
 			if ( IsAnyNegative( goodMask ) )
 			{
 				fltx4 flLifeTime = DivSIMD( SubSIMD( curTime, *pCreationTime ), *pLifeDuration );
-			
+
 				fltx4 T = MulSIMD( SubSIMD( flLifeTime, lowRange ), ooInRange );
 				T = MinSIMD( Four_Ones, MaxSIMD( Four_Zeros, T ) );
 				T = SimpleSpline( T );
@@ -1801,16 +1801,16 @@ void C_OP_ColorInterpolate::Operate( CParticleCollection *pParticles, float flSt
 	}
 	else
 	{
-		do 
+		do
 		{
 			fltx4 goodMask = CmpGtSIMD( *pLifeDuration, Four_Zeros );
 			if ( IsAnyNegative( goodMask ) )
 			{
 				fltx4 flLifeTime = DivSIMD( SubSIMD( curTime, *pCreationTime ), *pLifeDuration );
-			
+
 				fltx4 T = MulSIMD( SubSIMD( flLifeTime, lowRange ), ooInRange );
 				T = MinSIMD( Four_Ones, MaxSIMD( Four_Zeros, T ) );
-			
+
 				pColor->x = MaskedAssign( goodMask, AddSIMD( pInitialColor->x, MulSIMD( T, SubSIMD( targetR, pInitialColor->x ) ) ), pColor->x );
 				pColor->y = MaskedAssign( goodMask, AddSIMD( pInitialColor->y, MulSIMD( T, SubSIMD( targetG, pInitialColor->y ) ) ), pColor->y );
 				pColor->z = MaskedAssign( goodMask, AddSIMD( pInitialColor->z, MulSIMD( T, SubSIMD( targetB, pInitialColor->z ) ) ), pColor->z );
@@ -1826,7 +1826,7 @@ void C_OP_ColorInterpolate::Operate( CParticleCollection *pParticles, float flSt
 
 DEFINE_PARTICLE_OPERATOR( C_OP_ColorInterpolate, "Color Fade", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_ColorInterpolate ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_ColorInterpolate )
 	DMXELEMENT_UNPACK_FIELD( "color_fade", "255 255 255 255", Color, m_ColorFade )
 	DMXELEMENT_UNPACK_FIELD( "fade_start_time", "0", float, m_flFadeStartTime )
 	DMXELEMENT_UNPACK_FIELD( "fade_end_time", "1", float, m_flFadeEndTime )
@@ -1848,7 +1848,7 @@ class C_OP_PositionLock : public CParticleOperatorInstance
 		Vector m_vPrevPosition;
 		matrix3x4_t m_matPrevTransform;
 	};
-	
+
 	int m_nControlPointNumber;
 	Vector m_vPrevPosition;
 	float m_flStartTime_min;
@@ -1899,7 +1899,7 @@ class C_OP_PositionLock : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_PositionLock , "Movement Lock to Control Point", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_PositionLock ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_PositionLock )
 	DMXELEMENT_UNPACK_FIELD( "control_point_number", "0", int, m_nControlPointNumber )
 	DMXELEMENT_UNPACK_FIELD( "start_fadeout_min", "1", float, m_flStartTime_min )
 	DMXELEMENT_UNPACK_FIELD( "start_fadeout_max", "1", float, m_flStartTime_max )
@@ -1935,7 +1935,7 @@ void C_OP_PositionLock::Operate( CParticleCollection *pParticles, float flStreng
 		Vector vecPrevCPPos = pCtx->m_vPrevPosition;
 
 		const float *pCreationTime;
-		const float *pLifeDuration;	
+		const float *pLifeDuration;
 		pCreationTime = pParticles->GetFloatAttributePtr( PARTICLE_ATTRIBUTE_CREATION_TIME, i );
 		pLifeDuration = pParticles->GetFloatAttributePtr( PARTICLE_ATTRIBUTE_LIFE_DURATION, i );
 		float flLifeTime = *pLifeDuration != 0.0f ? clamp( ( pParticles->m_flCurTime - *pCreationTime ) / ( *pLifeDuration ), 0.0f, 1.0f ) : 0.0f;
@@ -1959,8 +1959,8 @@ void C_OP_PositionLock::Operate( CParticleCollection *pParticles, float flStreng
 		float *xyz_prev = pParticles->GetFloatAttributePtrForWrite( PARTICLE_ATTRIBUTE_PREV_XYZ, i );
 
 		Vector vecParticlePosition, vecParticlePosition_prev ;
-		SetVectorFromAttribute( vecParticlePosition, xyz ); 
-		SetVectorFromAttribute( vecParticlePosition_prev, xyz_prev ); 
+		SetVectorFromAttribute( vecParticlePosition, xyz );
+		SetVectorFromAttribute( vecParticlePosition_prev, xyz_prev );
 		float flDampenAmount = 1;
 		if ( m_flRange != 0 )
 		{
@@ -2042,12 +2042,12 @@ void C_OP_PositionLock::Operate( CParticleCollection *pParticles, float flStreng
 	if ( m_flStartTime_min >= 1.0 )							// always locked on
 	{
 		CM128AttributeIterator pCreationTime( PARTICLE_ATTRIBUTE_CREATION_TIME, pParticles );
-		do 
+		do
 		{
 			fltx4 fl4ParticleAge = SubSIMD( pParticles->m_fl4CurTime, *pCreationTime);
 			fltx4 fl4CreationFrameBias = MinSIMD( fl4ParticleAge, fl4_Dt );
 			fl4CreationFrameBias = MulSIMD( DivSIMD( Four_Ones, fl4_Dt ), fl4CreationFrameBias );
-			FourVectors v4ScaledDelta = v4Delta;			
+			FourVectors v4ScaledDelta = v4Delta;
 			v4ScaledDelta *= fl4CreationFrameBias;
 
 			fltx4 fl4LockStrength = ReplicateX4( flStrength );
@@ -2097,14 +2097,14 @@ void C_OP_PositionLock::Operate( CParticleCollection *pParticles, float flStreng
 		fltx4 fl4EndBias = ReplicateX4( m_flEndTime_min );
 		int nSSEStartExponent = m_flStartTime_exp * 4.0;
 		int nSSEEndExponent = m_flEndTime_exp * 4.0;
-		do 
+		do
 		{
 
 			fltx4 fl4LifeTime = SubSIMD( fl4CurTime, *pCreationTime );
 			fltx4 fl4CreationFrameBias = MinSIMD( fl4LifeTime, fl4_Dt );
 			fl4CreationFrameBias = MulSIMD( DivSIMD( Four_Ones, fl4_Dt ), fl4CreationFrameBias );
 
-			FourVectors v4ScaledDelta = v4Delta;			
+			FourVectors v4ScaledDelta = v4Delta;
 			v4ScaledDelta *= fl4CreationFrameBias;
 
 			fl4LifeTime = MaxSIMD( Four_Zeros, MinSIMD( Four_Ones,
@@ -2114,7 +2114,7 @@ void C_OP_PositionLock::Operate( CParticleCollection *pParticles, float flStreng
 
 			fltx4 fl4EndTime = Pow_FixedPoint_Exponent_SIMD( RandSIMD( nContext ), nSSEEndExponent );
 			fl4EndTime = AddSIMD( fl4EndBias, MulSIMD( fl4EndTime, fl4EndRange ) );
-	   
+
 			// now, determine "lockedness"
 			fltx4 fl4LockScale = DivSIMD( SubSIMD( fl4LifeTime, fl4StartTime ), SubSIMD( fl4EndTime, fl4StartTime ) );
 			fl4LockScale = SubSIMD( Four_Ones, MaxSIMD( Four_Zeros, MinSIMD( Four_Ones, fl4LockScale ) ) );
@@ -2181,12 +2181,12 @@ class C_OP_ControlpointLight : public CParticleOperatorInstance
 	LightDesc_t		m_LightNode1, m_LightNode2, m_LightNode3, m_LightNode4;
 	int				m_nControlPoint1, m_nControlPoint2, m_nControlPoint3, m_nControlPoint4;
 	Vector			m_vecCPOffset1, m_vecCPOffset2, m_vecCPOffset3, m_vecCPOffset4;
-	float			m_LightFiftyDist1, m_LightZeroDist1, m_LightFiftyDist2, m_LightZeroDist2, 
+	float			m_LightFiftyDist1, m_LightZeroDist1, m_LightFiftyDist2, m_LightZeroDist2,
 					m_LightFiftyDist3, m_LightZeroDist3, m_LightFiftyDist4, m_LightZeroDist4;
 	Color			m_LightColor1, m_LightColor2, m_LightColor3, m_LightColor4;
-	bool			m_bLightType1, m_bLightType2, m_bLightType3, m_bLightType4, m_bLightDynamic1, 
-					m_bLightDynamic2, m_bLightDynamic3, m_bLightDynamic4, m_bUseNormal, m_bUseHLambert, 
-					m_bLightActive1, m_bLightActive2, m_bLightActive3, m_bLightActive4, 
+	bool			m_bLightType1, m_bLightType2, m_bLightType3, m_bLightType4, m_bLightDynamic1,
+					m_bLightDynamic2, m_bLightDynamic3, m_bLightDynamic4, m_bUseNormal, m_bUseHLambert,
+					m_bLightActive1, m_bLightActive2, m_bLightActive3, m_bLightActive4,
 					m_bClampLowerRange, m_bClampUpperRange;
 
 	DECLARE_PARTICLE_OPERATOR( C_OP_ControlpointLight );
@@ -2205,10 +2205,10 @@ class C_OP_ControlpointLight : public CParticleOperatorInstance
 	{
 		return PARTICLE_ATTRIBUTE_XYZ_MASK;
 	}
-	
+
 	virtual uint64 GetReadControlPointMask() const
 	{
-		return ( 1ULL << m_nControlPoint1 ) | ( 1ULL << m_nControlPoint2 ) | 
+		return ( 1ULL << m_nControlPoint1 ) | ( 1ULL << m_nControlPoint2 ) |
 			   ( 1ULL << m_nControlPoint3 ) | ( 1ULL << m_nControlPoint4 );
 	}
 
@@ -2339,7 +2339,7 @@ BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_ControlpointLight )
 	DMXELEMENT_UNPACK_FIELD( "Light 1 Dynamic Light", "0", bool, m_bLightDynamic1 )
 	DMXELEMENT_UNPACK_FIELD( "Light 1 Direction", "0 0 0", Vector, m_LightNode1.m_Direction )
 	DMXELEMENT_UNPACK_FIELD( "Light 1 50% Distance", "100", float, m_LightFiftyDist1 )
-	DMXELEMENT_UNPACK_FIELD( "Light 1 0% Distance", "200", float, m_LightZeroDist1 )	
+	DMXELEMENT_UNPACK_FIELD( "Light 1 0% Distance", "200", float, m_LightZeroDist1 )
 	DMXELEMENT_UNPACK_FIELD( "Light 1 Spot Inner Cone", "30.0", float, m_LightNode1.m_Theta )
 	DMXELEMENT_UNPACK_FIELD( "Light 1 Spot Outer Cone", "45.0", float, m_LightNode1.m_Phi )
 	DMXELEMENT_UNPACK_FIELD( "Light 2 Control Point",  "0", int, m_nControlPoint2 )
@@ -2349,7 +2349,7 @@ BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_ControlpointLight )
 	DMXELEMENT_UNPACK_FIELD( "Light 2 Dynamic Light", "0", bool, m_bLightDynamic2 )
 	DMXELEMENT_UNPACK_FIELD( "Light 2 Direction", "0 0 0", Vector, m_LightNode2.m_Direction )
 	DMXELEMENT_UNPACK_FIELD( "Light 2 50% Distance", "100", float, m_LightFiftyDist2 )
-	DMXELEMENT_UNPACK_FIELD( "Light 2 0% Distance", "200", float, m_LightZeroDist2 )	
+	DMXELEMENT_UNPACK_FIELD( "Light 2 0% Distance", "200", float, m_LightZeroDist2 )
 	DMXELEMENT_UNPACK_FIELD( "Light 2 Spot Inner Cone", "30.0", float, m_LightNode2.m_Theta )
 	DMXELEMENT_UNPACK_FIELD( "Light 2 Spot Outer Cone", "45.0", float, m_LightNode2.m_Phi )
 	DMXELEMENT_UNPACK_FIELD( "Light 3 Control Point",  "0", int, m_nControlPoint3 )
@@ -2359,7 +2359,7 @@ BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_ControlpointLight )
 	DMXELEMENT_UNPACK_FIELD( "Light 3 Dynamic Light", "0", bool, m_bLightDynamic3 )
 	DMXELEMENT_UNPACK_FIELD( "Light 3 Direction", "0 0 0", Vector, m_LightNode3.m_Direction )
 	DMXELEMENT_UNPACK_FIELD( "Light 3 50% Distance", "100", float, m_LightFiftyDist3 )
-	DMXELEMENT_UNPACK_FIELD( "Light 3 0% Distance", "200", float, m_LightZeroDist3 )	
+	DMXELEMENT_UNPACK_FIELD( "Light 3 0% Distance", "200", float, m_LightZeroDist3 )
 	DMXELEMENT_UNPACK_FIELD( "Light 3 Spot Inner Cone", "30.0", float, m_LightNode3.m_Theta )
 	DMXELEMENT_UNPACK_FIELD( "Light 3 Spot Outer Cone", "45.0", float, m_LightNode3.m_Phi )
 	DMXELEMENT_UNPACK_FIELD( "Light 4 Control Point",  "0", int, m_nControlPoint4 )
@@ -2369,7 +2369,7 @@ BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_ControlpointLight )
 	DMXELEMENT_UNPACK_FIELD( "Light 4 Dynamic Light", "0", bool, m_bLightDynamic4 )
 	DMXELEMENT_UNPACK_FIELD( "Light 4 Direction", "0 0 0", Vector, m_LightNode4.m_Direction )
 	DMXELEMENT_UNPACK_FIELD( "Light 4 50% Distance", "100", float, m_LightFiftyDist4 )
-	DMXELEMENT_UNPACK_FIELD( "Light 4 0% Distance", "200", float, m_LightZeroDist4 )	
+	DMXELEMENT_UNPACK_FIELD( "Light 4 0% Distance", "200", float, m_LightZeroDist4 )
 	DMXELEMENT_UNPACK_FIELD( "Light 4 Spot Inner Cone", "30.0", float, m_LightNode4.m_Theta )
 	DMXELEMENT_UNPACK_FIELD( "Light 4 Spot Outer Cone", "45.0", float, m_LightNode4.m_Phi )
 	DMXELEMENT_UNPACK_FIELD( "Initial Color Bias", "0.0", float, m_flScale )
@@ -2404,7 +2404,7 @@ void C_OP_ControlpointLight::Operate( CParticleCollection *pParticles, float flS
 	C4VAttributeIterator pInitialColor( PARTICLE_ATTRIBUTE_TINT_RGB, pParticles );
 	C4VAttributeWriteIterator pColor( PARTICLE_ATTRIBUTE_TINT_RGB, pParticles );
 	C4VAttributeIterator pXYZ( PARTICLE_ATTRIBUTE_XYZ, pParticles );
-	
+
 
 	// Set up lighting conditions and attenuation
 	if ( m_bLightDynamic1 )
@@ -2447,10 +2447,10 @@ void C_OP_ControlpointLight::Operate( CParticleCollection *pParticles, float flS
 	LightNode2.RecalculateDerivedValues();
 	LightNode3.RecalculateDerivedValues();
 	LightNode4.RecalculateDerivedValues();
-		
+
 	FourVectors vScale;
 	vScale.DuplicateVector( Vector(m_flScale, m_flScale, m_flScale) );
-		
+
 	if ( m_bUseNormal )
 	{
 		FourVectors vCPPosition1, vCPPosition2, vCPPosition3, vCPPosition4;
@@ -2461,9 +2461,9 @@ void C_OP_ControlpointLight::Operate( CParticleCollection *pParticles, float flS
 		vCPPosition4.DuplicateVector( vecLocation4 );
 
 		int nCtr = pParticles->m_nPaddedActiveParticles;
-		do 
+		do
 		{
-			FourVectors vLighting = vScale;				
+			FourVectors vLighting = vScale;
 			vLighting *= *pInitialColor;
 			FourVectors vNormal = *pXYZ;
 			vNormal -= vCPPosition1;
@@ -2481,7 +2481,7 @@ void C_OP_ControlpointLight::Operate( CParticleCollection *pParticles, float flS
 			vNormal -= vCPPosition4;
 			vNormal.VectorNormalizeFast();
 			LightNode4.ComputeLightAtPoints( *pXYZ, vNormal, vLighting, m_bUseHLambert );
-			
+
 			if ( m_bClampLowerRange	)
 			{
 				FourVectors vInitialClamp = *pInitialColor;
@@ -2508,9 +2508,9 @@ void C_OP_ControlpointLight::Operate( CParticleCollection *pParticles, float flS
 				vLighting.y = MinSIMD( vLighting.y, Four_Ones );
 				vLighting.z = MinSIMD( vLighting.z, Four_Ones );
 			}
-			
+
 			*pColor = vLighting;
-			
+
 			++pColor;
 			++pXYZ;
 			++pInitialColor;
@@ -2519,17 +2519,17 @@ void C_OP_ControlpointLight::Operate( CParticleCollection *pParticles, float flS
 	else
 	{
 		int nCtr = pParticles->m_nPaddedActiveParticles;
-		do 
+		do
 		{
-			FourVectors vLighting = vScale;				
+			FourVectors vLighting = vScale;
 			vLighting *= *pInitialColor;
-			
+
 			LightNode1.ComputeNonincidenceLightAtPoints( *pXYZ, vLighting );
 			LightNode2.ComputeNonincidenceLightAtPoints( *pXYZ, vLighting );
 			LightNode3.ComputeNonincidenceLightAtPoints( *pXYZ, vLighting );
 			LightNode4.ComputeNonincidenceLightAtPoints( *pXYZ, vLighting );
-			
-			
+
+
 			if ( m_bClampLowerRange	)
 			{
 				FourVectors vInitialClamp = *pInitialColor;
@@ -2556,10 +2556,10 @@ void C_OP_ControlpointLight::Operate( CParticleCollection *pParticles, float flS
 				vLighting.y = MinSIMD( vLighting.y, Four_Ones );
 				vLighting.z = MinSIMD( vLighting.z, Four_Ones );
 			}
-			
-			
+
+
 			*pColor = vLighting;
-			
+
 			++pColor;
 			++pXYZ;
 			++pInitialColor;
@@ -2572,7 +2572,7 @@ void C_OP_ControlpointLight::Operate( CParticleCollection *pParticles, float flS
 // Render visualization
 //-----------------------------------------------------------------------------
 void C_OP_ControlpointLight::Render( CParticleCollection *pParticles ) const
-{					   
+{
 	Vector vecOrigin1 = pParticles->GetControlPointAtCurrentTime( m_nControlPoint1 );
 	vecOrigin1 += m_vecCPOffset1;
 	Vector vecOrigin2 = pParticles->GetControlPointAtCurrentTime( m_nControlPoint2 );
@@ -2608,7 +2608,7 @@ void C_OP_ControlpointLight::Render( CParticleCollection *pParticles ) const
 		RenderWireframeSphere( vecOrigin1, m_LightZeroDist1, 16, 8, LightColor1Outer, false );
 	}
 	if ( m_bLightActive2 )
-	{	
+	{
 		RenderWireframeSphere( vecOrigin2, m_LightFiftyDist2, 16, 8, m_LightColor2, false );
 		RenderWireframeSphere( vecOrigin2, m_LightZeroDist2, 16, 8, LightColor2Outer, false );
 	}
@@ -2622,7 +2622,7 @@ void C_OP_ControlpointLight::Render( CParticleCollection *pParticles ) const
 		RenderWireframeSphere( vecOrigin4, m_LightFiftyDist4, 16, 8, m_LightColor4, false );
 		RenderWireframeSphere( vecOrigin4, m_LightZeroDist4, 16, 8, LightColor4Outer, false );
 	}
-	
+
 }
 
 
@@ -2653,7 +2653,7 @@ class C_OP_SetChildControlPoints : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_SetChildControlPoints, "Set child control points from particle positions", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_SetChildControlPoints ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_SetChildControlPoints )
 	DMXELEMENT_UNPACK_FIELD( "Group ID to affect", "0", int, m_nChildGroupID )
 	DMXELEMENT_UNPACK_FIELD( "First control point to set", "0", int, m_nFirstControlPoint )
 	DMXELEMENT_UNPACK_FIELD( "# of control points to set", "1", int, m_nNumControlPoints )
@@ -2674,7 +2674,7 @@ void C_OP_SetChildControlPoints::Operate( CParticleCollection *pParticles, float
 			{
 				for( int p=0; p < nToSet; p++ )
 				{
-					const float *pXYZ = pParticles->GetFloatAttributePtr( 
+					const float *pXYZ = pParticles->GetFloatAttributePtr(
 						PARTICLE_ATTRIBUTE_XYZ, p + m_nFirstSourcePoint );
 					Vector cPnt( pXYZ[0], pXYZ[4], pXYZ[8] );
 					pChild->SetControlPoint( p+nFirst, cPnt );
@@ -2819,7 +2819,7 @@ class C_OP_DampenToCP : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_DampenToCP , "Movement Dampen Relative to Control Point", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_DampenToCP ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_DampenToCP )
 DMXELEMENT_UNPACK_FIELD( "control_point_number", "0", int, m_nControlPointNumber )
 DMXELEMENT_UNPACK_FIELD( "falloff range", "100", float, m_flRange )
 DMXELEMENT_UNPACK_FIELD( "dampen scale", "1", float, m_flScale )
@@ -2840,8 +2840,8 @@ void C_OP_DampenToCP::Operate( CParticleCollection *pParticles, float flStrength
 
 		Vector vecParticlePosition, vecParticlePosition_prev, vParticleDelta ;
 
-		SetVectorFromAttribute( vecParticlePosition, xyz ); 
-		SetVectorFromAttribute( vecParticlePosition_prev, xyz_prev ); 
+		SetVectorFromAttribute( vecParticlePosition, xyz );
+		SetVectorFromAttribute( vecParticlePosition_prev, xyz_prev );
 		Vector ofs;
 		ofs = vecParticlePosition - vecControlPoint;
 		float flDistance = ofs.Length();
@@ -2855,12 +2855,12 @@ void C_OP_DampenToCP::Operate( CParticleCollection *pParticles, float flStrength
 			flDampenAmount = flDistance  / m_flRange;
 			flDampenAmount = pow( flDampenAmount, m_flScale);
 		}
-		
+
 		vParticleDelta = vecParticlePosition - vecParticlePosition_prev;
 		Vector vParticleDampened = vParticleDelta * flDampenAmount;
 		vecParticlePosition = vecParticlePosition_prev + vParticleDampened;
 		Vector vecParticlePositionOrg;
-		SetVectorFromAttribute( vecParticlePositionOrg, xyz ); 
+		SetVectorFromAttribute( vecParticlePositionOrg, xyz );
 		VectorLerp (vecParticlePositionOrg, vecParticlePosition, flStrength, vecParticlePosition );
 		SetVectorAttribute( xyz, vecParticlePosition );
 	}
@@ -3073,7 +3073,7 @@ void C_OP_DistanceToCP::Operate( CParticleCollection *pParticles, float flStreng
 	{
 		Vector vecPosition2;
 		const float *pXYZ = pParticles->GetFloatAttributePtr(PARTICLE_ATTRIBUTE_XYZ, i );
-		vecPosition2 = Vector(pXYZ[0], pXYZ[4], pXYZ[8]); 
+		vecPosition2 = Vector(pXYZ[0], pXYZ[4], pXYZ[8]);
 		Vector vecDelta = vecControlPoint1 - vecPosition2;
 		float flDistance = vecDelta.Length();
 		if ( m_bActiveRange && ( flDistance < m_flInputMin || flDistance > m_flInputMax ) )
@@ -3178,7 +3178,7 @@ void C_OP_SetControlPointToPlayer::Operate( CParticleCollection *pParticles, flo
 class C_OP_PerParticleEmitter : public CParticleOperatorInstance
 {
 	DECLARE_PARTICLE_OPERATOR( C_OP_PerParticleEmitter );
-	
+
 	struct C_OP_PerParticleEmitterContext_t
 	{
 		float	m_flTotalActualParticlesSoFar;
@@ -3249,7 +3249,7 @@ class C_OP_PerParticleEmitter : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_PerParticleEmitter, "Per Particle Emitter", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_PerParticleEmitter ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_PerParticleEmitter )
 DMXELEMENT_UNPACK_FIELD( "Group ID to affect", "1", int, m_nChildGroupID )
 DMXELEMENT_UNPACK_FIELD( "Inherit Velocity", "0", int, m_bInheritVelocity )
 DMXELEMENT_UNPACK_FIELD( "Emission Rate", "100", float, m_flEmitRate )
@@ -3270,14 +3270,14 @@ void C_OP_PerParticleEmitter::Operate( CParticleCollection *pParticles, float fl
 				C_OP_PerParticleEmitterContext_t *pCtx=reinterpret_cast<C_OP_PerParticleEmitterContext_t *>( pContext );
 				const float *pXYZ = pParticles->GetFloatAttributePtr(
 					PARTICLE_ATTRIBUTE_XYZ, i );
-				const float *pXYZ_Prev = pParticles->GetFloatAttributePtr( 
+				const float *pXYZ_Prev = pParticles->GetFloatAttributePtr(
 					PARTICLE_ATTRIBUTE_PREV_XYZ, i );
 				Vector vecParticlePosition, vecParticlePosition_prev, vParticleDelta ;
 
-				vecParticlePosition = Vector ( pXYZ[0], pXYZ[4], pXYZ[8] ); 
-				vecParticlePosition_prev = Vector ( pXYZ_Prev[0], pXYZ_Prev[4], pXYZ_Prev[8] );  
+				vecParticlePosition = Vector ( pXYZ[0], pXYZ[4], pXYZ[8] );
+				vecParticlePosition_prev = Vector ( pXYZ_Prev[0], pXYZ_Prev[4], pXYZ_Prev[8] );
 				vParticleDelta = vecParticlePosition - vecParticlePosition_prev;
-	
+
 				float flEmissionRate = m_flEmitRate * flStrength;
 
 				if ( m_flVelocityScale != 0.0f )
@@ -3351,7 +3351,7 @@ void C_OP_PerParticleEmitter::Operate( CParticleCollection *pParticles, float fl
 				if ( nParticlesEmitted != pChild->m_nActiveParticles )
 				{
 
-					uint32 nInittedMask = ( PARTICLE_ATTRIBUTE_XYZ_MASK | PARTICLE_ATTRIBUTE_PREV_XYZ_MASK | PARTICLE_ATTRIBUTE_CREATION_TIME_MASK );					
+					uint32 nInittedMask = ( PARTICLE_ATTRIBUTE_XYZ_MASK | PARTICLE_ATTRIBUTE_PREV_XYZ_MASK | PARTICLE_ATTRIBUTE_CREATION_TIME_MASK );
 					// init newly emitted particles
 					pChild->InitializeNewParticles( nParticlesEmitted, pChild->m_nActiveParticles - nParticlesEmitted, nInittedMask );
 					//CHECKSYSTEM( this );
@@ -3374,7 +3374,7 @@ void C_OP_PerParticleEmitter::Operate( CParticleCollection *pParticles, float fl
 					vecMoveStep += vecMoveStampStep;
 					if ( m_bInheritVelocity )
 					{
-						*pXYZ_Prev_Child = *pXYZ_Prev; 
+						*pXYZ_Prev_Child = *pXYZ_Prev;
 					}
 					else
 					{
@@ -3427,7 +3427,7 @@ class C_OP_LockToBone : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_LockToBone , "Movement Lock to Bone", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_LockToBone ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_LockToBone )
 	DMXELEMENT_UNPACK_FIELD( "control_point_number", "0", int, m_nControlPointNumber )
 	DMXELEMENT_UNPACK_FIELD( "lifetime fade start", "0", float, m_flLifeTimeFadeStart )
 	DMXELEMENT_UNPACK_FIELD( "lifetime fade end", "0", float, m_flLifeTimeFadeEnd )
@@ -3452,7 +3452,7 @@ void C_OP_LockToBone::Operate( CParticleCollection *pParticles, float flStrength
 			const float *pUVW = pParticles->GetFloatAttributePtr( PARTICLE_ATTRIBUTE_HITBOX_RELATIVE_XYZ, i );
 			const int nBoxIndex = *pParticles->GetIntAttributePtr( PARTICLE_ATTRIBUTE_HITBOX_INDEX, i );
 			float const *pCreationTime = pParticles->GetFloatAttributePtr( PARTICLE_ATTRIBUTE_CREATION_TIME, i );
-			
+
 			float flAge = pParticles->m_flCurTime -*pCreationTime;
 
 			if ( flAge < flAgeThreshold )
@@ -3470,7 +3470,7 @@ void C_OP_LockToBone::Operate( CParticleCollection *pParticles, float flStrength
 					vecParticlePosition.z = Lerp( pUVW[8], hb.m_vecBoxMins.z, hb.m_vecBoxMaxes.z );
 					Vector vecWorldPosition;
 					VectorTransform( vecParticlePosition, hb.m_Transform, vecWorldPosition );
-				
+
 					Vector vecPrevParticlePosition;
 					ModelHitBoxInfo_t phb = pParticles->m_ControlPointHitBoxes[m_nControlPointNumber].m_pPrevBoxes[ nBoxIndex ];
 					vecPrevParticlePosition.x = Lerp( pUVW[0], phb.m_vecBoxMins.x, phb.m_vecBoxMaxes.x );
@@ -3478,17 +3478,17 @@ void C_OP_LockToBone::Operate( CParticleCollection *pParticles, float flStrength
 					vecPrevParticlePosition.z = Lerp( pUVW[8], phb.m_vecBoxMins.z, phb.m_vecBoxMaxes.z );
 					Vector vecPrevWorldPosition;
 					VectorTransform( vecPrevParticlePosition, phb.m_Transform, vecPrevWorldPosition );
-				
+
 					Vector Delta = vecWorldPosition-vecPrevWorldPosition;
-				
+
 					if ( flAge > m_flLifeTimeFadeStart )
 						Delta *= flStrength * ( 1.0- ( ( flAge - m_flLifeTimeFadeStart ) * flIScale ) );
-				
+
 					Vector xyz;
 					SetVectorFromAttribute( xyz, pXYZ );
 					xyz += Delta;
 					SetVectorAttribute( pXYZ, xyz );
-				
+
 					Vector prevxyz;
 					SetVectorFromAttribute( prevxyz, pPrevXYZ );
 					prevxyz += Delta;
@@ -3498,7 +3498,7 @@ void C_OP_LockToBone::Operate( CParticleCollection *pParticles, float flStrength
 		}
 	}
 };
-	
+
 //-----------------------------------------------------------------------------
 // Plane Cull Operator - cull particles on the "wrong" side of a plane
 //-----------------------------------------------------------------------------
@@ -3531,7 +3531,7 @@ class C_OP_PlaneCull : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_PlaneCull, "Cull when crossing plane", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_PlaneCull ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_PlaneCull )
 	DMXELEMENT_UNPACK_FIELD( "Control Point for point on plane", "0", int, m_nPlaneControlPoint )
 	DMXELEMENT_UNPACK_FIELD( "Cull plane offset", "0", float, m_flPlaneOffset )
 	DMXELEMENT_UNPACK_FIELD( "Plane Normal", "0 0 1", Vector, m_vecPlaneDirection )
@@ -3551,7 +3551,7 @@ void C_OP_PlaneCull::Operate( CParticleCollection *pParticles, float flStrength,
 	FourVectors ofs = v4N;
 	ofs *= ReplicateX4( m_flPlaneOffset );
 	v4Pnt -= ofs;
-	
+
 	for ( int i = 0; i < nLimit; i+= 4 )
 	{
 		FourVectors f4PlaneRel = (*pXYZ );
@@ -3569,7 +3569,7 @@ void C_OP_PlaneCull::Operate( CParticleCollection *pParticles, float flStrength,
 				pParticles->KillParticle( i + 2 );
 			if ( nMask & 8 )
 				pParticles->KillParticle( i + 3 );
-			
+
 		}
 		++pXYZ;
 	}
@@ -3607,7 +3607,7 @@ class C_OP_ModelCull : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_ModelCull , "Cull relative to model", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_ModelCull ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_ModelCull )
 DMXELEMENT_UNPACK_FIELD( "control_point_number", "0", int, m_nControlPointNumber )
 DMXELEMENT_UNPACK_FIELD( "use only bounding box", "0", bool, m_bBoundBox )
 DMXELEMENT_UNPACK_FIELD( "cull outside instead of inside", "0", bool, m_bCullOutside )
@@ -3739,7 +3739,7 @@ class C_OP_VelocityMatchingForce : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_VelocityMatchingForce , "Movement Match Particle Velocities", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_VelocityMatchingForce ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_VelocityMatchingForce )
 DMXELEMENT_UNPACK_FIELD( "Direction Matching Strength", "0.25", float, m_flDirScale )
 DMXELEMENT_UNPACK_FIELD( "Speed Matching Strength", "0.25", float, m_flSpdScale )
 DMXELEMENT_UNPACK_FIELD( "Control Point to Broadcast Speed and Direction To", "-1", int, m_nCPBroadcast )
@@ -3820,7 +3820,7 @@ class C_OP_OrientTo2dDirection : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_OrientTo2dDirection , "Rotation Orient to 2D Direction", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_OrientTo2dDirection ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_OrientTo2dDirection )
 DMXELEMENT_UNPACK_FIELD( "Rotation Offset", "0", float, m_flRotOffset )
 DMXELEMENT_UNPACK_FIELD( "Spin Strength", "1", float, m_flSpinStrength )
 END_PARTICLE_OPERATOR_UNPACK( C_OP_OrientTo2dDirection )
@@ -3896,7 +3896,7 @@ class C_OP_Orient2DRelToCP : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_Orient2DRelToCP , "Rotation Orient Relative to CP", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_Orient2DRelToCP ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_Orient2DRelToCP )
 DMXELEMENT_UNPACK_FIELD( "Rotation Offset", "0", float, m_flRotOffset )
 DMXELEMENT_UNPACK_FIELD( "Spin Strength", "1", float, m_flSpinStrength )
 DMXELEMENT_UNPACK_FIELD( "Control Point", "0", int, m_nCP )
@@ -3962,7 +3962,7 @@ class C_OP_MaxVelocity : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_MaxVelocity , "Movement Max Velocity", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_MaxVelocity ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_MaxVelocity )
 DMXELEMENT_UNPACK_FIELD( "Maximum Velocity", "0", float, m_flMaxVelocity )
 END_PARTICLE_OPERATOR_UNPACK( C_OP_MaxVelocity )
 
@@ -4058,7 +4058,7 @@ class C_OP_MaintainSequentialPath : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_MaintainSequentialPath, "Movement Maintain Position Along Path", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_MaintainSequentialPath ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_MaintainSequentialPath )
 	DMXELEMENT_UNPACK_FIELD( "maximum distance", "0", float, m_fMaxDistance )
 	DMXELEMENT_UNPACK_FIELD( "bulge", "0", float, m_PathParams.m_flBulge )
 	DMXELEMENT_UNPACK_FIELD( "start control point number", "0", int, m_PathParams.m_nStartControlPointNumber )
@@ -4122,7 +4122,7 @@ void C_OP_MaintainSequentialPath::Operate( CParticleCollection *pParticles, floa
 		vecPXYZ -= Pnt;
 
 		float flXYZOffset = min (vecXYZ.Length(), m_fMaxDistance );
-		float flPXYZOffset = min (vecPXYZ.Length(), m_fMaxDistance ); 
+		float flPXYZOffset = min (vecPXYZ.Length(), m_fMaxDistance );
 
 		VectorNormalizeFast( vecXYZ );
 		vecXYZ *= flXYZOffset * fl_Cohesion;
@@ -4239,7 +4239,7 @@ void C_OP_RemapDotProductToScalar::Operate( CParticleCollection *pParticles, flo
 			vecPXYZ.x = pxyz[0];
 			vecPXYZ.y = pxyz[4];
 			vecPXYZ.z = pxyz[8];
-			
+
 			vecInput1 = vecXYZ - vecPXYZ;
 			VectorNormalizeFast( vecInput1 );
 
@@ -4298,7 +4298,7 @@ class C_OP_RemapCPtoScalar : public CParticleOperatorInstance
 
 	virtual void Operate( CParticleCollection *pParticles, float flStrength,  void *pContext ) const;
 
-	int		m_nCPInput;                                                             
+	int		m_nCPInput;
 	int		m_nFieldOutput;
 	int		m_nField;
 	float	m_flInputMin;
@@ -4345,7 +4345,7 @@ void C_OP_RemapCPtoScalar::Operate( CParticleCollection *pParticles, float flStr
 	{
 		pCreationTime = pParticles->GetFloatAttributePtr( PARTICLE_ATTRIBUTE_CREATION_TIME, i );
 		// using raw creation time to map to emitter lifespan
-		float flLifeTime = *pCreationTime;  
+		float flLifeTime = *pCreationTime;
 
 		// only use within start/end time frame
 		if ( ( ( flLifeTime < m_flStartTime ) || ( flLifeTime >= m_flEndTime ) ) && ( ( m_flStartTime != -1.0f) && ( m_flEndTime != -1.0f) ) )
@@ -4407,7 +4407,7 @@ class C_OP_MovementRotateParticleAroundAxis : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_MovementRotateParticleAroundAxis , "Movement Rotate Particle Around Axis", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_MovementRotateParticleAroundAxis ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_MovementRotateParticleAroundAxis )
 DMXELEMENT_UNPACK_FIELD( "Rotation Axis", "0 0 1", Vector, m_vecRotAxis )
 DMXELEMENT_UNPACK_FIELD( "Rotation Rate", "180", float, m_flRotRate )
 DMXELEMENT_UNPACK_FIELD( "Control Point", "0", int, m_nCP )
@@ -4442,7 +4442,7 @@ void C_OP_MovementRotateParticleAroundAxis::Operate( CParticleCollection *pParti
 	C4VAttributeWriteIterator pPrevXYZ( PARTICLE_ATTRIBUTE_PREV_XYZ, pParticles );
 
 	int nCtr = pParticles->m_nPaddedActiveParticles;
-	do 
+	do
 	{
 		FourVectors fvCurPos = *pXYZ;
 		fvCurPos -= fvCPPos;
@@ -4468,7 +4468,7 @@ void C_OP_MovementRotateParticleAroundAxis::Operate( CParticleCollection *pParti
 };
 
 //-----------------------------------------------------------------------------
-// Remap Speed to CP Operator  
+// Remap Speed to CP Operator
 //-----------------------------------------------------------------------------
 class C_OP_RemapSpeedtoCP : public CParticleOperatorInstance
 {
@@ -4551,25 +4551,25 @@ void AddBuiltInParticleOperators( void )
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_Spin );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_SpinUpdate );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_SpinYaw );
-	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_OrientTo2dDirection );	
-	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_Orient2DRelToCP );	
+	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_OrientTo2dDirection );
+	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_Orient2DRelToCP );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_InterpolateRadius );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_ColorInterpolate );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_OscillateScalar );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_OscillateVector );
-	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_DampenToCP );	
+	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_DampenToCP );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_PositionLock );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_LockToBone );
-	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_DistanceBetweenCPs );		
-	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_DistanceToCP );		
+	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_DistanceBetweenCPs );
+	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_DistanceToCP );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_SetControlPointToPlayer );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_SetControlPointToCenter );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_SetChildControlPoints );
-	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_SetControlPointPositions );	
-	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_PlaneCull );	
+	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_SetControlPointPositions );
+	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_PlaneCull );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_ModelCull );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_Cull );
-	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_ControlpointLight ); 	
+	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_ControlpointLight );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_RemapScalar );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_Noise );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_VectorNoise );
@@ -4577,8 +4577,7 @@ void AddBuiltInParticleOperators( void )
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_MaxVelocity );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_MaintainSequentialPath );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_RemapDotProductToScalar );
-	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_RemapCPtoScalar );		
-	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_MovementRotateParticleAroundAxis );		
-	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_RemapSpeedtoCP );		
+	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_RemapCPtoScalar );
+	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_MovementRotateParticleAroundAxis );
+	REGISTER_PARTICLE_OPERATOR( FUNCTION_OPERATOR, C_OP_RemapSpeedtoCP );
 }
-

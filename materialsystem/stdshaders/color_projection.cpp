@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -139,7 +139,7 @@ Vector blindMK( Vector vColor )
 	Vector d_rgb = rgb_from_xyz( d_xyz );
 
 	Vector adj_rgb;
-	
+
 	adj_rgb.Init();
 
 	if ( d_rgb.x!=0 )

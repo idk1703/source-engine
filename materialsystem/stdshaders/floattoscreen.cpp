@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,7 +25,7 @@ BEGIN_VS_SHADER_FLAGS( floattoscreen, "Help for floattoscreen", SHADER_NOT_EDITA
 			LoadTexture( FBTEXTURE );
 		}
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		// Requires DX9 + above

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -35,7 +35,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEShowLine::C_TEShowLine( void )
 {
@@ -43,7 +43,7 @@ C_TEShowLine::C_TEShowLine( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEShowLine::~C_TEShowLine( void )
 {
@@ -51,8 +51,8 @@ C_TEShowLine::~C_TEShowLine( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEShowLine::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -72,7 +72,7 @@ void C_TEShowLine::PostDataUpdate( DataUpdateType_t updateType )
 	CSmartPtr<CTEParticleRenderer> pRen = CTEParticleRenderer::Create( "TEShowLine", m_vecOrigin );
 	if( !pRen )
 		return;
-	
+
 	while (len > 0)
 	{
 		len -= dec;
@@ -83,13 +83,13 @@ void C_TEShowLine::PostDataUpdate( DataUpdateType_t updateType )
 			p->m_Velocity.Init();
 
 			pRen->SetParticleLifetime(p, 30);
-			
+
 			p->SetColor(0, 1, 1);
 			p->SetAlpha(1);
 			pRen->SetParticleType(p, pt_static);
 
 			p->m_Pos = m_vecOrigin;
-			
+
 			m_vecOrigin += vec;
 		}
 	}

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -42,7 +42,7 @@ public:
 	virtual void SelectWeaponSlot( int iSlot );
 
 	virtual C_BaseCombatWeapon	*GetSelectedWeapon( void )
-	{ 
+	{
 		return m_hSelectedWeapon;
 	}
 
@@ -57,7 +57,7 @@ protected:
 	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
 	virtual bool IsWeaponSelectable()
-	{ 
+	{
 		if (IsInSelectionMode())
 			return true;
 
@@ -70,8 +70,8 @@ private:
 
 	void FastWeaponSwitch( int iWeaponSlot );
 
-	virtual	void SetSelectedWeapon( C_BaseCombatWeapon *pWeapon ) 
-	{ 
+	virtual	void SetSelectedWeapon( C_BaseCombatWeapon *pWeapon )
+	{
 		m_hSelectedWeapon = pWeapon;
 	}
 
@@ -189,7 +189,7 @@ bool CHudWeaponSelection::ShouldDraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponSelection::LevelInit()
 {
@@ -309,7 +309,7 @@ void CHudWeaponSelection::Paint()
 					{
 						for (wchar_t *pch = text; *pch != 0; pch++)
 						{
-							if (*pch == '\n') 
+							if (*pch == '\n')
 							{
 								// newline character, drop to the next line
 								if (slen > maxslen)

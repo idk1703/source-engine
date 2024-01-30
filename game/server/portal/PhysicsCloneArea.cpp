@@ -18,8 +18,8 @@ LINK_ENTITY_TO_CLASS( physicsclonearea, CPhysicsCloneArea );
 
 #define PHYSICSCLONEAREASCALE 4.0f
 
-const Vector CPhysicsCloneArea::vLocalMins( 3.0f, 
-										   -PORTAL_HALF_WIDTH * PHYSICSCLONEAREASCALE, 
+const Vector CPhysicsCloneArea::vLocalMins( 3.0f,
+										   -PORTAL_HALF_WIDTH * PHYSICSCLONEAREASCALE,
 										   -PORTAL_HALF_HEIGHT * PHYSICSCLONEAREASCALE );
 const Vector CPhysicsCloneArea::vLocalMaxs( PORTAL_HALF_HEIGHT * PHYSICSCLONEAREASCALE,  //x is the forward which is fairly thin for portals, replacing with halfheight
 											PORTAL_HALF_WIDTH * PHYSICSCLONEAREASCALE,
@@ -52,7 +52,7 @@ void CPhysicsCloneArea::Touch( CBaseEntity *pOther )
 		return;
 
 	//TODO: Planar checks to see if it's a better idea to reclone/unclone
-	
+
 }
 
 void CPhysicsCloneArea::EndTouch( CBaseEntity *pOther )
@@ -96,7 +96,7 @@ void CPhysicsCloneArea::Activate( void )
 }
 
 int CPhysicsCloneArea::ObjectCaps( void )
-{ 
+{
 	return BaseClass::ObjectCaps() | FCAP_DONT_SAVE; //don't save this entity in any way, we naively recreate them
 }
 
@@ -148,7 +148,7 @@ void CPhysicsCloneArea::CloneNearbyEntities( void )
 	ptOBBStart += vForward * vLocalMins.x;
 	ptOBBStart += vRight * vLocalMins.y;
 	ptOBBStart += vUp * vLocalMins.z;
-	
+
 
 	vForward *= vLocalMaxs.x - vLocalMins.x;
 	vRight *= vLocalMaxs.y - vLocalMins.y;
@@ -172,19 +172,19 @@ void CPhysicsCloneArea::CloneNearbyEntities( void )
 		if( ptTest.y > vAABBMaxs.y ) vAABBMaxs.y = ptTest.y;
 		if( ptTest.z > vAABBMaxs.z ) vAABBMaxs.z = ptTest.z;
 	}
-	
+
 
 	/*{
 		Vector ptAABBCenter = (vAABBMins + vAABBMaxs) * 0.5f;
 		Vector vAABBExtent = (vAABBMaxs - vAABBMins) * 0.5f;
 		NDebugOverlay::Box( ptAABBCenter, -vAABBExtent, vAABBExtent, 0, 0, 255, 128, 10.0f );
 	}*/
-	
+
 
 	int count = UTIL_EntitiesInBox( pList, 1024, vAABBMins, vAABBMaxs, 0 );
 	trace_t tr;
 	UTIL_ClearTrace( tr );
-	
+
 
 	//Iterate over all the possible targets
 	for ( int i = 0; i < count; i++ )
@@ -201,13 +201,13 @@ void CPhysicsCloneArea::CloneNearbyEntities( void )
 				Vector ptEntityCenter = pEntCollision->GetCollisionOrigin();
 
 				//double check intersection at the OBB vs OBB level, we don't want to affect large piles of physics objects if we don't have to, it gets slow
-				if( IsOBBIntersectingOBB( ptOrigin, qAngles, vLocalMins, vLocalMaxs, 
+				if( IsOBBIntersectingOBB( ptOrigin, qAngles, vLocalMins, vLocalMaxs,
 					ptEntityCenter, pEntCollision->GetCollisionAngles(), pEntCollision->OBBMins(), pEntCollision->OBBMaxs() ) )
 				{
 					tr.endpos = (ptOrigin + ptEntityCenter) * 0.5;
 					PhysicsMarkEntitiesAsTouching( pEntity, tr );
 					//StartTouch( pEntity );
-					
+
 					//pEntity->WakeRestingObjects();
 					//pPhysicsObject->Wake();
 				}
@@ -249,4 +249,3 @@ CPhysicsCloneArea *CPhysicsCloneArea::CreatePhysicsCloneArea( CProp_Portal *pFol
 
 	return pCloneArea;
 }
-

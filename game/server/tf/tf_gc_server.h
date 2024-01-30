@@ -261,7 +261,7 @@ public:
 	void GiveXPRewardToPlayerForAction( CSteamID steamID, CMsgTFXPSource::XPSourceType eType, int nCount );
 	// Directly assign the value
 	void GiveXPDirectly( CSteamID steamID, CMsgTFXPSource::XPSourceType eType, int nAmount, bool bCanAwardBonusXP = true );
-	// Give an XP bonus that increases 
+	// Give an XP bonus that increases
 	void GiveXPBonus( CSteamID steamID,
 					  CMsgTFXPSource_XPSourceType eType,
 					  float flMultipler,

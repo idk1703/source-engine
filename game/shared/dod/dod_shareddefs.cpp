@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -22,7 +22,7 @@ DodVoiceCommand_t g_VoiceCommands[] =
 	{"voice_usesmoke",		"UseSmoke",			PLAYERANIMEVENT_HANDSIGNAL,			"#Voice_subtitle_usesmoke" },
 	{"voice_usegrens",		"UseGrenades",		PLAYERANIMEVENT_HANDSIGNAL,			"#Voice_subtitle_usegrens" },
 	{"voice_ceasefire",		"CeaseFire",		PLAYERANIMEVENT_HANDSIGNAL,			"#Voice_subtitle_ceasefire" },
-			
+
 	// Menu B
 	{"voice_yessir",		"YesSir",			PLAYERANIMEVENT_HANDSIGNAL,			"#Voice_subtitle_yessir" },
 	{"voice_negative",		"Negative",			PLAYERANIMEVENT_HANDSIGNAL,			"#Voice_subtitle_negative" },
@@ -33,7 +33,7 @@ DodVoiceCommand_t g_VoiceCommands[] =
 	{"voice_niceshot",		"NiceShot",			PLAYERANIMEVENT_HANDSIGNAL,			"#Voice_subtitle_niceshot" },
 	{"voice_thanks",		"Thanks",			PLAYERANIMEVENT_HANDSIGNAL,			"#Voice_subtitle_thanks" },
 	{"voice_areaclear",		"Clear",			PLAYERANIMEVENT_HANDSIGNAL,			"#Voice_subtitle_areaclear" },
-			
+
 	// Menu C
 	{"voice_dropweapons",	"DropWeapons",		PLAYERANIMEVENT_HANDSIGNAL,			"#Voice_subtitle_dropyourweapons" },
 	{"voice_displace",		"Displace",			PLAYERANIMEVENT_HANDSIGNAL,			"#Voice_subtitle_displace" },
@@ -58,7 +58,7 @@ DodVoiceCommand_t g_VoiceCommands[] =
 	{"voice_mgahead",		"MgAhead",			PLAYERANIMEVENT_HANDSIGNAL,			"#Voice_subtitle_mgahead" },
 	{"voice_enemyahead",	"EnemyAhead",		PLAYERANIMEVENT_HANDSIGNAL,		"#Voice_subtitle_enemyahead" },
 	{"voice_fallback",		"FallBack",			PLAYERANIMEVENT_HANDSIGNAL,		"#Voice_subtitle_fallback" },
-	
+
 	// Must be last in the list
 	{ NULL }
 };
@@ -82,12 +82,12 @@ DodHandSignal_t g_HandSignals[] =
 	{"signal_moveout",			PLAYERANIMEVENT_HANDSIGNAL,		"#Voice_subtitle_attack" },
 	{"signal_areaclear",		PLAYERANIMEVENT_HANDSIGNAL,		"#Voice_subtitle_areaclear" },
 	{"signal_coveringfire",		PLAYERANIMEVENT_HANDSIGNAL,		"#Voice_subtitle_cover" },
-								
+
 	// Must be last in the list
 	{ NULL }
 };
 
-const char * s_WeaponAliasInfo[] = 
+const char * s_WeaponAliasInfo[] =
 {
 	"none",	//	WEAPON_NONE = 0,
 
@@ -104,7 +104,7 @@ const char * s_WeaponAliasInfo[] =
 	"garand",		//WEAPON_GARAND,
 	"m1carbine",	//WEAPON_M1CARBINE,
 	"k98",			//WEAPON_K98,
-	
+
 	//Sniper Rifles
 	"spring",		//WEAPON_SPRING,
 	"k98_scoped",	//WEAPON_K98_SCOPED,
@@ -142,18 +142,18 @@ const char * s_WeaponAliasInfo[] =
 	// not actually separate weapons, but defines used in stats recording
 	"thompson_punch",		//WEAPON_THOMPSON_PUNCH
 	"mp40_punch",			//WEAPON_MP40_PUNCH
-	"garand_zoomed",		//WEAPON_GARAND_ZOOMED,	
+	"garand_zoomed",		//WEAPON_GARAND_ZOOMED,
 
 	"k98_zoomed",			//WEAPON_K98_ZOOMED
 	"spring_zoomed",		//WEAPON_SPRING_ZOOMED
-	"k98s_zoomed",			//WEAPON_K98_SCOPED_ZOOMED	
+	"k98s_zoomed",			//WEAPON_K98_SCOPED_ZOOMED
 
 	"30cal_undeployed",		//WEAPON_30CAL_UNDEPLOYED,
 	"mg42_undeployed",		//WEAPON_MG42_UNDEPLOYED,
 
 	"bar_semiauto",			//WEAPON_BAR_SEMIAUTO,
 	"mp44_semiauto",		//WEAPON_MP44_SEMIAUTO,
-	
+
 	NULL,		// end of list marker
 };
 
@@ -180,7 +180,7 @@ const char *g_pszHintMessages[] =
 	"#Hint_prone",
 	"#Hint_low_stamina",
 	"#Hint_area_requires_object",
-	"#Hint_player_killed_wavetime", 
+	"#Hint_player_killed_wavetime",
 	"#Hint_mg_overheat",
 	"#game_shoulder_rpg",
 	"#Hint_pick_up_weapon",
@@ -208,7 +208,7 @@ const char *g_pszHintMessages[] =
 	"#Hint_bomb_first_select",
 };
 
-const char *pszTeamAlliesClasses[] = 
+const char *pszTeamAlliesClasses[] =
 {
 	"us_garand",
 	"us_tommy",
@@ -219,7 +219,7 @@ const char *pszTeamAlliesClasses[] =
 	NULL
 };
 
-const char *pszTeamAxisClasses[] = 
+const char *pszTeamAxisClasses[] =
 {
 	"axis_k98",
 	"axis_mp40",

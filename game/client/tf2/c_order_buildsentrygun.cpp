@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,4 +23,3 @@ void C_OrderBuildSentryGun::GetDescription( char *pDest, int bufferSize )
 {
 	Q_strncpy( pDest, "Build Sentry Gun To Protect Object", bufferSize );
 }
-

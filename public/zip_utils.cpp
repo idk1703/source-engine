@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -124,14 +124,14 @@ public:
 			// generate safe name at the desired prefix
 			char uniqueFilename[MAX_PATH];
 			SYSTEMTIME sysTime;                                                       \
-			GetLocalTime( &sysTime );   
+			GetLocalTime( &sysTime );
 			sprintf( uniqueFilename, "%d_%d_%d_%d_%d.tmp", sysTime.wDay, sysTime.wHour, sysTime.wMinute, sysTime.wSecond, sysTime.wMilliseconds );                                                \
 			V_ComposeFileName( WritePath.String(), uniqueFilename, tempFileName, sizeof( tempFileName ) );
 		}
 
 		FileName = tempFileName;
 		HANDLE hFile = CreateFile( tempFileName, GENERIC_READ|GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
-		
+
 		return hFile;
 	}
 
@@ -205,7 +205,7 @@ public:
 
 		FileName = tempFileName;
 		FILE *hFile = fopen( tempFileName, "rw+" );
-		
+
 		return (HANDLE)hFile;
 	}
 
@@ -276,11 +276,11 @@ public:
 	CFileStream( HANDLE hOutFile ) : IWriteStream(), m_file( NULL ), m_hFile( hOutFile ) {}
 
 	// Implementing IWriteStream method
-	virtual void Put( const void* pMem, int size ) 
-	{ 
+	virtual void Put( const void* pMem, int size )
+	{
 		if ( m_file )
 		{
-			fwrite( pMem, size, 1, m_file ); 
+			fwrite( pMem, size, 1, m_file );
 		}
 #ifdef WIN32
 		else
@@ -292,8 +292,8 @@ public:
 	}
 
 	// Implementing IWriteStream method
-	virtual unsigned int Tell( void ) 
-	{ 
+	virtual unsigned int Tell( void )
+	{
 		if ( m_file )
 		{
 			return ftell( m_file );
@@ -305,7 +305,7 @@ public:
 #else
 			return 0;
 #endif
-		} 
+		}
 	}
 
 private:
@@ -399,7 +399,7 @@ private:
 	void			SaveDirectory( IWriteStream& stream );
 	int				MakeXZipCommentString( char *pComment );
 	void			ParseXZipCommentString( const char *pComment );
-	
+
 	// Internal entry for faster searching, etc.
 	class CZipEntry
 	{
@@ -449,7 +449,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CZipFile::CZipEntry::CZipEntry( void )
 {
@@ -465,8 +465,8 @@ CZipFile::CZipEntry::CZipEntry( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : src - 
+// Purpose:
+// Input  : src -
 //-----------------------------------------------------------------------------
 CZipFile::CZipEntry::CZipEntry( const CZipFile::CZipEntry& src )
 {
@@ -562,8 +562,8 @@ void CZipFile::Reset( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Comparison for sorting entries
-// Input  : src1 - 
-//			src2 - 
+// Input  : src1 -
+//			src2 -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CZipFile::CZipEntry::ZipFileLessFunc( CZipEntry const& src1, CZipEntry const& src2 )
@@ -614,8 +614,8 @@ void CZipFile::ActivateByteSwapping( bool bActivate )
 
 //-----------------------------------------------------------------------------
 // Purpose: Load pak file from raw buffer
-// Input  : *buffer - 
-//			bufferlength - 
+// Input  : *buffer -
+//			bufferlength -
 //-----------------------------------------------------------------------------
 void CZipFile::ParseFromBuffer( void *buffer, int bufferlength )
 {
@@ -774,14 +774,14 @@ HANDLE CZipFile::ParseFromDisk( const char *pFilename )
 	{
 		// not found
 		return NULL;
-	}	
+	}
 #else
 	HANDLE hFile = fopen( pFilename, "rw+" );
 	if ( !hFile )
 	{
 		// not found
 		return NULL;
-	}	
+	}
 #endif
 
 	unsigned int fileLen = CWin32File::FileSeek( hFile, 0, FILE_END );
@@ -806,7 +806,7 @@ HANDLE CZipFile::ParseFromDisk( const char *pFilename )
 	for ( unsigned int startOffset = offset; offset <= startOffset; offset-- )
 	{
 		CWin32File::FileSeek( hFile, offset, FILE_BEGIN );
-		
+
 		CWin32File::FileRead( hFile, &rec, sizeof( rec ) );
 		m_Swap.SwapFieldsToTargetEndian( &rec );
 
@@ -948,7 +948,7 @@ static void ReadTextData( const char *pSrc, int nSrcSize, CUtlBuffer &buf )
 
 		buf.PutChar( *pSrcScan );
 	}
-	
+
 	// Null terminate
 	buf.PutChar( '\0' );
 }
@@ -988,9 +988,9 @@ static void CopyTextData( char *pDst, const char *pSrc, int dstSize, int srcSize
 
 //-----------------------------------------------------------------------------
 // Purpose: Adds a new lump, or overwrites existing one
-// Input  : *relativename - 
-//			*data - 
-//			length - 
+// Input  : *relativename -
+//			*data -
+//			length -
 //-----------------------------------------------------------------------------
 void CZipFile::AddBufferToZip( const char *relativename, void *data, int length, bool bTextMode, IZip::eCompressionType compressionType )
 {
@@ -1222,7 +1222,7 @@ bool CZipFile::ReadFileFromZip( HANDLE hZipFile, const char *pRelativeName, bool
 
 //-----------------------------------------------------------------------------
 // Purpose: Check if a file already exists in the zip.
-// Input  : *relativename - 
+// Input  : *relativename -
 //-----------------------------------------------------------------------------
 bool CZipFile::FileExistsInZip( const char *pRelativeName )
 {
@@ -1293,7 +1293,7 @@ unsigned short CZipFile::CalculatePadding( unsigned int filenameLen, unsigned in
 	{
 		return 0;
 	}
-	
+
 	unsigned int headerSize = sizeof( ZIP_LocalFileHeader ) + filenameLen;
 	return (unsigned short)( m_AlignmentSize - ( ( pos + headerSize ) % m_AlignmentSize ) );
 }
@@ -1362,7 +1362,7 @@ unsigned int CZipFile::CalculateSize( void )
 		size += sizeof( ZIP_LocalFileHeader );
 		size += strlen( e->m_Name.String() );
 
-		// every file has a directory header that duplicates the filename 
+		// every file has a directory header that duplicates the filename
 		dirHeaders += sizeof( ZIP_FileHeader ) + strlen( e->m_Name.String() );
 
 		// calculate padding
@@ -1869,4 +1869,3 @@ unsigned int CZip::GetAlignment()
 {
 	return m_ZipFile.GetAlignment();
 }
-

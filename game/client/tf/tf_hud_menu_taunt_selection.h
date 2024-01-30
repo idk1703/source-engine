@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -51,7 +51,7 @@ private:
 	CItemModelPanel *m_pItemModelPanels[NUM_TAUNT_SLOTS];
 	// CIconPanel *m_pKeyIcons[NUM_TAUNT_SLOTS];
 	// CExLabel *m_pKeyLabels[NUM_TAUNT_SLOTS];
-	
+
 	int m_iSelectedItem;
 };
 

@@ -21,7 +21,7 @@
 //			pValObjectPrev -	Object that precedes us in the linked list (we're
 //								always added to the end)
 //-----------------------------------------------------------------------------
-void CValObject::Init( tchar *pchType, void *pvObj, tchar *pchName, 
+void CValObject::Init( tchar *pchType, void *pvObj, tchar *pchName,
 					   CValObject *pValObjectParent, CValObject *pValObjectPrev )
 {
 	m_nUser = 0;
@@ -37,8 +37,8 @@ void CValObject::Init( tchar *pchType, void *pvObj, tchar *pchName,
 	}
 
 	m_pvObj = pvObj;
-	
-	// Initialize pchName: 
+
+	// Initialize pchName:
 	if ( NULL != pchName )
 	{
 		Q_strncpy( m_rgchName, pchName, sizeof(m_rgchName) / sizeof(*m_rgchName) );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -49,7 +49,7 @@ enum
 //
 // Custom tasks.
 //
-enum 
+enum
 {
 	TASK_CROW_FIND_FLYTO_NODE = LAST_SHARED_TASK,
 	//TASK_CROW_PREPARE_TO_FLY,
@@ -118,7 +118,7 @@ public:
 	// CAI_BaseNPC:
 	//
 	virtual float MaxYawSpeed( void ) { return 120.0f; }
-	
+
 	virtual Class_T Classify( void );
 	virtual void GatherEnemyConditions( CBaseEntity *pEnemy );
 
@@ -147,7 +147,7 @@ public:
 	virtual bool QueryHearSound( CSound *pSound );
 
 	void InputFlyAway( inputdata_t &inputdata );
-	
+
 	void TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator );
 	void StartTargetHandling( CBaseEntity *pTargetEnt );
 
@@ -174,7 +174,7 @@ protected:
 
 	float m_flEnemyDist;		// Distance to GetEnemy(), cached in GatherEnemyConditions.
 	int m_nMorale;				// Used to determine which avoidance schedule to pick. Degrades as I pick avoidance schedules.
-	
+
 	bool m_bReachedMoveGoal;
 
 	float m_flHopStartZ;		// Our Z coordinate when we started a hop. Used to check for accidentally hopping off things.
@@ -189,7 +189,7 @@ private:
 	bool				m_bSoar;
 	Vector				m_vLastStoredOrigin;
 	float				m_flLastStuckCheck;
-	
+
 	float				m_flDangerSoundTime;
 
 	Vector				m_vDesiredTarget;
@@ -206,7 +206,7 @@ class CNPC_Seagull : public CNPC_Crow
 	DECLARE_CLASS( CNPC_Seagull, CNPC_Crow );
 
 public:
-	
+
 	void Spawn( void )
 	{
 		SetModelName( AllocPooledString("models/seagull.mdl") );

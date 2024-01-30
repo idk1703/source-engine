@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -123,7 +123,7 @@ void CHintMessageQueue::Update()
 	if ( !m_pPlayer )
 		return;
 
-	// test this - send the message as soon as it is ready, 
+	// test this - send the message as soon as it is ready,
 	// just stomp the old message
 	//if ( gpGlobals->curtime > m_tmMessageEnd )
 	{
@@ -162,8 +162,8 @@ bool CHintMessageQueue::AddMessage( const char* message, float duration, CUtlVec
 //--------------------------------------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
+// Purpose:
+// Input  : *pPlayer -
 //-----------------------------------------------------------------------------
 CHintMessageTimers::CHintMessageTimers( CHintSystem *pSystem, CHintMessageQueue *pQueue )
 {
@@ -243,7 +243,7 @@ void CHintMessageTimers::AddTimer( int iHintID, float timer_duration, float mess
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintMessageTimers::RemoveTimer( int iHintID )
 {
@@ -256,7 +256,7 @@ void CHintMessageTimers::RemoveTimer( int iHintID )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintMessageTimers::StartTimer( int iHintID )
 {
@@ -269,7 +269,7 @@ void CHintMessageTimers::StartTimer( int iHintID )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintMessageTimers::StopTimer( int iHintID )
 {

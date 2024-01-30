@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -26,10 +26,10 @@ template<class Data, typename C = bool (*)( Data const&, Data const& ), typename
 class CUtlHash
 {
 public:
-	// compare and key functions - implemented by the 
+	// compare and key functions - implemented by the
 	typedef C CompareFunc_t;
 	typedef K KeyFunc_t;
-	
+
 	// constructor/deconstructor
 	CUtlHash( int bucketCount = 0, int growCount = 0, int initCount = 0,
 		      CompareFunc_t compareFunc = 0, KeyFunc_t keyFunc = 0 );
@@ -82,12 +82,12 @@ protected:
 	// handle lower 16 bits = key index (bucket list)
 	typedef CUtlVector<Data> HashBucketList_t;
 	CUtlVector<HashBucketList_t>	m_Buckets;
-	
+
 	CompareFunc_t					m_CompareFunc;			// function used to handle unique compares on data
 	KeyFunc_t						m_KeyFunc;				// function used to generate the key value
 
-	bool							m_bPowerOfTwo;			// if the bucket value is a power of two, 
-	unsigned int					m_ModMask;				// use the mod mask to "mod"	
+	bool							m_bPowerOfTwo;			// if the bucket value is a power of two,
+	unsigned int					m_ModMask;				// use the mod mask to "mod"
 };
 
 
@@ -130,16 +130,16 @@ inline bool CUtlHash<Data, C, K>::IsValidHandle( UtlHashHandle_t handle ) const
 	int ndxBucket = GetBucketIndex( handle );
 	int ndxKeyData = GetKeyDataIndex( handle );
 
-	// ndxBucket and ndxKeyData can't possibly be less than zero -- take a 
+	// ndxBucket and ndxKeyData can't possibly be less than zero -- take a
 	// look at the definition of the Get..Index functions for why. However,
 	// if you override those functions, you will need to override this one
-	// as well. 
+	// as well.
 	if( /*( ndxBucket >= 0 ) && */      ( ndxBucket < m_Buckets.Count() ) )
 	{
 		if( /*( ndxKeyData >= 0 ) && */ ( ndxKeyData < m_Buckets[ndxBucket].Count() ) )
 			return true;
 	}
-	
+
 	return false;
 }
 
@@ -435,12 +435,12 @@ inline void CUtlHash<Data, C, K>::Log( const char *filename )
 	int numBucketsEmpty = 0;
 
 	int bucketCount = m_Buckets.Count();
-	fprintf( pDebugFp, "\n%d Buckets\n", bucketCount ); 
+	fprintf( pDebugFp, "\n%d Buckets\n", bucketCount );
 
 	for( int ndxBucket = 0; ndxBucket < bucketCount; ndxBucket++ )
 	{
 		int count = m_Buckets[ndxBucket].Count();
-		
+
 		if( count > maxBucketSize ) { maxBucketSize = count; }
 		if( count == 0 )
 			numBucketsEmpty++;
@@ -455,7 +455,7 @@ inline void CUtlHash<Data, C, K>::Log( const char *filename )
 }
 
 //=============================================================================
-// 
+//
 // Fast Hash
 //
 // Number of buckets must be a power of 2.
@@ -483,7 +483,7 @@ public:
 	}
 };
 
-template<class Data, class HashFuncs = CUtlHashFastNoHash > 
+template<class Data, class HashFuncs = CUtlHashFastNoHash >
 class CUtlHashFast
 {
 public:
@@ -532,7 +532,7 @@ public:
 
 	typedef HashFastData_t_<Data> HashFastData_t;
 
-	unsigned int						m_uiBucketMask;	
+	unsigned int						m_uiBucketMask;
 	CUtlVector<UtlHashFastHandle_t>		m_aBuckets;
 	CUtlFixedLinkedList<HashFastData_t>	m_aDataPool;
 };
@@ -625,13 +625,13 @@ template<class Data, class HashFuncs> inline UtlHashFastHandle_t CUtlHashFast<Da
 	// Add data to new element.
 	pHashData->m_uiKey = uiKey;
 	pHashData->m_Data = data;
-				
+
 	// Link element.
 	int iBucket = HashFuncs::Hash( uiKey, m_uiBucketMask );
 	m_aDataPool.LinkBefore( m_aBuckets[iBucket], iHashData );
 	m_aBuckets[iBucket] = iHashData;
-	
-	return iHashData;	
+
+	return iHashData;
 }
 
 //-----------------------------------------------------------------------------
@@ -713,7 +713,7 @@ template<class Data, class HashFuncs> inline Data const &CUtlHashFast<Data,HashF
 }
 
 //=============================================================================
-// 
+//
 // Fixed Hash
 //
 // Number of buckets must be a power of 2.
@@ -740,7 +740,7 @@ public:
 	}
 };
 
-template<class Data, int NUM_BUCKETS, class CHashFuncs = CUtlHashFastNoHash > 
+template<class Data, int NUM_BUCKETS, class CHashFuncs = CUtlHashFastNoHash >
 class CUtlHashFixed
 {
 public:
@@ -858,7 +858,7 @@ template<class Data, int NUM_BUCKETS, class HashFuncs> inline UtlHashFixedHandle
 	pHashData->m_Data = data;
 
 	m_nElements++;
-	return (UtlHashFixedHandle_t)pHashData;	
+	return (UtlHashFixedHandle_t)pHashData;
 }
 
 //-----------------------------------------------------------------------------

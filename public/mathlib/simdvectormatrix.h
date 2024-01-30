@@ -65,10 +65,10 @@ public:
 		{
 			if ( m_pData )
 				delete[] m_pData;
-			
+
 			m_nWidth = width;
 			m_nHeight = height;
-			
+
 			m_nPaddedWidth = ( m_nWidth + 3) >> 2;
 			m_pData = NULL;
 			if ( width && height )
@@ -86,7 +86,7 @@ public:
 	{
 		SetSize( src.m_nWidth, src.m_nHeight );
 		if ( m_pData )
-			memcpy( m_pData, src.m_pData, m_nHeight*m_nPaddedWidth*sizeof(m_pData[0]) ); 
+			memcpy( m_pData, src.m_pData, m_nHeight*m_nPaddedWidth*sizeof(m_pData[0]) );
 		return *this;
 	}
 

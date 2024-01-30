@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -80,7 +80,7 @@ void SV_EnsureInstanceBaseline( ServerClass *pServerClass, int iEdict, const voi
 			Q_snprintf( idString, sizeof( idString ), "%d", pClass->m_ClassID );
 
 			// Ok, make a new instance baseline so they can reference it.
-			int temp = sv.GetInstanceBaselineTable()->AddString( 
+			int temp = sv.GetInstanceBaselineTable()->AddString(
 				true,
 				idString,	// Note we're sending a string with the ID number, not the class name.
 				nBytes,
@@ -106,9 +106,9 @@ void SV_EnsureInstanceBaseline( ServerClass *pServerClass, int iEdict, const voi
 // Pack the entity....
 //-----------------------------------------------------------------------------
 
-static inline void SV_PackEntity( 
-	int edictIdx, 
-	edict_t* edict, 
+static inline void SV_PackEntity(
+	int edictIdx,
+	edict_t* edict,
 	ServerClass* pServerClass,
 	CFrameSnapshot *pSnapshot )
 {
@@ -127,25 +127,25 @@ static inline void SV_PackEntity(
 		// if not, then we gotta compute it
 		bUsedPrev = framesnapshotmanager->UsePreviouslySentPacket( pSnapshot, edictIdx, iSerialNum );
 	}
-		
+
 	if ( bUsedPrev && !sv_debugmanualmode.GetInt() )
 	{
 		edict->ClearStateChanged();
 		return;
 	}
-	
+
 	// First encode the entity's data.
 	ALIGN4 char packedData[MAX_PACKEDENTITY_DATA] ALIGN4_POST;
 	bf_write writeBuf( "SV_PackEntity->writeBuf", packedData, sizeof( packedData ) );
 
 	SendTable *pSendTable = pServerClass->m_pTable;
-	
+
 	// (avoid constructor overhead).
 	unsigned char tempData[ sizeof( CSendProxyRecipients ) * MAX_DATATABLE_PROXIES ];
 	CUtlMemory< CSendProxyRecipients > recip( (CSendProxyRecipients*)tempData, pSendTable->m_pPrecalc->GetNumDataTableProxies() );
 
 	if( !SendTable_Encode( pSendTable, edict->GetUnknown(), &writeBuf, edictIdx, &recip, false ) )
-	{							 
+	{
 		Host_Error( "SV_PackEntity: SendTable_Encode returned false (ent %d).\n", edictIdx );
 	}
 
@@ -156,11 +156,11 @@ static inline void SV_PackEntity(
 #endif
 
 	SV_EnsureInstanceBaseline( pServerClass, edictIdx, packedData, writeBuf.GetNumBytesWritten() );
-		
+
 	int nFlatProps = SendTable_GetNumFlatProps( pSendTable );
 	IChangeFrameList *pChangeFrame = NULL;
 
-	// If this entity was previously in there, then it should have a valid IChangeFrameList 
+	// If this entity was previously in there, then it should have a valid IChangeFrameList
 	// which we can delta against to figure out which properties have changed.
 	//
 	// If not, then we want to setup a new IChangeFrameList.
@@ -170,14 +170,14 @@ static inline void SV_PackEntity(
 	{
 		// Calculate a delta.
 		Assert( !pPrevFrame->IsCompressed() );
-		
+
 		int deltaProps[MAX_DATATABLE_PROPS];
 
 		int nChanges = SendTable_CalcDelta(
-			pSendTable, 
+			pSendTable,
 			pPrevFrame->GetData(), pPrevFrame->GetNumBits(),
 			packedData,	writeBuf.GetNumBitsWritten(),
-			
+
 			deltaProps,
 			ARRAYSIZE( deltaProps ),
 
@@ -191,7 +191,7 @@ static inline void SV_PackEntity(
 
 		// If it's non-manual-mode, but we detect that there are no changes here, then just
 		// use the previous pSnapshot if it's available (as though the entity were manual mode).
-		// It would be interesting to hook here and see how many non-manual-mode entities 
+		// It would be interesting to hook here and see how many non-manual-mode entities
 		// are winding up with no changes.
 		if ( nChanges == 0 )
 		{
@@ -214,12 +214,12 @@ static inline void SV_PackEntity(
 					Assert( deltaProps[iDeltaProp] < pSendTable->m_pPrecalc->GetNumProps() );
 
 					const SendProp *pProp = pSendTable->m_pPrecalc->GetProp( deltaProps[iDeltaProp] );
-					// If a field changed, but it changed because it encoded against tickcount, 
+					// If a field changed, but it changed because it encoded against tickcount,
 					//   then it's just like the entity changed the underlying field, not an error, that is.
 					if ( pProp->GetFlags() & SPROP_ENCODED_AGAINST_TICKCOUNT )
 						continue;
 
-					Msg( "Entity %d (class '%s') reported ENTITY_CHANGE_NONE but '%s' changed.\n", 
+					Msg( "Entity %d (class '%s') reported ENTITY_CHANGE_NONE but '%s' changed.\n",
 						edictIdx,
 						edict->GetClassName(),
 						pProp->GetName() );
@@ -228,7 +228,7 @@ static inline void SV_PackEntity(
 			}
 		}
 
-#ifndef _XBOX	
+#ifndef _XBOX
 #if defined( REPLAY_ENABLED )
 		if ( (hltv && hltv->IsActive()) || (replay && replay->IsActive()) )
 #else
@@ -247,7 +247,7 @@ static inline void SV_PackEntity(
 			// for the properties in the delta.
 			pChangeFrame = pPrevFrame->SnagChangeFrameList();
 		}
-		
+
 		ErrorIfNot( pChangeFrame,
 			("SV_PackEntity: SnagChangeFrameList returned null") );
 		ErrorIfNot( pChangeFrame->GetNumProps() == nFlatProps,
@@ -347,8 +347,8 @@ SendTable* GetEntSendTable(edict_t *pEdict)
 }
 
 
-void PackEntities_NetworkBackDoor( 
-	int clientCount, 
+void PackEntities_NetworkBackDoor(
+	int clientCount,
 	CGameClient **clients,
 	CFrameSnapshot *snapshot )
 {
@@ -363,7 +363,7 @@ void PackEntities_NetworkBackDoor(
 	{
 		int index = snapshot->m_pValidEntities[iValidEdict];
 		edict_t* edict = &sv.edicts[ index ];
-		
+
 		// this is a bit of a hack to ensure that we get a "preview" of the
 		//  packet timstamp that the server will send so that things that
 		//  are encoded relative to packet time will be correct
@@ -376,11 +376,11 @@ void PackEntities_NetworkBackDoor(
 		// directly over to the client.
 		Assert( index < snapshot->m_nNumEntities );
 		ServerClass *pSVClass = snapshot->m_pEntities[ index ].m_pClass;
-		g_pLocalNetworkBackdoor->EntState( index, edict->m_NetworkSerialNumber, 
+		g_pLocalNetworkBackdoor->EntState( index, edict->m_NetworkSerialNumber,
 			pSVClass->m_ClassID, pSVClass->m_pTable, edict->GetUnknown(), edict->HasStateChanged(), bShouldTransmit );
 		edict->ClearStateChanged();
 	}
-	
+
 	// Tell the client about any entities that are now dormant.
 	g_pLocalNetworkBackdoor->ProcessDormantEntities();
 	InvalidateSharedEdictChangeInfos();
@@ -400,8 +400,8 @@ struct PackWork_t
 	}
 };
 
-void PackEntities_Normal( 
-	int clientCount, 
+void PackEntities_Normal(
+	int clientCount,
 	CGameClient **clients,
 	CFrameSnapshot *snapshot )
 {
@@ -411,18 +411,18 @@ void PackEntities_Normal(
 	CUtlVectorFixed< PackWork_t, MAX_EDICTS > workItems;
 
 	// check for all active entities, if they are seen by at least on client, if
-	// so, bit pack them 
+	// so, bit pack them
 	for ( int iValidEdict=0; iValidEdict < snapshot->m_nValidEntities; ++iValidEdict )
 	{
 		int index = snapshot->m_pValidEntities[ iValidEdict ];
-		
+
 		Assert( index < snapshot->m_nNumEntities );
 
 		edict_t* edict = &sv.edicts[ index ];
 
 		// if HLTV is running save PVS info for each entity
 		SV_FillHLTVData( snapshot, edict, iValidEdict );
-		
+
 		// if Replay is running save PVS info for each entity
 		SV_FillReplayData( snapshot, edict, iValidEdict );
 
@@ -436,7 +436,7 @@ void PackEntities_Normal(
 			CClientFrame *frame = client->m_pCurrentFrame;
 
 			if( frame->transmit_entity.Get( index ) )
-			{	
+			{
 				PackWork_t w;
 				w.nIdx = index;
 				w.pEdict = edict;
@@ -471,8 +471,8 @@ void PackEntities_Normal(
 // Writes the compressed packet of entities to all clients
 //-----------------------------------------------------------------------------
 
-void SV_ComputeClientPacks( 
-	int clientCount, 
+void SV_ComputeClientPacks(
+	int clientCount,
 	CGameClient **clients,
 	CFrameSnapshot *snapshot )
 {
@@ -502,7 +502,7 @@ void SV_ComputeClientPacks(
 #else
 		sv.m_StringTables->DirectUpdate( clients[0]->GetMaxAckTickCount() );
 #endif
-		
+
 		g_pLocalNetworkBackdoor->StartEntityStateUpdate();
 
 #ifndef SWDS
@@ -557,7 +557,7 @@ void SV_MaybeWriteSendTable( SendTable *pTable, bf_write &pBuf, bool bNeedDecode
 
 	byte	tmpbuf[4096];
 	sndTbl.m_DataOut.StartWriting( tmpbuf, sizeof(tmpbuf) );
-	
+
 	// write send table properties into message buffer
 	SendTable_WriteInfos(pTable, &sndTbl.m_DataOut );
 
@@ -606,8 +606,8 @@ void SV_WriteSendTables( ServerClass *pClasses, bf_write &pBuf )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : crc - 
+// Purpose:
+// Input  : crc -
 //-----------------------------------------------------------------------------
 void SV_ComputeClassInfosCRC( CRC32_t* crc )
 {
@@ -630,7 +630,7 @@ void CGameServer::AssignClassIds()
 	{
 		++nClasses;
 	}
-	
+
 	// These should be the same! If they're not, then it should detect an explicit create message.
 	ErrorIfNot( nClasses <= MAX_SERVER_CLASSES,
 		("CGameServer::AssignClassIds: too many server classes (%i, MAX = %i).\n", nClasses, MAX_SERVER_CLASSES );
@@ -657,11 +657,11 @@ void CGameServer::AssignClassIds()
 void SV_WriteClassInfos(ServerClass *pClasses, bf_write &pBuf)
 {
 	// Assert( sv.serverclasses < MAX_SERVER_CLASSES );
-	
+
 	SVC_ClassInfo classinfomsg;
 
 	classinfomsg.m_bCreateOnClient = false;
-	
+
 	for ( ServerClass *pClass=pClasses; pClass; pClass=pClass->m_pNext )
 	{
 		SVC_ClassInfo::class_t svclass;
@@ -669,7 +669,7 @@ void SV_WriteClassInfos(ServerClass *pClasses, bf_write &pBuf)
 		svclass.classID = pClass->m_ClassID;
 		Q_strncpy( svclass.datatablename, pClass->m_pTable->GetName(), sizeof(svclass.datatablename) );
 		Q_strncpy( svclass.classname, pClass->m_pNetworkName, sizeof(svclass.classname) );
-				
+
 		classinfomsg.m_Classes.AddToTail( svclass );  // add all known classes to message
 	}
 
@@ -688,6 +688,3 @@ const char* GetObjectClassName( int objectID )
 		return "[unknown]";
 	}
 }
-
-
-

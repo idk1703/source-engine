@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ public:
 	virtual void Paint()
 	{
 		DrawSetTextFont(GetFont());
-		
+
 		// draw background
 		DrawSetTextColor(_menuItem->GetBgColor());
 		DrawPrintChar(0, 0, 'g');
@@ -55,7 +55,7 @@ public:
 				// offset image
 				DrawSetTextColor(_menuItem->GetDisabledFgColor1());
 				DrawPrintChar(1, 3, 'a');
-				
+
 				// overlayed image
 				DrawSetTextColor(_menuItem->GetDisabledFgColor2());
 				DrawPrintChar(0, 2, 'a');
@@ -87,7 +87,7 @@ MenuItem::MenuItem(Menu *parent, const char *panelName, const char *text, Menu *
 
 	// only one arg should be passed in.
 	Assert (!(cascadeMenu && checkable));
-	
+
 	Init();
 }
 
@@ -109,7 +109,7 @@ MenuItem::MenuItem(Menu *parent, const char *panelName, const wchar_t *wszText, 
 
 	// only one arg should be passed in.
 	Assert (!(cascadeMenu && checkable));
-	
+
 	Init();
 }
 
@@ -119,7 +119,7 @@ MenuItem::MenuItem(Menu *parent, const char *panelName, const wchar_t *wszText, 
 MenuItem::~MenuItem()
 {
 	delete m_pCascadeMenu;
-	delete m_pCascadeArrow;	
+	delete m_pCascadeArrow;
 	delete m_pCheck;
 	if (m_pUserData)
 	{
@@ -160,7 +160,7 @@ void MenuItem::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Menu *MenuItem::GetParentMenu()
 {
@@ -193,7 +193,7 @@ void MenuItem::CloseCascadeMenu()
 			m_pCascadeMenu->SetVisible(false);
 		}
 		// disarm even if menu wasn't visible!
-		SetArmed(false);  
+		SetArmed(false);
 	}
 }
 
@@ -228,7 +228,7 @@ void MenuItem::OnCursorEntered()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Handle mouse cursor exiting a menuItem. 
+// Purpose: Handle mouse cursor exiting a menuItem.
 //-----------------------------------------------------------------------------
 void MenuItem::OnCursorExited()
 {
@@ -242,7 +242,7 @@ void MenuItem::OnCursorExited()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Handle mouse cursor exiting a menuItem. 
+// Purpose: Handle mouse cursor exiting a menuItem.
 //-----------------------------------------------------------------------------
 void MenuItem::OnKeyCodeReleased(KeyCode code)
 {
@@ -260,10 +260,10 @@ void MenuItem::OnKeyCodeReleased(KeyCode code)
 //-----------------------------------------------------------------------------
 void MenuItem::ArmItem()
 {
-	// close all other menus 
+	// close all other menus
 	GetParentMenu()->CloseOtherMenus(this);
 	// arm the menuItem.
-	Button::SetArmed(true);	
+	Button::SetArmed(true);
 
 	// When you have a submenu with no scroll bar the menu
 	// border will not be drawn correctly. This fixes it.
@@ -316,20 +316,20 @@ void MenuItem::OnKillFocus()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: fire the menu item as if it has been selected and 
+// Purpose: fire the menu item as if it has been selected and
 //			Tell the owner that it is closing
 //-----------------------------------------------------------------------------
 void MenuItem::FireActionSignal()
 {
 	// cascading menus items don't trigger the parent menu to disappear
 	// (they trigger the cascading menu to open/close when cursor is moved over/off them)
-	if (!m_pCascadeMenu) 
-	{	
+	if (!m_pCascadeMenu)
+	{
 		KeyValues *kv = new KeyValues("MenuItemSelected");
 		kv->SetPtr("panel", this);
 		ivgui()->PostMessage(GetVParent(), kv, GetVPanel());
 
-	//	ivgui()->PostMessage(GetVParent(), new KeyValues("MenuItemSelected"), GetVPanel());		
+	//	ivgui()->PostMessage(GetVParent(), new KeyValues("MenuItemSelected"), GetVPanel());
 		Button::FireActionSignal();
 		// toggle the check next to the item if it is checkable
 		if (m_bCheckable)
@@ -342,7 +342,7 @@ void MenuItem::FireActionSignal()
 		// if we are in keyboard mode, open the child menu.
 		if (GetParentMenu()->GetMenuMode() == Menu::KEYBOARD)
 		{
-			OpenCascadeMenu();			
+			OpenCascadeMenu();
 		}
 	}
 }
@@ -351,10 +351,10 @@ void MenuItem::FireActionSignal()
 // Purpose: Opens the cascading menu.
 //-----------------------------------------------------------------------------
 void MenuItem::OpenCascadeMenu()
-{		
+{
 	if (m_pCascadeMenu)
 	{
-		// perform layout on menu, this way it will open in the right spot 
+		// perform layout on menu, this way it will open in the right spot
 		// if the window's been moved
 		m_pCascadeMenu->PerformLayout();
 		m_pCascadeMenu->SetVisible(true);
@@ -384,14 +384,14 @@ void MenuItem::ApplySchemeSettings(IScheme *pScheme)
 	SetDepressedColor(GetSchemeColor("Menu.ArmedTextColor", GetFgColor(), pScheme), GetSchemeColor("Menu.ArmedBgColor", GetBgColor(), pScheme));
 
 	SetTextInset(atoi(pScheme->GetResourceString("Menu.TextInset")), 0);
-	
+
 	// reload images since applyschemesettings in label wipes them out.
 	if ( m_pCascadeArrow )
 	{
 		m_pCascadeArrow->SetFont(pScheme->GetFont("Marlett", IsProportional() ));
 		m_pCascadeArrow->ResizeImageToContent();
 		AddImage(m_pCascadeArrow, 0);
-	}	
+	}
 	else if (m_bCheckable)
 	{
 		( static_cast<MenuItemCheckImage *>(m_pCheck) )->SetFont( pScheme->GetFont("Marlett", IsProportional()));
@@ -423,7 +423,7 @@ void MenuItem::ApplySchemeSettings(IScheme *pScheme)
 //-----------------------------------------------------------------------------
 void MenuItem::GetTextImageSize(int &wide, int &tall)
 {
-   GetTextImage()->GetSize(wide, tall);
+	GetTextImage()->GetSize(wide, tall);
 }
 
 //-----------------------------------------------------------------------------
@@ -434,7 +434,7 @@ void MenuItem::GetTextImageSize(int &wide, int &tall)
 //-----------------------------------------------------------------------------
 void MenuItem::SetTextImageSize(int wide, int tall)
 {
-   GetTextImage()->SetSize(wide, tall);
+	GetTextImage()->SetSize(wide, tall);
 }
 
 //-----------------------------------------------------------------------------
@@ -448,7 +448,7 @@ void MenuItem::GetArrowImageSize(int &wide, int &tall)
 	{
 		m_pCascadeArrow->GetSize(wide, tall);
 		return;
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -461,12 +461,12 @@ void MenuItem::GetCheckImageSize(int &wide, int &tall)
 	{
 		// resize the image to the contents size
 		( static_cast<MenuItemCheckImage *>(m_pCheck) )->ResizeImageToContent();
-	    m_pCheck->GetSize(wide, tall);
+		m_pCheck->GetSize(wide, tall);
 
 		// include the inset for the check, since nobody but us know about the inset
 		wide += CHECK_INSET;
 		return;
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -476,7 +476,7 @@ void MenuItem::GetCheckImageSize(int &wide, int &tall)
 //-----------------------------------------------------------------------------
 Menu *MenuItem::GetMenu()
 {
-	return m_pCascadeMenu;	
+	return m_pCascadeMenu;
 }
 
 //-----------------------------------------------------------------------------
@@ -504,7 +504,7 @@ void MenuItem::OnKeyModeSet()
 //-----------------------------------------------------------------------------
 bool MenuItem::IsCheckable()
 {
-	return m_bCheckable;	
+	return m_bCheckable;
 }
 
 //-----------------------------------------------------------------------------
@@ -512,7 +512,7 @@ bool MenuItem::IsCheckable()
 //-----------------------------------------------------------------------------
 bool MenuItem::IsChecked()
 {
-	return m_bChecked;	
+	return m_bChecked;
 }
 
 //-----------------------------------------------------------------------------
@@ -528,15 +528,15 @@ void MenuItem::SetChecked(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool MenuItem::CanBeDefaultButton(void)
 {
-    return false;
+	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 KeyValues *MenuItem::GetUserData()
 {
@@ -560,7 +560,7 @@ void MenuItem::SetUserData(const KeyValues *kv)
 		m_pUserData->deleteThis();
 		m_pUserData = NULL;
 	}
-	
+
 	if ( kv )
 	{
 		m_pUserData = kv->MakeCopy();
@@ -569,7 +569,7 @@ void MenuItem::SetUserData(const KeyValues *kv)
 
 //-----------------------------------------------------------------------------
 // Purpose: Passing in NULL removes this object
-// Input  : *keyName - 
+// Input  : *keyName -
 //-----------------------------------------------------------------------------
 void MenuItem::SetCurrentKeyBinding( char const *keyName )
 {

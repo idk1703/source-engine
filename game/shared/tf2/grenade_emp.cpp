@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -50,7 +50,7 @@ LINK_ENTITY_TO_CLASS( grenade_emp, CGrenadeEMP );
 PRECACHE_REGISTER(grenade_emp);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CGrenadeEMP::CGrenadeEMP()
 {
@@ -78,7 +78,7 @@ void CGrenadeEMP::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeEMP::Spawn( void )
 {
@@ -119,7 +119,7 @@ void CGrenadeEMP::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeEMP::UpdateOnRemove( void )
 {
@@ -135,7 +135,7 @@ void CGrenadeEMP::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeEMP::Explode( trace_t *pTrace, int bitsDamageType )
 {
@@ -157,11 +157,11 @@ void CGrenadeEMP::Explode( trace_t *pTrace, int bitsDamageType )
 		// Since this doesn't fire on the client right now, ignore the culling of the local player
 		filter.SetIgnorePredictionCull( true );
 
-		te->BeamRingPoint( filter, delay, 
+		te->BeamRingPoint( filter, delay,
 			GetAbsOrigin() + Vector(0,0,32) ,  // origin
 			64.0f,					// start radius
 			weapon_emp_grenade_radius.GetFloat() * 2,					// end radius
-			g_iEMPPulseEffectIndex, 
+			g_iEMPPulseEffectIndex,
 			0, // halo index
 			0, // start frame
 			2, // framerate
@@ -169,10 +169,10 @@ void CGrenadeEMP::Explode( trace_t *pTrace, int bitsDamageType )
 			25.0, // width
 			50, // spread
 			2, // amplitude
-			50 + ( 1-frac ) * 200, 
-			63, 
-			63 + 127 * frac, 
-			255 - frac * 127, 
+			50 + ( 1-frac ) * 200,
+			63,
+			63 + 127 * frac,
+			255 - frac * 127,
 			20 );
 	}
 
@@ -283,7 +283,7 @@ CGrenadeEMP *CGrenadeEMP::Create( const Vector &vecOrigin, const Vector &vecForw
 
 #if defined( CLIENT_DLL )
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeEMP::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -340,4 +340,3 @@ int CGrenadeEMP::DrawModel( int flags )
 }
 
 #endif
-

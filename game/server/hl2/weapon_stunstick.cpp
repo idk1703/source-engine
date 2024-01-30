@@ -32,7 +32,7 @@ LINK_ENTITY_TO_CLASS( weapon_stunstick, CWeaponStunStick );
 PRECACHE_WEAPON_REGISTER( weapon_stunstick );
 #endif
 
-acttable_t CWeaponStunStick::m_acttable[] = 
+acttable_t CWeaponStunStick::m_acttable[] =
 {
 	{ ACT_MELEE_ATTACK1,	ACT_MELEE_ATTACK_SWING,	true },
 	{ ACT_IDLE_ANGRY,		ACT_IDLE_ANGRY_MELEE,	true },
@@ -88,7 +88,7 @@ float CWeaponStunStick::GetDamageForActivity( Activity hitActivity )
 {
 	if ( ( GetOwner() != NULL ) && ( GetOwner()->IsPlayer() ) )
 		return sk_plr_dmg_stunstick.GetFloat();
-	
+
 	return sk_npc_dmg_stunstick.GetFloat();
 }
 
@@ -170,13 +170,13 @@ int CWeaponStunStick::WeaponMeleeAttack1Condition( float flDot, float flDist )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponStunStick::ImpactEffect( trace_t &traceHit )
 {
 	//Glowing spark effect for hit
 	//UTIL_DecalTrace( &m_trLineHit, "PlasmaGlowFade" );
-	
+
 	//FIXME: need new decals
 	UTIL_ImpactTrace( &traceHit, DMG_CLUB );
 }
@@ -198,7 +198,7 @@ void CWeaponStunStick::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseComba
 				Vector vecDelta;
 				VectorSubtract( pEnemy->WorldSpaceCenter(), pOperator->Weapon_ShootPosition(), vecDelta );
 				VectorNormalize( vecDelta );
-				
+
 				Vector2D vecDelta2D = vecDelta.AsVector2D();
 				Vector2DNormalize( vecDelta2D );
 				if ( DotProduct2D( vecDelta2D, vecDirection.AsVector2D() ) > 0.8f )
@@ -210,9 +210,9 @@ void CWeaponStunStick::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseComba
 			Vector vecEnd;
 			VectorMA( pOperator->Weapon_ShootPosition(), 32, vecDirection, vecEnd );
 			// Stretch the swing box down to catch low level physics objects
-			CBaseEntity *pHurt = pOperator->CheckTraceHullAttack( pOperator->Weapon_ShootPosition(), vecEnd, 
+			CBaseEntity *pHurt = pOperator->CheckTraceHullAttack( pOperator->Weapon_ShootPosition(), vecEnd,
 				Vector(-16,-16,-40), Vector(16,16,16), GetDamageForActivity( GetActivity() ), DMG_CLUB, 0.5f, false );
-			
+
 			// did I hit someone?
 			if ( pHurt )
 			{
@@ -237,7 +237,7 @@ void CWeaponStunStick::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseComba
 						color32 white = {255,255,255,255};
 						UTIL_ScreenFade( pPlayer, white, 0.2f, 1.0f, FFADE_OUT|FFADE_PURGE|FFADE_STAYOUT );
 						bFlashed = true;
-						
+
 						pCop->KnockOutTarget( pHurt );
 
 						break;
@@ -248,7 +248,7 @@ void CWeaponStunStick::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseComba
 						pCop->StunnedTarget( pHurt );
 					}
 				}
-				
+
 				// Punch angles
 				if ( pPlayer != NULL && !(pPlayer->GetFlags() & FL_GODMODE) )
 				{
@@ -282,11 +282,11 @@ void CWeaponStunStick::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseComba
 						color32 red = {128,0,0,128};
 						UTIL_ScreenFade( pPlayer, red, 0.5f, 0.1f, FFADE_IN );
 					}
-					
+
 					// Force the player to drop anyting they were holding
 					pPlayer->ForceDropOfCarriedPhysObjects();
 				}
-				
+
 				// do effect?
 			}
 			else
@@ -328,7 +328,7 @@ void CWeaponStunStick::SetStunState( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponStunStick::Deploy( void )
@@ -339,7 +339,7 @@ bool CWeaponStunStick::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponStunStick::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
@@ -352,8 +352,8 @@ bool CWeaponStunStick::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &vecVelocity - 
+// Purpose:
+// Input  : &vecVelocity -
 //-----------------------------------------------------------------------------
 void CWeaponStunStick::Drop( const Vector &vecVelocity )
 {
@@ -363,7 +363,7 @@ void CWeaponStunStick::Drop( const Vector &vecVelocity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponStunStick::GetStunState( void )

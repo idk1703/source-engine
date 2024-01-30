@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -59,16 +59,16 @@ enum PSDMode_t
 //
 //////////////////////////////////////////////////////////////////////////
 
-struct PSDHeader_t 
+struct PSDHeader_t
 {
-    unsigned int	m_nSignature;
-    unsigned short	m_nVersion;
-    unsigned char	m_pReserved[6];
-    unsigned short	m_nChannels;
-    unsigned int	m_nRows;
-    unsigned int	m_nColumns;
-    unsigned short	m_nDepth;
-    unsigned short	m_nMode;
+	unsigned int	m_nSignature;
+	unsigned short	m_nVersion;
+	unsigned char	m_pReserved[6];
+	unsigned short	m_nChannels;
+	unsigned int	m_nRows;
+	unsigned int	m_nColumns;
+	unsigned short	m_nDepth;
+	unsigned short	m_nMode;
 };
 
 struct PSDPalette_t
@@ -273,12 +273,12 @@ static void PSDConvertToRGBA8888( int nChannelsCount, PSDMode_t mode, PSDPalette
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Deals with uncompressed channels
 //-----------------------------------------------------------------------------
-static int s_pChannelIndex[MODE_COUNT+1][4] = 
-{ 
+static int s_pChannelIndex[MODE_COUNT+1][4] =
+{
 	{ -1, -1, -1, -1 },
 	{ 0, 3, -1, -1 },		// MODE_GREYSCALE
 	{ 0, 3, -1, -1 },		// MODE_PALETTIZED
@@ -430,7 +430,7 @@ bool PSDReadFileRGBA8888( CUtlBuffer &buf, Bitmap_t &bitmap )
 		palette.m_pGreen = palette.m_pRed + nPaletteSize;
 		palette.m_pBlue = palette.m_pGreen + nPaletteSize;
 	}
- 	int nImageResourcesSize = BigLong( buf.GetUnsignedInt() );
+	int nImageResourcesSize = BigLong( buf.GetUnsignedInt() );
 	buf.SeekGet( CUtlBuffer::SEEK_CURRENT, nImageResourcesSize );
 	int nLayersSize = BigLong( buf.GetUnsignedInt() );
 	buf.SeekGet( CUtlBuffer::SEEK_CURRENT, nLayersSize );
@@ -544,7 +544,7 @@ PSDResFileInfo::ResFileInfoElement PSDResFileInfo::FindElement( ResFileInfo eTyp
 		// 1 : type
 		// 2 : length
 		// bytes[ length ]
-		
+
 		unsigned short uResLabel = BigShort( *( unsigned short * )( pvBuffer ) );
 		pvBuffer += 2;
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -38,7 +38,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEEnergySplash::C_TEEnergySplash( void )
 {
@@ -49,22 +49,22 @@ C_TEEnergySplash::C_TEEnergySplash( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEEnergySplash::~C_TEEnergySplash( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEEnergySplash::Precache( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEEnergySplash::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -87,4 +87,3 @@ BEGIN_RECV_TABLE_NOBASE(C_TEEnergySplash, DT_TEEnergySplash)
 	RecvPropVector(RECVINFO(m_vecDir)),
 	RecvPropInt(RECVINFO(m_bExplosive)),
 END_RECV_TABLE()
-

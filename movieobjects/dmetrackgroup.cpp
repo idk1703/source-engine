@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -41,7 +41,7 @@ void CDmeTrackGroup::OnDestruction()
 {
 	// NOTE: The track owner handles may still be pointing to us when we get destructed,
 	// but their handles will be invalid, so GetTrackGroup on a track
-	// will correctly return NULL. 
+	// will correctly return NULL.
 }
 
 
@@ -99,7 +99,7 @@ void CDmeTrackGroup::SetOwnerClip( CDmeClip *pClip )
 bool CDmeTrackGroup::IsFilmTrackGroup()
 {
 	CDmeClip *pOwnerClip = GetOwnerClip();
-	if ( pOwnerClip ) 
+	if ( pOwnerClip )
 		return pOwnerClip->GetFilmTrackGroup() == this;
 	return m_nMaxTrackCount == 1;
 }
@@ -446,7 +446,7 @@ void CDmeTrackGroup::RemoveEmptyTracks()
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Sort tracks by track type, then alphabetically
 //-----------------------------------------------------------------------------

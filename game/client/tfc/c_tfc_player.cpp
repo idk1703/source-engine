@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -51,7 +51,7 @@ public:
 		if ( pPlayer && !pPlayer->IsDormant() )
 		{
 			pPlayer->DoAnimationEvent( (PlayerAnimEvent_t)m_iEvent.Get(), m_nData );
-		}	
+		}
 	}
 
 public:
@@ -90,7 +90,7 @@ END_PREDICTION_DATA()
 // C_TFCPlayer implementation.
 // ------------------------------------------------------------------------------------------ //
 
-C_TFCPlayer::C_TFCPlayer() : 
+C_TFCPlayer::C_TFCPlayer() :
 	m_iv_angEyeAngles( "C_TFCPlayer::m_iv_angEyeAngles" )
 {
 	m_PlayerAnimState = CreatePlayerAnimState( this );
@@ -142,7 +142,7 @@ void C_TFCPlayer::PostDataUpdate( DataUpdateType_t updateType )
 	// C_BaseEntity assumes we're networking the entity's angles, so pretend that it
 	// networked the same value we already have.
 	SetNetworkAngles( GetLocalAngles() );
-	
+
 	BaseClass::PostDataUpdate( updateType );
 }
 
@@ -160,18 +160,18 @@ void C_TFCPlayer::ProcessMuzzleFlashEvent()
 	{
 		Vector vAttachment;
 		QAngle dummyAngles;
-		
+
 		C_WeaponTFCBase *pWeapon = m_Shared.GetActiveTFCWeapon();
-				
+
 		if ( pWeapon )
 		{
 			int iAttachment = pWeapon->LookupAttachment( "muzzle_flash" );
-				
+
 			if ( iAttachment > 0 )
 			{
 				float flScale = 1;
 				pWeapon->GetAttachment( iAttachment, vAttachment, dummyAngles );
-				
+
 				// The way the models are setup, the up vector points along the barrel.
 				Vector vForward, vRight, vUp;
 				AngleVectors( dummyAngles, &vForward, &vRight, &vUp );
@@ -184,14 +184,14 @@ void C_TFCPlayer::ProcessMuzzleFlashEvent()
 
 	Vector vAttachment;
 	QAngle dummyAngles;
-	
+
 	bool bFoundAttachment = GetAttachment( 1, vAttachment, dummyAngles );
 	// If we have an attachment, then stick a light on it.
 	if ( bFoundAttachment )
 	{
 		dlight_t *el = effects->CL_AllocDlight( LIGHT_INDEX_MUZZLEFLASH + index );
 		el->origin = vAttachment;
-		el->radius = 24; 
+		el->radius = 24;
 		el->decay = el->radius / 0.05f;
 		el->die = gpGlobals->curtime + 0.05f;
 		el->color.r = 255;

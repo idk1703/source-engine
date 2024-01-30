@@ -58,7 +58,7 @@ Button::Button(Panel *parent, const char *panelName, const wchar_t *wszText, Pan
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Button::Init()
 {
@@ -108,7 +108,7 @@ Button::~Button()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Button::SetButtonActivationType(ActivationType_t activationType)
 {
@@ -337,14 +337,14 @@ void Button::NavigateFrom()
 
 	OnKeyCodeReleased( KEY_XBUTTON_A );
 }
-	
+
 //-----------------------------------------------------------------------------
 // Purpose:	Paint button on screen
 //-----------------------------------------------------------------------------
 void Button::Paint(void)
 {
 	if ( !ShouldPaint() )
-		return; 
+		return;
 
 	BaseClass::Paint();
 
@@ -447,7 +447,7 @@ void Button::OnKillFocus()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Button::ApplySchemeSettings(IScheme *pScheme)
 {
@@ -600,7 +600,7 @@ IBorder *Button::GetBorder(bool depressed, bool armed, bool selected, bool keyfo
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: sets this button to be the button that is accessed by default 
+// Purpose: sets this button to be the button that is accessed by default
 //			when the user hits ENTER or SPACE
 //-----------------------------------------------------------------------------
 void Button::SetAsCurrentDefaultButton(int state)
@@ -622,7 +622,7 @@ void Button::SetAsCurrentDefaultButton(int state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: sets this button to be the button that is accessed by default 
+// Purpose: sets this button to be the button that is accessed by default
 //			when the user hits ENTER or SPACE
 //-----------------------------------------------------------------------------
 void Button::SetAsDefaultButton(int state)
@@ -659,7 +659,7 @@ void Button::SetArmedSound(const char *sound)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Button::SetDepressedSound(const char *sound)
 {
@@ -674,7 +674,7 @@ void Button::SetDepressedSound(const char *sound)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Button::SetReleasedSound(const char *sound)
 {
@@ -702,7 +702,7 @@ void Button::SetMouseClickEnabled(MouseCode code,bool state)
 	{
 		//set bit to 0
 		_mouseClickMask&=~(1<<((int)(code+1)));
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -741,7 +741,7 @@ void Button::SetCommand( KeyValues *message )
 
 //-----------------------------------------------------------------------------
 // Purpose: Peeks at the message to send when button is pressed
-// Input  :  - 
+// Input  :  -
 // Output : KeyValues
 //-----------------------------------------------------------------------------
 KeyValues *Button::GetCommand()
@@ -802,11 +802,11 @@ bool Button::RequestInfo(KeyValues *outputData)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool Button::CanBeDefaultButton(void)
 {
-    return true;
+	return true;
 }
 
 
@@ -829,7 +829,7 @@ void Button::GetSettings( KeyValues *outResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Button::ApplySettings( KeyValues *inResourceData )
 {
@@ -891,7 +891,7 @@ const char *Button::GetDescription( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Button::OnSetState(int state)
 {
@@ -900,7 +900,7 @@ void Button::OnSetState(int state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Button::OnCursorEntered()
 {
@@ -911,7 +911,7 @@ void Button::OnCursorEntered()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Button::OnCursorExited()
 {
@@ -922,13 +922,13 @@ void Button::OnCursorExited()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Button::OnMousePressed(MouseCode code)
 {
 	if (!IsEnabled())
 		return;
-	
+
 	if (!IsMouseClickEnabled(code))
 		return;
 
@@ -965,7 +965,7 @@ void Button::OnMousePressed(MouseCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Button::OnMouseDoublePressed(MouseCode code)
 {
@@ -973,7 +973,7 @@ void Button::OnMouseDoublePressed(MouseCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Button::OnMouseReleased(MouseCode code)
 {
@@ -1007,7 +1007,7 @@ void Button::OnMouseReleased(MouseCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Button::OnKeyCodePressed(KeyCode code)
 {
@@ -1040,7 +1040,7 @@ void Button::OnKeyCodePressed(KeyCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Button::OnKeyCodeReleased( KeyCode keycode )
 {
@@ -1065,9 +1065,9 @@ void Button::OnKeyCodeReleased( KeyCode keycode )
 	}
 	_buttonFlags.ClearFlag( BUTTON_KEY_DOWN );
 
-	if ( !( code == KEY_XSTICK1_UP || code == KEY_XSTICK1_DOWN || code == KEY_XSTICK1_LEFT || code == KEY_XSTICK1_RIGHT || 
-			code == KEY_XSTICK2_UP || code == KEY_XSTICK2_DOWN || code == KEY_XSTICK2_LEFT || code == KEY_XSTICK2_RIGHT || 
-			code == KEY_XBUTTON_UP || code == KEY_XBUTTON_DOWN || code == KEY_XBUTTON_LEFT || code == KEY_XBUTTON_RIGHT || 
+	if ( !( code == KEY_XSTICK1_UP || code == KEY_XSTICK1_DOWN || code == KEY_XSTICK1_LEFT || code == KEY_XSTICK1_RIGHT ||
+			code == KEY_XSTICK2_UP || code == KEY_XSTICK2_DOWN || code == KEY_XSTICK2_LEFT || code == KEY_XSTICK2_RIGHT ||
+			code == KEY_XBUTTON_UP || code == KEY_XBUTTON_DOWN || code == KEY_XBUTTON_LEFT || code == KEY_XBUTTON_RIGHT ||
 			keycode == KEY_UP|| keycode == KEY_DOWN || keycode == KEY_LEFT || keycode == KEY_RIGHT ) )
 	{
 		SetArmed( false );

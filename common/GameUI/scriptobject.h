@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -147,7 +147,7 @@ public:
 	CInfoDescription( void );
 
 	virtual void WriteScriptHeader( FileHandle_t fp ) OVERRIDE;
-	virtual void WriteFileHeader( FileHandle_t fp ) OVERRIDE; 
+	virtual void WriteFileHeader( FileHandle_t fp ) OVERRIDE;
 };
 
 void UTIL_StripInvalidCharacters( char *pszInput, int maxlen );

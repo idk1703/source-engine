@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -192,7 +192,7 @@ void FloatBitMap_t::ComputeVertexPositionsAndNormals( float flHeightScale, Vecto
 }
 
 FloatBitMap_t *FloatBitMap_t::ComputeSelfShadowedBumpmapFromHeightInAlphaChannel(
-	float bump_scale, int nrays_to_trace_per_pixel, 
+	float bump_scale, int nrays_to_trace_per_pixel,
 	uint32 nOptionFlags ) const
 {
 
@@ -322,7 +322,7 @@ FloatBitMap_t *FloatBitMap_t::ComputeSelfShadowedBumpmapFromHeightInAlphaChannel
 				ret->Pixel( nX, nY, 2 ) *= flScale;
 			}
 	}
-	
+
 	delete[] verts;
 	delete[] trace_directions;
 	delete[] normals;
@@ -347,4 +347,3 @@ FloatBitMap_t *FloatBitMap_t::ComputeBumpmapFromHeightInAlphaChannel( float bump
 		}
 	return ret;
 }
-

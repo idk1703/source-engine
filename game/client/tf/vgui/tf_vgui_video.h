@@ -23,7 +23,7 @@ public:
 	virtual void OnClose();
 	virtual void OnKeyCodePressed( vgui::KeyCode code ){}
 	virtual void ApplySettings( KeyValues *inResourceData );
-	
+
 	virtual void GetPanelPos( int &xpos, int &ypos );
 	virtual void Shutdown();
 

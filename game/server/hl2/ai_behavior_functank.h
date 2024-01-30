@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -26,24 +26,24 @@ enum
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CAI_FuncTankBehavior : public CAI_SimpleBehavior
 {
 	DECLARE_CLASS( CAI_FuncTankBehavior, CAI_SimpleBehavior );
 	DEFINE_CUSTOM_SCHEDULE_PROVIDER;
 	DECLARE_DATADESC();
-	
+
 public:
 	// Contructor/Deconstructor
 	CAI_FuncTankBehavior();
 	~CAI_FuncTankBehavior();
 
 	void UpdateOnRemove();
-	
+
 	// Identifier
 	const char *GetName() {	return "FuncTank"; }
-	
+
 	// Schedule
 	bool 		CanSelectSchedule();
 	void		BeginScheduleSelection();
@@ -54,7 +54,7 @@ public:
 
 	// Conditions:
 	virtual void GatherConditions();
-	
+
 	enum
 	{
 		SCHED_MOVE_TO_FUNCTANK = BaseClass::NEXT_SCHEDULE,
@@ -62,11 +62,11 @@ public:
 		SCHED_SCAN_WITH_FUNCTANK,
 		SCHED_FAIL_MOVE_TO_FUNCTANK,
 	};
-	
+
 	// Tasks
 	void		StartTask( const Task_t *pTask );
 	void		RunTask( const Task_t *pTask );
-	
+
 	enum
 	{
 		TASK_GET_PATH_TO_FUNCTANK = BaseClass::NEXT_TASK,
@@ -83,7 +83,7 @@ public:
 	{
 		COND_FUNCTANK_DISMOUNT = BaseClass::NEXT_CONDITION,
 		NEXT_CONDITION,
-	};	
+	};
 
 	// Combat.
 	CBaseEntity *BestEnemy( void );
@@ -105,10 +105,10 @@ public:
 	bool IsMounted( void )				{ return m_bMounted; }
 
 private:
-	
-	// Schedule 
+
+	// Schedule
 	int			SelectSchedule();
-	
+
 private:
 
 	CHandle<CFuncTank>	m_hFuncTank;

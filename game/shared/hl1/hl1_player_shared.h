@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -32,7 +32,7 @@ enum PlayerAnimEvent_t
 	PLAYERANIMEVENT_JUMP,
 	PLAYERANIMEVENT_RELOAD,
 	PLAYERANIMEVENT_DIE,
-	
+
 	PLAYERANIMEVENT_COUNT
 };
 

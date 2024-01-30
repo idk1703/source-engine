@@ -70,7 +70,7 @@ float AssociatedLegendrePolynomial( int nL, int nM, float flX )
 	if ( nL == nM )
 		return flPmm;
 	float flPmmp1 = flX * ( 2.0 * nM + 1.0 ) * flPmm;
-	if ( nL == nM + 1 ) 
+	if ( nL == nM + 1 )
 		return flPmmp1;
 	float flPll = 0.;
 	for( int nLL = nM + 2 ; nLL <= nL; nLL++ )
@@ -88,7 +88,7 @@ static float SHNormalizationFactor( int nL, int nM )
 	return sqrt( flTemp );
 }
 
-#define SQRT_2 1.414213562373095 
+#define SQRT_2 1.414213562373095
 
 FORCEINLINE float SphericalHarmonic( int nL, int nM, float flTheta, float flPhi, float flCosTheta )
 {
@@ -99,7 +99,7 @@ FORCEINLINE float SphericalHarmonic( int nL, int nM, float flTheta, float flPhi,
 		return SQRT_2 * SHNormalizationFactor( nL, nM ) * cos ( nM * flPhi ) *
 			AssociatedLegendrePolynomial( nL, nM, flCosTheta );
 
-	return 
+	return
 		SQRT_2 * SHNormalizationFactor( nL, -nM ) * sin( -nM * flPhi ) * AssociatedLegendrePolynomial( nL, -nM, flCosTheta );
 
 }
@@ -121,4 +121,3 @@ float SphericalHarmonic( int nL, int nM, Vector const &vecDirection )
 	}
 	return SphericalHarmonic( nL, nM, flTheta, flPhi, cos( flTheta ) );
 }
-

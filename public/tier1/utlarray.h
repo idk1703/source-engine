@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -28,7 +28,7 @@
 struct base_array_t
 {
 public:
-	static const bool IsUtlArray = true; // Used to match this at compiletime 		
+	static const bool IsUtlArray = true; // Used to match this at compiletime
 };
 
 #if defined( GNUC ) && defined( DEBUG )
@@ -49,7 +49,7 @@ public:
 	CUtlArray();
 	CUtlArray( T* pMemory, size_t count );
 	~CUtlArray();
-	
+
 	CUtlArray<T, MAX_SIZE>& operator=( const CUtlArray<T, MAX_SIZE> &other );
 	CUtlArray( CUtlArray const& vec );
 
@@ -82,7 +82,7 @@ public:
 	void CopyArray( const T *pArray, size_t count );
 
 	void Swap( CUtlArray< T, MAX_SIZE > &vec );
-	
+
 	// Finds an element (element needs operator== defined)
 	int Find( const T& src ) const;
 	void FillWithValue( const T& src );
@@ -141,38 +141,38 @@ inline CUtlArray<T, MAX_SIZE>::CUtlArray( CUtlArray const& vec )
 
 template< typename T, size_t MAX_SIZE >
 typename CUtlArray<T, MAX_SIZE>::iterator CUtlArray<T, MAX_SIZE>::begin()
-{ 
-	return Base(); 
+{
+	return Base();
 }
 
 template< typename T, size_t MAX_SIZE >
 typename CUtlArray<T, MAX_SIZE>::const_iterator CUtlArray<T, MAX_SIZE>::begin() const
-{ 
-	return Base(); 
+{
+	return Base();
 }
 
 template< typename T, size_t MAX_SIZE >
 typename CUtlArray<T, MAX_SIZE>::iterator CUtlArray<T, MAX_SIZE>::end()
-{ 
-	return Base() + Count(); 
+{
+	return Base() + Count();
 }
 
 template< typename T, size_t MAX_SIZE >
 typename CUtlArray<T, MAX_SIZE>::const_iterator CUtlArray<T, MAX_SIZE>::end() const
-{ 
-	return Base() + Count(); 
+{
+	return Base() + Count();
 }
 
 template< typename T, size_t MAX_SIZE >
-inline T *CUtlArray<T, MAX_SIZE>::Base()								
-{ 
-	return &m_Memory[0]; 
+inline T *CUtlArray<T, MAX_SIZE>::Base()
+{
+	return &m_Memory[0];
 }
 
 template< typename T, size_t MAX_SIZE >
-inline const T *CUtlArray<T, MAX_SIZE>::Base() const					
-{ 
-	return &m_Memory[0]; 
+inline const T *CUtlArray<T, MAX_SIZE>::Base() const
+{
+	return &m_Memory[0];
 }
 
 //-----------------------------------------------------------------------------
@@ -246,7 +246,7 @@ inline bool CUtlArray<T, MAX_SIZE>::IsValidIndex( int i ) const
 {
 	return (i >= 0) && (i < MAX_SIZE);
 }
- 
+
 
 //-----------------------------------------------------------------------------
 // Returns in invalid index

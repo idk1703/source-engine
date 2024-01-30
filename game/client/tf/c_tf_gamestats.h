@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #ifndef C_TF_GAMESTATS_H
@@ -138,7 +138,7 @@ public:
 class TF_Gamestats_StoreEvent : public TF_Gamestats_ItemEvent
 {
 public:
-	TF_Gamestats_StoreEvent( int in_eventNum, CEconItemView* in_item, 
+	TF_Gamestats_StoreEvent( int in_eventNum, CEconItemView* in_item,
 		const char* in_panelName, int in_classId, const cart_item_t* in_cartItem,
 		int in_checkoutAttempts, const char* in_storeError, int in_totalPrice, int in_currencyCode );
 
@@ -285,7 +285,7 @@ public:
 	virtual void Event_PlayerFiredWeapon( C_TFPlayer *pPlayer, bool bCritical );
 	virtual void Event_Catalog( int eventID, const char* filter=NULL, CEconItemView* item=NULL );
 	virtual void Event_Crafting( int eventID, CEconItemView* item=NULL, int numAttempts=0, int recipeFound=0 );
-	virtual void Event_Store( int eventID, CEconItemView* item=NULL, const char* panelName=NULL, 
+	virtual void Event_Store( int eventID, CEconItemView* item=NULL, const char* panelName=NULL,
 		int classId=0, const cart_item_t* in_cartItem=NULL, int in_checkoutAttempts=0, const char* storeError=NULL, int in_totalPrice=0, int in_currencyCode=0 );
 	virtual void Event_ItemTransaction( int eventID, CEconItemView* item, const char* pszReason=NULL, int iQuality=0 );
 	virtual void Event_Trading( int eventID, CEconItemView* item=NULL, bool localPlayerIsPartyA=false,

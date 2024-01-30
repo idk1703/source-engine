@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -25,12 +25,12 @@ class CMapFrustum : public CMapHelper
 public:
 
 	DECLARE_MAPCLASS(CMapFrustum,CMapHelper);
-	
+
 	//
 	// Factory for building from a list of string parameters.
 	//
 	static CMapClass *Create(CHelperInfo *pInfo, CMapEntity *pParent);
-	
+
 	//
 	// Construction/destruction:
 	//
@@ -76,7 +76,7 @@ protected:
 	float m_flPitchScale;
 	float m_fBrightness;
 
-	QAngle m_Angles;	
+	QAngle m_Angles;
 	char m_szFOVKeyName[KEYVALUE_MAX_KEY_LENGTH];
 	char m_szColorKeyName[KEYVALUE_MAX_KEY_LENGTH];
 	char m_szNearPlaneKeyName[KEYVALUE_MAX_KEY_LENGTH];

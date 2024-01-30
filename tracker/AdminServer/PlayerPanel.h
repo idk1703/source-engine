@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -32,7 +32,7 @@ public:
 	~CPlayerPanel();
 
 	// returns the keyvalues for the currently selected row
-	KeyValues *GetSelected(); 
+	KeyValues *GetSelected();
 
 protected:
 	// property page handlers

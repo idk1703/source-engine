@@ -52,5 +52,3 @@ ActionResult< CTFBot > CTFBotNavEntWait::Update( CTFBot *me, float interval )
 
 	return Continue();
 }
-
-

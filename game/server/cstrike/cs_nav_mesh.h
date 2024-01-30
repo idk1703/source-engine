@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -12,7 +12,7 @@
 //
 // Author: Michael S. Booth (mike@turtlerockstudios.com), 2003
 //
-// NOTE: The Navigation code uses Doxygen-style comments. If you run Doxygen over this code, it will 
+// NOTE: The Navigation code uses Doxygen-style comments. If you run Doxygen over this code, it will
 // auto-generate documentation.  Visit www.doxygen.org to download the system for free.
 //
 
@@ -29,7 +29,7 @@
 
 class CNavArea;
 class CCSNavArea;
-class CBaseEntity; 
+class CBaseEntity;
 
 //--------------------------------------------------------------------------------------------------------
 /**

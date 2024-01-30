@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,7 +24,7 @@ BEGIN_VS_SHADER_FLAGS( Overlay_Fit, "Help for TerrainTest2", SHADER_NOT_EDITABLE
 	{
 		// No texture means no self-illum or env mask in base alpha
 		CLEAR_FLAGS( MATERIAL_VAR_BASEALPHAENVMAPMASK );
-		
+
 		// If in decal mode, no debug override...
 		if (IS_FLAG_SET(MATERIAL_VAR_DECAL))
 		{
@@ -87,4 +87,3 @@ BEGIN_VS_SHADER_FLAGS( Overlay_Fit, "Help for TerrainTest2", SHADER_NOT_EDITABLE
 		Draw();
 	}
 END_SHADER
-

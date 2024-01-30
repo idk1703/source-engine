@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -74,7 +74,7 @@ public:
 	// set the enabled state of an item
 	virtual void SetItemEnabled(const char *itemText, bool state);
 	virtual void SetItemEnabled(int itemID, bool state);
-	
+
 	// Removes a single item
 	void DeleteItem( int itemID );
 
@@ -92,7 +92,7 @@ public:
 	// Return true if the combobox current has the dropdown menu open
 	virtual bool IsDropdownVisible();
 
-	// Activate the item in the menu list,as if that 
+	// Activate the item in the menu list,as if that
 	// menu item had been selected by the user
 	MESSAGE_FUNC_INT( ActivateItem, "ActivateItem", itemID );
 	void ActivateItemByRow(int row);
@@ -150,11 +150,11 @@ protected:
 #ifdef _X360
 	virtual void OnKeyCodePressed(KeyCode code);
 #endif
-    virtual void OnKeyCodeTyped(KeyCode code);
+	virtual void OnKeyCodeTyped(KeyCode code);
 	virtual void OnKeyTyped(wchar_t unichar);
 
 	void SelectMenuItem(int itemToSelect);
-    void MoveAlongMenuItemList(int direction);
+	void MoveAlongMenuItemList(int direction);
 	void MoveToFirstMenuItem();
 	void MoveToLastMenuItem();
 private:

@@ -12,7 +12,7 @@
 #include "weapon_combatshield.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseCombatCharacter::Release( void )
 {
@@ -22,7 +22,7 @@ void C_BaseCombatCharacter::Release( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseCombatCharacter::SetDormant( bool bDormant )
 {
@@ -47,8 +47,8 @@ void C_BaseCombatCharacter::SetDormant( bool bDormant )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_BaseCombatCharacter::OnPreDataChanged( DataUpdateType_t updateType )
 {
@@ -58,7 +58,7 @@ void C_BaseCombatCharacter::OnPreDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseCombatCharacter::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -127,7 +127,7 @@ void C_BaseCombatCharacter::PowerupEnd( int iPowerup )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseCombatCharacter::RemoveAllPowerups( void )
 {
@@ -145,7 +145,7 @@ void C_BaseCombatCharacter::RemoveAllPowerups( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseCombatCharacter::ClientThink( void )
 {
@@ -192,7 +192,7 @@ void C_BaseCombatCharacter::AddEMPEffect( float flSize )
 		Vector vOffset = RandomVector( -1, 1 );
 		VectorNormalize( vOffset );
 		vPos = vCenter + (vOffset * RandomFloat( 0, flSize ));
-		
+
 		pEmitter->SetSortOrigin( vPos );
 		SimpleParticle *pParticle = pEmitter->AddSimpleParticle( hParticleMaterial, vPos );
 		if ( pParticle )
@@ -203,7 +203,7 @@ void C_BaseCombatCharacter::AddEMPEffect( float flSize )
 			pParticle->m_flRollDelta = 0;
 			pParticle->m_flDieTime = 0.4f;
 			pParticle->m_flLifetime = 0;
-			pParticle->m_uchColor[0] = 255; 
+			pParticle->m_uchColor[0] = 255;
 			pParticle->m_uchColor[1] = 255;
 			pParticle->m_uchColor[2] = 255;
 			pParticle->m_uchStartAlpha = 32;
@@ -242,7 +242,7 @@ void C_BaseCombatCharacter::AddBuffEffect( float flSize )
 		Vector vOffset = RandomVector( -1, 1 );
 		VectorNormalize( vOffset );
 		vPos = vCenter + (vOffset * RandomFloat( 0, flSize ));
-		
+
 		SimpleParticle *pParticle = pEmitter->AddSimpleParticle( hParticleMaterial, vPos );
 		if ( pParticle )
 		{
@@ -270,11 +270,11 @@ C_WeaponCombatShield *C_BaseCombatCharacter::GetShield( void )
 	C_BaseCombatWeapon *pWeapon;
 	if ( GetTeamNumber() == TEAM_ALIENS )
 	{
-		pWeapon = Weapon_OwnsThisType( "weapon_combat_shield_alien" );	
+		pWeapon = Weapon_OwnsThisType( "weapon_combat_shield_alien" );
 	}
 	else
 	{
-		pWeapon = Weapon_OwnsThisType( "weapon_combat_shield" );	
+		pWeapon = Weapon_OwnsThisType( "weapon_combat_shield" );
 	}
 
 	if ( !pWeapon )

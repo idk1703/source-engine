@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -42,8 +42,8 @@ protected:
 	virtual Color GetButtonFgColor();
 	virtual void ApplySchemeSettings(IScheme *pScheme);
 
-    virtual bool CanBeDefaultButton(void);
-    virtual void OnKeyCodePressed(KeyCode code);
+	virtual bool CanBeDefaultButton(void);
+	virtual void OnKeyCodePressed(KeyCode code);
 
 private:
 	Color _selectedColor;

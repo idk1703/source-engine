@@ -91,7 +91,7 @@ void InitWeaponSheenPass( CBaseVSShader *pShader, IMaterialVar** params, WeaponS
 	{
 		pShader->LoadTexture( info.m_nSheenMapMask );
 	}
-	
+
 }
 
 void DrawWeaponSheenPass( CBaseVSShader *pShader, IMaterialVar** params, IShaderDynamicAPI *pShaderAPI,
@@ -185,7 +185,7 @@ void DrawWeaponSheenPass( CBaseVSShader *pShader, IMaterialVar** params, IShader
 		// Reset render state manually since we're drawing from two materials
 		pShaderAPI->SetDefaultState();
 
-		// Set Vertex Shader Constants 
+		// Set Vertex Shader Constants
 		if ( ( bBumpMapping ) && ( info.m_nBumpTransform != -1 ) )
 		{
 			pShader->SetVertexShaderTextureTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, info.m_nBumpTransform );
@@ -242,13 +242,13 @@ void DrawWeaponSheenPass( CBaseVSShader *pShader, IMaterialVar** params, IShader
 		{
 			pShader->BindTexture( SHADER_SAMPLER2, info.m_nSheenMap, -1 );
 		}
-		
+
 		if ( info.m_nSheenMapMask != -1 )
 		{
 			pShader->BindTexture( SHADER_SAMPLER3, info.m_nSheenMapMask, info.m_nSheenMapMaskFrame );
 		}
 
-		// Set Pixel Shader Constants 
+		// Set Pixel Shader Constants
 		float vEyePos[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 		pShaderAPI->GetWorldSpaceCameraPosition( vEyePos );
 		pShaderAPI->SetPixelShaderConstant( 5, vEyePos, 1 );
@@ -286,6 +286,6 @@ bool ShouldDrawMaterialSheen ( IMaterialVar** params, WeaponSheenPassVars_t &inf
 	{
 		return true;
 	}
-	
+
 	return false;
 }

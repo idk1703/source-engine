@@ -32,7 +32,7 @@
 
 ConVar	npc_bug_warrior_health( "npc_bug_warrior_health", "150" );
 ConVar	npc_bug_warrior_swipe_damage( "npc_bug_warrior_swipe_damage", "20" );
- 
+
 BEGIN_DATADESC( CNPC_Bug_Warrior )
 
 	DEFINE_FIELD( m_flIdleDelay,		FIELD_FLOAT ),
@@ -88,7 +88,7 @@ enum BugTasks
 //==================================================
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CNPC_Bug_Warrior::CNPC_Bug_Warrior( void )
 {
@@ -99,7 +99,7 @@ CNPC_Bug_Warrior::CNPC_Bug_Warrior( void )
 //-----------------------------------------------------------------------------
 // Purpose: Setup our schedules and tasks, etc.
 //-----------------------------------------------------------------------------
-void CNPC_Bug_Warrior::InitCustomSchedules( void ) 
+void CNPC_Bug_Warrior::InitCustomSchedules( void )
 {
 	INIT_CUSTOM_AI( CNPC_Bug_Warrior );
 
@@ -119,7 +119,7 @@ void CNPC_Bug_Warrior::InitCustomSchedules( void )
 	ADD_CUSTOM_CONDITION( CNPC_Bug_Warrior, COND_WBUG_STOP_FLEEING );
 	ADD_CUSTOM_CONDITION( CNPC_Bug_Warrior, COND_WBUG_RETURN_TO_BUGHOLE );
 	ADD_CUSTOM_CONDITION( CNPC_Bug_Warrior, COND_WBUG_ASSIST_FELLOW_BUG );
-		
+
 	// Tasks
 	ADD_CUSTOM_TASK( CNPC_Bug_Warrior,	TASK_WBUG_GET_PATH_TO_FLEE );
 	ADD_CUSTOM_TASK( CNPC_Bug_Warrior,	TASK_WBUG_GET_PATH_TO_PATROL );
@@ -140,7 +140,7 @@ void CNPC_Bug_Warrior::InitCustomSchedules( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Warrior::Spawn( void )
 {
@@ -153,7 +153,7 @@ void CNPC_Bug_Warrior::Spawn( void )
 	SetDefaultEyeOffset();
 	SetViewOffset( (WorldAlignMins() + WorldAlignMaxs()) * 0.5 );	// See from my center
 	SetDistLook( 1024.0 );
-	
+
 	SetNavType(NAV_GROUND);
 	m_NPCState		= NPC_STATE_NONE;
 	SetBloodColor( BLOOD_COLOR_YELLOW );
@@ -179,7 +179,7 @@ void CNPC_Bug_Warrior::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Warrior::Precache( void )
 {
@@ -194,7 +194,7 @@ void CNPC_Bug_Warrior::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CNPC_Bug_Warrior::SelectSchedule( void )
@@ -290,9 +290,9 @@ int CNPC_Bug_Warrior::SelectSchedule( void )
 // Input  : Type - schedule type
 // Output : int - translated type
 //-----------------------------------------------------------------------------
-int CNPC_Bug_Warrior::TranslateSchedule( int scheduleType ) 
+int CNPC_Bug_Warrior::TranslateSchedule( int scheduleType )
 {
-	if ( scheduleType == SCHED_CHASE_ENEMY ) 
+	if ( scheduleType == SCHED_CHASE_ENEMY )
 	{
 		// Tell my squad that I'm attacking this guy
 		if ( m_pSquad )
@@ -306,8 +306,8 @@ int CNPC_Bug_Warrior::TranslateSchedule( int scheduleType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Warrior::StartTask( const Task_t *pTask )
 {
@@ -363,7 +363,7 @@ void CNPC_Bug_Warrior::StartTask( const Task_t *pTask )
 				return;
 			}
 
-			SetHintNode( CAI_HintManager::FindHint( this, HINT_BUG_PATROL_POINT, bits_HINT_NODE_RANDOM, 4096 ) ); 
+			SetHintNode( CAI_HintManager::FindHint( this, HINT_BUG_PATROL_POINT, bits_HINT_NODE_RANDOM, 4096 ) );
 			if( !GetHintNode() )
 			{
 				TaskFail("Couldn't find patrol node");
@@ -438,8 +438,8 @@ void CNPC_Bug_Warrior::StartTask( const Task_t *pTask )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Warrior::RunTask( const Task_t *pTask )
 {
@@ -447,7 +447,7 @@ void CNPC_Bug_Warrior::RunTask( const Task_t *pTask )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNPC_Bug_Warrior::FValidateHintType(CAI_Hint *pHint)
 {
@@ -474,7 +474,7 @@ bool CNPC_Bug_Warrior::HandleInteraction( int interactionType, void *data, CBase
 			return false;
 
 		// Interrupt me if I'm fleeing
-		if ( IsCurSchedule(SCHED_WBUG_FLEE_ENEMY) || 
+		if ( IsCurSchedule(SCHED_WBUG_FLEE_ENEMY) ||
 			 IsCurSchedule(SCHED_WBUG_CHASE_ENEMY_FAILED) )
 		{
 			SetCondition( COND_WBUG_STOP_FLEEING );
@@ -487,8 +487,8 @@ bool CNPC_Bug_Warrior::HandleInteraction( int interactionType, void *data, CBase
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pVictim - 
+// Purpose:
+// Input  : *pVictim -
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Warrior::Event_Killed( const CTakeDamageInfo &info )
 {
@@ -503,7 +503,7 @@ void CNPC_Bug_Warrior::Event_Killed( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Warrior::MeleeAttack( float distance, float damage, QAngle& viewPunch, Vector& shove )
 {
@@ -517,12 +517,12 @@ void CNPC_Bug_Warrior::MeleeAttack( float distance, float damage, QAngle& viewPu
 	VectorNormalize( vecForward );
 	Vector vEnd = vStart + (vecForward * distance );
 
-	// Use half the size of my target for the box 
+	// Use half the size of my target for the box
 	Vector vecHalfTraceBox = (GetEnemy()->WorldAlignMaxs() - GetEnemy()->WorldAlignMins()) * 0.25;
 	//NDebugOverlay::Box( vStart, -Vector(10,10,10), Vector(10,10,10), 0,255,0,20,1.0);
 	//NDebugOverlay::Box( GetEnemy()->EyePosition(), -Vector(10,10,10), Vector(10,10,10), 255,255,255,20,1.0);
 	CBaseEntity *pHurt = CheckTraceHullAttack( vStart, vEnd, -vecHalfTraceBox, vecHalfTraceBox, damage, DMG_SLASH );
-	
+
 	if ( pHurt )
 	{
 		CBasePlayer *pPlayer = ToBasePlayer( pHurt );
@@ -530,7 +530,7 @@ void CNPC_Bug_Warrior::MeleeAttack( float distance, float damage, QAngle& viewPu
 		if ( pPlayer )
 		{
 			//Kick the player angles
-			pPlayer->ViewPunch( viewPunch );	
+			pPlayer->ViewPunch( viewPunch );
 
 			Vector	dir = pHurt->GetAbsOrigin() - GetAbsOrigin();
 			VectorNormalize(dir);
@@ -553,8 +553,8 @@ void CNPC_Bug_Warrior::MeleeAttack( float distance, float damage, QAngle& viewPu
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEvent - 
+// Purpose:
+// Input  : *pEvent -
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Warrior::HandleAnimEvent( animevent_t *pEvent )
 {
@@ -577,11 +577,11 @@ void CNPC_Bug_Warrior::HandleAnimEvent( animevent_t *pEvent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pInflictor - 
-//			*pAttacker - 
-//			flDamage - 
-//			bitsDamageType - 
+// Purpose:
+// Input  : *pInflictor -
+//			*pAttacker -
+//			flDamage -
+//			bitsDamageType -
 // Output : int
 //-----------------------------------------------------------------------------
 int CNPC_Bug_Warrior::OnTakeDamage_Alive( const CTakeDamageInfo &info )
@@ -592,7 +592,7 @@ int CNPC_Bug_Warrior::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Warrior::IdleSound( void )
 {
@@ -601,7 +601,7 @@ void CNPC_Bug_Warrior::IdleSound( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Warrior::PainSound( const CTakeDamageInfo &info )
 {
@@ -609,8 +609,8 @@ void CNPC_Bug_Warrior::PainSound( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &vecTarget - 
+// Purpose:
+// Input  : &vecTarget -
 // Output : float
 //-----------------------------------------------------------------------------
 float CNPC_Bug_Warrior::CalcIdealYaw( const Vector &vecTarget )
@@ -625,21 +625,21 @@ float CNPC_Bug_Warrior::CalcIdealYaw( const Vector &vecTarget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CNPC_Bug_Warrior::MaxYawSpeed( void )
 {
 	switch ( GetActivity() )
 	{
-	case ACT_IDLE:		
+	case ACT_IDLE:
 		return 15.0f;
 		break;
-	
+
 	case ACT_WALK:
 		return 15.0f;
 		break;
-	
+
 	default:
 	case ACT_RUN:
 		return 30.0f;
@@ -650,7 +650,7 @@ float CNPC_Bug_Warrior::MaxYawSpeed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Bug_Warrior::ShouldPlayIdleSound( void )
@@ -675,9 +675,9 @@ bool CNPC_Bug_Warrior::ShouldPlayIdleSound( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flDot - 
-//			flDist - 
+// Purpose:
+// Input  : flDot -
+//			flDist -
 // Output : int
 //-----------------------------------------------------------------------------
 int CNPC_Bug_Warrior::MeleeAttack1Conditions( float flDot, float flDist )
@@ -699,11 +699,11 @@ int CNPC_Bug_Warrior::MeleeAttack1Conditions( float flDot, float flDist )
 	vec2DPrDir	= ( vecPrPos - GetAbsOrigin() ).AsVector2D();
 
 	Vector vecBodyDir;
-	
+
 	BodyDirection2D( &vecBodyDir );
 
 	Vector2D	vec2DBodyDir = vecBodyDir.AsVector2D();
-	
+
 	flPrDot	= DotProduct2D (vec2DPrDir, vec2DBodyDir );
 
 	if ( flPrDist > BUG_WARRIOR_MELEE1_RANGE )
@@ -746,7 +746,7 @@ bool CNPC_Bug_Warrior::ShouldFlee( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Bug_Warrior::IsAlone( void )
@@ -763,7 +763,7 @@ bool CNPC_Bug_Warrior::IsAlone( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Warrior::SetBugHole( CMaker_BugHole *pBugHole )
 {
@@ -793,7 +793,7 @@ void CNPC_Bug_Warrior::Assist( CAI_BaseNPC *pBug )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNPC_Bug_Warrior::StartPatrolling( string_t iszPatrolPathName )
 {
@@ -824,7 +824,7 @@ bool CNPC_Bug_Warrior::IsPatrolling( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Warrior::AlertSound( void )
 {
@@ -935,7 +935,7 @@ AI_DEFINE_SCHEDULE
 //=========================================================
 // Flee from our enemy
 //=========================================================
-AI_DEFINE_SCHEDULE 
+AI_DEFINE_SCHEDULE
 (
 	SCHED_WBUG_FLEE_ENEMY,
 
@@ -956,7 +956,7 @@ AI_DEFINE_SCHEDULE
 //=========================================================
 // Walk a set of patrol points
 //=========================================================
-AI_DEFINE_SCHEDULE 
+AI_DEFINE_SCHEDULE
 (
 	SCHED_WBUG_PATROL,
 
@@ -980,7 +980,7 @@ AI_DEFINE_SCHEDULE
 //=========================================================
 // Return to defend a bughole
 //=========================================================
-AI_DEFINE_SCHEDULE 
+AI_DEFINE_SCHEDULE
 (
 	SCHED_WBUG_RETURN_TO_BUGHOLE,
 
@@ -999,7 +999,7 @@ AI_DEFINE_SCHEDULE
 //=========================================================
 // Return to a bughole and remove myself
 //=========================================================
-AI_DEFINE_SCHEDULE 
+AI_DEFINE_SCHEDULE
 (
 	SCHED_WBUG_RETURN_TO_BUGHOLE_AND_REMOVE,
 
@@ -1021,7 +1021,7 @@ AI_DEFINE_SCHEDULE
 //=========================================================
 // Move to assist a fellow bug
 //=========================================================
-AI_DEFINE_SCHEDULE 
+AI_DEFINE_SCHEDULE
 (
 	SCHED_WBUG_ASSIST_FELLOW_BUG,
 

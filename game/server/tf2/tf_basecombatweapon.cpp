@@ -20,7 +20,7 @@ IMPLEMENT_SERVERCLASS_ST(CTFMachineGun, DT_TFMachineGun )
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMachineGun::PrimaryAttack( void )
 {
@@ -28,7 +28,7 @@ void CTFMachineGun::PrimaryAttack( void )
 	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
 	if (!pPlayer)
 		return;
-	
+
 	// Abort here to handle burst and auto fire modes
 	if ( (GetMaxClip1() != -1 && m_iClip1 == 0) || (GetMaxClip1() == -1 && !pPlayer->GetAmmoCount(m_iPrimaryAmmoType) ) )
 		return;
@@ -36,7 +36,7 @@ void CTFMachineGun::PrimaryAttack( void )
 	pPlayer->DoMuzzleFlash();
 
 
-	// To make the firing framerate independent, we may have to fire more than one bullet here on low-framerate systems, 
+	// To make the firing framerate independent, we may have to fire more than one bullet here on low-framerate systems,
 	// especially if the weapon we're firing has a really fast rate of fire.
 	if ( GetSequence() != SelectWeightedSequence( ACT_VM_PRIMARYATTACK ))
 	{
@@ -90,7 +90,7 @@ void CTFMachineGun::PrimaryAttack( void )
 	if (!m_iClip1 && pPlayer->GetAmmoCount(m_iPrimaryAmmoType) <= 0)
 	{
 		// HEV suit - indicate out of ammo condition
-		pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0); 
+		pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0);
 	}
 
 	PlayAttackAnimation( GetPrimaryAttackActivity() );
@@ -102,7 +102,7 @@ void CTFMachineGun::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const Vector& CTFMachineGun::GetBulletSpread( void )
 {
@@ -111,7 +111,7 @@ const Vector& CTFMachineGun::GetBulletSpread( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMachineGun::FireBullets( CBaseTFCombatWeapon *pWeapon, int cShots, const Vector &vecSrc, const Vector &vecDirShooting, const Vector &vecSpread, float flDistance, int iBulletType, int iTracerFreq)
 {
@@ -129,7 +129,7 @@ void CTFMachineGun::FireBullets( CBaseTFCombatWeapon *pWeapon, int cShots, const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFMachineGun::GetFireRate( void )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,12 +20,12 @@ END_DATADESC()
 
 
 
-CTFNailgunNail *CTFNailgunNail::CreateNail( 
-	bool fSendClientNail, 
-	Vector vecOrigin, 
-	QAngle vecAngles, 
-	CBaseEntity *pOwner, 
-	CBaseEntity *pLauncher, 
+CTFNailgunNail *CTFNailgunNail::CreateNail(
+	bool fSendClientNail,
+	Vector vecOrigin,
+	QAngle vecAngles,
+	CBaseEntity *pOwner,
+	CBaseEntity *pLauncher,
 	bool fMakeClientNail )
 {
 	CTFNailgunNail *pNail = (CTFNailgunNail*)CreateEntityByName( "tf_nailgun_nail" );
@@ -70,9 +70,9 @@ CTFNailgunNail *CTFNailgunNail::CreateSuperNail( Vector vecOrigin, QAngle vecAng
 //=========================================================
 // CTFNailgunNail::Spawn
 //
-// Creates an nail entity on the server that is invisible 
+// Creates an nail entity on the server that is invisible
 // so that it won't be sent to clients. At the same time sends a
-// tiny message that creates a flying nail entity on all 
+// tiny message that creates a flying nail entity on all
 // clients. (sjb)
 //=========================================================
 void CTFNailgunNail::Spawn()
@@ -124,7 +124,7 @@ void CTFNailgunNail::NailTouch( CBaseEntity *pOther )
 		int iStartHealth = pOther->GetHealth();
 		CTakeDamageInfo info( this, pevOwner, vDamageForce, vDamagePosition, m_iDamage, DMG_SLASH );
 		pOther->TakeDamage( info );
-		
+
 		// Did they take the damage?
 		if ( pOther->GetHealth() < iStartHealth )
 		{
@@ -133,7 +133,7 @@ void CTFNailgunNail::NailTouch( CBaseEntity *pOther )
 
 		// Do an impact trace in case we hit the world.
 		trace_t tr;
-		UTIL_TraceLine( 
+		UTIL_TraceLine(
 			GetAbsOrigin() - vVelNorm * 30,
 			GetAbsOrigin() + vVelNorm * 50,
 			MASK_SOLID_BRUSHONLY,
@@ -147,6 +147,5 @@ void CTFNailgunNail::NailTouch( CBaseEntity *pOther )
 		}
 
 		UTIL_Remove( this );
-	}	
+	}
 }
-

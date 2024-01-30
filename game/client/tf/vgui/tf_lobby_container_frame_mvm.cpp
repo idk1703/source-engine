@@ -43,7 +43,7 @@ void CLobbyContainerFrame_MvM::ApplySchemeSettings( vgui::IScheme *pScheme )
 	m_pPracticeButton = dynamic_cast<vgui::Button *>(FindChildByName( "PracticeButton", true )); Assert( m_pPracticeButton );
 }
 
-bool CLobbyContainerFrame_MvM::VerifyPartyAuthorization() const 
+bool CLobbyContainerFrame_MvM::VerifyPartyAuthorization() const
 {
 	// They want to Mann Up.  Confirm that everybody in the party has a ticket.
 	// if they are in a party of one, we provide slightly more specific UI.
@@ -52,7 +52,7 @@ bool CLobbyContainerFrame_MvM::VerifyPartyAuthorization() const
 	// Early out. Anyone can play for free
 	if ( !bBraggingRights )
 		return true;
-	
+
 	// Solo
 	CTFParty *pParty = GTFGCClientSystem()->GetParty();
 	if ( pParty == NULL || pParty->GetNumMembers() <= 1 )
@@ -143,7 +143,7 @@ void CLobbyContainerFrame_MvM::HandleBackPressed()
 			Msg( "Unexpected wizard step %d", (int)GTFGCClientSystem()->GetWizardStep() );
 			break;
 	}
-	
+
 	// Unhandled case
 	BaseClass::HandleBackPressed();
 }
@@ -166,7 +166,7 @@ void CLobbyContainerFrame_MvM::OnCommand( const char *command )
 		GTFGCClientSystem()->RequestSelectWizardStep( TF_Matchmaking_WizardStep_MVM_TOUR_OF_DUTY );
 #else // new mm
 		GTFGCClientSystem()->RequestSelectWizardStep( TF_Matchmaking_WizardStep_MVM_CHALLENGE );
-#endif // USE_MVM_TOUR	
+#endif // USE_MVM_TOUR
 		return;
 	}
 	else if ( FStrEq( command, "practice" ) )
@@ -212,7 +212,7 @@ void CLobbyContainerFrame_MvM::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLobbyContainerFrame_MvM::OnKeyCodePressed(vgui::KeyCode code)
 {
@@ -313,7 +313,7 @@ void CLobbyContainerFrame_MvM::WriteControls()
 	switch ( GTFGCClientSystem()->GetSearchMode() )
 	{
 		case TF_Matchmaking_MVM:
-			if ( GTFGCClientSystem()->GetSearchPlayForBraggingRights() || 
+			if ( GTFGCClientSystem()->GetSearchPlayForBraggingRights() ||
 				 GTFGCClientSystem()->GetWizardStep() == TF_Matchmaking_WizardStep_MVM_PLAY_FOR_BRAGGING_RIGHTS )
 			{
 				GetPropertySheet()->SetTabTitle( 0, "#TF_MvM_HeaderCoop" );
@@ -354,4 +354,3 @@ void CLobbyContainerFrame_MvM::WriteControls()
 
 	BaseClass::WriteControls();
 }
-

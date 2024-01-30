@@ -39,7 +39,7 @@ mxTreeView::mxTreeView (mxWindow *parent, int x, int y, int w, int h, int id)
 	d_this->d_hwnd = CreateWindowEx (WS_EX_CLIENTEDGE, WC_TREEVIEW, "", dwStyle,
 				x, y, w, h, hwndParent,
 				(HMENU) id, (HINSTANCE) GetModuleHandle (NULL), NULL);
-	
+
 	SendMessage (d_this->d_hwnd, WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_VAR_FONT), MAKELPARAM (TRUE, 0));
 	SetWindowLong (d_this->d_hwnd, GWL_USERDATA, (LONG) this);
 
@@ -311,7 +311,7 @@ mxTreeView::getParent (mxTreeViewItem *item) const
 
 void mxTreeView::setImageList( void *himagelist )
 {
-	TreeView_SetImageList(d_this->d_hwnd, (HIMAGELIST)himagelist, TVSIL_NORMAL); 
+	TreeView_SetImageList(d_this->d_hwnd, (HIMAGELIST)himagelist, TVSIL_NORMAL);
 }
 
 void mxTreeView::setImages(mxTreeViewItem *item, int imagenormal, int imageselected )
@@ -331,7 +331,7 @@ void mxTreeView::setImages(mxTreeViewItem *item, int imagenormal, int imageselec
 		TreeView_SetItem (d_this->d_hwnd, &tvItem);
 	}
 }
-void mxTreeView::sortTree( mxTreeViewItem *parent, bool recurse, 
+void mxTreeView::sortTree( mxTreeViewItem *parent, bool recurse,
 	void *func, int parameter )
 {
 	if (!d_this)

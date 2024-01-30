@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -44,6 +44,6 @@ private:
 	int m_iIconH;
 
 	CPanelAnimationVar( float, m_flIconAlpha, "icon_alpha", "255" );
-};	
+};
 
 #endif // DOD_HUD_PLAYERSTATUS_TNT_H

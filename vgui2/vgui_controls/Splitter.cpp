@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -281,7 +281,7 @@ void Splitter::SetSplitterColor( Color c )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Enables borders on the splitters
 //-----------------------------------------------------------------------------
@@ -337,7 +337,7 @@ void Splitter::ApplySettings(KeyValues *inResourceData)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int Splitter::GetPosRange()
 {
@@ -357,7 +357,7 @@ void Splitter::LockChildSize( int nChildIndex, int nSize )
 	SplitterInfo_t &info = m_Splitters[nChildIndex];
 	nSize += SPLITTER_HANDLE_WIDTH;
 	if ( !info.m_bLocked || (info.m_nLockedSize != nSize) )
-	{ 
+	{
 		float flPrevPos = (nChildIndex > 0) ? m_Splitters[nChildIndex-1].m_flPos : 0.0f;
 		float flOldSize = info.m_flPos - flPrevPos;
 		float flDelta = nSize - flOldSize;
@@ -377,7 +377,7 @@ void Splitter::LockChildSize( int nChildIndex, int nSize )
 void Splitter::UnlockChildSize( int nChildIndex )
 {
 	Assert( nChildIndex < m_Splitters.Count() );
-	SplitterInfo_t &info = m_Splitters[nChildIndex]; 
+	SplitterInfo_t &info = m_Splitters[nChildIndex];
 	if ( info.m_bLocked )
 	{
 		info.m_bLocked = false;
@@ -408,7 +408,7 @@ void Splitter::UnlockChildSize( int nChildIndex )
 			{
 				m_Splitters[i].m_flPos = flPrevPos + m_Splitters[i].m_nLockedSize;
 			}
-			flPrevPos = m_Splitters[i].m_flPos; 
+			flPrevPos = m_Splitters[i].m_flPos;
 		}
 		InvalidateLayout();
 	}
@@ -441,7 +441,7 @@ void Splitter::OnSizeChanged( int newWide, int newTall )
 		else
 		{
 			++nUnlockedCount;
-			flUnlockedSize += info.m_flPos - flLastPos; 
+			flUnlockedSize += info.m_flPos - flLastPos;
 		}
 		flLastPos = info.m_flPos;
 	}
@@ -461,14 +461,14 @@ void Splitter::OnSizeChanged( int newWide, int newTall )
 		SplitterInfo_t &info = m_Splitters[i];
 		if ( info.m_bLocked )
 		{
-			flLastPrevPos = info.m_flPos; 
+			flLastPrevPos = info.m_flPos;
 			info.m_flPos = flLastPos + info.m_nLockedSize;
 		}
 		else
 		{
 			float flNewSize = info.m_flPos - flLastPrevPos;
 			flNewSize *= flRatio;
-			flLastPrevPos = info.m_flPos; 
+			flLastPrevPos = info.m_flPos;
 			info.m_flPos = flLastPos + flNewSize;
 		}
 		flLastPos = info.m_flPos;
@@ -531,7 +531,7 @@ void Splitter::SetSplitterPosition( int nIndex, int nPos )
 		}
 	}
 	nPos = clamp( nPos, nMinPos, nMaxPos );
-	
+
 	m_Splitters[nIndex].m_flPos = nPos;
 	int p = nPos;
 	for ( i = nIndex - 1 ; i >= 0; --i )
@@ -665,7 +665,7 @@ void Splitter::RespaceSplitters( float *flFractions )
 // Purpose: sets user settings
 //-----------------------------------------------------------------------------
 void Splitter::ApplyUserConfigSettings(KeyValues *userConfig)
-{ 
+{
 	BaseClass::ApplyUserConfigSettings( userConfig );
 
 	// read the splitter sizes
@@ -757,7 +757,7 @@ void Splitter::PerformLayout( )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Splitter::GetSettings( KeyValues *outResourceData )
 {

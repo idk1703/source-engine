@@ -49,7 +49,7 @@ public:
 	virtual void OnAttributeChanged( CDmAttribute *pAttribute );
 	CDmaVar< float >	m_flexWeight;
 	CDmaElement< CDmeGameModel >	m_gameModel;
-	
+
 	DmAttributeHandle_t m_ToAttributeHandle;
 
 private:

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ class CEntityHelpDlg : public CDialog
 		static void SetEditGameClass(GDclass *pClass);
 
 	protected:
-		
+
 		void UpdateClass(GDclass *pClass);
 
 		int GetTextWidth(const char *pszText, CDC *pDC = NULL);

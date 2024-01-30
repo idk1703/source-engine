@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -120,7 +120,7 @@ void C_MovieExplosion::Start(CParticleMgr *pParticleMgr, IPrototypeArgAccess *pA
 		pEmitter->m_Velocity = RandomVector(-1, 1) * 200;
 
 		pEmitter->m_Pos = GetAbsOrigin();
-			
+
 		pEmitter->m_Lifetime = 0;
 		pEmitter->m_ParticleSpawn.Init(15);
 	}
@@ -155,7 +155,7 @@ void C_MovieExplosion::Update(float fTimeDelta)
 		float tempDelta = fTimeDelta;
 		while(pEmitter->m_ParticleSpawn.NextEvent(tempDelta))
 		{
-			StandardParticle_t *pParticle = 
+			StandardParticle_t *pParticle =
 				(StandardParticle_t*)m_ParticleEffect.AddParticle( sizeof(StandardParticle_t), m_iFireballMaterial);
 
 			if(pParticle)
@@ -206,13 +206,12 @@ void C_MovieExplosion::SimulateParticles( CParticleSimulateIterator *pIterator )
 			pIterator->RemoveParticle( pParticle );
 		}
 		else
-		{		
+		{
 			// Move it (this comes after rendering to make it clear that moving the particle here won't change
 			// its rendering for this frame since m_TransformedPos has already been set).
 			pParticle->m_Pos = pParticle->m_Pos + pParticle->m_Velocity * pIterator->GetTimeDelta();
 		}
-		
+
 		pParticle = (StandardParticle_t*)pIterator->GetNext();
 	}
 }
-

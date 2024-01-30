@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -128,7 +128,7 @@ bool CImportVMT::SerializeShaderParameter( CUtlBuffer &buf, CDmAttribute *pAttri
 	case AT_VMATRIX:
 		{
 			const VMatrix &mat = pAttribute->GetValue<VMatrix>( );
-			buf.Printf( "\"%s\" \"[ %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f ]\"\n", pAttribute->GetName(), 
+			buf.Printf( "\"%s\" \"[ %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f ]\"\n", pAttribute->GetName(),
 				mat[0][0], mat[0][1], mat[0][2], mat[0][3],
 				mat[1][0], mat[1][1], mat[1][2], mat[1][3],
 				mat[2][0], mat[2][1], mat[2][2], mat[2][3],
@@ -137,7 +137,7 @@ bool CImportVMT::SerializeShaderParameter( CUtlBuffer &buf, CDmAttribute *pAttri
 		break;
 
 	default:
-		Warning( "Attempted to serialize an unsupported shader parameter type %s (%s)\n", 
+		Warning( "Attempted to serialize an unsupported shader parameter type %s (%s)\n",
 			pAttribute->GetName(), g_pDataModel->GetAttributeNameForType( pAttribute->GetType() ) );
 		return false;
 	}
@@ -318,7 +318,7 @@ int ParseVectorFromKeyValueString( const char *pParamName, const char* pScan, co
 	{
 		Assert( *pScan == '[' );
 	}
-	
+
 	// skip the '['
 	++pScan;
 	int i;
@@ -525,7 +525,7 @@ bool CImportVMT::UnserializeProxies( CDmElement *pElement, KeyValues *pKeyValues
 	// Proxies are a list of sub-keys, the name is the proxy name, subkeys are values
 	for ( KeyValues *pProxy = pKeyValues->GetFirstTrueSubKey(); pProxy != NULL; pProxy = pProxy->GetNextTrueSubKey() )
 	{
-		CDmElement *pProxyElement = CreateDmElement( "DmElement", pProxy->GetName(), NULL ); 
+		CDmElement *pProxyElement = CreateDmElement( "DmElement", pProxy->GetName(), NULL );
 		array.AddToTail( pProxyElement );
 		pProxyElement->SetValue( "proxyType", pKeyValues->GetName() );
 		pProxyElement->SetValue( "editorType", "vmtProxy" );
@@ -570,7 +570,7 @@ bool CImportVMT::UnserializeFallbacks( CDmElement *pElement, KeyValues *pFallbac
 
 	CDmrElementArray<> array( pFallbacks );
 
-	CDmElement *pFallback = CreateDmElement( "DmElement", pFallbackKeyValues->GetName(), NULL ); 
+	CDmElement *pFallback = CreateDmElement( "DmElement", pFallbackKeyValues->GetName(), NULL );
 	array.AddToTail( pFallback );
 	pFallback->SetValue( "editorType", "vmtFallback" );
 
@@ -654,7 +654,7 @@ void CImportVMT::ExpandPatchFile( KeyValues *pKeyValues )
 				{
 					InsertKeyValues( *includeKeyValues, *pInsertSection, false );
 				}
-				
+
 				KeyValues *pReplaceSection = pKeyValues->FindKey( "replace" );
 				if( pReplaceSection )
 				{

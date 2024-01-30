@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -54,7 +54,7 @@ public:
 
 BEGIN_DATADESC( CGameWeaponManager )
 
-//fields	
+//fields
 	DEFINE_KEYFIELD( m_iszWeaponName, FIELD_STRING, "weaponname" ),
 	DEFINE_KEYFIELD( m_iMaxPieces, FIELD_INTEGER, "maxpieces" ),
 	DEFINE_KEYFIELD( m_flAmmoMod, FIELD_FLOAT, "ammomod" ),
@@ -160,21 +160,21 @@ void CGameWeaponManager::Spawn()
 // to find suitable candidates for removal.
 //
 // Right now we just remove the first weapons we find that
-// are behind the player, or are out of the player's PVS. 
+// are behind the player, or are out of the player's PVS.
 // Later, we may want to score the results so that we
-// removed the farthest gun that's not in the player's 
+// removed the farthest gun that's not in the player's
 // viewcone, etc.
 //
 // Some notes and thoughts:
 //
-// This code is designed NOT to remove weapons that are 
+// This code is designed NOT to remove weapons that are
 // hand-placed by level designers. It should only clean
 // up weapons dropped by dead NPCs, which is useful in
 // situations where enemies are spawned in for a sustained
 // period of time.
 //
 // Right now we PREFER to remove weapons that are not in the
-// player's PVS, but this could be opposite of what we 
+// player's PVS, but this could be opposite of what we
 // really want. We may only want to conduct the cleanup on
 // weapons that are IN the player's PVS.
 //---------------------------------------------------------
@@ -182,7 +182,7 @@ void CGameWeaponManager::Think()
 {
 	int i;
 
-	// Don't have to think all that often. 
+	// Don't have to think all that often.
 	SetNextThink( gpGlobals->curtime + 2.0 );
 
 	const char *pszWeaponName = STRING( m_iszWeaponName );

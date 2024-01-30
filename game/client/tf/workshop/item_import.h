@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -276,7 +276,7 @@ private:
 	vgui::TextEntry *m_pTFEnglishNameTextEntry;
 	vgui::CheckButton *m_pPerforceCheckButton;
 	vgui::CheckButton *m_pPartnerCheckButton;
-	
+
 	vgui::EditablePanel	*m_pEquipRegionPanel;
 	vgui::ComboBox	*m_pEquipRegionComboBox;
 

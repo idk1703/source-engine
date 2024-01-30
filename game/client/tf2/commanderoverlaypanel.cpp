@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -45,8 +45,8 @@ static inline int AlphaMapIndex(int x, int y)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *commander - 
+// Purpose:
+// Input  : *commander -
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::SetCommanderView( CClientModeCommander *commander )
 {
@@ -54,7 +54,7 @@ void CCommanderOverlayPanel::SetCommanderView( CClientModeCommander *commander )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCommanderOverlayPanel::CCommanderOverlayPanel( void ) :
 	vgui::Panel( NULL, "CommanderOverlayPanel" ),
@@ -79,7 +79,7 @@ CCommanderOverlayPanel::CCommanderOverlayPanel( void ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCommanderOverlayPanel::~CCommanderOverlayPanel( void )
 {
@@ -87,7 +87,7 @@ CCommanderOverlayPanel::~CCommanderOverlayPanel( void )
 
 
 //-----------------------------------------------------------------------------
-// Initialize rendering origin 
+// Initialize rendering origin
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::InitializeRenderOrigin()
 {
@@ -111,11 +111,11 @@ void CCommanderOverlayPanel::InitializeRenderOrigin()
 
 
 //-----------------------------------------------------------------------------
-// Computes the view range: 
+// Computes the view range:
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::ComputeZoomRange()
 {
-	// This is 
+	// This is
 	m_MinWorldWidth = TACTICAL_MIN_VIEWABLE_SIZE;
 
 	// Get the world size
@@ -138,14 +138,14 @@ void CCommanderOverlayPanel::ComputeZoomRange()
 
 	if (panelAspect > worldAspect)
 	{
-		// In this case, to see the whole map, 
+		// In this case, to see the whole map,
 		// we'll have black areas on the left + right sides
 		// Make sure we choose a width big enough to display the entire height
 		m_MaxWorldWidth = size[1] * panelAspect;
 	}
 	else
 	{
-		// In this case, to see the whole map, 
+		// In this case, to see the whole map,
 		// we'll have black areas on the top + bottom
 		// Make sure we choose a width big enough to display the entire height
 		m_MaxWorldWidth = size[0];
@@ -158,7 +158,7 @@ void CCommanderOverlayPanel::ComputeZoomRange()
 
 		m_fZoom *= ratio;
 	}
-}	
+}
 
 //-----------------------------------------------------------------------------
 // Call when the map changes
@@ -172,7 +172,7 @@ void CCommanderOverlayPanel::LevelInit( char const* pMapName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::LevelShutdown( void )
 {
@@ -221,7 +221,7 @@ void CCommanderOverlayPanel::Enable()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::Disable()
 {
@@ -329,10 +329,10 @@ void CCommanderOverlayPanel::ChangeZoomLevel( float newZoom )
 	GetMousePos( mx, my );
 
 	// Need to convert from screen space back to a worldspace ray
-	CreatePickingRay( 
-		mx, my, 
+	CreatePickingRay(
+		mx, my,
 		ScreenWidth(), ScreenHeight(),
-		CurrentViewOrigin(), 
+		CurrentViewOrigin(),
 		CurrentViewAngles(),
 		rayOrigin,
 		rayForward );
@@ -348,7 +348,7 @@ void CCommanderOverlayPanel::ChangeZoomLevel( float newZoom )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CCommanderOverlayPanel::IsRightMouseMapMoving( void )
@@ -357,7 +357,7 @@ bool CCommanderOverlayPanel::IsRightMouseMapMoving( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::RightMouseMapMove( void )
 {
@@ -367,10 +367,10 @@ void CCommanderOverlayPanel::RightMouseMapMove( void )
 	Vector vecEndPosCurrent, vecEndPosPrevious;
 
 	// Need to convert from screen space back to a worldspace ray
-	CreatePickingRay( 
-		m_right.m_nXCurrent, m_right.m_nYCurrent, 
+	CreatePickingRay(
+		m_right.m_nXCurrent, m_right.m_nYCurrent,
 		ScreenWidth(), ScreenHeight(),
-		g_vecRenderOrigin, 
+		g_vecRenderOrigin,
 		g_vecRenderAngles,
 		vecEndPosCurrent,
 		rayForward );
@@ -399,20 +399,20 @@ void CCommanderOverlayPanel::RightMouseMapMove( void )
 	Vector vecEndPosCurrent, vecEndPosPrevious;
 
 	// Need to convert from screen space back to a worldspace ray
-	CreatePickingRay( 
-		m_right.m_nXCurrent, m_right.m_nYCurrent, 
+	CreatePickingRay(
+		m_right.m_nXCurrent, m_right.m_nYCurrent,
 		ScreenWidth(), ScreenHeight(),
-		g_vecRenderOrigin, 
+		g_vecRenderOrigin,
 		g_vecRenderAngles,
 		vecEndPosCurrent,
 		rayForward );
 
 	// Now create ray from old position
 	// Need to convert from screen space back to a worldspace ray
-	CreatePickingRay( 
-		m_right.m_nXPrev, m_right.m_nYPrev, 
+	CreatePickingRay(
+		m_right.m_nXPrev, m_right.m_nYPrev,
 		ScreenWidth(), ScreenHeight(),
-		g_vecRenderOrigin, 
+		g_vecRenderOrigin,
 		g_vecRenderAngles,
 		vecEndPosPrevious,
 		rayForward );
@@ -449,7 +449,7 @@ void CCommanderOverlayPanel::RightMousePressed( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::RightMouseReleased( void )
 {
@@ -483,10 +483,10 @@ void CCommanderOverlayPanel::RightMouseReleased( void )
 		Vector vecEndPos;
 
 		// Need to convert from screen space back to a worldspace ray
-		CreatePickingRay( 
-			m_right.m_nXCurrent, m_right.m_nYCurrent, 
+		CreatePickingRay(
+			m_right.m_nXCurrent, m_right.m_nYCurrent,
 			ScreenWidth(), ScreenHeight(),
-			CurrentViewOrigin(), 
+			CurrentViewOrigin(),
 			CurrentViewAngles(),
 			rayOrigin,
 			rayForward );
@@ -513,10 +513,10 @@ void CCommanderOverlayPanel::RightMouseReleased( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
-//			y - 
-//			mouse - 
+// Purpose:
+// Input  : x -
+//			y -
+//			mouse -
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::UpdateMousePos( int x, int y, MouseDown_t& mouse )
 {
@@ -529,9 +529,9 @@ void CCommanderOverlayPanel::UpdateMousePos( int x, int y, MouseDown_t& mouse )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
-//			y - 
+// Purpose:
+// Input  : x -
+//			y -
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::OnCursorMoved(int x, int y)
 {
@@ -543,9 +543,9 @@ void CCommanderOverlayPanel::OnCursorMoved(int x, int y)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
-//			y - 
+// Purpose:
+// Input  : x -
+//			y -
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::GetMousePos( int& x, int& y )
 {
@@ -553,8 +553,8 @@ void CCommanderOverlayPanel::GetMousePos( int& x, int& y )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mouse - 
+// Purpose:
+// Input  : mouse -
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::StartMovingMouse( MouseDown_t& mouse )
 {
@@ -579,8 +579,8 @@ void CCommanderOverlayPanel::LeftMousePressed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : code - 
+// Purpose:
+// Input  : code -
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::OnMousePressed(vgui::MouseCode code)
 {
@@ -601,12 +601,12 @@ void CCommanderOverlayPanel::OnMousePressed(vgui::MouseCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x0 - 
-//			y0 - 
-//			x1 - 
-//			y1 - 
-//			true - 
+// Purpose:
+// Input  : x0 -
+//			y0 -
+//			x1 -
+//			y1 -
+//			true -
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::SelectPlayersInRectangle( int x0, int y0, int x1, int y1, bool clearOldSelections /*= true*/ )
 {
@@ -665,7 +665,7 @@ void CCommanderOverlayPanel::SelectPlayersInRectangle( int x0, int y0, int x1, i
 		// Transform
 		debugoverlay->ScreenPosition( pos, screen );
 
-		// FIXME: Get the player icon size from where?!?					
+		// FIXME: Get the player icon size from where?!?
 		drawX = screen.x - 32;
 		drawY = screen.y - 40;
 		int intersectX = 64;
@@ -755,7 +755,7 @@ void CCommanderOverlayPanel::LeftMouseReleased( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::GetOrthoRenderBox(Vector &vCenter, float &xSize, float &ySize)
 {
@@ -773,7 +773,7 @@ void CCommanderOverlayPanel::GetOrthoRenderBox(Vector &vCenter, float &xSize, fl
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::GetVisibleOrthoSize(float &xSize, float &ySize)
 {
@@ -788,7 +788,7 @@ void CCommanderOverlayPanel::GetVisibleOrthoSize(float &xSize, float &ySize)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CCommanderOverlayPanel::WorldUnitsPerPixel()
 {
@@ -798,7 +798,7 @@ float CCommanderOverlayPanel::WorldUnitsPerPixel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::ActualToVisibleOffset( Vector& offset )
 {
@@ -807,7 +807,7 @@ void CCommanderOverlayPanel::ActualToVisibleOffset( Vector& offset )
 	int w, h, wact, hact;
 	GetVisibleSize( w, h );
 	GetParent()->GetSize( wact, hact );
-	
+
 	float worldUnitsPerPixel = m_fZoom / wact;
 	float dWorldY = (hact - h) * 0.5f * worldUnitsPerPixel;
 	offset.Init( 0, dWorldY, 0 );
@@ -832,7 +832,7 @@ void CCommanderOverlayPanel::BoundOrigin( Vector& camera )
 	GetVisibleOrthoSize( dim[0], dim[1] );
 
 	// Compute the position of the center of the visible area based on
-	// the new suggested camera position 
+	// the new suggested camera position
 	Vector actualToVisible, newVisCenter;
 	ActualToVisibleOffset( actualToVisible );
 	VectorAdd( camera, actualToVisible, newVisCenter );
@@ -855,29 +855,29 @@ void CCommanderOverlayPanel::BoundOrigin( Vector& camera )
 	// area only takes up the top half of the screen. Therefore, we need to
 	// set the origin so that the center of what we want lies at the
 	// center of the visible region
-	VectorSubtract( newVisCenter, actualToVisible, camera ); 
+	VectorSubtract( newVisCenter, actualToVisible, camera );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Given mouse/screen positions as well as the current
 //  render origin and angles, returns a unit vector through the mouse position
 //  that can be used to trace into the world under the mouse click pixel.
-// Input  : fov - 
-//			mousex - 
-//			mousey - 
-//			screenwidth - 
-//			screenheight - 
-//			vecRenderAngles - 
-//			c_x - 
-//			vpn - 
-//			vup - 
-//			360.0 - 
+// Input  : fov -
+//			mousex -
+//			mousey -
+//			screenwidth -
+//			screenheight -
+//			vecRenderAngles -
+//			c_x -
+//			vpn -
+//			vup -
+//			360.0 -
 //-----------------------------------------------------------------------------
-void CCommanderOverlayPanel::CreatePickingRay( int mousex, int mousey, 
+void CCommanderOverlayPanel::CreatePickingRay( int mousex, int mousey,
 	int screenwidth, int screenheight,
-	const Vector& vecRenderOrigin, 
-	const QAngle& vecRenderAngles, 
+	const Vector& vecRenderOrigin,
+	const QAngle& vecRenderAngles,
 	Vector &rayOrigin,
 	Vector &rayDirection
 	)
@@ -885,7 +885,7 @@ void CCommanderOverlayPanel::CreatePickingRay( int mousex, int mousey,
 	Vector vCenter;
 	float xSize, ySize;
 	GetOrthoRenderBox(vCenter, xSize, ySize);
-	
+
 	float xPos = RemapVal(mousex, 0, screenwidth,  vCenter.x-xSize, vCenter.x+xSize);
 	float yPos = RemapVal(mousey, 0, screenheight, vCenter.y+ySize, vCenter.y-ySize); // (flip screen y)
 	rayOrigin.Init(xPos, yPos, vCenter.z);
@@ -893,7 +893,7 @@ void CCommanderOverlayPanel::CreatePickingRay( int mousex, int mousey,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::OnMouseReleased(vgui::MouseCode code)
 {
@@ -914,7 +914,7 @@ void CCommanderOverlayPanel::OnMouseReleased(vgui::MouseCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::CenterOnMouse( Vector& mouseWorldPos )
 {
@@ -926,18 +926,18 @@ void CCommanderOverlayPanel::CenterOnMouse( Vector& mouseWorldPos )
 	GetMousePos( mx, my );
 
 	// Need to convert from screen space back to a worldspace ray
-	CreatePickingRay( 
-		mx, my, 
+	CreatePickingRay(
+		mx, my,
 		ScreenWidth(), ScreenHeight(),
-		CurrentViewOrigin(), 
+		CurrentViewOrigin(),
 		CurrentViewAngles(),
 		mouseWorldPos,
 		rayForward );
 
-	CreatePickingRay( 
-		ScreenWidth()/2, ScreenHeight()/2, 
+	CreatePickingRay(
+		ScreenWidth()/2, ScreenHeight()/2,
 		ScreenWidth(), ScreenHeight(),
-		CurrentViewOrigin(), 
+		CurrentViewOrigin(),
 		CurrentViewAngles(),
 		centerOrigin,
 		rayForward );
@@ -950,8 +950,8 @@ void CCommanderOverlayPanel::CenterOnMouse( Vector& mouseWorldPos )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : delta - 
+// Purpose:
+// Input  : delta -
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::OnMouseWheeled(int delta)
 {
@@ -984,7 +984,7 @@ void CCommanderOverlayPanel::OnMouseWheeled(int delta)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommanderOverlayPanel::Paint()
 {
@@ -1010,7 +1010,7 @@ void CCommanderOverlayPanel::Paint()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CCommanderOverlayPanel::GetZoom( void )
 {

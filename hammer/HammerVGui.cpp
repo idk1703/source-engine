@@ -37,13 +37,13 @@ bool CHammerVGui::Init( HWND hWindow )
 	// initialize vgui_control interfaces
 	if (!vgui::VGui_InitInterfacesList( "HAMMER", &g_Factory, 1 ))
 		return false;
-	
+
 	if ( !vgui::VGui_InitMatSysInterfacesList( "HAMMER", &g_Factory, 1 ) )
 		return false;
 
 	if ( !g_pMatSystemSurface )
 		return false;
-	
+
 	// configuration settings
 	vgui::system()->SetUserConfigFile("hammer.vdf", "EXECUTABLE_PATH");
 
@@ -74,7 +74,7 @@ void CHammerVGui::SetFocus( CVGuiWnd *pVGuiWnd )
 		return;
 
 	g_pInputSystem->PollInputState();
-	vgui::ivgui()->RunFrame(); 
+	vgui::ivgui()->RunFrame();
 
 	g_pMatSystemSurface->AttachToWindow( NULL, false );
 	g_pInputSystem->DetachFromWindow( );
@@ -106,7 +106,7 @@ void CHammerVGui::Simulate()
 		return;
 
 	g_pInputSystem->PollInputState();
-	vgui::ivgui()->RunFrame(); 
+	vgui::ivgui()->RunFrame();
 
 	// run vgui animations
 	vgui::GetAnimationController()->UpdateAnimations( vgui::system()->GetCurrentTime() );

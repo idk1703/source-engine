@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -12,7 +12,7 @@
 #pragma once
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_PropCrane : public C_BaseAnimating, public IClientVehicle
 {
@@ -25,7 +25,7 @@ public:
 	DECLARE_DATADESC();
 
 	C_PropCrane();
-	
+
 	void PreDataUpdate( DataUpdateType_t updateType );
 	void PostDataUpdate( DataUpdateType_t updateType );
 

@@ -57,7 +57,7 @@ CGLMQuery::CGLMQuery( GLMContext *ctx, GLMQueryParams *params )
 	// get the type of query requested
 	// generate name(s) needed
 	// set initial state appropriately
-	
+
 	m_ctx = ctx;
 	m_params = *params;
 
@@ -65,13 +65,13 @@ CGLMQuery::CGLMQuery( GLMContext *ctx, GLMQueryParams *params )
 	m_syncobj			=	0;
 
 	m_started = m_stopped = m_done = false;
-	
+
 	m_nullQuery = false;
 		// assume value of convar at start time
 		// does not change during individual query lifetime
 		// started null = stays null
 		// started live = stays live
-	
+
 	switch(m_params.m_type)
 	{
 		case EOcclusion:
@@ -98,13 +98,13 @@ CGLMQuery::CGLMQuery( GLMContext *ctx, GLMQueryParams *params )
 			GLMPRINTF(("-A-      CGLMQuery(fence) created name %d", m_name));
 		break;
 	}
-	
+
 }
 
 CGLMQuery::~CGLMQuery()
 {
 	GLMPRINTF(("-A-> ~CGLMQuery"));
-	
+
 	// make sure query has completed (might not be necessary)
 	// delete the name(s)
 
@@ -126,7 +126,7 @@ CGLMQuery::~CGLMQuery()
 #ifdef HAVE_GL_ARB_SYNC
 			if (gGL->m_bHave_GL_ARB_sync)
 				gGL->glDeleteSync( m_syncobj );
-			else 
+			else
 #endif
 			if (gGL->m_bHave_GL_NV_fence)
 				gGL->glDeleteFencesNV(1, &m_name );
@@ -135,7 +135,7 @@ CGLMQuery::~CGLMQuery()
 		}
 		break;
 	}
-	
+
 	m_name = 0;
 	m_syncobj = 0;
 
@@ -169,19 +169,19 @@ void	CGLMQuery::Start( void )		// "start counting"
 		break;
 
 		case EFence:
-#ifdef HAVE_GL_ARB_SYNC		
+#ifdef HAVE_GL_ARB_SYNC
 			if (gGL->m_bHave_GL_ARB_sync)
 			{
 				if (m_syncobj != 0) gGL->glDeleteSync(m_syncobj);
 				m_syncobj = gGL->glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
 			}
 			else
-#endif 
+#endif
 			if (gGL->m_bHave_GL_NV_fence)
 				gGL->glSetFenceNV( m_name, GL_ALL_COMPLETED_NV );
 			else if (gGL->m_bHave_GL_APPLE_fence)
 				gGL->glSetFenceAPPLE( m_name );
-			
+
 			m_stopped = true;	// caller should not call Stop on a fence, it self-stops
 		break;
 	}
@@ -190,7 +190,7 @@ void	CGLMQuery::Start( void )		// "start counting"
 void	CGLMQuery::Stop( void )			// "stop counting"
 {
 	Assert(m_started);
-	
+
 	if ( m_stopped )
 		return;
 
@@ -213,7 +213,7 @@ void	CGLMQuery::Stop( void )			// "stop counting"
 			// nop - you don't "end" a fence, you just test it and/or finish it out in Complete
 		break;
 	}
-	
+
 	m_stopped = true;
 }
 
@@ -238,11 +238,11 @@ bool	CGLMQuery::IsDone( void )
 				else
 				{
 					// prepare to pay a big price on drivers prior to 10.6.4+SLGU
-					
+
 					GLint available = 0;
 					gGL->glGetQueryObjectivARB(m_name, GL_QUERY_RESULT_AVAILABLE_ARB, &available );
-					
-					m_done = (available != 0);					
+
+					m_done = (available != 0);
 				}
 			}
 			break;
@@ -252,7 +252,7 @@ bool	CGLMQuery::IsDone( void )
 #ifdef HAVE_GL_ARB_SYNC
 				if (gGL->m_bHave_GL_ARB_sync)
 					m_done = (gGL->glClientWaitSync( m_syncobj, 0, 0 ) == GL_ALREADY_SIGNALED);
-				else 
+				else
 #endif
 				if ( m_name == 0 )
 					m_done = true;
@@ -277,7 +277,7 @@ bool	CGLMQuery::IsDone( void )
 			break;
 		}
 	}
-	
+
 	return m_done;
 }
 
@@ -285,7 +285,7 @@ void	CGLMQuery::Complete( uint *result )
 {
 	uint resultval = 0;
 	//bool bogus_available = false;
-	
+
 	// blocking call if not done
 	Assert(m_started);
 	Assert(m_stopped);
@@ -311,7 +311,7 @@ void	CGLMQuery::Complete( uint *result )
 		{
 			if(!m_done)
 			{
-#ifdef HAVE_GL_ARB_SYNC				
+#ifdef HAVE_GL_ARB_SYNC
 				if (gGL->m_bHave_GL_ARB_sync)
 				{
 					if (gGL->glClientWaitSync( m_syncobj, 0, 0 ) != GL_ALREADY_SIGNALED)
@@ -330,7 +330,7 @@ void	CGLMQuery::Complete( uint *result )
 					gGL->glFinishFenceNV( m_name );
 				else if (gGL->m_bHave_GL_APPLE_fence)
 					gGL->glFinishFenceAPPLE( m_name );
-				
+
 				m_done = true;					// for clarity or if they try to Complete twice
 			}
 		}
@@ -338,10 +338,10 @@ void	CGLMQuery::Complete( uint *result )
 	}
 
 	Assert( m_done );
-	
+
 	// reset state for re-use - i.e. you have to call Complete if you want to re-use the object
 	m_started = m_stopped = m_done = false;
-	
+
 	if (result)	// caller may pass NULL if not interested in result, for example to clear a fence
 	{
 		*result = resultval;
@@ -360,4 +360,3 @@ bool	CGLMQuery::IsStopped	( void )
 {
 	return m_stopped;
 }
-

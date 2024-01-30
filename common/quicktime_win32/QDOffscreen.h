@@ -1,17 +1,17 @@
 /*
-     File:       QDOffscreen.h
- 
-     Contains:   Quickdraw Offscreen GWorld Interfaces.
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1985-2003 by Apple Computer, Inc., all rights reserved
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       QDOffscreen.h
+
+		Contains:   Quickdraw Offscreen GWorld Interfaces.
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1985-2003 by Apple Computer, Inc., all rights reserved
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __QDOFFSCREEN__
 #define __QDOFFSCREEN__
@@ -40,44 +40,44 @@ extern "C" {
 #endif
 
 enum {
-  pixPurgeBit                   = 0,
-  noNewDeviceBit                = 1,
-  useTempMemBit                 = 2,
-  keepLocalBit                  = 3,
-  useDistantHdwrMemBit          = 4,
-  useLocalHdwrMemBit            = 5,
-  pixelsPurgeableBit            = 6,
-  pixelsLockedBit               = 7,
-  mapPixBit                     = 16,
-  newDepthBit                   = 17,
-  alignPixBit                   = 18,
-  newRowBytesBit                = 19,
-  reallocPixBit                 = 20,
-  clipPixBit                    = 28,
-  stretchPixBit                 = 29,
-  ditherPixBit                  = 30,
-  gwFlagErrBit                  = 31
+	pixPurgeBit                   = 0,
+	noNewDeviceBit                = 1,
+	useTempMemBit                 = 2,
+	keepLocalBit                  = 3,
+	useDistantHdwrMemBit          = 4,
+	useLocalHdwrMemBit            = 5,
+	pixelsPurgeableBit            = 6,
+	pixelsLockedBit               = 7,
+	mapPixBit                     = 16,
+	newDepthBit                   = 17,
+	alignPixBit                   = 18,
+	newRowBytesBit                = 19,
+	reallocPixBit                 = 20,
+	clipPixBit                    = 28,
+	stretchPixBit                 = 29,
+	ditherPixBit                  = 30,
+	gwFlagErrBit                  = 31
 };
 
 enum {
-  pixPurge                      = 1L << pixPurgeBit,
-  noNewDevice                   = 1L << noNewDeviceBit,
-  useTempMem                    = 1L << useTempMemBit,
-  keepLocal                     = 1L << keepLocalBit,
-  useDistantHdwrMem             = 1L << useDistantHdwrMemBit,
-  useLocalHdwrMem               = 1L << useLocalHdwrMemBit,
-  pixelsPurgeable               = 1L << pixelsPurgeableBit,
-  pixelsLocked                  = 1L << pixelsLockedBit,
-  kAllocDirectDrawSurface       = 1L << 14,
-  mapPix                        = 1L << mapPixBit,
-  newDepth                      = 1L << newDepthBit,
-  alignPix                      = 1L << alignPixBit,
-  newRowBytes                   = 1L << newRowBytesBit,
-  reallocPix                    = 1L << reallocPixBit,
-  clipPix                       = 1L << clipPixBit,
-  stretchPix                    = 1L << stretchPixBit,
-  ditherPix                     = 1L << ditherPixBit,
-  gwFlagErr                     = 1L << gwFlagErrBit
+	pixPurge                      = 1L << pixPurgeBit,
+	noNewDevice                   = 1L << noNewDeviceBit,
+	useTempMem                    = 1L << useTempMemBit,
+	keepLocal                     = 1L << keepLocalBit,
+	useDistantHdwrMem             = 1L << useDistantHdwrMemBit,
+	useLocalHdwrMem               = 1L << useLocalHdwrMemBit,
+	pixelsPurgeable               = 1L << pixelsPurgeableBit,
+	pixelsLocked                  = 1L << pixelsLockedBit,
+	kAllocDirectDrawSurface       = 1L << 14,
+	mapPix                        = 1L << mapPixBit,
+	newDepth                      = 1L << newDepthBit,
+	alignPix                      = 1L << alignPixBit,
+	newRowBytes                   = 1L << newRowBytesBit,
+	reallocPix                    = 1L << reallocPixBit,
+	clipPix                       = 1L << clipPixBit,
+	stretchPix                    = 1L << stretchPixBit,
+	ditherPix                     = 1L << ditherPixBit,
+	gwFlagErr                     = 1L << gwFlagErrBit
 };
 
 typedef unsigned long                   GWorldFlags;
@@ -85,7 +85,7 @@ typedef unsigned long                   GWorldFlags;
 typedef CGrafPtr                        GWorldPtr;
 /*
  *  NewGWorld()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -93,33 +93,33 @@ typedef CGrafPtr                        GWorldPtr;
  */
 EXTERN_API( QDErr )
 NewGWorld(
-  GWorldPtr *   offscreenGWorld,
-  short         PixelDepth,
-  const Rect *  boundsRect,
-  CTabHandle    cTable,                /* can be NULL */
-  GDHandle      aGDevice,              /* can be NULL */
-  GWorldFlags   flags)                                        FOURWORDINLINE(0x203C, 0x0016, 0x0000, 0xAB1D);
+	GWorldPtr *   offscreenGWorld,
+	short         PixelDepth,
+	const Rect *  boundsRect,
+	CTabHandle    cTable,                /* can be NULL */
+	GDHandle      aGDevice,              /* can be NULL */
+	GWorldFlags   flags)                                        FOURWORDINLINE(0x203C, 0x0016, 0x0000, 0xAB1D);
 
 
 /* GDevice attribute bits for Carbon and QuickTime 3.0*/
 enum {
-  deviceIsIndirect              = (1L << 0),
-  deviceNeedsLock               = (1L << 1),
-  deviceIsStatic                = (1L << 2),
-  deviceIsExternalBuffer        = (1L << 3),
-  deviceIsDDSurface             = (1L << 4),
-  deviceIsDCISurface            = (1L << 5),
-  deviceIsGDISurface            = (1L << 6),
-  deviceIsAScreen               = (1L << 7),
-  deviceIsOverlaySurface        = (1L << 8),
-  pixMapIsDoubleBuffered        = (1L << 9)
+	deviceIsIndirect              = (1L << 0),
+	deviceNeedsLock               = (1L << 1),
+	deviceIsStatic                = (1L << 2),
+	deviceIsExternalBuffer        = (1L << 3),
+	deviceIsDDSurface             = (1L << 4),
+	deviceIsDCISurface            = (1L << 5),
+	deviceIsGDISurface            = (1L << 6),
+	deviceIsAScreen               = (1L << 7),
+	deviceIsOverlaySurface        = (1L << 8),
+	pixMapIsDoubleBuffered        = (1L << 9)
 };
 
 #if TARGET_OS_WIN32
 #if CALL_NOT_IN_CARBON
 /*
  *  GetGDeviceSurface()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -131,7 +131,7 @@ GetGDeviceSurface(GDHandle gdh);
 
 /*
  *  GetGDeviceAttributes()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -144,7 +144,7 @@ GetGDeviceAttributes(GDHandle gdh);
 /* to allocate non-mac-rgb GWorlds use QTNewGWorld (ImageCompression.h) */
 /*
  *  NewGWorldFromHBITMAP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -152,12 +152,12 @@ GetGDeviceAttributes(GDHandle gdh);
  */
 EXTERN_API( QDErr )
 NewGWorldFromHBITMAP(
-  GWorldPtr *   offscreenGWorld,
-  CTabHandle    cTable,
-  GDHandle      aGDevice,
-  GWorldFlags   flags,
-  void *        newHBITMAP,
-  void *        newHDC);
+	GWorldPtr *   offscreenGWorld,
+	CTabHandle    cTable,
+	GDHandle      aGDevice,
+	GWorldFlags   flags,
+	void *        newHBITMAP,
+	void *        newHDC);
 
 
 #endif  /* CALL_NOT_IN_CARBON */
@@ -166,7 +166,7 @@ NewGWorldFromHBITMAP(
 
 /*
  *  NewGWorldFromPtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.1 and later
@@ -174,19 +174,19 @@ NewGWorldFromHBITMAP(
  */
 EXTERN_API( QDErr )
 NewGWorldFromPtr(
-  GWorldPtr *     offscreenGWorld,
-  unsigned long   PixelFormat,
-  const Rect *    boundsRect,
-  CTabHandle      cTable,                /* can be NULL */
-  GDHandle        aGDevice,              /* can be NULL */
-  GWorldFlags     flags,
-  Ptr             newBuffer,
-  long            rowBytes);
+	GWorldPtr *     offscreenGWorld,
+	unsigned long   PixelFormat,
+	const Rect *    boundsRect,
+	CTabHandle      cTable,                /* can be NULL */
+	GDHandle        aGDevice,              /* can be NULL */
+	GWorldFlags     flags,
+	Ptr             newBuffer,
+	long            rowBytes);
 
 
 /*
  *  LockPixels()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -198,7 +198,7 @@ LockPixels(PixMapHandle pm)                                   FOURWORDINLINE(0x2
 
 /*
  *  UnlockPixels()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -210,7 +210,7 @@ UnlockPixels(PixMapHandle pm)                                 FOURWORDINLINE(0x2
 
 /*
  *  UpdateGWorld()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -218,17 +218,17 @@ UnlockPixels(PixMapHandle pm)                                 FOURWORDINLINE(0x2
  */
 EXTERN_API( GWorldFlags )
 UpdateGWorld(
-  GWorldPtr *   offscreenGWorld,
-  short         pixelDepth,
-  const Rect *  boundsRect,
-  CTabHandle    cTable,
-  GDHandle      aGDevice,              /* can be NULL */
-  GWorldFlags   flags)                                        FOURWORDINLINE(0x203C, 0x0016, 0x0003, 0xAB1D);
+	GWorldPtr *   offscreenGWorld,
+	short         pixelDepth,
+	const Rect *  boundsRect,
+	CTabHandle    cTable,
+	GDHandle      aGDevice,              /* can be NULL */
+	GWorldFlags   flags)                                        FOURWORDINLINE(0x203C, 0x0016, 0x0003, 0xAB1D);
 
 
 /*
  *  DisposeGWorld()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -240,7 +240,7 @@ DisposeGWorld(GWorldPtr offscreenGWorld)                      FOURWORDINLINE(0x2
 
 /*
  *  GetGWorld()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -248,13 +248,13 @@ DisposeGWorld(GWorldPtr offscreenGWorld)                      FOURWORDINLINE(0x2
  */
 EXTERN_API( void )
 GetGWorld(
-  CGrafPtr *  port,
-  GDHandle *  gdh)                                            FOURWORDINLINE(0x203C, 0x0008, 0x0005, 0xAB1D);
+	CGrafPtr *  port,
+	GDHandle *  gdh)                                            FOURWORDINLINE(0x203C, 0x0008, 0x0005, 0xAB1D);
 
 
 /*
  *  SetGWorld()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -262,13 +262,13 @@ GetGWorld(
  */
 EXTERN_API( void )
 SetGWorld(
-  CGrafPtr   port,
-  GDHandle   gdh)                                             FOURWORDINLINE(0x203C, 0x0008, 0x0006, 0xAB1D);
+	CGrafPtr   port,
+	GDHandle   gdh)                                             FOURWORDINLINE(0x203C, 0x0008, 0x0006, 0xAB1D);
 
 
 /*
  *  CTabChanged()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -280,7 +280,7 @@ CTabChanged(CTabHandle ctab)                                  FOURWORDINLINE(0x2
 
 /*
  *  PixPatChanged()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -292,7 +292,7 @@ PixPatChanged(PixPatHandle ppat)                              FOURWORDINLINE(0x2
 
 /*
  *  PortChanged()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -304,7 +304,7 @@ PortChanged(GrafPtr port)                                     FOURWORDINLINE(0x2
 
 /*
  *  GDeviceChanged()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -316,7 +316,7 @@ GDeviceChanged(GDHandle gdh)                                  FOURWORDINLINE(0x2
 
 /*
  *  AllowPurgePixels()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -328,7 +328,7 @@ AllowPurgePixels(PixMapHandle pm)                             FOURWORDINLINE(0x2
 
 /*
  *  NoPurgePixels()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -340,7 +340,7 @@ NoPurgePixels(PixMapHandle pm)                                FOURWORDINLINE(0x2
 
 /*
  *  GetPixelsState()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -352,7 +352,7 @@ GetPixelsState(PixMapHandle pm)                               FOURWORDINLINE(0x2
 
 /*
  *  SetPixelsState()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -360,13 +360,13 @@ GetPixelsState(PixMapHandle pm)                               FOURWORDINLINE(0x2
  */
 EXTERN_API( void )
 SetPixelsState(
-  PixMapHandle   pm,
-  GWorldFlags    state)                                       FOURWORDINLINE(0x203C, 0x0008, 0x000E, 0xAB1D);
+	PixMapHandle   pm,
+	GWorldFlags    state)                                       FOURWORDINLINE(0x203C, 0x0008, 0x000E, 0xAB1D);
 
 
 /*
  *  GetPixBaseAddr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -378,7 +378,7 @@ GetPixBaseAddr(PixMapHandle pm)                               FOURWORDINLINE(0x2
 
 /*
  *  GetPixRowBytes()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -390,7 +390,7 @@ GetPixRowBytes(PixMapHandle pm)                               FOURWORDINLINE(0x2
 
 /*
  *  NewScreenBuffer()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -398,15 +398,15 @@ GetPixRowBytes(PixMapHandle pm)                               FOURWORDINLINE(0x2
  */
 EXTERN_API( QDErr )
 NewScreenBuffer(
-  const Rect *    globalRect,
-  Boolean         purgeable,
-  GDHandle *      gdh,
-  PixMapHandle *  offscreenPixMap)                            FOURWORDINLINE(0x203C, 0x000E, 0x0010, 0xAB1D);
+	const Rect *    globalRect,
+	Boolean         purgeable,
+	GDHandle *      gdh,
+	PixMapHandle *  offscreenPixMap)                            FOURWORDINLINE(0x203C, 0x000E, 0x0010, 0xAB1D);
 
 
 /*
  *  DisposeScreenBuffer()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -418,7 +418,7 @@ DisposeScreenBuffer(PixMapHandle offscreenPixMap)             FOURWORDINLINE(0x2
 
 /*
  *  GetGWorldDevice()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -430,7 +430,7 @@ GetGWorldDevice(GWorldPtr offscreenGWorld)                    FOURWORDINLINE(0x2
 
 /*
  *  QDDone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -442,7 +442,7 @@ QDDone(GrafPtr port)                                          FOURWORDINLINE(0x2
 
 /*
  *  OffscreenVersion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -454,7 +454,7 @@ OffscreenVersion(void)                                        TWOWORDINLINE(0x70
 
 /*
  *  NewTempScreenBuffer()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -462,15 +462,15 @@ OffscreenVersion(void)                                        TWOWORDINLINE(0x70
  */
 EXTERN_API( QDErr )
 NewTempScreenBuffer(
-  const Rect *    globalRect,
-  Boolean         purgeable,
-  GDHandle *      gdh,
-  PixMapHandle *  offscreenPixMap)                            FOURWORDINLINE(0x203C, 0x000E, 0x0015, 0xAB1D);
+	const Rect *    globalRect,
+	Boolean         purgeable,
+	GDHandle *      gdh,
+	PixMapHandle *  offscreenPixMap)                            FOURWORDINLINE(0x203C, 0x000E, 0x0015, 0xAB1D);
 
 
 /*
  *  PixMap32Bit()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -482,7 +482,7 @@ PixMap32Bit(PixMapHandle pmHandle)                            FOURWORDINLINE(0x2
 
 /*
  *  GetGWorldPixMap()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -504,4 +504,3 @@ GetGWorldPixMap(GWorldPtr offscreenGWorld)                    FOURWORDINLINE(0x2
 #endif
 
 #endif /* __QDOFFSCREEN__ */
-

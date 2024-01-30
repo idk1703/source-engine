@@ -19,7 +19,7 @@
 void CKamikazeAward::getWinner()
 {
 	CEventListIterator it;
-	
+
 	for (it=g_pMatchInfo->eventList()->begin(); it != g_pMatchInfo->eventList()->end(); ++it)
 	{
 		if ((*it)->getType()==CLogEvent::SUICIDE || (*it)->getType()==CLogEvent::KILLED_BY_WORLD)
@@ -30,7 +30,7 @@ void CKamikazeAward::getWinner()
 			fNoWinner=false;
 		}
 	}
-	
+
 	map<PID,int>::iterator kamiter;
 
 	for (kamiter=numdeaths.begin();kamiter!=numdeaths.end();++kamiter)
@@ -63,4 +63,3 @@ void CKamikazeAward::extendedinfo(CHTMLFile& html)
 	else
 		html.write("%s was self-victimized %li times.",winnerName.c_str(),numdeaths[winnerID]);
 }
-

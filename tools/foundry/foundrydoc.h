@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -19,14 +19,14 @@
 
 
 //-----------------------------------------------------------------------------
-// Forward declarations 
+// Forward declarations
 //-----------------------------------------------------------------------------
 class IFoundryDocCallback;
 class CDmeVMFEntity;
 
 
 //-----------------------------------------------------------------------------
-// Contains all editable state 
+// Contains all editable state
 //-----------------------------------------------------------------------------
 class CFoundryDoc : public IDmNotify
 {

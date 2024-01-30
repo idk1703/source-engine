@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -48,13 +48,13 @@ CLightingPreviewResultsWindow::CLightingPreviewResultsWindow(void)
 //-----------------------------------------------------------------------------
 CLightingPreviewResultsWindow::~CLightingPreviewResultsWindow(void)
 {
-} 
+}
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParentWnd - 
-//			rect - 
+// Purpose:
+// Input  : *pParentWnd -
+//			rect -
 //-----------------------------------------------------------------------------
 void CLightingPreviewResultsWindow::Create(CWnd *pParentWnd )
 {
@@ -64,8 +64,8 @@ void CLightingPreviewResultsWindow::Create(CWnd *pParentWnd )
 	{
 		// create class
 		LPreviewWndClassName = AfxRegisterWndClass(
-			CS_DBLCLKS | CS_HREDRAW | 
-			CS_VREDRAW, LoadCursor(NULL, IDC_ARROW), 
+			CS_DBLCLKS | CS_HREDRAW |
+			CS_VREDRAW, LoadCursor(NULL, IDC_ARROW),
 			(HBRUSH) GetStockObject(BLACK_BRUSH), NULL);
 	}
 
@@ -79,7 +79,7 @@ void CLightingPreviewResultsWindow::Create(CWnd *pParentWnd )
 
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLightingPreviewResultsWindow::OnClose()
 {
@@ -88,7 +88,7 @@ void CLightingPreviewResultsWindow::OnClose()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLightingPreviewResultsWindow::OnPaint(void)
 {
@@ -109,7 +109,7 @@ void CLightingPreviewResultsWindow::OnPaint(void)
 		mybmh.biCompression=BI_RGB;
 		mybmh.biSizeImage=g_pLPreviewOutputBitmap->Width()*g_pLPreviewOutputBitmap->Height();
 
-  
+
 		StretchDIBits(
 			dc.GetSafeHdc(),clientrect.left,clientrect.top,1+(clientrect.right-clientrect.left),
 			1+(clientrect.bottom-clientrect.top),
@@ -118,5 +118,3 @@ void CLightingPreviewResultsWindow::OnPaint(void)
 			DIB_RGB_COLORS, SRCCOPY);
 	}
 }
-
-

@@ -20,7 +20,7 @@
 //-----------------------------------------------------------------------------
 // sort function
 //-----------------------------------------------------------------------------
-bool CMaterialDict::MaterialLessFunc( const MaterialLookup_t& src1, 
+bool CMaterialDict::MaterialLessFunc( const MaterialLookup_t& src1,
 										   const MaterialLookup_t& src2 )
 {
 	Assert( ThreadInMainThread() );
@@ -34,7 +34,7 @@ bool CMaterialDict::MaterialLessFunc( const MaterialLookup_t& src1,
 //-----------------------------------------------------------------------------
 // sort function for missing materials
 //-----------------------------------------------------------------------------
-bool CMaterialDict::MissingMaterialLessFunc( const MissingMaterial_t& src1, 
+bool CMaterialDict::MissingMaterialLessFunc( const MissingMaterial_t& src1,
 											const MissingMaterial_t& src2 )
 {
 	Assert( ThreadInMainThread() );
@@ -168,4 +168,3 @@ void CMaterialDict::RemoveAllMaterials()
 
 	RemoveAllMaterialsFromMaterialList();
 }
-

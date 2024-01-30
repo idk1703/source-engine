@@ -36,13 +36,13 @@ void GDSetMessageFunc(GameDataMessageFunc_t pFunc)
 
 //-----------------------------------------------------------------------------
 // Purpose: Fetches the next token from the file.
-// Input  : tr - 
+// Input  : tr -
 //			ppszStore - Destination buffer, one of the following:
 //				pointer to NULL - token will be placed in an allocated buffer
 //				pointer to non-NULL buffer - token will be placed in buffer
-//			ttexpecting - 
-//			pszExpecting - 
-// Output : 
+//			ttexpecting -
+//			pszExpecting -
+// Output :
 //-----------------------------------------------------------------------------
 static bool DoGetToken(TokenReader &tr, char **ppszStore, int nSize, trtoken_t ttexpecting, const char *pszExpecting)
 {
@@ -116,7 +116,7 @@ static bool DoGetToken(TokenReader &tr, char **ppszStore, int nSize, trtoken_t t
 				break;
 			}
 		}
-		
+
 		GDError(tr, "expecting %s", pszTokenName);
 		return false;
 	}
@@ -135,10 +135,10 @@ static bool DoGetToken(TokenReader &tr, char **ppszStore, int nSize, trtoken_t t
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : tr - 
-//			error - 
-// Output : 
+// Purpose:
+// Input  : tr -
+//			error -
+// Output :
 //-----------------------------------------------------------------------------
 bool GDError(TokenReader &tr, const char *error, ...)
 {
@@ -153,7 +153,7 @@ bool GDError(TokenReader &tr, const char *error, ...)
 		// HACK: should use an enumeration for error level
 		g_pMsgFunc(1, tr.Error(szBuf));
 	}
-	
+
 	if (tr.GetErrorCount() >= MAX_ERRORS)
 	{
 		if (g_pMsgFunc)
@@ -161,7 +161,7 @@ bool GDError(TokenReader &tr, const char *error, ...)
 			// HACK: should use an enumeration for error level
 			g_pMsgFunc(1, "   - too many errors; aborting.");
 		}
-		
+
 		return false;
 	}
 
@@ -217,11 +217,11 @@ bool GDSkipToken(TokenReader &tr, trtoken_t ttexpecting, const char *pszExpectin
 //-----------------------------------------------------------------------------
 // Purpose: Fetches the next token from the file, allocating a buffer exactly
 //			large enough to hold the token.
-// Input  : tr - 
-//			ppszStore - 
-//			ttexpecting - 
-//			pszExpecting - 
-// Output : 
+// Input  : tr -
+//			ppszStore -
+//			ttexpecting -
+//			pszExpecting -
+// Output :
 //-----------------------------------------------------------------------------
 bool GDGetTokenDynamic(TokenReader &tr, char **ppszStore, trtoken_t ttexpecting, const char *pszExpecting)
 {
@@ -256,7 +256,7 @@ GameData::~GameData(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void GameData::ClearData(void)
 {
@@ -273,7 +273,7 @@ void GameData::ClearData(void)
 
 //-----------------------------------------------------------------------------
 // Purpose: Loads a gamedata (FGD) file into this object.
-// Input  : pszFilename - 
+// Input  : pszFilename -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL GameData::Load(const char *pszFilename)
@@ -405,7 +405,7 @@ BOOL GameData::Load(const char *pszFilename)
 		{
 			if (!ParseMapSize(tr))
 			{
-				// Error in map size specifier, skip to next @ sign. 
+				// Error in map size specifier, skip to next @ sign.
 				tr.IgnoreTill(OPERATOR, "@");
 			}
 		}
@@ -413,7 +413,7 @@ BOOL GameData::Load(const char *pszFilename)
 		{
 			if ( !LoadFGDMaterialExclusions( tr ) )
 			{
-				// FGD exclusions not defined; skip to next @ sign. 
+				// FGD exclusions not defined; skip to next @ sign.
 				tr.IgnoreTill(OPERATOR, "@");
 			}
 		}
@@ -421,7 +421,7 @@ BOOL GameData::Load(const char *pszFilename)
 		{
 			if ( !LoadFGDAutoVisGroups( tr ) )
 			{
-				// FGD AutoVisGroups not defined; skip to next @ sign. 
+				// FGD AutoVisGroups not defined; skip to next @ sign.
 				tr.IgnoreTill(OPERATOR, "@");
 			}
 		}
@@ -450,7 +450,7 @@ BOOL GameData::Load(const char *pszFilename)
 //
 //			ex: mapsize(-8192, 8192)
 //
-// Input  : tr - 
+// Input  : tr -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool GameData::ParseMapSize(TokenReader &tr)
@@ -465,7 +465,7 @@ bool GameData::ParseMapSize(TokenReader &tr)
 	{
 		return false;
 	}
-	int nMin = atoi(szToken);	
+	int nMin = atoi(szToken);
 
 	if (!GDSkipToken(tr, OPERATOR, ","))
 	{
@@ -476,7 +476,7 @@ bool GameData::ParseMapSize(TokenReader &tr)
 	{
 		return false;
 	}
-	int nMax = atoi(szToken);	
+	int nMax = atoi(szToken);
 
 	if (nMin != nMax)
 	{
@@ -494,10 +494,10 @@ bool GameData::ParseMapSize(TokenReader &tr)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszName - 
-//			piIndex - 
-// Output : 
+// Purpose:
+// Input  : pszName -
+//			piIndex -
+// Output :
 //-----------------------------------------------------------------------------
 GDclass *GameData::ClassForName(const char *pszName, int *piIndex)
 {
@@ -608,7 +608,7 @@ static bool CUtlType_LessThan( const GDIV_TYPE &type1, const GDIV_TYPE &type2 )
 // Purpose: this function will attempt to remap a key's value
 // Input  : pszKey - the name of the key
 //			pszInvalue - the original value
-//			AllowNameRemapping - only do name remapping if this parameter is true.  
+//			AllowNameRemapping - only do name remapping if this parameter is true.
 //				this is generally only false on the instance level.
 // Output : returns true if the value changed
 //			pszOutValue - the new value if changed
@@ -664,7 +664,7 @@ bool GameData::RemapKeyValue( const char *pszKey, const char *pszInValue, char *
 				sprintf( pszOutValue, "%g %g %g", outPoint.x, outPoint.y, outPoint.z );
 			}
 			break;
-			
+
 		case REMAP_ANGLE:
 			if ( m_InstanceAngle.x != 0.0f || m_InstanceAngle.y != 0.0f || m_InstanceAngle.z != 0.0f )
 			{
@@ -706,7 +706,7 @@ bool GameData::RemapKeyValue( const char *pszKey, const char *pszInValue, char *
 //-----------------------------------------------------------------------------
 // Purpose: this function will attempt to remap a name field.
 // Input  : pszInvalue - the original value
-//			AllowNameRemapping - only do name remapping if this parameter is true.  
+//			AllowNameRemapping - only do name remapping if this parameter is true.
 //				this is generally only false on the instance level.
 // Output : returns true if the value changed
 //			pszOutValue - the new value if changed
@@ -735,8 +735,8 @@ bool GameData::RemapNameField( const char *pszInValue, char *pszOutValue, TNameF
 
 //-----------------------------------------------------------------------------
 // Purpose: Gathers any FGD-defined material directory exclusions
-// Input  : 
-// Output : 
+// Input  :
+// Output :
 //-----------------------------------------------------------------------------
 bool GameData::LoadFGDMaterialExclusions( TokenReader &tr )
 {
@@ -754,12 +754,12 @@ bool GameData::LoadFGDMaterialExclusions( TokenReader &tr )
 			break;
 		}
 		else if ( GDGetToken( tr, szToken, sizeof( szToken ), STRING ) )
-		{		
+		{
 			// Make sure we haven't loaded this from another FGD
 			for ( int i = 0; i < m_FGDMaterialExclusions.Count(); i++ )
 			{
 				if ( !stricmp( szToken, m_FGDMaterialExclusions[i].szDirectory ) )
-				{			
+				{
 					bMatchFound = true;
 					break;
 				}
@@ -788,8 +788,8 @@ bool GameData::LoadFGDMaterialExclusions( TokenReader &tr )
 
 //-----------------------------------------------------------------------------
 // Purpose: Gathers any FGD-defined Auto VisGroups
-// Input  : 
-// Output : 
+// Input  :
+// Output :
 //-----------------------------------------------------------------------------
 bool GameData::LoadFGDAutoVisGroups( TokenReader &tr )
 {
@@ -797,7 +797,7 @@ bool GameData::LoadFGDAutoVisGroups( TokenReader &tr )
 	int cindex = 0;	// Index of Classes
 
 	char szToken[128];
-	
+
 	// Handle the Parent -- World Geometry, Entities, World Detail
 	if ( GDSkipToken( tr, OPERATOR, "=" ) )
 	{
@@ -806,7 +806,7 @@ bool GameData::LoadFGDAutoVisGroups( TokenReader &tr )
 		{
 			return( FALSE );
 		}
-		
+
 		gindex = m_FGDAutoVisGroups.AddToTail();
 		Q_strncpy( m_FGDAutoVisGroups[gindex].szParent, szToken, sizeof( m_FGDAutoVisGroups[gindex].szParent ) );
 

@@ -10,7 +10,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 vProjPos					: POSITION;	
+	float4 vProjPos					: POSITION;
 	float2 vBaseTexCoord			: TEXCOORD0;
 };
 

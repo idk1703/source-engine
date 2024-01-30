@@ -32,7 +32,7 @@ extern void CharacterSetBuild( characterset_t *pSetBuffer, const char *pSetStrin
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : *pSetBuffer - pre-build group buffer
 //			character - character to lookup
 // Output : int - 1 if the character was in the set

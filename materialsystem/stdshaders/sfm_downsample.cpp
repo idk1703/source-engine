@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -19,7 +19,7 @@ BEGIN_VS_SHADER_FLAGS( sfm_downsample_shader, "Help for Downsample", SHADER_NOT_
 	{
 		LoadTexture( BASETEXTURE );
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		// Requires DX9 + above

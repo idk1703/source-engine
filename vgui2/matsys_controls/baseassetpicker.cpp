@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -385,7 +385,7 @@ public:
 	// Mod iteration
 	int ModCount() const;
 	const ModInfo_t& ModInfo( int nIndex ) const;
-	
+
 	// Building the mod list
 	void BuildModList();
 
@@ -414,7 +414,7 @@ private:
 		{
 			m_Ext.AddMultipleToTail( nExtCount, ppSearchExt );
 		}
- 		CachedAssetList_t( const CachedAssetList_t& )
+		CachedAssetList_t( const CachedAssetList_t& )
 		{
 			// Only used during insertion; do nothing
 		}
@@ -817,8 +817,8 @@ static int __cdecl AssetBrowserModSortFunc( vgui::ListPanel *pPanel, const ListP
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CBaseAssetPicker::CBaseAssetPicker( vgui::Panel *pParent, const char *pAssetType, 
-	const char *pExt, const char *pSubDir, const char *pTextType ) : 
+CBaseAssetPicker::CBaseAssetPicker( vgui::Panel *pParent, const char *pAssetType,
+	const char *pExt, const char *pSubDir, const char *pTextType ) :
 	BaseClass( pParent, "AssetPicker" )
 {
 	m_bBuiltAssetList = false;
@@ -888,17 +888,17 @@ void CBaseAssetPicker::CreateStandardControls( vgui::Panel *pParent, bool bAllow
 	char pTemp[512];
 	Q_snprintf( pTemp, sizeof(pTemp), "No .%s files", m_pAssetExt );
 	m_pAssetBrowser = new vgui::ListPanel( pSplitterBottomSide, "AssetBrowser" );
- 	m_pAssetBrowser->AddColumnHeader( 0, "mod", "Mod", 52, 0 );
+	m_pAssetBrowser->AddColumnHeader( 0, "mod", "Mod", 52, 0 );
 	m_pAssetBrowser->AddColumnHeader( 1, "asset", m_pAssetType, 128, ListPanel::COLUMN_RESIZEWITHWINDOW );
-    m_pAssetBrowser->SetSelectIndividualCells( false );
-    m_pAssetBrowser->SetMultiselectEnabled( bAllowMultiselect );
+	m_pAssetBrowser->SetSelectIndividualCells( false );
+	m_pAssetBrowser->SetMultiselectEnabled( bAllowMultiselect );
 	m_pAssetBrowser->SetEmptyListText( pTemp );
- 	m_pAssetBrowser->SetDragEnabled( true );
+	m_pAssetBrowser->SetDragEnabled( true );
 	m_pAssetBrowser->AddActionSignalTarget( this );
 	m_pAssetBrowser->SetSortFunc( 0, AssetBrowserModSortFunc );
 	m_pAssetBrowser->SetSortFunc( 1, AssetBrowserSortFunc );
 	m_pAssetBrowser->SetSortColumn( 1 );
-						 
+
 	// filter selection
 	m_pFilter = new TextEntry( pSplitterBottomSide, "FilterList" );
 	m_pFilter->AddActionSignalTarget( this );
@@ -963,7 +963,7 @@ void CBaseAssetPicker::GetUserConfigSettings( KeyValues *pUserConfig )
 	BaseClass::GetUserConfigSettings( pUserConfig );
 	pUserConfig->SetString( "filter", m_Filter );
 	pUserConfig->SetString( "folderfilter", m_FolderFilter );
-	pUserConfig->SetString( "mod", ( m_nCurrentModFilter >= 0 ) ? 
+	pUserConfig->SetString( "mod", ( m_nCurrentModFilter >= 0 ) ?
 		s_AssetCache.ModInfo( m_nCurrentModFilter ).m_ModName : "" );
 }
 
@@ -991,7 +991,7 @@ void CBaseAssetPicker::AddExtension( const char *pExtension )
 //-----------------------------------------------------------------------------
 bool CBaseAssetPicker::IsMultiselectEnabled() const
 {
-	return m_pAssetBrowser->IsMultiselectEnabled(); 
+	return m_pAssetBrowser->IsMultiselectEnabled();
 }
 
 
@@ -1001,10 +1001,10 @@ bool CBaseAssetPicker::IsMultiselectEnabled() const
 void CBaseAssetPicker::SetInitialSelection( const char *pAssetName )
 {
 	// This makes it so the background list filling code will automatically select this asset when it gets to it.
-	m_SelectedAsset = pAssetName;		
-								   
+	m_SelectedAsset = pAssetName;
+
 	if ( pAssetName )
-	{	
+	{
 		// Sometimes we've already refreshed our list with a bunch of cached resources and the item is already in the list,
 		// so in that case just select it here.
 		int cnt = m_pAssetBrowser->GetItemCount();
@@ -1013,21 +1013,21 @@ void CBaseAssetPicker::SetInitialSelection( const char *pAssetName )
 			KeyValues *kv = m_pAssetBrowser->GetItem( i );
 			if ( !kv )
 				continue;
-			
+
 			const char *pTestAssetName = kv->GetString( "asset" );
 			if ( !pTestAssetName )
 				continue;
-				
+
 			if ( Q_stricmp( pTestAssetName, pAssetName ) == 0 )
 			{
 				m_pAssetBrowser->SetSelectedCell( i, 0 );
 				break;
-			}			
+			}
 		}
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Set/get the filter
 //-----------------------------------------------------------------------------
@@ -1042,7 +1042,7 @@ const char *CBaseAssetPicker::GetFilter()
 	return m_Filter;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: called to open
 //-----------------------------------------------------------------------------
@@ -1054,7 +1054,7 @@ void CBaseAssetPicker::Activate()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseAssetPicker::OnKeyCodePressed( KeyCode code )
 {
@@ -1101,7 +1101,7 @@ bool CBaseAssetPicker::IsAssetVisible( int nAssetIndex )
 
 	return true;
 }
-		
+
 
 //-----------------------------------------------------------------------------
 // Adds an asset from the cache to the list
@@ -1118,7 +1118,7 @@ void CBaseAssetPicker::AddAssetToList( int nAssetIndex )
 	kv->SetInt( "root", bInRootDir );
 	int nItemID = m_pAssetBrowser->AddItem( kv, 0, false, false );
 	kv->deleteThis();
-	
+
 	if ( m_pAssetBrowser->GetSelectedItemsCount() == 0 && !Q_strcmp( m_SelectedAsset, info.m_AssetName ) )
 	{
 		m_pAssetBrowser->SetSelectedCell( nItemID, 0 );
@@ -1187,7 +1187,7 @@ void CBaseAssetPicker::OnTick()
 	UpdateAssetColumnHeader();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Builds the Bsp name list
 //-----------------------------------------------------------------------------
@@ -1200,7 +1200,7 @@ void CBaseAssetPicker::BuildAssetNameList( )
 	m_nMatchingAssets = 0;
 	m_nCurrentModFilter = -1;
 
-	// Build the list of known mods if we haven't 
+	// Build the list of known mods if we haven't
 	s_AssetCache.BuildModList();
 
 	m_pModSelector->RemoveAll();
@@ -1288,13 +1288,13 @@ void CBaseAssetPicker::UpdateAssetColumnHeader( )
 	m_pAssetBrowser->SetColumnHeaderText( 1, pColumnTitle );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Request focus of the filter box
 //-----------------------------------------------------------------------------
 void CBaseAssetPicker::RequestFilterFocus()
 {
-    if ( m_Filter.Length() )
+	if ( m_Filter.Length() )
 	{
 		m_pFilter->SelectAllOnFirstFocus( true );
 	}
@@ -1427,7 +1427,7 @@ void CBaseAssetPicker::OnItemSelected( KeyValues *kv )
 		// Fill in the full path
 		int nModIndex = GetSelectedAssetModIndex();
 		char pBuf[MAX_PATH];
-		Q_snprintf( pBuf, sizeof(pBuf), "%s\\%s\\%s", 
+		Q_snprintf( pBuf, sizeof(pBuf), "%s\\%s\\%s",
 			s_AssetCache.ModInfo( nModIndex ).m_Path.Get(), m_pAssetSubDir, pSelectedAsset );
 		Q_FixSlashes( pBuf );
 		m_pFullPath->SetText( pBuf );
@@ -1457,7 +1457,7 @@ int CBaseAssetPicker::GetSelectedAssetCount()
 	return m_pAssetBrowser->GetSelectedItemsCount();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the selceted asset name
 //-----------------------------------------------------------------------------
@@ -1476,7 +1476,7 @@ const char *CBaseAssetPicker::GetSelectedAsset( int nAssetIndex )
 	return pItemKeyValues->GetString( "asset" );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the selceted asset mod index
 //-----------------------------------------------------------------------------
@@ -1496,7 +1496,7 @@ int CBaseAssetPicker::GetSelectedAssetModIndex( )
 // Purpose: Modal picker frame
 //
 //-----------------------------------------------------------------------------
-CBaseAssetPickerFrame::CBaseAssetPickerFrame( vgui::Panel *pParent ) : 
+CBaseAssetPickerFrame::CBaseAssetPickerFrame( vgui::Panel *pParent ) :
 	BaseClass( pParent, "AssetPickerFrame" )
 {
 	m_pContextKeyValues = NULL;
@@ -1521,7 +1521,7 @@ void CBaseAssetPickerFrame::SetAssetPicker( CBaseAssetPicker* pPicker )
 	m_pPicker->AddActionSignalTarget( this );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Deletes the message
 //-----------------------------------------------------------------------------
@@ -1539,10 +1539,10 @@ void CBaseAssetPickerFrame::CleanUpMessage()
 // Sets the initial selected asset
 //-----------------------------------------------------------------------------
 void CBaseAssetPickerFrame::SetInitialSelection( const char *pAssetName )
-{	
+{
 	m_pPicker->SetInitialSelection( pAssetName );
 }
-	
+
 
 //-----------------------------------------------------------------------------
 // Set/get the filter
@@ -1621,5 +1621,3 @@ void CBaseAssetPickerFrame::OnCommand( const char *pCommand )
 
 	BaseClass::OnCommand( pCommand );
 }
-
-	

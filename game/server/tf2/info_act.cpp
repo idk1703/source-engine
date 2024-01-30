@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -67,7 +67,7 @@ BEGIN_DATADESC( CInfoAct )
 	DEFINE_OUTPUT( m_Team1RespawnDelayDone, "OnTeam1RespawnDelayDone" ),
 	DEFINE_OUTPUT( m_Team2RespawnDelayDone, "OnTeam2RespawnDelayDone" ),
 
-	// keys 
+	// keys
 	DEFINE_KEYFIELD_NOT_SAVED( m_iActNumber, FIELD_INTEGER, "ActNumber" ),
 	DEFINE_KEYFIELD_NOT_SAVED( m_flActTimeLimit, FIELD_FLOAT, "ActTimeLimit" ),
 	DEFINE_KEYFIELD_NOT_SAVED( m_iszIntermissionCamera, FIELD_STRING, "IntermissionCamera" ),
@@ -107,7 +107,7 @@ LINK_ENTITY_TO_CLASS( info_act, CInfoAct );
 #define RESPAWN_TEAM_2_DELAY_CONTEXT	"RespawnTeam2DelayThink"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CInfoAct::CInfoAct( void )
 {
@@ -116,7 +116,7 @@ CInfoAct::CInfoAct( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CInfoAct::UpdateTransmitState()
 {
@@ -124,7 +124,7 @@ int CInfoAct::UpdateTransmitState()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoAct::Spawn( void )
 {
@@ -406,7 +406,7 @@ void CInfoAct::FinishAct( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoAct::ActThink( void )
 {
@@ -568,10 +568,10 @@ void CInfoAct::InputAddTime( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CInfoAct::IsAWaitingAct( void )
-{ 
+{
 	return HasSpawnFlags(SF_ACT_WAITINGFORGAMESTART);
 }
 

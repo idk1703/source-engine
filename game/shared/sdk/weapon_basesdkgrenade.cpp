@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,7 +10,7 @@
 #include "npcevent.h"
 #include "engine/IEngineSound.h"
 #include "weapon_basesdkgrenade.h"
-#include "in_buttons.h"	
+#include "in_buttons.h"
 
 
 #ifdef CLIENT_DLL
@@ -62,7 +62,7 @@ CBaseSDKGrenade::CBaseSDKGrenade()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseSDKGrenade::Precache()
 {
@@ -70,7 +70,7 @@ void CBaseSDKGrenade::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseSDKGrenade::Deploy()
 {
@@ -82,17 +82,17 @@ bool CBaseSDKGrenade::Deploy()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseSDKGrenade::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
 	m_bRedraw = false;
-	m_bPinPulled = false; // when this is holstered make sure the pin isn’t pulled.
+	m_bPinPulled = false; // when this is holstered make sure the pin isnï¿½t pulled.
 	m_fThrowTime = 0;
 
 #ifndef CLIENT_DLL
-	// If they attempt to switch weapons before the throw animation is done, 
+	// If they attempt to switch weapons before the throw animation is done,
 	// allow it, but kill the weapon if we have to.
 	CSDKPlayer *pPlayer = GetPlayerOwner();
 
@@ -108,7 +108,7 @@ bool CBaseSDKGrenade::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseSDKGrenade::PrimaryAttack()
 {
@@ -123,7 +123,7 @@ void CBaseSDKGrenade::PrimaryAttack()
 	// attack button, then throw the grenade.
 	SendWeaponAnim( ACT_VM_PULLPIN );
 	m_bPinPulled = true;
-	
+
 	// Don't let weapon idle interfere in the middle of a throw!
 	SetWeaponIdleTime( gpGlobals->curtime + SequenceDuration() );
 
@@ -131,7 +131,7 @@ void CBaseSDKGrenade::PrimaryAttack()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseSDKGrenade::SecondaryAttack()
 {
@@ -139,7 +139,7 @@ void CBaseSDKGrenade::SecondaryAttack()
 		return;
 
 	CSDKPlayer *pPlayer = GetPlayerOwner();
-	
+
 	if ( pPlayer == NULL )
 		return;
 
@@ -162,7 +162,7 @@ void CBaseSDKGrenade::SecondaryAttack()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseSDKGrenade::Reload()
@@ -183,7 +183,7 @@ bool CBaseSDKGrenade::Reload()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseSDKGrenade::ItemPostFrame()
 {
@@ -196,16 +196,16 @@ void CBaseSDKGrenade::ItemPostFrame()
 		return;
 
 	// If they let go of the fire button, they want to throw the grenade.
-	if ( m_bPinPulled && !(pPlayer->m_nButtons & IN_ATTACK) ) 
+	if ( m_bPinPulled && !(pPlayer->m_nButtons & IN_ATTACK) )
 	{
 		pPlayer->DoAnimationEvent( PLAYERANIMEVENT_THROW_GRENADE );
 
 		StartGrenadeThrow();
-		
+
 		DecrementAmmo( pPlayer );
-	
+
 		m_bPinPulled = false;
-		SendWeaponAnim( ACT_VM_THROW );	
+		SendWeaponAnim( ACT_VM_THROW );
 		SetWeaponIdleTime( gpGlobals->curtime + SequenceDuration() );
 	}
 	else if ((m_fThrowTime > 0) && (m_fThrowTime < gpGlobals->curtime))
@@ -230,7 +230,7 @@ void CBaseSDKGrenade::ItemPostFrame()
 			}
 #endif
 			return;	//don't animate this grenade any more!
-		}	
+		}
 	}
 	else if( !m_bRedraw )
 	{
@@ -271,12 +271,12 @@ void CBaseSDKGrenade::ItemPostFrame()
 
 	int CBaseSDKGrenade::CapabilitiesGet()
 	{
-		return bits_CAP_WEAPON_RANGE_ATTACK1; 
+		return bits_CAP_WEAPON_RANGE_ATTACK1;
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
-	// Input  : *pOwner - 
+	// Purpose:
+	// Input  : *pOwner -
 	//-----------------------------------------------------------------------------
 	void CBaseSDKGrenade::DecrementAmmo( CBaseCombatCharacter *pOwner )
 	{
@@ -319,7 +319,7 @@ void CBaseSDKGrenade::ItemPostFrame()
 		Vector vecSrc = pPlayer->GetAbsOrigin() + pPlayer->GetViewOffset();
 
 		vecSrc += vForward * 16;
-	
+
 		Vector vecThrow = vForward * flVel + pPlayer->GetAbsVelocity();
 
 		EmitGrenade( vecSrc, vec3_angle, vecThrow, AngularImpulse(600,random->RandomInt(-1200,1200),0), pPlayer );
@@ -339,7 +339,7 @@ void CBaseSDKGrenade::ItemPostFrame()
 
 		Vector vForward;
 		pPlayer->EyeVectors( &vForward );
-		Vector vecSrc = pPlayer->GetAbsOrigin() + pPlayer->GetViewOffset() + vForward * 16; 
+		Vector vecSrc = pPlayer->GetAbsOrigin() + pPlayer->GetViewOffset() + vForward * 16;
 
 		Vector vecVel = pPlayer->GetAbsVelocity();
 
@@ -360,4 +360,3 @@ void CBaseSDKGrenade::ItemPostFrame()
 	}
 
 #endif
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -44,7 +44,7 @@ public:
 	float				AdjustFactorForInterpolatorType( float factor, int side );
 
 	void				CopyFrom( const CDmeTimeSelection &src );
-	
+
 	void				GetCurrent( DmeTime_t pTimes[TS_TIME_COUNT] );
 	void				SetCurrent( DmeTime_t* pTimes );
 

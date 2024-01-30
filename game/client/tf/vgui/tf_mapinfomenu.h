@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -48,7 +48,7 @@ protected:
 	virtual void OnCommand( const char *command );
 	virtual void OnKeyCodeReleased( vgui::KeyCode code );
 	virtual void OnThink();
-	
+
 private:
 	// helper functions
 	void LoadMapPage();

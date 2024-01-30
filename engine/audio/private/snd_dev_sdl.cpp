@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -186,8 +186,8 @@ void CAudioDeviceSDLAudio::Shutdown( void )
 //-----------------------------------------------------------------------------
 // WAV out device
 //-----------------------------------------------------------------------------
-inline bool CAudioDeviceSDLAudio::ValidWaveOut( void ) const 
-{ 
+inline bool CAudioDeviceSDLAudio::ValidWaveOut( void ) const
+{
 	return m_devId != 0;
 }
 
@@ -255,10 +255,10 @@ void CAudioDeviceSDLAudio::OpenWaveOut( void )
 
 #if defined( BINK_VIDEO ) && defined( LINUX )
 	// Tells Bink to use SDL for its audio decoding
-	if ( g_pVideo != NULL) 
+	if ( g_pVideo != NULL)
 	{
 		g_pVideo->SoundDeviceCommand( VideoSoundDeviceOperation::SET_SDL_PARAMS, NULL, (void *)&obtained );
-	
+
 	}
 #endif
 }
@@ -266,8 +266,8 @@ void CAudioDeviceSDLAudio::OpenWaveOut( void )
 //-----------------------------------------------------------------------------
 // Closes the windows wave out device
 //-----------------------------------------------------------------------------
-void CAudioDeviceSDLAudio::CloseWaveOut( void ) 
-{ 
+void CAudioDeviceSDLAudio::CloseWaveOut( void )
+{
 	// none of these SDL_* functions are available to call if this is false.
 	if (m_devId)
 	{
@@ -283,7 +283,7 @@ void CAudioDeviceSDLAudio::CloseWaveOut( void )
 //-----------------------------------------------------------------------------
 void CAudioDeviceSDLAudio::AllocateOutputBuffers()
 {
-	// Allocate and lock memory for the waveform data.  
+	// Allocate and lock memory for the waveform data.
 	const int nBufferSize = WAV_BUFFER_SIZE * WAV_BUFFERS;
 	m_pBuffer = new uint8_t[nBufferSize];
 	memset(m_pBuffer, '\0', nBufferSize);
@@ -312,7 +312,7 @@ int CAudioDeviceSDLAudio::PaintBegin( float mixAheadTime, int soundtime, int pai
 	//  paintedtime - total samples that have been mixed at speed
 	//  endtime - target for samples in mixahead buffer at speed
 	unsigned int endtime = soundtime + mixAheadTime * DeviceDmaSpeed();
-	
+
 	int samps = DeviceSampleCount() >> (DeviceChannels()-1);
 
 	if ((int)(endtime - soundtime) > samps)
@@ -320,7 +320,7 @@ int CAudioDeviceSDLAudio::PaintBegin( float mixAheadTime, int soundtime, int pai
 
 	if ((endtime - paintedtime) & 0x3)
 	{
-		// The difference between endtime and painted time should align on 
+		// The difference between endtime and painted time should align on
 		// boundaries of 4 samples.  This is important when upsampling from 11khz -> 44khz.
 		endtime -= (endtime - paintedtime) & 0x3;
 	}
@@ -377,7 +377,7 @@ void CAudioDeviceSDLAudio::AudioCallback(Uint8 *stream, int len)
 
 #if defined( BINK_VIDEO ) && defined( LINUX )
 	// Mix in Bink movie audio if that stuff is playing.
-	if ( g_pVideo != NULL) 
+	if ( g_pVideo != NULL)
 	{
 		g_pVideo->SoundDeviceCommand( VideoSoundDeviceOperation::SDLMIXER_CALLBACK, (void *)stream_orig, (void *)&totalWriteable );
 	}
@@ -479,7 +479,7 @@ void CAudioDeviceSDLAudio::MixUpsample( int sampleCount, int filtertype )
 {
 	paintbuffer_t *ppaint = MIX_GetCurrentPaintbufferPtr();
 	int ifilter = ppaint->ifilter;
-	
+
 	Assert (ifilter < CPAINTFILTERS);
 
 	S_MixBufferUpsample2x( sampleCount, ppaint->pbuf, &(ppaint->fltmem[ifilter][0]), CPAINTFILTERMEM, filtertype );
@@ -544,7 +544,7 @@ void CAudioDeviceSDLAudio::TransferSamples( int end )
 {
 	int		lpaintedtime = g_paintedtime;
 	int		endtime = end;
-	
+
 	// resumes playback...
 
 	if ( m_pBuffer )
@@ -571,4 +571,3 @@ void CAudioDeviceSDLAudio::ApplyDSPEffects( int idsp, portable_samplepair_t *pbu
 }
 
 #endif // !DEDICATED
-

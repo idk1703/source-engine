@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,10 +18,10 @@ class CWeaponM1Carbine : public CDODSemiAutoWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponM1Carbine, CDODSemiAutoWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponM1Carbine()  {}
 
 	virtual DODWeaponID GetWeaponID( void ) const		{ return WEAPON_M1CARBINE; }
@@ -43,7 +43,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_m1carbine, CWeaponM1Carbine );
 PRECACHE_WEAPON_REGISTER( weapon_m1carbine );
 
-acttable_t CWeaponM1Carbine::m_acttable[] = 
+acttable_t CWeaponM1Carbine::m_acttable[] =
 {
 	{ ACT_DOD_STAND_AIM,					ACT_DOD_STAND_AIM_RIFLE,				false },
 	{ ACT_DOD_CROUCH_AIM,					ACT_DOD_CROUCH_AIM_RIFLE,				false },

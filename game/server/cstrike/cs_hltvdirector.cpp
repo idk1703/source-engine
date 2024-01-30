@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -53,7 +53,7 @@ void CCSHLTVDirector::CreateShotFromEvent( CHLTVGameEvent *event )
 		 !Q_strcmp( "hostage_killed", name ) )
 	{
 		CBaseEntity *player = UTIL_PlayerByUserId( event->m_Event->GetInt("userid") );
-		
+
 		if ( !player )
 			return;
 
@@ -124,10 +124,10 @@ const char** CCSHLTVDirector::GetModEvents()
 		"round_start",
 		"round_end",
 		// additional CS:S events:
-		"bomb_planted",	
+		"bomb_planted",
 		"bomb_defused",
 		"hostage_killed",
-		"hostage_hurt",		
+		"hostage_hurt",
 		NULL
 	};
 

@@ -141,4 +141,3 @@ KeyValues *CGameEventManagerOld::UnserializeKeyValue( bf_read *buf)
 	DevMsg("UnserializeKeyValue:: not supported\n");
 	return NULL;
 }
-

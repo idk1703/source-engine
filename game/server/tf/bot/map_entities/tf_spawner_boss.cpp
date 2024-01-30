@@ -37,7 +37,7 @@ LINK_ENTITY_TO_CLASS( tf_spawner_boss, CTFSpawnerBoss );
 
 
 //------------------------------------------------------------------------------
-CTFSpawnerBoss::CTFSpawnerBoss( void ) 
+CTFSpawnerBoss::CTFSpawnerBoss( void )
 {
 	m_isExpended = false;
 	m_spawnCountRemaining = 0;
@@ -121,8 +121,8 @@ void CTFSpawnerBoss::SpawnerThink( void )
 
 	// spawn a bot
 	CBotNPC *bot = (CBotNPC *)CreateEntityByName( "bot_boss" );
-	if ( bot ) 
-	{										   
+	if ( bot )
+	{
 		m_spawnedBotVector.AddToTail( bot );
 
 		int iTeam = TEAM_UNASSIGNED;
@@ -164,4 +164,3 @@ void CTFSpawnerBoss::SpawnerThink( void )
 #endif // TF_RAID_MODE
 
 #endif // #ifdef OBSOLETE_USE_BOSS_ALPHA
-

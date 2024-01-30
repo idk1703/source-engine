@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -17,7 +17,7 @@ const float MINIMUM_SORT_TIME = 1.5f;
 //			NOTE:	m_Servers can not use more than 96 sockets, else it will
 //					cause internet explorer to Stop working under win98 SE!
 //-----------------------------------------------------------------------------
-CInternetGames::CInternetGames(vgui::Panel *parent, const char *panelName, EPageType eType ) : 
+CInternetGames::CInternetGames(vgui::Panel *parent, const char *panelName, EPageType eType ) :
 	CBaseGamesPage(parent, panelName, eType )
 {
 	m_fLastSort = 0.0f;
@@ -66,7 +66,7 @@ CInternetGames::~CInternetGames()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInternetGames::PerformLayout()
 {
@@ -134,7 +134,7 @@ void CInternetGames::ServerResponded( HServerListRequest hReq, int iServer )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInternetGames::ServerFailedToRespond( HServerListRequest hReq, int iServer )
 {
@@ -201,7 +201,7 @@ void CInternetGames::RefreshComplete( HServerListRequest hReq, EMatchMakingServe
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInternetGames::GetNewServerList()
 {
@@ -233,7 +233,7 @@ bool CInternetGames::SupportsItem(IGameList::InterfaceItem_e item)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInternetGames::CheckRedoSort( void )
 {
@@ -306,7 +306,7 @@ int CInternetGames::GetRegionCodeToFilter()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CInternetGames::CheckTagFilter( gameserveritem_t &server )
 {

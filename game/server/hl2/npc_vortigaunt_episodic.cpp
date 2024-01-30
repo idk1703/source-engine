@@ -137,7 +137,7 @@ int AE_VORTIGAUNT_STOP_HEAL_GLOW;	// '
 // Squad slots
 //-----------------------------------------------------------------------------
 enum SquadSlot_T
-{	
+{
 	SQUAD_SLOT_HEAL_PLAYER = LAST_SHARED_SQUADSLOT,
 };
 
@@ -216,9 +216,9 @@ static bool IsRoller( CBaseEntity *pRoller )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CNPC_Vortigaunt::CNPC_Vortigaunt( void ) : 
+CNPC_Vortigaunt::CNPC_Vortigaunt( void ) :
 m_bPlayerRequestedHeal( false ),
 m_flNextHealTime( 3.0f ), // Let the player settle before we decide to do this
 m_nNumTokensToSpawn( 0 ),
@@ -302,10 +302,10 @@ void CNPC_Vortigaunt::StartTask( const Task_t *pTask )
 			SetTarget( m_hHealTarget );
 			TaskComplete();
 		}
-		
+
 		break;
 	}
-	
+
 	case TASK_VORTIGAUNT_EXTRACT_WARMUP:
 	{
 		ResetIdealActivity( (Activity) ACT_VORTIGAUNT_TO_ACTION );
@@ -339,7 +339,7 @@ void CNPC_Vortigaunt::StartTask( const Task_t *pTask )
 		SetLayerPriority( nLayer, 1.0f );
 
 		m_eHealState = HEAL_STATE_WARMUP;
-		
+
 		CBasePlayer *pPlayer = ToBasePlayer( m_hHealTarget );
 		if ( pPlayer == NULL )
 		{
@@ -350,11 +350,11 @@ void CNPC_Vortigaunt::StartTask( const Task_t *pTask )
 		// Figure out how many tokens to spawn
 		float flArmorDelta = (float) sk_vortigaunt_armor_charge.GetInt() - pPlayer->ArmorValue();
 		m_nNumTokensToSpawn = ceil( flArmorDelta / sk_vortigaunt_armor_charge_per_token.GetInt() );
-		
+
 		// If we're forced to recharge, then at least send one
 		if ( m_bForceArmorRecharge && m_nNumTokensToSpawn <= 0 )
 			m_nNumTokensToSpawn = 1;
-		
+
 		TaskComplete();
 		break;
 	}
@@ -378,7 +378,7 @@ void CNPC_Vortigaunt::StartTask( const Task_t *pTask )
 
 	default:
 		{
-			BaseClass::StartTask( pTask );	
+			BaseClass::StartTask( pTask );
 			break;
 		}
 	}
@@ -410,7 +410,7 @@ void CNPC_Vortigaunt::RunTask( const Task_t *pTask )
 			BaseClass::RunTask( pTask );
 			break;
 		}
-	
+
 	case TASK_VORTIGAUNT_EXTRACT_WARMUP:
 	{
 		if ( IsActivityFinished() )
@@ -419,7 +419,7 @@ void CNPC_Vortigaunt::RunTask( const Task_t *pTask )
 		}
 		break;
 	}
-	
+
 	case TASK_VORTIGAUNT_EXTRACT:
 	{
 		if ( IsActivityFinished() )
@@ -482,7 +482,7 @@ void CNPC_Vortigaunt::RunTask( const Task_t *pTask )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Vortigaunt::AlertSound( void )
 {
@@ -500,7 +500,7 @@ float CNPC_Vortigaunt::MaxYawSpeed ( void )
 {
 	switch ( GetActivity() )
 	{
-	case ACT_IDLE:		
+	case ACT_IDLE:
 		return 35;
 		break;
 	case ACT_WALK:
@@ -519,7 +519,7 @@ float CNPC_Vortigaunt::MaxYawSpeed ( void )
 // Purpose: Normal facing position is the eyes, but with the vort eyes on such a
 //			long swing arm, this causes stability issues when an npc is trying to
 //			face a vort that's also turning their head
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 Vector  CNPC_Vortigaunt::FacingPosition( void )
 {
@@ -529,13 +529,13 @@ Vector  CNPC_Vortigaunt::FacingPosition( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Normal body target is the mid-point between the center and the eyes, but
-//			the vort's eyes are so far offset, that this is usually in the middle of 
+//			the vort's eyes are so far offset, that this is usually in the middle of
 //			empty space
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 
-Vector CNPC_Vortigaunt::BodyTarget( const Vector &posSrc, bool bNoisy ) 
-{ 
+Vector CNPC_Vortigaunt::BodyTarget( const Vector &posSrc, bool bNoisy )
+{
 	Vector low = WorldSpaceCenter() - ( WorldSpaceCenter() - GetAbsOrigin() ) * .25;
 
 	Vector high;
@@ -560,7 +560,7 @@ Vector CNPC_Vortigaunt::BodyTarget( const Vector &posSrc, bool bNoisy )
 		result = low + delta * rand1 + delta * rand2;
 	}
 	else
-		result = low + delta * 0.5; 
+		result = low + delta * 0.5;
 
 	return result;
 }
@@ -678,8 +678,8 @@ int CNPC_Vortigaunt::MeleeAttack1Conditions( float flDot, float flDist )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flRadius - 
+// Purpose:
+// Input  : flRadius -
 // Output : int
 //-----------------------------------------------------------------------------
 int CNPC_Vortigaunt::NumAntlionsInRadius( float flRadius )
@@ -708,7 +708,7 @@ int CNPC_Vortigaunt::RangeAttack2Conditions( float flDot, float flDist )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Vortigaunt::HandleAnimEvent( animevent_t *pEvent )
 {
@@ -718,7 +718,7 @@ void CNPC_Vortigaunt::HandleAnimEvent( animevent_t *pEvent )
 		StartHandGlow( VORTIGAUNT_BEAM_HEAL, atoi( pEvent->options ) );
 		return;
 	}
-	
+
 	// Stop our heal glows (choreo driven)
 	if ( pEvent->event == AE_VORTIGAUNT_STOP_HEAL_GLOW )
 	{
@@ -732,7 +732,7 @@ void CNPC_Vortigaunt::HandleAnimEvent( animevent_t *pEvent )
 		StartHandGlow( VORTIGAUNT_BEAM_DISPEL, atoi( pEvent->options ) );
 		return;
 	}
-	
+
 	// Stop our hurt glows (choreo driven)
 	if ( pEvent->event == AE_VORTIGAUNT_STOP_HURT_GLOW )
 	{
@@ -764,7 +764,7 @@ void CNPC_Vortigaunt::HandleAnimEvent( animevent_t *pEvent )
 		// TODO: Increase the size?
 		return;
 	}
-	
+
 	// Kaboom!
 	if ( pEvent->event == AE_VORTIGAUNT_DISPEL )
 	{
@@ -794,12 +794,12 @@ void CNPC_Vortigaunt::HandleAnimEvent( animevent_t *pEvent )
 		{
 			ArmBeam( VORTIGAUNT_BEAM_ZAP, HAND_LEFT );
 		}
-		
+
 		if ( ( nHand == HAND_RIGHT ) || (nHand == HAND_BOTH ) )
 		{
 			ArmBeam( VORTIGAUNT_BEAM_ZAP, HAND_RIGHT );
 		}
-		
+
 		// Make hands glow if not already glowing
 		if ( m_fGlowAge == 0 )
 		{
@@ -807,7 +807,7 @@ void CNPC_Vortigaunt::HandleAnimEvent( animevent_t *pEvent )
 			{
 				StartHandGlow( VORTIGAUNT_BEAM_ZAP, HAND_LEFT );
 			}
-			 
+
 			if ( ( nHand == HAND_RIGHT ) || (nHand == HAND_BOTH ) )
 			{
 				StartHandGlow( VORTIGAUNT_BEAM_ZAP, HAND_RIGHT );
@@ -816,14 +816,14 @@ void CNPC_Vortigaunt::HandleAnimEvent( animevent_t *pEvent )
 		}
 
 		CPASAttenuationFilter filter( this );
-		
+
 		CSoundParameters params;
 		if ( GetParametersForSound( "NPC_Vortigaunt.ZapPowerup", params, NULL ) )
 		{
 			EmitSound_t ep( params );
 			//ep.m_nPitch = 100 + m_iBeams * 10;
 			ep.m_nPitch = 150;
-	
+
 			EmitSound( filter, entindex(), ep );
 
 			m_bStopLoopingSounds = true;
@@ -847,7 +847,7 @@ void CNPC_Vortigaunt::HandleAnimEvent( animevent_t *pEvent )
 		{
 			ZapBeam( HAND_LEFT );
 		}
-		
+
 		if ( ( nHand == HAND_RIGHT ) || (nHand == HAND_BOTH ) )
 		{
 			ZapBeam( HAND_RIGHT );
@@ -894,7 +894,7 @@ void CNPC_Vortigaunt::HandleAnimEvent( animevent_t *pEvent )
 					vecSpawnOrigin = vecSpawnOrigin + (vecToVort * flDistance);
 				}
 
-				// HACK: If we've still failed, just spawn it on the player 
+				// HACK: If we've still failed, just spawn it on the player
 				if ( i == iNumAttempts )
 				{
 					CBasePlayer	*pPlayer = AI_GetSinglePlayer();
@@ -911,11 +911,11 @@ void CNPC_Vortigaunt::HandleAnimEvent( animevent_t *pEvent )
 			}
 
 			CEffectData	data;
-			
+
 			data.m_vOrigin = GetTarget()->WorldSpaceCenter();
 			data.m_vNormal = WorldSpaceCenter() - GetTarget()->WorldSpaceCenter();
 			VectorNormalize( data.m_vNormal );
-			
+
 			data.m_flScale = 4;
 
 			DispatchEffect( "AntlionGib", data );
@@ -925,7 +925,7 @@ void CNPC_Vortigaunt::HandleAnimEvent( animevent_t *pEvent )
 		m_flNextAttack = gpGlobals->curtime + random->RandomFloat( 2.0f, 3.0f );
 		return;
 	}
-	
+
 	if ( pEvent->event == AE_VORTIGAUNT_ZAP_DONE )
 	{
 		ClearBeams();
@@ -939,7 +939,7 @@ void CNPC_Vortigaunt::HandleAnimEvent( animevent_t *pEvent )
 		m_eHealState = HEAL_STATE_WARMUP;
 		return;
 	}
-	
+
 	if ( pEvent->event == AE_VORTIGAUNT_HEAL_STARTSOUND )
 	{
 		CPASAttenuationFilter filter( this );
@@ -959,7 +959,7 @@ void CNPC_Vortigaunt::HandleAnimEvent( animevent_t *pEvent )
 
 	if ( pEvent->event == AE_VORTIGAUNT_SWING_SOUND )
 	{
-		EmitSound( "NPC_Vortigaunt.Swing" );	
+		EmitSound( "NPC_Vortigaunt.Swing" );
 		return;
 	}
 
@@ -993,7 +993,7 @@ void CNPC_Vortigaunt::HandleAnimEvent( animevent_t *pEvent )
 		EmitSound( "NPC_Vortigaunt.FootstepRight", pEvent->eventtime );
 		return;
 	}
-	
+
 	BaseClass::HandleAnimEvent( pEvent );
 }
 
@@ -1053,7 +1053,7 @@ Activity CNPC_Vortigaunt::NPC_TranslateActivity( Activity eNewActivity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Vortigaunt::UpdateOnRemove( void)
 {
@@ -1076,7 +1076,7 @@ void CNPC_Vortigaunt::Event_Killed( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Vortigaunt::Spawn( void )
 {
@@ -1112,7 +1112,7 @@ void CNPC_Vortigaunt::Spawn( void )
 	m_flEyeIntegRate		= 0.6f;		// Got a big eyeball so turn it slower
 	m_bForceArmorRecharge	= false;
 	m_flHealHinderedTime	= 0.0f;
-	
+
 	m_nCurGlowIndex	= 0;
 
 	m_bStopLoopingSounds	= false;
@@ -1131,7 +1131,7 @@ void CNPC_Vortigaunt::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Vortigaunt::Precache()
 {
@@ -1175,7 +1175,7 @@ void CNPC_Vortigaunt::Precache()
 	PrecacheMaterial( "sprites/light_glow02_add" );
 
 	BaseClass::Precache();
-}	
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: Interpret a player +USE'ing us
@@ -1196,7 +1196,7 @@ void CNPC_Vortigaunt::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 			return;
 		}
 	}
-	
+
 	// Next, try to speak the +USE concept
 	if ( IsOkToSpeakInResponseToPlayer() && m_eHealState == HEAL_STATE_NONE )
 	{
@@ -1215,7 +1215,7 @@ void CNPC_Vortigaunt::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 		else
 		{
 			// Don't say hi after you've said your +USE speech
-			SetSpokeConcept( TLK_HELLO, NULL );	
+			SetSpokeConcept( TLK_HELLO, NULL );
 		}
 	}
 }
@@ -1227,14 +1227,14 @@ void CNPC_Vortigaunt::PainSound( const CTakeDamageInfo &info )
 {
 	if ( gpGlobals->curtime < m_flPainTime )
 		return;
-	
+
 	m_flPainTime = gpGlobals->curtime + random->RandomFloat(0.5, 0.75);
 
 	Speak( VORT_PAIN );
 }
 
 //=========================================================
-// DeathSound 
+// DeathSound
 //=========================================================
 void CNPC_Vortigaunt::DeathSound( const CTakeDamageInfo &info )
 {
@@ -1293,7 +1293,7 @@ int CNPC_Vortigaunt::TranslateSchedule( int scheduleType )
 		break;
 
 	case SCHED_TAKE_COVER_FROM_BEST_SOUND:
-		
+
 		// Stand still if we're in the middle of an attack.  Failing to do so can make us miss our shot!
 		if ( IsPlayingGesture( ACT_GESTURE_RANGE_ATTACK1 ) )
 			return SCHED_COMBAT_FACE;
@@ -1308,7 +1308,7 @@ int CNPC_Vortigaunt::TranslateSchedule( int scheduleType )
 		break;
 
 	case SCHED_RANGE_ATTACK1:
-		
+
 		// If we're told to fire when we're already firing, just face our target.  If we don't do this, we get a bizarre double-shot
 		if ( IsPlayingGesture( ACT_GESTURE_RANGE_ATTACK1 ) )
 			return SCHED_COMBAT_FACE;
@@ -1321,7 +1321,7 @@ int CNPC_Vortigaunt::TranslateSchedule( int scheduleType )
 	case SCHED_CHASE_ENEMY:
 	case SCHED_ESTABLISH_LINE_OF_FIRE:
 	case SCHED_ESTABLISH_LINE_OF_FIRE_FALLBACK:
-		
+
 		// Don't go running off after an enemy just because we're in an attack delay!  This has to do with
 		// the base systems assuming that held weapons are driving certain decisions when this creature
 		// uses an innate ability.
@@ -1331,7 +1331,7 @@ int CNPC_Vortigaunt::TranslateSchedule( int scheduleType )
 		break;
 		*/
 	}
-	
+
 	return BaseClass::TranslateSchedule( scheduleType );
 }
 
@@ -1406,7 +1406,7 @@ bool CNPC_Vortigaunt::HealBehaviorAvailable( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Determines whether or not the 
+// Purpose: Determines whether or not the
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Vortigaunt::ShouldHealTarget( CBaseEntity *pTarget )
@@ -1461,7 +1461,7 @@ bool CNPC_Vortigaunt::ShouldHealTarget( CBaseEntity *pTarget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CNPC_Vortigaunt::SelectHealSchedule( void )
@@ -1580,7 +1580,7 @@ int CNPC_Vortigaunt::SelectSchedule( void )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 int CNPC_Vortigaunt::SelectFailSchedule( int failedSchedule, int failedTask, AI_TaskFailureCode_t taskFailCode )
 {
@@ -1596,7 +1596,7 @@ int CNPC_Vortigaunt::SelectFailSchedule( int failedSchedule, int failedTask, AI_
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Vortigaunt::DeclineFollowing( void )
 {
@@ -1611,7 +1611,7 @@ bool CNPC_Vortigaunt::CanBeUsedAsAFriend( void )
 	// We don't want to be used if we're busy
 	if ( IsCurSchedule( SCHED_VORTIGAUNT_HEAL ) )
 		return false;
-	
+
 	if ( IsCurSchedule( SCHED_VORTIGAUNT_EXTRACT_BUGBAIT ) )
 		return false;
 
@@ -1644,7 +1644,7 @@ void CNPC_Vortigaunt::StartHealing( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Vortigaunt::StopHealing( bool bInterrupt )
 {
@@ -1655,7 +1655,7 @@ void CNPC_Vortigaunt::StopHealing( bool bInterrupt )
 
 	EndHandGlow( VORTIGAUNT_BEAM_HEAL );
 	VacateStrategySlot();
-	
+
 	// See if we're completely interrupting the heal or just ending normally
 	if ( bInterrupt )
 	{
@@ -1747,7 +1747,7 @@ void CNPC_Vortigaunt::MaintainHealSchedule( void )
 
 			// Increment a counter to let us know how long we've failed
 			m_flHealHinderedTime += gpGlobals->curtime - GetLastThink();
-			
+
 			if ( m_flHealHinderedTime > 2.0f )
 			{
 				// If too long, stop trying
@@ -1767,14 +1767,14 @@ void CNPC_Vortigaunt::MaintainHealSchedule( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 inline bool CNPC_Vortigaunt::InAttackSequence( void )
 {
 	if ( m_MoveAndShootOverlay.IsMovingAndShooting() )
 		return true;
-	
+
 	if ( GetActivity() == ACT_RANGE_ATTACK1 )
 		return true;
 
@@ -1823,17 +1823,17 @@ void CNPC_Vortigaunt::PrescheduleThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &move - 
-//			flInterval - 
+// Purpose:
+// Input  : &move -
+//			flInterval -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Vortigaunt::OverrideMoveFacing( const AILocalMoveGoal_t &move, float flInterval )
 {
 	// If we're in our aiming gesture, then always face our target as we run
 	Activity nActivity = NPC_TranslateActivity( ACT_GESTURE_RANGE_ATTACK1 );
-	if ( IsPlayingGesture( nActivity ) || 
-	     IsCurSchedule( SCHED_PC_MOVE_TOWARDS_COVER_FROM_BEST_SOUND ) || 
+	if ( IsPlayingGesture( nActivity ) ||
+	     IsCurSchedule( SCHED_PC_MOVE_TOWARDS_COVER_FROM_BEST_SOUND ) ||
 	     IsCurSchedule( SCHED_VORT_FLEE_FROM_BEST_SOUND ) ||
 		 IsCurSchedule( SCHED_TAKE_COVER_FROM_BEST_SOUND ) )
 	{
@@ -1845,7 +1845,7 @@ bool CNPC_Vortigaunt::OverrideMoveFacing( const AILocalMoveGoal_t &move, float f
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Vortigaunt::BuildScheduleTestBits( void )
 {
@@ -1853,7 +1853,7 @@ void CNPC_Vortigaunt::BuildScheduleTestBits( void )
 	BaseClass::BuildScheduleTestBits();
 
 	// Allow healing to interrupt us if we're standing around
-	if ( IsCurSchedule( SCHED_IDLE_STAND ) || 
+	if ( IsCurSchedule( SCHED_IDLE_STAND ) ||
 		 IsCurSchedule( SCHED_ALERT_STAND ) )
 	{
 		if ( m_eHealState == HEAL_STATE_NONE )
@@ -1871,7 +1871,7 @@ void CNPC_Vortigaunt::BuildScheduleTestBits( void )
 		{
 			SetCustomInterruptCondition( COND_VORTIGAUNT_HEAL_TARGET_TOO_FAR );
 			SetCustomInterruptCondition( COND_VORTIGAUNT_HEAL_TARGET_BLOCKED );
-			
+
 			// Interrupt if we're not already turning
 			if ( IsCurSchedule( SCHED_VORTIGAUNT_FACE_PLAYER ) == false )
 			{
@@ -1904,7 +1904,7 @@ void CNPC_Vortigaunt::ArmBeam( int beamType, int nHand )
 		Vector vecAim = forward * random->RandomFloat( -1, 1 ) + right * side * random->RandomFloat( 0, 1 ) + up * random->RandomFloat( -1, 1 );
 		trace_t tr1;
 		AI_TraceLine ( vecSrc, vecSrc + vecAim * (10*12), MASK_SOLID, this, COLLISION_GROUP_NONE, &tr1);
-		
+
 		// Don't hit the sky
 		if ( tr1.surface.flags & SURF_SKY )
 			continue;
@@ -1971,7 +1971,7 @@ void CNPC_Vortigaunt::StartHandGlow( int beamType, int nHand )
 	case VORTIGAUNT_BEAM_ALL:
 		Assert( 0 );
 		break;
-	}	
+	}
 }
 
 //------------------------------------------------------------------------------
@@ -2004,7 +2004,7 @@ void CNPC_Vortigaunt::EndHandGlow( int beamType /*= VORTIGAUNT_BEAM_ALL*/ )
 extern int ACT_ANTLION_ZAP_FLIP;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNPC_Vortigaunt::IsValidEnemy( CBaseEntity *pEnemy )
 {
@@ -2061,7 +2061,7 @@ void CNPC_Vortigaunt::ZapBeam( int nHand )
 	if ( GetEnemy() )
 	{
 		Vector vecTarget = GetEnemy()->BodyTarget( vecSrc, false );
-				
+
 		if ( g_debug_vortigaunt_aim.GetBool() )
 		{
 			NDebugOverlay::Cross3D( vecTarget, 4.0f, 255, 0, 0, true, 10.0f );
@@ -2132,7 +2132,7 @@ void CNPC_Vortigaunt::ZapBeam( int nHand )
 		VectorNormalize( vecAim );// not a unit vec yet
 		// hit like a 5kg object flying 100 ft/s
 		dmgInfo.SetDamageForce( 5 * 100 * 12 * vecAim );
-		
+
 		// Our zaps do special things to antlions
 		if ( FClassnameIs( pEntity, "npc_antlion" ) )
 		{
@@ -2147,7 +2147,7 @@ void CNPC_Vortigaunt::ZapBeam( int nHand )
 				// Always gib the antlion hit!
 				dmgInfo.ScaleDamage( 4.0f );
 			}
-			
+
 			// Look in a ring and flip other antlions nearby
 			DispelAntlions( tr.endpos, 200.0f, false );
 		}
@@ -2170,13 +2170,13 @@ void CNPC_Vortigaunt::ClearHandGlow( void )
 		UTIL_Remove( m_hHandEffect[0] );
 		m_hHandEffect[0] = NULL;
 	}
-	
+
 	if ( m_hHandEffect[1] != NULL )
 	{
 		UTIL_Remove( m_hHandEffect[1] );
 		m_hHandEffect[1] = NULL;
 	}
-	
+
 	m_fGlowAge = 0;
 }
 
@@ -2197,7 +2197,7 @@ void CNPC_Vortigaunt::ClearBeams( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Vortigaunt::InputEnableArmorRecharge( inputdata_t &data )
 {
@@ -2205,7 +2205,7 @@ void CNPC_Vortigaunt::InputEnableArmorRecharge( inputdata_t &data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Vortigaunt::InputDisableArmorRecharge( inputdata_t &data )
 {
@@ -2213,7 +2213,7 @@ void CNPC_Vortigaunt::InputDisableArmorRecharge( inputdata_t &data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Vortigaunt::InputChargeTarget( inputdata_t &data )
 {
@@ -2241,7 +2241,7 @@ void CNPC_Vortigaunt::InputChargeTarget( inputdata_t &data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Vortigaunt::InputExtractBugbait( inputdata_t &data )
 {
@@ -2285,7 +2285,7 @@ void CNPC_Vortigaunt::InputDisableHealthRegeneration( inputdata_t &data )
 int CNPC_Vortigaunt::IRelationPriority( CBaseEntity *pTarget )
 {
 	int priority = BaseClass::IRelationPriority( pTarget );
-	
+
 	if ( pTarget == NULL )
 		return priority;
 
@@ -2300,7 +2300,7 @@ int CNPC_Vortigaunt::IRelationPriority( CBaseEntity *pTarget )
 	}
 
 	// Targets near our follow target have a higher priority to us
-	if ( m_FollowBehavior.GetFollowTarget() && 
+	if ( m_FollowBehavior.GetFollowTarget() &&
 		m_FollowBehavior.GetFollowTarget()->GetAbsOrigin().DistToSqr( pTarget->GetAbsOrigin() ) < Square(25*12) )
 	{
 		priority++;
@@ -2375,8 +2375,8 @@ void CNPC_Vortigaunt::GatherHealConditions( void )
 
 	// We stop if there are enemies around
 	if ( m_bArmorRechargeEnabled == false ||
-		 HasCondition( COND_NEW_ENEMY ) || 
-		 HasCondition( COND_HEAR_DANGER ) || 
+		 HasCondition( COND_NEW_ENEMY ) ||
+		 HasCondition( COND_HEAR_DANGER ) ||
 		 HasCondition( COND_HEAVY_DAMAGE ) )
 	{
 		ClearCondition( COND_VORTIGAUNT_HEAL_VALID );
@@ -2456,7 +2456,7 @@ void CNPC_Vortigaunt::GatherConditions( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Vortigaunt::DispelAntlions( const Vector &vecOrigin, float flRadius, bool bDispel /*= true*/ )
 {
@@ -2541,7 +2541,7 @@ void CNPC_Vortigaunt::DispelAntlions( const Vector &vecOrigin, float flRadius, b
 
 			pAntlion->ApplyAbsVelocityImpulse( vecDir );
 
-			// gib nearby antlions, knock over distant ones. 
+			// gib nearby antlions, knock over distant ones.
 			if ( flDist < 128 && bDispel )
 			{
 				// splat!
@@ -2569,7 +2569,7 @@ void CNPC_Vortigaunt::DispelAntlions( const Vector &vecOrigin, float flRadius, b
 			}
 		}
 	}
-	
+
 	// Stop our effects
 	if ( bDispel )
 	{
@@ -2602,15 +2602,15 @@ bool CNPC_Vortigaunt::CanRunAScriptedNPCInteraction( bool bForced /*= false*/ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : interrupt - 
+// Purpose:
+// Input  : interrupt -
 //-----------------------------------------------------------------------------
 void CNPC_Vortigaunt::SetScriptedScheduleIgnoreConditions( Interruptability_t interrupt )
 {
 	// First add our base conditions to ignore
 	BaseClass::SetScriptedScheduleIgnoreConditions( interrupt );
 
-	static int g_VortConditions[] = 
+	static int g_VortConditions[] =
 	{
 		COND_VORTIGAUNT_CAN_HEAL,
 		COND_VORTIGAUNT_DISPEL_ANTLIONS,
@@ -2677,8 +2677,8 @@ bool CNPC_Vortigaunt::ShouldMoveAndShoot( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: notification from a grub that I squished it. This special case 
-// function is necessary because what you would think to be the ordinary 
+// Purpose: notification from a grub that I squished it. This special case
+// function is necessary because what you would think to be the ordinary
 // channels are in fact missing: Event_KilledOther doesn't actually do anything
 // and KilledNPC expects a BaseCombatCharacter, and always uses the same Speak
 // line.
@@ -2689,7 +2689,7 @@ void CNPC_Vortigaunt::OnSquishedGrub( const CBaseEntity *pGrub )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Vortigaunt::AimGun( void )
 {
@@ -2704,7 +2704,7 @@ void CNPC_Vortigaunt::AimGun( void )
 
 		vecShootOrigin = Weapon_ShootPosition();
 		Vector vecShootDir;
-		
+
 		// Aim where it is
 		vecShootDir = GetShootEnemyDir( vecShootOrigin, false );
 
@@ -2712,7 +2712,7 @@ void CNPC_Vortigaunt::AimGun( void )
 		{
 			NDebugOverlay::Line( WorldSpaceCenter(), WorldSpaceCenter() + vecShootDir * 256.0f, 255, 0, 0, true, 0.1f );
 		}
-		
+
 		SetAim( vecShootDir );
 	}
 	else
@@ -2734,7 +2734,7 @@ void CNPC_Vortigaunt::OnStartScene( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Vortigaunt::IsInterruptable( void )
@@ -2780,19 +2780,19 @@ bool CNPC_Vortigaunt::CanFlinch( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Vortigaunt::OnUpdateShotRegulator( void )
 {
 	// Do nothing, we're not really running this code in a normal manner
 	GetShotRegulator()->SetBurstInterval( 2.0f, 2.0f );
 	GetShotRegulator()->SetBurstShotCountRange( 1, 1 );
-	GetShotRegulator()->SetRestInterval( 2.0f, 2.0f );	
+	GetShotRegulator()->SetRestInterval( 2.0f, 2.0f );
 }
 
 /*
 IMPLEMENT_SERVERCLASS_ST( CVortigauntChargeToken, DT_VortigauntChargeToken )
-	SendPropFloat( SENDINFO(m_flFadeOutTime), 0, SPROP_NOSCALE),	
+	SendPropFloat( SENDINFO(m_flFadeOutTime), 0, SPROP_NOSCALE),
 	SendPropBool( SENDINFO(m_bFadeOut) ),
 	SendPropFloat( SENDINFO(m_flScale), 0, SPROP_NOSCALE),
 END_SEND_TABLE()
@@ -2951,7 +2951,7 @@ AI_BEGIN_CUSTOM_NPC( npc_vortigaunt, CNPC_Vortigaunt )
 		""
 		"	Interrupts"
 	)
-	
+
 	//=========================================================
 	// > SCHED_VORTIGAUNT_FACE_PLAYER
 	//=========================================================
@@ -2989,7 +2989,7 @@ AI_BEGIN_CUSTOM_NPC( npc_vortigaunt, CNPC_Vortigaunt )
 		""
 		"	Interrupts"
 		"		COND_HEAVY_DAMAGE"
-	);	
+	);
 
 	//=========================================================
 	// > SCHED_VORTIGAUNT_DISPEL_ANTLIONS
@@ -3003,7 +3003,7 @@ AI_BEGIN_CUSTOM_NPC( npc_vortigaunt, CNPC_Vortigaunt )
 		""
 		"	Interrupts"
 		"		COND_NO_CUSTOM_INTERRUPTS"
-		);	
+		);
 
 	//=========================================================
 	//
@@ -3045,9 +3045,9 @@ AI_END_CUSTOM_NPC()
 
 
 //=============================================================================
-// 
-//  Charge Token 
-//	
+//
+//  Charge Token
+//
 //=============================================================================
 
 LINK_ENTITY_TO_CLASS( vort_charge_token, CVortigauntChargeToken );
@@ -3056,7 +3056,7 @@ BEGIN_DATADESC( CVortigauntChargeToken )
 	DEFINE_FIELD( m_hTarget, FIELD_EHANDLE ),
 	DEFINE_FIELD( m_flLifetime, FIELD_TIME ),
 	DEFINE_FIELD( m_bFadeOut, FIELD_BOOLEAN ),
-	
+
 	DEFINE_ENTITYFUNC( SeekThink ),
 	DEFINE_ENTITYFUNC( SeekTouch ),
 END_DATADESC()
@@ -3090,7 +3090,7 @@ CVortigauntChargeToken *CVortigauntChargeToken::CreateChargeToken( const Vector 
 	pToken->SetThink( &CVortigauntChargeToken::SeekThink );
 	pToken->SetTouch( &CVortigauntChargeToken::SeekTouch );
 	pToken->Spawn();
-	
+
 	// Start out at the same velocity as our owner
 	Vector vecInitialVelocity;
 	CBaseAnimating *pAnimating = dynamic_cast<CBaseAnimating *>(pOwner);
@@ -3100,7 +3100,7 @@ CVortigauntChargeToken *CVortigauntChargeToken::CreateChargeToken( const Vector 
 	}
 	else
 	{
-		vecInitialVelocity = pTarget->GetSmoothedVelocity();				
+		vecInitialVelocity = pTarget->GetSmoothedVelocity();
 	}
 
 	// Start out at that speed
@@ -3110,7 +3110,7 @@ CVortigauntChargeToken *CVortigauntChargeToken::CreateChargeToken( const Vector 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVortigauntChargeToken::Precache( void )
 {
@@ -3120,13 +3120,13 @@ void CVortigauntChargeToken::Precache( void )
 //-----------------------------------------------------------------------------
 // Purpose: We want to move through grates!
 //-----------------------------------------------------------------------------
-unsigned int CVortigauntChargeToken::PhysicsSolidMaskForEntity( void ) const 
-{ 
-	return MASK_SHOT; 
+unsigned int CVortigauntChargeToken::PhysicsSolidMaskForEntity( void ) const
+{
+	return MASK_SHOT;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVortigauntChargeToken::Spawn( void )
 {
@@ -3163,8 +3163,8 @@ Vector CVortigauntChargeToken::GetSteerVector( const Vector &vecForward )
 	Vector vecProbe;
 	float flSpeed = GetAbsVelocity().Length();
 
-	// Try right 
-	vecProbe = vecForward + vecRight;	
+	// Try right
+	vecProbe = vecForward + vecRight;
 	vecProbe *= flSpeed;
 
 	// We ignore multiple targets
@@ -3226,7 +3226,7 @@ void CVortigauntChargeToken::SeekThink( void )
 	Vector vecOffset = vec3_origin;
 	vecOffset += vecUp * cos( gpGlobals->curtime * 20.0f ) * 200.0f * gpGlobals->frametime;
 	vecOffset += vecRight * sin( gpGlobals->curtime * 15.0f ) * 200.0f * gpGlobals->frametime;
-	
+
 	vecOffset += GetSteerVector( vecDir );
 
 	SetAbsVelocity( ( vecDir * flSpeed ) + vecOffset );
@@ -3234,7 +3234,7 @@ void CVortigauntChargeToken::SeekThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVortigauntChargeToken::SeekTouch( CBaseEntity	*pOther )
 {
@@ -3266,8 +3266,8 @@ void CVortigauntChargeToken::SeekTouch( CBaseEntity	*pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flTime - 
+// Purpose:
+// Input  : flTime -
 //-----------------------------------------------------------------------------
 void CVortigauntChargeToken::FadeAndDie( void )
 {
@@ -3281,9 +3281,9 @@ void CVortigauntChargeToken::FadeAndDie( void )
 }
 
 //=============================================================================
-// 
+//
 //  Dispel Effect
-//	
+//
 //=============================================================================
 
 LINK_ENTITY_TO_CLASS( vort_effect_dispel, CVortigauntEffectDispel );
@@ -3322,7 +3322,7 @@ CVortigauntEffectDispel *CVortigauntEffectDispel::CreateEffectDispel( const Vect
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVortigauntEffectDispel::Spawn( void )
 {
@@ -3340,8 +3340,8 @@ void CVortigauntEffectDispel::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flTime - 
+// Purpose:
+// Input  : flTime -
 //-----------------------------------------------------------------------------
 void CVortigauntEffectDispel::FadeAndDie( void )
 {
@@ -3352,9 +3352,9 @@ void CVortigauntEffectDispel::FadeAndDie( void )
 
 
 //=============================================================================
-// 
+//
 //  Flesh effect target (used for orchestrating the "Invisible Alyx" moment
-//	
+//
 //=============================================================================
 
 #ifdef HL2_EPISODIC
@@ -3379,7 +3379,7 @@ private:
 	CNetworkVar( float, m_flScaleTime );
 
 	DECLARE_SERVERCLASS();
-	DECLARE_DATADESC();	
+	DECLARE_DATADESC();
 };
 
 LINK_ENTITY_TO_CLASS( point_flesh_effect_target, CFleshEffectTarget );

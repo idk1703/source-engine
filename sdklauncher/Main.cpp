@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -49,7 +49,7 @@ CSteamAPIContext g_SteamAPIContext;
 CSteamAPIContext *steamapicontext = &g_SteamAPIContext;
 
 // This is the base engine + mod-specific game dir (e.g. "c:\tf2\mytfmod\")
-char	gamedir[1024];	
+char	gamedir[1024];
 extern	char g_engineDir[50];
 CSDKLauncherDialog *g_pMainFrame = 0;
 
@@ -78,26 +78,26 @@ static LRESULT CALLBACK messageProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM 
 
 			g_pMainFrame->SetCurrentGame( szCurrentGame );
 		}
-	} 
- 
+	}
+
 	return ::DefWindowProc(hwnd,msg,wparam,lparam);
 }
 
 const char* GetLastWindowsErrorString()
 {
 	static char err[2048];
-	
+
 	LPVOID lpMsgBuf;
-	FormatMessage( 
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-		FORMAT_MESSAGE_FROM_SYSTEM | 
+	FormatMessage(
+		FORMAT_MESSAGE_ALLOCATE_BUFFER |
+		FORMAT_MESSAGE_FROM_SYSTEM |
 		FORMAT_MESSAGE_IGNORE_INSERTS,
 		NULL,
 		GetLastError(),
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
 		(LPTSTR) &lpMsgBuf,
 		0,
-		NULL 
+		NULL
 	);
 
 	strncpy( err, (char*)lpMsgBuf, sizeof( err ) );
@@ -124,9 +124,9 @@ void CreateMessageWindow( void )
 	// Create an empty window just for message handling
 	staticHwnd = CreateWindowEx(0, "SDKLauncher_Window", "Hidden Window", 0, 0, 0, 1, 1, NULL, NULL, GetModuleHandle(NULL), NULL);
 }
- 
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ShutdownMessageWindow( void )
 {
@@ -152,7 +152,7 @@ SpewRetval_t SDKLauncherSpewOutputFunc( SpewType_t spewType, char const *pMsg )
 #else
 #error "Implement me"
 #endif
-		
+
 		return SPEW_ABORT;
 	}
 	if (spewType == SPEW_ASSERT)
@@ -215,13 +215,13 @@ void SubstituteBaseDir( const char *pIn, char *pOut, int outLen )
 CUtlVector<char> g_FileData;
 CUtlVector<char> g_ReplacementData[2];
 
-CUtlVector<char>* GetFileStringWithReplacements( 
-	const char *pInputFilename, 
+CUtlVector<char>* GetFileStringWithReplacements(
+	const char *pInputFilename,
 	const char **ppReplacements, int nReplacements,
 	int &dataWriteLen )
 {
 	Assert( nReplacements % 2 == 0 );
- 
+
 	// Read in the file data.
 	FileHandle_t hFile = g_pFullFileSystem->Open( pInputFilename, "rb" );
 	if ( !hFile )
@@ -231,7 +231,7 @@ CUtlVector<char>* GetFileStringWithReplacements(
 	g_FileData.SetSize( g_pFullFileSystem->Size( hFile ) );
 	g_pFullFileSystem->Read( g_FileData.Base(), g_FileData.Count(), hFile );
 	g_pFullFileSystem->Close( hFile );
-	
+
 	CUtlVector<char> *pCurData = &g_FileData;
 	dataWriteLen = g_FileData.Count();
 	if ( nReplacements )
@@ -259,13 +259,13 @@ CUtlVector<char>* GetFileStringWithReplacements(
 			dataWriteLen = strlen( pCurData->Base() );
 		}
 	}
-	
+
 	return pCurData;
 }
 
 
-bool CopyWithReplacements( 
-	const char *pInputFilename, 
+bool CopyWithReplacements(
+	const char *pInputFilename,
 	const char **ppReplacements, int nReplacements,
 	const char *pOutputFilenameFormat, ... )
 {
@@ -277,7 +277,7 @@ bool CopyWithReplacements(
 		Q_snprintf( msg, sizeof( msg ), "Can't open %s for reading.", pInputFilename );
 		::MessageBox( NULL, msg, "Error", MB_OK );
 		return false;
-	} 
+	}
 
 	// Get the output filename.
 	char outFilename[MAX_PATH];
@@ -333,7 +333,7 @@ int InitializeVGui()
 
 	// load the scheme
 	vgui::scheme()->LoadSchemeFromFile("Resource/sdklauncher_scheme.res", NULL);
-	
+
 	// localization
 	g_pVGuiLocalize->AddFile( "resource/platform_english.txt" );
 	g_pVGuiLocalize->AddFile( "vgui/resource/vgui_english.txt" );
@@ -398,7 +398,7 @@ public:
 public:
 	vgui::VPANEL m_PrevAppFocusPanel;
 };
-		
+
 
 
 void VGUIMessageBox( vgui::Panel *pParent, const char *pTitle, const char *pMsg, ... )
@@ -428,17 +428,17 @@ void UpdateConfigsStatus_Init( void )
 		Q_strncat ( szConfigDir, g_engineDir, MAX_PATH );
 		Q_strncat ( szConfigDir, "\\bin", MAX_PATH );
 
-		g_dwChangeHandle = FindFirstChangeNotification( 
-			szConfigDir,													// directory to watch 
-			false,															// watch the subtree 
-			(FILE_NOTIFY_CHANGE_DIR_NAME|FILE_NOTIFY_CHANGE_FILE_NAME|FILE_NOTIFY_CHANGE_LAST_WRITE|FILE_NOTIFY_CHANGE_SIZE|FILE_NOTIFY_CHANGE_ATTRIBUTES));	// watch file and dir name changes 
- 
+		g_dwChangeHandle = FindFirstChangeNotification(
+			szConfigDir,													// directory to watch
+			false,															// watch the subtree
+			(FILE_NOTIFY_CHANGE_DIR_NAME|FILE_NOTIFY_CHANGE_FILE_NAME|FILE_NOTIFY_CHANGE_LAST_WRITE|FILE_NOTIFY_CHANGE_SIZE|FILE_NOTIFY_CHANGE_ATTRIBUTES));	// watch file and dir name changes
+
 		if ( g_dwChangeHandle == INVALID_HANDLE_VALUE )
 		{
 			// FIXME: Unable to watch the file
 		}
 	}
-}	 
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: Update our status
@@ -455,7 +455,7 @@ void UpdateConfigsStatus( void )
 		{
 			g_pMainFrame->RefreshConfigs();
 		}
-		
+
 		// Start the next update
 		if ( FindNextChangeNotification( g_dwChangeHandle ) == FALSE )
 		{
@@ -484,10 +484,10 @@ void QuickLaunchCommandLine( char *pCommandLine )
 	memset( &pi, 0, sizeof( pi ) );
 
 	DWORD dwFlags = 0;
-	
-	if ( !CreateProcess( 
+
+	if ( !CreateProcess(
 		0,
-		pCommandLine, 
+		pCommandLine,
 		NULL,							// security
 		NULL,
 		TRUE,
@@ -523,7 +523,7 @@ bool RunQuickLaunch()
 		QuickLaunchCommandLine( cmdLine );
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -575,7 +575,7 @@ bool CSDKLauncherApp::Create()
 {
 	SpewOutputFunc( SDKLauncherSpewOutputFunc );
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "inputsystem.dll",		INPUTSYSTEM_INTERFACE_VERSION },
 		{ "vgui2.dll",				VGUI_IVGUI_INTERFACE_VERSION },
@@ -623,7 +623,7 @@ bool CSDKLauncherApp::PreInit()
 	Q_AppendSlash( gamedir, sizeof( gamedir ) );
 
 	// the "base dir" so we can scan mod name
-	g_pFullFileSystem->AddSearchPath(GetSDKLauncherBaseDirectory(), SDKLAUNCHER_MAIN_PATH_ID);	
+	g_pFullFileSystem->AddSearchPath(GetSDKLauncherBaseDirectory(), SDKLAUNCHER_MAIN_PATH_ID);
 	// the main platform dir
 	g_pFullFileSystem->AddSearchPath("platform","PLATFORM", PATH_ADD_TO_HEAD);
 
@@ -650,7 +650,7 @@ int CSDKLauncherApp::Main()
 	// If they just want to run Hammer or hlmv, just do that and exit.
 	if ( RunQuickLaunch() )
 		return 1;
-	
+
 	// Run app frame loop
 	int ret = InitializeVGui();
 	if ( ret != 0 )
@@ -661,7 +661,7 @@ int CSDKLauncherApp::Main()
 	SteamAPI_InitSafe();
 	SteamAPI_SetTryCatchCallbacks( false ); // We don't use exceptions, so tell steam not to use try/catch in callback handlers
 	g_SteamAPIContext.Init();
-	
+
 	// Start looking for file updates
 //	UpdateConfigsStatus_Init();
 
@@ -674,11 +674,10 @@ int CSDKLauncherApp::Main()
 //		UpdateConfigsStatus();
 		vgui::ivgui()->RunFrame();
 	}
-	
+
 	ShutdownVGui();
 
 //	UpdateConfigsStatus_Shutdown();
 
 	return 1;
 }
-

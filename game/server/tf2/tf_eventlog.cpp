@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -24,7 +24,7 @@ public:
 		{
 			return true;
 		}
-	
+
 		if ( Q_strcmp(event->GetName(), "tf2_") == 0 )
 		{
 			return PrintTF2Event( event );
@@ -53,4 +53,3 @@ IGameSystem* GameLogSystem()
 {
 	return &g_TF2EventLog;
 }
-

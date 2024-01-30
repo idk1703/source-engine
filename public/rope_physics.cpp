@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -44,8 +44,8 @@ void CBaseRopePhysics::SetNumNodes( int nNodes )
 	{
 		m_pSprings[i].m_pNode1 = &m_pNodes[i].m_vPos;
 		m_pSprings[i].m_pNode2 = &m_pNodes[i+1].m_vPos;
-		Assert( m_pSprings[i].m_pNode1->IsValid() ); 
-		Assert( m_pSprings[i].m_pNode2->IsValid() ); 
+		Assert( m_pSprings[i].m_pNode1->IsValid() );
+		Assert( m_pSprings[i].m_pNode2->IsValid() );
 
 		m_flNodeSpringDistsSqr[i] = m_flSpringDistSqr / NumSprings();
 	}
@@ -148,5 +148,3 @@ void CBaseRopePhysics::ApplyConstraints( CSimplePhysics::CNode *pNodes, int nNod
 			m_pDelegate->ApplyConstraints( pNodes, nNodes );
 	}
 }
-
-

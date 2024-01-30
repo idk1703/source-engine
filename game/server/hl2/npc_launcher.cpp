@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -57,7 +57,7 @@ public:
 	float				m_flSpinSpeed;
 	float				m_flDamage;
 	float				m_flDamageRadius;
-	
+
 	// ----------------
 	//	Outputs
 	// ----------------
@@ -75,7 +75,7 @@ public:
 	void InputFireOnce( inputdata_t &inputdata );
 
 	void LauncherTurnOn(void);
-	
+
 	void				Precache( void );
 	void				Spawn( void );
 	Class_T				Classify( void );
@@ -186,7 +186,7 @@ void CNPC_Launcher::InputFireOnce( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Launcher::Precache( void )
 {
@@ -195,14 +195,14 @@ void CNPC_Launcher::Precache( void )
 	PrecacheModel(STRING(m_sMissileModel));
 	PrecacheScriptSound( STRING(m_sLaunchSound));
 	PrecacheScriptSound( STRING(m_sFlySound));
-	
+
 	UTIL_PrecacheOther( "grenade_homer");
 	BaseClass::Precache();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Launcher::LauncherTurnOn(void)
 {
@@ -213,7 +213,7 @@ void CNPC_Launcher::LauncherTurnOn(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Launcher::Spawn( void )
 {
@@ -231,7 +231,7 @@ void CNPC_Launcher::Spawn( void )
 		m_nHomingStrength = 100;
 		Warning("WARNING: NPC_Launcher Homing Strength must be between 0 and 100\n");
 	}
-	
+
 	SetSolid( SOLID_NONE );
 	SetMoveType( MOVETYPE_NONE );
 	SetBloodColor( DONT_BLEED );
@@ -242,7 +242,7 @@ void CNPC_Launcher::Spawn( void )
 	CapabilitiesAdd( bits_CAP_SQUAD );
 
 	InitRelationshipTable();
-	
+
 	if (m_nStartOn)
 	{
 		LauncherTurnOn();
@@ -251,7 +251,7 @@ void CNPC_Launcher::Spawn( void )
 	// -------------------------------------------------------
 	//  If I form squads add me to a squad
 	// -------------------------------------------------------
-	// @TODO (toml 12-05-02): RECONCILE WITH SAVE/RESTORE	
+	// @TODO (toml 12-05-02): RECONCILE WITH SAVE/RESTORE
 	if (!m_pSquad)
 	{
 		m_pSquad = g_AI_SquadManager.FindCreateSquad(this, m_SquadName);
@@ -259,7 +259,7 @@ void CNPC_Launcher::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Class_T	CNPC_Launcher::Classify( void )
 {
@@ -346,7 +346,7 @@ bool CNPC_Launcher::IsValidEnemy( CBaseEntity *pTarget )
 	// ------------------------------------------------------
 	trace_t tr;
 
-	// Trace from launch position to target position.  
+	// Trace from launch position to target position.
 	// Use position above actual barral based on vertical launch speed
 	Vector vStartPos = GetAbsOrigin() + Vector(0,0,0.2*m_flLaunchSpeed);
 	Vector vEndPos	 = pTarget->GetAbsOrigin();
@@ -394,11 +394,11 @@ void CNPC_Launcher::LauncherThink( void )
 // Purpose: Draw any debug text overlays
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CNPC_Launcher::DrawDebugTextOverlays(void) 
+int CNPC_Launcher::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 		Q_snprintf(tempstr,sizeof(tempstr),"State: %s", (m_pfnThink) ? "On" : "Off" );

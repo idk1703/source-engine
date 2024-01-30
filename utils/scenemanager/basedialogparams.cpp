@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,8 +10,8 @@
 #include "basedialogparams.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : self - 
+// Purpose:
+// Input  : self -
 //-----------------------------------------------------------------------------
 void CBaseDialogParams::PositionSelf( void *self )
 {
@@ -28,21 +28,21 @@ void CBaseDialogParams::PositionSelf( void *self )
 
 	int dialogw, dialogh;
 	int parentw, parenth;
-	
+
 	parentw = rcParent.right - rcParent.left;
 	parenth = rcParent.bottom - rcParent.top;
 	dialogw = rcDlg.right - rcDlg.left;
 	dialogh = rcDlg.bottom - rcDlg.top;
-	
+
 	int dlgleft, dlgtop;
 	dlgleft = ( parentw - dialogw ) / 2;
 	dlgtop = ( parenth - dialogh ) / 2;
-	
+
 	if ( m_bPositionDialog )
 	{
 		int top = m_nTop - dialogh - 5;
 		int left = m_nLeft;
-		
+
 		MoveWindow( dlgWindow,
 			left,
 			top,
@@ -52,8 +52,8 @@ void CBaseDialogParams::PositionSelf( void *self )
 	}
 	else
 	{
-		
-		MoveWindow( dlgWindow, 
+
+		MoveWindow( dlgWindow,
 			dlgleft,
 			dlgtop,
 			dialogw,
@@ -61,5 +61,5 @@ void CBaseDialogParams::PositionSelf( void *self )
 			TRUE
 			);
 	}
-	
+
 }

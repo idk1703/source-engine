@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -36,7 +36,7 @@ CRawLogPanel::CRawLogPanel(vgui::Panel *parent, const char *name) : vgui::Proper
 {
 	SetSize(200, 100);
 	m_pConsole = new CConsolePanel( this, "Console", false );
-	
+
 	LoadControlSettings("Admin\\RawLogPanel.res", "PLATFORM");
 }
 
@@ -66,7 +66,7 @@ void CRawLogPanel::OnPageHide()
 //-----------------------------------------------------------------------------
 // Purpose: inserts a new string into the main chat panel
 //-----------------------------------------------------------------------------
-void CRawLogPanel::DoInsertString(const char *str) 
+void CRawLogPanel::DoInsertString(const char *str)
 {
 	if ( str )
 	{

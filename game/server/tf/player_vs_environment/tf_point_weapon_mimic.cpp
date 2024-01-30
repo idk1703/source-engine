@@ -136,7 +136,7 @@ void CTFPointWeaponMimic::DetonateStickies( inputdata_t& inputdata )
 			//This guy will die soon enough.
 			if ( pTemp->IsEffectActive( EF_NODRAW ) )
 				continue;
-	
+
 			pTemp->Detonate();
 		}
 	}
@@ -180,7 +180,7 @@ void CTFPointWeaponMimic::FireRocket()
 		pProjectile->SetCritical( m_bCrits );
 		pProjectile->SetDamage( m_flDamage );
 		Vector vVelocity = pProjectile->GetAbsVelocity().Normalized() * GetSpeed();
-		pProjectile->SetAbsVelocity( vVelocity );	
+		pProjectile->SetAbsVelocity( vVelocity );
 		pProjectile->SetupInitialTransmittedGrenadeVelocity( vVelocity );
 		pProjectile->SetCollisionGroup( TFCOLLISION_GROUP_ROCKET_BUT_NOT_WITH_OTHER_ROCKETS );
 	}
@@ -212,7 +212,7 @@ void CTFPointWeaponMimic::FireGrenade()
 		pGrenade->SetDamageRadius( m_flSplashRadius );
 		pGrenade->SetCritical( m_bCrits );
 		vVelocity = pGrenade->GetAbsVelocity().Normalized() * GetSpeed();
-		pGrenade->SetAbsVelocity( vVelocity );	
+		pGrenade->SetAbsVelocity( vVelocity );
 		pGrenade->SetupInitialTransmittedGrenadeVelocity( vVelocity );
 	}
 }
@@ -231,7 +231,7 @@ void CTFPointWeaponMimic::FireArrow()
 		pProjectile->SetCritical( m_bCrits );
 		pProjectile->SetDamage( m_flDamage );
 		Vector vVelocity = pProjectile->GetAbsVelocity().Normalized() * GetSpeed();
-		pProjectile->SetAbsVelocity( vVelocity );	
+		pProjectile->SetAbsVelocity( vVelocity );
 		pProjectile->SetupInitialTransmittedGrenadeVelocity( vVelocity );
 		pProjectile->SetCollisionGroup( TFCOLLISION_GROUP_ROCKET_BUT_NOT_WITH_OTHER_ROCKETS );
 	}
@@ -265,7 +265,7 @@ void CTFPointWeaponMimic::FireStickyGrenade()
 
 		pGrenade->InitGrenade( vVelocity, AngularImpulse( 600, random->RandomInt( -1200, 1200 ), 0 ), NULL, m_flDamage, m_flSplashRadius );
 		vVelocity = pGrenade->GetAbsVelocity().Normalized() * GetSpeed();
-		pGrenade->SetAbsVelocity( vVelocity );	
+		pGrenade->SetAbsVelocity( vVelocity );
 		pGrenade->SetupInitialTransmittedGrenadeVelocity( vVelocity );
 
 		pGrenade->SetDamage( m_flDamage );

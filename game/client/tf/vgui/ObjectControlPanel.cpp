@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,16 +25,16 @@
 
 
 //-----------------------------------------------------------------------------
-// Standard VGUI panel for objects 
+// Standard VGUI panel for objects
 //-----------------------------------------------------------------------------
 DECLARE_VGUI_SCREEN_FACTORY( CObjectControlPanel, "object_control_panel" );
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CObjectControlPanel::CObjectControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, panelName, NULL ) 
+	: BaseClass( parent, panelName, NULL )
 {
 	// Make some high-level panels to group stuff we want to activate/deactivate
 	m_pActivePanel = new CCommandChainingPanel( this, "ActivePanel" );
@@ -47,7 +47,7 @@ CObjectControlPanel::CObjectControlPanel( vgui::Panel *parent, const char *panel
 
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CObjectControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -73,7 +73,7 @@ bool CObjectControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pIn
 
 
 //-----------------------------------------------------------------------------
-// Returns the object it's attached to 
+// Returns the object it's attached to
 //-----------------------------------------------------------------------------
 C_BaseObject *CObjectControlPanel::GetOwningObject() const
 {
@@ -105,7 +105,7 @@ vgui::Panel* CObjectControlPanel::TickCurrentPanel()
 
 	m_pCurrentPanel = GetActivePanel();
 	OnTickActive(pObj, pLocalPlayer);
-	
+
 	return m_pCurrentPanel;
 }
 
@@ -133,7 +133,7 @@ void CObjectControlPanel::OnTick()
 	{
 		// Update the current subpanel
 		m_pCurrentPanel->SetVisible( false );
-	
+
 		m_pCurrentPanel = TickCurrentPanel();
 
 		m_pCurrentPanel->SetVisible( true );
@@ -152,10 +152,10 @@ DECLARE_VGUI_SCREEN_FACTORY( CRotatingObjectControlPanel, "rotating_object_contr
 
 
 //-----------------------------------------------------------------------------
-// This is a panel for an object that has rotational controls 
+// This is a panel for an object that has rotational controls
 //-----------------------------------------------------------------------------
 CRotatingObjectControlPanel::CRotatingObjectControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, panelName ) 
+	: BaseClass( parent, panelName )
 {
 }
 
@@ -180,4 +180,3 @@ void CRotatingObjectControlPanel::OnTickActive( C_BaseObject *pObj, C_TFPlayer *
 	m_pRotationSlider->SetVisible( bEnable );
 	m_pRotationLabel->SetVisible( bEnable );
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -70,11 +70,11 @@ class CMouthInfo
 {
 public:
 	// 0 = mouth closed, 255 = mouth agape
-	byte					mouthopen;		
+	byte					mouthopen;
 	// counter for running average
-	byte					sndcount;		
+	byte					sndcount;
 	// running average
-	int						sndavg;			
+	int						sndavg;
 
 public:
 							CMouthInfo( void ) { m_nVoiceSources = 0; m_needsEnvelope = false; }
@@ -103,7 +103,7 @@ private:
 	};
 
 	short					m_nVoiceSources;
-	short					m_needsEnvelope; 
+	short					m_needsEnvelope;
 	CVoiceData				m_VoiceSources[ MAX_VOICE_DATA ];
 };
 #pragma pack(pop)

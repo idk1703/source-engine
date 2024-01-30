@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -16,7 +16,7 @@
 #include <vgui_controls/Panel.h>
 
 
-#define MIN_ALPHA	 100	
+#define MIN_ALPHA	 100
 
 
 class CHudFlashlight : public CHudElement, public vgui::Panel

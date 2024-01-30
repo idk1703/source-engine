@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -135,7 +135,7 @@ void R_LightAmbient_3D( const Vector& normal, const Vector* pLightBoxColor, Vect
 
 
 //-----------------------------------------------------------------------------
-// Set up light[i].dot, light[i].falloff, and light[i].delta for all lights given 
+// Set up light[i].dot, light[i].falloff, and light[i].delta for all lights given
 // a vertex position "vert".
 //-----------------------------------------------------------------------------
 void R_LightStrengthWorld( const Vector& vert, int lightcount, LightDesc_t* pDesc, lightpos_t *light )
@@ -155,7 +155,7 @@ void R_LightStrengthWorld( const Vector& vert, int lightcount, LightDesc_t* pDes
 
 
 //-----------------------------------------------------------------------------
-// Calculate the delta between a light and position 
+// Calculate the delta between a light and position
 //-----------------------------------------------------------------------------
 void R_WorldLightDelta( const LightDesc_t *wl, const Vector& org, Vector& delta )
 {
@@ -183,14 +183,14 @@ void R_WorldLightDelta( const LightDesc_t *wl, const Vector& org, Vector& delta 
 // TODO: cone clipping calc's wont work for boxlight since the player asks for a single point.  Not sure what the volume is.
 TEMPLATE_FUNCTION_TABLE( void, R_LightEffectsWorldFunctionTable, ( const LightDesc_t* pLightDesc, const lightpos_t *light, const Vector& normal, Vector &dest ), 256 )
 {
-	enum  
-	{ 
+	enum
+	{
 		LightType1 = ( nArgument & 0xC0 ) >> 6,
 		LightType2 = ( nArgument & 0x30 ) >> 4,
 		LightType3 = ( nArgument & 0x0C ) >> 2,
 		LightType4 = ( nArgument & 0x03 )
 	};
- 
+
 	//	VPROF( "R_LightEffectsWorld" );
 
 	#ifdef NO_AMBIENT_CUBE
@@ -250,8 +250,8 @@ TEMPLATE_FUNCTION_TABLE( void, R_LightEffectsWorldFunctionTable, ( const LightDe
 
 TEMPLATE_FUNCTION_TABLE( void, R_LightEffectsWorldFunctionTableConstDirectional, ( const LightDesc_t* pLightDesc, const lightpos_t *light, const Vector& normal, Vector &dest, float flDirectionalConstant ), 256 )
 {
-	enum  
-	{ 
+	enum
+	{
 		LightType1 = ( nArgument & 0xC0 ) >> 6,
 		LightType2 = ( nArgument & 0x30 ) >> 4,
 		LightType3 = ( nArgument & 0x0C ) >> 2,
@@ -331,12 +331,12 @@ TEMPLATE_FUNCTION_TABLE( void, R_LightEffectsWorldFunctionTableConstDirectional,
 // Get the function table index
 //-----------------------------------------------------------------------------
 static int s_pLightMask[ 5 ] =
-{			
+{
 	0,			// No lights
 	0xC0,		// 1 light
 	0xF0,		// 2 lights
 	0xFC,		// 3 lights
-	0xFF,		// 4 lights  
+	0xFF,		// 4 lights
 };
 
 inline int R_LightEffectsWorldIndex(const LightDesc_t* pLightDesc, int nNumLights)
@@ -347,7 +347,7 @@ inline int R_LightEffectsWorldIndex(const LightDesc_t* pLightDesc, int nNumLight
 	}
 
 	int nIndex = ((pLightDesc[0].m_Type & 0x3) << 6) | ((pLightDesc[1].m_Type & 0x3) << 4) | ( (pLightDesc[2].m_Type & 0x3) << 2) | (pLightDesc[3].m_Type & 0x3);
-	nIndex &= s_pLightMask[ nNumLights ]; 
+	nIndex &= s_pLightMask[ nNumLights ];
 
 	Assert( nIndex >= 0 && nIndex < R_LightEffectsWorldFunctionTable::count );
 	return nIndex;
@@ -355,7 +355,7 @@ inline int R_LightEffectsWorldIndex(const LightDesc_t* pLightDesc, int nNumLight
 
 
 /*
-  light_direction (light_pos - vertex_pos)
+	light_direction (light_pos - vertex_pos)
 */
 // TODO: move cone calcs to position
 // TODO: cone clipping calc's wont work for boxlight since the player asks for a single point.  Not sure what the volume is.
@@ -394,7 +394,7 @@ TEMPLATE_FUNCTION_TABLE( float, R_WorldLightDistanceFalloffFunctionTable, ( cons
 }
 
 //-----------------------------------------------------------------------------
-// Calculate the falloff from the world lights 
+// Calculate the falloff from the world lights
 //-----------------------------------------------------------------------------
 float FASTCALL R_WorldLightDistanceFalloff( const LightDesc_t *wl, const Vector& delta )
 {
@@ -462,7 +462,7 @@ int CStudioRender::R_LightGlintPosition( int index, const Vector& org, Vector& d
 
 
 //-----------------------------------------------------------------------------
-// Setup up the function table 
+// Setup up the function table
 //-----------------------------------------------------------------------------
 void CStudioRender::R_InitLightEffectsWorld3()
 {
@@ -474,7 +474,7 @@ void CStudioRender::R_InitLightEffectsWorld3()
 
 //-----------------------------------------------------------------------------
 // Performs lighting functions common to the ComputeLighting and ComputeLightingConstantDirectional
-// returns the index of the LightEffectsWorldFunction to use 
+// returns the index of the LightEffectsWorldFunction to use
 //-----------------------------------------------------------------------------
 static int ComputeLightingCommon( const Vector* pAmbient, int lightCount,
 	LightDesc_t* pLights, const Vector& pt, const Vector& normal, lightpos_t *pLightPos, Vector& lighting )

@@ -36,7 +36,7 @@ class CTFRocketLauncher : public CTFWeaponBaseGun
 public:
 
 	DECLARE_CLASS( CTFRocketLauncher, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	// Server specific.
@@ -91,7 +91,7 @@ class CTFRocketLauncher_DirectHit : public CTFRocketLauncher
 {
 public:
 	DECLARE_CLASS( CTFRocketLauncher_DirectHit, CTFRocketLauncher );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	// Server specific.
@@ -150,7 +150,7 @@ public:
 	virtual void	ItemBusyFrame( void );
 
 private:
-	
+
 	void			RedirectRockets();
 
 #ifdef GAME_DLL
@@ -164,7 +164,7 @@ class CTFCrossbow : public CTFRocketLauncher
 {
 public:
 	DECLARE_CLASS( CTFCrossbow, CTFRocketLauncher );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	// Server specific.

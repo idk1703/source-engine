@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -31,7 +31,7 @@ int main( int argc, char **argv )
 	{
 		Usage();
 	}
-	
+
 	MathLib_Init( 2.2f, 2.2f, 0.0f, 2.0f );
 	InitDefaultFileSystem();
 
@@ -102,7 +102,7 @@ int main( int argc, char **argv )
 
 	if( width1 != width2 || height1 != height2 )
 	{
-		printf( "image dimensions different (%dx%d!=%dx%d): can't do diff for %s\n", 
+		printf( "image dimensions different (%dx%d!=%dx%d): can't do diff for %s\n",
 			width1, height1, width2, height2, pFileName[0] );
 		exit( -1 );
 	}
@@ -110,7 +110,7 @@ int main( int argc, char **argv )
 	// have to allow for different formats for now due to *.txt file screwup.
 	if( imageFormat1 != imageFormat2 )
 	{
-		printf( "image format different (%s!=%s). . can't do diff for %s\n", 
+		printf( "image format different (%s!=%s). . can't do diff for %s\n",
 			ImageLoader::GetName( imageFormat1 ), ImageLoader::GetName( imageFormat2 ), pDstFileName );
 		exit( -1 );
 	}
@@ -130,7 +130,7 @@ int main( int argc, char **argv )
 		printf( "error loading %s\n", pFileName[0] );
 		exit( -1 );
 	}
-	
+
 	buf2.SeekGet( CUtlBuffer::SEEK_HEAD, 0 );
 	if( !TGALoader::Load( pImage2Tmp, buf2, width2, height2, imageFormat2, 2.2f, false ) )
 	{
@@ -149,13 +149,13 @@ int main( int argc, char **argv )
 	{
 		float d;
 		d = ( float )( pImage2[i] - pImage1[i] );
-		mse += ( d * d );		
+		mse += ( d * d );
 	}
 
 	mse /= ( float )( width1 * height1 * sizeInBytes );
 
 	if ( argc == 3 )
-	{		
+	{
 		printf( "MSE=%f\n", mse );
 	}
 	else
@@ -164,11 +164,11 @@ int main( int argc, char **argv )
 		{
 			printf( "FAIL" );
 		}
-		else 
+		else
 		{
 			printf( "PASS" );
 		}
 	}
 
-	return 0;	
+	return 0;
 }

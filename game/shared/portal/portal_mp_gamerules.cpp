@@ -66,7 +66,7 @@ LINK_ENTITY_TO_CLASS( portalmp_gamerules, CPortalMPGameRulesProxy );
 IMPLEMENT_NETWORKCLASS_ALIASED( PortalMPGameRulesProxy, DT_PortalMPGameRulesProxy )
 
 static PortalMPViewVectors g_PortalMPViewVectors(
-	Vector( 0, 0, 64 ),       //VEC_VIEW (m_vView) 
+	Vector( 0, 0, 64 ),       //VEC_VIEW (m_vView)
 
 	Vector(-16, -16, 0 ),	  //VEC_HULL_MIN (m_vHullMin)
 	Vector( 16,  16,  72 ),	  //VEC_HULL_MAX (m_vHullMax)
@@ -216,7 +216,7 @@ const PortalMPViewVectors* CPortalMPGameRules::GetPortalMPViewVectors()const
 CPortalMPGameRules::~CPortalMPGameRules( void )
 {
 #ifndef CLIENT_DLL
-	// Note, don't delete each team since they are in the gEntList and will 
+	// Note, don't delete each team since they are in the gEntList and will
 	// automatically be deleted from there, instead.
 	g_Teams.Purge();
 #endif
@@ -231,7 +231,7 @@ void CPortalMPGameRules::CreateStandardEntities( void )
 	BaseClass::CreateStandardEntities();
 
 #ifdef _DEBUG
-	CBaseEntity *pEnt = 
+	CBaseEntity *pEnt =
 #endif
 		CBaseEntity::Create( "portalmp_gamerules", vec3_origin, vec3_angle );
 	Assert( pEnt );
@@ -337,7 +337,7 @@ void CPortalMPGameRules::Think( void )
 	}
 
 	if ( gpGlobals->curtime > m_tmNextPeriodicThink )
-	{		
+	{
 		CheckAllPlayersReady();
 		CheckRestartGame();
 		m_tmNextPeriodicThink = gpGlobals->curtime + 1.0;
@@ -394,7 +394,7 @@ bool CPortalMPGameRules::CheckGameOver()
 		// check to see if we should change levels now
 		if ( m_flIntermissionEndTime < gpGlobals->curtime )
 		{
-			ChangeLevel(); // intermission is over			
+			ChangeLevel(); // intermission is over
 		}
 
 		return true;
@@ -404,12 +404,12 @@ bool CPortalMPGameRules::CheckGameOver()
 	return false;
 }
 
-// when we are within this close to running out of entities,  items 
+// when we are within this close to running out of entities,  items
 // marked with the ITEM_FLAG_LIMITINWORLD will delay their respawn
 #define ENTITY_INTOLERANCE	100
 
 //=========================================================
-// FlWeaponRespawnTime - Returns 0 if the weapon can respawn 
+// FlWeaponRespawnTime - Returns 0 if the weapon can respawn
 // now,  otherwise it returns the time at which it can try
 // to spawn again.
 //=========================================================
@@ -478,7 +478,7 @@ bool GetObjectsOriginalParameters( CBaseEntity *pObject, Vector &vOriginalOrigin
 #endif
 		return true;
 	}
-	else if ( CWeaponPortalBase *pWeapon = IsManagedObjectAWeapon( pObject )) 
+	else if ( CWeaponPortalBase *pWeapon = IsManagedObjectAWeapon( pObject ))
 	{
 		if ( pWeapon->m_flNextResetCheckTime > gpGlobals->curtime )
 			return false;
@@ -651,7 +651,7 @@ void CPortalMPGameRules::ClientDisconnected( edict_t *pClient )
 
 
 //=========================================================
-// Deathnotice. 
+// Deathnotice.
 //=========================================================
 void CPortalMPGameRules::DeathNotice( CBasePlayer *pVictim, const CTakeDamageInfo &info )
 {
@@ -836,7 +836,7 @@ int CPortalMPGameRules::PlayerRelationship( CBaseEntity *pPlayer, CBaseEntity *p
 const char *CPortalMPGameRules::GetGameDescription( void )
 {
 	return "PMP Test";
-} 
+}
 
 
 float CPortalMPGameRules::GetMapRemainingTime()
@@ -853,7 +853,7 @@ float CPortalMPGameRules::GetMapRemainingTime()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPortalMPGameRules::Precache( void )
 {
@@ -874,7 +874,7 @@ bool CPortalMPGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1
 		return false;
 	}
 
-	return BaseClass::ShouldCollide( collisionGroup0, collisionGroup1 ); 
+	return BaseClass::ShouldCollide( collisionGroup0, collisionGroup1 );
 
 }
 
@@ -959,7 +959,7 @@ ConVar cl_autowepswitch(
 
 
 bool CPortalMPGameRules::FShouldSwitchWeapon( CBasePlayer *pPlayer, CBaseCombatWeapon *pWeapon )
-{		
+{
 	if ( pPlayer->GetActiveWeapon() && pPlayer->IsNetClient() )
 	{
 		// Player has an active item, so let's check cl_autowepswitch.
@@ -999,7 +999,7 @@ float CPortalMPGameRules::GetLaserTurretDamage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Movement speed of the turret. 
+// Purpose: Movement speed of the turret.
 //-----------------------------------------------------------------------------
 float CPortalMPGameRules::GetLaserTurretMoveSpeed( void )
 {
@@ -1096,7 +1096,7 @@ void CPortalMPGameRules::RestartGame()
 	}
 
 	m_flIntermissionEndTime = 0;
-	m_flRestartGameTime = 0.0;		
+	m_flRestartGameTime = 0.0;
 	m_bCompleteReset = false;
 
 	IGameEvent * event = gameeventmanager->CreateEvent( "round_start" );
@@ -1173,7 +1173,7 @@ void CPortalMPGameRules::CleanUpMap()
 		{
 			if ( m_iIterator == g_MapEntityRefs.InvalidIndex() )
 			{
-				// This shouldn't be possible. When we loaded the map, it should have used 
+				// This shouldn't be possible. When we loaded the map, it should have used
 				// CCSMapLoadEntityFilter, which should have built the g_MapEntityRefs list
 				// with the same list of entities we're referring to here.
 				Assert( false );
@@ -1192,7 +1192,7 @@ void CPortalMPGameRules::CleanUpMap()
 				}
 				else
 				{
-					// Cool, the slot where this entity was is free again (most likely, the entity was 
+					// Cool, the slot where this entity was is free again (most likely, the entity was
 					// freed above). Now create an entity with this specific index.
 					return CreateEntityByName( pClassname, ref.m_iEdict );
 				}

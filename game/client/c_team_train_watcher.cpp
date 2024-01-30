@@ -46,7 +46,7 @@ C_TeamTrainWatcher::C_TeamTrainWatcher()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TeamTrainWatcher::~C_TeamTrainWatcher()
 {
@@ -56,7 +56,7 @@ C_TeamTrainWatcher::~C_TeamTrainWatcher()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TeamTrainWatcher::ClientThink()
 {
@@ -72,7 +72,7 @@ void C_TeamTrainWatcher::ClientThink()
 
 #ifdef GLOWS_ENABLE
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TeamTrainWatcher::UpdateGlowEffect( void )
 {
@@ -92,7 +92,7 @@ void C_TeamTrainWatcher::UpdateGlowEffect( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TeamTrainWatcher::DestroyGlowEffect( void )
 {
@@ -118,7 +118,7 @@ void C_TeamTrainWatcher::OnPreDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TeamTrainWatcher::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -194,7 +194,7 @@ void C_TeamTrainWatcher::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TeamTrainWatcher::Spawn( void )
 {
@@ -207,7 +207,7 @@ void C_TeamTrainWatcher::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TeamTrainWatcher::UpdateOnRemove( void )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -96,7 +96,7 @@ bool CGameEventEditDoc::LoadFromFile( const char *pFileName )
 	Q_StripExtension( pFileName, mapname, sizeof(mapname) );
 	char *pszFileName = (char*)Q_UnqualifiedFileName(mapname);
 
-	// Set the txt file name. 
+	// Set the txt file name.
 	// If we loaded an existing commentary file, keep the same filename.
 	// If we loaded a .bsp, change the name & the extension.
 	if ( !V_stricmp( Q_GetFileExtension( pFileName ), "bsp" ) )
@@ -108,7 +108,7 @@ bool CGameEventEditDoc::LoadFromFile( const char *pFileName )
 		if ( g_pFileSystem->FileExists( m_pTXTFileName ) )
 		{
 			char pBuf[1024];
-			Q_snprintf( pBuf, sizeof(pBuf), "File %s already exists!\n", m_pTXTFileName ); 
+			Q_snprintf( pBuf, sizeof(pBuf), "File %s already exists!\n", m_pTXTFileName );
 			m_pTXTFileName[0] = 0;
 			vgui::MessageBox *pMessageBox = new vgui::MessageBox( "Unable to overwrite file!\n", pBuf, g_pCommEditTool );
 			pMessageBox->DoModal( );
@@ -130,7 +130,7 @@ bool CGameEventEditDoc::LoadFromFile( const char *pFileName )
 		if ( !pComm )
 		{
 			char pBuf[1024];
-			Q_snprintf( pBuf, sizeof(pBuf), "File %s is not a commentary file!\nThe file name must end in _commentary.txt.\n", m_pTXTFileName ); 
+			Q_snprintf( pBuf, sizeof(pBuf), "File %s is not a commentary file!\nThe file name must end in _commentary.txt.\n", m_pTXTFileName );
 			m_pTXTFileName[0] = 0;
 			vgui::MessageBox *pMessageBox = new vgui::MessageBox( "Bad file name!\n", pBuf, g_pCommEditTool );
 			pMessageBox->DoModal( );

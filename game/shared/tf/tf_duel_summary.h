@@ -42,7 +42,7 @@ const char *PchNameFromeDuelEndReason( eDuelEndReason eReason );
 const uint32 kWinsPerLevel = 10;
 
 //---------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //---------------------------------------------------------------------------------
 class CTFDuelSummary : public GCSDK::CProtoBufSharedObject< CSOTFDuelSummary, k_EEconTypeDuelSummary >
 {

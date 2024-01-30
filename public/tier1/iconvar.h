@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -32,7 +32,7 @@ class CCommand;
 // ConVar flags
 //-----------------------------------------------------------------------------
 // The default, no flags at all
-#define FCVAR_NONE				0 
+#define FCVAR_NONE				0
 
 // Command to ConVars and ConCommands
 // ConVar Systems
@@ -73,9 +73,9 @@ class CCommand;
 
 #define FCVAR_SERVER_CAN_EXECUTE	(1<<28)// the server is allowed to execute this command on clients via ClientCommand/NET_StringCmd/CBaseClientState::ProcessStringCmd.
 #define FCVAR_SERVER_CANNOT_QUERY	(1<<29)// If this is set, then the server is not allowed to query this cvar's value (via IServerPluginHelpers::StartQueryCvarValue).
-#define FCVAR_CLIENTCMD_CAN_EXECUTE	(1<<30)	// IVEngineClient::ClientCmd is allowed to execute this command. 
+#define FCVAR_CLIENTCMD_CAN_EXECUTE	(1<<30)	// IVEngineClient::ClientCmd is allowed to execute this command.
 											// Note: IVEngineClient::ClientCmd_Unrestricted can run any client command.
-#define FCVAR_EXEC_DESPITE_DEFAULT	(1<<31) // -default causes a lot of commands to be ignored (but still be recorded as though they had run). 
+#define FCVAR_EXEC_DESPITE_DEFAULT	(1<<31) // -default causes a lot of commands to be ignored (but still be recorded as though they had run).
 											// This causes them to be executed anyways.
 
 #define FCVAR_INTERNAL_USE		(1<<15)	// This var isn't archived, but is exposed to players--and its use is allowed in competitive play.
@@ -84,7 +84,7 @@ class CCommand;
 // #define FCVAR_AVAILABLE			(1<<26)
 // #define FCVAR_AVAILABLE			(1<<27)
 
-#define FCVAR_MATERIAL_THREAD_MASK ( FCVAR_RELOAD_MATERIALS | FCVAR_RELOAD_TEXTURES | FCVAR_MATERIAL_SYSTEM_THREAD )	
+#define FCVAR_MATERIAL_THREAD_MASK ( FCVAR_RELOAD_MATERIALS | FCVAR_RELOAD_TEXTURES | FCVAR_MATERIAL_SYSTEM_THREAD )
 
 //-----------------------------------------------------------------------------
 // Called when a ConVar changes value

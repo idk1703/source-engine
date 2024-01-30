@@ -22,7 +22,7 @@ rescolor sResourceColor = { 64,	255, 64 };
 char sResourceName[] = "Jojierium";
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseTechnology::CBaseTechnology( void )
 {
@@ -52,7 +52,7 @@ CBaseTechnology::CBaseTechnology( void )
 	m_bVehicle = false;
 	m_bTechLevelUpgrade = false;
 	m_bResourceTech = false;
-	
+
 	memset( m_szTextureName, 0, sizeof( m_szTextureName ) );
 	m_nTextureID = 0;
 
@@ -63,10 +63,10 @@ CBaseTechnology::CBaseTechnology( void )
 
 	SetHidden( false );
 	ResetHintsGiven();
-}	
+}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseTechnology::~CBaseTechnology( void )
 {
@@ -93,7 +93,7 @@ void CBaseTechnology::SetName( const char *pName )
 	// Determine special information about this technology
 	m_bClassUpgrade		= NameStartsWith( pName, "class_" );
 	m_bVehicle			= NameStartsWith( pName, "vehicle_" );
-	m_bTechLevelUpgrade	= NameStartsWith( pName, "tech_level_" ); 
+	m_bTechLevelUpgrade	= NameStartsWith( pName, "tech_level_" );
 	// HACK: Assume global techs relate to resources for now
 	m_bResourceTech		= NameStartsWith( pName, "g_" );
 }
@@ -115,8 +115,8 @@ void CBaseTechnology::SetDescription( const char *pDesc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pName - 
+// Purpose:
+// Input  : *pName -
 //-----------------------------------------------------------------------------
 void CBaseTechnology::SetButtonName( const char *pName )
 {
@@ -132,8 +132,8 @@ void CBaseTechnology::SetLevel( int iLevel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *texture - 
+// Purpose:
+// Input  : *texture -
 //-----------------------------------------------------------------------------
 void CBaseTechnology::SetTextureName( const char *texture )
 {
@@ -141,8 +141,8 @@ void CBaseTechnology::SetTextureName( const char *texture )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : id - 
+// Purpose:
+// Input  : id -
 //-----------------------------------------------------------------------------
 void CBaseTechnology::SetTextureId( int id )
 {
@@ -182,8 +182,8 @@ void CBaseTechnology::SetClassResultSound( int iClass, const char *pSound )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : associate - 
+// Purpose:
+// Input  : associate -
 //-----------------------------------------------------------------------------
 void CBaseTechnology::SetClassResultAssociateWeapons( int iClass, bool associate )
 {
@@ -193,7 +193,7 @@ void CBaseTechnology::SetClassResultAssociateWeapons( int iClass, bool associate
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Set a specific class's precached sound 
+// Purpose: Set a specific class's precached sound
 //-----------------------------------------------------------------------------
 void CBaseTechnology::SetClassResultSound( int iClass, int iSound )
 {
@@ -265,7 +265,7 @@ bool CBaseTechnology::AffectsClass( int iClass )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseTechnology::IsClassUpgrade( void )
@@ -274,7 +274,7 @@ bool CBaseTechnology::IsClassUpgrade( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseTechnology::IsVehicle( void )
@@ -283,7 +283,7 @@ bool CBaseTechnology::IsVehicle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseTechnology::IsResourceTech( void )
@@ -292,7 +292,7 @@ bool CBaseTechnology::IsResourceTech( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseTechnology::IsTechLevelUpgrade( void )
@@ -359,7 +359,7 @@ bool CBaseTechnology::IncreaseResourceLevel( float flResourcesToSpend )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Figure out my overall owned percentage 
+// Purpose: Figure out my overall owned percentage
 //-----------------------------------------------------------------------------
 void CBaseTechnology::RecalculateOverallLevel( void )
 {
@@ -374,7 +374,7 @@ void CBaseTechnology::RecalculateOverallLevel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CBaseTechnology::GetOverallLevel( void )
 {
@@ -390,7 +390,7 @@ void CBaseTechnology::ForceComplete( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseTechnology::IsAGoalTechnology( void )
 {
@@ -398,7 +398,7 @@ bool CBaseTechnology::IsAGoalTechnology( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTechnology::SetGoalTechnology( bool bGoal )
 {
@@ -424,7 +424,7 @@ const char	*CBaseTechnology::GetPrintName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CBaseTechnology::GetButtonName( void )
@@ -433,7 +433,7 @@ const char *CBaseTechnology::GetButtonName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CBaseTechnology::GetTextureName(void )
@@ -442,7 +442,7 @@ const char *CBaseTechnology::GetTextureName(void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CBaseTechnology::GetTextureId( void )
@@ -494,8 +494,8 @@ int	CBaseTechnology::GetSound( int iClass )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : iClass - 
+// Purpose:
+// Input  : iClass -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseTechnology::GetAssociateWeaponsForClass( int iClass )
@@ -509,7 +509,7 @@ bool CBaseTechnology::GetAssociateWeaponsForClass( int iClass )
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns whether the technology is available to the team
-// Input  : state - 
+// Input  : state -
 //-----------------------------------------------------------------------------
 void CBaseTechnology::SetAvailable( bool state )
 {
@@ -561,7 +561,7 @@ int CBaseTechnology::GetPreferenceCount( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 int CBaseTechnology::GetNumWeaponAssociations( void )
@@ -570,7 +570,7 @@ int CBaseTechnology::GetNumWeaponAssociations( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *CBaseTechnology::GetAssociatedWeapon( int index )
@@ -584,8 +584,8 @@ const char *CBaseTechnology::GetAssociatedWeapon( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *weaponname - 
+// Purpose:
+// Input  : *weaponname -
 //-----------------------------------------------------------------------------
 void CBaseTechnology::AddAssociatedWeapon( const char *weaponname )
 {
@@ -598,7 +598,7 @@ void CBaseTechnology::AddAssociatedWeapon( const char *weaponname )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CBaseTechnology::GetNumberContainedTechs( void )
 {
@@ -606,7 +606,7 @@ int	CBaseTechnology::GetNumberContainedTechs( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CBaseTechnology::GetContainedTechName( int iTech )
 {
@@ -615,7 +615,7 @@ const char *CBaseTechnology::GetContainedTechName( int iTech )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTechnology::SetContainedTech( int iTech, CBaseTechnology *pTech )
 {
@@ -624,7 +624,7 @@ void CBaseTechnology::SetContainedTech( int iTech, CBaseTechnology *pTech )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CBaseTechnology::GetNumberDependentTechs( void )
 {
@@ -632,7 +632,7 @@ int	CBaseTechnology::GetNumberDependentTechs( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CBaseTechnology::GetDependentTechName( int iTech )
 {
@@ -641,7 +641,7 @@ const char *CBaseTechnology::GetDependentTechName( int iTech )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTechnology::SetDependentTech( int iTech, CBaseTechnology *pTech )
 {
@@ -693,7 +693,7 @@ bool CBaseTechnology::IsDirty( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTechnology::SetDirty( bool bDirty )
 {
@@ -702,7 +702,7 @@ void CBaseTechnology::SetDirty( bool bDirty )
 
 //-----------------------------------------------------------------------------
 // Purpose: Set availability state for item
-// Input  : state - 
+// Input  : state -
 //-----------------------------------------------------------------------------
 void CBaseTechnology::SetActive( bool state )
 {
@@ -719,7 +719,7 @@ bool CBaseTechnology::GetActive( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Set whether this is our local preferred item
-// Input  : state - 
+// Input  : state -
 //-----------------------------------------------------------------------------
 void CBaseTechnology::SetPreferred( bool state )
 {
@@ -737,7 +737,7 @@ bool CBaseTechnology::GetPreferred( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Set the number of players preferring this tech
-// Input  : voters - 
+// Input  : voters -
 //-----------------------------------------------------------------------------
 void CBaseTechnology::SetVoters( int voters )
 {
@@ -754,8 +754,8 @@ int CBaseTechnology::GetVoters( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hide - 
+// Purpose:
+// Input  : hide -
 //-----------------------------------------------------------------------------
 void CBaseTechnology::SetHidden( bool hide )
 {
@@ -763,7 +763,7 @@ void CBaseTechnology::SetHidden( bool hide )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseTechnology::IsHidden( void )
@@ -772,7 +772,7 @@ bool CBaseTechnology::IsHidden( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTechnology::ResetHintsGiven( void )
 {
@@ -780,7 +780,7 @@ void CBaseTechnology::ResetHintsGiven( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseTechnology::GetHintsGiven( int type )
@@ -794,8 +794,8 @@ bool CBaseTechnology::GetHintsGiven( int type )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : given - 
+// Purpose:
+// Input  : given -
 //-----------------------------------------------------------------------------
 void CBaseTechnology::SetHintsGiven( int type, bool given )
 {
@@ -821,7 +821,7 @@ void CBaseTechnology::SetHintsGiven( int type, bool given )
 //====================================================================================================================
 #ifndef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTechnology::AddTechnologyToPlayer( CBaseTFPlayer *pPlayer )
 {
@@ -837,7 +837,7 @@ void CBaseTechnology::AddTechnologyToPlayer( CBaseTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTechnology::AddTechnologyToTeam( CTFTeam *pTeam )
 {
@@ -866,7 +866,7 @@ void CBaseTechnology::RegisterWatcher( CInfoCustomTechnology *pWatcher )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTechnology::UpdateWatchers( void )
 {
@@ -893,7 +893,7 @@ void CBaseTechnology::UpdateWatchers( void )
 //====================================================================================================================
 //-----------------------------------------------------------------------------
 // Purpose: Construct raw technology tree
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 CTechnologyTree::CTechnologyTree( IFileSystem* pFileSystem, int nTeamNumber )
 {
@@ -954,7 +954,7 @@ void CTechnologyTree::LinkDependentTechnologies( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTechnologyTree::~CTechnologyTree( void )
 {
@@ -1010,7 +1010,7 @@ CBaseTechnology *CTechnologyTree::GetTechnology( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseTechnology* CTechnologyTree::GetTechnology( const char *pName )
 {
@@ -1019,7 +1019,7 @@ CBaseTechnology* CTechnologyTree::GetTechnology( const char *pName )
 		if( stricmp( pName, m_Technologies[i]->GetName() ) == 0 )
 			return m_Technologies[i];
 	}
-	
+
 	return NULL;
 }
 
@@ -1092,7 +1092,7 @@ void CTechnologyTree::IncrementPreferences( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Return the most voted-for technologies 
+// Purpose: Return the most voted-for technologies
 // Input  : iDesireLevel: 1 = Most voted for, 2 = 2nd most voted for, etc
 //-----------------------------------------------------------------------------
 CBaseTechnology *CTechnologyTree::GetDesiredTechnology( int iDesireLevel )

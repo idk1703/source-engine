@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,7 +18,7 @@ class SampleTabs: public DemoPage
 	public:
 		SampleTabs(Panel *parent, const char *name);
 		~SampleTabs();
-	
+
 	private:
 		PropertySheet *m_pPropertySheet;
 
@@ -65,5 +65,3 @@ Panel* SampleTabs_Create(Panel *parent)
 {
 	return new SampleTabs(parent, "Tabs");
 }
-
-

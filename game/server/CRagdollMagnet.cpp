@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,8 +27,8 @@ BEGIN_DATADESC( CRagdollMagnet )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CRagdollMagnet::InputEnable( inputdata_t &inputdata )
 {
@@ -36,8 +36,8 @@ void CRagdollMagnet::InputEnable( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CRagdollMagnet::InputDisable( inputdata_t &inputdata )
 {
@@ -68,7 +68,7 @@ CRagdollMagnet *CRagdollMagnet::FindBestMagnet( CBaseEntity *pNPC )
 	// Assume we won't find one.
 	pBestMagnet = NULL;
 	flClosestDist = FLT_MAX;
-	
+
 	do
 	{
 		pMagnet = (CRagdollMagnet *)gEntList.FindEntityByClassname( pMagnet, "phys_ragdollmagnet" );
@@ -106,7 +106,7 @@ CRagdollMagnet *CRagdollMagnet::FindBestMagnet( CBaseEntity *pNPC )
 
 //-----------------------------------------------------------------------------
 // Purpose: Get the force that we should add to this NPC's ragdoll.
-// Input  : *pNPC - 
+// Input  : *pNPC -
 // Output : Vector
 //
 // NOTE: This function assumes pNPC is within this magnet's radius.
@@ -195,7 +195,7 @@ float CRagdollMagnet::DistToPoint( const Vector &vecPoint )
 
 			// Need to get a vector that's right-hand to m_axis
 			VectorVectors( vecAxis, vecRight, vecUp );
-			
+
 			//CrossProduct( vecAxis, vecUp, vecRight );
 			//VectorNormalize( vecRight );
 			//VectorNormalize( vecUp );

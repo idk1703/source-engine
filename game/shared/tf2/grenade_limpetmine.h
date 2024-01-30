@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ public:
 
 	// EMP
 	virtual bool	CanTakeEMPDamage() { return true; }
-	virtual bool	TakeEMPDamage( float duration );	
+	virtual bool	TakeEMPDamage( float duration );
 	bool			IsEMPed( void ) { return m_bEMPed; }
 
 	// Think and Touch

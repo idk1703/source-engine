@@ -47,7 +47,7 @@ public:
 	DECLARE_CLASS( CPortalGameRules, CSingleplayRules );
 
 	virtual bool	Init();
-	
+
 	virtual bool	ShouldCollide( int collisionGroup0, int collisionGroup1 );
 	virtual bool	ShouldUseRobustRadiusDamage(CBaseEntity *pEntity);
 #ifndef CLIENT_DLL
@@ -90,7 +90,7 @@ private:
 	virtual bool			ShouldBurningPropsEmitLight();
 
 	bool ShouldRemoveRadio( void );
-	
+
 public:
 
 	virtual float FlPlayerFallDamage( CBasePlayer *pPlayer );

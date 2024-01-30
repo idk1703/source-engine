@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -26,7 +26,7 @@
 #define TE_BEAMCYLINDER		3		// cylinder that expands to max radius over lifetime
 #define TE_BEAMFOLLOW		4		// create a line of decaying beam segments until entity stops moving
 #define TE_BEAMRING			5		// connect a beam ring to two entities
-#define TE_BEAMSPLINE		6		
+#define TE_BEAMSPLINE		6
 #define TE_BEAMRINGPOINT	7
 #define	TE_BEAMLASER		8		// Fades according to viewpoint
 #define TE_BEAMTESLA		9

@@ -1,6 +1,6 @@
 //===== Copyright (c) 1996-2005, Valve Corporation, All rights reserved. ======//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -185,7 +185,7 @@ void AppendCallStackToLogMessage( tchar *formattedMessage, int iMessageLength, i
 
 			//append preface
 			int iAppendedLength = _snprintf( formattedMessage, iMessageLength, _T("\nCall Stack:\n\t") );
-							
+
 			void **CallStackBuffer = (void **)stackalloc( iAppendCallStackLength * sizeof( void * ) );
 			int iCount = GetCallStack( CallStackBuffer, iAppendCallStackLength, 2 );
 			if( TranslateStackInfo( CallStackBuffer, iCount, formattedMessage + iAppendedLength, iMessageLength - iAppendedLength, _T("\n\t") ) == 0 )
@@ -265,8 +265,8 @@ void Error_SpewCallStack( int iMaxCallStackLength, const tchar *pMsgFormat, ... 
 
 
 //-----------------------------------------------------------------------------
-// A couple of super-common dynamic spew messages, here for convenience 
-// These looked at the "developer" group, print if it's level 1 or higher 
+// A couple of super-common dynamic spew messages, here for convenience
+// These looked at the "developer" group, print if it's level 1 or higher
 //-----------------------------------------------------------------------------
 void DevMsg( int level, const tchar* pMsgFormat, ... )
 {
@@ -324,8 +324,8 @@ void* Plat_SimpleLog( const tchar* file, int line )
 
 //-----------------------------------------------------------------------------
 // Purpose: For debugging startup times, etc.
-// Input  : *fmt - 
-//			... - 
+// Input  : *fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void COM_TimestampedLog( char const *fmt, ... )
 {
@@ -434,7 +434,7 @@ public:
 
 void CHardwareBreakPoint::SetBits( DWORD_PTR& dw, int lowBit, int bits, int newValue )
 {
-	DWORD_PTR mask = (1 << bits) - 1; 
+	DWORD_PTR mask = (1 << bits) - 1;
 	dw = (dw & ~(mask << lowBit)) | (newValue << lowBit);
 }
 
@@ -624,4 +624,3 @@ bool ClearHardwareBreakpoint( HardwareBreakpointHandle_t handle )
 }
 
 #endif // IS_WINDOWS_PC
-

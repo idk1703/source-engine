@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -33,17 +33,17 @@ END_SEND_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Precache: 
+// Precache:
 //-----------------------------------------------------------------------------
 void CCitadelEnergyCore::Precache()
 {
 	BaseClass::Precache();
-	PrecacheMaterial( "effects/combinemuzzle2_dark" ); 
+	PrecacheMaterial( "effects/combinemuzzle2_dark" );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCitadelEnergyCore::Spawn( void )
 {
@@ -63,8 +63,8 @@ void CCitadelEnergyCore::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flWarmUpTime - 
+// Purpose:
+// Input  : flWarmUpTime -
 //-----------------------------------------------------------------------------
 void CCitadelEnergyCore::StartCharge( float flWarmUpTime )
 {
@@ -74,7 +74,7 @@ void CCitadelEnergyCore::StartCharge( float flWarmUpTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCitadelEnergyCore::StartDischarge( void )
 {
@@ -83,8 +83,8 @@ void CCitadelEnergyCore::StartDischarge( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flCoolDownTime - 
+// Purpose:
+// Input  : flCoolDownTime -
 //-----------------------------------------------------------------------------
 void CCitadelEnergyCore::StopDischarge( float flCoolDownTime )
 {
@@ -94,8 +94,8 @@ void CCitadelEnergyCore::StopDischarge( float flCoolDownTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CCitadelEnergyCore::InputStartCharge( inputdata_t &inputdata )
 {
@@ -103,8 +103,8 @@ void CCitadelEnergyCore::InputStartCharge( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CCitadelEnergyCore::InputStartDischarge( inputdata_t &inputdata )
 {
@@ -112,8 +112,8 @@ void CCitadelEnergyCore::InputStartDischarge( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CCitadelEnergyCore::InputStop( inputdata_t &inputdata )
 {

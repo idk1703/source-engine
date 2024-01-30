@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-//  
+//
 //
 //=============================================================================
 
@@ -39,15 +39,15 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEFireBullets::CTEFireBullets( const char *name ) : CBaseTempEntity( name )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEFireBullets::~CTEFireBullets( void )
 {
@@ -61,7 +61,7 @@ SendPropInt( SENDINFO( m_iWeaponID ), Q_log2(TF_WEAPON_COUNT)+1, SPROP_UNSIGNED 
 SendPropInt( SENDINFO( m_iMode ), 1, SPROP_UNSIGNED ),
 SendPropInt( SENDINFO( m_iSeed ), NUM_BULLET_SEED_BITS, SPROP_UNSIGNED ),
 SendPropInt( SENDINFO( m_iPlayer ), 6, SPROP_UNSIGNED ), 	// max 64 players, see MAX_PLAYERS
-SendPropFloat( SENDINFO( m_flSpread ), 8, 0, 0.0f, 1.0f ),	
+SendPropFloat( SENDINFO( m_flSpread ), 8, 0, 0.0f, 1.0f ),
 SendPropBool( SENDINFO( m_bCritical ) ),
 END_SEND_TABLE()
 
@@ -71,7 +71,7 @@ static CTEFireBullets g_TEFireBullets( "Fire Bullets" );
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void TE_FireBullets( int iPlayerIndex, const Vector &vOrigin, const QAngle &vAngles, 
+void TE_FireBullets( int iPlayerIndex, const Vector &vOrigin, const QAngle &vAngles,
 					 int iWeaponID, int	iMode, int iSeed, float flSpread, bool bCritical )
 {
 	CPASFilter filter( vOrigin );
@@ -119,8 +119,8 @@ public:
 static CTETFExplosion g_TETFExplosion( "TFExplosion" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTETFExplosion::CTETFExplosion( const char *name ) : CBaseTempEntity( name )
 {
@@ -149,7 +149,7 @@ void TE_TFExplosion( IRecipientFilter &filter, float flDelay, const Vector &vecO
 {
 	VectorCopy( vecOrigin, g_TETFExplosion.m_vecOrigin );
 	VectorCopy( vecNormal, g_TETFExplosion.m_vecNormal );
-	g_TETFExplosion.m_iWeaponID	= iWeaponID;	
+	g_TETFExplosion.m_iWeaponID	= iWeaponID;
 	g_TETFExplosion.m_nEntIndex	= nEntIndex;
 	g_TETFExplosion.m_nDefID = nDefID;
 	g_TETFExplosion.m_nSound = nSound;
@@ -205,8 +205,8 @@ public:
 static CTETFParticleEffect g_TETFParticleEffect( "TFParticleEffect" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTETFParticleEffect::CTETFParticleEffect( const char *name ) : CBaseTempEntity( name )
 {
@@ -262,7 +262,7 @@ IMPLEMENT_SERVERCLASS_ST( CTETFParticleEffect, DT_TETFParticleEffect )
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TE_TFParticleEffect( IRecipientFilter &filter, float flDelay, const char *pszParticleName, ParticleAttachment_t iAttachType, CBaseEntity *pEntity, const char *pszAttachmentName, bool bResetAllParticlesOnEntity )
 {
@@ -291,7 +291,7 @@ void TE_TFParticleEffect( IRecipientFilter &filter, float flDelay, const char *p
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TE_TFParticleEffect( IRecipientFilter &filter, float flDelay, const char *pszParticleName, ParticleAttachment_t iAttachType, CBaseEntity *pEntity, int iAttachmentPoint, bool bResetAllParticlesOnEntity  )
 {
@@ -316,7 +316,7 @@ void TE_TFParticleEffect( IRecipientFilter &filter, float flDelay, const char *p
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TE_TFParticleEffect( IRecipientFilter &filter, float flDelay, const char *pszParticleName, Vector vecOrigin, QAngle vecAngles, CBaseEntity *pEntity /*= NULL*/, ParticleAttachment_t eAttachType /*= PATTACH_CUSTOMORIGIN*/ )
 {
@@ -324,7 +324,7 @@ void TE_TFParticleEffect( IRecipientFilter &filter, float flDelay, const char *p
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TE_TFParticleEffectComplex
 (
@@ -374,7 +374,7 @@ void TE_TFParticleEffectComplex
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TE_TFParticleEffect( IRecipientFilter &filter, float flDelay, int iEffectIndex, Vector vecOrigin, Vector vecStart, QAngle vecAngles, CBaseEntity *pEntity )
 {

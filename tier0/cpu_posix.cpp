@@ -20,7 +20,7 @@ class TimeVal
 {
 public:
 	TimeVal() {}
-	TimeVal& operator=(const TimeVal &val) { m_TimeVal = val.m_TimeVal; return *this; } 
+	TimeVal& operator=(const TimeVal &val) { m_TimeVal = val.m_TimeVal; return *this; }
 	inline double operator-(const TimeVal &left)
 	{
 		uint64 left_us = (uint64) left.m_TimeVal.tv_sec * 1000000 + left.m_TimeVal.tv_usec;
@@ -72,9 +72,9 @@ uint64 GetCPUFreqFromPROC()
 	}
 
 	/* ignore all lines until we reach MHz information */
-	while (fgets(line, 1024, fp) != NULL) 
-	{ 
-		if (strstr(line, search_str) != NULL) 
+	while (fgets(line, 1024, fp) != NULL)
+	{
+		if (strstr(line, search_str) != NULL)
 		{
 			/* ignore all characters in line up to : */
 			for (s = line; *s && (*s != ':'); ++s)
@@ -84,11 +84,11 @@ uint64 GetCPUFreqFromPROC()
 			if ( *s && ( sscanf( s + 1, "%lf", &mhz) == 1 ) )
 				break;
 		}
-    }
+	}
 
-    fclose(fp);
+	fclose(fp);
 
-    return ( uint64 )( mhz * 1000000 );
+	return ( uint64 )( mhz * 1000000 );
 }
 
 #endif
@@ -142,7 +142,7 @@ uint64 CalculateCPUFreq()
 		usleep( 5000 ); // sleep for 5 msec
 		gettimeofday( &end_time.m_TimeVal, 0 );
 		rdtsc( end_tsc );
-	
+
 		// end_time - start_time calls into the overloaded TimeVal operator- way above, and returns a double.
 		period3 = ( end_tsc - start_tsc ) / ( end_time - start_time );
 
@@ -155,18 +155,18 @@ uint64 CalculateCPUFreq()
 
 		period1 = period2;
 		period2 = period3;
-    }
+	}
 
 	if ( count == max_iterations )
-    {
+	{
 		return GetCPUFreqFromPROC(); // fall back to /proc
-    }
+	}
 
 	// Set the period to the average period measured.
 	period = ( period1 + period2 + period3 ) / 3;
 
 	// Some Pentiums have broken TSCs that increment very
-	// slowly or unevenly. 
+	// slowly or unevenly.
 	if (period < 10000000)
 	{
 		return GetCPUFreqFromPROC(); // fall back to /proc
@@ -174,4 +174,3 @@ uint64 CalculateCPUFreq()
 
 	return period;
 }
-

@@ -31,7 +31,7 @@ using namespace vgui;
 #define Y_BORDER					YRES(4)
 
 static ConVar vprof_verbose( "vprof_verbose", "1", FCVAR_ARCHIVE, "Set to one to show average and peak times" );
-static ConVar vprof_unaccounted_limit( "vprof_unaccounted_limit", "0.3", FCVAR_ARCHIVE, 
+static ConVar vprof_unaccounted_limit( "vprof_unaccounted_limit", "0.3", FCVAR_ARCHIVE,
 									  "number of milliseconds that a node must exceed to turn red in the vprof panel" );
 static ConVar vprof_warningmsec( "vprof_warningmsec", "10", FCVAR_ARCHIVE, "Above this many milliseconds render the label red to indicate slow code." );
 
@@ -54,7 +54,7 @@ static void ClearNodeClientData( CVProfNode *pNode )
 	{
 		ClearNodeClientData( pNode->GetSibling() );
 	}
-	
+
 	if( pNode->GetChild() )
 	{
 		ClearNodeClientData( pNode->GetChild() );
@@ -114,10 +114,10 @@ void ChangeVProfScopeCallback( IConVar *pConVar, const char *pOldString, float f
 	}
 }
 
-ConVar vprof_scope( 
-	"vprof_scope", 
-	"", 
-	0, 
+ConVar vprof_scope(
+	"vprof_scope",
+	"",
+	0,
 	"Set a specific scope to start showing vprof tree",
 	0, 0, 0, 0,
 	ChangeVProfScopeCallback );
@@ -332,7 +332,7 @@ int CProfileHierarchyPanel::AddItem( KeyValues *data, int parentItemIndex, Colum
 {
 	int itemIndex = GetTree()->AddItem( data, parentItemIndex );
 	columnPanels.treeViewItem = itemIndex;
-	
+
 	ColumnPanels_t search;
 	search.treeViewItem = itemIndex;
 
@@ -405,7 +405,7 @@ void CProfileHierarchyPanel::PerformLayout()
 				{
 					continue;
 				}
-				
+
 				bool vis = ( top + offset - 20 ) >= 0 && ( bottom + offset ) < tall;
 
 				p->SetParent( vis ? this : NULL );
@@ -475,7 +475,7 @@ KeyValues *CProfileHierarchyPanel::GetItemData(int itemIndex)
 //-----------------------------------------------------------------------------
 // Purpose: Create the VProf panel
 //-----------------------------------------------------------------------------
-CVProfPanel::CVProfPanel( vgui::Panel *pParent, const char *pElementName ) 
+CVProfPanel::CVProfPanel( vgui::Panel *pParent, const char *pElementName )
  :	vgui::Frame( pParent, pElementName )
 {
 	m_pVProfile = g_pVProfileForDisplay;
@@ -539,14 +539,14 @@ CVProfPanel::CVProfPanel( vgui::Panel *pParent, const char *pElementName )
 	m_nLastBudgetGroupCount = 0;
 	m_nCurrentBudgetGroup = -1;
 
-	m_pHierarchicalView = new vgui::CheckButton( this, "HierarchicalViewSelection", "" );	
+	m_pHierarchicalView = new vgui::CheckButton( this, "HierarchicalViewSelection", "" );
 	m_pHierarchicalView->AddActionSignalTarget( this );
 	m_pHierarchicalView->SetSelected( true );
 	m_bHierarchicalView = true;
 
 	m_pRedoSort = new vgui::Button( this, "RedoSorting", "", this, "redosort" );
 
-	m_pVerbose = new vgui::CheckButton( this, "VerboseCheckbox", "" );	
+	m_pVerbose = new vgui::CheckButton( this, "VerboseCheckbox", "" );
 	m_pVerbose->AddActionSignalTarget( this );
 	m_pVerbose->SetSelected( vprof_verbose.GetBool() );
 
@@ -555,16 +555,16 @@ CVProfPanel::CVProfPanel( vgui::Panel *pParent, const char *pElementName )
 	m_pPlaybackLabel = new vgui::Label( this, "PlaybackLabel", "" );
 	m_pPlaybackLabel->SetBgColor( Color( 0, 0, 0, 200 ) );
 	m_pPlaybackLabel->SetPaintBackgroundEnabled( true );
-	
+
 	m_pStepForward = new vgui::Button( this, "StepForward", "", this, "StepForward" );
 	m_pStepBack = new vgui::Button( this, "StepBack", "", this, "StepBack" );
 	m_pGotoButton = new vgui::Button( this, "GotoButton", "", this, "GotoButton" );
-	
+
 	m_pPlaybackScroll = new vgui::ScrollBar( this, "PlaybackScroll", false );
 	m_pPlaybackScroll->SetRange( 0, 1000 );
 	m_pPlaybackScroll->SetRangeWindow( 30 );
 	m_pPlaybackScroll->AddActionSignalTarget( this );
-	
+
 	m_iLastPlaybackTick = -1;
 
 
@@ -614,7 +614,7 @@ void CVProfPanel::PerformLayout()
 // Scheme settings!
 //-----------------------------------------------------------------------------
 void CVProfPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
-{			 
+{
 	BaseClass::ApplySchemeSettings( pScheme );
 
 	IBorder *border = pScheme->GetBorder( "ToolTipBorder" );
@@ -625,15 +625,15 @@ void CVProfPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *command - 
+// Purpose:
+// Input  : *command -
 //-----------------------------------------------------------------------------
 void CVProfPanel::Close()
 {
 	UserCmd_HideVProf();
 	BaseClass::Close();
 }
-			  
+
 
 //-----------------------------------------------------------------------------
 // Is it visible?
@@ -641,7 +641,7 @@ void CVProfPanel::Close()
 void CVProfPanel::OnTick()
 {
 	BaseClass::OnTick();
-	
+
 	// Did the CVProfile we're using switch behind our back?
 	if ( g_pVProfileForDisplay != m_pVProfile )
 	{
@@ -685,19 +685,19 @@ void CVProfPanel::OnTick()
 // 2 = By "group" then by "text"
 static int g_nSortType = -1;
 //-----------------------------------------------------------------------------
-// Visualization changed 
+// Visualization changed
 //-----------------------------------------------------------------------------
 void CVProfPanel::OnTextChanged( KeyValues *data )
 {
 	Panel *pPanel = reinterpret_cast<vgui::Panel *>( data->GetPtr("panel") );
 	vgui::ComboBox *pBox = dynamic_cast<vgui::ComboBox *>( pPanel );
 
-	if( pBox == m_pVProfCategory ) 
+	if( pBox == m_pVProfCategory )
 	{
 		// The -1 here is for the 'All Categories' item
 		m_nCurrentBudgetGroup = pBox->GetActiveItem() - 1;
 
-		// NOTE: We have to reset the tree view so that it 
+		// NOTE: We have to reset the tree view so that it
 		// is populated with only the ones we want (need to eliminate everything
 		// that's not appropriate)
 		Reset();
@@ -744,7 +744,7 @@ bool ChildCostSortFunc(KeyValues *pNode1, KeyValues *pNode2)
 			int val = Q_stricmp( g1, g2 );
 			if( val < 0 )
 				return true;
-			
+
 			if ( val > 0 )
 				return false;
 
@@ -761,7 +761,7 @@ bool ChildCostSortFunc(KeyValues *pNode1, KeyValues *pNode2)
 
 
 //-----------------------------------------------------------------------------
-// Changes the visualization method for vprof data 
+// Changes the visualization method for vprof data
 //-----------------------------------------------------------------------------
 void CVProfPanel::OnCheckButtonChecked(Panel *panel)
 {
@@ -898,12 +898,12 @@ int CVProfPanel::UpdateVProfTreeEntry( KeyValues *pKeyValues, CVProfNode *pNode,
 	CFmtStrN< 256 > l2miss;
 
 	frame.sprintf( "[%4d] %7.2f %7.2f", pNode->GetCurCalls(), pNode->GetCurTime(), curTimeLessChildren );
-	
-	
+
+
 	pKeyValues->SetString( "frame", msg );
 
 	if( vprof_verbose.GetBool() )
-	{											 
+	{
 		double avgCalls = ( m_pVProfile->NumFramesSampled() > 0 ) ? (double)pNode->GetTotalCalls() / (double)m_pVProfile->NumFramesSampled() : 0;
 		double avg = ( m_pVProfile->NumFramesSampled() > 0 ) ? (double)pNode->GetTotalTime() / (double)m_pVProfile->NumFramesSampled() : 0;
 		double avgLessChildrenVerbose = ( m_pVProfile->NumFramesSampled() > 0 ) ? (double)pNode->GetTotalTimeLessChildren() / (double)m_pVProfile->NumFramesSampled() : 0;
@@ -980,7 +980,7 @@ void CVProfPanel::FillTree( KeyValues *pKeyValues, CVProfNode *pNode, int parent
 	}
 
 	int id = parent;
-	if (( m_nCurrentBudgetGroup < 0 ) || ( pNode->GetBudgetGroupID() == m_nCurrentBudgetGroup )) 
+	if (( m_nCurrentBudgetGroup < 0 ) || ( pNode->GetBudgetGroupID() == m_nCurrentBudgetGroup ))
 	{
 		id = UpdateVProfTreeEntry( pKeyValues, pNode, parent );
 	}
@@ -989,7 +989,7 @@ void CVProfPanel::FillTree( KeyValues *pKeyValues, CVProfNode *pNode, int parent
 	{
 		FillTree( pKeyValues, pNode->GetSibling(), parent );
 	}
-	
+
 	if( pNode->GetChild() )
 	{
 		FillTree( pKeyValues, pNode->GetChild(), m_bHierarchicalView ? id : parent );
@@ -1023,7 +1023,7 @@ void CVProfPanel::UpdateProfile( float filteredtime )
 	{
 		PopulateBudgetGroupComboBox();
 
-		SetTitle( CFmtStr( "VProf (%s) --  %d frames sampled", 
+		SetTitle( CFmtStr( "VProf (%s) --  %d frames sampled",
 									   m_pVProfile->IsEnabled() ?  "running" : "not running",
 										   m_pVProfile->NumFramesSampled() ), false );
 
@@ -1035,7 +1035,7 @@ void CVProfPanel::UpdateProfile( float filteredtime )
 		}
 
 		KeyValues * pVal = new KeyValues("");
-		
+
 		if ( !m_pHierarchy->GetTree()->GetItemCount() )
 		{
 			pVal->SetString( "Text", "Call tree" );
@@ -1050,12 +1050,12 @@ void CVProfPanel::UpdateProfile( float filteredtime )
 
 		const char *pScope = vprof_scope.GetString();
 		CVProfNode *pStartNode = ( pScope[0] == 0 ) ? m_pVProfile->GetRoot()  : m_pVProfile->FindNode(m_pVProfile->GetRoot(), pScope );
-		
+
 		if ( pStartNode )
 		{
 			FillTree( pVal, pStartNode, m_RootItem );
 		}
-		
+
 		pVal->deleteThis();
 
 		if( bEnabled )
@@ -1067,7 +1067,7 @@ void CVProfPanel::UpdateProfile( float filteredtime )
 	if ( m_pVProfile->IsEnabled() )
 	{
 		Assert( m_pVProfile->AtRoot() );
-		
+
 		if ( GetBudgetPanel()->IsBudgetPanelShown() )
 			GetBudgetPanel()->SnapshotVProfHistory( filteredtime );
 
@@ -1077,7 +1077,7 @@ void CVProfPanel::UpdateProfile( float filteredtime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVProfPanel::UserCmd_ShowVProf( void )
 {
@@ -1093,7 +1093,7 @@ void CVProfPanel::UserCmd_ShowVProf( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVProfPanel::UserCmd_HideVProf( void )
 {

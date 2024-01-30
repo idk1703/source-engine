@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -51,13 +51,13 @@ static DmAttributeType_t g_pStandardFieldTypes[] =
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeVertexDataBase, CDmeVertexDataBase );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeVertexDataBase::OnConstruction()
 {
@@ -103,7 +103,7 @@ void CDmeVertexDataBase::UpdateStandardFieldInfo( int nFieldIndex, const char *p
 //-----------------------------------------------------------------------------
 void CDmeVertexDataBase::ComputeFieldInfo()
 {
-	// Clear existing field info, 
+	// Clear existing field info,
 	// but keep the old names around so field indices remain constant
 	int nCurrentCount = m_FieldInfo.Count();
 	for ( int i = 0; i < nCurrentCount; ++i )
@@ -112,7 +112,7 @@ void CDmeVertexDataBase::ComputeFieldInfo()
 		m_FieldInfo[i].m_pVertexData = NULL;
 	}
 
-	// FIXME: Want to maintain field indices as constants for all time 
+	// FIXME: Want to maintain field indices as constants for all time
 	int nFieldCount = m_VertexFormat.Count();
 	for ( int i = 0; i < nFieldCount; ++i )
 	{
@@ -170,7 +170,7 @@ void CDmeVertexDataBase::ComputeVertexCount()
 		int nFieldCount = array.Count();
 		if ( nFieldCount < m_nVertexCount )
 		{
-			m_nVertexCount = nFieldCount; 
+			m_nVertexCount = nFieldCount;
 		}
 	}
 }
@@ -468,7 +468,7 @@ FieldIndex_t CDmeVertexDataBase::CreateField( const char *pFieldName, DmAttribut
 	AddAttribute( pIndicesName, AT_INT_ARRAY );
 
 	FindOrAddVertexField( pFieldName );
-	 
+
 	// FIXME: Not hugely efficient, is there a better way of doing this?
 	// Necessary to return a field index for the name
 	ComputeFieldInfo();
@@ -586,11 +586,11 @@ FieldIndex_t CDmeVertexDataBase::FindFieldIndex( const char *pFieldName ) const
 //-----------------------------------------------------------------------------
 // Returns well-known vertex data
 //-----------------------------------------------------------------------------
-static CUtlVector<Vector4D> s_EmptyVector4D; 
-static CUtlVector<Vector> s_EmptyVector; 
-static CUtlVector<Vector2D> s_EmptyVector2D; 
-static CUtlVector<Color> s_EmptyColor; 
-static CUtlVector<float> s_EmptyFloat; 
+static CUtlVector<Vector4D> s_EmptyVector4D;
+static CUtlVector<Vector> s_EmptyVector;
+static CUtlVector<Vector2D> s_EmptyVector2D;
+static CUtlVector<Color> s_EmptyColor;
+static CUtlVector<float> s_EmptyFloat;
 
 const CUtlVector<Vector> &CDmeVertexDataBase::GetPositionData( ) const
 {
@@ -599,7 +599,7 @@ const CUtlVector<Vector> &CDmeVertexDataBase::GetPositionData( ) const
 		return s_EmptyVector;
 
 	CDmrArrayConst<Vector> vertexData = GetVertexData( nFieldIndex );
-	return vertexData.Get(); 
+	return vertexData.Get();
 }
 
 const CUtlVector<Vector> &CDmeVertexDataBase::GetNormalData( ) const
@@ -609,7 +609,7 @@ const CUtlVector<Vector> &CDmeVertexDataBase::GetNormalData( ) const
 		return s_EmptyVector;
 
 	CDmrArrayConst<Vector> vertexData = GetVertexData( nFieldIndex );
-	return vertexData.Get(); 
+	return vertexData.Get();
 }
 
 const CUtlVector<Vector4D> &CDmeVertexDataBase::GetTangentData( ) const
@@ -619,7 +619,7 @@ const CUtlVector<Vector4D> &CDmeVertexDataBase::GetTangentData( ) const
 		return s_EmptyVector4D;
 
 	CDmrArrayConst<Vector4D> vertexData = GetVertexData( nFieldIndex );
-	return vertexData.Get(); 
+	return vertexData.Get();
 }
 
 const CUtlVector<Vector2D> &CDmeVertexDataBase::GetTextureCoordData( ) const
@@ -629,7 +629,7 @@ const CUtlVector<Vector2D> &CDmeVertexDataBase::GetTextureCoordData( ) const
 		return s_EmptyVector2D;
 
 	CDmrArrayConst<Vector2D> vertexData = GetVertexData( nFieldIndex );
-	return vertexData.Get(); 
+	return vertexData.Get();
 }
 
 const CUtlVector<Color> &CDmeVertexDataBase::GetColorData( ) const
@@ -639,7 +639,7 @@ const CUtlVector<Color> &CDmeVertexDataBase::GetColorData( ) const
 		return s_EmptyColor;
 
 	CDmrArrayConst<Color> vertexData = GetVertexData( nFieldIndex );
-	return vertexData.Get(); 
+	return vertexData.Get();
 }
 
 const float *CDmeVertexDataBase::GetJointWeightData( int nDataIndex ) const
@@ -669,7 +669,7 @@ const CUtlVector<float> &CDmeVertexDataBase::GetBalanceData( ) const
 		return s_EmptyFloat;
 
 	CDmrArrayConst<float> vertexData = GetVertexData( nFieldIndex );
-	return vertexData.Get(); 
+	return vertexData.Get();
 }
 
 const CUtlVector<float> &CDmeVertexDataBase::GetMorphSpeedData( ) const
@@ -679,7 +679,7 @@ const CUtlVector<float> &CDmeVertexDataBase::GetMorphSpeedData( ) const
 		return s_EmptyFloat;
 
 	CDmrArrayConst<float> vertexData = GetVertexData( nFieldIndex );
-	return vertexData.Get(); 
+	return vertexData.Get();
 }
 
 const CUtlVector<float> &CDmeVertexDataBase::GetWrinkleData( ) const
@@ -689,7 +689,7 @@ const CUtlVector<float> &CDmeVertexDataBase::GetWrinkleData( ) const
 		return s_EmptyFloat;
 
 	CDmrArrayConst<float> vertexData = GetVertexData( nFieldIndex );
-	return vertexData.Get(); 
+	return vertexData.Get();
 }
 
 const CUtlVector<float> &CDmeVertexDataBase::GetWeightData( ) const
@@ -699,21 +699,21 @@ const CUtlVector<float> &CDmeVertexDataBase::GetWeightData( ) const
 		return s_EmptyFloat;
 
 	CDmrArrayConst<float> vertexData = GetVertexData( nFieldIndex );
-	return vertexData.Get(); 
+	return vertexData.Get();
 }
 
 
 //-----------------------------------------------------------------------------
 // Returns well-known index data
 //-----------------------------------------------------------------------------
-static CUtlVector<int> s_EmptyInt; 
+static CUtlVector<int> s_EmptyInt;
 const CUtlVector<int> &CDmeVertexDataBase::GetVertexIndexData( FieldIndex_t nFieldIndex ) const
 {
 	if ( nFieldIndex < 0 || nFieldIndex >= m_FieldInfo.Count() )
 		return s_EmptyInt;
 
 	CDmrArrayConst<int> indexData = GetIndexData( nFieldIndex );
-	return indexData.Get(); 
+	return indexData.Get();
 }
 
 const CUtlVector<int> &CDmeVertexDataBase::GetVertexIndexData( StandardFields_t fieldId ) const
@@ -730,7 +730,7 @@ const CUtlVector< int > &CDmeVertexDataBase::FindVertexIndicesFromDataIndex( Fie
 	if ( nFieldIndex < 0 )
 		return s_EmptyInt;
 
-	FieldInfo_t &info = m_FieldInfo[nFieldIndex]; 
+	FieldInfo_t &info = m_FieldInfo[nFieldIndex];
 	if ( info.m_bInverseMapDirty )
 	{
 		CDmrArrayConst<int> array( info.m_pIndexData );
@@ -846,14 +846,14 @@ void CDmeVertexDataBase::CopyTo( CDmeVertexDataBase *pDst ) const
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeVertexData, CDmeVertexData );
 IMPLEMENT_ELEMENT_FACTORY( DmeVertexDeltaData, CDmeVertexDeltaData );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeVertexData::OnConstruction()
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -66,7 +66,7 @@ CTFSpectatorGUI *GetTFSpectatorGUI()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ConVar cl_spec_carrieditems( "cl_spec_carrieditems", "1", FCVAR_ARCHIVE, "Show non-standard items being carried by player you're spectating." );
 
@@ -121,7 +121,7 @@ CTFSpectatorGUI::CTFSpectatorGUI(IViewPort *pViewPort) : CSpectatorGUI(pViewPort
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFSpectatorGUI::~CTFSpectatorGUI()
 {
@@ -133,7 +133,7 @@ CTFSpectatorGUI::~CTFSpectatorGUI()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFSpectatorGUI::Reset( void )
 {
@@ -148,7 +148,7 @@ void CTFSpectatorGUI::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFSpectatorGUI::GetTopBarHeight()
 {
@@ -164,7 +164,7 @@ int CTFSpectatorGUI::GetTopBarHeight()
 		}
 	}
 
-	return m_pTopBar->GetTall() + iPlayerPanelHeight; 
+	return m_pTopBar->GetTall() + iPlayerPanelHeight;
 }
 
 //-----------------------------------------------------------------------------
@@ -204,7 +204,7 @@ void CTFSpectatorGUI::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFSpectatorGUI::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -256,7 +256,7 @@ void CTFSpectatorGUI::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFSpectatorGUI::ApplySettings( KeyValues *inResourceData )
 {
@@ -275,7 +275,7 @@ void CTFSpectatorGUI::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFSpectatorGUI::NeedsUpdate( void )
 {
@@ -289,7 +289,7 @@ bool CTFSpectatorGUI::NeedsUpdate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFSpectatorGUI::Update()
 {
@@ -316,7 +316,7 @@ void CTFSpectatorGUI::Update()
 	}
 	if ( pLocalPlayer && pLocalPlayer->m_hStudent && m_bCoaching )
 	{
-		Vector vecTarget = pLocalPlayer->m_hStudent->GetAbsOrigin();		
+		Vector vecTarget = pLocalPlayer->m_hStudent->GetAbsOrigin();
 		Vector vecDelta = pLocalPlayer->GetAbsOrigin() - vecTarget;
 		float flDistance = vecDelta.Length();
 		const float kInchesToMeters = 0.0254f;
@@ -336,7 +336,7 @@ void CTFSpectatorGUI::Update()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFSpectatorGUI::UpdateReinforcements( void )
 {
@@ -357,7 +357,7 @@ void CTFSpectatorGUI::UpdateReinforcements( void )
 
 	bool bBuyBackVisible = false;
 	wchar_t wLabel[256];
-		
+
 	if ( TFGameRules()->InStalemate() )
 	{
 		if ( TFGameRules()->IsInArenaMode() == true )
@@ -455,10 +455,10 @@ void CTFSpectatorGUI::UpdateKeyLabels( void )
 
 	if ( InTournamentGUI() == false )
 	{
-		// get the desired player class	
+		// get the desired player class
 		int iClass = TF_CLASS_UNDEFINED;
 		bool bIsHLTV = engine->IsHLTV();
-		
+
 		if ( pPlayer )
 		{
 			iClass = pPlayer->m_Shared.GetDesiredPlayerClassIndex();
@@ -484,7 +484,7 @@ void CTFSpectatorGUI::UpdateKeyLabels( void )
 				g_pVGuiLocalize->ConstructString_safe( wzTipLabel, g_pVGuiLocalize->Find( "#Tip_Fmt" ), 1, wzTip );
 				SetDialogVariable( "tip", wzTipLabel );
 			}
-			
+
 			m_flNextTipChangeTime = gpGlobals->curtime + 10.0f;
 			m_iTipClass = iClass;
 		}
@@ -699,7 +699,7 @@ void CTFSpectatorGUI::UpdateKeyLabels( void )
 				g_pVGuiLocalize->ConvertANSIToUnicode( szMapName, wMapName, sizeof(wMapName));
 				g_pVGuiLocalize->ConstructString_safe( wLabel, g_pVGuiLocalize->Find( "#Spec_Map" ), 1, wMapName );
 
-				m_pMapLabel->SetText( wLabel ); 
+				m_pMapLabel->SetText( wLabel );
 			}
 		}
 	}
@@ -719,8 +719,8 @@ void CTFSpectatorGUI::UpdateKeyLabels( void )
 
 			g_pVGuiLocalize->ConvertANSIToUnicode( pStudentName, wPlayerName, sizeof(wPlayerName));
 			g_pVGuiLocalize->ConstructString_safe( wLabel, g_pVGuiLocalize->Find( "#TF_Coach_Student_Prefix" ), 1, wPlayerName );
-			
-			SetDialogVariable( "student_name", wLabel ); 
+
+			SetDialogVariable( "student_name", wLabel );
 		}
 		for ( int i = 1; i <= 2; ++i )
 		{
@@ -743,7 +743,7 @@ void CTFSpectatorGUI::UpdateKeyLabels( void )
 				else
 				{
 					m_pAvatar->ClearAvatar();
-				}				
+				}
 			}
 		}
 
@@ -779,7 +779,7 @@ void CTFSpectatorGUI::UpdateKeyLabels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFSpectatorGUI::ShowPanel(bool bShow)
 {
@@ -881,7 +881,7 @@ void CTFSpectatorGUI::ShowPanel(bool bShow)
 		{
 			m_flNextPlayerPanelUpdate = 0;
 			m_flNextItemPanelUpdate = 0;
-			UpdateItemPanel();	
+			UpdateItemPanel();
 			RecalculatePlayerPanels();
 		}
 	}
@@ -890,7 +890,7 @@ void CTFSpectatorGUI::ShowPanel(bool bShow)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFSpectatorGUI::FireGameEvent( IGameEvent *event )
 {
@@ -916,7 +916,7 @@ void CTFSpectatorGUI::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFSpectatorGUI::UpdateItemPanel( bool bForce )
 {
@@ -928,7 +928,7 @@ void CTFSpectatorGUI::UpdateItemPanel( bool bForce )
 	{
 		bVisible = false;
 	}
-	else 
+	else
 	{
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 		if ( pLocalPlayer )
@@ -984,7 +984,7 @@ void CTFSpectatorGUI::UpdateItemPanel( bool bForce )
 							bool bOriginalOwner = steamIDOwner.GetAccountID() == pItemToShow->GetAccountID();
 							pItemLabel->SetText( bOriginalOwner ? "#FreezePanel_Item" : "#FreezePanel_ItemOtherOwner" );
 						}
-						
+
 
 						bVisible = true;
 						m_pItemPanel->SetDialogVariable( "killername", g_TF_PR->GetPlayerName( pPlayer->entindex() ) );
@@ -1001,7 +1001,7 @@ void CTFSpectatorGUI::UpdateItemPanel( bool bForce )
 						// force update description to get the correct panel size
 						m_pItemPanel->UpdateDescription();
 						m_pItemPanel->SetPos( ScreenWidth() - XRES( 10 ) - m_pItemPanel->GetWide(), ScreenHeight() - YRES( 12 ) - m_pItemPanel->GetTall() );
-					}	
+					}
 				}
 			}
 		}
@@ -1014,26 +1014,26 @@ void CTFSpectatorGUI::UpdateItemPanel( bool bForce )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFSpectatorGUI::ForceItemPanelCycle( void )
 {
 	m_flNextItemPanelUpdate = 0;
-	UpdateItemPanel( true );		
+	UpdateItemPanel( true );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-const char *CTFSpectatorGUI::GetResFile( void ) 
-{ 
+const char *CTFSpectatorGUI::GetResFile( void )
+{
 	if ( m_bCoaching )
 	{
-		return "Resource/UI/SpectatorCoach.res"; 
+		return "Resource/UI/SpectatorCoach.res";
 	}
 	else if ( InTournamentGUI() )
 	{
-		return "Resource/UI/SpectatorTournament.res"; 
+		return "Resource/UI/SpectatorTournament.res";
 	}
 	else if ( ::input->IsSteamControllerActive() )
 	{
@@ -1046,7 +1046,7 @@ const char *CTFSpectatorGUI::GetResFile( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFSpectatorGUI::InTournamentGUI( void )
 {
@@ -1061,7 +1061,7 @@ bool CTFSpectatorGUI::InTournamentGUI( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFSpectatorGUI::RecalculatePlayerPanels( void )
 {
@@ -1103,7 +1103,7 @@ void CTFSpectatorGUI::RecalculatePlayerPanels( void )
 
 			bool bHideBots = false;
 
-	#ifndef _DEBUG 
+	#ifndef _DEBUG
 			if ( bMvM )
 			{
 				bHideBots = true;
@@ -1145,7 +1145,7 @@ void CTFSpectatorGUI::RecalculatePlayerPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFSpectatorGUI::UpdatePlayerPanels( void )
 {
@@ -1255,7 +1255,7 @@ void CTFSpectatorGUI::UpdatePlayerPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFSpectatorGUI::SelectSpec( int iSlot )
 {

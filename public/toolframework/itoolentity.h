@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -61,7 +61,7 @@ enum ClientShadowFlags_t
 
 
 //-----------------------------------------------------------------------------
-// Opaque pointer returned from Find* methods, don't store this, you need to 
+// Opaque pointer returned from Find* methods, don't store this, you need to
 // Attach it to a tool entity or discard after searching
 //-----------------------------------------------------------------------------
 typedef void *EntitySearchResult;
@@ -106,7 +106,7 @@ public:
 	virtual void			RemoveClientRenderable( IClientRenderable *pRenderable ) = 0;
 	virtual void			SetRenderGroup( IClientRenderable *pRenderable, int renderGroup ) = 0;
 	virtual void			MarkClientRenderableDirty( IClientRenderable *pRenderable ) = 0;
-    virtual void			UpdateProjectedTexture( ClientShadowHandle_t h, bool bForce ) = 0;
+	virtual void			UpdateProjectedTexture( ClientShadowHandle_t h, bool bForce ) = 0;
 
 	virtual bool			DrawSprite( IClientRenderable *pRenderable, float scale, float frame, int rendermode, int renderfx, const Color &color, float flProxyRadius, int *pVisHandle ) = 0;
 
@@ -260,7 +260,7 @@ public:
 
 	// Iterates through ALL entities (separate list for client vs. server)
 	virtual EntitySearchResult	NextChoreoEntity( EntitySearchResult currentEnt ) = 0;
-	EntitySearchResult			FirstChoreoEntity() { return NextChoreoEntity( NULL ); } 
+	EntitySearchResult			FirstChoreoEntity() { return NextChoreoEntity( NULL ); }
 	virtual const char			*GetSceneFile( EntitySearchResult sr ) = 0;
 
 	// For interactive editing

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,7 +27,7 @@ class IAchievement;
 // Loads an achievement's icon into a specified image panel, or turns the panel off if no achievement icon was found.
 bool LoadAchievementIcon( vgui::ImagePanel* pIconPanel, IAchievement *pAchievement, const char *pszExt = NULL );
 
-// Updates a listed achievement item's progress bar. 
+// Updates a listed achievement item's progress bar.
 void UpdateProgressBar( vgui::EditablePanel* pPanel, IAchievement *pAchievement, Color clrProgressBar );
 
 //-----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ void UpdateProgressBar( vgui::EditablePanel* pPanel, IAchievement *pAchievement,
 //-----------------------------------------------------------------------------
 class CAchievementsDialog_XBox : public CBaseDialog
 {
-	DECLARE_CLASS_SIMPLE( CAchievementsDialog_XBox, CBaseDialog ); 
+	DECLARE_CLASS_SIMPLE( CAchievementsDialog_XBox, CBaseDialog );
 
 public:
 	CAchievementsDialog_XBox(vgui::Panel *parent);
@@ -74,7 +74,7 @@ private:
 };
 
 
-//////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////
 // PC version
 //////////////////////////////////////////////////////////////////////////
 class CAchievementsDialog : public vgui::Frame
@@ -117,7 +117,7 @@ public:
 
 	int m_iFixedWidth;
 
-	typedef struct 
+	typedef struct
 	{
 		int m_iMinRange;
 		int m_iMaxRange;

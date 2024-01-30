@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -23,9 +23,9 @@ class CAK47 : public CWeaponCSBaseGun
 {
 public:
 	DECLARE_CLASS( CAK47, CWeaponCSBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CAK47();
 
 	virtual void PrimaryAttack();

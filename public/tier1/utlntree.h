@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: N-way tree container class 
+// Purpose: N-way tree container class
 //
 // $Revision: $
 // $NoKeywords: $
@@ -26,7 +26,7 @@
 //		A lovely index-based linked list! T is the class type, I is the index
 //		type, which usually should be an unsigned short or smaller.
 //-----------------------------------------------------------------------------
-template <class T, class I = unsigned short> 
+template <class T, class I = unsigned short>
 class CUtlNTree
 {
 public:
@@ -92,7 +92,7 @@ public:
 	// Are nodes in the list or valid?
 	bool  IsValidIndex( I i ) const;
 	bool  IsInTree( I i ) const;
-   
+
 protected:
 	// What the linked list element looks like
 	struct Node_t
@@ -107,7 +107,7 @@ protected:
 		// No copy constructor for these...
 		Node_t( const Node_t& );
 	};
-	
+
 	// constructs the class
 	void ConstructList();
 
@@ -122,36 +122,36 @@ protected:
 	{
 		m_pElements = m_Memory.Base();
 	}
-	
+
 	// copy constructors not allowed
 	CUtlNTree( CUtlNTree<T, I> const& tree ) { Assert(0); }
-	   
+
 	CUtlMemory<Node_t> m_Memory;
 	I	m_Root;
 	I	m_FirstFree;
 	I	m_ElementCount;		// The number actually in the tree
 	I	m_MaxElementIndex;	// The max index we've ever assigned
-	
-	// For debugging purposes; 
+
+	// For debugging purposes;
 	// it's in release builds so this can be used in libraries correctly
 	Node_t  *m_pElements;
 };
-   
-   
+
+
 //-----------------------------------------------------------------------------
 // constructor, destructor
 //-----------------------------------------------------------------------------
 
 template <class T, class I>
 CUtlNTree<T,I>::CUtlNTree( int growSize, int initSize ) :
-	m_Memory(growSize, initSize) 
+	m_Memory(growSize, initSize)
 {
 	ConstructList();
 	ResetDbgInfo();
 }
 
 template <class T, class I>
-CUtlNTree<T,I>::CUtlNTree( void* pMemory, int memsize ) : 
+CUtlNTree<T,I>::CUtlNTree( void* pMemory, int memsize ) :
 	m_Memory(pMemory, memsize/sizeof(T))
 {
 	ConstructList();
@@ -159,7 +159,7 @@ CUtlNTree<T,I>::CUtlNTree( void* pMemory, int memsize ) :
 }
 
 template <class T, class I>
-CUtlNTree<T,I>::~CUtlNTree( ) 
+CUtlNTree<T,I>::~CUtlNTree( )
 {
 	RemoveAll();
 }
@@ -167,7 +167,7 @@ CUtlNTree<T,I>::~CUtlNTree( )
 template <class T, class I>
 void CUtlNTree<T,I>::ConstructList()
 {
-	m_Root = InvalidIndex(); 
+	m_Root = InvalidIndex();
 	m_FirstFree = InvalidIndex();
 	m_ElementCount = m_MaxElementIndex = 0;
 }
@@ -179,25 +179,25 @@ void CUtlNTree<T,I>::ConstructList()
 template <class T, class I>
 inline T& CUtlNTree<T,I>::Element( I i )
 {
-	return m_Memory[i].m_Element; 
+	return m_Memory[i].m_Element;
 }
 
 template <class T, class I>
 inline const T& CUtlNTree<T,I>::Element( I i ) const
 {
-	return m_Memory[i].m_Element; 
+	return m_Memory[i].m_Element;
 }
 
 template <class T, class I>
-inline T& CUtlNTree<T,I>::operator[]( I i )        
-{ 
-	return m_Memory[i].m_Element; 
-}
-
-template <class T, class I>
-inline const T& CUtlNTree<T,I>::operator[]( I i ) const 
+inline T& CUtlNTree<T,I>::operator[]( I i )
 {
-	return m_Memory[i].m_Element; 
+	return m_Memory[i].m_Element;
+}
+
+template <class T, class I>
+inline const T& CUtlNTree<T,I>::operator[]( I i ) const
+{
+	return m_Memory[i].m_Element;
 }
 
 
@@ -205,13 +205,13 @@ inline const T& CUtlNTree<T,I>::operator[]( I i ) const
 // list statistics
 //-----------------------------------------------------------------------------
 template <class T, class I>
-inline int CUtlNTree<T,I>::Count() const      
-{ 
-	return m_ElementCount; 
+inline int CUtlNTree<T,I>::Count() const
+{
+	return m_ElementCount;
 }
 
 template <class T, class I>
-inline I CUtlNTree<T,I>::MaxElementIndex() const   
+inline I CUtlNTree<T,I>::MaxElementIndex() const
 {
 	return m_MaxElementIndex;
 }
@@ -221,37 +221,37 @@ inline I CUtlNTree<T,I>::MaxElementIndex() const
 // Traversing the list
 //-----------------------------------------------------------------------------
 template <class T, class I>
-inline I  CUtlNTree<T,I>::Root() const  
-{ 
-	return m_Root; 
+inline I  CUtlNTree<T,I>::Root() const
+{
+	return m_Root;
 }
 
 template <class T, class I>
-inline I  CUtlNTree<T,I>::FirstChild( I i ) const  
-{ 
-	Assert( IsInTree(i) ); 
-	return InternalNode(i).m_FirstChild; 
+inline I  CUtlNTree<T,I>::FirstChild( I i ) const
+{
+	Assert( IsInTree(i) );
+	return InternalNode(i).m_FirstChild;
 }
 
 template <class T, class I>
-inline I  CUtlNTree<T,I>::PrevSibling( I i ) const  
-{ 
-	Assert( IsInTree(i) ); 
-	return InternalNode(i).m_PrevSibling; 
+inline I  CUtlNTree<T,I>::PrevSibling( I i ) const
+{
+	Assert( IsInTree(i) );
+	return InternalNode(i).m_PrevSibling;
 }
 
 template <class T, class I>
-inline I  CUtlNTree<T,I>::NextSibling( I i ) const  
-{ 
-	Assert( IsInTree(i) ); 
-	return InternalNode(i).m_NextSibling; 
+inline I  CUtlNTree<T,I>::NextSibling( I i ) const
+{
+	Assert( IsInTree(i) );
+	return InternalNode(i).m_NextSibling;
 }
 
 template <class T, class I>
-inline I  CUtlNTree<T,I>::Parent( I i ) const  
-{ 
-	Assert( IsInTree(i) ); 
-	return InternalNode(i).m_Parent; 
+inline I  CUtlNTree<T,I>::Parent( I i ) const
+{
+	Assert( IsInTree(i) );
+	return InternalNode(i).m_Parent;
 }
 
 
@@ -259,8 +259,8 @@ inline I  CUtlNTree<T,I>::Parent( I i ) const
 // Are nodes in the list or valid?
 //-----------------------------------------------------------------------------
 template <class T, class I>
-inline bool CUtlNTree<T,I>::IsValidIndex( I i ) const  
-{ 
+inline bool CUtlNTree<T,I>::IsValidIndex( I i ) const
+{
 	return (i < m_MaxElementIndex) && (i >= 0);
 }
 
@@ -324,13 +324,13 @@ I CUtlNTree<T,I>::AllocInternal( )
 		{
 			Error("CUtlNTree overflow!\n");
 		}
-	} 
+	}
 	else
 	{
 		elem = m_FirstFree;
 		m_FirstFree = InternalNode( m_FirstFree ).m_NextSibling;
 	}
-	
+
 	Node_t &node = InternalNode( elem );
 	node.m_NextSibling = node.m_PrevSibling = node.m_Parent = node.m_FirstChild = INVALID_NTREE_IDX;
 	ResetDbgInfo();
@@ -409,12 +409,12 @@ void CUtlNTree<T,I>::RemoveAll()
 		node.m_PrevSibling = (I)i;	// Marks it as being in the free list
 		node.m_Parent = node.m_FirstChild = INVALID_NTREE_IDX;
 	}
-	
+
 	// First free points to the first element
 	m_FirstFree = 0;
-	
+
 	// Clear everything else out
-	m_Root = INVALID_NTREE_IDX; 
+	m_Root = INVALID_NTREE_IDX;
 	m_ElementCount = 0;
 }
 
@@ -430,7 +430,7 @@ void CUtlNTree<T,I>::SetRoot( I root )
 	m_Root = root;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Links a node after a particular node
 //-----------------------------------------------------------------------------
@@ -438,10 +438,10 @@ template <class T, class I>
 void  CUtlNTree<T,I>::LinkChildAfter( I parent, I after, I elem )
 {
 	Assert( IsInTree(elem) );
-	
+
 	// Unlink it if it's in the list at the moment
 	Unlink(elem);
-	
+
 	Node_t& newElem = InternalNode(elem);
 	newElem.m_Parent = parent;
 	newElem.m_PrevSibling = after;
@@ -486,7 +486,7 @@ template <class T, class I>
 void CUtlNTree<T,I>::LinkChildBefore( I parent, I before, I elem )
 {
 	Assert( IsValidIndex(elem) );
-	
+
 	if ( before != INVALID_NTREE_IDX )
 	{
 		LinkChildAfter( parent, InternalNode( before ).m_PrevSibling, elem );
@@ -532,7 +532,7 @@ void CUtlNTree<T,I>::Unlink( I elem )
 	Assert( IsInTree(elem) );
 
 	Node_t *pOldNode = &InternalNode( elem );
-	
+
 	// If we're the first guy, reset the head
 	// otherwise, make our previous node's next pointer = our next
 	if ( pOldNode->m_PrevSibling != INVALID_NTREE_IDX )
@@ -550,14 +550,14 @@ void CUtlNTree<T,I>::Unlink( I elem )
 			m_Root = pOldNode->m_NextSibling;
 		}
 	}
-	
+
 	// If we're the last guy, reset the tail
 	// otherwise, make our next node's prev pointer = our prev
 	if ( pOldNode->m_NextSibling != INVALID_NTREE_IDX )
 	{
 		InternalNode( pOldNode->m_NextSibling ).m_PrevSibling = pOldNode->m_PrevSibling;
 	}
-	
+
 	// Unlink everything except children
 	pOldNode->m_Parent = pOldNode->m_PrevSibling = pOldNode->m_NextSibling = INVALID_NTREE_IDX;
 }
@@ -619,6 +619,6 @@ void CUtlNTree<T,I>::RemoveSubTree( I elem )
 	UnlinkSubTree( elem );
 	Free( elem );
 }
-  
+
 
 #endif // UTLNTREE_H

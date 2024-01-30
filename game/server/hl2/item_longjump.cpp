@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 
 ===== item_longjump.cpp ========================================================
 
-  handling for the longjump module
+	handling for the longjump module
 */
 
 #include "cbase.h"
@@ -24,7 +24,7 @@ public:
 	DECLARE_CLASS( CItemLongJump, CItem );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/w_longjump.mdl" );
 		BaseClass::Spawn( );
@@ -52,7 +52,7 @@ public:
 			MessageEnd();
 
 			UTIL_EmitSoundSuit( pPlayer->edict(), "!HEV_A1" );	// Play the longjump sound UNDONE: Kelly? correct sound?
-			return true;		
+			return true;
 		}
 		return false;
 	}

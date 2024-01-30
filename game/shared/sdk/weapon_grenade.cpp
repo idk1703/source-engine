@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,7 +13,7 @@
 
 
 #ifdef CLIENT_DLL
-	
+
 #else
 
 	#include "sdk_player.h"
@@ -64,12 +64,12 @@ public:
 	// Grenade stuff.
 public:
 
-	static CGrenadeProjectile* Create( 
-		const Vector &position, 
-		const QAngle &angles, 
-		const Vector &velocity, 
-		const AngularImpulse &angVelocity, 
-		CBaseCombatCharacter *pOwner, 
+	static CGrenadeProjectile* Create(
+		const Vector &position,
+		const QAngle &angles,
+		const Vector &velocity,
+		const AngularImpulse &angVelocity,
+		CBaseCombatCharacter *pOwner,
 		float timer )
 	{
 		CGrenadeProjectile *pGrenade = (CGrenadeProjectile*)CBaseEntity::Create( "grenade_projectile", position, angles, pOwner );
@@ -80,7 +80,7 @@ public:
 		pGrenade->SetDetonateTimerLength( 1.5 );
 		pGrenade->SetAbsVelocity( velocity );
 		pGrenade->SetupInitialTransmittedGrenadeVelocity( velocity );
-		pGrenade->SetThrower( pOwner ); 
+		pGrenade->SetThrower( pOwner );
 
 		pGrenade->SetGravity( BaseClass::GetGrenadeGravity() );
 		pGrenade->SetFriction( BaseClass::GetGrenadeFriction() );
@@ -89,7 +89,7 @@ public:
 		pGrenade->m_flDamage = 100;
 		pGrenade->m_DmgRadius = pGrenade->m_flDamage * 3.5f;
 		pGrenade->ChangeTeam( pOwner->GetTeamNumber() );
-		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );	
+		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );
 
 		// make NPCs afaid of it while in the air
 		pGrenade->SetThink( &CGrenadeProjectile::DangerSoundThink );
@@ -109,6 +109,5 @@ void CSDKGrenade::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, A
 {
 	CGrenadeProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse, pPlayer, GRENADE_TIMER );
 }
-	
-#endif
 
+#endif

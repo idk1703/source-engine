@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -99,10 +99,10 @@ CTFWeaponBaseGrenadeProj::~CTFWeaponBaseGrenadeProj()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int	CTFWeaponBaseGrenadeProj::GetDamageType() 
-{ 
+int	CTFWeaponBaseGrenadeProj::GetDamageType()
+{
 	int iDmgType = g_aWeaponDamageTypes[ GetWeaponID() ];
 	if ( m_bCritical )
 	{
@@ -113,7 +113,7 @@ int	CTFWeaponBaseGrenadeProj::GetDamageType()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFWeaponBaseGrenadeProj::GetDamageCustom()
 {
@@ -137,17 +137,17 @@ void CTFWeaponBaseGrenadeProj::BounceOff( IPhysicsObject *pPhysics )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-float CTFWeaponBaseGrenadeProj::GetDamageRadius() 
-{ 
+float CTFWeaponBaseGrenadeProj::GetDamageRadius()
+{
 	float flRadius = m_DmgRadius;
 	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( m_hLauncher, flRadius, mult_explosion_radius );
-	return flRadius; 
-}	
+	return flRadius;
+}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseGrenadeProj::Precache( void )
 {
@@ -186,7 +186,7 @@ void CTFWeaponBaseGrenadeProj::OnDataChanged( DataUpdateType_t type )
 
 	if ( type == DATA_UPDATE_CREATED )
 	{
-		// Now stick our initial velocity into the interpolation history 
+		// Now stick our initial velocity into the interpolation history
 		CInterpolatedVar< Vector > &interpolator = GetOriginInterpolator();
 
 		interpolator.ClearHistory();
@@ -211,8 +211,8 @@ void CTFWeaponBaseGrenadeProj::OnDataChanged( DataUpdateType_t type )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj *CTFWeaponBaseGrenadeProj::Create( const char *szName, const Vector &position, const QAngle &angles, 
-													   const Vector &velocity, const AngularImpulse &angVelocity, 
+CTFWeaponBaseGrenadeProj *CTFWeaponBaseGrenadeProj::Create( const char *szName, const Vector &position, const QAngle &angles,
+													   const Vector &velocity, const AngularImpulse &angVelocity,
 													   CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, int iFlags )
 {
 	CTFWeaponBaseGrenadeProj *pGrenade = static_cast<CTFWeaponBaseGrenadeProj*>( CBaseEntity::Create( szName, position, angles, pOwner ) );
@@ -225,24 +225,24 @@ CTFWeaponBaseGrenadeProj *CTFWeaponBaseGrenadeProj::Create( const char *szName, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFWeaponBaseGrenadeProj::InitGrenade( const Vector &velocity, const AngularImpulse &angVelocity, 
+void CTFWeaponBaseGrenadeProj::InitGrenade( const Vector &velocity, const AngularImpulse &angVelocity,
 										   CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo )
 {
 	InitGrenade( velocity, angVelocity, pOwner, weaponInfo.GetWeaponData( TF_WEAPON_PRIMARY_MODE ).m_nDamage, weaponInfo.m_flDamageRadius );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFWeaponBaseGrenadeProj::InitGrenade( const Vector &velocity, const AngularImpulse &angVelocity, 
+void CTFWeaponBaseGrenadeProj::InitGrenade( const Vector &velocity, const AngularImpulse &angVelocity,
 									CBaseCombatCharacter *pOwner, const int iDamage, const float flRadius )
 {
 	// We can't use OwnerEntity for grenades, because then the owner can't shoot them with his hitscan weapons (due to collide rules)
 	// Thrower is used to store the person who threw the grenade, for damage purposes.
 	SetOwnerEntity( NULL );
-	SetThrower( pOwner ); 
+	SetThrower( pOwner );
 
 	SetupInitialTransmittedGrenadeVelocity( velocity );
 
@@ -271,7 +271,7 @@ void CTFWeaponBaseGrenadeProj::Spawn( void )
 
 	// So it will collide with physics props!
 	SetSolidFlags( FSOLID_NOT_STANDABLE );
-	SetSolid( SOLID_BBOX );	
+	SetSolid( SOLID_BBOX );
 
 	AddEffects( EF_NOSHADOW );
 
@@ -299,7 +299,7 @@ void CTFWeaponBaseGrenadeProj::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #define TF_GRENADE_JUMP_RADIUS	146
 void CTFWeaponBaseGrenadeProj::Explode( trace_t *pTrace, int bitsDamageType )
@@ -428,7 +428,7 @@ void CTFWeaponBaseGrenadeProj::Explode( trace_t *pTrace, int bitsDamageType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFWeaponBaseGrenadeProj::OnTakeDamage( const CTakeDamageInfo &info )
 {
@@ -468,7 +468,7 @@ void CTFWeaponBaseGrenadeProj::DetonateThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseGrenadeProj::Detonate( void )
 {
@@ -498,7 +498,7 @@ void CTFWeaponBaseGrenadeProj::SetDetonateTimerLength( float timer )
 	{
 		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( GetOwnerEntity(), fFuseMult, fuse_mult );
 	}
-	
+
 	m_flDetonateTime = gpGlobals->curtime + ( timer * fFuseMult );
 }
 
@@ -518,7 +518,7 @@ void CTFWeaponBaseGrenadeProj::ResolveFlyCollisionCustom( trace_t &trace, Vector
 
 #if 0
 	// if its breakable glass and we kill it, don't bounce.
-	// give some damage to the glass, and if it breaks, pass 
+	// give some damage to the glass, and if it breaks, pass
 	// through it.
 	bool breakthrough = false;
 
@@ -593,16 +593,16 @@ void CTFWeaponBaseGrenadeProj::ResolveFlyCollisionCustom( trace_t &trace, Vector
 
 			// TFTODO: rotate around trace.plane.normal
 
-			SetAbsAngles( angle );			
+			SetAbsAngles( angle );
 		}
 		else
 		{
-			Vector vecDelta = GetBaseVelocity() - vecAbsVelocity;	
+			Vector vecDelta = GetBaseVelocity() - vecAbsVelocity;
 			Vector vecBaseDir = GetBaseVelocity();
 			VectorNormalize( vecBaseDir );
 			float flScale = vecDelta.Dot( vecBaseDir );
 
-			VectorScale( vecAbsVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, vecVelocity ); 
+			VectorScale( vecAbsVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, vecVelocity );
 			VectorMA( vecVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, GetBaseVelocity() * flScale, vecVelocity );
 			PhysicsPushEntity( vecVelocity, &trace );
 		}
@@ -738,7 +738,7 @@ void CTFWeaponBaseGrenadeProj::VPhysicsUpdate( IPhysicsObject *pPhysics )
 
 	// find all entities that my collision group wouldn't hit, but COLLISION_GROUP_NONE would and bounce off of them as a ray cast
 	CTraceFilterCollisionGrenades filter( this, GetThrower() );
-	
+
 	ITraceFilter *pFilterChain = NULL;
 	CTraceFilterIgnoreFriendlyCombatItems filterCombatItems( this, COLLISION_GROUP_NONE, GetTeamNumber(), true );
 	if ( TFGameRules() && TFGameRules()->GameModeUsesUpgrades() )
@@ -787,7 +787,7 @@ void CTFWeaponBaseGrenadeProj::VPhysicsUpdate( IPhysicsObject *pPhysics )
 	if ( tr.DidHit() )
 	{
 		Touch( tr.m_pEnt );
-		
+
 		if ( bHitFriendly || bHitEnemy )
 		{
 			// reflect velocity around normal

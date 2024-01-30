@@ -39,7 +39,7 @@ public:
 
 	void		AutoNameIfHasNoTitle( const char *pMapName );
 	void		SetTitle( const wchar_t *pTitle );
-	
+
 	// NOTE: Doesn't copy exactly - gets a valid filename for the returned performance.
 	CReplayPerformance *MakeCopy() const;
 

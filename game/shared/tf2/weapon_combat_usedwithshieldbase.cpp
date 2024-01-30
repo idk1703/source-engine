@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,7 +12,7 @@
 #include "weapon_twohandedcontainer.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: Make sure we're not switching directly to this weapon, since this 
+// Purpose: Make sure we're not switching directly to this weapon, since this
 //			weapon can only be "switched" to by the twohandedcontainer weapon.
 //-----------------------------------------------------------------------------
 bool CWeaponCombatUsedWithShieldBase::CanDeploy( void )
@@ -42,8 +42,8 @@ bool CWeaponCombatUsedWithShieldBase::CanDeploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : allow - 
+// Purpose:
+// Input  : allow -
 //-----------------------------------------------------------------------------
 void CWeaponCombatUsedWithShieldBase::AllowShieldPostFrame( bool allow )
 {
@@ -59,11 +59,11 @@ void CWeaponCombatUsedWithShieldBase::AllowShieldPostFrame( bool allow )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CWeaponCombatUsedWithShieldBase::GetShieldState( void )
-{	
+{
 	CBaseTFPlayer *pOwner = ToBaseTFPlayer( GetOwner() );
 	if ( !pOwner )
 		return SS_DOWN;
@@ -77,7 +77,7 @@ int CWeaponCombatUsedWithShieldBase::GetShieldState( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Mirror the values in the container, if there is one
-// Input  : *pPlayer - 
+// Input  : *pPlayer -
 // Output : int
 //-----------------------------------------------------------------------------
 int CWeaponCombatUsedWithShieldBase::UpdateClientData( CBasePlayer *pPlayer )

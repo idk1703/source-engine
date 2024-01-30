@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -91,7 +91,7 @@ PRECACHE_REGISTER( func_suggested_build );
 const float kDefaultFacingFOV = cos(M_PI);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFuncSuggestedBuild::CFuncSuggestedBuild()
 	: CBaseTrigger()
@@ -113,14 +113,14 @@ void CFuncSuggestedBuild::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncSuggestedBuild::Precache( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncSuggestedBuild::Activate( void )
 {
@@ -133,7 +133,7 @@ void CFuncSuggestedBuild::Activate( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncSuggestedBuild::InputSetActive( inputdata_t &inputdata )
 {
@@ -141,7 +141,7 @@ void CFuncSuggestedBuild::InputSetActive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncSuggestedBuild::InputSetInactive( inputdata_t &inputdata )
 {
@@ -149,7 +149,7 @@ void CFuncSuggestedBuild::InputSetInactive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncSuggestedBuild::InputToggleActive( inputdata_t &inputdata )
 {
@@ -157,7 +157,7 @@ void CFuncSuggestedBuild::InputToggleActive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncSuggestedBuild::SetActive( bool bActive )
 {
@@ -165,7 +165,7 @@ void CFuncSuggestedBuild::SetActive( bool bActive )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CFuncSuggestedBuild::GetActive() const
 {
@@ -173,7 +173,7 @@ bool CFuncSuggestedBuild::GetActive() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CFuncSuggestedBuild::MatchesObjectType( int iObjectType, int iObjectMode ) const
 {
@@ -200,7 +200,7 @@ bool CFuncSuggestedBuild::MatchesObjectType( int iObjectType, int iObjectMode ) 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CFuncSuggestedBuild::IsPointInArea( const Vector &vecPoint )
 {
@@ -213,7 +213,7 @@ bool CFuncSuggestedBuild::IsPointInArea( const Vector &vecPoint )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CFuncSuggestedBuild::IsFacingRequiredEntity( CBaseObject &baseObject ) const
 {
@@ -237,7 +237,7 @@ bool CFuncSuggestedBuild::IsFacingRequiredEntity( CBaseObject &baseObject ) cons
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncSuggestedBuild::OnBuildInArea( CBaseObject& baseObject )
 {
@@ -245,7 +245,7 @@ void CFuncSuggestedBuild::OnBuildInArea( CBaseObject& baseObject )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncSuggestedBuild::OnBuildInAreaNotFacing( CBaseObject& baseObject )
 {
@@ -253,7 +253,7 @@ void CFuncSuggestedBuild::OnBuildInAreaNotFacing( CBaseObject& baseObject )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncSuggestedBuild::OnBuildingUpgraded( CBaseObject& baseObject )
 {
@@ -261,7 +261,7 @@ void CFuncSuggestedBuild::OnBuildingUpgraded( CBaseObject& baseObject )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool NotifyObjectBuiltInSuggestedArea( CBaseObject &baseObject )
 {
@@ -306,7 +306,7 @@ bool NotifyObjectBuiltInSuggestedArea( CBaseObject &baseObject )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool NotifyObjectUpgradedInSuggestedArea( CBaseObject &baseObject )
 {

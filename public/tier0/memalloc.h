@@ -56,20 +56,20 @@ public:
 	virtual void *Alloc( size_t nSize ) = 0;
 	virtual void *Realloc( void *pMem, size_t nSize ) = 0;
 	virtual void Free( void *pMem ) = 0;
-    virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize ) = 0;
+	virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize ) = 0;
 
 	// Debug versions
-    virtual void *Alloc( size_t nSize, const char *pFileName, int nLine ) = 0;
-    virtual void *Realloc( void *pMem, size_t nSize, const char *pFileName, int nLine ) = 0;
-    virtual void  Free( void *pMem, const char *pFileName, int nLine ) = 0;
-    virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize, const char *pFileName, int nLine ) = 0;
+	virtual void *Alloc( size_t nSize, const char *pFileName, int nLine ) = 0;
+	virtual void *Realloc( void *pMem, size_t nSize, const char *pFileName, int nLine ) = 0;
+	virtual void  Free( void *pMem, const char *pFileName, int nLine ) = 0;
+	virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize, const char *pFileName, int nLine ) = 0;
 
 	// Returns size of a particular allocation
 	virtual size_t GetSize( void *pMem ) = 0;
 
-    // Force file + line information for an allocation
-    virtual void PushAllocDbgInfo( const char *pFileName, int nLine ) = 0;
-    virtual void PopAllocDbgInfo() = 0;
+	// Force file + line information for an allocation
+	virtual void PushAllocDbgInfo( const char *pFileName, int nLine ) = 0;
+	virtual void PopAllocDbgInfo() = 0;
 
 	// FIXME: Remove when we have our own allocator
 	// these methods of the Crt debug code is used in our codebase currently
@@ -108,7 +108,7 @@ public:
 
 	virtual void DumpBlockStats( void * ) = 0;
 
-#if defined( _MEMTEST )	
+#if defined( _MEMTEST )
 	virtual void SetStatsExtraInfo( const char *pMapName, const char *pComment ) = 0;
 #endif
 
@@ -119,7 +119,7 @@ public:
 	// handles storing allocation info for coroutines
 	virtual uint32 GetDebugInfoSize() = 0;
 	virtual void SaveDebugInfo( void *pvDebugInfo ) = 0;
-	virtual void RestoreDebugInfo( const void *pvDebugInfo ) = 0;	
+	virtual void RestoreDebugInfo( const void *pvDebugInfo ) = 0;
 	virtual void InitDebugInfo( void *pvDebugInfo, const char *pchRootFileName, int nLine ) = 0;
 
 	// Replacement for ::GlobalMemoryStatus which accounts for unused memory in our system
@@ -138,23 +138,23 @@ MEM_INTERFACE IMemAlloc *g_pMemAlloc;
 #define MEMALLOC_REGION 0
 #endif
 inline void *MemAlloc_Alloc( size_t nSize )
-{ 
+{
 	return g_pMemAlloc->RegionAlloc( MEMALLOC_REGION, nSize );
 }
 
 inline void *MemAlloc_Alloc( size_t nSize, const char *pFileName, int nLine )
-{ 
+{
 	return g_pMemAlloc->RegionAlloc( MEMALLOC_REGION, nSize, pFileName, nLine );
 }
 #else
 #undef MEMALLOC_REGION
 inline void *MemAlloc_Alloc( size_t nSize )
-{ 
+{
 	return g_pMemAlloc->Alloc( nSize );
 }
 
 inline void *MemAlloc_Alloc( size_t nSize, const char *pFileName, int nLine )
-{ 
+{
 	return g_pMemAlloc->Alloc( nSize, pFileName, nLine );
 }
 #endif
@@ -364,11 +364,11 @@ inline size_t MemAlloc_GetSizeAligned( void *pMemBlock )
 class CMemAllocAttributeAlloction
 {
 public:
-	CMemAllocAttributeAlloction( const char *pszFile, int line ) 
+	CMemAllocAttributeAlloction( const char *pszFile, int line )
 	{
 		MemAlloc_PushAllocDbgInfo( pszFile, line );
 	}
-	
+
 	~CMemAllocAttributeAlloction()
 	{
 		MemAlloc_PopAllocDbgInfo();
@@ -407,7 +407,7 @@ public:
 #else
 	#define MEM_ALLOC_CREDIT_CLASS()
 	#define MEM_ALLOC_CLASSNAME(type) NULL
-	#define MEM_ALLOC_CREDIT_FUNCTION() 
+	#define MEM_ALLOC_CREDIT_FUNCTION()
 #endif
 
 //-----------------------------------------------------------------------------
@@ -507,7 +507,7 @@ inline void *MemAlloc_ReallocAligned( void *ptr, size_t size, size_t align )
 		free( ptr );
 	}
 
-	MemAlloc_CheckAlloc( ptr_new_aligned, size ); 
+	MemAlloc_CheckAlloc( ptr_new_aligned, size );
 	return ptr_new_aligned;
 }
 #else

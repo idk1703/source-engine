@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -44,20 +44,20 @@ ConVar log_verbose_interval( "log_verbose_interval", "3.0", FCVAR_GAMEDLL, "Dete
 
 static CViewVectors g_DefaultViewVectors(
 	Vector( 0, 0, 64 ),			//VEC_VIEW (m_vView)
-								
+
 	Vector(-16, -16, 0 ),		//VEC_HULL_MIN (m_vHullMin)
 	Vector( 16,  16,  72 ),		//VEC_HULL_MAX (m_vHullMax)
-													
+
 	Vector(-16, -16, 0 ),		//VEC_DUCK_HULL_MIN (m_vDuckHullMin)
 	Vector( 16,  16,  36 ),		//VEC_DUCK_HULL_MAX	(m_vDuckHullMax)
 	Vector( 0, 0, 28 ),			//VEC_DUCK_VIEW		(m_vDuckView)
-													
+
 	Vector(-10, -10, -10 ),		//VEC_OBS_HULL_MIN	(m_vObsHullMin)
 	Vector( 10,  10,  10 ),		//VEC_OBS_HULL_MAX	(m_vObsHullMax)
-													
+
 	Vector( 0, 0, 14 )			//VEC_DEAD_VIEWHEIGHT (m_vDeadViewHeight)
-);													
-													
+);
+
 
 // ------------------------------------------------------------------------------------ //
 // CGameRulesProxy implementation.
@@ -131,7 +131,7 @@ CGameRules::CGameRules() : CAutoGameSystemPerFrame( "CGameRules" )
 {
 	Assert( !g_pGameRules );
 	g_pGameRules = this;
-}	
+}
 
 #else //}{
 
@@ -228,7 +228,7 @@ bool CGameRules::CanHavePlayerItem( CBasePlayer *pPlayer, CBaseCombatWeapon *pWe
 	{
 		if ( !CanHaveAmmo( pPlayer, pWeapon->m_iPrimaryAmmoType ) )
 		{
-			// we can't carry anymore ammo for this gun. We can only 
+			// we can't carry anymore ammo for this gun. We can only
 			// have the gun if we aren't already carrying one of this type
 			if ( pPlayer->Weapon_OwnsThisType( pWeapon ) )
 			{
@@ -264,7 +264,7 @@ void CGameRules::RefreshSkillData ( bool forceUpdate )
 
 #if !defined( TF_DLL ) && !defined( DOD_DLL )
 	char	szExec[256];
-#endif 
+#endif
 
 	ConVarRef skill( "skill" );
 
@@ -303,11 +303,11 @@ bool IsExplosionTraceBlocked( trace_t *ptr )
 
 	if( ptr->m_pEnt->GetMoveType() == MOVETYPE_PUSH )
 	{
-		// All doors are push, but not all things that push are doors. This 
+		// All doors are push, but not all things that push are doors. This
 		// narrows the search before we start to do classname compares.
 		if( FClassnameIs(ptr->m_pEnt, "prop_door_rotating") ||
-        FClassnameIs(ptr->m_pEnt, "func_door") ||
-        FClassnameIs(ptr->m_pEnt, "func_door_rotating") )
+	FClassnameIs(ptr->m_pEnt, "func_door") ||
+	FClassnameIs(ptr->m_pEnt, "func_door_rotating") )
 			return true;
 	}
 
@@ -345,7 +345,7 @@ void CGameRules::RadiusDamage( const CTakeDamageInfo &info, const Vector &vecSrc
 		}
 	}
 #endif // HL2_DLL
-	
+
 	vecSrc.z += 1;// in case grenade is lying on the ground
 
 	float flHalfRadiusSqr = Square( flRadius / 2.0f );
@@ -401,7 +401,7 @@ void CGameRules::RadiusDamage( const CTakeDamageInfo &info, const Vector &vecSrc
 						Vector vecToTarget = vecSpot - tr.endpos;
 						VectorNormalize( vecToTarget );
 
-						// We're going to deflect the blast along the surface that 
+						// We're going to deflect the blast along the surface that
 						// interrupted a trace from explosion to this target.
 						Vector vecUp, vecDeflect;
 						CrossProduct( vecToTarget, tr.plane.normal, vecUp );
@@ -445,7 +445,7 @@ void CGameRules::RadiusDamage( const CTakeDamageInfo &info, const Vector &vecSrc
 					{
 						continue;
 					}
-					
+
 					// Now, if the interposing object is physics, block some explosion force based on its mass.
 					if( pBlockingEntity->VPhysicsGetObject() )
 					{
@@ -487,7 +487,7 @@ void CGameRules::RadiusDamage( const CTakeDamageInfo &info, const Vector &vecSrc
 			tr.endpos = vecSrc;
 			tr.fraction = 0.0;
 		}
-		
+
 		CTakeDamageInfo adjustedInfo = info;
 		//Msg("%s: Blocked damage: %f percent (in:%f  out:%f)\n", pEntity->GetClassname(), flBlockedDamagePercent * 100, flAdjustedDamage, flAdjustedDamage - (flAdjustedDamage * flBlockedDamagePercent) );
 		adjustedInfo.SetDamage( flAdjustedDamage - (flAdjustedDamage * flBlockedDamagePercent) );
@@ -529,7 +529,7 @@ void CGameRules::RadiusDamage( const CTakeDamageInfo &info, const Vector &vecSrc
 			pEntity->TakeDamage( adjustedInfo );
 		}
 
-		// Now hit all triggers along the way that respond to damage... 
+		// Now hit all triggers along the way that respond to damage...
 		pEntity->TraceAttackToTriggers( adjustedInfo, vecSrc, tr.endpos, dir );
 
 #if defined( GAME_DLL )
@@ -598,7 +598,7 @@ void CGameRules::EndGameFrame( void )
 	Assert( g_MultiDamage.IsClear() );
 	if ( !g_MultiDamage.IsClear() )
 	{
-		Warning("Unapplied multidamage left in the system:\nTarget: %s\nInflictor: %s\nAttacker: %s\nDamage: %.2f\n", 
+		Warning("Unapplied multidamage left in the system:\nTarget: %s\nInflictor: %s\nAttacker: %s\nDamage: %.2f\n",
 			g_MultiDamage.GetTarget()->GetDebugName(),
 			g_MultiDamage.GetInflictor()->GetDebugName(),
 			g_MultiDamage.GetAttacker()->GetDebugName(),
@@ -611,7 +611,7 @@ void CGameRules::EndGameFrame( void )
 // trace line rules
 //-----------------------------------------------------------------------------
 float CGameRules::WeaponTraceEntity( CBaseEntity *pEntity, const Vector &vecStart, const Vector &vecEnd,
-					 unsigned int mask, trace_t *ptr )
+					unsigned int mask, trace_t *ptr )
 {
 	UTIL_TraceEntity( pEntity, vecStart, vecEnd, mask, ptr );
 	return 1.0f;
@@ -627,7 +627,7 @@ void CGameRules::CreateStandardEntities()
 //-----------------------------------------------------------------------------
 // Purpose: Inform client(s) they can mark the indicated achievement as completed (SERVER VERSION)
 // Input  : filter - which client(s) to send this to
-//			iAchievementID - The enumeration value of the achievement to mark (see TODO:Kerry, what file will have the mod's achievement enum?) 
+//			iAchievementID - The enumeration value of the achievement to mark (see TODO:Kerry, what file will have the mod's achievement enum?)
 //-----------------------------------------------------------------------------
 void CGameRules::MarkAchievement( IRecipientFilter& filter, char const *pchAchievementName )
 {
@@ -683,7 +683,7 @@ bool CGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 		// let debris and multiplayer objects collide
 		return true;
 	}
-	
+
 	// --------------------------------------------------------------------------
 	// NOTE: All of this code assumes the collision groups have been sorted!!!!
 	// NOTE: Don't change their order without rewriting this code !!!
@@ -721,7 +721,7 @@ bool CGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 	// This change was breaking HL2DM
 	// Adrian: TEST! Interactive Debris doesn't collide with the player.
 	if ( collisionGroup0 == COLLISION_GROUP_INTERACTIVE_DEBRIS && ( collisionGroup1 == COLLISION_GROUP_PLAYER_MOVEMENT || collisionGroup1 == COLLISION_GROUP_PLAYER ) )
-		 return false;
+		return false;
 #endif
 
 	if ( collisionGroup0 == COLLISION_GROUP_BREAKABLE_GLASS && collisionGroup1 == COLLISION_GROUP_BREAKABLE_GLASS )
@@ -734,7 +734,7 @@ bool CGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 	// Projectiles hit everything but debris, weapons, + other projectiles
 	if ( collisionGroup1 == COLLISION_GROUP_PROJECTILE )
 	{
-		if ( collisionGroup0 == COLLISION_GROUP_DEBRIS || 
+		if ( collisionGroup0 == COLLISION_GROUP_DEBRIS ||
 			collisionGroup0 == COLLISION_GROUP_WEAPON ||
 			collisionGroup0 == COLLISION_GROUP_PROJECTILE )
 		{
@@ -748,7 +748,7 @@ bool CGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 	// Weapons are triggers, too, so they should still touch because of that
 	if ( collisionGroup1 == COLLISION_GROUP_WEAPON )
 	{
-		if ( collisionGroup0 == COLLISION_GROUP_VEHICLE || 
+		if ( collisionGroup0 == COLLISION_GROUP_VEHICLE ||
 			collisionGroup0 == COLLISION_GROUP_PLAYER ||
 			collisionGroup0 == COLLISION_GROUP_NPC )
 		{
@@ -813,7 +813,7 @@ const char *CGameRules::GetChatPrefix( bool bTeamOnly, CBasePlayer *pPlayer )
 		else
 			return "*DEAD*";
 	}
-	
+
 	return "";
 }
 
@@ -851,7 +851,7 @@ void CGameRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 			event->SetString( "newname", pszName );
 			gameeventmanager->FireEvent( event );
 		}
-		
+
 		pPlayer->SetPlayerName( pszName );
 	}
 

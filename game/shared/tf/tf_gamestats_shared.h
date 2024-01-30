@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #ifndef TF_GAMESTATS_SHARED_H
@@ -190,7 +190,7 @@ enum TFGameStatsLumpIds_t
 	TFSTATS_LUMP_MAPHEADER,
 	TFSTATS_LUMP_MAPDEATH,
 	TFSTATS_LUMP_MAPDAMAGE,
-	TFSTATS_LUMP_CLASS,	
+	TFSTATS_LUMP_CLASS,
 	TFSTATS_LUMP_WEAPON,
 	TFSTATS_LUMP_ENDTAG,
 	MAX_LUMP_COUNT
@@ -289,7 +289,7 @@ public:
 		char			m_szMapName[64];							// Name of the map.
 		int				m_nMapRevision;								// Version number for the map.
 		unsigned int	m_nIPAddr;									// IP Address of the server - 4 bytes stored as an int.
-		unsigned short	m_nPort;									// Port the server is using.	
+		unsigned short	m_nPort;									// Port the server is using.
 		int				m_iRoundsPlayed;							// # of rounds played
 		int				m_iTotalTime;								// total # of seconds of all rounds
 		int				m_iBlueWins;								// # of blue team wins
@@ -310,7 +310,7 @@ public:
 			m_iRedSuddenDeathWins += other.m_iRedSuddenDeathWins;
 			for ( int i = 0; i <= MAX_CONTROL_POINTS; i++ )
 			{
-				m_iLastCapChangedInRound[i] += other.m_iLastCapChangedInRound[i]; 
+				m_iLastCapChangedInRound[i] += other.m_iLastCapChangedInRound[i];
 			}
 		}
 	};
@@ -345,7 +345,7 @@ public:
 	LevelHeader_t					m_Header;							// Level header.
 	// Disabling These Fields
 	//CUtlVector<PlayerDeathsLump_t>	m_aPlayerDeaths;					// Vector of player deaths.
-	//CUtlVector<PlayerDamageLump_t>	m_aPlayerDamage;					// Vector of player damage.	
+	//CUtlVector<PlayerDamageLump_t>	m_aPlayerDamage;					// Vector of player damage.
 	bool							m_bIsRealServer;
 	TF_Gamestats_ClassStats_t		m_aClassStats[TF_CLASS_COUNT_ALL];	// Vector of class data
 	TF_Gamestats_WeaponStats_t		m_aWeaponStats[TF_WEAPON_COUNT];	// Vector of weapon data
@@ -442,7 +442,7 @@ struct LoadoutStats_t
 		V_memset( iLoadoutItemDefIndices, INVALID_ITEM_DEF_INDEX, sizeof( iLoadoutItemDefIndices ) );
 		V_memset( iLoadoutItemQualities, AE_UNDEFINED, sizeof( iLoadoutItemQualities ) );
 		V_memset( iLoadoutItemStyles, 0, sizeof( iLoadoutItemStyles ) );
-		
+
 		flStartTime = 0;
 		iClass = TF_CLASS_UNDEFINED;
 	}
@@ -469,11 +469,11 @@ struct LoadoutStats_t
 
 //=============================================================================
 //
-// TF Player Stats 
+// TF Player Stats
 //
 struct PlayerStats_t
 {
-	PlayerStats_t()	
+	PlayerStats_t()
 	{
 		Reset();
 	};
@@ -528,7 +528,7 @@ struct TFReportedStats_t
 #ifdef GAME_DLL
 	void AppendCustomDataToSaveBuffer( CUtlBuffer &SaveBuffer );
 	bool LoadCustomDataFromBuffer( CUtlBuffer &LoadBuffer );
-#endif 
+#endif
 
 	bool													m_bValidData;
 	TF_Gamestats_LevelStats_t								*m_pCurrentGame;
@@ -659,7 +659,7 @@ struct PasstimeStats_t
 		int nTotalTossesIntercepted;
 		int nTotalTossesInterceptedNearGoal;
 		int nTotalSteals;
-		int nTotalStealsNearGoal; 
+		int nTotalStealsNearGoal;
 		int nTotalBallSpawnShots;
 		int nTotalScores;
 		int nTotalRecoveries;

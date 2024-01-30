@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,7 +13,7 @@
 #include "clientmode_shared.h"
 #include "counterstrikeviewport.h"
 
-class ClientModeCSNormal : public ClientModeShared 
+class ClientModeCSNormal : public ClientModeShared
 {
 DECLARE_CLASS( ClientModeCSNormal, ClientModeShared );
 
@@ -45,7 +45,7 @@ public:
 	// HPE_BEGIN:
 	// [menglish] Save server information shown to the client in a persistent place
 	//=============================================================================
-	 
+
 	virtual wchar_t* GetServerName() { return m_pServerName; }
 	virtual void SetServerName(wchar_t* name);
 	virtual wchar_t* GetMapName() { return m_pMapName; }

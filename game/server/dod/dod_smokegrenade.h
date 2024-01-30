@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,7 +10,7 @@
 #pragma once
 #endif
 
-#include "dod_basegrenade.h" 
+#include "dod_basegrenade.h"
 
 class CDODSmokeGrenade : public CDODBaseGrenade
 {
@@ -22,7 +22,7 @@ public:
 
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void BounceSound( void ); 
+	virtual void BounceSound( void );
 	virtual void Detonate();
 
 	virtual bool CanBePickedUp( void ) { return false; }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -50,7 +50,7 @@ CDispCreateDlg::CDispCreateDlg( CWnd *pParent ) :
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 BOOL CDispCreateDlg::OnInitDialog(void)
 {
@@ -69,7 +69,7 @@ BOOL CDispCreateDlg::OnInitDialog(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispCreateDlg::DoDataExchange( CDataExchange *pDX )
 {
@@ -88,7 +88,7 @@ void CDispCreateDlg::DoDataExchange( CDataExchange *pDX )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CDispCreateDlg::OnVScroll( UINT nSBCode, UINT nPos, CScrollBar *pScrollBar ) 
+void CDispCreateDlg::OnVScroll( UINT nSBCode, UINT nPos, CScrollBar *pScrollBar )
 {
 	m_spinPower.SetPos( nPos );
 	SetDlgItemInt( ID_DISP_CREATE_POWER, nPos );
@@ -117,7 +117,7 @@ CDispNoiseDlg::CDispNoiseDlg( CWnd *pParent ) :
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 BOOL CDispNoiseDlg::OnInitDialog(void)
 {
@@ -141,7 +141,7 @@ BOOL CDispNoiseDlg::OnInitDialog(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispNoiseDlg::DoDataExchange( CDataExchange *pDX )
 {
@@ -158,9 +158,9 @@ void CDispNoiseDlg::DoDataExchange( CDataExchange *pDX )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDispNoiseDlg::OnSpinUpDown( NMHDR *pNMHDR, LRESULT *pResult ) 
+void CDispNoiseDlg::OnSpinUpDown( NMHDR *pNMHDR, LRESULT *pResult )
 {
 	//
 	// get scroll up down edit box
@@ -235,7 +235,7 @@ CDispPaintDistDlg::CDispPaintDistDlg( CWnd *pParent ) :
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDispPaintDistDlg::~CDispPaintDistDlg()
 {
@@ -247,7 +247,7 @@ CDispPaintDistDlg::~CDispPaintDistDlg()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 BOOL CDispPaintDistDlg::OnInitDialog( void )
 {
@@ -426,23 +426,23 @@ bool CDispPaintDistDlg::InitComboBoxBrushGeo( void )
 				FilterComboBoxBrushGeo( DISPPAINT_EFFECT_RAISELOWER, true );
 				break;
 			}
-		case DISPPAINT_EFFECT_RAISETO: 
-			{ 
+		case DISPPAINT_EFFECT_RAISETO:
+			{
 				pTool->SetEffect( DISPPAINT_EFFECT_RAISETO );
 				SetEffectButtonGeo( DISPPAINT_EFFECT_RAISETO );
 				FilterComboBoxBrushGeo( DISPPAINT_EFFECT_RAISETO, true );
-				break; 
+				break;
 			}
-		case DISPPAINT_EFFECT_SMOOTH: 
-			{  
+		case DISPPAINT_EFFECT_SMOOTH:
+			{
 				pTool->SetEffect( DISPPAINT_EFFECT_SMOOTH );
 				SetEffectButtonGeo( DISPPAINT_EFFECT_SMOOTH );
 				FilterComboBoxBrushGeo( DISPPAINT_EFFECT_SMOOTH, true );
-				break; 
+				break;
 			}
-		default: 
-			{ 
-				return false; 
+		default:
+			{
+				return false;
 			}
 		}
 
@@ -531,13 +531,13 @@ void CDispPaintDistDlg::FilterComboBoxBrushGeo( unsigned int nEffect, bool bInit
 				// get the application directory
 				char appDir[MAX_PATH];
 				APP()->GetDirectory( DIR_PROGRAM, appDir );
-				
+
 				// append the filters directory name
 				strcat( appDir, "filters\\" );
-				
+
 				// append the directory prefix to the icon name
 				CString iconFilename = appDir + pFilter->m_Name;
-				
+
 				// add the icon to the icon combo box
 				m_comboboxBrush.AddIcon( iconFilename );
 			}
@@ -590,7 +590,7 @@ bool CDispPaintDistDlg::InitComboBoxAxis( void )
 	if ( pTool )
 	{
 		m_comboboxAxis.SetCurSel( m_nPrevPaintAxis );
-		pTool->SetPaintAxis( m_nPrevPaintAxis, m_vecPrevPaintAxis );		
+		pTool->SetPaintAxis( m_nPrevPaintAxis, m_vecPrevPaintAxis );
 	}
 	else
 	{
@@ -602,7 +602,7 @@ bool CDispPaintDistDlg::InitComboBoxAxis( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispPaintDistDlg::EnablePaintingComboBoxes( void )
 {
@@ -610,7 +610,7 @@ void CDispPaintDistDlg::EnablePaintingComboBoxes( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispPaintDistDlg::DisablePaintingComboBoxes( void )
 {
@@ -618,7 +618,7 @@ void CDispPaintDistDlg::DisablePaintingComboBoxes( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispPaintDistDlg::EnableBrushTypeButtons( void )
 {
@@ -630,7 +630,7 @@ void CDispPaintDistDlg::EnableBrushTypeButtons( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispPaintDistDlg::DisableBrushTypeButtons( void )
 {
@@ -642,7 +642,7 @@ void CDispPaintDistDlg::DisableBrushTypeButtons( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispPaintDistDlg::DoDataExchange( CDataExchange *pDX )
 {
@@ -778,7 +778,7 @@ void CDispPaintDistDlg::SetEffectButtonGeo( unsigned int nEffect )
 	radiobutton->SetCheck( nEffect == DISPPAINT_EFFECT_RAISELOWER );
 	radiobutton = ( CButton* )GetDlgItem( ID_DISP_PAINT_DIST_RAISETO );
 	radiobutton->SetCheck( nEffect == DISPPAINT_EFFECT_RAISETO );
-	radiobutton = ( CButton* )GetDlgItem( ID_DISP_PAINT_DIST_SMOOTH ); 
+	radiobutton = ( CButton* )GetDlgItem( ID_DISP_PAINT_DIST_SMOOTH );
 	radiobutton->SetCheck( nEffect == DISPPAINT_EFFECT_SMOOTH );
 }
 
@@ -923,7 +923,7 @@ void CDispPaintDistDlg::UpdateEditBoxRadius( float flRadius, bool bForceInit )
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CDispPaintDistDlg::OnHScroll( UINT nSBCode, UINT nPos, CScrollBar *pScrollBar ) 
+void CDispPaintDistDlg::OnHScroll( UINT nSBCode, UINT nPos, CScrollBar *pScrollBar )
 {
 	// Get the displacement tool.
 	CToolDisplace *pTool = GetDisplacementTool();
@@ -1069,7 +1069,7 @@ BEGIN_MESSAGE_MAP(CPaintSculptDlg, CDialog)
 	//{{AFX_MSG_MAP(CPaintSculptDlg)
 	ON_BN_CLICKED( ID_DISP_PAINT_DIST_AUTOSEW, OnCheckAutoSew )
 	ON_WM_CLOSE()
-	ON_WM_DESTROY()	
+	ON_WM_DESTROY()
 	ON_BN_CLICKED(IDC_SCULPT_PUSH, &CPaintSculptDlg::OnBnClickedSculptPush)
 	ON_BN_CLICKED(IDC_SCULPT_CARVE, &CPaintSculptDlg::OnBnClickedSculptCarve)
 	ON_BN_CLICKED(IDC_SCULPT_PROJECT, &CPaintSculptDlg::OnBnClickedSculptProject)
@@ -1147,18 +1147,18 @@ BOOL CPaintSculptDlg::OnInitDialog( )
 
 	if( !m_PushOptions->Create( IDD_DISP_SCULPT_PUSH_OPTIONS, this ) )
 	{
-		return FALSE;	
+		return FALSE;
 	}
 
 	if( !m_CarveOptions->Create( IDD_DISP_SCULPT_CARVE_OPTIONS, this ) )
 	{
-		return FALSE;	
+		return FALSE;
 	}
 
 #if 0
 	if( !m_ProjectOptions->Create( IDD_DISP_SCULPT_PROJECT_OPTIONS, this ) )
 	{
-		return FALSE;	
+		return FALSE;
 	}
 #endif
 
@@ -1244,7 +1244,7 @@ void CPaintSculptDlg::OnLButtonUp( UINT nFlags, CPoint point )
 	{
 		painter->OnLButtonUpDialog( nFlags, point );
 	}
-	
+
 	__super::OnLButtonUp(nFlags, point);
 }
 
@@ -1337,9 +1337,9 @@ void CPaintSculptDlg::OnBnClickedSculptProject( )
 
 #if 0
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
-// Output : 
+// Purpose:
+// Input  :
+// Output :
 //-----------------------------------------------------------------------------
 BOOL CPaintSculptDlg::PreTranslateMessage( MSG* pMsg )
 {
@@ -1423,7 +1423,7 @@ BEGIN_MESSAGE_MAP(CDispPaintDataDlg, CDialog)
 	ON_EN_CHANGE( ID_DISP_PAINT_DATA_EDIT_VALUE, OnEditValue )
 
 	ON_WM_CLOSE()
-	ON_WM_DESTROY()	
+	ON_WM_DESTROY()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -1437,7 +1437,7 @@ CDispPaintDataDlg::CDispPaintDataDlg( CWnd *pParent ) :
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDispPaintDataDlg::~CDispPaintDataDlg()
 {
@@ -1449,7 +1449,7 @@ CDispPaintDataDlg::~CDispPaintDataDlg()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 BOOL CDispPaintDataDlg::OnInitDialog(void)
 {
@@ -1502,7 +1502,7 @@ void CDispPaintDataDlg::InitValue( void )
 
 		// init slider value
 		UpdateSliderValue( m_fPrevPaintValue );
-		
+
 		// initialize the value edit box
 		CString strValue;
 		strValue.Format( "%4.2f", m_fPrevPaintValue );
@@ -1511,7 +1511,7 @@ void CDispPaintDataDlg::InitValue( void )
 	else
 	{
 		UpdateSliderValue( 15.0f );
-		
+
 		// initialize the value edit box
 		m_editValue.SetWindowText( "15.00" );
 	}
@@ -1547,23 +1547,23 @@ bool CDispPaintDataDlg::InitComboBoxBrushData( void )
 				FilterComboBoxBrushData( DISPPAINT_EFFECT_RAISELOWER, true );
 				break;
 			}
-		case DISPPAINT_EFFECT_RAISETO: 
-			{ 
+		case DISPPAINT_EFFECT_RAISETO:
+			{
 				pDispTool->SetEffect( DISPPAINT_EFFECT_RAISETO );
 				SetEffectButtonData( DISPPAINT_EFFECT_RAISETO );
 				FilterComboBoxBrushData( DISPPAINT_EFFECT_RAISETO, true );
-				break; 
+				break;
 			}
-		case DISPPAINT_EFFECT_SMOOTH: 
-			{  
+		case DISPPAINT_EFFECT_SMOOTH:
+			{
 				pDispTool->SetEffect( DISPPAINT_EFFECT_SMOOTH );
 				SetEffectButtonData( DISPPAINT_EFFECT_SMOOTH );
 				FilterComboBoxBrushData( DISPPAINT_EFFECT_SMOOTH, true );
-				break; 
+				break;
 			}
-		default: 
-			{ 
-				return false; 
+		default:
+			{
+				return false;
 			}
 		}
 
@@ -1620,13 +1620,13 @@ void CDispPaintDataDlg::FilterComboBoxBrushData( unsigned int uiEffect, bool bIn
 				// get the application directory
 				char appDir[MAX_PATH];
 				APP()->GetDirectory( DIR_PROGRAM, appDir );
-				
+
 				// append the filters directory name
 				strcat( appDir, "filters\\" );
-				
+
 				// append the directory prefix to the icon name
 				CString iconFilename = appDir + pFilter->m_Name;
-				
+
 				// add the icon to the icon combo box
 				m_comboboxBrush.AddIcon( iconFilename );
 			}
@@ -1662,7 +1662,7 @@ bool CDispPaintDataDlg::InitComboBoxType( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispPaintDataDlg::DoDataExchange( CDataExchange *pDX )
 {
@@ -1723,7 +1723,7 @@ void CDispPaintDataDlg::SetEffectButtonData( unsigned int effect )
 	radiobutton->SetCheck( effect == DISPPAINT_EFFECT_RAISELOWER );
 	radiobutton = ( CButton* )GetDlgItem( ID_DISP_PAINT_DATA_RAISETO );
 	radiobutton->SetCheck( effect == DISPPAINT_EFFECT_RAISETO );
-	radiobutton = ( CButton* )GetDlgItem( ID_DISP_PAINT_DATA_SMOOTH ); 
+	radiobutton = ( CButton* )GetDlgItem( ID_DISP_PAINT_DATA_SMOOTH );
 	radiobutton->SetCheck( effect == DISPPAINT_EFFECT_SMOOTH );
 }
 
@@ -1792,7 +1792,7 @@ void CDispPaintDataDlg::UpdateSliderValue( float fValue )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CDispPaintDataDlg::OnHScroll( UINT nSBCode, UINT nPos, CScrollBar *pScrollBar ) 
+void CDispPaintDataDlg::OnHScroll( UINT nSBCode, UINT nPos, CScrollBar *pScrollBar )
 {
 	// get the displacement tool
 	CToolDisplace *pDispTool = GetDisplacementTool();
@@ -1809,7 +1809,7 @@ void CDispPaintDataDlg::OnHScroll( UINT nSBCode, UINT nPos, CScrollBar *pScrollB
 
 			//
 			// update "the buddy" the disp value cedit box
-			//	
+			//
 			CString strValue;
 			strValue.Format( "%4.2f", ( float )pos );
 			m_editValue.SetWindowText( strValue );

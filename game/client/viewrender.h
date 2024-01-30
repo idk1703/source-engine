@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -97,14 +97,14 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 struct ViewCustomVisibility_t
 {
 	ViewCustomVisibility_t()
 	{
 		m_nNumVisOrigins = 0;
-		m_VisData.m_fDistToAreaPortalTolerance = FLT_MAX; 
+		m_VisData.m_fDistToAreaPortalTolerance = FLT_MAX;
 		m_iForceViewLeaf = -1;
 	}
 
@@ -146,7 +146,7 @@ struct ViewCustomVisibility_t
 };
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 struct WaterRenderInfo_t
 {
@@ -160,7 +160,7 @@ struct WaterRenderInfo_t
 };
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 class CBase3dView : public CRefCounted<>,
 					protected CViewSetup
@@ -261,7 +261,7 @@ protected:
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 
 class CRenderExecutor
@@ -277,7 +277,7 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 
 class CSimpleRenderExecutor : public CRenderExecutor
@@ -318,7 +318,7 @@ public:
 	void			AddViewToScene( CRendering3dView *pView ) { m_SimpleExecutor.AddView( pView ); }
 protected:
 	// Sets up the view parameters for all views (left, middle and right eyes).
-    void            SetUpViews();
+	void            SetUpViews();
 
 	// Sets up the view parameters of map overview mode (cl_leveloverview)
 	void			SetUpOverView();
@@ -333,14 +333,14 @@ protected:
 	virtual void	WriteReplayScreenshot( WriteReplayScreenshotParams_t &params );
 	virtual void	UpdateReplayScreenshotCache();
 
-    StereoEye_t		GetFirstEye() const;
-    StereoEye_t		GetLastEye() const;
-    CViewSetup &    GetView(StereoEye_t eEye);
-    const CViewSetup &    GetView(StereoEye_t eEye) const ;
+	StereoEye_t		GetFirstEye() const;
+	StereoEye_t		GetLastEye() const;
+	CViewSetup &    GetView(StereoEye_t eEye);
+	const CViewSetup &    GetView(StereoEye_t eEye) const ;
 
 
 	// This stores all of the view setup parameters that the engine needs to know about.
-    // Best way to pick the right one is with ::GetView(), rather than directly.
+	// Best way to pick the right one is with ::GetView(), rather than directly.
 	CViewSetup		m_View;         // mono <- in stereo mode, this will be between the two eyes and is the "main" view.
 	CViewSetup		m_ViewLeft;     // left (unused for mono)
 	CViewSetup		m_ViewRight;    // right (unused for mono)
@@ -378,7 +378,7 @@ public:
 	bool			ShouldDrawBrushModels( void );
 
 	const CViewSetup *GetViewSetup( ) const;
-	
+
 	void			DisableVis( void );
 
 	// Sets up the view model position relative to the local player
@@ -433,7 +433,7 @@ private:
 
 	void			DrawMonitors( const CViewSetup &cameraView );
 
-	bool			DrawOneMonitor( ITexture *pRenderTarget, int cameraNum, C_PointCamera *pCameraEnt, const CViewSetup &cameraView, C_BasePlayer *localPlayer, 
+	bool			DrawOneMonitor( ITexture *pRenderTarget, int cameraNum, C_PointCamera *pCameraEnt, const CViewSetup &cameraView, C_BasePlayer *localPlayer,
 						int x, int y, int width, int height );
 
 	// Drawing primitives
@@ -454,7 +454,7 @@ private:
 
 	virtual void			ViewDrawScene_Intro( const CViewSetup &view, int nClearFlags, const IntroData_t &introData );
 
-#ifdef PORTAL 
+#ifdef PORTAL
 	// Intended for use in the middle of another ViewDrawScene call, this allows stencils to be drawn after opaques but before translucents are drawn in the main view.
 	void			ViewDrawScene_PortalStencil( const CViewSetup &view, ViewCustomVisibility_t *pCustomVisibility );
 	void			Draw3dSkyboxworld_Portal( const CViewSetup &view, int &nClearFlags, bool &bDrew3dSkybox, SkyboxVisibility_t &nSkyboxVisible, ITexture *pRenderTarget = NULL );
@@ -472,11 +472,11 @@ private:
 
 
 	// This stores the current view
- 	CViewSetup		m_CurrentView;
+	CViewSetup		m_CurrentView;
 
 	// VIS Overrides
 	// Set to true to turn off client side vis ( !!!! rendering will be slow since everything will draw )
-	bool			m_bForceNoVis;	
+	bool			m_bForceNoVis;
 
 	// Some cvars needed by this system
 	const ConVar	*m_pDrawEntities;

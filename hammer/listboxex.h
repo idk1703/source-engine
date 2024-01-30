@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -36,10 +36,10 @@ typedef struct
 	char *pszSaveCaption;	// save caption to this, if supported
 	int iDataType;			// how to display	(lbdxxx)
 	int iEditType;			// how to edit		(lbexxx)
-	
+
 	int iDataValue;			// int value for integer/bool fields
 	char szDataString[128];	// str value for string fields
-	
+
 	PVOID pSaveTo;
 	const char * pszHelp;	// help text		(ptr or NULL)
 	int iRangeMin;			// ranged value min	(-1 if no range)
@@ -79,7 +79,7 @@ public:
 
 	void AddItem(char * pszCaption, int iEditType, PVOID pData,
 		int iRangeMin = -1, int iRangeMax = -1, const char * pszHelp = NULL);
-	void SetItemChoices(int iItem, CStringArray * pChoices, 
+	void SetItemChoices(int iItem, CStringArray * pChoices,
 		int iDefaultChoice = 0);
 	void GetItemText(int iItem, char *pszText);
 	void CreateEditControl();

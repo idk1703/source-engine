@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -23,7 +23,7 @@ const char *g_aTeamNames[TF_TEAM_COUNT] =
 	"Blue"
 };
 
-color32 g_aTeamColors[TF_TEAM_COUNT] = 
+color32 g_aTeamColors[TF_TEAM_COUNT] =
 {
 	{ 0, 0, 0, 0 },
 	{ 0, 0, 0, 0 },
@@ -103,7 +103,7 @@ const char *g_aRawPlayerClassNames[TF_CLASS_MENU_BUTTONS] =
 	"random"
 };
 
-const char g_szBotModels[][ MAX_PATH ] = 
+const char g_szBotModels[][ MAX_PATH ] =
 {
 	"", //TF_CLASS_UNDEFINED
 
@@ -133,7 +133,7 @@ const char g_szPlayerRobotModels[][MAX_PATH] =
 	"models/bots/engineer/bot_engineer_human_anim.mdl",
 };
 
-const char g_szBotBossModels[][ MAX_PATH ] = 
+const char g_szBotBossModels[][ MAX_PATH ] =
 {
 	"", //TF_CLASS_UNDEFINED
 
@@ -151,7 +151,7 @@ const char g_szBotBossModels[][ MAX_PATH ] =
 const char g_szBotBossSentryBusterModel[ MAX_PATH ] = "models/bots/demo/bot_sentry_buster.mdl";
 
 // Rome 2 promo models
-const char g_szRomePromoItems_Hat[][ MAX_PATH ] = 
+const char g_szRomePromoItems_Hat[][ MAX_PATH ] =
 {
 	"", //TF_CLASS_UNDEFINED
 
@@ -166,7 +166,7 @@ const char g_szRomePromoItems_Hat[][ MAX_PATH ] =
 	"tw_engineerbot_helmet",
 };
 
-const char g_szRomePromoItems_Misc[][ MAX_PATH ] = 
+const char g_szRomePromoItems_Misc[][ MAX_PATH ] =
 {
 	"", //TF_CLASS_UNDEFINED
 
@@ -181,7 +181,7 @@ const char g_szRomePromoItems_Misc[][ MAX_PATH ] =
 	"tw_engineerbot_armor",
 };
 
-const char *g_pszBreadModels[] = 
+const char *g_pszBreadModels[] =
 {
 	"models/weapons/c_models/c_bread/c_bread_baguette.mdl",		// Spy
 	"models/weapons/c_models/c_bread/c_bread_burnt.mdl",		// Pyro
@@ -428,7 +428,7 @@ static const char *g_aConditionNames[] =
 //	"TF_COND_SPACE_GRAVITY",
 //	"TF_COND_SELF_CONC",
 	"TF_COND_ROCKETPACK",
-	"TF_COND_STEALTHED_PHASE",  	
+	"TF_COND_STEALTHED_PHASE",
 	"TF_COND_CLIP_OVERLOAD",
 	"TF_COND_SPY_CLASS_STEAL",
 #endif // STAGING_ONLY
@@ -447,11 +447,11 @@ const char *GetTFConditionName( ETFCond eCond )
 ETFCond GetTFConditionFromName( const char *pszCondName )
 {
 	for( uint i=0; i<TF_COND_LAST; i++ )
-	{ 
+	{
 		ETFCond eCond = (ETFCond)i;
-		if ( !V_stricmp( GetTFConditionName( eCond ), pszCondName ) ) 
+		if ( !V_stricmp( GetTFConditionName( eCond ), pszCondName ) )
 			return eCond;
-	} 
+	}
 
 	Assert( !!"Invalid Condition Name" );
 	return TF_COND_INVALID;
@@ -556,7 +556,7 @@ ETFFlagEventTypes GetCTFEventTypeFromName( const char *pszName )
 			return (ETFFlagEventTypes)i;
 		}
 	}
-	
+
 	Assert( false );
 	return TF_NUM_FLAG_EVENTS;
 }
@@ -572,7 +572,7 @@ const char *GetRDScoreMethodName( RDScoreMethod_t iScoreMethod )
 		"SCORE_CORES_COLLECTED",
 		"SCORE_REACTOR_RETURNED",
 		"SCORE_REACTOR_STEAL",
-		
+
 		"NUM_SCORE_TYPES"
 	};
 
@@ -588,7 +588,7 @@ RDScoreMethod_t GetRDScoreMethodFromName( const char *pszName )
 			return (RDScoreMethod_t)i;
 		}
 	}
-	
+
 	Assert( false );
 	return SCORE_UNDEFINED;
 }
@@ -601,7 +601,7 @@ const char *g_aWeaponNames[] =
 	"TF_WEAPON_NONE",
 	"TF_WEAPON_BAT",
 	"TF_WEAPON_BAT_WOOD",
-	"TF_WEAPON_BOTTLE", 
+	"TF_WEAPON_BOTTLE",
 	"TF_WEAPON_FIREAXE",
 	"TF_WEAPON_CLUB",
 	"TF_WEAPON_CROWBAR",
@@ -713,7 +713,7 @@ int g_aWeaponDamageTypes[] =
 	DMG_GENERIC,	// TF_WEAPON_NONE
 	DMG_CLUB,		// TF_WEAPON_BAT,
 	DMG_CLUB,		// TF_WEAPON_BAT_WOOD,
-	DMG_CLUB,		// TF_WEAPON_BOTTLE, 
+	DMG_CLUB,		// TF_WEAPON_BOTTLE,
 	DMG_CLUB,		// TF_WEAPON_FIREAXE,
 	DMG_CLUB,		// TF_WEAPON_CLUB,
 	DMG_CLUB,		// TF_WEAPON_CROWBAR,
@@ -913,11 +913,11 @@ const char *GetCustomDamageName( ETFDmgCustom eDmgCustom )
 ETFDmgCustom GetCustomDamageFromName( const char *pszCustomDmgName )
 {
 	for( uint i=0; i<TF_DMG_CUSTOM_END; i++ )
-	{ 
+	{
 		ETFDmgCustom eDmgCustom = (ETFDmgCustom)i;
-		if ( !V_stricmp( GetCustomDamageName( eDmgCustom ), pszCustomDmgName ) ) 
+		if ( !V_stricmp( GetCustomDamageName( eDmgCustom ), pszCustomDmgName ) )
 			return eDmgCustom;
-	} 
+	}
 
 	Assert( !!"Invalid Custom Damage Name" );
 	return TF_DMG_CUSTOM_NONE;
@@ -956,7 +956,7 @@ const char *g_szProjectileNames[] =
 	"projectile_sentry_rocket",
 	"projectile_bread_monster",
 
-#ifdef STAGING_ONLY	
+#ifdef STAGING_ONLY
 	// Staging
 	"projectile_tranq",
 	"projectile_sniperbullet",
@@ -969,7 +969,7 @@ const char *g_szProjectileNames[] =
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_szProjectileNames ) == TF_NUM_PROJECTILES );
 
 // these map to the projectiles named in g_szProjectileNames
-int g_iProjectileWeapons[] = 
+int g_iProjectileWeapons[] =
 {
 	TF_WEAPON_NONE,
 	TF_WEAPON_PISTOL,
@@ -1136,7 +1136,7 @@ const char *g_pszHintMessages[] =
 	"#Hint_Cannot_Arm_Feign_Now",
 };
 
-const char *g_pszArrowModels[] = 
+const char *g_pszArrowModels[] =
 {
 	"models/weapons/w_models/w_arrow.mdl",
 	"models/weapons/w_models/w_repair_claw.mdl",
@@ -1467,7 +1467,7 @@ void LoadObjectInfos( IBaseFileSystem *pFileSystem )
 			// Does it make sense to call the below Steam API so it'll force a validation next startup time?
 			// Need to verify it's real corruption and not someone dorking around with their objects.txt file...
 			//
-			// From Martin Otten: If you have a file on disc and you’re 100% sure it’s
+			// From Martin Otten: If you have a file on disc and youï¿½re 100% sure itï¿½s
 			//  corrupt, call ISteamApps::MarkContentCorrupt( false ), before you shutdown
 			//  the game. This will cause a content validation in Steam.
 
@@ -1559,7 +1559,7 @@ ConVar tf_cheapobjects( "tf_cheapobjects","0", FCVAR_CHEAT | FCVAR_DEVELOPMENTON
 //-----------------------------------------------------------------------------
 // Purpose: Return the cost of another object of the specified type
 //			If bLast is set, return the cost of the last built object of the specified type
-// 
+//
 // Note: Used to contain logic from tf2 that multiple instances of the same object
 //       cost different amounts. See tf2/game_shared/tf_shareddefs.cpp for details
 //-----------------------------------------------------------------------------
@@ -1617,8 +1617,8 @@ bool ClassCanBuild( int iClass, int iObjectType )
 }
 
 const unsigned char *GetTFEncryptionKey( void )
-{ 
-	return (unsigned char *)"E2NcUkG2"; 
+{
+	return (unsigned char *)"E2NcUkG2";
 }
 
 //-----------------------------------------------------------------------------
@@ -1630,7 +1630,7 @@ struct wpntranslation_class_weapons_t
 	const char *pszClassWpn[TF_LAST_NORMAL_CLASS];
 };
 
-wpntranslation_class_weapons_t pszWpnEntTranslationList[] = 
+wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 {
 	{
 		"tf_weapon_shotgun",
@@ -1644,7 +1644,7 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 			"tf_weapon_shotgun_hwg",	// TF_CLASS_HEAVYWEAPONS,
 			"tf_weapon_shotgun_pyro",	// TF_CLASS_PYRO,
 			"",							// TF_CLASS_SPY,
-			"tf_weapon_shotgun_primary",// TF_CLASS_ENGINEER,		
+			"tf_weapon_shotgun_primary",// TF_CLASS_ENGINEER,
 		}
 	},
 
@@ -1660,7 +1660,7 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 			"",							// TF_CLASS_HEAVYWEAPONS,
 			"",							// TF_CLASS_PYRO,
 			"",							// TF_CLASS_SPY,
-			"tf_weapon_pistol",			// TF_CLASS_ENGINEER,		
+			"tf_weapon_pistol",			// TF_CLASS_ENGINEER,
 		}
 	},
 
@@ -1676,7 +1676,7 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 			"",							// TF_CLASS_HEAVYWEAPONS,
 			"",							// TF_CLASS_PYRO,
 			"",							// TF_CLASS_SPY,
-			"",							// TF_CLASS_ENGINEER,		
+			"",							// TF_CLASS_ENGINEER,
 		}
 	},
 	{
@@ -1691,7 +1691,7 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 			"",							// TF_CLASS_HEAVYWEAPONS,
 			"",							// TF_CLASS_PYRO,
 			"",							// TF_CLASS_SPY,
-			"",							// TF_CLASS_ENGINEER,		
+			"",							// TF_CLASS_ENGINEER,
 		}
 	},
 	{
@@ -1706,7 +1706,7 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 			"tf_weapon_fireaxe",		// TF_CLASS_HEAVYWEAPONS,		HWG uses a fireaxe because he doesn't have a default melee weapon of his own; also I am a terrible person
 			"tf_weapon_fireaxe",		// TF_CLASS_PYRO,
 			"tf_weapon_knife",			// TF_CLASS_SPY,
-			"tf_weapon_wrench",			// TF_CLASS_ENGINEER,		
+			"tf_weapon_wrench",			// TF_CLASS_ENGINEER,
 		}
 	},
 	{
@@ -1721,7 +1721,7 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 			"tf_weapon_throwable_secondary",			// TF_CLASS_HEAVYWEAPONS
 			"tf_weapon_throwable_secondary",			// TF_CLASS_PYRO,
 			"tf_weapon_throwable_secondary",			// TF_CLASS_SPY,
-			"tf_weapon_throwable_secondary",			// TF_CLASS_ENGINEER,		
+			"tf_weapon_throwable_secondary",			// TF_CLASS_ENGINEER,
 		}
 	},
 	{
@@ -1736,7 +1736,7 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 			"",			// TF_CLASS_HEAVYWEAPONS
 			"",			// TF_CLASS_PYRO,
 			""			// TF_CLASS_SPY,
-			"",			// TF_CLASS_ENGINEER,		
+			"",			// TF_CLASS_ENGINEER,
 		}
 	},
 	{
@@ -1751,7 +1751,7 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 			"",			// TF_CLASS_HEAVYWEAPONS
 			"",			// TF_CLASS_PYRO,
 			"tf_weapon_revolver",				// TF_CLASS_SPY,
-			"tf_weapon_revolver_secondary",		// TF_CLASS_ENGINEER,		
+			"tf_weapon_revolver_secondary",		// TF_CLASS_ENGINEER,
 		}
 	},
 };
@@ -1835,7 +1835,7 @@ helltower_vo_t g_pszHelltowerAnnouncerLines[] =
 
 #ifdef TF_CLIENT_DLL
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 const char *g_pszInvasionMaps[] =
 {
@@ -1907,7 +1907,7 @@ const char *g_pszClassIconsAlt[SCOREBOARD_CLASS_ICONS] =
 const char *g_pszItemClassImagesRed[] =
 {
 	"class_portraits/all_class",	// TF_CLASS_UNDEFINED = 0,
-	"class_portraits/scout",		// TF_CLASS_SCOUT,			
+	"class_portraits/scout",		// TF_CLASS_SCOUT,
 	"class_portraits/sniper",		// TF_CLASS_SNIPER,
 	"class_portraits/soldier",		// TF_CLASS_SOLDIER,
 	"class_portraits/demoman",		// TF_CLASS_DEMOMAN,
@@ -1916,7 +1916,7 @@ const char *g_pszItemClassImagesRed[] =
 	"class_portraits/pyro",			// TF_CLASS_PYRO,
 	"class_portraits/spy",			// TF_CLASS_SPY,
 	"class_portraits/engineer",		// TF_CLASS_ENGINEER,
-	"class_portraits/scout_grey",		// TF_CLASS_SCOUT,			
+	"class_portraits/scout_grey",		// TF_CLASS_SCOUT,
 	"class_portraits/sniper_grey",		// TF_CLASS_SNIPER,
 	"class_portraits/soldier_grey",		// TF_CLASS_SOLDIER,
 	"class_portraits/demoman_grey",		// TF_CLASS_DEMOMAN,
@@ -1930,7 +1930,7 @@ const char *g_pszItemClassImagesRed[] =
 const char *g_pszItemClassImagesBlue[] =
 {
 	"class_portraits/all_class",		// TF_CLASS_UNDEFINED = 0,
-	"class_portraits/scout_blue",		// TF_CLASS_SCOUT,			
+	"class_portraits/scout_blue",		// TF_CLASS_SCOUT,
 	"class_portraits/sniper_blue",		// TF_CLASS_SNIPER,
 	"class_portraits/soldier_blue",		// TF_CLASS_SOLDIER,
 	"class_portraits/demoman_blue",		// TF_CLASS_DEMOMAN,
@@ -1939,7 +1939,7 @@ const char *g_pszItemClassImagesBlue[] =
 	"class_portraits/pyro_blue",		// TF_CLASS_PYRO,
 	"class_portraits/spy_blue",			// TF_CLASS_SPY,
 	"class_portraits/engineer_blue",	// TF_CLASS_ENGINEER,
-	"class_portraits/scout_blue_grey",		// TF_CLASS_SCOUT,			
+	"class_portraits/scout_blue_grey",		// TF_CLASS_SCOUT,
 	"class_portraits/sniper_blue_grey",		// TF_CLASS_SNIPER,
 	"class_portraits/soldier_blue_grey",	// TF_CLASS_SOLDIER,
 	"class_portraits/demoman_blue_grey",	// TF_CLASS_DEMOMAN,

@@ -26,7 +26,7 @@ public:
 };
 
 IMPLEMENT_CLIENTCLASS_DT( C_Dinosaur_Signal, DT_DinosaurSignal, CDinosaurSignal )
-	RecvPropString( RECVINFO(m_szSoundName) ), 
+	RecvPropString( RECVINFO(m_szSoundName) ),
 	RecvPropFloat( RECVINFO(m_flOuterRadius) ),
 	RecvPropFloat( RECVINFO(m_flInnerRadius) ),
 	RecvPropInt( RECVINFO(m_nSignalID) ),
@@ -155,7 +155,7 @@ void C_Portal_Dinosaur::ClientThink()
 	//if ( V_stristr( engine->GetLevelName(), "testchmb_a_00" ) != 0 )
 	if ( 0 )//m_hDinosaur_Signal.Get() && m_hDinosaur_Signal.Get()->m_nSignalID == 0 )
 	{
-		// TODO:Play either morse code or special sstv content based on 
+		// TODO:Play either morse code or special sstv content based on
 		// game account client state given from gc.
 	}
 	else
@@ -213,7 +213,7 @@ void C_Portal_Dinosaur::ScanForSounds()
 #if defined ( RADIO_DEBUG_CLIENT )
 	// Msg( "Dinosaur(%d) listening for signal... dist: %f, blend amt: %f\n", entindex(), flDist, flMidBlend );
 #endif
-	
+
 	// If we've fully heard this signal, mark the achievement
 	if ( flInnerBlend >= 1.0f && m_flOldBlend < 1.0f )
 	{

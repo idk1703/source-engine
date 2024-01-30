@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -85,7 +85,7 @@ static int ModelFrameCount( model_t *model )
 
 	if ( count < 1 )
 		count = 1;
-	
+
 	return count;
 }
 
@@ -135,7 +135,7 @@ public:
 	virtual void RecomputeTranslucency( const model_t *model, int nSkin, int nBody, void /*IClientRenderable*/ *pClientRenderable, float fInstanceAlphaModulate);
 	virtual int	GetModelMaterialCount( const model_t *model ) const;
 	virtual void GetModelMaterials( const model_t *model, int count, IMaterial** ppMaterials );
-	virtual void GetIlluminationPoint( const model_t *model, IClientRenderable *pRenderable, const Vector& origin, 
+	virtual void GetIlluminationPoint( const model_t *model, IClientRenderable *pRenderable, const Vector& origin,
 		const QAngle& angles, Vector* pLightingOrigin );
 	virtual int GetModelContents( int modelIndex );
 	vcollide_t *GetVCollide( const model_t *model );
@@ -499,7 +499,7 @@ int CModelInfo::GetModelType( const model_t *model ) const
 		}
 #endif
 	}
-	
+
 	return model->type;
 }
 
@@ -546,7 +546,7 @@ virtualmodel_t *CModelInfo::GetVirtualModel( const studiohdr_t *pStudioHdr ) con
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 byte *CModelInfo::GetAnimBlock( const studiohdr_t *pStudioHdr, int nBlock ) const
 {
@@ -693,7 +693,7 @@ void CModelInfo::GetModelMaterials( const model_t *model, int count, IMaterial**
 		Mod_GetModelMaterials( (model_t *)model, count, ppMaterials );
 }
 
-void CModelInfo::GetIlluminationPoint( const model_t *model, IClientRenderable *pRenderable, const Vector& origin, 
+void CModelInfo::GetIlluminationPoint( const model_t *model, IClientRenderable *pRenderable, const Vector& origin,
 	const QAngle& angles, Vector* pLightingOrigin )
 {
 	Assert( model->type == mod_studio );
@@ -717,7 +717,7 @@ int CModelInfo::GetModelContents( int modelIndex )
 		{
 		case mod_brush:
 			return CM_InlineModelContents( modelIndex-1 );
-		
+
 		// BUGBUG: Studio contents?
 		case mod_studio:
 			return CONTENTS_SOLID;
@@ -843,8 +843,8 @@ bool CModelInfo::GetModelKeyValue( const model_t *model, CUtlBuffer &buf )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *model - 
+// Purpose:
+// Input  : *model -
 // Output : float
 //-----------------------------------------------------------------------------
 float CModelInfo::GetModelRadius( const model_t *model )
@@ -948,7 +948,7 @@ int CModelInfoServer::RegisterDynamicModel( const char *name, bool bClientSide )
 	Assert( pTable->FindStringIndex( name ) == INVALID_STRING_INDEX );
 	bool bWasLocked = static_cast<CNetworkStringTable_LockOverride*>( pTable )->LockWithRetVal( false );
 	char nIsLoaded = 0;
-	int netidx = pTable->AddString( true, name, 1, &nIsLoaded );	
+	int netidx = pTable->AddString( true, name, 1, &nIsLoaded );
 	static_cast<CNetworkStringTable*>( pTable )->Lock( bWasLocked );
 
 	// And also cache the model_t* pointer at this time
@@ -1026,8 +1026,8 @@ protected:
 private:
 	struct ScreenFadeInfo_t
 	{
-		float	m_flMinScreenWidth;	
-		float	m_flMaxScreenWidth;	
+		float	m_flMinScreenWidth;
+		float	m_flMaxScreenWidth;
 		float	m_flFalloffFactor;
 	};
 
@@ -1201,7 +1201,7 @@ unsigned char CModelInfoClient::ComputeViewScreenFade( const Vector &vecAbsOrigi
 //-----------------------------------------------------------------------------
 // A method to get the material color + texture coordinate
 //-----------------------------------------------------------------------------
-IMaterial* BrushModel_GetLightingAndMaterial( const Vector &start, 
+IMaterial* BrushModel_GetLightingAndMaterial( const Vector &start,
 	const Vector &end, Vector &diffuseLightColor, Vector &baseColor)
 {
 	float textureS, textureT;

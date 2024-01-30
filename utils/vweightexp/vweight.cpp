@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -30,8 +30,8 @@ static VWeightImportClassDesc VWeightImportCD;
 //===================================================================
 // Required plug-in export functions
 //
-BOOL WINAPI DllMain( HINSTANCE hinstDLL, ULONG fdwReason, LPVOID lpvReserved) 
-{	
+BOOL WINAPI DllMain( HINSTANCE hinstDLL, ULONG fdwReason, LPVOID lpvReserved)
+{
 	static int fFirstTimeHere = TRUE;
 	if (fFirstTimeHere)
 	{
@@ -41,13 +41,13 @@ BOOL WINAPI DllMain( HINSTANCE hinstDLL, ULONG fdwReason, LPVOID lpvReserved)
 	return TRUE;
 }
 
-	
+
 EXPORT_THIS int LibNumberClasses(void)
 {
 	return 2;
 }
 
-	
+
 EXPORT_THIS ClassDesc *LibClassDesc(int iWhichClass)
 {
 	switch(iWhichClass)
@@ -58,13 +58,13 @@ EXPORT_THIS ClassDesc *LibClassDesc(int iWhichClass)
 	}
 }
 
-	
+
 EXPORT_THIS const TCHAR *LibDescription()
 {
 	return _T("Valve VVW Plug-in.");
 }
 
-	
+
 EXPORT_THIS ULONG LibVersion()
 {
 	return VERSION_3DSMAX;
@@ -194,7 +194,7 @@ int BuildINodeMap(INode *pnode)
 	{
 		BuildINodeMap(pnode->GetChildNode(c));
 	}
-	
+
 	return g_cNameMap;
 }
 
@@ -216,7 +216,7 @@ int GetIndexOfINode( INode *pnode, BOOL fAssertPropExists )
 {
 	return GetIndexOfNodeName( pnode->GetName(), fAssertPropExists );
 }
-	
+
 void AddINode( INode *pnode )
 {
 	TSTR strNodeName(pnode->GetName());
@@ -268,7 +268,7 @@ BOOL FNodeMarkedToSkip(INode *pnode)
 	return (::GetIndexOfINode(pnode) == UNDESIRABLE_NODE_MARKER);
 }
 
-	
+
 
 //=============================================================
 // gets a weighted value for the current system of nodes
@@ -338,7 +338,7 @@ int GetBoneWeights( IPhyContextExport *mcExport, int iVertex, MaxVertWeight *pwe
 				}
 			}
 		}
-		else 
+		else
 		{
 			INode *Bone = ((IPhyRigidVertex *)vtxExport)->GetNode();
 			int index = GetIndexOfINode(Bone);
@@ -433,4 +433,3 @@ void SetBoneWeights( Modifier * bonesProMod, int iVertex, MaxVertWeight *pweight
 	//fclose(fp);
 	//exit(1);
 }
-

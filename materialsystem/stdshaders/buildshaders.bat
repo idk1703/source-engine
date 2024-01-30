@@ -211,9 +211,9 @@ REM Cull duplicate entries in work/build list
 REM ****************
 if exist filestocopy.txt type filestocopy.txt | perl "%SrcDirBase%\devtools\bin\uniqifylist.pl" > uniquefilestocopy.txt
 if exist filelistgen.txt if not "%dynamic_shaders%" == "1" (
-    echo Generating action list...
-    copy filelistgen.txt filelist.txt >nul
-    rem %SrcDirBase%\devtools\bin\fxccombogen.exe <filelistgen.txt 1>nul 2>filelist.txt
+	echo Generating action list...
+	copy filelistgen.txt filelist.txt >nul
+	rem %SrcDirBase%\devtools\bin\fxccombogen.exe <filelistgen.txt 1>nul 2>filelist.txt
 )
 
 REM ****************
@@ -255,4 +255,3 @@ REM ****************
 
 %TTEXE% -diff %tt_start%
 echo.
-

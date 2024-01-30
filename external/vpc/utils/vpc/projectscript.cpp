@@ -83,9 +83,9 @@ void VPC_TrackSchemaFile( const char *pName, bool bRemove, const char *pFileFlag
 	if ( bRemove )
 	{
 		// not found, nothing to do
-		return;	
+		return;
 	}
-	
+
 	g_pVPC->m_SchemaFiles.AddToTail( pName );
 
 	// suppress building of schematized cpp files
@@ -129,7 +129,7 @@ static char *ResolveCandidate( const char *pszFile, const char *pszPlatform )
 }
 
 // No particular order, but must not change without changing the arrPlatformChains matrix
-const char *g_szArrPlatforms[] = 
+const char *g_szArrPlatforms[] =
 {
 	"win32",	//  0
 	"win64",	//  1
@@ -174,7 +174,7 @@ static char *ResolveFilename( const char *pszFile, CUtlVector<CUtlString> &vecBo
 	static bool bInited = false;
 	static char _szPlatformStore[128];
 	static const char (&szPlatform)[128] = _szPlatformStore;
-	
+
 	if ( !bInited )
 	{
 		bInited = true;
@@ -194,7 +194,7 @@ static char *ResolveFilename( const char *pszFile, CUtlVector<CUtlString> &vecBo
 			break;
 		}
 	}
-	
+
 	if ( nPlatformColumn < 0 )
 	{
 		g_pVPC->VPCWarning( "Internal Error: Target Platform: '%s' unrecognized while expanding $os!", szPlatform );
@@ -205,7 +205,7 @@ static char *ResolveFilename( const char *pszFile, CUtlVector<CUtlString> &vecBo
 	char *pszResolved = NULL;
 	int nPlatformToCheck = -1;
 	int nCurrentPlatformRow = -1;
-	do 
+	do
 	{
 		nCurrentPlatformRow++;
 		nPlatformToCheck = arrPlatformChains[nCurrentPlatformRow][nPlatformColumn];
@@ -269,7 +269,7 @@ void VPC_Keyword_AddFilesByPattern()
 		for ( int i=0; i < vecResults.Count(); i++ )
 		{
 			g_pVPC->VPCStatus( false, "glob: adding '%s' to project", vecResults[i].String() );
-			g_pVPC->GetProjectGenerator()->StartFile( vecResults[i].String(), true ); 
+			g_pVPC->GetProjectGenerator()->StartFile( vecResults[i].String(), true );
 			g_pVPC->GetProjectGenerator()->EndFile();
 		}
 	}
@@ -364,7 +364,7 @@ void VPC_Keyword_AddFile( const char *pFileFlag = NULL, const folderConfig_t *pF
 #if defined( POSIX )
 				// We have a _lot_ of vpc files that contain header files with the incorrect casing.
 				// So try to lowercase the filename here and if it exists, replace it and carry on.
-				//	
+				//
 				CUtlString FileNameLower = files[ i ];
 
 				V_strlower( FileNameLower.Get() );
@@ -481,7 +481,7 @@ void VPC_Keyword_AddFile( const char *pFileFlag = NULL, const folderConfig_t *pF
 				if ( pExcludedExtension && !V_stricmp( pExcludedExtension, "cpp" ) )
 				{
 					g_pVPC->VPCStatus( false, "excluding '%s' from build", pExcludedFilename );
-					g_pVPC->GetProjectGenerator()->StartFile( pExcludedFilename, true ); 
+					g_pVPC->GetProjectGenerator()->StartFile( pExcludedFilename, true );
 					CUtlVector< CUtlString > configurationNames;
  					g_pVPC->GetProjectGenerator()->GetAllConfigurationNames( configurationNames );
 					for ( int i=0; i < configurationNames.Count(); i++ )
@@ -497,8 +497,8 @@ void VPC_Keyword_AddFile( const char *pFileFlag = NULL, const folderConfig_t *pF
 			pFilename = filename.String();
 		}
 
-		bool bAdded = g_pVPC->GetProjectGenerator()->StartFile( pFilename, true ); 
-		
+		bool bAdded = g_pVPC->GetProjectGenerator()->StartFile( pFilename, true );
+
 		if ( bDynamicFile )
 		{
 			CUtlVector< CUtlString > configurationNames;
@@ -517,8 +517,8 @@ void VPC_Keyword_AddFile( const char *pFileFlag = NULL, const folderConfig_t *pF
 		{
 			pExtension = "";
 		}
-		
-		if ( !g_pVPC->m_sUnityCurrent.IsEmpty() && !V_stricmp( pExtension, "cpp" ) && !bHasSection && !bHasConditional ) 
+
+		if ( !g_pVPC->m_sUnityCurrent.IsEmpty() && !V_stricmp( pExtension, "cpp" ) && !bHasSection && !bHasConditional )
 		{
 			bool bEmitUnityFiles = ( !g_pVPC->m_bInMkSlnPass && ( g_pVPC->IsForceGenerate() || !g_pVPC->IsProjectCurrent( g_pVPC->GetOutputFilename(), false ) ) );
 			if ( bEmitUnityFiles )
@@ -550,7 +550,7 @@ void VPC_Keyword_AddFile( const char *pFileFlag = NULL, const folderConfig_t *pF
 				g_pVPC->GetProjectGenerator()->EndConfigurationBlock();
 			}
 		}
-		else 
+		else
 		{
 			bool bHadConfigSection = false;
 
@@ -662,7 +662,7 @@ static void VPC_HandleLibraryExpansion( char const *pDefaultPath, char const *pF
 	}
 	char szResolvedFilePrefix[MAX_PATH];
 	g_pVPC->ResolveMacrosInString( pFileNamePrefix, szResolvedFilePrefix, sizeof(szResolvedFilePrefix) );
-	
+
 	CUtlStringList impFiles;
 	VPC_ParseFileList( impFiles );
 	for( int i = 0; i < impFiles.Count(); i++ )
@@ -674,7 +674,7 @@ static void VPC_HandleLibraryExpansion( char const *pDefaultPath, char const *pF
 		char impFile[MAX_PATH];
 		V_strncpy( impFile, impFiles[i], sizeof( impFile ) );
 		V_RemoveDotSlashes( impFile );
-		
+
 		char *pLastSlash = (char*)MAX( strrchr( impFile, '\\' ), strrchr( impFile, '/' ) );
 		if ( pLastSlash )
 		{
@@ -784,14 +784,14 @@ void VPC_Keyword_Folder( bool bUnity, const folderConfig_t *pInheritedFolderConf
 	const char				*pToken;
 	char				folderName[MAX_PATH];
 	folderConfig_t			folderConfig;
-	
+
 	// by default, our active config is any config that we inherited from the parent.
 	const folderConfig_t	*pActiveFolderConfig = pInheritedFolderConfig;
 
 	if ( !g_pVPC->GetScript().ParsePropertyValue( NULL, folderName, sizeof( folderName ) ) )
 	{
 		g_pVPC->GetScript().SkipBracedSection();
-		return;		
+		return;
 	}
 
 	g_pVPC->GetProjectGenerator()->StartFolder( folderName );
@@ -841,7 +841,7 @@ void VPC_Keyword_Folder( bool bUnity, const folderConfig_t *pInheritedFolderConf
 
 		// Msg( "pushing unity file %s\n", g_sUnityCurrent );
 		g_pVPC->GetProjectGenerator()->StartFile( g_pVPC->m_sUnityCurrent, true );
-		g_pVPC->GetProjectGenerator()->EndFile();	
+		g_pVPC->GetProjectGenerator()->EndFile();
 	}
 
 	// Now parse all the files and subfolders..
@@ -921,9 +921,9 @@ void VPC_Keyword_Folder( bool bUnity, const folderConfig_t *pInheritedFolderConf
 		}
 		else if ( !V_stricmp( pToken, "$configuration" ) )
 		{
-			// read the folder-specific configuration.  
+			// read the folder-specific configuration.
 			VPC_Keyword_FolderConfiguration( &folderConfig );
-			
+
 			// if we found a new config section, make it active and apply it to subsequent files
 			if ( folderConfig.BHasConfig() )
 				pActiveFolderConfig = &folderConfig;
@@ -935,7 +935,7 @@ void VPC_Keyword_Folder( bool bUnity, const folderConfig_t *pInheritedFolderConf
 			g_pVPC->VPCSyntaxError();
 		}
 	}
-	
+
 	if ( bUnity )
 	{
 		// Msg( "popping unity file %s\n", g_sUnityCurrent );
@@ -968,7 +968,7 @@ void VPC_Keyword_Shaders( int depth )
 
 	if ( !g_pVPC->GetScript().ParsePropertyValue( NULL, shadersName, sizeof( shadersName ) ) )
 	{
-		return;		
+		return;
 	}
 
 	g_pVPC->VPCStatus( false, "Parsing: %s", shadersName );
@@ -1008,8 +1008,8 @@ void VPC_Keyword_Shaders( int depth )
 
 	g_pVPC->GetScript().PopScript();
 
-	if ( !fxcList.Count() && 
-		!vshList.Count() && 
+	if ( !fxcList.Count() &&
+		!vshList.Count() &&
 		!pshList.Count() &&
 		!vfxList.Count() &&
 		!otherList.Count() )
@@ -1158,7 +1158,7 @@ void VPC_Keyword_Macro( MacroType_t eMacroType )
 	if ( !pToken || !pToken[0] )
 		g_pVPC->VPCSyntaxError();
 	strcpy( macro, pToken );
-	
+
 	if ( !g_pVPC->GetScript().ParsePropertyValue( NULL, value, sizeof( value ) ) )
 	{
 		return;
@@ -1169,7 +1169,7 @@ void VPC_Keyword_Macro( MacroType_t eMacroType )
 	{
 		V_strncpy( value, environmentValue, sizeof( value ) );
 	}
-	
+
 	g_pVPC->FindOrCreateMacro( macro, true, ( eMacroType == VPC_MACRO_VALUE ) ? value : "" );
 }
 
@@ -1190,7 +1190,7 @@ void VPC_Keyword_MacroRequired( MacroRequiredType_t eMacroRequiredType )
 	const char	*pToken;
 
 	macroDefaultValue[0] = '\0';
-	
+
 	pToken = g_pVPC->GetScript().GetToken( false );
 	if ( !pToken || !pToken[0] )
 	{
@@ -1257,7 +1257,7 @@ void VPC_Keyword_LoadAddressMacro( void )
 	if ( !g_pVPC->GetScript().ParsePropertyValue( NULL, szMacroName, sizeof( szMacroName ) ) )
 	{
 		g_pVPC->GetScript().SkipBracedSection();
-		return;		
+		return;
 	}
 
 	pToken = g_pVPC->GetScript().GetToken( true );
@@ -1265,7 +1265,7 @@ void VPC_Keyword_LoadAddressMacro( void )
 	{
 		g_pVPC->VPCSyntaxError();
 	}
-	
+
 	while ( 1 )
 	{
 		pToken = g_pVPC->GetScript().GetToken( true );
@@ -1285,7 +1285,7 @@ void VPC_Keyword_LoadAddressMacro( void )
 			{
 				continue;
 			}
-		
+
 			if ( !V_stricmp( szProjectName, g_pVPC->GetLoadAddressName() ) )
 			{
 				// set Macro
@@ -1314,7 +1314,7 @@ void VPC_Keyword_LoadAddressMacroAlias( void )
 	if ( !g_pVPC->GetScript().ParsePropertyValue( NULL, szAlias, sizeof( szAlias ) ) )
 	{
 		g_pVPC->GetScript().SkipBracedSection();
-		return;		
+		return;
 	}
 
 	pToken = g_pVPC->GetScript().GetToken( true );
@@ -1375,7 +1375,7 @@ void Internal_LoadAddressMacroAuto( bool bPad )
 	if ( !g_pVPC->GetScript().ParsePropertyValue( NULL, szBaseAddress, sizeof( szBaseAddress ) ) )
 	{
 		g_pVPC->GetScript().SkipBracedSection();
-		return;		
+		return;
 	}
 	unsigned int baseAddress = 0;
 	sscanf( szBaseAddress, "%x", &baseAddress );
@@ -1390,7 +1390,7 @@ void Internal_LoadAddressMacroAuto( bool bPad )
 	{
 		g_pVPC->VPCSyntaxError();
 	}
-	
+
 	int iEntryNum = 0;
 	while ( 1 )
 	{
@@ -1406,7 +1406,7 @@ void Internal_LoadAddressMacroAuto( bool bPad )
 			// set Macro
 			char szMacroValue[MAX_SYSTOKENCHARS];
 			sprintf( szMacroValue, "0x%8.8x", baseAddress );
-			
+
 			iSetEntryNum = iEntryNum;
 			iSetBaseAddress = baseAddress;
 			pMacro = g_pVPC->FindOrCreateMacro( szMacroName, true, szMacroValue );
@@ -1476,7 +1476,7 @@ void Internal_LoadAddressMacroAuto( bool bPad )
 
 			char szMacroValue[MAX_SYSTOKENCHARS];
 			sprintf( szMacroValue, "0x%8.8x", iSetBaseAddress );
-	
+
 			pMacro->value = szMacroValue;
 		}
 	}
@@ -1507,7 +1507,7 @@ void VPC_Keyword_LoadAddressMacroAuto( void )
 //	}
 //
 //	Specialized instruction to populate the load address macro based on a project
-//	name. Assumes the contained list is minimally packed and has free reign of 
+//	name. Assumes the contained list is minimally packed and has free reign of
 //	space up to the limit. Finds unused space spreads it out evenly between
 //	each project
 //-----------------------------------------------------------------------------
@@ -1536,13 +1536,13 @@ void VPC_SharedKeyword_Conditional()
 		pToken++;
 	}
 	strcpy( name, pToken );
-	
+
 	char value[MAX_SYSTOKENCHARS];
 	if ( !g_pVPC->GetScript().ParsePropertyValue( NULL, value, sizeof( value ) ) )
 	{
 		return;
 	}
-	
+
 	conditional_t *pConditional = g_pVPC->FindOrCreateConditional( name, true, CONDITIONAL_CUSTOM );
 	if ( pConditional->type != CONDITIONAL_CUSTOM )
 	{
@@ -1566,7 +1566,7 @@ void VPC_SharedKeyword_Conditional()
 void VPC_Keyword_IgnoreRedundancyWarning( void )
 {
 	char	value[MAX_SYSTOKENCHARS];
-	
+
 	if ( !g_pVPC->GetScript().ParsePropertyValue( NULL, value, sizeof( value ) ) )
 	{
 		return;
@@ -1608,7 +1608,7 @@ void VPC_PrepareToReadScript( const char *pInputScriptName, int depth, bool bQui
 	// parse the text script
 	if ( !Sys_Exists( szScriptName ) )
 	{
-		g_pVPC->VPCError( "Cannot open %s", szScriptName );	
+		g_pVPC->VPCError( "Cannot open %s", szScriptName );
 	}
 
 	// load it with the file expansions to compute it's CRC, so we notice if new matching files appear on disk
@@ -1617,7 +1617,7 @@ void VPC_PrepareToReadScript( const char *pInputScriptName, int depth, bool bQui
 	if ( scriptLen < 0 )
 	{
 		// unexpected due to existence check
-		g_pVPC->VPCError( "Cannot open %s", szScriptName );	
+		g_pVPC->VPCError( "Cannot open %s", szScriptName );
 	}
 
 	g_pVPC->AddScriptToCRCCheck( szScriptName, CRC32_ProcessSingleBuffer( pScriptBuffer, scriptLen ) );
@@ -1632,7 +1632,7 @@ void VPC_PrepareToReadScript( const char *pInputScriptName, int depth, bool bQui
 // Adds the current VPC file to the 'VPC Script' file, setting all the
 // custom builds steps needed to verify the .vcproj is up to date
 //-----------------------------------------------------------------------------
-void VPC_AddCurrentVPCScriptToProjectFolder( bool bDoCRCCheck ) 
+void VPC_AddCurrentVPCScriptToProjectFolder( bool bDoCRCCheck )
 {
 	// skip including VPC scripts if NOVPC is defined
 	if( g_pVPC->EvaluateConditionalExpression( "$NOVPC" ) )
@@ -1681,7 +1681,7 @@ void VPC_HandleIncludeStatement( int depth, bool bQuiet, void (*CallbackFn)( con
 
 		CallbackFn( szBigBuffer, depth+1, bQuiet );
 		free( pScriptBuffer );
-		
+
 		// restore state
 		g_pVPC->GetScript().PopScript();
 	}
@@ -1784,7 +1784,7 @@ void WriteCRCCheckFile( const char *pVCProjFilename )
 
 	// add the supplemental string crc
 	fprintf( fp, "%s\n", g_pVPC->GetCRCString() );
-	
+
 	CUtlDict<int, int> filenameDict( k_eDictCompareTypeFilenames );
 	for ( int i=0; i < g_pVPC->m_ScriptList.Count(); i++ )
 	{
@@ -1810,7 +1810,7 @@ void WriteCRCCheckFile( const char *pVCProjFilename )
 // (via $AdditionalProjectDependencies).
 //
 // This fixes full rebuild problems where it's building a project that uses schemacompiler
-// at the same time as it's building schemacompiler. This usually screws up when 
+// at the same time as it's building schemacompiler. This usually screws up when
 // it tries to copy the new schemacompiler.exe to game\bin but it's in use.
 //
 void VPC_ForceAdditionalSchemaDependencies( const char *pProjectName )
@@ -1872,7 +1872,7 @@ void VPC_Keyword_Project( int depth, bool bQuiet )
 		g_pVPC->VPCSyntaxError();
 
 	VPC_HandleProjectCommands( NULL, depth, bQuiet );
-	
+
 	// the unnamed project does not get written, once it is named it will be written on closing scope
 	if ( V_stricmp( szProjectName, "UNNAMED" ) )
 	{
@@ -1981,7 +1981,7 @@ void VPC_Keyword_CustomBuildStep( void )
 			{
 				// end of section
 				break;
-			}			
+			}
 		}
 
 		CUtlString buildsteps;
@@ -2089,7 +2089,7 @@ bool CVPC::ParseProjectScript( const char *pScriptName, int depth, bool bQuiet, 
 	char	szScriptName[MAX_PATH];
 
 	VPC_PrepareToReadScript( pScriptName, depth, bQuiet, pScriptBuffer, szScriptName );
-	
+
 	int cMissingFilesPreParse = g_pVPC->GetMissingFilesCount();
 
 	if ( !depth )
@@ -2105,7 +2105,7 @@ bool CVPC::ParseProjectScript( const char *pScriptName, int depth, bool bQuiet, 
 		FindOrCreateMacro( "LOADADDRESSNAME", true, g_pVPC->GetLoadAddressName() );
 
 		// create reserved $CRCCHECK
-		// The CRCs themselves are dumped into theproject.vcproj.vpc_crc (in VPC_WriteCRCCheckFile), so all this does 
+		// The CRCs themselves are dumped into theproject.vcproj.vpc_crc (in VPC_WriteCRCCheckFile), so all this does
 		// is point vpccrccheck.exe at it with "vpccrccheck.exe -crc2 theproject.vcproj"
 		// scripts add the terminal /n if they append, after referencing $CRCCHECK
 					// needs to be quoted to work with /dp which puts " (platform) " in project names,
@@ -2178,7 +2178,7 @@ void CVPC::AddScriptToCRCCheck( const char *pScriptName, CRC32_t crc )
 //
 //							Schema Script Generation
 //
-// Temporary - Once the schema workflow settles down, this schema-specific code should be 
+// Temporary - Once the schema workflow settles down, this schema-specific code should be
 //             at minimum moved into its own file, and ideally generalized so that VPC
 //             has a minimum of embedded schema-specific logic.
 //
@@ -2286,7 +2286,7 @@ void VPC_FakeKeyword_SchemaFolder( CBaseProjectDataCollector *pDataCollector )
 	vpcBuffer.SetBufferType( true, true );
 	vpcBuffer.Printf( "$Folder \"Autogenerated Schema Files\" \n" );
 	vpcBuffer.Printf( "{\n" );
-	vpcBuffer.Printf( 
+	vpcBuffer.Printf(
 		"$File \"%s\"\n"
 		"{\n"
 		"	$Configuration\n"
@@ -2312,7 +2312,7 @@ void VPC_FakeKeyword_SchemaFolder( CBaseProjectDataCollector *pDataCollector )
 		"		}\n"
 		"	}\n"
 		"}\n";
-	
+
 	vpcBuffer.Printf( "$Folder \"Cpp Schema Wrappers\" \n" );
 	{
 		vpcBuffer.Printf( "{\n" );
@@ -2372,7 +2372,7 @@ void VPC_FakeKeyword_SchemaFolder( CBaseProjectDataCollector *pDataCollector )
 	pOutKeyValues->SetString( "anchor_path", szSchemaOutAnchorPath );
 	char dmeTargetFolder[MAX_PATH];
 	g_pVPC->ResolveMacrosInString( "$SRCDIR\\public", dmeTargetFolder, sizeof( dmeTargetFolder ) );
-	pOutKeyValues->SetString( "dme_target_folder", dmeTargetFolder );	
+	pOutKeyValues->SetString( "dme_target_folder", dmeTargetFolder );
 
 	KeyValues *pOutAllConfigs = new KeyValues( "configs" );
 	pOutKeyValues->AddSubKey( pOutAllConfigs );
@@ -2429,7 +2429,7 @@ KeyValues *ConfigPreprocessorSettingsAsKV( CSpecificConfig * pConfig )
 	KeyValues *pInConfigKV = pConfig->m_pKV;
 
 	//////////////////////////////////////////////////////////////////////////
-	// write defines 
+	// write defines
 
 	{
 		KeyValues *pOutDefines = new KeyValues( "defines" );
@@ -2462,7 +2462,7 @@ KeyValues *ConfigPreprocessorSettingsAsKV( CSpecificConfig * pConfig )
 	}
 
 	//////////////////////////////////////////////////////////////////////////
-	// write includes 
+	// write includes
 
 	KeyValues *pOutIncludes = new KeyValues( "includes" );
 	pOutConfig->AddSubKey( pOutIncludes );

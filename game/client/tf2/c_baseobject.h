@@ -29,7 +29,7 @@ class C_BaseTFPlayer;
 #define MAX_ID_STRING		256
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_BaseObject : public C_BaseCombatCharacter, public IHasBuildPoints
 {
@@ -94,7 +94,7 @@ public:
 
 	// This is called to get the initial builder yaw...
 	virtual float	GetInitialBuilderYaw();
-	
+
 	virtual void	RecalculateIDString( void );
 
 	int GetType() const { return m_iObjectType; }

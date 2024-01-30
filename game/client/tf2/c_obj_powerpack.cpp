@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@
 #define NUM_POWERPACK_GLOWS		6
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectPowerPack : public C_BaseObject
 {
@@ -66,7 +66,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_ObjectPowerPack, DT_ObjectPowerPack, CObjectPowerPack
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectPowerPack::C_ObjectPowerPack()
 {
@@ -75,12 +75,12 @@ C_ObjectPowerPack::C_ObjectPowerPack()
 		m_pGlowSprites[i] = NULL;
 	}
 
-	m_iGlowModelIndex = PrecacheModel( "effects/human_object_glow.vmt" ); 
+	m_iGlowModelIndex = PrecacheModel( "effects/human_object_glow.vmt" );
 	m_pJacobsLadderBeam = NULL;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectPowerPack::~C_ObjectPowerPack( void )
 {
@@ -122,7 +122,7 @@ void C_ObjectPowerPack::OnGoInactive( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectPowerPack::RemoveGlows( void )
 {
@@ -145,7 +145,7 @@ void C_ObjectPowerPack::RemoveGlows( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectPowerPack::ClientThink( void )
 {
@@ -207,18 +207,18 @@ void C_ObjectPowerPack::ClientThink( void )
 	if ( m_flJacobsLeftPoint >= 1.0f && m_flJacobsRightPoint >= 1.0f )
 	{
 		// Snap!
-		m_flJacobsLeftPoint = 0.0f; 
-		m_flJacobsRightPoint = 0.0f; 
+		m_flJacobsLeftPoint = 0.0f;
+		m_flJacobsRightPoint = 0.0f;
 	}
-	else if ( m_flJacobsLeftPoint > 1.0f ) 
-	{ 
+	else if ( m_flJacobsLeftPoint > 1.0f )
+	{
 		// Only the left point's made it
-		m_flJacobsLeftPoint = 1.0f; 
+		m_flJacobsLeftPoint = 1.0f;
 	}
-	else if ( m_flJacobsRightPoint > 1.0f ) 
-	{ 
+	else if ( m_flJacobsRightPoint > 1.0f )
+	{
 		// Only the right point's made it
-		m_flJacobsRightPoint = 1.0f; 
+		m_flJacobsRightPoint = 1.0f;
 	}
 
 	Vector vecLeft = vecLeftTop - vecLeftBottom;
@@ -231,11 +231,11 @@ void C_ObjectPowerPack::ClientThink( void )
 	beamInfo.m_flRed = color.r;
 	beamInfo.m_flGreen = color.g;
 	beamInfo.m_flBlue = color.b;
-	beams->UpdateBeamInfo( m_pJacobsLadderBeam, beamInfo );	
+	beams->UpdateBeamInfo( m_pJacobsLadderBeam, beamInfo );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_ObjectPowerPack::DrawModel( int flags )
 {
@@ -267,7 +267,7 @@ int C_ObjectPowerPack::DrawModel( int flags )
 }
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CPowerPackControlPanel : public CObjectControlPanel
 {
@@ -287,16 +287,16 @@ DECLARE_VGUI_SCREEN_FACTORY( CPowerPackControlPanel, "powerpack_control_panel" )
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CPowerPackControlPanel::CPowerPackControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CPowerPackControlPanel" ) 
+	: BaseClass( parent, "CPowerPackControlPanel" )
 {
 }
 
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CPowerPackControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -336,5 +336,3 @@ void CPowerPackControlPanel::OnTick()
 
 	m_pSocketsLabel->SetText( buf );
 }
-
-

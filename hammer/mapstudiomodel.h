@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -63,7 +63,7 @@ class CMapStudioModel : public CMapHelper
 		static void EnableAnimation(BOOL bEnable);
 
 		bool IsVisualElement(void) { return(true); }
-		
+
 		bool ShouldRenderLast();
 
 		const char* GetDescription() { return("Studio model"); }
@@ -75,7 +75,7 @@ class CMapStudioModel : public CMapHelper
 		int GetSequenceCount(void);
 		void GetSequenceName(int nIndex, char *szName);
 		void SetSequence(int nIndex);
-		
+
 		// Returns the index of the sequence (does a case-insensitive search).
 		// Returns -1 if the sequence doesn't exist.
 		int GetSequenceIndex( const char *pSequenceName ) const;
@@ -87,12 +87,12 @@ class CMapStudioModel : public CMapHelper
 		inline float ComputeScreenFade( CRender3D *pRender ) const;
 
 		void GetRenderAngles(QAngle &Angles);
-		
+
 		//
 		// Implements CMapAtom transformation functions.
 		//
 		void DoTransform(const VMatrix &matrix);
-		
+
 		inline void ReversePitch(bool bReversePitch);
 		inline void SetOrientedBounds(bool bOrientedBounds);
 

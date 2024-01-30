@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -62,7 +62,7 @@ void CTFHLTVDirector::CreateShotFromEvent( CHLTVGameEvent *event )
 
 	int thera = RandomFloat()>0.5?20:-20;
 
-	if ( !Q_strcmp( "teamplay_point_startcapture", name ) || 
+	if ( !Q_strcmp( "teamplay_point_startcapture", name ) ||
 		 !Q_strcmp( "teamplay_point_captured", name ) ||
 		 !Q_strcmp( "teamplay_capture_blocked", name ) )
 	{
@@ -70,14 +70,14 @@ void CTFHLTVDirector::CreateShotFromEvent( CHLTVGameEvent *event )
 
 		int iCameraIndex = -1;
 		float flClosest = 99999.9f;
-		
+
 		if ( pCapturePoint )
 		{
 			// Does it have an associated viewpoint?
 			for ( int i = 0; i<m_nNumFixedCameras; i++ )
 			{
 				CBaseEntity *pCamera = m_pFixedCameras[ i ];
-		
+
 				if ( pCamera )
 				{
 					byte pvs[MAX_MAP_CLUSTERS/8];
@@ -190,7 +190,7 @@ const char** CTFHLTVDirector::GetModEvents()
 		"round_end",
 		"server_cvar",
 		"server_spawn",
-				
+
 		// additional TF events:
 		"controlpoint_starttouch",
 		"controlpoint_endtouch",
@@ -209,7 +209,7 @@ const char** CTFHLTVDirector::GetModEvents()
 		"training_complete",
 		"tf_game_over",
 		"object_destroyed",
-			
+
 		NULL
 	};
 

@@ -15,13 +15,13 @@
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CStatModuleItemSelectionPanel : public CItemCriteriaSelectionPanel
 {
 	DECLARE_CLASS_SIMPLE( CStatModuleItemSelectionPanel, CItemCriteriaSelectionPanel );
 public:
-	CStatModuleItemSelectionPanel( Panel *pParent, const CEconItemView* pCorrespondingItem ) 
+	CStatModuleItemSelectionPanel( Panel *pParent, const CEconItemView* pCorrespondingItem )
 		: BaseClass( pParent, NULL )
 		, m_pCorrespondingItem( pCorrespondingItem )
 		, m_mapXifierClassCount( CaselessStringLessThan )
@@ -56,7 +56,7 @@ public:
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	const char *GetItemNotSelectableReason( const CEconItemView *pItem ) const
 	{
@@ -116,9 +116,9 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CStrangeCountTransferPanel::CStrangeCountTransferPanel( vgui::Panel *parent, CEconItemView* pToolItem ) 
+CStrangeCountTransferPanel::CStrangeCountTransferPanel( vgui::Panel *parent, CEconItemView* pToolItem )
 	: BaseClass( parent, "StrangeCountTrasnferDialog" )
 	, m_pToolItem( pToolItem )
 {
@@ -143,7 +143,7 @@ CStrangeCountTransferPanel::CStrangeCountTransferPanel( vgui::Panel *parent, CEc
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStrangeCountTransferPanel::~CStrangeCountTransferPanel( void )
 {
@@ -154,7 +154,7 @@ CStrangeCountTransferPanel::~CStrangeCountTransferPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStrangeCountTransferPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -216,7 +216,7 @@ void CStrangeCountTransferPanel::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStrangeCountTransferPanel::OnItemPanelMousePressed( vgui::Panel *panel )
 {
@@ -240,7 +240,7 @@ void CStrangeCountTransferPanel::OnItemPanelMousePressed( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStrangeCountTransferPanel::OnSelectionReturned( KeyValues *data )
 {
@@ -260,7 +260,7 @@ void CStrangeCountTransferPanel::OnSelectionReturned( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStrangeCountTransferPanel::UpdateOKButton()
 {

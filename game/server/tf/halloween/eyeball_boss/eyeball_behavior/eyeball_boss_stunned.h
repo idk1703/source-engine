@@ -16,7 +16,7 @@ public:
 	virtual void							OnEnd( CEyeballBoss *me, Action< CEyeballBoss > *nextAction );
 
 	virtual EventDesiredResult< CEyeballBoss > OnInjured( CEyeballBoss *me, const CTakeDamageInfo &info )
-	{ 
+	{
 		// don't get stunned while stunned
 		return TryToSustain( RESULT_CRITICAL );
 	}

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@ class SampleCheckButtons: public DemoPage
 	public:
 		SampleCheckButtons(Panel *parent, const char *name);
 		~SampleCheckButtons();
-	
+
 	private:
 
 };
@@ -46,5 +46,3 @@ Panel* SampleCheckButtons_Create(Panel *parent)
 {
 	return new SampleCheckButtons(parent, "Check buttons");
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -89,54 +89,54 @@ CCSClientScoreBoardDialog::CCSClientScoreBoardDialog( IViewPort *pViewPort ) : C
 	m_teamDisplayCT.playerDataColor = Color( 150, 200, 255, 255 );
 	m_teamDisplayCT.playerClanColor = Color( 150, 200, 255, 255 );
 
-    m_iImageDead = kInvalidImageID;
-    m_iImageDominated = kInvalidImageID;
-    m_iImageNemesis = kInvalidImageID;
-    m_iImageBomb = kInvalidImageID;
-    m_iImageVIP = kInvalidImageID;
-    m_iImageFriend = kInvalidImageID;
-    m_iImageNemesisDead = kInvalidImageID;
-    m_iImageDominationDead = kInvalidImageID;
+	m_iImageDead = kInvalidImageID;
+	m_iImageDominated = kInvalidImageID;
+	m_iImageNemesis = kInvalidImageID;
+	m_iImageBomb = kInvalidImageID;
+	m_iImageVIP = kInvalidImageID;
+	m_iImageFriend = kInvalidImageID;
+	m_iImageNemesisDead = kInvalidImageID;
+	m_iImageDominationDead = kInvalidImageID;
 
 	m_pWinConditionLabel = new Label( this, "WinConditionLabel", "" );
 	m_pClockLabel = new Label( this, "Icon_Clock", "" );
 
-    m_pLabelMapName = new Label( this, "MapName", "" );
+	m_pLabelMapName = new Label( this, "MapName", "" );
 	m_pServerLabel = new Label( this, "ServerNameLabel", "" );
 
-    ListenForGameEvent( "server_spawn" );
-    ListenForGameEvent( "game_newmap" );
-    ListenForGameEvent( "match_end_conditions" );
-    ListenForGameEvent( "cs_win_panel_match" );
+	ListenForGameEvent( "server_spawn" );
+	ListenForGameEvent( "game_newmap" );
+	ListenForGameEvent( "match_end_conditions" );
+	ListenForGameEvent( "cs_win_panel_match" );
 
-    SetDialogVariable( "server", "" );
-    SetVisible( false );
-    SetProportional(true);
-    SetPaintBorderEnabled(false);
-    SetScheme( "ClientScheme" );
+	SetDialogVariable( "server", "" );
+	SetVisible( false );
+	SetProportional(true);
+	SetPaintBorderEnabled(false);
+	SetScheme( "ClientScheme" );
 
 	// [pfreese] Make the scoreboard a popup so it renders over the chat interface (which is also a popup). Hacky.
 	MakePopup();
-	
-    m_listItemFont = NULL;
 
-    m_LocalPlayerItemID = -1;
-    m_iImageMVP = -1;
+	m_listItemFont = NULL;
 
-    m_gameOver = false;
+	m_LocalPlayerItemID = -1;
+	m_iImageMVP = -1;
 
-    if ( g_pClientMode &&
-		 g_pClientMode->GetMapName() )
-    {
+	m_gameOver = false;
+
+	if ( g_pClientMode &&
+		g_pClientMode->GetMapName() )
+	{
 		V_wcsncpy( m_pMapName, g_pClientMode->GetMapName(), sizeof( m_pMapName ) );
-        SetDialogVariable( "mapname", m_pMapName );
-        m_pLabelMapName->SetVisible( true );
-    }
+		SetDialogVariable( "mapname", m_pMapName );
+		m_pLabelMapName->SetVisible( true );
+	}
 
-    SetKeyBoardInputEnabled( true );
+	SetKeyBoardInputEnabled( true );
 
-    for ( int i = 0; i < cMaxScoreLines; ++i )
-    {
+	for ( int i = 0; i < cMaxScoreLines; ++i )
+	{
 		PlayerDisplay* pPlayerDisplay;
 
 		pPlayerDisplay = &m_teamDisplayCT.playerDisplay[i];
@@ -165,8 +165,8 @@ CCSClientScoreBoardDialog::CCSClientScoreBoardDialog( IViewPort *pViewPort ) : C
 	}
 
 	m_pServerName[0] = L'\0';
-    m_pStatsEnabled[0] = L'\0';
-    m_pStatsDisabled[0] = L'\0';
+	m_pStatsEnabled[0] = L'\0';
+	m_pStatsDisabled[0] = L'\0';
 
 	m_MVPXOffset = 0;
 }
@@ -176,19 +176,19 @@ CCSClientScoreBoardDialog::CCSClientScoreBoardDialog( IViewPort *pViewPort ) : C
 //-----------------------------------------------------------------------------
 CCSClientScoreBoardDialog::~CCSClientScoreBoardDialog()
 {
-    for (int i = 0; i < cMaxScoreLines; ++i)
-    {
+	for (int i = 0; i < cMaxScoreLines; ++i)
+	{
 		PlayerDisplay* pPlayerDisplay;
 
 		pPlayerDisplay = &m_teamDisplayCT.playerDisplay[i];
 		delete pPlayerDisplay->pClanLabel;
-        delete pPlayerDisplay->pNameLabel;
-        delete pPlayerDisplay->pScoreLabel;
-        delete pPlayerDisplay->pDeathsLabel;
-        delete pPlayerDisplay->pPingLabel;
+		delete pPlayerDisplay->pNameLabel;
+		delete pPlayerDisplay->pScoreLabel;
+		delete pPlayerDisplay->pDeathsLabel;
+		delete pPlayerDisplay->pPingLabel;
 		delete pPlayerDisplay->pMVPCountLabel;
 		delete pPlayerDisplay->pAvatar;
-        delete pPlayerDisplay->pStatusImage;
+		delete pPlayerDisplay->pStatusImage;
 		delete pPlayerDisplay->pMVPImage;
 		delete pPlayerDisplay->pSelect;
 
@@ -203,7 +203,7 @@ CCSClientScoreBoardDialog::~CCSClientScoreBoardDialog()
 		delete pPlayerDisplay->pStatusImage;
 		delete pPlayerDisplay->pMVPImage;
 		delete pPlayerDisplay->pSelect;
-    }
+	}
 }
 
 const wchar_t *LocalizeFindSafe( const char *pTokenName )
@@ -217,29 +217,29 @@ const wchar_t *LocalizeFindSafe( const char *pTokenName )
 //-----------------------------------------------------------------------------
 void CCSClientScoreBoardDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
-    BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings( pScheme );
 
 	//
 	// [smessick] Note: ApplySchemeSettings is called multiple times for the scoreboard.
 	// Therefore, we must make sure to delete previously allocated items.
 	//
 
-    LoadControlSettings( "Resource/UI/scoreboard.res" );
+	LoadControlSettings( "Resource/UI/scoreboard.res" );
 
-    //Just used for a background alpha value.  50% opacity
-    m_listItemFont = pScheme->GetFont( "ScoreboardBody_1", IsProportional() );
-    m_listItemFontSmaller = pScheme->GetFont( "ScoreboardBody_2", IsProportional() );
-    m_listItemFontSmallest = pScheme->GetFont( "ScoreboardBody_3", IsProportional() );
+	//Just used for a background alpha value.  50% opacity
+	m_listItemFont = pScheme->GetFont( "ScoreboardBody_1", IsProportional() );
+	m_listItemFontSmaller = pScheme->GetFont( "ScoreboardBody_2", IsProportional() );
+	m_listItemFontSmallest = pScheme->GetFont( "ScoreboardBody_3", IsProportional() );
 	m_MVPFont = pScheme->GetFont( "ScoreboardMVP", IsProportional() );
 
-    SetBgColor( Color( 0, 0, 0, 0 ) );
-    SetBorder( pScheme->GetBorder( "BaseBorder" ) );
+	SetBgColor( Color( 0, 0, 0, 0 ) );
+	SetBorder( pScheme->GetBorder( "BaseBorder" ) );
 
-    // turn off the default player list since we have our own
-    if ( m_pPlayerList )
-    {
-        m_pPlayerList->SetVisible( false );
-    }
+	// turn off the default player list since we have our own
+	if ( m_pPlayerList )
+	{
+		m_pPlayerList->SetVisible( false );
+	}
 
 	// Set the player colors from the convars.
 	UpdatePlayerColors();
@@ -251,7 +251,7 @@ void CCSClientScoreBoardDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 	// Set the server name (in the case of a resolution change).
 	if ( m_pServerName[0] == L'\0' &&
-		 g_pClientMode->GetServerName() != NULL )
+		g_pClientMode->GetServerName() != NULL )
 	{
 		V_wcsncpy( m_pServerName, g_pClientMode->GetServerName(), sizeof( m_pServerName ) );
 	}
@@ -267,8 +267,8 @@ void CCSClientScoreBoardDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 	{
 		V_wcsncpy( m_pStatsDisabled, LocalizeFindSafe( "#Cstrike_Scoreboard_StatsDisabled" ), sizeof( m_pStatsDisabled ) );
 	}
- 
-    SetVisible( false );
+
+	SetVisible( false );
 }
 
 
@@ -540,30 +540,30 @@ void CCSClientScoreBoardDialog::SetupTeamDisplay( TeamDisplayInfo& teamDisplay, 
 int CCSClientScoreBoardDialog::PlayerSortFunction( PlayerScoreInfo* const* pLeft, PlayerScoreInfo* const* pRight )
 {
 	// a return value < 0 puts pLeft earlier in the list, > 0 puts pRight earlier
-    const PlayerScoreInfo* pPlayer1 = *pLeft;
-    const PlayerScoreInfo* pPlayer2 = *pRight;
-    Assert( pPlayer1 && pPlayer2 );
+	const PlayerScoreInfo* pPlayer1 = *pLeft;
+	const PlayerScoreInfo* pPlayer2 = *pRight;
+	Assert( pPlayer1 && pPlayer2 );
 
-    // bail out early if either player is an empty slot, i.e. has a player index of -1
-    if( pPlayer1->playerIndex == -1 )
+	// bail out early if either player is an empty slot, i.e. has a player index of -1
+	if( pPlayer1->playerIndex == -1 )
 		return 1;
-    if( pPlayer2->playerIndex == -1 )
+	if( pPlayer2->playerIndex == -1 )
 		return -1;
 
-    // first compare scores
-    if ( pPlayer1->frags > pPlayer2->frags )
+	// first compare scores
+	if ( pPlayer1->frags > pPlayer2->frags )
 		return -1;
-    if ( pPlayer1->frags < pPlayer2->frags )
+	if ( pPlayer1->frags < pPlayer2->frags )
 		return 1;
 
-    // second compare deaths
-    if ( pPlayer1->deaths > pPlayer2->deaths )
+	// second compare deaths
+	if ( pPlayer1->deaths > pPlayer2->deaths )
 		return 1;
-    if ( pPlayer1->deaths < pPlayer2->deaths )
+	if ( pPlayer1->deaths < pPlayer2->deaths )
 		return -1;
 
-    // if score and deaths are the same, use player index to get deterministic sort
-    if ( pPlayer1->playerIndex < pPlayer2->playerIndex )
+	// if score and deaths are the same, use player index to get deterministic sort
+	if ( pPlayer1->playerIndex < pPlayer2->playerIndex )
 		return -1;
 	else
 		return 1;
@@ -575,15 +575,15 @@ int CCSClientScoreBoardDialog::PlayerSortFunction( PlayerScoreInfo* const* pLeft
 //-----------------------------------------------------------------------------
 void CCSClientScoreBoardDialog::Update()
 {
-    if ( m_pServerLabel )
-    {
-        m_pServerLabel->SetText( m_pServerName );
-    }
+	if ( m_pServerLabel )
+	{
+		m_pServerLabel->SetText( m_pServerName );
+	}
 
 	// Update the stats status.
-    CAchievementMgr *pAchievementMgr = dynamic_cast<CAchievementMgr*>( engine->GetAchievementMgr() );
-    if ( pAchievementMgr != NULL &&
-		 pAchievementMgr->CheckAchievementsEnabled() )
+	CAchievementMgr *pAchievementMgr = dynamic_cast<CAchievementMgr*>( engine->GetAchievementMgr() );
+	if ( pAchievementMgr != NULL &&
+		pAchievementMgr->CheckAchievementsEnabled() )
 	{
 		SetDialogVariable( "statsstatus", m_pStatsEnabled );
 	}
@@ -592,21 +592,21 @@ void CCSClientScoreBoardDialog::Update()
 		SetDialogVariable( "statsstatus", m_pStatsDisabled );
 	}
 
-    UpdateTeamInfo();
-    UpdatePlayerList();
-    UpdateSpectatorList();
+	UpdateTeamInfo();
+	UpdatePlayerList();
+	UpdateSpectatorList();
 	UpdateHLTVList();
-    UpdateMatchEndText();
+	UpdateMatchEndText();
 	UpdateMvpElements();
 
-    // update every second
-    m_fNextUpdateTime = gpGlobals->curtime + kUpdateInterval;
+	// update every second
+	m_fNextUpdateTime = gpGlobals->curtime + kUpdateInterval;
 
-    // Catch the case where we call ShowPanel before ApplySchemeSettings, eg when going from windowed <-> fullscreen
-    if ( m_pImageList == NULL )
-    {
-        InvalidateLayout( true, true );
-    }
+	// Catch the case where we call ShowPanel before ApplySchemeSettings, eg when going from windowed <-> fullscreen
+	if ( m_pImageList == NULL )
+	{
+		InvalidateLayout( true, true );
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -619,72 +619,72 @@ void CCSClientScoreBoardDialog::UpdateTeamInfo()
 		return;
 	}
 
-    // update the team sections in the scoreboard
-    for ( int teamIndex = TEAM_TERRORIST; teamIndex <= TEAM_CT; teamIndex++ )
-    {
-        wchar_t *teamName = NULL;
-        C_Team *team = GetGlobalTeam( teamIndex );
-        if ( team )
-        {
-            // choose dialog variables to set depending on team
-            const char *pDialogVarTeamName = NULL;
-            const char *pDialogVarAliveCount = NULL;
+	// update the team sections in the scoreboard
+	for ( int teamIndex = TEAM_TERRORIST; teamIndex <= TEAM_CT; teamIndex++ )
+	{
+		wchar_t *teamName = NULL;
+		C_Team *team = GetGlobalTeam( teamIndex );
+		if ( team )
+		{
+			// choose dialog variables to set depending on team
+			const char *pDialogVarTeamName = NULL;
+			const char *pDialogVarAliveCount = NULL;
 			const char *pDialogVarTeamScore = NULL;
-            switch ( teamIndex )
-            {
-            case TEAM_TERRORIST:
-                teamName = g_pVGuiLocalize->Find( "#Cstrike_Team_T" );
-                pDialogVarTeamName = "t_teamname";
+			switch ( teamIndex )
+			{
+			case TEAM_TERRORIST:
+				teamName = g_pVGuiLocalize->Find( "#Cstrike_Team_T" );
+				pDialogVarTeamName = "t_teamname";
 				pDialogVarAliveCount = "t_alivecount";
 				pDialogVarTeamScore = "t_totalteamscore";
-                break;
-            case TEAM_CT:
-                teamName = g_pVGuiLocalize->Find( "#Cstrike_Team_CT" );
-                pDialogVarTeamName = "ct_teamname";
+				break;
+			case TEAM_CT:
+				teamName = g_pVGuiLocalize->Find( "#Cstrike_Team_CT" );
+				pDialogVarTeamName = "ct_teamname";
 				pDialogVarAliveCount = "ct_alivecount";
 				pDialogVarTeamScore = "ct_totalteamscore";
-                break;
-            default:
-                Assert( false );
-                break;
-            }
+				break;
+			default:
+				Assert( false );
+				break;
+			}
 
 			// Set the team name if it hasn't been set.
-            wchar_t name[64];
-            if ( !teamName && team && team->Get_Name() != NULL )
-            {
-                g_pVGuiLocalize->ConvertANSIToUnicode( team->Get_Name(), name, sizeof( name ) );
-                teamName = name;
-            }
+			wchar_t name[64];
+			if ( !teamName && team && team->Get_Name() != NULL )
+			{
+				g_pVGuiLocalize->ConvertANSIToUnicode( team->Get_Name(), name, sizeof( name ) );
+				teamName = name;
+			}
 
 			// Count the players on the team.
-            int numPlayers = 0;
+			int numPlayers = 0;
 			int numAlive = 0;
-            for ( int playerIndex = 1 ; playerIndex <= MAX_PLAYERS; playerIndex++ )
-            {
-                if ( g_PR->IsConnected( playerIndex ) && g_PR->GetTeam( playerIndex ) == teamIndex )
-                {
-                    numPlayers++;
+			for ( int playerIndex = 1 ; playerIndex <= MAX_PLAYERS; playerIndex++ )
+			{
+				if ( g_PR->IsConnected( playerIndex ) && g_PR->GetTeam( playerIndex ) == teamIndex )
+				{
+					numPlayers++;
 					if ( g_PR->IsAlive( playerIndex ) )
 					{
 						++numAlive;
 					}
-                }				
-            }
+				}
+			}
 
-            SetDialogVariable( pDialogVarTeamName, teamName );
+			SetDialogVariable( pDialogVarTeamName, teamName );
 
 			// Team score
-            wchar_t wNumScore[16];
-            V_snwprintf( wNumScore, ARRAYSIZE( wNumScore ), L"%i", team->Get_Score() );
-            SetDialogVariable( pDialogVarTeamScore, wNumScore );
+			wchar_t wNumScore[16];
+			V_snwprintf( wNumScore, ARRAYSIZE( wNumScore ), L"%i", team->Get_Score() );
+			SetDialogVariable( pDialogVarTeamScore, wNumScore );
 
 			// Number of alive players
 			wchar_t numAliveString[32];
-            V_snwprintf( numAliveString, ARRAYSIZE( numAliveString ), L"%i / %i", numAlive, numPlayers);
-            SetDialogVariable( pDialogVarAliveCount, numAliveString );
-        }
-    }
+			V_snwprintf( numAliveString, ARRAYSIZE( numAliveString ), L"%i / %i", numAlive, numPlayers);
+			SetDialogVariable( pDialogVarAliveCount, numAliveString );
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -731,48 +731,48 @@ void CCSClientScoreBoardDialog::AdjustFontToFit( const char *pString, vgui::Labe
 //-----------------------------------------------------------------------------
 void CCSClientScoreBoardDialog::UpdatePlayerList()
 {
-    m_teamDisplayT.playerScores.PurgeAndDeleteElements();
-    m_teamDisplayCT.playerScores.PurgeAndDeleteElements();
+	m_teamDisplayT.playerScores.PurgeAndDeleteElements();
+	m_teamDisplayCT.playerScores.PurgeAndDeleteElements();
 
-    C_CSPlayer *pLocalPlayer = C_CSPlayer::GetLocalCSPlayer();
-    if ( !pLocalPlayer )
-        return;
+	C_CSPlayer *pLocalPlayer = C_CSPlayer::GetLocalCSPlayer();
+	if ( !pLocalPlayer )
+		return;
 
 	// Set the player colors from the convars.
 	UpdatePlayerColors();
 
-    for( int playerIndex = 1 ; playerIndex <= MAX_PLAYERS; playerIndex++ )
-    {
-        if( g_PR->IsConnected( playerIndex ) )
-        {
-            PlayerScoreInfo* playerScoreInfo = new PlayerScoreInfo;
-            if ( !GetPlayerScoreInfo( playerIndex, *playerScoreInfo ) )
+	for( int playerIndex = 1 ; playerIndex <= MAX_PLAYERS; playerIndex++ )
+	{
+		if( g_PR->IsConnected( playerIndex ) )
+		{
+			PlayerScoreInfo* playerScoreInfo = new PlayerScoreInfo;
+			if ( !GetPlayerScoreInfo( playerIndex, *playerScoreInfo ) )
 			{
-                delete playerScoreInfo;
+				delete playerScoreInfo;
 				continue;
 			}
 
-            if ( g_PR->GetTeam( playerIndex ) == TEAM_TERRORIST )
-            {
-                m_teamDisplayT.playerScores.AddToTail(playerScoreInfo);
-            }
-            else if ( g_PR->GetTeam( playerIndex ) == TEAM_CT )
-            {
-                m_teamDisplayCT.playerScores.AddToTail(playerScoreInfo);
-            }
-            else
-            {
+			if ( g_PR->GetTeam( playerIndex ) == TEAM_TERRORIST )
+			{
+				m_teamDisplayT.playerScores.AddToTail(playerScoreInfo);
+			}
+			else if ( g_PR->GetTeam( playerIndex ) == TEAM_CT )
+			{
+				m_teamDisplayCT.playerScores.AddToTail(playerScoreInfo);
+			}
+			else
+			{
 				// [mhansen] make sure we don't leak here
-                delete playerScoreInfo;
-            }
-        }
-    }
+				delete playerScoreInfo;
+			}
+		}
+	}
 
-    // Sort the lists of players
-    m_teamDisplayT.playerScores.Sort(PlayerSortFunction);
-    m_teamDisplayCT.playerScores.Sort(PlayerSortFunction);
+	// Sort the lists of players
+	m_teamDisplayT.playerScores.Sort(PlayerSortFunction);
+	m_teamDisplayCT.playerScores.Sort(PlayerSortFunction);
 
-    // Force the local player to be visible when he is below the visible portion of the sorted list
+	// Force the local player to be visible when he is below the visible portion of the sorted list
 	if ( pLocalPlayer->GetTeamNumber() == TEAM_TERRORIST )
 		ForceLocalPlayerVisible(m_teamDisplayT);
 	else if ( pLocalPlayer->GetTeamNumber() == TEAM_CT )
@@ -826,7 +826,7 @@ void CCSClientScoreBoardDialog::UpdateTeamPlayerDisplay( TeamDisplayInfo& teamDi
 // 				bufsize = strlen( oldName ) * 2 + 14 + 1;
 // 			else
 // 				bufsize = strlen( oldName ) * 2 + 1;
-// 
+//
 // 			char *newName = (char *)_alloca( bufsize );
 // 			UTIL_MakeSafeName( oldName, newName, bufsize );
 
@@ -926,7 +926,7 @@ void CCSClientScoreBoardDialog::UpdateTeamPlayerDisplay( TeamDisplayInfo& teamDi
 			if ( playerDisplay.pAvatar != NULL )
 			{
 				playerDisplay.pAvatar->SetVisible( true );
-				playerDisplay.pAvatar->SetPlayer( playerIndex, k_EAvatarSize32x32 );				
+				playerDisplay.pAvatar->SetPlayer( playerIndex, k_EAvatarSize32x32 );
 				playerDisplay.pAvatar->GetPos(xPos, yPos);
 				playerDisplay.pAvatar->SetPos(xPos, startY);
 			}
@@ -1218,19 +1218,19 @@ void CCSClientScoreBoardDialog::UpdateMvpElements()
 //-----------------------------------------------------------------------------
 bool CCSClientScoreBoardDialog::ShouldShowAsSpectator( int iPlayerIndex )
 {
-    C_CS_PlayerResource *cs_PR = dynamic_cast<C_CS_PlayerResource *>( g_PR );
-    if ( !cs_PR )
-        return false;
+	C_CS_PlayerResource *cs_PR = dynamic_cast<C_CS_PlayerResource *>( g_PR );
+	if ( !cs_PR )
+		return false;
 
-    // see if player is connected
-    if ( cs_PR->IsConnected( iPlayerIndex ) ) 
-    {
-        // either spectator or unassigned team should show in spectator list
-        int iTeam = cs_PR->GetTeam( iPlayerIndex );
-        if ( TEAM_SPECTATOR == iTeam || TEAM_UNASSIGNED == iTeam )
-            return true;
-    }
-    return false;
+	// see if player is connected
+	if ( cs_PR->IsConnected( iPlayerIndex ) )
+	{
+		// either spectator or unassigned team should show in spectator list
+		int iTeam = cs_PR->GetTeam( iPlayerIndex );
+		if ( TEAM_SPECTATOR == iTeam || TEAM_UNASSIGNED == iTeam )
+			return true;
+	}
+	return false;
 }
 
 
@@ -1239,14 +1239,14 @@ void CCSClientScoreBoardDialog::FireGameEvent( IGameEvent *event )
 	if ( event == NULL )
 		return;
 
-    const char *pEventName = event->GetName();
+	const char *pEventName = event->GetName();
 	if ( pEventName == NULL )
 		return;
 
-    if ( Q_strcmp( pEventName, "server_spawn" ) == 0 )
-    {
-        // set server name in scoreboard
-        const char *hostname = event->GetString( "hostname" );
+	if ( Q_strcmp( pEventName, "server_spawn" ) == 0 )
+	{
+		// set server name in scoreboard
+		const char *hostname = event->GetString( "hostname" );
 		if ( hostname != NULL )
 		{
 			wchar_t wzHostName[256];
@@ -1269,10 +1269,10 @@ void CCSClientScoreBoardDialog::FireGameEvent( IGameEvent *event )
 				g_pClientMode->SetServerName( m_pServerName );
 			}
 		}
-    }
-    else if ( Q_strcmp( pEventName, "game_newmap" ) == 0 )
-    {
-        const char *mapName = event->GetString( "mapname" );
+	}
+	else if ( Q_strcmp( pEventName, "game_newmap" ) == 0 )
+	{
+		const char *mapName = event->GetString( "mapname" );
 		if ( mapName != NULL )
 		{
 			g_pVGuiLocalize->ConvertANSIToUnicode( mapName, m_pMapName, sizeof( m_pMapName ) );
@@ -1289,16 +1289,16 @@ void CCSClientScoreBoardDialog::FireGameEvent( IGameEvent *event )
 				g_pClientMode->SetMapName( m_pMapName );
 			}
 		}
-    }
-    else if ( Q_strcmp( pEventName, "match_end_conditions" ) == 0 )
-    {
-        UpdateMatchEndText();
-    }
-    else if ( Q_strcmp( pEventName, "cs_win_panel_match" ) == 0 )
-    {
-        m_gameOver = true;
-        UpdateMatchEndText();
-    }
+	}
+	else if ( Q_strcmp( pEventName, "match_end_conditions" ) == 0 )
+	{
+		UpdateMatchEndText();
+	}
+	else if ( Q_strcmp( pEventName, "cs_win_panel_match" ) == 0 )
+	{
+		m_gameOver = true;
+		UpdateMatchEndText();
+	}
 
 	BaseClass::FireGameEvent( event );
 }
@@ -1312,51 +1312,51 @@ bool CCSClientScoreBoardDialog::GetPlayerScoreInfo( int playerIndex, PlayerScore
 	if ( g_PR == NULL )
 		return false;
 
-    // Clean up the player name
-    const char *oldName = g_PR->GetPlayerName( playerIndex );
+	// Clean up the player name
+	const char *oldName = g_PR->GetPlayerName( playerIndex );
 	if ( oldName == NULL )
 		return false;
 
 	playerScoreInfo.szName = g_PR->GetPlayerName( playerIndex );
 
-    playerScoreInfo.playerIndex = playerIndex;
-    playerScoreInfo.frags = g_PR->GetPlayerScore( playerIndex );
-    playerScoreInfo.deaths = g_PR->GetDeaths( playerIndex );
+	playerScoreInfo.playerIndex = playerIndex;
+	playerScoreInfo.frags = g_PR->GetPlayerScore( playerIndex );
+	playerScoreInfo.deaths = g_PR->GetDeaths( playerIndex );
 
-    if ( g_PR->GetPing( playerIndex ) < 1 )
-    {
-        if ( g_PR->IsFakePlayer( playerIndex ) )
-        {
-			playerScoreInfo.ping = -1;
-        }
-        else
-        {
-			playerScoreInfo.ping = 0;
-        }
-    }
-    else
-    {
-		playerScoreInfo.ping = g_PR->GetPing( playerIndex );
-    }
-
-    // get CS specific infos
-    C_CS_PlayerResource *cs_PR = dynamic_cast<C_CS_PlayerResource *>( g_PR );
-
-    C_CSPlayer *pLocalPlayer = C_CSPlayer::GetLocalCSPlayer();
-
-    if ( !cs_PR || !pLocalPlayer )
+	if ( g_PR->GetPing( playerIndex ) < 1 )
 	{
-        return false;
+		if ( g_PR->IsFakePlayer( playerIndex ) )
+		{
+			playerScoreInfo.ping = -1;
+		}
+		else
+		{
+			playerScoreInfo.ping = 0;
+		}
+	}
+	else
+	{
+		playerScoreInfo.ping = g_PR->GetPing( playerIndex );
+	}
+
+	// get CS specific infos
+	C_CS_PlayerResource *cs_PR = dynamic_cast<C_CS_PlayerResource *>( g_PR );
+
+	C_CSPlayer *pLocalPlayer = C_CSPlayer::GetLocalCSPlayer();
+
+	if ( !cs_PR || !pLocalPlayer )
+	{
+		return false;
 	}
 
 	// Get the clan tag
 	playerScoreInfo.szClanTag = cs_PR->GetClanTag( playerIndex );
 
-    bool bShowExtraInfo = 
-        ( pLocalPlayer->GetTeamNumber() == TEAM_UNASSIGNED ) || // we're not spawned yet
-        ( pLocalPlayer->GetTeamNumber() == TEAM_SPECTATOR ) || // we are a spectator
-        ( pLocalPlayer->IsPlayerDead() && mp_forcecamera.GetInt() == OBS_ALLOW_ALL ) ||	 // we are dead and allowed to spectate opponents
-        ( pLocalPlayer->GetTeamNumber() == g_PR->GetTeam( playerIndex ) ); // we're on the same team
+	bool bShowExtraInfo =
+		( pLocalPlayer->GetTeamNumber() == TEAM_UNASSIGNED ) || // we're not spawned yet
+		( pLocalPlayer->GetTeamNumber() == TEAM_SPECTATOR ) || // we are a spectator
+		( pLocalPlayer->IsPlayerDead() && mp_forcecamera.GetInt() == OBS_ALLOW_ALL ) ||	 // we are dead and allowed to spectate opponents
+		( pLocalPlayer->GetTeamNumber() == g_PR->GetTeam( playerIndex ) ); // we're on the same team
 
 	playerScoreInfo.szStatus = NULL;
 	playerScoreInfo.bStatusPlayerColor = false;
@@ -1374,15 +1374,15 @@ bool CCSClientScoreBoardDialog::GetPlayerScoreInfo( int playerIndex, PlayerScore
 		playerScoreInfo.szStatus = "../hud/scoreboard_dead";
 	}
 
-    if ( g_PR->IsHLTV( playerIndex ) )
-    {
+	if ( g_PR->IsHLTV( playerIndex ) )
+	{
 //         // show #spectators in class field, it's transmitted as player's score
 //         char numspecs[32];
 //         Q_snprintf( numspecs, sizeof( numspecs ), "%i Spectators", m_HLTVSpectators );
 //         kv->SetString( "class", numspecs );
-    }
+	}
 
-    // Set the dominated icon
+	// Set the dominated icon
 	if ( pLocalPlayer->IsPlayerDominatingMe( playerIndex ) )
 	{
 		if ( g_PR->IsAlive( playerIndex ) )
@@ -1409,7 +1409,7 @@ bool CCSClientScoreBoardDialog::GetPlayerScoreInfo( int playerIndex, PlayerScore
 
 	if ( cs_PR->HasC4( playerIndex ) && bShowExtraInfo )
 	{
- 		playerScoreInfo.szStatus = "../hud/scoreboard_bomb";
+		playerScoreInfo.szStatus = "../hud/scoreboard_bomb";
 		playerScoreInfo.bStatusPlayerColor = true;
 	}
 
@@ -1419,7 +1419,7 @@ bool CCSClientScoreBoardDialog::GetPlayerScoreInfo( int playerIndex, PlayerScore
 		playerScoreInfo.bStatusPlayerColor = true;
 	}
 
-    return true;
+	return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -1508,14 +1508,14 @@ void CCSClientScoreBoardDialog::UpdateMatchEndText()
 // Resets all changes made by the scoreboard's state at the match end
 void CCSClientScoreBoardDialog::ResetFromGameOverState()
 {
-    m_gameOver = false;
+	m_gameOver = false;
 
-    if ( m_pLabelMapName )
-    {
-        m_pLabelMapName->SetVisible( true );
-    }
+	if ( m_pLabelMapName )
+	{
+		m_pLabelMapName->SetVisible( true );
+	}
 
-    UpdateMatchEndText();
+	UpdateMatchEndText();
 }
 
 // [tj] We hook into the show command so we can lock or unlock all the elements that need to be hidden
@@ -1524,18 +1524,18 @@ void CCSClientScoreBoardDialog::ResetFromGameOverState()
 // to leave the keyboard disabled
 void CCSClientScoreBoardDialog::ShowPanel( bool state )
 {
-    BaseClass::ShowPanel(state);
+	BaseClass::ShowPanel(state);
 
-    int iRenderGroup = gHUD.LookupRenderGroupIndexByName( "hide_for_scoreboard" );
+	int iRenderGroup = gHUD.LookupRenderGroupIndexByName( "hide_for_scoreboard" );
 
-    if ( state )
-    {	
-        gHUD.LockRenderGroup( iRenderGroup );
-    }
-    else
-    {		
-        gHUD.UnlockRenderGroup( iRenderGroup );
-    }
+	if ( state )
+	{
+		gHUD.LockRenderGroup( iRenderGroup );
+	}
+	else
+	{
+		gHUD.UnlockRenderGroup( iRenderGroup );
+	}
 }
 
 
@@ -1555,18 +1555,18 @@ void CCSClientScoreBoardDialog::UpdatePlayerColors( void )
 // [tj] Disabling joystick input if you are dead.
 void CCSClientScoreBoardDialog::OnThink()
 {
-    BaseClass::OnThink();
+	BaseClass::OnThink();
 
 #ifdef _XBOX
-    C_CSPlayer *pLocalPlayer = C_CSPlayer::GetLocalCSPlayer();
-    if ( pLocalPlayer )
-    {
-        bool mouseEnabled = IsMouseInputEnabled();
-        if (pLocalPlayer->IsAlive() == mouseEnabled)
-        {
-            SetMouseInputEnabled( !mouseEnabled );
-        }
-    }
+	C_CSPlayer *pLocalPlayer = C_CSPlayer::GetLocalCSPlayer();
+	if ( pLocalPlayer )
+	{
+		bool mouseEnabled = IsMouseInputEnabled();
+		if (pLocalPlayer->IsAlive() == mouseEnabled)
+		{
+			SetMouseInputEnabled( !mouseEnabled );
+		}
+	}
 #endif
 }
 

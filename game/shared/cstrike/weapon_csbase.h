@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -31,7 +31,7 @@ extern int GetShellForAmmoType( const char *ammoname );
 
 class CCSPlayer;
 
-// These are the names of the ammo types that go in the CAmmoDefs and that the 
+// These are the names of the ammo types that go in the CAmmoDefs and that the
 // weapon script files reference.
 #define BULLET_PLAYER_50AE		"BULLET_PLAYER_50AE"
 #define BULLET_PLAYER_762MM		"BULLET_PLAYER_762MM"
@@ -79,7 +79,7 @@ class CWeaponCSBase : public CBaseCombatWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponCSBase, CBaseCombatWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponCSBase();
@@ -89,25 +89,25 @@ public:
 
 		virtual void CheckRespawn();
 		virtual CBaseEntity* Respawn();
-		
+
 		virtual const Vector& GetBulletSpread();
 		virtual float	GetDefaultAnimSpeed();
 
 		virtual void	BulletWasFired( const Vector &vecStart, const Vector &vecEnd );
 		virtual bool	ShouldRemoveOnRoundRestart();
 
-        //=============================================================================
-        // HPE_BEGIN:
-        // [dwenger] Handle round restart processing for the weapon.
-        //=============================================================================
+		//=============================================================================
+		// HPE_BEGIN:
+		// [dwenger] Handle round restart processing for the weapon.
+		//=============================================================================
 
-        virtual void    OnRoundRestart();
+		virtual void    OnRoundRestart();
 
-        //=============================================================================
-        // HPE_END
-        //=============================================================================
+		//=============================================================================
+		// HPE_END
+		//=============================================================================
 
-        virtual bool	DefaultReload( int iClipSize1, int iClipSize2, int iActivity );
+		virtual bool	DefaultReload( int iClipSize1, int iClipSize2, int iActivity );
 
 		void SendReloadEvents();
 
@@ -116,7 +116,7 @@ public:
 		virtual void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 
 		virtual bool IsRemoveable();
-		
+
 	#endif
 
 	virtual bool	Holster( CBaseCombatWeapon *pSwitchingTo );
@@ -225,27 +225,27 @@ public:
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
-	
+
 	void SetExtraAmmoCount( int count ) { m_iExtraPrimaryAmmo = count; }
 	int GetExtraAmmoCount( void ) { return m_iExtraPrimaryAmmo; }
 
 	//=============================================================================
-	// HPE_BEGIN:	
+	// HPE_BEGIN:
 	//=============================================================================
 
-    // [tj] Accessors for the previous owner of the gun
+	// [tj] Accessors for the previous owner of the gun
 	void SetPreviousOwner(CCSPlayer* player) { m_prevOwner = player; }
 	CCSPlayer* GetPreviousOwner() { return m_prevOwner; }
 
-    // [tj] Accessors for the donor system
-    void SetDonor(CCSPlayer* player) { m_donor = player; }
-    CCSPlayer* GetDonor() { return m_donor; }
-    void SetDonated(bool donated) { m_donated = true;}
-    bool GetDonated() { return m_donated; }
+	// [tj] Accessors for the donor system
+	void SetDonor(CCSPlayer* player) { m_donor = player; }
+	CCSPlayer* GetDonor() { return m_donor; }
+	void SetDonated(bool donated) { m_donated = true;}
+	bool GetDonated() { return m_donated; }
 
-    //[dwenger] Accessors for the prior owner list
-    void AddToPriorOwnerList(CCSPlayer* pPlayer);
-    bool IsAPriorOwner(CCSPlayer* pPlayer);
+	//[dwenger] Accessors for the prior owner list
+	void AddToPriorOwnerList(CCSPlayer* pPlayer);
+	bool IsAPriorOwner(CCSPlayer* pPlayer);
 
 	//=============================================================================
 	// HPE_END
@@ -268,20 +268,20 @@ private:
 
 	int m_iDefaultExtraAmmo;
 
-    //=============================================================================
-    // HPE_BEGIN:
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	//=============================================================================
 
-    // [dwenger] track all prior owners of this weapon
-    CUtlVector< CCSPlayer* >    m_PriorOwners;
+	// [dwenger] track all prior owners of this weapon
+	CUtlVector< CCSPlayer* >    m_PriorOwners;
 
-    // [tj] To keep track of people who drop weapons for teammates during the buy round
-    CHandle<CCSPlayer> m_donor;
-    bool m_donated;
+	// [tj] To keep track of people who drop weapons for teammates during the buy round
+	CHandle<CCSPlayer> m_donor;
+	bool m_donated;
 
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 };
 
 extern ConVar weapon_accuracy_model;

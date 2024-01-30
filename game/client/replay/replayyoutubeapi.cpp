@@ -104,7 +104,7 @@ class CYouTubeLoginWaitDialog : public CGenericWaitingDialog
 {
 	DECLARE_CLASS_SIMPLE( CYouTubeLoginWaitDialog, CGenericWaitingDialog );
 public:
-	CYouTubeLoginWaitDialog( IReplayMovie *pMovie, CConfirmDialog *pLoginDialog ) 
+	CYouTubeLoginWaitDialog( IReplayMovie *pMovie, CConfirmDialog *pLoginDialog )
 		: CGenericWaitingDialog( pLoginDialog->GetParent() )
 		, m_pMovie( pMovie )
 		, m_pLoginDialog( pLoginDialog )
@@ -157,7 +157,7 @@ class CYouTubeUploadWaitDialog : public CGenericWaitingDialog
 {
 	DECLARE_CLASS_SIMPLE( CYouTubeUploadWaitDialog, CGenericWaitingDialog );
 public:
-	CYouTubeUploadWaitDialog( IReplayMovie *pMovie, const char *pTitle, const char *pDescription, YouTubeUploadHandle_t handle, vgui::Panel *pParent )  
+	CYouTubeUploadWaitDialog( IReplayMovie *pMovie, const char *pTitle, const char *pDescription, YouTubeUploadHandle_t handle, vgui::Panel *pParent )
 		: CGenericWaitingDialog( pParent )
 		, m_pMovie( pMovie )
 		, m_strTitle( pTitle )
@@ -220,7 +220,7 @@ public:
 				if ( pDetailsPanel )
 				{
 					pDetailsPanel->InvalidateLayout( true, false );
-				}		
+				}
 				ShowMessageBox( "#YouTube_Upload_Title", "#YouTube_Upload_Success", "#GameUI_OK", NULL, GetParent() );
 
 				// notify the GC
@@ -240,7 +240,7 @@ public:
 
 				// share on Steam Community
 				if ( steamapicontext && steamapicontext->SteamRemoteStorage() )
-				{					
+				{
 					CUtlString strPreviewFileName;
 					AppId_t nConsumerAppId = steamapicontext->SteamUtils()->GetAppID();
 					ERemoteStoragePublishedFileVisibility eVisibility = k_ERemoteStoragePublishedFileVisibilityPublic;
@@ -250,13 +250,13 @@ public:
 
 					// don't bother waiting for result
 					SteamAPICall_t hSteamAPICall = steamapicontext->SteamRemoteStorage()->PublishVideo(
-						k_EWorkshopVideoProviderNone, "", 
+						k_EWorkshopVideoProviderNone, "",
 						strURLToVideo.Get(),
-						strPreviewFileName.Get(), 
-						nConsumerAppId, 
-						m_strTitle.Get(), 
-						m_strDescription.Get(), 
-						eVisibility, 
+						strPreviewFileName.Get(),
+						nConsumerAppId,
+						m_strTitle.Get(),
+						m_strDescription.Get(),
+						eVisibility,
 						&tags
 						);
 					hSteamAPICall;
@@ -302,7 +302,7 @@ public:
 				_snwprintf( wszPercentage, ARRAYSIZE( wszPercentage ), L"%u", iProgress );
 				_snwprintf( wszNow, ARRAYSIZE( wszNow ), L"%u", ulnow_kb );
 				_snwprintf( wszTotal, ARRAYSIZE( wszTotal ), L"%u", ultotal_kb );
-				g_pVGuiLocalize->ConstructString_safe( wszProgress, g_pVGuiLocalize->Find( "#YouTube_UploadProgress" ), 3, 
+				g_pVGuiLocalize->ConstructString_safe( wszProgress, g_pVGuiLocalize->Find( "#YouTube_UploadProgress" ), 3,
 												  wszPercentage,
 												  wszNow,
 												  wszTotal );
@@ -356,7 +356,7 @@ public:
 			{
 				steamapicontext->SteamFriends()->ActivateGameOverlayToWebPage( "http://www.youtube.com/create_account?next=/" );
 			}
-		}		
+		}
 		else if ( !Q_strnicmp( command, "confirm", 7 ) )
 		{
 			TextEntry *pTextEntryUserName = dynamic_cast< TextEntry * >( FindChildByName( "UserNameTextEntry" ) );
@@ -393,12 +393,12 @@ protected:
 		Assert( pSource );
 		Assert( pDeveloperTag );
 		Assert( pDeveloperKey );
-		
+
 		YouTube_SetDeveloperSettings( pDeveloperKey, pDeveloperTag );
 
 		// try to log in
 		YouTube_Login( pUserName, pPassword, pSource );
-		
+
 		CYouTubeLoginWaitDialog *pDialog = new CYouTubeLoginWaitDialog( m_pMovie, this );
 		ShowWaitingDialog( pDialog, "#YouTube_LoggingIn", true, true, -1 );
 	}
@@ -443,7 +443,7 @@ public:
 		{
 			m_pUnlistedCheckbox->SetMouseInputEnabled( true );
 		}
-		
+
 	}
 
 	void GetGameNameStrings( const char **ppShortGameName, const char **ppFullGameName )
@@ -490,7 +490,7 @@ public:
 			{
 				steamapicontext->SteamFriends()->ActivateGameOverlayToWebPage( "http://www.youtube.com/t/terms" );
 			}
-		}		
+		}
 		else if ( !Q_strnicmp( command, "confirm", 7 ) )
 		{
 			char szTitle[256];

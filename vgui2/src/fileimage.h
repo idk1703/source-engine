@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@ class FileImageStream
 {
 public:
 	virtual void	Read(void *pOut, int len)=0;
-	
+
 	// Returns true if there were any Read errors.
 	// Clears error status.
 	virtual bool	ErrorStatus()=0;
@@ -37,7 +37,7 @@ public:
 	virtual bool		ErrorStatus();
 
 
-private:		
+private:
 	unsigned char		*m_pData;
 	int					m_DataLen;
 	int					m_CurPos;
@@ -74,7 +74,7 @@ public:
 		m_Width = m_Height = 0;
 		m_pData = NULL;
 	}
-	
+
 	int				m_Width, m_Height;
 	unsigned char	*m_pData;
 };
@@ -91,5 +91,3 @@ void Save32BitTGA(
 
 
 #endif
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,9 +28,9 @@ public:
 	Slider(Panel *parent, const char *panelName);
 
 	// interface
-	virtual void SetValue(int value, bool bTriggerChangeMessage = true); 
+	virtual void SetValue(int value, bool bTriggerChangeMessage = true);
 	virtual int  GetValue();
-    virtual void SetRange(int min, int max);	 // set to max and min range of rows to display
+	virtual void SetRange(int min, int max);	 // set to max and min range of rows to display
 	virtual void GetRange(int &min, int &max);
 	virtual void GetNobPos(int &min, int &max);	// get current Slider position
 	virtual void SetButtonOffset(int buttonOffset);
@@ -44,7 +44,7 @@ public:
 	virtual void SetThumbWidth( int width );
 	virtual int	 EstimateValueAtPos( int localMouseX, int localMouseY );
 	virtual void SetInverted( bool bInverted );
-	
+
 	// If you click on the slider outside of the nob, the nob jumps
 	// to the click position, and if this setting is enabled, the nob
 	// is then draggable from the new position until the mouse is released
@@ -82,7 +82,7 @@ protected:
 protected:
 	virtual void RecomputeNobPosFromValue();
 	virtual void RecomputeValueFromNobPos();
-	
+
 	virtual void SendSliderMovedMessage();
 	virtual void SendSliderDragStartMessage();
 	virtual void SendSliderDragEndMessage();

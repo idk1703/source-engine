@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -144,4 +144,3 @@ public:
 LINK_ENTITY_TO_CLASS( ammo_57mm, CItemAmmo57MM );
 
 //-----------------------------------------------------------------------------
-

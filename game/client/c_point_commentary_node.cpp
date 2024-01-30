@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "cbase.h"
@@ -38,7 +38,7 @@ bool IsInCommentaryMode( void )
 static bool g_bTracingVsCommentaryNodes = false;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudCommentary : public CHudElement, public vgui::Panel
 {
@@ -90,7 +90,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_PointCommentaryNode : public C_BaseAnimating
 {
@@ -116,7 +116,7 @@ public:
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	virtual void SetDormant( bool bDormant )
 	{
@@ -202,7 +202,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PointCommentaryNode::OnPreDataChanged( DataUpdateType_t updateType )
 {
@@ -212,7 +212,7 @@ void C_PointCommentaryNode::OnPreDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PointCommentaryNode::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -336,7 +336,7 @@ bool C_PointCommentaryNode::TestCollision( const Ray_t &ray, unsigned int mask, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool IsNodeUnderCrosshair( C_BasePlayer *pPlayer )
 {
@@ -362,7 +362,7 @@ bool IsNodeUnderCrosshair( C_BasePlayer *pPlayer )
 DECLARE_HUDELEMENT( CHudCommentary );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudCommentary::CHudCommentary( const char *name ) : vgui::Panel( NULL, "HudCommentary" ), CHudElement( name )
 {
@@ -387,7 +387,7 @@ void CHudCommentary::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudCommentary::Paint()
 {
@@ -447,7 +447,7 @@ void CHudCommentary::Paint()
 		hFont = vgui::scheme()->GetIScheme(scheme)->GetFont( "Default" );
 	}
 	vgui::surface()->DrawSetTextFont( hFont );
-	vgui::surface()->DrawSetTextColor( clr ); 
+	vgui::surface()->DrawSetTextColor( clr );
 	vgui::surface()->DrawSetTextPos( m_iSpeakersX, m_iSpeakersY );
 	vgui::surface()->DrawPrintText( m_szSpeakers, wcslen(m_szSpeakers) );
 
@@ -489,7 +489,7 @@ void CHudCommentary::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudCommentary::ShouldDraw()
 {
@@ -497,24 +497,24 @@ bool CHudCommentary::ShouldDraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudCommentary::Init( void )
-{ 
+{
 	m_matIcon.Init( "vgui/hud/icon_commentary", TEXTURE_GROUP_VGUI );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudCommentary::VidInit( void )
-{ 
+{
 	SetAlpha(0);
 	StopCommentary();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudCommentary::StartCommentary( C_PointCommentaryNode *pNode, char *pszSpeakers, int iNode, int iNodeMax, float flStartTime, float flEndTime )
 {
@@ -556,7 +556,7 @@ void CHudCommentary::StartCommentary( C_PointCommentaryNode *pNode, char *pszSpe
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudCommentary::StopCommentary( void )
 {
@@ -564,11 +564,11 @@ void CHudCommentary::StopCommentary( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CommentaryModeShouldSwallowInput( C_BasePlayer *pPlayer )
 {
-	if ( !IsInCommentaryMode() )	
+	if ( !IsInCommentaryMode() )
 		return false;
 
 	if ( pPlayer->m_nButtons & COMMENTARY_BUTTONS )

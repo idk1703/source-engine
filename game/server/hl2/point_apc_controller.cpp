@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -69,7 +69,7 @@ public:
 	QAngle		AimBarrelAt( const Vector &parentTarget );
 
 	bool	ShouldSavePhysics()	{ return false; }
-	
+
 	DECLARE_DATADESC();
 
 	CBaseEntity *FindTarget( string_t targetName, CBaseEntity *pActivator );
@@ -88,7 +88,7 @@ protected:
 	float			m_maxRange;		// Max range to aim/track
 
 	Vector			m_barrelPos;	// Length of the barrel
-	
+
 	Vector			m_sightOrigin;	// Last sight of target
 
 	string_t		m_soundStartRotate;
@@ -143,7 +143,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CAPCController::~CAPCController( void )
 {
@@ -157,18 +157,18 @@ CAPCController::~CAPCController( void )
 // Purpose: Input handler for activating the tank.
 //------------------------------------------------------------------------------
 void CAPCController::InputActivate( inputdata_t &inputdata )
-{	
+{
 	ActivateRocketGuidance();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAPCController::ActivateRocketGuidance(void)
 {
-	m_spawnflags	|= SF_TANK_ACTIVE; 
-	SetNextThink( gpGlobals->curtime + 0.1f ); 
+	m_spawnflags	|= SF_TANK_ACTIVE;
+	SetNextThink( gpGlobals->curtime + 0.1f );
 }
 
 
@@ -182,29 +182,29 @@ void CAPCController::InputDeactivate( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAPCController::DeactivateRocketGuidance(void)
 {
-	m_spawnflags	&= ~SF_TANK_ACTIVE; 
+	m_spawnflags	&= ~SF_TANK_ACTIVE;
 	StopRotSound();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : targetName - 
-//			pActivator - 
+// Purpose:
+// Input  : targetName -
+//			pActivator -
 //-----------------------------------------------------------------------------
-CBaseEntity *CAPCController::FindTarget( string_t targetName, CBaseEntity *pActivator ) 
+CBaseEntity *CAPCController::FindTarget( string_t targetName, CBaseEntity *pActivator )
 {
 	return gEntList.FindEntityGenericNearest( STRING( targetName ), GetAbsOrigin(), 0, this, pActivator );
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Caches entity key values until spawn is called.
-// Input  : szKeyName - 
-//			szValue - 
-// Output : 
+// Input  : szKeyName -
+//			szValue -
+// Output :
 //-----------------------------------------------------------------------------
 bool CAPCController::KeyValue( const char *szKeyName, const char *szValue )
 {
@@ -303,11 +303,11 @@ QAngle CAPCController::AimBarrelAt( const Vector &parentTarget )
 	float quadTargetXY = target.x*target.x + target.y*target.y;
 
 		// We're trying to aim the offset barrel at an arbitrary point.
-		// To calculate this, I think of the target as being on a sphere with 
+		// To calculate this, I think of the target as being on a sphere with
 		// it's center at the origin of the gun.
-		// The rotation we need is the opposite of the rotation that moves the target 
+		// The rotation we need is the opposite of the rotation that moves the target
 		// along the surface of that sphere to intersect with the gun's shooting direction
-		// To calculate that rotation, we simply calculate the intersection of the ray 
+		// To calculate that rotation, we simply calculate the intersection of the ray
 		// coming out of the barrel with the target sphere (that's the new target position)
 		// and use atan2() to get angles
 
@@ -445,9 +445,9 @@ void CAPCController::TrackTarget( void )
 		m_bFireDelayed = false;		// reset flag since we can no longer see target
 	}
 }
-	
+
 void CAPCController::StartRotSound( void )
-{	
+{
 	if ( m_soundLoopRotate != NULL_STRING )
 	{
 		CPASAttenuationFilter filter( this );
@@ -461,7 +461,7 @@ void CAPCController::StartRotSound( void )
 
 		EmitSound( filter, entindex(), ep );
 	}
-	
+
 	if ( m_soundStartRotate != NULL_STRING )
 	{
 		CPASAttenuationFilter filter( this );
@@ -495,4 +495,3 @@ void CAPCController::StopRotSound( void )
 		EmitSound( filter, entindex(), ep );
 	}
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 // $NoKeywords: $
 //=============================================================================//
 
@@ -95,12 +95,12 @@ void		CM_SetupAreaFloodNums( byte areaFloodNums[MAX_MAP_AREAS], int *pNumAreas )
 
 
 //-----------------------------------------------------------------------------
-// This can be used as a replacement for CM_PointLeafnum if the successive 
+// This can be used as a replacement for CM_PointLeafnum if the successive
 // origins will be close to each other.
 //
 // It caches the distance to the closest plane leading
 // out of whatever leaf it was in last time you asked for the leaf index, and
-// if it's within that distance the next time you ask for it, it'll 
+// if it's within that distance the next time you ask for it, it'll
 //-----------------------------------------------------------------------------
 class CFastPointLeafNum
 {

@@ -62,7 +62,7 @@ class CTFBot;
 #define TF_MVM_AD_ENEMY_DROPPED		"MVM.AttackDefend.EnemyDropped"
 #define TF_MVM_AD_ENEMY_CAPTURED	"MVM.AttackDefend.EnemyCaptured"
 #define TF_MVM_AD_ENEMY_RETURNED	"MVM.AttackDefend.EnemyReturned"
-   
+
 #define TF_AD_TEAM_STOLEN			"AttackDefend.TeamStolen"
 #define TF_AD_TEAM_DROPPED			"AttackDefend.TeamDropped"
 #define TF_AD_TEAM_CAPTURED			"AttackDefend.TeamCaptured"
@@ -242,7 +242,7 @@ public:
 
 	void			CreateReturnIcon( void );
 	void			DestroyReturnIcon( void );
-	
+
 	void			ResetFlagReturnTime( void ) { m_flResetTime = 0; }
 	void			SetFlagReturnIn( float flTime )
 	{
@@ -250,15 +250,15 @@ public:
 		m_flMaxResetTime = flTime;
 	}
 
-    void			SetFlagReturnIn( float flTime, float flMaxResetTime )
-    {
-        m_flResetTime = gpGlobals->curtime + flTime;
-        m_flMaxResetTime = flMaxResetTime;
-    }
+	void			SetFlagReturnIn( float flTime, float flMaxResetTime )
+	{
+		m_flResetTime = gpGlobals->curtime + flTime;
+		m_flMaxResetTime = flMaxResetTime;
+	}
 
 	void			ResetFlagNeutralTime( void ) { m_flNeutralTime = 0; }
 	void			SetFlagNeutralIn( float flTime )
-	{ 
+	{
 		m_flNeutralTime = gpGlobals->curtime + flTime;
 		m_flMaxResetTime = flTime;
 	}
@@ -300,18 +300,18 @@ public:
 
 	float			GetMaxResetTime() { return m_flMaxResetTime; }
 	float			GetReturnProgress( void );
-	
+
 public:
 
 	void			UpdateGlowEffect( void );
 	virtual bool	ShouldHideGlowEffect( void );
 
 #endif
-	
-    // TODO: Both of these should be updated to work with floats instead of ints.
+
+	// TODO: Both of these should be updated to work with floats instead of ints.
 	int				GetReturnTime( int nMaxReturnTime );
-    int             GetMaxReturnTime( void );
-	
+	int             GetMaxReturnTime( void );
+
 	void			Capture( CTFPlayer *pPlayer, int nCapturePoint );
 	virtual void	PickUp( CTFPlayer *pPlayer, bool bInvisible );
 	virtual void	Drop( CTFPlayer *pPlayer, bool bVisible, bool bThrown = false, bool bMessage = true );
@@ -382,21 +382,21 @@ private:
 	CNetworkString( m_szPaperEffect, MAX_PATH );
 	CNetworkString( m_szTrailEffect, MAX_PATH );
 	CNetworkVar( int, m_nUseTrailEffect );
-	
+
 
 	int				m_iOriginalTeam;
 	float			m_flOwnerPickupTime;
 
-    int GetReturnTimeShotClockMode( int nStartReturnTime );
-    inline bool IsFlagShotClockModePossible() const
-    {
-        return m_nType == TF_FLAGTYPE_CTF 
-			|| m_nType == TF_FLAGTYPE_ROBOT_DESTRUCTION 
+	int GetReturnTimeShotClockMode( int nStartReturnTime );
+	inline bool IsFlagShotClockModePossible() const
+	{
+		return m_nType == TF_FLAGTYPE_CTF
+			|| m_nType == TF_FLAGTYPE_ROBOT_DESTRUCTION
 			|| m_nType == TF_FLAGTYPE_RESOURCE_CONTROL;
-    }
+	}
 
-    float           m_flLastPickupTime; // What the time was of the last pickup by any player.
-    float           m_flLastResetDuration; // How long was the last time to reset before being picked up?
+	float           m_flLastPickupTime; // What the time was of the last pickup by any player.
+	float           m_flLastResetDuration; // How long was the last time to reset before being picked up?
 
 	int				m_nReturnTime; // Length of time (in seconds) before dropped flag/intelligence returns to base.
 	int				m_nNeutralType; // Type of neutral flag (only used for Invade game type).
@@ -404,9 +404,9 @@ private:
 
 	bool			m_bReturnBetweenWaves; // Used in MvM mode to determine if the flag should return between waves.
 	bool			m_bUseShotClockMode; // Used to determine whether we should be using shot clock mode or not.
-	
+
 	CNetworkVar( float, m_flTimeToSetPoisonous ); // Time to set the flag as poisonous
-	
+
 	EHANDLE		m_hReturnIcon;
 
 #ifdef GAME_DLL
@@ -428,14 +428,14 @@ private:
 	bool			m_bCaptured;
 
 	EHANDLE			m_hInitialPlayer;
-	
+
 	EHANDLE			m_hInitialParent;
 	Vector			m_vecOffset;
 
 #else
 
 	IMaterial	*m_pReturnProgressMaterial_Empty;		// For labels above players' heads.
-	IMaterial	*m_pReturnProgressMaterial_Full;		
+	IMaterial	*m_pReturnProgressMaterial_Full;
 
 	int			m_nOldTeamNumber;
 	EHANDLE		m_hOldOwner;

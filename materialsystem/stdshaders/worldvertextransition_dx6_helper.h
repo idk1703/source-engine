@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -32,7 +32,7 @@ struct WorldVertexTransition_DX6_Vars_t
 
 void InitParamsWorldVertexTransition_DX6( IMaterialVar** params, WorldVertexTransition_DX6_Vars_t &info );
 void InitWorldVertexTransition_DX6( CBaseShader *pShader, IMaterialVar** params, WorldVertexTransition_DX6_Vars_t &info );
-void DrawWorldVertexTransition_DX6( CBaseShader *pShader, IMaterialVar** params, 
+void DrawWorldVertexTransition_DX6( CBaseShader *pShader, IMaterialVar** params,
 	IShaderDynamicAPI *pShaderAPI, IShaderShadow* pShaderShadow, WorldVertexTransition_DX6_Vars_t &info );
 
 

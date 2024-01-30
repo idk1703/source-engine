@@ -78,7 +78,7 @@ LINK_ENTITY_TO_CLASS( ai_relationship, CAI_Relationship );
 
 BEGIN_DATADESC( CAI_Relationship )
 	DEFINE_THINKFUNC( ApplyRelationshipThink ),
-	
+
 	DEFINE_KEYFIELD( m_iszSubject, FIELD_STRING, "subject" ),
 	DEFINE_KEYFIELD( m_iDisposition, FIELD_INTEGER, "disposition" ),
 	DEFINE_KEYFIELD( m_iRank, FIELD_INTEGER, "rank" ),
@@ -97,7 +97,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_Relationship::Spawn()
 {
@@ -131,8 +131,8 @@ void CAI_Relationship::Activate()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bActive - 
+// Purpose:
+// Input  : bActive -
 //-----------------------------------------------------------------------------
 void CAI_Relationship::SetActive( bool bActive )
 {
@@ -187,8 +187,8 @@ void CAI_Relationship::ApplyRelationshipThink( void )
 //---------------------------------------------------------
 void CAI_Relationship::ApplyRelationship( CBaseEntity *pActivator, CBaseEntity *pCaller )
 {
-	// @TODO (toml 10-22-04): sort out MP relationships 
-	
+	// @TODO (toml 10-22-04): sort out MP relationships
+
 	// The player spawns slightly after the NPCs, meaning that if we don't wait, the
 	// player will miss any relationships placed on them.
 	if ( AI_IsSinglePlayer() && !UTIL_GetLocalPlayer() )
@@ -298,7 +298,7 @@ void CAI_Relationship::OnEntityDeleted( CBaseEntity *pEntity )
 // Purpose: Translate special tokens for inputs
 // Input  : iszName - Name to check
 //			*pActivator - Activator
-//			*pCaller - Caller 
+//			*pCaller - Caller
 // Output : CBaseEntity - Entity that matches (NULL if none)
 //-----------------------------------------------------------------------------
 #define ACTIVATOR_KEYNAME "!activator"
@@ -368,7 +368,7 @@ void CAI_Relationship::ChangeRelationships( int disposition, int iReverting, CBa
 	// -------------------------------
 
 	float radiusSq = Square( m_flRadius );
-	
+
 	// Search players first
 	for ( int i = 1; i <= gpGlobals->maxClients; i++ )
 	{
@@ -463,8 +463,8 @@ void CAI_Relationship::ChangeRelationships( int disposition, int iReverting, CBa
 					pTarget->RemoveEntityRelationship( pSubject );
 				}
 			}
-			else if( pSubject->IRelationType(pTarget) != disposition || 
-				     pSubject->IRelationPriority(pTarget) != m_iRank || 
+			else if( pSubject->IRelationType(pTarget) != disposition ||
+				     pSubject->IRelationPriority(pTarget) != m_iRank ||
 					 HasSpawnFlags( SF_RELATIONSHIP_NOTIFY_SUBJECT ) ||
 					 HasSpawnFlags( SF_RELATIONSHIP_NOTIFY_TARGET ) )
 			{
@@ -493,4 +493,3 @@ void CAI_Relationship::ChangeRelationships( int disposition, int iReverting, CBa
 		}
 	}
 }
-

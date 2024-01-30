@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -13,7 +13,7 @@
 
 DEFINE_FALLBACK_SHADER( VertexLitGeneric, VertexLitGeneric_DX6 )
 
-BEGIN_SHADER( VertexLitGeneric_DX6, 
+BEGIN_SHADER( VertexLitGeneric_DX6,
 			  "Help for VertexLitGeneric_DX6" )
 
 	BEGIN_SHADER_PARAMS
@@ -114,7 +114,7 @@ BEGIN_SHADER( VertexLitGeneric_DX6,
 		// Don't alpha test if the alpha channel is used for other purposes
 		if (IS_FLAG_SET(MATERIAL_VAR_SELFILLUM) || IS_FLAG_SET(MATERIAL_VAR_BASEALPHAENVMAPMASK) )
 			CLEAR_FLAGS( MATERIAL_VAR_ALPHATEST );
-			
+
 		if (params[ENVMAP]->IsDefined())
 		{
 			if( !IS_FLAG_SET(MATERIAL_VAR_ENVMAPSPHERE) )
@@ -173,18 +173,18 @@ BEGIN_SHADER( VertexLitGeneric_DX6,
 			// same blend mode as we used for lightmapping
 			pShaderShadow->EnableBlending( true );
 			SingleTextureLightmapBlendMode();
-			
+
 			pShaderShadow->EnableCustomPixelPipe( true );
 			pShaderShadow->CustomTextureStages( 1 );
 
 			// This here will perform color = vertex light * (cc alpha) + 1 * (1 - cc alpha)
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-				SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_BLEND_CONSTANTALPHA, 
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+				SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_BLEND_CONSTANTALPHA,
 				SHADER_TEXARG_VERTEXCOLOR, SHADER_TEXARG_CONSTANTCOLOR );
 
 			// Alpha isn't used, it doesn't matter what we set it to.
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-				SHADER_TEXCHANNEL_ALPHA, SHADER_TEXOP_SELECTARG1, 
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+				SHADER_TEXCHANNEL_ALPHA, SHADER_TEXOP_SELECTARG1,
 				SHADER_TEXARG_NONE, SHADER_TEXARG_NONE );
 
 			pShaderShadow->DrawFlags( SHADER_DRAW_POSITION | SHADER_DRAW_COLOR );
@@ -270,7 +270,7 @@ BEGIN_SHADER( VertexLitGeneric_DX6,
 			int flags = SetShadowEnvMappingState( ENVMAPMASK ) | SHADER_DRAW_COLOR;
 			bool hasEnvMapMask = params[ENVMAPMASK]->IsTexture();
 
-			pShaderShadow->OverbrightValue( hasEnvMapMask ? 
+			pShaderShadow->OverbrightValue( hasEnvMapMask ?
 				SHADER_TEXTURE_STAGE1 : SHADER_TEXTURE_STAGE0, OVERBRIGHT );
 
 			// Independenly configure alpha and color
@@ -293,7 +293,7 @@ BEGIN_SHADER( VertexLitGeneric_DX6,
 		DYNAMIC_STATE
 		{
 			SetDynamicEnvMappingState( ENVMAP, ENVMAPMASK, BASETEXTURE,
-				ENVMAPFRAME, ENVMAPMASKFRAME, FRAME, 
+				ENVMAPFRAME, ENVMAPMASKFRAME, FRAME,
 				BASETEXTURETRANSFORM, ENVMAPMASKSCALE );
 		}
 		Draw();
@@ -319,7 +319,7 @@ BEGIN_SHADER( VertexLitGeneric_DX6,
 		// If it's base + mask * env, gotta do that in 2 passes
 		// Gotta do funky stuff to fade out self-illuminated stuff
 		bool hasEnvMapTint = !IsWhite(ENVMAPTINT);
-		
+
 		// Special case, can do in one pass
 		if (!hasEnvMapTint && !texDefined && !IS_FLAG_SET(MATERIAL_VAR_VERTEXCOLOR) &&
 			!IsColorModulating() )
@@ -330,14 +330,14 @@ BEGIN_SHADER( VertexLitGeneric_DX6,
 
 		if (texDefined)
 		{
-			FixedFunctionBaseTimesDetailPass( 
-				BASETEXTURE, FRAME, BASETEXTURETRANSFORM, DETAIL, DETAILSCALE ); 
+			FixedFunctionBaseTimesDetailPass(
+				BASETEXTURE, FRAME, BASETEXTURETRANSFORM, DETAIL, DETAILSCALE );
 		}
 		else
 		{
-			FixedFunctionMaskedEnvmapPass( 
+			FixedFunctionMaskedEnvmapPass(
 				ENVMAP, ENVMAPMASK, BASETEXTURE,
-				ENVMAPFRAME, ENVMAPMASKFRAME, FRAME, 
+				ENVMAPFRAME, ENVMAPMASKFRAME, FRAME,
 				BASETEXTURETRANSFORM, ENVMAPMASKSCALE, ENVMAPTINT );
 		}
 
@@ -346,9 +346,9 @@ BEGIN_SHADER( VertexLitGeneric_DX6,
 		{
 			if ( texDefined && envDefined )
 			{
-				FixedFunctionAdditiveMaskedEnvmapPass( 
+				FixedFunctionAdditiveMaskedEnvmapPass(
 					ENVMAP, ENVMAPMASK, BASETEXTURE,
-					ENVMAPFRAME, ENVMAPMASKFRAME, FRAME, 
+					ENVMAPFRAME, ENVMAPMASKFRAME, FRAME,
 					BASETEXTURETRANSFORM, ENVMAPMASKSCALE, ENVMAPTINT );
 			}
 		}
@@ -356,11 +356,11 @@ BEGIN_SHADER( VertexLitGeneric_DX6,
 		// Pass 2 : * vertex lighting
 		MultiplyByVertexLighting( params, pShaderAPI, pShaderShadow );
 
-		// FIXME: We could add it to the lightmap 
+		// FIXME: We could add it to the lightmap
 		// Draw the selfillum pass (blows away envmap at self-illum points)
 		if ( IS_FLAG_SET(MATERIAL_VAR_SELFILLUM) )
 		{
-			FixedFunctionSelfIlluminationPass( 
+			FixedFunctionSelfIlluminationPass(
 				SHADER_SAMPLER0, BASETEXTURE, FRAME, BASETEXTURETRANSFORM, SELFILLUMTINT );
 		}
 	}
@@ -379,7 +379,7 @@ BEGIN_SHADER( VertexLitGeneric_DX6,
 			// Draw the selfillum pass
 			if ( IS_FLAG_SET(MATERIAL_VAR_SELFILLUM) )
 			{
-				FixedFunctionSelfIlluminationPass( 
+				FixedFunctionSelfIlluminationPass(
 					SHADER_SAMPLER0, BASETEXTURE, FRAME, BASETEXTURETRANSFORM, SELFILLUMTINT );
 			}
 		}
@@ -391,14 +391,14 @@ BEGIN_SHADER( VertexLitGeneric_DX6,
 			FixedFunctionMultiplyByDetailPass(
 				BASETEXTURE, FRAME, BASETEXTURETRANSFORM, DETAIL, DETAILSCALE );
 		}
-		 
+
 		// Pass 2 : Masked environment map
-		if ( params[ENVMAP]->IsTexture() && 
+		if ( params[ENVMAP]->IsTexture() &&
 			 (IS_FLAG_SET(MATERIAL_VAR_MULTIPASS)) )
 		{
-			FixedFunctionAdditiveMaskedEnvmapPass( 
+			FixedFunctionAdditiveMaskedEnvmapPass(
 				ENVMAP, ENVMAPMASK, BASETEXTURE,
-				ENVMAPFRAME, ENVMAPMASKFRAME, FRAME, 
+				ENVMAPFRAME, ENVMAPMASKFRAME, FRAME,
 				BASETEXTURETRANSFORM, ENVMAPMASKSCALE, ENVMAPTINT );
 		}
 	}
@@ -418,4 +418,3 @@ BEGIN_SHADER( VertexLitGeneric_DX6,
 		}
 	}
 END_SHADER
-

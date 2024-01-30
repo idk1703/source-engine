@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,7 +32,7 @@ abstract_class IClientEntity : public IClientUnknown, public IClientRenderable, 
 public:
 	// Delete yourself.
 	virtual void			Release( void ) = 0;
-	
+
 	// Network origin + angles
 	virtual const Vector&	GetAbsOrigin( void ) const = 0;
 	virtual const QAngle&	GetAbsAngles( void ) const = 0;

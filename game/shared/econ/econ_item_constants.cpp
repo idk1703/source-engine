@@ -10,7 +10,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *g_szQualityStrings[] =
 {
@@ -74,7 +74,7 @@ EEconItemQuality EconQuality_GetQualityFromString( const char* pszQuality )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *g_szQualityColorStrings[] =
 {
@@ -115,7 +115,7 @@ const char *EconQuality_GetColorString( EEconItemQuality eQuality )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *g_szQualityLocalizationStrings[] =
 {
@@ -258,7 +258,7 @@ bool EconWear_IsValidValue( int nWear )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CSchemaColorDefHandle g_AttribColorDefs[] =
 {
@@ -346,7 +346,7 @@ COMPILE_TIME_ASSERT( ARRAYSIZE( g_szRecipeCategoryStrings ) == NUM_RECIPE_CATEGO
 // Item acquisition.
 //-----------------------------------------------------------------------------
 // Strings shown to the local player in the pickup dialog
-const char *g_pszItemPickupMethodStrings[] = 
+const char *g_pszItemPickupMethodStrings[] =
 {
 	"#NewItemMethod_Dropped",			// UNACK_ITEM_DROPPED = 1,
 	"#NewItemMethod_Crafted",			// UNACK_ITEM_CRAFTED,
@@ -382,7 +382,7 @@ const char *g_pszItemPickupMethodStrings[] =
 
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_pszItemPickupMethodStrings ) == (UNACK_NUM_METHODS - 1) );		// -1 because UNACK_ITEM_DROPPED is index 1, not 0
 
-const char *g_pszItemPickupMethodStringsUnloc[] = 
+const char *g_pszItemPickupMethodStringsUnloc[] =
 {
 	"dropped",			// UNACK_ITEM_DROPPED = 1,
 	"crafted",			// UNACK_ITEM_CRAFTED,
@@ -418,7 +418,7 @@ const char *g_pszItemPickupMethodStringsUnloc[] =
 COMPILE_TIME_ASSERT( ARRAYSIZE( g_pszItemPickupMethodStringsUnloc ) == (UNACK_NUM_METHODS - 1) );
 
 // Strings shown to other players in the chat dialog
-const char *g_pszItemFoundMethodStrings[] = 
+const char *g_pszItemFoundMethodStrings[] =
 {
 	"#Item_Found",				// UNACK_ITEM_DROPPED = 1,
 	"#Item_Crafted",			// UNACK_ITEM_CRAFTED,
@@ -531,7 +531,7 @@ const CEconItemAttributeDefinition *GetKillEaterAttr_Score( int i )
 
 	const CEconItemAttributeDefinition *pAttrRes = g_KillEaterAttr[i].m_attrScore;
 	AssertMsg1( pAttrRes, "Missing Killeater attr score %s", g_KillEaterAttr[ i ].m_attrScore.GetName() );
-	
+
 	return pAttrRes;
 }
 
@@ -564,7 +564,7 @@ const CEconItemAttributeDefinition *GetKillEaterAttr_RestrictionValue( int i )
 
 	const CEconItemAttributeDefinition *pAttrRes = g_KillEaterAttr[i].m_attrRestrictionValue;
 	AssertMsg1( pAttrRes, "Missing Killeater attr restriction value %s", g_KillEaterAttr[ i ].m_attrRestrictionValue.GetName() );
-	
+
 	return pAttrRes;
 }
 
@@ -583,7 +583,7 @@ bool GetKilleaterValueByEvent( const IEconItemInterface* pItem, const kill_eater
 	{
 		const CEconItemAttributeDefinition *pAttribKillEater		  = GetKillEaterAttr_Score( i );
 		const CEconItemAttributeDefinition *pAttribKillEaterScoreType = GetKillEaterAttr_Type( i );
-		
+
 		Assert( pAttribKillEater && pAttribKillEaterScoreType );
 		if ( !pAttribKillEater || !pAttribKillEaterScoreType )
 			return false;
@@ -592,7 +592,7 @@ bool GetKilleaterValueByEvent( const IEconItemInterface* pItem, const kill_eater
 		uint32 unKillEaterAttrValue;
 		if ( !pItem->FindAttribute( pAttribKillEater, &unKillEaterAttrValue ) )
 			continue;
-		
+
 		uint32 unKillEaterScoreTypeAttrValue = kKillEaterEvent_PlayerKill;
 
 		float fKillEaterScoreTypeAttrValue;
@@ -660,7 +660,7 @@ const char* GetCollectionCraftingInvalidReason( const IEconItemInterface *pTestI
 			return "#TF_CollectionCrafting_NoCollection";
 		}
 	}
-	 
+
 	// Needs rarity
 	uint8 nRarity = pTestItem->GetItemDefinition()->GetRarity();
 	if( nRarity == k_unItemRarity_Any )
@@ -810,13 +810,13 @@ const char* GetHalloweenOfferingInvalidReason( const IEconItemInterface *pTestIt
 
 		const char *pToolType = pEconTool->GetTypeName();
 
-		if ( !V_strcmp( pToolType, "paint_can" ) ) 
+		if ( !V_strcmp( pToolType, "paint_can" ) )
 			return NULL;
-		else if ( !V_strcmp( pToolType, "strange_part" ) ) 
+		else if ( !V_strcmp( pToolType, "strange_part" ) )
 			return NULL;
-		else if ( !V_strcmp( pToolType, "name" ) ) 
+		else if ( !V_strcmp( pToolType, "name" ) )
 			return NULL;
-		else if ( !V_strcmp( pToolType, "desc" ) ) 
+		else if ( !V_strcmp( pToolType, "desc" ) )
 			return NULL;
 		else if ( !V_strcmp( pToolType, "killstreakifier" ) )
 			return NULL;
@@ -828,7 +828,7 @@ const char* GetHalloweenOfferingInvalidReason( const IEconItemInterface *pTestIt
 	}
 
 	// Otherwise you must be a weapon or we won't allow
-	if ( pTestItem->GetItemDefinition()->GetLoadoutSlot( 0 ) == LOADOUT_POSITION_PRIMARY 
+	if ( pTestItem->GetItemDefinition()->GetLoadoutSlot( 0 ) == LOADOUT_POSITION_PRIMARY
 		|| pTestItem->GetItemDefinition()->GetLoadoutSlot( 0 ) == LOADOUT_POSITION_SECONDARY
 		|| pTestItem->GetItemDefinition()->GetLoadoutSlot( 0 ) == LOADOUT_POSITION_MELEE
 		|| pTestItem->GetItemDefinition()->GetLoadoutSlot( 0 ) == LOADOUT_POSITION_BUILDING
@@ -837,11 +837,11 @@ const char* GetHalloweenOfferingInvalidReason( const IEconItemInterface *pTestIt
 	) {
 		// Must be strange, genuine, vintage, haunted or paintkit (ie a marketable weapon)
 		eQuality = pTestItem->GetQuality();
-		if ( eQuality == AE_RARITY1 
-			|| eQuality == AE_VINTAGE 
+		if ( eQuality == AE_RARITY1
+			|| eQuality == AE_VINTAGE
 			|| eQuality == AE_HAUNTED
-			|| eQuality == AE_COLLECTORS 
-			|| eQuality == AE_PAINTKITWEAPON 
+			|| eQuality == AE_COLLECTORS
+			|| eQuality == AE_PAINTKITWEAPON
 		) {
 			return NULL;
 		}

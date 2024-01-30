@@ -18,7 +18,7 @@
 // Purpose: One function - gets all the .rmf and .map files in the current dir,
 //			merges them with same-name .txt files, and creates a prefab library
 //			as specified in pszName.
-// Input  : pszName - 
+// Input  : pszName -
 //-----------------------------------------------------------------------------
 void MakePrefabLibrary(LPCTSTR pszName)
 {
@@ -26,7 +26,7 @@ void MakePrefabLibrary(LPCTSTR pszName)
 	int nPrefabs = 0;
 
 	printf("Making prefab library %s.ol\n", pszName);
-	
+
 	pLibrary->SetName(pszName);
 
 	// disable caching of prefabs
@@ -137,4 +137,3 @@ Again:
 
 	printf("%d prefabs in library.\n", nPrefabs);
 }
-

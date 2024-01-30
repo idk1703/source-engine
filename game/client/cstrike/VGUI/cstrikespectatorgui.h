@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,7 +30,7 @@ private:
 
 public:
 	CCSSpectatorGUI( IViewPort *pViewPort );
-		
+
 	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	virtual void UpdateSpectatorPlayerList( void );
 	virtual void Update( void );
@@ -76,13 +76,13 @@ protected:
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-#define DESIRED_RADAR_RESOLUTION 450 
+#define DESIRED_RADAR_RESOLUTION 450
 
 class CCSMapOverview : public CMapOverview
 {
 	DECLARE_CLASS_SIMPLE( CCSMapOverview, CMapOverview );
 
-public:	
+public:
 
 	enum
 	{
@@ -109,7 +109,7 @@ protected:	// private structures & types
 	typedef struct {
 		int		xpos;
 		int		ypos;
-	} FootStep_t;	
+	} FootStep_t;
 
 	// Extra stuff in a this-level parallel array
 	typedef struct CSMapPlayer_s {
@@ -228,7 +228,7 @@ private:
 		const char *text = NULL,
 		Color *textColor = NULL,
 		float status = -1,
-		Color *statusColor = NULL 
+		Color *statusColor = NULL
 		);
 
 	int GetMasterAlpha( void );// The main alpha that the map part should be, determined by using the mode to look at the right convar

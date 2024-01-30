@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -22,7 +22,7 @@ IMPLEMENT_SERVERCLASS_ST(CGrenadeTrail, DT_GrenadeTrail)
 	SendPropFloat(SENDINFO(m_ParticleLifetime), 16, SPROP_ROUNDUP, 0.1, 100),
 	SendPropFloat(SENDINFO(m_StopEmitTime), 0, SPROP_NOSCALE),
 	SendPropBool(SENDINFO(m_bEmit) ),
-	SendPropInt(SENDINFO(m_nAttachment), 32 ),	
+	SendPropInt(SENDINFO(m_nAttachment), 32 ),
 END_SEND_TABLE()
 
 
@@ -41,8 +41,8 @@ LINK_ENTITY_TO_CLASS(env_grenadetrail, CGrenadeTrail);
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 CGrenadeTrail::CGrenadeTrail()
 {
@@ -65,7 +65,7 @@ void CGrenadeTrail::SetEmit(bool bVal)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CGrenadeTrail*
 //-----------------------------------------------------------------------------
 CGrenadeTrail* CGrenadeTrail::CreateGrenadeTrail()
@@ -89,7 +89,7 @@ CGrenadeTrail* CGrenadeTrail::CreateGrenadeTrail()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Attach the smoke trail to an entity or point 
+// Purpose: Attach the smoke trail to an entity or point
 // Input  : index - entity that has the attachment
 //			attachment - point to attach to
 //-----------------------------------------------------------------------------

@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 // Debug flags for nextbot
 
-enum NextBotDebugType 
+enum NextBotDebugType
 {
 	NEXTBOT_DEBUG_NONE = 0,
 	NEXTBOT_BEHAVIOR	= 0x0001,

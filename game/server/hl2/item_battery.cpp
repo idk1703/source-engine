@@ -21,7 +21,7 @@ public:
 	DECLARE_CLASS( CItemBattery, CItem );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/items/battery.mdl" );
 		BaseClass::Spawn( );
@@ -42,4 +42,3 @@ public:
 
 LINK_ENTITY_TO_CLASS(item_battery, CItemBattery);
 PRECACHE_REGISTER(item_battery);
-

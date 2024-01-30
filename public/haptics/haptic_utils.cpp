@@ -30,7 +30,7 @@ extern vgui::IInputInternal *g_InputInternal;
 #endif
 #endif
 
-#ifdef CLIENT_DLL 
+#ifdef CLIENT_DLL
 ConVar hap_HasDevice	( "hap_HasDevice", "0", FCVAR_USERINFO/*|FCVAR_HIDDEN*/, "falcon is connected" );
 // damage scale on a title basis. Convar referenced in the haptic dll.
 #ifdef PORTAL
@@ -50,7 +50,7 @@ void HapticSendWeaponAnim(CBaseCombatWeapon* weapon, int iActivity)
 	//ignore idle
 	if(iActivity == ACT_VM_IDLE)
 		return;
-	
+
 	#if defined( CLIENT_DLL )
 	//if(hap_PrintEvents.GetBool())
 	//	Msg("Client Activity :%s %s %s\n",weapon->GetName(),"Activities",VarArgs("%i",iActivity));
@@ -107,7 +107,7 @@ void ConnectHaptics(CreateInterfaceFn appFactory)
 		if(factory)
 		{
 			haptics = reinterpret_cast< IHaptics* >( factory( HAPTICS_INTERFACE_VERSION, NULL ) );
-			if(haptics && 
+			if(haptics &&
 				haptics->Initialize(engine,
 					view,
 					g_InputInternal,
@@ -238,7 +238,7 @@ void UpdateAvatarEffect(void)
 		{
 			eye[YAW] += 90;
 		}
-		
+
 
 
 	}
@@ -258,12 +258,12 @@ void UpdateAvatarEffect(void)
 		vel = vvel;
 
 
-	
+
 	VectorYawRotate(vel, -90 -eye[YAW], vel );
 
 	vel.y = -vel.y;
 	vel.z = -vel.z;
-	
+
 	switch(pPlayer->GetMoveType()) {
 		case MOVETYPE_NOCLIP:
 			vel *= hap_noclip_avatar_scale.GetFloat();
@@ -315,14 +315,14 @@ void HapticsDamage(CBasePlayer* pPlayer, const CTakeDamageInfo &info)
 	}
 #ifdef TERROR
 	else if(
-		(bitDamageType & ( DMG_PARALYZE | DMG_NERVEGAS | DMG_POISON | DMG_RADIATION | DMG_DROWNRECOVER | DMG_ACID | DMG_SLOWBURN ) ) && 
+		(bitDamageType & ( DMG_PARALYZE | DMG_NERVEGAS | DMG_POISON | DMG_RADIATION | DMG_DROWNRECOVER | DMG_ACID | DMG_SLOWBURN ) ) &&
 		(bitDamageType & ~( DMG_PARALYZE | DMG_NERVEGAS | DMG_POISON | DMG_RADIATION | DMG_DROWNRECOVER | DMG_ACID | DMG_SLOWBURN ) )==0 )
 	{
 		// it is time based. and should not really do a punch.
 		return;
 	}
 #endif
-	
+
 	float sendDamage = info.GetDamage();
 
 	if(sendDamage>0.0f)
@@ -371,7 +371,7 @@ void HapticProcessSound(const char* soundname, int entIndex)
 #endif
 
 // determines weather the vehicles control box option is faded
-ConVar hap_ui_vehicles( "hap_ui_vehicles", 
+ConVar hap_ui_vehicles( "hap_ui_vehicles",
 						   HAPTIC_VEHICLE_DEFAULT,
 						   0
 						   );
@@ -433,11 +433,3 @@ void HapticsExitedVehicle(C_BaseEntity* vehicle, C_BaseCombatCharacter *pPasseng
 	haptics->ProcessHapticEvent(2,"Movement","BasePlayer");
 }
 #endif
-
-
-
-
-
-
-
-

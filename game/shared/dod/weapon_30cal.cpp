@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,10 +24,10 @@ class CWeapon30cal : public CDODBipodWeapon
 {
 public:
 	DECLARE_CLASS( CWeapon30cal, CDODBipodWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeapon30cal()  {}
 
 	virtual DODWeaponID GetWeaponID( void ) const		{ return WEAPON_30CAL; }
@@ -37,7 +37,7 @@ public:
 	{
 		if ( !IsDeployed() )
 			return WEAPON_30CAL_UNDEPLOYED;
-		else 
+		else
 			return WEAPON_30CAL;
 	}
 
@@ -70,7 +70,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_30cal, CWeapon30cal );
 PRECACHE_WEAPON_REGISTER( weapon_30cal );
 
-acttable_t CWeapon30cal::m_acttable[] = 
+acttable_t CWeapon30cal::m_acttable[] =
 {
 	{ ACT_DOD_STAND_AIM,					ACT_DOD_STAND_AIM_30CAL,				false },
 	{ ACT_DOD_CROUCH_AIM,					ACT_DOD_CROUCH_AIM_30CAL,				false },
@@ -141,7 +141,7 @@ void CWeapon30cal::PrimaryAttack( void )
 
 	if( !IsDeployed() )
 	{
-#ifdef CLIENT_DLL 
+#ifdef CLIENT_DLL
 		pPlayer->HintMessage( HINT_MG_FIRE_UNDEPLOYED );
 #endif
 		pPlayer->m_Shared.SetSlowedTime( 0.2 );
@@ -159,7 +159,7 @@ Activity CWeapon30cal::GetDrawActivity( void )
 	Activity actDraw;
 
 	if( m_iClip1 <= 0 )
-		actDraw = ACT_VM_DRAW_EMPTY;	
+		actDraw = ACT_VM_DRAW_EMPTY;
 	else
 		actDraw = ACT_VM_DRAW;
 

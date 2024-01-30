@@ -62,7 +62,7 @@ bool CTFLeaderboardPanel::UpdateLeaderboards()
 	CUtlVector< LeaderboardEntry_t* > scores;
 	if ( !GetLeaderboardData( scores ) )
 		return false;
-	
+
 	int x=0,y=0;
 	FOR_EACH_VEC( m_vecLeaderboardEntries, i )
 	{
@@ -82,10 +82,10 @@ bool CTFLeaderboardPanel::UpdateLeaderboards()
 				pContainer->SetDialogVariable( "rank", leaderboardEntry->m_nGlobalRank );
 				pContainer->SetDialogVariable( "username", InventoryManager()->PersonaName_Get( steamID.GetAccountID() ) );
 				pContainer->SetDialogVariable( "score", leaderboardEntry->m_nScore );
-				
+
 				CExLabel *pText = dynamic_cast< CExLabel* >( pContainer->FindChildByName( "UserName" ) );
 				if ( pText )
-				{			
+				{
 					pText->SetColorStr( bIsLocalPlayer ? m_LocalPlayerTextColor : colorToUse );
 				}
 
@@ -95,8 +95,8 @@ bool CTFLeaderboardPanel::UpdateLeaderboards()
 					pAvatar->SetShouldDrawFriendIcon( false );
 					pAvatar->SetPlayer( steamID, k_EAvatarSize32x32 );
 				}
-			}								
-		}			
+			}
+		}
 	}
 
 	return true;

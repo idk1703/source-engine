@@ -15,7 +15,7 @@
 
 DEFINE_FALLBACK_SHADER( Cable, Cable_DX8 )
 
-BEGIN_VS_SHADER( Cable_DX8, 
+BEGIN_VS_SHADER( Cable_DX8,
 			  "Help for Cable shader" )
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( BUMPMAP, SHADER_PARAM_TYPE_TEXTURE, "cable/cablenormalmap", "bumpmap texture" )
@@ -58,10 +58,10 @@ BEGIN_VS_SHADER( Cable_DX8,
 			{
 				pShaderShadow->EnableSRGBRead( SHADER_SAMPLER1, true );
 			}
-			
+
 			int tCoordDimensions[] = {2,2};
-			pShaderShadow->VertexShaderVertexFormat( 
-				VERTEX_POSITION | VERTEX_COLOR | VERTEX_TANGENT_S | VERTEX_TANGENT_T, 
+			pShaderShadow->VertexShaderVertexFormat(
+				VERTEX_POSITION | VERTEX_COLOR | VERTEX_TANGENT_S | VERTEX_TANGENT_T,
 				2, tCoordDimensions, 0 );
 
 			cable_Static_Index vshIndex;
@@ -71,7 +71,7 @@ BEGIN_VS_SHADER( Cable_DX8,
 
 			// we are writing linear values from this shader.
 			// This is kinda wrong.  We are writing linear or gamma depending on "IsHDREnabled" below.
-			// The COLOR really decides if we are gamma or linear.  
+			// The COLOR really decides if we are gamma or linear.
 			if ( g_pHardwareConfig->GetDXSupportLevel() >= 90)
 			{
 				pShaderShadow->EnableSRGBWrite( true );
@@ -83,9 +83,9 @@ BEGIN_VS_SHADER( Cable_DX8,
 		{
 			BindTexture( SHADER_SAMPLER0, BUMPMAP );
 			BindTexture( SHADER_SAMPLER1, BASETEXTURE );
-			
 
-			// The dot product with the light is remapped from the range 
+
+			// The dot product with the light is remapped from the range
 			// [-1,1] to [MinLight, MaxLight].
 
 			// Given:
@@ -98,7 +98,7 @@ BEGIN_VS_SHADER( Cable_DX8,
 			// Then in the pixel shader we add by B.
 			float flMinLight = params[MINLIGHT]->GetFloatValue();
 			float flMaxLight = params[MAXLIGHT]->GetFloatValue();
-			
+
 			float A = (flMaxLight - flMinLight) * 0.5f;
 			float B = (flMaxLight + flMinLight) * 0.5f;
 
@@ -111,7 +111,7 @@ BEGIN_VS_SHADER( Cable_DX8,
 			{
 				pShaderAPI->SetPixelShaderConstant( 0, b4 );
 			}
-			
+
 			// This is the light direction [0,1,0,0] * A * 0.5
 			float lightDir[4] = {0, A*0.5, 0, 0};
 			if( g_pHardwareConfig->GetDXSupportLevel() >= 90)

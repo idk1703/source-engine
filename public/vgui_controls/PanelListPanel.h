@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -46,10 +46,10 @@ public:
 	int NextItem( int nItemID ) const;
 	int InvalidItemID() const;
 
-	virtual Panel *GetItemLabel(int itemID); 
-	virtual Panel *GetItemPanel(int itemID); 
+	virtual Panel *GetItemLabel(int itemID);
+	virtual Panel *GetItemPanel(int itemID);
 
-    ScrollBar*  GetScrollbar() { return m_vbar; }
+	ScrollBar*  GetScrollbar() { return m_vbar; }
 
 	virtual void RemoveItem(int itemID); // removes an item from the table (changing the indices of all following items)
 	virtual void DeleteAllItems(); // clears and deletes all the memory used by the data items
@@ -94,7 +94,7 @@ protected:
 	virtual void OnMouseWheeled(int delta);
 
 private:
-	
+
 
 	enum { DEFAULT_HEIGHT = 24, PANELBUFFER = 5 };
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -17,7 +17,7 @@ class CHudFlashbang : public CHudElement, public vgui::Panel
 public:
 	DECLARE_CLASS_SIMPLE( CHudFlashbang, vgui::Panel );
 
-	virtual bool ShouldDraw();	
+	virtual bool ShouldDraw();
 	virtual void Paint();
 
 	CHudFlashbang( const char *name );
@@ -35,7 +35,7 @@ CHudFlashbang::CHudFlashbang( const char *pName ) :
 	vgui::Panel( NULL, "HudFlashbang" ), CHudElement( pName )
 {
 	SetParent( g_pClientMode->GetViewport() );
-	
+
 	m_iAdditiveWhiteID = 0;
 
 	SetHiddenBits( HIDEHUD_PLAYERDEAD );
@@ -54,4 +54,3 @@ void CHudFlashbang::Paint()
 {
 	return;
 }
-

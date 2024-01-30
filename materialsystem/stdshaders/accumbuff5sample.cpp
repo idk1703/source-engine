@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -35,7 +35,7 @@ BEGIN_VS_SHADER_FLAGS( accumbuff5sample, "Help for AccumBuff5Sample", SHADER_NOT
 		LoadTexture( TEXTURE3 );
 		LoadTexture( TEXTURE4 );
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		// Requires DX9 + above
@@ -78,7 +78,7 @@ BEGIN_VS_SHADER_FLAGS( accumbuff5sample, "Help for AccumBuff5Sample", SHADER_NOT
 			{
 				DECLARE_STATIC_PIXEL_SHADER( accumbuff5sample_ps20 );
 				SET_STATIC_PIXEL_SHADER( accumbuff5sample_ps20 );
-			}			
+			}
 		}
 
 		DYNAMIC_STATE

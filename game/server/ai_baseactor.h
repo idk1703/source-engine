@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Hooks and classes for the support of humanoid NPCs with 
+// Purpose: Hooks and classes for the support of humanoid NPCs with
 //			groovy facial animation capabilities, aka, "Actors"
 //
 //=============================================================================//
@@ -58,15 +58,15 @@ public:
 	// Note, you must add all names to this static function in order for Init to work
 	static bool	IsServerSideFlexController( char const *szName );
 
-	void	Init( FlexWeight_t &index, const char *szName ) 
-	{ 
+	void	Init( FlexWeight_t &index, const char *szName )
+	{
 		// Make this fatal!!!
 		if ( !IsServerSideFlexController( szName ) )
 		{
 			Error( "You forgot to add flex controller %s to list in CAI_BaseActor::IsServerSideFlexController().", szName );
 		}
 
-		index = (FlexWeight_t)FindFlexController( szName ); 
+		index = (FlexWeight_t)FindFlexController( szName );
 	}
 	void	Set( FlexWeight_t index, float flValue ) { SetFlexWeight( (LocalFlexController_t)index, flValue ); }
 	float	Get( FlexWeight_t index ) { return GetFlexWeight( (LocalFlexController_t)index ); }
@@ -117,7 +117,7 @@ public:
 
 	// CBaseFlex
 	virtual	void			SetViewtarget( const Vector &viewtarget );
-	
+
 	// CAI_BaseNPC
 	virtual float			PickLookTarget( bool bExcludePlayers = false, float minTime = 1.5, float maxTime = 2.5 );
 	virtual float			PickLookTarget( CAI_InterestTarget &queue, bool bExcludePlayers = false, float minTime = 1.5, float maxTime = 2.5 );

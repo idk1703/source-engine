@@ -26,7 +26,7 @@ class CAI_HolsterBehavior : public CAI_SimpleBehavior
 
 public:
 	CAI_HolsterBehavior();
-	
+
 	virtual const char *GetName() {	return "Holster"; }
 
 	virtual bool 	CanSelectSchedule();
@@ -40,7 +40,7 @@ public:
 	//void OnStartSchedule( int scheduleType );
 
 	//void InitializeBehavior();
-	
+
 	enum
 	{
 		SCHED_HOLSTER_WEAPON = BaseClass::NEXT_SCHEDULE,		// Try to get out of the player's way
@@ -67,10 +67,8 @@ private:
 	bool			m_bWeaponOut;
 
 	//---------------------------------
-	
+
 	DECLARE_DATADESC();
 };
 
 #endif // AI_BEHAVIOR_HOLSTER_H
-
-

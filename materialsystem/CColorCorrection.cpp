@@ -83,7 +83,7 @@ void ColorCorrectionLookup_t::AllocTexture()
 
 	m_pColorCorrectionTexture = ITextureInternal::CreateProceduralTexture( name, TEXTURE_GROUP_OTHER,
 		COLOR_CORRECTION_TEXTURE_SIZE, COLOR_CORRECTION_TEXTURE_SIZE, COLOR_CORRECTION_TEXTURE_SIZE, IMAGE_FORMAT_BGRX8888,
-		TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_SINGLECOPY | TEXTUREFLAGS_CLAMPS | 
+		TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_SINGLECOPY | TEXTUREFLAGS_CLAMPS |
 		TEXTUREFLAGS_CLAMPT | TEXTUREFLAGS_CLAMPU | TEXTUREFLAGS_NODEBUGOVERRIDE );
 
 	extern void CreateColorCorrectionTexture( ITextureInternal *pTexture, ColorCorrectionHandle_t handle );
@@ -154,7 +154,7 @@ public:
 
 protected:
 	CUtlVector< ColorCorrectionLookup_t * > m_ColorCorrectionList;
-    ColorCorrectionHandle_t m_DefaultColorCorrectionHandle;
+	ColorCorrectionHandle_t m_DefaultColorCorrectionHandle;
 	ColorCorrectionHandle_t m_UnnamedColorCorrectionHandle;
 	float m_DefaultColorCorrectionWeight;
 	bool m_bEnabled;
@@ -364,7 +364,7 @@ ColorCorrectionLookup_t *CColorCorrectionSystem::FindLookup( ColorCorrectionHand
 //  Find the handle associated with a specified name
 //-----------------------------------------------------------------------------
 ColorCorrectionHandle_t CColorCorrectionSystem::GetLookupHandle( const char *pName )
-{	
+{
 	// case and slash insensitive
 	FileNameHandle_t hName = g_pFullFileSystem->FindOrAddFileName( pName );
 	COMPILE_TIME_ASSERT( sizeof( FileNameHandle_t ) == sizeof( ColorCorrectionHandle_t ) );
@@ -419,7 +419,7 @@ bool CColorCorrectionSystem::RemoveLookup( ColorCorrectionHandle_t handle )
 
 			delete lookup;
 
-            return true;
+			return true;
 		}
 	}
 
@@ -436,7 +436,7 @@ void CColorCorrectionSystem::SetLookupWeight( ColorCorrectionHandle_t handle, fl
 		m_DefaultColorCorrectionWeight = flWeight;
 		return;
 	}
-    
+
 	ColorCorrectionLookup_t *lookup = FindLookup( handle );
 	if ( lookup && flWeight>lookup->m_flWeight )
 	{
@@ -462,7 +462,7 @@ float CColorCorrectionSystem::GetLookupWeight( ColorCorrectionHandle_t handle )
 
 	return lookup->m_flWeight;
 }
-    
+
 //-----------------------------------------------------------------------------
 //  Gets the weight for the color correction lookup specified by index
 //-----------------------------------------------------------------------------
@@ -476,7 +476,7 @@ float CColorCorrectionSystem::GetLookupWeight( int i )
 		ColorCorrectionLookup_t *lookup = m_ColorCorrectionList[ i ];
 		return lookup->m_flWeight;
 	}
-	
+
 	return 0.0f;
 }
 
@@ -607,7 +607,7 @@ void CColorCorrectionSystem::LoadLookup( ColorCorrectionHandle_t handle, const c
 				color24 vOutColor24 = pColors[colorIndex];
 
 				/* // Still experimenting with this...it looks banded right now so leaving it off.
-				   // I think we need to generate better raw data for the 360 instead of hacking it here.
+					// I think we need to generate better raw data for the 360 instead of hacking it here.
 				if ( IsX360() )
 				{
 					// We need to adjust the outcolor for the 360's piecewise linear gamma space
@@ -617,8 +617,8 @@ void CColorCorrectionSystem::LoadLookup( ColorCorrectionHandle_t handle, const c
 					// Our input is in 360 gamma space
 					color24 inColor24 = ConvertToColor24( inColor );
 					float flInColor360[3] = { float( inColor24.r ) / float( 255 ),
-											  float( inColor24.g ) / float( 255 ),
-											  float( inColor24.b ) / float( 255 ) };
+											float( inColor24.g ) / float( 255 ),
+											float( inColor24.b ) / float( 255 ) };
 
 					// Find the srgb gamma color this maps to
 					float flInColorSrgb[3];
@@ -712,7 +712,7 @@ void CColorCorrectionSystem::ResetLookup( ColorCorrectionHandle_t handle )
 //-----------------------------------------------------------------------------
 void CColorCorrectionSystem::ResetLookupWeights( )
 {
-    m_DefaultColorCorrectionWeight = 0.0f;
+	m_DefaultColorCorrectionWeight = 0.0f;
 
 	for ( int i=0;i<m_ColorCorrectionList.Count();i++ )
 	{
@@ -804,8 +804,8 @@ int CColorCorrectionSystem::GetNumLookups( )
 	int i;
 	for ( i=0;i<m_ColorCorrectionList.Count()&&i<COLOR_CORRECTION_MAX_TEXTURES;i++ )
 	{
-		 if ( m_ColorCorrectionList[i]->m_flWeight<=0.0f )
-			 break;
+		if ( m_ColorCorrectionList[i]->m_flWeight<=0.0f )
+			break;
 	}
 
 	return i;

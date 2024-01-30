@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -87,25 +87,25 @@ CAnchorMgr::CAnchorMgr()
 void CAnchorMgr::Init( HWND hParentWnd, CAnchorDef *pAnchors, int nAnchors )
 {
 	m_Anchors.CopyArray( pAnchors, nAnchors );
-	
+
 	m_hParentWnd = hParentWnd;
-	
+
 	// Figure out the main window's size.
 	RECT rcParent, rcItem;
 	GetWindowRect( m_hParentWnd, &rcParent );
 	m_OriginalParentSize[0] = rcParent.right - rcParent.left;
 	m_OriginalParentSize[1] = rcParent.bottom - rcParent.top;
 
-	// Get all the subitem positions.	
+	// Get all the subitem positions.
 	for ( int i=0; i < m_Anchors.Count(); i++ )
 	{
 		CAnchorDef *pAnchor = &m_Anchors[i];
 
 		if ( pAnchor->m_hInputWnd )
 			pAnchor->m_hWnd = pAnchor->m_hInputWnd;
-		else	
+		else
 			pAnchor->m_hWnd = GetDlgItem( m_hParentWnd, pAnchor->m_DlgItemID );
-			
+
 		if ( !pAnchor->m_hWnd )
 			continue;
 
@@ -114,7 +114,7 @@ void CAnchorMgr::Init( HWND hParentWnd, CAnchorDef *pAnchors, int nAnchors )
 		ptTopLeft.x = rcItem.left;
 		ptTopLeft.y = rcItem.top;
 		ScreenToClient( m_hParentWnd, &ptTopLeft );
-		
+
 		pAnchor->m_OriginalPos[0] = ptTopLeft.x;
 		pAnchor->m_OriginalPos[1] = ptTopLeft.y;
 		pAnchor->m_OriginalPos[2] = ptTopLeft.x + (rcItem.right - rcItem.left);
@@ -130,22 +130,21 @@ void CAnchorMgr::OnSize()
 	GetWindowRect( m_hParentWnd, &rcParent );
 	width = rcParent.right - rcParent.left;
 	height = rcParent.bottom - rcParent.top;
-	
+
 	// Move each item.
 	for ( int i=0; i < m_Anchors.Count(); i++ )
 	{
 		CAnchorDef *pAnchor = &m_Anchors[i];
 		if ( !pAnchor->m_hWnd )
 			continue;
-	
+
 		RECT rcNew;
 		rcNew.left   = ProcessAnchorHorz( pAnchor->m_OriginalPos[0], m_OriginalParentSize, pAnchor->m_AnchorLeft, width, height );
 		rcNew.right  = ProcessAnchorHorz( pAnchor->m_OriginalPos[2], m_OriginalParentSize, pAnchor->m_AnchorRight, width, height );
 		rcNew.top    = ProcessAnchorVert( pAnchor->m_OriginalPos[1], m_OriginalParentSize, pAnchor->m_AnchorTop, width, height );
 		rcNew.bottom = ProcessAnchorVert( pAnchor->m_OriginalPos[3], m_OriginalParentSize, pAnchor->m_AnchorBottom, width, height );
-	
+
 		SetWindowPos( pAnchor->m_hWnd, NULL, rcNew.left, rcNew.top, rcNew.right-rcNew.left, rcNew.bottom-rcNew.top, SWP_NOZORDER );
 		InvalidateRect( pAnchor->m_hWnd, NULL, false );
 	}
 }
-

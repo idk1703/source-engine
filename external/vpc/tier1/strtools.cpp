@@ -161,11 +161,11 @@ int	_V_wcslen(const wchar_t *pwch)
 char *_V_strrchr(const char *s, char c)
 {
 	AssertValidStringPtr( s );
-    int len = V_strlen(s);
-    s += len;
-    while (len--)
+	int len = V_strlen(s);
+	s += len;
+	while (len--)
 	if (*--s == c) return (char *)s;
-    return 0;
+	return 0;
 }
 
 int _V_strcmp (const char *s1, const char *s2)
@@ -182,13 +182,13 @@ int _V_wcscmp (const wchar_t *s1, const wchar_t *s2)
 	while (1)
 	{
 		if (*s1 != *s2)
-			return -1;              // strings not equal    
+			return -1;              // strings not equal
 		if (!*s1)
 			return 0;               // strings are equal
 		s1++;
 		s2++;
 	}
-	
+
 	return -1;
 }
 
@@ -205,9 +205,9 @@ int	_V_stricmp( const char *s1, const char *s2 )
 		return -1;
 	if ( s2 == NULL )
 		return 1;
-	
+
 	return stricmp( s1, s2 );
-#else	
+#else
 	uint8 const *pS1 = ( uint8 const * ) s1;
 	uint8 const *pS2 = ( uint8 const * ) s2;
 	for(;;)
@@ -405,7 +405,7 @@ int V_strncasecmp (const char *s1, const char *s2, int n)
 	AssertValidStringPtr( s1 );
 	AssertValidStringPtr( s2 );
 	VPROF_2( "V_strcmp", VPROF_BUDGETGROUP_OTHER_UNACCOUNTED, false, BUDGETFLAG_ALL );
-	
+
 	while ( n-- > 0 )
 	{
 		int c1 = *s1++;
@@ -423,7 +423,7 @@ int V_strncasecmp (const char *s1, const char *s2, int n)
 		if ( c1 == '\0' )
 			return 0; // null terminator hit - strings the same
 	}
-	
+
 	return 0; // n characters compared the same
 }
 
@@ -533,7 +533,7 @@ int64 V_atoi64( const char *str )
 	int64             val;
 	int64             sign;
 	int64             c;
-	
+
 	Assert( str );
 	if (*str == '-')
 	{
@@ -542,7 +542,7 @@ int64 V_atoi64( const char *str )
 	}
 	else
 		sign = 1;
-		
+
 	val = 0;
 
 //
@@ -564,7 +564,7 @@ int64 V_atoi64( const char *str )
 				return val*sign;
 		}
 	}
-	
+
 //
 // check for character
 //
@@ -572,7 +572,7 @@ int64 V_atoi64( const char *str )
 	{
 		return sign * str[1];
 	}
-	
+
 //
 // assume decimal
 //
@@ -583,12 +583,12 @@ int64 V_atoi64( const char *str )
 			return val*sign;
 		val = val*10 + c - '0';
 	}
-	
+
 	return 0;
 }
 
 int V_atoi( const char *str )
-{ 
+{
 	return (int)V_atoi64( str );
 }
 
@@ -600,7 +600,7 @@ float V_atof (const char *str)
 	int             sign;
 	int             c;
 	int             decimal, total;
-	
+
 	if (*str == '-')
 	{
 		sign = -1;
@@ -608,7 +608,7 @@ float V_atof (const char *str)
 	}
 	else
 		sign = 1;
-		
+
 	val = 0;
 
 //
@@ -630,7 +630,7 @@ float V_atof (const char *str)
 				return val*sign;
 		}
 	}
-	
+
 //
 // check for character
 //
@@ -638,7 +638,7 @@ float V_atof (const char *str)
 	{
 		return sign * str[1];
 	}
-	
+
 //
 // assume decimal
 //
@@ -676,12 +676,12 @@ float V_atof (const char *str)
 		val /= 10;
 		total--;
 	}
-	
+
 	return val*sign;
 }
 
 //-----------------------------------------------------------------------------
-// Normalizes a float string in place.  
+// Normalizes a float string in place.
 //
 // (removes leading zeros, trailing zeros after the decimal point, and the decimal point itself where possible)
 //-----------------------------------------------------------------------------
@@ -724,7 +724,7 @@ char const* V_stristr( char const* pStr, char const* pSearch )
 	AssertValidStringPtr(pStr);
 	AssertValidStringPtr(pSearch);
 
-	if (!pStr || !pSearch) 
+	if (!pStr || !pSearch)
 		return 0;
 
 	char const* pLetter = pStr;
@@ -778,7 +778,7 @@ char const* V_strnistr( char const* pStr, char const* pSearch, int n )
 	AssertValidStringPtr(pStr);
 	AssertValidStringPtr(pSearch);
 
-	if (!pStr || !pSearch) 
+	if (!pStr || !pSearch)
 		return 0;
 
 	char const* pLetter = pStr;
@@ -895,12 +895,12 @@ int V_snwprintf( wchar_t *pDest, int maxLenInNumWideCharacters, const wchar_t *p
 
 	// Len < 0 represents an overflow
 	if ( ( len < 0 ) ||
-		 ( maxLenInNumWideCharacters > 0 && len >= maxLenInNumWideCharacters ) )
+		( maxLenInNumWideCharacters > 0 && len >= maxLenInNumWideCharacters ) )
 	{
 		len = maxLenInNumWideCharacters;
 		pDest[maxLenInNumWideCharacters-1] = 0;
 	}
-	
+
 	return len;
 }
 
@@ -993,7 +993,7 @@ char *V_strncat(char *pDest, const char *pSrc, size_t maxLenInBytes, int max_cha
 	Assert( maxLenInBytes >= 0 );
 	AssertValidStringPtr( pDest);
 	AssertValidStringPtr( pSrc );
-	
+
 	size_t len = strlen(pDest);
 	size_t srclen = strlen( pSrc );
 	if ( max_chars_to_copy <= COPY_ALL_CHARACTERS )
@@ -1034,8 +1034,8 @@ wchar_t *V_wcsncat( wchar_t *pDest, const wchar_t *pSrc, int maxLenInBytes, int 
 	DEBUG_LINK_CHECK;
 	size_t charstocopy = (size_t)0;
 
-    Assert( maxLenInBytes >= 0 );
-    
+	Assert( maxLenInBytes >= 0 );
+
 	int maxLenInCharacters = maxLenInBytes / sizeof( wchar_t );
 
 	size_t len = wcslen(pDest);
@@ -1068,9 +1068,9 @@ wchar_t *V_wcsncat( wchar_t *pDest, const wchar_t *pSrc, int maxLenInBytes, int 
 
 //-----------------------------------------------------------------------------
 // Purpose: Converts value into x.xx MB/ x.xx KB, x.xx bytes format, including commas
-// Input  : value - 
-//			2 - 
-//			false - 
+// Input  : value -
+//			2 -
+//			false -
 // Output : char
 //-----------------------------------------------------------------------------
 #define NUM_PRETIFYMEM_BUFFERS 8
@@ -1244,38 +1244,38 @@ char *V_pretifynum( int64 value )
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the 4 bit nibble for a hex character
-// Input  : c - 
+// Input  : c -
 // Output : unsigned char
 //-----------------------------------------------------------------------------
 static unsigned char V_nibble( char c )
 {
 	if ( ( c >= '0' ) &&
-		 ( c <= '9' ) )
+		( c <= '9' ) )
 	{
-		 return (unsigned char)(c - '0');
+		return (unsigned char)(c - '0');
 	}
 
 	if ( ( c >= 'A' ) &&
-		 ( c <= 'F' ) )
+		( c <= 'F' ) )
 	{
-		 return (unsigned char)(c - 'A' + 0x0a);
+		return (unsigned char)(c - 'A' + 0x0a);
 	}
 
 	if ( ( c >= 'a' ) &&
-		 ( c <= 'f' ) )
+		( c <= 'f' ) )
 	{
-		 return (unsigned char)(c - 'a' + 0x0a);
+		return (unsigned char)(c - 'a' + 0x0a);
 	}
 
 	return '0';
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *in - 
-//			numchars - 
-//			*out - 
-//			maxoutputbytes - 
+// Purpose:
+// Input  : *in -
+//			numchars -
+//			*out -
+//			maxoutputbytes -
 //-----------------------------------------------------------------------------
 void V_hextobinary( char const *in, int numchars, byte *out, int maxoutputbytes )
 {
@@ -1293,20 +1293,20 @@ void V_hextobinary( char const *in, int numchars, byte *out, int maxoutputbytes 
 	int i;
 
 	p = out;
-	for ( i = 0; 
-		 ( i < numchars ) && ( ( p - out ) < maxoutputbytes ); 
-		 i+=2, p++ )
+	for ( i = 0;
+		( i < numchars ) && ( ( p - out ) < maxoutputbytes );
+		i+=2, p++ )
 	{
-		*p = ( V_nibble( in[i] ) << 4 ) | V_nibble( in[i+1] );		
+		*p = ( V_nibble( in[i] ) << 4 ) | V_nibble( in[i+1] );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *in - 
-//			inputbytes - 
-//			*out - 
-//			outsize - 
+// Purpose:
+// Input  : *in -
+//			inputbytes -
+//			*out -
+//			outsize -
 //-----------------------------------------------------------------------------
 void V_binarytohex( const byte *in, int inputbytes, char *out, int outsize )
 {
@@ -1329,9 +1329,9 @@ void V_binarytohex( const byte *in, int inputbytes, char *out, int outsize )
 
 //-----------------------------------------------------------------------------
 // Purpose: Extracts the base name of a file (no path, no extension, assumes '/' or '\' as path separator)
-// Input  : *in - 
-//			*out - 
-//			maxlen - 
+// Input  : *in -
+//			*out -
+//			maxlen -
 //-----------------------------------------------------------------------------
 void V_FileBase( const char *in, char *out, int maxlen )
 {
@@ -1348,19 +1348,19 @@ void V_FileBase( const char *in, char *out, int maxlen )
 	int len, start, end;
 
 	len = V_strlen( in );
-	
+
 	// scan backward for '.'
 	end = len - 1;
 	while ( end&& in[end] != '.' && !PATHSEPARATOR( in[end] ) )
 	{
 		end--;
 	}
-	
+
 	if ( in[end] != '.' )		// no '.', copy to end
 	{
 		end = len-1;
 	}
-	else 
+	else
 	{
 		end--;					// Found ',', copy to left of '.'
 	}
@@ -1376,7 +1376,7 @@ void V_FileBase( const char *in, char *out, int maxlen )
 	{
 		start = 0;
 	}
-	else 
+	else
 	{
 		start++;
 	}
@@ -1391,8 +1391,8 @@ void V_FileBase( const char *in, char *out, int maxlen )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *ppath - 
+// Purpose:
+// Input  : *ppath -
 //-----------------------------------------------------------------------------
 void V_StripTrailingSlash( char *ppath )
 {
@@ -1409,14 +1409,14 @@ void V_StripTrailingSlash( char *ppath )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *in - 
-//			*out - 
-//			outSize - 
+// Purpose:
+// Input  : *in -
+//			*out -
+//			outSize -
 //-----------------------------------------------------------------------------
 void V_StripExtension( const char *in, char *out, int outSize )
 {
-	// Find the last dot. If it's followed by a dot or a slash, then it's part of a 
+	// Find the last dot. If it's followed by a dot or a slash, then it's part of a
 	// directory specifier like ../../somedir/./blah.
 
 	// scan backward for '.'
@@ -1446,10 +1446,10 @@ void V_StripExtension( const char *in, char *out, int outSize )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *path - 
-//			*extension - 
-//			pathStringLength - 
+// Purpose:
+// Input  : *path -
+//			*extension -
+//			pathStringLength -
 //-----------------------------------------------------------------------------
 void V_DefaultExtension( char *path, const char *extension, int pathStringLength )
 {
@@ -1468,7 +1468,7 @@ void V_DefaultExtension( char *path, const char *extension, int pathStringLength
 		if (*src == '.')
 		{
 			// it has an extension
-			return;                 
+			return;
 		}
 		src--;
 	}
@@ -1486,9 +1486,9 @@ void V_DefaultExtension( char *path, const char *extension, int pathStringLength
 
 //-----------------------------------------------------------------------------
 // Purpose: Force extension...
-// Input  : *path - 
-//			*extension - 
-//			pathStringLength - 
+// Input  : *path -
+//			*extension -
+//			pathStringLength -
 //-----------------------------------------------------------------------------
 void V_SetExtension( char *path, const char *extension, int pathStringLength )
 {
@@ -1498,7 +1498,7 @@ void V_SetExtension( char *path, const char *extension, int pathStringLength )
 
 //-----------------------------------------------------------------------------
 // Purpose: Remove final filename from string
-// Input  : *path - 
+// Input  : *path -
 // Output : void  V_StripFilename
 //-----------------------------------------------------------------------------
 void  V_StripFilename (char *path)
@@ -1509,7 +1509,7 @@ void  V_StripFilename (char *path)
 	if ( length <= 0 )
 		return;
 
-	while ( length > 0 && 
+	while ( length > 0 &&
 		!PATHSEPARATOR( path[length] ) )
 	{
 		length--;
@@ -1528,8 +1528,8 @@ void  V_StripFilename (char *path)
 
 //-----------------------------------------------------------------------------
 // Purpose: Changes all '/' or '\' characters into separator
-// Input  : *pname - 
-//			separator - 
+// Input  : *pname -
+//			separator -
 //-----------------------------------------------------------------------------
 void V_FixSlashes( char *pname, char separator /* = CORRECT_PATH_SEPARATOR */ )
 {
@@ -1555,8 +1555,8 @@ void V_FixDoubleSlashes( char *pStr )
 	{
 		if ( (pStr[i] == '/' || pStr[i] == '\\') && (pStr[i+1] == '/' || pStr[i+1] == '\\') )
 		{
-			// This means there's a double slash somewhere past the start of the filename. That 
-			// can happen in Hammer if they use a material in the root directory. You'll get a filename 
+			// This means there's a double slash somewhere past the start of the filename. That
+			// can happen in Hammer if they use a material in the root directory. You'll get a filename
 			// that looks like 'materials\\blah.vmt'
 			V_memmove( &pStr[i], &pStr[i+1], len - i );
 			--len;
@@ -1566,17 +1566,17 @@ void V_FixDoubleSlashes( char *pStr )
 
 //-----------------------------------------------------------------------------
 // Purpose: Strip off the last directory from dirName
-// Input  : *dirName - 
-//			maxlen - 
+// Input  : *dirName -
+//			maxlen -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool V_StripLastDir( char *dirName, int maxlen )
 {
-	if( dirName[0] == 0 || 
-		!V_stricmp( dirName, "./" ) || 
+	if( dirName[0] == 0 ||
+		!V_stricmp( dirName, "./" ) ||
 		!V_stricmp( dirName, ".\\" ) )
 		return false;
-	
+
 	int len = V_strlen( dirName );
 
 	Assert( len < maxlen );
@@ -1625,7 +1625,7 @@ bool V_StripLastDir( char *dirName, int maxlen )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Returns a pointer to the beginning of the unqualified file name 
+// Purpose: Returns a pointer to the beginning of the unqualified file name
 //			(no path information)
 // Input:	in - file name (may be unqualified, relative or absolute path)
 // Output:	pointer to unqualified file name
@@ -1668,10 +1668,10 @@ void V_ComposeFileName( const char *path, const char *filename, char *dest, int 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *path - 
-//			*dest - 
-//			destSize - 
+// Purpose:
+// Input  : *path -
+//			*dest -
+//			destSize -
 // Output : void V_ExtractFilePath
 //-----------------------------------------------------------------------------
 bool V_ExtractFilePath (const char *path, char *dest, int destSize )
@@ -1700,10 +1700,10 @@ bool V_ExtractFilePath (const char *path, char *dest, int destSize )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *path - 
-//			*dest - 
-//			destSize - 
+// Purpose:
+// Input  : *path -
+//			*dest -
+//			destSize -
 // Output : void V_ExtractFileExtension
 //-----------------------------------------------------------------------------
 void V_ExtractFileExtension( const char *path, char *dest, int destSize )
@@ -1717,7 +1717,7 @@ void V_ExtractFileExtension( const char *path, char *dest, int destSize )
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns a pointer to the file extension within a file name string
-// Input:	in - file name 
+// Input:	in - file name
 // Output:	pointer to beginning of extension (after the "."), or NULL
 //				if there is no extension
 //-----------------------------------------------------------------------------
@@ -1735,7 +1735,7 @@ const char * V_GetFileExtension( const char * path )
 
 	// check to see if the '.' is part of a pathname
 	if (src == path || PATHSEPARATOR( *src ) )
-	{		
+	{
 		return NULL;  // no extension
 	}
 
@@ -1744,8 +1744,8 @@ const char * V_GetFileExtension( const char * path )
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns a pointer to the filename part of a path string
-// Input:	in - file name 
-// Output:	pointer to beginning of filename (after the "/"). If there were no /, 
+// Input:	in - file name
+// Output:	pointer to beginning of filename (after the "/"). If there were no /,
 //          output is identical to input
 //-----------------------------------------------------------------------------
 const char *V_GetFileName( const char *pPath )
@@ -1813,10 +1813,10 @@ bool V_RemoveDotSlashes( char *pFilename, char separator )
 	pIn = pFilename;
 	while ( *pIn )
 	{
-		if ( pIn[0] == '.' && 
-			 pIn[1] == '.' && 
-			 (pIn == pFilename || PATHSEPARATOR(pIn[-1])) &&	// Preceding character must be a slash.
-			 (pIn[2] == 0 || PATHSEPARATOR(pIn[2])) )			// Following character must be a slash or the end of the string.
+		if ( pIn[0] == '.' &&
+			pIn[1] == '.' &&
+			(pIn == pFilename || PATHSEPARATOR(pIn[-1])) &&	// Preceding character must be a slash.
+			(pIn[2] == 0 || PATHSEPARATOR(pIn[2])) )			// Following character must be a slash or the end of the string.
 		{
 			char *pEndOfDots = pIn + 2;
 			char *pStart = pIn - 2;
@@ -1844,8 +1844,8 @@ bool V_RemoveDotSlashes( char *pFilename, char separator )
 			++pIn;
 		}
 	}
-	
-	V_FixSlashes( pFilename, separator );	
+
+	V_FixSlashes( pFilename, separator );
 	return true;
 }
 
@@ -1857,7 +1857,7 @@ void V_AppendSlash( char *pStr, int strSize )
 	{
 		if ( len+1 >= strSize )
 			Error( "V_AppendSlash: ran out of space on %s.", pStr );
-		
+
 		pStr[len] = CORRECT_PATH_SEPARATOR;
 		pStr[len+1] = 0;
 	}
@@ -1880,7 +1880,7 @@ void V_MakeAbsolutePath( char *pOut, int outLen, const char *pPath, const char *
 		}
 		else
 		{
-#ifdef _PS3 
+#ifdef _PS3
 			{
 				V_strncpy( pOut, g_pPS3PathInfo->GameImagePath(), outLen );
 			}
@@ -1923,7 +1923,7 @@ bool V_MakeRelativePath( const char *pFullPath, const char *pDirectory, char *pR
 	// Strip out common parts of the path
 	const char *pLastCommonPath = NULL;
 	const char *pLastCommonDir = NULL;
-	while ( *pPath && ( tolower( *pPath ) == tolower( *pDir ) || 
+	while ( *pPath && ( tolower( *pPath ) == tolower( *pDir ) ||
 						( PATHSEPARATOR( *pPath ) && ( PATHSEPARATOR( *pDir ) || (*pDir == 0) ) ) ) )
 	{
 		if ( PATHSEPARATOR( *pPath ) )
@@ -2038,7 +2038,7 @@ static bool CopyToMaxChars( char *pOut, int outSize, const char *pIn, int nChars
 		++pIn;
 		--nCharsToCopy;
 	}
-	
+
 	pOut[iOut] = 0;
 	return true;
 }
@@ -2046,8 +2046,8 @@ static bool CopyToMaxChars( char *pOut, int outSize, const char *pIn, int nChars
 
 // Returns true if it completed successfully.
 // If it would overflow pOut, it fills as much as it can and returns false.
-bool V_StrSubst( 
-	const char *pIn, 
+bool V_StrSubst(
+	const char *pIn,
 	const char *pMatch,
 	const char *pReplaceWith,
 	char *pOut,
@@ -2073,7 +2073,7 @@ bool V_StrSubst(
 			int copyLen = pTestPos - pInStart;
 			if ( !CopyToMaxChars( pOutPos, nRemainingOut, pInStart, copyLen ) )
 				return false;
-			
+
 			// Did we hit the end of the output string?
 			if ( copyLen > nRemainingOut-1 )
 				return false;
@@ -2086,7 +2086,7 @@ bool V_StrSubst(
 				return false;
 
 			pInStart += copyLen + replaceFromLen;
-			pOutPos += replaceToLen;			
+			pOutPos += replaceToLen;
 		}
 		else
 		{
@@ -2170,7 +2170,7 @@ bool V_GetCurrentDirectory( char *pOut, int maxLen )
 	Assert( 0 );
 	return false; // not supported
 #else // !_PS3
-    return _getcwd( pOut, maxLen ) == pOut;
+	return _getcwd( pOut, maxLen ) == pOut;
 #endif // _PS3
 }
 
@@ -2181,7 +2181,7 @@ bool V_SetCurrentDirectory( const char *pDirName )
 	Assert( 0 );
 	return false; // not supported
 #else // !_PS3
-    return _chdir( pDirName ) == 0;
+	return _chdir( pDirName ) == 0;
 #endif // _PS3
 }
 
@@ -2194,7 +2194,7 @@ void V_StrSlice( const char *pStr, int firstChar, int lastCharNonInclusive, char
 {
 	if ( outSize == 0 )
 		return;
-	
+
 	int length = strlen( pStr );
 
 	// Fixup the string indices.
@@ -2320,7 +2320,7 @@ char *V_AddBackSlashesToSpecialChars( char const *pSrc )
 	}
 	char *pRet = new char[ nSpaceNeeded + 1 ];				// +1 for null
 	char *pOut = pRet;
-	
+
 	for( char const *pScan = pSrc; *pScan; pScan++ )
 	{
 		bool bIsSpecial = false;
@@ -2382,10 +2382,10 @@ void V_StringToColor32( color32 *color, const char *pString )
 
 
 // 3d memory copy
-void CopyMemory3D( void *pDest, void const *pSrc,		
-				   int nNumCols, int nNumRows, int nNumSlices, // dimensions of copy
-				   int nSrcBytesPerRow, int nSrcBytesPerSlice, // strides for source.
-				   int nDestBytesPerRow, int nDestBytesPerSlice // strides for dest
+void CopyMemory3D( void *pDest, void const *pSrc,
+					int nNumCols, int nNumRows, int nNumSlices, // dimensions of copy
+					int nSrcBytesPerRow, int nSrcBytesPerSlice, // strides for source.
+					int nDestBytesPerRow, int nDestBytesPerSlice // strides for dest
 	)
 {
 	if ( nNumSlices && nNumRows && nNumCols )
@@ -2501,28 +2501,28 @@ bool V_BinToString( char*pString, void *pBin, uint nBinSize )
 }
 
 // The following characters are not allowed to begin a line for Asian language line-breaking
-// purposes.  They include the right parenthesis/bracket, space character, period, exclamation, 
+// purposes.  They include the right parenthesis/bracket, space character, period, exclamation,
 // question mark, and a number of language-specific characters for Chinese, Japanese, and Korean
 static const wchar_t wszCantBeginLine[] =
 {
 	0x0020, 0x0021, 0x0025, 0x0029,	0x002c, 0x002e, 0x003a, 0x003b,
-	0x003e, 0x003f, 0x005d, 0x007d,	0x00a2, 0x00a8, 0x00b0, 0x00b7, 
-	0x00bb,	0x02c7, 0x02c9,	0x2010, 0x2013, 0x2014, 0x2015,	0x2016, 
-	0x2019, 0x201d, 0x201e,	0x201f, 0x2020, 0x2021, 0x2022,	0x2025, 
+	0x003e, 0x003f, 0x005d, 0x007d,	0x00a2, 0x00a8, 0x00b0, 0x00b7,
+	0x00bb,	0x02c7, 0x02c9,	0x2010, 0x2013, 0x2014, 0x2015,	0x2016,
+	0x2019, 0x201d, 0x201e,	0x201f, 0x2020, 0x2021, 0x2022,	0x2025,
 	0x2026, 0x2027, 0x203a, 0x203c,	0x2047, 0x2048, 0x2049, 0x2103,
 	0x2236, 0x2574, 0x3001, 0x3002,	0x3003, 0x3005, 0x3006, 0x3009,
 	0x300b, 0x300d, 0x300f, 0x3011,	0x3015, 0x3017, 0x3019, 0x301b,
-	0x301c,	0x301e, 0x301f, 0x303b, 0x3041, 0x3043, 0x3045, 0x3047, 
-	0x3049,	0x3063, 0x3083, 0x3085, 0x3087,	0x308e, 0x3095, 0x3096, 
-	0x30a0,	0x30a1, 0x30a3, 0x30a5, 0x30a7,	0x30a9, 0x30c3, 0x30e3, 
-	0x30e5,	0x30e7, 0x30ee, 0x30f5, 0x30f6,	0x30fb, 0x30fd, 0x30fe, 
-	0x30fc,	0x31f0, 0x31f1, 0x31f2, 0x31f3,	0x31f4, 0x31f5, 0x31f6, 
-	0x31f7,	0x31f8, 0x31f9, 0x31fa, 0x31fb,	0x31fc, 0x31fd, 0x31fe, 
-	0x31ff,	0xfe30, 0xfe31, 0xfe32, 0xfe33,	0xfe36, 0xfe38, 0xfe3a,	
-	0xfe3c, 0xfe3e, 0xfe40, 0xfe42, 0xfe44,	0xfe4f, 0xfe50, 0xfe51, 
-	0xfe52,	0xfe53, 0xfe54, 0xfe55, 0xfe56,	0xfe57, 0xfe58, 0xfe5a, 
-	0xfe5c, 0xfe5e, 0xff01,	0xff02, 0xff05, 0xff07, 0xff09,	0xff0c, 
-	0xff0e, 0xff1a, 0xff1b,	0xff1f, 0xff3d, 0xff40, 0xff5c,	0xff5d, 
+	0x301c,	0x301e, 0x301f, 0x303b, 0x3041, 0x3043, 0x3045, 0x3047,
+	0x3049,	0x3063, 0x3083, 0x3085, 0x3087,	0x308e, 0x3095, 0x3096,
+	0x30a0,	0x30a1, 0x30a3, 0x30a5, 0x30a7,	0x30a9, 0x30c3, 0x30e3,
+	0x30e5,	0x30e7, 0x30ee, 0x30f5, 0x30f6,	0x30fb, 0x30fd, 0x30fe,
+	0x30fc,	0x31f0, 0x31f1, 0x31f2, 0x31f3,	0x31f4, 0x31f5, 0x31f6,
+	0x31f7,	0x31f8, 0x31f9, 0x31fa, 0x31fb,	0x31fc, 0x31fd, 0x31fe,
+	0x31ff,	0xfe30, 0xfe31, 0xfe32, 0xfe33,	0xfe36, 0xfe38, 0xfe3a,
+	0xfe3c, 0xfe3e, 0xfe40, 0xfe42, 0xfe44,	0xfe4f, 0xfe50, 0xfe51,
+	0xfe52,	0xfe53, 0xfe54, 0xfe55, 0xfe56,	0xfe57, 0xfe58, 0xfe5a,
+	0xfe5c, 0xfe5e, 0xff01,	0xff02, 0xff05, 0xff07, 0xff09,	0xff0c,
+	0xff0e, 0xff1a, 0xff1b,	0xff1f, 0xff3d, 0xff40, 0xff5c,	0xff5d,
 	0xff5e, 0xff60, 0xff64
 };
 
@@ -2531,12 +2531,12 @@ static const wchar_t wszCantBeginLine[] =
 // of language-specific characters for Chinese, Japanese, and Korean
 static const wchar_t wszCantEndLine[] =
 {
-	0x0024, 0x0028, 0x002a, 0x003c, 0x005b, 0x005c, 0x007b, 0x00a3,	
-	0x00a5, 0x00ab, 0x00ac, 0x00b7, 0x02c6, 0x2018,	0x201c, 0x201f, 
-	0x2035, 0x2039, 0x3005, 0x3007,	0x3008, 0x300a, 0x300c, 0x300e, 
-	0x3010,	0x3014, 0x3016, 0x3018, 0x301a, 0x301d, 0xfe34, 0xfe35, 
-	0xfe37, 0xfe39, 0xfe3b, 0xfe3d, 0xfe3f,	0xfe41, 0xfe43, 0xfe59, 
-	0xfe5b,	0xfe5d, 0xff04, 0xff08, 0xff0e,	0xff3b, 0xff5b, 0xff5f, 
+	0x0024, 0x0028, 0x002a, 0x003c, 0x005b, 0x005c, 0x007b, 0x00a3,
+	0x00a5, 0x00ab, 0x00ac, 0x00b7, 0x02c6, 0x2018,	0x201c, 0x201f,
+	0x2035, 0x2039, 0x3005, 0x3007,	0x3008, 0x300a, 0x300c, 0x300e,
+	0x3010,	0x3014, 0x3016, 0x3018, 0x301a, 0x301d, 0xfe34, 0xfe35,
+	0xfe37, 0xfe39, 0xfe3b, 0xfe3d, 0xfe3f,	0xfe41, 0xfe43, 0xfe59,
+	0xfe5b,	0xfe5d, 0xff04, 0xff08, 0xff0e,	0xff3b, 0xff5b, 0xff5f,
 	0xffe1,	0xffe5, 0xffe6
 };
 
@@ -2593,8 +2593,8 @@ bool AsianWordWrap::CanBreakAfter( const wchar_t* wsz )
 
 	wchar_t first_char = wsz[0];
 	wchar_t second_char = wsz[1];
- 	if( ( iswascii( first_char ) && iswascii( second_char ) ) // If not both CJK, return early
- 		|| ( iswalnum( first_char ) && iswalnum( second_char ) ) ) // both characters are alphanumeric - Don't split a number or a word!
+	if( ( iswascii( first_char ) && iswascii( second_char ) ) // If not both CJK, return early
+		|| ( iswalnum( first_char ) && iswalnum( second_char ) ) ) // both characters are alphanumeric - Don't split a number or a word!
 	{
 		return false;
 	}

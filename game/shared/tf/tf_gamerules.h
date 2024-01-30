@@ -34,7 +34,7 @@
 #endif
 
 #ifdef CLIENT_DLL
-	
+
 	#define CTFGameRules C_TFGameRules
 	#define CTFGameRulesProxy C_TFGameRulesProxy
 	#define CBonusRoundLogic C_BonusRoundLogic
@@ -244,7 +244,7 @@ public:
 	float			m_flForceScale;
 	CBaseEntity		*m_pEntityTarget;		// Target being direct hit if any
 private:
-	// These are used during the application of the RadiusDamage 
+	// These are used during the application of the RadiusDamage
 	float			flFalloff;
 };
 
@@ -306,7 +306,7 @@ public:
 	virtual bool	Damage_ShowOnHUD( int iDmgType );				// Damage types that have client HUD art.
 	virtual bool	Damage_ShouldNotBleed( int iDmgType );			// Damage types that don't make the player bleed.
 	// TEMP:
-	virtual int		Damage_GetTimeBased( void );		
+	virtual int		Damage_GetTimeBased( void );
 	virtual int		Damage_GetShowOnHud( void );
 	virtual int		Damage_GetShouldNotBleed( void );
 
@@ -378,7 +378,7 @@ public:
 	bool			CanChangeClassInStalemate( void );
 	bool			CanChangeTeam( int iCurrentTeam ) const;
 
-	virtual void	SetRoundOverlayDetails( void );	
+	virtual void	SetRoundOverlayDetails( void );
 	virtual void	ShowRoundInfoPanel( CTFPlayer *pPlayer = NULL ); // NULL pPlayer means show the panel to everyone
 
 	virtual bool	TimerMayExpire( void );
@@ -435,14 +435,14 @@ public:
 
 	void SetCTFCaptureBonusTime( float flTime ){ m_flCTFCaptureBonusTime = flTime; }
 	float GetCTFCaptureBonusTime( void )
-	{ 
+	{
 		float flRetVal = tf_ctf_bonus_time.GetFloat();
 		if ( m_flCTFCaptureBonusTime >= 0.0f )
 		{
 			flRetVal = m_flCTFCaptureBonusTime;
 		}
 
-		return flRetVal; 
+		return flRetVal;
 	}
 
 	// populate vector with set of control points the player needs to capture
@@ -457,7 +457,7 @@ public:
 	virtual bool ClientConnected( edict_t *pEntity, const char *pszName, const char *pszAddress, char *reject, int maxrejectlen );
 
 	virtual bool ShouldSkipAutoScramble( void )
-	{ 
+	{
 		return IsPVEModeActive();
 	}
 
@@ -501,7 +501,7 @@ protected:
 	virtual void	RespawnTeam( int iTeam );
 
 	virtual void	InternalHandleTeamWin( int iWinningTeam );
-	
+
 	static int		PlayerRoundScoreSortFunc( const PlayerRoundScore_t *pRoundScore1, const PlayerRoundScore_t *pRoundScore2 );
 	static int		PlayerArenaRoundScoreSortFunc( const PlayerArenaRoundScore_t *pRoundScore1, const PlayerArenaRoundScore_t *pRoundScore2 );
 
@@ -540,7 +540,7 @@ public:
 
 	// Collision and Damage rules.
 	virtual bool	ShouldCollide( int collisionGroup0, int collisionGroup1 );
-	
+
 	int GetTimeLeft( void );
 
 	// Get the view vectors for this mod.
@@ -562,13 +562,13 @@ public:
 	const char *GetTeamGoalString( int iTeam );
 
 	int		GetStopWatchState( void ) { return m_nStopWatchState; }
-	
+
 	// Game Modes
 	virtual bool IsInArenaMode( void ) const OVERRIDE;
 	virtual bool IsInKothMode( void ) const OVERRIDE { return m_bPlayingKoth; }
 	bool IsInMedievalMode( void ) const { return m_bPlayingMedieval; }
 	bool IsHolidayMap( int nHoliday ) const { return m_nMapHolidayType == nHoliday; }
-	
+
 #ifdef TF_RAID_MODE
 	bool IsRaidMode( void ) const;
 	bool IsBossBattleMode( void ) const;
@@ -582,7 +582,7 @@ bool IsCreepWaveMode( void ) const;
 
 	void SetMannVsMachineAlarmStatus( bool bStatus ){ m_bMannVsMachineAlarmStatus.Set( bStatus ); }
 	bool GetMannVsMachineAlarmStatus( void ){ return m_bMannVsMachineAlarmStatus; }
-	
+
 	bool IsQuickBuildTime( void );
 
 	bool GameModeUsesUpgrades( void );
@@ -670,7 +670,7 @@ bool IsCreepWaveMode( void ) const;
 	bool			ItemTesting_GetBotTurntable( void ) { return m_bItemTesting_BotTurntable; }
 	bool			ItemTesting_GetBotViewScan( void ) { return m_bItemTesting_BotViewScan; }
 	void			ItemTesting_SetupFromKV( KeyValues *pKV );
-	
+
 	bool IsPlayingHybrid_CTF_CP( void ) const { return m_bPlayingHybrid_CTF_CP; }
 	bool IsPlayingSpecialDeliveryMode( void ) const { return m_bPlayingSpecialDeliveryMode; }
 	bool IsPlayingRobotDestructionMode( void ) const { return m_bPlayingRobotDestructionMode; }
@@ -701,19 +701,19 @@ bool IsCreepWaveMode( void ) const;
 	void SetPlayersInHell( bool bState ){ m_bHelltowerPlayersInHell.Set( bState ); } // used for Halloween 2013 state of the game (players in the underworld fighting)
 	bool ArePlayersInHell( void ) const { return m_bHelltowerPlayersInHell; }
 	void SpawnPlayerInHell( CTFPlayer *pPlayer, const char *pszSpawnPointName );
-	
-	// Halloween 2013 
+
+	// Halloween 2013
 	void PlayHelltowerAnnouncerVO( int iRedLine, int iBlueLine );
 
 	void SetUsingSpells( bool bState )
-	{ 
-		m_bIsUsingSpells.Set( bState ); 
+	{
+		m_bIsUsingSpells.Set( bState );
 	}
 
 	bool IsUsingSpells( void ) const;
 	bool IsUsingGrapplingHook( void ) const;
 
-	bool IsTruceActive( void ) const; 
+	bool IsTruceActive( void ) const;
 
 	bool MapHasMatchSummaryStage( void ){ return m_bMapHasMatchSummaryStage; }
 	bool PlayersAreOnMatchSummaryStage( void ){ return m_bPlayersAreOnMatchSummaryStage; }
@@ -746,7 +746,7 @@ bool IsCreepWaveMode( void ) const;
 	EUserNextMapVote PlayerNextMapVoteState( int nIndex ) const { return m_ePlayerWantsRematch.Get( nIndex ); }
 	ENextMapVotingState GetCurrentNextMapVotingState() const { return m_eRematchState; }
 	MapDefIndex_t GetNextMapVoteOption( int nIndex ) const { return m_nNextMapVoteOptions.Get( nIndex ); }
-	
+
 #ifdef GAME_DLL
 	void UpdateNextMapVoteOptionsFromLobby();
 	void KickPlayersNewMatchIDRequestFailed();
@@ -799,7 +799,7 @@ bool IsCreepWaveMode( void ) const;
 #else
 
 	DECLARE_SERVERCLASS_NOBASE(); // This makes data tables able to access our private vars.
-	
+
 	virtual ~CTFGameRules();
 
 	virtual void LevelShutdown();
@@ -846,7 +846,7 @@ bool IsCreepWaveMode( void ) const;
 	void ClientSettingsChanged( CBasePlayer *pPlayer );
 	void ChangePlayerName( CTFPlayer *pPlayer, const char *pszNewName );
 
-	virtual VoiceCommandMenuItem_t *VoiceCommand( CBaseMultiplayerPlayer *pPlayer, int iMenu, int iItem ); 
+	virtual VoiceCommandMenuItem_t *VoiceCommand( CBaseMultiplayerPlayer *pPlayer, int iMenu, int iItem );
 
 	float GetPreMatchEndTime() const;	// Returns the time at which the prematch will be over.
 	void GoToIntermission( void );
@@ -988,8 +988,8 @@ public:
 	void SetOvertimeAllowedForCTF( bool bAllowed ){ m_bOvertimeAllowedForCTF = bAllowed; }
 	bool GetOvertimeAllowedForCTF( void ){ return m_bOvertimeAllowedForCTF; }
 
-	const CUtlVector< CHandle< CBaseEntity > > &GetHealthEntityVector( void );		// return vector of health entities 
-	const CUtlVector< CHandle< CBaseEntity > > &GetAmmoEntityVector( void );		// return vector of ammo entities 
+	const CUtlVector< CHandle< CBaseEntity > > &GetHealthEntityVector( void );		// return vector of health entities
+	const CUtlVector< CHandle< CBaseEntity > > &GetAmmoEntityVector( void );		// return vector of ammo entities
 
 	CHandle< CTeamTrainWatcher > GetPayloadToPush( int pushingTeam ) const;			// return the train watcher for the Payload cart the given team needs to push to win, or NULL if none currently exists
 	CHandle< CTeamTrainWatcher > GetPayloadToBlock( int blockingTeam ) const;		// return the train watcher for the Payload cart the given team needs to block from advancing, or NULL if none currently exists
@@ -1000,7 +1000,7 @@ public:
 
 	bool ShouldDropSpellPickup();
 	void DropSpellPickup( const Vector& vPosition, int nTier = 0 ) const;
-	
+
 	bool ShouldDropBonusDuck( void );
 	bool ShouldDropBonusDuckFromPlayer( CTFPlayer *pScorer, CTFPlayer *pVictim );
 	void DropBonusDuck( const Vector& vPosition, CTFPlayer *pScorer = NULL, CTFPlayer *pAssistor = NULL, CTFPlayer *pVictim = NULL, bool bCrit = false, bool bObjective = false ) const;
@@ -1024,7 +1024,7 @@ private:
 	void MatchSummaryTeleport();
 
 	void StopWatchShouldBeTimedWin_Calculate( void );
-	
+
 #endif // GAME_DLL
 
 private:
@@ -1035,12 +1035,12 @@ private:
 
 #ifdef GAME_DLL
 
-	
+
 	void CheckHelltowerCartAchievement( int iTeam );
 
 	Vector2D	m_vecPlayerPositions[MAX_PLAYERS];
 
-	CUtlVector<CHandle<CHealthKit> > m_hDisabledHealthKits;	
+	CUtlVector<CHandle<CHealthKit> > m_hDisabledHealthKits;
 
 
 	char	m_szMostRecentCappers[MAX_PLAYERS+1];	// list of players who made most recent capture.  Stored as string so it can be passed in events.
@@ -1053,7 +1053,7 @@ private:
 	int m_iCurrentMiniRoundMask;
 
 	CHandle<CTeamRoundTimer>	m_hStopWatchTimer;
-	
+
 
 	CTeamRoundTimer* GetStopWatchTimer( void ) { return (CTeamRoundTimer*)m_hStopWatchTimer.Get(); }
 
@@ -1065,7 +1065,7 @@ private:
 	//Arena
 	bool IsFirstBloodAllowed( void );
 	EHANDLE m_hArenaEntity;
-	CUtlVector<CHandle<CTFPlayer> > m_hArenaPlayerQueue;	
+	CUtlVector<CHandle<CTFPlayer> > m_hArenaPlayerQueue;
 	int		m_iPreviousTeamSize;
 	bool	m_bArenaFirstBlood;
 
@@ -1073,7 +1073,7 @@ private:
 
 	// Tournament
 	CHandle< CCompetitiveLogic > m_hCompetitiveLogicEntity;
-	
+
 	CHandle<CTrainingModeLogic> m_hTrainingModeLogic;
 	CHandle<CTFHolidayEntity> m_hHolidayLogic;
 
@@ -1101,7 +1101,7 @@ private:
 	CHandle< CRaidLogic >		m_hRaidLogic;
 	CHandle< CBossBattleLogic > m_hBossBattleLogic;
 #endif // TF_RAID_MODE
-	
+
 	int		m_nCurrencyAccumulator;
 	int		m_iCurrencyPool;
 
@@ -1215,7 +1215,7 @@ public:
 	float	GetCapturePointTime( void ) { return m_flCapturePointEnableTime; }
 
 	virtual bool ShouldDrawHeadLabels()
-	{ 
+	{
 		if ( IsInTournamentMode() )
 			return false;
 
@@ -1346,7 +1346,7 @@ public:
 		m_iGlobalAttributeCacheVersion++;
 	}
 
-private:	
+private:
 #ifdef CLIENT_DLL
 	bool m_bRecievedBaseline;
 #endif
@@ -1457,8 +1457,8 @@ inline CTFGameRules* TFGameRules()
 	return static_cast<CTFGameRules*>(g_pGameRules);
 }
 
-inline float CTFGameRules::ItemTesting_GetBotAnimSpeed( void ) 
-{ 
+inline float CTFGameRules::ItemTesting_GetBotAnimSpeed( void )
+{
 	static const ConVar *pHostTimescale = NULL;
 
 	if ( !pHostTimescale )
@@ -1476,7 +1476,7 @@ inline float CTFGameRules::ItemTesting_GetBotAnimSpeed( void )
 inline bool CTFGameRules::IsRaidMode( void ) const
 {
 #ifdef GAME_DLL
-	return m_hRaidLogic != NULL; 
+	return m_hRaidLogic != NULL;
 #else
 	return tf_gamemode_raid.GetBool();
 #endif
@@ -1511,7 +1511,7 @@ inline bool CTFGameRules::IsHalloweenScenario( HalloweenScenarioType scenario ) 
 bool EntityPlacementTest( CBaseEntity *pMainEnt, const Vector &vOrigin, Vector &outPos, bool bDropToGround );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CArenaLogic : public CPointEntity
 {
@@ -1534,7 +1534,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CCompetitiveLogic : public CPointEntity
 {
@@ -1550,7 +1550,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CLogicMannPower : public CPointEntity
 {
@@ -1673,7 +1673,7 @@ public:
 	DECLARE_DATADESC();
 
 	CTFHolidayEntity()
-	{ 
+	{
 		m_nHolidayType = kHoliday_None;
 		m_nTauntInHell = 0;
 		m_nAllowHaunting = 0;
@@ -1720,7 +1720,7 @@ public:
 	DECLARE_DATADESC();
 
 	CKothLogic()
-	{ 
+	{
 		m_nTimerInitialLength = 180; // seconds
 		m_nTimeToUnlockPoint = 30; // seconds
 
@@ -1758,12 +1758,12 @@ public:
 	DECLARE_DATADESC();
 
 	CCPTimerLogic()
-	{ 
+	{
 		m_nTimerLength = 60; // seconds
 		m_iszControlPointName = NULL_STRING;
 		m_hControlPoint = NULL;
 		m_bFire15SecRemain = m_bFire10SecRemain = m_bFire5SecRemain = true;
-	
+
 		SetContextThink( &CCPTimerLogic::Think, gpGlobals->curtime + 0.15, CP_TIMER_THINK );
 	}
 	virtual int UpdateTransmitState()

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -242,7 +242,7 @@ CTankTrainAI::~CTankTrainAI( void )
 	{
 		controller.SoundDestroy( m_soundTreads );
 	}
-	
+
 	if ( m_soundEngine )
 	{
 		controller.SoundDestroy( m_soundEngine );
@@ -259,7 +259,7 @@ void CTankTrainAI::Precache( void )
 int CTankTrainAI::SoundEnginePitch( void )
 {
 	CFuncTrackTrain *pTrain = m_hTrain;
-	
+
 	// we know this isn't NULL here
 	if ( pTrain->GetMaxSpeed() )
 	{
@@ -295,7 +295,7 @@ void CTankTrainAI::SoundEngineStart( void )
 	{
 		controller.Play( m_soundTreads, 1.0, 100 );
 	}
-	
+
 	if ( m_soundEngine )
 	{
 		controller.Play( m_soundEngine, 0.5, 90 );
@@ -303,7 +303,7 @@ void CTankTrainAI::SoundEngineStart( void )
 		controller.CommandAdd( m_soundEngine, 0, SOUNDCTRL_CHANGE_PITCH, 1.5, random->RandomInt(130, 145) );
 		controller.CommandAdd( m_soundEngine, 1.5, SOUNDCTRL_CHANGE_PITCH, 2, random->RandomInt(105, 115) );
 	}
-	
+
 	m_soundPlaying = true;
 }
 
@@ -314,7 +314,7 @@ void CTankTrainAI::SoundEngineStop( void )
 		return;
 
 	CSoundEnvelopeController &controller = CSoundEnvelopeController::GetController();
-	
+
 	if ( m_soundTreads )
 	{
 		controller.SoundFadeOut( m_soundTreads, 0.25 );
@@ -325,7 +325,7 @@ void CTankTrainAI::SoundEngineStop( void )
 		controller.CommandClear( m_soundEngine );
 		controller.SoundChangePitch( m_soundEngine, 70, 3.0 );
 	}
-	m_soundPlaying = false;	
+	m_soundPlaying = false;
 }
 
 
@@ -341,7 +341,7 @@ void CTankTrainAI::SoundShutdown( void )
 	{
 		controller.Shutdown( m_soundEngine );
 	}
-	m_soundPlaying = false;	
+	m_soundPlaying = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -357,7 +357,7 @@ void CTankTrainAI::Spawn( void )
 void CTankTrainAI::Activate( void )
 {
 	BaseClass::Activate();
-	
+
 	CBaseEntity *pTarget = NULL;
 
 	CFuncTrackTrain *pTrain = NULL;
@@ -414,7 +414,7 @@ int PathFindDirection( CPathTrack *pStart, const Vector &startPosition, const Ve
 	do
 	{
 		float dist = (pPath->GetLocalOrigin() - destination).LengthSqr();
-		
+
 		// This is closer than our current estimate
 		if ( dist < nearestDist )
 		{
@@ -503,7 +503,7 @@ void CTankTrainAI::Think( void )
 			desired = 1;
 		}
 	}
-	
+
 	// UNDONE: Align the think time with arrival, and bump this up to a few seconds
 	SetNextThink( gpGlobals->curtime + 0.5f );
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -26,7 +26,7 @@ static void PopulateChannelList( HWND wnd, CSoundParametersInternal *p )
 		return;
 	}
 
-	SendMessage( control, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( control, CB_RESETCONTENT, 0, 0 );
 	if ( p )
 	{
 		SendMessage( control, WM_SETTEXT , 0, (LPARAM)p->ChannelToString() );
@@ -36,14 +36,14 @@ static void PopulateChannelList( HWND wnd, CSoundParametersInternal *p )
 		SendMessage( control, WM_SETTEXT , 0, (LPARAM)"CHAN_VOICE" );
 	}
 
-	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"CHAN_VOICE" ); 
+	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"CHAN_VOICE" );
 
-	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"CHAN_AUTO" ); 
-	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"CHAN_WEAPON" ); 
-	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"CHAN_ITEM" ); 
-	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"CHAN_BODY" ); 
-	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"CHAN_STREAM" ); 
-	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"CHAN_STATIC" ); 
+	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"CHAN_AUTO" );
+	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"CHAN_WEAPON" );
+	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"CHAN_ITEM" );
+	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"CHAN_BODY" );
+	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"CHAN_STREAM" );
+	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"CHAN_STATIC" );
 }
 
 static void PopulateVolumeList( HWND wnd, CSoundParametersInternal *p )
@@ -54,7 +54,7 @@ static void PopulateVolumeList( HWND wnd, CSoundParametersInternal *p )
 		return;
 	}
 
-	SendMessage( control, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( control, CB_RESETCONTENT, 0, 0 );
 
 	if ( p )
 	{
@@ -65,7 +65,7 @@ static void PopulateVolumeList( HWND wnd, CSoundParametersInternal *p )
 		SendMessage( control, WM_SETTEXT , 0, (LPARAM)"VOL_NORM" );
 	}
 
-	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"VOL_NORM" ); 
+	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"VOL_NORM" );
 }
 
 static void PopulateSoundlevelList( HWND wnd, CSoundParametersInternal *p )
@@ -76,7 +76,7 @@ static void PopulateSoundlevelList( HWND wnd, CSoundParametersInternal *p )
 		return;
 	}
 
-	SendMessage( control, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( control, CB_RESETCONTENT, 0, 0 );
 
 	if ( p )
 	{
@@ -125,7 +125,7 @@ static void PopulatePitchList( HWND wnd, CSoundParametersInternal *p )
 		return;
 	}
 
-	SendMessage( control, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( control, CB_RESETCONTENT, 0, 0 );
 
 	if ( p )
 	{
@@ -136,9 +136,9 @@ static void PopulatePitchList( HWND wnd, CSoundParametersInternal *p )
 		SendMessage( control, WM_SETTEXT , 0, (LPARAM)"PITCH_NORM" );
 	}
 
-	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"PITCH_NORM" ); 
-	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"PITCH_LOW" ); 
-	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"PITCH_HIGH" ); 
+	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"PITCH_NORM" );
+	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"PITCH_LOW" );
+	SendMessage( control, CB_ADDSTRING, 0, (LPARAM)"PITCH_HIGH" );
 }
 
 
@@ -150,7 +150,7 @@ static void PopulateScriptList( HWND wnd, char const *curscript )
 		return;
 	}
 
-	SendMessage( control, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( control, CB_RESETCONTENT, 0, 0 );
 
 	if ( curscript )
 	{
@@ -178,8 +178,8 @@ static bool WaveLessFunc( const char *const& name1, const char *const& name2 )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wnd - 
+// Purpose:
+// Input  : wnd -
 // Output : static void
 //-----------------------------------------------------------------------------
 static void PopulateWaveList( HWND wnd, CSoundParametersInternal *p )
@@ -210,7 +210,7 @@ static void PopulateWaveList( HWND wnd, CSoundParametersInternal *p )
 		char const *name = m_SortedNames[ j ];
 		if ( name && name[ 0 ] )
 		{
-			SendMessage( control, LB_ADDSTRING, 0, (LPARAM)name ); 
+			SendMessage( control, LB_ADDSTRING, 0, (LPARAM)name );
 		}
 
 		delete name;
@@ -254,7 +254,7 @@ static void PopulateWaveList_Available( HWND wnd )
 		char const *name = m_SortedNames[ j ];
 		if ( name && name[ 0 ] )
 		{
-			SendMessage( control, LB_ADDSTRING, 0, (LPARAM)name ); 
+			SendMessage( control, LB_ADDSTRING, 0, (LPARAM)name );
 		}
 
 		j = m_SortedNames.NextInorder( j );
@@ -317,7 +317,7 @@ static void SoundProperties_OnOK( HWND hwndDlg )
 
 	char outsoundname[ 256 ];
 	char outscriptfile[ 256 ];
-						
+
 	GetDlgItemText( hwndDlg, IDC_SOUNDNAME, outsoundname, sizeof( outsoundname ) );
 	GetDlgItemText( hwndDlg, IDC_SOUNDSCRIPT, outscriptfile, sizeof( outscriptfile ) );
 
@@ -381,18 +381,18 @@ static void SoundProperties_OnOK( HWND hwndDlg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
 static BOOL CALLBACK SoundPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	switch(uMsg)
 	{
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		{
 			g_Params.PositionSelf( hwndDlg );
 
@@ -400,7 +400,7 @@ static BOOL CALLBACK SoundPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM 
 
 			CSoundParametersInternal *p = NULL;
 			char const *script = NULL;
-				
+
 			if ( g_Params.addsound )
 			{
 				Assert( g_Params.items.Count() == 0 );
@@ -410,7 +410,7 @@ static BOOL CALLBACK SoundPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM 
 
 				item = item = g_Params.items[ 0 ];
 
-				SendMessage( GetDlgItem( hwndDlg, IDC_OWNERONLY ), BM_SETCHECK, 
+				SendMessage( GetDlgItem( hwndDlg, IDC_OWNERONLY ), BM_SETCHECK,
 					( WPARAM )BST_UNCHECKED,
 					( LPARAM )0 );
 
@@ -428,7 +428,7 @@ static BOOL CALLBACK SoundPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM 
 				p = g_pSoundEmitterSystem->InternalGetParametersForSound( soundindex );
 				Assert( p );
 
-				SendMessage( GetDlgItem( hwndDlg, IDC_OWNERONLY ), BM_SETCHECK, 
+				SendMessage( GetDlgItem( hwndDlg, IDC_OWNERONLY ), BM_SETCHECK,
 					( WPARAM ) p->OnlyPlayToOwner() ? BST_CHECKED : BST_UNCHECKED,
 					( LPARAM )0 );
 
@@ -438,7 +438,7 @@ static BOOL CALLBACK SoundPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM 
 
 				SetDlgItemTextW( hwndDlg, IDC_STATIC_CLOSECAPTION, cctext );
 			}
-			
+
 			PopulateChannelList( hwndDlg, p );
 			PopulateVolumeList( hwndDlg, p );
 			PopulateSoundlevelList( hwndDlg, p );
@@ -456,9 +456,9 @@ static BOOL CALLBACK SoundPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM 
 
 			SetFocus( GetDlgItem( hwndDlg, IDC_SOUNDNAME ) );
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -468,7 +468,7 @@ static BOOL CALLBACK SoundPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM 
 				EndDialog( hwndDlg, 1 );
 			}
 			break;
-        case IDCANCEL:
+		case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		case IDC_WAVELIST:
@@ -508,11 +508,11 @@ static BOOL CALLBACK SoundPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM 
 						{
 							CWaveParams wp;
 							memset( &wp, 0, sizeof( wp ) );
-							
+
 							Q_snprintf( wp.m_szDialogTitle, sizeof( wp.m_szDialogTitle ), "Wave Properties" );
-							
+
 							wp.items.AddToTail( wavefile );
-							
+
 							WaveProperties( &wp );
 						}
 					}
@@ -530,7 +530,7 @@ static BOOL CALLBACK SoundPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM 
 					for ( i = 0; i < count; i++ )
 					{
 						char wavename[ 256 ];
-						
+
 						SendMessage( GetDlgItem( hwndDlg, IDC_WAVELIST), LB_GETTEXT, selected[ i ], (LPARAM)wavename );
 
 						// Add it to global parameters, too
@@ -565,7 +565,7 @@ static BOOL CALLBACK SoundPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM 
 					for ( i = 0; i < count; i++ )
 					{
 						char wavename[ 256 ];
-						
+
 						// Get selection wave name
 						SendMessage( GetDlgItem( hwndDlg, IDC_WAVELIST_AVAILABLE), LB_GETTEXT, selected[ i ], (LPARAM)wavename );
 
@@ -596,16 +596,16 @@ static BOOL CALLBACK SoundPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int SoundProperties( CSoundParams *params )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_SOUNDPROPERTIES ),
 		(HWND)GetWorkspaceManager()->getHandle(),
 		(DLGPROC)SoundPropertiesDialogProc );

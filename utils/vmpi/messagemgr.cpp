@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ public:
 
 // IMessageMgr overrides.
 public:
-	
+
 	virtual void	Print( const char *pMsg );
 
 
@@ -57,7 +57,7 @@ private:
 
 	HANDLE							m_hExitObj;			// This is signalled when we want the thread to exit.
 	HANDLE							m_hExitResponseObj;	// The thread sets this when it exits.
-	
+
 	HANDLE							m_hMessageObj;		// This signals to the thread that there's a message to send.
 	HANDLE							m_hMessageSentObj;	// This signals back to the main thread that the message was sent.
 	const char						*m_pMessageText;	// The text to send.
@@ -67,7 +67,7 @@ private:
 
 	ITCPListenSocket				*m_pListenSocket;
 	int								m_iListenPort;
-	
+
 	ISocket							*m_pBroadcastSocket;
 	double							m_flLastBroadcast;
 
@@ -107,7 +107,7 @@ bool CMessageMgr::Init()
 	if ( !m_pBroadcastSocket->BindToAny( 0 ) )
 		return false;
 
-	
+
 	// Create the listen socket.
 	m_pListenSocket = NULL;
 	for ( m_iListenPort=MSGMGR_LISTEN_PORT_FIRST; m_iListenPort <= MSGMGR_LISTEN_PORT_LAST; m_iListenPort++ )
@@ -122,7 +122,7 @@ bool CMessageMgr::Init()
 
 	// Create our broadcast/connection thread.
 	m_flLastBroadcast = 0;
-	m_hThread = CreateThread( 
+	m_hThread = CreateThread(
 		NULL,
 		0,
 		&CMessageMgr::StaticThreadFn,
@@ -149,7 +149,7 @@ void CMessageMgr::Term()
 			SetEvent( m_hExitObj );
 			WaitForSingleObject( m_hExitResponseObj, INFINITE );
 		}
-		
+
 		CloseHandle( m_hThread );
 		m_hThread = NULL;
 	}
@@ -206,7 +206,7 @@ DWORD CMessageMgr::ThreadFn()
 			m_flLastBroadcast = flCurTime;
 		}
 
-		
+
 		// Accept new connections.
 		CIPAddr addr;
 		ITCPSocket *pConn = m_pListenSocket->UpdateListen( &addr );
@@ -217,19 +217,19 @@ DWORD CMessageMgr::ThreadFn()
 			{
 				char *pMsg = m_MessageQ[iQ];
 				int bufLen = strlen( pMsg ) + 1;
-				
+
 				char packetID = MSGMGR_PACKETID_MSG;
 				const void *data[2] = { &packetID, pMsg };
 				int len[2] = { 1, bufLen };
 
 				// Send it out to our sockets.
 				pConn->SendChunks( data, len, 2 );
-			}				
+			}
 
 			m_Sockets.AddToTail( pConn );
 		}
 
-		
+
 		// Should we exit?
 		HANDLE handles[2] = {m_hExitObj, m_hMessageObj};
 		DWORD ret = WaitForMultipleObjects( 2, handles, FALSE, 200 );
@@ -255,7 +255,7 @@ DWORD CMessageMgr::ThreadFn()
 			strcpy( m_MessageQ[index], m_pMessageText );
 
 
-			
+
 			// Ok, send out the message.
 			char packetID = MSGMGR_PACKETID_MSG;
 			const void *data[2] = { &packetID, m_pMessageText };
@@ -277,7 +277,7 @@ DWORD CMessageMgr::ThreadFn()
 		m_Sockets[i]->Release();
 
 	m_Sockets.Purge();
-	
+
 	m_MessageQ.PurgeAndDeleteElements();
 
 	SetEvent( m_hExitResponseObj );
@@ -297,4 +297,3 @@ IMessageMgr* GetMessageMgr()
 {
 	return &g_MessageMgr;
 }
-

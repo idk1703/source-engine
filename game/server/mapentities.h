@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,7 +14,7 @@
 #include "mapentities_shared.h"
 
 // This class provides hooks into the map-entity loading process that allows CS to do some tricks
-// when restarting the round. The main trick it tries to do is recreate all 
+// when restarting the round. The main trick it tries to do is recreate all
 abstract_class IMapEntityFilter
 {
 public:
@@ -32,7 +32,7 @@ void MapEntity_PrecacheEntity( const char *pEntData, int &nStringSize );
 
 
 //-----------------------------------------------------------------------------
-// Hierarchical spawn 
+// Hierarchical spawn
 //-----------------------------------------------------------------------------
 struct HierarchicalSpawn_t
 {

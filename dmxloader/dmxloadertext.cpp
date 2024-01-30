@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -78,8 +78,8 @@ static CDmxKeyValues2ErrorStack g_KeyValues2ErrorStack;
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CDmxKeyValues2ErrorStack::CDmxKeyValues2ErrorStack() : 
-	m_pFilename("NULL"), m_errorIndex(0), m_maxErrorIndex(0), m_nFileLine(1) 
+CDmxKeyValues2ErrorStack::CDmxKeyValues2ErrorStack() :
+	m_pFilename("NULL"), m_errorIndex(0), m_maxErrorIndex(0), m_nFileLine(1)
 {
 }
 
@@ -759,7 +759,7 @@ void CDmxSerializerKeyValues2::EatWhitespacesAndComments( CUtlBuffer &buf )
 	// eating white spaces and remarks loop
 	int nMaxPut = buf.TellMaxPut() - buf.TellGet();
 	int nOffset = 0;
-	while ( nOffset < nMaxPut )	
+	while ( nOffset < nMaxPut )
 	{
 		// Eat whitespaces, keep track of line count
 		const char *pPeek = NULL;
@@ -904,7 +904,7 @@ bool CDmxSerializerKeyValues2::UnserializeElementAttribute( CUtlBuffer &buf, Dmx
 		g_KeyValues2ErrorStack.ReportError( "Attribute \"%s\" was defined more than once.\n", pAttributeName );
 		return false;
 	}
-	
+
 	CDmxAttribute *pAttribute;
 	{
 		CDmxElementModifyScope modify( pElement );
@@ -1163,7 +1163,7 @@ bool CDmxSerializerKeyValues2::UnserializeArrayAttribute( CUtlBuffer &buf, DmxEl
 //-----------------------------------------------------------------------------
 // Reads an attribute for an element
 //-----------------------------------------------------------------------------
-bool CDmxSerializerKeyValues2::UnserializeAttribute( CUtlBuffer &buf, 
+bool CDmxSerializerKeyValues2::UnserializeAttribute( CUtlBuffer &buf,
 	DmxElementDictHandle_t hElement, const char *pAttributeName, DmAttributeType_t nAttrType )
 {
 	// Read the attribute value
@@ -1349,7 +1349,7 @@ bool CDmxSerializerKeyValues2::UnserializeElement( CUtlBuffer &buf, const char *
 	return true;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Unserializes a single element
 //-----------------------------------------------------------------------------
@@ -1364,7 +1364,7 @@ bool CDmxSerializerKeyValues2::UnserializeElement( CUtlBuffer &buf, DmxElementDi
 	TokenType_t token = ReadToken( buf, tokenBuf );
 	if ( token == TOKEN_INVALID )
 		return false;
-	
+
 	if ( token == TOKEN_EOF )
 		return true;
 
@@ -1383,7 +1383,7 @@ bool CDmxSerializerKeyValues2::UnserializeElement( CUtlBuffer &buf, DmxElementDi
 	return UnserializeElement( buf, pTypeName, pHandle );
 }
 
-			   
+
 //-----------------------------------------------------------------------------
 // Main entry point for the unserialization
 //-----------------------------------------------------------------------------

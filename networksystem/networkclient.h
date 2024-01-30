@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -35,7 +35,7 @@ public:
 	virtual void	OnPacketFinished();
 
 	// ILookupChannel
-    virtual INetChannel *FindNetChannel( const netadr_t& from ) ;
+	virtual INetChannel *FindNetChannel( const netadr_t& from ) ;
 
 	INetChannel *GetNetChannel()
 	{
@@ -46,7 +46,7 @@ public:
 	void SendUpdate();
 
 	CUDPSocket *m_pSocket;
-	
+
 	CNetChannel		m_NetChan;
 	bool			m_bConnected;
 };

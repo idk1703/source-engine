@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -40,13 +40,13 @@ public:
 	char			m_UserName[128];
 };
 
-// If you're the master, this loads pDBInfoFilename, sends that info to the workers, and 
+// If you're the master, this loads pDBInfoFilename, sends that info to the workers, and
 // connects to the database.
 //
 // If you're a worker, this waits for the DB info, then connects to the database.
-void StatsDB_InitStatsDatabase( 
-	int argc, 
-	char **argv, 
+void StatsDB_InitStatsDatabase(
+	int argc,
+	char **argv,
 	const char *pDBInfoFilename );
 
 // The database gives back a unique ID for the job.

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -26,7 +26,7 @@
 
 class CTFProjectile_Jar;
 
-enum EThrowableTypes 
+enum EThrowableTypes
 {
 	EThrowableBase				= 0,
 #ifdef STAGING_ONLY
@@ -45,7 +45,7 @@ class CTFJar : public CTFWeaponBaseGun
 public:
 
 	DECLARE_CLASS( CTFJar, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFJar();
@@ -72,7 +72,7 @@ public:
 
 //	virtual bool		SendWeaponAnim( int iActivity );
 
-	virtual CTFProjectile_Jar	*CreateJarProjectile( const Vector &position, const QAngle &angles, const Vector &velocity, 
+	virtual CTFProjectile_Jar	*CreateJarProjectile( const Vector &position, const QAngle &angles, const Vector &velocity,
 		const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo );
 #endif
 
@@ -90,12 +90,12 @@ class CTFJarMilk : public CTFJar
 {
 public:
 	DECLARE_CLASS( CTFJarMilk, CTFJar );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 
 	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_JAR_MILK; }
 
 #ifdef GAME_DLL
-	virtual CTFProjectile_Jar	*CreateJarProjectile( const Vector &position, const QAngle &angles, const Vector &velocity, 
+	virtual CTFProjectile_Jar	*CreateJarProjectile( const Vector &position, const QAngle &angles, const Vector &velocity,
 		const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo );
 #endif
 
@@ -110,7 +110,7 @@ class CTFCleaver : public CTFJar
 {
 public:
 	DECLARE_CLASS( CTFCleaver, CTFJar );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 
 	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_CLEAVER; }
 	virtual float		GetProjectileSpeed( void );
@@ -127,7 +127,7 @@ public:
 
 	virtual bool		ShouldSpeakWhenFiring( void ){ return false; }
 
-	virtual CTFProjectile_Jar	*CreateJarProjectile( const Vector &position, const QAngle &angles, const Vector &velocity, 
+	virtual CTFProjectile_Jar	*CreateJarProjectile( const Vector &position, const QAngle &angles, const Vector &velocity,
 		const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo );
 #endif
 
@@ -154,7 +154,7 @@ public:
 #ifdef GAME_DLL
 	CTFProjectile_Jar();
 
-	static CTFProjectile_Jar *Create( const Vector &position, const QAngle &angles, const Vector &velocity, 
+	static CTFProjectile_Jar *Create( const Vector &position, const QAngle &angles, const Vector &velocity,
 	const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo );
 
 	virtual int			GetProjectileType() const OVERRIDE			{ return m_iProjectileType; }
@@ -170,7 +170,7 @@ public:
 	virtual void		OnHit( CBaseEntity *pOther )				{}
 	virtual void		OnHitWorld( void )							{}
 	virtual void		Explode( trace_t *pTrace, int bitsDamageType ) OVERRIDE;
-	
+
 
 	virtual void		PipebombTouch( CBaseEntity *pOther ) OVERRIDE;
 	virtual void		VPhysicsCollision( int index, gamevcollisionevent_t *pEvent ) OVERRIDE;
@@ -200,7 +200,7 @@ public:
 	DECLARE_NETWORKCLASS();
 
 #ifdef GAME_DLL
-	static CTFProjectile_JarMilk *Create( const Vector &position, const QAngle &angles, const Vector &velocity, 
+	static CTFProjectile_JarMilk *Create( const Vector &position, const QAngle &angles, const Vector &velocity,
 		const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo );
 
 	virtual void		SetCustomPipebombModel() OVERRIDE;
@@ -212,7 +212,7 @@ public:
 	virtual int			GetWeaponID( void ) const OVERRIDE			{ return TF_WEAPON_GRENADE_JAR_MILK; }
 
 	virtual void		Precache() OVERRIDE;
-	
+
 };
 
 // *************************************************************************************************************************
@@ -227,7 +227,7 @@ public:
 #endif
 
 #ifdef GAME_DLL
-	static CTFProjectile_Cleaver *Create( const Vector &position, const QAngle &angles, const Vector &velocity, 
+	static CTFProjectile_Cleaver *Create( const Vector &position, const QAngle &angles, const Vector &velocity,
 		const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, int nSkin );
 #endif
 
@@ -245,7 +245,7 @@ public:
 	virtual void		Detonate() OVERRIDE;
 	virtual const char* GetImpactEffect() OVERRIDE { return ""; }
 	virtual ETFCond		GetEffectCondition( void ) OVERRIDE { return TF_COND_BLEEDING; }
-	
+
 
 private:
 	bool m_bHitPlayer;

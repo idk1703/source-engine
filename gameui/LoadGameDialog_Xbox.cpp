@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -28,7 +28,7 @@ CLoadGameDialogXbox::CLoadGameDialogXbox( vgui::Panel *parent ) : BaseClass( par
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadGameDialogXbox::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -42,12 +42,12 @@ void CLoadGameDialogXbox::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadGameDialogXbox::PerformSelectedAction( void )
 {
 	BaseClass::PerformSelectedAction();
-	
+
 	if ( !GetNumPanels() )
 		return;
 
@@ -66,7 +66,7 @@ void CLoadGameDialogXbox::PerformSelectedAction( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadGameDialogXbox::PerformDeletion( void )
 {
@@ -84,8 +84,8 @@ void CLoadGameDialogXbox::PerformDeletion( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bNewSaveSelected - 
+// Purpose:
+// Input  : bNewSaveSelected -
 //-----------------------------------------------------------------------------
 void CLoadGameDialogXbox::UpdateFooterOptions( void )
 {
@@ -98,7 +98,7 @@ void CLoadGameDialogXbox::UpdateFooterOptions( void )
 	if ( HasActivePanels() )
 	{
 		pFooter->AddNewButtonLabel( "#GameUI_Load", "#GameUI_Icons_A_BUTTON" );
-		
+
 		// Don't allow deletions of autosaves!
 		CGameSavePanel *pPanel = GetActivePanel();
 		if ( pPanel && pPanel->IsAutoSaveType() == false )
@@ -113,8 +113,8 @@ void CLoadGameDialogXbox::UpdateFooterOptions( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *command - 
+// Purpose:
+// Input  : *command -
 //-----------------------------------------------------------------------------
 void CLoadGameDialogXbox::OnCommand( const char *command )
 {
@@ -137,7 +137,7 @@ void CLoadGameDialogXbox::OnCommand( const char *command )
 		engine->ClientCmd_Unrestricted( szCmd );
 
 		// Ignore all other input while we're open
-		OnClose();	
+		OnClose();
 	}
 	else if ( !Q_stricmp( command, "DeleteGame" ) )
 	{

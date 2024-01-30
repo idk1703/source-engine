@@ -79,7 +79,7 @@ namespace InterceptFxc
 		{
 			LPD3DXBUFFER pShader = NULL; // NOTE: Must release the COM interface later
 			LPD3DXBUFFER pErrorMessages = NULL; // NOTE: Must release COM interface later
-			
+
 			// DxProxyModule
 			static DxProxyModule s_dxModule;
 
@@ -97,7 +97,7 @@ namespace InterceptFxc
 					break;
 				}
 			}
-			
+
 			HRESULT hr = s_dxModule.D3DXCompileShaderFromFile( pszFilename, pMacros, NULL /* LPD3DXINCLUDE */,
 				"main",	pszModel, 0, &pShader, &pErrorMessages,
 				NULL /* LPD3DXCONSTANTTABLE *ppConstantTable */ );
@@ -253,7 +253,3 @@ namespace InterceptFxc
 	}
 
 }; // namespace InterceptFxc
-
-
-
-

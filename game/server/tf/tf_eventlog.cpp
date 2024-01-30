@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -67,12 +67,12 @@ protected:
 	bool PrintTFEvent( IGameEvent *event )	// print Mod specific logs
 	{
 		const char *eventName = event->GetName();
-	
+
 		if ( !Q_strncmp( eventName, "server_", strlen("server_")) )
 		{
 			return false; // ignore server_ messages
 		}
-		
+
  		if ( !Q_strncmp( eventName, "player_death", Q_strlen( "player_death" ) ) )
  		{
 			const int userid = event->GetInt( "userid" );
@@ -87,22 +87,22 @@ protected:
 			int iCustomDamage = event->GetInt( "customkill" );
 			CBasePlayer *pAttacker = UTIL_PlayerByUserId( attackerid );
 
-			if ( pPlayer == pAttacker )  
-			{  
-				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" committed suicide with \"%s\" (attacker_position \"%d %d %d\")\n",  
+			if ( pPlayer == pAttacker )
+			{
+				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" committed suicide with \"%s\" (attacker_position \"%d %d %d\")\n",
 								pPlayer->GetPlayerName(),
 								userid,
 								pPlayer->GetNetworkIDString(),
 								pPlayer->GetTeam()->GetName(),
 								weapon,
-								(int)pPlayer->GetAbsOrigin().x, 
+								(int)pPlayer->GetAbsOrigin().x,
 								(int)pPlayer->GetAbsOrigin().y,
 								(int)pPlayer->GetAbsOrigin().z );
 			}
 			else if ( pAttacker )
 			{
  				const char *pszCustom = NULL;
- 
+
  				switch( iCustomDamage )
  				{
 				case TF_DMG_CUSTOM_HEADSHOT_DECAPITATION:
@@ -112,7 +112,7 @@ protected:
  				case TF_DMG_CUSTOM_BACKSTAB:
  					pszCustom = "backstab";
  					break;
- 
+
  				default:
  					break;
  				}
@@ -122,10 +122,10 @@ protected:
 				{
 					pszCustom = "feign_death";
 				}
- 
+
  				if ( pszCustom )
  				{
- 					UTIL_LogPrintf( "\"%s<%i><%s><%s>\" killed \"%s<%i><%s><%s>\" with \"%s\" (customkill \"%s\") (attacker_position \"%d %d %d\") (victim_position \"%d %d %d\")\n",  
+ 					UTIL_LogPrintf( "\"%s<%i><%s><%s>\" killed \"%s<%i><%s><%s>\" with \"%s\" (customkill \"%s\") (attacker_position \"%d %d %d\") (victim_position \"%d %d %d\")\n",
 								pAttacker->GetPlayerName(),
 								attackerid,
 								pAttacker->GetNetworkIDString(),
@@ -136,16 +136,16 @@ protected:
 								pPlayer->GetTeam()->GetName(),
 								weapon,
  								pszCustom,
-								(int)pAttacker->GetAbsOrigin().x, 
+								(int)pAttacker->GetAbsOrigin().x,
 								(int)pAttacker->GetAbsOrigin().y,
 								(int)pAttacker->GetAbsOrigin().z,
-								(int)pPlayer->GetAbsOrigin().x, 
+								(int)pPlayer->GetAbsOrigin().x,
 								(int)pPlayer->GetAbsOrigin().y,
 								(int)pPlayer->GetAbsOrigin().z );
 				}
 				else
-				{  
- 					UTIL_LogPrintf( "\"%s<%i><%s><%s>\" killed \"%s<%i><%s><%s>\" with \"%s\" (attacker_position \"%d %d %d\") (victim_position \"%d %d %d\")\n",  
+				{
+ 					UTIL_LogPrintf( "\"%s<%i><%s><%s>\" killed \"%s<%i><%s><%s>\" with \"%s\" (attacker_position \"%d %d %d\") (victim_position \"%d %d %d\")\n",
  						pAttacker->GetPlayerName(),
  						attackerid,
  						pAttacker->GetNetworkIDString(),
@@ -155,13 +155,13 @@ protected:
  						pPlayer->GetNetworkIDString(),
  						pPlayer->GetTeam()->GetName(),
  						weapon,
-						(int)pAttacker->GetAbsOrigin().x, 
+						(int)pAttacker->GetAbsOrigin().x,
 						(int)pAttacker->GetAbsOrigin().y,
 						(int)pAttacker->GetAbsOrigin().z,
-						(int)pPlayer->GetAbsOrigin().x, 
+						(int)pPlayer->GetAbsOrigin().x,
 						(int)pPlayer->GetAbsOrigin().y,
 						(int)pPlayer->GetAbsOrigin().z );
- 				}							
+ 				}
 			}
 			else
 			{
@@ -181,7 +181,7 @@ protected:
 						pPlayer->GetNetworkIDString(),
 						pPlayer->GetTeam()->GetName(),
 						pszCustomKill,
-						(int)pPlayer->GetAbsOrigin().x, 
+						(int)pPlayer->GetAbsOrigin().x,
 						(int)pPlayer->GetAbsOrigin().y,
 						(int)pPlayer->GetAbsOrigin().z );
 
@@ -194,19 +194,19 @@ protected:
 									userid,
 									pPlayer->GetNetworkIDString(),
 									pPlayer->GetTeam()->GetName(),
-									(int)pPlayer->GetAbsOrigin().x, 
+									(int)pPlayer->GetAbsOrigin().x,
 									(int)pPlayer->GetAbsOrigin().y,
 									(int)pPlayer->GetAbsOrigin().z );
 				}
 			}
- 
+
  			// Assist kill
  			int assistid = event->GetInt( "assister" );
  			CBasePlayer *pAssister = UTIL_PlayerByUserId( assistid );
- 
+
  			if ( pAssister )
  			{
- 				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"kill assist\" against \"%s<%i><%s><%s>\" (assister_position \"%d %d %d\") (attacker_position \"%d %d %d\") (victim_position \"%d %d %d\")\n",    
+ 				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"kill assist\" against \"%s<%i><%s><%s>\" (assister_position \"%d %d %d\") (attacker_position \"%d %d %d\") (victim_position \"%d %d %d\")\n",
  					pAssister->GetPlayerName(),
  					assistid,
  					pAssister->GetNetworkIDString(),
@@ -225,15 +225,15 @@ protected:
 					(int)pPlayer->GetAbsOrigin().y,
 					(int)pPlayer->GetAbsOrigin().z );
  			}
- 
+
  			// Domination and Revenge
  			// pAttacker //int attackerid = engine->GetPlayerForUserID( event->GetInt( "attacker" ) );
  			// pPlayer //int userid = engine->GetPlayerForUserID( event->GetInt( "userid" ) );
  			// pAssister // assistid
- 
+
  			if ( event->GetInt( "death_flags" ) & TF_DEATH_DOMINATION && pAttacker )
  			{
- 				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"domination\" against \"%s<%i><%s><%s>\"\n",  
+ 				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"domination\" against \"%s<%i><%s><%s>\"\n",
  					pAttacker->GetPlayerName(),
  					attackerid,
  					pAttacker->GetNetworkIDString(),
@@ -246,7 +246,7 @@ protected:
  			}
  			if ( event->GetInt( "death_flags" ) & TF_DEATH_ASSISTER_DOMINATION  && pAssister )
  			{
- 				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"domination\" against \"%s<%i><%s><%s>\" (assist \"1\")\n",  
+ 				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"domination\" against \"%s<%i><%s><%s>\" (assist \"1\")\n",
  					pAssister->GetPlayerName(),
  					assistid,
  					pAssister->GetNetworkIDString(),
@@ -257,9 +257,9 @@ protected:
  					pPlayer->GetTeam()->GetName()
  					);
  			}
- 			if ( event->GetInt( "death_flags" ) & TF_DEATH_REVENGE && pAttacker ) 
+ 			if ( event->GetInt( "death_flags" ) & TF_DEATH_REVENGE && pAttacker )
  			{
- 				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"revenge\" against \"%s<%i><%s><%s>\"\n",  
+ 				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"revenge\" against \"%s<%i><%s><%s>\"\n",
  					pAttacker->GetPlayerName(),
  					attackerid,
  					pAttacker->GetNetworkIDString(),
@@ -270,9 +270,9 @@ protected:
  					pPlayer->GetTeam()->GetName()
  					);
  			}
- 			if ( event->GetInt( "death_flags" ) & TF_DEATH_ASSISTER_REVENGE && pAssister ) 
+ 			if ( event->GetInt( "death_flags" ) & TF_DEATH_ASSISTER_REVENGE && pAssister )
  			{
- 				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"revenge\" against \"%s<%i><%s><%s>\" (assist \"1\")\n",  
+ 				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"revenge\" against \"%s<%i><%s><%s>\" (assist \"1\")\n",
  					pAssister->GetPlayerName(),
  					assistid,
  					pAssister->GetNetworkIDString(),
@@ -283,7 +283,7 @@ protected:
  					pPlayer->GetTeam()->GetName()
  					);
  			}
- 
+
 			return true;
 		}
  		else if ( FStrEq( eventName, "player_changeclass" ) )
@@ -294,15 +294,15 @@ protected:
  			{
  				return false;
  			}
- 
+
  			int iClass = event->GetInt("class");
- 
+
  			if ( pPlayer->GetTeamNumber() < FIRST_GAME_TEAM )
  				return true;
- 
+
  			if ( iClass >= TF_FIRST_NORMAL_CLASS && iClass <= TF_LAST_NORMAL_CLASS  )
  			{
- 				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" changed role to \"%s\"\n",  
+ 				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" changed role to \"%s\"\n",
  					pPlayer->GetPlayerName(),
  					userid,
  					pPlayer->GetNetworkIDString(),
@@ -310,7 +310,7 @@ protected:
  					GetPlayerClassData( iClass )->m_szClassName
  					);
  			}
- 
+
  			return true;
  		}
 		else if ( FStrEq( eventName, "tf_game_over" ) || FStrEq( eventName, "teamplay_game_over" ) )
@@ -318,7 +318,7 @@ protected:
 			UTIL_LogPrintf( "World triggered \"Game_Over\" reason \"%s\"\n", event->GetString( "reason" ) );
 			UTIL_LogPrintf( "Team \"Red\" final score \"%d\" with \"%d\" players\n", GetGlobalTeam( TF_TEAM_RED )->GetScore(), GetGlobalTeam( TF_TEAM_RED )->GetNumPlayers() );
 			UTIL_LogPrintf( "Team \"Blue\" final score \"%d\" with \"%d\" players\n", GetGlobalTeam( TF_TEAM_BLUE )->GetScore(), GetGlobalTeam( TF_TEAM_BLUE )->GetNumPlayers() );
- 			return true;		
+ 			return true;
  		}
  		else if ( FStrEq( eventName, "player_chargedeployed" ) )
  		{
@@ -328,15 +328,15 @@ protected:
  			{
  				return false;
  			}
- 
- 			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"chargedeployed\"\n",  
+
+ 			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"chargedeployed\"\n",
  				pPlayer->GetPlayerName(),
  				userid,
  				pPlayer->GetNetworkIDString(),
  				pPlayer->GetTeam()->GetName()
  				);
- 
- 			return true;		
+
+ 			return true;
  		}
 		else if ( FStrEq( eventName, "player_builtobject" ) ||
 				  FStrEq( eventName, "player_carryobject" ) ||
@@ -375,21 +375,21 @@ protected:
  			const CObjectInfo *pInfo = ( objectid >= 0 && objectid < OBJ_LAST ) ? GetObjectInfo( objectid ) : NULL;
  			if ( !pInfo )
  				return false;
- 
+
  			const int userid = event->GetInt( "userid" );
  			CBasePlayer *pObjectOwner = UTIL_PlayerByUserId( userid );
  			if ( !pObjectOwner )
  				return false;
- 
+
  			const int attackerid = event->GetInt( "attacker" );
  			CBasePlayer *pAttacker = UTIL_PlayerByUserId( attackerid );
  			if ( !pAttacker )
  				return false;
- 
+
  			const char *weapon = event->GetString( "weapon" );
- 
+
  			// log that the person killed an object
- 			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"killedobject\" (object \"%s\") (weapon \"%s\") (objectowner \"%s<%i><%s><%s>\") (attacker_position \"%d %d %d\")\n",   
+ 			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"killedobject\" (object \"%s\") (weapon \"%s\") (objectowner \"%s<%i><%s><%s>\") (attacker_position \"%d %d %d\")\n",
  				pAttacker->GetPlayerName(),
  				attackerid,
  				pAttacker->GetNetworkIDString(),
@@ -400,15 +400,15 @@ protected:
  				userid,
  				pObjectOwner->GetNetworkIDString(),
  				pObjectOwner->GetTeam()->GetName(),
-				(int)pAttacker->GetAbsOrigin().x, 
+				(int)pAttacker->GetAbsOrigin().x,
 				(int)pAttacker->GetAbsOrigin().y,
 				(int)pAttacker->GetAbsOrigin().z );
- 
+
  			const int assisterid = event->GetInt( "assister" );
  			CBasePlayer *pAssister = UTIL_PlayerByUserId( assisterid );
  			if ( pAssister )
  			{
- 				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"killedobject\" (object \"%s\") (objectowner \"%s<%i><%s><%s>\") (assist \"1\") (assister_position \"%d %d %d\") (attacker_position \"%d %d %d\")\n",   
+ 				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"killedobject\" (object \"%s\") (objectowner \"%s<%i><%s><%s>\") (assist \"1\") (assister_position \"%d %d %d\") (attacker_position \"%d %d %d\")\n",
  					pAssister->GetPlayerName(),
  					assisterid,
  					pAssister->GetNetworkIDString(),
@@ -418,28 +418,28 @@ protected:
  					userid,
  					pObjectOwner->GetNetworkIDString(),
  					pObjectOwner->GetTeam()->GetName(),
-					(int)pAssister->GetAbsOrigin().x, 
+					(int)pAssister->GetAbsOrigin().x,
 					(int)pAssister->GetAbsOrigin().y,
 					(int)pAssister->GetAbsOrigin().z,
-					(int)pAttacker->GetAbsOrigin().x, 
+					(int)pAttacker->GetAbsOrigin().x,
 					(int)pAttacker->GetAbsOrigin().y,
 					(int)pAttacker->GetAbsOrigin().z );
- 			}			
+ 			}
  		}
  		else if ( FStrEq( eventName, "teamplay_flag_event" ) )
- 		{	
+ 		{
  			int playerindex = event->GetInt( "player" );
- 
+
  			CBasePlayer *pPlayer = UTIL_PlayerByIndex( playerindex );
  			if ( !pPlayer )
  			{
  				return false;
  			}
- 
+
  			const char *pszEvent = "unknown";	// picked up, dropped, defended, captured
 			int iEventType = event->GetInt( "eventtype" );
 			bool bPlainLogEntry = true;
- 
+
  			switch ( iEventType )
  			{
  			case TF_FLAGEVENT_PICKUP:
@@ -463,13 +463,13 @@ protected:
 
 			if ( bPlainLogEntry )
 			{
-  				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"flagevent\" (event \"%s\") (position \"%d %d %d\")\n",    
+  				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"flagevent\" (event \"%s\") (position \"%d %d %d\")\n",
  					pPlayer->GetPlayerName(),
  					pPlayer->GetUserID(),
  					pPlayer->GetNetworkIDString(),
  					pPlayer->GetTeam()->GetName(),
  					pszEvent,
-					(int)pPlayer->GetAbsOrigin().x, 
+					(int)pPlayer->GetAbsOrigin().x,
 					(int)pPlayer->GetAbsOrigin().y,
 					(int)pPlayer->GetAbsOrigin().z );
  			}
@@ -477,7 +477,7 @@ protected:
 			{
 				CTFTeam *pTeam = GetGlobalTFTeam( pPlayer->GetTeamNumber() );
 
-				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"flagevent\" (event \"%s\") (team_caps \"%d\") (caps_per_round \"%d\") (position \"%d %d %d\")\n", 
+				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"flagevent\" (event \"%s\") (team_caps \"%d\") (caps_per_round \"%d\") (position \"%d %d %d\")\n",
 					pPlayer->GetPlayerName(),
 					pPlayer->GetUserID(),
 					pPlayer->GetNetworkIDString(),
@@ -485,69 +485,69 @@ protected:
 					pszEvent,
 					pTeam->GetFlagCaptures(),
 					tf_flag_caps_per_round.GetInt(),
-					(int)pPlayer->GetAbsOrigin().x, 
+					(int)pPlayer->GetAbsOrigin().x,
 					(int)pPlayer->GetAbsOrigin().y,
 					(int)pPlayer->GetAbsOrigin().z );
 			}
-	 
+
  			return true;
  		}
  		else if ( FStrEq( eventName, "teamplay_capture_blocked" ) )
  		{
  			int blockerindex = event->GetInt( "blocker" );
- 
+
  			CBasePlayer *pBlocker = UTIL_PlayerByIndex( blockerindex );
  			if ( !pBlocker )
  			{
-				return true;		
+				return true;
 			}
 
- 			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"captureblocked\" (cp \"%d\") (cpname \"%s\") (position \"%d %d %d\")\n",   
+ 			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"captureblocked\" (cp \"%d\") (cpname \"%s\") (position \"%d %d %d\")\n",
  				pBlocker->GetPlayerName(),
  				pBlocker->GetUserID(),
  				pBlocker->GetNetworkIDString(),
  				pBlocker->GetTeam()->GetName(),
  				event->GetInt( "cp" ),
  				event->GetString( "cpname" ),
-				(int)pBlocker->GetAbsOrigin().x, 
+				(int)pBlocker->GetAbsOrigin().x,
 				(int)pBlocker->GetAbsOrigin().y,
 				(int)pBlocker->GetAbsOrigin().z );
  		}
  		else if ( FStrEq( eventName, "teamplay_point_captured" ) )
  		{
  			CTeam *pTeam = GetGlobalTeam( event->GetInt( "team" ) );
- 
+
  			if ( !pTeam )
  				return true;
- 
+
  			const char *szCappers = event->GetString( "cappers" );
- 
+
  			int iNumCappers = Q_strlen( szCappers );
- 
+
  			if ( iNumCappers <= 0 )
  				return true;
- 
+
  			char buf[1024];
- 
+
  			Q_snprintf( buf, sizeof(buf), "Team \"%s\" triggered \"pointcaptured\" (cp \"%d\") (cpname \"%s\") (numcappers \"%d\") ",
  				pTeam->GetName(),
  				event->GetInt( "cp" ),
  				event->GetString( "cpname" ),
  				iNumCappers );
- 
+
  			for ( int i=0;i<iNumCappers;i++ )
  			{
  				int iPlayerIndex = szCappers[i];
- 
+
  				Assert( iPlayerIndex != '\0' && iPlayerIndex > 0 && iPlayerIndex <= MAX_PLAYERS );
- 
+
  				CBasePlayer *pPlayer = UTIL_PlayerByIndex( iPlayerIndex );
- 
+
  				if ( !pPlayer )
  					continue;
- 
+
  				char playerBuf[256];
- 				Q_snprintf( playerBuf, sizeof(playerBuf), "(player%d \"%s<%i><%s><%s>\") (position%d \"%d %d %d\") ", 
+ 				Q_snprintf( playerBuf, sizeof(playerBuf), "(player%d \"%s<%i><%s><%s>\") (position%d \"%d %d %d\") ",
 					i + 1,
  					pPlayer->GetPlayerName(),
  					pPlayer->GetUserID(),
@@ -557,10 +557,10 @@ protected:
 					(int)pPlayer->GetAbsOrigin().x,
 					(int)pPlayer->GetAbsOrigin().y,
 					(int)pPlayer->GetAbsOrigin().z );
- 
+
  				Q_strncat( buf, playerBuf, sizeof(buf), COPY_ALL_CHARACTERS );
  			}
- 
+
  			UTIL_LogPrintf( "%s\n", buf );
  		}
 		else if ( FStrEq( eventName, "teamplay_round_stalemate" ) )
@@ -578,7 +578,7 @@ protected:
 			{
 				UTIL_LogPrintf( "World triggered \"Round_SuddenDeath\"\n" );
 			}
-			
+
 			return true;
 		}
 		else if ( FStrEq( eventName, "teamplay_round_win" ) )
@@ -674,4 +674,3 @@ IGameSystem* GameLogSystem()
 {
 	return &g_TFEventLog;
 }
-

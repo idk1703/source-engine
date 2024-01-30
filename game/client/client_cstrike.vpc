@@ -25,11 +25,11 @@ $Project "Client (CStrike)"
 		$File	"cstrike\cs_replay.cpp"
 		$File	"cstrike\cs_replay.h"
 	}
-	
+
 	$Folder	"Source Files"
 	{
 		-$File	"$SRCDIR\game\shared\weapon_parse_default.cpp"
-		
+
 		$File	"c_team_objectiveresource.cpp"
 		$File	"c_team_objectiveresource.h"
 		$File	"c_team_train_watcher.cpp"
@@ -43,7 +43,7 @@ $Project "Client (CStrike)"
 		$File	"$SRCDIR\game\client\hud_vote.cpp"
 		$File	"$SRCDIR\game\shared\predicted_viewmodel.cpp"
 		$File	"$SRCDIR\game\shared\predicted_viewmodel.h"
-		
+
 		$Folder	"CounterStrike DLL"
 		{
 			$File	"$SRCDIR\game\shared\cstrike\cs_achievement_constants.h"
@@ -84,7 +84,7 @@ $Project "Client (CStrike)"
 			$File	"$SRCDIR\game\shared\cstrike\cs_gamestats_shared.cpp"
 			$File	"$SRCDIR\game\shared\cstrike\cs_gamestats_shared.h"
 			$File	"$SRCDIR\game\shared\steamworks_gamestats.cpp"
-			$File	"$SRCDIR\game\shared\steamworks_gamestats.h"			
+			$File	"$SRCDIR\game\shared\steamworks_gamestats.h"
 			$File	"cstrike\cs_in_main.cpp"
 			$File	"$SRCDIR\game\shared\cstrike\cs_player_shared.cpp"
 			$File	"$SRCDIR\game\shared\cstrike\cs_playeranimstate.cpp"
@@ -109,7 +109,7 @@ $Project "Client (CStrike)"
 			$File	"$SRCDIR\game\shared\cstrike\bot\shared_util.cpp"
 			$File	"$SRCDIR\game\shared\cstrike\bot\shared_util.h"
 			$File	"cstrike\vgui_rootpanel_cs.cpp"
-			
+
 			$Folder "HUD Elements"
 			{
 				$File	"cstrike\cs_hud_ammo.cpp"
@@ -119,7 +119,7 @@ $Project "Client (CStrike)"
 				$File	"cstrike\cs_hud_freezepanel.cpp"
 				$File	"cstrike\cs_hud_freezepanel.h"
 				$File	"cstrike\cs_hud_playerhealth.cpp"
-				$File	"cstrike\cs_hud_playerhealth.h"			
+				$File	"cstrike\cs_hud_playerhealth.h"
 				$File	"cstrike\cs_hud_health.cpp"
 				$File	"cstrike\cs_hud_scope.cpp"
 				$File	"cstrike\cs_hud_target_id.cpp"
@@ -143,7 +143,7 @@ $Project "Client (CStrike)"
 				$File	"cstrike\radio_status.cpp"
 				$File	"cstrike\radio_status.h"
 			}
-			
+
 			$Folder "Weapon"
 			{
 				$File	"$SRCDIR\game\shared\cstrike\weapon_ak47.cpp"
@@ -255,7 +255,7 @@ $Project "Client (CStrike)"
 			$File	"game_controls\classmenu.cpp"
 		}
 	}
-	
+
 	$Folder	"Header Files"
 	{
 
@@ -267,7 +267,7 @@ $Project "Client (CStrike)"
 		}
 	}
 
-	$Folder	"Link Libraries" 
+	$Folder	"Link Libraries"
 	{
 		$Lib vtf
 	}

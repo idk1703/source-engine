@@ -25,7 +25,7 @@
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CNPC_Magnusson : public CAI_BaseActor
 {
@@ -43,7 +43,7 @@ LINK_ENTITY_TO_CLASS( npc_magnusson, CNPC_Magnusson );
 
 
 //-----------------------------------------------------------------------------
-// Classify - indicates this NPC's place in the 
+// Classify - indicates this NPC's place in the
 // relationship table.
 //-----------------------------------------------------------------------------
 Class_T	CNPC_Magnusson::Classify ( void )
@@ -103,7 +103,7 @@ void CNPC_Magnusson::Spawn()
 	m_iHealth			= 8;
 	m_flFieldOfView		= 0.5;// indicates the width of this NPC's forward view cone ( as a dotproduct result )
 	m_NPCState			= NPC_STATE_NONE;
-	
+
 	CapabilitiesAdd( bits_CAP_MOVE_GROUND | bits_CAP_OPEN_DOORS | bits_CAP_ANIMATEDFACE | bits_CAP_TURN_HEAD );
 	CapabilitiesAdd( bits_CAP_FRIENDLY_DMG_IMMUNE );
 
@@ -118,9 +118,9 @@ void CNPC_Magnusson::Spawn()
 void CNPC_Magnusson::Precache()
 {
 	PrecacheModel( STRING( GetModelName() ) );
-	
+
 	BaseClass::Precache();
-}	
+}
 
 //-----------------------------------------------------------------------------
 // AI Schedules Specific to this NPC

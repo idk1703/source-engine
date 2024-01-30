@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,7 +22,7 @@ using namespace vgui;
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
-// Input  : *filename - image file to load 
+// Input  : *filename - image file to load
 //-----------------------------------------------------------------------------
 Bitmap::Bitmap(const char *filename, bool hardwareFiltered)
 {
@@ -145,13 +145,13 @@ void Bitmap::Paint()
 	{
 		_id = g_pSurface->CreateNewTextureID();
 	}
-	
+
 	// if we have not uploaded yet, lets go ahead and do so
 	if ( !_uploaded )
 	{
 		ForceUpload();
 	}
-	
+
 	// set the texture current, set the color, and draw the biatch
 	g_pSurface->DrawSetColor( _color[0], _color[1], _color[2], _color[3] );
 	g_pSurface->DrawSetTexture( _id );
@@ -172,7 +172,7 @@ void Bitmap::Paint()
 		verts[1].m_Position.Init( _wide, 0 );
 		verts[2].m_Position.Init( _wide, _tall );
 		verts[3].m_Position.Init( 0, _tall );
-		
+
 		switch ( _rotation )
 		{
 		case ROTATED_CLOCKWISE_90:
@@ -191,7 +191,7 @@ void Bitmap::Paint()
 
 		case ROTATED_FLIPPED:
 			verts[0].m_TexCoord.Init( 1, 1 );
-			verts[1].m_TexCoord.Init( 0, 1 );	
+			verts[1].m_TexCoord.Init( 0, 1 );
 			verts[2].m_TexCoord.Init( 0, 0 );
 			verts[3].m_TexCoord.Init( 1, 0 );
 			break;
@@ -200,7 +200,7 @@ void Bitmap::Paint()
 		case ROTATED_UNROTATED:
 			break;
 		}
-		
+
 		g_pSurface->DrawTexturedPolygon( 4, verts );
 	}
 }
@@ -265,8 +265,3 @@ void Bitmap::SetFrame( int nFrame )
 	// the frame cache is critical to cheapen the cost of this call
 	g_pSurface->DrawSetTextureFrame( _id, nFrame, &nFrameCache );
 }
-
-
-
-
-

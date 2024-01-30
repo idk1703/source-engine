@@ -129,7 +129,7 @@ void CBotNPCDecoy::Spawn( void )
 
 //---------------------------------------------------------------------------------------------
 unsigned int CBotNPCDecoy::PhysicsSolidMaskForEntity( void ) const
-{ 
+{
 	// Only collide with the other team
 	int teamContents = ( GetTeamNumber() == TF_TEAM_RED ) ? CONTENTS_BLUETEAM : CONTENTS_REDTEAM;
 
@@ -206,7 +206,7 @@ public:
 			me->GetBodyInterface()->StartActivity( me->GetRunActivity() );
 		}
 
-		return Continue(); 
+		return Continue();
 	}
 
 	virtual ActionResult< CBotNPCDecoy > Update( CBotNPCDecoy *me, float interval )
@@ -243,4 +243,3 @@ private:
 
 
 IMPLEMENT_INTENTION_INTERFACE( CBotNPCDecoy, CBotNPCDecoyBehavior );
-

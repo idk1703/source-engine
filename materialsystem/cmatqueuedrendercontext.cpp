@@ -21,7 +21,7 @@
 ConVar mat_report_queue_status( "mat_report_queue_status", "0", FCVAR_MATERIAL_SYSTEM_THREAD );
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 
 #if defined( _WIN32 )
@@ -96,7 +96,7 @@ void FastCopy( byte *pDest, const byte *pSrc, size_t nBytes )
 #endif
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 
 enum MatQueuedMeshFlags_t
@@ -110,7 +110,7 @@ class CMatQueuedMesh : public IMesh
 public:
 	CMatQueuedMesh( CMatQueuedRenderContext *pOwner, IMatRenderContextInternal *pHardwareContext )
 	 :	m_pLateBoundMesh( &m_pActualMesh ),
-		m_pOwner( pOwner ), 
+		m_pOwner( pOwner ),
 		m_pCallQueue( pOwner->GetCallQueueInternal() ),
 		m_pHardwareContext( pHardwareContext ),
 		m_pVertexData( NULL ),
@@ -610,7 +610,7 @@ public:
 	{
 		Assert( 0 );
 	}
-	virtual bool IsDynamic() const 
+	virtual bool IsDynamic() const
 	{
 		Assert( 0 );
 		return false;
@@ -692,7 +692,7 @@ private:
 unsigned short CMatQueuedMesh::gm_ScratchIndexBuffer[6];
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 bool CMatQueuedRenderContext::Init( CMaterialSystem *pMaterialSystem, CMatRenderContextBase *pHardwareContext )
 {
@@ -725,7 +725,7 @@ bool CMatQueuedRenderContext::Init( CMaterialSystem *pMaterialSystem, CMatRender
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::Shutdown()
 {
@@ -750,7 +750,7 @@ void CMatQueuedRenderContext::Shutdown()
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::Free()
 {
@@ -760,7 +760,7 @@ void CMatQueuedRenderContext::Free()
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::CompactMemory()
 {
@@ -771,7 +771,7 @@ void CMatQueuedRenderContext::CompactMemory()
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::BeginQueue( CMatRenderContextBase *pInitialState )
 {
@@ -788,7 +788,7 @@ void CMatQueuedRenderContext::BeginQueue( CMatRenderContextBase *pInitialState )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::EndQueue( bool bCallQueued )
 {
@@ -860,7 +860,7 @@ void CMatQueuedRenderContext::Bind( IMaterial *iMaterial, void *proxyData )
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::BeginRender()
 {
@@ -873,7 +873,7 @@ void CMatQueuedRenderContext::BeginRender()
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::EndRender()
 {
@@ -884,7 +884,7 @@ void CMatQueuedRenderContext::EndRender()
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::CallQueued( bool bTermAfterCall )
 {
@@ -905,7 +905,7 @@ void CMatQueuedRenderContext::CallQueued( bool bTermAfterCall )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::FlushQueued()
 {
@@ -913,7 +913,7 @@ void CMatQueuedRenderContext::FlushQueued()
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 ICallQueue *CMatQueuedRenderContext::GetCallQueue()
 {
@@ -921,9 +921,9 @@ ICallQueue *CMatQueuedRenderContext::GetCallQueue()
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
-void CMatQueuedRenderContext::SetRenderTargetEx( int nRenderTargetID, ITexture *pNewTarget ) 
+void CMatQueuedRenderContext::SetRenderTargetEx( int nRenderTargetID, ITexture *pNewTarget )
 {
 	CMatRenderContextBase::SetRenderTargetEx( nRenderTargetID, pNewTarget );
 
@@ -931,7 +931,7 @@ void CMatQueuedRenderContext::SetRenderTargetEx( int nRenderTargetID, ITexture *
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::GetRenderTargetDimensions( int &width, int &height) const
 {
@@ -957,7 +957,7 @@ void CMatQueuedRenderContext::GetRenderTargetDimensions( int &width, int &height
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::Viewport( int x, int y, int width, int height )
 {
@@ -966,7 +966,7 @@ void CMatQueuedRenderContext::Viewport( int x, int y, int width, int height )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::SetLight( int i, const LightDesc_t &desc )
 {
@@ -974,7 +974,7 @@ void CMatQueuedRenderContext::SetLight( int i, const LightDesc_t &desc )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::SetLightingOrigin( Vector vLightingOrigin )
 {
@@ -982,7 +982,7 @@ void CMatQueuedRenderContext::SetLightingOrigin( Vector vLightingOrigin )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::SetAmbientLightCube( LightCube_t cube )
 {
@@ -1006,7 +1006,7 @@ int	CMatQueuedRenderContext::GetCurrentNumBones( ) const
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::FogMode( MaterialFogMode_t fogMode )
 {
@@ -1087,7 +1087,7 @@ void CMatQueuedRenderContext::GetFogDistances( float *fStart, float *fEnd, float
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::GetViewport( int& x, int& y, int& width, int& height ) const
 {
@@ -1125,7 +1125,7 @@ void CMatQueuedRenderContext::GetViewport( int& x, int& y, int& width, int& heig
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::SyncToken( const char *p )
 {
@@ -1133,7 +1133,7 @@ void CMatQueuedRenderContext::SyncToken( const char *p )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 IMesh* CMatQueuedRenderContext::GetDynamicMesh( bool buffered, IMesh* pVertexOverride, IMesh* pIndexOverride, IMaterial *pAutoBind )
 {
@@ -1207,7 +1207,7 @@ IMesh* CMatQueuedRenderContext::GetDynamicMeshEx( VertexFormat_t vertexFormat, b
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 int CMatQueuedRenderContext::GetMaxVerticesToRender( IMaterial *pMaterial )
 {
@@ -1230,7 +1230,7 @@ int CMatQueuedRenderContext::GetMaxVerticesToRender( IMaterial *pMaterial )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::GetMaxToRender( IMesh *pMesh, bool bMaxUntilFlush, int *pMaxVerts, int *pMaxIndices )
 {
@@ -1244,7 +1244,7 @@ void CMatQueuedRenderContext::GetMaxToRender( IMesh *pMesh, bool bMaxUntilFlush,
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 IMesh *CMatQueuedRenderContext::GetFlexMesh()
 {
@@ -1254,7 +1254,7 @@ IMesh *CMatQueuedRenderContext::GetFlexMesh()
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 OcclusionQueryObjectHandle_t CMatQueuedRenderContext::CreateOcclusionQueryObject()
 {
@@ -1271,7 +1271,7 @@ int CMatQueuedRenderContext::OcclusionQuery_GetNumPixelsRendered( OcclusionQuery
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::SetFlashlightState( const FlashlightState_t &s, const VMatrix &m )
 {
@@ -1279,7 +1279,7 @@ void CMatQueuedRenderContext::SetFlashlightState( const FlashlightState_t &s, co
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 bool CMatQueuedRenderContext::EnableClipping( bool bEnable )
 {
@@ -1288,7 +1288,7 @@ bool CMatQueuedRenderContext::EnableClipping( bool bEnable )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::UserClipTransform( const VMatrix &m )
 {
@@ -1296,7 +1296,7 @@ void CMatQueuedRenderContext::UserClipTransform( const VMatrix &m )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::GetWindowSize( int &width, int &height ) const
 {
@@ -1305,9 +1305,9 @@ void CMatQueuedRenderContext::GetWindowSize( int &width, int &height ) const
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
-void CMatQueuedRenderContext::DrawScreenSpaceRectangle( 
+void CMatQueuedRenderContext::DrawScreenSpaceRectangle(
 	IMaterial *pMaterial,
 	int destx, int desty,
 	int width, int height,
@@ -1325,7 +1325,7 @@ void CMatQueuedRenderContext::DrawScreenSpaceRectangle(
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::LoadBoneMatrix( int i, const matrix3x4_t &m )
 {
@@ -1333,7 +1333,7 @@ void CMatQueuedRenderContext::LoadBoneMatrix( int i, const matrix3x4_t &m )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::CopyRenderTargetToTextureEx( ITexture *pTexture, int i, Rect_t *pSrc, Rect_t *pDst )
 {
@@ -1341,7 +1341,7 @@ void CMatQueuedRenderContext::CopyRenderTargetToTextureEx( ITexture *pTexture, i
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::CopyTextureToRenderTargetEx( int i, ITexture *pTexture, Rect_t *pSrc, Rect_t *pDst )
 {
@@ -1349,7 +1349,7 @@ void CMatQueuedRenderContext::CopyTextureToRenderTargetEx( int i, ITexture *pTex
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 bool CMatQueuedRenderContext::OnDrawMesh( IMesh *pMesh, int firstIndex, int numIndices )
 {
@@ -1359,7 +1359,7 @@ bool CMatQueuedRenderContext::OnDrawMesh( IMesh *pMesh, int firstIndex, int numI
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 bool CMatQueuedRenderContext::OnDrawMesh( IMesh *pMesh, CPrimList *pLists, int nLists )
 {
@@ -1375,7 +1375,7 @@ void CMatQueuedRenderContext::DeferredDrawPrimList( IMesh *pMesh, CPrimList *pLi
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CMatQueuedRenderContext::DeferredSetFlexMesh( IMesh *pStaticMesh, int nVertexOffsetInBytes )
 {
@@ -1398,7 +1398,7 @@ bool CMatQueuedRenderContext::OnSetFlexMesh( IMesh *pStaticMesh, IMesh *pMesh, i
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 bool CMatQueuedRenderContext::OnSetColorMesh( IMesh *pStaticMesh, IMesh *pMesh, int nVertexOffsetInBytes )
 {
@@ -1407,7 +1407,7 @@ bool CMatQueuedRenderContext::OnSetColorMesh( IMesh *pStaticMesh, IMesh *pMesh, 
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 bool CMatQueuedRenderContext::OnSetPrimitiveType( IMesh *pMesh, MaterialPrimitiveType_t type )
 {
@@ -1416,7 +1416,7 @@ bool CMatQueuedRenderContext::OnSetPrimitiveType( IMesh *pMesh, MaterialPrimitiv
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 bool CMatQueuedRenderContext::OnFlushBufferedPrimitives()
 {
@@ -1425,7 +1425,7 @@ bool CMatQueuedRenderContext::OnFlushBufferedPrimitives()
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 inline void CMatQueuedRenderContext::QueueMatrixSync()
 {
@@ -1535,14 +1535,14 @@ void CMatQueuedRenderContext::Scale( float x, float y, float z )
 	QueueMatrixSync();
 }
 
-void CMatQueuedRenderContext::BeginBatch( IMesh* pIndices ) 
+void CMatQueuedRenderContext::BeginBatch( IMesh* pIndices )
 {
 	Assert( pIndices == (IMesh *)m_pQueuedMesh );
 	m_queue.QueueCall( this, &CMatQueuedRenderContext::DeferredBeginBatch, m_pQueuedMesh->GetIndexData(), m_pQueuedMesh->IndexCount() );
 	m_pQueuedMesh->DetachBuffers();
 }
 
-void CMatQueuedRenderContext::BindBatch( IMesh* pVertices, IMaterial *pAutoBind ) 
+void CMatQueuedRenderContext::BindBatch( IMesh* pVertices, IMaterial *pAutoBind )
 {
 	Assert( pVertices != (IMesh *)m_pQueuedMesh );
 	m_queue.QueueCall( m_pHardwareContext, &IMatRenderContext::BindBatch, pVertices, pAutoBind );
@@ -1750,4 +1750,3 @@ void CMatQueuedRenderContext::ReadPixelsAndStretch( Rect_t *pSrcRect, Rect_t *pD
 	m_pMaterialSystem->Unlock( hLock );
 	BeginRender();
 }
-

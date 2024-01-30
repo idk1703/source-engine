@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -23,7 +23,7 @@ public:
 		{
 			return true;
 		}
-	
+
 		if ( Q_strcmp(event->GetName(), "hl1_") == 0 )
 		{
 			return PrintHL1Event( event );
@@ -52,4 +52,3 @@ IGameSystem* GameLogSystem()
 {
 	return &g_HL1EventLog;
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,9 +13,9 @@ void RegisterUserMessages()
 {
 	usermessages->Register( "Geiger", 1 );		// geiger info data
 	usermessages->Register( "Train", 1 );		// train control data
-	usermessages->Register( "HudText", -1 );	
-	usermessages->Register( "SayText", -1 );	
-	usermessages->Register( "TextMsg", -1 );	
+	usermessages->Register( "HudText", -1 );
+	usermessages->Register( "SayText", -1 );
+	usermessages->Register( "TextMsg", -1 );
 	usermessages->Register( "ResetHUD", 1 );	// called every respawn
 	usermessages->Register( "GameTitle", 0 );	// show game title
 	usermessages->Register( "ItemPickup", -1 );	// for item history on screen
@@ -34,8 +34,7 @@ void RegisterUserMessages()
 	usermessages->Register( "Damage", -1 );		// for HUD damage indicators
 	usermessages->Register( "RadioText", -1 );		// for HUD damage indicators
 	usermessages->Register( "HintText", -1 );	// Displays hint text display
-	
+
 	usermessages->Register( "ReloadEffect", 2 );			// a player reloading..
 	usermessages->Register( "PlayerAnimEvent", -1 );	// jumping, firing, reload, etc.
 }
-

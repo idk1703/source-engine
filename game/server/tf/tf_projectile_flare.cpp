@@ -84,7 +84,7 @@ CTFProjectile_Flare *CTFProjectile_Flare::Create( CBaseEntity *pLauncher, const 
 	float flLaunchSpeed = pFlare->GetProjectileSpeed();
 
 	Vector vecVelocity = vecForward * flLaunchSpeed;
-	pFlare->SetAbsVelocity( vecVelocity );	
+	pFlare->SetAbsVelocity( vecVelocity );
 	pFlare->SetupInitialTransmittedGrenadeVelocity( vecVelocity );
 
 	float flGravity = FLARE_GRAVITY;
@@ -178,10 +178,10 @@ CBasePlayer *CTFProjectile_Flare::GetScorer( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int	CTFProjectile_Flare::GetDamageType() 
-{ 
+int	CTFProjectile_Flare::GetDamageType()
+{
 	int iDmgType = BaseClass::GetDamageType();
 	if ( m_bCritical )
 	{
@@ -192,7 +192,7 @@ int	CTFProjectile_Flare::GetDamageType()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFProjectile_Flare::Explode( trace_t *pTrace, CBaseEntity *pOther )
 {
@@ -223,7 +223,7 @@ void CTFProjectile_Flare::Explode( trace_t *pTrace, CBaseEntity *pOther )
 				// Check if burning before damage
 				bool bIsBurningVictim = pTFVictim->m_Shared.InCond( TF_COND_BURNING );
 				int iDamageType = GetDamageType();
-				
+
 				// Prevent the normal push force cause we are going to add it
 				iDamageType |= DMG_PREVENT_PHYSICS_FORCE;
 
@@ -232,7 +232,7 @@ void CTFProjectile_Flare::Explode( trace_t *pTrace, CBaseEntity *pOther )
 				pTFVictim->TakeDamage( info );
 
 				bool bIsEnemy = pAttacker && pTFVictim->GetTeamNumber() != pAttacker->GetTeamNumber();
-				
+
 				// Quick Fix Uber and teammates are immune to the force
 				if ( !pTFVictim->m_Shared.InCond( TF_COND_MEGAHEAL ) && bIsEnemy )
 				{
@@ -246,7 +246,7 @@ void CTFProjectile_Flare::Explode( trace_t *pTrace, CBaseEntity *pOther )
 					{
 						pTFVictim->m_Shared.StunPlayer( 0.5, 1.f, TF_STUN_MOVEMENT, ToTFPlayer( pAttacker ) );
 					}
-					
+
 					float flForce = bIsBurningVictim ? 400.0f : 100.0f;
 					pTFVictim->ApplyAirBlastImpulse( vecToTarget * flForce );
 				}
@@ -441,20 +441,20 @@ void CTFProjectile_Flare::Detonate( bool bSelfOnly )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-float CTFProjectile_Flare::GetRadius( void ) 
-{ 
+float CTFProjectile_Flare::GetRadius( void )
+{
 	float flRadius = TF_FLARE_DET_RADIUS;
 	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( m_hLauncher, flRadius, mult_explosion_radius );
-	return flRadius; 
+	return flRadius;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Let the flaregun know we're gone
 //-----------------------------------------------------------------------------
-void CTFProjectile_Flare::SendDeathNotice( void ) 
-{ 
+void CTFProjectile_Flare::SendDeathNotice( void )
+{
 	CBaseEntity *pAttacker = GetOwnerEntity();
 	if ( !pAttacker )
 		return;
@@ -464,10 +464,10 @@ void CTFProjectile_Flare::SendDeathNotice( void )
 	{
 		pFlareGun->DeathNotice( this );
 	}
-}	
+}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFProjectile_Flare::ImpactThink( void )
 {
@@ -509,10 +509,10 @@ void CTFProjectile_Flare::PerformCustomPhysics( Vector *pNewPosition, Vector *pN
 
 			bool bBurning = pPlayer->m_Shared.InCond( TF_COND_BURNING );
 
-			if ( !bBurning || 
-				 pPlayer->InSameTeam( this ) || 
+			if ( !bBurning ||
+				 pPlayer->InSameTeam( this ) ||
 				 ( pPlayer->m_Shared.GetDisguiseTeam() == GetTeamNumber() && !bBurning ) ||
-				 ( pPlayer->m_Shared.IsStealthed() && !bBurning ) || 
+				 ( pPlayer->m_Shared.IsStealthed() && !bBurning ) ||
 				 pPlayer->GetTeamNumber() == TEAM_SPECTATOR ||
 				 !pPlayer->IsAlive() )
 			{

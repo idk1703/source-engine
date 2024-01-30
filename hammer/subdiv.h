@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ public:
 	enum { POINT_ORDINARY = 0,
 		   POINT_CORNER = 1,
 		   POINT_CREASE = 2 };
-	
+
 	enum { NUM_SUBDIV_EDGES = 8 };
 
 	Vector		m_Point;
@@ -111,14 +111,14 @@ public:
 
 	//=========================================================================
 	//
-	// 
+	//
 	//
 	inline void Clear( void );
 	void DoSubdivide( void );
 
 	//=========================================================================
 	//
-	// 
+	//
 	//
 	inline int GetPointCount( void );
 	int AddPoint( const Vector& point, const Vector& normal );
@@ -182,7 +182,7 @@ inline void CSubdivMesh::Clear( void )
 	m_PointCount = 0;
 	m_EdgeCount = 0;
 	m_TreeCount = 0;
-	
+
 	m_MaxPointCount = 0;
 	m_MaxEdgeCount = 0;
 	m_MaxTreeCount = 0;

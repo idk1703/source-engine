@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,7 +13,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectBunker : public C_BaseObject
 {
@@ -31,7 +31,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_ObjectBunker, DT_ObjectBunker, CObjectBunker)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectBunker::C_ObjectBunker()
 {
@@ -43,7 +43,7 @@ C_ObjectBunker::C_ObjectBunker()
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectBunkerLadder : public C_BaseAnimating
 {
@@ -67,4 +67,3 @@ END_RECV_TABLE()
 C_ObjectBunkerLadder::C_ObjectBunkerLadder()
 {
 }
-

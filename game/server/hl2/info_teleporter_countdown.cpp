@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -64,7 +64,7 @@ IMPLEMENT_SERVERCLASS_ST( CInfoTeleporterCountdown, DT_InfoTeleporterCountdown )
 	SendPropInt( SENDINFO( m_bCountdownStarted ), 1, SPROP_UNSIGNED ),
 	SendPropInt( SENDINFO( m_bDisabled ), 1, SPROP_UNSIGNED ),
 	SendPropTime( SENDINFO( m_flStartTime ) ),
-	SendPropFloat( SENDINFO( m_flTimeRemaining ), 0, SPROP_NOSCALE ),	
+	SendPropFloat( SENDINFO( m_flTimeRemaining ), 0, SPROP_NOSCALE ),
 END_SEND_TABLE()
 
 

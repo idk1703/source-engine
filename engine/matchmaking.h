@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #ifndef MATCHMAKING_H
@@ -66,7 +66,7 @@ enum eGameState
 
 #define HEARTBEAT_INTERVAL_LONG		1.0		// send a heartbeat every second during gameplay
 #define HEARTBEAT_INTERVAL_SHORT	0.1		// send a heartbeat ten times a second in the lobby
-#define HEARTBEAT_TIMEOUT			10.0	// time out if a heartbeat isn't recieved for ten seconds 
+#define HEARTBEAT_TIMEOUT			10.0	// time out if a heartbeat isn't recieved for ten seconds
 #if defined( _DEBUG )
 #define HEARTBEAT_TIMEOUT_LOADING	300		// in debug loads take much longer
 #else
@@ -131,7 +131,7 @@ public:
 	virtual void	JoinInviteSessionByID( XNKID nSessionID );
 	virtual void	JoinInviteSession( XSESSION_INFO *pHostInfo );
 	virtual void	KickPlayerFromSession( uint64 id );
-	
+
 	// For GameUI
 	virtual KeyValues *GetSessionProperties();
 
@@ -201,7 +201,7 @@ public:
 	void	TestStats();
 
 	bool	GameIsActive();
-	
+
 	void	PrintVoiceStatus( void );
 
 private:
@@ -282,7 +282,7 @@ private:
 	INetChannel *CreateNetChannel( netadr_t *adr );
 	INetChannel *AddRemoteChannel( netadr_t *adr );
 	INetChannel *FindChannel( const unsigned int ip );
-	CClientInfo *FindClient( netadr_t *adr ); 
+	CClientInfo *FindClient( netadr_t *adr );
 	CClientInfo *FindClientByXUID( XUID xuid );
 	void		SetChannelTimeout( netadr_t *adr, int timeout );
 	void		RemoveRemoteChannel( netadr_t *adr, const char *pReason );
@@ -362,7 +362,7 @@ private:
 	// Contexts and properties
 	CUtlVector< XUSER_CONTEXT >		m_SessionContexts;		// for session creation
 	CUtlVector< XUSER_PROPERTY >	m_SessionProperties;	// for session creation
-	CUtlVector< XUSER_PROPERTY >	m_PlayerStats;			
+	CUtlVector< XUSER_PROPERTY >	m_PlayerStats;
 	KeyValues						*m_pSessionKeys;		// for GameUI lobby setup
 
 	double			m_flVoiceBlinkTime;
@@ -377,7 +377,7 @@ private:
 		INVITE_AWAITING_STORAGE,
 		INVITE_ACCEPTING
 	} m_InviteState;
-	
+
 	struct InviteWaitingInfo_t
 	{
 		DWORD				m_UserIdx;
@@ -389,7 +389,7 @@ private:
 		int					m_InviteStorageDeviceSelected;
 		int					m_bAcceptingInvite;
 	} m_InviteWaitingInfo;
-	
+
 	void RunFrameInvite();
 	void InviteCancel();
 };

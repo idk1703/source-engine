@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@ class CHL2MPClientScoreBoardDialog : public CClientScoreBoardDialog
 {
 private:
 	DECLARE_CLASS_SIMPLE(CHL2MPClientScoreBoardDialog, CClientScoreBoardDialog);
-	
+
 public:
 	CHL2MPClientScoreBoardDialog(IViewPort *pViewPort);
 	~CHL2MPClientScoreBoardDialog();
@@ -43,14 +43,14 @@ private:
 	virtual void AddSection(int teamType, int teamNumber); // add a new section header for a team
 
 	int GetSectionFromTeamNumber( int teamNumber );
-	enum 
-	{ 
+	enum
+	{
 		CSTRIKE_NAME_WIDTH = 320,
 		CSTRIKE_CLASS_WIDTH = 56,
 		CSTRIKE_SCORE_WIDTH = 40,
 		CSTRIKE_DEATH_WIDTH = 46,
 		CSTRIKE_PING_WIDTH = 46,
-//		CSTRIKE_VOICE_WIDTH = 40, 
+//		CSTRIKE_VOICE_WIDTH = 40,
 //		CSTRIKE_FRIENDS_WIDTH = 24,
 	};
 

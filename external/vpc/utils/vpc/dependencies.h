@@ -1,6 +1,6 @@
 //====== Copyright 1996-2005, Valve Corporation, All rights reserved. =======
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -20,7 +20,7 @@ enum EDependencyType
 
 class CProjectDependencyGraph;
 enum k_EDependsOnFlags
-{ 
+{
 	k_EDependsOnFlagCheckNormalDependencies		= 0x01,
 	k_EDependsOnFlagCheckAdditionalDependencies	= 0x02,
 	k_EDependsOnFlagRecurse						= 0x04,
@@ -116,7 +116,7 @@ public:
 	// Note that there can be multiple CDependency_Projects with the same m_iProjectIndex.
 	projectIndex_t m_iProjectIndex;
 
-	// This is used by /p4sln. It uses this to call into VPC_ParseProjectScript. These are the values of g_pVPC->GetOutputFilename(), szScriptName, 
+	// This is used by /p4sln. It uses this to call into VPC_ParseProjectScript. These are the values of g_pVPC->GetOutputFilename(), szScriptName,
 	// and the defines at the time of building this project.
 	CUtlString m_StoredOutputFilename;
 	char m_szStoredScriptName[MAX_PATH];
@@ -151,8 +151,8 @@ public:
 	//
 	// - VPC uses projectIndex_t, but a single projectIndex_t can turn into multiple games (server_tf, server_episodic, etc) in VPC_IterateTargetProjects.
 	// - The dependency code has a separate CDependency_Project for each game.
-	// 
-	// This takes a bunch of project indices (usually m_targetProjects, which comes from the command line's "+this -that *theother" syntax), 
+	//
+	// This takes a bunch of project indices (usually m_targetProjects, which comes from the command line's "+this -that *theother" syntax),
 	// which are game-agnostic, and based on what games were specified on the command line, it builds the list of CDependency_Project*s.
 	void TranslateProjectIndicesToDependencyProjects( CUtlVector<projectIndex_t> &projectList, CUtlVector<CDependency_Project*> &out );
 

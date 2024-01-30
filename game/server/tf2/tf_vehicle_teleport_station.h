@@ -65,7 +65,7 @@ protected:
 	void				OnItemPostFrame( CBaseTFPlayer *pDriver );
 
 private:
-	
+
 	static CUtlVector<CVehicleTeleportStation*> s_DeployedTeleportStations;
 
 	Vector				m_vecTeleporterMins;

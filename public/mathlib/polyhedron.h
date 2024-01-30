@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -42,7 +42,7 @@ public:
 	Polyhedron_IndexedLine_t *pLines;
 	Polyhedron_IndexedLineReference_t *pIndices;
 	Polyhedron_IndexedPolygon_t *pPolygons;
-	
+
 	unsigned short iVertexCount;
 	unsigned short iLineCount;
 	unsigned short iIndexCount;
@@ -70,4 +70,3 @@ CPolyhedron *GetTempPolyhedron( unsigned short iVertices, unsigned short iLines,
 
 
 #endif //#ifndef POLYHEDRON_H_
-

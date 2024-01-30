@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -66,7 +66,7 @@ void CPakViewDirec::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // CPakViewDirec message handlers
 
-void CPakViewDirec::OnInitialUpdate() 
+void CPakViewDirec::OnInitialUpdate()
 {
 	CTreeView::OnInitialUpdate();
 	CTreeCtrl &tc = GetTreeCtrl();
@@ -76,5 +76,5 @@ void CPakViewDirec::OnInitialUpdate()
 	SetWindowLong(tc.m_hWnd, GWL_STYLE, dwStyle | TVS_HASLINES);
 
 	// set the image list
-	
+
 }

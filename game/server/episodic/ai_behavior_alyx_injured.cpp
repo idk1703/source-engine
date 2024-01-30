@@ -47,7 +47,7 @@ struct ActivityMap_t
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_BehaviorAlyxInjured::PopulateActivityMap( void )
 {
@@ -67,7 +67,7 @@ void CAI_BehaviorAlyxInjured::PopulateActivityMap( void )
 		{ ACT_RUN_AIM_STIMULATED,	ACT_RUN_AIM_STIMULATED },	// FIMXE: No appropriate temp anim right now!
 		{ ACT_RUN_AIM_AGITATED,		ACT_RUN_AIM_AGITATED },		// FIMXE: No appropriate temp anim right now!
 		{ ACT_RUN_HURT,				ACT_RUN_HURT },
-		
+
 		// Walks
 		{ ACT_WALK,					ACT_WALK_HURT },
 		{ ACT_WALK_AIM,				ACT_WALK_HURT },
@@ -115,13 +115,13 @@ void CAI_BehaviorAlyxInjured::Spawn( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Get the flinch activity for us to play
-// Input  : bHeavyDamage - 
-//			bGesture - 
+// Input  : bHeavyDamage -
+//			bGesture -
 // Output : Activity
 //-----------------------------------------------------------------------------
 Activity CAI_BehaviorAlyxInjured::GetFlinchActivity( bool bHeavyDamage, bool bGesture )
 {
-	// 
+	//
 	if ( ( bGesture == false ) || ( GetOuter()->GetActivity() != ACT_COWER ) )
 		return BaseClass::GetFlinchActivity( bHeavyDamage, bGesture );
 
@@ -130,8 +130,8 @@ Activity CAI_BehaviorAlyxInjured::GetFlinchActivity( bool bHeavyDamage, bool bGe
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nActivity - 
+// Purpose:
+// Input  : nActivity -
 //-----------------------------------------------------------------------------
 Activity CAI_BehaviorAlyxInjured::NPC_TranslateActivity( Activity nActivity )
 {
@@ -140,7 +140,7 @@ Activity CAI_BehaviorAlyxInjured::NPC_TranslateActivity( Activity nActivity )
 
 	// Look it up in the translation map
 	int nIndex = m_ActivityMap.Find( nNewActivity );
-	
+
 	if ( m_ActivityMap.IsValidIndex( nIndex ) )
 		return m_ActivityMap[nIndex];
 
@@ -155,7 +155,7 @@ bool CAI_BehaviorAlyxInjured::ShouldRunToCover( void )
 {
 	Vector	vecRetreatPos;
 	float	flRetreatRadius = 128.0f;
-	
+
 	// See how far off from our cover position we are
 	if ( FindCoverFromEnemyBehindTarget( GetFollowTarget(), flRetreatRadius, &vecRetreatPos ) )
 	{
@@ -235,7 +235,7 @@ int CAI_BehaviorAlyxInjured::SelectFailSchedule( int failedSchedule, int failedT
 	{
 	case TASK_FIND_COVER_FROM_ENEMY:
 	case TASK_FIND_INJURED_COVER_FROM_ENEMY:
-		
+
 		// Only cower if we're already near enough to our follow target
 		float flDistToFollowTargetSqr = ( GetOuter()->GetAbsOrigin() - GetFollowTarget()->GetAbsOrigin() ).LengthSqr();
 		if (  flDistToFollowTargetSqr > Square( 256 ) )
@@ -266,7 +266,7 @@ bool CAI_BehaviorAlyxInjured::FindThreatDirection2D( const Vector &vecSource, Ve
 
 		vecScratch = ( vecSource - pMemory->hEnemy->WorldSpaceCenter() );
 		VectorNormalize( vecScratch	);
-		
+
 		(*vecOut) += vecScratch;
 		bValid = true;
 	}
@@ -291,7 +291,7 @@ bool CAI_BehaviorAlyxInjured::FindCoverFromEnemyBehindTarget( CBaseEntity *pTarg
 
 	Vector	vecTargetPos = pTarget->GetAbsOrigin();
 	Vector	vecThreatDir = vec3_origin;
-	
+
 	// Find our threat direction and base our cover on that
 	if ( FindThreatDirection2D( vecTargetPos, &vecThreatDir ) )
 	{
@@ -318,12 +318,12 @@ bool CAI_BehaviorAlyxInjured::FindCoverFromEnemyBehindTarget( CBaseEntity *pTarg
 		}
 
 		AIMoveTrace_t moveTrace;
-		GetOuter()->GetMoveProbe()->MoveLimit(	NAV_GROUND, 
-			GetOuter()->GetAbsOrigin(), 
-			vecTestPos, 
-			MASK_SOLID_BRUSHONLY, 
-			NULL, 
-			0, 
+		GetOuter()->GetMoveProbe()->MoveLimit(	NAV_GROUND,
+			GetOuter()->GetAbsOrigin(),
+			vecTestPos,
+			MASK_SOLID_BRUSHONLY,
+			NULL,
+			0,
 			&moveTrace );
 
 		bool bWithinRangeToGoal = ( moveTrace.vEndPosition - vecTestPos ).Length2DSqr() < Square( GetOuter()->GetHullWidth() * 3.0f );
@@ -354,8 +354,8 @@ bool CAI_BehaviorAlyxInjured::FindCoverFromEnemyBehindTarget( CBaseEntity *pTarg
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CAI_BehaviorAlyxInjured::StartTask( const Task_t *pTask )
 {
@@ -375,7 +375,7 @@ void CAI_BehaviorAlyxInjured::StartTask( const Task_t *pTask )
 			if ( FindCoverFromEnemyBehindTarget( pLeader, COVER_DISTANCE, &coverPos ) )
 			{
 				AI_NavGoal_t goal( GOALTYPE_LOCATION, coverPos, ACT_RUN, AIN_HULL_TOLERANCE, AIN_DEF_FLAGS );
-				GetOuter()->GetNavigator()->SetGoal( goal );		
+				GetOuter()->GetNavigator()->SetGoal( goal );
 				GetOuter()->m_flMoveWaitFinished = gpGlobals->curtime + pTask->flTaskData;
 				TaskComplete();
 				return;
@@ -395,13 +395,13 @@ void CAI_BehaviorAlyxInjured::StartTask( const Task_t *pTask )
 //-----------------------------------------------------------------------------
 // Purpose: Whether or not Alyx is injured
 //-----------------------------------------------------------------------------
-bool CAI_BehaviorAlyxInjured::IsInjured( void ) const 
-{ 
+bool CAI_BehaviorAlyxInjured::IsInjured( void ) const
+{
 	return IsAlyxInInjuredMode();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_BehaviorAlyxInjured::GatherConditions( void )
 {
@@ -418,8 +418,8 @@ void CAI_BehaviorAlyxInjured::GatherConditions( void )
 	}
 
 	// Determines whether we consider ourselves in danger
-	bool bInDanger = (  HasCondition( COND_LIGHT_DAMAGE ) || 
-						HasCondition( COND_HEAVY_DAMAGE ) || 
+	bool bInDanger = (  HasCondition( COND_LIGHT_DAMAGE ) ||
+						HasCondition( COND_HEAVY_DAMAGE ) ||
 						HasCondition( COND_INJURED_OVERWHELMED ) );
 
 	// See if we're too far away from the player and in danger
@@ -450,7 +450,7 @@ void CAI_BehaviorAlyxInjured::GatherConditions( void )
 		if ( bWarnPlayer )
 		{
 			// FIXME: This should be routed through the normal speaking code with a system to emit from the player's suit.
-			
+
 			CBasePlayer *pPlayer = UTIL_PlayerByIndex( 1 );
 			//float flPlayerDistSqr = ( GetOuter()->GetAbsOrigin() - pPlayer->GetAbsOrigin() ).LengthSqr();
 
@@ -605,14 +605,14 @@ void CAI_InjuredFollowGoal::EnableGoal( CAI_BaseNPC *pAI )
 
 	if ( GetGoalEntity() == NULL )
 		return;
-	
+
 	pBehavior->SetFollowGoal( this );
 }
 
 //-------------------------------------
 
 void CAI_InjuredFollowGoal::DisableGoal( CAI_BaseNPC *pAI  )
-{ 
+{
 	CAI_BehaviorAlyxInjured *pBehavior;
 	if ( !pAI->GetBehavior( &pBehavior ) )
 		return;

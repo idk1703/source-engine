@@ -49,7 +49,7 @@ DEFINE_TESTCASE_NOSUITE( DmxArrayTest )
 	CDmrStringArray stringVec2( pElement, "string_array_test2", true );
 	stringVec2 = stringVec;
 	Shipping_Assert( stringVec2.Count() == 3 );
-			 
+
 	CDmrArray< float > floatVec2( pElement, "float_array_test2", true );
 	floatVec2 = floatVec;
 	Shipping_Assert( floatVec2.Count() == 3 );

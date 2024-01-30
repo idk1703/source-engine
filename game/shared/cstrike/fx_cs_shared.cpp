@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -27,15 +27,15 @@ ConVar weapon_accuracy_logging( "weapon_accuracy_logging", "0", FCVAR_REPLICATED
 	{
 
 		// If we have some sounds from the weapon classname.txt file, play a random one of them
-		const char *shootsound = pWeaponInfo->aShootSounds[ sound_type ]; 
+		const char *shootsound = pWeaponInfo->aShootSounds[ sound_type ];
 		if ( !shootsound || !shootsound[0] )
 			return;
 
 		CBroadcastRecipientFilter filter; // this is client side only
 		if ( !te->CanPredict() )
 			return;
-				
-		CBaseEntity::EmitSound( filter, iPlayerIndex, shootsound, &vOrigin, flSoundTime ); 
+
+		CBaseEntity::EmitSound( filter, iPlayerIndex, shootsound, &vOrigin, flSoundTime );
 	}
 
 	class CGroupedSound
@@ -47,7 +47,7 @@ ConVar weapon_accuracy_logging( "weapon_accuracy_logging", "0", FCVAR_REPLICATED
 
 	CUtlVector<CGroupedSound> g_GroupedSounds;
 
-	
+
 	// Called by the ImpactSound function.
 	void ShotgunImpactSoundGroup( const char *pSoundName, const Vector &vEndPos )
 	{
@@ -105,7 +105,7 @@ ConVar weapon_accuracy_logging( "weapon_accuracy_logging", "0", FCVAR_REPLICATED
 // This runs on both the client and the server.
 // On the server, it only does the damage calculations.
 // On the client, it does all the effects.
-void FX_FireBullets( 
+void FX_FireBullets(
 	int	iPlayerIndex,
 	const Vector &vOrigin,
 	const QAngle &vAngles,
@@ -145,7 +145,7 @@ void FX_FireBullets(
 // #else
 // 		V_strcat(szFlags, "SERVER ", sizeof(szFlags));
 // #endif
-// 
+//
 		if ( pPlayer->GetMoveType() == MOVETYPE_LADDER )
 			V_strcat(szFlags, "LADDER ", sizeof(szFlags));
 
@@ -157,7 +157,7 @@ void FX_FireBullets(
 
 		float fVelocity = pPlayer->GetAbsVelocity().Length2D();
 
-		Msg("FireBullets @ %10f [ %s ]: inaccuracy=%f  spread=%f  max dispersion=%f  mode=%2i  vel=%10f  seed=%3i  %s\n", 
+		Msg("FireBullets @ %10f [ %s ]: inaccuracy=%f  spread=%f  max dispersion=%f  mode=%2i  vel=%10f  seed=%3i  %s\n",
 			gpGlobals->curtime, weaponAlias, fInaccuracy, fSpread, fInaccuracy + fSpread, iMode, fVelocity, iSeed, szFlags);
 	}
 #endif
@@ -186,10 +186,10 @@ void FX_FireBullets(
 #ifndef CLIENT_DLL
 	// if this is server code, send the effect over to client as temp entity
 	// Dispatch one message for all the bullet impacts and sounds.
-	TE_FireBullets( 
+	TE_FireBullets(
 		iPlayerIndex,
-		vOrigin, 
-		vAngles, 
+		vOrigin,
+		vAngles,
 		iWeaponID,
 		iMode,
 		iSeed,
@@ -251,7 +251,7 @@ void FX_FireBullets(
 
 	if ( !pPlayer )
 		return;
-	
+
 	StartGroupingSounds();
 
 #ifdef GAME_DLL
@@ -342,4 +342,3 @@ void FX_PlantBomb( int iPlayerIndex, const Vector &vOrigin, PlantBombOption_t op
 	TE_PlantBomb( iPlayerIndex, vOrigin, option );
 #endif
 }
-

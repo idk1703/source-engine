@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -12,11 +12,11 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CFriendsGames::CFriendsGames(vgui::Panel *parent) : 
+CFriendsGames::CFriendsGames(vgui::Panel *parent) :
 	CBaseGamesPage(parent, "FriendsGames",  eFriendsServer )
 {
 	m_iServerRefreshCount = 0;
-	
+
 	if ( !IsSteamGameServerBrowsingEnabled() )
 	{
 		m_pGameList->SetEmptyListText("#ServerBrowser_OfflineMode");

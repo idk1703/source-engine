@@ -29,14 +29,14 @@ LINK_ENTITY_TO_CLASS( weapon_infiltrator, CWeaponInfiltrator );
 PRECACHE_WEAPON_REGISTER(weapon_infiltrator);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponInfiltrator::CWeaponInfiltrator( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponInfiltrator::Precache( void )
 {
@@ -44,7 +44,7 @@ void CWeaponInfiltrator::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponInfiltrator::ComputeEMPFireState( void )
@@ -59,7 +59,7 @@ bool CWeaponInfiltrator::ComputeEMPFireState( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponInfiltrator::Deploy( void )
 {
@@ -69,14 +69,14 @@ bool CWeaponInfiltrator::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponInfiltrator::PrimaryAttack( void )
 {
 	CBaseTFPlayer *pTarget = GetAssassinationTarget();
 	if ( pTarget == NULL )
 		return;
-	
+
 	WeaponSound( SINGLE );
 	PlayAttackAnimation( ACT_VM_PRIMARYATTACK );
 	m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration( m_nSequence ) * 0.5;

@@ -23,7 +23,7 @@ class CServerNotConnectedToSteamDialog;
 CServerNotConnectedToSteamDialog *OpenServerNotConnectedToSteamDialog( vgui::Panel *pParent );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFBaseStorePanel::CTFBaseStorePanel( Panel *parent ) : CStorePanel(parent)
 {
@@ -32,7 +32,7 @@ CTFBaseStorePanel::CTFBaseStorePanel( Panel *parent ) : CStorePanel(parent)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseStorePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -42,7 +42,7 @@ void CTFBaseStorePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseStorePanel::OnArmoryOpened( KeyValues *data )
 {
@@ -75,7 +75,7 @@ void CTFBaseStorePanel::OnArmoryOpened( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseStorePanel::OnArmoryClosed( void )
 {
@@ -84,7 +84,7 @@ void CTFBaseStorePanel::OnArmoryClosed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseStorePanel::OnThink()
 {
@@ -99,12 +99,12 @@ void CTFBaseStorePanel::OnThink()
 		else
 		{
 			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "NotificationsPresentBlinkStop" );
-		}		
+		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseStorePanel::PostTransactionCompleted( void )
 {
@@ -123,7 +123,7 @@ void CTFBaseStorePanel::PostTransactionCompleted( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseStorePanel::SetTransactionID( uint64 inID )
 {

@@ -120,7 +120,7 @@ void CCSViewRender::PerformNightVisionEffect( const CViewSetup &view )
 		{
 			int iMaxValue = 255;
 			byte overlaycolor[4] = { 0, 255, 0, 255 };
-			
+
 			if ( g_pMaterialSystemHardwareConfig->GetDXSupportLevel() >= 80 )
 			{
 				UpdateScreenEffectTexture( 0, view.x, view.y, view.width, view.height );
@@ -139,16 +139,16 @@ void CCSViewRender::PerformNightVisionEffect( const CViewSetup &view )
 
 				pPlayer->m_flNightVisionAlpha = MIN( pPlayer->m_flNightVisionAlpha, iMaxValue );
 			}
-			else 
+			else
 			{
 				pPlayer->m_flNightVisionAlpha -= 40;
 
 				pPlayer->m_flNightVisionAlpha = MAX( pPlayer->m_flNightVisionAlpha, 0 );
-				
+
 			}
 
 			overlaycolor[3] = pPlayer->m_flNightVisionAlpha;
-	
+
 			render->ViewDrawFade( overlaycolor, pMaterial );
 
 			// Only one pass in DX7.
@@ -175,20 +175,20 @@ void CCSViewRender::PerformFlashbangEffect( const CViewSetup &view )
 
 	if ( pPlayer->m_flFlashBangTime < gpGlobals->curtime )
 		return;
-	
+
 	IMaterial *pMaterial = materials->FindMaterial( "effects/flashbang", TEXTURE_GROUP_CLIENT_EFFECTS, true );
 
 	if ( !pMaterial )
 		return;
 
 	byte overlaycolor[4] = { 255, 255, 255, 255 };
-	
+
 	CMatRenderContextPtr pRenderContext( materials );
-	
+
 	if ( pPlayer->m_flFlashAlpha < pPlayer->m_flFlashMaxAlpha )
 	{
 		pPlayer->m_flFlashAlpha += 45;
-		
+
 		pPlayer->m_flFlashAlpha = MIN( pPlayer->m_flFlashAlpha, pPlayer->m_flFlashMaxAlpha );
 
 		overlaycolor[0] = overlaycolor[1] = overlaycolor[2] = pPlayer->m_flFlashAlpha;
@@ -198,7 +198,7 @@ void CCSViewRender::PerformFlashbangEffect( const CViewSetup &view )
 		bool foundVar;
 
 		IMaterialVar* m_BaseTextureVar = pMaterial->FindVar( "$basetexture", &foundVar, false );
-	
+
 		Rect_t srcRect;
 		srcRect.x = view.x;
 		srcRect.y = view.y;
@@ -214,11 +214,11 @@ void CCSViewRender::PerformFlashbangEffect( const CViewSetup &view )
 		if (g_pMaterialSystemHardwareConfig->GetDXSupportLevel() >= 80)
 		{
 			pRenderContext->DrawScreenSpaceRectangle( pMaterial, view.x, view.y, view.width, view.height,
-				0, 0, m_pFlashTexture->GetActualWidth()-1, m_pFlashTexture->GetActualHeight()-1, 
+				0, 0, m_pFlashTexture->GetActualWidth()-1, m_pFlashTexture->GetActualHeight()-1,
 				m_pFlashTexture->GetActualWidth(), m_pFlashTexture->GetActualHeight() );
 			render->ViewDrawFade( overlaycolor, pMaterial );
 			pRenderContext->DrawScreenSpaceRectangle( pMaterial, view.x, view.y, view.width, view.height,
-				0, 0, m_pFlashTexture->GetActualWidth()-1, m_pFlashTexture->GetActualHeight()-1, 
+				0, 0, m_pFlashTexture->GetActualWidth()-1, m_pFlashTexture->GetActualHeight()-1,
 				m_pFlashTexture->GetActualWidth(), m_pFlashTexture->GetActualHeight() );
 		}
 	}
@@ -227,7 +227,7 @@ void CCSViewRender::PerformFlashbangEffect( const CViewSetup &view )
 		float flAlpha = pPlayer->m_flFlashMaxAlpha * (pPlayer->m_flFlashBangTime - gpGlobals->curtime) / pPlayer->m_flFlashDuration;
 
 		flAlpha = clamp( flAlpha, 0, pPlayer->m_flFlashMaxAlpha );
-		
+
 		overlaycolor[0] = overlaycolor[1] = overlaycolor[2] = flAlpha;
 
 		render->ViewDrawFade( overlaycolor, pMaterial );
@@ -236,11 +236,11 @@ void CCSViewRender::PerformFlashbangEffect( const CViewSetup &view )
 		if (g_pMaterialSystemHardwareConfig->GetDXSupportLevel() >= 80)
 		{
 			pRenderContext->DrawScreenSpaceRectangle( pMaterial, view.x, view.y, view.width, view.height,
-				0, 0, m_pFlashTexture->GetActualWidth()-1, m_pFlashTexture->GetActualHeight()-1, 
+				0, 0, m_pFlashTexture->GetActualWidth()-1, m_pFlashTexture->GetActualHeight()-1,
 				m_pFlashTexture->GetActualWidth(), m_pFlashTexture->GetActualHeight() );
 			render->ViewDrawFade( overlaycolor, pMaterial );
 			pRenderContext->DrawScreenSpaceRectangle( pMaterial, view.x, view.y, view.width, view.height,
-				0, 0, m_pFlashTexture->GetActualWidth()-1, m_pFlashTexture->GetActualHeight()-1, 
+				0, 0, m_pFlashTexture->GetActualWidth()-1, m_pFlashTexture->GetActualHeight()-1,
 				m_pFlashTexture->GetActualWidth(), m_pFlashTexture->GetActualHeight() );
 		}
 	}
@@ -322,4 +322,3 @@ void CCSViewRender::RenderPlayerSprites()
 	CViewRender::RenderPlayerSprites();
 	RadioManager()->DrawHeadLabels();
 }
-

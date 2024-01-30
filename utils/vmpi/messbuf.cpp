@@ -1,13 +1,13 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
 //
 // MessageBuffer - handy for serializing/unserializing
-// structures to be sent as messages  
+// structures to be sent as messages
 // dal - 9/2002
 //
 #include <stdlib.h>
@@ -192,10 +192,10 @@ int MessageBuffer::ReadString( char *pOut, int bufferLength )
 			pOut[0] = 0;
 			return -1;
 		}
-		
+
 		if ( ch == 0 || nChars >= (bufferLength-1) )
 			break;
-			
+
 		pOut[nChars] = ch;
 		++nChars;
 	}
@@ -225,7 +225,7 @@ MessageBuffer::clear(int minsize)
 {
 	if (minsize > size) {
 		resize(minsize);
-    }
+	}
 	memset(data, 0, size);
 	offset = 0;
 	len = 0;
@@ -240,7 +240,7 @@ MessageBuffer::reset(int minsize)
 {
 	if (minsize > size) {
 		resize(minsize);
-    }
+	}
 	len = 0;
 	offset = 0;
 }
@@ -271,7 +271,7 @@ void
 MessageBuffer::print(FILE * ofile, int num)
 {
 	fprintf(ofile, "Len: %d Offset: %d Size: %d\n", len, offset, size);
-    if (num > size) num = size;
+	if (num > size) num = size;
 	for (int i=0; i<num; ++i) {
 		fprintf(ofile, "%02x ", (unsigned char) data[i]);
 	}

@@ -34,7 +34,7 @@ static char s_pPlayerStatFile[MAX_PATH];
 //-----------------------------------------------------------------------------
 // Strings assocaited with the stats
 //-----------------------------------------------------------------------------
-static const char *s_pStatStrings[TF_STAT_COUNT] = 
+static const char *s_pStatStrings[TF_STAT_COUNT] =
 {
 	"Ferry Control",			// TF_STAT_FERRY_CONTROL
 	"Resource Chunks Spawned",	// TF_STAT_RESOURCE_CHUNKS_SPAWNED,
@@ -43,7 +43,7 @@ static const char *s_pStatStrings[TF_STAT_COUNT] =
 };
 
 // These are the strings for the team stats above TFCLASS_CLASS_COUNT.
-static const char *s_pNonClassTeamStatStrings[TF_TEAM_STAT_COUNT-TFCLASS_CLASS_COUNT] = 
+static const char *s_pNonClassTeamStatStrings[TF_TEAM_STAT_COUNT-TFCLASS_CLASS_COUNT] =
 {
 	"Player Count",			// TF_TEAM_STAT_PLAYER_COUNT,
 	"Resources Collected",	// TF_TEAM_STAT_RESOURCES_COLLECTED,
@@ -59,7 +59,7 @@ static const char *s_pNonClassTeamStatStrings[TF_TEAM_STAT_COUNT-TFCLASS_CLASS_C
 static const char *s_pTeamStatStrings[TF_TEAM_STAT_COUNT];
 static bool s_bTeamStatStringsInitted = false;
 
-static const char *s_pPlayerStatStrings[TF_PLAYER_STAT_COUNT] = 
+static const char *s_pPlayerStatStrings[TF_PLAYER_STAT_COUNT] =
 {
 	"Player Count",			// TF_PLAYER_STAT_PLAYER_COUNT
 	"Player Seconds",		// TF_PLAYER_STAT_PLAYER_SECONDS
@@ -71,7 +71,7 @@ static const char *s_pPlayerStatStrings[TF_PLAYER_STAT_COUNT] =
 	"Resources Spent",		// TF_PLAYER_STAT_RESOURCES_SPENT,
 	"Object Value",			// TF_PLAYER_STAT_CURRENT_OBJECT_VALUE
 	"Objects Owned",		// TF_PLAYER_STAT_OBJECT_COUNT,
-	
+
 	"Kill Count",			// TF_PLAYER_STAT_KILL_COUNT,
 	"Objects Destroyed",	// TF_PLAYER_STAT_DESTROYED_OBJECT_COUNT,
 	"Health Given",			// TF_PLAYER_STAT_HEALTH_GIVEN,
@@ -108,7 +108,7 @@ static const char *GetTeamStatString( int stat )
 		for ( i=TFCLASS_CLASS_COUNT; i < TF_TEAM_STAT_COUNT; i++ )
 			s_pTeamStatStrings[i] = s_pNonClassTeamStatStrings[i - TFCLASS_CLASS_COUNT];
 	}
-	
+
 	return s_pTeamStatStrings[stat];
 }
 
@@ -367,7 +367,7 @@ void CTFStats::CollectStats( )
 
 		if ( GetStat( TF_STAT_FERRY_CONTROL ) == i )
 		{
-			IncrementTeamStat( i, TF_TEAM_STAT_FERRY_CONTROL_TIME, TF_STATS_COLLECTION_TIME ); 
+			IncrementTeamStat( i, TF_TEAM_STAT_FERRY_CONTROL_TIME, TF_STATS_COLLECTION_TIME );
 		}
 
 		ClearPlayerStat( i, TF_PLAYER_STAT_OBJECT_COUNT );
@@ -417,7 +417,7 @@ void CTFStats::CollectStats( )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 void CTFStats::ComputeFileNames()
@@ -597,7 +597,7 @@ void CTFStats::FrameUpdatePostEntityThink( )
 	if ( CurrentActIsAWaitingAct() )
 		return;
 
-	CollectFrameStats();	
+	CollectFrameStats();
 
 	// NOTE: We could keep track of the history here if we wanted for later
 	// display when the map ends
@@ -611,7 +611,7 @@ void CTFStats::FrameUpdatePostEntityThink( )
 		ComputeFileNames();
 	}
 
-	CollectStats();	
+	CollectStats();
 	WriteStats();
 	WriteTeamStats();
 	WritePlayerStats();

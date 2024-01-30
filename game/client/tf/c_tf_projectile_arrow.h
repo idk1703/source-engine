@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -27,7 +27,7 @@ public:
 
 	C_TFProjectile_Arrow();
 	~C_TFProjectile_Arrow();
-	
+
 	virtual void	OnDataChanged( DataUpdateType_t updateType );
 	virtual void	NotifyBoneAttached( C_BaseAnimating* attachTarget );
 	virtual void	ClientThink( void );

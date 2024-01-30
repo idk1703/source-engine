@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -30,16 +30,16 @@ class CTFCSpanner : public CTFCCrowbar
 {
 public:
 	DECLARE_CLASS( CTFCSpanner, CTFCCrowbar );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	#ifndef CLIENT_DLL
 		DECLARE_DATADESC();
 	#endif
 
 
 public:
-	
+
 	CTFCSpanner();
 
 	virtual void Precache();
@@ -55,7 +55,7 @@ public:
 
 
 private:
-	
+
 	CTFCSpanner( const CTFCSpanner & ) {}
 };
 

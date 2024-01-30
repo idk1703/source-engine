@@ -155,9 +155,9 @@ private:
 	int m_nNonVRWidth;
 	int m_nNonVRHeight;
 #if defined( USE_SDL )
-    int m_nNonVRSDLDisplayIndex;
+	int m_nNonVRSDLDisplayIndex;
 #endif
-    bool m_bNonVRRawInput;
+	bool m_bNonVRRawInput;
 };
 
 extern CClientVirtualReality g_ClientVirtualReality;

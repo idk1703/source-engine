@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -150,7 +150,7 @@ void CTeamMenu::ShowPanel(bool bShow)
 			m_iJumpKey = gameuifuncs->GetButtonCodeForBind( "jump" );
 		}
 
-		if ( m_iScoreBoardKey == BUTTON_CODE_INVALID ) 
+		if ( m_iScoreBoardKey == BUTTON_CODE_INVALID )
 		{
 			m_iScoreBoardKey = gameuifuncs->GetButtonCodeForBind( "showscores" );
 		}
@@ -186,7 +186,7 @@ void CTeamMenu::LoadMapPage( const char *mapName )
 {
 	// Save off the map name so we can re-load the page in ApplySchemeSettings().
 	Q_strncpy( m_szMapName, mapName, strlen( mapName ) + 1 );
-	
+
 	char mapRES[ MAX_PATH ];
 
 	char uilanguage[ 64 ];
@@ -227,7 +227,7 @@ void CTeamMenu::LoadMapPage( const char *mapName )
 		m_pMapInfoHTML->OpenURL( localURL, NULL );
 #endif
 		InvalidateLayout();
-		Repaint();		
+		Repaint();
 
 		return;
 	}
@@ -252,7 +252,7 @@ void CTeamMenu::LoadMapPage( const char *mapName )
 		else
 		{
 			m_pMapInfo->SetText( "" );
-			return; 
+			return;
 		}
 	}
 
@@ -280,7 +280,7 @@ void CTeamMenu::LoadMapPage( const char *mapName )
 	{
 		// convert the win32 ucs2 data to wchar_t
 		dataSize*=2;// need to *2 to account for ucs2 to wchar_t (4byte) growth
-		wchar_t *memBlockConverted = (wchar_t *)malloc(dataSize);	
+		wchar_t *memBlockConverted = (wchar_t *)malloc(dataSize);
 		V_UCS2ToUnicode( (ucs2 *)memBlock, memBlockConverted, dataSize );
 		free(memBlock);
 		memBlock = memBlockConverted;
@@ -335,12 +335,12 @@ void CTeamMenu::MakeTeamButtons(void)
 
 		if ( !teamname || !teamname[0] )
 			return; // no more teams
-	
+
 		char buttonText[32];
-		Q_snprintf( buttonText, sizeof(buttonText), "&%i %s", i +1, teamname ); 
+		Q_snprintf( buttonText, sizeof(buttonText), "&%i %s", i +1, teamname );
 		m_pTeamButtons[i]->SetText( buttonText );
 
-		m_pTeamButtons[i]->SetCommand( new KeyValues("TeamButton", "team", i ) );	
+		m_pTeamButtons[i]->SetCommand( new KeyValues("TeamButton", "team", i ) );
 		IScheme *pScheme = scheme()->GetIScheme( GetScheme() );
 		m_pTeamButtons[i]->SetArmedColor(pScheme->GetColor(GetStringTeamColor(i), Color(255, 255, 255, 255))  ,  pScheme->GetColor("SelectionBG", Color(255, 255, 255, 0)) );
 		m_pTeamButtons[i]->SetDepressedColor( pScheme->GetColor(GetStringTeamColor(i), Color(255, 255, 255, 255)), pScheme->GetColor("ButtonArmedBgColor", Color(255, 255, 255, 0)) );
@@ -349,7 +349,7 @@ void CTeamMenu::MakeTeamButtons(void)
 
 		i++;
 	}
-} 
+}
 
 
 //-----------------------------------------------------------------------------
@@ -360,7 +360,7 @@ void CTeamMenu::OnTeamButton( int team )
 	char cmd[64];
 	if( team >= m_iNumTeams )  // its a special button
 	{
-		if( team == m_iNumTeams ) // first extra team is auto assign	
+		if( team == m_iNumTeams ) // first extra team is auto assign
 		{
 			Q_snprintf( cmd, sizeof( cmd ), "jointeam 5" );
 		}

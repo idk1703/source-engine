@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,14 +18,14 @@ void CHL1Item::Spawn( void )
 	SetSolid( SOLID_BBOX );
 	AddSolidFlags( FSOLID_NOT_STANDABLE | FSOLID_TRIGGER );
 	CollisionProp()->UseTriggerBounds( true, 24.0f );
-	
+
 	SetCollisionGroup( COLLISION_GROUP_DEBRIS );
 
 	SetTouch( &CItem::ItemTouch );
 
 #ifdef HL1_DLL
-    if ( g_pGameRules->IsMultiplayer() )
-        AddEffects( EF_NOSHADOW );
+	if ( g_pGameRules->IsMultiplayer() )
+		AddEffects( EF_NOSHADOW );
 #endif
 
 

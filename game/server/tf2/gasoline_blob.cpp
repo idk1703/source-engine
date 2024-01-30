@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,10 +37,10 @@ IMPLEMENT_SERVERCLASS_ST_NOBASE( CGasolineBlob, DT_GasolineBlob )
 	SendPropVector( SENDINFO(m_vecOrigin), -1,  SPROP_COORD ),
 	SendPropEHandle (SENDINFO_NAME(m_hMoveParent, moveparent)),
 	SendPropFloat( SENDINFO(m_flLitStartTime), -1, SPROP_NOSCALE ),
-	
+
 	SendPropFloat( SENDINFO(m_flCreateTime), -1, SPROP_NOSCALE ),
 	SendPropFloat( SENDINFO(m_flMaxLifetime), -1, SPROP_NOSCALE ),
-	
+
 	SendPropInt( SENDINFO(m_iTeamNum),		TEAMNUM_NUM_BITS, 0 ),
 	SendPropInt( SENDINFO( m_BlobFlags ), NUM_BLOB_FLAGS, SPROP_UNSIGNED ),
 	SendPropVector( SENDINFO( m_vSurfaceNormal ), 0, SPROP_NORMAL ),
@@ -53,10 +53,10 @@ LINK_ENTITY_TO_CLASS( gasoline_blob, CGasolineBlob );
 CUtlLinkedList<CGasolineBlob*, int> g_GasolineBlobs;
 
 
-CGasolineBlob* CGasolineBlob::Create( 
-	CBaseEntity *pOwner, 
-	const Vector &vOrigin, 
-	const Vector &vStartVelocity, 
+CGasolineBlob* CGasolineBlob::Create(
+	CBaseEntity *pOwner,
+	const Vector &vOrigin,
+	const Vector &vStartVelocity,
 	bool bUseGravity,
 	float flAirLifetime,
 	float flLifetime )
@@ -65,7 +65,7 @@ CGasolineBlob* CGasolineBlob::Create(
 	if ( !pBlob )
 		return NULL;
 
-	// The "constructor".	
+	// The "constructor".
 	pBlob->SetLocalOrigin( vOrigin );
 	pBlob->SetAbsVelocity( vStartVelocity );
 	pBlob->SetThink( &CGasolineBlob::Think );
@@ -83,13 +83,13 @@ CGasolineBlob* CGasolineBlob::Create(
 	pBlob->m_takedamage = DAMAGE_YES;
 	pBlob->m_flLitStartTime = 0;
 	pBlob->ChangeTeam( pOwner->GetTeamNumber() );
-	
+
 	if ( bUseGravity )
 		pBlob->m_BlobFlags |= BLOBFLAG_USE_GRAVITY;
 
 	pBlob->m_flAirLifetime = flAirLifetime;
 	pBlob->m_flTimeInAir = 0;
-	
+
 	pBlob->SetNextThink( gpGlobals->curtime );
 	g_GasolineBlobs.AddToTail( pBlob );
 
@@ -211,7 +211,7 @@ void CGasolineBlob::Think()
 		CBaseEntity *ents[512];
 		float dists[512];
 		int nEnts = FindBurnableEntsInSphere( ents, dists, ARRAYSIZE( ents ), GetAbsOrigin(), FIRE_DAMAGE_SEARCH_DISTANCE, m_hOwner );
-		
+
 		for ( int i=0; i < nEnts; i++ )
 		{
 			float flDistFromBorder = MAX( 0, FIRE_DAMAGE_DISTANCE - dists[i] );
@@ -236,7 +236,7 @@ void CGasolineBlob::Think()
 			vecNewVelocity.z -= 800 * gpGlobals->frametime;
 			SetAbsVelocity( vecNewVelocity );
 		}
-		
+
 		Vector vNewPos = GetAbsOrigin() + vecNewVelocity * gpGlobals->frametime;
 
 		// Can we go there?
@@ -257,7 +257,7 @@ void CGasolineBlob::Think()
 		if( bStopped )
 		{
 			SetLocalOrigin( trace.endpos + trace.plane.normal * 2 );
-			
+
 			// Ok, we hit something. Stop moving.
 			m_BlobFlags |= BLOBFLAG_STOPPED;
 			m_vSurfaceNormal = trace.plane.normal;
@@ -266,7 +266,7 @@ void CGasolineBlob::Think()
 		{
 			SetLocalOrigin( vNewPos );
 		}
-	}	
+	}
 
 	SetNextThink( gpGlobals->curtime );
 }
@@ -276,4 +276,3 @@ bool IsGasolineBlob( CBaseEntity *pEnt )
 {
 	return FClassnameIs( pEnt, "gasoline_blob" );
 }
-

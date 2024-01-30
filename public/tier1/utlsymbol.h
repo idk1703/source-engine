@@ -40,37 +40,37 @@ public:
 	CUtlSymbol( UtlSymId_t id ) : m_Id(id) {}
 	CUtlSymbol( const char* pStr );
 	CUtlSymbol( CUtlSymbol const& sym ) : m_Id(sym.m_Id) {}
-	
+
 	// operator=
 	CUtlSymbol& operator=( CUtlSymbol const& src ) { m_Id = src.m_Id; return *this; }
-	
+
 	// operator==
 	bool operator==( CUtlSymbol const& src ) const { return m_Id == src.m_Id; }
 	bool operator==( const char* pStr ) const;
-	
+
 	// Is valid?
 	bool IsValid() const { return m_Id != UTL_INVAL_SYMBOL; }
-	
+
 	// Gets at the symbol
 	operator UtlSymId_t const() const { return m_Id; }
-	
+
 	// Gets the string associated with the symbol
 	const char* String( ) const;
 
 	// Modules can choose to disable the static symbol table so to prevent accidental use of them.
 	static void DisableStaticSymbolTable();
-		
+
 protected:
 	UtlSymId_t   m_Id;
-		
+
 	// Initializes the symbol table
 	static void Initialize();
-	
+
 	// returns the current symbol table
 	static CUtlSymbolTableMT* CurrTable();
-		
+
 	// The standard global symbol table
-	static CUtlSymbolTableMT* s_pSymbolTable; 
+	static CUtlSymbolTableMT* s_pSymbolTable;
 
 	static bool s_bAllowStaticSymbolTable;
 
@@ -93,16 +93,16 @@ public:
 	// constructor, destructor
 	CUtlSymbolTable( int growSize = 0, int initSize = 32, bool caseInsensitive = false );
 	~CUtlSymbolTable();
-	
+
 	// Finds and/or creates a symbol based on the string
 	CUtlSymbol AddString( const char* pString );
 
 	// Finds the symbol for pString
 	CUtlSymbol Find( const char* pString ) const;
-	
+
 	// Look up the string associated with a particular symbol
 	const char* String( CUtlSymbol id ) const;
-	
+
 	// Remove all symbols in the table.
 	void  RemoveAll();
 
@@ -151,8 +151,8 @@ protected:
 	};
 
 	struct StringPool_t
-	{	
-		int m_TotalLen;		// How large is 
+	{
+		int m_TotalLen;		// How large is
 		int m_SpaceUsed;
 		char m_Data[1];
 	};
@@ -202,7 +202,7 @@ public:
 		m_lock.UnlockRead();
 		return pszResult;
 	}
-	
+
 private:
 #if defined(WIN32) || defined(_WIN32)
 	mutable CThreadSpinRWLock m_lock;
@@ -218,7 +218,7 @@ private:
 // description:
 //    This class defines a symbol table of individual filenames, stored more
 //	  efficiently than a standard symbol table.  Internally filenames are broken
-//	  up into file and path entries, and a file handle class allows convenient 
+//	  up into file and path entries, and a file handle class allows convenient
 //	  access to these.
 //-----------------------------------------------------------------------------
 

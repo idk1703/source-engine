@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -46,7 +46,7 @@ public:
 
 	virtual void		GetIntersectingSurfaces( GetIntersectingSurfaces_Struct *pStruct );
 	virtual void		RenderWireframeInLightmapPage( int pageId );
-	
+
 	virtual void		GetBoundingBox( Vector& bbMin, Vector& bbMax );
 
 	virtual void		SetParent( SurfaceHandle_t surfID );
@@ -67,7 +67,7 @@ public:
 
 	virtual bool		GetTag();
 	virtual void		SetTag();
-	
+
 public:
 
 	//=========================================================================
@@ -78,7 +78,7 @@ public:
 
 	// Used for indexing displacements.
 	CDispInfo*	GetDispByIndex( int index )		{ return index == 0xFFFF ? 0 : &m_pDispArray->m_pDispInfos[index]; }
-	
+
 	// Get this displacement's index into the main array.
 	int			GetDispIndex()					{ return this - m_pDispArray->m_pDispInfos; }
 
@@ -92,10 +92,10 @@ public:
 
 	// Rendering.
 	void		ClearLOD();
-	
+
 	void		DrawDispAxes();
 	bool		Render( CGroupMesh *pGroup, bool bAllowDebugModes );
-	
+
 	// Add in the contribution of a dynamic light.
 	void		AddSingleDynamicLight( dlight_t& dl );
 	void		AddSingleDynamicLightBumped( dlight_t& dl );
@@ -104,7 +104,7 @@ public:
 	void		AddSingleDynamicAlphaLight( dlight_t& dl );
 
 	// Cast a ray against this surface
-	bool		TestRay( Ray_t const& ray, float start, float end, float& dist, 
+	bool		TestRay( Ray_t const& ray, float start, float end, float& dist,
 						Vector2D* lightmapUV, Vector2D* texureUV );
 
 // CDispUtilsHelper implementation.
@@ -136,7 +136,7 @@ public:
 
 	// This is called from CreateStaticBuffers_All after the CCoreDispInfo is fully
 	// initialized. It just copies the data that it needs.
-	bool		CopyCoreDispData( 
+	bool		CopyCoreDispData(
 		model_t *pWorld,
 		const MaterialSystem_SortInfo_t *pSortInfos,
 		const CCoreDispInfo *pInfo,
@@ -169,11 +169,11 @@ public:
 	// Figure out the vector's projection in the decal's space.
 	void		DecalProjectVert( Vector const &vPos, CDispDecalBase *pDispDecal, ShadowInfo_t const* pInfo, Vector &out );
 
-	void		CullDecals( 
+	void		CullDecals(
 		int iNodeBit,
-		CDispDecal **decals, 
-		int nDecals, 
-		CDispDecal **childDecals, 
+		CDispDecal **decals,
+		int nDecals,
+		CDispDecal **childDecals,
 		int &nChildDecals );
 
 	void		TesselateDisplacement();
@@ -185,17 +185,17 @@ public:
 
 	// Clear all active verts except the corner verts.
 	void		InitializeActiveVerts();
-	
+
 	// Returns a particular vertex
 	CDispRenderVert* GetVertex( int i );
 
 	// Methods to compute lightmap coordinates, texture coordinates,
 	// and lightmap color based on displacement u,v
-	void ComputeLightmapAndTextureCoordinate( RayDispOutput_t const& output, 
+	void ComputeLightmapAndTextureCoordinate( RayDispOutput_t const& output,
 		Vector2D* luv, Vector2D* tuv );
 
 	// This little beastie generate decal fragments
-	void GenerateDecalFragments( CVertIndex const &nodeIndex, 
+	void GenerateDecalFragments( CVertIndex const &nodeIndex,
 		int iNodeBitIndex, unsigned short decalHandle, CDispDecalBase *pDispDecal );
 
 private:
@@ -218,7 +218,7 @@ private:
 	void ClearAllShadowDecalFragments();
 
 	// Used by GenerateDecalFragments
-	void GenerateDecalFragments_R( CVertIndex const &nodeIndex, 
+	void GenerateDecalFragments_R( CVertIndex const &nodeIndex,
 		int iNodeBitIndex, unsigned short decalHandle, CDispDecalBase *pDispDecal, int iLevel );
 
 	// Used to create a bitfield to help cull decal tests
@@ -226,7 +226,7 @@ private:
 		CDispDecalBase *pDispDecal,	ShadowInfo_t const* pInfo );
 
 	// Used by SetupDecalNodeIntersect
-	bool SetupDecalNodeIntersect_R( CVertIndex const &nodeIndex, int iNodeBitIndex, 
+	bool SetupDecalNodeIntersect_R( CVertIndex const &nodeIndex, int iNodeBitIndex,
 		CDispDecalBase *pDispDecal, ShadowInfo_t const* pInfo, int iLevel, CDecalNodeSetupCache* pCache );
 
 
@@ -237,7 +237,7 @@ public:
 	Vector			m_BBoxMin;
 	Vector			m_BBoxMax;
 
-	int m_nIndices;		// The actual # of indices being used (it can be less than m_Indices.Count() if 
+	int m_nIndices;		// The actual # of indices being used (it can be less than m_Indices.Count() if
 						// our LOD is reducing the triangle count).
 	int				m_iIndexOffset;
 	// Used to get material..
@@ -260,7 +260,7 @@ public:
 public:
 
 	// These bits tell which vertices and nodes are currently active.
-	// These start out the same as m_ErrorVerts but have verts added if 
+	// These start out the same as m_ErrorVerts but have verts added if
 	// a neighbor needs to activate some verts.
 	CBitVec<CCoreDispInfo::MAX_VERT_COUNT>	m_ActiveVerts;
 
@@ -292,7 +292,7 @@ public:
 	Vector2D		m_BaseSurfaceTexCoords[4];
 
 	// Precalculated data for displacements of this size.
-	const CPowerInfo	*m_pPowerInfo;	
+	const CPowerInfo	*m_pPowerInfo;
 
 	// Neighbor info for each side, indexed by NEIGHBOREDGE_ enums.
 	// First 4 are edge neighbors, the rest are corners.
@@ -302,7 +302,7 @@ public:
 	// Copied from the ddispinfo. Speciifes where in g_DispLightmapSamplePositions the (compressed)
 	// lightmap sample positions start.
 	int				m_iLightmapSamplePositionStart;
-	
+
 	// The current triangulation for visualizing tag data.
 	int				m_nWalkIndexCount;
 	unsigned short  *m_pWalkIndices;
@@ -325,8 +325,8 @@ public:
 	DispShadowHandle_t	m_FirstShadowDecal;
 
 	unsigned short	m_Index;	// helps in debugging
-	
-	// Current tag value.		
+
+	// Current tag value.
 	unsigned short	m_Tag;
 	CDispArray		*m_pDispArray;
 };
@@ -374,7 +374,7 @@ inline void CDispInfo::SetTouched( bool bTouched )
 //-----------------------------------------------------------------------------
 inline bool CDispInfo::IsTouched( void )
 {
-	return m_bTouched; 
+	return m_bTouched;
 }
 
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,4 +29,3 @@ void Clip_And_Render_Convex_Polygon( PortalMeshPoint_t *pVerts, int iVertCount, 
 
 
 #endif //#ifndef PORTAL_DYNAMICMESHRENDERINGUTILS_H
-

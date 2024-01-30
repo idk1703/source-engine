@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -21,35 +21,35 @@ void CMatchResults::generate()
 {
 	CEventListIterator it=g_pMatchInfo->eventList()->end();
 	--it;
-	
+
 	for (it=g_pMatchInfo->eventList()->begin();it!=g_pMatchInfo->eventList()->end();++it)
 	{
-		
+
 		if ((*it)->getType()==CLogEvent::MATCH_RESULTS_MARKER)
 			valid=true;
-		
+
 		else if ((*it)->getType()==CLogEvent::MATCH_DRAW)
 		{
 			draw=true;
 		}
-		
+
 		else if ((*it)->getType()==CLogEvent::MATCH_VICTOR)
 		{
 			//winning teams are recited first, then losing teams.  so start in "winning" mode
 			bool fWinMode=true;
-			
+
 			char eventText[200];
 			strcpy(eventText,(*it)->getFullMessage());
-			
+
 			char seps[]   = " \n\t";
 			char *token;
-			
+
 			token = strtok( eventText, seps );
 			while( token != NULL )
 			{
 				if (stricmp(token,"defeated")==0)
 					fWinMode=false;
-				
+
 				else if (token[0]=='\"')
 				{
 					//found a team name
@@ -57,12 +57,12 @@ void CMatchResults::generate()
 					token++; //advance past the first quote
 					char* quote2=strchr(token,'\"');
 					*quote2='\0';	//null out the second quote;
-					
+
 					//get team ID
 					int tID=g_pMatchInfo->teamID(token);
 					teams[tID].fWinner=fWinMode;
-					
-					
+
+
 
 
 				}
@@ -121,8 +121,8 @@ int CMatchResults::getWinnerTeamScore()
 {
 	if (draw)
 		return teams[0].score;
-	
-	for (int i=0;i<MAX_TEAMS;i++)	
+
+	for (int i=0;i<MAX_TEAMS;i++)
 		if (teams[i].valid && teams[i].fWinner)
 			return teams[i].score;
 		return 0;
@@ -151,8 +151,8 @@ void CMatchResults::calcRealWinners()
 char* CMatchResults::getLoserTeamsString()
 {
 	bool firstLoser=true;
-	
-	
+
+
 	for (int i=0;i<MAX_TEAMS;i++)
 	{
 		if (teams[i].valid && !teams[i].fWinner)
@@ -170,7 +170,7 @@ int CMatchResults::getLoserTeamScore()
 {
 	if (draw)
 		return teams[0].score;
-	for (int i=0;i<MAX_TEAMS;i++)	
+	for (int i=0;i<MAX_TEAMS;i++)
 		if (teams[i].valid && !teams[i].fWinner)
 			return teams[i].score;
 		return 0;
@@ -187,7 +187,7 @@ bool CMatchResults::Outnumbered(int WinnerOrLoser)
 		else
 			losers+=teams[i].numplayers;
 	}
-	
+
 	if (WinnerOrLoser == WINNER)
 		return losers > winners;
 	else
@@ -207,21 +207,20 @@ void CMatchResults::writeHTML(CHTMLFile& html)
 {
 	calcRealWinners(); //deal with logging bug in DLL
 	html.write("<div class=headline>\n");
-	
+
 	if (!valid)
 		html.write("No winner has been determined.");
 	else if (!draw)
 	{
 		bool fOutnumbered=false;
 		bool winPlural=numWinningTeams()==1;
-		
+
 		html.write("%s %s! They scored %li points to %s's %li\n",getWinnerTeamsString(),winPlural?"wins":"win",getWinnerTeamScore(),getLoserTeamsString(),getLoserTeamScore());
 	}
 	else
 		html.write("The match ends in a draw! <br> All teams scored %li \n",getWinnerTeamScore());
-	
-	
-	html.write("</div>");
-	
-}
 
+
+	html.write("</div>");
+
+}

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Revision: $
 // $NoKeywords: $
@@ -69,5 +69,3 @@ public:
 
 
 #endif	// ICLIENTLEAFSYSTEM_H
-
-

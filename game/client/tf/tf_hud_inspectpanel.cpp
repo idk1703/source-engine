@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -74,7 +74,7 @@ void InspectUp()
 static ConCommand s_inspect_up_cmd( "-inspect", InspectUp, "", FCVAR_SERVER_CAN_EXECUTE );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudInspectPanel::CHudInspectPanel( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudInspectPanel" )
 {
@@ -92,7 +92,7 @@ CHudInspectPanel::CHudInspectPanel( const char *pElementName ) : CHudElement( pE
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudInspectPanel::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -103,7 +103,7 @@ void CHudInspectPanel::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudInspectPanel::LockInspectRenderGroup( bool bLock )
 {
@@ -119,7 +119,7 @@ void CHudInspectPanel::LockInspectRenderGroup( bool bLock )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudInspectPanel::ShouldDraw( void )
 {
@@ -135,7 +135,7 @@ bool CHudInspectPanel::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudInspectPanel::UserCmd_InspectTarget( void )
 {
@@ -208,7 +208,7 @@ void CHudInspectPanel::UserCmd_InspectTarget( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFPlayer *CHudInspectPanel::GetInspectTarget( C_TFPlayer *pLocalTFPlayer )
 {
@@ -249,7 +249,7 @@ C_TFPlayer *CHudInspectPanel::GetInspectTarget( C_TFPlayer *pLocalTFPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudInspectPanel::SetPanelVisible( bool bVisible )
 {
@@ -261,7 +261,7 @@ void CHudInspectPanel::SetPanelVisible( bool bVisible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CHudInspectPanel::HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
 {

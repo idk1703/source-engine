@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -14,7 +14,7 @@
 
 // the command line param that tells the engine to use steam
 #define STEAM_PARM					"-steam"
-// the command line param to tell dedicated server to restart 
+// the command line param to tell dedicated server to restart
 // if they are out of date
 #define AUTO_RESTART "-autoupdate"
 
@@ -33,7 +33,7 @@
 #define MAXIMUM_TICK_INTERVAL	(0.1)
 
 // This is the max # of players the engine can handle
-#define ABSOLUTE_PLAYER_LIMIT 255  // not 256, so we can send the limit as a byte 
+#define ABSOLUTE_PLAYER_LIMIT 255  // not 256, so we can send the limit as a byte
 #define ABSOLUTE_PLAYER_LIMIT_DW	( (ABSOLUTE_PLAYER_LIMIT/32) + 1 )
 
 // a player name may have 31 chars + 0 on the PC.
@@ -130,7 +130,7 @@
 #define	FL_NOTARGET				(1<<15)
 #define	FL_AIMTARGET			(1<<16)	// set if the crosshair needs to aim onto the entity
 #define	FL_PARTIALGROUND		(1<<17)	// not all corners are valid
-#define FL_STATICPROP			(1<<18)	// Eetsa static prop!		
+#define FL_STATICPROP			(1<<18)	// Eetsa static prop!
 #define FL_GRAPHED				(1<<19) // worldgraph has this ent listed as something that blocks a connection
 #define FL_GRENADE				(1<<20)
 #define FL_STEPMOVEMENT			(1<<21)	// Changes the SV_Movestep() behavior to not do any processing
@@ -172,7 +172,7 @@
 #define	FL_NOTARGET				(1<<16)
 #define	FL_AIMTARGET			(1<<17)	// set if the crosshair needs to aim onto the entity
 #define	FL_PARTIALGROUND		(1<<18)	// not all corners are valid
-#define FL_STATICPROP			(1<<19)	// Eetsa static prop!		
+#define FL_STATICPROP			(1<<19)	// Eetsa static prop!
 #define FL_GRAPHED				(1<<20) // worldgraph has this ent listed as something that blocks a connection
 #define FL_GRENADE				(1<<21)
 #define FL_STEPMOVEMENT			(1<<22)	// Changes the SV_Movestep() behavior to not do any processing
@@ -348,7 +348,7 @@ enum
 // Rendering constants
 // if this is changed, update common/MaterialSystem/Sprite.cpp
 enum RenderMode_t
-{	
+{
 	kRenderNormal = 0,		// src
 	kRenderTransColor,		// c*a+dest*(1-a)
 	kRenderTransTexture,	// src*a+dest*(1-a)
@@ -365,20 +365,20 @@ enum RenderMode_t
 };
 
 enum RenderFx_t
-{	
-	kRenderFxNone = 0, 
-	kRenderFxPulseSlow, 
-	kRenderFxPulseFast, 
-	kRenderFxPulseSlowWide, 
-	kRenderFxPulseFastWide, 
-	kRenderFxFadeSlow, 
-	kRenderFxFadeFast, 
-	kRenderFxSolidSlow, 
-	kRenderFxSolidFast, 	   
-	kRenderFxStrobeSlow, 
-	kRenderFxStrobeFast, 
-	kRenderFxStrobeFaster, 
-	kRenderFxFlickerSlow, 
+{
+	kRenderFxNone = 0,
+	kRenderFxPulseSlow,
+	kRenderFxPulseFast,
+	kRenderFxPulseSlowWide,
+	kRenderFxPulseFastWide,
+	kRenderFxFadeSlow,
+	kRenderFxFadeFast,
+	kRenderFxSolidSlow,
+	kRenderFxSolidFast,
+	kRenderFxStrobeSlow,
+	kRenderFxStrobeFast,
+	kRenderFxStrobeFaster,
+	kRenderFxFlickerSlow,
 	kRenderFxFlickerFast,
 	kRenderFxNoDissipation,
 	kRenderFxDistort,			// Distort/scale/translate flicker
@@ -444,4 +444,3 @@ typedef CThreadNullMutex CSourceMutex;
 #endif
 
 #endif
-

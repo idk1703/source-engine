@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -122,7 +122,7 @@ static void SetupCompilerSettings(ProjectInfo_t& info)
 	CString includePath;
 	if (info.m_Public)
 	{
-		includePath.Format("/I%spublic", info.m_RelativeSrcPath, 
+		includePath.Format("/I%spublic", info.m_RelativeSrcPath,
 			info.m_RelativeSrcPath );
 
 		info.m_pConfig->AddToolSettings(varTool, (char const*)includePath, varj);
@@ -151,7 +151,7 @@ static void SetupCompilerSettings(ProjectInfo_t& info)
 	if (info.m_Project == PROJECT_DLL)
 	{
 		CString dllExport;
-		dllExport.Format("/D \"%s_DLL_EXPORT\"", info.m_RootName ); 
+		dllExport.Format("/D \"%s_DLL_EXPORT\"", info.m_RootName );
 		dllExport.MakeUpper();
 		info.m_pConfig->AddToolSettings(varTool, (char const*)dllExport, varj);
 	}
@@ -164,7 +164,7 @@ static void SetupCompilerSettings(ProjectInfo_t& info)
 	info.m_pConfig->AddToolSettings(varTool, varSwitch, varj);
 
 	// Remove Preprocessor def for MFC DLL specifier, _AFXDLL
-	// /GX - No exceptions, 
+	// /GX - No exceptions,
 	// /YX - no precompiled headers
 	// Remove WIN32, it's put there by default
 	varSwitch = "/D \"_AFXDLL\" /GX /YX /D \"WIN32\"";
@@ -178,8 +178,8 @@ static void SetupCompilerSettings(ProjectInfo_t& info)
 		info.m_pConfig->RemoveToolSettings(varTool, varSwitch, varj);
 
 		// Add the following switches:
-		// /ZI - Includes debug information in a program database compatible with Edit and Continue. 
-		// /Zi - Includes debug information in a program database (no Edit and Continue) 
+		// /ZI - Includes debug information in a program database compatible with Edit and Continue.
+		// /Zi - Includes debug information in a program database (no Edit and Continue)
 		// /Od - Disable optimization
 		// /GZ - Catch release build problems (uninitialized variables, fp stack problems)
 		// /Op - Improves floating-point consistency
@@ -203,8 +203,8 @@ static void SetupCompilerSettings(ProjectInfo_t& info)
 
 	case CONFIG_RELEASE:
 		// Remove the following switches:
-		// /Zi - Generates complete debugging information 
-		// /ZI - Includes debug information in a program database compatible with Edit and Continue. 
+		// /Zi - Generates complete debugging information
+		// /ZI - Includes debug information in a program database compatible with Edit and Continue.
 		// /Gm - Minimal rebuild
 		// /GZ - Catch release build problems (uninitialized variables, fp stack problems)
 		varSwitch = "/D \"_DEBUG\" /Gm /Zi /ZI /GZ";
@@ -212,11 +212,11 @@ static void SetupCompilerSettings(ProjectInfo_t& info)
 
 		// Add the following switches:
 		// /Ox - Uses maximum optimization (/Ob1gity /Gs)
-		// /Ow - Assumes aliasing across function calls 
-		// /Op - Improves floating-point consistency 
+		// /Ow - Assumes aliasing across function calls
+		// /Op - Improves floating-point consistency
 		// /Gf - String pooling
 		// /Oi - Generates intrinsic functions
-		// /Ot - Favors fast code 
+		// /Ot - Favors fast code
 		// /Og - Uses global optimizations
 		// /Gy - Enable function level linking
 		varSwitch = "/D \"NDEBUG\" /Ox /Ow /Op /Oi /Ot /Og /Gf /Gy";
@@ -262,7 +262,7 @@ static void SetupLinkerSettings(ProjectInfo_t& info)
 	// Add libraries we always want to use
 	varSwitch = "tier0.lib";
 	info.m_pConfig->AddToolSettings(varTool, varSwitch, varj);
-	
+
 	// Hook in the static library path
 	CString libPath;
 
@@ -307,10 +307,10 @@ static void SetupCustomBuildSteps(ProjectInfo_t& info)
 
 		// NOTE: The second attrib is commented out because I'm fairly certain it causes
 		// a bug in VSS to make it overwrite the target on a get
-		copySteps.Format( 
+		copySteps.Format(
 			"if exist %s attrib -r %s\n"
 			"copy $(TargetPath) %s\n"
-			"if exist $(TargetDir)\\%s.map copy $(TargetDir)\\%s.map %s%s.map", 
+			"if exist $(TargetDir)\\%s.map copy $(TargetDir)\\%s.map %s%s.map",
 			targetPath, targetPath,
 			targetPath,
 			info.m_RootName, info.m_RootName, info.m_RelativeTargetPath, info.m_RootName );
@@ -324,10 +324,10 @@ static void SetupCustomBuildSteps(ProjectInfo_t& info)
 
 		// NOTE: The second attrib is commented out because I'm fairly certain it causes
 		// a bug in VSS to make it overwrite the target on a get
-		copySteps.Format( 
+		copySteps.Format(
 			"if exist %s attrib -r %s\n"
 			"copy $(TargetPath) %s\n"
-			"if exist $(TargetDir)\\%s.map copy $(TargetDir)\\%s.map %s%s.map", 
+			"if exist $(TargetDir)\\%s.map copy $(TargetDir)\\%s.map %s%s.map",
 			targetPath, targetPath,
 			targetPath,
 			info.m_RootName, info.m_RootName, info.m_RelativeTargetPath, info.m_RootName );
@@ -341,7 +341,7 @@ static void SetupCustomBuildSteps(ProjectInfo_t& info)
  			targetPath.Format( "%s%s.lib", info.m_RelativeImplibPath, info.m_RootName );
 
 			CString impLibCopy;
-			impLibCopy.Format( 
+			impLibCopy.Format(
 				"\nif exist %s attrib -r %s\n"
 				"if exist $(TargetDir)\\%s.lib copy $(TargetDir)\\%s.lib %s\n",
 				targetPath, targetPath,
@@ -449,7 +449,7 @@ void CValvelibAppWiz::CustomizeProject(IBuildProject* pProject)
 		info.m_ConfigIndex = j;
 
 		info.m_pConfig = pConfigs->Item(varj);
-		
+
 		// Figure if we're debug or release
 		info.m_pConfig->get_Name( &configName );
 		info.m_Config = CONFIG_RELEASE;
@@ -482,10 +482,9 @@ void CValvelibAppWiz::CustomizeProject(IBuildProject* pProject)
 		info.m_pConfig->MakeCurrentSettingsDefault();
 	}
 }
-	
+
 
 // Here we define one instance of the CValvelibAppWiz class.  You can access
 //  m_Dictionary and any other public members of this class through the
 //  global Valvelibaw.
 CValvelibAppWiz Valvelibaw;
-

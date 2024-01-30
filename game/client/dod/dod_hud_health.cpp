@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -55,21 +55,21 @@ private:
 	CHudTexture *m_pIconHealthOverlay;
 	CHudTexture *m_pIconBG;
 	CHudTexture *m_pIconStaminaBar;
-};	
+};
 
 //DECLARE_HUDELEMENT( CHudHealth );
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CHudHealth::CHudHealth( const char *pElementName ) : CHudElement( pElementName ), BaseClass(NULL, "HudHealth") 
+CHudHealth::CHudHealth( const char *pElementName ) : CHudElement( pElementName ), BaseClass(NULL, "HudHealth")
 {
 	SetParent( g_pClientMode->GetViewport() );
 	SetHiddenBits( HIDEHUD_HEALTH | HIDEHUD_PLAYERDEAD );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHealth::Init()
 {
@@ -102,21 +102,21 @@ void CHudHealth::ApplySchemeSettings( IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHealth::Reset()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHealth::VidInit()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHealth::OnThink()
 {
@@ -150,7 +150,7 @@ bool CHudHealth::ShouldDraw( void )
 	if ( !pPlayer )
 		return false;
 
-	if( pPlayer->GetTeamNumber() != TEAM_ALLIES && 
+	if( pPlayer->GetTeamNumber() != TEAM_ALLIES &&
 		pPlayer->GetTeamNumber() != TEAM_AXIS )
 		return false;
 
@@ -166,7 +166,7 @@ void CHudHealth::Paint( void )
 
 	int xpos = 0;
 	int ypos = h - m_pIconBG->Height();
-	
+
 	m_pIconBG->DrawSelf( xpos, ypos, clrIcon );
 
 	int nOffset = m_pIconHealthOverlay->Height() * ( 1.0 - ( (float)m_iHealth / 100.0 ) );

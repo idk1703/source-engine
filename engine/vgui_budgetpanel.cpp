@@ -81,7 +81,7 @@ CBudgetPanelEngine::~CBudgetPanelEngine()
 void CBudgetPanelEngine::PostChildPaint()
 {
 	int r = 255;
-	int g = 0; 
+	int g = 0;
 
 	int nDXSupportLevel = g_pMaterialSystemHardwareConfig->GetDXSupportLevel();
 	if( ( g_fFrameRate >= 60 )
@@ -107,13 +107,13 @@ void CBudgetPanelEngine::PostChildPaint()
 		g_pMatSystemSurface->DrawColoredText( m_hFont, 600, yPos, 255, 0, 0, 255, "%s", str );
 		yPos += 14;
 	}
-#endif	
+#endif
 	BaseClass::PostChildPaint();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBudgetPanelEngine::UserCmd_ShowBudgetPanel( void )
 {
@@ -123,7 +123,7 @@ void CBudgetPanelEngine::UserCmd_ShowBudgetPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBudgetPanelEngine::UserCmd_HideBudgetPanel( void )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -69,7 +69,7 @@ class CHudLabel : public vgui::Label
 public:
 	CHudLabel( vgui::Panel *parent, const char *panelName, const char *text );
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	
+
 	// Selection highlight
 	void	SetSelected( bool bSelected );
 

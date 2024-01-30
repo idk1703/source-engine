@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ BEGIN_VS_SHADER_FLAGS( floatcombine, "Help for floatcombine", SHADER_NOT_EDITABL
 			LoadTexture( BLOOMTEXTURE );
 		}
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		// Requires DX9 + above

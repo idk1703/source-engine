@@ -18,7 +18,7 @@
 #include <tier0/platform.h>
 #include "dod_gamestats.h"
 
-int iDistanceStatWeapons[DOD_NUM_DISTANCE_STAT_WEAPONS] = 
+int iDistanceStatWeapons[DOD_NUM_DISTANCE_STAT_WEAPONS] =
 {
 	WEAPON_COLT,
 	WEAPON_P38,
@@ -73,12 +73,12 @@ int iWeaponBucketDistances[DOD_NUM_WEAPON_DISTANCE_BUCKETS-1] =
 	1000,
 	1300,
 	1600,
-	2000		
+	2000
 };
 
 #ifndef GAME_DLL
 
-	const char * s_WeaponAliasInfo[] = 
+	const char * s_WeaponAliasInfo[] =
 	{
 		"none",	//	WEAPON_NONE = 0,
 
@@ -133,11 +133,11 @@ int iWeaponBucketDistances[DOD_NUM_WEAPON_DISTANCE_BUCKETS-1] =
 		// not actually separate weapons, but defines used in stats recording
 		"thompson_punch",		//WEAPON_THOMPSON_PUNCH
 		"mp40_punch",			//WEAPON_MP40_PUNCH
-		"garand_zoomed",		//WEAPON_GARAND_ZOOMED,	
+		"garand_zoomed",		//WEAPON_GARAND_ZOOMED,
 
 		"k98_zoomed",			//WEAPON_K98_ZOOMED
 		"spring_zoomed",		//WEAPON_SPRING_ZOOMED
-		"k98_scoped_zoomed",	//WEAPON_K98_SCOPED_ZOOMED	
+		"k98_scoped_zoomed",	//WEAPON_K98_SCOPED_ZOOMED
 
 		"30cal_undeployed",		//WEAPON_30CAL_UNDEPLOYED,
 		"mg42_undeployed",		//WEAPON_MG42_UNDEPLOYED,

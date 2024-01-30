@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -165,16 +165,16 @@ void GDclass::AddBase(GDclass *pBase)
 	{
 		m_rgbColor = pBase->GetColor();
 		m_bGotColor = true;
-	}	
+	}
 }
 
 
 //-----------------------------------------------------------------------------
 // Purpose: Adds the given GDInputVariable to this GDClass's list of variables.
-// Input  : pVar - 
-//			pBase - 
-//			iBaseIndex - 
-//			iVarIndex - 
+// Input  : pVar -
+//			pBase -
+//			iBaseIndex -
+//			iVarIndex -
 // Output : Returns TRUE if the pVar pointer was copied directly into this GDClass,
 //			FALSE if not. If this function returns TRUE, pVar should not be
 //			deleted by the caller.
@@ -183,7 +183,7 @@ BOOL GDclass::AddVariable(GDinputvariable *pVar, GDclass *pBase, int iBaseIndex,
 {
 	int iThisIndex;
 	GDinputvariable *pThisVar = VarForName(pVar->GetName(), &iThisIndex);
-	
+
 	//
 	// Check to see if we are overriding an existing variable definition.
 	//
@@ -262,7 +262,7 @@ BOOL GDclass::AddVariable(GDinputvariable *pVar, GDclass *pBase, int iBaseIndex,
 
 		return(bReturn);
 	}
-	
+
 	//
 	// New variable.
 	//
@@ -292,7 +292,7 @@ BOOL GDclass::AddVariable(GDinputvariable *pVar, GDclass *pBase, int iBaseIndex,
 	m_VariableMap[m_nVariables][0] = iBaseIndex;
 	m_VariableMap[m_nVariables][1] = iVarIndex;
 	++m_nVariables;
-	
+
 	//
 	// We added the pointer to our list of items (see Variables.AddToTail, above) so
 	// we must return true here.
@@ -389,10 +389,10 @@ CClassOutput *GDclass::GetOutput(int nIndex)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : tr - 
-//			pGD - 
-// Output : Returns TRUE if worth continuing, FALSE otherwise.	
+// Purpose:
+// Input  : tr -
+//			pGD -
+// Output : Returns TRUE if worth continuing, FALSE otherwise.
 //-----------------------------------------------------------------------------
 BOOL GDclass::InitFromTokens(TokenReader& tr, GameData *pGD)
 {
@@ -484,8 +484,8 @@ BOOL GDclass::InitFromTokens(TokenReader& tr, GameData *pGD)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &tr - 
+// Purpose:
+// Input  : &tr -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool GDclass::ParseBase(TokenReader &tr)
@@ -532,8 +532,8 @@ bool GDclass::ParseBase(TokenReader &tr)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &tr - 
+// Purpose:
+// Input  : &tr -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool GDclass::ParseColor(TokenReader &tr)
@@ -578,7 +578,7 @@ bool GDclass::ParseColor(TokenReader &tr)
 	{
 		return(false);
 	}
-	
+
 	return(true);
 }
 
@@ -644,8 +644,8 @@ bool GDclass::ParseHelper(TokenReader &tr, char *pszHelperName)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &tr - 
+// Purpose:
+// Input  : &tr -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool GDclass::ParseSize(TokenReader &tr)
@@ -709,8 +709,8 @@ bool GDclass::ParseSize(TokenReader &tr)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &tr - 
+// Purpose:
+// Input  : &tr -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool GDclass::ParseSpecifiers(TokenReader &tr)
@@ -906,8 +906,8 @@ bool GDclass::ParseOutput(TokenReader &tr)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &tr - 
+// Purpose:
+// Input  : &tr -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool GDclass::ParseVariables(TokenReader &tr)
@@ -955,7 +955,7 @@ bool GDclass::ParseVariables(TokenReader &tr)
 
 		int nDupIndex;
 		GDinputvariable *pDupVar = VarForName(var->GetName(), &nDupIndex);
-		
+
 		// check for duplicate variable definitions
 		if (pDupVar)
 		{
@@ -980,8 +980,8 @@ bool GDclass::ParseVariables(TokenReader &tr)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : iIndex - 
+// Purpose:
+// Input  : iIndex -
 // Output : GDinputvariable *
 //-----------------------------------------------------------------------------
 GDinputvariable *GDclass::GetVariableAt(int iIndex)
@@ -1036,6 +1036,3 @@ void GDclass::GetHelperForGDVar( GDinputvariable *pVar, CUtlVector<const char *>
 		}
 	}
 }
-
-
-

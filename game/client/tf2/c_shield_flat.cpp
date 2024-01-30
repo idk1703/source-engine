@@ -23,7 +23,7 @@ enum
 #define EMP_MIN_WIDTH 5.0f
 
 //-----------------------------------------------------------------------------
-// Flat version of the shield 
+// Flat version of the shield
 //-----------------------------------------------------------------------------
 
 class C_ShieldFlat : public C_Shield
@@ -41,7 +41,7 @@ public:
 
 	virtual void SetDormant( bool bDormant );
 
-	// Return true if the panel is active 
+	// Return true if the panel is active
 	virtual bool IsPanelActive( int x, int y );
 
 	// Gets at the control point data; who knows how it was made?
@@ -277,7 +277,7 @@ void C_ShieldFlat::GetBounds( Vector& mins, Vector& maxs )
 }
 
 //-----------------------------------------------------------------------------
-// Return true if the panel is active 
+// Return true if the panel is active
 //-----------------------------------------------------------------------------
 
 bool C_ShieldFlat::IsPanelActive( int x, int y )
@@ -302,7 +302,7 @@ void C_ShieldFlat::GetShieldData( Vector const** ppVerts, float* pOpacity, float
 //-----------------------------------------------------------------------------
 // Shield points
 //-----------------------------------------------------------------------------
-const Vector& C_ShieldFlat::GetPoint( int x, int y ) 
+const Vector& C_ShieldFlat::GetPoint( int x, int y )
 {
 	if ((m_LastAngles != GetAbsAngles()) || (m_LastPosition != GetAbsOrigin() ))
 	{
@@ -347,4 +347,3 @@ int	C_ShieldFlat::DrawModel( int flags )
 
 	return BaseClass::DrawModel( flags );
 }
-

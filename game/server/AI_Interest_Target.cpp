@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Hooks and classes for the support of humanoid NPCs with 
+// Purpose: Hooks and classes for the support of humanoid NPCs with
 //			groovy facial animation capabilities, aka, "Actors"
 //
 //=============================================================================//
@@ -50,7 +50,7 @@ float CAI_InterestTarget_t::Interest( void )
 	{
 		t = (1.0 - t) / m_flRamp;
 		t = 3.0f * t * t - 2.0f * t * t * t;
-	} 
+	}
 	else
 	{
 		t = 1.0f;

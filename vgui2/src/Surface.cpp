@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -88,7 +88,7 @@ public:
 	bool	disabled; // whether the window can take user input
 	int     fullscreenInfo[3];
 	VPanel	*embeddedPanel;
-	
+
 	bool    isToolbar;				// whether it has an icon in the tool tray or not
 	HICON   notifyIcon;
 	VPANEL notifyPanel;
@@ -155,7 +155,7 @@ public:
 	virtual bool DrawGetTextureFile(int id, char *filename, int maxlen );
 	virtual int	 DrawGetTextureId( char const *filename );
 	virtual void DrawSetTextureFile(int id, const char *filename, int hardwareFilter, bool forceReload = false);
-	virtual void DrawSetTexture(int id);	
+	virtual void DrawSetTexture(int id);
 	virtual void DrawSetTextureRGBA(int id, const unsigned char *rgba, int wide, int tall, int hardwareFilter, bool forceReload = false);
 	virtual void DrawSetTextureRGBAEx(int id, const unsigned char *rgba, int wide, int tall, ImageFormat imageFormat );
 	virtual void DrawGetTextureSize(int id, int &wide, int &tall);
@@ -243,7 +243,7 @@ public:
 	virtual const char *GetFontFamilyName( HFont font );
 
 	virtual bool IsCursorVisible() { return true; }
-	
+
 	// gets the absolute coordinates of the screen (in screen space)
 	void GetAbsoluteWindowBounds(int &x, int &y, int &wide, int &tall);
 
@@ -279,7 +279,7 @@ public:
 	virtual void DrawSetAlphaMultiplier( float alpha /* [0..1] */ ) {}
 	virtual float DrawGetAlphaMultiplier() { return 1.0f; }
 
-	// Here's where the app systems get to learn about each other 
+	// Here's where the app systems get to learn about each other
 	virtual bool Connect( CreateInterfaceFn factory );
 	virtual void Disconnect();
 
@@ -308,7 +308,7 @@ public:
 		PaintTraverse( panel );
 	}
 
-	virtual float GetZPos() const 
+	virtual float GetZPos() const
 	{
 		return 0.0f;
 	}
@@ -348,7 +348,7 @@ public:
 	virtual void DrawSetTextureFrame( int id, int nFrame, unsigned int *pFrameCache );
 
 
-	virtual void DrawUpdateRegionTextureRGBA( int nTextureID, int x, int y, const unsigned char *pchData, int wide, int tall, ImageFormat imageFormat ) 
+	virtual void DrawUpdateRegionTextureRGBA( int nTextureID, int x, int y, const unsigned char *pchData, int wide, int tall, ImageFormat imageFormat )
 	{
 	}
 	virtual bool BHTMLWindowNeedsPaint(IHTML *htmlwin)
@@ -361,21 +361,21 @@ public:
 
 	virtual void *Deprecated_AccessChromeHTMLController() { return NULL; }
 
-	virtual void SetFullscreenViewport( int x, int y, int w, int h ) OVERRIDE 
+	virtual void SetFullscreenViewport( int x, int y, int w, int h ) OVERRIDE
 	{
-		m_nFullscreenViewportX = x; 
-		m_nFullscreenViewportY = y; 
-		m_nFullscreenViewportWidth = w; 
-		m_nFullscreenViewportHeight = h; 
-		m_pFullscreenRenderTarget = NULL; 
+		m_nFullscreenViewportX = x;
+		m_nFullscreenViewportY = y;
+		m_nFullscreenViewportWidth = w;
+		m_nFullscreenViewportHeight = h;
+		m_pFullscreenRenderTarget = NULL;
 	}
 
-	virtual void GetFullscreenViewport( int & x, int & y, int & w, int & h ) OVERRIDE 
-	{ 
-		x = m_nFullscreenViewportX; 
-		y = m_nFullscreenViewportY; 
-		w = m_nFullscreenViewportWidth; 
-		h = m_nFullscreenViewportHeight;  
+	virtual void GetFullscreenViewport( int & x, int & y, int & w, int & h ) OVERRIDE
+	{
+		x = m_nFullscreenViewportX;
+		y = m_nFullscreenViewportY;
+		w = m_nFullscreenViewportWidth;
+		h = m_nFullscreenViewportHeight;
 	}
 	virtual void PushFullscreenViewport();
 	virtual void PopFullscreenViewport();
@@ -421,7 +421,7 @@ private:
 
 	bool _needKB;
 	bool _needMouse;
-	
+
 	int		m_TextPos[2];
 
 	Texture *m_pCurrentTexture;
@@ -434,7 +434,7 @@ private:
 
 	struct ScreenOverride_t
 	{
-		ScreenOverride_t() : m_bActive( false ) 
+		ScreenOverride_t() : m_bActive( false )
 		{
 			m_nValue[ 0 ] = m_nValue[ 1 ] = 0;
 		}
@@ -451,7 +451,7 @@ private:
 	int m_nFullscreenViewportY;
 	int m_nFullscreenViewportWidth;
 	int m_nFullscreenViewportHeight;
-	ITexture *m_pFullscreenRenderTarget; 
+	ITexture *m_pFullscreenRenderTarget;
 
 };
 
@@ -513,9 +513,9 @@ private:
 	unsigned int _refCount;
 	KeyValues *_dragData;
 
-    virtual HRESULT STDMETHODCALLTYPE QueryInterface( 
-        /* [in] */ REFIID riid,
-        /* [iid_is][out] */ void __RPC_FAR *__RPC_FAR *ppvObject)
+	virtual HRESULT STDMETHODCALLTYPE QueryInterface(
+		/* [in] */ REFIID riid,
+		/* [iid_is][out] */ void __RPC_FAR *__RPC_FAR *ppvObject)
 	{
 		if (riid == IID_IDropTarget)
 		{
@@ -525,13 +525,13 @@ private:
 
 		return E_NOINTERFACE;
 	}
-    
-    virtual ULONG STDMETHODCALLTYPE AddRef( void)
+
+	virtual ULONG STDMETHODCALLTYPE AddRef( void)
 	{
 		return ++_refCount;
 	}
-    
-    virtual ULONG STDMETHODCALLTYPE Release( void)
+
+	virtual ULONG STDMETHODCALLTYPE Release( void)
 	{
 		return --_refCount;
 	}
@@ -611,7 +611,7 @@ private:
 			DVASPECT_CONTENT,
 			-1,
 			TYMED_HGLOBAL
-    		};
+			};
 		STGMEDIUM storage;
 
 		if (pDataObject->GetData(&format, &storage) == S_OK)
@@ -686,7 +686,7 @@ int CWin32Surface::GetNumTextures()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static void staticGenerateIconForTexture(Texture *texture, HDC hdc)
 {
@@ -803,7 +803,7 @@ CWin32Surface::~CWin32Surface()
 	staticSurfaceAvailable = false;
 
 	// free all the textures
-	
+
 	for (int i = 0; i < m_VGuiSurfaceTextures.MaxElement(); i++)
 	{
 		if (!m_VGuiSurfaceTextures.IsValidIndex(i))
@@ -867,7 +867,7 @@ void CWin32Surface::Shutdown()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 VPANEL CWin32Surface::GetEmbeddedPanel()
 {
@@ -879,7 +879,7 @@ VPANEL CWin32Surface::GetEmbeddedPanel()
  {
 
  }
- void CWin32Surface::DrawOutlinedCircle(int x, int y, int radius, int segments) 
+ void CWin32Surface::DrawOutlinedCircle(int x, int y, int radius, int segments)
  {
 
  }
@@ -895,9 +895,9 @@ VPANEL CWin32Surface::GetEmbeddedPanel()
 
 	POINT *pt;
 	HDC hdc = PLAT(_currentContextPanel)->hdc;
-	
+
 	pt = (POINT *)malloc(sizeof(POINT) * n);
-	if(pt) 
+	if(pt)
 	{
 		for(int i=0;i<n;i++)
 		{
@@ -916,12 +916,12 @@ VPANEL CWin32Surface::GetEmbeddedPanel()
 		HBRUSH oldBrush = (HBRUSH)::SelectObject(hdc, hbrush);
 
 		::Polygon(hdc, pt, n);
-		
+
 		::SelectObject(hdc, oldBrush);
 		::DeleteObject(hbrush);
 		free(pt);
 
-		//restore pen colour 
+		//restore pen colour
 		DrawSetTextColor(GetRValue(pencolor),GetGValue(pencolor),GetBValue(pencolor),255);
 	}
  }
@@ -935,7 +935,7 @@ VPANEL CWin32Surface::GetEmbeddedPanel()
  }
  bool CWin32Surface::IsCursorLocked( void ) const
  {
-	 return false;
+	return false;
  }
  void CWin32Surface::SetWorkspaceInsets( int left, int top, int right, int bottom )
  {
@@ -944,7 +944,7 @@ VPANEL CWin32Surface::GetEmbeddedPanel()
 // Connect, disconnect...
 //-----------------------------------------------------------------------------
 bool CWin32Surface::Connect( CreateInterfaceFn factory )
-{	
+{
 return true;
 }
 
@@ -1024,7 +1024,7 @@ void CWin32Surface::SetCurrentContextPanel(VPANEL panel)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 VPANEL CWin32Surface::GetContextPanelForChildPanel(VPANEL childPanel)
 {
@@ -1048,7 +1048,7 @@ void CWin32Surface::PushMakeCurrent(VPANEL panel, bool useInsets)
 
 	// clear the current active font so that it will be reset
 	m_pActiveFont = NULL;
-	
+
 	if (!currentContextPanel)
 	{
 		// no drawing context found, something is seriously wrong
@@ -1107,7 +1107,7 @@ void CWin32Surface::PushMakeCurrent(VPANEL panel, bool useInsets)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWin32Surface::PopMakeCurrent(VPANEL panel)
 {
@@ -1119,7 +1119,7 @@ void CWin32Surface::PopMakeCurrent(VPANEL panel)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWin32Surface::GetScreenSize(int &wide, int &tall)
 {
@@ -1194,7 +1194,7 @@ void CWin32Surface::DrawSetTextureFrame( int id, int nFrame, unsigned int *pFram
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 VPANEL CWin32Surface::GetNotifyPanel()
 {
@@ -1202,7 +1202,7 @@ VPANEL CWin32Surface::GetNotifyPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWin32Surface::SetNotifyIcon(VPANEL context, HTexture iconID, VPANEL panelToReceiveMessages, const char *text)
 {
@@ -1218,7 +1218,7 @@ void CWin32Surface::SetNotifyIcon(VPANEL context, HTexture iconID, VPANEL panelT
 	// things haven't changed so just update the tooltip
 	if (_notifyIcon == iconID && _notifyPanel == panelToReceiveMessages && context && PLAT(context)->notifyIcon)
 	{
-		::NOTIFYICONDATA iconData = 
+		::NOTIFYICONDATA iconData =
 		{
 			sizeof(iconData),
 			PLAT(context)->hwnd,
@@ -1268,7 +1268,7 @@ void CWin32Surface::SetNotifyIcon(VPANEL context, HTexture iconID, VPANEL panelT
 		PLAT(context)->notifyIcon = texture->_icon;
 	}
 
-	::NOTIFYICONDATA iconData = 
+	::NOTIFYICONDATA iconData =
 	{
 		sizeof(iconData),
 		PLAT(context)->hwnd,
@@ -1303,7 +1303,7 @@ void CWin32Surface::DrawSetColor(Color col)
 
 void CWin32Surface::DrawSetTextPos(int x, int y)
 {
-	MoveToEx(PLAT(_currentContextPanel)->hdc,x,y,null);	
+	MoveToEx(PLAT(_currentContextPanel)->hdc,x,y,null);
 	m_TextPos[0] = x;
 	m_TextPos[1] = y;
 }
@@ -1318,7 +1318,7 @@ void CWin32Surface::DrawGetTextPos(int& x,int& y)
 void CWin32Surface::DrawSetTextFont(HFont font)
 {
 	Assert(font);
-	
+
 	// make the font current
 	m_hCurrentFont = font;
 
@@ -1368,9 +1368,9 @@ void CWin32Surface::DrawLine(int x0,int y0,int x1,int y1)
 void CWin32Surface::DrawPolyLine(int *px, int *py, int numPoints)
 {
 	POINT *pt;
-	
+
 	pt = (POINT *)malloc(sizeof(POINT) * numPoints);
-	if(pt) 
+	if(pt)
 	{
 		for(int i=0;i<numPoints;i++)
 		{
@@ -1402,12 +1402,12 @@ void CWin32Surface::SetLineColor(Color col)
 {
 	HPEN tmp=pen;
 	pen = CreatePen(PS_SOLID,0,RGB(col[0], col[1], col[2]));
-	if(pen) 
+	if(pen)
 	{
-		SelectObject(PLAT(_currentContextPanel)->hdc, pen ); 
+		SelectObject(PLAT(_currentContextPanel)->hdc, pen );
 	}
 	// you must delete the pen AFTER a new one is selected
-	if(tmp) 
+	if(tmp)
 	{
 		DeleteObject(tmp);
 	}
@@ -1439,7 +1439,7 @@ void CWin32Surface::DrawUnicodeString( const wchar_t *pwString, FontDrawType_t d
 
 	while ( wchar_t ch = *pwString++ )
 	{
-		DrawUnicodeChar( ch );	
+		DrawUnicodeChar( ch );
 	}
 }
 
@@ -1579,8 +1579,8 @@ void CWin32Surface::PaintHTMLWindow(IHTML *htmlwin)
 
 
 //-----------------------------------------------------------------------------
-void CWin32Surface::SetAllowHTMLJavaScript( bool state ) 
-{ 
+void CWin32Surface::SetAllowHTMLJavaScript( bool state )
+{
 }
 
 //-----------------------------------------------------------------------------
@@ -1636,7 +1636,7 @@ void CWin32Surface::DrawSetTextureRGBAEx(int id,const unsigned char* rgba,int wi
 		texture->_tall = tall;
 		texture->_icon = NULL;
 		texture->_dib = NULL;
-		texture->_bitmap = staticCreateBitmapHandle(texture->_wide, 
+		texture->_bitmap = staticCreateBitmapHandle(texture->_wide,
 			texture->_tall,	PLAT(_currentContextPanel)->hdc, 32, &texture->_dib );
 
 		// copy over the texture data
@@ -1648,10 +1648,10 @@ void CWin32Surface::DrawSetTextureRGBAEx(int id,const unsigned char* rgba,int wi
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : id - 
-//			*filename - 
-//			maxlen - 
+// Purpose:
+// Input  : id -
+//			*filename -
+//			maxlen -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWin32Surface::DrawGetTextureFile(int id, char *filename, int maxlen )
@@ -1686,7 +1686,7 @@ int	  CWin32Surface::DrawGetTextureId( char const *filename )
 void CWin32Surface::DrawSetTextureFile(int id, const char *filename, int hardwareFilter, bool forceReload /*= false*/)
 {
 	Texture *texture = GetTextureById(id);
-	
+
 	if (!texture || stricmp(filename, texture->_filename) || forceReload )
 	{
 		// no texture, or the filename is different;  load the new texture
@@ -1734,7 +1734,7 @@ void CWin32Surface::DrawSetTextureFile(int id, const char *filename, int hardwar
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWin32Surface::DrawTexturedRect(int x0,int y0,int x1,int y1)
 {
@@ -1758,7 +1758,7 @@ void CWin32Surface::DrawTexturedRect(int x0,int y0,int x1,int y1)
 	{
 		HBITMAP bitmap_mask = m_pCurrentTexture->_maskBitmap;
 
-		// draw the mask first to clear out the background to black 
+		// draw the mask first to clear out the background to black
 		oldObject = ::SelectObject(PLAT(_currentContextPanel)->textureDC, bitmap_mask);
 		::StretchBlt(PLAT(_currentContextPanel)->hdc,x0,y0,x1-x0,y1-y0,PLAT(_currentContextPanel)->textureDC,0,0,wide,tall,SRCAND);
 
@@ -1824,7 +1824,7 @@ HBITMAP staticCreateBitmapHandle(int wide, int tall, HDC hdc, int bpp, void **di
 
 #define DIB_HEADER_MARKER   ((WORD) ('M' << 8) | 'B')
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWin32Surface::LoadBMP(Texture *texture, const char *filename)
 {
@@ -1846,7 +1846,7 @@ bool CWin32Surface::LoadBMP(Texture *texture, const char *filename)
 	dwFileSize = g_pFullFileSystem->Size( file );
 
 	g_pFullFileSystem->Read( &bmfHeader, sizeof(bmfHeader), file );
-	
+
 	if (bmfHeader.bfType == DIB_HEADER_MARKER)
 	{
 		dwBitsSize = dwFileSize - sizeof(bmfHeader);
@@ -1867,16 +1867,16 @@ bool CWin32Surface::LoadBMP(Texture *texture, const char *filename)
 			texture->_icon = NULL;
 			texture->_bMask = false;
 			texture->_bitmap = staticCreateBitmapHandle(
-				texture->_wide, 
-				texture->_tall, 
-				PLAT(_currentContextPanel)->hdc, 
+				texture->_wide,
+				texture->_tall,
+				PLAT(_currentContextPanel)->hdc,
 				32, &texture->_dib );
 
 			unsigned char *rgba = (unsigned char *)( pDIB + sizeof( BITMAPINFOHEADER ) + 256 * sizeof( RGBQUAD ) );
 
 			// Copy raw data
 			for (j = 0; j < texture->_tall; j++)
-			{ 
+			{
 				for (i = 0; i <texture->_wide; i++)
 				{
 					int y = (texture->_tall - j - 1);
@@ -1885,7 +1885,7 @@ bool CWin32Surface::LoadBMP(Texture *texture, const char *filename)
 					int offsdest = (j * texture->_wide + i) * 4;
 					unsigned char *src = ((unsigned char *)rgba) + offs;
 					char *dst = ((char*)texture->_dib) + offsdest;
-					
+
 					dst[0] = lpbmi->bmiColors[ *src ].rgbRed;
 					dst[1] = lpbmi->bmiColors[ *src ].rgbGreen;
 					dst[2] = lpbmi->bmiColors[ *src ].rgbBlue;
@@ -1908,7 +1908,7 @@ bool CWin32Surface::LoadBMP(Texture *texture, const char *filename)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWin32Surface::LoadTGA(Texture *texture, const char *filename)
 {
@@ -1926,7 +1926,7 @@ bool CWin32Surface::LoadTGA(Texture *texture, const char *filename)
 
 	// read the header
 	tga_header_t tgaHeader;
-	g_pFullFileSystem->Read(&tgaHeader, sizeof(tgaHeader), file);		
+	g_pFullFileSystem->Read(&tgaHeader, sizeof(tgaHeader), file);
 
 	if (tgaHeader.image_type != 2 && tgaHeader.image_type != 10)
 	{
@@ -1961,9 +1961,9 @@ bool CWin32Surface::LoadTGA(Texture *texture, const char *filename)
 		for (row = tgaHeader.height - 1; row >= 0; row--)
 		{
 			ptr = ((uchar *)rgba) + (row * tgaHeader.width * 4);
-			for (column = 0; column < tgaHeader.width; column++) 
+			for (column = 0; column < tgaHeader.width; column++)
 			{
-				switch (tgaHeader.pixel_size) 
+				switch (tgaHeader.pixel_size)
 				{
 					case 24:
 					{
@@ -1985,7 +1985,7 @@ bool CWin32Surface::LoadTGA(Texture *texture, const char *filename)
 						g_pFullFileSystem->Read(ptr + 1, 1, file);
 						g_pFullFileSystem->Read(ptr + 0, 1, file);
 						g_pFullFileSystem->Read(ptr + 3, 1, file);
-						
+
 						if (!invertAlpha)
 						{
 							// if it's 0, then it's going to be zeroed out
@@ -2016,7 +2016,7 @@ bool CWin32Surface::LoadTGA(Texture *texture, const char *filename)
 		for(row = tgaHeader.height - 1; row >= 0; row--)
 		{
 			ptr = ((uchar*)rgba) + row * tgaHeader.width * 4;
-			for(column=0;column<tgaHeader.width;) 
+			for(column=0;column<tgaHeader.width;)
 			{
 				g_pFullFileSystem->Read(&packetHeader, 1, file);
 				packetSize = 1 + (packetHeader & 0x7f);
@@ -2058,7 +2058,7 @@ bool CWin32Surface::LoadTGA(Texture *texture, const char *filename)
 							break;
 						}
 					}
-					
+
 					for (j = 0; j < packetSize; j++)
 					{
 						ptr[0] = color[0];
@@ -2084,7 +2084,7 @@ bool CWin32Surface::LoadTGA(Texture *texture, const char *filename)
 				}
 				else
 				{
-					for (j = 0; j < packetSize; j++) 
+					for (j = 0; j < packetSize; j++)
 					{
 						switch (tgaHeader.pixel_size)
 						{
@@ -2167,7 +2167,7 @@ bool CWin32Surface::LoadTGA(Texture *texture, const char *filename)
 			int offs = (j * texture->_wide + i) * 4;
 			char *src = ((char*)rgba) + offs;
 			char *dst = ((char*)texture->_dib) + offs;
-			
+
 			if (bMask)
 			{
 				char *maskDst = ((char*) texture->_maskDib) + offs;
@@ -2223,7 +2223,7 @@ void CWin32Surface::BringToFront(VPANEL panel)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: puts the thread that created the specified window into the foreground 
+// Purpose: puts the thread that created the specified window into the foreground
 //          and activates the window.
 //-----------------------------------------------------------------------------
 void CWin32Surface::SetForegroundWindow(VPANEL panel)
@@ -2235,7 +2235,7 @@ void CWin32Surface::SetForegroundWindow(VPANEL panel)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWin32Surface::MovePopupToFront(VPANEL panel)
 {
@@ -2245,7 +2245,7 @@ void CWin32Surface::MovePopupToFront(VPANEL panel)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWin32Surface::MovePopupToBack(VPANEL panel)
 {
@@ -2253,22 +2253,22 @@ void CWin32Surface::MovePopupToBack(VPANEL panel)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// HWND_TOPMOST - Places the window above all non-topmost windows. 
+// Purpose:
+// HWND_TOPMOST - Places the window above all non-topmost windows.
 // The window maintains its topmost position even when it is deactivated.
-// HWND_NOTOPMOST - Places the window above all non-topmost windows (that is, behind 
+// HWND_NOTOPMOST - Places the window above all non-topmost windows (that is, behind
 // all topmost windows). This flag has no effect if the window is already a non-topmost window.
 //-----------------------------------------------------------------------------
 void CWin32Surface::SetAsTopMost(VPANEL panel, bool state)
 {
 	panel = GetContextPanelForChildPanel(panel);
-	DWORD style=SWP_NOMOVE|SWP_NOSIZE;	
-	
+	DWORD style=SWP_NOMOVE|SWP_NOSIZE;
+
 	if (PLAT(panel)->disabled)
 	{
 		style |= SWP_NOACTIVATE;
 	}
-		
+
 	if (state)
 	{
 		SetFocus(PLAT(panel)->hwnd);
@@ -2281,7 +2281,7 @@ void CWin32Surface::SetAsTopMost(VPANEL panel, bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWin32Surface::SetPanelVisible(VPANEL panel, bool visible)
 {
@@ -2314,7 +2314,7 @@ void CWin32Surface::FlashWindow(VPANEL panel, bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWin32Surface::SetTopLevelFocus(VPANEL panel)
 {
@@ -2323,7 +2323,7 @@ void CWin32Surface::SetTopLevelFocus(VPANEL panel)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWin32Surface::SetMinimized(VPANEL panel, bool state)
 {
@@ -2353,7 +2353,7 @@ bool CWin32Surface::IsMinimized(VPANEL panel)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWin32Surface::SetTitle(VPANEL panel, const wchar_t *title)
 {
@@ -2374,7 +2374,7 @@ void CWin32Surface::SetTitle(VPANEL panel, const wchar_t *title)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWin32Surface::SetAsToolBar(VPANEL panel, bool state)
 {
@@ -2393,7 +2393,7 @@ void CWin32Surface::SetAsToolBar(VPANEL panel, bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CWin32Surface::GetPopupCount()
 {
@@ -2401,7 +2401,7 @@ int CWin32Surface::GetPopupCount()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 VPANEL CWin32Surface::GetPopup(int index)
 {
@@ -2409,7 +2409,7 @@ VPANEL CWin32Surface::GetPopup(int index)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWin32Surface::CreatePopup(VPANEL panel, bool minimised, bool showTaskbarIcon, bool disabled, bool mouseInput, bool kbInput )
 {
@@ -2495,7 +2495,7 @@ void CWin32Surface::CreatePopup(VPANEL panel, bool minimised, bool showTaskbarIc
 	::SetBkMode(plat->hdc, TRANSPARENT);
 	::SetWindowLong(plat->hwnd, GWL_USERDATA, (LONG)g_pIVgui->PanelToHandle(panel));
 	::SetTextAlign(plat->hdc, TA_LEFT | TA_TOP | TA_UPDATECP);
-	
+
 	if (!((VPanel *)panel)->IsVisible() || panel == _embeddedPanel)
 	{
 		SetPanelVisible(panel, false);
@@ -2616,9 +2616,9 @@ bool CWin32Surface::RecreateContext(VPANEL panel)
 		// simple scheme to prevent excessive allocations by allocating only when
 		// bigger. It also adds in 100 extra for subsequent sizings
 		// it will also realloc if the size is 200 smaller to shrink memory usage
-		if ((wide > plat->bitmapSize[0]) 
+		if ((wide > plat->bitmapSize[0])
 			|| (tall > plat->bitmapSize[1])
-			|| (wide < (plat->bitmapSize[0] - 200)) 
+			|| (wide < (plat->bitmapSize[0] - 200))
 			|| (tall < (plat->bitmapSize[1] - 200)))
 		{
 			if (plat->bitmap != null)
@@ -2644,12 +2644,12 @@ bool CWin32Surface::RecreateContext(VPANEL panel)
 			plat->hwndDC = NULL;
 		}
 	}
- 
+
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWin32Surface::EnableMouseCapture(VPANEL panel, bool state)
 {
@@ -2665,7 +2665,7 @@ void CWin32Surface::EnableMouseCapture(VPANEL panel, bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWin32Surface::ShouldPaintChildPanel(VPANEL childPanel)
 {
@@ -2681,12 +2681,12 @@ void CWin32Surface::SwapBuffers(VPANEL panel)
 	if (PLAT(panel))
 	{
 		START_TIMER();
-		
+
 		SurfacePlat *plat = PLAT(panel);
 
 		int wide,tall;
 		((VPanel *)panel)->GetSize(wide,tall);
-		
+
 		plat->hwndDC = ::GetDC(plat->hwnd);
 
 		// reset origin and clipping then blit
@@ -2750,7 +2750,7 @@ void CWin32Surface::ApplyChanges()
 			::SetWindowPos(Plat->hwnd, null, x, y, wide, tall, SWP_NOZORDER | SWP_NOACTIVATE | SWP_NOCOPYBITS);
 			if ( sx > 0 || sy > 0 ) // only message for moves that are on the screen
 			{
-				g_pIVgui->PostMessage(panel, new KeyValues("Move"), NULL ); 
+				g_pIVgui->PostMessage(panel, new KeyValues("Move"), NULL );
 			}
 		}
 
@@ -2788,7 +2788,7 @@ void CWin32Surface::InternalSolveTraverse(VPANEL panel)
 {
 	// solve the parent
 	((VPanel *)panel)->Solve();
-	
+
 	// now we can solve the children
 	for (int i = 0; i < ((VPanel *)panel)->GetChildCount(); i++)
 	{
@@ -2857,7 +2857,7 @@ void CWin32Surface::SolveTraverse(VPANEL panel, bool forceApplySchemeSettings)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWin32Surface::PaintTraverse(VPANEL panel)
 {
@@ -2911,7 +2911,7 @@ void CWin32Surface::CalculateMouseVisible()
 	for(i = 0 ; i < g_pSurface->GetPopupCount() ; i++ )
 	{
 		VPanel *pop = (VPanel *)g_pSurface->GetPopup( i ) ;
-		
+
 		bool isVisible=pop->IsVisible();
 		VPanel *p= pop->GetParent();
 
@@ -2924,7 +2924,7 @@ void CWin32Surface::CalculateMouseVisible()
 			}
 			p=p->GetParent();
 		}
-	
+
 		if(isVisible)
 		{
 			_needMouse |= pop->IsMouseInputEnabled();
@@ -2940,7 +2940,7 @@ void CWin32Surface::CalculateMouseVisible()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWin32Surface::NeedKBInput()
 {
@@ -2982,7 +2982,7 @@ void CWin32Surface::SetCursor(HCursor cursor)
 			break;
 		}
 	}
-	
+
 	::SetCursor(_currentCursor);
 }
 
@@ -3013,7 +3013,7 @@ bool CWin32Surface::HasFocus()
 	// see if any of the windows on the surface have the focus
 	for (int i = 0; i < GetPopupCount(); i++)
 	{
-		VPANEL panel = GetPopup(i); 
+		VPANEL panel = GetPopup(i);
 		if (focus == PLAT(panel)->hwnd)
 			return true;
 	}
@@ -3038,7 +3038,7 @@ bool CWin32Surface::IsWithin(int x,int y)
 		}
 	}
 
- 	return false;
+	return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -3069,7 +3069,7 @@ void CWin32Surface::setFocus(VPANEL panel)
 			}
 		}
 	}
-		
+
 	// let the main panel get focus as the default
 	if (panel)
 	{
@@ -3084,7 +3084,7 @@ struct FontRangeItem_t
 	int upperRange;
 };
 
-FontRangeItem_t g_FontRanges[] = 
+FontRangeItem_t g_FontRanges[] =
 {
 	{ "Basic Latin",							0x0000, 0x007F },
 	{ "Latin-1 Supplement",						0x0080, 0x00FF },
@@ -3214,8 +3214,8 @@ int CWin32Surface::GetFontAscent(HFont font, wchar_t wch)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : font - 
+// Purpose:
+// Input  : font -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWin32Surface::IsFontAdditive(HFont font)
@@ -3365,9 +3365,9 @@ bool GetIconSize( ICONINFO& iconInfo, int& w, int& h )
 
 	HBITMAP bitmap = iconInfo.hbmColor;
 	BITMAP bm;
-	if ( 0 == GetObject((HGDIOBJ)bitmap, sizeof(BITMAP), (LPVOID)&bm) ) 
+	if ( 0 == GetObject((HGDIOBJ)bitmap, sizeof(BITMAP), (LPVOID)&bm) )
 	{
-        return false; 
+		return false;
 	}
 
 	w = bm.bmWidth;
@@ -3422,14 +3422,14 @@ public:
 		y = m_Pos.y;
 
 		DrawIconEx
-		( 
+		(
 			hdc,
-			x, y, 
-			m_hIcon, 
+			x, y,
+			m_hIcon,
 			m_Size.cx, m_Size.cy,
 			0,
 			NULL,
-			DI_NORMAL 
+			DI_NORMAL
 		);
 	}
 
@@ -3448,7 +3448,7 @@ public:
 	}
 
 	// Get the size the image will actually draw in (usually defaults to the content size)
-	virtual void GetSize(int &wide, int &tall) 
+	virtual void GetSize(int &wide, int &tall)
 	{
 		GetContentSize( wide, tall );
 	}
@@ -3459,7 +3459,7 @@ public:
 		// Nothing
 	}
 
-	// Set the draw color 
+	// Set the draw color
 	virtual void SetColor(Color col)
 	{
 		// Nothing
@@ -3469,7 +3469,7 @@ public:
 
 	virtual int GetNumFrames() { return 0; }
 	virtual void SetFrame( int nFrame ) {}
-	
+
 	virtual HTexture GetID() { return 0; }
 	virtual void SetRotation( int iRotation ) { return; };
 
@@ -3494,12 +3494,12 @@ IImage *CWin32Surface::GetIconImageForFullPath( char const *pFullPath )
 	IImage *newIcon = NULL;
 
 	SHFILEINFO info = { 0 };
-	DWORD_PTR dwResult = SHGetFileInfo( 
+	DWORD_PTR dwResult = SHGetFileInfo(
 		pFullPath,
 		0,
 		&info,
 		sizeof( info ),
-		SHGFI_TYPENAME | SHGFI_ICON | SHGFI_SMALLICON | SHGFI_SHELLICONSIZE 
+		SHGFI_TYPENAME | SHGFI_ICON | SHGFI_SMALLICON | SHGFI_SHELLICONSIZE
 	);
 	if ( dwResult )
 	{
@@ -3736,7 +3736,7 @@ static LRESULT CALLBACK staticProc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lpara
 		g_pIVgui->ShutdownMessage(lparam);
 		return ::DefWindowProc(hwnd,msg,wparam,lparam);
 	}
-	
+
 	if (msg == WM_ENDSESSION && wparam == TRUE)
 	{
 		// system is being shutdown
@@ -3756,12 +3756,12 @@ static LRESULT CALLBACK staticProc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lpara
 
 	bool sendToDefWindowProc = true;
 	// md: temporarily disabled until the infinite recursion gets fixed.
-	
+
 	if ( ImmIsUIMessage( NULL, msg, wparam, lparam ) )
 	{
 		sendToDefWindowProc = false;
 	}
-	
+
 	switch (msg)
 	{
 		case MS_WM_XBUTTONDOWN:
@@ -3792,9 +3792,9 @@ static LRESULT CALLBACK staticProc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lpara
 
 		case WM_CREATE:
 		{
-	        s_uTaskbarRestart = RegisterWindowMessage(TEXT("TaskbarCreated"));
+			s_uTaskbarRestart = RegisterWindowMessage(TEXT("TaskbarCreated"));
 			break;
-        }
+		}
 		case WM_CLOSE:
 		{
 			// tell the panel to close
@@ -3825,7 +3825,7 @@ static LRESULT CALLBACK staticProc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lpara
 			break;
 		}
 		case WM_SETCURSOR:
-		{		
+		{
 //!!			SetCursor(staticCurrentCursor);
 			break;
 		}
@@ -3835,7 +3835,7 @@ static LRESULT CALLBACK staticProc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lpara
 			pt.x = (short)LOWORD(lparam);
 			pt.y = (short)HIWORD(lparam);
 
-			
+
 			// This code catches the case when a WM_LBUTTONUP is lost
 
 			bool bLMButtonDown = wparam & MK_LBUTTON;
@@ -3856,7 +3856,7 @@ static LRESULT CALLBACK staticProc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lpara
 				g_pInput->SetMouseCodeState( MOUSE_MIDDLE, BUTTON_RELEASED );
 				g_pInput->InternalMouseReleased(MOUSE_MIDDLE);
 			}
-			
+
 			::ClientToScreen((HWND)hwnd, &pt);
 			g_pInput->InternalCursorMoved(pt.x, pt.y);
 			break;
@@ -4007,7 +4007,7 @@ static LRESULT CALLBACK staticProc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lpara
 		}
 		case WM_PAINT:
 		{
-			//surface was by repainted vgui or by windows itself, do the repainting all repainting 
+			//surface was by repainted vgui or by windows itself, do the repainting all repainting
 			//will goes through here and nowhere else
 
 			// post Paint messages to the que
@@ -4043,7 +4043,7 @@ static LRESULT CALLBACK staticProc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lpara
 				PAINTSTRUCT ps;
 				::BeginPaint(hwnd,&ps);
 	//			startTime = system()->GetCurrentTime();
- 				g_Surface.SolveTraverse(panel, false);
+				g_Surface.SolveTraverse(panel, false);
 	//			solveTime = system()->GetCurrentTime();
 				g_Surface.PaintTraverse(panel);
 	//			paintTime = system()->GetCurrentTime();
@@ -4052,13 +4052,13 @@ static LRESULT CALLBACK staticProc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lpara
 
 //			debug timing code
 //			ivgui()->DPrintf2("Paint timings (%.3f %.3f)\n", (float)(solveTime - startTime), (float)(paintTime - solveTime));
-		
+
 		/*	char dbtxt[200];
 			Q_snprintf(dbtxt,200,"paint:%p -- %p\n",hwnd,g_Surface.GetHTMLWindow(0)->GetIEHWND());
 			OutputDebugString( dbtxt );
 		*/
 			//clear the update rectangle so it does not get another Repaint
-			::ValidateRect(hwnd, NULL);	
+			::ValidateRect(hwnd, NULL);
 
 			break;
 		}

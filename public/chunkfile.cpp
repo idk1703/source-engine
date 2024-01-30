@@ -108,8 +108,8 @@ void CChunkHandlerMap::AddHandler(const char *pszChunkName, ChunkHandler_t pfnHa
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the callback for error handling within this chunk's scope.
-// Input  : pfnHandler - 
-//			pData - 
+// Input  : pfnHandler -
+//			pData -
 //-----------------------------------------------------------------------------
 void CChunkHandlerMap::SetErrorHandler(ChunkErrorHandler_t pfnHandler, void *pData)
 {
@@ -119,8 +119,8 @@ void CChunkHandlerMap::SetErrorHandler(ChunkErrorHandler_t pfnHandler, void *pDa
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : ppData - 
+// Purpose:
+// Input  : ppData -
 // Output : ChunkErrorHandler_t
 //-----------------------------------------------------------------------------
 ChunkErrorHandler_t CChunkHandlerMap::GetErrorHandler(void **ppData)
@@ -181,8 +181,8 @@ CChunkFile::~CChunkFile(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszChunkName - 
+// Purpose:
+// Input  : *pszChunkName -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CChunkFile::BeginChunk(const char *pszChunkName)
@@ -208,7 +208,7 @@ ChunkFileResult_t CChunkFile::BeginChunk(const char *pszChunkName)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChunkFile::BuildIndentString(char *pszDest, int nDepth)
 {
@@ -225,7 +225,7 @@ void CChunkFile::BuildIndentString(char *pszDest, int nDepth)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CChunkFile::Close(void)
@@ -241,7 +241,7 @@ ChunkFileResult_t CChunkFile::Close(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CChunkFile::EndChunk(void)
@@ -302,8 +302,8 @@ const char *CChunkFile::GetErrorText(ChunkFileResult_t eResult)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : eError - 
+// Purpose:
+// Input  : eError -
 //-----------------------------------------------------------------------------
 void CChunkFile::HandleError(const char *szChunkName, ChunkFileResult_t eError)
 {
@@ -315,7 +315,7 @@ void CChunkFile::HandleError(const char *szChunkName, ChunkFileResult_t eError)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CChunkFile::HandleChunk(const char *szChunkName)
@@ -386,7 +386,7 @@ ChunkFileResult_t CChunkFile::HandleChunk(const char *szChunkName)
 			} while ((nDepth) && (eResult == ChunkFile_Ok));
 		}
 	}
-	
+
 	return(ChunkFile_Ok);
 }
 
@@ -411,7 +411,7 @@ ChunkFileResult_t CChunkFile::Open(const char *pszFileName, ChunkFileOpenMode_t 
 		else
 		{
 			return(ChunkFile_OpenFail);
-		}	
+		}
 	}
 	else if (eMode == ChunkFile_Write)
 	{
@@ -454,7 +454,7 @@ void CChunkFile::SetDefaultChunkHandler( DefaultChunkHandler_t pHandler, void *p
 void CChunkFile::PushHandlers(CChunkHandlerMap *pHandlerMap)
 {
 	if (m_nHandlerStackDepth < MAX_INDENT_DEPTH)
-	{ 
+	{
 		m_HandlerStack[m_nHandlerStackDepth] = pHandlerMap;
 		m_nHandlerStackDepth++;
 	}
@@ -524,7 +524,7 @@ ChunkFileResult_t CChunkFile::ReadNext(char *szName, char *szValue, int nValueSi
 						// Unexpected end of file.
 						return(ChunkFile_UnexpectedEOF);
 					}
-					
+
 					case TOKENSTRINGTOOLONG:
 					{
 						// String too long or unterminated string.
@@ -628,9 +628,9 @@ ChunkFileResult_t CChunkFile::ReadChunk(KeyHandler_t pfnKeyHandler, void *pData)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszValue - 
-//			pbBool - 
+// Purpose:
+// Input  : pszValue -
+//			pbBool -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CChunkFile::ReadKeyValueBool(const char *pszValue, bool &bBool)
@@ -651,9 +651,9 @@ bool CChunkFile::ReadKeyValueBool(const char *pszValue, bool &bBool)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszValue - 
-//			pfFloat - 
+// Purpose:
+// Input  : pszValue -
+//			pfFloat -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CChunkFile::ReadKeyValueFloat(const char *pszValue, float &flFloat)
@@ -664,9 +664,9 @@ bool CChunkFile::ReadKeyValueFloat(const char *pszValue, float &flFloat)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszValue - 
-//			pnInt - 
+// Purpose:
+// Input  : pszValue -
+//			pnInt -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CChunkFile::ReadKeyValueInt(const char *pszValue, int &nInt)
@@ -677,12 +677,12 @@ bool CChunkFile::ReadKeyValueInt(const char *pszValue, int &nInt)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszKey - 
-//			r - 
-//			g - 
-//			b - 
-// Output : 
+// Purpose:
+// Input  : pszKey -
+//			r -
+//			g -
+//			b -
+// Output :
 //-----------------------------------------------------------------------------
 bool CChunkFile::ReadKeyValueColor(const char *pszValue, unsigned char &chRed, unsigned char &chGreen, unsigned char &chBlue)
 {
@@ -691,7 +691,7 @@ bool CChunkFile::ReadKeyValueColor(const char *pszValue, unsigned char &chRed, u
 		int r = 0;
 		int g = 0;
 		int b = 0;
-		
+
 		if (sscanf(pszValue, "%d %d %d", &r, &g, &b) == 3)
 		{
 			chRed = r;
@@ -707,9 +707,9 @@ bool CChunkFile::ReadKeyValueColor(const char *pszValue, unsigned char &chRed, u
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszValue - 
-//			pfPoint - 
+// Purpose:
+// Input  : pszValue -
+//			pfPoint -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CChunkFile::ReadKeyValuePoint(const char *pszValue, Vector &Point)
@@ -724,9 +724,9 @@ bool CChunkFile::ReadKeyValuePoint(const char *pszValue, Vector &Point)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszValue - 
-//			pfVector - 
+// Purpose:
+// Input  : pszValue -
+//			pfVector -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CChunkFile::ReadKeyValueVector2(const char *pszValue, Vector2D &vec)
@@ -741,9 +741,9 @@ bool CChunkFile::ReadKeyValueVector2(const char *pszValue, Vector2D &vec)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszValue - 
-//			pfVector - 
+// Purpose:
+// Input  : pszValue -
+//			pfVector -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CChunkFile::ReadKeyValueVector3(const char *pszValue, Vector &vec)
@@ -758,9 +758,9 @@ bool CChunkFile::ReadKeyValueVector3(const char *pszValue, Vector &vec)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszValue - 
-//			pfVector - 
+// Purpose:
+// Input  : pszValue -
+//			pfVector -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CChunkFile::ReadKeyValueVector4(const char *pszValue, Vector4D &vec)
@@ -775,9 +775,9 @@ bool CChunkFile::ReadKeyValueVector4(const char *pszValue, Vector4D &vec)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszLine - 
-// Output : 
+// Purpose:
+// Input  : pszLine -
+// Output :
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CChunkFile::WriteKeyValue(const char *pszKey, const char *pszValue)
 {
@@ -793,10 +793,10 @@ ChunkFileResult_t CChunkFile::WriteKeyValue(const char *pszKey, const char *pszV
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszKey - 
-//			bValue - 
-// Output : 
+// Purpose:
+// Input  : pszKey -
+//			bValue -
+// Output :
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CChunkFile::WriteKeyValueBool(const char *pszKey, bool bValue)
 {
@@ -812,10 +812,10 @@ ChunkFileResult_t CChunkFile::WriteKeyValueBool(const char *pszKey, bool bValue)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszKey - 
-//			nValue - 
-// Output : 
+// Purpose:
+// Input  : pszKey -
+//			nValue -
+// Output :
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CChunkFile::WriteKeyValueInt(const char *pszKey, int nValue)
 {
@@ -831,10 +831,10 @@ ChunkFileResult_t CChunkFile::WriteKeyValueInt(const char *pszKey, int nValue)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszKey - 
-//			fValue - 
-// Output : 
+// Purpose:
+// Input  : pszKey -
+//			fValue -
+// Output :
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CChunkFile::WriteKeyValueFloat(const char *pszKey, float fValue)
 {
@@ -850,12 +850,12 @@ ChunkFileResult_t CChunkFile::WriteKeyValueFloat(const char *pszKey, float fValu
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszKey - 
-//			r - 
-//			g - 
-//			b - 
-// Output : 
+// Purpose:
+// Input  : pszKey -
+//			r -
+//			g -
+//			b -
+// Output :
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CChunkFile::WriteKeyValueColor(const char *pszKey, unsigned char r, unsigned char g, unsigned char b)
 {
@@ -871,10 +871,10 @@ ChunkFileResult_t CChunkFile::WriteKeyValueColor(const char *pszKey, unsigned ch
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszKey - 
-//			fVector - 
-// Output : 
+// Purpose:
+// Input  : pszKey -
+//			fVector -
+// Output :
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CChunkFile::WriteKeyValuePoint(const char *pszKey, const Vector &Point)
 {
@@ -890,7 +890,7 @@ ChunkFileResult_t CChunkFile::WriteKeyValuePoint(const char *pszKey, const Vecto
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CChunkFile::WriteKeyValueVector2(const char *pszKey, const Vector2D &vec)
 {
@@ -906,7 +906,7 @@ ChunkFileResult_t CChunkFile::WriteKeyValueVector2(const char *pszKey, const Vec
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CChunkFile::WriteKeyValueVector3(const char *pszKey, const Vector &vec)
 {
@@ -922,10 +922,10 @@ ChunkFileResult_t CChunkFile::WriteKeyValueVector3(const char *pszKey, const Vec
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszKey - 
-//			fVector - 
-// Output : 
+// Purpose:
+// Input  : pszKey -
+//			fVector -
+// Output :
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CChunkFile::WriteKeyValueVector4(const char *pszKey, const Vector4D &vec)
 {
@@ -941,9 +941,9 @@ ChunkFileResult_t CChunkFile::WriteKeyValueVector4(const char *pszKey, const Vec
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszLine - 
-// Output : 
+// Purpose:
+// Input  : *pszLine -
+// Output :
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CChunkFile::WriteLine(const char *pszLine)
 {
@@ -979,7 +979,6 @@ ChunkFileResult_t CChunkFile::WriteLine(const char *pszLine)
 			return(ChunkFile_Fail);
 		}
 	}
-	
+
 	return(ChunkFile_Ok);
 }
-

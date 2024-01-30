@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -38,9 +38,9 @@
 
 using namespace vgui;
 
-bool AvatarIndexLessFunc( const int &lhs, const int &rhs )	
-{ 
-	return lhs < rhs; 
+bool AvatarIndexLessFunc( const int &lhs, const int &rhs )
+{
+	return lhs < rhs;
 }
 
 //-----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ CClientScoreBoardDialog::CClientScoreBoardDialog(IViewPort *pViewPort) : Editabl
 
 	m_HLTVSpectators = 0;
 	m_ReplaySpectators = 0;
-	
+
 	// update scoreboard instantly if on of these events occure
 	ListenForGameEvent( "hltv_status" );
 	ListenForGameEvent( "server_spawn" );
@@ -104,7 +104,7 @@ void CClientScoreBoardDialog::OnThink()
 
 	// NOTE: this is necessary because of the way input works.
 	// If a key down message is sent to vgui, then it will get the key up message
-	// Sometimes the scoreboard is activated by other vgui menus, 
+	// Sometimes the scoreboard is activated by other vgui menus,
 	// sometimes by console commands. In the case where it's activated by
 	// other vgui menus, we lose the key up message because this panel
 	// doesn't accept keyboard input. It *can't* accept keyboard input
@@ -113,9 +113,9 @@ void CClientScoreBoardDialog::OnThink()
 	// the scoreboard is up. That feature is impossible if this panel accepts input.
 	// because if a vgui panel is up that accepts input, it prevents the engine from
 	// receiving that input. So, I'm stuck with a polling solution.
-	// 
+	//
 	// Close key is set to non-invalid when something other than a keybind
-	// brings the scoreboard up, and it's set to invalid as soon as the 
+	// brings the scoreboard up, and it's set to invalid as soon as the
 	// dialog becomes hidden.
 	if ( m_nCloseKey != BUTTON_CODE_INVALID )
 	{
@@ -195,7 +195,7 @@ void CClientScoreBoardDialog::PostApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClientScoreBoardDialog::ShowPanel(bool bShow)
 {
@@ -259,7 +259,7 @@ void CClientScoreBoardDialog::FireGameEvent( IGameEvent *event )
 
 bool CClientScoreBoardDialog::NeedsUpdate( void )
 {
-	return (m_fNextUpdateTime < gpGlobals->curtime);	
+	return (m_fNextUpdateTime < gpGlobals->curtime);
 }
 
 //-----------------------------------------------------------------------------
@@ -268,10 +268,10 @@ bool CClientScoreBoardDialog::NeedsUpdate( void )
 void CClientScoreBoardDialog::Update( void )
 {
 	// Set the title
-	
+
 	// Reset();
 	m_pPlayerList->DeleteAllItems();
-	
+
 	FillScoreBoard();
 
 	// grow the scoreboard to fit all the players
@@ -293,7 +293,7 @@ void CClientScoreBoardDialog::Update( void )
 	MoveToCenterOfScreen();
 
 	// update every second
-	m_fNextUpdateTime = gpGlobals->curtime + 1.0f; 
+	m_fNextUpdateTime = gpGlobals->curtime + 1.0f;
 }
 
 //-----------------------------------------------------------------------------
@@ -305,7 +305,7 @@ void CClientScoreBoardDialog::UpdateTeamInfo()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClientScoreBoardDialog::UpdatePlayerInfo()
 {
@@ -333,7 +333,7 @@ void CClientScoreBoardDialog::UpdatePlayerInfo()
 
 			int itemID = FindItemIDForPlayerIndex( i );
   			int sectionID = gr->GetTeam( i );
-			
+
 			if ( gr->IsLocalPlayer( i ) )
 			{
 				selectedRow = itemID;
@@ -401,7 +401,7 @@ void CClientScoreBoardDialog::AddSection(int teamType, int teamNumber)
 		wchar_t *teamName = g_pVGuiLocalize->Find( gr->GetTeamName(teamNumber) );
 		wchar_t name[64];
 		wchar_t string1[1024];
-		
+
 		if (!teamName)
 		{
 			g_pVGuiLocalize->ConvertANSIToUnicode(gr->GetTeamName(teamNumber), name, sizeof(name));
@@ -409,7 +409,7 @@ void CClientScoreBoardDialog::AddSection(int teamType, int teamNumber)
 		}
 
 		g_pVGuiLocalize->ConstructString_safe( string1, g_pVGuiLocalize->Find("#Player"), 2, teamName );
-		
+
 		m_pPlayerList->AddSection(m_iSectionId, "", StaticPlayerSortFunc);
 
 		// Avatars are always displayed at 32x32 regardless of resolution
@@ -486,7 +486,7 @@ bool CClientScoreBoardDialog::GetPlayerScoreInfo(int playerIndex, KeyValues *kv)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClientScoreBoardDialog::UpdatePlayerAvatar( int playerIndex, KeyValues *kv )
 {
@@ -536,7 +536,7 @@ void CClientScoreBoardDialog::FillScoreBoard()
 
 	// update player info
 	UpdatePlayerInfo();
-} 
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: searches for the player in the scoreboard

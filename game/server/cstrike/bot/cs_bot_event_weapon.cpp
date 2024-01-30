@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -64,7 +64,7 @@ void CCSBot::OnWeaponFire( IGameEvent *event )
 
 		// M4A1 - check for silencer
 		case WEAPON_M4A1:
-		{					
+		{
 			if (weapon->IsSilenced())
 			{
 				range = ShortRange;
@@ -162,6 +162,3 @@ void CCSBot::OnWeaponZoom( IGameEvent *event )
 
 	OnAudibleEvent( event, player, 1100.0f, PRIORITY_LOW, false ); // weapon_zoom
 }
-
-
-

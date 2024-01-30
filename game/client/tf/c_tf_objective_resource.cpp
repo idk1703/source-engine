@@ -24,7 +24,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_TFObjectiveResource, DT_TFObjectiveResource, CTFObje
 	RecvPropString( RECVINFO( m_iszMvMPopfileName ) ),
 	RecvPropInt( RECVINFO(m_iChallengeIndex) ),
 	RecvPropInt( RECVINFO(m_nMvMEventPopfileType) ),
-	
+
 	RecvPropArray3( RECVINFO_ARRAY( m_nMannVsMachineWaveClassCounts ), RecvPropInt( RECVINFO( m_nMannVsMachineWaveClassCounts[0] ) ) ),
 	RecvPropArray( RecvPropString( RECVINFO( m_iszMannVsMachineWaveClassNames[0]) ), m_iszMannVsMachineWaveClassNames ),
 	RecvPropArray3( RECVINFO_ARRAY( m_nMannVsMachineWaveClassFlags ), RecvPropInt( RECVINFO( m_nMannVsMachineWaveClassFlags[0] ) ) ),
@@ -38,7 +38,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_TFObjectiveResource, DT_TFObjectiveResource, CTFObje
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFObjectiveResource::C_TFObjectiveResource()
 {
@@ -79,14 +79,14 @@ C_TFObjectiveResource::C_TFObjectiveResource()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFObjectiveResource::~C_TFObjectiveResource()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *C_TFObjectiveResource::GetGameSpecificCPCappingSwipe( int index_, int iCappingTeam )
 {
@@ -100,7 +100,7 @@ const char *C_TFObjectiveResource::GetGameSpecificCPCappingSwipe( int index_, in
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *C_TFObjectiveResource::GetGameSpecificCPBarFG( int index_, int iOwningTeam )
 {
@@ -116,7 +116,7 @@ const char *C_TFObjectiveResource::GetGameSpecificCPBarFG( int index_, int iOwni
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *C_TFObjectiveResource::GetGameSpecificCPBarBG( int index_, int iCappingTeam )
 {
@@ -130,7 +130,7 @@ const char *C_TFObjectiveResource::GetGameSpecificCPBarBG( int index_, int iCapp
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFObjectiveResource::SetCappingTeam( int index_, int team )
 {
@@ -161,76 +161,76 @@ void C_TFObjectiveResource::SetCappingTeam( int index_, int team )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_TFObjectiveResource::GetMannVsMachineWaveClassCount( int nIndex )
 {
 	if ( nIndex < ARRAYSIZE( m_nMannVsMachineWaveClassCounts ) )
 	{
-		return m_nMannVsMachineWaveClassCounts[ nIndex ]; 
+		return m_nMannVsMachineWaveClassCounts[ nIndex ];
 	}
 	nIndex -= ARRAYSIZE( m_nMannVsMachineWaveClassCounts );
 
 	if ( nIndex < ARRAYSIZE( m_nMannVsMachineWaveClassCounts2 ) )
 	{
-		return m_nMannVsMachineWaveClassCounts2[ nIndex ]; 
+		return m_nMannVsMachineWaveClassCounts2[ nIndex ];
 	}
 
 	return 0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *C_TFObjectiveResource::GetMannVsMachineWaveClassName( int nIndex )
-{ 
+{
 	if ( nIndex < ARRAYSIZE( m_iszMannVsMachineWaveClassNames ) )
 	{
-		return m_iszMannVsMachineWaveClassNames[ nIndex ]; 
+		return m_iszMannVsMachineWaveClassNames[ nIndex ];
 	}
 	nIndex -= ARRAYSIZE( m_iszMannVsMachineWaveClassNames );
 
 	if ( nIndex < ARRAYSIZE( m_iszMannVsMachineWaveClassNames2 ) )
 	{
-		return m_iszMannVsMachineWaveClassNames2[ nIndex ]; 
+		return m_iszMannVsMachineWaveClassNames2[ nIndex ];
 	}
 
 	return "";
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-unsigned int C_TFObjectiveResource::GetMannVsMachineWaveClassFlags( int nIndex ) 
-{ 
+unsigned int C_TFObjectiveResource::GetMannVsMachineWaveClassFlags( int nIndex )
+{
 	if ( nIndex < ARRAYSIZE( m_nMannVsMachineWaveClassFlags ) )
 	{
-		return m_nMannVsMachineWaveClassFlags[ nIndex ]; 
+		return m_nMannVsMachineWaveClassFlags[ nIndex ];
 	}
 	nIndex -= ARRAYSIZE( m_nMannVsMachineWaveClassFlags );
 
 	if ( nIndex < ARRAYSIZE( m_nMannVsMachineWaveClassFlags2 ) )
 	{
-		return m_nMannVsMachineWaveClassFlags2[ nIndex ]; 
+		return m_nMannVsMachineWaveClassFlags2[ nIndex ];
 	}
 
 	return 0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_TFObjectiveResource::GetMannVsMachineWaveClassActive( int nIndex )
 {
 	if ( nIndex < ARRAYSIZE( m_bMannVsMachineWaveClassActive ) )
 	{
-		return m_bMannVsMachineWaveClassActive[ nIndex ]; 
+		return m_bMannVsMachineWaveClassActive[ nIndex ];
 	}
 	nIndex -= ARRAYSIZE( m_bMannVsMachineWaveClassActive );
 
 	if ( nIndex < ARRAYSIZE( m_bMannVsMachineWaveClassActive2 ) )
 	{
-		return m_bMannVsMachineWaveClassActive2[ nIndex ]; 
+		return m_bMannVsMachineWaveClassActive2[ nIndex ];
 	}
 
 	return 0;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -99,14 +99,14 @@ public:
 	virtual CBasePlayer *GetScorer( void );
 	// Return the entity that should get assistance credit
 	virtual CBasePlayer *GetAssistant( void ) { return NULL; };
-	
+
 protected:
 	void		Detonate( void );
 
 	// A derived class should return true here so that weapon sounds, etc, can
 	//  apply the proper filter
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -124,7 +124,7 @@ protected:
 	virtual void	Start(CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs);
 	virtual bool	SimulateAndRender(Particle *pParticle, ParticleDraw *pDraw, float &sortKey);
 
-	// Add the position to the history 
+	// Add the position to the history
 	void		AddPositionToHistory( const Vector& org, float flSimTime );
 	void		ResetPositionHistories( const Vector& org );
 	// Adjustments for shots straight out of local player's eyes
@@ -160,7 +160,7 @@ protected:
 
 	// Should this object cast shadows?
 	virtual ShadowType_t	ShadowCastType() { return SHADOWS_NONE; }
-	
+
 	virtual void	ClientThink( void );
 	virtual bool	OnPredictedEntityRemove( bool isbeingremoved, C_BaseEntity *predicted );
 
@@ -222,7 +222,7 @@ public:
 	// A derived class should return true here so that weapon sounds, etc, can
 	//  apply the proper filter
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 

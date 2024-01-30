@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-class CEntityDissolve : public CBaseEntity 
+class CEntityDissolve : public CBaseEntity
 {
 public:
 	DECLARE_SERVERCLASS();
@@ -20,10 +20,10 @@ public:
 	CEntityDissolve( void );
 	~CEntityDissolve( void );
 
-	static CEntityDissolve	*Create( CBaseEntity *pTarget, const char *pMaterialName, 
+	static CEntityDissolve	*Create( CBaseEntity *pTarget, const char *pMaterialName,
 		float flStartTime, int nDissolveType = 0, bool *pRagdollCreated = NULL );
 	static CEntityDissolve	*Create( CBaseEntity *pTarget, CBaseEntity *pSource );
-	
+
 	void	Precache();
 	void	Spawn();
 	void	AttachToEntity( CBaseEntity *pTarget );
@@ -32,10 +32,10 @@ public:
 	void	SetMagnitude( int iMagnitude ){ m_nMagnitude = iMagnitude; }
 	void	SetDissolveType( int iType ) { m_nDissolveType = iType;	}
 
-	Vector	GetDissolverOrigin( void ) 
-	{ 
-		Vector vReturn = m_vDissolverOrigin; 
-		return vReturn;	
+	Vector	GetDissolverOrigin( void )
+	{
+		Vector vReturn = m_vDissolverOrigin;
+		return vReturn;
 	}
 	int		GetMagnitude( void ) { return m_nMagnitude;	}
 	int		GetDissolveType( void ) { return m_nDissolveType;	}

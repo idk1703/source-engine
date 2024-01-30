@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,10 +18,10 @@ class CWeaponK98 : public CDODSniperWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponK98, CDODSniperWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponK98()  {}
 
 	virtual void	Spawn( void );
@@ -33,7 +33,7 @@ public:
 	{
 		if ( IsFullyZoomed() )
 			return WEAPON_K98_ZOOMED;
-		else 
+		else
 			return WEAPON_K98;
 	}
 
@@ -75,7 +75,7 @@ void CWeaponK98::Spawn( void )
 	m_bShouldRezoomAfterShot = false;
 }
 
-acttable_t CWeaponK98::m_acttable[] = 
+acttable_t CWeaponK98::m_acttable[] =
 {
 	{ ACT_DOD_STAND_AIM,					ACT_DOD_STAND_AIM_BOLT,					false },
 	{ ACT_DOD_CROUCH_AIM,					ACT_DOD_CROUCH_AIM_BOLT,				false },
@@ -121,7 +121,7 @@ Activity CWeaponK98::GetPrimaryAttackActivity( void )
 	Activity actPrim;
 
 	if( m_iClip1 <= 0 )
-		actPrim = ACT_VM_PRIMARYATTACK_EMPTY;	
+		actPrim = ACT_VM_PRIMARYATTACK_EMPTY;
 	else
 		actPrim = ACT_VM_PRIMARYATTACK;
 
@@ -137,4 +137,3 @@ float CWeaponK98::GetFireDelay( void )
 
 	return BaseClass::GetFireDelay();
 }
-

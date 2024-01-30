@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -47,7 +47,7 @@ public:
 					~C_AR2Explosion();
 
 private:
-	
+
 	class AR2ExplosionParticle : public StandardParticle_t
 	{
 	public:
@@ -69,7 +69,7 @@ public:
 // IParticleEffect.
 public:
 	virtual void	Update(float fTimeDelta);
-	
+
 	virtual void RenderParticles( CParticleRenderIterator *pIterator );
 	virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
 
@@ -99,7 +99,7 @@ END_RECV_TABLE()
 // ------------------------------------------------------------------------- //
 
 // Given a line segment from vStart to vEnd
-// and a list of convex polygons in pSurfInfos and nSurfInfos, 
+// and a list of convex polygons in pSurfInfos and nSurfInfos,
 // fill in the list of which polygons the segment intersects.
 // Returns the number of intersected surfaces.
 static int IntersectSegmentWithSurfInfos(
@@ -126,7 +126,7 @@ static int IntersectSegmentWithSurfInfos(
 		{
 			float t = dot1 / (dot1 - dot2);
 			Vector vIntersection = vStart + (vEnd - vStart) * t;
-			
+
 			// If the intersection is behind any edge plane, then it's not inside the polygon.
 			unsigned long iEdge;
 			for(iEdge=0; iEdge < pSurf->m_nVerts; iEdge++)
@@ -271,14 +271,14 @@ void C_AR2Explosion::Start(CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArg
 				Vector vIntersections[MAX_SURFINFO_INTERSECTIONS];
 				int nIntersections;
 				nIntersections = IntersectSegmentWithSurfInfos(
-					startPos, 
-					endPos, 
-					surfInfos, 
-					nSurfInfos, 
+					startPos,
+					endPos,
+					surfInfos,
+					nSurfInfos,
 					pIntersected,
 					vIntersections,
 					MAX_SURFINFO_INTERSECTIONS);
-				
+
 				if(nIntersections)
 				{
 					int iIntersection = rand() % nIntersections;
@@ -300,14 +300,14 @@ void C_AR2Explosion::Start(CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArg
 					velocity = reflection * AR2_DUST_SPEED * falloffMul;
 					// velocity = velocity + (vIntersections[iIntersection] - vCenter) * falloffMul;
 
-					
+
 					/*
-					debugoverlay->AddLineOverlay( vIntersections[iIntersection], 
+					debugoverlay->AddLineOverlay( vIntersections[iIntersection],
 												  vIntersections[iIntersection] + reflection * 64,
 												  128, 128, 255, false, 15.0 );
 					*/
 #if 1
-					AR2ExplosionParticle *pParticle = 
+					AR2ExplosionParticle *pParticle =
 						(AR2ExplosionParticle*)m_ParticleEffect.AddParticle( sizeof(AR2ExplosionParticle), m_MaterialHandle );
 
 					if(pParticle)
@@ -328,7 +328,7 @@ void C_AR2Explosion::Start(CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArg
 				}
 			}
 		}
-	}	
+	}
 
 	// build interior smoke particles
 	for(int i=nParticles; i < iParticlesToSpawn; i++)
@@ -346,7 +346,7 @@ void C_AR2Explosion::Start(CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArg
 		float falloffMul = pow(1.0f - dist / (AR2_DUST_RADIUS / 2), power);
 
 		Vector velocity = direction * AR2_DUST_SPEED * falloffMul;
-		AR2ExplosionParticle *pParticle = 
+		AR2ExplosionParticle *pParticle =
 			(AR2ExplosionParticle*)m_ParticleEffect.AddParticle( sizeof(AR2ExplosionParticle), m_MaterialHandle );
 
 		if(pParticle)
@@ -408,7 +408,7 @@ void C_AR2Explosion::SimulateParticles( CParticleSimulateIterator *pIterator )
 				float dist = pParticle->m_Velocity.Length()	* dt;
 				float r = dist * dist;
 				// FIXME: this is a really screwy air-resistance function....
-				pParticle->m_Velocity = pParticle->m_Velocity * (100 / (100 + r )); 
+				pParticle->m_Velocity = pParticle->m_Velocity * (100 / (100 + r ));
 
 				// dampen roll
 				static float dtime;
@@ -441,11 +441,11 @@ void C_AR2Explosion::RenderParticles( CParticleRenderIterator *pIterator )
 
 			// FIXME: base color should be a dirty version of the material color
 			Vector color = g_AR2DustColor1 * (1.0 - lifetimePercent) + g_AR2DustColor2 * lifetimePercent;
-			
+
 			Vector tPos;
 			TransformParticle(m_pParticleMgr->GetModelView(), pParticle->m_Pos, tPos);
 			sortKey = tPos.z;
-			
+
 			float	alpha;
 
 			if ( pParticle->m_Lifetime < AR2_DUST_FADE_IN_TIME )
@@ -471,5 +471,3 @@ void C_AR2Explosion::RenderParticles( CParticleRenderIterator *pIterator )
 		pParticle = (const AR2ExplosionParticle *)pIterator->GetNext( sortKey );
 	}
 }
-
-

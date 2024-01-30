@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -20,7 +20,7 @@ using namespace vgui;
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCommentaryDialog::CCommentaryDialog(vgui::Panel *parent) : BaseClass(parent, "CommentaryDialog")
 {
@@ -60,14 +60,14 @@ CCommentaryDialog::CCommentaryDialog(vgui::Panel *parent) : BaseClass(parent, "C
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCommentaryDialog::~CCommentaryDialog()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommentaryDialog::OnClose( void )
 {
@@ -86,8 +86,8 @@ void CCommentaryDialog::OnClose( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *command - 
+// Purpose:
+// Input  : *command -
 //-----------------------------------------------------------------------------
 void CCommentaryDialog::OnCommand( const char *command )
 {
@@ -110,7 +110,7 @@ void CCommentaryDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommentaryDialog::OnKeyCodePressed(KeyCode code)
 {
@@ -133,7 +133,7 @@ void CCommentaryDialog::OnKeyCodePressed(KeyCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void OpenCommentaryDialog( void )
 {
@@ -148,7 +148,7 @@ void OpenCommentaryDialog( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ConVar commentary_firstrun("commentary_firstrun", "0", FCVAR_ARCHIVE );
 void CC_CommentaryTestFirstRun( void )
@@ -165,7 +165,7 @@ static ConCommand commentary_testfirstrun("commentary_testfirstrun", CC_Commenta
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPostCommentaryDialog::CPostCommentaryDialog(vgui::Panel *parent) : BaseClass(parent, "PostCommentaryDialog")
 {
@@ -188,7 +188,7 @@ CPostCommentaryDialog::CPostCommentaryDialog(vgui::Panel *parent) : BaseClass(pa
 	{
 		bCommentaryOn = commentary.GetBool();
 	}
- 
+
 	// Setup the buttons & labels to reflect the current state of the commentary
 	if ( bCommentaryOn )
 	{
@@ -201,14 +201,14 @@ CPostCommentaryDialog::CPostCommentaryDialog(vgui::Panel *parent) : BaseClass(pa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPostCommentaryDialog::~CPostCommentaryDialog()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPostCommentaryDialog::OnFinishedClose( void )
 {
@@ -238,7 +238,7 @@ void CPostCommentaryDialog::OnKeyCodeTyped(KeyCode code)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPostCommentaryDialog::OnKeyCodePressed(KeyCode code)
 {

@@ -35,9 +35,9 @@
 #endif
 
 ConVar lzma_persistent_buffer( "lzma_persistent_buffer", LZMA_DEFAULT_PERSISTENT_BUFFER, FCVAR_NONE,
-                               "If set, attempt to keep a persistent buffer for the LZMA decoder dictionary. " \
-                               "This avoids re-allocating a ~16-64meg buffer for each operation, " \
-                               "at the expensive of keeping extra memory around when it is not in-use." );
+	"If set, attempt to keep a persistent buffer for the LZMA decoder dictionary. " \
+	"This avoids re-allocating a ~16-64meg buffer for each operation, " \
+	"at the expensive of keeping extra memory around when it is not in-use." );
 
 // Allocator to pass to LZMA functions
 static void *g_pStaticLZMABuf = NULL;
@@ -149,7 +149,7 @@ unsigned int CLZMA::Uncompress( unsigned char *pInput, unsigned char *pOutput )
 	SizeT inProcessed = pHeader->lzmaSize;
 	ELzmaStatus status;
 	SRes result = LzmaDecode( (Byte *)pOutput, &outProcessed, (Byte *)(pInput + sizeof( lzma_header_t ) ),
-	                          &inProcessed, (Byte *)pHeader->properties, LZMA_PROPS_SIZE, LZMA_FINISH_END, &status, &g_Alloc );
+		&inProcessed, (Byte *)pHeader->properties, LZMA_PROPS_SIZE, LZMA_FINISH_END, &status, &g_Alloc );
 
 
 	LzmaDec_Free(&state, &g_Alloc);
@@ -165,12 +165,12 @@ unsigned int CLZMA::Uncompress( unsigned char *pInput, unsigned char *pOutput )
 
 CLZMAStream::CLZMAStream()
 	: m_pDecoderState( NULL ),
-	  m_nActualSize( 0 ),
-	  m_nActualBytesRead ( 0 ),
-	  m_nCompressedSize( 0 ),
-	  m_nCompressedBytesRead ( 0 ),
-	  m_bParsedHeader( false ),
-	  m_bZIPStyleHeader( false )
+	m_nActualSize( 0 ),
+	m_nActualBytesRead ( 0 ),
+	m_nCompressedSize( 0 ),
+	m_nCompressedBytesRead ( 0 ),
+	m_bParsedHeader( false ),
+	m_bZIPStyleHeader( false )
 {}
 
 CLZMAStream::~CLZMAStream()
@@ -213,9 +213,9 @@ bool CLZMAStream::CreateDecoderState( const unsigned char *pProperties )
 // Attempt to read up to nMaxInputBytes from the compressed stream, writing up to nMaxOutputBytes to pOutput.
 // Returns false if read stops due to an error.
 bool CLZMAStream::Read( unsigned char *pInput, unsigned int nMaxInputBytes,
-                        unsigned char *pOutput, unsigned int nMaxOutputBytes,
-                        /* out */ unsigned int &nCompressedBytesRead,
-                        /* out */ unsigned int &nOutputBytesWritten )
+	unsigned char *pOutput, unsigned int nMaxOutputBytes,
+	/* out */ unsigned int &nCompressedBytesRead,
+	/* out */ unsigned int &nOutputBytesWritten )
 {
 	nCompressedBytesRead = 0;
 	nOutputBytesWritten = 0;
@@ -258,7 +258,7 @@ bool CLZMAStream::Read( unsigned char *pInput, unsigned int nMaxInputBytes,
 		finishMode = LZMA_FINISH_END;
 	}
 	SRes result = LzmaDec_DecodeToBuf( m_pDecoderState, pOutput, &outSize,
-									   pInput, &inSize, finishMode, &status );
+									pInput, &inSize, finishMode, &status );
 
 	// DevMsg("[%p] Running lzmaDecode:\n"
 	//        "    pInput:             %p\n"
@@ -311,7 +311,7 @@ void CLZMAStream::InitZIPHeader( unsigned int nCompressedSize, unsigned int nOri
 	if ( m_bParsedHeader || m_bZIPStyleHeader )
 	{
 		AssertMsg( !m_bParsedHeader && !m_bZIPStyleHeader,
-		           "LZMA Stream: InitZIPHeader() called on stream past header" );
+		"LZMA Stream: InitZIPHeader() called on stream past header" );
 		return;
 	}
 
@@ -354,7 +354,7 @@ CLZMAStream::eHeaderParse CLZMAStream::TryParseHeader( unsigned char *pInput, un
 		if ( nLZMAPropertiesSize != LZMA_PROPS_SIZE )
 		{
 			Warning( "LZMA stream: Unexpected LZMA properties size: %hu, expecting %u. Version mismatch?\n",
-			         nLZMAPropertiesSize, LZMA_PROPS_SIZE );
+			nLZMAPropertiesSize, LZMA_PROPS_SIZE );
 			return eHeaderParse_Fail;
 		}
 

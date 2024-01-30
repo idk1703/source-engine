@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -52,9 +52,9 @@ public:
 	virtual void AccumulatePose(
 		const CStudioHdr *pStudioHdr,
 		CIKContext *pIKContext,
-		Vector pos[], 
-		Quaternion q[], 
-		int sequence, 
+		Vector pos[],
+		Quaternion q[],
+		int sequence,
 		float cycle,
 		const float poseParameter[],
 		int boneMask,
@@ -116,7 +116,7 @@ public:
 			MAX_TEXT_LINES = 4
 		};
 	};
-	
+
 	CCopyableUtlVector< InfoText > m_arrTxt;
 
 
@@ -322,9 +322,9 @@ public:
 	virtual void AccumulatePose(
 		const CStudioHdr *pStudioHdr,
 		CIKContext *pIKContext,
-		Vector pos[], 
-		Quaternion q[], 
-		int sequence, 
+		Vector pos[],
+		Quaternion q[],
+		int sequence,
 		float cycle,
 		const float poseParameter[],
 		int boneMask,
@@ -515,7 +515,7 @@ void CPoseDebuggerImpl::AccumulatePose( const CStudioHdr *pStudioHdr, CIKContext
 	char chBuffer[256];
 	ModelPoseDebugInfo::InfoText txt;
 	int numLines = 0;
-	
+
 	txt.m_iActivity = seqdesc.activity;
 	sprintf( txt.m_chActivity, "%s", seqdesc.pszActivityName() );
 	sprintf( txt.m_chLabel, "%s", seqdesc.pszLabel() );

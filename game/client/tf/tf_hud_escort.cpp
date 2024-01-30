@@ -31,7 +31,7 @@ void AddSubKeyNamed( KeyValues *pKeys, const char *pszName )
 	if ( pNewKey )
 	{
 		pKeys->AddSubKey( pNewKey );
-	}	
+	}
 }
 
 CEscortHillPanel::CEscortHillPanel( vgui::Panel *parent, const char *name ) : vgui::Panel( parent, name )
@@ -39,7 +39,7 @@ CEscortHillPanel::CEscortHillPanel( vgui::Panel *parent, const char *name ) : vg
 	m_iTexture = vgui::surface()->DrawGetTextureId( TF_ESCORT_HILL_MATERIAL );
 	if ( m_iTexture == -1 ) // we didn't find it, so create a new one
 	{
-		m_iTexture = vgui::surface()->CreateNewTextureID();	
+		m_iTexture = vgui::surface()->CreateNewTextureID();
 		vgui::surface()->DrawSetTextureFile( m_iTexture, TF_ESCORT_HILL_MATERIAL, true, false );
 	}
 
@@ -129,14 +129,14 @@ void CEscortHillPanel::Paint( void )
 	{
 		vert[0].Init( Vector2D( 0, 0 ), uv21 );
 		vert[1].Init( Vector2D( m_nPanelWide, 0 ), uv11 );
-		vert[2].Init( Vector2D( m_nPanelWide, m_nPanelTall ), uv12 );				
+		vert[2].Init( Vector2D( m_nPanelWide, m_nPanelTall ), uv12 );
 		vert[3].Init( Vector2D( 0, m_nPanelTall ), uv22 );
 	}
 	else
 	{
 		vert[0].Init( Vector2D( 0, 0 ), uv11 );
 		vert[1].Init( Vector2D( m_nPanelWide, 0 ), uv21 );
-		vert[2].Init( Vector2D( m_nPanelWide, m_nPanelTall ), uv22 );				
+		vert[2].Init( Vector2D( m_nPanelWide, m_nPanelTall ), uv22 );
 		vert[3].Init( Vector2D( 0, m_nPanelTall ), uv12 );
 	}
 
@@ -166,7 +166,7 @@ CEscortStatusTeardrop::CEscortStatusTeardrop(Panel *parent) : vgui::EditablePane
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEscortStatusTeardrop::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -180,7 +180,7 @@ void CEscortStatusTeardrop::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEscortStatusTeardrop::IsVisible( void )
 {
@@ -194,7 +194,7 @@ bool CEscortStatusTeardrop::IsVisible( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEscortStatusTeardrop::SetupForPoint( int iCPIndex )
 {
@@ -213,7 +213,7 @@ void CEscortStatusTeardrop::SetupForPoint( int iCPIndex )
 
 	bool bInWinState = TeamplayRoundBasedRules() ? TeamplayRoundBasedRules()->RoundHasBeenWon() : false;
 
-	if ( !bInWinState )	
+	if ( !bInWinState )
 	{
 		SetVisible( true );
 
@@ -235,7 +235,7 @@ void CEscortStatusTeardrop::SetupForPoint( int iCPIndex )
 		}
 		else
 		{
-			// not capping 
+			// not capping
 
 			m_pCapping->SetVisible( false );
 
@@ -252,7 +252,7 @@ void CEscortStatusTeardrop::SetupForPoint( int iCPIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEscortStatusTeardrop::UpdateBarText( int iCPIndex )
 {
@@ -271,7 +271,7 @@ void CEscortStatusTeardrop::UpdateBarText( int iCPIndex )
 		return;
 
 	m_pBarText->SetVisible( true );
-	
+
 	int iCappingTeam = ObjectiveResource()->GetCappingTeam( iCPIndex );
 	int iPlayerTeam = pPlayer->GetTeamNumber();
 
@@ -317,7 +317,7 @@ void CEscortStatusTeardrop::UpdateBarText( int iCPIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHudEscortProgressBar::CTFHudEscortProgressBar( vgui::Panel *parent, const char *name ) : vgui::ImagePanel( parent, name )
 {
@@ -347,7 +347,7 @@ void CTFHudEscortProgressBar::SetTeam( int nTeam )
 	m_iTexture = vgui::surface()->DrawGetTextureId( pszMaterial );
 	if ( m_iTexture == -1 ) // we didn't find it, so create a new one
 	{
-		m_iTexture = vgui::surface()->CreateNewTextureID();	
+		m_iTexture = vgui::surface()->CreateNewTextureID();
 	}
 
 	vgui::surface()->DrawSetTextureFile( m_iTexture, pszMaterial, true, false );
@@ -378,19 +378,19 @@ void CTFHudEscortProgressBar::Paint()
 
 		vert[0].Init( Vector2D( 0, 0 ), uv11 );
 		vert[1].Init( Vector2D( nMiddle, 0 ), uv21 );
-		vert[2].Init( Vector2D( nMiddle, nBarH ), uv22 );				
+		vert[2].Init( Vector2D( nMiddle, nBarH ), uv22 );
 		vert[3].Init( Vector2D( 0, nBarH ), uv12 );
 
 		surface()->DrawSetColor( Color(255,255,255,210) );
 		surface()->DrawTexturedPolygon( 4, vert );
-	  
+
 		surface()->DrawSetColor( Color(245,229,196,210) );
 		surface()->DrawLine( nMiddle - 1, 0, nMiddle - 1, nBarH );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHudEscort::CTFHudEscort( Panel *parent, const char *name ) : EditablePanel( parent, name ), m_flProgressHistory("CTFHudEscort::m_flProgressHistory")
 {
@@ -421,7 +421,7 @@ CTFHudEscort::CTFHudEscort( Panel *parent, const char *name ) : EditablePanel( p
 	m_pBlocked = new ImagePanel( m_pEscortItemPanel, "Blocked" );
 
 	m_pEscortItemImageAlert = new ImagePanel( m_pEscortItemPanel, "EscortItemImageAlert" );
-	
+
 	m_pHomeCPIcon = new ImagePanel( this, "HomeCPIcon" );
 
 	m_pCPTemplate = new ImagePanel( this, "SimpleControlPointTemplate" );
@@ -456,7 +456,7 @@ CTFHudEscort::CTFHudEscort( Panel *parent, const char *name ) : EditablePanel( p
 	m_iBlueMaterialIndex = surface()->DrawGetTextureId( "hud/cart_track_blue" );
 	if ( m_iBlueMaterialIndex == -1 ) // we didn't find it, so create a new one
 	{
-		m_iBlueMaterialIndex = surface()->CreateNewTextureID();	
+		m_iBlueMaterialIndex = surface()->CreateNewTextureID();
 	}
 
 	surface()->DrawSetTextureFile( m_iBlueMaterialIndex, "hud/cart_track_blue", true, false );
@@ -465,7 +465,7 @@ CTFHudEscort::CTFHudEscort( Panel *parent, const char *name ) : EditablePanel( p
 	m_iRedMaterialIndex = surface()->DrawGetTextureId( "hud/cart_track_red" );
 	if ( m_iRedMaterialIndex == -1 ) // we didn't find it, so create a new one
 	{
-		m_iRedMaterialIndex = surface()->CreateNewTextureID();	
+		m_iRedMaterialIndex = surface()->CreateNewTextureID();
 	}
 
 	surface()->DrawSetTextureFile( m_iRedMaterialIndex, "hud/cart_track_red", true, false );
@@ -511,7 +511,7 @@ bool CTFHudEscort::IsVisible( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudEscort::PerformLayout( void )
 {
@@ -560,7 +560,7 @@ void CTFHudEscort::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudEscort::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -651,7 +651,7 @@ void CTFHudEscort::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudEscort::UpdateAlarmAnimations( void )
 {
@@ -755,7 +755,7 @@ void CTFHudEscort::OnTick()
 	}
 
 	int iBarX, iBarY, iBarW, iBarH;
-	m_pLevelBar->GetBounds( iBarX, iBarY, iBarW, iBarH );	
+	m_pLevelBar->GetBounds( iBarX, iBarY, iBarW, iBarH );
 
 	int newX = iBarX + (int)( (float)(iBarW) * m_flProgress );
 
@@ -868,7 +868,7 @@ void CTFHudEscort::OnTick()
 // Purpose: Receive messages about changes in state
 //-----------------------------------------------------------------------------
 void CTFHudEscort::FireGameEvent( IGameEvent *event )
-{	
+{
 	const char *eventName = event->GetName();
 	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
 
@@ -959,7 +959,7 @@ void CTFHudEscort::FireGameEvent( IGameEvent *event )
 	else if ( FStrEq( "controlpoint_updatecapping", eventName ) )
 	{
 		// Update the capping status of our control point icons
-		int iIndex = event->GetInt( "index" );	
+		int iIndex = event->GetInt( "index" );
 		UpdateStatusTeardropFor( iIndex );
 		return;
 	}
@@ -1001,7 +1001,7 @@ void CTFHudEscort::FireGameEvent( IGameEvent *event )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudEscort::UpdateStatusTeardropFor( int iIndex )
 {
@@ -1072,7 +1072,7 @@ void CTFHudEscort::UpdateCPImages( void )
 	{
 		bool bValid = true;
 
-		if ( !ObjectiveResource()->IsInMiniRound(i) || 
+		if ( !ObjectiveResource()->IsInMiniRound(i) ||
 			 !ObjectiveResource()->IsCPVisible(i) ||
 			 ( m_bMultipleTrains && ( ObjectiveResource()->GetCPGroup( i ) != ( m_nTeam - 2 ) ) ) ) // -2 to offset the team numbers to 0
 		{
@@ -1089,7 +1089,7 @@ void CTFHudEscort::UpdateCPImages( void )
 			float flDist = ObjectiveResource()->GetPathDistance(i);
 
 			int iBarX, iBarY, iBarW, iBarH;
-			m_pLevelBar->GetBounds( iBarX, iBarY, iBarW, iBarH );	
+			m_pLevelBar->GetBounds( iBarX, iBarY, iBarW, iBarH );
 
 			int newX = iBarX + (int)( (float)iBarW * flDist );
 
@@ -1107,7 +1107,7 @@ void CTFHudEscort::UpdateCPImages( void )
 			pIcon->SetForceOpaqueImages( !m_bMultipleTrains && ( m_nNumHills > 0 ) );
 			pIcon->UpdateImage();
 		}
-		
+
 	}
 
 	// we don't want to draw if we haven't got good point positions yet
@@ -1115,7 +1115,7 @@ void CTFHudEscort::UpdateCPImages( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHudMultipleEscort::CTFHudMultipleEscort( Panel *parent, const char *name ) : EditablePanel( parent, name )
 {
@@ -1131,14 +1131,14 @@ CTFHudMultipleEscort::CTFHudMultipleEscort( Panel *parent, const char *name ) : 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHudMultipleEscort::~CTFHudMultipleEscort()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudMultipleEscort::SetVisible( bool state )
 {
@@ -1156,7 +1156,7 @@ void CTFHudMultipleEscort::SetVisible( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudMultipleEscort::Reset()
 {
@@ -1172,7 +1172,7 @@ void CTFHudMultipleEscort::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudMultipleEscort::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -1208,7 +1208,7 @@ void CTFHudMultipleEscort::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudMultipleEscort::FireGameEvent( IGameEvent * event )
 {

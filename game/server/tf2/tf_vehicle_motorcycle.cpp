@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -48,7 +48,7 @@ ConVar	vehicle_motorcycle_health( "vehicle_motorcycle_health","200", FCVAR_NONE,
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CVehicleMotorcycle::CVehicleMotorcycle()
 {
@@ -57,25 +57,25 @@ CVehicleMotorcycle::CVehicleMotorcycle()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleMotorcycle::Precache()
 {
 	PrecacheModel( MOTORCYCLE_MODEL );
 
 	PrecacheVGuiScreen( "screen_vulnerable_point");
-	
+
 	BaseClass::Precache();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleMotorcycle::Spawn()
 {
 	SetModel( MOTORCYCLE_MODEL );
-	
+
 	// This size is used for placement only...
 	UTIL_SetSize(this, MOTORCYCLE_MINS, MOTORCYCLE_MAXS);
 	m_takedamage = DAMAGE_YES;
@@ -95,5 +95,3 @@ void CVehicleMotorcycle::GetControlPanelInfo( int nPanelIndex, const char *&pPan
 {
 	pPanelName = "screen_vulnerable_point";
 }
-
-

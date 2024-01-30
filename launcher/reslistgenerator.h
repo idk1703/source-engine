@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // Defines the entry point for the application.
 //
@@ -29,4 +29,3 @@ public:
 extern IResListGenerator *reslistgenerator;
 
 #endif // RESLISTGENERATOR_H
-

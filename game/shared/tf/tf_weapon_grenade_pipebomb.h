@@ -48,7 +48,7 @@ public:
 	// Unique identifier.
 	virtual int			GetWeaponID( void ) const;
 
-	int GetType( void ) const { return m_iType; } 
+	int GetType( void ) const { return m_iType; }
 	virtual int			GetDamageType();
 	bool				HasStickyEffects() const { return m_iType == TF_GL_MODE_REMOTE_DETONATE || m_iType == TF_GL_MODE_REMOTE_DETONATE_PRACTICE; }
 
@@ -100,7 +100,7 @@ public:
 	DECLARE_DATADESC();
 
 	// Creation.
-	static CTFGrenadePipebombProjectile *Create( const Vector &position, const QAngle &angles, const Vector &velocity, 
+	static CTFGrenadePipebombProjectile *Create( const Vector &position, const QAngle &angles, const Vector &velocity,
 		                                         const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, int iPipeBombType, float flMultDmg );
 
 	static const char* GetPipebombClass( int iPipeBombType );
@@ -108,7 +108,7 @@ public:
 	// Overrides.
 	virtual void	Spawn();
 	virtual void	Precache();
-	
+
 	virtual void	BounceSound( void );
 	virtual void	Detonate();
 	virtual void	Fizzle();
@@ -142,7 +142,7 @@ public:
 	bool		m_bFizzle;
 	bool		m_bWallShatter;
 private:
-	
+
 	float		m_flMinSleepTime;
 	float		m_flDeflectedTime;
 	bool		m_bSendPlayerDestroyedEvent;

@@ -103,4 +103,3 @@ unsigned LightingPreviewThreadFN( void *thread_start_arg );
 void HandleLightingPreview( void );
 
 #endif
-

@@ -243,7 +243,7 @@ bool CRandomChoiceSpawner::Spawn( const Vector &here, EntityHandleVector_t *resu
 			m_nRandomPickDecision[ i ] = RandomInt( 0, m_spawnerVector.Count() - 1 );
 		}
 	}
-	
+
 	bool bResult = m_spawnerVector[ m_nRandomPickDecision[ m_nNumSpawned ] ]->Spawn( here, result );
 
 	m_nNumSpawned++;
@@ -425,7 +425,7 @@ bool CRandomChoiceSpawner::HasEventChangeAttributes( const char* pszEventName ) 
 	{
 		m_spawnerVector[i]->HasEventChangeAttributes( pszEventName );
 	}
-	
+
 	return false;
 }
 
@@ -605,7 +605,7 @@ static bool ParseDynamicAttributes( CTFBot::EventChangeAttributes_t& event, KeyV
 		{
 			Warning( "TFBotSpawner: Invalid skill '%s'\n", value );
 			return false;
-		}	
+		}
 	}
 	else if ( !Q_stricmp( name, "WeaponRestrictions" ) )
 	{
@@ -782,7 +782,7 @@ bool CTFBotSpawner::Parse( KeyValues *values )
 	// Reset All values
 	m_class = TF_CLASS_UNDEFINED;
 	m_iszClassIcon = NULL_STRING;
-	
+
 	m_health = -1; // default health
 	m_scale = -1.0f; // default scale
 	m_flAutoJumpMin = m_flAutoJumpMax = 0.f; // default AutoJumpMin/Max
@@ -932,7 +932,7 @@ bool CTFBotSpawner::Spawn( const Vector &rawHere, EntityHandleVector_t *result )
 	CTFNavArea *area = (CTFNavArea *)TheTFNavMesh()->GetNavArea( here );
 	if ( area && area->HasAttributeTF( TF_NAV_NO_SPAWNING ) )
 	{
-		if ( tf_populator_debug.GetBool() ) 
+		if ( tf_populator_debug.GetBool() )
 		{
 			DevMsg( "CTFBotSpawner: %3.2f: *** Tried to spawn in a NO_SPAWNING area at (%f, %f, %f)\n", gpGlobals->curtime, here.x, here.y, here.z );
 		}
@@ -960,7 +960,7 @@ bool CTFBotSpawner::Spawn( const Vector &rawHere, EntityHandleVector_t *result )
 
 	if ( z >= StepHeight )
 	{
-		if ( tf_populator_debug.GetBool() ) 
+		if ( tf_populator_debug.GetBool() )
 		{
 			DevMsg( "CTFBotSpawner: %3.2f: *** No space to spawn at (%f, %f, %f)\n", gpGlobals->curtime, here.x, here.y, here.z );
 		}
@@ -971,7 +971,7 @@ bool CTFBotSpawner::Spawn( const Vector &rawHere, EntityHandleVector_t *result )
 	{
 		if ( m_class == TF_CLASS_ENGINEER && m_defaultAttributes.m_attributeFlags & CTFBot::TELEPORT_TO_HINT && CTFBotMvMEngineerHintFinder::FindHint( true, false ) == false )
 		{
-			if ( tf_populator_debug.GetBool() ) 
+			if ( tf_populator_debug.GetBool() )
 			{
 				DevMsg( "CTFBotSpawner: %3.2f: *** No teleporter hint for engineer\n", gpGlobals->curtime );
 			}
@@ -1009,7 +1009,7 @@ bool CTFBotSpawner::Spawn( const Vector &rawHere, EntityHandleVector_t *result )
 			if ( nNumEnemyBots >= CPopulationManager::MVM_INVADERS_TEAM_SIZE )
 			{
 				// no room for more
-				if ( tf_populator_debug.GetBool() ) 
+				if ( tf_populator_debug.GetBool() )
 				{
 					DevMsg( "CTFBotSpawner: %3.2f: *** Can't spawn. Max number invaders already spawned.\n", gpGlobals->curtime );
 				}
@@ -1065,7 +1065,7 @@ bool CTFBotSpawner::Spawn( const Vector &rawHere, EntityHandleVector_t *result )
 			if ( totalPlayerCount >= gpGlobals->maxClients )
 			{
 				// no room for more
-				if ( tf_populator_debug.GetBool() ) 
+				if ( tf_populator_debug.GetBool() )
 				{
 					DevMsg( "CTFBotSpawner: %3.2f: *** Can't spawn. No free player slot.\n", gpGlobals->curtime );
 				}
@@ -1076,12 +1076,12 @@ bool CTFBotSpawner::Spawn( const Vector &rawHere, EntityHandleVector_t *result )
 		newBot = NextBotCreatePlayerBot< CTFBot >( "TFBot", false );
 	}
 
-	if ( newBot ) 
+	if ( newBot )
 	{
 		// remove any player attributes
 		newBot->RemovePlayerAttributes( false );
 
-		// clear any old TeleportWhere settings 
+		// clear any old TeleportWhere settings
 		newBot->ClearTeleportWhere();
 
 		if ( g_internalSpawnPoint == NULL )
@@ -1201,7 +1201,7 @@ bool CTFBotSpawner::Spawn( const Vector &rawHere, EntityHandleVector_t *result )
 		// Add our items first, they'll get replaced below by the normal MvM items if any are needed
 		if ( TFGameRules()->IsMannVsMachineMode() && ( newBot->GetTeamNumber() == TF_TEAM_PVE_INVADERS ) )
 		{
-			// Apply the Rome 2 promo items to each bot. They'll be 
+			// Apply the Rome 2 promo items to each bot. They'll be
 			// filtered out for clients that do not have Romevision.
 			CMissionPopulator *pMission = dynamic_cast< CMissionPopulator* >( GetPopulator() );
 			if ( pMission && ( pMission->GetMissionType() == CTFBot::MISSION_DESTROY_SENTRIES ) )
@@ -1289,7 +1289,7 @@ bool CTFBotSpawner::Spawn( const Vector &rawHere, EntityHandleVector_t *result )
 
 		if ( tf_populator_debug.GetBool() )
 		{
-			if ( tf_populator_debug.GetBool() ) 
+			if ( tf_populator_debug.GetBool() )
 			{
 				DevMsg( "%3.2f: Spawned TFBot '%s'\n", gpGlobals->curtime, m_name.IsEmpty() ? newBot->GetPlayerClass()->GetName() : m_name.Get() );
 			}
@@ -1336,8 +1336,8 @@ bool CTFBotSpawner::IsMiniBoss( int nSpawnNum /*= -1*/ )
 }
 
 //-----------------------------------------------------------------------
-bool CTFBotSpawner::HasAttribute( CTFBot::AttributeType type, int nSpawnNum /*= -1*/ ) 
-{ 
+bool CTFBotSpawner::HasAttribute( CTFBot::AttributeType type, int nSpawnNum /*= -1*/ )
+{
 	return ( m_defaultAttributes.m_attributeFlags & type ) != 0;
 }
 

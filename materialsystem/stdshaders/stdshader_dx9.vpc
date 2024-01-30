@@ -95,8 +95,8 @@ $Project "stdshader_dx9"
 		$File	"eyes_dx8_dx9_helper.cpp"
 		$File	"eyes_dx9.cpp"
 		$File	"eyeglint_dx9.cpp"
-		$File	"filmdust_dx8_dx9.cpp"							
-		$File	"filmgrain_dx8_dx9.cpp"							
+		$File	"filmdust_dx8_dx9.cpp"
+		$File	"filmgrain_dx8_dx9.cpp"
 		$File	"flesh_interior_blended_pass_helper.cpp"
 		$File	"floatcombine.cpp"
 		$File	"floatcombine_autoexpose.cpp"
@@ -127,7 +127,7 @@ $Project "stdshader_dx9"
 		$File	"pyro_vision.cpp"
 		$File	"refract.cpp"
 		$File	"refract_dx9_helper.cpp"
-		$File	"rendertargetblit_x360.cpp"					[$X360]	
+		$File	"rendertargetblit_x360.cpp"					[$X360]
 		$File	"sample4x4.cpp"
 		$File	"sample4x4_blend.cpp"
 		$File	"screenspace_general.cpp"
@@ -223,11 +223,11 @@ $Project "stdshader_dx9"
 		$File	"$SRCDIR\dx9sdk\lib\d3dx9.lib"
 	}
 
-	$Folder "Link Libraries" 
+	$Folder "Link Libraries"
 	{
-        $Lib	mathlib
-        $Lib	shaderlib
-    }
+	$Lib	mathlib
+	$Lib	shaderlib
+	}
 
 	$File	"$SRCDIR\devtools\bin\vsh_prep.pl"
 	$File	"$SRCDIR\devtools\bin\psh_prep.pl"

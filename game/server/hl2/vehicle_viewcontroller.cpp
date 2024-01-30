@@ -15,7 +15,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CPropVehicleViewController : public CPropVehicleDriveable
 {
@@ -24,7 +24,7 @@ public:
 	DECLARE_DATADESC();
 
 	// CBaseEntity
-	void			Spawn( void ); 
+	void			Spawn( void );
 	void			Think(void);
 
 	// CPropVehicle
@@ -54,7 +54,7 @@ void CPropVehicleViewController::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleViewController::Think(void)
 {
@@ -77,7 +77,7 @@ void CPropVehicleViewController::Think(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleViewController::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move )
 {
@@ -85,7 +85,7 @@ void CPropVehicleViewController::SetupMove( CBasePlayer *player, CUserCmd *ucmd,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //    NOTE: Doesn't call the base call enter vehicle on purpose!
 //-----------------------------------------------------------------------------
 void CPropVehicleViewController::EnterVehicle( CBasePlayer *pPlayer )
@@ -121,7 +121,7 @@ void CPropVehicleViewController::EnterVehicle( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleViewController::ExitVehicle( int nRole )
 {
@@ -130,7 +130,7 @@ void CPropVehicleViewController::ExitVehicle( int nRole )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleViewController::InputForcePlayerIn( inputdata_t &inputdata )
 {
@@ -169,7 +169,7 @@ void CPropVehicleViewController::InputForcePlayerIn( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleViewController::InputForcePlayerOut( inputdata_t &inputdata )
 {

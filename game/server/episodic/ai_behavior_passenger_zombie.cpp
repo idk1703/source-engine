@@ -63,7 +63,7 @@ impactdamagetable_t gZombiePassengerImpactDamageTable =
 		5,			// never take more than 5 pts of damage from anything under 5kg
 		36*36,		// <5kg objects must go faster than 36 in/s to do damage
 
-		VPHYSICS_LARGE_OBJECT_MASS,		// large mass in kg 
+		VPHYSICS_LARGE_OBJECT_MASS,		// large mass in kg
 		4,			// large mass scale (anything over 500kg does 4X as much energy to read from damage table)
 		5,			// large mass falling scale (emphasize falling/crushing damage over sideways impacts since the stress will kill you anyway)
 		0.0f,		// min vel
@@ -72,15 +72,15 @@ impactdamagetable_t gZombiePassengerImpactDamageTable =
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CAI_PassengerBehaviorZombie::CAI_PassengerBehaviorZombie( void ) : 
-m_flLastVerticalLean( 0.0f ), 
+CAI_PassengerBehaviorZombie::CAI_PassengerBehaviorZombie( void ) :
+m_flLastVerticalLean( 0.0f ),
 m_flLastLateralLean( 0.0f ),
 m_flNextLeapTime( 0.0f )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_PassengerBehaviorZombie::CanEnterVehicle( void )
@@ -107,8 +107,8 @@ int CAI_PassengerBehaviorZombie::TranslateSchedule( int scheduleType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : activity - 
+// Purpose:
+// Input  : activity -
 // Output : Activity
 //-----------------------------------------------------------------------------
 Activity CAI_PassengerBehaviorZombie::NPC_TranslateActivity( Activity activity )
@@ -238,7 +238,7 @@ int CAI_PassengerBehaviorZombie::SelectSchedule( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_PassengerBehaviorZombie::CanJumpToAttachToVehicle( void )
@@ -280,7 +280,7 @@ inline bool CAI_PassengerBehaviorZombie::CanBeOnEnemyVehicle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_PassengerBehaviorZombie::GatherConditions( void )
 {
@@ -296,13 +296,13 @@ void CAI_PassengerBehaviorZombie::GatherConditions( void )
 		{
 			SetCondition( COND_CAN_RANGE_ATTACK1 );
 		}
-		
+
 		// Determine if we can latch on to the vehicle (out of sight)
 		ClearCondition( COND_PASSENGER_ZOMBIE_CAN_ATTACH_TO_VEHICLE );
 		CBasePlayer *pPlayer = AI_GetSinglePlayer();
-		
-		if ( pPlayer != NULL && 
-			 GetOuter()->GetEnemy() == pPlayer && 
+
+		if ( pPlayer != NULL &&
+			 GetOuter()->GetEnemy() == pPlayer &&
 			 pPlayer->GetVehicleEntity() == m_hVehicle )
 		{
 			// Can't be visible to the player and must be close enough
@@ -376,7 +376,7 @@ void CAI_PassengerBehaviorZombie::GetAttachmentPoint( Vector *vecPoint )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 int CAI_PassengerBehaviorZombie::FindExitSequence( void )
@@ -402,7 +402,7 @@ int CAI_PassengerBehaviorZombie::FindExitSequence( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_PassengerBehaviorZombie::StartDismount( void )
 {
@@ -449,7 +449,7 @@ void CAI_PassengerBehaviorZombie::StartDismount( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_PassengerBehaviorZombie::FinishDismount( void )
 {
@@ -458,7 +458,7 @@ void CAI_PassengerBehaviorZombie::FinishDismount( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_PassengerBehaviorZombie::StartTask( const Task_t *pTask )
 {
@@ -488,7 +488,7 @@ void CAI_PassengerBehaviorZombie::StartTask( const Task_t *pTask )
 
 			// Swipe
 			GetOuter()->SetIdealActivity( (Activity) ACT_PASSENGER_MELEE_ATTACK1 );
-			
+
 			// Randomly attack again in the future
 			float flWait = random->RandomFloat( 0.0f, 1.0f );
 			SuppressAttack( flWait );
@@ -584,7 +584,7 @@ float CAI_PassengerBehaviorZombie::GetEntryPointCost( const Vector &vecEntryPos 
 	// Find the direction from us to the entry point
 	Vector vecEntryDir = ( vecEntryPos - GetAbsOrigin() );
 	float flCost = VectorNormalize( vecEntryDir );
-	
+
 	// Get our current facing
 	Vector vecDir;
 	GetOuter()->GetVectors( &vecDir, NULL, NULL );
@@ -600,8 +600,8 @@ float CAI_PassengerBehaviorZombie::GetEntryPointCost( const Vector &vecEntryPos 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bNearest - 
+// Purpose:
+// Input  : bNearest -
 // Output : int
 //-----------------------------------------------------------------------------
 int CAI_PassengerBehaviorZombie::FindEntrySequence( bool bNearest /*= false*/ )
@@ -646,7 +646,7 @@ int CAI_PassengerBehaviorZombie::FindEntrySequence( bool bNearest /*= false*/ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_PassengerBehaviorZombie::ExitVehicle( void )
 {
@@ -682,14 +682,14 @@ void CAI_PassengerBehaviorZombie::CalculateBodyLean( void )
 
 	// FIXME: Framerate dependant!
 	m_flLastVerticalLean = ( m_flLastVerticalLean * 0.75f ) + ( flVerticalDisp * 0.25f );
-	
+
 	// Set these parameters
 	GetOuter()->SetPoseParameter( "lean_lateral", m_flLastLateralLean );
 	GetOuter()->SetPoseParameter( "lean_vertical", m_flLastVerticalLean );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_PassengerBehaviorZombie::GatherVehicleStateConditions( void )
 {
@@ -715,7 +715,7 @@ void CAI_PassengerBehaviorZombie::GatherVehicleStateConditions( void )
 			m_hVehicle->GetVelocity( &vecDamageForce, NULL );
 			VectorNormalize( vecDamageForce );
 			vecDamageForce *= random->RandomFloat( 50000.0f, 60000.0f );
-			
+
 			//NDebugOverlay::HorzArrow( GetAbsOrigin(), GetAbsOrigin() + ( vecDamageForce * 256.0f ), 16.0f, 255, 0, 0, 16, true, 2.0f );
 
 			// Fake it!
@@ -731,8 +731,8 @@ void CAI_PassengerBehaviorZombie::GatherVehicleStateConditions( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEvent - 
+// Purpose:
+// Input  : *pEvent -
 //-----------------------------------------------------------------------------
 void CAI_PassengerBehaviorZombie::HandleAnimEvent( animevent_t *pEvent )
 {
@@ -831,7 +831,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_PassengerBehaviorZombie )
 		""
 		"	Interrupts"
 		)
-	
+
 	DEFINE_SCHEDULE
 		(
 		SCHED_PASSENGER_ZOMBIE_RANGE_ATTACK1,

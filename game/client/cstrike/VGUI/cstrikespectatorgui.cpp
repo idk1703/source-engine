@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -79,7 +79,7 @@ CCSSpectatorGUI::CCSSpectatorGUI(IViewPort *pViewPort) : CSpectatorGUI(pViewPort
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSSpectatorGUI::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
@@ -118,7 +118,7 @@ void CCSSpectatorGUI::UpdateSpectatorPlayerList()
 	{
 		wchar_t frags[ 10 ];
 		_snwprintf( frags, ARRAYSIZE( frags ), L"%i", ts->Get_Score()  );
-		
+
 		SetLabelText( "TERScoreValue", frags );
 	}
 }
@@ -176,7 +176,7 @@ void CCSSpectatorGUI::UpdateTimer()
 	Color timerColor = m_pTimer->GetFgColor();
 	if( g_PlantedC4s.Count() > 0 )
 	{
-		m_pTimer->SetText( "\\" ); // bomb icon  
+		m_pTimer->SetText( "\\" ); // bomb icon
 		m_pTimerLabel->SetVisible( false );
 
 		if( g_PlantedC4s[0]->m_flNextGlow > gpGlobals->curtime + 0.1f )
@@ -191,11 +191,11 @@ void CCSSpectatorGUI::UpdateTimer()
 	timerColor[3] = 255;
 	m_pTimer->SetFgColor( timerColor );
 	m_pTimer->SetText( "e" ); // clock icon
-	
+
 	m_nLastTime = (int)( CSGameRules()->GetRoundRemainingTime() );
 
 	if ( m_nLastTime < 0 )
-		 m_nLastTime  = 0;
+		m_nLastTime  = 0;
 
 	wchar_t szText[ 63 ];
 	_snwprintf ( szText, ARRAYSIZE( szText ), L"%d:%02d", (m_nLastTime / 60), (m_nLastTime % 60) );
@@ -231,7 +231,7 @@ void CCSSpectatorGUI::UpdateAccount()
 	int iTeamOnly = 0;// TODO = gCSViewPortInterface->GetForceCamera();
 
 	// if we're not a spectator or HLTV and iTeamOnly is set
-	if ( C_BasePlayer::GetLocalPlayer()->GetTeamNumber() // && !gEngfuncs.IsSpectateOnly() 
+	if ( C_BasePlayer::GetLocalPlayer()->GetTeamNumber() // && !gEngfuncs.IsSpectateOnly()
 	&& iTeamOnly )
 	{
 		// then we want to force the same team
@@ -247,7 +247,7 @@ void CCSSpectatorGUI::UpdateAccount()
 void CCSSpectatorGUI::Update()
 {
 	BaseClass::Update();
-	
+
 	C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 
 	if( pLocalPlayer )
@@ -311,7 +311,7 @@ void CCSSpectatorGUI::ResizeControls( void )
 	m_pCTScore->GetContentSize( wCT, hCT );
 	m_pTerScore->GetBounds( x2, y2, w2, t2 );
 	m_pTerScore->GetContentSize( wTer, hTer );
-	
+
 	int desiredScoreWidth = m_scoreWidth;
 	desiredScoreWidth = MAX( desiredScoreWidth, wCT );
 	desiredScoreWidth = MAX( desiredScoreWidth, wTer );
@@ -602,7 +602,7 @@ bool CCSMapOverview::CanPlayerBeSeen( MapPlayer_t *player )
 		return false;
 
 	CSMapPlayer_t *csPlayer = GetCSInfoForPlayer(player);
-		
+
 	if ( !csPlayer )
 		return false;
 
@@ -626,8 +626,8 @@ bool CCSMapOverview::CanPlayerBeSeen( MapPlayer_t *player )
 			return true;// always yes for teammates.
 
 		// and a living enemy needs to have been seen recently, and have been for a while
-		if( csPlayer->timeLastSeen != -1  
-			&& ( now - csPlayer->timeLastSeen < TIME_SPOTS_STAY_SEEN ) 
+		if( csPlayer->timeLastSeen != -1
+			&& ( now - csPlayer->timeLastSeen < TIME_SPOTS_STAY_SEEN )
 			&& ( now - csPlayer->timeFirstSeen > TIME_UNTIL_ENEMY_SEEN )
 			)
 			return true;
@@ -640,7 +640,7 @@ bool CCSMapOverview::CanPlayerBeSeen( MapPlayer_t *player )
 		if ( csPlayer->overrideExpirationTime == -1  ||  csPlayer->overrideExpirationTime <= gpGlobals->curtime )
 			return false;
 	}
-	
+
 	return BaseClass::CanPlayerBeSeen(player);
 }
 
@@ -972,7 +972,7 @@ void CCSMapOverview::UpdateBomb()
 	}
 	else if ( pCSPR->HasC4( 0 ) )
 	{
-		// bomb dropped 
+		// bomb dropped
 		Vector pos = pCSPR->GetC4Postion();
 
 		if ( pos.x != 0 || pos.y != 0 || pos.z != 0 )
@@ -1056,12 +1056,12 @@ bool CCSMapOverview::ShouldDraw( void )
 	{
 		if ( (GET_HUDELEMENT( CHudRadar ))->ShouldDraw() == false )
 		{
-			return false; 
+			return false;
 		}
 
 		// We have to be alive and not blind to draw in this mode.
 		C_CSPlayer *pCSPlayer = C_CSPlayer::GetLocalCSPlayer();
-		if( !pCSPlayer || pCSPlayer->GetObserverMode() == OBS_MODE_DEATHCAM ) 
+		if( !pCSPlayer || pCSPlayer->GetObserverMode() == OBS_MODE_DEATHCAM )
 		{
 			return false;
 		}
@@ -1161,7 +1161,7 @@ void CCSMapOverview::DrawMapTexture()
 	}
 
 	int mapInset = GetBorderSize();
-	int pwidth, pheight; 
+	int pwidth, pheight;
 	GetSize(pwidth, pheight);
 
 	if ( textureIDToUse > 0 )
@@ -1208,7 +1208,7 @@ void CCSMapOverview::DrawMapTexture()
 
 void CCSMapOverview::DrawBomb()
 {
-    if( m_bomb.state == CSMapBomb_t::BOMB_INVALID )
+	if( m_bomb.state == CSMapBomb_t::BOMB_INVALID )
 		return;
 
 	CBasePlayer *localPlayer = C_BasePlayer::GetLocalPlayer();
@@ -1226,11 +1226,11 @@ void CCSMapOverview::DrawBomb()
 		if( localMapPlayer->health <= 0 )
 		{
 			if ( mp_forcecamera.GetInt() != OBS_ALLOW_ALL )
-				return;// They're dead and spectating isn't restricted 
+				return;// They're dead and spectating isn't restricted
 		}
-		else if( (m_bomb.timeLastSeen == -1)  
-			||  ( now - m_bomb.timeLastSeen >= TIME_SPOTS_STAY_SEEN ) 
-			||  ( now - m_bomb.timeFirstSeen < TIME_UNTIL_ENEMY_SEEN ) 
+		else if( (m_bomb.timeLastSeen == -1)
+			||  ( now - m_bomb.timeLastSeen >= TIME_SPOTS_STAY_SEEN )
+			||  ( now - m_bomb.timeFirstSeen < TIME_UNTIL_ENEMY_SEEN )
 			)
 		{
 			return;// It's in view
@@ -1241,7 +1241,7 @@ void CCSMapOverview::DrawBomb()
 	int bombIcon;
 	int bombRing;
 	int bombRingOffscreen;
-	switch(m_bomb.state) 
+	switch(m_bomb.state)
 	{
 		case CSMapBomb_t::BOMB_DROPPED:
 		{
@@ -1323,7 +1323,7 @@ bool CCSMapOverview::DrawIconCS( int textureID, int offscreenTextureID, Vector p
 			{
 				angleToUse += m_fViewAngle;
 			}
-			else 
+			else
 			{
 				if ( m_bRotateMap )
 					angleToUse += 180.0f;
@@ -1412,7 +1412,7 @@ bool CCSMapOverview::DrawIconCS( int textureID, int offscreenTextureID, Vector p
 		surface()->DrawSetTextPos( x+1, y );
 		surface()->DrawPrintText( iconText, wcslen(iconText) );
 
-		// draw name in color 
+		// draw name in color
 		surface()->DrawSetTextColor( textColor->r(), textColor->g(), textColor->b(), 255 );
 		surface()->DrawSetTextPos( x, y );
 		surface()->DrawPrintText( iconText, wcslen(iconText) );
@@ -1471,7 +1471,7 @@ void CCSMapOverview::DrawMapPlayers()
 		{
 			float zDifference = 0;
 			if( localPlayer )
-			{	
+			{
 				if( (localPlayer->GetObserverMode() != OBS_MODE_NONE) && localPlayer->GetObserverTarget() )
 					zDifference = player->position.z - localPlayer->GetObserverTarget()->GetAbsOrigin().z;
 				else
@@ -1506,7 +1506,7 @@ void CCSMapOverview::DrawMapPlayers()
 				// Make them show a halo
 				DrawIconCS(m_radioFlash, m_radioFlashOffscreen, player->position, sizeForRing, player->angle[YAW], 255);
 			}
-			
+
 			bool doingLocalPlayer = GetPlayerByUserID(localPlayer->GetUserID()) == player;
 			float angleForPlayer = GetViewAngle();
 
@@ -1586,7 +1586,7 @@ void CCSMapOverview::DrawHostages()
 			int normalIcon, offscreenIcon;
 			float zDifference = 0;
 			if( localPlayer )
-			{	
+			{
 				if( (localPlayer->GetObserverMode() != OBS_MODE_NONE) && localPlayer->GetObserverTarget() )
 					zDifference = hostage->position.z - localPlayer->GetObserverTarget()->GetAbsOrigin().z;
 				else
@@ -1981,7 +1981,7 @@ void CCSMapOverview::SetMode(int mode)
 
 		g_pClientMode->GetViewportAnimationController()->RunAnimationCommand( this, "zoom", desiredZoom, 0.0f, 0.2f, vgui::AnimationController::INTERPOLATOR_LINEAR );
 	}
-	else 
+	else
 	{
 		SetPaintBackgroundType( 0 );// square corners
 
@@ -2189,7 +2189,7 @@ void CCSMapOverview::SetPlayerPreferredViewSize( float viewSize )
 //-----------------------------------------------------------------------------
 int CCSMapOverview::GetIconNumberFromTeamNumber( int teamNumber )
 {
-	switch(teamNumber) 
+	switch(teamNumber)
 	{
 	case TEAM_TERRORIST:
 		return MAP_ICON_T;
@@ -2263,7 +2263,7 @@ void CCSMapOverview::DrawGoalIcons()
 }
 
 //-----------------------------------------------------------------------------
-bool CCSMapOverview::IsRadarLocked() 
+bool CCSMapOverview::IsRadarLocked()
 {
 	return cl_radar_locked.GetBool();
 }
@@ -2302,7 +2302,7 @@ int CCSMapOverview::GetBorderSize( void )
 Vector2D CCSMapOverview::PanelToMap( const Vector2D &panelPos )
 {
 	// This is the reversing of baseclass's MapToPanel
-	int pwidth, pheight; 
+	int pwidth, pheight;
 	GetSize(pwidth, pheight);
 	float viewAngle = GetViewAngle();
 	float fScale = (m_fZoom * m_fFullZoom) / OVERVIEW_MAP_SIZE;

@@ -38,7 +38,7 @@ CMoviePlayerPanel::CMoviePlayerPanel( Panel *pParent, const char *pName, const c
 			m_pMaterial = m_pVideoMaterial->GetMaterial();
 			m_pMaterial->AddRef();
 			m_nNumFrames = m_pVideoMaterial->GetFrameCount();
-		
+
 		}
 	}
 
@@ -66,7 +66,7 @@ void CMoviePlayerPanel::PerformLayout()
 
 		// Adjust parent for fullscreen mode
 		SetParent( g_pClientMode->GetViewport() );
-		
+
 		// Adjust bounds for fullscreen
 		SetBounds( 0, 0, ScreenWidth(), ScreenHeight() );
 	}

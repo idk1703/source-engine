@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -125,7 +125,7 @@ public:
 	static void EnableBuildDetailObjects( bool bBuild );	// This is used to delay building detail objects until the
 															// end of the map load. Prevents it from generating the
 															// detail objects 3x more often than necessary.
-	
+
 	void Render3D( CRender3D* pRender );
 	bool ShouldRenderLast(void);
 

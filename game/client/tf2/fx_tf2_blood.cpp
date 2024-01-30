@@ -27,17 +27,17 @@ CLIENTEFFECT_MATERIAL( "effects/blood_puff" )
 CLIENTEFFECT_REGISTER_END()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : origin - 
-//			normal - 
-//			scale - 
+// Purpose:
+// Input  : origin -
+//			normal -
+//			scale -
 //-----------------------------------------------------------------------------
 void FX_TF2_BloodSpray( const Vector &origin, const Vector &normal, float scale, unsigned char r, unsigned char g, unsigned char b, int flags )
 {
 	if ( UTIL_IsLowViolence() )
 		return;
 
-	//debugoverlay->AddLineOverlay( origin, origin + normal * 72, 255, 255, 255, true, 10 ); 
+	//debugoverlay->AddLineOverlay( origin, origin + normal * 72, 255, 255, 255, true, 10 );
 
 	float spread = 0.2f;
 	Vector color = Vector( r / 255.0f, g / 255.0f, b / 255.0f );
@@ -103,8 +103,8 @@ void FX_TF2_BloodSpray( const Vector &origin, const Vector &normal, float scale,
 		pTrailEmitter->SetSortOrigin( origin );
 
 		// Partial gravity on blood drops.
-		pTrailEmitter->SetGravity( 600.0 ); 
-		
+		pTrailEmitter->SetGravity( 600.0 );
+
 		// Enable simple collisions with nearby surfaces.
 		pTrailEmitter->Setup(origin, &vecNormal, 1, 10, 100, 600, 0.2, 0 );
 
@@ -221,13 +221,13 @@ void FX_TF2_BloodSpray( const Vector &origin, const Vector &normal, float scale,
 					pParticle->m_uchColor[0]	= MIN( 1.0f, color[0] * colorRamp ) * 255.0f;
 					pParticle->m_uchColor[1]	= MIN( 1.0f, color[1] * colorRamp ) * 255.0f;
 					pParticle->m_uchColor[2]	= MIN( 1.0f, color[2] * colorRamp ) * 255.0f;
-					
+
 					pParticle->m_uchStartSize	= random->RandomFloat( scale, scale * 4 ) * flDistanceScale;
 					pParticle->m_uchEndSize		= pParticle->m_uchStartSize * 2 * flDistanceScale;
-					
+
 					pParticle->m_uchStartAlpha	= random->RandomInt( 200, 255 );
 					pParticle->m_uchEndAlpha	= 0;
-					
+
 					pParticle->m_flRoll			= random->RandomInt( 0, 360 );
 					pParticle->m_flRollDelta	= random->RandomFloat( -4.0f, 4.0f );
 				}
@@ -266,13 +266,13 @@ void FX_TF2_BloodSpray( const Vector &origin, const Vector &normal, float scale,
 					pParticle->m_uchColor[0]	= MIN( 1.0f, color[0] * colorRamp ) * 255.0f;
 					pParticle->m_uchColor[1]	= MIN( 1.0f, color[1] * colorRamp ) * 255.0f;
 					pParticle->m_uchColor[2]	= MIN( 1.0f, color[2] * colorRamp ) * 255.0f;
-					
+
 					pParticle->m_uchStartSize	= random->RandomFloat( scale * 0.5, scale ) * flDistanceScale;
 					pParticle->m_uchEndSize		= pParticle->m_uchStartSize * 4 * flDistanceScale;
-					
+
 					pParticle->m_uchStartAlpha	= random->RandomInt( 80, 128 );
 					pParticle->m_uchEndAlpha	= 0;
-					
+
 					pParticle->m_flRoll			= random->RandomInt( 0, 360 );
 					pParticle->m_flRollDelta	= random->RandomFloat( -4.0f, 4.0f );
 				}
@@ -287,11 +287,11 @@ void FX_TF2_BloodSpray( const Vector &origin, const Vector &normal, float scale,
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bloodtype - 
-//			r - 
-//			g - 
-//			b - 
+// Purpose:
+// Input  : bloodtype -
+//			r -
+//			g -
+//			b -
 //-----------------------------------------------------------------------------
 void GetBloodColorForTeam( int iTeam, unsigned char &r, unsigned char &g, unsigned char &b )
 {
@@ -308,7 +308,7 @@ void GetBloodColorForTeam( int iTeam, unsigned char &r, unsigned char &g, unsign
 		g = 0;
 		b = 0;
 	}
-	else 
+	else
 	{
 		// NPCs?
 		r = 200;

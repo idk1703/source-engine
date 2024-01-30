@@ -1,17 +1,17 @@
 /*
-     File:       PMTicket.h
- 
-     Contains:   Mac OS X Printing Manager Job Ticket Interfaces.
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1999-2001 by Apple Computer, Inc., all rights reserved
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       PMTicket.h
+
+		Contains:   Mac OS X Printing Manager Job Ticket Interfaces.
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1999-2001 by Apple Computer, Inc., all rights reserved
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __MACTYPES__
 #include <MacTypes.h>
@@ -53,11 +53,11 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=mac68k
+		#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+		#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+		#pragma pack(2)
 #endif
 
 /* SECTION I: DATA TYPES, STUCTURES, and CONSTANTS */
@@ -68,8 +68,8 @@ typedef struct OpaquePMTicketRef*       PMTicketRef;
 typedef struct OpaquePMTemplateRef*     PMTemplateRef;
 /* A few constants that will be useful in calling Job Ticket functions. */
 enum {
-  kPMUnlocked                   = false,
-  kPMLocked                     = true
+	kPMUnlocked                   = false,
+	kPMLocked                     = true
 };
 
 #define kPMDontFetchItem    NULL   /* Used to ask GetItem if an item exists. */
@@ -83,7 +83,7 @@ enum {
 /* docment and page numbers if they are available. In the future we expect to enable embedded */
 /* document and page tickets. */
 enum {
-  kPMTopLevel                   = 0
+	kPMTopLevel                   = 0
 };
 
 /* There are several different types of tickets that use the same accessor functions and  */
@@ -115,24 +115,24 @@ enum {
 /* Warning: Don't use these tags when creating tickets.  Use the CFSTRs above. */
 typedef SInt16 PMTicketType;
 enum {
-  kPMTicketTypeUnknown          = -1,
-  kPMJobTicketType              = 1,
-  kPMDocumentTicketType         = 2,
-  kPMPageTicketType             = 3,
-  kPMPageFormatTicketType       = 4,
-  kPMPrintSettingsTicketType    = 5,
-  kPMPrinterInfoTicketType      = 6,
-  kPMDestinationTicketType      = 7,
-  kPMConverterSetupTicketType   = 8,
-  kPMModuleInfoTicketType       = 9,
-  kPMTicketListType             = 10,
-  kPMPaperInfoTicketType        = 11
+	kPMTicketTypeUnknown          = -1,
+	kPMJobTicketType              = 1,
+	kPMDocumentTicketType         = 2,
+	kPMPageTicketType             = 3,
+	kPMPageFormatTicketType       = 4,
+	kPMPrintSettingsTicketType    = 5,
+	kPMPrinterInfoTicketType      = 6,
+	kPMDestinationTicketType      = 7,
+	kPMConverterSetupTicketType   = 8,
+	kPMModuleInfoTicketType       = 9,
+	kPMTicketListType             = 10,
+	kPMPaperInfoTicketType        = 11
 };
 
 
 /*
  *  PMPrintingPhaseType
- *  
+ *
  *  Discussion:
  *    An enum to demark where in the printing process we are. This
  *    value will be stored in the print settings ticket at the top
@@ -144,17 +144,17 @@ enum {
  */
 typedef UInt16 PMPrintingPhaseType;
 enum {
-  kPMPhaseUnknown               = 0,    /* Not clear what phase we're in yet. */
-  kPMPhasePreDialog             = 1,    /* Just before we execute the code to open the dialog. */
-  kPMPhaseDialogsUp             = 2,    /* One of the dialogs is in front of the user. */
-  kPMPhasePostDialogs           = 3,    /* Dialogs are down, not yet spooling. */
-  kPMPhasePreAppDrawing         = 4,    /* Just before we begin to spool */
-  kPMPhaseAppDrawing            = 5,    /* We're spooling drawing commands from the app. */
-  kPMPhasePostAppDrawing        = 6,    /* Finished with spooling, not yet rendering or converting. */
-  kPMPhasePreConversion         = 7,    /* Just before we begin to convert to PS, Raster, or other final format. */
-  kPMPhaseConverting            = 8,    /* Converting from Spool file to final printer format. */
-  kPMPhasePostConversion        = 9,    /* Done with printer ready data, waiting for completion. */
-  kPMPhasePrinting              = 10    /* In the process of waiting for the printer. */
+	kPMPhaseUnknown               = 0,    /* Not clear what phase we're in yet. */
+	kPMPhasePreDialog             = 1,    /* Just before we execute the code to open the dialog. */
+	kPMPhaseDialogsUp             = 2,    /* One of the dialogs is in front of the user. */
+	kPMPhasePostDialogs           = 3,    /* Dialogs are down, not yet spooling. */
+	kPMPhasePreAppDrawing         = 4,    /* Just before we begin to spool */
+	kPMPhaseAppDrawing            = 5,    /* We're spooling drawing commands from the app. */
+	kPMPhasePostAppDrawing        = 6,    /* Finished with spooling, not yet rendering or converting. */
+	kPMPhasePreConversion         = 7,    /* Just before we begin to convert to PS, Raster, or other final format. */
+	kPMPhaseConverting            = 8,    /* Converting from Spool file to final printer format. */
+	kPMPhasePostConversion        = 9,    /* Done with printer ready data, waiting for completion. */
+	kPMPhasePrinting              = 10    /* In the process of waiting for the printer. */
 };
 
 typedef SInt16                          PMTicketErrors;
@@ -166,36 +166,36 @@ typedef SInt16                          PMTicketErrors;
 /* these arrays. These are basically key types that are allowed for batch processing. */
 typedef UInt16 PMTicketItemType;
 enum {
-  kPMItemInvalidType            = 0,
-  kPMItemCStringType            = 1,    /* a C string pointed to by a char* */
-  kPMItemSInt32Type             = 2,    /* a C signed 32 bit integer. */
-  kPMItemBooleanType            = 3,    /* A Boolean */
-  kPMItemCStrListType           = 4,    /* A list of c-strings. */
-  kPMItemPMRectType             = 5,    /* A pointer to a PMRect */
-  kPMItemSInt32ListType         = 6,    /* A pointer to a SInt32List */
-  kPMItemPMRectListType         = 7     /* A pointer to a PMRectList */
+	kPMItemInvalidType            = 0,
+	kPMItemCStringType            = 1,    /* a C string pointed to by a char* */
+	kPMItemSInt32Type             = 2,    /* a C signed 32 bit integer. */
+	kPMItemBooleanType            = 3,    /* A Boolean */
+	kPMItemCStrListType           = 4,    /* A list of c-strings. */
+	kPMItemPMRectType             = 5,    /* A pointer to a PMRect */
+	kPMItemSInt32ListType         = 6,    /* A pointer to a SInt32List */
+	kPMItemPMRectListType         = 7     /* A pointer to a PMRectList */
 };
 
 
 /* A structure that holds a list of CString pointers, along with a definition for a constant list. */
 struct CStrList {
-  SInt32              count;                  /* Number of CString pointers in the array. */
-  const char **       strArray;               /* Pointer to first CString pointer. */
+	SInt32              count;                  /* Number of CString pointers in the array. */
+	const char **       strArray;               /* Pointer to first CString pointer. */
 };
 typedef struct CStrList                 CStrList;
 typedef const CStrList                  ConstCStrList;
 /* A structure to hold a list of Signed 32 bit integers.  */
 struct SInt32List {
-  SInt32              count;                  /* Number of Signed 32 bit values in array. */
-  const SInt32 *      sInt32Array;            /* Pointer to the first 32 bit value in array. */
+	SInt32              count;                  /* Number of Signed 32 bit values in array. */
+	const SInt32 *      sInt32Array;            /* Pointer to the first 32 bit value in array. */
 };
 typedef struct SInt32List               SInt32List;
 typedef const SInt32List                ConstSInt32List;
 /* A structure to hold a list of PMRect structures. PMRect is defined in PMDefinitions.h */
 /* and is basically a set of four doubles (top, left, bottom, and right). */
 struct PMRectList {
-  SInt32              count;                  /* Number of PMRect pointers in the array. */
-  const PMRect **     pmRectArray;            /* Pointer to the first PMRect pointer. */
+	SInt32              count;                  /* Number of PMRect pointers in the array. */
+	const PMRect **     pmRectArray;            /* Pointer to the first PMRect pointer. */
 };
 typedef struct PMRectList               PMRectList;
 typedef const PMRectList                ConstPMRectList;
@@ -204,42 +204,42 @@ typedef const PMRectList                ConstPMRectList;
 /* The structure below will serve as a statically defined "Ticket Item" that can then be */
 /* converted into a job ticket item. An array of these structures would be made into a ticket. */
 struct PMTicketItemStruct {
-  char *              key;                    /* The CString for the key. */
-  PMTicketItemType    itemType;               /* What type of item is being defined in union below. */
-  Boolean             locked;                 /* Can other callers change this after it's entered in a ticket? */
-  union {                                       /* The item data itself. */
-    const void *        GenericData;          /* Generic data */
-    const char *        cString;              /* kPMItemCStringType */
-    SInt32              sInt32;               /* kPMItemSInt32Type */
-    UInt32              boolean;              /* kPMItemBooleanType */
-    ConstCStrList *     cStrlist;             /* kPMItemCStrListType */
-    PMRect *            rect;                 /* kPMItemPMRectType */
-    ConstSInt32List *   sInt32List;           /* kPMItemSInt32ListType */
-    ConstPMRectList *   pmRectList;           /* kPMItemPMRectListType */
-  }                       value;
+	char *              key;                    /* The CString for the key. */
+	PMTicketItemType    itemType;               /* What type of item is being defined in union below. */
+	Boolean             locked;                 /* Can other callers change this after it's entered in a ticket? */
+	union {                                       /* The item data itself. */
+		const void *        GenericData;          /* Generic data */
+		const char *        cString;              /* kPMItemCStringType */
+		SInt32              sInt32;               /* kPMItemSInt32Type */
+		UInt32              boolean;              /* kPMItemBooleanType */
+		ConstCStrList *     cStrlist;             /* kPMItemCStrListType */
+		PMRect *            rect;                 /* kPMItemPMRectType */
+		ConstSInt32List *   sInt32List;           /* kPMItemSInt32ListType */
+		ConstPMRectList *   pmRectList;           /* kPMItemPMRectListType */
+	}                       value;
 };
 typedef struct PMTicketItemStruct       PMTicketItemStruct;
 /* END OF BATCH PROCESSING ENUMS AND STRUCTURES */
 /* ENUMS for Ticket Values */
 /* The values for kPMDuplexingKey */
 enum {
-  kPMDuplexNone                 = 1,
-  kPMDuplexNoTumble             = 2,    /* Print on both sides of the paper, pages flip from left to right.*/
-  kPMDuplexTumble               = 3,    /* Print on both sides of the paper, tumbling on so pages flip top to bottom.*/
-  kPMSimplexTumble              = 4,    /* Print on only one side of the paper, but tumble the images while printing.*/
-  kPMDuplexDefault              = kPMDuplexNone /* If the kPMDuplexingKey is not in a ticket then kPMDuplexDefault should be assumed.*/
+	kPMDuplexNone                 = 1,
+	kPMDuplexNoTumble             = 2,    /* Print on both sides of the paper, pages flip from left to right.*/
+	kPMDuplexTumble               = 3,    /* Print on both sides of the paper, tumbling on so pages flip top to bottom.*/
+	kPMSimplexTumble              = 4,    /* Print on only one side of the paper, but tumble the images while printing.*/
+	kPMDuplexDefault              = kPMDuplexNone /* If the kPMDuplexingKey is not in a ticket then kPMDuplexDefault should be assumed.*/
 };
 
 
 /* Values for the kPMPSErrorHandlerKey */
 enum {
-  kPSNoErrorHandler             = 0,
-  kPSErrorHandler               = 1
+	kPSNoErrorHandler             = 0,
+	kPSErrorHandler               = 1
 };
 
 /* If the kPMCopyCollateKey is not present, then kPMCopyCollateDefault should be assumed. */
 enum {
-  kPMCopyCollateDefault         = true
+	kPMCopyCollateDefault         = true
 };
 
 
@@ -252,8 +252,8 @@ enum {
 /*  utilities defined to fetch data in different formats. For instance, it would be simple */
 /*  to read in the Job Name as a CFString, or as a 'C' string. */
 /* Ticket: PAPER INFO TICKET
-    This ticket contains a single Paper Info set, with all the information necessary to 
-    describe a paper type available from the Printer Module.
+		This ticket contains a single Paper Info set, with all the information necessary to
+		describe a paper type available from the Printer Module.
 */
 #define kPMPaperInfoPrelude             "com.apple.print.PaperInfo."
 /* CFString for the name of the paper displayed in UI */
@@ -270,11 +270,11 @@ enum {
 #define kPMMatchPaperKey                CFSTR("com.apple.print.PaperInfo.PMMatchPaper")
 
 /* Ticket: PAGE FORMAT TICKET
-    Describes the application's drawing environment, including resolution, scaling, and
-    orientation. All information in the page format ticket is saved with the user's document,
-    so the single paper info stored inside the page format ticket describes the logical page
-    an application may draw to. This logical page is then mapped to a physical page defined
-    in the Print Settings Ticket.
+		Describes the application's drawing environment, including resolution, scaling, and
+		orientation. All information in the page format ticket is saved with the user's document,
+		so the single paper info stored inside the page format ticket describes the logical page
+		an application may draw to. This logical page is then mapped to a physical page defined
+		in the Print Settings Ticket.
 */
 #define kPMPageFormatPrelude            "com.apple.print.PageFormat."
 /* CFArray of 4 CFNumbers of kCFNumberDoubleType for scaled and rotated page rectangle. */
@@ -311,10 +311,10 @@ enum {
 #define kPMFormattingPrinterStr         "com.apple.print.PageFormat.FormattingPrinter"
 #define kPMFormattingPrinterKey         CFSTR("com.apple.print.PageFormat.FormattingPrinter")
 /* Ticket: PRINT SETTINGS TICKET
-    Contains the user's print dialog selections. Includes items set by the application to
-    further refine the output produced on the printer. Information in this ticket may also
-    be saved with the decument, but are likely to be overwritten by any saved settings. 
-    Logical page information is mapped to the physical page defined in this ticket.
+		Contains the user's print dialog selections. Includes items set by the application to
+		further refine the output produced on the printer. Information in this ticket may also
+		be saved with the decument, but are likely to be overwritten by any saved settings.
+		Logical page information is mapped to the physical page defined in this ticket.
 */
 #define kPMPrintSettingsPrelude         "com.apple.print.PrintSettings."
 /* CFNumber, kCFNumberSInt32Type kPMDestinationPrinter kPMDestinationFile kPMDestinationFax. */
@@ -435,14 +435,14 @@ enum {
 #define kPMPPDDictStr                   "com.apple.print.PrintSettings.kPMPPDDictStr"
 #define kPMPPDDictKey                   CFSTR("com.apple.print.PrintSettings.kPMPPDDictStr")
 /* Ticket: PAGE TICKET
-    Future Feature. Intended to hold Page Format and Print Settings ticket for a single
-    page of the document. Not yet implemented.
+		Future Feature. Intended to hold Page Format and Print Settings ticket for a single
+		page of the document. Not yet implemented.
 */
 #define kPMPageTicketPrelude            "com.apple.print.PageTicket."
 /* Ticket: DOCUMENT TICKET
-    Future Feature. Intended to hold multiple Page Tickets and separate Page Format
-    and Print Settings tickets for a single document. Not yet implemented. For now,
-    the keys listed here will be included at the Job Ticket Level.
+		Future Feature. Intended to hold multiple Page Tickets and separate Page Format
+		and Print Settings tickets for a single document. Not yet implemented. For now,
+		the keys listed here will be included at the Job Ticket Level.
 */
 #define kPMDocumentTicketPrelude        "com.apple.print.DocumentTicket."
 /* CFString. Indicates format of data stored in the spool file. */
@@ -452,12 +452,12 @@ enum {
 #define kPMPrinterModuleFormatStr       "com.apple.print.DocumentTicket.PMDocPMInputFormat"
 #define kPMPrinterModuleFormatKey       CFSTR("com.apple.print.DocumentTicket.PMDocPMInputFormat")
 /* Ticket: JOB TICKET
-    Holds a Page Format and Print Settings ticket, as well as a few other fields that 
-    are Job Specific, such as information about the user that submitted the job. The
-    fidelity bit controls what happens when the system encounters settings that can't
-    be obeyed.
-    In the future a Job Ticket may hold multiple document tickets in addition to the 
-    Print Settings and Page Format tickets.
+		Holds a Page Format and Print Settings ticket, as well as a few other fields that
+		are Job Specific, such as information about the user that submitted the job. The
+		fidelity bit controls what happens when the system encounters settings that can't
+		be obeyed.
+		In the future a Job Ticket may hold multiple document tickets in addition to the
+		Print Settings and Page Format tickets.
 */
 #define kPMJobTicketPrelude             "com.apple.print.JobInfo."
 /* CFString, The name of the job to be displayed in the queue window. */
@@ -482,17 +482,17 @@ enum {
 #define kPMOutputTypeStr                "com.apple.print.JobInfo.PMOutputType"
 #define kPMOutputTypeKey                CFSTR("com.apple.print.JobInfo.PMOutputType")
 /* Ticket: LIST TICKET
-    Contains a list of other tickets. There is no restriction on the type of tickets
-    that can be stored in a list, any ticket will do. 
+		Contains a list of other tickets. There is no restriction on the type of tickets
+		that can be stored in a list, any ticket will do.
 */
 #define kPMTicketListPrelude            "com.apple.print.TicketList."
 
 
 /* Ticket: Printer Info Ticket
-    Created by the Printer Module to describe features and settings of the current
-    printer. This is information largely used by the Printer Module itself and the Print
-    Dialog Extensions associated with the PM. All "range" type values that would be 
-    verified at dialog time should go in a separate Template.
+		Created by the Printer Module to describe features and settings of the current
+		printer. This is information largely used by the Printer Module itself and the Print
+		Dialog Extensions associated with the PM. All "range" type values that would be
+		verified at dialog time should go in a separate Template.
 */
 #define kPMPrinterInfoPrelude           "com.apple.print.PrinterInfo."
 /* CFString, Full name of the printer. */
@@ -541,21 +541,21 @@ enum {
 
 /* Enum for the possible font rasterizers. */
 enum {
-  kPMPSTTRasterizerUnknown      = 0,    /*  unknown*/
-  kPMPSTTRasterizerNone         = 1,    /*  none*/
-  kPMPSTTRasterizerAccept68K    = 2,    /*  accept 68k*/
-  kPMPSTTRasterizerType42       = 3     /*  type 42*/
+	kPMPSTTRasterizerUnknown      = 0,    /*  unknown*/
+	kPMPSTTRasterizerNone         = 1,    /*  none*/
+	kPMPSTTRasterizerAccept68K    = 2,    /*  accept 68k*/
+	kPMPSTTRasterizerType42       = 3     /*  type 42*/
 };
 
 /* Enum for possible PostScript Language Levels. */
 enum {
-  kPMPSTargetLanguageLevel2and3 = -3,   /* Level 2 Compatible, may take advantage of Level 3 features*/
-  kPMPSTargetLanguageLevel1and2 = -2,   /* Level 1 Compatible, may take advantage of Level 2 and 3 features*/
-  kPMPSTargetLanguageLevelUnknown = -1, /* language level of target is unknown*/
-  kPMPSTargetLanguageLevel1     = 1,    /* level 1*/
-  kPMPSTargetLanguageLevel2     = 2,    /* level 2*/
-  kPMPSTargetLanguageLevel3     = 3,    /* level 3*/
-  kPMPSTargetLanguageLevelDefault = kPMPSTargetLanguageLevelUnknown /* default*/
+	kPMPSTargetLanguageLevel2and3 = -3,   /* Level 2 Compatible, may take advantage of Level 3 features*/
+	kPMPSTargetLanguageLevel1and2 = -2,   /* Level 1 Compatible, may take advantage of Level 2 and 3 features*/
+	kPMPSTargetLanguageLevelUnknown = -1, /* language level of target is unknown*/
+	kPMPSTargetLanguageLevel1     = 1,    /* level 1*/
+	kPMPSTargetLanguageLevel2     = 2,    /* level 2*/
+	kPMPSTargetLanguageLevel3     = 3,    /* level 3*/
+	kPMPSTargetLanguageLevelDefault = kPMPSTargetLanguageLevelUnknown /* default*/
 };
 
 
@@ -614,8 +614,8 @@ enum {
 #define kPMTransparentCommStr           "com.apple.print.PrinterInfo.PMTransparentComm"
 #define kPMTransparentCommKey           CFSTR("com.apple.print.PrinterInfo.PMTransparentComm")
 /* Ticket: Converter Setup Ticket
-    Contains controls for converter. Generally, the Printer Module and Job Manager will set
-    tags in this ticket to control the various settings of the conversion process. 
+		Contains controls for converter. Generally, the Printer Module and Job Manager will set
+		tags in this ticket to control the various settings of the conversion process.
 */
 #define kPMConverterSetupPrelude        "com.apple.print.ConverterSetup."
 /* CFBoolean, turns on banding if it's available. */
@@ -652,7 +652,7 @@ enum {
 /* and used to help the programmer make sure they are adding the correct fields to the object. */
 /*
  *  PMTicketCreate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -660,14 +660,14 @@ enum {
  */
 EXTERN_API_C( OSStatus )
 PMTicketCreate(
-  CFAllocatorRef   allocator,
-  CFStringRef      ticketType,
-  PMTicketRef *    newTicket);
+	CFAllocatorRef   allocator,
+	CFStringRef      ticketType,
+	PMTicketRef *    newTicket);
 
 
 /*
  *  PMTicketCopy()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -675,16 +675,16 @@ PMTicketCreate(
  */
 EXTERN_API_C( OSStatus )
 PMTicketCopy(
-  CFAllocatorRef   allocator,
-  PMTicketRef      sourceTicket,
-  PMTicketRef *    destinationTicket);
+	CFAllocatorRef   allocator,
+	PMTicketRef      sourceTicket,
+	PMTicketRef *    destinationTicket);
 
 
 /* Retain, release, or get retain count of a Ticket. The behavior is modelled after */
 /* CoreFoundation's CFRetain, CFRelease, and CFGetRetainCount APIs. */
 /*
  *  PMTicketGetRetainCount()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -692,13 +692,13 @@ PMTicketCopy(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetRetainCount(
-  PMTicketRef   ticket,
-  CFIndex *     retainCount);
+	PMTicketRef   ticket,
+	CFIndex *     retainCount);
 
 
 /*
  *  PMTicketRetain()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -710,7 +710,7 @@ PMTicketRetain(PMTicketRef ticket);
 
 /*
  *  PMTicketRelease()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -723,13 +723,13 @@ PMTicketRelease(PMTicketRef ticket);
 
 /*
  *  PMTicketReleaseAndClear()
- *  
+ *
  *  Discussion:
  *    PMTicketReleaseAndClear does the same thing as PMTicketRelease
  *    except that it sets the passed in pointer to NULL, which we think
  *    is good programming practice. Other references to the ticket may
  *    still be valid, but this one is no longer expected to be used.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -743,13 +743,13 @@ PMTicketReleaseAndClear(PMTicketRef * ticket);
 
 /*
  *  PMTicketGetLockedState()
- *  
+ *
  *  Discussion:
  *    Tickets may be locked by the printing system, so we provide a
  *    function to determine if the ticket is indeed locked. Any
  *    attempted changes to a locked ticket will result in
  *    "kPMTicketLocked" error.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -757,18 +757,18 @@ PMTicketReleaseAndClear(PMTicketRef * ticket);
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetLockedState(
-  PMTicketRef   ticket,
-  Boolean *     lockedState);
+	PMTicketRef   ticket,
+	Boolean *     lockedState);
 
 
 
 /*
  *  PMTicketConfirmTicket()
- *  
+ *
  *  Discussion:
  *    To confirm that we have a real ticket, this short function gets
  *    called.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -781,7 +781,7 @@ PMTicketConfirmTicket(PMTicketRef ticket);
 
 /*
  *  PMTicketValidate()
- *  
+ *
  *  Discussion:
  *    We validate an entire ticket by calling our PMTicketValidate
  *    function, passing a template which contains constraints for all
@@ -790,7 +790,7 @@ PMTicketConfirmTicket(PMTicketRef ticket);
  *    own custom data. For now we have to verify a single ticket at a
  *    time. Future updates will allow the caller to confirm an entire
  *    tree of tickets.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -798,9 +798,9 @@ PMTicketConfirmTicket(PMTicketRef ticket);
  */
 EXTERN_API_C( OSStatus )
 PMTicketValidate(
-  PMTicketRef     ticket,
-  PMTemplateRef   verifyingTemplate,
-  CFArrayRef *    invalidItems);
+	PMTicketRef     ticket,
+	PMTemplateRef   verifyingTemplate,
+	CFArrayRef *    invalidItems);
 
 
 
@@ -810,7 +810,7 @@ PMTicketValidate(
 /* from old to new tickets. */
 /*
  *  PMTicketGetType()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -818,13 +818,13 @@ PMTicketValidate(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetType(
-  PMTicketRef    ticket,
-  CFStringRef *  ticketType);
+	PMTicketRef    ticket,
+	CFStringRef *  ticketType);
 
 
 /*
  *  PMTicketGetEnumType()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -832,13 +832,13 @@ PMTicketGetType(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetEnumType(
-  PMTicketRef     ticket,
-  PMTicketType *  ticketType);
+	PMTicketRef     ticket,
+	PMTicketType *  ticketType);
 
 
 /*
  *  PMTicketGetAllocator()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -846,13 +846,13 @@ PMTicketGetEnumType(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetAllocator(
-  PMTicketRef       ticket,
-  CFAllocatorRef *  allocator);
+	PMTicketRef       ticket,
+	CFAllocatorRef *  allocator);
 
 
 /*
  *  PMTicketGetAPIVersion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -860,8 +860,8 @@ PMTicketGetAllocator(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetAPIVersion(
-  PMTicketRef    ticket,
-  CFStringRef *  apiVersion);
+	PMTicketRef    ticket,
+	CFStringRef *  apiVersion);
 
 
 
@@ -870,10 +870,10 @@ PMTicketGetAPIVersion(
 /* function is provided to go "all the way." */
 /*
  *  PMTicketToXML()
- *  
+ *
  *  Discussion:
  *    Convert to XML
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -881,16 +881,16 @@ PMTicketGetAPIVersion(
  */
 EXTERN_API_C( OSStatus )
 PMTicketToXML(
-  PMTicketRef   ticket,
-  CFDataRef *   anXMLTicket);
+	PMTicketRef   ticket,
+	CFDataRef *   anXMLTicket);
 
 
 /*
  *  PMTicketWriteXMLToFile()
- *  
+ *
  *  Discussion:
  *    Convert to XML and write to file
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -898,16 +898,16 @@ PMTicketToXML(
  */
 EXTERN_API_C( OSStatus )
 PMTicketWriteXMLToFile(
-  PMTicketRef   ticket,
-  const char *  path);
+	PMTicketRef   ticket,
+	const char *  path);
 
 
 /*
  *  PMTicketWriteXML()
- *  
+ *
  *  Discussion:
  *    Convert to XML and write to FILE stream
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -915,16 +915,16 @@ PMTicketWriteXMLToFile(
  */
 EXTERN_API_C( OSStatus )
 PMTicketWriteXML(
-  PMTicketRef   ticket,
-  FILE *        xmlFile);
+	PMTicketRef   ticket,
+	FILE *        xmlFile);
 
 
 /*
  *  PMXMLToTicket()
- *  
+ *
  *  Discussion:
  *    Convert from XML
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -932,18 +932,18 @@ PMTicketWriteXML(
  */
 EXTERN_API_C( OSStatus )
 PMXMLToTicket(
-  CFAllocatorRef   allocator,
-  CFDataRef        anXMLTicket,
-  PMTicketRef *    ticket,
-  CFStringRef *    conversionError);
+	CFAllocatorRef   allocator,
+	CFDataRef        anXMLTicket,
+	PMTicketRef *    ticket,
+	CFStringRef *    conversionError);
 
 
 /*
  *  PMTicketReadXMLFromFile()
- *  
+ *
  *  Discussion:
  *    Read from XML file
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -951,10 +951,10 @@ PMXMLToTicket(
  */
 EXTERN_API_C( OSStatus )
 PMTicketReadXMLFromFile(
-  CFAllocatorRef   allocator,
-  const char *     path,
-  PMTicketRef *    ticket,
-  CFStringRef *    errorString);
+	CFAllocatorRef   allocator,
+	const char *     path,
+	PMTicketRef *    ticket,
+	CFStringRef *    errorString);
 
 
 
@@ -965,7 +965,7 @@ PMTicketReadXMLFromFile(
 /* CFString */
 /*
  *  PMTicketSetCFString()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -973,17 +973,17 @@ PMTicketReadXMLFromFile(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetCFString(
-  PMTicketRef   ticket,
-  CFStringRef   clientID,
-  CFStringRef   key,
-  CFStringRef   item,
-  Boolean       locked);
+	PMTicketRef   ticket,
+	CFStringRef   clientID,
+	CFStringRef   key,
+	CFStringRef   item,
+	Boolean       locked);
 
 
 /* Pascal String */
 /*
  *  PMTicketSetPString()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -991,17 +991,17 @@ PMTicketSetCFString(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetPString(
-  PMTicketRef      ticket,
-  CFStringRef      clientID,
-  CFStringRef      key,
-  ConstStringPtr   value,
-  Boolean          locked);
+	PMTicketRef      ticket,
+	CFStringRef      clientID,
+	CFStringRef      key,
+	ConstStringPtr   value,
+	Boolean          locked);
 
 
 /* 'C' String */
 /*
  *  PMTicketSetCString()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1009,17 +1009,17 @@ PMTicketSetPString(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetCString(
-  PMTicketRef   ticket,
-  CFStringRef   clientID,
-  CFStringRef   key,
-  const char *  value,
-  Boolean       locked);
+	PMTicketRef   ticket,
+	CFStringRef   clientID,
+	CFStringRef   key,
+	const char *  value,
+	Boolean       locked);
 
 
 /* Array of 'C' Strings */
 /*
  *  PMTicketSetCStringArray()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1027,12 +1027,12 @@ PMTicketSetCString(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetCStringArray(
-  PMTicketRef    ticket,
-  CFStringRef    clientID,
-  CFStringRef    key,
-  const char **  cStringArray,
-  UInt32         count,
-  Boolean        locked);
+	PMTicketRef    ticket,
+	CFStringRef    clientID,
+	CFStringRef    key,
+	const char **  cStringArray,
+	UInt32         count,
+	Boolean        locked);
 
 
 
@@ -1040,7 +1040,7 @@ PMTicketSetCStringArray(
 /* CFNumber */
 /*
  *  PMTicketSetCFNumber()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1048,17 +1048,17 @@ PMTicketSetCStringArray(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetCFNumber(
-  PMTicketRef   ticket,
-  CFStringRef   clientID,
-  CFStringRef   key,
-  CFNumberRef   item,
-  Boolean       locked);
+	PMTicketRef   ticket,
+	CFStringRef   clientID,
+	CFStringRef   key,
+	CFNumberRef   item,
+	Boolean       locked);
 
 
 /* SInt32 */
 /*
  *  PMTicketSetSInt32()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1066,17 +1066,17 @@ PMTicketSetCFNumber(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetSInt32(
-  PMTicketRef   ticket,
-  CFStringRef   clientID,
-  CFStringRef   key,
-  SInt32        value,
-  Boolean       locked);
+	PMTicketRef   ticket,
+	CFStringRef   clientID,
+	CFStringRef   key,
+	SInt32        value,
+	Boolean       locked);
 
 
 /* Array of SInt32 */
 /*
  *  PMTicketSetSInt32Array()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1084,12 +1084,12 @@ PMTicketSetSInt32(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetSInt32Array(
-  PMTicketRef     ticket,
-  CFStringRef     clientID,
-  CFStringRef     key,
-  const SInt32 *  sInt32Array,
-  UInt32          count,
-  Boolean         locked);
+	PMTicketRef     ticket,
+	CFStringRef     clientID,
+	CFStringRef     key,
+	const SInt32 *  sInt32Array,
+	UInt32          count,
+	Boolean         locked);
 
 
 /* UInt32 */
@@ -1097,7 +1097,7 @@ PMTicketSetSInt32Array(
 /* as the largest unsigned number. Please avoid setting the high bit */
 /*
  *  PMTicketSetUInt32()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1105,11 +1105,11 @@ PMTicketSetSInt32Array(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetUInt32(
-  PMTicketRef   ticket,
-  CFStringRef   clientID,
-  CFStringRef   key,
-  UInt32        value,
-  Boolean       locked);
+	PMTicketRef   ticket,
+	CFStringRef   clientID,
+	CFStringRef   key,
+	UInt32        value,
+	Boolean       locked);
 
 
 /* Array of UInt32 */
@@ -1117,7 +1117,7 @@ PMTicketSetUInt32(
 /* as the largest unsigned number. Please avoid setting the high bit */
 /*
  *  PMTicketSetUInt32Array()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1125,18 +1125,18 @@ PMTicketSetUInt32(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetUInt32Array(
-  PMTicketRef     ticket,
-  CFStringRef     clientID,
-  CFStringRef     key,
-  const UInt32 *  uInt32Array,
-  UInt32          count,
-  Boolean         locked);
+	PMTicketRef     ticket,
+	CFStringRef     clientID,
+	CFStringRef     key,
+	const UInt32 *  uInt32Array,
+	UInt32          count,
+	Boolean         locked);
 
 
 /* Double */
 /*
  *  PMTicketSetDouble()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1144,17 +1144,17 @@ PMTicketSetUInt32Array(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetDouble(
-  PMTicketRef   ticket,
-  CFStringRef   clientID,
-  CFStringRef   key,
-  double        value,
-  Boolean       locked);
+	PMTicketRef   ticket,
+	CFStringRef   clientID,
+	CFStringRef   key,
+	double        value,
+	Boolean       locked);
 
 
 /* Array of doubles */
 /*
  *  PMTicketSetDoubleArray()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1162,18 +1162,18 @@ PMTicketSetDouble(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetDoubleArray(
-  PMTicketRef     ticket,
-  CFStringRef     clientID,
-  CFStringRef     key,
-  const double *  doubleArray,
-  UInt32          count,
-  Boolean         changeable);
+	PMTicketRef     ticket,
+	CFStringRef     clientID,
+	CFStringRef     key,
+	const double *  doubleArray,
+	UInt32          count,
+	Boolean         changeable);
 
 
 /* PMResolution - Array of 2 Doubles */
 /*
  *  PMTicketSetPMResolution()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1181,17 +1181,17 @@ PMTicketSetDoubleArray(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetPMResolution(
-  PMTicketRef     ticket,
-  CFStringRef     clientID,
-  CFStringRef     key,
-  PMResolution *  value,
-  Boolean         locked);
+	PMTicketRef     ticket,
+	CFStringRef     clientID,
+	CFStringRef     key,
+	PMResolution *  value,
+	Boolean         locked);
 
 
 /* Array of PMResolution */
 /*
  *  PMTicketSetPMResolutionArray()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1199,18 +1199,18 @@ PMTicketSetPMResolution(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetPMResolutionArray(
-  PMTicketRef     ticket,
-  CFStringRef     clientID,
-  CFStringRef     key,
-  PMResolution *  pmResolutionArray,
-  UInt32          count,
-  Boolean         locked);
+	PMTicketRef     ticket,
+	CFStringRef     clientID,
+	CFStringRef     key,
+	PMResolution *  pmResolutionArray,
+	UInt32          count,
+	Boolean         locked);
 
 
 /* PMRect - Array of 4 Doubles */
 /*
  *  PMTicketSetPMRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1218,17 +1218,17 @@ PMTicketSetPMResolutionArray(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetPMRect(
-  PMTicketRef   ticket,
-  CFStringRef   clientID,
-  CFStringRef   key,
-  PMRect *      value,
-  Boolean       locked);
+	PMTicketRef   ticket,
+	CFStringRef   clientID,
+	CFStringRef   key,
+	PMRect *      value,
+	Boolean       locked);
 
 
 /* Array of PMRects */
 /*
  *  PMTicketSetPMRectArray()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1236,19 +1236,19 @@ PMTicketSetPMRect(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetPMRectArray(
-  PMTicketRef   ticket,
-  CFStringRef   clientID,
-  CFStringRef   key,
-  PMRect *      pmRectArray,
-  UInt32        count,
-  Boolean       locked);
+	PMTicketRef   ticket,
+	CFStringRef   clientID,
+	CFStringRef   key,
+	PMRect *      pmRectArray,
+	UInt32        count,
+	Boolean       locked);
 
 
 /* Raw Data */
 /* CFData */
 /*
  *  PMTicketSetCFData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1256,17 +1256,17 @@ PMTicketSetPMRectArray(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetCFData(
-  PMTicketRef   ticket,
-  CFStringRef   clientID,
-  CFStringRef   key,
-  CFDataRef     item,
-  Boolean       locked);
+	PMTicketRef   ticket,
+	CFStringRef   clientID,
+	CFStringRef   key,
+	CFDataRef     item,
+	Boolean       locked);
 
 
 /* UInt8 - 'C' Bytes */
 /*
  *  PMTicketSetBytes()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1274,19 +1274,19 @@ PMTicketSetCFData(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetBytes(
-  PMTicketRef    ticket,
-  CFStringRef    clientID,
-  CFStringRef    key,
-  const UInt8 *  data,
-  UInt32         size,
-  Boolean        locked);
+	PMTicketRef    ticket,
+	CFStringRef    clientID,
+	CFStringRef    key,
+	const UInt8 *  data,
+	UInt32         size,
+	Boolean        locked);
 
 
 /* Booleans */
 /* CFBoolean */
 /*
  *  PMTicketSetCFBoolean()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1294,17 +1294,17 @@ PMTicketSetBytes(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetCFBoolean(
-  PMTicketRef    ticket,
-  CFStringRef    clientID,
-  CFStringRef    key,
-  CFBooleanRef   item,
-  Boolean        locked);
+	PMTicketRef    ticket,
+	CFStringRef    clientID,
+	CFStringRef    key,
+	CFBooleanRef   item,
+	Boolean        locked);
 
 
 /* 'C' Boolean */
 /*
  *  PMTicketSetBoolean()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1312,18 +1312,18 @@ PMTicketSetCFBoolean(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetBoolean(
-  PMTicketRef   ticket,
-  CFStringRef   clientID,
-  CFStringRef   key,
-  Boolean       value,
-  Boolean       locked);
+	PMTicketRef   ticket,
+	CFStringRef   clientID,
+	CFStringRef   key,
+	Boolean       value,
+	Boolean       locked);
 
 
 
 /* Dates */
 /*
  *  PMTicketSetCFDate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1331,17 +1331,17 @@ PMTicketSetBoolean(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetCFDate(
-  PMTicketRef   ticket,
-  CFStringRef   clientID,
-  CFStringRef   key,
-  CFDateRef     item,
-  Boolean       locked);
+	PMTicketRef   ticket,
+	CFStringRef   clientID,
+	CFStringRef   key,
+	CFDateRef     item,
+	Boolean       locked);
 
 
 /* Arrays */
 /*
  *  PMTicketSetCFArray()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1349,17 +1349,17 @@ PMTicketSetCFDate(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetCFArray(
-  PMTicketRef   ticket,
-  CFStringRef   clientID,
-  CFStringRef   key,
-  CFArrayRef    item,
-  Boolean       locked);
+	PMTicketRef   ticket,
+	CFStringRef   clientID,
+	CFStringRef   key,
+	CFArrayRef    item,
+	Boolean       locked);
 
 
 /* Dictionaries */
 /*
  *  PMTicketSetCFDictionary()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1367,17 +1367,17 @@ PMTicketSetCFArray(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetCFDictionary(
-  PMTicketRef       ticket,
-  CFStringRef       clientID,
-  CFStringRef       key,
-  CFDictionaryRef   item,
-  Boolean           locked);
+	PMTicketRef       ticket,
+	CFStringRef       clientID,
+	CFStringRef       key,
+	CFDictionaryRef   item,
+	Boolean           locked);
 
 
 /* Templates, which are defined to be opaque. */
 /*
  *  PMTicketSetTemplate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1385,17 +1385,17 @@ PMTicketSetCFDictionary(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetTemplate(
-  PMTicketRef     ticket,
-  CFStringRef     clientID,
-  CFStringRef     key,
-  PMTemplateRef   item,
-  Boolean         locked);
+	PMTicketRef     ticket,
+	CFStringRef     clientID,
+	CFStringRef     key,
+	PMTemplateRef   item,
+	Boolean         locked);
 
 
 /* Generic CF Type */
 /*
  *  PMTicketSetItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1403,17 +1403,17 @@ PMTicketSetTemplate(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetItem(
-  PMTicketRef   ticket,
-  CFStringRef   clientID,
-  CFStringRef   key,
-  CFTypeRef     item,
-  Boolean       locked);
+	PMTicketRef   ticket,
+	CFStringRef   clientID,
+	CFStringRef   key,
+	CFTypeRef     item,
+	Boolean       locked);
 
 
 
 /*
  *  PMTicketSetMetaItem()
- *  
+ *
  *  Discussion:
  *    To add an item that doesn't need to be stored in the XML file,
  *    use the PMTicketSetMetaItem() call. It allows simple addition of
@@ -1424,7 +1424,7 @@ PMTicketSetItem(
  *    caller to add items temporarily to a ticket, perhaps to keep
  *    track of the "default" ticket in a list of tickets, or the
  *    "current" paper info in a list of papers.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1432,20 +1432,20 @@ PMTicketSetItem(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetMetaItem(
-  PMTicketRef   ticket,
-  CFStringRef   key,
-  CFTypeRef     item);
+	PMTicketRef   ticket,
+	CFStringRef   key,
+	CFTypeRef     item);
 
 
 
 /*
  *  PMTicketFillFromArray()
- *  
+ *
  *  Discussion:
  *    Convert an array of static item structures into entries for a
  *    ticket and add them one at a time to the ticket. Could fail part
  *    way through.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1453,22 +1453,22 @@ PMTicketSetMetaItem(
  */
 EXTERN_API_C( OSStatus )
 PMTicketFillFromArray(
-  PMTicketRef                 ticket,
-  CFStringRef                 clientID,
-  const PMTicketItemStruct *  items,
-  UInt32                      itemCount);
+	PMTicketRef                 ticket,
+	CFStringRef                 clientID,
+	const PMTicketItemStruct *  items,
+	UInt32                      itemCount);
 
 
 
 /*
  *  PMTicketCopyItem()
- *  
+ *
  *  Discussion:
  *    If an item must be copied from one ticket to another, use the
  *    "CopyItem" call to make the simple transfer. This will update the
  *    recorded date and client ID for the item. The "locked" field will
  *    determine if subsequent updates may be made.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1476,11 +1476,11 @@ PMTicketFillFromArray(
  */
 EXTERN_API_C( OSStatus )
 PMTicketCopyItem(
-  PMTicketRef   sourceTicket,
-  PMTicketRef   destTicket,
-  CFStringRef   clientID,
-  CFStringRef   key,
-  Boolean       locked);
+	PMTicketRef   sourceTicket,
+	PMTicketRef   destTicket,
+	CFStringRef   clientID,
+	CFStringRef   key,
+	Boolean       locked);
 
 
 
@@ -1489,7 +1489,7 @@ PMTicketCopyItem(
 /* for items in sub-tickets. */
 /*
  *  PMTicketIsItemLocked()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1497,14 +1497,14 @@ PMTicketCopyItem(
  */
 EXTERN_API_C( OSStatus )
 PMTicketIsItemLocked(
-  PMTicketRef   ticket,
-  CFStringRef   key,
-  Boolean *     locked);
+	PMTicketRef   ticket,
+	CFStringRef   key,
+	Boolean *     locked);
 
 
 /*
  *  PMTicketLockItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1512,14 +1512,14 @@ PMTicketIsItemLocked(
  */
 EXTERN_API_C( OSStatus )
 PMTicketLockItem(
-  PMTicketRef   ticket,
-  CFStringRef   clientID,
-  CFStringRef   key);
+	PMTicketRef   ticket,
+	CFStringRef   clientID,
+	CFStringRef   key);
 
 
 /*
  *  PMTicketUnlockItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1527,21 +1527,21 @@ PMTicketLockItem(
  */
 EXTERN_API_C( OSStatus )
 PMTicketUnlockItem(
-  PMTicketRef   ticket,
-  CFStringRef   clientID,
-  CFStringRef   key);
+	PMTicketRef   ticket,
+	CFStringRef   clientID,
+	CFStringRef   key);
 
 
 
 /*
  *  PMTicketDeleteItem()
- *  
+ *
  *  Discussion:
  *    Disable an item using PMTicketDelete. Future callers will see
  *    "ItemNotFound" errors. This call actually tags a new set of
  *    structures to the end of an item's dictionary, in order to keep a
  *    history of the item.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1549,19 +1549,19 @@ PMTicketUnlockItem(
  */
 EXTERN_API_C( OSStatus )
 PMTicketDeleteItem(
-  PMTicketRef   ticket,
-  CFStringRef   clientID,
-  CFStringRef   key);
+	PMTicketRef   ticket,
+	CFStringRef   clientID,
+	CFStringRef   key);
 
 
 /*
  *  PMTicketReleaseItem()
- *  
+ *
  *  Discussion:
  *    Release an item (quite different from delete) when you want it
  *    completely removed from the ticket. This can only be done if the
  *    item is unlocked.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1569,13 +1569,13 @@ PMTicketDeleteItem(
  */
 EXTERN_API_C( OSStatus )
 PMTicketReleaseItem(
-  PMTicketRef   ticket,
-  CFStringRef   key);
+	PMTicketRef   ticket,
+	CFStringRef   key);
 
 
 /*
  *  PMTicketContainsItem()
- *  
+ *
  *  Discussion:
  *    Fetching an item back out of the ticket requires the "GetItem"
  *    call for the particular type of data you're fetching. In some
@@ -1584,7 +1584,7 @@ PMTicketReleaseItem(
  *    cases developers are encouraged to use the specific call for the
  *    data they need, thus enabling type checking and reducing errors.
  *    Returns true if item exists.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1592,17 +1592,17 @@ PMTicketReleaseItem(
  */
 EXTERN_API_C( Boolean )
 PMTicketContainsItem(
-  PMTicketRef   ticket,
-  UInt32        nodeIndex1,
-  UInt32        nodeIndex2,
-  CFStringRef   key);
+	PMTicketRef   ticket,
+	UInt32        nodeIndex1,
+	UInt32        nodeIndex2,
+	CFStringRef   key);
 
 
 /* Strings */
 /* CFString */
 /*
  *  PMTicketGetCFString()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1610,17 +1610,17 @@ PMTicketContainsItem(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetCFString(
-  PMTicketRef    ticket,
-  UInt32         nodeIndex1,
-  UInt32         nodeIndex2,
-  CFStringRef    key,
-  CFStringRef *  item);
+	PMTicketRef    ticket,
+	UInt32         nodeIndex1,
+	UInt32         nodeIndex2,
+	CFStringRef    key,
+	CFStringRef *  item);
 
 
 /* Pascal String */
 /*
  *  PMTicketGetPString()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1628,19 +1628,19 @@ PMTicketGetCFString(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetPString(
-  PMTicketRef        ticket,
-  UInt32             nodeIndex1,
-  UInt32             nodeIndex2,
-  CFStringRef        key,
-  UInt32             bufferSize,
-  CFStringEncoding   encoding,
-  StringPtr          value);
+	PMTicketRef        ticket,
+	UInt32             nodeIndex1,
+	UInt32             nodeIndex2,
+	CFStringRef        key,
+	UInt32             bufferSize,
+	CFStringEncoding   encoding,
+	StringPtr          value);
 
 
 /* 'C' String */
 /*
  *  PMTicketGetCString()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1648,13 +1648,13 @@ PMTicketGetPString(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetCString(
-  PMTicketRef        ticket,
-  UInt32             nodeIndex1,
-  UInt32             nodeIndex2,
-  CFStringRef        key,
-  UInt32             bufferSize,
-  CFStringEncoding   encoding,
-  char *             value);
+	PMTicketRef        ticket,
+	UInt32             nodeIndex1,
+	UInt32             nodeIndex2,
+	CFStringRef        key,
+	UInt32             bufferSize,
+	CFStringEncoding   encoding,
+	char *             value);
 
 
 
@@ -1662,7 +1662,7 @@ PMTicketGetCString(
 /* CFNumber */
 /*
  *  PMTicketGetCFNumber()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1670,17 +1670,17 @@ PMTicketGetCString(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetCFNumber(
-  PMTicketRef    ticket,
-  UInt32         nodeIndex1,
-  UInt32         nodeIndex2,
-  CFStringRef    key,
-  CFNumberRef *  item);
+	PMTicketRef    ticket,
+	UInt32         nodeIndex1,
+	UInt32         nodeIndex2,
+	CFStringRef    key,
+	CFNumberRef *  item);
 
 
 /* SInt32 */
 /*
  *  PMTicketGetSInt32()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1688,17 +1688,17 @@ PMTicketGetCFNumber(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetSInt32(
-  PMTicketRef   ticket,
-  UInt32        nodeIndex1,
-  UInt32        nodeIndex2,
-  CFStringRef   key,
-  SInt32 *      value);
+	PMTicketRef   ticket,
+	UInt32        nodeIndex1,
+	UInt32        nodeIndex2,
+	CFStringRef   key,
+	SInt32 *      value);
 
 
 /* UInt32 */
 /*
  *  PMTicketGetUInt32()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1706,17 +1706,17 @@ PMTicketGetSInt32(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetUInt32(
-  PMTicketRef   ticket,
-  UInt32        nodeIndex1,
-  UInt32        nodeIndex2,
-  CFStringRef   key,
-  UInt32 *      value);
+	PMTicketRef   ticket,
+	UInt32        nodeIndex1,
+	UInt32        nodeIndex2,
+	CFStringRef   key,
+	UInt32 *      value);
 
 
 /* Double */
 /*
  *  PMTicketGetDouble()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1724,17 +1724,17 @@ PMTicketGetUInt32(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetDouble(
-  PMTicketRef   ticket,
-  UInt32        nodeIndex1,
-  UInt32        nodeIndex2,
-  CFStringRef   key,
-  double *      value);
+	PMTicketRef   ticket,
+	UInt32        nodeIndex1,
+	UInt32        nodeIndex2,
+	CFStringRef   key,
+	double *      value);
 
 
 /* PMResolution - Array of 2 doubles */
 /*
  *  PMTicketGetPMResolution()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1742,16 +1742,16 @@ PMTicketGetDouble(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetPMResolution(
-  PMTicketRef     ticket,
-  UInt32          nodeIndex1,
-  UInt32          nodeIndex2,
-  CFStringRef     key,
-  PMResolution *  res);
+	PMTicketRef     ticket,
+	UInt32          nodeIndex1,
+	UInt32          nodeIndex2,
+	CFStringRef     key,
+	PMResolution *  res);
 
 
 /*
  *  PMTicketGetIndexPMResolution()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1759,18 +1759,18 @@ PMTicketGetPMResolution(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetIndexPMResolution(
-  PMTicketRef     ticket,
-  UInt32          nodeIndex1,
-  UInt32          nodeIndex2,
-  CFStringRef     key,
-  UInt32          index,
-  PMResolution *  res);
+	PMTicketRef     ticket,
+	UInt32          nodeIndex1,
+	UInt32          nodeIndex2,
+	CFStringRef     key,
+	UInt32          index,
+	PMResolution *  res);
 
 
 /* PMRect - Array of 4 doubles */
 /*
  *  PMTicketGetPMRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1778,11 +1778,11 @@ PMTicketGetIndexPMResolution(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetPMRect(
-  PMTicketRef   ticket,
-  UInt32        nodeIndex1,
-  UInt32        nodeIndex2,
-  CFStringRef   key,
-  PMRect *      value);
+	PMTicketRef   ticket,
+	UInt32        nodeIndex1,
+	UInt32        nodeIndex2,
+	CFStringRef   key,
+	PMRect *      value);
 
 
 
@@ -1790,7 +1790,7 @@ PMTicketGetPMRect(
 /* CFData */
 /*
  *  PMTicketGetCFData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1798,11 +1798,11 @@ PMTicketGetPMRect(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetCFData(
-  PMTicketRef   ticket,
-  UInt32        nodeIndex1,
-  UInt32        nodeIndex2,
-  CFStringRef   key,
-  CFDataRef *   item);
+	PMTicketRef   ticket,
+	UInt32        nodeIndex1,
+	UInt32        nodeIndex2,
+	CFStringRef   key,
+	CFDataRef *   item);
 
 
 /* UInt8 - 'C' Bytes */
@@ -1811,7 +1811,7 @@ PMTicketGetCFData(
 /* set, this time with valid data pointer and valid size pointer pointing to # of bytes requested. */
 /*
  *  PMTicketGetBytes()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1819,19 +1819,19 @@ PMTicketGetCFData(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetBytes(
-  PMTicketRef   ticket,
-  UInt32        nodeIndex1,
-  UInt32        nodeIndex2,
-  CFStringRef   key,
-  UInt8 *       data,
-  UInt32 *      size);
+	PMTicketRef   ticket,
+	UInt32        nodeIndex1,
+	UInt32        nodeIndex2,
+	CFStringRef   key,
+	UInt8 *       data,
+	UInt32 *      size);
 
 
 /* Booleans */
 /* CFBoolean */
 /*
  *  PMTicketGetCFBoolean()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1839,17 +1839,17 @@ PMTicketGetBytes(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetCFBoolean(
-  PMTicketRef     ticket,
-  UInt32          nodeIndex1,
-  UInt32          nodeIndex2,
-  CFStringRef     key,
-  CFBooleanRef *  item);
+	PMTicketRef     ticket,
+	UInt32          nodeIndex1,
+	UInt32          nodeIndex2,
+	CFStringRef     key,
+	CFBooleanRef *  item);
 
 
 /* 'C' Boolean  */
 /*
  *  PMTicketGetBoolean()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1857,17 +1857,17 @@ PMTicketGetCFBoolean(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetBoolean(
-  PMTicketRef   ticket,
-  UInt32        nodeIndex1,
-  UInt32        nodeIndex2,
-  CFStringRef   key,
-  Boolean *     value);
+	PMTicketRef   ticket,
+	UInt32        nodeIndex1,
+	UInt32        nodeIndex2,
+	CFStringRef   key,
+	Boolean *     value);
 
 
 /* Dates */
 /*
  *  PMTicketGetCFDate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1875,17 +1875,17 @@ PMTicketGetBoolean(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetCFDate(
-  PMTicketRef   ticket,
-  UInt32        nodeIndex1,
-  UInt32        nodeIndex2,
-  CFStringRef   key,
-  CFDateRef *   item);
+	PMTicketRef   ticket,
+	UInt32        nodeIndex1,
+	UInt32        nodeIndex2,
+	CFStringRef   key,
+	CFDateRef *   item);
 
 
 /* Non-numeric Arrays */
 /*
  *  PMTicketGetCFArray()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1893,17 +1893,17 @@ PMTicketGetCFDate(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetCFArray(
-  PMTicketRef   ticket,
-  UInt32        nodeIndex1,
-  UInt32        nodeIndex2,
-  CFStringRef   key,
-  CFArrayRef *  item);
+	PMTicketRef   ticket,
+	UInt32        nodeIndex1,
+	UInt32        nodeIndex2,
+	CFStringRef   key,
+	CFArrayRef *  item);
 
 
 /* Dictionaries */
 /*
  *  PMTicketGetCFDictionary()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1911,17 +1911,17 @@ PMTicketGetCFArray(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetCFDictionary(
-  PMTicketRef        ticket,
-  UInt32             nodeIndex1,
-  UInt32             nodeIndex2,
-  CFStringRef        key,
-  CFDictionaryRef *  item);
+	PMTicketRef        ticket,
+	UInt32             nodeIndex1,
+	UInt32             nodeIndex2,
+	CFStringRef        key,
+	CFDictionaryRef *  item);
 
 
 /* PMTemplates, which are defined to be opaque. */
 /*
  *  PMTicketCreateTemplate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1929,18 +1929,18 @@ PMTicketGetCFDictionary(
  */
 EXTERN_API_C( OSStatus )
 PMTicketCreateTemplate(
-  PMTicketRef      ticket,
-  UInt32           nodeIndex1,
-  UInt32           nodeIndex2,
-  CFStringRef      key,
-  PMTemplateRef *  item);
+	PMTicketRef      ticket,
+	UInt32           nodeIndex1,
+	UInt32           nodeIndex2,
+	CFStringRef      key,
+	PMTemplateRef *  item);
 
 
 
 /* The generic calls for regular items and meta items. See notes on "SetMetaItem" for more details. */
 /*
  *  PMTicketGetItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1948,17 +1948,17 @@ PMTicketCreateTemplate(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetItem(
-  PMTicketRef   ticket,
-  UInt32        nodeIndex1,
-  UInt32        nodeIndex2,
-  CFStringRef   key,
-  CFTypeRef *   item);
+	PMTicketRef   ticket,
+	UInt32        nodeIndex1,
+	UInt32        nodeIndex2,
+	CFStringRef   key,
+	CFTypeRef *   item);
 
 
 /* Meta items don't get saved to XML. */
 /*
  *  PMTicketGetMetaItem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1966,9 +1966,9 @@ PMTicketGetItem(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetMetaItem(
-  PMTicketRef   ticket,
-  CFStringRef   key,
-  CFTypeRef *   item);
+	PMTicketRef   ticket,
+	CFStringRef   key,
+	CFTypeRef *   item);
 
 
 
@@ -1978,7 +1978,7 @@ PMTicketGetMetaItem(
 /* later on. */
 /*
  *  PMTicketSetTicket()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1986,14 +1986,14 @@ PMTicketGetMetaItem(
  */
 EXTERN_API_C( OSStatus )
 PMTicketSetTicket(
-  PMTicketRef   ticket,
-  PMTicketRef   ticketToAdd,
-  UInt32        index);
+	PMTicketRef   ticket,
+	PMTicketRef   ticketToAdd,
+	UInt32        index);
 
 
 /*
  *  PMTicketContainsTicket()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2001,15 +2001,15 @@ PMTicketSetTicket(
  */
 EXTERN_API_C( OSStatus )
 PMTicketContainsTicket(
-  PMTicketRef   ticket,
-  CFStringRef   requestedType,
-  UInt32        index,
-  Boolean *     exists);
+	PMTicketRef   ticket,
+	CFStringRef   requestedType,
+	UInt32        index,
+	Boolean *     exists);
 
 
 /*
  *  PMTicketGetTicket()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2017,15 +2017,15 @@ PMTicketContainsTicket(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetTicket(
-  PMTicketRef    ticket,
-  CFStringRef    requestedType,
-  UInt32         index,
-  PMTicketRef *  retreivedTicket);
+	PMTicketRef    ticket,
+	CFStringRef    requestedType,
+	UInt32         index,
+	PMTicketRef *  retreivedTicket);
 
 
 /*
  *  PMTicketRemoveTicket()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2033,14 +2033,14 @@ PMTicketGetTicket(
  */
 EXTERN_API_C( OSStatus )
 PMTicketRemoveTicket(
-  PMTicketRef   ticket,
-  CFStringRef   typeToRemove,
-  UInt32        index);
+	PMTicketRef   ticket,
+	CFStringRef   typeToRemove,
+	UInt32        index);
 
 
 /*
  *  PMTicketGetPPDDict()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2048,21 +2048,21 @@ PMTicketRemoveTicket(
  */
 EXTERN_API_C( OSStatus )
 PMTicketGetPPDDict(
-  PMTicketRef               ticket,
-  UInt32                    nodeIndex1,
-  UInt32                    nodeIndex2,
-  CFMutableDictionaryRef *  dict);
+	PMTicketRef               ticket,
+	UInt32                    nodeIndex1,
+	UInt32                    nodeIndex2,
+	CFMutableDictionaryRef *  dict);
 
 
 
 
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+		#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+		#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+		#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF

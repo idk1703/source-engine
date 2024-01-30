@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,9 +19,9 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : demoframe - 
-//			demotime - 
+// Purpose:
+// Input  : demoframe -
+//			demotime -
 //-----------------------------------------------------------------------------
 bool CDemoActionSkipAhead::Update( const DemoActionTimingContext& tc )
 {
@@ -38,8 +38,8 @@ bool CDemoActionSkipAhead::Update( const DemoActionTimingContext& tc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pInitData - 
+// Purpose:
+// Input  : *pInitData -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoActionSkipAhead::Init( KeyValues *pInitData )
@@ -54,8 +54,8 @@ bool CDemoActionSkipAhead::Init( KeyValues *pInitData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : buf - 
+// Purpose:
+// Input  : buf -
 //-----------------------------------------------------------------------------
 void CDemoActionSkipAhead::SaveKeysToBuffer( int depth, CUtlBuffer& buf )
 {
@@ -77,8 +77,8 @@ void CDemoActionSkipAhead::SaveKeysToBuffer( int depth, CUtlBuffer& buf )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frame - 
+// Purpose:
+// Input  : frame -
 //-----------------------------------------------------------------------------
 void CDemoActionSkipAhead::SetSkipToTick( int frame )
 {
@@ -87,8 +87,8 @@ void CDemoActionSkipAhead::SetSkipToTick( int frame )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : t - 
+// Purpose:
+// Input  : t -
 //-----------------------------------------------------------------------------
 void CDemoActionSkipAhead::SetSkipToTime( float t )
 {
@@ -120,9 +120,9 @@ DECLARE_DEMOACTION( DEMO_ACTION_SKIPAHEAD, CDemoActionSkipAhead );
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : demoframe - 
-//			demotime - 
+// Purpose:
+// Input  : demoframe -
+//			demotime -
 //-----------------------------------------------------------------------------
 bool CDemoActionStopPlayback::Update( const DemoActionTimingContext& tc )
 {
@@ -152,8 +152,8 @@ DECLARE_DEMOACTION( DEMO_ACTION_STOPPLAYBACK, CDemoActionStopPlayback );
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pInitData - 
+// Purpose:
+// Input  : *pInitData -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoActionPlayCommands::Init( KeyValues *pInitData )
@@ -167,8 +167,8 @@ bool CDemoActionPlayCommands::Init( KeyValues *pInitData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *stream - 
+// Purpose:
+// Input  : *stream -
 //-----------------------------------------------------------------------------
 void CDemoActionPlayCommands::SetCommandStream( char const *stream )
 {
@@ -176,7 +176,7 @@ void CDemoActionPlayCommands::SetCommandStream( char const *stream )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char
 //-----------------------------------------------------------------------------
 char const	*CDemoActionPlayCommands::GetCommandStream( void ) const
@@ -185,7 +185,7 @@ char const	*CDemoActionPlayCommands::GetCommandStream( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoActionPlayCommands::FireAction( void )
 {
@@ -198,8 +198,8 @@ void CDemoActionPlayCommands::FireAction( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : buf - 
+// Purpose:
+// Input  : buf -
 //-----------------------------------------------------------------------------
 void CDemoActionPlayCommands::SaveKeysToBuffer( int depth, CUtlBuffer& buf )
 {
@@ -214,8 +214,8 @@ DECLARE_DEMOACTION( DEMO_ACTION_PLAYCOMMANDS, CDemoActionPlayCommands );
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pInitData - 
+// Purpose:
+// Input  : *pInitData -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoActionScreenFadeStart::Init( KeyValues *pInitData )
@@ -237,7 +237,7 @@ bool CDemoActionScreenFadeStart::Init( KeyValues *pInitData )
 
 	fade.duration = (unsigned short)((float)(1<<SCREENFADE_FRACBITS) * duration );
 	fade.holdTime = (unsigned short)((float)(1<<SCREENFADE_FRACBITS) * holdTime );
-	
+
 	fade.fadeFlags = 0;
 
 	if ( fadein )
@@ -270,7 +270,7 @@ bool CDemoActionScreenFadeStart::Init( KeyValues *pInitData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : ScreenFade_t const
 //-----------------------------------------------------------------------------
 ScreenFade_t *CDemoActionScreenFadeStart::GetScreenFade( void )
@@ -279,7 +279,7 @@ ScreenFade_t *CDemoActionScreenFadeStart::GetScreenFade( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoActionScreenFadeStart::FireAction( void )
 {
@@ -288,8 +288,8 @@ void CDemoActionScreenFadeStart::FireAction( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : buf - 
+// Purpose:
+// Input  : buf -
 //-----------------------------------------------------------------------------
 void CDemoActionScreenFadeStart::SaveKeysToBuffer( int depth, CUtlBuffer& buf )
 {
@@ -325,8 +325,8 @@ DECLARE_DEMOACTION( DEMO_ACTION_SCREENFADE_START, CDemoActionScreenFadeStart );
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *text - 
+// Purpose:
+// Input  : *text -
 //-----------------------------------------------------------------------------
 void CDemoActionTextMessageStart::SetMessageText( char const *text )
 {
@@ -334,7 +334,7 @@ void CDemoActionTextMessageStart::SetMessageText( char const *text )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CDemoActionTextMessageStart::GetMessageText( void ) const
@@ -343,8 +343,8 @@ char const *CDemoActionTextMessageStart::GetMessageText( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *font - 
+// Purpose:
+// Input  : *font -
 //-----------------------------------------------------------------------------
 void CDemoActionTextMessageStart::SetFontName( char const *font )
 {
@@ -352,7 +352,7 @@ void CDemoActionTextMessageStart::SetFontName( char const *font )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CDemoActionTextMessageStart::GetFontName( void ) const
@@ -365,8 +365,8 @@ char const *CDemoActionTextMessageStart::GetFontName( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pInitData - 
+// Purpose:
+// Input  : *pInitData -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoActionTextMessageStart::Init( KeyValues *pInitData )
@@ -418,7 +418,7 @@ bool CDemoActionTextMessageStart::Init( KeyValues *pInitData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : ScreenFade_t const
 //-----------------------------------------------------------------------------
 client_textmessage_t *CDemoActionTextMessageStart::GetTextMessage( void )
@@ -427,7 +427,7 @@ client_textmessage_t *CDemoActionTextMessageStart::GetTextMessage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoActionTextMessageStart::FireAction( void )
 {
@@ -439,8 +439,8 @@ void CDemoActionTextMessageStart::FireAction( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : buf - 
+// Purpose:
+// Input  : buf -
 //-----------------------------------------------------------------------------
 void CDemoActionTextMessageStart::SaveKeysToBuffer( int depth, CUtlBuffer& buf )
 {
@@ -483,8 +483,8 @@ DECLARE_DEMOACTION( DEMO_ACTION_TEXTMESSAGE_START, CDemoActionTextMessageStart )
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pInitData - 
+// Purpose:
+// Input  : *pInitData -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoActionCDTrackStart::Init( KeyValues *pInitData )
@@ -498,8 +498,8 @@ bool CDemoActionCDTrackStart::Init( KeyValues *pInitData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : track - 
+// Purpose:
+// Input  : track -
 //-----------------------------------------------------------------------------
 void CDemoActionCDTrackStart::SetTrack( int track )
 {
@@ -507,7 +507,7 @@ void CDemoActionCDTrackStart::SetTrack( int track )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CDemoActionCDTrackStart::GetTrack( void ) const
@@ -516,7 +516,7 @@ int CDemoActionCDTrackStart::GetTrack( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoActionCDTrackStart::FireAction( void )
 {
@@ -533,8 +533,8 @@ void CDemoActionCDTrackStart::FireAction( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : buf - 
+// Purpose:
+// Input  : buf -
 //-----------------------------------------------------------------------------
 void CDemoActionCDTrackStart::SaveKeysToBuffer( int depth, CUtlBuffer& buf )
 {
@@ -549,7 +549,7 @@ DECLARE_DEMOACTION( DEMO_ACTION_PLAYCDTRACK_START, CDemoActionCDTrackStart );
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoActionCDTrackStop::FireAction( void )
 {
@@ -564,8 +564,8 @@ DECLARE_DEMOACTION( DEMO_ACTION_PLAYCDTRACK_STOP, CDemoActionCDTrackStop );
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pInitData - 
+// Purpose:
+// Input  : *pInitData -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoActionPlaySoundStart::Init( KeyValues *pInitData )
@@ -581,8 +581,8 @@ bool CDemoActionPlaySoundStart::Init( KeyValues *pInitData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *stream - 
+// Purpose:
+// Input  : *stream -
 //-----------------------------------------------------------------------------
 void CDemoActionPlaySoundStart::SetSoundName( char const *name )
 {
@@ -590,7 +590,7 @@ void CDemoActionPlaySoundStart::SetSoundName( char const *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char
 //-----------------------------------------------------------------------------
 char const	*CDemoActionPlaySoundStart::GetSoundName( void ) const
@@ -599,7 +599,7 @@ char const	*CDemoActionPlaySoundStart::GetSoundName( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoActionPlaySoundStart::FireAction( void )
 {
@@ -628,8 +628,8 @@ void CDemoActionPlaySoundStart::FireAction( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : buf - 
+// Purpose:
+// Input  : buf -
 //-----------------------------------------------------------------------------
 void CDemoActionPlaySoundStart::SaveKeysToBuffer( int depth, CUtlBuffer& buf )
 {
@@ -643,9 +643,9 @@ DECLARE_DEMOACTION( DEMO_ACTION_PLAYSOUND_START, CDemoActionPlaySoundStart );
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : demoframe - 
-//			demotime - 
+// Purpose:
+// Input  : demoframe -
+//			demotime -
 //-----------------------------------------------------------------------------
 bool CBaseDemoActionWithStopTime::Update( const DemoActionTimingContext& tc )
 {
@@ -676,8 +676,8 @@ bool CBaseDemoActionWithStopTime::Update( const DemoActionTimingContext& tc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pInitData - 
+// Purpose:
+// Input  : *pInitData -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseDemoActionWithStopTime::Init( KeyValues *pInitData )
@@ -692,8 +692,8 @@ bool CBaseDemoActionWithStopTime::Init( KeyValues *pInitData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : buf - 
+// Purpose:
+// Input  : buf -
 //-----------------------------------------------------------------------------
 void CBaseDemoActionWithStopTime::SaveKeysToBuffer( int depth, CUtlBuffer& buf )
 {
@@ -715,8 +715,8 @@ void CBaseDemoActionWithStopTime::SaveKeysToBuffer( int depth, CUtlBuffer& buf )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frame - 
+// Purpose:
+// Input  : frame -
 //-----------------------------------------------------------------------------
 void CBaseDemoActionWithStopTime::SetStopTick( int tick )
 {
@@ -725,8 +725,8 @@ void CBaseDemoActionWithStopTime::SetStopTick( int tick )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : t - 
+// Purpose:
+// Input  : t -
 //-----------------------------------------------------------------------------
 void CBaseDemoActionWithStopTime::SetStopTime( float t )
 {
@@ -735,7 +735,7 @@ void CBaseDemoActionWithStopTime::SetStopTime( float t )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDemoActionChangePlaybackRate::CDemoActionChangePlaybackRate()
 {
@@ -744,8 +744,8 @@ CDemoActionChangePlaybackRate::CDemoActionChangePlaybackRate()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pInitData - 
+// Purpose:
+// Input  : *pInitData -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoActionChangePlaybackRate::Init( KeyValues *pInitData )
@@ -759,8 +759,8 @@ bool CDemoActionChangePlaybackRate::Init( KeyValues *pInitData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : buf - 
+// Purpose:
+// Input  : buf -
 //-----------------------------------------------------------------------------
 void CDemoActionChangePlaybackRate::SaveKeysToBuffer( int depth, CUtlBuffer& buf )
 {
@@ -770,8 +770,8 @@ void CDemoActionChangePlaybackRate::SaveKeysToBuffer( int depth, CUtlBuffer& buf
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frame - 
+// Purpose:
+// Input  : frame -
 //-----------------------------------------------------------------------------
 void CDemoActionChangePlaybackRate::SetPlaybackRate( float rate )
 {
@@ -779,8 +779,8 @@ void CDemoActionChangePlaybackRate::SetPlaybackRate( float rate )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : t - 
+// Purpose:
+// Input  : t -
 //-----------------------------------------------------------------------------
 float CDemoActionChangePlaybackRate::GetPlaybackRate( void ) const
 {
@@ -788,7 +788,7 @@ float CDemoActionChangePlaybackRate::GetPlaybackRate( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoActionChangePlaybackRate::FireAction( void )
 {
@@ -798,7 +798,7 @@ void CDemoActionChangePlaybackRate::FireAction( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoActionChangePlaybackRate::OnActionFinished( void )
 {
@@ -810,7 +810,7 @@ DECLARE_DEMOACTION( DEMO_ACTION_CHANGEPLAYBACKRATE, CDemoActionChangePlaybackRat
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDemoActionPausePlayback::CDemoActionPausePlayback()
 {
@@ -818,8 +818,8 @@ CDemoActionPausePlayback::CDemoActionPausePlayback()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pInitData - 
+// Purpose:
+// Input  : *pInitData -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoActionPausePlayback::Init( KeyValues *pInitData )
@@ -833,8 +833,8 @@ bool CDemoActionPausePlayback::Init( KeyValues *pInitData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : buf - 
+// Purpose:
+// Input  : buf -
 //-----------------------------------------------------------------------------
 void CDemoActionPausePlayback::SaveKeysToBuffer( int depth, CUtlBuffer& buf )
 {
@@ -844,8 +844,8 @@ void CDemoActionPausePlayback::SaveKeysToBuffer( int depth, CUtlBuffer& buf )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frame - 
+// Purpose:
+// Input  : frame -
 //-----------------------------------------------------------------------------
 void CDemoActionPausePlayback::SetPauseTime( float t )
 {
@@ -853,8 +853,8 @@ void CDemoActionPausePlayback::SetPauseTime( float t )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : t - 
+// Purpose:
+// Input  : t -
 //-----------------------------------------------------------------------------
 float CDemoActionPausePlayback::GetPauseTime( void ) const
 {
@@ -862,7 +862,7 @@ float CDemoActionPausePlayback::GetPauseTime( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoActionPausePlayback::FireAction( void )
 {
@@ -886,7 +886,7 @@ CDemoActionZoom::CDemoActionZoom()
 	m_flFOVRateOut = 0;  // degress per second
 	m_flFOVRateIn = 0;	 // degrees per second
 	m_flHoldTime = 0;
-	
+
 	//
 	m_flFOVStartTime = 0;
 	m_flOriginalFOV = 0.0f;
@@ -909,8 +909,8 @@ bool CDemoActionZoom::Init( KeyValues *pInitData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : tc - 
+// Purpose:
+// Input  : tc -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoActionZoom::Update( const DemoActionTimingContext& tc )

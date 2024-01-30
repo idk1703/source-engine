@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -33,7 +33,7 @@ public:
 	virtual			~CTEBubbleTrail( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 	DECLARE_SERVERCLASS();
 
 public:
@@ -46,8 +46,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEBubbleTrail::CTEBubbleTrail( const char *name ) :
 	CBaseTempEntity( name )
@@ -61,22 +61,22 @@ CTEBubbleTrail::CTEBubbleTrail( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEBubbleTrail::~CTEBubbleTrail( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEBubbleTrail::Test( const Vector& current_origin, const QAngle& current_angles )
 {
 	// Fill in data
 	m_vecMins = current_origin;
-	
+
 	Vector forward;
 
 	m_vecMins.GetForModify()[2] += 24;
@@ -113,17 +113,17 @@ END_SEND_TABLE()
 static CTEBubbleTrail g_TEBubbleTrail( "Bubble Trail" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//			*mins - 
-//			*maxs - 
-//			height - 
-//			modelindex - 
-//			count - 
-//			speed - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//			*mins -
+//			*maxs -
+//			height -
+//			modelindex -
+//			count -
+//			speed -
 //-----------------------------------------------------------------------------
 void TE_BubbleTrail( IRecipientFilter& filter, float delay,
 	const Vector* mins, const Vector* maxs, float flWaterZ, int modelindex, int count, float speed )

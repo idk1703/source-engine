@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -36,23 +36,23 @@ C_TEBaseBeam::C_TEBaseBeam( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBaseBeam::~C_TEBaseBeam( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
-void C_TEBaseBeam::PreDataUpdate( DataUpdateType_t updateType ) 
-{ 
+void C_TEBaseBeam::PreDataUpdate( DataUpdateType_t updateType )
+{
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEBaseBeam::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -79,4 +79,3 @@ BEGIN_RECV_TABLE_NOBASE( C_TEBaseBeam, DT_BaseBeam )
 	RecvPropInt( RECVINFO(a)),
 	RecvPropInt( RECVINFO(m_nFlags)),
 END_RECV_TABLE()
-

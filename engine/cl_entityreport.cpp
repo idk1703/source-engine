@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -132,7 +132,7 @@ int CompareEntityBits(const void* pIndexA, const void* pIndexB )
 			return 1;
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -146,12 +146,12 @@ void CL_ResetEntityBits( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Record activity
-// Input  : entnum - 
-//			bitcount - 
+// Input  : entnum -
+//			bitcount -
 //-----------------------------------------------------------------------------
 void CL_RecordEntityBits( int entnum, int bitcount )
 {
-	if ( entnum < 0 || entnum >= MAX_EDICTS ) 
+	if ( entnum < 0 || entnum >= MAX_EDICTS )
 	{
 		return;
 	}
@@ -178,7 +178,7 @@ void CL_RecordEntityBits( int entnum, int bitcount )
 
 //-----------------------------------------------------------------------------
 // Purpose: Record entity add event
-// Input  : entnum - 
+// Input  : entnum -
 //-----------------------------------------------------------------------------
 void CL_RecordAddEntity( int entnum )
 {
@@ -194,7 +194,7 @@ void CL_RecordAddEntity( int entnum )
 
 //-----------------------------------------------------------------------------
 // Purpose: record entity leave event
-// Input  : entnum - 
+// Input  : entnum -
 //-----------------------------------------------------------------------------
 void CL_RecordLeavePVS( int entnum )
 {
@@ -210,8 +210,8 @@ void CL_RecordLeavePVS( int entnum )
 
 //-----------------------------------------------------------------------------
 // Purpose: record entity deletion event
-// Input  : entnum - 
-//			*pclass - 
+// Input  : entnum -
+//			*pclass -
 //-----------------------------------------------------------------------------
 void CL_RecordDeleteEntity( int entnum, ClientClass *pclass )
 {
@@ -255,7 +255,7 @@ static CEntityReportPanel *g_pEntityReportPanel = NULL;
 
 //-----------------------------------------------------------------------------
 // Purpose: Creates the CEntityReportPanel VGUI panel
-// Input  : *parent - 
+// Input  : *parent -
 //-----------------------------------------------------------------------------
 void CL_CreateEntityReportPanel( vgui::Panel *parent )
 {
@@ -264,12 +264,12 @@ void CL_CreateEntityReportPanel( vgui::Panel *parent )
 
 //-----------------------------------------------------------------------------
 // Purpose: Instances the entity report panel
-// Input  : *parent - 
+// Input  : *parent -
 //-----------------------------------------------------------------------------
 CEntityReportPanel::CEntityReportPanel( vgui::Panel *parent ) :
 	CBasePanel( parent, "CEntityReportPanel" )
 {
-	// Need parent here, before loading up textures, so getSurfaceBase 
+	// Need parent here, before loading up textures, so getSurfaceBase
 	//  will work on this panel ( it's null otherwise )
 	SetSize( videomode->GetModeStereoWidth(), videomode->GetModeStereoHeight() );
 	SetPos( 0, 0 );
@@ -284,7 +284,7 @@ CEntityReportPanel::CEntityReportPanel( vgui::Panel *parent ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEntityReportPanel::~CEntityReportPanel( void )
 {
@@ -301,7 +301,7 @@ void CEntityReportPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CEntityReportPanel::ShouldDraw( void )
@@ -310,14 +310,14 @@ bool CEntityReportPanel::ShouldDraw( void )
 	{
 		return false;
 	}
-	
+
 	return true;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Helper to flash colors
-// Input  : cycle - 
-//			value - 
+// Input  : cycle -
+//			value -
 // Output : static int
 //-----------------------------------------------------------------------------
 static int MungeColorValue( float cycle, int& value )
@@ -336,7 +336,7 @@ static int MungeColorValue( float cycle, int& value )
 
 	remaining = value - midpoint;
 	midpoint = midpoint + remaining / 2;
-		
+
 	value = midpoint + ( remaining / 2 ) * cycle;
 	if ( invert )
 	{
@@ -349,11 +349,11 @@ static int MungeColorValue( float cycle, int& value )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frac - 
-//			r - 
-//			g - 
-//			b - 
+// Purpose:
+// Input  : frac -
+//			r -
+//			g -
+//			b -
 //-----------------------------------------------------------------------------
 void CEntityReportPanel::ApplyEffect( ENTITYBITS *entry, int& r, int& g, int& b )
 {
@@ -387,7 +387,7 @@ void CEntityReportPanel::ApplyEffect( ENTITYBITS *entry, int& r, int& g, int& b 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEntityReportPanel::DrawEntry( int row, int col, int rowheight, int colwidth, int entityIdx )
 {
@@ -402,7 +402,7 @@ bool CEntityReportPanel::DrawEntry( int row, int col, int rowheight, int colwidt
 	int left = 5;
 
 	pNet	= entitylist->GetClientNetworkable( entityIdx );
-	
+
 	entry = &s_EntityBits[ entityIdx ];
 
 	effectactive = ( realtime <= entry->effectfinishtime ) ? true : false;
@@ -435,7 +435,7 @@ bool CEntityReportPanel::DrawEntry( int row, int col, int rowheight, int colwidt
 		wchar_t unicode[ 256 ];
 
 		Q_snprintf( text, sizeof(text), "(%i) %s", entityIdx, pClientClass->m_pNetworkName );
-		
+
 		g_pVGuiLocalize->ConvertANSIToUnicode( text, unicode, sizeof( unicode ) );
 
 		DrawColoredText( m_hFont, left + col * colwidth, top + row * rowheight, r, g, b, a, unicode );
@@ -490,10 +490,10 @@ bool CEntityReportPanel::DrawEntry( int row, int col, int rowheight, int colwidt
 		ApplyEffect( entry, r, g, b );
 
 		wchar_t unicode[ 256 ];
-		g_pVGuiLocalize->ConvertANSIToUnicode( ( effectactive && entry->deletedclientclass ) ? 
+		g_pVGuiLocalize->ConvertANSIToUnicode( ( effectactive && entry->deletedclientclass ) ?
 			  entry->deletedclientclass->m_pNetworkName : "unused", unicode, sizeof( unicode ) );
 
-		DrawColoredText( m_hFont, left + col * colwidth, top + row * rowheight, r, g, b, a, 
+		DrawColoredText( m_hFont, left + col * colwidth, top + row * rowheight, r, g, b, a,
 			L"(%i) %s", i, unicode );
 	}*/
 
@@ -501,9 +501,9 @@ bool CEntityReportPanel::DrawEntry( int row, int col, int rowheight, int colwidt
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEntityReportPanel::Paint() 
+void CEntityReportPanel::Paint()
 {
 	VPROF( "CEntityReportPanel::Paint" );
 
@@ -604,4 +604,3 @@ void CEntityReportPanel::Paint()
 		}
 	}
 }
-

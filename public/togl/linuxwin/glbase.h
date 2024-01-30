@@ -62,7 +62,7 @@
 #ifdef OSX
 	typedef void _PseudoNSGLContext;					// aka NSOpenGLContext
 	typedef _PseudoNSGLContext	*PseudoNSGLContextPtr;
-	
+
 	CGLContextObj	GetCGLContextFromNSGL( PseudoNSGLContextPtr nsglCtx );
 #endif
 
@@ -85,7 +85,7 @@
 
 #define GL_BATCH_TELEMETRY_ZONES 0
 
-// GL_BATCH_PERF_ANALYSIS - Enables gl_batch_vis, and various per-batch telemetry statistics messages. 
+// GL_BATCH_PERF_ANALYSIS - Enables gl_batch_vis, and various per-batch telemetry statistics messages.
 #define GL_BATCH_PERF_ANALYSIS 0
 #define GL_BATCH_PERF_ANALYSIS_WRITE_PNGS 0
 

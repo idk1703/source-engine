@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -40,12 +40,12 @@ public:
 
 protected:
 
-	/// Load up and resolve the entities that are supposed to be the control points 
+	/// Load up and resolve the entities that are supposed to be the control points
 	void ReadControlPointEnts( void );
 
 	bool				m_bStartActive;
 	string_t			m_iszEffectName;
-	
+
 	CNetworkVar( bool,	m_bActive );
 	CNetworkVar( int,	m_iEffectIndex )
 	CNetworkVar( float,	m_flStartTime );	// Time at which this effect was started.  This is used after restoring an active effect.

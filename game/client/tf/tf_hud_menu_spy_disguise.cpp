@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -35,9 +35,9 @@ ConVar tf_simple_disguise_menu( "tf_simple_disguise_menu", NULL, FCVAR_ARCHIVE, 
 DECLARE_HUDELEMENT( CHudMenuSpyDisguise );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CHudMenuSpyDisguise::CHudMenuSpyDisguise( const char *pElementName ) 
+CHudMenuSpyDisguise::CHudMenuSpyDisguise( const char *pElementName )
 	: CHudBaseBuildMenu( pElementName, "HudMenuSpyDisguise" )
 {
 	Panel *pParent = g_pClientMode->GetViewport();
@@ -90,7 +90,7 @@ CHudMenuSpyDisguise::CHudMenuSpyDisguise( const char *pElementName )
 ConVar tf_disguise_menu_controller_mode( "tf_disguise_menu_controller_mode", "0", FCVAR_ARCHIVE, "Use console controller disguise menus. 1 = ON, 0 = OFF." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuSpyDisguise::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -164,7 +164,7 @@ void CHudMenuSpyDisguise::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudMenuSpyDisguise::ShouldDraw( void )
 {
@@ -194,7 +194,7 @@ int	CHudMenuSpyDisguise::HudElementKeyInput( int down, ButtonCode_t keynum, cons
 	}
 
 	// menu classes are not in the same order as the defines
-	static int iRemapKeyToClass[9] = 
+	static int iRemapKeyToClass[9] =
 	{
 		TF_CLASS_SCOUT,
 		TF_CLASS_SOLDIER,
@@ -299,7 +299,7 @@ int	CHudMenuSpyDisguise::HudElementKeyInput( int down, ButtonCode_t keynum, cons
 
 				iSlot -= 1;	// adjust to be 0 based
 
-				// allow slot1 - slot4 
+				// allow slot1 - slot4
 				if ( iSlot < 0 || iSlot > 8 )
 					return 1;
 			}
@@ -413,7 +413,7 @@ int	CHudMenuSpyDisguise::HudElementKeyInput( int down, ButtonCode_t keynum, cons
 							ToggleSelectionIcons( true );
 							return 0;
 						}
-					}					
+					}
 				}
 			}
 		}
@@ -431,7 +431,7 @@ int	CHudMenuSpyDisguise::HudElementKeyInput( int down, ButtonCode_t keynum, cons
 			return 0;
 		}
 	}
-	
+
 	return 1;	// key not handled
 }
 
@@ -448,7 +448,7 @@ void SelectDisguise( int iClass, int iTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuSpyDisguise::FindToggleBinding( void )
 {
@@ -476,7 +476,7 @@ void CHudMenuSpyDisguise::FindToggleBinding( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuSpyDisguise::ToggleSelectionIcons( bool bGroup )
 {
@@ -538,7 +538,7 @@ void CHudMenuSpyDisguise::ToggleSelectionIcons( bool bGroup )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuSpyDisguise::SelectDisguise( int iClass, int iTeam )
 {
@@ -564,7 +564,7 @@ void CHudMenuSpyDisguise::SelectDisguise( int iClass, int iTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuSpyDisguise::ToggleDisguiseTeam( void )
 {
@@ -582,7 +582,7 @@ void CHudMenuSpyDisguise::ToggleDisguiseTeam( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuSpyDisguise::SetSelectedItem( int iSlot )
 {
@@ -596,13 +596,13 @@ void CHudMenuSpyDisguise::SetSelectedItem( int iSlot )
 			// move the selection background
 			int x, y;
 			m_pClassItems_Blue[m_iSelectedItem-1]->GetPos( x, y );
-			m_pActiveSelection->SetPos( x, y );	
+			m_pActiveSelection->SetPos( x, y );
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuSpyDisguise::FireGameEvent( IGameEvent *event )
 {
@@ -638,7 +638,7 @@ void CHudMenuSpyDisguise::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuSpyDisguise::SetVisible( bool state )
 {
@@ -648,7 +648,7 @@ void CHudMenuSpyDisguise::SetVisible( bool state )
 		engine->ClientCmd( "cancelselect" );
 
 		bool bConsoleMode = ( IsConsole() || tf_disguise_menu_controller_mode.GetBool() || ::input->IsSteamControllerActive() );
-			
+
 		if ( bConsoleMode != m_bInConsoleMode )
 		{
 			InvalidateLayout( true, true );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,13 +19,13 @@ CLitSmokeEmitter::CLitSmokeEmitter( const char *pDebugName ) : CSimpleEmitter( p
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *materialName - 
+// Purpose:
+// Input  : *materialName -
 //-----------------------------------------------------------------------------
 void CLitSmokeEmitter::Init( const char *materialName, Vector sortOrigin )
 {
 	m_hSmokeMaterial = GetPMaterial( materialName );
-	
+
 	IMaterial *pMaterial = ParticleMgr()->PMaterialToIMaterial( m_hSmokeMaterial );
 	if ( pMaterial )
 	{
@@ -37,9 +37,9 @@ void CLitSmokeEmitter::Init( const char *materialName, Vector sortOrigin )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : position - 
-//			color - 
+// Purpose:
+// Input  : position -
+//			color -
 //-----------------------------------------------------------------------------
 void CLitSmokeEmitter::SetDirectionalLight( Vector position, Vector color, float intensity )
 {
@@ -47,15 +47,15 @@ void CLitSmokeEmitter::SetDirectionalLight( Vector position, Vector color, float
 	info.m_flIntensity = intensity;
 	info.m_vColor = color;
 	info.m_vPos	= position;
-	
+
 	m_Renderer.SetDirectionalLight( info );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : position - 
-//			color - 
-//			intensity - 
+// Purpose:
+// Input  : position -
+//			color -
+//			intensity -
 //-----------------------------------------------------------------------------
 void CLitSmokeEmitter::SetLight( Vector position, Vector color, float intensity )
 {
@@ -68,8 +68,8 @@ void CLitSmokeEmitter::SetLight( Vector position, Vector color, float intensity 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flTimeDelta - 
+// Purpose:
+// Input  : flTimeDelta -
 //-----------------------------------------------------------------------------
 void CLitSmokeEmitter::Update( float flTimeDelta )
 {
@@ -93,12 +93,12 @@ void CLitSmokeEmitter::RenderParticles( CParticleRenderIterator *pIterator )
 	{
 		float	tLifetime = pParticle->m_flLifetime / pParticle->m_flDieTime;
 
-		// Transform.						   
+		// Transform.
 		Vector tPos;
 
 		TransformParticle( ParticleMgr()->GetModelView(), pParticle->m_Pos, tPos );
 		float sortKey = tPos.z;
-		
+
 		float alpha255 = ( ( (float) pParticle->m_uchColor[3]/255.0f ) * sin( M_PI_F * tLifetime ) ) * 255.0f;
 
 		Vector	color01 = Vector( pParticle->m_uchColor[0], pParticle->m_uchColor[1], pParticle->m_uchColor[2] ) * (tLifetime / 255.0f);
@@ -111,7 +111,7 @@ void CLitSmokeEmitter::RenderParticles( CParticleRenderIterator *pIterator )
 			FLerp( pParticle->m_uchStartSize, pParticle->m_uchEndSize, tLifetime ),
 			color01
 		);
-		
+
 		pParticle = (const LitSmokeParticle*)pIterator->GetNext( sortKey );
 	}
 }
@@ -121,7 +121,7 @@ void CLitSmokeEmitter::SimulateParticles( CParticleSimulateIterator *pIterator )
 {
 	// Make sure they've called Init().
 	Assert( m_bInitted );
-	
+
 	LitSmokeParticle *pParticle = (LitSmokeParticle*)pIterator->GetFirst();
 	while ( pParticle )
 	{
@@ -135,5 +135,3 @@ void CLitSmokeEmitter::SimulateParticles( CParticleSimulateIterator *pIterator )
 		pParticle = (LitSmokeParticle*)pIterator->GetNext();
 	}
 }
-
-

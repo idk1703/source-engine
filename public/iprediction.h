@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -36,7 +36,7 @@ public:
 
 	// Run prediction
 	virtual void	Update
-					( 
+					(
 						int startframe,				// World update ( un-modded ) most recently received
 						bool validframe,			// Is frame data valid
 						int incoming_acknowledged,	// Last command acknowledged to have been run by server (un-modded)

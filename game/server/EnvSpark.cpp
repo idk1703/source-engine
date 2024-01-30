@@ -15,8 +15,8 @@
 
 //-----------------------------------------------------------------------------
 // Purpose: Emits sparks from the given location and plays a random spark sound.
-// Input  : pev - 
-//			location - 
+// Input  : pev -
+//			location -
 //-----------------------------------------------------------------------------
 void DoSpark( CBaseEntity *ent, const Vector &location, int nMagnitude, int nTrailLength, bool bPlaySound, const Vector &vecDir )
 {
@@ -94,13 +94,13 @@ void CEnvSpark::Spawn(void)
 		m_flDelay = 1.0f;
 	}
 #endif//HL1_DLL
-	
+
 	Precache( );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvSpark::Precache(void)
 {
@@ -144,7 +144,7 @@ void CEnvSpark::InputStartSpark( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvSpark::StartSpark( void )
 {
@@ -170,7 +170,7 @@ void CEnvSpark::InputStopSpark( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvSpark::StopSpark( void )
 {
@@ -191,5 +191,3 @@ void CEnvSpark::InputToggleSpark( inputdata_t &inputdata )
 		InputStopSpark( inputdata );
 	}
 }
-
-

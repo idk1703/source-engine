@@ -109,7 +109,7 @@ bool CSteamApplication::Create( )
 
 	// Add in the cvar factory
 	AppModule_t cvarModule = LoadModule( VStdLib_GetICVarFactory() );
-	AddSystem( cvarModule, CVAR_INTERFACE_VERSION );	
+	AddSystem( cvarModule, CVAR_INTERFACE_VERSION );
 
 	AppModule_t fileSystemModule = LoadModule( pFileSystemDLL );
 	m_pFileSystem = (IFileSystem*)AddSystem( fileSystemModule, FILESYSTEM_INTERFACE_VERSION );
@@ -161,10 +161,10 @@ int CSteamApplication::Startup()
 	int nRetVal = BaseClass::Startup();
 	if ( GetErrorStage() != NONE )
 		return nRetVal;
-	
+
 	if ( FileSystem_SetBasePaths( m_pFileSystem ) != FS_OK )
 		return 0;
-	
+
 	// Now that Steam is loaded, we can load up main libraries through steam
 	m_pChildAppSystemGroup->Setup( m_pFileSystem, this );
 	return m_pChildAppSystemGroup->Startup();
@@ -179,4 +179,3 @@ void CSteamApplication::Shutdown()
 
 // Turn off memdbg macros (turned on up top) since this is included like a header
 #include "tier0/memdbgoff.h"
-

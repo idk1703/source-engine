@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -19,7 +19,7 @@
 #include "datamodel/dmelement.h"
 
 //-----------------------------------------------------------------------------
-// Forward declarations 
+// Forward declarations
 //-----------------------------------------------------------------------------
 class IPetDocCallback;
 class CPetDoc;
@@ -27,7 +27,7 @@ class CDmeParticleSystemDefinition;
 
 
 //-----------------------------------------------------------------------------
-// The file format for particle system definitions 
+// The file format for particle system definitions
 //-----------------------------------------------------------------------------
 #define PET_FILE_FORMAT "pcf"
 
@@ -36,7 +36,7 @@ typedef CDmrElementArray<CDmeParticleSystemDefinition> CDmrParticleSystemList;
 
 
 //-----------------------------------------------------------------------------
-// Contains all editable state 
+// Contains all editable state
 //-----------------------------------------------------------------------------
 class CPetDoc : public IDmNotify, CBaseElementPropertiesChoices
 {
@@ -46,7 +46,7 @@ public:
 
 	// Inherited from INotifyUI
 	virtual void NotifyDataChanged( const char *pReason, int nNotifySource, int nNotifyFlags );
-	virtual bool GetIntChoiceList( const char *pChoiceListType, CDmElement *pElement, 
+	virtual bool GetIntChoiceList( const char *pChoiceListType, CDmElement *pElement,
 		const char *pAttributeName, bool bArrayElement, IntChoiceList_t &list );
 
 	// Sets/Gets the file name
@@ -77,7 +77,7 @@ public:
 	CDmAttribute *GetParticleSystemDefinitionList();
 
 	// add a new definition we've created
-	void AddNewParticleSystemDefinition( CDmeParticleSystemDefinition *pNew, 
+	void AddNewParticleSystemDefinition( CDmeParticleSystemDefinition *pNew,
 										 CUndoScopeGuard &Guard );
 
 	// Adds a new particle system definition
@@ -97,9 +97,9 @@ public:
 	bool IsParticleSystemDefined( const char *pName );
 
 	// For element choice lists. Return false if it's an unknown choice list type
-	virtual bool GetStringChoiceList( const char *pChoiceListType, CDmElement *pElement, 
+	virtual bool GetStringChoiceList( const char *pChoiceListType, CDmElement *pElement,
 		const char *pAttributeName, bool bArrayElement, StringChoiceList_t &list );
-	virtual bool GetElementChoiceList( const char *pChoiceListType, CDmElement *pElement, 
+	virtual bool GetElementChoiceList( const char *pChoiceListType, CDmElement *pElement,
 		const char *pAttributeName, bool bArrayElement, ElementChoiceList_t &list );
 
 	// Updates a specific particle defintion

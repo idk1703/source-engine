@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,7 +34,7 @@ public:
 
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -47,8 +47,8 @@ public:
 		return BaseClass::ShouldPredict();
 	}
 #endif
-private:														
-	CWeaponObjRallyFlag( const CWeaponObjRallyFlag & );						
+private:
+	CWeaponObjRallyFlag( const CWeaponObjRallyFlag & );
 
 };
 

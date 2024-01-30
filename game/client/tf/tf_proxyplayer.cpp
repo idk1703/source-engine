@@ -49,7 +49,7 @@ public:
 		if ( GetRGBAImage( rgbaAvatarImage, destBufferSize ) )
 		{
 			// Set up the pixel writer to write into the VTF texture
-			CPixelWriter pixelWriter;		
+			CPixelWriter pixelWriter;
 			pixelWriter.SetPixelMemory( pVTFTexture->Format(), pVTFTexture->ImageData(), pVTFTexture->RowSizeInBytes( 0 ) );
 
 			// only write the pixels requested
@@ -84,9 +84,9 @@ public:
 class CPlayerSteamAvatarTextureRegenerator : public CRGBAImageTextureRegenerator
 {
 public:
-	CPlayerSteamAvatarTextureRegenerator( const CSteamID &steamID ) 
+	CPlayerSteamAvatarTextureRegenerator( const CSteamID &steamID )
 		: CRGBAImageTextureRegenerator()
-		, m_steamID(steamID) 
+		, m_steamID(steamID)
 		{}
 	virtual ~CPlayerSteamAvatarTextureRegenerator() {}
 

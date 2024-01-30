@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -36,10 +36,10 @@ public:
 
 	CWeaponSMG1();
 
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
-	
+
 	void	Precache( void );
 	void	AddViewKick( void );
 	void	SecondaryAttack( void );
@@ -69,7 +69,7 @@ protected:
 
 	Vector	m_vecTossVelocity;
 	float	m_flNextGrenadeCheck;
-	
+
 private:
 	CWeaponSMG1( const CWeaponSMG1 & );
 };
@@ -86,7 +86,7 @@ LINK_ENTITY_TO_CLASS( weapon_smg1, CWeaponSMG1 );
 PRECACHE_WEAPON_REGISTER(weapon_smg1);
 
 #ifndef CLIENT_DLL
-acttable_t	CWeaponSMG1::m_acttable[] = 
+acttable_t	CWeaponSMG1::m_acttable[] =
 {
 	{ ACT_HL2MP_IDLE,					ACT_HL2MP_IDLE_SMG1,					false },
 	{ ACT_HL2MP_RUN,					ACT_HL2MP_RUN_SMG1,						false },
@@ -104,12 +104,12 @@ IMPLEMENT_ACTTABLE(CWeaponSMG1);
 //=========================================================
 CWeaponSMG1::CWeaponSMG1( )
 {
-	m_fMinRange1		= 0;// No minimum range. 
+	m_fMinRange1		= 0;// No minimum range.
 	m_fMaxRange1		= 1400;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponSMG1::Precache( void )
 {
@@ -131,7 +131,7 @@ void CWeaponSMG1::Equip( CBaseCombatCharacter *pOwner )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Activity
 //-----------------------------------------------------------------------------
 Activity CWeaponSMG1::GetPrimaryAttackActivity( void )
@@ -141,7 +141,7 @@ Activity CWeaponSMG1::GetPrimaryAttackActivity( void )
 
 	if ( m_nShotsFired < 3 )
 		return ACT_VM_RECOIL1;
-	
+
 	if ( m_nShotsFired < 4 )
 		return ACT_VM_RECOIL2;
 
@@ -170,14 +170,14 @@ bool CWeaponSMG1::Reload( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponSMG1::AddViewKick( void )
 {
 	#define	EASY_DAMPEN			0.5f
 	#define	MAX_VERTICAL_KICK	1.0f	//Degrees
 	#define	SLIDE_LIMIT			2.0f	//Seconds
-	
+
 	//Get the view kick
 	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
 
@@ -188,13 +188,13 @@ void CWeaponSMG1::AddViewKick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponSMG1::SecondaryAttack( void )
 {
 	// Only the player fires this way so we can cast
 	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
-	
+
 	if ( pPlayer == NULL )
 		return;
 
@@ -218,14 +218,14 @@ void CWeaponSMG1::SecondaryAttack( void )
 	// Don't autoaim on grenade tosses
 	AngleVectors( pPlayer->EyeAngles() + pPlayer->GetPunchAngle(), &vecThrow );
 	VectorScale( vecThrow, 1000.0f, vecThrow );
-	
+
 #ifndef CLIENT_DLL
 	//Create the grenade
 	CGrenadeAR2 *pGrenade = (CGrenadeAR2*)Create( "grenade_ar2", vecSrc, vec3_angle, pPlayer );
 	pGrenade->SetAbsVelocity( vecThrow );
 
 	pGrenade->SetLocalAngularVelocity( RandomAngle( -400, 400 ) );
-	pGrenade->SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_BOUNCE ); 
+	pGrenade->SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_BOUNCE );
 	pGrenade->SetThrower( GetOwner() );
 	pGrenade->SetDamage( SMG1_GRENADE_DAMAGE );
 	pGrenade->SetDamageRadius( SMG1_GRENADE_RADIUS );

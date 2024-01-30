@@ -78,10 +78,10 @@ public:
 
 	virtual bool CanBeAnEnemyOf( CBaseEntity *pEnemy );
 
-	bool	IsHangingFromCeiling( void ) 
-	{ 
+	bool	IsHangingFromCeiling( void )
+	{
 #ifdef HL2_EPISODIC
-		return m_bHangingFromCeiling;	
+		return m_bHangingFromCeiling;
 #else
 		return false;
 #endif
@@ -215,7 +215,7 @@ public:
 	void	AttackSound( void );
 
 	enum SquadSlot_t
-	{	
+	{
 		SQUAD_SLOT_ENGAGE1 = LAST_SHARED_SQUADSLOT,
 		SQUAD_SLOT_ENGAGE2,
 		SQUAD_SLOT_ENGAGE3,

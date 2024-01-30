@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -80,7 +80,7 @@ font_t *CFontAmalgam::GetFontForChar(int ch)
 	for (int i = 0; i < m_Fonts.Count(); i++)
 	{
 #if defined(LINUX)
-        if ( ch >= m_Fonts[i].lowRange && ch <= m_Fonts[i].highRange && m_Fonts[i].font->HasChar(ch))
+	if ( ch >= m_Fonts[i].lowRange && ch <= m_Fonts[i].highRange && m_Fonts[i].font->HasChar(ch))
 #else
 		if (ch >= m_Fonts[i].lowRange && ch <= m_Fonts[i].highRange)
 #endif
@@ -148,7 +148,7 @@ int CFontAmalgam::GetFontMaxWidth()
 // Purpose: returns the name of the font that is loaded
 //-----------------------------------------------------------------------------
 const char *CFontAmalgam::GetFontName(int i)
-{	
+{
 	if ( m_Fonts.IsValidIndex( i ) && m_Fonts[ i ].font )
 	{
 		return m_Fonts[ i ].font->GetName();
@@ -163,12 +163,12 @@ const char *CFontAmalgam::GetFontName(int i)
 // Purpose: returns the family name of the font that is loaded
 //-----------------------------------------------------------------------------
 const char *CFontAmalgam::GetFontFamilyName( int i )
-{	
+{
 	if ( m_Fonts.IsValidIndex( i ) && m_Fonts[ i ].font )
 	{
 		return m_Fonts[ i ].font->GetFamilyName();
 	}
-	
+
 	return "";
 }
 
@@ -176,7 +176,7 @@ const char *CFontAmalgam::GetFontFamilyName( int i )
 // Purpose: returns the name of the font that is loaded
 //-----------------------------------------------------------------------------
 int CFontAmalgam::GetFlags(int i)
-{	
+{
 	if ( m_Fonts.Count() && m_Fonts[i].font )
 	{
 		return m_Fonts[i].font->GetFlags();
@@ -191,7 +191,7 @@ int CFontAmalgam::GetFlags(int i)
 // Purpose: returns the number of fonts this amalgam contains
 //-----------------------------------------------------------------------------
 int CFontAmalgam::GetCount()
-{		
+{
 	return m_Fonts.Count();
 }
 

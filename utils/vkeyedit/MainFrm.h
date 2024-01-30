@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -18,11 +18,11 @@
 
 class CMainFrame : public CFrameWnd
 {
-	
+
 protected: // create from serialization only
 	CMainFrame();
 	DECLARE_DYNCREATE(CMainFrame)
-		
+
 	CSplitterWnd m_wndSplitter;
 
 // Attributes

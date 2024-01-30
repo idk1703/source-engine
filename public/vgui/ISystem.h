@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -76,8 +76,8 @@ public:
 	virtual double GetTimeSinceLastUse() = 0;
 
 	// Get a string containing the available drives
-	// If the function succeeds, the return value is the length, in characters, 
-	// of the strings copied to the buffer, 
+	// If the function succeeds, the return value is the length, in characters,
+	// of the strings copied to the buffer,
 	// not including the terminating null character.
 	virtual int GetAvailableDrives(char *buf, int bufLen) = 0;
 

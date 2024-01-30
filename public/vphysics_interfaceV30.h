@@ -63,7 +63,7 @@ class IPhysicsEnvironment;
 class IPhysicsSurfaceProps;
 class IConvexInfo;
 
-enum PhysInterfaceId_t 
+enum PhysInterfaceId_t
 {
 	PIID_UNKNOWN,
 	PIID_IPHYSICSOBJECT,
@@ -174,7 +174,7 @@ public:
 	virtual void			PolysoupAddTriangle( CPhysPolysoup *pSoup, const Vector &a, const Vector &b, const Vector &c, int materialIndex7bits ) = 0;
 	// convert the convex into a compiled collision model
 	virtual CPhysCollide *ConvertPolysoupToCollide( CPhysPolysoup *pSoup, bool useMOPP ) = 0;
-	
+
 	// Get the memory size in bytes of the collision model for serialization
 	virtual int				CollideSize( CPhysCollide *pCollide ) = 0;
 	// serialize the collide to a block of memory
@@ -268,10 +268,10 @@ public:
 	virtual unsigned int GetGameData( int convexIndex ) = 0;
 	// Gets the triangle's verts to an array
 	virtual void	GetTriangleVerts( int convexIndex, int triangleIndex, Vector *verts ) = 0;
-	
+
 	// UNDONE: This doesn't work!!!
 	virtual void	SetTriangleVerts( int convexIndex, int triangleIndex, const Vector *verts ) = 0;
-	
+
 	// returns the 7-bit material index
 	virtual int		GetTriangleMaterialIndex( int convexIndex, int triangleIndex ) = 0;
 	// sets a 7-bit material index for this triangle
@@ -382,8 +382,8 @@ public:
 	virtual void Update( const Vector &position, const QAngle &angles, float timeOffset ) = 0;
 	virtual void MaxSpeed( float maxSpeed, float maxAngularSpeed ) = 0;
 	virtual void StepUp( float height ) = 0;
-	
-	// If the teleport distance is non-zero, the object will be teleported to 
+
+	// If the teleport distance is non-zero, the object will be teleported to
 	// the target location when the error exceeds this quantity.
 	virtual void SetTeleportDistance( float teleportDistance ) = 0;
 	virtual bool AllowsTranslation() = 0;
@@ -450,7 +450,7 @@ abstract_class IPhysicsCollisionSolver
 public:
 	virtual int ShouldCollide( IPhysicsObject *pObj0, IPhysicsObject *pObj1, void *pGameData0, void *pGameData1 ) = 0;
 	virtual int ShouldSolvePenetration( IPhysicsObject *pObj0, IPhysicsObject *pObj1, void *pGameData0, void *pGameData1, float dt ) = 0;
-	
+
 	// pObject has already done the max number of collisions this tick, should we freeze it to save CPU?
 	virtual bool ShouldFreezeObject( IPhysicsObject *pObject ) = 0;
 
@@ -491,7 +491,7 @@ public:
 	// This controls drag, air that is more dense has more drag.
 	virtual void			SetAirDensity( float density ) = 0;
 	virtual float			GetAirDensity( void ) = 0;
-	
+
 	// object creation
 	// create a polygonal object.  pCollisionModel was created by the physics builder DLL in a pre-process.
 	virtual IPhysicsObject	*CreatePolyObject( const CPhysCollide *pCollisionModel, int materialIndex, const Vector &position, const QAngle &angles, objectparams_t *pParams ) = 0;
@@ -575,10 +575,10 @@ public:
 
 	// Debugging:
 	virtual bool IsCollisionModelUsed( CPhysCollide *pCollide ) = 0;
-	
+
 	// Physics world version of the enginetrace API:
 	virtual void TraceRay( const Ray_t &ray, unsigned int fMask, IPhysicsTraceFilter *pTraceFilter, trace_t *pTrace ) = 0;
-	virtual void SweepCollideable( const CPhysCollide *pCollide, const Vector &vecAbsStart, const Vector &vecAbsEnd, 
+	virtual void SweepCollideable( const CPhysCollide *pCollide, const Vector &vecAbsStart, const Vector &vecAbsEnd,
 		const QAngle &vecAngles, unsigned int fMask, IPhysicsTraceFilter *pTraceFilter, trace_t *pTrace ) = 0;
 
 	// performance tuning
@@ -666,7 +666,7 @@ public:
 	// Enable / disable motion (pin / unpin the object)
 	virtual void			EnableMotion( bool enable ) = 0;
 
-	// call this when the collision filter conditions change due to this 
+	// call this when the collision filter conditions change due to this
 	// object's state (e.g. changing solid type or collision group)
 	virtual void			RecheckCollisionFilter() = 0;
 
@@ -680,7 +680,7 @@ public:
 	virtual void			LocalToWorldVector( Vector *worldVector, const Vector &localVector ) = 0;
 	// transforms a vector (no translation) from world to object-local space
 	virtual void			WorldToLocalVector( Vector *localVector, const Vector &worldVector ) = 0;
-	
+
 	// push on an object
 	// force vector is direction & magnitude of impulse kg in / s
 	virtual void			ApplyForceCenter( const Vector &forceVector ) = 0;
@@ -702,14 +702,14 @@ public:
 	virtual void			GetPosition( Vector *worldPosition, QAngle *angles ) = 0;
 	virtual void			GetPositionMatrix( matrix3x4_t *positionMatrix ) = 0;
 	// force the velocity to a new value
-	// NOTE: velocity is in worldspace, angularVelocity is relative to the object's 
+	// NOTE: velocity is in worldspace, angularVelocity is relative to the object's
 	// local axes (just like pev->velocity, pev->avelocity)
 	virtual void			SetVelocity( const Vector *velocity, const AngularImpulse *angularVelocity ) = 0;
 
 	// like the above, but force the change into the simulator immediately
 	virtual void			SetVelocityInstantaneous( const Vector *velocity, const AngularImpulse *angularVelocity ) = 0;
 
-	// NOTE: velocity is in worldspace, angularVelocity is relative to the object's 
+	// NOTE: velocity is in worldspace, angularVelocity is relative to the object's
 	// local axes (just like pev->velocity, pev->avelocity)
 	virtual void			GetVelocity( Vector *velocity, AngularImpulse *angularVelocity ) = 0;
 
@@ -717,7 +717,7 @@ public:
 	// the object's mass or inertia
 	virtual void			AddVelocity( const Vector *velocity, const AngularImpulse *angularVelocity ) = 0;
 	virtual void			GetVelocityAtPoint( const Vector &worldPosition, Vector &velocity ) = 0;
-	
+
 	virtual float			GetEnergy() = 0;
 
 	// returns true if the object is in contact with another object
@@ -730,7 +730,7 @@ public:
 	// refactor this a bit - move some of this to IPhysicsShadowController
 	virtual void			SetShadow( float maxSpeed, float maxAngularSpeed, bool allowPhysicsMovement, bool allowPhysicsRotation ) = 0;
 	virtual void			UpdateShadow( const Vector &targetPosition, const QAngle &targetAngles, bool tempDisableGravity, float timeOffset ) = 0;
-	
+
 	// returns number of ticks since last Update() call
 	virtual int				GetShadowPosition( Vector *position, QAngle *angles ) = 0;
 	virtual IPhysicsShadowController *GetShadowController( void ) const = 0;
@@ -770,7 +770,7 @@ public:
 	virtual unsigned int	GetContents() = 0;
 	virtual void			SetContents( unsigned int contents ) = 0;
 	virtual Vector			GetMassCenterLocalSpace() = 0;
-	
+
 	// used to iterate the contact points of an object
 	virtual IPhysicsFrictionSnapshot *CreateFrictionSnapshot() = 0;
 	virtual void DestroyFrictionSnapshot( IPhysicsFrictionSnapshot *pSnapshot ) = 0;
@@ -803,7 +803,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: These properties are defined per-material.  This is accessible at 
+// Purpose: These properties are defined per-material.  This is accessible at
 //			each triangle in a collision mesh
 //-----------------------------------------------------------------------------
 struct surfacephysicsparams_t

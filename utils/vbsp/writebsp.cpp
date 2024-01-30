@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -31,7 +31,7 @@ ONLY SAVE OUT PLANES THAT ARE ACTUALLY USED AS NODES
 
 =========================================================
 */
-  
+
 void EmitFaceVertexes (face_t **list, face_t *f);
 void AssignOccluderAreas();
 
@@ -135,7 +135,7 @@ void EmitLeaf (node_t *node)
 		// will be multiple leaves (albeit from different models) that reference
 		// the same cluster and parts of the code like ivp.cpp's ConvertWaterModelToPhysCollide
 		// won't work.
-		leaf_p->cluster = -1; 
+		leaf_p->cluster = -1;
 	}
 
 	leaf_p->contents = node->contents;
@@ -147,10 +147,10 @@ void EmitLeaf (node_t *node)
 
 	//
 	// write bounding box info
-	//	
+	//
 	VECTOR_COPY (node->mins, leaf_p->mins);
 	VECTOR_COPY (node->maxs, leaf_p->maxs);
-	
+
 	//
 	// write the leafbrushes
 	//
@@ -183,7 +183,7 @@ void EmitLeaf (node_t *node)
 
 	leaf_p->firstleafface = numleaffaces;
 
-	for (p = node->portals ; p ; p = p->next[s])	
+	for (p = node->portals ; p ; p = p->next[s])
 	{
 		s = (p->nodes[1] == node);
 		f = p->face[s];
@@ -192,7 +192,7 @@ void EmitLeaf (node_t *node)
 
 		EmitMarkFace (leaf_p, f);
 	}
-	
+
 	// emit the detail faces
 	for ( pList = node->leaffacelist; pList; pList = pList->pNext )
 	{
@@ -210,133 +210,133 @@ side_t *pOrigFaceSideList[MAX_MAP_PLANES];
 //-----------------------------------------------------------------------------
 int CreateOrigFace( face_t *f )
 {
-    int         i, j;
-    dface_t     *of;
-    side_t      *side;
-    int         vIndices[128];
-    int         eIndex[2];
-    winding_t   *pWinding;
+	int         i, j;
+	dface_t     *of;
+	side_t      *side;
+	int         vIndices[128];
+	int         eIndex[2];
+	winding_t   *pWinding;
 
-    // not a real face!
-    if( !f->w )
-        return -1;
+	// not a real face!
+	if( !f->w )
+		return -1;
 
-    // get the original face -- the "side"
-    side = f->originalface;
+	// get the original face -- the "side"
+	side = f->originalface;
 
-    // get the original face winding
+	// get the original face winding
 	if( !side->winding )
 	{
 		return -1;
 	}
 
-    //
-    // get the next original face
-    //
-    if( numorigfaces >= MAX_MAP_FACES )
+	//
+	// get the next original face
+	//
+	if( numorigfaces >= MAX_MAP_FACES )
 		Error( "Too many faces in map, max = %d", MAX_MAP_FACES );
 	of = &dorigfaces[numorigfaces];
-    numorigfaces++;
+	numorigfaces++;
 
-    // set original face to -1 -- it is an origianl face!
-    of->origFace = -1;
+	// set original face to -1 -- it is an origianl face!
+	of->origFace = -1;
 
-    //
-    // add side to plane list
-    //
-    side->next = pOrigFaceSideList[f->planenum];
-    pOrigFaceSideList[f->planenum] = side;
-    side->origIndex = numorigfaces - 1;
+	//
+	// add side to plane list
+	//
+	side->next = pOrigFaceSideList[f->planenum];
+	pOrigFaceSideList[f->planenum] = side;
+	side->origIndex = numorigfaces - 1;
 
-    pWinding = CopyWinding( side->winding );
+	pWinding = CopyWinding( side->winding );
 
-    //
-    // plane info
-    //
-    of->planenum = side->planenum;
+	//
+	// plane info
+	//
+	of->planenum = side->planenum;
 	if ( side->contents & CONTENTS_DETAIL )
 		of->onNode = 0;
 	else
 		of->onNode = 1;
 	of->side = side->planenum & 1;
 
-    //
-    // edge info
-    //
-    of->firstedge = numsurfedges;
-    of->numedges = side->winding->numpoints;
+	//
+	// edge info
+	//
+	of->firstedge = numsurfedges;
+	of->numedges = side->winding->numpoints;
 
-    //
-    // material info
-    //
-    of->texinfo = side->texinfo;
+	//
+	// material info
+	//
+	of->texinfo = side->texinfo;
 	of->dispinfo = f->dispinfo;
 
-    //
-    // save the vertices
-    //
-    for( i = 0; i < pWinding->numpoints; i++ )
-    {
-        //
-        // compare vertices
-        //
-		vIndices[i] = GetVertexnum( pWinding->p[i] );
-    }
-
-    //
-    // save off points -- as edges
-    //
-    for( i = 0; i < pWinding->numpoints; i++ )
+	//
+	// save the vertices
+	//
+	for( i = 0; i < pWinding->numpoints; i++ )
 	{
-        //
-        // look for matching edges first
-        //
-        eIndex[0] = vIndices[i];
-        eIndex[1] = vIndices[(i+1)%pWinding->numpoints];
+		//
+		// compare vertices
+		//
+		vIndices[i] = GetVertexnum( pWinding->p[i] );
+	}
 
-        for( j = firstmodeledge; j < numedges; j++ )
-        {
-            if( ( eIndex[0] == dedges[j].v[1] ) &&
-                ( eIndex[1] == dedges[j].v[0] ) &&
-         	    ( edgefaces[j][0]->contents == f->contents ) )
-            {
-                // check for multiple backward edges!! -- shouldn't have
+	//
+	// save off points -- as edges
+	//
+	for( i = 0; i < pWinding->numpoints; i++ )
+	{
+		//
+		// look for matching edges first
+		//
+		eIndex[0] = vIndices[i];
+		eIndex[1] = vIndices[(i+1)%pWinding->numpoints];
+
+		for( j = firstmodeledge; j < numedges; j++ )
+		{
+			if( ( eIndex[0] == dedges[j].v[1] ) &&
+				( eIndex[1] == dedges[j].v[0] ) &&
+				( edgefaces[j][0]->contents == f->contents ) )
+			{
+				// check for multiple backward edges!! -- shouldn't have
 				if( edgefaces[j][1] )
 					continue;
 
-                // set back edge
+				// set back edge
 				edgefaces[j][1] = f;
 
-                //
-                // get next surface edge
-                //
-                if( numsurfedges >= MAX_MAP_SURFEDGES )
-                    Error( "Too much brush geometry in bsp, numsurfedges == MAX_MAP_SURFEDGES" );                
-                dsurfedges[numsurfedges] = -j;
-                numsurfedges++;
-                break;
-            }
-        }
-        
-        if( j == numedges )
-        {
-            //
-            // get next edge
-            //
+				//
+				// get next surface edge
+				//
+				if( numsurfedges >= MAX_MAP_SURFEDGES )
+					Error( "Too much brush geometry in bsp, numsurfedges == MAX_MAP_SURFEDGES" );
+				dsurfedges[numsurfedges] = -j;
+				numsurfedges++;
+				break;
+			}
+		}
+
+		if( j == numedges )
+		{
+			//
+			// get next edge
+			//
 			AddEdge( eIndex[0], eIndex[1], f );
-        
-            //
-            // get next surface edge
-            //
-            if( numsurfedges >= MAX_MAP_SURFEDGES )
-				Error( "Too much brush geometry in bsp, numsurfedges == MAX_MAP_SURFEDGES" );                
-            dsurfedges[numsurfedges] = ( numedges - 1 );
-            numsurfedges++;
-        }
+
+			//
+			// get next surface edge
+			//
+			if( numsurfedges >= MAX_MAP_SURFEDGES )
+				Error( "Too much brush geometry in bsp, numsurfedges == MAX_MAP_SURFEDGES" );
+			dsurfedges[numsurfedges] = ( numedges - 1 );
+			numsurfedges++;
+		}
 	}
 
-    // return the index
-    return ( numorigfaces - 1 );
+	// return the index
+	return ( numorigfaces - 1 );
 }
 
 
@@ -348,33 +348,33 @@ int CreateOrigFace( face_t *f )
 //-----------------------------------------------------------------------------
 int FindOrigFace( face_t *f )
 {
-    int         i;
-    static int  bClear = 0;
-    side_t      *pSide;
+	int         i;
+	static int  bClear = 0;
+	side_t      *pSide;
 
-    //
-    // initially clear the face side lists (per face plane)
-    //
-    if( !bClear )
-    {
-        for( i = 0; i < MAX_MAP_PLANES; i++ )
-        {
-            pOrigFaceSideList[i] = NULL;
-        }
-        bClear = 1;
-    }
+	//
+	// initially clear the face side lists (per face plane)
+	//
+	if( !bClear )
+	{
+		for( i = 0; i < MAX_MAP_PLANES; i++ )
+		{
+			pOrigFaceSideList[i] = NULL;
+		}
+		bClear = 1;
+	}
 
-    //
-    // compare the sides
-    //
-    for( pSide = pOrigFaceSideList[f->planenum]; pSide; pSide = pSide->next )
-    {
-        if( pSide == f->originalface )
-            return pSide->origIndex;
-    }
+	//
+	// compare the sides
+	//
+	for( pSide = pOrigFaceSideList[f->planenum]; pSide; pSide = pSide->next )
+	{
+		if( pSide == f->originalface )
+			return pSide->origIndex;
+	}
 
-    // original face not found in list
-    return -1;
+	// original face not found in list
+	return -1;
 }
 
 
@@ -387,23 +387,23 @@ int FindOrigFace( face_t *f )
 //-----------------------------------------------------------------------------
 int FindOrCreateOrigFace( face_t *f )
 {
-    int index;
+	int index;
 
-    // check for an original face
-    if( !f->originalface )
-        return -1;
+	// check for an original face
+	if( !f->originalface )
+		return -1;
 
-    //
-    // find or create a orig face and return the index
-    //
-    index = FindOrigFace( f );
+	//
+	// find or create a orig face and return the index
+	//
+	index = FindOrigFace( f );
 
-    if( index == -1 )
-        return CreateOrigFace( f );
-    else if( index == -2 )
-        return -1;
+	if( index == -1 )
+		return CreateOrigFace( f );
+	else if( index == -2 )
+		return -1;
 
-    return index;
+	return index;
 }
 
 /*
@@ -419,15 +419,15 @@ void EmitFace( face_t *f, qboolean onNode )
 
 //	void SubdivideFaceBySubdivSize( face_t *f ); // garymcthack
 //	SubdivideFaceBySubdivSize( f );
-    
+
 	// set initial output number
 	f->outputnumber = -1;
 
-    // degenerated
+	// degenerated
 	if( f->numpoints < 3 )
 		return;
-    
-    // not a final face
+
+	// not a final face
 	if( f->merged || f->split[0] || f->split[1] )
 		return;
 
@@ -443,9 +443,9 @@ void EmitFace( face_t *f, qboolean onNode )
 	// save output number so leaffaces can use
 	f->outputnumber = numfaces;
 
-    //
-    // get the next available .bsp face slot
-    //
+	//
+	// get the next available .bsp face slot
+	//
 	if (numfaces >= MAX_MAP_FACES)
 		Error( "Too many faces in map, max = %d", MAX_MAP_FACES );
 	df = &dfaces[numfaces];
@@ -456,22 +456,22 @@ void EmitFace( face_t *f, qboolean onNode )
 
 	numfaces++;
 
-    //
+	//
 	// plane info - planenum is used by qlight, but not quake
-    //
+	//
 	df->planenum = f->planenum;
 	df->onNode = onNode;
 	df->side = f->planenum & 1;
-    
-    //
-    // material info
-    //
+
+	//
+	// material info
+	//
 	df->texinfo = f->texinfo;
 	df->dispinfo = f->dispinfo;
 	df->smoothingGroups = f->smoothingGroups;
 
-    // save the original "side"/face data
-    df->origFace = FindOrCreateOrigFace( f );
+	// save the original "side"/face data
+	df->origFace = FindOrCreateOrigFace( f );
 	df->surfaceFogVolumeID = -1;
 	dfacenodes[numfaces-1] = f->fogVolumeLeaf;
 	if ( f->fogVolumeLeaf )
@@ -479,9 +479,9 @@ void EmitFace( face_t *f, qboolean onNode )
 		Assert( f->fogVolumeLeaf->planenum == PLANENUM_LEAF );
 	}
 
-    //
-    // edge info
-    //
+	//
+	// edge info
+	//
 	df->firstedge = numsurfedges;
 	df->numedges = f->numpoints;
 
@@ -499,16 +499,16 @@ void EmitFace( face_t *f, qboolean onNode )
 	df->SetNumPrims( f->numPrims );
 	df->SetDynamicShadowsEnabled( f->originalface->m_bDynamicShadowsEnabled );
 
-    //
-    // save off points -- as edges
-    //
+	//
+	// save off points -- as edges
+	//
 	for( i = 0; i < f->numpoints; i++ )
 	{
 		//e = GetEdge (f->pts[i], f->pts[(i+1)%f->numpoints], f);
 		e = GetEdge2 (f->vertexnums[i], f->vertexnums[(i+1)%f->numpoints], f);
 
 		if (numsurfedges >= MAX_MAP_SURFEDGES)
-			Error( "Too much brush geometry in bsp, numsurfedges == MAX_MAP_SURFEDGES" );                
+			Error( "Too much brush geometry in bsp, numsurfedges == MAX_MAP_SURFEDGES" );
 		dsurfedges[numsurfedges] = e;
 		numsurfedges++;
 	}
@@ -552,7 +552,7 @@ void FreeLeafFaces( face_t *pLeafFaceList )
 {
 	int count = 0;
 	face_t *f, *next;
-	
+
 	f = pLeafFaceList;
 
 	while ( f )
@@ -581,7 +581,7 @@ int EmitDrawNode_r (node_t *node)
 		return -numleafs;
 	}
 
-	// emit a node	
+	// emit a node
 	if (numnodes == MAX_MAP_NODES)
 		Error ("MAX_MAP_NODES");
 	node->diskId = numnodes;
@@ -611,7 +611,7 @@ int EmitDrawNode_r (node_t *node)
 
 	//
 	// recursively output the other nodes
-	//	
+	//
 	for (i=0 ; i<2 ; i++)
 	{
 		if (node->children[i]->planenum == PLANENUM_LEAF)
@@ -621,7 +621,7 @@ int EmitDrawNode_r (node_t *node)
 		}
 		else
 		{
-			n->children[i] = numnodes;	
+			n->children[i] = numnodes;
 			EmitDrawNode_r (node->children[i]);
 		}
 	}
@@ -682,8 +682,8 @@ int FindMatchingBrushSideTexinfo( int sideIndex, const texinfomap_t *pMap )
 	int sideSurfaceProp = g_SurfaceProperties[sideTexData];
 	for ( int j = 0; j < texinfo.Count(); j++ )
 	{
-		if ( pMap[j].refCount > 0 && 
-			texinfo[j].flags == sideTexFlags && 
+		if ( pMap[j].refCount > 0 &&
+			texinfo[j].flags == sideTexFlags &&
 			g_SurfaceProperties[texinfo[j].texdata] == sideSurfaceProp )
 		{
 			// found one
@@ -898,7 +898,7 @@ void WriteBSP (node_t *headnode, face_t *pLeafFaceList )
 {
 	int		i;
 	int		oldfaces;
-    int     oldorigfaces;
+	int     oldorigfaces;
 
 	c_nofaces = 0;
 	c_facenodes = 0;
@@ -906,18 +906,18 @@ void WriteBSP (node_t *headnode, face_t *pLeafFaceList )
 	qprintf ("--- WriteBSP ---\n");
 
 	oldfaces = numfaces;
-    oldorigfaces = numorigfaces;
+	oldorigfaces = numorigfaces;
 
 	GetEdge2_InitOptimizedList();
 	EmitLeafFaces( pLeafFaceList );
 	dmodels[nummodels].headnode = EmitDrawNode_r (headnode);
-	
+
 	// Only emit area portals for the main world.
 	if( nummodels == 0 )
 	{
 		EmitAreaPortals (headnode);
 	}
-		
+
 	//
 	// add all displacement faces for the particular model
 	//
@@ -935,7 +935,7 @@ void WriteBSP (node_t *headnode, face_t *pLeafFaceList )
 	qprintf ("%5i nodes with faces\n", c_facenodes);
 	qprintf ("%5i nodes without faces\n", c_nofaces);
 	qprintf ("%5i faces\n", numfaces-oldfaces);
-    qprintf( "%5i original faces\n", numorigfaces-oldorigfaces );
+	qprintf( "%5i original faces\n", numorigfaces-oldorigfaces );
 }
 
 
@@ -1008,7 +1008,7 @@ void SetLightStyles (void)
 		t = ValueForKey (e, "targetname");
 		if (!t[0])
 			continue;
-		
+
 		// find this targetname
 		for (j=0 ; j<stylenum ; j++)
 			if (!strcmp (lighttargets[j], t))
@@ -1161,7 +1161,7 @@ static void ClearDistToClosestWater( void )
 void DiscoverMacroTextures()
 {
 	CUtlDict<int,int> tempDict;
-	
+
 	g_FaceMacroTextureInfos.SetSize( numfaces );
 	for ( int iFace=0; iFace < numfaces; iFace++ )
 	{
@@ -1171,7 +1171,7 @@ void DiscoverMacroTextures()
 
 		dtexdata_t *pTexData = &dtexdata[pTexInfo->texdata];
 		const char *pMaterialName = &g_TexDataStringData[ g_TexDataStringTable[pTexData->nameStringTableID] ];
-		
+
 		MaterialSystemMaterial_t hMaterial = FindMaterial( pMaterialName, NULL, false );
 
 		const char *pMacroTextureName = GetMaterialVar( hMaterial, "$macro_texture" );
@@ -1188,7 +1188,7 @@ void DiscoverMacroTextures()
 		}
 		else
 		{
-			g_FaceMacroTextureInfos[iFace].m_MacroTextureNameID = 0xFFFF;		
+			g_FaceMacroTextureInfos[iFace].m_MacroTextureNameID = 0xFFFF;
 		}
 	}
 }
@@ -1368,7 +1368,7 @@ static int PointLeafnum_r (const Vector& p, int num)
 	{
 		dnode_t* node = dnodes + num;
 		dplane_t* plane = dplanes + node->planenum;
-		
+
 		if (plane->type < 3)
 			d = p[plane->type] - plane->dist;
 		else
@@ -1431,7 +1431,7 @@ static void AddNodeToBounds(int node, CUtlVector<int>& skipAreas, Vector& mins, 
 			for (int j = 0; j < dfaces[face].numedges; ++j)
 			{
 				Assert( firstedge+j < numsurfedges );
-				int edge = abs(dsurfedges[firstedge+j]); 
+				int edge = abs(dsurfedges[firstedge+j]);
 				dedge_t* pEdge = &dedges[edge];
 				Assert( pEdge->v[0] >= 0 );
 				Assert( pEdge->v[1] >= 0 );
@@ -1450,7 +1450,7 @@ static void AddNodeToBounds(int node, CUtlVector<int>& skipAreas, Vector& mins, 
 bool IsBoxInsideWorld( int node, CUtlVector<int> &skipAreas, const Vector &vecMins, const Vector &vecMaxs )
 {
 	while( 1 )
-	{			
+	{
 		// leaf
 		if (node < 0)
 		{
@@ -1468,7 +1468,7 @@ bool IsBoxInsideWorld( int node, CUtlVector<int> &skipAreas, const Vector &vecMi
 				if ( dleafs[leaf].area == skipAreas[i] )
 					return false;
 			}
-			
+
 			return true;
 		}
 
@@ -1478,26 +1478,26 @@ bool IsBoxInsideWorld( int node, CUtlVector<int> &skipAreas, const Vector &vecMi
 		dnode_t *pNode = &dnodes[ node ];
 		dplane_t *pPlane = &dplanes[ pNode->planenum ];
 
-        int sideResult = BrushBspBoxOnPlaneSide( vecMins, vecMaxs, pPlane );
+		int sideResult = BrushBspBoxOnPlaneSide( vecMins, vecMaxs, pPlane );
 
-        // front side
-        if( sideResult == 1 )
-        {
+		// front side
+		if( sideResult == 1 )
+		{
 			node = pNode->children[0];
-        }
-        // back side
-        else if( sideResult == 2 )
-        {
+		}
+		// back side
+		else if( sideResult == 2 )
+		{
 			node = pNode->children[1];
-        }
-        //split
-        else
-        {
+		}
+		//split
+		else
+		{
 			if ( IsBoxInsideWorld( pNode->children[0], skipAreas, vecMins, vecMaxs ) )
 				return true;
 
 			node = pNode->children[1];
-        }
+		}
 	}
 }
 
@@ -1549,5 +1549,3 @@ void ComputeBoundsNoSkybox( )
 		}
 	}
 }
-
-

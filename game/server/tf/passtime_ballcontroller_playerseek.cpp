@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@ namespace {
 }
 
 //-----------------------------------------------------------------------------
-CPasstimeBallControllerPlayerSeek::CPasstimeBallControllerPlayerSeek() 
+CPasstimeBallControllerPlayerSeek::CPasstimeBallControllerPlayerSeek()
 	: CPasstimeBallController( kPriority ) // low priority
 	, m_fEnableTime( 0 )
 {}
@@ -90,9 +90,9 @@ bool CPasstimeBallControllerPlayerSeek::Seek( CPasstimeBall *ball, CTFPlayer *pT
 
 	Vector targetvel = pTarget->EyePosition() - ballpos;
 	targetvel.NormalizeInPlace();
-	targetvel *= pTarget->TeamFortress_CalculateMaxSpeed() * 
+	targetvel *= pTarget->TeamFortress_CalculateMaxSpeed() *
 		tf_passtime_ball_seek_speed_factor.GetFloat();
-	
+
 	Vector currentvel;
 	pPhys->GetVelocity( &currentvel, 0 );
 	Vector steer = targetvel - currentvel;
@@ -101,9 +101,9 @@ bool CPasstimeBallControllerPlayerSeek::Seek( CPasstimeBall *ball, CTFPlayer *pT
 }
 
 //-----------------------------------------------------------------------------
-void CPasstimeBallControllerPlayerSeek::OnBallSpawned( CPasstimeBall *ball ) 
+void CPasstimeBallControllerPlayerSeek::OnBallSpawned( CPasstimeBall *ball )
 {
-	// NOTE: this hack is the only thing that prevents players from picking up 
+	// NOTE: this hack is the only thing that prevents players from picking up
 	// balls immediately after they were thrown (including by nearby unrelated
 	// players)
 	m_fEnableTime = gpGlobals->curtime + 0.25f;

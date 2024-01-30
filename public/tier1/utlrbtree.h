@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -40,29 +40,29 @@ public:
 
 //-------------------------------------
 
-inline bool StringLessThan( const char * const &lhs, const char * const &rhs)			{ 
+inline bool StringLessThan( const char * const &lhs, const char * const &rhs)			{
 	if ( !lhs ) return false;
 	if ( !rhs ) return true;
-	return ( V_strcmp( lhs, rhs) < 0 );  
+	return ( V_strcmp( lhs, rhs) < 0 );
 }
 
-inline bool CaselessStringLessThan( const char * const &lhs, const char * const &rhs )	{ 
+inline bool CaselessStringLessThan( const char * const &lhs, const char * const &rhs )	{
 	if ( !lhs ) return false;
 	if ( !rhs ) return true;
-	return ( V_stricmp( lhs, rhs) < 0 ); 
+	return ( V_stricmp( lhs, rhs) < 0 );
 }
 
 
 // Same as CaselessStringLessThan, but it ignores differences in / and \.
-inline bool CaselessStringLessThanIgnoreSlashes( const char * const &lhs, const char * const &rhs )	
-{ 
+inline bool CaselessStringLessThanIgnoreSlashes( const char * const &lhs, const char * const &rhs )
+{
 	const char *pa = lhs;
 	const char *pb = rhs;
 	while ( *pa && *pb )
 	{
 		char a = *pa;
 		char b = *pb;
-		
+
 		// Check for dir slashes.
 		if ( a == '/' || a == '\\' )
 		{
@@ -73,10 +73,10 @@ inline bool CaselessStringLessThanIgnoreSlashes( const char * const &lhs, const 
 		{
 			if ( a >= 'a' && a <= 'z' )
 				a = 'A' + (a - 'a');
-			
+
 			if ( b >= 'a' && b <= 'z' )
 				b = 'A' + (b - 'a');
-				
+
 			if ( a > b )
 				return false;
 			else if ( a < b )
@@ -85,7 +85,7 @@ inline bool CaselessStringLessThanIgnoreSlashes( const char * const &lhs, const 
 		++pa;
 		++pb;
 	}
-	
+
 	// Filenames also must be the same length.
 	if ( *pa != *pb )
 	{
@@ -171,7 +171,7 @@ public:
 	// but we should really remove patterns using this anyways, for safety and generality
 	I  MaxElement() const;
 
-	// Gets the children                               
+	// Gets the children
 	I  Parent( I i ) const;
 	I  LeftChild( I i ) const;
 	I  RightChild( I i ) const;
@@ -236,7 +236,7 @@ public:
 	I  FirstPostorder() const;
 	I  NextPostorder( I i ) const;
 
-	// If you change the search key, this can be used to reinsert the 
+	// If you change the search key, this can be used to reinsert the
 	// element into the tree.
 	void	Reinsert( I elem );
 
@@ -265,7 +265,7 @@ protected:
 
 	// Gets at the links
 	Links_t const	&Links( I i ) const;
-	Links_t			&Links( I i );      
+	Links_t			&Links( I i );
 
 	// Checks if a link is red or black
 	bool IsRed( I i ) const;
@@ -344,7 +344,7 @@ public:
 		}
 #endif
 
-		return LeftChild(i) != i; 
+		return LeftChild(i) != i;
 	}
 
 protected:
@@ -375,7 +375,7 @@ protected:
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-inline CUtlRBTree<T, I, L, M>::CUtlRBTree( int growSize, int initSize, const LessFunc_t &lessfunc ) : 
+inline CUtlRBTree<T, I, L, M>::CUtlRBTree( int growSize, int initSize, const LessFunc_t &lessfunc ) :
 m_Elements( growSize, initSize ),
 m_LessFunc( lessfunc ),
 m_Root( InvalidIndex() ),
@@ -387,7 +387,7 @@ m_LastAlloc( m_Elements.InvalidIterator() )
 }
 
 template < class T, class I, typename L, class M >
-inline CUtlRBTree<T, I, L, M>::CUtlRBTree( const LessFunc_t &lessfunc ) : 
+inline CUtlRBTree<T, I, L, M>::CUtlRBTree( const LessFunc_t &lessfunc ) :
 m_Elements( 0, 0 ),
 m_LessFunc( lessfunc ),
 m_Root( InvalidIndex() ),
@@ -398,15 +398,15 @@ m_LastAlloc( m_Elements.InvalidIterator() )
 	ResetDbgInfo();
 }
 
-template < class T, class I, typename L, class M > 
+template < class T, class I, typename L, class M >
 inline CUtlRBTree<T, I, L, M>::~CUtlRBTree()
 {
 	Purge();
 }
 
 template < class T, class I, typename L, class M >
-inline void CUtlRBTree<T, I, L, M>::EnsureCapacity( int num )        
-{ 
+inline void CUtlRBTree<T, I, L, M>::EnsureCapacity( int num )
+{
 	m_Elements.EnsureCapacity( num );
 }
 
@@ -429,27 +429,27 @@ inline void CUtlRBTree<T, I, L, M>::CopyFrom( const CUtlRBTree<T, I, L, M> &othe
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-inline T &CUtlRBTree<T, I, L, M>::Element( I i )        
-{ 
-	return m_Elements[i].m_Data; 
+inline T &CUtlRBTree<T, I, L, M>::Element( I i )
+{
+	return m_Elements[i].m_Data;
 }
 
 template < class T, class I, typename L, class M >
-inline T const &CUtlRBTree<T, I, L, M>::Element( I i ) const  
-{ 
-	return m_Elements[i].m_Data; 
+inline T const &CUtlRBTree<T, I, L, M>::Element( I i ) const
+{
+	return m_Elements[i].m_Data;
 }
 
 template < class T, class I, typename L, class M >
-inline T &CUtlRBTree<T, I, L, M>::operator[]( I i )        
-{ 
-	return Element(i); 
+inline T &CUtlRBTree<T, I, L, M>::operator[]( I i )
+{
+	return Element(i);
 }
 
 template < class T, class I, typename L, class M >
-inline T const &CUtlRBTree<T, I, L, M>::operator[]( I i ) const  
-{ 
-	return Element(i); 
+inline T const &CUtlRBTree<T, I, L, M>::operator[]( I i ) const
+{
+	return Element(i);
 }
 
 //-----------------------------------------------------------------------------
@@ -463,9 +463,9 @@ inline T const &CUtlRBTree<T, I, L, M>::operator[]( I i ) const
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-inline	I  CUtlRBTree<T, I, L, M>::Root() const             
-{ 
-	return m_Root; 
+inline	I  CUtlRBTree<T, I, L, M>::Root() const
+{
+	return m_Root;
 }
 
 //-----------------------------------------------------------------------------
@@ -473,9 +473,9 @@ inline	I  CUtlRBTree<T, I, L, M>::Root() const
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-inline	unsigned int CUtlRBTree<T, I, L, M>::Count() const          
-{ 
-	return (unsigned int)m_NumElements; 
+inline	unsigned int CUtlRBTree<T, I, L, M>::Count() const
+{
+	return (unsigned int)m_NumElements;
 }
 
 //-----------------------------------------------------------------------------
@@ -483,32 +483,32 @@ inline	unsigned int CUtlRBTree<T, I, L, M>::Count() const
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-inline	I  CUtlRBTree<T, I, L, M>::MaxElement() const       
+inline	I  CUtlRBTree<T, I, L, M>::MaxElement() const
 {
 	return ( I )m_Elements.NumAllocated();
 }
 
 
 //-----------------------------------------------------------------------------
-// Gets the children                               
+// Gets the children
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-inline	I CUtlRBTree<T, I, L, M>::Parent( I i ) const      
-{ 
-	return Links(i).m_Parent; 
+inline	I CUtlRBTree<T, I, L, M>::Parent( I i ) const
+{
+	return Links(i).m_Parent;
 }
 
 template < class T, class I, typename L, class M >
-inline	I CUtlRBTree<T, I, L, M>::LeftChild( I i ) const   
-{ 
-	return Links(i).m_Left; 
+inline	I CUtlRBTree<T, I, L, M>::LeftChild( I i ) const
+{
+	return Links(i).m_Left;
 }
 
 template < class T, class I, typename L, class M >
-inline	I CUtlRBTree<T, I, L, M>::RightChild( I i ) const  
-{ 
-	return Links(i).m_Right; 
+inline	I CUtlRBTree<T, I, L, M>::RightChild( I i ) const
+{
+	return Links(i).m_Right;
 }
 
 //-----------------------------------------------------------------------------
@@ -516,15 +516,15 @@ inline	I CUtlRBTree<T, I, L, M>::RightChild( I i ) const
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-inline	bool CUtlRBTree<T, I, L, M>::IsLeftChild( I i ) const 
-{ 
-	return LeftChild(Parent(i)) == i; 
+inline	bool CUtlRBTree<T, I, L, M>::IsLeftChild( I i ) const
+{
+	return LeftChild(Parent(i)) == i;
 }
 
 template < class T, class I, typename L, class M >
 inline	bool CUtlRBTree<T, I, L, M>::IsRightChild( I i ) const
-{ 
-	return RightChild(Parent(i)) == i; 
+{
+	return RightChild(Parent(i)) == i;
 }
 
 
@@ -533,15 +533,15 @@ inline	bool CUtlRBTree<T, I, L, M>::IsRightChild( I i ) const
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-inline	bool CUtlRBTree<T, I, L, M>::IsRoot( I i ) const     
-{ 
-	return i == m_Root; 
+inline	bool CUtlRBTree<T, I, L, M>::IsRoot( I i ) const
+{
+	return i == m_Root;
 }
 
 template < class T, class I, typename L, class M >
-inline	bool CUtlRBTree<T, I, L, M>::IsLeaf( I i ) const     
-{ 
-	return (LeftChild(i) == InvalidIndex()) && (RightChild(i) == InvalidIndex()); 
+inline	bool CUtlRBTree<T, I, L, M>::IsLeaf( I i ) const
+{
+	return (LeftChild(i) == InvalidIndex()) && (RightChild(i) == InvalidIndex());
 }
 
 
@@ -567,7 +567,7 @@ inline	bool CUtlRBTree<T, I, L, M>::IsValidIndex( I i ) const
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-inline I CUtlRBTree<T, I, L, M>::InvalidIndex()         
+inline I CUtlRBTree<T, I, L, M>::InvalidIndex()
 {
 	return ( I )M::InvalidIndex();
 }
@@ -578,9 +578,9 @@ inline I CUtlRBTree<T, I, L, M>::InvalidIndex()
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-inline int CUtlRBTree<T, I, L, M>::Depth() const           
-{ 
-	return Depth(Root()); 
+inline int CUtlRBTree<T, I, L, M>::Depth() const
+{
+	return Depth(Root());
 }
 
 //-----------------------------------------------------------------------------
@@ -588,21 +588,21 @@ inline int CUtlRBTree<T, I, L, M>::Depth() const
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-inline void  CUtlRBTree<T, I, L, M>::SetParent( I i, I parent )       
-{ 
-	Links(i).m_Parent = parent; 
+inline void  CUtlRBTree<T, I, L, M>::SetParent( I i, I parent )
+{
+	Links(i).m_Parent = parent;
 }
 
 template < class T, class I, typename L, class M >
-inline void  CUtlRBTree<T, I, L, M>::SetLeftChild( I i, I child  )    
-{ 
-	Links(i).m_Left = child; 
+inline void  CUtlRBTree<T, I, L, M>::SetLeftChild( I i, I child  )
+{
+	Links(i).m_Left = child;
 }
 
 template < class T, class I, typename L, class M >
-inline void  CUtlRBTree<T, I, L, M>::SetRightChild( I i, I child  )   
-{ 
-	Links(i).m_Right = child; 
+inline void  CUtlRBTree<T, I, L, M>::SetRightChild( I i, I child  )
+{
+	Links(i).m_Right = child;
 }
 
 //-----------------------------------------------------------------------------
@@ -610,21 +610,21 @@ inline void  CUtlRBTree<T, I, L, M>::SetRightChild( I i, I child  )
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-inline typename CUtlRBTree<T, I, L, M>::Links_t const &CUtlRBTree<T, I, L, M>::Links( I i ) const 
+inline typename CUtlRBTree<T, I, L, M>::Links_t const &CUtlRBTree<T, I, L, M>::Links( I i ) const
 {
 	// Sentinel node, makes life easier
-	static Links_t s_Sentinel = 
-	{ 
-		InvalidIndex(), InvalidIndex(), InvalidIndex(), CUtlRBTree<T, I, L, M>::BLACK 
+	static Links_t s_Sentinel =
+	{
+		InvalidIndex(), InvalidIndex(), InvalidIndex(), CUtlRBTree<T, I, L, M>::BLACK
 	};
 
 	return (i != InvalidIndex()) ? *(Links_t*)&m_Elements[i] : *(Links_t*)&s_Sentinel;
 }
 
 template < class T, class I, typename L, class M >
-inline typename CUtlRBTree<T, I, L, M>::Links_t &CUtlRBTree<T, I, L, M>::Links( I i )       
-{ 
-	Assert(i != InvalidIndex()); 
+inline typename CUtlRBTree<T, I, L, M>::Links_t &CUtlRBTree<T, I, L, M>::Links( I i )
+{
+	Assert(i != InvalidIndex());
 	return *(Links_t *)&m_Elements[i];
 }
 
@@ -633,15 +633,15 @@ inline typename CUtlRBTree<T, I, L, M>::Links_t &CUtlRBTree<T, I, L, M>::Links( 
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-inline bool CUtlRBTree<T, I, L, M>::IsRed( I i ) const                
-{ 
-	return (Links(i).m_Tag == RED); 
+inline bool CUtlRBTree<T, I, L, M>::IsRed( I i ) const
+{
+	return (Links(i).m_Tag == RED);
 }
 
 template < class T, class I, typename L, class M >
-inline bool CUtlRBTree<T, I, L, M>::IsBlack( I i ) const             
-{ 
-	return (Links(i).m_Tag == BLACK); 
+inline bool CUtlRBTree<T, I, L, M>::IsBlack( I i ) const
+{
+	return (Links(i).m_Tag == BLACK);
 }
 
 
@@ -650,15 +650,15 @@ inline bool CUtlRBTree<T, I, L, M>::IsBlack( I i ) const
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-inline typename CUtlRBTree<T, I, L, M>::NodeColor_t  CUtlRBTree<T, I, L, M>::Color( I i ) const            
-{ 
-	return (NodeColor_t)Links(i).m_Tag; 
+inline typename CUtlRBTree<T, I, L, M>::NodeColor_t  CUtlRBTree<T, I, L, M>::Color( I i ) const
+{
+	return (NodeColor_t)Links(i).m_Tag;
 }
 
 template < class T, class I, typename L, class M >
-inline void CUtlRBTree<T, I, L, M>::SetColor( I i, typename CUtlRBTree<T, I, L, M>::NodeColor_t c ) 
-{ 
-	Links(i).m_Tag = (I)c; 
+inline void CUtlRBTree<T, I, L, M>::SetColor( I i, typename CUtlRBTree<T, I, L, M>::NodeColor_t c )
+{
+	Links(i).m_Tag = (I)c;
 }
 
 //-----------------------------------------------------------------------------
@@ -728,7 +728,7 @@ void  CUtlRBTree<T, I, L, M>::FreeNode( I i )
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-void CUtlRBTree<T, I, L, M>::RotateLeft(I elem) 
+void CUtlRBTree<T, I, L, M>::RotateLeft(I elem)
 {
 	I rightchild = RightChild(elem);
 	SetRightChild( elem, LeftChild(rightchild) );
@@ -758,7 +758,7 @@ void CUtlRBTree<T, I, L, M>::RotateLeft(I elem)
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-void CUtlRBTree<T, I, L, M>::RotateRight(I elem) 
+void CUtlRBTree<T, I, L, M>::RotateRight(I elem)
 {
 	I leftchild = LeftChild(elem);
 	SetLeftChild( elem, RightChild(leftchild) );
@@ -788,7 +788,7 @@ void CUtlRBTree<T, I, L, M>::RotateRight(I elem)
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-void CUtlRBTree<T, I, L, M>::InsertRebalance(I elem) 
+void CUtlRBTree<T, I, L, M>::InsertRebalance(I elem)
 {
 	while ( !IsRoot(elem) && (Color(Parent(elem)) == RED) )
 	{
@@ -799,15 +799,15 @@ void CUtlRBTree<T, I, L, M>::InsertRebalance(I elem)
 		if (IsLeftChild(parent))
 		{
 			I uncle = RightChild(grandparent);
-			if (IsRed(uncle)) 
+			if (IsRed(uncle))
 			{
 				/* uncle is RED */
 				SetColor(parent, BLACK);
 				SetColor(uncle, BLACK);
 				SetColor(grandparent, RED);
 				elem = grandparent;
-			} 
-			else 
+			}
+			else
 			{
 				/* uncle is BLACK */
 				if (IsRightChild(elem))
@@ -823,20 +823,20 @@ void CUtlRBTree<T, I, L, M>::InsertRebalance(I elem)
 				SetColor(grandparent, RED);
 				RotateRight(grandparent);
 			}
-		} 
-		else 
+		}
+		else
 		{
 			/* mirror image of above code */
 			I uncle = LeftChild(grandparent);
-			if (IsRed(uncle)) 
+			if (IsRed(uncle))
 			{
 				/* uncle is RED */
 				SetColor(parent, BLACK);
 				SetColor(uncle, BLACK);
 				SetColor(grandparent, RED);
 				elem = grandparent;
-			} 
-			else 
+			}
+			else
 			{
 				/* uncle is BLACK */
 				if (IsLeftChild(elem))
@@ -883,19 +883,19 @@ void CUtlRBTree<T, I, L, M>::LinkToParent( I i, I parent, bool isLeft )
 	elem.m_Tag = RED;
 
 	/* insert node in tree */
-	if (parent != InvalidIndex()) 
+	if (parent != InvalidIndex())
 	{
 		if (isLeft)
 			Links(parent).m_Left = i;
 		else
 			Links(parent).m_Right = i;
-	} 
-	else 
+	}
+	else
 	{
 		m_Root = i;
 	}
 
-	InsertRebalance(i);	
+	InsertRebalance(i);
 }
 
 //-----------------------------------------------------------------------------
@@ -903,18 +903,18 @@ void CUtlRBTree<T, I, L, M>::LinkToParent( I i, I parent, bool isLeft )
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-void CUtlRBTree<T, I, L, M>::RemoveRebalance(I elem) 
+void CUtlRBTree<T, I, L, M>::RemoveRebalance(I elem)
 {
-	while (elem != m_Root && IsBlack(elem)) 
+	while (elem != m_Root && IsBlack(elem))
 	{
 		I parent = Parent(elem);
 
 		// If elem is the left child of the parent
-		if (elem == LeftChild(parent)) 
+		if (elem == LeftChild(parent))
 		{
 			// Get our sibling
 			I sibling = RightChild(parent);
-			if (IsRed(sibling)) 
+			if (IsRed(sibling))
 			{
 				SetColor(sibling, BLACK);
 				SetColor(parent, RED);
@@ -924,7 +924,7 @@ void CUtlRBTree<T, I, L, M>::RemoveRebalance(I elem)
 				parent = Parent(elem);
 				sibling = RightChild(parent);
 			}
-			if ( (IsBlack(LeftChild(sibling))) && (IsBlack(RightChild(sibling))) ) 
+			if ( (IsBlack(LeftChild(sibling))) && (IsBlack(RightChild(sibling))) )
 			{
 				if (sibling != InvalidIndex())
 					SetColor(sibling, RED);
@@ -949,11 +949,11 @@ void CUtlRBTree<T, I, L, M>::RemoveRebalance(I elem)
 				elem = m_Root;
 			}
 		}
-		else 
+		else
 		{
 			// Elem is the right child of the parent
 			I sibling = LeftChild(parent);
-			if (IsRed(sibling)) 
+			if (IsRed(sibling))
 			{
 				SetColor(sibling, BLACK);
 				SetColor(parent, RED);
@@ -965,11 +965,11 @@ void CUtlRBTree<T, I, L, M>::RemoveRebalance(I elem)
 			}
 			if ( (IsBlack(RightChild(sibling))) && (IsBlack(LeftChild(sibling))) )
 			{
-				if (sibling != InvalidIndex()) 
+				if (sibling != InvalidIndex())
 					SetColor( sibling, RED );
 				elem = parent;
-			} 
-			else 
+			}
+			else
 			{
 				if (IsBlack(LeftChild(sibling)))
 				{
@@ -999,7 +999,7 @@ void CUtlRBTree<T, I, L, M>::Unlink( I elem )
 	{
 		I x, y;
 
-		if ((LeftChild(elem) == InvalidIndex()) || 
+		if ((LeftChild(elem) == InvalidIndex()) ||
 			(RightChild(elem) == InvalidIndex()))
 		{
 			/* y has a NIL node as a child */
@@ -1084,7 +1084,7 @@ void CUtlRBTree<T, I, L, M>::Link( I elem )
 //-----------------------------------------------------------------------------
 
 template < class T, class I, typename L, class M >
-void CUtlRBTree<T, I, L, M>::RemoveAt(I elem) 
+void CUtlRBTree<T, I, L, M>::RemoveAt(I elem)
 {
 	if ( elem != InvalidIndex() )
 	{
@@ -1149,8 +1149,8 @@ void CUtlRBTree<T, I, L, M>::RemoveAll()
 	}
 
 	// Clear everything else out
-	m_Root = InvalidIndex(); 
-	// Technically, this iterator could become invalid. It will not, because it's 
+	m_Root = InvalidIndex();
+	// Technically, this iterator could become invalid. It will not, because it's
 	// always the same iterator. If we don't clear this here, the state of this
 	// container will be invalid after we start inserting elements again.
 	m_LastAlloc = m_Elements.InvalidIterator();
@@ -1392,7 +1392,7 @@ bool CUtlRBTree<T, I, L, M>::IsValid() const
 			return false;
 	}
 
-	// iterate over all elements, looking for validity 
+	// iterate over all elements, looking for validity
 	// based on the self pointers
 	int nElements = 0;
 	int numFree2 = 0;
@@ -1414,21 +1414,21 @@ bool CUtlRBTree<T, I, L, M>::IsValid() const
 
 			if ( right != InvalidIndex() )
 			{
-				if ( !IsValidIndex( right ) ) 
+				if ( !IsValidIndex( right ) )
 					return false;
 				if ( Parent( right ) != i )
 					return false;
-				if ( IsRed( i ) && IsRed( right ) ) 
+				if ( IsRed( i ) && IsRed( right ) )
 					return false;
 			}
 
 			if ( left != InvalidIndex() )
 			{
-				if ( !IsValidIndex( left ) ) 
+				if ( !IsValidIndex( left ) )
 					return false;
-				if ( Parent( left ) != i ) 
+				if ( Parent( left ) != i )
 					return false;
-				if ( IsRed( i ) && IsRed( left ) ) 
+				if ( IsRed( i ) && IsRed( left ) )
 					return false;
 			}
 		}
@@ -1452,7 +1452,7 @@ bool CUtlRBTree<T, I, L, M>::IsValid() const
 // Sets the less func
 //-----------------------------------------------------------------------------
 
-template < class T, class I, typename L, class M >  
+template < class T, class I, typename L, class M >
 void CUtlRBTree<T, I, L, M>::SetLessFunc( const typename CUtlRBTree<T, I, L, M>::LessFunc_t &func )
 {
 	if (!m_LessFunc)
@@ -1472,7 +1472,7 @@ void CUtlRBTree<T, I, L, M>::SetLessFunc( const typename CUtlRBTree<T, I, L, M>:
 //-----------------------------------------------------------------------------
 
 // Inserts a node into the tree, doesn't copy the data in.
-template < class T, class I, typename L, class M > 
+template < class T, class I, typename L, class M >
 void CUtlRBTree<T, I, L, M>::FindInsertionPosition( T const &insert, I &parent, bool &leftchild )
 {
 	Assert( m_LessFunc );
@@ -1481,7 +1481,7 @@ void CUtlRBTree<T, I, L, M>::FindInsertionPosition( T const &insert, I &parent, 
 	I current = m_Root;
 	parent = InvalidIndex();
 	leftchild = false;
-	while (current != InvalidIndex()) 
+	while (current != InvalidIndex())
 	{
 		parent = current;
 		if (m_LessFunc( insert, Element(current) ))
@@ -1495,7 +1495,7 @@ void CUtlRBTree<T, I, L, M>::FindInsertionPosition( T const &insert, I &parent, 
 	}
 }
 
-template < class T, class I, typename L, class M > 
+template < class T, class I, typename L, class M >
 I CUtlRBTree<T, I, L, M>::Insert( T const &insert )
 {
 	// use copy constructor to copy it in
@@ -1508,7 +1508,7 @@ I CUtlRBTree<T, I, L, M>::Insert( T const &insert )
 }
 
 
-template < class T, class I, typename L, class M > 
+template < class T, class I, typename L, class M >
 void CUtlRBTree<T, I, L, M>::Insert( const T *pArray, int nItems )
 {
 	while ( nItems-- )
@@ -1518,7 +1518,7 @@ void CUtlRBTree<T, I, L, M>::Insert( const T *pArray, int nItems )
 }
 
 
-template < class T, class I, typename L, class M > 
+template < class T, class I, typename L, class M >
 I CUtlRBTree<T, I, L, M>::InsertIfNotFound( T const &insert )
 {
 	// use copy constructor to copy it in
@@ -1528,7 +1528,7 @@ I CUtlRBTree<T, I, L, M>::InsertIfNotFound( T const &insert )
 	I current = m_Root;
 	parent = InvalidIndex();
 	leftchild = false;
-	while (current != InvalidIndex()) 
+	while (current != InvalidIndex())
 	{
 		parent = current;
 		if (m_LessFunc( insert, Element(current) ))
@@ -1553,19 +1553,19 @@ I CUtlRBTree<T, I, L, M>::InsertIfNotFound( T const &insert )
 //-----------------------------------------------------------------------------
 // finds a node in the tree
 //-----------------------------------------------------------------------------
-template < class T, class I, typename L, class M > 
+template < class T, class I, typename L, class M >
 I CUtlRBTree<T, I, L, M>::Find( T const &search ) const
 {
 	Assert( m_LessFunc );
 
 	I current = m_Root;
-	while (current != InvalidIndex()) 
+	while (current != InvalidIndex())
 	{
 		if (m_LessFunc( search, Element(current) ))
 			current = LeftChild(current);
 		else if (m_LessFunc( Element(current), search ))
 			current = RightChild(current);
-		else 
+		else
 			break;
 	}
 	return current;
@@ -1575,7 +1575,7 @@ I CUtlRBTree<T, I, L, M>::Find( T const &search ) const
 //-----------------------------------------------------------------------------
 // swap in place
 //-----------------------------------------------------------------------------
-template < class T, class I, typename L, class M > 
+template < class T, class I, typename L, class M >
 void CUtlRBTree<T, I, L, M>::Swap( CUtlRBTree< T, I, L > &that )
 {
 	m_Elements.Swap( that.m_Elements );

@@ -141,8 +141,8 @@ void CAccumBuffProxy::OnBind( void *pC_BaseEntity )
 		return;
 	}
 
-	m_pTexture0->SetTextureValue( pAccumParams->m_pTexture0 ); 
-	m_pTexture1->SetTextureValue( pAccumParams->m_pTexture1 ); 
+	m_pTexture0->SetTextureValue( pAccumParams->m_pTexture0 );
+	m_pTexture1->SetTextureValue( pAccumParams->m_pTexture1 );
 
 	// If we're just using this material to do a clear to black...
 	if ( pAccumParams->m_bClear )
@@ -203,7 +203,7 @@ const CReplayPerformance *CReplayRenderer::GetPerformance() const
 
 const char *CReplayRenderer::GetMovieFilename() const
 {
-	if ( !m_pMovie ) 
+	if ( !m_pMovie )
 		return NULL;
 
 	return m_pMovie->GetMovieFilename();
@@ -231,9 +231,9 @@ float CReplayRenderer::GetRecordingFrameDuration()
 		Assert( false );
 		return 30.0f;
 	}
-	
+
 	double interval = 1.0 / actualFPS;
-	
+
 	return (float) interval;
 }
 
@@ -279,31 +279,31 @@ bool CReplayRenderer::SetupRenderer( RenderMovieParams_t &params, IReplayMovie *
 		m_pMovieMaker = g_pVideo->CreateVideoRecorder( VideoSystem::WEBM );
 #else
 		m_pMovieMaker = g_pVideo->CreateVideoRecorder( VideoSystem::QUICKTIME );
-#endif		
+#endif
 		if ( !m_pMovieMaker )
 			return false;
 
 		CFmtStr fmtMovieFullFilename( "%s%s", g_pReplayMovieManager->GetRenderDir(), pMovie->GetMovieFilename() );
-		
+
 		bool bSuccess = false;
 		if ( m_pMovieMaker->CreateNewMovieFile( fmtMovieFullFilename.Access(), true ) )
 		{
 			const ReplayRenderSettings_t &Settings = params.m_Settings;
-			
+
 #ifndef USE_WEBM_FOR_REPLAY
 			ConVarRef QTEncodeGamma( "video_quicktime_encode_gamma" );
 			VideoEncodeGamma_t encodeGamma = ( QTEncodeGamma.IsValid() ) ? (VideoEncodeGamma_t) QTEncodeGamma.GetInt() : VideoEncodeGamma::GAMMA_2_2;
 #else
 			VideoEncodeGamma_t encodeGamma = VideoEncodeGamma::GAMMA_2_2;
 #endif
-			
+
 			if ( m_pMovieMaker->SetMovieVideoParameters( Settings.m_Codec, Settings.m_nEncodingQuality, (int)Settings.m_nWidth, (int)Settings.m_nHeight, Settings.m_FPS, encodeGamma ) )
 			{
 				if ( m_pMovieMaker->SetMovieSourceImageParameters( VideoEncodeSourceFormat::BGRA_32BIT, (int)Settings.m_nWidth, (int)Settings.m_nHeight ) )
 				{
 					AudioEncodeOptions_t audioOptions =  AudioEncodeOptions::USE_AUDIO_ENCODE_GROUP_SIZE | AudioEncodeOptions::GROUP_SIZE_IS_VIDEO_FRAME |
-														 AudioEncodeOptions::LIMIT_AUDIO_TRACK_TO_VIDEO_DURATION | AudioEncodeOptions::PAD_AUDIO_WITH_SILENCE ;
-					
+														AudioEncodeOptions::LIMIT_AUDIO_TRACK_TO_VIDEO_DURATION | AudioEncodeOptions::PAD_AUDIO_WITH_SILENCE ;
+
 					if ( m_pMovieMaker->SetMovieSourceAudioParameters( AudioEncodeSourceFormat::AUDIO_16BIT_PCMStereo, 44100, audioOptions ) )
 					{
 						bSuccess = true;
@@ -311,7 +311,7 @@ bool CReplayRenderer::SetupRenderer( RenderMovieParams_t &params, IReplayMovie *
 				}
 			}
 		}
-		
+
 		if ( !bSuccess )
 		{
 			g_pVideo->DestroyVideoRecorder( m_pMovieMaker );
@@ -324,7 +324,7 @@ bool CReplayRenderer::SetupRenderer( RenderMovieParams_t &params, IReplayMovie *
 #endif
 
 	m_pRenderOverlay->Show();
-	
+
 	return true;
 }
 
@@ -358,7 +358,7 @@ void CReplayRenderer::InitBuffers( const RenderMovieParams_t &params )
 	CFmtStr fmtHostFramerateCmd( "host_framerate %f\n", params.m_flEngineFps );
 	engine->ClientCmd_Unrestricted( fmtHostFramerateCmd.Access() );
 
-    g_pMaterialSystem->BeginRenderTargetAllocation();								// Begin allocating RTs which IFM can scribble into
+	g_pMaterialSystem->BeginRenderTargetAllocation();								// Begin allocating RTs which IFM can scribble into
 
 	// Offscreen surface for rendering individual samples
 	ImageFormat AccumSampleFormat = (g_pMaterialSystemHardwareConfig->GetHDRType() == HDR_TYPE_FLOAT) ? IMAGE_FORMAT_RGBA16161616F : g_pMaterialSystem->GetBackBufferFormat();
@@ -383,7 +383,7 @@ void CReplayRenderer::InitBuffers( const RenderMovieParams_t &params )
 		"_rt_LayoffResult", Settings.m_nWidth, Settings.m_nHeight, RT_SIZE_OFFSCREEN,
 		g_pMaterialSystem->GetBackBufferFormat(), MATERIAL_RT_DEPTH_SHARED, TEXTUREFLAGS_BORDER | TEXTUREFLAGS_POINTSAMPLE ));
 
-    g_pMaterialSystem->EndRenderTargetAllocation();								// Begin allocating RTs which IFM can scribble into
+	g_pMaterialSystem->EndRenderTargetAllocation();								// Begin allocating RTs which IFM can scribble into
 
 	KeyValues *pVMTKeyValues = new KeyValues( "accumbuff4sample" );
 	pVMTKeyValues->SetString( "$TEXTURE0", m_AccumBuffSample->GetName() ); // Dummy
@@ -568,7 +568,7 @@ void CReplayRenderer::SetupSampleView( int x, int y, int w, int h, int nSample, 
 	viewSetup.zNearViewmodel = 1;
 	viewSetup.zFarViewmodel = viewSetup.zFar;
 
-	viewSetup.m_bOrtho = false; 
+	viewSetup.m_bOrtho = false;
 	viewSetup.m_bRenderToSubrectOfLargerScreen = true;
 
 	SetupDOFMatrixSkewView( viewSetup.origin, viewSetup.angles, nSample, viewSetup );	// Sheared matrix method more comparable to image-space DoF approximation
@@ -730,9 +730,9 @@ void CReplayRenderer::CompositeAndLayoffFrame( int nFrame )
 
 	const int nMotionBlurTimeSteps = NumMotionBlurTimeSteps();
 	bool bAppendToMovie = false;
-	
+
 	// Determine if this is a frame we handle audio on
-	
+
 	bool AudioTrigger = (m_nTimeStep == 0) && !m_bShutterClosed;
 	SetAudioSyncFrame( AudioTrigger );
 
@@ -740,34 +740,34 @@ void CReplayRenderer::CompositeAndLayoffFrame( int nFrame )
 	if ( !IsMotionBlurEnabled() )
 	{
 		m_curSampleTime = DmeTime_t( nFrame, GetFramerate() );
-		
+
 		#ifdef TRACE_REPLAY_STATE_MACHINE
 			Msg( "Rendering Frame at T=%.4f  ", m_curSampleTime.GetSeconds() );
 		#endif
-		
+
 		RenderLayoffFrame( m_curSampleTime, 0, 1 );			// Just get one frame
 
 		bAppendToMovie = true;
-		goto render_to_video;		
+		goto render_to_video;
 	}
 
 	// Shutter closed?
 	if ( m_bShutterClosed )
 	{
 		m_nTimeStep++;
-		
+
 		#ifdef TRACE_REPLAY_STATE_MACHINE
 			Msg("Shutter Closed...  TStep now %d", m_nTimeStep );
 		#endif
-		
+
 		// If nMotionBlurTimeSteps subframes have passed, open the shutter for the next frame.
 		if ( m_nTimeStep >= nMotionBlurTimeSteps )
 		{
 			Assert( m_nTimeStep == nMotionBlurTimeSteps );
-			
+
 			m_nTimeStep = 0;
 			m_bShutterClosed = false;
-			
+
 			#ifdef TRACE_REPLAY_STATE_MACHINE
 				Msg( ", Shutter OPENED, TStep=0");
 			#endif
@@ -778,7 +778,7 @@ void CReplayRenderer::CompositeAndLayoffFrame( int nFrame )
 			float frameRate = HF.GetFloat();
 			Msg( ", DONE, ENgine FPS = %f\n", frameRate );
 		#endif
-	
+
 		return;
 	}
 
@@ -796,23 +796,23 @@ void CReplayRenderer::CompositeAndLayoffFrame( int nFrame )
 		Assert( timeStepSize.GetSeconds() > 0.0 );
 
 		DmeTime_t curSampleTime( frameTime );
-		
+
 		#ifdef TRACE_REPLAY_STATE_MACHINE
 			Msg("FrameT=%.4lf   ", frameTime );
 		#endif
-		
+
 
 		timeStepSize /= nMotionBlurTimeSteps;
-		
+
 		curSampleTime -= timeStepSize * ( nMotionBlurTimeSteps - 1 ) / 2.0f;
 
 		// Loop through all samples for the current timestep, jittering the camera if antialiasing is enabled.
-		
+
 		#ifdef TRACE_REPLAY_STATE_MACHINE
 			Msg(" Shutter's Open, Rendering %d Sub-Frames ", nSamplesPerTimeStep );
 			Msg( "Frame %i: Laying off sub frame at time step %i \n", nFrame, m_nTimeStep );
-		#endif 
-		
+		#endif
+
 		RenderLayoffFrame( m_curSampleTime, m_nCurSample++, nNumTotalSamples );
 
 		++m_nTimeStep;
@@ -823,8 +823,8 @@ void CReplayRenderer::CompositeAndLayoffFrame( int nFrame )
 		{
 			#ifdef TRACE_REPLAY_STATE_MACHINE
 				Msg( "  TStep=Max, Append=TRUE ... ");
-			#endif 
-			
+			#endif
+
 			m_nTimeStep = 0;
 			m_nCurSample = 0;
 			m_curSampleTime = curSampleTime;
@@ -840,7 +840,7 @@ render_to_video:
 		#ifdef TRACE_REPLAY_STATE_MACHINE
 			Msg(" -- Appending Frame %d to Movie\n", nFramesSent );  nFramesSent++;
 		#endif
-		
+
 		CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
 		pRenderContext->PushRenderTargetAndViewport( m_LayoffResult );
 
@@ -849,7 +849,7 @@ render_to_video:
 
 		pRenderContext->PopRenderTargetAndViewport();
 	}
-	
+
 	#ifdef TRACE_REPLAY_STATE_MACHINE
 		Msg("\n");
 	#endif
@@ -878,7 +878,7 @@ void CReplayRenderer::LayoffFrame( int nFrame )
 	#endif
 
 	CMatRenderContextPtr pRenderContext( materials );
-// 	pRenderContext->ReadPixelsAndStretch( &srcRect, &dstRect, (unsigned char*)m_pLayoffBuf, 
+// 	pRenderContext->ReadPixelsAndStretch( &srcRect, &dstRect, (unsigned char*)m_pLayoffBuf,
 // 		IMAGE_FORMAT_BGRA8888, dstRect.width * ImageLoader::SizeInBytes( IMAGE_FORMAT_BGRA8888 ) );
 
 	pRenderContext->ReadPixels( 0, 0, (int) m_RenderParams.m_Settings.m_nWidth, (int) m_RenderParams.m_Settings.m_nHeight, (unsigned char*)m_pLayoffBuf, IMAGE_FORMAT_BGRA8888 );
@@ -890,7 +890,7 @@ void CReplayRenderer::LayoffFrame( int nFrame )
 	if ( m_RenderParams.m_bExportRaw )
 	{
 		CUtlBuffer bufOut;
-        if ( TGAWriter::WriteToBuffer( (unsigned char *)m_pLayoffBuf, bufOut, m_RenderParams.m_Settings.m_nWidth,
+		if ( TGAWriter::WriteToBuffer( (unsigned char *)m_pLayoffBuf, bufOut, m_RenderParams.m_Settings.m_nWidth,
 			m_RenderParams.m_Settings.m_nHeight, IMAGE_FORMAT_BGRA8888, IMAGE_FORMAT_RGB888 ) )
 		{
 			// Format filename and write the TGA
@@ -900,15 +900,15 @@ void CReplayRenderer::LayoffFrame( int nFrame )
 				m_iTgaFrame++
 			);
 
-	        if ( !g_pFullFileSystem->WriteFile( fmtFilename.Access(), NULL, bufOut ) )
-	        {
-	            Warning( "Couldn't write bitmap data snapshot to file %s.\n", fmtFilename.Access() );
-	        }
+			if ( !g_pFullFileSystem->WriteFile( fmtFilename.Access(), NULL, bufOut ) )
+			{
+				Warning( "Couldn't write bitmap data snapshot to file %s.\n", fmtFilename.Access() );
+			}
 		}
 	}
 	else if ( m_pMovieMaker )
 	{
-		// can't run in any other mode	
+		// can't run in any other mode
 		Assert( mat_queue_mode.GetInt() == 0 );
 		VPROF_BUDGET( "CReplayRenderer::LayoffFrame - AppendVideoFrame", VPROF_BUDGETGROUP_REPLAY );
 		m_pMovieMaker->AppendVideoFrame( m_pLayoffBuf );
@@ -942,7 +942,7 @@ void CReplayRenderer::RenderLayoffFrame( DmeTime_t time, int nCurSample, int nNu
 
 	// Initialize view setup for this sample
 	SetupSampleView( 0, 0, w, h, nCurSample, viewSetup );
-	
+
 	const int flags = RENDERVIEW_DRAWVIEWMODEL;
 
 	// Tell the engine to tell the client to render the view (sans viewmodel)
@@ -1005,7 +1005,7 @@ void CReplayRenderer::RenderAudio( unsigned char *pBuffer, int nSize, int nNumSa
 	else if ( m_pMovieMaker )
 	{
 		m_pMovieMaker->AppendAudioSamples( pBuffer, (size_t)nSize );
-	}	
+	}
 #endif
 }
 

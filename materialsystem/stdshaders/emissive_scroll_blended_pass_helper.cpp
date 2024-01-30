@@ -110,7 +110,7 @@ void InitParamsEmissiveScrollBlendedPass( CBaseVSShader *pShader, IMaterialVar**
 
 	if ( ( info.m_nBlendStrength != -1 ) && ( !params[info.m_nBlendStrength]->IsDefined() ) )
 	{
-        params[info.m_nBlendStrength]->SetFloatValue( kDefaultEmissiveBlendStrength );
+	params[info.m_nBlendStrength]->SetFloatValue( kDefaultEmissiveBlendStrength );
 	}
 
 	if ( ( info.m_nEmissiveTint != -1 ) && ( !params[info.m_nEmissiveTint]->IsDefined() ) )
@@ -130,7 +130,7 @@ void InitEmissiveScrollBlendedPass( CBaseVSShader *pShader, IMaterialVar** param
 }
 
 void DrawEmissiveScrollBlendedPass( CBaseVSShader *pShader, IMaterialVar** params, IShaderDynamicAPI *pShaderAPI,
-								   IShaderShadow* pShaderShadow, EmissiveScrollBlendedPassVars_t &info, VertexCompressionType_t vertexCompression )
+								IShaderShadow* pShaderShadow, EmissiveScrollBlendedPassVars_t &info, VertexCompressionType_t vertexCompression )
 {
 	SHADOW_STATE
 	{
@@ -205,7 +205,7 @@ void DrawEmissiveScrollBlendedPass( CBaseVSShader *pShader, IMaterialVar** param
 			SET_DYNAMIC_VERTEX_SHADER_COMBO( COMPRESSED_VERTS, (int)vertexCompression );
 			SET_DYNAMIC_VERTEX_SHADER( emissive_scroll_blended_pass_vs20 );
 
-			// Set Vertex Shader Constants 
+			// Set Vertex Shader Constants
 			// None?
 
 			// Set Pixel Shader Combos
@@ -242,7 +242,7 @@ void DrawEmissiveScrollBlendedPass( CBaseVSShader *pShader, IMaterialVar** param
 		pShader->BindTexture( SHADER_SAMPLER1, info.m_nFlowTexture );
 		pShader->BindTexture( SHADER_SAMPLER2, info.m_nEmissiveTexture );
 
-		// Set Pixel Shader Constants 
+		// Set Pixel Shader Constants
 		//float vConstZero[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 		// This brings in the electricity and the second base texture when the second base texture is present

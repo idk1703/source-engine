@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -63,7 +63,7 @@ bool CVoiceBanMgr::Init(const char *pGameDir)
 				char playerID[SIGNED_GUID_LEN];
 				filesystem->Read(playerID, SIGNED_GUID_LEN, fh);
 				AddBannedPlayer(playerID);
-			}			
+			}
 		}
 
 		filesystem->Close(fh);
@@ -127,7 +127,7 @@ void CVoiceBanMgr::SetPlayerBan(char const playerID[SIGNED_GUID_LEN], bool bSque
 		// Is this guy already squelched?
 		if(GetPlayerBan(playerID))
 			return;
-	
+
 		AddBannedPlayer(playerID);
 	}
 	else
@@ -180,4 +180,3 @@ CVoiceBanMgr::BannedPlayer* CVoiceBanMgr::AddBannedPlayer(char const playerID[SI
 	pNew->m_pPrev->m_pNext = pNew->m_pNext->m_pPrev = pNew;
 	return pNew;
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -44,7 +44,7 @@ const SpyConstructBuilding_t g_kSpyBuildings[ NUM_SPY_BUILDINGS ] =
 							"spy_trap_unavailable.res",
 							"spy_trap_active.res",
 							"spy_trap_inactive.res",
-							"spy_trap_inactive.res" ), 
+							"spy_trap_inactive.res" ),
 
 	// Reprogrammer
 	SpyConstructBuilding_t( true,
@@ -115,9 +115,9 @@ const SpyConstructBuildingReplacement_t s_alternateSpyBuildings[] =
 DECLARE_HUDELEMENT_DEPTH( CHudMenuSpyBuild, 40 );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CHudMenuSpyBuild::CHudMenuSpyBuild( const char *pElementName ) 
+CHudMenuSpyBuild::CHudMenuSpyBuild( const char *pElementName )
 	: CHudBaseBuildMenu( pElementName, "HudMenuSpyBuild" )
 {
 	Panel *pParent = g_pClientMode->GetViewport();
@@ -157,7 +157,7 @@ CHudMenuSpyBuild::CHudMenuSpyBuild( const char *pElementName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuSpyBuild::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -169,28 +169,28 @@ void CHudMenuSpyBuild::ApplySchemeSettings( IScheme *pScheme )
 		// once we deem spy traps as shippable, but for now they're a prototype.
 
 // 		LoadControlSettings( "resource/UI/build_menu_360/HudMenuSpyBuild.res" );
-// 
+//
 // 		// Load the already built images, destroyable
 // 		m_pAlreadyBuiltObjects[0]->LoadControlSettings( "resource/UI/build_menu_360/sentry_already_built.res" );
 // 		m_pAlreadyBuiltObjects[1]->LoadControlSettings( "resource/UI/build_menu_360/dispenser_already_built.res" );
 // 		m_pAlreadyBuiltObjects[2]->LoadControlSettings( "resource/UI/build_menu_360/tele_entrance_already_built.res" );
 // 		m_pAlreadyBuiltObjects[3]->LoadControlSettings( "resource/UI/build_menu_360/tele_exit_already_built.res" );
-// 
+//
 // 		m_pAvailableObjects[0]->LoadControlSettings( "resource/UI/build_menu_360/sentry_active.res" );
 // 		m_pAvailableObjects[1]->LoadControlSettings( "resource/UI/build_menu_360/dispenser_active.res" );
 // 		m_pAvailableObjects[2]->LoadControlSettings( "resource/UI/build_menu_360/tele_entrance_active.res" );
 // 		m_pAvailableObjects[3]->LoadControlSettings( "resource/UI/build_menu_360/tele_exit_active.res" );
-// 
+//
 // 		m_pCantAffordObjects[0]->LoadControlSettings( "resource/UI/build_menu_360/sentry_cant_afford.res" );
 // 		m_pCantAffordObjects[1]->LoadControlSettings( "resource/UI/build_menu_360/dispenser_cant_afford.res" );
 // 		m_pCantAffordObjects[2]->LoadControlSettings( "resource/UI/build_menu_360/tele_entrance_cant_afford.res" );
 // 		m_pCantAffordObjects[3]->LoadControlSettings( "resource/UI/build_menu_360/tele_exit_cant_afford.res" );
-// 
+//
 // 		m_pUnavailableObjects[0]->LoadControlSettings( "resource/UI/build_menu/sentry_unavailable.res" );
 // 		m_pUnavailableObjects[1]->LoadControlSettings( "resource/UI/build_menu/dispenser_unavailable.res" );
 // 		m_pUnavailableObjects[2]->LoadControlSettings( "resource/UI/build_menu/tele_entrance_unavailable.res" );
 // 		m_pUnavailableObjects[3]->LoadControlSettings( "resource/UI/build_menu/tele_exit_unavailable.res" );
-// 
+//
 // 		m_pActiveSelection = dynamic_cast< CIconPanel * >( FindChildByName( "active_selection_bg" ) );
 // 		m_pBuildLabelBright = dynamic_cast< CExLabel * >( FindChildByName( "BuildHintLabel_Bright" ) );
 // 		m_pBuildLabelDim = dynamic_cast< CExLabel * >( FindChildByName( "BuildHintLabel_Dim" ) );
@@ -247,7 +247,7 @@ void CHudMenuSpyBuild::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudMenuSpyBuild::ShouldDraw( void )
 {
@@ -265,7 +265,7 @@ bool CHudMenuSpyBuild::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuSpyBuild::GetBuildingIDAndModeFromSlot( int iSlot, int &iBuilding, int &iMode, const SpyConstructBuilding_t (&buildings)[ NUM_SPY_BUILDINGS ] )
 {
@@ -381,7 +381,7 @@ int	CHudMenuSpyBuild::HudElementKeyInput( int down, ButtonCode_t keynum, const c
 				return 0;
 			}
 
-			// allow slot1 - slot4 
+			// allow slot1 - slot4
 			if ( iSlot < 1 || iSlot > NUM_SPY_BUILDINGS )
 				return 1;
 		}
@@ -420,7 +420,7 @@ int	CHudMenuSpyBuild::HudElementKeyInput( int down, ButtonCode_t keynum, const c
 			default:
 				return 1;	// key not handled
 			}
-		}		
+		}
 
 		if ( iSlot > 0 )
 		{
@@ -493,7 +493,7 @@ bool CHudMenuSpyBuild::SendDestroyMessage( int iSlot )
 		// NVNT send the destroy command
 		if ( haptics )
 			haptics->ProcessHapticEvent(2, "Game", szCmd);
-		bSuccess = true; 
+		bSuccess = true;
 	}
 	else
 	{
@@ -673,7 +673,7 @@ void CHudMenuSpyBuild::SetSelectedItem( int iSlot )
 
 			m_pActiveSelection->SetPos( x, y );
 
-			UpdateHintLabels();			
+			UpdateHintLabels();
 		}
 	}
 }
@@ -723,7 +723,7 @@ void CHudMenuSpyBuild::UpdateHintLabels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CHudMenuSpyBuild::CalcCustomBuildMenuLayout( void ) const
 {
@@ -737,7 +737,7 @@ int	CHudMenuSpyBuild::CalcCustomBuildMenuLayout( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuSpyBuild::InitBuildings()
 {
@@ -747,7 +747,7 @@ void CHudMenuSpyBuild::InitBuildings()
 	}
 
 	ReplaceBuildings( m_Buildings );
-	
+
 	InvalidateLayout( true, true );
 }
 
@@ -798,7 +798,7 @@ void CHudMenuSpyBuild::ReplaceBuildings( SpyConstructBuilding_t (&targetBuilding
 			AssertMsg( 0, "Trying to replace a disabled slot" );
 			continue;
 		}
-		
+
 		// no conflict, replace the building
 		for ( int j = 0; j < ARRAYSIZE( trapSlots ); ++j )
 		{
@@ -843,7 +843,7 @@ bool CHudMenuSpyBuild::CanBuild( int iSlot )
 		{
 			ConVarRef training_can_build_sentry( "training_can_build_sentry");
 			bCanBuild = training_can_build_sentry.GetInt() != 0;
-		}			
+		}
 		break;
 	case 2:
 		{
@@ -867,4 +867,3 @@ bool CHudMenuSpyBuild::CanBuild( int iSlot )
 	return bCanBuild;
 }
 #endif // STAGING_ONLY
-

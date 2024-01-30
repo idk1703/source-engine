@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -134,7 +134,7 @@ private:
 	enum class SecretRoomState { None, Open, Solved } m_SecretRoom_state;
 	CTFPlayer *m_SecretRoom_slottedPlayers[9];
 	CUtlVector<CSteamID> m_SecretRoom_playersThatTouchedRoom;
-	
+
 	// netvars
 	CNetworkHandle( CPasstimeBall, m_hBall );
 	CNetworkArray( Vector, m_trackPoints, 16 );
@@ -149,4 +149,4 @@ private:
 //-----------------------------------------------------------------------------
 extern CTFPasstimeLogic *g_pPasstimeLogic;
 
-#endif // TF_PASSTIME_LOGIC_H  
+#endif // TF_PASSTIME_LOGIC_H

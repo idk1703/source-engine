@@ -1,9 +1,9 @@
 /***
 *
 //========= Copyright Valve Corporation, All rights reserved. ============//
-*	
-*	This product contains software technology licensed from Id 
-*	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc. 
+*
+*	This product contains software technology licensed from Id
+*	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
 *	All Rights Reserved.
 *
 ****/
@@ -162,7 +162,7 @@ struct s_loddata_t
 	int				numvertices;
 	s_boneweight_t	*globalBoneweight;
 	s_vertexinfo_t	*vertexInfo;
-	Vector			*vertex;	
+	Vector			*vertex;
 	Vector			*normal;
 	Vector4D		*tangentS;
 	Vector2D		*texcoord;
@@ -207,7 +207,7 @@ struct s_source_t
 	s_boneweight_t	*localBoneweight;	// vertex info about local bone weighting
 	s_boneweight_t	*globalBoneweight;	// vertex info about global bone weighting
 	s_vertexinfo_t	*vertexInfo;		// generic vertex info
-	Vector			*vertex;	
+	Vector			*vertex;
 	Vector			*normal;
 	Vector4D		*tangentS;
 	Vector2D		*texcoord;
@@ -215,7 +215,7 @@ struct s_source_t
 	int numfaces;
 	s_face_t *face;						// vertex indexs per face
 
-	// raw skeletal animation	
+	// raw skeletal animation
 	int numframes;
 	int startframe;
 	int endframe;

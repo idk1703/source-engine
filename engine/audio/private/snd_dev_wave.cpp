@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -146,9 +146,9 @@ void CAudioDeviceWave::Shutdown( void )
 //-----------------------------------------------------------------------------
 // WAV out device
 //-----------------------------------------------------------------------------
-inline bool CAudioDeviceWave::ValidWaveOut( void ) const 
-{ 
-	return m_waveOutHandle != 0; 
+inline bool CAudioDeviceWave::ValidWaveOut( void ) const
+{
+	return m_waveOutHandle != 0;
 }
 
 
@@ -167,7 +167,7 @@ void CAudioDeviceWave::OpenWaveOut( void )
 	waveFormat.wBitsPerSample = DeviceSampleBits();
 	waveFormat.nSamplesPerSec = DeviceDmaSpeed(); // DeviceSampleRate
 	waveFormat.nBlockAlign = waveFormat.nChannels * waveFormat.wBitsPerSample / 8;
-	waveFormat.nAvgBytesPerSec = waveFormat.nSamplesPerSec * waveFormat.nBlockAlign; 
+	waveFormat.nAvgBytesPerSec = waveFormat.nSamplesPerSec * waveFormat.nBlockAlign;
 
 	MMRESULT errorCode = waveOutOpen( &m_waveOutHandle, WAVE_MAPPER, &waveFormat, 0, 0L, CALLBACK_NULL );
 	while ( errorCode != MMSYSERR_NOERROR )
@@ -202,14 +202,14 @@ void CAudioDeviceWave::OpenWaveOut( void )
 //-----------------------------------------------------------------------------
 // Closes the windows wave out device
 //-----------------------------------------------------------------------------
-void CAudioDeviceWave::CloseWaveOut( void ) 
-{ 
+void CAudioDeviceWave::CloseWaveOut( void )
+{
 	if ( ValidWaveOut() )
 	{
 		waveOutReset( m_waveOutHandle );
 		FreeOutputBuffers();
 		waveOutClose( m_waveOutHandle );
-		m_waveOutHandle = NULL; 
+		m_waveOutHandle = NULL;
 	}
 }
 
@@ -219,11 +219,11 @@ void CAudioDeviceWave::CloseWaveOut( void )
 //-----------------------------------------------------------------------------
 void* CAudioDeviceWave::AllocOutputMemory( int nSize, HGLOBAL &hMemory )
 {
-	// Output memory for waveform data+hdrs must be 
+	// Output memory for waveform data+hdrs must be
 	// globally allocated with GMEM_MOVEABLE and GMEM_SHARE flags.
-	hMemory = GlobalAlloc( GMEM_MOVEABLE | GMEM_SHARE, nSize ); 
-	if ( !hMemory ) 
-	{ 
+	hMemory = GlobalAlloc( GMEM_MOVEABLE | GMEM_SHARE, nSize );
+	if ( !hMemory )
+	{
 		DevWarning( "Sound: Out of memory.\n");
 		CloseWaveOut();
 		return NULL;
@@ -231,13 +231,13 @@ void* CAudioDeviceWave::AllocOutputMemory( int nSize, HGLOBAL &hMemory )
 
 	HPSTR lpData = (char *)GlobalLock( hMemory );
 	if ( !lpData )
-	{ 
+	{
 		DevWarning( "Sound: Failed to lock.\n");
 		GlobalFree( hMemory );
 		hMemory = NULL;
 		CloseWaveOut();
 		return NULL;
-	} 
+	}
 	memset( lpData, 0, nSize );
 	return lpData;
 }
@@ -250,7 +250,7 @@ void CAudioDeviceWave::FreeOutputMemory( HGLOBAL &hMemory )
 {
 	if ( hMemory )
 	{
-		GlobalUnlock( hMemory ); 
+		GlobalUnlock( hMemory );
 		GlobalFree( hMemory );
 		hMemory = NULL;
 	}
@@ -262,7 +262,7 @@ void CAudioDeviceWave::FreeOutputMemory( HGLOBAL &hMemory )
 //-----------------------------------------------------------------------------
 void CAudioDeviceWave::AllocateOutputBuffers()
 {
-	// Allocate and lock memory for the waveform data.  
+	// Allocate and lock memory for the waveform data.
 	int nBufferSize = WAV_BUFFER_SIZE * WAV_BUFFERS;
 	HPSTR lpData = (char *)AllocOutputMemory( nBufferSize, m_hWaveData );
 	if ( !lpData )
@@ -278,7 +278,7 @@ void CAudioDeviceWave::AllocateOutputBuffers()
 	for ( int i=0 ; i < WAV_BUFFERS; i++ )
 	{
 		LPWAVEHDR lpHdr = lpWaveHdr + i;
-		lpHdr->dwBufferLength = WAV_BUFFER_SIZE; 
+		lpHdr->dwBufferLength = WAV_BUFFER_SIZE;
 		lpHdr->lpData = lpData + (i * WAV_BUFFER_SIZE);
 
 		MMRESULT nResult = waveOutPrepareHeader( m_waveOutHandle, lpHdr, sizeof(WAVEHDR) );
@@ -291,7 +291,7 @@ void CAudioDeviceWave::AllocateOutputBuffers()
 	}
 
 	m_deviceSampleCount = nBufferSize / DeviceSampleBytes();
-	
+
 	m_pBuffer = (void *)lpData;
 	m_pWaveHdr = lpWaveHdr;
 }
@@ -328,7 +328,7 @@ int CAudioDeviceWave::PaintBegin( float mixAheadTime, int soundtime, int painted
 	//  endtime - target for samples in mixahead buffer at speed
 
 	unsigned int endtime = soundtime + mixAheadTime * DeviceDmaSpeed();
-	
+
 	int samps = DeviceSampleCount() >> (DeviceChannels()-1);
 
 	if ((int)(endtime - soundtime) > samps)
@@ -336,7 +336,7 @@ int CAudioDeviceWave::PaintBegin( float mixAheadTime, int soundtime, int painted
 
 	if ((endtime - paintedtime) & 0x3)
 	{
-		// The difference between endtime and painted time should align on 
+		// The difference between endtime and painted time should align on
 		// boundaries of 4 samples.  This is important when upsampling from 11khz -> 44khz.
 		endtime -= (endtime - paintedtime) & 0x3;
 	}
@@ -377,27 +377,27 @@ void CAudioDeviceWave::PaintEnd( void )
 	// submit a few new sound blocks
 	//
 	// 22K sound support
-	// 44k: UNDONE - double blocks out now that we're at 44k playback? 
-	cblocks = 4 << 1; 
+	// 44k: UNDONE - double blocks out now that we're at 44k playback?
+	cblocks = 4 << 1;
 
 	while (((m_buffersSent - m_buffersCompleted) >> SAMPLE_16BIT_SHIFT) < cblocks)
 	{
 		h = m_pWaveHdr + ( m_buffersSent&WAV_MASK );
 
 		m_buffersSent++;
-		/* 
-		 * Now the data block can be sent to the output device. The 
-		 * waveOutWrite function returns immediately and waveform 
-		 * data is sent to the output device in the background. 
-		 */ 
-		wResult = waveOutWrite( m_waveOutHandle, h, sizeof(WAVEHDR) ); 
+		/*
+		 * Now the data block can be sent to the output device. The
+		 * waveOutWrite function returns immediately and waveform
+		 * data is sent to the output device in the background.
+		 */
+		wResult = waveOutWrite( m_waveOutHandle, h, sizeof(WAVEHDR) );
 
 		if (wResult != MMSYSERR_NOERROR)
-		{ 
+		{
 			Warning( "Failed to write block to device\n");
 			Shutdown();
-			return; 
-		} 
+			return;
+		}
 	}
 }
 
@@ -478,7 +478,7 @@ void CAudioDeviceWave::MixUpsample( int sampleCount, int filtertype )
 {
 	paintbuffer_t *ppaint = MIX_GetCurrentPaintbufferPtr();
 	int ifilter = ppaint->ifilter;
-	
+
 	Assert (ifilter < CPAINTFILTERS);
 
 	S_MixBufferUpsample2x( sampleCount, ppaint->pbuf, &(ppaint->fltmem[ifilter][0]), CPAINTFILTERMEM, filtertype );
@@ -543,7 +543,7 @@ void CAudioDeviceWave::TransferSamples( int end )
 {
 	int		lpaintedtime = g_paintedtime;
 	int		endtime = end;
-	
+
 	// resumes playback...
 
 	if ( m_pBuffer )

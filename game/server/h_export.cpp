@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 
 ===== h_export.cpp ========================================================
 
-  Entity classes exported by Halflife.
+	Entity classes exported by Halflife.
 
 */
 
@@ -35,14 +35,13 @@ BOOL WINAPI DllMain( HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved )
 	}
 
 	if ( fdwReason == DLL_PROCESS_ATTACH )
-    {
+	{
 		win32DLLHandle = hinstDLL;
-    }
+	}
 	else if ( fdwReason == DLL_PROCESS_DETACH )
-    {
-    }
+	{
+	}
 	return TRUE;
 }
 
 #endif
-

@@ -159,4 +159,3 @@ static bool BPendingReliableMessages()
 
 
 #endif // _TF_GC_SHARED_H
-

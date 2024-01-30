@@ -28,7 +28,7 @@ struct InputEvent_t;
 
 
 //-----------------------------------------------------------------------------
-// Global singleton interfaces related to VGUI 
+// Global singleton interfaces related to VGUI
 //-----------------------------------------------------------------------------
 extern IMatSystemSurface *g_pMatSystemSurface;
 
@@ -82,7 +82,7 @@ public:
 	virtual void UpdateButtonState( const InputEvent_t &event ) = 0;
 	virtual void PostInit() = 0;
 
-    virtual void Paint( PaintMode_t mode ) = 0;
+	virtual void Paint( PaintMode_t mode ) = 0;
 
 	// handlers for game UI (main menu)
 	virtual void ActivateGameUI() = 0;

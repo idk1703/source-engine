@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -47,7 +47,7 @@ CDODTextWindow::CDODTextWindow(IViewPort *pViewPort) : CTextWindow( pViewPort )
 
 	// Do this again ( base class already does it )
 	// If we don't, custom controls that we catch in our CreateControlByName
-	// will not go to the CDODTextWindow version as we haven't instantiated 
+	// will not go to the CDODTextWindow version as we haven't instantiated
 	// ourselves as a CDODTextWindow yet.
 	LoadControlSettings("Resource/UI/TextWindow.res");
 }
@@ -60,7 +60,7 @@ CDODTextWindow::~CDODTextWindow()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODTextWindow::Update()
 {
@@ -74,7 +74,7 @@ void CDODTextWindow::Update()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODTextWindow::SetVisible(bool state)
 {
@@ -108,7 +108,7 @@ void CDODTextWindow::ShowPanel(bool bShow)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODTextWindow::OnKeyCodePressed(KeyCode code)
 {
@@ -135,11 +135,11 @@ void CDODTextWindow::PaintBackground()
 //-----------------------------------------------------------------------------
 void CDODTextWindow::PerformLayout()
 {
-	BaseClass::PerformLayout();	
+	BaseClass::PerformLayout();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODTextWindow::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -147,7 +147,7 @@ void CDODTextWindow::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Panel *CDODTextWindow::CreateControlByName( const char *controlName )
 {

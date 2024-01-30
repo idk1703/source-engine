@@ -17,11 +17,11 @@
 #include "tier0/memdbgon.h"
 
 #if defined( CBaseCombatCharacter )
-#undef CBaseCombatCharacter	
+#undef CBaseCombatCharacter
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseCombatCharacter::C_BaseCombatCharacter()
 {
@@ -39,7 +39,7 @@ C_BaseCombatCharacter::C_BaseCombatCharacter()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseCombatCharacter::~C_BaseCombatCharacter()
 {
@@ -59,7 +59,7 @@ int	C_BaseCombatCharacter::GetAmmoCount( char *szName ) const
 */
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseCombatCharacter::OnPreDataChanged( DataUpdateType_t updateType )
 {
@@ -71,7 +71,7 @@ void C_BaseCombatCharacter::OnPreDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseCombatCharacter::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -105,7 +105,7 @@ void C_BaseCombatCharacter::DoMuzzleFlash()
 
 #ifdef GLOWS_ENABLE
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseCombatCharacter::GetGlowEffectColor( float *r, float *g, float *b )
 {
@@ -115,7 +115,7 @@ void C_BaseCombatCharacter::GetGlowEffectColor( float *r, float *g, float *b )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 /*
 void C_BaseCombatCharacter::EnableGlowEffect( float r, float g, float b )
@@ -131,7 +131,7 @@ void C_BaseCombatCharacter::EnableGlowEffect( float r, float g, float b )
 */
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseCombatCharacter::UpdateGlowEffect( void )
 {
@@ -152,7 +152,7 @@ void C_BaseCombatCharacter::UpdateGlowEffect( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseCombatCharacter::DestroyGlowEffect( void )
 {

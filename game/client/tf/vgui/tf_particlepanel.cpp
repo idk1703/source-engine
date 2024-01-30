@@ -42,7 +42,7 @@ DECLARE_BUILD_FACTORY( CTFParticlePanel );
 //-----------------------------------------------------------------------------
 // Constructor, destructor
 //-----------------------------------------------------------------------------
-CTFParticlePanel::CTFParticlePanel( vgui::Panel *pParent, const char *pName ) 
+CTFParticlePanel::CTFParticlePanel( vgui::Panel *pParent, const char *pName )
 	: BaseClass( pParent, pName )
 {
 	m_Camera.m_flZNear = 3.0f;
@@ -248,7 +248,7 @@ void CTFParticlePanel::OnCommand( const char *command )
 
 			if( !pEffect->m_pParticleSystem )
 				continue;
-	
+
 			pEffect->StartupParticleCollection();
 			pEffect->m_pParticleSystem->StartEmission();
 			pEffect->m_bForceStopped = false;
@@ -342,7 +342,7 @@ static bool IsValidHierarchy( CParticleCollection *pCollection )
 void CTFParticlePanel::OnTick()
 {
 	BaseClass::OnTick();
-	
+
 	float flTime = engine->Time();
 
 	bool bAnyActive = false;
@@ -519,7 +519,7 @@ void CTFParticlePanel::ParticleEffect_t::SetParticleSystem( const char* pszParti
 	m_ParticleSystemName = pszParticleSystemName;
 
 	m_pParent->PostActionSignal( new KeyValues( "ParticleSystemReconstructed" ) );
-	
+
 	if( m_bStartActivated )
 	{
 		StartupParticleCollection();
@@ -535,7 +535,7 @@ void CTFParticlePanel::ParticleEffect_t::Paint( CMatRenderContextPtr& pRenderCon
 	pRenderContext->MatrixMode( MATERIAL_PROJECTION );
 	pRenderContext->PushMatrix();
 	pRenderContext->LoadIdentity();
-	
+
 	pRenderContext->Ortho( 0, 0, screenW, screenH, -9999, 9999 );
 
 	pRenderContext->Translate( flXScale * ( m_nXPos + iXOffset ), screenH - flYScale * ( m_nYPos + iYOffset ), 0.f );

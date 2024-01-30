@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -88,7 +88,7 @@ protected:
 
 	DODWeaponID m_EmitterWeaponID;
 
-private:		
+private:
 
 	CDODBaseGrenade( const CDODBaseGrenade & );
 

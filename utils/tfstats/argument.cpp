@@ -42,7 +42,7 @@ CLogEventArgument::CLogEventArgument()
 // Purpose:	initializes the argument
 // Input:	text - the text representing the argument
 //------------------------------------------------------------------------------------------------------
-void CLogEventArgument::init(const char* text) 
+void CLogEventArgument::init(const char* text)
 {
 
 	int len=strlen(text);
@@ -98,9 +98,9 @@ PID CLogEventArgument::asPlayerGetPID() const
 		sscanf(openPID,"%li",&wonID);
 	}
 
-	
+
 	return PID(svrPID,wonID);
-	
+
 }
 */
 //------------------------------------------------------------------------------------------------------
@@ -123,13 +123,13 @@ char* CLogEventArgument::asPlayerGetName(char* copybuf) const
 	if (!noPID)
 		*eon=old;
 	return copybuf;
-	
+
 }
 
 
 //------------------------------------------------------------------------------------------------------
 // Function:	CLogEventArgument::asPlayerGetName
-// Purpose:	an alternate form of the above function that returns the playername 
+// Purpose:	an alternate form of the above function that returns the playername
 // as a C++ string, rather than buffercopying it around
 // Output:	string: the player's name
 //------------------------------------------------------------------------------------------------------
@@ -137,11 +137,11 @@ string CLogEventArgument::asPlayerGetName() const
 {
 	char* eon=findStartOfSvrID(m_ArgText);
 	bool noPID=(eon==m_ArgText);
-	
+
 	char old=*eon;
 	if (!noPID)
 		*eon=0;
-	
+
 
 	string s(m_ArgText);
 	if (!noPID)
@@ -173,7 +173,7 @@ unsigned long CLogEventArgument::asPlayerGetWONID() const
 unsigned long CLogEventArgument::asPlayerGetPID() const
 {
 	int svrPID=asPlayerGetSvrPID();
-	
+
 	if (pidMap[svrPID]==0 || pidMap[svrPID]==-1)
 		pidMap[svrPID]=svrPID;
 	return pidMap[svrPID];
@@ -193,7 +193,7 @@ double CLogEventArgument::getFloatValue() const
 //------------------------------------------------------------------------------------------------------
 // Function:	CLogEventArgument::getStringValue
 // Purpose:	 treats the argument as a string and returns a pointer to the argument
-// text itself.  note the pointer is const, so the argument can't be modified by 
+// text itself.  note the pointer is const, so the argument can't be modified by
 // the caller (unless they perform some nefarious casting on the returned pointer)
 // Output:	const char*
 //------------------------------------------------------------------------------------------------------
@@ -214,4 +214,3 @@ char* CLogEventArgument::getStringValue(char* copybuf) const
 	strcpy(copybuf,m_ArgText);
 	return copybuf;
 }
-

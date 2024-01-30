@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -42,15 +42,15 @@ winding_t	*AllocWinding (int points);
 vec_t	WindingArea (winding_t *w);
 void	WindingCenter (winding_t *w, Vector &center);
 vec_t	WindingAreaAndBalancePoint( winding_t *w, Vector &center );
-void	ClipWindingEpsilon (winding_t *in, const Vector &normal, vec_t dist, 
+void	ClipWindingEpsilon (winding_t *in, const Vector &normal, vec_t dist,
 				vec_t epsilon, winding_t **front, winding_t **back);
 
 // translates everything by offset, then does the clip, then translates back (to keep precision)
 void ClipWindingEpsilon_Offset( winding_t *in, const Vector &normal, vec_t dist, vec_t epsilon, winding_t **front, winding_t **back, const Vector &offset );
 
-void	ClassifyWindingEpsilon( winding_t *in, const Vector &normal, vec_t dist, 
+void	ClassifyWindingEpsilon( winding_t *in, const Vector &normal, vec_t dist,
 				vec_t epsilon, winding_t **front, winding_t **back, winding_t **on);
-void	ClassifyWindingEpsilon_Offset( winding_t *in, const Vector &normal, vec_t dist, 
+void	ClassifyWindingEpsilon_Offset( winding_t *in, const Vector &normal, vec_t dist,
 				vec_t epsilon, winding_t **front, winding_t **back, winding_t **on, const Vector &offset);
 
 winding_t	*ChopWinding (winding_t *in, const Vector &normal, vec_t dist);

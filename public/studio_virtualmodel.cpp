@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -277,7 +277,7 @@ void virtualmodel_t::AppendAnimations( int group, const studiohdr_t *pStudioHdr 
 
 		m_group[ group ].masterAnim[ j ] = k;
 	}
-	
+
 	if ( HasLookupTable() )
 	{
 		for ( j = numCheck; j < anim.Count(); j++ )
@@ -380,14 +380,14 @@ void virtualmodel_t::AppendAttachments( int group, const studiohdr_t *pStudioHdr
 	{
 
 		n = m_group[ group ].masterBone[ pStudioHdr->pLocalAttachment( j )->localbone ];
-		
+
 		// skip if the attachments bone doesn't exist in the root model
 		if (n == -1)
 		{
 			continue;
 		}
-		
-		
+
+
 		char *s1 = pStudioHdr->pLocalAttachment( j )->pszName();
 		for (k = 0; k < numCheck; k++)
 		{

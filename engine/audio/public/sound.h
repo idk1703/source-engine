@@ -49,14 +49,14 @@ struct StartSoundParams_t
 	StartSoundParams_t() :
 		staticsound( false ),
 		userdata( 0 ),
-		soundsource( 0 ), 
-		entchannel( CHAN_AUTO ), 
-		pSfx( 0 ), 
+		soundsource( 0 ),
+		entchannel( CHAN_AUTO ),
+		pSfx( 0 ),
 		bUpdatePositions( true ),
-		fvol( 1.0f ),  
-		soundlevel( SNDLVL_NORM ), 
-		flags( SND_NOFLAGS ), 
-		pitch( PITCH_NORM ), 
+		fvol( 1.0f ),
+		soundlevel( SNDLVL_NORM ),
+		flags( SND_NOFLAGS ),
+		pitch( PITCH_NORM ),
 		specialdsp( 0 ),
 		fromserver( false ),
 		delay( 0.0f ),
@@ -70,11 +70,11 @@ struct StartSoundParams_t
 
 	bool			staticsound;
 	int				userdata;
-    int				soundsource;
+	int				soundsource;
 	int				entchannel;
 	CSfxTable		*pSfx;
-	Vector			origin; 
-	Vector			direction; 
+	Vector			origin;
+	Vector			direction;
 	bool			bUpdatePositions;
 	float			fvol;
 	soundlevel_t	soundlevel;

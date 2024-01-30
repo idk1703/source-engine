@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -86,7 +86,7 @@ void CScratchPad3D::CCommand_Polygon::Read( CFileRead *pFile )
 	pFile->Read( &count, sizeof(count) );
 	m_Verts.RemoveAll();
 	m_Verts.AddMultipleToTail( count );
-	
+
 	if( count )
 		pFile->Read( &m_Verts[0], sizeof(CSPVert)*count );
 }
@@ -95,7 +95,7 @@ void CScratchPad3D::CCommand_Polygon::Write( IFileSystem* pFileSystem, FileHandl
 {
 	int count = m_Verts.Size();
 	pFileSystem->Write( &count, sizeof(count), fp );
-	
+
 	if( count )
 		pFileSystem->Write( &m_Verts[0], sizeof(CSPVert)*count, fp );
 }
@@ -222,7 +222,7 @@ bool CScratchPad3D::LoadCommandsFromFile( )
 	{
 		unsigned char iCommand;
 		fileRead.Read( &iCommand, sizeof(iCommand) );
-		
+
 		CBaseCommand *pCmd = NULL;
 		if( iCommand == COMMAND_POINT )
 			pCmd = new CCommand_Point;
@@ -246,7 +246,7 @@ bool CScratchPad3D::LoadCommandsFromFile( )
 
 		pCmd->Read( &fileRead );
 		m_Commands.AddToTail( pCmd );
-	}	
+	}
 
 	m_pFileSystem->Close( fp );
 	return true;
@@ -263,29 +263,29 @@ void CScratchPad3D::Release()
 	delete this;
 }
 
-void CScratchPad3D::SetMapping( 
-	const Vector &vInputMin, 
+void CScratchPad3D::SetMapping(
+	const Vector &vInputMin,
 	const Vector &vInputMax,
 	const Vector &vOutputMin,
 	const Vector &vOutputMax )
 {
 	CCommand_Matrix *cmd = new CCommand_Matrix;
 	m_Commands.AddToTail( cmd );
-	
+
 	Vector vDivisor(1,1,1);
 	for( int i=0; i < 3; i++ )
 		vDivisor[i] = fabs(vInputMax[i] - vInputMin[i]) < 0.0001f ? 0.001f : (vInputMax[i] - vInputMin[i]);
 
-	Vector vScale = (vOutputMax - vOutputMin) / vDivisor; 
+	Vector vScale = (vOutputMax - vOutputMin) / vDivisor;
 	Vector vShift = -vInputMin * vScale + vOutputMin;
 
-	cmd->m_mMatrix.Init( 
+	cmd->m_mMatrix.Init(
 		vScale.x,		0,			0,			vShift.x,
 		0,				vScale.y,	0,			vShift.y,
 		0,				0,			vScale.z,	vShift.z,
 		0,				0,			0,			1 );
 
-	
+
 	AutoFlush();
 }
 
@@ -329,7 +329,7 @@ void CScratchPad3D::DrawPolygon( CSPVertList const &verts )
 	m_Commands.AddToTail( cmd );
 
 	cmd->m_Verts.AddVectorToTail( verts.m_Verts );
-	
+
 	AutoFlush();
 }
 
@@ -360,54 +360,54 @@ void CScratchPad3D::SetRenderState( RenderState state, unsigned long val )
 void CScratchPad3D::DrawWireframeBox( const Vector &vMin, const Vector &vMax, const Vector &vColor )
 {
 	// Bottom 4.
-	DrawLine( 
-		CSPVert(Vector(vMin.x, vMin.y, vMin.z), vColor), 
+	DrawLine(
+		CSPVert(Vector(vMin.x, vMin.y, vMin.z), vColor),
 		CSPVert(Vector(vMax.x, vMin.y, vMin.z), vColor) );
 
-	DrawLine( 
-		CSPVert(Vector(vMin.x, vMin.y, vMin.z), vColor), 
+	DrawLine(
+		CSPVert(Vector(vMin.x, vMin.y, vMin.z), vColor),
 		CSPVert(Vector(vMin.x, vMax.y, vMin.z), vColor) );
 
-	DrawLine( 
-		CSPVert(Vector(vMax.x, vMin.y, vMin.z), vColor), 
+	DrawLine(
+		CSPVert(Vector(vMax.x, vMin.y, vMin.z), vColor),
 		CSPVert(Vector(vMax.x, vMax.y, vMin.z), vColor) );
 
-	DrawLine( 
-		CSPVert(Vector(vMax.x, vMax.y, vMin.z), vColor), 
+	DrawLine(
+		CSPVert(Vector(vMax.x, vMax.y, vMin.z), vColor),
 		CSPVert(Vector(vMin.x, vMax.y, vMin.z), vColor) );
 
 	// Top 4.
-	DrawLine( 
-		CSPVert(Vector(vMin.x, vMin.y, vMax.z), vColor), 
+	DrawLine(
+		CSPVert(Vector(vMin.x, vMin.y, vMax.z), vColor),
 		CSPVert(Vector(vMax.x, vMin.y, vMax.z), vColor) );
 
-	DrawLine( 
-		CSPVert(Vector(vMin.x, vMin.y, vMax.z), vColor), 
+	DrawLine(
+		CSPVert(Vector(vMin.x, vMin.y, vMax.z), vColor),
 		CSPVert(Vector(vMin.x, vMax.y, vMax.z), vColor) );
 
-	DrawLine( 
-		CSPVert(Vector(vMax.x, vMin.y, vMax.z), vColor), 
+	DrawLine(
+		CSPVert(Vector(vMax.x, vMin.y, vMax.z), vColor),
 		CSPVert(Vector(vMax.x, vMax.y, vMax.z), vColor) );
 
-	DrawLine( 
-		CSPVert(Vector(vMax.x, vMax.y, vMax.z), vColor), 
+	DrawLine(
+		CSPVert(Vector(vMax.x, vMax.y, vMax.z), vColor),
 		CSPVert(Vector(vMin.x, vMax.y, vMax.z), vColor) );
 
 	// Connecting 4.
-	DrawLine( 
-		CSPVert(Vector(vMin.x, vMin.y, vMin.z), vColor), 
+	DrawLine(
+		CSPVert(Vector(vMin.x, vMin.y, vMin.z), vColor),
 		CSPVert(Vector(vMin.x, vMin.y, vMax.z), vColor) );
 
-	DrawLine( 
-		CSPVert(Vector(vMin.x, vMax.y, vMin.z), vColor), 
+	DrawLine(
+		CSPVert(Vector(vMin.x, vMax.y, vMin.z), vColor),
 		CSPVert(Vector(vMin.x, vMax.y, vMax.z), vColor) );
 
-	DrawLine( 
-		CSPVert(Vector(vMax.x, vMax.y, vMin.z), vColor), 
+	DrawLine(
+		CSPVert(Vector(vMax.x, vMax.y, vMin.z), vColor),
 		CSPVert(Vector(vMax.x, vMax.y, vMax.z), vColor) );
 
-	DrawLine( 
-		CSPVert(Vector(vMax.x, vMin.y, vMin.z), vColor), 
+	DrawLine(
+		CSPVert(Vector(vMax.x, vMin.y, vMin.z), vColor),
 		CSPVert(Vector(vMax.x, vMin.y, vMax.z), vColor) );
 }
 
@@ -427,7 +427,7 @@ void CScratchPad3D::DrawText( const char *pStr, const CTextParams &params )
 void CScratchPad3D::Clear()
 {
 	FileHandle_t fp;
-	
+
 	while( ( fp = m_pFileSystem->Open(m_pFilename, "wb") ) == NULL )
 	{
 #ifdef _WIN32
@@ -455,25 +455,25 @@ void CScratchPad3D::Flush()
 		usleep( 5 );
 #endif
 	}
-	
+
 	// Append the new commands to the file.
 	for( int i=0; i < m_Commands.Size(); i++ )
 	{
 		m_pFileSystem->Write( &m_Commands[i]->m_iCommand, sizeof(m_Commands[i]->m_iCommand), fp );
 		m_Commands[i]->Write( m_pFileSystem, fp );
 	}
-	
+
 	m_pFileSystem->Close( fp );
 
 	DeleteCommands();
 }
 
 void CScratchPad3D::DrawImageBW(
-		unsigned char const *pData, 
-		int width, 
-		int height, 
-		int pitchInBytes, 
-		bool bOutlinePixels, 
+		unsigned char const *pData,
+		int width,
+		int height,
+		int pitchInBytes,
+		bool bOutlinePixels,
 		bool bOutlineImage,
 		Vector *vCorners )
 {
@@ -496,19 +496,19 @@ void CScratchPad3D::DrawImageBW(
 
 
 void CScratchPad3D::DrawPolygonsForPixels(
-		SPRGBA *pData, 
-		int width, 
-		int height, 
-		int pitchInBytes, 
+		SPRGBA *pData,
+		int width,
+		int height,
+		int pitchInBytes,
 		Vector *vCorners )
 {
 	// Scan top-down.
 	Vector vCurLeft = vCorners[1];
 	Vector vCurRight = vCorners[2];
-	
+
 	Vector vLeftInc = (vCorners[0] - vCorners[1]) / height;
 	Vector vRightInc = (vCorners[3] - vCorners[2]) / height;
-	
+
 	Vector vNextLeft = vCurLeft + vLeftInc;
 	Vector vNextRight = vCurRight + vRightInc;
 
@@ -522,7 +522,7 @@ void CScratchPad3D::DrawPolygonsForPixels(
 	{
 		vTopLeft = vCurLeft;
 		vBottomLeft = vNextLeft;
-		
+
 		Vector vTopXInc = (vCurRight - vCurLeft) / width;
 		Vector vBottomXInc = (vNextRight - vNextLeft) / width;
 
@@ -536,7 +536,7 @@ void CScratchPad3D::DrawPolygonsForPixels(
 				DrawPolygon( CSPVertList( vPolyBox, 4, Vector(pSrc->r/255.1f, pSrc->g/255.1f, pSrc->b/255.1f) ) );
 			else
 				DrawPolygon( CSPVertList( vPolyBox, 4, Vector(1,1,1) ) );
-			
+
 			++pSrc;
 			vTopLeft += vTopXInc;
 			vTopRight += vTopXInc;
@@ -553,10 +553,10 @@ void CScratchPad3D::DrawPolygonsForPixels(
 
 
 void CScratchPad3D::DrawImageRGBA(
-		SPRGBA *pData, 
-		int width, 
-		int height, 
-		int pitchInBytes, 
+		SPRGBA *pData,
+		int width,
+		int height,
+		int pitchInBytes,
 		bool bOutlinePixels,
 		bool bOutlineImage,
 		Vector *vCorners )
@@ -632,4 +632,3 @@ IScratchPad3D* ScratchPad3D_Create( char const *pFilename )
 	return pRet;
 }
 #endif // POSIX
-

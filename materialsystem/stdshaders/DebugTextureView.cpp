@@ -20,7 +20,7 @@ BEGIN_VS_SHADER( DebugTextureView_dx9, "Help for DebugTextureView" )
 			LoadTexture( BASETEXTURE );
 		}
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		if ( g_pHardwareConfig->GetDXSupportLevel() < 90 )

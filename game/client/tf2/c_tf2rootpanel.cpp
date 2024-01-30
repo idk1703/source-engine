@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,8 +15,8 @@
 #include "commanderoverlaypanel.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
 C_TF2RootPanel::C_TF2RootPanel( vgui::VPANEL parent )
 	: BaseClass( NULL, "TF2 Root Panel" )
@@ -37,7 +37,7 @@ C_TF2RootPanel::C_TF2RootPanel( vgui::VPANEL parent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TF2RootPanel::~C_TF2RootPanel( void )
 {
@@ -45,7 +45,7 @@ C_TF2RootPanel::~C_TF2RootPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TF2RootPanel::PostChildPaint()
 {
@@ -77,7 +77,7 @@ void C_TF2RootPanel::RenderPanelEffects( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Add effect to list
-// Input  : *effect - 
+// Input  : *effect -
 //-----------------------------------------------------------------------------
 EFFECT_HANDLE C_TF2RootPanel::AddEffect( CPanelEffect *effect )
 {
@@ -90,7 +90,7 @@ EFFECT_HANDLE C_TF2RootPanel::AddEffect( CPanelEffect *effect )
 
 //-----------------------------------------------------------------------------
 // Purpose: Remove effect from list
-// Input  : *effect - 
+// Input  : *effect -
 //-----------------------------------------------------------------------------
 void C_TF2RootPanel::RemoveEffect( EFFECT_HANDLE handle )
 {
@@ -107,7 +107,7 @@ void C_TF2RootPanel::RemoveEffect( EFFECT_HANDLE handle )
 
 //-----------------------------------------------------------------------------
 // Purpose: Find effect by handle
-// Input  : handle - 
+// Input  : handle -
 // Output : CPanelEffect
 //-----------------------------------------------------------------------------
 CPanelEffect *C_TF2RootPanel::FindEffect( EFFECT_HANDLE handle )
@@ -137,7 +137,7 @@ void C_TF2RootPanel::ClearAllEffects( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TF2RootPanel::OnTick( void )
 {
@@ -168,7 +168,7 @@ void C_TF2RootPanel::LevelInit( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TF2RootPanel::LevelShutdown( void )
 {
@@ -177,7 +177,7 @@ void C_TF2RootPanel::LevelShutdown( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Delete any panel effects owned by owner
-// Input  : *owner - 
+// Input  : *owner -
 //-----------------------------------------------------------------------------
 void C_TF2RootPanel::DestroyPanelEffects( ITFHintItem *owner )
 {
@@ -191,4 +191,3 @@ void C_TF2RootPanel::DestroyPanelEffects( ITFHintItem *owner )
 		}
 	}
 }
-

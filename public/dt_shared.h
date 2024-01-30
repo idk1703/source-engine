@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -23,10 +23,10 @@
 
 #include "dt_recv.h"
 
-#define PROPINFO(varName)							RECVINFO(varName)						
-#define PROPINFO_DT(varName)						RECVINFO_DT(varName)					
-#define PROPINFO_DT_NAME(varName, remoteVarName)	RECVINFO_DTNAME(varName,remoteVarName)	
-#define PROPINFO_NAME(varName,remoteVarName)		RECVINFO_NAME(varName, remoteVarName)	
+#define PROPINFO(varName)							RECVINFO(varName)
+#define PROPINFO_DT(varName)						RECVINFO_DT(varName)
+#define PROPINFO_DT_NAME(varName, remoteVarName)	RECVINFO_DTNAME(varName,remoteVarName)
+#define PROPINFO_NAME(varName,remoteVarName)		RECVINFO_NAME(varName, remoteVarName)
 
 #define DataTableProp	RecvProp
 
@@ -40,8 +40,8 @@
 
 #include "dt_send.h"
 
-#define PROPINFO(varName)							SENDINFO(varName)			
-#define PROPINFO_DT(varName)						SENDINFO_DT(varName)		
+#define PROPINFO(varName)							SENDINFO(varName)
+#define PROPINFO_DT(varName)						SENDINFO_DT(varName)
 #define PROPINFO_DT_NAME(varName, remoteVarName)	SENDINFO_DT_NAME(varName, remoteVarName)
 #define PROPINFO_NAME(varName,remoteVarName)		SENDINFO_NAME(varName,remoteVarName)
 
@@ -100,4 +100,3 @@ DataTableProp PropEHandle(
 	int sizeofVar=SIZEOF_IGNORE );
 
 #endif // DATATABLE_SHARED_H
-

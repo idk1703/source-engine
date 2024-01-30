@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -46,6 +46,3 @@ int CEntityBurnEffect::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 	else
 		return FL_EDICT_DONTSEND;
 }
-
-
-

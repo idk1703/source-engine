@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,10 +19,10 @@ class CWeaponGreaseGun : public CDODFullAutoWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponGreaseGun, CDODFullAutoWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponGreaseGun()  {}
 
 	virtual DODWeaponID GetWeaponID( void ) const		{ return WEAPON_GREASEGUN; }
@@ -42,7 +42,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_greasegun, CWeaponGreaseGun );
 PRECACHE_WEAPON_REGISTER( weapon_greasegun );
 
-acttable_t CWeaponGreaseGun::m_acttable[] = 
+acttable_t CWeaponGreaseGun::m_acttable[] =
 {
 	// Aim
 	{ ACT_IDLE,								ACT_DOD_STAND_AIM_GREASE,				false },

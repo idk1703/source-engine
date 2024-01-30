@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -91,7 +91,7 @@ namespace vgui
 		virtual void SetUserAgentInfo( const wchar_t *pwchUserAgent ) = 0;
 
 		// can't add custom headers to IE
-		virtual void AddHeader( const char *pchHeader, const char *pchValue ) = 0;	
+		virtual void AddHeader( const char *pchHeader, const char *pchValue ) = 0;
 
 		virtual void SetFileDialogChoice( const char *pchFileName ) = 0;
 
@@ -151,7 +151,7 @@ namespace vgui
 		virtual void Obsolete_OnUpdate() =0;
 		virtual void Obsolete_OnLink()=0;
 		virtual void Obsolete_OffLink()=0;
-	
+
 		// call backs for events
 		// when the top level browser is changing the page they are looking at (not sub iframes or the like loading)
 		virtual void OnURLChanged( const char *url, const char *pchPostData, bool bIsRedirect ) = 0;
@@ -171,7 +171,7 @@ namespace vgui
 		virtual void SetHTMLTitle( const char *pchTitle ) = 0;
 		// the browser is loading a sub url for a page, usually an image or css
 		virtual void OnLoadingResource( const char *pchURL ) = 0;
-		// the browser is telling us the user is hovering a url or the like 
+		// the browser is telling us the user is hovering a url or the like
 		virtual void OnSetStatusText(const char *text) =0;
 		// the browser wants the cursor changed please
 		virtual void OnSetCursor( vgui::CursorCode cursor ) = 0;

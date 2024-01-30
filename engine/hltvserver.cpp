@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -74,7 +74,7 @@ static void tv_name_changed_f( IConVar *var, const char *pOldValue, float flOldV
 }
 
 static ConVar tv_maxclients( "tv_maxclients", "128", 0, "Maximum client number on SourceTV server.",
-							  true, 0, true, 255 );
+							true, 0, true, 255 );
 
 ConVar tv_autorecord( "tv_autorecord", "0", 0, "Automatically records all games as SourceTV demos." );
 ConVar tv_name( "tv_name", "SourceTV", 0, "SourceTV host name", tv_name_changed_f );
@@ -140,7 +140,7 @@ void CDeltaEntityCache::SetTick( int nTick, int nMaxEntities )
 unsigned char* CDeltaEntityCache::FindDeltaBits( int nEntityIndex, int nDeltaTick, int &nBits )
 {
 	nBits = -1;
-	
+
 	if ( nEntityIndex < 0 || nEntityIndex >= m_nMaxEntities )
 		return NULL;
 
@@ -151,7 +151,7 @@ unsigned char* CDeltaEntityCache::FindDeltaBits( int nEntityIndex, int nDeltaTic
 		if ( pEntry->nDeltaTick == nDeltaTick )
 		{
 			nBits = pEntry->nBits;
-			return (unsigned char*)(pEntry) + sizeof(DeltaEntityEntry_s);		
+			return (unsigned char*)(pEntry) + sizeof(DeltaEntityEntry_s);
 		}
 		else
 		{
@@ -159,7 +159,7 @@ unsigned char* CDeltaEntityCache::FindDeltaBits( int nEntityIndex, int nDeltaTic
 			pEntry = pEntry->pNext;
 		}
 	}
-	
+
 	return NULL;
 }
 
@@ -202,17 +202,17 @@ void CDeltaEntityCache::AddDeltaBits( int nEntityIndex, int nDeltaTick, int nBit
 	pEntry->pNext = NULL; // link to next
 	pEntry->nDeltaTick = nDeltaTick;
 	pEntry->nBits = nBits;
-	
+
 	if ( nBits > 0 )
 	{
-		bf_read  inBuffer; 
+		bf_read  inBuffer;
 		inBuffer.StartReading( pBuffer->GetData(), pBuffer->m_nDataBytes, pBuffer->GetNumBitsWritten() );
 		bf_write outBuffer( (char*)(pEntry) + sizeof(DeltaEntityEntry_s), nBufferSize );
 		outBuffer.WriteBitsFromBuffer( &inBuffer, nBits );
 	}
 }
 
-						  
+
 static RecvTable* FindRecvTable( const char *pName, RecvTable **pRecvTables, int nRecvTables )
 {
 	for ( int i=0; i< nRecvTables; i++ )
@@ -244,7 +244,7 @@ static RecvTable* AddRecvTableR( SendTable *sendt, RecvTable **pRecvTables, int 
 
 			rp->m_pVarName	= sp->m_pVarName;
 			rp->m_RecvType	= sp->m_Type;
-			
+
 			if ( sp->IsExcludeProp() )
 			{
 				// if prop is excluded, give different name
@@ -256,12 +256,12 @@ static RecvTable* AddRecvTableR( SendTable *sendt, RecvTable **pRecvTables, int 
 				rp->SetInsideArray();
 				rp->m_pVarName = "InsideArrayProp"; // give different name
 			}
-			
+
 			if ( sp->GetType() == DPT_Array )
 			{
 				Assert ( sp->GetArrayProp() == sendt->GetProp( i-1 ) );
 				Assert( receiveProps[i-1].IsInsideArray() );
-				
+
 				rp->SetArrayProp( &receiveProps[i-1] );
 				rp->InitArray( sp->m_nElements, sp->m_ElementStride );
 			}
@@ -304,7 +304,7 @@ void CHLTVServer::FreeClientRecvTables()
 
 		// delete the table itself
 		delete rt;
-		
+
 	}
 
 	Q_memset( m_pRecvTables, 0, sizeof( m_pRecvTables ) );
@@ -315,7 +315,7 @@ void CHLTVServer::FreeClientRecvTables()
 void CHLTVServer::InitClientRecvTables()
 {
 	ServerClass* pCur = NULL;
-	
+
 	if ( ClientDLL_GetAllClasses() != NULL )
 		return; //already initialized
 
@@ -325,17 +325,17 @@ void CHLTVServer::InitClientRecvTables()
 		// create receive table from send table.
 		AddRecvTableR( pCur->m_pTable, m_pRecvTables, m_nRecvTables );
 
-		ErrorIfNot( 
-			m_nRecvTables < ARRAYSIZE( m_pRecvTables ), 
+		ErrorIfNot(
+			m_nRecvTables < ARRAYSIZE( m_pRecvTables ),
 			("AddRecvTableR: overflowed MAX_DATATABLES")
 			);
 	}
 
-	// now register client classes 
+	// now register client classes
 	for ( pCur = serverGameDLL->GetAllServerClasses(); pCur; pCur=pCur->m_pNext )
 	{
-		ErrorIfNot( 
-			m_nRecvTables < ARRAYSIZE( m_pRecvTables ), 
+		ErrorIfNot(
+			m_nRecvTables < ARRAYSIZE( m_pRecvTables ),
 			("ClientDLL_InitRecvTableMgr: overflowed MAX_DATATABLES")
 			);
 
@@ -343,7 +343,7 @@ void CHLTVServer::InitClientRecvTables()
 		RecvTable * recvt = FindRecvTable( pCur->m_pTable->GetName(), m_pRecvTables, m_nRecvTables );
 
 		Assert ( recvt );
-		
+
 		// register class, constructor addes clientClass to g_pClientClassHead list
 		ClientClass * clientclass = new ClientClass( pCur->m_pNetworkName, NULL, NULL, recvt );
 
@@ -361,7 +361,7 @@ void CHLTVServer::InitClientRecvTables()
 
 CHLTVFrame::CHLTVFrame()
 {
-	
+
 }
 
 CHLTVFrame::~CHLTVFrame()
@@ -407,18 +407,18 @@ void CHLTVFrame::CopyHLTVData( CHLTVFrame &frame )
 
 	if ( tv_relayvoice.GetBool() )
 		bits += frame.m_Messages[HLTV_BUFFER_VOICE].GetNumBitsWritten();
-	
+
 	if ( bits > 0 )
 	{
 		// collapse all unreliable buffers in one
 		int bytes = PAD_NUMBER( Bits2Bytes(bits), 4 );
 		m_Messages[HLTV_BUFFER_UNRELIABLE].StartWriting( new char[ bytes ], bytes );
-		m_Messages[HLTV_BUFFER_UNRELIABLE].WriteBits( frame.m_Messages[HLTV_BUFFER_UNRELIABLE].GetData(), frame.m_Messages[HLTV_BUFFER_UNRELIABLE].GetNumBitsWritten() ); 
-		m_Messages[HLTV_BUFFER_UNRELIABLE].WriteBits( frame.m_Messages[HLTV_BUFFER_TEMPENTS].GetData(), frame.m_Messages[HLTV_BUFFER_TEMPENTS].GetNumBitsWritten() ); 
-		m_Messages[HLTV_BUFFER_UNRELIABLE].WriteBits( frame.m_Messages[HLTV_BUFFER_SOUNDS].GetData(), frame.m_Messages[HLTV_BUFFER_SOUNDS].GetNumBitsWritten() ); 
+		m_Messages[HLTV_BUFFER_UNRELIABLE].WriteBits( frame.m_Messages[HLTV_BUFFER_UNRELIABLE].GetData(), frame.m_Messages[HLTV_BUFFER_UNRELIABLE].GetNumBitsWritten() );
+		m_Messages[HLTV_BUFFER_UNRELIABLE].WriteBits( frame.m_Messages[HLTV_BUFFER_TEMPENTS].GetData(), frame.m_Messages[HLTV_BUFFER_TEMPENTS].GetNumBitsWritten() );
+		m_Messages[HLTV_BUFFER_UNRELIABLE].WriteBits( frame.m_Messages[HLTV_BUFFER_SOUNDS].GetData(), frame.m_Messages[HLTV_BUFFER_SOUNDS].GetNumBitsWritten() );
 
 		if ( tv_relayvoice.GetBool() )
-			m_Messages[HLTV_BUFFER_UNRELIABLE].WriteBits( frame.m_Messages[HLTV_BUFFER_VOICE].GetData(), frame.m_Messages[HLTV_BUFFER_VOICE].GetNumBitsWritten() ); 
+			m_Messages[HLTV_BUFFER_UNRELIABLE].WriteBits( frame.m_Messages[HLTV_BUFFER_VOICE].GetData(), frame.m_Messages[HLTV_BUFFER_VOICE].GetNumBitsWritten() );
 	}
 }
 
@@ -506,7 +506,7 @@ void CHLTVServer::StartMaster(CGameClient *client)
 		return;
 	}
 
-	m_Director = serverGameDirector;	
+	m_Director = serverGameDirector;
 
 	if ( !m_Director )
 	{
@@ -549,7 +549,7 @@ void CHLTVServer::StartMaster(CGameClient *client)
 
 	// allocate buffers for input frame
 	m_HLTVFrame.AllocBuffers();
-			
+
 	InstallStringTables();
 
 	// activate director in game.dll
@@ -576,9 +576,9 @@ void CHLTVServer::StartMaster(CGameClient *client)
 
 		j++;
 	}
-	
+
 	// copy signon buffers
-	m_Signon.StartWriting( m_Server->m_Signon.GetBasePointer(), m_Server->m_Signon.m_nDataBytes, 
+	m_Signon.StartWriting( m_Server->m_Signon.GetBasePointer(), m_Server->m_Signon.m_nDataBytes,
 		m_Server->m_Signon.GetNumBitsWritten() );
 
 	Q_strncpy( m_szMapname, m_Server->m_szMapname, sizeof(m_szMapname) );
@@ -591,7 +591,7 @@ void CHLTVServer::StartMaster(CGameClient *client)
 	m_MasterClient->UpdateUserSettings(); // make sure UserInfo is correct
 
 	// hack reduce signontick by one to catch changes made in the current tick
-	m_MasterClient->m_nSignonTick--;	
+	m_MasterClient->m_nSignonTick--;
 
 	if ( m_bMasterOnlyMode )
 	{
@@ -630,7 +630,7 @@ bool CHLTVServer::DispatchToRelay( CHLTVClient *pClient )
 {
 	if ( tv_dispatchmode.GetInt() <= DISPATCH_MODE_OFF )
 		return false; // don't redirect
-	
+
 	CBaseClient	*pBestProxy = NULL;
 	float fBestRatio = 1.0f;
 
@@ -687,15 +687,15 @@ bool CHLTVServer::DispatchToRelay( CHLTVClient *pClient )
 		if ( myRatio < fBestRatio )
 			return false;	// don't redirect
 	}
-	
+
 	const char *pszRelayAddr = pBestProxy->GetUserSetting("hltv_addr");
 
 	if ( !pszRelayAddr )
 		return false;
-	
 
-	ConMsg( "Redirecting spectator %s to SourceTV relay %s\n", 
-		pClient->GetNetChannel()->GetRemoteAddress().ToString(), 
+
+	ConMsg( "Redirecting spectator %s to SourceTV relay %s\n",
+		pClient->GetNetChannel()->GetRemoteAddress().ToString(),
 		pszRelayAddr );
 
 	// first tell that client that we are a SourceTV server,
@@ -708,7 +708,7 @@ bool CHLTVServer::DispatchToRelay( CHLTVClient *pClient )
 	NET_StringCmd cmdMsg( va("redirect %s\n", pszRelayAddr ) ) ;
 	pClient->SendNetMsg( cmdMsg, true );
 
- 	// increase this proxies client number in advance so this proxy isn't used again next time
+	// increase this proxies client number in advance so this proxy isn't used again next time
 	int clients = Q_atoi( pBestProxy->GetUserSetting( "hltv_clients" ) );
 	pBestProxy->SetUserCVar( "hltv_clients", va("%d", clients+1 ) );
 
@@ -743,7 +743,7 @@ void CHLTVServer::StartRelay()
 
 	Clear();  // clear old settings & buffers
 
-	if ( m_nRecvTables == 0 ) 
+	if ( m_nRecvTables == 0 )
 	{
 		// must be done only once since Mod never changes
 		InitClientRecvTables();
@@ -752,7 +752,7 @@ void CHLTVServer::StartRelay()
 	m_HLTVFrame.AllocBuffers();
 
 	m_StringTables = &m_NetworkStringTables;
-	
+
 	SetMaxClients( tv_maxclients.GetInt() );
 
 	m_bSignonState = true;
@@ -810,7 +810,7 @@ void CHLTVServer::GetGlobalStats( int &proxies, int &slots, int &clients )
 		m_nGlobalClients += GetNumClients();
 	}
 
-	// if this is a relay proxies, global data comes via the 
+	// if this is a relay proxies, global data comes via the
 	// wire from the master proxy
 	proxies = m_nGlobalProxies;
 	slots = m_nGlobalSlots;
@@ -899,7 +899,7 @@ void CHLTVServer::BroadcastLocalChat( const char *pszChat, const char *pszGroup 
 
 	if ( !event )
 		return;
-	
+
 	event->SetString( "text", pszChat );
 
 	char	 buffer_data[MAX_EVENT_BYTES];
@@ -986,13 +986,13 @@ void CHLTVServer::BroadcastEvent(IGameEvent *event)
 		DevMsg("CHLTVServer: failed to serialize event '%s'.\n", event->GetName() );
 		return;
 	}
-	
+
 	BroadcastMessage( eventMsg, true, true );
-	
+
 	if ( tv_debug.GetBool() )
 		Msg("SourceTV broadcast event: %s\n", event->GetName() );
 }
- 
+
 void CHLTVServer::FireGameEvent(IGameEvent *event)
 {
 	if ( !IsActive() )
@@ -1038,27 +1038,27 @@ void CHLTVServer::InstallStringTables( void )
 	Assert( m_StringTables->GetNumTables() == 0); // must be empty
 
 	m_StringTables->AllowCreation( true );
-	
+
 	// master hltv needs to keep a list of changes for all table items
 	m_StringTables->EnableRollback( true );
 
 	for ( int i =0; i<numTables; i++)
 	{
 		// iterate through server tables
-		CNetworkStringTable *serverTable = 
+		CNetworkStringTable *serverTable =
 			(CNetworkStringTable*)m_Server->m_StringTables->GetTable( i );
 
 		if ( !serverTable )
 			continue;
 
 		// get matching client table
-		CNetworkStringTable *hltvTable = 
+		CNetworkStringTable *hltvTable =
 			(CNetworkStringTable*)m_StringTables->CreateStringTableEx(
 				serverTable->GetTableName(),
 				serverTable->GetMaxStrings(),
 				serverTable->GetUserDataSize(),
 				serverTable->GetUserDataSizeBits(),
-				serverTable->HasFileNameStrings() 
+				serverTable->HasFileNameStrings()
 				);
 
 		if ( !hltvTable )
@@ -1068,7 +1068,7 @@ void CHLTVServer::InstallStringTables( void )
 		}
 
 		// make hltv table an exact copy of server table
-		hltvTable->CopyStringTable( serverTable ); 
+		hltvTable->CopyStringTable( serverTable );
 
 		// link hltv table to server table
 		serverTable->SetMirrorTable( hltvTable );
@@ -1105,14 +1105,14 @@ void CHLTVServer::UserInfoChanged( int nClientIndex )
 }
 
 void CHLTVServer::LinkInstanceBaselines( void )
-{	
+{
 	// Forces to update m_pInstanceBaselineTable.
 	AUTO_LOCK( g_svInstanceBaselineMutex );
-	GetInstanceBaselineTable(); 
+	GetInstanceBaselineTable();
 
 	Assert( m_pInstanceBaselineTable );
-		
-	// update all found server classes 
+
+	// update all found server classes
 	for ( ServerClass *pClass = serverGameDLL->GetAllServerClasses(); pClass; pClass=pClass->m_pNext )
 	{
 		char idString[32];
@@ -1120,7 +1120,7 @@ void CHLTVServer::LinkInstanceBaselines( void )
 
 		// Ok, make a new instance baseline so they can reference it.
 		int index  = m_pInstanceBaselineTable->FindStringIndex( idString );
-			
+
 		if ( index != -1 )
 		{
 			pClass->m_InstanceBaselineIndex = index;
@@ -1156,7 +1156,7 @@ Vector CHLTVServer::GetOriginFromPackedEntity(PackedEntity* pe)
 		if ( Q_strcmp( pProp->GetName(), "m_vecOrigin" ) == 0 )
 		{
 			Assert( pProp->GetType() == DPT_Vector );
-		
+
 			bf_read buf( pe->LockData(), Bits2Bytes(pe->GetNumBits()), pProp->GetOffset() );
 
 			origin[0] = DecodeFloat(pProp, &buf);
@@ -1176,9 +1176,9 @@ CHLTVEntityData *FindHLTVDataInSnapshot( CFrameSnapshot * pSnapshot, int iEntInd
 	int z = pSnapshot->m_nValidEntities-1;
 
 	if ( iEntIndex < pSnapshot->m_pValidEntities[a] ||
-		 iEntIndex > pSnapshot->m_pValidEntities[z] )
-		 return NULL;
-	
+		iEntIndex > pSnapshot->m_pValidEntities[z] )
+		return NULL;
+
 	while ( a < z )
 	{
 		int m = (a+z)/2;
@@ -1187,7 +1187,7 @@ CHLTVEntityData *FindHLTVDataInSnapshot( CFrameSnapshot * pSnapshot, int iEntInd
 
 		if ( index == iEntIndex )
 			return &pSnapshot->m_pHLTVEntityData[m];
-		
+
 		if ( iEntIndex > index )
 		{
 			if ( pSnapshot->m_pValidEntities[z] == iEntIndex )
@@ -1221,12 +1221,12 @@ void CHLTVServer::EntityPVSCheck( CClientFrame *pFrame )
 	// setup engine PVS
 	SV_ResetPVS( PVS, nPVSSize );
 
-	CFrameSnapshot * pSnapshot = pFrame->GetSnapshot();	
+	CFrameSnapshot * pSnapshot = pFrame->GetSnapshot();
 
 	Assert ( pSnapshot->m_pHLTVEntityData != NULL );
 
 	int nDirectorEntity = m_Director->GetPVSEntity();
-    	
+
 	if ( pSnapshot && nDirectorEntity > 0 )
 	{
 		CHLTVEntityData *pHLTVData = FindHLTVDataInSnapshot( pSnapshot, nDirectorEntity );
@@ -1255,7 +1255,7 @@ void CHLTVServer::EntityPVSCheck( CClientFrame *pFrame )
 
 		if ( entindex < 0 )
 			break;
-			
+
 		// is transmit_always is set ->  no PVS check
 		if ( pFrame->transmit_always->Get(entindex) )
 		{
@@ -1292,7 +1292,7 @@ void CHLTVServer::EntityPVSCheck( CClientFrame *pFrame )
 			}
 		}
 
- 		// entity is not in PVS, remove from transmit_entity list
+		// entity is not in PVS, remove from transmit_entity list
 		pFrame->transmit_entity.Clear( entindex );
 	}
 }
@@ -1300,7 +1300,7 @@ void CHLTVServer::EntityPVSCheck( CClientFrame *pFrame )
 void CHLTVServer::SignonComplete()
 {
 	Assert ( !IsMasterProxy() );
-	
+
 	m_bSignonState = false;
 
 	LinkInstanceBaselines();
@@ -1319,7 +1319,7 @@ CClientFrame *CHLTVServer::AddNewFrame( CClientFrame *clientFrame )
 	m_nLastTick = clientFrame->tick_count;
 
 	m_HLTVFrame.SetSnapshot( clientFrame->GetSnapshot() );
-	m_HLTVFrame.tick_count = clientFrame->tick_count;	
+	m_HLTVFrame.tick_count = clientFrame->tick_count;
 	m_HLTVFrame.last_entity = clientFrame->last_entity;
 	m_HLTVFrame.transmit_entity = clientFrame->transmit_entity;
 
@@ -1376,7 +1376,7 @@ void CHLTVServer::SendClientMessages ( bool bSendSnapshots )
 	for ( int i=0; i< m_Clients.Count(); i++ )
 	{
 		CHLTVClient* client = Client(i);
-		
+
 		// Update Host client send state...
 		if ( !client->ShouldSendMessages() )
 		{
@@ -1406,9 +1406,9 @@ void CHLTVServer::UpdateStats( void )
 		return;
 
 	m_fNextSendUpdateTime = net_time + 8.0f;
-	
+
 	// fire game event for everyone
-	IGameEvent *event = NULL; 
+	IGameEvent *event = NULL;
 
 	if ( !IsMasterProxy() && !m_ClientState.IsConnected() )
 	{
@@ -1420,7 +1420,7 @@ void CHLTVServer::UpdateStats( void )
 
 		event->SetString( "text", "SourceTV reconnecting ..." );
 	}
-	else 
+	else
 	{
 		int proxies, slots, clients;
 		GetGlobalStats( proxies, slots, clients );
@@ -1545,7 +1545,7 @@ void CHLTVServer::RunFrame()
 		NET_ProcessSocket( m_ClientState.m_Socket, &m_ClientState );
 
 		m_ClientState.RunFrame();
-		
+
 		m_ClientState.SendPacket();
 	}
 
@@ -1561,7 +1561,7 @@ void CHLTVServer::RunFrame()
 	if ( IsPlayingBack() )
 		return;
 
-	// get current tick time for director module and restore 
+	// get current tick time for director module and restore
 	// world (stringtables, framebuffers) as they were at this time
 	UpdateTick();
 
@@ -1575,7 +1575,7 @@ void CHLTVServer::RunFrame()
 	// Update the Steam server if we're running a relay.
 	if ( !sv.IsActive() )
 		Steam3Server().RunFrame();
-	
+
 	UpdateMasterServer();
 }
 
@@ -1604,13 +1604,13 @@ void CHLTVServer::UpdateTick( void )
 
 	if ( newFrame == NULL )
 		return; // we dont have a new frame
-	
+
 	if ( m_CurrentFrame == newFrame )
 		return;	// current frame didn't change
 
 	m_CurrentFrame = newFrame;
 	m_nTickCount = m_CurrentFrame->tick_count;
-	
+
 	if ( IsMasterProxy() )
 	{
 		// now do master proxy stuff
@@ -1621,7 +1621,7 @@ void CHLTVServer::UpdateTick( void )
 		// remove entities out of current PVS
 		if ( tv_transmitall.GetBool() == false )
 		{
-			EntityPVSCheck( m_CurrentFrame );	
+			EntityPVSCheck( m_CurrentFrame );
 		}
 	}
 	else
@@ -1648,7 +1648,7 @@ const char *CHLTVServer::GetName( void ) const
 void CHLTVServer::FillServerInfo(SVC_ServerInfo &serverinfo)
 {
 	CBaseServer::FillServerInfo( serverinfo );
-	
+
 	serverinfo.m_nPlayerSlot = m_nPlayerSlot; // all spectators think they're the HLTV client
 	serverinfo.m_nMaxClients = m_nGameServerMaxClients;
 }
@@ -1672,7 +1672,7 @@ void CHLTVServer::Clear( void )
 	m_fNextSendUpdateTime = 0.0f;
 	m_HLTVFrame.FreeBuffers();
 	m_vPVSOrigin.Init();
-		
+
 	DeleteClientFrames( -1 );
 
 	m_DeltaCache.Flush();
@@ -1717,7 +1717,7 @@ void CHLTVServer::Init(bool bIsDedicated)
 	CBaseServer::Init( bIsDedicated );
 
 	m_Socket = NS_HLTV;
-	
+
 	// check if only master proxy is allowed, no broadcasting
 	if ( CommandLine()->FindParm("-tvmasteronly") )
 	{
@@ -1778,7 +1778,7 @@ CDemoFile *CHLTVServer::GetDemoFile()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CHLTVServer::IsPlayingBack( void )
@@ -1788,7 +1788,7 @@ bool CHLTVServer::IsPlayingBack( void )
 
 bool CHLTVServer::IsPlaybackPaused()
 {
-	return m_bPlaybackPaused;	
+	return m_bPlaybackPaused;
 }
 
 float CHLTVServer::GetPlaybackTimeScale()
@@ -1818,7 +1818,7 @@ int	CHLTVServer::GetPlaybackTick( void )
 
 int CHLTVServer::GetTotalTicks(void)
 {
-	return m_DemoFile.m_DemoHeader.playback_ticks;	
+	return m_DemoFile.m_DemoHeader.playback_ticks;
 }
 
 bool CHLTVServer::StartPlayback( const char *filename, bool bAsTimeDemo )
@@ -1839,7 +1839,7 @@ bool CHLTVServer::StartPlayback( const char *filename, bool bAsTimeDemo )
 		m_DemoFile.Close();
 		return false;
 	}
-	
+
 	// create a fake channel with a NULL address
 	m_ClientState.m_NetChannel = NET_CreateNetChannel( NS_CLIENT, NULL, "DEMO", &m_ClientState );
 
@@ -1849,7 +1849,7 @@ bool CHLTVServer::StartPlayback( const char *filename, bool bAsTimeDemo )
 		m_DemoFile.Close();
 		return false;
 	}
-	
+
 	m_ClientState.m_NetChannel->SetTimeout( -1.0f );	// never timeout
 
 
@@ -1883,7 +1883,7 @@ void CHLTVServer::ReadCompleteDemoFile()
 	// setup demo packet data buffer
 	Q_memset( &demoPacket, 0, sizeof(demoPacket) );
 	demoPacket.from.SetType( NA_LOOPBACK);
-	
+
 	while ( true )
 	{
 		m_DemoFile.ReadCmdHeader( cmd, tick );
@@ -1907,7 +1907,7 @@ void CHLTVServer::ReadCompleteDemoFile()
 			{
 				ALIGN4 char data[64*1024] ALIGN4_POST;
 				bf_read buf( "dem_datatables", data, sizeof(data) );
-				
+
 				m_DemoFile.ReadNetworkDataTables( &buf );
 				buf.Seek( 0 );
 
@@ -1977,7 +1977,7 @@ void CHLTVServer::ReadCompleteDemoFile()
 					m_ClientState.m_NetChannel->ProcessPacket( &demoPacket, false );
 				}
 			}
-	
+
 			break;
 		}
 	}
@@ -2001,10 +2001,10 @@ const char *CHLTVServer::GetPassword() const
 	return password;
 }
 
-IClient *CHLTVServer::ConnectClient ( netadr_t &adr, int protocol, int challenge, int clientChallenge, int authProtocol, 
-									 const char *name, const char *password, const char *hashedCDkey, int cdKeyLen )
+IClient *CHLTVServer::ConnectClient ( netadr_t &adr, int protocol, int challenge, int clientChallenge, int authProtocol,
+									const char *name, const char *password, const char *hashedCDkey, int cdKeyLen )
 {
-	IClient	*client = (CHLTVClient*)CBaseServer::ConnectClient( 
+	IClient	*client = (CHLTVClient*)CBaseServer::ConnectClient(
 		adr, protocol, challenge, clientChallenge, authProtocol, name, password, hashedCDkey, cdKeyLen );
 
 	if ( client )
@@ -2136,7 +2136,7 @@ void CHLTVServer::ReplyInfo( const netadr_t &adr )
 }
 #endif // #ifndef NO_STEAM
 
-CON_COMMAND( tv_status, "Show SourceTV server status." ) 
+CON_COMMAND( tv_status, "Show SourceTV server status." )
 {
 	int		slots, proxies,	clients;
 	float	in, out;
@@ -2156,7 +2156,7 @@ CON_COMMAND( tv_status, "Show SourceTV server status." )
 	out /= 1024;
 
 	ConMsg("--- SourceTV Status ---\n");
-	ConMsg("Online %s, FPS %.1f, Version %i (%s)\n", 
+	ConMsg("Online %s, FPS %.1f, Version %i (%s)\n",
 		COM_FormatSeconds( hltv->GetOnlineTime() ), hltv->m_flFPS, build_number(),
 
 #ifdef _WIN32
@@ -2192,20 +2192,20 @@ CON_COMMAND( tv_status, "Show SourceTV server status." )
 		net_local_adr.ToString( true ), hltv->GetUDPPort(), in ,out );
 
 	hltv->GetLocalStats( proxies, slots, clients );
-	
-	ConMsg("Local Slots %i, Spectators %i, Proxies %i\n", 
+
+	ConMsg("Local Slots %i, Spectators %i, Proxies %i\n",
 		slots, clients-proxies, proxies );
 
 	hltv->GetGlobalStats( proxies, slots, clients);
 
-	ConMsg("Total Slots %i, Spectators %i, Proxies %i\n", 
+	ConMsg("Total Slots %i, Spectators %i, Proxies %i\n",
 		slots, clients-proxies, proxies);
 
 	if ( hltv->m_DemoRecorder.IsRecording() )
 	{
-		ConMsg("Recording to \"%s\", length %s.\n", hltv->m_DemoRecorder.GetDemoFile()->m_szFileName, 
+		ConMsg("Recording to \"%s\", length %s.\n", hltv->m_DemoRecorder.GetDemoFile()->m_szFileName,
 			COM_FormatSeconds( host_state.interval_per_tick * hltv->m_DemoRecorder.GetRecordingTick() ) );
-	}		
+	}
 }
 
 CON_COMMAND( tv_relay, "Connect to SourceTV server and relay broadcast." )
@@ -2241,7 +2241,7 @@ CON_COMMAND( tv_relay, "Connect to SourceTV server and relay broadcast." )
 	Host_Disconnect( false );
 
 	// start networking
-	NET_SetMutiplayer( true );	
+	NET_SetMutiplayer( true );
 
 	hltv->ConnectRelay( address );
 }
@@ -2317,7 +2317,7 @@ CON_COMMAND( tv_record, "Starts SourceTV demo recording." )
 		ConMsg( "record %s: invalid path.\n", args[1] );
 		return;
 	}
- 
+
 	char name[ MAX_OSPATH ];
 
 	Q_strncpy( name, args[1], sizeof( name ) );
@@ -2335,7 +2335,7 @@ CON_COMMAND( tv_stoprecord, "Stops SourceTV demo recording." )
 		ConMsg("SourceTV not active.\n" );
 		return;
 	}
-	
+
 	hltv->m_DemoRecorder.StopRecording();
 }
 
@@ -2356,9 +2356,9 @@ CON_COMMAND( tv_clients, "Shows list of connected SourceTV clients." )
 
 		if ( !netchan )
 			continue;
-		
+
 		ConMsg("ID: %i, \"%s\" %s, Time %s, %s, In %.1f, Out %.1f.\n",
-            client->GetUserID(),
+	client->GetUserID(),
 			client->GetClientName(),
 			client->IsHLTV() ? "(Relay)" : "",
 			COM_FormatSeconds( netchan->GetTimeConnected() ),
@@ -2392,7 +2392,7 @@ CON_COMMAND( tv_msg, "Send a screen message to all clients." )
 
 #ifndef SWDS
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void EditDemo_f( const CCommand &args )
 {

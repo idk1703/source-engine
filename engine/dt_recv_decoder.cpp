@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -38,7 +38,7 @@ CClientSendTable::CClientSendTable()
 CClientSendTable::~CClientSendTable()
 {
 	delete [] m_SendTable.m_pNetTableName;
-	
+
 	for ( int iProp=0; iProp < m_SendTable.m_nProps; iProp++ )
 	{
 		delete [] m_SendTable.m_pProps[iProp].m_pVarName;
@@ -48,6 +48,3 @@ CClientSendTable::~CClientSendTable()
 
 	delete [] m_SendTable.m_pProps;
 }
-
-
-

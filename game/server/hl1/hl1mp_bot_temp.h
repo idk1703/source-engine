@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,4 +16,3 @@ CBasePlayer *BotPutInServer( bool bFrozen, int iTeam );
 
 
 #endif // BOT_BASE_H
-

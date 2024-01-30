@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -124,7 +124,7 @@ static void GenerateNiceFilter( float wratio, float hratio, float dratio, int ke
 	if (dratio != 0.0f)
 	{
 		dz = 1.0f / (float)dratio;
-		z = -((float)kernelDiameter - dz) * 0.5f; 
+		z = -((float)kernelDiameter - dz) * 0.5f;
 	}
 	else
 	{
@@ -135,10 +135,10 @@ static void GenerateNiceFilter( float wratio, float hratio, float dratio, int ke
 	float total = 0.0f;
 	for ( h = 0; h < kernelDepth; ++h )
 	{
-		float y = -((float)kernelDiameter - dy) * 0.5f; 
+		float y = -((float)kernelDiameter - dy) * 0.5f;
 		for ( i = 0; i < kernelHeight; ++i )
 		{
-			float x = -((float)kernelDiameter - dx) * 0.5f; 
+			float x = -((float)kernelDiameter - dx) * 0.5f;
 			for ( j = 0; j < kernelWidth; ++j )
 			{
 				int nKernelIndex = kernelWidth * ( i + h * kernelHeight ) + j;
@@ -182,7 +182,7 @@ static void GenerateNiceFilter( float wratio, float hratio, float dratio, int ke
 			for ( j = 0; j < kernelWidth; ++j )
 			{
 				pKernel[nPixel + j] *= flInvTotal;
-				pInvKernel[nPixel + j] = flInvFactor * pKernel[nPixel + j]; 
+				pInvKernel[nPixel + j] = flInvFactor * pKernel[nPixel + j];
 			}
 		}
 	}
@@ -261,7 +261,7 @@ public:
 		return z & (info.m_nSrcDepth - 1);
 	}
 
-	static void ComputeAveragedColor( const KernelInfo_t &kernel, const ResampleInfo_t &info, 
+	static void ComputeAveragedColor( const KernelInfo_t &kernel, const ResampleInfo_t &info,
 		int startX, int startY, int startZ, float *gammaToLinear, float *total )
 	{
 		total[0] = total[1] = total[2] = total[3] = 0.0f;
@@ -287,7 +287,7 @@ public:
 
 				for ( int l = 0, srcX = startX; l < kernel.m_nWidth; ++l, ++srcX, ++kernelIdx )
 				{
-					int sx = ActualX( srcX, info );					
+					int sx = ActualX( srcX, info );
 					int srcPixel = (sz + sy + sx) << 2;
 
 					float flKernelFactor;
@@ -328,10 +328,10 @@ public:
 					}
 				}
 			}
-		}	
+		}
 	}
 
-	static void AddAlphaToAlphaResult( const KernelInfo_t &kernel, const ResampleInfo_t &info, 
+	static void AddAlphaToAlphaResult( const KernelInfo_t &kernel, const ResampleInfo_t &info,
 		int startX, int startY, int startZ, float flAlpha, float *pAlphaResult )
 	{
 		for ( int j = 0, srcZ = startZ; j < kernel.m_nDepth; ++j, ++srcZ )
@@ -356,7 +356,7 @@ public:
 
 				for ( int l = 0, srcX = startX; l < kernel.m_nWidth; ++l, ++srcX, ++kernelIdx )
 				{
-					int sx = ActualX( srcX, info );					
+					int sx = ActualX( srcX, info );
 					int srcPixel = sz + sy + sx;
 
 					float flKernelFactor;
@@ -377,7 +377,7 @@ public:
 		}
 	}
 
-	static void AdjustAlphaChannel( const KernelInfo_t &kernel, const ResampleInfo_t &info, 
+	static void AdjustAlphaChannel( const KernelInfo_t &kernel, const ResampleInfo_t &info,
 		int wratio, int hratio, int dratio, float *pAlphaResult )
 	{
 		// Find the delta between the alpha + source image
@@ -484,7 +484,7 @@ public:
 					else if ( type == KERNEL_ALPHATEST )
 					{
 						// If there's more than 40% coverage, then keep the pixel (renormalize the color based on coverage)
-						float flAlpha = ( total[3] >= flAlphaThreshhold ) ? 255 : 0; 
+						float flAlpha = ( total[3] >= flAlphaThreshhold ) ? 255 : 0;
 
 						for ( int ch = 0; ch < 3; ++ ch )
 							info.m_pDest[ dstPixel + ch ] = Clamp( 255.0f * pow( ( info.m_flColorGoal[ch] + ( info.m_flColorScale[ch] * ( ( total[ch] > 0 ? total[ch] : 0 ) - info.m_flColorGoal[ch] ) ) ) / 255.0f, invDstGamma ) );
@@ -566,7 +566,7 @@ bool ResampleRGBA8888( const ResampleInfo_t& info )
 	int wratio = info.m_nSrcWidth / info.m_nDestWidth;
 	int hratio = info.m_nSrcHeight / info.m_nDestHeight;
 	int dratio = (info.m_nSrcDepth != info.m_nDestDepth) ? info.m_nSrcDepth / info.m_nDestDepth : 0;
-	
+
 	KernelInfo_t kernel;
 
 	float* pTempMemory = 0;
@@ -615,7 +615,7 @@ bool ResampleRGBA8888( const ResampleInfo_t& info )
 			{
 				kernelCache[power] = new float[kernel.m_nWidth * kernel.m_nHeight];
 				pInvKernelCache[power] = new float[kernel.m_nWidth * kernel.m_nHeight];
-				GenerateNiceFilter( wratio, hratio, dratio, kernel.m_nDiameter, kernelCache[power], pInvKernelCache[power] ); 
+				GenerateNiceFilter( wratio, hratio, dratio, kernel.m_nDiameter, kernelCache[power], pInvKernelCache[power] );
 			}
 
 			kernel.m_pKernel = kernelCache[power];
@@ -626,7 +626,7 @@ bool ResampleRGBA8888( const ResampleInfo_t& info )
 			// Don't cache non-square kernels, or 3d kernels
 			pTempMemory = new float[kernel.m_nWidth * kernel.m_nHeight * kernel.m_nDepth];
 			pTempInvMemory = new float[kernel.m_nWidth * kernel.m_nHeight * kernel.m_nDepth];
-			GenerateNiceFilter( wratio, hratio, dratio, kernel.m_nDiameter, pTempMemory, pTempInvMemory ); 
+			GenerateNiceFilter( wratio, hratio, dratio, kernel.m_nDiameter, pTempMemory, pTempInvMemory );
 			kernel.m_pKernel = pTempMemory;
 			kernel.m_pInvKernel = pTempInvMemory;
 		}
@@ -666,7 +666,7 @@ bool ResampleRGBA8888( const ResampleInfo_t& info )
 	}
 
 	if ( info.m_nFlags & RESAMPLE_NICE_FILTER )
-	{	
+	{
 		g_KernelFuncNice[type]( kernel, info, wratio, hratio, dratio, gammaToLinear, pAlphaResult );
 		if (pTempMemory)
 		{
@@ -864,7 +864,7 @@ void GenerateMipmapLevelsLQ( unsigned char* pSrc, unsigned char* pDst, int width
 
 	// Copy the 0th level over.
 	memcpy( pDst, pSrcLevel, mipmap0Size );
-	
+
 	int dstWidth = width;
 	int dstHeight = height;
 	unsigned char* pDstLevel = pDst + mipmap0Size;
@@ -874,13 +874,13 @@ void GenerateMipmapLevelsLQ( unsigned char* pSrc, unsigned char* pDst, int width
 
 	// Distance from one pixel to the next
 	const int cStride = 4;
-	
-	do 
+
+	do
 	{
 		dstWidth =  Max( 1, dstWidth  >> 1 );
 		dstHeight = Max( 1, dstHeight >> 1 );
 
-		// Distance from one row to the next. 
+		// Distance from one row to the next.
 		const int cSrcPitch = cStride * srcWidth * ( srcHeight > 1 ? 1 : 0);
 		const int cSrcStride = srcWidth > 1 ? cStride : 0;
 
@@ -889,19 +889,19 @@ void GenerateMipmapLevelsLQ( unsigned char* pSrc, unsigned char* pDst, int width
 
 		for ( int j = 0; j < dstHeight; ++j )
 		{
-			for ( int i = 0; i < dstWidth; ++i ) 
+			for ( int i = 0; i < dstWidth; ++i )
 			{
-				// This doesn't round. It's crappy. It's a simple bilerp. 
+				// This doesn't round. It's crappy. It's a simple bilerp.
 				pDstPixel[ 0 ] = ( ( unsigned int ) pSrcPixel[ 0 ] + ( unsigned int ) pSrcPixel[ 0 + cSrcStride ] + ( unsigned int ) pSrcPixel[ 0 + cSrcPitch ] + ( unsigned int ) pSrcPixel[ 0 + cSrcPitch + cSrcStride ] ) >> 2;
 				pDstPixel[ 1 ] = ( ( unsigned int ) pSrcPixel[ 1 ] + ( unsigned int ) pSrcPixel[ 1 + cSrcStride ] + ( unsigned int ) pSrcPixel[ 1 + cSrcPitch ] + ( unsigned int ) pSrcPixel[ 1 + cSrcPitch + cSrcStride ] ) >> 2;
 				pDstPixel[ 2 ] = ( ( unsigned int ) pSrcPixel[ 2 ] + ( unsigned int ) pSrcPixel[ 2 + cSrcStride ] + ( unsigned int ) pSrcPixel[ 2 + cSrcPitch ] + ( unsigned int ) pSrcPixel[ 2 + cSrcPitch + cSrcStride ] ) >> 2;
 				pDstPixel[ 3 ] = ( ( unsigned int ) pSrcPixel[ 3 ] + ( unsigned int ) pSrcPixel[ 3 + cSrcStride ] + ( unsigned int ) pSrcPixel[ 3 + cSrcPitch ] + ( unsigned int ) pSrcPixel[ 3 + cSrcPitch + cSrcStride ] ) >> 2;
-				
+
 				pDstPixel += cStride;
 				pSrcPixel += cStride * 2; // We advance 2 source pixels for each pixel.
 			}
 
-			// Need to bump down a row. 
+			// Need to bump down a row.
 			pSrcPixel += cSrcPitch;
 		}
 
@@ -916,4 +916,3 @@ void GenerateMipmapLevelsLQ( unsigned char* pSrc, unsigned char* pDst, int width
 
 
 } // ImageLoader namespace ends
-

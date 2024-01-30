@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -9,11 +9,11 @@
 #include "bsplib.h"
 
 
-void ScratchPad_DrawWinding( 
-	IScratchPad3D *pPad, 
-	int nPoints, 
-	Vector *pPoints, 
-	Vector vColor, 
+void ScratchPad_DrawWinding(
+	IScratchPad3D *pPad,
+	int nPoints,
+	Vector *pPoints,
+	Vector vColor,
 	Vector vOffset )
 {
 	for ( int i=0; i < nPoints; i++ )
@@ -35,7 +35,7 @@ void ScratchPad_DrawFace( IScratchPad3D *pPad, dface_t *f, int iFaceNumber, cons
 			v = dedges[-se].v[1];
 		else
 			v = dedges[se].v[0];
-	
+
 		dvertex_t *dv = &dvertexes[v];
 		points.AddToTail( dv->point );
 	}
@@ -62,12 +62,12 @@ void ScratchPad_DrawFace( IScratchPad3D *pPad, dface_t *f, int iFaceNumber, cons
 		params.m_bOutline = true;
 		params.m_flLetterWidth = 2;
 		params.m_vColor.Init( 1, 0, 0 );
-		
+
 		VectorAngles( dplanes[f->planenum].normal, params.m_vAngles );
 		params.m_bTwoSided = true;
 
 		params.m_vPos = vCenter;
-		
+
 		pPad->DrawText( str, params );
 	}
 }
@@ -83,7 +83,7 @@ void ScratchPad_DrawWorld( IScratchPad3D *pPad, bool bDrawFaceNumbers, const CSP
 		dleaf_t *l = &dleafs[i];
 		if ( l->contents & CONTENTS_DETAIL )
 			continue;
-			
+
 		for ( int z=0; z < l->numleaffaces; z++ )
 		{
 			int iFace = dleaffaces[l->firstleafface+z];

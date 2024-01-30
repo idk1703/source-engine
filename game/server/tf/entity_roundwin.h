@@ -15,7 +15,7 @@
 // CTeamplayRoundWin Entity.
 //
 
-class CTeamplayRoundWin : public CPointEntity 
+class CTeamplayRoundWin : public CPointEntity
 {
 public:
 	DECLARE_CLASS( CTeamplayRoundWin, CPointEntity );
@@ -41,5 +41,3 @@ private:
 };
 
 #endif // ENTITY_ROUND_WIN_H
-
-

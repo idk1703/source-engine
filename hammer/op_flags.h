@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -40,7 +40,7 @@ class COP_Flags : public CObjectPage
 public:
 	COP_Flags();
 	~COP_Flags();
-	
+
 	// This needs to be set because we have to notify the entity page when the value changes.
 	void SetEntityPage( COP_Entity *pEntityPage );
 
@@ -49,10 +49,10 @@ public:
 	void UpdateForClass(CEditGameClass* pObj);
 	void MergeForClass(CEditGameClass* pObj);
 	void CreateCheckList(void);
-	
+
 	// Called when the entity tab changes the spawnflags, which renders our data obsolete.
 	void OnUpdateSpawnFlags( unsigned long value );
-	
+
 	GDclass *pObjClass;
 
 // Dialog Data
@@ -86,6 +86,6 @@ protected:
 
 	CUtlVector <CheckListItem> m_CheckListItems;
 	int m_nNumSelectedObjects;
-	
+
 	COP_Entity *m_pEntityPage;
 };

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -90,9 +90,9 @@ private:
 	void AddHardcodedFileCommands();
 	void AddFileCommand( const char *pszFilePath, EPureServerFileClass eFileClass, unsigned short nLoadOrder );
 
-	CPureServerWhitelist::CCommand* CheckEntry( 
-		CUtlDict<CPureServerWhitelist::CCommand*,int> &dict, 
-		const char *pEntryName, 
+	CPureServerWhitelist::CCommand* CheckEntry(
+		CUtlDict<CPureServerWhitelist::CCommand*,int> &dict,
+		const char *pEntryName,
 		CPureServerWhitelist::CCommand *pBestEntry );
 
 	unsigned short	m_LoadCounter;	// Incremented as we load things so their m_LoadOrder increases.
@@ -211,4 +211,3 @@ extern CPureFileTracker g_PureFileTracker;
 
 
 #endif // PURE_SERVER_H
-

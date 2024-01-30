@@ -70,7 +70,7 @@ public:
 
 	float	OverrideMaxYawSpeed( Activity activity );
 	void	UpdateYaw( int speed );
-	void	RecalculateYawSpeed(); 
+	void	RecalculateYawSpeed();
 
 	bool	IsDeceleratingToGoal() const	{ return m_bDeceleratingToGoal; }
 	float	GetMoveScriptTotalTime();
@@ -96,7 +96,7 @@ private:
 	int 	BuildInsertNode( int i, float flTime );
 
 	Activity GetTransitionActivity( void );
-	
+
 	// --------------------------------
 
 	// helpers to simplify code
@@ -148,7 +148,7 @@ private:
 		Vector	vecLocation;
 
 	};
-	
+
 	//---------------------------------
 
 	CUtlVector<AI_Movementscript_t>	m_scriptMove;
@@ -176,7 +176,7 @@ private:
 
 	float			m_flCurrRate;
 
-	float			m_flPredictiveSpeedAdjust;		// predictive speed adjust from probing slope 
+	float			m_flPredictiveSpeedAdjust;		// predictive speed adjust from probing slope
 	float			m_flReactiveSpeedAdjust;		// reactive speed adjust when slope movement detected
 	Vector			m_vecPrevOrigin1;
 	Vector			m_vecPrevOrigin2;
@@ -192,7 +192,7 @@ private:
 	float			m_doRight;
 	float			m_flNextTurnAct;		// next time for small turn gesture
 
-	
+
 	float	GetMoveScriptDist( float &flNewSpeed );
 	float	GetMoveScriptYaw( void );
 	void	SetMoveScriptAnim( float flNewSpeed );
@@ -255,6 +255,6 @@ class CAI_BlendedNPC : public CAI_BlendingHost<CAI_BaseNPC>
 	DECLARE_CLASS( CAI_BlendedNPC, CAI_BlendingHost<CAI_BaseNPC> );
 };
 
-//-----------------------------------------------------------------------------	
+//-----------------------------------------------------------------------------
 
 #endif

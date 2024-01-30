@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -20,7 +20,7 @@ public:
 
 	void SetSkipToTick( int tick );
 	void SetSkipToTime( float t );
-	
+
 private:
 
 	bool		m_bUsingSkipTick;
@@ -156,7 +156,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDemoActionPlaySoundStart : public CBaseDemoAction
 {
@@ -194,7 +194,7 @@ public:
 
 	void		SetStopTick( int tick );
 	void		SetStopTime( float time );
-	
+
 private:
 
 	bool		m_bUsingStopTick;
@@ -205,7 +205,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDemoActionChangePlaybackRate : public CBaseDemoActionWithStopTime
 {
@@ -232,7 +232,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDemoActionPausePlayback : public CBaseDemoActionWithStopTime
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -34,7 +34,7 @@ public:
 		{
 			Error( "InitSingleton: pEmitter is NULL" );
 		}
-	
+
 		pEmitter->GetBinding().SetDrawThruLeafSystem( false );				// Draw in DrawSingletons instead.
 		pEmitter->SetSortOrigin( Vector( 0, 0, 0 ) );
 
@@ -51,13 +51,13 @@ public:
 	{
 		g_pSimpleSingleton[0] = InitSingleton( CSimpleEmitter::Create( "Simple Particle Singleton" ) );
 		g_pSimpleSingleton[1] = InitSingleton( CSimpleEmitter::Create( "Simple Particle Singleton [sky]" ) );
-		
+
 		g_pEmberSingleton[0] = InitSingleton( CEmberEffect::Create( "Ember Particle Singleton" ) );
 		g_pEmberSingleton[1] = InitSingleton( CEmberEffect::Create( "Ember Particle Singleton [sky]" ) );
-		
+
 		g_pFireSmokeSingleton[0] = InitSingleton( CFireSmokeEffect::Create( "Fire Smoke Particle Singleton" ) );
 		g_pFireSmokeSingleton[1] = InitSingleton( CFireSmokeEffect::Create( "Fire Smoke Particle Singleton [sky]" ) );
-		
+
 		g_pFireSingleton[0] = InitSingleton( CFireParticle::Create( "Fire Particle Singleton" ) );
 		g_pFireSingleton[1] = InitSingleton( CFireParticle::Create( "Fire Particle Singleton [sky]" ) );
 	}
@@ -84,15 +84,15 @@ inline void CopyParticle( const T *pSrc, T *pDest )
 		Particle *pPrev = pDest->m_pPrev;
 		Particle *pNext = pDest->m_pNext;
 		PMaterialHandle pSubTexture = pDest->m_pSubTexture;
-		
+
 		*pDest = *pSrc;
-		
+
 		pDest->m_pPrev = pPrev;
 		pDest->m_pNext = pNext;
 		pDest->m_pSubTexture = pSubTexture;
 	}
 }
-		
+
 
 
 void AddSimpleParticle( const SimpleParticle *pParticle, PMaterialHandle hMaterial, bool bInSkybox )
@@ -151,12 +151,9 @@ void DrawParticleSingletons( bool bInSkybox )
 	{
 		g_pFireSmokeSingleton[bInSkybox]->GetBinding().DrawModel( 1 );
 	}
-	
+
 	if ( g_pFireSingleton[bInSkybox].IsValid() )
 	{
 		g_pFireSingleton[bInSkybox]->GetBinding().DrawModel( 1 );
 	}
 }
-
-
-

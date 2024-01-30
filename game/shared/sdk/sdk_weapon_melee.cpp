@@ -82,12 +82,12 @@ void CWeaponSDKMelee::ItemPostFrame( void )
 	if ( (pPlayer->m_nButtons & IN_ATTACK) && (m_flNextPrimaryAttack <= gpGlobals->curtime) && pPlayer->CanAttack() )
 	{
 		PrimaryAttack();
-	} 
+	}
 	else if ( (pPlayer->m_nButtons & IN_ATTACK2) && (m_flNextSecondaryAttack <= gpGlobals->curtime) && pPlayer->CanAttack() )
 	{
 		SecondaryAttack();
 	}
-	else 
+	else
 	{
 		WeaponIdle();
 	}
@@ -100,7 +100,7 @@ void CWeaponSDKMelee::ItemPostFrame( void )
 //------------------------------------------------------------------------------
 void CWeaponSDKMelee::PrimaryAttack()
 {
-	
+
 #ifndef CLIENT_DLL
 	CSDKPlayer *pPlayer = ToSDKPlayer( GetPlayerOwner() );
 	// Move other players back to history positions based on local player's lag
@@ -131,7 +131,7 @@ void CWeaponSDKMelee::SecondaryAttack()
 void CWeaponSDKMelee::Hit( trace_t &traceHit, Activity nHitActivity )
 {
 	CSDKPlayer *pPlayer = ToSDKPlayer( GetOwner() );
-	
+
 	//Do view kick
 //	AddViewKick();
 
@@ -155,10 +155,10 @@ void CWeaponSDKMelee::Hit( trace_t &traceHit, Activity nHitActivity )
 
 		CalculateMeleeDamageForce( &info, hitDirection, traceHit.endpos );
 
-		pHitEntity->DispatchTraceAttack( info, hitDirection, &traceHit ); 
+		pHitEntity->DispatchTraceAttack( info, hitDirection, &traceHit );
 		ApplyMultiDamage();
 
-		// Now hit all triggers along the ray that... 
+		// Now hit all triggers along the ray that...
 		TraceAttackToTriggers( info, traceHit.startpos, traceHit.endpos, hitDirection );
 #endif
 		WeaponSound( MELEE_HIT );
@@ -218,14 +218,14 @@ Activity CWeaponSDKMelee::ChooseIntersectionPointAndActivity( trace_t &hitTrace,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &traceHit - 
+// Purpose:
+// Input  : &traceHit -
 //-----------------------------------------------------------------------------
 bool CWeaponSDKMelee::ImpactWater( const Vector &start, const Vector &end )
 {
 	//FIXME: This doesn't handle the case of trying to splash while being underwater, but that's not going to look good
 	//		 right now anyway...
-	
+
 	// We must start outside the water
 	if ( UTIL_PointContents( start ) & (CONTENTS_WATER|CONTENTS_SLIME))
 		return false;
@@ -254,7 +254,7 @@ bool CWeaponSDKMelee::ImpactWater( const Vector &start, const Vector &end )
 			data.m_fFlags |= FX_WATER_IN_SLIME;
 		}
 
-		DispatchEffect( "watersplash", data );			
+		DispatchEffect( "watersplash", data );
 #endif
 	}
 
@@ -262,7 +262,7 @@ bool CWeaponSDKMelee::ImpactWater( const Vector &start, const Vector &end )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponSDKMelee::ImpactEffect( trace_t &traceHit )
 {
@@ -342,7 +342,7 @@ void CWeaponSDKMelee::Swing( int bIsSecondary )
 
 		// We want to test the first swing again
 		Vector testEnd = swingStart + forward * GetRange();
-		
+
 		// See if we happened to hit water
 		ImpactWater( swingStart, testEnd );
 	}
@@ -360,4 +360,3 @@ void CWeaponSDKMelee::Swing( int bIsSecondary )
 	m_flNextPrimaryAttack = gpGlobals->curtime + GetFireRate();
 	m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();
 }
-

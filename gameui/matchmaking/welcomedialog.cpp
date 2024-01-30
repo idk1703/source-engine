@@ -19,7 +19,7 @@
 CWelcomeDialog::CWelcomeDialog( vgui::Panel *pParent ) : BaseClass( pParent, "WelcomeDialog" )
 {
 	// do nothing
-} 
+}
 
 //---------------------------------------------------------
 // Purpose: Set the title and menu positions

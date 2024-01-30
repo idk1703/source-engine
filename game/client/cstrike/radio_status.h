@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,7 +21,7 @@ public:
 
 	virtual void LevelInitPostEntity();
 	virtual void LevelShutdownPreEntity();
-	
+
 public:
 
 	// Called when a player uses the radio
@@ -44,7 +44,7 @@ private:
 };
 
 
-// Get the (global) voice manager. 
+// Get the (global) voice manager.
 CRadioStatus* RadioManager();
 
 

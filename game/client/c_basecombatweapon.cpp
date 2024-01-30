@@ -34,7 +34,7 @@ C_BaseCombatWeapon *GetActiveWeapon( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseCombatWeapon::SetDormant( bool bDormant )
 {
@@ -48,7 +48,7 @@ void C_BaseCombatWeapon::SetDormant( bool bDormant )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseCombatWeapon::NotifyShouldTransmit( ShouldTransmitState_t state )
 {
@@ -88,13 +88,13 @@ static inline bool ShouldDrawLocalPlayerViewModel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseCombatWeapon::OnRestore()
 {
 	BaseClass::OnRestore();
 
-	// if the player is holding this weapon, 
+	// if the player is holding this weapon,
 	// mark it as just restored so it won't show as a new pickup
 	if (GetOwner() == C_BasePlayer::GetLocalPlayer())
 	{
@@ -119,8 +119,8 @@ int C_BaseCombatWeapon::GetWorldModelIndex( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bnewentity - 
+// Purpose:
+// Input  : bnewentity -
 //-----------------------------------------------------------------------------
 void C_BaseCombatWeapon::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -241,10 +241,10 @@ void C_BaseCombatWeapon::DrawCrosshair()
 
 	Vector vForward;
 	AngleVectors( vShootAngles, &vForward );
-	
-	
+
+
 	// Change the color depending on if we're looking at a friend or an enemy.
-	CPartitionFilterListMask filter( PARTITION_ALL_CLIENT_EDICTS );	
+	CPartitionFilterListMask filter( PARTITION_ALL_CLIENT_EDICTS );
 	trace_t tr;
 	traceline->TraceLine( vShootPos, vShootPos + vForward * 10000, COLLISION_GROUP_NONE, MASK_SHOT, &tr, true, ~0, &filter );
 
@@ -258,7 +258,7 @@ void C_BaseCombatWeapon::DrawCrosshair()
 				g = b = 0;
 			}
 		}
-	}		 
+	}
 */
 
 	CHudCrosshair *pCrosshair = GET_HUDELEMENT( CHudCrosshair );
@@ -267,9 +267,9 @@ void C_BaseCombatWeapon::DrawCrosshair()
 
 	// Find out if this weapon's auto-aimed onto a target
 	bool bOnTarget = ( m_iState == WEAPON_IS_ONTARGET );
-	
+
 	if ( player->GetFOV() >= 90 )
-	{ 
+	{
 		// normal crosshairs
 		if ( bOnTarget && GetWpnData().iconAutoaim )
 		{
@@ -288,7 +288,7 @@ void C_BaseCombatWeapon::DrawCrosshair()
 		}
 	}
 	else
-	{ 
+	{
 		Color white( 255, 255, 255, 255 );
 
 		// zoomed crosshairs
@@ -355,7 +355,7 @@ bool C_BaseCombatWeapon::GetShootPosition( Vector &vOrigin, QAngle &vAngles )
 		}
 		else
 		{
-			vAngles = pEnt->GetRenderAngles();	
+			vAngles = pEnt->GetRenderAngles();
 		}
 	}
 	else
@@ -393,7 +393,7 @@ bool C_BaseCombatWeapon::GetShootPosition( Vector &vOrigin, QAngle &vAngles )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_BaseCombatWeapon::ShouldDraw( void )
@@ -464,7 +464,7 @@ bool C_BaseCombatWeapon::ShouldDrawPickup( void )
 
 	return true;
 }
-		   
+
 //-----------------------------------------------------------------------------
 // Purpose: Render the weapon. Draw the Viewmodel if the weapon's being carried
 //			by this player, otherwise draw the worldmodel.
@@ -485,10 +485,10 @@ int C_BaseCombatWeapon::DrawModel( int flags )
 	{
 		// don't draw weapon if chasing this guy as spectator
 		// we don't check that in ShouldDraw() since this may change
-		// without notification 
-		
+		// without notification
+
 		if ( localplayer->GetObserverMode() == OBS_MODE_IN_EYE &&
-			 localplayer->GetObserverTarget() == GetOwner() ) 
+			 localplayer->GetObserverTarget() == GetOwner() )
 			return false;
 	}
 
@@ -502,10 +502,10 @@ int C_BaseCombatWeapon::DrawModel( int flags )
 // the weapon timings are on the view model and not the world model. That means the
 // server needs to use the view model, but the client wants to use the world model.
 //-----------------------------------------------------------------------------
-int C_BaseCombatWeapon::CalcOverrideModelIndex() 
-{ 
+int C_BaseCombatWeapon::CalcOverrideModelIndex()
+{
 	C_BasePlayer *localplayer = C_BasePlayer::GetLocalPlayer();
-	if ( localplayer && 
+	if ( localplayer &&
 		localplayer == GetOwner() &&
 		ShouldDrawLocalPlayerViewModel() )
 	{

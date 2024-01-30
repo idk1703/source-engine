@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -27,7 +27,7 @@ public:
 	{
 		conPanel = NULL;
 	}
-	
+
 	void Create( vgui::VPANEL parent )
 	{
 		/*

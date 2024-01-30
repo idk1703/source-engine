@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -29,7 +29,7 @@ class C_SmokeTrail : public C_BaseParticleEntity, public IPrototypeAppEffect
 public:
 	DECLARE_CLASS( C_SmokeTrail, C_BaseParticleEntity );
 	DECLARE_CLIENTCLASS();
-	
+
 					C_SmokeTrail();
 	virtual			~C_SmokeTrail();
 
@@ -72,10 +72,10 @@ public:
 
 	float			m_ParticleLifetime;		// How long do the particles live?
 	float			m_StopEmitTime;			// When do I stop emitting particles? (-1 = never)
-	
+
 	float			m_MinSpeed;				// Speed range.
 	float			m_MaxSpeed;
-	
+
 	float			m_MinDirectedSpeed;		// Directed speed range.
 	float			m_MaxDirectedSpeed;
 
@@ -109,7 +109,7 @@ class C_RocketTrail : public C_BaseParticleEntity, public IPrototypeAppEffect
 public:
 	DECLARE_CLASS( C_RocketTrail, C_BaseParticleEntity );
 	DECLARE_CLIENTCLASS();
-	
+
 					C_RocketTrail();
 	virtual			~C_RocketTrail();
 
@@ -150,10 +150,10 @@ public:
 
 	float			m_ParticleLifetime;		// How long do the particles live?
 	float			m_StopEmitTime;			// When do I stop emitting particles? (-1 = never)
-	
+
 	float			m_MinSpeed;				// Speed range.
 	float			m_MaxSpeed;
-	
+
 	float			m_StartSize;			// Size ramp.
 	float			m_EndSize;
 
@@ -209,7 +209,7 @@ class C_SporeExplosion : public C_BaseParticleEntity, public IPrototypeAppEffect
 public:
 	DECLARE_CLASS( C_SporeExplosion, C_BaseParticleEntity );
 	DECLARE_CLIENTCLASS();
-	
+
 	C_SporeExplosion( void );
 	virtual	~C_SporeExplosion( void );
 
@@ -320,7 +320,7 @@ class C_DustTrail : public C_BaseParticleEntity, public IPrototypeAppEffect
 public:
 	DECLARE_CLASS( C_DustTrail, C_BaseParticleEntity );
 	DECLARE_CLIENTCLASS();
-	
+
 					C_DustTrail();
 	virtual			~C_DustTrail();
 
@@ -360,10 +360,10 @@ public:
 	float			m_ParticleLifetime;		// How long do the particles live?
 	float			m_StartEmitTime;		// When did I start emitting particles?
 	float			m_StopEmitTime;			// When do I stop emitting particles? (-1 = never)
-	
+
 	float			m_MinSpeed;				// Speed range.
 	float			m_MaxSpeed;
-	
+
 	float			m_MinDirectedSpeed;		// Directed speed range.
 	float			m_MaxDirectedSpeed;
 

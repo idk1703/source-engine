@@ -19,7 +19,7 @@
 DECLARE_BUILD_FACTORY( CBlueprintPanel );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBlueprintPanel::CBlueprintPanel( vgui::Panel *parent, const char *name ) : vgui::EditablePanel( parent, name )
 {
@@ -32,7 +32,7 @@ CBlueprintPanel::CBlueprintPanel( vgui::Panel *parent, const char *name ) : vgui
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBlueprintPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -48,7 +48,7 @@ void CBlueprintPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBlueprintPanel::SetObjectInfo( const CObjectInfo* pNewInfo )
 {
@@ -98,18 +98,18 @@ void CBlueprintPanel::SetObjectInfo( const CObjectInfo* pNewInfo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBlueprintPanel::SetActAsButton( bool bClickable, bool bMouseOver ) 
-{ 
-	m_bClickable = bClickable; 
-	m_bMouseOver = bMouseOver; 
+void CBlueprintPanel::SetActAsButton( bool bClickable, bool bMouseOver )
+{
+	m_bClickable = bClickable;
+	m_bMouseOver = bMouseOver;
 
 	SetMouseInputEnabled( m_bClickable || m_bMouseOver );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBlueprintPanel::OnCursorEntered( void )
 {
@@ -120,7 +120,7 @@ void CBlueprintPanel::OnCursorEntered( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBlueprintPanel::OnCursorExited( void )
 {
@@ -131,7 +131,7 @@ void CBlueprintPanel::OnCursorExited( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBlueprintPanel::OnMousePressed(vgui::MouseCode code)
 {
@@ -144,7 +144,7 @@ void CBlueprintPanel::OnMousePressed(vgui::MouseCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBlueprintPanel::OnMouseReleased(vgui::MouseCode code)
 {
@@ -157,7 +157,7 @@ void CBlueprintPanel::OnMouseReleased(vgui::MouseCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBlueprintPanel::OnMouseDoublePressed(vgui::MouseCode code)
 {

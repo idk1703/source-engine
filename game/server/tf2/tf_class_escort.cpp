@@ -52,7 +52,7 @@ bool OrderCreator_ShieldWall( CPlayerClassEscort *pClass )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CPlayerClassEscort::GetClassModelString( int nTeam )
@@ -62,13 +62,13 @@ const char *CPlayerClassEscort::GetClassModelString( int nTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPlayerClassEscort::CPlayerClassEscort( CBaseTFPlayer *pPlayer, TFClass iClass ) : CPlayerClass( pPlayer, iClass )
 {
 	for (int i = 0; i < MAX_TF_TEAMS; ++i)
 	{
-		SetClassModel( MAKE_STRING(GetClassModelString(i)), i ); 
+		SetClassModel( MAKE_STRING(GetClassModelString(i)), i );
 	}
 }
 
@@ -80,19 +80,19 @@ void CPlayerClassEscort::SetupSizeData( void )
 	// Initially set the player to the base player class standing hull size.
 	m_pPlayer->SetCollisionBounds( ESCORTCLASS_HULL_STAND_MIN, ESCORTCLASS_HULL_STAND_MAX );
 	m_pPlayer->SetViewOffset( ESCORTCLASS_VIEWOFFSET_STAND );
-	m_pPlayer->m_Local.m_flStepSize = ESCORTCLASS_STEPSIZE;	
+	m_pPlayer->m_Local.m_flStepSize = ESCORTCLASS_STEPSIZE;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPlayerClassEscort::~CPlayerClassEscort()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassEscort::ClassActivate( void )
 {
@@ -106,7 +106,7 @@ void CPlayerClassEscort::ClassActivate( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponShield *CPlayerClassEscort::GetProjectedShield( void )
 {
@@ -129,7 +129,7 @@ CWeaponShield *CPlayerClassEscort::GetProjectedShield( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassEscort::CreateClass( void )
 {
@@ -150,7 +150,7 @@ void CPlayerClassEscort::CreateClass( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CPlayerClassEscort::ResupplyAmmo( float flFraction, ResupplyReason_t reason )
 {
@@ -192,7 +192,7 @@ void CPlayerClassEscort::SetupMoveData( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassEscort::SetPlayerHull( void )
 {
@@ -208,7 +208,7 @@ void CPlayerClassEscort::SetPlayerHull( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassEscort::ResetViewOffset( void )
 {
@@ -220,7 +220,7 @@ void CPlayerClassEscort::ResetViewOffset( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassEscort::PowerupStart( int iPowerup, float flAmount, CBaseEntity *pAttacker, CDamageModifier *pDamageModifier )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -112,9 +112,9 @@ void CheckResult( HRESULT hr )
 }
 
 void DrawLine2(const Vector &vFrom, const Vector &vTo, float r1, float g1, float b1, float a1, float r2, float g2, float b2, float a2)
-{	
+{
 	VertPosDiffuse verts[2];
-	
+
 	verts[0].Init( vFrom, r1, g1, b1, 1 );
 	verts[1].Init( vTo,   r2, g2, b2, 1 );
 
@@ -154,10 +154,10 @@ void SetupLookAt( const Vector &vEye, const Vector &vDest, Vector basis[3] )
 	basis[0] = (vDest - vEye);	// Forward.
 	VectorNormalize( basis[0] );
 	basis[2].Init(0.0f, 0.0f, 1.0f);		// Up.
-	
+
 	basis[1] = basis[2].Cross(basis[0]);	// Left.
 	VectorNormalize( basis[1] );
-	
+
 	basis[2] = basis[0].Cross(basis[1]);	// Regenerate up.
 	VectorNormalize( basis[2] );
 }
@@ -209,10 +209,10 @@ void UpdateView(float mouseDeltaX, float mouseDeltaY)
 		}
 	}
 
-    // Set the projection matrix to 90 degrees.
+	// Set the projection matrix to 90 degrees.
 	D3DXMATRIX matProj;
-     D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI/2, Sys_ScreenWidth() / (float)Sys_ScreenHeight(), 1.0f, 10000.0f );
-    g_pDevice->SetTransform( D3DTS_PROJECTION, &matProj );
+	D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI/2, Sys_ScreenWidth() / (float)Sys_ScreenHeight(), 1.0f, 10000.0f );
+	g_pDevice->SetTransform( D3DTS_PROJECTION, &matProj );
 
 
 	// This matrix converts from D3D coordinates (X=right, Y=up, Z=forward)
@@ -222,7 +222,7 @@ void UpdateView(float mouseDeltaX, float mouseDeltaY)
 		-1.0f, 0.0f,  0.0f,  0.0f,
 		0.0f,  1.0f,  0.0f,  0.0f,
 		0.0f,  0.0f,  0.0f,  1.0f);
-	
+
 	g_ViewerPos = pController->m_vPos;
 	mRot = SetupMatrixAngles( pController->m_vAngles );
 
@@ -243,7 +243,7 @@ void UpdateView(float mouseDeltaX, float mouseDeltaY)
 void CommandRender_Point( CScratchPad3D::CBaseCommand *pInCmd, IDirect3DDevice8 *pDevice )
 {
 	CScratchPad3D::CCommand_Point *pCmd = (CScratchPad3D::CCommand_Point*)pInCmd;
-	
+
 	g_pDevice->SetRenderState( D3DRS_POINTSIZE, *((DWORD*)&pCmd->m_flPointSize) );
 
 	VertPosDiffuse vert;
@@ -313,7 +313,7 @@ void CommandRender_Polygon( CScratchPad3D::CBaseCommand *pInCmd, IDirect3DDevice
 		if( nVerts >= 2 )
 		{
 			g_pDevice->DrawPrimitiveUP( D3DPT_LINESTRIP, nVerts-1, verts, sizeof(verts[0]) );
-			
+
 			verts[nVerts] = verts[0];
 			g_pDevice->DrawPrimitiveUP( D3DPT_LINESTRIP, 1, &verts[nVerts-1], sizeof(verts[0]) );
 		}
@@ -389,31 +389,31 @@ public:
 };
 
 
-void GenerateTextGreyscaleBitmap( 
-	const char *pText, 
+void GenerateTextGreyscaleBitmap(
+	const char *pText,
 	CUtlVector<unsigned char> &bitmap,
 	int *pWidth,
 	int *pHeight )
 {
 	*pWidth = *pHeight = 0;
 
-	
+
 	// Create a bitmap, font, and HDC.
 	HDC hDC = CreateCompatibleDC( NULL );
 	Assert( hDC );
 
 	HFONT hFont = ::CreateFontA(
 		18,		// font height
-		0, 0, 0, 
-		FW_MEDIUM, 
-		false, 
-		false, 
-		false, 
-		ANSI_CHARSET, 
-		OUT_DEFAULT_PRECIS, 
-		CLIP_DEFAULT_PRECIS, 
-		ANTIALIASED_QUALITY, 
-		DEFAULT_PITCH | FF_DONTCARE, 
+		0, 0, 0,
+		FW_MEDIUM,
+		false,
+		false,
+		false,
+		ANSI_CHARSET,
+		OUT_DEFAULT_PRECIS,
+		CLIP_DEFAULT_PRECIS,
+		ANTIALIASED_QUALITY,
+		DEFAULT_PITCH | FF_DONTCARE,
 		"Arial" );
 	Assert( hDC );
 	if ( !hFont )
@@ -422,7 +422,7 @@ void GenerateTextGreyscaleBitmap(
 		return;
 	}
 
-	
+
 	// Create a bitmap. Allow for width of 512. Hopefully, that can fit all the text we need.
 	int bigImageWidth = 512;
 	int bigImageHeight = 64;
@@ -436,9 +436,9 @@ void GenerateTextGreyscaleBitmap(
 	bmi.biBitCount     = 24;
 	bmi.biPlanes       = 1;
 	bmi.biCompression  = BI_RGB;
-	
+
 	void *pBits = NULL;
-	HBITMAP hBitmap = CreateDIBSection( hDC, 
+	HBITMAP hBitmap = CreateDIBSection( hDC,
 		(BITMAPINFO*)&bmi, DIB_RGB_COLORS, (void**)&pBits, NULL, 0 );
 	Assert( hBitmap && pBits );
 
@@ -489,14 +489,14 @@ void GenerateTextGreyscaleBitmap(
 }
 
 
-IDirect3DTexture8* MakeD3DTextureFromBitmap( 
-	CUtlVector<unsigned char> &bitmap, 
-	int width, 
+IDirect3DTexture8* MakeD3DTextureFromBitmap(
+	CUtlVector<unsigned char> &bitmap,
+	int width,
 	int height,
 	bool bSolidBackground )
 {
 	IDirect3DTexture8 *pRet = NULL;
-	HRESULT hr = g_pDevice->CreateTexture( 
+	HRESULT hr = g_pDevice->CreateTexture(
 		width,
 		height,
 		1,
@@ -526,7 +526,7 @@ IDirect3DTexture8* MakeD3DTextureFromBitmap(
 		{
 			unsigned char *pDestPixel = &pDestData[ (y*lockedRect.Pitch + x*4) ];
 			unsigned char cSrcColor = bitmap[y*width+x];
-			
+
 			if ( bSolidBackground )
 			{
 				pDestPixel[3] = 0xFF;
@@ -590,7 +590,7 @@ void CommandRender_Text( CScratchPad3D::CBaseCommand *pInCmd, IDirect3DDevice8 *
 
 	float flAvgCharWidth = (float)flTotalWidth / pCached->m_nChars;
 	float flTotalHeight = flAvgCharWidth * 3;
-	
+
 	Vector vShift( 0, 0, 0 );
 	if ( pParams->m_bCentered )
 		vShift = vRight * ( -flTotalWidth/2 ) + vUp * ( flTotalHeight/2 );
@@ -602,7 +602,7 @@ void CommandRender_Text( CScratchPad3D::CBaseCommand *pInCmd, IDirect3DDevice8 *
 	quad[1].m_Pos = pParams->m_vPos + vRight * flTotalWidth;
 	quad[2].m_Pos = quad[1].m_Pos - vUp * flTotalHeight;
 	quad[3].m_Pos = pParams->m_vPos - vUp * flTotalHeight;
-	
+
 	// Set tex coords.
 	if ( bFlip )
 	{
@@ -627,7 +627,7 @@ void CommandRender_Text( CScratchPad3D::CBaseCommand *pInCmd, IDirect3DDevice8 *
 
 
 	// Draw.
-	
+
 	// Backup render states.
 	DWORD tss[][3] = {
 		{ D3DTSS_COLOROP, D3DTOP_MODULATE, 0 },
@@ -635,7 +635,7 @@ void CommandRender_Text( CScratchPad3D::CBaseCommand *pInCmd, IDirect3DDevice8 *
 		{ D3DTSS_COLORARG2, D3DTA_TEXTURE, 0 },
 		{ D3DTSS_ALPHAOP, D3DTOP_MODULATE, 0 },
 		{ D3DTSS_ALPHAARG1, D3DTA_DIFFUSE, 0 },
-		{ D3DTSS_ALPHAARG2, D3DTA_TEXTURE, 0 } 
+		{ D3DTSS_ALPHAARG2, D3DTA_TEXTURE, 0 }
 		};
 	#define NUM_TSS ( sizeof( tss ) / sizeof( tss[0] ) )
 
@@ -647,7 +647,7 @@ void CommandRender_Text( CScratchPad3D::CBaseCommand *pInCmd, IDirect3DDevice8 *
 		{ D3DRS_FILLMODE, D3DFILL_SOLID, 0 }
 		};
 	#define NUM_RSS ( sizeof( rss ) / sizeof( rss[0] ) )
-	
+
 	for ( int i=0; i < NUM_TSS; i++ )
 	{
 		g_pDevice->GetTextureStageState( 0, (D3DTEXTURESTAGESTATETYPE)tss[i][0], &tss[i][2] );
@@ -681,10 +681,10 @@ void CommandRender_Text( CScratchPad3D::CBaseCommand *pInCmd, IDirect3DDevice8 *
 		DWORD fillMode;
 		g_pDevice->GetRenderState( D3DRS_FILLMODE, &fillMode );
 		g_pDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_WIREFRAME );
-		
+
 		quad[4] = quad[0];
 		g_pDevice->DrawPrimitiveUP( D3DPT_LINESTRIP, 4, quad, sizeof(quad[0]) );
-		
+
 		g_pDevice->SetRenderState( D3DRS_FILLMODE, fillMode );
 	}
 }
@@ -761,9 +761,9 @@ void RunCommands( )
 bool CheckForNewFile( bool bForce )
 {
 	// See if the file has changed..
-	HANDLE hFile = CreateFile( 
-		g_pScratchPad->m_pFilename, 
-		GENERIC_READ, 
+	HANDLE hFile = CreateFile(
+		g_pScratchPad->m_pFilename,
+		GENERIC_READ,
 		FILE_SHARE_READ,
 		NULL,
 		OPEN_EXISTING,
@@ -823,7 +823,7 @@ void AppInit()
 	}
 
 	// FIXME: I took this out of scratchpad 3d, not sure if this is even necessary any more
-	pFileSystem->AddSearchPath( ".", "PLATFORM" );	
+	pFileSystem->AddSearchPath( ".", "PLATFORM" );
 
 	g_pScratchPad = new CScratchPad3D( pFilename, pFileSystem, false );
 
@@ -835,7 +835,7 @@ void AppInit()
 	g_pDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_SELECTARG1 );
 	g_pDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_DIFFUSE );
 	g_pDevice->SetRenderState( D3DRS_ALPHABLENDENABLE, FALSE );
-	g_pDevice->SetTexture( 0, NULL ); 
+	g_pDevice->SetTexture( 0, NULL );
 
 	// Setup point scaling parameters.
 	float flOne=1;
@@ -855,10 +855,10 @@ void AppRender( float frametime, float mouseDeltaX, float mouseDeltaY, bool bInv
 	g_nPolygons = 0;
 
 	g_pDevice->SetVertexShader( VertPosDiffuse::GetFVF() );
-	
-	if( !bInvalidRect && 
-		!Sys_GetKeyState( APPKEY_LBUTTON ) && 
-		!Sys_GetKeyState( APPKEY_RBUTTON ) && 
+
+	if( !bInvalidRect &&
+		!Sys_GetKeyState( APPKEY_LBUTTON ) &&
+		!Sys_GetKeyState( APPKEY_RBUTTON ) &&
 		!CheckForNewFile(false) )
 	{
 		Sys_Sleep( 100 );
@@ -870,7 +870,7 @@ void AppRender( float frametime, float mouseDeltaX, float mouseDeltaY, bool bInv
 	g_pDevice->BeginScene();
 
 	UpdateView( mouseDeltaX, mouseDeltaY );
-	
+
 	RunCommands();
 
 	g_pDevice->EndScene();
@@ -892,7 +892,7 @@ void AppPreResize()
 			// Delete the cached data if there is any.
 			pCmd->ReleaseCachedRenderData();
 		}
-	}	
+	}
 }
 
 void AppPostResize()
@@ -922,7 +922,3 @@ void AppKey( int key, int down )
 void AppChar( int key )
 {
 }
-
-
-
-

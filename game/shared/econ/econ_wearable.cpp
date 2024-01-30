@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -151,7 +151,7 @@ void CEconWearable::RemoveFrom( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CEconWearable::GetSkin( void )
 {
@@ -352,7 +352,7 @@ ShadowType_t CEconWearable::ShadowCastType()
 	{
 		return SHADOWS_RENDER_TO_TEXTURE_DYNAMIC;
 	}
-	
+
 	return SHADOWS_NONE;
 }
 
@@ -396,7 +396,7 @@ bool CEconWearable::ShouldDraw( void )
 	{
 		return false;
 	}
-		
+
 	return BaseClass::ShouldDraw();
 }
 
@@ -560,7 +560,7 @@ C_EconWearableGib::~C_EconWearableGib()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_EconWearableGib::Initialize( bool bWillBeParented )
 {
@@ -569,7 +569,7 @@ bool C_EconWearableGib::Initialize( bool bWillBeParented )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStudioHdr* C_EconWearableGib::OnNewModel()
 {
@@ -582,7 +582,7 @@ CStudioHdr* C_EconWearableGib::OnNewModel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EconWearableGib::SpawnClientEntity( void )
 {
@@ -597,7 +597,7 @@ void C_EconWearableGib::SpawnClientEntity( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_EconWearableGib::FinishModelInitialization( void )
 {
@@ -659,7 +659,7 @@ bool C_EconWearableGib::FinishModelInitialization( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EconWearableGib::Spawn()
 {
@@ -668,7 +668,7 @@ void C_EconWearableGib::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_EconWearableGib::ValidateEntityAttachedToPlayer( bool &bShouldRetry )
 {
@@ -704,7 +704,7 @@ bool C_EconWearableGib::UpdateThinkState( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EconWearableGib::ClientThink( void )
 {
@@ -716,7 +716,7 @@ void C_EconWearableGib::ClientThink( void )
 			return;
 		}
 
-		// fade out 
+		// fade out
 		float alpha = (m_fDeathTime - gpGlobals->curtime) / WEARABLE_FADEOUT_TIME;
 		SetRenderMode( kRenderTransTexture );
 		SetRenderColorA( alpha * 256 );
@@ -726,7 +726,7 @@ void C_EconWearableGib::ClientThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EconWearableGib::StartFadeOut( float fDelay )
 {
@@ -735,7 +735,7 @@ void C_EconWearableGib::StartFadeOut( float fDelay )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EconWearableGib::ImpactTrace( trace_t *pTrace, int iDamageType, const char *pCustomImpactName )
 {
@@ -757,7 +757,7 @@ void C_EconWearableGib::ImpactTrace( trace_t *pTrace, int iDamageType, const cha
 	}
 	else
 	{
-		Vector hitpos;  
+		Vector hitpos;
 
 		VectorMA( pTrace->startpos, pTrace->fraction, dir, hitpos );
 		VectorNormalize( dir );
@@ -775,7 +775,7 @@ void C_EconWearableGib::ImpactTrace( trace_t *pTrace, int iDamageType, const cha
 		dir *= 4000;  // adjust impact strenght
 
 		// apply force where we hit it
-		pPhysicsObject->ApplyForceOffset( dir, hitpos );	
+		pPhysicsObject->ApplyForceOffset( dir, hitpos );
 	}
 }
 

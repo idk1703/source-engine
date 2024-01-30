@@ -53,7 +53,7 @@ inline int CUnifiedSignals::Update()
 	int old		= m_flState;
 	m_flState	= m_flSignal;
 	m_flSignal	= 0;
-	
+
 	return m_flState ^ old;
 }
 
@@ -61,14 +61,14 @@ inline int CUnifiedSignals::Update()
 
 inline void CUnifiedSignals::Signal( int flSignal )
 {
-	m_flSignal |= flSignal; 
+	m_flSignal |= flSignal;
 }
 
 
 
 inline int CUnifiedSignals::GetState()
 {
-	return m_flState; 
+	return m_flState;
 }
 
 

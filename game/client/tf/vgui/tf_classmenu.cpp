@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ ConVar replay_replaywelcomedlgcount( "replay_replaywelcomedlgcount", "0", FCVAR_
 ConVar tf_mvm_classupgradehelpcount( "tf_mvm_classupgradehelpcount", "0", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE | FCVAR_HIDDEN, "The number of times the player upgrade help dialog has displayed." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFClassTipsItemPanel::CTFClassTipsItemPanel( Panel *parent, const char *name, int iListItemID ) : BaseClass( parent, name )
 {
@@ -57,7 +57,7 @@ CTFClassTipsItemPanel::~CTFClassTipsItemPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClassTipsItemPanel::SetClassTip( const wchar_t *pwszText, const char *pszIcon )
 {
@@ -83,7 +83,7 @@ void CTFClassTipsItemPanel::SetClassTip( const wchar_t *pwszText, const char *ps
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClassTipsItemPanel::ApplySchemeSettings( IScheme* pScheme )
 {
@@ -93,7 +93,7 @@ void CTFClassTipsItemPanel::ApplySchemeSettings( IScheme* pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFClassTipsListPanel : public PanelListPanel
 {
@@ -160,7 +160,7 @@ public:
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	~CTFClassTipsListPanel()
 	{
@@ -170,7 +170,7 @@ public:
 private:
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	int GetListHeight( void )
 	{
@@ -189,7 +189,7 @@ private:
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	void SetScrollBarImagesVisible( bool visible )
 	{
@@ -217,7 +217,7 @@ private:
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	void OnTick()
 	{
@@ -266,7 +266,7 @@ private:
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	void ApplySchemeSettings( IScheme *pScheme )
 	{
@@ -332,7 +332,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFClassTipsPanel : public EditablePanel
 {
@@ -347,14 +347,14 @@ public:
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	~CTFClassTipsPanel()
 	{
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	void SetClass( int iClass )
 	{
@@ -429,7 +429,7 @@ public:
 private:
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	virtual void ApplySchemeSettings( IScheme *pScheme )
 	{
@@ -444,7 +444,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFClassMenu::CTFClassMenu( IViewPort *pViewPort )
 :	CClassMenu( pViewPort )
@@ -514,7 +514,7 @@ CTFClassMenu::CTFClassMenu( IViewPort *pViewPort )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClassMenu::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -596,7 +596,7 @@ void CTFClassMenu::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFClassMenu::GetCurrentPlayerClass()
 {
@@ -612,7 +612,7 @@ int CTFClassMenu::GetCurrentPlayerClass()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CExImageButton *CTFClassMenu::GetCurrentClassButton()
 {
@@ -622,7 +622,7 @@ CExImageButton *CTFClassMenu::GetCurrentClassButton()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClassMenu::ShowPanel( bool bShow )
 {
@@ -635,10 +635,10 @@ void CTFClassMenu::ShowPanel( bool bShow )
 		}
 
 		// can't change class if you're on the losing team during the "bonus time" after a team has won the round
-		if ( ( TFGameRules()->State_Get() == GR_STATE_TEAM_WIN && 
-			 C_TFPlayer::GetLocalTFPlayer() && 
+		if ( ( TFGameRules()->State_Get() == GR_STATE_TEAM_WIN &&
+			 C_TFPlayer::GetLocalTFPlayer() &&
 			 C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TFGameRules()->GetWinningTeam()
-			 && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_SPECTATOR 
+			 && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_SPECTATOR
 			 && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_UNASSIGNED
 			 && GetSpectatorMode() == OBS_MODE_NONE ) ||
 			 TFGameRules()->State_Get() == GR_STATE_GAME_OVER ||
@@ -692,7 +692,7 @@ const char *g_pszLegacyClassSelectVCDWeapons[TF_LAST_NORMAL_CLASS] =
 	"tf_weapon_minigun",					// TF_CLASS_HEAVYWEAPONS,
 	"tf_weapon_flamethrower",				// TF_CLASS_PYRO,
 	"",										// TF_CLASS_SPY,				// weapons handled individually
-	"tf_weapon_wrench",						// TF_CLASS_ENGINEER,		
+	"tf_weapon_wrench",						// TF_CLASS_ENGINEER,
 };
 
 int g_iLegacyClassSelectWeaponSlots[TF_LAST_NORMAL_CLASS] =
@@ -706,11 +706,11 @@ int g_iLegacyClassSelectWeaponSlots[TF_LAST_NORMAL_CLASS] =
 	LOADOUT_POSITION_PRIMARY,		// TF_CLASS_HEAVYWEAPONS,
 	LOADOUT_POSITION_PRIMARY,		// TF_CLASS_PYRO,
 	LOADOUT_POSITION_MELEE,			// TF_CLASS_SPY,
-	LOADOUT_POSITION_MELEE,			// TF_CLASS_ENGINEER,		
+	LOADOUT_POSITION_MELEE,			// TF_CLASS_ENGINEER,
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClassMenu::UpdateButtonSelectionStates( int iClass )
 {
@@ -725,13 +725,13 @@ void CTFClassMenu::UpdateButtonSelectionStates( int iClass )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClassMenu::SelectClass( int iClass )
 {
 	if ( !engine->IsInGame() )
 		return;
-	
+
 	if ( !m_pTFPlayerModelPanel )
 		return;
 
@@ -841,12 +841,12 @@ void CTFClassMenu::SelectClass( int iClass )
 	}
 	CBaseEntity::EmitSound( filter, SOUND_FROM_UI_PANEL, nClassMusicStr );
 	m_nBaseMusicGuid = enginesound->GetGuidForLastSoundEmitted();
-	
+
 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClassMenu::LoadItems()
 {
@@ -890,7 +890,7 @@ void CTFClassMenu::LoadItems()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClassMenu::OnKeyCodePressed( KeyCode code )
 {
@@ -915,10 +915,10 @@ void CTFClassMenu::OnKeyCodePressed( KeyCode code )
 		Go();
 	}
 	else if ( ( m_iClassMenuKey != BUTTON_CODE_INVALID && m_iClassMenuKey == code ) ||
-		code == KEY_XBUTTON_BACK || 
+		code == KEY_XBUTTON_BACK ||
 		code == KEY_XBUTTON_B ||
 		code == STEAMCONTROLLER_B ||
-		code == KEY_0 || 
+		code == KEY_0 ||
 		code == KEY_PAD_0 )
 	{
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
@@ -933,13 +933,13 @@ void CTFClassMenu::OnKeyCodePressed( KeyCode code )
 		int loopCheck = 0;
 		int nCurrentClass = GetRemappedMenuIndexForClass( m_iCurrentClassIndex );
 
-		do 
+		do
 		{
 			loopCheck++;
 			nCurrentClass++;
 			nCurrentClass = ( nCurrentClass % TF_CLASS_MENU_BUTTONS );
 		} while( ( m_pClassButtons[ iRemapIndexToClass[nCurrentClass] ] == NULL ) && ( loopCheck < TF_CLASS_MENU_BUTTONS ) );
-		
+
 		SelectClass(  iRemapIndexToClass[ nCurrentClass ] );
 	}
 	else if ( code == STEAMCONTROLLER_Y )
@@ -951,7 +951,7 @@ void CTFClassMenu::OnKeyCodePressed( KeyCode code )
 		int loopCheck = 0;
 		int nCurrentClass = GetRemappedMenuIndexForClass( m_iCurrentClassIndex );
 
-		do 
+		do
 		{
 			loopCheck++;
 			nCurrentClass--;
@@ -960,7 +960,7 @@ void CTFClassMenu::OnKeyCodePressed( KeyCode code )
 				nCurrentClass = GetRemappedMenuIndexForClass( TF_CLASS_RANDOM );
 			}
 		} while( ( m_pClassButtons[ iRemapIndexToClass[nCurrentClass] ] == NULL ) && ( loopCheck < TF_CLASS_MENU_BUTTONS ) );
-		
+
 		SelectClass(  iRemapIndexToClass[ nCurrentClass ] );
 	}
 	else if( code == KEY_XBUTTON_UP || code == KEY_XSTICK1_UP || code == STEAMCONTROLLER_DPAD_UP )
@@ -996,7 +996,7 @@ void CTFClassMenu::OnKeyCodePressed( KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClassMenu::OnKeyCodeReleased( vgui::KeyCode code )
 {
@@ -1006,7 +1006,7 @@ void CTFClassMenu::OnKeyCodeReleased( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClassMenu::OnThink()
 {
@@ -1043,7 +1043,7 @@ void CTFClassMenu::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClassMenu::SetCancelButtonVisible( bool bVisible )
 {
@@ -1052,7 +1052,7 @@ void CTFClassMenu::SetCancelButtonVisible( bool bVisible )
 	{
 		m_pCancelHintIcon->SetVisible( bVisible );
 	}
-	
+
 	if ( m_pSelectAClassLabel )
 	{
 		m_pSelectAClassLabel->SetVisible( !bVisible );
@@ -1060,7 +1060,7 @@ void CTFClassMenu::SetCancelButtonVisible( bool bVisible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClassMenu::Update()
 {
@@ -1102,7 +1102,7 @@ void CTFClassMenu::Update()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Panel *CTFClassMenu::CreateControlByName( const char *controlName )
 {
@@ -1139,13 +1139,13 @@ void CTFClassMenu::PaintBackground( void )
 }
 
 //-----------------------------------------------------------------------------
-// Do things that should be done often, eg number of players in the 
+// Do things that should be done often, eg number of players in the
 // selected class
 //-----------------------------------------------------------------------------
 void CTFClassMenu::OnTick( void )
 {
-	//When a player changes teams, their class and team values don't get here 
-	//necessarily before the command to update the class menu. This leads to the cancel button 
+	//When a player changes teams, their class and team values don't get here
+	//necessarily before the command to update the class menu. This leads to the cancel button
 	//being visible and people cancelling before they have a class. check for class == TF_CLASS_UNDEFINED and if so
 	//hide the cancel button
 
@@ -1170,7 +1170,7 @@ void CTFClassMenu::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClassMenu::OnClose()
 {
@@ -1190,7 +1190,7 @@ void CTFClassMenu::OnClose()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClassMenu::SetVisible( bool state )
 {
@@ -1217,9 +1217,9 @@ void CTFClassMenu::SetVisible( bool state )
 	}
 	else
 	{
-		engine->ServerCmd( "menuclosed" );	
+		engine->ServerCmd( "menuclosed" );
 		engine->ClientCmd( "_cl_classmenuopen 0" );
-		
+
 		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
 		{
 			CBaseEntity::StopSound( SOUND_FROM_UI_PANEL, "music.mvm_class_menu" );
@@ -1232,7 +1232,7 @@ void CTFClassMenu::SetVisible( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClassMenu::Go()
 {
@@ -1291,12 +1291,12 @@ void CTFClassMenu::Go()
 	}
 	else
 	{
-		
+
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClassMenu::OnCommand( const char *command )
 {
@@ -1337,7 +1337,7 @@ void CTFClassMenu::OnCommand( const char *command )
 		EconUI()->SetDefaultTeam( GetTeamNumber() );
 
 		// Go directly to the loadout for the selected class
-		EconUI()->OpenEconUI( -m_iCurrentClassIndex );	
+		EconUI()->OpenEconUI( -m_iCurrentClassIndex );
 	}
 	else
 	{
@@ -1368,7 +1368,7 @@ static const char *g_sDialogVariables[] = {
 	"numDemoman",
 	"numHeavy",
 	"numEngineer",
-	
+
 	"numMedic",
 	"numSniper",
 	"numSpy",
@@ -1397,11 +1397,11 @@ static const char *g_sClassImagesRed[] = {
 	"class_sel_sm_scout_red",
 	"class_sel_sm_soldier_red",
 	"class_sel_sm_pyro_red",
-	
+
 	"class_sel_sm_demo_red",
 	"class_sel_sm_heavy_red",
 	"class_sel_sm_engineer_red",
-	
+
 	"class_sel_sm_medic_red",
 	"class_sel_sm_sniper_red",
 	"class_sel_sm_spy_red",
@@ -1411,7 +1411,7 @@ static const char *g_sClassImagesRed[] = {
 
 int g_ClassDefinesRemap[] = {
 	0,
-	TF_CLASS_SCOUT,	
+	TF_CLASS_SCOUT,
 	TF_CLASS_SOLDIER,
 	TF_CLASS_PYRO,
 
@@ -1557,7 +1557,7 @@ void CTFClassMenu::UpdateNumClassLabels( int iTeam )
 			}
 		}
 	}
-	
+
 	if ( nTotalCount == 0 )
 	{
 		// no classes for our team yet
@@ -1699,5 +1699,3 @@ void CTFClassMenu::CheckMvMUpgrades()
 		}
 	}
 }
-
-

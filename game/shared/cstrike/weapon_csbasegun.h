@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -26,11 +26,11 @@
 class CWeaponCSBaseGun : public CWeaponCSBase
 {
 public:
-	
+
 	DECLARE_CLASS( CWeaponCSBaseGun, CWeaponCSBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponCSBaseGun();
 
 	virtual void PrimaryAttack();
@@ -46,7 +46,7 @@ public:
 	virtual void DoFireEffects();
 	virtual void ItemPostFrame();
 
-protected: 
+protected:
 	float m_zoomFullyActiveTime;
 
 private:

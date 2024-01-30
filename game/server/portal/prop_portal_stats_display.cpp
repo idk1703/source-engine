@@ -62,7 +62,7 @@ private:
 	CNetworkString( szChallengeName, 32 );
 
 	CNetworkVar( int, m_iDisplayObjective );
-	
+
 	COutputEvent m_OnMetBronzeObjective;
 	COutputEvent m_OnMetSilverObjective;
 	COutputEvent m_OnMetGoldObjective;
@@ -85,7 +85,7 @@ private:
 LINK_ENTITY_TO_CLASS( prop_portal_stats_display, CPropPortalStatsDisplay );
 
 //-----------------------------------------------------------------------------
-// Save/load 
+// Save/load
 //-----------------------------------------------------------------------------
 BEGIN_DATADESC( CPropPortalStatsDisplay )
 	DEFINE_FIELD( m_bEnabled, FIELD_BOOLEAN ),
@@ -406,7 +406,7 @@ void CPropPortalStatsDisplay::SpawnControlPanels()
 		pScreen->MakeVisibleOnlyToTeammates( false );
 		pScreen->SetTransparency( true );
 		int nScreen = m_hScreens.AddToTail( );
-		m_hScreens[nScreen].Set( pScreen );	
+		m_hScreens[nScreen].Set( pScreen );
 	}
 }
 
@@ -472,7 +472,7 @@ void CPropPortalStatsDisplay::RestoreControlPanels( void )
 		if ( pScreen )
 		{
 			int nScreen = m_hScreens.AddToTail( );
-			m_hScreens[nScreen].Set( pScreen );	
+			m_hScreens[nScreen].Set( pScreen );
 		}
 	}
 }

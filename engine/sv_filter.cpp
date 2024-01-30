@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -32,7 +32,7 @@ CUtlVector< userfilter_t > g_UserFilters;
 
 //-----------------------------------------------------------------------------
 // Purpose: Sends a message to prospective clients letting them know they're banned
-// Input  : *adr - 
+// Input  : *adr -
 //-----------------------------------------------------------------------------
 void Filter_SendBan( const netadr_t& adr )
 {
@@ -41,7 +41,7 @@ void Filter_SendBan( const netadr_t& adr )
 
 //-----------------------------------------------------------------------------
 // Purpose: Checks an IP address to see if it is banned
-// Input  : *adr - 
+// Input  : *adr -
 // Output : bool
 //-----------------------------------------------------------------------------
 bool Filter_ShouldDiscard( const netadr_t& adr )
@@ -55,7 +55,7 @@ bool Filter_ShouldDiscard( const netadr_t& adr )
 
 	unsigned in = *(unsigned *)&adr.ip[0];
 
-	// Handle timeouts 
+	// Handle timeouts
 	for ( int i = g_IPFilters.Count() - 1 ; i >= 0 ; i--)
 	{
 		if ( ( g_IPFilters[i].compare != 0xffffffff) &&
@@ -78,8 +78,8 @@ bool Filter_ShouldDiscard( const netadr_t& adr )
 
 //-----------------------------------------------------------------------------
 // Purpose: Takes an IP address string and fills in an ipfilter_t mask and compare (raw address)
-// Input  : *s - 
-//			*f - 
+// Input  : *s -
+//			*f -
 // Output : bool Filter_ConvertString
 //-----------------------------------------------------------------------------
 bool Filter_ConvertString( const char *s, ipfilter_t *f )
@@ -88,13 +88,13 @@ bool Filter_ConvertString( const char *s, ipfilter_t *f )
 	int		i, j;
 	byte	b[4];
 	byte	m[4];
-	
+
 	for (i=0 ; i<4 ; i++)
 	{
 		b[i] = 0;
 		m[i] = 0;
 	}
-	
+
 	for (i=0 ; i<4 ; i++)
 	{
 		if (*s < '0' || *s > '9')
@@ -102,7 +102,7 @@ bool Filter_ConvertString( const char *s, ipfilter_t *f )
 			ConMsg("Bad filter address: %s\n", s);
 			return false;
 		}
-		
+
 		j = 0;
 		while (*s >= '0' && *s <= '9')
 		{
@@ -117,10 +117,10 @@ bool Filter_ConvertString( const char *s, ipfilter_t *f )
 			break;
 		s++;
 	}
-	
+
 	f->mask = *(unsigned int *)m;
 	f->compare = *(unsigned int *)b;
-	
+
 	return true;
 }
 
@@ -156,7 +156,7 @@ static void Filter_Add_f( const CCommand& args )
 		if ( g_IPFilters[i].compare == 0xffffffff || ( g_IPFilters[i].compare == f.compare && g_IPFilters[i].mask == f.mask ) )
 			break;		// free spot
 	}
-	
+
 	if (i == g_IPFilters.Count())
 	{
 		if (g_IPFilters.Count() == MAX_IPFILTERS)
@@ -172,13 +172,13 @@ static void Filter_Add_f( const CCommand& args )
 		// updating in-place, so don't kick people
 		bKick = false;
 	}
-	
+
 	banTime = atof( args[1] );
 	if (banTime < 0.01f)
 	{
 		banTime = 0.0f;
 	}
-	
+
 	g_IPFilters[i].banTime = banTime;
 
 	// Time to unban.
@@ -218,7 +218,7 @@ static void Filter_Add_f( const CCommand& args )
 	{
 		Q_snprintf( szDuration, sizeof( szDuration ), "for %.2f minutes", banTime );
 	}
-	
+
 	// fire the event
 
 	IGameEvent *event = g_GameEventManager.CreateEvent( "server_addban" );
@@ -402,14 +402,14 @@ CON_COMMAND( writeip, "Save the ban list to " BANNED_IP_FILENAME "." )
 		ConMsg( "Couldn't open %s\n", name );
 		return;
 	}
-	
+
 	for ( i = 0 ; i < g_IPFilters.Count() ; i++ )
 	{
 		*(unsigned *)b = g_IPFilters[i].compare;
 
 		// Only store out the permanent bad guys from this server.
 		banTime = g_IPFilters[i].banTime;
-		
+
 		if ( banTime != 0.0f )
 		{
 			continue;
@@ -417,7 +417,7 @@ CON_COMMAND( writeip, "Save the ban list to " BANNED_IP_FILENAME "." )
 
 		g_pFileSystem->FPrintf( f, "addip 0 %i.%i.%i.%i\r\n", b[0], b[1], b[2], b[3] );
 	}
-	
+
 	g_pFileSystem->Close( f );
 }
 
@@ -433,8 +433,8 @@ bool Filter_IsUserBanned( const USERID_t& userid )
 		return false;
 
 	bool bNegativeFilter = sv_filterban.GetInt() == 1;
-	
-	// Handle timeouts 
+
+	// Handle timeouts
 	for ( int i =g_UserFilters.Count() - 1 ; i >= 0 ; i-- )
 	{
 		// Time out old filters
@@ -528,7 +528,7 @@ CON_COMMAND( writeid, "Writes a list of permanently-banned user IDs to " BANNED_
 		ConMsg( "Couldn't open %s\n", name );
 		return;
 	}
-	
+
 	for ( i = 0 ; i < g_UserFilters.Count() ; i++ )
 	{
 		banTime = g_UserFilters[i].banTime;
@@ -581,7 +581,7 @@ CON_COMMAND( removeid, "Remove a user ID from the ban list." )
 		if ( !Q_strnicmp( pszArg1, STEAM_PREFIX, Q_strlen( STEAM_PREFIX ) ) && Q_strstr( args[2], ":" ) )
 		{
 			Q_snprintf( szSearchString, sizeof( szSearchString ), "%s:%s:%s", pszArg1, args[3], args[5] );
-			
+
 			USERID_t *id = Filter_StringToUserID( szSearchString );
 			if ( id )
 			{
@@ -631,7 +631,7 @@ CON_COMMAND( removeid, "Remove a user ID from the ban list." )
 
 			return;
 		}
-		
+
 		ConMsg( "removeid:  couldn't find %s\n", szSearchString );
 	}
 	// this is a userid
@@ -828,9 +828,9 @@ CON_COMMAND( banid, "Add a user ID to the ban list." )
 			}
 		}
 		// searching by UniqueID
-		else	
+		else
 		{
-			if ( Q_stricmp( client->GetNetworkIDString(), szSearchString ) == 0 ) 
+			if ( Q_stricmp( client->GetNetworkIDString(), szSearchString ) == 0 )
 			{
 				// found!
 				localId = client->GetNetworkID();
@@ -877,7 +877,7 @@ CON_COMMAND( banid, "Add a user ID to the ban list." )
 			break;
 	}
 
-	// 
+	//
 	// Adding a new one
 	if ( i >= g_UserFilters.Count() )
 	{
@@ -943,14 +943,14 @@ CON_COMMAND( banid, "Add a user ID to the ban list." )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Filter_Init( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Filter_Shutdown( void )
 {

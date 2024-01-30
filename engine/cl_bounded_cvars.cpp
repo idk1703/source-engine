@@ -32,14 +32,14 @@ class CBoundedCvar_Rate : public ConVar_ServerBounded
 {
 public:
 	CBoundedCvar_Rate() :
-	  ConVar_ServerBounded( 
+	  ConVar_ServerBounded(
 		  "rate",
 #if defined( _X360 )
 		  "6000",
 #else
 		  V_STRINGIFY(DEFAULT_RATE),
 #endif
-		  FCVAR_ARCHIVE | FCVAR_USERINFO, 
+		  FCVAR_ARCHIVE | FCVAR_USERINFO,
 		  "Max bytes/sec the host can receive data" )
 	  {
 	  }
@@ -70,10 +70,10 @@ class CBoundedCvar_CmdRate : public ConVar_ServerBounded
 {
 public:
 	CBoundedCvar_CmdRate() :
-	  ConVar_ServerBounded( 
-		  "cl_cmdrate", 
-		  "30", 
-		  FCVAR_ARCHIVE | FCVAR_USERINFO, 
+	  ConVar_ServerBounded(
+		  "cl_cmdrate",
+		  "30",
+		  FCVAR_ARCHIVE | FCVAR_USERINFO,
 		  "Max number of command packets sent to server per second", true, MIN_CMD_RATE, true, MAX_CMD_RATE )
 	{
 	}
@@ -117,10 +117,10 @@ class CBoundedCvar_UpdateRate : public ConVar_ServerBounded
 {
 public:
 	CBoundedCvar_UpdateRate() :
-	  ConVar_ServerBounded( 
+	  ConVar_ServerBounded(
 		  "cl_updaterate",
-		  "20", 
-		  FCVAR_ARCHIVE | FCVAR_USERINFO | FCVAR_NOT_CONNECTED, 
+		  "20",
+		  FCVAR_ARCHIVE | FCVAR_USERINFO | FCVAR_NOT_CONNECTED,
 		  "Number of packets per second of updates you are requesting from the server" )
 	{
 	}
@@ -130,8 +130,8 @@ public:
 		// Clamp to the min/max values the server has set.
 		//
 		// This cvar only takes effect on the server anyway, and this is done there too,
-		// but we have this here so they'll get the **note thing telling them the value 
-		// isn't functioning the way they set it.		
+		// but we have this here so they'll get the **note thing telling them the value
+		// isn't functioning the way they set it.
 		return clamp( GetBaseFloatValue(), sv_minupdaterate.GetFloat(), sv_maxupdaterate.GetFloat() );
 	}
 };

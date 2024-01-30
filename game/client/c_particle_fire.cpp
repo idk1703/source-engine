@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -74,7 +74,7 @@ class C_ParticleFire : public C_BaseParticleEntity, public IPrototypeAppEffect
 {
 public:
 	DECLARE_CLASS( C_ParticleFire, C_BaseParticleEntity );
-	DECLARE_CLIENTCLASS();					
+	DECLARE_CLIENTCLASS();
 
 					C_ParticleFire();
 					~C_ParticleFire();
@@ -93,7 +93,7 @@ public:
 	public:
 		Vector			m_StartPos;		// The particle moves from m_StartPos to (m_StartPos+m_Direction) over its lifetime.
 		Vector			m_Direction;
-		
+
 		float			m_Lifetime;
 		float			m_SpinAngle;
 		unsigned char	m_iRamp;		// Which fire ramp are we using?
@@ -185,7 +185,7 @@ void C_ParticleFire::Start(CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArg
 	m_pParticleMgr->AddEffect( &m_ParticleEffect, this );
 	m_MaterialHandle = m_ParticleEffect.FindOrAddMaterial("particle/particle_fire");
 
-	// Start 
+	// Start
 	m_nEmitters = 0;
 	m_EmitterSpawn.Init(15);
 }
@@ -228,7 +228,7 @@ void C_ParticleFire::Update(float fTimeDelta)
 				for(int iTry=0; iTry < nTries; iTry++)
 				{
 					FireEmitter *pSourceEmitter = &m_Emitters[rand() % m_nEmitters];
-					
+
 					int iOffset = rand() % NUM_FIREGRID_OFFSETS;
 					if(pSourceEmitter->m_DirectionsTested & (1 << iOffset))
 						continue;
@@ -255,7 +255,7 @@ void C_ParticleFire::Update(float fTimeDelta)
 					}
 				}
 			}
-			
+
 			if(pEmitter)
 			{
 				pEmitter->m_Lifetime = 0;
@@ -294,10 +294,10 @@ void C_ParticleFire::RenderParticles( CParticleRenderIterator *pIterator )
 	{
 		float smooth01 = 1 - (cos(pParticle->m_Lifetime * 3.14159 / FIRE_PARTICLE_LIFETIME) * 0.5 + 0.5);
 		float smooth00 = 1 - (cos(pParticle->m_Lifetime * 3.14159 * 2 / FIRE_PARTICLE_LIFETIME) * 0.5 + 0.5);
-		
+
 		FireRamp *pRamp = &g_FireRamps[pParticle->m_iRamp];
 		Vector curColor = pRamp->m_Start + (pRamp->m_End - pRamp->m_Start) * smooth01;
-		
+
 		// Render.
 		Vector tPos;
 		TransformParticle(m_pParticleMgr->GetModelView(), pParticle->m_Pos, tPos);
@@ -335,5 +335,3 @@ void C_ParticleFire::SimulateParticles( CParticleSimulateIterator *pIterator )
 		pParticle = (FireParticle*)pIterator->GetNext();
 	}
 }
-
-

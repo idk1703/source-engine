@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -38,14 +38,14 @@ class CTFCMinigun : public CWeaponTFCBase
 {
 public:
 	DECLARE_CLASS( CTFCMinigun, CWeaponTFCBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	#ifndef CLIENT_DLL
 		DECLARE_DATADESC();
 	#endif
 
-	
+
 	CTFCMinigun();
 
 	// We say yes to this so the weapon system lets us switch to it.
@@ -57,7 +57,7 @@ public:
 	virtual bool Deploy();
 	virtual bool SendWeaponAnim( int iActivity );
 	virtual void HandleFireOnEmpty();
-	
+
 	virtual TFCWeaponID GetWeaponID( void ) const;
 
 
@@ -65,7 +65,7 @@ public:
 public:
 
 private:
-	
+
 	CTFCMinigun( const CTFCMinigun & ) {}
 
 	void WindUp();

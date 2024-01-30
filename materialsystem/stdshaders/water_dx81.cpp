@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@
 
 DEFINE_FALLBACK_SHADER( Water, Water_DX81 )
 
-BEGIN_VS_SHADER( Water_DX81, 
+BEGIN_VS_SHADER( Water_DX81,
 			  "Help for Water_DX81" )
 
 	BEGIN_SHADER_PARAMS
@@ -120,12 +120,12 @@ BEGIN_VS_SHADER( Water_DX81,
 	{
 		// "REFLECT" "0..1"
 		// "REFRACT" "0..1"
-		int pshIndex = ( bReflection ? 1 : 0 ) | ( bRefraction ? 2 : 0 );				
+		int pshIndex = ( bReflection ? 1 : 0 ) | ( bRefraction ? 2 : 0 );
 		return pshIndex;
 	}
 
 	inline void DrawReflectionRefraction( IMaterialVar **params, IShaderShadow* pShaderShadow,
-		IShaderDynamicAPI* pShaderAPI, bool bReflection, bool bRefraction ) 
+		IShaderDynamicAPI* pShaderAPI, bool bReflection, bool bRefraction )
 	{
 		SHADOW_STATE
 		{
@@ -167,22 +167,22 @@ BEGIN_VS_SHADER( Water_DX81,
 			SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, REFLECTAMOUNT );
 			SetVertexShaderTextureTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_1, BUMPTRANSFORM );
 			SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_3, REFRACTAMOUNT );
-			
+
 			float c0[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 			pShaderAPI->SetPixelShaderConstant( 0, c0, 1 );
-			
+
 			SetPixelShaderConstant( 1, REFRACTTINT );
 			SetPixelShaderConstant( 4, REFLECTTINT );
-			
+
 			float c2[4] = { 0.5f, 0.5f, 0.5f, 0.5f };
 			pShaderAPI->SetPixelShaderConstant( 2, c2, 1 );
-			
+
 			// ERASE ME!
 			float c3[4] = { 5.0f, 0.0f, 0.0f, 0.0f };
 			pShaderAPI->SetPixelShaderConstant( 3, c3, 1 );
 
 			// reflection/refraction scale
-			float reflectionRefractionScale[4] = { params[REFLECTAMOUNT]->GetFloatValue(), 
+			float reflectionRefractionScale[4] = { params[REFLECTAMOUNT]->GetFloatValue(),
 				params[REFRACTAMOUNT]->GetFloatValue(), 0.0f, 0.0f };
 			pShaderAPI->SetPixelShaderConstant( 5, reflectionRefractionScale, 1 );
 			pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_4, reflectionRefractionScale, 1 );
@@ -193,7 +193,7 @@ BEGIN_VS_SHADER( Water_DX81,
 		}
 		Draw();
 	}
-	
+
 	enum DrawCheapType_t
 	{
 		DRAW_CHEAP_OPAQUE = 0,
@@ -202,7 +202,7 @@ BEGIN_VS_SHADER( Water_DX81,
 		DRAW_CHEAP_FRESNEL_AND_LOD,
 	};
 
-	inline void DrawCheapWater( IMaterialVar **params, IShaderShadow* pShaderShadow, 
+	inline void DrawCheapWater( IMaterialVar **params, IShaderShadow* pShaderShadow,
 		                        IShaderDynamicAPI* pShaderAPI, DrawCheapType_t type )
 	{
 		SHADOW_STATE
@@ -222,7 +222,7 @@ BEGIN_VS_SHADER( Water_DX81,
 			{
 				EnableAlphaBlending( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE_MINUS_SRC_ALPHA );
 			}
-			pShaderShadow->VertexShaderVertexFormat( 
+			pShaderShadow->VertexShaderVertexFormat(
 				VERTEX_POSITION | VERTEX_NORMAL | VERTEX_TANGENT_S |
 				VERTEX_TANGENT_T, 1, 0, 0 );
 
@@ -246,7 +246,7 @@ BEGIN_VS_SHADER( Water_DX81,
 			BindTexture( SHADER_SAMPLER0, NORMALMAP, BUMPFRAME );
 			BindTexture( SHADER_SAMPLER3, ENVMAP, ENVMAPFRAME );
 			pShaderAPI->BindStandardTexture( SHADER_SAMPLER4, TEXTURE_NORMALIZATION_CUBEMAP );
-			
+
 			float pCheapWaterConstants[4] = { 0, 0, 0, 0 };
 			if ( (type != DRAW_CHEAP_OPAQUE) && (type != DRAW_CHEAP_FRESNEL_OPAQUE) )
 			{
@@ -259,7 +259,7 @@ BEGIN_VS_SHADER( Water_DX81,
 
 			SetPixelShaderConstant( 0, FOGCOLOR );
 			SetPixelShaderConstant( 1, REFLECTTINT, REFLECTBLENDFACTOR );
-				
+
 			SetVertexShaderTextureTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, BUMPTRANSFORM );
 
 			watercheap_vs14_Dynamic_Index vshIndex;
@@ -276,7 +276,7 @@ BEGIN_VS_SHADER( Water_DX81,
 		// 2) ForceExpensive means do real reflection instead of env_cubemap.
 		// By default, it will do refraction and use env_cubemap for the reflection.
 
-		// Also, it will fade to cheap water at a particular distance, 
+		// Also, it will fade to cheap water at a particular distance,
 		// based on CheapWaterStartDistance and CheapWaterEndDistance
 		// * In the ForceCheap case, no fading is required
 		// * In the default case, it will fade based on these parameters in a single pass
@@ -308,4 +308,3 @@ BEGIN_VS_SHADER( Water_DX81,
 		}
 	}
 END_SHADER
-

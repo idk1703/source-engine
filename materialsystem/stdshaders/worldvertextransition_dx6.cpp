@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ BEGIN_SHADER( WorldVertexTransition_DX6,
 		SetupVars( info );
 		InitParamsWorldVertexTransition_DX6( params, info );
 	}
-	
+
 	SHADER_INIT
 	{
 		WorldVertexTransition_DX6_Vars_t info;

@@ -56,7 +56,7 @@ CTFRevolver::CTFRevolver()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFRevolver::DefaultReload( int iClipSize1, int iClipSize2, int iActivity )
 {
@@ -81,7 +81,7 @@ bool CTFRevolver::DefaultReload( int iClipSize1, int iClipSize2, int iActivity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CTFRevolver::GetDamageType( void ) const
 {
@@ -181,7 +181,7 @@ void CTFRevolver::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFRevolver::GetWeaponSpread( void )
 {
@@ -199,7 +199,7 @@ float CTFRevolver::GetWeaponSpread( void )
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRevolver::GetWeaponCrosshairScale( float &flScale )
 {
@@ -265,7 +265,7 @@ bool CTFRevolver::Holster( CBaseCombatWeapon *pSwitchingTo )
 	if ( pOwner )
 	{
 		if ( SapperKillsCollectCrits() )
-		{	
+		{
 			if ( pOwner->m_Shared.GetRevengeCrits() )
 			{
 				pOwner->m_Shared.RemoveCond( TF_COND_CRITBOOSTED );

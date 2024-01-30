@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -27,7 +27,7 @@ public:
 
 	ClientShadowHandle_t GetFlashlightHandle( void ) { return m_FlashlightHandle; }
 	void SetFlashlightHandle( ClientShadowHandle_t Handle ) { m_FlashlightHandle = Handle;	}
-	
+
 protected:
 
 	void LightOff();
@@ -52,7 +52,7 @@ protected:
 class CHeadlightEffect : public CFlashlightEffect
 {
 public:
-	
+
 	CHeadlightEffect();
 	~CHeadlightEffect();
 

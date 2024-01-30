@@ -13,7 +13,7 @@ BEGIN_NETWORK_TABLE( CBaseObjectUpgrade, DT_BaseObjectUpgrade )
 END_NETWORK_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseObjectUpgrade::CBaseObjectUpgrade()
 {
@@ -21,12 +21,12 @@ CBaseObjectUpgrade::CBaseObjectUpgrade()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObjectUpgrade::Spawn()
 {
 #if !defined( CLIENT_DLL )
-     m_fObjectFlags.Set( m_fObjectFlags | OF_MUST_BE_BUILT_ON_ATTACHMENT );
+	m_fObjectFlags.Set( m_fObjectFlags | OF_MUST_BE_BUILT_ON_ATTACHMENT );
 #endif
 
 	BaseClass::Spawn();

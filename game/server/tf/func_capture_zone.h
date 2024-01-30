@@ -53,7 +53,7 @@ public:
 private:
 
 	CNetworkVar( bool, m_bDisabled );		// Enabled/Disabled?
-	
+
 	int				m_nCapturePoint;	// Used in non-CTF maps to identify this capture point
 
 	COutputEvent	m_outputOnCapture;	// Fired a flag is captured on this point.

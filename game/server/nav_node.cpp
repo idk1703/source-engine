@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -44,7 +44,7 @@ public:
 
 	unsigned int operator()( const CNavNode *pItem ) const
 	{
-		return Hash8( &pItem->GetPosition()->AsVector2D() );	
+		return Hash8( &pItem->GetPosition()->AsVector2D() );
 	}
 };
 
@@ -244,11 +244,11 @@ void CNavNode::Draw( void )
 					to.z = z;
 					AddDirectionVector( &to, (NavDirType) i, m_obstacleEndDist[i] );
 					NDebugOverlay::Line( from, to, 255, 0, 255, false, 0.1f );
-				}				
+				}
 			}
 		}
 	}
-	
+
 
 #endif // DEBUG_NAV_NODES
 }
@@ -454,7 +454,7 @@ CNavNode *CNavNode::GetNode( const Vector &pos )
 
 //--------------------------------------------------------------------------------------------------------------
 /**
- * Return true if this node is bidirectionally linked to 
+ * Return true if this node is bidirectionally linked to
  * another node in the given direction
  */
 BOOL CNavNode::IsBiLinked( NavDirType dir ) const
@@ -485,4 +485,3 @@ BOOL CNavNode::IsClosedCell( void ) const
 
 	return false;
 }
-

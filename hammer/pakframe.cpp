@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -44,7 +44,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CPakFrame message handlers
 
-BOOL CPakFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext) 
+BOOL CPakFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 {
 	if(!SplitWnd.CreateStatic(this, 1, 2))
 		return FALSE;
@@ -53,9 +53,9 @@ BOOL CPakFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 	GetClientRect(&r);
 
 	// create panes
-	SplitWnd.CreateView(0, 0, RUNTIME_CLASS(CPakViewDirec), 
+	SplitWnd.CreateView(0, 0, RUNTIME_CLASS(CPakViewDirec),
 		CSize(150, r.bottom), pContext);
-	SplitWnd.CreateView(0, 1, RUNTIME_CLASS(CPakViewFiles), 
+	SplitWnd.CreateView(0, 1, RUNTIME_CLASS(CPakViewFiles),
 		CSize(300, r.bottom), pContext);
 
 	return TRUE;

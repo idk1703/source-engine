@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -32,7 +32,7 @@ void CDmElementDictionary::Clear()
 	m_elementsToDelete.Purge();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Inserts an element into the table
 //-----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ void CDmElementDictionary::AddArrayAttribute( CDmAttribute *pAttribute, const Dm
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CDmElementDictionary::RemoveAttributeInfosOfElement( AttributeList_t &attributes, DmElementHandle_t hElement )
 {
@@ -311,7 +311,7 @@ DmElementDictHandle_t CDmElementSerializationDictionary::Find( CDmElement *pElem
 	return m_Dict.Find( find );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Creates the list of all things to serialize
 //-----------------------------------------------------------------------------
@@ -422,7 +422,7 @@ int CDmElementSerializationDictionary::RootElementCount() const
 	return nCount;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Iterates over all root elements to serialize
 //-----------------------------------------------------------------------------
@@ -464,5 +464,3 @@ CDmElement *CDmElementSerializationDictionary::GetRootElement( DmElementDictHand
 	Assert( m_Dict[h].m_bRoot );
 	return m_Dict[h].m_pElement;
 }
-
-

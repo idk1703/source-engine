@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Dr. Breen, the oft maligned genius, heroically saving humanity from 
+// Purpose: Dr. Breen, the oft maligned genius, heroically saving humanity from
 //			its own worst enemy, itself.
 //=============================================================================//
 
@@ -18,10 +18,10 @@
 #include "tier0/memdbgon.h"
 
 // Spawnflags
-#define SF_BREEN_BACKGROUND_TALK		( 1 << 16 )		// 65536 
+#define SF_BREEN_BACKGROUND_TALK		( 1 << 16 )		// 65536
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CNPC_Breen : public CAI_BaseActor
 {
@@ -39,7 +39,7 @@ public:
 LINK_ENTITY_TO_CLASS( npc_breen, CNPC_Breen );
 
 //-----------------------------------------------------------------------------
-// Classify - indicates this NPC's place in the 
+// Classify - indicates this NPC's place in the
 // relationship table.
 //-----------------------------------------------------------------------------
 Class_T	CNPC_Breen::Classify ( void )
@@ -101,7 +101,7 @@ void CNPC_Breen::Spawn()
 	m_iHealth			= 8;
 	m_flFieldOfView		= 0.5;// indicates the width of this NPC's forward view cone ( as a dotproduct result )
 	m_NPCState			= NPC_STATE_NONE;
-	
+
 	CapabilitiesAdd( bits_CAP_MOVE_GROUND | bits_CAP_OPEN_DOORS | bits_CAP_ANIMATEDFACE | bits_CAP_TURN_HEAD );
 	CapabilitiesAdd( bits_CAP_FRIENDLY_DMG_IMMUNE );
 	AddEFlags( EFL_NO_DISSOLVE | EFL_NO_MEGAPHYSCANNON_RAGDOLL | EFL_NO_PHYSCANNON_INTERACTION );
@@ -116,10 +116,10 @@ void CNPC_Breen::Precache()
 {
 	PrecacheModel( STRING( GetModelName() ) );
 	BaseClass::Precache();
-}	
+}
 
-bool CNPC_Breen::UseSemaphore( void )	
-{ 
+bool CNPC_Breen::UseSemaphore( void )
+{
 	if ( HasSpawnFlags( SF_BREEN_BACKGROUND_TALK ) )
 		return false;
 
@@ -129,4 +129,3 @@ bool CNPC_Breen::UseSemaphore( void )
 //-----------------------------------------------------------------------------
 // AI Schedules Specific to this NPC
 //-----------------------------------------------------------------------------
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -82,7 +82,7 @@ void CTFCSuperNailgun::PrimaryAttack()
 
 	// Uses 2 nails if it can
 	pOwner->RemoveAmmo( MIN( 2, iCurrentAmmoCount ), GetPrimaryAmmoType() );
-	
+
 	// Setup fire delays
 	m_flNextPrimaryAttack = gpGlobals->curtime + 0.1;
 	m_flTimeWeaponIdle = gpGlobals->curtime + 10;
@@ -90,7 +90,7 @@ void CTFCSuperNailgun::PrimaryAttack()
 
 
 #ifdef CLIENT_DLL
-	
+
 	// ------------------------------------------------------------------------------------------------ //
 	// ------------------------------------------------------------------------------------------------ //
 	// CLIENT DLL SPECIFIC CODE

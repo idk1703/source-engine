@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,9 +27,9 @@ public:
 
 	dface_t			*dfaces;
 	unsigned char	*m_pFacesTouched;	// If non-null, then this has 1 byte for each face and
-										// tells which faces had their lightmaps updated.										
+										// tells which faces had their lightmaps updated.
 	int				numfaces;
-	
+
 	dvertex_t		*dvertexes;
 	int				numvertexes;
 
@@ -62,8 +62,8 @@ class IVRadDLL
 public:
 	// All vrad.exe does is load the VRAD DLL and run this.
 	virtual int			main( int argc, char **argv ) = 0;
-	
-	
+
+
 	// Load the BSP file into memory.
 	virtual bool		Init( char const *pFilename ) = 0;
 
@@ -73,10 +73,10 @@ public:
 	// Get some data from the BSP file that's in memory.
 	virtual void		GetBSPInfo( CBSPInfo *pInfo ) = 0;
 
-	// Incrementally relight the BSP file in memory given the new entity 
+	// Incrementally relight the BSP file in memory given the new entity
 	// descriptions in pVMFFile. pVMFFile should only contain light entities.
 	//
-	// Returns true only if the lightmaps are updated. If the process is 
+	// Returns true only if the lightmaps are updated. If the process is
 	// interrupted or there is an error, false is returned.
 	virtual bool		DoIncrementalLight( char const *pVMFFile ) = 0;
 

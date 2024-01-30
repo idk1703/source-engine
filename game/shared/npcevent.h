@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -63,7 +63,7 @@ struct animevent_t
 #define	EVENT_WEAPON_PISTOL_FIRE		3014
 #define EVENT_WEAPON_RELOAD				3015
 #define EVENT_WEAPON_THROW3				3016
-#define EVENT_WEAPON_RELOAD_SOUND		3017		// Use this + EVENT_WEAPON_RELOAD_FILL_CLIP to prevent shooting during the reload animation 
+#define EVENT_WEAPON_RELOAD_SOUND		3017		// Use this + EVENT_WEAPON_RELOAD_FILL_CLIP to prevent shooting during the reload animation
 #define EVENT_WEAPON_RELOAD_FILL_CLIP	3018
 #define EVENT_WEAPON_SMG1_BURST1		3101		// first round in a 3-round burst
 #define EVENT_WEAPON_SMG1_BURSTN		3102		// 2, 3 rounds

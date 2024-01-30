@@ -15,7 +15,7 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
-																			   
+
 //-----------------------------------------------------------------------------
 
 struct duel_minigame_data_t
@@ -56,7 +56,7 @@ static void SpeakConceptBySteamID( const CSteamID &steamID, int iConcept, const 
 		char pModifiers[256] = "";
 		if ( pPlayerInitiator && pPlayerTarget )
 		{
-			Q_snprintf( pModifiers, sizeof(pModifiers), "duelinitiatorclass:%s,dueltargetclass:%s", 
+			Q_snprintf( pModifiers, sizeof(pModifiers), "duelinitiatorclass:%s,dueltargetclass:%s",
 					    g_aPlayerClassNames_NonLocalized[ pPlayerInitiator->m_Shared.InCond( TF_COND_DISGUISED ) ? pPlayerInitiator->m_Shared.GetDisguiseClass() : pPlayerInitiator->GetPlayerClass()->GetClassIndex() ],
 						g_aPlayerClassNames_NonLocalized[ pPlayerTarget->m_Shared.InCond( TF_COND_DISGUISED ) ? pPlayerTarget->m_Shared.GetDisguiseClass() : pPlayerTarget->GetPlayerClass()->GetClassIndex() ]
 						);
@@ -77,7 +77,7 @@ static void SendDuelResults( duel_minigame_data_t &duel, const CSteamID &steamID
 	msg.Body().m_ulTargetSteamID = duel.m_steamIDTarget.ConvertToUint64();
 	msg.Body().m_ulWinnerSteamID = steamIDWinner.ConvertToUint64();
 	msg.Body().m_usScoreInitiator = duel.m_usScoreInitiator;
-	msg.Body().m_usScoreTarget = duel.m_usScoreTarget;	
+	msg.Body().m_usScoreTarget = duel.m_usScoreTarget;
 	msg.Body().m_usEndReason = eReason;
 	GCClientSystem()->BSendMessage( msg );
 }
@@ -97,7 +97,7 @@ static void UpdateDuelScore( CTFPlayer *pKiller, CTFPlayer *pVictim, eDuelScoreT
 	CSteamID steamIDVictim;
 	if ( pKiller->GetSteamID( &steamIDKiller ) == false || pVictim->GetSteamID( &steamIDVictim ) == false )
 		return;
-		
+
 	int iScoreIncrement = kDuelScoreTypes[ scoreType ];
 
 	FOR_EACH_VEC( g_duels, i )
@@ -299,7 +299,7 @@ void DuelMiniGame_NotifyPlayerChangedTeam( CTFPlayer *pPlayer, int iNewTeam, boo
 			{
 				SendDuelResults( *pDuel, steamIDOpponent, bInitiatedByPlayer ? kDuelEndReason_PlayerSwappedTeams : kDuelEndReason_PlayerForceSwappedTeams );
 				RemoveDuel( pDuel );
-			}			
+			}
 			return;
 		}
 	}

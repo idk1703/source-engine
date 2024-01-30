@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -71,7 +71,7 @@ public:
 	// before OnPacketReceive is ever called.
 	virtual void Init( IThreadedTCPSocket *pSocket ) = 0;
 
-	// This is called when a packet arrives. NOTE: you are responsible for freeing the packet 
+	// This is called when a packet arrives. NOTE: you are responsible for freeing the packet
 	// by calling CTCPPacket::Release() on it.
 	virtual void OnPacketReceived( CTCPPacket *pPacket ) = 0;
 
@@ -101,7 +101,7 @@ public:
 	virtual void Release() = 0;
 
 	// Returns the address of whoever you are connected to.
-	virtual CIPAddr GetRemoteAddr() const = 0;	
+	virtual CIPAddr GetRemoteAddr() const = 0;
 
 	// Returns true if the socket is connected and ready to go. If this returns false, then the socket won't
 	// send or receive data any more. It also means that your ITCPSocketHandler's OnError function has been called.
@@ -121,14 +121,14 @@ class ITCPConnectSocket
 public:
 	// Call this to stop listening for connections and delete the object.
 	virtual void Release() = 0;
-	
+
 	// Keep calling this as long as you want to wait for connections.
 	//
 	// If it returns true and pSocket is NULL, it means it hasn't connected yet.
 	// If it returns true and pSocket is non-NULL, then it has connected.
 	// If it returns false, then the connection attempt failed and all further Update() calls will return false.
 	virtual bool Update( IThreadedTCPSocket **pSocket, unsigned long milliseconds=0 ) = 0;
-};	
+};
 
 
 // This class is implemented by the app and passed into CreateListener. When the listener makes
@@ -142,20 +142,20 @@ public:
 };
 
 
-// Use this to listen for TCP connections. The ITCPConnectSocket will keep returning connections 
+// Use this to listen for TCP connections. The ITCPConnectSocket will keep returning connections
 // until you call Release().
-ITCPConnectSocket* ThreadedTCP_CreateListener( 
+ITCPConnectSocket* ThreadedTCP_CreateListener(
 	IHandlerCreator *pHandlerCreator,	// This handles messages from the socket.
 	const unsigned short port,			// Listen on this port.
-	int nQueueLength = 5				// How many connections 
+	int nQueueLength = 5				// How many connections
 	);
 
 
 // Use this to connect to a remote process. After Update() returns a non-NULL value, you should
 // call Release() on the ITCPConnectSocket because it won't ever return another connection.
-ITCPConnectSocket* ThreadedTCP_CreateConnector( 
+ITCPConnectSocket* ThreadedTCP_CreateConnector(
 	const CIPAddr &addr,			// Who to connect to.
-	const CIPAddr &localAddr,		// Local address to bind to. Leave uninitialized (pass in CIPAddr()) and it will 
+	const CIPAddr &localAddr,		// Local address to bind to. Leave uninitialized (pass in CIPAddr()) and it will
 									// an interface and a port for you. You can also just fill in the port, and it will
 									// use that port and choose an interface for you.
 	IHandlerCreator *pHandlerCreator// If it connects, it asks this thing to make a handler for the connection.

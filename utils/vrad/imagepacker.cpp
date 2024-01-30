@@ -5,7 +5,7 @@
 // Valve, L.L.C., or in accordance with the terms and conditions stipulated in
 // the agreement/contract under which the contents have been supplied.
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -19,21 +19,21 @@
 bool CImagePacker::Reset( int maxLightmapWidth, int maxLightmapHeight )
 {
 	int i;
-	
+
 	Assert( maxLightmapWidth <= MAX_MAX_LIGHTMAP_WIDTH );
-	
+
 	m_MaxLightmapWidth = maxLightmapWidth;
 	m_MaxLightmapHeight = maxLightmapHeight;
-	
+
 	m_MaxBlockWidth = maxLightmapWidth + 1;
 	m_MaxBlockHeight = maxLightmapHeight + 1;
 
 	m_AreaUsed = 0;
 	m_MinimumHeight = -1;
 	for( i = 0; i < m_MaxLightmapWidth; i++ )
-    {
+	{
 		m_pLightmapWavefront[i] = -1;
-    }
+	}
 	return true;
 }
 
@@ -63,7 +63,7 @@ bool CImagePacker::AddBlock( int width, int height, int *returnX, int *returnY )
 	if ( ( width >= m_MaxBlockWidth ) && ( height >= m_MaxBlockHeight ) )
 		return false;
 
-	int bestX = -1;	
+	int bestX = -1;
 	int maxYIdx;
 	int outerX = 0;
 	int outerMinY = m_MaxLightmapHeight;
@@ -88,7 +88,7 @@ bool CImagePacker::AddBlock( int width, int height, int *returnX, int *returnY )
 		}
 		outerX = maxYIdx + 1;
 	}
-	
+
 	if( bestX == -1 )
 	{
 		// If we failed to add it, remember the block size that failed
@@ -102,11 +102,11 @@ bool CImagePacker::AddBlock( int width, int height, int *returnX, int *returnY )
 
 		return false;
 	}
-	
+
 	// Set the return positions for the block.
 	*returnX = bestX;
 	*returnY = outerMinY + 1;
-	
+
 	// Check if it actually fit height-wise.
 	// hack
 	//  if( *returnY + height > maxLightmapHeight )
@@ -120,22 +120,21 @@ bool CImagePacker::AddBlock( int width, int height, int *returnX, int *returnY )
 
 		return false;
 	}
-						   
+
 	// It fit!
 	// Keep up with the smallest possible size for the image so far.
 	if( *returnY + height > m_MinimumHeight )
 		m_MinimumHeight = *returnY + height;
-	
+
 	// Update the wavefront info.
 	int x;
 	for( x = bestX; x < bestX + width; x++ )
-    {
+	{
 		m_pLightmapWavefront[x] = outerMinY + height;
-    }
-	
+	}
+
 	//  AddBlockToLightmapImage( *returnX, *returnY, width, height );
 	m_AreaUsed += width * height;
 
 	return true;
 }
-

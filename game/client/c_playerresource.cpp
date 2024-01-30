@@ -43,14 +43,14 @@ BEGIN_PREDICTION_DATA( C_PlayerResource )
 	DEFINE_PRED_ARRAY( m_iAccountID, FIELD_INTEGER, MAX_PLAYERS+1, FTYPEDESC_PRIVATE ),
 	DEFINE_PRED_ARRAY( m_bValid, FIELD_BOOLEAN, MAX_PLAYERS+1, FTYPEDESC_PRIVATE ),
 
-END_PREDICTION_DATA()	
+END_PREDICTION_DATA()
 
 C_PlayerResource *g_PR;
 
 IGameResources * GameResources( void ) { return g_PR; }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_PlayerResource::C_PlayerResource()
 {
@@ -65,7 +65,7 @@ C_PlayerResource::C_PlayerResource()
 	memset( m_iAccountID, 0, sizeof( m_iAccountID ) );
 	memset( m_bValid, 0, sizeof( m_bValid ) );
 	m_szUnconnectedName = 0;
-	
+
 	for ( int i=0; i<MAX_TEAMS; i++ )
 	{
 		m_Colors[i] = COLOR_GREY;
@@ -81,7 +81,7 @@ C_PlayerResource::C_PlayerResource()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_PlayerResource::~C_PlayerResource()
 {
@@ -109,13 +109,13 @@ void C_PlayerResource::UpdatePlayerName( int slot )
 	{
 		m_szUnconnectedName = AllocPooledString( PLAYER_UNCONNECTED_NAME );
 	}
-	
+
 	player_info_t sPlayerInfo;
 	if ( IsConnected( slot ) && engine->GetPlayerInfo( slot, &sPlayerInfo ) )
 	{
 		m_szName[slot] = AllocPooledString( sPlayerInfo.name );
 	}
-	else 
+	else
 	{
 		if ( !IsValid( slot ) )
 		{
@@ -137,7 +137,7 @@ void C_PlayerResource::ClientThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *C_PlayerResource::GetPlayerName( int iIndex )
 {
@@ -146,7 +146,7 @@ const char *C_PlayerResource::GetPlayerName( int iIndex )
 		Assert( false );
 		return PLAYER_ERROR_NAME;
 	}
-	
+
 	if ( !IsConnected( iIndex ) && !IsValid( iIndex ) )
 		return PLAYER_UNCONNECTED_NAME;
 
@@ -221,12 +221,12 @@ bool C_PlayerResource::IsHLTV(int index_ )
 		return false;
 
 	player_info_t sPlayerInfo;
-	
+
 	if ( engine->GetPlayerInfo( index_, &sPlayerInfo ) )
 	{
 		return sPlayerInfo.ishltv;
 	}
-	
+
 	return false;
 }
 
@@ -248,7 +248,7 @@ bool C_PlayerResource::IsReplay(int index_ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_PlayerResource::IsFakePlayer( int iIndex )
 {
@@ -261,12 +261,12 @@ bool C_PlayerResource::IsFakePlayer( int iIndex )
 	{
 		return sPlayerInfo.fakeplayer;
 	}
-	
+
 	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	C_PlayerResource::GetPing( int iIndex )
 {
@@ -277,7 +277,7 @@ int	C_PlayerResource::GetPing( int iIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 /*-----------------------------------------------------------------------------
 int	C_PlayerResource::GetPacketloss( int iIndex )
 {
@@ -288,7 +288,7 @@ int	C_PlayerResource::GetPacketloss( int iIndex )
 }*/
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	C_PlayerResource::GetPlayerScore( int iIndex )
 {
@@ -299,7 +299,7 @@ int	C_PlayerResource::GetPlayerScore( int iIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	C_PlayerResource::GetDeaths( int iIndex )
 {
@@ -310,7 +310,7 @@ int	C_PlayerResource::GetDeaths( int iIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	C_PlayerResource::GetHealth( int iIndex )
 {
@@ -335,7 +335,7 @@ const Color &C_PlayerResource::GetTeamColor(int index_ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_PlayerResource::IsConnected( int iIndex )
 {
@@ -346,7 +346,7 @@ bool C_PlayerResource::IsConnected( int iIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 uint32 C_PlayerResource::GetAccountID( int iIndex )
 {
@@ -360,7 +360,7 @@ uint32 C_PlayerResource::GetAccountID( int iIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_PlayerResource::IsValid( int iIndex )
 {

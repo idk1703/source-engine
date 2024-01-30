@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ================================== //
 //
-// Purpose: Defines a texture compositor which uses simple operations and shaders to 
-// create complex procedural textures. 
+// Purpose: Defines a texture compositor which uses simple operations and shaders to
+// create complex procedural textures.
 //
 //============================================================================================== //
 
@@ -40,7 +40,7 @@ public:
 
 	void Error( bool _retry, PRINTF_FORMAT_STRING const char* _debugDevMsg, ... );
 
-	void SetRootStage( CTCStage* _rootStage ); 
+	void SetRootStage( CTCStage* _rootStage );
 
 	ITexture* AllocateCompositorRenderTarget( );
 	void ReleaseCompositorRenderTarget( ITexture* _tex );
@@ -107,8 +107,8 @@ public:
 	bool HasCheckedForCycles() const { return m_bCheckedForCycles; }
 
 private:
-	CTextureCompositorTemplate( const char* pName, KeyValues* pKV ) 
-	: m_pKV( pKV ) 
+	CTextureCompositorTemplate( const char* pName, KeyValues* pKV )
+	: m_pKV( pKV )
 	, m_Name( pName )
 	, m_bCheckedForCycles( false )
 	{ }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -86,7 +86,7 @@ void CBaseBudgetPanel::OnConfigDataChanged( const CBudgetPanelConfigData &data )
 
 	// Copy in the config data and rebuild everything.
 	Rebuild( data );
-	
+
 	if ( m_ConfigData.m_BudgetGroupInfo.Count() > m_BudgetGroupTimes.Count() )
 	{
 		m_BudgetGroupTimes.EnsureCount( m_ConfigData.m_BudgetGroupInfo.Count() );
@@ -111,7 +111,7 @@ void CBaseBudgetPanel::OnConfigDataChanged( const CBudgetPanelConfigData &data )
 void CBaseBudgetPanel::ResetAll()
 {
 	m_ConfigData.m_BudgetGroupInfo.Purge();
-	
+
 	for ( int i=0; i < m_GraphLabels.Count(); i++ )
 		m_GraphLabels[i]->MarkForDeletion();
 	m_GraphLabels.Purge();
@@ -126,7 +126,7 @@ void CBaseBudgetPanel::Rebuild( const CBudgetPanelConfigData &data )
 {
 	int oldNumBudgetGroups = m_ConfigData.m_BudgetGroupInfo.Count();
 	int oldNumHistoryLabels = m_ConfigData.m_HistoryLabelValues.Count();
-	
+
 	int oldNumTimeLabels = m_TimeLabels.Count();
 
 	// Copy the new config in.
@@ -206,7 +206,7 @@ void CBaseBudgetPanel::Rebuild( const CBudgetPanelConfigData &data )
 	}
 	SetHistoryLabelText();
 
-	
+
 	// Note: the time lines still use milliseconds for the computations about where to draw them,
 	// but each BudgetGroupDataType_t has its own scale.
 	int nTimeLabels = m_ConfigData.m_flBarGraphRange + data.m_flTimeLabelInterval;
@@ -268,7 +268,7 @@ void CBaseBudgetPanel::PerformLayout()
 
 	m_pBudgetHistoryPanel->SetRange( 0, m_ConfigData.m_flHistoryRange );
 
-	
+
 	float bottomOfHistoryPercentage = m_ConfigData.m_flBottomOfHistoryFraction;
 	UpdateWindowGeometry();
 	int x, y, totalWidth, totalHeight;
@@ -285,10 +285,10 @@ void CBaseBudgetPanel::PerformLayout()
 	}
 
 	totalHeightMinusTimeLabels = totalHeight - maxTimeLabelHeight;
-	
+
 	m_pBudgetHistoryPanel->SetPos( 0, 0 );
 	int budgetHistoryHeight = totalHeightMinusTimeLabels * bottomOfHistoryPercentage;
-	m_pBudgetHistoryPanel->SetSize( totalWidth - maxFPSLabelWidth, 
+	m_pBudgetHistoryPanel->SetSize( totalWidth - maxFPSLabelWidth,
 		budgetHistoryHeight );
 
 	int maxLabelWidth = 0;
@@ -301,20 +301,20 @@ void CBaseBudgetPanel::PerformLayout()
 			maxLabelWidth = width;
 		}
 	}
-	
-	m_pBudgetBarGraphPanel->SetPos( maxLabelWidth, 
+
+	m_pBudgetBarGraphPanel->SetPos( maxLabelWidth,
 		totalHeightMinusTimeLabels * bottomOfHistoryPercentage );
-	m_pBudgetBarGraphPanel->SetSize( totalWidth - maxLabelWidth, 
+	m_pBudgetBarGraphPanel->SetSize( totalWidth - maxLabelWidth,
 		totalHeightMinusTimeLabels * ( 1 - bottomOfHistoryPercentage ) );
 
 	for( i = 0; i < m_GraphLabels.Count(); i++ )
 	{
-		m_GraphLabels[i]->SetPos( 0, 
+		m_GraphLabels[i]->SetPos( 0,
 			( bottomOfHistoryPercentage * totalHeightMinusTimeLabels ) +
-			( i * totalHeightMinusTimeLabels * 
+			( i * totalHeightMinusTimeLabels *
 			( 1 - bottomOfHistoryPercentage ) ) / m_ConfigData.m_BudgetGroupInfo.Count() );
-		// fudge height by 1 for rounding 
-		m_GraphLabels[i]->SetSize( maxLabelWidth, 1 + ( totalHeightMinusTimeLabels * 
+		// fudge height by 1 for rounding
+		m_GraphLabels[i]->SetSize( maxLabelWidth, 1 + ( totalHeightMinusTimeLabels *
 			( 1 - bottomOfHistoryPercentage ) ) / m_ConfigData.m_BudgetGroupInfo.Count() );
 		m_GraphLabels[i]->SetContentAlignment( vgui::Label::a_east );
 	}
@@ -327,7 +327,7 @@ void CBaseBudgetPanel::PerformLayout()
 		int labelWidth, labelHeight;
 		m_TimeLabels[i]->GetContentSize( labelWidth, labelHeight );
 		x = maxLabelWidth + ( i * m_ConfigData.m_flTimeLabelInterval ) / fRange * ( totalWidth - maxLabelWidth );
-		
+
 		m_TimeLabels[i]->SetPos( x - ( labelWidth * 0.5 ), totalHeight - labelHeight );
 		m_TimeLabels[i]->SetSize( labelWidth, labelHeight );
 		m_TimeLabels[i]->SetContentAlignment( vgui::Label::a_east );
@@ -430,7 +430,7 @@ void CBaseBudgetPanel::MarkForFullRepaint()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseBudgetPanel::GetGraphLabelScreenSpaceTopAndBottom( int id, int &top, int &bottom )
 {
@@ -440,4 +440,3 @@ void CBaseBudgetPanel::GetGraphLabelScreenSpaceTopAndBottom( int id, int &top, i
 	top = y;
 	bottom = top + m_GraphLabels[id]->GetTall();
 }
-

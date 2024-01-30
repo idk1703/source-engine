@@ -77,7 +77,7 @@ public:
 	//
 	// Monologue operations
 	//
-	
+
 	bool HasMonolog( void ) { return m_iMonologIndex != -1; };
 	void BeginMonolog( char *pszSentenceName, CBaseEntity *pListener );
 	void EndMonolog( void );
@@ -95,7 +95,7 @@ public:
 	char		m_szMonologSentence[MONOLOGNAME_LEN];	// The name of the sentence group for the monolog I'm speaking.
 	int			m_iMonologIndex;						// Which sentence from the group I should be speaking.
 	bool		m_fMonologSuspended;
-	EHANDLE		m_hMonologTalkTarget;					// Who I'm trying to deliver my monolog to. 
+	EHANDLE		m_hMonologTalkTarget;					// Who I'm trying to deliver my monolog to.
 
 	DECLARE_SIMPLE_DATADESC();
 };
@@ -110,7 +110,7 @@ public:
 	virtual bool	KeyValue( const char *szKeyName, const char *szValue );
 
 	virtual CAI_Expresser *CreateExpresser() { return new CNPCSimpleTalkerExpresser(this); }
-	
+
 	virtual void			StartFollowing( CBaseEntity *pLeader ) { m_FollowBehavior.SetFollowTarget( pLeader ); DeferSchedulingToBehavior( &m_FollowBehavior ); }
 	virtual void			StopFollowing( ) { m_FollowBehavior.SetFollowTarget( NULL ); DeferSchedulingToBehavior( NULL ); }
 	CBaseEntity		*GetFollowTarget( void ) { return m_FollowBehavior.GetFollowTarget(); }
@@ -165,7 +165,7 @@ public:
 		SCHED_TALKER_BETRAYED,
 
 		// !ALWAYS LAST!
-		NEXT_SCHEDULE,	
+		NEXT_SCHEDULE,
 	};
 
 	//=========================================================
@@ -188,12 +188,12 @@ public:
 		TASK_TALKER_WAIT_FOR_SEMAPHORE,
 
 		// !ALWAYS LAST!
-		NEXT_TASK,		
+		NEXT_TASK,
 	};
 
 //private:
 	virtual bool IsValidSpeechTarget( int flags, CBaseEntity *pEntity );
-	
+
 	CBaseEntity		*FindNearestFriend(bool fPlayer);
 
 	bool IsOkToSpeak( void );
@@ -215,11 +215,11 @@ public:
 	void			TrySmellTalk( void );
 
 	virtual void	SetAnswerQuestion( CNPCSimpleTalker *pSpeaker );
-	
+
 	bool ShouldSuspendMonolog( void );
 	bool ShouldResumeMonolog( void );
 	void OnResumeMonolog() 		{	Speak( TLK_RESUME ); }
-	
+
 	int			m_nSpeak;						// number of times initiated talking
 	float		m_flNextIdleSpeechTime;
 

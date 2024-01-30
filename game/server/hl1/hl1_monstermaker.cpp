@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: An entity that creates NPCs in the game. 
+// Purpose: An entity that creates NPCs in the game.
 //
 //=============================================================================//
 
@@ -83,7 +83,7 @@ bool CNPCMaker::CanMakeNPC( void )
 
 	if ( !m_flGround )
 	{
-		// set altitude. Now that I'm activated, any breakables, etc should be out from under me. 
+		// set altitude. Now that I'm activated, any breakables, etc should be out from under me.
 		trace_t tr;
 
 		UTIL_TraceLine ( GetAbsOrigin(), GetAbsOrigin() - Vector ( 0, 0, 2048 ), MASK_NPCSOLID_BRUSHONLY, this, COLLISION_GROUP_NONE, &tr );
@@ -93,7 +93,7 @@ bool CNPCMaker::CanMakeNPC( void )
 	Vector mins = GetAbsOrigin() - Vector( 34, 34, 0 );
 	Vector maxs = GetAbsOrigin() + Vector( 34, 34, 0 );
 	maxs.z = GetAbsOrigin().z;
-	
+
 	//Only adjust for the ground if we want it
 	if ( ( m_spawnflags & SF_NPCMAKER_NO_DROP ) == false )
 	{
@@ -101,7 +101,7 @@ bool CNPCMaker::CanMakeNPC( void )
 	}
 
 	CBaseEntity *pList[128];
-	
+
 	int count = UTIL_EntitiesInBox( pList, 128, mins, maxs, FL_CLIENT|FL_NPC );
 	if ( count )
 	{
@@ -239,7 +239,7 @@ void CNPCMaker::MakeNPC( void )
 		Warning("NULL Ent in NPCMaker!\n" );
 		return;
 	}
-	
+
 	m_OnSpawnNPC.FireOutput( this, this );
 
 	pent->SetLocalOrigin( GetAbsOrigin() );
@@ -284,8 +284,8 @@ void CNPCMaker::MakerThink ( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pVictim - 
+// Purpose:
+// Input  : *pVictim -
 //-----------------------------------------------------------------------------
 void CNPCMaker::DeathNotice( CBaseEntity *pVictim )
 {

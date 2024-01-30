@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -58,7 +58,7 @@ public:
 	virtual int			Restore( IRestore &restore );
 	virtual void		OnScheduleChange( void );
 	virtual bool		FVisible( CBaseEntity *pEntity, int traceMask = MASK_BLOCKLOS, CBaseEntity **ppBlocker = NULL );
-	
+
 	virtual bool		WeaponLOSCondition( const Vector &ownerPos, const Vector &targetPos, bool bSetConditions) { return true; }
 
 	virtual int			GetSoundInterests( void ) { return (SOUND_PLAYER|SOUND_COMBAT|SOUND_DANGER); }
@@ -83,7 +83,7 @@ private:
 	Vector GetBulletOrigin( void );
 
 	static const char *pAttackSounds[];
-	
+
 	void ClearTargetGroup( void );
 
 	float GetWaitTimePercentage( float flTime, bool fLinear );
@@ -191,10 +191,10 @@ enum
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CNPC_Combine_Cannon::CNPC_Combine_Cannon( void ) : 	
+CNPC_Combine_Cannon::CNPC_Combine_Cannon( void ) :
 	m_pBeam( NULL ),
 	m_hBarrageTarget( NULL )
-{ 
+{
 #ifdef _DEBUG
 	m_vecPaintCursor.Init();
 	m_vecPaintStart.Init();
@@ -214,7 +214,7 @@ bool CNPC_Combine_Cannon::QuerySeeEntity( CBaseEntity *pEntity, bool bOnlyHateOr
 
 	if ( !FInViewCone(pEntity) )
 	{
-		// Yes, this does call FInViewCone twice a frame for all entities checked for 
+		// Yes, this does call FInViewCone twice a frame for all entities checked for
 		// visibility, but doing this allows us to cut out a bunch of traces that would
 		// be done by VerifyShot for entities that aren't even in our viewcone.
 		return false;
@@ -358,7 +358,7 @@ void CNPC_Combine_Cannon::GetPaintAim( const Vector &vecStart, const Vector &vec
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Combine_Cannon::CreateLaser( void )
 {
@@ -384,7 +384,7 @@ void CNPC_Combine_Cannon::CreateLaser( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Combine_Cannon::CreateAncillaryBeams( void )
 {
@@ -412,14 +412,14 @@ void CNPC_Combine_Cannon::CreateAncillaryBeams( void )
 #define LINE_LENGTH 1600.0f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flConvergencePerc - 
-//			vecBasis - 
+// Purpose:
+// Input  : flConvergencePerc -
+//			vecBasis -
 //-----------------------------------------------------------------------------
 void CNPC_Combine_Cannon::UpdateAncillaryBeams( float flConvergencePerc, const Vector &vecOrigin, const Vector &vecBasis )
 {
-	// Multiple beams deviate from the basis direction by a certain number of degrees and "converge" 
-	// at the basis vector over a duration of time, the position in that duration expressed by 
+	// Multiple beams deviate from the basis direction by a certain number of degrees and "converge"
+	// at the basis vector over a duration of time, the position in that duration expressed by
 	// flConvergencePerc.  The beams are most deviated at 0 and fully converged at 1.
 
 	float flRotationOffset = (2*M_PI)/(float)NUM_ANCILLARY_BEAMS; // Degrees separating each beam, in radians
@@ -427,7 +427,7 @@ void CNPC_Combine_Cannon::UpdateAncillaryBeams( float flConvergencePerc, const V
 	float flOffset;
 	Vector vecFinal;
 	Vector vecOffset;
-	
+
 	matrix3x4_t matRotate;
 	QAngle vecAngles;
 	VectorAngles( vecBasis, vecAngles );
@@ -452,7 +452,7 @@ void CNPC_Combine_Cannon::UpdateAncillaryBeams( float flConvergencePerc, const V
 		// Find the number of radians offset we are
 		flOffset = (float) i * flRotationOffset + DEG2RAD( 30.0f );
 		flOffset += (M_PI/8.0f) * sin( gpGlobals->curtime * 3.0f );
-		
+
 		// Construct a circle that's also offset by the line's length
 		vecOffset.x = cos( flOffset ) * flScale;
 		vecOffset.y = sin( flOffset ) * flScale;
@@ -496,7 +496,7 @@ void CNPC_Combine_Cannon::PaintTarget( const Vector &vecTarget, float flPaintTim
 
 #define THRESHOLD 0.9f
 	float flNoiseScale;
-	
+
 	if ( flPaintPerc >= THRESHOLD )
 	{
 		flNoiseScale = 1 - (1 / (1 - THRESHOLD)) * ( flPaintPerc - THRESHOLD );
@@ -531,25 +531,25 @@ void CNPC_Combine_Cannon::PaintTarget( const Vector &vecTarget, float flPaintTim
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Combine_Cannon::OnScheduleChange( void )
 {
 	LaserOff();
-	
+
 	m_hBarrageTarget = NULL;
 
 	BaseClass::OnScheduleChange();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Combine_Cannon::Precache( void )
 {
 	PrecacheModel("models/combine_soldier.mdl");
-	PrecacheModel("effects/bluelaser1.vmt");	
-	
+	PrecacheModel("effects/bluelaser1.vmt");
+
 	gHaloTexture = PrecacheModel("sprites/light_glow03.vmt");
 
 	PrecacheScriptSound( "NPC_Combine_Cannon.FireBullet" );
@@ -559,7 +559,7 @@ void CNPC_Combine_Cannon::Precache( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Combine_Cannon::Spawn( void )
 {
@@ -599,7 +599,7 @@ void CNPC_Combine_Cannon::Spawn( void )
 	CapabilitiesClear();
 	CapabilitiesAdd( bits_CAP_INNATE_RANGE_ATTACK1 | bits_CAP_SIMPLE_RADIUS_DAMAGE );
 
-	m_HackedGunPos = Vector ( 0, 0, 0 ); 
+	m_HackedGunPos = Vector ( 0, 0, 0 );
 
 	AddSpawnFlags( SF_NPC_LONG_RANGE | SF_NPC_ALWAYSTHINK );
 
@@ -625,7 +625,7 @@ void CNPC_Combine_Cannon::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Class_T	CNPC_Combine_Cannon::Classify( void )
 {
@@ -637,7 +637,7 @@ Class_T	CNPC_Combine_Cannon::Classify( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Vector CNPC_Combine_Cannon::GetBulletOrigin( void )
 {
@@ -655,7 +655,7 @@ int CNPC_Combine_Cannon::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 }
 
 //---------------------------------------------------------
-// Purpose: 
+// Purpose:
 //---------------------------------------------------------
 void CNPC_Combine_Cannon::UpdateOnRemove( void )
 {
@@ -680,7 +680,7 @@ void CNPC_Combine_Cannon::UpdateOnRemove( void )
 }
 
 //---------------------------------------------------------
-// Purpose: 
+// Purpose:
 //---------------------------------------------------------
 int CNPC_Combine_Cannon::SelectSchedule ( void )
 {
@@ -694,7 +694,7 @@ int CNPC_Combine_Cannon::SelectSchedule ( void )
 }
 
 //---------------------------------------------------------
-// Purpose: 
+// Purpose:
 //---------------------------------------------------------
 bool CNPC_Combine_Cannon::FCanCheckAttacks ( void )
 {
@@ -715,8 +715,8 @@ bool CNPC_Combine_Cannon::VerifyShot( CBaseEntity *pTarget )
 	{
 		if( pTarget->IsPlayer() )
 		{
-			// if the target is the player, do another trace to see if we can shoot his eyeposition. This should help 
-			// improve sniper responsiveness in cases where the player is hiding his chest from the sniper with his 
+			// if the target is the player, do another trace to see if we can shoot his eyeposition. This should help
+			// improve sniper responsiveness in cases where the player is hiding his chest from the sniper with his
 			// head in full view.
 			UTIL_TraceLine( GetBulletOrigin(), pTarget->EyePosition(), MASK_SHOT, pTarget, COLLISION_GROUP_NONE, &tr );
 
@@ -773,7 +773,7 @@ int CNPC_Combine_Cannon::RangeAttack1Conditions( float flDot, float flDist )
 
 //---------------------------------------------------------
 //---------------------------------------------------------
-int CNPC_Combine_Cannon::TranslateSchedule( int scheduleType ) 
+int CNPC_Combine_Cannon::TranslateSchedule( int scheduleType )
 {
 	switch( scheduleType )
 	{
@@ -799,8 +799,8 @@ void CNPC_Combine_Cannon::ScopeGlint( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *vecIn - 
+// Purpose:
+// Input  : *vecIn -
 //-----------------------------------------------------------------------------
 void CNPC_Combine_Cannon::AdjustShotPosition( CBaseEntity *pTarget, Vector *vecIn )
 {
@@ -810,7 +810,7 @@ void CNPC_Combine_Cannon::AdjustShotPosition( CBaseEntity *pTarget, Vector *vecI
 	Vector low = pTarget->WorldSpaceCenter() - ( pTarget->WorldSpaceCenter() - pTarget->GetAbsOrigin() ) * .25;
 	Vector high = pTarget->EyePosition();
 	Vector delta = high - low;
-	Vector result = low + delta * 0.5; 
+	Vector result = low + delta * 0.5;
 
 	// Only take the height
 	(*vecIn)[2] = result[2];
@@ -818,12 +818,12 @@ void CNPC_Combine_Cannon::AdjustShotPosition( CBaseEntity *pTarget, Vector *vecI
 
 //---------------------------------------------------------
 // This starts the bullet state machine.  The actual effects
-// of the bullet will happen later.  This function schedules 
+// of the bullet will happen later.  This function schedules
 // those effects.
 //
 // fDirectShot indicates whether the bullet is a "direct shot"
 // that is - fired with the intent that it will strike the
-// enemy. Otherwise, the bullet is intended to strike a 
+// enemy. Otherwise, the bullet is intended to strike a
 // decoy object or nothing at all in particular.
 //---------------------------------------------------------
 bool CNPC_Combine_Cannon::FireBullet( const Vector &vecTarget, bool bDirectShot )
@@ -878,7 +878,7 @@ void CNPC_Combine_Cannon::StartTask( const Task_t *pTask )
 			if ( GetEnemy()->IsPlayer() )
 			{
 				float delay = random->RandomFloat( 0.0f, 0.3f );
-			
+
 				if ( ( gpGlobals->curtime - m_flTimeLastAttackedPlayer ) < 1.0f )
 				{
 					SetWait( CANNON_SUBSEQUENT_PAINT_TIME );
@@ -901,7 +901,7 @@ void CNPC_Combine_Cannon::StartTask( const Task_t *pTask )
 			Vector vecCursor;
 			AngleVectors( GetEnemy()->GetLocalAngles(), &vecCursor );
 			vecCursor *= 300;
-			vecCursor += GetEnemy()->EyePosition();				
+			vecCursor += GetEnemy()->EyePosition();
 			LaserOn( vecCursor, Vector( 16, 16, 16 ) );
 		}
 		break;
@@ -937,7 +937,7 @@ void CNPC_Combine_Cannon::RunTask( const Task_t *pTask )
 				bool bBarrageFinished = m_flBarrageDuration < gpGlobals->curtime;
 				bool bNoShot = ( QuerySeeEntity( m_hBarrageTarget ) == false );	// FIXME: Store this info off better
 				bool bSeePlayer = HasCondition( COND_SEE_PLAYER	);
-				
+
 				// Treat the player differently to normal NPCs
 				if ( bPlayerIsEnemy )
 				{
@@ -963,7 +963,7 @@ void CNPC_Combine_Cannon::RunTask( const Task_t *pTask )
 		{
 			// See if we're done painting our target
 			if ( IsWaitFinished() )
-			{			
+			{
 				TaskComplete();
 			}
 
@@ -989,7 +989,7 @@ int CNPC_Combine_Cannon::Restore( IRestore &restore )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -1003,7 +1003,7 @@ float CNPC_Combine_Cannon::MaxYawSpeed( void )
 void CNPC_Combine_Cannon::PrescheduleThink( void )
 {
 	BaseClass::PrescheduleThink();
-	
+
 	// NOTE: We'll deal with this on the client
 	// Think faster if the beam is on, this gives the beam higher resolution.
 	if( m_pBeam )
@@ -1137,7 +1137,7 @@ void CNPC_Combine_Cannon::InputDisableSniper( inputdata_t &inputdata )
 //---------------------------------------------------------
 // See all NPC's easily.
 //
-// Only see the player if you can trace to both of his 
+// Only see the player if you can trace to both of his
 // eyeballs. That is, allow the player to peek around corners.
 // This is a little more expensive than the base class' check!
 //---------------------------------------------------------
@@ -1159,7 +1159,7 @@ bool CNPC_Combine_Cannon::FVisible( CBaseEntity *pEntity, int traceMask, CBaseEn
 
 	if( fabs( GetAbsOrigin().z - pEntity->WorldSpaceCenter().z ) <= 120.f )
 	{
-		// If the player is around the same elevation, look straight at his eyes. 
+		// If the player is around the same elevation, look straight at his eyes.
 		// At the same elevation, the vertical peeking allowance makes it too easy
 		// for a player to dispatch the sniper from cover.
 		vecVerticalOffset = vec3_origin;
@@ -1195,7 +1195,7 @@ bool CNPC_Combine_Cannon::FVisible( CBaseEntity *pEntity, int traceMask, CBaseEn
 
 #if 0
 		NDebugOverlay::Line(EyePosition(), tr.endpos, 0,255,0, true, 0.1);
-#endif 
+#endif
 
 		if ( tr.fraction != 1.0 && tr.m_pEnt != pEntity )
 		{
@@ -1208,9 +1208,9 @@ bool CNPC_Combine_Cannon::FVisible( CBaseEntity *pEntity, int traceMask, CBaseEn
 		// Can see the player.
 		return true;
 	}
-	
+
 	// Now, if the check failed, see if the player is ducking and has recently
-	// fired a muzzleflash. If yes, see if you'd be able to see the player if 
+	// fired a muzzleflash. If yes, see if you'd be able to see the player if
 	// they were standing in their current position instead of ducking. Since
 	// the sniper doesn't have a clear shot in this situation, he will harrass
 	// near the player.
@@ -1258,7 +1258,7 @@ AI_BEGIN_CUSTOM_NPC( npc_combine_cannon, CNPC_Combine_Cannon )
 
 	DECLARE_CONDITION( COND_CANNON_ENABLED );
 	DECLARE_CONDITION( COND_CANNON_DISABLED );
-	DECLARE_CONDITION( COND_CANNON_NO_SHOT );	
+	DECLARE_CONDITION( COND_CANNON_NO_SHOT );
 
 	DECLARE_TASK( TASK_CANNON_PAINT_ENEMY );
 	DECLARE_TASK( TASK_CANNON_ATTACK_CURSOR );
@@ -1296,7 +1296,7 @@ AI_BEGIN_CUSTOM_NPC( npc_combine_cannon, CNPC_Combine_Cannon )
 		"		COND_HEAR_DANGER"
 		"		COND_CANNON_DISABLED"
 	)
-		
+
 	//=========================================================
 	// ATTACK
 	//=========================================================

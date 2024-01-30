@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -29,20 +29,19 @@ void SetupLightNormalFromProps( const QAngle &angles, float angle, float pitch, 
 		{
 			angle = angles[YAW];
 		}
-		
+
 		output[2] = 0;
 		output[0] = (float)cos (angle/180*M_PI);
 		output[1] = (float)sin (angle/180*M_PI);
 	}
-	
+
 	if ( !pitch )
 	{
 		// if we don't have a specific "pitch" use the "angles" PITCH
 		pitch = angles[PITCH];
 	}
-	
+
 	output[2] = (float)sin(pitch/180*M_PI);
 	output[0] *= (float)cos(pitch/180*M_PI);
 	output[1] *= (float)cos(pitch/180*M_PI);
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -66,7 +66,7 @@ void CHeliBladeMaterialProxy::OnBind( C_BaseEntity *pEnt )
 		float dt = gpGlobals->curtime  - pHeli->StartupTime();
 		dt /= FADE_IN_TIME;
 		dt = clamp( dt, 0.0f, 1.0f );
-		if ( m_bFadeOut ) 
+		if ( m_bFadeOut )
 		{
 			dt = 1.0f - dt;
 		}
@@ -88,4 +88,3 @@ IMaterial *CHeliBladeMaterialProxy::GetMaterial()
 }
 
 EXPOSE_INTERFACE( CHeliBladeMaterialProxy, IMaterialProxy, "HeliBlade" IMATERIAL_PROXY_INTERFACE_VERSION );
-

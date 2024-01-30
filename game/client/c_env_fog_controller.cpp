@@ -36,7 +36,7 @@ BEGIN_NETWORK_TABLE_NOBASE( CFogController, DT_FogController )
 END_NETWORK_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_FogController::C_FogController()
 {

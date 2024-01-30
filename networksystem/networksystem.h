@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -90,7 +90,7 @@ public:
 	// Returns the current time
 	float GetTime( void );
 
-	// Converts a string to a socket address 
+	// Converts a string to a socket address
 	bool StringToSockaddr( const char *s, struct sockaddr *sadr );
 
 	// Queues up a network packet
@@ -130,7 +130,7 @@ private:
 //-----------------------------------------------------------------------------
 // Inline methods
 //-----------------------------------------------------------------------------
-template< class T > 
+template< class T >
 T* CNetworkSystem::CreateNetworkEvent()
 {
 	// Increase the size of m_EventMessageBuffer if this assertion fails
@@ -138,7 +138,7 @@ T* CNetworkSystem::CreateNetworkEvent()
 	return (T*)CreateNetworkEvent( sizeof(T) );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the number of bits to encode the type + group with
 //-----------------------------------------------------------------------------
@@ -152,7 +152,7 @@ inline int CNetworkSystem::GetGroupBitCount() const
 	return m_nGroupBits;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Writes a system network message
 //-----------------------------------------------------------------------------
@@ -169,4 +169,3 @@ inline void WriteNetworkMessage( bf_write &msg, INetworkMessage *pNetworkMessage
 }
 
 #endif // NETWORKSYSTEM_H
-

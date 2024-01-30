@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -46,13 +46,13 @@ bool IsAmmoType( int iAmmoType, const char *pAmmoName )
 	return GetAmmoDef()->Index( pAmmoName ) == iAmmoType;
 }
 
-static const char * s_WeaponAliasInfo[] = 
+static const char * s_WeaponAliasInfo[] =
 {
 	"none",	//	WEAPON_NONE = 0,
 
 	//Melee
 	"shotgun",	//WEAPON_AMERKNIFE,
-	
+
 	NULL,		// end of list marker
 };
 
@@ -66,17 +66,17 @@ IMPLEMENT_NETWORKCLASS_ALIASED( WeaponPortalBase, DT_WeaponPortalBase )
 BEGIN_NETWORK_TABLE( CWeaponPortalBase, DT_WeaponPortalBase )
 
 #ifdef CLIENT_DLL
-  
+
 #else
 	// world weapon models have no aminations
-  //	SendPropExclude( "DT_AnimTimeMustBeFirst", "m_flAnimTime" ),
+	//	SendPropExclude( "DT_AnimTimeMustBeFirst", "m_flAnimTime" ),
 //	SendPropExclude( "DT_BaseAnimating", "m_nSequence" ),
 //	SendPropExclude( "DT_LocalActiveWeaponData", "m_flTimeWeaponIdle" ),
 #endif
-	
+
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CWeaponPortalBase ) 
+BEGIN_PREDICTION_DATA( CWeaponPortalBase )
 END_PREDICTION_DATA()
 
 LINK_ENTITY_TO_CLASS( weapon_portal_base, CWeaponPortalBase );
@@ -91,7 +91,7 @@ LINK_ENTITY_TO_CLASS( weapon_portal_base, CWeaponPortalBase );
 #endif
 
 // ----------------------------------------------------------------------------- //
-// CWeaponPortalBase implementation. 
+// CWeaponPortalBase implementation.
 // ----------------------------------------------------------------------------- //
 CWeaponPortalBase::CWeaponPortalBase()
 {
@@ -103,7 +103,7 @@ CWeaponPortalBase::CWeaponPortalBase()
 
 
 bool CWeaponPortalBase::IsPredicted() const
-{ 
+{
 	return false;
 }
 
@@ -112,15 +112,15 @@ void CWeaponPortalBase::WeaponSound( WeaponSound_t sound_type, float soundtime /
 #ifdef CLIENT_DLL
 
 		// If we have some sounds from the weapon classname.txt file, play a random one of them
-		const char *shootsound = GetWpnData().aShootSounds[ sound_type ]; 
+		const char *shootsound = GetWpnData().aShootSounds[ sound_type ];
 		if ( !shootsound || !shootsound[0] )
 			return;
 
 		CBroadcastRecipientFilter filter; // this is client side only
 		if ( !te->CanPredict() )
 			return;
-				
-		CBaseEntity::EmitSound( filter, GetPlayerOwner()->entindex(), shootsound, &GetPlayerOwner()->GetAbsOrigin() ); 
+
+		CBaseEntity::EmitSound( filter, GetPlayerOwner()->entindex(), shootsound, &GetPlayerOwner()->GetAbsOrigin() );
 #else
 		BaseClass::WeaponSound( sound_type, soundtime );
 #endif
@@ -138,7 +138,7 @@ CPortal_Player* CWeaponPortalBase::GetPortalPlayerOwner() const
 }
 
 #ifdef CLIENT_DLL
-	
+
 void CWeaponPortalBase::OnDataChanged( DataUpdateType_t type )
 {
 	BaseClass::OnDataChanged( type );
@@ -224,7 +224,7 @@ void CWeaponPortalBase::DrawCrosshair()
 	bool bOnTarget = ( m_iState == WEAPON_IS_ONTARGET );
 
 	if ( player->GetFOV() >= 90 )
-	{ 
+	{
 		// normal crosshairs
 		if ( bOnTarget && GetWpnData().iconAutoaim )
 		{
@@ -243,7 +243,7 @@ void CWeaponPortalBase::DrawCrosshair()
 		}
 	}
 	else
-	{ 
+	{
 		Color white( 255, 255, 255, 255 );
 
 		// zoomed crosshairs
@@ -258,7 +258,7 @@ void CWeaponPortalBase::DrawCrosshair()
 
 void CWeaponPortalBase::DoAnimationEvents( CStudioHdr *pStudioHdr )
 {
-	// HACK: Because this model renders view and world models in the same frame 
+	// HACK: Because this model renders view and world models in the same frame
 	// it's using the wrong studio model when checking the sequences.
 	C_BasePlayer *pPlayer = UTIL_PlayerByIndex( 1 );
 	if ( pPlayer && pPlayer->GetActiveWeapon() == this )
@@ -286,7 +286,7 @@ void CWeaponPortalBase::GetRenderBounds( Vector& theMins, Vector& theMaxs )
 	{
 		CStudioHdr *pStudioHdr = NULL;
 
-		// HACK: Because this model renders view and world models in the same frame 
+		// HACK: Because this model renders view and world models in the same frame
 		// it's using the wrong studio model when checking the sequences.
 		C_BasePlayer *pPlayer = UTIL_PlayerByIndex( 1 );
 		if ( pPlayer && pPlayer->GetActiveWeapon() == this )
@@ -307,7 +307,7 @@ void CWeaponPortalBase::GetRenderBounds( Vector& theMins, Vector& theMaxs )
 			theMins = vec3_origin;
 			theMaxs = vec3_origin;
 			return;
-		} 
+		}
 		if (!VectorCompare( vec3_origin, pStudioHdr->view_bbmin() ) || !VectorCompare( vec3_origin, pStudioHdr->view_bbmax() ))
 		{
 			// clipping bounding box
@@ -334,7 +334,7 @@ void CWeaponPortalBase::GetRenderBounds( Vector& theMins, Vector& theMaxs )
 
 
 #else
-	
+
 void CWeaponPortalBase::Spawn()
 {
 	BaseClass::Spawn();
@@ -352,7 +352,7 @@ void CWeaponPortalBase::	Materialize( void )
 	{
 		// changing from invisible state to visible.
 		EmitSound( "AlyxEmp.Charge" );
-		
+
 		RemoveEffects( EF_NODRAW );
 		DoMuzzleFlash();
 	}
@@ -439,4 +439,3 @@ void UTIL_ClipPunchAngleOffset( QAngle &in, const QAngle &punch, const QAngle &c
 }
 
 #endif
-

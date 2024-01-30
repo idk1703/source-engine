@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: This module defines the CPowerInfo class, which contains a 
+// Purpose: This module defines the CPowerInfo class, which contains a
 //          whole bunch of precalculated data for each displacement power.
 //          It holds data that indicates how to tesselate, how to access
 //          neighbor displacements, etc.
@@ -63,13 +63,13 @@ public:
 class CVertDependency
 {
 public:
-	
+
 	// Returns false if there is no dependency stored here.
 	bool		IsValid()	{ return m_iVert.x != -1; }
 
 
 public:
-			
+
 	// The vert index is in the same power as the source displacement.
 	// It is also wrapped, so for example, on the middle of the right edge
 	// of a 3x3, it will have a dependency on the 3x3's root node (1,1), and it
@@ -88,7 +88,7 @@ class CVertInfo
 public:
 					CVertInfo();
 
-	// These are the vertices that this vertex depends on (vertices that must be 
+	// These are the vertices that this vertex depends on (vertices that must be
 	// active for this vert to exist).
 	CVertDependency	m_Dependencies[2];
 
@@ -128,8 +128,8 @@ public:
 class CPowerInfo
 {
 public:
-						CPowerInfo( 
-							CVertInfo *pVertInfo, 
+						CPowerInfo(
+							CVertInfo *pVertInfo,
 							CFourVerts *pSideVerts,
 							CFourVerts *pChildVerts,
 							CFourVerts *pSideVertCorners,
@@ -147,7 +147,7 @@ public:
 
 	// Get the number of vertices in a displacement of this power.
 	int					GetNumVerts() const			{ return m_MaxVerts; }
-	
+
 	// Return a corner point index. Indexed by the CORNER_ defines.
 	const CVertIndex&	GetCornerPointIndex( int iCorner ) const;
 
@@ -164,7 +164,7 @@ public:
 
 	CTriInfo			*m_pTriInfos;
 	int					m_nTriInfos;
-	
+
 	int					m_Power;
 
 	CVertIndex			m_RootNode;

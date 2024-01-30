@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -41,10 +41,10 @@ CBoneFollowerManager::~CBoneFollowerManager()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
-//			iNumBones - 
-//			**pFollowerBoneNames - 
+// Purpose:
+// Input  : *pEntity -
+//			iNumBones -
+//			**pFollowerBoneNames -
 //-----------------------------------------------------------------------------
 void CBoneFollowerManager::InitBoneFollowers( CBaseAnimating *pParentEntity, int iNumBones, const char **pFollowerBoneNames )
 {
@@ -59,7 +59,7 @@ void CBoneFollowerManager::InitBoneFollowers( CBaseAnimating *pParentEntity, int
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBoneFollowerManager::AddBoneFollower( CBaseAnimating *pParentEntity, const char *pFollowerBoneName, solid_t *pSolid )
 {
@@ -87,9 +87,9 @@ static int HitGroupFromPhysicsBone( CBaseAnimating *pAnim, int physicsBone )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &follow - 
-//			*pBoneName - 
+// Purpose:
+// Input  : &follow -
+//			*pBoneName -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBoneFollowerManager::CreatePhysicsFollower( CBaseAnimating *pParentEntity, physfollower_t &follow, const char *pBoneName, solid_t *pSolid )
@@ -139,7 +139,7 @@ bool CBoneFollowerManager::CreatePhysicsFollower( CBaseAnimating *pParentEntity,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBoneFollowerManager::UpdateBoneFollowers( CBaseAnimating *pParentEntity )
 {
@@ -161,7 +161,7 @@ void CBoneFollowerManager::UpdateBoneFollowers( CBaseAnimating *pParentEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBoneFollowerManager::DestroyBoneFollowers( void )
 {
@@ -179,7 +179,7 @@ void CBoneFollowerManager::DestroyBoneFollowers( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 physfollower_t *CBoneFollowerManager::GetBoneFollower( int iFollowerIndex )
 {
@@ -207,7 +207,7 @@ int CBoneFollowerManager::GetBoneFollowerIndex( CBoneFollower *pFollower )
 		if ( m_physBones[i].hFollower == pFollower )
 			return i;
 	}
-	
+
 	return -1;
 }
 
@@ -392,10 +392,10 @@ CBoneFollower *CBoneFollower::Create( CBaseEntity *pOwner, const char *pModelNam
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int CBoneFollower::ObjectCaps() 
-{ 
+int CBoneFollower::ObjectCaps()
+{
 	CBaseEntity *pOwner = GetOwnerEntity();
 	if ( pOwner )
 	{
@@ -410,7 +410,7 @@ int CBoneFollower::ObjectCaps()
 	return BaseClass::ObjectCaps();
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBoneFollower::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {

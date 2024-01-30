@@ -217,7 +217,7 @@ void ConstructStringKeyValuesInternal_Impl( T *unicodeOutput, int unicodeBufferS
 
 					// look up the variable name
 					const T *value = GetTypedKeyValuesString<T>( localizationVariables, variableName );
-					
+
 					int paramSize = StringFuncs<T>::Length( value );
 					if (paramSize >= unicodeBufferSize)
 					{
@@ -242,7 +242,7 @@ void ConstructStringKeyValuesInternal_Impl( T *unicodeOutput, int unicodeBufferS
 			unicodeBufferSize--;
 
 			formatString++;
-		}		
+		}
 	}
 
 	// ensure null termination

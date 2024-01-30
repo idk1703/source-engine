@@ -100,7 +100,7 @@ BEGIN_VS_SHADER_FLAGS( ShadowBuild_DX8, "Help for ShadowBuild", SHADER_NOT_EDITA
 				const VMatrix &mat = ppTranslucentParams[BASETEXTURETRANSFORM]->GetMatrixValue();
 				transformation[0].Init( mat[0][0], mat[0][1], mat[0][2], mat[0][3] );
 				transformation[1].Init( mat[1][0], mat[1][1], mat[1][2], mat[1][3] );
-				pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, transformation[0].Base(), 2 ); 
+				pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, transformation[0].Base(), 2 );
 			}
 			else
 			{

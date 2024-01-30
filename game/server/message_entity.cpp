@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@
 #define SF_MESSAGE_DISABLED		1
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CMessageEntity : public CPointEntity
 {
@@ -86,7 +86,7 @@ void CMessageEntity::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMessageEntity::Activate( void )
 {
@@ -98,7 +98,7 @@ void CMessageEntity::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMessageEntity::UpdateOnRemove()
 {
@@ -136,10 +136,10 @@ void CMessageEntity::Think( void )
 	// turn on text
 	m_drawText = true;
 }
-	
+
 //-------------------------------------------
 //-------------------------------------------
-void CMessageEntity::DrawOverlays(void) 
+void CMessageEntity::DrawOverlays(void)
 {
 	if ( !m_drawText )
 		return;
@@ -157,7 +157,7 @@ void CMessageEntity::DrawOverlays(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMessageEntity::InputEnable( inputdata_t &inputdata )
 {
@@ -165,7 +165,7 @@ void CMessageEntity::InputEnable( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMessageEntity::InputDisable( inputdata_t &inputdata )
 {

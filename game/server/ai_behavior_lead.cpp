@@ -111,14 +111,14 @@ int CAI_LeadBehavior::DrawDebugTextOverlays( int text_offset )
 
 	offset = BaseClass::DrawDebugTextOverlays( text_offset );
 	if ( GetOuter()->m_debugOverlays & OVERLAY_TEXT_BIT )
-	{	
+	{
 		if ( HasGoal() )
 		{
 			Q_snprintf( tempstr, sizeof(tempstr), "Goal: %s %s", m_args.pszGoal, VecToString( m_goal ) );
 			GetOuter()->EntityText( offset, tempstr, 0 );
 			offset++;
 		}
-		else 
+		else
 		{
 			Q_snprintf( tempstr, sizeof(tempstr), "Goal: None" );
 			GetOuter()->EntityText( offset, tempstr, 0 );
@@ -184,7 +184,7 @@ bool CAI_LeadBehavior::CanSelectSchedule()
 
 	bool fAttacked = ( HasCondition( COND_LIGHT_DAMAGE ) || HasCondition( COND_HEAVY_DAMAGE ) );
 	bool fNonCombat = ( GetNpcState() == NPC_STATE_IDLE || GetNpcState() == NPC_STATE_ALERT );
-	
+
 	return ( !fAttacked && (fNonCombat || m_args.bLeadDuringCombat) && HasGoal() );
 }
 
@@ -204,7 +204,7 @@ bool CAI_LeadBehavior::SetGoal( const AI_LeadArgs_t &args )
 {
 	CBaseEntity *pGoalEnt;
 	pGoalEnt = gEntList.FindEntityByName( NULL, args.pszGoal );
-	
+
 	if ( !pGoalEnt )
 		return false;
 
@@ -239,7 +239,7 @@ bool CAI_LeadBehavior::SetGoal( const AI_LeadArgs_t &args )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CAI_LeadBehavior::GetClosestPointOnRoute( const Vector &targetPos, Vector *pVecClosestPoint )
 {
@@ -250,7 +250,7 @@ bool CAI_LeadBehavior::GetClosestPointOnRoute( const Vector &targetPos, Vector *
 		// We arrive here twice when lead behaviour starts:
 		//	- When the lead behaviour is first enabled. We have no schedule. We want to know if the player is ahead of us.
 		//	- A frame later when we've chosen to lead the player, but we still haven't built our route. We know that the
-		//	  the player isn't lagging, so it's safe to go ahead and simply say he's ahead of us. This avoids building 
+		//	  the player isn't lagging, so it's safe to go ahead and simply say he's ahead of us. This avoids building
 		//	  the temp route twice.
 		if ( IsCurSchedule( SCHED_LEAD_PLAYER, false ) )
 			return true;
@@ -315,8 +315,8 @@ bool CAI_LeadBehavior::GetClosestPointOnRoute( const Vector &targetPos, Vector *
 //-----------------------------------------------------------------------------
 bool CAI_LeadBehavior::PlayerIsAheadOfMe( bool bForce )
 {
-	// Find the nearest point on our route to the player, and see if that's further 
-	// ahead of us than our nearest point. 
+	// Find the nearest point on our route to the player, and see if that's further
+	// ahead of us than our nearest point.
 
 	// If we're not leading, our route doesn't lead to the goal, so we can't use it.
 	// If we just started leading, go ahead and test, and we'll build a temp route.
@@ -328,7 +328,7 @@ bool CAI_LeadBehavior::PlayerIsAheadOfMe( bool bForce )
 	Vector vecClosestPoint;
 	if ( GetClosestPointOnRoute( AI_GetSinglePlayer()->GetAbsOrigin(), &vecClosestPoint ) )
 	{
-		// If the closest point is not right next to me, then 
+		// If the closest point is not right next to me, then
 		// the player is somewhere ahead of me on the route.
 		if ( (vecClosestPoint - GetOuter()->GetAbsOrigin()).LengthSqr() > (32*32) )
 			return true;
@@ -338,7 +338,7 @@ bool CAI_LeadBehavior::PlayerIsAheadOfMe( bool bForce )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_LeadBehavior::GatherConditions( void )
 {
@@ -431,7 +431,7 @@ void CAI_LeadBehavior::GatherConditions( void )
 				}
 			}
 
-			// Now we want to see if the follower is lost. Being lost means being (far away || out of LOS ) 
+			// Now we want to see if the follower is lost. Being lost means being (far away || out of LOS )
 			// && some time has passed. Also, lagging players are considered lost if the NPC's never delivered
 			// the start speech, because it means the NPC should run to the player to start the lead.
 			if( HasCondition( COND_LEAD_FOLLOWER_LAGGING ) )
@@ -584,7 +584,7 @@ int CAI_LeadBehavior::SelectSchedule()
 			m_waitpoint = vec3_origin;
 			Speak( TLK_LEAD_WAITOVER );
 
-			// Don't speak the start line, because we've said 
+			// Don't speak the start line, because we've said
 			m_hasspokenstart = true;
 			return SCHED_WAIT_FOR_SPEAK_FINISH;
 		}
@@ -687,7 +687,7 @@ void CAI_LeadBehavior::StartTask( const Task_t *pTask )
 		{
 			if ( m_goalyaw != -1 )
 			{
-				GetMotor()->SetIdealYaw( m_goalyaw ); 
+				GetMotor()->SetIdealYaw( m_goalyaw );
 			}
 
 			TaskComplete();
@@ -716,10 +716,10 @@ void CAI_LeadBehavior::StartTask( const Task_t *pTask )
 			{
 				TaskComplete();
 			}
-			
+
 			break;
 		}
-		
+
 		case TASK_STOP_LEADING:
 		{
 			ClearGoal();
@@ -739,7 +739,7 @@ void CAI_LeadBehavior::StartTask( const Task_t *pTask )
 			}
 			break;
 		}
-		
+
 		case TASK_LEAD_GET_PATH_TO_WAITPOINT:
 		{
 			if ( GetNavigator()->SetGoal( m_waitpoint ) )
@@ -756,7 +756,7 @@ void CAI_LeadBehavior::StartTask( const Task_t *pTask )
 		case TASK_LEAD_WALK_PATH:
 		{
 			// If we're leading, and we're supposed to run, run instead of walking
-			if ( m_run && 
+			if ( m_run &&
 				( IsCurSchedule( SCHED_LEAD_WAITFORPLAYER, false ) || IsCurSchedule( SCHED_LEAD_PLAYER, false ) || IsCurSchedule( SCHED_LEAD_SPEAK_THEN_LEAD_PLAYER, false )|| IsCurSchedule( SCHED_LEAD_RETRIEVE, false ) ) )
 			{
 				ChainStartTask( TASK_RUN_PATH );
@@ -851,7 +851,7 @@ void CAI_LeadBehavior::StartTask( const Task_t *pTask )
 
 			if( GetOuter()->GetState() == NPC_STATE_COMBAT )
 			{
-				// Don't stand around jabbering in combat. 
+				// Don't stand around jabbering in combat.
 				TaskComplete();
 			}
 
@@ -874,8 +874,8 @@ void CAI_LeadBehavior::StartTask( const Task_t *pTask )
 
 //-------------------------------------
 
-void CAI_LeadBehavior::RunTask( const Task_t *pTask )		
-{ 
+void CAI_LeadBehavior::RunTask( const Task_t *pTask )
+{
 	switch ( pTask->iTask )
 	{
 		case TASK_LEAD_SUCCEED:
@@ -936,7 +936,7 @@ void CAI_LeadBehavior::RunTask( const Task_t *pTask )
 						case ACT_WALK_AIM:	curActivity = ACT_WALK;	break;
 						case ACT_RUN_AIM:	curActivity = ACT_RUN;	break;
 						}
-						
+
 						if ( curActivity != followActivity )
 						{
 							GetNavigator()->SetMovementActivity(followActivity);
@@ -957,7 +957,7 @@ void CAI_LeadBehavior::RunTask( const Task_t *pTask )
 		case TASK_LEAD_WALK_PATH:
 		{
 			// If we're leading, and we're supposed to run, run instead of walking
-			if ( m_run && 
+			if ( m_run &&
 				( IsCurSchedule( SCHED_LEAD_WAITFORPLAYER, false ) || IsCurSchedule( SCHED_LEAD_PLAYER, false ) || IsCurSchedule( SCHED_LEAD_SPEAK_THEN_LEAD_PLAYER, false )|| IsCurSchedule( SCHED_LEAD_RETRIEVE, false ) ) )
 			{
 				ChainRunTask( TASK_RUN_PATH );
@@ -1030,7 +1030,7 @@ bool CAI_LeadBehavior::Speak( AIConcept_t concept )
 			return false;
 		}
 	}
-	
+
 	if ( pExpresser->Speak( concept, GetConceptModifiers( concept ) ) )
 	{
 		m_flSpeakNextNagTime = gpGlobals->curtime + LEAD_NAG_TIME;
@@ -1047,7 +1047,7 @@ bool CAI_LeadBehavior::IsSpeaking()
 	CAI_Expresser *pExpresser = GetOuter()->GetExpresser();
 	if ( !pExpresser )
 		return false;
-		
+
 	return pExpresser->IsSpeaking();
 }
 
@@ -1105,7 +1105,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_LeadBehavior )
 	DECLARE_TASK( TASK_LEAD_WALK_PATH )
 
 	DEFINE_SCHEDULE
-	( 
+	(
 		SCHED_LEAD_RETRIEVE,
 
 		"	Tasks"
@@ -1126,7 +1126,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_LeadBehavior )
 	//-------------------------------------
 
 	DEFINE_SCHEDULE
-	( 
+	(
 		SCHED_LEAD_SPEAK_THEN_RETRIEVE_PLAYER,
 
 		"	Tasks"
@@ -1144,7 +1144,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_LeadBehavior )
 	//-------------------------------------
 
 	DEFINE_SCHEDULE
-	( 
+	(
 		SCHED_LEAD_RETRIEVE_WAIT,
 
 		"	Tasks"
@@ -1164,7 +1164,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_LeadBehavior )
 	//---------------------------------
 
 	DEFINE_SCHEDULE
-	( 
+	(
 		SCHED_LEAD_PLAYER,
 
 		"	Tasks"
@@ -1185,7 +1185,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_LeadBehavior )
 	//---------------------------------
 
 	DEFINE_SCHEDULE
-	( 
+	(
 		SCHED_LEAD_AWAIT_SUCCESS,
 
 		"	Tasks"
@@ -1217,13 +1217,13 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_LeadBehavior )
 
 	//---------------------------------
 	// This is the schedule Odell uses to pause the tour momentarily
-	// if the player lags behind. If the player shows up in a 
+	// if the player lags behind. If the player shows up in a
 	// couple of seconds, the tour will resume. Otherwise, Odell
 	// moves to retrieve.
 	//---------------------------------
 
 	DEFINE_SCHEDULE
-	( 
+	(
 		SCHED_LEAD_PAUSE,
 
 		"	Tasks"
@@ -1264,7 +1264,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_LeadBehavior )
 	//---------------------------------
 
 	DEFINE_SCHEDULE
-	( 
+	(
 		SCHED_LEAD_WAITFORPLAYER,
 
 		"	Tasks"
@@ -1287,7 +1287,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_LeadBehavior )
 	//---------------------------------
 
 	DEFINE_SCHEDULE
-	( 
+	(
 		SCHED_LEAD_WAITFORPLAYERIDLE,
 
 		"	Tasks"
@@ -1307,7 +1307,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_LeadBehavior )
 	//---------------------------------
 
 	DEFINE_SCHEDULE
-	( 
+	(
 		SCHED_LEAD_PLAYERNEEDSWEAPON,
 
 		"	Tasks"
@@ -1322,7 +1322,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_LeadBehavior )
 	//---------------------------------
 
 	DEFINE_SCHEDULE
-	( 
+	(
 		SCHED_LEAD_SPEAK_START,
 
 		"	Tasks"
@@ -1335,7 +1335,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_LeadBehavior )
 	//---------------------------------
 
 	DEFINE_SCHEDULE
-	( 
+	(
 	SCHED_LEAD_SPEAK_THEN_LEAD_PLAYER,
 
 	"	Tasks"
@@ -1385,14 +1385,14 @@ public:
 
 	virtual void InputActivate( inputdata_t &inputdata );
 	virtual void InputDeactivate( inputdata_t &inputdata );
-	
+
 	DECLARE_DATADESC();
 private:
 
 	virtual void OnEvent( int event );
 	void InputSetSuccess( inputdata_t &inputdata );
 	void InputSetFailure( inputdata_t &inputdata );
-	
+
 	bool	 m_fArrived; // @TODO (toml 08-16-02): move arrived tracking onto behavior
 	float	 m_flWaitDistance;
 	float	 m_flLeadDistance;
@@ -1488,7 +1488,7 @@ CAI_LeadBehavior *CAI_LeadGoal::GetLeadBehavior()
 	{
 		return NULL;
 	}
-	
+
 	return pBehavior;
 }
 
@@ -1499,7 +1499,7 @@ void CAI_LeadGoal::InputSetSuccess( inputdata_t &inputdata )
 	CAI_LeadBehavior *pBehavior = GetLeadBehavior();
 	if ( !pBehavior )
 		return;
-		
+
 	// @TODO (toml 02-14-03): Hackly!
 	pBehavior->SetCondition( CAI_LeadBehavior::COND_LEAD_SUCCESS);
 }
@@ -1518,7 +1518,7 @@ void CAI_LeadGoal::InputSetFailure( inputdata_t &inputdata )
 void CAI_LeadGoal::InputActivate( inputdata_t &inputdata )
 {
 	BaseClass::InputActivate( inputdata );
-	
+
 	CAI_LeadBehavior *pBehavior = GetLeadBehavior();
 	if ( !pBehavior )
 	{
@@ -1570,7 +1570,7 @@ void CAI_LeadGoal::InputDeactivate( inputdata_t &inputdata )
 	CAI_LeadBehavior *pBehavior = GetLeadBehavior();
 	if ( !pBehavior )
 		return;
-		
+
 	pBehavior->StopLeading();
 }
 
@@ -1588,7 +1588,7 @@ void CAI_LeadGoal::OnEvent( int event )
 		case LBE_FAILURE:		pOutputEvent = &m_OnFailure;		break;
 		case LBE_DONE:			pOutputEvent = &m_OnDone;			break;
 	}
-	
+
 	// @TODO (toml 08-16-02): move arrived tracking onto behavior
 	if ( event == LBE_ARRIVAL )
 		m_fArrived = true;
@@ -1599,8 +1599,8 @@ void CAI_LeadGoal::OnEvent( int event )
 
 //-----------------------------------------------------------------------------
 
-const char *CAI_LeadGoal::GetConceptModifiers( const char *pszConcept )	
-{ 
+const char *CAI_LeadGoal::GetConceptModifiers( const char *pszConcept )
+{
 	if ( m_iszStartConceptModifier != NULL_STRING && *STRING(m_iszStartConceptModifier) && strcmp( pszConcept, TLK_LEAD_START) == 0 )
 		return STRING( m_iszStartConceptModifier );
 
@@ -1612,13 +1612,13 @@ const char *CAI_LeadGoal::GetConceptModifiers( const char *pszConcept )
 
 	if ( m_iszArrivalConceptModifier != NULL_STRING && *STRING(m_iszArrivalConceptModifier) && strcmp( pszConcept, TLK_LEAD_ARRIVAL) == 0 )
 		return STRING( m_iszArrivalConceptModifier );
-		
+
 	if ( m_iszSuccessConceptModifier != NULL_STRING && *STRING(m_iszSuccessConceptModifier) && strcmp( pszConcept, TLK_LEAD_SUCCESS) == 0 )
 		return STRING( m_iszSuccessConceptModifier );
-		
+
 	if (m_iszFailureConceptModifier != NULL_STRING && *STRING(m_iszFailureConceptModifier) && strcmp( pszConcept, TLK_LEAD_FAILURE) == 0 )
 		return STRING( m_iszFailureConceptModifier );
-	
+
 	if (m_iszRetrieveConceptModifier != NULL_STRING && *STRING(m_iszRetrieveConceptModifier) && strcmp( pszConcept, TLK_LEAD_RETRIEVE) == 0 )
 		return STRING( m_iszRetrieveConceptModifier );
 
@@ -1627,8 +1627,8 @@ const char *CAI_LeadGoal::GetConceptModifiers( const char *pszConcept )
 
 	if ( m_fArrived && m_iszPostArrivalConceptModifier != NULL_STRING && *STRING(m_iszPostArrivalConceptModifier) )
 		return STRING( m_iszPostArrivalConceptModifier );
-	
-	return NULL; 
+
+	return NULL;
 }
 
 
@@ -1670,12 +1670,12 @@ END_DATADESC()
 
 //-----------------------------------------------------------------------------
 
-const char *CAI_LeadGoal_Weapon::GetConceptModifiers( const char *pszConcept )	
-{ 
+const char *CAI_LeadGoal_Weapon::GetConceptModifiers( const char *pszConcept )
+{
 	if ( m_iszMissingWeaponConceptModifier != NULL_STRING && *STRING(m_iszMissingWeaponConceptModifier) && strcmp( pszConcept, TLK_LEAD_MISSINGWEAPON) == 0 )
 		return STRING( m_iszMissingWeaponConceptModifier );
 
-	return BaseClass::GetConceptModifiers( pszConcept ); 
+	return BaseClass::GetConceptModifiers( pszConcept );
 }
 
 

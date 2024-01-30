@@ -40,7 +40,7 @@ public:
 	CRpgRocket();
 
 	Class_T Classify( void ) { return CLASS_NONE; }
-	
+
 	void Spawn( void );
 	void Precache( void );
 	void RocketTouch( CBaseEntity *pOther );
@@ -54,7 +54,7 @@ public:
 	CHandle<CWeaponRPG>		m_hOwner;
 	float					m_flIgniteTime;
 	int						m_iTrail;
-	
+
 	DECLARE_DATADESC();
 };
 

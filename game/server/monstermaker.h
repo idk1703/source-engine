@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -27,7 +27,7 @@
 
 //=========================================================
 //=========================================================
-class CNPCSpawnDestination : public CPointEntity 
+class CNPCSpawnDestination : public CPointEntity
 {
 	DECLARE_CLASS( CNPCSpawnDestination, CPointEntity );
 
@@ -82,15 +82,15 @@ public:
 	virtual bool IsDepleted( void );
 
 	DECLARE_DATADESC();
-	
+
 	int			m_nMaxNumNPCs;			// max number of NPCs this ent can create
-	float		m_flSpawnFrequency;		// delay (in secs) between spawns 
+	float		m_flSpawnFrequency;		// delay (in secs) between spawns
 
 	COutputEHANDLE m_OnSpawnNPC;
 	COutputEvent m_OnAllSpawned;
 	COutputEvent m_OnAllSpawnedDead;
 	COutputEvent m_OnAllLiveChildrenDead;
-	
+
 	int		m_nLiveChildren;	// how many NPCs made by this NPC maker that are currently alive
 	int		m_nMaxLiveChildren;	// max number of NPCs that this maker may have out at one time.
 
@@ -113,7 +113,7 @@ public:
 	virtual void MakeNPC( void );
 
 	DECLARE_DATADESC();
-	
+
 	string_t m_iszNPCClassname;			// classname of the NPC(s) that will be created.
 	string_t m_SquadName;
 	string_t m_strHintGroup;
@@ -127,7 +127,7 @@ class CTemplateNPCMaker : public CBaseNPCMaker
 public:
 	DECLARE_CLASS( CTemplateNPCMaker, CBaseNPCMaker );
 
-	CTemplateNPCMaker( void ) 
+	CTemplateNPCMaker( void )
 	{
 		m_iMinSpawnDistance = 0;
 	}
@@ -152,14 +152,14 @@ protected:
 	void InputSpawnMultiple( inputdata_t &inputdata );
 	void InputChangeDestinationGroup( inputdata_t &inputdata );
 	void InputSetMinimumSpawnDistance( inputdata_t &inputdata );
-	
+
 	float	m_flRadius;
 
 	DECLARE_DATADESC();
 
 	string_t m_iszTemplateName;		// The name of the NPC that will be used as the template.
 	string_t m_iszTemplateData;		// The keyvalue data blob from the template NPC that will be used to spawn new ones.
-	string_t m_iszDestinationGroup;	
+	string_t m_iszDestinationGroup;
 
 	int		m_iMinSpawnDistance;
 

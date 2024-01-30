@@ -75,4 +75,4 @@ void GenerateIntrinsicSQLSchema( GCSDK::CSchemaFull &schemaFull )
 
 	schemaFull.FinishInit();
 }
-} // namespace 
+} // namespace

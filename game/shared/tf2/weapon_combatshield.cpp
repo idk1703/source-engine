@@ -49,7 +49,7 @@ ConVar	weapon_combat_shield_health( "weapon_combat_shield_health", "100", FCVAR_
 #define SHIELD_FADOUT_TIME 0.2f
 
 //-----------------------------------------------------------------------------
-// Constructor, destructor: 
+// Constructor, destructor:
 //-----------------------------------------------------------------------------
 CWeaponCombatShield::CWeaponCombatShield()
 {
@@ -75,7 +75,7 @@ CWeaponCombatShield::CWeaponCombatShield()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatShield::Precache( void )
 {
@@ -88,7 +88,7 @@ void CWeaponCombatShield::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponCombatShield::Deploy( void )
 {
@@ -122,7 +122,7 @@ int	CWeaponCombatShield::GetOtherWeaponsActivity( int iActivity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Get the activity the other weapon in our twohanded container should 
+// Purpose: Get the activity the other weapon in our twohanded container should
 //			play instead of the one it's attempting to play.
 //-----------------------------------------------------------------------------
 int	CWeaponCombatShield::ReplaceOtherWeaponsActivity( int iActivity )
@@ -142,7 +142,7 @@ int	CWeaponCombatShield::ReplaceOtherWeaponsActivity( int iActivity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponCombatShield::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
@@ -152,7 +152,7 @@ bool CWeaponCombatShield::Holster( CBaseCombatWeapon *pSwitchingTo )
 		player->SetBlocking( false );
 		player->SetParrying( false );
 
-		if ( m_iShieldState != SS_DOWN && 
+		if ( m_iShieldState != SS_DOWN &&
 			 m_iShieldState != SS_UNAVAILABLE )
 		{
 			SetShieldState( SS_LOWERING );
@@ -182,8 +182,8 @@ bool CWeaponCombatShield::TakeShieldBash( CBaseTFPlayer *pBasher )
 
 		m_flShieldUnavailableEndTime = gpGlobals->curtime + 2.0;
 
-		// Play a sound	
-		EmitSound( "WeaponCombatShield.TakeBash" );		
+		// Play a sound
+		EmitSound( "WeaponCombatShield.TakeBash" );
 		return true;
 	}
 
@@ -191,7 +191,7 @@ bool CWeaponCombatShield::TakeShieldBash( CBaseTFPlayer *pBasher )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatShield::SetShieldState( int iShieldState )
 {
@@ -319,7 +319,7 @@ void CWeaponCombatShield::UpdateShieldState( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CWeaponCombatShield::GetShieldState( void )
 {
@@ -338,8 +338,8 @@ void CWeaponCombatShield::SetShieldUsable( bool bUsable )
 		{
 			// We've got our shield up, so drop it (play sound & animation).
 			SendWeaponAnim( ACT_VM_HAULBACK );
-			WeaponSound( SPECIAL2 );			
-			SetShieldState( SS_LOWERING );			
+			WeaponSound( SPECIAL2 );
+			SetShieldState( SS_LOWERING );
 		}
 	}
 
@@ -355,8 +355,8 @@ bool CWeaponCombatShield::ShieldUsable( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : allow - 
+// Purpose:
+// Input  : allow -
 //-----------------------------------------------------------------------------
 void CWeaponCombatShield::SetAllowPostFrame( bool allow )
 {
@@ -364,7 +364,7 @@ void CWeaponCombatShield::SetAllowPostFrame( bool allow )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatShield::ItemPostFrame( void )
 {
@@ -447,7 +447,7 @@ void CWeaponCombatShield::ShieldPostFrame( void )
 		SendWeaponAnim( ACT_VM_SECONDARYATTACK );
 
 		SetShieldState( SS_RAISING );
-		
+
 		// Abort any reloads in progess
 		pOwner->AbortReload();
 	}
@@ -506,7 +506,7 @@ void CWeaponCombatShield::ShieldBash( void )
 
 	// Get the target point and location
 	Vector vecAiming;
-	Vector vecSrc = pOwner->Weapon_ShootPosition( pOwner->GetOrigin() );	
+	Vector vecSrc = pOwner->Weapon_ShootPosition( pOwner->GetOrigin() );
 	pOwner->EyeVectors( &vecAiming );
 
 	// Find a player in range of this player, and make sure they're healable
@@ -534,7 +534,7 @@ void CWeaponCombatShield::ShieldBash( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Attempt to block the incoming attack, and return the damage it 
+// Purpose: Attempt to block the incoming attack, and return the damage it
 //			should do after the block, if any.
 //-----------------------------------------------------------------------------
 float CWeaponCombatShield::AttemptToBlock( float flDamage )
@@ -577,7 +577,7 @@ float CWeaponCombatShield::AttemptToBlock( float flDamage )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponCombatShield::GetShieldHealth( void )
 {
@@ -585,7 +585,7 @@ float CWeaponCombatShield::GetShieldHealth( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatShield::AddShieldHealth( float flHealth )
 {
@@ -593,7 +593,7 @@ void CWeaponCombatShield::AddShieldHealth( float flHealth )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatShield::RemoveShieldHealth( float flHealth )
 {
@@ -644,7 +644,7 @@ int CWeaponCombatShield::UpdateClientData( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponCombatShield::VisibleInWeaponSelection( void )
@@ -697,7 +697,7 @@ void CWeaponCombatShield::DrawAmmo( void )
 
 	// Set our color
 	gHUD.m_clrNormal.GetColor( r, g, b, a );
-	
+
 	int iWidth = XRES(12);
 	int iHeight = YRES(64);
 
@@ -723,7 +723,7 @@ void CWeaponCombatShield::DrawAmmo( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatShield::GetViewmodelBoneControllers( C_BaseViewModel *pViewModel, float controllers[MAXSTUDIOBONECTRLS])
 {
@@ -792,7 +792,7 @@ void CWeaponCombatShield::InitShieldBeam( void )
 	beamInfo.m_flBlue = 128.0f;
 	beamInfo.m_nSegments = 15;
 	beamInfo.m_bRenderable = false;
-	
+
 	m_pShieldBeam = beams->CreateBeamPoints( beamInfo );
 
 	beamInfo.m_vecStart.Init();
@@ -835,7 +835,7 @@ void CWeaponCombatShield::InitShieldBeam( void )
 	beamInfo.m_nSegments = 18;
 	beamInfo.m_bRenderable = false;
 
-	m_pShieldBeam3 = beams->CreateBeamPoints( beamInfo );	
+	m_pShieldBeam3 = beams->CreateBeamPoints( beamInfo );
 
 	m_hShieldSpriteMaterial.Init( "sprites/blueflare1", TEXTURE_GROUP_CLIENT_EFFECTS );
 }
@@ -865,7 +865,7 @@ void CWeaponCombatShield::InitTeslaBeam( void )
 	beamInfo.m_flBlue = 127.0f;
 	beamInfo.m_nSegments = 15;
 	beamInfo.m_bRenderable = false;
-	
+
 	m_pTeslaBeam = beams->CreateBeamPoints( beamInfo );
 
 	beamInfo.m_vecStart.Init();
@@ -886,7 +886,7 @@ void CWeaponCombatShield::InitTeslaBeam( void )
 	beamInfo.m_flBlue = 127.0f;
 	beamInfo.m_nSegments = 8;
 	beamInfo.m_bRenderable = false;
-	
+
 	m_pTeslaBeam2 = beams->CreateBeamPoints( beamInfo );
 
 	m_hTeslaSpriteMaterial.Init( "sprites/blueflare1", TEXTURE_GROUP_CLIENT_EFFECTS );
@@ -909,13 +909,13 @@ void CWeaponCombatShield::DrawBeams( C_BaseViewModel *pViewModel )
 		return;
 
 	// Init
-	if ( !m_pTeslaBeam ) 
-	{ 
-		InitTeslaBeam(); 
+	if ( !m_pTeslaBeam )
+	{
+		InitTeslaBeam();
 	}
-	if ( !m_pShieldBeam ) 
-	{ 
-		InitShieldBeam(); 
+	if ( !m_pShieldBeam )
+	{
+		InitShieldBeam();
 	}
 
 	if ( !m_pShieldBeam || !m_pTeslaBeam )
@@ -968,8 +968,8 @@ void CWeaponCombatShield::DrawBeams( C_BaseViewModel *pViewModel )
 	beamInfo.m_flRed = color.r;
 	beamInfo.m_flGreen = color.g;
 	beamInfo.m_flBlue = color.b;
-	beams->UpdateBeamInfo( m_pTeslaBeam, beamInfo );	
-	beams->UpdateBeamInfo( m_pTeslaBeam2, beamInfo );	
+	beams->UpdateBeamInfo( m_pTeslaBeam, beamInfo );
+	beams->UpdateBeamInfo( m_pTeslaBeam2, beamInfo );
 	beams->DrawBeam( m_pTeslaBeam );
 	beams->DrawBeam( m_pTeslaBeam2 );
 
@@ -991,7 +991,7 @@ void CWeaponCombatShield::DrawBeams( C_BaseViewModel *pViewModel )
 		Vector vecJoint;
 		int iAttachment = pViewModel->LookupAttachment( &szShieldJoint[0] );
 		pViewModel->GetAttachment( iAttachment, vecJoint, vecAngle );
-		pViewModel->UncorrectViewModelAttachment( vecJoint );	
+		pViewModel->UncorrectViewModelAttachment( vecJoint );
 
 		if ( nJoint < 5 )
 		{
@@ -1002,12 +1002,12 @@ void CWeaponCombatShield::DrawBeams( C_BaseViewModel *pViewModel )
 			beamInfo.m_vecStart = vecRightTop;
 		}
 		beamInfo.m_vecEnd = vecJoint;
-		beams->UpdateBeamInfo( m_pTeslaBeam, beamInfo );	
-		beams->UpdateBeamInfo( m_pTeslaBeam2, beamInfo );	
+		beams->UpdateBeamInfo( m_pTeslaBeam, beamInfo );
+		beams->UpdateBeamInfo( m_pTeslaBeam2, beamInfo );
 		beams->DrawBeam( m_pTeslaBeam );
 		beams->DrawBeam( m_pTeslaBeam2 );
 
-		float flSize = 7.0f; 
+		float flSize = 7.0f;
 		color32 color = { 206, 181, 127, 255 };
 		materials->Bind( m_hShieldSpriteMaterial, this );
 		DrawSprite( beamInfo.m_vecStart, flSize, flSize, color );
@@ -1022,7 +1022,7 @@ void CWeaponCombatShield::DrawBeams( C_BaseViewModel *pViewModel )
 		Q_snprintf( szShieldJoint, sizeof( szShieldJoint ), "Shield%d", iJoint+1 );
 		iAttachment = pViewModel->LookupAttachment( &szShieldJoint[0] );
 		pViewModel->GetAttachment( iAttachment, vecShieldJoints[iJoint], vecAngle );
-		pViewModel->UncorrectViewModelAttachment( vecShieldJoints[iJoint] );	
+		pViewModel->UncorrectViewModelAttachment( vecShieldJoints[iJoint] );
 	}
 
 	// Shield Internal
@@ -1128,7 +1128,7 @@ void* SendProxy_SendCombatShieldLocalWeaponDataTable( const SendProp *pProp, con
 			return (void*)pVarData;
 		}
 	}
-	
+
 	return NULL;
 }
 REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_SendCombatShieldLocalWeaponDataTable );
@@ -1198,8 +1198,3 @@ END_PREDICTION_DATA()
 
 PRECACHE_WEAPON_REGISTER(weapon_combat_shield);
 PRECACHE_WEAPON_REGISTER(weapon_combat_shield_alien);
-
-
-
-
-

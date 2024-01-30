@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@ class CTFCTeamMenu : public CTeamMenu
 {
 private:
 	DECLARE_CLASS_SIMPLE( CTFCTeamMenu, CTeamMenu );
-		
+
 public:
 	CTFCTeamMenu(IViewPort *pViewPort);
 	~CTFCTeamMenu();

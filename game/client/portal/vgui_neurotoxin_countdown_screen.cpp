@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -19,7 +19,7 @@ using namespace vgui;
 
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CNeurotoxinCountdownScreen : public CVGuiScreenPanel
 {
@@ -53,10 +53,10 @@ private:
 DECLARE_VGUI_SCREEN_FACTORY( CNeurotoxinCountdownScreen, "neurotoxin_countdown_screen" );
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CNeurotoxinCountdownScreen::CNeurotoxinCountdownScreen( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CNeurotoxinCountdownScreen", vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/NeurotoxinCountdownScreen.res", "NeuroToxinScreen" ) ) 
+	: BaseClass( parent, "CNeurotoxinCountdownScreen", vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/NeurotoxinCountdownScreen.res", "NeuroToxinScreen" ) )
 {
 	m_pDisplayTextLabel = new vgui::Label( this, "NumberDisplay", "x" );
 	iLastSlideIndex = 0;
@@ -67,13 +67,13 @@ void CNeurotoxinCountdownScreen::ApplySchemeSettings( IScheme *pScheme )
 	assert( pScheme );
 
 	m_cDefault = pScheme->GetColor( "CNeurotoxinCountdownScreen_Default", GetFgColor() );
-	m_cInvisible = Color( 0, 0, 0, 0 );	
+	m_cInvisible = Color( 0, 0, 0, 0 );
 
 	m_pDisplayTextLabel->SetFgColor( m_cDefault );
 }
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CNeurotoxinCountdownScreen::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -150,7 +150,7 @@ void CNeurotoxinCountdownScreen::Update( C_NeurotoxinCountdown *pNeurotoxinCount
 	int iMinutes = pNeurotoxinCountdown->GetMinutes();
 	int iSeconds = pNeurotoxinCountdown->GetSeconds();
 	int iMilliseconds;
-	
+
 	if ( iMinutes <= 0 && iSeconds <= 0 )
 	{
 		iMinutes = 0;

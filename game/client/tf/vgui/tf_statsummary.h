@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -32,9 +32,9 @@ private:
 	DECLARE_CLASS_SIMPLE( CTFStatsSummaryPanel, vgui::EditablePanel );
 
 public:
-	CTFStatsSummaryPanel();	 
+	CTFStatsSummaryPanel();
 	CTFStatsSummaryPanel( vgui::Panel *parent );
-	~CTFStatsSummaryPanel();	 
+	~CTFStatsSummaryPanel();
 
 	void Init( void );
 
@@ -74,7 +74,7 @@ private:
 	void UpdateLeaderboard();
 	void InitBarChartComboBox( vgui::ComboBox *pComboBox );
 	void SetValueAsClass( const char *pDialogVariable, int iValue, int iPlayerClass );
-	void DisplayBarValue( int iChart, int iClass, ClassStats_t &stats, TFStatType_t statType, StatDisplay_t flags, float flMaxValue );	
+	void DisplayBarValue( int iChart, int iClass, ClassStats_t &stats, TFStatType_t statType, StatDisplay_t flags, float flMaxValue );
 	static float GetDisplayValue( ClassStats_t &stats, TFStatType_t statType, StatDisplay_t statDisplay );
 	const char *RenderValue( float flValue, TFStatType_t statType, StatDisplay_t statDisplay );
 	static float SafeCalcFraction( float flNumerator, float flDemoninator );
@@ -95,7 +95,7 @@ private:
 	vgui::Panel		*m_pLeaderboardTitle;
 
 	vgui::ImagePanel *m_pMainBackground;
-	void UpdateMainBackground( void ); 
+	void UpdateMainBackground( void );
 
 	vgui::EditablePanel	*m_pContributedPanel;
 

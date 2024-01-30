@@ -57,7 +57,7 @@ public:
 	int			DeviceChannels( void )		{ return m_deviceChannels; }
 	int			DeviceSampleBits( void )	{ return m_deviceSampleBits; }
 	int			DeviceSampleBytes( void )	{ return m_deviceSampleBits/8; }
-	int			DeviceDmaSpeed( void )		{ return m_deviceDmaSpeed; }	
+	int			DeviceDmaSpeed( void )		{ return m_deviceDmaSpeed; }
 	int			DeviceSampleCount( void )	{ return m_deviceSampleCount; }
 
 
@@ -88,7 +88,7 @@ private:
 	int					m_bufferSizeBytes;			// size of a single hardware output buffer, in bytes
 	CInterlockedUInt	m_BufferTail;
 	CInterlockedUInt	m_BufferHead;
-	
+
 	CXboxVoice			m_VoiceData;
 };
 
@@ -100,25 +100,25 @@ CAudioXAudio *CAudioXAudio::m_pSingleton = NULL;
 class XAudio2VoiceCallback : public IXAudio2VoiceCallback
 {
 public:
-    XAudio2VoiceCallback() {}
-    ~XAudio2VoiceCallback() {}
+	XAudio2VoiceCallback() {}
+	~XAudio2VoiceCallback() {}
 
-    void OnStreamEnd() {}
+	void OnStreamEnd() {}
 
-    void OnVoiceProcessingPassEnd() {}
+	void OnVoiceProcessingPassEnd() {}
 
-    void OnVoiceProcessingPassStart( UINT32 SamplesRequired ) {}
+	void OnVoiceProcessingPassStart( UINT32 SamplesRequired ) {}
 
-    void OnBufferEnd( void *pBufferContext ) 
+	void OnBufferEnd( void *pBufferContext )
 	{
 		CAudioXAudio::m_pSingleton->XAudioPacketCallback( (int)pBufferContext );
 	}
 
-    void OnBufferStart( void *pBufferContext ) {}
+	void OnBufferStart( void *pBufferContext ) {}
 
-    void OnLoopEnd( void *pBufferContext ) {}
+	void OnLoopEnd( void *pBufferContext ) {}
 
-    void OnVoiceError( void *pBufferContext, HRESULT Error ) {}
+	void OnVoiceError( void *pBufferContext, HRESULT Error ) {}
 };
 XAudio2VoiceCallback s_XAudio2VoiceCallback;
 
@@ -177,7 +177,7 @@ CAudioXAudio::~CAudioXAudio( void )
 // Initialize XAudio
 //-----------------------------------------------------------------------------
 bool CAudioXAudio::Init( void )
-{	
+{
 	XAUDIOSPEAKERCONFIG xAudioConfig = 0;
 	XAudioGetSpeakerConfig( &xAudioConfig );
 	snd_surround.SetValue( ( xAudioConfig & XAUDIOSPEAKERCONFIG_DIGITAL_DOLBYDIGITAL ) ? SURROUND_DIGITAL5DOT1 : SURROUND_STEREO );
@@ -199,7 +199,7 @@ bool CAudioXAudio::Init( void )
 		break;
 
 	case SURROUND_DIGITAL5DOT1:
-		m_bSurround = true;	
+		m_bSurround = true;
 		m_bSurroundCenter = true;
 		m_deviceChannels = 6;
 		break;
@@ -208,7 +208,7 @@ bool CAudioXAudio::Init( void )
 	m_deviceSampleBits = 16;
 	m_deviceDmaSpeed = SOUND_DMA_SPEED;
 
-    // initialize the XAudio Engine
+	// initialize the XAudio Engine
 	// Both threads on core 2
 	m_pXAudio2 = NULL;
 	HRESULT hr = XAudio2Create( &m_pXAudio2, 0, XboxThread5 );
@@ -216,11 +216,11 @@ bool CAudioXAudio::Init( void )
 		return false;
 
 	// create the mastering voice, this will upsample to the devices target hw output rate
-    m_pMasteringVoice = NULL;
+	m_pMasteringVoice = NULL;
 	hr = m_pXAudio2->CreateMasteringVoice( &m_pMasteringVoice );
 	if ( FAILED( hr ) )
-        return false;
-	
+		return false;
+
 	// 16 bit PCM
 	WAVEFORMATEX waveFormatEx = { 0 };
 	waveFormatEx.wFormatTag = WAVE_FORMAT_PCM;
@@ -232,16 +232,16 @@ bool CAudioXAudio::Init( void )
 	waveFormatEx.cbSize = 0;
 
 	m_pSourceVoice = NULL;
-	hr = m_pXAudio2->CreateSourceVoice( 
-			&m_pSourceVoice, 
-			&waveFormatEx, 
+	hr = m_pXAudio2->CreateSourceVoice(
+			&m_pSourceVoice,
+			&waveFormatEx,
 			0,
 			XAUDIO2_DEFAULT_FREQ_RATIO,
 			&s_XAudio2VoiceCallback,
 			NULL,
 			NULL );
 	if ( FAILED( hr ) )
-        return false;
+		return false;
 
 	float volumes[MAX_DEVICE_CHANNELS];
 	for ( int i = 0; i < MAX_DEVICE_CHANNELS; i++ )
@@ -272,9 +272,9 @@ bool CAudioXAudio::Init( void )
 
 	// number of mono samples output buffer may hold
 	m_deviceSampleCount = MAX_XAUDIO2_BUFFERS * (m_bufferSizeBytes/(DeviceSampleBytes()));
-	
+
 	// NOTE: This really shouldn't be tied to the # of bufferable samples.
-	// This just needs to be large enough so that it doesn't fake out the sampling in 
+	// This just needs to be large enough so that it doesn't fake out the sampling in
 	// GetSoundTime().  Basically GetSoundTime() assumes a cyclical time stamp and finds wraparound cases
 	// but that means it needs to get called much more often than once per cycle.  So this number should be
 	// much larger than the framerate in terms of output time
@@ -284,7 +284,7 @@ bool CAudioXAudio::Init( void )
 	XMAPlaybackInitialize();
 
 	hr = m_pSourceVoice->Start( 0 );
-    if ( FAILED( hr ) )
+	if ( FAILED( hr ) )
 		return false;
 
 	DevMsg( "XAudio Device Initialized:\n" );
@@ -412,7 +412,7 @@ int CAudioXAudio::PaintBegin( float mixAheadTime, int soundtime, int paintedtime
 	//  soundtime = total full samples that have been played out to hardware at dmaspeed
 	//  paintedtime = total full samples that have been mixed at speed
 
-	//  endtime = target for full samples in mixahead buffer at speed	
+	//  endtime = target for full samples in mixahead buffer at speed
 	int mixaheadtime = mixAheadTime * DeviceDmaSpeed();
 	int endtime = soundtime + mixaheadtime;
 	if ( endtime <= paintedtime )
@@ -428,7 +428,7 @@ int CAudioXAudio::PaintBegin( float mixAheadTime, int soundtime, int paintedtime
 	}
 	if ( ( endtime - paintedtime ) & 0x03 )
 	{
-		// The difference between endtime and painted time should align on 
+		// The difference between endtime and painted time should align on
 		// boundaries of 4 samples.  This is important when upsampling from 11khz -> 44khz.
 		endtime -= ( endtime - paintedtime ) & 0x03;
 	}
@@ -457,7 +457,7 @@ int CAudioXAudio::TransferStereo( const portable_samplepair_t *pFrontBuffer, int
 
 	int *pFront = (int *)pFrontBuffer;
 	short *pOutput = (short *)pOutputBuffer;
-	
+
 	// get size of output buffer in full samples (LR pairs)
 	// number of sequential sample pairs that can be wrriten
 	linearCount = g_AudioDevice->DeviceSampleCount() >> 1;
@@ -501,14 +501,14 @@ int CAudioXAudio::TransferSurroundInterleaved( const portable_samplepair_t *pFro
 	int *pRear = (int *)pRearBuffer;
 	int *pCenter = (int *)pCenterBuffer;
 	short *pOutput = (short *)pOutputBuffer;
-	
+
 	// number of mono samples per channel
 	// number of sequential samples that can be wrriten
-	linearCount = m_bufferSizeBytes/( DeviceSampleBytes() * DeviceChannels() );		
+	linearCount = m_bufferSizeBytes/( DeviceSampleBytes() * DeviceChannels() );
 
 	// clamp output count to requested number of samples
-	if ( linearCount > endTime - paintedTime )	
-	{	
+	if ( linearCount > endTime - paintedTime )
+	{
 		linearCount = endTime - paintedTime;
 	}
 
@@ -574,7 +574,7 @@ void CAudioXAudio::TransferSamples( int endTime )
 		pBuffer->AudioBytes = TransferSurroundInterleaved( PAINTBUFFER, REARPAINTBUFFER, CENTERPAINTBUFFER, g_paintedtime, endTime, (char *)pBuffer->pAudioData );
 	}
 
-    // submit buffer
+	// submit buffer
 	m_pSourceVoice->SubmitSourceBuffer( pBuffer );
 }
 
@@ -582,13 +582,13 @@ void CAudioXAudio::TransferSamples( int endTime )
 // Get our device name
 //-----------------------------------------------------------------------------
 const char *CAudioXAudio::DeviceName( void )
-{ 
+{
 	if ( m_bSurround )
 	{
 		return "XAudio: 5.1 Channel Surround";
 	}
 
-	return "XAudio: Stereo"; 
+	return "XAudio: Stereo";
 }
 
 CXboxVoice::CXboxVoice()
@@ -631,7 +631,7 @@ void CXboxVoice::VoiceShutdown( void )
 {
 	if ( !m_pXHVEngine )
 		return;
-	
+
 	m_pXHVEngine->Release();
 	m_pXHVEngine = NULL;
 }
@@ -647,7 +647,7 @@ void CXboxVoice::AddPlayerToVoiceList( CClientInfo *pClient, bool bLocal )
 
 		if ( bLocal == true )
 		{
- 			if ( m_pXHVEngine->RegisterLocalTalker( pClient->m_iControllers[i] ) == S_OK )
+			if ( m_pXHVEngine->RegisterLocalTalker( pClient->m_iControllers[i] ) == S_OK )
 			{
 				m_pXHVEngine->StartLocalProcessingModes( pClient->m_iControllers[i], &local_proc_mode, 1 );
 			}
@@ -702,9 +702,9 @@ void CXboxVoice::UpdateHUDVoiceStatus( void )
 
 		int iIndex = iClient + 1;
 		XUID id =  g_pMatchmaking->PlayerIdToXuid( iIndex );
-		
+
 		if ( id != 0 )
-		{	
+		{
 			bool bTalking = false;
 
 			if ( bSelf == true )
@@ -726,7 +726,7 @@ void CXboxVoice::UpdateHUDVoiceStatus( void )
 					bTalking = true;
 				}
 			}
-		
+
 			g_pSoundServices->OnChangeVoiceStatus( iIndex, bTalking );
 		}
 		else
@@ -760,7 +760,7 @@ bool CXboxVoice::VoiceUpdateData( void  )
 
 		if ( !(dwVoiceFlags & ( 1 << i )) )
 			continue;
-  
+
 		dwBytes = m_ChatBufferSize - m_wLocalDataSize;
 
 		if( dwBytes < XHV_VOICECHAT_MODE_PACKET_SIZE )
@@ -782,8 +782,8 @@ bool CXboxVoice::VoiceUpdateData( void  )
 		break;
 	}
 
-	return  bShouldSend || 
-		( wVoiceBytes && 
+	return  bShouldSend ||
+		( wVoiceBytes &&
 		( GetTickCount() - m_dwLastVoiceSend ) > MAX_VOICE_BUFFER_TIME );
 }
 
@@ -805,7 +805,7 @@ void CXboxVoice::GetVoiceData( CLC_VoiceData *pMessage )
 
 	puchVoiceData = m_ChatBuffer;
 
-	pMessage->m_DataOut.StartWriting( puchVoiceData, pMessage->m_nLength );	
+	pMessage->m_DataOut.StartWriting( puchVoiceData, pMessage->m_nLength );
 	pMessage->m_nLength *= 8;
 	pMessage->m_DataOut.SeekToBit( pMessage->m_nLength );	 // set correct writing position
 }

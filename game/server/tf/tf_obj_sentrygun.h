@@ -88,7 +88,7 @@ public:
 	int				GetFireAttachment( void );
 
 	void            OnKilledEnemy(CBasePlayer* pVictim);
-	
+
 	virtual void	MakeMiniBuilding( CTFPlayer* pPlayer );
 	virtual void	MakeCarriedObject( CTFPlayer *pCarrier );
 	void			MakeScaledBuilding( CTFPlayer* pPlayer );
@@ -151,7 +151,7 @@ private:
 	virtual void ModifyFireBulletsDamage( CTakeDamageInfo* dmgInfo );
 
 	int GetBaseTurnRate( void );
-	
+
 	virtual void	MakeDisposableBuilding( CTFPlayer *pPlayer );
 
 	CNetworkVar( int, m_iState );
@@ -238,7 +238,7 @@ public:
 	virtual int GetProjectileType() const OVERRIDE { return TF_PROJECTILE_SENTRY_ROCKET; }
 
 	// Creation.
-	static CTFProjectile_SentryRocket *Create( const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL );	
+	static CTFProjectile_SentryRocket *Create( const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL );
 
 	virtual void Spawn();
 };

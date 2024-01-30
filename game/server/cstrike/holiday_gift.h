@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,7 +20,7 @@ public:
 	DECLARE_CLASS( CHolidayGift, CItem );
 
 public:
-	
+
 	virtual void Precache();
 	virtual void Spawn( void );
 	virtual bool MyTouch( CBasePlayer *pBasePlayer );

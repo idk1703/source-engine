@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -378,7 +378,7 @@ void FreeBrushList (bspbrush_t *brushes)
 		next = brushes->next;
 
 		FreeBrush (brushes);
-	}		
+	}
 }
 
 /*
@@ -393,7 +393,7 @@ bspbrush_t *CopyBrush (bspbrush_t *brush)
 	bspbrush_t *newbrush;
 	int			size;
 	int			i;
-	
+
 	size = (int)&(((bspbrush_t *)0)->sides[brush->numsides]);
 
 	newbrush = AllocBrush (brush->numsides);
@@ -542,7 +542,7 @@ TestBrushToPlanenum
 ============
 */
 int	TestBrushToPlanenum (bspbrush_t *brush, int planenum,
-						 int *numsplits, qboolean *hintsplit, int *epsilonbrush)
+						int *numsplits, qboolean *hintsplit, int *epsilonbrush)
 {
 	int			i, j, num;
 	plane_t		*plane;
@@ -667,7 +667,7 @@ qboolean WindingIsTiny (winding_t *w)
 }
 
 
-// UNDONE: JAY: This should be a slightly better heuristic - it builds an OBB 
+// UNDONE: JAY: This should be a slightly better heuristic - it builds an OBB
 // around the winding and tests planar dimensions.  NOTE: This can fail when a
 // winding normal cannot be constructed (or is degenerate), but that is probably
 // desired in this case.
@@ -891,7 +891,7 @@ side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 					continue;	// skip surfaces are never chosen
 				if ( side->visible ^ (pass<1) )
 					continue;	// only check visible faces on first pass
-				
+
 				pnum = side->planenum;
 				pnum &= ~1;	// allways use positive facing plane
 
@@ -1118,40 +1118,40 @@ void SplitBrush( bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t
 	TranslateWinding( w, -offset );
 	midwinding = w;
 
-    //
-    //
+	//
+	//
 	// split it for real
-    //
-    //
+	//
+	//
 
-    //
-    // allocate two new brushes referencing the original
-    //
+	//
+	// allocate two new brushes referencing the original
+	//
 	for( i = 0; i < 2; i++ )
 	{
 		b[i] = AllocBrush( brush->numsides + 1 );
 		b[i]->original = brush->original;
 	}
 
-    //
+	//
 	// split all the current windings
-    //
+	//
 	for( i = 0; i < brush->numsides; i++ )
 	{
-        // get the current side
+		// get the current side
 		s = &brush->sides[i];
 
-        // get the sides winding
+		// get the sides winding
 		w = s->winding;
 		if( !w )
 			continue;
 
-        // clip the winding
+		// clip the winding
 		ClipWindingEpsilon_Offset( w, plane->normal, plane->dist, 0 /*PLANESIDE_EPSILON*/, &cw[0], &cw[1], offset );
 
 		for( j = 0; j < 2; j++ )
 		{
-            // does winding exist?
+			// does winding exist?
 			if( !cw[j] )
 				continue;
 #if 0
@@ -1162,16 +1162,16 @@ void SplitBrush( bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t
 			}
 #endif
 
-            //
-            // create a clipped "side" with the new winding
-            //
+			//
+			// create a clipped "side" with the new winding
+			//
 			cs = &b[j]->sides[b[j]->numsides];
 			b[j]->numsides++;
 			*cs = *s;
 			cs->winding = cw[j];
 			cs->tested = false;
-            // save the original side information
-            //cs->original = s->original;
+			// save the original side information
+			//cs->original = s->original;
 		}
 	}
 
@@ -1225,10 +1225,10 @@ void SplitBrush( bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t
 		cs->planenum = planenum^i^1;
 		cs->texinfo = TEXINFO_NODE;
 
-        // initialize the displacement map index
+		// initialize the displacement map index
 		cs->pMapDisp = NULL;
 
-        cs->visible = false;
+		cs->visible = false;
 		cs->tested = false;
 		if (i==0)
 			cs->winding = CopyWinding (midwinding);
@@ -1262,7 +1262,7 @@ void SplitBrush( bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t
 SplitBrushList
 ================
 */
-void SplitBrushList (bspbrush_t *brushes, 
+void SplitBrushList (bspbrush_t *brushes,
 	node_t *node, bspbrush_t **front, bspbrush_t **back)
 {
 	bspbrush_t	*brush, *newbrush, *newbrush2;
@@ -1352,7 +1352,7 @@ node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 		LeafNode (node, brushes);
 		return node;
 	}
-			 
+
 	// this is a splitplane node
 	node->side = bestside;
 	node->planenum = bestside->planenum & ~1;	// always use front facing
@@ -1379,7 +1379,7 @@ node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 
 	return node;
 }
-	  
+
 
 //===========================================================
 
@@ -1466,4 +1466,3 @@ p[0] = 0;
 #endif
 	return tree;
 }
-

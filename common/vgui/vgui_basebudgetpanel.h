@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -33,7 +33,7 @@ public:
 class CBudgetPanelConfigData
 {
 public:
-	// NOTE: nothing can ever be removed from this list once you've called 
+	// NOTE: nothing can ever be removed from this list once you've called
 	// OnConfigDataChanged. Elements can only be added to it.
 	CUtlVector<CBudgetGroupInfo> m_BudgetGroupInfo;
 
@@ -49,7 +49,7 @@ public:
 	int m_nLinesPerTimeLabel;	// How many vertical lines per time label?
 
 	// How translucent is the background.
-	float m_flBackgroundAlpha; 
+	float m_flBackgroundAlpha;
 
 	// Where to position it on the screen.
 	int m_xCoord;
@@ -85,7 +85,7 @@ public:
 	bool IsDedicated() const { return m_bDedicated; }
 
 	const double *GetBudgetGroupData( int &nGroups, int &nSamplesPerGroup, int &nSampleOffset ) const;
-	
+
 	void GetGraphLabelScreenSpaceTopAndBottom( int id, int &top, int &bottom );
 
 	// What percentage is the specified value of the (bargraph) range?
@@ -105,17 +105,17 @@ protected:
 	void ClearTimesForAllGroupsForThisFrame( void );
 	void ClearAllTimesForGroup( int groupID );
 	void Rebuild( const CBudgetPanelConfigData &data );
-	
+
 protected:
 	int m_BudgetHistoryOffset;
 
 	// This defines all the positioning, label names, etc.
 	CBudgetPanelConfigData m_ConfigData;
-	
+
 	CUtlVector<vgui::Label *> m_GraphLabels;
 	CUtlVector<vgui::Label *> m_TimeLabels;
 	CUtlVector<vgui::Label *> m_HistoryLabels;
-	
+
 	CBudgetHistoryPanel *m_pBudgetHistoryPanel;
 	CBudgetBarGraphPanel *m_pBudgetBarGraphPanel;
 

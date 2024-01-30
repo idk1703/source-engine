@@ -44,10 +44,10 @@ $Configuration
 
 		// New warnings in VS 2012 that we want to ignore.
 		// warning C4005: 'DXGI_STATUS_OCCLUDED' : macro redefinition
-		// warning C6014: Leaking memory 'pThinkParams'. 
+		// warning C6014: Leaking memory 'pThinkParams'.
 		// warning C28159: Consider using 'GetTickCount64' instead of 'GetTickCount'. Reason: GetTickCount overflows roughly every 49 days.
-		// warning C28182: Dereferencing NULL pointer. 'pPropMesh' contains the same NULL value as '(CMesh *)=(pPropMesh)' did. 
-		// warning C28183: 'entropy->ac_count_ptrs[actbl]' could be '0', and is a copy of the value found in 'entropy->dc_count_ptrs[dctbl]':  this does not adhere to the specification for the function 'memset'. 
+		// warning C28182: Dereferencing NULL pointer. 'pPropMesh' contains the same NULL value as '(CMesh *)=(pPropMesh)' did.
+		// warning C28183: 'entropy->ac_count_ptrs[actbl]' could be '0', and is a copy of the value found in 'entropy->dc_count_ptrs[dctbl]':  this does not adhere to the specification for the function 'memset'.
 		// warning C28197: Possibly leaking memory 'pInfo'.
 		// warning C28198: Possibly leaking memory 'kvFrame1' due to an exception.   Is a local catch block needed to clean up memory?
 		// warning C28204: 'QueryInterface' : Only one of this overload and the one at c:\program files (x86)\windows kits\8.0\include\um\unknwnbase.h(114) are annotated for _Param_(2): both or neither must be annotated.

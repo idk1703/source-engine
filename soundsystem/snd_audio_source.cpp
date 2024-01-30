@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -42,7 +42,7 @@ CAudioSource *AudioSource_Create( const char *pName )
 CAudioSource::~CAudioSource( void )
 {
 	CAudioMixer *mixer;
-	
+
 	while ( 1 )
 	{
 		mixer = g_pSoundSystem->FindMixer( this );

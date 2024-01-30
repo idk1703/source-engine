@@ -16,7 +16,7 @@
 
 
 #if HL2_EPISODIC
-// In Episodic we unify the NO_WORLD_ILLUMINATION lights to use 
+// In Episodic we unify the NO_WORLD_ILLUMINATION lights to use
 // the more efficient elight structure instead. This should theoretically
 // be extended to other projects but may have unintended consequences
 // and bears more thorough testing.
@@ -112,7 +112,7 @@ void C_DynamicLight::Release()
 		m_pDynamicLight->die = gpGlobals->curtime;
 		m_pDynamicLight = 0;
 	}
-	
+
 	if (m_pSpotlightEnd)
 	{
 		m_pSpotlightEnd->die = gpGlobals->curtime;
@@ -171,7 +171,7 @@ void C_DynamicLight::ClientThink(void)
 			m_pDynamicLight = 0;
 		}
 	}
-	
+
 #if DLIGHT_NO_WORLD_USES_ELIGHT
 	if (( m_OuterAngle > 0 ) && !ShouldBeElight())
 #else
@@ -185,7 +185,7 @@ void C_DynamicLight::ClientThink(void)
 			m_pSpotlightEnd = effects->CL_AllocDlight( -index );
 			Assert (m_pSpotlightEnd);
 		}
-				  
+
 		// Trace a line outward, don't use hitboxes (too slow)
 		Vector end;
 		VectorMA( GetAbsOrigin(), m_Radius, forward, end );
@@ -195,7 +195,7 @@ void C_DynamicLight::ClientThink(void)
 		UTIL_TraceLine( GetAbsOrigin(), end, MASK_NPCWORLDSTATIC, NULL, COLLISION_GROUP_NONE, &pm );
 		C_BaseEntity::PopEnableAbsRecomputations();
 		VectorCopy( pm.endpos, m_pSpotlightEnd->origin );
-		
+
 		if (pm.fraction == 1.0f)
 		{
 			m_pSpotlightEnd->die = gpGlobals->curtime;
@@ -234,4 +234,3 @@ void C_DynamicLight::ClientThink(void)
 
 	SetNextClientThink(gpGlobals->curtime + 0.001);
 }
-

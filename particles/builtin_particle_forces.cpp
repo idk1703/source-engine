@@ -37,7 +37,7 @@ class C_OP_RandomForce : public CParticleOperatorInstance
 	}
 
 
-	virtual void AddForces( FourVectors *pAccumulatedForces, 
+	virtual void AddForces( FourVectors *pAccumulatedForces,
 							CParticleCollection *pParticles,
 							int nBlocks,
 							float flStrength,
@@ -47,10 +47,10 @@ class C_OP_RandomForce : public CParticleOperatorInstance
 	Vector m_MaxForce;
 };
 
-void C_OP_RandomForce::AddForces( FourVectors *pAccumulatedForces, 
+void C_OP_RandomForce::AddForces( FourVectors *pAccumulatedForces,
 								  CParticleCollection *pParticles,
 								  int nBlocks,
-								  float flStrength,					  
+								  float flStrength,
 								  void *pContext ) const
 {
 	FourVectors box_min,box_max;
@@ -62,9 +62,9 @@ void C_OP_RandomForce::AddForces( FourVectors *pAccumulatedForces,
 	{
 		pAccumulatedForces->x = AddSIMD(
 			pAccumulatedForces->x, AddSIMD( box_min.x, MulSIMD( box_max.x, RandSIMD( nContext) ) ) );
-		pAccumulatedForces->y = AddSIMD(									   
+		pAccumulatedForces->y = AddSIMD(
 			pAccumulatedForces->y, AddSIMD( box_min.y, MulSIMD( box_max.y, RandSIMD( nContext) ) ) );
-		pAccumulatedForces->z = AddSIMD(									   
+		pAccumulatedForces->z = AddSIMD(
 			pAccumulatedForces->z, AddSIMD( box_min.z, MulSIMD( box_max.z, RandSIMD( nContext) ) ) );
 		pAccumulatedForces++;
 	}
@@ -73,7 +73,7 @@ void C_OP_RandomForce::AddForces( FourVectors *pAccumulatedForces,
 
 DEFINE_PARTICLE_OPERATOR( C_OP_RandomForce, "random force", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_RandomForce ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_RandomForce )
 	DMXELEMENT_UNPACK_FIELD( "min force", "0 0 0", Vector, m_MinForce )
 	DMXELEMENT_UNPACK_FIELD( "max force", "0 0 0", Vector, m_MaxForce )
 END_PARTICLE_OPERATOR_UNPACK( C_OP_RandomForce )
@@ -93,7 +93,7 @@ class C_OP_TwistAroundAxis : public CParticleOperatorInstance
 	}
 
 
-	virtual void AddForces( FourVectors *pAccumulatedForces, 
+	virtual void AddForces( FourVectors *pAccumulatedForces,
 							CParticleCollection *pParticles,
 							int nBlocks,
 							float flStrength,
@@ -104,7 +104,7 @@ class C_OP_TwistAroundAxis : public CParticleOperatorInstance
 	bool m_bLocalSpace;
 };
 
-void C_OP_TwistAroundAxis::AddForces( FourVectors *pAccumulatedForces, 
+void C_OP_TwistAroundAxis::AddForces( FourVectors *pAccumulatedForces,
 									  CParticleCollection *pParticles,
 									  int nBlocks,
 									  float flStrength,
@@ -146,7 +146,7 @@ void C_OP_TwistAroundAxis::AddForces( FourVectors *pAccumulatedForces,
 
 DEFINE_PARTICLE_OPERATOR( C_OP_TwistAroundAxis, "twist around axis", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_TwistAroundAxis ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_TwistAroundAxis )
 	DMXELEMENT_UNPACK_FIELD( "amount of force", "0", float, m_fForceAmount )
 	DMXELEMENT_UNPACK_FIELD( "twist axis", "0 0 1", Vector, m_TwistAxis )
 	DMXELEMENT_UNPACK_FIELD( "object local space axis 0/1","0", bool, m_bLocalSpace )
@@ -173,7 +173,7 @@ class C_OP_AttractToControlPoint : public CParticleOperatorInstance
 	}
 
 
-	virtual void AddForces( FourVectors *pAccumulatedForces, 
+	virtual void AddForces( FourVectors *pAccumulatedForces,
 							CParticleCollection *pParticles,
 							int nBlocks,
 							float flStrength,
@@ -184,7 +184,7 @@ class C_OP_AttractToControlPoint : public CParticleOperatorInstance
 	int m_nControlPointNumber;
 };
 
-void C_OP_AttractToControlPoint::AddForces( FourVectors *pAccumulatedForces, 
+void C_OP_AttractToControlPoint::AddForces( FourVectors *pAccumulatedForces,
 											CParticleCollection *pParticles,
 											int nBlocks,
 											float flStrength,
@@ -214,12 +214,12 @@ void C_OP_AttractToControlPoint::AddForces( FourVectors *pAccumulatedForces,
 		*(pAccumulatedForces++) += ofs;
 		pPos += nPosStride;
 	}
-	
+
 }
 
 DEFINE_PARTICLE_OPERATOR( C_OP_AttractToControlPoint, "Pull towards control point", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_AttractToControlPoint ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_AttractToControlPoint )
 	DMXELEMENT_UNPACK_FIELD( "amount of force", "0", float, m_fForceAmount )
 	DMXELEMENT_UNPACK_FIELD( "falloff power", "2", float, m_fFalloffPower )
 	DMXELEMENT_UNPACK_FIELD( "control point number", "0", int, m_nControlPointNumber )
@@ -250,7 +250,7 @@ class C_OP_LennardJonesForce : public CParticleOperatorInstance
 		m_pPhysTiler = new PhysTiler(m_fInteractionRadius);
 	}
 
-	virtual void AddForces( FourVectors *pAccumulatedForces, 
+	virtual void AddForces( FourVectors *pAccumulatedForces,
 		CParticleCollection *pParticles,
 		int nBlocks,
 		float flStrength,
@@ -341,21 +341,21 @@ void C_OP_LennardJonesForce::addParticleForce(PhysParticle* a, PhysParticle* b, 
 	if(f > m_fMaxAttraction) f = m_fMaxAttraction;
 
 	Point3D scaledr = (b->center - a->center) * (f/(d+FLT_EPSILON)); // Dividing by d scales distance down to a unit vector
-	a->force.add(scaledr); 
+	a->force.add(scaledr);
 	b->force.subtract(scaledr);
 }
 
-void C_OP_LennardJonesForce::AddForces( FourVectors *pAccumulatedForces, 
+void C_OP_LennardJonesForce::AddForces( FourVectors *pAccumulatedForces,
 										CParticleCollection *pParticles,
 										int nBlocks,
-										float flStrength,					  
+										float flStrength,
 										void *pContext ) const
 {
 	int nParticles = pParticles->m_nActiveParticles; // Not sure if this is correct!
 
 	size_t nPosStride;
 	const FourVectors *pPos=pParticles->Get4VAttributePtr( PARTICLE_ATTRIBUTE_XYZ, &nPosStride );
-	
+
 	// The +4 is because particles are stored by PET in blocks of 4
 	// However, not every block is full. Thus, nParticles may be
 	// less than nBlocks*4. Could get rid of this if the swizzling/unswizzling
@@ -365,12 +365,12 @@ void C_OP_LennardJonesForce::AddForces( FourVectors *pAccumulatedForces,
 	{
 		imp_particles_sa.pushAutoSize(PhysParticle());
 	}
-	
+
 	/*
 	size_t nPrevPosStride;
 	const FourVectors *pPrevPos=pParticles->Get4VAttributePtr( PARTICLE_ATTRIBUTE_PREV_XYZ, &nPrevPosStride );
 	*/
-	
+
 	//m_pParticleCache->beginFrame();
 	//m_pParticleCache->beginTile(nParticles);
 
@@ -434,7 +434,7 @@ void C_OP_LennardJonesForce::AddForces( FourVectors *pAccumulatedForces,
 	float timeStep = 1.0f; // This should be customizable
 	float nearNeighborInteractionRadius = 2.3f;
 	float nearNeighborInteractionRadiusSq = nearNeighborInteractionRadius * nearNeighborInteractionRadius;
-	
+
 	PhysParticleCache* pCache = m_pPhysTiler->getParticleCache();
 
 	// Calculate number of near neighbors for each particle
@@ -453,7 +453,7 @@ void C_OP_LennardJonesForce::AddForces( FourVectors *pAccumulatedForces,
 			{
 				b1->neighbor_count++;
 				b2->neighbor_count++;
-	
+
 			}
 
 			node++;
@@ -502,7 +502,7 @@ void C_OP_LennardJonesForce::AddForces( FourVectors *pAccumulatedForces,
 		pAccumulatedForces->Z(0) += imp_particles_sa[i*4].force[2];
 
 		pAccumulatedForces->X(1) += imp_particles_sa[i*4+1].force[0];
-		pAccumulatedForces->Y(1) += imp_particles_sa[i*4+1].force[1];		
+		pAccumulatedForces->Y(1) += imp_particles_sa[i*4+1].force[1];
 		pAccumulatedForces->Z(1) += imp_particles_sa[i*4+1].force[2];
 
 		pAccumulatedForces->X(2) += imp_particles_sa[i*4+2].force[0];
@@ -520,7 +520,7 @@ void C_OP_LennardJonesForce::AddForces( FourVectors *pAccumulatedForces,
 
 DEFINE_PARTICLE_OPERATOR( C_OP_LennardJonesForce, "lennard jones force", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_LennardJonesForce ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_LennardJonesForce )
 DMXELEMENT_UNPACK_FIELD( "interaction radius", "4", float, m_fInteractionRadius )
 DMXELEMENT_UNPACK_FIELD( "surface tension", "1", float, m_fSurfaceTension )
 DMXELEMENT_UNPACK_FIELD( "lennard jones attractive force", "1", float, m_fLennardJonesAttraction )
@@ -541,4 +541,3 @@ void AddBuiltInParticleForceGenerators( void )
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_FORCEGENERATOR, C_OP_LennardJonesForce );
 	#endif
 }
-

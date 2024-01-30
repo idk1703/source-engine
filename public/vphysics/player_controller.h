@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -38,7 +38,7 @@ public:
 
 	virtual void SetPushMassLimit( float maxPushMass ) = 0;
 	virtual void SetPushSpeedLimit( float maxPushSpeed ) = 0;
-	
+
 	virtual float GetPushMassLimit() = 0;
 	virtual float GetPushSpeedLimit() = 0;
 	virtual bool WasFrozen() = 0;

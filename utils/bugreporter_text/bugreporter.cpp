@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #define PROTECTED_THINGS_DISABLE
@@ -240,7 +240,7 @@ bool CBugReporter::Init( CreateInterfaceFn engineFactory )
 		}
 	}
 
-	// Load our bugreporter_text options file 
+	// Load our bugreporter_text options file
 	m_OptionsFile = new KeyValues( "OptionsFile" );
 	if ( !m_OptionsFile->LoadFromFile( g_filesystem, "bugreporter_text.txt", "EXECUTABLE_PATH" ) )
 	{
@@ -289,7 +289,7 @@ char const *CBugReporter::GetDisplayName( int index )
 	if ( index < 0 || index >= (int)m_SortedDisplayNames.Count() )
 		return "<<Invalid>>";
 
-	return m_BugStrings.String( m_SortedDisplayNames[ index ] ); 
+	return m_BugStrings.String( m_SortedDisplayNames[ index ] );
 }
 
 char const *CBugReporter::GetDisplayNameForUserName( char const *username )

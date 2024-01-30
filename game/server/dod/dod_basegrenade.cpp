@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -37,14 +37,14 @@ END_DATADESC()
 BEGIN_DATADESC( CDODBaseGrenade )
 
 	DEFINE_THINKFUNC( DetonateThink ),
-	
+
 	DEFINE_EMBEDDED( m_GrenadeController ),
 	DEFINE_PHYSPTR( m_pMotionController ),	// probably not necessary
-	
+
 END_DATADESC()
 
 IMPLEMENT_SERVERCLASS_ST( CDODBaseGrenade, DT_DODBaseGrenade )
-	SendPropVector( SENDINFO( m_vInitialVelocity ), 
+	SendPropVector( SENDINFO( m_vInitialVelocity ),
 				20,		// nbits
 				0,		// flags
 				-3000,	// low value
@@ -70,13 +70,13 @@ void CDODBaseGrenade::Spawn( void )
 	m_bUseVPhysics = true;
 
 	BaseClass::Spawn();
-	
+
 	SetSolid( SOLID_BBOX );	// So it will collide with physics props!
 
 	UTIL_SetSize( this, Vector(-4,-4,-4), Vector(4,4,4) );
 
 	if( m_bUseVPhysics )
-	{		 
+	{
 		SetCollisionGroup( COLLISION_GROUP_WEAPON );
 		IPhysicsObject *pPhysicsObject = VPhysicsInitNormal( SOLID_BBOX, 0, false );
 
@@ -87,7 +87,7 @@ void CDODBaseGrenade::Spawn( void )
 
 			pPhysicsObject->EnableGravity( false );
 		}
-		
+
 		m_takedamage	= DAMAGE_EVENTS_ONLY;
 	}
 	else
@@ -99,7 +99,7 @@ void CDODBaseGrenade::Spawn( void )
 	AddSolidFlags( FSOLID_NOT_STANDABLE );
 
 	m_iHealth		= 1;
-	
+
 	SetFriction( GetGrenadeFriction() );
 	SetElasticity( GetGrenadeElasticity() );
 
@@ -141,8 +141,8 @@ void CDODBaseGrenade::DetonateThink( void )
 	}
 
 	Vector foo;
-	AngularImpulse a;	
-		
+	AngularImpulse a;
+
 	VPhysicsGetObject()->GetVelocity( &foo, &a );
 
 	if( gpGlobals->curtime > m_flDetonateTime )
@@ -175,7 +175,7 @@ void CDODBaseGrenade::ResolveFlyCollisionCustom( trace_t &trace, Vector &vecVelo
 	{
 		flSurfaceElasticity = 0.3;
 	}
-	
+
 	float flTotalElasticity = GetElasticity() * flSurfaceElasticity;
 	flTotalElasticity = clamp( flTotalElasticity, 0.0f, 0.9f );
 
@@ -220,12 +220,12 @@ void CDODBaseGrenade::ResolveFlyCollisionCustom( trace_t &trace, Vector &vecVelo
 		}
 		else
 		{
-			Vector vecDelta = GetBaseVelocity() - vecAbsVelocity;	
+			Vector vecDelta = GetBaseVelocity() - vecAbsVelocity;
 			Vector vecBaseDir = GetBaseVelocity();
 			VectorNormalize( vecBaseDir );
 			float flScale = vecDelta.Dot( vecBaseDir );
 
-			VectorScale( vecAbsVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, vecVelocity ); 
+			VectorScale( vecAbsVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, vecVelocity );
 			VectorMA( vecVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, GetBaseVelocity() * flScale, vecVelocity );
 			PhysicsPushEntity( vecVelocity, &trace );
 		}
@@ -245,7 +245,7 @@ void CDODBaseGrenade::ResolveFlyCollisionCustom( trace_t &trace, Vector &vecVelo
 			SetAbsVelocity( vecAbsVelocity );
 		}
 	}
-	
+
 	BounceSound();
 }
 
@@ -291,7 +291,7 @@ void CDODBaseGrenade::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 		// if its after the round, and bonus round is off, don't allow anyone to pick it up
 		if ( state != STATE_RND_RUNNING )
 			return;
-	}	
+	}
 
 	OnPickedUp();
 
@@ -300,7 +300,7 @@ void CDODBaseGrenade::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 	Assert( szClsName );
 
 	CBaseCombatWeapon *pWeapon = dynamic_cast<CBaseCombatWeapon *>( pPlayer->GiveNamedItem( szClsName ) );
-	
+
 	Assert( pWeapon && "Wpn pointer has to be valid for us to pick up this grenade" );
 
 	if( pWeapon )
@@ -310,12 +310,12 @@ void CDODBaseGrenade::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 		pWeapon->AcceptInput( "DetonateTime", this, this, flDetTime, 0 );
 
 #ifdef DBGFLAG_ASSERT
-		bool bSuccess = 
+		bool bSuccess =
 #endif
 			pPlayer->Weapon_Switch( pWeapon );
 
-		Assert( bSuccess );		
-		
+		Assert( bSuccess );
+
 		//Remove the one we picked up
 		SetThink( NULL );
 		UTIL_Remove( this );
@@ -520,7 +520,7 @@ void CDODBaseGrenade::VPhysicsCollision( int index, gamevcollisionevent_t *pEven
 		// don't stop, go through this entity after breaking it
 		Vector dampedVelocity = DOD_GRENADE_WINDOW_BREAK_DAMPING_AMOUNT * pEvent->preVelocity[index];
 		VPhysicsGetObject()->SetVelocity( &dampedVelocity, &pEvent->preAngularVelocity[index] );
-	}	
+	}
 	else
 		BaseClass::VPhysicsCollision( index, pEvent );
 }

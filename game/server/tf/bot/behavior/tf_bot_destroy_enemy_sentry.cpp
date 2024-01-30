@@ -106,7 +106,7 @@ bool FindStickybombAim( CTFBot *me, CBaseEntity *target, float *aimYaw, float *a
 // 		if ( toTarget.IsLengthGreaterThan( tf_bot_sticky_base_range.GetBool() ) )
 // 		{
 // 			charge = RandomFloat( 0.1f, 1.0f );
-// 
+//
 // 			// skew towards zero - full charge shots are seldom required
 // 			charge *= charge;
 // 		}
@@ -271,7 +271,7 @@ public:
 //---------------------------------------------------------------------------------------------
 void CTFBotDestroyEnemySentry::ComputeSafeAttackSpot( CTFBot *me )
 {
-	m_hasSafeAttackSpot = false;	
+	m_hasSafeAttackSpot = false;
 
 	CObjectSentrygun *sentry = me->GetEnemySentry();
 	if ( sentry == NULL )
@@ -299,7 +299,7 @@ void CTFBotDestroyEnemySentry::ComputeSafeAttackSpot( CTFBot *me )
 		Vector wayOut = ( area->GetCenter() - sentryArea->GetCenter() ) + area->GetCenter();
 
 		Vector farthestFromSentry;
-		area->GetClosestPointOnArea( wayOut, &farthestFromSentry ); 
+		area->GetClosestPointOnArea( wayOut, &farthestFromSentry );
 
 		if ( ( farthestFromSentry - sentry->GetAbsOrigin() ).IsLengthGreaterThan( SENTRY_MAX_RANGE ) )
 		{
@@ -413,7 +413,7 @@ public:
 	}
 
 	// return true if 'adjArea' should be included in the ongoing search
-	virtual bool ShouldSearch( CNavArea *baseAdjArea, CNavArea *baseCurrentArea, float travelDistanceSoFar ) 
+	virtual bool ShouldSearch( CNavArea *baseAdjArea, CNavArea *baseCurrentArea, float travelDistanceSoFar )
 	{
 		CTFNavArea *area = (CTFNavArea *)baseCurrentArea;
 
@@ -458,7 +458,7 @@ void CTFBotDestroyEnemySentry::ComputeCornerAttackSpot( CTFBot *me )
 	{
 		return;
 	}
-	
+
 	sentry->UpdateLastKnownArea();
 	CTFNavArea *sentryArea = (CTFNavArea *)sentry->GetLastKnownArea();
 
@@ -588,8 +588,8 @@ ActionResult< CTFBot >	CTFBotDestroyEnemySentry::Update( CTFBot *me, float inter
 			// we just became uber - are we close enough to rush the sentry?
 			const float maxRushDistance = 500.0f;
 			CTFBotPathCost cost( me, FASTEST_ROUTE );
-			float travelDistance = NavAreaTravelDistance( me->GetLastKnownArea(), 
-														  m_targetSentry->GetLastKnownArea(), 
+			float travelDistance = NavAreaTravelDistance( me->GetLastKnownArea(),
+														  m_targetSentry->GetLastKnownArea(),
 														  cost, maxRushDistance );
 
 			if ( travelDistance >= 0.0f )
@@ -707,7 +707,7 @@ ActionResult< CTFBot >	CTFBotDestroyEnemySentry::Update( CTFBot *me, float inter
 
 	if ( isInAttackPosition || me->IsLineOfFireClear( me->GetEnemySentry() ) )
 	{
-		// must look at sentry entity to make use of SelectTargetPoint() 
+		// must look at sentry entity to make use of SelectTargetPoint()
 		me->GetBodyInterface()->AimHeadTowards( me->GetEnemySentry(), IBody::MANDATORY, 1.0f, NULL, "Aiming at enemy sentry" );
 
 		// because sentries are stationary, check if XY is on target to allow SelectTargetPoint() to adjust Z for grenades
@@ -886,7 +886,7 @@ ActionResult< CTFBot > CTFBotUberAttackEnemySentry::Update( CTFBot *me, float in
 	}
 	else if ( me->IsLineOfFireClear( m_targetSentry ) )
 	{
-		// must look at sentry entity to make use of SelectTargetPoint() 
+		// must look at sentry entity to make use of SelectTargetPoint()
 		me->GetBodyInterface()->AimHeadTowards( m_targetSentry, IBody::MANDATORY, 1.0f, NULL, "Aiming at target sentry" );
 
 		// because sentries are stationary, check if XY is on target to allow SelectTargetPoint() to adjust Z for grenades

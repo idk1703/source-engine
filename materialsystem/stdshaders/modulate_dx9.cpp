@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -52,8 +52,8 @@ BEGIN_VS_SHADER( Modulate_DX9,
 		info.m_nRefractAmount = REFRACTAMOUNT;
 	}
 
-	bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const 
-	{ 
+	bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const
+	{
 		if ( params[CLOAKPASSENABLED]->GetIntValue() ) // If material supports cloaking
 		{
 			if ( bCheckSpecificToThisFrame == false ) // For setting model flag at load time
@@ -64,7 +64,7 @@ BEGIN_VS_SHADER( Modulate_DX9,
 		}
 
 		// Check flag2 if not drawing cloak pass
-		return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE ); 
+		return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE );
 	}
 
 	bool IsTranslucent( IMaterialVar **params ) const
@@ -77,7 +77,7 @@ BEGIN_VS_SHADER( Modulate_DX9,
 		}
 
 		// Check flag if not drawing cloak pass
-		return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT ); 
+		return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT );
 	}
 
 	SHADER_INIT_PARAMS()
@@ -161,7 +161,7 @@ BEGIN_VS_SHADER( Modulate_DX9,
 				if( params[BASETEXTURE]->IsTexture() )
 				{
 					pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
-			
+
 					numTexCoords = 1;
 				}
 

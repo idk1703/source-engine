@@ -27,7 +27,7 @@
 
 
 #ifdef CLIENT_DLL
-	
+
 	#define CTFCGameRules C_TFCGameRules
 	#define CTFCGameRulesProxy C_TFCGameRulesProxy
 
@@ -64,7 +64,7 @@ public:
 	#else
 
 		DECLARE_SERVERCLASS_NOBASE(); // This makes datatables able to access our private vars.
-		
+
 		virtual ~CTFCGameRules();
 
 		virtual bool ClientCommand( CBaseEntity *pEdict, const CCommand &args );
@@ -83,7 +83,7 @@ public:
 
 
 public:
-	
+
 	bool CTF_Map;
 
 };

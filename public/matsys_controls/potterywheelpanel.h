@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -93,7 +93,7 @@ protected:
 	{
 		MAX_LIGHT_COUNT = 4
 	};
-	
+
 	struct LightInfo_t
 	{
 		LightDesc_t m_Desc;
@@ -102,7 +102,7 @@ protected:
 
 
 
-	enum ManipulationMode_t 
+	enum ManipulationMode_t
 	{
 		CAMERA_ROTATE,
 		CAMERA_TRANSLATE,

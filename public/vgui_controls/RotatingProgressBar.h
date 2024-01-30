@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@ namespace vgui
 {
 
 	//-----------------------------------------------------------------------------
-	// Purpose: Progress Bar that rotates an image around its center 
+	// Purpose: Progress Bar that rotates an image around its center
 	//-----------------------------------------------------------------------------
 	class RotatingProgressBar : public ProgressBar
 	{
@@ -60,7 +60,7 @@ namespace vgui
 		float m_flRotatingWide;
 		float m_flRotatingTall;
 
-	};		  
+	};
 
 } // namespace vgui
 

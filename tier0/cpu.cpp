@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,7 +30,7 @@ static bool cpuid(unsigned long function, unsigned long& out_eax, unsigned long&
 		"=S" (out_ebx),
 		"=c" (out_ecx),
 		"=d" (out_edx)
-		: "a" (function) 
+		: "a" (function)
 		);
 	return true;
 #elif defined( _X360 )
@@ -50,21 +50,21 @@ static bool cpuid(unsigned long function, unsigned long& out_eax, unsigned long&
 
 	__try
 	{
-        _asm
+		_asm
 		{
 			xor edx, edx		// Clue the compiler that EDX is about to be used.
-            mov eax, function   // set up CPUID to return processor version and features
+			mov eax, function   // set up CPUID to return processor version and features
 								//      0 = vendor string, 1 = version info, 2 = cache info
-            cpuid				// code bytes = 0fh,  0a2h
-            mov local_eax, eax	// features returned in eax
-            mov local_ebx, ebx	// features returned in ebx
-            mov local_ecx, ecx	// features returned in ecx
-            mov local_edx, edx	// features returned in edx
+			cpuid				// code bytes = 0fh,  0a2h
+			mov local_eax, eax	// features returned in eax
+			mov local_ebx, ebx	// features returned in ebx
+			mov local_ecx, ecx	// features returned in ecx
+			mov local_edx, edx	// features returned in edx
 		}
-    } 
-	__except(EXCEPTION_EXECUTE_HANDLER) 
-	{ 
-		retval = false; 
+	}
+	__except(EXCEPTION_EXECUTE_HANDLER)
+	{
+		retval = false;
 	}
 
 	out_eax = local_eax;
@@ -80,19 +80,19 @@ static bool cpuid(unsigned long function, unsigned long& out_eax, unsigned long&
 
 static bool CheckMMXTechnology(void)
 {
-#if defined( _X360 ) || defined( _PS3 ) 
+#if defined( _X360 ) || defined( _PS3 )
 	return true;
 #else
-    unsigned long eax,ebx,edx,unused;
-    if ( !cpuid(1,eax,ebx,unused,edx) )
+	unsigned long eax,ebx,edx,unused;
+	if ( !cpuid(1,eax,ebx,unused,edx) )
 		return false;
 
-    return ( edx & 0x800000 ) != 0;
+	return ( edx & 0x800000 ) != 0;
 #endif
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: This is a bit of a hack because it appears 
+// Purpose: This is a bit of a hack because it appears
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 static bool IsWin98OrOlder()
@@ -105,12 +105,12 @@ static bool IsWin98OrOlder()
 	OSVERSIONINFOEX osvi;
 	ZeroMemory(&osvi, sizeof(OSVERSIONINFOEX));
 	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-	
+
 	BOOL bOsVersionInfoEx = GetVersionEx ((OSVERSIONINFO *) &osvi);
 	if( !bOsVersionInfoEx )
 	{
 		// If OSVERSIONINFOEX doesn't work, try OSVERSIONINFO.
-		
+
 		osvi.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
 		if ( !GetVersionEx ( (OSVERSIONINFO *) &osvi) )
 		{
@@ -150,13 +150,13 @@ static bool CheckSSETechnology(void)
 		return false;
 	}
 
-    unsigned long eax,ebx,edx,unused;
-    if ( !cpuid(1,eax,ebx,unused,edx) )
+	unsigned long eax,ebx,edx,unused;
+	if ( !cpuid(1,eax,ebx,unused,edx) )
 	{
 		return false;
 	}
 
-    return ( edx & 0x2000000L ) != 0;
+	return ( edx & 0x2000000L ) != 0;
 #endif
 }
 
@@ -166,10 +166,10 @@ static bool CheckSSE2Technology(void)
 	return false;
 #else
 	unsigned long eax,ebx,edx,unused;
-    if ( !cpuid(1,eax,ebx,unused,edx) )
+	if ( !cpuid(1,eax,ebx,unused,edx) )
 		return false;
 
-    return ( edx & 0x04000000 ) != 0;
+	return ( edx & 0x04000000 ) != 0;
 #endif
 }
 
@@ -263,17 +263,17 @@ static bool Check3DNowTechnology(void)
 	return false;
 #else
 	unsigned long eax, unused;
-    if ( !cpuid(0x80000000,eax,unused,unused,unused) )
+	if ( !cpuid(0x80000000,eax,unused,unused,unused) )
 		return false;
 
-    if ( eax > 0x80000000L )
-    {
-     	if ( !cpuid(0x80000001,unused,unused,unused,eax) )
+	if ( eax > 0x80000000L )
+	{
+		if ( !cpuid(0x80000001,unused,unused,unused,eax) )
 			return false;
 
 		return ( eax & 1<<31 ) != 0;
-    }
-    return false;
+	}
+	return false;
 #endif
 }
 
@@ -283,10 +283,10 @@ static bool CheckCMOVTechnology()
 	return false;
 #else
 	unsigned long eax,ebx,edx,unused;
-    if ( !cpuid(1,eax,ebx,unused,edx) )
+	if ( !cpuid(1,eax,ebx,unused,edx) )
 		return false;
 
-    return ( edx & (1<<15) ) != 0;
+	return ( edx & (1<<15) ) != 0;
 #endif
 }
 
@@ -295,11 +295,11 @@ static bool CheckFCMOVTechnology(void)
 #if defined( _X360 ) || defined( _PS3 )
 	return false;
 #else
-    unsigned long eax,ebx,edx,unused;
-    if ( !cpuid(1,eax,ebx,unused,edx) )
+	unsigned long eax,ebx,edx,unused;
+	if ( !cpuid(1,eax,ebx,unused,edx) )
 		return false;
 
-    return ( edx & (1<<16) ) != 0;
+	return ( edx & (1<<16) ) != 0;
 #endif
 }
 
@@ -309,10 +309,10 @@ static bool CheckRDTSCTechnology(void)
 	return false;
 #else
 	unsigned long eax,ebx,edx,unused;
-    if ( !cpuid(1,eax,ebx,unused,edx) )
+	if ( !cpuid(1,eax,ebx,unused,edx) )
 		return false;
 
-    return ( edx & 0x10 ) != 0;
+	return ( edx & 0x10 ) != 0;
 #endif
 }
 
@@ -325,17 +325,17 @@ const tchar* GetProcessorVendorId()
 	unsigned long unused, VendorIDRegisters[3];
 
 	static tchar VendorID[13];
-	
+
 	memset( VendorID, 0, sizeof(VendorID) );
 	if ( !cpuid(0,unused, VendorIDRegisters[0], VendorIDRegisters[2], VendorIDRegisters[1] ) )
 	{
 		if ( IsPC() )
 		{
-			_tcscpy( VendorID, _T( "Generic_x86" ) ); 
+			_tcscpy( VendorID, _T( "Generic_x86" ) );
 		}
 		else if ( IsX360() )
 		{
-			_tcscpy( VendorID, _T( "PowerPC" ) ); 
+			_tcscpy( VendorID, _T( "PowerPC" ) );
 		}
 	}
 	else
@@ -349,7 +349,7 @@ const tchar* GetProcessorVendorId()
 #endif
 }
 
-// Returns non-zero if Hyper-Threading Technology is supported on the processors and zero if not.  This does not mean that 
+// Returns non-zero if Hyper-Threading Technology is supported on the processors and zero if not.  This does not mean that
 // Hyper-Threading Technology is necessarily enabled.
 static bool HTSupported(void)
 {
@@ -364,14 +364,14 @@ static bool HTSupported(void)
 	const unsigned int PENTIUM4_ID   = 0x0f00;		// Pentium 4 family processor id
 
 	unsigned long unused,
-				  reg_eax = 0, 
-				  reg_edx = 0,
-				  vendor_id[3] = {0, 0, 0};
+				reg_eax = 0,
+				reg_edx = 0,
+				vendor_id[3] = {0, 0, 0};
 
 	// verify cpuid instruction is supported
-	if( !cpuid(0,unused, vendor_id[0],vendor_id[2],vendor_id[1]) 
-	 || !cpuid(1,reg_eax,unused,unused,reg_edx) )
-	 return false;
+	if( !cpuid(0,unused, vendor_id[0],vendor_id[2],vendor_id[1])
+	|| !cpuid(1,reg_eax,unused,unused,reg_edx) )
+	return false;
 
 	//  Check to see if this is a Pentium 4 or later processor
 	if (((reg_eax & FAMILY_ID) ==  PENTIUM4_ID) || (reg_eax & EXT_FAMILY_ID))
@@ -391,10 +391,10 @@ static uint8 LogicalProcessorsPerPackage(void)
 	// EBX[23:16] indicate number of logical processors per package
 	const unsigned NUM_LOGICAL_BITS = 0x00FF0000;
 
-    unsigned long unused, reg_ebx = 0;
+	unsigned long unused, reg_ebx = 0;
 
-	if ( !HTSupported() ) 
-		return 1; 
+	if ( !HTSupported() )
+		return 1;
 
 	if ( !cpuid(1,unused,reg_ebx,unused,unused) )
 		return 1;
@@ -473,7 +473,7 @@ const CPUInformation* GetCPUInformation()
 
 	// Grab the processor frequency:
 	pi.m_Speed = CalculateClockSpeed();
-	
+
 	// Get the logical and physical processor counts:
 	pi.m_nLogicalProcessors = LogicalProcessorsPerPackage();
 
@@ -486,7 +486,7 @@ const CPUInformation* GetCPUInformation()
 	pi.m_nPhysicalProcessors = (unsigned char)(si.dwNumberOfProcessors / pi.m_nLogicalProcessors);
 	pi.m_nLogicalProcessors = (unsigned char)(pi.m_nLogicalProcessors * pi.m_nPhysicalProcessors);
 
-	// Make sure I always report at least one, when running WinXP with the /ONECPU switch, 
+	// Make sure I always report at least one, when running WinXP with the /ONECPU switch,
 	// it likes to report 0 processors for some reason.
 	if ( pi.m_nPhysicalProcessors == 0 && pi.m_nLogicalProcessors == 0 )
 	{
@@ -593,4 +593,3 @@ const CPUInformation* GetCPUInformation()
 
 	return &pi;
 }
-

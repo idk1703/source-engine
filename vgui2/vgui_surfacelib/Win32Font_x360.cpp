@@ -218,13 +218,13 @@ bool CWin32Font::IsEqualTo(const char *windowsFontName, int tall, int weight, in
 	// do an true comparison that accounts for non-supported behaviors that gets remapped
 	// avoids creating fonts that are graphically equivalent, though specified differently
 	if ( !stricmp( windowsFontName, m_szName.String() ) &&
-		m_iTall == tall && 
+		m_iTall == tall &&
 		m_iBlur == blur &&
 		m_iScanLines == scanlines )
 	{
 		// only these flags affect the font glyphs
-		int validFlags = vgui::ISurface::FONTFLAG_DROPSHADOW | 
-						vgui::ISurface::FONTFLAG_OUTLINE | 
+		int validFlags = vgui::ISurface::FONTFLAG_DROPSHADOW |
+						vgui::ISurface::FONTFLAG_OUTLINE |
 						vgui::ISurface::FONTFLAG_ROTARY |
 						vgui::ISurface::FONTFLAG_ITALIC |
 						vgui::ISurface::FONTFLAG_UNDERLINE;

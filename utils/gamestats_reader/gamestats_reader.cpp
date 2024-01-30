@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -50,7 +50,7 @@ void StartMYSQLInsert( void )
 }
 
 void AddField( const char *field, const char *value )
-{	
+{
 	char buf[128];
 
 	if ( !g_bFirstCmd )
@@ -65,9 +65,9 @@ void AddField( const char *field, const char *value )
 }
 
 void AddField( const char *field, const int value )
-{	
+{
 	char buf[128];
-	
+
 	if ( !g_bFirstCmd )
 	{
 		Q_strncat( sqlCmd, ", ", SQL_CMD_BUFSIZE, COPY_ALL_CHARACTERS );
@@ -108,13 +108,13 @@ int CompleteMYSQLInsert( void )
 	return retcode;
 }
 
-static const char *pszTeamNames[] = 
+static const char *pszTeamNames[] =
 {
 	"allies",
 	"axis"
 };
 
-static const char *pszClassNames[] = 
+static const char *pszClassNames[] =
 {
 	"rifleman",
 	"assault",
@@ -124,7 +124,7 @@ static const char *pszClassNames[] =
 	"rocket"
 };
 
-int iDistanceStatWeapons[DOD_NUM_DISTANCE_STAT_WEAPONS] = 
+int iDistanceStatWeapons[DOD_NUM_DISTANCE_STAT_WEAPONS] =
 {
 	WEAPON_COLT,
 	WEAPON_P38,
@@ -169,7 +169,7 @@ int iNoDistStatWeapons[DOD_NUM_NODIST_STAT_WEAPONS] =
 	WEAPON_MP40_PUNCH,
 };
 
-const char * s_WeaponAliasInfo[] = 
+const char * s_WeaponAliasInfo[] =
 {
 	"none",	//	WEAPON_NONE = 0,
 
@@ -224,11 +224,11 @@ const char * s_WeaponAliasInfo[] =
 	// not actually separate weapons, but defines used in stats recording
 	"thompson_punch",		//WEAPON_THOMPSON_PUNCH
 	"mp40_punch",			//WEAPON_MP40_PUNCH
-	"garand_zoomed",		//WEAPON_GARAND_ZOOMED,	
+	"garand_zoomed",		//WEAPON_GARAND_ZOOMED,
 
 	"k98_zoomed",			//WEAPON_K98_ZOOMED
 	"spring_zoomed",		//WEAPON_SPRING_ZOOMED
-	"k98_scoped_zoomed",	//WEAPON_K98_SCOPED_ZOOMED	
+	"k98_scoped_zoomed",	//WEAPON_K98_SCOPED_ZOOMED
 
 	"30cal_undeployed",		//WEAPON_30CAL_UNDEPLOYED,
 	"mg42_undeployed",		//WEAPON_MG42_UNDEPLOYED,
@@ -265,11 +265,11 @@ void ParseFile( const char *fileName )
 
 	struct tm *t = localtime( &mapfiletime );
 
-	// YYYY-MM-DD HH:MM::SS 
+	// YYYY-MM-DD HH:MM::SS
 
 	char filetimebuf[64];
 
-	Q_snprintf( filetimebuf, sizeof(filetimebuf), "%04d-%02d-%02d %02d:%02d:%02d", 
+	Q_snprintf( filetimebuf, sizeof(filetimebuf), "%04d-%02d-%02d %02d:%02d:%02d",
 		t->tm_year + 1900,
 		t->tm_mon + 1,
 		t->tm_mday,
@@ -427,7 +427,7 @@ int main( int argc, char **argv )
 
 						filename = g_pFullFileSystem->FindNext(findHandle);
 					}
-					g_pFullFileSystem->FindClose(findHandle);	
+					g_pFullFileSystem->FindClose(findHandle);
 
 					printf( "Completed: %d files processed from directory \"%s\"\n", iNumFiles, dir );
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -64,7 +64,7 @@ static void ConVarNetworkChangeCallback( IConVar *pConVar, const char *pOldValue
 			NET_SetConVar convar( var.GetName(), var.GetString() );
 			cl.m_NetChannel->SendNetMsg( convar );
 		}
-	} 
+	}
 
 	// Log changes to server variables
 
@@ -138,7 +138,7 @@ public:
 	}
 
 	// Purpose: Returns true if the commands can be aliased to one another
-	//  Either game/client .dll shared with engine, 
+	//  Either game/client .dll shared with engine,
 	//  or game and client dll shared and marked FCVAR_REPLICATED
 	virtual bool AreConVarsLinkable( const ConVar *child, const ConVar *parent )
 	{
@@ -213,7 +213,7 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CCvarQuery, ICvarQuery, CVAR_QUERY_INTERFACE_
 //-----------------------------------------------------------------------------
 //
 // CVar utilities begins here
-//  
+//
 //-----------------------------------------------------------------------------
 static bool IsAllSpaces( const wchar_t *str )
 {
@@ -231,9 +231,9 @@ static bool IsAllSpaces( const wchar_t *str )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *var - 
-//			*value - 
+// Purpose:
+// Input  : *var -
+//			*value -
 //-----------------------------------------------------------------------------
 void CCvarUtilities::SetDirect( ConVar *var, const char *value )
 {
@@ -247,7 +247,7 @@ void CCvarUtilities::SetDirect( ConVar *var, const char *value )
 		{
 			return;
 		}
-	} 
+	}
 
 	pszValue = value;
 	// This cvar's string must only contain printable characters.
@@ -331,7 +331,7 @@ void CCvarUtilities::SetDirect( ConVar *var, const char *value )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 
@@ -399,13 +399,13 @@ bool CCvarUtilities::IsCommand( const CCommand &args )
 	// Allow cheat commands in singleplayer, debug, or multiplayer with sv_cheats on
 	if ( v->IsFlagSet( FCVAR_CHEAT ) )
 	{
-		if ( !Host_IsSinglePlayerGame() && !CanCheat() 
+		if ( !Host_IsSinglePlayerGame() && !CanCheat()
 #if !defined(SWDS)
 			&& !cl.ishltv
 #if defined( REPLAY_ENABLED )
 			&& !cl.isreplay
 #endif
-			&& !demoplayer->IsPlayingBack() 
+			&& !demoplayer->IsPlayingBack()
 #endif
 			)
 		{
@@ -416,7 +416,7 @@ bool CCvarUtilities::IsCommand( const CCommand &args )
 
 	// Text invoking the command was typed into the console, decide what to do with it
 	//  if this is a replicated ConVar, except don't worry about restrictions if playing a .dem file
-	if ( v->IsFlagSet( FCVAR_REPLICATED ) 
+	if ( v->IsFlagSet( FCVAR_REPLICATED )
 #if !defined(SWDS)
 		&& !demoplayer->IsPlayingBack()
 #endif
@@ -476,7 +476,7 @@ bool CCvarUtilities::IsCommand( const CCommand &args )
 	return true;
 }
 
-// This is a band-aid copied directly from IsCommand().  
+// This is a band-aid copied directly from IsCommand().
 bool CCvarUtilities::IsValidToggleCommand( const char *cmd )
 {
 	ConVar			*v;
@@ -531,9 +531,9 @@ bool CCvarUtilities::IsValidToggleCommand( const char *cmd )
 	// Allow cheat commands in singleplayer, debug, or multiplayer with sv_cheats on
 	if ( v->IsFlagSet( FCVAR_CHEAT ) )
 	{
-		if ( !Host_IsSinglePlayerGame() && !CanCheat() 
+		if ( !Host_IsSinglePlayerGame() && !CanCheat()
 #if !defined(SWDS) && !defined(_XBOX)
-			&& !demoplayer->IsPlayingBack() 
+			&& !demoplayer->IsPlayingBack()
 #endif
 			)
 		{
@@ -544,7 +544,7 @@ bool CCvarUtilities::IsValidToggleCommand( const char *cmd )
 
 	// Text invoking the command was typed into the console, decide what to do with it
 	//  if this is a replicated ConVar, except don't worry about restrictions if playing a .dem file
-	if ( v->IsFlagSet( FCVAR_REPLICATED ) 
+	if ( v->IsFlagSet( FCVAR_REPLICATED )
 #if !defined(SWDS) && !defined(_XBOX)
 		&& !demoplayer->IsPlayingBack()
 #endif
@@ -568,8 +568,8 @@ bool CCvarUtilities::IsValidToggleCommand( const char *cmd )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *f - 
+// Purpose:
+// Input  : *f -
 //-----------------------------------------------------------------------------
 void CCvarUtilities::WriteVariables( CUtlBuffer &buff, bool bAllVars )
 {
@@ -627,7 +627,7 @@ static char *StripTabsAndReturns( const char *inbuffer, char *outbuffer, int out
 }
 
 static char *StripQuotes( const char *inbuffer, char *outbuffer, int outbufferSize )
-{	
+{
 	char *out = outbuffer;
 	const char *i = inbuffer;
 	char *o = out;
@@ -701,9 +701,9 @@ static void PrintListHeader( FileHandle_t& f )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *var - 
-//			*f - 
+// Purpose:
+// Input  : *var -
+//			*f -
 //-----------------------------------------------------------------------------
 static void PrintCvar( const ConVar *var, bool logging, FileHandle_t& fh )
 {
@@ -741,7 +741,7 @@ static void PrintCvar( const ConVar *var, bool logging, FileHandle_t& fh )
 	char tempbuff[512] = { 0 };
 
 	// Clean up integers
-	if ( var->GetInt() == (int)var->GetFloat() )   
+	if ( var->GetInt() == (int)var->GetFloat() )
 	{
 		Q_snprintf(valstr, sizeof( valstr ), "%-8i", var->GetInt() );
 	}
@@ -788,7 +788,7 @@ static void PrintCommand( const ConCommand *cmd, bool logging, FileHandle_t& f )
 }
 
 static bool ConCommandBaseLessFunc( const ConCommandBase * const &lhs, const ConCommandBase * const &rhs )
-{ 
+{
 	const char *left = lhs->GetName();
 	const char *right = rhs->GetName();
 
@@ -801,7 +801,7 @@ static bool ConCommandBaseLessFunc( const ConCommandBase * const &lhs, const Con
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : void CCvar::CvarList_f
 //-----------------------------------------------------------------------------
 void CCvarUtilities::CvarList( const CCommand &args )
@@ -821,7 +821,7 @@ void CCvarUtilities::CvarList( const CCommand &args )
 	if ( iArgs == 2 && !Q_strcasecmp( args[1],"?" ) )
 	{
 		ConMsg( "cvarlist:  [log logfile] [ partial ]\n" );
-		return;         
+		return;
 	}
 
 	if ( !Q_strcasecmp( args[1],"log" ) && iArgs >= 3 )
@@ -847,7 +847,7 @@ void CCvarUtilities::CvarList( const CCommand &args )
 	}
 	else
 	{
-		partial = args[ 1 ];   
+		partial = args[ 1 ];
 		ipLen = Q_strlen( partial );
 	}
 
@@ -871,7 +871,7 @@ void CCvarUtilities::CvarList( const CCommand &args )
 				print = true;
 			}
 		}
-		else		  
+		else
 		{
 			print = true;
 		}
@@ -917,8 +917,8 @@ void CCvarUtilities::CvarList( const CCommand &args )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
+// Purpose:
+// Input  :
 // Output : int
 //-----------------------------------------------------------------------------
 int CCvarUtilities::CountVariablesWithFlags( int flags )
@@ -942,7 +942,7 @@ int CCvarUtilities::CountVariablesWithFlags( int flags )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCvarUtilities::CvarHelp( const CCommand &args )
 {
@@ -972,7 +972,7 @@ void CCvarUtilities::CvarHelp( const CCommand &args )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCvarUtilities::CvarDifferences( const CCommand &args )
 {
@@ -989,7 +989,7 @@ void CCvarUtilities::CvarDifferences( const CCommand &args )
 		if ( !Q_stricmp( ((ConVar *)var)->GetDefault(), ((ConVar *)var)->GetString() ) )
 			continue;
 
-		ConVar_PrintDescription( (ConVar *)var );	
+		ConVar_PrintDescription( (ConVar *)var );
 	}
 }
 
@@ -1009,7 +1009,7 @@ void CCvarUtilities::CvarToggle( const CCommand &args )
 	}
 
 	ConVar *var = g_pCVar->FindVar( args[1] );
-	
+
 	if ( !IsValidToggleCommand( args[1] ) )
 	{
 		return;
@@ -1072,13 +1072,13 @@ void CCvarUtilities::CvarFindFlags_f( const CCommand &args )
 		{
 			if ( !var->IsFlagSet( g_ConVarFlags[i].bit ) )
 				continue;
-			
+
 			if ( !V_stristr( g_ConVarFlags[i].desc, search ) )
 				continue;
 
-			ConVar_PrintDescription( var );	
+			ConVar_PrintDescription( var );
 		}
-	}	
+	}
 }
 
 
@@ -1109,7 +1109,7 @@ CON_COMMAND( help, "Find help about a convar/concommand." )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND( differences, "Show all convars which are not at their default values." )
 {
@@ -1117,7 +1117,7 @@ CON_COMMAND( differences, "Show all convars which are not at their default value
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND( toggle, "Toggles a convar on or off, or cycles through a set of values." )
 {
@@ -1134,4 +1134,3 @@ CON_COMMAND( getcvars, "" )
 	g_pCVar->PublishToVXConsole();
 }
 #endif
-

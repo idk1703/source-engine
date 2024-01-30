@@ -77,7 +77,7 @@ static CSys g_Sys;
 ISys *sys = &g_Sys;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CSys::~CSys()
 {
@@ -87,7 +87,7 @@ CSys::~CSys()
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : msec
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 void CSys::Sleep( int msec )
 {
@@ -254,7 +254,7 @@ GameInit
 */
 bool CSys::LoadModules( CDedicatedAppSystemGroup *pAppSystemGroup )
 {
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
  		{ "engine" DLL_EXT_STRING,				CVAR_QUERY_INTERFACE_VERSION },
 		{ "soundemittersystem" DLL_EXT_STRING,	SOUNDEMITTERSYSTEM_INTERFACE_VERSION }, // loaded for backwards compatability, prevents crash on exit for old game dlls
@@ -269,14 +269,14 @@ bool CSys::LoadModules( CDedicatedAppSystemGroup *pAppSystemGroup )
 		{ "", "" }	// Required to terminate the list
 	};
 
-	if ( !pAppSystemGroup->AddSystems( appSystems ) ) 
+	if ( !pAppSystemGroup->AddSystems( appSystems ) )
 		return false;
 
 	engine = (IDedicatedServerAPI *)pAppSystemGroup->FindSystem( VENGINE_HLDS_API_VERSION );
 	// obsolete i think SetCVarIF( (ICvar*)pAppSystemGroup->FindSystem( VENGINE_CVAR_INTERFACE_VERSION ) );
 
 	IMaterialSystem* pMaterialSystem = (IMaterialSystem*)pAppSystemGroup->FindSystem( MATERIAL_SYSTEM_INTERFACE_VERSION );
-	pMaterialSystem->SetShaderAPI( "shaderapiempty" DLL_EXT_STRING );	
+	pMaterialSystem->SetShaderAPI( "shaderapiempty" DLL_EXT_STRING );
 	return true;
 }
 

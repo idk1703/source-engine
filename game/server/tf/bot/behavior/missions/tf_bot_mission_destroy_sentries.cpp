@@ -28,7 +28,7 @@ CTFBotMissionDestroySentries::CTFBotMissionDestroySentries( CObjectSentrygun *go
 //---------------------------------------------------------------------------------------------
 CObjectSentrygun *CTFBotMissionDestroySentries::SelectSentryTarget( CTFBot *me )
 {
-	
+
 	return NULL;
 }
 

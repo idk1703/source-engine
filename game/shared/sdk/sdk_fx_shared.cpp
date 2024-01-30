@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -26,15 +26,15 @@
 	{
 
 		// If we have some sounds from the weapon classname.txt file, play a random one of them
-		const char *shootsound = pWeaponInfo->aShootSounds[ sound_type ]; 
+		const char *shootsound = pWeaponInfo->aShootSounds[ sound_type ];
 		if ( !shootsound || !shootsound[0] )
 			return;
 
 		CBroadcastRecipientFilter filter; // this is client side only
 		if ( !te->CanPredict() )
 			return;
-				
-		CBaseEntity::EmitSound( filter, iPlayerIndex, shootsound, &vOrigin ); 
+
+		CBaseEntity::EmitSound( filter, iPlayerIndex, shootsound, &vOrigin );
 	}
 
 	class CGroupedSound
@@ -46,7 +46,7 @@
 
 	CUtlVector<CGroupedSound> g_GroupedSounds;
 
-	
+
 	// Called by the ImpactSound function.
 	void ShotgunImpactSoundGroup( const char *pSoundName, const Vector &vEndPos )
 	{
@@ -89,7 +89,7 @@
 
 	#include "sdk_player.h"
 	#include "te_firebullets.h"
-	
+
 	// Server doesn't play sounds anyway.
 	void StartGroupingSounds() {}
 	void EndGroupingSounds() {}
@@ -105,7 +105,7 @@
 // This runs on both the client and the server.
 // On the server, it only does the damage calculations.
 // On the client, it does all the effects.
-void FX_FireBullets( 
+void FX_FireBullets(
 	int	iPlayerIndex,
 	const Vector &vOrigin,
 	const QAngle &vAngles,
@@ -155,10 +155,10 @@ void FX_FireBullets(
 #else
 	// if this is server code, send the effect over to client as temp entity
 	// Dispatch one message for all the bullet impacts and sounds.
-	TE_FireBullets( 
+	TE_FireBullets(
 		iPlayerIndex,
-		vOrigin, 
-		vAngles, 
+		vOrigin,
+		vAngles,
 		iWeaponID,
 		iMode,
 		iSeed,
@@ -185,7 +185,7 @@ void FX_FireBullets(
 
 	if ( !pPlayer )
 		return;
-	
+
 	StartGroupingSounds();
 
 #if !defined (CLIENT_DLL)
@@ -201,7 +201,7 @@ void FX_FireBullets(
 		float x, y;
 		x = RandomFloat( -0.5, 0.5 ) + RandomFloat( -0.5, 0.5 );
 		y = RandomFloat( -0.5, 0.5 ) + RandomFloat( -0.5, 0.5 );
-	
+
 		iSeed++; // use new seed for next bullet
 
 		pPlayer->FireBullet(
@@ -221,4 +221,3 @@ void FX_FireBullets(
 
 	EndGroupingSounds();
 }
-

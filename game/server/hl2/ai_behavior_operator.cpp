@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -26,7 +26,7 @@ BEGIN_DATADESC( CAI_OperatorBehavior )
 END_DATADESC();
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CAI_OperatorBehavior::CAI_OperatorBehavior()
 {
@@ -96,7 +96,7 @@ void CAI_OperatorBehavior::GatherConditionsNotActive()
 {
 	if( m_hPositionEnt )
 	{
-		// If we're not currently the active behavior, we have a position ent, and the 
+		// If we're not currently the active behavior, we have a position ent, and the
 		// NPC can see it, coax the AI out of IDLE/ALERT schedules with this condition.
 		if( CanSeePositionEntity() )
 		{
@@ -142,8 +142,8 @@ void CAI_OperatorBehavior::GatherConditions( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CAI_OperatorBehavior::StartTask( const Task_t *pTask )
 {
@@ -219,8 +219,8 @@ void CAI_OperatorBehavior::StartTask( const Task_t *pTask )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CAI_OperatorBehavior::RunTask( const Task_t *pTask )
 {
@@ -246,7 +246,7 @@ CAI_OperatorGoal *CAI_OperatorBehavior::GetGoalEntity()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CAI_OperatorBehavior::IsGoalReady()
 {
@@ -259,7 +259,7 @@ bool CAI_OperatorBehavior::IsGoalReady()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_OperatorBehavior::SetParameters( CAI_OperatorGoal *pGoal, CBaseEntity *pPositionEnt, CBaseEntity *pContextTarget )
 {
@@ -269,7 +269,7 @@ void CAI_OperatorBehavior::SetParameters( CAI_OperatorGoal *pGoal, CBaseEntity *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_OperatorBehavior::CanSelectSchedule()
@@ -277,7 +277,7 @@ bool CAI_OperatorBehavior::CanSelectSchedule()
 	if ( m_hGoalEntity.Get() == NULL )
 		return false;
 
-	if ( m_hPositionEnt.Get() == NULL ) 
+	if ( m_hPositionEnt.Get() == NULL )
 		return false;
 
 	if( GetGoalEntity()->GetState() == OPERATOR_STATE_FINISHED )
@@ -305,7 +305,7 @@ bool CAI_OperatorBehavior::CanSelectSchedule()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CAI_OperatorBehavior::SelectSchedule()
@@ -374,9 +374,9 @@ void CAI_OperatorGoal::EnableGoal( CAI_BaseNPC *pAI )
 		return;
 	}
 
-	
+
 	CBaseEntity *pContextTarget = NULL;
-	
+
 	if( m_iszContextTarget != NULL_STRING )
 	{
 		pContextTarget = gEntList.FindEntityByName( NULL, m_iszContextTarget );
@@ -386,8 +386,8 @@ void CAI_OperatorGoal::EnableGoal( CAI_BaseNPC *pAI )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAI_OperatorGoal::InputActivate( inputdata_t &inputdata )
 {
@@ -395,8 +395,8 @@ void CAI_OperatorGoal::InputActivate( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAI_OperatorGoal::InputDeactivate( inputdata_t &inputdata )
 {
@@ -433,7 +433,7 @@ DECLARE_CONDITION( COND_OPERATOR_LOST_SIGHT_OF_POSITION )
 
 //=========================================================
 //=========================================================
-DEFINE_SCHEDULE 
+DEFINE_SCHEDULE
 (
  SCHED_OPERATOR_APPROACH_POSITION,
  "	Tasks"
@@ -451,7 +451,7 @@ DEFINE_SCHEDULE
 
  //=========================================================
  //=========================================================
- DEFINE_SCHEDULE 
+ DEFINE_SCHEDULE
  (
  SCHED_OPERATOR_OPERATE,
  "	Tasks"
@@ -465,11 +465,11 @@ DEFINE_SCHEDULE
 
 //=========================================================
 //=========================================================
-DEFINE_SCHEDULE 
+DEFINE_SCHEDULE
 (
  SCHED_OPERATOR_WAIT_FOR_HOLSTER,
  "	Tasks"
- "		TASK_WAIT					1.0" 
+ "		TASK_WAIT					1.0"
  "	"
  "	Interrupts"
  "	"

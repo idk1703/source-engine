@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -28,5 +28,3 @@ void CPortalSWeaponInfo::Parse( KeyValues *pKeyValuesData, const char *szWeaponN
 
 	m_iPlayerDamage = pKeyValuesData->GetInt( "damage", 0 );
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -57,7 +57,7 @@ public:
 
 	// unhooks and evicts image if possible, caller must re-establish
 	bool EvictImage();
-	
+
 	int GetNumFrames();
 	void SetFrame( int nFrame );
 

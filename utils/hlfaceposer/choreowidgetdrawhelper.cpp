@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,8 +11,8 @@
 #include "choreoviewcolors.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *widget - 
+// Purpose:
+// Input  : *widget -
 //-----------------------------------------------------------------------------
 CChoreoWidgetDrawHelper::CChoreoWidgetDrawHelper( mxWindow *widget )
 {
@@ -20,8 +20,8 @@ CChoreoWidgetDrawHelper::CChoreoWidgetDrawHelper( mxWindow *widget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *widget - 
+// Purpose:
+// Input  : *widget -
 //-----------------------------------------------------------------------------
 CChoreoWidgetDrawHelper::CChoreoWidgetDrawHelper( mxWindow *widget, COLORREF bgColor )
 {
@@ -29,9 +29,9 @@ CChoreoWidgetDrawHelper::CChoreoWidgetDrawHelper( mxWindow *widget, COLORREF bgC
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *widget - 
-//			bounds - 
+// Purpose:
+// Input  : *widget -
+//			bounds -
 //-----------------------------------------------------------------------------
 CChoreoWidgetDrawHelper::CChoreoWidgetDrawHelper( mxWindow *widget, RECT& bounds )
 {
@@ -39,9 +39,9 @@ CChoreoWidgetDrawHelper::CChoreoWidgetDrawHelper( mxWindow *widget, RECT& bounds
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *widget - 
-//			bounds - 
+// Purpose:
+// Input  : *widget -
+//			bounds -
 //-----------------------------------------------------------------------------
 CChoreoWidgetDrawHelper::CChoreoWidgetDrawHelper( mxWindow *widget, RECT& bounds, bool noPageFlip )
 {
@@ -50,12 +50,12 @@ CChoreoWidgetDrawHelper::CChoreoWidgetDrawHelper( mxWindow *widget, RECT& bounds
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *widget - 
-//			x - 
-//			y - 
-//			w - 
-//			h - 
+// Purpose:
+// Input  : *widget -
+//			x -
+//			y -
+//			w -
+//			h -
 //-----------------------------------------------------------------------------
 CChoreoWidgetDrawHelper::CChoreoWidgetDrawHelper( mxWindow *widget, int x, int y, int w, int h, COLORREF bgColor )
 {
@@ -63,10 +63,10 @@ CChoreoWidgetDrawHelper::CChoreoWidgetDrawHelper( mxWindow *widget, int x, int y
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *widget - 
-//			bounds - 
-//			bgColor - 
+// Purpose:
+// Input  : *widget -
+//			bounds -
+//			bgColor -
 //-----------------------------------------------------------------------------
 CChoreoWidgetDrawHelper::CChoreoWidgetDrawHelper( mxWindow *widget, RECT& bounds, COLORREF bgColor )
 {
@@ -74,12 +74,12 @@ CChoreoWidgetDrawHelper::CChoreoWidgetDrawHelper( mxWindow *widget, RECT& bounds
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *widget - 
-//			x - 
-//			y - 
-//			w - 
-//			h - 
+// Purpose:
+// Input  : *widget -
+//			x -
+//			y -
+//			w -
+//			h -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::Init( mxWindow *widget, int x, int y, int w, int h, COLORREF bgColor, bool noPageFlip )
 {
@@ -156,7 +156,7 @@ CChoreoWidgetDrawHelper::~CChoreoWidgetDrawHelper( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CChoreoWidgetDrawHelper::GetWidth( void )
@@ -165,7 +165,7 @@ int CChoreoWidgetDrawHelper::GetWidth( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CChoreoWidgetDrawHelper::GetHeight( void )
@@ -174,8 +174,8 @@ int CChoreoWidgetDrawHelper::GetHeight( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rc - 
+// Purpose:
+// Input  : rc -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::GetClientRect( RECT& rc )
 {
@@ -185,7 +185,7 @@ void CChoreoWidgetDrawHelper::GetClientRect( RECT& rc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : HDC
 //-----------------------------------------------------------------------------
 HDC CChoreoWidgetDrawHelper::GrabDC( void )
@@ -194,14 +194,14 @@ HDC CChoreoWidgetDrawHelper::GrabDC( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *font - 
-//			pointsize - 
-//			weight - 
-//			maxwidth - 
-//			rcText - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : *font -
+//			pointsize -
+//			weight -
+//			maxwidth -
+//			rcText -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::CalcTextRect( const char *font, int pointsize, int weight, int maxwidth, RECT& rcText, const char *fmt, ... )
 {
@@ -213,7 +213,7 @@ void CChoreoWidgetDrawHelper::CalcTextRect( const char *font, int pointsize, int
 	vsprintf( output, fmt, args );
 
 	HFONT fnt = CreateFont(
-		 -pointsize, 
+		 -pointsize,
 		 0,
 		 0,
 		 0,
@@ -237,12 +237,12 @@ void CChoreoWidgetDrawHelper::CalcTextRect( const char *font, int pointsize, int
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *font - 
-//			pointsize - 
-//			weight - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : *font -
+//			pointsize -
+//			weight -
+//			*fmt -
+//			... -
 // Output : int
 //-----------------------------------------------------------------------------
 int CChoreoWidgetDrawHelper::CalcTextWidth( const char *font, int pointsize, int weight, const char *fmt, ... )
@@ -255,7 +255,7 @@ int CChoreoWidgetDrawHelper::CalcTextWidth( const char *font, int pointsize, int
 	vsprintf( output, fmt, args );
 
 	HFONT fnt = CreateFont(
-		 -pointsize, 
+		 -pointsize,
 		 0,
 		 0,
 		 0,
@@ -290,12 +290,12 @@ int CChoreoWidgetDrawHelper::CalcTextWidth( const char *font, int pointsize, int
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *font - 
-//			pointsize - 
-//			weight - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : *font -
+//			pointsize -
+//			weight -
+//			*fmt -
+//			... -
 // Output : int
 //-----------------------------------------------------------------------------
 int CChoreoWidgetDrawHelper::CalcTextWidthW( const char *font, int pointsize, int weight, const wchar_t *fmt, ... )
@@ -308,7 +308,7 @@ int CChoreoWidgetDrawHelper::CalcTextWidthW( const char *font, int pointsize, in
 	vswprintf( output, fmt, args );
 
 	HFONT fnt = CreateFont(
-		 -pointsize, 
+		 -pointsize,
 		 0,
 		 0,
 		 0,
@@ -342,10 +342,10 @@ int CChoreoWidgetDrawHelper::CalcTextWidthW( const char *font, int pointsize, in
 	return rcText.right;
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fnt - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : fnt -
+//			*fmt -
+//			... -
 // Output : int
 //-----------------------------------------------------------------------------
 int CChoreoWidgetDrawHelper::CalcTextWidth( HFONT fnt, const char *fmt, ... )
@@ -402,14 +402,14 @@ int CChoreoWidgetDrawHelper::CalcTextWidthW( HFONT fnt, const wchar_t *fmt, ... 
 	return rcText.right;
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *font - 
-//			pointsize - 
-//			weight - 
-//			clr - 
-//			rcText - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : *font -
+//			pointsize -
+//			weight -
+//			clr -
+//			rcText -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::DrawColoredText( const char *font, int pointsize, int weight, COLORREF clr, RECT& rcText, const char *fmt, ... )
 {
@@ -419,19 +419,19 @@ void CChoreoWidgetDrawHelper::DrawColoredText( const char *font, int pointsize, 
 	va_start( args, fmt );
 	vsprintf( output, fmt, args );
 	va_end( args  );
-	
+
 	DrawColoredTextCharset( font, pointsize, weight, ANSI_CHARSET, clr, rcText, output );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *font - 
-//			pointsize - 
-//			weight - 
-//			clr - 
-//			rcText - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : *font -
+//			pointsize -
+//			weight -
+//			clr -
+//			rcText -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::DrawColoredTextW( const char *font, int pointsize, int weight, COLORREF clr, RECT& rcText, const wchar_t *fmt, ... )
 {
@@ -441,18 +441,18 @@ void CChoreoWidgetDrawHelper::DrawColoredTextW( const char *font, int pointsize,
 	va_start( args, fmt );
 	vswprintf( output, fmt, args );
 	va_end( args  );
-	
+
 	DrawColoredTextCharsetW( font, pointsize, weight, ANSI_CHARSET, clr, rcText, output );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : font - 
-//			clr - 
-//			rcText - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : font -
+//			clr -
+//			rcText -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::DrawColoredText( HFONT font, COLORREF clr, RECT& rcText, const char *fmt, ... )
 {
@@ -462,7 +462,7 @@ void CChoreoWidgetDrawHelper::DrawColoredText( HFONT font, COLORREF clr, RECT& r
 	va_start( args, fmt );
 	vsprintf( output, fmt, args );
 	va_end( args  );
-	
+
 	HFONT oldFont = (HFONT)SelectObject( m_dcMemory, font );
 	COLORREF oldColor = SetTextColor( m_dcMemory, clr );
 	int oldMode = SetBkMode( m_dcMemory, TRANSPARENT );
@@ -480,12 +480,12 @@ void CChoreoWidgetDrawHelper::DrawColoredText( HFONT font, COLORREF clr, RECT& r
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : font - 
-//			clr - 
-//			rcText - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : font -
+//			clr -
+//			rcText -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::DrawColoredTextW( HFONT font, COLORREF clr, RECT& rcText, const wchar_t *fmt, ... )
 {
@@ -495,7 +495,7 @@ void CChoreoWidgetDrawHelper::DrawColoredTextW( HFONT font, COLORREF clr, RECT& 
 	va_start( args, fmt );
 	vswprintf( output, fmt, args );
 	va_end( args  );
-	
+
 	HFONT oldFont = (HFONT)SelectObject( m_dcMemory, font );
 	COLORREF oldColor = SetTextColor( m_dcMemory, clr );
 	int oldMode = SetBkMode( m_dcMemory, TRANSPARENT );
@@ -512,14 +512,14 @@ void CChoreoWidgetDrawHelper::DrawColoredTextW( HFONT font, COLORREF clr, RECT& 
 	SelectObject( m_dcMemory, oldFont );
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *font - 
-//			pointsize - 
-//			weight - 
-//			clr - 
-//			rcText - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : *font -
+//			pointsize -
+//			weight -
+//			clr -
+//			rcText -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::DrawColoredTextCharset( const char *font, int pointsize, int weight, DWORD charset, COLORREF clr, RECT& rcText, const char *fmt, ... )
 {
@@ -529,10 +529,10 @@ void CChoreoWidgetDrawHelper::DrawColoredTextCharset( const char *font, int poin
 	va_start( args, fmt );
 	vsprintf( output, fmt, args );
 	va_end( args  );
-	
+
 
 	HFONT fnt = CreateFont(
-		 -pointsize, 
+		 -pointsize,
 		 0,
 		 0,
 		 0,
@@ -572,10 +572,10 @@ void CChoreoWidgetDrawHelper::DrawColoredTextCharsetW( const char *font, int poi
 	va_start( args, fmt );
 	vswprintf( output, fmt, args );
 	va_end( args  );
-	
+
 
 	HFONT fnt = CreateFont(
-		 -pointsize, 
+		 -pointsize,
 		 0,
 		 0,
 		 0,
@@ -608,14 +608,14 @@ void CChoreoWidgetDrawHelper::DrawColoredTextCharsetW( const char *font, int poi
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *font - 
-//			pointsize - 
-//			weight - 
-//			clr - 
-//			rcText - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : *font -
+//			pointsize -
+//			weight -
+//			clr -
+//			rcText -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::DrawColoredTextMultiline( const char *font, int pointsize, int weight, COLORREF clr, RECT& rcText, const char *fmt, ... )
 {
@@ -627,7 +627,7 @@ void CChoreoWidgetDrawHelper::DrawColoredTextMultiline( const char *font, int po
 	vsprintf( output, fmt, args );
 
 	HFONT fnt = CreateFont(
-		 -pointsize, 
+		 -pointsize,
 		 0,
 		 0,
 		 0,
@@ -659,16 +659,16 @@ void CChoreoWidgetDrawHelper::DrawColoredTextMultiline( const char *font, int po
 	DeleteObject( fnt );
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : r - 
-//			g - 
-//			b - 
-//			style - 
-//			width - 
-//			x1 - 
-//			y1 - 
-//			x2 - 
-//			y2 - 
+// Purpose:
+// Input  : r -
+//			g -
+//			b -
+//			style -
+//			width -
+//			x1 -
+//			y1 -
+//			x2 -
+//			y2 -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::DrawColoredLine( COLORREF clr, int style, int width, int x1, int y1, int x2, int y2 )
 {
@@ -681,12 +681,12 @@ void CChoreoWidgetDrawHelper::DrawColoredLine( COLORREF clr, int style, int widt
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : clr - 
-//			style - 
-//			width - 
-//			count - 
-//			*pts - 
+// Purpose:
+// Input  : clr -
+//			style -
+//			width -
+//			count -
+//			*pts -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::DrawColoredPolyLine( COLORREF clr, int style, int width, CUtlVector< POINT >& points )
 {
@@ -707,7 +707,7 @@ void CChoreoWidgetDrawHelper::DrawColoredPolyLine( COLORREF clr, int style, int 
 		temp[ i ].x = pt->x - m_x;
 		temp[ i ].y = pt->y - m_y;
 	}
-	
+
 	Polyline( m_dcMemory, temp, c );
 
 	SelectObject( m_dcMemory, oldPen );
@@ -715,16 +715,16 @@ void CChoreoWidgetDrawHelper::DrawColoredPolyLine( COLORREF clr, int style, int 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : r - 
-//			g - 
-//			b - 
-//			style - 
-//			width - 
-//			x1 - 
-//			y1 - 
-//			x2 - 
-//			y2 - 
+// Purpose:
+// Input  : r -
+//			g -
+//			b -
+//			style -
+//			width -
+//			x1 -
+//			y1 -
+//			x2 -
+//			y2 -
 //-----------------------------------------------------------------------------
 POINTL CChoreoWidgetDrawHelper::DrawColoredRamp( COLORREF clr, int style, int width, int x1, int y1, int x2, int y2, float rate, float sustain )
 {
@@ -752,11 +752,11 @@ POINTL CChoreoWidgetDrawHelper::DrawColoredRamp( COLORREF clr, int style, int wi
 
 //-----------------------------------------------------------------------------
 // Purpose: Draw a filled rect
-// Input  : clr - 
-//			x1 - 
-//			y1 - 
-//			x2 - 
-//			y2 - 
+// Input  : clr -
+//			x1 -
+//			y1 -
+//			x2 -
+//			y2 -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::DrawFilledRect( COLORREF clr, RECT& rc )
 {
@@ -770,11 +770,11 @@ void CChoreoWidgetDrawHelper::DrawFilledRect( COLORREF clr, RECT& rc )
 
 //-----------------------------------------------------------------------------
 // Purpose: Draw a filled rect
-// Input  : clr - 
-//			x1 - 
-//			y1 - 
-//			x2 - 
-//			y2 - 
+// Input  : clr -
+//			x1 -
+//			y1 -
+//			x2 -
+//			y2 -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::DrawFilledRect( COLORREF clr, int x1, int y1, int x2, int y2 )
 {
@@ -790,11 +790,11 @@ void CChoreoWidgetDrawHelper::DrawFilledRect( COLORREF clr, int x1, int y1, int 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : clr - 
-//			style - 
-//			width - 
-//			rc - 
+// Purpose:
+// Input  : clr -
+//			style -
+//			width -
+//			rc -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::DrawOutlinedRect( COLORREF clr, int style, int width, RECT& rc )
 {
@@ -803,13 +803,13 @@ void CChoreoWidgetDrawHelper::DrawOutlinedRect( COLORREF clr, int style, int wid
 
 //-----------------------------------------------------------------------------
 // Purpose: Draw an outlined rect
-// Input  : clr - 
-//			style - 
-//			width - 
-//			x1 - 
-//			y1 - 
-//			x2 - 
-//			y2 - 
+// Input  : clr -
+//			style -
+//			width -
+//			x1 -
+//			y1 -
+//			x2 -
+//			y2 -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::DrawOutlinedRect( COLORREF clr, int style, int width, int x1, int y1, int x2, int y2 )
 {
@@ -838,13 +838,13 @@ void CChoreoWidgetDrawHelper::DrawOutlinedRect( COLORREF clr, int style, int wid
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x1 - 
-//			y1 - 
-//			x2 - 
-//			y2 - 
-//			clr - 
-//			thickness - 
+// Purpose:
+// Input  : x1 -
+//			y1 -
+//			x2 -
+//			y2 -
+//			clr -
+//			thickness -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::DrawLine( int x1, int y1, int x2, int y2, COLORREF clr, int thickness )
 {
@@ -872,11 +872,11 @@ void CChoreoWidgetDrawHelper::DrawLine( int x1, int y1, int x2, int y2, COLORREF
 	DeleteObject( pen );
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rc - 
-//			fillr - 
-//			fillg - 
-//			fillb - 
+// Purpose:
+// Input  : rc -
+//			fillr -
+//			fillg -
+//			fillb -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::DrawTriangleMarker( RECT& rc, COLORREF fill, bool inverted /*= false*/ )
 {
@@ -909,13 +909,13 @@ void CChoreoWidgetDrawHelper::DrawTriangleMarker( RECT& rc, COLORREF fill, bool 
 	HRGN rgn = CreatePolygonRgn( region, cPoints, ALTERNATE );
 
 	int oldPF = SetPolyFillMode( m_dcMemory, ALTERNATE );
-	
+
 	HBRUSH brFace = CreateSolidBrush( fill );
 
 	FillRgn( m_dcMemory, rgn, brFace );
 
 	DeleteObject( brFace );
-	
+
 	SetPolyFillMode( m_dcMemory, oldPF );
 
 	DeleteObject( rgn );
@@ -963,7 +963,7 @@ void CChoreoWidgetDrawHelper::ClipToRects( void )
 			HRGN result = CreateRectRgn( 0, 0, 100, 100 );
 
 			CombineRgn( result, m_ClipRegion, addIn, RGN_AND );
-			
+
 			DeleteObject( m_ClipRegion );
 			DeleteObject( addIn );
 
@@ -975,8 +975,8 @@ void CChoreoWidgetDrawHelper::ClipToRects( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rc - 
+// Purpose:
+// Input  : rc -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::OffsetSubRect( RECT& rc )
 {
@@ -984,9 +984,9 @@ void CChoreoWidgetDrawHelper::OffsetSubRect( RECT& rc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : br - 
-//			rc - 
+// Purpose:
+// Input  : br -
+//			rc -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::DrawFilledRect( HBRUSH br, RECT& rc )
 {
@@ -1022,7 +1022,7 @@ void CChoreoWidgetDrawHelper::DrawCircle( COLORREF clr, int x, int y, int radius
 		Arc( m_dcMemory, rc.left, rc.top, rc.right, rc.bottom,
 			rc.left, rc.top, rc.left, rc.top );
 	}
-	
+
 	SelectObject( m_dcMemory, oldPen );
 	SelectObject( m_dcMemory, oldBr );
 
@@ -1031,11 +1031,11 @@ void CChoreoWidgetDrawHelper::DrawCircle( COLORREF clr, int x, int y, int radius
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rc - 
-//			clr1 - 
-//			clr2 - 
-//			vertical - 
+// Purpose:
+// Input  : rc -
+//			clr1 -
+//			clr2 -
+//			vertical -
 //-----------------------------------------------------------------------------
 void CChoreoWidgetDrawHelper::DrawGradientFilledRect( RECT& rc, COLORREF clr1, COLORREF clr2, bool vertical )
 {
@@ -1050,9 +1050,9 @@ void CChoreoWidgetDrawHelper::DrawGradientFilledRect( RECT& rc, COLORREF clr1, C
 	vert[0].Green  = GetGValue( clr1 ) << 8;
 	vert[0].Blue   = GetBValue( clr1 ) << 8;
 	vert[0].Alpha  = 0x0000;
-	
+
 	vert[1].x      = rcDraw.right;
-	vert[1].y      = rcDraw.bottom; 
+	vert[1].y      = rcDraw.bottom;
 	vert[1].Red    = GetRValue( clr2 ) << 8;
 	vert[1].Green  = GetGValue( clr2 ) << 8;
 	vert[1].Blue   = GetBValue( clr2 ) << 8;

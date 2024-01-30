@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -47,7 +47,7 @@ struct AnimSetLayout_t
 	const char *contextmenulabel;
 };
 
-static AnimSetLayout_t g_AnimSetLayout[] = 
+static AnimSetLayout_t g_AnimSetLayout[] =
 {
 	{	CBaseAnimationSetEditor::LAYOUT_SPLIT,			"split",		"#BxAnimSetSplitLayout" },
 	{	CBaseAnimationSetEditor::LAYOUT_VERTICAL,		"vertical",		"#BxAnimSetVerticalLayout" },
@@ -216,8 +216,8 @@ void CBaseAnimationSetEditor::ChangeLayout( EAnimSetLayout_t newLayout )
 		{
 			m_Splitter = new Splitter( this, "AnimSetEditorMainSplitter", SPLITTER_MODE_VERTICAL, 1 );
 			m_Splitter->SetAutoResize
-				( 
-				Panel::PIN_TOPLEFT, 
+				(
+				Panel::PIN_TOPLEFT,
 				Panel::AUTORESIZE_DOWNANDRIGHT,
 				0, ANIMATION_SET_EDITOR_BUTTONTRAY_HEIGHT,
 				0, 0
@@ -229,8 +229,8 @@ void CBaseAnimationSetEditor::ChangeLayout( EAnimSetLayout_t newLayout )
 
 			m_hControlGroup->SetParent( m_Splitter->GetChild( 0 ) );
 			m_hControlGroup->SetAutoResize
-				( 
-				Panel::PIN_TOPLEFT, 
+				(
+				Panel::PIN_TOPLEFT,
 				Panel::AUTORESIZE_DOWNANDRIGHT,
 				0, 0,
 				0, 0
@@ -238,8 +238,8 @@ void CBaseAnimationSetEditor::ChangeLayout( EAnimSetLayout_t newLayout )
 
 			sub = new Splitter( m_Splitter->GetChild( 1 ), "AnimSetEditorSubSplitter", SPLITTER_MODE_HORIZONTAL, 1 );
 			sub->SetAutoResize
-				( 
-				Panel::PIN_TOPLEFT, 
+				(
+				Panel::PIN_TOPLEFT,
 				Panel::AUTORESIZE_DOWNANDRIGHT,
 				0, 0,
 				0, 0
@@ -247,16 +247,16 @@ void CBaseAnimationSetEditor::ChangeLayout( EAnimSetLayout_t newLayout )
 
 			m_hPresetFader->SetParent( sub->GetChild( 0 ) );
 			m_hPresetFader->SetAutoResize
-				( 
-				Panel::PIN_TOPLEFT, 
+				(
+				Panel::PIN_TOPLEFT,
 				Panel::AUTORESIZE_DOWNANDRIGHT,
 				0, 0,
 				0, 0
 				);
 			m_hAttributeSlider->SetParent( sub->GetChild( 1 ) );
 			m_hAttributeSlider->SetAutoResize
-				( 
-				Panel::PIN_TOPLEFT, 
+				(
+				Panel::PIN_TOPLEFT,
 				Panel::AUTORESIZE_DOWNANDRIGHT,
 				0, 0,
 				0, 0
@@ -268,8 +268,8 @@ void CBaseAnimationSetEditor::ChangeLayout( EAnimSetLayout_t newLayout )
 			m_Splitter = new Splitter( this, "AnimSetEditorMainSplitter", SPLITTER_MODE_VERTICAL, 2 );
 			m_Splitter->SetSplitterColor( Color(32, 32, 32, 255) );
 			m_Splitter->SetAutoResize
-				( 
-				Panel::PIN_TOPLEFT, 
+				(
+				Panel::PIN_TOPLEFT,
 				Panel::AUTORESIZE_DOWNANDRIGHT,
 				0, ANIMATION_SET_EDITOR_BUTTONTRAY_HEIGHT,
 				0, 0
@@ -281,8 +281,8 @@ void CBaseAnimationSetEditor::ChangeLayout( EAnimSetLayout_t newLayout )
 				list[ i ]->SetParent( m_Splitter->GetChild( i ) );
 				list[ i ]->SetSize( m_Splitter->GetChild( i )->GetWide(), m_Splitter->GetChild( i )->GetTall() );
 				list[ i ]->SetAutoResize
-					( 
-					Panel::PIN_TOPLEFT, 
+					(
+					Panel::PIN_TOPLEFT,
 					Panel::AUTORESIZE_DOWNANDRIGHT,
 					0, 0,
 					0, 0
@@ -297,8 +297,8 @@ void CBaseAnimationSetEditor::ChangeLayout( EAnimSetLayout_t newLayout )
 			m_Splitter = new Splitter( this, "AnimSetEditorMainSplitter", SPLITTER_MODE_HORIZONTAL, 2 );
 			m_Splitter->SetSplitterColor( Color(32, 32, 32, 255) );
 			m_Splitter->SetAutoResize
-				( 
-				Panel::PIN_TOPLEFT, 
+				(
+				Panel::PIN_TOPLEFT,
 				Panel::AUTORESIZE_DOWNANDRIGHT,
 				0, ANIMATION_SET_EDITOR_BUTTONTRAY_HEIGHT,
 				0, 0
@@ -311,8 +311,8 @@ void CBaseAnimationSetEditor::ChangeLayout( EAnimSetLayout_t newLayout )
 				list[ i ]->SetParent( m_Splitter->GetChild( i ) );
 				list[ i ]->SetSize( m_Splitter->GetChild( i )->GetWide(), m_Splitter->GetChild( i )->GetTall() );
 				list[ i ]->SetAutoResize
-					( 
-					Panel::PIN_TOPLEFT, 
+					(
+					Panel::PIN_TOPLEFT,
 					Panel::AUTORESIZE_DOWNANDRIGHT,
 					0, 0,
 					0, 0
@@ -399,7 +399,7 @@ CDmeChannel* CBaseAnimationSetEditor::FindImportChannel( CDmeChannel *pChannel, 
 
 		CDmElement *pImportTargetElement = pImportChannel->GetToElement();
 		const char *pImportName = pImportTargetElement->GetName();
-		
+
 		// Element name has to match exactly or be of the form *(channel name)*
 		if ( !Q_stricmp( pTargetName, pImportName ) )
 			return pImportChannel;
@@ -617,7 +617,7 @@ void CBaseAnimationSetEditor::ImportAnimation( CDmeChannelsClip *pChannelsClip, 
 	CUtlVector< LogPreview_t > controls;
 	int nCount = bVisibleOnly ? BuildVisibleControlList( controls ) : BuildFullControlList( controls );
 
-	COperationFileListFrame *pStatusFrame = new COperationFileListFrame( this, 
+	COperationFileListFrame *pStatusFrame = new COperationFileListFrame( this,
 		"Import the Following Channels?", "Target Control", false );
 	pStatusFrame->SetCloseButtonVisible( false );
 	pStatusFrame->SetOperationColumnHeaderText( "Source Channel" );
@@ -635,20 +635,20 @@ void CBaseAnimationSetEditor::ImportAnimation( CDmeChannelsClip *pChannelsClip, 
 				continue;
 
 			char pChannelInfo[512];
-			Q_snprintf( pChannelInfo, sizeof(pChannelInfo), "\"%s\" : %s", 
+			Q_snprintf( pChannelInfo, sizeof(pChannelInfo), "\"%s\" : %s",
 				pChannel->GetToElement()->GetName(), pChannel->GetToAttribute()->GetName() );
 
 			CDmeChannel *pImportChannel = FindImportChannel( pChannel, pChannelsClip );
 			if ( !pImportChannel )
 			{
-				pStatusFrame->AddOperation( "No source channel", pChannelInfo, Color( 255, 0, 0, 255 ) ); 
+				pStatusFrame->AddOperation( "No source channel", pChannelInfo, Color( 255, 0, 0, 255 ) );
 				continue;
 			}
 
 			ppFoundChannels[nFoundCount++] = pImportChannel;
 
 			char pImportInfo[512];
-			Q_snprintf( pImportInfo, sizeof(pImportInfo), "\"%s\" : %s", 
+			Q_snprintf( pImportInfo, sizeof(pImportInfo), "\"%s\" : %s",
 				pImportChannel->GetToElement()->GetName(), pImportChannel->GetToAttribute()->GetName() );
 			pStatusFrame->AddOperation( pImportInfo, pChannelInfo, Color( 0, 255, 0, 255 ) );
 		}
@@ -669,7 +669,7 @@ void CBaseAnimationSetEditor::ImportAnimation( CDmeChannelsClip *pChannelsClip, 
 			continue;
 
 		char pImportInfo[512];
-		Q_snprintf( pImportInfo, sizeof(pImportInfo), "\"%s\" : %s", 
+		Q_snprintf( pImportInfo, sizeof(pImportInfo), "\"%s\" : %s",
 			pMissingChannel->GetToElement()->GetName(), pMissingChannel->GetToAttribute()->GetName() );
 		pStatusFrame->AddOperation( pImportInfo, "No destination control", Color( 255, 255, 0, 255 ) );
 	}
@@ -707,7 +707,7 @@ void CBaseAnimationSetEditor::OnImportAnimationCancelled( KeyValues *pParams )
 {
 	KeyValues *pContextKeyValues = pParams->FindKey( "context" );
 	CDmElement *pAnimationList = GetElementKeyValue<CDmElement>( pContextKeyValues, "animationList" );
-		
+
 	// Cleanup the file
 	if ( pAnimationList )
 	{
@@ -761,7 +761,7 @@ void CBaseAnimationSetEditor::OnFileSelected( KeyValues *kv )
 		int nCount = BuildVisibleControlList( controls );
 		if ( nCount == 0 )
 		{
-			vgui::MessageBox *pMessageBox = new vgui::MessageBox( "Error Importing Animations\n", 
+			vgui::MessageBox *pMessageBox = new vgui::MessageBox( "Error Importing Animations\n",
 				"Cannot import because there are no visible controls!\n", GetParent() );
 			pMessageBox->DoModal( );
 			return;
@@ -796,7 +796,7 @@ void CBaseAnimationSetEditor::OnFileSelected( KeyValues *kv )
 	if ( !pAnimationList || pAnimationList->GetAnimationCount() == 0 )
 	{
 		char pBuf[1024];
-		Q_snprintf( pBuf, sizeof(pBuf), "File \"%s\" contains no animations!\n", pFileName ); 
+		Q_snprintf( pBuf, sizeof(pBuf), "File \"%s\" contains no animations!\n", pFileName );
 		vgui::MessageBox *pMessageBox = new vgui::MessageBox( "Error Importing Animations\n", pBuf, GetParent() );
 		pMessageBox->DoModal( );
 
@@ -864,7 +864,7 @@ void CBaseAnimationSetEditor::OnImportAnimation( KeyValues *pParams )
 //-----------------------------------------------------------------------------
 // Main entry point for exporting facial animation
 //-----------------------------------------------------------------------------
-void CBaseAnimationSetEditor::SetupFileOpenDialog( vgui::FileOpenDialog *pDialog, 
+void CBaseAnimationSetEditor::SetupFileOpenDialog( vgui::FileOpenDialog *pDialog,
 	bool bOpenFile, const char *pFileFormat, KeyValues *pContextKeyValues )
 {
 	// Compute starting directory
@@ -895,7 +895,7 @@ bool CBaseAnimationSetEditor::OnWriteFileToDisk( const char *pFileName, const ch
 	// Recompute relative paths for each source now that we know the file name
 	// NOTE: This also updates the name of the fileID in the datamodel system
 	CDisableUndoScopeGuard guard;
-	bool bOk = ExportFacialAnimation( pFileName, GetRootClip(), GetAnimationSetClip(), m_AnimSet ); 
+	bool bOk = ExportFacialAnimation( pFileName, GetRootClip(), GetAnimationSetClip(), m_AnimSet );
 	return bOk;
 }
 
@@ -1073,4 +1073,3 @@ void CBaseAnimationSetEditor::RecomputePreview()
 {
 	m_hAttributeSlider->RecomputePreview();
 }
-

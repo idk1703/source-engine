@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,7 +25,7 @@ extern CUtlVector<CCoreDispInfo*> g_CoreDispInfos;
 // Setup initial entries in g_dispinfo with some of the vertex data from the mapdisps.
 void EmitInitialDispInfos();
 
-// Resample vertex alpha into lightmap alpha for displacement surfaces so LOD popping artifacts are 
+// Resample vertex alpha into lightmap alpha for displacement surfaces so LOD popping artifacts are
 // less noticeable on the mid-to-high end.
 //
 // Also builds neighbor data.

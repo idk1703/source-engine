@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -58,7 +58,7 @@ class CMapCylinder : public CMapHelper
 		bool IsCulledByCordon(const Vector &vecMins, const Vector &vecMaxs) { return false; } // We don't hide unless our parent hides.
 
 		virtual CMapClass *PrepareSelection(SelectMode_t eSelectMode);
-		
+
 		const char* GetDescription() { return("Cylinder helper"); }
 
 		void OnAddToWorld(CMapWorld *pWorld);
@@ -79,14 +79,14 @@ class CMapCylinder : public CMapHelper
 
 		// Implements CMapAtom transformation functions.
 		void DoTransform(const VMatrix &matrix);
-		
+
 		char m_szStartValueKey[80];		// The key in our parent entity to look at for our start target.
 		char m_szStartKey[80];			// The value in our parent entity to look at for our start target.
 		char m_szStartRadiusKey[80];		// The key in our parent entity to look at for the cylinder Radius
 
-		char m_szEndValueKey[80];		// 
-		char m_szEndKey[80];			// 
-		char m_szEndRadiusKey[80];		// 
+		char m_szEndValueKey[80];		//
+		char m_szEndKey[80];			//
+		char m_szEndRadiusKey[80];		//
 
 		CMapEntity *m_pStartEntity;		// Our start target.
 		CMapEntity *m_pEndEntity;		// Our end target.

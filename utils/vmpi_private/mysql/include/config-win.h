@@ -1,19 +1,19 @@
 /* Copyright (C) 2000 MySQL AB & MySQL Finland AB & TCX DataKonsult AB
-   
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-   
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-   
-   You should have received a copy of the GNU Library General Public
-   License along with this library; if not, write to the Free
-   Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
-   MA 02111-1307, USA */
+
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Library General Public
+	License as published by the Free Software Foundation; either
+	version 2 of the License, or (at your option) any later version.
+
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Library General Public License for more details.
+
+	You should have received a copy of the GNU Library General Public
+	License along with this library; if not, write to the Free
+	Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+	MA 02111-1307, USA */
 
 /* Defines for Win32 to make it compatible for MySQL */
 
@@ -97,7 +97,7 @@ typedef __int64	longlong;
 typedef int sigset_t;
 #define longlong_defined
 /* off_t should not be __int64 because of conflicts in header files;
-   Use my_off_t or os_off_t instead */
+	Use my_off_t or os_off_t instead */
 typedef	long off_t;
 typedef __int64 os_off_t;
 #ifdef _WIN64
@@ -138,7 +138,7 @@ typedef uint rf_SetTimer;
 #define USE_MB 1
 #define USE_MB_IDENT 1
 #define USE_STRCOLL 1
- 
+
 /* Convert some simple functions to Posix */
 
 #define sigset(A,B) signal((A),(B))
@@ -153,9 +153,9 @@ typedef uint rf_SetTimer;
 
 inline double rint(double nr)
 {
-  double f = floor(nr);
-  double c = ceil(nr);
-  return (((c-nr) >= (nr-f)) ? f :c);
+	double f = floor(nr);
+	double c = ceil(nr);
+	return (((c-nr) >= (nr-f)) ? f :c);
 }
 
 #ifdef _WIN64
@@ -165,10 +165,10 @@ inline double rint(double nr)
 #else
 inline double ulonglong2double(ulonglong value)
 {
-  longlong nr=(longlong) value;
-  if (nr >= 0)
-    return (double) nr;
-  return (18446744073709551616.0 + (double) nr);
+	longlong nr=(longlong) value;
+	if (nr >= 0)
+	return (double) nr;
+	return (18446744073709551616.0 + (double) nr);
 }
 #define my_off_t2double(A) ulonglong2double(A)
 #endif /* _WIN64 */
@@ -187,40 +187,40 @@ inline double ulonglong2double(ulonglong value)
 
 #define sint2korr(A)	(*((int16 *) (A)))
 #define sint3korr(A)	((int32) ((((uchar) (A)[2]) & 128) ? \
-				  (((uint32) 255L << 24) | \
-				   (((uint32) (uchar) (A)[2]) << 16) |\
-				   (((uint32) (uchar) (A)[1]) << 8) | \
-				   ((uint32) (uchar) (A)[0])) : \
-				  (((uint32) (uchar) (A)[2]) << 16) |\
-				  (((uint32) (uchar) (A)[1]) << 8) | \
-				  ((uint32) (uchar) (A)[0])))
+					(((uint32) 255L << 24) | \
+					(((uint32) (uchar) (A)[2]) << 16) |\
+					(((uint32) (uchar) (A)[1]) << 8) | \
+					((uint32) (uchar) (A)[0])) : \
+					(((uint32) (uchar) (A)[2]) << 16) |\
+					(((uint32) (uchar) (A)[1]) << 8) | \
+					((uint32) (uchar) (A)[0])))
 #define sint4korr(A)	(*((long *) (A)))
 #define uint2korr(A)	(*((uint16 *) (A)))
 #define uint3korr(A)	(long) (*((unsigned long *) (A)) & 0xFFFFFF)
 #define uint4korr(A)	(*((unsigned long *) (A)))
 #define uint5korr(A)	((ulonglong)(((uint32) ((uchar) (A)[0])) +\
-				    (((uint32) ((uchar) (A)[1])) << 8) +\
-				    (((uint32) ((uchar) (A)[2])) << 16) +\
-				    (((uint32) ((uchar) (A)[3])) << 24)) +\
-			 	    (((ulonglong) ((uchar) (A)[4])) << 32))
+					(((uint32) ((uchar) (A)[1])) << 8) +\
+					(((uint32) ((uchar) (A)[2])) << 16) +\
+					(((uint32) ((uchar) (A)[3])) << 24)) +\
+						(((ulonglong) ((uchar) (A)[4])) << 32))
 #define uint8korr(A)	(*((ulonglong *) (A)))
 #define sint8korr(A)	(*((longlong *) (A)))
 #define int2store(T,A)	*((uint16*) (T))= (uint16) (A)
 #define int3store(T,A)		{ *(T)=  (uchar) ((A));\
-				  *(T+1)=(uchar) (((uint) (A) >> 8));\
-				  *(T+2)=(uchar) (((A) >> 16)); }
+					*(T+1)=(uchar) (((uint) (A) >> 8));\
+					*(T+2)=(uchar) (((A) >> 16)); }
 #define int4store(T,A)	*((long *) (T))= (long) (A)
 #define int5store(T,A)	{ *(T)= (uchar)((A));\
-			  *((T)+1)=(uchar) (((A) >> 8));\
-			  *((T)+2)=(uchar) (((A) >> 16));\
-			  *((T)+3)=(uchar) (((A) >> 24)); \
-			  *((T)+4)=(uchar) (((A) >> 32)); }
+				*((T)+1)=(uchar) (((A) >> 8));\
+				*((T)+2)=(uchar) (((A) >> 16));\
+				*((T)+3)=(uchar) (((A) >> 24)); \
+				*((T)+4)=(uchar) (((A) >> 32)); }
 #define int8store(T,A)	*((ulonglong *) (T))= (ulonglong) (A)
 
 #define doubleget(V,M)	{ *((long *) &V) = *((long*) M); \
-			  *(((long *) &V)+1) = *(((long*) M)+1); }
+				*(((long *) &V)+1) = *(((long*) M)+1); }
 #define doublestore(T,V) { *((long *) T) = *((long*) &V); \
-			   *(((long *) T)+1) = *(((long*) &V)+1); }
+				*(((long *) T)+1) = *(((long*) &V)+1); }
 #define float4get(V,M) { *((long *) &(V)) = *((long*) (M)); }
 #define float8get(V,M) doubleget((V),(M))
 #define float4store(V,M) memcpy((byte*) V,(byte*) (&M),sizeof(float))

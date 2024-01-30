@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -19,7 +19,7 @@ using namespace vgui;
 
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CSlideshowDisplayScreen : public CVGuiScreenPanel
 {
@@ -52,10 +52,10 @@ private:
 DECLARE_VGUI_SCREEN_FACTORY( CSlideshowDisplayScreen, "slideshow_display_screen" );
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CSlideshowDisplayScreen::CSlideshowDisplayScreen( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CSlideshowDisplayScreen", vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/SlideshowDisplayScreen.res", "SlideshowDisplayScreen" ) ) 
+	: BaseClass( parent, "CSlideshowDisplayScreen", vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/SlideshowDisplayScreen.res", "SlideshowDisplayScreen" ) )
 {
 	m_pDisplayTextLabel = new vgui::Label( this, "NumberDisplay", "x" );
 	iLastSlideIndex = 0;
@@ -66,13 +66,13 @@ void CSlideshowDisplayScreen::ApplySchemeSettings( IScheme *pScheme )
 	assert( pScheme );
 
 	m_cDefault = pScheme->GetColor( "CSlideshowDisplayScreen_Default", GetFgColor() );
-	m_cInvisible = Color( 0, 0, 0, 0 );	
+	m_cInvisible = Color( 0, 0, 0, 0 );
 
 	m_pDisplayTextLabel->SetFgColor( m_cDefault );
 }
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CSlideshowDisplayScreen::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {

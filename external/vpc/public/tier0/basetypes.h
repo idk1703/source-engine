@@ -1,6 +1,6 @@
 //========= Copyright 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -43,7 +43,7 @@
 #include "tier0/valve_off.h"
 
 // There's a different version of this file in the xbox codeline
-// so the PC version built in the xbox branch includes things like 
+// so the PC version built in the xbox branch includes things like
 // tickrate changes.
 #include "xbox_codeline_defines.h"
 
@@ -151,7 +151,7 @@ inline T clamp( T const &val, Y const &minVal, X const &maxVal )
 
 // if the nth bit of a is set (counting with 0 = LSB),
 // return x, else y
-// this is fast if nbit is a compile-time immediate 
+// this is fast if nbit is a compile-time immediate
 #define ibitsel(a, nbit, x, y) ( ( ((a) & (1 << (nbit))) != 0 ) ? (x) : (y) )
 
 
@@ -291,7 +291,7 @@ FORCEINLINE int iclamp( int x, int min, int max )
 
 // if the nth bit of a is set (counting with 0 = LSB),
 // return x, else y
-// this is fast if nbit is a compile-time immediate 
+// this is fast if nbit is a compile-time immediate
 #define ibitsel(a, nbit, x, y) ( (x) + (((y) - (x)) & (((a) & (1 << (nbit))) ? 0 : -1)) )
 
 #endif
@@ -335,14 +335,14 @@ inline T AlignValue( T val, uintp alignment )
 }
 
 
-// FIXME: this should move 
+// FIXME: this should move
 #ifndef __cplusplus
 #define true TRUE
 #define false FALSE
 #endif
 
 //-----------------------------------------------------------------------------
-// look for NANs, infinities, and underflows. 
+// look for NANs, infinities, and underflows.
 // This assumes the ANSI/IEEE 754-1985 standard
 //-----------------------------------------------------------------------------
 
@@ -355,7 +355,7 @@ inline uint32 FloatBits( const vec_t &f )
 		vec_t f;
 		uint32 ul;
 	}tmp;
-	
+
 	switch( false ) { case false: ; case (sizeof( tmp ) == 4 && sizeof( tmp.f ) == 4 && sizeof( tmp.ul ) == 4):; };
 	tmp.f = f;
 	return tmp.ul;
@@ -387,7 +387,7 @@ inline bool IsFinite( const vec_t &f )
 //#include <math.h>
 // Just use prototype from math.h
 #ifdef __cplusplus
-extern "C" 
+extern "C"
 {
 #endif
 	double __cdecl fabs(double);
@@ -440,14 +440,14 @@ struct color24
 typedef struct color32_s
 {
 	bool operator!=( const struct color32_s &other ) const;
-	byte r, g, b, a; 
+	byte r, g, b, a;
 
 	// assign and copy by using the whole register rather
 	// than byte-by-byte copy. (No, the compiler is not
-	// smart enough to do this for you. /FAcs if you 
+	// smart enough to do this for you. /FAcs if you
 	// don't believe me.)
 	inline unsigned *asInt(void) { return reinterpret_cast<unsigned*>(this); }
-	inline const unsigned *asInt(void) const { return reinterpret_cast<const unsigned*>(this); } 
+	inline const unsigned *asInt(void) const { return reinterpret_cast<const unsigned*>(this); }
 	// This thing is in a union elsewhere, and union members can't have assignment
 	// operators, so you have to explicitly assign using this, or be slow. SUCK.
 	inline void Copy(const color32_s &rhs)

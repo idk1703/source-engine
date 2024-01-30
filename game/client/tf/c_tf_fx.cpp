@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -38,7 +38,7 @@ RecvPropVector( RECVINFO( m_vecOrigin ) ),
 RecvPropFloat( RECVINFO( m_vecAngles[0] ) ),
 RecvPropFloat( RECVINFO( m_vecAngles[1] ) ),
 RecvPropInt( RECVINFO( m_iWeaponID ) ),
-RecvPropInt( RECVINFO( m_iMode ) ), 
+RecvPropInt( RECVINFO( m_iMode ) ),
 RecvPropInt( RECVINFO( m_iSeed ) ),
 RecvPropInt( RECVINFO( m_iPlayer ) ),
 RecvPropFloat( RECVINFO( m_flSpread ) ),

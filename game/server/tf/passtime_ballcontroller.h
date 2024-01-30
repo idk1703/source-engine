@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,7 @@ class CPasstimeBallController : public TAutoList< CPasstimeBallController >
 public:
 	// ApplyTo returns the number of controllers that were applied.
 	// BallCollision happens from vphysics callbacks.
-	// BallPickedUp happens after player gets ball, but before ball 
+	// BallPickedUp happens after player gets ball, but before ball
 	// is removed from world.
 	static int ApplyTo( CPasstimeBall *pBall );
 	static int DisableOn( const CPasstimeBall *pBall );
@@ -31,7 +31,7 @@ public:
 	static void BallPickedUp( CPasstimeBall *pBall, CTFPlayer *pCatcher );
 	static void BallDamaged( CPasstimeBall *pBall );
 	static void BallSpawned( CPasstimeBall *pBall );
-	
+
 	explicit CPasstimeBallController( int priority );
 	virtual ~CPasstimeBallController() {}
 	void SetIsEnabled( bool is );
@@ -59,6 +59,4 @@ private:
 	CPasstimeBallController &operator=( CPasstimeBallController && ) = delete;
 };
 
-#endif // PASSTIME_BALLCONTROLLER_H  
-
-
+#endif // PASSTIME_BALLCONTROLLER_H

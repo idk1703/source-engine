@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,4 +32,3 @@ bool C_Cycler_TF2Commando::IsShieldActive() const
 {
 	return m_bShieldActive;
 }
-

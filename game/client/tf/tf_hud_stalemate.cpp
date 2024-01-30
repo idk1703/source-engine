@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -26,7 +26,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudStalemate : public CHudElement, public EditablePanel
 {
@@ -53,7 +53,7 @@ private:
 DECLARE_HUDELEMENT( CHudStalemate );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudStalemate::CHudStalemate( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudStalemate" )
 {
@@ -67,7 +67,7 @@ CHudStalemate::CHudStalemate( const char *pElementName ) : CHudElement( pElement
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudStalemate::Init( void )
 {
@@ -79,7 +79,7 @@ void CHudStalemate::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudStalemate::FireGameEvent( IGameEvent * event )
 {
@@ -95,8 +95,8 @@ void CHudStalemate::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CHudStalemate::OnTick( void )
 {
@@ -108,7 +108,7 @@ void CHudStalemate::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudStalemate::LevelInit( void )
 {
@@ -117,7 +117,7 @@ void CHudStalemate::LevelInit( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudStalemate::ShouldDraw( void )
 {
@@ -125,7 +125,7 @@ bool CHudStalemate::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudStalemate::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -146,7 +146,7 @@ const char *pszStalemateReasons[NUM_STALEMATE_REASONS] =
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudStalemate::SetupStalematePanel( int iReason )
 {

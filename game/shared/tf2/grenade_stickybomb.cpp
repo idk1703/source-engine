@@ -17,7 +17,7 @@ ConVar	grenade_stickybomb_damage( "grenade_stickybomb_damage","0", 0, "Recon's s
 ConVar	grenade_stickybomb_radius( "grenade_stickybomb_radius","0", 0, "Recon's stickybomb splash radius" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CGrenadeStickyBomb : public CBaseGrenade
 {
@@ -63,7 +63,7 @@ void CGrenadeStickyBomb::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeStickyBomb::Spawn( void )
 {
@@ -93,7 +93,7 @@ void CGrenadeStickyBomb::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeStickyBomb::SetTimer( float timer )
 {

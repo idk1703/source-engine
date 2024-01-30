@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,7 +34,7 @@ bool CTextStatsMgr::WriteFile( IFileSystem *pFileSys, const char *pFilename )
 	FileHandle_t hFile = pFileSys->Open( pFilename, "wt", "LOGDIR" );
 	if ( hFile == FILESYSTEM_INVALID_HANDLE )
 		return false;
-	
+
 	CTextStat *pHead = CTextStat::GetTextStatsList();
 	for ( CTextStat *pCur=pHead->m_pNext; pCur != pHead; pCur=pCur->m_pNext )
 	{
@@ -85,7 +85,7 @@ CTextStat::CTextStat( TextStatPrintFn printFn, void *pUserData, CTextStatsMgr *p
 
 CTextStat::~CTextStat()
 {
-	Term();		
+	Term();
 }
 
 
@@ -96,7 +96,7 @@ void CTextStat::Init( TextStatPrintFn printFn, void *pUserData, CTextStatsMgr *p
 	m_pPrev = GetTextStatsList();
 	m_pNext = GetTextStatsList()->m_pNext;
 	m_pPrev->m_pNext = m_pNext->m_pPrev = this;
-	
+
 	m_PrintFn = printFn;
 	m_pUserData = pUserData;
 	m_pMgr = pMgr;
@@ -137,7 +137,7 @@ void CTextStat::RemoveFn( void *pUserData )
 // ------------------------------------------------------------------------------------------ //
 // CTextStatInt implementation.
 // ------------------------------------------------------------------------------------------ //
-				
+
 CTextStatInt::CTextStatInt( const char *pName, int initialValue, CTextStatsMgr *pMgr )
 {
 	m_pName = pName;
@@ -167,8 +167,3 @@ CTextStatFile::CTextStatFile( TextStatFileFn fn )
 	m_pNext = CTextStatFile::s_pHead;
 	CTextStatFile::s_pHead = this;
 }
-
-
-
-
-

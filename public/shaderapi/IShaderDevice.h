@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -46,7 +46,7 @@ struct ShaderDisplayMode_t
 	int m_nRefreshRateDenominator;	// Refresh rate = numerator / denominator.
 };
 
-	
+
 //-----------------------------------------------------------------------------
 // Describes how to set the device
 //-----------------------------------------------------------------------------
@@ -174,7 +174,7 @@ public:
 	// A returned factory of NULL indicates the mode was not set properly.
 	virtual CreateInterfaceFn SetMode( void *hWnd, int nAdapter, const ShaderDeviceInfo_t& mode ) = 0;
 
-	// Installs a callback to get called 
+	// Installs a callback to get called
 	virtual void AddModeChangeCallback( ShaderModeChangeCallbackFunc_t func ) = 0;
 	virtual void RemoveModeChangeCallback( ShaderModeChangeCallbackFunc_t func ) = 0;
 };
@@ -201,7 +201,7 @@ public:
 	// Are we using graphics?
 	virtual bool IsUsingGraphics() const = 0;
 
-	// Use this to spew information about the 3D layer 
+	// Use this to spew information about the 3D layer
 	virtual void SpewDriverInfo() const = 0;
 
 	// What's the bit depth of the stencil buffer?

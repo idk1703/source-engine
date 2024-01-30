@@ -57,11 +57,11 @@ typedef struct
 
 #define	TERMVALUE	0x31415926
 	// terminator for value tables
-	
+
 #define	VE( x )		{ x, #x }
 	// "value entry"
 
-const GLMValueEntry_t	g_d3d_devtypes[] = 
+const GLMValueEntry_t	g_d3d_devtypes[] =
 {
 	VE( D3DDEVTYPE_HAL ),
 	VE( D3DDEVTYPE_REF ),
@@ -69,7 +69,7 @@ const GLMValueEntry_t	g_d3d_devtypes[] =
 	VE( TERMVALUE )
 };
 
-const GLMValueEntry_t g_d3d_formats[] = 
+const GLMValueEntry_t g_d3d_formats[] =
 {
 	VE( D3DFMT_INDEX16 ),
 	VE( D3DFMT_D16 ),
@@ -128,7 +128,7 @@ const GLMValueEntry_t	g_d3d_rtypes[] =
 	VE( TERMVALUE )
 };
 
-const GLMValueEntry_t g_d3d_usages[] = 
+const GLMValueEntry_t g_d3d_usages[] =
 {
 	VE( D3DUSAGE_RENDERTARGET ),
 	VE( D3DUSAGE_DEPTHSTENCIL ),
@@ -152,7 +152,7 @@ const GLMValueEntry_t g_d3d_usages[] =
 	VE( TERMVALUE )
 };
 
-const GLMValueEntry_t g_d3d_rstates[] = 
+const GLMValueEntry_t g_d3d_rstates[] =
 {
 	VE( D3DRS_ZENABLE ),
 	VE( D3DRS_FILLMODE ),
@@ -257,11 +257,11 @@ const GLMValueEntry_t g_d3d_rstates[] =
 	VE( D3DRS_SRCBLENDALPHA ),
 	VE( D3DRS_DESTBLENDALPHA ),
 	VE( D3DRS_BLENDOPALPHA ),
-	
+
 	VE( TERMVALUE )
 };
 
-const GLMValueEntry_t g_d3d_opcodes[] = 
+const GLMValueEntry_t g_d3d_opcodes[] =
 {
 	VE( D3DSIO_NOP ),
 	VE( D3DSIO_PHASE ),
@@ -353,7 +353,7 @@ const GLMValueEntry_t g_d3d_opcodes[] =
 };
 
 
-const GLMValueEntry_t g_d3d_vtxdeclusages[] = 
+const GLMValueEntry_t g_d3d_vtxdeclusages[] =
 {
 	{ D3DDECLUSAGE_POSITION		,"POSN" },		// P
 	{ D3DDECLUSAGE_BLENDWEIGHT	,"BLWT" },		// W
@@ -371,7 +371,7 @@ const GLMValueEntry_t g_d3d_vtxdeclusages[] =
 	{ D3DDECLUSAGE_SAMPLE		,"SAMP" }		// M
 };
 
-const GLMValueEntry_t g_d3d_vtxdeclusages_short[] = 
+const GLMValueEntry_t g_d3d_vtxdeclusages_short[] =
 {
 	{ D3DDECLUSAGE_POSITION		,"P" },
 	{ D3DDECLUSAGE_BLENDWEIGHT	,"W" },
@@ -389,7 +389,7 @@ const GLMValueEntry_t g_d3d_vtxdeclusages_short[] =
 	{ D3DDECLUSAGE_SAMPLE		,"M" }
 };
 
-const GLMValueEntry_t	g_cgl_rendids[] =			// need to mask with 0xFFFFFF00 to match on these (ex: 8800GT == 0x00022608 
+const GLMValueEntry_t	g_cgl_rendids[] =			// need to mask with 0xFFFFFF00 to match on these (ex: 8800GT == 0x00022608
 {
 #ifdef OSX
 	VE( kCGLRendererGenericID ),
@@ -413,7 +413,7 @@ const GLMValueEntry_t	g_cgl_rendids[] =			// need to mask with 0xFFFFFF00 to mat
 	VE( TERMVALUE )
 };
 
-const GLMValueEntry_t g_gl_errors[] = 
+const GLMValueEntry_t g_gl_errors[] =
 {
 	VE( GL_INVALID_ENUM ),
 	VE( GL_INVALID_VALUE ),
@@ -432,7 +432,7 @@ const GLMValueEntry_t g_gl_errors[] =
 };
 
 // there are some ARB/EXT dupes in this table but that doesn't matter too much
-const GLMValueEntry_t g_gl_enums[] = 
+const GLMValueEntry_t g_gl_enums[] =
 {
 	{	0x0000,	"GL_ZERO"	},
 	{	0x0001,	"GL_ONE"	},
@@ -2467,11 +2467,11 @@ const GLMValueEntry_t g_gl_enums[] =
 	{	0x8E4D,	"GL_FIRST_VERTEX_CONVENTION_EXT"	},
 	{	0x8E4E,	"GL_LAST_VERTEX_CONVENTION_EXT"	},
 	{	0x8E4F,	"GL_PROVOKING_VERTEX_EXT"	},
-	
+
 	VE( TERMVALUE )
 };
 
-const GLMValueEntry_t g_gl_renderers[] = 
+const GLMValueEntry_t g_gl_renderers[] =
 {
 	{ 0x00020200, "Generic" },
 	{ 0x00020400, "GenericFloat" },
@@ -2511,31 +2511,31 @@ const char *	GLMDecode( GLMThing_t thingtype, unsigned long value )
 	{
 		case	eD3D_DEVTYPE:	table = g_d3d_devtypes;
 		break;
-		
+
 		case	eD3D_FORMAT:	table = g_d3d_formats;
 		break;
-			
+
 		case	eD3D_RTYPE:		table = g_d3d_rtypes;
 		break;
-			
+
 		case	eD3D_USAGE:		table = g_d3d_usages;
 		break;
-		
+
 		case 	eD3D_RSTATE:	table = g_d3d_rstates;
 		break;
-		
-		case	eD3D_SIO:		table = g_d3d_opcodes;			
+
+		case	eD3D_SIO:		table = g_d3d_opcodes;
 		break;
-		
+
 		case	eD3D_VTXDECLUSAGE:	table = g_d3d_vtxdeclusages;
 		break;
-		
+
 		case	eCGL_RENDID:	table = g_cgl_rendids;
 		break;
-			
+
 		case	eGL_ERROR:		table = g_gl_errors;
 		break;
-		
+
 		case	eGL_ENUM:		table = g_gl_enums;
 		break;
 
@@ -2547,7 +2547,7 @@ const char *	GLMDecode( GLMThing_t thingtype, unsigned long value )
 			return "UNKNOWNTYPE";
 		break;
 	}
-	
+
 	if (table)
 	{
 		while( table->value != TERMVALUE )
@@ -2566,18 +2566,18 @@ const char	*GLMDecodeMask( GLMThing_t kind, unsigned long value )
 {
 	// if cursor to scratch buffer is within 1K of EOB, rewind
 	// nobody is going to decode 63K of flag string values in a single call..
-	
+
 	// this means that strings returned by this function have a short lifetime.. print them and do not save the pointer..
-	
+
 	if ( (sizeof(s_glmStrScratch) - s_glmStrCursor) < 1000 )
 	{
 		s_glmStrCursor = 0;
 	}
-	
+
 	char	*start = &s_glmStrScratch[ s_glmStrCursor ];
 	char	*dest = start;
 	char	first = 1;
-	
+
 	DWORD mask = static_cast<DWORD>(1L<<31);
 	while(mask)
 	{
@@ -2585,14 +2585,14 @@ const char	*GLMDecodeMask( GLMThing_t kind, unsigned long value )
 		{
 			sprintf(dest,"%s%s", (first) ? "" : "|", GLMDecode( kind, value&mask ) );
 			first = 0;
-			
+
 			dest += strlen(dest);	// leaves dest pointing at the end null
 		}
 		mask >>= 1;
 	}
 	s_glmStrCursor = (dest - s_glmStrScratch) + 1;	// +1 so the next decoded flag set doesn't land on the ending null
 	return start;
-	
+
 }
 
 #undef VE
@@ -2611,10 +2611,10 @@ bool	GLMDetectOGLP( void )
 	{
 		// enable a breakpoint on color4sv
 		int oglp_bkpt[3] = { kCGLFEglColor4sv, kCGLProfBreakBefore, 1 };
-		
-		CGLSetOption( kCGLGOEnableBreakpoint, (GLint)oglp_bkpt );			
+
+		CGLSetOption( kCGLGOEnableBreakpoint, (GLint)oglp_bkpt );
 	}
-	
+
 #endif
 	return result;
 }
@@ -2623,55 +2623,55 @@ bool	GLMDetectOGLP( void )
 // from http://blog.timac.org/?p=190
 
 #ifndef _WIN32
-	#include <stdbool.h>  
+	#include <stdbool.h>
 #endif
-#include <sys/types.h>  
+#include <sys/types.h>
 #ifndef _WIN32
-	#include <unistd.h>  
-	#include <sys/sysctl.h>  
+	#include <unistd.h>
+	#include <sys/sysctl.h>
 #endif
 
-// From Technical Q&A QA1361  
-// Returns true if the current process  
-// is being debugged (either running  
-// under the debugger or has a debugger  
-// attached post facto).  
+// From Technical Q&A QA1361
+// Returns true if the current process
+// is being debugged (either running
+// under the debugger or has a debugger
+// attached post facto).
 
 bool	GLMDetectGDB( void )			// aka AmIBeingDebugged()
 {
 #ifdef OSX
-	bool				result;	
-    int                 junk;  
-    int                 mib[4];  
-    struct kinfo_proc   info;  
-    size_t              size;  
-  
-    // Initialize the flags so that,  
-    // if sysctl fails for some bizarre  
-    // reason, we get a predictable result.  
-  
-    info.kp_proc.p_flag = 0;  
-  
-    // Initialize mib, which tells sysctl the info  
-    // we want, in this case we're looking for  
-    // information about a specific process ID.  
-  
-    mib[0] = CTL_KERN;  
-    mib[1] = KERN_PROC;  
-    mib[2] = KERN_PROC_PID;  
-    mib[3] = getpid();  
-  
-    // Call sysctl.  
-  
-    size = sizeof(info);  
-    junk = sysctl(mib, sizeof(mib) / sizeof(*mib), &info, &size, NULL, 0);  
-  
-    assert(junk == 0);  
-  
-    // We're being debugged if the P_TRACED  
-    // flag is set.  
-  
-    result = ( (info.kp_proc.p_flag & P_TRACED) != 0 );  
+	bool				result;
+	int                 junk;
+	int                 mib[4];
+	struct kinfo_proc   info;
+	size_t              size;
+
+	// Initialize the flags so that,
+	// if sysctl fails for some bizarre
+	// reason, we get a predictable result.
+
+	info.kp_proc.p_flag = 0;
+
+	// Initialize mib, which tells sysctl the info
+	// we want, in this case we're looking for
+	// information about a specific process ID.
+
+	mib[0] = CTL_KERN;
+	mib[1] = KERN_PROC;
+	mib[2] = KERN_PROC_PID;
+	mib[3] = getpid();
+
+	// Call sysctl.
+
+	size = sizeof(info);
+	junk = sysctl(mib, sizeof(mib) / sizeof(*mib), &info, &size, NULL, 0);
+
+	assert(junk == 0);
+
+	// We're being debugged if the P_TRACED
+	// flag is set.
+
+	result = ( (info.kp_proc.p_flag & P_TRACED) != 0 );
 	return result;
 #else
 	return Sys_IsDebuggerPresent();
@@ -2685,7 +2685,7 @@ static uint		g_glmDebugFlavorMask = 0;		// which message flavors are enabled for
 uint	GLMDetectAvailableChannels( void )
 {
 	uint result = 0;
-	
+
 	// printf is always available (except maybe in release... ?)
 	result |= (1 << ePrintf);
 
@@ -2695,14 +2695,14 @@ uint	GLMDetectAvailableChannels( void )
 		result |= (1 << eDebugger);
 		printf("\n############# GDB Detected");
 	}
-	
+
 	// oglp
 	if (GLMDetectOGLP())
 	{
 		result |= (1 << eGLProfiler);
 		printf("\n############# OGLP Detected");
-	}	
-	
+	}
+
 	return result;
 }
 
@@ -2719,20 +2719,20 @@ void	GLMDebugInitialize( bool forceReinit )
 	{
 		// detect channels
 		uint channelMask = GLMDetectAvailableChannels();
-		
+
 		// see if there are any prohibitions on the commandline
 		// (also add any other desired reasons, release build say)..
-		
+
 		if ( CommandLine()->FindParm("-noprintconsole") )
 		{
 			channelMask &= ~(1<<ePrintf);
 		}
-		
+
 		if ( CommandLine()->FindParm("-noprintdebugger") )
 		{
 			channelMask &= ~(1<<eDebugger);
 		}
-		
+
 		if ( CommandLine()->FindParm("-noprintoglp") )
 		{
 			channelMask &= ~(1<<eGLProfiler);
@@ -2781,11 +2781,11 @@ uint	GLMDebugChannelMask( uint *newValue )
 	{
 		g_glmDebugChannelMask = *newValue;
 	}
-	
+
 	uint result = g_glmDebugChannelMask;
-	
+
 	// leave space for any override / mute mechanism we might want to inject here
-	
+
 	return result;
 }
 
@@ -2795,11 +2795,11 @@ uint	GLMDebugFlavorMask( uint *newValue )
 	{
 		g_glmDebugFlavorMask = *newValue;
 	}
-	
+
 	uint result = g_glmDebugFlavorMask;
-	
+
 	// leave space for any override / mute mechanism we might want to inject here
-	
+
 	return result;
 }
 
@@ -2822,7 +2822,7 @@ void GLMEnableTrace( bool on )
 
 #if GLMDEBUG
 	// following funcs vanish if GLMDEBUG not set
-	
+
 void	GLMStringOut( char *string )
 {
 	if ( GLMDebugChannelMask() & ( (1<<ePrintf) | (1<<eDebugger) ) )
@@ -2920,7 +2920,7 @@ void	GLMPrintfVA( const char *fmt, va_list vargs )
 	uint channelMask = GLMDebugChannelMask();
 	if (!channelMask)
 		return;
-	
+
 	// if "all flavors" is off, return
 	uint flavorMask = GLMDebugFlavorMask();
 	if (! ( flavorMask & (1<<eAllFlavors) ) )
@@ -2935,9 +2935,9 @@ void	GLMPrintfVA( const char *fmt, va_list vargs )
 	// print the formatted string, with indenting
 	// if first char is a '>' - raise indent level after print.
 	// if first char is a '<' - lower indent level before print.
-	
+
 	char buf[100000];
-	
+
 	if (fmt[0] == '<')
 	{
 		GLMIncIndent( -1 );
@@ -2946,7 +2946,7 @@ void	GLMPrintfVA( const char *fmt, va_list vargs )
 	memset( buf, '\t', g_glm_indent );
 	vsprintf( buf+g_glm_indent, fmt, vargs );
 	GLMStringOut( buf );
-	
+
 	if (fmt[0] == '>')
 	{
 		GLMIncIndent( 1 );
@@ -2959,7 +2959,7 @@ void	GLMPrintf( const char *fmt, ... )
 	uint channelMask = GLMDebugChannelMask();
 	if (!channelMask)
 		return;
-	
+
 	// if "all flavors" is off, return
 	uint flavorMask = GLMDebugFlavorMask();
 	if (! ( flavorMask & (1<<eAllFlavors) ) )
@@ -2977,7 +2977,7 @@ void	GLMPrintStr( const char *str, EGLMDebugFlavor flavor )					// will indent
 	uint channelMask = GLMDebugChannelMask();
 	if (!channelMask)
 		return;
-	
+
 	// if "all flavors" is off, return
 	uint flavorMask = GLMDebugFlavorMask();
 	if (! ( flavorMask & (1<<eAllFlavors) ) )
@@ -2990,16 +2990,16 @@ void	GLMPrintStr( const char *str, EGLMDebugFlavor flavor )					// will indent
 	// just print the plain string, with indenting
 	// if first char is a '>' - raise indent level after print.
 	// if first char is a '<' - lower indent level before print.
-	
+
 	char buf[64000];
-	
+
 	if (str[0] == '<')
 	{
 		GLMIncIndent( -1 );
 	}
 
 	memset( buf, '\t', g_glm_indent );
-	
+
 	if (strlen(str) < sizeof(buf)-g_glm_indent-1)
 	{
 		strcpy( buf + g_glm_indent, str );
@@ -3009,9 +3009,9 @@ void	GLMPrintStr( const char *str, EGLMDebugFlavor flavor )					// will indent
 		DXABSTRACT_BREAK_ON_ERROR();
 	}
 
-	
+
 	GLMStringOut( buf );		// single string out with indenting
-	
+
 	if (str[0] == '>')
 	{
 		GLMIncIndent( 1 );
@@ -3025,7 +3025,7 @@ void GLMPrintText( const char *str, EGLMDebugFlavor flavor, uint options )
 	uint channelMask = GLMDebugChannelMask();
 	if (!channelMask)
 		return;
-	
+
 	// if "all flavors" is off, return
 	uint flavorMask = GLMDebugFlavorMask();
 	if (! ( flavorMask & (1<<eAllFlavors) ) )
@@ -3038,14 +3038,14 @@ void GLMPrintText( const char *str, EGLMDebugFlavor flavor, uint options )
 	char	buf[64000];
 	char	lineout[64000];
 	int		linenum = 1;
-	
+
 	V_strncpy( buf, str, sizeof(buf) );
-	
+
 	// walk the text and treat each newline as an indentation opportunity..
 	const char *mark = buf;
 	const char *end = mark + strlen(buf);
 	//const char *next = NULL;
-	
+
 	while(mark < end)
 	{
 		// starting at mark, see if there is a newline between there and end
@@ -3078,7 +3078,7 @@ void GLMPrintText( const char *str, EGLMDebugFlavor flavor, uint options )
 int		GLMIncIndent( int indentDelta )
 {
 	g_glm_indent += indentDelta;
-	
+
 	if (indentDelta>0)
 	{
 		if (g_glm_indent > g_glm_indent_max)
@@ -3119,7 +3119,7 @@ class CGPUTimestampManager
 {
 	CGPUTimestampManager( const CGPUTimestampManager & );
 	CGPUTimestampManager& operator= ( CGPUTimestampManager & );
-		
+
 public:
 	CGPUTimestampManager() :
 		m_bInitialized( false ),
@@ -3149,7 +3149,7 @@ public:
 
 	inline bool IsInitialized() const { return m_bInitialized; }
 	inline uint GetCurFrame() const { return m_nCurFrame; }
-		
+
 	void Init()
 	{
 		Deinit();
@@ -3162,7 +3162,7 @@ public:
 		InitRdtsc();
 
 		m_nCurFrame = 0;
-				
+
 		gGL->glGenQueries( cFreeQueryPoolSize, m_FreeQueryPool );
 		m_nFreeQueryPoolSize = cFreeQueryPoolSize;
 
@@ -3172,11 +3172,11 @@ public:
 
 		m_nQueryZoneStackSize = 0;
 		m_nNumFinishedZones = 0;
-										
+
 		m_bInitialized = true;
-		
+
 		m_nTotalSpanWorkCount = 0;
-		
+
 		Calibrate();
 	}
 
@@ -3189,11 +3189,11 @@ public:
 
 		m_flGPUToS = 1.0 / 1000000000.0;
 
-		//0.99997541250006794; 
+		//0.99997541250006794;
 		//0.99997530000006662;
 		// Correction factor to prevent excessive drift, only calibrated on my system, we need a better way of computing/recording this.
 		double flGPURatio = 0.99997425000007034000;
-		
+
 		const uint NT = 1;
 		for ( uint nTrial = 0; nTrial < NT; nTrial++ )
 		{
@@ -3204,20 +3204,20 @@ public:
 				uint64 nBestTotalCPUTimestamp = (uint64)-1;
 				uint64 nBestCPUTimestamp = 0;
 				GLuint64 nBestGPUTimestamp = 0;
-						
+
 				for ( uint i = 0; i < 10; i++)
 				{
 					const uint64 nStartCPUTimestamp = Plat_Rdtsc();
-				
-					gGL->glQueryCounter( m_FreeQueryPool[0], GL_TIMESTAMP);				
+
+					gGL->glQueryCounter( m_FreeQueryPool[0], GL_TIMESTAMP);
 					PipelineFlush();
-								
+
 					const uint64 nEndCPUTimestamp = Plat_Rdtsc();
-				
+
 					GLint nAvailable;
-					do 
-					{ 
-						gGL->glGetQueryObjectiv( m_FreeQueryPool[0], GL_QUERY_RESULT_AVAILABLE, &nAvailable ); 
+					do
+					{
+						gGL->glGetQueryObjectiv( m_FreeQueryPool[0], GL_QUERY_RESULT_AVAILABLE, &nAvailable );
 					} while ( !nAvailable );
 
 					GLuint64 nGPUTimestamp;
@@ -3241,7 +3241,7 @@ public:
 
 				DbgPrintf("%f %f %1.20f\n", flCPUTimestampTimeInSeconds, flGPUTimestampTimeInSeconds, flClockOffsetsInS[q] );
 			}
-						
+
 			m_flGPUToCPUOffsetInS = 0.0f;
 			for ( uint i = 0; i < R; i++ )
 				m_flGPUToCPUOffsetInS += flClockOffsetsInS[i];
@@ -3264,7 +3264,7 @@ public:
 				{
 					flGPURatio -= .000000125f;
 				}
-#else				
+#else
 				if ( flDelta < 0.0000005f )
 				{
 					flGPURatio += .0000000125f;
@@ -3292,9 +3292,9 @@ public:
 			PipelineFlush();
 
 			GLint nAvailable;
-			do 
-			{ 
-				gGL->glGetQueryObjectiv( m_FreeQueryPool[0], GL_QUERY_RESULT_AVAILABLE, &nAvailable ); 
+			do
+			{
+				gGL->glGetQueryObjectiv( m_FreeQueryPool[0], GL_QUERY_RESULT_AVAILABLE, &nAvailable );
 			} while ( !nAvailable );
 
 			GLuint64 nGPUTime;
@@ -3348,7 +3348,7 @@ public:
 			}
 		}
 		m_nQueryZoneStackSize = 0;
-						
+
 		m_flGPUToCPUOffsetInS = 0;
 		m_flGPUToS = 0;
 		m_flRdtscToS = 0;
@@ -3360,22 +3360,22 @@ public:
 	// pName is assumed to be a telemetry dynamic string!
 	void BeginZone( const char *pName )
 	{
-		if ( !m_bInitialized ) 
+		if ( !m_bInitialized )
 			return;
-		
+
 		if ( m_nQueryZoneStackSize >= cMaxQueryZoneStackSize )
 		{
 			Panic( "Increase cMaxQueryZoneStackSize!" );
 		}
 
 		QueryZone_t &zone = m_QueryZoneStack[m_nQueryZoneStackSize];
-		
+
 		zone.m_pName = pName;
 
 		zone.m_nBeginQuery = AllocQueryHandle();
 		zone.m_nEndQuery = 0;
 		zone.m_nStackLevel = m_nQueryZoneStackSize;
-		
+
 		zone.m_nTotalGPUWorkCount = g_nTotalDrawsOrClears;
 #if GL_TELEMETRY_GPU_ZONES
 		zone.m_nTotalGPUWorkCount += g_TelemetryGPUStats.GetTotal();
@@ -3385,12 +3385,12 @@ public:
 
 		m_nQueryZoneStackSize++;
 	}
-	
+
 	void EndZone()
 	{
-		if ( !m_bInitialized ) 
+		if ( !m_bInitialized )
 			return;
-				
+
 		if ( ( !m_nQueryZoneStackSize ) || ( m_nNumOutstandingQueryZones == cMaxQueryZones ) )
 		{
 			Panic( "Query zone error!" );
@@ -3412,7 +3412,7 @@ public:
 		m_OutstandingQueryZones[m_nOutstandingQueriesHead] = m_QueryZoneStack[m_nQueryZoneStackSize];
 		m_nOutstandingQueriesHead = ( m_nOutstandingQueriesHead + 1 ) % cMaxQueryZones;
 		m_nNumOutstandingQueryZones++;
-		
+
 		COMPILE_TIME_ASSERT( ( int )cMaxQueryZones > ( int )cMaxQueryZoneStackSize );
 		if ( m_nNumOutstandingQueryZones >= ( cMaxQueryZones - cMaxQueryZoneStackSize ) )
 		{
@@ -3426,12 +3426,12 @@ public:
 			PipelineFlush();
 		}
 	}
-	
+
 	void Tick()
 	{
 		m_nCurFrame++;
 
-		if ( !m_bInitialized ) 
+		if ( !m_bInitialized )
 			return;
 
 		if ( m_nQueryZoneStackSize > 0 )
@@ -3442,7 +3442,7 @@ public:
 		FlushOutstandingQueries( false );
 
 		tmMessage( TELEMETRY_LEVEL2, 0, "Total PIX timespan GPU work count: %u", m_nTotalSpanWorkCount );
-		
+
 		m_nTotalSpanWorkCount = 0;
 	}
 
@@ -3460,9 +3460,9 @@ public:
 			QueryZone_t &zone = m_OutstandingQueryZones[m_nOutstandingQueriesTail];
 
 			GLint nEndAvailable = 0;
-			do 
+			do
 			{
-				gGL->glGetQueryObjectiv( zone.m_nEndQuery, GL_QUERY_RESULT_AVAILABLE, &nEndAvailable ); 
+				gGL->glGetQueryObjectiv( zone.m_nEndQuery, GL_QUERY_RESULT_AVAILABLE, &nEndAvailable );
 
 			} while ( ( bForce ) && ( nEndAvailable == 0 ) );
 
@@ -3479,7 +3479,7 @@ public:
 			gGL->glGetQueryObjectui64v( zone.m_nBeginQuery, GL_QUERY_RESULT, &nBeginGPUTime );
 			gGL->glGetQueryObjectui64v( zone.m_nEndQuery, GL_QUERY_RESULT, &nEndGPUTime );
 
-			ReleaseQueryHandle( zone.m_nBeginQuery ); 
+			ReleaseQueryHandle( zone.m_nBeginQuery );
 			zone.m_nBeginQuery = 0;
 
 			ReleaseQueryHandle( zone.m_nEndQuery );
@@ -3523,7 +3523,7 @@ private:
 	GLuint m_FreeQueryPool[cFreeQueryPoolSize ];
 	uint m_nFreeQueryPoolSize;
 
-	GLuint AllocQueryHandle() 
+	GLuint AllocQueryHandle()
 	{
 		if ( !m_nFreeQueryPoolSize )
 		{
@@ -3567,12 +3567,12 @@ private:
 		uint m_nStackLevel;
 		uint m_nTotalGPUWorkCount;
 
-		inline bool operator< ( const FinishedQueryZone_t &rhs ) const 
-		{ 
+		inline bool operator< ( const FinishedQueryZone_t &rhs ) const
+		{
 			if ( m_nBeginGPUTime == rhs.m_nBeginGPUTime)
 				return m_nStackLevel < rhs.m_nStackLevel;
 
-			return m_nBeginGPUTime < rhs.m_nBeginGPUTime; 
+			return m_nBeginGPUTime < rhs.m_nBeginGPUTime;
 		}
 	};
 
@@ -3580,7 +3580,7 @@ private:
 	uint m_nNumFinishedZones;
 
 	uint m_nTotalSpanWorkCount;
-			
+
 	void InitRdtsc()
 	{
 		m_flRdtscToS = 0.0f;
@@ -3727,7 +3727,7 @@ void GLMBeginPIXEvent( const char *str )
 	tmEnter( TELEMETRY_LEVEL2, TMZF_NONE, "PIX %s", p ? p : ""  );
 
 	g_nPIXEventIndex++;
-			
+
 	g_GPUTimestampManager.BeginZone( p );
 #endif // !OSX
 	V_strncpy( sg_pPIXName, str, 128 );
@@ -3758,7 +3758,7 @@ void GLMEndPIXEvent( void )
 	}
 
 	sg_pPIXName[0] = '\0';
-		
+
 	tmLeave( TELEMETRY_LEVEL2 );
 }
 
@@ -3791,33 +3791,33 @@ extern "C" uint GetCurrentKeyModifiers( void );
 
 enum ECarbonModKeyIndex
 {
-  EcmdKeyBit                     = 8,    /* command key down?*/
-  EshiftKeyBit                   = 9,    /* shift key down?*/
-  EalphaLockBit                  = 10,   /* alpha lock down?*/
-  EoptionKeyBit                  = 11,   /* option key down?*/
-  EcontrolKeyBit                 = 12    /* control key down?*/
+	EcmdKeyBit                     = 8,    /* command key down?*/
+	EshiftKeyBit                   = 9,    /* shift key down?*/
+	EalphaLockBit                  = 10,   /* alpha lock down?*/
+	EoptionKeyBit                  = 11,   /* option key down?*/
+	EcontrolKeyBit                 = 12    /* control key down?*/
 };
 
 enum ECarbonModKeyMask
 {
-  EcmdKey                        = 1 << EcmdKeyBit,
-  EshiftKey                      = 1 << EshiftKeyBit,
-  EalphaLock                     = 1 << EalphaLockBit,
-  EoptionKey                     = 1 << EoptionKeyBit,
-  EcontrolKey                    = 1 << EcontrolKeyBit
+	EcmdKey                        = 1 << EcmdKeyBit,
+	EshiftKey                      = 1 << EshiftKeyBit,
+	EalphaLock                     = 1 << EalphaLockBit,
+	EoptionKey                     = 1 << EoptionKeyBit,
+	EcontrolKey                    = 1 << EcontrolKeyBit
 };
 
 float	GLMKnob( char *knobname, float *setvalue )
 {
 #if GLMDEBUG
 	float result = 0.0f;
-	
+
 	if (!g_knobMap)
 	{
 		g_knobMap = new CUtlMap< GLMKnobKey, GLMKnobValue* >;
 		g_knobMap->SetLessFunc( LessFunc_GLMKnobKey );
 	}
-	
+
 #ifdef OSX
 	uint mods = GetCurrentKeyModifiers();
 #else
@@ -3845,20 +3845,20 @@ float	GLMKnob( char *knobname, float *setvalue )
 		// does the key exist in the map ?
 		GLMKnobKey key;
 		key.m_knobName = knobname;
-		
+
 		GLMKnobValue *knob = NULL;
-		
+
 		unsigned short index = g_knobMap->Find( key );
 		if (index != g_knobMap->InvalidIndex())
 		{
 			// found it
 			knob = (*g_knobMap)[ index ];
-			
+
 			if (setvalue)
 			{
 				knob->m_value = *setvalue;
 			}
-			
+
 			result = knob->m_value;
 		}
 		else
@@ -3867,7 +3867,7 @@ float	GLMKnob( char *knobname, float *setvalue )
 			knob = new GLMKnobValue;
 
 			knob->m_value = (setvalue) ? *setvalue : 0.0f;
-			
+
 			g_knobMap->Insert( key, knob );
 		}
 
@@ -3885,7 +3885,7 @@ float	GLMKnobToggle( char *knobname )
 {
 	// if not 0.0, make it 0.0
 	// if 0.0, make it 1.0
-	
+
 	float newValue = 0.0;	// assume falling edge
 	float curValue = GLMKnob( knobname, NULL );
 	if (curValue == 0.0)
@@ -3951,7 +3951,7 @@ CGLMFileMirror::~CGLMFileMirror( )
 		free (m_path);
 		m_path = NULL;
 	}
-	
+
 	if (m_data)
 	{
 		free (m_data);
@@ -3982,12 +3982,12 @@ void CGLMFileMirror::SetData( char *data, uint dataSize )
 	}
 
 	m_size = dataSize;
-	
+
 	m_data = (char *)malloc( m_size +1 );
 	m_data[ m_size ] = 0;			// extra NULL terminator, no charge
-	
+
 	memcpy( m_data, data, m_size );	// copy data in
-	
+
 	WriteFile();					// keep disk copy sync'd
 }
 
@@ -3997,7 +3997,7 @@ static bool stat_diff( struct stat *a, struct stat *b )
 	{
 		return true;
 	}
-	
+
 #ifdef OSX
 	if (memcmp( &a->st_mtimespec, &b->st_mtimespec, sizeof( struct timespec ) ) )
 #else
@@ -4006,7 +4006,7 @@ static bool stat_diff( struct stat *a, struct stat *b )
 	{
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -4015,9 +4015,9 @@ bool CGLMFileMirror::PollForChanges( void )
 	// snapshot old stat
 	//bool		old_exists = m_exists;
 	struct stat	old_stat = m_stat;
-	
+
 	UpdateStatInfo();
-	
+
 	if (m_exists)
 	{
 		if ( stat_diff( &old_stat, &m_stat ) )
@@ -4027,10 +4027,10 @@ bool CGLMFileMirror::PollForChanges( void )
 			do
 			{
 				ThreadSleep(100000);
-				
+
 				struct stat last_stat = m_stat;
 				UpdateStatInfo();
-				
+
 				if (stat_diff( &last_stat, &m_stat ))
 				{
 					stablecount = 0;
@@ -4040,7 +4040,7 @@ bool CGLMFileMirror::PollForChanges( void )
 					stablecount++;
 				}
 			} while(stablecount<3);
-			
+
 			// changes have settled down, now re-read it
 			ReadFile();
 			return true;
@@ -4082,9 +4082,9 @@ void CGLMFileMirror::UpdateStatInfo( void )
 
 void CGLMFileMirror::ReadFile( void )
 {
-	// unconditional - we discard any old buffer, make a new one, 
+	// unconditional - we discard any old buffer, make a new one,
 	UpdateStatInfo();
-	
+
 	if (m_data)
 	{
 		free( m_data );
@@ -4098,12 +4098,12 @@ void CGLMFileMirror::ReadFile( void )
 		{
 			// get size from stat
 			m_size = m_stat.st_size;
-			
+
 			m_data = (char *)malloc( m_size +1 );
 			m_data[ m_size ] = 0;	// extra NULL terminator, no charge
-			
+
 			fread( m_data, 1, m_size, infile );
-			
+
 			fclose( infile );
 		}
 		else
@@ -4125,12 +4125,12 @@ void CGLMFileMirror::ReadFile( void )
 void CGLMFileMirror::WriteFile( void )
 {
 	FILE *outfile = fopen( m_path, "wb" );
-	
+
 	if (outfile)
 	{
-		fwrite( m_data, 1, m_size, outfile );		
+		fwrite( m_data, 1, m_size, outfile );
 		fclose( outfile );
-				
+
 		UpdateStatInfo();	// sets m_stat and m_exists
 	}
 	else
@@ -4142,7 +4142,7 @@ void CGLMFileMirror::WriteFile( void )
 void	CGLMFileMirror::OpenInEditor( bool foreground )
 {
 	char temp[64000];
-	
+
 	// pass -b if no desire to bring editor to foreground
 	sprintf(temp,"/usr/bin/bbedit %s %s", foreground ? "" : "-b", m_path );
 	system( temp );
@@ -4156,20 +4156,20 @@ CGLMEditableTextItem::CGLMEditableTextItem( char *text, uint size, bool forceOve
 	m_origSize = size;
 	m_origText = (char *)malloc( m_origSize );
 	memcpy( m_origText, text, m_origSize );
-	
+
 	// null out munged form til we generate it
 	m_mungedSize = 0;
 	m_mungedText = NULL;
-	
+
 	// null out mirror until we create it
 	m_mirrorBaseName = NULL;
 	m_mirrorFullPath = NULL;
 	m_mirror = NULL;
-	
+
 	GenHashOfOrigText();						// will fill out m_origDigest
 	GenMungedText( false );
 	GenBaseNameAndFullPath( prefix, suffix );	// figure out where the mirror will go
-	
+
 	if (!strcmp(m_mirrorBaseName, "96c7e9d2faf76b1148f7274afd684d4b.fsh"))
 	{
 		printf("\nhello there\n");
@@ -4179,14 +4179,14 @@ CGLMEditableTextItem::CGLMEditableTextItem( char *text, uint size, bool forceOve
 	// see if there was any content on disk
 	// if so, honor that content *unless* the force-option is set.
 	m_mirror = new CGLMFileMirror( m_mirrorFullPath );
-	
+
 	// the logic is simple.
 	// the only time we will choose the copy on disk, is if
 	// a - forceOverwrite is false
 	// AND b - the copy on disk is bigger than 10 bytes.
-	
+
 	bool	replaceDiskCopy = true;
-	
+
 	char	*mirrorData = NULL;
 	uint	mirrorSize = 0;
 
@@ -4202,7 +4202,7 @@ CGLMEditableTextItem::CGLMEditableTextItem( char *text, uint size, bool forceOve
 			}
 		}
 	}
-	
+
 	if (replaceDiskCopy)
 	{
 		// push our generated data to the mirror - disk copy is overwritten
@@ -4213,30 +4213,30 @@ CGLMEditableTextItem::CGLMEditableTextItem( char *text, uint size, bool forceOve
 		GenMungedText( true );
 	}
 
-}	
-	
+}
+
 CGLMEditableTextItem::~CGLMEditableTextItem( )
 {
 	if (m_origText)
 	{
 		free (m_origText);
 	}
-	
+
 	if (m_mungedText)
 	{
 		free (m_mungedText);
 	}
-	
+
 	if (m_mirrorBaseName)
 	{
 		free (m_mirrorBaseName);
 	}
-	
+
 	if (m_mirrorFullPath)
 	{
 		free (m_mirrorFullPath);
 	}
-	
+
 	if (m_mirror)
 	{
 		free( m_mirror );
@@ -4247,7 +4247,7 @@ bool	CGLMEditableTextItem::HasData( void )
 {
 	return m_mirror->HasData();
 }
-	
+
 bool	CGLMEditableTextItem::PollForChanges( void )
 {
 	bool changed = m_mirror->PollForChanges();
@@ -4262,7 +4262,7 @@ bool	CGLMEditableTextItem::PollForChanges( void )
 void	CGLMEditableTextItem::GetCurrentText( char **textOut, uint *sizeOut )
 {
 	if (!m_mungedText)	GLMDebugger();
-	
+
 	*textOut = m_mungedText;
 	*sizeOut = m_mungedSize;
 }
@@ -4277,7 +4277,7 @@ void	CGLMEditableTextItem::GenHashOfOrigText( void )
 {
 	MD5Context_t md5ctx;
 	MD5Init( &md5ctx );
-	MD5Update( &md5ctx, (unsigned char*)m_origText, m_origSize ); 
+	MD5Update( &md5ctx, (unsigned char*)m_origText, m_origSize );
 	MD5Final( m_origDigest, &md5ctx );
 }
 
@@ -4286,7 +4286,7 @@ void	CGLMEditableTextItem::GenBaseNameAndFullPath(  char *prefix, char *suffix  
 {
 	// base name is hash digest in hex, plus the suffix.
 	char	temp[5000];
-	
+
 	Q_binarytohex( m_origDigest, sizeof(m_origDigest), temp, sizeof( temp ) );
 	if (suffix)
 	{
@@ -4306,7 +4306,7 @@ void	CGLMEditableTextItem::GenMungedText( bool fromMirror )
 	if (fromMirror)
 	{
 		// just import the text as is from the mirror file.
-		
+
 		char	*mirrorData = NULL;
 		uint	mirrorSize = 0;
 
@@ -4314,17 +4314,17 @@ void	CGLMEditableTextItem::GenMungedText( bool fromMirror )
 		{
 			// peek at it, and use it if it is more than some minimum number of bytes.
 			m_mirror->GetData( &mirrorData, &mirrorSize );
-			
+
 			if (m_mungedText)
 			{
 				free( m_mungedText );
 				m_mungedText = NULL;
 			}
-			
+
 			m_mungedText = (char *)malloc( mirrorSize+1 );
 			m_mungedText[ mirrorSize ] = 0;
 			memcpy( m_mungedText, mirrorData, mirrorSize );
-			
+
 			m_mungedSize = mirrorSize;
 		}
 		else
@@ -4341,20 +4341,20 @@ void	CGLMEditableTextItem::GenMungedText( bool fromMirror )
 				free( m_mungedText );
 				m_mungedText = NULL;
 			}
-			
+
 			m_mungedText = (char *)malloc( m_origSize+1 );
 			m_mungedText[ m_origSize ] = 0;
 			memcpy( m_mungedText, m_origText, m_origSize );
-			
+
 			m_mungedSize = m_origSize;
-			
+
 		#else
 			// take pure 'orig' text that came in from the engine, and clone it
 			// do not clone the first line
 			char	temp[100000];
 			char	*dst = temp;
 			char	*lim = &temp[ sizeof(temp) ];
-			
+
 			// zero temp
 			memset( temp, 0, sizeof(temp) );
 
@@ -4363,16 +4363,16 @@ void	CGLMEditableTextItem::GenMungedText( bool fromMirror )
 			{
 				GLMDebugger();
 			}
-			
+
 			memcpy( dst, m_origText, m_origSize );
 			dst += m_origSize;
-			
+
 			// add a newline if the last character wasn't
 			if ( (*(dst-1)) != '\n' )
 			{
 				*dst++ = '\n';
 			}
-			
+
 			// walk orig text again and copy it over, with these caveats
 			// don't copy the first line
 			// insert a # before all the other lines.
@@ -4390,7 +4390,7 @@ void	CGLMEditableTextItem::GenMungedText( bool fromMirror )
 				src = firstNewline;
 			}
 
-			
+
 			// now walk the rest - insert a # after each newline
 			while( (dst < lim) && ((src-temp) < m_origSize) )
 			{
@@ -4409,17 +4409,17 @@ void	CGLMEditableTextItem::GenMungedText( bool fromMirror )
 			{
 				GLMDebugger();
 			}
-			
+
 			// final newline
 			*dst++ = '\n';
-			
+
 			// copyout
 			if (m_mungedText)
 			{
 				free( m_mungedText );
 				m_mungedText = NULL;
 			}
-			
+
 			m_mungedSize = dst - temp;
 			m_mungedText = (char *)malloc( m_mungedSize );
 			memcpy( m_mungedText, temp, m_mungedSize );
@@ -4453,10 +4453,10 @@ CGLMTextSectioner::CGLMTextSectioner( char *text, int textLength, const char **m
 	// if so, open a new section based at that line
 
 	GLMTextSection *curSection = NULL;		// no current section until we see a marker
-	
+
 	char *cursor = text;
 	char *textLimit = text+textLength;
-	
+
 	int foundMarker;
 	const char **markerCursor;
 	while( cursor < textLimit )
@@ -4465,16 +4465,16 @@ CGLMTextSectioner::CGLMTextSectioner( char *text, int textLength, const char **m
 		// find the end of the line and keep that handy.
 		char *eol = strchr( cursor, '\n' );
 		int charsInLine = (eol) ? (eol-cursor)+1 : strlen(cursor);
-		
+
 		//see if any of the marker strings is located here.
 		foundMarker = -1;
 		markerCursor = markers;
-		
+
 		while( (foundMarker<0) && (*markerCursor!=NULL) )
 		{
 			// see if the n'th marker is a hit
 			int markerLen = strlen(*markerCursor);
-			
+
 			if (!strncmp( cursor, *markerCursor, markerLen  ) )
 			{
 				// hit
@@ -4482,19 +4482,19 @@ CGLMTextSectioner::CGLMTextSectioner( char *text, int textLength, const char **m
 			}
 			markerCursor++;
 		}
-		
+
 		// outcome is either "marker spotted" or "no".
 		// if marker seen, open new section using that marker.
 		// else, grow active section if underway.
 		// then, move cursor to next line.
-		
+
 		if (foundMarker >= 0)
 		{
 			// found marker.  start new section.
 			// no need to do anything special with prior section - it was up to date before seeing this marker.
 			int index = m_sectionTable.AddToTail();
 			curSection = &m_sectionTable[ index ];
-			
+
 			curSection->m_markerIndex	= foundMarker;
 			curSection->m_textOffset	= cursor - text;	// text includes the marker
 			curSection->m_textLength	= charsInLine;		// this line goes in the tally, later lines add to it
@@ -4516,7 +4516,7 @@ CGLMTextSectioner::~CGLMTextSectioner( )
 	// not much to do.
 }
 
-					
+
 int	CGLMTextSectioner::Count( void )
 {
 	return m_sectionTable.Count();
@@ -4525,9 +4525,9 @@ int	CGLMTextSectioner::Count( void )
 void CGLMTextSectioner::GetSection( int index, uint *offsetOut, uint *lengthOut, int *markerIndexOut )
 {
 	Assert( index < m_sectionTable.Count() );
-	
+
 	GLMTextSection	*section = &m_sectionTable[ index ];
-	
+
 	*offsetOut = section->m_textOffset;
 	*lengthOut = section->m_textLength;
 	*markerIndexOut = section->m_markerIndex;
@@ -4544,7 +4544,7 @@ void CGLMTextSectioner::GetSection( int index, uint *offsetOut, uint *lengthOut,
 // f. find and replace: chop out all the spaces and line feeds, change FFFFFF and 000000 to your marker chars of choice.
 // g. wrap each line with quotes and a comma.
 
-unsigned char g_glmDebugFontMap[ 128 * 128 ] = 
+unsigned char g_glmDebugFontMap[ 128 * 128 ] =
 {
 "                                                                                               *                                "
 "                          *                 *      *    *                                      *                                "
@@ -4674,11 +4674,3 @@ unsigned char g_glmDebugFontMap[ 128 * 128 ] =
 "                                                                                                                                "
 "                                                                                                                                "
 };
-
-
-
-
-
-
-
-

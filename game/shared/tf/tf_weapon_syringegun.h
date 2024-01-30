@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -32,7 +32,7 @@ class CTFSyringeGun : public CTFWeaponBaseGun
 public:
 
 	DECLARE_CLASS( CTFSyringeGun, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 // Server specific.

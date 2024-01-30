@@ -213,9 +213,9 @@ void CSessionOptionsDialog::SetupSession( void )
 	{
 		COptionsItem *pItem = dynamic_cast< COptionsItem* >( m_Menu.GetItem( i ) );
 		if ( !pItem )
-		{                    
+		{
 			continue;
-		}		
+		}
 
 		const sessionProperty_t &prop = pItem->GetActiveOption();
 
@@ -258,7 +258,7 @@ void CSessionOptionsDialog::UpdateScenarioDisplay( void )
 }
 
 //-----------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------
 void CSessionOptionsDialog::OnMenuItemChanged( KeyValues *pData )
 {
@@ -269,9 +269,9 @@ void CSessionOptionsDialog::OnMenuItemChanged( KeyValues *pData )
 	{
 		COptionsItem *pActiveOption = dynamic_cast< COptionsItem* >( m_Menu.GetItem( iItem ) );
 		if ( pActiveOption )
-		{    
+		{
 			const sessionProperty_t &activeOption = pActiveOption->GetActiveOption();
-				
+
 			if ( !Q_strncmp( activeOption.szID, "PROPERTY_GAME_SIZE", sessionProperty_t::MAX_KEY_LEN ) )
 			{
 				// make sure the private slots is less than prop.szValue
@@ -285,9 +285,9 @@ void CSessionOptionsDialog::OnMenuItemChanged( KeyValues *pData )
 				{
 					COptionsItem *pItem = dynamic_cast< COptionsItem* >( m_Menu.GetItem( iMenu ) );
 					if ( !pItem )
-					{                    
+					{
 						continue;
-					}		
+					}
 
 					const sessionProperty_t &prop = pItem->GetActiveOption();
 
@@ -342,7 +342,7 @@ void CSessionOptionsDialog::OverrideMenuItem( KeyValues *pItemKeys )
 			KeyValues *pKey = m_pDialogKeys->FindKey( pID );
 			if ( pKey )
 			{
-				pItemKeys->SetInt( "activeoption", pKey->GetInt( "optionindex" ) );	
+				pItemKeys->SetInt( "activeoption", pKey->GetInt( "optionindex" ) );
 			}
 		}
 	}
@@ -389,7 +389,7 @@ void CSessionOptionsDialog::OnKeyCodePressed( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSessionOptionsDialog::OnThink()
 {
@@ -414,7 +414,6 @@ void CSessionOptionsDialog::OnCommand( const char *pCommand )
 		SetupSession();
 		OnClose();
 	}
-		
+
 	GetParent()->OnCommand( pCommand );
 }
-

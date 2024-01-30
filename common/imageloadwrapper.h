@@ -11,7 +11,7 @@
 #include "tgaloader.h"
 #include "pngloader.h"
 
-// Convert any supported image type (jpeg, tga) to RGB 
+// Convert any supported image type (jpeg, tga) to RGB
 bool ConvertImageToRGB( const byte *pubImageData, int cubImageData, CUtlBuffer &bufOutput, int &width, int &height );
 
 // Convert any supported image type (jpeg, tga) to RGBA

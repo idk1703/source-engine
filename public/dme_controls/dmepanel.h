@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -79,8 +79,8 @@ private:
 		CBaseDmePanelFactory *m_pFactory;
 	};
 
-	MESSAGE_FUNC( OnTextChanged, "TextChanged" );	
-	MESSAGE_FUNC( OnDmeElementChanged, "DmeElementChanged" );	
+	MESSAGE_FUNC( OnTextChanged, "TextChanged" );
+	MESSAGE_FUNC( OnDmeElementChanged, "DmeElementChanged" );
 	MESSAGE_FUNC_PARAMS( OnViewedElementChanged, "NotifyViewedElementChanged", kv );
 
 	// Copy/paste support
@@ -241,7 +241,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Helper macro to create the converter panel factory 
+// Helper macro to create the converter panel factory
 // IMPLEMENT_DMEPANEL_CONVERSION_FACTORY_OVERRIDE is used by applications to override
 // DmePanels implemented in libraries
 //-----------------------------------------------------------------------------

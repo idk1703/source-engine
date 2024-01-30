@@ -53,7 +53,7 @@ void UtlStrcpy( CUtlVector<char> &dest, const char *pSrc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *GetBaseDirectory( void )
@@ -83,7 +83,7 @@ bool AddConfig( int configID )
 {
 	// Find the games block of the keyvalues
 	KeyValues *gameBlock = g_ConfigManager.GetGameBlock();
-	
+
 	if ( gameBlock == NULL )
 	{
 		Assert( 0 );
@@ -97,10 +97,10 @@ bool AddConfig( int configID )
 	// Data for building the new configuration
 	const char *pModName = g_Configs[configID]->m_Name.Base();
 	const char *pModDirectory = g_Configs[configID]->m_ModDir.Base();
-	
+
 	// Mod name
 	Q_strncpy( newInfo.gameName, pModName, sizeof( newInfo.gameName ) );
-	
+
 	// FGD
 	Q_strncpy( newInfo.FGD, "base.fgd", sizeof( newInfo.FGD ) );
 
@@ -117,7 +117,7 @@ bool AddConfig( int configID )
 
 	char fullDir[MAX_PATH];
 	g_ConfigManager.GetRootGameDirectory( fullDir, sizeof( fullDir ), g_ConfigManager.GetRootDirectory() );
-	
+
 	return g_ConfigManager.AddDefaultConfig( newInfo, gameBlock, szPath, fullDir );
 }
 
@@ -131,7 +131,7 @@ bool RemoveConfig( int configID )
 
 	// Find the games block of the keyvalues
 	KeyValues *gameBlock = g_ConfigManager.GetGameBlock();
-	
+
 	if ( gameBlock == NULL )
 	{
 		Assert( 0 );
@@ -170,7 +170,7 @@ bool UpdateConfigs( void )
 
 	// Find the games block of the keyvalues
 	KeyValues *gameBlock = g_ConfigManager.GetGameBlock();
-	
+
 	if ( gameBlock == NULL )
 	{
 		Assert( 0 );
@@ -217,7 +217,7 @@ bool ParseConfigs( void )
 
 	// Find the games block of the keyvalues
 	KeyValues *gameBlock = g_ConfigManager.GetGameBlock();
-	
+
 	if ( gameBlock == NULL )
 	{
 		Assert( 0 );
@@ -248,17 +248,17 @@ void UpdateConfigsStatus_Init( void )
 		char szConfigDir[MAX_PATH];
 		Q_strncpy( szConfigDir, GetBaseDirectory(), sizeof( szConfigDir ) );
 
-		g_dwChangeHandle = FindFirstChangeNotification( 
-			szConfigDir,													// directory to watch 
-			false,															// watch the subtree 
-			FILE_NOTIFY_CHANGE_LAST_WRITE );								// watch file and dir name changes 
- 
+		g_dwChangeHandle = FindFirstChangeNotification(
+			szConfigDir,													// directory to watch
+			false,															// watch the subtree
+			FILE_NOTIFY_CHANGE_LAST_WRITE );								// watch file and dir name changes
+
 		if ( g_dwChangeHandle == INVALID_HANDLE_VALUE )
 		{
 			// FIXME: Unable to watch the file
 		}
 	}
-}	 
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: Reload and re-parse our configuration data
@@ -285,11 +285,11 @@ void UpdateConfigsStatus( void )
 		{
 			// Reload the configs
 			g_ConfigManager.LoadConfigs();
-			
+
 			// Reparse the configurations
 			ReloadConfigs();
 		}
-		
+
 		// Start the next update
 		if ( FindNextChangeNotification( g_dwChangeHandle ) == FALSE )
 		{
@@ -322,7 +322,7 @@ static LRESULT CALLBACK messageProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM 
 			g_pMainFrame->PopulateConfigList();
 		}
 	}
- 
+
 	return ::DefWindowProc(hwnd,msg,wparam,lparam);
 }
 
@@ -342,9 +342,9 @@ void CreateMessageWindow( void )
 	// Create an empty window just for message handling
 	staticHwnd = CreateWindowEx(0, "VConfig_Window", "Hidden Window", 0, 0, 0, 1, 1, NULL, NULL, GetModuleHandle(NULL), NULL);
 }
- 
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ShutdownMessageWindow( void )
 {
@@ -418,8 +418,8 @@ void SetXSIScriptSettings( )
 {
 	// Determine the currently installed version of XSI
 	char *pXSIVersion = "5.1";
-	
-	// FIXME: We need a way of knowing the current version of XSI being used 
+
+	// FIXME: We need a way of knowing the current version of XSI being used
 	// so we can set up the appropriate search paths. There's no easy way of doing this currently
 	// so I'm defining my own environment variable
 	char pXSIVersionBuf[ MAX_PATH ];
@@ -487,7 +487,7 @@ SpewRetval_t VConfig_SpewOutputFunc( SpewType_t type, char const *pMsg )
 	case SPEW_ERROR:
 		::MessageBox( NULL, pMsg, "VConfig Error", MB_OK );
 		return SPEW_ABORT;
-		
+
 	case SPEW_ASSERT:
 		return SPEW_DEBUGGER;
 	}
@@ -533,7 +533,7 @@ bool CVConfigApp::Create()
 		return false;
 	}
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "inputsystem.dll",		INPUTSYSTEM_INTERFACE_VERSION },
 		{ "vgui2.dll",				VGUI_IVGUI_INTERFACE_VERSION },
@@ -590,7 +590,7 @@ bool CVConfigApp::PreInit()
 	UpdateConfigsStatus_Init();
 
 	// the "base dir" so we can scan mod name
-	g_pFullFileSystem->AddSearchPath( GetBaseDirectory(), VCONFIG_MAIN_PATH_ID );	
+	g_pFullFileSystem->AddSearchPath( GetBaseDirectory(), VCONFIG_MAIN_PATH_ID );
 
 	// the main platform dir
 	g_pFullFileSystem->AddSearchPath( "platform","PLATFORM", PATH_ADD_TO_HEAD );
@@ -643,4 +643,3 @@ int CVConfigApp::Main()
 
 	return 1;
 }
-

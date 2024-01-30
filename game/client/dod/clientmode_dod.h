@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,7 +15,7 @@
 
 class CDODFreezePanel;
 
-class ClientModeDODNormal : public ClientModeShared 
+class ClientModeDODNormal : public ClientModeShared
 {
 DECLARE_CLASS( ClientModeDODNormal, ClientModeShared );
 
@@ -40,9 +40,9 @@ public:
 
 	virtual int		HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
 
-	
+
 private:
-	
+
 	//	void	UpdateSpectatorMode( void );
 
 	void RadioMessage( const char *pszSoundName, const char *pszSubtitle, const char *pszSender = NULL, int iSenderIndex = 0 );

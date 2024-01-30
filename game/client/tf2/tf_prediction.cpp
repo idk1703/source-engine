@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,9 +25,9 @@ public:
 
 private:
 
-	void SetupMoveRecon( CUserCmd *ucmd, C_BaseTFPlayer *pTFPlayer, IMoveHelper *pHelper, 
+	void SetupMoveRecon( CUserCmd *ucmd, C_BaseTFPlayer *pTFPlayer, IMoveHelper *pHelper,
 					     CTFMoveData *pTFMove );
-	void SetupMoveCommando( CUserCmd *ucmd, C_BaseTFPlayer *pTFPlayer, IMoveHelper *pHelper, 
+	void SetupMoveCommando( CUserCmd *ucmd, C_BaseTFPlayer *pTFPlayer, IMoveHelper *pHelper,
 					        CTFMoveData *pTFMove );
 
 	void FinishMoveRecon( CTFMoveData *pTFMove, C_BaseTFPlayer *pTFPlayer );
@@ -35,9 +35,9 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, 
+void CTFPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper,
 	CMoveData *move )
 {
 	// Call the default SetupMove code.
@@ -58,14 +58,14 @@ void CTFPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper
 	pTFMove->m_nClassID = pTFPlayer->PlayerClass();
 	switch( pTFPlayer->GetClass() )
 	{
-	case TFCLASS_RECON: 
-		{ 
-			SetupMoveRecon( ucmd, pTFPlayer, pHelper, pTFMove ); 
-			break; 
+	case TFCLASS_RECON:
+		{
+			SetupMoveRecon( ucmd, pTFPlayer, pHelper, pTFMove );
+			break;
 		}
-	case TFCLASS_COMMANDO: 
-		{ 
-			SetupMoveCommando( ucmd, pTFPlayer, pHelper, pTFMove ); 
+	case TFCLASS_COMMANDO:
+		{
+			SetupMoveCommando( ucmd, pTFPlayer, pHelper, pTFMove );
 			break;
 		}
 	default:
@@ -93,7 +93,7 @@ void CTFPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFPrediction::SetupMoveRecon( CUserCmd *ucmd, C_BaseTFPlayer *pTFPlayer, IMoveHelper *pHelper, 
+void CTFPrediction::SetupMoveRecon( CUserCmd *ucmd, C_BaseTFPlayer *pTFPlayer, IMoveHelper *pHelper,
 								    CTFMoveData *pTFMove )
 {
 	C_PlayerClassRecon *pRecon = static_cast<C_PlayerClassRecon*>( pTFPlayer->GetPlayerClass() );
@@ -117,7 +117,7 @@ void CTFPrediction::SetupMoveRecon( CUserCmd *ucmd, C_BaseTFPlayer *pTFPlayer, I
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFPrediction::SetupMoveCommando( CUserCmd *ucmd, C_BaseTFPlayer *pTFPlayer, IMoveHelper *pHelper, 
+void CTFPrediction::SetupMoveCommando( CUserCmd *ucmd, C_BaseTFPlayer *pTFPlayer, IMoveHelper *pHelper,
 								       CTFMoveData *pTFMove )
 {
 	C_PlayerClassCommando *pCommando = static_cast<C_PlayerClassCommando*>( pTFPlayer->GetPlayerClass() );
@@ -138,7 +138,7 @@ void CTFPrediction::SetupMoveCommando( CUserCmd *ucmd, C_BaseTFPlayer *pTFPlayer
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPrediction::FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *move )
 {
@@ -159,14 +159,14 @@ void CTFPrediction::FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData 
 	//
 	switch( pTFPlayer->PlayerClass() )
 	{
-	case TFCLASS_RECON: 
-		{ 
-			FinishMoveRecon( pTFMove, pTFPlayer ); 
-			break; 
+	case TFCLASS_RECON:
+		{
+			FinishMoveRecon( pTFMove, pTFPlayer );
+			break;
 		}
-	case TFCLASS_COMMANDO: 
-		{ 
-			FinishMoveCommando( pTFMove, pTFPlayer ); 
+	case TFCLASS_COMMANDO:
+		{
+			FinishMoveCommando( pTFMove, pTFPlayer );
 			break;
 		}
 	default:
@@ -242,4 +242,3 @@ static CTFPrediction g_Prediction;
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CTFPrediction, IPrediction, VCLIENT_PREDICTION_INTERFACE_VERSION, g_Prediction );
 
 CPrediction *prediction = &g_Prediction;
-

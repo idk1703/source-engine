@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -23,7 +23,7 @@ ConVar soundscape_debug( "soundscape_debug", "0", FCVAR_CHEAT, "When on, draws l
 LINK_ENTITY_TO_CLASS( env_soundscape_proxy, CEnvSoundscapeProxy );
 
 BEGIN_DATADESC( CEnvSoundscapeProxy )
-	
+
 	DEFINE_KEYFIELD( m_MainSoundscapeName, FIELD_STRING, "MainSoundscapeName" )
 
 END_DATADESC()
@@ -151,7 +151,7 @@ bool CEnvSoundscape::IsEnabled( void ) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvSoundscape::Disable( void )
 {
@@ -162,7 +162,7 @@ void CEnvSoundscape::Disable( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvSoundscape::Enable( void )
 {
@@ -183,10 +183,10 @@ bool CEnvSoundscape::KeyValue( const char *szKeyName, const char *szValue )
 	return true;
 }
 
-// returns true if the given sound entity is in range 
+// returns true if the given sound entity is in range
 // and can see the given player entity (pTarget)
 
-bool CEnvSoundscape::InRangeOfPlayer( CBasePlayer *pTarget ) 
+bool CEnvSoundscape::InRangeOfPlayer( CBasePlayer *pTarget )
 {
 	Vector vecSpot1 = EarPosition();
 	Vector vecSpot2 = pTarget->EarPosition();
@@ -247,7 +247,7 @@ void CEnvSoundscape::WriteAudioParamsTo( audioparams_t &audio )
 // a new in-range, visible sound entity resets a new soundscape.
 //
 
-// CONSIDER: if player in water state, autoset and underwater soundscape? 
+// CONSIDER: if player in water state, autoset and underwater soundscape?
 void CEnvSoundscape::UpdateForPlayer( ss_update_t &update )
 {
 	if ( !IsEnabled() )
@@ -264,7 +264,7 @@ void CEnvSoundscape::UpdateForPlayer( ss_update_t &update )
 	// calc range from sound entity to player
 	Vector target = EarPosition();
 	float range = (update.playerPosition - target).Length();
-	
+
 	if ( update.pCurrentSoundscape == this )
 	{
 		update.currentDistance = range;
@@ -429,11 +429,11 @@ void CEnvSoundscapeTriggerable::DelegateStartTouch( CBaseEntity *pEnt )
 	if ( !pPlayer )
 		return;
 
-	// Just in case.. we shouldn't already be in the player's list because it should have 
+	// Just in case.. we shouldn't already be in the player's list because it should have
 	// called DelegateEndTouch, but this seems to happen when they're noclipping.
 	pPlayer->m_hTriggerSoundscapeList.FindAndRemove( this );
 
-	// Add us to the player's list of soundscapes and 
+	// Add us to the player's list of soundscapes and
 	pPlayer->m_hTriggerSoundscapeList.AddToHead( this );
 	WriteAudioParamsTo( pPlayer->GetAudioParams() );
 }
@@ -507,7 +507,7 @@ BEGIN_DATADESC( CTriggerSoundscape )
 	DEFINE_THINKFUNC( PlayerUpdateThink ),
 	DEFINE_KEYFIELD( m_SoundscapeName, FIELD_STRING, "soundscape" ),
 	DEFINE_FIELD( m_hSoundscape, FIELD_EHANDLE ),
-	DEFINE_UTLVECTOR( m_spectators, FIELD_EHANDLE ), 
+	DEFINE_UTLVECTOR( m_spectators, FIELD_EHANDLE ),
 END_DATADESC()
 
 

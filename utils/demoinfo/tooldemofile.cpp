@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -29,7 +29,7 @@ CToolDemoFile::~CToolDemoFile()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CToolDemoFile::ReadSequenceInfo(int &nSeqNrIn, int &nSeqNrOut)
 {
@@ -40,7 +40,7 @@ void CToolDemoFile::ReadSequenceInfo(int &nSeqNrIn, int &nSeqNrOut)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CToolDemoFile::ReadCmdInfo( democmdinfo_t& info )
 {
@@ -49,10 +49,10 @@ void CToolDemoFile::ReadCmdInfo( democmdinfo_t& info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : cmd - 
-//			dt - 
-//			frame - 
+// Purpose:
+// Input  : cmd -
+//			dt -
+//			frame -
 //-----------------------------------------------------------------------------
 void CToolDemoFile::ReadCmdHeader( unsigned char& cmd, int& tick )
 {
@@ -60,7 +60,7 @@ void CToolDemoFile::ReadCmdHeader( unsigned char& cmd, int& tick )
 
 	// Read the command
 	int r = g_pFileSystem->Read ( &cmd, sizeof(byte), m_hDemoFile );
-	
+
 	if ( r <=0 )
 	{
 		Warning("Missing end tag in demo file.\n");
@@ -72,14 +72,14 @@ void CToolDemoFile::ReadCmdHeader( unsigned char& cmd, int& tick )
 
 	// Read the timestamp
 	g_pFileSystem->Read ( &tick, sizeof(int), m_hDemoFile );
-	
+
 	tick = LittleDWord( tick );
 }
 
 const char *CToolDemoFile::ReadConsoleCommand()
 {
 	static char cmdstring[1024];
-	
+
 	ReadRawData( cmdstring, sizeof(cmdstring) );
 
 	return cmdstring;
@@ -94,9 +94,9 @@ unsigned int CToolDemoFile::GetCurPos()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : expected_length - 
-//			&demofile - 
+// Purpose:
+// Input  : expected_length -
+//			&demofile -
 //-----------------------------------------------------------------------------
 int CToolDemoFile::ReadNetworkDataTables( CUtlBuffer *buf )
 {
@@ -122,17 +122,17 @@ int CToolDemoFile::ReadNetworkDataTables( CUtlBuffer *buf )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : discard - 
+// Purpose:
+// Input  : discard -
 //-----------------------------------------------------------------------------
 int CToolDemoFile::ReadUserCmd( char *buffer, int &size )
 {
 	Assert( m_hDemoFile != FILESYSTEM_INVALID_HANDLE );
 
 	int outgoing_sequence;
-	
+
 	g_pFileSystem->Read( &outgoing_sequence, sizeof( int ), m_hDemoFile );
-	
+
 	size = ReadRawData( buffer, size );
 
 	return outgoing_sequence;
@@ -148,15 +148,15 @@ void CToolDemoFile::SeekTo( int position )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 int CToolDemoFile::ReadRawData( char *buffer, int length )
 {
 	Assert( m_hDemoFile != FILESYSTEM_INVALID_HANDLE );
-	
+
 	int size;
-	
+
 	// read length of data block
 	g_pFileSystem->Read( &size, sizeof( int ), m_hDemoFile );
 
@@ -199,7 +199,7 @@ demoheader_t *CToolDemoFile::ReadDemoHeader()
 {
 	if ( m_hDemoFile == FILESYSTEM_INVALID_HANDLE )
 		return NULL;	// file not open
-	
+
 	// goto file start
 	g_pFileSystem->Seek(m_hDemoFile, 0, FILESYSTEM_SEEK_HEAD);
 
@@ -222,7 +222,7 @@ demoheader_t *CToolDemoFile::ReadDemoHeader()
 
 	if ( m_DemoHeader.networkprotocol != PROTOCOL_VERSION )
 	{
-		Warning ("ERROR: demo network protocol %i outdated, engine version is %i \n", 
+		Warning ("ERROR: demo network protocol %i outdated, engine version is %i \n",
 			m_DemoHeader.networkprotocol, PROTOCOL_VERSION );
 
 		return NULL;
@@ -231,7 +231,7 @@ demoheader_t *CToolDemoFile::ReadDemoHeader()
 
 	if ( m_DemoHeader.demoprotocol != DEMO_PROTOCOL )
 	{
-		Warning ("ERROR: demo file protocol %i outdated, engine version is %i \n", 
+		Warning ("ERROR: demo file protocol %i outdated, engine version is %i \n",
 			m_DemoHeader.demoprotocol, DEMO_PROTOCOL );
 
 		return NULL;
@@ -264,7 +264,7 @@ bool CToolDemoFile::Open(const char *name, bool bReadOnly)
 
 	if ( m_hDemoFile == FILESYSTEM_INVALID_HANDLE )
 	{
-		Warning ("CToolDemoFile::Open: couldn't open file %s for %s.\n", 
+		Warning ("CToolDemoFile::Open: couldn't open file %s for %s.\n",
 			name, bReadOnly?"reading":"writing" );
 		return false;
 	}
@@ -292,4 +292,3 @@ int CToolDemoFile::GetSize()
 {
 	return g_pFileSystem->Size( m_hDemoFile );
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,7 +33,7 @@ int				CTextureConverter::m_nWarnings;
 
 //-----------------------------------------------------------------------------
 // Purpose: Reset counters.
-// Input  : 
+// Input  :
 // Output : Counters all reset to 0.
 //-----------------------------------------------------------------------------
 void CTextureConverter::Initialize( void )
@@ -112,7 +112,7 @@ void CTextureConverter::ConvertSolids( CMapWorld * pWorld )
 
 //-----------------------------------------------------------------------------
 // Purpose: Enumeration function, increment the solids counter.
-// Input  : 
+// Input  :
 // Output : Always return true to continue enumerating.
 //-----------------------------------------------------------------------------
 bool CTextureConverter::CountMapSolids( CMapSolid *, DWORD )
@@ -151,7 +151,7 @@ bool CTextureConverter::CheckSolidTextures( CMapSolid * pSolid, DWORD )
 //-----------------------------------------------------------------------------
 // Purpose: Check the texture of a face to determine if conversion is necessary.
 // Input  : pFace - a map face.
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 void CTextureConverter::CheckFaceTexture( CMapFace * pFace )
 {
@@ -193,7 +193,7 @@ bool TextureEndsIn( const char *pTextureName, const char *pEnd )
 // Purpose: Determine if any materials match the old texture of a face and replace
 //          appropriately.
 // Input  : pFace - a map face known to need conversion.
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 void CTextureConverter::ConvertFaceTexture( CMapFace * pFace )
 {
@@ -201,9 +201,9 @@ void CTextureConverter::ConvertFaceTexture( CMapFace * pFace )
 	IEditorTexture *pNewTexture;
 
 	const char *pTextureName = pFace->GetTexture()->GetName();
-	
+
 	// Check for SKY and SKIP brushes.
-	char *replacements[][2] = 
+	char *replacements[][2] =
 	{
 		{ "sky",		"tools/toolsskybox" },
 		{ "skip",		"tools/toolsskip" },
@@ -270,7 +270,7 @@ void CTextureConverter::ConvertDecals( CMapWorld * pWorld )
 
 //-----------------------------------------------------------------------------
 // Purpose: Enumeration function, increment the decals counter if entity is a decal.
-// Input  : 
+// Input  :
 // Output : Always return true to continue enumerating.
 //-----------------------------------------------------------------------------
 bool CTextureConverter::CountMapDecals( CMapEntity * pEnt, DWORD )
@@ -314,7 +314,7 @@ bool CTextureConverter::CheckDecalTextures( CMapEntity * pEnt, DWORD )
 // Purpose: Determine if any materials match the old texture of a decal and replace
 //          appropriately.
 // Input  : pEnt - a map decal known to need conversion.
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 void CTextureConverter::ConvertDecalTexture( CMapEntity * pEnt )
 {
@@ -487,7 +487,7 @@ void CTextureConverter::RescaleFaceTexture( CMapFace * pFace, IEditorTexture * p
 
 	int nOldWidth = -1;
 	int nOldHeight = -1;
-	
+
 	// First look for the .resizeinfo in the mod dir (hl2\dod), then the game dir (hl2\hl2).
 	char resizeInfoFilename[512];
 	Q_snprintf( resizeInfoFilename, sizeof( resizeInfoFilename ), "materials\\%s.resizeinfo", pNewTexture->GetName() );
@@ -506,7 +506,7 @@ void CTextureConverter::RescaleFaceTexture( CMapFace * pFace, IEditorTexture * p
 	g_pFileSystem->Close( fp );
 	if ( nScanned != 2 || nOldWidth < 0 || nOldHeight < 0 || nOldWidth > 5000 || nOldHeight > 5000 )
 		return;
-	
+
 	nNewWidth	= pNewTexture->GetWidth();
 	nNewHeight	= pNewTexture->GetHeight();
 
@@ -620,7 +620,7 @@ void CTextureConverter::MsgConvertDecal( CMapEntity * pEnt, const char * format,
 
 //-----------------------------------------------------------------------------
 // Purpose: Display information about the full conversion process.
-// Input  : 
+// Input  :
 // Output : Values of the counters are logged.
 //-----------------------------------------------------------------------------
 void CTextureConverter::DisplayStatistics( void )

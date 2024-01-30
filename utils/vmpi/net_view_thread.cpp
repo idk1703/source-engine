@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -38,7 +38,7 @@ void CNetViewThread::Init()
 	m_hThreadExitEvent = CreateEvent( NULL, false, false, NULL );
 
 	DWORD dwThreadID = 0;
-	m_hThread = CreateThread( 
+	m_hThread = CreateThread(
 		NULL,
 		0,
 		&CNetViewThread::StaticThreadFn,
@@ -82,13 +82,13 @@ void CNetViewThread::GetComputerNames( CUtlVector<char*> &computerNames )
 
 void CNetViewThread::UpdateServicesFromNetView()
 {
-    HANDLE hChildStdoutRd, hChildStdoutWr;
-    
+	HANDLE hChildStdoutRd, hChildStdoutWr;
+
 	// Set the bInheritHandle flag so pipe handles are inherited.
-    SECURITY_ATTRIBUTES saAttr; 
-	saAttr.nLength = sizeof(SECURITY_ATTRIBUTES); 
-    saAttr.bInheritHandle = TRUE; 
-    saAttr.lpSecurityDescriptor = NULL; 
+	SECURITY_ATTRIBUTES saAttr;
+	saAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
+	saAttr.bInheritHandle = TRUE;
+	saAttr.lpSecurityDescriptor = NULL;
 
 	if( CreatePipe( &hChildStdoutRd, &hChildStdoutWr, &saAttr, 0 ) )
 	{
@@ -97,12 +97,12 @@ void CNetViewThread::UpdateServicesFromNetView()
 		si.cb = sizeof(si);
 		si.dwFlags = STARTF_USESTDHANDLES;
 		si.hStdOutput = hChildStdoutWr;
-		
+
 		PROCESS_INFORMATION pi;
 
-		if( CreateProcess( 
-			NULL, 
-			"net view", 
+		if( CreateProcess(
+			NULL,
+			"net view",
 			NULL,	// lpProcessAttributes
 			NULL,	// lpThreadAttributes
 			TRUE,	// bInheritHandls
@@ -118,12 +118,12 @@ void CNetViewThread::UpdateServicesFromNetView()
 			char buffer[BUFFER_SIZE];
 			BOOL bDone = FALSE;
 			CUtlVector<char> totalBuffer;
-			
+
 			while(1)
 			{
 				DWORD dwCount = 0;
 				DWORD dwRead = 0;
-				
+
 				// read from input handle
 				PeekNamedPipe(hChildStdoutRd, NULL, NULL, NULL, &dwCount, NULL);
 				if (dwCount)
@@ -141,7 +141,7 @@ void CNetViewThread::UpdateServicesFromNetView()
 				{
 					if ( bDone )
 						break;
-					
+
 					bDone = TRUE;	// next time we get it
 				}
 			}
@@ -162,7 +162,7 @@ void CNetViewThread::ParseComputerNames( const char *pNetViewOutput )
 	EnterCriticalSection( &m_ComputerNamesCS );
 
 	m_ComputerNames.PurgeAndDeleteElements();
-	
+
 	const char *pCur = pNetViewOutput;
 	while ( *pCur != 0 )
 	{
@@ -204,5 +204,3 @@ DWORD CNetViewThread::StaticThreadFn( LPVOID lpParameter )
 {
 	return ((CNetViewThread*)lpParameter)->ThreadFn();
 }
-
-

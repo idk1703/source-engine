@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -203,7 +203,7 @@ bool COSXFont::CreateTextLayout()
 		CHECK_ATSU_ERR( err );
 		return false;
 	}
-	
+
 	return true;
 }
 
@@ -303,7 +303,7 @@ bool COSXFont::Create( const char *windowsFontName, int tall, int weight, int bl
 	CGContextSetTextDrawingMode( m_ContextRef, kCGTextFill );
 	CGContextSetRGBStrokeColor( m_ContextRef, 1.0f, 1.0f, 1.0f, 1.0f );
 	CGContextSetLineWidth( m_ContextRef, 1 );
-	
+
 	// Calculate our gaussian distribution for if we're blurred.
 	if ( m_iBlur > 1 )
 	{
@@ -342,7 +342,7 @@ void COSXFont::GetKernedCharWidth( wchar_t ch, wchar_t chBefore, wchar_t chAfter
 		abcA = m_ExtendedKernedABCWidthsCache[iKerned].abc.abcA;
 		wide = m_ExtendedKernedABCWidthsCache[ iKerned ].abc.wide;
 		return;
-	}	
+	}
 
 	if ( !m_ATSUStyle || ( ch == 0 ) )
 		return;
@@ -407,7 +407,7 @@ void COSXFont::GetKernedCharWidth( wchar_t ch, wchar_t chBefore, wchar_t chAfter
 		CHECK_ATSU_ERR( err );
 
 	ATSLayoutRecord *layoutRecords;
-	ItemCount glyphCount;	
+	ItemCount glyphCount;
 
 	layoutRecords = NULL;
 	err = ATSUDirectGetLayoutDataArrayPtrFromTextLayout( m_ATSUTextLayout, 0, kATSUDirectDataLayoutRecordATSLayoutRecordCurrent, (void **) &layoutRecords, &glyphCount );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 // Spawns particles after  the entity
 //-----------------------------------------------------------------------------
-class CEntityParticleTrail : public CBaseParticleEntity 
+class CEntityParticleTrail : public CBaseParticleEntity
 {
 	DECLARE_DATADESC();
 	DECLARE_CLASS( CEntityParticleTrail, CBaseParticleEntity );
@@ -41,7 +41,7 @@ private:
 	void	AttachToEntity( CBaseEntity *pTarget );
 	void	IncrementRefCount();
 	void	DecrementRefCount();
-	
+
 	CNetworkVar( int, m_iMaterialName );
 	CNetworkVarEmbedded( EntityParticleTrailInfo_t, m_Info );
 	CNetworkHandle( CBaseEntity, m_hConstraintEntity );

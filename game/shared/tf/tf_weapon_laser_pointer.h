@@ -49,7 +49,7 @@ class CTFLaserPointer : public CTFWeaponBaseGun
 public:
 
 	DECLARE_CLASS( CTFLaserPointer, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFLaserPointer();

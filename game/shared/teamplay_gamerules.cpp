@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -49,7 +49,7 @@ CTeamplayRules::CTeamplayRules()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamplayRules::Precache( void )
 {
@@ -62,7 +62,7 @@ void CTeamplayRules::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamplayRules::Think ( void )
 {
@@ -77,7 +77,7 @@ void CTeamplayRules::Think ( void )
 	}
 
 	float flTimeLimit = mp_timelimit.GetFloat() * 60;
-	
+
 	if ( flTimeLimit != 0 && gpGlobals->curtime >= flTimeLimit )
 	{
 		ChangeLevel();
@@ -108,7 +108,7 @@ bool CTeamplayRules::ClientCommand( CBaseEntity *pEdict, const CCommand &args )
 {
 	if( BaseClass::ClientCommand( pEdict, args ) )
 		return true;
-	
+
 	if ( FStrEq( args[0], "menuselect" ) )
 	{
 		if ( args.ArgC() < 2 )
@@ -140,7 +140,7 @@ const char *CTeamplayRules::SetDefaultPlayerTeam( CBasePlayer *pPlayer )
 	if ( (pPlayer->TeamName())[0] == '\0' || !IsValidTeam( pPlayer->TeamName() ) || defaultteam.GetFloat() )
 	{
 		const char *pTeamName = NULL;
-		
+
 		if ( defaultteam.GetFloat() )
 		{
 			pTeamName = team_names[0];
@@ -235,7 +235,7 @@ void CTeamplayRules::ClientDisconnected( edict_t *pClient )
 //=========================================================
 void CTeamplayRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 {
-	/* TODO: handle skin, model & team changes 
+	/* TODO: handle skin, model & team changes
 
   	char text[1024];
 
@@ -285,7 +285,7 @@ void CTeamplayRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 			event->SetString( "newname", pszName );
 			gameeventmanager->FireEvent( event );
 		}
-		
+
 		pPlayer->SetPlayerName( pszName );
 	}
 
@@ -299,7 +299,7 @@ void CTeamplayRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 }
 
 //=========================================================
-// Deathnotice. 
+// Deathnotice.
 //=========================================================
 void CTeamplayRules::DeathNotice( CBasePlayer *pVictim, const CTakeDamageInfo &info )
 {
@@ -321,7 +321,7 @@ void CTeamplayRules::DeathNotice( CBasePlayer *pVictim, const CTakeDamageInfo &i
 					event->SetInt("killer", pk->GetUserID() );
 					event->SetInt("victim", pVictim->GetUserID() );
 					event->SetInt("priority", 7 );	// HLTV event priority, not transmitted
-					
+
 					gameeventmanager->FireEvent( event );
 				}
 				return;
@@ -385,9 +385,9 @@ int CTeamplayRules::PlayerRelationship( CBaseEntity *pPlayer, CBaseEntity *pTarg
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pListener - 
-//			*pSpeaker - 
+// Purpose:
+// Input  : *pListener -
+//			*pSpeaker -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CTeamplayRules::PlayerCanHearChat( CBasePlayer *pListener, CBasePlayer *pSpeaker )
@@ -449,7 +449,7 @@ int CTeamplayRules::GetTeamIndex( const char *pTeamName )
 				return tm;
 		}
 	}
-	
+
 	return -1;	// No match
 }
 
@@ -463,7 +463,7 @@ const char *CTeamplayRules::GetIndexedTeamName( int teamIndex )
 }
 
 
-bool CTeamplayRules::IsValidTeam( const char *pTeamName ) 
+bool CTeamplayRules::IsValidTeam( const char *pTeamName )
 {
 	if ( !m_teamLimit )	// Any team is valid if the teamlist isn't set
 		return true;
@@ -479,7 +479,7 @@ const char *CTeamplayRules::TeamWithFewestPlayers( void )
 	char *pTeamName = NULL;
 
 	memset( teamCount, 0, MAX_TEAMS * sizeof(int) );
-	
+
 	// loop through all clients, count number of players on each team
 	for ( i = 1; i <= gpGlobals->maxClients; i++ )
 	{
@@ -551,9 +551,9 @@ void CTeamplayRules::RecountTeams( void )
 			const char *pTeamName = plr->TeamID();
 			// try add to existing team
 			int tm = GetTeamIndex( pTeamName );
-			
+
 			if ( tm < 0 ) // no team match found
-			{ 
+			{
 				if ( !m_teamLimit )
 				{
 					// add to new team

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -38,7 +38,7 @@ VehicleModeDeploy_e C_BaseTFFourWheelVehicle::GetVehicleModeDeploy() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTFFourWheelVehicle::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -59,7 +59,7 @@ void C_BaseTFFourWheelVehicle::RestrictView( int nRole, float flMinYaw, float fl
 	Assert( nRole >= 0 );
 	Vector vehicleEyeOrigin;
 	QAngle vehicleEyeAngles;
-	GetRoleViewPosition( nRole, &vehicleEyeOrigin, &vehicleEyeAngles ); 
+	GetRoleViewPosition( nRole, &vehicleEyeOrigin, &vehicleEyeAngles );
 
 	// Confine the view to the appropriate yaw range...
 	float flCenterYaw = vehicleEyeAngles[YAW];
@@ -76,7 +76,7 @@ void C_BaseTFFourWheelVehicle::RestrictView( int nRole, float flMinYaw, float fl
 
 
 //-----------------------------------------------------------------------------
-// Clamps the view angles while driving the vehicle 
+// Clamps the view angles while driving the vehicle
 //-----------------------------------------------------------------------------
 void C_BaseTFFourWheelVehicle::UpdateViewAngles( C_BasePlayer *pLocalPlayer, CUserCmd *pCmd )
 {
@@ -86,4 +86,3 @@ void C_BaseTFFourWheelVehicle::UpdateViewAngles( C_BasePlayer *pLocalPlayer, CUs
 		RestrictView( nRole, -90, 90, pCmd->viewangles );
 	}
 }
-

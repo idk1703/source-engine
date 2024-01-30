@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -150,7 +150,7 @@ public:
 			offsets.AddToTail( currentOffset );
 
 			const char *pString = m_StringMap.String( i );
-			buffer.Put( pString, strlen( pString ) + 1 ); 
+			buffer.Put( pString, strlen( pString ) + 1 );
 
 			currentOffset += strlen( pString ) + 1;
 		}
@@ -445,7 +445,7 @@ bool CSceneImage::CreateSceneImageFile( CUtlBuffer &targetBuffer, char const *pc
 		{
 			// filename checksums must be unique or runtime binary search would be bogus
 			Error( "CreateSceneImageFile: Unexpected filename checksum collision!\n" );
-		}		
+		}
 
 		imageDirectory.Insert( imageEntry );
 	}
@@ -519,7 +519,7 @@ bool CSceneImage::CreateSceneImageFile( CUtlBuffer &targetBuffer, char const *pc
 	// finalize and write data
 	Assert( sceneDataStart == targetBuffer.TellMaxPut() );
 	for ( int i = 0; i < imageDirectory.Count(); i++ )
-	{	
+	{
 		int iScene = writeOrder[i];
 		targetBuffer.Put( g_SceneFiles[iScene].compiledBuffer.Base(), g_SceneFiles[iScene].compiledBuffer.TellMaxPut() );
 	}

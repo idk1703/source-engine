@@ -174,7 +174,7 @@ public:
 
 	// methods
 	void ResetTimer( void );
-	
+
 	DECLARE_DATADESC();
 };
 
@@ -214,7 +214,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTimerEntity::Spawn( void )
 {
@@ -235,7 +235,7 @@ void CTimerEntity::Spawn( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTimerEntity::Think( void )
 {
@@ -261,7 +261,7 @@ void CTimerEntity::ResetTimer( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTimerEntity::Enable( void )
 {
@@ -271,7 +271,7 @@ void CTimerEntity::Enable( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTimerEntity::Disable( void )
 {
@@ -280,7 +280,7 @@ void CTimerEntity::Disable( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTimerEntity::Toggle( void )
 {
@@ -295,7 +295,7 @@ void CTimerEntity::Toggle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTimerEntity::FireTimer( void )
 {
@@ -331,7 +331,7 @@ void CTimerEntity::FireTimer( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTimerEntity::InputEnable( inputdata_t &inputdata )
 {
@@ -340,7 +340,7 @@ void CTimerEntity::InputEnable( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTimerEntity::InputDisable( inputdata_t &inputdata )
 {
@@ -348,7 +348,7 @@ void CTimerEntity::InputDisable( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTimerEntity::InputToggle( inputdata_t &inputdata )
 {
@@ -356,7 +356,7 @@ void CTimerEntity::InputToggle( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTimerEntity::InputFireTimer( inputdata_t &inputdata )
 {
@@ -406,9 +406,9 @@ void CTimerEntity::InputAddToTimer( inputdata_t &inputdata )
 	// don't add time if the timer isn't enabled
 	if ( m_iDisabled )
 		return;
-	
+
 	// Add time to timer
- 	float flNextThink = GetNextThink();	
+ 	float flNextThink = GetNextThink();
 	SetNextThink( flNextThink += inputdata.value.Float() );
 }
 
@@ -438,11 +438,11 @@ void CTimerEntity::InputSubtractFromTimer( inputdata_t &inputdata )
 // Purpose: Draw any debug text overlays
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CTimerEntity::DrawDebugTextOverlays( void ) 
+int CTimerEntity::DrawDebugTextOverlays( void )
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 
@@ -575,7 +575,7 @@ void CLogicLineToEntity::Think(void)
 	}
 
 	Vector delta;
-	VectorSubtract( pDest->GetAbsOrigin(), pSrc->GetAbsOrigin(), delta ); 
+	VectorSubtract( pDest->GetAbsOrigin(), pSrc->GetAbsOrigin(), delta );
 	m_Line.Set(delta, this, this);
 
 	SetNextThink( gpGlobals->curtime + 0.01f );
@@ -640,7 +640,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMathRemap::Spawn(void)
 {
@@ -667,7 +667,7 @@ void CMathRemap::Spawn(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMathRemap::InputEnable( inputdata_t &inputdata )
 {
@@ -675,7 +675,7 @@ void CMathRemap::InputEnable( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMathRemap::InputDisable( inputdata_t &inputdata )
 {
@@ -762,7 +762,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMathColorBlend::Spawn(void)
 {
@@ -872,7 +872,7 @@ public:
 	DECLARE_DATADESC();
 
 	COutputInt m_outCounter;
-		
+
 	string_t	m_globalstate;
 	int			m_triggermode;
 	int			m_initialstate;
@@ -896,7 +896,7 @@ BEGIN_DATADESC( CEnvGlobal )
 	DEFINE_INPUTFUNC( FIELD_INTEGER, "SetCounter",	InputSetCounter ),
 	DEFINE_INPUTFUNC( FIELD_INTEGER, "AddToCounter",	InputAddToCounter ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "GetCounter",	InputGetCounter ),
-	
+
 	DEFINE_OUTPUT( m_outCounter, "Counter" ),
 
 END_DATADESC()
@@ -906,7 +906,7 @@ LINK_ENTITY_TO_CLASS( env_global, CEnvGlobal );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvGlobal::Spawn( void )
 {
@@ -930,7 +930,7 @@ void CEnvGlobal::Spawn( void )
 		{
 			GlobalEntity_Add( m_globalstate, gpGlobals->mapname, (GLOBALESTATE)m_initialstate );
 		}
-		
+
 		if ( m_counter != 0 )
 		{
 			GlobalEntity_SetCounter( m_globalstate, m_counter );
@@ -1063,12 +1063,12 @@ void CEnvGlobal::InputToggle( inputdata_t &inputdata )
 // Input  :
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CEnvGlobal::DrawDebugTextOverlays(void) 
+int CEnvGlobal::DrawDebugTextOverlays(void)
 {
 	// Skip AIClass debug overlays
 	int text_offset = CBaseEntity::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 		Q_snprintf(tempstr,sizeof(tempstr),"State: %s",STRING(m_globalstate));
@@ -1098,7 +1098,7 @@ int CEnvGlobal::DrawDebugTextOverlays(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #define MS_MAX_TARGETS 32
 
@@ -1174,10 +1174,10 @@ bool CMultiSource::KeyValue( const char *szKeyName, const char *szValue )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiSource::Spawn()
-{ 
+{
 	SetNextThink( gpGlobals->curtime + 0.1f );
 	m_spawnflags |= SF_MULTI_INIT;	// Until it's initialized
 	SetThink(&CMultiSource::Register);
@@ -1185,14 +1185,14 @@ void CMultiSource::Spawn()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pActivator - 
-//			pCaller - 
-//			useType - 
-//			value - 
+// Purpose:
+// Input  : pActivator -
+//			pCaller -
+//			useType -
+//			value -
 //-----------------------------------------------------------------------------
 void CMultiSource::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
-{ 
+{
 	int i = 0;
 
 	// Find the entity in our list
@@ -1204,14 +1204,14 @@ void CMultiSource::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 	if (i > m_iTotal)
 	{
 		Warning("MultiSrc: Used by non member %s.\n", pCaller->edict() ? pCaller->GetClassname() : "<logical entity>");
-		return;	
+		return;
 	}
 
 	// CONSIDER: a Use input to the multisource always toggles.  Could check useType for ON/OFF/TOGGLE
 
 	m_rgTriggered[i-1] ^= 1;
 
-	// 
+	//
 	if ( IsTriggered( pActivator ) )
 	{
 		DevMsg( 2, "Multisource %s enabled (%d inputs)\n", GetDebugName(), m_iTotal );
@@ -1225,7 +1225,7 @@ void CMultiSource::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CMultiSource::IsTriggered( CBaseEntity * )
 {
@@ -1248,16 +1248,16 @@ bool CMultiSource::IsTriggered( CBaseEntity * )
 		if ( !m_globalstate || GlobalEntity_GetState( m_globalstate ) == GLOBAL_ON )
 			return 1;
 	}
-	
+
 	return 0;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMultiSource::Register(void)
-{ 
+{
 	CBaseEntity *pTarget = NULL;
 
 	m_iTotal = 0;
@@ -1420,11 +1420,11 @@ void CMathCounter::Spawn( void )
 // Input  :
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CMathCounter::DrawDebugTextOverlays( void ) 
+int CMathCounter::DrawDebugTextOverlays( void )
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 
@@ -1441,8 +1441,8 @@ int CMathCounter::DrawDebugTextOverlays( void )
 		text_offset++;
 
 		if( m_bDisabled )
-		{	
-			Q_snprintf(tempstr,sizeof(tempstr),"*DISABLED*");		
+		{
+			Q_snprintf(tempstr,sizeof(tempstr),"*DISABLED*");
 		}
 		else
 		{
@@ -1478,7 +1478,7 @@ void CMathCounter::InputSetHitMin( inputdata_t &inputdata )
 	UpdateOutValue( inputdata.pActivator, m_OutValue.Get() );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Input handler for adding to the accumulator value.
 // Input  : Float value to add.
@@ -1723,7 +1723,7 @@ BEGIN_DATADESC( CLogicCase )
 	DEFINE_KEYFIELD(m_nCase[13], FIELD_STRING, "Case14"),
 	DEFINE_KEYFIELD(m_nCase[14], FIELD_STRING, "Case15"),
 	DEFINE_KEYFIELD(m_nCase[15], FIELD_STRING, "Case16"),
-	
+
 	DEFINE_FIELD( m_nShuffleCases, FIELD_INTEGER ),
 	DEFINE_FIELD( m_nLastShuffleCase, FIELD_INTEGER ),
 	DEFINE_ARRAY( m_uchShuffleCaseMap, FIELD_CHARACTER, MAX_LOGIC_CASES ),
@@ -1784,7 +1784,7 @@ void CLogicCase::InputValue( inputdata_t &inputdata )
 			return;
 		}
 	}
-	
+
 	m_OnDefault.Set( inputdata.value, inputdata.pActivator, this );
 }
 
@@ -1809,7 +1809,7 @@ int CLogicCase::BuildCaseMap(unsigned char *puchCaseMap)
 			nNumCases++;
 		}
 	}
-	
+
 	return nNumCases;
 }
 
@@ -1851,18 +1851,18 @@ void CLogicCase::InputPickRandomShuffle( inputdata_t &inputdata )
 {
 	int nAvoidCase = -1;
 	int nCaseCount = m_nShuffleCases;
-	
+
 	if ( nCaseCount == 0 )
 	{
 		// Starting a new shuffle batch.
 		nCaseCount = m_nShuffleCases = BuildCaseMap( m_uchShuffleCaseMap );
-		
+
 		if ( ( m_nShuffleCases > 1 ) && ( m_nLastShuffleCase != -1 ) )
 		{
 			// Remove the previously picked case from the case map for this pick only.
-			// This avoids repeats across shuffle batch boundaries.		
+			// This avoids repeats across shuffle batch boundaries.
 			nAvoidCase = m_nLastShuffleCase;
-			
+
 			for (int i = 0; i < m_nShuffleCases; i++ )
 			{
 				if ( m_uchShuffleCaseMap[i] == nAvoidCase )
@@ -1876,7 +1876,7 @@ void CLogicCase::InputPickRandomShuffle( inputdata_t &inputdata )
 			}
 		}
 	}
-	
+
 	//
 	// Choose a random case from the ones that were set up by the level designer.
 	// Never repeat a case within a shuffle batch, nor consecutively across batches.
@@ -1892,7 +1892,7 @@ void CLogicCase::InputPickRandomShuffle( inputdata_t &inputdata )
 		{
 			m_OnCase[nCase].FireOutput( inputdata.pActivator, this );
 		}
-		
+
 		m_uchShuffleCaseMap[nRandom] = m_uchShuffleCaseMap[m_nShuffleCases - 1];
 		m_nShuffleCases--;
 
@@ -2028,11 +2028,11 @@ void CLogicCompare::DoCompare(CBaseEntity *pActivator, float flInValue)
 // Purpose: Draw any debug text overlays
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CLogicCompare::DrawDebugTextOverlays( void ) 
+int CLogicCompare::DrawDebugTextOverlays( void )
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 
@@ -2056,7 +2056,7 @@ int CLogicCompare::DrawDebugTextOverlays( void )
 class CLogicBranch : public CLogicalEntity
 {
 	DECLARE_CLASS( CLogicBranch, CLogicalEntity );
-	
+
 public:
 
 	void UpdateOnRemove();
@@ -2083,7 +2083,7 @@ private:
 	void UpdateValue(bool bNewValue, CBaseEntity *pActivator, LogicBranchFire_t eFire);
 
 	bool m_bInValue;					// Place to hold the last input value for a future test.
-	
+
 	CUtlVector<EHANDLE> m_Listeners;	// A list of logic_branch_listeners that are monitoring us.
 
 	// Outputs
@@ -2129,10 +2129,10 @@ void CLogicBranch::UpdateOnRemove()
 			g_EventQueue.AddEvent( this, "_OnLogicBranchRemoved", 0, this, this );
 		}
 	}
-	
+
 	BaseClass::UpdateOnRemove();
 }
-	
+
 
 //-----------------------------------------------------------------------------
 // Purpose: Input handler to set a new input value without firing outputs.
@@ -2185,7 +2185,7 @@ void CLogicBranch::InputTest( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 // Purpose: Tests the last input value, firing the appropriate output based on
 //			the test result.
-// Input  : bInValue - 
+// Input  : bInValue -
 //-----------------------------------------------------------------------------
 void CLogicBranch::UpdateValue( bool bNewValue, CBaseEntity *pActivator, LogicBranchFire_t eFire )
 {
@@ -2237,13 +2237,13 @@ void CLogicBranch::AddLogicBranchListener( CBaseEntity *pEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CLogicBranch::DrawDebugTextOverlays( void )
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 
@@ -2582,9 +2582,9 @@ BEGIN_DATADESC( CLogicBranchList )
 	DEFINE_KEYFIELD( m_nLogicBranchNames[13], FIELD_STRING, "Branch14" ),
 	DEFINE_KEYFIELD( m_nLogicBranchNames[14], FIELD_STRING, "Branch15" ),
 	DEFINE_KEYFIELD( m_nLogicBranchNames[15], FIELD_STRING, "Branch16" ),
-	
+
 	DEFINE_UTLVECTOR( m_LogicBranchList, FIELD_EHANDLE ),
-	
+
 	DEFINE_FIELD( m_eLastState, FIELD_INTEGER ),
 
 	// Inputs
@@ -2630,7 +2630,7 @@ void CLogicBranchList::Activate( void )
 			}
 		}
 	}
-	
+
 	BaseClass::Activate();
 }
 
@@ -2680,7 +2680,7 @@ void CLogicBranchList::DoTest( CBaseEntity *pActivator )
 {
 	bool bOneTrue = false;
 	bool bOneFalse = false;
-	
+
 	for ( int i = 0; i < m_LogicBranchList.Count(); i++ )
 	{
 		CLogicBranch *pBranch = (CLogicBranch *)m_LogicBranchList.Element( i ).Get();
@@ -2722,13 +2722,13 @@ void CLogicBranchList::DoTest( CBaseEntity *pActivator )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CLogicBranchList::DrawDebugTextOverlays( void )
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 

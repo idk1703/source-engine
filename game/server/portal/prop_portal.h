@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -34,7 +34,7 @@ public:
 	virtual					~CProp_Portal( void );
 
 	CNetworkHandle( CProp_Portal, m_hLinkedPortal ); //the portal this portal is linked to
-	
+
 
 	VMatrix					m_matrixThisToLinked; //the matrix that will transform a point relative to this portal, to a point relative to the linked portal
 	CNetworkVar( bool, m_bActivated ); //a portal can exist and not be active
@@ -45,7 +45,7 @@ public:
 
 	EHANDLE	m_hMicrophone; //the microphone for teleporting sound
 	EHANDLE	m_hSpeaker; //the speaker for teleported sound
-	
+
 	CSoundPatch		*m_pAmbientSound;
 
 	Vector		m_vAudioOrigin;
@@ -59,7 +59,7 @@ public:
 	cplane_t m_plane_Origin; //a portal plane on the entity origin
 
 	CPhysicsCloneArea		*m_pAttachedCloningArea;
-	
+
 	bool	IsPortal2() const;
 	void	SetIsPortal2( bool bIsPortal2 );
 	const VMatrix& MatrixThisToLinked() const;
@@ -85,7 +85,7 @@ public:
 
 	bool					IsActivedAndLinked( void ) const;
 
-    void					WakeNearbyEntities( void ); //wakes all nearby entities in-case there's been a significant change in how they can rest near a portal
+	void					WakeNearbyEntities( void ); //wakes all nearby entities in-case there's been a significant change in how they can rest near a portal
 
 	void					ForceEntityToFitInPortalWall( CBaseEntity *pEntity ); //projects an object's center into the middle of the portal wall hall, and traces back to where it wants to be
 
@@ -99,7 +99,7 @@ public:
 	void					PunchAllPenetratingPlayers( void ); // adds outward force to player intersecting the portal plane
 
 	virtual void			StartTouch( CBaseEntity *pOther );
-	virtual void			Touch( CBaseEntity *pOther ); 
+	virtual void			Touch( CBaseEntity *pOther );
 	virtual void			EndTouch( CBaseEntity *pOther );
 	bool					ShouldTeleportTouchingEntity( CBaseEntity *pOther ); //assuming the entity is or was just touching the portal, check for teleportation conditions
 	void					TeleportTouchingEntity( CBaseEntity *pOther );

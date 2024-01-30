@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -21,13 +21,13 @@
 #define SPHERE_RADIUS 16
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeVMFEntity, CDmeVMFEntity );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeVMFEntity::OnConstruction()
 {
@@ -70,7 +70,7 @@ void CDmeVMFEntity::OnAttributeChanged( CDmAttribute *pAttribute )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the entity ID
 //-----------------------------------------------------------------------------
@@ -126,7 +126,7 @@ void CDmeVMFEntity::AttachToEngineEntity( bool bAttach )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Draws the helper for the entity
 //-----------------------------------------------------------------------------
@@ -147,7 +147,7 @@ int CDmeVMFEntity::DrawModel( int flags )
 	float flRadius = SPHERE_RADIUS;
 	int nVertices =  nTheta * nPhi;
 	int nIndices = 2 * ( nTheta + 1 ) * ( nPhi - 1 );
-	
+
 	rc->FogMode( MATERIAL_FOG_NONE );
 	rc->SetNumBoneWeights( 0 );
 	rc->Bind( m_Wireframe );
@@ -174,8 +174,8 @@ int CDmeVMFEntity::DrawModel( int flags )
 			Vector vecPos;
 			vecPos.x = flRadius * sin(phi) * cos(theta);
 			vecPos.y = flRadius * cos(phi);
-			vecPos.z = -flRadius * sin(phi) * sin(theta); 
-			    
+			vecPos.z = -flRadius * sin(phi) * sin(theta);
+
 			unsigned char red = (int)( u * 255.0f );
 			unsigned char green = (int)( v * 255.0f );
 			unsigned char blue = (int)( v * 255.0f );
@@ -222,7 +222,7 @@ int CDmeVMFEntity::DrawModel( int flags )
 	rc->MatrixMode( MATERIAL_MODEL );
 	rc->PopMatrix();
 
-	return 0; 
+	return 0;
 }
 
 
@@ -240,7 +240,7 @@ const QAngle &CDmeVMFEntity::GetRenderAngles( void )
 }
 
 void CDmeVMFEntity::GetRenderBounds( Vector& mins, Vector& maxs )
-{ 
+{
 	mins.Init( -SPHERE_RADIUS, -SPHERE_RADIUS, -SPHERE_RADIUS );
 	maxs.Init( SPHERE_RADIUS, SPHERE_RADIUS, SPHERE_RADIUS );
 }

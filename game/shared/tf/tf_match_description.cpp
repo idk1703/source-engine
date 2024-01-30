@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -36,11 +36,11 @@
 #ifdef GC_DLL
 GCConVar tf_mm_ladder_force_map_by_name( "tf_mm_ladder_force_map_by_name", "", "If specified, force any matches that form for 6v6, 9v9, 12v12 to use the specified map (e.g. cp_sunshine)." );
 GCConVar tf_mm_casual_rejoin_cooldown_secs( "tf_mm_casual_rejoin_cooldown_secs", "180",
-                                            "How many seconds must pass before anyone can re-match into a casual or MvM lobby they have left. "
-                                            "Setting this too low may allow someone to rejoin a lobby while a vote-kick for them is still occuring, but before it has passed." );
+	"How many seconds must pass before anyone can re-match into a casual or MvM lobby they have left. "
+	"Setting this too low may allow someone to rejoin a lobby while a vote-kick for them is still occuring, but before it has passed." );
 GCConVar tf_mm_casual_rejoin_cooldown_votekick_secs( "tf_mm_casual_rejoin_cooldown_votekick_secs", "10800", // 3 hours
-                                                     "How many seconds must pass before a vote-kicked player can re-match into a casual or MvM lobby. "
-                                                     "This is not infinite as casual lobbies may persist for days." );
+	"How many seconds must pass before a vote-kicked player can re-match into a casual or MvM lobby. "
+	"This is not infinite as casual lobbies may persist for days." );
 // These are in matchmaking shared
 extern GCConVar tf_mm_match_size_mvm;
 extern GCConVar tf_mm_match_size_ladder_6v6;
@@ -97,8 +97,8 @@ typedef std::function< bool(const CTFMemcachedLobbyFormerMember &) > FilterLeftM
 //
 // Returns false and stops iterating if predicate fails.
 static bool BCheckLeftMatchMembersAgainstParty( const MatchDescription_t *pMatch,
-                                                const MatchParty_t *pParty,
-                                                const FilterLeftMember_t &predicate )
+	const MatchParty_t *pParty,
+	const FilterLeftMember_t &predicate )
 {
 	FOR_EACH_VEC( pParty->m_vecMembers, idxMember )
 	{
@@ -129,7 +129,7 @@ static bool BCheckLeftMatchMembersAgainstParty( const MatchDescription_t *pMatch
 //
 // Returns false and stops iterating if predicate fails.
 static bool BCheckLeftMatchMembersAgainstNewlyAddedMembers( const MatchDescription_t *pMatch,
-                                                            const FilterLeftMember_t &predicate )
+	const FilterLeftMember_t &predicate )
 {
 	FOR_EACH_VEC( pMatch->m_vecParties, idx )
 	{
@@ -152,7 +152,7 @@ static bool BThreadedFormerMemberMayRejoinJoinCasualOrMvMMatch( const CTFMemcach
 	uint32_t unRejoinTimeout = (uint32_t)Max( tf_mm_casual_rejoin_cooldown_secs.GetInt(), 0 );
 
 	if ( unRejoinTimeout && rtLeftLobby != 0 &&
-	     rtLeftLobby + unRejoinTimeout > rtNow )
+	rtLeftLobby + unRejoinTimeout > rtNow )
 	{
 		// Rejoin too soon after leaving lobby
 		return false;
@@ -162,10 +162,10 @@ static bool BThreadedFormerMemberMayRejoinJoinCasualOrMvMMatch( const CTFMemcach
 	RTime32 rtLeftMatch = member.left_match_time();
 	TFMatchLeaveReason eLeftMatchReason = member.left_match_reason();
 	if ( unVoteKickTimeout &&
-	     rtLeftMatch != 0 &&
-	     ( eLeftMatchReason == TFMatchLeaveReason_VOTE_KICK ||
-	       eLeftMatchReason == TFMatchLeaveReason_ADMIN_KICK ) &&
-	     rtLeftMatch + unVoteKickTimeout > rtNow )
+	rtLeftMatch != 0 &&
+	( eLeftMatchReason == TFMatchLeaveReason_VOTE_KICK ||
+	eLeftMatchReason == TFMatchLeaveReason_ADMIN_KICK ) &&
+	rtLeftMatch + unVoteKickTimeout > rtNow )
 	{
 		// Too soon after votekick
 		return false;
@@ -313,17 +313,17 @@ const float flAvgPPMPM = 27.f;	// Points per minute per match
 const float flAvgPPMPP = 1.15f;	// Points per minute per player (above / 24)
 
 const XPSourceDef_t g_XPSourceDefs[] = { { "MatchMaking.XPChime", "TF_XPSource_PositiveFormat", "#TF_XPSource_Score", flTargetXPPM * flScoreXPScale / flAvgPPMPP					/* 6.5  */ }	// SOURCE_SCORE = 0;
-									   , { "MatchMaking.XPChime", "TF_XPSource_PositiveFormat", "#TF_XPSource_ObjectiveBonus", flTargetXPPM * flObjectiveXPScale / flAvgPPMPM		/* 0.0926  */ }	// SOURCE_OBJECTIVE_BONUS = 1;
-									   , { "MatchMaking.XPChime", "TF_XPSource_PositiveFormat", "#TF_XPSource_CompletedMatch", flTargetXPPM * flMatchCompletionXPScale / flAvgPPMPM /* 0.185 */ }	// SOURCE_COMPLETED_MATCH = 2;
-									   , { "MVM.PlayerDied", "TF_XPSource_NoValueFormat", "#TF_XPSource_Comp_Abandon", 1.f }																// SOURCE_COMPETITIVE_ABANDON = 3;
-									   , { "MatchMaking.XPChime", "TF_XPSource_NoValueFormat", "#TF_XPSource_Comp_Win", 1.f }																// SOURCE_COMPETITIVE_WIN = 4;
-									   , { NULL, "TF_XPSource_NoValueFormat", "#TF_XPSource_Comp_Loss", 1.f }																			// SOURCE_COMPETITIVE_LOSS = 5;
-									   , { "MatchMaking.XPChime", "TF_XPSource_PositiveFormat", "#TF_XPSource_Autobalance_Bonus", 1.f } };														// SOURCE_AUTOBALANCE_BONUS = 6;
+									, { "MatchMaking.XPChime", "TF_XPSource_PositiveFormat", "#TF_XPSource_ObjectiveBonus", flTargetXPPM * flObjectiveXPScale / flAvgPPMPM		/* 0.0926  */ }	// SOURCE_OBJECTIVE_BONUS = 1;
+									, { "MatchMaking.XPChime", "TF_XPSource_PositiveFormat", "#TF_XPSource_CompletedMatch", flTargetXPPM * flMatchCompletionXPScale / flAvgPPMPM /* 0.185 */ }	// SOURCE_COMPLETED_MATCH = 2;
+									, { "MVM.PlayerDied", "TF_XPSource_NoValueFormat", "#TF_XPSource_Comp_Abandon", 1.f }																// SOURCE_COMPETITIVE_ABANDON = 3;
+									, { "MatchMaking.XPChime", "TF_XPSource_NoValueFormat", "#TF_XPSource_Comp_Win", 1.f }																// SOURCE_COMPETITIVE_WIN = 4;
+									, { NULL, "TF_XPSource_NoValueFormat", "#TF_XPSource_Comp_Loss", 1.f }																			// SOURCE_COMPETITIVE_LOSS = 5;
+									, { "MatchMaking.XPChime", "TF_XPSource_PositiveFormat", "#TF_XPSource_Autobalance_Bonus", 1.f } };														// SOURCE_AUTOBALANCE_BONUS = 6;
 
 IProgressionDesc::IProgressionDesc( EMatchGroup eMatchGroup
-								  , const char* pszBadgeName
-								  , const char* pszProgressionResFile 
-								  , const char* pszLevelToken )
+								, const char* pszBadgeName
+								, const char* pszProgressionResFile
+								, const char* pszLevelToken )
 	: m_eMatchGroup( eMatchGroup )
 	, m_strBadgeName( pszBadgeName )
 	, m_pszProgressionResFile( pszProgressionResFile )
@@ -376,43 +376,43 @@ class CMvMMatchGroupDescription : public IMatchGroupDescription
 	public:
 		CMvMMatchGroupDescription( EMatchGroup eMatchGroup, const char* pszConfig, bool bTrustedOnly )
 			: IMatchGroupDescription( eMatchGroup
-									  , { eMatchMode_MatchMaker_LateJoinDropIn // m_eLateJoinMode;
-									  , eMMPenaltyPool_Casual // m_ePenaltyPool
-									  , false				  // m_bUsesSkillRatings;
-									  , false				  // m_bSupportsLowPriorityQueue;
-									  , false				  // m_bRequiresMatchID;
-									  , MVM_REQUIRED_SCORE	  // m_pmm_required_score;
-									  , false				  // m_bUseMatchHud;
-									  , pszConfig			  // m_pszExecFileName;
-									  , &tf_mm_match_size_mvm // m_pmm_match_group_size;
-									  , NULL				  // m_pmm_match_group_size_minimum;
-									  , MATCH_TYPE_MVM		  // m_eMatchType;
-									  , false				  // m_bShowPreRoundDoors;
-									  , false				  // m_bShowPostRoundDoors;
-									  , NULL				  // m_pszMatchEndKickWarning;
-									  , NULL				  // m_pszMatchStartSound;
-									  , false				  // m_bAutoReady;
-									  , false				  // m_bShowRankIcons;
-									  , false				  // m_bUseMatchSummaryStage;
-									  , false				  // m_bDistributePerformanceMedals;
-									  , false				  // m_bIsCompetitiveMode;
-									  , false				  // m_bUseFirstBlood;
-									  , false				  // m_bUseReducedBonusTime;
-									  , false				  // m_bUseAutoBalance;
-									  , false				  // m_bAllowTeamChange;
-									  , true				  // m_bRandomWeaponCrits;
-									  , false				  // m_bFixedWeaponSpread;
-									  , false				  // m_bRequireCompleteMatch;
-									  , bTrustedOnly		  // m_bTrustedServersOnly;
-									  , false				  // m_bForceClientSettings;
-									  , false				  // m_bAllowDrawingAtMatchSummary
-									  , true				  // m_bAllowSpecModeChange
-									  , false				  // m_bAutomaticallyRequeueAfterMatchEnds
-									  , false				  // m_bUsesMapVoteOnRoundEnd
-									  , false				  // m_bUsesXP
-									  , false				  // m_bUsesDashboardOnRoundEnd
-									  , false				  // m_bUsesSurveys
-									  , false } )			  // m_bStrictMatchmakerScoring
+									, { eMatchMode_MatchMaker_LateJoinDropIn // m_eLateJoinMode;
+									, eMMPenaltyPool_Casual // m_ePenaltyPool
+									, false				  // m_bUsesSkillRatings;
+									, false				  // m_bSupportsLowPriorityQueue;
+									, false				  // m_bRequiresMatchID;
+									, MVM_REQUIRED_SCORE	  // m_pmm_required_score;
+									, false				  // m_bUseMatchHud;
+									, pszConfig			  // m_pszExecFileName;
+									, &tf_mm_match_size_mvm // m_pmm_match_group_size;
+									, NULL				  // m_pmm_match_group_size_minimum;
+									, MATCH_TYPE_MVM		  // m_eMatchType;
+									, false				  // m_bShowPreRoundDoors;
+									, false				  // m_bShowPostRoundDoors;
+									, NULL				  // m_pszMatchEndKickWarning;
+									, NULL				  // m_pszMatchStartSound;
+									, false				  // m_bAutoReady;
+									, false				  // m_bShowRankIcons;
+									, false				  // m_bUseMatchSummaryStage;
+									, false				  // m_bDistributePerformanceMedals;
+									, false				  // m_bIsCompetitiveMode;
+									, false				  // m_bUseFirstBlood;
+									, false				  // m_bUseReducedBonusTime;
+									, false				  // m_bUseAutoBalance;
+									, false				  // m_bAllowTeamChange;
+									, true				  // m_bRandomWeaponCrits;
+									, false				  // m_bFixedWeaponSpread;
+									, false				  // m_bRequireCompleteMatch;
+									, bTrustedOnly		  // m_bTrustedServersOnly;
+									, false				  // m_bForceClientSettings;
+									, false				  // m_bAllowDrawingAtMatchSummary
+									, true				  // m_bAllowSpecModeChange
+									, false				  // m_bAutomaticallyRequeueAfterMatchEnds
+									, false				  // m_bUsesMapVoteOnRoundEnd
+									, false				  // m_bUsesXP
+									, false				  // m_bUsesDashboardOnRoundEnd
+									, false				  // m_bUsesSurveys
+									, false } )			  // m_bStrictMatchmakerScoring
 		{}
 
 #ifdef GC_DLL
@@ -443,8 +443,8 @@ class CMvMMatchGroupDescription : public IMatchGroupDescription
 		return true;
 	}
 
-	virtual bool InitMatchFromLobby( MatchDescription_t* pMatch, CTFLobby* pLobby ) const OVERRIDE 
-	{ 
+	virtual bool InitMatchFromLobby( MatchDescription_t* pMatch, CTFLobby* pLobby ) const OVERRIDE
+	{
 		pMatch->m_setAcceptableChallenges.Clear();
 		pMatch->m_setAcceptableChallenges.SetMissionBySchemaIndex( pLobby->GetMissionIndex(), true );
 
@@ -605,7 +605,7 @@ class CMvMMatchGroupDescription : public IMatchGroupDescription
 			}
 #endif // USE_MVM_TOUR
 		}
-		
+
 		return NULL;
 	}
 
@@ -629,8 +629,8 @@ class CMvMMatchGroupDescription : public IMatchGroupDescription
 			}
 		}
 		EmitInfo( SPEW_GC, nSpewLevel, nLogLevel, "%s  MvM Type: %s    Search Pop: %s\n", pszLeader,
-		          ( m_eMatchGroup == k_nMatchGroup_MvM_MannUp ? "Mann Up" : ( m_eMatchGroup == k_nMatchGroup_MvM_Practice ? "Bootcamp" : "UNKNOWN" ) ),
-		          sSelectedPops.String() );
+		( m_eMatchGroup == k_nMatchGroup_MvM_MannUp ? "Mann Up" : ( m_eMatchGroup == k_nMatchGroup_MvM_Practice ? "Bootcamp" : "UNKNOWN" ) ),
+		sSelectedPops.String() );
 		EmitInfo( SPEW_GC, nSpewLevel, nLogLevel, "%s  Best valve data center ping: %.0fms\n", pszLeader, pMatch->m_flPingClosestServer );
 	}
 #endif
@@ -706,8 +706,8 @@ class CMvMMatchGroupDescription : public IMatchGroupDescription
 
 		case GR_STATE_RND_RUNNING:
 			if ( TFObjectiveResource() &&
-			     !TFObjectiveResource()->GetMannVsMachineIsBetweenWaves() &&
-			     TFObjectiveResource()->GetMannVsMachineWaveCount() == TFObjectiveResource()->GetMannVsMachineMaxWaveCount() )
+			!TFObjectiveResource()->GetMannVsMachineIsBetweenWaves() &&
+			TFObjectiveResource()->GetMannVsMachineWaveCount() == TFObjectiveResource()->GetMannVsMachineMaxWaveCount() )
 			{
 				int nMaxEnemyCountNoSupport = TFObjectiveResource()->GetMannVsMachineWaveEnemyCount();
 				if ( nMaxEnemyCountNoSupport <= 0 )
@@ -766,11 +766,11 @@ class CMvMMatchGroupDescription : public IMatchGroupDescription
 		return bSafe;
 	}
 
-	virtual bool BPlayWinMusic( int nWinningTeam, bool bGameOver ) const OVERRIDE 
+	virtual bool BPlayWinMusic( int nWinningTeam, bool bGameOver ) const OVERRIDE
 	{
 		// Not handled
-		return false; 
-	} 
+		return false;
+	}
 #endif
 };
 
@@ -783,9 +783,9 @@ public:
 	public:
 		CLadderProgressionDesc( EMatchGroup eMatchGroup )
 			: IProgressionDesc( eMatchGroup
-							  , "models/vgui/competitive_badge.mdl"
-							  , "resource/ui/PvPCompRankPanel.res"
-							  , "TF_Competitive_Rank" )
+							, "models/vgui/competitive_badge.mdl"
+							, "resource/ui/PvPCompRankPanel.res"
+							, "TF_Competitive_Rank" )
 		{
 			// Bucket 1
 			m_vecLevels.AddToTail( { 1,		k_unDrilloRating_Ladder_Min,		11500, "competitive/competitive_badge_rank001", "#TF_Competitive_Rank_1",  "MatchMaking.RankOneAchieved",	"competitive/comp_background_tier001a" } );
@@ -863,7 +863,7 @@ public:
 			#error Make this call a yielding call if you are removing it from client ifdefs
 #endif
 			CTFRatingData *pRating = CTFRatingData::YieldingGetPlayerRatingDataBySteamID( steamapicontext->SteamUser()->GetSteamID(),
-			                                                                              k_nMMRating_6v6_DRILLO_PlayerAcknowledged );
+					k_nMMRating_6v6_DRILLO_PlayerAcknowledged );
 			return pRating ? pRating->GetRatingData().unRatingPrimary : 0u;
 		}
 
@@ -883,7 +883,7 @@ public:
 			#error Make this call a yielding call if you are removing it from client ifdefs
 #endif
 			CTFRatingData *pRating = CTFRatingData::YieldingGetPlayerRatingDataBySteamID( steamapicontext->SteamUser()->GetSteamID(),
-			                                                                              k_nMMRating_6v6_DRILLO );
+					k_nMMRating_6v6_DRILLO );
 
 			return pRating ? pRating->GetRatingData().unRatingPrimary : 0u;
 		}
@@ -891,7 +891,7 @@ public:
 
 #if defined GC
 		virtual bool BYldAcknowledgePlayerXPOnTransaction( CSQLAccess &transaction,
-		                                                   CTFSharedObjectCache *pLockedSOCache ) const OVERRIDE
+			CTFSharedObjectCache *pLockedSOCache ) const OVERRIDE
 		{
 			// This is bad and a result of XP being just a rating in some places but a magic field elsewhere.
 			FixmeMMRatingBackendSwapping();
@@ -903,10 +903,10 @@ public:
 
 			// Feed it to acknowledged rating
 			return pLockedSOCache->BYieldingUpdatePlayerRating( transaction,
-			                                                    k_nMMRating_6v6_DRILLO_PlayerAcknowledged,
-			                                                    k_nMMRatingSource_PlayerAcknowledge,
-			                                                    0,
-			                                                    ratingData );
+				k_nMMRating_6v6_DRILLO_PlayerAcknowledged,
+				k_nMMRatingSource_PlayerAcknowledge,
+				0,
+				ratingData );
 		}
 
 		virtual const bool BRankXPIsActuallyPrimaryMMRating() const OVERRIDE
@@ -921,7 +921,7 @@ public:
 		virtual void DebugSpewLevels() const OVERRIDE
 		{
 			Msg( "Spewing comp levels:\n" );
-	
+
 			// Walk the levels to find where the passed in experience value falls
 			for( int i=0; i< m_vecLevels.Count(); ++i )
 			{
@@ -933,43 +933,43 @@ public:
 
 	CLadderMatchGroupDescription( EMatchGroup eMatchGroup, ConVar* pmm_match_group_size )
 		:	IMatchGroupDescription( eMatchGroup
-								  , { eMatchMode_MatchMaker_LateJoinMatchBased // m_eLateJoinMode;
-								  , eMMPenaltyPool_Ranked	   // m_ePenaltyPool
-								  , true					   // m_bUsesSkillRatings;
-								  , true					   // m_bSupportsLowPriorityQueue;
-								  , true					   // m_bRequiresMatchID;
-								  , LADDER_REQUIRED_SCORE	   // m_pmm_required_score;
-								  , true					   // m_bUseMatchHud;
-								  , "server_competitive.cfg"   // m_pszExecFileName;
-								  , pmm_match_group_size	   // m_pmm_match_group_size;
-								  , NULL					   // m_pmm_match_group_size_minimum;
-								  , MATCH_TYPE_COMPETITIVE	   // m_eMatchType;
-								  , true					   // m_bShowPreRoundDoors;
-								  , true					   // m_bShowPostRoundDoors;
-								  , "#TF_Competitive_GameOver" // m_pszMatchEndKickWarning;
-								  , "MatchMaking.RoundStart"   // m_pszMatchStartSound;
-								  , false					   // m_bAutoReady;
-								  , true					   // m_bShowRankIcons;
-								  , true					   // m_bUseMatchSummaryStage;
-								  , true					   // m_bDistributePerformanceMedals;
-								  , true					   // m_bIsCompetitiveMode;
-								  , true					   // m_bUseFirstBlood;
-								  , true					   // m_bUseReducedBonusTime;
-								  , false					   // m_bUseAutoBalance;
-								  , false					   // m_bAllowTeamChange;
-								  , false					   // m_bRandomWeaponCrits;
-								  , true					   // m_bFixedWeaponSpread;
-								  , true					   // m_bRequireCompleteMatch;
-								  , true					   // m_bTrustedServersOnly;
-								  , true					   // m_bForceClientSettings;
-								  , true					   // m_bAllowDrawingAtMatchSummary
-								  , false					   // m_bAllowSpecModeChange
-								  , false					   // m_bAutomaticallyRequeueAfterMatchEnds
-								  , false					   // m_bUsesMapVoteOnRoundEnd
-								  , false					   // m_bUsesXP
-								  , true					   // m_bUsesDashboardOnRoundEnd
-								  , true					   // m_bUsesSurveys
-								  , true } )				   // m_bStrictMatchmakerScoring
+								, { eMatchMode_MatchMaker_LateJoinMatchBased // m_eLateJoinMode;
+								, eMMPenaltyPool_Ranked	   // m_ePenaltyPool
+								, true					   // m_bUsesSkillRatings;
+								, true					   // m_bSupportsLowPriorityQueue;
+								, true					   // m_bRequiresMatchID;
+								, LADDER_REQUIRED_SCORE	   // m_pmm_required_score;
+								, true					   // m_bUseMatchHud;
+								, "server_competitive.cfg"   // m_pszExecFileName;
+								, pmm_match_group_size	   // m_pmm_match_group_size;
+								, NULL					   // m_pmm_match_group_size_minimum;
+								, MATCH_TYPE_COMPETITIVE	   // m_eMatchType;
+								, true					   // m_bShowPreRoundDoors;
+								, true					   // m_bShowPostRoundDoors;
+								, "#TF_Competitive_GameOver" // m_pszMatchEndKickWarning;
+								, "MatchMaking.RoundStart"   // m_pszMatchStartSound;
+								, false					   // m_bAutoReady;
+								, true					   // m_bShowRankIcons;
+								, true					   // m_bUseMatchSummaryStage;
+								, true					   // m_bDistributePerformanceMedals;
+								, true					   // m_bIsCompetitiveMode;
+								, true					   // m_bUseFirstBlood;
+								, true					   // m_bUseReducedBonusTime;
+								, false					   // m_bUseAutoBalance;
+								, false					   // m_bAllowTeamChange;
+								, false					   // m_bRandomWeaponCrits;
+								, true					   // m_bFixedWeaponSpread;
+								, true					   // m_bRequireCompleteMatch;
+								, true					   // m_bTrustedServersOnly;
+								, true					   // m_bForceClientSettings;
+								, true					   // m_bAllowDrawingAtMatchSummary
+								, false					   // m_bAllowSpecModeChange
+								, false					   // m_bAutomaticallyRequeueAfterMatchEnds
+								, false					   // m_bUsesMapVoteOnRoundEnd
+								, false					   // m_bUsesXP
+								, true					   // m_bUsesDashboardOnRoundEnd
+								, true					   // m_bUsesSurveys
+								, true } )				   // m_bStrictMatchmakerScoring
 	{
 		m_pProgressionDesc = new CLadderProgressionDesc( eMatchGroup );
 	}
@@ -1013,7 +1013,7 @@ public:
 	{
 		// Right now there's no criteria on ladder matches, but leavers are never allowed to rejoin
 		return BCheckLeftMatchMembersAgainstParty( pMatch, pCurrentParty,
-		                                           [](const CTFMemcachedLobbyFormerMember& member) { return false; } );
+			[](const CTFMemcachedLobbyFormerMember& member) { return false; } );
 	}
 
 	virtual bool BThreadedIntersectMatchWithParty( MatchDescription_t* pMatch, const MatchParty_t* pParty ) const OVERRIDE
@@ -1091,7 +1091,7 @@ public:
 
 		// Exec our match settings
 		const char *pszExecFile = ( bHighSkill ) ? "server_competitive_rounds_win_conditions_high_skill.cfg" : "server_competitive_rounds_win_conditions.cfg";
-		
+
 		if ( bUseStopWatch )
 		{
 			pszExecFile = ( bHighSkill ) ? "server_competitive_stopwatch_win_conditions_high_skill.cfg" : "server_competitive_stopwatch_win_conditions.cfg";
@@ -1175,9 +1175,9 @@ public:
 
 		CCasualProgressionDesc( EMatchGroup eMatchGroup )
 			: IProgressionDesc( eMatchGroup
-			                    , "models/vgui/12v12_badge.mdl"
-			                    , "resource/ui/PvPCasualRankPanel.res"
-			                    , "TF_Competitive_Level" )
+			, "models/vgui/12v12_badge.mdl"
+			, "resource/ui/PvPCasualRankPanel.res"
+			, "TF_Competitive_Level" )
 			, m_nLevelsPerStep( 25 )
 			, m_nSteps( 6 )
 			, m_nAverageXPPerGame( 500 )
@@ -1190,11 +1190,11 @@ public:
 			};
 
 			const StepInfo_t stepInfo[] = { { 1.5f, "MatchMaking.LevelOneAchieved" }
-										  , { 2.5f, "MatchMaking.LevelTwoAchieved" }
-										  , { 4.f, "MatchMaking.LevelThreeAchieved" }
-										  , { 6.f, "MatchMaking.LevelFourAchieved" }
-										  , { 9.f, "MatchMaking.LevelFiveAchieved" }
-										  , { 14.f, "MatchMaking.LevelSixAchieved" } };
+										, { 2.5f, "MatchMaking.LevelTwoAchieved" }
+										, { 4.f, "MatchMaking.LevelThreeAchieved" }
+										, { 6.f, "MatchMaking.LevelFourAchieved" }
+										, { 9.f, "MatchMaking.LevelFiveAchieved" }
+										, { 14.f, "MatchMaking.LevelSixAchieved" } };
 
 			uint32 nNumLevels = m_nLevelsPerStep * m_nSteps;
 
@@ -1324,7 +1324,7 @@ public:
 
 #if defined GC
 		virtual bool BYldAcknowledgePlayerXPOnTransaction( CSQLAccess &transaction,
-		                                                   CTFSharedObjectCache *pLockedSOCache ) const OVERRIDE
+			CTFSharedObjectCache *pLockedSOCache ) const OVERRIDE
 		{
 			// This is bad and a result of XP being just a rating in some places but a magic field elsewhere.
 			FixmeMMRatingBackendSwapping();
@@ -1377,7 +1377,7 @@ public:
 		{
 			Msg( "Spewing casual levels:\n" );
 			Msg( "Assuming average %d XP per game and average %d minutes per game\n", m_nAverageXPPerGame, m_nAverageMinutesPerGame );
-	
+
 			uint32 nNumGamesToAchieve = 0;
 			// Walk the levels to find where the passed in experience value falls
 			for( int i=0; i< m_vecLevels.Count(); ++i )
@@ -1408,43 +1408,43 @@ public:
 
 	CCasualMatchGroupDescription( EMatchGroup eMatchGroup, ConVar* pmm_match_group_size, ConVar* pmm_match_group_size_minimum )
 		: IMatchGroupDescription( eMatchGroup
-								  , { eMatchMode_MatchMaker_LateJoinMatchBased	   // m_eLateJoinMode;
-								  , eMMPenaltyPool_Casual		   // m_ePenaltyPool
-								  , true						   // m_bUsesSkillRatings;
-								  , true						   // m_bSupportsLowPriorityQueue;
-								  , true						   // m_bRequiresMatchID;
-								  , CASUAL_REQUIRED_SCORE		   // m_pmm_required_score;
-								  , true						   // m_bUseMatchHud;
-								  , "server_casual.cfg"			   // m_pszExecFileName;
-								  , pmm_match_group_size		   // m_pmm_match_group_size;
-								  , pmm_match_group_size_minimum   // m_pmm_match_group_size_minimum;
-								  , MATCH_TYPE_CASUAL			   // m_eMatchType;
-								  , true						   // m_bShowPreRoundDoors;
-								  , true						   // m_bShowPostRoundDoors;
-								  , "#TF_Competitive_GameOver"	   // m_pszMatchEndKickWarning;
-								  , "MatchMaking.RoundStartCasual" // m_pszMatchStartSound;
-								  , true						   // m_bAutoReady;
-								  , false						   // m_bShowRankIcons;
-								  , false						   // m_bUseMatchSummaryStage;
-								  , false						   // m_bDistributePerformanceMedals;
-								  , true						   // m_bIsCompetitiveMode;
-								  , false						   // m_bUseFirstBlood;
-								  , false						   // m_bUseReducedBonusTime;
-								  , true						   // m_bUseAutoBalance;
-								  , false						   // m_bAllowTeamChange;
-								  , true						   // m_bRandomWeaponCrits;
-								  , false						   // m_bFixedWeaponSpread;
-								  , false						   // m_bRequireCompleteMatch;
-								  , true						   // m_bTrustedServersOnly;
-								  , false						   // m_bForceClientSettings;
-								  , false						   // m_bAllowDrawingAtMatchSummary
-								  , true						   // m_bAllowSpecModeChange
-								  , true						   // m_bAutomaticallyRequeueAfterMatchEnds
-								  , true						   // m_bUsesMapVoteOnRoundEnd
-								  , true						   // m_bUsesXP
-								  , true						   // m_bUsesDashboardOnRoundEnd
-								  , true						   // m_bUsesSurveys
-								  , false } )					   // m_bStrictMatchmakerScoring
+								, { eMatchMode_MatchMaker_LateJoinMatchBased	   // m_eLateJoinMode;
+								, eMMPenaltyPool_Casual		   // m_ePenaltyPool
+								, true						   // m_bUsesSkillRatings;
+								, true						   // m_bSupportsLowPriorityQueue;
+								, true						   // m_bRequiresMatchID;
+								, CASUAL_REQUIRED_SCORE		   // m_pmm_required_score;
+								, true						   // m_bUseMatchHud;
+								, "server_casual.cfg"			   // m_pszExecFileName;
+								, pmm_match_group_size		   // m_pmm_match_group_size;
+								, pmm_match_group_size_minimum   // m_pmm_match_group_size_minimum;
+								, MATCH_TYPE_CASUAL			   // m_eMatchType;
+								, true						   // m_bShowPreRoundDoors;
+								, true						   // m_bShowPostRoundDoors;
+								, "#TF_Competitive_GameOver"	   // m_pszMatchEndKickWarning;
+								, "MatchMaking.RoundStartCasual" // m_pszMatchStartSound;
+								, true						   // m_bAutoReady;
+								, false						   // m_bShowRankIcons;
+								, false						   // m_bUseMatchSummaryStage;
+								, false						   // m_bDistributePerformanceMedals;
+								, true						   // m_bIsCompetitiveMode;
+								, false						   // m_bUseFirstBlood;
+								, false						   // m_bUseReducedBonusTime;
+								, true						   // m_bUseAutoBalance;
+								, false						   // m_bAllowTeamChange;
+								, true						   // m_bRandomWeaponCrits;
+								, false						   // m_bFixedWeaponSpread;
+								, false						   // m_bRequireCompleteMatch;
+								, true						   // m_bTrustedServersOnly;
+								, false						   // m_bForceClientSettings;
+								, false						   // m_bAllowDrawingAtMatchSummary
+								, true						   // m_bAllowSpecModeChange
+								, true						   // m_bAutomaticallyRequeueAfterMatchEnds
+								, true						   // m_bUsesMapVoteOnRoundEnd
+								, true						   // m_bUsesXP
+								, true						   // m_bUsesDashboardOnRoundEnd
+								, true						   // m_bUsesSurveys
+								, false } )					   // m_bStrictMatchmakerScoring
 	{
 		m_pProgressionDesc = new CCasualProgressionDesc( eMatchGroup );
 	}
@@ -1524,7 +1524,7 @@ public:
 			// We should have SOMETHING valid.
 			Assert( vecValidMaps.Count() > 0 );
 			pLobby->SetMapName( "ctf_2fort" ); // Everybody loves 2fort
-			return; 
+			return;
 		}
 
 		const char *pszMap = vecValidMaps[ RandomInt( 0, vecValidMaps.Count() - 1 ) ]->pszMapName;
@@ -1534,8 +1534,8 @@ public:
 	// Private helper to check an entire party's join permissions and criteria, for both PartyCompatible and Intersect
 	// below, since they do the same computation, one just keeps it.
 	bool BThreadedCheckPartyAllowedToJoinMatchAndIntersectCriteria( const MatchDescription_t* pMatch,
-	                                                                const MatchParty_t *pParty,
-	                                                                CCasualCriteriaHelper &criteria ) const
+		const MatchParty_t *pParty,
+		CCasualCriteriaHelper &criteria ) const
 	{
 		if ( *tf_mm_ladder_force_map_by_name.GetString() )
 		{
@@ -1595,7 +1595,7 @@ public:
 	virtual void Dump( const char *pszLeader, int nSpewLevel, int nLogLevel, const MatchParty_t* pMatch ) const OVERRIDE
 	{
 		CUtlString strSelectedMaps;
-		
+
 		CUtlVector< const MapDef_t* > vecValidMaps;
 		int nCount = 0;
 		int nNumMaps = GetItemSchema()->GetMasterMapsList().Count();
@@ -1656,14 +1656,14 @@ public:
 	virtual void InitGameRulesSettingsPostEntity() const OVERRIDE
 	{
 		CTeamControlPointMaster *pMaster = ( g_hControlPointMasters.Count() ) ? g_hControlPointMasters[0] : NULL;
-		bool bMultiStagePLR = ( tf_gamemode_payload.GetBool() && pMaster && pMaster->PlayingMiniRounds() && 
+		bool bMultiStagePLR = ( tf_gamemode_payload.GetBool() && pMaster && pMaster->PlayingMiniRounds() &&
 								pMaster->GetNumRounds() > 1 && TFGameRules()->HasMultipleTrains() );
 		bool bCTF = tf_gamemode_ctf.GetBool();
 		bool bUseStopWatch = TFGameRules()->MatchmakingShouldUseStopwatchMode();
 
 		// Exec our match settings
-		const char *pszExecFile = bUseStopWatch ? "server_casual_stopwatch_win_conditions.cfg" : 
-								  ( ( bMultiStagePLR || bCTF ) ? "server_casual_max_rounds_win_conditions.cfg" : "server_casual_rounds_win_conditions.cfg" );
+		const char *pszExecFile = bUseStopWatch ? "server_casual_stopwatch_win_conditions.cfg" :
+								( ( bMultiStagePLR || bCTF ) ? "server_casual_max_rounds_win_conditions.cfg" : "server_casual_rounds_win_conditions.cfg" );
 
 		if ( TFGameRules()->IsPowerupMode() )
 		{
@@ -1745,7 +1745,7 @@ const IMatchGroupDescription* GetMatchGroupDescription( const EMatchGroup& eGrou
 	static CCasualMatchGroupDescription descCasual6v6	( k_nMatchGroup_Casual_6v6,   &tf_mm_match_size_ladder_6v6, NULL );
 	static CCasualMatchGroupDescription descCasual9v9	( k_nMatchGroup_Casual_9v9,   &tf_mm_match_size_ladder_9v9, NULL );
 	static CCasualMatchGroupDescription descCasual12v12	( k_nMatchGroup_Casual_12v12, &tf_mm_match_size_ladder_12v12, \
-	                                                                                  &tf_mm_match_size_ladder_12v12_minimum );
+			&tf_mm_match_size_ladder_12v12_minimum );
 
 	switch( eGroup )
 	{

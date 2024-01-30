@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -89,6 +89,3 @@ void OpenDoorState::OnExit( CCSBot *me )
 	me->ClearLookAt();
 	me->ResetStuckMonitor();
 }
-
-
-

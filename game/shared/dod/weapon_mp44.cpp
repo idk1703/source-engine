@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,10 +19,10 @@ class CWeaponMP44 : public CDODFireSelectWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponMP44, CDODFireSelectWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponMP44()  {}
 
 	virtual DODWeaponID GetWeaponID( void ) const		{ return WEAPON_MP44; }
@@ -32,7 +32,7 @@ public:
 	{
 		if ( IsSemiAuto() )
 			return WEAPON_MP44_SEMIAUTO;
-		else 
+		else
 			return WEAPON_MP44;
 	}
 
@@ -53,7 +53,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_mp44, CWeaponMP44 );
 PRECACHE_WEAPON_REGISTER( weapon_mp44 );
 
-acttable_t CWeaponMP44::m_acttable[] = 
+acttable_t CWeaponMP44::m_acttable[] =
 {
 	{ ACT_DOD_STAND_AIM,					ACT_DOD_STAND_AIM_MP44,					false },
 	{ ACT_DOD_CROUCH_AIM,					ACT_DOD_CROUCH_AIM_MP44,				false },

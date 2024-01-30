@@ -183,9 +183,9 @@ void TeamFortress_TeamSetColor()
 class CColorInitializer
 {
 public:
-	CColorInitializer() 
+	CColorInitializer()
 	{
-		TeamFortress_TeamSetColor(); 
+		TeamFortress_TeamSetColor();
 	}
 } g_ColorInitializer;
 

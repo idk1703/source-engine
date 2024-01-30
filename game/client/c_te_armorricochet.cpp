@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -39,7 +39,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEMetalSparks::C_TEMetalSparks( void )
 {
@@ -49,7 +49,7 @@ C_TEMetalSparks::C_TEMetalSparks( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEMetalSparks::~C_TEMetalSparks( void )
 {
@@ -90,8 +90,8 @@ static inline void RecordMetalSparks( const Vector &start, const Vector &directi
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEMetalSparks::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -160,8 +160,8 @@ void TE_ArmorRicochet( IRecipientFilter& filter, float delay,
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEArmorRicochet::PostDataUpdate( DataUpdateType_t updateType )
 {

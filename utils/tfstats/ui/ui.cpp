@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -39,7 +39,7 @@ CUIApp::CUIApp()
 	// Place all significant initialization in InitInstance
 	pause=false;
 	pauseSecs=0;
-	
+
 	CPersistentString cps("RunBefore");
 	FirstEverTimeRun=!cps.toBool();
 	cps=true;
@@ -93,16 +93,16 @@ BOOL CUIApp::InitInstance()
 void reporterror31337(LONG i)
 {
 	LPVOID lpMsgBuf;
-FormatMessage( 
-    FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-    FORMAT_MESSAGE_FROM_SYSTEM | 
-    FORMAT_MESSAGE_IGNORE_INSERTS,
-    NULL,
-    i,
-    MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-    (LPTSTR) &lpMsgBuf,
-    0,
-    NULL 
+FormatMessage(
+	FORMAT_MESSAGE_ALLOCATE_BUFFER |
+	FORMAT_MESSAGE_FROM_SYSTEM |
+	FORMAT_MESSAGE_IGNORE_INSERTS,
+	NULL,
+	i,
+	MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
+	(LPTSTR) &lpMsgBuf,
+	0,
+	NULL
 );
 // Process any inserts in lpMsgBuf.
 // ...
@@ -110,7 +110,7 @@ FormatMessage(
 MessageBox( NULL, (LPCTSTR)lpMsgBuf, "Error", MB_OK | MB_ICONINFORMATION );
 // Free the buffer.
 LocalFree( lpMsgBuf );
- 
+
 }
 
 
@@ -145,7 +145,7 @@ string CUIApp::CTFStatsExec::getExecString()
 	retval+=addSlash(outputdirectory);
 	retval+=removeSlash(outputsubdir);
 	retval+="\" ";
-	
+
 	retval+="ruleDir=\"";
 	retval+=removeSlash(ruledirectory);
 	retval+="\" ";
@@ -171,7 +171,7 @@ string CUIApp::CTFStatsExec::getExecString()
 		retval+=removeSlash(playerhttp);
 		retval+="\"";
 	}
-	
+
 	retval+=" eliminateOldPlayers=";
 	retval+=elimOldPlayers?"yes":"no";
 	if (elimOldPlayers)
@@ -184,12 +184,12 @@ string CUIApp::CTFStatsExec::getExecString()
 	}
 
 
-	
+
 	retval+=" displayMM2=";
 	retval+=displayMM2?"yes":"no";
 	retval+=" displayStartUpInfo=";
 	retval+=displayStartupInfo?"yes":"no";
-	
+
 
 	return retval;
 }
@@ -199,7 +199,7 @@ string CUIApp::CTFStatsExec::getExecString()
 void CUIApp::execTFStats()
 {
 	std::list<CUIApp::CTFStatsExec>::iterator it;
-	
+
 	AllocConsole();
 	for (it=m_pLogs->begin();it!=m_pLogs->end();++it)
 	{
@@ -218,7 +218,7 @@ void CUIApp::execTFStats()
 		it->elimOldPlayers=elimOldPlayers;
 		it->elimDays=elimDays;
 
-		
+
 		string exec=it->getExecString();
 		//create process takes a non-const char buffer?
 		char createProcBuf[4000];
@@ -235,8 +235,8 @@ void CUIApp::execTFStats()
 		SetConsoleTitle(buffer);
 
 		BOOL result=CreateProcess(NULL,createProcBuf,NULL,NULL,FALSE,0,NULL,NULL,&si,&pi);
-			
-		
+
+
 		if (pi.hProcess && result)
 		{
 			//wait for this one to finish before running next one!
@@ -244,7 +244,7 @@ void CUIApp::execTFStats()
 			do
 			{
 				GetExitCodeProcess(pi.hProcess,&exitCode);
-				
+
 				//check every 10th of a second
 				if (exitCode==STILL_ACTIVE)
 					Sleep(100);
@@ -262,7 +262,7 @@ void CUIApp::execTFStats()
 			HANDLE hConsOutput=GetStdHandle(STD_OUTPUT_HANDLE);
 			WriteConsole(hConsOutput,badmojo.c_str(),badmojo.length(),NULL,0);
 			Sleep(4000);
-		}	
+		}
 	}
 	FreeConsole();
 }

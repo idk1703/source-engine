@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -17,7 +17,7 @@
 #endif
 
 
-#define FLOW_OUTGOING	0		
+#define FLOW_OUTGOING	0
 #define FLOW_INCOMING	1
 #define MAX_FLOWS		2		// in & out
 
@@ -41,14 +41,14 @@ public:
 		SIGNON,			// various signondata
 		TOTAL,			// must be last and is not a real group
 	};
-	
+
 	virtual const char  *GetName( void ) const = 0;	// get channel name
 	virtual const char  *GetAddress( void ) const = 0; // get channel IP address as string
 	virtual float		GetTime( void ) const = 0;	// current net time
 	virtual float		GetTimeConnected( void ) const = 0;	// get connection time in seconds
 	virtual int			GetBufferSize( void ) const = 0;	// netchannel packet history size
 	virtual int			GetDataRate( void ) const = 0; // send data rate in byte/sec
-	
+
 	virtual bool		IsLoopback( void ) const = 0;	// true if loopback channel
 	virtual bool		IsTimingOut( void ) const = 0;	// true if timing out
 	virtual bool		IsPlayback( void ) const = 0;	// true if demo playback

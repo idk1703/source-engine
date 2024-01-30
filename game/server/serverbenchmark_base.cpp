@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -35,7 +35,7 @@ static double Benchmark_ValidTime()
 	Plat_SetBenchmarkMode( false );
 	double flRet = Plat_FloatTime();
 	Plat_SetBenchmarkMode( bOld );
-	
+
 	return flRet;
 }
 
@@ -49,9 +49,9 @@ public:
 	CServerBenchmark()
 	{
 		m_BenchmarkState = BENCHMARKSTATE_NOT_RUNNING;
-		
+
 		// The benchmark should always have the same seed and do exactly the same thing on the same ticks.
-		m_RandomStream.SetSeed( 1111 ); 
+		m_RandomStream.SetSeed( 1111 );
 	}
 
 	virtual bool StartBenchmark()
@@ -100,7 +100,7 @@ public:
 
 	virtual void UpdateBenchmark()
 	{
-		// No benchmark running?	
+		// No benchmark running?
 		if ( m_BenchmarkState == BENCHMARKSTATE_NOT_RUNNING )
 			return;
 
@@ -131,7 +131,7 @@ public:
 
 		int nTicksRunSoFar = gpGlobals->tickcount - m_nBenchmarkStartTick;
 		UpdateBenchmarkCounter();
-	
+
 		// Are we finished with the benchmark?
 		if ( nTicksRunSoFar >= sv_benchmark_numticks.GetInt() )
 		{
@@ -172,7 +172,7 @@ public:
 		if ( m_nBenchmarkMode == 2 )
 		{
 			FileHandle_t fh = filesystem->Open( "sv_benchmark_results.txt", "wt", "DEFAULT_WRITE_PATH" );
-			
+
 			// If this file doesn't get written out, then the build script will generate an email that there's a problem somewhere.
 			if ( fh )
 			{
@@ -183,7 +183,7 @@ public:
 			// Quit out.
 			engine->ServerCommand( "quit\n" );
 		}
-		
+
 		m_BenchmarkState = BENCHMARKSTATE_NOT_RUNNING;
 		engine->SetDedicatedServerBenchmarkMode( false );
 	}
@@ -195,7 +195,7 @@ public:
 			if( !engine->IsDedicatedServer() && pPlayer->entindex() == 1 )
 				return true;
 		}
-		
+
 		return false;
 	}
 
@@ -207,7 +207,7 @@ public:
 		if ( GetTickOffset() >= nNextSpawnTick )
 		{
 			m_nLastPhysicsObjectTick = nNextSpawnTick;
-			
+
 			if ( m_PhysicsObjects.Count() < s_nBenchmarkPhysicsObjects )
 			{
 				// Find a bot to spawn it from.
@@ -227,9 +227,9 @@ public:
 					const char *pModelName = m_PhysicsModelNames[iModelName];
 
 					int iPlayer = this->RandomInt( 0, curPlayers.Count() - 1 );
-						
+
 					Vector vSpawnPos = curPlayers[iPlayer]->EyePosition() + Vector( 0, 0, 50 );
-					
+
 					// We'll try 15 locations around the player to spawn this thing.
 					for ( int i=0; i < 15; i++ )
 					{
@@ -267,7 +267,7 @@ public:
 						AngularImpulse vAngularImpulse( this->RandomFloat(-flAngImpulse,flAngImpulse), this->RandomFloat(-flAngImpulse,flAngImpulse), this->RandomFloat(flAngImpulse,flAngImpulse) );
 						pPhysicsObject->ApplyForceCenter( Vector( this->RandomFloat(-flForce,flForce), this->RandomFloat(-flForce,flForce), this->RandomFloat(0,flForce) ) );
 					}
-				}				
+				}
 			}
 		}
 	}
@@ -348,8 +348,8 @@ public:
 			if ( pPlayer && (pPlayer->GetFlags() & FL_FAKECLIENT) )
 			{
 				crc += pPlayer->GetTeamNumber();
-				crc += (int)pPlayer->GetAbsOrigin().x; 
-				crc += (int)pPlayer->GetAbsOrigin().y; 
+				crc += (int)pPlayer->GetAbsOrigin().x;
+				crc += (int)pPlayer->GetAbsOrigin().y;
 			}
 		}
 
@@ -368,7 +368,7 @@ public:
 
 
 private:
-	
+
 	enum EBenchmarkState
 	{
 		BENCHMARKSTATE_NOT_RUNNING,
@@ -378,7 +378,7 @@ private:
 	EBenchmarkState m_BenchmarkState;
 
 	float m_fl_ValidTime_BenchmarkStartTime;
-	
+
 	float m_flBenchmarkStartTime;
 	float m_flLastBenchmarkCounterUpdate;
 	float m_flBenchmarkStartWaitTime;

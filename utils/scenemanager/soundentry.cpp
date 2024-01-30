@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,8 +20,8 @@
 #include "tier3/tier3.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CSoundEntry::CSoundEntry( CVCDFile *vcd, char const *name ) : m_pOwner( vcd )
 {
@@ -106,8 +106,8 @@ void CSoundEntry::RemoveWave( CWaveFile *wave )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *wave - 
+// Purpose:
+// Input  : *wave -
 // Output : int
 //-----------------------------------------------------------------------------
 int CSoundEntry::FindWave( CWaveFile *wave )
@@ -120,8 +120,8 @@ int CSoundEntry::FindWave( CWaveFile *wave )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 void CSoundEntry::SetName( char const *name )
 {
@@ -288,8 +288,8 @@ void CSoundEntry::SetDirty( bool dirty )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wavindex - 
+// Purpose:
+// Input  : wavindex -
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CSoundEntry::GetSentenceText( int wavindex )

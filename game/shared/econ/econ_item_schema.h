@@ -113,10 +113,10 @@ struct static_attrib_t
 
 	// Parses a single subsection from a single-line attribute block that looks like:
 	//
-	//		CharacterAttributes 
+	//		CharacterAttributes
 	//		{
 	//			"increase buff duration"	9.0
-	//			"damage bonus"	2.0 
+	//			"damage bonus"	2.0
 	//		}
 	//
 	// It's impossible to specify GC-generated attributes in this format. Will return true/false based on
@@ -193,7 +193,7 @@ class CEconItemRarityDefinition
 {
 public:
 	CEconItemRarityDefinition( void );
-	
+
 	~CEconItemRarityDefinition( void ) { }
 
 	bool		BInitFromKV( KeyValues *pKVItem, KeyValues *pKVRarityWeights, CEconItemSchema &pschema, CUtlVector<CUtlString> *pVecErrors = NULL );
@@ -551,14 +551,14 @@ public:
 	};
 
 	virtual ~CEconLootListDefinition();
-	
+
 	bool BInitFromKV( KeyValues *pKVLootList, CEconItemSchema &pschema, CUtlVector<CUtlString> *pVecErrors );
 
 	const char *GetName() const { return m_pszName; }
 	virtual const char *GetLootListHeaderLocalizationKey() const OVERRIDE { return m_pszLootListHeader; }
 	virtual const char *GetLootListFooterLocalizationKey() const OVERRIDE { return m_pszLootListFooter; }
 	virtual const char *GetLootListCollectionReference() const OVERRIDE { return m_pszCollectionReference; }
-		
+
 	const CUtlVector<drop_item_t>& GetLootListContents() const { return m_DropList; }
 #ifdef GC_DLL
 	const CUtlVector<loot_list_additional_drop_t>& GetAdditionalDrops() const { return m_AdditionalDrops; }
@@ -691,10 +691,10 @@ protected:
 	int32		m_nDefIndex;
 
 	// Localization key strings
-	CUtlString	m_strName; 
-	CUtlString	m_strN_A; 
-	CUtlString	m_strDescInputs; 
-	CUtlString	m_strDescOutputs; 
+	CUtlString	m_strName;
+	CUtlString	m_strN_A;
+	CUtlString	m_strDescInputs;
+	CUtlString	m_strDescOutputs;
 	CUtlString	m_strDI_A;
 	CUtlString	m_strDI_B;
 	CUtlString	m_strDI_C;
@@ -749,7 +749,7 @@ enum attrib_effect_types_t
 	ATTRIB_EFFECT_NEUTRAL,
 	ATTRIB_EFFECT_POSITIVE,
 	ATTRIB_EFFECT_NEGATIVE,
-	
+
 	NUM_EFFECT_TYPES,
 };
 
@@ -779,7 +779,7 @@ public:
 	attrib_definition_index_t GetDefinitionIndex( void ) const	{ return m_nDefIndex; }
 	// Attribute name referenced in the db.
 	const char	*GetDefinitionName( void ) const	{ return m_pszDefinitionName; }
-	
+
 	KeyValues	*GetRawDefinition( void ) const		{ return m_pKVAttribute; }
 
 	// Data accessing
@@ -1039,14 +1039,14 @@ public:
 
 	int GetSkin( int iTeam, bool bViewmodel ) const
 	{
-		Assert( iTeam >= 0 ); 
+		Assert( iTeam >= 0 );
 		Assert( iTeam < TEAM_VISUAL_SECTIONS );
 
 		if ( bViewmodel && m_iViewmodelSkins[ iTeam ] != -1 )
 		{
 			return m_iViewmodelSkins[ iTeam ];
 		}
-		
+
 		return m_iSkins[iTeam];
 	}
 
@@ -1119,7 +1119,7 @@ struct perteamvisuals_t
 		m_Styles.PurgeAndDeleteElements();
 	}
 
-#if defined(CLIENT_DLL) || defined(GAME_DLL)	
+#if defined(CLIENT_DLL) || defined(GAME_DLL)
 	int iHideParentBodyGroup;
 
 	// Properties necessary for the game client/server but not for the GC.
@@ -1234,7 +1234,7 @@ public:
 	// We don't support throwing exceptions from tool construction so this is intended to be checked afterwards
 	// whenever a new tool is created. (See CreateEconToolImpl().)
 	virtual bool BFinishInitialization() { return true; }
-	
+
 	// Used by the GC only for WebAPI responses and for some weird internal code.
 	const char *GetTypeName() const { return m_pszTypeName; }		// would like to disable on the client so we aren't tempted to check against it, but used for building a unique tool list
 	const char *GetUseString() const { return m_pszUseString; }
@@ -1348,7 +1348,7 @@ public:
 	uint8		GetMaxLevel( void ) const			{ return m_unMaxItemLevel; }
 	uint8		GetItemSeries( void ) const			{ return m_unItemSeries; }
 	uint8		GetQuality( void ) const			{ return m_nItemQuality; }
-	void		SetRarity( uint8 nRarity )			{ Assert( m_nItemRarity == k_unItemRarity_Any ); m_nItemRarity = nRarity; } 
+	void		SetRarity( uint8 nRarity )			{ Assert( m_nItemRarity == k_unItemRarity_Any ); m_nItemRarity = nRarity; }
 	uint8		GetRarity( void ) const				{ return m_nItemRarity; }
 	uint8		GetForcedQuality( void ) const		{ return m_nForcedItemQuality; }
 	uint16		GetDefaultDropQuantity( void ) const	{ return m_nDefaultDropQuantity; }
@@ -1647,7 +1647,7 @@ private:
 	bool			m_bFlipViewModel;
 
 	// This is a wearable that sits in a non-wearable loadout slot
-	bool			m_bActAsWearable;	
+	bool			m_bActAsWearable;
 
 	// This is a weapon that sits in a wearable slot (Action)
 	bool			m_bActAsWeapon;
@@ -1702,7 +1702,7 @@ private:
 
 	// A pack bundle is a bundle that contains items that are not for sale individually
 	bool			m_bIsPackBundle;
-	
+
 	// A pack item is an item which is not for sale individually and is only for sale as part of a pack bundle. A 'regular' bundle can only include a pack bundle by explicitly including all of the pack bundle's items individually.
 	// If this pointer is non-NULL, this item is considered to be a pack item (see CEconItemDefinition::IsPackItem()).
 	CEconItemDefinition	*m_pOwningPackBundle;
@@ -1778,7 +1778,7 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline style_index_t CEconItemDefinition::GetNumStyles() const
 {
@@ -1804,7 +1804,7 @@ inline style_index_t CEconItemDefinition::GetNumSelectableStyles() const
 	if (!pVisData)
 		return 0;
 
-	style_index_t nCount = 0; 
+	style_index_t nCount = 0;
 	FOR_EACH_VEC( pVisData->m_Styles, i )
 	{
 		if( pVisData->m_Styles[i]->IsSelectable() )
@@ -1817,7 +1817,7 @@ inline style_index_t CEconItemDefinition::GetNumSelectableStyles() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline const CEconStyleInfo *CEconItemDefinition::GetStyleInfo( style_index_t unStyle ) const
 {
@@ -1830,7 +1830,7 @@ inline const CEconStyleInfo *CEconItemDefinition::GetStyleInfo( style_index_t un
 
 #if defined(CLIENT_DLL) || defined(GAME_DLL)
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline int CEconItemDefinition::GetNumAttachedModels( int iTeam ) const
 {
@@ -1838,7 +1838,7 @@ inline int CEconItemDefinition::GetNumAttachedModels( int iTeam ) const
 	iTeam = GetBestVisualTeamData( iTeam );
 	if ( iTeam < 0 || iTeam >= TEAM_VISUAL_SECTIONS || !GetPerTeamVisual(iTeam) )
 		return 0;
-	return GetPerTeamVisual(iTeam)->m_AttachedModels.Count(); 
+	return GetPerTeamVisual(iTeam)->m_AttachedModels.Count();
 #else
 	return 0;
 #endif
@@ -1901,7 +1901,7 @@ inline int CEconItemDefinition::GetNumPlaybackActivities( int iTeam ) const
 	iTeam = GetBestVisualTeamData( iTeam );
 	if ( iTeam < 0 || iTeam >= TEAM_VISUAL_SECTIONS || !GetPerTeamVisual(iTeam) )
 		return 0;
-	return GetPerTeamVisual(iTeam)->m_Activities.Count(); 
+	return GetPerTeamVisual(iTeam)->m_Activities.Count();
 #else
 	return 0;
 #endif
@@ -1926,7 +1926,7 @@ inline activity_on_wearable_t *CEconItemDefinition::GetPlaybackActivityData( int
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline int CEconItemDefinition::GetNumAnimations( int iTeam ) const
 {
@@ -1934,7 +1934,7 @@ inline int CEconItemDefinition::GetNumAnimations( int iTeam ) const
 	iTeam = GetBestVisualTeamData( iTeam );
 	if ( iTeam < 0 || iTeam >= TEAM_VISUAL_SECTIONS || !GetPerTeamVisual(iTeam) )
 		return 0;
-	return GetPerTeamVisual(iTeam)->m_Animations.Count(); 
+	return GetPerTeamVisual(iTeam)->m_Animations.Count();
 #else
 	return 0;
 #endif
@@ -1958,22 +1958,22 @@ inline animation_on_wearable_t *CEconItemDefinition::GetAnimationData( int iTeam
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline int CEconItemDefinition::GetNumAttachedParticles( int iTeam ) const
-{ 
+{
 #ifndef CSTRIKE_DLL
 	iTeam = GetBestVisualTeamData( iTeam );
 	if ( iTeam < 0 || iTeam >= TEAM_VISUAL_SECTIONS || !GetPerTeamVisual(iTeam) )
 		return 0;
-	return GetPerTeamVisual(iTeam)->m_AttachedParticles.Count(); 
+	return GetPerTeamVisual(iTeam)->m_AttachedParticles.Count();
 #else
 	return 0;
 #endif
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline attachedparticlesystem_t *CEconItemDefinition::GetAttachedParticleData( int iTeam, int iIdx ) const
 {
@@ -1994,7 +1994,7 @@ inline attachedparticlesystem_t *CEconItemDefinition::GetAttachedParticleData( i
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline const char *CEconItemDefinition::GetMaterialOverride( int iTeam ) const
 {
@@ -2009,7 +2009,7 @@ inline const char *CEconItemDefinition::GetMaterialOverride( int iTeam ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline const char *CEconItemDefinition::GetMuzzleFlash( int iTeam ) const
 {
@@ -2024,7 +2024,7 @@ inline const char *CEconItemDefinition::GetMuzzleFlash( int iTeam ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline const char *CEconItemDefinition::GetTracerEffect( int iTeam ) const
 {
@@ -2039,7 +2039,7 @@ inline const char *CEconItemDefinition::GetTracerEffect( int iTeam ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline const char *CEconItemDefinition::GetParticleEffect( int iTeam ) const
 {
@@ -2054,7 +2054,7 @@ inline const char *CEconItemDefinition::GetParticleEffect( int iTeam ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline int CEconItemDefinition::GetHiddenParentBodygroup( int iTeam ) const
 {
@@ -2069,7 +2069,7 @@ inline int CEconItemDefinition::GetHiddenParentBodygroup( int iTeam ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline int CEconItemDefinition::GetNumModifiedBodyGroups( int iTeam ) const
 {
@@ -2084,7 +2084,7 @@ inline int CEconItemDefinition::GetNumModifiedBodyGroups( int iTeam ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline const char* CEconItemDefinition::GetModifiedBodyGroup( int iTeam, int i, int& body ) const
 {
@@ -2100,7 +2100,7 @@ inline const char* CEconItemDefinition::GetModifiedBodyGroup( int iTeam, int i, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline int CEconItemDefinition::GetNumCodeControlledBodyGroups( int iTeam ) const
 {
@@ -2115,7 +2115,7 @@ inline int CEconItemDefinition::GetNumCodeControlledBodyGroups( int iTeam ) cons
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline const char* CEconItemDefinition::GetCodeControlledBodyGroup( int iTeam, int i, codecontrolledbodygroupdata_t &ccbgd ) const
 {
@@ -2132,7 +2132,7 @@ inline const char* CEconItemDefinition::GetCodeControlledBodyGroup( int iTeam, i
 
 #if defined(CLIENT_DLL) || defined(GAME_DLL)
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline int CEconItemDefinition::GetStyleSkin( style_index_t unStyle, int iTeam, bool bViewmodel ) const
 {
@@ -2146,7 +2146,7 @@ inline int CEconItemDefinition::GetStyleSkin( style_index_t unStyle, int iTeam, 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline const char* CEconItemDefinition::GetStyleInventoryImage( style_index_t unStyle ) const
 {
@@ -2158,7 +2158,7 @@ inline const char* CEconItemDefinition::GetStyleInventoryImage( style_index_t un
 #endif // defined(CLIENT_DLL) || defined(GAME_DLL)
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline int CEconItemDefinition::GetViewmodelBodygroupOverride( int iTeam ) const
 {
@@ -2173,7 +2173,7 @@ inline int CEconItemDefinition::GetViewmodelBodygroupOverride( int iTeam ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline int CEconItemDefinition::GetViewmodelBodygroupStateOverride( int iTeam ) const
 {
@@ -2188,7 +2188,7 @@ inline int CEconItemDefinition::GetViewmodelBodygroupStateOverride( int iTeam ) 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline int CEconItemDefinition::GetWorldmodelBodygroupOverride( int iTeam ) const
 {
@@ -2203,7 +2203,7 @@ inline int CEconItemDefinition::GetWorldmodelBodygroupOverride( int iTeam ) cons
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline int CEconItemDefinition::GetWorldmodelBodygroupStateOverride( int iTeam ) const
 {
@@ -2218,7 +2218,7 @@ inline int CEconItemDefinition::GetWorldmodelBodygroupStateOverride( int iTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline bool CEconItemDefinition::UsesPerClassBodygroups( int iTeam ) const
 {
@@ -2233,7 +2233,7 @@ inline bool CEconItemDefinition::UsesPerClassBodygroups( int iTeam ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline const char *CEconItemDefinition::GetCustomSound( int iTeam, int iSound ) const
 {
@@ -2250,7 +2250,7 @@ inline const char *CEconItemDefinition::GetCustomSound( int iTeam, int iSound ) 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline const char *CEconItemDefinition::GetWeaponReplacementSound( int iTeam, /* WeaponSound_t */ int iSound ) const
 {
@@ -2267,7 +2267,7 @@ inline const char *CEconItemDefinition::GetWeaponReplacementSound( int iTeam, /*
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline int CEconItemDefinition::GetBestVisualTeamData( int iTeam ) const
 {
@@ -2491,7 +2491,7 @@ namespace GCSDK
 // The class hierarchy looks like:
 //
 //		ISchemaAttributeTypeBase< TAttribInMemoryType >:
-//	
+//
 //			This describes a specific in-memory format for an attribute, without any association to
 //			a particular DB, wire format, etc. We can't template the base class because it's an
 //			interface. This implements about half of ISchemaAttributeType and has its own mini
@@ -2703,10 +2703,10 @@ public:
 	equipped_class_t	GetLastValidClass() const							{ return m_unLastValidClass; }
 	bool				IsValidClass( equipped_class_t unClass )			{ return ( unClass >= m_unFirstValidClass && unClass <= m_unLastValidClass ) || unClass == GetAccountIndex(); }
 	bool				IsValidItemSlot( equipped_slot_t unSlot, equipped_class_t unClass ) const { return IsValidItemSlot( unSlot, unClass == m_unAccoutClassIndex ? EQUIP_TYPE_ACCOUNT : EQUIP_TYPE_CLASS ); }
-	bool				IsValidItemSlot( equipped_slot_t unSlot, EEquipType_t eType ) const	
+	bool				IsValidItemSlot( equipped_slot_t unSlot, EEquipType_t eType ) const
 	{
 		return eType == EQUIP_TYPE_ACCOUNT ? unSlot >= m_unFirstValidAccountItemSlot && unSlot <= m_unLastValidAccountItemSlot
-										   : unSlot >= m_unFirstValidClassItemSlot && unSlot <= m_unLastValidClassItemSlot; 
+										   : unSlot >= m_unFirstValidClassItemSlot && unSlot <= m_unLastValidClassItemSlot;
 	}
 
 	enum { kMaxItemPresetCount = 4 };
@@ -2780,7 +2780,7 @@ public:
 
 	typedef CUtlMap<const char*, CEconOperationDefinition*, int > OperationDefinitionMap_t;
 	const OperationDefinitionMap_t &GetOperationDefinitions() const { return m_mapOperationDefinitions; }
-	
+
 
 #if defined(CLIENT_DLL) || defined(GAME_DLL)
 	const ArmoryStringDict_t	&GetArmoryDataItemClasses() const { return m_dictArmoryItemClassesDataStrings; }
@@ -2822,7 +2822,7 @@ public:
 
 	KeyValues *FindDefinitionPrefabByName( const char *pszPrefabName ) const;
 	const PrefabMap_t& GetPrefabMap() const { return m_mapDefinitionPrefabs; }
-	
+
 	CUtlVector< CEconItemDefinition * > &GetBundles() { return m_vecBundles; }	// Retrieve a cached list of all bundles
 
 	const char *FindStringTableEntry( const char *pszTableName, int iIndex ) const;
@@ -2865,7 +2865,7 @@ public:
 #ifdef CLIENT_DLL
 	const char *GetSteamPackageLocalizationToken( uint32 unPackageId ) const;
 #endif // CLIENT_DLL
-	
+
 	bool BCanGSCreateItems( uint32 unIP ) const;
 #ifdef GC_DLL
 	const AchievementAward_t *GetAchievementReward( const char *pchAchievementName, AppId_t unAppID ) const;
@@ -3360,7 +3360,7 @@ public:
 	virtual const char *GetLootListHeaderLocalizationKey() const OVERRIDE;
 	virtual const char *GetLootListFooterLocalizationKey() const OVERRIDE;
 	virtual const char *GetLootListCollectionReference() const OVERRIDE;
-	
+
 #ifdef GC_DLL
 	MUST_CHECK_RETURN virtual bool BGenerateSingleRollRandomItems( const CEconGameAccount *pGameAccount, bool bFreeAccount, CUtlVector<CEconItem *> *out_pvecItems, const CUtlVector< item_definition_index_t > *pVecAvoidItemDefs = NULL ) const OVERRIDE;
 #endif // GC_DLL

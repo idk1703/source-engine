@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose: Pulling CCollisionEvent's definition out of physics.cpp so it can be abstracted upon (for the portal mod)
-//			
+//
 //
 // $Workfile:     $
 // $Date:         $
@@ -76,7 +76,7 @@ public:
 	void PostSimulationFrame();
 	void ObjectEnterTrigger( IPhysicsObject *pTrigger, IPhysicsObject *pObject );
 	void ObjectLeaveTrigger( IPhysicsObject *pTrigger, IPhysicsObject *pObject );
-	
+
 	bool GetTriggerEvent( triggerevent_t *pEvent, CBaseEntity *pTriggerEntity );
 	void BufferTouchEvents( bool enable ) { m_bBufferTouchEvents = enable; }
 	virtual void AddDamageEvent( CBaseEntity *pEntity, const CTakeDamageInfo &info, IPhysicsObject *pInflictorPhysics, bool bRestoreVelocity, const Vector &savedVel, const AngularImpulse &savedAngVel );
@@ -90,7 +90,7 @@ public:
 	int		ShouldSolvePenetration( IPhysicsObject *pObj0, IPhysicsObject *pObj1, void *pGameData0, void *pGameData1, float dt );
 	bool	ShouldFreezeObject( IPhysicsObject *pObject );
 	static const char *ModuleName() { return CBaseEntity::IsServer() ? "SERVER" : "CLIENT"; }
-	int		AdditionalCollisionChecksThisTick( int currentChecksDone ) 
+	int		AdditionalCollisionChecksThisTick( int currentChecksDone )
 	{
 		//CallbackContext check(this);
 		if ( currentChecksDone < 1200 )
@@ -99,7 +99,7 @@ public:
 			return 1200 - currentChecksDone;
 		}
 		DevMsg(1,"%s: VPhysics exceeded collision check limit (%d)!!!\nInterpenetration may result!\n", ModuleName(), currentChecksDone );
-		return 0; 
+		return 0;
 	}
 	bool ShouldFreezeContacts( IPhysicsObject **pObjectList, int objectCount );
 
@@ -140,7 +140,7 @@ private:
 	// make the call into the entity system
 	void DispatchStartTouch( CBaseEntity *pEntity0, CBaseEntity *pEntity1, const Vector &point, const Vector &normal );
 	void DispatchEndTouch( CBaseEntity *pEntity0, CBaseEntity *pEntity1 );
-	
+
 	class CallbackContext
 	{
 	public:
@@ -157,7 +157,7 @@ private:
 		CCollisionEvent *m_pOuter;
 	};
 	friend class CallbackContext;
-	
+
 	friction_t					m_current[4];
 	gamevcollisionevent_t		m_gameEvent;
 	CUtlVector<triggerevent_t>	m_triggerEvents;

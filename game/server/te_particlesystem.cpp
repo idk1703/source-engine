@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,7 +25,3 @@ IMPLEMENT_SERVERCLASS_ST(CTEParticleSystem, DT_TEParticleSystem)
 	SendPropFloat( SENDINFO_VECTORELEM(m_vecOrigin, 2), -1, SPROP_COORD),
 #endif
 END_SEND_TABLE()
-
-
-
-

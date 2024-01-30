@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -126,7 +126,7 @@ void CStudioRender::R_GatherStats( studiomeshgroup_t *pGroup, CMeshBuilder &Mesh
 
 	const float UNIFORM_SCREEN_WIDTH = 1600.0f;
 	const float UNIFORM_SCREEN_HEIGHT = 1200.0f;
-	
+
 	for (int j = 0; j < pGroup->m_NumStrips; ++j)
 	{
 		OptimizedModel::StripHeader_t *pStrip = &pGroup->m_pStripData[ j ];
@@ -258,7 +258,7 @@ void CStudioRender::R_GatherStats( studiomeshgroup_t *pGroup, CMeshBuilder &Mesh
 					{
 						vColor.Init( 0.701f, 1.0f, 0.0f );
 					}
-					else 
+					else
 					{
 						vColor.Init( 0.0f, 1.0f, 0.0f );
 					}
@@ -287,7 +287,7 @@ void CStudioRender::R_GatherStats( studiomeshgroup_t *pGroup, CMeshBuilder &Mesh
 					{
 						vColor.Init( 0.0f, 1.0f, 0.0f );
 					}
-					else 
+					else
 					{
 						vColor.Init( 0.0f, 0.871f, 1.0f );
 					}
@@ -320,7 +320,7 @@ void CStudioRender::R_GatherStats( studiomeshgroup_t *pGroup, CMeshBuilder &Mesh
 //-----------------------------------------------------------------------------
 // Main model rendering entry point
 //-----------------------------------------------------------------------------
-void CStudioRender::ModelStats( const DrawModelInfo_t& info, const StudioRenderContext_t &rc, 
+void CStudioRender::ModelStats( const DrawModelInfo_t& info, const StudioRenderContext_t &rc,
 							    matrix3x4_t *pBoneToWorld, const FlexWeights_t &flex, int flags )
 {
 	StudioRenderContext_t	StatsRC = rc;
@@ -364,7 +364,7 @@ void CStudioRender::ModelStats( const DrawModelInfo_t& info, const StudioRenderC
 	ComputePoseToWorld( m_PoseToWorld, m_pStudioHdr, boneMask, m_pRC->m_ViewOrigin, pBoneToWorld );
 
 	R_StudioRenderModel( pRenderContext, info.m_Skin, info.m_Body, info.m_HitboxSet, info.m_pClientEntity,
-		info.m_pHardwareData->m_pLODs[info.m_Lod].ppMaterials, 
+		info.m_pHardwareData->m_pLODs[info.m_Lod].ppMaterials,
 		info.m_pHardwareData->m_pLODs[info.m_Lod].pMaterialFlags, flags, boneMask, info.m_Lod, info.m_pColorMeshes);
 
 	// Restore the matrices if we're skinning

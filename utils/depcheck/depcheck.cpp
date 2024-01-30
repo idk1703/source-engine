@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,16 +14,16 @@ char    *va(char *format, ...)
 {
 	va_list         argptr;
 	static char             string[1024];
-	
+
 	va_start (argptr, format);
 	Q_vsnprintf( string, 1024, format, argptr );
 	va_end (argptr);
 
-	return string;  
+	return string;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void printusage( void )
 {
@@ -36,10 +36,10 @@ void printusage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *sourcetreebase - 
-//			*subdir - 
-//			*baseentityclass - 
+// Purpose:
+// Input  : *sourcetreebase -
+//			*subdir -
+//			*baseentityclass -
 //-----------------------------------------------------------------------------
 void ProcessDirectory( const char *game, const char *sourcetreebase, const char *subdir, const char *dsp, const char *config )
 {
@@ -58,7 +58,7 @@ void ProcessDirectory( const char *game, const char *sourcetreebase, const char 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CheckLogFile( void )
 {
@@ -70,9 +70,9 @@ void CheckLogFile( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : argc - 
-//			argv[] - 
+// Purpose:
+// Input  : argc -
+//			argv[] -
 // Output : int
 //-----------------------------------------------------------------------------
 int main( int argc, char* argv[] )

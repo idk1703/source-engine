@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -50,7 +50,7 @@ void MinimapCreateTempTrace( const char* pMetaClassName, int sortOrder, const Ve
 	MinimapInitData_t initData;
 	initData.m_vecPosition = vecPosition;
 
-	PanelMetaClassMgr()->CreatePanelMetaClass( 
+	PanelMetaClassMgr()->CreatePanelMetaClass(
 		pMetaClassName, sortOrder, &initData, CMinimapPanel::MinimapRootPanel() );
 }
 
@@ -60,7 +60,7 @@ void MinimapCreateTempTrace( const char* pMetaClassName, int sortOrder, C_BaseEn
 	initData.m_pEntity = pEntity;
 	initData.m_vecPosition = vecOffset;
 
-	PanelMetaClassMgr()->CreatePanelMetaClass( 
+	PanelMetaClassMgr()->CreatePanelMetaClass(
 		pMetaClassName, sortOrder, &initData, CMinimapPanel::MinimapRootPanel() );
 }
 
@@ -72,8 +72,8 @@ class CMinimapRootPanel : public Panel
 	typedef Panel BaseClass;
 
 public:
-	CMinimapRootPanel( Panel *pParent = NULL ) 
-		: BaseClass( pParent,"CMinimapRootPanel" ) 
+	CMinimapRootPanel( Panel *pParent = NULL )
+		: BaseClass( pParent,"CMinimapRootPanel" )
 	{
 		SetPaintBackgroundEnabled( false );
 		SetPaintEnabled( false );
@@ -86,7 +86,7 @@ class CTextHelpPanel : public vgui::Panel
 	DECLARE_CLASS_SIMPLE( CTextHelpPanel, vgui::Panel )
 
 public:
-	
+
 	CTextHelpPanel();
 
 	virtual void Paint();
@@ -109,7 +109,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTextHelpPanel::CTextHelpPanel()
 : BaseClass( NULL, "HudMinimapTextHelpPanel" )
@@ -124,7 +124,7 @@ CTextHelpPanel::CTextHelpPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTextHelpPanel::PaintBackground()
 {
@@ -136,13 +136,13 @@ void CTextHelpPanel::PaintBackground()
 		m_pImage->GetColor( r, g, b, a );
 		bg[3] = a;
 		SetBgColor( bg );
-	
+
 		BaseClass::PaintBackground();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTextHelpPanel::Paint()
 {
@@ -163,12 +163,12 @@ void CTextHelpPanel::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *image - 
-//			x - 
-//			y - 
-//			w - 
-//			h - 
+// Purpose:
+// Input  : *image -
+//			x -
+//			y -
+//			w -
+//			h -
 //-----------------------------------------------------------------------------
 void CTextHelpPanel::SetImage( BitmapImage *image )
 {
@@ -186,7 +186,7 @@ void CTextHelpPanel::SetImage( BitmapImage *image )
 Panel *CMinimapPanel::MinimapRootPanel()
 {
 	static CMinimapRootPanel s_MinimapRootPanel;
-	return &s_MinimapRootPanel; 
+	return &s_MinimapRootPanel;
 }
 
 CMinimapPanel *CMinimapPanel::MinimapPanel()
@@ -243,7 +243,7 @@ CMinimapPanel::CMinimapPanel( const char *pElementName )
 	m_pTextPanel->SetAutoDelete( false );
 	m_pBackgroundPanel->SetAutoDelete( false );
 	SetAutoDelete( false );
-	
+
 	m_pClient = NULL;
 
 	m_flZoomAdjust = 1.0f;
@@ -255,7 +255,7 @@ CMinimapPanel::CMinimapPanel( const char *pElementName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMinimapPanel::~CMinimapPanel( void )
 {
@@ -271,8 +271,8 @@ CMinimapPanel::~CMinimapPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *scheme - 
+// Purpose:
+// Input  : *scheme -
 //-----------------------------------------------------------------------------
 void CMinimapPanel::ApplySchemeSettings( IScheme *scheme )
 {
@@ -309,9 +309,9 @@ void CMinimapPanel::Activate()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : w - 
-//			h - 
+// Purpose:
+// Input  : w -
+//			h -
 //-----------------------------------------------------------------------------
 void CMinimapPanel::OnSizeChanged( int w, int h )
 {
@@ -324,7 +324,7 @@ void CMinimapPanel::OnSizeChanged( int w, int h )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CMinimapPanel::GetAdjustedZoom( void )
@@ -333,7 +333,7 @@ float CMinimapPanel::GetAdjustedZoom( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CMinimapPanel::GetTrueZoom()
@@ -342,9 +342,9 @@ float CMinimapPanel::GetTrueZoom()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : center - 
-//			scale - 
+// Purpose:
+// Input  : center -
+//			scale -
 //-----------------------------------------------------------------------------
 void CMinimapPanel::GetMapOriginAndScale( Vector& origin, float& scale )
 {
@@ -353,11 +353,11 @@ void CMinimapPanel::GetMapOriginAndScale( Vector& origin, float& scale )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : clip - 
-//			pos - 
-//			outx - 
-//			outy - 
+// Purpose:
+// Input  : clip -
+//			pos -
+//			outx -
+//			outy -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMinimapPanel::WorldToMinimap( MinimapPosType_t posType, const Vector& pos, float& outx, float& outy )
@@ -371,9 +371,9 @@ bool CMinimapPanel::WorldToMinimap( MinimapPosType_t posType, const Vector& pos,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
-//			y - 
+// Purpose:
+// Input  : x -
+//			y -
 //-----------------------------------------------------------------------------
 void CMinimapPanel::AdjustNormalizedPositionForAspectRatio( float& x, float& y )
 {
@@ -396,20 +396,20 @@ bool CMinimapPanel::InternalWorldToMinimap( MinimapPosType_t posType, const Vect
 	Vector test = ( pos -  origin );
 
 	float xfraction = 0.0f;
-	
+
 	if ( worldsize.x > 0 )
 	{
 		xfraction = (test.x - worldmins.x) / (worldmaxs.x - worldmins.x);
 	}
 
 	float yfraction = 0.0f;
-	
+
 	if ( worldsize.y > 0 )
 	{
 		yfraction = (test.y - worldmins.y) / (worldmaxs.y - worldmins.y);
 	}
 
-	xfraction = ( xfraction - 0.5f ) * zoomscale + 0.5f; 
+	xfraction = ( xfraction - 0.5f ) * zoomscale + 0.5f;
 	yfraction = ( yfraction - 0.5f ) * zoomscale + 0.5f;
 
 	yfraction = 1.0f - yfraction;
@@ -472,14 +472,14 @@ bool CMinimapPanel::InternalWorldToMinimap( MinimapPosType_t posType, const Vect
 
 	outx = xfraction * wide;
 	outy = yfraction * tall;
-	
+
 	return inside;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *mapname - 
+// Purpose:
+// Input  : *mapname -
 //-----------------------------------------------------------------------------
 void CMinimapPanel::LevelInit( const char *mapname )
 {
@@ -505,7 +505,7 @@ void CMinimapPanel::MsgFunc_MinimapPulse( bf_read &msg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMinimapPanel::LevelShutdown( void )
 {
@@ -554,7 +554,7 @@ void CMinimapPanel::SetBackgroundMaterials( const char *pMaterialName )
 }
 
 //-----------------------------------------------------------------------------
-// Called when the mouse is hit 
+// Called when the mouse is hit
 //-----------------------------------------------------------------------------
 void CMinimapPanel::OnMousePressed(MouseCode code)
 {
@@ -666,7 +666,7 @@ void CMinimapPanel::SetBackgroundViewport( float minx, float miny, float maxx, f
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMinimapPanel::PaintActOverlays( int teamIndex, int alpha )
 {
@@ -702,12 +702,12 @@ void CMinimapPanel::PaintActOverlays( int teamIndex, int alpha )
 				clr = m_BackgroundColor;
 				clr[3] = alpha;
 				m_pBackgroundPanel->SetBgColor( clr );
- 
+
 				textshowing = true;
-			}				
+			}
 		}
 	}
-	
+
 	if ( !textshowing )
 	{
 		m_pTextPanel->SetVisible( false );
@@ -717,7 +717,7 @@ void CMinimapPanel::PaintActOverlays( int teamIndex, int alpha )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMinimapPanel::OnThink()
 {
@@ -738,13 +738,13 @@ void CMinimapPanel::OnThink()
 	if ( m_flZoomAmount != m_flPrevZoomAmount )
 	{
 		m_flPrevZoomAmount = m_flZoomAmount;
-		ComputeMapOrigin( m_vecCurrentOrigin );	
+		ComputeMapOrigin( m_vecCurrentOrigin );
 		InvokeOnTickOnChildren( this );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMinimapPanel::Paint()
 {
@@ -784,7 +784,7 @@ void CMinimapPanel::Paint()
 	team = clamp( team, 0, MAX_ACT_TEAMS );
 
 	// Array index is 0 to MAX_ACT_TEAMS - 1 where a team of zero means no team and won't be indexed
-	//  due to logic that checks team > 0 
+	//  due to logic that checks team > 0
 	int teamIndex = clamp( team - 1, 0, MAX_ACT_TEAMS - 1 );
 
 	if ( m_pBackground[ teamIndex ] )
@@ -800,8 +800,8 @@ void CMinimapPanel::Paint()
 		float offsetx, offsety;
 
 		// Need to translate m_vecCurrentOrigin into minimap space
-		InternalWorldToMinimap( 
-			MINIMAP_NOCLIP, 
+		InternalWorldToMinimap(
+			MINIMAP_NOCLIP,
 			m_vecCurrentOrigin,
 			-m_vecMapCenter,
 			1,
@@ -895,7 +895,7 @@ void CMinimapPanel::InvokeOnTickOnChildren( vgui::Panel *parent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMinimapPanel::OnTick()
 {
@@ -911,7 +911,7 @@ void CMinimapPanel::OnTick()
 	if ( C_BasePlayer::GetLocalPlayer() && minimap_visible.GetBool() )
 	{
 		SetVisible( true );
-		ComputeMapOrigin( m_vecCurrentOrigin );	
+		ComputeMapOrigin( m_vecCurrentOrigin );
 	}
 	else
 	{
@@ -922,8 +922,8 @@ void CMinimapPanel::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : alpha - 
+// Purpose:
+// Input  : alpha -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMinimapPanel::ShouldDrawZoomDetails( int& alpha )
@@ -938,8 +938,8 @@ bool CMinimapPanel::ShouldDrawZoomDetails( int& alpha )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : center - 
+// Purpose:
+// Input  : center -
 //-----------------------------------------------------------------------------
 void CMinimapPanel::ComputeMapOrigin( Vector& origin )
 {
@@ -952,7 +952,7 @@ void CMinimapPanel::ComputeMapOrigin( Vector& origin )
 
 	C_BasePlayer* pPlayer = C_BasePlayer::GetLocalPlayer();
 
-	Vector playerOrigin; 
+	Vector playerOrigin;
 
 	if( !pPlayer )
 	{
@@ -964,7 +964,7 @@ void CMinimapPanel::ComputeMapOrigin( Vector& origin )
 	}
 
 	origin.Init();
-	 
+
 	playerOrigin.z = m_vecMapCenter.z = 0.0f;
 
 	Vector delta = playerOrigin - m_vecMapCenter;
@@ -1044,7 +1044,7 @@ void CMinimapPanel::ComputeMapOrigin( Vector& origin )
 	m_flWorldSpaceInsets[ 1 ] = MIN( m_vecMapCenter.y, worldmins.y + m_flCenterOnPlayer * ( viewport_height_world_units ) * 0.5f );
 	m_flWorldSpaceInsets[ 2 ] = MAX( m_vecMapCenter.x, worldmaxs.x - m_flCenterOnPlayer * ( viewport_width_world_units ) * 0.5f );
 	m_flWorldSpaceInsets[ 3 ] = MAX( m_vecMapCenter.y, worldmaxs.y - m_flCenterOnPlayer * ( viewport_height_world_units ) * 0.5f );
-	
+
 	// Assuming origin is at center of view, compute world space left, top, right, bottom
 	m_flWorldSpaceBounds[ 0 ] = m_vecMapCenter.x + origin.x - viewport_width_world_units * 0.5f;
 	m_flWorldSpaceBounds[ 1 ] = m_vecMapCenter.y + origin.y - viewport_height_world_units * 0.5f;
@@ -1062,50 +1062,50 @@ void CMinimapPanel::ComputeMapOrigin( Vector& origin )
 	origin.y = clamp( origin.y, m_flWorldSpaceInsets[ 1 ] - m_vecMapCenter.y, m_flWorldSpaceInsets[ 3 ] - m_vecMapCenter.y );
 
 	/*
-	engine->Con_NPrintf( 1, "map bounds left %i top %i right %i bottom %i", 
+	engine->Con_NPrintf( 1, "map bounds left %i top %i right %i bottom %i",
 		(int)worldmins.x,
 		(int)worldmins.y,
 		(int)worldmaxs.x,
 		(int)worldmaxs.y );
 
-	engine->Con_NPrintf( 2, "world space bounds left %i top %i right %i bottom %i", 
+	engine->Con_NPrintf( 2, "world space bounds left %i top %i right %i bottom %i",
 		(int)m_flWorldSpaceBounds[ 0 ],
 		(int)m_flWorldSpaceBounds[ 1 ],
 		(int)m_flWorldSpaceBounds[ 2 ],
 		(int)m_flWorldSpaceBounds[ 3 ] );
 
-	engine->Con_NPrintf( 3, "world space insets left %i top %i right %i bottom %i", 
+	engine->Con_NPrintf( 3, "world space insets left %i top %i right %i bottom %i",
 		(int)m_flWorldSpaceInsets[ 0 ],
 		(int)m_flWorldSpaceInsets[ 1 ],
 		(int)m_flWorldSpaceInsets[ 2 ],
 		(int)m_flWorldSpaceInsets[ 3 ] );
 
-	engine->Con_NPrintf( 4, "world space clipping left %i top %i right %i bottom %i", 
+	engine->Con_NPrintf( 4, "world space clipping left %i top %i right %i bottom %i",
 		(int)m_flClippedWorldSpaceBounds[ 0 ],
 		(int)m_flClippedWorldSpaceBounds[ 1 ],
 		(int)m_flClippedWorldSpaceBounds[ 2 ],
 		(int)m_flClippedWorldSpaceBounds[ 3 ] );
 
 
-	engine->Con_NPrintf( 5, "world center %i %i", 
+	engine->Con_NPrintf( 5, "world center %i %i",
 		(int)m_vecMapCenter.x, (int)m_vecMapCenter.y );
 
-	engine->Con_NPrintf( 6, "player origin %i %i", 
+	engine->Con_NPrintf( 6, "player origin %i %i",
 		(int)playerOrigin.x, (int)playerOrigin.y );
 
-	engine->Con_NPrintf( 7, "desired map center %i %i", 
+	engine->Con_NPrintf( 7, "desired map center %i %i",
 		(int)( m_vecMapCenter.x + preOrigin.x ), (int)( preOrigin.y + m_vecMapCenter.x ) );
 
-	engine->Con_NPrintf( 8, "actual map center %i %i", 
+	engine->Con_NPrintf( 8, "actual map center %i %i",
 		(int)( m_vecMapCenter.x + origin.x ), (int)( origin.y + m_vecMapCenter.y ) );
 
 	engine->Con_NPrintf( 9, "viewport (%ix%i) aspect %.2f world (%ix%i) aspect %f",
 		vw, vh, m_flViewportAspectRatio, (int)worldsize.x, (int)worldsize.y, m_flMapAspectRatio );
-	
-	engine->Con_NPrintf( 10, "zoom %.3f zoom adjust %.3f", 
+
+	engine->Con_NPrintf( 10, "zoom %.3f zoom adjust %.3f",
 		m_flZoomAmount, m_flZoomAdjust );
 
-	engine->Con_NPrintf( 11, "viewport %i x %i", 
+	engine->Con_NPrintf( 11, "viewport %i x %i",
 		(int)viewport_width_world_units, (int)viewport_height_world_units );
 	*/
 
@@ -1196,7 +1196,7 @@ void CMinimapPanel::InitOverlays( const char *materialrootname )
 					p->m_bInUse = true;
 				}
 			}
-		}	
+		}
 	}
 }
 
@@ -1224,7 +1224,7 @@ void CMinimapPanel::ShutdownOverlays( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Panel
 //-----------------------------------------------------------------------------
 Panel *CMinimapPanel::GetTextPaintPanel( void )
@@ -1255,10 +1255,10 @@ void CMinimapPanel::ZoomIn( void )
 	else
 	{
 		m_nZoomLevel = ( m_nZoomLevel + 1 ) % ( NUM_WIDTHS );
-		m_nZoomLevel = clamp( m_nZoomLevel, 0, NUM_WIDTHS - 1 );	
+		m_nZoomLevel = clamp( m_nZoomLevel, 0, NUM_WIDTHS - 1 );
 
 		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence(
-			m_nZoomLevel == 0 ? 
+			m_nZoomLevel == 0 ?
 				"MinimapZoomLevel0" :
 				"MinimapZoomLevel1" );
 	}
@@ -1278,7 +1278,7 @@ void CMinimapPanel::Zoom_Minimap_f( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMinimapPanel::ToggleMinimap( void )
 {
@@ -1294,7 +1294,7 @@ void CMinimapPanel::ToggleMinimap( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Toggle_Minimap_f( void )
 {
@@ -1316,7 +1316,7 @@ static ConCommand minimap( "minimap", Toggle_Minimap_f, "Toggle size of the tf2 
 void CMinimapPanel::SetMinimapZoom( bool bZoom )
 {
 	C_BaseTFPlayer *local = C_BaseTFPlayer::GetLocalPlayer();
-	if ( local && local->m_TFLocal.m_bForceMapOverview ) 
+	if ( local && local->m_TFLocal.m_bForceMapOverview )
 	{
 		bZoom = true;
 	}
@@ -1350,7 +1350,7 @@ void CMinimapPanel::ProcessInput()
 
 	bool hitting_button = ( iKeybits & (IN_ATTACK | IN_ATTACK2 | IN_JUMP) ) ? true : false;
 
-	// While the minimap's zoomed, 
+	// While the minimap's zoomed,
 	if ( m_bMinimapZoomed && hitting_button )
 	{
 		SetMinimapZoom( false );
@@ -1361,7 +1361,3 @@ void CMinimapPanel::ProcessInput()
 }
 
 static ConCommand zoom_minimap( "zoom_minimap", CMinimapPanel::Zoom_Minimap_f, "Zoom in on minimap." );
-
-
-
-

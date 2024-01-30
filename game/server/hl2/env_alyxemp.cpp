@@ -16,7 +16,7 @@
 LINK_ENTITY_TO_CLASS( env_alyxemp, CAlyxEmpEffect );
 
 BEGIN_DATADESC( CAlyxEmpEffect )
-	
+
 	DEFINE_KEYFIELD( m_nType,			FIELD_INTEGER,	"Type" ),
 	DEFINE_KEYFIELD( m_strTargetName,	FIELD_STRING,	"EndTargetName" ),
 
@@ -45,7 +45,7 @@ IMPLEMENT_SERVERCLASS_ST( CAlyxEmpEffect, DT_AlyxEmpEffect )
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAlyxEmpEffect::Spawn( void )
 {
@@ -59,19 +59,19 @@ void CAlyxEmpEffect::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAlyxEmpEffect::Activate( void )
 {
 	// Start out with a target entity
 	SetTargetEntity( STRING(m_strTargetName) );
-	
+
 	BaseClass::Activate();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szEntityName - 
+// Purpose:
+// Input  : *szEntityName -
 //-----------------------------------------------------------------------------
 void CAlyxEmpEffect::SetTargetEntity( const char *szEntityName )
 {
@@ -100,7 +100,7 @@ void CAlyxEmpEffect::SetTargetEntity( CBaseEntity *pTarget )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CAlyxEmpEffect::ActivateAutomatic( CBaseEntity *pAlyx, CBaseEntity *pTarget )
 {
@@ -143,7 +143,7 @@ void CAlyxEmpEffect::AutomaticThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAlyxEmpEffect::Precache( void )
 {
@@ -155,8 +155,8 @@ void CAlyxEmpEffect::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAlyxEmpEffect::InputStartCharge( inputdata_t &inputdata )
 {
@@ -180,8 +180,8 @@ void CAlyxEmpEffect::StartCharge( float flDuration )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAlyxEmpEffect::InputStartDischarge( inputdata_t &inputdata )
 {
@@ -229,8 +229,8 @@ void CAlyxEmpEffect::StartDischarge()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAlyxEmpEffect::InputStop( inputdata_t &inputdata )
 {
@@ -263,8 +263,8 @@ void CAlyxEmpEffect::Stop( float flDuration )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAlyxEmpEffect::InputSetTargetEnt( inputdata_t &inputdata )
 {

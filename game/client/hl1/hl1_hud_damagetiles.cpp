@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -83,7 +83,7 @@ CHudDamageTiles::CHudDamageTiles( const char *pElementName ) : CHudElement( pEle
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
 	SetParent( pParent );
-	
+
 	SetHiddenBits( HIDEHUD_HEALTH | HIDEHUD_PLAYERDEAD | HIDEHUD_NEEDSUIT );
 }
 
@@ -100,7 +100,7 @@ void CHudDamageTiles::VidInit( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDamageTiles::Reset( void )
 {
@@ -163,8 +163,8 @@ long CHudDamageTiles::DamageTileFlags( int i )
 	case 2:
 		// HL2 hijacked DMG_FREEZE and made it DMG_VEHICLE
 		// HL2 hijacked DMG_SLOWFREEZE and made it DMG_DISSOLVE
-//		return DMG_FREEZE | DMG_SLOWFREEZE;	
-		return DMG_VEHICLE | DMG_DISSOLVE;	
+//		return DMG_FREEZE | DMG_SLOWFREEZE;
+		return DMG_VEHICLE | DMG_DISSOLVE;
 
 	case 3:
 		return DMG_DROWN;
@@ -262,15 +262,15 @@ void CHudDamageTiles::Paint( void )
 		}
 	}
 }
- 
+
 
 void CHudDamageTiles::UpdateTiles( long bitsDamage )
-{	
+{
 	damagetile_t *pDmgTile;
 
 	// Which types are new?
 	long bitsOn = ~m_bitsDamage & bitsDamage;
-	
+
 	for ( int i = 0; i < NUM_DMG_TYPES; i++ )
 	{
 		pDmgTile = &m_dmgTileInfo[ i ];
@@ -295,7 +295,7 @@ void CHudDamageTiles::UpdateTiles( long bitsDamage )
 				pDmgTile->y = GetTall() - ( pDmgTile->icon )->Height() * 2;
 			}
 			pDmgTile->flExpire	= gpGlobals->curtime + DMG_IMAGE_LIFE;
-			
+
 			// move everyone else up
 			for ( int j = 0; j < NUM_DMG_TYPES; j++ )
 			{
@@ -308,8 +308,8 @@ void CHudDamageTiles::UpdateTiles( long bitsDamage )
 
 			}
 			pDmgTile = &m_dmgTileInfo[ i ];
-		}	
-	}	
+		}
+	}
 
 	// damage bits are only turned on here;  they are turned off when the draw time has expired (in Paint())
 	m_bitsDamage |= bitsDamage;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,7 +22,7 @@
 class CBaseViewModel;
 
 //-----------------------------------------------------------------------------
-// Purpose: Client side rep of CBaseTFCombatWeapon 
+// Purpose: Client side rep of CBaseTFCombatWeapon
 //-----------------------------------------------------------------------------
 class CWeaponTwoHandedContainer : public CBaseTFCombatWeapon
 {
@@ -52,7 +52,7 @@ public:
 
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -77,7 +77,7 @@ private:
 public:
 
 #else
-	
+
 	virtual void SetTransmit( CCheckTransmitInfo *pInfo, bool bAlways );
 
 #endif

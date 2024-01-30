@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,7 +33,7 @@ enum DataType_t
 	DATATYPE_CONSTCHARPTR,
 	DATATYPE_INT,
 	DATATYPE_FLOAT,
-	DATATYPE_PTR,	
+	DATATYPE_PTR,
 	DATATYPE_BOOL,
 	DATATYPE_KEYVALUES,
 	DATATYPE_CONSTWCHARPTR,
@@ -254,7 +254,7 @@ PanelMessageMap *FindOrAddPanelMessageMap( char const *className );
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // OBSELETE MAPPING FUNCTIONS, USE ABOVE
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

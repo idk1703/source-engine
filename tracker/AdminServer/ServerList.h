@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -41,7 +41,7 @@ public:
 
 	// Handles a frame of networking
 	void RunFrame();
-	
+
 	// gets a server from the list by id, range [0, ServerCount)
 	serveritem_t &GetServer(unsigned int serverID);
 

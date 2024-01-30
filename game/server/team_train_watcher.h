@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -129,7 +129,7 @@ private:
 	string_t m_iszGoalNode;
 
 	// list of node associations with control points
-	typedef struct 
+	typedef struct
 	{
 		CHandle<CPathTrack>	hPathTrack;
 		CHandle<CTeamControlPoint> hCP;

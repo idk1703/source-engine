@@ -114,9 +114,9 @@ mx_CreateToolTipControl ()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *window - 
-//			*event - 
+// Purpose:
+// Input  : *window -
+//			*event -
 // Output : static void
 //-----------------------------------------------------------------------------
 static void RecursiveHandleEvent( mxWindow *window, mxEvent *event )
@@ -149,7 +149,7 @@ char const *translatecode( int code )
 	case NM_SETCURSOR:
 		return "NM_SETCURSOR";
 	case NM_SETFOCUS:
-		return "NM_SETFOCUS"; 
+		return "NM_SETFOCUS";
 	case TVN_BEGINDRAG:
 		return "TVN_BEGINDRAG";
 	case TVN_BEGINLABELEDIT:
@@ -263,7 +263,7 @@ static LRESULT CALLBACK WndProc (HWND hwnd, UINT uMessage, WPARAM wParam, LPARAM
 		mxEvent event;
 
 #if 0
-		//if ( nmhdr->idFrom > 0 ) 
+		//if ( nmhdr->idFrom > 0 )
 		{
 			mxWidget *temp = (mxWidget *) GetWindowLong (nmhdr->hwndFrom, GWL_USERDATA);
 			if ( temp && temp->getType() == MX_TREEVIEW )
@@ -275,7 +275,7 @@ static LRESULT CALLBACK WndProc (HWND hwnd, UINT uMessage, WPARAM wParam, LPARAM
 				char sz[ 256 ];
 				sprintf( sz, "tree view receiving notify %i : %s action %i old %p new %p selection %p\n", nmhdr->code, translatecode( nmhdr->code ),
 					nmt->action, nmt->itemOld, nmt->itemNew, hItem );
-				
+
 				OutputDebugString( sz );
 			}
 		}
@@ -408,7 +408,7 @@ static LRESULT CALLBACK WndProc (HWND hwnd, UINT uMessage, WPARAM wParam, LPARAM
 	{
 		mxEvent event;
 
-		
+
 		mxWindow *window = (mxWindow *) GetWindowLong (hwnd, GWL_USERDATA);
 		if (window)
 		{
@@ -533,9 +533,9 @@ static LRESULT CALLBACK WndProc (HWND hwnd, UINT uMessage, WPARAM wParam, LPARAM
 			if (window)
 			{
 				if ( wParam == WM_LBUTTONDOWN ||
-					 wParam == WM_MBUTTONDOWN ||
-					 wParam == WM_RBUTTONDOWN /*||
-					 wParam & WM_XBUTTONDOWN*/ )
+					wParam == WM_MBUTTONDOWN ||
+					wParam == WM_RBUTTONDOWN /*||
+					wParam & WM_XBUTTONDOWN*/ )
 				{
 					mxEvent event;
 					event.event = mxEvent::ParentNotify;
@@ -898,7 +898,7 @@ mx::init(int argc, char **argv)
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = (HINSTANCE) GetModuleHandle (NULL);
-    wc.hIcon = LoadIcon (wc.hInstance, "MX_ICON");
+	wc.hIcon = LoadIcon (wc.hInstance, "MX_ICON");
 	wc.hCursor = LoadCursor (NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH) COLOR_WINDOW;
 	wc.lpszMenuName = NULL;
@@ -938,7 +938,7 @@ mx::run()
 			}
 
 			if ( !g_hAcceleratorTable ||
-				!TranslateAccelerator( (HWND)g_mainWindow->getHandle (), g_hAcceleratorTable, &msg )) 
+				!TranslateAccelerator( (HWND)g_mainWindow->getHandle (), g_hAcceleratorTable, &msg ))
 			{
 				TranslateMessage( &msg );
 				DispatchMessage( &msg );

@@ -2,11 +2,11 @@
 //
 // Purpose: Structured Solid (CSSolid) implementation.
 //
-// Method of identifying different parts of solid (vertices/edges/faces) is 
+// Method of identifying different parts of solid (vertices/edges/faces) is
 // a unique-id system. The AddFace/AddEdge/AddVertex functions assign each
 // new "part" an id using GetNewID(). External objects referencing the CSSolid
-// do not have to worry about keeping track of indices into the private 
-// arrays, since an ID is valid only if the part still exists. To get 
+// do not have to worry about keeping track of indices into the private
+// arrays, since an ID is valid only if the part still exists. To get
 // information about an ID, use the GetHandleInfo() function -> it returns
 // FALSE if the given ID is no longer valid.
 //
@@ -175,7 +175,7 @@ PVOID CSSolid::GetHandleData(SSHANDLE id)
 
 BOOL CSSolid::GetHandleInfo(SSHANDLEINFO *pInfo, SSHANDLE id)
 {
-	// try vertices .. 
+	// try vertices ..
 	for(int i = 0; i < m_nVertices; i++)
 	{
 		if(m_Vertices[i].id != id)
@@ -190,7 +190,7 @@ BOOL CSSolid::GetHandleInfo(SSHANDLEINFO *pInfo, SSHANDLE id)
 		return TRUE;
 	}
 
-	// try edges .. 
+	// try edges ..
 	for(int i = 0; i < m_nEdges; i++)
 	{
 		if(m_Edges[i].id != id)
@@ -242,10 +242,10 @@ int CSSolid::GetEdgeIndex(SSHANDLE v1, SSHANDLE v2)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : Point - 
-//			fLeniency - 
-// Output : 
+// Purpose:
+// Input  : Point -
+//			fLeniency -
+// Output :
 //-----------------------------------------------------------------------------
 int CSSolid::GetEdgeIndex(const Vector &Point, float fLeniency)
 {
@@ -263,7 +263,7 @@ int CSSolid::GetEdgeIndex(const Vector &Point, float fLeniency)
 		{
 			continue;
 		}
-		
+
 		// if we are here, the 3 axes compare ok.
 		return i;
 	}
@@ -287,7 +287,7 @@ int CSSolid::GetVertexIndex(const Vector &Point, float fLeniency)
 
 		if (fDiff > (fLeniency*fLeniency))
 			continue;
-			
+
 		// if we are here, the 3 axes compare ok.
 		return i;
 	}
@@ -305,7 +305,7 @@ int CSSolid::GetFaceIndex(const Vector &Point, float fLeniency)
 
 //-----------------------------------------------------------------------------
 // Purpose: Calculates the center of an edge.
-// Input  : pEdge - 
+// Input  : pEdge -
 //-----------------------------------------------------------------------------
 void CSSolid::CalcEdgeCenter(CSSEdge *pEdge)
 {
@@ -327,11 +327,11 @@ void CSSolid::CalcEdgeCenter(CSSEdge *pEdge)
 
 SSHANDLE CSSolid::GetConnectionVertex(CSSEdge *pEdge1, CSSEdge *pEdge2)
 {
-	if((pEdge1->hvStart == pEdge2->hvStart) || 
+	if((pEdge1->hvStart == pEdge2->hvStart) ||
 		(pEdge1->hvStart == pEdge2->hvEnd))
 		return pEdge1->hvStart;
 
-	if((pEdge1->hvEnd == pEdge2->hvStart) || 
+	if((pEdge1->hvEnd == pEdge2->hvStart) ||
 		(pEdge1->hvEnd == pEdge2->hvEnd))
 		return pEdge1->hvEnd;
 
@@ -473,7 +473,7 @@ bool CSSolid::HasDisps( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Check to see if the SSolid with displacement surfaces has valid 
+// Purpose: Check to see if the SSolid with displacement surfaces has valid
 //          base face surfaces.
 //-----------------------------------------------------------------------------
 bool CSSolid::IsValidWithDisps( void )
@@ -563,7 +563,7 @@ void CSSolid::ToMapSolid(CMapSolid *p)
 		// Create face from new points.
 		//
 		Vector *pts = CreatePointList(pFace);
-		
+
 		SolidFace.CreateFace(pts, pFace.nEdges);
 
 		//
@@ -576,7 +576,7 @@ void CSSolid::ToMapSolid(CMapSolid *p)
 		{
 			SolidFace.InitializeTextureAxes(Options.GetTextureAlignment(), INIT_TEXTURE_AXES | INIT_TEXTURE_FORCE);
 		}
-			
+
 		// Attempt to update the displacement - if there is one.
 		if ( pFace.m_hDisp != EDITDISPHANDLE_INVALID )
 		{
@@ -709,7 +709,7 @@ void CSSolid::FromMapSolid(CMapSolid *p, bool bSkipDisplacementFaces)
 		for(int pt = 0; pt <= nFacePoints; pt++)
 		{
 			int iVertex;
-			
+
 			if(pt < nFacePoints)
 			{
 				// YWB:  Change leniency from 1.0 down to 0.1
@@ -736,7 +736,7 @@ void CSSolid::FromMapSolid(CMapSolid *p, bool bSkipDisplacementFaces)
 			if (hLastVertex)
 			{
 				// create the edge from the last vertex to current vertex.
-				//  first check to see if this edge already exists.. 
+				//  first check to see if this edge already exists..
 				int iEdge = GetEdgeIndex(hLastVertex, hThisVertex);
 				CSSEdge *pEdge;
 				if (iEdge == -1)
@@ -788,7 +788,7 @@ CSSEdge ** CSSolid::FindAffectedEdges(SSHANDLE *pHandles, int iNumHandles, int& 
 		for(int i = 0; i < m_nEdges; i++)
 		{
 			CSSEdge *pEdge = &m_Edges[i];
-			if(pEdge->hvStart == pHandles[h] || 
+			if(pEdge->hvStart == pHandles[h] ||
 				pEdge->hvEnd == pHandles[h])
 			{
 				// ensure it's not already stored
@@ -823,7 +823,7 @@ void CSSolid::MoveSelectedHandles(const Vector &Delta)
 	int nMoveVertices = 0;
 
 	SSHANDLEINFO hi;
-	
+
 	for(int i = 0; i < m_nVertices; i++)
 	{
 		if(m_Vertices[i].m_bSelected)
@@ -926,13 +926,13 @@ BOOL CSSolid::SplitFace(SSHANDLE h1, SSHANDLE h2)
 	if(hi.Type == shtEdge)
 	{
 		// edge-based face split
-		bRvl = SplitFaceByEdges((CSSEdge*) hi.pData, 
+		bRvl = SplitFaceByEdges((CSSEdge*) hi.pData,
 			(CSSEdge*) GetHandleData(h2));
 	}
 	else if(hi.Type == shtVertex)
 	{
 		// vertex-based face split
-		bRvl = SplitFaceByVertices((CSSVertex*) hi.pData, 
+		bRvl = SplitFaceByVertices((CSSVertex*) hi.pData,
 			(CSSVertex*) GetHandleData(h2));
 	}
 
@@ -997,7 +997,7 @@ BOOL CSSolid::SplitFaceByVertices(CSSVertex *pVertex1, CSSVertex *pVertex2)
 	AssignFace(pNewEdge, pFace->id);
 	AssignFace(pNewEdge, pNewFace->id);
 
-	// set up edges - start with newvertex1 
+	// set up edges - start with newvertex1
 	SSHANDLE hNewEdges[64];
 	int nNewEdges;
 	BOOL bFirst = TRUE;
@@ -1013,7 +1013,7 @@ BOOL CSSolid::SplitFaceByVertices(CSSVertex *pVertex1, CSSVertex *pVertex2)
 	for(int i = 0; i < nVertices; i++)
 	{
 		int iNextVertex = GetNext(i, 1, nVertices);
-		int iEdgeIndex = GetEdgeIndex(phVertexList[i], 
+		int iEdgeIndex = GetEdgeIndex(phVertexList[i],
 			phVertexList[iNextVertex]);
 		CSSEdge *pEdge = &m_Edges[iEdgeIndex];
 		AssignFace(pEdge, pFace->id, TRUE);
@@ -1068,12 +1068,12 @@ BOOL CSSolid::SplitFaceByEdges(CSSEdge *pEdge1, CSSEdge *pEdge2)
 	SSHANDLE hFace;
 
 	// find the handle of the face
-	if(pEdge1->Faces[0] == pEdge2->Faces[0] || 
+	if(pEdge1->Faces[0] == pEdge2->Faces[0] ||
 		pEdge1->Faces[0] == pEdge2->Faces[1])
 	{
 		hFace = pEdge1->Faces[0];
 	}
-	else if(pEdge1->Faces[1] == pEdge2->Faces[0] || 
+	else if(pEdge1->Faces[1] == pEdge2->Faces[0] ||
 		pEdge1->Faces[1] == pEdge2->Faces[1])
 	{
 		hFace = pEdge1->Faces[1];
@@ -1136,7 +1136,7 @@ BOOL CSSolid::SplitFaceByEdges(CSSEdge *pEdge1, CSSEdge *pEdge2)
 	fclose(fp);
 */
 
-	// set up edges - start with newvertex1 
+	// set up edges - start with newvertex1
 	SSHANDLE hNewEdges[64];
 	int nNewEdges;
 	BOOL bFirst = TRUE;
@@ -1145,7 +1145,7 @@ BOOL CSSolid::SplitFaceByEdges(CSSEdge *pEdge1, CSSEdge *pEdge2)
 	// ** do two new faces first **
 
 	int nv1index, nv2index;
-	SSHANDLE *phVertexList = CreateNewVertexList(pFace, pEdge1, pEdge2, 
+	SSHANDLE *phVertexList = CreateNewVertexList(pFace, pEdge1, pEdge2,
 		nv1index, nv2index, pNewVertex1, pNewVertex2);
 	int nVertices = pFace->nEdges;
 	if(nv1index != -1)
@@ -1157,7 +1157,7 @@ BOOL CSSolid::SplitFaceByEdges(CSSEdge *pEdge1, CSSEdge *pEdge2)
 	for(int i = 0; i < nVertices; i++)
 	{
 		int iNextVertex = GetNext(i, 1, nVertices);
-		int iEdgeIndex = GetEdgeIndex(phVertexList[i], 
+		int iEdgeIndex = GetEdgeIndex(phVertexList[i],
 			phVertexList[iNextVertex]);
 		CSSEdge *pEdge = &m_Edges[iEdgeIndex];
 		Assert(pEdge->id != pEdge1->id);
@@ -1208,13 +1208,13 @@ DoNextFace:
 
 		if(pUpdFace == pNewFace || pUpdFace == pFace)
 			continue;
-		
+
 		phVertexList = CreateNewVertexList(pUpdFace, pEdge1, pEdge2,
 			nv1index, nv2index, pNewVertex1, pNewVertex2);
 
 		if(phVertexList == NULL)	// don't need to update this face
 			continue;
-	
+
 		nNewEdges = 0;
 		nVertices = pUpdFace->nEdges;
 		if(nv1index != -1)
@@ -1258,7 +1258,7 @@ DoNextFace:
 void CSSolid::DeleteEdge(int iEdge)
 {
 	SSHANDLE edgeid = m_Edges[iEdge].id;
-		
+
 	// kill this edge
 	for(int i2 = iEdge; i2 < m_nEdges-1; i2++)
 	{
@@ -1277,7 +1277,7 @@ void CSSolid::DeleteEdge(int iEdge)
 			if(face.Edges[e] != edgeid)
 				continue;
 
-			memcpy(&face.Edges[e], &face.Edges[e+1], (face.nEdges-e) * 
+			memcpy(&face.Edges[e], &face.Edges[e+1], (face.nEdges-e) *
 				sizeof(face.Edges[0]));
 			--face.nEdges;
 			break;	// no more in this face
@@ -1321,7 +1321,7 @@ void CSSolid::DeleteFace(int iFace)
 }
 
 
-SSHANDLE* CSSolid::CreateNewVertexList(CSSFace *pFace, CSSEdge *pEdge1, 
+SSHANDLE* CSSolid::CreateNewVertexList(CSSFace *pFace, CSSEdge *pEdge1,
 									   CSSEdge *pEdge2, int& nv1index, int& nv2index,
 									   CSSVertex *pNewVertex1, CSSVertex *pNewVertex2)
 {
@@ -1342,17 +1342,17 @@ DoAgain:
 		int iPrevIndex = GetNext(i, -1, nVertices);
 		int iNextIndex = GetNext(i, 1, nVertices);
 
-		if(nv1index == -1 && (hVertexList[i] == pEdge1->hvEnd || 
+		if(nv1index == -1 && (hVertexList[i] == pEdge1->hvEnd ||
 			hVertexList[i] == pEdge1->hvStart))
 		{
 			// find pEdge1->hvStart
-			if(hVertexList[iPrevIndex] == pEdge1->hvStart || 
+			if(hVertexList[iPrevIndex] == pEdge1->hvStart ||
 				hVertexList[iPrevIndex] == pEdge1->hvEnd)
 			{
 				// add at i.
 				nv1index = i;
 			}
-			if(hVertexList[iNextIndex] == pEdge1->hvStart || 
+			if(hVertexList[iNextIndex] == pEdge1->hvStart ||
 				hVertexList[iNextIndex] == pEdge1->hvEnd)
 			{
 				// add at iNextIndex
@@ -1367,17 +1367,17 @@ DoAgain:
 			}
 		}
 
-		if(nv2index == -1 && (hVertexList[i] == pEdge2->hvEnd || 
+		if(nv2index == -1 && (hVertexList[i] == pEdge2->hvEnd ||
 			hVertexList[i] == pEdge2->hvStart))
 		{
 			// find pEdge1->hvStart
-			if(hVertexList[iPrevIndex] == pEdge2->hvStart || 
+			if(hVertexList[iPrevIndex] == pEdge2->hvStart ||
 				hVertexList[iPrevIndex] == pEdge2->hvEnd)
 			{
 				// add at i.
 				nv2index = i;
 			}
-			if(hVertexList[iNextIndex] == pEdge2->hvStart || 
+			if(hVertexList[iNextIndex] == pEdge2->hvStart ||
 				hVertexList[iNextIndex] == pEdge2->hvEnd)
 			{
 				// add at iNextIndex
@@ -1452,9 +1452,9 @@ DoVertices:
 			// same vertices - kill v1, set edge refs to use v2.
 			SSHANDLE hV1 = m_Vertices[v1].id;
 			SSHANDLE hV2 = m_Vertices[v2].id;
-			
+
 			hDeletedList[nDeleted++] = hV1;
-			
+
 			DeleteVertex(v1);
 
 			int nAffected;
@@ -1469,7 +1469,7 @@ DoVertices:
 					ppEdges[e]->hvEnd = hV2;
 				CalcEdgeCenter(ppEdges[e]);
 			}
-			
+
 			goto DoVertices;
 		}
 	}
@@ -1506,7 +1506,7 @@ DoEdges:
 
 			CSSEdge &edge2 = m_Edges[e2];
 
-			if(!((edge2.hvStart == edge.hvStart && edge2.hvEnd == edge.hvEnd) || 
+			if(!((edge2.hvStart == edge.hvStart && edge2.hvEnd == edge.hvEnd) ||
 				(edge2.hvEnd == edge.hvStart && edge2.hvStart == edge.hvEnd)))
 				continue;
 
@@ -1549,9 +1549,9 @@ DoConcurrentEdges:
 
 				if(face.Edges[ef1] != face.Edges[ef2])
 					continue;
-			
+
 				// delete this ref
-				memcpy(&face.Edges[ef2], &face.Edges[ef2+1], (face.nEdges-ef2) * 
+				memcpy(&face.Edges[ef2], &face.Edges[ef2+1], (face.nEdges-ef2) *
 					sizeof(face.Edges[0]));
 				--face.nEdges;
 
@@ -1587,10 +1587,10 @@ void CSSFace::Init(void)
 {
 	nEdges = 0;
 	bModified = FALSE;
-	
+
 	m_nFaceID = 0;
 	m_hDisp = EDITDISPHANDLE_INVALID;
-	
+
 	memset(&texture, 0, sizeof(TEXTURE));
 
 	texture.scale[0] = g_pGameConfig->GetDefaultTextureScale();
@@ -1662,7 +1662,7 @@ void CSSVertex::GetPosition(Vector& Position)
 }
 
 
-// 
+//
 // save to .DXF
 //
 void CSSolid::SerializeDXF(FILE *stream, int nObject)
@@ -1699,7 +1699,7 @@ void CSSolid::SerializeDXF(FILE *stream, int nObject)
 		for(int v = 0; v < face.nEdges-2; v++)
 		{
 			fprintf(stream, "0\nVERTEX\n8\n%s\n10\n0\n20\n0\n30\n"
-				"0\n70\n128\n71\n%d\n72\n%d\n73\n%d\n", szName, 
+				"0\n70\n128\n71\n%d\n72\n%d\n73\n%d\n", szName,
 				v == 0 ? pVerts[0] : -pVerts[0],
 				pVerts[v+1],
 				v == (face.nEdges-3) ? pVerts[v+2] : -pVerts[v+2]

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -216,7 +216,7 @@ Panel *PanelListPanel::GetItemPanel(int itemID)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PanelListPanel::RemoveItem(int itemID)
 {
@@ -273,7 +273,7 @@ void PanelListPanel::RemoveAll()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PanelListPanel::OnSizeChanged(int wide, int tall)
 {
@@ -311,7 +311,7 @@ void PanelListPanel::PerformLayout()
 		bScrollbarVisible = (m_pPanelEmbedded->GetTall() > tall);
 	}
 	m_vbar->SetVisible( bScrollbarVisible );
-	
+
 	// Now lay out the controls on the embedded panel
 	int y = 0;
 	int h = 0;
@@ -319,7 +319,7 @@ void PanelListPanel::PerformLayout()
 
 	int xpos = m_iFirstColumnWidth + m_iPanelBuffer;
 	int iColumnWidth = ( wide - xpos - m_vbar->GetWide() - 12 ) / m_iNumColumns;
-	
+
 	for ( int i = 0; i < m_SortedItems.Count(); i++ )
 	{
 		int iCurrentColumn = i % m_iNumColumns;
@@ -362,7 +362,7 @@ void PanelListPanel::ApplySchemeSettings(IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PanelListPanel::OnSliderMoved( int position )
 {
@@ -371,7 +371,7 @@ void PanelListPanel::OnSliderMoved( int position )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PanelListPanel::MoveScrollBarToTop()
 {
@@ -379,7 +379,7 @@ void PanelListPanel::MoveScrollBarToTop()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PanelListPanel::SetFirstColumnWidth( int width )
 {
@@ -411,7 +411,7 @@ void PanelListPanel::OnMouseWheeled(int delta)
 {
 	int val = m_vbar->GetValue();
 	val -= (delta * DEFAULT_HEIGHT);
-	m_vbar->SetValue(val);	
+	m_vbar->SetValue(val);
 }
 
 //-----------------------------------------------------------------------------
@@ -443,7 +443,7 @@ Panel *PanelListPanel::GetSelectedPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PanelListPanel::ScrollToItem( int itemNumber )
 {
@@ -472,5 +472,3 @@ void PanelListPanel::ScrollToItem( int itemNumber )
 	m_vbar->SetValue( y );
 	InvalidateLayout();
 }
-
-

@@ -31,15 +31,15 @@
 class CSAchievementsAndStatsInterface : public AchievementsAndStatsInterface
 {
 public:
-    CSAchievementsAndStatsInterface();
+	CSAchievementsAndStatsInterface();
 
-    virtual void CreatePanel( vgui::Panel* pParent );
-    virtual void DisplayPanel();
-    virtual void ReleasePanel();
+	virtual void CreatePanel( vgui::Panel* pParent );
+	virtual void DisplayPanel();
+	virtual void ReleasePanel();
 	virtual int GetAchievementsPanelMinWidth( void ) const { return cAchievementsDialogMinWidth; }
 
 protected:
-    vgui::DHANDLE<vgui::Frame>  m_pAchievementAndStatsSummary;
+	vgui::DHANDLE<vgui::Frame>  m_pAchievementAndStatsSummary;
 };
 
 #endif

@@ -19,7 +19,7 @@ ConVar tf_boss_alpha_stunned_duration( "tf_boss_alpha_stunned_duration", "10" );
 
 
 //---------------------------------------------------------------------------------------------
-Action< CBossAlpha > *CBossAlphaTacticalMonitor::InitialContainedAction( CBossAlpha *me )	
+Action< CBossAlpha > *CBossAlphaTacticalMonitor::InitialContainedAction( CBossAlpha *me )
 {
 	if ( TFGameRules()->IsBossBattleMode() )
 	{
@@ -32,10 +32,10 @@ Action< CBossAlpha > *CBossAlphaTacticalMonitor::InitialContainedAction( CBossAl
 
 //---------------------------------------------------------------------------------------------
 ActionResult< CBossAlpha > CBossAlphaTacticalMonitor::OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction )
-{ 
+{
 	m_getOffMeTimer.Invalidate();
 
-	return Continue(); 
+	return Continue();
 }
 
 

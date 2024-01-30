@@ -69,11 +69,11 @@ ConVar mat_loadtextures( "mat_loadtextures", "1", FCVAR_CHEAT );
 	#define CONVAR_DEFAULT_MOD_OFFLINE_HDR_SWITCH "0"
 #endif
 static ConVar mod_offline_hdr_switch( "mod_offline_hdr_switch", CONVAR_DEFAULT_MOD_OFFLINE_HDR_SWITCH, FCVAR_INTERNAL_USE,
-                                      "Re-order the HDR/LDR mode switch to do most of the material system "
-                                      "reloading with the device offline. This reduces unnecessary device "
-                                      "resource uploads and may drastically reduce load time and memory pressure "
-                                      "on certain drivers, but may trigger bugs in some very old source engine "
-                                      "pathways." );
+									"Re-order the HDR/LDR mode switch to do most of the material system "
+									"reloading with the device offline. This reduces unnecessary device "
+									"resource uploads and may drastically reduce load time and memory pressure "
+									"on certain drivers, but may trigger bugs in some very old source engine "
+									"pathways." );
 static ConVar mod_touchalldata( "mod_touchalldata", "1", 0, "Touch model data during level startup" );
 static ConVar mod_forcetouchdata( "mod_forcetouchdata", "1", 0, "Forces all model file data into cache on model load." );
 ConVar mat_excludetextures( "mat_excludetextures", "0", FCVAR_CHEAT );
@@ -228,7 +228,7 @@ public:
 	virtual bool	IsLoaded( const model_t *mod );
 
 	virtual bool	LastLoadedMapHasHDRLighting(void);
-	
+
 	void			DumpVCollideStats();
 
 	// Returns the map model, otherwise NULL, no load or create
@@ -259,7 +259,7 @@ public:
 
 	// Called by client code to load dynamic models, instead of GetModelForName.
 	virtual model_t *GetDynamicModel( const char *name, bool bClientOnly );
-	
+
 	// Called by client code to query dynamic model state
 	virtual bool	IsDynamicModelLoading( model_t *pModel, bool bClientOnly );
 
@@ -329,7 +329,7 @@ private:
 
 	// Internal data
 private:
-	enum 
+	enum
 	{
 		MAX_KNOWN_MODELS = 1024,
 	};
@@ -419,7 +419,7 @@ int CMapLoadHelper::GetRefCount()
 }
 
 //-----------------------------------------------------------------------------
-// Setup a BSP loading context, maintains a ref count.	
+// Setup a BSP loading context, maintains a ref count.
 //-----------------------------------------------------------------------------
 void CMapLoadHelper::Init( model_t *pMapModel, const char *loadname )
 {
@@ -538,7 +538,7 @@ void CMapLoadHelper::Init( model_t *pMapModel, const char *loadname )
 //-----------------------------------------------------------------------------
 void CMapLoadHelper::InitFromMemory( model_t *pMapModel, const void *pData, int nDataSize )
 {
-	// valid for 360 only 
+	// valid for 360 only
 	// 360 has reorganized bsp format and no external lump files
 	Assert( IsX360() && pData && nDataSize );
 
@@ -688,7 +688,7 @@ int CMapLoadHelper::LumpSize( int lumpId )
 //-----------------------------------------------------------------------------
 int CMapLoadHelper::LumpOffset( int lumpID  )
 {
-	// If we have a lump file for this lump, return 
+	// If we have a lump file for this lump, return
 	// the offset to move past the lump file header.
 	if ( IsPC() && s_MapLumpFiles[lumpID].file != FILESYSTEM_INVALID_HANDLE )
 	{
@@ -746,9 +746,9 @@ void CMapLoadHelper::LoadLumpData( int offset, int size, void *pData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mapfile - 
-//			lumpToLoad - 
+// Purpose:
+// Input  : mapfile -
+//			lumpToLoad -
 //-----------------------------------------------------------------------------
 CMapLoadHelper::CMapLoadHelper( int lumpToLoad )
 {
@@ -763,14 +763,14 @@ CMapLoadHelper::CMapLoadHelper( int lumpToLoad )
 	m_pData = NULL;
 	m_pRawData = NULL;
 	m_pUncompressedData = NULL;
-	
+
 	// Load raw lump from disk
 	lump_t *lump = &s_MapHeader.lumps[ lumpToLoad ];
 	Assert( lump );
 
 	m_nLumpSize = lump->filelen;
 	m_nLumpOffset = lump->fileofs;
-	m_nLumpVersion = lump->version;	
+	m_nLumpVersion = lump->version;
 
 	FileHandle_t fileToUse = s_MapFileHandle;
 
@@ -835,11 +835,11 @@ CMapLoadHelper::CMapLoadHelper( int lumpToLoad )
 	{
 		// Handle compressed lump -- users of the class see the uncompressed data
 		AssertMsg( CLZMA::IsCompressed( m_pData ),
-		           "Lump claims to be compressed but is not recognized as LZMA" );
+					"Lump claims to be compressed but is not recognized as LZMA" );
 
 		m_nLumpSize = CLZMA::GetActualSize( m_pData );
 		AssertMsg( lump->uncompressedSize == m_nLumpSize,
-		           "Lump header disagrees with lzma header for compressed lump" );
+					"Lump header disagrees with lzma header for compressed lump" );
 
 		m_pUncompressedData = (unsigned char *)malloc( m_nLumpSize );
 		CLZMA::Uncompress( m_pData, m_pUncompressedData );
@@ -849,7 +849,7 @@ CMapLoadHelper::CMapLoadHelper( int lumpToLoad )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapLoadHelper::~CMapLoadHelper( void )
 {
@@ -865,7 +865,7 @@ CMapLoadHelper::~CMapLoadHelper( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : model_t
 //-----------------------------------------------------------------------------
 worldbrushdata_t *CMapLoadHelper::GetMap( void )
@@ -875,7 +875,7 @@ worldbrushdata_t *CMapLoadHelper::GetMap( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CMapLoadHelper::GetMapName( void )
@@ -884,12 +884,12 @@ const char *CMapLoadHelper::GetMapName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 char *CMapLoadHelper::GetLoadName( void )
 {
-	// If we have a custom lump file for the lump this helper 
+	// If we have a custom lump file for the lump this helper
 	// is loading, return it instead.
 	if ( IsPC() && s_MapLumpFiles[m_nLumpID].file != FILESYSTEM_INVALID_HANDLE )
 	{
@@ -900,7 +900,7 @@ char *CMapLoadHelper::GetLoadName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : byte
 //-----------------------------------------------------------------------------
 byte *CMapLoadHelper::LumpBase( void )
@@ -909,7 +909,7 @@ byte *CMapLoadHelper::LumpBase( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapLoadHelper::LumpSize()
@@ -1001,10 +1001,10 @@ void Map_CheckFeatureFlags()
 		flags_lump = *( (dflagslump_t *)( lh.LumpBase() ) );
 
 		// check if loaded map has baked static prop lighting
-		g_bLoadedMapHasBakedPropLighting = 
+		g_bLoadedMapHasBakedPropLighting =
 			( flags_lump.m_LevelFlags & LVLFLAGS_BAKED_STATIC_PROP_LIGHTING_NONHDR ) != 0 ||
 			( flags_lump.m_LevelFlags & LVLFLAGS_BAKED_STATIC_PROP_LIGHTING_HDR ) != 0;
-		g_bBakedPropLightingNoSeparateHDR = 
+		g_bBakedPropLightingNoSeparateHDR =
 			( flags_lump.m_LevelFlags & LVLFLAGS_BAKED_STATIC_PROP_LIGHTING_HDR ) == 0;
 	}
 }
@@ -1036,11 +1036,11 @@ bool Map_CheckForHDR( model_t *pModel, const char *pLoadName )
 		// This lump only exists in version 20 and greater, so don't bother checking for it on earlier versions.
 		bHasHDR = false;
 	}
-	
+
 	bool bEnableHDR = ( IsX360() && bHasHDR ) ||
 		( bHasHDR && ( mat_hdr_level.GetInt() >= 2 ) &&
 		( g_pMaterialSystemHardwareConfig->GetDXSupportLevel() >= 90 ) );
-	
+
 	EnableHDR( bEnableHDR );
 
 	// this data really should have been in the header, but it isn't
@@ -1091,12 +1091,12 @@ static int ComputeLightmapSize( dface_t *pFace, mtexinfo_t *pTexInfo )
 		bNeedsBumpmap = true;
 	}
 
-    int lightstyles;
-    for (lightstyles=0; lightstyles < MAXLIGHTMAPS; lightstyles++ )
-    {
-        if ( pFace->styles[lightstyles] == 255 )
-            break;
-    }
+	int lightstyles;
+	for (lightstyles=0; lightstyles < MAXLIGHTMAPS; lightstyles++ )
+	{
+		if ( pFace->styles[lightstyles] == 255 )
+			break;
+	}
 
 	int nLuxels = (pFace->m_LightmapTextureSizeInLuxels[0]+1) * (pFace->m_LightmapTextureSizeInLuxels[1]+1);
 	if( bNeedsBumpmap )
@@ -1108,7 +1108,7 @@ static int ComputeLightmapSize( dface_t *pFace, mtexinfo_t *pTexInfo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Mod_LoadLighting( CMapLoadHelper &lh )
 {
@@ -1132,7 +1132,7 @@ void Mod_LoadLighting( CMapLoadHelper &lh )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Mod_LoadWorldlights( CMapLoadHelper &lh, bool bIsHDR )
 {
@@ -1160,8 +1160,8 @@ void Mod_LoadWorldlights( CMapLoadHelper &lh, bool bIsHDR )
 	{
 		if( lh.GetMap()->worldlights[i].type == emit_spotlight)
 		{
-			if ((lh.GetMap()->worldlights[i].constant_attn == 0.0) && 
-				(lh.GetMap()->worldlights[i].linear_attn == 0.0) && 
+			if ((lh.GetMap()->worldlights[i].constant_attn == 0.0) &&
+				(lh.GetMap()->worldlights[i].linear_attn == 0.0) &&
 				(lh.GetMap()->worldlights[i].quadratic_attn == 0.0))
 			{
 				lh.GetMap()->worldlights[i].quadratic_attn = 1.0;
@@ -1173,17 +1173,17 @@ void Mod_LoadWorldlights( CMapLoadHelper &lh, bool bIsHDR )
 		else if( lh.GetMap()->worldlights[i].type == emit_point)
 		{
 			// To match earlier lighting, use quadratic...
-			if ((lh.GetMap()->worldlights[i].constant_attn == 0.0) && 
-				(lh.GetMap()->worldlights[i].linear_attn == 0.0) && 
+			if ((lh.GetMap()->worldlights[i].constant_attn == 0.0) &&
+				(lh.GetMap()->worldlights[i].linear_attn == 0.0) &&
 				(lh.GetMap()->worldlights[i].quadratic_attn == 0.0))
 			{
 				lh.GetMap()->worldlights[i].quadratic_attn = 1.0;
 			}
 		}
 
-   		// I replaced the cuttoff_dot field (which took a value from 0 to 1)
+			// I replaced the cuttoff_dot field (which took a value from 0 to 1)
 		// with a max light radius. Radius of less than 1 will never happen,
-		// so I can get away with this. When I set radius to 0, it'll 
+		// so I can get away with this. When I set radius to 0, it'll
 		// run the old code which computed a radius
 		if (lh.GetMap()->worldlights[i].radius < 1)
 		{
@@ -1193,7 +1193,7 @@ void Mod_LoadWorldlights( CMapLoadHelper &lh, bool bIsHDR )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Mod_LoadVertices( void )
 {
@@ -1223,9 +1223,9 @@ void Mod_LoadVertices( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mins - 
-//			maxs - 
+// Purpose:
+// Input  : mins -
+//			maxs -
 // Output : float
 //-----------------------------------------------------------------------------
 static float RadiusFromBounds (Vector& mins, Vector& maxs)
@@ -1242,7 +1242,7 @@ static float RadiusFromBounds (Vector& mins, Vector& maxs)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Mod_LoadSubmodels( CUtlVector<mmodel_t> &submodelList )
 {
@@ -1276,7 +1276,7 @@ void Mod_LoadSubmodels( CUtlVector<mmodel_t> &submodelList )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : medge_t *Mod_LoadEdges
 //-----------------------------------------------------------------------------
 medge_t *Mod_LoadEdges ( void )
@@ -1307,7 +1307,7 @@ medge_t *Mod_LoadEdges ( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Mod_LoadOcclusion( void )
 {
@@ -1404,12 +1404,12 @@ void Mod_LoadOcclusion( void )
 
 
 
-// UNDONE: Really, it's stored 2 times because the texture system keeps a 
+// UNDONE: Really, it's stored 2 times because the texture system keeps a
 // copy of the name too.  I guess we'll get rid of this when we have a material
 // system that works without a graphics context.  At that point, everyone can
 // reference the name in the material, or just the material itself.
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Mod_LoadTexdata( void )
 {
@@ -1421,7 +1421,7 @@ void Mod_LoadTexdata( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Mod_LoadTexinfo( void )
 {
@@ -1477,7 +1477,7 @@ void Mod_LoadTexinfo( void )
 				out->material = g_materialEmpty;
 				g_materialEmpty->IncrementReferenceCount();
 			}
- 		}
+		}
 		else
 		{
 			out->material = g_materialEmpty;
@@ -1565,9 +1565,9 @@ static void CheckSurfaceLighting( SurfaceHandle_t surfID, worldbrushdata_t *pBru
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *loadmodel - 
-//			*s - 
+// Purpose:
+// Input  : *loadmodel -
+//			*s -
 // Output : void CalcSurfaceExtents
 //-----------------------------------------------------------------------------
 static void CalcSurfaceExtents ( CMapLoadHelper& lh, SurfaceHandle_t surfID )
@@ -1583,18 +1583,18 @@ static void CalcSurfaceExtents ( CMapLoadHelper& lh, SurfaceHandle_t surfID )
 
 	worldbrushdata_t *pBrushData = lh.GetMap();
 	tex = MSurf_TexInfo( surfID, pBrushData );
-	
+
 	for (i=0 ; i<MSurf_VertCount( surfID ); i++)
 	{
 		e = pBrushData->vertindices[MSurf_FirstVertIndex( surfID )+i];
 		v = &pBrushData->vertexes[e];
-		
+
 		for (j=0 ; j<2 ; j++)
 		{
-			val = v->position[0] * tex->textureVecsTexelsPerWorldUnits[j][0] + 
-				  v->position[1] * tex->textureVecsTexelsPerWorldUnits[j][1] +
-				  v->position[2] * tex->textureVecsTexelsPerWorldUnits[j][2] +
-				  tex->textureVecsTexelsPerWorldUnits[j][3];
+			val = v->position[0] * tex->textureVecsTexelsPerWorldUnits[j][0] +
+				v->position[1] * tex->textureVecsTexelsPerWorldUnits[j][1] +
+				v->position[2] * tex->textureVecsTexelsPerWorldUnits[j][2] +
+				tex->textureVecsTexelsPerWorldUnits[j][3];
 			if (val < textureMins[j])
 				textureMins[j] = val;
 			if (val > textureMaxs[j])
@@ -1603,7 +1603,7 @@ static void CalcSurfaceExtents ( CMapLoadHelper& lh, SurfaceHandle_t surfID )
 	}
 
 	for (i=0 ; i<2 ; i++)
-	{	
+	{
 		if( MSurf_LightmapExtents( surfID, pBrushData )[i] == 0 && !MSurf_Samples( surfID, pBrushData ) )
 		{
 			MSurf_Flags( surfID ) |= SURFDRAW_NOLIGHT;
@@ -1623,46 +1623,46 @@ static void CalcSurfaceExtents ( CMapLoadHelper& lh, SurfaceHandle_t surfID )
 }
 
 //-----------------------------------------------------------------------------
-// Input  : *pModel - 
-//			*pLump - 
-//			*loadname - 
+// Input  : *pModel -
+//			*pLump -
+//			*loadname -
 //-----------------------------------------------------------------------------
 void Mod_LoadVertNormals( void )
 {
 	CMapLoadHelper lh( LUMP_VERTNORMALS );
 
-    // get a pointer to the vertex normal data.
+	// get a pointer to the vertex normal data.
 	Vector *pVertNormals = ( Vector * )lh.LumpBase();
 
-    //
-    // verify vertnormals data size
-    //
-    if( lh.LumpSize() % sizeof( *pVertNormals ) )
-        Host_Error( "Mod_LoadVertNormals: funny lump size in %s!\n", lh.GetMapName() );
+	//
+	// verify vertnormals data size
+	//
+	if( lh.LumpSize() % sizeof( *pVertNormals ) )
+		Host_Error( "Mod_LoadVertNormals: funny lump size in %s!\n", lh.GetMapName() );
 
 	int count = lh.LumpSize() / sizeof(*pVertNormals);
 	Vector *out = (Vector *)Hunk_AllocName( lh.LumpSize(), va( "%s [%s]", lh.GetLoadName(), "vertnormals" ) );
 	memcpy( out, pVertNormals, lh.LumpSize() );
-	
+
 	lh.GetMap()->vertnormals = out;
 	lh.GetMap()->numvertnormals = count;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Mod_LoadVertNormalIndices( void )
 {
 	CMapLoadHelper lh( LUMP_VERTNORMALINDICES );
 
-    // get a pointer to the vertex normal data.
+	// get a pointer to the vertex normal data.
 	unsigned short *pIndices = ( unsigned short * )lh.LumpBase();
 
 	int count = lh.LumpSize() / sizeof(*pIndices);
 	unsigned short *out = (unsigned short *)Hunk_AllocName( lh.LumpSize(), va( "%s [%s]", lh.GetLoadName(), "vertnormalindices" ) );
 	memcpy( out, pIndices, lh.LumpSize() );
-	
+
 	lh.GetMap()->vertnormalindices = out;
 	lh.GetMap()->numvertnormalindices = count;
 
@@ -1677,10 +1677,10 @@ void Mod_LoadVertNormalIndices( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *loadmodel - 
-//			*l - 
-//			*loadname - 
+// Purpose:
+// Input  : *loadmodel -
+//			*l -
+//			*loadname -
 //-----------------------------------------------------------------------------
 void Mod_LoadPrimitives( void )
 {
@@ -1710,10 +1710,10 @@ void Mod_LoadPrimitives( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *loadmodel - 
-//			*l - 
-//			*loadname - 
+// Purpose:
+// Input  : *loadmodel -
+//			*l -
+//			*loadname -
 //-----------------------------------------------------------------------------
 void Mod_LoadPrimVerts( void )
 {
@@ -1739,10 +1739,10 @@ void Mod_LoadPrimVerts( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *loadmodel - 
-//			*l - 
-//			*loadname - 
+// Purpose:
+// Input  : *loadmodel -
+//			*l -
+//			*loadname -
 //-----------------------------------------------------------------------------
 void Mod_LoadPrimIndices( void )
 {
@@ -1767,12 +1767,12 @@ void Mod_LoadPrimIndices( void )
 
 
 // This allocates memory for a lump and copies the lump data in.
-void Mod_LoadLump( 
-	model_t *loadmodel, 
+void Mod_LoadLump(
+	model_t *loadmodel,
 	int iLump,
-	char *loadname, 
+	char *loadname,
 	int elementSize,
-	void **ppData, 
+	void **ppData,
 	int *nElements )
 {
 	CMapLoadHelper lh( iLump );
@@ -1837,16 +1837,16 @@ void *Hunk_AllocNameAlignedClear_( int size, int alignment, const char *pHunkNam
 }
 
 // Allocates a block of T from the hunk.  Aligns as specified and clears the memory
-template< typename T > 
+template< typename T >
 T *Hunk_AllocNameAlignedClear( int count, int alignment, const char *pHunkName )
 {
 	return (T *)Hunk_AllocNameAlignedClear_( alignment + count * sizeof(T), alignment, pHunkName );
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *loadmodel - 
-//			*l - 
-//			*loadname - 
+// Purpose:
+// Input  : *loadmodel -
+//			*l -
+//			*loadname -
 //-----------------------------------------------------------------------------
 void Mod_LoadFaces( void )
 {
@@ -1862,7 +1862,7 @@ void Mod_LoadFaces( void )
 		face_lump_to_load = LUMP_FACES_HDR;
 	}
 	CMapLoadHelper lh( face_lump_to_load );
-	
+
 	in = (dface_t *)lh.LumpBase();
 	if (lh.LumpSize() % sizeof(*in))
 		Host_Error ("Mod_LoadFaces: funny lump size in %s",lh.GetMapName());
@@ -1891,14 +1891,14 @@ void Mod_LoadFaces( void )
 	{
 		SurfaceHandle_t surfID = SurfaceHandleFromIndex( surfnum, pBrushData );
 		MSurf_FirstVertIndex( surfID )  = in->firstedge;
-		
+
 		int vertCount = in->numedges;
 		MSurf_Flags( surfID ) = 0;
 		Assert( vertCount <= 255 );
 		MSurf_SetVertCount( surfID, vertCount );
 
 		planenum = in->planenum;
-		
+
 		if ( in->onNode )
 		{
 			MSurf_Flags( surfID ) |= SURFDRAW_NODE;
@@ -1937,7 +1937,7 @@ void Mod_LoadFaces( void )
 		{
 			MSurf_Flags( surfID ) |= SURFDRAW_NOLIGHT;
 		}
-		
+
 		if ( pTex->flags & SURF_NOSHADOWS )
 		{
 			MSurf_Flags( surfID ) |= SURFDRAW_NOSHADOWS;
@@ -1953,13 +1953,13 @@ void Mod_LoadFaces( void )
 			MSurf_Flags( surfID ) |= SURFDRAW_SKY;
 		}
 
-        di = in->dispinfo;
+		di = in->dispinfo;
 		out2->pDispInfo = NULL;
-        if( di != -1 )
-        {
+		if( di != -1 )
+		{
 //			out->origSurfaceID = in->origFace;
 			MSurf_Flags( surfID ) |= SURFDRAW_HAS_DISP;
-        }
+		}
 		else
 		{
 			// non-displacement faces shouldn't come out of VBSP if they have nodraw.
@@ -1977,7 +1977,7 @@ void Mod_LoadFaces( void )
 				}
 			}
 		}
-		
+
 		// No shadows on the surface to start with
 		out2->m_ShadowDecals = SHADOW_DECAL_HANDLE_INVALID;
 		out2->decals = WORLD_DECAL_HANDLE_INVALID;
@@ -1990,9 +1990,9 @@ void Mod_LoadFaces( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *node - 
-//			*parent - 
+// Purpose:
+// Input  : *node -
+//			*parent -
 // Output : void Mod_SetParent
 //-----------------------------------------------------------------------------
 void Mod_SetParent (mnode_t *node, mnode_t *parent)
@@ -2035,10 +2035,10 @@ static void CheckSmallVolumeDifferences( mnode_t *pNode, const Vector &parentSiz
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *loadmodel - 
-//			*l - 
-//			*loadname - 
+// Purpose:
+// Input  : *loadmodel -
+//			*l -
+//			*loadname -
 //-----------------------------------------------------------------------------
 void Mod_LoadNodes( void )
 {
@@ -2065,7 +2065,7 @@ void Mod_LoadNodes( void )
 			mins[j] = in->mins[j];
 			maxs[j] = in->maxs[j];
 		}
-	
+
 		VectorAdd( mins, maxs, out->m_vecCenter );
 		out->m_vecCenter *= 0.5f;
 		VectorSubtract( maxs, out->m_vecCenter, out->m_vecHalfDiagonal );
@@ -2087,7 +2087,7 @@ void Mod_LoadNodes( void )
 				out->children[j] = (mnode_t *)(lh.GetMap()->leafs + (-1 - p));
 		}
 	}
-	
+
 	Mod_SetParent (lh.GetMap()->nodes, NULL);	// sets nodes and leafs
 
 	// Check for small-area parents... no culling below them...
@@ -2096,7 +2096,7 @@ void Mod_LoadNodes( void )
 	{
 		if (pNode->contents == -1)
 		{
-			if ((pNode->m_vecHalfDiagonal.x <= 50) && (pNode->m_vecHalfDiagonal.y <= 50) && 
+			if ((pNode->m_vecHalfDiagonal.x <= 50) && (pNode->m_vecHalfDiagonal.y <= 50) &&
 				(pNode->m_vecHalfDiagonal.z <= 50))
 			{
 				// Mark all children as being too small to bother with...
@@ -2113,10 +2113,10 @@ void Mod_LoadNodes( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *loadmodel - 
-//			*l - 
-//			*loadname - 
+// Purpose:
+// Input  : *loadmodel -
+//			*l -
+//			*loadname -
 //-----------------------------------------------------------------------------
 void Mod_LoadLeafs_Version_0( CMapLoadHelper &lh )
 {
@@ -2171,18 +2171,18 @@ void Mod_LoadLeafs_Version_0( CMapLoadHelper &lh )
 		out->firstmarksurface = in->firstleafface;
 		out->nummarksurfaces = in->numleaffaces;
 		out->parent = NULL;
-		
+
 		out->dispCount = 0;
 
 		out->leafWaterDataID = in->leafWaterDataID;
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *loadmodel - 
-//			*l - 
-//			*loadname - 
+// Purpose:
+// Input  : *loadmodel -
+//			*l -
+//			*loadname -
 //-----------------------------------------------------------------------------
 void Mod_LoadLeafs_Version_1( CMapLoadHelper &lh, CMapLoadHelper &ambientLightingLump, CMapLoadHelper &ambientLightingTable )
 {
@@ -2272,11 +2272,11 @@ void Mod_LoadLeafs_Version_1( CMapLoadHelper &lh, CMapLoadHelper &ambientLightin
 		out->firstmarksurface = in->firstleafface;
 		out->nummarksurfaces = in->numleaffaces;
 		out->parent = NULL;
-		
+
 		out->dispCount = 0;
 
 		out->leafWaterDataID = in->leafWaterDataID;
-	}	
+	}
 }
 
 void Mod_LoadLeafs( void )
@@ -2290,7 +2290,7 @@ void Mod_LoadLeafs( void )
 		break;
 	case 1:
 		if( g_pMaterialSystemHardwareConfig->GetHDRType() != HDR_TYPE_NONE &&
-	  		  CMapLoadHelper::LumpSize( LUMP_LEAF_AMBIENT_LIGHTING_HDR ) > 0 )
+				CMapLoadHelper::LumpSize( LUMP_LEAF_AMBIENT_LIGHTING_HDR ) > 0 )
 		{
 			CMapLoadHelper mlh( LUMP_LEAF_AMBIENT_LIGHTING_HDR );
 			CMapLoadHelper mlhTable( LUMP_LEAF_AMBIENT_INDEX_HDR );
@@ -2300,7 +2300,7 @@ void Mod_LoadLeafs( void )
 		{
 			CMapLoadHelper mlh( LUMP_LEAF_AMBIENT_LIGHTING );
 			CMapLoadHelper mlhTable( LUMP_LEAF_AMBIENT_INDEX );
-			Mod_LoadLeafs_Version_1( lh, mlh, mlhTable ); 
+			Mod_LoadLeafs_Version_1( lh, mlh, mlhTable );
 		}
 		break;
 	default:
@@ -2322,7 +2322,7 @@ void Mod_LoadLeafs( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Mod_LoadLeafWaterData( void )
 {
@@ -2362,7 +2362,7 @@ void Mod_LoadLeafWaterData( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Mod_LoadCubemapSamples( void )
 {
@@ -2400,7 +2400,7 @@ void Mod_LoadCubemapSamples( void )
 	{
 		out->origin.Init( ( float )in->origin[0], ( float )in->origin[1], ( float )in->origin[2] );
 		out->size = in->size;
-		Q_snprintf( textureName, sizeof( textureName ), "maps/%s/c%d_%d_%d%s", loadName, ( int )in->origin[0], 
+		Q_snprintf( textureName, sizeof( textureName ), "maps/%s/c%d_%d_%d%s", loadName, ( int )in->origin[0],
 			( int )in->origin[1], ( int )in->origin[2], pHDRExtension );
 		out->pTexture = materials->FindTexture( textureName, TEXTURE_GROUP_CUBE_MAP, true, nCreateFlags );
 		if ( IsErrorTexture( out->pTexture ) )
@@ -2409,7 +2409,7 @@ void Mod_LoadCubemapSamples( void )
 			{
 				Warning( "Couldn't get HDR '%s' -- ", textureName );
 				// try non hdr version
-				Q_snprintf( textureName, sizeof( textureName ), "maps/%s/c%d_%d_%d", loadName, ( int )in->origin[0], 
+				Q_snprintf( textureName, sizeof( textureName ), "maps/%s/c%d_%d_%d", loadName, ( int )in->origin[0],
 							( int )in->origin[1], ( int )in->origin[2]);
 				Warning( "Trying non HDR '%s'\n", textureName);
 				out->pTexture = materials->FindTexture( textureName, TEXTURE_GROUP_CUBE_MAP, true );
@@ -2454,7 +2454,7 @@ void Mod_LoadCubemapSamples( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Mod_LoadLeafMinDistToWater( void )
 {
@@ -2472,7 +2472,7 @@ void Mod_LoadLeafMinDistToWater( void )
 			break;
 		}
 	}
-	
+
 	if( !foundOne || lh.LumpSize() == 0 || !g_pMaterialSystemHardwareConfig || !g_pMaterialSystemHardwareConfig->SupportsVertexAndPixelShaders())
 	{
 		// We don't bother keeping this if:
@@ -2499,15 +2499,15 @@ void Mod_LoadLeafMinDistToWater( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Mod_LoadMarksurfaces( void )
-{	
+{
 	int		i, j, count;
 	unsigned short	*in;
 
 	CMapLoadHelper lh( LUMP_LEAFFACES );
-	
+
 	in = (unsigned short *)lh.LumpBase();
 	if (lh.LumpSize() % sizeof(*in))
 		Host_Error ("Mod_LoadMarksurfaces: funny lump size in %s",lh.GetMapName());
@@ -2574,7 +2574,7 @@ void Mod_LoadMarksurfaces( void )
 	// write out the compacted array
 	pBrushData->marksurfaces = surfList;
 	pBrushData->nummarksurfaces = realCount;
-	
+
 	// remove the temp copy of the disk data
 	delete[] tempDiskData;
 
@@ -2582,18 +2582,18 @@ void Mod_LoadMarksurfaces( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pedges - 
-//			*loadmodel - 
-//			*l - 
-//			*loadname - 
+// Purpose:
+// Input  : *pedges -
+//			*loadmodel -
+//			*l -
+//			*loadname -
 //-----------------------------------------------------------------------------
 void Mod_LoadSurfedges( medge_t *pedges )
-{	
+{
 	int		i, count;
 	int		*in;
 	unsigned short *out;
-	
+
 	CMapLoadHelper lh( LUMP_SURFEDGES );
 
 	in = (int *)lh.LumpBase();
@@ -2624,10 +2624,10 @@ void Mod_LoadSurfedges( medge_t *pedges )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *loadmodel - 
-//			*l - 
-//			*loadname - 
+// Purpose:
+// Input  : *loadmodel -
+//			*l -
+//			*loadname -
 //-----------------------------------------------------------------------------
 void Mod_LoadPlanes( void )
 {
@@ -2806,8 +2806,8 @@ void Mod_LoadGameLumpDict( void )
 		// Ensure (lumpsize * numlumps + headersize) doesn't overflow
 		const int nMaxGameLumps = ( INT_MAX - sizeof( dgamelumpheader_t ) ) / sizeof( dgamelump_t );
 		if ( pGameLumpHeader->lumpCount < 0 ||
-		     pGameLumpHeader->lumpCount > nMaxGameLumps ||
-		     sizeof( dgamelumpheader_t ) + sizeof( dgamelump_t ) * pGameLumpHeader->lumpCount > lhSize )
+			pGameLumpHeader->lumpCount > nMaxGameLumps ||
+			sizeof( dgamelumpheader_t ) + sizeof( dgamelump_t ) * pGameLumpHeader->lumpCount > lhSize )
 		{
 			Warning( "Bogus gamelump header in map, rejecting\n" );
 		}
@@ -2818,15 +2818,15 @@ void Mod_LoadGameLumpDict( void )
 			for (int i = 0; i < pGameLumpHeader->lumpCount; ++i )
 			{
 				if ( pGameLump[i].fileofs >= 0 &&
-				     (unsigned int)pGameLump[i].fileofs >= (unsigned int)lh.LumpOffset() &&
-				     (unsigned int)pGameLump[i].fileofs < (unsigned int)lh.LumpOffset() + lhSize &&
-				     pGameLump[i].filelen > 0 )
+					(unsigned int)pGameLump[i].fileofs >= (unsigned int)lh.LumpOffset() &&
+					(unsigned int)pGameLump[i].fileofs < (unsigned int)lh.LumpOffset() + lhSize &&
+					pGameLump[i].filelen > 0 )
 				{
 					unsigned int compressedSize = 0;
 					if ( i + 1 < pGameLumpHeader->lumpCount &&
-					     pGameLump[i+1].fileofs > pGameLump[i].fileofs &&
-					     pGameLump[i+1].fileofs >= 0 &&
-					     (unsigned int)pGameLump[i+1].fileofs <= (unsigned int)lh.LumpOffset() + lhSize )
+						pGameLump[i+1].fileofs > pGameLump[i].fileofs &&
+						pGameLump[i+1].fileofs >= 0 &&
+						(unsigned int)pGameLump[i+1].fileofs <= (unsigned int)lh.LumpOffset() + lhSize )
 					{
 						compressedSize = (unsigned int)pGameLump[i+1].fileofs - (unsigned int)pGameLump[i].fileofs;
 					}
@@ -2883,7 +2883,7 @@ void Mod_TouchAllData( model_t *pModel, int nServerCount )
 }
 
 //-----------------------------------------------------------------------------
-// Callbacks to get called when various data is loaded or unloaded 
+// Callbacks to get called when various data is loaded or unloaded
 //-----------------------------------------------------------------------------
 class CMDLCacheNotify : public IMDLCacheNotify
 {
@@ -2894,7 +2894,7 @@ public:
 private:
 	void ComputeModelFlags( model_t* mod, MDLHandle_t handle );
 
-	// Sets the bounds from the studiohdr 
+	// Sets the bounds from the studiohdr
 	void SetBoundsFromStudioHdr( model_t *pModel, MDLHandle_t handle );
 };
 static CMDLCacheNotify s_MDLCacheNotify;
@@ -2907,7 +2907,7 @@ void CMDLCacheNotify::ComputeModelFlags( model_t* pModel, MDLHandle_t handle )
 	studiohdr_t *pStudioHdr = g_pMDLCache->GetStudioHdr( handle );
 
 	// Clear out those flags we set...
-	pModel->flags &= ~(MODELFLAG_TRANSLUCENT_TWOPASS | MODELFLAG_VERTEXLIT | 
+	pModel->flags &= ~(MODELFLAG_TRANSLUCENT_TWOPASS | MODELFLAG_VERTEXLIT |
 		MODELFLAG_TRANSLUCENT | MODELFLAG_MATERIALPROXY | MODELFLAG_FRAMEBUFFER_TEXTURE |
 		MODELFLAG_STUDIOHDR_USES_FB_TEXTURE | MODELFLAG_STUDIOHDR_USES_BUMPMAPPING | MODELFLAG_STUDIOHDR_USES_ENV_CUBEMAP );
 
@@ -2971,7 +2971,7 @@ void CMDLCacheNotify::ComputeModelFlags( model_t* pModel, MDLHandle_t handle )
 }
 
 //-----------------------------------------------------------------------------
-// Sets the bounds from the studiohdr 
+// Sets the bounds from the studiohdr
 //-----------------------------------------------------------------------------
 void CMDLCacheNotify::SetBoundsFromStudioHdr( model_t *pModel, MDLHandle_t handle )
 {
@@ -2994,7 +2994,7 @@ void CMDLCacheNotify::SetBoundsFromStudioHdr( model_t *pModel, MDLHandle_t handl
 }
 
 //-----------------------------------------------------------------------------
-// Callbacks to get called when various data is loaded or unloaded 
+// Callbacks to get called when various data is loaded or unloaded
 //-----------------------------------------------------------------------------
 void CMDLCacheNotify::OnDataLoaded( MDLCacheDataType_t type, MDLHandle_t handle )
 {
@@ -3041,7 +3041,7 @@ void CMDLCacheNotify::OnDataUnloaded( MDLCacheDataType_t type, MDLHandle_t handl
 }
 
 //-----------------------------------------------------------------------------
-// Hooks the cache notify into the MDL cache system 
+// Hooks the cache notify into the MDL cache system
 //-----------------------------------------------------------------------------
 void ConnectMDLCacheNotify( )
 {
@@ -3141,8 +3141,8 @@ class CResourcePreloadModel : public CResourcePreload
 			MEM_ALLOC_CREDIT_( "CResourcePreloadModel(MDL)" );
 
 			char szFilename[MAX_PATH];
-			V_ComposeFileName( "models", pName, szFilename, sizeof( szFilename ) );			
-	
+			V_ComposeFileName( "models", pName, szFilename, sizeof( szFilename ) );
+
 			// find model or create empty entry
 			model_t *pModel = g_ModelLoader.FindModel( szFilename );
 
@@ -3154,7 +3154,7 @@ class CResourcePreloadModel : public CResourcePreload
 				// already loaded or preloaded
 				return true;
 			}
-			
+
 			// the model in not supposed to be in memory
 			Assert( pModel->type == mod_bad );
 
@@ -3177,7 +3177,7 @@ class CResourcePreloadModel : public CResourcePreload
 
 			// get it into the cache
 			g_pMDLCache->PreloadModel( pModel->studio );
-			
+
 			return true;
 		}
 
@@ -3311,7 +3311,7 @@ static CResourcePreloadModel s_ResourcePreloadModel;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelLoader::Init( void )
 {
@@ -3322,7 +3322,7 @@ void CModelLoader::Init( void )
 	m_bMapRenderInfoLoaded = false;
 	m_bMapHasHDRLighting = false;
 	g_bLoadedMapHasBakedPropLighting = false;
-	
+
 	// Make sure we have physcollision and physprop interfaces
 	CollisionBSPData_LinkPhysics();
 
@@ -3332,7 +3332,7 @@ void CModelLoader::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelLoader::Shutdown( void )
 {
@@ -3365,7 +3365,7 @@ model_t *CModelLoader::GetModelForIndex( int i )
 
 //-----------------------------------------------------------------------------
 // Purpose: Look up name for model
-// Input  : *model - 
+// Input  : *model -
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CModelLoader::GetName( const model_t *pModel )
@@ -3379,8 +3379,8 @@ const char *CModelLoader::GetName( const model_t *pModel )
 
 //-----------------------------------------------------------------------------
 // Purpose: Finds the model, builds entry if not present, always returns a model
-// Input  : *name - 
-//			referencetype - 
+// Input  : *name -
+//			referencetype -
 // Output : model_t
 //-----------------------------------------------------------------------------
 model_t *CModelLoader::FindModel( const char *pName )
@@ -3425,7 +3425,7 @@ model_t *CModelLoader::FindModel( const char *pName )
 		pModel->nLoadFlags = FMODELLOADER_NOTLOADEDORREFERENCED;
 
 		// Copy in name and normalize!
-		// Various other subsystems fetch this 'object' name to do dictionary lookups, 
+		// Various other subsystems fetch this 'object' name to do dictionary lookups,
 		// which are usually case insensitive, but not to slashes or dotslashes.
 		pModel->strName = pName;
 		V_RemoveDotSlashes( pModel->strName.GetForModify(), '/' );
@@ -3439,7 +3439,7 @@ model_t *CModelLoader::FindModel( const char *pName )
 		pModel = m_Models[i].modelpointer;
 	}
 
-	// notify the reslist generator that this model may be referenced later in the level 
+	// notify the reslist generator that this model may be referenced later in the level
 	// (does nothing if reslist generation is not enabled)
 	MapReslistGenerator().OnModelPrecached( pName );
 
@@ -3450,8 +3450,8 @@ model_t *CModelLoader::FindModel( const char *pName )
 
 //-----------------------------------------------------------------------------
 // Purpose: Finds the model, and loads it if it isn't already present.  Updates reference flags
-// Input  : *name - 
-//			referencetype - 
+// Input  : *name -
+//			referencetype -
 // Output : model_t
 //-----------------------------------------------------------------------------
 model_t *CModelLoader::GetModelForName( const char *name, REFERENCETYPE referencetype )
@@ -3470,8 +3470,8 @@ model_t *CModelLoader::GetModelForName( const char *name, REFERENCETYPE referenc
 
 //-----------------------------------------------------------------------------
 // Purpose: Add a reference to the model in question
-// Input  : *name - 
-//			referencetype - 
+// Input  : *name -
+//			referencetype -
 //-----------------------------------------------------------------------------
 model_t *CModelLoader::ReferenceModel( const char *name, REFERENCETYPE referencetype )
 {
@@ -3485,9 +3485,9 @@ model_t *CModelLoader::ReferenceModel( const char *name, REFERENCETYPE reference
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *entry - 
-//			referencetype - 
+// Purpose:
+// Input  : *entry -
+//			referencetype -
 //-----------------------------------------------------------------------------
 model_t	*CModelLoader::LoadModel( model_t *mod, REFERENCETYPE *pReferencetype )
 {
@@ -3529,7 +3529,7 @@ model_t	*CModelLoader::LoadModel( model_t *mod, REFERENCETYPE *pReferencetype )
 	}
 
 	// Check if brushes or sprites are loaded
-	if ( FMODELLOADER_LOADED & mod->nLoadFlags ) 
+	if ( FMODELLOADER_LOADED & mod->nLoadFlags )
 	{
 		return mod;
 	}
@@ -3580,7 +3580,7 @@ model_t	*CModelLoader::LoadModel( model_t *mod, REFERENCETYPE *pReferencetype )
 	case mod_brush:
 		{
 			double t1 = Plat_FloatTime();
-			
+
 			// This is necessary on dedicated clients. On listen + dedicated servers, it's called twice.
 			// The second invocation is harmless.
 			// Add to file system before loading so referenced objects in map can use the filename.
@@ -3627,7 +3627,7 @@ model_t	*CModelLoader::LoadModel( model_t *mod, REFERENCETYPE *pReferencetype )
 			g_pFileSystem->BeginMapAccess();
 			Map_LoadModel( mod );
 			g_pFileSystem->EndMapAccess();
-	
+
 			double t2 = Plat_FloatTime();
 			g_flAccumulatedModelLoadTimeBrush += (t2 - t1);
 		}
@@ -3654,7 +3654,7 @@ static void BuildSpriteLoadName( const char *pName, char *pOut, int outLen, bool
 	// If it's a .vmt and they put a path in there, then use the path.
 	// Otherwise, use the old method of prepending the sprites directory.
 	Assert( pName != NULL && pOut != NULL );
-	
+
 	bIsVideo = false;
 	bool bIsVMT = false;
 	const char *pExt = V_GetFileExtension( pName );
@@ -3669,7 +3669,7 @@ static void BuildSpriteLoadName( const char *pName, char *pOut, int outLen, bool
 			}
 		}
 	}
-	
+
 	if ( ( bIsVideo || bIsVMT ) && ( strchr( pName, '/' ) || strchr( pName, '\\' )  ) )
 	{
 		// The material system cannot handle a prepended "materials" dir
@@ -3697,14 +3697,14 @@ static void BuildSpriteLoadName( const char *pName, char *pOut, int outLen, bool
 		Q_FileBase( pName, szBase, sizeof( szBase ) );
 		Q_snprintf( pOut, outLen, "sprites/%s", szBase );
 	}
-	
+
 	return;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : int
 //-----------------------------------------------------------------------------
 int CModelLoader::GetModelFileSize( char const *name )
@@ -3733,8 +3733,8 @@ int CModelLoader::GetModelFileSize( char const *name )
 
 //-----------------------------------------------------------------------------
 // Purpose: Unmasks the referencetype field for the model
-// Input  : *model - 
-//			referencetype - 
+// Input  : *model -
+//			referencetype -
 //-----------------------------------------------------------------------------
 void CModelLoader::UnreferenceModel( model_t *model, REFERENCETYPE referencetype )
 {
@@ -3744,7 +3744,7 @@ void CModelLoader::UnreferenceModel( model_t *model, REFERENCETYPE referencetype
 
 //-----------------------------------------------------------------------------
 // Purpose: Unmasks the specified reference type across all models
-// Input  : referencetype - 
+// Input  : referencetype -
 //-----------------------------------------------------------------------------
 void CModelLoader::UnreferenceAllModels( REFERENCETYPE referencetype )
 {
@@ -3779,16 +3779,16 @@ void CModelLoader::ReloadFilesInList( IFileList *pFilesToReload )
 	FOR_EACH_MAP_FAST( m_Models, i )
 	{
 		model_t	*pModel = m_Models[i].modelpointer;
-		
+
 		if ( pModel->type != mod_studio )
 			continue;
-		
+
 		if ( !IsLoaded( pModel ) )
 			continue;
-		
+
 		if ( pModel->type != mod_studio )
 			continue;
-		
+
 		if ( pFilesToReload->IsFileInList( pModel->strName ) )
 		{
 			#ifdef PURE_SERVER_DEBUG_SPEW
@@ -3875,7 +3875,7 @@ void CModelLoader::UnloadAllModels( bool bCheckReference )
 		}
 
 		if ( model->nLoadFlags & ( FMODELLOADER_LOADED | FMODELLOADER_LOADED_BY_PRELOAD ) )
-		{		
+		{
 			UnloadModel( model );
 		}
 	}
@@ -4110,7 +4110,7 @@ int Mod_GetMaterialCount( model_t* mod )
 int Mod_GetModelMaterials( model_t* pModel, int count, IMaterial** ppMaterials )
 {
 	studiohdr_t *pStudioHdr;
-	int found = 0; 
+	int found = 0;
 	int	i;
 
 	switch( pModel->type )
@@ -4263,7 +4263,7 @@ static int SurfFlagsToSortGroup( SurfaceHandle_t surfID, int flags )
 
 	if( ( flags & ( SURFDRAW_UNDERWATER | SURFDRAW_ABOVEWATER ) ) == ( SURFDRAW_UNDERWATER | SURFDRAW_ABOVEWATER ) )
 		return MAT_SORT_GROUP_INTERSECTS_WATER_SURFACE;
-	
+
 	if( flags & SURFDRAW_UNDERWATER )
 		return MAT_SORT_GROUP_STRICTLY_UNDERWATER;
 
@@ -4275,9 +4275,9 @@ static int SurfFlagsToSortGroup( SurfaceHandle_t surfID, int flags )
 	{
 		Vector vecCenter;
 		Surf_ComputeCentroid( surfID, &vecCenter );
-		DevWarning( "SurfFlagsToSortGroup:  unhandled flags (%X) (%s)!\n", flags, MSurf_TexInfo(surfID)->material->GetName() );	
-		DevWarning( "- This implies you have a surface (usually a displacement) embedded in solid.\n" );	
-		DevWarning( "- Look near (%.1f, %.1f, %.1f)\n", vecCenter.x, vecCenter.y, vecCenter.z );	
+		DevWarning( "SurfFlagsToSortGroup:  unhandled flags (%X) (%s)!\n", flags, MSurf_TexInfo(surfID)->material->GetName() );
+		DevWarning( "- This implies you have a surface (usually a displacement) embedded in solid.\n" );
+		DevWarning( "- Look near (%.1f, %.1f, %.1f)\n", vecCenter.x, vecCenter.y, vecCenter.z );
 	}
 	//Assert( 0 );
 	return MAT_SORT_GROUP_STRICTLY_ABOVEWATER;
@@ -4294,13 +4294,13 @@ bool Mod_MarkWaterSurfaces( model_t *pModel )
 	model_t *pSaveModel = host_state.worldmodel;
 
 	// garymcthack!!!!!!!!
-	// host_state.worldmodel isn't set at this point, so. . . . 
+	// host_state.worldmodel isn't set at this point, so. . . .
 	host_state.SetWorldModel( pModel );
 	MarkWaterSurfaces_r( pModel->brush.pShared->nodes );
 	for ( int i = 0; i < pModel->brush.pShared->numsurfaces; i++ )
 	{
 		SurfaceHandle_t surfID = SurfaceHandleFromIndex( i, pModel->brush.pShared );
-		
+
 		int sortGroup = SurfFlagsToSortGroup( surfID, MSurf_Flags( surfID ) );
 		if ( sortGroup == MAT_SORT_GROUP_WATERSURFACE )
 		{
@@ -4342,7 +4342,7 @@ public:
 		int surfaceCount = m_pBrush->brush.nummodelsurfaces;
 		for (int i = 0; i < surfaceCount; ++i)
 		{
-			SurfaceHandle_t surfID = SurfaceHandleFromIndex( m_pBrush->brush.firstmodelsurface + i, m_pShared ); 
+			SurfaceHandle_t surfID = SurfaceHandleFromIndex( m_pBrush->brush.firstmodelsurface + i, m_pShared );
 			MSurf_Flags( surfID ) &= ~(SURFDRAW_ABOVEWATER | SURFDRAW_UNDERWATER);
 			MSurf_Flags( surfID ) |= flags;
 		}
@@ -4381,9 +4381,9 @@ static void MarkBrushModelWaterSurfaces( model_t* world,
 
 int g_nMapLoadCount = 0;
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *mod - 
-//			*buffer - 
+// Purpose:
+// Input  : *mod -
+//			*buffer -
 //-----------------------------------------------------------------------------
 void CModelLoader::Map_LoadModel( model_t *mod )
 {
@@ -4427,7 +4427,7 @@ void CModelLoader::Map_LoadModel( model_t *mod )
 
 	COM_TimestampedLog( "  Mod_LoadVertices" );
 	Mod_LoadVertices();
-	
+
 	COM_TimestampedLog( "  Mod_LoadEdges" );
 	medge_t *pedges = Mod_LoadEdges();
 
@@ -4497,7 +4497,7 @@ void CModelLoader::Map_LoadModel( model_t *mod )
 	Mod_LoadLeafs();
 
 	COM_TimestampedLog( "  Mod_LoadMarksurfaces" );
-    Mod_LoadMarksurfaces();
+	Mod_LoadMarksurfaces();
 
 	COM_TimestampedLog( "  Mod_LoadNodes" );
 	Mod_LoadNodes();
@@ -4511,7 +4511,7 @@ void CModelLoader::Map_LoadModel( model_t *mod )
 #ifndef SWDS
 	// UNDONE: Does the cmodel need worldlights?
 	COM_TimestampedLog( "  OverlayMgr()->LoadOverlays" );
-	OverlayMgr()->LoadOverlays();	
+	OverlayMgr()->LoadOverlays();
 #endif
 
 	COM_TimestampedLog( "  Mod_LoadLeafMinDistToWater" );
@@ -4522,32 +4522,32 @@ void CModelLoader::Map_LoadModel( model_t *mod )
 #endif
 
 	COM_TimestampedLog( "  LUMP_CLIPPORTALVERTS" );
-	Mod_LoadLump( mod, 
-		LUMP_CLIPPORTALVERTS, 
+	Mod_LoadLump( mod,
+		LUMP_CLIPPORTALVERTS,
 		va( "%s [%s]", m_szLoadName, "clipportalverts" ),
-		sizeof(m_worldBrushData.m_pClipPortalVerts[0]), 
+		sizeof(m_worldBrushData.m_pClipPortalVerts[0]),
 		(void**)&m_worldBrushData.m_pClipPortalVerts,
 		&m_worldBrushData.m_nClipPortalVerts );
 
 	COM_TimestampedLog( "  LUMP_AREAPORTALS" );
-	Mod_LoadLump( mod, 
-		LUMP_AREAPORTALS, 
+	Mod_LoadLump( mod,
+		LUMP_AREAPORTALS,
 		va( "%s [%s]", m_szLoadName, "areaportals" ),
-		sizeof(m_worldBrushData.m_pAreaPortals[0]), 
+		sizeof(m_worldBrushData.m_pAreaPortals[0]),
 		(void**)&m_worldBrushData.m_pAreaPortals,
 		&m_worldBrushData.m_nAreaPortals );
-	
+
 	COM_TimestampedLog( "  LUMP_AREAS" );
-	Mod_LoadLump( mod, 
-		LUMP_AREAS, 
+	Mod_LoadLump( mod,
+		LUMP_AREAS,
 		va( "%s [%s]", m_szLoadName, "areas" ),
-		sizeof(m_worldBrushData.m_pAreas[0]), 
+		sizeof(m_worldBrushData.m_pAreas[0]),
 		(void**)&m_worldBrushData.m_pAreas,
 		&m_worldBrushData.m_nAreas );
 
 	COM_TimestampedLog( "  Mod_LoadWorldlights" );
 	if ( g_pMaterialSystemHardwareConfig->GetHDRType() != HDR_TYPE_NONE &&
-  		  CMapLoadHelper::LumpSize( LUMP_WORLDLIGHTS_HDR ) > 0 )
+			CMapLoadHelper::LumpSize( LUMP_WORLDLIGHTS_HDR ) > 0 )
 	{
 		CMapLoadHelper mlh( LUMP_WORLDLIGHTS_HDR );
 		Mod_LoadWorldlights( mlh, true );
@@ -4656,7 +4656,7 @@ void CModelLoader::SetupSubModels( model_t *mod, CUtlVector<mmodel_t> &list )
 		starmod = &m_InlineModels[i];
 
 		*starmod = *mod;
-		
+
 		starmod->brush.firstmodelsurface = bm->firstface;
 		starmod->brush.nummodelsurfaces = bm->numfaces;
 		starmod->brush.firstnode = bm->headnode;
@@ -4668,7 +4668,7 @@ void CModelLoader::SetupSubModels( model_t *mod, CUtlVector<mmodel_t> &list )
 		VectorCopy(bm->maxs, starmod->maxs);
 		VectorCopy(bm->mins, starmod->mins);
 		starmod->radius = bm->radius;
-	
+
 		if (i == 0)
 		{
 			*mod = *starmod;
@@ -4682,14 +4682,14 @@ void CModelLoader::SetupSubModels( model_t *mod, CUtlVector<mmodel_t> &list )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *mod - 
+// Purpose:
+// Input  : *mod -
 //-----------------------------------------------------------------------------
 void CModelLoader::Map_UnloadModel( model_t *mod )
 {
 	Assert( !( mod->nLoadFlags & FMODELLOADER_REFERENCEMASK ) );
 	mod->nLoadFlags &= ~FMODELLOADER_LOADED;
-	
+
 #ifndef SWDS
 	OverlayMgr()->UnloadOverlays();
 #endif
@@ -4701,7 +4701,7 @@ void CModelLoader::Map_UnloadModel( model_t *mod )
 #endif
 
 	Map_UnloadCubemapSamples( mod );
-	
+
 #ifndef SWDS
 	// Free decals in displacements.
 	R_DecalTerm( &m_worldBrushData, true );
@@ -4732,7 +4732,7 @@ void CModelLoader::Map_UnloadModel( model_t *mod )
 
 
 //-----------------------------------------------------------------------------
-// Computes dimensions + frame count of a material 
+// Computes dimensions + frame count of a material
 //-----------------------------------------------------------------------------
 static void GetSpriteInfo( const char *pName, bool bIsVideo, int &nWidth, int &nHeight, int &nFrameCount )
 {
@@ -4752,7 +4752,7 @@ static void GetSpriteInfo( const char *pName, bool bIsVideo, int &nWidth, int &n
 			pVideoMaterial->GetVideoImageSize( &nWidth, &nHeight );
 			nFrameCount = pVideoMaterial->GetFrameCount();
 			pMaterial = pVideoMaterial->GetMaterial();
-			
+
 			g_pVideo->DestroyVideoMaterial( pVideoMaterial );
 		}
 	}
@@ -4777,7 +4777,7 @@ static void GetSpriteInfo( const char *pName, bool bIsVideo, int &nWidth, int &n
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelLoader::Sprite_LoadModel( model_t *mod )
 {
@@ -4823,7 +4823,7 @@ void CModelLoader::Sprite_LoadModel( model_t *mod )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelLoader::Sprite_UnloadModel( model_t *mod )
 {
@@ -5008,7 +5008,7 @@ void CModelLoader::Studio_LoadModel( model_t *pModel, bool bTouchAllData )
 
 	if ( !bPreLoaded )
 	{
-		pModel->studio = g_pMDLCache->FindMDL( pModel->strName );		
+		pModel->studio = g_pMDLCache->FindMDL( pModel->strName );
 		g_pMDLCache->SetUserData( pModel->studio, pModel );
 
 		InitStudioModelState( pModel );
@@ -5083,10 +5083,10 @@ void CModelLoader::Studio_LoadModel( model_t *pModel, bool bTouchAllData )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *mod - 
+// Purpose:
+// Input  : *mod -
 //-----------------------------------------------------------------------------
 void CModelLoader::Studio_UnloadModel( model_t *pModel )
 {
@@ -5117,7 +5117,7 @@ void CModelLoader::Studio_UnloadModel( model_t *pModel )
 	}
 
 #ifdef DBGFLAG_ASSERT
-	int nRef = 
+	int nRef =
 #endif
 		g_pMDLCache->Release( pModel->studio );
 
@@ -5136,8 +5136,8 @@ void CModelLoader::Studio_UnloadModel( model_t *pModel )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *mod - 
+// Purpose:
+// Input  : *mod -
 //-----------------------------------------------------------------------------
 void CModelLoader::SetWorldModel( model_t *mod )
 {
@@ -5147,7 +5147,7 @@ void CModelLoader::SetWorldModel( model_t *mod )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelLoader::ClearWorldModel( void )
 {
@@ -5157,7 +5157,7 @@ void CModelLoader::ClearWorldModel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CModelLoader::IsWorldModelSet( void )
@@ -5166,7 +5166,7 @@ bool CModelLoader::IsWorldModelSet( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CModelLoader::GetNumWorldSubmodels( void )
@@ -5178,8 +5178,8 @@ int CModelLoader::GetNumWorldSubmodels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Check cache or union data for info, reload studio model if needed 
-// Input  : *model - 
+// Purpose: Check cache or union data for info, reload studio model if needed
+// Input  : *model -
 //-----------------------------------------------------------------------------
 void *CModelLoader::GetExtraData( model_t *model )
 {
@@ -5221,7 +5221,7 @@ void *CModelLoader::GetExtraData( model_t *model )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CModelLoader::Map_GetRenderInfoAllocated( void )
@@ -5231,7 +5231,7 @@ bool CModelLoader::Map_GetRenderInfoAllocated( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelLoader::Map_SetRenderInfoAllocated( bool allocated )
 {
@@ -5240,8 +5240,8 @@ void CModelLoader::Map_SetRenderInfoAllocated( bool allocated )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *mod - 
+// Purpose:
+// Input  : *mod -
 //-----------------------------------------------------------------------------
 void CModelLoader::Map_LoadDisplacements( model_t *pModel, bool bRestoring )
 {
@@ -5250,11 +5250,11 @@ void CModelLoader::Map_LoadDisplacements( model_t *pModel, bool bRestoring )
 		Assert( false );
 		return;
 	}
-	
+
 	Q_FileBase( pModel->strName, m_szLoadName, sizeof( m_szLoadName ) );
 	CMapLoadHelper::Init( pModel, m_szLoadName );
 
-    DispInfo_LoadDisplacements( pModel, bRestoring );
+	DispInfo_LoadDisplacements( pModel, bRestoring );
 
 	CMapLoadHelper::Shutdown();
 }
@@ -5333,7 +5333,7 @@ int CModelLoader::UpdateOrCreate( const char *pSourceName, char *pTargetName, in
 
 //-----------------------------------------------------------------------------
 // Purpose: Determine if specified .bsp is valid
-// Input  : *mapname - 
+// Input  : *mapname -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CModelLoader::Map_IsValid( char const *pMapFile, bool bQuiet /* = false */ )
@@ -5501,7 +5501,7 @@ int	CModelLoader::FindNext( int iIndex, model_t **ppModel )
 	}
 
 	*ppModel = m_Models[iIndex].modelpointer;
-	
+
 	iIndex = m_Models.NextInorder( iIndex );
 	if ( iIndex == m_Models.InvalidIndex() )
 	{
@@ -5612,7 +5612,7 @@ void CModelLoader::UpdateDynamicModelLoadQueue()
 			// do the clean up after we're actually done
 			// we keep some file cache around to make sure that LoadModel doesn't do blocking load
 			g_pQueuedLoader->CleanupDynamicLoad();
-			
+
 			s_LastDynamicLoadTime = Plat_FloatTime();
 		}
 	}
@@ -5909,7 +5909,7 @@ void CModelLoader::InternalUpdateDynamicModels( bool bIgnoreTime )
 
 		// UNLOAD THIS MODEL if zero refcount and not currently loading, and either timed out or never loaded
 		if ( dyn.m_iRefCount <= 0 && !(dyn.m_nLoadFlags & CDynamicModelInfo::LOADING) &&
-			 ( ( now - (dyn.m_uLastTouchedMS_Div256 << 8) ) >= delay || !( dyn.m_nLoadFlags & CDynamicModelInfo::CLIENTREADY ) ) )
+			( ( now - (dyn.m_uLastTouchedMS_Div256 << 8) ) >= delay || !( dyn.m_nLoadFlags & CDynamicModelInfo::CLIENTREADY ) ) )
 		{
 			// Remove from load queue
 			if ( dyn.m_nLoadFlags & CDynamicModelInfo::QUEUED )
@@ -5950,7 +5950,7 @@ void CModelLoader::InternalUpdateDynamicModels( bool bIgnoreTime )
 				else
 				{
 					DynamicModelDebugMsg( "model %p [%s] unload\n", pModel, pModel->strName.String() );
-					
+
 					Studio_UnloadModel( pModel );
 
 					if ( mod_dynamicunloadtextures.GetBool() )
@@ -5978,7 +5978,7 @@ void CModelLoader::Client_OnServerModelStateChanged( model_t *pModel, bool bServ
 {
 #ifndef SWDS
 	// Listen server don't distinguish between server and client ready, never use SERVERLOADING flag
-	if ( sv.IsActive() ) 
+	if ( sv.IsActive() )
 		return;
 
 	UtlHashHandle_t i = m_DynamicModels.Find( pModel );
@@ -6039,7 +6039,7 @@ void Mod_LeafAmbientColorAtPos( Vector *pOut, const Vector &pos, int leafIndex )
 		float totalFactor = 0;
 		for ( int i = 0; i < count; i++ )
 		{
-			// do an inverse squared distance weighted average of the samples to reconstruct 
+			// do an inverse squared distance weighted average of the samples to reconstruct
 			// the original function
 
 			// the sample positions are packed as leaf bounds fractions, compute
@@ -6117,7 +6117,7 @@ CON_COMMAND_F( model_list, "Dump model list to file", FCVAR_CHEAT | FCVAR_DONTRE
 			}
 
 			g_pFileSystem->FPrintf( fileHandle, "name,dataSize,numVerts,nTriCount,dataSizeLod0,numVertsLod0,nTriCountLod0,numBones,numParts,numLODs,numMeshes\n" );
-	
+
 			for ( int i = 0; i < modelloader->GetCount(); i++ )
 			{
 				const char* name = "Unknown";

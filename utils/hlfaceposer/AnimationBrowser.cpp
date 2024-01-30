@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -80,7 +80,7 @@ bool CCustomAnim::HasAnimation( char const *search )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CAnimBrowserTab : public CTabWindow
 {
@@ -117,11 +117,11 @@ public:
 		mxPopupMenu *sub = NULL;
 		for ( int i = 0; i < m_CustomGroups.Count(); ++i )
 		{
-			if ( !sub ) 
+			if ( !sub )
 			{
 				sub = new mxPopupMenu();
 			}
-			sub->add( va( "%s", m_CustomGroups[ i ].String() ), IDC_AB_DELETEGROUPSTART + i ); 
+			sub->add( va( "%s", m_CustomGroups[ i ].String() ), IDC_AB_DELETEGROUPSTART + i );
 		}
 		if ( sub )
 		{
@@ -133,7 +133,7 @@ public:
 		sub = new mxPopupMenu();
 		for ( int i = 0; i < m_CustomGroups.Count(); ++i )
 		{
-			sub->add( va( "%s", m_CustomGroups[ i ].String() ), IDC_AB_RENAMEGROUPSTART + i ); 
+			sub->add( va( "%s", m_CustomGroups[ i ].String() ), IDC_AB_RENAMEGROUPSTART + i );
 		}
 
 		pop->addMenu( "Rename Group", sub );
@@ -166,7 +166,7 @@ private:
 
 
 AnimationBrowser::AnimationBrowser( mxWindow *parent, int id /*=0*/ )
-: IFacePoserToolWindow( "AnimationBrowser", "Animations" ), 
+: IFacePoserToolWindow( "AnimationBrowser", "Animations" ),
 	mxWindow( parent, 0, 0, 0, 0, "AnimationBrowser", id )
 {
 	setId( id );
@@ -212,7 +212,7 @@ AnimationBrowser::AnimationBrowser( mxWindow *parent, int id /*=0*/ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : AnimationBrowser::~AnimationBrowser
 //-----------------------------------------------------------------------------
 AnimationBrowser::~AnimationBrowser ( void )
@@ -226,8 +226,8 @@ void AnimationBrowser::Shutdown()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : cellsize - 
+// Purpose:
+// Input  : cellsize -
 //-----------------------------------------------------------------------------
 void AnimationBrowser::SetCellSize( int cellsize )
 {
@@ -238,7 +238,7 @@ void AnimationBrowser::SetCellSize( int cellsize )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AnimationBrowser::Deselect( void )
 {
@@ -247,8 +247,8 @@ void AnimationBrowser::Deselect( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : exp - 
+// Purpose:
+// Input  : exp -
 //-----------------------------------------------------------------------------
 void AnimationBrowser::Select( int sequence )
 {
@@ -257,7 +257,7 @@ void AnimationBrowser::Select( int sequence )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int AnimationBrowser::ComputePixelsNeeded( void )
@@ -345,18 +345,18 @@ void AnimationBrowser::DrawSequenceDescription( CChoreoWidgetDrawHelper& helper,
 
 	OffsetRect( &textRect, 0, textheight );
 
-	helper.DrawColoredText( "Arial", 9, FW_NORMAL, RGB( 63, 63, 63 ), textRect, "%.2f seconds", 
+	helper.DrawColoredText( "Arial", 9, FW_NORMAL, RGB( 63, 63, 63 ), textRect, "%.2f seconds",
 		mdl->GetDuration( sequence ) );
 
 	textRect.top = y + h - 4 * textheight - 1;
 	textRect.bottom = textRect.top + textheight;
 
-	helper.DrawColoredText( "Arial", 9, FW_NORMAL, RGB( 50, 200, 255 ), textRect, "frames %i", 
+	helper.DrawColoredText( "Arial", 9, FW_NORMAL, RGB( 50, 200, 255 ), textRect, "frames %i",
 		mdl->GetNumFrames( sequence ) );
 
 	OffsetRect( &textRect, 0, textheight - 4 );
-	
-	helper.DrawColoredText( "Arial", 9, FW_NORMAL, RGB( 50, 200, 255 ), textRect, "fps %.2f", 
+
+	helper.DrawColoredText( "Arial", 9, FW_NORMAL, RGB( 50, 200, 255 ), textRect, "fps %.2f",
 		(float)mdl->GetFPS( sequence ) );
 
 }
@@ -376,7 +376,7 @@ void AnimationBrowser::DrawThumbNail( int sequence, CChoreoWidgetDrawHelper& hel
 	mstudioseqdesc_t *pseqdesc = GetSeqDesc( sequence );
 	if ( !pseqdesc )
 		return;
-	
+
 	mxbitmapdata_t *bm = models->GetBitmapForSequence( models->GetActiveModelIndex(), TranslateSequenceNumber( sequence ) );
 	if ( bm && bm->valid )
 	{
@@ -417,7 +417,7 @@ void AnimationBrowser::redraw()
 
 	RECT clipRect;
 	helper.GetClientRect( clipRect );
-	
+
 	clipRect.top += TOP_GAP + GetCaptionHeight();
 
 	helper.StartClipping( clipRect );
@@ -450,7 +450,7 @@ void AnimationBrowser::redraw()
 	rcText.top = 8;
 	rcText.bottom = rcText.top + 15;
 
-	helper.DrawColoredText( "Arial", 9, FW_NORMAL, RGB( 63, 63, 63 ), rcText, "%i sequences", 
+	helper.DrawColoredText( "Arial", 9, FW_NORMAL, RGB( 63, 63, 63 ), rcText, "%i sequences",
 		curcount );
 
 }
@@ -472,7 +472,7 @@ int AnimationBrowser::GetCellUnderPosition( int x, int y )
 		}
 
 		if ( x >= rcx && x <= rcx + rcw &&
-			 y >= rcy && y <= rcy + rch )
+			y >= rcy && y <= rcy + rch )
 		{
 			return c;
 		}
@@ -547,7 +547,7 @@ void AnimationBrowser::ShowRightClickMenu( int mx, int my )
 			CCustomAnim *anim = m_CustomAnimationTabs[ i ];
 			if ( anim->HasAnimation( pseqdesc->pszLabel() ) )
 			{
-                ca->add( va( "%s", anim->m_ShortName.String() ), IDC_AB_REMOVEFROMGROUPSTART + i );
+	ca->add( va( "%s", anim->m_ShortName.String() ), IDC_AB_REMOVEFROMGROUPSTART + i );
 				useMenu = true;
 			}
 		}
@@ -571,7 +571,7 @@ void AnimationBrowser::ShowRightClickMenu( int mx, int my )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AnimationBrowser::DrawFocusRect( void )
 {
@@ -585,7 +585,7 @@ void AnimationBrowser::DrawFocusRect( void )
 static bool IsWindowOrChild( mxWindow *parent, HWND test )
 {
 	HWND parentHwnd = (HWND)parent->getHandle();
-	if ( test == parentHwnd || 
+	if ( test == parentHwnd ||
 		IsChild( parentHwnd, test ) )
 	{
 		return true;
@@ -665,39 +665,39 @@ int AnimationBrowser::handleEvent (mxEvent *event)
 					if (event->modifiers == SB_THUMBTRACK)
 					{
 						int offset = event->height;
-						
+
 						slScrollbar->setValue( offset );
-						
+
 						m_nTopOffset = offset;
-						
+
 						redraw();
 					}
 					else if ( event->modifiers == SB_PAGEUP )
 					{
 						int offset = slScrollbar->getValue();
-						
+
 						offset -= m_nGranularity;
 						offset = max( offset, slScrollbar->getMinValue() );
-						
+
 						slScrollbar->setValue( offset );
 						InvalidateRect( (HWND)slScrollbar->getHandle(), NULL, TRUE );
-						
+
 						m_nTopOffset = offset;
-						
+
 						redraw();
 					}
 					else if ( event->modifiers == SB_PAGEDOWN )
 					{
 						int offset = slScrollbar->getValue();
-						
+
 						offset += m_nGranularity;
 						offset = min( offset, slScrollbar->getMaxValue() );
-						
+
 						slScrollbar->setValue( offset );
 						InvalidateRect( (HWND)slScrollbar->getHandle(), NULL, TRUE );
-						
+
 						m_nTopOffset = offset;
-						
+
 						redraw();
 					}
 				}
@@ -747,23 +747,23 @@ int AnimationBrowser::handleEvent (mxEvent *event)
 						m_flDragTime = realtime;
 						m_bDragging = true;
 						m_nDragCell = cell;
-						
+
 						m_nXStart = (short)event->x;
 						m_nYStart = (short)event->y;
-						
+
 						m_rcFocus.left = cx;
 						m_rcFocus.top = cy;
 						m_rcFocus.right = cx + cw;
 						m_rcFocus.bottom = cy + ch - m_nDescriptionHeight;
-						
+
 						POINT pt;
 						pt.x = pt.y = 0;
 						ClientToScreen( (HWND)getHandle(), &pt );
-						
+
 						OffsetRect( &m_rcFocus, pt.x, pt.y );
-						
+
 						m_rcOrig = m_rcFocus;
-						
+
 						DrawFocusRect();
 
 						Select( cell );
@@ -785,12 +785,12 @@ int AnimationBrowser::handleEvent (mxEvent *event)
 			{
 				// Draw drag line of some kind
 				DrawFocusRect();
-	
+
 				// update pos
 				m_rcFocus = m_rcOrig;
-				OffsetRect( &m_rcFocus, ( (short)event->x - m_nXStart ), 
+				OffsetRect( &m_rcFocus, ( (short)event->x - m_nXStart ),
 					( (short)event->y - m_nYStart ) );
-				
+
 				DrawFocusRect();
 			}
 			iret = 1;
@@ -978,7 +978,7 @@ void AnimationBrowser::Think( float dt )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AnimationBrowser::ThumbnailIncrease( void )
 {
@@ -995,7 +995,7 @@ void AnimationBrowser::ThumbnailIncrease( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AnimationBrowser::ThumbnailDecrease( void )
 {
@@ -1004,7 +1004,7 @@ void AnimationBrowser::ThumbnailDecrease( void )
 		m_nSnapshotWidth -= THUMBNAIL_SIZE_STEP;
 		g_viewerSettings.thumbnailsizeanim = m_nSnapshotWidth;
 		m_nSnapshotHeight = m_nSnapshotWidth + m_nDescriptionHeight;
-		
+
 		Con_Printf( "Thumbnail size %i x %i\n", m_nSnapshotWidth, m_nSnapshotWidth );
 
 		redraw();
@@ -1012,7 +1012,7 @@ void AnimationBrowser::ThumbnailDecrease( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AnimationBrowser::RestoreThumbnailSize( void )
 {
@@ -1034,9 +1034,9 @@ void AnimationBrowser::ReloadBitmaps( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *model - 
-//			sequence - 
+// Purpose:
+// Input  : *model -
+//			sequence -
 // Output : static bool
 //-----------------------------------------------------------------------------
 static bool IsTypeOfSequence( StudioModel *model, int sequence, char const *typestring )
@@ -1142,7 +1142,7 @@ void AnimationBrowser::OnFilter()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int AnimationBrowser::GetSequenceCount()
@@ -1151,8 +1151,8 @@ int AnimationBrowser::GetSequenceCount()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : mstudioseqdesc_t
 //-----------------------------------------------------------------------------
 mstudioseqdesc_t *AnimationBrowser::GetSeqDesc( int index )
@@ -1249,7 +1249,7 @@ void AnimationBrowser::RenameCustomFile( int index )
 		return;
 
 	CCustomAnim *anim = m_CustomAnimationTabs[ index ];
- 	CInputParams params;
+	CInputParams params;
 	memset( &params, 0, sizeof( params ) );
 	Q_snprintf( params.m_szDialogTitle, sizeof( params.m_szDialogTitle ), "Custom Animation Group" );
 	Q_strcpy( params.m_szPrompt, "Group Name:" );
@@ -1288,7 +1288,7 @@ void AnimationBrowser::RenameCustomFile( int index )
 	filesystem->RemoveFile( fn, "MOD" );
 
 	anim->m_ShortName = params.m_szInputText;
-	
+
 	char basename[ 128 ];
 	Q_StripExtension( hdr->pszName(), basename, sizeof( basename ) );
 	Q_snprintf( fn, sizeof( fn ), "expressions/%s/animation/%s.txt", basename, params.m_szInputText );
@@ -1385,7 +1385,7 @@ void AnimationBrowser::OnModelChanged()
 	BuildCustomFromFiles( files );
 
 	RestoreThumbnailSize();
-	
+
 	// Just reapply filter
 	OnFilter();
 }
@@ -1404,7 +1404,7 @@ void AnimationBrowser::OnModelChanged()
 		return;
 	}
 
- 	CInputParams params;
+	CInputParams params;
 	memset( &params, 0, sizeof( params ) );
 	Q_snprintf( params.m_szDialogTitle, sizeof( params.m_szDialogTitle ), "Custom Animation Group" );
 	Q_strcpy( params.m_szPrompt, "Group Name:" );
@@ -1437,16 +1437,16 @@ void AnimationBrowser::OnModelChanged()
 
  int AnimationBrowser::FindCustomFile( char const *shortName )
  {
-	 CUtlSymbol search;
-	 search = shortName;
+	CUtlSymbol search;
+	search = shortName;
 
-	 for ( int i = 0; i < m_CustomAnimationTabs.Count(); ++i )
-	 {
-		 CCustomAnim *anim = m_CustomAnimationTabs[ i ];
-		 if ( anim->m_ShortName == search )
-			 return i;
-	 }
-	 return -1;
+	for ( int i = 0; i < m_CustomAnimationTabs.Count(); ++i )
+	{
+		CCustomAnim *anim = m_CustomAnimationTabs[ i ];
+		if ( anim->m_ShortName == search )
+			return i;
+	}
+	return -1;
  }
 
 void AnimationBrowser::AddAnimationToCustomFile( int index, char const *animationName )
@@ -1458,7 +1458,7 @@ void AnimationBrowser::AddAnimationToCustomFile( int index, char const *animatio
 
 	CUtlSymbol search;
 	search = animationName;
-	
+
 	if ( anim->m_Animations.Find( search ) == anim->m_Animations.InvalidIndex() )
 	{
 		anim->m_Animations.AddToTail( search );
@@ -1477,7 +1477,7 @@ void AnimationBrowser::RemoveAnimationFromCustomFile( int index, char const *ani
 
 	CUtlSymbol search;
 	search = animationName;
-	
+
 	int slot = anim->m_Animations.Find( search );
 	if ( slot != anim->m_Animations.InvalidIndex() )
 	{

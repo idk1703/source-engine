@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -126,7 +126,7 @@ private:
 	{
 		wchar_t wch;
 		wchar_t wchBefore;
-		wchar_t wchAfter; 
+		wchar_t wchAfter;
 		kernedSize abc;
 	};
 

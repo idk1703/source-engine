@@ -77,7 +77,7 @@ private:
 		bool			m_bHasAddress;
 		netadr_t		adr;
 	};
-	
+
 	CUtlLinkedList<ListenerStore_t, int>	m_ListenerIDs;
 	ra_listener_id				m_NextListenerID;
 
@@ -91,4 +91,3 @@ extern CServerRemoteAccess g_ServerRemoteAccess;
 extern "C" void NotifyDedicatedServerUI(const char *message);
 
 #endif // SV_REMOTEACCESS_H
-

@@ -78,7 +78,7 @@ END_RECV_TABLE()
 ConVar cl_obj_test_building_damage( "cl_obj_test_building_damage", "-1", FCVAR_CHEAT, "debug building damage", true, -1, true, BUILDING_DAMAGE_LEVEL_CRITICAL );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseObject::C_BaseObject(  )
 {
@@ -116,14 +116,14 @@ C_BaseObject::C_BaseObject(  )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseObject::~C_BaseObject( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::Spawn( void )
 {
@@ -133,7 +133,7 @@ void C_BaseObject::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::UpdateOnRemove( void )
 {
@@ -151,7 +151,7 @@ void C_BaseObject::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::PreDataUpdate( DataUpdateType_t updateType )
 {
@@ -168,7 +168,7 @@ void C_BaseObject::PreDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -285,7 +285,7 @@ void C_BaseObject::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::SetDormant( bool bDormant )
 {
@@ -297,11 +297,11 @@ void C_BaseObject::SetDormant( bool bDormant )
 #define TF_OBJ_BODYGROUPTURNOFF			0
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : origin - 
-//			angles - 
-//			event - 
-//			*options - 
+// Purpose:
+// Input  : origin -
+//			angles -
+//			event -
+//			*options -
 //-----------------------------------------------------------------------------
 void C_BaseObject::FireEvent( const Vector& origin, const QAngle& angles, int event, const char *options )
 {
@@ -346,7 +346,7 @@ void C_BaseObject::FireEvent( const Vector& origin, const QAngle& angles, int ev
 				int subpartcount = GetBodygroupCount( i );
 				if ( subpartcount == 2 )
 				{
-					SetBodygroup( i, 
+					SetBodygroup( i,
 						( event == TF_OBJ_ENABLEALLBODYGROUPS ) ?
 						TF_OBJ_BODYGROUPTURNON : TF_OBJ_BODYGROUPTURNOFF );
 				}
@@ -388,7 +388,7 @@ void C_BaseObject::OnPlacementStateChanged( bool bValidPlacement )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::Simulate( void )
 {
@@ -402,8 +402,8 @@ void C_BaseObject::Simulate( void )
 			OnPlacementStateChanged( m_iLastPlacementPosValid > 0 );
 		}
 
-		// We figure out our own placement pos, but we still leave it to the server to 
-		// do collision with other entities and nobuild triggers, so that sets the 
+		// We figure out our own placement pos, but we still leave it to the server to
+		// do collision with other entities and nobuild triggers, so that sets the
 		// placement animation
 
 		SetLocalOrigin( m_vecBuildOrigin );
@@ -451,12 +451,12 @@ bool C_BaseObject::WasLastPlacementPosValid( void )
 	{
 		return ( !IsEffectActive(EF_NODRAW) );
 	}
-	
+
 	return ( m_iLastPlacementPosValid > 0 );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_BaseObject::DrawModel( int flags )
 {
@@ -492,7 +492,7 @@ float C_BaseObject::GetReversesBuildingConstructionSpeed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::HighlightBuildPoints( int flags )
 {
@@ -561,11 +561,11 @@ void C_BaseObject::HighlightBuildPoints( int flags )
 					pPlacementObj->SetAbsOrigin( vecBPOrigin );
 					pPlacementObj->SetAbsAngles( vecBPAngles );
 
-					modelrender->DrawModel( 
-						flags, 
+					modelrender->DrawModel(
+						flags,
 						pPlacementObj,
 						pPlacementObj->GetModelInstance(),
-						pPlacementObj->index, 
+						pPlacementObj->index,
 						pPlacementObj->GetModel(),
 						vecBPOrigin,
 						vecBPAngles,
@@ -600,7 +600,7 @@ void C_BaseObject::ActivateYawPreview( bool enable )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::PreviewYaw( float yaw )
 {
@@ -608,7 +608,7 @@ void C_BaseObject::PreviewYaw( float yaw )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_BaseObject::IsPreviewingYaw() const
 {
@@ -616,7 +616,7 @@ bool C_BaseObject::IsPreviewingYaw() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 BuildingDamageLevel_t C_BaseObject::CalculateDamageLevel( void )
 {
@@ -651,7 +651,7 @@ BuildingDamageLevel_t C_BaseObject::CalculateDamageLevel( void )
 
 /*
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::Release( void )
 {
@@ -667,7 +667,7 @@ void C_BaseObject::Release( void )
 */
 
 //-----------------------------------------------------------------------------
-// Ownership: 
+// Ownership:
 //-----------------------------------------------------------------------------
 C_TFPlayer *C_BaseObject::GetOwner()
 {
@@ -675,7 +675,7 @@ C_TFPlayer *C_BaseObject::GetOwner()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_BaseObject::IsOwnedByLocalPlayer() const
 {
@@ -690,7 +690,7 @@ bool C_BaseObject::IsOwnedByLocalPlayer() const
 //-----------------------------------------------------------------------------
 void C_BaseObject::AddEntity( void )
 {
-	// If set to invisible, skip. Do this before resetting the entity pointer so it has 
+	// If set to invisible, skip. Do this before resetting the entity pointer so it has
 	// valid data to decide whether it's visible.
 	if ( !ShouldDraw() )
 	{
@@ -726,7 +726,7 @@ void C_BaseObject::AddEntity( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::Select( void )
 {
@@ -740,7 +740,7 @@ void C_BaseObject::ResetClientsideFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Sends client commands back to the server: 
+// Sends client commands back to the server:
 //-----------------------------------------------------------------------------
 void C_BaseObject::SendClientCommand( const char *pCmd )
 {
@@ -770,7 +770,7 @@ const char *C_BaseObject::GetIDString( void )
 
 
 //-----------------------------------------------------------------------------
-// It's a valid ID target when it's building 
+// It's a valid ID target when it's building
 //-----------------------------------------------------------------------------
 bool C_BaseObject::IsValidIDTarget( void )
 {
@@ -779,7 +779,7 @@ bool C_BaseObject::IsValidIDTarget( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::RecalculateIDString( void )
 {
@@ -815,7 +815,7 @@ void C_BaseObject::DisplayHintTo( C_BasePlayer *pPlayer )
 	C_TFPlayer *pTFPlayer = ToTFPlayer(pPlayer);
 	if ( InSameTeam( pPlayer ) )
 	{
-		// We're looking at a friendly object. 
+		// We're looking at a friendly object.
 
 		if ( HasSapper() )
 		{
@@ -826,7 +826,7 @@ void C_BaseObject::DisplayHintTo( C_BasePlayer *pPlayer )
 		{
 			// I'm an engineer.
 
-			// If I'm looking at a constructing object, let me know I can help build it (but not 
+			// If I'm looking at a constructing object, let me know I can help build it (but not
 			// if I built it myself, since I've already got that hint from the wrench).
 			if ( !bHintPlayed && IsBuilding() && GetBuilder() != pTFPlayer )
 			{
@@ -843,7 +843,7 @@ void C_BaseObject::DisplayHintTo( C_BasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::GetGlowEffectColor( float *r, float *g, float *b )
 {
@@ -868,7 +868,7 @@ bool C_BaseObject::HasSapper( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_BaseObject::IsPlasmaDisabled( void )
 {
@@ -895,7 +895,7 @@ void C_BaseObject::GetTargetIDString( OUT_Z_BYTECAP( iMaxLenInBytes ) wchar_t *s
 
 	if ( !pLocalPlayer )
 		return;
-	
+
 	if ( pLocalPlayer->InSameDisguisedTeam( this ) || pLocalPlayer->IsPlayerClass( TF_CLASS_SPY ) || bSpectator )
 	{
 		wchar_t wszBuilderName[ MAX_PLAYER_NAME_LENGTH ];
@@ -957,7 +957,7 @@ void C_BaseObject::GetTargetIDString( OUT_Z_BYTECAP( iMaxLenInBytes ) wchar_t *s
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::GetTargetIDDataString( OUT_Z_BYTECAP(iMaxLenInBytes) wchar_t *sDataString, int iMaxLenInBytes )
 {
@@ -1032,7 +1032,7 @@ void C_BaseObject::GetTargetIDDataString( OUT_Z_BYTECAP(iMaxLenInBytes) wchar_t 
 //-----------------------------------------------------------------------------
 int C_BaseObject::GetDisplayPriority( void )
 {
-	return GetObjectInfo( GetType() )->m_iDisplayPriority;	
+	return GetObjectInfo( GetType() )->m_iDisplayPriority;
 }
 
 //-----------------------------------------------------------------------------
@@ -1040,7 +1040,7 @@ int C_BaseObject::GetDisplayPriority( void )
 //-----------------------------------------------------------------------------
 const char *C_BaseObject::GetHudStatusIcon( void )
 {
-	return GetObjectInfo( GetType() )->m_pHudStatusIcon;	
+	return GetObjectInfo( GetType() )->m_pHudStatusIcon;
 }
 
 ConVar cl_obj_fake_alert( "cl_obj_fake_alert", "0", 0, "", true, BUILDING_HUD_ALERT_NONE, true, MAX_BUILDING_HUD_ALERT_LEVEL-1 );
@@ -1079,9 +1079,9 @@ BuildingHudAlert_t C_BaseObject::GetBuildingAlertLevel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-ShadowType_t C_BaseObject::ShadowCastType( void ) 
+ShadowType_t C_BaseObject::ShadowCastType( void )
 {
 	if ( GetInvisibilityLevel() == 1.f )
 		return SHADOWS_NONE;
@@ -1090,7 +1090,7 @@ ShadowType_t C_BaseObject::ShadowCastType( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float C_BaseObject::GetInvisibilityLevel( void )
 {
@@ -1105,7 +1105,7 @@ float C_BaseObject::GetInvisibilityLevel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::SetInvisibilityLevel( float flValue )
 {
@@ -1187,7 +1187,7 @@ void CObjectPowerProxy::OnBind( void *pRenderable )
 EXPOSE_INTERFACE( CObjectPowerProxy, IMaterialProxy, "ObjectPower" IMATERIAL_PROXY_INTERFACE_VERSION );
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CBasicControlPanel : public CObjectControlPanel
 {
@@ -1202,10 +1202,10 @@ DECLARE_VGUI_SCREEN_FACTORY( CBasicControlPanel, "basic_control_panel" );
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CBasicControlPanel::CBasicControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CBasicControlPanel" ) 
+	: BaseClass( parent, "CBasicControlPanel" )
 {
 }
 
@@ -1220,7 +1220,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input :
 //-----------------------------------------------------------------------------
 void CBuildingInvisProxy::OnBind( C_BaseEntity *pBaseEntity )

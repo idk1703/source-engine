@@ -258,11 +258,11 @@ bool ILocomotion::HasPotentialGap( const Vector &from, const Vector &desiredTo, 
 			{
 				*fraction = ( t - step ) / ( length + step );
 			}
-			
+
 			return true;
 		}
 
-		pos += delta;		
+		pos += delta;
 	}
 
 	if ( fraction )
@@ -301,12 +301,12 @@ bool ILocomotion::IsGap( const Vector &pos, const Vector &forward ) const
 	NextBotTraceFilterIgnoreActors filter( GetBot()->GetEntity(), COLLISION_GROUP_NONE );
 
 	TraceHull( pos + Vector( 0, 0, GetStepHeight() ),	// start up a bit to handle rough terrain
-					pos + Vector( 0, 0, -GetMaxJumpHeight() ), 
-					Vector( -halfWidth, -halfWidth, 0 ), Vector( halfWidth, halfWidth, hullHeight ), 
+					pos + Vector( 0, 0, -GetMaxJumpHeight() ),
+					Vector( -halfWidth, -halfWidth, 0 ), Vector( halfWidth, halfWidth, hullHeight ),
 					mask, &filter, &ground );
 
 // 	int r,g,b;
-// 
+//
 // 	if ( ground.fraction >= 1.0f && !ground.startsolid )
 // 	{
 // 		r = 255, g = 0, b = 0;
@@ -315,7 +315,7 @@ bool ILocomotion::IsGap( const Vector &pos, const Vector &forward ) const
 // 	{
 // 		r = 0, g = 255, b = 0;
 // 	}
-// 
+//
 // 	NDebugOverlay::SweptBox( pos,
 // 							 pos + Vector( 0, 0, -GetStepHeight() ),
 // 							 Vector( -halfWidth, -halfWidth, 0 ), Vector( halfWidth, halfWidth, hullHeight ),
@@ -351,7 +351,7 @@ bool ILocomotion::IsEntityTraversable( CBaseEntity *obstacle, TraverseWhenType w
 	if ( FClassnameIs( obstacle, "func_brush" ) )
 	{
 		CFuncBrush *brush = (CFuncBrush *)obstacle;
-		
+
 		switch ( brush->m_iSolidity )
 		{
 			case CFuncBrush::BRUSHSOLID_ALWAYS:
@@ -376,7 +376,7 @@ bool ILocomotion::IsEntityTraversable( CBaseEntity *obstacle, TraverseWhenType w
 
 //--------------------------------------------------------------------------------------------------------------
 bool ILocomotion::IsAreaTraversable( const CNavArea *baseArea ) const
-{ 
+{
 	return !baseArea->IsBlocked( GetBot()->GetEntity()->GetTeamNumber() );
 }
 
@@ -407,7 +407,7 @@ void ILocomotion::ClearStuckStatus( const char *reason )
 
 
 //--------------------------------------------------------------------------------------------------------------
-/** 
+/**
  * Stuck check
  */
 void ILocomotion::StuckMonitor( void )
@@ -517,4 +517,3 @@ const Vector &ILocomotion::GetFeet( void ) const
 {
 	return GetBot()->GetEntity()->GetAbsOrigin();
 }
-

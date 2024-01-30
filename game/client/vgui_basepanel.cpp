@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -15,7 +15,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBasePanel::CBasePanel( vgui::Panel *pParent, const char *panelName ) : BaseClass( pParent, panelName )
 {
@@ -30,14 +30,14 @@ CBasePanel::CBasePanel( vgui::Panel *pParent, const char *panelName ) : BaseClas
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
-//			y - 
-//			w - 
-//			h - 
+// Purpose:
+// Input  : x -
+//			y -
+//			w -
+//			h -
 //-----------------------------------------------------------------------------
 CBasePanel::CBasePanel( vgui::Panel *pParent, const char *panelName, int x, int y, int w, int h ) :
-  Panel( pParent, panelName )
+	Panel( pParent, panelName )
 {
 	SetBounds( x, y, w, h );
 	m_bTexturedBackground = false;
@@ -49,7 +49,7 @@ CBasePanel::CBasePanel( vgui::Panel *pParent, const char *panelName, int x, int 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBasePanel::~CBasePanel( void )
 {
@@ -62,7 +62,7 @@ CBasePanel::~CBasePanel( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::PaintBackground( void )
 {
@@ -77,7 +77,7 @@ void CBasePanel::PaintBackground( void )
 		m_nBackgroundMaterial = vgui::surface()->CreateNewTextureID();
 		vgui::surface()->DrawSetTextureFile( m_nBackgroundMaterial, m_szBgTexture, true, true );
 	}
-	
+
 	vgui::surface()->DrawSetColor( GetFgColor() );
 
 	// Draw it with texture
@@ -116,8 +116,8 @@ void CBasePanel::PaintBackground( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *texname - 
+// Purpose:
+// Input  : *texname -
 //-----------------------------------------------------------------------------
 void CBasePanel::SetTexture( const char *texname, bool tiled /*=false*/ )
 {
@@ -147,9 +147,9 @@ void CBasePanel::OnCursorMoved(int x,int y)
 
 	LocalToScreen( x, y );
 
-	vgui::ivgui()->PostMessage( 
-		GetParent()->GetVPanel(), 
-		new KeyValues( "CursorMoved", "xpos", x, "ypos", y ), 
+	vgui::ivgui()->PostMessage(
+		GetParent()->GetVPanel(),
+		new KeyValues( "CursorMoved", "xpos", x, "ypos", y ),
 		GetVPanel() );
 }
 
@@ -161,9 +161,9 @@ void CBasePanel::OnMousePressed(vgui::MouseCode code)
 	if ( !GetParent() )
 		return;
 
-	vgui::ivgui()->PostMessage( 
-		GetParent()->GetVPanel(), 
-		new KeyValues( "MousePressed", "code", code ), 
+	vgui::ivgui()->PostMessage(
+		GetParent()->GetVPanel(),
+		new KeyValues( "MousePressed", "code", code ),
 		GetVPanel() );
 }
 
@@ -175,9 +175,9 @@ void CBasePanel::OnMouseDoublePressed(vgui::MouseCode code)
 	if ( !GetParent() )
 		return;
 
-	vgui::ivgui()->PostMessage( 
-		GetParent()->GetVPanel(), 
-		new KeyValues( "MouseDoublePressed", "code", code ), 
+	vgui::ivgui()->PostMessage(
+		GetParent()->GetVPanel(),
+		new KeyValues( "MouseDoublePressed", "code", code ),
 		GetVPanel() );
 }
 
@@ -189,9 +189,9 @@ void CBasePanel::OnMouseReleased(vgui::MouseCode code)
 	if ( !GetParent() )
 		return;
 
-	vgui::ivgui()->PostMessage( 
-		GetParent()->GetVPanel(), 
-		new KeyValues( "MouseReleased", "code", code ), 
+	vgui::ivgui()->PostMessage(
+		GetParent()->GetVPanel(),
+		new KeyValues( "MouseReleased", "code", code ),
 		GetVPanel() );
 }
 
@@ -203,9 +203,9 @@ void CBasePanel::OnMouseWheeled(int delta)
 	if ( !GetParent() )
 		return;
 
-	vgui::ivgui()->PostMessage( 
-		GetParent()->GetVPanel(), 
-		new KeyValues( "MouseWheeled", "delta", delta ), 
+	vgui::ivgui()->PostMessage(
+		GetParent()->GetVPanel(),
+		new KeyValues( "MouseWheeled", "delta", delta ),
 		GetVPanel()  );
 }
 
@@ -215,7 +215,7 @@ void CBasePanel::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudLabel::CHudLabel( vgui::Panel *parent, const char *panelName, const char *text) :
 	vgui::Label( parent,panelName,text )
@@ -224,7 +224,7 @@ CHudLabel::CHudLabel( vgui::Panel *parent, const char *panelName, const char *te
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudLabel::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
@@ -239,6 +239,3 @@ void CHudLabel::ApplySchemeSettings(vgui::IScheme *pScheme)
 		SetBgColor( GetSchemeColor("HudStatusBgColor", pScheme) );
 	}
 }
-
-
-

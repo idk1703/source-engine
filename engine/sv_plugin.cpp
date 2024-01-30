@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -41,7 +41,7 @@ QueryCvarCookie_t SendCvarValueQueryToClient( IClient *client, const char *pCvar
 	// so it knows who to callback on when the value arrives back from the client.
 	if ( !bPluginQuery )
 		msg.m_iCookie = -msg.m_iCookie;
-	
+
 	client->SendNetMsg( msg );
 	return msg.m_iCookie;
 }
@@ -114,7 +114,7 @@ bool CPlugin::Load( const char *fileName )
 					m_iPluginInterfaceVersion = 1;
 					m_pPlugin = (IServerPluginCallbacks *)pluginFactory( INTERFACEVERSION_ISERVERPLUGINCALLBACKS_VERSION_1, NULL );
 					if ( !m_pPlugin )
-					{				
+					{
 						Warning( "Could not get IServerPluginCallbacks interface from plugin \"%s\"", fileName );
 						return false;
 					}
@@ -179,8 +179,8 @@ const char *CPlugin::GetName()
 IServerPluginCallbacks *CPlugin::GetCallback()
 {
 	Assert( m_pPlugin );
-	if ( m_pPlugin ) 
-	{	
+	if ( m_pPlugin )
+	{
 		return m_pPlugin;
 	}
 	else
@@ -205,7 +205,7 @@ void CPlugin::Disable( bool state )
 	{
 		m_pPlugin->UnPause();
 	}
-	m_bDisable = state; 
+	m_bDisable = state;
 }
 
 
@@ -242,11 +242,11 @@ void CServerPlugin::LoadPlugins()
 			findfn = Sys_FindNext( NULL, 0 );
 			continue;
 		}
-	
+
 		KeyValues *pluginsFile = new KeyValues("Plugins");
 		pluginsFile->LoadFromFile( g_pFileSystem, va("addons/%s", findfn), "MOD" );
 
-		if ( pluginsFile->GetString("file", NULL) ) 
+		if ( pluginsFile->GetString("file", NULL) )
 		{
 			LoadPlugin(pluginsFile->GetString("file"));
 		}
@@ -366,7 +366,7 @@ void CServerPlugin::PrintDetails()
 }
 
 // helper macro to stop this being typed for every passthrough
-#define FORALL_PLUGINS	for( int i = 0; i < m_Plugins.Count(); i++ ) 
+#define FORALL_PLUGINS	for( int i = 0; i < m_Plugins.Count(); i++ )
 #define CALL_PLUGIN_IF_ENABLED(call) \
 	do { \
 		CPlugin *plugin = m_Plugins[i]; \
@@ -385,8 +385,8 @@ extern CNetworkStringTableContainer *networkStringTableContainerServer;
 //---------------------------------------------------------------------------------
 // Purpose: pass through functions for the 3rd party API
 //---------------------------------------------------------------------------------
-void CServerPlugin::LevelInit(	char const *pMapName, 
-								char const *pMapEntities, char const *pOldLevel, 
+void CServerPlugin::LevelInit(	char const *pMapName,
+								char const *pMapEntities, char const *pOldLevel,
 								char const *pLandmarkName, bool loadGame, bool background )
 {
 	CETWScope timer( "CServerPlugin::LevelInit" );
@@ -507,7 +507,7 @@ bool CServerPlugin::ClientConnect( edict_t *pEntity, const char *pszName, const 
 			}
 		}
 	}
-	
+
 	bAllowConnect = serverGameClients->ClientConnect( pEntity, pszName, pszAddress, reject, maxrejectlen );
 	return bRetValOverridden ? bSavedRetVal : bAllowConnect;
 }
@@ -537,7 +537,7 @@ QueryCvarCookie_t CServerPlugin::StartQueryCvarValue( edict_t *pEntity, const ch
 		Warning( "StartQueryCvarValue: Invalid entity\n" );
 		return InvalidQueryCvarCookie;
 	}
-	
+
 	IClient *client = sv.Client( clientnum-1 );
 	return SendCvarValueQueryToClient( client, pCvarName, true );
 }
@@ -638,7 +638,7 @@ void  CServerPlugin::CreateMessage( edict_t *pEntity, DIALOG_TYPE type, KeyValue
 		ConMsg( "Invalid entity\n" );
 		return;
 	}
-	
+
 	IClient *client = sv.Client(clientnum-1);
 
 	SVC_Menu menu( type, data );
@@ -648,16 +648,16 @@ void  CServerPlugin::CreateMessage( edict_t *pEntity, DIALOG_TYPE type, KeyValue
 void CServerPlugin::ClientCommand( edict_t *pEntity, const char *cmd )
 {
 	int entnum = NUM_FOR_EDICT( pEntity );
-	
+
 	if ( ( entnum < 1 ) || ( entnum >  sv.GetClientCount() ) )
 	{
 		Msg("\n!!!\nCServerPlugin::ClientCommand:  Some entity tried to stuff '%s' to console buffer of entity %i when maxclients was set to %i, ignoring\n\n",
 			cmd, entnum, sv.GetMaxClients()	);
 		return;
 	}
-	
+
 	sv.GetClient(entnum-1)->ExecuteStringCommand( cmd );
-	
+
 }
 
 //---------------------------------------------------------------------------------
@@ -671,7 +671,7 @@ CON_COMMAND( plugin_print, "Prints details about loaded plugins" )
 {
 	g_pServerPluginHandler->PrintDetails();
 }
- 
+
 CON_COMMAND( plugin_pause, "plugin_pause <index> : pauses a loaded plugin" )
 {
 	if ( args.ArgC() < 2 )
@@ -754,4 +754,3 @@ CON_COMMAND( plugin_unload, "plugin_unload <index> : unloads a plugin" )
 		ConMsg( "Unloaded plugin \"%s\"\n", args[1] );
 	}
 }
-

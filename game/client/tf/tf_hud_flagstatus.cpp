@@ -53,17 +53,17 @@ extern ConVar tf_flag_caps_per_round;
 void AddSubKeyNamed( KeyValues *pKeys, const char *pszName );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFArrowPanel::CTFArrowPanel( Panel *parent, const char *name ) : vgui::Panel( parent, name )
 {
-	m_RedMaterial.Init( "hud/objectives_flagpanel_compass_red", TEXTURE_GROUP_VGUI ); 
-	m_BlueMaterial.Init( "hud/objectives_flagpanel_compass_blue", TEXTURE_GROUP_VGUI ); 
-	m_NeutralMaterial.Init( "hud/objectives_flagpanel_compass_grey", TEXTURE_GROUP_VGUI ); 
-	m_NeutralRedMaterial.Init( "hud/objectives_flagpanel_compass_grey_with_red", TEXTURE_GROUP_VGUI ); 
+	m_RedMaterial.Init( "hud/objectives_flagpanel_compass_red", TEXTURE_GROUP_VGUI );
+	m_BlueMaterial.Init( "hud/objectives_flagpanel_compass_blue", TEXTURE_GROUP_VGUI );
+	m_NeutralMaterial.Init( "hud/objectives_flagpanel_compass_grey", TEXTURE_GROUP_VGUI );
+	m_NeutralRedMaterial.Init( "hud/objectives_flagpanel_compass_grey_with_red", TEXTURE_GROUP_VGUI );
 
-	m_RedMaterialNoArrow.Init( "hud/objectives_flagpanel_compass_red_noArrow", TEXTURE_GROUP_VGUI ); 
-	m_BlueMaterialNoArrow.Init( "hud/objectives_flagpanel_compass_blue_noArrow", TEXTURE_GROUP_VGUI ); 
+	m_RedMaterialNoArrow.Init( "hud/objectives_flagpanel_compass_red_noArrow", TEXTURE_GROUP_VGUI );
+	m_BlueMaterialNoArrow.Init( "hud/objectives_flagpanel_compass_blue_noArrow", TEXTURE_GROUP_VGUI );
 
 	m_pMaterial = m_NeutralMaterial;
 	m_bUseRed = false;
@@ -73,7 +73,7 @@ CTFArrowPanel::CTFArrowPanel( Panel *parent, const char *name ) : vgui::Panel( p
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFArrowPanel::OnTick( void )
 {
@@ -96,7 +96,7 @@ void CTFArrowPanel::OnTick( void )
 			m_pMaterial = m_NeutralMaterial;
 		}
 
-		if ( pEnt && TFGameRules()->GetMannVsMachineAlarmStatus() == true ) 
+		if ( pEnt && TFGameRules()->GetMannVsMachineAlarmStatus() == true )
 		{
 			CCaptureFlag *pFlag = dynamic_cast<CCaptureFlag *>( pEnt );
 			if ( pFlag && pFlag->IsStolen() )
@@ -162,7 +162,7 @@ void CTFArrowPanel::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFArrowPanel::GetAngleRotation( void )
 {
@@ -207,7 +207,7 @@ float CTFArrowPanel::GetAngleRotation( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFArrowPanel::Paint()
 {
@@ -219,7 +219,7 @@ void CTFArrowPanel::Paint()
 
 	CMatRenderContextPtr pRenderContext( materials );
 	pRenderContext->MatrixMode( MATERIAL_MODEL );
-	pRenderContext->PushMatrix(); 
+	pRenderContext->PushMatrix();
 
 	VMatrix panelRotation;
 	panelRotation.Identity();
@@ -260,7 +260,7 @@ void CTFArrowPanel::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFArrowPanel::IsVisible( void )
 {
@@ -271,7 +271,7 @@ bool CTFArrowPanel::IsVisible( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFlagStatus::CTFFlagStatus( Panel *parent, const char *name ) : EditablePanel( parent, name )
 {
@@ -282,7 +282,7 @@ CTFFlagStatus::CTFFlagStatus( Panel *parent, const char *name ) : EditablePanel(
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlagStatus::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -310,7 +310,7 @@ void CTFFlagStatus::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFlagStatus::IsVisible( void )
 {
@@ -322,7 +322,7 @@ bool CTFFlagStatus::IsVisible( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlagStatus::UpdateStatus( void )
 {
@@ -359,7 +359,7 @@ void CTFFlagStatus::UpdateStatus( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHudFlagObjectives::CTFHudFlagObjectives( Panel *parent, const char *name ) : EditablePanel( parent, name )
 {
@@ -385,7 +385,7 @@ CTFHudFlagObjectives::CTFHudFlagObjectives( Panel *parent, const char *name ) : 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFHudFlagObjectives::IsVisible( void )
 {
@@ -396,7 +396,7 @@ bool CTFHudFlagObjectives::IsVisible( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudFlagObjectives::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -414,7 +414,7 @@ void CTFHudFlagObjectives::ApplySchemeSettings( IScheme *pScheme )
 	{
 		nNumFlags++;
 	}
-	
+
 	if ( m_pBlueFlag && m_pBlueFlag->GetEntity() != NULL )
 	{
 		nNumFlags++;
@@ -472,7 +472,7 @@ void CTFHudFlagObjectives::ApplySchemeSettings( IScheme *pScheme )
 			}
 		}
 	}
-	
+
 	// load control settings...
 	LoadControlSettings( "resource/UI/HudObjectiveFlagPanel.res", NULL, NULL, pConditions );
 
@@ -503,7 +503,7 @@ void CTFHudFlagObjectives::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudFlagObjectives::Reset()
 {
@@ -513,7 +513,7 @@ void CTFHudFlagObjectives::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudFlagObjectives::SetPlayingToLabelVisible( bool bVisible )
 {
@@ -532,7 +532,7 @@ void CTFHudFlagObjectives::SetPlayingToLabelVisible( bool bVisible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudFlagObjectives::OnTick()
 {
@@ -611,7 +611,7 @@ void CTFHudFlagObjectives::OnTick()
 					if ( !m_pBlueFlag || ( pFlag != m_pBlueFlag->GetEntity() ) )
 					{
 						m_pRedFlag->SetEntity( pFlag );
-							
+
 						if ( !m_pRedFlag->IsVisible() )
 						{
 							m_pRedFlag->SetVisible( true );
@@ -759,7 +759,7 @@ void CTFHudFlagObjectives::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudFlagObjectives::SetCarriedImage( const char *pchIcon )
 {
@@ -770,7 +770,7 @@ void CTFHudFlagObjectives::SetCarriedImage( const char *pchIcon )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudFlagObjectives::UpdateStatus( C_BasePlayer *pNewOwner /*= NULL*/, C_BaseEntity *pFlagEntity /*= NULL*/ )
 {
@@ -795,7 +795,7 @@ void CTFHudFlagObjectives::UpdateStatus( C_BasePlayer *pNewOwner /*= NULL*/, C_B
 	{
 		m_bCarryingFlag = true;
 
-		// make sure the panels are on, set the initial alpha values, 
+		// make sure the panels are on, set the initial alpha values,
 		// set the color of the flag we're carrying, and start the animations
 		if ( m_pBlueFlag && m_pBlueFlag->IsVisible() )
 		{
@@ -810,9 +810,9 @@ void CTFHudFlagObjectives::UpdateStatus( C_BasePlayer *pNewOwner /*= NULL*/, C_B
 		if ( m_pCarriedImage && !m_pCarriedImage->IsVisible() )
 		{
 			int nTeam;
-			if ( pPlayerFlag->GetType() == TF_FLAGTYPE_ATTACK_DEFEND || 
-				 pPlayerFlag->GetType() == TF_FLAGTYPE_TERRITORY_CONTROL || 
-				 pPlayerFlag->GetType() == TF_FLAGTYPE_INVADE || 
+			if ( pPlayerFlag->GetType() == TF_FLAGTYPE_ATTACK_DEFEND ||
+				 pPlayerFlag->GetType() == TF_FLAGTYPE_TERRITORY_CONTROL ||
+				 pPlayerFlag->GetType() == TF_FLAGTYPE_INVADE ||
 				 pPlayerFlag->GetType() == TF_FLAGTYPE_RESOURCE_CONTROL )
 			{
 				nTeam = ( ( GetLocalPlayerTeam() == TF_TEAM_BLUE ) ? ( TF_TEAM_BLUE ) : ( TF_TEAM_RED ) );
@@ -887,7 +887,7 @@ void CTFHudFlagObjectives::UpdateStatus( C_BasePlayer *pNewOwner /*= NULL*/, C_B
 				{
 					m_pBlueFlag->SetVisible( true );
 				}
-				
+
 				m_pBlueFlag->UpdateStatus();
 			}
 			else
@@ -922,7 +922,7 @@ void CTFHudFlagObjectives::UpdateStatus( C_BasePlayer *pNewOwner /*= NULL*/, C_B
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudFlagObjectives::FireGameEvent( IGameEvent *event )
 {
@@ -941,7 +941,7 @@ void CTFHudFlagObjectives::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #define FLAG_CALLER_WIDE ( XRES( 30 ) )
 #define FLAG_CALLER_TALL ( YRES( 30 ) )
@@ -954,7 +954,7 @@ void CTFHudFlagObjectives::FireGameEvent( IGameEvent *event )
 CUtlVector< CTFFlagCalloutPanel* > CTFFlagCalloutPanel::m_FlagCalloutPanels;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFlagCalloutPanel::CTFFlagCalloutPanel( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, pElementName )
 {
@@ -989,7 +989,7 @@ CTFFlagCalloutPanel::CTFFlagCalloutPanel( const char *pElementName ) : CHudEleme
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFlagCalloutPanel::~CTFFlagCalloutPanel( void )
 {
@@ -1044,7 +1044,7 @@ void CTFFlagCalloutPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlagCalloutPanel::PerformLayout( void )
 {
@@ -1054,7 +1054,7 @@ void CTFFlagCalloutPanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlagCalloutPanel::GetCalloutPosition( const Vector &vecDelta, float flRadius, float *xpos, float *ypos, float *flRotation )
 {
@@ -1085,7 +1085,7 @@ void CTFFlagCalloutPanel::GetCalloutPosition( const Vector &vecDelta, float flRa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlagCalloutPanel::OnTick( void )
 {
@@ -1098,7 +1098,7 @@ void CTFFlagCalloutPanel::OnTick( void )
 		MarkForDeletion();
 		return;
 	}
-	
+
 	bool bShouldDraw = ShouldShowFlagIconToLocalPlayer();
 
 	// Only show the most valuable enemy flag in this mode
@@ -1249,7 +1249,7 @@ void CTFFlagCalloutPanel::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlagCalloutPanel::PaintBackground( void )
 {
@@ -1267,7 +1267,7 @@ void CTFFlagCalloutPanel::PaintBackground( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlagCalloutPanel::Paint( void )
 {
@@ -1335,7 +1335,7 @@ void CTFFlagCalloutPanel::Paint( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlagCalloutPanel::SetFlag( CCaptureFlag *pFlag, float flDuration, Vector &vecOffset )
 {
@@ -1346,7 +1346,7 @@ void CTFFlagCalloutPanel::SetFlag( CCaptureFlag *pFlag, float flDuration, Vector
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFlagCalloutPanel *CTFFlagCalloutPanel::AddFlagCalloutIfNotFound( CCaptureFlag *pFlag, float flDuration, Vector &vecLocation )
 {
@@ -1372,7 +1372,7 @@ CTFFlagCalloutPanel *CTFFlagCalloutPanel::AddFlagCalloutIfNotFound( CCaptureFlag
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFlagCalloutPanel::ShouldShowFlagIconToLocalPlayer( void )
 {
@@ -1383,7 +1383,7 @@ bool CTFFlagCalloutPanel::ShouldShowFlagIconToLocalPlayer( void )
 	int nDisplayMode = tf_rd_flag_ui_mode.GetInt();
 
 	// In "show all" mode, don't show flags on the local player's team that are being carried
-	if ( m_hFlag->IsStolen() && 
+	if ( m_hFlag->IsStolen() &&
 		 m_hFlag->InSameTeam( pLocalTFPlayer ) &&
 		 nDisplayMode == FLAG_CALLER_DISPLAY_ALL )
 		return false;
@@ -1392,7 +1392,7 @@ bool CTFFlagCalloutPanel::ShouldShowFlagIconToLocalPlayer( void )
 	if ( m_hFlag->InSameTeam( pLocalTFPlayer ) &&
 		nDisplayMode < FLAG_CALLER_DISPLAY_ALL )
 		return false;
-	
+
 	// Don't show the player running this flag
 	if ( m_hFlag->IsStolen() && pLocalTFPlayer == m_hFlag->GetPrevOwner() )
 		return false;
@@ -1401,7 +1401,7 @@ bool CTFFlagCalloutPanel::ShouldShowFlagIconToLocalPlayer( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlagCalloutPanel::ScaleAndPositionCallout( float flScale /*= 1.f*/  )
 {
@@ -1409,7 +1409,7 @@ void CTFFlagCalloutPanel::ScaleAndPositionCallout( float flScale /*= 1.f*/  )
 		return;
 
 	SetSize( ( FLAG_CALLER_WIDE * flScale ), ( FLAG_CALLER_TALL * flScale ) );
-	
+
 	if ( !m_pFlagCalloutPanel )
 		return;
 
@@ -1422,15 +1422,14 @@ void CTFFlagCalloutPanel::ScaleAndPositionCallout( float flScale /*= 1.f*/  )
 	// Briefcase - top-left
 	m_pFlagCalloutPanel->SetSize( ( m_nPanelWideOrig * flScale ), ( m_nPanelTallOrig * flScale ) );
 	m_pFlagCalloutPanel->SetPos( 0, 0 );
-	
+
 	// Label - centered
 	m_pFlagValueLabel->SetSize( ( m_nLabelWideOrig * flScale ), ( m_nLabelTallOrig * flScale ) );
 	m_pFlagValueLabel->SetPos( ( m_pFlagCalloutPanel->GetWide() - m_pFlagValueLabel->GetWide() ) * 0.5f, ( m_pFlagCalloutPanel->GetWide() - m_pFlagValueLabel->GetTall() ) * 0.65f );
-	
+
 	// Icon - lower-right
 	m_pFlagStatusIcon->SetSize( ( m_nIconWideOrig * flScale ), ( m_nIconTallOrig * flScale ) );
 	m_pFlagStatusIcon->SetPos( ( m_pFlagCalloutPanel->GetWide() - m_pFlagStatusIcon->GetWide() ) * 1.05f, ( m_pFlagCalloutPanel->GetWide() - m_pFlagStatusIcon->GetTall() ) * 0.85f );
 
 	m_flPrevScale = flScale;
 }
-

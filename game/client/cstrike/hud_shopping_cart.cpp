@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -21,7 +21,7 @@ public:
 
 	CHudShoppingCart( const char *name );
 
-	virtual bool ShouldDraw();	
+	virtual bool ShouldDraw();
 	virtual void Paint();
 	virtual void Init();
 
@@ -42,7 +42,7 @@ CHudShoppingCart::CHudShoppingCart( const char *pName ) :
 {
 	SetParent( g_pClientMode->GetViewport() );
 	m_pCartIcon = NULL;
-	
+
 	SetHiddenBits( HIDEHUD_PLAYERDEAD );
 
 	//=============================================================================
@@ -82,7 +82,7 @@ void CHudShoppingCart::Paint()
 	{
 		m_pCartIcon = gHUD.GetIcon( "shopping_cart" );
 	}
-	
+
 	if ( m_pCartIcon )
 	{
 		int x, y, w, h;
@@ -91,4 +91,3 @@ void CHudShoppingCart::Paint()
 		m_pCartIcon->DrawSelf( 0, 0, w, h, m_clrIcon );
 	}
 }
-

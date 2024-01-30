@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -57,12 +57,12 @@ static int		gFakePlaneType[6] = {1,-1,2,-2,3,-3};
 // (assuming X goes forward, Y goes left, and Z goes up).
 //
 //				 6 ------------- 5
-//			   /  			   /  
+//			   /  			   /
 //			 /	 |			 /	 |
 //		   /	 |		   /	 |
 //		 2 ------------- 1		 |
 //		  		 |		  		 |
-//		 |		  		 |		  
+//		 |		  		 |
 //		 |		 7 ------|------ 4
 //		 |	   /		 |	   /
 //		 |	 /			 |	 /
@@ -78,7 +78,7 @@ static int		gFakePlaneType[6] = {1,-1,2,-2,3,-3};
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void R_UnloadSkys( void )
 {
@@ -91,12 +91,12 @@ void R_UnloadSkys( void )
 			skyboxMaterials[ i ]->DecrementReferenceCount();
 			skyboxMaterials[ i ] = NULL;
 		}
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool R_LoadNamedSkys( const char *skyname )
@@ -146,7 +146,7 @@ bool R_LoadNamedSkys( const char *skyname )
 			skyboxMaterials[ i ]->DecrementReferenceCount();
 			skyboxMaterials[ i ] = NULL;
 		}
-	
+
 		// Use the new one
 		assert( skies[ i ] );
 		skyboxMaterials[i] = skies[ i ];
@@ -157,7 +157,7 @@ bool R_LoadNamedSkys( const char *skyname )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void R_LoadSkys( void )
 {
@@ -204,7 +204,7 @@ void R_LoadSkys( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #pragma warning (disable : 4701)
 void MakeSkyVec( float s, float t, int axis, float zFar, Vector& position, Vector2D &texCoord )
@@ -259,7 +259,7 @@ void MakeSkyVec( float s, float t, int axis, float zFar, Vector& position, Vecto
 #pragma warning (default : 4701)
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void R_DrawSkyBox( float zFar, int nDrawFlags /*= 0x3F*/  )
 {
@@ -344,7 +344,7 @@ void R_DrawSkyBox( float zFar, int nDrawFlags /*= 0x3F*/  )
 			}
 			CIndexBuilder &indexBuilder = meshBuilder;
 			indexBuilder.FastQuad( 0 );
-		
+
 			meshBuilder.End();
 			pMesh->Draw();
 		}

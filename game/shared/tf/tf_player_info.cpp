@@ -15,4 +15,3 @@ IMPLEMENT_CLASS_MEMPOOL( CTFPlayerInfo, 10 * 1000, UTLMEMORYPOOL_GROW_SLOW );
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
-

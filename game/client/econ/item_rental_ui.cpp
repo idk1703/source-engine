@@ -43,7 +43,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CConfirmItemPreviewDialog::CConfirmItemPreviewDialog( vgui::Panel *parent, CEconItemView *pPreviewItem ) : CBaseToolUsageDialog( parent, "ConfirmItemPreviewDialog", pPreviewItem, pPreviewItem )
 {
@@ -51,7 +51,7 @@ CConfirmItemPreviewDialog::CConfirmItemPreviewDialog( vgui::Panel *parent, CEcon
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CConfirmItemPreviewDialog::~CConfirmItemPreviewDialog()
 {
@@ -59,7 +59,7 @@ CConfirmItemPreviewDialog::~CConfirmItemPreviewDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmItemPreviewDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -84,7 +84,7 @@ void CConfirmItemPreviewDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmItemPreviewDialog::Apply( void )
 {
@@ -133,7 +133,7 @@ public:
 			// We aren't allowed to preview an item right now.
 			CTFMessageBoxDialog* pDialog = ShowMessageBox( "#ItemPreview_PreviewStartFailedTitle", "#ItemPreview_PreviewStartFailedText", "#GameUI_OK" );
 			RTime32 nextTime = msg.Body().m_timePreviewTime + EconUI()->GetStorePanel()->GetPriceSheet()->GetPreviewPeriod();
-			
+
 			locchar_t wzValue[64];
 			char time_buf[k_RTimeRenderBufferSize];
 			GLocalizationProvider()->ConvertUTF8ToLocchar( CRTime::Render( nextTime, time_buf ), wzValue, sizeof( wzValue ) );
@@ -205,8 +205,8 @@ void OpenStoreToItem( bool bConfirmed, void *pContext )
 	}
 }
 
-CEconPreviewNotification::CEconPreviewNotification( uint64 ulSteamID, uint32 iItemDef ) 
-	: CEconNotification() 
+CEconPreviewNotification::CEconPreviewNotification( uint64 ulSteamID, uint32 iItemDef )
+	: CEconNotification()
 {
 	SetSteamID( ulSteamID );
 	SetLifetime( 20.0f );

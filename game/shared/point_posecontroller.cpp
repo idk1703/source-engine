@@ -24,7 +24,7 @@
 #define MAX_POSE_FMOD_AMPLITUDE 10.0f
 
 
-LINK_ENTITY_TO_CLASS( point_posecontroller, CPoseController );	
+LINK_ENTITY_TO_CLASS( point_posecontroller, CPoseController );
 
 
 BEGIN_DATADESC( CPoseController )
@@ -118,12 +118,12 @@ void CPoseController::BuildPropList( void )
 			if ( m_hProps[ iPropNum ] != pProp )
 			{
 				// Only set new handles (to avoid network spam)
-				m_hProps.Set( iPropNum, pProp );	
+				m_hProps.Set( iPropNum, pProp );
 			}
 
 			// Update the pose parameter index
 			SetPoseIndex( iPropNum, pProp->LookupPoseParameter( m_iszPoseParameterName.ToCStr() ) );
-			
+
 			++iPropNum;
 		}
 
@@ -318,11 +318,11 @@ void CPoseController::InputRandomizeFMod( inputdata_t &inputdata )
 
 void CPoseController::InputGetFMod( inputdata_t &inputdata )
 {
-	DevMsg( "FMod values for pose controller %s\nTYPE: %i\nTIME OFFSET: %f\nRATE: %f\nAMPLITUDE: %f\n", 
-			STRING( GetEntityName() ), 
-			m_nFModType.Get(), 
-			m_fFModTimeOffset.Get(), 
-			m_fFModRate.Get(), 
+	DevMsg( "FMod values for pose controller %s\nTYPE: %i\nTIME OFFSET: %f\nRATE: %f\nAMPLITUDE: %f\n",
+			STRING( GetEntityName() ),
+			m_nFModType.Get(),
+			m_fFModTimeOffset.Get(),
+			m_fFModRate.Get(),
 			m_fFModAmplitude.Get() );
 }
 

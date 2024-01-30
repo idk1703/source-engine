@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -86,13 +86,13 @@ int CPortal_CollisionEvent::ShouldCollide( IPhysicsObject *pObj0, IPhysicsObject
 							if( CPSCollisionEntity::IsPortalSimulatorCollisionEntity( pEntities[i] ) )
 							{
 								PS_PhysicsObjectSourceType_t objectSource;
-								if(	pSimulators[i]->CreatedPhysicsObject( pPhysObjects[i], &objectSource ) && 
+								if(	pSimulators[i]->CreatedPhysicsObject( pPhysObjects[i], &objectSource ) &&
 									((objectSource == PSPOST_REMOTE_BRUSHES) || (objectSource == PSPOST_REMOTE_STATICPROPS)) )
 								{
 									if( (pSimulators[1-i]->m_DataAccess.Simulation.Dynamic.EntFlags[pEntities[1-i]->entindex()] & PSEF_IS_IN_PORTAL_HOLE) == 0 )
 										return 0; //require that the entity be in the portal hole before colliding with transformed geometry
 									//FIXME: The above requirement might fail horribly for transformed collision blocking the portal from the other side and fast moving objects
-								}	
+								}
 							}
 							break;
 						}
@@ -100,7 +100,7 @@ int CPortal_CollisionEvent::ShouldCollide( IPhysicsObject *pObj0, IPhysicsObject
 				}
 				else if( bShadowClonesInvolved )
 				{
-					if( ((pSimulators[0]->m_DataAccess.Simulation.Dynamic.EntFlags[pEntities[0]->entindex()] | 
+					if( ((pSimulators[0]->m_DataAccess.Simulation.Dynamic.EntFlags[pEntities[0]->entindex()] |
 						pSimulators[1]->m_DataAccess.Simulation.Dynamic.EntFlags[pEntities[1]->entindex()]) &
 						PSEF_IS_IN_PORTAL_HOLE) == 0 )
 					{
@@ -132,7 +132,7 @@ int CPortal_CollisionEvent::ShouldCollide( IPhysicsObject *pObj0, IPhysicsObject
 						else
 						{
 							CPortalSimulator *pSimulator_Static = CPortalSimulator::GetSimulatorThatCreatedPhysicsObject( pPhysObjects[i] ); //might have been a static prop which would yield a new simulator
-														
+
 							if( pSimulator_Static && (pSimulator_Static != pSimulator_Entity) )
 								return 0; //static collideable is from a different simulator
 						}
@@ -211,7 +211,7 @@ int CPortal_CollisionEvent::ShouldSolvePenetration( IPhysicsObject *pObj0, IPhys
 		CPortal_Player *pHoldingPlayer = (CPortal_Player *)GetPlayerHoldingEntity( pHeld );
 		if( !pHoldingPlayer && CPhysicsShadowClone::IsShadowClone( pHeld ) )
 			pHoldingPlayer = (CPortal_Player *)GetPlayerHoldingEntity( ((CPhysicsShadowClone *)pHeld)->GetClonedEntity() );
-		
+
 		Assert( pHoldingPlayer );
 		if( pHoldingPlayer )
 		{
@@ -234,7 +234,7 @@ int CPortal_CollisionEvent::ShouldSolvePenetration( IPhysicsObject *pObj0, IPhys
 	}
 
 
-	if( (pObj0->GetGameFlags() | pObj1->GetGameFlags()) & FVPHYSICS_IS_SHADOWCLONE ) 
+	if( (pObj0->GetGameFlags() | pObj1->GetGameFlags()) & FVPHYSICS_IS_SHADOWCLONE )
 	{
 		//at least one shadowclone is involved
 
@@ -256,7 +256,7 @@ int CPortal_CollisionEvent::ShouldSolvePenetration( IPhysicsObject *pObj0, IPhys
 				if( ((CPhysicsShadowClone *)(pObjects[i]->GetGameData()))->GetClonedEntity() == (pObjects[j]->GetGameData()) )
 					return 0; //don't solve between a shadow clone and its source entity
 			}
-		}	
+		}
 	}
 
 	return BaseClass::ShouldSolvePenetration( pObj0, pObj1, pGameData0, pGameData1, dt );
@@ -284,11 +284,11 @@ static void ModifyWeight_PreCollision( vcollisionevent_t *pEvent )
 		{
 			CPhysicsShadowClone *pClone = ((CPhysicsShadowClone *)pEvent->pObjects[i]->GetGameData());
 			pUnshadowedEntities[i] = pClone->GetClonedEntity();
-		
+
 			if( pUnshadowedEntities[i] == NULL )
 				return;
 
-            pUnshadowedObjects[i] = pClone->TranslatePhysicsToClonedEnt( pEvent->pObjects[i] );
+	pUnshadowedObjects[i] = pClone->TranslatePhysicsToClonedEnt( pEvent->pObjects[i] );
 
 			if( pUnshadowedObjects[i] == NULL )
 				return;
@@ -297,7 +297,7 @@ static void ModifyWeight_PreCollision( vcollisionevent_t *pEvent )
 		{
 			pUnshadowedEntities[i] = (CBaseEntity *)pEvent->pObjects[i]->GetGameData();
 			pUnshadowedObjects[i] = pEvent->pObjects[i];
-		}		
+		}
 	}
 
 	// HACKHACK: Reduce mass for combine ball vs movable brushes so the collision
@@ -337,7 +337,7 @@ static void ModifyWeight_PreCollision( vcollisionevent_t *pEvent )
 		{
 			int j = 1-i;
 			if( dynamic_cast<CPropCombineBall *>(pUnshadowedEntities[j]) != NULL )
-			{			
+			{
 				// [j] is the combine ball, set mass low
 				// if the above ball vs brush entity check didn't already change the mass, change the mass
 				if ( !s_bChangedMass[j] )
@@ -353,7 +353,7 @@ static void ModifyWeight_PreCollision( vcollisionevent_t *pEvent )
 						pUnshadowedObjects[j]->SetMass( VPHYSICS_MIN_MASS );
 					}
 				}
-				
+
 				// [i] is the held object, set mass high
 				s_bChangedMass[i] = true;
 				s_fSavedMass[i] = pUnshadowedObjects[i]->GetMass();
@@ -369,7 +369,7 @@ static void ModifyWeight_PreCollision( vcollisionevent_t *pEvent )
 			else if( pEvent->pObjects[j]->GetGameFlags() & FVPHYSICS_IS_SHADOWCLONE )
 			{
 				//held object vs shadow clone, set held object mass back to grab controller saved mass
-				
+
 				// [i] is the held object
 				s_bChangedMass[i] = true;
 				s_fSavedMass[i] = pUnshadowedObjects[i]->GetMass();
@@ -450,7 +450,7 @@ void CPortal_CollisionEvent::AddDamageEvent( CBaseEntity *pEntity, const CTakeDa
 	if( (info.GetDamageType() & DMG_CRUSH) &&
 		(pInflictorPhysics->GetGameFlags() & FVPHYSICS_IS_SHADOWCLONE) &&
 		(!info.BaseDamageIsValid()) &&
-		(info.GetDamageForce().LengthSqr() > (20000.0f * 20000.0f)) 
+		(info.GetDamageForce().LengthSqr() > (20000.0f * 20000.0f))
 		)
 	{
 		//VERY likely this was caused by the penetration solver. Since a shadow clone is involved we're going to ignore it becuase it causes more problems than it solves in this case
@@ -461,26 +461,3 @@ void CPortal_CollisionEvent::AddDamageEvent( CBaseEntity *pEntity, const CTakeDa
 
 	BaseClass::AddDamageEvent( pEntity, *pPassDownInfo, pInflictorPhysics, bRestoreVelocity, savedVel, savedAngVel );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -50,20 +50,20 @@
 #if defined(USE_MEM_DEBUG)
 	#if defined( POSIX ) || defined( _PS3 )
 		#define _NORMAL_BLOCK 1
-		
+
 		#include "tier0/valve_off.h"
 		#include <cstddef>
 		#include <new>
 		#include <sys/types.h>
 		#if !defined( DID_THE_OPERATOR_NEW )
-                        #define DID_THE_OPERATOR_NEW
+	#define DID_THE_OPERATOR_NEW
 			// posix doesn't have a new of this form, so we impl our own
 			void* operator new( size_t nSize, int blah, const char *pFileName, int nLine );
 			void* operator new[]( size_t nSize, int blah, const char *pFileName, int nLine );
 		#endif
-	
+
 	#else // defined(POSIX)
-	
+
 		// Include crtdbg.h and make sure _DEBUG is set to 1.
 		#if !defined(_DEBUG)
 			#define _DEBUG 1
@@ -72,7 +72,7 @@
 		#else
 			#include <crtdbg.h>
 		#endif // !defined(_DEBUG)
-	
+
 	#endif // defined(POSIX)
 #endif
 
@@ -105,7 +105,7 @@ inline void *MemAlloc_InlineCallocMemset( void *pMem, size_t nCount, size_t nEle
 #define free(p)				g_pMemAlloc->Free( p )
 #define _aligned_free( p )	MemAlloc_FreeAligned( p )
 #else
-extern const char *g_pszModule; 
+extern const char *g_pszModule;
 #define free(p)				g_pMemAlloc->Free( p, g_pszModule, 0 )
 #define _aligned_free( p )	MemAlloc_FreeAligned( p, g_pszModule, 0 )
 #endif
@@ -156,32 +156,32 @@ extern const char *g_pszModule;
 inline char *MemAlloc_StrDup(const char *pString, const char *pFileName, unsigned nLine)
 {
 	char *pMemory;
-	
+
 	if (!pString)
 		return NULL;
-	
+
 	size_t len = strlen(pString) + 1;
 	if ((pMemory = (char *)MemAlloc_Alloc(len, pFileName, nLine)) != NULL)
 	{
 		return strcpy( pMemory, pString );
 	}
-	
+
 	return NULL;
 }
 
 inline wchar_t *MemAlloc_WcStrDup(const wchar_t *pString, const char *pFileName, unsigned nLine)
 {
 	wchar_t *pMemory;
-	
+
 	if (!pString)
 		return NULL;
-	
+
 	size_t len = (wcslen(pString) + 1);
 	if ((pMemory = (wchar_t *)MemAlloc_Alloc(len * sizeof(wchar_t), pFileName, nLine)) != NULL)
 	{
 		return wcscpy( pMemory, pString );
 	}
-	
+
 	return NULL;
 }
 

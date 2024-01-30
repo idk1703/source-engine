@@ -36,7 +36,7 @@ public:
 	{
 		m_builder = NULL;
 	}
-		
+
 	void SetBuilder( CTFWeaponBuilder *builder )
 	{
 		m_builder = builder;
@@ -209,4 +209,3 @@ ActionResult< CTFBot > CTFBotEngineerBuildDispenser::OnResume( CTFBot *me, Actio
 
 	return Continue();
 }
-

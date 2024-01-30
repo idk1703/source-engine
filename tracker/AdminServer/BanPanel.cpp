@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -156,7 +156,7 @@ void CBanPanel::OnServerDataResponse(const char *value, const char *response)
 			{
 				ban->SetWString("time", LocalizeFind("#Ban_Permanent", L"permanent"));
 			}
-			
+
 			// add to list
 			m_pBanListPanel->AddItem(ban, 0, false, false);
 
@@ -194,14 +194,14 @@ void CBanPanel::OnOpenContextMenu(int row)
 	if (m_pBanListPanel->IsVisible() && m_pBanListPanel->IsCursorOver()
 		&& m_pBanListPanel->GetNumSelectedRows())
 	// show the ban changing menu IF its the visible panel and the cursor is
-	// over it 
+	// over it
 	{
-	
+
 		unsigned int banID =m_pBanListPanel->GetSelectedRow(0);
-			
+
 		// activate context menu
 		m_pBanContextMenu->ShowMenu(this, banID);
-	} 
+	}
 	else
 	{
 		m_pBanContextMenu->ShowMenu(this, -1);
@@ -250,14 +250,14 @@ void CBanPanel::RemoveBan()
 // Purpose: change the time length of a ban
 //-----------------------------------------------------------------------------
 void CBanPanel::ChangeBan()
-{	
+{
 	int itemID = m_pBanListPanel->GetSelectedItem(0);
 	if (itemID == -1)
 		return;
 
 	KeyValues *kv = m_pBanListPanel->GetItem(itemID);
 	if (kv != NULL)
-	{	
+	{
 		char timeText[20];
 		float time = kv->GetFloat("time");
 		_snprintf(timeText, sizeof(timeText), "%0.2f", time);
@@ -387,7 +387,7 @@ void CBanPanel::OnFileSelected(const char *fullpath)
 	// a file from anywhere on their filesystem... so we use stdio
 	FILE *f = fopen(fullpath,"rb");
 	while (!feof(f) && fgets(line, 255, f))
-	{	
+	{
 		// parse each line of the config file adding the ban
 		tok.SetLine(line);
 		if (tok.CountToken() == 3)
@@ -400,7 +400,7 @@ void CBanPanel::OnFileSelected(const char *fullpath)
 
 	// change the cursor back to normal and shutdown file
 	surface()->SetCursor(dc_user);
-	if (f) 
+	if (f)
 	{
 		fclose(f);
 	}

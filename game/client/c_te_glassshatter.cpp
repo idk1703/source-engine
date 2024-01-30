@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -48,7 +48,7 @@ public:
 	virtual void	PostDataUpdate( DataUpdateType_t updateType );
 
 private:
-	// Recording 
+	// Recording
 	void RecordShatterSurface( );
 
 public:
@@ -77,7 +77,7 @@ IMPLEMENT_CLIENTCLASS_EVENT_DT(C_TEShatterSurface, DT_TEShatterSurface, CTEShatt
 	RecvPropFloat( RECVINFO(m_flWidth)),
 	RecvPropFloat( RECVINFO(m_flHeight)),
 	RecvPropFloat( RECVINFO(m_flShardSize)),
-	RecvPropInt( RECVINFO(m_nSurfaceType)),	
+	RecvPropInt( RECVINFO(m_nSurfaceType)),
 	RecvPropInt( RECVINFO(m_uchFrontColor[0])),
 	RecvPropInt( RECVINFO(m_uchFrontColor[1])),
 	RecvPropInt( RECVINFO(m_uchFrontColor[2])),
@@ -114,7 +114,7 @@ C_TEShatterSurface::~C_TEShatterSurface()
 
 
 //-----------------------------------------------------------------------------
-// Recording 
+// Recording
 //-----------------------------------------------------------------------------
 void C_TEShatterSurface::RecordShatterSurface( )
 {
@@ -157,7 +157,7 @@ void C_TEShatterSurface::RecordShatterSurface( )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEShatterSurface::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -210,7 +210,7 @@ void C_TEShatterSurface::PostDataUpdate( DataUpdateType_t updateType )
 	for (int width=0;width<nNumWide;width++)
 	{
 		for (int height=0;height<nNumHigh;height++)
-		{			
+		{
 			pParticle = (Particle3D *) pGlassEmitter->AddParticle( sizeof(Particle3D), hMaterial[random->RandomInt(0,1)], vCurPos );
 
 			Vector vForceVel = Vector(0,0,0);
@@ -264,12 +264,12 @@ void C_TEShatterSurface::PostDataUpdate( DataUpdateType_t updateType )
 	Vector vMoveDir = m_vecForce;
 	VectorNormalize(vMoveDir);
 
-	pGlassEmitter->m_ParticleCollision.Setup( m_vecOrigin, &vMoveDir, GLASS_SHARD_NOISE, 
+	pGlassEmitter->m_ParticleCollision.Setup( m_vecOrigin, &vMoveDir, GLASS_SHARD_NOISE,
 												flMinSpeed, flMaxSpeed, GLASS_SHARD_GRAVITY, GLASS_SHARD_DAMPING );
 }
 
 void TE_ShatterSurface( IRecipientFilter& filter, float delay,
-	const Vector* pos, const QAngle* angle, const Vector* vForce, const Vector* vForcePos, 
+	const Vector* pos, const QAngle* angle, const Vector* vForce, const Vector* vForcePos,
 	float width, float height, float shardsize, ShatterSurface_t surfacetype,
 	int front_r, int front_g, int front_b, int back_r, int back_g, int back_b)
 {

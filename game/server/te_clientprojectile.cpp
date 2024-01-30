@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -11,7 +11,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTEClientProjectile : public CBaseTempEntity
 {
@@ -22,7 +22,7 @@ public:
 	virtual			~CTEClientProjectile( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 	DECLARE_SERVERCLASS();
 
 public:
@@ -34,8 +34,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEClientProjectile::CTEClientProjectile( const char *name ) :
 	CBaseTempEntity( name )
@@ -48,22 +48,22 @@ CTEClientProjectile::CTEClientProjectile( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEClientProjectile::~CTEClientProjectile( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEClientProjectile::Test( const Vector& current_origin, const QAngle& current_angles )
 {
 	// Fill in data
 	m_vecOrigin = current_origin;
-	
+
 	Vector forward;
 	AngleVectors( current_angles, &forward );
 	forward[2] = 0.0;
@@ -73,7 +73,7 @@ void CTEClientProjectile::Test( const Vector& current_origin, const QAngle& curr
 
 	m_nLifeTime = 5;
 	m_hOwner = NULL;
-	
+
 	CBroadcastRecipientFilter filter;
 	Create( filter, 0.0 );
 }
@@ -91,17 +91,17 @@ END_SEND_TABLE()
 static CTEClientProjectile g_TEClientProjectile( "Client Projectile" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//			*mins - 
-//			*maxs - 
-//			height - 
-//			modelindex - 
-//			count - 
-//			speed - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//			*mins -
+//			*maxs -
+//			height -
+//			modelindex -
+//			count -
+//			speed -
 //-----------------------------------------------------------------------------
 void TE_ClientProjectile( IRecipientFilter& filter, float delay,
 	const Vector* vecOrigin, const Vector* vecVelocity, int modelindex, int lifetime, CBaseEntity *pOwner )

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -111,7 +111,7 @@ CDemoUIPanel::CDemoUIPanel( vgui::Panel *parent ) : vgui::Frame( parent, "DemoUI
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDemoUIPanel::~CDemoUIPanel()
 {
@@ -165,11 +165,11 @@ void CDemoUIPanel::OnTick()
 	m_pGo->SetEnabled( bIsPlaying );
 
 	bool bEnabled = bIsPlaying && false;
-		
+
 	// if player can go back in time
 	m_pFastBackward->SetEnabled( bEnabled );
 	m_pPrevFrame->SetEnabled( bEnabled );
-	
+
 	// set filename text
 	m_pCurrentDemo->SetText( demoaction->GetCurrentDemoFile() );
 	bool bHasDemoFile = demoaction->GetCurrentDemoFile()[0] != 0;
@@ -192,11 +192,11 @@ void CDemoUIPanel::OnTick()
 	{
 		curtick = demoplayer->GetPlaybackTick();
 		totalticks = demoplayer->GetTotalTicks();
-		
+
 		fProgress = (float)curtick/(float)totalticks;
 		fProgress = clamp( fProgress, 0.0f, 1.0f );
 	}
-		
+
 	m_pProgress->SetProgress( fProgress );
 	m_pProgressLabelFrame->SetText( va( "Tick: %i / %i", curtick, totalticks ) );
 
@@ -263,7 +263,7 @@ void CDemoUIPanel::OnCommand(const char *command)
 		Q_snprintf( cmd, sizeof(cmd), "demo_gototick %s 0 1\n", tick );
 
 		Cbuf_AddText( cmd );
-		
+
 		// demoplayer->PausePlayback( -1 );
 		// demoplayer->SkipToTick( Q_atoi(tick), false );
 	}
@@ -360,7 +360,7 @@ void CDemoUIPanel::OnFileSelected( char const *fullpath )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoUIPanel::OnVDMChanged( void )
 {
@@ -375,7 +375,7 @@ void CDemoUIPanel::OnVDMChanged( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoUIPanel::IsHoldingFastForward( void )
@@ -423,10 +423,10 @@ void CDemoUIPanel::SetPlaybackScale( float scale )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frame - 
-//			elapsed - 
-//			info - 
+// Purpose:
+// Input  : frame -
+//			elapsed -
+//			info -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoUIPanel::OverrideView( democmdinfo_t& info, int tick )
@@ -435,7 +435,7 @@ bool CDemoUIPanel::OverrideView( democmdinfo_t& info, int tick )
 	{
 		// manual camera override, overrides anyting
 		HandleInput( vgui::input()->IsMouseDown( MOUSE_LEFT ) );
-				
+
 		info.viewOrigin = m_ViewOrigin;
 		info.viewAngles = m_ViewAngles;
 		info.localViewAngles = m_ViewAngles;
@@ -456,15 +456,15 @@ bool CDemoUIPanel::OverrideView( democmdinfo_t& info, int tick )
 
 	m_ViewOrigin = info.GetViewOrigin();
 	m_ViewAngles = info.GetViewAngles();
-	
+
 	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frame - 
-//			elapsed - 
-//			smoothing - 
+// Purpose:
+// Input  : frame -
+//			elapsed -
+//			smoothing -
 //-----------------------------------------------------------------------------
 void CDemoUIPanel::DrawDebuggingInfo()
 {
@@ -475,7 +475,7 @@ void CDemoUIPanel::DrawDebuggingInfo()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoUIPanel::HandleInput( bool active )
 {
@@ -834,7 +834,7 @@ void CDemoUIPanel2::OnMessage(const KeyValues *params, VPANEL fromPanel)
 		{
 			int iNewTickPos = m_pProgress->GetValue();
 			int iDemoCurrentTickPos = demoplayer->GetPlaybackTick();
-			
+
 			if ( iNewTickPos != iDemoCurrentTickPos )
 				Cbuf_AddText( va( "demo_gototick %d 0 1\n", iNewTickPos ) );
 		}
@@ -942,10 +942,10 @@ void CDemoUIPanel2::SetPlaybackScale( float scale )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frame - 
-//			elapsed - 
-//			info - 
+// Purpose:
+// Input  : frame -
+//			elapsed -
+//			info -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoUIPanel2::OverrideView( democmdinfo_t& info, int tick )
@@ -959,7 +959,7 @@ void CDemoUIPanel2::DrawDebuggingInfo()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoUIPanel2::HandleInput( bool active )
 {
@@ -1028,4 +1028,3 @@ void DemoUI2_off()
 static ConCommand demoui2( "demoui2", DemoUI2_f, "Show/hide the advanced demo player UI (demoui2).", FCVAR_DONTRECORD );
 static ConCommand demoui2_on( "+demoui2", DemoUI2_on, "Bring the advanced demo player UI (demoui2) to foreground.", FCVAR_DONTRECORD );
 static ConCommand demoui2_off( "-demoui2", DemoUI2_off, "Send the advanced demo player UI (demoui2) to background.", FCVAR_DONTRECORD );
-

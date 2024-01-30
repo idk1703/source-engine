@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -72,7 +72,7 @@ void AttackState::OnEnter( CCSBot *me )
 			{
 				const float crouchFarRange = 750.0f;
 				float crouchChance;
-				
+
 				// more likely to crouch if using sniper rifle or if enemy is far away
 				if (me->IsUsingSniperRifle())
 					crouchChance = 50.0f;
@@ -106,7 +106,7 @@ void AttackState::OnEnter( CCSBot *me )
 		if (m_crouchAndHold)
 		{
 			me->Crouch();
-			me->PrintIfWatched( "Crouch and hold attack!\n" ); 
+			me->PrintIfWatched( "Crouch and hold attack!\n" );
 		}
 	}
 
@@ -303,8 +303,8 @@ void AttackState::OnUpdate( CCSBot *me )
 	CWeaponCSBase *weapon = me->GetActiveCSWeapon();
 	if (weapon)
 	{
-		if (weapon->GetWeaponID() == WEAPON_C4 || 
-			weapon->GetWeaponID() == WEAPON_HEGRENADE || 
+		if (weapon->GetWeaponID() == WEAPON_C4 ||
+			weapon->GetWeaponID() == WEAPON_HEGRENADE ||
 			weapon->GetWeaponID() == WEAPON_FLASHBANG ||
 			weapon->GetWeaponID() == WEAPON_SMOKEGRENADE)
 		{
@@ -340,9 +340,9 @@ void AttackState::OnUpdate( CCSBot *me )
 
 		bool isPinnedDown = (gpGlobals->curtime > m_pinnedDownTimestamp);
 
-		if (isPinnedDown || 
+		if (isPinnedDown ||
 			(me->CanSeeSniper() && !me->IsSniper()) ||
-			(me->IsOutnumbered() && m_isCoward) || 
+			(me->IsOutnumbered() && m_isCoward) ||
 			(me->OutnumberedCount() >= 2 && me->GetProfile()->GetAggression() < 1.0f))
 		{
 			// only retreat if at least one of them is aiming at me
@@ -375,7 +375,7 @@ void AttackState::OnUpdate( CCSBot *me )
 						me->GetChatter()->NeedBackup();
 					}
 				}
-				else	
+				else
 				{
 					me->PrintIfWatched( "I want to retreat, but no safe spots nearby!\n" );
 				}
@@ -512,7 +512,7 @@ void AttackState::OnUpdate( CCSBot *me )
 		// dont adjust zoom level if we're already zoomed in - just fire
 		if (me->GetZoomLevel() == CCSBot::NO_ZOOM && me->AdjustZoom( targetRange ))
 			m_scopeTimestamp = gpGlobals->curtime;
-	
+
 		const float waitScopeTime = 0.3f + me->GetProfile()->GetReactionTime();
 		if (gpGlobals->curtime - m_scopeTimestamp < waitScopeTime)
 		{
@@ -565,7 +565,7 @@ void AttackState::OnUpdate( CCSBot *me )
 		{
 			m_isEnemyHidden = true;
 		}
-					
+
 
 		if (notSeenEnemyTime > 0.1f)
 		{
@@ -629,7 +629,7 @@ void AttackState::OnUpdate( CCSBot *me )
 	else if (me->IsCrouching())	// if we are crouching, be a little patient
 		chaseTime += 1.0f;
 
-	// if we can't see the enemy, and have either seen him but currently lost sight of him, 
+	// if we can't see the enemy, and have either seen him but currently lost sight of him,
 	// or haven't yet seen him, chase after him (unless we are a sniper)
 	if (!me->IsEnemyVisible() && (notSeenEnemyTime > chaseTime || !m_haveSeenEnemy))
 	{
@@ -707,4 +707,3 @@ void AttackState::OnExit( CCSBot *me )
 
 	//me->StopAiming();
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -45,13 +45,13 @@ static Color s_TextColor( 200, 200, 200, 192 );
 static Color s_TextColorFocus( 208, 143, 40, 192 );
 
 // NOTE: Index with [preview][selected]
-static Color s_BarColor[2][2] = 
+static Color s_BarColor[2][2] =
 {
 	{ Color( 45, 45, 45, 255 ), Color( 150, 80, 0, 255 ) },
 	{ Color( 30, 255, 255, 80 ), Color( 30, 180, 255, 255 ) }
 };
 
-static Color s_ZeroColor[2][2] = 
+static Color s_ZeroColor[2][2] =
 {
 	{ Color( 33, 33, 33, 255 ), Color( 0, 255, 255, 60 ) },
 	{ Color( 100, 80, 0, 255 ), Color( 0, 180, 255, 255 ) }
@@ -75,14 +75,14 @@ static void BlendFlexValues( AttributeValue_t *pResult, const AttributeValue_t &
 	// Do the math in 'left-right' space because we filter in that space
 	float flSrcLeft, flSrcRight;
 	ValueBalanceToLeftRight( &flSrcLeft, &flSrcRight, src.m_pValue[ANIM_CONTROL_VALUE], src.m_pValue[ANIM_CONTROL_BALANCE] );
-	
+
 	float flDestLeft, flDestRight;
 	ValueBalanceToLeftRight( &flDestLeft, &flDestRight, dest.m_pValue[ANIM_CONTROL_VALUE], dest.m_pValue[ANIM_CONTROL_BALANCE] );
-	
+
 	float flTargetLeft = flSrcLeft + flLeftFilter * ( flDestLeft - flSrcLeft );
 	float flTargetRight = flSrcRight + flRightFilter * ( flDestRight - flSrcRight );
-	
-	LeftRightToValueBalance( &pResult->m_pValue[ANIM_CONTROL_VALUE], &pResult->m_pValue[ANIM_CONTROL_BALANCE], flTargetLeft, flTargetRight, 
+
+	LeftRightToValueBalance( &pResult->m_pValue[ANIM_CONTROL_VALUE], &pResult->m_pValue[ANIM_CONTROL_BALANCE], flTargetLeft, flTargetRight,
 		( flBlend <= 0.5f ) ? src.m_pValue[ANIM_CONTROL_BALANCE] : dest.m_pValue[ANIM_CONTROL_BALANCE] );
 
 	pResult->m_pValue[ANIM_CONTROL_MULTILEVEL] = src.m_pValue[ANIM_CONTROL_MULTILEVEL] + ( dest.m_pValue[ANIM_CONTROL_MULTILEVEL] - src.m_pValue[ANIM_CONTROL_MULTILEVEL] ) * flBlend;
@@ -122,7 +122,7 @@ private:
 // Constructor, destructor
 //-----------------------------------------------------------------------------
 CAttributeSlider::CAttributeSlider( CBaseAnimSetAttributeSliderPanel *parent, const char *panelName, CDmElement *pControl ) :
-	BaseClass( (Panel *)parent, panelName ), 
+	BaseClass( (Panel *)parent, panelName ),
 	m_pParent( parent ),
 	m_pWhite( NULL ),
 	m_bPreviewEnabled( false ),
@@ -140,7 +140,7 @@ CAttributeSlider::CAttributeSlider( CBaseAnimSetAttributeSliderPanel *parent, co
 	m_hControl = pControl;
 
 	// Cache off control information since this state should never change
-	// NOTE: If it ever does, just change the implementations of 
+	// NOTE: If it ever does, just change the implementations of
 	// IsTransform + GetMidpoint to always read these values from the attributes
 	m_bTransform = pControl->GetValue< bool >( "transform" );
 
@@ -218,17 +218,17 @@ void CAttributeSlider::ApplySchemeSettings( IScheme *scheme )
 
 
 //-----------------------------------------------------------------------------
-// Gets/sets the slider value. 
+// Gets/sets the slider value.
 // NOTE: This may not match the value pushed into the control because of fading
 //-----------------------------------------------------------------------------
-static const char *s_pChangeMessage[ANIM_CONTROL_COUNT] = 
+static const char *s_pChangeMessage[ANIM_CONTROL_COUNT] =
 {
 	"SliderMoved",
 	"BalanceChanged",
 	"MultiLevelChanged",
 };
 
-static const char *s_pChangeKeyValue[ANIM_CONTROL_COUNT] = 
+static const char *s_pChangeKeyValue[ANIM_CONTROL_COUNT] =
 {
 	"position",
 	"balance",
@@ -1036,7 +1036,7 @@ void CAttributeSlider::DrawCircularPreview( AnimationControlType_t type, bool bM
 	if ( !bMainTick )
 	{
 		clr[ 3 ] *= 0.5f;
-	}	
+	}
 
 	DrawCircularTick( clr, flCurrent, nCenterX, nCenterY, flRadius );
 }

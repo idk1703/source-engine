@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -69,23 +69,23 @@ int ClipPolyToPlane_LerpTexCoords( PortalMeshPoint_t *inVerts, int vertCount, Po
 			continue;
 
 		Vector& p1 = inVerts[i].vWorldSpacePosition;
-		
+
 
 		// generate a split point
 		int i2 = (i+1)%vertCount;
 		Vector& p2 = inVerts[i2].vWorldSpacePosition;
-		
+
 		dot = dists[i] / (dists[i]-dists[i+1]);
 		for (j=0 ; j<3 ; j++)
-		{	
+		{
 			mid[j] = p1[j] + dot*(p2[j]-p1[j]);
 		}
 
 		VectorCopy (mid, outVerts[outCount].vWorldSpacePosition);
-		
+
 		outVerts[outCount].texCoord.x = inVerts[i].texCoord.x + dot*(inVerts[i2].texCoord.x - inVerts[i].texCoord.x);
 		outVerts[outCount].texCoord.y = inVerts[i].texCoord.y + dot*(inVerts[i2].texCoord.y - inVerts[i].texCoord.y);
-		
+
 		++outCount;
 	}
 
@@ -140,7 +140,7 @@ void Clip_And_Render_Convex_Polygon( PortalMeshPoint_t *pVerts, int iVertCount, 
 	//clip by the viewing frustum
 	{
 		VPlane *pFrustum = view->GetFrustum();
-		
+
 		//clip by first plane and put output into pInVerts
 		iVertCount = ClipPolyToPlane_LerpTexCoords( pVerts, iVertCount, pInVerts, pFrustum[0].m_Normal, pFrustum[0].m_Dist, 0.01f );
 
@@ -159,7 +159,7 @@ void Clip_And_Render_Convex_Polygon( PortalMeshPoint_t *pVerts, int iVertCount, 
 	}
 
 	CMatRenderContextPtr pRenderContext( materials );
-	
+
 	RenderPortalMeshConvexPolygon( pOutVerts, iVertCount, pMaterial, pBind );
 	if( mat_wireframe.GetBool() )
 		RenderPortalMeshConvexPolygon( pOutVerts, iVertCount, materials->FindMaterial( "shadertest/wireframe", TEXTURE_GROUP_CLIENT_EFFECTS, false ), pBind );
@@ -167,17 +167,3 @@ void Clip_And_Render_Convex_Polygon( PortalMeshPoint_t *pVerts, int iVertCount, 
 	stackfree( pOutVerts );
 	stackfree( pInVerts );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

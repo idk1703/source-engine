@@ -74,7 +74,7 @@ CSHA1::~CSHA1()
 	// Reset();
 }
 #ifdef	_MINIMUM_BUILD_
-void Minimum_CSHA1::Reset() 
+void Minimum_CSHA1::Reset()
 #else
 void CSHA1::Reset()
 #endif

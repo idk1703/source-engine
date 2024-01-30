@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -30,4 +30,3 @@ int CGameTrace::GetEntityIndex() const
 	else
 		return -1;
 }
-

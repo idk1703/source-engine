@@ -14,15 +14,15 @@
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTFStorePage_Maps2::CTFStorePage_Maps2( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData ) 
+CTFStorePage_Maps2::CTFStorePage_Maps2( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData )
 :	BaseClass( parent, pPageData, "Resource/UI/econ/store/v2/StorePreviewItemPanel_Maps.res" )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage_Maps2::OnPageShow()
 {
@@ -32,7 +32,7 @@ void CTFStorePage_Maps2::OnPageShow()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage_Maps2::OnCommand( const char *command )
 {
@@ -47,7 +47,7 @@ void CTFStorePage_Maps2::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage_Maps2::DisplayMapStampsDialog()
 {

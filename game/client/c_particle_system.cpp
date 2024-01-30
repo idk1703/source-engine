@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -37,7 +37,7 @@ protected:
 
 	enum { kMAXCONTROLPOINTS = 63 }; ///< actually one less than the total number of cpoints since 0 is assumed to be me
 
-	
+
 	EHANDLE		m_hControlPointEnts[kMAXCONTROLPOINTS];
 	//	SendPropArray3( SENDINFO_ARRAY3(m_iControlPointParents), SendPropInt( SENDINFO_ARRAY(m_iControlPointParents), 3, SPROP_UNSIGNED ) ),
 	unsigned char m_iControlPointParents[kMAXCONTROLPOINTS];
@@ -59,12 +59,12 @@ BEGIN_RECV_TABLE_NOBASE( C_ParticleSystem, DT_ParticleSystem )
 	RecvPropFloat( RECVINFO( m_flStartTime ) ),
 
 	RecvPropArray3( RECVINFO_ARRAY(m_hControlPointEnts), RecvPropEHandle( RECVINFO( m_hControlPointEnts[0] ) ) ),
-	RecvPropArray3( RECVINFO_ARRAY(m_iControlPointParents), RecvPropInt( RECVINFO(m_iControlPointParents[0]))), 
+	RecvPropArray3( RECVINFO_ARRAY(m_iControlPointParents), RecvPropInt( RECVINFO(m_iControlPointParents[0]))),
 	RecvPropBool( RECVINFO( m_bWeatherEffect ) ),
 END_RECV_TABLE();
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ParticleSystem::C_ParticleSystem()
 {
@@ -72,7 +72,7 @@ C_ParticleSystem::C_ParticleSystem()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ParticleSystem::PreDataUpdate( DataUpdateType_t updateType )
 {
@@ -82,7 +82,7 @@ void C_ParticleSystem::PreDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ParticleSystem::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -116,7 +116,7 @@ void C_ParticleSystem::PostDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ParticleSystem::ClientThink( void )
 {
@@ -176,7 +176,7 @@ void C_ParticleSystem::ClientThink( void )
 // PARTICLE SYSTEM DISPATCH EFFECT
 //======================================================================================================================
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ParticleEffectCallback( const CEffectData &data )
 {
@@ -222,7 +222,7 @@ void ParticleEffectCallback( const CEffectData &data )
 				}
 			}
 		}
-	}	
+	}
 	else
 	{
 		if ( GameRules() )
@@ -264,7 +264,7 @@ DECLARE_CLIENT_EFFECT( "ParticleEffect", ParticleEffectCallback );
 // PARTICLE SYSTEM STOP EFFECT
 //======================================================================================================================
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ParticleEffectStopCallback( const CEffectData &data )
 {

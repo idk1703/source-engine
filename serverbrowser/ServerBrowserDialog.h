@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -14,11 +14,11 @@
 extern class IRunGameEngine *g_pRunGameEngine;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CServerBrowserDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CServerBrowserDialog, vgui::Frame ); 
+	DECLARE_CLASS_SIMPLE( CServerBrowserDialog, vgui::Frame );
 
 public:
 	// Construction/destruction
@@ -37,12 +37,12 @@ public:
 
 	// updates status text at bottom of window
 	void UpdateStatusText(PRINTF_FORMAT_STRING const char *format, ...);
-	
+
 	// updates status text at bottom of window
 	void UpdateStatusText(wchar_t *unicode);
 
 	// context menu access
-	CServerContextMenu *GetContextMenu(vgui::Panel *pParent);		
+	CServerContextMenu *GetContextMenu(vgui::Panel *pParent);
 
 	// returns a pointer to a static instance of this dialog
 	// valid for use only in sort functions
@@ -52,7 +52,7 @@ public:
 	void AddServerToFavorites(gameserveritem_t &server);
 	// Adds a server to our list of blacklisted servers
 	void AddServerToBlacklist(gameserveritem_t &server);
-	bool IsServerBlacklisted(gameserveritem_t &server); 
+	bool IsServerBlacklisted(gameserveritem_t &server);
 
 	// begins the process of joining a server from a game list
 	// the game info dialog it opens will also update the game list

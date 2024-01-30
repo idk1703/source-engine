@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -88,4 +88,4 @@ private:
 } // namespace vgui
 
 
-#endif // WIZARDSUBPANEL_H	   
+#endif // WIZARDSUBPANEL_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -105,11 +105,11 @@ class CFinalStatusWindow : public vgui::Frame
 public:
 	typedef vgui::Frame BaseClass;
 
-	CFinalStatusWindow( vgui::Panel *parent, const char *pName, const char *pOutputDirName, const char *pOutputModGamedirName ) 
+	CFinalStatusWindow( vgui::Panel *parent, const char *pName, const char *pOutputDirName, const char *pOutputModGamedirName )
 		: BaseClass( parent, pName )
 	{
 		m_pLabel = new vgui::Label( this, "MessageLabel", "" );
-		
+
 		LoadControlSettings( "FinalStatusWindow.res" );
 
 		char msg[512];
@@ -146,7 +146,7 @@ CCreateModWizard::CCreateModWizard( vgui::Panel *parent, const char *name, KeyVa
 
 	subPanel = new CModWizardSubPanel_TemplateOptions( this, "CModWizardSubPanel_TemplateOptions" );
 	subPanel->SetVisible( false );
-	
+
 
 	// Tell the config manager which games to put in the config by default
 	if ( !V_strcmp( g_engineDir, "orangebox" ) )
@@ -159,7 +159,7 @@ CCreateModWizard::CCreateModWizard( vgui::Panel *parent, const char *name, KeyVa
 	}
 	else
 	{
-		subPanel = new CModWizardSubPanel_CopyFiles_Source2006( this, "CModWizardSubPanel_CopyFiles" );		
+		subPanel = new CModWizardSubPanel_CopyFiles_Source2006( this, "CModWizardSubPanel_CopyFiles" );
 	}
 
 	subPanel->SetVisible( false );
@@ -173,7 +173,7 @@ CCreateModWizard::~CCreateModWizard()
 	if ( m_bRunFromCommandLine )
 	{
 		g_bAppQuit = true;
-		
+
 		if ( g_bModWizardFinished )
 			SetModWizardStatusCode( 2 );
 		else
@@ -207,4 +207,3 @@ void CCreateModWizard::Run()
 
 	vgui::input()->SetAppModalSurface( GetVPanel() );
 }
-

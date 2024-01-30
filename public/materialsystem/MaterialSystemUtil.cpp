@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -170,7 +170,7 @@ void CTextureReference::InitProceduralTexture( const char *pTextureName, const c
 	Shutdown();
 
 	m_pTexture = materials->CreateProceduralTexture( pTextureName, pTextureGroupName, w, h, fmt, nFlags );
-	
+
 	// NOTE: The texture reference is already incremented internally above!
 	/*
 	if ( m_pTexture )
@@ -191,7 +191,7 @@ void CTextureReference::InitRenderTarget( int w, int h, RenderTargetSizeMode_t s
 	int renderTargetFlags = bHDR ? CREATERENDERTARGETFLAGS_HDR : 0;
 
 	// NOTE: Refcount returned by CreateRenderTargetTexture is 1
-	m_pTexture = materials->CreateNamedRenderTargetTextureEx( pStrOptionalName, w, h, sizeMode, fmt, 
+	m_pTexture = materials->CreateNamedRenderTargetTextureEx( pStrOptionalName, w, h, sizeMode, fmt,
 		depth, textureFlags, renderTargetFlags );
 
 	Assert( m_pTexture );
@@ -226,14 +226,14 @@ void CTextureReference::InitRenderTargetTexture( int w, int h, RenderTargetSizeM
 
 	int renderTargetFlags = CREATERENDERTARGETFLAGS_NOEDRAM;
 
-	m_pTexture = materials->CreateNamedRenderTargetTextureEx( 
-		pStrOptionalName, 
-		w, 
-		h, 
-		sizeMode, 
-		fmt, 
-		depth, 
-		TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT, 
+	m_pTexture = materials->CreateNamedRenderTargetTextureEx(
+		pStrOptionalName,
+		w,
+		h,
+		sizeMode,
+		fmt,
+		depth,
+		TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT,
 		renderTargetFlags );
 	Assert( m_pTexture );
 }
@@ -252,4 +252,3 @@ void CTextureReference::InitRenderTargetSurface( int width, int height, ImageFor
 	m_pTexture->CreateRenderTargetSurface( width, height, fmt, bSameAsTexture );
 }
 #endif
-

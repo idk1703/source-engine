@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -72,7 +72,7 @@ void CWalkerStrider::Precache()
 
 void CWalkerStrider::Spawn()
 {
-	SpawnWalker( 
+	SpawnWalker(
 		WALKER_STRIDER_MODEL,		// Model name.
 		OBJ_WALKER_STRIDER,			// Object type.
 		Vector( -186, -157, -504 ), // Placement dimensions.
@@ -101,11 +101,11 @@ void CWalkerStrider::Fire()
 	m_flAnimTime = m_flPrevAnimTime = 0;
 	SetCycle( 0 );
 	m_flNextShootTime = gpGlobals->curtime;
-	
+
 	m_vFireAngles[ROLL] = 0;
 	m_vFireAngles[PITCH] = m_vDriverAngles[PITCH];
 	m_vFireAngles[YAW] = GetAbsAngles()[YAW];
-	
+
 	// Play the fire sound.
 	CPASAttenuationFilter filter( this, "Brush.Fire" );
 	EmitSound( filter, 0, "Brush.Fire", &GetAbsOrigin() );
@@ -120,12 +120,12 @@ void CWalkerStrider::Crouch()
 	m_bCrouched = true;
 	m_flNextCrouchTime = gpGlobals->curtime + 0.3;
 	ResetSequence( LookupSequence( "low" ) );
-	
+
 	// HACK: there should be a better way to this.. like CBaseAnimating::ResetAnimation,
 	// or ResetSequence should do it.
 	m_flAnimTime = m_flPrevAnimTime = 0;
 	SetCycle( 0 );
-	
+
 	// HACK CITY.. This forces it to invalidate the abs origins of the gun bases.
 	Vector vPos = GetLocalOrigin();
 	SetLocalOrigin( vPos + Vector( 100, 0, 0 ) );
@@ -196,7 +196,7 @@ void CWalkerStrider::WalkerThink()
 			{
 				Vector vSrc = GetAbsOrigin();
 				Vector vForward;
-				
+
 				QAngle vFireAngles = m_vFireAngles;
 				vFireAngles[YAW] += RandomFloat( -STRIDER_FIRE_ANGLE_ERROR, STRIDER_FIRE_ANGLE_ERROR );
 				vFireAngles[PITCH] += RandomFloat( -STRIDER_FIRE_ANGLE_ERROR, STRIDER_FIRE_ANGLE_ERROR );
@@ -208,7 +208,7 @@ void CWalkerStrider::WalkerThink()
 				Vector vHitPos = trace.endpos;
 				float flDamageRadius = 100;
 				float flDamage = 50;
-				
+
 				CBasePlayer *pDriver = GetPassenger( VEHICLE_ROLE_DRIVER );
 				if ( pDriver )
 				{
@@ -233,26 +233,26 @@ void CWalkerStrider::WalkerThink()
 		if ( m_flOriginToLowestLegHeight != -1 )
 		{
 			trace_t trace;
-			UTIL_TraceLine( 
-				GetAbsOrigin(), 
+			UTIL_TraceLine(
+				GetAbsOrigin(),
 				GetAbsOrigin() - Vector( 0, 0, 2000 ),
-				MASK_SOLID_BRUSHONLY, 
-				this, 
-				COLLISION_GROUP_NONE, 
+				MASK_SOLID_BRUSHONLY,
+				this,
+				COLLISION_GROUP_NONE,
 				&trace );
 
 			if ( trace.fraction < 1 )
 			{
 				m_flWantedZ = trace.endpos.z + m_flOriginToLowestLegHeight;
 			}
-			
+
 			// Move our Z towards the wanted Z.
 			if ( m_flWantedZ != -1 )
 			{
 				Vector vCur = GetAbsOrigin();
 				vCur.z = Approach( m_flWantedZ, vCur.z, STRIDER_TORSO_VERTICAL_SLIDE_SPEED * dt );
 				SetAbsOrigin( vCur );
-			}		
+			}
 		}
 	}
 }
@@ -267,7 +267,7 @@ void CWalkerStrider::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYP
 	CBaseTFPlayer *pPlayer = dynamic_cast<CBaseTFPlayer*>(pActivator);
 	if ( !pPlayer || !InSameTeam( pPlayer ) )
 		return;
-	
+
 	// Ok, put them in the driver role.
 	AttemptToBoardVehicle( pPlayer );
 }
@@ -362,7 +362,7 @@ void CWalkerStrider::FootHit( const char *pFootName )
 		{
 			CTakeDamageInfo info( this, pPlayer, 20, DMG_CLUB );
 			TFGameRules()->RadiusDamage( info, footPosition, 200, CLASS_NONE );
-		}			
+		}
 
 		m_flDontMakeSoundsUntil = gpGlobals->curtime + 0.4;
 	}
@@ -378,13 +378,13 @@ void CWalkerStrider::HandleAnimEvent( animevent_t *pEvent )
 		case STRIDER_AE_FOOTSTEP_LEFTL:
 			FootHit( "left foot" );
 			break;
-		
+
 		case STRIDER_AE_FOOTSTEP_RIGHT:
 		case STRIDER_AE_FOOTSTEP_RIGHTM:
 		case STRIDER_AE_FOOTSTEP_RIGHTL:
 			FootHit( "right foot" );
 			break;
-		
+
 		case STRIDER_AE_FOOTSTEP_BACK:
 		case STRIDER_AE_FOOTSTEP_BACKM:
 		case STRIDER_AE_FOOTSTEP_BACKL:
@@ -392,4 +392,3 @@ void CWalkerStrider::HandleAnimEvent( animevent_t *pEvent )
 			break;
 	}
 }
-

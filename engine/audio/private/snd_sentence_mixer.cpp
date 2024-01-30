@@ -25,7 +25,7 @@ public:
 	virtual bool		ShouldContinueMixing( void );
 
 	virtual CAudioSource*	GetSource( void );
-	
+
 	// get the current position (next sample to be mixed)
 	virtual int			GetSamplePosition( void );
 	virtual float		ModifyPitch( float pitch );
@@ -83,7 +83,7 @@ CSentenceMixer::CSentenceMixer( voxword_t *pWords )
 			// very long sentence, prevent overflow
 			break;
 		}
-	}	
+	}
 
 	// startup all the mixers now, this serves as a hint to the audio streamer
 	// actual mixing will commence when they are ALL ready
@@ -108,7 +108,7 @@ CSentenceMixer::CSentenceMixer( voxword_t *pWords )
 		}
 	}
 
-	m_bNewWord = ( m_pCurrentWordMixer != NULL );	
+	m_bNewWord = ( m_pCurrentWordMixer != NULL );
 }
 
 CSentenceMixer::~CSentenceMixer( void )
@@ -121,7 +121,7 @@ CSentenceMixer::~CSentenceMixer( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true if mixing can commence, false otherwise
 //-----------------------------------------------------------------------------
 bool CSentenceMixer::IsReadyToMix()
@@ -148,7 +148,7 @@ bool CSentenceMixer::IsReadyToMix()
 
 		int start = m_VoxWords[m_currentWordIndex].start;
 		int end = m_VoxWords[m_currentWordIndex].end;
-		
+
 		// don't allow overlapped ranges
 		if ( end <= start )
 		{
@@ -192,7 +192,7 @@ CAudioSource *CSentenceMixer::GetSource( void )
 
 	return NULL;
 }
-	
+
 // get the current position (next sample to be mixed)
 int CSentenceMixer::GetSamplePosition( void )
 {
@@ -238,7 +238,7 @@ void CSentenceMixer::FreeWord( int nWord )
 	{
 		delete m_pWordMixers[nWord];
 		m_pWordMixers[nWord] = NULL;
-	}	
+	}
 
 	if ( m_VoxWords[nWord].sfx )
 	{
@@ -334,7 +334,7 @@ int CSentenceMixer::MixDataToDevice( IAudioDevice *pDevice, channel_t *pChannel,
 			}
 
 			// advance to next valid word mixer
-			do 
+			do
 			{
 				m_currentWordIndex++;
 				if ( m_currentWordIndex >= m_nNumWords )

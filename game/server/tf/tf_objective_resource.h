@@ -60,7 +60,7 @@ public:
 	float GetBaseMvMBombUpgradeTime( void ){ return m_flMvMBaseBombUpgradeTime; }
 	void SetNextMvMBombUpgradeTime( float nTime ){ m_flMvMNextBombUpgradeTime = nTime; }
 	float GetNextMvMBombUpgradeTime( void ) { return m_flMvMNextBombUpgradeTime; }
-	
+
 	void SetMannVsMachineChallengeIndex( int iIndex ) { m_iChallengeIndex = iIndex; }
 	int	 GetMannVsMachineChallengeIndex( void ) { return m_iChallengeIndex; }
 	void SetMvMPopfileName( string_t iszMvMPopfileName ) { m_iszMvMPopfileName = iszMvMPopfileName; }
@@ -79,7 +79,7 @@ private:
 
 	CNetworkVar( float, m_flMannVsMachineNextWaveTime );
 	CNetworkVar( bool, m_bMannVsMachineBetweenWaves );
-	
+
 	CNetworkArray( int, m_nMannVsMachineWaveClassCounts, MVM_CLASS_TYPES_PER_WAVE_MAX );
 	CNetworkArray( int, m_nMannVsMachineWaveClassCounts2, MVM_CLASS_TYPES_PER_WAVE_MAX );
 	CNetworkArray( string_t, m_iszMannVsMachineWaveClassNames, MVM_CLASS_TYPES_PER_WAVE_MAX );
@@ -106,4 +106,3 @@ inline CTFObjectiveResource *TFObjectiveResource()
 }
 
 #endif	// TF_OBJECTIVE_RESOURCE_H
-

@@ -96,7 +96,7 @@ const char *g_szItemBorders[][5] =
 	{ "BackpackItemBorder_RarityMythical",	"BackpackItemMouseOverBorder_RarityMythical",	"BackpackItemSelectedBorder",	"BackpackItemGreyedOutBorder_RarityMythical",	"BackpackItemGreyedOutSelectedBorder_RarityMythical"	}, // AE_RARITY_MYTHICAL,
 	{ "BackpackItemBorder_RarityLegendary",	"BackpackItemMouseOverBorder_RarityLegendary",	"BackpackItemSelectedBorder",	"BackpackItemGreyedOutBorder_RarityLegendary",	"BackpackItemGreyedOutSelectedBorder_RarityLegendary"	}, // AE_RARITY_LEGENDARY,
 	{ "BackpackItemBorder_RarityAncient",	"BackpackItemMouseOverBorder_RarityAncient",	"BackpackItemSelectedBorder",	"BackpackItemGreyedOutBorder_RarityAncient",	"BackpackItemGreyedOutSelectedBorder_RarityAncient"		}, // AE_RARITY_ANCIENT,
-};	
+};
 
 COMPILE_TIME_ASSERT( ARRAYSIZE(g_szItemBorders) == AE_MAX_TYPES );
 
@@ -128,7 +128,7 @@ static bool HasCustomUserAttribute ( const CEconItemView *pEconItemView, const c
 	pEconItemView->IterateAttributes( &countIterator );
 
 	return countIterator.GetCount() > iUserData;
-}	
+}
 
 static bool HasRemovableCustomName ( const CEconItemView *pEconItemView, const char *, int )
 {
@@ -192,7 +192,7 @@ void GetCustomDialogToken_StrangePartName( const CEconItemView *pEconItemView, i
 	extern const wchar_t *GetLocalizedStringForKillEaterTypeAttr( const CLocalizationProvider *pLocalizationProvider, uint32 unKillEaterEventType );		// return type changed from locchar_t * because the backpack panel only exists on the client
 
 	uint32 unKillEaterBaseType = GetScoreTypeForKillEaterAttr( pEconItemView, GetKillEaterAttr_Type( iUserData ) );
-	
+
 	out_String = GetLocalizedStringForKillEaterTypeAttr( GLocalizationProvider(), unKillEaterBaseType );
 }
 
@@ -261,7 +261,7 @@ static bool HasResettableScoreAttributes ( const CEconItemView *pEconItemView, c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int GetRemovableAttributesCount()
 {
@@ -278,7 +278,7 @@ RefurbishableProperty RemovableAttributes_GetAttributeDetails( int i )
 
 	if ( i < ARRAYSIZE( g_RemoveableAttributes ) )
 		return g_RemoveableAttributes[i];
-	
+
 	// Which attribute in particular are we looking for?
 	int iStrangePartIndex = i - ARRAYSIZE( g_RemoveableAttributes );
 	if ( iStrangePartIndex < GetKillEaterAttrCount() )
@@ -297,7 +297,7 @@ RefurbishableProperty RemovableAttributes_GetAttributeDetails( int i )
 
 			return partReturnProp;
 		}
-		
+
 		// ...or the presence of a restriction attribute if this slot is a base slot that might have a filter
 		static RefurbishableProperty sStrangeFilterProperty = { &HasCustomAttribute, &GetCustomDialogToken_StrangePartName, NULL, "#RefurbishItem_RemoveStrangeFilterCombo", "#RefurbishItem_RemoveStrangeFilterTitle", "#RefurbishItem_RemoveStrangeFilter", kCustomizationRemove_StrangePart, kNoUserData };
 
@@ -358,7 +358,7 @@ bool RemovableAttributes_DoAnyAttributesApply( const CEconItemView *pEconItemVie
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ConVar cl_showbackpackrarities( "cl_showbackpackrarities", "0", FCVAR_ARCHIVE, "0 = Show no backpack icon border colors. 1 = Show item rarities within the backpack. 2 = Show item rarities only for Market-listable items." );
 ConVar cl_show_market_data_on_items( "cl_show_market_data_on_items", "1", FCVAR_ARCHIVE, "0 = Never. 1 = Only when showing borders for Market-listable items. 2 = Always." );
@@ -368,7 +368,7 @@ ConVar tf_explanations_backpackpanel( "tf_explanations_backpackpanel", "0", FCVA
 ConVar tf_backpack_page_button_delay( "tf_backpack_page_button_delay", "0.5", FCVAR_ARCHIVE, "Amount of time the mouse cursor needs to hover over the page button to select the page." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBackpackPanel::CBackpackPanel( vgui::Panel *parent, const char *panelName ) : CBaseLoadoutPanel( parent, panelName )
 {
@@ -435,7 +435,7 @@ CBackpackPanel::~CBackpackPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -629,7 +629,7 @@ void CBackpackPanel::SetPageButtonTextColorBasedOnContents()
 		{
 			CEconItemView *pItem = pInv->GetItem( i );
 			const int nSlot = InventoryManager()->GetBackpackPositionFromBackend( pItem->GetInventoryPosition() ) - 1;
-			const int nPage = nSlot / GetNumSlotsPerPage();	 
+			const int nPage = nSlot / GetNumSlotsPerPage();
 			if ( nPage >= 0 && nPage < m_Pages.Count() )
 			{
 				vecPageCount[ nPage ] = vecPageCount[ nPage ] + 1;
@@ -702,9 +702,9 @@ void CBackpackPanel::PositionItemPanel( CItemModelPanel *pPanel, int iIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBackpackPanel::PerformLayout( void ) 
+void CBackpackPanel::PerformLayout( void )
 {
 	BaseClass::PerformLayout();
 
@@ -761,7 +761,7 @@ void CBackpackPanel::PerformLayout( void )
 					pButton->AddActionSignalTarget( this );
 				}
 				pPage->SetDialogVariable( "page", i+1 );
-				
+
 				bool bVisible = i < m_nNumActivePages;
 				if ( bVisible )
 				{
@@ -810,7 +810,7 @@ void CBackpackPanel::PerformLayout( void )
 	}
 
 	if ( !m_bDragging )
-	{	
+	{
 		if ( m_pDragToNextPageButton && m_pDragToPrevPageButton )
 		{
 			m_pDragToNextPageButton->SetVisible( false );
@@ -839,7 +839,7 @@ void CBackpackPanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::FireGameEvent( IGameEvent *event )
 {
@@ -876,7 +876,7 @@ void CBackpackPanel::FireGameEvent( IGameEvent *event )
 
 			// Paint can list
 			// Ignore the stock paintcan thats only for armory purposes
-			if ( !V_strcmp( pEconTool->GetTypeName(), "paint_can" ) && pItemDef_BasePaintCan != pItemDef ) 
+			if ( !V_strcmp( pEconTool->GetTypeName(), "paint_can" ) && pItemDef_BasePaintCan != pItemDef )
 			{
 				// Paint Can
 				m_vecPaintCans.AddToTail( pItemDef->GetDefinitionIndex() );
@@ -967,7 +967,7 @@ void CBackpackPanel::SetCurrentTransactionID( uint64 nTxnID )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::OnShowPanel( bool bVisible, bool bReturningFromArmory )
 {
@@ -1045,7 +1045,7 @@ void CBackpackPanel::OnShowPanel( bool bVisible, bool bReturningFromArmory )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::PostShowPanel( bool bVisible )
 {
@@ -1069,7 +1069,7 @@ void CBackpackPanel::PostShowPanel( bool bVisible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBackpackPanel::GetNumPages( void )
 {
@@ -1078,7 +1078,7 @@ int CBackpackPanel::GetNumPages( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::AssignItemToPanel( CItemModelPanel *pPanel, int iIndex )
 {
@@ -1116,7 +1116,7 @@ void CBackpackPanel::AssignItemToPanel( CItemModelPanel *pPanel, int iIndex )
 				// when we customize it.
 				CFmtStr fmtStrCustomizedDefName( "Upgradeable %s", mapItems[it]->GetDefinitionName() );
 				pItemDef = GetItemSchema()->GetItemDefinitionByName( fmtStrCustomizedDefName.Access() );
-				
+
 				// If we don't have an upgradeable version, we assume that we can't upgrade it and link to the base
 				// definition instead. We expect this to only happen if the item won't actually be useable for whatever
 				// purpose (name tags, etc.). We sanity-check this on the GC.
@@ -1243,7 +1243,7 @@ void CBackpackPanel::AssignItemToPanel( CItemModelPanel *pPanel, int iIndex )
 		if ( pItemData	// Want to put in an item
 		  && pPanel->GetItem()	// Panel has an item
 		  && pItemData->GetItemID() == pPanel->GetItem()->GetItemID() // That panel has the same item that we want to put in
-		  && nDirtyIndex == m_vecDirtyItems.InvalidIndex() ) // And that item is not dirtied.  
+		  && nDirtyIndex == m_vecDirtyItems.InvalidIndex() ) // And that item is not dirtied.
 		{
 			// We dont do anything
 			return;
@@ -1281,7 +1281,7 @@ void CBackpackPanel::AssignItemToPanel( CItemModelPanel *pPanel, int iIndex )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::ClearNameFilter( bool bUpdateModelPanels )
 {
@@ -1302,7 +1302,7 @@ void CBackpackPanel::ClearNameFilter( bool bUpdateModelPanels )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::UpdateFilteringItems()
 {
@@ -1328,14 +1328,14 @@ void CBackpackPanel::UpdateFilteringItems()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::UpdateModelPanels( void )
 {
 	tmZone( TELEMETRY_LEVEL1, TMZF_NONE, "%s", __FUNCTION__ );
 
 	UpdateFilteringItems();
-	
+
 	// We're showing the backpack. Show all the items in our inventory
 	FOR_EACH_VEC( m_pItemModelPanels, i )
 	{
@@ -1369,7 +1369,7 @@ void CBackpackPanel::UpdateModelPanels( void )
 	V_sprintf_safe( szTmp, "%d/%d", GetCurrentPage()+1, GetNumPages() );
 	SetDialogVariable( "backpackpage", szTmp );
 
-	// Now layout again to position our item buttons 
+	// Now layout again to position our item buttons
 	InvalidateLayout();
 }
 
@@ -1407,7 +1407,7 @@ void CBackpackPanel::OnItemPanelEntered( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::OnItemPanelMousePressed( vgui::Panel *panel )
 {
@@ -1514,7 +1514,7 @@ void CBackpackPanel::OnKeyCodeReleased( vgui::KeyCode code )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::OnMouseCaptureLost( void )
 {
@@ -1525,7 +1525,7 @@ void CBackpackPanel::OnMouseCaptureLost( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::OnMouseReleased(vgui::MouseCode code)
 {
@@ -1550,7 +1550,7 @@ void CBackpackPanel::OnMouseReleased(vgui::MouseCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::OnConfirmDelete( KeyValues *data )
 {
@@ -1579,7 +1579,7 @@ void CBackpackPanel::OnConfirmDelete( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::OnItemPanelMouseReleased( vgui::Panel *panel )
 {
@@ -1754,7 +1754,7 @@ void CBackpackPanel::AddCommerceSubmenus( Menu *pSubMenu, item_definition_index_
 		pMenuItem->SetText( wPriceListing );
 		pMenuItem->InvalidateLayout( true, false );
 	}
-	
+
 	// Market
 	if ( CreateMarketPriceString( iItemDef, wPriceListing, sizeof( wPriceListing ) ) )
 	{
@@ -1827,7 +1827,7 @@ void CBackpackPanel::AddPaintToContextMenu( Menu *pPaintSubMenu, item_definition
 	}
 	else
 	{
-		// 
+		//
 		const char *pszContextMenuBorder = "NotificationDefault";
 		const char *pszContextMenuFont = "HudFontMediumSecondary";
 
@@ -1866,7 +1866,7 @@ void CBackpackPanel::AddCommerceToContextMenu( Menu *pMenu, const char* pszActio
 	}
 	else
 	{
-		// 
+		//
 		const char *pszContextMenuBorder = "NotificationDefault";
 		const char *pszContextMenuFont = "HudFontMediumSecondary";
 
@@ -1884,7 +1884,7 @@ void CBackpackPanel::AddCommerceToContextMenu( Menu *pMenu, const char* pszActio
 //-----------------------------------------------------------------------------
 void CBackpackPanel::OpenContextMenu()
 {
-	CUtlVector<CEconItemView*> vecSelectedItems; 
+	CUtlVector<CEconItemView*> vecSelectedItems;
 	for ( int i = 0; i < m_pItemModelPanels.Count(); i++ )
 	{
 		if ( m_pItemModelPanels[i]->IsSelected() && m_pItemModelPanels[i]->GetItem() )
@@ -1915,7 +1915,7 @@ void CBackpackPanel::OpenContextMenu()
 		uint32 unEscrowTime;
 		const bool bToolIsInEscrow = pItem->FindAttribute( pAttrib_ToolEscrowUntil, &unEscrowTime )
 									&& unEscrowTime > CRTime::RTime32TimeCur();
-			
+
 		const IEconTool *pEconTool = pItem->GetItemDefinition()->GetEconTool();
 
 		const bool bIsTool = pItem->GetStaticData()->IsTool() && (pEconTool != NULL);
@@ -1958,7 +1958,7 @@ void CBackpackPanel::OpenContextMenu()
 		}
 		else if ( pItem->GetItemDefinition()->GetCapabilities() & ITEM_CAP_DECODABLE )
 		{
-			
+
 			static CSchemaAttributeDefHandle pAttrDef_CanShuffleCrateContents( "can shuffle crate contents" );
 
 			if ( pItem->FindAttribute( pAttrDef_CanShuffleCrateContents ) )
@@ -1970,7 +1970,7 @@ void CBackpackPanel::OpenContextMenu()
 			{
 				contextMenuBuilder.AddMenuItem( "#UseKey", new KeyValues( "Context_OpenCrateWithKey" ), "primaryaction" );
 			}
-			
+
 			if ( GetDecodedByItemDefIndex( pItem ) )
 			{
 				contextMenuBuilder.AddMenuItem( "#GetKey", new KeyValues( "Context_GetItemFromStore" ), "primaryaction" );
@@ -1982,7 +1982,7 @@ void CBackpackPanel::OpenContextMenu()
 			// check if we have at least 1 slot criteria
 			static CSchemaAttributeDefHandle pAttrDef_Slot( "item slot criteria 1" );
 			if ( pItem->FindAttribute( pAttrDef_Slot ) )
-			{	
+			{
 				contextMenuBuilder.AddMenuItem( "#EditSlots", new KeyValues( "Context_EditSlot" ), "primaryaction" );
 			}
 		}
@@ -1994,7 +1994,7 @@ void CBackpackPanel::OpenContextMenu()
 			{
 				contextMenuBuilder.AddMenuItem( "#UseDuckToken", new KeyValues( "Context_ApplyByItem" ), "primaryaction" );
 			}
-			
+
 			if ( GetDecodedByItemDefIndex( pItem ) )
 			{
 				contextMenuBuilder.AddMenuItem( "#GetDuckToken", new KeyValues( "Context_GetItemFromStore" ), "primaryaction" );
@@ -2006,7 +2006,7 @@ void CBackpackPanel::OpenContextMenu()
 		static CSchemaAttributeDefHandle pAttrib_WeaponAllowInspect( "weapon_allow_inspect" );
 		static CSchemaAttributeDefHandle pAttrib_CosmeticAllowInspect( "cosmetic_allow_inspect" );
 		if ( pItem && pItem->IsValid() &&
-			( FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pItem, pAttrib_WeaponAllowInspect, &flInspect ) || FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pItem, pAttrib_CosmeticAllowInspect, &flInspect ) 
+			( FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pItem, pAttrib_WeaponAllowInspect, &flInspect ) || FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pItem, pAttrib_CosmeticAllowInspect, &flInspect )
 #ifdef STAGING_ONLY
 			|| tf_weapon_force_allow_inspect.GetBool()
 #endif
@@ -2014,7 +2014,7 @@ void CBackpackPanel::OpenContextMenu()
 		{
 			if ( flInspect != 0
 #ifdef STAGING_ONLY
-				|| tf_weapon_force_allow_inspect.GetBool() 
+				|| tf_weapon_force_allow_inspect.GetBool()
 #endif
 				)
 			{
@@ -2029,7 +2029,7 @@ void CBackpackPanel::OpenContextMenu()
 			{
 				if ( !pItemDef->CanBeUsedByClass( iClass ) )
 					continue;
-			
+
 				if ( pEquipSubMenu == NULL )
 				{
 					pEquipSubMenu = new Menu( this, "EquipMenu" );
@@ -2052,11 +2052,11 @@ void CBackpackPanel::OpenContextMenu()
 					case TF_CLASS_SPY: 				pszClassName = "#TF_Class_Name_Spy"; break;
 					case TF_CLASS_ENGINEER: 		pszClassName = "#TF_Class_Name_Engineer"; break;
 				}
-			
+
 				pEquipSubMenu->AddMenuItem( pszClassName, new KeyValues( "Command", "command", CFmtStr( "equipclass%d", iClass ) ), this );
 			}
 		}
-		
+
 		// For customizable items only
 		if ( !pItem->IsTemporaryItem() )
 		{
@@ -2165,7 +2165,7 @@ void CBackpackPanel::OpenContextMenu()
 					CPlayerInventory *pLocalInv = TFInventoryManager()->GetLocalInventory();
 
 					FOR_EACH_VEC( m_vecPaintCans, i )
-					{	
+					{
 						if ( pLocalInv && pLocalInv->FindFirstItembyItemDef( m_vecPaintCans[i] ) )
 						{
 							vecOwnedPaints.AddToTail( m_vecPaintCans[i] );
@@ -2263,7 +2263,7 @@ void CBackpackPanel::OpenContextMenu()
 					pStrangePartsSubMenu->AddSeparator();
 					if ( vecStoreParts.Count() > 0 )
 					{
-						// Add Header and loop 
+						// Add Header and loop
 						int nIndex = pStrangePartsSubMenu->AddMenuItem( "", new KeyValues( "Command", "command", "" ), this );
 						vgui::MenuItem *pMenuItem = pStrangePartsSubMenu->GetMenuItem( nIndex );
 						pMenuItem->SetText( g_pVGuiLocalize->Find( "#TF_Market" ) );
@@ -2362,13 +2362,13 @@ void CBackpackPanel::OpenContextMenu()
 	int nX, nY;
 	g_pVGuiInput->GetCursorPosition( nX, nY );
 	m_pContextMenu->SetPos( nX - 1, nY - 1 );
-	
+
 	m_pContextMenu->SetVisible(true);
 	m_pContextMenu->AddActionSignalTarget(this);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::OnItemPanelMouseRightRelease( vgui::Panel *panel )
 {
@@ -2531,7 +2531,7 @@ void CBackpackPanel::HandleDragTo( CItemModelPanel *pItemPanel, int iPanelIndex 
 			ToggleSelectBackpackItemPanel( m_pItemDraggedFromPanel );
 		}
 
-		// We "move" the items in the backpack immediately, because when the messages come back 
+		// We "move" the items in the backpack immediately, because when the messages come back
 		// from steam they'll fix the positions if the move fails for some reason.
 		CEconItemView *pItem = NULL;
 		if ( m_pItemModelPanels[iPanelIndex]->HasItem() )
@@ -2590,7 +2590,7 @@ void CBackpackPanel::OnTick( void )
 		bNeedsTick = true;
 	}
 
-	// To handle page movement while holding the mouse still over the page buttons, 
+	// To handle page movement while holding the mouse still over the page buttons,
 	// we need to keep calling OnCursorMoved() whenever we're dragging.
 	if ( m_bDragging && m_pMouseDragItemPanel && m_pItemDraggedFromPanel && IsVisible() )
 	{
@@ -2769,7 +2769,7 @@ void CBackpackPanel::OnItemPanelCursorMoved( int x, int y )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::ToggleSelectBackpackItemPanel( CItemModelPanel *pPanel )
 {
@@ -2788,7 +2788,7 @@ void CBackpackPanel::ToggleSelectBackpackItemPanel( CItemModelPanel *pPanel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::DeSelectAllBackpackItemPanels( void )
 {
@@ -2887,12 +2887,12 @@ void CBackpackPanel::OnTextChanged( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::OnButtonChecked( KeyValues *pData )
 {
 	Panel *pPanel = reinterpret_cast<vgui::Panel *>( pData->GetPtr("panel") );
-	
+
 	if ( m_bShowBaseItems != m_pShowBaseItemsCheckbox->IsSelected() && m_pShowBaseItemsCheckbox == pPanel && IsVisible() )
 	{
 		SetShowBaseItems( m_pShowBaseItemsCheckbox->IsSelected() );
@@ -2900,7 +2900,7 @@ void CBackpackPanel::OnButtonChecked( KeyValues *pData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::OnCancelSelection( void )
 {
@@ -2912,7 +2912,7 @@ void CBackpackPanel::OnCancelSelection( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CBackpackPanel::GetGreyOutItemPanelReason( CItemModelPanel *pItemPanel )
 {
@@ -2942,7 +2942,7 @@ const char *CBackpackPanel::GetGreyOutItemPanelReason( CItemModelPanel *pItemPan
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOver )
 {
@@ -2989,7 +2989,7 @@ void CBackpackPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseO
 	}
 	else
 	{
-		
+
 		if ( pItemPanel->IsSelected() )
 		{
 			pszBorder = g_szItemBorders[iRarity][2];
@@ -3004,7 +3004,7 @@ void CBackpackPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseO
 		}
 	}
 
-	vgui::IScheme *pScheme = vgui::scheme()->GetIScheme( GetScheme() );	
+	vgui::IScheme *pScheme = vgui::scheme()->GetIScheme( GetScheme() );
 	pItemPanel->SetBorder( pScheme->GetBorder( pszBorder ) );
 }
 
@@ -3045,7 +3045,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SendGCSimpleAttributeRemovalMessage( CEconItemView *pEconItemView, const char *szDesc, EGCItemMsg eItemMsg )
 {
@@ -3098,7 +3098,7 @@ void CTFRemoveItemCustomizationConfirmDialog::OnCommand( const char *command )
 			case kCustomizationRemove_MakersMark:
 				SendGCSimpleAttributeRemovalMessage( &m_Item, "makers_mark", k_EMsgGCRemoveMakersMark );
 				break;
-			
+
 			case kCustomizationRemove_StrangePart:
 			{
 				Assert( m_prop.m_iUserData != kNoUserData );
@@ -3111,11 +3111,11 @@ void CTFRemoveItemCustomizationConfirmDialog::OnCommand( const char *command )
 				// Make sure this item has this attribute.
 				float fScoreType = kKillEaterEvent_PlayerKill;
 				Verify( FindAttribute_UnsafeBitwiseCast<attrib_value_t>( &m_Item, pAttrDef, &fScoreType ) || iKillEaterAttrIndex == 0 );
-				
+
 				// Dispatch message.
 				EconUI()->Gamestats_ItemTransaction( IE_ITEM_REMOVED_ATTRIB, &m_Item, "strange_part" );
 				GCSDK::CProtoBufMsg<CMsgGCRemoveStrangePart> msg( k_EMsgGCRemoveStrangePart );
-				
+
 				msg.Body().set_item_id( m_Item.GetItemID() );
 				msg.Body().set_strange_part_score_type( (int)fScoreType );
 				GCClientSystem()->BSendMessage( msg );
@@ -3136,16 +3136,16 @@ void CTFRemoveItemCustomizationConfirmDialog::OnCommand( const char *command )
 			case kCustomizationRemove_UpgradeCard:
 				{
 					Assert( m_prop.m_iUserData != kNoUserData );
-				
+
 					// Make sure we selected a valid attribute that this item has.
 					const CEconItemAttributeDefinition *pAttrDef = GetCardUpgradeForIndex( &m_Item, m_prop.m_iUserData );
 					Assert( pAttrDef );
 					Verify( m_Item.FindAttribute( pAttrDef ) );
-				
+
 					// Dispatch message.
 					EconUI()->Gamestats_ItemTransaction( IE_ITEM_REMOVED_ATTRIB, &m_Item, "upgrade_card" );
 					GCSDK::CProtoBufMsg<CMsgGCRemoveUpgradeCard> msg( k_EMsgGCRemoveUpgradeCard );
-				
+
 					msg.Body().set_item_id( m_Item.GetItemID() );
 					msg.Body().set_attribute_index( pAttrDef->GetDefinitionIndex() );
 					GCClientSystem()->BSendMessage( msg );
@@ -3172,7 +3172,7 @@ void CTFRemoveItemCustomizationConfirmDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CRefurbishItemDialog : public CComboBoxBackpackOverlayDialogBase
 {
@@ -3541,8 +3541,8 @@ void CBackpackPanel::DoDeliverItem()
 	{
 		// If this is a global gift, we don't let the user pick a target so we're done as of now.
 		extern void UseUntargetedGiftConfirm( bool bConfirmed, void *pContext );
-		CTFGenericConfirmDialog *pDialog = ShowConfirmDialog( "#TF_DeliverGiftDialog_Title", "#TF_DeliverGiftDialog_Random_Text", 
-														      "#TF_DeliverGiftDialog_Confirm", "#TF_DeliverGiftDialog_Cancel", 
+		CTFGenericConfirmDialog *pDialog = ShowConfirmDialog( "#TF_DeliverGiftDialog_Title", "#TF_DeliverGiftDialog_Random_Text",
+														      "#TF_DeliverGiftDialog_Confirm", "#TF_DeliverGiftDialog_Cancel",
 														      &UseUntargetedGiftConfirm );
 
 		pDialog->SetContext( &m_ToolSelectionItem );
@@ -3596,7 +3596,7 @@ void CBackpackPanel::DoEditSlot()
 	{
 		m_pItemSlotPanel = vgui::SETUP_PANEL( new CItemSlotPanel( this ) );
 	}
-				
+
 	// Set item into panel
 	if ( m_pItemSlotPanel )
 	{
@@ -3874,7 +3874,7 @@ void CBackpackPanel::DoOpenCrateWithKey()
 void CBackpackPanel::DoEquipForClass( int nClass )
 {
 	// Negative because reasons
-	EconUI()->OpenEconUI( -nClass );	
+	EconUI()->OpenEconUI( -nClass );
 }
 
 //-----------------------------------------------------------------------------
@@ -4016,7 +4016,7 @@ void CBackpackPanel::GetSelectedPanels( ESelection eSelection, CUtlVector< CItem
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::OnCommand( const char *command )
 {
@@ -4149,7 +4149,7 @@ void CBackpackPanel::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::OpenArmory( CEconItemView* item )
 {
@@ -4157,7 +4157,7 @@ void CBackpackPanel::OpenArmory( CEconItemView* item )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::CancelToolSelection( void )
 {
@@ -4182,7 +4182,7 @@ void CBackpackPanel::CancelToolSelection( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::SetShowBaseItems( bool bShow )
 {
@@ -4202,7 +4202,7 @@ void CBackpackPanel::SetShowBaseItems( bool bShow )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ConVar *CBackpackPanel::GetExplanationConVar( void )
 {
@@ -4211,7 +4211,7 @@ ConVar *CBackpackPanel::GetExplanationConVar( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackpackPanel::SetCurrentPage( int nNewPage )
 {

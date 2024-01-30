@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -21,7 +21,7 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Enums
 //-----------------------------------------------------------------------------
-enum 
+enum
 {
 	SCROLLBAR_SIZE=18,  // the width of a scrollbar
 	WINDOW_BORDER_WIDTH=2 // the width of the window's border
@@ -136,8 +136,8 @@ void CVMTPanel::PerformLayout()
 	m_pVerticalBar->SetVisible(bVertScrollVisible);
 
 	// Shrink the bars if both are visible
-	m_iViewableWidth = bVertScrollVisible ? iWidth - SCROLLBAR_SIZE - WINDOW_BORDER_WIDTH : iWidth; 
-	m_iViewableHeight = bHorizScrollVisible ? iHeight - SCROLLBAR_SIZE - WINDOW_BORDER_WIDTH : iHeight; 
+	m_iViewableWidth = bVertScrollVisible ? iWidth - SCROLLBAR_SIZE - WINDOW_BORDER_WIDTH : iWidth;
+	m_iViewableHeight = bHorizScrollVisible ? iHeight - SCROLLBAR_SIZE - WINDOW_BORDER_WIDTH : iHeight;
 
 	// Set the position of the horizontal bar...
 	if (bHorizScrollVisible)
@@ -146,7 +146,7 @@ void CVMTPanel::PerformLayout()
 		m_pHorizontalBar->SetSize( m_iViewableWidth, SCROLLBAR_SIZE );
 
 		m_pHorizontalBar->SetRangeWindow( m_iViewableWidth );
-		m_pHorizontalBar->SetRange( 0, iMaterialWidth );	
+		m_pHorizontalBar->SetRange( 0, iMaterialWidth );
 
 		// FIXME: Change scroll amount based on how much is not visible?
 		m_pHorizontalBar->SetButtonPressedScrollValue( 5 );
@@ -159,7 +159,7 @@ void CVMTPanel::PerformLayout()
 		m_pVerticalBar->SetSize(SCROLLBAR_SIZE, m_iViewableHeight);
 
 		m_pVerticalBar->SetRangeWindow( m_iViewableHeight );
-		m_pVerticalBar->SetRange( 0, iMaterialHeight);	
+		m_pVerticalBar->SetRange( 0, iMaterialHeight);
 		m_pVerticalBar->SetButtonPressedScrollValue( 5 );
 	}
 }
@@ -273,7 +273,7 @@ void CVMTPanel::RenderSphere( const Vector &vCenter, float flRadius, int nTheta,
 {
 	int nVertices =  nTheta * nPhi;
 	int nIndices = 2 * ( nTheta + 1 ) * ( nPhi - 1 );
-	
+
 	CMatRenderContextPtr pRenderContext( MaterialSystem() );
 	pRenderContext->FogMode( MATERIAL_FOG_NONE );
 	pRenderContext->SetNumBoneWeights( 0 );
@@ -307,9 +307,9 @@ void CVMTPanel::RenderSphere( const Vector &vCenter, float flRadius, int nTheta,
 
 			Vector vecPos;
 			vecPos.x = flRadius * sin(phi) * cos(theta);
-			vecPos.y = flRadius * sin(phi) * sin(theta); 
+			vecPos.y = flRadius * sin(phi) * sin(theta);
 			vecPos.z = flRadius * cos(phi);
-			    
+
 			Vector vecNormal = vecPos;
 			VectorNormalize( vecNormal );
 
@@ -399,7 +399,7 @@ static ITexture *GetPowerOfTwoFrameBufferTexture( void )
 	{
 		s_pPowerOfTwoFrameBufferTexture.Init( materials->FindTexture( "_rt_PowerOfTwoFB", TEXTURE_GROUP_RENDER_TARGET ) );
 	}
-	
+
 	return s_pPowerOfTwoFrameBufferTexture;
 }
 
@@ -455,4 +455,3 @@ void CVMTPanel::OnPaint3D()
 	pMesh->Draw();
 	*/
 }
-	    

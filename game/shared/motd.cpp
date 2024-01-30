@@ -15,7 +15,7 @@
 using namespace GCSDK;
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 CMOTDEntryDefinition::CMOTDEntryDefinition( void )
 {
@@ -25,7 +25,7 @@ CMOTDEntryDefinition::CMOTDEntryDefinition( void )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 bool CMOTDEntryDefinition::BInitFromKV( KeyValues *pKVMOTD, CUtlVector<CUtlString> *pVecErrors )
 {
@@ -41,10 +41,10 @@ bool CMOTDEntryDefinition::BInitFromKV( KeyValues *pKVMOTD, CUtlVector<CUtlStrin
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
-const char *CMOTDEntryDefinition::GetTitle( ELanguage eLang ) 
-{ 
+const char *CMOTDEntryDefinition::GetTitle( ELanguage eLang )
+{
 	if ( m_pKVMOTD )
 	{
 		// See if we have a localised block for the specified language.
@@ -64,10 +64,10 @@ const char *CMOTDEntryDefinition::GetTitle( ELanguage eLang )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
-const char *CMOTDEntryDefinition::GetText( ELanguage eLang ) 
-{ 
+const char *CMOTDEntryDefinition::GetText( ELanguage eLang )
+{
 	if ( m_pKVMOTD )
 	{
 		// See if we have a localised block for the specified language.
@@ -87,10 +87,10 @@ const char *CMOTDEntryDefinition::GetText( ELanguage eLang )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 const char *CMOTDEntryDefinition::GetHeaderTitle( ELanguage eLang )
-{ 
+{
 	if ( m_pKVMOTD )
 	{
 		// See if we have a localised block for the specified language.
@@ -168,7 +168,7 @@ int CMOTDManager::GetNumMOTDAfter( RTime32 iTime )
 //-----------------------------------------------------------------------------
 // Remove all unused MOTD: Save memory and whatever
 //-----------------------------------------------------------------------------
-void CMOTDManager::PurgeUnusedMOTDEntries( KeyValues *pKVMOTDEntries ) 
+void CMOTDManager::PurgeUnusedMOTDEntries( KeyValues *pKVMOTDEntries )
 {
 	// Find the latest entry name and remove all others
 	int iLargest = -1;
@@ -214,7 +214,7 @@ CMOTDEntryDefinition *CMOTDManager::GetNextMOTDAfter( RTime32 iTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:	
+// Purpose:
 //-----------------------------------------------------------------------------
 CMOTDEntryDefinition *CMOTDManager::GetMOTDByIndex( int iIndex )
 {
@@ -268,7 +268,7 @@ bool CGCMOTDRequest::BYieldingRunJobFromMsg( IMsgNetPacket *pNetPacket )
 		// Move on to the next message.
 		iMOTDTime = pMOTD->GetChangedTime();
 		pMOTD = m_pGCGameBase->GetMOTDManager().GetNextMOTDAfter( iMOTDTime );
-	} 
+	}
 	msg_response.Body().m_nEntries = iEntries;
 
 	GGCEcon()->BSendGCMsgToClient( msg.Hdr().m_ulSteamID, msg_response );

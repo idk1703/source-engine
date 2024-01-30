@@ -21,7 +21,7 @@ class BoundBox
 
 		BoundBox(void);
 		BoundBox(const Vector &mins, const Vector &maxs);
-		
+
 		void ResetBounds(void);
 		inline void SetBounds(const Vector &mins, const Vector &maxs);
 
@@ -41,7 +41,7 @@ class BoundBox
 
 		Vector bmins;
 		Vector bmaxs;
-}; 
+};
 
 
 //-----------------------------------------------------------------------------

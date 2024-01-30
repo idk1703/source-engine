@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -24,7 +24,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const
 //-----------------------------------------------------------------------------
 const char	*CSceneTokenProcessor::CurrentToken( void )
@@ -33,8 +33,8 @@ const char	*CSceneTokenProcessor::CurrentToken( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : crossline - 
+// Purpose:
+// Input  : crossline -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSceneTokenProcessor::GetToken( bool crossline )
@@ -43,7 +43,7 @@ bool CSceneTokenProcessor::GetToken( bool crossline )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSceneTokenProcessor::TokenAvailable( void )
@@ -52,9 +52,9 @@ bool CSceneTokenProcessor::TokenAvailable( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fmt - 
-//			... - 
+// Purpose:
+// Input  : *fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CSceneTokenProcessor::Error( const char *fmt, ... )
 {
@@ -136,7 +136,7 @@ bool GetFirstSoundInScene( const char *pSceneFilename, char *pSoundName, int sou
 	CChoreoScene *pScene = HammerLoadScene( pSceneFilename );
 	if ( !pScene )
 		return false;
-	
+
 	for ( int i = 0; i < pScene->GetNumEvents(); i++ )
 	{
 		CChoreoEvent *e = pScene->GetEvent( i );
@@ -148,7 +148,7 @@ bool GetFirstSoundInScene( const char *pSceneFilename, char *pSoundName, int sou
 		delete pScene;
 		return true;
 	}
-	
+
 	delete pScene;
-	return false;	
+	return false;
 }

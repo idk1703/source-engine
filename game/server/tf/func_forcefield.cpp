@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -25,7 +25,7 @@ IMPLEMENT_SERVERCLASS_ST( CFuncForceField, DT_FuncForceField )
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncForceField::Spawn( void )
 {
@@ -34,7 +34,7 @@ void CFuncForceField::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CFuncForceField::UpdateTransmitState()
 {
@@ -50,7 +50,7 @@ int CFuncForceField::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncForceField::TurnOff( void )
 {
@@ -60,7 +60,7 @@ void CFuncForceField::TurnOff( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncForceField::TurnOn( void )
 {
@@ -69,7 +69,7 @@ void CFuncForceField::TurnOn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CFuncForceField::ShouldCollide( int collisionGroup, int contentsMask ) const
 {
@@ -102,7 +102,7 @@ bool CFuncForceField::ShouldCollide( int collisionGroup, int contentsMask ) cons
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncForceField::SetActive( bool bActive )
 {
@@ -121,7 +121,7 @@ void CFuncForceField::SetActive( bool bActive )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool PointsCrossForceField( const Vector& vecStart, const Vector &vecEnd, int nTeamToIgnore )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -55,7 +55,7 @@ class CBaseGameStats_Driver : public CAutoGameSystemPerFrame
 {
 public:
 	CBaseGameStats_Driver( void );
-	
+
 	typedef CAutoGameSystemPerFrame BaseClass;
 
 	// IGameSystem overloads
@@ -150,7 +150,7 @@ void CBaseGameStats::StatsLog( char const *fmt, ... )
 	time( &aclock );
 	struct tm *newtime = localtime( &aclock );
 
-	
+
 	char timeString[ 128 ];
 	Q_strncpy( timeString, asctime( newtime ), sizeof( timeString ) );
 	// Get rid of the \n.
@@ -367,7 +367,7 @@ bool CBaseGameStats::SaveToFileNOW( bool bForceSyncWrite /* = false */ )
 	buf.Put( s_szPseudoUniqueID, 16 );
 
 	if( ShouldTrackStandardStats() )
-		m_BasicStats.SaveToBuffer( buf ); 
+		m_BasicStats.SaveToBuffer( buf );
 	else
 		buf.PutInt( GAMESTATS_STANDARD_NOT_SAVED );
 
@@ -469,7 +469,7 @@ bool CBaseGameStats::UploadStatsFileNOW( void )
 		StatsLog( "UploadStatsFileNOW: stats tracking not fully enabled, not uploading file\n" );
 		return false;
 	}
-	
+
 	if (!HaveValidData() )
 	{
 		StatsLog( "UploadStatsFileNOW: no valid game data, not uploading file\n" );
@@ -533,8 +533,8 @@ bool CBaseGameStats::LoadFromFile( void )
 		filesystem->RelativePathToFullPath( gamestats->GetStatSaveFileName(), GAMESTATS_PATHID, fullpath, sizeof( fullpath ) );
 		StatsLog( "Loading stats from '%s'\n", fullpath );
 	}
-	
-	CUtlBuffer buf; 
+
+	CUtlBuffer buf;
 	if ( filesystem->ReadFile( gamestats->GetStatSaveFileName(), GAMESTATS_PATHID, buf ) )
 	{
 		bool bRetVal = true;
@@ -550,7 +550,7 @@ bool CBaseGameStats::LoadFromFile( void )
 		CBGSDriver.m_szLoadedUserID[ sizeof( CBGSDriver.m_szLoadedUserID ) - 1 ] = 0;
 
 		if ( s_szPseudoUniqueID[ 0 ] != 0 )
-		{			
+		{
 			if ( Q_stricmp( CBGSDriver.m_szLoadedUserID, s_szPseudoUniqueID ) )
 			{
 				//UserID changed, blow away log!!!
@@ -563,7 +563,7 @@ bool CBaseGameStats::LoadFromFile( void )
 				gamestats->LoadingEvent_PlayerIDDifferentThanLoadedStats();
 				bRetVal = false;
 			}
-		
+
 			if ( version <= GAMESTATS_FILE_VERSION_OLD5 )
 			{
 				gamestats->m_BasicStats.Clear();
@@ -605,7 +605,7 @@ bool CBaseGameStats::LoadFromFile( void )
 		filesystem->RemoveFile( GAMESTATS_LOG_FILE, GAMESTATS_PATHID );
 	}
 
-	return false;	
+	return false;
 }
 
 bool CBaseGameStats_Driver::Init()
@@ -667,9 +667,9 @@ bool CBaseGameStats_Driver::Init()
 		//load existing stats
 		gamestats->LoadFromFile();
 	}
-		
+
 	if ( s_szPseudoUniqueID[ 0 ] != 0 )
-	{			
+	{
 		gamestats->Event_Init();
 
 		if( gamestats->AutoSave_OnInit() )
@@ -691,7 +691,7 @@ void CBaseGameStats_Driver::Shutdown()
 	m_bShuttingDown = true;
 
 	gamestats->Event_Shutdown();
-	
+
 	if( gamestats->AutoSave_OnShutdown() )
 		gamestats->SaveToFileNOW();
 
@@ -790,7 +790,7 @@ void CBaseGameStats_Driver::LevelShutdownPreEntity()
 		if( gamestats->AutoUpload_OnLevelShutdown() )
 			gamestats->UploadStatsFileNOW();
 
-		m_bInLevel = false;	
+		m_bInLevel = false;
 	}
 }
 
@@ -1004,7 +1004,7 @@ void CBaseGameStats::SetHL2UnlockedChapterStatistic( void )
 			// free
 			delete [] configBuffer;
 		}
-	}	
+	}
 }
 
 static void CC_ResetGameStats( const CCommand &args )

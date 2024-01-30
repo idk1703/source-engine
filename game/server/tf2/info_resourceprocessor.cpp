@@ -24,7 +24,7 @@ END_SEND_TABLE()
 LINK_ENTITY_TO_CLASS( info_resourceprocessor, CResourceProcessor);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceProcessor::Spawn( void )
 {
@@ -42,7 +42,7 @@ void CResourceProcessor::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceProcessor::Precache( void )
 {
@@ -52,7 +52,7 @@ void CResourceProcessor::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceProcessor::Activate( void )
 {
@@ -66,11 +66,11 @@ void CResourceProcessor::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CResourceProcessor::ProcessorTouch( CBaseEntity *pOther )
 {
-	// Players 
+	// Players
 	if ( pOther->IsPlayer() )
 	{
 		// Ignore touches from enemy players
@@ -123,7 +123,7 @@ void CResourceProcessor::SpawnMiniCarrier( void )
 	pMiniCarrier->ChangeTeam( m_iTeamNumber );
 
 	// Find a clear spot near me & spawn in it
-	if ( !EntityPlacementTest( pMiniCarrier, GetAbsOrigin() + Vector(0,0,m_flHackSpawnHeight), 
+	if ( !EntityPlacementTest( pMiniCarrier, GetAbsOrigin() + Vector(0,0,m_flHackSpawnHeight),
 			pMiniCarrier->GetAbsOrigin(), false ) )
 	{
 		Warning( "Failed to find empty space to spawn a minicarrier.\n" );

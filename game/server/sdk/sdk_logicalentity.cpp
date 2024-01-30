@@ -31,7 +31,7 @@ LINK_ENTITY_TO_CLASS( my_logical_entity, CMyLogicalEntity  );
 
 // Start of our data description for the class
 BEGIN_DATADESC( CMyLogicalEntity  )
-	
+
 	// For save/load
 	DEFINE_FIELD( m_nCounter, FIELD_INTEGER ),
 
@@ -59,7 +59,7 @@ void CMyLogicalEntity ::InputTick( inputdata_t &inputData )
 	{
 		// Fire an output event
 		m_OnThreshold.FireOutput( inputData.pActivator, this );
-		
+
 		// Reset our counter
 		m_nCounter = 0;
 	}

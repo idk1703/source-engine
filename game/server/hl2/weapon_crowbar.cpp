@@ -37,7 +37,7 @@ LINK_ENTITY_TO_CLASS( weapon_crowbar, CWeaponCrowbar );
 PRECACHE_WEAPON_REGISTER( weapon_crowbar );
 #endif
 
-acttable_t CWeaponCrowbar::m_acttable[] = 
+acttable_t CWeaponCrowbar::m_acttable[] =
 {
 	{ ACT_MELEE_ATTACK1,	ACT_MELEE_ATTACK_SWING, true },
 	{ ACT_IDLE,				ACT_IDLE_ANGRY_MELEE,	false },
@@ -72,7 +72,7 @@ float CWeaponCrowbar::GetDamageForActivity( Activity hitActivity )
 void CWeaponCrowbar::AddViewKick( void )
 {
 	CBasePlayer *pPlayer  = ToBasePlayer( GetOwner() );
-	
+
 	if ( pPlayer == NULL )
 		return;
 
@@ -81,8 +81,8 @@ void CWeaponCrowbar::AddViewKick( void )
 	punchAng.x = random->RandomFloat( 1.0f, 2.0f );
 	punchAng.y = random->RandomFloat( -2.0f, -1.0f );
 	punchAng.z = 0.0f;
-	
-	pPlayer->ViewPunch( punchAng ); 
+
+	pPlayer->ViewPunch( punchAng );
 }
 
 
@@ -153,7 +153,7 @@ void CWeaponCrowbar::HandleAnimEventMeleeHit( animevent_t *pEvent, CBaseCombatCh
 		Vector vecDelta;
 		VectorSubtract( pEnemy->WorldSpaceCenter(), pOperator->Weapon_ShootPosition(), vecDelta );
 		VectorNormalize( vecDelta );
-		
+
 		Vector2D vecDelta2D = vecDelta.AsVector2D();
 		Vector2DNormalize( vecDelta2D );
 		if ( DotProduct2D( vecDelta2D, vecDirection.AsVector2D() ) > 0.8f )
@@ -164,9 +164,9 @@ void CWeaponCrowbar::HandleAnimEventMeleeHit( animevent_t *pEvent, CBaseCombatCh
 
 	Vector vecEnd;
 	VectorMA( pOperator->Weapon_ShootPosition(), 50, vecDirection, vecEnd );
-	CBaseEntity *pHurt = pOperator->CheckTraceHullAttack( pOperator->Weapon_ShootPosition(), vecEnd, 
+	CBaseEntity *pHurt = pOperator->CheckTraceHullAttack( pOperator->Weapon_ShootPosition(), vecEnd,
 		Vector(-16,-16,-16), Vector(36,36,36), sk_npc_dmg_crowbar.GetFloat(), DMG_CLUB, 0.75 );
-	
+
 	// did I hit someone?
 	if ( pHurt )
 	{

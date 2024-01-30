@@ -103,7 +103,7 @@ OSVersion DetectOSVersion()
 	{
 		if ( version.dwMajorVersion == 4 )
 			return OSV_NT4; // or mabye NT3.5???
-		
+
 		if ( version.dwMajorVersion == 6 )
 			return OSV_VISTA;
 
@@ -642,8 +642,8 @@ bool InitD3D( HWND hWnd, bool blur )
 	{ // x, y, z, u, v
 		-1, -1, 0, u0, v0,
 		-1,  1, 0, u0, v1,
-		 1, -1, 0, u1, v0,
-		 1,  1, 0, u1, v1,
+		1, -1, 0, u1, v0,
+		1,  1, 0, u1, v1,
 	};
 	g_dwDrawFVF = D3DFVF_XYZ | D3DFVF_TEX1;
 	g_nDrawStride = sizeof( drawverts ) / 4;
@@ -1146,8 +1146,8 @@ HWND CreateFullscreenWindow( bool bFadeIn )
 		wc.hbrBackground = NULL;
 		wc.lpszMenuName =  NULL;
 		wc.lpszClassName = "myclass";
-	 
-		if ( !RegisterClass( &wc ) ) 
+
+		if ( !RegisterClass( &wc ) )
 			return 0;
 
 		s_bRegistered = true;
@@ -1398,7 +1398,7 @@ extern "C" int WINAPI _tWinMain( HINSTANCE hInstance, HINSTANCE /*hPrevInstance*
 	lpCmdLine = GetCommandLine(); //this line necessary for _ATL_MIN_CRT
 
 	CoInitialize( 0 );
-    _Module.Init( ObjectMap, hInstance, &LIBID_ATLLib );
+	_Module.Init( ObjectMap, hInstance, &LIBID_ATLLib );
 
 	::InitCommonControls();
 

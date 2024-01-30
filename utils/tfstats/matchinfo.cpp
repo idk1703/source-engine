@@ -46,7 +46,7 @@ void CMatchInfo::generate()
 				else
 				{
 					bLanGame=true;
-				
+
 					CPlayerList::iterator it=players.begin();
 					for (it;it!=players.end();++it)
 					{
@@ -99,7 +99,7 @@ void CMatchInfo::generate()
 				int sid=curr->getArgument(0)->asPlayerGetSvrPID();
 				//PID pid=curr->getArgument(0)->asPlayerGetFullPID();
 				unsigned long WONid=curr->getArgument(0)->asPlayerGetWONID();
-				
+
 				PID pid;
 				if (WONid!=-1)
 				{
@@ -109,20 +109,20 @@ void CMatchInfo::generate()
 				else
 				{
 					bLanGame=true;
-					
-					//they may have matched based on IP or name.  
+
+					//they may have matched based on IP or name.
 					//so check if the player structure pointed to by
 					//the sid is valid, if so, don't reassign pid
 					pid=pidMap[sid];
 					if (players[pid].ipAddress=="")
 						pid=pidMap[sid]=sid;
 				}
-				
+
 				players[pid].svrPID=sid;
 				players[pid].WONID=WONid;
 				players[pid].pid=pid;
 				string nm=curr->getArgument(0)->asPlayerGetName();
-				
+
 				//keep the pseudonym list updated
 				players[pid].nameFound(curr->getTime(),nm);
 			}
@@ -133,13 +133,13 @@ void CMatchInfo::generate()
 				time_t changetime=curr->getTime();
 
 				player_class newpc=playerClassNameToClassID(curr->getArgument(1)->getStringValue());
-				
+
 				//keep the pseudonym list updated
 				players[pid].nameFound(curr->getTime(),curr->getArgument(0)->asPlayerGetName());
 				string plrname=curr->getArgument(0)->asPlayerGetName();
-				
+
 				players[pid].allclassesplayed.add(changetime,newpc);
-				
+
 				int currTeam=players[pid].teams.atTime(changetime);
 				players[pid].perteam[currTeam].classesplayed.add(changetime,newpc);
 
@@ -155,15 +155,15 @@ void CMatchInfo::generate()
 			{
 				PID pid=(*it)->getArgument(0)->asPlayerGetPID();
 				int team=players[pid].teams.atTime((*it)->getTime());
-				
+
 			//	players[pid].perteam[team].kills++;
 				players[pid].perteam[team].deaths++;
 				players[pid].perteam[team].suicides++;
-				
+
 				//keep the pseudonym list updated
 				players[pid].nameFound(curr->getTime(),curr->getArgument(0)->asPlayerGetName());
 			}
-			break;	
+			break;
 		case CLogEvent::FRAG:
 		case CLogEvent::TEAM_FRAG:
 			{
@@ -171,12 +171,12 @@ void CMatchInfo::generate()
 				PID killedid=(*it)->getArgument(1)->asPlayerGetPID();
 				int killerTeam=players[killerid].teams.atTime((*it)->getTime());
 				int killedTeam=players[killedid].teams.atTime((*it)->getTime());
-				
-				
+
+
 				CPlayer& p1=players[killerid];
 				CPlayer& p2=players[killedid];
-				
-				
+
+
 				if (curr->getType() == CLogEvent::TEAM_FRAG)
 				{
 					players[killerid].perteam[killerTeam].teamkills++;
@@ -184,7 +184,7 @@ void CMatchInfo::generate()
 				}
 				else if (curr->getType() == CLogEvent::FRAG)
 				{
-					string weapName=(*it)->getArgument(2)->getStringValue();	
+					string weapName=(*it)->getArgument(2)->getStringValue();
 
 					bool countKill=true;
 
@@ -203,7 +203,7 @@ void CMatchInfo::generate()
 					}
 					if (countKill)
 					{
-						
+
 						players[killerid].perteam[killerTeam].weaponKills[weapName]++;
 						players[killerid].perteam[killerTeam].kills++;
 						players[killedid].perteam[killedTeam].deaths++;
@@ -213,19 +213,19 @@ void CMatchInfo::generate()
 				//keep the pseudonym list updated
 				players[killerid].nameFound(curr->getTime(),curr->getArgument(0)->asPlayerGetName());
 				players[killedid].nameFound(curr->getTime(),curr->getArgument(1)->asPlayerGetName());
-	
+
 			}
-			break;	
+			break;
 		case CLogEvent::TEAM_JOIN:
 			{
 				int team=curr->getArgument(1)->getFloatValue();
 				team--; //teams are logged as 1-4.  tfstats stores them as 0-3
 				PID pid=curr->getArgument(0)->asPlayerGetPID();
-				
-				
+
+
 				CPlayer& p=players[pid];
 				team_exists[team]=true;
-				
+
 				int oldteam=team;
 				if(p.teams.anythingAtTime(curr->getTime()-1))
 					oldteam=p.teams.atTime(curr->getTime()-1);
@@ -234,9 +234,9 @@ void CMatchInfo::generate()
 
 				//keep the pseudonym list updated
 				players[pid].nameFound(curr->getTime(),curr->getArgument(0)->asPlayerGetName());
-		
+
 				players[pid].teams.add(curr->getTime(),team);
-				
+
 				if (p.allclassesplayed.anythingAtTime(curr->getTime()))
 				{
 					player_class plrcurrclass=players[pid].allclassesplayed.atTime(curr->getTime());
@@ -245,7 +245,7 @@ void CMatchInfo::generate()
 				}
 			}
 			break;
-			
+
 		case CLogEvent::TEAM_RENAME:
 			{
 				int teamid=curr->getArgument(0)->getFloatValue()-1;
@@ -253,7 +253,7 @@ void CMatchInfo::generate()
 				teamnames[teamid]=tname;
 			}
 			break;
-			
+
 		case CLogEvent::SERVER_NAME:
 			{
 				servername=curr->getArgument(0)->getStringValue();
@@ -272,7 +272,7 @@ void CMatchInfo::generate()
 				players[pid].allclassesplayed.cut(curr->getTime());
 				players[pid].teams.cut(curr->getTime());
 				players[pid].aliases.cut(curr->getTime());
-				
+
 				int currTeam=players[pid].teams.atTime(curr->getTime());
 				players[pid].perteam[currTeam].classesplayed.cut(curr->getTime());
 
@@ -302,10 +302,10 @@ void CMatchInfo::generate()
 			}
 			break;
 		}
-		
+
 #ifdef _DEBUG
 #ifdef _PARSEDEBUG
-		
+
 		printf("%s:\n",CLogEvent::TypeNames[(int)curr->getType()]);
 		fflush(stdout);
 		printf("\t%s\n",curr->m_StrippedText);
@@ -320,27 +320,27 @@ void CMatchInfo::generate()
 		printf("\n");
 #endif
 #endif
-	}		
-	
-	
+	}
+
+
 	if (logclosetime==0  && !plogfile->empty())
 	{
 		CEventListIterator it=plogfile->end();
 		--it;
 		logclosetime=(*it)->getTime();
 	}
-	
+
 	map<PID,CPlayer>::iterator it2;
 	for(it2=players.begin();it2!=players.end();++it2)
 	{
 		CPlayer& p=(*it2).second;
-			
-		
+
+
 		if (p.aliases.endTime < logclosetime)
 			p.aliases.endTime=logclosetime;
-		
+
 		p.name=p.aliases.favourite();
-		
+
 		if (p.allclassesplayed.endTime < logclosetime)
 			p.allclassesplayed.endTime=logclosetime;
 
@@ -351,15 +351,15 @@ void CMatchInfo::generate()
 		{
 			//if you have no kills you have to play on a team at least 30 seconds to be counted part of it
 			//also give a one-suicide grace so they can killthemselves to get onto another team?
-			if (p.teams.howLong(i) < 30 && p.perteam[i].kills==0)// && p.perteam[i].deaths < 1) 
+			if (p.teams.howLong(i) < 30 && p.perteam[i].kills==0)// && p.perteam[i].deaths < 1)
 					p.teams.remove(i);
 
 			CTimeIndexedList<player_class>* v= &p.perteam[i].classesplayed;
 			p.perteam[i].classesplayed.endTime=logclosetime;
-			
+
 			time_t t=p.teams.howLong(i);
 			p.perteam[i].timeon=t;
-		
+
 		}
 
 	}
@@ -375,40 +375,40 @@ void CMatchInfo::generate()
 PID CMatchInfo::getPlayerID(string name)
 {
 	CPlayerListIterator it;
-	
+
 	//ugh! O(n)
 	for (it=playerBegin();it!=playerEnd();++it)
 	{
 		PID id=(*it).first;
 		CPlayer curr=(*it).second;
-		
+
 		if (curr.name == name)
 			return id;
 	}
-	return -1; 
+	return -1;
 }
 
 /*
 unsigned long CMatchInfo::getPlayerWONID(string name)
 {
 	CPlayerListIterator it;
-	
+
 	//ugh! O(n)
 	for (it=playerBegin();it!=playerEnd();++it)
 	{
 		CPlayer curr=(*it).second;
-		
+
 		if (curr.name == name)
 			return curr.WONID;
 	}
-	return 0xffffffff; 
+	return 0xffffffff;
 }
 */
 //------------------------------------------------------------------------------------------------------
 // Function:	CMatchInfo::CMatchInfo
 // Purpose:	 Constructor
 // Input:	plf - the log file
-// Output:	
+// Output:
 //------------------------------------------------------------------------------------------------------
 CMatchInfo::CMatchInfo(CEventList* plf)
 :numPlrs(0),logclosetime(0),plogfile(plf)
@@ -418,11 +418,11 @@ CMatchInfo::CMatchInfo(CEventList* plf)
 	teamnames[2]="Yellow";
 	teamnames[3]="Green";
 	team_exists[0]=team_exists[1]=team_exists[2]=team_exists[3]=false;
-	
-	
-	generate();	
-	
-}		
+
+
+	generate();
+
+}
 
 
 
@@ -450,11 +450,11 @@ int CMatchInfo::teamID(string teamname)
 time_t CMatchInfo::getTimeOn(PID pid)
 {
 	CPlayer& p=players[pid];
-	
+
 	if (p.logofftime==0)
 		p.logofftime=logclosetime;
-	
+
 	time_t timeon=p.logofftime-p.logontime;
-	
+
 	return timeon;
 }

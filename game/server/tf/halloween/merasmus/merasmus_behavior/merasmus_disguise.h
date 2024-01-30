@@ -24,7 +24,7 @@ private:
 
 	void RandomDisguiseTauntTimer();
 	CountdownTimer m_disguiseTauntTimer;
-	
+
 	float m_flStartRegenTime;
 	int m_nStartRegenHealth;
 };

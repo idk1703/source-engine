@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -56,7 +56,7 @@ void COptionProperties::DoStandardInit()
 	AddPage(&Build);
 }
 
-void COptionProperties::OnClose() 
+void COptionProperties::OnClose()
 {
 	CPropertySheet::OnClose();
 }

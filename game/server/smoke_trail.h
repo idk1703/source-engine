@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -22,7 +22,7 @@ public:
 	DECLARE_SERVERCLASS();
 
 	SmokeTrail();
-	virtual bool KeyValue( const char *szKeyName, const char *szValue ); 
+	virtual bool KeyValue( const char *szKeyName, const char *szValue );
 	void					SetEmit(bool bVal);
 	void					FollowEntity( CBaseEntity *pEntity, const char *pAttachmentName = NULL);
 	static	SmokeTrail*		CreateSmokeTrail();
@@ -39,7 +39,7 @@ public:
 	CNetworkVar( float, m_MinSpeed );				// Speed range.
 	CNetworkVar( float, m_MaxSpeed );
 	CNetworkVar( float, m_StartSize );			// Size ramp.
-	CNetworkVar( float, m_EndSize );	
+	CNetworkVar( float, m_EndSize );
 	CNetworkVar( float, m_SpawnRadius );
 	CNetworkVar( float, m_MinDirectedSpeed );				// Speed range.
 	CNetworkVar( float, m_MaxDirectedSpeed );
@@ -76,13 +76,13 @@ public:
 	CNetworkVar( float, m_MinSpeed );				// Speed range.
 	CNetworkVar( float, m_MaxSpeed );
 	CNetworkVar( float, m_StartSize );			// Size ramp.
-	CNetworkVar( float, m_EndSize );	
+	CNetworkVar( float, m_EndSize );
 	CNetworkVar( float, m_SpawnRadius );
-	
+
 	CNetworkVar( bool, m_bEmit );
 
 	CNetworkVar( int, m_nAttachment );
-	
+
 	CNetworkVar( bool, m_bDamaged );
 
 	CNetworkVar( float, m_flFlareScale );			// Size of the flare
@@ -182,7 +182,7 @@ public:
 	DECLARE_SERVERCLASS();
 
 	DustTrail();
-	virtual bool KeyValue( const char *szKeyName, const char *szValue ); 
+	virtual bool KeyValue( const char *szKeyName, const char *szValue );
 	void					SetEmit(bool bVal);
 	static	DustTrail*		CreateDustTrail();
 
@@ -197,7 +197,7 @@ public:
 	CNetworkVar( float, m_MinSpeed );				// Speed range.
 	CNetworkVar( float, m_MaxSpeed );
 	CNetworkVar( float, m_StartSize );			// Size ramp.
-	CNetworkVar( float, m_EndSize );	
+	CNetworkVar( float, m_EndSize );
 	CNetworkVar( float, m_SpawnRadius );
 	CNetworkVar( float, m_MinDirectedSpeed );				// Speed range.
 	CNetworkVar( float, m_MaxDirectedSpeed );

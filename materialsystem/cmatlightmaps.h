@@ -48,7 +48,7 @@ public:
 	void		BeginLightmapAllocation( void );
 	void		EndLightmapAllocation( void );
 
-	int			AllocateLightmap( int width, int height, 
+	int			AllocateLightmap( int width, int height,
 		                                  int offsetIntoLightmapPage[2],
 										  IMaterial *pMaterial );
 	int			AllocateWhiteLightmap( IMaterial *pMaterial );
@@ -59,7 +59,7 @@ public:
 	void		GetSortInfo( MaterialSystem_SortInfo_t *sortInfoArray );
 
 	void		UpdateLightmap( int lightmapPageID, int lightmapSize[2],
-								int offsetIntoLightmapPage[2], 
+								int offsetIntoLightmapPage[2],
 								float *pFloatImage, float *pFloatImageBump1,
 								float *pFloatImageBump2, float *pFloatImageBump3 );
 
@@ -107,12 +107,12 @@ private:
 	void		InitLightmapBits( int lightmap );
 
 	// assumes m_LightmapPixelWriter is already set up - results written there
-	void		BumpedLightmapBitsToPixelWriter_LDR( float* pFloatImage, float *pFloatImageBump1, float *pFloatImageBump2, 
+	void		BumpedLightmapBitsToPixelWriter_LDR( float* pFloatImage, float *pFloatImageBump1, float *pFloatImageBump2,
 													float *pFloatImageBump3, int pLightmapSize[2], int pOffsetIntoLightmapPage[2], FloatBitMap_t *pfmOut );
-	void		BumpedLightmapBitsToPixelWriter_HDRF( float* pFloatImage, float *pFloatImageBump1, float *pFloatImageBump2, 
+	void		BumpedLightmapBitsToPixelWriter_HDRF( float* pFloatImage, float *pFloatImageBump1, float *pFloatImageBump2,
 		float *pFloatImageBump3, int pLightmapSize[2], int pOffsetIntoLightmapPage[2], FloatBitMap_t *pfmOut );
 
-	void		BumpedLightmapBitsToPixelWriter_HDRI( float* pFloatImage, float *pFloatImageBump1, float *pFloatImageBump2, 
+	void		BumpedLightmapBitsToPixelWriter_HDRI( float* pFloatImage, float *pFloatImageBump1, float *pFloatImageBump2,
 		float *pFloatImageBump3, int pLightmapSize[2], int pOffsetIntoLightmapPage[2], FloatBitMap_t *pfmOut );
 
 	void		LightmapBitsToPixelWriter_LDR( float* pFloatImage, int pLightmapSize[2], int pOffsetIntoLightmapPage[2], FloatBitMap_t *pfmOut );

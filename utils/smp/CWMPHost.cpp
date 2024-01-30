@@ -32,15 +32,15 @@ int					g_desiredVideoScaleMode = ID_STRETCH_TO_FIT;
 
 bool FAILMSG(HRESULT hr)
 {
-    if (FAILED(hr))
-    {
-        TCHAR   szError[MAX_STRING];
+	if (FAILED(hr))
+	{
+		TCHAR   szError[MAX_STRING];
 
-        ::wsprintf(szError, _T("Error code = %08X"), hr);
-        ::MessageBox(NULL, szError, _T("Error"), MB_OK | MB_ICONERROR);
-    }
+		::wsprintf(szError, _T("Error code = %08X"), hr);
+		::MessageBox(NULL, szError, _T("Error"), MB_OK | MB_ICONERROR);
+	}
 
-    return FAILED(hr);
+	return FAILED(hr);
 }
 
 void LogPlayerEvent( EventType_t e )
@@ -272,7 +272,7 @@ LRESULT CWMPHost::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandl
 	m_wndView.Create(m_hWnd, rcClient, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
 	if (NULL == m_wndView.m_hWnd)
 		goto FAILURE;
-	
+
 	// load OCX in window
 
 	hr = m_wndView.QueryHost(&spHost);

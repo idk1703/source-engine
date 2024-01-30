@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -30,7 +30,7 @@ static void WaveProperties_OnOK( HWND hwndDlg )
 	// Gather info and make changes
 	CWaveFile *item = g_Params.items[ 0 ];
 	char sentencetext[ 512 ];
-						
+
 	GetDlgItemText( hwndDlg, IDC_SENTENCETEXT, sentencetext, sizeof( sentencetext ) );
 
 	bool voiceduck = SendMessage( GetDlgItem( hwndDlg, IDC_VOICEDUCK ), BM_GETCHECK, 0, 0 ) == BST_CHECKED ? true : false;
@@ -48,8 +48,8 @@ static void WaveProperties_OnOK( HWND hwndDlg )
 char *Q_stristr_slash( char const *pStr, char const *pSearch );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
+// Purpose:
+// Input  : hwndDlg -
 //-----------------------------------------------------------------------------
 static void WaveProperties_ExportSentence()
 {
@@ -69,7 +69,7 @@ static void WaveProperties_ExportSentence()
 		item->GetPhonemeExportFile( relative, sizeof( relative ) );
 		if ( filesystem->FileExists( relative ) )
 		{
-			int retval = MultipleRequest( va( "Overwrite '%s'?", relative ) );	
+			int retval = MultipleRequest( va( "Overwrite '%s'?", relative ) );
 			if ( retval != 0 )
 				continue;
 
@@ -81,8 +81,8 @@ static void WaveProperties_ExportSentence()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
+// Purpose:
+// Input  : hwndDlg -
 //-----------------------------------------------------------------------------
 static void WaveProperties_ImportSentence()
 {
@@ -106,8 +106,8 @@ static void WaveProperties_ImportSentence()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
+// Purpose:
+// Input  : hwndDlg -
 // Output : static
 //-----------------------------------------------------------------------------
 static void WaveProperties_InitSentenceData( HWND hwndDlg )
@@ -117,24 +117,24 @@ static void WaveProperties_InitSentenceData( HWND hwndDlg )
 	SetDlgItemText( hwndDlg, IDC_WAVENAME, item->GetName() );
 	SetDlgItemText( hwndDlg, IDC_SENTENCETEXT, item->GetSentenceText() );
 
-	SendMessage( GetDlgItem( hwndDlg, IDC_VOICEDUCK ), BM_SETCHECK, 
+	SendMessage( GetDlgItem( hwndDlg, IDC_VOICEDUCK ), BM_SETCHECK,
 		( WPARAM ) item->GetVoiceDuck() ? BST_CHECKED : BST_UNCHECKED,
 		( LPARAM )0 );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
 static BOOL CALLBACK WavePropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	switch(uMsg)
 	{
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		{
 			g_Params.PositionSelf( hwndDlg );
 
@@ -144,9 +144,9 @@ static BOOL CALLBACK WavePropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM w
 
 			SetFocus( GetDlgItem( hwndDlg, IDC_WAVENAME ) );
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -156,7 +156,7 @@ static BOOL CALLBACK WavePropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM w
 				EndDialog( hwndDlg, 1 );
 			}
 			break;
-        case IDCANCEL:
+		case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		case IDC_EXPORTSENTENCE:
@@ -173,16 +173,16 @@ static BOOL CALLBACK WavePropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM w
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int WaveProperties( CWaveParams *params )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_WAVEPROPERTIES ),
 		(HWND)GetWorkspaceManager()->getHandle(),
 		(DLGPROC)WavePropertiesDialogProc );

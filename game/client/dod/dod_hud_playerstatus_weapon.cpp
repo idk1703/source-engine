@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,7 +24,7 @@
 float GetScale( int nIconWidth, int nIconHeight, int nWidth, int nHeight );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudCurrentWeapon::Paint()
 {
@@ -56,7 +56,3 @@ void CDoDHudCurrentWeapon::Paint()
 		}
 	}
 }
-
-
-
-

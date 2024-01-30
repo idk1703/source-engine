@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ class ITFHintItem;
 typedef unsigned int EFFECT_HANDLE;
 #define EFFECT_INVALID_HANDLE (EFFECT_HANDLE)(~0)
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CPanelEffect
 {
@@ -71,7 +71,7 @@ public:
 
 	virtual void			SetTargetPoint( int x, int y );
 	virtual void			SetTargetRect( int x, int y, int w, int h );
-	
+
 	virtual void			SetColor( int r, int g, int b, int a );
 	virtual void			GetColor( int& r, int& g, int& b, int& a );
 
@@ -105,7 +105,7 @@ protected:
 	ITFHintItem				*m_pOwner;
 
 	// Data
-	
+
 	// type of effect
 	int						m_nType;
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #ifndef WEAPON_CITIZENPACKAGE_H
@@ -21,7 +21,7 @@ class CWeaponCitizenPackage : public CBaseHLCombatWeapon
 public:
 
 	DECLARE_SERVERCLASS();
-	DECLARE_DATADESC();	
+	DECLARE_DATADESC();
 	DECLARE_ACTTABLE();
 
 	void ItemPostFrame( void );

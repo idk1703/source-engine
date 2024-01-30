@@ -5,7 +5,7 @@
 
 #if defined( WIN32 ) && !defined( _X360 )
 #include <windows.h> // SRC only!!
-#endif // 
+#endif //
 
 #include "filesystem.h"
 #include "tier0/icommandline.h"
@@ -119,7 +119,7 @@ static void WriteConvertedString( IBaseFileSystem *pFileSystem, FileHandle_t hFi
 //
 //--------------------------------------------------------------------------------------------------
 template <size_t maxLenInChars> static int CleanFloatString( OUT_Z_ARRAY char (&pszFloatBuf)[maxLenInChars] )
-{ 
+{
 	int nStrLen = V_strlen( pszFloatBuf );
 
 	const char *pDecimal = V_strnchr( pszFloatBuf, '.', maxLenInChars - 1 );

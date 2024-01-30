@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -82,7 +82,7 @@ int CDmeLogLayerHelper::TotalRemovedPoints()
 // Constructor
 //-----------------------------------------------------------------------------
 CDmeLogLayerHelper::CDmeLogLayerHelper( CDmElement *pLogLayer, int nDefaultCurveType )	:
-	m_pLogLayer( pLogLayer ), m_times( pLogLayer, "times", true ), 
+	m_pLogLayer( pLogLayer ), m_times( pLogLayer, "times", true ),
 	m_values( pLogLayer, "values", true ), m_curvetypes( pLogLayer, "curvetypes", true )
 {
 	m_nDefaultCurveType = nDefaultCurveType;
@@ -113,7 +113,7 @@ int CDmeLogLayerHelper::InsertKey( int nTime, float flValue, int nCurveType )
 	InsertAfter( nAfter, nTime, flValue, nCurveType );
 	return nAfter + 1;
 }
-	
+
 void CDmeLogLayerHelper::SetCurveType( int nKey, int nCurveType )
 {
 	m_curvetypes.Set( nKey, nCurveType );
@@ -192,7 +192,7 @@ float CDmeLogLayerHelper::ComputeTotalError( CDmeLogLayerHelper *pDest, int nSta
 //-----------------------------------------------------------------------------
 // Select the best fit curve type
 //-----------------------------------------------------------------------------
-static int s_nInterpTypes[] = 
+static int s_nInterpTypes[] =
 {
 	INTERPOLATE_LINEAR_INTERP,
 	INTERPOLATE_EASE_INOUT,
@@ -268,7 +268,7 @@ void CDmeLogLayerHelper::ComputeDerivates( float *pSlope, float *pAccel, int nPo
 
 
 //-----------------------------------------------------------------------------
-// Implementation of Douglas-Peucker curve simplification routine 
+// Implementation of Douglas-Peucker curve simplification routine
 // (hacked to only care about error against original curve (sort of 1D)
 //-----------------------------------------------------------------------------
 void CDmeLogLayerHelper::CurveSimplify_R( float flThreshold, int nStartPoint, int nEndPoint, CDmeLogLayerHelper *pDest )
@@ -359,7 +359,7 @@ void CDmeLogLayerHelper::Simplify( float flThreshhold )
 	destLayer.AddToTail( m_times[nFirstKey], m_values[nFirstKey], m_nDefaultCurveType );
 	destLayer.AddToTail( m_times[nLastKey], m_values[nLastKey], m_nDefaultCurveType );
 
-	// Recursively finds the point with the largest error from the "simplified curve" 
+	// Recursively finds the point with the largest error from the "simplified curve"
 	// and subdivides the problem on both sides until the largest delta from the simplified
 	// curve is less than the tolerance
 	CurveSimplify_R( flThreshhold, nFirstKey, nLastKey, &destLayer );
@@ -425,7 +425,7 @@ static CChoreoEvent* FindOrAddAnimationEvent( CChoreoScene *pScene, CChoreoActor
 	pEvent->SetChannel( pChannel );
 	pEvent->SetActive( true );
 	pChannel->AddEvent( pEvent );
-	
+
 	return pEvent;
 }
 
@@ -581,8 +581,8 @@ void ImportSamplesIntoTrack( CFlexAnimationTrack *pTrack, CDmElement *pLog, int 
 
 	if ( nSampleType == 0 )
 	{
-		pTrack->SetEdgeActive( true, true ); 
-		pTrack->SetEdgeActive( false, true ); 
+		pTrack->SetEdgeActive( true, true );
+		pTrack->SetEdgeActive( false, true );
 
 		int nCurveType0, nCurveType1;
 		if ( bHasCurveTypeData )

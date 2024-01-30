@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -85,7 +85,7 @@ void CHLPlayerMove::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 
 		if ( pVehicle )
 		{
-			pVehicle->SetupMove( player, ucmd, pHelper, move ); 
+			pVehicle->SetupMove( player, ucmd, pHelper, move );
 
 			if ( !m_bWasInVehicle )
 			{
@@ -110,7 +110,7 @@ void CHLPlayerMove::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *
 	// Call the default FinishMove code.
 	BaseClass::FinishMove( player, ucmd, move );
 	if ( gpGlobals->frametime != 0 )
-	{		
+	{
 		float distance = 0.0f;
 		IServerVehicle *pVehicle = player->GetVehicle();
 		if ( pVehicle )
@@ -126,7 +126,7 @@ void CHLPlayerMove::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *
 					distance = 0.0f;
 				m_vecSaveOrigin = newPos;
 			}
-			
+
 			CPropVehicleDriveable *driveable = dynamic_cast< CPropVehicleDriveable * >( player->GetVehicleEntity() );
 			if ( driveable )
 			{

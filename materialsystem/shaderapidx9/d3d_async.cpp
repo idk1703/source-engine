@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // methods for muti-core dx9 threading
 //===========================================================================//
@@ -530,9 +530,9 @@ void D3DDeviceWrapper::ExecutePushBuffer( PushBuffer const* pb)
 			case PBCMD_DRAWPRIM:
 			{
 				VPROF_BUFFER_PLAYBACK( "DRAWPRIM" );
-				
+
 				tmZone( TELEMETRY_LEVEL2, TMZF_NONE, "Dx9Device()->DrawPrimitive" );
-				
+
 				Dx9Device()->DrawPrimitive( (D3DPRIMITIVETYPE) dptr[1], dptr[2], dptr[3] );
 				dptr+=4;
 				break;
@@ -541,7 +541,7 @@ void D3DDeviceWrapper::ExecutePushBuffer( PushBuffer const* pb)
 			case PBCMD_DRAWINDEXEDPRIM:
 			{
 				VPROF_BUFFER_PLAYBACK( "DRAWINDEXEDPRIM" );
-				
+
 				tmZone( TELEMETRY_LEVEL2, TMZF_NONE, "Dx9Device()->DrawIndexedPrimitive" );
 
 				Dx9Device()->DrawIndexedPrimitive( (D3DPRIMITIVETYPE) dptr[1], dptr[2], dptr[3],
@@ -716,7 +716,7 @@ void D3DDeviceWrapper::ExecutePushBuffer( PushBuffer const* pb)
 				dptr++;
 				break;
 			}
-			
+
 			case PBCMD_END_SCENE:
 			{
 				VPROF_BUFFER_PLAYBACK( "END_SCENE" );
@@ -782,8 +782,8 @@ void D3DDeviceWrapper::ExecutePushBuffer( PushBuffer const* pb)
 										  Filter );
 			}
 			break;
-			
-			
+
+
 			case PBCMD_PRESENT:
 			{
 				VPROF_BUFFER_PLAYBACK( "PRESENT" );

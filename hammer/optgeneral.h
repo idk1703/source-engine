@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -70,11 +70,11 @@ protected:
 
 	BOOL BrowseForFolder(char *pszTitle, char *pszDirectory);
 	BOOL OnApply();
-	
+
 	DECLARE_MESSAGE_MAP()
 
-	
-	
+
+
 };
 
 

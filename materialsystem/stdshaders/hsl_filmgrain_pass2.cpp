@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -89,5 +89,3 @@ BEGIN_VS_SHADER( hsl_filmgrain_pass2, "Help for Film Grain" )
 		Draw();
 	}
 END_SHADER
-
-

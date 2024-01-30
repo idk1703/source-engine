@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -19,7 +19,7 @@
 // Slamming this off - it's causing very hot D3D9 function calls to not be inlined and contain a bunch of unused code. (Does this code even work/add real value any more?)
 #define SHADERAPI_USE_SMP 0
 
-// Set this to 1 to allow buffering of the whole frame to memory and then playback (singlethreaded).  
+// Set this to 1 to allow buffering of the whole frame to memory and then playback (singlethreaded).
 // This is for debugging only and is used to test the performance of just calling D3D and rendering without other CPU overhead.
 #define SHADERAPI_BUFFER_D3DCALLS 0
 
@@ -40,7 +40,7 @@
 
 #define PUSHBUFFER_NELEMS 4096
 
-enum PushBufferState 
+enum PushBufferState
 {
 	PUSHBUFFER_AVAILABLE,
 	PUSHBUFFER_BEING_FILLED,
@@ -116,8 +116,8 @@ enum PushBufferCommand
 	PBCMD_SETVIEWPORT,										// vp_struct
 	PBCMD_CLEAR,											// count, n rect structs, flags, color, z, stencil
 	PBCMD_SET_VERTEXDECLARATION,							// vdeclptr
-	PBCMD_BEGIN_SCENE,										// 
-	PBCMD_END_SCENE,										// 
+	PBCMD_BEGIN_SCENE,										//
+	PBCMD_END_SCENE,										//
 	PBCMD_PRESENT,											// complicated..see code
 	PBCMD_SETCLIPPLANE,										// idx, 4 floats
 	PBCMD_STRETCHRECT,										// see code
@@ -171,7 +171,7 @@ private:
 
 	void SubmitIfNotBusy(void);
 
-#if	SHADERAPI_USE_SMP	
+#if	SHADERAPI_USE_SMP
 	template<class T> FORCEINLINE void PushStruct( PushBufferCommand cmd, T const *str )
 	{
 		int nwords=N_DWORDS( T );
@@ -180,7 +180,7 @@ private:
 		memcpy( m_pOutputPtr+1, str, sizeof( T ) );
 		m_pOutputPtr += 1+nwords;
 	}
-	
+
 	FORCEINLINE void AllocatePushBufferSpace(size_t nSlots)
 	{
 		// check for N slots of space, and decrement amount of space left
@@ -297,7 +297,7 @@ private:
 	template<class T> FORCEINLINE void PushStruct( PushBufferCommand cmd, T const *str )
 	{
 	}
-	
+
 	FORCEINLINE void AllocatePushBufferSpace(size_t nSlots)
 	{
 	}
@@ -403,7 +403,7 @@ public:
 		m_bBufferingD3DCalls = false;
 #endif
 	}
-	
+
 	void SetDevicePtr(IDirect3DDevice9 *pD3DDev )
 	{
 		m_pD3DDevice = pD3DDev;
@@ -430,7 +430,7 @@ public:
 		else
 			DO_D3D( SetDepthStencilSurface( new_stencil ) );
 	}
-	
+
 	HRESULT CreateCubeTexture(
 		UINT EdgeLength,
 		UINT Levels,
@@ -485,7 +485,7 @@ public:
 		return m_pD3DDevice->CreateOffscreenPlainSurface( Width, Height, Format, Pool,
 														  ppSurface, pSharedHandle);
 	}
-	
+
 	HRESULT CreateTexture(
 		UINT Width,
 		UINT Height,
@@ -499,7 +499,7 @@ public:
 		)
 	{
 		Synchronize();
-		return m_pD3DDevice->CreateTexture( Width, Height, Levels, Usage, 
+		return m_pD3DDevice->CreateTexture( Width, Height, Levels, Usage,
 											Format, Pool, ppTexture, pSharedHandle
 											#if defined( DX_TO_GL_ABSTRACTION )
 												,debugLabel
@@ -707,7 +707,7 @@ public:
 	FORCEINLINE void SetRenderState( D3DRENDERSTATETYPE state, DWORD val )
 	{
 //		Assert( state >= 0 && state < MAX_NUM_RENDERSTATES );
-		RECORD_RENDER_STATE( state, val ); 
+		RECORD_RENDER_STATE( state, val );
 		if (ASyncMode())
 		{
 			Push( PBCMD_SET_RENDERSTATE, state, val );
@@ -719,7 +719,7 @@ public:
 	FORCEINLINE void SetRenderStateInline( D3DRENDERSTATETYPE state, DWORD val )
 	{
 		//		Assert( state >= 0 && state < MAX_NUM_RENDERSTATES );
-		RECORD_RENDER_STATE( state, val ); 
+		RECORD_RENDER_STATE( state, val );
 		if (ASyncMode())
 		{
 			SetRenderState( state, val );
@@ -955,7 +955,7 @@ public:
 		return hr;
 	}
 
-		
+
 	FORCEINLINE HRESULT  Lock( IDirect3DVertexBuffer9* vb, size_t offset, size_t size, void **ptr,
 							DWORD flags,
 							LockedBufferContext *lb)
@@ -1010,7 +1010,7 @@ public:
 
 		return hr;
 	}
-	
+
 	// asycnhronous lock of index buffer
 	FORCEINLINE HRESULT Lock( IDirect3DIndexBuffer9* ib, size_t offset, size_t size, void **ptr, DWORD flags,
 						   LockedBufferContext * lb)
@@ -1173,7 +1173,7 @@ public:
 #endif
 			DO_D3D( Clear(count, pRects, Flags, color, Z, stencil) );
 	}
-	
+
 	HRESULT Reset( D3DPRESENT_PARAMETERS *parms)
 	{
 		RECORD_COMMAND( DX8_RESET, 1 );
@@ -1209,16 +1209,16 @@ public:
 		Synchronize();
 		DO_D3D( SetTransform( mtrx_id, mt) );
 	}
-	
+
 	FORCEINLINE void SetSamplerState( int stage, D3DSAMPLERSTATETYPE state, DWORD val)
 	{
-		RECORD_SAMPLER_STATE( stage, state, val ); 
+		RECORD_SAMPLER_STATE( stage, state, val );
 		if ( ASyncMode() )
 			Push( PBCMD_SET_SAMPLER_STATE, stage, state, val );
 		else
 			DO_D3D( SetSamplerState( stage, state, val) );
 	}
-	
+
 	void SetFVF( int fvf)
 	{
 		Synchronize();
@@ -1227,7 +1227,7 @@ public:
 
 	FORCEINLINE void SetTextureStageState( int stage, D3DTEXTURESTAGESTATETYPE state, DWORD val )
 	{
-		RECORD_TEXTURE_STAGE_STATE( stage, state, val ); 
+		RECORD_TEXTURE_STAGE_STATE( stage, state, val );
 		Synchronize();
 		DO_D3D( SetTextureStageState( stage, state, val) );
 	}
@@ -1371,7 +1371,7 @@ public:
 		RECORD_INT( PrimitiveCount );
 		if ( ASyncMode() )
 		{
-			Push(PBCMD_DRAWINDEXEDPRIM, 
+			Push(PBCMD_DRAWINDEXEDPRIM,
 				 Type, BaseVertexIndex, MinIndex, NumVertices, StartIndex, PrimitiveCount );
 //			SubmitIfNotBusy();
 		}
@@ -1428,7 +1428,7 @@ public:
 		m_nCurrentTessLevel = (int)ceil( level );
 	}
 #endif
-	
+
 	void SetMaterial( D3DMATERIAL9 const *mat)
 	{
 		RECORD_COMMAND( DX8_SET_MATERIAL, 1 );
@@ -1541,10 +1541,10 @@ public:
 		}
 		else
 #endif
-			return m_pD3DDevice->Present( pSourceRect, pDestRect, 
+			return m_pD3DDevice->Present( pSourceRect, pDestRect,
 									  hDestWindowOverride, pDirtyRegion );
 	}
-	
+
 
 #if defined( DX_TO_GL_ABSTRACTION )
 

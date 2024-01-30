@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -59,7 +59,7 @@ private:
 	static int AchivementDateSortPredicate( CCSBaseAchievement* const* pLeft, CCSBaseAchievement* const* pRight);
 	void DisplayCompressedLocalizedStat(CSStatType_t stat, const char* dialogVariable, const char* localizationToken = NULL);
 	void DisplayFormattedLabel(const char* localizationToken, const wchar_t* valueText, const char* dialogVariable);
-	
+
 	int m_iFixedWidth;
 	int m_iDefaultWeaponImage;
 	int m_iDefaultMapImage;
@@ -75,7 +75,7 @@ private:
 	vgui::PanelListPanel	*m_pRecentAchievementsList;
 
 	StatCard*			m_pStatCard;
-	
+
 	bool				m_bRecentAchievementsDirty;
 	bool				m_bStatsDirty;
 

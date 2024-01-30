@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #ifndef TF_WEAPON_PARSE_H
@@ -62,10 +62,10 @@ class CTFWeaponInfo : public FileWeaponInfo_t
 public:
 
 	DECLARE_CLASS_GAMEROOT( CTFWeaponInfo, FileWeaponInfo_t );
-	
+
 	CTFWeaponInfo();
 	~CTFWeaponInfo();
-	
+
 	virtual void Parse( ::KeyValues *pKeyValuesData, const char *szWeaponName );
 
 	WeaponData_t const &GetWeaponData( int iWeapon ) const	{ return m_WeaponData[iWeapon]; }
@@ -75,7 +75,7 @@ public:
 	WeaponData_t	m_WeaponData[2];
 
 	int		m_iWeaponType;
-	
+
 	// Grenade.
 	bool	m_bGrenade;
 	float	m_flDamageRadius;

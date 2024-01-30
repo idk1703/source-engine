@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -30,7 +30,7 @@ public:
 	LRESULT WindowProc( UINT message, WPARAM wParam, LPARAM lParam );
 
 	void SetViewOrigin( float flHorz, float flVert, bool bRelative = false );
-			
+
 	void SetZoom(float flNewZoom);
 	float GetZoom( void );
 
@@ -42,10 +42,10 @@ public:
 	int  ObjectsAt( CMapWorld *pWorld, const Vector2D &vPoint, HitInfo_t *pObjects, int nMaxObjects, unsigned int nFlags = 0 );
 	void GetCenterPoint(Vector& pt);
 	void OnContextMenu(UINT nFlags, const Vector2D &vPoint);
-	
+
 	void EnsureVisible(Vector &vecPos, float flMargin);
 	void UpdateTitleWindowPos();
-	
+
 	virtual void Render() {}
 
 	void ZoomIn(BOOL bAllViews = FALSE);
@@ -65,7 +65,7 @@ public:
 	void ClientToWorld(Vector &vecWorld, const Vector2D &ptClient);
 	void BuildRay( const Vector2D &ptClient, Vector& vStart, Vector& vEnd );
 	void GetBestTransformPlane( Vector &horzAxis, Vector &vertAxis, Vector &thirdAxis);
-			
+
 	const Vector &GetViewAxis();
 	bool IsInClientView( const Vector &vecMin, const Vector &vecMax );
 	bool IsInClientView( const Vector2D &vecMin, const Vector2D &vecMax );
@@ -75,7 +75,7 @@ public:
 	bool CanBoxFitInView(const Vector &minsWorld, const Vector &maxsWorld);
 	bool PointInClientRect( const Vector2D &point );
 	bool HitTest( const Vector2D &vPoint, const Vector& mins, const Vector& maxs );
-	
+
 // Implementation
 protected:
 	CMapView2DBase();           // protected constructor used by dynamic creation
@@ -112,9 +112,9 @@ protected:
 
 protected:
 	// timer IDs:
-	enum 
-	{ 
-		TIMER_SCROLLVIEW = 1, 
+	enum
+	{
+		TIMER_SCROLLVIEW = 1,
 	};
 
 	void DrawPointFile( CRender2D *pRender );
@@ -131,7 +131,7 @@ protected:
 	// these vars are used often, so keep values. they just mirror Camera values
 	Vector  m_vViewOrigin;
 	float	m_fZoom;			// zoom factor (* map units)
-	float	m_fClientWidthHalf;	
+	float	m_fClientWidthHalf;
 	float	m_fClientHeightHalf;
 	Vector  m_vViewAxis;		// view axis, normal
 
@@ -140,9 +140,9 @@ protected:
 
 	int		m_ClientWidth;
 	int		m_ClientHeight;
-	
+
 	int		m_xScroll, m_yScroll;	// amount to scroll on timer
-	
+
 	bool	m_bToolShown;			// is tool currently visible?
 	CTitleWnd *m_pwndTitle;			// title window
 
@@ -150,7 +150,7 @@ protected:
 	Color	m_clrGrid1024;			// 1024 unit line color
 	Color	m_clrGridCustom;		// custom unit color
 	Color	m_clrGridDot;			// grid dot color
-	Color	m_clrAxis;				// grid axis color 
+	Color	m_clrAxis;				// grid axis color
 
 	//
 	// Color scheme functions.
@@ -158,7 +158,7 @@ protected:
 	void AdjustColorIntensity(Color &color, int nIntensity);
 	void SetColorMode(bool bBlackOnWhite);
 
-	
+
 	// mouse drag (space + leftbutton):
 	bool	m_bMouseDrag;	// status indicator
 
@@ -194,9 +194,9 @@ inline bool CMapView2DBase::PointInClientRect( const Vector2D &point )
 	return ( point.x >= 0 && point.y >= 0 && point.x < m_ClientWidth && point.y < m_ClientHeight );
 }
 
-inline float CMapView2DBase::GetZoom() 
-{ 
-	return m_fZoom; 
+inline float CMapView2DBase::GetZoom()
+{
+	return m_fZoom;
 }
 
 inline CRender2D *CMapView2DBase::GetRender()

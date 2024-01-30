@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@
 class CKeyToggleCheckButton : public vgui::CheckButton
 {
 public:
-	CKeyToggleCheckButton( vgui::Panel *parent, const char *panelName, const char *text, 
+	CKeyToggleCheckButton( vgui::Panel *parent, const char *panelName, const char *text,
 		char const *keyname, char const *cmdname );
 	~CKeyToggleCheckButton();
 

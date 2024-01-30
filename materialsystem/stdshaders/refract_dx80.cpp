@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,7 +18,7 @@
 
 DEFINE_FALLBACK_SHADER( Refract, Refract_DX80 )
 
-BEGIN_VS_SHADER( Refract_DX80, 
+BEGIN_VS_SHADER( Refract_DX80,
 			  "Help for Refract_DX80" )
 
 	BEGIN_SHADER_PARAMS
@@ -141,7 +141,7 @@ BEGIN_VS_SHADER( Refract_DX80,
 		if( bNormalMapAlpha ) pshIndex |= 0x2;
 		return pshIndex;
 	}
-	
+
 	SHADER_DRAW
 	{
 		bool bIsModel = IS_FLAG_SET( MATERIAL_VAR_MODEL );
@@ -314,4 +314,3 @@ BEGIN_VS_SHADER( Refract_DX80,
 		}
 	}
 END_SHADER
-

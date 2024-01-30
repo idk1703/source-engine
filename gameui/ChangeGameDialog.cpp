@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -71,7 +71,7 @@ void CChangeGameDialog::LoadModList()
 	WIN32_FIND_DATA wfd;
 	HANDLE hResult;
 	memset(&wfd, 0, sizeof(WIN32_FIND_DATA));
-	
+
 	hResult = FindFirstFile( szSearchPath, &wfd);
 	if (hResult != INVALID_HANDLE_VALUE)
 	{
@@ -117,13 +117,13 @@ void CChangeGameDialog::LoadModList()
 			if (!bMoreFiles)
 				break;
 		}
-		
+
 		FindClose(hResult);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChangeGameDialog::OnCommand(const char *command)
 {
@@ -153,9 +153,3 @@ void CChangeGameDialog::OnCommand(const char *command)
 		BaseClass::OnCommand(command);
 	}
 }
-
-
-
-
-
-

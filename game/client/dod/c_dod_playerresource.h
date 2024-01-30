@@ -25,7 +25,7 @@ public:
 
 	int GetScore( int iIndex );
 	int GetPlayerClass( int iIndex );
-	
+
 protected:
 
 	int		m_iObjScore[MAX_PLAYERS+1];

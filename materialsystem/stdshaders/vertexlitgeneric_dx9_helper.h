@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -65,7 +65,7 @@ struct VertexLitGeneric_DX9_Vars_t
 	int m_nPhongAlbedoTint;
 	int m_nPhongExponentTexture;
 	int m_nDiffuseWarpTexture;
-	int m_nPhongWarpTexture;	
+	int m_nPhongWarpTexture;
 	int m_nPhongBoost;
 	int m_nPhongFresnelRanges;
 	int m_nPhongExponentFactor;

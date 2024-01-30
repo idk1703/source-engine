@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -47,7 +47,7 @@ enum ShadowType_t
 
 // This provides a way for entities to know when they've entered or left the PVS.
 // Normally, server entities can use NotifyShouldTransmit to get this info, but client-only
-// entities can use this. Store a CPVSNotifyInfo in your 
+// entities can use this. Store a CPVSNotifyInfo in your
 //
 // When bInPVS=true, it's being called DURING rendering. It might be after rendering any
 // number of views.
@@ -96,7 +96,7 @@ public:
 	// Determine the color modulation amount
 	virtual void	GetColorModulation( float* color ) = 0;
 
-	// Returns false if the entity shouldn't be drawn due to LOD. 
+	// Returns false if the entity shouldn't be drawn due to LOD.
 	// (NOTE: This is no longer used/supported, but kept in the vtable for backwards compat)
 	virtual bool	LODTest() = 0;
 
@@ -108,15 +108,15 @@ public:
 
 	virtual void	SetupWeights( const matrix3x4_t *pBoneToWorld, int nFlexWeightCount, float *pFlexWeights, float *pFlexDelayedWeights ) = 0;
 	virtual void	DoAnimationEvents( void ) = 0;
-	
-	// Return this if you want PVS notifications. See IPVSNotify for more info.	
+
+	// Return this if you want PVS notifications. See IPVSNotify for more info.
 	// Note: you must always return the same value from this function. If you don't,
 	// undefined things will occur, and they won't be good.
 	virtual IPVSNotify* GetPVSNotifyInterface() = 0;
 
 	// Returns the bounds relative to the origin (render bounds)
 	virtual void	GetRenderBounds( Vector& mins, Vector& maxs ) = 0;
-	
+
 	// returns the bounds as an AABB in worldspace
 	virtual void	GetRenderBoundsWorldspace( Vector& mins, Vector& maxs ) = 0;
 
@@ -173,7 +173,7 @@ public:
 };
 
 
-// This class can be used to implement default versions of some of the 
+// This class can be used to implement default versions of some of the
 // functions of IClientRenderable.
 abstract_class CDefaultClientRenderable : public IClientUnknown, public IClientRenderable
 {
@@ -226,7 +226,7 @@ public:
 	}
 
 	// Should this object be able to have shadows cast onto it?
-	virtual bool	ShouldReceiveProjectedTextures( int flags ) 
+	virtual bool	ShouldReceiveProjectedTextures( int flags )
 	{
 		return false;
 	}

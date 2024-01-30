@@ -39,9 +39,9 @@ void CNPC_Zombie::Spawn()
 	Precache( );
 
 	SetModel( "models/zombie.mdl" );
-	
+
 	SetRenderColor( 255, 255, 255, 255 );
-	
+
 	SetHullType(HULL_HUMAN);
 	SetHullSizeNormal();
 
@@ -49,7 +49,7 @@ void CNPC_Zombie::Spawn()
 	AddSolidFlags( FSOLID_NOT_STANDABLE );
 	SetMoveType( MOVETYPE_STEP );
 	m_bloodColor		= BLOOD_COLOR_GREEN;
-    m_iHealth			= sk_zombie_health.GetFloat();
+	m_iHealth			= sk_zombie_health.GetFloat();
 	//pev->view_ofs		= VEC_VIEW;// position of the eyes relative to monster's origin.
 	m_flFieldOfView		= 0.5;
 	m_NPCState			= NPC_STATE_NONE;
@@ -82,7 +82,7 @@ void CNPC_Zombie::Precache()
 //-----------------------------------------------------------------------------
 Class_T	CNPC_Zombie::Classify( void )
 {
-	return CLASS_ALIEN_MONSTER; 
+	return CLASS_ALIEN_MONSTER;
 }
 
 //=========================================================
@@ -111,7 +111,7 @@ void CNPC_Zombie::HandleAnimEvent( animevent_t *pEvent )
 				if ( pHurt->GetFlags() & ( FL_NPC | FL_CLIENT ) )
 				{
 					pHurt->ViewPunch( QAngle( 5, 0, 18 ) );
-					
+
 					GetVectors( &v_forward, &v_right, NULL );
 
 					pHurt->SetAbsVelocity( pHurt->GetAbsVelocity() - v_right * 100 );
@@ -123,7 +123,7 @@ void CNPC_Zombie::HandleAnimEvent( animevent_t *pEvent )
 				EmitSound( filter, entindex(), "Zombie.AttackMiss" );
 
 			if ( random->RandomInt( 0, 1 ) )
-				 AttackSound();
+				AttackSound();
 		}
 		break;
 
@@ -137,14 +137,14 @@ void CNPC_Zombie::HandleAnimEvent( animevent_t *pEvent )
 			vecMaxs.z = vecMaxs.x;
 
 			CBaseEntity *pHurt = CheckTraceHullAttack( 70, vecMins, vecMaxs, sk_zombie_dmg_one_slash.GetFloat(), DMG_SLASH );
-			
+
 			CPASAttenuationFilter filter2( this );
 			if ( pHurt )
 			{
 				if ( pHurt->GetFlags() & ( FL_NPC | FL_CLIENT ) )
 				{
 					pHurt->ViewPunch( QAngle ( 5, 0, -18 ) );
-					
+
 					GetVectors( &v_forward, &v_right, NULL );
 
 					pHurt->SetAbsVelocity( pHurt->GetAbsVelocity() - v_right * 100 );
@@ -156,8 +156,8 @@ void CNPC_Zombie::HandleAnimEvent( animevent_t *pEvent )
 				EmitSound( filter2, entindex(), "Zombie.AttackMiss" );
 			}
 
-			if ( random->RandomInt( 0,1 ) ) 
-				 AttackSound();
+			if ( random->RandomInt( 0,1 ) )
+				AttackSound();
 		}
 		break;
 
@@ -170,7 +170,7 @@ void CNPC_Zombie::HandleAnimEvent( animevent_t *pEvent )
 			vecMaxs.z = vecMaxs.x;
 
 			CBaseEntity *pHurt = CheckTraceHullAttack( 70, vecMins, vecMaxs, sk_zombie_dmg_both_slash.GetFloat(), DMG_SLASH );
-			
+
 
 			CPASAttenuationFilter filter3( this );
 			if ( pHurt )
@@ -178,7 +178,7 @@ void CNPC_Zombie::HandleAnimEvent( animevent_t *pEvent )
 				if ( pHurt->GetFlags() & ( FL_NPC | FL_CLIENT ) )
 				{
 					pHurt->ViewPunch( QAngle ( 5, 0, 0 ) );
-					
+
 					GetVectors( &v_forward, &v_right, NULL );
 					pHurt->SetAbsVelocity( pHurt->GetAbsVelocity() - v_right * 100 );
 				}
@@ -188,7 +188,7 @@ void CNPC_Zombie::HandleAnimEvent( animevent_t *pEvent )
 				EmitSound( filter3, entindex(),"Zombie.AttackMiss" );
 
 			if ( random->RandomInt( 0,1 ) )
-				 AttackSound();
+				AttackSound();
 		}
 		break;
 
@@ -200,10 +200,10 @@ void CNPC_Zombie::HandleAnimEvent( animevent_t *pEvent )
 
 
 static float DamageForce( const Vector &size, float damage )
-{ 
+{
 	float force = damage * ((32 * 32 * 72.0) / (size.x * size.y * size.z)) * 5;
-	
-	if ( force > 1000.0) 
+
+	if ( force > 1000.0)
 	{
 		force = 1000.0;
 	}
@@ -213,11 +213,11 @@ static float DamageForce( const Vector &size, float damage )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pInflictor - 
-//			pAttacker - 
-//			flDamage - 
-//			bitsDamageType - 
+// Purpose:
+// Input  : pInflictor -
+//			pAttacker -
+//			flDamage -
+//			bitsDamageType -
 // Output : int
 //-----------------------------------------------------------------------------
 int CNPC_Zombie::OnTakeDamage_Alive( const CTakeDamageInfo &inputInfo )
@@ -236,8 +236,8 @@ int CNPC_Zombie::OnTakeDamage_Alive( const CTakeDamageInfo &inputInfo )
 
 	// HACK HACK -- until we fix this.
 	if ( IsAlive() )
-		 PainSound( info );
-	
+		PainSound( info );
+
 	return BaseClass::OnTakeDamage_Alive( info );
 }
 

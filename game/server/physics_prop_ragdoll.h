@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -42,7 +42,7 @@ public:
 	DECLARE_SERVERCLASS();
 	// Don't treat as a live target
 	virtual bool IsAlive( void ) { return false; }
-	
+
 	virtual void TraceAttack( const CTakeDamageInfo &info, const Vector &dir, trace_t *ptr, CDmgAccumulator *pAccumulator );
 	virtual bool TestCollision( const Ray_t &ray, unsigned int mask, trace_t& trace );
 	virtual void Teleport( const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity );
@@ -63,7 +63,7 @@ public:
 	// locals
 	void InitRagdollAnimation( void );
 	void InitRagdoll( const Vector &forceVector, int forceBone, const Vector &forcePos, matrix3x4_t *pPrevBones, matrix3x4_t *pBoneToWorld, float dt, int collisionGroup, bool activateRagdoll, bool bWakeRagdoll = true );
-	
+
 	void RecheckCollisionFilter( void );
 	void SetDebrisThink();
 	void ClearFlagsThink( void );
@@ -144,7 +144,7 @@ private:
 	CNetworkVar( float, m_flBlendWeight );
 	CNetworkVar( int, m_nOverlaySequence );
 	float	m_flDefaultFadeScale;
-	
+
 	Vector				m_ragdollMins[RAGDOLL_MAX_ELEMENTS];
 	Vector				m_ragdollMaxs[RAGDOLL_MAX_ELEMENTS];
 };

@@ -50,7 +50,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_BaseObject, DT_BaseObject, CBaseObject)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseObject::C_BaseObject(  )
 {
@@ -67,14 +67,14 @@ C_BaseObject::C_BaseObject(  )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseObject::~C_BaseObject( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::PreDataUpdate( DataUpdateType_t updateType )
 {
@@ -88,7 +88,7 @@ void C_BaseObject::PreDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -123,7 +123,7 @@ void C_BaseObject::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::SetDormant( bool bDormant )
 {
@@ -135,11 +135,11 @@ void C_BaseObject::SetDormant( bool bDormant )
 #define TF_OBJ_BODYGROUPTURNOFF			0
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : origin - 
-//			angles - 
-//			event - 
-//			*options - 
+// Purpose:
+// Input  : origin -
+//			angles -
+//			event -
+//			*options -
 //-----------------------------------------------------------------------------
 void C_BaseObject::FireEvent( const Vector& origin, const QAngle& angles, int event, const char *options )
 {
@@ -184,7 +184,7 @@ void C_BaseObject::FireEvent( const Vector& origin, const QAngle& angles, int ev
 				int subpartcount = GetBodygroupCount( i );
 				if ( subpartcount == 2 )
 				{
-					SetBodygroup( i, 
+					SetBodygroup( i,
 						( event == TF_OBJ_ENABLEALLBODYGROUPS ) ?
 						TF_OBJ_BODYGROUPTURNON : TF_OBJ_BODYGROUPTURNOFF );
 				}
@@ -200,13 +200,13 @@ void C_BaseObject::FireEvent( const Vector& origin, const QAngle& angles, int ev
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_BaseObject::OffsetObjectOrigin( Vector& origin )
 {
 	if ( !m_bBuilding )
 		return false;
-	
+
 	if ( inv_demo.GetBool() )
 		return false;
 
@@ -226,7 +226,7 @@ const char* C_BaseObject::GetStatusName() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_BaseObject::DrawModel( int flags )
 {
@@ -298,7 +298,7 @@ int C_BaseObject::DrawModel( int flags )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::HighlightBuildPoints( int flags )
 {
@@ -361,11 +361,11 @@ void C_BaseObject::HighlightBuildPoints( int flags )
 					pPlacementObj->SetAbsAngles( vecBPAngles );
 
 
-					modelrender->DrawModel( 
-						flags, 
+					modelrender->DrawModel(
+						flags,
 						pPlacementObj,
 						pPlacementObj->GetModelInstance(),
-						pPlacementObj->index, 
+						pPlacementObj->index,
 						pPlacementObj->GetModel(),
 						vecBPOrigin,
 						vecBPAngles,
@@ -418,7 +418,7 @@ void C_BaseObject::ActivateYawPreview( bool enable )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::PreviewYaw( float yaw )
 {
@@ -426,7 +426,7 @@ void C_BaseObject::PreviewYaw( float yaw )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_BaseObject::IsPreviewingYaw() const
 {
@@ -442,7 +442,7 @@ float C_BaseObject::GetInitialBuilderYaw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -472,7 +472,7 @@ void C_BaseObject::PostDataUpdate( DataUpdateType_t updateType )
 		}
 	}
 
-	if ( m_bHasSapper ) 
+	if ( m_bHasSapper )
 	{
 		// Play a specific sound for a sapper...
 		if ( m_bOldSapper != m_bHasSapper )
@@ -498,7 +498,7 @@ void C_BaseObject::PostDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::Release( void )
 {
@@ -513,7 +513,7 @@ void C_BaseObject::Release( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_BaseObject::IsUnderAttack( )
 {
@@ -522,7 +522,7 @@ bool C_BaseObject::IsUnderAttack( )
 }
 
 //-----------------------------------------------------------------------------
-// Ownership: 
+// Ownership:
 //-----------------------------------------------------------------------------
 C_BaseTFPlayer *C_BaseObject::GetOwner()
 {
@@ -530,7 +530,7 @@ C_BaseTFPlayer *C_BaseObject::GetOwner()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_BaseObject::IsOwnedByLocalPlayer() const
 {
@@ -545,7 +545,7 @@ bool C_BaseObject::IsOwnedByLocalPlayer() const
 //-----------------------------------------------------------------------------
 void C_BaseObject::AddEntity( void )
 {
-	// If set to invisible, skip. Do this before resetting the entity pointer so it has 
+	// If set to invisible, skip. Do this before resetting the entity pointer so it has
 	// valid data to decide whether it's visible.
 	if ( !ShouldDraw() )
 	{
@@ -581,7 +581,7 @@ void C_BaseObject::AddEntity( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::Select( void )
 {
@@ -590,7 +590,7 @@ void C_BaseObject::Select( void )
 }
 
 //-----------------------------------------------------------------------------
-// Sends client commands back to the server: 
+// Sends client commands back to the server:
 //-----------------------------------------------------------------------------
 void C_BaseObject::SendClientCommand( const char *pCmd )
 {
@@ -620,7 +620,7 @@ char *C_BaseObject::GetIDString( void )
 
 
 //-----------------------------------------------------------------------------
-// It's a valid ID target when it's building 
+// It's a valid ID target when it's building
 //-----------------------------------------------------------------------------
 bool C_BaseObject::IsValidIDTarget( void )
 {
@@ -629,7 +629,7 @@ bool C_BaseObject::IsValidIDTarget( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::RecalculateIDString( void )
 {
@@ -698,7 +698,7 @@ void C_BaseObject::DrawRunningEffects( void )
 	if ( GetAttachment( iSmokeAttachment, vecSmoke, angSmoke ) )
 	{
 		AngleVectors( angSmoke, &vecSmokeDir);
-	
+
 		float r, g, b;
 		r = g = b = random->RandomFloat( 16, 92 );
 
@@ -789,7 +789,7 @@ void C_BaseObject::DrawDamageEffects( void )
 		vecFire = vecOrigin;
 		angFire = QAngle(0,0,0);
 	}
-	
+
 	float r, g, b;
 	r = g = b = random->RandomFloat( 16, 92 );
 
@@ -898,7 +898,7 @@ void CObjectPowerProxy::OnBind( void *pRenderable )
 EXPOSE_INTERFACE( CObjectPowerProxy, IMaterialProxy, "ObjectPower" IMATERIAL_PROXY_INTERFACE_VERSION );
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CBasicControlPanel : public CObjectControlPanel
 {
@@ -913,9 +913,9 @@ DECLARE_VGUI_SCREEN_FACTORY( CBasicControlPanel, "basic_control_panel" );
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CBasicControlPanel::CBasicControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CBasicControlPanel" ) 
+	: BaseClass( parent, "CBasicControlPanel" )
 {
 }

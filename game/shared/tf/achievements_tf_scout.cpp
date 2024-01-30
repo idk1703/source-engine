@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -23,13 +23,13 @@
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_FirstBlood : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// Achievement for getting first blood.
 		if ( event->GetInt( "death_flags" ) & TF_DEATH_FIRST_BLOOD )
@@ -44,14 +44,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_FirstBlood, ACHIEVEMENT_TF_SCOUT_FIRST_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_FirstBloodKill : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 5 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pAttackerPlayer = ToTFPlayer( pAttacker );
 
@@ -70,13 +70,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_FirstBloodKill, ACHIEVEMENT_TF_SCOUT_FI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_WellEarlyKill : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// Achievement for getting a kill in cp_well during the setup phase.
 		if ( FStrEq( m_pAchievementMgr->GetMapName(), "cp_well" ) &&
@@ -92,14 +92,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_WellEarlyKill, ACHIEVEMENT_TF_SCOUT_WEL
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_LifetimeKills : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 2004 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// Achievement for getting 2004 lifetime kills!
 		IncrementCount();
@@ -110,7 +110,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_LifetimeKills, ACHIEVEMENT_TF_SCOUT_LIF
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_IronManKills : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -136,7 +136,7 @@ class CAchievementTFScout_IronManKills : public CBaseTFAchievement
 			ResetTracking();
 		}
 	}
-	
+
 	void ResetTracking()
 	{
 		m_bKillOnGround = false;
@@ -145,7 +145,7 @@ class CAchievementTFScout_IronManKills : public CBaseTFAchievement
 
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// Achievement for getting a kill while on the ground, in the air, and in the water in a single life.
 		CTFPlayer *pAttackerPlayer = ToTFPlayer( pAttacker );
@@ -170,7 +170,7 @@ class CAchievementTFScout_IronManKills : public CBaseTFAchievement
 			IncrementCount();
 		}
 	}
-	
+
 	bool m_bKillOnGround;
 	bool m_bKillInAir;
 	bool m_bKillInWater;
@@ -180,7 +180,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_IronManKills, ACHIEVEMENT_TF_SCOUT_IRON
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_DestroyTeleporters : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 3 );
@@ -216,7 +216,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_DestroyTeleporters, ACHIEVEMENT_TF_SCOU
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_DestroyBuildingsBeingBuilt : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 3 );
@@ -251,7 +251,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_DestroyBuildingsBeingBuilt, ACHIEVEMENT
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_DestroySentryWithPistol : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -289,7 +289,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_DestroySentryWithPistol, ACHIEVEMENT_TF
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_DoubleJumps : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1000 );
@@ -335,7 +335,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_DoubleJumps, ACHIEVEMENT_TF_SCOUT_DOUBL
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_AssistChargeMedic : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -366,7 +366,7 @@ class CAchievementTFScout_AssistChargeMedic : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		int iAssisterIndex = engine->GetPlayerForUserID( event->GetInt( "assister" ) );
 		if ( iAssisterIndex > 0 && iAssisterIndex == m_iMedic )
@@ -393,7 +393,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_AssistChargeMedic, ACHIEVEMENT_TF_SCOUT
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_StealSandwich : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -433,7 +433,7 @@ class CAchievementTFScout_StealSandwich : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// Achievement for killing a Heavy and taking his sandvich.
 		C_TFPlayer *pTFVictim = ToTFPlayer( pVictim );
@@ -452,7 +452,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_StealSandwich, ACHIEVEMENT_TF_SCOUT_STE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_KillChargedMedic : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -464,7 +464,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_KillChargedMedic, ACHIEVEMENT_TF_SCOUT_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_SurviveDamage : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -509,7 +509,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_SurviveDamage, ACHIEVEMENT_TF_SCOUT_SUR
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_ThreeFlagCaptures : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -552,21 +552,21 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_ThreeFlagCaptures, ACHIEVEMENT_TF_SCOUT
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_DoubleJumpKill : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 20 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_TFPlayer *pKiller = ToTFPlayer( pAttacker );
 		int iDoubleJumpKill = pKiller->m_Shared.GetAirDash();
 
 		if ( iDoubleJumpKill > 0 )
 		{
-			IncrementCount(); 
+			IncrementCount();
 		}
 	}
 };
@@ -575,7 +575,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_DoubleJumpKill, ACHIEVEMENT_TF_SCOUT_DO
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_FlagCapGrind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 25 );
@@ -605,7 +605,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_FlagCapGrind, ACHIEVEMENT_TF_SCOUT_FLAG
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_DodgeDamage : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -648,13 +648,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_DodgeDamage, ACHIEVEMENT_TF_SCOUT_DODGE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_KnockIntoTrain : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		if ( !pTFVictim )
@@ -672,7 +672,7 @@ class CAchievementTFScout_KnockIntoTrain : public CBaseTFAchievement
 				 ( pAttacker && pAttacker->IsBrushModel() ) || // They were smashed by the world! Gah!
 				 ( !pAttacker || (pAttacker == pVictim) ) || // He killed himself!
 				 ( custom == TF_DMG_CUSTOM_SUICIDE ) ||
-				 ( custom == TF_DMG_CUSTOM_TRIGGER_HURT ) ) // A trigger-hurt got him! 
+				 ( custom == TF_DMG_CUSTOM_TRIGGER_HURT ) ) // A trigger-hurt got him!
 			{
 				IncrementCount();
 			}
@@ -684,14 +684,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_KnockIntoTrain, ACHIEVEMENT_TF_SCOUT_KN
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_KillStunned : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 50 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		if ( !pTFVictim )
@@ -724,13 +724,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_KillStunned, ACHIEVEMENT_TF_SCOUT_KILL_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_StunIntoTrain : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		if ( !pTFVictim )
@@ -751,7 +751,7 @@ class CAchievementTFScout_StunIntoTrain : public CBaseTFAchievement
 				( pAttacker && pAttacker->IsBrushModel() ) || // They were smashed by the world! Gah!
 				( !pAttacker || (pAttacker == pVictim) ) || // He killed himself!
 				( custom == TF_DMG_CUSTOM_SUICIDE ) ||
-				( custom == TF_DMG_CUSTOM_TRIGGER_HURT ) ) // A trigger-hurt got him! 
+				( custom == TF_DMG_CUSTOM_TRIGGER_HURT ) ) // A trigger-hurt got him!
 			{
 				IncrementCount();
 			}
@@ -763,7 +763,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_StunIntoTrain, ACHIEVEMENT_TF_SCOUT_STU
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_StunUberEnemies : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 2 );
@@ -803,7 +803,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_StunUberEnemies, ACHIEVEMENT_TF_SCOUT_S
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_StunCappingEnemies : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 50 );
@@ -841,7 +841,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_StunCappingEnemies, ACHIEVEMENT_TF_SCOU
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_MaxStuns : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -878,7 +878,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_MaxStuns, ACHIEVEMENT_TF_SCOUT_MAX_STUN
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_StunScoutWithTheirBall : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -890,14 +890,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_StunScoutWithTheirBall, ACHIEVEMENT_TF_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_KillInDodgeCooldown : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// Achievement for killing another scout under the effect Crit-a-Cola
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
@@ -913,7 +913,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_KillInDodgeCooldown, ACHIEVEMENT_TF_SCO
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_KillFromBehind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 50 );
@@ -940,7 +940,7 @@ class CAchievementTFScout_KillFromBehind : public CBaseTFAchievement
 		return DotProduct( vecVictimForward, vecToTarget );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// Achievement for killing a bunch of enemies from behind with the scattergun double.
 		if ( event->GetInt( "weaponid" ) == TF_WEAPON_SCATTERGUN )
@@ -959,7 +959,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_KillFromBehind, ACHIEVEMENT_TF_SCOUT_KI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_CaptureLastPoint : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1020,7 +1020,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_CaptureLastPoint, ACHIEVEMENT_TF_SCOUT_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_CaptureThreePoints : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1083,7 +1083,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_CaptureThreePoints, ACHIEVEMENT_TF_SCOU
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_FastCap : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1129,7 +1129,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_FastCap, ACHIEVEMENT_TF_SCOUT_FAST_CAP,
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_StartAndFinishCap : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 10 );
@@ -1178,7 +1178,7 @@ class CAchievementTFScout_StartAndFinishCap : public CBaseTFAchievement
 				if ( iTeam == pLocalPlayer->GetTeamNumber() )
 				{
 					m_Points.Remove( iIndex );
-					IncrementCount();					
+					IncrementCount();
 				}
 			}
 		}
@@ -1205,7 +1205,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_StartAndFinishCap, ACHIEVEMENT_TF_SCOUT
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_BlockCaps : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 50 );
@@ -1243,7 +1243,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_BlockCaps, ACHIEVEMENT_TF_SCOUT_BLOCK_C
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_CarrierKillCarrier : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1282,7 +1282,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_CarrierKillCarrier, ACHIEVEMENT_TF_SCOU
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_CapFlagWithoutAttacking : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1329,7 +1329,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_CapFlagWithoutAttacking, ACHIEVEMENT_TF
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_LongDistanceRunner : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 25000 );
@@ -1376,7 +1376,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFScout_LongDistanceRunner, ACHIEVEMENT_TF_SCOU
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFScout_TauntKill : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1455,7 +1455,7 @@ class CAchievementTFScout_AchieveProgress1 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFScout_AchieveProgress1, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 10, ACHIEVEMENT_TF_SCOUT_START_RANGE, ACHIEVEMENT_TF_SCOUT_END_RANGE );
@@ -1468,7 +1468,7 @@ class CAchievementTFScout_AchieveProgress2 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFScout_AchieveProgress2, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 16, ACHIEVEMENT_TF_SCOUT_START_RANGE, ACHIEVEMENT_TF_SCOUT_END_RANGE );
@@ -1481,7 +1481,7 @@ class CAchievementTFScout_AchieveProgress3 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFScout_AchieveProgress3, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 22, ACHIEVEMENT_TF_SCOUT_START_RANGE, ACHIEVEMENT_TF_SCOUT_END_RANGE );
@@ -1727,6 +1727,3 @@ public:
 DECLARE_ACHIEVEMENT( CAchievementTFScout_BackscatterKillFriendsGrind, ACHIEVEMENT_TF_SCOUT_BACKSCATTER_KILL_FRIENDS_GRIND, "TF_SCOUT_BACKSCATTER_KILL_FRIENDS_GRIND", 5 );
 
 #endif // CLIENT_DLL
-
-
-

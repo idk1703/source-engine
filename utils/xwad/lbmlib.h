@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -52,4 +52,3 @@ int	LoadBMP (const char* szFile, byte** ppbBits, byte** ppbPalette);
 void WriteLBMfile (char *filename, byte *data, int width, int height
 	, byte *palette);
 int WriteBMPfile (char *szFile, byte *pbBits, int width, int height, byte *pbPalette);
-

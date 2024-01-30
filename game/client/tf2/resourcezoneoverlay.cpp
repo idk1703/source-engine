@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Revision:     $
 // $NoKeywords: $
@@ -55,7 +55,7 @@ private:
 		int x, y, w, h;
 	};
 
-	bool ParseSingleResourceBitmap( KeyValues *pKeyValues, 
+	bool ParseSingleResourceBitmap( KeyValues *pKeyValues,
 			const char *pResourceName, CResourceBitmaps *pResourceBitmap );
 	bool ParseTeamResourceBitmaps( CResourceBitmaps *pT, KeyValues *pTeam );
 
@@ -77,7 +77,7 @@ DECLARE_OVERLAY_FACTORY( CResourceZoneOverlay, "resourcezone" );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 CResourceZoneOverlay::CResourceZoneOverlay( vgui::Panel *parent, const char *panelName )
@@ -88,7 +88,7 @@ CResourceZoneOverlay::CResourceZoneOverlay( vgui::Panel *parent, const char *pan
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 CResourceZoneOverlay::~CResourceZoneOverlay( void )
@@ -104,7 +104,7 @@ CResourceZoneOverlay::~CResourceZoneOverlay( void )
 // Parse class icons
 //-----------------------------------------------------------------------------
 
-bool CResourceZoneOverlay::ParseSingleResourceBitmap( KeyValues *pKeyValues, 
+bool CResourceZoneOverlay::ParseSingleResourceBitmap( KeyValues *pKeyValues,
 				const char *pResourceName, CResourceBitmaps *pResourceBitmap )
 {
 	const char *image;
@@ -209,7 +209,7 @@ void CResourceZoneOverlay::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : pImage - Class specific image
 //-----------------------------------------------------------------------------
 
@@ -219,7 +219,7 @@ void CResourceZoneOverlay::SetImage( BitmapImage *pImage )
 }
 
 //-----------------------------------------------------------------------------
-// Sets the draw color 
+// Sets the draw color
 //-----------------------------------------------------------------------------
 
 void CResourceZoneOverlay::SetColor( int r, int g, int b, int a )
@@ -231,7 +231,7 @@ void CResourceZoneOverlay::SetColor( int r, int g, int b, int a )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 void CResourceZoneOverlay::Paint( void )

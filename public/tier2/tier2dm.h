@@ -25,7 +25,7 @@ void DisconnectDataModel();
 //-----------------------------------------------------------------------------
 // Helper empty implementation of an IAppSystem for tier2 libraries
 //-----------------------------------------------------------------------------
-template< class IInterface, int ConVarFlag = 0 > 
+template< class IInterface, int ConVarFlag = 0 >
 class CTier2DmAppSystem : public CTier2AppSystem< IInterface, ConVarFlag >
 {
 	typedef CTier2AppSystem< IInterface, ConVarFlag > BaseClass;
@@ -35,7 +35,7 @@ public:
 	{
 	}
 
-	virtual bool Connect( CreateInterfaceFn factory ) 
+	virtual bool Connect( CreateInterfaceFn factory )
 	{
 		if ( !BaseClass::Connect( factory ) )
 			return false;
@@ -64,7 +64,7 @@ public:
 		BaseClass::Shutdown();
 	}
 
-	virtual void Disconnect() 
+	virtual void Disconnect()
 	{
 		DisconnectDataModel();
 		BaseClass::Disconnect();
@@ -73,4 +73,3 @@ public:
 
 
 #endif // TIER2DM_H
-

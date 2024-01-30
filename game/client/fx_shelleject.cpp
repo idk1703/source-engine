@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -12,7 +12,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ShellEjectCallback( const CEffectData &data )
 {
@@ -27,7 +27,7 @@ void ShellEjectCallback( const CEffectData &data )
 DECLARE_CLIENT_EFFECT( "ShellEject", ShellEjectCallback );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void RifleShellEjectCallback( const CEffectData &data )
 {
@@ -42,7 +42,7 @@ void RifleShellEjectCallback( const CEffectData &data )
 DECLARE_CLIENT_EFFECT( "RifleShellEject", RifleShellEjectCallback );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ShotgunShellEjectCallback( const CEffectData &data )
 {
@@ -55,5 +55,3 @@ void ShotgunShellEjectCallback( const CEffectData &data )
 }
 
 DECLARE_CLIENT_EFFECT( "ShotgunShellEject", ShotgunShellEjectCallback );
-
-

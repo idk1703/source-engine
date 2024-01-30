@@ -199,7 +199,7 @@ CMdlInfoApp::CMdlInfoApp()
 //-----------------------------------------------------------------------------
 bool CMdlInfoApp::Create()
 {
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "vstdlib.dll",			PROCESS_UTILS_INTERFACE_VERSION },
 		{ "materialsystem.dll",		MATERIAL_SYSTEM_INTERFACE_VERSION },
@@ -283,7 +283,7 @@ int CMdlInfoApp::Startup()
 int CMdlInfoApp::Main()
 {
 	// This bit of hackery allows us to access files on the harddrive
-	g_pFullFileSystem->AddSearchPath( "", "LOCAL", PATH_ADD_TO_HEAD ); 
+	g_pFullFileSystem->AddSearchPath( "", "LOCAL", PATH_ADD_TO_HEAD );
 
 	if ( CommandLineHasOpt( kOptHelp ) )
 	{

@@ -80,8 +80,8 @@ static int ListFileNameSortFunc(ListPanel *pPanel, const ListPanelItem &item1, c
 	int num1 = Q_atoi( string1 );
 	int num2 = Q_atoi( string2 );
 
-	if ( num1 != 0 && 
-		 num2 != 0 )
+	if ( num1 != 0 &&
+		num2 != 0 )
 	{
 		if ( num1 < num2 )
 			return -1;
@@ -94,7 +94,7 @@ static int ListFileNameSortFunc(ListPanel *pPanel, const ListPanelItem &item1, c
 	{
 		return -1;
 	}
-	
+
 	// Push numbers before everything else
 	if ( num2 != 0 )
 	{
@@ -231,7 +231,7 @@ class FileCompletionEdit : public TextEntry
 
 public:
 	FileCompletionEdit(Panel *parent);
-    ~FileCompletionEdit();
+	~FileCompletionEdit();
 
 	int AddItem(const char *itemText, KeyValues *userData);
 	int AddItem(const wchar_t *itemText, KeyValues *userData);
@@ -325,7 +325,7 @@ void FileCompletionEdit::OnSetText(const wchar_t *newtext)
 	// see if the combobox text has changed, and if so, post a message detailing the new text
 	wchar_t wbuf[255];
 	GetText( wbuf, 254 );
-	
+
 	if ( wcscmp(wbuf, newtext) )
 	{
 		// text has changed
@@ -459,7 +459,7 @@ void FileCompletionEdit::OnMenuItemHighlight( int itemID )
 
 
 //-----------------------------------------------------------------------------
-// Dictionary of start dir contexts 
+// Dictionary of start dir contexts
 //-----------------------------------------------------------------------------
 static CUtlDict< CUtlString, unsigned short > s_StartDirContexts;
 
@@ -488,7 +488,7 @@ static ColumnInfo_t g_ColInfo[] =
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-FileOpenDialog::FileOpenDialog(Panel *parent, const char *title, bool bOpenOnly, KeyValues* pContextKeyValues ) : 
+FileOpenDialog::FileOpenDialog(Panel *parent, const char *title, bool bOpenOnly, KeyValues* pContextKeyValues ) :
 	Frame( parent, "FileOpenDialog" )
 {
 	m_DialogType = bOpenOnly ? FOD_OPEN : FOD_SAVE;
@@ -496,7 +496,7 @@ FileOpenDialog::FileOpenDialog(Panel *parent, const char *title, bool bOpenOnly,
 }
 
 
-FileOpenDialog::FileOpenDialog( Panel *parent, const char *title, FileOpenDialogType_t type, KeyValues *pContextKeyValues ) : 
+FileOpenDialog::FileOpenDialog( Panel *parent, const char *title, FileOpenDialogType_t type, KeyValues *pContextKeyValues ) :
 	Frame( parent, "FileOpenDialog" )
 {
 	m_DialogType = type;
@@ -508,13 +508,13 @@ void FileOpenDialog::Init( const char *title, KeyValues *pContextKeyValues )
 	m_bFileSelected = false;
 	SetTitle(title, true);
 	SetMinimizeButtonVisible(false);
-	
+
 #ifdef POSIX
-	Q_strncpy(m_szLastPath, "/", sizeof( m_szLastPath ) );	
+	Q_strncpy(m_szLastPath, "/", sizeof( m_szLastPath ) );
 #else
 	Q_strncpy(m_szLastPath, "c:\\", sizeof( m_szLastPath ) );
-#endif	
-	
+#endif
+
 	m_pContextKeyValues = pContextKeyValues;
 
 	// Get the list of available drives and put them in a menu here.
@@ -537,7 +537,7 @@ void FileOpenDialog::Init( const char *title, KeyValues *pContextKeyValues )
 	m_pFileList->SetMultiselectEnabled( false );
 
 	// file name edit box
-	m_pFileNameEdit = new FileCompletionEdit(this); 
+	m_pFileNameEdit = new FileCompletionEdit(this);
 	m_pFileNameEdit->AddActionSignalTarget(this);
 
 	m_pFileTypeCombo = new ComboBox( this, "FileTypeCombo", 6, false );
@@ -563,16 +563,16 @@ void FileOpenDialog::Init( const char *title, KeyValues *pContextKeyValues )
 	m_pNewFolderButton->GetTooltip()->SetText( "#FileOpenDialog_ToolTip_NewFolder" );
 	m_pOpenInExplorerButton = new Button( this, "OpenInExplorerButton", "", this );
 
-#if defined ( OSX )	
+#if defined ( OSX )
 	m_pOpenInExplorerButton->GetTooltip()->SetText( "#FileOpenDialog_ToolTip_OpenInFinderButton" );
 #elif defined ( POSIX )
 	m_pOpenInExplorerButton->GetTooltip()->SetText( "#FileOpenDialog_ToolTip_OpenInDesktopManagerButton" );
 #else // Assume Windows / Explorer
 	m_pOpenInExplorerButton->GetTooltip()->SetText( "#FileOpenDialog_ToolTip_OpenInExplorerButton" );
 #endif
-	
+
 	Label *lookIn  = new Label( this, "LookInLabel", "#FileOpenDialog_Look_in" );
-	Label *fileName = new Label( this, "FileNameLabel", 
+	Label *fileName = new Label( this, "FileNameLabel",
 		( m_DialogType != FOD_SELECT_DIRECTORY ) ? "#FileOpenDialog_File_name" : "#FileOpenDialog_Directory_Name" );
 
 	m_pFolderIcon = new ImagePanel(NULL, "FolderIcon");
@@ -653,7 +653,7 @@ void FileOpenDialog::Init( const char *title, KeyValues *pContextKeyValues )
 		const char *pszHomeDir = getenv( "HOME" );
 		V_strcpy_safe( pLocalPath, pszHomeDir );
 	}
-	
+
 	SetStartDirectory( pLocalPath );
 
 	// Because these call through virtual functions, we can't issue them in the constructor, so we post a message to ourselves instead!!
@@ -714,7 +714,7 @@ void FileOpenDialog::OnKeyCodeTyped(KeyCode code)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void FileOpenDialog::PopulateDriveList()
 {
@@ -760,7 +760,7 @@ void FileOpenDialog::PopulateDriveList()
 	}
 #else
 	m_pFullPathEdit->AddItem("/", NULL);
-	
+
 	char *pData = fullpath;
 	int indent = 0;
 	while (*pData)
@@ -772,7 +772,7 @@ void FileOpenDialog::PopulateDriveList()
 				memset(subDirPath, ' ', indent);
 				memcpy(subDirPath+indent, fullpath, pData-fullpath);
 				subDirPath[indent+pData-fullpath] = 0;
-				
+
 				m_pFullPathEdit->AddItem(subDirPath, NULL);
 			}
 			indent += 2;
@@ -865,7 +865,7 @@ void FileOpenDialog::OnOpenInExplorer()
 	Q_snprintf( szCmd, sizeof(szCmd), "/usr/bin/open \"%s\"", pCurrentDirectory );
 	::system( szCmd );
 #elif defined( LINUX )
-	char szCmd[ MAX_PATH * 2 ];	
+	char szCmd[ MAX_PATH * 2 ];
 	Q_snprintf( szCmd, sizeof(szCmd), "xdg-open \"%s\" &", pCurrentDirectory );
 	::system( szCmd );
 #endif
@@ -1009,7 +1009,7 @@ void FileOpenDialog::NewFolder( char const *folderName )
 	{
 		Q_MakeAbsolutePath( pFullPath, sizeof(pFullPath), pNewFolderName, pCurrentDirectory );
 		if ( !g_pFullFileSystem->FileExists( pFullPath, NULL ) &&
-			 !g_pFullFileSystem->IsDirectory( pFullPath, NULL ) )
+			!g_pFullFileSystem->IsDirectory( pFullPath, NULL ) )
 		{
 			g_pFullFileSystem->CreateDirHierarchy( pFullPath, NULL );
 			m_pFileNameEdit->SetText( pNewFolderName );
@@ -1060,7 +1060,7 @@ void FileOpenDialog::ValidatePath()
 #endif
 	// cleanup the path, we format tabs into the list to make it pretty in the UI
 	Q_StripPrecedingAndTrailingWhitespace( fullpath );
-	
+
 	struct _stat buf;
 	if ( ( 0 == _stat( fullpath, &buf ) ) &&
 		( 0 != ( buf.st_mode & S_IFDIR ) ) )
@@ -1071,13 +1071,13 @@ void FileOpenDialog::ValidatePath()
 	else
 	{
 		// failed to load file, use the previously successful path
-	}	
+	}
 
 	m_pFullPathEdit->SetText(m_szLastPath);
 	m_pFullPathEdit->GetTooltip()->SetText(m_szLastPath);
 }
 
-#ifdef WIN32	
+#ifdef WIN32
 const char *GetAttributesAsString( DWORD dwAttributes )
 {
 	static char out[ 256 ];
@@ -1135,7 +1135,7 @@ const char *GetFileTimetamp( FILETIME ft )
 		}
 	}
 	Q_snprintf( out, sizeof( out ), "%d/%02d/%04d %d:%02d %s",
-		local.wMonth, 
+		local.wMonth,
 		local.wDay,
 		local.wYear,
 		hour,
@@ -1154,7 +1154,7 @@ void FileOpenDialog::PopulateFileList()
 {
 	// clear the current list
 	m_pFileList->DeleteAllItems();
-	
+
 	FileFindHandle_t findHandle;
 	char pszFileModified[64];
 
@@ -1174,8 +1174,8 @@ void FileOpenDialog::PopulateFileList()
 		// add wildcard for search
 		Q_strncpy(filterList, "*\0", MAX_FILTER_LENGTH);
 	}
-	
-	
+
+
 	char *filterPtr = filterList;
 	KeyValues *kv = new KeyValues("item");
 
@@ -1221,7 +1221,7 @@ void FileOpenDialog::PopulateFileList()
 					kv->SetInt( "image", 1 );
 
 					IImage *image = surface()->GetIconImageForFullPath( pFullPath );
-					
+
 					if ( image )
 					{
 						kv->SetPtr( "iconImage", (void *)image );
@@ -1256,7 +1256,7 @@ void FileOpenDialog::PopulateFileList()
 	// find all the directories
 	GetCurrentDirectory( dir, sizeof(dir) );
 	Q_strncat(dir, "*", sizeof( dir ), COPY_ALL_CHARACTERS);
-	
+
 	const char *pszFileName = g_pFullFileSystem->FindFirst( dir, &findHandle );
 	while ( pszFileName )
 	{
@@ -1274,7 +1274,7 @@ void FileOpenDialog::PopulateFileList()
 
 			kv->SetString( "filesize", "" );
 			kv->SetString( "type", "#FileOpenDialog_FileType_Folder" );
-			
+
 			kv->SetString( "attributes", g_pFullFileSystem->IsFileWritable( pFullPath )? "" : "R" );
 
 			long fileModified = g_pFullFileSystem->GetFileTime( pFullPath );
@@ -1505,7 +1505,7 @@ void FileOpenDialog::OnOpen()
 	if ( !stricmp(pFileName, "..") )
 	{
 		MoveUpFolder();
-		
+
 		// clear the name text
 		m_pFileNameEdit->SetText("");
 		return;
@@ -1517,7 +1517,7 @@ void FileOpenDialog::OnOpen()
 		m_pFileNameEdit->SetText("");
 		return;
 	}
-	 
+
 	// Compute the full path
 	char pFullPath[MAX_PATH * 4];
 	if ( !Q_IsAbsolutePath( pFileName ) )
@@ -1536,7 +1536,7 @@ void FileOpenDialog::OnOpen()
 	}
 
 	Q_StripTrailingSlash( pFullPath );
-	
+
 	// when statting a directory on Windows, you want to include
 	// the terminal slash exactly when you are statting a root
 	// directory. PKMN.
@@ -1547,9 +1547,9 @@ void FileOpenDialog::OnOpen()
 	}
 #endif
 
-	
+
 	// If the name specified is a directory, then change directory
-	if ( g_pFullFileSystem->IsDirectory( pFullPath, NULL ) && 
+	if ( g_pFullFileSystem->IsDirectory( pFullPath, NULL ) &&
 		( !IsOSX() || ( IsOSX() && !Q_stristr( pFullPath, ".app" ) ) ) )
 	{
 		// it's a directory; change to the specified directory
@@ -1609,7 +1609,7 @@ void FileOpenDialog::OnOpen()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: using the file edit box as a prefix, create a menu of all possible files 
+// Purpose: using the file edit box as a prefix, create a menu of all possible files
 //-----------------------------------------------------------------------------
 void FileOpenDialog::PopulateFileNameCompletion()
 {

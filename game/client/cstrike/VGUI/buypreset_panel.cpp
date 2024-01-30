@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -50,7 +50,7 @@ public:
 			m_pMenu->SetDirty();
 		}
 	}
-	
+
 private:
 	CBuyPresetEditMainMenu *m_pMenu;
 };
@@ -398,7 +398,7 @@ void BuyPresetEditPanel::OnSizeChanged( int wide, int tall )
 		{
 			continue;
 		}
-		
+
 		if(newY+newT>tall)
 		{
 			continue;

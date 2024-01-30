@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,7 @@ using namespace vgui;
 DECLARE_BUILD_FACTORY( ScalableImagePanel );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ScalableImagePanel::ScalableImagePanel(Panel *parent, const char *name) : Panel(parent, name)
 {
@@ -45,7 +45,7 @@ ScalableImagePanel::ScalableImagePanel(Panel *parent, const char *name) : Panel(
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ScalableImagePanel::~ScalableImagePanel()
 {
@@ -60,7 +60,7 @@ ScalableImagePanel::~ScalableImagePanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ScalableImagePanel::SetImage(const char *imageName)
 {
@@ -90,7 +90,7 @@ void ScalableImagePanel::SetImage(const char *imageName)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ScalableImagePanel::PaintBackground()
 {
@@ -154,7 +154,7 @@ void ScalableImagePanel::PaintBackground()
 			verts[2].Init( Vector2D( x+drawW, y+drawH ), uv22 );
 			verts[3].Init( Vector2D( x, y+drawH ), uv12  );
 
-			vgui::surface()->DrawTexturedPolygon( 4, verts );	
+			vgui::surface()->DrawTexturedPolygon( 4, verts );
 
 			x += drawW;
 			uvx += uvw;
@@ -188,7 +188,7 @@ void ScalableImagePanel::GetSettings(KeyValues *outResourceData)
 	if (m_pszImageName)
 	{
 		outResourceData->SetString("image", m_pszImageName);
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -49,11 +49,11 @@ void CFuncBulletShield::Spawn( void )
 }
 
 /*
-bool IntersectRayWithOBB( const Vector &vecRayStart, const Vector &vecRayDelta, 
-	const matrix3x4_t &matOBBToWorld, const Vector &vecOBBMins, const Vector &vecOBBMaxs, 
+bool IntersectRayWithOBB( const Vector &vecRayStart, const Vector &vecRayDelta,
+	const matrix3x4_t &matOBBToWorld, const Vector &vecOBBMins, const Vector &vecOBBMaxs,
 	float flTolerance, CBaseTrace *pTrace );
 
-bool IntersectRayWithOBB( const Vector &vecRayOrigin, const Vector &vecRayDelta, 
+bool IntersectRayWithOBB( const Vector &vecRayOrigin, const Vector &vecRayDelta,
 	const Vector &vecBoxOrigin, const QAngle &angBoxRotation,
 	const Vector &vecOBBMins, const Vector &vecOBBMaxs, float flTolerance, CBaseTrace *pTrace );
 
@@ -63,8 +63,8 @@ bool IntersectRayWithOBB( const Ray_t &ray, const Vector &vecBoxOrigin, const QA
 bool IntersectRayWithOBB( const Ray_t &ray, const matrix3x4_t &matOBBToWorld,
 	const Vector &vecOBBMins, const Vector &vecOBBMaxs, float flTolerance, CBaseTrace *pTrace );
 
-bool IntersectRayWithOBB( const Vector &vecRayStart, const Vector &vecRayDelta, 
-	const matrix3x4_t &matOBBToWorld, const Vector &vecOBBMins, const Vector &vecOBBMaxs, 
+bool IntersectRayWithOBB( const Vector &vecRayStart, const Vector &vecRayDelta,
+	const matrix3x4_t &matOBBToWorld, const Vector &vecOBBMins, const Vector &vecOBBMaxs,
 	float flTolerance, BoxTraceInfo_t *pTrace );
 	*/
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -98,7 +98,7 @@ public:
 	virtual void FileRequested(const char *fileName, unsigned int transferID) = 0; // other side request a file for download
 
 	virtual void FileReceived(const char *fileName, unsigned int transferID) = 0; // we received a file
-	
+
 	virtual void FileDenied(const char *fileName, unsigned int transferID) = 0;	// a file request was denied by other side
 };
 
@@ -117,7 +117,7 @@ public:
 
 public:
 	netadr_t		m_From;				// sender IP
-	CUDPSocket		*m_pSource;			// received source 
+	CUDPSocket		*m_pSource;			// received source
 	float			m_flReceivedTime;	// received time
 	unsigned char	*m_pData;			// pointer to raw packet data
 	bf_read			m_Message;			// easy bitbuf data access
@@ -179,7 +179,7 @@ public:
 	bool		AddNetMsg( INetworkMessage *msg, bool bForceReliable = false );
 
 	// send a chunk of data
-	bool		AddData( bf_write &msg, bool bReliable = true ); 
+	bool		AddData( bf_write &msg, bool bReliable = true );
 
 	// Puts data onto the wire:
 
@@ -221,7 +221,7 @@ private:
 	int			m_nInSequenceNr;
 	// last received acknowledge outgoing sequnce number
 	int			m_nOutSequenceNrAck;
-	
+
 	// state of outgoing reliable data (0/1) flip flop used for loss detection
 	int			m_nOutReliableState;
 	// state of incoming reliable data
@@ -244,28 +244,28 @@ private:
 	CUDPSocket	*m_pSocket;   // NS_SERVER or NS_CLIENT index, depending on channel.
 	int			m_StreamSocket;	// TCP socket handle
 
-	unsigned int m_MaxReliablePayloadSize;	// max size of reliable payload in a single packet	
+	unsigned int m_MaxReliablePayloadSize;	// max size of reliable payload in a single packet
 
 	// Address this channel is talking to.
-	netadr_t	remote_address;  
-	
+	netadr_t	remote_address;
+
 	// For timeouts.  Time last message was received.
-	float		last_received;		
+	float		last_received;
 	// Time when channel was connected.
-	float      connect_time;       
+	float      connect_time;
 
 	// Bandwidth choke
 	// Bytes per second
-	int			m_Rate;				
+	int			m_Rate;
 	// If realtime > cleartime, free to send next packet
 	float		m_fClearTime;
 
-	float		m_Timeout;		// in seconds 
+	float		m_Timeout;		// in seconds
 
 	char			m_Name[32];		// channel name
 
 // packet history
-	// netflow_t		m_DataFlow[ MAX_FLOWS ];  
+	// netflow_t		m_DataFlow[ MAX_FLOWS ];
 
 	INetworkMessageHandler			*m_MessageHandler;	// who registers and processes messages
 };

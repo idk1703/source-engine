@@ -19,7 +19,7 @@
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseTFPlayer::IsClass( TFClass iClass )
 {
@@ -35,7 +35,7 @@ bool CBaseTFPlayer::IsClass( TFClass iClass )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponCombatShield *CBaseTFPlayer::GetCombatShield( void )
 {
@@ -94,7 +94,7 @@ bool CBaseTFPlayer::IsHittingShield( const Vector &vecVelocity, float *flDamage 
 			*flDamage = GetCombatShield()->AttemptToBlock( *flDamage );
 			return ( !(*flDamage) );
 		}
-		
+
 		return true;
 	}
 
@@ -204,7 +204,7 @@ bool CBaseTFPlayer::Weapon_ShouldSelectItem( CBaseCombatWeapon *pWeapon )
 // Sapper handling is all here because it'll soon be shared Client / Server
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseTFPlayer::IsAttachingSapper( void )
 {
@@ -212,7 +212,7 @@ bool CBaseTFPlayer::IsAttachingSapper( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CBaseTFPlayer::GetSapperAttachmentTime( void )
 {
@@ -220,7 +220,7 @@ float CBaseTFPlayer::GetSapperAttachmentTime( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::StartAttachingSapper( CBaseObject *pObject, CGrenadeObjectSapper *pSapper )
 {
@@ -246,7 +246,7 @@ void CBaseTFPlayer::StartAttachingSapper( CBaseObject *pObject, CGrenadeObjectSa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::CheckSapperAttaching( void )
 {
@@ -306,7 +306,7 @@ void CBaseTFPlayer::CheckSapperAttaching( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::CleanupAfterAttaching( void )
 {
@@ -326,11 +326,11 @@ void CBaseTFPlayer::CleanupAfterAttaching( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::StopAttaching( void )
 {
-	CleanupAfterAttaching();	
+	CleanupAfterAttaching();
 
 	if ( m_hSapper != NULL )
 	{
@@ -343,7 +343,7 @@ void CBaseTFPlayer::StopAttaching( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::FinishAttaching( void )
 {
@@ -382,7 +382,7 @@ CPlayerAnimState::CPlayerAnimState( CBaseTFPlayer *outer )
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerAnimState::Update()
 {
@@ -396,7 +396,7 @@ void CPlayerAnimState::Update()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerAnimState::ComputePlaybackRate()
 {
@@ -469,7 +469,7 @@ void CPlayerAnimState::ComputePlaybackRate()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CBasePlayer
 //-----------------------------------------------------------------------------
 CBaseTFPlayer *CPlayerAnimState::GetOuter()
@@ -478,8 +478,8 @@ CBaseTFPlayer *CPlayerAnimState::GetOuter()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dt - 
+// Purpose:
+// Input  : dt -
 //-----------------------------------------------------------------------------
 void CPlayerAnimState::EstimateYaw( void )
 {
@@ -527,7 +527,7 @@ void CPlayerAnimState::EstimateYaw( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Override for backpeddling
-// Input  : dt - 
+// Input  : dt -
 //-----------------------------------------------------------------------------
 void CPlayerAnimState::ComputePoseParam_BodyYaw( void )
 {
@@ -536,7 +536,7 @@ void CPlayerAnimState::ComputePoseParam_BodyYaw( void )
 		return;
 
 	// view direction relative to movement
-	float flYaw;	 
+	float flYaw;
 
 	EstimateYaw();
 
@@ -565,12 +565,12 @@ void CPlayerAnimState::ComputePoseParam_BodyYaw( void )
 	{
 		flYaw = flYaw - 360;
 	}
-	
+
 	GetOuter()->SetPoseParameter( iYaw, flYaw );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerAnimState::ComputePoseParam_BodyPitch( CStudioHdr *pStudioHdr )
 {
@@ -595,11 +595,11 @@ void CPlayerAnimState::ComputePoseParam_BodyPitch( CStudioHdr *pStudioHdr )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : goal - 
-//			maxrate - 
-//			dt - 
-//			current - 
+// Purpose:
+// Input  : goal -
+//			maxrate -
+//			dt -
+//			current -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPlayerAnimState::ConvergeAngles( float goal,float maxrate, float dt, float& current )
@@ -663,7 +663,7 @@ void CPlayerAnimState::ComputePoseParam_BodyLookYaw( void )
 	float turnrate = mp_feetyawrate.GetFloat();
 
 	Vector vel;
-	
+
 	GetOuterAbsVelocity( vel );
 
 	bool isMoving = ( vel.Length() > 0.0f ) ? true : false;
@@ -711,7 +711,7 @@ void CPlayerAnimState::ComputePoseParam_BodyLookYaw( void )
 		// Standing still for a while, rotate feet around to face forward
 		// Or rotated too far
 		// FIXME:  Play an in place turning animation
-		if ( rotated_too_far || 
+		if ( rotated_too_far ||
 			( gpGlobals->curtime > m_flLastTurnTime + mp_facefronttime.GetFloat() ) )
 		{
 			m_flGoalFeetYaw		= GetOuter()->GetAbsAngles().y;
@@ -778,8 +778,8 @@ void CPlayerAnimState::ComputePoseParam_BodyLookYaw( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : activity - 
+// Purpose:
+// Input  : activity -
 // Output : Activity
 //-----------------------------------------------------------------------------
 Activity CPlayerAnimState::BodyYawTranslateActivity( Activity activity )

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -91,7 +91,7 @@ struct DamageAnimation_t
 	int bitsDamage;
 	float angleMinimum;
 	float angleMaximum;
-	int damage; 
+	int damage;
 };
 
 //-----------------------------------------------------------------------------
@@ -117,13 +117,13 @@ CHudDODDamageIndicator::CHudDODDamageIndicator( const char *pElementName ) : CHu
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
 	SetParent( pParent );
 
-	m_WhiteAdditiveMaterial.Init( "vgui/white_additive", TEXTURE_GROUP_VGUI ); 
+	m_WhiteAdditiveMaterial.Init( "vgui/white_additive", TEXTURE_GROUP_VGUI );
 
 	SetHiddenBits( HIDEHUD_HEALTH );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDODDamageIndicator::Reset( void )
 {
@@ -140,14 +140,14 @@ void CHudDODDamageIndicator::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudDODDamageIndicator::ShouldDraw( void )
 {
 	if ( !CHudElement::ShouldDraw() )
 		return false;
 
-	if ( !m_DmgColorLeft[3] && !m_DmgColorRight[3] && !m_DmgHighColorLeft[3] && !m_DmgHighColorRight[3] 
+	if ( !m_DmgColorLeft[3] && !m_DmgColorRight[3] && !m_DmgHighColorLeft[3] && !m_DmgHighColorRight[3]
 	&& !m_DmgFullscreenColor[3] )
 		return false;
 

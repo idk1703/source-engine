@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -37,7 +37,7 @@
 //--------------------------------------------------------------------------------------------------------------
 /// The current version of the nav file format
 
-/// IMPORTANT: If this version changes, the swap function in makegamedata 
+/// IMPORTANT: If this version changes, the swap function in makegamedata
 /// must be updated to match. If not, this will break the Xbox 360.
 // TODO: Was changed from 15, update when latest 360 code is integrated (MSB 5/5/09)
 const int NavCurrentVersion = 16;
@@ -45,13 +45,13 @@ const int NavCurrentVersion = 16;
 //--------------------------------------------------------------------------------------------------------------
 //
 // The 'place directory' is used to save and load places from
-// nav files in a size-efficient manner that also allows for the 
+// nav files in a size-efficient manner that also allows for the
 // order of the place ID's to change without invalidating the
 // nav files.
 //
-// The place directory is stored in the nav file as a list of 
+// The place directory is stored in the nav file as a list of
 // place name strings.  Each nav area then contains an index
-// into that directory, or zero if no place has been assigned to 
+// into that directory, or zero if no place has been assigned to
 // that area.
 //
 PlaceDirectory::PlaceDirectory( void )
@@ -129,7 +129,7 @@ void PlaceDirectory::Save( CUtlBuffer &fileBuffer )
 	IndexType count = (IndexType)m_directory.Count();
 	fileBuffer.PutUnsignedShort( count );
 
-	// store entries		
+	// store entries
 	for( int i=0; i<m_directory.Count(); ++i )
 	{
 		const char *placeName = TheNavMesh->PlaceToName( m_directory[i] );
@@ -263,7 +263,7 @@ void CNavArea::Save( CUtlBuffer &fileBuffer, unsigned int version ) const
 	FOR_EACH_VEC( m_hidingSpots, hit )
 	{
 		HidingSpot *spot = m_hidingSpots[ hit ];
-		
+
 		spot->Save( fileBuffer, version );
 
 		// overflow check
@@ -312,7 +312,7 @@ void CNavArea::Save( CUtlBuffer &fileBuffer, unsigned int version ) const
 				spotCount = (unsigned char)e->spots.Count();
 			}
 			fileBuffer.PutUnsignedChar( spotCount );
-		
+
 			saveCount = 0;
 			FOR_EACH_VEC( e->spots, sit )
 			{
@@ -431,7 +431,7 @@ NavErrorType CNavArea::Load( CUtlBuffer &fileBuffer, unsigned int version, unsig
 	{
 		m_invDxCorners = m_invDyCorners = 0;
 
-		DevWarning( "Degenerate Navigation Area #%d at setpos %g %g %g\n", 
+		DevWarning( "Degenerate Navigation Area #%d at setpos %g %g %g\n",
 			m_id, m_center.x, m_center.y, m_center.z );
 	}
 
@@ -495,7 +495,7 @@ NavErrorType CNavArea::Load( CUtlBuffer &fileBuffer, unsigned int version, unsig
 			HidingSpot *spot = TheNavMesh->CreateHidingSpot();
 
 			spot->Load( fileBuffer, version );
-			
+
 			m_hidingSpots.AddToTail( spot );
 		}
 	}
@@ -539,7 +539,7 @@ NavErrorType CNavArea::Load( CUtlBuffer &fileBuffer, unsigned int version, unsig
 
 			// read list of spots along this path
 			unsigned char spotCount = fileBuffer.GetUnsignedChar();
-		
+
 			for( int s=0; s<spotCount; ++s )
 			{
 				fileBuffer.GetFloat();
@@ -567,7 +567,7 @@ NavErrorType CNavArea::Load( CUtlBuffer &fileBuffer, unsigned int version, unsig
 
 		// read list of spots along this path
 		unsigned char spotCount = fileBuffer.GetUnsignedChar();
-	
+
 		SpotOrder order;
 		for( int s=0; s<spotCount; ++s )
 		{
@@ -654,7 +654,7 @@ NavErrorType CNavArea::Load( CUtlBuffer &fileBuffer, unsigned int version, unsig
 	else
 	{
 /* TODO: Re-enable when latest 360 code gets integrated (MSB 5/5/09)
-		size_t nBytes = visibleAreaCount * sizeof( AreaBindInfo ); 
+		size_t nBytes = visibleAreaCount * sizeof( AreaBindInfo );
 		m_potentiallyVisibleAreas.~CAreaBindInfoArray();
 		new ( &m_potentiallyVisibleAreas ) CAreaBindInfoArray( (AreaBindInfo *)engine->AllocLevelStaticData( nBytes ), visibleAreaCount );
 */
@@ -780,7 +780,7 @@ NavErrorType CNavArea::PostLoad( void )
 		if ( info.area == NULL )
 		{
 			Warning( "Invalid area in visible set for area #%d\n", GetID() );
-		}		
+		}
 	}
 
 	m_inheritVisibilityFrom.area = TheNavMesh->GetNavAreaByID( m_inheritVisibilityFrom.id );
@@ -800,7 +800,7 @@ NavErrorType CNavArea::PostLoad( void )
 
 //--------------------------------------------------------------------------------------------------------------
 /**
- * Compute travel distance along shortest path from startPos to goalPos. 
+ * Compute travel distance along shortest path from startPos to goalPos.
  * Return -1 if can't reach endPos from goalPos.
  */
 template< typename CostFunctor >
@@ -972,7 +972,7 @@ void CNavMesh::ComputeBattlefrontAreas( void )
 				if (fabs(area->GetEarliestOccupyTime( TEAM_TERRORIST ) - area->GetEarliestOccupyTime( TEAM_CT )) < epsilon)
 				{
 				}
-				
+
 			}
 		}
 	}
@@ -1009,14 +1009,14 @@ Changes all '/' characters into '\' characters, in place.
 inline void COM_FixSlashes( char *pname )
 {
 #ifdef _WIN32
-	while ( *pname ) 
+	while ( *pname )
 	{
 		if ( *pname == '/' )
 			*pname = '\\';
 		pname++;
 	}
 #else
-	while ( *pname ) 
+	while ( *pname )
 	{
 		if ( *pname == '\\' )
 			*pname = '/';
@@ -1124,7 +1124,7 @@ bool CNavMesh::Save( void ) const
 	// The sub-version number is maintained and owned by classes derived from CNavMesh and CNavArea
 	// and allows them to track their custom data just as we do at this top level
 	fileBuffer.PutUnsignedInt( GetSubVersionNumber() );
-	
+
 	// store the size of source bsp file in the nav file
 	// so we can test if the bsp changed since the nav file was made
 	unsigned int bspSize = filesystem->Size( bspFilename );
@@ -1184,7 +1184,7 @@ bool CNavMesh::Save( void ) const
 			ladder->Save( fileBuffer, NavCurrentVersion );
 		}
 	}
-	
+
 	//
 	// Store derived class mesh info
 	//
@@ -1640,7 +1640,7 @@ NavErrorType CNavMesh::PostLoad( unsigned int version )
 	}
 
 	ComputeBattlefrontAreas();
-	
+
 	//
 	// Allow each nav area to know what other areas have one-way connections to it. Need to gather
 	// then sort due to allocation restrictions on the 360
@@ -1653,7 +1653,7 @@ NavErrorType CNavMesh::PostLoad( unsigned int version )
 	FOR_EACH_VEC( TheNavAreas, oit )
 	{
 		oneWayLink.area = TheNavAreas[ oit ];
-	
+
 		for( int d=0; d<NUM_DIRECTIONS; d++ )
 		{
 			const NavConnectVector *connectList = oneWayLink.area->GetAdjacentAreas( (NavDirType)d );
@@ -1662,9 +1662,9 @@ NavErrorType CNavMesh::PostLoad( unsigned int version )
 			{
 				NavConnect connect = (*connectList)[ it ];
 				oneWayLink.destArea = connect.area;
-			
+
 				// if the area we connect to has no connection back to us, allow that area to remember us as an incoming connection
-				oneWayLink.backD = OppositeDirection( (NavDirType)d );		
+				oneWayLink.backD = OppositeDirection( (NavDirType)d );
 				const NavConnectVector *backConnectList = oneWayLink.destArea->GetAdjacentAreas( (NavDirType)oneWayLink.backD );
 				bool isOneWay = true;
 				FOR_EACH_VEC( (*backConnectList), bit )
@@ -1676,7 +1676,7 @@ NavErrorType CNavMesh::PostLoad( unsigned int version )
 						break;
 					}
 				}
-				
+
 				if (isOneWay)
 				{
 					oneWayLinks.AddToTail( oneWayLink );
@@ -1690,7 +1690,7 @@ NavErrorType CNavMesh::PostLoad( unsigned int version )
 	for ( int i = 0; i < oneWayLinks.Count(); i++ )
 	{
 		// add this one-way connection
-		oneWayLinks[i].destArea->AddIncomingConnection( oneWayLinks[i].area, (NavDirType)oneWayLinks[i].backD );	
+		oneWayLinks[i].destArea->AddIncomingConnection( oneWayLinks[i].area, (NavDirType)oneWayLinks[i].backD );
 	}
 
 	ValidateNavAreaConnections();
@@ -1704,6 +1704,6 @@ NavErrorType CNavMesh::PostLoad( unsigned int version )
 
 	// the Navigation Mesh has been successfully loaded
 	m_isLoaded = true;
-	
+
 	return NAV_OK;
 }

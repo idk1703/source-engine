@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -102,7 +102,7 @@ void CImportKeyValueBase::PrintStringAttribute( CDmElement* pElement, CUtlBuffer
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Used to add typed attributes from keyvalues
 //-----------------------------------------------------------------------------
@@ -124,7 +124,7 @@ bool CImportKeyValueBase::AddBoolAttribute( CDmElement* pElement, KeyValues *pKe
 	return pElement->SetValue( pKeyName, bValue ) != NULL;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Used to add typed attributes from keyvalues
 //-----------------------------------------------------------------------------
@@ -226,7 +226,7 @@ bool CImportKeyValueBase::AddStringAttributeFlags( CDmElement* pElement, KeyValu
 	return true;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Recursively resolves all attributes pointing to elements
 //-----------------------------------------------------------------------------
@@ -266,7 +266,7 @@ void CImportKeyValueBase::RecursivelyResolveElement( CDmElement* pElement )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Main entry point for the unserialization
 //-----------------------------------------------------------------------------

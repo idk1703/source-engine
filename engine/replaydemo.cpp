@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -61,12 +61,12 @@ void CReplayDemoRecorder::GetUniqueDemoFilename( char *pOut, int nLength )
 {
 	Assert( pOut );
 	tm today; VCRHook_LocalTime( &today );
-	Q_snprintf( pOut, nLength, "%04i%02i%02i-%02i%02i%02i-%s.dem", 
-		1900 + today.tm_year, today.tm_mon+1, today.tm_mday, 
-		today.tm_hour, today.tm_min, today.tm_sec, m_pReplayServer->GetMapName() ); 
+	Q_snprintf( pOut, nLength, "%04i%02i%02i-%02i%02i%02i-%s.dem",
+		1900 + today.tm_year, today.tm_mon+1, today.tm_mday,
+		today.tm_hour, today.tm_min, today.tm_sec, m_pReplayServer->GetMapName() );
 }
 
-void CReplayDemoRecorder::StartRecording() 
+void CReplayDemoRecorder::StartRecording()
 {
 	// Get a proper filename and cache it for later
 	GetUniqueDemoFilename( m_szDumpFilename, sizeof( m_szDumpFilename ) );
@@ -83,7 +83,7 @@ const char *CReplayDemoRecorder::GetDemoFilename()
 	return s_szDemoFilename;
 }
 
-void CReplayDemoRecorder::StartRecording( const char *pFilename, bool bContinuously ) 
+void CReplayDemoRecorder::StartRecording( const char *pFilename, bool bContinuously )
 {
 	SETUP_CVAR_REF( replay_recording );
 
@@ -97,7 +97,7 @@ void CReplayDemoRecorder::StartRecording( const char *pFilename, bool bContinuou
 		Warning( "Failed to start recording - couldn't open demo file %s.\n", pFilename );
 		return;
 	}
-	
+
 	// Using this tickcount allows us to sync up client-side recorded ragdolls later with replay demos on clients
 	m_nStartTick = g_ServerGlobalVariables.tickcount;
 
@@ -122,7 +122,7 @@ void CReplayDemoRecorder::StartRecording( const char *pFilename, bool bContinuou
 
 	// write demo file header info
 	m_DemoFile.WriteDemoHeader();
-	
+
 	dh->signonlength = WriteSignonData(); // demoheader will be written when demo is closed
 
 	m_nFrameCount = 0;
@@ -166,7 +166,7 @@ void CReplayDemoRecorder::StopRecording()
 		delete [] m_MessageData.GetBasePointer();
 		m_MessageData.StartWriting( NULL, 0 );
 	}
-	
+
 	// replay_stoprecording gets set to 0 from within the replay session recorder, but only if we aren't starting to record a new round
 }
 
@@ -189,9 +189,9 @@ void CReplayDemoRecorder::WriteServerInfo()
 
 	// on the master demos are using sv object, on relays replay
 	CBaseServer *pServer = (CBaseServer*)&sv;
-	
+
 	m_pReplayServer->FillServerInfo( serverinfo ); // fill rest of info message
-	
+
 	serverinfo.WriteToBuffer( msg );
 
 	// send first tick
@@ -290,7 +290,7 @@ void CReplayDemoRecorder::RecordStringTables()
 		// Didn't fit.  Try doubling the size of the buffer
 		dataLen *= 2;
 	}
-	
+
 	if ( dataLen > DEMO_FILE_MAX_STRINGTABLE_SIZE )
 	{
 		Warning( "Failed to RecordStringTables. Trying to record string table that's bigger than max string table size\n" );
@@ -306,7 +306,7 @@ int CReplayDemoRecorder::WriteSignonData()
 	// on the master demos are using sv object, on relays replay
 	CBaseServer *pServer = (CBaseServer*)&sv;
 
-	m_nSignonTick = pServer->m_nTickCount;		
+	m_nSignonTick = pServer->m_nTickCount;
 
 	WriteServerInfo();
 
@@ -327,7 +327,7 @@ int CReplayDemoRecorder::WriteSignonData()
 	NET_SignonState signonMsg1( SIGNONSTATE_PRESPAWN, pServer->GetSpawnCount() );
 	signonMsg1.WriteToBuffer( msg );
 
-	WriteMessages( dem_signon, msg ); 
+	WriteMessages( dem_signon, msg );
 	msg.Reset();
 
 	// set view entity
@@ -338,8 +338,8 @@ int CReplayDemoRecorder::WriteSignonData()
 	NET_SignonState signonMsg2( SIGNONSTATE_SPAWN, pServer->GetSpawnCount() );
 	signonMsg2.WriteToBuffer( msg );
 
-	WriteMessages( dem_signon, msg ); 
-	
+	WriteMessages( dem_signon, msg );
+
 	return m_DemoFile.GetCurPos( false ) - start;
 }
 
@@ -404,7 +404,7 @@ void CReplayDemoRecorder::WriteFrame( CReplayFrame *pFrame )
 	m_nDeltaTick = pFrame->tick_count;
 
 	// write packet to demo file
-	WriteMessages( dem_packet, msg ); 
+	WriteMessages( dem_packet, msg );
 }
 
 void CReplayDemoRecorder::WriteMessages( unsigned char cmd, bf_write &message )
@@ -433,8 +433,8 @@ void CReplayDemoRecorder::WriteMessages( unsigned char cmd, bf_write &message )
 	}
 
 	// write command & time
-	m_DemoFile.WriteCmdHeader( cmd, GetRecordingTick() ); 
-	
+	m_DemoFile.WriteCmdHeader( cmd, GetRecordingTick() );
+
 	// write NULL democmdinfo just to keep same format as client demos
 	democmdinfo_t info;
 	Q_memset( &info, 0, sizeof( info ) );
@@ -443,7 +443,7 @@ void CReplayDemoRecorder::WriteMessages( unsigned char cmd, bf_write &message )
 	// write continously increasing sequence numbers
 	m_DemoFile.WriteSequenceInfo( m_SequenceInfo, m_SequenceInfo );
 	m_SequenceInfo++;
-	
+
 	// Output the buffer.  Skip the network packet stuff.
 	m_DemoFile.WriteRawData( (char*)message.GetBasePointer(), len );
 }
@@ -455,7 +455,7 @@ void CReplayDemoRecorder::RecordMessages(bf_read &data, int bits)
 	{
 		m_MessageData.StartWriting( new unsigned char[NET_MAX_PAYLOAD], NET_MAX_PAYLOAD );
 	}
-	
+
 	if ( bits>0 )
 	{
 		m_MessageData.WriteBitsFromBuffer( &data, bits );

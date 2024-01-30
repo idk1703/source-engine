@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -26,7 +26,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudTeamGoal : public CHudElement, public EditablePanel
 {
@@ -52,7 +52,7 @@ private:
 DECLARE_HUDELEMENT( CHudTeamGoal );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTeamGoal::CHudTeamGoal( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudTeamGoal" )
 {
@@ -68,7 +68,7 @@ CHudTeamGoal::CHudTeamGoal( const char *pElementName ) : CHudElement( pElementNa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTeamGoal::LevelInit( void )
 {
@@ -76,7 +76,7 @@ void CHudTeamGoal::LevelInit( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTeamGoal::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -97,7 +97,7 @@ void CHudTeamGoal::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudTeamGoal::ShouldDraw( void )
 {
@@ -172,7 +172,7 @@ const char *pszTeamRoleSwitch[NUM_TEAM_ROLES] =
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTeamGoal::SetupGoalPanel( const char *pszGoal )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -54,7 +54,7 @@ private:
 	float	m_CurrentGain;			// Gain at sample 0 in this block.
 	float	m_NextGain;				// Gain at the last sample in this block.
 
-	AGFixed	m_FixedCurrentGain;		// Fixed-point m_CurrentGain.	
+	AGFixed	m_FixedCurrentGain;		// Fixed-point m_CurrentGain.
 	AGFixed	m_GainMultiplier;		// (m_NextGain - m_CurrentGain) / (m_BlockSize - 1).
 };
 

@@ -25,11 +25,11 @@ LINK_ENTITY_TO_CLASS( dod_player_manager, CDODPlayerResource );
 
 CDODPlayerResource::CDODPlayerResource( void )
 {
-	
+
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODPlayerResource::UpdatePlayerData( void )
 {
@@ -38,7 +38,7 @@ void CDODPlayerResource::UpdatePlayerData( void )
 	for ( i = 1; i <= gpGlobals->maxClients; i++ )
 	{
 		CDODPlayer *pPlayer = (CDODPlayer*)UTIL_PlayerByIndex( i );
-		
+
 		if ( pPlayer && pPlayer->IsConnected() )
 		{
 			m_iObjScore.Set( i, pPlayer->GetScore() );

@@ -20,7 +20,7 @@ IMPLEMENT_CLASS_MEMPOOL( CEconItemPerClassPresetData, 10 * 1000, UTLMEMORYPOOL_G
 #include "tier0/memdbgon.h"
 
 // --------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------------
 CEconItemPerClassPresetData::CEconItemPerClassPresetData()
 	: m_unAccountID( 0 )
@@ -159,7 +159,7 @@ bool CEconItemPerClassPresetData::BYieldingAddRemoveToTransaction( GCSDK::CSQLAc
 	CSchSelectedItemPreset schSelectedItemPreset;
 	schSelectedItemPreset.m_unAccountID = m_unAccountID;
 	schSelectedItemPreset.m_unClassID = m_unClassID;
-	
+
 	if ( !sqlAccess.BYieldingDeleteRecords( schSelectedItemPreset, CSET_2_COL( CSchSelectedItemPreset, k_iField_unAccountID, k_iField_unClassID ) ) )
 		return false;
 

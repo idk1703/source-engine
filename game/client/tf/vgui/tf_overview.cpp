@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,7 +10,7 @@
 #include <vgui/ILocalize.h>
 #include "tf_shareddefs.h"
 #include "tf_overview.h"
-#include "c_playerresource.h"	
+#include "c_playerresource.h"
 #include "c_tf_objective_resource.h"
 #include "usermessages.h"
 #include "coordsize.h"
@@ -98,7 +98,7 @@ DECLARE_HUDELEMENT( CTFMapOverview );
 ConVar tf_overview_voice_icon_size( "tf_overview_voice_icon_size", "64", FCVAR_ARCHIVE );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFMapOverview::CTFMapOverview( const char *pElementName ) : BaseClass( pElementName )
 {
@@ -111,7 +111,7 @@ CTFMapOverview::CTFMapOverview( const char *pElementName ) : BaseClass( pElement
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::Update()
 {
@@ -121,7 +121,7 @@ void CTFMapOverview::Update()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::VidInit( void )
 {
@@ -129,7 +129,7 @@ void CTFMapOverview::VidInit( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::UpdateCapturePoints()
 {
@@ -191,7 +191,7 @@ void CTFMapOverview::UpdateCapturePoints()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::InitTeamColorsAndIcons()
 {
@@ -213,7 +213,7 @@ void CTFMapOverview::InitTeamColorsAndIcons()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::DrawCamera()
 {
@@ -246,7 +246,7 @@ void CTFMapOverview::DrawCamera()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::FireGameEvent( IGameEvent *event )
 {
@@ -273,12 +273,12 @@ void CTFMapOverview::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFMapOverview::CanPlayerBeSeen( MapPlayer_t *player )
 {
 	// rules that define if you can see a player on the overview or not
-    C_BasePlayer *localPlayer = C_BasePlayer::GetLocalPlayer();
+	C_BasePlayer *localPlayer = C_BasePlayer::GetLocalPlayer();
 
 	if ( !localPlayer || !player )
 		return false;
@@ -300,7 +300,7 @@ bool CTFMapOverview::CanPlayerBeSeen( MapPlayer_t *player )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::ShowLargeMap( void )
 {
@@ -315,14 +315,14 @@ void CTFMapOverview::ShowLargeMap( void )
 	// if we hit the toggle while full, set to disappear when we release
 	if ( m_iLastMode == MAP_MODE_FULL )
 	{
-        m_iLastMode = MAP_MODE_OFF;
+		m_iLastMode = MAP_MODE_OFF;
 	}
 
 	SetMode( MAP_MODE_FULL );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::HideLargeMap( void )
 {
@@ -335,7 +335,7 @@ void CTFMapOverview::HideLargeMap( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::ToggleZoom( void )
 {
@@ -364,7 +364,7 @@ void CTFMapOverview::ToggleZoom( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::SetMode(int mode)
 {
@@ -418,7 +418,7 @@ void CTFMapOverview::SetMode(int mode)
 		if ( m_nMode == MAP_MODE_INSET )
 			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "ZoomToLarge" );
 		else
-            g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "SnapToLarge" );
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "SnapToLarge" );
 	}
 
 	// finally set mode
@@ -431,7 +431,7 @@ void CTFMapOverview::SetMode(int mode)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::UpdateSizeAndPosition()
 {
@@ -454,7 +454,7 @@ ConVar cl_voicetest( "cl_voicetest", "0", FCVAR_CHEAT );
 ConVar cl_overview_chat_time( "cl_overview_chat_time", "2.0", FCVAR_ARCHIVE );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::PlayerChat( int index )
 {
@@ -462,7 +462,7 @@ void CTFMapOverview::PlayerChat( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::DrawMapPlayers()
 {
@@ -492,7 +492,7 @@ void CTFMapOverview::DrawMapPlayers()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::DrawVoiceIconForPlayer( int playerIndex )
 {
@@ -530,7 +530,7 @@ void CTFMapOverview::DrawVoiceIconForPlayer( int playerIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFMapOverview::DrawIcon( MapObject_t *obj )
 {
@@ -546,7 +546,7 @@ bool CTFMapOverview::DrawIcon( MapObject_t *obj )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::DrawQuad( Vector pos, int scale, float angle, int textureID, int alpha )
 {
@@ -583,7 +583,7 @@ void CTFMapOverview::DrawQuad( Vector pos, int scale, float angle, int textureID
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFMapOverview::DrawCapturePoint( int iCP, MapObject_t *obj )
 {
@@ -657,7 +657,7 @@ bool CTFMapOverview::DrawCapturePoint( int iCP, MapObject_t *obj )
 			surface()->DrawSetTextPos( x+1, y );
 			surface()->DrawPrintText( wText, wcslen(wText) );
 
-			// draw name in color 
+			// draw name in color
 			surface()->DrawSetTextColor( g_PR->GetTeamColor( iCappingTeam ) );
 			surface()->DrawSetTextPos( x, y );
 			surface()->DrawPrintText( wText, wcslen(wText) );
@@ -668,7 +668,7 @@ bool CTFMapOverview::DrawCapturePoint( int iCP, MapObject_t *obj )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::DrawHorizontalSwipe( Vector pos, int scale, int textureID, float flCapPercentage, bool bSwipeLeft )
 {
@@ -709,7 +709,7 @@ void CTFMapOverview::DrawHorizontalSwipe( Vector pos, int scale, int textureID, 
 		lowerLeft.x  = flXPos + flIconSize - width;
 	}
 
-	vgui::Vertex_t vert[4];	
+	vgui::Vertex_t vert[4];
 
 	Vector2D pos0 = WorldToMap( upperLeft );
 	vert[0].Init( MapToPanel( pos0 ), uv11 );
@@ -729,7 +729,7 @@ void CTFMapOverview::DrawHorizontalSwipe( Vector pos, int scale, int textureID, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::SetMap( const char * levelname )
 {
@@ -749,7 +749,7 @@ void CTFMapOverview::SetMap( const char * levelname )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFMapOverview::ShouldDraw( void )
 {
@@ -762,7 +762,7 @@ bool CTFMapOverview::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::Paint()
 {
@@ -796,7 +796,7 @@ void CTFMapOverview::Paint()
 extern ConVar overview_alpha;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::DrawMapOverlayTexture()
 {
@@ -828,7 +828,7 @@ void CTFMapOverview::DrawMapOverlayTexture()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapOverview::UpdateMapOverlayTexture()
 {

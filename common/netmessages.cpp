@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -21,8 +21,8 @@
 // XXX(JohnS): This is no longer used, but we're keeping it so we can check if old network streams set it to work around
 //             missing information in the older SVC_VoiceInit packet. See SVC_VoiceInit::ReadFromBuffer
 ConVar sv_use_steam_voice( "sv_use_steam_voice", "0", FCVAR_HIDDEN | FCVAR_REPLICATED,
-                           "Deprecated - placeholder convar for handling old network streams that "
-                           "had an incomplete SVC_VoiceInit packet.  Use \"sv_voicecodec steam\"" );
+	"Deprecated - placeholder convar for handling old network streams that "
+	"had an incomplete SVC_VoiceInit packet.  Use \"sv_voicecodec steam\"" );
 
 static char s_text[1024];
 
@@ -35,7 +35,7 @@ const char *CLC_VoiceData::ToString(void) const
 bool CLC_VoiceData::WriteToBuffer( bf_write &buffer )
 {
 	buffer.WriteUBitLong( GetType(), NETMSG_TYPE_BITS );
-	
+
 	m_nLength = m_DataOut.GetNumBitsWritten();
 
 	buffer.WriteWord( m_nLength );	// length in bits
@@ -44,7 +44,7 @@ bool CLC_VoiceData::WriteToBuffer( bf_write &buffer )
 #if defined ( _X360 )
 	buffer.WriteLongLong( m_xuid );
 #endif
-	
+
 	return buffer.WriteBits( m_DataOut.GetBasePointer(), m_nLength );
 }
 
@@ -65,7 +65,7 @@ bool CLC_VoiceData::ReadFromBuffer( bf_read &buffer )
 
 const char *CLC_Move::ToString(void) const
 {
-	Q_snprintf(s_text, sizeof(s_text), "%s: backup %i, new %i, bytes %i", GetName(), 
+	Q_snprintf(s_text, sizeof(s_text), "%s: backup %i, new %i, bytes %i", GetName(),
 		m_nNewCommands, m_nBackupCommands, Bits2Bytes(m_nLength) );
 	return s_text;
 }
@@ -74,11 +74,11 @@ bool CLC_Move::WriteToBuffer( bf_write &buffer )
 {
 	buffer.WriteUBitLong( GetType(), NETMSG_TYPE_BITS );
 	m_nLength = m_DataOut.GetNumBitsWritten();
-	
+
 	buffer.WriteUBitLong( m_nNewCommands, NUM_NEW_COMMAND_BITS );
 	buffer.WriteUBitLong( m_nBackupCommands, NUM_BACKUP_COMMAND_BITS );
-	
-	buffer.WriteWord( m_nLength );	
+
+	buffer.WriteWord( m_nLength );
 
 	return buffer.WriteBits( m_DataOut.GetData(), m_nLength );
 }
@@ -96,7 +96,7 @@ bool CLC_Move::ReadFromBuffer( bf_read &buffer )
 
 const char *CLC_ClientInfo::ToString(void) const
 {
-	Q_snprintf(s_text, sizeof(s_text), "%s: SendTableCRC %i", GetName(), 
+	Q_snprintf(s_text, sizeof(s_text), "%s: SendTableCRC %i", GetName(),
 		m_nSendTableCRC );
 	return s_text;
 }
@@ -110,7 +110,7 @@ bool CLC_ClientInfo::WriteToBuffer( bf_write &buffer )
 	buffer.WriteOneBit( m_bIsHLTV?1:0 );
 	buffer.WriteLong( m_nFriendsID );
 	buffer.WriteString( m_FriendsName );
-	
+
 	for ( int i=0; i<MAX_CUSTOM_FILES; i++ )
 	{
 		if ( m_nCustomFiles[i] != 0 )
@@ -123,7 +123,7 @@ bool CLC_ClientInfo::WriteToBuffer( bf_write &buffer )
 			buffer.WriteOneBit( 0 );
 		}
 	}
-		
+
 #if defined( REPLAY_ENABLED )
 	buffer.WriteOneBit( m_bIsReplay?1:0 );
 #endif
@@ -140,7 +140,7 @@ bool CLC_ClientInfo::ReadFromBuffer( bf_read &buffer )
 	m_bIsHLTV = buffer.ReadOneBit()!=0;
 	m_nFriendsID = buffer.ReadLong();
 	buffer.ReadString( m_FriendsName, sizeof(m_FriendsName) );
-	
+
 	for ( int i=0; i<MAX_CUSTOM_FILES; i++ )
 	{
 		if ( buffer.ReadOneBit() != 0 )
@@ -230,7 +230,7 @@ bool CLC_RespondCvarValue::WriteToBuffer( bf_write &buffer )
 
 	buffer.WriteSBitLong( m_iCookie, 32 );
 	buffer.WriteSBitLong( m_eStatusCode, 4 );
-	
+
 	buffer.WriteString( m_szCvarName );
 	buffer.WriteString( m_szCvarValue );
 
@@ -243,15 +243,15 @@ bool CLC_RespondCvarValue::ReadFromBuffer( bf_read &buffer )
 
 	m_iCookie = buffer.ReadSBitLong( 32 );
 	m_eStatusCode = (EQueryCvarValueStatus)buffer.ReadSBitLong( 4 );
-	
+
 	// Read the name.
 	buffer.ReadString( m_szCvarNameBuffer, sizeof( m_szCvarNameBuffer ) );
 	m_szCvarName = m_szCvarNameBuffer;
-	
+
 	// Read the value.
 	buffer.ReadString( m_szCvarValueBuffer, sizeof( m_szCvarValueBuffer ) );
 	m_szCvarValue = m_szCvarValueBuffer;
-	
+
 	return !buffer.IsOverflowed();
 }
 
@@ -308,7 +308,7 @@ bool CLC_FileCRCCheck::WriteToBuffer( bf_write &buffer )
 
 	// Reserved for future use.
 	buffer.WriteOneBit( 0 );
-	
+
 	// Just write a couple bits for the path ID if it's one of the common ones.
 	int iCode = FindCommonPathID( m_szPathID );
 	if ( iCode == -1 )
@@ -351,7 +351,7 @@ bool CLC_FileCRCCheck::ReadFromBuffer( bf_read &buffer )
 
 	// Reserved for future use.
 	buffer.ReadOneBit();
-	
+
 	// Read the path ID.
 	int iCode = buffer.ReadUBitLong( 2 );
 	if ( iCode == 0 )
@@ -415,7 +415,7 @@ bool CLC_FileCRCCheck::ReadFromBuffer( bf_read &buffer )
 		m_CRCIOs = buffer.ReadUBitLong( 32 );
 		m_eFileHashType = buffer.ReadUBitLong( 32 );
 	}
-	
+
 	return !buffer.IsOverflowed();
 }
 
@@ -614,7 +614,7 @@ bool Base_CmdKeyValues::ReadFromBuffer( bf_read &buffer )
 
 const char * Base_CmdKeyValues::ToString(void) const
 {
-	Q_snprintf( s_text, sizeof(s_text), "%s: %s", 
+	Q_snprintf( s_text, sizeof(s_text), "%s: %s",
 		GetName(), m_pKeyValues ? m_pKeyValues->GetName() : "<<null>>" );
 	return s_text;
 }
@@ -673,7 +673,7 @@ bool SVC_Print::ReadFromBuffer( bf_read &buffer )
 	VPROF( "SVC_Print::ReadFromBuffer" );
 
 	m_szText = m_szTextBuffer;
-	
+
 	return buffer.ReadString(m_szTextBuffer, sizeof(m_szTextBuffer) );
 }
 
@@ -694,7 +694,7 @@ bool NET_StringCmd::ReadFromBuffer( bf_read &buffer )
 	VPROF( "NET_StringCmd::ReadFromBuffer" );
 
 	m_szCommand = m_szCommandBuffer;
-	
+
 	return buffer.ReadString(m_szCommandBuffer, sizeof(m_szCommandBuffer) );
 }
 
@@ -850,13 +850,13 @@ bool SVC_BSPDecal::ReadFromBuffer( bf_read &buffer )
 		m_nModelIndex = 0;
 	}
 	m_bLowPriority = buffer.ReadOneBit() ? true : false;
-	
+
 	return !buffer.IsOverflowed();
 }
 
 const char *SVC_BSPDecal::ToString(void) const
 {
-	Q_snprintf(s_text, sizeof(s_text), "%s: tex %i, ent %i, mod %i lowpriority %i", 
+	Q_snprintf(s_text, sizeof(s_text), "%s: tex %i, ent %i, mod %i lowpriority %i",
 		GetName(), m_nDecalTextureIndex, m_nEntityIndex, m_nModelIndex, m_bLowPriority ? 1 : 0 );
 	return s_text;
 }
@@ -1070,7 +1070,7 @@ bool SVC_UserMessage::WriteToBuffer( bf_write &buffer )
 	buffer.WriteUBitLong( GetType(), NETMSG_TYPE_BITS );
 	buffer.WriteByte( m_nMsgType );
 	buffer.WriteUBitLong( m_nLength, NETMSG_LENGTH_BITS );  // max 256 * 8 bits, see MAX_USER_MSG_DATA
-	
+
 	return buffer.WriteBits( m_DataOut.GetData(), m_nLength );
 }
 
@@ -1173,8 +1173,8 @@ bool NET_SetConVar::ReadFromBuffer( bf_read &buffer )
 
 const char *NET_SetConVar::ToString(void) const
 {
-	Q_snprintf(s_text, sizeof(s_text), "%s: %i cvars, \"%s\"=\"%s\"", 
-		GetName(), m_ConVars.Count(), 
+	Q_snprintf(s_text, sizeof(s_text), "%s: %i cvars, \"%s\"=\"%s\"",
+		GetName(), m_ConVars.Count(),
 		m_ConVars[0].name, m_ConVars[0].value );
 	return s_text;
 }
@@ -1198,7 +1198,7 @@ bool SVC_UpdateStringTable::WriteToBuffer( bf_write &buffer )
 	}
 
 	buffer.WriteUBitLong( m_nLength, 20 );
-	
+
 	return buffer.WriteBits( m_DataOut.GetData(), m_nLength );
 }
 
@@ -1216,7 +1216,7 @@ bool SVC_UpdateStringTable::ReadFromBuffer( bf_read &buffer )
 	{
 		m_nChangedEntries = 1;
 	}
-	
+
 	m_nLength = buffer.ReadUBitLong( 20 );
 	m_DataIn = buffer;
 	return buffer.SeekRelative( m_nLength );
@@ -1259,7 +1259,7 @@ bool SVC_CreateStringTable::WriteToBuffer( bf_write &buffer )
 		buffer.WriteUBitLong( m_nUserDataSize, 12 );
 		buffer.WriteUBitLong( m_nUserDataSizeBits, 4 );
 	}
-	
+
 	buffer.WriteOneBit( m_bDataCompressed ? 1 : 0 );
 	return buffer.WriteBits( m_DataOut.GetData(), m_nLength );
 }
@@ -1317,7 +1317,7 @@ bool SVC_CreateStringTable::ReadFromBuffer( bf_read &buffer )
 
 const char *SVC_CreateStringTable::ToString(void) const
 {
-	Q_snprintf(s_text, sizeof(s_text), "%s: table %s, entries %i, bytes %i userdatasize %i userdatabits %i", 
+	Q_snprintf(s_text, sizeof(s_text), "%s: table %s, entries %i, bytes %i userdatasize %i userdatabits %i",
 		GetName(), m_szTableName, m_nNumEntries, Bits2Bytes(m_nLength), m_nUserDataSize, m_nUserDataSizeBits );
 	return s_text;
 }
@@ -1329,7 +1329,7 @@ bool SVC_Sounds::WriteToBuffer( bf_write &buffer )
 	buffer.WriteUBitLong( GetType(), NETMSG_TYPE_BITS );
 
 	Assert( m_nNumSounds > 0 );
-	
+
 	if ( m_bReliableSound )
 	{
 		// as single sound message is 32 bytes long maximum
@@ -1343,7 +1343,7 @@ bool SVC_Sounds::WriteToBuffer( bf_write &buffer )
 		buffer.WriteUBitLong( m_nNumSounds, 8 );
 		buffer.WriteUBitLong( m_nLength, 16  );
 	}
-	
+
 	return buffer.WriteBits( m_DataOut.GetData(), m_nLength );
 }
 
@@ -1364,17 +1364,17 @@ bool SVC_Sounds::ReadFromBuffer( bf_read &buffer )
 		m_nNumSounds = buffer.ReadUBitLong( 8 );
 		m_nLength = buffer.ReadUBitLong( 16 );
 	}
-		
+
 	m_DataIn = buffer;
 	return buffer.SeekRelative( m_nLength );
 }
 
 const char *SVC_Sounds::ToString(void) const
 {
-	Q_snprintf(s_text, sizeof(s_text), "%s: number %i,%s bytes %i", 
+	Q_snprintf(s_text, sizeof(s_text), "%s: number %i,%s bytes %i",
 		GetName(), m_nNumSounds, m_bReliableSound?" reliable,":"", Bits2Bytes(m_nLength) );
 	return s_text;
-} 
+}
 
 bool SVC_Prefetch::WriteToBuffer( bf_write &buffer )
 {
@@ -1405,12 +1405,12 @@ bool SVC_Prefetch::ReadFromBuffer( bf_read &buffer )
 
 const char *SVC_Prefetch::ToString(void) const
 {
-	Q_snprintf(s_text, sizeof(s_text), "%s: type %i index %i", 
-		GetName(), 
-		(int)m_fType, 
+	Q_snprintf(s_text, sizeof(s_text), "%s: type %i index %i",
+		GetName(),
+		(int)m_fType,
 		(int)m_nSoundIndex );
 	return s_text;
-} 
+}
 
 bool SVC_TempEntities::WriteToBuffer( bf_write &buffer )
 {
@@ -1442,15 +1442,15 @@ const char *SVC_TempEntities::ToString(void) const
 {
 	Q_snprintf(s_text, sizeof(s_text), "%s: number %i, bytes %i", GetName(), m_nNumEntries, Bits2Bytes(m_nLength) );
 	return s_text;
-} 
+}
 
 bool SVC_ClassInfo::WriteToBuffer( bf_write &buffer )
 {
 	if ( !m_bCreateOnClient )
 	{
-		m_nNumServerClasses = m_Classes.Count();	// use number from list list	
+		m_nNumServerClasses = m_Classes.Count();	// use number from list list
 	}
-	
+
 	buffer.WriteUBitLong( GetType(), NETMSG_TYPE_BITS );
 
 	buffer.WriteShort( m_nNumServerClasses );
@@ -1501,16 +1501,16 @@ bool SVC_ClassInfo::ReadFromBuffer( bf_read &buffer )
 
 		m_Classes.AddToTail( serverclass );
 	}
-	
+
 	return !buffer.IsOverflowed();
 }
 
 const char *SVC_ClassInfo::ToString(void) const
 {
-	Q_snprintf(s_text, sizeof(s_text), "%s: num %i, %s", GetName(), 
+	Q_snprintf(s_text, sizeof(s_text), "%s: num %i, %s", GetName(),
 		m_nNumServerClasses, m_bCreateOnClient?"use client classes":"full update" );
 	return s_text;
-} 
+}
 
 /*
 bool SVC_SpawnBaseline::WriteToBuffer( bf_write &buffer )
@@ -1544,7 +1544,7 @@ bool SVC_SpawnBaseline::ReadFromBuffer( bf_read &buffer )
 const char *SVC_SpawnBaseline::ToString(void) const
 {
 	static char text[256];
-	Q_snprintf(text, sizeof(text), "%s: ent %i, class %i, bytes %i", 
+	Q_snprintf(text, sizeof(text), "%s: ent %i, class %i, bytes %i",
 		GetName(), m_nEntityIndex, m_nClassID, Bits2Bytes(m_nLength) );
 	return text;
 } */
@@ -1559,7 +1559,7 @@ bool SVC_GameEvent::WriteToBuffer( bf_write &buffer )
 	buffer.WriteUBitLong( GetType(), NETMSG_TYPE_BITS );
 	buffer.WriteUBitLong( m_nLength, NETMSG_LENGTH_BITS );  // max 8 * 256 bits
 	return buffer.WriteBits( m_DataOut.GetData(), m_nLength );
-	
+
 }
 
 bool SVC_GameEvent::ReadFromBuffer( bf_read &buffer )
@@ -1575,7 +1575,7 @@ const char *SVC_GameEvent::ToString(void) const
 {
 	Q_snprintf(s_text, sizeof(s_text), "%s: bytes %i", GetName(), Bits2Bytes(m_nLength) );
 	return s_text;
-} 
+}
 
 bool SVC_SendTable::WriteToBuffer( bf_write &buffer )
 {
@@ -1603,10 +1603,10 @@ bool SVC_SendTable::ReadFromBuffer( bf_read &buffer )
 
 const char *SVC_SendTable::ToString(void) const
 {
-	Q_snprintf(s_text, sizeof(s_text), "%s: needs Decoder %s,bytes %i", 
+	Q_snprintf(s_text, sizeof(s_text), "%s: needs Decoder %s,bytes %i",
 		GetName(), m_bNeedsDecoder?"yes":"no", Bits2Bytes(m_nLength) );
 	return s_text;
-} 
+}
 
 bool SVC_EntityMessage::WriteToBuffer( bf_write &buffer )
 {
@@ -1619,7 +1619,7 @@ bool SVC_EntityMessage::WriteToBuffer( bf_write &buffer )
 	buffer.WriteUBitLong( m_nEntityIndex, MAX_EDICT_BITS );
 	buffer.WriteUBitLong( m_nClassID, MAX_SERVER_CLASS_BITS );
 	buffer.WriteUBitLong( m_nLength, NETMSG_LENGTH_BITS );  // max 8 * 256 bits
-	
+
 	return buffer.WriteBits( m_DataOut.GetData(), m_nLength );
 }
 
@@ -1646,7 +1646,7 @@ bool SVC_PacketEntities::WriteToBuffer( bf_write &buffer )
 	buffer.WriteUBitLong( GetType(), NETMSG_TYPE_BITS );
 
 	buffer.WriteUBitLong( m_nMaxEntries, MAX_EDICT_BITS );
-	
+
 	buffer.WriteOneBit( m_bIsDelta?1:0 );
 
 	if ( m_bIsDelta )
@@ -1660,7 +1660,7 @@ bool SVC_PacketEntities::WriteToBuffer( bf_write &buffer )
 
 	buffer.WriteUBitLong( m_nLength, DELTASIZE_BITS );
 
-	buffer.WriteOneBit( m_bUpdateBaseline?1:0 ); 
+	buffer.WriteOneBit( m_bUpdateBaseline?1:0 );
 
 	buffer.WriteBits( m_DataOut.GetData(), m_nLength );
 
@@ -1672,7 +1672,7 @@ bool SVC_PacketEntities::ReadFromBuffer( bf_read &buffer )
 	VPROF( "SVC_PacketEntities::ReadFromBuffer" );
 
 	m_nMaxEntries = buffer.ReadUBitLong( MAX_EDICT_BITS );
-	
+
 	m_bIsDelta = buffer.ReadOneBit()!=0;
 
 	if ( m_bIsDelta )
@@ -1693,7 +1693,7 @@ bool SVC_PacketEntities::ReadFromBuffer( bf_read &buffer )
 	m_bUpdateBaseline = buffer.ReadOneBit() != 0;
 
 	m_DataIn = buffer;
-	
+
 	return buffer.SeekRelative( m_nLength );
 }
 
@@ -1702,7 +1702,7 @@ const char *SVC_PacketEntities::ToString(void) const
 	Q_snprintf(s_text, sizeof(s_text), "%s: delta %i, max %i, changed %i,%s bytes %i",
 		GetName(), m_nDeltaFrom, m_nMaxEntries, m_nUpdatedEntries, m_bUpdateBaseline?" BL update,":"", Bits2Bytes(m_nLength) );
 	return s_text;
-} 
+}
 
 SVC_Menu::SVC_Menu( DIALOG_TYPE type, KeyValues *data )
 {
@@ -1756,13 +1756,13 @@ bool SVC_Menu::ReadFromBuffer( bf_read &buffer )
 	buffer.ReadBytes( buf.Base(), m_iLength );
 	buf.SeekPut( CUtlBuffer::SEEK_HEAD, m_iLength );
 
-	if ( m_MenuKeyValues ) 
+	if ( m_MenuKeyValues )
 	{
 		m_MenuKeyValues->deleteThis();
 	}
 	m_MenuKeyValues = new KeyValues( "menu" );
 	Assert( m_MenuKeyValues );
-	
+
 	m_MenuKeyValues->ReadAsBinary( buf );
 
 	return !buffer.IsOverflowed();
@@ -1773,7 +1773,7 @@ const char *SVC_Menu::ToString(void) const
 	Q_snprintf(s_text, sizeof(s_text), "%s: %i \"%s\" (len:%i)", GetName(),
 		m_Type, m_MenuKeyValues ? m_MenuKeyValues->GetName() : "No KeyValues", m_iLength );
 	return s_text;
-} 
+}
 
 bool SVC_GameEventList::WriteToBuffer( bf_write &buffer )
 {
@@ -1801,7 +1801,7 @@ const char *SVC_GameEventList::ToString(void) const
 {
 	Q_snprintf(s_text, sizeof(s_text), "%s: number %i, bytes %i", GetName(), m_nNumEvents, Bits2Bytes(m_nLength) );
 	return s_text;
-} 
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////
 // Matchmaking messages:
@@ -1950,7 +1950,7 @@ const char *MM_Checkpoint::ToString( void ) const
 bool MM_JoinResponse::WriteToBuffer( bf_write &buffer )
 {
 	buffer.WriteUBitLong( GetType(), NETMSG_TYPE_BITS );
-	buffer.WriteLong( m_ResponseType );		
+	buffer.WriteLong( m_ResponseType );
 	buffer.WriteLongLong( m_id );		// 64 bit
 	buffer.WriteLongLong( m_Nonce );	// 64 bit
 	buffer.WriteLong( m_SessionFlags );
@@ -2057,7 +2057,7 @@ bool SVC_GetCvarValue::ReadFromBuffer( bf_read &buffer )
 	m_iCookie = buffer.ReadSBitLong( 32 );
 	buffer.ReadString( m_szCvarNameBuffer, sizeof( m_szCvarNameBuffer ) );
 	m_szCvarName = m_szCvarNameBuffer;
-	
+
 	return !buffer.IsOverflowed();
 }
 
@@ -2065,5 +2065,4 @@ const char *SVC_GetCvarValue::ToString(void) const
 {
 	Q_snprintf( s_text, sizeof(s_text), "%s: cvar: %s, cookie: %d", GetName(), m_szCvarName, m_iCookie );
 	return s_text;
-} 
-
+}

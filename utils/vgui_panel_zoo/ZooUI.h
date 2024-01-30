@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -61,7 +61,7 @@ public:
 	CZooUI();
 	~CZooUI();
 
-	void OnClose();	
+	void OnClose();
 	void OnMinimize();
 	void OnCommand(const char *command);
 
@@ -73,8 +73,3 @@ private:
 };
 
 #endif // SURVEY_H
-
-
-
-
-

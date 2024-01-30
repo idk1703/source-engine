@@ -49,11 +49,11 @@ private:
 	float m_flThreshold;					// The threshold angular velocity that we are looking for.
 	int m_nLastCompareResult;				// The comparison result from our last measurement, expressed as -1, 0, or 1
 	int m_nLastFireResult;					// The last result for which we fire the output.
-	
+
 	float m_flFireTime;
 	float m_flFireInterval;
 	float m_flLastAngVelocity;
-	
+
 	QAngle m_lastOrientation;
 
 	Vector m_vecAxis;
@@ -65,8 +65,8 @@ private:
 	// Compare the target's angular velocity to the threshold velocity and fire the appropriate output.
 	// These outputs are filtered by m_flFireInterval to ignore excessive oscillations.
 	COutputEvent m_OnLessThan;
-	COutputEvent m_OnLessThanOrEqualTo;		
-	COutputEvent m_OnGreaterThan;			
+	COutputEvent m_OnLessThanOrEqualTo;
+	COutputEvent m_OnGreaterThan;
 	COutputEvent m_OnGreaterThanOrEqualTo;
 	COutputEvent m_OnEqualTo;
 
@@ -87,7 +87,7 @@ BEGIN_DATADESC( CPointAngularVelocitySensor )
 	DEFINE_KEYFIELD( m_flFireInterval, FIELD_FLOAT, "fireinterval" ),
 	DEFINE_FIELD( m_flLastAngVelocity, FIELD_FLOAT ),
 	DEFINE_FIELD( m_lastOrientation, FIELD_VECTOR ),
-	
+
 	// Inputs
 	DEFINE_INPUTFUNC(FIELD_VOID, "Test", InputTest),
 	DEFINE_INPUTFUNC(FIELD_VOID, "TestWithInterval", InputTestWithInterval),
@@ -239,7 +239,7 @@ float CPointAngularVelocitySensor::SampleAngularVelocity(CBaseEntity *pEntity)
 //-----------------------------------------------------------------------------
 // Purpose: Compares the given entity's angular velocity to the threshold velocity.
 // Input  : pEntity - Entity whose angular velocity is being measured.
-//			flThreshold - 
+//			flThreshold -
 // Output : Returns -1 if less than, 0 if equal to, or 1 if greater than the threshold.
 //-----------------------------------------------------------------------------
 int CPointAngularVelocitySensor::CompareToThreshold(CBaseEntity *pEntity, float flThreshold, bool bFireVelocityOutput)
@@ -305,7 +305,7 @@ void CPointAngularVelocitySensor::Think(void)
 				//
 				m_flFireTime = gpGlobals->curtime + m_flFireInterval;
 			}
-			
+
 			m_nLastCompareResult = nCompare;
 		}
 		else if ((m_flFireTime != 0) && (gpGlobals->curtime >= m_flFireTime))
@@ -325,7 +325,7 @@ void CPointAngularVelocitySensor::Think(void)
 
 
 //-----------------------------------------------------------------------------
-// Fires the output after the fire interval if the velocity is stable. 
+// Fires the output after the fire interval if the velocity is stable.
 //-----------------------------------------------------------------------------
 void CPointAngularVelocitySensor::InputTestWithInterval( inputdata_t &inputdata )
 {
@@ -349,11 +349,11 @@ void CPointAngularVelocitySensor::InputTest( inputdata_t &inputdata )
 	FireCompareOutput(nCompareResult, inputdata.pActivator);
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Fires the appropriate output based on the given comparison result.
-// Input  : nCompareResult - 
-//			pActivator - 
+// Input  : nCompareResult -
+//			pActivator -
 //-----------------------------------------------------------------------------
 void CPointAngularVelocitySensor::FireCompareOutput( int nCompareResult, CBaseEntity *pActivator )
 {
@@ -439,14 +439,14 @@ void CPointVelocitySensor::Spawn()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointVelocitySensor::Activate( void )
 {
 	BaseClass::Activate();
 
 	m_hTargetEntity = gEntList.FindEntityByName( NULL, m_target );
-	
+
 	if ( m_bEnabled && m_hTargetEntity )
 	{
 		SetNextThink( gpGlobals->curtime );
@@ -454,7 +454,7 @@ void CPointVelocitySensor::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointVelocitySensor::InputEnable( inputdata_t &inputdata )
 {
@@ -463,7 +463,7 @@ void CPointVelocitySensor::InputEnable( inputdata_t &inputdata )
 		return;
 
 	m_bEnabled = true;
-	
+
 	if ( m_hTargetEntity )
 	{
 		SetNextThink( gpGlobals->curtime );
@@ -471,7 +471,7 @@ void CPointVelocitySensor::InputEnable( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointVelocitySensor::InputDisable( inputdata_t &inputdata )
 {
@@ -521,7 +521,7 @@ void CPointVelocitySensor::SampleVelocity( void )
 	// axis is normalized is simply their dot product (eg V . A = |V|*|A|*cos(theta) )
 	m_fPrevVelocity = ( m_vecAxis != vec3_origin ) ? DotProduct( vecVelocity, m_vecAxis ) : 1.0f;
 
-	// if it's changed since the last frame, poke the output 
+	// if it's changed since the last frame, poke the output
 	if ( m_fPrevVelocity != m_Velocity.Get() )
 	{
 		m_Velocity.Set( m_fPrevVelocity, NULL, NULL );

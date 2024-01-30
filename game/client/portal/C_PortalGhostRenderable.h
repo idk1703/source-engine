@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@ class C_PortalGhostRenderable : public C_BaseAnimating//IClientRenderable, publi
 {
 public:
 	C_BaseEntity *m_pGhostedRenderable; //the renderable we're transforming and re-rendering
-	
+
 	VMatrix m_matGhostTransform;
 	float *m_pSharedRenderClipPlane; //shared by all portal ghost renderables within the same portal
 	bool m_bLocalPlayer; //special draw rules for the local player

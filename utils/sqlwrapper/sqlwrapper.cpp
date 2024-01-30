@@ -10,7 +10,7 @@
 #include <windows.h>
 
 ////// MySQL API includes
-#include <WinSock.H> 
+#include <WinSock.H>
 #include "mysql.h"
 #include "errmsg.h"
 
@@ -35,10 +35,10 @@
 //							we're stuck with
 //-----------------------------------------------------------------------------
 #ifdef _WIN32
-BOOL APIENTRY DllMain( HANDLE hModule, 
-                       DWORD  dwReason, 
-                       LPVOID lpReserved
-					 )
+BOOL APIENTRY DllMain( HANDLE hModule,
+	DWORD  dwReason,
+	LPVOID lpReserved
+					)
 {
 	switch ( dwReason )
 	{
@@ -46,7 +46,7 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 			break;
 	}
 
-    return TRUE;
+	return TRUE;
 }
 #elif _LINUX
 void __attribute__ ((constructor)) app_init(void);
@@ -153,7 +153,7 @@ ISQLWrapper *CSQLWrapperFactory::Create( const char *pchDB, const char *pchHost,
 
 //-----------------------------------------------------------------------------
 // Purpose: Free a previously allocated sql interface
-// Input:	pWrapper - interface that was alloced		
+// Input:	pWrapper - interface that was alloced
 //-----------------------------------------------------------------------------
 void CSQLWrapperFactory::Free( ISQLWrapper *pSQLWrapper )
 {
@@ -303,7 +303,7 @@ bool CSQLWrapper::BInternalQuery( const char *pchQueryString, MYSQL_RES **ppMySQ
 	bool bRet = _Query( pchQueryString, ppMySQLRes );
 	if ( !bRet && !m_bConnected && bRecurse ) // hmmm, got hung up when running the query
 	{
-		bRet = BInternalQuery( pchQueryString, ppMySQLRes, false ); // run the query again now we reconnected	
+		bRet = BInternalQuery( pchQueryString, ppMySQLRes, false ); // run the query again now we reconnected
 	}
 
 	return bRet;
@@ -363,15 +363,15 @@ bool CSQLWrapper::BInsert( const char *pchQueryString )
 
 	m_bInQuery = true;
 	MYSQL_RES *pMySQLRes = NULL;
-	bool bRet = BInternalQuery( pchQueryString, &pMySQLRes, true ); 
-	if ( bRet && pMySQLRes ) 
+	bool bRet = BInternalQuery( pchQueryString, &pMySQLRes, true );
+	if ( bRet && pMySQLRes )
 	{
 		mysql_free_result( pMySQLRes );
 	}
 	m_bInQuery = false;
 	return bRet;
 }
-	
+
 
 //-----------------------------------------------------------------------------
 // Purpose: returns a pointer to the table descriptions for this DB
@@ -386,7 +386,7 @@ const ISQLTableSet *CSQLWrapper::PSQLTableSetDescription()
 	}
 
 	m_bInQuery = true;
-	if ( !m_SQLTableSet.Init( this ) ) 
+	if ( !m_SQLTableSet.Init( this ) )
 	{
 		return NULL;
 	}

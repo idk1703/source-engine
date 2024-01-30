@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -189,7 +189,7 @@ private:
 	EHANDLE	m_hTargetEnt;
 
 	EHANDLE m_hNextCine;		// The script to hand the NPC off to when we finish with them.
-	
+
 	bool	m_bThinking;
 	bool 	m_bInitiatedSelfDelete;
 

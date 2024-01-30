@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -45,7 +45,7 @@ void MoveToState::OnEnter( CCSBot *me )
 			route = SAFEST_ROUTE;
 			break;
 	}
-		
+
 	// build path to, or nearly to, goal position
 	me->ComputePath( m_goalPosition, route );
 
@@ -139,7 +139,7 @@ void MoveToState::OnUpdate( CCSBot *me )
 					switch( me->GetTask() )
 					{
 						case CCSBot::DEFUSE_BOMB:
-						{	
+						{
 							// if we are near the bombsite and there is time left, sneak in (unless all enemies are dead)
 							if (me->GetEnemiesRemaining())
 							{
@@ -297,7 +297,7 @@ void MoveToState::OnUpdate( CCSBot *me )
 						const float useRange = PLAYER_USE_RADIUS - 10.0f; // shave off a fudge factor to make sure we're within range
 						if (to.IsLengthLessThan( useRange ))
 						{
-							me->UseEntity( me->GetGoalEntity() );					
+							me->UseEntity( me->GetGoalEntity() );
 							return;
 						}
 					}
@@ -332,7 +332,7 @@ void MoveToState::OnUpdate( CCSBot *me )
 					return;
 				}
 				break;
-		
+
 			case CCSBot::MOVE_TO_LAST_KNOWN_ENEMY_POSITION:
 			{
 				CBasePlayer *victim = static_cast<CBasePlayer *>( me->GetTaskEntity() );

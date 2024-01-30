@@ -31,7 +31,7 @@ public:
 private:
 	PathFollower m_path;
 	CountdownTimer m_repathTimer;
-	
+
 	Vector m_vantagePoint;
 	CountdownTimer m_vantagePointTimer;
 	Vector FindVantagePoint( CTFBot *me, CBaseEntity *cart );

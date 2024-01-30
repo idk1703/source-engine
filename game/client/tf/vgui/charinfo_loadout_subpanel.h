@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -45,7 +45,7 @@ public:
 	virtual void Paint();
 
 private:
-	vgui::IImage *m_pActiveImage;	
+	vgui::IImage *m_pActiveImage;
 	char *m_pszActiveImageName;
 
 	vgui::IImage *m_pInactiveImage;
@@ -76,7 +76,7 @@ enum charinfosubbuttons_t
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CCharInfoLoadoutSubPanel : public vgui::PropertyPage
 {

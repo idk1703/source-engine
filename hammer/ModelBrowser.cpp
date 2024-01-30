@@ -21,8 +21,8 @@ static LPCTSTR pszIniSection = "Model Browser";
 class CModelBrowserPanel : public vgui::EditablePanel
 {
 public:
-	CModelBrowserPanel( CModelBrowser *pBrowser, const char *panelName ) : 
-	  vgui::EditablePanel( NULL, panelName )
+	CModelBrowserPanel( CModelBrowser *pBrowser, const char *panelName ) :
+	vgui::EditablePanel( NULL, panelName )
 	{
 		m_pBrowser = pBrowser;
 	}
@@ -36,7 +36,7 @@ public:
 	virtual void OnCommand( const char *pCommand )
 	{
 		if ( Q_strcmp( pCommand, "OK" ) == 0 )
-		{	
+		{
 			m_pBrowser->EndDialog( IDOK );
 		}
 		else if ( Q_strcmp( pCommand, "Cancel" ) == 0 )
@@ -62,8 +62,8 @@ public:
 	virtual void OnMessage(const KeyValues *params, vgui::VPANEL ifromPanel)
 	{
 		vgui::EditablePanel::OnMessage( params, ifromPanel );
-		
-		if ( Q_strcmp( params->GetName(), "MDLPreviewChanged" ) == 0 ) 
+
+		if ( Q_strcmp( params->GetName(), "MDLPreviewChanged" ) == 0 )
 		{
 			m_pBrowser->UpdateStatusLine();
 		}
@@ -101,7 +101,7 @@ void CModelBrowser::SetModelName( const char *pModelName )
 
 	m_pPicker->SelectMDL( pModelName );
 	m_pPicker->SetInitialSelection( pszSelectedModel );
-		
+
 	m_pStatusLine->SetText( pModelName );
 }
 
@@ -200,7 +200,7 @@ void CModelBrowser::Resize()
 	m_pStatusLine->SetBounds( 160, rect.Height() - 30, max( 100, rect.Width() - 166 ), 24 );
 }
 
-void CModelBrowser::OnSize(UINT nType, int cx, int cy) 
+void CModelBrowser::OnSize(UINT nType, int cx, int cy)
 {
 	if (nType == SIZE_MINIMIZED || !IsWindow(m_VGuiWindow.m_hWnd) )
 	{
@@ -232,15 +232,15 @@ BOOL CModelBrowser::OnInitDialog()
 	m_VGuiWindow.Create( NULL, _T("ModelViewer"), WS_VISIBLE|WS_CHILD, CRect(0,0,100,100), this, 1001);
 
 	vgui::EditablePanel *pMainPanel = new CModelBrowserPanel( this, "ModelBrowerPanel" );
-	
+
 	m_VGuiWindow.SetParentWindow( &m_VGuiWindow );
 	m_VGuiWindow.SetMainPanel( pMainPanel );
 	pMainPanel->MakePopup( false, false );
-    m_VGuiWindow.SetRepaintInterval( 75 );
-	
+	m_VGuiWindow.SetRepaintInterval( 75 );
+
 
 	m_pPicker->SetParent( pMainPanel );
-	m_pPicker->AddActionSignalTarget( pMainPanel );	
+	m_pPicker->AddActionSignalTarget( pMainPanel );
 
 	m_pButtonOK->SetParent( pMainPanel );
 	m_pButtonOK->AddActionSignalTarget( pMainPanel );
@@ -252,7 +252,7 @@ BOOL CModelBrowser::OnInitDialog()
 
 	m_pStatusLine->SetParent( pMainPanel );
 	m_pStatusLine->SetEditable( false );
-	
+
 	SaveLoadSettings( false ); // load
 
 	m_pPicker->Activate();

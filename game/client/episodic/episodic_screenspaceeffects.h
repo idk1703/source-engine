@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -15,9 +15,9 @@
 class CStunEffect : public IScreenSpaceEffect
 {
 public:
-	CStunEffect( void ) : 
-		m_flDuration( 0.0f ), 
-		m_flFinishTime( 0.0f ), 
+	CStunEffect( void ) :
+		m_flDuration( 0.0f ),
+		m_flFinishTime( 0.0f ),
 		m_bUpdateView( true ) {}
 
 	virtual void Init( void );
@@ -45,9 +45,9 @@ ADD_SCREENSPACE_EFFECT( CStunEffect, episodic_stun );
 class CEP1IntroEffect : public IScreenSpaceEffect
 {
 public:
-	CEP1IntroEffect( void ) : 
-		  m_flDuration( 0.0f ), 
-		  m_flFinishTime( 0.0f ), 
+	CEP1IntroEffect( void ) :
+		  m_flDuration( 0.0f ),
+		  m_flFinishTime( 0.0f ),
 		  m_bUpdateView( true ),
 		  m_bEnabled( false ),
 		  m_bFadeOut( false ) {}
@@ -61,7 +61,7 @@ public:
 	virtual void Render( int x, int y, int w, int h );
 
 private:
-	
+
 	inline unsigned char	GetFadeAlpha( void );
 
 	CTextureReference m_StunTexture;
@@ -86,9 +86,9 @@ ADD_SCREENSPACE_EFFECT( CEP1IntroEffect, episodic_intro );
 class CEP2StunEffect : public IScreenSpaceEffect
 {
 public:
-	CEP2StunEffect( void ) : 
-	  m_flDuration( 0.0f ), 
-	  m_flFinishTime( 0.0f ), 
+	CEP2StunEffect( void ) :
+	  m_flDuration( 0.0f ),
+	  m_flFinishTime( 0.0f ),
 	  m_bUpdateView( true ),
 	  m_bEnabled( false ),
 	  m_bFadeOut( false ) {}

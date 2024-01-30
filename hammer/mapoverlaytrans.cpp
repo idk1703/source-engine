@@ -156,30 +156,30 @@ void CMapOverlayTransition::OnParentKeyChanged( const char* szKey, const char* s
 	}
 
 	// Texture data.
-	if ( !stricmp( szKey, "LengthTexcoordStart" ) )	
-	{ 
+	if ( !stricmp( szKey, "LengthTexcoordStart" ) )
+	{
 		m_ShoreData.m_vecLengthTexcoord[0] = atof( szValue );
 	}
-	if ( !stricmp( szKey, "LengthTexcoordEnd" ) )	
-	{ 
+	if ( !stricmp( szKey, "LengthTexcoordEnd" ) )
+	{
 		m_ShoreData.m_vecLengthTexcoord[1] = atof( szValue );
 	}
-	if ( !stricmp( szKey, "WidthTexcoordStart" ) )	
-	{ 
+	if ( !stricmp( szKey, "WidthTexcoordStart" ) )
+	{
 		m_ShoreData.m_vecWidthTexcoord[0] = atof( szValue );
 	}
-	if ( !stricmp( szKey, "WidthTexcoordEnd" ) )	
-	{ 
+	if ( !stricmp( szKey, "WidthTexcoordEnd" ) )
+	{
 		m_ShoreData.m_vecWidthTexcoord[1] = atof( szValue );
 	}
 
 	// Width data.
-	if ( !stricmp( szKey, "Width1" ) )	
-	{ 
+	if ( !stricmp( szKey, "Width1" ) )
+	{
 		m_ShoreData.m_flWidths[0] = atof( szValue );
 	}
-	if ( !stricmp( szKey, "Width2" ) )	
-	{ 
+	if ( !stricmp( szKey, "Width2" ) )
+	{
 		m_ShoreData.m_flWidths[1] = atof( szValue );
 	}
 
@@ -378,7 +378,7 @@ ChunkFileResult_t CMapOverlayTransition::SaveVMF( CChunkFile *pFile, CSaveInfo *
 				pOverlay->SaveDataToVMF( pFile, pSaveInfo );
 			}
 		}
-	} 
+	}
 
 	if ( eResult == ChunkFile_Ok )
 	{

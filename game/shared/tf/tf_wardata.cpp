@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,8 +20,8 @@
 using namespace GCSDK;
 
 //-----------------------------------------------------------------------------
-// Purpose: Get user's War Data by steamID and war ID.  Returns NULL if it 
-//			doesnt exist or if the war is inactive and bLoadEvenIfWarInactive 
+// Purpose: Get user's War Data by steamID and war ID.  Returns NULL if it
+//			doesnt exist or if the war is inactive and bLoadEvenIfWarInactive
 //			is false.  On the GC bLoadSOCacheIfNeeded will load the user's
 //			SOCache if needed in order to try and get their war data
 //-----------------------------------------------------------------------------
@@ -107,7 +107,7 @@ bool CWarDefinition::BInitFromKV( KeyValues *pKV, CUtlVector<CUtlString> *pVecEr
 	m_rtTimeEnd = ( pszTime && pszTime[0] )
 							? CRTime::RTime32FromFmtString( "YYYY-MM-DD hh:mm:ss" , pszTime )
 							: RTime32(0);
-		
+
 	KeyValues* pKVSidesBlock = pKV->FindKey( "sides" );
 	FOR_EACH_TRUE_SUBKEY( pKVSidesBlock, pKVSide )
 	{
@@ -269,7 +269,7 @@ CGCMsgGC_War_GlobalStatsResponse* CTFWarGlobalDataHelper::FindOrCreateWarData( w
 		return NULL;
 
 	CGCMsgGC_War_GlobalStatsResponse* pGlobalData = NULL;
-		
+
 	auto waridx = m_mapWarStats.Find( (war_definition_index_t)nWarDef );
 	if ( waridx == m_mapWarStats.InvalidIndex() && bCreateIfDoesntExist )
 	{
@@ -281,7 +281,7 @@ CGCMsgGC_War_GlobalStatsResponse* CTFWarGlobalDataHelper::FindOrCreateWarData( w
 	{
 		pGlobalData = &m_mapWarStats[ waridx ];
 	}
-		
+
 	return pGlobalData;
 }
 
@@ -374,7 +374,7 @@ void CTFWarGlobalDataHelper::SetGlobalStats( const CGCMsgGC_War_GlobalStatsRespo
 	m_flLastUpdated = Plat_FloatTime();
 #endif
 	m_bInitialized = true;
-	
+
 	CGCMsgGC_War_GlobalStatsResponse* pExistingData = FindOrCreateWarData( newData.war_id(), true );
 	if ( pExistingData )
 	{
@@ -386,7 +386,7 @@ void CTFWarGlobalDataHelper::SetGlobalStats( const CGCMsgGC_War_GlobalStatsRespo
 	if ( event )
 	{
 		gameeventmanager->FireEventClientSide( event );
-	}	
+	}
 #endif
 }
 
@@ -394,7 +394,7 @@ void CTFWarGlobalDataHelper::AddToSideScore( war_definition_index_t nWar, war_si
 {
 	Assert( nWar != INVALID_WAR_DEF_INDEX );
 	Assert( nSide != INVALID_WAR_SIDE );
-	
+
 	CGCMsgGC_War_GlobalStatsResponse_SideScore* pSide = FindOrCreateWarDataSide( nSide, nWar, true );
 	if ( pSide )
 	{
@@ -405,15 +405,15 @@ void CTFWarGlobalDataHelper::AddToSideScore( war_definition_index_t nWar, war_si
 //-----------------------------------------------------------------------------
 // Purpose: Grab the Spy stats.  Request an update if we're on the client and stale
 //-----------------------------------------------------------------------------
-uint64 CTFWarGlobalDataHelper::GetGlobalSideScore( war_definition_index_t nWar, war_side_t nSide ) 
-{ 
+uint64 CTFWarGlobalDataHelper::GetGlobalSideScore( war_definition_index_t nWar, war_side_t nSide )
+{
 	Assert( nWar != INVALID_WAR_DEF_INDEX );
 	Assert( nSide != INVALID_WAR_SIDE );
 
 #ifdef CLIENT_DLL
 	CheckGlobalStatsStaleness();
 #endif
-	
+
 	CGCMsgGC_War_GlobalStatsResponse_SideScore* pSide = FindOrCreateWarDataSide( nSide, nWar, true );
 	if ( pSide )
 	{
@@ -479,7 +479,7 @@ void CTFWarGlobalDataHelper::RequestLeaderboard()
 			SteamAPICall_t apicall = steamapicontext->SteamUserStats()->FindLeaderboard( eSide == k_ESpy ? k_pszSpyVsEngyLeaderboard_Spy : k_pszSpyVsEngyLeaderboard_Engy );
 			m_findLeaderboardCallback.Set( apicall, this, &CTFWarGlobalDataHelper::OnFindLeaderboard );
 		}
-	}*/	
+	}*/
 }
 
 //-----------------------------------------------------------------------------
@@ -497,7 +497,7 @@ void CTFWarGlobalDataHelper::DownloadLeaderboard()
 	{
 		// friends
 		SteamAPICall_t apicall = steamapicontext->SteamUserStats()->DownloadLeaderboardEntries( m_findLeaderboardResults.m_hSteamLeaderboard, k_ELeaderboardDataRequestFriends, 1, 10 );
-		downloadLeaderboardCallbackFriends.Set( apicall, this, &CTFWarGlobalDataHelper::OnLeaderboardScoresDownloaded_Friends );			
+		downloadLeaderboardCallbackFriends.Set( apicall, this, &CTFWarGlobalDataHelper::OnLeaderboardScoresDownloaded_Friends );
 		// global around user
 		apicall = steamapicontext->SteamUserStats()->DownloadLeaderboardEntries( m_findLeaderboardResults.m_hSteamLeaderboard, k_ELeaderboardDataRequestGlobal, 1, 10 );
 		downloadLeaderboardCallbackGlobal.Set( apicall, this, &CTFWarGlobalDataHelper::OnLeaderboardScoresDownloaded_Global );

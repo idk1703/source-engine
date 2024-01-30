@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -23,9 +23,9 @@
 // MiniDumpWriteDump() function declaration (so we can just get the function directly from windows)
 typedef BOOL (WINAPI *MINIDUMPWRITEDUMP)
 	(
-	HANDLE hProcess, 
-	DWORD dwPid, 
-	HANDLE hFile, 
+	HANDLE hProcess,
+	DWORD dwPid,
+	HANDLE hFile,
 	MINIDUMP_TYPE DumpType,
 	CONST PMINIDUMP_EXCEPTION_INFORMATION ExceptionParam,
 	CONST PMINIDUMP_USER_STREAM_INFORMATION UserStreamParam,
@@ -51,9 +51,9 @@ static char g_rgchMinidumpComment[2048];
 //										  of length at least _MAX_PATH to contain the name
 //										  of the written minidump file on return.
 //-----------------------------------------------------------------------------
-bool WriteMiniDumpUsingExceptionInfo( 
-	unsigned int uStructuredExceptionCode, 
-	_EXCEPTION_POINTERS * pExceptionInfo, 
+bool WriteMiniDumpUsingExceptionInfo(
+	unsigned int uStructuredExceptionCode,
+	_EXCEPTION_POINTERS * pExceptionInfo,
 	int minidumpType,
 	const char *pszFilenameSuffix,
 	tchar *ptchMinidumpFileNameBuffer /* = NULL */
@@ -109,7 +109,7 @@ bool WriteMiniDumpUsingExceptionInfo(
 			strcpy( g_rgchMinidumpFilenamePrefix, pch );
 		}
 
-		
+
 		// can't use the normal string functions since we're in tier0
 		tchar rgchFileName[MAX_PATH];
 		_sntprintf( rgchFileName, sizeof(rgchFileName) / sizeof(tchar),
@@ -191,7 +191,7 @@ bool WriteMiniDumpUsingExceptionInfo(
 
 			// fall through to trying again
 		}
-		
+
 		// mark any failed minidump writes by renaming them
 		if ( !bMinidumpResult )
 		{
@@ -311,7 +311,7 @@ void WriteMiniDump( const char *pszFilenameSuffix )
 
 		// Never get here (non-continuable exception)
 	}
-	// Write the minidump from inside the filter (GetExceptionInformation() is only 
+	// Write the minidump from inside the filter (GetExceptionInformation() is only
 	// valid in the filter)
 	__except ( g_pfnWriteMiniDump( EXCEPTION_BREAKPOINT, GetExceptionInformation(), pszFilenameSuffix ), EXCEPTION_EXECUTE_HANDLER )
 	{
@@ -435,8 +435,8 @@ int CatchAndWriteMiniDump_Impl( CatchAndWriteContext_t &ctx )
 	{
 		// don't mask exceptions when running in the debugger
 		return ctx.Invoke();
-	}	
-	
+	}
+
 //	g_DumpHelper.Init();
 
 // Win32 code gets to use a special handler
@@ -452,7 +452,7 @@ int CatchAndWriteMiniDump_Impl( CatchAndWriteContext_t &ctx )
 
 	// if we get here, we definitely are not in an exception handler
 	g_bInException = false;
-	
+
 	return 0;
 #else
 //	if ( ctx.m_pargv != 0 )
@@ -464,7 +464,7 @@ int CatchAndWriteMiniDump_Impl( CatchAndWriteContext_t &ctx )
 //	CCrashHandlerScope scope( handler, g_DumpHelper.GetProduct(), g_DumpHelper.GetVersion(), g_DumpHelper.GetBuildID(), false );
 //	if ( handler )
 //		handler->SetSteamID( g_DumpHelper.GetSteamID() );
-	
+
 	return ctx.Invoke();
 #endif
 }
@@ -618,7 +618,7 @@ PLATFORM_INTERFACE void CatchAndWriteMiniDump( FnWMain pfn, int argc, tchar *arg
 	pfn( argc, argv );
 }
 
-#endif 
+#endif
 
 // User minidump stream info comment strings.
 //
@@ -683,5 +683,3 @@ const char *MinidumpUserStreamInfoGet( int Index )
 
 	return g_UserStreamInfo[ Index ];
 }
-
-

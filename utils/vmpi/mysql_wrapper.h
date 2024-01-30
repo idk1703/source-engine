@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -64,9 +64,9 @@ public:
 	// If you just executed a select statement, then you can use these functions to
 	// iterate over the result set.
 
-	// Get the number of columns in the data returned from the last query (if it was a select statement).	
+	// Get the number of columns in the data returned from the last query (if it was a select statement).
 	virtual int				NumFields() = 0;
-	
+
 	// Get the name of each column returned by the last query.
 	virtual const char*		GetFieldName( int iColumn ) = 0;
 

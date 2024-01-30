@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,7 +22,7 @@ class SampleButtons: public DemoPage
 		~SampleButtons();
 
 		void onButtonClicked();
-	
+
 	private:
 		Button *m_pEnabledButton;
 		Button *m_pDepressedButton;
@@ -32,7 +32,7 @@ class SampleButtons: public DemoPage
 		Button *m_pMoreInfoButton;
 		Button *m_pExpandButton;
 		MenuButton *m_pMenuButton;
-		
+
 		DECLARE_PANELMAP();
 };
 
@@ -82,7 +82,7 @@ SampleButtons::SampleButtons(Panel *parent, const char *name) : DemoPage(parent,
 	m_pDisActiveButton->ForceDepressed(true);
 	// Set it disabled
 	m_pDisActiveButton->SetEnabled(false);
-	
+
 
 
 	m_pMoreInfoButton = new Button(this, "MoreInfoButton", "More info required...");
@@ -118,7 +118,7 @@ void SampleButtons::onButtonClicked()
 
 MessageMapItem_t SampleButtons::m_MessageMap[] =
 {
-	MAP_MESSAGE( SampleButtons, "ButtonClicked", onButtonClicked ),   
+	MAP_MESSAGE( SampleButtons, "ButtonClicked", onButtonClicked ),
 };
 
 IMPLEMENT_PANELMAP(SampleButtons, DemoPage);
@@ -129,5 +129,3 @@ Panel* SampleButtons_Create(Panel *parent)
 {
 	return new SampleButtons(parent, "Buttons");
 }
-
-

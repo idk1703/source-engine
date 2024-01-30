@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -74,7 +74,7 @@ void CDialogAddBan::Activate(const char *type,const char *player,const char *aut
 	RequestFocus();
 	m_pIDTextEntry->RequestFocus();
 	SetVisible(true);
-	
+
 	SetTextEntry("PlayerTextEntry",player);
 	SetTextEntry("IDTextEntry",authid);
 
@@ -130,7 +130,7 @@ bool CDialogAddBan::IsIPCheck()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDialogAddBan::OnCommand(const char *command)
 {
@@ -143,14 +143,14 @@ void CDialogAddBan::OnCommand(const char *command)
 		float time;
 		m_pIDTextEntry->GetText(idbuf, sizeof(idbuf));
 		m_pTimeTextEntry->GetText(buf, 64);
-	
+
 
 		if(strlen(idbuf)<=0)
 		{
 			MessageBox *dlg = new MessageBox("#Add_Ban_Error", "#Add_Ban_ID_Invalid");
 			dlg->DoModal();
 			bClose=false;
-		} 
+		}
 		else if(strlen(buf)<=0 && !m_pPermBanRadio->IsSelected())
 		{
 			MessageBox *dlg = new MessageBox("#Add_Ban_Error", "#Add_Ban_Time_Empty");
@@ -175,7 +175,7 @@ void CDialogAddBan::OnCommand(const char *command)
 				{
 					time*=(60*24);
 				}
-				if(time<0) 
+				if(time<0)
 				{
 					MessageBox *dlg = new MessageBox("#Add_Ban_Error", "#Add_Ban_Time_Invalid");
 					dlg->DoModal();
@@ -195,7 +195,7 @@ void CDialogAddBan::OnCommand(const char *command)
 				bClose = true;
 			}
 		}
-		
+
 	}
 	else if (!stricmp(command, "Close"))
 	{
@@ -214,7 +214,7 @@ void CDialogAddBan::OnCommand(const char *command)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDialogAddBan::PerformLayout()
 {
@@ -243,8 +243,8 @@ void CDialogAddBan::OnButtonToggled(Panel *panel)
 	else
 	{
 		m_pTimeTextEntry->SetEnabled(true);
-		m_pTimeCombo->SetEnabled(true);	
+		m_pTimeCombo->SetEnabled(true);
 	}
-	
+
 	Repaint();
 }

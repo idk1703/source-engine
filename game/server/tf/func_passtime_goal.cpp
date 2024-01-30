@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -56,7 +56,7 @@ void CFuncPasstimeGoal::Spawn()
 	m_bTriggerDisabled = m_bDisabled;
 	SetThink( &CFuncPasstimeGoal::GoalThink );
 	SetNextThink( gpGlobals->curtime );
-	
+
 	// set goal type
 	if ( BTowerGoal() )
 	{
@@ -127,7 +127,7 @@ void CFuncPasstimeGoal::ShimEndTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-void CFuncPasstimeGoal::OnScore( int iTeam ) 
+void CFuncPasstimeGoal::OnScore( int iTeam )
 {
 	if( iTeam == TF_TEAM_RED )
 	{

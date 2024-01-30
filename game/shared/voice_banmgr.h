@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,7 +18,7 @@ class CVoiceBanMgr
 public:
 
 				CVoiceBanMgr();
-				~CVoiceBanMgr();	
+				~CVoiceBanMgr();
 
 	// Init loads the list of squelched players from disk.
 	bool		Init(const char *pGameDir);

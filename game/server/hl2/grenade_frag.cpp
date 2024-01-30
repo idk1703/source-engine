@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ class CGrenadeFrag : public CBaseGrenade
 #if !defined( CLIENT_DLL )
 	DECLARE_DATADESC();
 #endif
-					
+
 	~CGrenadeFrag( void );
 
 public:
@@ -60,7 +60,7 @@ public:
 	// this function only used in episodic.
 #if defined(HL2_EPISODIC) && 0 // FIXME: HandleInteraction() is no longer called now that base grenade derives from CBaseAnimating
 	bool	HandleInteraction(int interactionType, void *data, CBaseCombatCharacter* sourceEnt);
-#endif 
+#endif
 
 	void	InputSetTimer( inputdata_t &inputdata );
 
@@ -85,7 +85,7 @@ BEGIN_DATADESC( CGrenadeFrag )
 	DEFINE_FIELD( m_inSolid, FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_combineSpawned, FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_punted, FIELD_BOOLEAN ),
-	
+
 	// Function Pointers
 	DEFINE_THINKFUNC( DelayThink ),
 
@@ -96,7 +96,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CGrenadeFrag::~CGrenadeFrag( void )
 {
@@ -138,7 +138,7 @@ void CGrenadeFrag::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeFrag::OnRestore( void )
 {
@@ -150,7 +150,7 @@ void CGrenadeFrag::OnRestore( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeFrag::CreateEffects( void )
 {
@@ -195,12 +195,12 @@ class CTraceFilterCollisionGroupDelta : public CTraceFilterEntitiesOnly
 public:
 	// It does have a base, but we'll never network anything below here..
 	DECLARE_CLASS_NOBASE( CTraceFilterCollisionGroupDelta );
-	
+
 	CTraceFilterCollisionGroupDelta( const IHandleEntity *passentity, int collisionGroupAlreadyChecked, int newCollisionGroup )
 		: m_pPassEnt(passentity), m_collisionGroupAlreadyChecked( collisionGroupAlreadyChecked ), m_newCollisionGroup( newCollisionGroup )
 	{
 	}
-	
+
 	virtual bool ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask )
 	{
 		if ( !PassServerEntityFilter( pHandleEntity, m_pPassEnt ) )
@@ -230,7 +230,7 @@ void CGrenadeFrag::VPhysicsUpdate( IPhysicsObject *pPhysics )
 	Vector vel;
 	AngularImpulse angVel;
 	pPhysics->GetVelocity( &vel, &angVel );
-	
+
 	Vector start = GetAbsOrigin();
 	// find all entities that my collision group wouldn't hit, but COLLISION_GROUP_NONE would and bounce off of them as a ray cast
 	CTraceFilterCollisionGroupDelta filter( this, GetCollisionGroup(), COLLISION_GROUP_NONE );
@@ -264,7 +264,7 @@ void CGrenadeFrag::VPhysicsUpdate( IPhysicsObject *pPhysics )
 
 		// reflect velocity around normal
 		vel = -2.0f * tr.plane.normal * DotProduct(vel,tr.plane.normal) + vel;
-		
+
 		// absorb 80% in impact
 		vel *= GRENADE_COEFFICIENT_OF_RESTITUTION;
 		angVel *= -0.5f;
@@ -308,7 +308,7 @@ void CGrenadeFrag::OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t r
 #else
 	if( IsX360() )
 	{
-		// Give 'em a couple of seconds to aim and throw. 
+		// Give 'em a couple of seconds to aim and throw.
 		SetTimer( 2.0f, 1.0f);
 		BlipSound();
 		m_flNextBlipTime = gpGlobals->curtime + FRAG_GRENADE_BLIP_FAST_FREQUENCY;
@@ -322,7 +322,7 @@ void CGrenadeFrag::OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t r
 	BaseClass::OnPhysGunPickup( pPhysGunUser, reason );
 }
 
-void CGrenadeFrag::DelayThink() 
+void CGrenadeFrag::DelayThink()
 {
 	if( gpGlobals->curtime > m_flDetonateTime )
 	{
@@ -337,11 +337,11 @@ void CGrenadeFrag::DelayThink()
 #endif
 		m_bHasWarnedAI = true;
 	}
-	
+
 	if( gpGlobals->curtime > m_flNextBlipTime )
 	{
 		BlipSound();
-		
+
 		if( m_bHasWarnedAI )
 		{
 			m_flNextBlipTime = gpGlobals->curtime + FRAG_GRENADE_BLIP_FAST_FREQUENCY;
@@ -382,7 +382,7 @@ extern int g_interactionBarnacleVictimBite;
 extern int g_interactionBarnacleVictimReleased;
 bool CGrenadeFrag::HandleInteraction(int interactionType, void *data, CBaseCombatCharacter* sourceEnt)
 {
-	// allow fragnades to be grabbed by barnacles. 
+	// allow fragnades to be grabbed by barnacles.
 	if ( interactionType == g_interactionBarnacleVictimGrab )
 	{
 		// give the grenade another five seconds seconds so the player can have the satisfaction of blowing up the barnacle with it
@@ -393,7 +393,7 @@ bool CGrenadeFrag::HandleInteraction(int interactionType, void *data, CBaseComba
 	}
 	else if ( interactionType == g_interactionBarnacleVictimBite )
 	{
-		// detonate the grenade immediately 
+		// detonate the grenade immediately
 		SetTimer( 0, 0 );
 		return true;
 	}
@@ -420,7 +420,7 @@ CBaseGrenade *Fraggrenade_Create( const Vector &position, const QAngle &angles, 
 {
 	// Don't set the owner here, or the player can't interact with grenades he's thrown
 	CGrenadeFrag *pGrenade = (CGrenadeFrag *)CBaseEntity::Create( "npc_grenade_frag", position, angles, pOwner );
-	
+
 	pGrenade->SetTimer( timer, timer - FRAG_GRENADE_WARN_TIME );
 	pGrenade->SetVelocity( velocity, angVelocity );
 	pGrenade->SetThrower( ToBaseCombatCharacter( pOwner ) );

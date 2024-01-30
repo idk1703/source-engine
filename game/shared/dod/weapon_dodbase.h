@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,25 +24,25 @@ extern bool IsSecondaryWeapon( int id );
 
 class CDODPlayer;
 
-// These are the names of the ammo types that go in the CAmmoDefs and that the 
+// These are the names of the ammo types that go in the CAmmoDefs and that the
 // weapon script files reference.
 
 #define DOD_AMMO_SUBMG		"DOD_AMMO_SUBMG"
 #define DOD_AMMO_ROCKET		"DOD_AMMO_ROCKET"
 #define DOD_AMMO_COLT		"DOD_AMMO_COLT"
 #define DOD_AMMO_P38		"DOD_AMMO_P38"
-#define DOD_AMMO_C96		"DOD_AMMO_C96"	
+#define DOD_AMMO_C96		"DOD_AMMO_C96"
 #define DOD_AMMO_WEBLEY		"DOD_AMMO_WEBLEY"
 #define DOD_AMMO_GARAND		"DOD_AMMO_GARAND"
 #define DOD_AMMO_K98		"DOD_AMMO_K98"
 #define DOD_AMMO_M1CARBINE	"DOD_AMMO_M1CARBINE"
 #define DOD_AMMO_ENFIELD	"DOD_AMMO_ENFIELD"
 #define DOD_AMMO_SPRING		"DOD_AMMO_SPRING"
-#define DOD_AMMO_FG42		"DOD_AMMO_FG42"		
+#define DOD_AMMO_FG42		"DOD_AMMO_FG42"
 #define DOD_AMMO_BREN		"DOD_AMMO_BREN"
-#define DOD_AMMO_BAR		"DOD_AMMO_BAR"		
-#define DOD_AMMO_30CAL		"DOD_AMMO_30CAL"	
-#define DOD_AMMO_MG34		"DOD_AMMO_MG34"		
+#define DOD_AMMO_BAR		"DOD_AMMO_BAR"
+#define DOD_AMMO_30CAL		"DOD_AMMO_30CAL"
+#define DOD_AMMO_MG34		"DOD_AMMO_MG34"
 #define DOD_AMMO_MG42		"DOD_AMMO_MG42"
 #define DOD_AMMO_HANDGRENADE	"DOD_AMMO_HANDGRENADE"
 #define DOD_AMMO_HANDGRENADE_EX	"DOD_AMMO_HANDGRENADE_EX"	// the EX is for EXploding! :)
@@ -84,7 +84,7 @@ typedef enum
 	WEAPON_GARAND,
 	WEAPON_M1CARBINE,
 	WEAPON_K98,
-	
+
 	//Sniper Rifles
 	WEAPON_SPRING,
 	WEAPON_K98_SCOPED,
@@ -124,7 +124,7 @@ typedef enum
 	WEAPON_THOMPSON_PUNCH,
 	WEAPON_MP40_PUNCH,
 
-	WEAPON_GARAND_ZOOMED,	
+	WEAPON_GARAND_ZOOMED,
 	WEAPON_K98_ZOOMED,
 	WEAPON_SPRING_ZOOMED,
 	WEAPON_K98_SCOPED_ZOOMED,
@@ -134,7 +134,7 @@ typedef enum
 
 	WEAPON_BAR_SEMIAUTO,
 	WEAPON_MP44_SEMIAUTO,
-		
+
 	WEAPON_MAX,		// number of weapons weapon index
 
 } DODWeaponID;
@@ -144,7 +144,7 @@ typedef enum
 
 /*
 
-  CWeaponDODBase
+	CWeaponDODBase
 	|
 	|
 	|--> CWeaponDODBaseMelee
@@ -218,7 +218,7 @@ class CWeaponDODBase : public CBaseCombatWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponDODBase, CBaseCombatWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponDODBase();
@@ -228,7 +228,7 @@ public:
 
 		virtual void CheckRespawn();
 		virtual CBaseEntity* Respawn();
-		
+
 		virtual const Vector& GetBulletSpread();
 		virtual float	GetDefaultAnimSpeed();
 
@@ -237,7 +237,7 @@ public:
 
 		void Materialize();
 		void AttemptToMaterialize();
-		
+
 	#else
 
 		void PlayWorldReloadSound( CDODPlayer *pPlayer );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -33,7 +33,7 @@ extern ConVar tf_arena_preround_time;
 #define TF_ARENA_NOTIFICATION_HIDETIME tf_arena_preround_time.GetFloat();
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudArenaNotification : public CHudElement, public EditablePanel
 {
@@ -61,7 +61,7 @@ private:
 DECLARE_HUDELEMENT( CHudArenaNotification );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudArenaNotification::CHudArenaNotification( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudArenaNotification" )
 {
@@ -76,7 +76,7 @@ CHudArenaNotification::CHudArenaNotification( const char *pElementName ) : CHudE
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaNotification::Init( void )
 {
@@ -90,7 +90,7 @@ void CHudArenaNotification::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaNotification::FireGameEvent( IGameEvent * event )
 {
@@ -131,7 +131,7 @@ void CHudArenaNotification::FireGameEvent( IGameEvent * event )
 
 		wchar_t wszLocalized[100];
 		g_pVGuiLocalize->ConstructString_safe( wszLocalized, g_pVGuiLocalize->Find( "#TF_Arena_MaxStreak" ), 2, pTeam->Get_Localized_Name(), wStreak );
-		
+
 
 		char szLocalized[100];
 		g_pVGuiLocalize->ConvertUnicodeToANSI( wszLocalized, szLocalized, sizeof(szLocalized) );
@@ -150,8 +150,8 @@ void CHudArenaNotification::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CHudArenaNotification::OnTick( void )
 {
@@ -191,7 +191,7 @@ void CHudArenaNotification::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaNotification::SetVisible( bool state )
 {
@@ -210,7 +210,7 @@ void CHudArenaNotification::SetVisible( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaNotification::LevelInit( void )
 {
@@ -219,7 +219,7 @@ void CHudArenaNotification::LevelInit( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudArenaNotification::ShouldDraw( void )
 {
@@ -227,7 +227,7 @@ bool CHudArenaNotification::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaNotification::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -242,7 +242,7 @@ void CHudArenaNotification::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaNotification::SetupSwitchPanel( int iNotification )
 {

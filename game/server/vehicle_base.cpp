@@ -69,7 +69,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( prop_vehicle, CPropVehicle );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #pragma warning (disable:4355)
 CPropVehicle::CPropVehicle() : m_VehiclePhysics( this )
@@ -79,14 +79,14 @@ CPropVehicle::CPropVehicle() : m_VehiclePhysics( this )
 #pragma warning (default:4355)
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPropVehicle::~CPropVehicle ()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicle::Spawn( )
 {
@@ -147,24 +147,24 @@ void CPropVehicle::Teleport( const Vector *newPosition, const QAngle *newAngles,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicle::DrawDebugGeometryOverlays()
 {
-	if (m_debugOverlays & OVERLAY_BBOX_BIT) 
-	{	
+	if (m_debugOverlays & OVERLAY_BBOX_BIT)
+	{
 		m_VehiclePhysics.DrawDebugGeometryOverlays();
 	}
 	BaseClass::DrawDebugGeometryOverlays();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CPropVehicle::DrawDebugTextOverlays()
 {
 	int nOffset = BaseClass::DrawDebugTextOverlays();
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		nOffset = m_VehiclePhysics.DrawDebugTextOverlays( nOffset );
 	}
@@ -172,7 +172,7 @@ int CPropVehicle::DrawDebugTextOverlays()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBasePlayer *CPropVehicle::HasPhysicsAttacker( float dt )
 {
@@ -193,7 +193,7 @@ void CPropVehicle::OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t r
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicle::InputThrottle( inputdata_t &inputdata )
 {
@@ -201,7 +201,7 @@ void CPropVehicle::InputThrottle( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicle::InputSteering( inputdata_t &inputdata )
 {
@@ -209,7 +209,7 @@ void CPropVehicle::InputSteering( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicle::InputAction( inputdata_t &inputdata )
 {
@@ -227,7 +227,7 @@ void CPropVehicle::InputHandBrakeOff( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicle::Think()
 {
@@ -245,7 +245,7 @@ void CPropVehicle::Think()
 #define SMOOTHING_FACTOR 0.9
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicle::VPhysicsUpdate( IPhysicsObject *pPhysics )
 {
@@ -261,12 +261,12 @@ void CPropVehicle::VPhysicsUpdate( IPhysicsObject *pPhysics )
 	// must be a wheel
 	if (!m_VehiclePhysics.VPhysicsUpdate( pPhysics ))
 		return;
-	
+
 	BaseClass::VPhysicsUpdate( pPhysics );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const Vector
 //-----------------------------------------------------------------------------
 Vector CPropVehicle::GetSmoothedVelocity( void )
@@ -374,7 +374,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( prop_vehicle_driveable, CPropVehicleDriveable );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPropVehicleDriveable::CPropVehicleDriveable( void ) :
 	m_pServerVehicle( NULL ),
@@ -387,7 +387,7 @@ CPropVehicleDriveable::CPropVehicleDriveable( void ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPropVehicleDriveable::~CPropVehicleDriveable( void )
 {
@@ -395,7 +395,7 @@ CPropVehicleDriveable::~CPropVehicleDriveable( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleDriveable::CreateServerVehicle( void )
 {
@@ -405,7 +405,7 @@ void CPropVehicleDriveable::CreateServerVehicle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleDriveable::DestroyServerVehicle()
 {
@@ -423,13 +423,13 @@ void CPropVehicleDriveable::Precache( void )
 {
 	BaseClass::Precache();
 
-	// This step is needed because if we're precaching from a templated instance, we'll miss our vehicle 
+	// This step is needed because if we're precaching from a templated instance, we'll miss our vehicle
 	// script sounds unless we do the parse below.  This instance of the vehicle will be nuked when we're actually created.
 	if ( m_pServerVehicle == NULL )
 	{
 		CreateServerVehicle();
 	}
-	
+
 	// Load the script file and precache our assets
 	if ( m_pServerVehicle )
 	{
@@ -439,14 +439,14 @@ void CPropVehicleDriveable::Precache( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleDriveable::Spawn( void )
 {
 	// Has to be created before Spawn is called (since that causes Precache to be called)
 	DestroyServerVehicle();
 	CreateServerVehicle();
-	
+
 	// Initialize our vehicle via script
 	if ( m_pServerVehicle->Initialize( STRING(m_vehicleScript) ) == false )
 	{
@@ -465,7 +465,7 @@ void CPropVehicleDriveable::Spawn( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CPropVehicleDriveable::Restore( IRestore &restore )
 {
@@ -476,7 +476,7 @@ int CPropVehicleDriveable::Restore( IRestore &restore )
 	CreateServerVehicle();
 
 	int nRetVal = BaseClass::Restore( restore );
-	 
+
 	return nRetVal;
 }
 
@@ -518,17 +518,17 @@ void CPropVehicleDriveable::GetVectors(Vector* pForward, Vector* pRight, Vector*
 
 	if (pForward != NULL)
 	{
-		MatrixGetColumn( entityToWorld, 1, *pForward ); 
+		MatrixGetColumn( entityToWorld, 1, *pForward );
 	}
 
 	if (pRight != NULL)
 	{
-		MatrixGetColumn( entityToWorld, 0, *pRight ); 
+		MatrixGetColumn( entityToWorld, 0, *pRight );
 	}
 
 	if (pUp != NULL)
 	{
-		MatrixGetColumn( entityToWorld, 2, *pUp ); 
+		MatrixGetColumn( entityToWorld, 2, *pUp );
 	}
 }
 
@@ -544,10 +544,10 @@ void CPropVehicleDriveable::VehicleAngleVectors( const QAngle &angles, Vector *p
 	  	*pForward *= -1;
 	}
 }
-  
+
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleDriveable::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
@@ -561,18 +561,18 @@ void CPropVehicleDriveable::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CBaseEntity *CPropVehicleDriveable::GetDriver( void ) 
-{ 
-	if ( m_hNPCDriver ) 
-		return m_hNPCDriver; 
+CBaseEntity *CPropVehicleDriveable::GetDriver( void )
+{
+	if ( m_hNPCDriver )
+		return m_hNPCDriver;
 
-	return m_hPlayer; 
+	return m_hPlayer;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleDriveable::EnterVehicle( CBaseCombatCharacter *pPassenger )
 {
@@ -616,7 +616,7 @@ void CPropVehicleDriveable::EnterVehicle( CBaseCombatCharacter *pPassenger )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleDriveable::ExitVehicle( int nRole )
 {
@@ -626,7 +626,7 @@ void CPropVehicleDriveable::ExitVehicle( int nRole )
 
 	m_hPlayer = NULL;
 	ResetUseKey( pPlayer );
-	
+
 	m_playerOff.FireOutput( pPlayer, this, 0 );
 
 	// clear out the fire buttons
@@ -645,7 +645,7 @@ void CPropVehicleDriveable::ExitVehicle( int nRole )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleDriveable::ResetUseKey( CBasePlayer *pPlayer )
 {
@@ -653,7 +653,7 @@ void CPropVehicleDriveable::ResetUseKey( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleDriveable::DriveVehicle( CBasePlayer *pPlayer, CUserCmd *ucmd )
 {
@@ -665,7 +665,7 @@ void CPropVehicleDriveable::DriveVehicle( CBasePlayer *pPlayer, CUserCmd *ucmd )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleDriveable::DriveVehicle( float flFrameTime, CUserCmd *ucmd, int iButtonsDown, int iButtonsReleased )
 {
@@ -729,7 +729,7 @@ bool CPropVehicleDriveable::IsOverturned( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleDriveable::Think()
 {
@@ -764,7 +764,7 @@ void CPropVehicleDriveable::Think()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleDriveable::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move )
 {
@@ -825,7 +825,7 @@ bool CPropVehicleDriveable::CanExitVehicle( CBaseEntity *pEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleDriveable::InputTurnOn( inputdata_t &inputdata )
 {
@@ -837,7 +837,7 @@ void CPropVehicleDriveable::InputTurnOn( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleDriveable::InputTurnOff( inputdata_t &inputdata )
 {
@@ -870,7 +870,7 @@ void CPropVehicleDriveable::StartEngine( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehicleDriveable::StopEngine( void )
 {
@@ -1013,9 +1013,9 @@ void CPropVehicleDriveable::TraceAttack( const CTakeDamageInfo &info, const Vect
 // Passenger carrier
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPassenger - 
-//			bCompanion - 
+// Purpose:
+// Input  : *pPassenger -
+//			bCompanion -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPropVehicleDriveable::NPC_CanEnterVehicle( CAI_BaseNPC *pPassenger, bool bCompanion )
@@ -1025,9 +1025,9 @@ bool CPropVehicleDriveable::NPC_CanEnterVehicle( CAI_BaseNPC *pPassenger, bool b
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPassenger - 
-//			bCompanion - 
+// Purpose:
+// Input  : *pPassenger -
+//			bCompanion -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPropVehicleDriveable::NPC_CanExitVehicle( CAI_BaseNPC *pPassenger, bool bCompanion )
@@ -1037,9 +1037,9 @@ bool CPropVehicleDriveable::NPC_CanExitVehicle( CAI_BaseNPC *pPassenger, bool bC
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPassenger - 
-//			bCompanion - 
+// Purpose:
+// Input  : *pPassenger -
+//			bCompanion -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPropVehicleDriveable::NPC_AddPassenger( CAI_BaseNPC *pPassenger, string_t strRoleName, int nSeatID )
@@ -1056,9 +1056,9 @@ bool CPropVehicleDriveable::NPC_AddPassenger( CAI_BaseNPC *pPassenger, string_t 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPassenger - 
-//			bCompanion - 
+// Purpose:
+// Input  : *pPassenger -
+//			bCompanion -
 //-----------------------------------------------------------------------------
 bool CPropVehicleDriveable::NPC_RemovePassenger( CAI_BaseNPC *pPassenger )
 {
@@ -1074,12 +1074,12 @@ bool CPropVehicleDriveable::NPC_RemovePassenger( CAI_BaseNPC *pPassenger )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pVictim - 
-//			&info - 
+// Purpose:
+// Input  : *pVictim -
+//			&info -
 //-----------------------------------------------------------------------------
 void CPropVehicleDriveable::Event_KilledOther( CBaseEntity *pVictim, const CTakeDamageInfo &info )
-{ 
+{
 	CBaseEntity *pDriver = GetDriver();
 	if ( pDriver != NULL )
 	{
@@ -1123,13 +1123,13 @@ void CFourWheelServerVehicle::InitViewSmoothing( const Vector &vecOrigin, const 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFourWheelServerVehicle::SetVehicle( CBaseEntity *pVehicle )
 {
 	ASSERT( dynamic_cast<CPropVehicleDriveable*>(pVehicle) );
 	BaseClass::SetVehicle( pVehicle );
-	
+
 	// Save this for view smoothing
 	if ( pVehicle != NULL )
 	{
@@ -1150,7 +1150,7 @@ void CFourWheelServerVehicle::GetVehicleViewPosition( int nRole, Vector *pAbsOri
 		SharedVehicleViewSmoothing( pPlayerDriver,
 									pAbsOrigin, pAbsAngles,
 									pVehicle->IsEnterAnimOn(), pVehicle->IsExitAnimOn(),
-									pVehicle->GetEyeExitEndpoint(), 
+									pVehicle->GetEyeExitEndpoint(),
 									&m_ViewSmoothing,
 									pFOV );
 	}
@@ -1162,15 +1162,15 @@ void CFourWheelServerVehicle::GetVehicleViewPosition( int nRole, Vector *pAbsOri
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const vehicleparams_t *CFourWheelServerVehicle::GetVehicleParams( void )
-{ 
-	return &GetFourWheelVehiclePhysics()->GetVehicleParams(); 
+{
+	return &GetFourWheelVehiclePhysics()->GetVehicleParams();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const vehicle_operatingparams_t	*CFourWheelServerVehicle::GetVehicleOperatingParams( void )
 {
@@ -1178,7 +1178,7 @@ const vehicle_operatingparams_t	*CFourWheelServerVehicle::GetVehicleOperatingPar
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const vehicle_controlparams_t *CFourWheelServerVehicle::GetVehicleControlParams( void )
 {
@@ -1191,7 +1191,7 @@ IPhysicsVehicleController *CFourWheelServerVehicle::GetVehicleController()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPropVehicleDriveable *CFourWheelServerVehicle::GetFourWheelVehicle( void )
 {
@@ -1199,7 +1199,7 @@ CPropVehicleDriveable *CFourWheelServerVehicle::GetFourWheelVehicle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFourWheelVehiclePhysics *CFourWheelServerVehicle::GetFourWheelVehiclePhysics( void )
 {
@@ -1208,20 +1208,20 @@ CFourWheelVehiclePhysics *CFourWheelServerVehicle::GetFourWheelVehiclePhysics( v
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CFourWheelServerVehicle::IsVehicleUpright( void )
-{ 
-	return (GetFourWheelVehicle()->IsOverturned() == false); 
+{
+	return (GetFourWheelVehicle()->IsOverturned() == false);
 }
 
-bool CFourWheelServerVehicle::IsVehicleBodyInWater() 
-{ 
-	return GetFourWheelVehicle()->IsVehicleBodyInWater(); 
+bool CFourWheelServerVehicle::IsVehicleBodyInWater()
+{
+	return GetFourWheelVehicle()->IsVehicleBodyInWater();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CFourWheelServerVehicle::IsPassengerEntering( void )
 {
@@ -1229,7 +1229,7 @@ bool CFourWheelServerVehicle::IsPassengerEntering( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CFourWheelServerVehicle::IsPassengerExiting( void )
 {
@@ -1237,7 +1237,7 @@ bool CFourWheelServerVehicle::IsPassengerExiting( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFourWheelServerVehicle::NPC_SetDriver( CNPC_VehicleDriver *pDriver )
 {
@@ -1264,7 +1264,7 @@ void CFourWheelServerVehicle::NPC_SetDriver( CNPC_VehicleDriver *pDriver )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFourWheelServerVehicle::NPC_DriveVehicle( void )
 {
@@ -1323,9 +1323,9 @@ void CFourWheelServerVehicle::NPC_DriveVehicle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nWheelIndex - 
-//			&vecPos - 
+// Purpose:
+// Input  : nWheelIndex -
+//			&vecPos -
 //-----------------------------------------------------------------------------
 bool CFourWheelServerVehicle::GetWheelContactPoint( int nWheelIndex, Vector &vecPos )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -59,14 +59,14 @@ LINK_ENTITY_TO_CLASS( env_portal_path_track, CEnvPortalPathTrack );
 //*********( FUNCTION IMPLEMENTATIONS )***************
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 CEnvPortalPathTrack::CEnvPortalPathTrack()
 {
 	m_bTrackActive = false;
-	m_bEndpointActive = false; 
-//	m_fScaleEndpoint = 1.0f; 
+	m_bEndpointActive = false;
+//	m_fScaleEndpoint = 1.0f;
 //	m_fScaleTrack = 1.0f;
 }
 
@@ -76,16 +76,16 @@ CEnvPortalPathTrack::~CEnvPortalPathTrack()
 }
 
 //-----------------------------------------------------------------------------
-// Precache: 
+// Precache:
 //-----------------------------------------------------------------------------
 void CEnvPortalPathTrack::Precache()
 {
 	BaseClass::Precache();
-	PrecacheMaterial( "effects/combinemuzzle2_dark" ); 
+	PrecacheMaterial( "effects/combinemuzzle2_dark" );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvPortalPathTrack::Spawn( void )
 {
@@ -106,7 +106,7 @@ void CEnvPortalPathTrack::Activate( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Initializes the track beam and it's partical effects
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CEnvPortalPathTrack::InitTrackFX()
 {
@@ -116,13 +116,13 @@ void CEnvPortalPathTrack::InitTrackFX()
 	{
 		m_pBeam->PointEntInit( GetAbsOrigin(), m_pnext );							//Set up the beam to draw from its center to it's next track.
 	}
-	
+
 	ActivateTrackFX();																//Set prettiness
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Kills the track beam and it's partical effects
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CEnvPortalPathTrack::ShutDownTrackFX()
 {
@@ -135,7 +135,7 @@ void CEnvPortalPathTrack::ShutDownTrackFX()
 
 //-----------------------------------------------------------------------------
 // Purpose: Initializes the endpoint particle effects
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CEnvPortalPathTrack::InitEndpointFX()
 {
@@ -143,7 +143,7 @@ void CEnvPortalPathTrack::InitEndpointFX()
 
 //-----------------------------------------------------------------------------
 // Purpose: Activates the visual effects on the path track between two endpoints
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CEnvPortalPathTrack::InputActivateTrack(inputdata_t &inputdata)
 {
@@ -152,7 +152,7 @@ void CEnvPortalPathTrack::InputActivateTrack(inputdata_t &inputdata)
 
 //-----------------------------------------------------------------------------
 // Purpose: Activates the visual effects on the endpoint
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CEnvPortalPathTrack::InputActivateEndpoint(inputdata_t &inputdata)
 {
@@ -161,7 +161,7 @@ void CEnvPortalPathTrack::InputActivateEndpoint(inputdata_t &inputdata)
 
 //-----------------------------------------------------------------------------
 // Purpose: Activates the visual effects on the path track between two endpoints
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CEnvPortalPathTrack::InputDeactivateTrack(inputdata_t &inputdata)
 {
@@ -170,7 +170,7 @@ void CEnvPortalPathTrack::InputDeactivateTrack(inputdata_t &inputdata)
 
 //-----------------------------------------------------------------------------
 // Purpose: Activates the visual effects on the endpoint
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CEnvPortalPathTrack::InputDeactivateEndpoint(inputdata_t &inputdata)
 {
@@ -179,7 +179,7 @@ void CEnvPortalPathTrack::InputDeactivateEndpoint(inputdata_t &inputdata)
 
 //-----------------------------------------------------------------------------
 // Purpose: Activate all of the track's beams (at least the ones that are flagged to display)
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CEnvPortalPathTrack::ActivateTrackFX ( void )
 {
@@ -192,7 +192,7 @@ void CEnvPortalPathTrack::ActivateTrackFX ( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Activate all of the track's beams (at least the ones that are flagged to display)
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CEnvPortalPathTrack::DeactivateTrackFX ( void )
 {
@@ -203,7 +203,7 @@ void CEnvPortalPathTrack::DeactivateTrackFX ( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Activate all of the endpoint's glowy bits that are flagged to display
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CEnvPortalPathTrack::ActivateEndpointFX ( void )
 {
@@ -211,7 +211,7 @@ void CEnvPortalPathTrack::ActivateEndpointFX ( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Activate all of the endpoint's glowy bits that are flagged to display
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CEnvPortalPathTrack::DeactivateEndpointFX ( void )
 {

@@ -17,7 +17,7 @@ class CSfxTable;
 class CAudioMixer;
 typedef int SoundSource;
 
-// DO NOT REORDER: indices to fvolume arrays in channel_t 
+// DO NOT REORDER: indices to fvolume arrays in channel_t
 
 #define IFRONT_LEFT		0			// NOTE: must correspond to order of fvolume array below!
 #define IFRONT_RIGHT	1
@@ -26,7 +26,7 @@ typedef int SoundSource;
 #define IFRONT_CENTER	4
 #define IFRONT_CENTER0	5			// dummy slot - center channel is mono, but mixers reference volume[1] slot
 
-#define IFRONT_LEFTD	6			// start of doppler right array			
+#define IFRONT_LEFTD	6			// start of doppler right array
 #define IFRONT_RIGHTD	7
 #define	IREAR_LEFTD		8
 #define IREAR_RIGHTD	9
@@ -47,13 +47,13 @@ struct channel_t
 
 	CSfxTable	*sfx;			// the actual sound
 	CAudioMixer	*pMixer;		// The sound's instance data for this channel
-	
+
 	// speaker channel volumes, indexed using IFRONT_LEFT to IFRONT_CENTER.
 	// NOTE: never access these fvolume[] elements directly! Use channel helpers in snd_dma.cpp.
 
 	float		fvolume[CCHANVOLUMES];			// 0.0-255.0 current output volumes
 	float		fvolume_target[CCHANVOLUMES];	// 0.0-255.0 target output volumes
-	float		fvolume_inc[CCHANVOLUMES];		// volume increment, per frame, moves volume[i] to vol_target[i] (per spatialization)		
+	float		fvolume_inc[CCHANVOLUMES];		// volume increment, per frame, moves volume[i] to vol_target[i] (per spatialization)
 	uint		nFreeChannelAtSampleTime;
 
 	SoundSource	soundsource;	// see iclientsound.h for description.
@@ -101,7 +101,7 @@ struct channel_t
 		{
 			bool		bUpdatePositions : 1; // if true, assume sound source can move and update according to entity
 			bool		isSentence : 1;		// true if playing linked sentence
-			bool		bdry : 1;			// if true, bypass all dsp processing for this sound (ie: music)	
+			bool		bdry : 1;			// if true, bypass all dsp processing for this sound (ie: music)
 			bool		bSpeaker : 1;		// true if sound is playing through in-game speaker entity.
 			bool		bstereowav : 1;		// if true, a stereo .wav file is the sample data source
 
@@ -111,7 +111,7 @@ struct channel_t
 			bool		bfirstpass : 1;		// true if this is first time sound is spatialized
 			bool		bTraced : 1;		// true if channel was already checked this frame for obscuring
 			bool		bfast_pitch : 1;	// true if using low quality pitch (fast, but no interpolation)
-			
+
 			bool		m_bIsFreeingChannel : 1;	// true when inside S_FreeChannel - prevents reentrance
 			bool		m_bCompatibilityAttenuation : 1;	// True when we want to use goldsrc compatibility mode for the attenuation
 															// In that case, dist_mul is set to a relatively meaningful value in StartDynamic/StartStaticSound,

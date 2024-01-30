@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Revision: $
 // $NoKeywords: $
@@ -28,7 +28,7 @@ struct DemoEvent_t
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFDemoSupport : public CAutoGameSystemPerFrame, public CGameEventListener
 {

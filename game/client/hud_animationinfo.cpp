@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -63,9 +63,9 @@ protected:
 DECLARE_HUDELEMENT( CHudAnimationInfo );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pElementName - 
-//			*panelName - 
+// Purpose:
+// Input  : *pElementName -
+//			*panelName -
 //-----------------------------------------------------------------------------
 CHudAnimationInfo::CHudAnimationInfo( const char *pElementName )
  : CHudElement( pElementName ), BaseClass( NULL, "HudAnimationInfo" )
@@ -107,7 +107,7 @@ void CHudAnimationInfo::PaintString( int& x, int &y, const char *sz, Color *pLeg
 	wchar_t szconverted[ 512 ];
 
 	g_pVGuiLocalize->ConvertANSIToUnicode( "O->", szconverted, sizeof(szconverted)  );
-		
+
 	if ( pLegendColor )
 	{
 		surface()->DrawSetTextColor( *pLegendColor );
@@ -300,7 +300,7 @@ CON_COMMAND_F_COMPLETION( cl_animationinfo, "Hud element to examine.", 0, HudEle
 
 	// Find it
 	CHudElement *element = NULL;
-	
+
 	for ( int i = 0; i < gHUD.m_HudList.Size(); i++ )
 	{
 		if ( stricmp( gHUD.m_HudList[i]->GetName(), args[1]  ) == 0 )
@@ -314,7 +314,7 @@ CON_COMMAND_F_COMPLETION( cl_animationinfo, "Hud element to examine.", 0, HudEle
 	{
 		info->SetWatch( dynamic_cast< Panel * >( element ) );
 	}
-	else 
+	else
 	{
 		VPANEL root = VGui_GetClientDLLRootPanel();
 		vgui::Panel *rootPanel = ipanel()->GetPanel( root, info->GetModuleName() );
@@ -334,4 +334,3 @@ CON_COMMAND_F_COMPLETION( cl_animationinfo, "Hud element to examine.", 0, HudEle
 		}
 	}
 }
-

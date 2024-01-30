@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -37,7 +37,7 @@ public:
 		w = ScreenWidth();
 		h = ScreenHeight();
 
-		if ( w != m_ScreenSize[ 0 ] || 
+		if ( w != m_ScreenSize[ 0 ] ||
 			 h != m_ScreenSize[ 1 ] )
 		{
 			m_ScreenSize[ 0 ] = w;
@@ -187,7 +187,7 @@ public:
 						g_pVGuiLocalize->ConstructString_safe( wzString, g_pVGuiLocalize->Find( "#GameUI_PausedTimer" ), 1, wzTime );
 						g_pVGuiLocalize->ConvertUnicodeToANSI( wzString, szString, sizeof( szString ) );
 						m_pPauseDiscPanel->SetText( szString );
-					
+
 						m_nPrevTimeRemaining = nTime;
 					}
 				}

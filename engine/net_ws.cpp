@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -17,7 +17,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-#define NET_COMPRESSION_STACKBUF_SIZE 4096 
+#define NET_COMPRESSION_STACKBUF_SIZE 4096
 
 static ConVar net_showudp_wire( "net_showudp_wire", "0", 0, "Show incoming packet information" );
 
@@ -39,17 +39,17 @@ static ConVar matchmakingport( "matchmakingport", NETSTRING( PORT_MATCHMAKING ),
 static ConVar systemlinkport( "systemlinkport", NETSTRING( PORT_SYSTEMLINK ), FCVAR_ALLOWED_IN_COMPETITIVE, "System Link port" );
 
 static ConVar fakelag		( "net_fakelag", "0", FCVAR_CHEAT, "Lag all incoming network data (including loopback) by this many milliseconds." );
-static ConVar fakeloss		( "net_fakeloss", "0", FCVAR_CHEAT, "Simulate packet loss as a percentage (negative means drop 1/n packets)" ); 
-static ConVar droppackets	( "net_droppackets", "0", FCVAR_CHEAT, "Drops next n packets on client" ); 
+static ConVar fakeloss		( "net_fakeloss", "0", FCVAR_CHEAT, "Simulate packet loss as a percentage (negative means drop 1/n packets)" );
+static ConVar droppackets	( "net_droppackets", "0", FCVAR_CHEAT, "Drops next n packets on client" );
 static ConVar fakejitter	( "net_fakejitter", "0", FCVAR_CHEAT, "Jitter fakelag packet time" );
 
 static ConVar net_compressvoice( "net_compressvoice", "0", 0, "Attempt to compress out of band voice payloads (360 only)." );
 ConVar net_usesocketsforloopback( "net_usesocketsforloopback", "0", 0, "Use network sockets layer even for listen server local player's packets (multiplayer only)." );
 
 #ifdef _DEBUG
-static ConVar fakenoise		( "net_fakenoise", "0", FCVAR_CHEAT, "Simulate corrupt network packets (changes n bits per packet randomly)" ); 
-static ConVar fakeshuffle	( "net_fakeshuffle", "0", FCVAR_CHEAT, "Shuffles order of every nth packet (needs net_fakelag)" ); 
-static ConVar recvpackets	( "net_recvpackets", "-1", FCVAR_CHEAT, "Receive exactly next n packets if >= 0" ); 
+static ConVar fakenoise		( "net_fakenoise", "0", FCVAR_CHEAT, "Simulate corrupt network packets (changes n bits per packet randomly)" );
+static ConVar fakeshuffle	( "net_fakeshuffle", "0", FCVAR_CHEAT, "Shuffles order of every nth packet (needs net_fakelag)" );
+static ConVar recvpackets	( "net_recvpackets", "-1", FCVAR_CHEAT, "Receive exactly next n packets if >= 0" );
 static ConVar	net_savelargesplits( "net_savelargesplits", "-1", 0, "If not -1, then if a split has this many or more split parts, save the entire packet to disc for analysis." );
 #endif
 
@@ -96,7 +96,7 @@ typedef struct
 	int			hTCP;		// handle to TCP socket from socket()
 } netsocket_t;
 
-typedef struct 
+typedef struct
 {
 	int				newsock;	// handle of new socket
 	int				netsock;	// handle of listen socket
@@ -153,23 +153,23 @@ typedef struct
 #define SPLITPACKET_MAX_DATA_BYTES_PER_SECOND V_STRINGIFY(DEFAULT_RATE)
 
 static ConVar sv_maxroutable
-	( 
-	"sv_maxroutable", 
-	"1260", 
-	0, 
-	"Server upper bound on net_maxroutable that a client can use.", 
-	true, MIN_USER_MAXROUTABLE_SIZE, 
-	true, MAX_USER_MAXROUTABLE_SIZE 
+	(
+	"sv_maxroutable",
+	"1260",
+	0,
+	"Server upper bound on net_maxroutable that a client can use.",
+	true, MIN_USER_MAXROUTABLE_SIZE,
+	true, MAX_USER_MAXROUTABLE_SIZE
 	);
 
 ConVar net_maxroutable
-	( 
-	"net_maxroutable", 
-	"1260", 
-	FCVAR_ARCHIVE | FCVAR_USERINFO, 
-	"Requested max packet size before packets are 'split'.", 
-	true, MIN_USER_MAXROUTABLE_SIZE, 
-	true, MAX_USER_MAXROUTABLE_SIZE 
+	(
+	"net_maxroutable",
+	"1260",
+	FCVAR_ARCHIVE | FCVAR_USERINFO,
+	"Requested max packet size before packets are 'split'.",
+	true, MIN_USER_MAXROUTABLE_SIZE,
+	true, MAX_USER_MAXROUTABLE_SIZE
 	);
 
 netadr_t	net_local_adr;
@@ -285,16 +285,16 @@ const char *NET_ErrorString (int code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *s - 
-//			*sadr - 
+// Purpose:
+// Input  : *s -
+//			*sadr -
 // Output : bool	NET_StringToSockaddr
 //-----------------------------------------------------------------------------
 bool NET_StringToSockaddr( const char *s, struct sockaddr *sadr )
 {
 	char	*colon;
 	char	copy[128];
-	
+
 	Q_memset (sadr, 0, sizeof(*sadr));
 	((struct sockaddr_in *)sadr)->sin_family = AF_INET;
 	((struct sockaddr_in *)sadr)->sin_port = 0;
@@ -306,10 +306,10 @@ bool NET_StringToSockaddr( const char *s, struct sockaddr *sadr )
 		if (*colon == ':')
 		{
 			*colon = 0;
-			((struct sockaddr_in *)sadr)->sin_port = NET_HostToNetShort((short)atoi(colon+1));	
+			((struct sockaddr_in *)sadr)->sin_port = NET_HostToNetShort((short)atoi(colon+1));
 		}
 	}
-	
+
 	if (copy[0] >= '0' && copy[0] <= '9' && Q_strstr( copy, "." ) )
 	{
 		*(int *)&((struct sockaddr_in *)sadr)->sin_addr = inet_addr(copy);
@@ -324,7 +324,7 @@ bool NET_StringToSockaddr( const char *s, struct sockaddr *sadr )
 			return false;
 		*(int *)&((struct sockaddr_in *)sadr)->sin_addr = *(int *)h->h_addr_list[0];
 	}
-	
+
 	return true;
 }
 
@@ -396,7 +396,7 @@ bool NET_StringToAdr ( const char *s, netadr_t *a)
 	struct sockaddr saddr;
 
 	char address[128];
-	
+
 	Q_strncpy( address, s, sizeof(address) );
 
 	if ( !Q_strncmp( address, "localhost", 10 ) || !Q_strncmp( address, "localhost:", 10 ) )
@@ -406,10 +406,10 @@ bool NET_StringToAdr ( const char *s, netadr_t *a)
 		Q_memcpy( address, "127.0.0.1", 9 );
 	}
 
-	
+
 	if ( !NET_StringToSockaddr (address, &saddr) )
 		return false;
-		
+
 	a->SetFromSockadr( &saddr );
 
 	return true;
@@ -429,7 +429,7 @@ CNetChan *NET_FindNetChannel(int socket, netadr_t &adr)
 		if ( socket != chan->GetSocket() )
 			continue;
 
-		// and the IP:Port address 
+		// and the IP:Port address
 		if ( adr.CompareAdr( chan->GetRemoteAddress() )  )
 		{
 			return chan;	// found it
@@ -486,14 +486,14 @@ int NET_OpenSocket ( const char *net_interface, int& port, int protocol )
 
 	if ( newsocket == -1 )
 	{
-		NET_GetLastError(); 
+		NET_GetLastError();
 		if ( net_error != WSAEAFNOSUPPORT )
 			Msg ("WARNING: NET_OpenSockett: socket failed: %s", NET_ErrorString(net_error));
 
 		return 0;
 	}
 
-	
+
 	opt =  1; // make it non-blocking
 	int ret;
 	VCR_NONPLAYBACKFN( ioctlsocket (newsocket, FIONBIO, (unsigned long*)&opt), ret, "ioctlsocket" );
@@ -502,7 +502,7 @@ int NET_OpenSocket ( const char *net_interface, int& port, int protocol )
 		NET_GetLastError();
 		Msg ("WARNING: NET_OpenSocket: ioctl FIONBIO: %s\n", NET_ErrorString(net_error) );
 	}
-	
+
 	if ( protocol == IPPROTO_TCP )
 	{
 		if ( !IsX360() ) // SO_KEEPALIVE unsupported on the 360
@@ -511,7 +511,7 @@ int NET_OpenSocket ( const char *net_interface, int& port, int protocol )
 			VCR_NONPLAYBACKFN( setsockopt(newsocket, SOL_SOCKET, SO_KEEPALIVE, (char *)&opt, sizeof(opt)), ret, "setsockopt" );
 			if (ret == -1)
 			{
-				NET_GetLastError();		
+				NET_GetLastError();
 				Msg ("WARNING: NET_OpenSocket: setsockopt SO_KEEPALIVE: %s\n", NET_ErrorString(net_error));
 				return 0;
 			}
@@ -523,7 +523,7 @@ int NET_OpenSocket ( const char *net_interface, int& port, int protocol )
 		VCR_NONPLAYBACKFN( setsockopt(newsocket, SOL_SOCKET, SO_LINGER, (char *)&optlinger, sizeof(optlinger)), ret, "setsockopt" );
 		if (ret == -1)
 		{
-			NET_GetLastError();		
+			NET_GetLastError();
 			Msg ("WARNING: NET_OpenSocket: setsockopt SO_LINGER: %s\n", NET_ErrorString(net_error));
 			return 0;
 		}
@@ -532,7 +532,7 @@ int NET_OpenSocket ( const char *net_interface, int& port, int protocol )
 		VCR_NONPLAYBACKFN( setsockopt(newsocket, IPPROTO_TCP, TCP_NODELAY, (char *)&opt, sizeof(opt)), ret, "setsockopt" );
 		if (ret == -1)
 		{
-			NET_GetLastError();		
+			NET_GetLastError();
 			Msg ("WARNING: NET_OpenSocket: setsockopt TCP_NODELAY: %s\n", NET_ErrorString(net_error));
 			return 0;
 		}
@@ -541,7 +541,7 @@ int NET_OpenSocket ( const char *net_interface, int& port, int protocol )
 		VCR_NONPLAYBACKFN( setsockopt(newsocket, SOL_SOCKET, SO_SNDBUF, (char *)&opt, sizeof(opt)), ret, "setsockopt" );
 		if (ret == -1)
 		{
-			NET_GetLastError();		
+			NET_GetLastError();
 			Msg ("WARNING: NET_OpenSocket: setsockopt SO_SNDBUF: %s\n", NET_ErrorString(net_error));
 			return 0;
 		}
@@ -550,11 +550,11 @@ int NET_OpenSocket ( const char *net_interface, int& port, int protocol )
 		VCR_NONPLAYBACKFN( setsockopt(newsocket, SOL_SOCKET, SO_RCVBUF, (char *)&opt, sizeof(opt)), ret, "setsockopt" );
 		if (ret == -1)
 		{
-			NET_GetLastError();		
+			NET_GetLastError();
 			Msg ("WARNING: NET_OpenSocket: setsockopt SO_RCVBUF: %s\n", NET_ErrorString(net_error));
 			return 0;
 		}
-		
+
 
 		return newsocket;	// don't bind TCP sockets by default
 	}
@@ -566,7 +566,7 @@ int NET_OpenSocket ( const char *net_interface, int& port, int protocol )
 	VCR_NONPLAYBACKFN( getsockopt( newsocket, SOL_SOCKET, SO_RCVBUF, (char *)&opt, &len ), ret, "getsockopt" );
 	if ( ret == -1 )
 	{
-		NET_GetLastError();		
+		NET_GetLastError();
 		Msg ("WARNING: NET_OpenSocket: getsockopt SO_RCVBUF: %s\n", NET_ErrorString(net_error));
 		return 0;
 	}
@@ -585,7 +585,7 @@ int NET_OpenSocket ( const char *net_interface, int& port, int protocol )
 	VCR_NONPLAYBACKFN( setsockopt(newsocket, SOL_SOCKET, SO_RCVBUF, (char *)&opt, sizeof(opt)), ret, "setsockopt" );
 	if (ret == -1)
 	{
-		NET_GetLastError();		
+		NET_GetLastError();
 		Msg ("WARNING: NET_OpenSocket: setsockopt SO_RCVBUF: %s\n", NET_ErrorString(net_error));
 		return 0;
 	}
@@ -594,7 +594,7 @@ int NET_OpenSocket ( const char *net_interface, int& port, int protocol )
 	VCR_NONPLAYBACKFN( setsockopt(newsocket, SOL_SOCKET, SO_SNDBUF, (char *)&opt, sizeof(opt)), ret, "setsockopt" );
 	if (ret == -1)
 	{
-		NET_GetLastError();		
+		NET_GetLastError();
 		Msg ("WARNING: NET_OpenSocket: setsockopt SO_SNDBUF: %s\n", NET_ErrorString(net_error));
 		return 0;
 	}
@@ -607,12 +607,12 @@ int NET_OpenSocket ( const char *net_interface, int& port, int protocol )
 		VCR_NONPLAYBACKFN( setsockopt(newsocket, SOL_SOCKET, SO_BROADCAST, (char *)&opt, sizeof(opt)), ret, "setsockopt" );
 		if (ret == -1)
 		{
-			NET_GetLastError();		
+			NET_GetLastError();
 			Msg ("WARNING: NET_OpenSocket: setsockopt SO_BROADCAST: %s\n", NET_ErrorString(net_error));
 			return 0;
 		}
 	}
-	
+
 	if ( CommandLine()->FindParm( "-reuse" ) )
 	{
 		opt = 1; // make it reusable
@@ -692,7 +692,7 @@ int NET_OpenSocket ( const char *net_interface, int& port, int protocol )
 			Warning( "WARNING: Port %i was unavailable - bound to port %i instead\n", port - port_offset, port );
 		}
 	}
-	
+
 	return newsocket;
 }
 
@@ -766,7 +766,7 @@ int NET_ReceiveStream( int nSock, char * buf, int len, int flags )
 	{
 		NET_GetLastError();
 
-		if ( net_error == WSAEWOULDBLOCK || 
+		if ( net_error == WSAEWOULDBLOCK ||
 			 net_error == WSAENOTCONN )
 		{
 			return 0; // ignore EWOULDBLOCK
@@ -827,7 +827,7 @@ void NET_RemoveNetChannel(INetChannel *netchan, bool bDeleteNetChan)
 	s_NetChannels.FindAndRemove( static_cast<CNetChan*>(netchan) );
 
 	NET_ClearQueuedPacketsForChannel( netchan );
-	
+
 	if ( bDeleteNetChan )
 		delete netchan;
 }
@@ -887,7 +887,7 @@ int NET_CountLaggedList( netpacket_t *pList )
 {
 	int c = 0;
 	netpacket_t *p = pList;
-	
+
 	while ( p )
 	{
 		c++;
@@ -960,12 +960,12 @@ NET_AdjustLag
 void NET_AdjustLag( void )
 {
 	static double s_LastTime = 0;
-	
+
 	// Bound time step
-	
+
 	float dt = net_time - s_LastTime;
 	dt = clamp( dt, 0.0f, 0.2f );
-	
+
 	s_LastTime = net_time;
 
 	// Already converged?
@@ -1073,30 +1073,30 @@ bool NET_LagPacket (bool newdata, netpacket_t * packet)
 			netpacket_t * t = p->pNext;
 			p->pNext = t->pNext;
 			t->pNext = p;
-			p = t; 
+			p = t;
 		}
 	}
 #endif
-	
+
 	// remove packet p from list (is head)
 	s_pLagData[packet->source] = p->pNext;
-		
+
 	// copy & adjust content
-	packet->source	= p->source;	
-	packet->from	= p->from;		
+	packet->source	= p->source;
+	packet->from	= p->from;
 	packet->pNext	= NULL;			// no next
 	packet->received = net_time;	// new time
-	packet->size	= p->size;		
+	packet->size	= p->size;
 	packet->wiresize = p->wiresize;
 	packet->stream	= p->stream;
-			
+
 	Q_memcpy( packet->data, p->data, p->size );
 
 	// free lag packet
-					
+
 	delete[] p->data;
 	delete p;
-			
+
 	return true;
 }
 
@@ -1134,7 +1134,7 @@ typedef CUtlVector< CSplitPacketEntry > vecSplitPacketEntries_t;
 static CUtlVector<vecSplitPacketEntries_t> net_splitpackets;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void NET_DiscardStaleSplitpackets( const int sock )
 {
@@ -1163,8 +1163,8 @@ void NET_DiscardStaleSplitpackets( const int sock )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *from - 
+// Purpose:
+// Input  : *from -
 // Output : CSplitPacketEntry
 //-----------------------------------------------------------------------------
 CSplitPacketEntry *NET_FindOrCreateSplitPacketEntry( const int sock, netadr_t *from )
@@ -1221,10 +1221,10 @@ static char const *DescribeSocket( int sock )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pData - 
-//			size - 
-//			*outSize - 
+// Purpose:
+// Input  : *pData -
+//			size -
+//			*outSize -
 // Output : bool
 //-----------------------------------------------------------------------------
 bool NET_GetLong( const int sock, netpacket_t *packet )
@@ -1232,8 +1232,8 @@ bool NET_GetLong( const int sock, netpacket_t *packet )
 	int				packetNumber, packetCount, sequenceNumber, offset;
 	short			packetID;
 	SPLITPACKET		*pHeader;
-	
-	if ( packet->size < sizeof(SPLITPACKET) ) 
+
+	if ( packet->size < sizeof(SPLITPACKET) )
 	{
 		Msg( "Invalid split packet length %i\n", packet->size );
 		return false;
@@ -1244,18 +1244,18 @@ bool NET_GetLong( const int sock, netpacket_t *packet )
 	sequenceNumber	= LittleLong( pHeader->sequenceNumber );
 	packetID		= LittleShort( (short)pHeader->packetID );
 	// High byte is packet number
-	packetNumber	= ( packetID >> 8 );	
+	packetNumber	= ( packetID >> 8 );
 	// Low byte is number of total packets
-	packetCount		= ( packetID & 0xff );	
+	packetCount		= ( packetID & 0xff );
 
 	int nSplitSizeMinusHeader = (int)LittleShort( (short)pHeader->nSplitSize );
 	if ( nSplitSizeMinusHeader < MIN_SPLIT_SIZE ||
 		 nSplitSizeMinusHeader > MAX_SPLIT_SIZE )
 	{
-		Msg( "NET_GetLong:  Split packet from %s with invalid split size (number %i/ count %i) where size %i is out of valid range [%llu - %llu]\n", 
-			packet->from.ToString(), 
-			packetNumber, 
-			packetCount, 
+		Msg( "NET_GetLong:  Split packet from %s with invalid split size (number %i/ count %i) where size %i is out of valid range [%llu - %llu]\n",
+			packet->from.ToString(),
+			packetNumber,
+			packetCount,
 			nSplitSizeMinusHeader,
 			(uint64)MIN_SPLIT_SIZE,
 			(uint64)MAX_SPLIT_SIZE );
@@ -1265,10 +1265,10 @@ bool NET_GetLong( const int sock, netpacket_t *packet )
 	if ( packetNumber >= MAX_SPLITPACKET_SPLITS ||
 		 packetCount > MAX_SPLITPACKET_SPLITS )
 	{
-		Msg( "NET_GetLong:  Split packet from %s with too many split parts (number %i/ count %i) where %llu is max count allowed\n", 
-			packet->from.ToString(), 
-			packetNumber, 
-			packetCount, 
+		Msg( "NET_GetLong:  Split packet from %s with too many split parts (number %i/ count %i) where %llu is max count allowed\n",
+			packet->from.ToString(),
+			packetNumber,
+			packetCount,
 			(uint64)MAX_SPLITPACKET_SPLITS );
 		return false;
 	}
@@ -1282,7 +1282,7 @@ bool NET_GetLong( const int sock, netpacket_t *packet )
 	Assert( packet->from.CompareAdr( entry->from ) );
 
 	// First packet in split series?
-	if ( entry->netsplit.currentSequence == -1 || 
+	if ( entry->netsplit.currentSequence == -1 ||
 		sequenceNumber != entry->netsplit.currentSequence )
 	{
 		entry->netsplit.currentSequence	= sequenceNumber;
@@ -1292,10 +1292,10 @@ bool NET_GetLong( const int sock, netpacket_t *packet )
 
 	if ( entry->netsplit.nExpectedSplitSize != nSplitSizeMinusHeader )
 	{
-		Msg( "NET_GetLong:  Split packet from %s with inconsistent split size (number %i/ count %i) where size %i not equal to initial size of %i\n", 
-			packet->from.ToString(), 
-			packetNumber, 
-			packetCount, 
+		Msg( "NET_GetLong:  Split packet from %s with inconsistent split size (number %i/ count %i) where size %i not equal to initial size of %i\n",
+			packet->from.ToString(),
+			packetNumber,
+			packetCount,
 			nSplitSizeMinusHeader,
 			entry->netsplit.nExpectedSplitSize
 			);
@@ -1318,13 +1318,13 @@ bool NET_GetLong( const int sock, netpacket_t *packet )
 
 		if ( net_showsplits.GetInt() && net_showsplits.GetInt() != 3 )
 		{
-			Msg( "<-- [%s] Split packet %4i/%4i seq %5i size %4i mtu %4llu from %s\n", 
+			Msg( "<-- [%s] Split packet %4i/%4i seq %5i size %4i mtu %4llu from %s\n",
 				DescribeSocket( sock ),
-				packetNumber + 1, 
-				packetCount, 
+				packetNumber + 1,
+				packetCount,
 				sequenceNumber,
-				size, 
-				(uint64)(nSplitSizeMinusHeader + sizeof( SPLITPACKET )), 
+				size,
+				(uint64)(nSplitSizeMinusHeader + sizeof( SPLITPACKET )),
 				packet->from.ToString() );
 		}
 	}
@@ -1337,7 +1337,7 @@ bool NET_GetLong( const int sock, netpacket_t *packet )
 	// Copy the incoming data to the appropriate place in the buffer
 	offset = (packetNumber * nSplitSizeMinusHeader);
 	memcpy( entry->netsplit.buffer + offset, packet->data + sizeof(SPLITPACKET), size );
-	
+
 	// Have we received all of the pieces to the packet?
 	if ( entry->netsplit.splitCount <= 0 )
 	{
@@ -1366,7 +1366,7 @@ bool NET_GetLoopPacket ( netpacket_t * packet )
 
 	if ( packet->source > NS_SERVER )
 		return false;
-		
+
 	if ( !s_LoopBacks[packet->source].PopItem( &loop ) )
 	{
 		return false;
@@ -1379,12 +1379,12 @@ bool NET_GetLoopPacket ( netpacket_t * packet )
 		return ( NET_LagPacket( false, packet ) );
 	}
 
-	// copy data from loopback buffer to packet 
+	// copy data from loopback buffer to packet
 	packet->from.SetType( NA_LOOPBACK );
 	packet->size = loop->datalen;
 	packet->wiresize = loop->datalen;
 	Q_memcpy ( packet->data, loop->data, packet->size );
-	
+
 	loop->datalen = 0; // buffer is avalibale again
 
 	if ( loop->data != loop->defbuffer )
@@ -1396,7 +1396,7 @@ bool NET_GetLoopPacket ( netpacket_t * packet )
 	delete loop;
 
 	// allow lag system to modify packet
-	return ( NET_LagPacket( true, packet ) );	
+	return ( NET_LagPacket( true, packet ) );
 }
 
 bool NET_ReceiveDatagram ( const int sock, netpacket_t * packet )
@@ -1483,12 +1483,12 @@ bool NET_ReceiveDatagram ( const int sock, netpacket_t * packet )
 		if ( ret < NET_MAX_MESSAGE )
 		{
 			// Check for split message
-			if ( LittleLong( *(int *)packet->data ) == NET_HEADER_FLAG_SPLITPACKET )	
+			if ( LittleLong( *(int *)packet->data ) == NET_HEADER_FLAG_SPLITPACKET )
 			{
 				if ( !NET_GetLong( sock, packet ) )
 					return false;
 			}
-			
+
 			// Next check for compressed message
 			if ( LittleLong( *(int *)packet->data) == NET_HEADER_FLAG_COMPRESSEDPACKET )
 			{
@@ -1510,7 +1510,7 @@ bool NET_ReceiveDatagram ( const int sock, netpacket_t * packet )
 				{
 					if ( net_showudp.GetBool() )
 					{
-						Msg( "UDP:  discarding %d bytes from %s due to decompression error [%d decomp, actual %d] at tm=%f rt=%f\n", ret, packet->from.ToString(), uDecompressedSize, actualSize, 
+						Msg( "UDP:  discarding %d bytes from %s due to decompression error [%d decomp, actual %d] at tm=%f rt=%f\n", ret, packet->from.ToString(), uDecompressedSize, actualSize,
 							(float)net_time, (float)Plat_FloatTime() );
 					}
 					return false;
@@ -1535,7 +1535,7 @@ bool NET_ReceiveDatagram ( const int sock, netpacket_t * packet )
 				fixup.StartWriting( packet->data, NET_MAX_MESSAGE, unPacketBits );
 				fixup.WriteBits( bufVoice.Base(), nVoiceBits );
 
-				// Make sure we have enough bits to read a final net_NOP opcode before compressing 
+				// Make sure we have enough bits to read a final net_NOP opcode before compressing
 				int nRemainingBits = fixup.GetNumBitsWritten() % 8;
 				if ( nRemainingBits > 0 &&  nRemainingBits <= (8-NETMSG_TYPE_BITS) )
 				{
@@ -1634,7 +1634,7 @@ netpacket_t *NET_GetPacket (int sock, byte *scratch )
 	inpacket.from.SetType( NA_IP );
 	inpacket.from.Clear();
 	inpacket.received = net_time;
-	inpacket.source = sock;	
+	inpacket.source = sock;
 	inpacket.data = scratch;
 	inpacket.size = 0;
 	inpacket.wiresize = 0;
@@ -1649,7 +1649,7 @@ netpacket_t *NET_GetPacket (int sock, byte *scratch )
 			return NULL;
 		}
 
-		// then check UDP data 
+		// then check UDP data
 		if ( !NET_ReceiveValidDatagram( sock, &inpacket ) )
 		{
 			// at last check if the lag system has a packet for us
@@ -1659,8 +1659,8 @@ netpacket_t *NET_GetPacket (int sock, byte *scratch )
 			}
 		}
 	}
-	
-	Assert ( inpacket.size ); 
+
+	Assert ( inpacket.size );
 
 #ifdef _DEBUG
 	if ( fakenoise.GetInt() > 0 )
@@ -1668,7 +1668,7 @@ netpacket_t *NET_GetPacket (int sock, byte *scratch )
 		COM_AddNoise( inpacket.data, inpacket.size, fakenoise.GetInt() );
 	}
 #endif
-	
+
 	// prepare bitbuffer for reading packet with new size
 	inpacket.message.StartReading( inpacket.data, inpacket.size );
 
@@ -1703,12 +1703,12 @@ void NET_ProcessPending( void )
 			s_PendingSockets.Remove( i );
 			continue;	// connection closed somehow
 		}
-		
+
 		bf_read		header( headerBuf, sizeof(headerBuf) );
 
 		int cmd = header.ReadByte();
 		unsigned long challengeNr = header.ReadLong();
-		bool bOK = false;	
+		bool bOK = false;
 
 		if ( cmd == STREAM_CMD_ACKN )
 		{
@@ -1726,7 +1726,7 @@ void NET_ProcessPending( void )
 					{
 						chan->m_StreamSocket = psock->newsock;
 						chan->m_StreamActive = true;
-						
+
 						chan->ResetStreaming();
 
 						bOK = true;
@@ -1735,7 +1735,7 @@ void NET_ProcessPending( void )
 						{
 							Msg ("TCP <- %s: connection accepted\n", psock->addr.ToString() );
 						}
-						
+
 						break;
 					}
 					else
@@ -1759,13 +1759,13 @@ void NET_ProcessPending( void )
 void NET_ProcessListen(int sock)
 {
 	netsocket_t * netsock = &net_sockets[sock];
-		
+
 	if ( !netsock->bListening )
 		return;
 
 	sockaddr sa;
 	int nLengthAddr = sizeof(sa);
-		
+
 	int newSocket;
 
 	VCR_NONPLAYBACKFN( accept( netsock->hTCP, &sa, (socklen_t*)&nLengthAddr), newSocket, "accept" );
@@ -1799,7 +1799,7 @@ void NET_ProcessListen(int sock)
 
 	char authcmd = STREAM_CMD_AUTH;
 
-	NET_SendStream( newSocket, &authcmd, 1 , 0 );	
+	NET_SendStream( newSocket, &authcmd, 1 , 0 );
 
 	if ( net_showtcp.GetInt() )
 	{
@@ -1818,7 +1818,7 @@ void NET_ProcessSocket( int sock, IConnectionlessPacketHandler *handler )
 	VPROF_BUDGET( "NET_ProcessSocket", VPROF_BUDGETGROUP_OTHER_NETWORKING );
 
 	netpacket_t * packet;
-	
+
 	Assert ( (sock >= 0) && (sock<net_sockets.Count()) );
 
 	// Scope for the auto_lock
@@ -1855,7 +1855,7 @@ void NET_ProcessSocket( int sock, IConnectionlessPacketHandler *handler )
 		{
 			Filter_SendBan( packet->from );	// tell them we aren't listening...
 			continue;
-		} 
+		}
 
 		// check for connectionless packet (0xffffffff) first
 		if ( LittleLong( *(unsigned int *)packet->data ) == CONNECTIONLESS_HEADER )
@@ -1872,7 +1872,7 @@ void NET_ProcessSocket( int sock, IConnectionlessPacketHandler *handler )
 		}
 
 		// check for packets from connected clients
-		
+
 		CNetChan * netchan = NET_FindNetChannel( sock, packet->from );
 
 		if ( netchan )
@@ -1930,7 +1930,7 @@ int NET_SendToImpl( SOCKET s, const char FAR * buf, int len, const struct sockad
 		// 360 uses VDP protocol to piggyback voice data across the network.
 		// Two-byte VDP Header contains the number of game data bytes
 
-		// NOTE: The header bytes *should* be swapped to network endian, however when communicating 
+		// NOTE: The header bytes *should* be swapped to network endian, however when communicating
 		// with XLSP servers (the only cross-platform communication possible with a secure network)
 		// the server's network stack swaps the header at the receiving end.
 		const int nVDPHeaderBytes = 2;
@@ -1957,34 +1957,34 @@ int NET_SendToImpl( SOCKET s, const char FAR * buf, int len, const struct sockad
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : sock - 
-//			s - 
-//			buf - 
-//			len - 
-//			flags - 
-//			to - 
-//			tolen - 
+// Purpose:
+// Input  : sock -
+//			s -
+//			buf -
+//			len -
+//			flags -
+//			to -
+//			tolen -
 // Output : int
 //-----------------------------------------------------------------------------
 bool CL_IsHL2Demo();
 bool CL_IsPortalDemo();
 int NET_SendTo( bool verbose, SOCKET s, const char FAR * buf, int len, const struct sockaddr FAR * to, int tolen, int iGameDataLength )
-{	
+{
 	int nSend = 0;
 
 	VPROF_BUDGET( "NET_SendTo", VPROF_BUDGETGROUP_OTHER_NETWORKING );
-	
-	// If it's 0.0.0.0:0, then it's a fake player + sv_stressbots and we've plumbed everything all 
+
+	// If it's 0.0.0.0:0, then it's a fake player + sv_stressbots and we've plumbed everything all
 	// the way through here, where we finally bail out.
 	sockaddr_in *pInternetAddr = (sockaddr_in*)to;
 #ifdef _WIN32
 	if ( pInternetAddr->sin_addr.S_un.S_addr == 0
 #else
-	if ( pInternetAddr->sin_addr.s_addr == 0 
+	if ( pInternetAddr->sin_addr.s_addr == 0
 #endif
 		&& pInternetAddr->sin_port == 0 )
-	{		
+	{
 		return len;
 	}
 
@@ -2009,19 +2009,19 @@ int NET_SendTo( bool verbose, SOCKET s, const char FAR * buf, int len, const str
 #endif // _WIN32
 
 		nSend = NET_SendToImpl
-		( 
-			s, 
+		(
+			s,
 			buf,
 			len,
-			to, 
-			tolen, 
-			iGameDataLength 
+			to,
+			tolen,
+			iGameDataLength
 		);
 	}
 
 #if defined( _DEBUG )
-	if ( verbose && 
-		( nSend > 0 ) && 
+	if ( verbose &&
+		( nSend > 0 ) &&
 		( len > MAX_ROUTABLE_PAYLOAD ) )
 	{
 		ConDMsg( "NET_SendTo:  Packet length (%i) > (%i) bytes\n", len, MAX_ROUTABLE_PAYLOAD );
@@ -2036,7 +2036,7 @@ int NET_SendTo( bool verbose, SOCKET s, const char FAR * buf, int len, const str
 #include "filesystem_engine.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *NET_GetDebugFilename( char const *prefix )
@@ -2058,10 +2058,10 @@ char const *NET_GetDebugFilename( char const *prefix )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *filename - 
-//			*buf - 
-//			len - 
+// Purpose:
+// Input  : *filename -
+//			*buf -
+//			len -
 //-----------------------------------------------------------------------------
 void NET_StorePacket( char const *filename, byte const *buf, int len )
 {
@@ -2094,7 +2094,7 @@ struct SendQueueItem_t
 
 struct SendQueue_t
 {
-	SendQueue_t() : 
+	SendQueue_t() :
 		m_nHostFrame( 0 )
 	{
 	}
@@ -2122,7 +2122,7 @@ int NET_QueuePacketForSend( CNetChan *chan, bool verbose, SOCKET s, const char F
 		sq->m_To.Put( (const void *)to, tolen );
 		sq->m_pChannel->IncrementQueuedPackets();
 	}
-	
+
 	return len;
 }
 
@@ -2130,12 +2130,12 @@ void NET_SendQueuedPacket( SendQueueItem_t *sq )
 {
 	// Msg( "Send queued packet %d\n", sq->m_Buffer.TellPut() );
 	NET_SendTo
-	( 
-		false, 
-		sq->m_Socket, 
-		( const char FAR * )sq->m_Buffer.Base(), 
-		sq->m_Buffer.TellPut(), 
-		( const struct sockaddr FAR * )sq->m_To.Base(), 
+	(
+		false,
+		sq->m_Socket,
+		( const char FAR * )sq->m_Buffer.Base(),
+		sq->m_Buffer.TellPut(),
+		( const struct sockaddr FAR * )sq->m_To.Base(),
 		sq->m_To.TellPut() , -1
 	);
 
@@ -2185,14 +2185,14 @@ void NET_SendQueuedPackets()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : sock - 
-//			s - 
-//			buf - 
-//			len - 
-//			flags - 
-//			to - 
-//			tolen - 
+// Purpose:
+// Input  : sock -
+//			s -
+//			buf -
+//			len -
+//			flags -
+//			to -
+//			tolen -
 // Output : int
 //-----------------------------------------------------------------------------
 static volatile int32 s_SplitPacketSequenceNumber[ MAX_SOCKETS ] = {1};
@@ -2226,7 +2226,7 @@ int NET_SendLong( INetChannel *chan, int sock, SOCKET s, const char FAR * buf, i
 	pPacket->netID = LittleLong( NET_HEADER_FLAG_SPLITPACKET );
 	pPacket->sequenceNumber = LittleLong( nSequenceNumber );
 	pPacket->nSplitSize = LittleShort( nSplitSizeMinusHeader );
-	
+
 	int nPacketCount = (sendlen + nSplitSizeMinusHeader - 1) / nSplitSizeMinusHeader;
 
 #if defined( _DEBUG )
@@ -2257,9 +2257,9 @@ int NET_SendLong( INetChannel *chan, int sock, SOCKET s, const char FAR * buf, i
 		int size = min( (int)nSplitSizeMinusHeader, nBytesLeft );
 
 		pPacket->packetID = LittleShort( (short)(( nPacketNumber << 8 ) + nPacketCount) );
-		
+
 		Q_memcpy( packet + sizeof(SPLITPACKET), sendbuf + (nPacketNumber * nSplitSizeMinusHeader), size );
-		
+
 		int ret = 0;
 
 		// Setting net_queued_packet_thread to NET_QUEUED_PACKET_THREAD_DEBUG_VALUE goes into a mode where all packets are queued.. can be used to stress-test it.
@@ -2270,7 +2270,7 @@ int NET_SendLong( INetChannel *chan, int sock, SOCKET s, const char FAR * buf, i
 
 		if ( netchan && (nFragmentsSent >= net_splitrate.GetInt() || net_queued_packet_thread.GetInt() == NET_QUEUED_PACKET_THREAD_DEBUG_VALUE) )
 		{
-			// Don't let this rate get too high (SPLITPACKET_MAX_DATA_BYTES_PER_SECOND == 15000 bytes/sec) 
+			// Don't let this rate get too high (SPLITPACKET_MAX_DATA_BYTES_PER_SECOND == 15000 bytes/sec)
 			// or user's won't be able to receive all of the parts since they'll be too close together.
 			/// XXX(JohnS): (float)cv.GetInt() is just preserving what this was doing before to avoid changing the
 			///             semantics of this convar
@@ -2309,13 +2309,13 @@ int NET_SendLong( INetChannel *chan, int sock, SOCKET s, const char FAR * buf, i
 		if ( net_showsplits.GetInt() && net_showsplits.GetInt() != 2 )
 		{
 			netadr_t adr;
-			
+
 			adr.SetFromSockadr( (struct sockaddr*)to );
 
 			Msg( "--> [%s] Split packet %4i/%4i seq %5i size %4i mtu %4i to %s [ total %4i ]\n",
 				DescribeSocket( sock ),
-				nPacketNumber, 
-				nPacketCount, 
+				nPacketNumber,
+				nPacketCount,
 				nSequenceNumber,
 				size,
 				nMaxRoutableSize,
@@ -2323,16 +2323,16 @@ int NET_SendLong( INetChannel *chan, int sock, SOCKET s, const char FAR * buf, i
 				sendlen );
 		}
 	}
-	
+
 	return nTotalBytesSent;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : sock - 
-//			length - 
-//			*data - 
-//			to - 
+// Purpose:
+// Input  : sock -
+//			length -
+//			*data -
+//			to -
 // Output : void NET_SendPacket
 //-----------------------------------------------------------------------------
 
@@ -2412,7 +2412,7 @@ int NET_SendPacket ( INetChannel *chan, int sock,  const netadr_t &to, const uns
 		unsigned short usVoiceBits = pVoicePayload->GetNumBitsWritten();
 		*( unsigned short * )pVoice = LittleShort( usVoiceBits );
 		pVoice += sizeof( unsigned short );
-		
+
 		byte *pOutput = NULL;
 		if ( net_compressvoice.GetBool() )
 		{
@@ -2434,7 +2434,7 @@ int NET_SendPacket ( INetChannel *chan, int sock,  const netadr_t &to, const uns
 	{
 		VPROF_BUDGET( "NET_SendPacket_Compress", VPROF_BUDGETGROUP_OTHER_NETWORKING );
 		unsigned int nCompressedLength = COM_GetIdealDestinationCompressionBufferSize_Snappy( length );
-	
+
 		memCompressed.EnsureCapacity( nCompressedLength + nVoiceBytes + sizeof( unsigned int ) );
 
 		*(int *)memCompressed.Base() = LittleLong( NET_HEADER_FLAG_COMPRESSEDPACKET );
@@ -2450,7 +2450,7 @@ int NET_SendPacket ( INetChannel *chan, int sock,  const netadr_t &to, const uns
 				byte *pVoice = (byte *)memCompressed.Base() + length;
 				Q_memcpy( pVoice, memCompressedVoice.Base(), nVoiceBytes );
 			}
-			
+
 			iGameDataLength = length;
 
 			length += nVoiceBytes;
@@ -2458,7 +2458,7 @@ int NET_SendPacket ( INetChannel *chan, int sock,  const netadr_t &to, const uns
 			bWroteVoice = true;
 		}
 	}
-	
+
 	if ( !bWroteVoice && pVoicePayload && pVoicePayload->GetNumBitsWritten() > 0 )
 	{
 		memCompressed.EnsureCapacity( length + nVoiceBytes );
@@ -2479,8 +2479,8 @@ int NET_SendPacket ( INetChannel *chan, int sock,  const netadr_t &to, const uns
 		nMaxRoutable = clamp( chan->GetMaxRoutablePayloadSize(), MIN_USER_MAXROUTABLE_SIZE, min( sv_maxroutable.GetInt(), MAX_USER_MAXROUTABLE_SIZE ) );
 	}
 
-	if ( length <= nMaxRoutable && 
-		!(net_queued_packet_thread.GetInt() == NET_QUEUED_PACKET_THREAD_DEBUG_VALUE && chan ) )	
+	if ( length <= nMaxRoutable &&
+		!(net_queued_packet_thread.GetInt() == NET_QUEUED_PACKET_THREAD_DEBUG_VALUE && chan ) )
 	{
 		// simple case, small packet, just send it
 		ret = NET_SendTo( true, net_socket, (const char *)data, length, &addr, sizeof(addr), iGameDataLength );
@@ -2490,11 +2490,11 @@ int NET_SendPacket ( INetChannel *chan, int sock,  const netadr_t &to, const uns
 		// split packet into smaller pieces
 		ret = NET_SendLong( chan, sock, net_socket, (const char *)data, length, &addr, sizeof(addr), nMaxRoutable );
 	}
-	
+
 	if (ret == -1)
 	{
 		NET_GetLastError();
-		
+
 		// wouldblock is silent
 		if ( net_error == WSAEWOULDBLOCK )
 			return 0;
@@ -2509,7 +2509,7 @@ int NET_SendPacket ( INetChannel *chan, int sock,  const netadr_t &to, const uns
 		ConDMsg ("NET_SendPacket Warning: %s : %s\n", NET_ErrorString(net_error), to.ToString() );
 		ret = length;
 	}
-	
+
 
 	return ret;
 }
@@ -2518,7 +2518,7 @@ void NET_OutOfBandPrintf(int sock, const netadr_t &adr, const char *format, ...)
 {
 	va_list		argptr;
 	char		string[MAX_ROUTABLE_PAYLOAD];
-	
+
 	*(unsigned int*)string = CONNECTIONLESS_HEADER;
 
 	va_start (argptr, format);
@@ -2573,7 +2573,7 @@ void NET_FlushAllSockets( void )
 	char data[2048];
 	struct sockaddr	from;
 	int	fromlen = sizeof(from);
-	
+
 	for (int i=0 ; i<net_sockets.Count() ; i++)
 	{
 		if ( net_sockets[i].hUDP )
@@ -2650,7 +2650,7 @@ NET_OpenSockets
 ====================
 */
 void NET_OpenSockets (void)
-{	
+{
 	// Xbox 360 uses VDP protocol to combine encrypted game data with clear voice data
 	const int nProtocol = X360SecureNetwork() ? IPPROTO_VDP : IPPROTO_UDP;
 
@@ -2789,9 +2789,9 @@ void NET_GetLocalAddress (void)
 
 		NET_StringToAdr (buff, &net_local_adr);
 
-		int ipaddr = ( net_local_adr.ip[0] << 24 ) + 
-					 ( net_local_adr.ip[1] << 16 ) + 
-					 ( net_local_adr.ip[2] << 8 ) + 
+		int ipaddr = ( net_local_adr.ip[0] << 24 ) +
+					 ( net_local_adr.ip[1] << 16 ) +
+					 ( net_local_adr.ip[2] << 8 ) +
 					   net_local_adr.ip[3];
 
 		hostip.SetValue( ipaddr );
@@ -2883,14 +2883,14 @@ void NET_LogServerStatus( void )
 
 	const unsigned int size = 128;
 	char msg[size];
-	Q_snprintf( msg, size, "%.0f,%d,%.0f,%.0f,%.0f,%.1f,%.1f,%.1f,%.1f,%.1f\n", 
+	Q_snprintf( msg, size, "%.0f,%d,%.0f,%.0f,%.0f,%.1f,%.1f,%.1f,%.1f,%.1f\n",
 				fCurrentTime,
 				numChannels,
 				fStats[NET_LATENCY],
 				fStats[NET_LOSS],
-				fStats[NET_PACKETS_IN], 
+				fStats[NET_PACKETS_IN],
 				fStats[NET_PACKETS_OUT],
-				fStats[NET_FLOW_IN]/1024.0f, 
+				fStats[NET_FLOW_IN]/1024.0f,
 				fStats[NET_FLOW_OUT]/1024.0f,
 				fStats[NET_CHOKE_IN],
 				fStats[NET_CHOKE_OUT]
@@ -3050,7 +3050,7 @@ void NET_Config ( void )
 	// now reconfiguare
 
 	if ( net_multiplayer )
-	{	
+	{
 		// don't allocate loopback buffers
 		NET_ConfigLoopbackBuffers( false );
 
@@ -3075,8 +3075,8 @@ void NET_Config ( void )
 		NET_ConfigLoopbackBuffers( true );
 	}
 
-	Msg( "Network: IP %s, mode %s, dedicated %s, ports %i SV / %i CL\n", 
-		net_local_adr.ToString(true), net_multiplayer?"MP":"SP", net_dedicated?"Yes":"No", 
+	Msg( "Network: IP %s, mode %s, dedicated %s, ports %i SV / %i CL\n",
+		net_local_adr.ToString(true), net_multiplayer?"MP":"SP", net_dedicated?"Yes":"No",
 		net_sockets[NS_SERVER].nPort, net_sockets[NS_CLIENT].nPort );
 }
 
@@ -3093,7 +3093,7 @@ void NET_SetDedicated ()
 	if ( net_noip )
 	{
 		Msg( "Warning! Dedicated not possible with -noip parameter.\n");
-		return;		
+		return;
 	}
 
 	net_dedicated = true;
@@ -3165,13 +3165,13 @@ void NET_SetMutiplayer(bool multiplayer)
 	if ( net_noip && multiplayer )
 	{
 		Msg( "Warning! Multiplayer mode not available with -noip parameter.\n");
-		return;		
+		return;
 	}
 
 	if ( net_dedicated && !multiplayer )
 	{
 		Msg( "Warning! Singleplayer mode not available on dedicated server.\n");
-		return;		
+		return;
 	}
 
 	// reconfigure if changed
@@ -3189,8 +3189,8 @@ void NET_SetMutiplayer(bool multiplayer)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bIsDedicated - 
+// Purpose:
+// Input  : bIsDedicated -
 //-----------------------------------------------------------------------------
 void NET_Init( bool bIsDedicated )
 {
@@ -3266,7 +3266,7 @@ void NET_Init( bool bIsDedicated )
 
 	net_time = 0.0f;
 
-	
+
 	int hPort = CommandLine()->ParmValue( "-port", -1 );
 	if ( hPort == -1 )
 	{
@@ -3394,7 +3394,7 @@ CON_COMMAND( net_status, "Shows current network status" )
 	AUTO_LOCK( s_NetChannels );
 	int numChannels = s_NetChannels.Count();
 
-	ConMsg("Net status for host %s:\n", 
+	ConMsg("Net status for host %s:\n",
 		net_local_adr.ToString(true) );
 
 	ConMsg("- Config: %s, %s, %i connections\n",
@@ -3409,9 +3409,9 @@ CON_COMMAND( net_status, "Shows current network status" )
 
 	ConMsg("- Ports: Client %u, Server %u, HLTV %u, Matchmaking %u, Systemlink %u%s\n",
 		net_sockets[NS_CLIENT].nPort,
-		net_sockets[NS_SERVER].nPort, 
-		net_sockets[NS_HLTV].nPort, 
-		net_sockets[NS_MATCHMAKING].nPort, 
+		net_sockets[NS_SERVER].nPort,
+		net_sockets[NS_HLTV].nPort,
+		net_sockets[NS_MATCHMAKING].nPort,
 		net_sockets[NS_SYSTEMLINK].nPort,
 		lan_str.Get() );
 
@@ -3443,7 +3443,7 @@ CON_COMMAND( net_status, "Shows current network status" )
 
 		avgPacketsIn += chan->GetAvgPackets(FLOW_INCOMING);
 		avgPacketsOut += chan->GetAvgPackets(FLOW_OUTGOING);
-		
+
 		avgDataIn += chan->GetAvgData(FLOW_INCOMING);
 		avgDataOut += chan->GetAvgData(FLOW_OUTGOING);
 	}

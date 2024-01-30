@@ -104,7 +104,7 @@ CMapClass *CMapCylinder::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapCylinder::CMapCylinder(void)
 {
@@ -119,9 +119,9 @@ CMapCylinder::CMapCylinder(void)
 //			pszEndKey - The key to search in other entities for a match against the value of pszEndValueKey ex 'targetname'.
 //			pszEndValueKey - The key in our parent entity from which to get a search term for the end entity ex 'beamend01'.
 //-----------------------------------------------------------------------------
-CMapCylinder::CMapCylinder(const char *pszStartKey, const char *pszStartValueKey, const char *pszStartRadiusKey, 
+CMapCylinder::CMapCylinder(const char *pszStartKey, const char *pszStartValueKey, const char *pszStartRadiusKey,
 						   const char *pszEndKey, const char *pszEndValueKey, const char *pszEndRadiusKey )
-{	
+{
 	Initialize();
 
 	strcpy(m_szStartKey, pszStartKey);
@@ -202,7 +202,7 @@ void CMapCylinder::BuildCylinder(void)
 void CMapCylinder::CalcBounds(BOOL bFullUpdate)
 {
 	CMapClass::CalcBounds(bFullUpdate);
-	
+
 	//
 	// Don't calculate 2D bounds - we don't occupy any space in 2D. This keeps our
 	// parent entity's bounds from expanding to encompass our endpoints.
@@ -236,8 +236,8 @@ void CMapCylinder::CalcBounds(BOOL bFullUpdate)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bUpdateDependencies - 
+// Purpose:
+// Input  : bUpdateDependencies -
 // Output : CMapClass
 //-----------------------------------------------------------------------------
 CMapClass *CMapCylinder::Copy(bool bUpdateDependencies)
@@ -256,8 +256,8 @@ CMapClass *CMapCylinder::Copy(bool bUpdateDependencies)
 //-----------------------------------------------------------------------------
 // Purpose: Turns 'this' into an exact replica of 'pObject'.
 // Input  : pObject - Object to replicate.
-//			bUpdateDependencies - 
-// Output : 
+//			bUpdateDependencies -
+// Output :
 //-----------------------------------------------------------------------------
 CMapClass *CMapCylinder::CopyFrom(CMapClass *pObject, bool bUpdateDependencies)
 {
@@ -346,9 +346,9 @@ void CMapCylinder::OnNotifyDependent(CMapClass *pObject, Notify_Dependent_t eNot
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : key - 
-//			value - 
+// Purpose:
+// Input  : key -
+//			value -
 //-----------------------------------------------------------------------------
 void CMapCylinder::OnParentKeyChanged( const char* key, const char* value )
 {
@@ -365,7 +365,7 @@ void CMapCylinder::OnParentKeyChanged( const char* key, const char* value )
 			m_pEndEntity = (CMapEntity *)UpdateDependency(m_pEndEntity, pWorld->FindChildByKeyValue(m_szEndKey, value));
 			BuildCylinder();
 		}
-		
+
 		if (m_pStartEntity && stricmp(key, m_szStartRadiusKey) == 0)
 		{
 			const char *pRadiusKey = m_pStartEntity->GetKeyValue( m_szStartRadiusKey );
@@ -470,8 +470,8 @@ void CMapCylinder::Render2D(CRender2D *pRender)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pRender - 
+// Purpose:
+// Input  : pRender -
 //-----------------------------------------------------------------------------
 void CMapCylinder::Render3D(CRender3D *pRender)
 {
@@ -480,23 +480,23 @@ void CMapCylinder::Render3D(CRender3D *pRender)
 
 	pRender->BeginRenderHitTarget(this);
 	pRender->PushRenderMode(RENDER_MODE_WIREFRAME);
-	
+
 	Vector Start,End;
-	
+
 	m_pStartEntity->GetOrigin(Start);
 	m_pEndEntity->GetOrigin(End);
 
 	unsigned char color[3];
 	if (IsSelected())
 	{
-		color[0] = SELECT_EDGE_RED; 
+		color[0] = SELECT_EDGE_RED;
 		color[1] = SELECT_EDGE_GREEN;
 		color[2] = SELECT_EDGE_BLUE;
 	}
 	else
 	{
 		color[0] = r;
-		color[1] = g; 
+		color[1] = g;
 		color[2] = b;
 	}
 
@@ -565,9 +565,9 @@ void CMapCylinder::Render3D(CRender3D *pRender)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : File - 
-//			bRMF - 
+// Purpose:
+// Input  : File -
+//			bRMF -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapCylinder::SerializeRMF(std::fstream &File, BOOL bRMF)
@@ -577,9 +577,9 @@ int CMapCylinder::SerializeRMF(std::fstream &File, BOOL bRMF)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : File - 
-//			bRMF - 
+// Purpose:
+// Input  : File -
+//			bRMF -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapCylinder::SerializeMAP(std::fstream &File, BOOL bRMF)
@@ -589,8 +589,8 @@ int CMapCylinder::SerializeMAP(std::fstream &File, BOOL bRMF)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pTransBox - 
+// Purpose:
+// Input  : pTransBox -
 //-----------------------------------------------------------------------------
 void CMapCylinder::DoTransform(const VMatrix &matrix)
 {
@@ -663,5 +663,3 @@ CMapClass *CMapCylinder::PrepareSelection(SelectMode_t eSelectMode)
 {
 	return NULL;
 }
-
-

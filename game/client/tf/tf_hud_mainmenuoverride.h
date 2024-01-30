@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -48,7 +48,7 @@ enum mm_button_styles
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudMainMenuOverride : public vgui::EditablePanel, public IViewPortPanel, public CGameEventListener, public CLocalSteamSharedObjectListener
 {
@@ -200,7 +200,7 @@ private:
 	vgui::Label						*m_pMOTDTitleLabel;
 	vgui::EditablePanel				*m_pMOTDTitleImageContainer;
 	vgui::ImagePanel				*m_pMOTDTitleImage;
-	
+
 	int								m_hTitleLabelFont;
 	bool							m_bInitMOTD;
 
@@ -228,7 +228,7 @@ private:
 
 	CExButton				*m_pBackToReplaysButton;
 	ImagePanel				*m_pStoreHasNewItemsImage;
-	
+
 	CExButton				*m_pVRModeButton;
 	vgui::Panel				*m_pVRModeBackground;
 

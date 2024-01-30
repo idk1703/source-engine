@@ -114,7 +114,7 @@ private:
 CPointTemplatePrecacher g_PointTemplatePrecacher( "CPointTemplatePrecacher" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PrecachePointTemplates()
 {
@@ -122,7 +122,7 @@ void PrecachePointTemplates()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointTemplate::Spawn( void )
 {
@@ -131,7 +131,7 @@ void CPointTemplate::Spawn( void )
 
 void CPointTemplate::Precache()
 {
-	// We can't call precache right when we instance the template, we need to defer it until after all map entities have 
+	// We can't call precache right when we instance the template, we need to defer it until after all map entities have
 	//  been loaded, so add this template to a list which is cleared after map entity parsing is completed.
 	g_PointTemplatePrecacher.AddToPrecache( this );
 }
@@ -148,7 +148,7 @@ bool CPointTemplate::AllowNameFixup()
 
 //-----------------------------------------------------------------------------
 // Purpose: Called at the start of template initialization for this point_template.
-//			Find all the entities referenced by this point_template, which will 
+//			Find all the entities referenced by this point_template, which will
 //			then be turned into templates by the map-parsing code.
 //-----------------------------------------------------------------------------
 void CPointTemplate::StartBuildingTemplates( void )
@@ -189,7 +189,7 @@ void CPointTemplate::FinishBuildingTemplates( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointTemplate::AddTemplate( CBaseEntity *pEntity, const char *pszMapData, int nLen )
 {
@@ -216,7 +216,7 @@ void CPointTemplate::AddTemplate( CBaseEntity *pEntity, const char *pszMapData, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CPointTemplate::ShouldRemoveTemplateEntities( void )
 {
@@ -224,7 +224,7 @@ bool CPointTemplate::ShouldRemoveTemplateEntities( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CPointTemplate::GetNumTemplates( void )
 {
@@ -232,7 +232,7 @@ int	CPointTemplate::GetNumTemplates( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CPointTemplate::GetTemplateIndexForTemplate( int iTemplate )
 {
@@ -241,7 +241,7 @@ int	CPointTemplate::GetTemplateIndexForTemplate( int iTemplate )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CPointTemplate::GetNumTemplateEntities( void )
 {
@@ -249,7 +249,7 @@ int CPointTemplate::GetNumTemplateEntities( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseEntity	*CPointTemplate::GetTemplateEntity( int iTemplateNumber )
 {
@@ -260,7 +260,7 @@ CBaseEntity	*CPointTemplate::GetTemplateEntity( int iTemplateNumber )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointTemplate::PerformPrecache()
 {
@@ -289,11 +289,11 @@ void CPointTemplate::PerformPrecache()
 		int nStringSize;
 		if ( AllowNameFixup() && Templates_IndexRequiresEntityIOFixup( iTemplateIndex ) )
 		{
-			// This template requires instancing. 
+			// This template requires instancing.
 			// Create a new mapdata block and ask the template system to fill it in with
 			// a unique version (with fixed Entity I/O connections).
 			pMapData = Templates_GetEntityIOFixedMapData( iTemplateIndex );
-			
+
 		}
 		else
 		{
@@ -310,9 +310,9 @@ void CPointTemplate::PerformPrecache()
 
 //-----------------------------------------------------------------------------
 // Purpose: Spawn the entities I contain
-// Input  : &vecOrigin - 
-//			&vecAngles - 
-//			pEntities - 
+// Input  : &vecOrigin -
+//			&vecAngles -
+//			pEntities -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPointTemplate::CreateInstance( const Vector &vecOrigin, const QAngle &vecAngles, CUtlVector<CBaseEntity*> *pEntities )
@@ -341,7 +341,7 @@ bool CPointTemplate::CreateInstance( const Vector &vecOrigin, const QAngle &vecA
 		// Unique versions of these templates need to be created whenever they're instanced.
 		if ( AllowNameFixup() && Templates_IndexRequiresEntityIOFixup( iTemplateIndex ) )
 		{
-			// This template requires instancing. 
+			// This template requires instancing.
 			// Create a new mapdata block and ask the template system to fill it in with
 			// a unique version (with fixed Entity I/O connections).
 			pMapData = Templates_GetEntityIOFixedMapData( iTemplateIndex );
@@ -394,8 +394,8 @@ bool CPointTemplate::CreateInstance( const Vector &vecOrigin, const QAngle &vecA
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CPointTemplate::InputForceSpawn( inputdata_t &inputdata )
 {
@@ -403,7 +403,7 @@ void CPointTemplate::InputForceSpawn( inputdata_t &inputdata )
 	CUtlVector<CBaseEntity*> hNewEntities;
 	if ( !CreateInstance( GetAbsOrigin(), GetAbsAngles(), &hNewEntities ) )
 		return;
-	
+
 	// Fire our output
 	m_pOutputOnSpawned.FireOutput( this, this );
 }

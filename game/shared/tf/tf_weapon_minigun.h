@@ -49,7 +49,7 @@ class CTFMinigun : public CTFWeaponBaseGun
 public:
 
 	DECLARE_CLASS( CTFMinigun, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 // Server specific.
@@ -113,7 +113,7 @@ public:
 #endif
 
 private:
-	
+
 	CTFMinigun( const CTFMinigun & ) {}
 
 	void WindUp( void );
@@ -127,15 +127,15 @@ private:
 	// Barrel spinning
 	virtual CStudioHdr *OnNewModel( void );
 	virtual void		StandardBlendingRules( CStudioHdr *hdr, Vector pos[], Quaternion q[], float currentTime, int boneMask );
-	
+
 	virtual void		UpdateOnRemove( void );
 
 	void				CreateMove( float flInputSampleTime, CUserCmd *pCmd, const QAngle &vecOldViewAngles );
 
 	void				OnDataChanged( DataUpdateType_t type );
-		
+
 	virtual void	ItemPreFrame( void );
-	
+
 	// Firing sound
 	void				WeaponSoundUpdate( void );
 	void				PlayStopFiringSound();

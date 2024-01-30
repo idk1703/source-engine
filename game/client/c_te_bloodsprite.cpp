@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -17,7 +17,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-extern short		g_sModelIndexBloodDrop;	
+extern short		g_sModelIndexBloodDrop;
 extern short		g_sModelIndexBloodSpray;
 
 //-----------------------------------------------------------------------------
@@ -65,7 +65,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBloodSprite::C_TEBloodSprite( void )
 {
@@ -79,7 +79,7 @@ C_TEBloodSprite::C_TEBloodSprite( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBloodSprite::~C_TEBloodSprite( void )
 {
@@ -87,9 +87,9 @@ C_TEBloodSprite::~C_TEBloodSprite( void )
 
 
 //-----------------------------------------------------------------------------
-// Recording 
+// Recording
 //-----------------------------------------------------------------------------
-static inline void RecordBloodSprite( const Vector &start, const Vector &direction, 
+static inline void RecordBloodSprite( const Vector &start, const Vector &direction,
 	int r, int g, int b, int a, int nSprayModelIndex, int nDropModelIndex, int size )
 {
 	if ( !ToolsEnabled() )
@@ -127,21 +127,21 @@ static inline void RecordBloodSprite( const Vector &start, const Vector &directi
 
 
 //-----------------------------------------------------------------------------
-// Recording 
+// Recording
 //-----------------------------------------------------------------------------
 void TE_BloodSprite( IRecipientFilter& filter, float delay,
 	const Vector* org, const Vector *dir, int r, int g, int b, int a, int size )
 {
 	Vector	offset = *org + ( (*dir) * 4.0f );
 
-	tempents->BloodSprite( offset, r, g, b, a, g_sModelIndexBloodSpray, g_sModelIndexBloodDrop, size );	
+	tempents->BloodSprite( offset, r, g, b, a, g_sModelIndexBloodSpray, g_sModelIndexBloodDrop, size );
 	FX_Blood( offset, (Vector &)*dir, r, g, b, a );
 	RecordBloodSprite( *org, *dir, r, g, b, a, g_sModelIndexBloodSpray, g_sModelIndexBloodDrop, size );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEBloodSprite::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -149,7 +149,7 @@ void C_TEBloodSprite::PostDataUpdate( DataUpdateType_t updateType )
 
 	Vector	offset = m_vecOrigin + ( m_vecDirection * 4.0f );
 
-	tempents->BloodSprite( offset, r, g, b, a, m_nSprayModel, m_nDropModel, m_nSize );	
+	tempents->BloodSprite( offset, r, g, b, a, m_nSprayModel, m_nDropModel, m_nSize );
 	FX_Blood( offset, m_vecDirection, r, g, b, a );
 	RecordBloodSprite( m_vecOrigin, m_vecDirection, r, g, b, a, m_nSprayModel, m_nDropModel, m_nSize );
 }

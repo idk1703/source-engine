@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -92,7 +92,7 @@ BEGIN_VS_SHADER( Sky_DX9, "Help for Sky_DX9 shader" )
 			ImageFormat fmt=txtr->GetImageFormat();
 			if (
 				(fmt==IMAGE_FORMAT_RGBA16161616) ||
-				( (fmt==IMAGE_FORMAT_RGBA16161616F) && 
+				( (fmt==IMAGE_FORMAT_RGBA16161616F) &&
 				  (g_pHardwareConfig->GetHDRType()==HDR_TYPE_INTEGER))
 				)
 			{
@@ -123,4 +123,3 @@ BEGIN_VS_SHADER( Sky_DX9, "Help for Sky_DX9 shader" )
 	}
 
 END_SHADER
-

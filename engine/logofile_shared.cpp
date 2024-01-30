@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -183,7 +183,7 @@ bool LogoFile_ReadFile( CRC32_t crcValue, CUtlVector<char> &fileData )
 		Warning( "LogoFile_ReadFile: error reading file '%s'.\n", filename.m_Filename );
 		return false;
 	}
-	
+
 	// Validate it one last time.
 	if ( !LogoFile_IsValidVTFFile( fileData.Base(), fileData.Count() ) )
 	{
@@ -191,6 +191,6 @@ bool LogoFile_ReadFile( CRC32_t crcValue, CUtlVector<char> &fileData )
 		Warning( "LogoFile_ReadFile: !IsValidVTFFile for '%s'.\n", filename.m_Filename );
 		return false;
 	}
-	
+
 	return true;
 }

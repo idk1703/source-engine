@@ -342,7 +342,7 @@ void CClientReplayContext::GetPlaybackTimes( float &flOutTime, float &flOutLengt
 {
 	flOutTime = 0.0f;
 	flOutLength = 0.0f;
-	
+
 	// Get server start record tick
 	const int nServerRecordStartTick = CL_GetRecordingSessionManager()->GetServerStartTickForSession( pReplay->m_hSession );
 

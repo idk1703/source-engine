@@ -97,7 +97,7 @@ private:
 LINK_ENTITY_TO_CLASS( vgui_slideshow_display, CSlideshowDisplay );
 
 //-----------------------------------------------------------------------------
-// Save/load 
+// Save/load
 //-----------------------------------------------------------------------------
 BEGIN_DATADESC( CSlideshowDisplay )
 	DEFINE_FIELD( m_bEnabled, FIELD_BOOLEAN ),
@@ -165,7 +165,7 @@ CSlideshowDisplay::~CSlideshowDisplay()
 //-----------------------------------------------------------------------------
 // Read in worldcraft data...
 //-----------------------------------------------------------------------------
-bool CSlideshowDisplay::KeyValue( const char *szKeyName, const char *szValue ) 
+bool CSlideshowDisplay::KeyValue( const char *szKeyName, const char *szValue )
 {
 	//!! temp hack, until worldcraft is fixed
 	// strip the # tokens from (duplicate) key names
@@ -234,7 +234,7 @@ void CSlideshowDisplay::Spawn( void )
 	BaseClass::Spawn();
 
 	m_bEnabled = false;
-	
+
 	// Clear out selected list
 	m_chCurrentSlideLists.GetForModify( 0 ) = 0;	// Select all slides to begin with
 	for ( int i = 1; i < 16; ++i )
@@ -442,7 +442,7 @@ void CSlideshowDisplay::RestoreControlPanels( void )
 		if ( pScreen )
 		{
 			int nScreen = m_hScreens.AddToTail( );
-			m_hScreens[nScreen].Set( pScreen );	
+			m_hScreens[nScreen].Set( pScreen );
 			pScreen->SetActive( true );
 		}
 
@@ -517,7 +517,7 @@ void CSlideshowDisplay::BuildSlideShowImagesList( void )
 		Q_snprintf( szFileName, sizeof( szFileName ), "vgui/%s/%s", m_szSlideshowDirectory.Get(), szMatFileName );
 		szFileName[ Q_strlen( szFileName ) - 4 ] = '\0';
 
-		PrecacheMaterial( szFileName );	
+		PrecacheMaterial( szFileName );
 
 		// Get material keywords
 		char szFullFileName[_MAX_PATH];

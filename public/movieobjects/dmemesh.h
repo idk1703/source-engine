@@ -68,7 +68,7 @@ public:
 	virtual void GetBoundingSphere( Vector &c, float &r ) const { return GetBoundingSphere( c, r, NULL, NULL ); }
 
 	void GetBoundingBox( Vector &min, Vector &max, CDmeVertexData *pPassedBase /* = NULL */, CDmeSingleIndexedComponent *pPassedSelection /* = NULL */ ) const;
-	
+
 	virtual void GetBoundingBox( Vector &min, Vector &max ) const { return GetBoundingBox( min, max, NULL, NULL ); }
 
 	// accessors
@@ -181,7 +181,7 @@ public:
 	// Computes new normal deltas for all states based on position deltas
 	void ComputeDeltaStateNormals();
 
-	struct DeltaComputation_t 
+	struct DeltaComputation_t
 	{
 		int m_nDeltaIndex;
 		int m_nDimensionality;
@@ -285,7 +285,7 @@ private:
 	// Compute the dimensionality of the delta state (how many inputs affect it)
 	int ComputeDeltaStateDimensionality( int nDeltaIndex );
 
-	// Discovers the atomic controls used by the various delta states 
+	// Discovers the atomic controls used by the various delta states
 	void BuildAtomicControlLists( int nCount, DeltaComputation_t *pInfo, CUtlVector< CUtlVector< int > > &deltaStateUsage );
 
 	// Computes the aggregate position for all vertices after applying a set of delta states
@@ -296,7 +296,7 @@ private:
 
 	// Copies the corrected normal data into a delta state
 	void SetDeltaNormalData( int nDeltaIndex, int nNormalCount, Vector *pNormals );
-	// Renders normals 
+	// Renders normals
 	void RenderNormals( matrix3x4_t *pPoseToWorld, RenderVertexDelta_t *pDelta );
 
 	// Writes triangulated indices for a face set into a meshbuilder
@@ -305,7 +305,7 @@ private:
 	// Initializes the normal material
 	static void InitializeNormalMaterial();
 
-	// Sort function 
+	// Sort function
 	static int DeltaStateLessFunc( const void * lhs, const void * rhs );
 
 	// Computes a list of the delta states ordered by dimensionality
@@ -369,7 +369,7 @@ private:
 		const CDmeSingleIndexedComponent *pMask = NULL );
 
 	friend class CDmxEdit;
-	bool RemoveBaseState( CDmeVertexData *pBase ); 
+	bool RemoveBaseState( CDmeVertexData *pBase );
 	CDmeVertexData *FindOrAddBaseState( CDmeVertexData *pBase );
 
 	// CFalloff functors map [0, 1] values to [0, 1] values
@@ -456,7 +456,7 @@ private:
 
 	// Cached-off map of fields->
 	CUtlVector< FaceSet_t > m_hwFaceSets;
-	
+
 	// Normal rendering materials
 	static bool s_bNormalMaterialInitialized;
 	static CMaterialReference s_NormalMaterial;

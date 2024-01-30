@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -65,7 +65,7 @@ protected:
 	// Generated message map functions
 	//{{AFX_MSG(COP_Model)
 	virtual BOOL OnInitDialog();
-	virtual BOOL OnKillActive(); 
+	virtual BOOL OnKillActive();
 	virtual BOOL OnSetActive();
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar);
 	//}}AFX_MSG

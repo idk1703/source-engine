@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,7 +29,7 @@ void InvestigateNoiseState::AttendCurrentNoise( CCSBot *me )
 	if (me->IsWellPastSafe() && me->HasNotSeenEnemyForLongTime() && me->GetNoisePriority() != PRIORITY_HIGH)
 		me->GetChatter()->HeardNoise( *me->GetNoisePosition() );
 
-	// figure out how to get to the noise		
+	// figure out how to get to the noise
 	me->PrintIfWatched( "Attending to noise...\n" );
 	me->ComputePath( m_checkNoisePosition, FASTEST_ROUTE );
 
@@ -109,7 +109,7 @@ void InvestigateNoiseState::OnUpdate( CCSBot *me )
 	}
 
 
-	// if we can see the noise position and we're close enough to it and looking at it, 
+	// if we can see the noise position and we're close enough to it and looking at it,
 	// we don't need to actually move there (it's checked enough)
 	const float closeRange = 500.0f;
 	if (range < closeRange)

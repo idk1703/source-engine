@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ void CEventPropertiesInterruptDialog::InitControlData( CEventParams *params )
 	BaseClass::InitControlData( params );
 
 	HWND choices1 = GetControl( IDC_EVENTCHOICES );
-	SendMessage( choices1, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( choices1, CB_RESETCONTENT, 0, 0 );
 	SendMessage( choices1, WM_SETTEXT , 0, (LPARAM)params->m_szParameters );
 }
 
@@ -44,7 +44,7 @@ void CEventPropertiesInterruptDialog::InitDialog( HWND hwndDlg )
 	m_hDialog = hwndDlg;
 
 	g_Params.PositionSelf( m_hDialog );
-	
+
 	// Set working title for dialog, etc.
 	SetTitle();
 
@@ -60,9 +60,9 @@ void CEventPropertiesInterruptDialog::InitDialog( HWND hwndDlg )
 static CEventPropertiesInterruptDialog g_EventPropertiesInterruptDialog;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wnd - 
-//			*params - 
+// Purpose:
+// Input  : wnd -
+//			*params -
 // Output : static
 //-----------------------------------------------------------------------------
 
@@ -72,11 +72,11 @@ void CEventPropertiesInterruptDialog::ShowControlsForEventType( CEventParams *pa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
 static BOOL CALLBACK EventPropertiesInterruptDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
@@ -97,14 +97,14 @@ BOOL CEventPropertiesInterruptDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WP
 	{
 	case WM_PAINT:
 		{
-			PAINTSTRUCT ps; 
+			PAINTSTRUCT ps;
 			HDC hdc;
-			
-            hdc = BeginPaint(hwndDlg, &ps); 
-			DrawSpline( hdc, GetControl( IDC_STATIC_SPLINE ), g_Params.m_pEvent );
-            EndPaint(hwndDlg, &ps); 
 
-            return FALSE; 
+	hdc = BeginPaint(hwndDlg, &ps);
+			DrawSpline( hdc, GetControl( IDC_STATIC_SPLINE ), g_Params.m_pEvent );
+	EndPaint(hwndDlg, &ps);
+
+	return FALSE;
 		}
 		break;
 	case WM_VSCROLL:
@@ -117,13 +117,13 @@ BOOL CEventPropertiesInterruptDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WP
 			return FALSE;
 		}
 		break;
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		{
 			InitDialog( hwndDlg );
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -153,7 +153,7 @@ BOOL CEventPropertiesInterruptDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WP
 				EndDialog( hwndDlg, 1 );
 			}
 			break;
-        case IDCANCEL:
+	case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		case IDC_CHECK_ENDTIME:
@@ -197,16 +197,16 @@ BOOL CEventPropertiesInterruptDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WP
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int EventProperties_Interrupt( CEventParams *params )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_EVENTPROPERTIES_INTERRUPT ),
 		(HWND)g_MDLViewer->getHandle(),
 		(DLGPROC)EventPropertiesInterruptDialogProc );

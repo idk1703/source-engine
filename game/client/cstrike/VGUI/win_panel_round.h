@@ -30,7 +30,7 @@ private:
 
 public:
 	WinPanel_Round(const char *pElementName);
-    ~WinPanel_Round();
+	~WinPanel_Round();
 
 	virtual void Reset();
 	virtual void Init();

@@ -136,7 +136,7 @@ public:
 
 	// Do we have skinning data?
 	bool HasSkinningData() const;
-	
+
 	// Do we need tangent data? (Utility method for applications to know if they should call ComputeDefaultTangentData)
 	bool NeedsTangentData() const;
 
@@ -208,7 +208,7 @@ inline FieldIndex_t CDmeVertexDataBase::CreateField( const char *pFieldName )
 // Returns a standard field index
 //-----------------------------------------------------------------------------
 inline FieldIndex_t CDmeVertexDataBase::FindFieldIndex( StandardFields_t nFieldIndex ) const
-{	
+{
 	return m_pStandardFieldIndex[ nFieldIndex ];
 }
 
@@ -218,7 +218,7 @@ inline FieldIndex_t CDmeVertexDataBase::FindFieldIndex( StandardFields_t nFieldI
 //-----------------------------------------------------------------------------
 inline int CDmeVertexDataBase::VertexCount() const
 {
-	return m_nVertexCount; 
+	return m_nVertexCount;
 }
 
 

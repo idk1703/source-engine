@@ -59,5 +59,3 @@ void CTrainingAnnotation::Hide()
 		gameeventmanager->FireEventClientSide( pEvent );
 	}
 }
-
-

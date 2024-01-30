@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -46,7 +46,7 @@ enum MinimapPosType_t
 
 
 //-----------------------------------------------------------------------------
-// Purpose: On the left side of the screen is an overview map and a highlight 
+// Purpose: On the left side of the screen is an overview map and a highlight
 // rectangle showing the current viewport
 //
 // NOTE: The minimap panel is architected in such a way as to view some global
@@ -63,7 +63,7 @@ public:
 		GROWING,
 		SHRINKING
 	};
-	
+
 							CMinimapPanel( const char *pElementName );
 	virtual					~CMinimapPanel( void );
 
@@ -211,7 +211,7 @@ enum
 {
 	MINIMAP_GROUND_LINES = 0,
 	MINIMAP_RESOURCE_ZONES,
-	MINIMAP_OBJECTS, 
+	MINIMAP_OBJECTS,
 	MINIMAP_SPY_CAMERAS,
 	MINIMAP_COLLECTORS,
 	MINIMAP_MAP_GOALS,

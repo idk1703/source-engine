@@ -33,7 +33,7 @@ PRECACHE_REGISTER(obj_powerpack);
 ConVar	obj_powerpack_health( "obj_powerpack_health","100", FCVAR_NONE, "Human powerpack health" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectPowerPack::CObjectPowerPack()
 {
@@ -41,7 +41,7 @@ CObjectPowerPack::CObjectPowerPack()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectPowerPack::Spawn( void )
 {
@@ -70,7 +70,7 @@ void CObjectPowerPack::GetControlPanelInfo( int nPanelIndex, const char *&pPanel
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectPowerPack::FinishedBuilding( void )
 {
@@ -99,7 +99,7 @@ void CObjectPowerPack::FinishedBuilding( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectPowerPack::Precache()
 {
@@ -111,7 +111,7 @@ void CObjectPowerPack::Precache()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectPowerPack::DestroyObject( void )
 {
@@ -188,7 +188,7 @@ void CObjectPowerPack::PowerNearbyObjects( CBaseObject *pObjectToTarget, bool bP
 	}
 	else
 	{
-		// Find nearby objects 
+		// Find nearby objects
 		for ( int i = 0; i < GetTFTeam()->GetNumObjects(); i++ )
 		{
 			CBaseObject *pObject = GetTFTeam()->GetObject(i);
@@ -244,7 +244,7 @@ void CObjectPowerPack::PowerObject( CBaseObject *pObject, bool bPlacing )
 	int nAttachmentIndex = pObject->LookupAttachment("powerpoint");
 	if (nAttachmentIndex < 0)
 		nAttachmentIndex = 1;
-							   
+
 	// FIXME: Cache these off
 	char sAttachment[32];
 	Q_snprintf( sAttachment,sizeof(sAttachment), "cablepoint%d", iPoint );
@@ -347,8 +347,8 @@ bool CObjectPowerPack::IsWithinPowerRange( CBaseObject *pObject )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : act - 
+// Purpose:
+// Input  : act -
 //-----------------------------------------------------------------------------
 void CObjectPowerPack::OnActivityChanged( Activity act )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -140,11 +140,11 @@ private:
 	bool	FinishAttachAdditionalModel( const model_t *pModel );
 	void	RemoveAdditionalModels( void );
 
-	bool	UpdateCosmeticParticles( 
-		IMatRenderContext				*pRenderContext, 
-		CStudioHdr						*pStudioHdr, 
-		MDLHandle_t						mdlHandle, 
-		matrix3x4_t						*pWorldMatrix, 
+	bool	UpdateCosmeticParticles(
+		IMatRenderContext				*pRenderContext,
+		CStudioHdr						*pStudioHdr,
+		MDLHandle_t						mdlHandle,
+		matrix3x4_t						*pWorldMatrix,
 		modelpanel_particle_system_t	iSystem,
 		CEconItemView					*pEconItem
 	);

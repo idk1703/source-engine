@@ -30,24 +30,24 @@ CF_EXPORT
 Boolean CFBooleanGetValue(CFBooleanRef boolean);
 
 typedef enum {
-    /* Types from MacTypes.h */
-    kCFNumberSInt8Type = 1,
-    kCFNumberSInt16Type = 2,
-    kCFNumberSInt32Type = 3,
-    kCFNumberSInt64Type = 4,
-    kCFNumberFloat32Type = 5,
-    kCFNumberFloat64Type = 6,	/* 64-bit IEEE 754 */
-    /* Basic C types */
-    kCFNumberCharType = 7,
-    kCFNumberShortType = 8,
-    kCFNumberIntType = 9,
-    kCFNumberLongType = 10,
-    kCFNumberLongLongType = 11,
-    kCFNumberFloatType = 12,
-    kCFNumberDoubleType = 13,
-    /* Other */
-    kCFNumberCFIndexType = 14,
-    kCFNumberMaxType = 14
+	/* Types from MacTypes.h */
+	kCFNumberSInt8Type = 1,
+	kCFNumberSInt16Type = 2,
+	kCFNumberSInt32Type = 3,
+	kCFNumberSInt64Type = 4,
+	kCFNumberFloat32Type = 5,
+	kCFNumberFloat64Type = 6,	/* 64-bit IEEE 754 */
+	/* Basic C types */
+	kCFNumberCharType = 7,
+	kCFNumberShortType = 8,
+	kCFNumberIntType = 9,
+	kCFNumberLongType = 10,
+	kCFNumberLongLongType = 11,
+	kCFNumberFloatType = 12,
+	kCFNumberDoubleType = 13,
+	/* Other */
+	kCFNumberCFIndexType = 14,
+	kCFNumberMaxType = 14
 } CFNumberType;
 
 typedef const struct __CFNumber * CFNumberRef;
@@ -132,4 +132,3 @@ CFComparisonResult CFNumberCompare(CFNumberRef number, CFNumberRef otherNumber, 
 #endif
 
 #endif /* ! __COREFOUNDATION_CFNUMBER__ */
-

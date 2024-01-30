@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -23,5 +23,3 @@ bool IsReflectiveGlassInView( const CViewSetup& view, cplane_t &plane );
 
 
 #endif // C_FUNC_REFLECTIVE_GLASS
-
-

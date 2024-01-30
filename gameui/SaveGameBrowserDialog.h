@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -33,12 +33,12 @@ class CGameSavePanel : public vgui::EditablePanel
 	DECLARE_CLASS_SIMPLE( CGameSavePanel, vgui::EditablePanel );
 
 public:
-	
+
 					CGameSavePanel( CSaveGameBrowserDialog *parent, SaveGameDescription_t *pSaveDesc, bool bCommandPanel = false );
 					~CGameSavePanel( void );
 
 	virtual	void	ApplySchemeSettings( IScheme *pScheme );
-	
+
 	bool IsAutoSaveType( void ) { return ( Q_stristr( m_SaveInfo.szType, "autosave" ) != 0 ); }
 
 	const SaveGameDescription_t *GetSaveInfo( void ) { return ( const SaveGameDescription_t * ) &m_SaveInfo; }
@@ -105,7 +105,7 @@ public:
 	virtual void	OnKeyCodeReleased( vgui::KeyCode code );
 	virtual void	OnDoneScanningSaveGames( void ) {}
 	virtual void	RefreshSaveGames( void );
-	
+
 	unsigned int	GetNumPanels( void ) { return m_SavePanels.Count(); }
 	bool			HasActivePanels( void ) { return ( m_SavePanels.Count() != 0 ); }
 	CGameSavePanel	*GetActivePanel( void );
@@ -119,7 +119,7 @@ public:
 	void			SetSelectedSaveIndex( int index );
 	void			SetSelectedSave( const char *chapter );
 	void			AddPanel( CGameSavePanel *pPanel ) { m_SavePanels.AddToHead( pPanel ); }
-	
+
 	void			RemoveActivePanel( void );
 	void			AnimateInsertNewPanel( const SaveGameDescription_t *pDesc );
 	void			AnimateOverwriteActivePanel( const SaveGameDescription_t *pNewDesc );
@@ -143,7 +143,7 @@ protected:
 	bool				ParseSaveData( char const *pszFileName, char const *pszShortName, SaveGameDescription_t *save );
 
 private:
-	
+
 	CUtlVector<CGameSavePanel *>	m_SavePanels;
 	int								m_iSelectedSave;
 	float							m_ScrollSpeedSlow;
@@ -151,8 +151,8 @@ private:
 	int								m_nDeletedPanel;	// Panel being subtracted
 	int								m_nAddedPanel;		// Panel being added
 	SaveGameDescription_t			m_NewSaveGameDesc;	// Held for panel animations
-	uint							m_nUsedStorageSpace;	// Amount of disk space used by save games 
-	
+	uint							m_nUsedStorageSpace;	// Amount of disk space used by save games
+
 	vgui::Panel			*m_pCenterBg;
 	CFooterPanel		*m_pFooter;
 
@@ -169,7 +169,7 @@ private:
 	void	UpdateMenuComponents( EScrollDirection dir );
 	void	ScanSavedGames( bool bIgnoreAutosave );
 	void	LayoutPanels( void );
-	
+
 	// "No Save Games" label
 	void	ShowNoSaveGameUI( void );
 	void	HideNoSaveGameUI( void );

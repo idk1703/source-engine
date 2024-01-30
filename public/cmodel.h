@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -122,6 +122,5 @@ private:
 
 #endif // CMODEL_H
 
-	
-#include "gametrace.h"
 
+#include "gametrace.h"

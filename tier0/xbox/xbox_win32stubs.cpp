@@ -36,7 +36,7 @@ struct xWnd_t
 static xWndClass_t*	g_pWndClasses;
 static xWnd_t*		g_pWnds;
 static HWND			g_focusWindow;
- 
+
 inline bool IsWndValid( HWND hWnd )
 {
 	if ( !hWnd || ((xWnd_t*)hWnd)->nMagic != HWND_MAGIC )
@@ -435,7 +435,7 @@ int GetDeviceCaps(HDC hdc, int nIndex)
 		case VERTRES:
 			return GetSystemMetrics( SM_CYSCREEN );
 		case VREFRESH:
-			return 60;  
+			return 60;
 	}
 
 	Assert( 0 );
@@ -465,7 +465,7 @@ BOOL SetWindowPos( HWND hWnd, HWND hWndInsertAfter, int x, int y, int cx, int cy
 }
 
 int XBX_unlink( const char* filename )
-{	
+{
 	bool bSuccess = DeleteFile( filename ) != 0;
 	if ( !bSuccess )
 	{
@@ -491,7 +491,7 @@ int XBX_mkdir( const char *pszDir )
 	strcpy( dirPath, pszDir );
 	ptr = strchr( dirPath, '\\' );
 	while ( ptr )
-	{		
+	{
 		ptr = strchr( ptr+1, '\\' );
 		if ( ptr )
 		{

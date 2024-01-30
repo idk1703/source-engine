@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -18,9 +18,9 @@ extern void v_strncpy(char *dest, const char *src, int bufsize);
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CLogMsgHandlerDetails::CLogMsgHandlerDetails(IResponse *baseobject, HANDLERTYPE type, void *typeinfo ) 
+CLogMsgHandlerDetails::CLogMsgHandlerDetails(IResponse *baseobject, HANDLERTYPE type, void *typeinfo )
 	: CMsgHandler( type, typeinfo )
-{ 
+{
 	m_pLogList = baseobject;
 	m_bNewMessage=false;
 }
@@ -41,7 +41,7 @@ bool CLogMsgHandlerDetails::Process( netadr_t *from, CMsgBuffer *msg )
 	message[strlen(message)-1]='\n';
 	message[strlen(message)]='\0';
 
-	// now tell the UI we have this new message	
+	// now tell the UI we have this new message
 	m_pLogList->ServerResponded();
 
 	return true;

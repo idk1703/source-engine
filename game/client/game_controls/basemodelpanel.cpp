@@ -40,7 +40,7 @@ using namespace vgui;
 DECLARE_BUILD_FACTORY( CModelPanel );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CModelPanel::CModelPanel( vgui::Panel *pParent, const char *pName ) : vgui::EditablePanel( pParent, pName )
 {
@@ -57,7 +57,7 @@ CModelPanel::CModelPanel( vgui::Panel *pParent, const char *pName ) : vgui::Edit
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CModelPanel::~CModelPanel()
 {
@@ -72,7 +72,7 @@ CModelPanel::~CModelPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -93,7 +93,7 @@ void CModelPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelPanel::OnCommand( const char *command )
 {
@@ -108,7 +108,7 @@ void CModelPanel::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelPanel::ParseModelInfo( KeyValues *inResourceData )
 {
@@ -158,7 +158,7 @@ void CModelPanel::ParseModelInfo( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelPanel::OnAddAnimation( KeyValues *pData )
 {
@@ -191,10 +191,10 @@ void CModelPanel::OnAddAnimation( KeyValues *pData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelPanel::FireGameEvent( IGameEvent * event )
-{	
+{
 	const char *type = event->GetName();
 
 	if ( Q_strcmp( type, "game_newmap" ) == 0 )
@@ -205,7 +205,7 @@ void CModelPanel::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelPanel::SetDefaultAnimation( const char *pszName )
 {
@@ -263,7 +263,7 @@ void CModelPanel::SwapModel( const char *pszName, const char *pszAttached )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelPanel::DeleteVCDData( void )
 {
@@ -277,7 +277,7 @@ void CModelPanel::DeleteVCDData( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelPanel::SetupVCD( void )
 {
@@ -306,7 +306,7 @@ void CModelPanel::SetupVCD( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelPanel::ClearAttachedModelInfos( void )
 {
@@ -317,7 +317,7 @@ void CModelPanel::ClearAttachedModelInfos( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelPanel::DeleteModelData( void )
 {
@@ -339,7 +339,7 @@ void CModelPanel::DeleteModelData( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CModelPanel::GetModelName( void )
 {
@@ -382,12 +382,12 @@ void CModelPanel::SetBodyGroup( const char* pszBodyGroupName, int nGroup )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelPanel::SetupModel( void )
 {
 	if ( !m_pModelInfo )
-		return; 
+		return;
 
 	MDLCACHE_CRITICAL_SECTION();
 
@@ -410,7 +410,7 @@ void CModelPanel::SetupModel( void )
 		pEnt->Remove();
 		return;
 	}
-	
+
 	// setup the handle
 	m_hModel = pEnt;
 
@@ -452,7 +452,7 @@ void CModelPanel::SetupModel( void )
 				{
 					const char *pName = pData->GetName();
 					float flValue = pData->GetFloat();
-		
+
 					pEnt->SetPoseParameter( pName, flValue );
 				}
 			}
@@ -470,7 +470,7 @@ void CModelPanel::SetupModel( void )
 		if ( pTemp )
 		{
 			if ( pTemp->InitializeAsClientEntity( pInfo->m_pszModelName, RENDER_GROUP_OPAQUE_ENTITY ) == false )
-			{	
+			{
 				// we failed to initialize this model so just skip it
 				pTemp->Remove();
 				continue;
@@ -494,7 +494,7 @@ void CModelPanel::SetupModel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelPanel::InitCubeMaps()
 {
@@ -537,7 +537,7 @@ void CModelPanel::UpdateModel()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelPanel::Paint()
 {
@@ -576,7 +576,7 @@ void CModelPanel::Paint()
 	{
 		// need to know if the ratio is not 4/3
 		// HACK! HACK! to get our player models to appear the way they do in 4/3 if we're using other aspect ratios
-		if ( flWidthRatio > 1.05f ) 
+		if ( flWidthRatio > 1.05f )
 		{
 			vecExtraModelOffset.Init( -60, 0, 0 );
 		}
@@ -596,14 +596,14 @@ void CModelPanel::Paint()
 	}
 
 	CMatRenderContextPtr pRenderContext( materials );
-	
+
 	// figure out what our viewport is right now
 	int viewportX, viewportY, viewportWidth, viewportHeight;
 	pRenderContext->GetViewport( viewportX, viewportY, viewportWidth, viewportHeight );
 
 	// Now draw it.
 	CViewSetup view;
-	view.x = x + m_pModelInfo->m_vecViewportOffset.x + viewportX; // we actually want to offset by the 
+	view.x = x + m_pModelInfo->m_vecViewportOffset.x + viewportX; // we actually want to offset by the
 	view.y = y + m_pModelInfo->m_vecViewportOffset.y + viewportY; // viewport origin here because Push3DView expects global coords below
 	view.width = w;
 	view.height = h;
@@ -618,7 +618,7 @@ void CModelPanel::Paint()
 	view.zNear = VIEW_NEARZ;
 	view.zFar = 1000;
 
-	
+
 
 	// Not supported by queued material system - doesn't appear to be necessary
 //	ITexture *pLocalCube = pRenderContext->GetLocalCubemap();
@@ -635,7 +635,7 @@ void CModelPanel::Paint()
 	pRenderContext->SetLightingOrigin( vec3_origin );
 	pRenderContext->SetAmbientLight( 0.4, 0.4, 0.4 );
 
-	static Vector white[6] = 
+	static Vector white[6] =
 	{
 		Vector( 0.4, 0.4, 0.4 ),
 		Vector( 0.4, 0.4, 0.4 ),
@@ -674,7 +674,7 @@ void CModelPanel::Paint()
 	}
 
 	modelrender->SuppressEngineLighting( false );
-	
+
 	render->PopView( dummyFrustum );
 
 	pRenderContext->BindLocalCubemap( NULL );
@@ -683,15 +683,15 @@ void CModelPanel::Paint()
 	vgui::surface()->DrawSetColor( Color(0,0,0,255) );
 	vgui::surface()->DrawOutlinedRect( 0,0, GetWide(), GetTall() );
 	*/
-	
+
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CModelPanel::FindAnimByName( const char *pszName )
 {
-	// first try to find the sequence using pszName as the friendly name 
+	// first try to find the sequence using pszName as the friendly name
 	for ( int iIndex = 0 ; iIndex <  m_pModelInfo->m_Animations.Count() ; iIndex++ )
 	{
 		CModelPanelModelAnimation *pAnimation = m_pModelInfo->m_Animations[ iIndex ];
@@ -703,7 +703,7 @@ int CModelPanel::FindAnimByName( const char *pszName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CModelPanel::SetSequence( const char *pszName )
 {
@@ -742,7 +742,7 @@ bool CModelPanel::SetSequence( const char *pszName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelPanel::SetSkin( int nSkin )
 {
@@ -754,7 +754,7 @@ void CModelPanel::SetSkin( int nSkin )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CModelPanel::OnSetAnimation( KeyValues *data )
 {
@@ -804,20 +804,20 @@ void CModelPanel::CalculateFrameDistanceInternal( const model_t *pModel )
 
 	// Get the bounds points and transform them by the desired model panel rotation.
 	Vector aBoundsPoints[8];
- 	aBoundsPoints[0].Init( vecMax.x, vecMax.y, vecMax.z ); 
-	aBoundsPoints[1].Init( vecMin.x, vecMax.y, vecMax.z ); 
-	aBoundsPoints[2].Init( vecMax.x, vecMin.y, vecMax.z ); 
-	aBoundsPoints[3].Init( vecMin.x, vecMin.y, vecMax.z ); 
-	aBoundsPoints[4].Init( vecMax.x, vecMax.y, vecMin.z ); 
-	aBoundsPoints[5].Init( vecMin.x, vecMax.y, vecMin.z ); 
-	aBoundsPoints[6].Init( vecMax.x, vecMin.y, vecMin.z ); 
-	aBoundsPoints[7].Init( vecMin.x, vecMin.y, vecMin.z ); 
+ 	aBoundsPoints[0].Init( vecMax.x, vecMax.y, vecMax.z );
+	aBoundsPoints[1].Init( vecMin.x, vecMax.y, vecMax.z );
+	aBoundsPoints[2].Init( vecMax.x, vecMin.y, vecMax.z );
+	aBoundsPoints[3].Init( vecMin.x, vecMin.y, vecMax.z );
+	aBoundsPoints[4].Init( vecMax.x, vecMax.y, vecMin.z );
+	aBoundsPoints[5].Init( vecMin.x, vecMax.y, vecMin.z );
+	aBoundsPoints[6].Init( vecMax.x, vecMin.y, vecMin.z );
+	aBoundsPoints[7].Init( vecMin.x, vecMin.y, vecMin.z );
 
 	// Translated center point (offset from camera center).
 	Vector vecTranslateCenter = -vecCenter;
 
 	// Build the rotation matrix.
-	QAngle angPanelAngles( m_pModelInfo->m_vecAbsAngles.x, m_pModelInfo->m_vecAbsAngles.y, m_pModelInfo->m_vecAbsAngles.z ); 
+	QAngle angPanelAngles( m_pModelInfo->m_vecAbsAngles.x, m_pModelInfo->m_vecAbsAngles.y, m_pModelInfo->m_vecAbsAngles.z );
 	matrix3x4_t matRotation;
 	AngleMatrix( angPanelAngles, matRotation );
 
@@ -920,7 +920,7 @@ void CModelPanel::CalculateFrameDistance( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Moves the camera forward/backward along the current view angle to 
+// Purpose: Moves the camera forward/backward along the current view angle to
 //			frame the model on the screen.
 //-----------------------------------------------------------------------------
 void CModelPanel::ZoomToFrameDistance( void )
@@ -944,4 +944,3 @@ void CModelPanel::ZoomToFrameDistance( void )
 	m_pModelInfo->m_vecOriginOffset.y = -vecModelCenter.y;
 	m_pModelInfo->m_vecOriginOffset.z = -vecModelCenter.z;
 }
-

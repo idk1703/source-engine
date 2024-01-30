@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@
 #define	EXPLOSION_FORCE_MIN	2
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_BaseExplosionEffect
 {
@@ -71,7 +71,7 @@ extern C_BaseExplosionEffect &BaseExplosionEffect( void );
 class CExplosionOverlay : public CWarpOverlay
 {
 public:
-	
+
 	virtual bool Update( void );
 
 public:

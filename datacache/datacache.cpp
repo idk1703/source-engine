@@ -56,12 +56,12 @@ static int g_iDontForceFlush;
 DEFINE_FIXEDSIZE_ALLOCATOR_MT( DataCacheItem_t, 4096/sizeof(DataCacheItem_t), CUtlMemoryPool::GROW_SLOW );
 
 void DataCacheItem_t::DestroyResource()
-{ 
+{
 	if ( pSection )
 	{
 		pSection->DiscardItemData( this, DC_AGE_DISCARD );
 	}
-	delete this; 
+	delete this;
 }
 
 
@@ -70,7 +70,7 @@ void DataCacheItem_t::DestroyResource()
 //-----------------------------------------------------------------------------
 
 CDataCacheSection::CDataCacheSection( CDataCache *pSharedCache, IDataCacheClient *pClient, const char *pszName )
-  :	m_pClient( pClient ),
+	:	m_pClient( pClient ),
 	m_LRU( pSharedCache->m_LRU ),
 	m_mutex( pSharedCache->m_mutex ),
 	m_pSharedCache( pSharedCache ),
@@ -144,7 +144,7 @@ void CDataCacheSection::GetStatus( DataCacheStatus_t *pStatus, DataCacheLimits_t
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CDataCacheSection::EnsureCapacity( unsigned nBytes, unsigned nItems )
 {
@@ -196,7 +196,7 @@ bool CDataCacheSection::AddEx( DataCacheClientID_t clientId, const void *pItemDa
 
 	EnsureCapacity( size );
 
-	DataCacheItemData_t itemData = 
+	DataCacheItemData_t itemData =
 	{
 		pItemData,
 		size,
@@ -330,7 +330,7 @@ DataCacheRemoveResult_t CDataCacheSection::Remove( DataCacheHandle_t handle, con
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 bool CDataCacheSection::IsPresent( DataCacheHandle_t handle )
 {
@@ -465,7 +465,7 @@ void *CDataCacheSection::GetNoTouch( DataCacheHandle_t handle, bool bFrameLock )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: "Frame locking" (not game frame). A crude way to manage locks over relatively 
+// Purpose: "Frame locking" (not game frame). A crude way to manage locks over relatively
 //			short periods. Does not affect normal locks/unlocks
 //-----------------------------------------------------------------------------
 int CDataCacheSection::BeginFrameLocking()
@@ -491,7 +491,7 @@ int CDataCacheSection::BeginFrameLocking()
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 bool CDataCacheSection::IsFrameLocking()
 {
@@ -501,7 +501,7 @@ bool CDataCacheSection::IsFrameLocking()
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void *CDataCacheSection::FrameLock( DataCacheHandle_t handle )
 {
@@ -536,7 +536,7 @@ void *CDataCacheSection::FrameLock( DataCacheHandle_t handle )
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 int CDataCacheSection::EndFrameLocking()
 {
@@ -570,7 +570,7 @@ int CDataCacheSection::EndFrameLocking()
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 int *CDataCacheSection::GetFrameUnlockCounterPtr()
 {
@@ -588,7 +588,7 @@ int CDataCacheSection::GetLockCount( DataCacheHandle_t handle )
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 int CDataCacheSection::BreakLock( DataCacheHandle_t handle )
 {
@@ -607,7 +607,7 @@ bool CDataCacheSection::Touch( DataCacheHandle_t handle )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Explicitly mark an item as "least recently used". 
+// Purpose: Explicitly mark an item as "least recently used".
 //-----------------------------------------------------------------------------
 bool CDataCacheSection::Age( DataCacheHandle_t handle )
 {
@@ -737,8 +737,8 @@ void CDataCacheSection::OutputReport( DataCacheReportType_t reportType )
 
 //-----------------------------------------------------------------------------
 // Purpose: Updates the size of a specific item
-// Input  : handle - 
-//			newSize - 
+// Input  : handle -
+//			newSize -
 //-----------------------------------------------------------------------------
 void CDataCacheSection::UpdateSize( DataCacheHandle_t handle, unsigned int nNewSize )
 {
@@ -750,7 +750,7 @@ void CDataCacheSection::UpdateSize( DataCacheHandle_t handle, unsigned int nNewS
 	}
 
 	unsigned oldSize = pItem->size;
-	
+
 	if ( oldSize != nNewSize )
 	{
 		// Update the size
@@ -762,7 +762,7 @@ void CDataCacheSection::UpdateSize( DataCacheHandle_t handle, unsigned int nNewS
 		{
 			m_pSharedCache->EnsureCapacity( bytesAdded );
 		}
-		
+
 		m_LRU.NotifySizeChanged( (memhandle_t)handle, oldSize, nNewSize );
 		NoteSizeChanged( oldSize, nNewSize );
 	}
@@ -771,7 +771,7 @@ void CDataCacheSection::UpdateSize( DataCacheHandle_t handle, unsigned int nNewS
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 memhandle_t CDataCacheSection::GetFirstUnlockedItem()
 {
@@ -928,17 +928,17 @@ bool CDataCacheSection::DiscardItemData( DataCacheItem_t *pItem, DataCacheNotifi
 //-----------------------------------------------------------------------------
 // CDataCacheSectionFastFind
 //-----------------------------------------------------------------------------
-DataCacheHandle_t CDataCacheSectionFastFind::DoFind( DataCacheClientID_t clientId ) 
-{ 
+DataCacheHandle_t CDataCacheSectionFastFind::DoFind( DataCacheClientID_t clientId )
+{
 	AUTO_LOCK( m_mutex );
 	UtlHashFastHandle_t hHash = m_Handles.Find( Hash4( &clientId ) );
 	if( hHash != m_Handles.InvalidHandle() )
 		return m_Handles[hHash];
-	return DC_INVALID_HANDLE; 
+	return DC_INVALID_HANDLE;
 }
 
 
-void CDataCacheSectionFastFind::OnAdd( DataCacheClientID_t clientId, DataCacheHandle_t hCacheItem ) 
+void CDataCacheSectionFastFind::OnAdd( DataCacheClientID_t clientId, DataCacheHandle_t hCacheItem )
 {
 	AUTO_LOCK( m_mutex );
 	Assert( m_Handles.Find( Hash4( &clientId ) ) == m_Handles.InvalidHandle());
@@ -946,7 +946,7 @@ void CDataCacheSectionFastFind::OnAdd( DataCacheClientID_t clientId, DataCacheHa
 }
 
 
-void CDataCacheSectionFastFind::OnRemove( DataCacheClientID_t clientId ) 
+void CDataCacheSectionFastFind::OnRemove( DataCacheClientID_t clientId )
 {
 	AUTO_LOCK( m_mutex );
 	UtlHashFastHandle_t hHash = m_Handles.Find( Hash4( &clientId ) );
@@ -961,7 +961,7 @@ void CDataCacheSectionFastFind::OnRemove( DataCacheClientID_t clientId )
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Convar callback to change data cache 
+// Convar callback to change data cache
 //-----------------------------------------------------------------------------
 void DataCacheSize_f( IConVar *pConVar, const char *pOldString, float flOldValue )
 {
@@ -1023,7 +1023,7 @@ void *CDataCache::QueryInterface( const char *pInterfaceName )
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 CDataCache::CDataCache()
 	: m_mutex( m_LRU.AccessMutex() )
@@ -1114,11 +1114,11 @@ IDataCacheSection *CDataCache::AddSection( IDataCacheClient *pClient, const char
 		pSection = new CDataCacheSection( this, pClient, pszSectionName );
 	else
 		pSection = new CDataCacheSectionFastFind( this, pClient, pszSectionName );
-		
+
 	pSection->SetLimits( limits );
 
 	m_Sections.AddToTail( pSection );
-	return pSection;	
+	return pSection;
 }
 
 
@@ -1153,12 +1153,12 @@ IDataCacheSection *CDataCache::FindSection( const char *pszClientName )
 	{
 		return m_Sections[iSection];
 	}
-	return NULL;	
+	return NULL;
 }
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CDataCache::EnsureCapacity( unsigned nBytes )
 {
@@ -1345,9 +1345,9 @@ void CDataCache::OutputItemReport( memhandle_t hItem )
 	name[0] = 0;
 	pSection->GetClient()->GetItemName( pItem->clientId, pItem->pItemData, name, DC_MAX_ITEM_NAME );
 
-	Msg( "\t%16.16s : %12s : 0x%08x, 0x%p, 0x%p : %s : %s\n", 
-		Q_pretifymem( pItem->size, 2, true ), 
-		pSection->GetName(), 
+	Msg( "\t%16.16s : %12s : 0x%08x, 0x%p, 0x%p : %s : %s\n",
+		Q_pretifymem( pItem->size, 2, true ),
+		pSection->GetName(),
 		pItem->clientId, pItem->pItemData, hItem,
 		( name[0] ) ? name : "unknown",
 		( m_LRU.LockCount( hItem ) ) ? CFmtStr( "Locked %d", m_LRU.LockCount( hItem ) ).operator const char*() : "" );
@@ -1355,7 +1355,7 @@ void CDataCache::OutputItemReport( memhandle_t hItem )
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 int CDataCache::FindSectionIndex( const char *pszSection )
 {
@@ -1381,5 +1381,3 @@ bool CDataCache::SortMemhandlesBySizeLessFunc( const memhandle_t& lhs, const mem
 
 	return pItem1->size < pItem2->size;
 }
-
-

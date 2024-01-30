@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -22,22 +22,22 @@ public:
 	virtual ~CLog();
 
 public: // IGameEventListener Interface
-	
+
 	void FireGameEvent( IGameEvent *event );
 
-public: 
+public:
 
 	bool IsActive( void );	// true if logging is "on"
 	void SetLoggingState( bool state );	// set the logging state to true (on) or false (off)
-	
+
 	bool UsingLogAddress( void );
 	bool AddLogAddress(netadr_t addr);
 	bool DelLogAddress(netadr_t addr);
 	void DelAllLogAddress( void );
 	void ListLogAddress( void );
-	
+
 	netadr_t GetLogAddress();
-	
+
 	void Open( void );  // opens logging file
 	void Close( void );	// closes logging file
 	void Flush( void ); // flushes the log file to disk
@@ -45,7 +45,7 @@ public:
 	void Init( void );
 	void Reset( void );	// reset all logging streams
 	void Shutdown( void );
-	
+
 	void Printf( PRINTF_FORMAT_STRING const char *fmt, ... ) FMTFUNCTION( 2, 3 );	// log a line to log file
 	void Print( const char * text );
 	void PrintServerVars( void ); // prints server vars to log file

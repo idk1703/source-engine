@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -69,7 +69,7 @@ CBudgetPanelShared::CBudgetPanelShared( vgui::Panel *pParent, const char *pEleme
 {
 	Assert( !g_pBudgetPanelShared );
 	g_pBudgetPanelShared = this;
-	
+
 	if ( g_pVProfExport )
 		g_pVProfExport->SetBudgetFlagsFilter( budgetFlagsFilter );
 
@@ -113,7 +113,7 @@ void CBudgetPanelShared::SendConfigDataToBase()
 	if ( g_pVProfExport )
 	{
 		nGroups = g_pVProfExport->GetNumBudgetGroups();
-	
+
 		// Make sure we have space to store the results.
 		if ( g_TempBudgetGroupSpace.Count() < nGroups )
 			g_TempBudgetGroupSpace.SetSize( nGroups );
@@ -131,7 +131,7 @@ void CBudgetPanelShared::SendConfigDataToBase()
 	data.m_HistoryLabelValues.AddToTail( 1000.0 / 20 );
 	data.m_HistoryLabelValues.AddToTail( 1000.0 / 30 );
 	data.m_HistoryLabelValues.AddToTail( 1000.0 / 60 );
-	
+
 	// Copy all the cvars in.
 	data.m_flHistoryRange = budget_history_range_ms.GetFloat();
 	data.m_flBottomOfHistoryFraction = budget_panel_bottom_of_history_fraction.GetFloat();
@@ -141,17 +141,17 @@ void CBudgetPanelShared::SendConfigDataToBase()
 	data.m_nLinesPerTimeLabel = 5;
 
 	data.m_flBackgroundAlpha = budget_background_alpha.GetFloat();
-	
+
 	SetupCustomConfigData( data );
 
 	// Send the config data to the base class.
 	OnConfigDataChanged( data );
-}	
+}
 
 
-void CBudgetPanelShared::DrawColoredText( 
-	vgui::HFont font, 
-	int x, int y, 
+void CBudgetPanelShared::DrawColoredText(
+	vgui::HFont font,
+	int x, int y,
 	int r, int g, int b, int a,
 	const char *pText,
 	... )
@@ -198,7 +198,7 @@ void CBudgetPanelShared::Paint()
 	g_TimerLessBudget.End();
 
 	BaseClass::Paint();
-	
+
 	g_fFrameTimeLessBudget = ( g_TimerLessBudget.GetDuration().GetSeconds() );
 	g_fFrameRate = 1.0 / g_fFrameTimeLessBudget;
 }
@@ -215,7 +215,7 @@ void CBudgetPanelShared::SnapshotVProfHistory( float filteredtime  )
 {
 	m_BudgetHistoryOffset = ( m_BudgetHistoryOffset + 1 ) % BUDGET_HISTORY_COUNT;
 	ClearTimesForAllGroupsForThisFrame();
-	
+
 	if ( g_pVProfExport )
 	{
 		if ( GetNumCachedBudgetGroups() != g_pVProfExport->GetNumBudgetGroups() )

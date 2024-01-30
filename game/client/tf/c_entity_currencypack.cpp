@@ -17,7 +17,7 @@ C_CurrencyPack::C_CurrencyPack()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_CurrencyPack::~C_CurrencyPack()
 {
@@ -26,7 +26,7 @@ C_CurrencyPack::~C_CurrencyPack()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_CurrencyPack::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -40,7 +40,7 @@ void C_CurrencyPack::OnDataChanged( DataUpdateType_t updateType )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_CurrencyPack::ClientThink()
 {
@@ -62,7 +62,7 @@ void C_CurrencyPack::ClientThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_CurrencyPack::UpdateGlowEffect( void )
 {
@@ -81,7 +81,7 @@ void C_CurrencyPack::UpdateGlowEffect( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_CurrencyPack::DestroyGlowEffect( void )
 {

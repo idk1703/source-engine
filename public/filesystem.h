@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -235,7 +235,7 @@ private:
 class IBlockingFileItemList
 {
 public:
-	
+
 	// You can't call any of the below calls without locking first
 	virtual void	LockMutex() = 0;
 	virtual void	UnlockMutex() = 0;
@@ -266,7 +266,7 @@ enum SearchPathAdd_t
 enum FilesystemOpenExFlags_t
 {
 	FSOPEN_UNBUFFERED		= (1 << 0),
-	FSOPEN_FORCE_TRACK_CRC	= (1 << 1),		// This makes it calculate a CRC for the file (if the file came from disk) regardless 
+	FSOPEN_FORCE_TRACK_CRC	= (1 << 1),		// This makes it calculate a CRC for the file (if the file came from disk) regardless
 											// of the IFileList passed to RegisterFileWhitelist.
 	FSOPEN_NEVERINPACK	    = (1 << 2),		// 360 only, hint to FS that file is not allowed to be in pack file
 };
@@ -279,8 +279,8 @@ enum FilesystemOpenExFlags_t
 
 struct FileSystemStatistics
 {
-	CInterlockedUInt	nReads,		
-						nWrites,		
+	CInterlockedUInt	nReads,
+						nWrites,
 						nBytesRead,
 						nBytesWritten,
 						nSeeks;
@@ -342,7 +342,7 @@ enum FSAsyncFlags_t
 //---------------------------------------------------------
 enum EFileCRCStatus
 {
-	k_eFileCRCStatus_CantOpenFile,		// We don't have this file. 
+	k_eFileCRCStatus_CantOpenFile,		// We don't have this file.
 	k_eFileCRCStatus_GotCRC,
 	k_eFileCRCStatus_FileInVPK
 };
@@ -383,7 +383,7 @@ struct FileAsyncRequest_t
 };
 
 
-struct FileHash_t 
+struct FileHash_t
 {
 	enum EFileHashType_t
 	{
@@ -407,14 +407,14 @@ struct FileHash_t
 
 	bool operator==( const FileHash_t &src ) const
 	{
-		return m_crcIOSequence == src.m_crcIOSequence && 
-			m_md5contents == src.m_md5contents && 
+		return m_crcIOSequence == src.m_crcIOSequence &&
+			m_md5contents == src.m_md5contents &&
 			m_eFileHashType == src.m_eFileHashType;
 	}
 	bool operator!=( const FileHash_t &src ) const
 	{
-		return m_crcIOSequence != src.m_crcIOSequence || 
-			m_md5contents != src.m_md5contents || 
+		return m_crcIOSequence != src.m_crcIOSequence ||
+			m_md5contents != src.m_md5contents ||
 			m_eFileHashType != src.m_eFileHashType;
 	}
 
@@ -547,9 +547,9 @@ public:
 
 	virtual bool			IsSteam() const = 0;
 
-	// Supplying an extra app id will mount this app in addition 
+	// Supplying an extra app id will mount this app in addition
 	// to the one specified in the environment variable "steamappid"
-	// 
+	//
 	// If nExtraAppId is < -1, then it will mount that app ID only.
 	// (Was needed by the dedicated server b/c the "SteamAppId" env var only gets passed to steam.dll
 	// at load time, so the dedicated couldn't pass it in that way).
@@ -562,7 +562,7 @@ public:
 	// Add paths in priority order (mod dir, game dir, ....)
 	// If one or more .pak files are in the specified directory, then they are
 	//  added after the file system path
-	// If the path is the relative path to a .bsp file, then any previous .bsp file 
+	// If the path is the relative path to a .bsp file, then any previous .bsp file
 	//  override is cleared and the current .bsp is searched for an embedded PAK file
 	//  and this file becomes the highest priority search path ( i.e., it's looked at first
 	//   even before the mod's file system path ).
@@ -650,8 +650,8 @@ public:
 	virtual void			FindClose( FileFindHandle_t handle ) = 0;
 
 	// Same as FindFirst, but you can filter by path ID, which can make it faster.
-	virtual const char		*FindFirstEx( 
-		const char *pWildCard, 
+	virtual const char		*FindFirstEx(
+		const char *pWildCard,
 		const char *pPathID,
 		FileFindHandle_t *pHandle
 		) = 0;
@@ -669,7 +669,7 @@ public:
 		return GetLocalPath( pFileName, pDest, (int)maxLenInChars );
 	}
 
-	// Returns true on success ( based on current list of search paths, otherwise false if 
+	// Returns true on success ( based on current list of search paths, otherwise false if
 	//  it can't be resolved )
 	// Prefer using the FullPathToRelativePath_safe template wrapper to calling this directly
 	virtual bool			FullPathToRelativePath( const char *pFullpath, OUT_Z_CAP(maxLenInChars) char *pDest, int maxLenInChars ) = 0;
@@ -749,7 +749,7 @@ public:
 	virtual int				HintResourceNeed( const char *hintlist, int forgetEverything ) = 0;
 	// returns true if a file is on disk
 	virtual bool			IsFileImmediatelyAvailable(const char *pFileName) = 0;
-	
+
 	// copies file out of pak/bsp/steam cache onto disk (to be accessible by third-party code)
 	virtual void			GetLocalCopy( const char *pFileName ) = 0;
 
@@ -859,7 +859,7 @@ public:
 	// This is called when the client connects to a server using a pure_server_whitelist.txt file.
 	virtual void			RegisterFileWhitelist( IPureServerWhitelist *pWhiteList, IFileList **pFilesToReload ) = 0;
 
-	// Called when the client logs onto a server. Any files that came off disk should be marked as 
+	// Called when the client logs onto a server. Any files that came off disk should be marked as
 	// unverified because this server may have a different set of files it wants to guarantee.
 	virtual void			MarkAllCRCsUnverified() = 0;
 
@@ -875,7 +875,7 @@ public:
 	// returned from here again.
 	// The client sends batches of these to the server to verify.
 	virtual int				GetUnverifiedFileHashes( CUnverifiedFileHash *pFiles, int nMaxFiles ) = 0;
-	
+
 	// Control debug message output.
 	// Pass a combination of WHITELIST_SPEW_ flags.
 	virtual int				GetWhitelistSpewFlags() = 0;
@@ -988,10 +988,10 @@ private:
 
 //-----------------------------------------------------------------------------
 
-inline unsigned IFileSystem::GetOptimalReadSize( FileHandle_t hFile, unsigned nLogicalSize ) 
-{ 
-	unsigned align; 
-	if ( GetOptimalIOConstraints( hFile, &align, NULL, NULL ) ) 
+inline unsigned IFileSystem::GetOptimalReadSize( FileHandle_t hFile, unsigned nLogicalSize )
+{
+	unsigned align;
+	if ( GetOptimalIOConstraints( hFile, &align, NULL, NULL ) )
 		return AlignValue( nLogicalSize, align );
 	else
 		return nLogicalSize;

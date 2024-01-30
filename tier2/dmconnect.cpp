@@ -58,5 +58,3 @@ void DisconnectDataModel()
 	g_pDmElementFramework->Disconnect();
 	g_pDataModel->Disconnect();
 }
-
-

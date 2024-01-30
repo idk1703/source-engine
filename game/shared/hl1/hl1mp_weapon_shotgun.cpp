@@ -36,7 +36,7 @@ class CWeaponShotgun : public CBaseHL1MPCombatWeapon
 {
 	DECLARE_CLASS( CWeaponShotgun, CBaseHL1MPCombatWeapon );
 
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 private:
@@ -145,7 +145,7 @@ void CWeaponShotgun::PrimaryAttack( void )
 	m_iClip1 -= 1;
 
 	Vector vecSrc		= pPlayer->Weapon_ShootPosition();
-	Vector vecAiming	= pPlayer->GetAutoaimVector( AUTOAIM_5DEGREES );	
+	Vector vecAiming	= pPlayer->GetAutoaimVector( AUTOAIM_5DEGREES );
 
 	if ( g_pGameRules->IsMultiplayer() )
 	{
@@ -178,7 +178,7 @@ void CWeaponShotgun::PrimaryAttack( void )
 	if ( !m_iClip1 && pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) <= 0 )
 	{
 		// HEV suit - indicate out of ammo condition
-		pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0); 
+		pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0);
 	}
 
 	if ( m_iClip1 > 0 )
@@ -233,7 +233,7 @@ void CWeaponShotgun::SecondaryAttack( void )
 	m_iClip1 -= 2;	// Shotgun uses same clip for primary and secondary attacks
 
 	Vector vecSrc	 = pPlayer->Weapon_ShootPosition();
-	Vector vecAiming = pPlayer->GetAutoaimVector( AUTOAIM_5DEGREES );	
+	Vector vecAiming = pPlayer->GetAutoaimVector( AUTOAIM_5DEGREES );
 
 	// Fire the bullets
 	if ( g_pGameRules->IsMultiplayer() )
@@ -267,7 +267,7 @@ void CWeaponShotgun::SecondaryAttack( void )
 	if ( !m_iClip1 && pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) <= 0 )
 	{
 		// HEV suit - indicate out of ammo condition
-		pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0); 
+		pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0);
 	}
 
 	if ( m_iClip1 > 0 )
@@ -282,7 +282,7 @@ void CWeaponShotgun::SecondaryAttack( void )
 bool CWeaponShotgun::Reload( void )
 {
 	CBaseCombatCharacter *pOwner  = GetOwner();
-	
+
 	if ( pOwner == NULL )
 		return false;
 
@@ -336,7 +336,7 @@ bool CWeaponShotgun::Reload( void )
 void CWeaponShotgun::FillClip( void )
 {
 	CBaseCombatCharacter *pOwner  = GetOwner();
-	
+
 	if ( pOwner == NULL )
 		return;
 
@@ -386,7 +386,7 @@ void CWeaponShotgun::WeaponIdle( void )
 			{
 				// reload debounce has timed out
 				SendWeaponAnim( ACT_SHOTGUN_PUMP );
-				
+
 				// play cocking sound
 				WeaponSound( SPECIAL1 );
 				m_fInSpecialReload = 0;

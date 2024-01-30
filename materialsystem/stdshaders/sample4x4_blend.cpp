@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@ BEGIN_VS_SHADER( Sample4x4_Blend, "Help for Sample4x4_Blend" )
 	{
 		LoadTexture( BASETEXTURE );
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		// Requires DX9 + above
@@ -37,13 +37,13 @@ BEGIN_VS_SHADER( Sample4x4_Blend, "Help for Sample4x4_Blend" )
 		{
 			pShaderShadow->EnableDepthWrites( false );
 			pShaderShadow->EnableAlphaWrites( true );
-			
+
 			pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
 			int fmt = VERTEX_POSITION;
 			pShaderShadow->VertexShaderVertexFormat( fmt, 1, 0, 0 );
-			
+
 			pShaderShadow->SetVertexShader( "Downsample_vs20", 0 );
-			
+
 			if( g_pHardwareConfig->SupportsPixelShaders_2_b() )
 			{
 				const char *szPixelShader = params[PIXSHADER]->GetStringValue();
@@ -104,7 +104,7 @@ BEGIN_VS_SHADER( Sample4x4_Blend, "Help for Sample4x4_Blend" )
 			// store the ALPHA material var into c0
 			v[0] = ALPHA;
 			pShaderAPI->SetPixelShaderConstant( 0, v, 1 );
-			
+
 		}
 		Draw();
 	}

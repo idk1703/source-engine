@@ -77,7 +77,7 @@ public:
 		return ( m_eIncrState != INCR_STATE_HAVE_FULL_RESULTS );
 	}
 
-	
+
 	bool IsLowerPriorityThan( CLightingPreviewThread *pLPV,
 							  CIncrementalLightInfo const &other ) const;
 
@@ -90,7 +90,7 @@ class CLightingPreviewThread
 {
 public:
 	CUtlVector<CLightingPreviewLightDescription> *m_pLightList;
-	
+
 	CSIMDVectorMatrix m_Positions;
 	CSIMDVectorMatrix m_Normals;
 	CSIMDVectorMatrix m_Albedos;
@@ -113,7 +113,7 @@ public:
 	// bounidng box of the rendered scene+ the eye
 	Vector m_MinViewCoords;
 	Vector m_MaxViewCoords;
-	
+
 	CLightingPreviewThread(void)
 	{
 		m_nBitmapGenerationCounter = -1;
@@ -126,7 +126,7 @@ public:
 		m_nContributionCounter = 1000000;
 		InitIncrementalInformation();
 	}
-	
+
 	void InitIncrementalInformation( void );
 
 	~CLightingPreviewThread( void )
@@ -152,7 +152,7 @@ public:
 
 	// handle new g-buffers from master
 	void HandleGBuffersMessage( MessageToLPreview &msg_in );
-	
+
 	// accept triangle list from master
 	void HandleGeomMessage( MessageToLPreview &msg_in );
 
@@ -165,7 +165,7 @@ public:
 	// inner lighting loop. meant to be multithreaded on dual-core (or more)
 	void CalculateForLightTask( int nLineMask, int nLineMatch,
 								CLightingPreviewLightDescription &l,
-								int calc_mask, 
+								int calc_mask,
 								float *fContributionOut );
 
 	void CalculateForLight( CLightingPreviewLightDescription &l );
@@ -199,7 +199,7 @@ public:
 		m_bResultChangedSinceLastSend = true;
 		m_fLastSendTime = Plat_FloatTime()-9;				// force send
 	}
-	
+
 	// handle a message. returns true if the thread shuold exit
 	bool HandleAMessage( void );
 
@@ -243,7 +243,7 @@ bool CIncrementalLightInfo::IsHighPriority( CLightingPreviewThread *pLPV ) const
 	if ( m_eIncrState == INCR_STATE_NEW )
 	{
 		// uncalculated lights within the view range are highest priority
-		if ( m_pLight->m_Position.WithinAABox( pLPV->m_MinViewCoords, 
+		if ( m_pLight->m_Position.WithinAABox( pLPV->m_MinViewCoords,
 											   pLPV->m_MaxViewCoords ) )
 			return true;
 	}
@@ -262,7 +262,7 @@ bool CIncrementalLightInfo::IsLowerPriorityThan( CLightingPreviewThread *pLPV,
 		return false;
 	if ( other_highpriority && (! highpriority ) )
 		return true;
-				 
+
 	int state_combo = m_eIncrState + 16*other.m_eIncrState;
 	switch ( state_combo )
 	{
@@ -475,7 +475,7 @@ void CLightingPreviewThread::Run(void)
 	bool should_quit = false;
 	while(! should_quit )
 	{
-		while ( 
+		while (
 			(! should_quit ) &&
 			( (! AnyUsefulWorkToDo() ) || ( g_HammerToLPreviewMsgQueue.MessageWaiting() ) ) )
 			should_quit |= HandleAMessage();
@@ -503,7 +503,7 @@ bool CLightingPreviewThread::HandleAMessage( void )
 	{
 		case LPREVIEW_MSG_EXIT:
 			return true;									// return from thread
-					
+
 		case LPREVIEW_MSG_LIGHT_DATA:
 		{
 			if ( m_pLightList )
@@ -530,7 +530,7 @@ bool CLightingPreviewThread::HandleAMessage( void )
 
 bool CLightingPreviewThread::AnyUsefulWorkToDo( void )
 {
-	if (  m_pLightList ) 
+	if (  m_pLightList )
 	{
 		for(int i=0;i<m_pLightList->Count();i++)
 		{
@@ -545,7 +545,7 @@ bool CLightingPreviewThread::AnyUsefulWorkToDo( void )
 
 void CLightingPreviewThread::DoWork( void )
 {
-	if (  m_pLightList ) 
+	if (  m_pLightList )
 	{
 		CLightingPreviewLightDescription *best_l=NULL;
 		CIncrementalLightInfo *best_l_info=NULL;
@@ -578,13 +578,13 @@ void CLightingPreviewThread::DoWork( void )
 
 void CLightingPreviewThread::HandleGBuffersMessage( MessageToLPreview &msg_in )
 {
-	m_Albedos.CreateFromRGBA_FloatImageData( 
+	m_Albedos.CreateFromRGBA_FloatImageData(
 		msg_in.m_pDefferedRenderingBMs[0]->Width,msg_in.m_pDefferedRenderingBMs[0]->Height,
 		msg_in.m_pDefferedRenderingBMs[0]->RGBAData);
-	m_Normals.CreateFromRGBA_FloatImageData( 
+	m_Normals.CreateFromRGBA_FloatImageData(
 		msg_in.m_pDefferedRenderingBMs[1]->Width,msg_in.m_pDefferedRenderingBMs[1]->Height,
 		msg_in.m_pDefferedRenderingBMs[1]->RGBAData);
-	m_Positions.CreateFromRGBA_FloatImageData( 
+	m_Positions.CreateFromRGBA_FloatImageData(
 		msg_in.m_pDefferedRenderingBMs[2]->Width,msg_in.m_pDefferedRenderingBMs[2]->Height,
 		msg_in.m_pDefferedRenderingBMs[2]->RGBAData);
 
@@ -635,7 +635,7 @@ void CLightingPreviewThread::SendResult( void )
 
 void CLightingPreviewThread::CalculateForLightTask( int nLineMask, int nLineMatch,
 													CLightingPreviewLightDescription &l,
-													int calc_mask, 
+													int calc_mask,
 													float *fContributionOut )
 {
 	FourVectors zero_vector;
@@ -644,7 +644,7 @@ void CLightingPreviewThread::CalculateForLightTask( int nLineMask, int nLineMatc
 	zero_vector.z=Four_Zeros;
 
 	FourVectors total_light=zero_vector;
-   
+
 	CIncrementalLightInfo *l_info=l.m_pIncrementalInfo;
 	CSIMDVectorMatrix &rslt=l_info->m_CalculatedContribution;
 	// figure out what lines to do
@@ -737,7 +737,7 @@ void CLightingPreviewThread::CalculateForLight( CLightingPreviewLightDescription
 	if ( l_info->m_eIncrState == INCR_STATE_PARTIAL_RESULTS )
 	{
 		new_incr_level = 1+l_info->m_PartialResultsStage;
-		prev_msk = m_LineMask[l_info->m_PartialResultsStage]; 
+		prev_msk = m_LineMask[l_info->m_PartialResultsStage];
 	}
 	int calc_mask=m_LineMask[new_incr_level] &~ prev_msk;
 
@@ -745,7 +745,7 @@ void CLightingPreviewThread::CalculateForLight( CLightingPreviewLightDescription
 	float total_light;
 	CalculateForLightTask( 0, 0, l, calc_mask, &total_light );
 	l_info->m_fTotalContribution = total_light;
-	
+
 	// throw away light array if no contribution
 	if ( l_info->m_fTotalContribution == 0.0 )
 		l_info->m_CalculatedContribution.SetSize( 0, 0 );
@@ -838,7 +838,7 @@ void HandleLightingPreview( void )
 						(existing_rect.bottom != g_pLPreviewOutputBitmap->Height()-1) )
 					{
 						CRect myRect;
-						myRect.top=0; 
+						myRect.top=0;
 						myRect.left=0;
 						myRect.right=g_pLPreviewOutputBitmap->Width()-1;
 						myRect.bottom=g_pLPreviewOutputBitmap->Height()-1;
@@ -848,7 +848,7 @@ void HandleLightingPreview( void )
 							myRect.Width(), myRect.Height(),
 							SWP_NOMOVE | SWP_NOZORDER );
 					}
-					
+
 					w->Invalidate( false );
 					w->UpdateWindow();
 				}
@@ -860,5 +860,3 @@ void HandleLightingPreview( void )
 		}
 	}
 }
-
-

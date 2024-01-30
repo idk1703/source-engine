@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -24,7 +24,7 @@ BEGIN_VS_SHADER_FLAGS( BlurFilterX, "Help for BlurFilterX", SHADER_NOT_EDITABLE 
 			LoadTexture( BASETEXTURE );
 		}
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		if ( g_pHardwareConfig->GetDXSupportLevel() < 90 )
@@ -51,7 +51,7 @@ BEGIN_VS_SHADER_FLAGS( BlurFilterX, "Help for BlurFilterX", SHADER_NOT_EDITABLE 
 			// Pre-cache shaders
 			blurfilter_vs20_Static_Index vshIndex;
 			pShaderShadow->SetVertexShader( "BlurFilter_vs20", vshIndex.GetIndex() );
-			
+
 			if( g_pHardwareConfig->SupportsPixelShaders_2_b() || g_pHardwareConfig->ShouldAlwaysUseShaderModel2bShaders() )
 			{
 				DECLARE_STATIC_PIXEL_SHADER( blurfilter_ps20b );
@@ -105,7 +105,7 @@ BEGIN_VS_SHADER_FLAGS( BlurFilterX, "Help for BlurFilterX", SHADER_NOT_EDITABLE 
 			pShaderAPI->SetPixelShaderConstant( 3, v, 1 );
 
 			pShaderAPI->SetVertexShaderIndex( 0 );
-			
+
 			if( g_pHardwareConfig->SupportsPixelShaders_2_b() || g_pHardwareConfig->ShouldAlwaysUseShaderModel2bShaders() )
 			{
 				DECLARE_DYNAMIC_PIXEL_SHADER( blurfilter_ps20b );

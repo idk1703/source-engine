@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -93,7 +93,7 @@ void GetNameForDXLevel( int dxlevel, char *name, int bufferSize)
 		Q_snprintf( name, bufferSize, "DirectX v%.1f", dxlevel / 10.0f );
 	}
 }
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: returns the aspect ratio mode number for the given resolution
 //-----------------------------------------------------------------------------
@@ -259,7 +259,7 @@ public:
 		m_pDXLevel->DeleteAllItems();
 		for (int i = 0; i < ARRAYSIZE(g_DirectXLevels); i++)
 		{
-			// don't allow choice of lower dxlevels than the default, 
+			// don't allow choice of lower dxlevels than the default,
 			// unless we're already at that lower level or have it forced
 			if (!CommandLine()->CheckParm("-dxlevel") &&
 				g_DirectXLevels[i] != config.dxSupportLevel &&
@@ -431,10 +431,10 @@ public:
 		SetSizeable( false );
 
 		m_pDXLevel->SetEnabled(false);
-		
+
 		m_pColorCorrection->SetEnabled( mat_dxlevel.GetInt() >= 90 );
 		m_pMotionBlur->SetEnabled( mat_dxlevel.GetInt() >= 90 );
-		
+
 		if ( g_pCVar->FindVar( "fov_desired" ) == NULL )
 		{
 			Panel *pFOV = FindChildByName( "FovSlider" );
@@ -449,7 +449,7 @@ public:
 				pFOV->SetVisible( false );
 			}
 		}
-		
+
 		MarkDefaultSettingsAsRecommended();
 
 		m_bUseChanges = false;
@@ -485,7 +485,7 @@ public:
 	int FindMSAAMode( int nAASamples, int nAAQuality )
 	{
 		// Run through the AA Modes supported by the device
-        for ( int nAAMode = 0; nAAMode < m_nNumAAModes; nAAMode++ )
+			for ( int nAAMode = 0; nAAMode < m_nNumAAModes; nAAMode++ )
 		{
 			// If we found the mode that matches what we're looking for, return the index
 			if ( ( m_nAAModes[nAAMode].m_nNumSamples == nAASamples) && ( m_nAAModes[nAAMode].m_nQualityLevel == nAAQuality) )
@@ -546,7 +546,7 @@ public:
 	{
 		// Pull in data from dxsupport.cfg database (includes fine-grained per-vendor/per-device config data)
 		KeyValues *pKeyValues = new KeyValues( "config" );
-		materials->GetRecommendedConfigurationInfo( 0, pKeyValues );	
+		materials->GetRecommendedConfigurationInfo( 0, pKeyValues );
 
 		// Read individual values from keyvalues which came from dxsupport.cfg database
 		int nSkipLevels = pKeyValues->GetInt( "ConVar.mat_picmip", 0 );
@@ -569,7 +569,7 @@ public:
 		// It doesn't make sense to retrieve this convar from dxsupport, because we'll then have materialsystem setting this config at loadtime. (Also, it only has very minimal support for CPU related configuration.)
 		//int nMulticore = pKeyValues->GetInt( "ConVar.mat_queue_mode", 0 );
 		int nMulticore = GetCPUInformation()->m_nPhysicalProcessors >= 2;
-		
+
 		// Only recommend a dxlevel if there is more than one available
 		if ( m_pDXLevel->GetItemCount() > 1 )
 		{
@@ -583,7 +583,7 @@ public:
 				}
 			}
 		}
-	
+
 		SetComboItemAsRecommended( m_pModelDetail, 2 - nRootLOD );
 		SetComboItemAsRecommended( m_pTextureDetail, 2 - nSkipLevels );
 
@@ -626,7 +626,7 @@ public:
 			SetComboItemAsRecommended( m_pShadowDetail, 0 );	// Blobbies
 
 		SetComboItemAsRecommended( m_pShaderDetail, nReduceFillRate ? 0 : 1 );
-		
+
 #ifndef _X360
 		if ( nWaterUseRealtimeReflection )
 #endif
@@ -672,13 +672,13 @@ public:
 	{
 		if ( !m_bUseChanges )
 			return;
-		
+
 		KeyValues *pActiveItem = m_pDXLevel->GetActiveItemUserData();
 		if ( pActiveItem )
 		{
 			ApplyChangesToConVar( "mat_dxlevel", pActiveItem->GetInt( "dxlevel" ) );
 		}
-		
+
 		ApplyChangesToConVar( "r_rootlod", 2 - m_pModelDetail->GetActiveItem());
 		ApplyChangesToConVar( "mat_picmip", 2 - m_pTextureDetail->GetActiveItem());
 
@@ -763,17 +763,17 @@ public:
 			break;
 		}
 
-		ApplyChangesToConVar( "mat_vsync", m_pVSync->GetActiveItem() );	 
+		ApplyChangesToConVar( "mat_vsync", m_pVSync->GetActiveItem() );
 
 		int iMC = m_pMulticore->GetActiveItem();
-		ApplyChangesToConVar( "mat_queue_mode", (iMC == 0) ? 0 : -1 );	 
+		ApplyChangesToConVar( "mat_queue_mode", (iMC == 0) ? 0 : -1 );
 
 		ApplyChangesToConVar( "mat_colorcorrection", m_pColorCorrection->GetActiveItem() );
 
 		ApplyChangesToConVar( "mat_motion_blur_enabled", m_pMotionBlur->GetActiveItem() );
-		
+
 		CCvarSlider *pFOV = (CCvarSlider *)FindChildByName( "FOVSlider" );
-		if ( pFOV ) 
+		if ( pFOV )
 		{
 			pFOV->ApplyChanges();
 		}
@@ -855,7 +855,7 @@ public:
 		int nAAQuality = mat_aaquality.GetInt();
 		int nMSAAMode = FindMSAAMode( nAASamples, nAAQuality );
 		m_pAntialiasingMode->ActivateItem( nMSAAMode );
-	
+
 		m_pAntialiasingMode->SetEnabled( m_nNumAAModes > 1 );
 
 #ifndef _X360
@@ -1071,8 +1071,8 @@ COptionsSubVideo::COptionsSubVideo(vgui::Panel *parent) : PropertyPage(parent, N
 	m_pVRMode->AddItem( pszVRModeName[0], NULL );
 	m_pVRMode->AddItem( pszVRModeName[1], NULL );
 
-	// Multimonitor under Direct3D requires you to destroy and recreate the device, 
-	// which is an operation we don't support as it currently stands. The user can 
+	// Multimonitor under Direct3D requires you to destroy and recreate the device,
+	// which is an operation we don't support as it currently stands. The user can
 	// pass -adapter N to use a different device.
 #if defined( USE_SDL ) && defined( DX_TO_GL_ABSTRACTION )
 	int numVideoDisplays = SDL_GetNumVideoDisplays();
@@ -1126,12 +1126,12 @@ COptionsSubVideo::COptionsSubVideo(vgui::Panel *parent) : PropertyPage(parent, N
 	{
 		m_pHDContent->SetVisible( true );
 	}
-	
+
 	// if VR mode isn't available, disable the dropdown
 	if( !g_pSourceVR )
 	{
 		// if sourcevr.dll is missing entirely that means VR mode is not
-		// supported in this game. Hide the mode dropdown and its label 
+		// supported in this game. Hide the mode dropdown and its label
 		m_pVRMode->SetVisible( false );
 
 		Panel *label = FindChildByName( "VRModeLabel" );
@@ -1279,7 +1279,7 @@ void COptionsSubVideo::PrepareResolutionList()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 COptionsSubVideo::~COptionsSubVideo()
 {
@@ -1302,7 +1302,7 @@ FILE *FOpenGameHDFile( const char *pchMode )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool COptionsSubVideo::BUseHDContent()
 {
@@ -1342,7 +1342,7 @@ void COptionsSubVideo::SetUseHDContent( bool bUse )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubVideo::OnResetData()
 {
@@ -1350,7 +1350,7 @@ void COptionsSubVideo::OnResetData()
 
 	const MaterialSystem_Config_t &config = materials->GetCurrentConfigForVideoCard();
 
-    // reset UI elements
+	// reset UI elements
 #if defined( USE_SDL ) && defined( DX_TO_GL_ABSTRACTION )
 	int ItemIndex;
 
@@ -1371,9 +1371,9 @@ void COptionsSubVideo::OnResetData()
 		}
 	}
 
-    m_pWindowed->ActivateItem( ItemIndex );
+	m_pWindowed->ActivateItem( ItemIndex );
 #else
-    m_pWindowed->ActivateItem( config.Windowed() ? 1 : 0 );
+	m_pWindowed->ActivateItem( config.Windowed() ? 1 : 0 );
 #endif
 
 	// reset gamma control
@@ -1381,7 +1381,7 @@ void COptionsSubVideo::OnResetData()
 
 	m_pHDContent->SetSelected( BUseHDContent() );
 
-    SetCurrentResolutionComboItem();
+	SetCurrentResolutionComboItem();
 
 	bool bVREnabled = config.m_nVRModeAdapter != -1;
 	m_pVRMode->ActivateItem( bVREnabled ? 1 : 0 );
@@ -1390,7 +1390,7 @@ void COptionsSubVideo::OnResetData()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubVideo::SetCurrentResolutionComboItem()
 {
@@ -1400,18 +1400,18 @@ void COptionsSubVideo::SetCurrentResolutionComboItem()
 
 	const MaterialSystem_Config_t &config = materials->GetCurrentConfigForVideoCard();
 
-    int resolution = -1;
-    for ( int i = 0; i < count; i++, plist++ )
+	int resolution = -1;
+	for ( int i = 0; i < count; i++, plist++ )
 	{
-		if ( plist->width == config.m_VideoMode.m_Width && 
-			 plist->height == config.m_VideoMode.m_Height )
+		if ( plist->width == config.m_VideoMode.m_Width &&
+			plist->height == config.m_VideoMode.m_Height )
 		{
-            resolution = i;
+				resolution = i;
 			break;
 		}
 	}
 
-    if (resolution != -1)
+	if (resolution != -1)
 	{
 		char sz[256];
 		int desktopWidth, desktopHeight;
@@ -1434,7 +1434,7 @@ void COptionsSubVideo::SetCurrentResolutionComboItem()
 #endif
 
 		GetResolutionName( plist, sz, sizeof(sz), desktopWidth, desktopHeight );
-        m_pMode->SetText(sz);
+			m_pMode->SetText(sz);
 	}
 }
 
@@ -1492,7 +1492,7 @@ void COptionsSubVideo::OnApplyChanges()
 	bool bVRMode = m_pVRMode->GetActiveItem() != 0;
 	if( ( -1 != config.m_nVRModeAdapter ) != bVRMode )
 	{
-		// let engine fill in mat_vrmode_adapter 
+		// let engine fill in mat_vrmode_adapter
 		char szCmd[256];
 		Q_snprintf( szCmd, sizeof(szCmd), "mat_enable_vrmode %d\n", bVRMode ? 1 : 0 );
 		engine->ClientCmd_Unrestricted( szCmd );
@@ -1569,7 +1569,7 @@ void COptionsSubVideo::OnApplyChanges()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubVideo::PerformLayout()
 {
@@ -1588,22 +1588,22 @@ void COptionsSubVideo::PerformLayout()
 void COptionsSubVideo::OnTextChanged(Panel *pPanel, const char *pszText)
 {
 	if (pPanel == m_pMode)
-    {
+	{
 		const MaterialSystem_Config_t &config = materials->GetCurrentConfigForVideoCard();
 
 		m_nSelectedMode = m_pMode->GetActiveItem();
 
 		int w = 0, h = 0;
 		sscanf(pszText, "%i x %i", &w, &h);
-        if ( config.m_VideoMode.m_Width != w || config.m_VideoMode.m_Height != h )
-        {
-            OnDataChanged();
-        }
-    }
-    else if (pPanel == m_pAspectRatio)
-    {
+			if ( config.m_VideoMode.m_Width != w || config.m_VideoMode.m_Height != h )
+			{
+				OnDataChanged();
+			}
+	}
+	else if (pPanel == m_pAspectRatio)
+	{
 		PrepareResolutionList();
-    }
+	}
 	else if (pPanel == m_pWindowed)
 	{
 		PrepareResolutionList();
@@ -1665,7 +1665,7 @@ void COptionsSubVideo::OnDataChanged()
 //-----------------------------------------------------------------------------
 bool COptionsSubVideo::RequiresRestart()
 {
-	if ( m_hOptionsSubVideoAdvancedDlg.Get() 
+	if ( m_hOptionsSubVideoAdvancedDlg.Get()
 		&& m_hOptionsSubVideoAdvancedDlg->RequiresRestart() )
 	{
 		return true;
@@ -1714,39 +1714,39 @@ void COptionsSubVideo::LaunchBenchmark()
 //-----------------------------------------------------------------------------
 class COptionsSubVideoThirdPartyCreditsDlg : public vgui::Frame
 {
-   DECLARE_CLASS_SIMPLE( COptionsSubVideoThirdPartyCreditsDlg, vgui::Frame );
+	DECLARE_CLASS_SIMPLE( COptionsSubVideoThirdPartyCreditsDlg, vgui::Frame );
 public:
-   COptionsSubVideoThirdPartyCreditsDlg( vgui::VPANEL hParent ) : BaseClass( NULL, NULL )
-   {
-      // parent is ignored, since we want look like we're steal focus from the parent (we'll become modal below)
+	COptionsSubVideoThirdPartyCreditsDlg( vgui::VPANEL hParent ) : BaseClass( NULL, NULL )
+	{
+		// parent is ignored, since we want look like we're steal focus from the parent (we'll become modal below)
 
-      SetTitle("#GameUI_ThirdPartyVideo_Title", true);
-      SetSize( 500, 200 );
-      LoadControlSettings( "resource/OptionsSubVideoThirdPartyDlg.res" );
-      MoveToCenterOfScreen();
-      SetSizeable( false );
-      SetDeleteSelfOnClose( true );
-   }
+		SetTitle("#GameUI_ThirdPartyVideo_Title", true);
+		SetSize( 500, 200 );
+		LoadControlSettings( "resource/OptionsSubVideoThirdPartyDlg.res" );
+		MoveToCenterOfScreen();
+		SetSizeable( false );
+		SetDeleteSelfOnClose( true );
+	}
 
-   virtual void Activate()
-   {
-      BaseClass::Activate();
+	virtual void Activate()
+	{
+		BaseClass::Activate();
 
-      input()->SetAppModalSurface(GetVPanel());
-   }
+		input()->SetAppModalSurface(GetVPanel());
+	}
 
-   void OnKeyCodeTyped(KeyCode code)
-   {
-      // force ourselves to be closed if the escape key it pressed
-      if (code == KEY_ESCAPE)
-      {
-         Close();
-      }
-      else
-      {
-         BaseClass::OnKeyCodeTyped(code);
-      }
-   }
+	void OnKeyCodeTyped(KeyCode code)
+	{
+		// force ourselves to be closed if the escape key it pressed
+		if (code == KEY_ESCAPE)
+		{
+			Close();
+		}
+		else
+		{
+			BaseClass::OnKeyCodeTyped(code);
+		}
+	}
 };
 
 
@@ -1755,9 +1755,9 @@ public:
 //-----------------------------------------------------------------------------
 void COptionsSubVideo::OpenThirdPartyVideoCreditsDialog()
 {
-   if (!m_OptionsSubVideoThirdPartyCreditsDlg.Get())
-   {
-      m_OptionsSubVideoThirdPartyCreditsDlg = new COptionsSubVideoThirdPartyCreditsDlg(GetVParent());
-   }
-   m_OptionsSubVideoThirdPartyCreditsDlg->Activate();
+	if (!m_OptionsSubVideoThirdPartyCreditsDlg.Get())
+	{
+		m_OptionsSubVideoThirdPartyCreditsDlg = new COptionsSubVideoThirdPartyCreditsDlg(GetVParent());
+	}
+	m_OptionsSubVideoThirdPartyCreditsDlg->Activate();
 }

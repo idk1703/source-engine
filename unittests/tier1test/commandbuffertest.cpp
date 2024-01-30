@@ -32,7 +32,7 @@ DEFINE_TESTCASE( CommandBufferTestSimple, CommandBufferTestSuite )
 	int argc;
 	const char **argv;
 	buffer.BeginProcessingCommands( 1 );
-								   
+
 	argc = buffer.DequeueNextCommand( argv );
 	Shipping_Assert( argc == 3 );
 	Shipping_Assert( !Q_stricmp( argv[0], "test_command" ) );
@@ -305,4 +305,3 @@ DEFINE_TESTCASE( CommandBufferTestOverflow, CommandBufferTestSuite )
 		buffer.EndProcessingCommands( );
 	}
 }
-

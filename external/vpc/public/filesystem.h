@@ -1,6 +1,6 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ======//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -20,7 +20,7 @@
 #include "tier1/interface.h"
 #include "tier1/utlsymbol.h"
 #include "tier1/utlstring.h"
-#include "tier1/functors.h" 
+#include "tier1/functors.h"
 #include "tier1/checksum_crc.h"
 #include "tier1/utlqueue.h"
 #include "appframework/iappsystem.h"
@@ -131,24 +131,24 @@ enum DVDMode_t
 
 enum FsState_t
 {
-    FS_STATE_INIT = 0,
-    FS_STATE_LEVEL_LOAD = 1,
-    FS_STATE_LEVEL_RUN = 2,
-    FS_STATE_LEVEL_RESTORE = 3,
-    FS_STATE_LEVEL_LOAD_END = 4,
-    FS_STATE_EXITING = 5
+	FS_STATE_INIT = 0,
+	FS_STATE_LEVEL_LOAD = 1,
+	FS_STATE_LEVEL_RUN = 2,
+	FS_STATE_LEVEL_RESTORE = 3,
+	FS_STATE_LEVEL_LOAD_END = 4,
+	FS_STATE_EXITING = 5
 };
 
 enum Ps3FileType_t
 {
-    PS3_FILETYPE_WAV,
-    PS3_FILETYPE_ANI,
-    PS3_FILETYPE_BSP,
-    PS3_FILETYPE_VMT,
-    PS3_FILETYPE_QPRE,
-    PS3_FILETYPE_OTHER,
-    PS3_FILETYPE_DIR,
-    PS3_FILETYPE_UNKNOWN
+	PS3_FILETYPE_WAV,
+	PS3_FILETYPE_ANI,
+	PS3_FILETYPE_BSP,
+	PS3_FILETYPE_VMT,
+	PS3_FILETYPE_QPRE,
+	PS3_FILETYPE_OTHER,
+	PS3_FILETYPE_DIR,
+	PS3_FILETYPE_UNKNOWN
 };
 
 
@@ -236,7 +236,7 @@ private:
 class IBlockingFileItemList
 {
 public:
-	
+
 	// You can't call any of the below calls without locking first
 	virtual void	LockMutex() = 0;
 	virtual void	UnlockMutex() = 0;
@@ -268,7 +268,7 @@ enum SearchPathAdd_t
 enum FilesystemOpenExFlags_t
 {
 	FSOPEN_UNBUFFERED		= (1 << 0),
-	FSOPEN_FORCE_TRACK_CRC	= (1 << 1),		// This makes it calculate a CRC for the file (if the file came from disk) regardless 
+	FSOPEN_FORCE_TRACK_CRC	= (1 << 1),		// This makes it calculate a CRC for the file (if the file came from disk) regardless
 											// of the IFileList passed to RegisterFileWhitelist.
 	FSOPEN_NEVERINPACK	    = (1 << 2),		// 360 only, hint to FS that file is not allowed to be in pack file
 };
@@ -281,8 +281,8 @@ enum FilesystemOpenExFlags_t
 
 struct FileSystemStatistics
 {
-	CInterlockedUInt	nReads,		
-						nWrites,		
+	CInterlockedUInt	nReads,
+						nWrites,
 						nBytesRead,
 						nBytesWritten,
 						nSeeks;
@@ -342,7 +342,7 @@ enum FSAsyncFlags_t
 //---------------------------------------------------------
 enum EFileCRCStatus
 {
-	k_eFileCRCStatus_CantOpenFile,		// We don't have this file. 
+	k_eFileCRCStatus_CantOpenFile,		// We don't have this file.
 	k_eFileCRCStatus_GotCRC
 };
 
@@ -498,9 +498,9 @@ public:
 
 	virtual bool			IsSteam() const = 0;
 
-	// Supplying an extra app id will mount this app in addition 
+	// Supplying an extra app id will mount this app in addition
 	// to the one specified in the environment variable "steamappid"
-	// 
+	//
 	// If nExtraAppId is < -1, then it will mount that app ID only.
 	// (Was needed by the dedicated server b/c the "SteamAppId" env var only gets passed to steam.dll
 	// at load time, so the dedicated couldn't pass it in that way).
@@ -513,7 +513,7 @@ public:
 	// Add paths in priority order (mod dir, game dir, ....)
 	// If one or more .pak files are in the specified directory, then they are
 	//  added after the file system path
-	// If the path is the relative path to a .bsp file, then any previous .bsp file 
+	// If the path is the relative path to a .bsp file, then any previous .bsp file
 	//  override is cleared and the current .bsp is searched for an embedded PAK file
 	//  and this file becomes the highest priority search path ( i.e., it's looked at first
 	//   even before the mod's file system path ).
@@ -594,8 +594,8 @@ public:
 	virtual void			FindClose( FileFindHandle_t handle ) = 0;
 
 	// Same as FindFirst, but you can filter by path ID, which can make it faster.
-	virtual const char		*FindFirstEx( 
-		const char *pWildCard, 
+	virtual const char		*FindFirstEx(
+		const char *pWildCard,
 		const char *pPathID,
 		FileFindHandle_t *pHandle
 		) = 0;
@@ -612,7 +612,7 @@ public:
 	// converts a partial path into a full path
 	virtual const char		*GetLocalPath( const char *pFileName, char *pLocalPath, int localPathBufferSize ) = 0;
 
-	// Returns true on success ( based on current list of search paths, otherwise false if 
+	// Returns true on success ( based on current list of search paths, otherwise false if
 	//  it can't be resolved )
 	virtual bool			FullPathToRelativePath( const char *pFullpath, char *pRelative, int maxlen ) = 0;
 
@@ -681,7 +681,7 @@ public:
 	virtual int				HintResourceNeed( const char *hintlist, int forgetEverything ) = 0;
 	// returns true if a file is on disk
 	virtual bool			IsFileImmediatelyAvailable(const char *pFileName) = 0;
-	
+
 	// copies file out of pak/bsp/steam cache onto disk (to be accessible by third-party code)
 	virtual void			GetLocalCopy( const char *pFileName ) = 0;
 
@@ -816,7 +816,7 @@ public:
 	// The filesystem hangs onto the whitelists you pass in here, and it will Release() them when it closes down
 	// or when you call this function again.
 	//
-	// NOTE: The whitelists you pass in here will be accessed from multiple threads, so make sure the 
+	// NOTE: The whitelists you pass in here will be accessed from multiple threads, so make sure the
 	//       IsFileInList function is thread safe.
 	//
 	// If pFilesToReload is non-null, the filesystem will hand back a list of files that should be reloaded because they
@@ -827,7 +827,7 @@ public:
 	// Be sure to call Release() on pFilesToReload.
 	virtual void			RegisterFileWhitelist( IFileList *pWantCRCList, IFileList *pAllowFromDiskList, IFileList **pFilesToReload ) = 0;
 
-	// Called when the client logs onto a server. Any files that came off disk should be marked as 
+	// Called when the client logs onto a server. Any files that came off disk should be marked as
 	// unverified because this server may have a different set of files it wants to guarantee.
 	virtual void			MarkAllCRCsUnverified() = 0;
 
@@ -843,7 +843,7 @@ public:
 	// returned from here again.
 	// The client sends batches of these to the server to verify.
 	virtual int				GetUnverifiedCRCFiles( CUnverifiedCRCFile *pFiles, int nMaxFiles ) = 0;
-	
+
 	// Control debug message output.
 	// Pass a combination of WHITELIST_SPEW_ flags.
 	virtual int				GetWhitelistSpewFlags() = 0;
@@ -859,7 +859,7 @@ public:
 
 	virtual int				GetSearchPathID( char *pPath, int nMaxLen ) = 0;
 	virtual bool			FixupSearchPathsAfterInstall() = 0;
-	
+
 	virtual FSDirtyDiskReportFunc_t		GetDirtyDiskReportFunc() = 0;
 
 	virtual void AddVPKFile( char const *pszName, SearchPathAdd_t addType = PATH_ADD_TO_TAIL ) = 0;
@@ -877,14 +877,14 @@ public:
 	virtual bool			GetAnyCorruptDLCInfo( int iCorruptDLC, wchar_t *pTitleBuff, int nOutTitleSize ) = 0;
 	virtual bool			AddDLCSearchPaths() = 0;
 	virtual bool			IsSpecificDLCPresent( unsigned int nDLCPackage ) = 0;
-	
+
 	// call this to look for CPU-hogs during loading processes. When you set this, a breakpoint
 	// will be issued whenever the indicated # of seconds go by without an i/o request.  Passing
 	// 0.0 will turn off the functionality.
 	virtual void            SetIODelayAlarm( float flThreshhold ) = 0;
 
 	virtual bool			AddXLSPUpdateSearchPath( const void *pData, int nSize ) = 0;
-	
+
 	virtual IIoStats		*GetIoStats() = 0;
 
 };
@@ -924,10 +924,10 @@ private:
 
 //-----------------------------------------------------------------------------
 
-inline unsigned IFileSystem::GetOptimalReadSize( FileHandle_t hFile, unsigned nLogicalSize ) 
-{ 
-	unsigned align; 
-	if ( GetOptimalIOConstraints( hFile, &align, NULL, NULL ) ) 
+inline unsigned IFileSystem::GetOptimalReadSize( FileHandle_t hFile, unsigned nLogicalSize )
+{
+	unsigned align;
+	if ( GetOptimalIOConstraints( hFile, &align, NULL, NULL ) )
 		return AlignValue( nLogicalSize, align );
 	else
 		return nLogicalSize;

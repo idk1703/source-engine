@@ -60,7 +60,7 @@ IViewPortPanel* SDKViewport::CreatePanelByName(const char *szPanelName)
 	// create a generic base panel, don't add twice
 	newpanel = BaseClass::CreatePanelByName( szPanelName );
 
-	return newpanel; 
+	return newpanel;
 }
 
 void SDKViewport::CreateDefaultPanels( void )
@@ -82,4 +82,3 @@ int SDKViewport::GetDeathMessageStartHeight( void )
 
 	return x;
 }
-

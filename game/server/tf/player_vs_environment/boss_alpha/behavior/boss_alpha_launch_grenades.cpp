@@ -36,8 +36,8 @@ ActionResult< CBossAlpha >	CBossAlphaLaunchGrenades::OnStart( CBossAlpha *me, Ac
 //---------------------------------------------------------------------------------------------
 void CBossAlphaLaunchGrenades::LaunchGrenade( CBossAlpha *me, const Vector &launchVel, CTFWeaponInfo *weaponInfo )
 {
-	CTFGrenadePipebombProjectile *pProjectile = CTFGrenadePipebombProjectile::Create( me->WorldSpaceCenter() + Vector( 0, 0, 100 ), vec3_angle, launchVel, 
-																					  AngularImpulse( 600, random->RandomInt( -1200, 1200 ), 0 ), 
+	CTFGrenadePipebombProjectile *pProjectile = CTFGrenadePipebombProjectile::Create( me->WorldSpaceCenter() + Vector( 0, 0, 100 ), vec3_angle, launchVel,
+																					  AngularImpulse( 600, random->RandomInt( -1200, 1200 ), 0 ),
 																					  me, *weaponInfo, TF_PROJECTILE_PIPEBOMB_REMOTE, 1 );
 	if ( pProjectile )
 	{

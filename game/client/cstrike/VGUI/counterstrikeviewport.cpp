@@ -73,7 +73,7 @@ CON_COMMAND( buyequip, "Show equipment buy menu" )
 		{
 			char strBuyTime[16];
 			Q_snprintf( strBuyTime, sizeof( strBuyTime ), "%d", (int)CSGameRules()->GetBuyTimeLength() );
-			
+
 			wchar_t buffer[128];
 			wchar_t buytime[16];
 			g_pVGuiLocalize->ConvertANSIToUnicode( strBuyTime, buytime, sizeof(buytime) );
@@ -161,7 +161,7 @@ CON_COMMAND_F( spec_menu, "Activates spectator menu", FCVAR_CLIENTCMD_CAN_EXECUT
 	{
 		 bShowIt = atoi( args[ 1 ] ) == 1;
 	}
-	
+
 	if ( gViewPortInterface )
 		gViewPortInterface->ShowPanel( PANEL_SPECMENU, bShowIt );
 }
@@ -170,7 +170,7 @@ CON_COMMAND_F( togglescores, "Toggles score panel", FCVAR_CLIENTCMD_CAN_EXECUTE)
 {
 	if ( !gViewPortInterface )
 		return;
-	
+
 	IViewPortPanel *scoreboard = gViewPortInterface->FindPanelByName( PANEL_SCOREBOARD );
 
 	if ( !scoreboard )
@@ -219,17 +219,17 @@ IViewPortPanel* CounterStrikeViewport::CreatePanelByName(const char *szPanelName
 
 	else if ( Q_strcmp(PANEL_SPECGUI, szPanelName) == 0 )
 	{
-		newpanel = new CCSSpectatorGUI( this );	
+		newpanel = new CCSSpectatorGUI( this );
 	}
 
 	else if ( Q_strcmp(PANEL_CLASS_CT, szPanelName) == 0 )
 	{
-		newpanel = new CClassMenu_CT( this );	
+		newpanel = new CClassMenu_CT( this );
 	}
 
 	else if ( Q_strcmp(PANEL_CLASS_TER, szPanelName) == 0 )
 	{
-		newpanel = new CClassMenu_TER( this );	
+		newpanel = new CClassMenu_TER( this );
 	}
 
 	else if ( Q_strcmp(PANEL_BUY_CT, szPanelName) == 0 )
@@ -268,7 +268,7 @@ IViewPortPanel* CounterStrikeViewport::CreatePanelByName(const char *szPanelName
 		newpanel = BaseClass::CreatePanelByName( szPanelName );
 	}
 
-	return newpanel; 
+	return newpanel;
 }
 
 void CounterStrikeViewport::CreateDefaultPanels( void )

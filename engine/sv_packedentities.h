@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,8 +17,8 @@
 #include "server_class.h"
 
 
-void SV_ComputeClientPacks( 
-	int clientCount, 
+void SV_ComputeClientPacks(
+	int clientCount,
 	CGameClient** clients,
 	CFrameSnapshot *snapshot );
 

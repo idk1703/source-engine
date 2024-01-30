@@ -25,7 +25,7 @@
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CNPC_GMan : public CAI_PlayerAlly
 {
@@ -54,7 +54,7 @@ BEGIN_DATADESC( CNPC_GMan )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Classify - indicates this NPC's place in the 
+// Classify - indicates this NPC's place in the
 // relationship table.
 //-----------------------------------------------------------------------------
 Class_T	CNPC_GMan::Classify ( void )
@@ -110,7 +110,7 @@ void CNPC_GMan::Spawn()
 	m_flFieldOfView		= 0.5;// indicates the width of this NPC's forward view cone ( as a dotproduct result )
 	m_NPCState			= NPC_STATE_NONE;
 	SetImpactEnergyScale( 0.0f ); // no physics damage on the gman
-	
+
 	CapabilitiesAdd( bits_CAP_MOVE_GROUND | bits_CAP_OPEN_DOORS | bits_CAP_ANIMATEDFACE | bits_CAP_TURN_HEAD );
 	CapabilitiesAdd( bits_CAP_FRIENDLY_DMG_IMMUNE );
 	AddEFlags( EFL_NO_DISSOLVE | EFL_NO_MEGAPHYSCANNON_RAGDOLL );
@@ -124,9 +124,9 @@ void CNPC_GMan::Spawn()
 void CNPC_GMan::Precache()
 {
 	PrecacheModel( "models/gman.mdl" );
-	
+
 	BaseClass::Precache();
-}	
+}
 
 //-----------------------------------------------------------------------------
 // The G-Man isn't scared of anything.
@@ -143,12 +143,12 @@ Disposition_t CNPC_GMan::IRelationType(CBaseEntity *pTarget)
 bool CNPC_GMan::CreateBehaviors()
 {
 	AddBehavior( &m_FollowBehavior );
-	
+
 	return BaseClass::CreateBehaviors();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CNPC_GMan::SelectSchedule( void )
 {

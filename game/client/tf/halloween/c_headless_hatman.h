@@ -18,7 +18,7 @@ public:
 	C_HeadlessHatman();
 	virtual ~C_HeadlessHatman();
 
-public:	
+public:
 	virtual void Spawn( void );
 	virtual bool IsNextBot() { return true; }
 

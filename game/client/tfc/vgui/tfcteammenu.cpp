@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -39,7 +39,7 @@ void CTFCTeamMenu::ShowPanel(bool bShow)
 	{
 		engine->CheckPoint( "TeamMenu" );
 	}
-	
+
 	BaseClass::ShowPanel( bShow );
 }
 
@@ -59,7 +59,7 @@ void CTFCTeamMenu::Update( void )
 			return;
 
 		// if we're not already a CT or T...or the freeze time isn't over yet...or we're dead
-		if ( pPlayer->GetTeamNumber() == TEAM_UNASSIGNED || 
+		if ( pPlayer->GetTeamNumber() == TEAM_UNASSIGNED ||
 			( pPlayer && pPlayer->IsPlayerDead() ) )
 		{
 			SetVisibleButton("specbutton", true);
@@ -79,16 +79,16 @@ void CTFCTeamMenu::Update( void )
 	Q_FileBase( engine->GetLevelName(), mapName, sizeof(mapName) );
 	if( C_TFCPlayer::GetLocalTFCPlayer()->GetTeamNumber() == TEAM_UNASSIGNED ) // we aren't on a team yet
 	{
-		SetVisibleButton("CancelButton", false); 
+		SetVisibleButton("CancelButton", false);
 	}
 	else
 	{
-		SetVisibleButton("CancelButton", true); 
+		SetVisibleButton("CancelButton", true);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: When a team button is pressed it triggers this function to 
+// Purpose: When a team button is pressed it triggers this function to
 //			cause the player to join a team
 //-----------------------------------------------------------------------------
 void CTFCTeamMenu::OnCommand( const char *command )
@@ -97,8 +97,8 @@ void CTFCTeamMenu::OnCommand( const char *command )
 	{
 		engine->ClientCmd( command );
 	}
-	
-	
+
+
 	BaseClass::OnCommand(command);
 
 	gViewPortInterface->ShowBackGround( false );

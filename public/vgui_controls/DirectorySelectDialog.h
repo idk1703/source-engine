@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -86,7 +86,7 @@ private:
 	vgui::Button *m_pCancelButton;
 	vgui::Button *m_pSelectButton;
 	vgui::Button *m_pCreateButton;
-	
+
 	friend class DirectoryTreeView;
 };
 

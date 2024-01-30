@@ -57,9 +57,9 @@ recipefilter_data_t g_RecipeFilters[NUM_RECIPE_CATEGORIES] =
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-wchar_t *LocalizeRecipeStringPiece( const char *pszString, wchar_t *pszConverted, int nConvertedSizeInBytes ) 
+wchar_t *LocalizeRecipeStringPiece( const char *pszString, wchar_t *pszConverted, int nConvertedSizeInBytes )
 {
 	if ( !pszString )
 		return L"";
@@ -72,7 +72,7 @@ wchar_t *LocalizeRecipeStringPiece( const char *pszString, wchar_t *pszConverted
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SetItemPanelToRecipe( CItemModelPanel *pPanel, const CEconCraftingRecipeDefinition *pRecipeDef, bool bShowName )
 {
@@ -129,7 +129,7 @@ void SetItemPanelToRecipe( CItemModelPanel *pPanel, const CEconCraftingRecipeDef
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PositionMouseOverPanelForRecipe( vgui::Panel *pScissorPanel, vgui::Panel *pRecipePanel, vgui::ScrollableEditablePanel *pRecipeScroller, CItemModelPanel *pMouseOverItemPanel )
 {
@@ -169,7 +169,7 @@ void PositionMouseOverPanelForRecipe( vgui::Panel *pScissorPanel, vgui::Panel *p
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCraftingPanel::CCraftingPanel( vgui::Panel *parent, const char *panelName ) : CBaseLoadoutPanel( parent, panelName )
 {
@@ -200,7 +200,7 @@ CCraftingPanel::CCraftingPanel( vgui::Panel *parent, const char *panelName ) : C
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCraftingPanel::~CCraftingPanel( void )
 {
@@ -217,7 +217,7 @@ CCraftingPanel::~CCraftingPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -243,7 +243,7 @@ void CCraftingPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -259,7 +259,7 @@ void CCraftingPanel::ApplySettings( KeyValues *inResourceData )
 		m_pRecipeButtonsKV = new KeyValues("recipebuttons_kv");
 		pItemKV->CopySubkeys( m_pRecipeButtonsKV );
 	}
-	
+
 	KeyValues *pButtonKV = inResourceData->FindKey( "recipefilterbuttons_kv" );
 	if ( pButtonKV )
 	{
@@ -273,9 +273,9 @@ void CCraftingPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCraftingPanel::PerformLayout( void ) 
+void CCraftingPanel::PerformLayout( void )
 {
 	BaseClass::PerformLayout();
 
@@ -290,7 +290,7 @@ void CCraftingPanel::PerformLayout( void )
 		{
 			m_pRecipeFilterButtons[i]->ApplySettings( m_pRecipeFilterButtonsKV );
 			m_pRecipeFilterButtons[i]->InvalidateLayout();
-		} 
+		}
 
 		int iButtonW, iButtonH;
 		m_pRecipeFilterButtons[i]->GetSize( iButtonW, iButtonH );
@@ -307,7 +307,7 @@ void CCraftingPanel::PerformLayout( void )
 		{
 			m_pRecipeButtons[i]->ApplySettings( m_pRecipeButtonsKV );
 			m_pRecipeButtons[i]->InvalidateLayout();
-		} 
+		}
 
 		int iYDelta = m_pRecipeButtons[0]->GetTall() + YRES(2);
 
@@ -334,7 +334,7 @@ void CCraftingPanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::CreateRecipeFilterButtons( void )
 {
@@ -355,7 +355,7 @@ void CCraftingPanel::CreateRecipeFilterButtons( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::UpdateRecipeFilter( void )
 {
@@ -394,7 +394,7 @@ void CCraftingPanel::UpdateRecipeFilter( void )
 	// Add a "Custom" option to the bottom of the Special recipe list
 	if ( m_iRecipeCategoryFilter == RECIPE_CATEGORY_SPECIAL )
 	{
-		SetButtonToRecipe( iMatchingRecipes, RECIPE_CUSTOM, g_pVGuiLocalize->Find("#Craft_Recipe_Custom") );	
+		SetButtonToRecipe( iMatchingRecipes, RECIPE_CUSTOM, g_pVGuiLocalize->Find("#Craft_Recipe_Custom") );
 		iMatchingRecipes++;
 	}
 
@@ -406,14 +406,14 @@ void CCraftingPanel::UpdateRecipeFilter( void )
 	}
 
 	// Move the scrollbar to the top
-	m_pRecipeListContainerScroller->GetScrollbar()->SetValue( 0 );	
+	m_pRecipeListContainerScroller->GetScrollbar()->SetValue( 0 );
 
 	UpdateSelectedRecipe( true );
 	InvalidateLayout();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::OnCancelSelection( void )
 {
@@ -426,7 +426,7 @@ void CCraftingPanel::OnCancelSelection( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::OnSelectionReturned( KeyValues *data )
 {
@@ -435,7 +435,7 @@ void CCraftingPanel::OnSelectionReturned( KeyValues *data )
 		uint64 ulIndex = data->GetUint64( "itemindex", INVALID_ITEM_ID );
 		if ( ulIndex == INVALID_ITEM_ID )
 		{
-			// should this be INVALID_ITEM_ID?		
+			// should this be INVALID_ITEM_ID?
 			m_InputItems[m_iSelectingForSlot] = 0;
 		}
 		else
@@ -452,7 +452,7 @@ void CCraftingPanel::OnSelectionReturned( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::OnShowPanel( bool bVisible, bool bReturningFromArmory )
 {
@@ -486,7 +486,7 @@ void CCraftingPanel::OnShowPanel( bool bVisible, bool bReturningFromArmory )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::OnClosing()
 {
@@ -703,7 +703,7 @@ void CCraftingPanel::UpdateCraftButton( void )
 	if ( m_pCraftButton )
 	{
 		m_pCraftButton->SetVisible( bAllowedToUse );
-	}	
+	}
 	if ( m_pUpgradeButton )
 	{
 		m_pUpgradeButton->SetVisible( !bAllowedToUse );
@@ -748,7 +748,7 @@ void CCraftingPanel::UpdateCraftButton( void )
 	if ( m_pCraftButton )
 	{
 		m_pCraftButton->SetEnabled( bCraftButtonActive );
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -863,7 +863,7 @@ void CCraftingPanel::UpdateModelPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::SetButtonToRecipe( int iButton, int iDefIndex, wchar_t *pszText )
 {
@@ -879,7 +879,7 @@ void CCraftingPanel::SetButtonToRecipe( int iButton, int iDefIndex, wchar_t *psz
 		if ( m_pRecipeButtonsKV )
 		{
 			pRecipeButton->ApplySettings( m_pRecipeButtonsKV );
-		} 
+		}
 		pRecipeButton->MakeReadyForUse();
 		m_pRecipeButtons.AddToTail( pRecipeButton );
 	}
@@ -891,7 +891,7 @@ void CCraftingPanel::SetButtonToRecipe( int iButton, int iDefIndex, wchar_t *psz
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::UpdateSelectedRecipe( bool bClearInputItems )
 {
@@ -938,7 +938,7 @@ void CCraftingPanel::UpdateSelectedRecipe( bool bClearInputItems )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::OnCommand( const char *command )
 {
@@ -992,7 +992,7 @@ void CCraftingPanel::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::OnRecipePanelEntered( vgui::Panel *panel )
 {
@@ -1012,7 +1012,7 @@ void CCraftingPanel::OnRecipePanelEntered( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::OnRecipePanelExited( vgui::Panel *panel )
 {
@@ -1022,7 +1022,7 @@ void CCraftingPanel::OnRecipePanelExited( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CCraftingPanel::GetItemPanelIndex( CItemModelPanel *pItemPanel )
 {
@@ -1035,7 +1035,7 @@ int	CCraftingPanel::GetItemPanelIndex( CItemModelPanel *pItemPanel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::OnItemPanelMousePressed( vgui::Panel *panel )
 {
@@ -1071,7 +1071,7 @@ void CCraftingPanel::OnItemPanelMousePressed( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static void ConfirmCraft( bool bConfirmed, void* pContext )
 {
@@ -1083,7 +1083,7 @@ static void ConfirmCraft( bool bConfirmed, void* pContext )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CCraftingPanel::CheckForUntradableItems( void )
 {
@@ -1112,7 +1112,7 @@ bool CCraftingPanel::CheckForUntradableItems( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::Craft( void )
 {
@@ -1153,7 +1153,7 @@ void CCraftingPanel::Craft( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::OnCraftResponse( EGCMsgResponse eResponse, CUtlVector<uint64> *vecCraftedIndices, int iRecipeUsed )
 {
@@ -1172,7 +1172,7 @@ void CCraftingPanel::OnCraftResponse( EGCMsgResponse eResponse, CUtlVector<uint6
 			// Craft denied.
 			C_CTF_GameStats.Event_Crafting( IE_CRAFTING_FAILURE, NULL, m_iCraftingAttempts );
 			CleanupPostCraft( m_iCurrentlySelectedRecipe != RECIPE_CUSTOM );
-			OpenCraftingStatusDialog( this, "#CraftUpdate_Denied", false, true, false );			
+			OpenCraftingStatusDialog( this, "#CraftUpdate_Denied", false, true, false );
 		}
 		break;
 
@@ -1198,11 +1198,11 @@ void CCraftingPanel::OnCraftResponse( EGCMsgResponse eResponse, CUtlVector<uint6
 			CleanupPostCraft( m_iCurrentlySelectedRecipe != RECIPE_CUSTOM );
 		}
 		break;
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::ShowCraftFinish( void )
 {
@@ -1210,7 +1210,7 @@ void CCraftingPanel::ShowCraftFinish( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::OnTick( void )
 {
@@ -1250,7 +1250,7 @@ void CCraftingPanel::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingPanel::CleanupPostCraft( bool bClearInputItems )
 {
@@ -1261,7 +1261,7 @@ void CCraftingPanel::CleanupPostCraft( bool bClearInputItems )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ConVar *CCraftingPanel::GetExplanationConVar( void )
 {
@@ -1274,7 +1274,7 @@ ConVar *CCraftingPanel::GetExplanationConVar( void )
 static vgui::DHANDLE<CCraftingStatusDialog> g_CraftingStatusPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCraftingStatusDialog::CCraftingStatusDialog( vgui::Panel *pParent, const char *pElementName ) : BaseClass( pParent, "CraftingStatusDialog" )
 {
@@ -1283,7 +1283,7 @@ CCraftingStatusDialog::CCraftingStatusDialog( vgui::Panel *pParent, const char *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingStatusDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -1300,7 +1300,7 @@ void CCraftingStatusDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingStatusDialog::OnCommand( const char *command )
 {
@@ -1341,7 +1341,7 @@ void CCraftingStatusDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingStatusDialog::OnTick( void )
 {
@@ -1366,7 +1366,7 @@ void CCraftingStatusDialog::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingStatusDialog::UpdateSchemeForVersion( bool bRecipe )
 {
@@ -1375,7 +1375,7 @@ void CCraftingStatusDialog::UpdateSchemeForVersion( bool bRecipe )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingStatusDialog::ShowStatusUpdate( bool bAnimateEllipses, bool bAllowClose, bool bShowOnExit )
 {
@@ -1405,7 +1405,7 @@ void CCraftingStatusDialog::ShowStatusUpdate( bool bAnimateEllipses, bool bAllow
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SetupCraftingStatusDialog( vgui::Panel *pParent )
 {
@@ -1434,7 +1434,7 @@ CCraftingStatusDialog *OpenCraftingStatusDialog( vgui::Panel *pParent, const cha
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CloseCraftingStatusDialog( void )
 {
@@ -1505,8 +1505,8 @@ public:
 			wchar_t szWrenchNumber[16]=L"";
 			_snwprintf( szWrenchNumber, ARRAYSIZE( szWrenchNumber ), L"%i", msg.Body().wrench_number() );
 			wchar_t szNotification[1024]=L"";
-			g_pVGuiLocalize->ConstructString_safe( szNotification, 
-											  g_pVGuiLocalize->Find( bDeleted ? "#TF_HUD_Event_GoldenWrench_D": "#TF_HUD_Event_GoldenWrench_C" ), 
+			g_pVGuiLocalize->ConstructString_safe( szNotification,
+											  g_pVGuiLocalize->Find( bDeleted ? "#TF_HUD_Event_GoldenWrench_D": "#TF_HUD_Event_GoldenWrench_C" ),
 											  2, szPlayerName, szWrenchNumber );
 			pNotifyPanel->SetupNotifyCustom( szNotification, HUD_NOTIFY_GOLDEN_WRENCH, 10.0f );
 

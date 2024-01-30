@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -43,7 +43,7 @@ class CTFThrowable : public CTFJar, public ITFChargeUpWeapon
 {
 public:
 	DECLARE_CLASS( CTFThrowable, CTFJar );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFThrowable();
@@ -60,8 +60,8 @@ public:
 
 	virtual float		InternalGetEffectBarRechargeTime( void );
 	virtual float		GetDetonationTime( void );
-	
-	
+
+
 	// ITFChargeUpWeapon
 	virtual bool CanCharge( void );
 	virtual float GetChargeBeginTime( void );
@@ -408,7 +408,7 @@ public:
 	DECLARE_CLASS( CTFProjectile_ThrowingKnife, CTFProjectile_Throwable );
 	DECLARE_NETWORKCLASS();
 
-#ifdef STAGING_ONLY	
+#ifdef STAGING_ONLY
 	virtual void		SetCustomPipebombModel()			{ SetModel( "models/workshop_partner/weapons/c_models/c_sd_cleaver/c_sd_cleaver.mdl" ); }
 #else
 	virtual void		SetCustomPipebombModel()			{ SetModel( "models/weapons/c_models/c_sd_cleaver/c_sd_cleaver.mdl" ); }
@@ -416,7 +416,7 @@ public:
 	virtual bool		ExplodesOnHit()						{ return false; }
 	virtual float		GetProjectileSpeed()				{ return 800.0f; }
 	virtual float		GetProjectileMaxSpeed()				{ return 2700.0f; }
-	
+
 #ifdef GAME_DLL
 	virtual int			GetProjectileType( void ) const OVERRIDE { return TF_PROJECTILE_THROWING_KNIFE; }
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -19,9 +19,9 @@ extern void v_strncpy(char *dest, const char *src, int bufsize);
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CPlayerMsgHandlerDetails::CPlayerMsgHandlerDetails( CPlayerList *baseobject, CUtlVector<Players_t> *players,HANDLERTYPE type, void *typeinfo /*= NULL*/ ) 
+CPlayerMsgHandlerDetails::CPlayerMsgHandlerDetails( CPlayerList *baseobject, CUtlVector<Players_t> *players,HANDLERTYPE type, void *typeinfo /*= NULL*/ )
 	: CMsgHandler( type, typeinfo )
-{ 
+{
 	m_pPlayerList = baseobject;
 	m_pPlayerNames=players;
 }
@@ -43,7 +43,7 @@ bool CPlayerMsgHandlerDetails::Process( netadr_t *from, CMsgBuffer *msg )
 
 
 		// Check type of data.
-		if (msg->ReadByte() != S2A_PLAYER) 
+		if (msg->ReadByte() != S2A_PLAYER)
 			return false;
 
 		int pNumber;
@@ -89,5 +89,3 @@ bool CPlayerMsgHandlerDetails::Process( netadr_t *from, CMsgBuffer *msg )
 
 	return true;
 }
-
-

@@ -11,7 +11,7 @@
 
 #ifdef _WIN32
 #pragma once
-#endif 
+#endif
 
 #include <igameevents.h>
 #include <utlvector.h>
@@ -44,10 +44,10 @@ public:
 public:
 	char		name[MAX_EVENT_NAME_LENGTH];	// name of this event
 	int			eventid;	// network index number, -1 = not networked
-	KeyValues	*keys;		// KeyValue describing data types, if NULL only name 
+	KeyValues	*keys;		// KeyValue describing data types, if NULL only name
 	bool		local;		// local event, never tell clients about that
 	bool		reliable;	// send this event as reliable message
-    CUtlVector<CGameEventCallback*>	listeners;	// registered listeners
+	CUtlVector<CGameEventCallback*>	listeners;	// registered listeners
 };
 
 class CGameEvent : public IGameEvent
@@ -71,7 +71,7 @@ public:
 	void SetInt( const char *keyName, int value );
 	void SetFloat( const char *keyName, float value );
 	void SetString( const char *keyName, const char *value );
-	
+
 	CGameEventDescriptor	*m_pDescriptor;
 	KeyValues				*m_pDataKeys;
 };
@@ -104,14 +104,14 @@ public:	// IGameEventManager functions
 
 	CGameEventManager();
 	virtual ~CGameEventManager();
-	
+
 	int	 LoadEventsFromFile( const char * filename );
 	void Reset();
-			
+
 	bool AddListener( IGameEventListener2 *listener, const char *name, bool bServerSide );
 	bool FindListener( IGameEventListener2 *listener, const char *name );
 	void RemoveListener( IGameEventListener2 *listener);
-		
+
 	IGameEvent *CreateEvent( const char *name, bool bForce = false );
 	IGameEvent *DuplicateEvent( IGameEvent *event);
 	bool FireEvent( IGameEvent *event, bool bDontBroadcast = false );
@@ -127,7 +127,7 @@ public:
 	void ReloadEventDefinitions();	// called by server on new map
 	bool AddListener( void *listener, CGameEventDescriptor *descriptor, int nListenerType );
 
-    CGameEventDescriptor *GetEventDescriptor( const char *name );
+	CGameEventDescriptor *GetEventDescriptor( const char *name );
 	CGameEventDescriptor *GetEventDescriptor( IGameEvent *event );
 	CGameEventDescriptor *GetEventDescriptor( int eventid );
 
@@ -137,12 +137,12 @@ public:
 	void WriteListenEventList(CLC_ListenEvents *msg);
 	bool HasClientListenersChanged( bool bReset = true );
 	void ConPrintEvent( IGameEvent *event);
-	
-	// legacy support 
+
+	// legacy support
 	bool AddListenerAll( void *listener, int nListenerType );
 	void RemoveListenerOld( void *listener);
-	
-	
+
+
 protected:
 
 	IGameEvent *CreateEvent( CGameEventDescriptor *descriptor );
@@ -150,15 +150,15 @@ protected:
 	void UnregisterEvent(int index);
 	bool FireEventIntern( IGameEvent *event, bool bServerSide, bool bClientOnly );
 	CGameEventCallback* FindEventListener( void* listener );
-	
+
 	CUtlVector<CGameEventDescriptor>	m_GameEvents;	// list of all known events
 	CUtlVector<CGameEventCallback*>		m_Listeners;	// list of all registered listeners
 	CUtlSymbolTable						m_EventFiles;	// list of all loaded event files
-	CUtlVector<CUtlSymbol>				m_EventFileNames; 
+	CUtlVector<CUtlSymbol>				m_EventFileNames;
 
 	bool	m_bClientListenersChanged;	// true every time client changed listeners
 };
 
 extern CGameEventManager &g_GameEventManager;
 
-#endif 
+#endif

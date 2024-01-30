@@ -28,7 +28,7 @@ class CTFGrenadeLauncher : public CTFWeaponBaseGun, public ITFChargeUpWeapon
 public:
 
 	DECLARE_CLASS( CTFGrenadeLauncher, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	// Server specific.
@@ -133,7 +133,7 @@ class CTFCannon : public CTFGrenadeLauncher
 {
 public:
 	DECLARE_CLASS( CTFCannon, CTFGrenadeLauncher );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_CANNON; }

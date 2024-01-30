@@ -37,20 +37,20 @@ public:
 	virtual void *Alloc( size_t nSize );
 	virtual void *Realloc( void *pMem, size_t nSize );
 	virtual void  Free( void *pMem );
-    virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize );
+	virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize );
 
 	// Debug versions
-    virtual void *Alloc( size_t nSize, const char *pFileName, int nLine );
-    virtual void *Realloc( void *pMem, size_t nSize, const char *pFileName, int nLine );
-    virtual void  Free( void *pMem, const char *pFileName, int nLine );
-    virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize, const char *pFileName, int nLine );
+	virtual void *Alloc( size_t nSize, const char *pFileName, int nLine );
+	virtual void *Realloc( void *pMem, size_t nSize, const char *pFileName, int nLine );
+	virtual void  Free( void *pMem, const char *pFileName, int nLine );
+	virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize, const char *pFileName, int nLine );
 
 	// Returns size of a particular allocation
 	virtual size_t GetSize( void *pMem );
 
-    // Force file + line information for an allocation
-    virtual void PushAllocDbgInfo( const char *pFileName, int nLine );
-    virtual void PopAllocDbgInfo();
+	// Force file + line information for an allocation
+	virtual void PushAllocDbgInfo( const char *pFileName, int nLine );
+	virtual void PopAllocDbgInfo();
 
 	virtual long CrtSetBreakAlloc( long lNewBreakAlloc );
 	virtual	int CrtSetReportMode( int nReportType, int nReportMode );
@@ -75,12 +75,12 @@ public:
 
 	virtual int GetVersion() { return MEMALLOC_VERSION; }
 
-	virtual void CompactHeap(); 
+	virtual void CompactHeap();
 	virtual MemAllocFailHandler_t SetAllocFailHandler( MemAllocFailHandler_t pfnMemAllocFailHandler );
 
 	virtual uint32 GetDebugInfoSize() { return 0; }
 	virtual void SaveDebugInfo( void *pvDebugInfo ) { }
-	virtual void RestoreDebugInfo( const void *pvDebugInfo ) {}	
+	virtual void RestoreDebugInfo( const void *pvDebugInfo ) {}
 	virtual void InitDebugInfo( void *pvDebugInfo, const char *pchRootFileName, int nLine ) {}
 
 private:

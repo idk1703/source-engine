@@ -15,7 +15,7 @@
 class CVoiceServer : public IVoiceServer
 {
 public:
-	
+
 	virtual bool	GetClientListening(int iReceiver, int iSender)
 	{
 		// Make into client indices..
@@ -27,22 +27,22 @@ public:
 
 		return sv.GetClient(iSender)->IsHearingClient( iReceiver );
 	}
-	
+
 	virtual bool	SetClientListening(int iReceiver, int iSender, bool bListen)
 	{
 		// Make into client indices..
 		--iReceiver;
 		--iSender;
-		
+
 		if(iReceiver < 0 || iReceiver >= sv.GetClientCount() || iSender < 0 || iSender >= sv.GetClientCount() )
 			return false;
 
 		CGameClient *cl = sv.Client(iSender);
-			
+
 		cl->m_VoiceStreams.Set( iReceiver, bListen?1:0 );
 
 		return true;
-	}	
+	}
 	virtual bool	SetClientProximity(int iReceiver, int iSender, bool bUseProximity)
 	{
 		// Make into client indices..
@@ -57,7 +57,7 @@ public:
 		cl->m_VoiceProximity.Set( iReceiver, bUseProximity );
 
 		return true;
-	}	
+	}
 };
 
 

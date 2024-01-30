@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,4 +28,3 @@ void AlignPanel(vgui::Panel *pChild, vgui::Panel *pParent, int alignment);
 
 
 #endif // VGUI_HELPERS_H
-

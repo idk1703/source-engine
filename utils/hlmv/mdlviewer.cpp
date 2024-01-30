@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -137,7 +137,7 @@ void UnloadFileSystemDialogModule()
 		Sys_UnloadModule( g_pFSDialogModule );
 		g_pFSDialogModule = 0;
 	}
-}	
+}
 
 
 
@@ -266,7 +266,7 @@ MDLViewer::MDLViewer ()
 
 	menuFile->add( "Refresh (F5)", IDC_FILE_REFRESH );
 	menuFile->addSeparator ();
-	
+
 	if ( g_bOldFileDialogs )
 	{
 		menuFile->add ("Load Weapon...", IDC_FILE_LOADMERGEDMODEL);
@@ -296,7 +296,7 @@ MDLViewer::MDLViewer ()
 		menuUnloadWeapon->setEnabled( i, false );
 	}
 	menuFile->addMenu ("Unload Weapon", menuUnloadWeapon);
-	
+
 	menuFile->addSeparator ();
 	menuFile->add ("Load Background Texture...", IDC_FILE_LOADBACKGROUNDTEX);
 	menuFile->add ("Load Ground Texture...", IDC_FILE_LOADGROUNDTEX);
@@ -450,7 +450,7 @@ void MDLViewer::LoadModelFile( const char *pszFile, int slot )
 				mxMessageBox (this, "Error loading model.", g_appTitle, MX_MB_ERROR | MX_MB_OK);
 				break;
 			}
-			
+
 			case LoadModel_PostLoadFail:
 			{
 				mxMessageBox (this, "Error post-loading model.", g_appTitle, MX_MB_ERROR | MX_MB_OK);
@@ -489,7 +489,7 @@ void MDLViewer::LoadModelFile( const char *pszFile, int slot )
 		setLabel( "%s", filename );
 	}
 	else
-	{	
+	{
 		mb->modify (IDC_FILE_UNLOADMERGEDMODEL1 + slot, IDC_FILE_UNLOADMERGEDMODEL1 + slot, pszFile);
 		mb->setEnabled (IDC_FILE_UNLOADMERGEDMODEL1 + slot, true);
 	}
@@ -605,7 +605,7 @@ int
 MDLViewer::handleEvent (mxEvent *event)
 {
 	MDLCACHE_CRITICAL_SECTION_( g_pMDLCache );
-	
+
 	switch (event->event)
 	{
 	case mxEvent::Action:
@@ -698,7 +698,7 @@ MDLViewer::handleEvent (mxEvent *event)
 				g_pStudioExtraModel[i] = NULL;
 
 				mb->modify (IDC_FILE_UNLOADMERGEDMODEL1 + i, IDC_FILE_UNLOADMERGEDMODEL1 + i, "(empty)");
-				mb->setEnabled (IDC_FILE_UNLOADMERGEDMODEL1 + i, false);					
+				mb->setEnabled (IDC_FILE_UNLOADMERGEDMODEL1 + i, false);
 			}
 		}
 		break;
@@ -1130,7 +1130,7 @@ void MDLViewer::handleIpcCommand( char *szCommand )
 		char szFirstPart[32];
 		sscanf( szCommand, "%s %f %f %f %f %f %f",
 			szFirstPart,
-			&vMayaPos.x, &vMayaPos.y, &vMayaPos.z, 
+			&vMayaPos.x, &vMayaPos.y, &vMayaPos.z,
 			&vMayaRot.x, &vMayaRot.y, &vMayaRot.z );
 
 
@@ -1138,7 +1138,7 @@ void MDLViewer::handleIpcCommand( char *szCommand )
 		// Obviously, this could all be simplified, but it's nice to make it easy to see what it's doing here.
 		//
 
-		
+
 		// Translate the camera position/angles from Maya space to model space.
 		// In model space, +X=forward, +Y=left, and +Z=up
 		// (i.e. the model faces forward along +X)
@@ -1163,10 +1163,10 @@ void MDLViewer::handleIpcCommand( char *szCommand )
 		// Concatenate.
 		MatrixMultiply( mModelToCameraRot, mModelToCameraTrans, mModelToCameraFull );
 
-		
+
 		// Now we need to convert the camera space from above to HLMV's specific camera space. This just means negating
 		// the X and Y axes because HLMV's camera space is (+X=back, +Y=left, +Z=up).
-		matrix3x4_t mCameraToWorld( 
+		matrix3x4_t mCameraToWorld(
 			-1, 0, 0, 0,
 			0, -1, 0, 0,
 			0, 0, 1, 0 );
@@ -1253,7 +1253,7 @@ MDLViewer::redraw ()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int MDLViewer::GetCurrentHitboxSet( void )
@@ -1356,7 +1356,7 @@ bool CHLModelViewerApp::Create()
 	g_dxlevel = CommandLine()->ParmValue( "-dx", 0 );
 	g_bOldFileDialogs = ( CommandLine()->FindParm( "-olddialogs" ) != 0 );
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "materialsystem.dll",		MATERIAL_SYSTEM_INTERFACE_VERSION },
 		{ "studiorender.dll",		STUDIO_RENDER_INTERFACE_VERSION },
@@ -1370,7 +1370,7 @@ bool CHLModelViewerApp::Create()
 		{ "", "" }	// Required to terminate the list
 	};
 
-	if ( !AddSystems( appSystems ) ) 
+	if ( !AddSystems( appSystems ) )
 		return false;
 
 	g_pFileSystem = (IFileSystem*)FindSystem( FILESYSTEM_INTERFACE_VERSION );
@@ -1379,7 +1379,7 @@ bool CHLModelViewerApp::Create()
 	g_pStudioRender = (IStudioRender*)FindSystem( STUDIO_RENDER_INTERFACE_VERSION );
 	g_pDataCache = (IDataCache*)FindSystem( DATACACHE_INTERFACE_VERSION );
 	g_pMDLCache = (IMDLCache*)FindSystem( MDLCACHE_INTERFACE_VERSION );
-	g_pStudioDataCache = (IStudioDataCache*)FindSystem( STUDIO_DATA_CACHE_INTERFACE_VERSION ); 
+	g_pStudioDataCache = (IStudioDataCache*)FindSystem( STUDIO_DATA_CACHE_INTERFACE_VERSION );
 	physcollision = (IPhysicsCollision *)FindSystem( VPHYSICS_COLLISION_INTERFACE_VERSION );
 	physprop = (IPhysicsSurfaceProps *)FindSystem( VPHYSICS_SURFACEPROPS_INTERFACE_VERSION );
 	g_pSoundEmitterBase = (ISoundEmitterSystemBase *)FindSystem( SOUNDEMITTERSYSTEM_INTERFACE_VERSION );
@@ -1391,12 +1391,12 @@ bool CHLModelViewerApp::Create()
 	}
 
 	const char *pShaderDLL = CommandLine()->ParmValue("-shaderdll");
-    const char *pArg;
+	const char *pArg;
 	if ( CommandLine()->CheckParm( "-shaderapi", &pArg ))
 	{
 		pShaderDLL = pArg;
 	}
-	
+
 	if(!pShaderDLL)
 	{
 		pShaderDLL = "shaderapidx9.dll";
@@ -1458,10 +1458,10 @@ bool CHLModelViewerApp::PreInit( )
 	g_bOldFileDialogs = true;
 	if ( CommandLine()->FindParm( "-NoSteamdDialog" ) )
 		g_bOldFileDialogs = false;
-	
+
 	LoadFileSystemDialogModule();
 
-	return true; 
+	return true;
 }
 
 void CHLModelViewerApp::PostShutdown()
@@ -1628,4 +1628,3 @@ BOOL CHlmvIpcServer::ExecuteCommand(CUtlBuffer &cmd, CUtlBuffer &res)
 	res.PutInt( 0 );
 	return TRUE;
 }
-

@@ -37,7 +37,7 @@ bool DefaultConditionalSymbolProc( const char *pKey )
 	{
 		return IsPlatformWindowsPC();
 	}
-	
+
 	if ( !V_stricmp( pKey, "X360" ) )
 	{
 		return IsX360();
@@ -61,8 +61,8 @@ bool DefaultConditionalSymbolProc( const char *pKey )
 	if ( !V_stricmp( pKey, "POSIX" ) )
 	{
 		return IsPlatformPosix();
-	}	
-	
+	}
+
 	if ( !V_stricmp( pKey, "GAMECONSOLE" ) )
 	{
 		return IsGameConsole();
@@ -113,10 +113,10 @@ char CExpressionEvaluator::GetNextToken( void )
 	// while whitespace, Increment CurrentPosition
 	while ( m_pExpression[m_CurPosition] == ' ' )
 		++m_CurPosition;
-    
+
 	// CurrentToken = Expression[CurrentPosition]
 	m_CurToken = m_pExpression[m_CurPosition++];
-  
+
 	return m_CurToken;
 }
 
@@ -280,7 +280,7 @@ bool CExpressionEvaluator::MakeFactor( ExprTree &tree )
 	}
 	else if ( IsIdentifierOrConstant( m_CurToken ) )
 	{
-		// Make a literal node, set Tree to point to it, set left/right children to NULL. 
+		// Make a literal node, set Tree to point to it, set left/right children to NULL.
 		if ( !MakeExprNode( tree, m_CurToken, LITERAL, NULL, NULL ) )
 		{
 			return false;
@@ -415,14 +415,14 @@ bool CExpressionEvaluator::SimplifyNode( ExprTree& node )
 		// the child of '!' is always to the right
 		node->data.value = !rightVal;
 		break;
-	
+
 	case CONDITIONAL:
 		if ( node->data.cond == AND_OP )
 		{
 			node->data.value = leftVal && rightVal;
 		}
 		else // OR_OP
-		{	
+		{
 			node->data.value = leftVal || rightVal;
 		}
 		break;
@@ -453,7 +453,7 @@ bool CExpressionEvaluator::Evaluate( bool &bResult, const char *pInfixExpression
 	{
 		int len = V_strlen( pInfixExpression );
 
-		// SECURITY: Bail on input buffers that are too large, they're used for RCEs and we don't 
+		// SECURITY: Bail on input buffers that are too large, they're used for RCEs and we don't
 		// need to support them.
 		if ( len + 1 > ARRAYSIZE( szCleanToken ) )
 		{
@@ -491,11 +491,3 @@ bool CExpressionEvaluator::Evaluate( bool &bResult, const char *pInfixExpression
 
 	return bValid;
 }
-
-
-
-
-
-
-
-

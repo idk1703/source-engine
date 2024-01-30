@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -52,7 +52,7 @@ public:
 	{
 		return k_ERunResultOkay;
 	}
-	
+
 	// returns true if the player is currently connected to a game server
 	virtual bool IsInGame()
 	{
@@ -202,4 +202,3 @@ EXPOSE_SINGLE_INTERFACE(CRunGameEngine, IRunGameEngine, RUNGAMEENGINE_INTERFACE_
 //EXPOSE_SINGLE_INTERFACE(CRunGameEngine, IRunGameEngine_Old, RUNGAMEENGINE_INTERFACE_VERSION_OLD);
 //#endif
 //}
-

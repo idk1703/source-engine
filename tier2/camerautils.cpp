@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "tier2/camerautils.h"
@@ -81,7 +81,7 @@ void ComputeProjectionMatrix( VMatrix *pCameraToProjection, const Camera_t &came
 //-----------------------------------------------------------------------------
 // Computes the screen space position given a screen size
 //-----------------------------------------------------------------------------
-void ComputeScreenSpacePosition( Vector2D *pScreenPosition, const Vector &vecWorldPosition, 
+void ComputeScreenSpacePosition( Vector2D *pScreenPosition, const Vector &vecWorldPosition,
 	const Camera_t &camera, int width, int height )
 {
 	VMatrix view, proj, viewproj;
@@ -95,5 +95,3 @@ void ComputeScreenSpacePosition( Vector2D *pScreenPosition, const Vector &vecWor
 	pScreenPosition->x = ( vecScreenPos.x + 1.0f ) * width / 2.0f;
 	pScreenPosition->y = ( -vecScreenPos.y + 1.0f ) * height / 2.0f;
 }
-
-

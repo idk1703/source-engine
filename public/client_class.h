@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -55,7 +55,7 @@ public:
 		m_pCreateFn		= createFn;
 		m_pCreateEventFn= createEventFn;
 		m_pRecvTable	= pRecvTable;
-		
+
 		// Link it in
 		m_pNext				= g_pClientClassHead;
 		g_pClientClassHead	= this;
@@ -88,7 +88,7 @@ public:
 
 
 #define DECLARE_CLIENTCLASS_NOBASE ALLOW_DATATABLES_PRIVATE_ACCESS
-	
+
 // This macro adds a ClientClass to the linked list in g_pClientClassHead (so
 // the list can be given to the engine).
 // Use this macro to expose your client class to the engine.
@@ -125,7 +125,7 @@ public:
 #define IMPLEMENT_CLIENTCLASS_DT_NOBASE(clientClassName, dataTable, serverClassName)\
 	IMPLEMENT_CLIENTCLASS(clientClassName, dataTable, serverClassName)\
 	BEGIN_RECV_TABLE_NOBASE(clientClassName, dataTable)
-	
+
 
 // Using IMPLEMENT_CLIENTCLASS_EVENT means the engine thinks the entity is an event so the entity
 // is responsible for freeing itself.

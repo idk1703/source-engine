@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -38,7 +38,7 @@ class CTFDecapitationMeleeWeaponBase : public CTFWeaponBaseMelee
 public:
 
 	DECLARE_CLASS( CTFDecapitationMeleeWeaponBase, CTFWeaponBaseMelee );
-	
+
 	CTFDecapitationMeleeWeaponBase();
 
 	virtual void		Precache( void );
@@ -79,7 +79,7 @@ class CTFSword : public CTFDecapitationMeleeWeaponBase
 public:
 
 	DECLARE_CLASS( CTFSword, CTFDecapitationMeleeWeaponBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFSword() {}
@@ -90,7 +90,7 @@ public:
 	virtual int			GetSwordHealthMod();
 	virtual int			GetSwingRange( void );
 	virtual void		OnDecapitation( CTFPlayer *pDeadPlayer );
-	
+
 	virtual bool		Deploy( void );
 
 	float				GetProgress( void ) { return 0.f; }
@@ -120,7 +120,7 @@ class CTFKatana : public CTFDecapitationMeleeWeaponBase
 public:
 
 	DECLARE_CLASS( CTFKatana, CTFDecapitationMeleeWeaponBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFKatana();
@@ -134,7 +134,7 @@ public:
 
 protected:
 	virtual int		GetSkinOverride() const;
-	
+
 private:
 	CNetworkVar( bool, m_bIsBloody );
 };

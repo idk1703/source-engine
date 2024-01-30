@@ -324,7 +324,7 @@ float4 SampleMorphDelta( sampler2D vt, const float3 vMorphTargetTextureDim, cons
 	float4 t;
 	t.x = vMorphSubrect.x + vMorphTargetTextureDim.z * flColumn + flField + 0.5f;
 	t.y = vMorphSubrect.y + flVertexID - flColumn * vMorphSubrect.w + 0.5f;
-	t.xy /= vMorphTargetTextureDim.xy;	
+	t.xy /= vMorphTargetTextureDim.xy;
 	t.z = t.w = 0.f;
 
 	return tex2Dlod( vt, t );
@@ -338,7 +338,7 @@ void SampleMorphDelta2( sampler2D vt, const float3 vMorphTargetTextureDim, const
 	float4 t;
 	t.x = vMorphSubrect.x + vMorphTargetTextureDim.z * flColumn + 0.5f;
 	t.y = vMorphSubrect.y + flVertexID - flColumn * vMorphSubrect.w + 0.5f;
-	t.xy /= vMorphTargetTextureDim.xy;	
+	t.xy /= vMorphTargetTextureDim.xy;
 	t.z = t.w = 0.f;
 
 	delta1 = tex2Dlod( vt, t );
@@ -372,7 +372,7 @@ bool ApplyMorph( float3 vPosFlex, float3 vNormalFlex, inout float3 vPosition, in
 	return true;
 }
 
-bool ApplyMorph( float3 vPosFlex, float3 vNormalFlex, 
+bool ApplyMorph( float3 vPosFlex, float3 vNormalFlex,
 	inout float3 vPosition, inout float3 vNormal, inout float3 vTangent )
 {
 	// Flexes coming in from a separate stream
@@ -384,7 +384,7 @@ bool ApplyMorph( float3 vPosFlex, float3 vNormalFlex,
 	return true;
 }
 
-bool ApplyMorph( float4 vPosFlex, float3 vNormalFlex, 
+bool ApplyMorph( float4 vPosFlex, float3 vNormalFlex,
 	inout float3 vPosition, inout float3 vNormal, inout float3 vTangent, out float flWrinkle )
 {
 	// Flexes coming in from a separate stream
@@ -402,7 +402,7 @@ bool ApplyMorph( float4 vPosFlex, float3 vNormalFlex,
 
 #ifdef SHADER_MODEL_VS_3_0
 
-bool ApplyMorph( sampler2D morphSampler, const float3 vMorphTargetTextureDim, const float4 vMorphSubrect, 
+bool ApplyMorph( sampler2D morphSampler, const float3 vMorphTargetTextureDim, const float4 vMorphSubrect,
 				const float flVertexID, const float3 vMorphTexCoord,
 				inout float3 vPosition )
 {
@@ -424,9 +424,9 @@ bool ApplyMorph( sampler2D morphSampler, const float3 vMorphTargetTextureDim, co
 	return false;
 #endif
 }
- 
-bool ApplyMorph( sampler2D morphSampler, const float3 vMorphTargetTextureDim, const float4 vMorphSubrect, 
-				const float flVertexID, const float3 vMorphTexCoord, 
+
+bool ApplyMorph( sampler2D morphSampler, const float3 vMorphTargetTextureDim, const float4 vMorphSubrect,
+				const float flVertexID, const float3 vMorphTexCoord,
 				inout float3 vPosition, inout float3 vNormal )
 {
 #if MORPHING
@@ -452,8 +452,8 @@ bool ApplyMorph( sampler2D morphSampler, const float3 vMorphTargetTextureDim, co
 #endif
 }
 
-bool ApplyMorph( sampler2D morphSampler, const float3 vMorphTargetTextureDim, const float4 vMorphSubrect, 
-				const float flVertexID, const float3 vMorphTexCoord, 
+bool ApplyMorph( sampler2D morphSampler, const float3 vMorphTargetTextureDim, const float4 vMorphSubrect,
+				const float flVertexID, const float3 vMorphTexCoord,
 				inout float3 vPosition, inout float3 vNormal, inout float3 vTangent )
 {
 #if MORPHING
@@ -528,7 +528,7 @@ float RangeFog( const float3 projPos )
 float WaterFog( const float3 worldPos, const float3 projPos )
 {
 	float4 tmp;
-	
+
 	tmp.xy = cEyePosWaterZ.wz - worldPos.z;
 
 	// tmp.x is the distance from the water surface to the vert
@@ -536,7 +536,7 @@ float WaterFog( const float3 worldPos, const float3 projPos )
 
 	// if $tmp.x < 0, then set it to 0
 	// This is the equivalent of moving the vert to the water surface if it's above the water surface
-	
+
 	tmp.x = max( 0.0f, tmp.x );
 
 	// $tmp.w = $tmp.x / $tmp.y
@@ -614,9 +614,9 @@ float4 DecompressBoneWeights( const float4 weights )
 	return result;
 }
 
-void SkinPosition( bool bSkinning, const float4 modelPos, 
-                   const float4 boneWeights, float4 fBoneIndices,
-				   out float3 worldPos )
+void SkinPosition( bool bSkinning, const float4 modelPos,
+	const float4 boneWeights, float4 fBoneIndices,
+				out float3 worldPos )
 {
 #if !defined( _X360 )
 	int3 boneIndices = D3DCOLORtoUBYTE4( fBoneIndices );
@@ -626,9 +626,9 @@ void SkinPosition( bool bSkinning, const float4 modelPos,
 
 	// Needed for invariance issues caused by multipass rendering
 #if defined( _X360 )
-	[isolate] 
+	[isolate]
 #endif
-	{ 
+	{
 		if ( !bSkinning )
 		{
 			worldPos = mul4x3( modelPos, cModel[0] );
@@ -649,14 +649,14 @@ void SkinPosition( bool bSkinning, const float4 modelPos,
 }
 
 void SkinPositionAndNormal( bool bSkinning, const float4 modelPos, const float3 modelNormal,
-                            const float4 boneWeights, float4 fBoneIndices,
-						    out float3 worldPos, out float3 worldNormal )
+	const float4 boneWeights, float4 fBoneIndices,
+						out float3 worldPos, out float3 worldNormal )
 {
 	// Needed for invariance issues caused by multipass rendering
 #if defined( _X360 )
-	[isolate] 
+	[isolate]
 #endif
-	{ 
+	{
 
 #if !defined( _X360 )
 		int3 boneIndices = D3DCOLORtoUBYTE4( fBoneIndices );
@@ -688,12 +688,12 @@ void SkinPositionAndNormal( bool bSkinning, const float4 modelPos, const float3 
 
 // Is it worth keeping SkinPosition and SkinPositionAndNormal around since the optimizer
 // gets rid of anything that isn't used?
-void SkinPositionNormalAndTangentSpace( 
+void SkinPositionNormalAndTangentSpace(
 							bool bSkinning,
-						    const float4 modelPos, const float3 modelNormal, 
+						const float4 modelPos, const float3 modelNormal,
 							const float4 modelTangentS,
-                            const float4 boneWeights, float4 fBoneIndices,
-						    out float3 worldPos, out float3 worldNormal, 
+	const float4 boneWeights, float4 fBoneIndices,
+						out float3 worldPos, out float3 worldNormal,
 							out float3 worldTangentS, out float3 worldTangentT )
 {
 #if !defined( _X360 )
@@ -704,9 +704,9 @@ void SkinPositionNormalAndTangentSpace(
 
 	// Needed for invariance issues caused by multipass rendering
 #if defined( _X360 )
-	[isolate] 
+	[isolate]
 #endif
-	{ 
+	{
 		if ( !bSkinning )
 		{
 			worldPos = mul4x3( modelPos, cModel[0] );
@@ -742,8 +742,8 @@ float3 AmbientLight( const float3 worldNormal )
 	int3 isNegative = ( worldNormal < 0.0 );
 	float3 linearColor;
 	linearColor = nSquared.x * cAmbientCubeX[isNegative.x] +
-	              nSquared.y * cAmbientCubeY[isNegative.y] +
-	              nSquared.z * cAmbientCubeZ[isNegative.z];
+	nSquared.y * cAmbientCubeY[isNegative.y] +
+	nSquared.z * cAmbientCubeZ[isNegative.z];
 	return linearColor;
 }
 
@@ -850,8 +850,8 @@ float3 DoLightInternal( const float3 worldPos, const float3 worldNormal, int lig
 }
 
 float3 DoLighting( const float3 worldPos, const float3 worldNormal,
-				   const float3 staticLightingColor, const bool bStaticLight,
-				   const bool bDynamicLight, bool bHalfLambert )
+				const float3 staticLightingColor, const bool bStaticLight,
+				const bool bDynamicLight, bool bHalfLambert )
 {
 	float3 linearColor = float3( 0.0f, 0.0f, 0.0f );
 
@@ -870,7 +870,7 @@ float3 DoLighting( const float3 worldPos, const float3 worldNormal,
 		for (int i = 0; i < g_nLightCount; i++)
 		{
 			linearColor += DoLightInternal( worldPos, worldNormal, i, bHalfLambert );
-		}		
+		}
 	}
 
 	if( bDynamicLight )
@@ -882,8 +882,8 @@ float3 DoLighting( const float3 worldPos, const float3 worldNormal,
 }
 
 float3 DoLightingUnrolled( const float3 worldPos, const float3 worldNormal,
-				  const float3 staticLightingColor, const bool bStaticLight,
-				  const bool bDynamicLight, bool bHalfLambert, const int nNumLights )
+				const float3 staticLightingColor, const bool bStaticLight,
+				const bool bDynamicLight, bool bHalfLambert, const int nNumLights )
 {
 	float3 linearColor = float3( 0.0f, 0.0f, 0.0f );
 
@@ -939,7 +939,7 @@ float2 ComputeSphereMapTexCoords( in float3 reflectionVector )
 #define DEFORMATION_CLAMP_TO_BOX_IN_WORLDSPACE 1
 							// minxyz.minsoftness / maxxyz.maxsoftness
 float3 ApplyDeformation( float3 worldpos, int deftype, float4 defparms0, float4 defparms1,
-						 float4 defparms2, float4 defparms3 )
+						float4 defparms2, float4 defparms3 )
 {
 	float3 ret = worldpos;
 	if ( deftype == DEFORMATION_CLAMP_TO_BOX_IN_WORLDSPACE )

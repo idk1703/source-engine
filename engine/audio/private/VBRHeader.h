@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -46,7 +46,7 @@ private:
 	static bool CheckVBRI( CMPAFile* pMPAFile, uint32& dwOffset );
 
 	bool ExtractLAMETag( uint32 dwOffset );
-	bool ExtractXINGHeader( uint32 dwOffset );	
+	bool ExtractXINGHeader( uint32 dwOffset );
 	bool ExtractVBRIHeader( uint32 dwOffset );
 
 	uint32 SeekPointXING(float fPercent)const ;
@@ -54,18 +54,18 @@ private:
 	uint32 SeekPointByTimeVBRI(float fEntryTimeMS) const;
 
 	CMPAFile* m_pMPAFile;
-public:	
+public:
 	VBRHeaderType m_HeaderType;
 	uint32 m_dwOffset;
 	uint32 m_dwQuality;	// quality (0..100)
 	int* m_pnToc;				// TOC points for seeking (must be freed)
-	uint32 m_dwTableSize;	// size of table (number of entries)	
+	uint32 m_dwTableSize;	// size of table (number of entries)
 
 	// only VBRI
-	float m_fDelay;	
+	float m_fDelay;
 	uint32 m_dwTableScale;	// for seeking
 	uint32 m_dwBytesPerEntry;
-    uint32 m_dwFramesPerEntry;
+	uint32 m_dwFramesPerEntry;
 	uint32 m_dwVersion;
 };
 

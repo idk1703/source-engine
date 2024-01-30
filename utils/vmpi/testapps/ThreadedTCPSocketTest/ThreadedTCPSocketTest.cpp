@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -33,7 +33,7 @@ SpewRetval_t MySpewFunc( SpewType_t type, char const *pMsg )
 		printf( "%s", pMsg );
 		OutputDebugString( pMsg );
 
-	csLock.Unlock();	
+	csLock.Unlock();
 
 	if( type == SPEW_ASSERT )
 		return SPEW_DEBUGGER;
@@ -50,7 +50,7 @@ public:
 	virtual void Init( IThreadedTCPSocket *pSocket )
 	{
 	}
-	
+
 	virtual void OnPacketReceived( CTCPPacket *pPacket )
 	{
 		// Echo the data back.
@@ -72,12 +72,12 @@ public:
 	virtual void Init( IThreadedTCPSocket *pSocket )
 	{
 	}
-	
+
 	virtual void OnPacketReceived( CTCPPacket *pPacket )
 	{
 		if ( g_ClientPacket.Count() < pPacket->GetLen() )
 			g_ClientPacket.SetSize( pPacket->GetLen() );
-		
+
 		memcpy( g_ClientPacket.Base(), pPacket->GetData(), pPacket->GetLen() );
 		g_ClientPacketEvent.SetEvent();
 		pPacket->Release();
@@ -125,19 +125,19 @@ int main(int argc, char* argv[])
 
 	g_ClientPacketEvent.Init( false, false );
 
-	
+
 	// Setup the "server".
 	CHandlerCreator_Server serverHandler;
 	CIPAddr addr( 127, 0, 0, 1, iPort );
 
-	ITCPConnectSocket *pListener = ThreadedTCP_CreateListener( 
+	ITCPConnectSocket *pListener = ThreadedTCP_CreateListener(
 		&serverHandler,
 		(unsigned short)iPort );
 
-	
+
 	// Setup the "client".
 	CHandlerCreator_Client clientCreator;
-	ITCPConnectSocket *pConnector = ThreadedTCP_CreateConnector( 
+	ITCPConnectSocket *pConnector = ThreadedTCP_CreateConnector(
 		CIPAddr( 127, 0, 0, 1, iPort ),
 		CIPAddr(),
 		&clientCreator );
@@ -190,9 +190,8 @@ int main(int argc, char* argv[])
 			Msg( "Packet %d, %d bytes, %dk/sec\n", iPacket++, size, (int)(((totalBytes+511)/1024) / flSeconds) );
 		}
 	}
-	
+
 	g_pClientSocket->Release();
 	g_pServerSocket->Release();
 	return 0;
 }
-

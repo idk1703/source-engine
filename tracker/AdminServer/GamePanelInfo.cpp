@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -42,7 +42,7 @@
 using namespace vgui;
 
 static const long RETRY_TIME = 10000;		// refresh server every 10 seconds
-static const long MAP_CHANGE_TIME = 20000;		// refresh 20 seconds after a map change 
+static const long MAP_CHANGE_TIME = 20000;		// refresh 20 seconds after a map change
 static const long RESTART_TIME = 60000;		// refresh 60 seconds after a "_restart"
 
 #include "IManageServer.h"
@@ -64,7 +64,7 @@ CGamePanelInfo::CGamePanelInfo(vgui::Panel *parent, const char *name, const char
 	// Each image file is named ss1, ss2, ss3... ss20, one image for each frame of the animation.
 	// This loads the 20 images in to the Animation class.
 	m_pAnimImagePanel->LoadAnimation("resource\\steam\\g", 12);
-	
+
 	//!! animation temporarily disabled until UI pass done
 	//m_pAnimImagePanel->StartAnimation();
 	m_pAnimImagePanel->SetVisible(false);
@@ -81,7 +81,7 @@ CGamePanelInfo::CGamePanelInfo(vgui::Panel *parent, const char *name, const char
 	m_pServerConfigPanel = new CServerConfigPanel(this, "ServerConfigPanel", mod);
 	m_pGraphsPanel = new CGraphPanel(this,"GraphsPanel");
 	m_pServerInfoPanel = new CServerInfoPanel(this, "ServerInfo");
-	
+
 	if ( CommandLine()->CheckParm( "-BudgetPanel" ) )
 		m_pBudgetPanel = new CBudgetPanelContainer( this, "BudgetPanel" );
 	else
@@ -94,7 +94,7 @@ CGamePanelInfo::CGamePanelInfo(vgui::Panel *parent, const char *name, const char
 	m_pDetailsSheet->AddPage(m_pGraphsPanel,"#Game_Server_Statistics");
 	m_pDetailsSheet->AddPage(m_pPlayerListPanel,"#Game_Current_Players");
 	m_pDetailsSheet->AddPage(m_pBanListPanel,"#Game_Bans");
-	
+
 	if ( m_pBudgetPanel )
 		m_pDetailsSheet->AddPage(m_pBudgetPanel,"#Game_Budgets");
 
@@ -108,13 +108,13 @@ CGamePanelInfo::CGamePanelInfo(vgui::Panel *parent, const char *name, const char
 	LoadControlSettingsAndUserConfig("Admin\\DialogGamePanelInfo.res");
 
 	SetNewTitle(false, name);
-	SetVisible(true);	
-	
+	SetVisible(true);
+
 	MoveToCenterOfScreen();
 	RequestFocus();
 	MoveToFront();
 
-	//!! hack, force the server info panel to refresh fast 
+	//!! hack, force the server info panel to refresh fast
 	// because the info it receives while loading the server is wrong
 	PostMessage(m_pServerInfoPanel, new KeyValues("ResetData"), 0.1f);
 }
@@ -145,7 +145,7 @@ void CGamePanelInfo::SetNewTitle(bool connectionFailed, const char *additional_t
 	g_pVGuiLocalize->ConvertANSIToUnicode(additional_text, serverName, sizeof(serverName));
 	wchar_t title[256];
 	g_pVGuiLocalize->ConstructString(title, sizeof(title), g_pVGuiLocalize->Find(localized_title), 1, serverName);
-	
+
 	SetTitle(title, true);
 }
 
@@ -188,7 +188,7 @@ void CGamePanelInfo::OnTick()
 //-----------------------------------------------------------------------------
 void CGamePanelInfo::OnCommand(const char *command)
 {
-	if (!stricmp(command, "stop2")) 
+	if (!stricmp(command, "stop2"))
 	{
 		RemoteServer().SendCommand("quit");
 		m_bShuttingDown = true;
@@ -204,7 +204,7 @@ void CGamePanelInfo::OnCommand(const char *command)
 // Purpose: produces a dialog asking a player to enter a new ban
 //-----------------------------------------------------------------------------
 void CGamePanelInfo::OnStop()
-{	
+{
 	QueryBox *box = new QueryBox("#Game_Stop_Server_Title", "#Game_Restart_Server");
 	box->AddActionSignalTarget(this);
 	box->SetOKButtonText("#Game_Stop_Server");

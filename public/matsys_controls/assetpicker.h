@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -30,7 +30,7 @@ class CAssetPicker : public CBaseAssetPicker
 	DECLARE_CLASS_SIMPLE( CAssetPicker, CBaseAssetPicker );
 
 public:
-	CAssetPicker( vgui::Panel *pParent, const char *pAssetType, 
+	CAssetPicker( vgui::Panel *pParent, const char *pAssetType,
 		const char *pExt, const char *pSubDir, const char *pTextType );
 };
 
@@ -43,7 +43,7 @@ class CAssetPickerFrame : public CBaseAssetPickerFrame
 	DECLARE_CLASS_SIMPLE( CAssetPickerFrame, CBaseAssetPickerFrame );
 
 public:
-	CAssetPickerFrame( vgui::Panel *pParent, const char *pTitle, 
+	CAssetPickerFrame( vgui::Panel *pParent, const char *pTitle,
 		const char *pAssetType, const char *pExt, const char *pSubDir, const char *pTextType );
 };
 

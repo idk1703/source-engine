@@ -15,7 +15,7 @@
 #define FLATBED_MINS			Vector(-30, -50, -10)
 #define FLATBED_MAXS			Vector( 30,  50, 55)
 #define FLATBED_MODEL			"models/objects/obj_flatbed.mdl"
-  
+
 IMPLEMENT_SERVERCLASS_ST(CVehicleFlatbed, DT_VehicleFlatbed)
 END_SEND_TABLE();
 
@@ -27,7 +27,7 @@ ConVar	vehicle_flatbed_health( "vehicle_flatbed_health","800", FCVAR_NONE, "Flat
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CVehicleFlatbed::CVehicleFlatbed()
 {
@@ -36,25 +36,25 @@ CVehicleFlatbed::CVehicleFlatbed()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleFlatbed::Precache()
 {
 	PrecacheModel( FLATBED_MODEL );
 
 	PrecacheVGuiScreen( "screen_vehicle_battering_ram" );
-	
+
 	BaseClass::Precache();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleFlatbed::Spawn()
 {
 	SetModel( FLATBED_MODEL );
-	
+
 	// This size is used for placement only...
 	UTIL_SetSize(this, FLATBED_MINS, FLATBED_MAXS);
 	m_takedamage = DAMAGE_YES;
@@ -74,5 +74,3 @@ void CVehicleFlatbed::GetControlPanelInfo( int nPanelIndex, const char *&pPanelN
 {
 	pPanelName = "screen_vehicle_battering_ram";
 }
-
-

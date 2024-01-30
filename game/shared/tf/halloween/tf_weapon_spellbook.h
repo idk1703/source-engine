@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -38,7 +38,7 @@
 	#define CTFProjectile_SpellTransposeTeleport	C_TFProjectile_SpellTransposeTeleport
 	#define CTFProjectile_SpellLightningOrb			C_TFProjectile_SpellLightningOrb
 	#define CTFProjectile_SpellVortex				C_TFProjectile_SpellVortex
-	
+
 	#define CTFProjectile_SpellKartOrb				C_TFProjectile_SpellKartOrb
 	#define CTFProjectile_SpellKartBats				C_TFProjectile_SpellKartBats
 	#define CTFProjectile_SpellKartMirv				C_TFProjectile_SpellKartMirv
@@ -124,18 +124,18 @@ class CTFSpellBook : public CTFThrowable
 {
 public:
 	DECLARE_CLASS( CTFSpellBook, CTFThrowable );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFSpellBook();
 	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_SPELLBOOK; }
 	virtual const char*	GetEffectLabelText( void )			{ return "#TF_KART"; }
 	virtual void		Precache( void );
-	
+
 	virtual void		PrimaryAttack();
 	virtual void		ItemPostFrame( void );
 
-	virtual void		ItemBusyFrame( void );		
+	virtual void		ItemBusyFrame( void );
 	virtual void		ItemHolsterFrame( void );
 
 	virtual bool		ShowHudElement ()								{ return false; }
@@ -164,9 +164,9 @@ public:
 
 	// Projectile Creation
 	virtual void	TossJarThink( void );
-	virtual void	CreateSpellRocket( const Vector &position, const QAngle &angles, const Vector &velocity, 
+	virtual void	CreateSpellRocket( const Vector &position, const QAngle &angles, const Vector &velocity,
 		const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo );
-	virtual void	CreateSpellJar( const Vector &position, const QAngle &angles, const Vector &velocity, 
+	virtual void	CreateSpellJar( const Vector &position, const QAngle &angles, const Vector &velocity,
 		const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo );
 
 	// Spell Helpers
@@ -174,7 +174,7 @@ public:
 	void			RollNewSpell( int iTier, bool bForceReroll = false );
 	void			SetSelectedSpell( int index );
 	void			SpeakSpellConceptIfAllowed();
-	
+
 	// Spells
 	void			CastKartSpell();
 	bool			CastSpell( CTFPlayer *pPlayer, int iSpellIndex );
@@ -201,7 +201,7 @@ public:
 	static bool		CastRocketJump( CTFPlayer *pPlayer );
 	static bool		CastSelfSpeedBoost( CTFPlayer *pPlayer );
 	static bool		CastSelfStealth( CTFPlayer *pPlayer );
-	
+
 	static bool		CastKartRocketJump( CTFPlayer *pPlayer );
 	static bool		CastKartUber( CTFPlayer *pPlayer );
 	static bool		CastKartBombHead( CTFPlayer *pPlayer );

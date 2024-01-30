@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -24,7 +24,7 @@ public:
 
 	// favorites list, loads/saves into keyvalues
 	void LoadFavoritesList();
-	
+
 	// IGameList handlers
 	// returns true if the game list supports the specified ui elements
 	virtual bool SupportsItem(InterfaceItem_e item);

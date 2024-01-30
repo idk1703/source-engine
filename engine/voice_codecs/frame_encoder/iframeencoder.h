@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,11 +22,11 @@ public:
 	virtual bool	Init(int quality, int &rawFrameSize, int &encodedFrameSize) = 0;
 
 	virtual void	Release() = 0;
-	
+
 	// pUncompressed is 8-bit signed mono sound data with 'rawFrameSize' bytes.
 	// pCompressed is the size of encodedFrameSize.
 	virtual void	EncodeFrame(const char *pUncompressed, char *pCompressed) = 0;
-	
+
 	// pCompressed is encodedFrameSize.
 	// pDecompressed is where the 8-bit signed mono samples are stored and has space for 'rawFrameSize' bytes.
 	virtual void	DecodeFrame(const char *pCompressed, char *pDecompressed) = 0;

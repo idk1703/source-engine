@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -17,7 +17,7 @@ template <class T> class NTreeNode
 public:
 	// constructor
 	NTreeNode<T>( T data );
-	
+
 	NTreeNode<T> *PrependChild( NTreeNode<T> *node );
 	NTreeNode<T> *AppendChild( NTreeNode<T> *node );
 	NTreeNode<T> *InsertChildAfterIndex( NTreeNode<T> *node, int index );
@@ -38,7 +38,7 @@ public:
 	void Traverse( void (*VisitFunc)( T, int depth ), int maxTreeDepth );
 	NTreeNode<T> *ReentrantTraversalGetFirst( int maxTreeDepth );
 	NTreeNode<T> *ReentrantTraversalGetNext( void );
-	
+
 protected:
 	GList<NTreeNode<T> * > *list;
 	T data;
@@ -170,7 +170,7 @@ NTreeNode<T> *NTreeNode<T>::GetChild( Position position )
 	return list->GetItemAtIndex( position );
 }
 
-template <class T>	
+template <class T>
 int NTreeNode<T>::GetIndexRelativeToParent()
 {
 	if( !parent )
@@ -243,7 +243,7 @@ void NTreeNode<T>::Traverse( void (*VisitFunc)( T, int depth ), int maxTreeDepth
 	ArrayStack<NTreeNode<T> *> stack( maxTreeDepth );
 	NTreeNode<T> *current, *nextSibling;
 
-	stack.Push( this );	
+	stack.Push( this );
 	Visit( this->GetItem(), 0 );
 	while( !stack.IsEmpty() )
 	{
@@ -264,7 +264,7 @@ void NTreeNode<T>::Traverse( void (*VisitFunc)( T, int depth ), int maxTreeDepth
 			{
 				stack.Push( nextSibling );
 				Visit( nextSibling->GetItem(), stack.GetDepth() - 1 );
-			}	
+			}
 		}
 	}
 }
@@ -305,7 +305,7 @@ NTreeNode<T> *NTreeNode<T>::ReentrantTraversalGetNext( void )
 			{
 				reentrantStack->Push( nextSibling );
 				return nextSibling;
-			}	
+			}
 		}
 	}
 	delete reentrantStack;

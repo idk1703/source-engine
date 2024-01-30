@@ -51,7 +51,7 @@ extern bool		g_bAbortServerSet;
 extern ConVar	reload_materials;
 #endif
 
-typedef enum 
+typedef enum
 {
 	HS_NEW_GAME = 0,
 	HS_LOAD_GAME,
@@ -204,9 +204,9 @@ void HostState_GameShutdown()
 
 	// This will get called during shutdown, ignore it.
 	if ( g_HostState.m_currentState != HS_SHUTDOWN &&
-		 g_HostState.m_currentState != HS_RESTART &&
-		 g_HostState.m_currentState != HS_GAME_SHUTDOWN
-		 )
+		g_HostState.m_currentState != HS_RESTART &&
+		g_HostState.m_currentState != HS_GAME_SHUTDOWN
+		)
 	{
 		g_HostState.SetNextState( HS_GAME_SHUTDOWN );
 	}
@@ -377,11 +377,11 @@ void CHostState::State_LoadGame()
 {
 #ifndef SWDS
 	HostState_RunGameInit();
-	
+
 	if ( saverestore->LoadGame( m_saveName ) )
 	{
 		// succesfully started the new game
-        GetTestScriptMgr()->CheckPoint( "load_game" );
+	GetTestScriptMgr()->CheckPoint( "load_game" );
 		SetState( HS_RUN, true );
 		return;
 	}
@@ -393,7 +393,7 @@ void CHostState::State_LoadGame()
 	GameShutdown();
 	// run the server at the console
 	SetState( HS_RUN, true );
-	
+
 	if ( IsX360() )
 	{
 		// On the 360 we need to return to the background map
@@ -495,7 +495,7 @@ void CHostState::State_Run( float frameTime )
 	// Nice big timeout to play it safe while still ensuring that we don't get stuck in
 	// infinite loops.
 	int nTimerWaitSeconds = 60;
-	if ( s_bFirstRunFrame ) 
+	if ( s_bFirstRunFrame )
 	{
 		// The first frame can take a while especially during fork startup.
 		s_bFirstRunFrame = false;
@@ -527,7 +527,7 @@ void CHostState::State_Run( float frameTime )
 
 	case HS_SHUTDOWN:
 	case HS_RESTART:
-		// NOTE: The game must be shutdown before a new game can start, 
+		// NOTE: The game must be shutdown before a new game can start,
 		// before a game can load, and before the system can be shutdown.
 		// This is done here instead of pathfinding through a state transition graph.
 		// That would be equivalent as the only way to get from HS_RUN to HS_LOAD_GAME is through HS_GAME_SHUTDOWN.
@@ -592,7 +592,7 @@ void CHostState::State_Shutdown()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHostState::State_Restart( void )
 {
@@ -663,13 +663,13 @@ void CHostState::FrameUpdate( float time )
 			break;
 		}
 
-		// only do a single pass at HS_RUN per frame.  All other states loop until they reach HS_RUN 
+		// only do a single pass at HS_RUN per frame.  All other states loop until they reach HS_RUN
 		if ( oldState == HS_RUN )
 			break;
 
 		// shutting down
 		if ( oldState == HS_SHUTDOWN ||
-			 oldState == HS_RESTART )
+			oldState == HS_RESTART )
 			break;
 
 		// Only HS_RUN is allowed to persist across loops!!!
@@ -717,7 +717,7 @@ void CHostState::OnClientConnected()
 	if ( m_bRememberLocation )
 	{
 		m_bRememberLocation = false;
-		Cbuf_AddText( va( "setpos_exact %f %f %f\n", m_vecLocation.x, m_vecLocation.y, m_vecLocation.z ) ); 
+		Cbuf_AddText( va( "setpos_exact %f %f %f\n", m_vecLocation.x, m_vecLocation.y, m_vecLocation.z ) );
 		Cbuf_AddText( va( "setang_exact %f %f %f\n", m_angLocation.x, m_angLocation.y, m_angLocation.z ) );
 	}
 
@@ -736,7 +736,7 @@ void CHostState::OnClientConnected()
 		fp = g_pFileSystem->Open( "vidmemstats.txt", "a" );
 
 		g_pFileSystem->FPrintf( fp, "%s:\n", g_HostState.m_levelName );
-	
+
 #ifdef VPROF_ENABLED
 		CVProfile *pProf = &g_VProfCurrentProfile;
 
@@ -772,7 +772,7 @@ void CHostState::OnClientConnected()
 #endif
 }
 
-void CHostState::OnClientDisconnected() 
+void CHostState::OnClientDisconnected()
 {
 }
 
@@ -800,4 +800,3 @@ static bool Host_ValidGame( void )
 	ConDMsg("Unable to launch game\n");
 	return false;
 }
-

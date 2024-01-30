@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -78,7 +78,7 @@ public:
 	// Stripping
 	//
 public:
-	
+
 	//
 	// StripHardwareVertsBuffer
 	//	The main function that strips the vhv buffer
@@ -92,14 +92,14 @@ public:
 	//		mdlBuffer		- mdl buffer, updated
 	//
 	virtual bool StripModelBuffer( CUtlBuffer &mdlBuffer ) = 0;
-	
+
 	//
 	// StripVertexDataBuffer
 	//	The main function that strips the vvd buffer
 	//		vvdBuffer		- vvd buffer, updated, size reduced
 	//
 	virtual bool StripVertexDataBuffer( CUtlBuffer &vvdBuffer ) = 0;
-	
+
 	//
 	// StripOptimizedModelBuffer
 	//	The main function that strips the vtx buffer

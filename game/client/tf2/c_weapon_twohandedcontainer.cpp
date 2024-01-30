@@ -31,9 +31,9 @@ void C_WeaponTwoHandedContainer::ViewModelDrawn( C_BaseViewModel *pBaseViewModel
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool C_WeaponTwoHandedContainer::OnFireEvent( C_BaseViewModel *pViewModel, const Vector& origin, 
+bool C_WeaponTwoHandedContainer::OnFireEvent( C_BaseViewModel *pViewModel, const Vector& origin,
 											  const QAngle& angles, int event, const char *options )
 {
 	bool bRight = m_hRightWeapon->OnFireEvent( pViewModel, origin, angles, event, options );
@@ -43,7 +43,7 @@ bool C_WeaponTwoHandedContainer::OnFireEvent( C_BaseViewModel *pViewModel, const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_WeaponTwoHandedContainer::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -72,7 +72,7 @@ void C_WeaponTwoHandedContainer::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_WeaponTwoHandedContainer::HookWeaponEntities( void )
 {
@@ -157,7 +157,7 @@ void C_WeaponTwoHandedContainer::OverrideMouseInput( float *x, float *y )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_WeaponTwoHandedContainer::VisibleInWeaponSelection( void )

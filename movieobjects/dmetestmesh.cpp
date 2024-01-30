@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmetestmesh.h"
@@ -28,13 +28,13 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeTestMesh, CDmeTestMesh );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeTestMesh::OnConstruction()
 {
@@ -107,7 +107,7 @@ void CDmeTestMesh::CreateMesh()
 	meshBuilder.Begin( m_pMesh, MATERIAL_TRIANGLES, 8, 36 );
 
 	// Draw a simple cube
-	static Vector s_pPositions[8] = 
+	static Vector s_pPositions[8] =
 	{
 		Vector( -10, -10, -10 ),
 		Vector(  10, -10, -10 ),
@@ -119,7 +119,7 @@ void CDmeTestMesh::CreateMesh()
 		Vector(  10,  10,  10 ),
 	};
 
-	static Vector2D s_pTexCoords[8] = 
+	static Vector2D s_pTexCoords[8] =
 	{
 		Vector2D(   0,     0 ),
 		Vector2D(   0.5,   0 ),
@@ -131,7 +131,7 @@ void CDmeTestMesh::CreateMesh()
 		Vector2D(   1,     1 ),
 	};
 
-	static unsigned char s_pColor[8][3] = 
+	static unsigned char s_pColor[8][3] =
 	{
 		{ 255, 255, 255 },
 		{   0, 255, 255 },
@@ -143,7 +143,7 @@ void CDmeTestMesh::CreateMesh()
 		{ 0, 0, 0 },
 	};
 
-	static int s_pIndices[12][3] = 
+	static int s_pIndices[12][3] =
 	{
 		{ 0, 1, 5 }, { 0, 5, 4 },
 		{ 4, 5, 7 }, { 4, 7, 6 },
@@ -231,7 +231,7 @@ void CDmeTestMesh::Resolve()
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Loads the model matrix based on the transform
 //-----------------------------------------------------------------------------
@@ -280,7 +280,7 @@ void CDmeTestMesh::LoadModelMatrix( CDmeTransform *pTransform )
 // Edge subdivision always works in a uniform way: For each edge in the unsubdivided
 // mesh, 4 edges are created from the edge midpoint, connecting to the two
 // face midpoint vertices and the two edge endpoints. In order to maintain the
-// specific ordering of the edges described above, we define the edges in the 
+// specific ordering of the edges described above, we define the edges in the
 // following manner:
 //		* Subdivided edge 0 : Starts at face 0 midpoint, ends at edge midpoint
 //		* Subdivided edge 1 : Starts at edge midpoint, ends at face 1 midpoint
@@ -289,11 +289,11 @@ void CDmeTestMesh::LoadModelMatrix( CDmeTransform *pTransform )
 //
 // Face subdivision *also* always works in a uniform way: For each face in the
 // unsubdivided mesh, N new faces are created, one for each edge in the unsubdivided
-// face. The faces are ordered in a very specific way: 
-//	    * Subdivided face 0 : Starts at the face midpoint, goes to unsubdivided edge 0's midpoint, 
+// face. The faces are ordered in a very specific way:
+//	    * Subdivided face 0 : Starts at the face midpoint, goes to unsubdivided edge 0's midpoint,
 //								winds around the edge until it hits unsubdivided edge 1's midpoint,
 //								then heads back to the face midpoint.
-//	    * Subdivided face 1 : Starts at the face midpoint, goes to unsubdivided edge 1's midpoint, 
+//	    * Subdivided face 1 : Starts at the face midpoint, goes to unsubdivided edge 1's midpoint,
 //								winds around the edge until it hits unsubdivided edge 2's midpoint,
 //								then heads back to the face midpoint.
 //		etc.
@@ -332,7 +332,7 @@ struct SubdivMesh_t
 
 	// Positive values mean read from m_Edges[x], use m_pVertex[0] for leading vertex
 	// Negative values mean read from m_Edges[-1-x], use m_pVertex[1] for leading vertex
-	CUtlVector<int> m_EdgeIndices;	
+	CUtlVector<int> m_EdgeIndices;
 	CUtlVector<Face_t> m_Faces;
 
 	int m_nTotalIndexCount;
@@ -398,7 +398,7 @@ static void AddFaceMidpointsToMesh( const SubdivMesh_t &src, SubdivMesh_t &dest 
 
 		for ( int j = 0; j < nEdgeCount; ++j, ++nEdgeIndex )
 		{
-			// NOTE: Instead of calling GetLeadingEdgeVertex, 
+			// NOTE: Instead of calling GetLeadingEdgeVertex,
 			// I could add both vertices for each edge + multiply by 0.5
 			int nEdge = src.m_EdgeIndices[nEdgeIndex];
 
@@ -432,21 +432,21 @@ static void AddEdgeMidpointsToMesh( const SubdivMesh_t &src, SubdivMesh_t &dest 
 		vert.m_nValence = 4;
 
 		const SubdivVertex_t *pSrcVert = &src.m_Vertices[ edge.m_pVertex[0] ];
-		vert.m_vecPosition = pSrcVert->m_vecPosition; 
-		vert.m_vecTexCoord = pSrcVert->m_vecTexCoord; 
+		vert.m_vecPosition = pSrcVert->m_vecPosition;
+		vert.m_vecTexCoord = pSrcVert->m_vecTexCoord;
 
 		pSrcVert = &src.m_Vertices[ edge.m_pVertex[1] ];
-		vert.m_vecPosition += pSrcVert->m_vecPosition; 
-		vert.m_vecTexCoord += pSrcVert->m_vecTexCoord; 
+		vert.m_vecPosition += pSrcVert->m_vecPosition;
+		vert.m_vecTexCoord += pSrcVert->m_vecTexCoord;
 
 		// NOTE: We know that the first n vertices added to dest correspond to the src face midpoints
 		pSrcVert = &dest.m_Vertices[ edge.m_pFace[0] ];
-		vert.m_vecPosition += pSrcVert->m_vecPosition; 
-		vert.m_vecTexCoord += pSrcVert->m_vecTexCoord; 
+		vert.m_vecPosition += pSrcVert->m_vecPosition;
+		vert.m_vecTexCoord += pSrcVert->m_vecTexCoord;
 
 		pSrcVert = &dest.m_Vertices[ edge.m_pFace[1] ];
-		vert.m_vecPosition += pSrcVert->m_vecPosition; 
-		vert.m_vecTexCoord += pSrcVert->m_vecTexCoord; 
+		vert.m_vecPosition += pSrcVert->m_vecPosition;
+		vert.m_vecTexCoord += pSrcVert->m_vecTexCoord;
 
 		vert.m_vecPosition /= 4.0f;
 		vert.m_vecTexCoord /= 4.0f;
@@ -493,7 +493,7 @@ static void AddModifiedVerticesToMesh( const SubdivMesh_t &src, SubdivMesh_t &de
 			VectorMA( destVertex.m_vecTexCoord, ooValenceSq, srcOtherVert.m_vecTexCoord, destVertex.m_vecTexCoord );
 
 			// This adds in the contribution from the two faces it's part of
-			// NOTE: Usage of dest here is correct; this grabs the vertex that 
+			// NOTE: Usage of dest here is correct; this grabs the vertex that
 			// was created that was in the middle of the source mesh's face
 			const SubdivVertex_t *pSrcFace = &dest.m_Vertices[ edge.m_pFace[ 0 ] ];
 			VectorMA( destVertex.m_vecPosition, 0.5f * ooValenceSq, pSrcFace->m_vecPosition, destVertex.m_vecPosition );
@@ -511,7 +511,7 @@ static void AddModifiedVerticesToMesh( const SubdivMesh_t &src, SubdivMesh_t &de
 //-----------------------------------------------------------------------------
 static void AddSubdividedEdges( const SubdivMesh_t &src, SubdivMesh_t &dest )
 {
-	// NOTE: We iterate over each edge in sequence and add edges 
+	// NOTE: We iterate over each edge in sequence and add edges
 	// between face 0, then face 1, then vertex 0, then vertex 1.
 	// The vertex index for the vert at the center of original face N is N.
 	// The vertex index for the vert at the center of original edge N is nSrcFaceCount + N;
@@ -584,7 +584,7 @@ static void AddSubdividedEdges( const SubdivMesh_t &src, SubdivMesh_t &dest )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Adds unique subdivided faces
 //-----------------------------------------------------------------------------
@@ -686,7 +686,7 @@ void CDmeTestMesh::CreateControlCage( )
 	m_pControlCage = new SubdivMesh_t;
 
 	// Draw a simple cube
-	static Vector s_pPositions[8] = 
+	static Vector s_pPositions[8] =
 	{
 		Vector( -30, -30, -30 ),
 		Vector(  30, -30, -30 ),
@@ -698,7 +698,7 @@ void CDmeTestMesh::CreateControlCage( )
 		Vector(  30,  30,  30 ),
 	};
 
-	static Vector2D s_pTexCoords[8] = 
+	static Vector2D s_pTexCoords[8] =
 	{
 		Vector2D(   0,     0 ),
 		Vector2D(   0.5,   0 ),
@@ -711,7 +711,7 @@ void CDmeTestMesh::CreateControlCage( )
 	};
 
 	// Indices into the vertex array
-	static int s_pEdges[12][2] = 
+	static int s_pEdges[12][2] =
 	{
 		{ 0, 4 }, { 4, 6 }, { 6, 2 }, { 2, 0 },	// 0 -> -x
 		{ 1, 3 }, { 3, 7 }, { 7, 5 }, { 5, 1 },	// 1 -> +x
@@ -722,7 +722,7 @@ void CDmeTestMesh::CreateControlCage( )
 	};
 
 	// Indices into the face array associated w/ the edges above
-	static int s_pEdgeFaces[12][2] = 
+	static int s_pEdgeFaces[12][2] =
 	{
 		{ 2, 0 }, { 5, 0 }, { 3, 0 }, { 4, 0 },	// 0 -> -x
 		{ 4, 1 }, { 3, 1 }, { 5, 1 }, { 2, 1 },	// 1 -> +x
@@ -732,10 +732,10 @@ void CDmeTestMesh::CreateControlCage( )
 		// 5 -> +z
 	};
 
-	// In what order does edge s_pEdges[i] appear on faces s_pEdgeFaces[i][0] and s_pEdgeFaces[i][1] 
+	// In what order does edge s_pEdges[i] appear on faces s_pEdgeFaces[i][0] and s_pEdgeFaces[i][1]
 	// in the list s_pIndices[s_pEdgeFaces[i][j]] below? Note the #s 0, 1, 2, and 3 should appear 6 times each in this array
 	// representing the fact that each face has a 0th,1st,2nd, and 3rd edge.
-	static int s_pRelativeEdgeIndex[12][2] = 
+	static int s_pRelativeEdgeIndex[12][2] =
 	{
 		{ 3, 0 }, { 3, 1 }, { 0, 2 }, { 0, 3 },	// 0 -> -x
 		{ 2, 0 }, { 2, 1 }, { 1, 2 }, { 1, 3 },	// 1 -> +x
@@ -745,7 +745,7 @@ void CDmeTestMesh::CreateControlCage( )
 		// 5 -> +z
 	};
 
-	static int s_pIndices[6][5] = 
+	static int s_pIndices[6][5] =
 	{
 		{ 0, 4, 6, 2, 0 },	// 0 -> -x
 		{ 1, 3, 7, 5, 1 },	// 1 -> +x
@@ -1011,7 +1011,7 @@ void CDmeTestMesh::Draw( const matrix3x4_t& shapeToWorld, CDmeDrawSettings *pDra
 
 	info.m_nLocalLightCount = 0;
 //	info.m_LocalLightDescs;
-	
+
 	matrix3x4_t *pBoneToWorld = g_pStudioRender->LockBoneMatrices( info.m_pStudioHdr->numbones );
 	SetUpBones( pTransform, info.m_pStudioHdr->numbones, pBoneToWorld );
 	g_pStudioRender->UnlockBoneMatrices();
@@ -1175,7 +1175,7 @@ void CDmeTestMesh::SetUpBones( CDmeTransform *pTransform, int nMaxBoneCount, mat
 		nMaxBoneCount = studioHdr.numBones();
 	}
 
-	for ( int i = 0; i < nMaxBoneCount; i++ ) 
+	for ( int i = 0; i < nMaxBoneCount; i++ )
 	{
 		// If it's not being used, fill with NAN for errors
 #ifdef _DEBUG
@@ -1197,11 +1197,11 @@ void CDmeTestMesh::SetUpBones( CDmeTransform *pTransform, int nMaxBoneCount, mat
 		QuaternionMatrix( q[i], boneMatrix );
 		MatrixSetColumn( pos[i], 3, boneMatrix );
 
-		if (studioHdr.pBone(i)->parent == -1) 
+		if (studioHdr.pBone(i)->parent == -1)
 		{
 			ConcatTransforms (rootToWorld, boneMatrix, pBoneToWorld[ i ]);
-		} 
-		else 
+		}
+		else
 		{
 			ConcatTransforms ( pBoneToWorld[ studioHdr.pBone(i)->parent ], boneMatrix, pBoneToWorld[ i ] );
 		}
@@ -1255,11 +1255,11 @@ const studiohdr_t *virtualgroup_t::GetStudioHdr( void ) const
 //   // = comment - not in file!!!
 //
 // 'version' #version			// right now, #version = 1
-// 
+//
 // 'nodes'						// bone naming and hierarchy
 // #bone "$bonename" #parent	// one of these per bone - can be in any order, but generally sequential
 // 'end'
-// 
+//
 // 'skeleton'					// joint animation (and begin pose)
 // 'time' #time					// repeat time + joints block once per frame
 // #bone .x .y .z .rx .ry .rz	// bone/translation/rotation - can traverse bones in any order, and even skip them
@@ -1434,7 +1434,7 @@ void ReadSkeletalAnimationFromSMD( std::vector< CDmeTransform* > &bones, std::is
 					anim.resize( time + 1 );
 					anim[time] = new bone_t[nodes.size()];
 				}
-				
+
 				if ( time > 0 )
 				{
 					if ( anim[time-1] )
@@ -1734,7 +1734,7 @@ CDmeTestMesh *CDmeTestMesh::ReadMeshFromSMD( char *pFilename, DmFileId_t fileid 
 //			Grab_Vertexanimation( psource );
 			return pMesh; // TODO - implement Grab_Vertexanimation!!!
 		}
-		else 
+		else
 		{
 			Warning( "unknown studio command\n" );
 		}

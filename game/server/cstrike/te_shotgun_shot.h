@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -11,7 +11,7 @@
 #endif
 
 
-void TE_FireBullets( 
+void TE_FireBullets(
 	int	iPlayerIndex,
 	const Vector &vOrigin,
 	const QAngle &vAngles,

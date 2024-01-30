@@ -1,6 +1,6 @@
 //========= Copyright (c) 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -63,7 +63,7 @@ void InitializeToFeeFee( void *pMem, size_t nSize )
 		++pCurDWord;
 		--nDWords;
 	}
-	
+
 	unsigned char *pCurChar = (unsigned char*)pCurDWord;
 	size_t nBytes = nSize & 3;
 	size_t iOffset = 0;
@@ -73,7 +73,7 @@ void InitializeToFeeFee( void *pMem, size_t nSize )
 		++iOffset;
 		--nBytes;
 		++pCurChar;
-	}			
+	}
 }
 
 
@@ -92,7 +92,7 @@ void DoApplyMemoryInitializations( void *pMem, size_t nSize )
 {
 	if ( !pMem )
 		return;
-	
+
 	// If they passed -noinitmemory on the command line, don't do anything here.
 	Assert( g_bInitMemory );
 
@@ -103,7 +103,7 @@ void DoApplyMemoryInitializations( void *pMem, size_t nSize )
 	if ( !bCheckedCommandLine )
 	{
 		bCheckedCommandLine = true;
-		
+
 		//APS
 		char *pStr = (char*)Plat_GetCommandLineA();
 		if ( pStr )
@@ -112,10 +112,10 @@ void DoApplyMemoryInitializations( void *pMem, size_t nSize )
 			strncpy( tempStr, pStr, sizeof( tempStr ) - 1 );
 			tempStr[ sizeof( tempStr ) - 1 ] = 0;
 			_strupr( tempStr );
-			
+
 			if ( strstr( tempStr, "-RANDOMIZEMEMORY" ) )
 				bRandomizeMemory = true;
-			
+
 			if ( strstr( tempStr, "-NOINITMEMORY" ) )
 				g_bInitMemory = false;
 		}
@@ -183,4 +183,3 @@ size_t CalcHeapUsed()
 }
 
 #endif // not PLATFORM_POSIX
-

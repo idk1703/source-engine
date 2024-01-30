@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -72,7 +72,7 @@ public:
 	{
 	}
 
-	// Suppresses/activates color writing 
+	// Suppresses/activates color writing
 	void EnableColorWrites( bool bEnable );
 	void EnableAlphaWrites( bool bEnable );
 
@@ -92,7 +92,7 @@ public:
 
 	// Back face culling
 	void EnableCulling( bool bEnable );
-	
+
 	// constant color
 	void EnableConstantColor( bool bEnable );
 
@@ -112,7 +112,7 @@ public:
 	void SetShadowDepthFiltering( Sampler_t stage );
 
 	// Computes the vertex format
-	virtual void VertexShaderVertexFormat( unsigned int nFlags, 
+	virtual void VertexShaderVertexFormat( unsigned int nFlags,
 		int nTexCoordCount, int* pTexCoordDimensions, int nUserDataSize );
 
 	// Pixel and vertex shader methods
@@ -222,7 +222,7 @@ private:
 
 	// State needed to create the snapshots
 	IMaterialSystemHardwareConfig* m_pHardwareConfig;
-	
+
 	// Separate alpha control?
 	bool		m_AlphaPipe;
 
@@ -284,7 +284,7 @@ private:
 static CShaderShadowDX8 g_ShaderShadow;
 IShaderShadowDX8 *g_pShaderShadowDx8 = &g_ShaderShadow;
 
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderShadowDX8, IShaderShadow, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderShadowDX8, IShaderShadow,
 								  SHADERSHADOW_INTERFACE_VERSION, g_ShaderShadow )
 
 //-----------------------------------------------------------------------------
@@ -301,7 +301,7 @@ IShaderShadowDX8* ShaderShadow()
 //-----------------------------------------------------------------------------
 CShaderShadowDX8::CShaderShadowDX8( ) :
 	m_DrawFlags(0), m_pHardwareConfig(0), m_HasConstantColor(false)
-{	
+{
 	memset( &m_ShadowState, 0, sizeof(m_ShadowState) );
 	memset( &m_TextureStage, 0, sizeof(m_TextureStage) );
 }
@@ -317,7 +317,7 @@ CShaderShadowDX8::~CShaderShadowDX8()
 void CShaderShadowDX8::Init( )
 {
 	m_pHardwareConfig = HardwareConfig();
-	
+
 	// Clear out the shadow state
 	memset( &m_ShadowState, 0, sizeof(m_ShadowState) );
 
@@ -447,9 +447,9 @@ void CShaderShadowDX8::SetDefaultState()
 		EnableTexGen( (TextureStage_t)i, false );
 		OverbrightValue( (TextureStage_t)i, 1.0f );
 		EnableTextureAlpha( (TextureStage_t)i, false );
-		CustomTextureOperation( (TextureStage_t)i, SHADER_TEXCHANNEL_COLOR, 
+		CustomTextureOperation( (TextureStage_t)i, SHADER_TEXCHANNEL_COLOR,
 			SHADER_TEXOP_DISABLE, SHADER_TEXARG_TEXTURE, SHADER_TEXARG_PREVIOUSSTAGE );
-		CustomTextureOperation( (TextureStage_t)i, SHADER_TEXCHANNEL_ALPHA, 
+		CustomTextureOperation( (TextureStage_t)i, SHADER_TEXCHANNEL_ALPHA,
 			SHADER_TEXOP_DISABLE, SHADER_TEXARG_TEXTURE, SHADER_TEXARG_PREVIOUSSTAGE );
 	}
 }
@@ -716,7 +716,7 @@ void CShaderShadowDX8::PolyMode( ShaderPolyModeFace_t face, ShaderPolyMode_t pol
 // FIXME:	Assert( face == SHADER_POLYMODEFACE_FRONT_AND_BACK );
 	if (face == SHADER_POLYMODEFACE_BACK)
 		return;
-	
+
 	D3DFILLMODE fillMode;
 	switch( polyMode )
 	{
@@ -764,7 +764,7 @@ bool CShaderShadowDX8::HasConstantColor() const
 	return m_HasConstantColor;
 }
 
-void CShaderShadowDX8::EnableConstantColor( bool bEnable ) 
+void CShaderShadowDX8::EnableConstantColor( bool bEnable )
 {
 	m_HasConstantColor = bEnable;
 }
@@ -843,7 +843,7 @@ void CShaderShadowDX8::EnableVertexBlend( bool bEnable )
 	}
 }
 
-				 
+
 //-----------------------------------------------------------------------------
 // Texturemapping state
 //-----------------------------------------------------------------------------
@@ -898,7 +898,7 @@ void CShaderShadowDX8::SetShadowDepthFiltering( Sampler_t stage )
 		return;
 	}
 #endif
-	
+
 	Warning( "Attempting set shadow filtering state on an invalid sampler (%d)!\n", stage );
 }
 
@@ -957,8 +957,8 @@ void CShaderShadowDX8::TexGen( TextureStage_t stage, ShaderTexGenParam_t param )
 	switch( param )
 	{
 	case SHADER_TEXGENPARAM_OBJECT_LINEAR:
-		m_TextureStage[stage].m_TexCoordIndex = 0;	
-		break;	
+		m_TextureStage[stage].m_TexCoordIndex = 0;
+		break;
 	case SHADER_TEXGENPARAM_EYE_LINEAR:
 		m_TextureStage[stage].m_TexCoordIndex = D3DTSS_TCI_CAMERASPACEPOSITION;
 		break;
@@ -991,7 +991,7 @@ void CShaderShadowDX8::TexGen( TextureStage_t stage, ShaderTexGenParam_t param )
 //-----------------------------------------------------------------------------
 void CShaderShadowDX8::OverbrightValue( TextureStage_t stage, float value )
 {
-	if ( m_pHardwareConfig->SupportsOverbright() && 
+	if ( m_pHardwareConfig->SupportsOverbright() &&
 		( stage < m_pHardwareConfig->GetTextureStageCount() ) )
 	{
 		m_TextureStage[stage].m_OverbrightVal = value;
@@ -1018,7 +1018,7 @@ void CShaderShadowDX8::CustomTextureStages( int stageCount )
 		stageCount = m_pHardwareConfig->GetTextureStageCount();
 }
 
-void CShaderShadowDX8::CustomTextureOperation( TextureStage_t stage, 
+void CShaderShadowDX8::CustomTextureOperation( TextureStage_t stage,
 	ShaderTexChannel_t channel, ShaderTexOp_t op, ShaderTexArg_t arg1, ShaderTexArg_t arg2 )
 {
 	m_TextureStage[stage].m_Op[channel]= op;
@@ -1030,7 +1030,7 @@ void CShaderShadowDX8::CustomTextureOperation( TextureStage_t stage,
 //-----------------------------------------------------------------------------
 // Compute the vertex format from vertex descriptor flags
 //-----------------------------------------------------------------------------
-void CShaderShadowDX8::VertexShaderVertexFormat( unsigned int nFlags, 
+void CShaderShadowDX8::VertexShaderVertexFormat( unsigned int nFlags,
 	int nTexCoordCount, int* pTexCoordDimensions, int nUserDataSize )
 {
 	// Code that creates a Mesh should specify whether it contains bone weights+indices, *not* the shader.
@@ -1039,7 +1039,7 @@ void CShaderShadowDX8::VertexShaderVertexFormat( unsigned int nFlags,
 
 	// This indicates we're using a vertex shader
 	nFlags |= VERTEX_FORMAT_VERTEX_SHADER;
-	m_ShadowShaderState.m_VertexUsage = MeshMgr()->ComputeVertexFormat( nFlags, nTexCoordCount, 
+	m_ShadowShaderState.m_VertexUsage = MeshMgr()->ComputeVertexFormat( nFlags, nTexCoordCount,
 		pTexCoordDimensions, 0, nUserDataSize );
 	m_ShadowState.m_UsingFixedFunction = false;
 
@@ -1083,7 +1083,7 @@ void CShaderShadowDX8::SetVertexShader( const char* pFileName, int nStaticVshInd
 {
 	char debugLabel[500] = "";
 #ifdef DX_TO_GL_ABSTRACTION
-	Q_snprintf( debugLabel, sizeof(debugLabel), "vs-file %s vs-index %d", pFileName, nStaticVshIndex ); 
+	Q_snprintf( debugLabel, sizeof(debugLabel), "vs-file %s vs-index %d", pFileName, nStaticVshIndex );
 #endif
 
 	m_ShadowShaderState.m_VertexShader = ShaderManager()->CreateVertexShader( pFileName, nStaticVshIndex, debugLabel );
@@ -1094,7 +1094,7 @@ void CShaderShadowDX8::SetPixelShader( const char* pFileName, int nStaticPshInde
 {
 	char debugLabel[500] = "";
 #ifdef DX_TO_GL_ABSTRACTION
-	Q_snprintf( debugLabel, sizeof(debugLabel), "ps-file %s ps-index %d", pFileName, nStaticPshIndex ); 
+	Q_snprintf( debugLabel, sizeof(debugLabel), "ps-file %s ps-index %d", pFileName, nStaticPshIndex );
 #endif
 
 	m_ShadowShaderState.m_PixelShader = ShaderManager()->CreatePixelShader( pFileName, nStaticPshIndex, debugLabel );
@@ -1195,7 +1195,7 @@ static inline D3DTEXTUREOP ComputeOp( ShaderTexOp_t op )
 
 	case SHADER_TEXOP_BLEND_TEXTUREALPHA:
 		return D3DTOP_BLENDTEXTUREALPHA;
-	
+
 	case SHADER_TEXOP_MODULATECOLOR_ADDALPHA:
 		return D3DTOP_MODULATECOLOR_ADDALPHA;
 
@@ -1219,7 +1219,7 @@ void CShaderShadowDX8::ConfigureCustomFVFVertexShader( unsigned int flags )
 	for ( i = 0; i < m_CustomTextureStages; ++i)
 	{
 		m_ShadowState.m_TextureStage[i].m_ColorArg1 = ComputeArg( m_TextureStage[i].m_Arg[0][0] );
-		m_ShadowState.m_TextureStage[i].m_ColorArg2 = ComputeArg( m_TextureStage[i].m_Arg[0][1] );								
+		m_ShadowState.m_TextureStage[i].m_ColorArg2 = ComputeArg( m_TextureStage[i].m_Arg[0][1] );
 		m_ShadowState.m_TextureStage[i].m_AlphaArg1 = ComputeArg( m_TextureStage[i].m_Arg[1][0] );
 		m_ShadowState.m_TextureStage[i].m_AlphaArg2 = ComputeArg( m_TextureStage[i].m_Arg[1][1] );
  		m_ShadowState.m_TextureStage[i].m_ColorOp = ComputeOp( m_TextureStage[i].m_Op[0] );
@@ -1264,7 +1264,7 @@ void CShaderShadowDX8::ConfigureAlphaPipe( unsigned int flags )
 			if (i == 0)
 			{
 				m_ShadowState.m_TextureStage[i].m_AlphaArg1 = D3DTA_TEXTURE;
-				m_ShadowState.m_TextureStage[i].m_AlphaArg2 = 
+				m_ShadowState.m_TextureStage[i].m_AlphaArg2 =
 					isUsingConstantAlpha ? D3DTA_TFACTOR : D3DTA_DIFFUSE;
 				if (!isUsingConstantAlpha && !isUsingVertexAlpha)
 					m_ShadowState.m_TextureStage[i].m_AlphaOp = D3DTOP_SELECTARG1;
@@ -1298,7 +1298,7 @@ void CShaderShadowDX8::ConfigureAlphaPipe( unsigned int flags )
 				m_ShadowState.m_TextureStage[i].m_AlphaArg2 = D3DTA_DIFFUSE;
 				if (isUsingVertexAlpha)
 				{
-					m_ShadowState.m_TextureStage[i].m_AlphaOp = 
+					m_ShadowState.m_TextureStage[i].m_AlphaOp =
 						isUsingConstantAlpha ? D3DTOP_MODULATE : D3DTOP_SELECTARG2;
 				}
 				else
@@ -1306,7 +1306,7 @@ void CShaderShadowDX8::ConfigureAlphaPipe( unsigned int flags )
 					m_ShadowState.m_TextureStage[i].m_AlphaOp = D3DTOP_SELECTARG1;
 				}
 				isUsingVertexAlpha = false;
-				isUsingConstantAlpha = false; 
+				isUsingConstantAlpha = false;
 			}
 			else
 			{
@@ -1465,7 +1465,7 @@ void CShaderShadowDX8::ConfigureFVFVertexShader( unsigned int flags )
 				lastUsedTextureStage = i;
 			}
 		}
-		else							  
+		else
 		{
 			// Here, we're modulating. Keep track of the last modulation stage,
 			// cause the constant color modulation comes in the stage after that
@@ -1495,7 +1495,7 @@ void CShaderShadowDX8::ConfigureFVFVertexShader( unsigned int flags )
 		else
 		{
 			AssertOnce (lastUsedTextureStage < 2);
-				
+
 			// Here, we've got enough texture stages to do the modulation
 			m_ShadowState.m_TextureStage[lastUsedTextureStage].m_ColorArg1 = D3DTA_TFACTOR;
 			m_ShadowState.m_TextureStage[lastUsedTextureStage].m_ColorArg2 = D3DTA_CURRENT;
@@ -1544,7 +1544,7 @@ void CShaderShadowDX8::ConfigureTextureCoordinates( unsigned int flags )
 	{
 		TextureCoordinate( SHADER_TEXTURE_STAGE0, 1 );
 	}
-	else if (flags & SHADER_DRAW_SECONDARY_TEXCOORD0 ) 
+	else if (flags & SHADER_DRAW_SECONDARY_TEXCOORD0 )
 	{
 		TextureCoordinate( SHADER_TEXTURE_STAGE0, 2 );
 	}
@@ -1558,7 +1558,7 @@ void CShaderShadowDX8::ConfigureTextureCoordinates( unsigned int flags )
 	{
 		TextureCoordinate( SHADER_TEXTURE_STAGE1, 1 );
 	}
-	else if (flags & SHADER_DRAW_SECONDARY_TEXCOORD1 ) 
+	else if (flags & SHADER_DRAW_SECONDARY_TEXCOORD1 )
 	{
 		TextureCoordinate( SHADER_TEXTURE_STAGE1, 2 );
 	}
@@ -1595,7 +1595,7 @@ VertexFormat_t CShaderShadowDX8::FlagsToVertexFormat( int flags ) const
 
 		if (flags & SHADER_DRAW_COLOR)
 			formatFlags |= VERTEX_COLOR;
-		
+
 		if( flags & SHADER_DRAW_SPECULAR )
 			formatFlags |= VERTEX_SPECULAR;
 
@@ -1631,7 +1631,7 @@ VertexFormat_t CShaderShadowDX8::FlagsToVertexFormat( int flags ) const
 			numBones = HardwareConfig()->MaxBlendMatrices() - 1;
 	}
 
-	return MeshMgr()->ComputeVertexFormat( formatFlags, VERTEX_MAX_TEXTURE_COORDINATES, 
+	return MeshMgr()->ComputeVertexFormat( formatFlags, VERTEX_MAX_TEXTURE_COORDINATES,
 		texCoordSize, numBones, userDataSize );
 }
 
@@ -1646,7 +1646,7 @@ void CShaderShadowDX8::ComputeAggregateShadowState( )
 	// Initialize the texture stage usage; this may get changed later
 	for (int i = 0; i < m_pHardwareConfig->GetSamplerCount(); ++i)
 	{
-		m_ShadowState.m_SamplerState[i].m_TextureEnable = 
+		m_ShadowState.m_SamplerState[i].m_TextureEnable =
 			IsUsingTextureCoordinates( (Sampler_t)i );
 
 		// Deal with the alpha pipe
@@ -1735,7 +1735,7 @@ void CShaderShadowDX8::ComputeAggregateShadowState( )
 		if (flags & (SHADER_DRAW_TEXCOORD1 | SHADER_DRAW_SECONDARY_TEXCOORD1))
 		{
 			Assert( (m_ShadowState.m_TextureStage[1].m_TexCoordIndex & 0xFFFF0000) == 0 );
-		}			
+		}
 		if (flags & (SHADER_DRAW_TEXCOORD2 | SHADER_DRAW_SECONDARY_TEXCOORD2))
 		{
 			Assert( (m_ShadowState.m_TextureStage[2].m_TexCoordIndex & 0xFFFF0000) == 0 );

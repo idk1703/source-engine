@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ typedef enum
 	AE_NPC_DRAW,
 	AE_NPC_WEAPON_FIRE,
 
-	AE_CL_PLAYSOUND, // #define CL_EVENT_SOUND				5004	// Emit a sound 
+	AE_CL_PLAYSOUND, // #define CL_EVENT_SOUND				5004	// Emit a sound
 	AE_SV_PLAYSOUND,
 	AE_CL_STOPSOUND,
 
@@ -49,10 +49,10 @@ typedef enum
 	AE_STOP_SCRIPTED_EFFECT,
 
 	AE_CLIENT_EFFECT_ATTACH,
-	
+
 	AE_MUZZLEFLASH,			// Muzzle flash from weapons held by the player
 	AE_NPC_MUZZLEFLASH,		// Muzzle flash from weapons held by NPCs
-	
+
 	AE_THUMPER_THUMP,		//Thumper Thump!
 	AE_AMMOCRATE_PICKUP_AMMO,	//Ammo crate pick up ammo!
 

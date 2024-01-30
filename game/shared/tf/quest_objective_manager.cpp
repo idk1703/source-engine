@@ -155,7 +155,7 @@ CON_COMMAND( ensure_so_trackers_for_steamid, "Ensures a steamID has all the trac
 		return;
 	}
 
-	 CSteamID steamID( (uint32)V_atoi( args[1] ), 
+	 CSteamID steamID( (uint32)V_atoi( args[1] ),
 
 		 // GetUniverse() DOESNT WORK on servers, so we're hacking this for now
 #ifdef STAGING_ONLY

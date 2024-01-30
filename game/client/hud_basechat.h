@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -55,16 +55,16 @@ enum ChatFilters
 	CHAT_FILTER_PUBLICCHAT	= 0x000004,
 	CHAT_FILTER_SERVERMSG	= 0x000008,
 	CHAT_FILTER_TEAMCHANGE	= 0x000010,
-    //=============================================================================
-    // HPE_BEGIN:
-    // [tj]Added a filter for achievement announce
-    //=============================================================================
-     
-    CHAT_FILTER_ACHIEVEMENT	= 0x000020,
-     
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [tj]Added a filter for achievement announce
+	//=============================================================================
+
+	CHAT_FILTER_ACHIEVEMENT	= 0x000020,
+
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 };
 
 
@@ -142,7 +142,7 @@ public:
 	Color			GetTextColor( void ) { return m_clrText; }
 	void			SetNameLength( int iLength ) { m_iNameLength = iLength;	}
 	void			SetNameColor( Color cColor ){ m_clrNameColor = cColor; 	}
-		
+
 	virtual void	PerformFadeout( void );
 	virtual void	InsertAndColorizeText( wchar_t *buf, int clientIndex );
 	virtual			void Colorize( int alpha = 255 );								///< Re-inserts the text in the appropriate colors at the given alpha
@@ -163,7 +163,7 @@ protected:
 	wchar_t					*m_text;
 
 	int				m_iNameStart;
-	
+
 private:
 	float			m_flStartTime;
 	int				m_nCount;
@@ -214,7 +214,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBaseHudChat : public CHudElement, public vgui::EditablePanel
 {
@@ -232,17 +232,17 @@ public:
 
 	virtual void	CreateChatInputLine( void );
 	virtual void	CreateChatLines( void );
-	
+
 	virtual void	Init( void );
 
 	void			LevelInit( const char *newmap );
 	void			LevelShutdown( void );
 
 	void			MsgFunc_TextMsg(const char *pszName, int iSize, void *pbuf);
-	
+
 	virtual void	Printf( int iFilter, PRINTF_FORMAT_STRING const char *fmt, ... );
 	virtual void	ChatPrintf( int iPlayerIndex, int iFilter, PRINTF_FORMAT_STRING const char *fmt, ... ) FMTFUNCTION( 4, 5 );
-	
+
 	virtual void	StartMessageMode( int iMessageModeType );
 	virtual void	StopMessageMode( void );
 	void			Send( void );
@@ -277,7 +277,7 @@ public:
 	virtual void			MsgFunc_TextMsg( bf_read &msg );
 	virtual void			MsgFunc_VoiceSubtitle( bf_read &msg );
 
-	
+
 	CBaseHudChatInputLine	*GetChatInput( void ) { return m_pChatInput; }
 	CHudChatFilterPanel		*GetChatFilterPanel( void );
 
@@ -314,7 +314,7 @@ protected:
 
 	Color			m_ColorCustom;
 
-private:	
+private:
 	void			Clear( void );
 
 	int				ComputeBreakChar( int width, const char *text, int textlen );
@@ -361,7 +361,7 @@ public:
 					PostMessage( m_pHudChat, new KeyValues("ChatEntrySend") );
 				}
 			}
-		
+
 			// End message mode.
 			if ( m_pHudChat )
 			{
@@ -389,7 +389,7 @@ private:
 class CBaseHudChatInputLine : public vgui::Panel
 {
 	typedef vgui::Panel BaseClass;
-	
+
 public:
 	CBaseHudChatInputLine( vgui::Panel *parent, char const *panelName );
 
@@ -402,7 +402,7 @@ public:
 	virtual void	ApplySchemeSettings(vgui::IScheme *pScheme);
 
 	vgui::Panel		*GetInputPanel( void );
-	virtual vgui::VPANEL GetCurrentKeyFocus() { return m_pInput->GetVPanel(); } 
+	virtual vgui::VPANEL GetCurrentKeyFocus() { return m_pInput->GetVPanel(); }
 
 	virtual void Paint()
 	{

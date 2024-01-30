@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -476,7 +476,7 @@ public:
 		}
 	}
 
-	
+
 
 private:
 
@@ -498,7 +498,7 @@ private:
 DECLARE_BUILD_FACTORY( CMainMenuPlayListEntry );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudMainMenuOverride::CHudMainMenuOverride( IViewPort *pViewPort ) : BaseClass( NULL, PANEL_MAINMENUOVERRIDE )
 {
@@ -535,7 +535,7 @@ CHudMainMenuOverride::CHudMainMenuOverride( IViewPort *pViewPort ) : BaseClass( 
 	m_pMouseOverItemPanel = vgui::SETUP_PANEL( new CItemModelPanel( this, "mouseoveritempanel" ) );
 	m_pMouseOverTooltip = new CItemModelPanelToolTip( this );
 	m_pMouseOverTooltip->SetupPanels( this, m_pMouseOverItemPanel );
-	
+
 	m_pMOTDHeaderLabel = NULL;
 	m_pMOTDHeaderIcon = NULL;
 	m_pMOTDTitleLabel = NULL;
@@ -589,7 +589,7 @@ CHudMainMenuOverride::CHudMainMenuOverride( IViewPort *pViewPort ) : BaseClass( 
 	m_pMOTDPanel->SetVisible( true );
 	m_pMOTDTextPanel = new vgui::EditablePanel( this, "MOTD_TextPanel" );
 	m_pMOTDTextScroller = new vgui::ScrollableEditablePanel( m_pMOTDPanel, m_pMOTDTextPanel, "MOTD_TextScroller" );
-	
+
 	m_pMOTDTextScroller->GetScrollbar()->SetAutohideButtons( true );
 	m_pMOTDTextScroller->GetScrollbar()->SetPaintBorderEnabled( false );
 	m_pMOTDTextScroller->GetScrollbar()->SetPaintBackgroundEnabled( false );
@@ -629,7 +629,7 @@ CHudMainMenuOverride::CHudMainMenuOverride( IViewPort *pViewPort ) : BaseClass( 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudMainMenuOverride::~CHudMainMenuOverride( void )
 {
@@ -669,7 +669,7 @@ void CHudMainMenuOverride::PaintTraverse( bool Repaint, bool allowForce )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::OnTick()
 {
@@ -687,7 +687,7 @@ void CHudMainMenuOverride::OnTick()
 	static bool s_bRanOnce = false;
 	if ( !s_bRanOnce )
 	{
-		s_bRanOnce = true; 
+		s_bRanOnce = true;
 		if ( char const *szConnectAdr = CommandLine()->ParmValue( "+connect" ) )
 		{
 			Msg( "Executing deferred connect command: %s\n", szConnectAdr );
@@ -741,7 +741,7 @@ void CHudMainMenuOverride::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::AttachToGameUI( void )
 {
@@ -758,7 +758,7 @@ void CHudMainMenuOverride::AttachToGameUI( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ConVar tf_last_store_pricesheet_version( "tf_last_store_pricesheet_version", "0", FCVAR_CLIENTDLL | FCVAR_ARCHIVE | FCVAR_DONTRECORD | FCVAR_HIDDEN );
 
@@ -873,7 +873,7 @@ void CHudMainMenuOverride::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::ApplySettings( KeyValues *inResourceData )
 {
@@ -888,7 +888,7 @@ void CHudMainMenuOverride::ApplySettings( KeyValues *inResourceData )
 		}
 		m_pButtonKV = new KeyValues("button_kv");
 		pItemKV->CopySubkeys( m_pButtonKV );
-		
+
 		m_bReapplyButtonKVs = true;
 	}
 
@@ -915,7 +915,7 @@ void CHudMainMenuOverride::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::ApplySchemeSettings( IScheme *scheme )
 {
@@ -1036,9 +1036,9 @@ void CHudMainMenuOverride::ApplySchemeSettings( IScheme *scheme )
 	{
 		m_hTitleLabelFont = m_pMOTDTitleLabel->GetFont();
 	}
-	
+
 	m_pMOTDTextLabel = dynamic_cast<vgui::Label*>( m_pMOTDTextPanel->FindChildByName( "MOTD_TextLabel" ) );
-	
+
 	m_pMOTDTitleImageContainer = dynamic_cast<vgui::EditablePanel*>( m_pMOTDPanel->FindChildByName("MOTD_TitleImageContainer") );
 	if ( m_pMOTDTitleImageContainer )
 	{
@@ -1089,7 +1089,7 @@ void CHudMainMenuOverride::ApplySchemeSettings( IScheme *scheme )
 	{
 		pImageButton->SetTooltip( m_pToolTip, "#MMenu_Tooltip_Workshop" );
 	}
-	
+
 	// Highlights
 	m_pHighlightAnims[ MMHA_TUTORIAL ]		= FindControl< CExplanationPopup >( "TutorialHighlight" );
 	m_pHighlightAnims[ MMHA_PRACTICE ]		= FindControl< CExplanationPopup >( "PracticeHighlight" );
@@ -1105,7 +1105,7 @@ void CHudMainMenuOverride::ApplySchemeSettings( IScheme *scheme )
 
 	RemoveAllMenuEntries();
 	LoadMenuEntries();
-	
+
 	UpdateNotifications();
 	UpdatePromotionalCodes();
 
@@ -1121,7 +1121,7 @@ void CHudMainMenuOverride::ApplySchemeSettings( IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::LoadCharacterImageFile( void )
 {
@@ -1153,7 +1153,7 @@ void CHudMainMenuOverride::LoadCharacterImageFile( void )
 			FOR_EACH_SUBKEY( pCharacterFile, pCharacter )
 			{
 				EHoliday eHoliday = (EHoliday)UTIL_GetHolidayForString( pCharacter->GetString( "holiday_restriction" ) );
-				const char* pszAssociatedWar = pCharacter->GetString( "war_restriction" );	
+				const char* pszAssociatedWar = pCharacter->GetString( "war_restriction" );
 
 				int iWeight = 1;
 
@@ -1207,7 +1207,7 @@ void CHudMainMenuOverride::LoadCharacterImageFile( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::LoadMenuEntries( void )
 {
@@ -1265,7 +1265,7 @@ void CHudMainMenuOverride::LoadMenuEntries( void )
 			if ( m_pButtonKV && iStyle != MMBS_CUSTOM )
 			{
 				pPanel->ApplySettings( m_pButtonKV );
-			} 
+			}
 
 			int iIdx = m_pMMButtonEntries.AddToTail();
 			m_pMMButtonEntries[iIdx].pPanel = pPanel;
@@ -1303,7 +1303,7 @@ void CHudMainMenuOverride::LoadMenuEntries( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::RemoveAllMenuEntries( void )
 {
@@ -1322,7 +1322,7 @@ void CHudMainMenuOverride::RemoveAllMenuEntries( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::PerformLayout( void )
 {
@@ -1380,7 +1380,7 @@ void CHudMainMenuOverride::PerformLayout( void )
 	// Make the glows behind the update buttons pulse
 	if ( m_pEventPromoContainer && cl_mainmenu_updateglow.GetInt() )
 	{
-		EditablePanel* pUpdateBackground = m_pEventPromoContainer->FindControl< EditablePanel >( "Background", true );	
+		EditablePanel* pUpdateBackground = m_pEventPromoContainer->FindControl< EditablePanel >( "Background", true );
 		if ( pUpdateBackground )
 		{
 			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( pUpdateBackground, "MMenu_UpdateButton_StartGlow" );
@@ -1390,7 +1390,7 @@ void CHudMainMenuOverride::PerformLayout( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::OnUpdateMenu( void )
 {
@@ -1477,7 +1477,7 @@ void CHudMainMenuOverride::OnUpdateMenu( void )
 	{
 		bool bShowQuit = !( bInGame || bInReplay );
 		bool bShowDisconnect = bInGame && !bInReplay;
-		
+
 		if ( m_pQuitButton->IsVisible() != bShowQuit )
 		{
 			m_pQuitButton->SetVisible( bShowQuit );
@@ -1536,7 +1536,7 @@ void CHudMainMenuOverride::OnUpdateMenu( void )
 				}
 			}
 		}
-	} 
+	}
 
 	if ( bSomethingChanged )
 	{
@@ -1618,7 +1618,7 @@ void CHudMainMenuOverride::CheckUnclaimedItems()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::OnConfirm( KeyValues *pParams )
 {
@@ -1630,20 +1630,20 @@ void CHudMainMenuOverride::OnConfirm( KeyValues *pParams )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::UpdateMOTD( bool bNewMOTDs )
-{	
+{
 	if ( m_bInitMOTD == false )
 	{
 		m_pMOTDPanel->InvalidateLayout( true, true );
-		m_bInitMOTD = true;	
+		m_bInitMOTD = true;
 	}
 
 	if ( bNewMOTDs )
 	{
 		m_bHaveNewMOTDs = true;
-		m_iCurrentMOTD = -1;		
+		m_iCurrentMOTD = -1;
 	}
 
 	int iCount = GetMOTDManager().GetNumMOTDs();
@@ -1678,7 +1678,7 @@ void CHudMainMenuOverride::UpdateMOTD( bool bNewMOTDs )
 		{
 			m_pMOTDHeaderLabel->SetText( pMOTD->GetHeaderTitle(nCurLang) );
 			int iHeaderType = pMOTD->GetHeaderType();
-			switch ( iHeaderType ) 
+			switch ( iHeaderType )
 			{
 			case 0:
 				m_pMOTDHeaderLabel->SetBgColor( Color ( 183, 108, 58, 255 ) );
@@ -1741,7 +1741,7 @@ void CHudMainMenuOverride::UpdateMOTD( bool bNewMOTDs )
 					m_pMOTDTitleLabel->SetFont( hMediumBoldFont );
 				}
 			}
-			else 
+			else
 			{
 				if ( m_hTitleLabelFont != vgui::INVALID_FONT )
 				{
@@ -1752,7 +1752,7 @@ void CHudMainMenuOverride::UpdateMOTD( bool bNewMOTDs )
 		m_pMOTDPanel->SetDialogVariable( "motdtitle", pMOTD->GetTitle(nCurLang) );
 
 		// Body Text
-		m_pMOTDTextPanel->SetDialogVariable( "motdtext", pMOTD->GetText(nCurLang) );	
+		m_pMOTDTextPanel->SetDialogVariable( "motdtext", pMOTD->GetText(nCurLang) );
 
 		// Image
 		const char* pszImage = pMOTD->GetImage();
@@ -1764,7 +1764,7 @@ void CHudMainMenuOverride::UpdateMOTD( bool bNewMOTDs )
 			{
 				m_pMOTDTitleImage->SetImage( "../logo/new_tf2_logo" );
 			}
-			else 
+			else
 			{
 				m_pMOTDTitleImage->SetImage( pszImage );
 			}
@@ -1773,7 +1773,7 @@ void CHudMainMenuOverride::UpdateMOTD( bool bNewMOTDs )
 			int iContentWide = 0;
 			int iContentTall = 0;
 			if ( m_pMOTDTitleImageContainer )
-			{	
+			{
 				m_pMOTDTitleImageContainer->GetSize( iContentWide, iContentTall );
 			}
 
@@ -1802,7 +1802,7 @@ void CHudMainMenuOverride::UpdateMOTD( bool bNewMOTDs )
 			m_pMOTDTextLabel->SetSize( m_pMOTDTextPanel->GetWide(), tall );
 			m_pMOTDTextPanel->SetSize( m_pMOTDTextPanel->GetWide(), m_pMOTDTextLabel->GetTall() );
 		}
-		
+
 		if ( m_pMOTDURLButton )
 		{
 			const char *pszURL = pMOTD->GetURL();
@@ -1822,7 +1822,7 @@ void CHudMainMenuOverride::UpdateMOTD( bool bNewMOTDs )
 		// Move our scrollbar to the top.
 		m_pMOTDTextScroller->InvalidateLayout();
 		m_pMOTDTextScroller->Repaint();
-		m_pMOTDTextScroller->GetScrollbar()->SetValue( 0 );	
+		m_pMOTDTextScroller->GetScrollbar()->SetValue( 0 );
 		m_pMOTDTextScroller->GetScrollbar()->SetVisible( m_pMOTDTextPanel->GetTall() > m_pMOTDTextScroller->GetScrollbar()->GetTall() );
 		m_pMOTDTextScroller->GetScrollbar()->InvalidateLayout();
 		m_pMOTDTextScroller->GetScrollbar()->Repaint();
@@ -1840,7 +1840,7 @@ void CHudMainMenuOverride::UpdateMOTD( bool bNewMOTDs )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::SetMOTDButtonVisible( bool bVisible )
 {
@@ -1864,7 +1864,7 @@ void CHudMainMenuOverride::SetMOTDButtonVisible( bool bVisible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::SetMOTDVisible( bool bVisible )
 {
@@ -1873,7 +1873,7 @@ void CHudMainMenuOverride::SetMOTDVisible( bool bVisible )
 	if ( bVisible )
 	{
 		// Ensure the text is correct.
-		UpdateMOTD( false ); 
+		UpdateMOTD( false );
 
 		// Clear MOTD button.
 		SetMOTDButtonVisible( true );
@@ -1893,7 +1893,7 @@ void CHudMainMenuOverride::SetMOTDVisible( bool bVisible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::SetQuestLogVisible( bool bVisible )
 {
@@ -1908,7 +1908,7 @@ void CHudMainMenuOverride::SetQuestLogVisible( bool bVisible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::SetWatchStreamVisible( bool bVisible )
 {
@@ -1927,7 +1927,7 @@ bool CHudMainMenuOverride::CheckAndWarnForPREC( void )
 	enum check_state
 	{
 		INVALID,
-		FOUND, 
+		FOUND,
 		NOT_FOUND,
 	};
 
@@ -1936,9 +1936,9 @@ bool CHudMainMenuOverride::CheckAndWarnForPREC( void )
 	{
 		s_state = NOT_FOUND;
 
-		ICvar::Iterator iter( g_pCVar ); 
+		ICvar::Iterator iter( g_pCVar );
 		for ( iter.SetFirst() ; iter.IsValid() ; iter.Next() )
-		{  
+		{
 			ConCommandBase *cmd = iter.Get();
 			if ( cmd )
 			{
@@ -1948,7 +1948,7 @@ bool CHudMainMenuOverride::CheckAndWarnForPREC( void )
 					break;
 				}
 			}
-		} 
+		}
 	}
 
 	if ( s_state == FOUND )
@@ -2038,7 +2038,7 @@ void CHudMainMenuOverride::ReloadMMPanels()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::UpdateNotifications()
 {
@@ -2078,7 +2078,7 @@ void CHudMainMenuOverride::UpdateNotifications()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::SetNotificationsButtonVisible( bool bVisible )
 {
@@ -2099,7 +2099,7 @@ void CHudMainMenuOverride::SetNotificationsButtonVisible( bool bVisible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::SetNotificationsPanelVisible( bool bVisible )
 {
@@ -2150,7 +2150,7 @@ void CHudMainMenuOverride::SetNotificationsPanelVisible( bool bVisible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::AdjustNotificationsPanelHeight()
 {
@@ -2165,7 +2165,7 @@ void CHudMainMenuOverride::AdjustNotificationsPanelHeight()
 	// Adjust visibility of the slider buttons and our width, as contents change.
 	if ( m_pNotificationsScroller )
 	{
-		if ( m_pNotificationsScroller->GetScrollbar()->GetSlider() && 
+		if ( m_pNotificationsScroller->GetScrollbar()->GetSlider() &&
 			m_pNotificationsScroller->GetScrollbar()->GetSlider()->IsSliderVisible() )
 		{
 			m_pNotificationsPanel->SetWide( m_iNotiPanelWide +  m_pNotificationsScroller->GetScrollbar()->GetSlider()->GetWide() );
@@ -2180,7 +2180,7 @@ void CHudMainMenuOverride::AdjustNotificationsPanelHeight()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::UpdatePromotionalCodes( void )
 {
@@ -2200,7 +2200,7 @@ void CHudMainMenuOverride::UpdatePromotionalCodes( void )
 			}
 		}
 
-		// The promo code button collides with the VR mode button. Turn off the promo code button 
+		// The promo code button collides with the VR mode button. Turn off the promo code button
 		// in that case since the people who deliberately enabled VR are much more likely to want that
 		// than to claim their Well Spun Hat in Rift.
 		bool bShowVR = materials->GetCurrentConfigForVideoCard().m_nVRModeAdapter == materials->GetCurrentAdapter();
@@ -2228,7 +2228,7 @@ void CHudMainMenuOverride::UpdatePromotionalCodes( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudMainMenuOverride::IsVisible( void )
 {
@@ -2242,7 +2242,7 @@ bool CHudMainMenuOverride::IsVisible( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::StartHighlightAnimation( mm_highlight_anims iAnim )
 {
@@ -2255,7 +2255,7 @@ void CHudMainMenuOverride::StartHighlightAnimation( mm_highlight_anims iAnim )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::HideHighlight( mm_highlight_anims iAnim )
 {
@@ -2266,7 +2266,7 @@ void CHudMainMenuOverride::HideHighlight( mm_highlight_anims iAnim )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::TogglePlayListMenu( void )
 {
@@ -2280,7 +2280,7 @@ void CHudMainMenuOverride::TogglePlayListMenu( void )
 		UpdatePlaylistEntries();
 	}
 
-	// These all rely on the playlist being in a specific state.  If we're 
+	// These all rely on the playlist being in a specific state.  If we're
 	// toggling, then there's no guarantees anything is where we think it is anymore
 	HideHighlight( MMHA_TUTORIAL );
 	HideHighlight( MMHA_PRACTICE );
@@ -2324,7 +2324,7 @@ void CHudMainMenuOverride::StopUpdateGlow()
 
 	if ( m_pEventPromoContainer )
 	{
-		EditablePanel* pUpdateBackground = m_pEventPromoContainer->FindControl< EditablePanel >( "Background", true );	
+		EditablePanel* pUpdateBackground = m_pEventPromoContainer->FindControl< EditablePanel >( "Background", true );
 		if ( pUpdateBackground )
 		{
 			g_pClientMode->GetViewportAnimationController()->StopAnimationSequence( pUpdateBackground, "MMenu_UpdateButton_StartGlow" );
@@ -2335,7 +2335,7 @@ void CHudMainMenuOverride::StopUpdateGlow()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::OnCommand( const char *command )
 {
@@ -2350,24 +2350,24 @@ void CHudMainMenuOverride::OnCommand( const char *command )
 	{
 		// Defaulting to 6v6
 		GTFGCClientSystem()->SetLadderType( k_nMatchGroup_Ladder_6v6 );
-		PromptOrFireCommand( "OpenMatchmakingLobby ladder" ); 
+		PromptOrFireCommand( "OpenMatchmakingLobby ladder" );
 		return;
 	}
 	else if ( FStrEq( "play_casual", command ) )
 	{
 		// Defaulting to 12v12
 		GTFGCClientSystem()->SetLadderType( k_nMatchGroup_Casual_12v12 );
-		PromptOrFireCommand( "OpenMatchmakingLobby casual" ); 
+		PromptOrFireCommand( "OpenMatchmakingLobby casual" );
 		return;
 	}
-	else if ( FStrEq( "play_mvm", command ) ) 
+	else if ( FStrEq( "play_mvm", command ) )
 	{
-		PromptOrFireCommand( "OpenMatchmakingLobby mvm" ); 
+		PromptOrFireCommand( "OpenMatchmakingLobby mvm" );
 		return;
 	}
 	else if ( FStrEq( "play_quickplay", command ) )
 	{
-		PromptOrFireCommand( "OpenQuickplayDialog" ); 
+		PromptOrFireCommand( "OpenQuickplayDialog" );
 		return;
 	}
 	else if ( FStrEq( "play_training", command ) )
@@ -2380,7 +2380,7 @@ void CHudMainMenuOverride::OnCommand( const char *command )
 			const char *pTitle = "#TF_Training_Prompt_Title";
 			if ( TFGameRules() && TFGameRules()->IsInTraining() )
 			{
-				pTitle = "#TF_Training_Restart_Title";				
+				pTitle = "#TF_Training_Restart_Title";
 				pText = "#TF_Training_Restart_Text";
 			}
 			CTFConfirmTrainingDialog *pConfirm = vgui::SETUP_PANEL( new CTFConfirmTrainingDialog( pText, pTitle, this ) );
@@ -2467,7 +2467,7 @@ void CHudMainMenuOverride::OnCommand( const char *command )
 	}
 	else if ( !Q_stricmp( command, "notifications_update" ) )
 	{
-		// force visible if 
+		// force visible if
 		if ( NotificationQueue_GetNumNotifications() != 0 )
 		{
 			SetNotificationsButtonVisible( true );
@@ -2479,7 +2479,7 @@ void CHudMainMenuOverride::OnCommand( const char *command )
 	}
 	else if ( !Q_stricmp( command, "test_anim" ) )
 	{
-		InvalidateLayout( true, true ); 
+		InvalidateLayout( true, true );
 
 		StartHighlightAnimation( MMHA_TUTORIAL );
 		StartHighlightAnimation( MMHA_PRACTICE );
@@ -2656,7 +2656,7 @@ void CHudMainMenuOverride::OnKeyCodePressed( KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::CheckTrainingStatus( void )
 {
@@ -2776,7 +2776,7 @@ void CHudMainMenuOverride::UpdatePlaylistEntries( void )
 	}
 
 	// If we have a live match, and a we're not in it, but we should be in,
-	// dont let the user click the MM UI buttons.  GTFGCClientSystem::Update() will nag them 
+	// dont let the user click the MM UI buttons.  GTFGCClientSystem::Update() will nag them
 	// to rejoin their match or abandon.
 	if ( pParty && pParty->GetState() == CSOTFParty_State_IN_MATCH )
 	{
@@ -2971,7 +2971,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCMOTDRequestResponse, "CGCMOTDRequestResponse", 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMainMenuToolTip::PerformLayout()
 {
@@ -3018,7 +3018,7 @@ void CMainMenuToolTip::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMainMenuToolTip::HideTooltip()
 {
@@ -3031,10 +3031,10 @@ void CMainMenuToolTip::HideTooltip()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CMainMenuToolTip::SetText(const char *pszText) 
-{ 
+void CMainMenuToolTip::SetText(const char *pszText)
+{
 	if ( m_pEmbeddedPanel )
 	{
 		_isDirty = true;
@@ -3156,7 +3156,7 @@ bool SaveImageIconAsPng( CEconItemView *pItem, ITexture *pInputTexture, const ch
 	ConVarRef r_texcomp_dump( "r_texcomp_dump" );
 	if ( r_texcomp_dump.GetInt() == 4 )
 	{
-		return true;	
+		return true;
 	}
 
 	if ( pTexture->GetImageFormat() == IMAGE_FORMAT_RGBA8888 ||
@@ -3244,7 +3244,7 @@ void StartNextImage( CEconItemView *pItemData, CEmbeddedItemModelPanel *pItemMod
 
 	// Force set convar for wear
 	//tf_paint_kit_force_wear.SetValue( iWear );
-	
+
 	// force image generation to use high res
 	pItemData->SetWeaponSkinUseHighRes( true );
 
@@ -3352,13 +3352,13 @@ void CHudMainMenuOverride::GenerateIcons( bool bLarge, int min /*= -1*/, int max
 	// Create a larger render target
 	materials->OverrideRenderTargetAllocation( true );
 
-	materials->CreateNamedRenderTargetTextureEx2( 
-		"offline_icon_generation", 
-		rtSize, rtSize, 
-		RT_SIZE_DEFAULT, 
-		materials->GetBackBufferFormat(), 
-		MATERIAL_RT_DEPTH_SHARED, 
-		TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT, 
+	materials->CreateNamedRenderTargetTextureEx2(
+		"offline_icon_generation",
+		rtSize, rtSize,
+		RT_SIZE_DEFAULT,
+		materials->GetBackBufferFormat(),
+		MATERIAL_RT_DEPTH_SHARED,
+		TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT,
 		0 );
 	materials->OverrideRenderTargetAllocation( false );
 
@@ -3374,7 +3374,7 @@ void CHudMainMenuOverride::GenerateIcons( bool bLarge, int min /*= -1*/, int max
 		CEconItemDefinition *pItem = mapItems[idxItem];
 		CTFItemDefinition *pTFDef = (CTFItemDefinition *)pItem;
 		item_definition_index_t iDefIndex = pTFDef->GetDefinitionIndex();
-		
+
 		// skip numbers below min
 		if ( min != -1 && iDefIndex < min )
 			continue;
@@ -3404,7 +3404,7 @@ void CHudMainMenuOverride::GenerateIcons( bool bLarge, int min /*= -1*/, int max
 	}
 
 	Msg( "Found %d Valid Item defs. %d normal items and %d paintkit items\n", m_vecIconDefs.Count(), nNormalItems, nPaintkitItems );
-	
+
 	int nNumGeneratingIcons = nNormalItems + nPaintkitItems * 5;
 	Msg( "Generating Icons for %d Items and 5 Wear Levels for each paintkit items (%d icons total)\n", m_vecIconDefs.Count(), nNumGeneratingIcons );
 
@@ -3421,7 +3421,3 @@ void CHudMainMenuOverride::GenerateIcons( bool bLarge, int min /*= -1*/, int max
 	m_bGeneratingLargeTestIcons = bLarge;
 }
 #endif
-
-
-
-

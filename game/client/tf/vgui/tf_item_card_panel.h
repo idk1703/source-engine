@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -86,7 +86,7 @@ private:
 	template < class T >
 	T* FindAndVerifyControl( Panel* pParent, const char* pszPanelName );
 
-	
+
 	CEconItemView*		m_pItem;
 
 	ImagePanel *m_pDropShadow;
@@ -96,7 +96,7 @@ private:
 	ImagePanel *m_pGrime;
 	ImagePanel *m_pRarityBackgroundOverlay;
 	EditablePanel *m_pMainContainer;
-	
+
 	EditablePanel *m_pCardTop;
 	CEmbeddedItemModelPanel *m_pItemModel;
 
@@ -127,7 +127,7 @@ private:
 // Purpose: Item model panel tooltip. Calls setvisible on the controlled panel
 //			and positions it below/above the current panel.
 //-----------------------------------------------------------------------------
-class CItemCardPanelToolTip : public vgui::BaseTooltip 
+class CItemCardPanelToolTip : public vgui::BaseTooltip
 {
 	DECLARE_CLASS_SIMPLE( CItemCardPanelToolTip, vgui::BaseTooltip );
 public:

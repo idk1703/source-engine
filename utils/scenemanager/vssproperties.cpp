@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,18 +14,18 @@
 static CVSSParams g_Params;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
-static BOOL CALLBACK VSSPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )  
+static BOOL CALLBACK VSSPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	switch(uMsg)
 	{
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		// Insert code here to put the string (to find and replace with)
 		// into the edit controls.
 		// ...
@@ -41,9 +41,9 @@ static BOOL CALLBACK VSSPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wP
 			SendMessage( GetDlgItem( hwndDlg, IDC_VSS_USERNAME ), EM_SETSEL, 0, MAKELONG(0, 0xffff) );
 
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -53,7 +53,7 @@ static BOOL CALLBACK VSSPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wP
 			GetDlgItemText( hwndDlg, IDC_VSS_PROJECT, g_Params.m_szProject, sizeof( g_Params.m_szProject ) );
 			EndDialog( hwndDlg, 1 );
 			break;
-        case IDCANCEL:
+		case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		}
@@ -63,16 +63,16 @@ static BOOL CALLBACK VSSPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wP
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int VSSProperties( CVSSParams *params )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_VSSPROPERTIES ),
 		(HWND)GetWorkspaceManager()->getHandle(),
 		(DLGPROC)VSSPropertiesDialogProc );

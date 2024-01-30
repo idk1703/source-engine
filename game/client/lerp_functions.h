@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -100,7 +100,7 @@ inline void Lerp_Clamp( CRangeCheckedVar<T,minValue,maxValue,startValue> &val )
 }
 
 
-template<> 
+template<>
 inline QAngle Lerp_Hermite<QAngle>( float t, const QAngle& p0, const QAngle& p1, const QAngle& p2 )
 {
 	// Can't do hermite with QAngles, get discontinuities, just do a regular interpolation
@@ -146,7 +146,7 @@ inline float LoopingLerp_Hermite( float t, float p0, float p1, float p2 )
 			p2 += 1.0f;
 		}
 	}
-		
+
 	float s = Lerp_Hermite( t, p0, p1, p2 );
 
 	s = s - (int)(s);

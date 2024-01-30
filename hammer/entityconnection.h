@@ -103,7 +103,7 @@ public:
 	static void FixBadConnections(CMapEntity *pEntity, bool bVisibilityCheck);
 
 protected:
-	char m_szSourceEntity[MAX_ENTITY_NAME_LEN];		// Targetname of the source entity 
+	char m_szSourceEntity[MAX_ENTITY_NAME_LEN];		// Targetname of the source entity
 	CMapEntityList *m_pSourceEntityList;
 	char m_szOutput[MAX_IO_NAME_LEN];				// Name of the output in the source entity.
 	char m_szTargetEntity[MAX_ENTITY_NAME_LEN];		// Targetname of the target entity.

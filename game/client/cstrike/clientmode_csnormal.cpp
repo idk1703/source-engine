@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -46,7 +46,7 @@
 // [tj] Needed to retrieve achievement text
 // [menglish] Need access to message macros
 //=============================================================================
- 
+
 #include "achievementmgr.h"
 #include "hud_macros.h"
 #include "c_plantedc4.h"
@@ -54,9 +54,9 @@
 #include "history_resource.h"
 #include "cs_client_gamestats.h"
 
-// [tj] We need to forward declare this, since the definition is all inside the implementation file 
+// [tj] We need to forward declare this, since the definition is all inside the implementation file
 class CHudHintDisplay;
- 
+
 //=============================================================================
 // HPE_END
 //=============================================================================
@@ -182,7 +182,7 @@ void SetBuyData( const ConVar &buyVar, const char *filename )
 	engine->ClientCmd(buystring);
 }
 
-void MsgFunc_KillCam(bf_read &msg) 
+void MsgFunc_KillCam(bf_read &msg)
 {
 	C_CSPlayer *pPlayer = ToCSPlayer( C_BasePlayer::GetLocalPlayer() );
 
@@ -238,7 +238,7 @@ IVModeManager *modemanager = ( IVModeManager * )&g_ModeManager;
 void CCSModeManager::Init()
 {
 	g_pClientMode = GetClientModeNormal();
-	
+
 	PanelMetaClassMgr()->LoadMetaClassDefinitionFile( SCREEN_FILE );
 }
 
@@ -280,7 +280,7 @@ void CCSModeManager::LevelShutdown( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ClientModeCSNormal::ClientModeCSNormal()
 {
@@ -299,13 +299,13 @@ void ClientModeCSNormal::Init()
 	ListenForGameEvent( "bomb_exploded" );
 	ListenForGameEvent( "bomb_defused" );
 	ListenForGameEvent( "hostage_killed" );
-	ListenForGameEvent( "hostage_hurt" );	
+	ListenForGameEvent( "hostage_hurt" );
 
 	usermessages->HookMessage( "KillCam", MsgFunc_KillCam );
 
 	//=============================================================================
 	// HPE_BEGIN:
-	// [tj] Add the shared HUD elements to the render groups responsible for hiding 
+	// [tj] Add the shared HUD elements to the render groups responsible for hiding
 	//		conflicting UI
 	//=============================================================================
 	CHudElement* hintBox = (CHudElement*)GET_HUDELEMENT( CHudHintDisplay );
@@ -319,7 +319,7 @@ void ClientModeCSNormal::Init()
 	CHudElement* historyResource = (CHudElement*)GET_HUDELEMENT( CHudHistoryResource );
 	if (historyResource)
 	{
-		historyResource->RegisterForRenderGroup("hide_for_scoreboard");		
+		historyResource->RegisterForRenderGroup("hide_for_scoreboard");
 	}
 	//=============================================================================
 	// HPE_END
@@ -383,8 +383,8 @@ void ClientModeCSNormal::UpdateSpectatorMode( void )
 	Vector2D mappos = overviewmap->WorldToMap( worldpos );
 
 	overviewmap->SetCenter( mappos );
-	overviewmap->SetAngle( angles.y );	
-	
+	overviewmap->SetAngle( angles.y );
+
 	for ( int i = 1; i<= MAX_PLAYERS; i++)
 	{
 		C_BaseEntity *ent = ClientEntityList().GetEnt( i );
@@ -404,7 +404,7 @@ void ClientModeCSNormal::UpdateSpectatorMode( void )
 			position = g_PR->GetPosition( i );
 			angles[1] = g_PR->GetViewAngle( i );
 		}
-		
+
 		overviewmap->SetPlayerPositions( i-1, position, angles );
 	}
 } */
@@ -417,7 +417,7 @@ int	ClientModeCSNormal::KeyInput( int down, ButtonCode_t keynum, const char *psz
 	// don't process input in LogoMaps
 	if( CSGameRules() && CSGameRules()->IsLogoMap() )
 		return 1;
-	
+
 	return BaseClass::KeyInput( down, keynum, pszCurrentBinding );
 }
 
@@ -452,7 +452,7 @@ void ClientModeCSNormal::FireGameEvent( IGameEvent *event )
 	CBaseHudChat *pHudChat = (CBaseHudChat *)GET_HUDELEMENT( CHudChat );
 	C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 	CLocalPlayerFilter filter;
-	
+
 	if ( !pLocalPlayer || !pHudChat )
 		return;
 
@@ -512,10 +512,10 @@ void ClientModeCSNormal::FireGameEvent( IGameEvent *event )
 		{
 			C_BaseEntity::EmitSound( filter, SOUND_FROM_LOCAL_PLAYER, "Event.RoundDraw");
 		}
-		
+
 		//=============================================================================
 		// HPE_BEGIN:
-		// [pfreese] Only show centerprint message for game commencing; the rest of 
+		// [pfreese] Only show centerprint message for game commencing; the rest of
 		// these messages are handled by the end-of-round panel.
 		// [Forrest] Show all centerprint messages if the end-of-round panel is disabled.
 		//=============================================================================
@@ -528,7 +528,7 @@ void ClientModeCSNormal::FireGameEvent( IGameEvent *event )
 			// we are starting a new round; clear the current match stats
 			g_CSClientGameStats.ResetMatchStats();
 		}
-		
+
 		//=============================================================================
 		// HPE_END
 		//=============================================================================
@@ -538,7 +538,7 @@ void ClientModeCSNormal::FireGameEvent( IGameEvent *event )
 	{
 		CBaseHudChat *pHudChat = (CBaseHudChat *)GET_HUDELEMENT( CHudChat );
 		C_BasePlayer *pPlayer = USERID2PLAYER( event->GetInt("userid") );
-		
+
 		if ( !pPlayer )
 			return;
 
@@ -571,7 +571,7 @@ void ClientModeCSNormal::FireGameEvent( IGameEvent *event )
 		internalCenterPrint->Print( "#Cstrike_TitlesTXT_Bomb_Planted" );
 
 		// play sound
-		 C_BaseEntity::EmitSound( filter, SOUND_FROM_LOCAL_PLAYER, "Event.BombPlanted")  ;
+		C_BaseEntity::EmitSound( filter, SOUND_FROM_LOCAL_PLAYER, "Event.BombPlanted")  ;
 	}
 
 	else if ( Q_strcmp( "bomb_defused", eventname ) == 0 )
@@ -582,7 +582,7 @@ void ClientModeCSNormal::FireGameEvent( IGameEvent *event )
 	// HPE_BEGIN:
 	// [menglish] Tell the client side bomb that the bomb has exploding here creating the explosion particle effect
 	//=============================================================================
-	 
+
 	else if ( Q_strcmp( "bomb_exploded", eventname ) == 0 )
 	{
 		if ( g_PlantedC4s.Count() > 0 )
@@ -592,7 +592,7 @@ void ClientModeCSNormal::FireGameEvent( IGameEvent *event )
 			pC4->Explode();
 		}
 	}
-	 
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
@@ -647,83 +647,83 @@ void ClientModeCSNormal::FireGameEvent( IGameEvent *event )
 		return; // server sends a colorized text string for this
 	}
 
-    //=============================================================================
-    // HPE_BEGIN:
-    // [tj] We handle this here instead of in the base class 
-    //      The reason is that we don't use string tables to localize.
-    //      Instead, we use the steam localization mechanism.
-    //
-    // [dwenger] Remove dependency on stats system for name of achievement.
-    //=============================================================================
-     
-    else if ( Q_strcmp( "achievement_earned", eventname ) == 0 )
-    {
-        CBaseHudChat *hudChat = (CBaseHudChat *)GET_HUDELEMENT( CHudChat );
-        int iPlayerIndex = event->GetInt( "player" );
-        C_BasePlayer *pPlayer = UTIL_PlayerByIndex( iPlayerIndex );
-        int iAchievement = event->GetInt( "achievement" );
+	//=============================================================================
+	// HPE_BEGIN:
+	// [tj] We handle this here instead of in the base class
+	//      The reason is that we don't use string tables to localize.
+	//      Instead, we use the steam localization mechanism.
+	//
+	// [dwenger] Remove dependency on stats system for name of achievement.
+	//=============================================================================
 
-        if ( !hudChat || !pPlayer )
-            return;
+	else if ( Q_strcmp( "achievement_earned", eventname ) == 0 )
+	{
+		CBaseHudChat *hudChat = (CBaseHudChat *)GET_HUDELEMENT( CHudChat );
+		int iPlayerIndex = event->GetInt( "player" );
+		C_BasePlayer *pPlayer = UTIL_PlayerByIndex( iPlayerIndex );
+		int iAchievement = event->GetInt( "achievement" );
+
+		if ( !hudChat || !pPlayer )
+			return;
 
 
-        CAchievementMgr *pAchievementMgr = dynamic_cast<CAchievementMgr *>( engine->GetAchievementMgr() );
-        if ( !pAchievementMgr )
-            return;
+		CAchievementMgr *pAchievementMgr = dynamic_cast<CAchievementMgr *>( engine->GetAchievementMgr() );
+		if ( !pAchievementMgr )
+			return;
 
-        IAchievement *pAchievement = pAchievementMgr->GetAchievementByID( iAchievement );
-        if ( pAchievement )
-        {
-            if ( !pPlayer->IsDormant() && pPlayer->ShouldAnnounceAchievement() )
-            {
-                pPlayer->SetNextAchievementAnnounceTime( gpGlobals->curtime + ACHIEVEMENT_ANNOUNCEMENT_MIN_TIME );
+		IAchievement *pAchievement = pAchievementMgr->GetAchievementByID( iAchievement );
+		if ( pAchievement )
+		{
+			if ( !pPlayer->IsDormant() && pPlayer->ShouldAnnounceAchievement() )
+			{
+				pPlayer->SetNextAchievementAnnounceTime( gpGlobals->curtime + ACHIEVEMENT_ANNOUNCEMENT_MIN_TIME );
 
-                //Do something for the player - Actually we should probably do this client-side when the achievement is first earned.
-                if (pPlayer->IsLocalPlayer()) 
-                {
-                }
-                pPlayer->OnAchievementAchieved( iAchievement );
-            }
+				//Do something for the player - Actually we should probably do this client-side when the achievement is first earned.
+				if (pPlayer->IsLocalPlayer())
+				{
+				}
+				pPlayer->OnAchievementAchieved( iAchievement );
+			}
 
-            if ( g_PR )
-            {
-                wchar_t wszPlayerName[MAX_PLAYER_NAME_LENGTH];
-                g_pVGuiLocalize->ConvertANSIToUnicode( g_PR->GetPlayerName( iPlayerIndex ), wszPlayerName, sizeof( wszPlayerName ) );
+			if ( g_PR )
+			{
+				wchar_t wszPlayerName[MAX_PLAYER_NAME_LENGTH];
+				g_pVGuiLocalize->ConvertANSIToUnicode( g_PR->GetPlayerName( iPlayerIndex ), wszPlayerName, sizeof( wszPlayerName ) );
 
-                wchar_t achievementName[1024];
-                const wchar_t* constAchievementName = &achievementName[0];
+				wchar_t achievementName[1024];
+				const wchar_t* constAchievementName = &achievementName[0];
 
-                constAchievementName = ACHIEVEMENT_LOCALIZED_NAME( pAchievement );
+				constAchievementName = ACHIEVEMENT_LOCALIZED_NAME( pAchievement );
 
-                if (constAchievementName)
-                {
-                    wchar_t wszLocalizedString[128];
-                    g_pVGuiLocalize->ConstructString( wszLocalizedString, sizeof( wszLocalizedString ), g_pVGuiLocalize->Find( "#Achievement_Earned" ), 2, wszPlayerName, constAchievementName/*wszAchievementString*/ );
+				if (constAchievementName)
+				{
+					wchar_t wszLocalizedString[128];
+					g_pVGuiLocalize->ConstructString( wszLocalizedString, sizeof( wszLocalizedString ), g_pVGuiLocalize->Find( "#Achievement_Earned" ), 2, wszPlayerName, constAchievementName/*wszAchievementString*/ );
 
-                    char szLocalized[128];
-                    g_pVGuiLocalize->ConvertUnicodeToANSI( wszLocalizedString, szLocalized, sizeof( szLocalized ) );
+					char szLocalized[128];
+					g_pVGuiLocalize->ConvertUnicodeToANSI( wszLocalizedString, szLocalized, sizeof( szLocalized ) );
 
-                    hudChat->ChatPrintf( iPlayerIndex, CHAT_FILTER_ACHIEVEMENT, "%s", szLocalized );
+					hudChat->ChatPrintf( iPlayerIndex, CHAT_FILTER_ACHIEVEMENT, "%s", szLocalized );
 
 					/*
-                    if (pPlayer->IsLocalPlayer()) 
-                    {
-                        char achievementDescription[1024];
-                        const char* constAchievementDescription = &achievementDescription[0];
+					if (pPlayer->IsLocalPlayer())
+					{
+						char achievementDescription[1024];
+						const char* constAchievementDescription = &achievementDescription[0];
 
-                        constAchievementDescription = pUserStats->GetAchievementDisplayAttribute( pAchievement->GetName(), "desc" );  
-                        hudChat->ChatPrintf( iPlayerIndex, CHAT_FILTER_ACHIEVEMENT, "(%s)", constAchievementDescription );
-                    }
+						constAchievementDescription = pUserStats->GetAchievementDisplayAttribute( pAchievement->GetName(), "desc" );
+						hudChat->ChatPrintf( iPlayerIndex, CHAT_FILTER_ACHIEVEMENT, "(%s)", constAchievementDescription );
+					}
 					*/
-                }
-            }
-        }
-    }
-     
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
-    
+				}
+			}
+		}
+	}
+
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
+
 
 	else
 	{
@@ -774,12 +774,12 @@ bool ShouldRecreateClassImageEntity( C_BaseAnimating *pEnt, const char *pNewMode
 }
 
 
-void UpdateClassImageEntity( 
+void UpdateClassImageEntity(
 	const char *pModelName,
 	int x, int y, int width, int height )
 {
 	C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
-	
+
 	if ( !pLocalPlayer )
 		return;
 
@@ -877,13 +877,13 @@ void UpdateClassImageEntity(
 	pPlayerModel->SetAbsAngles( QAngle( 0, 210, 0 ) );
 
 	// wacky hacky, set upper body animation
-	pPlayerModel->m_SequenceTransitioner.CheckForSequenceChange( 
+	pPlayerModel->m_SequenceTransitioner.CheckForSequenceChange(
 		pPlayerModel->GetModelPtr(),
 		pPlayerModel->LookupSequence( "walk_lower" ),
 		false,
 		true
 	);
-	pPlayerModel->m_SequenceTransitioner.UpdateCurrent( 
+	pPlayerModel->m_SequenceTransitioner.UpdateCurrent(
 		pPlayerModel->GetModelPtr(),
 		pPlayerModel->LookupSequence( "walk_lower" ),
 		pPlayerModel->GetCycle(),
@@ -936,7 +936,7 @@ void UpdateClassImageEntity(
 
 	//=============================================================================
 	// HPE_BEGIN:
-	// [mhansen] We don't want to light the model in the world.  We want it to 
+	// [mhansen] We don't want to light the model in the world.  We want it to
 	// always be lit normal like even if you are standing in a dark (or green) area
 	// in the world.
 	//=============================================================================
@@ -944,7 +944,7 @@ void UpdateClassImageEntity(
 	pRenderContext->SetLightingOrigin( vec3_origin );
 	pRenderContext->SetAmbientLight( 0.4, 0.4, 0.4 );
 
-	static Vector white[6] = 
+	static Vector white[6] =
 	{
 		Vector( 0.4, 0.4, 0.4 ),
 		Vector( 0.4, 0.4, 0.4 ),
@@ -1019,7 +1019,7 @@ void ClientModeCSNormal::PostRenderVGui()
 bool ClientModeCSNormal::ShouldDrawViewModel( void )
 {
 	C_CSPlayer *pPlayer = C_CSPlayer::GetLocalCSPlayer();
-	
+
 	if( pPlayer && pPlayer->GetFOV() != CSGameRules()->DefaultFOV() )
 	{
 		CWeaponCSBase *pWpn = pPlayer->GetActiveCSWeapon();
@@ -1073,7 +1073,7 @@ bool ClientModeCSNormal::CanRecordDemo( char *errorMsg, int length ) const
 // HPE_BEGIN:
 // [menglish] Save server information shown to the client in a persistent place
 //=============================================================================
- 
+
 void ClientModeCSNormal::SetServerName(wchar_t* name)
 {
 	V_wcsncpy(m_pServerName, name, sizeof( m_pServerName ) );

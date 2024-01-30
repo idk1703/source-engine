@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@
 
 using namespace vgui;
 
-static int iTopDims[8] = 
+static int iTopDims[8] =
 {
 	41, 30,
 	562, 30,
@@ -27,7 +27,7 @@ static int iTopDims[8] =
 
 static int iMainDims[8] =
 {
-	41, 67, 
+	41, 67,
 	599, 67,
 	599, 465,
 	41, 465
@@ -35,13 +35,13 @@ static int iMainDims[8] =
 
 static int iBoxDims[8] =
 {
-	69, 83, 
+	69, 83,
 	86, 83,
 	86, 89,
 	69, 89
 };
 
-static int iLineDims[6] = 
+static int iLineDims[6] =
 {
 	69, 89,
 	558, 89,

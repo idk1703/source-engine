@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -162,7 +162,7 @@ PowerupBottleType_t CTFPowerupBottle::GetPowerupType( void ) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPowerupBottle::ReapplyProvision( void )
 {
@@ -192,7 +192,7 @@ void CTFPowerupBottle::ReapplyProvision( void )
 		{
 			float flDuration = 0;
 			CALL_ATTRIB_HOOK_FLOAT( flDuration, powerup_duration );
-			
+
 			// Add extra time?
 			CALL_ATTRIB_HOOK_INT_ON_OTHER( pTFPlayer, flDuration, canteen_specialist );
 
@@ -252,7 +252,7 @@ void CTFPowerupBottle::ReapplyProvision( void )
 							if ( pSentry && !pSentry->IsCarried() )
 							{
 								pSentry->SetShieldLevel( SHIELD_MAX, flDuration );
-							}		
+							}
 						}
 					}
 					else if ( iShareBottle && pHealTarget )
@@ -283,7 +283,7 @@ void CTFPowerupBottle::ReapplyProvision( void )
 			if ( iHasRefillAmmo )
 			{
 				if ( m_bActive )
-				{	
+				{
 					// Refill weapon clips
 					for ( int i = 0; i < MAX_WEAPONS; i++ )
 					{
@@ -297,7 +297,7 @@ void CTFPowerupBottle::ReapplyProvision( void )
 							if ( ( pWeapon->UsesPrimaryAmmo() && !pWeapon->HasPrimaryAmmo() ) ||
 								( pWeapon->UsesSecondaryAmmo() && !pWeapon->HasSecondaryAmmo() ) )
 							{
-								pTFPlayer->AwardAchievement( ACHIEVEMENT_TF_MVM_USE_AMMO_BOTTLE ); 
+								pTFPlayer->AwardAchievement( ACHIEVEMENT_TF_MVM_USE_AMMO_BOTTLE );
 							}
 						}
 
@@ -370,7 +370,7 @@ void CTFPowerupBottle::ReapplyProvision( void )
 
 								pObj->DoQuickBuild( true );
 							}
-						}		
+						}
 					}
 				}
 			}
@@ -449,7 +449,7 @@ bool CTFPowerupBottle::Use()
 
 		float flDuration = 0;
 		CALL_ATTRIB_HOOK_FLOAT( flDuration, powerup_duration );
-		
+
 		// Add extra time?
 		CTFPlayer *pOwner = ToTFPlayer( GetOwnerEntity() );
 		if ( pOwner )
@@ -474,7 +474,7 @@ bool CTFPowerupBottle::Use()
 			pOwner->ForgetFirstUpgradeForItem( GetAttributeContainer()->GetItem() );
 		}
 #endif
-		
+
 		SetNumCharges( GetNumCharges() - 1 );
 		m_bActive = true;
 		ReapplyProvision();
@@ -510,7 +510,7 @@ void CTFPowerupBottle::SetNumCharges( uint8 usNumCharges )
 {
 	static CSchemaAttributeDefHandle pAttrDef_PowerupCharges( "powerup charges" );
 
-	m_usNumCharges = usNumCharges; 
+	m_usNumCharges = usNumCharges;
 
 	if ( !pAttrDef_PowerupCharges )
 		return;
@@ -527,7 +527,7 @@ void CTFPowerupBottle::SetNumCharges( uint8 usNumCharges )
 //-----------------------------------------------------------------------------
 uint8 CTFPowerupBottle::GetNumCharges() const
 {
-	return m_usNumCharges; 
+	return m_usNumCharges;
 }
 
 //-----------------------------------------------------------------------------
@@ -541,7 +541,7 @@ uint8 CTFPowerupBottle::GetMaxNumCharges() const
 	// Default canteen has 3 charges.  Medic canteen specialist allows purchasing 3 more charges.
 	// If anything else increases max charges, we need to refactor how canteen specialist is handled.
 	Assert( iMaxNumCharges >= 0 && iMaxNumCharges <= 6 );
-	
+
 	iMaxNumCharges = Min( iMaxNumCharges, 6 );
 
 	return (uint8)iMaxNumCharges;
@@ -737,7 +737,7 @@ void CEquipMvMCanteenNotification::Accept()
 	Assert( pItemDef_KritzOrTreat );
 	Assert( pItemDef_Canteen );
 	Assert( pItemDef_DefaultCanteen );
-	
+
 	for ( int i = 0; i < pLocalInv->GetItemCount(); ++i )
 	{
 		CEconItemView *pItem = pLocalInv->GetItem( i );
@@ -783,4 +783,3 @@ void CEquipMvMCanteenNotification::UpdateTick()
 	}
 }
 #endif // client
-

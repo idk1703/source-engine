@@ -93,19 +93,19 @@ public:
 	static uint32 GetSymmetricEncryptedSize( uint32 cubPlaintextData );
 
 	// this method writes the encrypted IV, then the ciphertext
-	static bool SymmetricEncryptWithIV( const uint8 * pubPlaintextData, uint32 cubPlaintextData, 
+	static bool SymmetricEncryptWithIV( const uint8 * pubPlaintextData, uint32 cubPlaintextData,
 										const uint8 * pIV, uint32 cubIV,
 										uint8 * pubEncryptedData, uint32 * pcubEncryptedData,
 										const uint8 * pubKey, uint32 cubKey );
-	static bool SymmetricEncrypt( const uint8 * pubPlaintextData, uint32 cubPlaintextData, 
+	static bool SymmetricEncrypt( const uint8 * pubPlaintextData, uint32 cubPlaintextData,
 								  uint8 * pubEncryptedData, uint32 * pcubEncryptedData,
 								  const uint8 * pubKey, uint32 cubKey );
 	// this method assumes there is no IV before the payload - dissimilar to SymmetricEncryptWithIV
-	static bool SymmetricDecryptWithIV( const uint8 * pubEncryptedData, uint32 cubEncryptedData, 
+	static bool SymmetricDecryptWithIV( const uint8 * pubEncryptedData, uint32 cubEncryptedData,
 										const uint8 * pIV, uint32 cubIV,
 										uint8 * pubPlaintextData, uint32 * pcubPlaintextData,
 										const uint8 * pubKey, uint32 cubKey );
-	static bool SymmetricDecrypt( const uint8 * pubEncryptedData, uint32 cubEncryptedData, 
+	static bool SymmetricDecrypt( const uint8 * pubEncryptedData, uint32 cubEncryptedData,
 								  uint8 * pubPlaintextData, uint32 * pcubPlaintextData,
 								  const uint8 * pubKey, uint32 cubKey );
 
@@ -126,33 +126,33 @@ public:
 	// Symmetrically decrypt data with the given password (see above).
 	// If the HMAC does not match what we expect, then we know that either the password is
 	// incorrect or the message is corrupted.
-	static bool DecryptWithPasswordAndAuthenticate( const uint8 * pubEncryptedData, uint32 cubEncryptedData, 
+	static bool DecryptWithPasswordAndAuthenticate( const uint8 * pubEncryptedData, uint32 cubEncryptedData,
 									 uint8 * pubPlaintextData, uint32 * pcubPlaintextData,
 									 const char *pchPassword );
 
 	static bool RSAGenerateKeys( uint8 *pubPublicKey, uint32 *pcubPublicKey, uint8 *pubPrivateKey, uint32 *pcubPrivateKey );
 
-	static bool RSAEncrypt( const uint8 *pubPlaintextPlaintextData, const uint32 cubData, uint8 *pubEncryptedData, 
+	static bool RSAEncrypt( const uint8 *pubPlaintextPlaintextData, const uint32 cubData, uint8 *pubEncryptedData,
 							uint32 *pcubEncryptedData, const uint8 *pubPublicKey, const uint32 cubPublicKey );
-	static bool RSADecrypt( const uint8 *pubEncryptedData, uint32 cubEncryptedData, 
+	static bool RSADecrypt( const uint8 *pubEncryptedData, uint32 cubEncryptedData,
 							uint8 *pubPlaintextData, uint32 *pcubPlaintextData, const uint8 *pubPrivateKey, const uint32 cubPrivateKey );
 
 	// decrypt using a public key, and no padding
-	static bool RSAPublicDecrypt_NoPadding( const uint8 *pubEncryptedData, uint32 cubEncryptedData, 
+	static bool RSAPublicDecrypt_NoPadding( const uint8 *pubEncryptedData, uint32 cubEncryptedData,
 							uint8 *pubPlaintextData, uint32 *pcubPlaintextData, const uint8 *pubPublicKey, const uint32 cubPublicKey );
 
-	static bool RSASign( const uint8 *pubData, const uint32 cubData, 
-						 uint8 *pubSignature, uint32 *pcubSignature, 
+	static bool RSASign( const uint8 *pubData, const uint32 cubData,
+						 uint8 *pubSignature, uint32 *pcubSignature,
 						const uint8 * pubPrivateKey, const uint32 cubPrivateKey );
-	static bool RSAVerifySignature( const uint8 *pubData, const uint32 cubData, 
-									const uint8 *pubSignature, const uint32 cubSignature, 
+	static bool RSAVerifySignature( const uint8 *pubData, const uint32 cubData,
+									const uint8 *pubSignature, const uint32 cubSignature,
 									const uint8 *pubPublicKey, const uint32 cubPublicKey );
 
-	static bool RSASignSHA256( const uint8 *pubData, const uint32 cubData, 
-						 uint8 *pubSignature, uint32 *pcubSignature, 
+	static bool RSASignSHA256( const uint8 *pubData, const uint32 cubData,
+						 uint8 *pubSignature, uint32 *pcubSignature,
 						const uint8 * pubPrivateKey, const uint32 cubPrivateKey );
-	static bool RSAVerifySignatureSHA256( const uint8 *pubData, const uint32 cubData, 
-									const uint8 *pubSignature, const uint32 cubSignature, 
+	static bool RSAVerifySignatureSHA256( const uint8 *pubData, const uint32 cubData,
+									const uint8 *pubSignature, const uint32 cubSignature,
 									const uint8 *pubPublicKey, const uint32 cubPublicKey );
 
 	static bool HexEncode( const uint8 *pubData, const uint32 cubData, char *pchEncodedData, uint32 cchEncodedData );
@@ -235,7 +235,7 @@ class CSimpleBitString;
 
 //-----------------------------------------------------------------------------
 // Purpose: Implement hex encoding / decoding using a custom lookup table.
-//			This is a class because the decoding is done via a generated 
+//			This is a class because the decoding is done via a generated
 //			reverse-lookup table, and to save time it's best to just create
 //			that table once.
 //-----------------------------------------------------------------------------
@@ -256,7 +256,7 @@ private:
 
 //-----------------------------------------------------------------------------
 // Purpose: Implement base32 encoding / decoding using a custom lookup table.
-//			This is a class because the decoding is done via a generated 
+//			This is a class because the decoding is done via a generated
 //			reverse-lookup table, and to save time it's best to just create
 //			that table once.
 //-----------------------------------------------------------------------------

@@ -101,12 +101,12 @@ typedef CFStringRef	(*CFDictionaryCopyDescriptionCallBack)(const void *value);
 typedef Boolean		(*CFDictionaryEqualCallBack)(const void *value1, const void *value2);
 typedef CFHashCode	(*CFDictionaryHashCallBack)(const void *value);
 typedef struct {
-    CFIndex				version;
-    CFDictionaryRetainCallBack		retain;
-    CFDictionaryReleaseCallBack		release;
-    CFDictionaryCopyDescriptionCallBack	copyDescription;
-    CFDictionaryEqualCallBack		equal;
-    CFDictionaryHashCallBack		hash;
+	CFIndex				version;
+	CFDictionaryRetainCallBack		retain;
+	CFDictionaryReleaseCallBack		release;
+	CFDictionaryCopyDescriptionCallBack	copyDescription;
+	CFDictionaryEqualCallBack		equal;
+	CFDictionaryHashCallBack		hash;
 } CFDictionaryKeyCallBacks;
 
 /*!
@@ -161,11 +161,11 @@ const CFDictionaryKeyCallBacks kCFCopyStringDictionaryKeyCallBacks;
 		equality in some operations.
 */
 typedef struct {
-    CFIndex				version;
-    CFDictionaryRetainCallBack		retain;
-    CFDictionaryReleaseCallBack		release;
-    CFDictionaryCopyDescriptionCallBack	copyDescription;
-    CFDictionaryEqualCallBack		equal;
+	CFIndex				version;
+	CFDictionaryRetainCallBack		retain;
+	CFDictionaryReleaseCallBack		release;
+	CFDictionaryCopyDescriptionCallBack	copyDescription;
+	CFDictionaryEqualCallBack		equal;
 } CFDictionaryValueCallBacks;
 
 /*!
@@ -585,7 +585,7 @@ void CFDictionaryGetKeysAndValues(CFDictionaryRef theDict, const void **keys, co
 		pointer to a function of the correct prototype, the behavior
 		is undefined. If there are keys or values which the
 		applier function does not expect or cannot properly apply
-		to, the behavior is undefined. 
+		to, the behavior is undefined.
 	@param context A pointer-sized user-defined value, which is passed
 		as the third parameter to the applier function, but is
 		otherwise unused by this function. If the context is not
@@ -624,7 +624,7 @@ void CFDictionaryAddValue(CFMutableDictionaryRef theDict, const void *key, const
 		undefined. If the dictionary is a fixed-capacity dictionary and
 		it is full before this operation, and the key does not exist in
 		the dictionary, the behavior is undefined.
-	@param key The key of the value to set into the dictionary. If a key 
+	@param key The key of the value to set into the dictionary. If a key
 		which matches this key is already present in the dictionary, only
 		the value is changed ("add if absent, replace if present"). If
 		no key matches the given key, the key-value pair is added to the
@@ -647,7 +647,7 @@ void CFDictionarySetValue(CFMutableDictionaryRef theDict, const void *key, const
 	@param theDict The dictionary to which the value is to be replaced. If this
 		parameter is not a valid mutable CFDictionary, the behavior is
 		undefined.
-	@param key The key of the value to replace in the dictionary. If a key 
+	@param key The key of the value to replace in the dictionary. If a key
 		which matches this key is present in the dictionary, the value
 		is changed to the given value, otherwise this function does
 		nothing ("replace if present").
@@ -666,7 +666,7 @@ void CFDictionaryReplaceValue(CFMutableDictionaryRef theDict, const void *key, c
 	@param theDict The dictionary from which the value is to be removed. If this
 		parameter is not a valid mutable CFDictionary, the behavior is
 		undefined.
-	@param key The key of the value to remove from the dictionary. If a key 
+	@param key The key of the value to remove from the dictionary. If a key
 		which matches this key is present in the dictionary, the key-value
 		pair is removed from the dictionary, otherwise this function does
 		nothing ("remove if present").
@@ -689,4 +689,3 @@ void CFDictionaryRemoveAllValues(CFMutableDictionaryRef theDict);
 #endif
 
 #endif /* ! __COREFOUNDATION_CFDICTIONARY__ */
-

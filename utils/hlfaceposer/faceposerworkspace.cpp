@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -11,7 +11,7 @@
 #include "ifaceposerworkspace.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CWorkspaceFiles : public IWorkspaceFiles
 {
@@ -152,12 +152,12 @@ LONG CWorkspaceFiles::CreateWorkspaceKey( char const *pchGameName, PHKEY phKey )
 	Q_snprintf( sz, sizeof( sz ), "Software\\Valve\\faceposer\\workspace\\%s", pchGameName );
 
 	return RegCreateKeyEx(
-		HKEY_CURRENT_USER,	// handle of open key 
-		sz, //				address of name of subkey to open 
-		0,					// DWORD ulOptions,	  // reserved 
+		HKEY_CURRENT_USER,	// handle of open key
+		sz, //				address of name of subkey to open
+		0,					// DWORD ulOptions,	  // reserved
 		NULL,				// Type of value
 		REG_OPTION_NON_VOLATILE, // Store permanently in reg.
-		KEY_ALL_ACCESS,		// REGSAM samDesired, // security access mask 
+		KEY_ALL_ACCESS,		// REGSAM samDesired, // security access mask
 		NULL,
 		phKey,				// Key we are creating
 		&disp );			// Type of creation

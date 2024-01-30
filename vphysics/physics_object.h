@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -223,7 +223,7 @@ private:
 	bool			IsControlling( const IVP_Controller *pController ) const;
 	float			GetVolume() const;
 	void			SetVolume( float volume );
-	
+
 	// the mass has changed, recompute the drag information
 	void			RecomputeDragBases();
 
@@ -256,7 +256,7 @@ private:
 	unsigned short	m_callbacks;
 	unsigned short	m_gameFlags;
 	unsigned int	m_contentsMask;
-	
+
 	float			m_volume;
 	float			m_buoyancyRatio;
 	float			m_dragCoefficient;
@@ -266,7 +266,7 @@ private:
 	friend bool CPhysicsEnvironment::TransferObject( IPhysicsObject *pObject, IPhysicsEnvironment *pDestinationEnvironment ); //need direct access to m_pShadow for Portal mod's physics object transfer system
 };
 
-// If you haven't ever touched a dynamic object, there's no need to search for contacting objects to 
+// If you haven't ever touched a dynamic object, there's no need to search for contacting objects to
 // wakeup when you are deleted.  So cache a bit here when contacts are generated
 inline bool CPhysicsObject::HasTouchedDynamic()
 {

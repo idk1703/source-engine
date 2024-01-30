@@ -157,7 +157,7 @@ bool INextBot::SetPosition( const Vector &pos )
 	{
 		return body->SetPosition( pos );
 	}
-	
+
 	// fall back to setting raw entity position
 	GetEntity()->SetAbsOrigin( pos );
 	return true;
@@ -179,7 +179,7 @@ bool INextBot::IsEnemy( const CBaseEntity *them ) const
 {
 	if ( them == NULL )
 		return false;
-		
+
 	// this is not strictly correct, as spectators are not enemies
 	return const_cast< INextBot * >( this )->GetEntity()->GetTeamNumber() != them->GetTeamNumber();
 }
@@ -193,7 +193,7 @@ bool INextBot::IsFriend( const CBaseEntity  *them ) const
 {
 	if ( them == NULL )
 		return false;
-		
+
 	return const_cast< INextBot * >( this )->GetEntity()->GetTeamNumber() == them->GetTeamNumber();
 }
 
@@ -307,7 +307,7 @@ float INextBot::GetRangeSquaredTo( CBaseEntity *subject ) const
 float INextBot::GetRangeSquaredTo( const Vector &pos ) const
 {
 	Vector to = pos - GetPosition();
-	return to.LengthSqr();	
+	return to.LengthSqr();
 }
 
 
@@ -331,7 +331,7 @@ const char *INextBot::GetDebugIdentifier( void ) const
 {
 	const int nameSize = 256;
 	static char name[ nameSize ];
-	
+
 	Q_snprintf( name, nameSize, "%s(#%d)", const_cast< INextBot * >( this )->GetEntity()->GetClassname(), const_cast< INextBot * >( this )->GetEntity()->entindex() );
 
 	return name;
@@ -392,7 +392,7 @@ bool INextBot::IsAbleToBreak( const CBaseEntity *object ) const
 {
 	if ( object && object->m_takedamage == DAMAGE_YES )
 	{
-		if ( FClassnameIs( const_cast< CBaseEntity * >( object ), "func_breakable" ) && 
+		if ( FClassnameIs( const_cast< CBaseEntity * >( object ), "func_breakable" ) &&
 			 object->GetHealth() )
 		{
 			return true;
@@ -534,4 +534,3 @@ void INextBot::UpdateImmobileStatus( void )
 		}
 	}
 }
-

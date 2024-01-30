@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -59,7 +59,7 @@ void CHudBossHealthMeter::ApplySchemeSettings( IScheme *pScheme )
 	//BarImage
 	m_pBarImagePanel = dynamic_cast<ImagePanel*>( m_pHealthBarPanel->FindChildByName( "BarImage" ) );
 	m_bossActiveBarColor = m_pBarImagePanel ? m_pBarImagePanel->GetDrawColor() : m_inactiveColor;
-		
+
 
 	// BorderImage
 	m_pBorderImagePanel = dynamic_cast< ImagePanel* >( FindChildByName( "BorderImage" ) );
@@ -140,7 +140,7 @@ void CHudBossHealthMeter::Update( void )
 		}
 
 		int iState = g_pMonsterResource->GetBossState();
-	
+
 		if ( m_pBarImagePanel )
 		{
 			Color barColor = ( iState == 0 ) ? m_bossActiveBarColor : m_inactiveColor;

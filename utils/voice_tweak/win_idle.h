@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -29,7 +29,7 @@ protected:
 	static DWORD WINAPI ThreadStub(LPVOID pIdle);
 	// The actual idle loop
 	virtual DWORD RunIdle();
-	
+
 public:
 	CWinIdle();
 	virtual ~CWinIdle();
@@ -75,4 +75,3 @@ public:
 
 
 #endif //__WINIDLE_H__
-

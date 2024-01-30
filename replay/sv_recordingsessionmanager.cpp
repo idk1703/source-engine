@@ -43,7 +43,7 @@ const char *CServerRecordingSessionManager::GetNewSessionName() const
 	tm today; VCRHook_LocalTime( &today );
 	return Replay_va(
 		"%04i%02i%02i-%02i%02i%02i-%s",
-		1900 + today.tm_year, today.tm_mon+1, today.tm_mday, 
+		1900 + today.tm_year, today.tm_mon+1, today.tm_mday,
 		today.tm_hour, today.tm_min, today.tm_sec,
 		g_pEngine->GetGameServer()->GetMapName()
 	);

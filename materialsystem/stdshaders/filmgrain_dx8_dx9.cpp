@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -91,7 +91,7 @@ BEGIN_VS_SHADER_FLAGS( FilmGrain_dx8, "Help for FilmGrain", SHADER_NOT_EDITABLE 
 		DYNAMIC_STATE
 		{
 			BindTexture( SHADER_SAMPLER0, GRAIN_TEXTURE, -1 );
-						
+
 			SetPixelShaderConstant( 0, NOISESCALE );
 
 #ifdef STDSHADER_DX9_DLL_EXPORT

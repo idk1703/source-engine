@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -132,7 +132,7 @@ void CVarEditDialog::Activate(vgui::Panel *actionSignalTarget, KeyValues *rules)
 	_snprintf(title, sizeof(title) - 1, "Change %s", m_pRules->GetString("name"));
 	SetTitle(title, false);
 
-	// bring to front	
+	// bring to front
 //	input()->SetAppModalSurface(GetVPanel());
 	MoveToCenterOfScreen();
 	BaseClass::Activate();
@@ -172,7 +172,7 @@ void CVarEditDialog::ApplyChanges()
 		char value[32];
 		_snprintf(value, sizeof(value) - 1, "%d", iVal);
 		RemoteServer().SetValue(m_pRules->GetName(), value);
-	
+
 	}
 	else if (!stricmp(type, "customlist"))
 	{
@@ -200,4 +200,3 @@ void CVarEditDialog::OnClose()
 	BaseClass::OnClose();
 	MarkForDeletion();
 }
-

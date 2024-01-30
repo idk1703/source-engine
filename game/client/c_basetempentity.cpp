@@ -41,21 +41,21 @@ C_BaseTempEntity *C_BaseTempEntity::GetList( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 C_BaseTempEntity::C_BaseTempEntity( void )
 {
 	// Add to list
 	m_pNext			= s_pTempEntities;
 	s_pTempEntities = this;
-	
+
 	m_pNextDynamic = NULL;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 C_BaseTempEntity::~C_BaseTempEntity( void )
 {
@@ -80,7 +80,7 @@ C_BaseTempEntity *C_BaseTempEntity::GetNextDynamic( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTempEntity::Precache( void )
 {
@@ -146,7 +146,7 @@ void C_BaseTempEntity::CheckDynamicTempEnts( void )
 // Purpose: Dynamic/non-singleton temp entities are initialized by
 //  calling into here.  They should be added to a list of C_BaseTempEntities so
 //  that their memory can be deallocated appropriately.
-// Input  : *pEnt - 
+// Input  : *pEnt -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_BaseTempEntity::Init( int entnum, int iSerialNum )
@@ -176,8 +176,8 @@ void C_BaseTempEntity::NotifyShouldTransmit( ShouldTransmitState_t state )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_BaseTempEntity::PreDataUpdate( DataUpdateType_t updateType )
 {
@@ -198,4 +198,3 @@ void* C_BaseTempEntity::GetDataTableBasePtr()
 {
 	return this;
 }
-

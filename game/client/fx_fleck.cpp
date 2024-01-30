@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -183,7 +183,7 @@ void CFleckParticles::RenderParticles( CParticleRenderIterator *pIterator )
 		Vector	tPos;
 		TransformParticle( ParticleMgr()->GetModelView(), pParticle->m_Pos, tPos );
 		float sortKey = (int) tPos.z;
-		
+
 		Vector	color;
 		color[0] = pParticle->m_uchColor[0] / 255.0f;
 		color[1] = pParticle->m_uchColor[1] / 255.0f;
@@ -235,5 +235,3 @@ void CFleckParticles::SimulateParticles( CParticleSimulateIterator *pIterator )
 		pParticle = (FleckParticle*)pIterator->GetNext();
 	}
 }
-
-

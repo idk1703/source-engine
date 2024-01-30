@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,9 +18,9 @@
 class CSplashParticle : public CSimpleEmitter
 {
 public:
-	
+
 	CSplashParticle( const char *pDebugName ) : CSimpleEmitter( pDebugName ), m_bUseClipHeight( false ) {}
-	
+
 	// Create
 	static CSplashParticle *Create( const char *pDebugName )
 	{
@@ -43,7 +43,7 @@ public:
 
 private:
 	CSplashParticle( const CSplashParticle & );
-	
+
 	float	m_flClipHeight;
 	bool	m_bUseClipHeight;
 };
@@ -75,22 +75,22 @@ inline void FX_GetSplashLighting( Vector position, Vector *color, float *luminos
 {
 	// Compute our lighting at our position
 	Vector totalColor = engine->GetLightForPoint( position, true );
-	
+
 	// Get our lighting information
 	UTIL_GetNormalizedColorTintAndLuminosity( totalColor, color, luminosity );
-	
+
 	// Fake a specular highlight (too dim otherwise)
 	if ( luminosity != NULL )
 	{
 		*luminosity = MIN( 1.0f, (*luminosity) * 4.0f );
-		
+
 		// Clamp so that we never go completely translucent
 		if ( *luminosity < 0.25f )
 		{
 			*luminosity = 0.25f;
 		}
 	}
-	
+
 	// Only take a quarter of the tint, mostly we want to be white
 	if ( color != NULL )
 	{

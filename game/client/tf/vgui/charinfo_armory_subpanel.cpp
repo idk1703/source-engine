@@ -50,7 +50,7 @@ const char *g_szArmoryFilterStrings[ARMFILT_TOTAL] =
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CArmoryPanel::CArmoryPanel(Panel *parent, const char *panelName) : vgui::EditablePanel( parent, panelName )
 {
@@ -86,7 +86,7 @@ CArmoryPanel::CArmoryPanel(Panel *parent, const char *panelName) : vgui::Editabl
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CArmoryPanel::~CArmoryPanel()
 {
@@ -98,7 +98,7 @@ CArmoryPanel::~CArmoryPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -127,7 +127,7 @@ void CArmoryPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::SetupComboBox( const char *pszCustomAddition )
 {
@@ -163,7 +163,7 @@ void CArmoryPanel::SetupComboBox( const char *pszCustomAddition )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -185,7 +185,7 @@ void CArmoryPanel::ApplySettings( KeyValues *inResourceData )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::OnShowPanel( void )
 {
@@ -236,7 +236,7 @@ void CArmoryPanel::JumpToItem( int iItemDef, armory_filters_t nFilter )
 			// If the item specified is a stock item, find the upgradeable version of it instead
 			else if ( pDef->GetQuality() == AE_NORMAL )
 			{
-				// Prepend the upgradeable string 
+				// Prepend the upgradeable string
 				char szTmpName[256];
 				Q_snprintf( szTmpName, sizeof(szTmpName), "Upgradeable %s", pDef->GetDefinitionName() );
 
@@ -283,7 +283,7 @@ void CArmoryPanel::ShowPanel( int iItemDef, armory_filters_t nFilter )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Show the armory with a custom list of item definitions, and a custom filter string 
+// Purpose: Show the armory with a custom list of item definitions, and a custom filter string
 //-----------------------------------------------------------------------------
 void CArmoryPanel::ShowPanel( const char *pszFilterString, CUtlVector<item_definition_index_t> *vecItems )
 {
@@ -296,7 +296,7 @@ void CArmoryPanel::ShowPanel( const char *pszFilterString, CUtlVector<item_defin
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::OnClosing()
 {
@@ -308,7 +308,7 @@ void CArmoryPanel::OnClosing()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::OnCommand( const char *command )
 {
@@ -397,7 +397,7 @@ void CArmoryPanel::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::MoveItem( int iDelta )
 {
@@ -430,7 +430,7 @@ void CArmoryPanel::MoveItem( int iDelta )
  }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::PerformLayout( void )
 {
@@ -473,7 +473,7 @@ void CArmoryPanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::SetFilterTo( int iItemDef, armory_filters_t nFilter )
 {
@@ -546,7 +546,7 @@ void CArmoryPanel::SetFilterTo( int iItemDef, armory_filters_t nFilter )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CArmoryPanel::DefPassesFilter( const CTFItemDefinition *pDef, armory_filters_t iFilter )
 {
@@ -634,7 +634,7 @@ bool CArmoryPanel::DefPassesFilter( const CTFItemDefinition *pDef, armory_filter
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::UpdateItemList( void )
 {
@@ -696,7 +696,7 @@ void CArmoryPanel::UpdateItemList( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::UpdateSelectedItem( void )
 {
@@ -769,7 +769,7 @@ void CArmoryPanel::UpdateSelectedItem( void )
 		}
 	}
 
-	if ( m_pStoreButton ) 
+	if ( m_pStoreButton )
 	{
 		bool bShowStoreButton = m_bAllowGotoStore && EconUI()->GetStorePanel() && EconUI()->GetStorePanel()->GetPriceSheet() && EconUI()->GetStorePanel()->GetPriceSheet()->GetEntry( m_SelectedItem.GetItemDefIndex() );
 		m_pStoreButton->SetVisible( bShowStoreButton );
@@ -777,7 +777,7 @@ void CArmoryPanel::UpdateSelectedItem( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::UpdateDataBlock( void )
 {
@@ -791,7 +791,7 @@ void CArmoryPanel::UpdateDataBlock( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CArmoryPanel::CalculateDataText( void )
 {
@@ -806,7 +806,7 @@ bool CArmoryPanel::CalculateDataText( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::OnItemPanelEntered( vgui::Panel *panel )
 {
@@ -820,7 +820,7 @@ void CArmoryPanel::OnItemPanelEntered( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::OnItemPanelExited( vgui::Panel *panel )
 {
@@ -833,7 +833,7 @@ void CArmoryPanel::OnItemPanelExited( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::OnItemPanelMouseReleased( vgui::Panel *panel )
 {
@@ -849,7 +849,7 @@ void CArmoryPanel::OnItemPanelMouseReleased( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::SetSelectedItem( CEconItemView* newItem )
 {
@@ -865,7 +865,7 @@ void CArmoryPanel::SetSelectedItem( CEconItemView* newItem )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::SetSelectedItem( int newIndex )
 {
@@ -880,7 +880,7 @@ void CArmoryPanel::SetSelectedItem( int newIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOver )
 {
@@ -933,7 +933,7 @@ void CArmoryPanel::OnTextChanged( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CArmoryPanel::OnItemLinkClicked( KeyValues *pParams )
 {
@@ -942,4 +942,3 @@ void CArmoryPanel::OnItemLinkClicked( KeyValues *pParams )
 	JumpToItem( iItemDef, ARMFILT_ALL_ITEMS );
 	m_pFilterComboBox->ActivateItemByRow( 0 );
 }
-

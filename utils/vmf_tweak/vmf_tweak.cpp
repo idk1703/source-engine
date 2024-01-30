@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -108,7 +108,7 @@ public:
 		delete [] m_pValue;
 		m_pValue = CopyString( pStr );
 	}
-	
+
 
 public:
 	char	*m_pKey;
@@ -161,7 +161,7 @@ bool CChunk::CompareKey( char const *pKeyName, char const *pValueStr )
 		return true;
 	else
 		return false;
-}	
+}
 
 
 CKeyValue* CChunk::FindKey( char const *pKeyName )
@@ -242,7 +242,7 @@ ChunkFileResult_t MyKeyHandler( const char *szKey, const char *szValue, void *pD
 	// Add the key to the current chunk.
 	CKeyValue *pKey = new CKeyValue;
 	pKey->m_LoadOrder = g_CurLoadOrder++;
-	
+
 	pKey->m_pKey   = CopyString( szKey );
 	pKey->m_pValue = CopyString( szValue );
 
@@ -269,7 +269,7 @@ CChunk* ParseChunk( char const *pChunkName, bool bOnlyOne )
 	{
 		if( g_pChunkFile->ReadChunk( MyKeyHandler ) != ChunkFile_Ok )
 			break;
-	
+
 		if( bOnlyOne )
 			break;
 	}
@@ -292,7 +292,7 @@ CChunk* ReadChunkFile( char const *pInFilename )
 	printf( "Reading.." );
 	chunkFile.SetDefaultChunkHandler( MyDefaultHandler, 0 );
 	g_pChunkFile = &chunkFile;
-	
+
 	CChunk *pRet = ParseChunk( "***ROOT***", false );
 	printf( "\n\n" );
 
@@ -322,7 +322,7 @@ void WriteChunks_R( CChunkFile *pFile, CChunk *pChunk, bool bRoot )
 
 	// Sort them..
 	CUtlRBTree<CChunkHolder,int> sortedStuff( 0, 0, &CChunkHolder::SortChunkFn );
-	
+
 	// Write keys.
 	for( unsigned short i=pChunk->m_Keys.Head(); i != pChunk->m_Keys.InvalidIndex(); i = pChunk->m_Keys.Next( i ) )
 	{
@@ -422,7 +422,7 @@ void LogicAuto( CChunk *pChunk )
 		CChunk *pConnections = pChunk->FindChunk( "connections" );
 		if ( !pConnections )
 			return;
-		
+
 		bool bFound = false;
 		for ( int i=0; i < pConnections->m_Keys.Count(); i++ )
 		{
@@ -433,13 +433,13 @@ void LogicAuto( CChunk *pChunk )
 				break;
 			}
 		}
-		
+
 		if ( !bFound )
 			return;
-			
-		++g_nLogicAutoReplacementsMade;			 
 
-		// Ok, this is a logic_auto with OnMapSpawn outputs in its connections.		
+		++g_nLogicAutoReplacementsMade;
+
+		// Ok, this is a logic_auto with OnMapSpawn outputs in its connections.
 		CUtlLinkedList<CKeyValue*,int> newKeys;
 		FOR_EACH_LL( pConnections->m_Keys, i )
 		{
@@ -455,7 +455,7 @@ void LogicAuto( CChunk *pChunk )
 				}
 			}
 		}
-		
+
 		FOR_EACH_LL( newKeys, i )
 		{
 			if ( !pConnections->FindKey( "OnMapTransition", newKeys[i]->m_pValue ) )
@@ -463,7 +463,7 @@ void LogicAuto( CChunk *pChunk )
 				pConnections->m_Keys.AddToTail( newKeys[i] );
 			}
 		}
-		
+
 		// Fix spawnflags.
 		CKeyValue *pFlags = pChunk->FindKey("spawnflags");
 		if ( pFlags )
@@ -537,4 +537,3 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
-

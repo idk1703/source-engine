@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -24,7 +24,7 @@ CNetChannel::CNetChannel()
 	last_received = 0;
 	connect_time = 0;
 	m_ConnectionState = CONNECTION_STATE_DISCONNECTED;
-	Q_strncpy( m_Name, "", sizeof(m_Name) ); 
+	Q_strncpy( m_Name, "", sizeof(m_Name) );
 
 	m_MessageHandler = NULL;
 
@@ -41,7 +41,7 @@ CNetChannel::CNetChannel()
 
 	// Prevent the first message from getting dropped after connection is set up.
 
-	m_nOutSequenceNr = 1;	// otherwise it looks like a 	
+	m_nOutSequenceNr = 1;	// otherwise it looks like a
 	m_nInSequenceNr = 0;
 	m_nOutSequenceNrAck = 0;
 	m_nOutReliableState = 0; // our current reliable state
@@ -61,7 +61,7 @@ CNetChannel::~CNetChannel()
 //-----------------------------------------------------------------------------
 void CNetChannel::Setup( bool serverSide, const netadr_t *adr, CUDPSocket *sendSocket, char const *name, INetworkMessageHandler *handler )
 {
-	Assert( name ); 
+	Assert( name );
 	Assert( handler );
 	Assert( adr );
 
@@ -69,11 +69,11 @@ void CNetChannel::Setup( bool serverSide, const netadr_t *adr, CUDPSocket *sendS
 
 	// remote_address may be NULL for fake channels (demo playback etc)
 	remote_address = *adr;
-	
+
 	last_received		= g_pNetworkSystemImp->GetTime();
 	connect_time		= last_received;
-	
-	Q_strncpy( m_Name, name, sizeof(m_Name) ); 
+
+	Q_strncpy( m_Name, name, sizeof(m_Name) );
 
 	m_MessageHandler = handler;
 
@@ -90,7 +90,7 @@ void CNetChannel::Setup( bool serverSide, const netadr_t *adr, CUDPSocket *sendS
 
 	// Prevent the first message from getting dropped after connection is set up.
 
-	m_nOutSequenceNr = 1;	// otherwise it looks like a 	
+	m_nOutSequenceNr = 1;	// otherwise it looks like a
 	m_nInSequenceNr = 0;
 	m_nOutSequenceNrAck = 0;
 	m_nOutReliableState = 0; // our current reliable state
@@ -174,7 +174,7 @@ void CNetChannel::SetTimeout(float seconds)
 	if ( m_Timeout > 3600.0f )
 	{
 		m_Timeout = 3600.0f; // 1 hour maximum
-	} 
+	}
 	else if ( m_Timeout < CONNECTION_PROBLEM_TIME )
 	{
 		m_Timeout = CONNECTION_PROBLEM_TIME; // allow at least this minimum
@@ -226,7 +226,7 @@ void CNetChannel::FlowReset( void )
 void CNetChannel::FlowNewPacket(int flow, int seqnr, int acknr, int nChoked, int nSize )
 {
 	netflow_t * pflow = &m_DataFlow[ flow ];
-	
+
 	// if frame_number != ( current + 1 ) mark frames between as invalid
 
 	netframe_t *pframe = NULL;
@@ -264,13 +264,13 @@ void CNetChannel::FlowNewPacket(int flow, int seqnr, int acknr, int nChoked, int
 
 	if ( acknr <= (m_DataFlow[aflow].currentindex - NET_FRAMES_BACKUP) )
 		return;	// acknowledged packet isn't in backup buffer anymore
-	
+
 	netframe_t * aframe = &m_DataFlow[aflow].frames[ acknr  & NET_FRAMES_MASK ];
 
 	if ( aframe->valid && aframe->latency == -1.0f )
 	{
 		// update ping for acknowledged packet, if not already acknowledged before
-		
+
 		aframe->latency = GetTime() - aframe->time;
 
 		if ( aframe->latency < 0.0f )
@@ -312,14 +312,14 @@ void CNetChannel::FlowUpdate(int flow, int addbytes)
 
 			if ( pcurr->time > endtime )
 				endtime = pcurr->time;
-		
+
 			totalvalid++;
 			totalchoked += pcurr->choked;
 			totalbytes += pcurr->size;
 
 			if ( pcurr->latency > -1.0f  )
 			{
-				totallatency += pcurr->latency; 
+				totallatency += pcurr->latency;
 				totallatencycount++;
 			}
 		}
@@ -327,7 +327,7 @@ void CNetChannel::FlowUpdate(int flow, int addbytes)
 		{
 			totalinvalid++;
 		}
-		
+
 		pprev = pcurr;
 	}
 
@@ -343,7 +343,7 @@ void CNetChannel::FlowUpdate(int flow, int addbytes)
 	}
 
 	int totalPackets = totalvalid + totalinvalid;
-			
+
 	if ( totalPackets > 0 )
 	{
 		pflow->avgloss *= FLOW_AVG;
@@ -351,11 +351,11 @@ void CNetChannel::FlowUpdate(int flow, int addbytes)
 
 		if ( pflow->avgloss < 0 )
 			pflow->avgloss = 0;
-		
+
 		pflow->avgchoke *= FLOW_AVG;
 		pflow->avgchoke += ( 1.0f - FLOW_AVG ) * ((float)totalchoked/totalPackets);
 	}
-	
+
 	if ( totallatencycount>0 )
 	{
 		float newping = totallatency / totallatencycount ;
@@ -395,11 +395,11 @@ A 0 length will still generate a packet and deal with the reliable messages.
 int CNetChannel::SendDatagram( bf_write *datagram )
 {
 	byte		send_buf[ NET_MAX_MESSAGE ];
-		
+
 	// first increase out sequence number
-	
+
 	// check, if fake client, then fake send also
-	if ( remote_address.GetType() == NA_NULL )	
+	if ( remote_address.GetType() == NA_NULL )
 	{
 		// this is a demo channel, fake sending all data
 		m_fClearTime = 0.0;		// no bandwidth delay
@@ -447,7 +447,7 @@ int CNetChannel::SendDatagram( bf_write *datagram )
 	}
 	*/
 
-	// Is there room for given datagram data. the datagram data 
+	// Is there room for given datagram data. the datagram data
 	// is somewhat more important than the normal unreliable data
 	// this is done to allow some kind of snapshot behaviour
 	// weather all data in datagram is transmitted or none.
@@ -476,7 +476,7 @@ int CNetChannel::SendDatagram( bf_write *datagram )
 	m_StreamUnreliable.Reset();	// clear unreliable data buffer
 
 	// Deal with packets that are too small for some networks
-	while ( send.GetNumBytesWritten() < MIN_ROUTEABLE_PACKET )		
+	while ( send.GetNumBytesWritten() < MIN_ROUTEABLE_PACKET )
 	{
 		// Go ahead and pad some bits as long as needed
 		WriteSystemNetworkMessage( send, net_nop );
@@ -502,7 +502,7 @@ int CNetChannel::SendDatagram( bf_write *datagram )
 
 //	FlowNewPacket( FLOW_OUTGOING, m_nOutSequenceNr, m_nInSequenceNr, m_nChokedPackets, nTotalSize );
 //	FlowUpdate( FLOW_OUTGOING, nTotalSize );
-	
+
 	float flTime = g_pNetworkSystemImp->GetTime();
 	if ( m_fClearTime < flTime )
 	{
@@ -512,7 +512,7 @@ int CNetChannel::SendDatagram( bf_write *datagram )
 	// calc cleantime when channel will be ready for next packet
 	Assert( m_Rate != 0.0f );
 	m_fClearTime += (float)( nTotalSize ) / (float) m_Rate;
-	
+
 	m_nChokedPackets = 0;
 	m_nOutSequenceNr++;
 
@@ -537,7 +537,7 @@ bool CNetChannel::ProcessControlMessage( int cmd, bf_read &buf )
 	default:
 		Msg( "CNetChannel: received bad control cmd %i from %s.\n", cmd, remote_address.ToString() );
 		return false;
-	}	
+	}
 }
 
 bool CNetChannel::ProcessMessages( bf_read &buf )
@@ -580,7 +580,7 @@ bool CNetChannel::ProcessMessages( bf_read &buf )
 		// let message parse itself from buffe
 		const char *pGroupName = pNetMessage->GetGroupName();
 		const char *pMessageName = pNetMessage->GetName();
-		
+
 		//int startbit = buf.GetNumBitsRead();
 
 		if ( !pNetMessage->ReadFromBuffer( buf ) )
@@ -605,7 +605,7 @@ bool CNetChannel::ProcessMessages( bf_read &buf )
 
 int CNetChannel::ProcessPacketHeader( bf_read& message )
 {
-	// get sequence numbers		
+	// get sequence numbers
 	int sequence	= message.ReadLong();
 	int sequence_ack= message.ReadLong();
 	int flags		= message.ReadByte();
@@ -616,7 +616,7 @@ int CNetChannel::ProcessPacketHeader( bf_read& message )
 	NOTE_UNUSED( relState );
 
 	if ( flags & PACKET_FLAG_CHOKED )
-		nChoked = message.ReadByte(); 
+		nChoked = message.ReadByte();
 
 // discard stale or duplicated packets
 	if (sequence <= m_nInSequenceNr )
@@ -640,7 +640,7 @@ int CNetChannel::ProcessPacketHeader( bf_read& message )
 			}
 		}
 		*/
-		
+
 		return -1;
 	}
 
@@ -674,7 +674,7 @@ int CNetChannel::ProcessPacketHeader( bf_read& message )
 // CNetChannel::ProcessPacket
 //
 // called when a new packet has arrived for this netchannel
-// sequence numbers are extracted, fragments/file streams stripped 
+// sequence numbers are extracted, fragments/file streams stripped
 // and then the netmessages processed
 //-----------------------------------------------------------------------------
 bool CNetChannel::StartProcessingPacket( CNetPacket *packet )
@@ -700,7 +700,7 @@ bool CNetChannel::StartProcessingPacket( CNetPacket *packet )
 			, GetName()
 			, packet->m_nSizeInBytes
 			, m_nInSequenceNr & 63
-			, m_nOutSequenceNrAck & 63 
+			, m_nOutSequenceNrAck & 63
 			, flags & PACKET_FLAG_RELIABLE	 ? 1 : 0
 			, GetTime() );
 	}
@@ -727,11 +727,11 @@ bool CNetChannel::StartProcessingPacket( CNetPacket *packet )
 
 		// flip subChannel bit to signal successfull receiving
 		FLIPBIT(m_nInReliableState, bit);
-		
+
 		for ( i=0; i<MAX_STREAMS; i++ )
 		{
 			if ( !CheckReceivingList( i ) )
-				return false; // error while processing 
+				return false; // error while processing
 		}
 		*/
 	}
@@ -872,8 +872,8 @@ float CNetChannel::GetAvgPackets( int flow ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *chan - 
+// Purpose:
+// Input  : *chan -
 //-----------------------------------------------------------------------------
 int CNetChannel::GetTotalData(int flow ) const
 {
@@ -892,7 +892,7 @@ int	CNetChannel::GetSequenceNr( int flow ) const
 	{
 		return m_nInSequenceNr;
 	}
-	
+
 	return 0;
 }
 */
@@ -912,7 +912,7 @@ float CNetChannel::GetAvgChoke( int flow ) const
 float CNetChannel::GetAvgLatency( int flow ) const
 {
 	return 0.0f;
-	//return m_DataFlow[flow].avglatency;	
+	//return m_DataFlow[flow].avglatency;
 }
 
 float CNetChannel::GetAvgLoss( int flow ) const

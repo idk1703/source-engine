@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -13,7 +13,7 @@
 #endif
 
 #include <vgui/VGUI.h>
-#include <vgui/IHTML.h> // CreateHTML, PaintHTML 
+#include <vgui/IHTML.h> // CreateHTML, PaintHTML
 #include "tier1/interface.h"
 #include "bitmap/imageformat.h"
 
@@ -62,7 +62,7 @@ struct Vertex_t
 		m_Position = pos;
 		m_TexCoord = coord;
 	}
-	
+
 	Vector2D	m_Position;
 	Vector2D	m_TexCoord;
 };
@@ -137,7 +137,7 @@ public:
 	// rendering functions
 	virtual void DrawSetColor(int r, int g, int b, int a) = 0;
 	virtual void DrawSetColor(Color col) = 0;
-	
+
 	virtual void DrawFilledRect(int x0, int y0, int x1, int y1) = 0;
 	virtual void DrawFilledRectArray( IntRect *pRects, int numRects ) = 0;
 	virtual void DrawOutlinedRect(int x0, int y0, int x1, int y1) = 0;
@@ -198,7 +198,7 @@ public:
 	virtual void ApplyChanges() = 0;
 	virtual bool IsWithin(int x, int y) = 0;
 	virtual bool HasFocus() = 0;
-	
+
 	// returns true if the surface supports minimize & maximize capabilities
 	enum SurfaceFeature_e
 	{
@@ -357,7 +357,7 @@ public:
 	virtual void PrecacheFontCharacters(HFont font, const wchar_t *pCharacters) = 0;
 	// Console-only.  Get the string to use for the current video mode for layout files.
 	virtual const char *GetResolutionKey( void ) const = 0;
-	
+
 	virtual const char *GetFontName( HFont font ) = 0;
 	virtual const char *GetFontFamilyName( HFont font ) = 0;
 	virtual void GetKernedCharWidth( HFont font, wchar_t ch, wchar_t chBefore, wchar_t chAfter, float &wide, float &abcA ) = 0;

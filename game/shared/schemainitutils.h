@@ -27,7 +27,7 @@
 			pVecErrors->AddToTail( msg );								\
 		}																\
 		return false;													\
-	}																	
+	}
 
 #define SCHEMA_INIT_SUCCESS( )											\
 	( NULL == pVecErrors ) || ( 0 == pVecErrors->Count() )

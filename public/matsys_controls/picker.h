@@ -71,9 +71,9 @@ public:
 	~CPicker();
 
 	// Sets the list of strings to display
-	void SetStringList( const PickerList_t &list ); 
+	void SetStringList( const PickerList_t &list );
 
-	// Purpose: 
+	// Purpose:
 	virtual void OnKeyCodePressed( vgui::KeyCode code );
 
 	// Returns the selected string

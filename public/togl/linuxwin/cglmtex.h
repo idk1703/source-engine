@@ -72,14 +72,14 @@ extern CGLMTex *g_pFirstCGMLTex;
 struct GLMTexFormatDesc
 {
 	const char	*m_formatSummary;	// for debug visibility
-	
+
 	D3DFORMAT	m_d3dFormat;		// what D3D knows it as; see public/bitmap/imageformat.h
-	
+
 	GLenum		m_glIntFormat;		// GL internal format
 	GLenum		m_glIntFormatSRGB;	// internal format if SRGB flavor
 	GLenum		m_glDataFormat;		// GL data format
 	GLenum		m_glDataType;		// GL data type
-	
+
 	int			m_chunkSize;		// 1 or 4 - 4 is used for compressed textures
 	int			m_bytesPerSquareChunk;	// how many bytes for the smallest quantum (m_chunkSize x m_chunkSize)
 									// this description lets us calculate size cleanly without conditional logic for compression
@@ -97,7 +97,7 @@ typedef struct
 	int			m_chunkCount;		// square chunk count (single texels or compressed blocks)
 	int			m_byteCountLimit;	// caller expectation of max number of bytes to write out
 	float		r,g,b,a;			// color desired
-	
+
 	// out
 	int			m_bytesWritten;
 }	GLMGenTexelParams;
@@ -155,17 +155,17 @@ struct GLMTexLayout
 
 	// const inputs used for hashing
 	GLMTexLayoutKey		m_key;
-	
+
 	// refcount
 	int					m_refCount;
 
-	// derived values:	
+	// derived values:
 	GLMTexFormatDesc	*m_format;					// format specific info
 	int					m_mipCount;					// derived by starying at base size and working down towards 1x1
 	int					m_faceCount;				// 1 for 2d/3d, 6 for cubemap
 	int					m_sliceCount;				// product of faces and mips
 	int					m_storageTotalSize;			// size of storage slab required
-	
+
 	// slice array
 	GLMTexLayoutSlice	m_slices[0];				// dynamically allocated 2-d array [faces][mips]
 };
@@ -176,10 +176,10 @@ class	CGLMTexLayoutTable
 {
 public:
 					CGLMTexLayoutTable();
-	
+
 	GLMTexLayout	*NewLayoutRef( GLMTexLayoutKey *pDesiredKey );		// pass in a pointer to layout key - receive ptr to completed layout
 	void			DelLayoutRef( GLMTexLayout *layout );		// pass in pointer to completed layout.  refcount is dropped.
-	
+
 	void			DumpStats( void );
 protected:
 	CUtlMap< GLMTexLayoutKey, GLMTexLayout* >	m_layoutMap;
@@ -197,10 +197,10 @@ struct GLMTexLockParams
 	CGLMTex		*m_tex;
 	int			m_face;
 	int			m_mip;
-	
+
 	// identifies the region of the slice
 	GLMRegion	m_region;
-	
+
 	// tells GLM to force re-read of the texels back from GL
 	// i.e. "I know I stepped on those texels with a draw or blit - the GLM copy is stale"
 	bool		m_readback;
@@ -209,7 +209,7 @@ struct GLMTexLockParams
 struct GLMTexLockDesc
 {
 	GLMTexLockParams	m_req;	// form of the lock request
-	
+
 	bool				m_active;				// set true at lock time. cleared at unlock time.
 
 	int					m_sliceIndex;			// which slice in the layout
@@ -298,7 +298,7 @@ struct GLMTexSamplingParams
 	{
 		static const GLenum dxtogl_addressMode[] = { GL_REPEAT, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_BORDER, (GLenum)-1 };
 		static const GLenum dxtogl_magFilter[4] = { GL_NEAREST,	GL_NEAREST,	GL_LINEAR, GL_LINEAR };
-		static const GLenum dxtogl_minFilter[4][4] = // indexed by _D3DTEXTUREFILTERTYPE on both axes: [row is min filter][col is mip filter]. 
+		static const GLenum dxtogl_minFilter[4][4] = // indexed by _D3DTEXTUREFILTERTYPE on both axes: [row is min filter][col is mip filter].
 		{
 			/* min = D3DTEXF_NONE */		{	GL_NEAREST,		GL_NEAREST_MIPMAP_NEAREST,	GL_NEAREST_MIPMAP_LINEAR,	(GLenum)-1	},		// D3DTEXF_NONE we just treat like POINT
 			/* min = D3DTEXF_POINT */		{	GL_NEAREST,		GL_NEAREST_MIPMAP_NEAREST,	GL_NEAREST_MIPMAP_LINEAR,	(GLenum)-1	},
@@ -341,7 +341,7 @@ struct GLMTexSamplingParams
 	{
 		static const GLenum dxtogl_addressMode[] = { GL_REPEAT, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_BORDER, (GLenum)-1 };
 		static const GLenum dxtogl_magFilter[4] = { GL_NEAREST,	GL_NEAREST,	GL_LINEAR, GL_LINEAR };
-		static const GLenum dxtogl_minFilter[4][4] = // indexed by _D3DTEXTUREFILTERTYPE on both axes: [row is min filter][col is mip filter]. 
+		static const GLenum dxtogl_minFilter[4][4] = // indexed by _D3DTEXTUREFILTERTYPE on both axes: [row is min filter][col is mip filter].
 		{
 			/* min = D3DTEXF_NONE */		{	GL_NEAREST,		GL_NEAREST_MIPMAP_NEAREST,	GL_NEAREST_MIPMAP_LINEAR,	(GLenum)-1	},		// D3DTEXF_NONE we just treat like POINT
 			/* min = D3DTEXF_POINT */		{	GL_NEAREST,		GL_NEAREST_MIPMAP_NEAREST,	GL_NEAREST_MIPMAP_LINEAR,	(GLenum)-1	},
@@ -364,7 +364,7 @@ struct GLMTexSamplingParams
 			gGL->glTexParameteri( target, GL_TEXTURE_WRAP_R, dxtogl_addressMode[m_packed.m_addressW] );
 		}
 
-		if ( ( m_packed.m_minFilter != curState.m_packed.m_minFilter ) || 
+		if ( ( m_packed.m_minFilter != curState.m_packed.m_minFilter ) ||
 			 ( m_packed.m_magFilter != curState.m_packed.m_magFilter ) ||
 			 ( m_packed.m_mipFilter != curState.m_packed.m_mipFilter ) ||
 			 ( m_packed.m_maxAniso != curState.m_packed.m_maxAniso ) )
@@ -384,7 +384,7 @@ struct GLMTexSamplingParams
 				flBorderColor[2] = ((m_borderColor      ) & 0xFF) * (1.0f/255.0f);	//B
 				flBorderColor[3] = ((m_borderColor >> 24) & 0xFF) * (1.0f/255.0f);	//A
 			}
-		
+
 			gGL->glTexParameterfv( target, GL_TEXTURE_BORDER_COLOR, flBorderColor ); // <-- this crashes ATI's driver, remark it out
 		}
 
@@ -418,7 +418,7 @@ struct GLMTexSamplingParams
 	{
 		static const GLenum dxtogl_addressMode[] = { GL_REPEAT, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_BORDER, (GLenum)-1 };
 		static const GLenum dxtogl_magFilter[4] = { GL_NEAREST,	GL_NEAREST,	GL_LINEAR, GL_LINEAR };
-		static const GLenum dxtogl_minFilter[4][4] = // indexed by _D3DTEXTUREFILTERTYPE on both axes: [row is min filter][col is mip filter]. 
+		static const GLenum dxtogl_minFilter[4][4] = // indexed by _D3DTEXTUREFILTERTYPE on both axes: [row is min filter][col is mip filter].
 		{
 			/* min = D3DTEXF_NONE */		{	GL_NEAREST,		GL_NEAREST_MIPMAP_NEAREST,	GL_NEAREST_MIPMAP_LINEAR,	(GLenum)-1	},		// D3DTEXF_NONE we just treat like POINT
 			/* min = D3DTEXF_POINT */		{	GL_NEAREST,		GL_NEAREST_MIPMAP_NEAREST,	GL_NEAREST_MIPMAP_LINEAR,	(GLenum)-1	},
@@ -466,7 +466,7 @@ public:
 	void					Lock( GLMTexLockParams *params, char** addressOut, int* yStrideOut, int *zStrideOut );
 	void					Unlock( GLMTexLockParams *params );
 	GLuint                                  GetTexName() { return m_texName; }
-	
+
 protected:
 	friend class GLMContext;			// only GLMContext can make CGLMTex objects
 	friend class GLMTester;
@@ -478,13 +478,13 @@ protected:
 	friend struct IDirect3DSurface9;
 	friend struct IDirect3DCubeTexture9;
 	friend struct IDirect3DVolumeTexture9;
-	
+
 			CGLMTex( GLMContext *ctx, GLMTexLayout *layout, uint levels, const char *debugLabel = NULL );
 			~CGLMTex( );
-	
+
 	int						CalcSliceIndex( int face, int mip );
 	void					CalcTexelDataOffsetAndStrides( int sliceIndex, int x, int y, int z, int *offsetOut, int *yStrideOut, int *zStrideOut );
-		
+
 	void					ReadTexels( GLMTexLockDesc *desc, bool readWholeSlice=true );
 	void					WriteTexels( GLMTexLockDesc *desc, bool writeWholeSlice=true, bool noDataWrite=false );
 		// last param lets us send NULL data ptr (only legal with uncompressed formats, beware)
@@ -496,44 +496,44 @@ protected:
 	// re-specify texture format to match desired sRGB form
 	// noWrite means send NULL for texel source addresses instead of actual data - ideal for RT's
 #endif
-				
+
 	bool					IsRBODirty() const;
 	void					ForceRBONonDirty();
 	void					ForceRBODirty();
-			
+
 		// re-specify texture format to match desired sRGB form
 		// noWrite means send NULL for texel source addresses instead of actual data - ideal for RT's
 
 	GLuint					m_texName;			// name of this texture in the context
 	GLenum					m_texGLTarget;
 	uint					m_nSamplerType;		// SAMPLER_2D, etc.
-	
+
 	GLMTexSamplingParams	m_SamplingParams;
 
 	GLMTexLayout			*m_layout;		// layout of texture (shared across all tex with same layout)
-	
+
 	uint					m_nLastResolvedBatchCounter;
-					
+
 	int						m_minActiveMip;//index of lowest mip that has been written.  used to drive setting of GL_TEXTURE_MAX_LEVEL.
 	int						m_maxActiveMip;//index of highest mip that has been written.  used to drive setting of GL_TEXTURE_MAX_LEVEL.
-						
+
 	GLMContext				*m_ctx;			// link back to parent context
-		
-	
+
+
 	CGLMFBO                 *m_pBlitSrcFBO;
 	CGLMFBO                 *m_pBlitDstFBO;
 	GLuint					m_rboName;		// name of MSAA RBO backing the tex if MSAA enabled (or zero)
-													
+
 	int						m_rtAttachCount; // how many RT's have this texture attached somewhere
 
 	char					*m_backing;		// backing storage if available
-	
+
 	int						m_lockCount;	// lock reqs are stored in the GLMContext for tracking
 
 	CUtlVector<unsigned char>	m_sliceFlags;
-			
+
 	char					*m_debugLabel;	// strdup() of debugLabel passed in, or NULL
-	
+
 	bool					m_texClientStorage;	// was CS selected for texture
 	bool					m_texPreloaded;		// has it been kicked into VRAM with GLMContext::PreloadTex yet
 

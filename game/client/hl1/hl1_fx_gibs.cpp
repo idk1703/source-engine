@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -30,7 +30,7 @@ void GetBloodColorHL1( int bloodtype, unsigned char &r, unsigned char &g, unsign
 		g = 0;
 		b = 0;
 	}
-	else if ( bloodtype == BLOOD_COLOR_GREEN ) 
+	else if ( bloodtype == BLOOD_COLOR_GREEN )
 	{
 		r = 195;
 		g = 195;
@@ -48,7 +48,7 @@ class C_HL1Gib : public C_Gib
 {
 	typedef C_BaseAnimating BaseClass;
 public:
-	
+
 	static C_HL1Gib *CreateClientsideGib( const char *pszModelName, Vector vecOrigin, Vector vecForceDir, AngularImpulse vecAngularImp )
 	{
 		C_HL1Gib *pGib = new C_HL1Gib;
@@ -121,14 +121,14 @@ void C_HL1Gib::ClientThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &origin - 
+// Purpose:
+// Input  : &origin -
 //-----------------------------------------------------------------------------
 void FX_HL1Gib( const Vector &origin, const Vector &direction, float scale, int iType, int iHealth, int iColor )
 {
 	Vector	offset;
 	int i;
-	
+
 	offset = RandomVector( -16, 16 ) + origin;
 
 	if ( iType == HUMAN_GIBS )
@@ -157,7 +157,7 @@ void FX_HL1Gib( const Vector &origin, const Vector &direction, float scale, int 
 			vVelocity = vVelocity * 4;
 		}
 
-		
+
 		C_HL1Gib *pGib = C_HL1Gib::CreateClientsideGib( pHumanGibsModel, offset, vVelocity * 2, aImpulse );
 
 		//Spawn a head.
@@ -213,7 +213,7 @@ void FX_HL1Gib( const Vector &origin, const Vector &direction, float scale, int 
 			pModelName = pAlienGibsModel;
 			iNumBody = ALIEN_GIB_COUNT;
 		}
-			 
+
 
 		C_HL1Gib *pGib = C_HL1Gib::CreateClientsideGib( pModelName, offset, vVelocity * 2, aAImpulse );
 
@@ -221,7 +221,7 @@ void FX_HL1Gib( const Vector &origin, const Vector &direction, float scale, int 
 		{
 			if ( iType == HUMAN_GIBS )
 				 pGib->m_nBody = random->RandomInt( 1, iNumBody-1 );
-			else 
+			else
 				 pGib->m_nBody = random->RandomInt( 0, iNumBody-1 );
 
 			pGib->m_iType = iType;
@@ -244,20 +244,20 @@ void FX_HL1Gib( const Vector &origin, const Vector &direction, float scale, int 
 	for ( i = 0; i < 4; i++ )
 	{
 		SimpleParticle *sParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), g_Mat_BloodPuff[0], origin );
-			
+
 		if ( sParticle == NULL )
 			return;
 
 		sParticle->m_flLifetime		= 0.0f;
 		sParticle->m_flDieTime		= 1;
-			
+
 		float	speed = random->RandomFloat( 32.0f, 128.0f );
 
 		sParticle->m_vecVelocity	= vDir * -speed;
 		sParticle->m_vecVelocity[2] -= 16.0f;
 
 		GetBloodColorHL1( iColor, sParticle->m_uchColor[0], sParticle->m_uchColor[1], sParticle->m_uchColor[2] );
-		
+
 		sParticle->m_uchStartAlpha	= 255;
 		sParticle->m_uchEndAlpha	= 0;
 		sParticle->m_uchStartSize	= random->RandomInt( 16, 32 );
@@ -269,7 +269,7 @@ void FX_HL1Gib( const Vector &origin, const Vector &direction, float scale, int 
 	for ( i = 0; i < 4; i++ )
 	{
 		SimpleParticle *sParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), g_Mat_BloodPuff[1], origin );
-			
+
 		if ( sParticle == NULL )
 		{
 			return;
@@ -277,7 +277,7 @@ void FX_HL1Gib( const Vector &origin, const Vector &direction, float scale, int 
 
 		sParticle->m_flLifetime		= 0.0f;
 		sParticle->m_flDieTime		= 1;
-			
+
 		float	speed = random->RandomFloat( 16.0f, 128.0f );
 
 		sParticle->m_vecVelocity	= vDir * -speed;
@@ -295,8 +295,8 @@ void FX_HL1Gib( const Vector &origin, const Vector &direction, float scale, int 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &data - 
+// Purpose:
+// Input  : &data -
 //-----------------------------------------------------------------------------
 void HL1GibCallback( const CEffectData &data )
 {

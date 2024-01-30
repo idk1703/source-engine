@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ class CDemoEditorPanel;
 class CDemoSmootherPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDemoUIPanel : public vgui::Frame
 {
@@ -47,7 +47,7 @@ public:
 	virtual void	OnVDMChanged( void );
 
 	virtual bool	OverrideView( democmdinfo_t& info, int frame );
-    virtual void	DrawDebuggingInfo();
+	virtual void	DrawDebuggingInfo();
 
 	static	void	InstallDemoUI( vgui::Panel *parent );
 
@@ -56,7 +56,7 @@ public:
 			void	GetDriveViewPoint( Vector &origin, QAngle &angle );
 
 protected:
-	
+
 	void			HandleInput( bool active );
 	bool			IsHoldingFastForward();
 	void			SetPlaybackScale( float scale );
@@ -68,7 +68,7 @@ protected:
 	void		OnEdit();
 	void		OnSmooth();
 	void		OnLoad();
-	
+
 	vgui::Label		*m_pCurrentDemo;
 	vgui::Button	*m_pStop;
 	vgui::Button	*m_pLoad;

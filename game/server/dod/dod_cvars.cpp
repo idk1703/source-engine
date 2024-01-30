@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:  
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -48,12 +48,12 @@ cvar_t  cvar_axisclasses			= {"mp_axisclasses",		"-1"};
 */
 
 	ConVar mp_winlimit( "mp_winlimit", "0", FCVAR_REPLICATED | FCVAR_NOTIFY, "Max score one team can reach before server changes maps", true, 0, false, 0 );
-	
-	ConVar mp_clan_restartround( "mp_clan_restartround", "0", FCVAR_GAMEDLL, "If non-zero, the round will restart in the specified number of seconds" );	
 
-	ConVar mp_limitteams( 
-		"mp_limitteams", 
-		"2", 
+	ConVar mp_clan_restartround( "mp_clan_restartround", "0", FCVAR_GAMEDLL, "If non-zero, the round will restart in the specified number of seconds" );
+
+	ConVar mp_limitteams(
+		"mp_limitteams",
+		"2",
 		FCVAR_REPLICATED,
 		"Max # of players 1 team can have over another",
 		true, 1,	// min value

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -28,7 +28,7 @@ public:
 		m_nHeaderBase = -1;
 	}
 	virtual	~CEntityInfo() {};
-	
+
 	bool			m_bAsDelta;
 	CClientFrame	*m_pFrom;
 	CClientFrame	*m_pTo;
@@ -41,7 +41,7 @@ public:
 	int				m_nHeaderBase;
 	int				m_nHeaderCount;
 
-	inline void	NextOldEntity( void ) 
+	inline void	NextOldEntity( void )
 	{
 		if ( m_pFrom )
 		{
@@ -59,7 +59,7 @@ public:
 		}
 	}
 
-	inline void	NextNewEntity( void ) 
+	inline void	NextNewEntity( void )
 	{
 		m_nNewEntity = m_pTo->transmit_entity.FindNextSetBit( m_nNewEntity+1 );
 
@@ -86,7 +86,7 @@ class CEntityReadInfo : public CEntityInfo
 
 public:
 
-	CEntityReadInfo() 
+	CEntityReadInfo()
 	{	m_nPostDataUpdateCalls = 0;
 		m_nLocalPlayerBits = 0;
 		m_nOtherPlayerBits = 0;
@@ -99,7 +99,7 @@ public:
 
 	int				m_nBaseline;	// what baseline index do we use (0/1)
 	bool			m_bUpdateBaselines; // update baseline while parsing snaphsot
-		
+
 	int				m_nLocalPlayerBits; // profiling data
 	int				m_nOtherPlayerBits; // profiling data
 

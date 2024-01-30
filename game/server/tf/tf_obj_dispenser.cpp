@@ -64,11 +64,11 @@ IMPLEMENT_SERVERCLASS_ST( CObjectDispenser, DT_ObjectDispenser )
 	SendPropInt( SENDINFO( m_iAmmoMetal ), -1, SPROP_VARINT ),
 	SendPropInt( SENDINFO( m_iMiniBombCounter ), -1, SPROP_VARINT ),
 
-	SendPropArray2( 
+	SendPropArray2(
 		SendProxyArrayLength_HealingArray,
-		SendPropInt("healing_array_element", 0, SIZEOF_IGNORE, NUM_NETWORKED_EHANDLE_BITS, SPROP_UNSIGNED, SendProxy_HealingList), 
-		MAX_PLAYERS, 
-		0, 
+		SendPropInt("healing_array_element", 0, SIZEOF_IGNORE, NUM_NETWORKED_EHANDLE_BITS, SPROP_UNSIGNED, SendProxy_HealingList),
+		MAX_PLAYERS,
+		0,
 		"healing_array"
 		)
 
@@ -89,7 +89,7 @@ PRECACHE_REGISTER(obj_dispenser);
 // How much ammo is given our per use
 #define DISPENSER_DROP_METAL		40
 
-float g_flDispenserHealRates[4] = 
+float g_flDispenserHealRates[4] =
 {
 	0,
 	10.0,
@@ -97,7 +97,7 @@ float g_flDispenserHealRates[4] =
 	20.0
 };
 
-float g_flDispenserAmmoRates[4] = 
+float g_flDispenserAmmoRates[4] =
 {
 	0,
 	0.2,
@@ -108,7 +108,7 @@ float g_flDispenserAmmoRates[4] =
 LINK_ENTITY_TO_CLASS( dispenser_touch_trigger, CDispenserTouchTrigger );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectDispenser::CObjectDispenser()
 {
@@ -140,7 +140,7 @@ CObjectDispenser::~CObjectDispenser()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDispenser::DetonateObject( void )
 {
@@ -186,7 +186,7 @@ void CObjectDispenser::DestroyObject( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDispenser::Spawn()
 {
@@ -200,7 +200,7 @@ void CObjectDispenser::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDispenser::FirstSpawn()
 {
@@ -224,7 +224,7 @@ void CObjectDispenser::FirstSpawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char* CObjectDispenser::GetBuildingModel( int iLevel )
 {
@@ -258,7 +258,7 @@ const char* CObjectDispenser::GetBuildingModel( int iLevel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char* CObjectDispenser::GetFinishedModel( int iLevel )
 {
@@ -324,7 +324,7 @@ bool CObjectDispenser::StartBuilding( CBaseEntity *pBuilder )
 	{
 		OnEndBeingCarried( pBuilder );
 	}
-	
+
 	return bStartBuildingResult;
 }
 
@@ -334,7 +334,7 @@ void CObjectDispenser::SetStartBuildingModel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDispenser::MakeMiniBuilding( CTFPlayer* pPlayer )
 {
@@ -354,11 +354,11 @@ void CObjectDispenser::MakeMiniBuilding( CTFPlayer* pPlayer )
 //-----------------------------------------------------------------------------
 void CObjectDispenser::StartUpgrading( void )
 {
-	// m_iUpgradeLevel is incremented in BaseClass::StartUpgrading(), 
+	// m_iUpgradeLevel is incremented in BaseClass::StartUpgrading(),
 	// but we need to set the model before calling it so SetActivity() will be successful
 	SetModel( GetBuildingModel( m_iUpgradeLevel+1 ) );
 
-	// clear our healing list, everyone will be 
+	// clear our healing list, everyone will be
 	// added again at the new heal rate in DispenseThink()
 	ResetHealingTargets();
 
@@ -368,7 +368,7 @@ void CObjectDispenser::StartUpgrading( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDispenser::FinishUpgrading( void )
 {
@@ -383,7 +383,7 @@ void CObjectDispenser::FinishUpgrading( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDispenser::SetModel( const char *pModel )
 {
@@ -403,7 +403,7 @@ void CObjectDispenser::SetModel( const char *pModel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDispenser::InitializeMapPlacedObject( void )
 {
@@ -425,7 +425,7 @@ bool CObjectDispenser::ShouldBeMiniBuilding( CTFPlayer* pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CObjectDispenser::GetMaxUpgradeLevel()
 {
@@ -467,7 +467,7 @@ void CObjectDispenser::OnGoActive( void )
 	}
 
 	float flRadius = GetDispenserRadius();
-	
+
 	if ( m_iszCustomTouchTrigger != NULL_STRING )
 	{
 		m_hTouchTrigger = dynamic_cast<CDispenserTouchTrigger *> ( gEntList.FindEntityByName( NULL, m_iszCustomTouchTrigger ) );
@@ -521,7 +521,7 @@ void CObjectDispenser::GetControlPanelInfo( int nPanelIndex, const char *&pPanel
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDispenser::Precache()
 {
@@ -567,7 +567,7 @@ void CObjectDispenser::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CObjectDispenser::DispenseAmmo( CTFPlayer *pPlayer )
 {
@@ -616,7 +616,7 @@ bool CObjectDispenser::DispenseAmmo( CTFPlayer *pPlayer )
 		{
 			// This is crude; it doesn't account for the value difference in resupplying rockets vs pistol bullets.
 			// Still, it's better than nothing when trying to measure the value classes generate.
-			if ( TFGameRules() && 
+			if ( TFGameRules() &&
 				 TFGameRules()->GameModeUsesUpgrades() &&
 				 TFGameRules()->State_Get() == GR_STATE_RND_RUNNING )
 			{
@@ -632,7 +632,7 @@ bool CObjectDispenser::DispenseAmmo( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CObjectDispenser::DispenseMetal( CTFPlayer *pPlayer )
 {
@@ -644,7 +644,7 @@ int CObjectDispenser::DispenseMetal( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDispenser::RefillThink( void )
 {
@@ -692,7 +692,7 @@ void CObjectDispenser::DispenseThink( void )
 		ResetHealingTargets();
 		return;
 	}
-	
+
 	float flRadius = GetDispenserRadius();
 
 	if ( m_flNextAmmoDispense <= gpGlobals->curtime )
@@ -704,7 +704,7 @@ void CObjectDispenser::DispenseThink( void )
 			// find players in sphere, that are visible
 			if ( ( flRadius != m_flPrevRadius ) && m_hTouchTrigger.Get() )
 			{
-				UTIL_SetSize( m_hTouchTrigger.Get(), Vector( -flRadius, -flRadius, -flRadius ), Vector( flRadius, flRadius, flRadius ) );	
+				UTIL_SetSize( m_hTouchTrigger.Get(), Vector( -flRadius, -flRadius, -flRadius ), Vector( flRadius, flRadius, flRadius ) );
 			}
 		}
 
@@ -732,7 +732,7 @@ void CObjectDispenser::DispenseThink( void )
 			iNumNearbyPlayers++;
 		}
 
-		// Try to dispense more often when no players are around so we 
+		// Try to dispense more often when no players are around so we
 		// give it as soon as possible when a new player shows up
 #ifdef STAGING_ONLY
 		float flNextAmmoDelay = IsMiniBuilding() ? DISPENSER_MINI_AMMO_THINK : 1.0;
@@ -740,7 +740,7 @@ void CObjectDispenser::DispenseThink( void )
 		float flNextAmmoDelay = 1.0;
 #endif
 		m_flNextAmmoDispense = gpGlobals->curtime + ( ( iNumNearbyPlayers > 0 ) ? flNextAmmoDelay : 0.1 );
-	}	
+	}
 
 	// for each player in touching list
 	int iSize = m_hTouchingEntities.Count();
@@ -782,10 +782,10 @@ void CObjectDispenser::DispenseThink( void )
 			}
 			else if ( !bHealingTarget && bValidHealTarget )
 			{
-				// if we can see them, add to healing list	
+				// if we can see them, add to healing list
 				// does nothing if we are healing them already
 				StartHealing( pEnt );
-			}	
+			}
 		}
 	}
 
@@ -835,7 +835,7 @@ void CObjectDispenser::DispenseThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDispenser::StartTouch( CBaseEntity *pOther )
 {
@@ -851,7 +851,7 @@ void CObjectDispenser::StartTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDispenser::Touch( CBaseEntity *pOther )
 {
@@ -870,7 +870,7 @@ void CObjectDispenser::Touch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDispenser::EndTouch( CBaseEntity *pOther )
 {
@@ -883,7 +883,7 @@ void CObjectDispenser::EndTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDispenser::ResetHealingTargets( void )
 {
@@ -955,7 +955,7 @@ void CObjectDispenser::StopHealing( CBaseEntity *pOther )
 				if ( GetBuilder()->GetTeam() == pOther->GetTeam() )
 				{
 					// Strange Health Provided to Allies
-					EconEntity_OnOwnerKillEaterEvent( 
+					EconEntity_OnOwnerKillEaterEvent(
 						dynamic_cast<CEconEntity *>( GetBuilder()->GetEntityForLoadoutSlot( LOADOUT_POSITION_PDA ) ),
 						GetBuilder(),
 						pPlayer,
@@ -1023,7 +1023,7 @@ bool CObjectDispenser::CouldHealTarget( CBaseEntity *pTarget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CObjectDispenser::GetDispenserRadius( void )
 {
@@ -1077,13 +1077,13 @@ bool CObjectDispenser::IsHealingTarget( CBaseEntity *pTarget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int CObjectDispenser::DrawDebugTextOverlays(void) 
+int CObjectDispenser::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 		Q_snprintf( tempstr, sizeof( tempstr ),"Metal: %d", m_iAmmoMetal.Get() );
@@ -1094,7 +1094,7 @@ int CObjectDispenser::DrawDebugTextOverlays(void)
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CObjectDispenser::MakeCarriedObject( CTFPlayer *pCarrier )
 {
@@ -1130,7 +1130,7 @@ END_SEND_TABLE()
 LINK_ENTITY_TO_CLASS( mapobj_cart_dispenser, CObjectCartDispenser );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectCartDispenser::CObjectCartDispenser()
 {
@@ -1157,7 +1157,7 @@ void CObjectCartDispenser::OnGoActive( void )
 {
 	BaseClass::OnGoActive();
 
-	SetModel( "" ); 
+	SetModel( "" );
 }
 
 //-----------------------------------------------------------------------------
@@ -1205,7 +1205,7 @@ void CObjectCartDispenser::DispenseSouls()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectCartDispenser::SetModel( const char *pModel )
 {
@@ -1230,7 +1230,7 @@ void CObjectCartDispenser::InputFireHalloweenBonus( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectCartDispenser::InputSetDispenserLevel( inputdata_t &inputdata )
 {
@@ -1243,7 +1243,7 @@ void CObjectCartDispenser::InputSetDispenserLevel( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectCartDispenser::InputEnable( inputdata_t &inputdata )
 {
@@ -1251,11 +1251,9 @@ void CObjectCartDispenser::InputEnable( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectCartDispenser::InputDisable( inputdata_t &inputdata )
 {
 	SetDisabled( true );
 }
-
-

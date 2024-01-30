@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -22,7 +22,7 @@ BEGIN_VS_SHADER_FLAGS( sfm_blurfiltery_shader, "Help for BlurFilterY", SHADER_NO
 			LoadTexture( BASETEXTURE );
 		}
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		// Requires DX9 + above
@@ -106,7 +106,7 @@ BEGIN_VS_SHADER_FLAGS( sfm_blurfiltery_shader, "Help for BlurFilterY", SHADER_NO
 			pShaderAPI->SetPixelShaderConstant( 3, v, 1 );
 
 			pShaderAPI->SetVertexShaderIndex( 0 );
-			
+
 			if( g_pHardwareConfig->SupportsPixelShaders_2_b() )
 			{
 				DECLARE_DYNAMIC_PIXEL_SHADER( blurfilter_ps20b );

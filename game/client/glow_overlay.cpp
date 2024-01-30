@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -145,7 +145,7 @@ void CGlowOverlay::UpdateSkyGlowObstruction( float zFar, bool bCacheFullSceneSta
 		return;
 
 	// Turning on sky obstruction caching mode
-	if ( bCacheFullSceneState && !m_bCacheSkyObstruction )	
+	if ( bCacheFullSceneState && !m_bCacheSkyObstruction )
 	{
 		m_bCacheSkyObstruction = true;
 	}
@@ -158,7 +158,7 @@ void CGlowOverlay::UpdateSkyGlowObstruction( float zFar, bool bCacheFullSceneSta
 
 	if ( PixelVisibility_IsAvailable() )
 	{
-		// Trace a ray at the object. 
+		// Trace a ray at the object.
 		Vector pos = CurrentViewOrigin() + m_vDirection * zFar * 0.999f;
 
 		// UNDONE: Can probably do only the pixelvis query in this case if you can figure out where
@@ -171,9 +171,9 @@ void CGlowOverlay::UpdateSkyGlowObstruction( float zFar, bool bCacheFullSceneSta
 	}
 	// Trace a ray at the object.
 	trace_t trace;
-	UTIL_TraceLine( CurrentViewOrigin(), CurrentViewOrigin() + (m_vDirection*MAX_TRACE_LENGTH), 
+	UTIL_TraceLine( CurrentViewOrigin(), CurrentViewOrigin() + (m_vDirection*MAX_TRACE_LENGTH),
 		CONTENTS_SOLID, NULL, COLLISION_GROUP_NONE, &trace );
-	
+
 	// back the trace with a pixel query to occlude with models
 	if ( trace.surface.flags & SURF_SKY )
 	{
@@ -191,7 +191,7 @@ void CGlowOverlay::UpdateGlowObstruction( const Vector &vToGlow, bool bCacheFull
 	// If we already cached the glow obstruction and are still using that, early-out
 	if ( bCacheFullSceneState && m_bCacheGlowObstruction )
 		return;
-	
+
 	if ( bCacheFullSceneState && !m_bCacheGlowObstruction )	// If turning on sky obstruction caching mode
 	{
 		m_bCacheGlowObstruction = true;
@@ -233,9 +233,9 @@ void CGlowOverlay::UpdateGlowObstruction( const Vector &vToGlow, bool bCacheFull
 	{
 		// Trace a ray at the object.
 		trace_t trace;
-		UTIL_TraceLine( CurrentViewOrigin(), CurrentViewOrigin() + (vToGlow*MAX_TRACE_LENGTH), 
+		UTIL_TraceLine( CurrentViewOrigin(), CurrentViewOrigin() + (vToGlow*MAX_TRACE_LENGTH),
 			CONTENTS_SOLID, NULL, COLLISION_GROUP_NONE, &trace );
-		
+
 		bFade = (trace.fraction < 1 && !(trace.surface.flags & SURF_SKY));
 	}
 	else
@@ -277,49 +277,49 @@ void CGlowOverlay::UpdateGlowObstruction( const Vector &vToGlow, bool bCacheFull
 	}
 }
 
-void CGlowOverlay::CalcSpriteColorAndSize( 
+void CGlowOverlay::CalcSpriteColorAndSize(
 	float flDot,
-	CGlowSprite *pSprite, 
-	float *flHorzSize, 
-	float *flVertSize, 
+	CGlowSprite *pSprite,
+	float *flHorzSize,
+	float *flVertSize,
 	Vector *vColor )
 {
 	// The overlay is largest and completely translucent at g_flOverlayRange.
 	// When the dot product is 1, then it's smaller and more opaque.
 	const float flSizeAtOverlayRangeMul = 150;
 	const float flSizeAtOneMul = 70;
-	
+
 	const float flOpacityAtOverlayRange = 0;
 	const float flOpacityAtOne = 1;
 
 	// Figure out how big and how opaque it will be.
-	*flHorzSize = RemapValClamped( 
-		flDot, 
-		g_flOverlayRange, 
-		1, 
-		flSizeAtOverlayRangeMul * pSprite->m_flHorzSize, 
-		flSizeAtOneMul * pSprite->m_flHorzSize );		
+	*flHorzSize = RemapValClamped(
+		flDot,
+		g_flOverlayRange,
+		1,
+		flSizeAtOverlayRangeMul * pSprite->m_flHorzSize,
+		flSizeAtOneMul * pSprite->m_flHorzSize );
 
-	*flVertSize = RemapValClamped( 
-		flDot, 
-		g_flOverlayRange, 
-		1, 
-		flSizeAtOverlayRangeMul * pSprite->m_flVertSize, 
-		flSizeAtOneMul * pSprite->m_flVertSize );		
-	
-	float flOpacity = RemapValClamped( 
-		flDot, 
-		g_flOverlayRange, 
-		1, 
-		flOpacityAtOverlayRange, 
-		flOpacityAtOne );		
+	*flVertSize = RemapValClamped(
+		flDot,
+		g_flOverlayRange,
+		1,
+		flSizeAtOverlayRangeMul * pSprite->m_flVertSize,
+		flSizeAtOneMul * pSprite->m_flVertSize );
+
+	float flOpacity = RemapValClamped(
+		flDot,
+		g_flOverlayRange,
+		1,
+		flOpacityAtOverlayRange,
+		flOpacityAtOne );
 
 	flOpacity = flOpacity * m_flGlowObstructionScale;
 	*vColor = pSprite->m_vColor * flOpacity;
 }
 
 
-void CGlowOverlay::CalcBasis( 
+void CGlowOverlay::CalcBasis(
 	const Vector &vToGlow,
 	float flHorzSize,
 	float flVertSize,
@@ -327,11 +327,11 @@ void CGlowOverlay::CalcBasis(
 	Vector &vUp,
 	Vector &vRight )
 {
-	const float flOverlayDist = 100;	
+	const float flOverlayDist = 100;
 	vBasePt = CurrentViewOrigin() + vToGlow * flOverlayDist;
-	
+
 	vUp.Init( 0, 0, 1 );
-	
+
 	vRight = vToGlow.Cross( vUp );
 	VectorNormalize( vRight );
 
@@ -348,10 +348,10 @@ void CGlowOverlay::Draw( bool bCacheFullSceneState )
 	extern ConVar	r_drawsprites;
 	if( !r_drawsprites.GetBool() )
 		return;
-	
+
 	// Get the vector to the sun.
 	Vector vToGlow;
-	
+
 	if( m_bDirectional )
 		vToGlow = m_vDirection;
 	else
@@ -364,24 +364,24 @@ void CGlowOverlay::Draw( bool bCacheFullSceneState )
 	UpdateGlowObstruction( vToGlow, bCacheFullSceneState );
 	if( m_flGlowObstructionScale == 0 )
 		return;
-	
+
 	bool bWireframe = ShouldDrawInWireFrameMode() || (r_drawsprites.GetInt() == 2);
-	
+
 	CMatRenderContextPtr pRenderContext( materials );
 
 	for( int iSprite=0; iSprite < m_nSprites; iSprite++ )
 	{
 		CGlowSprite *pSprite = &m_Sprites[iSprite];
- 
+
 		// Figure out the color and size to draw it.
 		float flHorzSize, flVertSize;
 		Vector vColor;
 		CalcSpriteColorAndSize( flDot, pSprite, &flHorzSize, &flVertSize, &vColor );
-	
+
 		// If we're alpha'd out, then don't bother
 		if ( vColor.LengthSqr() < 0.00001f )
 			continue;
-		
+
 		// Setup the basis to draw the sprite.
 		Vector vBasePt, vUp, vRight;
 		CalcBasis( vToGlow, flHorzSize, flVertSize, vBasePt, vUp, vRight );
@@ -410,66 +410,66 @@ void CGlowOverlay::Draw( bool bCacheFullSceneState )
 
 		CMeshBuilder builder;
 		builder.Begin( pMesh, MATERIAL_QUADS, 1 );
-		
+
 		Vector vPt;
-		
+
 		vPt = vBasePt - vRight + vUp;
 		builder.Position3fv( vPt.Base() );
 		builder.Color4f( VectorExpand(vColor), 1 );
 		builder.TexCoord2f( 0, 0, 1 );
 		builder.AdvanceVertex();
-		
+
 		vPt = vBasePt + vRight + vUp;
 		builder.Position3fv( vPt.Base() );
 		builder.Color4f( VectorExpand(vColor), 1 );
 		builder.TexCoord2f( 0, 1, 1 );
 		builder.AdvanceVertex();
-		
+
 		vPt = vBasePt + vRight - vUp;
 		builder.Position3fv( vPt.Base() );
 		builder.Color4f( VectorExpand(vColor), 1 );
 		builder.TexCoord2f( 0, 1, 0 );
 		builder.AdvanceVertex();
-		
+
 		vPt = vBasePt - vRight - vUp;
 		builder.Position3fv( vPt.Base() );
 		builder.Color4f( VectorExpand(vColor), 1 );
 		builder.TexCoord2f( 0, 0, 0 );
 		builder.AdvanceVertex();
-		
+
 		builder.End( false, true );
 
 		if( bWireframe )
 		{
 			IMaterial *pWireframeMaterial = materials->FindMaterial( "debug/debugwireframevertexcolor", TEXTURE_GROUP_OTHER );
 			pRenderContext->Bind( pWireframeMaterial );
-			
+
 			// Draw the sprite.
 			pMesh = pRenderContext->GetDynamicMesh( false, 0, 0, pWireframeMaterial );
-			
+
 			CMeshBuilder builderWireFrame;
 			builderWireFrame.Begin( pMesh, MATERIAL_QUADS, 1 );
-						
+
 			vPt = vBasePt - vRight + vUp;
 			builderWireFrame.Position3fv( vPt.Base() );
 			builderWireFrame.Color3f( 1.0f, 0.0f, 0.0f );
 			builderWireFrame.AdvanceVertex();
-			
+
 			vPt = vBasePt + vRight + vUp;
 			builderWireFrame.Position3fv( vPt.Base() );
 			builderWireFrame.Color3f( 1.0f, 0.0f, 0.0f );
 			builderWireFrame.AdvanceVertex();
-			
+
 			vPt = vBasePt + vRight - vUp;
 			builderWireFrame.Position3fv( vPt.Base() );
 			builderWireFrame.Color3f( 1.0f, 0.0f, 0.0f );
 			builderWireFrame.AdvanceVertex();
-			
+
 			vPt = vBasePt - vRight - vUp;
 			builderWireFrame.Position3fv( vPt.Base() );
 			builderWireFrame.Color3f( 1.0f, 0.0f, 0.0f );
 			builderWireFrame.AdvanceVertex();
-			
+
 			builderWireFrame.End( false, true );
 		}
 	}
@@ -505,7 +505,7 @@ void CGlowOverlay::DrawOverlays( bool bCacheFullSceneState )
 	{
 		iNext = g_GlowOverlaySystem.m_GlowOverlays.Next( i );
 		CGlowOverlay *pOverlay = g_GlowOverlaySystem.m_GlowOverlays[i];
-		
+
 		if( !pOverlay->m_bActivated )
 			continue;
 
@@ -530,7 +530,7 @@ void CGlowOverlay::UpdateSkyOverlays( float zFar, bool bCacheFullSceneState )
 	{
 		iNext = g_GlowOverlaySystem.m_GlowOverlays.Next( i );
 		CGlowOverlay *pOverlay = g_GlowOverlaySystem.m_GlowOverlays[i];
-		
+
 		if( !pOverlay->m_bActivated || !pOverlay->m_bDirectional || !pOverlay->m_bInSky )
 			continue;
 
@@ -574,4 +574,3 @@ void CGlowOverlay::RestoreSkyOverlayData( int iRestoreFromSlot )
 }
 
 #endif //#ifdef PORTAL
-

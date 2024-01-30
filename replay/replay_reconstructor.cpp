@@ -35,7 +35,7 @@ bool Replay_Reconstruct( CReplay *pReplay, bool bDeleteBlocks/*=true*/ )
 	CClientRecordingSession *pSession = CL_CastSession( CL_GetRecordingSessionManager()->FindSession( pReplay->m_hSession ) );
 	if ( !pSession )
 	{
-		CL_GetErrorSystem()->AddErrorFromTokenName( "#Replay_Err_Recon_BadSession" ); 
+		CL_GetErrorSystem()->AddErrorFromTokenName( "#Replay_Err_Recon_BadSession" );
 		return false;
 	}
 
@@ -109,7 +109,7 @@ bool Replay_Reconstruct( CReplay *pReplay, bool bDeleteBlocks/*=true*/ )
 
 		// Open the partial file for the current replay
 		const char *pFilename = pCurBlock->m_szFullFilename;
-		
+
 		FileHandle_t hBlockFile = g_pFullFileSystem->Open( pFilename, "rb" );
 		if ( hBlockFile == FILESYSTEM_INVALID_HANDLE )
 		{

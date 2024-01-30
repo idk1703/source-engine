@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Uploads gamestats via the SteamWorks API. 
+// Purpose: Uploads gamestats via the SteamWorks API.
 //
 //=============================================================================//
 
@@ -58,7 +58,7 @@ public:
 
 #ifndef	NO_STEAM
 	STEAM_CALLBACK_MANUAL( CSteamWorksGameStatsUploader, Steam_OnSteamSessionInfoIssued, GameStatsSessionIssued_t, m_CallbackSteamSessionInfoIssued );
-	STEAM_CALLBACK_MANUAL( CSteamWorksGameStatsUploader, Steam_OnSteamSessionInfoClosed, GameStatsSessionClosed_t, m_CallbackSteamSessionInfoClosed );	
+	STEAM_CALLBACK_MANUAL( CSteamWorksGameStatsUploader, Steam_OnSteamSessionInfoClosed, GameStatsSessionClosed_t, m_CallbackSteamSessionInfoClosed );
 #endif
 
 #endif
@@ -66,7 +66,7 @@ public:
 #ifdef GAME_DLL
 #ifndef	NO_STEAM
 	STEAM_GAMESERVER_CALLBACK( CSteamWorksGameStatsUploader, Steam_OnSteamSessionInfoIssued, GameStatsSessionIssued_t, m_CallbackSteamSessionInfoIssued );
-	STEAM_GAMESERVER_CALLBACK( CSteamWorksGameStatsUploader, Steam_OnSteamSessionInfoClosed, GameStatsSessionClosed_t, m_CallbackSteamSessionInfoClosed );	
+	STEAM_GAMESERVER_CALLBACK( CSteamWorksGameStatsUploader, Steam_OnSteamSessionInfoClosed, GameStatsSessionClosed_t, m_CallbackSteamSessionInfoClosed );
 #endif
 #endif
 
@@ -88,7 +88,7 @@ public:
 #ifdef CLIENT_DLL
 	void ClientDisconnect();
 	void ClearServerSessionID() { m_ServerSessionID = 0 ;}
-	int  GetNumServerConnects() { return m_iServerConnectCount; }		
+	int  GetNumServerConnects() { return m_iServerConnectCount; }
 #endif
 
 	bool IsCollectingDetails() { return m_bCollectingDetails; }
@@ -147,7 +147,7 @@ private:
 	EResult		WriteOptionalFloatToTable( KeyValues *pKV, const char* keyName, uint64 iTableID, const char *pzRow);
 	EResult		WriteOptionalIntToTable( KeyValues *pKV, const char* keyName, uint64 iTableID, const char *pzRow );
 
-	ISteamGameStats* GetInterface( void );	
+	ISteamGameStats* GetInterface( void );
 	EResult		ParseKeyValuesAndSendStats( KeyValues *pKV, bool bIncludeClientsServerSessionID = true );
 	void		ServerAddressToInt();
 

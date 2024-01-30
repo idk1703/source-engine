@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 
 ===== h_battery.cpp ========================================================
 
-  battery-related code
+	battery-related code
 
 */
 
@@ -40,12 +40,12 @@ public:
 
 	DECLARE_DATADESC();
 
-	float m_flNextCharge; 
+	float m_flNextCharge;
 	int		m_iReactivate ; // DeathMatch Delay until reactvated
 	int		m_iJuice;
 	int		m_iOn;			// 0 = off, 1 = startup, 2 = going
 	float   m_flSoundTime;
-	
+
 	int		m_iCaps;
 
 	COutputFloat m_OutRemainingCharge;
@@ -123,7 +123,7 @@ bool CRecharge::CreateVPhysics()
 }
 
 void CRecharge::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
-{ 
+{
 	// Make sure that we have a caller
 	if (!pActivator)
 		return;
@@ -135,7 +135,7 @@ void CRecharge::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE use
 	CBasePlayer *pPlayer = dynamic_cast<CBasePlayer *>( pActivator );
 
 	if ( pPlayer == NULL )
-		 return;
+		return;
 
 	// Reset to a state of continuous use.
 	m_iCaps = FCAP_CONTINUOUS_USE;
@@ -164,7 +164,7 @@ void CRecharge::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE use
 		// Make the user re-use me to get started drawing health.
 		pPlayer->m_afButtonPressed &= ~IN_USE;
 		m_iCaps = FCAP_IMPULSE_USE;
-		
+
 		EmitSound( "SuitRecharge.Deny" );
 		return;
 	}
@@ -179,7 +179,7 @@ void CRecharge::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE use
 
 	m_hActivator = pActivator;
 
-	
+
 	// Play the on sound or the looping charging sound
 	if (!m_iOn)
 	{

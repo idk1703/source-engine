@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -15,11 +15,11 @@ extern void OpenLocalizedURL( const char *lpszLocalName );
 using namespace vgui;
 
 CModWizardSubPanel_Finished::CModWizardSubPanel_Finished( Panel *parent, const char *panelName )
-	: BaseClass( parent, panelName )						 
+	: BaseClass( parent, panelName )
 {
 	m_pFinishedText = new Label( this, "FinishedText", "" );
 	m_pOpenReadme = new CheckButton( this, "OpenReadme", "" );
-	
+
 	m_OutputDirName[0] = 0;
 
 	LoadControlSettings( "ModWizardSubPanel_Finished.res");
@@ -56,7 +56,7 @@ WizardSubPanel *CModWizardSubPanel_Finished::GetNextSubPanel()
 void CModWizardSubPanel_Finished::PerformLayout()
 {
 	BaseClass::PerformLayout();
-	
+
 	GetWizardPanel()->SetFinishButtonEnabled( true );
 	GetWizardPanel()->SetPrevButtonEnabled( false );
 }
@@ -77,4 +77,3 @@ bool CModWizardSubPanel_Finished::OnFinishButton()
 
 	return true;
 }
-

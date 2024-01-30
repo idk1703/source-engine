@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -104,14 +104,14 @@ void CTFPlayerMove::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 		// Handle player class specific setup.
 		switch( pTFPlayer->PlayerClass() )
 		{
-		case TFCLASS_RECON: 
-			{ 
-				SetupMoveRecon( pTFPlayer, ucmd, pHelper, pTFMove ); 
-				break; 
+		case TFCLASS_RECON:
+			{
+				SetupMoveRecon( pTFPlayer, ucmd, pHelper, pTFMove );
+				break;
 			}
-		case TFCLASS_COMMANDO: 
-			{ 
-				SetupMoveCommando( pTFPlayer, ucmd, pHelper, pTFMove ); 
+		case TFCLASS_COMMANDO:
+			{
+				SetupMoveCommando( pTFPlayer, ucmd, pHelper, pTFMove );
 				break;
 			}
 		default:
@@ -123,14 +123,14 @@ void CTFPlayerMove::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 	}
 	else
 	{
-		pVehicle->SetupMove( player, ucmd, pHelper, move ); 
+		pVehicle->SetupMove( player, ucmd, pHelper, move );
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFPlayerMove::SetupMoveRecon( CBaseTFPlayer *pTFPlayer, CUserCmd *pUcmd, IMoveHelper *pHelper, 
+void CTFPlayerMove::SetupMoveRecon( CBaseTFPlayer *pTFPlayer, CUserCmd *pUcmd, IMoveHelper *pHelper,
 								    CTFMoveData *pTFMove )
 {
 	CPlayerClassRecon *pRecon = static_cast<CPlayerClassRecon*>( pTFPlayer->GetPlayerClass() );
@@ -154,7 +154,7 @@ void CTFPlayerMove::SetupMoveRecon( CBaseTFPlayer *pTFPlayer, CUserCmd *pUcmd, I
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFPlayerMove::SetupMoveCommando( CBaseTFPlayer *pTFPlayer, CUserCmd *pUcmd, IMoveHelper *pHelper, 
+void CTFPlayerMove::SetupMoveCommando( CBaseTFPlayer *pTFPlayer, CUserCmd *pUcmd, IMoveHelper *pHelper,
 								       CTFMoveData *pTFMove )
 {
 	CPlayerClassCommando *pCommando = static_cast<CPlayerClassCommando*>( pTFPlayer->GetPlayerClass() );
@@ -177,7 +177,7 @@ void CTFPlayerMove::SetupMoveCommando( CBaseTFPlayer *pTFPlayer, CUserCmd *pUcmd
 //-----------------------------------------------------------------------------
 // Purpose: This is called post player movement to copy back all data that
 //          movement could have modified and that is necessary for future
-//          movement. (Server-side, the client-side version of this code can 
+//          movement. (Server-side, the client-side version of this code can
 //          be found in prediction.cpp.)
 //-----------------------------------------------------------------------------
 void CTFPlayerMove::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *move )
@@ -203,14 +203,14 @@ void CTFPlayerMove::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *
 		// Handle player class specific setup.
 		switch( pTFPlayer->PlayerClass() )
 		{
-		case TFCLASS_RECON: 
-			{ 
-				FinishMoveRecon( pTFPlayer, pTFMove, ucmd ); 
-				break; 
+		case TFCLASS_RECON:
+			{
+				FinishMoveRecon( pTFPlayer, pTFMove, ucmd );
+				break;
 			}
-		case TFCLASS_COMMANDO: 
-			{ 
-				FinishMoveCommando( pTFPlayer, pTFMove, ucmd ); 
+		case TFCLASS_COMMANDO:
+			{
+				FinishMoveCommando( pTFPlayer, pTFMove, ucmd );
 				break;
 			}
 		default:
@@ -234,7 +234,7 @@ void CTFPlayerMove::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *
 	pTFPlayer->m_vecPosDelta = pTFMove->m_vecPosDelta;
 
 	COMPILE_TIME_ASSERT( CBaseTFPlayer::MOMENTUM_MAXSIZE == CTFMoveData::MOMENTUM_MAXSIZE );
-	
+
 	// Copy the momentum data back (the movement may have updated it!).
 	pTFPlayer->m_iMomentumHead = pTFMove->m_iMomentumHead;
 	for ( int iMomentum = 0; iMomentum < CTFMoveData::MOMENTUM_MAXSIZE; iMomentum++ )
@@ -246,7 +246,7 @@ void CTFPlayerMove::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFPlayerMove::FinishMoveRecon( CBaseTFPlayer *pTFPlayer, CTFMoveData *pTFMove, 
+void CTFPlayerMove::FinishMoveRecon( CBaseTFPlayer *pTFPlayer, CTFMoveData *pTFMove,
 									 CUserCmd *ucmd )
 {
 	CPlayerClassRecon *pRecon = static_cast<CPlayerClassRecon*>( pTFPlayer->GetPlayerClass() );
@@ -270,7 +270,7 @@ void CTFPlayerMove::FinishMoveRecon( CBaseTFPlayer *pTFPlayer, CTFMoveData *pTFM
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFPlayerMove::FinishMoveCommando( CBaseTFPlayer *pTFPlayer, CTFMoveData *pTFMove, 
+void CTFPlayerMove::FinishMoveCommando( CBaseTFPlayer *pTFPlayer, CTFMoveData *pTFMove,
 									    CUserCmd *ucmd )
 {
 	CPlayerClassCommando *pCommando = static_cast<CPlayerClassCommando*>( pTFPlayer->GetPlayerClass() );

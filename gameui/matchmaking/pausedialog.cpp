@@ -16,7 +16,7 @@
 CPauseDialog::CPauseDialog( vgui::Panel *pParent ) : BaseClass( pParent, "PauseDialog" )
 {
 	// do nothing
-} 
+}
 
 void CPauseDialog::Activate( void )
 {

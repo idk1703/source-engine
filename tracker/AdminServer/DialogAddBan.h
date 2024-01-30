@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class CDialogAddBan : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CDialogAddBan, vgui::Frame ); 
+	DECLARE_CLASS_SIMPLE( CDialogAddBan, vgui::Frame );
 public:
 	CDialogAddBan(vgui::Panel *parent);
 	~CDialogAddBan();
@@ -30,16 +30,16 @@ public:
 	void Activate(const char *type,const char *player, const char *authid);
 
 	/* message returned:
-		"AddBanValue" 
+		"AddBanValue"
 			"id"
 			"time"
 			"type"
 			"ipcheck"
 	*/
-	
+
 	// make the input stars, ala a password entry dialog
 	void MakePassword();
-	
+
 	// set the text in a certain label name
 	void SetLabelText(const char *textEntryName, const char *text);
 	void SetTextEntry(const char *textEntryName, const char *text);

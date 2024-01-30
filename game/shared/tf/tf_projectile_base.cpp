@@ -80,7 +80,7 @@ CTFBaseProjectile::~CTFBaseProjectile()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseProjectile::Precache( void )
 {
@@ -91,7 +91,7 @@ void CTFBaseProjectile::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseProjectile::Spawn( void )
 {
@@ -131,9 +131,9 @@ void CTFBaseProjectile::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTFBaseProjectile *CTFBaseProjectile::Create( const char *pszClassname, const Vector &vecOrigin, 
+CTFBaseProjectile *CTFBaseProjectile::Create( const char *pszClassname, const Vector &vecOrigin,
 											 const QAngle &vecAngles, CBaseEntity *pOwner, float flVelocity, short iProjModelIndex, const char *pszDispatchEffect,
 											CBaseEntity *pScorer, bool bCritical, Vector vColor1, Vector vColor2 )
 {
@@ -157,7 +157,7 @@ CTFBaseProjectile *CTFBaseProjectile::Create( const char *pszClassname, const Ve
 	// Spawn.
 	pProjectile->Spawn();
 
-	pProjectile->SetAbsVelocity( vecVelocity );	
+	pProjectile->SetAbsVelocity( vecVelocity );
 	//pProjectile->SetupInitialTransmittedGrenadeVelocity( vecVelocity );
 
 	// Setup the initial angles.
@@ -170,15 +170,15 @@ CTFBaseProjectile *CTFBaseProjectile::Create( const char *pszClassname, const Ve
 
 	// Hide the projectile and create a fake one on the client
 	pProjectile->AddEffects( EF_NODRAW );
-#endif 
+#endif
 
 	if ( pszDispatchEffect )
 	{
-		// we'd like to just send this projectile to a person in the shooter's PAS. However 
+		// we'd like to just send this projectile to a person in the shooter's PAS. However
 		// the projectile won't be sent to a player outside of water if shot from inside water
 		// and vice-versa, so we do a trace here to figure out if the trace starts or stops in water.
 		// if it crosses contents, we'll just broadcast the projectile. Otherwise, just send to PVS
-		// of the trace's endpoint. 
+		// of the trace's endpoint.
 		trace_t tr;
 		CTraceFilterSimple traceFilter( pOwner, COLLISION_GROUP_NONE );
 		ITraceFilter *pFilterChain = NULL;
@@ -197,7 +197,7 @@ CTFBaseProjectile *CTFBaseProjectile::Create( const char *pszClassname, const Ve
 		IRecipientFilter *pFilter;
 		if ( bBroadcast )
 		{
-			// The projectile is going to cross content types 
+			// The projectile is going to cross content types
 			// (which will block PVS/PAS). Send to every client
 			pFilter = new CReliableBroadcastRecipientFilter();
 		}
@@ -245,7 +245,7 @@ const char *CTFBaseProjectile::GetProjectileModelName( void )
 #ifdef CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseProjectile::PostDataUpdate( DataUpdateType_t type )
 {
@@ -280,7 +280,7 @@ void CTFBaseProjectile::PostDataUpdate( DataUpdateType_t type )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFBaseProjectile::DrawModel( int flags )
 {
@@ -292,7 +292,7 @@ int CTFBaseProjectile::DrawModel( int flags )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_LocalTempEntity *ClientsideProjectileCallback( const CEffectData &data, float flGravityBase, const char *pszParticleName )
 {
@@ -333,7 +333,7 @@ C_LocalTempEntity *ClientsideProjectileCallback( const CEffectData &data, float 
 				Vector vForward;
 				AngleVectors( vecAngles, &vForward );
 
-				trace_t trace;	
+				trace_t trace;
 				UTIL_TraceLine( vecMuzzleOrigin + vForward * -50, vecMuzzleOrigin, MASK_SOLID, pEnt, COLLISION_GROUP_NONE, &trace );
 
 				if ( trace.fraction != 1.0 )
@@ -362,12 +362,12 @@ C_LocalTempEntity *ClientsideProjectileCallback( const CEffectData &data, float 
 // Purpose:
 //-----------------------------------------------------------------------------
 unsigned int CTFBaseProjectile::PhysicsSolidMaskForEntity( void ) const
-{ 
+{
 	return BaseClass::PhysicsSolidMaskForEntity() | CONTENTS_HITBOX;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseProjectile::ProjectileTouch( CBaseEntity *pOther )
 {
@@ -479,7 +479,7 @@ CBasePlayer *CTFBaseProjectile::GetScorer( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFBaseProjectile::GetDamageType( void )
 {

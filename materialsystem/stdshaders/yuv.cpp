@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ BEGIN_VS_SHADER_FLAGS( YUV, "Help for YUV", SHADER_NOT_EDITABLE )
 	SHADER_INIT
 	{
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		// Requires DX8 + above

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -31,7 +31,7 @@ public:
 	// Add an image to the end of the list of animations
 	// image - pointer to the image to add to the end of the list
 	virtual void AddImage(IImage *image);
-	
+
 	// Load a set of animations by name.
 	// baseName - The name of the animations without their frame number or file extension, (e.g. c1.tga becomes just c.)
 	// framecount: number of frames in the animation

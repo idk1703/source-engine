@@ -97,7 +97,7 @@ void Benchmark_PHY( const CPhysCollide *pCollide, benchresults_t *pOut )
 	size[0].Init(0,0,0);
 	size[1].Init(16,16,16);
 
-#if VPROF_LEVEL > 0 
+#if VPROF_LEVEL > 0
 	g_VProfCurrentProfile.Reset();
 	g_VProfCurrentProfile.ResetPeaks();
 	g_VProfCurrentProfile.Start();
@@ -134,7 +134,7 @@ void Benchmark_PHY( const CPhysCollide *pCollide, benchresults_t *pOut )
 	}
 	duration = Plat_FloatTime() - startTime;
 
-#if VPROF_LEVEL > 0 
+#if VPROF_LEVEL > 0
 	g_VProfCurrentProfile.MarkFrame();
 	g_VProfCurrentProfile.Stop();
 	g_VProfCurrentProfile.Reset();
@@ -157,7 +157,7 @@ void Benchmark_PHY( const CPhysCollide *pCollide, benchresults_t *pOut )
 		{
 			g_Traces[i].hit = false;
 		}
-#if VPROF_LEVEL > 0 
+#if VPROF_LEVEL > 0
 		g_VProfCurrentProfile.MarkFrame();
 #endif
 	}
@@ -165,7 +165,7 @@ void Benchmark_PHY( const CPhysCollide *pCollide, benchresults_t *pOut )
 	for ( i = 0; i < NUM_COLLISION_TESTS; i++ )
 	{
 		physcollision->TraceBox( g_Traces[i].start, start, -size[1], size[1], pCollide, vec3_origin, vec3_angle, &tr );
-#if VPROF_LEVEL > 0 
+#if VPROF_LEVEL > 0
 		g_VProfCurrentProfile.MarkFrame();
 #endif
 	}
@@ -177,15 +177,15 @@ void Benchmark_PHY( const CPhysCollide *pCollide, benchresults_t *pOut )
 	pOut->rayTime = (midTime - startTime) * 1000.0f;
 	pOut->boxTime = (endTime - midTime)*1000.0f;
 
-#if VPROF_LEVEL > 0 
+#if VPROF_LEVEL > 0
 	g_VProfCurrentProfile.Stop();
 	g_VProfCurrentProfile.OutputReport( VPRT_FULL & ~VPRT_HIERARCHY, NULL );
 #endif
 }
 
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ======//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -225,7 +225,7 @@ bool CBenchmarkApp::Create()
 	//AppModule_t cvarModule = LoadModule( VStdLib_GetICVarFactory() );
 	//AddSystem( cvarModule, VENGINE_CVAR_INTERFACE_VERSION );
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "vphysics.dll",			VPHYSICS_INTERFACE_VERSION },
 		{ "", "" }	// Required to terminate the list
@@ -351,7 +351,7 @@ Benchmark models\props_combine\combineinnerwall001a.phy!
 //-----------------------------------------------------------------------------
 int CBenchmarkApp::Main()
 {
-	const char *pFileNames[] = 
+	const char *pFileNames[] =
 	{
 		"models\\props_c17\\bench01a.phy",
 		"models\\props_junk\\bicycle01a.phy",
@@ -391,8 +391,8 @@ int CBenchmarkApp::Main()
 			Benchmark_PHY( testModels[i].solids[0], &results );
 		}
 		Msg("%.2f ms [%.2f X] %d/%d hits\n", results.totalTime, IMPROVEMENT_FACTOR(results.totalTime, g_Baselines[i].total), results.collisionHits, results.collisionTests);
-		Msg("%.2f ms rays \t[%.2f X] \t%.2f ms boxes [%.2f X]\n", 
-			results.rayTime, IMPROVEMENT_FACTOR(results.rayTime, g_Baselines[i].ray), 
+		Msg("%.2f ms rays \t[%.2f X] \t%.2f ms boxes [%.2f X]\n",
+			results.rayTime, IMPROVEMENT_FACTOR(results.rayTime, g_Baselines[i].ray),
 			results.boxTime, IMPROVEMENT_FACTOR(results.boxTime, g_Baselines[i].box));
 		totalTime += results.totalTime;
 	}
@@ -401,6 +401,3 @@ int CBenchmarkApp::Main()
 	Msg("\n%.2fs total \t[%.2f X]!\n", totalTime, IMPROVEMENT_FACTOR(totalTime, g_TotalBaseline) );
 	return 0;
 }
-
-
-

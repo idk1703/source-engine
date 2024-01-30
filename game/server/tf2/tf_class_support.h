@@ -14,7 +14,7 @@
 #include "TFClassData_Shared.h"
 
 //=====================================================================
-// Support 
+// Support
 class CPlayerClassSupport : public CPlayerClass
 {
 public:

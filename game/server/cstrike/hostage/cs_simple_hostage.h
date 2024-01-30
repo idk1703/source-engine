@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -48,7 +48,7 @@ public:
 
 	virtual void Event_Killed( const CTakeDamageInfo &info );
 	virtual void Touch( CBaseEntity *other );				// in contact with "other"
-	
+
 	void HostageRescueZoneTouch( inputdata_t &inputdata );	// invoked when hostage touches a rescue zone
 
 	void HostageThink( void );								// periodic update to initiate behaviors

@@ -1,6 +1,6 @@
 //===== Copyright 1996-2005, Valve Corporation, All rights reserved. ======//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -95,7 +95,7 @@ ICommandLine *CommandLine()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCommandLine::CCommandLine( void )
 {
@@ -104,7 +104,7 @@ CCommandLine::CCommandLine( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCommandLine::~CCommandLine( void )
 {
@@ -161,7 +161,7 @@ void CCommandLine::LoadParametersFromFile( const char *&pSrc, char *&pDst, intp 
 				c = ' ';
 
 			*pDst++ = c;
-			
+
 			// Don't go past the end, and allow for our terminating space character AND a terminating null character.
 			if ( (pDst - pDestStart) >= (maxDestLen-2) )
 				break;
@@ -169,7 +169,7 @@ void CCommandLine::LoadParametersFromFile( const char *&pSrc, char *&pDst, intp 
 			// Get the next character, if there are more
 			c = (char)fgetc( fp );
 		}
-	
+
 		// Add a terminating space character
 		*pDst++ = ' ';
 
@@ -251,8 +251,8 @@ void CCommandLine::CreateCmdLine( const char *commandline )
 				bInQuotes = false;
 				continue;
 			}
-		}	
-		
+		}
+
 		// Don't go past the end.
 		if ( (pDst - szFull) >= (sizeof( szFull ) - 1) )
 			break;
@@ -282,7 +282,7 @@ static char * _stristr( char * pStr, const char * pSearch )
 	AssertValidStringPtr(pStr);
 	AssertValidStringPtr(pSearch);
 
-	if (!pStr || !pSearch) 
+	if (!pStr || !pSearch)
 		return 0;
 
 	char* pLetter = pStr;
@@ -323,7 +323,7 @@ static char * _stristr( char * pStr, const char * pSearch )
 
 //-----------------------------------------------------------------------------
 // Purpose: Remove specified string ( and any args attached to it ) from command line
-// Input  : *pszParm - 
+// Input  : *pszParm -
 //-----------------------------------------------------------------------------
 void CCommandLine::RemoveParm( const char *pszParm )
 {
@@ -344,12 +344,12 @@ void CCommandLine::RemoveParm( const char *pszParm )
 		found = _stristr( p, pszParm );
 		if ( !found )
 			break;
-			
+
 		pnextparam = found + 1;
 		bool bHadQuote = false;
 		if ( found > m_pszCmdLine && found[-1] == '\"' )
 			bHadQuote = true;
-		
+
 		while ( pnextparam && *pnextparam && (*pnextparam != ' ') && (*pnextparam != '\"') )
 			pnextparam++;
 
@@ -389,7 +389,7 @@ void CCommandLine::RemoveParm( const char *pszParm )
 		intp len = strlen( m_pszCmdLine );
 		if ( len == 0 || m_pszCmdLine[ len - 1 ] != ' ' )
 			break;
-		
+
 		m_pszCmdLine[len - 1] = '\0';
 	}
 
@@ -399,8 +399,8 @@ void CCommandLine::RemoveParm( const char *pszParm )
 
 //-----------------------------------------------------------------------------
 // Purpose: Append parameter and argument values to command line
-// Input  : *pszParm - 
-//			*pszValues - 
+// Input  : *pszParm -
+//			*pszValues -
 //-----------------------------------------------------------------------------
 void CCommandLine::AppendParm( const char *pszParm, const char *pszValues )
 {
@@ -465,19 +465,19 @@ const char *CCommandLine::GetCmdLine( void ) const
 
 //-----------------------------------------------------------------------------
 // Purpose: Search for the parameter in the current commandline
-// Input  : *psz - 
-//			**ppszValue - 
+// Input  : *psz -
+//			**ppszValue -
 // Output : char
 //-----------------------------------------------------------------------------
 const char *CCommandLine::CheckParm( const char *psz, const char **ppszValue ) const
 {
 	if ( ppszValue )
 		*ppszValue = NULL;
-	
+
 	int i = FindParm( psz );
 	if ( i == 0 )
 		return NULL;
-	
+
 	if ( ppszValue )
 	{
 		if ( (i+1) >= m_nParmCount )
@@ -489,7 +489,7 @@ const char *CCommandLine::CheckParm( const char *psz, const char **ppszValue ) c
 			*ppszValue = m_ppParms[i+1];
 		}
 	}
-	
+
 	return m_ppParms[i];
 }
 

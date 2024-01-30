@@ -11,7 +11,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CEnvScreenOverlay : public CPointEntity
 {
@@ -32,7 +32,7 @@ public:
 	void	InputSwitchOverlay( inputdata_t &inputdata );
 
 	void	SetActive( bool bActive ) { m_bIsActive = bActive; }
-	
+
 protected:
 	CNetworkArray( string_t, m_iszOverlayNames, MAX_SCREEN_OVERLAYS );
 	CNetworkArray( float, m_flOverlayTimes, MAX_SCREEN_OVERLAYS );
@@ -69,7 +69,7 @@ BEGIN_DATADESC( CEnvScreenOverlay )
 	DEFINE_KEYFIELD( m_flOverlayTimes[7], FIELD_FLOAT, "OverlayTime8" ),
 	DEFINE_KEYFIELD( m_flOverlayTimes[8], FIELD_FLOAT, "OverlayTime9" ),
 	DEFINE_KEYFIELD( m_flOverlayTimes[9], FIELD_FLOAT, "OverlayTime10" ),
-	
+
 	// Class CEnvScreenOverlay:
 	DEFINE_FIELD( m_iDesiredOverlay, FIELD_INTEGER ),
 	DEFINE_FIELD( m_flStartTime, FIELD_TIME ),
@@ -96,7 +96,7 @@ IMPLEMENT_SERVERCLASS_ST( CEnvScreenOverlay, DT_EnvScreenOverlay )
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEnvScreenOverlay::CEnvScreenOverlay( void )
 {
@@ -106,7 +106,7 @@ CEnvScreenOverlay::CEnvScreenOverlay( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvScreenOverlay::Spawn( void )
 {
@@ -114,7 +114,7 @@ void CEnvScreenOverlay::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvScreenOverlay::Precache( void )
 {
@@ -128,8 +128,8 @@ void CEnvScreenOverlay::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CEnvScreenOverlay::InputStartOverlay( inputdata_t &inputdata )
 {
@@ -184,7 +184,7 @@ void CEnvScreenOverlay::InputStopOverlay( inputdata_t &inputdata )
 	}
 
 	m_flStartTime = -1;
-	m_bIsActive = false; 
+	m_bIsActive = false;
 }
 
 // ====================================================================================
@@ -243,7 +243,7 @@ void CEnvScreenEffect::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvScreenEffect::InputStartEffect( inputdata_t &inputdata )
 {
@@ -256,7 +256,7 @@ void CEnvScreenEffect::InputStartEffect( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvScreenEffect::InputStopEffect( inputdata_t &inputdata )
 {

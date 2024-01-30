@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -55,7 +55,7 @@ public:
 	virtual void	Update();
 	virtual void	CreateMove( float flInputSampleTime, CUserCmd *cmd );
 	virtual bool	ShouldDrawViewModel( void );
-		
+
 	virtual vgui::Panel *GetMinimapParent( void );
 
 	ClientModeTFNormal();

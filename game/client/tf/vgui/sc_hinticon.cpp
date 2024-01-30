@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ CSCHintIcon::CSCHintIcon( vgui::Panel *parent, const char* panelName ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSCHintIcon::ApplySettings( KeyValues *inResourceData )
 {
@@ -45,7 +45,7 @@ void CSCHintIcon::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSCHintIcon::ApplySchemeSettings( IScheme *pScheme )
 {

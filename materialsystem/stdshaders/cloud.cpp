@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -52,7 +52,7 @@ BEGIN_SHADER( Cloud,
 				pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
 				pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );
 
-				pShaderShadow->DrawFlags( SHADER_DRAW_POSITION | 
+				pShaderShadow->DrawFlags( SHADER_DRAW_POSITION |
 					SHADER_DRAW_TEXCOORD0 | SHADER_DRAW_TEXCOORD1 );
 				DefaultFog();
 			}

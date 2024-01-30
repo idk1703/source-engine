@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -428,4 +428,3 @@ void LayoutBackgroundPanel( EditablePanel *pWindow )
 }
 
 //-----------------------------------------------------------------------------
-

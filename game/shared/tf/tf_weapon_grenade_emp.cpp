@@ -22,7 +22,7 @@
 #endif
 
 #define GRENADE_EMP_TIMER	3.0f //Seconds
-#define	GRENADE_EMP_LEADIN	2.0f 
+#define	GRENADE_EMP_LEADIN	2.0f
 
 //=============================================================================
 //
@@ -54,10 +54,10 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj *CTFGrenadeEmp::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, 
+CTFWeaponBaseGrenadeProj *CTFGrenadeEmp::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel,
 							        AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
 {
-	return CTFGrenadeEmpProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse, 
+	return CTFGrenadeEmpProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse,
 		                                pPlayer, GetTFWpnData(), flTime );
 }
 
@@ -81,14 +81,14 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGrenadeEmpProjectile* CTFGrenadeEmpProjectile::Create( const Vector &position, const QAngle &angles, 
-																const Vector &velocity, const AngularImpulse &angVelocity, 
+CTFGrenadeEmpProjectile* CTFGrenadeEmpProjectile::Create( const Vector &position, const QAngle &angles,
+																const Vector &velocity, const AngularImpulse &angVelocity,
 																CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags )
 {
 	CTFGrenadeEmpProjectile *pGrenade = static_cast<CTFGrenadeEmpProjectile*>( CTFWeaponBaseGrenadeProj::Create( "tf_weapon_grenade_emp_projectile", position, angles, velocity, angVelocity, pOwner, weaponInfo, timer, iFlags ) );
 	if ( pGrenade )
 	{
-		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );	
+		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );
 	}
 
 	return pGrenade;
@@ -153,7 +153,7 @@ void CTFGrenadeEmpProjectile::Detonate()
 		DrawRadius( flRadius );
 	}
 
-	// Apply some amount of EMP damage to every entity in the radius. They will calculate 
+	// Apply some amount of EMP damage to every entity in the radius. They will calculate
 	// their own damage based on how much ammo they have or some other wacky calculation.
 
 	CTakeDamageInfo info( this, GetThrower(), vec3_origin, GetAbsOrigin(), flDamage, DMG_EMP | DMG_PREVENT_PHYSICS_FORCE );

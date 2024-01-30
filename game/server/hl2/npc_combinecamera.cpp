@@ -105,13 +105,13 @@ enum eyeState_t
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CNPC_CombineCamera : public CAI_BaseNPC
 {
 	DECLARE_CLASS(CNPC_CombineCamera, CAI_BaseNPC);
 public:
-	
+
 	CNPC_CombineCamera();
 	~CNPC_CombineCamera();
 
@@ -133,17 +133,17 @@ public:
 	void InputSetIdle(inputdata_t &inputdata);
 
 	void DrawDebugGeometryOverlays(void);
-	
+
 	float MaxYawSpeed();
 
 	int OnTakeDamage(const CTakeDamageInfo &inputInfo);
 
 	Class_T Classify() { return (m_bEnabled) ? CLASS_MILITARY : CLASS_NONE; }
-	
+
 	bool IsValidEnemy( CBaseEntity *pEnemy );
 	bool FVisible(CBaseEntity *pEntity, int traceMask = MASK_BLOCKLOS, CBaseEntity **ppBlocker = NULL);
 
-	Vector EyeOffset(Activity nActivity) 
+	Vector EyeOffset(Activity nActivity)
 	{
 		Vector vecEyeOffset(0,0,-64);
 		GetEyePosition(GetModelPtr(), vecEyeOffset);
@@ -164,7 +164,7 @@ protected:
 	bool PreThink(cameraState_e state);
 	void SetEyeState(eyeState_t state);
 	void MaintainEye();
-	void Ping();	
+	void Ping();
 	void Toggle();
 	void Enable();
 	void Disable();
@@ -187,7 +187,7 @@ protected:
 
 	string_t m_sDefaultTarget;
 
-	EHANDLE	m_hEnemyTarget;			// Entity we acquired as an enemy.	
+	EHANDLE	m_hEnemyTarget;			// Entity we acquired as an enemy.
 
 	float m_flPingTime;
 	float m_flClickTime;			// Time to take next picture while angry.
@@ -263,7 +263,7 @@ CNPC_CombineCamera::CNPC_CombineCamera()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CNPC_CombineCamera::~CNPC_CombineCamera()
 {
@@ -321,7 +321,7 @@ void CNPC_CombineCamera::Spawn()
 	m_takedamage	= DAMAGE_YES;
 	m_iHealth		= 50;
 	m_bloodColor	= BLOOD_COLOR_MECH;
-	
+
 	SetSolid(SOLID_BBOX);
 	AddSolidFlags(FSOLID_NOT_STANDABLE);
 
@@ -380,7 +380,7 @@ void CNPC_CombineCamera::Spawn()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseEntity *CNPC_CombineCamera::GetTarget()
 {
@@ -388,7 +388,7 @@ CBaseEntity *CNPC_CombineCamera::GetTarget()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CNPC_CombineCamera::OnTakeDamage(const CTakeDamageInfo &inputInfo)
 {
@@ -471,7 +471,7 @@ bool CNPC_CombineCamera::UpdateFacing()
 {
 	bool  bMoved = false;
 	matrix3x4_t localToWorld;
-	
+
 	GetAttachment(LookupAttachment("eyes"), localToWorld);
 
 	Vector vecGoalDir;
@@ -485,7 +485,7 @@ bool CNPC_CombineCamera::UpdateFacing()
 
 	// Update pitch
 	float flDiff = AngleNormalize(UTIL_ApproachAngle( vecGoalLocalAngles.x, 0.0, 0.1f * MaxYawSpeed()));
-	
+
 	int iPose = LookupPoseParameter(COMBINE_CAMERA_BC_PITCH);
 	SetPoseParameter(iPose, GetPoseParameter(iPose) + (flDiff / 1.5f));
 
@@ -519,7 +519,7 @@ bool CNPC_CombineCamera::UpdateFacing()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Vector CNPC_CombineCamera::HeadDirection2D()
 {
@@ -534,8 +534,8 @@ Vector CNPC_CombineCamera::HeadDirection2D()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
+// Purpose:
+// Input  : *pEntity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_CombineCamera::FVisible(CBaseEntity *pEntity, int traceMask, CBaseEntity **ppBlocker)
@@ -604,7 +604,7 @@ CBaseEntity *CNPC_CombineCamera::MaintainEnemy()
 			}
 		}
 	}
-	
+
 	return NULL;
 }
 
@@ -689,8 +689,8 @@ void CNPC_CombineCamera::ActiveThink()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pTarget - 
+// Purpose:
+// Input  : pTarget -
 //-----------------------------------------------------------------------------
 void CNPC_CombineCamera::TrackTarget( CBaseEntity *pTarget )
 {
@@ -700,7 +700,7 @@ void CNPC_CombineCamera::TrackTarget( CBaseEntity *pTarget )
 	// Calculate direction to target
 	Vector vecMid = EyePosition();
 	Vector vecMidTarget = pTarget->BodyTarget(vecMid);
-	Vector vecDirToTarget = vecMidTarget - vecMid;	
+	Vector vecDirToTarget = vecMidTarget - vecMid;
 
 	// We want to look at the target's eyes so we don't jitter
 	Vector vecDirToTargetEyes = pTarget->WorldSpaceCenter() - vecMid;
@@ -723,9 +723,9 @@ void CNPC_CombineCamera::TrackTarget( CBaseEntity *pTarget )
 
 	Vector vecMuzzle, vecMuzzleDir;
 	QAngle vecMuzzleAng;
-	
+
 	GetAttachment("eyes", vecMuzzle, &vecMuzzleDir);
-	
+
 	SetIdealActivity((Activity) ACT_COMBINE_CAMERA_OPEN_IDLE);
 
 	m_vecGoalAngles.y = vecAnglesToTarget.y;
@@ -737,7 +737,7 @@ void CNPC_CombineCamera::TrackTarget( CBaseEntity *pTarget )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineCamera::MaintainEye()
 {
@@ -962,7 +962,7 @@ void CNPC_CombineCamera::Toggle()
 	{
 		Disable();
 	}
-	else 
+	else
 	{
 		Enable();
 	}
@@ -1044,7 +1044,7 @@ void CNPC_CombineCamera::SetAngry(bool bAngry)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineCamera::InputSetAngry(inputdata_t &inputdata)
 {
@@ -1053,7 +1053,7 @@ void CNPC_CombineCamera::InputSetAngry(inputdata_t &inputdata)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineCamera::InputSetIdle(inputdata_t &inputdata)
 {
@@ -1061,7 +1061,7 @@ void CNPC_CombineCamera::InputSetIdle(inputdata_t &inputdata)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineCamera::DeathThink()
 {
@@ -1081,11 +1081,11 @@ void CNPC_CombineCamera::DeathThink()
 		// lots of smoke
 		Vector pos;
 		CollisionProp()->RandomPointInBounds( vec3_origin, Vector( 1, 1, 1 ), &pos );
-		
+
 		CBroadcastRecipientFilter filter;
-		
+
 		te->Smoke(filter, 0.0, &pos, g_sModelIndexSmoke, 2.5, 10);
-		
+
 		g_pEffects->Sparks(pos);
 
 		SetActivity((Activity) ACT_COMBINE_CAMERA_CLOSE);
@@ -1104,8 +1104,8 @@ void CNPC_CombineCamera::DeathThink()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : height - 
+// Purpose:
+// Input  : height -
 //-----------------------------------------------------------------------------
 void CNPC_CombineCamera::SetHeight(float height)
 {
@@ -1139,11 +1139,11 @@ void CNPC_CombineCamera::SetHeight(float height)
 //-----------------------------------------------------------------------------
 // Purpose: Draw any debug text overlays
 //-----------------------------------------------------------------------------
-int CNPC_CombineCamera::DrawDebugTextOverlays(void) 
+int CNPC_CombineCamera::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 
@@ -1155,7 +1155,7 @@ int CNPC_CombineCamera::DrawDebugTextOverlays(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineCamera::DrawDebugGeometryOverlays(void)
 {

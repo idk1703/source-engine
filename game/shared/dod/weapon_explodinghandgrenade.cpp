@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -9,7 +9,7 @@
 
 #ifdef CLIENT_DLL
 	#define CWeaponExplodingHandGrenade C_WeaponExplodingHandGrenade
-#else 
+#else
 	#include "dod_handgrenade.h"	//the thing that we throw
 #endif
 

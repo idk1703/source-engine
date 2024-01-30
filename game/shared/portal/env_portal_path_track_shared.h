@@ -20,14 +20,14 @@ enum
 };
 
 
-#ifndef CLIENT_DLL 
+#ifndef CLIENT_DLL
 
 #include "pathtrack.h"
 
 class CBeam;
 
 //==============================================================
-// 
+//
 //==============================================================
 class CEnvPortalPathTrack : public CPathTrack
 {
@@ -57,7 +57,7 @@ public:
 	void	ActivateEndpointFX ( void );	//Activate all of the endpoint's glowy bits that are flagged to display
 
 	void	DeactivateTrackFX ( void );		//Activate all of the track's beams (at least the ones that are flagged to display)
-	void	DeactivateEndpointFX ( void );	//Activate all of the endpoint's glowy bits that are flagged to display 
+	void	DeactivateEndpointFX ( void );	//Activate all of the endpoint's glowy bits that are flagged to display
 
 protected:
 	CNetworkVar( bool, m_bTrackActive );

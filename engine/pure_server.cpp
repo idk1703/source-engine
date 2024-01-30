@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -134,7 +134,7 @@ void CPureServerWhitelist::Load( int iPureMode )
 
 	// Hardcoded rules last
 	AddHardcodedFileCommands();
-}		
+}
 
 bool operator==( const PureServerPublicKey_t &a, const PureServerPublicKey_t &b )
 {
@@ -202,7 +202,7 @@ bool CPureServerWhitelist::LoadCommandsFromKeyValues( KeyValues *kv )
 		const char *pModifiers = pCurItem->GetString();
 		if ( !pKeyValue || !pModifiers )
 			continue;
-	
+
 		Q_strncpy( szPathName, pKeyValue, sizeof(szPathName) );
 		Q_FixSlashes( szPathName );
 		const char *pValue = szPathName;
@@ -249,8 +249,8 @@ bool CPureServerWhitelist::LoadCommandsFromKeyValues( KeyValues *kv )
 
 		// Setup a new CCommand to hold this command.
 		AddFileCommand( pValue, eFileClass, m_LoadCounter++ );
-	}	
-	
+	}
+
 	return true;
 }
 
@@ -269,7 +269,7 @@ void CPureServerWhitelist::AddFileCommand( const char *pszFilePath, EPureServerF
 	pCommand->m_LoadOrder = nLoadOrder;
 	pCommand->m_eFileClass = eFileClass;
 
-	// Figure out if they're referencing a file, a recursive directory, or a nonrecursive directory.		
+	// Figure out if they're referencing a file, a recursive directory, or a nonrecursive directory.
 	CUtlDict<CCommand*,int> *pList;
 	const char *pEndPart = V_UnqualifiedFileName( pszFilePath );
 	if ( Q_stricmp( pEndPart, "..." ) == 0 )
@@ -278,7 +278,7 @@ void CPureServerWhitelist::AddFileCommand( const char *pszFilePath, EPureServerF
 		pList = &m_NonRecursiveDirCommands;
 	else
 		pList = &m_FileCommands;
-		
+
 	// If it's a directory command, get rid of the *.* or ...
 	char filePath[MAX_PATH];
 	if ( pList == &m_RecursiveDirCommands || pList == &m_NonRecursiveDirCommands )
@@ -337,7 +337,7 @@ void CPureServerWhitelist::UpdateCommandStats( CUtlDict<CPureServerWhitelist::CC
 	for ( int i=commands.First(); i != commands.InvalidIndex(); i=commands.Next( i ) )
 	{
 		*pHighest = max( *pHighest, (int)commands[i]->m_LoadOrder );
-		
+
 		int len = V_strlen( commands.GetElementName( i ) );
 		*pLongestPathName = max( *pLongestPathName, len );
 	}
@@ -384,7 +384,7 @@ void CPureServerWhitelist::PrintCommand( const char *pFileSpec, const char *pExt
 			buf += "check_crc";
 			break;
 	}
-	
+
 	Msg( "%s\n", buf.String() );
 }
 
@@ -406,7 +406,7 @@ void CPureServerWhitelist::PrintWhitelistContents()
 	UpdateCommandStats( m_FileCommands, &highestLoadOrder, &longestPathName );
 	UpdateCommandStats( m_RecursiveDirCommands, &highestLoadOrder, &longestPathName );
 	UpdateCommandStats( m_NonRecursiveDirCommands, &highestLoadOrder, &longestPathName );
-	
+
 	for ( int iLoadOrder=0; iLoadOrder <= highestLoadOrder; iLoadOrder++ )
 	{
 		// Check regular file commands.
@@ -549,7 +549,7 @@ void CPureServerWhitelist::InternalCacheFileCRCs( CUtlDict<CCommand*,int> &theLi
 void CPureServerWhitelist::DecodeCommandList( CUtlDict<CPureServerWhitelist::CCommand*,int> &theList, CUtlBuffer &buf, uint32 nFormatVersion )
 {
 	int nCommands = buf.GetInt();
-	
+
 	for ( int i=0; i < nCommands; i++ )
 	{
 		CPureServerWhitelist::CCommand *pCommand = new CPureServerWhitelist::CCommand;
@@ -571,7 +571,7 @@ void CPureServerWhitelist::DecodeCommandList( CUtlDict<CPureServerWhitelist::CCo
 		char str[MAX_PATH];
 		buf.GetString( str );
 		V_FixSlashes( str );
-		
+
 		theList.Insert( str, pCommand );
 	}
 }
@@ -581,7 +581,7 @@ CPureServerWhitelist::CCommand* CPureServerWhitelist::GetBestEntry( const char *
 {
 	// NOTE: Since this is a user-specified file, we don't have the added complexity of path IDs in here.
 	// So when the filesystem asks if a file is in the whitelist, we just ignore the path ID.
-	
+
 	// Make sure we have a relative pathname with fixed slashes..
 	char relativeFilename[MAX_PATH];
 	V_strncpy( relativeFilename, pFilename, sizeof( relativeFilename ) );
@@ -590,16 +590,16 @@ CPureServerWhitelist::CCommand* CPureServerWhitelist::GetBestEntry( const char *
 	if ( !V_IsAbsolutePath( relativeFilename ) || m_pFileSystem->FullPathToRelativePath( pFilename, relativeFilename, sizeof( relativeFilename ) ) )
 	{
 		V_FixSlashes( relativeFilename );
-		
+
 		// Get the directory this thing is in.
 		char relativeDir[MAX_PATH];
 		if ( !V_ExtractFilePath( relativeFilename, relativeDir, sizeof( relativeDir ) )	)
 			relativeDir[0] = 0;
-		
-		
+
+
 		// Check each of our dictionaries to see if there is an entry for this thing.
 		CCommand *pBestEntry = NULL;
-		
+
 		pBestEntry = CheckEntry( m_FileCommands, relativeFilename, pBestEntry );
 		if ( relativeDir[0] != 0 )
 		{
@@ -613,24 +613,24 @@ CPureServerWhitelist::CCommand* CPureServerWhitelist::GetBestEntry( const char *
 					break;
 			}
 		}
-			
+
 		return pBestEntry;
 	}
-	
+
 	// Either we couldn't find an entry, or they specified an absolute path that we could not convert to a relative path.
 	return NULL;
 }
 
 
-CPureServerWhitelist::CCommand* CPureServerWhitelist::CheckEntry( 
-	CUtlDict<CPureServerWhitelist::CCommand*,int> &dict, 
-	const char *pEntryName, 
+CPureServerWhitelist::CCommand* CPureServerWhitelist::CheckEntry(
+	CUtlDict<CPureServerWhitelist::CCommand*,int> &dict,
+	const char *pEntryName,
 	CPureServerWhitelist::CCommand *pBestEntry )
 {
 	int i = dict.Find( pEntryName );
 	if ( i != dict.InvalidIndex() && (!pBestEntry || dict[i]->m_LoadOrder > pBestEntry->m_LoadOrder) )
 		pBestEntry = dict[i];
-	
+
 	return pBestEntry;
 }
 
@@ -758,18 +758,18 @@ void FileRenderHelper( USERID_t userID, const char *pchMessage, const char *pchP
 
 	if ( pFileHash->m_PackFileID )
 	{
-		Q_snprintf( rgch, 256, "Pure server: file: %s\\%s ( %d %d %8.8x %6.6x ) %s : %s : %s\n", 
+		Q_snprintf( rgch, 256, "Pure server: file: %s\\%s ( %d %d %8.8x %6.6x ) %s : %s : %s\n",
 			pchPath, pchFileName,
 			pFileHash->m_PackFileID, pFileHash->m_nPackFileNumber, nFileFraction, pFileHash->m_cbFileLen,
-			pchMessage, 
+			pchMessage,
 			hex, hex2 );
 	}
 	else
 	{
-		Q_snprintf( rgch, 256, "Pure server: file: %s\\%s ( %d %d %x ) %s : %s : %s\n", 
+		Q_snprintf( rgch, 256, "Pure server: file: %s\\%s ( %d %d %x ) %s : %s : %s\n",
 			pchPath, pchFileName,
 			pFileHash->m_eFileHashType, pFileHash->m_cbFileLen, pFileHash->m_eFileHashType ? pFileHash->m_crcIOSequence : 0,
-			pchMessage, 
+			pchMessage,
 			hex, hex2 );
 	}
 	if ( userID.idtype != 0 )
@@ -795,7 +795,7 @@ bool CPureFileTracker::DoesFileMatch( const char *pPathID, const char *pRelative
 //
 //	// The clients must send us all files. We decide if it is whitelisted or not
 //	// That way the clients can not hide modified files in a whitelisted directory
-//	if ( pFileHash->m_PackFileID == 0 && 
+//	if ( pFileHash->m_PackFileID == 0 &&
 //		sv.GetPureServerWhitelist()->GetFileClass( pRelativeFilename ) != ePureServerFileClass_CheckHash )
 //	{
 //
@@ -850,7 +850,7 @@ bool CPureFileTracker::DoesFileMatch( const char *pPathID, const char *pRelative
 //		return false;
 //	}
 //	// if the user sent us a full file hash, but we dont have one, hash it now
-//	if ( pFileHash->m_eFileHashType == FileHash_t::k_EFileHashTypeEntireFile && 
+//	if ( pFileHash->m_eFileHashType == FileHash_t::k_EFileHashTypeEntireFile &&
 //		( eStatus != k_eFileCRCStatus_GotCRC || filehashLocal.m_eFileHashType != FileHash_t::k_EFileHashTypeEntireFile ) )
 //	{
 //		// lets actually read the file so we get a complete file hash
@@ -1063,7 +1063,7 @@ int CPureFileTracker::ListUserFiles( bool bListAll, const char *pchFilenameFind 
 int CPureFileTracker::ListAllTrackedFiles( bool bListAll, const char *pchFilenameFind, int nFileFractionMin, int nFileFractionMax )
 {
 	g_pFileSystem->MarkAllCRCsUnverified();
-	
+
 	int cTotal = 0;
 	int cTotalMatch = 0;
 	int count = 0;
@@ -1124,7 +1124,7 @@ void CC_PureServerListTrackedFiles(const CCommand &args)
 	//	return;
 	int nFileFractionMin = args.ArgC() >= 3 ? Q_atoi(args[2]) : 0;
 	int nFileFractionMax = args.ArgC() >= 4 ? Q_atoi(args[3]) : nFileFractionMin;
-	if ( nFileFractionMax < 0 ) 
+	if ( nFileFractionMax < 0 )
 		nFileFractionMax = 0x7FFFFFFF;
 	g_PureFileTracker.ListAllTrackedFiles( args.ArgC() <= 1, args.ArgC() >= 2 ? args[1] : NULL, nFileFractionMin, nFileFractionMax );
 }

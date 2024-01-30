@@ -265,7 +265,7 @@ void CLoadoutItemOptionsPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-void CLoadoutItemOptionsPanel::PerformLayout( void ) 
+void CLoadoutItemOptionsPanel::PerformLayout( void )
 {
 	BaseClass::PerformLayout();
 	m_pHatParticleSlider->SetTickColor( Color( 235, 226, 202, 255 ) ); // tanlight
@@ -343,15 +343,15 @@ void CLoadoutItemOptionsPanel::SetItemSlot( loadout_positions_t eItemSlot, int i
 	default:
 		break;
 	}
-	
+
 	if ( pszConVarName )
 	{
 		m_pHatParticleSlider->SetupSlider( -8, 8, pszConVarName, false );
 	}
-	
+
 	m_pHatParticleSlider->SetTickColor( Color( 235, 226, 202, 255 ) ); // tanlight
 	m_pHatParticleSlider->SetTickCaptions( "", "" );
-	
+
 	UpdateItemOptionsUI();
 }
 
@@ -444,15 +444,15 @@ void CLoadoutItemOptionsPanel::AddControlsSetStyle( void ) const
 
 //-----------------------------------------------------------------------------
 CEconItemView* CLoadoutItemOptionsPanel::GetItem( void ) const
-{ 
+{
 	return TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, m_eItemSlot );
 }
 
 CClassLoadoutPanel *g_pClassLoadoutPanel = NULL;
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CClassLoadoutPanel::CClassLoadoutPanel( vgui::Panel *parent ) 
+CClassLoadoutPanel::CClassLoadoutPanel( vgui::Panel *parent )
 	: CBaseLoadoutPanel( parent, "class_loadout_panel" )
 	, m_pItemOptionPanelKVs( NULL )
 {
@@ -469,7 +469,7 @@ CClassLoadoutPanel::CClassLoadoutPanel( vgui::Panel *parent )
 	m_pPresetsExplanationPopup = NULL;
 	m_pTauntsExplanationPopup = NULL;
 	m_pBuildablesButton = NULL;
-	
+
 	m_pCharacterLoadoutButton = NULL;
 	m_pTauntLoadoutButton = NULL;
 
@@ -490,7 +490,7 @@ CClassLoadoutPanel::~CClassLoadoutPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -567,9 +567,9 @@ void CClassLoadoutPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::PerformLayout( void ) 
+void CClassLoadoutPanel::PerformLayout( void )
 {
 	BaseClass::PerformLayout();
 
@@ -582,7 +582,7 @@ void CClassLoadoutPanel::PerformLayout( void )
 	if ( m_pTauntHintLabel )
 	{
 		m_pTauntHintLabel->SetVisible( m_bInTauntLoadoutMode );
-		
+
 		const char *key = engine->Key_LookupBinding( "taunt" );
 		if ( !key )
 		{
@@ -612,7 +612,7 @@ void CClassLoadoutPanel::PerformLayout( void )
 	{
 		m_vecItemOptionButtons[i]->SetVisible( false );
 	}
-	
+
 	for ( int i = 0; i < m_pItemModelPanels.Count(); i++ )
 	{
 		// Viewing a class loadout. Layout the buttons & the class image.
@@ -645,7 +645,7 @@ void CClassLoadoutPanel::PerformLayout( void )
 			{
 				iButtonPos--;
 			}
-			
+
 #ifdef STAGING_ONLY
 			// Override for the PDA AddOnSlots
 			if ( i == LOADOUT_POSITION_PDA_ADDON1 )
@@ -678,7 +678,7 @@ void CClassLoadoutPanel::PerformLayout( void )
 			int iColumnHeight = 4;
 			int iColumn = iButtonPos / iColumnHeight;
 			int iYButtonPos = iButtonPos % iColumnHeight;
-			
+
 			int iOffset = iColumn == 0 ? m_iItemXPosOffcenterA : m_iItemXPosOffcenterB + ((iColumn - 1) * 200);
 			int	iXPos = iCenter + iOffset;
 			int	iYPos = m_iItemYPos + (m_iItemYDelta * iYButtonPos);
@@ -691,7 +691,7 @@ void CClassLoadoutPanel::PerformLayout( void )
 				CExButton* pItemOptionsPanel = m_vecItemOptionButtons[iButtonPos];
 				int iButtonWide = m_pItemModelPanels[i]->GetWide();
 				int iMyWide = pItemOptionsPanel->GetWide();
-				int iOptionsXPos = iColumn == 0 
+				int iOptionsXPos = iColumn == 0
 								 ? iXPos + iButtonWide - iMyWide
 								 : iXPos;
 				pItemOptionsPanel->SetPos( iOptionsXPos, iYPos );
@@ -716,7 +716,7 @@ void CClassLoadoutPanel::PerformLayout( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::OnKeyCodePressed( vgui::KeyCode code )
 {
@@ -728,29 +728,29 @@ void CClassLoadoutPanel::OnKeyCodePressed( vgui::KeyCode code )
 
 	ButtonCode_t nButtonCode = GetBaseButtonCode( code );
 
-	if (nButtonCode == KEY_XBUTTON_LEFT || 
+	if (nButtonCode == KEY_XBUTTON_LEFT ||
 		nButtonCode == KEY_XSTICK1_LEFT ||
 		nButtonCode == KEY_XSTICK2_LEFT ||
 		nButtonCode == STEAMCONTROLLER_DPAD_LEFT ||
 		code == KEY_LEFT ||
-		nButtonCode == KEY_XBUTTON_RIGHT || 
+		nButtonCode == KEY_XBUTTON_RIGHT ||
 		nButtonCode == KEY_XSTICK1_RIGHT ||
 		nButtonCode == KEY_XSTICK2_RIGHT ||
 		nButtonCode == STEAMCONTROLLER_DPAD_RIGHT ||
 		code == KEY_RIGHT ||
-		nButtonCode == KEY_XBUTTON_UP || 
+		nButtonCode == KEY_XBUTTON_UP ||
 		nButtonCode == KEY_XSTICK1_UP ||
 		nButtonCode == KEY_XSTICK2_UP ||
 		nButtonCode == STEAMCONTROLLER_DPAD_UP ||
 		code == KEY_UP ||
-		nButtonCode == KEY_XBUTTON_DOWN || 
+		nButtonCode == KEY_XBUTTON_DOWN ||
 		nButtonCode == KEY_XSTICK1_DOWN ||
 		nButtonCode == KEY_XSTICK2_DOWN ||
 		nButtonCode == STEAMCONTROLLER_DPAD_DOWN ||
 		code == KEY_DOWN )
 	{
-		// just eat all navigation keys so we don't 
-		// end up with undesirable navigation behavior bubbling from 
+		// just eat all navigation keys so we don't
+		// end up with undesirable navigation behavior bubbling from
 		// one item model panel to another
 	}
 	else if( nButtonCode == KEY_XBUTTON_A || code == KEY_ENTER || nButtonCode == STEAMCONTROLLER_A )
@@ -770,7 +770,7 @@ void CClassLoadoutPanel::OnKeyCodePressed( vgui::KeyCode code )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::OnNavigateTo( const char* panelName )
 {
@@ -784,7 +784,7 @@ void CClassLoadoutPanel::OnNavigateTo( const char* panelName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::OnNavigateFrom( const char* panelName )
 {
@@ -798,7 +798,7 @@ void CClassLoadoutPanel::OnNavigateFrom( const char* panelName )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::OnShowPanel( bool bVisible, bool bReturningFromArmory )
 {
@@ -845,7 +845,7 @@ void CClassLoadoutPanel::OnShowPanel( bool bVisible, bool bReturningFromArmory )
 	}
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::PostShowPanel( bool bVisible )
 {
@@ -864,7 +864,7 @@ void CClassLoadoutPanel::PostShowPanel( bool bVisible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::SetClass( int iClass )
 {
@@ -877,7 +877,7 @@ void CClassLoadoutPanel::SetClass( int iClass )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::SetTeam( int iTeam )
 {
@@ -886,7 +886,7 @@ void CClassLoadoutPanel::SetTeam( int iTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CClassLoadoutPanel::GetNumRelevantSlots() const
 {
@@ -894,7 +894,7 @@ int CClassLoadoutPanel::GetNumRelevantSlots() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEconItemView *CClassLoadoutPanel::GetItemInSlot( int iSlot )
 {
@@ -907,7 +907,7 @@ CEconItemView *CClassLoadoutPanel::GetItemInSlot( int iSlot )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::FireGameEvent( IGameEvent *event )
 {
@@ -940,7 +940,7 @@ void CClassLoadoutPanel::AddNewItemPanel( int iPanelIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::UpdateModelPanels( void )
 {
@@ -993,7 +993,7 @@ void CClassLoadoutPanel::UpdateModelPanels( void )
 
 	UpdatePassiveAttributes();
 
-	// Now layout again to position our item buttons 
+	// Now layout again to position our item buttons
 	InvalidateLayout();
 
 	if ( m_pItemOptionPanel->IsVisible() )
@@ -1003,7 +1003,7 @@ void CClassLoadoutPanel::UpdateModelPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::OnItemPanelMouseReleased( vgui::Panel *panel )
 {
@@ -1023,7 +1023,7 @@ void CClassLoadoutPanel::OnItemPanelMouseReleased( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::OnSelectionReturned( KeyValues *data )
 {
@@ -1066,7 +1066,7 @@ void CClassLoadoutPanel::OnSelectionReturned( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::OnCancelSelection( void )
 {
@@ -1084,7 +1084,7 @@ void CClassLoadoutPanel::OnCancelSelection( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::RespawnPlayer()
 {
@@ -1114,7 +1114,7 @@ void CClassLoadoutPanel::ApplyKVsToItemPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::OnClosing( void )
 {
@@ -1134,7 +1134,7 @@ void CClassLoadoutPanel::OnClosing( void )
 extern const char *g_szItemBorders[AE_MAX_TYPES][5];
 extern ConVar cl_showbackpackrarities;
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOver )
 {
@@ -1173,8 +1173,8 @@ void CClassLoadoutPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMo
 				}
 			}
 		}
-		
-		
+
+
 		if ( iRarity == 0 )
 		{
 			if ( bMouseOver || pItemPanel->IsSelected() )
@@ -1220,7 +1220,7 @@ bool CClassLoadoutPanel::AnyOptionsAvailableForItem( const CEconItemView *pItem 
 {
 	if ( !pItem )
 		return false;
-		
+
 	// Styles!
 	if ( pItem->GetStaticData()->GetNumSelectableStyles() > 1 )
 		return true;
@@ -1235,7 +1235,7 @@ bool CClassLoadoutPanel::AnyOptionsAvailableForItem( const CEconItemView *pItem 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::SetLoadoutPage( classloadoutpage_t loadoutPage )
 {
@@ -1263,7 +1263,7 @@ void CClassLoadoutPanel::SetLoadoutPage( classloadoutpage_t loadoutPage )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::OnCommand( const char *command )
 {
@@ -1323,7 +1323,7 @@ void CClassLoadoutPanel::OnCommand( const char *command )
 				// It will send us a message to change the item the player model is holding
 				// and we need this to be updated for that.
 				m_iCurrentSlotIndex = iSlot;
-				
+
 
 				// Did they just toggle?
 				if ( m_pItemOptionPanel->GetItemSlot() == iSlot )
@@ -1362,7 +1362,7 @@ void CClassLoadoutPanel::OnMessage( const KeyValues* pParams, vgui::VPANEL hFrom
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct passive_attrib_to_print_t
 {
@@ -1371,7 +1371,7 @@ struct passive_attrib_to_print_t
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CAttributeIterator_AddPassiveAttribsToPassiveList : public CEconItemSpecificAttributeIterator
 {
@@ -1504,7 +1504,7 @@ void CClassLoadoutPanel::UpdatePassiveAttributes( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::AddAttribPassiveText( const CEconAttributeDescription& AttrDesc, INOUT_Z_CAP(iNumPassiveChars) wchar_t *out_wszPassiveDesc, int iNumPassiveChars )
 {
@@ -1525,7 +1525,7 @@ void CClassLoadoutPanel::AddAttribPassiveText( const CEconAttributeDescription& 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::UpdatePageButtonColor( CExImageButton *pPageButton, bool bIsActive )
 {

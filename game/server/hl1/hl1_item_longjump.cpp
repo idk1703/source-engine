@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,7 +19,7 @@ public:
 	DECLARE_CLASS( CItemLongJump, CHL1Item );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( "models/w_longjump.mdl" );
 		BaseClass::Spawn( );
@@ -51,7 +51,7 @@ public:
 			MessageEnd();
 
 			UTIL_EmitSoundSuit( pHL1Player->edict(), "!HEV_A1" );	// Play the longjump sound UNDONE: Kelly? correct sound?
-			return true;		
+			return true;
 		}
 		return false;
 	}

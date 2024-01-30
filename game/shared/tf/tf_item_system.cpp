@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -10,7 +10,7 @@
 #include "tf_item_inventory.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: Generate the base item for a class's loadout slot 
+// Purpose: Generate the base item for a class's loadout slot
 //-----------------------------------------------------------------------------
 item_definition_index_t CTFItemSystem::GenerateBaseItem( baseitemcriteria_t *pCriteria )
 {

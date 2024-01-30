@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -111,5 +111,3 @@ void VTUNEAPICALL CMResume(void);
 #endif   // __cplusplus
 
 #endif  // _VTUNEAPI_H_
-
-

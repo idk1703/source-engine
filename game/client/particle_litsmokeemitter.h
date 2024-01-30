@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -30,10 +30,10 @@ public:
 	virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
 
 	virtual	void	Init( const char *materialName, Vector sortOrigin );
-	
+
 	// Get the material we were initialized with.
 	PMaterialHandle	GetSmokeMaterial() const;
-	
+
 	// Color values are 0-1.
 	virtual	void	SetDirectionalLight( Vector position, Vector color, float intensity );
 	virtual	void	SetLight( Vector position, Vector color, float intensity );
@@ -59,9 +59,9 @@ public:
 private:
 
 	CLitSmokeEmitter( const CLitSmokeEmitter & ); // not defined, not accessible
-	
+
 private:
-	
+
 	bool m_bInitted;
 	PMaterialHandle m_hSmokeMaterial;
 };

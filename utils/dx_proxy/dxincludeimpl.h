@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -21,7 +21,7 @@ struct DxIncludeImpl : public ID3DXInclude
 		CachedFileData *pFileData = s_incFileCache.Get( pFileName );
 		if ( !pFileData || !pFileData->IsValid() )
 			return E_FAIL;
-		
+
 		*ppData = pFileData->GetDataPtr();
 		*pBytes = pFileData->GetDataLen();
 
@@ -37,7 +37,7 @@ struct DxIncludeImpl : public ID3DXInclude
 		if ( pFullPath && cbFullPath ) strncpy( pFullPath, pFileName, cbFullPath );
 		return Open( IncludeType, pFileName, pParentData, ppData, pBytes );
 	}
-	
+
 	STDMETHOD(Close)(THIS_ LPCVOID pData)
 	{
 		if ( CachedFileData *pFileData = CachedFileData::GetByDataPtr( pData ) )

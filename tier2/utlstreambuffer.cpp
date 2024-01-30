@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -211,7 +211,7 @@ void CUtlStreamBuffer::GrowAllocatedSize( int nSize )
 	{
 		while ( nNewSize < nSize + 1 )
 		{
-			nNewSize += DEFAULT_STREAM_CHUNK_SIZE; 
+			nNewSize += DEFAULT_STREAM_CHUNK_SIZE;
 		}
 		m_Memory.Grow( nNewSize - Size() );
 	}
@@ -302,7 +302,7 @@ int CUtlStreamBuffer::ReadBytesFromFile( int nBytesToRead, int nReadOffset )
 	int nBytesRead = g_pFullFileSystem->Read( pReadPoint, nBytesToRead, m_hFileHandle );
 	if ( nBytesRead != nBytesToRead )
 	{
-		// Since max put is a guess at the start, 
+		// Since max put is a guess at the start,
 		// we need to shrink it based on the actual # read
 		if ( m_nMaxPut > TellGet() + nReadOffset + nBytesRead )
 		{
@@ -329,7 +329,7 @@ bool CUtlStreamBuffer::StreamGetOverflow( int nSize )
 		return false;
 
 	// Shift the unread bytes down
-	// NOTE: Can't use the partial overlap path if we're seeking. We'll 
+	// NOTE: Can't use the partial overlap path if we're seeking. We'll
 	// get negative sizes passed in if we're seeking.
 	int nUnreadBytes;
 	bool bHasPartialOverlap = ( nSize >= 0 ) && ( TellGet() >= m_nOffset ) && ( TellGet() <= m_nOffset + Size() );
@@ -360,7 +360,7 @@ bool CUtlStreamBuffer::StreamGetOverflow( int nSize )
 		return false;
 
 	m_nOffset = TellGet();
-	return ( nBytesRead + nUnreadBytes >= nSize ); 
+	return ( nBytesRead + nUnreadBytes >= nSize );
 }
 
 

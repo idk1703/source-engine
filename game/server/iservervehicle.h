@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -31,7 +31,7 @@ public:
 
 	// Get and set the current driver. Use PassengerRole_t enum in shareddefs.h for adding passengers
 	virtual void			SetPassenger( int nRole, CBaseCombatCharacter *pPassenger ) = 0;
-	
+
 	// Is the player visible while in the vehicle? (this is a constant the vehicle)
 	virtual bool			IsPassengerVisible( int nRole = VEHICLE_ROLE_DRIVER ) = 0;
 
@@ -73,7 +73,7 @@ public:
 	virtual bool			NPC_GetPassengerSeatPositionLocal( CBaseCombatCharacter *pPassenger, Vector *vecResultPos, QAngle *vecResultAngle ) = 0;
 	virtual int				NPC_GetPassengerSeatAttachment( CBaseCombatCharacter *pPassenger ) = 0;
 	virtual bool			NPC_HasAvailableSeat( string_t strRoleName ) = 0;
-	
+
 	virtual const PassengerSeatAnims_t	*NPC_GetPassengerSeatAnims( CBaseCombatCharacter *pPassenger, PassengerSeatAnimType_t nType ) = 0;
 	virtual CBaseCombatCharacter		*NPC_GetPassengerInSeat( int nRoleID, int nSeatID ) = 0;
 
@@ -98,8 +98,8 @@ public:
 	virtual void			NPC_AimSecondaryWeapon( Vector vecTarget ) = 0;
 
 	// Weapon handling
-	virtual void			Weapon_PrimaryRanges( float *flMinRange, float *flMaxRange ) = 0;	
-	virtual void			Weapon_SecondaryRanges( float *flMinRange, float *flMaxRange ) = 0;	
+	virtual void			Weapon_PrimaryRanges( float *flMinRange, float *flMaxRange ) = 0;
+	virtual void			Weapon_SecondaryRanges( float *flMinRange, float *flMaxRange ) = 0;
 	virtual float			Weapon_PrimaryCanFireAt( void ) = 0;	// Return the time at which this vehicle's primary weapon can fire again
 	virtual float			Weapon_SecondaryCanFireAt( void ) = 0;	// Return the time at which this vehicle's secondary weapon can fire again
 
@@ -107,7 +107,7 @@ public:
 	virtual void			ReloadScript() = 0;
 };
 
-// This is an interface to derive from if your class contains an IServerVehicle 
+// This is an interface to derive from if your class contains an IServerVehicle
 // handler (i.e. something derived CBaseServerVehicle.
 abstract_class IDrivableVehicle
 {

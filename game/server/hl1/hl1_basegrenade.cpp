@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,7 +15,7 @@
 #include "hl1_basegrenade.h"
 
 
-extern short	g_sModelIndexFireball;		// (in combatweapon.cpp) holds the index for the fireball 
+extern short	g_sModelIndexFireball;		// (in combatweapon.cpp) holds the index for the fireball
 extern short	g_sModelIndexWExplosion;	// (in combatweapon.cpp) holds the index for the underwater explosion
 
 unsigned int CHL1BaseGrenade::PhysicsSolidMaskForEntity( void ) const
@@ -24,7 +24,7 @@ unsigned int CHL1BaseGrenade::PhysicsSolidMaskForEntity( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHL1BaseGrenade::Precache()
 {
@@ -55,12 +55,12 @@ void CHL1BaseGrenade::Explode( trace_t *pTrace, int bitsDamageType )
 	if ( pTrace->fraction != 1.0 )
 	{
 		Vector vecNormal = pTrace->plane.normal;
-		const surfacedata_t *pdata = physprops->GetSurfaceData( pTrace->surface.surfaceProps );	
+		const surfacedata_t *pdata = physprops->GetSurfaceData( pTrace->surface.surfaceProps );
 		CPASFilter filter( vecAbsOrigin );
-		te->Explosion( filter, 0.0, 
+		te->Explosion( filter, 0.0,
 			&vecAbsOrigin,
 			!( contents & MASK_WATER ) ? g_sModelIndexFireball : g_sModelIndexWExplosion,
-			m_DmgRadius * .03, 
+			m_DmgRadius * .03,
 			25,
 			TE_EXPLFLAG_NONE,
 			m_DmgRadius,
@@ -72,9 +72,9 @@ void CHL1BaseGrenade::Explode( trace_t *pTrace, int bitsDamageType )
 	{
 		CPASFilter filter( vecAbsOrigin );
 		te->Explosion( filter, 0.0,
-			&vecAbsOrigin, 
+			&vecAbsOrigin,
 			!( contents & MASK_WATER ) ? g_sModelIndexFireball : g_sModelIndexWExplosion,
-			m_DmgRadius * .03, 
+			m_DmgRadius * .03,
 			25,
 			TE_EXPLFLAG_NONE,
 			m_DmgRadius,
@@ -85,7 +85,7 @@ void CHL1BaseGrenade::Explode( trace_t *pTrace, int bitsDamageType )
 
 	// Use the owner's position as the reported position
 	Vector vecReported = GetThrower() ? GetThrower()->GetAbsOrigin() : vec3_origin;
-	
+
 	CTakeDamageInfo info( this, GetThrower(), GetBlastForce(), GetAbsOrigin(), m_flDamage, bitsDamageType, 0, &vecReported );
 
 	RadiusDamage( info, GetAbsOrigin(), m_DmgRadius, CLASS_NONE, NULL );
@@ -97,7 +97,7 @@ void CHL1BaseGrenade::Explode( trace_t *pTrace, int bitsDamageType )
 	EmitSound( "BaseGrenade.Explode" );
 
 	SetTouch( NULL );
-	
+
 	AddEffects( EF_NODRAW );
 	SetAbsVelocity( vec3_origin );
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -33,7 +33,7 @@ public:
 LINK_ENTITY_TO_CLASS( my_NPC, CMyNPC );
 
 //=========================================================
-// Classify - indicates this NPC's place in the 
+// Classify - indicates this NPC's place in the
 // relationship table.
 //=========================================================
 int	CMyNPC::Classify ( void )
@@ -97,7 +97,7 @@ void CMyNPC::Spawn()
 void CMyNPC::Precache()
 {
 	engine.PrecacheModel("models/mymodel.mdl");
-}	
+}
 
 //=========================================================
 // AI Schedules Specific to this NPC

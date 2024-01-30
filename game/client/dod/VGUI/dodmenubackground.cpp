@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,7 +21,7 @@ CDODMenuBackground::CDODMenuBackground(Panel *parent) : EditablePanel(parent, "M
 
 	SetZPos( -1 );
 
-	LoadControlSettings("Resource/UI/MenuBackground.res");	
+	LoadControlSettings("Resource/UI/MenuBackground.res");
 }
 
 void CDODMenuBackground::Init( void )
@@ -83,7 +83,6 @@ void CDODMenuBackground::Paint(void)
 	vgui::surface()->DrawLine( m_LineDims[0], m_LineDims[1], m_LineDims[2], m_LineDims[3] );
 	vgui::surface()->DrawLine( m_LineDims[2], m_LineDims[3], m_LineDims[4], m_LineDims[5] );
 
-	// top white box	
+	// top white box
 	vgui::surface()->DrawTexturedPolygon( 4, m_BoxVerts );
 }
-

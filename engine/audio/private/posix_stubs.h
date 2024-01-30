@@ -18,7 +18,7 @@
 #define DSSPEAKER_HEADPHONE		-1
 #define DSSPEAKER_QUAD			-2
 #define DSSPEAKER_5POINT1		-3
-#define DSSPEAKER_7POINT1		-4 
+#define DSSPEAKER_7POINT1		-4
 
 #define DISP_CHANGE_SUCCESSFUL	0
 
@@ -69,90 +69,90 @@ typedef uint POINTL;
 #define IDLE_PRIORITY_CLASS	1
 #define HIGH_PRIORITY_CLASS 2
 
-typedef struct _devicemode { 
-  BCHAR  dmDeviceName[CCHDEVICENAME]; 
-  WORD   dmSpecVersion; 
-  WORD   dmDriverVersion; 
-  WORD   dmSize; 
-  WORD   dmDriverExtra; 
-  DWORD  dmFields; 
-  union u1 {
-    struct s {
-      short dmOrientation;
-      short dmPaperSize;
-      short dmPaperLength;
-      short dmPaperWidth;
-      short dmScale; 
-      short dmCopies; 
-      short dmDefaultSource; 
-      short dmPrintQuality; 
-    };
-    POINTL dmPosition;
-    DWORD  dmDisplayOrientation;
-    DWORD  dmDisplayFixedOutput;
-  };
-  short  dmColor; 
-  short  dmDuplex; 
-  short  dmYResolution; 
-  short  dmTTOption; 
-  short  dmCollate; 
-  BYTE  dmFormName[CCHFORMNAME]; 
-  WORD  dmLogPixels; 
-  DWORD  dmBitsPerPel; 
-  DWORD  dmPelsWidth; 
-  DWORD  dmPelsHeight; 
-  union u2 {
-    DWORD  dmDisplayFlags; 
-    DWORD  dmNup;
-  };
-  DWORD  dmDisplayFrequency; 
-  DWORD  dmICMMethod;
-  DWORD  dmICMIntent;
-  DWORD  dmMediaType;
-  DWORD  dmDitherType;
-  DWORD  dmReserved1;
-  DWORD  dmReserved2;
-  DWORD  dmPanningWidth;
-  DWORD  dmPanningHeight;
-} DEVMODE, *LPDEVMODE; 
+typedef struct _devicemode {
+	BCHAR  dmDeviceName[CCHDEVICENAME];
+	WORD   dmSpecVersion;
+	WORD   dmDriverVersion;
+	WORD   dmSize;
+	WORD   dmDriverExtra;
+	DWORD  dmFields;
+	union u1 {
+		struct s {
+			short dmOrientation;
+			short dmPaperSize;
+			short dmPaperLength;
+			short dmPaperWidth;
+			short dmScale;
+			short dmCopies;
+			short dmDefaultSource;
+			short dmPrintQuality;
+		};
+		POINTL dmPosition;
+		DWORD  dmDisplayOrientation;
+		DWORD  dmDisplayFixedOutput;
+	};
+	short  dmColor;
+	short  dmDuplex;
+	short  dmYResolution;
+	short  dmTTOption;
+	short  dmCollate;
+	BYTE  dmFormName[CCHFORMNAME];
+	WORD  dmLogPixels;
+	DWORD  dmBitsPerPel;
+	DWORD  dmPelsWidth;
+	DWORD  dmPelsHeight;
+	union u2 {
+		DWORD  dmDisplayFlags;
+		DWORD  dmNup;
+	};
+	DWORD  dmDisplayFrequency;
+	DWORD  dmICMMethod;
+	DWORD  dmICMIntent;
+	DWORD  dmMediaType;
+	DWORD  dmDitherType;
+	DWORD  dmReserved1;
+	DWORD  dmReserved2;
+	DWORD  dmPanningWidth;
+	DWORD  dmPanningHeight;
+} DEVMODE, *LPDEVMODE;
 
 typedef uint32				MCIERROR;
 typedef uint				MCIDEVICEID;
 
 typedef struct {
-    DWORD_PTR dwCallback;  
+		DWORD_PTR dwCallback;
 } MCI_GENERIC_PARMS;
 
 typedef struct {
-    DWORD_PTR dwCallback; 
-    DWORD     dwReturn; 
-    DWORD     dwItem; 
-    DWORD     dwTrack; 
+		DWORD_PTR dwCallback;
+		DWORD     dwReturn;
+		DWORD     dwItem;
+		DWORD     dwTrack;
 } MCI_STATUS_PARMS;
- 
+
 typedef struct {
-    DWORD_PTR dwCallback; 
-    DWORD     dwFrom; 
-    DWORD     dwTo; 
+		DWORD_PTR dwCallback;
+		DWORD     dwFrom;
+		DWORD     dwTo;
 } MCI_PLAY_PARMS;
 
 typedef struct {
-    DWORD_PTR    dwCallback; 
-    MCIDEVICEID  wDeviceID; 
-    LPCSTR       lpstrDeviceType; 
-    LPCSTR       lpstrElementName; 
-    LPCSTR       lpstrAlias; 
-} MCI_OPEN_PARMS; 
+		DWORD_PTR    dwCallback;
+		MCIDEVICEID  wDeviceID;
+		LPCSTR       lpstrDeviceType;
+		LPCSTR       lpstrElementName;
+		LPCSTR       lpstrAlias;
+} MCI_OPEN_PARMS;
 
 typedef struct {
-    DWORD_PTR dwCallback; 
-    DWORD     dwTimeFormat; 
-    DWORD     dwAudio; 
+		DWORD_PTR dwCallback;
+		DWORD     dwTimeFormat;
+		DWORD     dwAudio;
 } MCI_SET_PARMS;
 
-#define MCI_MAKE_TMSF(t, m, s, f)	((DWORD)(((BYTE)(t) | ((WORD)(m) << 8)) | ((DWORD)(BYTE)(s) | ((WORD)(f)<<8)) << 16)) 
-#define MCI_MSF_MINUTE(msf)			((BYTE)(msf)) 
-#define MCI_MSF_SECOND(msf)			((BYTE)(((WORD)(msf)) >> 8)) 
+#define MCI_MAKE_TMSF(t, m, s, f)	((DWORD)(((BYTE)(t) | ((WORD)(m) << 8)) | ((DWORD)(BYTE)(s) | ((WORD)(f)<<8)) << 16))
+#define MCI_MSF_MINUTE(msf)			((BYTE)(msf))
+#define MCI_MSF_SECOND(msf)			((BYTE)(((WORD)(msf)) >> 8))
 
 #define MCI_OPEN					0
 #define MCI_OPEN_TYPE				0
@@ -186,13 +186,13 @@ typedef struct {
 #pragma pack(push, 1)
 typedef struct tWAVEFORMATEX
 {
-    WORD    wFormatTag;
-    WORD    nChannels;
-    DWORD   nSamplesPerSec;
-    DWORD   nAvgBytesPerSec;
-    WORD    nBlockAlign;
-    WORD    wBitsPerSample;
-    WORD    cbSize;
+		WORD    wFormatTag;
+		WORD    nChannels;
+		DWORD   nSamplesPerSec;
+		DWORD   nAvgBytesPerSec;
+		WORD    nBlockAlign;
+		WORD    wBitsPerSample;
+		WORD    cbSize;
 } WAVEFORMATEX, *PWAVEFORMATEX, *NPWAVEFORMATEX, *LPWAVEFORMATEX;
 
 typedef const WAVEFORMATEX *LPCWAVEFORMATEX;
@@ -200,19 +200,19 @@ typedef const WAVEFORMATEX *LPCWAVEFORMATEX;
 
 typedef struct waveformat_tag
 {
-    WORD    wFormatTag;
-    WORD    nChannels;
-    DWORD   nSamplesPerSec;
-    DWORD   nAvgBytesPerSec;
-    WORD    nBlockAlign;
+		WORD    wFormatTag;
+		WORD    nChannels;
+		DWORD   nSamplesPerSec;
+		DWORD   nAvgBytesPerSec;
+		WORD    nBlockAlign;
 } WAVEFORMAT, *PWAVEFORMAT, *NPWAVEFORMAT, *LPWAVEFORMAT;
 
 typedef const WAVEFORMAT *LPCWAVEFORMAT;
 
 typedef struct pcmwaveformat_tag
 {
-    WAVEFORMAT  wf;
-    WORD        wBitsPerSample;
+		WAVEFORMAT  wf;
+		WORD        wBitsPerSample;
 } PCMWAVEFORMAT, *PPCMWAVEFORMAT, *NPPCMWAVEFORMAT, *LPPCMWAVEFORMAT;
 
 typedef const PCMWAVEFORMAT *LPCPCMWAVEFORMAT;
@@ -231,4 +231,3 @@ typedef struct adpcmwaveformat_tag {
 
 #pragma pack(pop)
 #endif
-

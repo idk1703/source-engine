@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -21,7 +21,7 @@ static int				linearToScreen[1024];	// linear (0..1) to gamma corrected vertex l
 float					g_LinearToVertex[4096];	// linear (0..4) to screen corrected vertex space (0..1?)
 static int				linearToLightmap[4096];	// linear (0..4) to screen corrected texture value (0..255)
 
-void ColorSpace::SetGamma( float screenGamma, float texGamma, 
+void ColorSpace::SetGamma( float screenGamma, float texGamma,
 						   float overbright, bool allowCheats, bool linearFrameBuffer )
 {
 	int		i, inf;
@@ -35,7 +35,7 @@ void ColorSpace::SetGamma( float screenGamma, float texGamma,
 	}
 
 	g = screenGamma;
-	
+
 	// clamp values to prevent cheating in multiplayer
 	if( !allowCheats )
 	{
@@ -46,23 +46,23 @@ void ColorSpace::SetGamma( float screenGamma, float texGamma,
 			g = 1.8f;
 	}
 
-	if (g > 3.0) 
+	if (g > 3.0)
 		g = 3.0;
 
 	g = 1.0f / g;
-	g1 = texGamma * g; 
+	g1 = texGamma * g;
 
 	// pow( textureColor, g1 ) converts from on-disk texture space to framebuffer space
-	
-	if (brightness <= 0.0f) 
+
+	if (brightness <= 0.0f)
 	{
 		g3 = 0.125;
 	}
-	else if (brightness > 1.0f) 
+	else if (brightness > 1.0f)
 	{
 		g3 = 0.05f;
 	}
-	else 
+	else
 	{
 		g3 = 0.125f - (brightness * brightness) * 0.075f;
 	}
@@ -80,7 +80,7 @@ void ColorSpace::SetGamma( float screenGamma, float texGamma,
 		// shift up
 		if (f <= g3)
 			f = (f / g3) * 0.125f;
-		else 
+		else
 			f = 0.125f + ((f - g3) / (1.0f - g3)) * 0.875f;
 
 		// convert linear space to desired gamma space
@@ -117,9 +117,9 @@ void ColorSpace::SetGamma( float screenGamma, float texGamma,
 		texLightToLinear[i] = f;
 	}
 #endif
-	
+
 	float f, overbrightFactor;
-	
+
 	// Can't do overbright without texcombine
 	// UNDONE: Add GAMMA ramp to rectify this
 
@@ -139,16 +139,16 @@ void ColorSpace::SetGamma( float screenGamma, float texGamma,
 	{
 		overbrightFactor = 1.0;
 	}
-	
+
 	for (i=0 ; i<4096 ; i++)
 	{
 		// convert from linear 0..4 (x1024) to screen corrected vertex space (0..1?)
 		f = ( float )pow ( i/1024.0f, 1.0f / screenGamma );
-		
+
 		g_LinearToVertex[i] = f * overbrightFactor;
 		if (g_LinearToVertex[i] > 1)
 			g_LinearToVertex[i] = 1;
-		
+
 		linearToLightmap[i] = ( int )( f * 255 * overbrightFactor );
 		if (linearToLightmap[i] > 255)
 			linearToLightmap[i] = 255;
@@ -208,5 +208,3 @@ uint16 ColorSpace::LinearFloatToCorrectedShort( float in )
 
 	return out;
 }
-
-

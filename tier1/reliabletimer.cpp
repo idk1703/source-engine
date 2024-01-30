@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -48,7 +48,7 @@ CReliableTimer::CReliableTimer()
 	// On PowerPC, the time base register increment frequency is implementation dependent, and doesn't have to be constant.
 	// On PS3, measured it to be just shy of 80Mhz on the PPU and doesn't seem to change
 	if ( sm_nPerformanceFrequency == 0 )
-		sm_nPerformanceFrequency = sys_time_get_timebase_frequency(); 
+		sm_nPerformanceFrequency = sys_time_get_timebase_frequency();
 #else
 	// calculate performance frequency the first time we use a timer
 	if ( 0 == sm_nPerformanceFrequency )
@@ -85,9 +85,9 @@ int64 CReliableTimer::GetPerformanceCountNow()
 	return ulNow;
 #else
 	uint64 un64;
-	 __asm__ __volatile__ (
-                        "rdtsc\n\t"
-                        : "=A" (un64) );
+	__asm__ __volatile__ (
+	"rdtsc\n\t"
+	: "=A" (un64) );
 	return (int64)un64;
 #endif
 }

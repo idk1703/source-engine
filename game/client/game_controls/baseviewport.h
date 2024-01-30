@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,7 +29,7 @@ class CBaseViewport : public vgui::EditablePanel, public IViewPort, public IGame
 {
 	DECLARE_CLASS_SIMPLE( CBaseViewport, vgui::EditablePanel );
 
-public: 
+public:
 	CBaseViewport();
 	virtual ~CBaseViewport();
 
@@ -52,21 +52,21 @@ public:
 	virtual void ActivateClientUI();
 	virtual void HideClientUI();
 	virtual bool AllowedToPrintText( void );
-	
+
 #ifndef _XBOX
 	virtual int GetViewPortScheme() { return m_pBackGround->GetScheme(); }
 	virtual VPANEL GetViewPortPanel() { return m_pBackGround->GetVParent(); }
 #endif
 	virtual AnimationController *GetAnimationController() { return m_pAnimController; }
 
-	virtual void ShowBackGround(bool bShow) 
-	{ 
+	virtual void ShowBackGround(bool bShow)
+	{
 #ifndef _XBOX
-		m_pBackGround->SetVisible( bShow ); 
+		m_pBackGround->SetVisible( bShow );
 #endif
 	}
 
-	virtual int GetDeathMessageStartHeight( void );	
+	virtual int GetDeathMessageStartHeight( void );
 
 	// virtual void ChatInputPosition( int *x, int *y );
 
@@ -84,7 +84,7 @@ public:
 
 	// Check if the named panel is visible
 	virtual bool IsPanelVisible( const char* panel );
-	
+
 public: // IGameEventListener:
 	virtual void FireGameEvent( IGameEvent * event);
 
@@ -99,7 +99,7 @@ protected:
 	private:
 		typedef vgui::Frame BaseClass;
 	public:
-		CBackGroundPanel( vgui::Panel *parent) : Frame( parent, "ViewPortBackGround" ) 
+		CBackGroundPanel( vgui::Panel *parent) : Frame( parent, "ViewPortBackGround" )
 		{
 			SetScheme("ClientScheme");
 
@@ -113,10 +113,10 @@ protected:
 		virtual void ApplySchemeSettings(IScheme *pScheme)
 		{
 			BaseClass::ApplySchemeSettings(pScheme);
-			SetBgColor(pScheme->GetColor("ViewportBG", Color( 0,0,0,0 ) )); 
+			SetBgColor(pScheme->GetColor("ViewportBG", Color( 0,0,0,0 ) ));
 		}
 
-		virtual void PerformLayout() 
+		virtual void PerformLayout()
 		{
 			int w,h;
 			GetHudSize(w, h);
@@ -138,7 +138,7 @@ protected:
 protected:
 
 	virtual void Paint();
-	virtual void OnThink(); 
+	virtual void OnThink();
 	virtual void OnScreenSizeChanged(int iOldWide, int iOldTall);
 	void PostMessageToPanel( IViewPortPanel* pPanel, KeyValues *pKeyValues );
 
@@ -149,7 +149,7 @@ protected:
 	CBackGroundPanel	*m_pBackGround;
 #endif
 	CUtlVector<IViewPortPanel*> m_Panels;
-	
+
 	bool				m_bHasParent; // Used to track if child windows have parents or not.
 	bool				m_bInitialized;
 	IViewPortPanel		*m_pActivePanel;

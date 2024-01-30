@@ -162,7 +162,7 @@ END_DATADESC()
 // CTFFlameThrower implementation.
 // ------------------------------------------------------------------------------------------------ //
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFlameThrower::CTFFlameThrower()
 #if defined( CLIENT_DLL )
@@ -192,7 +192,7 @@ CTFFlameThrower::CTFFlameThrower()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFlameThrower::~CTFFlameThrower()
 {
@@ -203,7 +203,7 @@ CTFFlameThrower::~CTFFlameThrower()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::Precache( void )
 {
@@ -302,7 +302,7 @@ void CTFFlameThrower::WeaponReset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::Spawn( void )
 {
@@ -311,7 +311,7 @@ void CTFFlameThrower::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFlameThrower::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
@@ -332,7 +332,7 @@ bool CTFFlameThrower::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::ItemPostFrame()
 {
@@ -466,7 +466,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::PrimaryAttack()
 {
@@ -531,7 +531,7 @@ void CTFFlameThrower::PrimaryAttack()
 
 	// Because the muzzle is so long, it can stick through a wall if the player is right up against it.
 	// Make sure the weapon can't fire in this condition by tracing a line between the eye point and the end of the muzzle.
-	trace_t trace;	
+	trace_t trace;
 	Vector vecEye = pOwner->EyePosition();
 	Vector vecMuzzlePos = GetVisualMuzzlePos();
 	CTraceFilterIgnoreObjects traceFilter( this, COLLISION_GROUP_NONE );
@@ -727,13 +727,13 @@ void CTFFlameThrower::PrimaryAttack()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float AirBurstDamageForce( const Vector &size, float damage, float scale )
-{ 
+{
 	float force = damage * ((48 * 48 * 82.0) / (size.x * size.y * size.z)) * scale;
 
-	if ( force > 1000.0) 
+	if ( force > 1000.0)
 	{
 		force = 1000.0;
 	}
@@ -742,7 +742,7 @@ float AirBurstDamageForce( const Vector &size, float damage, float scale )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFlameThrower::SupportsAirBlastFunction( EFlameThrowerAirblastFunction eFunction ) const
 {
@@ -761,7 +761,7 @@ bool CTFFlameThrower::SupportsAirBlastFunction( EFlameThrowerAirblastFunction eF
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::FireAirBlast( int iAmmoPerShot )
 {
@@ -848,7 +848,7 @@ void CTFFlameThrower::FireAirBlast( int iAmmoPerShot )
 		fAirblastRefireTimeScale *= 0.5f;
 	}
 
-	m_flNextSecondaryAttack = gpGlobals->curtime + (0.75f * fAirblastRefireTimeScale);	
+	m_flNextSecondaryAttack = gpGlobals->curtime + (0.75f * fAirblastRefireTimeScale);
 	m_flNextPrimaryAttack = gpGlobals->curtime + (1.0f * fAirblastRefireTimeScale * fAirblastPrimaryRefireTimeScale);
 	m_flResetBurstEffect = gpGlobals->curtime + 0.05f;
 
@@ -901,7 +901,7 @@ void CTFFlameThrower::SetWeaponState( int nWeaponState )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::UseRage( void )
 {
@@ -933,7 +933,7 @@ void CTFFlameThrower::UseRage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::SecondaryAttack()
 {
@@ -1021,10 +1021,10 @@ void CTFFlameThrower::SecondaryAttack()
 #ifdef GAME_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Vector CTFFlameThrower::GetDeflectionSize()
-{ 
+{
 	const Vector vecBaseDeflectionSize = BaseClass::GetDeflectionSize();
 	float fMultiplier = 1.0f;
 
@@ -1046,7 +1046,7 @@ Vector CTFFlameThrower::GetDeflectionSize()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #ifdef _DEBUG
 ConVar tf_pushbackscalescale( "tf_pushbackscalescale", "1.0" );
@@ -1086,7 +1086,7 @@ void ExtinguishPlayer( CEconEntity *pExtinguisher, CTFPlayer *pOwner, CTFPlayer 
 	// stats
 	EconEntity_OnOwnerKillEaterEvent( pExtinguisher, pOwner, pTarget, kKillEaterEvent_BurningAllyExtinguished );
 
-	UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"player_extinguished\" against \"%s<%i><%s><%s>\" with \"%s\" (attacker_position \"%d %d %d\") (victim_position \"%d %d %d\")\n",    
+	UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"player_extinguished\" against \"%s<%i><%s><%s>\" with \"%s\" (attacker_position \"%d %d %d\") (victim_position \"%d %d %d\")\n",
 				pOwner->GetPlayerName(), pOwner->GetUserID(), pOwner->GetNetworkIDString(), pOwner->GetTeam()->GetName(),
 				pTarget->GetPlayerName(), pTarget->GetUserID(), pTarget->GetNetworkIDString(), pTarget->GetTeam()->GetName(),
 				pExtinguisherName, (int)pOwner->GetAbsOrigin().x, (int)pOwner->GetAbsOrigin().y, (int)pOwner->GetAbsOrigin().z,
@@ -1101,7 +1101,7 @@ bool CTFFlameThrower::DeflectPlayer( CTFPlayer *pTarget, CTFPlayer *pOwner, Vect
 		{
 			ExtinguishPlayer( this, pOwner, pTarget, "tf_weapon_flamethrower" );
 
-			// Return health to the Pyro. 
+			// Return health to the Pyro.
 			// We may want to cap the amount of health per extinguish but for now lets test this
 			int iRestoreHealthOnExtinguish = 0;
 			CALL_ATTRIB_HOOK_INT( iRestoreHealthOnExtinguish, extinguish_restores_health );
@@ -1120,14 +1120,14 @@ bool CTFFlameThrower::DeflectPlayer( CTFPlayer *pTarget, CTFPlayer *pOwner, Vect
 					}
 					healevent->SetInt( "weapon_def_index", healingItemDef );
 
-					gameeventmanager->FireEvent( healevent ); 
+					gameeventmanager->FireEvent( healevent );
 				}
 			}
 		}
 
 		return false;
 	}
-	
+
 	if ( SupportsAirBlastFunction( TF_FUNCTION_AIRBLAST_PUSHBACK ) )
 	{
 		int iReverseBlast = 0;
@@ -1148,11 +1148,11 @@ bool CTFFlameThrower::DeflectPlayer( CTFPlayer *pTarget, CTFPlayer *pOwner, Vect
 		}
 
 		// Quick Fix Uber is immune
-		if ( pTarget->m_Shared.InCond( TF_COND_MEGAHEAL )) 
+		if ( pTarget->m_Shared.InCond( TF_COND_MEGAHEAL ))
 			return false;
 
 
-		// Require our target be in a cone in front of us. Default threshold is the dot-product needs to be at least 0.8 = 1 - 0.2. 
+		// Require our target be in a cone in front of us. Default threshold is the dot-product needs to be at least 0.8 = 1 - 0.2.
 		float flDot = DotProduct( vecForward, vecToTarget );
 		float flAirblastConeScale = 0.2f;
 		CALL_ATTRIB_HOOK_FLOAT( flAirblastConeScale, mult_airblast_cone_scale );
@@ -1189,7 +1189,7 @@ bool CTFFlameThrower::DeflectPlayer( CTFPlayer *pTarget, CTFPlayer *pOwner, Vect
 #ifdef _DEBUG
 		Vector vecForce = vecToTarget * flForce * tf_pushbackscalescale.GetFloat();
 #else
-		Vector vecForce = vecToTarget * flForce;	
+		Vector vecForce = vecToTarget * flForce;
 #endif
 
 		if ( iReverseBlast )
@@ -1206,7 +1206,7 @@ bool CTFFlameThrower::DeflectPlayer( CTFPlayer *pTarget, CTFPlayer *pOwner, Vect
 
 #ifdef STAGING_ONLY
 		if ( !( pTarget == pOwner && pOwner->GetGroundEntity() ) )
-#endif		
+#endif
 		{
 			CALL_ATTRIB_HOOK_FLOAT( flVerticalPushbackScale, airblast_vertical_pushback_scale );
 		}
@@ -1228,7 +1228,7 @@ bool CTFFlameThrower::DeflectPlayer( CTFPlayer *pTarget, CTFPlayer *pOwner, Vect
 
 		// Apply AirBlastImpulse
 		pTarget->ApplyAirBlastImpulse( vecForce );
-		
+
 		// Make sure we get credit for the airblast if the target falls to its death
 		pTarget->m_AchievementData.AddDamagerToHistory( pOwner );
 
@@ -1254,7 +1254,7 @@ bool CTFFlameThrower::DeflectPlayer( CTFPlayer *pTarget, CTFPlayer *pOwner, Vect
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::PlayDeflectionSound( bool bPlayer )
 {
@@ -1265,7 +1265,7 @@ void CTFFlameThrower::PlayDeflectionSound( bool bPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFlameThrower::DeflectEntity( CBaseEntity *pTarget, CTFPlayer *pOwner, Vector &vecForward, Vector &vecCenter, Vector &vecSize )
 {
@@ -1277,7 +1277,7 @@ bool CTFFlameThrower::DeflectEntity( CBaseEntity *pTarget, CTFPlayer *pOwner, Ve
 
 	// can't deflect things on our own team
 	// except the passtime ball when in passtime mode
-	if ( (pTarget->GetTeamNumber() == pOwner->GetTeamNumber()) 
+	if ( (pTarget->GetTeamNumber() == pOwner->GetTeamNumber())
 		&& !(g_pPasstimeLogic && (g_pPasstimeLogic->GetBall() == pTarget)) )
 	{
 		return false;
@@ -1326,7 +1326,7 @@ bool CTFFlameThrower::DeflectEntity( CBaseEntity *pTarget, CTFPlayer *pOwner, Ve
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFlameThrower::Lower( void )
 {
@@ -1363,7 +1363,7 @@ Vector CTFFlameThrower::GetFlameOriginPos()
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFFlameThrower::GetFlameHitRatio( void )
 {
@@ -1474,7 +1474,7 @@ Vector CTFFlameThrower::GetMuzzlePosHelper( bool bVisualPos )
 {
 	Vector vecMuzzlePos;
 	CTFPlayer *pOwner = GetTFPlayerOwner();
-	if ( pOwner ) 
+	if ( pOwner )
 	{
 		Vector vecForward, vecRight, vecUp;
 		AngleVectors( pOwner->GetAbsAngles(), &vecForward, &vecRight, &vecUp );
@@ -1533,7 +1533,7 @@ void CTFFlameThrower::FireGameEvent( IGameEvent *event )
 #if defined( CLIENT_DLL )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::OnDataChanged(DataUpdateType_t updateType)
 {
@@ -1571,14 +1571,14 @@ void CTFFlameThrower::OnDataChanged(DataUpdateType_t updateType)
 			StartPilotLight();
 		}
 	}
-	else 
+	else
 	{
 		StopFlame();
 		StopPilotLight();
 		StopFullCritEffect();
 		m_bEffectsThinking = false;
 	}
-	
+
 	if ( pPlayerOwner == pLocalPlayer )
 	{
 		if ( m_pFiringLoop )
@@ -1598,18 +1598,18 @@ void CTFFlameThrower::OnDataChanged(DataUpdateType_t updateType)
 				// We play accent sounds based on accuracy
 				if ( m_flFlameHitRatio >= TF_FLAMETHROWER_HITACCURACY_HIGH )
 				{
-					controller.SoundChangePitch( m_pFiringLoop, 140, 0.1 );	
+					controller.SoundChangePitch( m_pFiringLoop, 140, 0.1 );
 					m_szAccuracySound = "Weapon_FlameThrower.FireHitHard";
 				}
 				else
 				{
-					controller.SoundChangePitch( m_pFiringLoop, 100, 0.1 );	
+					controller.SoundChangePitch( m_pFiringLoop, 100, 0.1 );
 
 					// If our accuracy is too low
 					if ( m_pFiringAccuracyLoop )
 					{
 						controller.SoundDestroy( m_pFiringAccuracyLoop );
-						m_pFiringAccuracyLoop = NULL;					
+						m_pFiringAccuracyLoop = NULL;
 					}
 
 					return;
@@ -1647,7 +1647,7 @@ void CTFFlameThrower::OnDataChanged(DataUpdateType_t updateType)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::UpdateOnRemove( void )
 {
@@ -1661,7 +1661,7 @@ void CTFFlameThrower::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::SetDormant( bool bDormant )
 {
@@ -1702,7 +1702,7 @@ int CTFFlameThrower::GetWorldModelIndex( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::StartFlame()
 {
@@ -1746,7 +1746,7 @@ void CTFFlameThrower::StartFlame()
 		if ( flCrossfadeTime > 0.0 )
 		{
 			// play the firing start sound and fade it out
-			m_pFiringStartSound = controller.SoundCreate( filter, entindex(), shootsound );		
+			m_pFiringStartSound = controller.SoundCreate( filter, entindex(), shootsound );
 			controller.Play( m_pFiringStartSound, 1.0, 100 );
 			controller.SoundChangeVolume( m_pFiringStartSound, 0.0, flCrossfadeTime );
 		}
@@ -1795,7 +1795,7 @@ void CTFFlameThrower::StartFlame()
 			}
 
 			CLocalPlayerFilter filter;
-			m_pFiringHitLoop = controller.SoundCreate( filter, entindex(), pchFireHitSound );	
+			m_pFiringHitLoop = controller.SoundCreate( filter, entindex(), pchFireHitSound );
 			controller.Play( m_pFiringHitLoop, 1.0, 100 );
 		}
 
@@ -1804,7 +1804,7 @@ void CTFFlameThrower::StartFlame()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::StopHitSound()
 {
@@ -1818,7 +1818,7 @@ void CTFFlameThrower::StopHitSound()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::StopFlame( bool bAbrupt /* = false */ )
 {
@@ -1862,7 +1862,7 @@ void CTFFlameThrower::StopFlame( bool bAbrupt /* = false */ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::StartPilotLight()
 {
@@ -1878,11 +1878,11 @@ void CTFFlameThrower::StartPilotLight()
 		m_pPilotLightSound = controller.SoundCreate( filter, entindex(), pilotlightsound );
 
 		controller.Play( m_pPilotLightSound, 1.0, 100 );
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::StopPilotLight()
 {
@@ -1901,7 +1901,7 @@ void CTFFlameThrower::StopFullCritEffect()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::RestartParticleEffect( void )
 {
@@ -1930,7 +1930,7 @@ void CTFFlameThrower::RestartParticleEffect( void )
 		{
 			pszParticleEffect = FlameCritEffectName( bIsFirstPersonView );
 		}
-		else 
+		else
 		{
 			pszParticleEffect = FlameEffectName( bIsFirstPersonView );
 		}
@@ -1940,7 +1940,7 @@ void CTFFlameThrower::RestartParticleEffect( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char* CTFFlameThrower::FlameEffectName( bool bIsFirstPersonView )
 {
@@ -1974,7 +1974,7 @@ const char* CTFFlameThrower::FlameEffectName( bool bIsFirstPersonView )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char* CTFFlameThrower::FlameCritEffectName( bool bIsFirstPersonView )
 {
@@ -2008,7 +2008,7 @@ const char* CTFFlameThrower::FlameCritEffectName( bool bIsFirstPersonView )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char* CTFFlameThrower::FullCritChargedEffectName( void )
 {
@@ -2021,7 +2021,7 @@ const char* CTFFlameThrower::FullCritChargedEffectName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::ClientEffectsThink( void )
 {
@@ -2098,7 +2098,7 @@ bool CTFFlameThrower::FlameEffect_t::StopEffects()
 #else
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::HitTargetThink( void )
 {
@@ -2114,10 +2114,10 @@ void CTFFlameThrower::HitTargetThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameThrower::SetHitTarget( void )
-{ 
+{
 	if ( m_iWeaponState > FT_STATE_IDLE )
 	{
 		m_bHitTarget = true;
@@ -2132,7 +2132,7 @@ void CTFFlameThrower::SetHitTarget( void )
 
 #ifdef STAGING_ONLY
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFlameThrower::RocketPackCanActivate( int nAmmoCost )
 {
@@ -2164,7 +2164,7 @@ bool CTFFlameThrower::RocketPackCanActivate( int nAmmoCost )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFlameThrower::RocketPackLaunch( int nAmmoCost )
 {
@@ -2219,7 +2219,7 @@ bool CTFFlameThrower::RocketPackLaunch( int nAmmoCost )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFlameThrower::ShootsNapalm( void )
 {
@@ -2332,7 +2332,7 @@ CTFFlameEntity *CTFFlameEntity::Create( const Vector &vecOrigin, const QAngle &v
 	{
 		pFlame->m_vecAttackerVelocity = pOwner->GetOwnerEntity()->GetAbsVelocity();
 	}
-	pFlame->SetAbsVelocity( pFlame->m_vecBaseVelocity );	
+	pFlame->SetAbsVelocity( pFlame->m_vecBaseVelocity );
 	// Setup the initial angles.
 	pFlame->SetAbsAngles( vecAngles );
 	pFlame->SetCritFromBehind( bAlwaysCritFromBehind );
@@ -2498,7 +2498,7 @@ void CTFFlameEntity::FlameThink( void )
 
 	// Update our velocity
 	SetAbsVelocity( vecVelocity );
-	
+
 	// Render debug visualization if convar on
 	if ( tf_debug_flamethrower.GetInt() )
 	{
@@ -2506,8 +2506,8 @@ void CTFFlameEntity::FlameThink( void )
 		{
 			int val = ( (int) ( gpGlobals->curtime * 10 ) ) % 255;
 			NDebugOverlay::EntityBounds(this, val, 255, val, 0 ,0 );
-		} 
-		else 
+		}
+		else
 		{
 			NDebugOverlay::EntityBounds(this, 0, 100, 255, 0 ,0) ;
 		}
@@ -2518,7 +2518,7 @@ void CTFFlameEntity::FlameThink( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameEntity::SetHitTarget( void )
 {
@@ -2530,7 +2530,7 @@ void CTFFlameEntity::SetHitTarget( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameEntity::RemoveFlame()
 {
@@ -2554,7 +2554,7 @@ void CTFFlameEntity::OnCollide( CBaseEntity *pOther )
 
 	// remember that we've burnt this player
 	m_hEntitiesBurnt.AddToTail( pOther );
-	
+
 	float flDistance = GetAbsOrigin().DistTo( m_vecInitialPos );
 	float flDamage = m_flDmgAmount * RemapValClamped( flDistance, tf_flamethrower_maxdamagedist.GetFloat()/2, tf_flamethrower_maxdamagedist.GetFloat(), 1.0f, 0.70f );
 
@@ -2640,7 +2640,7 @@ void CTFFlameEntity::OnCollide( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameEntity::OnCollideWithTeammate( CTFPlayer *pPlayer )
 {
@@ -2664,7 +2664,7 @@ void CTFFlameEntity::OnCollideWithTeammate( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFlameEntity::IsBehindTarget( CBaseEntity *pTarget )
 {
@@ -2692,13 +2692,13 @@ float CTFFlameEntity::DotProductToTarget( CBaseEntity *pTarget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlameEntity::UpdateFlameThrowerHitRatio( void )
 {
 	if ( !m_hFlameThrower )
 		return;
-	
+
 	if ( m_bBurnedEnemy )
 	{
 		m_hFlameThrower->DecrementFlameDamageCount();
@@ -2708,7 +2708,7 @@ void CTFFlameEntity::UpdateFlameThrowerHitRatio( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFFlameEntity::GetFlameFloat( void )
 {
@@ -2716,7 +2716,7 @@ float CTFFlameEntity::GetFlameFloat( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFFlameEntity::GetFlameDrag( void )
 {
@@ -2783,7 +2783,7 @@ void CTFProjectile_Napalm::Precache()
 	// PrecacheModel( TF_MODEL_NAPALM );
 	PrecacheParticleSystem( "burninggibs" );
 	PrecacheParticleSystem( "flaming_arrow" );
-	
+
 	PrecacheScriptSound( "Player.PlasmaDamage" );
 
 	BaseClass::Precache();
@@ -2810,7 +2810,7 @@ void CTFProjectile_Napalm::Spawn()
 
 #ifdef GAME_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFProjectile_Napalm *CTFProjectile_Napalm::Create( CBaseCombatCharacter *pOwner, CTFFlameThrower *pLauncher )
 {
@@ -2888,7 +2888,7 @@ void CTFProjectile_Napalm::Explode( trace_t *pTrace, int bitsDamageType )
 			{
 				// Particle
 				if ( GetImpactEffect() )
-				{	
+				{
 					CPVSFilter filter( vecOrigin );
 
 					// Stick effect on the player
@@ -2956,7 +2956,7 @@ void CTFProjectile_Napalm::Explode( trace_t *pTrace, int bitsDamageType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFProjectile_Napalm::PipebombTouch( CBaseEntity *pOther )
 {
@@ -2971,7 +2971,7 @@ void CTFProjectile_Napalm::PipebombTouch( CBaseEntity *pOther )
 
 	CTakeDamageInfo info;
 	info.SetAttacker( m_hFlameThrower->GetOwnerEntity() );
-	info.SetInflictor( m_hFlameThrower ); 
+	info.SetInflictor( m_hFlameThrower );
 	info.SetWeapon( m_hFlameThrower );
 	info.SetDamage( 2.f );
 	info.SetDamageCustom( GetCustomDamageType() );
@@ -2991,7 +2991,7 @@ void CTFProjectile_Napalm::ApplyBlastDamage( CTFPlayer *pThrower, Vector vecOrig
 {
 	CTakeDamageInfo info;
 	info.SetAttacker( pThrower );
-	info.SetInflictor( this ); 
+	info.SetInflictor( this );
 	info.SetWeapon( m_hFlameThrower );
 	info.SetDamage( 25.f );
 	info.SetDamageCustom( GetCustomDamageType() );
@@ -3042,7 +3042,7 @@ void CTFProjectile_Napalm::ExplodeEffectOnTarget( CTFPlayer *pThrower, CTFPlayer
 	CBaseEntity *pInflictor = GetLauncher();
 	CTakeDamageInfo info;
 	info.SetAttacker( pThrower );
-	info.SetInflictor( this ); 
+	info.SetInflictor( this );
 	info.SetWeapon( pInflictor );
 	info.SetDamage( 50 );
 	info.SetDamageCustom( GetCustomDamageType() );
@@ -3057,25 +3057,25 @@ void CTFProjectile_Napalm::ExplodeEffectOnTarget( CTFPlayer *pThrower, CTFPlayer
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFProjectile_Napalm::GetImpactEffect( void )
-{ 
+{
 	return "burninggibs";
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFProjectile_Napalm::SetCustomPipebombModel( void )
-{ 
+{
 	SetModel( "models/weapons/w_models/w_flaregun_shell.mdl" );
 }
 #endif // GAME_DLL
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFProjectile_Napalm::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -3083,7 +3083,7 @@ void CTFProjectile_Napalm::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFProjectile_Napalm::GetTrailParticleName( void )
 {

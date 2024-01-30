@@ -68,7 +68,7 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_handgun_scout_primary );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFPistol_ScoutPrimary::CTFPistol_ScoutPrimary()
 {
@@ -76,7 +76,7 @@ CTFPistol_ScoutPrimary::CTFPistol_ScoutPrimary()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPistol_ScoutPrimary::PlayWeaponShootSound( void )
 {
@@ -89,7 +89,7 @@ void CTFPistol_ScoutPrimary::PlayWeaponShootSound( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPistol_ScoutPrimary::SecondaryAttack( void )
 {
@@ -114,7 +114,7 @@ void CTFPistol_ScoutPrimary::SecondaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPistol_ScoutPrimary::Push( void )
 {
@@ -159,7 +159,7 @@ void CTFPistol_ScoutPrimary::Push( void )
 
 		float flDist = 50.f;
 		UTIL_TraceHull( vecEyes, vecEyes + vecForward * flDist,  -vHull, vHull, MASK_SOLID, &traceFilter, &trace );
-		
+
 		bool bDebug = false;
 		if ( bDebug )
 		{
@@ -183,7 +183,7 @@ void CTFPistol_ScoutPrimary::Push( void )
 			// Make sure we get credit for the push if the target falls to its death
 			pVictim->m_AchievementData.AddDamagerToHistory( pOwner );
 
-			break;			
+			break;
 		}
 	}
 
@@ -197,8 +197,8 @@ void CTFPistol_ScoutPrimary::Push( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CTFPistol_ScoutPrimary::ItemPostFrame()
 {
@@ -223,13 +223,13 @@ bool CTFPistol_ScoutPrimary::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPistol_ScoutPrimary::Precache( void )
 {
 	PrecacheScriptSound( "Weapon_Hands.Push" );
 	PrecacheScriptSound( "Weapon_Hands.PushImpact" );
-	
+
 	BaseClass::Precache();
 }
 
@@ -253,7 +253,7 @@ int	CTFPistol_ScoutSecondary::GetDamageType( void ) const
 	CALL_ATTRIB_HOOK_INT( iBackheadshot, back_headshot );
 	if ( iBackheadshot )
 	{
-		return BaseClass::GetDamageType() | DMG_USE_HITLOCATIONS;	
+		return BaseClass::GetDamageType() | DMG_USE_HITLOCATIONS;
 	}
 	return BaseClass::GetDamageType();
 }

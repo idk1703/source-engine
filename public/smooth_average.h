@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,7 +15,7 @@
 
 
 
-// Use this macro around any value, and it'll queue up the results given to it nTimes and 
+// Use this macro around any value, and it'll queue up the results given to it nTimes and
 // provide a running average.
 #define SMOOTH_AVERAGE( value, nCount ) CalcSmoothAverage( value, nCount, __FILE__, __LINE__ )
 
@@ -30,11 +30,11 @@ class CTimingInfo
 {
 public:
 	T	m_AverageValue;	// Note: this will be the SUM of the values if using SUM_OVER_TIME_INTERVAL.
-	
+
 	// The high and low points for m_AverageValue over the time interval.
-	T	m_HighAverage;	
+	T	m_HighAverage;
 	T	m_LowAverage;
-	
+
 	// The high and low points for the value itself over the time interval.
 	T	m_HighValue;
 	T	m_LowValue;
@@ -52,7 +52,7 @@ public:
 		T	m_Value;
 	};
 
-public:	
+public:
 	CUtlVector< CEntry > m_Values;
 	int m_iCurValue;
 };
@@ -69,7 +69,7 @@ public:
 		T m_Value;
 		T m_Average;
 	};
-	
+
 	CUtlVector<CEntry> m_Values;
 };
 
@@ -81,7 +81,7 @@ inline CTimingInfo< T > CalcSmoothAverage_Struct( const T &value, int nTimes, co
 	// Find an entry at this file and line.
 	char fullStr[1024];
 	Q_snprintf( fullStr, sizeof( fullStr ), "%s_%i", pFilename, iLine );
-	
+
 	int index = s_SmoothAverages.Find( fullStr );
 	CAveragesInfo<T> *pInfo;
 	if ( index == s_SmoothAverages.InvalidIndex() )
@@ -93,7 +93,7 @@ inline CTimingInfo< T > CalcSmoothAverage_Struct( const T &value, int nTimes, co
 	{
 		pInfo = (CAveragesInfo<T>*)s_SmoothAverages[index];
 	}
-	
+
 	// Add the new value.
 	int newValueIndex;
 	CAveragesInfo< T >::CEntry entry;
@@ -112,10 +112,10 @@ inline CTimingInfo< T > CalcSmoothAverage_Struct( const T &value, int nTimes, co
 
 	CTimingInfo< T > info;
 	info.m_AverageValue = pInfo->m_Values[0].m_Value;
-	
+
 	info.m_HighAverage = pInfo->m_Values[0].m_Average;
 	info.m_LowAverage = pInfo->m_Values[0].m_Average;
-	
+
 	info.m_HighValue = pInfo->m_Values[0].m_Value;
 	info.m_LowValue = pInfo->m_Values[0].m_Value;
 
@@ -137,7 +137,7 @@ inline CTimingInfo< T > CalcSmoothAverage_Struct( const T &value, int nTimes, co
 	pInfo->m_Values[newValueIndex].m_Average = info.m_AverageValue;
 	return info;
 }
-#endif 
+#endif
 
 template< class T >
 inline T CalcSmoothAverage( const T &value, int nTimes, const char *pFilename, int iLine )
@@ -154,7 +154,7 @@ inline CTimingInfo< T > SumOverTimeInterval_Struct( const T &value, float nSecon
 
 	char fullStr[1024];
 	Q_snprintf( fullStr, sizeof( fullStr ), "%s_%i", pFilename, iLine );
-	
+
 	int index = s_SmoothAverages.Find( fullStr );
 	CAveragesInfo_TimeBased<T> *pInfo;
 	if ( index == s_SmoothAverages.InvalidIndex() )
@@ -166,11 +166,11 @@ inline CTimingInfo< T > SumOverTimeInterval_Struct( const T &value, float nSecon
 	{
 		pInfo = s_SmoothAverages[index];
 	}
-	
+
 	// Get the current time now.
 	CCycleCount curTime;
 	curTime.Sample();
-	
+
 	// Get rid of old samples.
 	while ( pInfo->m_Values.Count() > 0 && (curTime.GetSeconds() - pInfo->m_Values[0].m_Time.GetSeconds()) > nSeconds )
 		pInfo->m_Values.Remove( 0 );
@@ -183,10 +183,10 @@ inline CTimingInfo< T > SumOverTimeInterval_Struct( const T &value, float nSecon
 
 	CTimingInfo< T > info;
 	info.m_AverageValue = pInfo->m_Values[0].m_Value;
-	
+
 	info.m_HighAverage = pInfo->m_Values[0].m_Average;
 	info.m_LowAverage = pInfo->m_Values[0].m_Average;
-	
+
 	info.m_HighValue = pInfo->m_Values[0].m_Value;
 	info.m_LowValue = pInfo->m_Values[0].m_Value;
 
@@ -219,4 +219,3 @@ inline CTimingInfo< T > SumOverTimeInterval( const T &value, float nSeconds, con
 
 
 #endif // SMOOTH_AVERAGE_H
-

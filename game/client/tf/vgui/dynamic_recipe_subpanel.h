@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ class CImageButton;
 class CRecipeComponentItemModelPanel;
 
 class CRecipeComponentItemModelPanel : public CItemModelPanel
-{	
+{
 public:
 	DECLARE_CLASS_SIMPLE( CRecipeComponentItemModelPanel, CItemModelPanel );
 	CRecipeComponentItemModelPanel( vgui::Panel *parent, const char *name );
@@ -247,7 +247,7 @@ private:
 	MESSAGE_FUNC_PTR( OnItemPanelEntered, "ItemPanelEntered", panel );
 	MESSAGE_FUNC_PTR( OnItemPanelExited, "ItemPanelExited", panel );
 	MESSAGE_FUNC( OnRecipeCompleted, "RecipeCompleted" );
-	
+
 	virtual bool AllowDragging( CItemModelPanel *panel ) OVERRIDE;
 	virtual void StartDrag( int x, int y ) OVERRIDE;
 	virtual void StopDrag( bool bSucceeded ) OVERRIDE;

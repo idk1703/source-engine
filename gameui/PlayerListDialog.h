@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 class CPlayerListDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CPlayerListDialog, vgui::Frame ); 
+	DECLARE_CLASS_SIMPLE( CPlayerListDialog, vgui::Frame );
 
 public:
 	CPlayerListDialog(vgui::Panel *parent);

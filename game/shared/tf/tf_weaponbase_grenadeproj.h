@@ -97,8 +97,8 @@ public:
 
 	DECLARE_DATADESC();
 
-	static CTFWeaponBaseGrenadeProj *Create( const char *szName, const Vector &position, const QAngle &angles, 
-				const Vector &velocity, const AngularImpulse &angVelocity, 
+	static CTFWeaponBaseGrenadeProj *Create( const char *szName, const Vector &position, const QAngle &angles,
+				const Vector &velocity, const AngularImpulse &angVelocity,
 				CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, int iFlags );
 
 	int						OnTakeDamage( const CTakeDamageInfo &info );

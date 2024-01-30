@@ -137,7 +137,7 @@ extern ConVar commentary;
 #ifndef NO_STEAM
 // this context is not available on dedicated servers
 // WARNING! always check if interfaces are available before using
-static CSteamAPIContext s_SteamAPIContext;	
+static CSteamAPIContext s_SteamAPIContext;
 CSteamAPIContext *steamapicontext = &s_SteamAPIContext;
 
 // this context is not available on a pure client connected to a remote server.
@@ -274,7 +274,7 @@ class CPostFrameNavigationHook;
 extern CPostFrameNavigationHook *PostFrameNavigationSystem( void );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int UTIL_GetCommandClientIndex( void )
@@ -287,7 +287,7 @@ int UTIL_GetCommandClientIndex( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CBasePlayer
 //-----------------------------------------------------------------------------
 CBasePlayer *UTIL_GetCommandClient( void )
@@ -319,7 +319,7 @@ bool UTIL_GetModDir( char *lpszTextOut, unsigned int nSize )
 	{
 		// Strip the last directory off (which will be our game dir)
 		Q_StripLastDir( lpszTextOut, nSize );
-		
+
 		// Find the difference in string lengths and take that difference from the original string as the mod dir
 		int dirlen = Q_strlen( lpszTextOut );
 		Q_strncpy( lpszTextOut, pGameDir + dirlen, Q_strlen( pGameDir ) - dirlen + 1 );
@@ -346,7 +346,7 @@ extern ConVar think_limit;
 #if 0
 //-----------------------------------------------------------------------------
 // Purpose: Draw output overlays for any measure sections
-// Input  : 
+// Input  :
 //-----------------------------------------------------------------------------
 void DrawMeasuredSections(void)
 {
@@ -359,7 +359,7 @@ void DrawMeasuredSections(void)
 		char str[256];
 		Q_snprintf(str,sizeof(str),"%s",p->GetName());
 		NDebugOverlay::ScreenText( 0.01,0.51+(row*rowheight),str, 255,255,255,255, 0.0 );
-		
+
 		Q_snprintf(str,sizeof(str),"%5.2f\n",p->GetTime().GetMillisecondsF());
 		//Q_snprintf(str,sizeof(str),"%3.3f\n",p->GetTime().GetSeconds() * 100.0 / engine->Time());
 		NDebugOverlay::ScreenText( 0.28,0.51+(row*rowheight),str, 255,255,255,255, 0.0 );
@@ -392,7 +392,7 @@ void DrawMeasuredSections(void)
 	p = CMeasureSection::GetList();
 	while ( p )
 	{
-		// Update max 
+		// Update max
 		p->UpdateMax();
 
 		// Reset regular accum.
@@ -411,7 +411,7 @@ void DrawMeasuredSections(void)
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void DrawAllDebugOverlays( void ) 
+void DrawAllDebugOverlays( void )
 {
 	// If in debug select mode print the selection entities name or classname
 	if (CBaseEntity::m_bInDebugSelect)
@@ -423,7 +423,7 @@ void DrawAllDebugOverlays( void )
 			// First try to trace a hull to an entity
 			CBaseEntity *pEntity = FindPickerEntity( pPlayer );
 
-			if ( pEntity ) 
+			if ( pEntity )
 			{
 				pEntity->DrawDebugTextOverlays();
 				pEntity->DrawBBoxOverlay();
@@ -433,7 +433,7 @@ void DrawAllDebugOverlays( void )
 	}
 
 	// --------------------------------------------------------
-	//  Draw debug overlay lines 
+	//  Draw debug overlay lines
 	// --------------------------------------------------------
 	UTIL_DrawOverlayLines();
 
@@ -443,7 +443,7 @@ void DrawAllDebugOverlays( void )
 	if (engine->IsInEditMode())
 	{
 		CBasePlayer* pPlayer = UTIL_PlayerByIndex( CBaseEntity::m_nDebugPlayer );
-		if (pPlayer) 
+		if (pPlayer)
 		{
 			if (g_pAINetworkManager->GetEditOps()->m_bLinkEditMode)
 			{
@@ -455,7 +455,7 @@ void DrawAllDebugOverlays( void )
 					Vector endPos	= g_pBigAINet->GetNode(pAILink->m_iDestID)->GetPosition(g_pAINetworkManager->GetEditOps()->m_iHullDrawNum);
 					Vector linkDir	= startPos-endPos;
 					float linkLen = VectorNormalize( linkDir );
-					
+
 					// Draw in green if link that's been turned off
 					if (pAILink->m_LinkInfo & bits_LINK_OFF)
 					{
@@ -545,9 +545,9 @@ void DrawAllDebugOverlays( void )
 				continue;
 
 			char tempstr[512];
-			Q_snprintf(tempstr, sizeof(tempstr),"%s: Mass: %.2f kg / %.2f lb (%s)", 
-				STRING( ent->GetModelName() ), ent->VPhysicsGetObject()->GetMass(), 
-				kg2lbs(ent->VPhysicsGetObject()->GetMass()), 
+			Q_snprintf(tempstr, sizeof(tempstr),"%s: Mass: %.2f kg / %.2f lb (%s)",
+				STRING( ent->GetModelName() ), ent->VPhysicsGetObject()->GetMass(),
+				kg2lbs(ent->VPhysicsGetObject()->GetMass()),
 				GetMassEquivalent(ent->VPhysicsGetObject()->GetMass()));
 			ent->EntityText(0, tempstr, 0);
 		}
@@ -565,8 +565,8 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CServerGameDLL, IServerGameDLL, INTERFACEVERSI
 // When bumping the version to this interface, check that our assumption is still valid and expose the older version in the same way
 COMPILE_TIME_ASSERT( INTERFACEVERSION_SERVERGAMEDLL_INT == 10 );
 
-bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory, 
-		CreateInterfaceFn physicsFactory, CreateInterfaceFn fileSystemFactory, 
+bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
+		CreateInterfaceFn physicsFactory, CreateInterfaceFn fileSystemFactory,
 		CGlobalVars *pGlobals)
 {
 	ConnectTier1Libraries( &appSystemFactory, 1 );
@@ -641,7 +641,7 @@ bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
 	gpGlobals = pGlobals;
 
 	g_pSharedChangeInfo = engine->GetSharedEdictChangeInfo();
-	
+
 	MathLib_Init( 2.2f, 2.2f, 0.0f, 2.0f );
 
 	// save these in case other system inits need them
@@ -651,12 +651,12 @@ bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
 	factories.physicsFactory = physicsFactory;
 	FactoryList_Store( factories );
 
-	// load used game events  
+	// load used game events
 	gameeventmanager->LoadEventsFromFile("resource/gameevents.res");
 
 	// init the cvar list first in case inits want to reference them
 	InitializeCvars();
-	
+
 	// Initialize the particle system
 	if ( !g_pParticleSystemMgr->Init( g_pParticleSystemQuery ) )
 	{
@@ -687,14 +687,14 @@ bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
 
 	// Physics must occur before the sound envelope manager
 	IGameSystem::Add( PhysicsGameSystem() );
-	
+
 	// Used to service deferred navigation queries for NPCs
 	IGameSystem::Add( (IGameSystem *) PostFrameNavigationSystem() );
 
 	// Add game log system
 	IGameSystem::Add( GameLogSystem() );
 #ifndef _XBOX
-	// Add HLTV director 
+	// Add HLTV director
 	IGameSystem::Add( HLTVDirectorSystem() );
 #endif
 	// Add sound emitter
@@ -794,10 +794,10 @@ void CServerGameDLL::DLLShutdown( void )
 #ifndef _X360
 	s_SteamAPIContext.Clear(); // Steam API context shutdown
 	s_SteamGameServerAPIContext.Clear();
-#endif	
+#endif
 
 	gameeventmanager = NULL;
-	
+
 	DisconnectTier3Libraries();
 	DisconnectTier2Libraries();
 	ConVar_Unregister();
@@ -895,7 +895,7 @@ void EndRestoreEntities()
 {
 	if ( !g_InRestore )
 		return;
-		
+
 	// The entire hierarchy is restored, so we can call GetAbsOrigin again.
 	//CBaseEntity::SetAbsQueriesValid( true );
 
@@ -1109,9 +1109,9 @@ void CServerGameDLL::ServerActivate( edict_t *pEdictList, int edictCount, int cl
 
 			BeginCheckChainedActivate();
 			pClass->Activate();
-			
+
 			// We don't care if it finished activating if it decided to remove itself.
-			EndCheckChainedActivate( !( pClass->GetEFlags() & EFL_KILLME ) ); 
+			EndCheckChainedActivate( !( pClass->GetEFlags() & EFL_KILLME ) );
 		}
 	}
 
@@ -1238,7 +1238,7 @@ void CServerGameDLL::GameFrame( bool simulating )
 	g_pServerBenchmark->UpdateBenchmark();
 
 	Physics_RunThinkFunctions( simulating );
-	
+
 	IGameSystem::FrameUpdatePostEntityThinkAllSystems();
 
 	// UNDONE: Make these systems IGameSystems and move these calls into FrameUpdatePostEntityThink()
@@ -1282,7 +1282,7 @@ void CServerGameDLL::GameFrame( bool simulating )
 
 //-----------------------------------------------------------------------------
 // Purpose: Called every frame even if not ticking
-// Input  : simulating - 
+// Input  : simulating -
 //-----------------------------------------------------------------------------
 void CServerGameDLL::PreClientUpdate( bool simulating )
 {
@@ -1299,7 +1299,7 @@ void CServerGameDLL::PreClientUpdate( bool simulating )
 //#ifdef _DEBUG  - allow this in release for now
 	DrawAllDebugOverlays();
 //#endif
-	
+
 	IGameSystem::PreClientUpdateAllSystems();
 
 #ifdef _DEBUG
@@ -1404,8 +1404,8 @@ void CServerGameDLL::LevelShutdown( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
+// Purpose:
+// Input  :
 // Output : ServerClass*
 //-----------------------------------------------------------------------------
 ServerClass* CServerGameDLL::GetAllServerClasses()
@@ -1449,7 +1449,7 @@ void CServerGameDLL::CreateNetworkStringTables( void )
 			g_pStringTableMaterials &&
 			g_pStringTableInfoPanel &&
 			g_pStringTableClientSideChoreoScenes &&
-			g_pStringTableServerMapCycle && 
+			g_pStringTableServerMapCycle &&
 			bPopFilesValid
 			);
 
@@ -1529,10 +1529,10 @@ void CServerGameDLL::Restore( CSaveRestoreData *s, bool b)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_type - 
-//			*name - 
-//			size - 
+// Purpose:
+// Input  : msg_type -
+//			*name -
+//			size -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 
@@ -1644,7 +1644,7 @@ static TITLECOMMENT gTitleComments[] =
 
 	{ "d1_trainstation_05", "#HL2_Chapter2_Title" },
 	{ "d1_trainstation_06", "#HL2_Chapter2_Title" },
-	
+
 	{ "d1_trainstation_", "#HL2_Chapter1_Title" },
 
 	{ "d1_canals_06", "#HL2_Chapter4_Title" },
@@ -1652,7 +1652,7 @@ static TITLECOMMENT gTitleComments[] =
 	{ "d1_canals_08", "#HL2_Chapter4_Title" },
 	{ "d1_canals_09", "#HL2_Chapter4_Title" },
 	{ "d1_canals_1", "#HL2_Chapter4_Title" },
-	
+
 	{ "d1_canals_0", "#HL2_Chapter3_Title" },
 
 	{ "d1_eli_", "#HL2_Chapter5_Title" },
@@ -1702,20 +1702,20 @@ static TITLECOMMENT gTitleComments[] =
 	{ "ep2_outland_03", "#ep2_Chapter2_Title" },
 	{ "ep2_outland_04", "#ep2_Chapter2_Title" },
 	{ "ep2_outland_05", "#ep2_Chapter3_Title" },
-	
+
 	{ "ep2_outland_06a", "#ep2_Chapter4_Title" },
 	{ "ep2_outland_06", "#ep2_Chapter3_Title" },
 
 	{ "ep2_outland_07", "#ep2_Chapter4_Title" },
 	{ "ep2_outland_08", "#ep2_Chapter4_Title" },
 	{ "ep2_outland_09", "#ep2_Chapter5_Title" },
-	
+
 	{ "ep2_outland_10a", "#ep2_Chapter5_Title" },
 	{ "ep2_outland_10", "#ep2_Chapter5_Title" },
 
 	{ "ep2_outland_11a", "#ep2_Chapter6_Title" },
 	{ "ep2_outland_11", "#ep2_Chapter6_Title" },
-	
+
 	{ "ep2_outland_12a", "#ep2_Chapter7_Title" },
 	{ "ep2_outland_12", "#ep2_Chapter6_Title" },
 #endif
@@ -1770,7 +1770,7 @@ void CServerGameDLL::GetSaveComment( char *text, int maxlength, float flMinutes,
 			break;
 		}
 	}
-	
+
 	// If we didn't get one, use the designer's map name, or the BSP name itself
 	if ( !pName )
 	{
@@ -1863,7 +1863,7 @@ IServerGCLobby *CServerGameDLL::GetServerGCLobby()
 {
 #ifdef TF_DLL
 	return GTFGCClientSystem();
-#else	
+#else
 	return NULL;
 #endif
 }
@@ -1939,7 +1939,7 @@ void CServerGameDLL::Status( void (*print) (const char *fmt, ...) )
 
 //-----------------------------------------------------------------------------
 void CServerGameDLL::PrepareLevelResources( /* in/out */ char *pszMapName, size_t nMapNameSize,
-                                            /* in/out */ char *pszMapFile, size_t nMapFileSize )
+	/* in/out */ char *pszMapFile, size_t nMapFileSize )
 {
 #ifdef TF_DLL
 	TFMapsWorkshop()->PrepareLevelResources( pszMapName, nMapNameSize, pszMapFile, nMapFileSize );
@@ -1949,8 +1949,8 @@ void CServerGameDLL::PrepareLevelResources( /* in/out */ char *pszMapName, size_
 //-----------------------------------------------------------------------------
 IServerGameDLL::ePrepareLevelResourcesResult
 CServerGameDLL::AsyncPrepareLevelResources( /* in/out */ char *pszMapName, size_t nMapNameSize,
-                                            /* in/out */ char *pszMapFile, size_t nMapFileSize,
-                                            float *flProgress /* = NULL */ )
+	/* in/out */ char *pszMapFile, size_t nMapFileSize,
+	float *flProgress /* = NULL */ )
 {
 #ifdef TF_DLL
 	return TFMapsWorkshop()->AsyncPrepareLevelResources( pszMapName, nMapNameSize, pszMapFile, nMapFileSize, flProgress );
@@ -2007,8 +2007,8 @@ static bool IsValidPath( const char *pszFilename )
 	}
 
 	if ( Q_strlen( pszFilename ) <= 0    ||
-		 Q_IsAbsolutePath( pszFilename ) || // to protect absolute paths
-		 Q_strstr( pszFilename, ".." ) )    // to protect relative paths
+		Q_IsAbsolutePath( pszFilename ) || // to protect absolute paths
+		Q_strstr( pszFilename, ".." ) )    // to protect relative paths
 	{
 		return false;
 	}
@@ -2126,7 +2126,7 @@ void UpdateChapterRestrictions( const char *mapname )
 
 	// make sure the specified chapter title is unlocked
 	strlwr( chapterTitle );
-	
+
 	// Get our active mod directory name
 	char modDir[MAX_PATH];
 	if ( UTIL_GetModDir( modDir, sizeof(modDir) ) == false )
@@ -2262,7 +2262,7 @@ void UpdateRichPresence ( void )
 			Warning( "GameInterface: UserSetContext failed.\n" );
 		}
 	}
-	
+
 	// Set which game the user is playing
 	if ( !xboxsystem->UserSetContext( XBX_GetPrimaryUserId(), CONTEXT_GAME, iGameID, true ) )
 	{
@@ -2299,7 +2299,7 @@ int GetMaterialIndex( const char *pMaterialName )
 	if (pMaterialName)
 	{
 		int nIndex = g_pStringTableMaterials->FindStringIndex( pMaterialName );
-		
+
 		if (nIndex != INVALID_STRING_INDEX )
 		{
 			return nIndex;
@@ -2379,7 +2379,7 @@ class CServerGameEnts : public IServerGameEnts
 public:
 	virtual void			SetDebugEdictBase(edict_t *base);
 	virtual void			MarkEntitiesAsTouching( edict_t *e1, edict_t *e2 );
-	virtual void			FreeContainingEntity( edict_t * ); 
+	virtual void			FreeContainingEntity( edict_t * );
 	virtual edict_t*		BaseEntityToEdict( CBaseEntity *pEnt );
 	virtual CBaseEntity*	EdictToBaseEntity( edict_t *pEdict );
 	virtual void			CheckTransmit( CCheckTransmitInfo *pInfo, const unsigned short *pEdictIndices, int nEdicts );
@@ -2393,8 +2393,8 @@ void CServerGameEnts::SetDebugEdictBase(edict_t *base)
 
 //-----------------------------------------------------------------------------
 // Purpose: Marks entities as touching
-// Input  : *e1 - 
-//			*e2 - 
+// Input  : *e1 -
+//			*e2 -
 //-----------------------------------------------------------------------------
 void CServerGameEnts::MarkEntitiesAsTouching( edict_t *e1, edict_t *e2 )
 {
@@ -2462,7 +2462,7 @@ void CServerGameEnts::CheckTransmit( CCheckTransmitInfo *pInfo, const unsigned s
 	Assert( pRecipientEntity && pRecipientEntity->IsPlayer() );
 	if ( !pRecipientEntity )
 		return;
-	
+
 	MDLCACHE_CRITICAL_SECTION();
 	CBasePlayer *pRecipientPlayer = static_cast<CBasePlayer*>( pRecipientEntity );
 	const int skyBoxArea = pRecipientPlayer->m_Local.m_skybox3d.area;
@@ -2473,7 +2473,7 @@ void CServerGameEnts::CheckTransmit( CCheckTransmitInfo *pInfo, const unsigned s
 
 	// m_pTransmitAlways must be set if HLTV client
 	Assert( bIsHLTV == ( pInfo->m_pTransmitAlways != NULL) ||
-		    bIsReplay == ( pInfo->m_pTransmitAlways != NULL) );
+		bIsReplay == ( pInfo->m_pTransmitAlways != NULL) );
 #endif
 
 	for ( int i=0; i < nEdicts; i++ )
@@ -2487,26 +2487,26 @@ void CServerGameEnts::CheckTransmit( CCheckTransmitInfo *pInfo, const unsigned s
 		// entity needs no transmit
 		if ( nFlags & FL_EDICT_DONTSEND )
 			continue;
-		
+
 		// entity is already marked for sending
 		if ( pInfo->m_pTransmitEdict->Get( iEdict ) )
 			continue;
-		
+
 		if ( nFlags & FL_EDICT_ALWAYS )
 		{
-			// FIXME: Hey! Shouldn't this be using SetTransmit so as 
+			// FIXME: Hey! Shouldn't this be using SetTransmit so as
 			// to also force network down dependent entities?
 			while ( true )
 			{
 				// mark entity for sending
 				pInfo->m_pTransmitEdict->Set( iEdict );
-	
+
 #ifndef _X360
 				if ( bIsHLTV || bIsReplay )
 				{
 					pInfo->m_pTransmitAlways->Set( iEdict );
 				}
-#endif	
+#endif
 				CServerNetworkProperty *pEnt = static_cast<CServerNetworkProperty*>( pEdict->GetNetworkable() );
 				if ( !pEnt )
 					break;
@@ -2536,7 +2536,7 @@ void CServerGameEnts::CheckTransmit( CCheckTransmitInfo *pInfo, const unsigned s
 			{
 				pEnt->SetTransmit( pInfo, true );
 				continue;
-			}	
+			}
 		}
 
 		// don't send this entity
@@ -2585,7 +2585,7 @@ void CServerGameEnts::CheckTransmit( CCheckTransmitInfo *pInfo, const unsigned s
 
 		// BUG BUG:  I think it might be better to build up a list of edict indices which "depend" on other answers and then
 		// resolve them in a second pass.  Not sure what happens if an entity has two parents who both request PVS check?
-        while ( check )
+	while ( check )
 		{
 			int checkIndex = check->entindex();
 
@@ -2659,10 +2659,10 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CServerGameClients, IServerGameClients, INTERF
 // Output : Returns TRUE if player is allowed to join, FALSE if connection is denied.
 //-----------------------------------------------------------------------------
 bool CServerGameClients::ClientConnect( edict_t *pEdict, const char *pszName, const char *pszAddress, char *reject, int maxrejectlen )
-{	
+{
 	if ( !g_pGameRules )
 		return false;
-	
+
 	return g_pGameRules->ClientConnected( pEdict, pszName, pszAddress, reject, maxrejectlen );
 }
 
@@ -2673,7 +2673,7 @@ bool CServerGameClients::ClientConnect( edict_t *pEdict, const char *pszName, co
 void CServerGameClients::ClientActive( edict_t *pEdict, bool bLoadGame )
 {
 	MDLCACHE_CRITICAL_SECTION();
-	
+
 	::ClientActive( pEdict, bLoadGame );
 
 	// If we just loaded from a save file, call OnRestore on valid entities
@@ -2714,7 +2714,7 @@ void CServerGameClients::ClientActive( edict_t *pEdict, bool bLoadGame )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : *pPlayer - the player
 //-----------------------------------------------------------------------------
 void CServerGameClients::ClientSpawned( edict_t *pPlayer )
@@ -2743,7 +2743,7 @@ void CServerGameClients::ClientDisconnect( edict_t *pEdict )
 			CSound *pSound;
 			pSound = CSoundEnt::SoundPointerForIndex( CSoundEnt::ClientSoundIndex( pEdict ) );
 			{
-				// since this client isn't around to think anymore, reset their sound. 
+				// since this client isn't around to think anymore, reset their sound.
 				if ( pSound )
 				{
 					pSound->Reset();
@@ -2806,7 +2806,7 @@ void CServerGameClients::ClientCommand( edict_t *pEntity, const CCommand &args )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: called after the player changes userinfo - gives dll a chance to modify 
+// Purpose: called after the player changes userinfo - gives dll a chance to modify
 //			it before it gets sent into the rest of the engine->
 // Input  : *pEdict - the player
 //			*infobuffer - their infobuffer
@@ -2818,7 +2818,7 @@ void CServerGameClients::ClientSettingsChanged( edict_t *pEdict )
 		return;
 
 	CBasePlayer *player = ( CBasePlayer * )CBaseEntity::Instance( pEdict );
-	
+
 	if ( !player )
 		return;
 
@@ -2829,12 +2829,12 @@ void CServerGameClients::ClientSettingsChanged( edict_t *pEdict )
 #define QUICKGETCVARVALUE(v) (engine->GetClientConVarValue( player->entindex(), v ))
 
 	// get network setting for prediction & lag compensation
-	
+
 	// Unfortunately, we have to duplicate the code in cdll_bounded_cvars.cpp here because the client
 	// doesn't send the virtualized value up (because it has no way to know when the virtualized value
 	// changes). Possible todo: put the responsibility on the bounded cvar to notify the engine when
-	// its virtualized value has changed.		
-	
+	// its virtualized value has changed.
+
 	player->m_nUpdateRate = Q_atoi( QUICKGETCVARVALUE("cl_updaterate") );
 	static const ConVar *pMinUpdateRate = g_pCVar->FindVar( "sv_minupdaterate" );
 	static const ConVar *pMaxUpdateRate = g_pCVar->FindVar( "sv_maxupdaterate" );
@@ -2867,7 +2867,7 @@ void CServerGameClients::ClientSettingsChanged( edict_t *pEdict )
 	{
 		player->m_fLerpTime = 0.0f;
 	}
-	
+
 #if !defined( NO_ENTITY_PREDICTION )
 	bool usePrediction = Q_atoi( QUICKGETCVARVALUE("cl_predict")) != 0;
 
@@ -2882,7 +2882,7 @@ void CServerGameClients::ClientSettingsChanged( edict_t *pEdict )
 		player->m_bPredictWeapons  = false;
 		player->m_bLagCompensation = false;
 	}
-	
+
 
 #undef QUICKGETCVARVALUE
 	}
@@ -2913,7 +2913,7 @@ int TestAreaPortalVisibilityThroughPortals ( CFuncAreaPortalBase* pAreaPortal, e
 			CProp_Portal* pRemotePortal = pLocalPortal->m_hLinkedPortal.Get();
 
 			// Make sure this portal's linked portal is in the PVS before we add what it can see
-			if ( pRemotePortal && pRemotePortal->m_bActivated && pRemotePortal->NetworkProp() && 
+			if ( pRemotePortal && pRemotePortal->m_bActivated && pRemotePortal->NetworkProp() &&
 				pRemotePortal->NetworkProp()->IsInPVS( pViewEntity, pvs, pvssize ) )
 			{
 				bool bIsOpenOnClient = true;
@@ -2929,7 +2929,7 @@ int TestAreaPortalVisibilityThroughPortals ( CFuncAreaPortalBase* pAreaPortal, e
 			}
 		}
 	}
-	
+
 	return 0;
 }
 #endif
@@ -2941,10 +2941,10 @@ int TestAreaPortalVisibilityThroughPortals ( CFuncAreaPortalBase* pAreaPortal, e
 // From the eye position, we set up the PAS and PVS to use for filtering network messages to the client.  At this point, we could
 //  override the actual PAS or PVS values, or use a different origin.
 // NOTE:  Do not cache the values of pas and pvs, as they depend on reusable memory in the engine, they are only good for this one frame
-// Input  : *pViewEntity - 
-//			*pClient - 
-//			**pvs - 
-//			**pas - 
+// Input  : *pViewEntity -
+//			*pClient -
+//			**pvs -
+//			**pas -
 //-----------------------------------------------------------------------------
 void CServerGameClients::ClientSetupVisibility( edict_t *pViewEntity, edict_t *pClient, unsigned char *pvs, int pvssize )
 {
@@ -2981,7 +2981,7 @@ void CServerGameClients::ClientSetupVisibility( edict_t *pViewEntity, edict_t *p
 
 	unsigned char portalBits[MAX_AREA_PORTAL_STATE_BYTES];
 	memset( portalBits, 0, sizeof( portalBits ) );
-	
+
 	int portalNums[512];
 	int isOpen[512];
 	int iOutPortal = 0;
@@ -2991,8 +2991,8 @@ void CServerGameClients::ClientSetupVisibility( edict_t *pViewEntity, edict_t *p
 		CFuncAreaPortalBase *pCur = g_AreaPortals[i];
 
 		bool bIsOpenOnClient = true;
-		
-		// Update our array of which portals are open and flush it if necessary.		
+
+		// Update our array of which portals are open and flush it if necessary.
 		portalNums[iOutPortal] = pCur->m_portalNumber;
 		isOpen[iOutPortal] = pCur->UpdateVisibility( org, fovDistanceAdjustFactor, bIsOpenOnClient );
 
@@ -3024,7 +3024,7 @@ void CServerGameClients::ClientSetupVisibility( edict_t *pViewEntity, edict_t *p
 				Error( "ClientSetupVisibility: portal number (%d) too large", pCur->m_portalNumber );
 			else
 				portalBits[pCur->m_portalNumber >> 3] |= (1 << (pCur->m_portalNumber & 7));
-		}	
+		}
 	}
 
 	// Flush the remaining areaportal states.
@@ -3035,7 +3035,7 @@ void CServerGameClients::ClientSetupVisibility( edict_t *pViewEntity, edict_t *p
 		// Update the area bits that get sent to the client.
 		pPlayer->m_Local.UpdateAreaBits( pPlayer, portalBits );
 
-#ifdef PORTAL 
+#ifdef PORTAL
 		// *After* the player's view has updated its area bits, add on any other areas seen by portals
 		CPortal_Player* pPortalPlayer = dynamic_cast<CPortal_Player*>( pPlayer );
 		if ( pPortalPlayer )
@@ -3050,14 +3050,14 @@ void CServerGameClients::ClientSetupVisibility( edict_t *pViewEntity, edict_t *p
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *player - 
-//			*buf - 
-//			numcmds - 
-//			totalcmds - 
-//			dropped_packets - 
-//			ignore - 
-//			paused - 
+// Purpose:
+// Input  : *player -
+//			*buf -
+//			numcmds -
+//			totalcmds -
+//			dropped_packets -
+//			ignore -
+//			paused -
 // Output : float
 //-----------------------------------------------------------------------------
 #define CMD_MAXBACKUP 64
@@ -3068,12 +3068,12 @@ float CServerGameClients::ProcessUsercmds( edict_t *player, bf_read *buf, int nu
 	int				i;
 	CUserCmd		*from, *to;
 
-	// We track last three command in case we drop some 
+	// We track last three command in case we drop some
 	//  packets but get them back.
-	CUserCmd cmds[ CMD_MAXBACKUP ];  
+	CUserCmd cmds[ CMD_MAXBACKUP ];
 
 	CUserCmd		cmdNull;  // For delta compression
-	
+
 	Assert( numcmds >= 0 );
 	Assert( ( totalcmds - numcmds ) >= 0 );
 
@@ -3164,8 +3164,8 @@ void CServerGameClients::ClientEarPosition( edict_t *pEdict, Vector *pEarOrigin 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *player - 
+// Purpose:
+// Input  : *player -
 // Output : CPlayerState
 //-----------------------------------------------------------------------------
 CPlayerState *CServerGameClients::GetPlayerState( edict_t *player )
@@ -3184,8 +3184,8 @@ CPlayerState *CServerGameClients::GetPlayerState( edict_t *player )
 //-----------------------------------------------------------------------------
 // Purpose: Anything this game .dll wants to add to the bug reporter text (e.g., the entity/model under the picker crosshair)
 //  can be added here
-// Input  : *buf - 
-//			buflen - 
+// Input  : *buf -
+//			buflen -
 //-----------------------------------------------------------------------------
 void CServerGameClients::GetBugReportInfo( char *buf, int buflen )
 {
@@ -3222,7 +3222,7 @@ void CServerGameClients::GetBugReportInfo( char *buf, int buflen )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: A user has had their network id setup and validated 
+// Purpose: A user has had their network id setup and validated
 //-----------------------------------------------------------------------------
 void CServerGameClients::NetworkIDValidated( const char *pszUserName, const char *pszNetworkID )
 {
@@ -3241,11 +3241,11 @@ void CServerGameClients::ClientCommandKeyValues( edict_t *pEntity, KeyValues *pK
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static bf_write *g_pMsgBuffer = NULL;
 
-void EntityMessageBegin( CBaseEntity * entity, bool reliable /*= false*/ ) 
+void EntityMessageBegin( CBaseEntity * entity, bool reliable /*= false*/ )
 {
 	Assert( !g_pMsgBuffer );
 
@@ -3261,7 +3261,7 @@ void UserMessageBegin( IRecipientFilter& filter, const char *messagename )
 	Assert( messagename );
 
 	int msg_type = usermessages->LookupUserMessage( messagename );
-	
+
 	if ( msg_type == -1 )
 	{
 		Error( "UserMessageBegin:  Unregistered message '%s'\n", messagename );
@@ -3389,7 +3389,7 @@ void MessageWriteEHandle( CBaseEntity *pEntity )
 		Error( "WriteEHandle called with no active message\n" );
 
 	long iEncodedEHandle;
-	
+
 	if( pEntity )
 	{
 		EHANDLE hEnt = pEntity;
@@ -3401,7 +3401,7 @@ void MessageWriteEHandle( CBaseEntity *pEntity )
 	{
 		iEncodedEHandle = INVALID_NETWORKED_EHANDLE_VALUE;
 	}
-	
+
 	g_pMsgBuffer->WriteLong( iEncodedEHandle );
 }
 

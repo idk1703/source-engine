@@ -140,7 +140,7 @@ bool CPvPRankPanel::XPState_t::BeginXPDeltaLerp()
 	return false;
 }
 
-void CPvPRankPanel::XPState_t::SOCreated( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) 
+void CPvPRankPanel::XPState_t::SOCreated( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent )
 {
 	if ( pObject->GetTypeID() == CSOTFLadderData::k_nTypeID )
 	{
@@ -148,7 +148,7 @@ void CPvPRankPanel::XPState_t::SOCreated( const CSteamID & steamIDOwner, const C
 		if( (EMatchGroup)pLadderObject->Obj().match_group() != m_eMatchGroup )
 			return;
 
-		// We'll get a eSOCacheEvent_Incremental when we're actually creating the 
+		// We'll get a eSOCacheEvent_Incremental when we're actually creating the
 		// first CSOTFLadderData object.  We dont want that to come through as
 		// "initializing" because it'll skip the leveling effects
 		UpdateXP( eEvent == eSOCacheEvent_ListenerAdded );
@@ -191,8 +191,8 @@ void CPvPRankPanel::XPState_t::SOUpdated( const CSteamID & steamIDOwner, const C
 class CMiniPvPRankPanel : public CPvPRankPanel
 {
 public:
-	CMiniPvPRankPanel( Panel* pParent, const char* pszPanelName ) : CPvPRankPanel( pParent, pszPanelName ) 
-	{} 
+	CMiniPvPRankPanel( Panel* pParent, const char* pszPanelName ) : CPvPRankPanel( pParent, pszPanelName )
+	{}
 
 private:
 	virtual KeyValues* GetConditions() const OVERRIDE
@@ -396,7 +396,7 @@ void CPvPRankPanel::OnThink()
 		// SUPER HACKS.  I dont have time to figure out popups
 		if ( m_pModelButton && vgui::input()->IsMouseDown( MOUSE_LEFT ) )
 		{
-			int nMouseX, nMouseY; 
+			int nMouseX, nMouseY;
 			input()->GetCursorPos( nMouseX, nMouseY );
 			if ( !m_bClicked && m_pModelButton->IsWithin( nMouseX, nMouseY ) )
 			{
@@ -437,7 +437,7 @@ void CPvPRankPanel::OnThink()
 
 			m_nLastLerpXP = nCurrentXP;
 		}
-		else 
+		else
 		{
 			// Our last lerp XP is caught up with current XP, but our last seen level is not up to date with what
 			// our current level actually is.  This can happen if we haven't been thinking, but we did level up somewhere
@@ -506,7 +506,7 @@ void CPvPRankPanel::OnCommand( const char *command )
 			pszSeqName = "click_B";
 			pszSoundName = "MatchMaking.MedalClickRare";
 		}
-	
+
 		m_pModelPanel->PlaySequence( pszSeqName );
 		PlaySoundEntry( pszSoundName );
 
@@ -593,10 +593,10 @@ void CPvPRankPanel::BeginXPLerp()
 						vecSources.AddToTail( pXPSource );
 					}
 				}
-					
+
 				// Sort them so users get a consistent experience
 				vecSources.Sort( &SortXPSources );
-					
+
 				// Show the sources
 				FOR_EACH_VEC( vecSources, i )
 				{
@@ -647,7 +647,7 @@ void CPvPRankPanel::PlayLevelUpEffects( const LevelInfo_t& level ) const
 	m_pModelPanel->PlaySequence( "level_up" );
 	PlaySoundEntry( level.m_pszLevelUpSound );
 	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( m_pXPBar, "PvPRankLevelUpXPBar", false);
-	
+
 	EditablePanel* pModelContainer = const_cast< CPvPRankPanel* >( this )->FindControl< EditablePanel >( "ModelContainer" );
 	if ( pModelContainer )
 	{

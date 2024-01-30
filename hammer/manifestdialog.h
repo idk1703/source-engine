@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -57,7 +57,7 @@ public:
 class CManifestListBox : public CListBox
 {
 public:
-	CManifestListBox( void ); 
+	CManifestListBox( void );
 
 	virtual void DrawItem( LPDRAWITEMSTRUCT lpDrawItemStruct );
 	virtual void MeasureItem( LPMEASUREITEMSTRUCT lpMeasureItemStruct );
@@ -180,4 +180,3 @@ public:
 };
 
 #endif // MANIFESTDIALOG_H
-

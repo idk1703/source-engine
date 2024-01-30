@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -152,7 +152,7 @@ public:
 	VWeightExportClass			*m_phec;
 	IPhyContextExport		*m_mcExport;
 	IPhysiqueExport			*m_phyExport;
-    Modifier				*m_phyMod;
+	Modifier				*m_phyMod;
 	Modifier				*m_bonesProMod;
 	BonesPro_WeightArray	*m_wa;
 private:
@@ -180,4 +180,3 @@ void GetUnifiedCoord( Point3 &p1, MaxVertWeight pweight[], MaxNode maxNode[], in
 int GetBoneWeights( IPhyContextExport *mcExport, int iVertex, MaxVertWeight *pweight);
 int GetBoneWeights( Modifier * bonesProMod, int iVertex, MaxVertWeight *pweight);
 void SetBoneWeights( Modifier * bonesProMod, int iVertex, MaxVertWeight *pweight);
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -49,7 +49,7 @@ public:
 	void		Spawn( void );
 	void		Activate( void );
 	void		DrawDebugGeometryOverlays();
-	
+
 	void		ToggleAlternatePath( void );
 	void		EnableAlternatePath( void );
 	void		DisableAlternatePath( void );
@@ -64,7 +64,7 @@ public:
 	CPathTrack	*GetNextInDir( bool bForward );
 	CPathTrack	*GetNext( void );
 	CPathTrack	*GetPrevious( void );
-	
+
 	CPathTrack	*Nearest( const Vector &origin );
 	//CPathTrack *LookAhead( Vector &origin, float dist, int move );
 	CPathTrack *LookAhead( Vector &origin, float dist, int move, CPathTrack **pNextNext = NULL );
@@ -123,7 +123,7 @@ private:
 	void		Project( CPathTrack *pstart, CPathTrack *pend, Vector &origin, float dist );
 	void		SetPrevious( CPathTrack *pprevious );
 	void		Link( void );
-	
+
 	static CPathTrack *Instance( edict_t *pent );
 
 	DECLARE_DATADESC();
@@ -131,7 +131,7 @@ private:
 	float		m_flRadius;
 	float		m_length;
 	string_t	m_altName;
-    int			m_nIterVal;
+	int			m_nIterVal;
 	TrackOrientationType_t m_eOrientationType;
 
 	COutputEvent m_OnPass;

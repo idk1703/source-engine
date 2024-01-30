@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -45,11 +45,10 @@ bool COrderBuildSentryGun::Update()
 	CBaseEntity *pEnt = GetTargetEntity();
 	if( !pEnt || !m_hOwningPlayer.Get() )
 		return true;
-	
+
 	CTFTeam *pTeam = m_hOwningPlayer->GetTFTeam();
 	if( pTeam->IsCoveredBySentryGun( pEnt->GetAbsOrigin() ) )
 		return true;
 
 	return false;
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -172,7 +172,7 @@ struct s_vertexinfo_t
 {
 	int				material;
 	int				mesh;
-	Vector			position;	
+	Vector			position;
 	Vector			normal;
 	Vector4D		tangentS;
 	Vector2D		texcoord;
@@ -185,7 +185,7 @@ struct s_vertexinfo_t
 // dstudiobone_t bone[MAXSTUDIOBONES];
 struct s_bonefixup_t
 {
-	matrix3x4_t m;	
+	matrix3x4_t m;
 };
 
 EXTERN int g_numbones;
@@ -261,7 +261,7 @@ struct s_bbox_t
 struct s_hitboxset
 {
 	char		hitboxsetname[ MAXSTUDIOHITBOXSETNAME ];
-	
+
 	int			numhitboxes;
 
 	s_bbox_t	hitbox[MAXSTUDIOSRCBONES];
@@ -403,11 +403,11 @@ struct s_motion_t
 struct s_animcmd_t
 {
 	int cmd;
-	union 
+	union
 	{
 		struct
 		{
-			int				index;	
+			int				index;
 		} weightlist;
 
 		struct
@@ -442,13 +442,13 @@ struct s_animcmd_t
 			int				loops;
 		} world;
 
-		struct 
+		struct
 		{
 			int				start;
 			int				end;
 		} fixuploop;
 
-		struct 
+		struct
 		{
 			float			angle;
 		} angle;
@@ -615,7 +615,7 @@ struct s_animation_t
 	// default adjustments
 	Vector			adjust;
 	float			scale; // ????
-	RadianEuler		rotation; 
+	RadianEuler		rotation;
 
 	s_source_t		*source;
 	char			animationname[MAX_PATH];
@@ -933,7 +933,7 @@ struct s_source_t
 	// default adjustments
 	Vector			adjust;
 	float			scale; // ????
-	RadianEuler		rotation; 
+	RadianEuler		rotation;
 
 
 	// Flex keys stored in the source data
@@ -1069,7 +1069,7 @@ struct s_flexkey_t
 {
 	int	 flexdesc;
 	int	 flexpair;
-	
+
 	s_source_t	 *source; // index into source table
 	char animationname[MAX_PATH];
 
@@ -1101,7 +1101,7 @@ EXTERN s_flexkey_t *g_defaultflexkey;
 struct s_flexop_t
 {
 	int		op;
-	union 
+	union
 	{
 		int		index;
 		float	value;
@@ -1385,7 +1385,7 @@ void Cmd_ShadowLOD( void );
 void FixupLODSources();
 
 // Get model LOD source
-s_source_t* GetModelLODSource( const char *pModelName, 
+s_source_t* GetModelLODSource( const char *pModelName,
 						const LodScriptData_t& scriptLOD, bool* pFound );
 
 
@@ -1471,7 +1471,7 @@ public:
 		strcpy( m_pDstName, pDstName );
 	}
 
-	const char *GetSrcName( void ) const 
+	const char *GetSrcName( void ) const
 	{
 		return m_pSrcName;
 	}
@@ -1515,7 +1515,7 @@ public:
 	{
 		m_bFacialAnimation = val;
 	}
-	bool GetFacialAnimationEnabled() const 
+	bool GetFacialAnimationEnabled() const
 	{
 		return m_bFacialAnimation;
 	}
@@ -1528,7 +1528,7 @@ public:
 	{
 		return m_bStrippedFromModel;
 	}
-	
+
 	LodScriptData_t()
 	{
 		m_bFacialAnimation = true;
@@ -1578,7 +1578,7 @@ extern float GetCollisionModelMass();
 // List of defined bone flex drivers
 extern DmElementHandle_t g_hDmeBoneFlexDriverList;
 
-// the first time these are called, the name of the model/QC file is printed so that when 
+// the first time these are called, the name of the model/QC file is printed so that when
 // running in batch mode, no echo, when dumping to a file, it can be determined which file is broke.
 void MdlError( PRINTF_FORMAT_STRING char const *pMsg, ... );
 void MdlWarning( PRINTF_FORMAT_STRING char const *pMsg, ... );
@@ -1599,4 +1599,3 @@ extern CCheckUVCmd g_StudioMdlCheckUVCmd;
 
 
 #endif // STUDIOMDL_H
-

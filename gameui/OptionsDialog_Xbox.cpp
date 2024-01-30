@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -87,7 +87,7 @@ struct OptionData_t
 		char		szConvar[ OPTION_STRING_LENGTH ];	// Used by all types except binds
 		char		szCommand[ OPTION_STRING_LENGTH ];	// Used exclusively by bind types
 	};
-	
+
 	char			szConvar2[ OPTION_STRING_LENGTH ];	// Used for choice types that use 2 convars
 
 	char			szConvarDef[ OPTION_STRING_LENGTH ];
@@ -156,14 +156,14 @@ bool ActionsAreTheSame( const char *pchAction1, const char *pchAction2 )
 	if ( Q_stricmp( pchAction1, pchAction2 ) == 0 )
 		return true;
 
-	if ( ( Q_stricmp( pchAction1, "+duck" ) == 0 || Q_stricmp( pchAction1, "toggle_duck" ) == 0 ) && 
+	if ( ( Q_stricmp( pchAction1, "+duck" ) == 0 || Q_stricmp( pchAction1, "toggle_duck" ) == 0 ) &&
 		 ( Q_stricmp( pchAction2, "+duck" ) == 0 || Q_stricmp( pchAction2, "toggle_duck" ) == 0 ) )
 	{
 		// +duck and toggle_duck are interchangable
 		return true;
 	}
 
-	if ( ( Q_stricmp( pchAction1, "+zoom" ) == 0 || Q_stricmp( pchAction1, "toggle_zoom" ) == 0 ) && 
+	if ( ( Q_stricmp( pchAction1, "+zoom" ) == 0 || Q_stricmp( pchAction1, "toggle_zoom" ) == 0 ) &&
 		 ( Q_stricmp( pchAction2, "+zoom" ) == 0 || Q_stricmp( pchAction2, "toggle_zoom" ) == 0 ) )
 	{
 		// +zoom and toggle_zoom are interchangable
@@ -264,13 +264,13 @@ COptionsDialogXbox::COptionsDialogXbox( vgui::Panel *parent, bool bControllerOpt
 		m_pValueBars[ iLabel ] = new AnalogBar( this, szLabelName );
 	}
 
-	// Faster repeats for sideways 
+	// Faster repeats for sideways
 	m_KeyRepeat.SetKeyRepeatTime( KEY_XBUTTON_LEFT, 0.08 );
 	m_KeyRepeat.SetKeyRepeatTime( KEY_XBUTTON_RIGHT, 0.08 );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsDialogXbox::InitializeSliderDefaults( void )
 {
@@ -287,7 +287,7 @@ void COptionsDialogXbox::InitializeSliderDefaults( void )
 		const char *pszConvarName = pOption->szConvar;
 		if ( pOption->szConvarDef && pOption->szConvarDef[0] )
 		{
-			// They've specified a different convar to use as the default 
+			// They've specified a different convar to use as the default
 			pszConvarName = pOption->szConvarDef;
 		}
 
@@ -319,7 +319,7 @@ void COptionsDialogXbox::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsDialogXbox::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -343,7 +343,7 @@ void COptionsDialogXbox::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 	int iX, iY;
 	m_pOptionsSelectionLeft->GetPos( iX, m_iSelectorYStart );
-	m_iOptionSpacing = (m_pOptionLabels[ 0 ])->GetTall(); 
+	m_iOptionSpacing = (m_pOptionLabels[ 0 ])->GetTall();
 
 	m_hLabelFont = pScheme->GetFont( "MenuLarge" );
 	m_hButtonFont = pScheme->GetFont( "GameUIButtons" );
@@ -439,7 +439,7 @@ void COptionsDialogXbox::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsDialogXbox::OnClose( void )
 {
@@ -477,7 +477,7 @@ void COptionsDialogXbox::OnClose( void )
 				// Bind DUCK key to +DUCK
 				Q_snprintf( szCommand, sizeof( szCommand ), "bind \"%s\" \"%s\"", g_pInputSystem->ButtonCodeToString( code ), "+DUCK" );
 				engine->ClientCmd_Unrestricted( szCommand );
-			}	
+			}
 		}
 	}
 
@@ -493,7 +493,7 @@ void COptionsDialogXbox::OnClose( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsDialogXbox::OnKeyCodePressed( vgui::KeyCode code )
 {
@@ -550,7 +550,7 @@ void COptionsDialogXbox::OnCommand(const char *command)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsDialogXbox::OnKeyCodeReleased( vgui::KeyCode code )
 {
@@ -560,7 +560,7 @@ void COptionsDialogXbox::OnKeyCodeReleased( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsDialogXbox::OnThink()
 {
@@ -716,7 +716,7 @@ void COptionsDialogXbox::HandleActiveKeyCodePressed( vgui::KeyCode code )
 void COptionsDialogXbox::HandleBindKeyCodePressed( vgui::KeyCode code )
 {
 	// Don't let stick movements be bound
-	if ( ( code >= KEY_XSTICK1_RIGHT && code <= KEY_XSTICK1_UP ) || 
+	if ( ( code >= KEY_XSTICK1_RIGHT && code <= KEY_XSTICK1_UP ) ||
 		 ( code >= KEY_XSTICK2_RIGHT && code <= KEY_XSTICK2_UP ) )
 		return;
 
@@ -851,7 +851,7 @@ void COptionsDialogXbox::UpdateFooter( void )
 		switch ( m_pSelectedOption->eOptionType )
 		{
 			case OPTION_TYPE_BIND:
-				m_pFooter->AddNewButtonLabel( "#GameUI_Cancel", "#GameUI_Icons_START" );			
+				m_pFooter->AddNewButtonLabel( "#GameUI_Cancel", "#GameUI_Icons_START" );
 				break;
 		}
 	}
@@ -948,7 +948,7 @@ void COptionsDialogXbox::GetChoiceFromConvar( OptionData_t *pOption )
 					break;
 				}
 
-				// We need to compare values in case we have "0" & "0.00000". 
+				// We need to compare values in case we have "0" & "0.00000".
 				if ( (pchValue[0] >= '0' && pchValue[0] <= '9') || pchValue[0] == '-' )
 				{
 					float flVal = atof(pchValue);
@@ -1125,7 +1125,7 @@ void COptionsDialogXbox::ChangeValue( float fChange )
 
 			m_bOptionsChanged = true;
 			vgui::surface()->PlaySound( "UI/buttonclick.wav" );
-			
+
 			break;
 		}
 	}
@@ -1367,7 +1367,7 @@ void COptionsDialogXbox::UpdateAllBinds( ButtonCode_t code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Read in defaults from game's default config file and populate list 
+// Purpose: Read in defaults from game's default config file and populate list
 //			using those defaults
 //-----------------------------------------------------------------------------
 void COptionsDialogXbox::FillInDefaultBindings( void )
@@ -1400,7 +1400,7 @@ void COptionsDialogXbox::FillInDefaultBindings( void )
 
 			char szBinding[256];
 			data = UTIL_Parse( data, szBinding, sizeof(szBinding) );
-			if ( strlen( szKeyName ) <= 0 )  
+			if ( strlen( szKeyName ) <= 0 )
 				break; // Error
 
 			// Bind it

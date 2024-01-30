@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -78,11 +78,11 @@ int CRotorWashEmitter::UpdateTransmitState( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &localOrigin - 
-//			&localAngles - 
-//			*pOwner - 
-//			flAltitude - 
+// Purpose:
+// Input  : &localOrigin -
+//			&localAngles -
+//			*pOwner -
+//			flAltitude -
 // Output : CBaseEntity
 //-----------------------------------------------------------------------------
 CBaseEntity *CreateRotorWashEmitter( const Vector &localOrigin, const QAngle &localAngles, CBaseEntity *pOwner, float flAltitude )

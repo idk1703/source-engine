@@ -31,12 +31,12 @@ INetworkSystem *g_pNetworkSystem;
 
 //-----------------------------------------------------------------------------
 // Purpose: Warning/Msg call back through this API
-// Input  : type - 
-//			*pMsg - 
+// Input  : type -
+//			*pMsg -
 // Output : SpewRetval_t
 //-----------------------------------------------------------------------------
 SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
-{	
+{
 	OutputDebugString( pMsg );
 	if ( type == SPEW_ASSERT )
 	{
@@ -86,14 +86,14 @@ bool CNetworkTestApp::Create()
 	// Add in the cvar factory
 	AppModule_t cvarModule = LoadModule( VStdLib_GetICVarFactory() );
 	AddSystem( cvarModule, CVAR_INTERFACE_VERSION );
-	
-	AppSystemInfo_t appSystems[] = 
+
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "networksystem.dll",		NETWORKSYSTEM_INTERFACE_VERSION },
 		{ "", "" }	// Required to terminate the list
 	};
 
-	if ( !AddSystems( appSystems ) ) 
+	if ( !AddSystems( appSystems ) )
 		return false;
 
 	g_pFileSystem = (IFileSystem*)FindSystem( FILESYSTEM_INTERFACE_VERSION );
@@ -120,18 +120,18 @@ bool CNetworkTestApp::CreateAppWindow( char const *pTitle, bool bWindowed, int w
 	WNDCLASSEX		wc;
 	memset( &wc, 0, sizeof( wc ) );
 	wc.cbSize		 = sizeof( wc );
-    wc.style         = CS_OWNDC | CS_DBLCLKS;
-    wc.lpfnWndProc   = DefWindowProc;
-    wc.hInstance     = (HINSTANCE)GetAppInstance();
-    wc.lpszClassName = "Valve001";
+	wc.style         = CS_OWNDC | CS_DBLCLKS;
+	wc.lpfnWndProc   = DefWindowProc;
+	wc.hInstance     = (HINSTANCE)GetAppInstance();
+	wc.lpszClassName = "Valve001";
 	wc.hIcon		 = NULL; //LoadIcon( s_HInstance, MAKEINTRESOURCE( IDI_LAUNCHER ) );
 	wc.hIconSm		 = wc.hIcon;
 
-    RegisterClassEx( &wc );
+	RegisterClassEx( &wc );
 
 	// Note, it's hidden
 	DWORD style = WS_POPUP | WS_CLIPSIBLINGS;
-	
+
 	if ( bWindowed )
 	{
 		// Give it a frame
@@ -152,14 +152,14 @@ bool CNetworkTestApp::CreateAppWindow( char const *pTitle, bool bWindowed, int w
 	AdjustWindowRectEx(&windowRect, style, FALSE, 0);
 
 	// Create the window
-	m_HWnd = CreateWindow( wc.lpszClassName, pTitle, style, 0, 0, 
-		windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, 
+	m_HWnd = CreateWindow( wc.lpszClassName, pTitle, style, 0, 0,
+		windowRect.right - windowRect.left, windowRect.bottom - windowRect.top,
 		NULL, NULL, (HINSTANCE)GetAppInstance(), NULL );
 
 	if (!m_HWnd)
 		return false;
 
-    int     CenterX, CenterY;
+	int     CenterX, CenterY;
 
 	CenterX = (GetSystemMetrics(SM_CXSCREEN) - w) / 2;
 	CenterY = (GetSystemMetrics(SM_CYSCREEN) - h) / 2;
@@ -168,7 +168,7 @@ bool CNetworkTestApp::CreateAppWindow( char const *pTitle, bool bWindowed, int w
 
 	// In VCR modes, keep it in the upper left so mouse coordinates are always relative to the window.
 	SetWindowPos (m_HWnd, NULL, CenterX, CenterY, 0, 0,
-				  SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW | SWP_DRAWFRAME);
+				SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW | SWP_DRAWFRAME);
 
 	return true;
 }
@@ -327,13 +327,13 @@ int CNetworkTestApp::Main()
 			// Helps avoid a buffer overflow
 			Sleep( 1 );
 
-			// Send a message out 
+			// Send a message out
 			if ( pChan->GetConnectionState() == CONNECTION_STATE_CONNECTED )
 			{
 				CTestNetworkMessage msg( 5 );
 				pChan->AddNetMsg( &msg, false );
 				msg.m_Data = 4;
- 				pChan->AddNetMsg( &msg, false );
+				pChan->AddNetMsg( &msg, false );
 			}
 
 			if ( pServerChan )
@@ -341,7 +341,7 @@ int CNetworkTestApp::Main()
 				CTestNetworkMessage msg( 6 );
 				pServerChan->AddNetMsg( &msg, false );
 				msg.m_Data = 7;
- 				pServerChan->AddNetMsg( &msg, false );
+				pServerChan->AddNetMsg( &msg, false );
 			}
 
 			g_pNetworkSystem->ClientSendMessages();
@@ -390,6 +390,3 @@ shutdownServer:
 
 	return nRetVal;
 }
-
-
-

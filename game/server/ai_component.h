@@ -20,8 +20,8 @@ struct Task_t;
 //-----------------------------------------------------------------------------
 // CAI_Component
 //
-// Purpose: Shared functionality of all classes that assume some of the 
-//			responsibilities of an owner AI. 
+// Purpose: Shared functionality of all classes that assume some of the
+//			responsibilities of an owner AI.
 //-----------------------------------------------------------------------------
 
 class CAI_Component
@@ -52,35 +52,35 @@ protected:
 	// Common services provided by CAI_BaseNPC, Convenience methods to simplify derived code
 	//
 	edict_t *			GetEdict();
-	
+
 	const Vector &		GetLocalOrigin() const;
 	void 				SetLocalOrigin( const Vector &origin );
 
 	const Vector &		GetAbsOrigin() const;
 	const QAngle&		GetAbsAngles() const;
-	
+
 	void				SetLocalAngles( const QAngle& angles );
 	const QAngle &		GetLocalAngles( void ) const;
-	
+
 	const Vector&		WorldAlignMins() const;
 	const Vector&		WorldAlignMaxs() const;
 	Vector 				WorldSpaceCenter() const;
-	
+
 	int 				GetCollisionGroup() const;
-	
+
 	void				SetSolid( SolidType_t val );
 	SolidType_t			GetSolid() const;
-	
+
 	float				GetGravity() const;
 	void				SetGravity( float );
 
 	CBaseEntity*		GetEnemy();
 	const Vector &		GetEnemyLKP() const;
 	void				TranslateNavGoal( CBaseEntity *pEnemy, Vector &chasePosition);
-	
+
 	CBaseEntity*		GetTarget();
 	void				SetTarget( CBaseEntity *pTarget );
-	
+
 	const Task_t*		GetCurTask( void );
 	virtual void		TaskFail( AI_TaskFailureCode_t );
 	void				TaskFail( const char *pszGeneralFailText );
@@ -103,15 +103,15 @@ protected:
 
 	CBaseEntity*		GetGoalEnt();
 	void				SetGoalEnt( CBaseEntity *pGoalEnt );
-	
+
 	void				Remember( int iMemory );
 	void				Forget( int iMemory );
 	bool				HasMemory( int iMemory );
 
 	CAI_Enemies *		GetEnemies();
-	
+
 	const char * 		GetEntClassname();
-	
+
 	int					CapabilitiesGet();
 
 	float				GetLastThink( const char *szContext = NULL );

@@ -33,7 +33,7 @@ CRagdollExplosionEnumerator::CRagdollExplosionEnumerator( Vector origin, float r
 IterationRetval_t CRagdollExplosionEnumerator::EnumElement( IHandleEntity *pHandleEntity )
 {
 	C_BaseEntity *pEnt = ClientEntityList().GetBaseEntityFromHandle( pHandleEntity->GetRefEHandle() );
-	
+
 	if ( pEnt == NULL )
 		return ITERATION_CONTINUE;
 
@@ -42,7 +42,7 @@ IterationRetval_t CRagdollExplosionEnumerator::EnumElement( IHandleEntity *pHand
 	// If the ragdoll was created on this tick, then the forces were already applied on the server
 	if ( pModel == NULL || WasRagdollCreatedOnCurrentTick( pEnt ) )
 		return ITERATION_CONTINUE;
-	
+
 	m_Entities.AddToTail( pEnt );
 
 	return ITERATION_CONTINUE;
@@ -70,13 +70,13 @@ CRagdollExplosionEnumerator::~CRagdollExplosionEnumerator()
 		// debugoverlay->AddLineOverlay( m_vecOrigin, position, 0,255,0, true, 18.0 );
 
 		if ( tr.fraction < 1.0f && tr.m_pEnt != pModel )
-			continue;	
+			continue;
 
 		dir *= force; // scale force
 
 		// tricky, adjust tr.start so end-start->= force
 		tr.startpos = tr.endpos - dir;
-		// move expolsion center a bit down, so things fly higher 
+		// move expolsion center a bit down, so things fly higher
 		tr.startpos.z -= 32.0f;
 
 		pModel->ImpactTrace( &tr, DMG_BLAST, NULL );
@@ -101,7 +101,7 @@ public:
 	virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
 
 private:
-	// Recording 
+	// Recording
 	void RecordExplosion( );
 
 public:
@@ -124,7 +124,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Networking 
+// Networking
 //-----------------------------------------------------------------------------
 IMPLEMENT_CLIENTCLASS_EVENT_DT(C_TEExplosion, DT_TEExplosion, CTEExplosion)
 	RecvPropInt( RECVINFO(m_nModelIndex)),
@@ -139,7 +139,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEExplosion::C_TEExplosion( void )
 {
@@ -158,14 +158,14 @@ C_TEExplosion::C_TEExplosion( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEExplosion::~C_TEExplosion( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEExplosion::AffectRagdolls( void )
 {
@@ -183,7 +183,7 @@ void C_TEExplosion::AffectRagdolls( void )
 bool CExplosionOverlay::Update( void )
 {
 	m_flLifetime += gpGlobals->frametime;
-	
+
 	const float flTotalLifetime = 0.1f;
 
 	if ( m_flLifetime < flTotalLifetime )
@@ -193,7 +193,7 @@ bool CExplosionOverlay::Update( void )
 		for( int i=0; i < m_nSprites; i++ )
 		{
 			m_Sprites[i].m_vColor = m_vBaseColors[i] * flColorScale;
-			
+
 			m_Sprites[i].m_flHorzSize += 16.0f * gpGlobals->frametime;
 			m_Sprites[i].m_flVertSize += 16.0f * gpGlobals->frametime;
 		}
@@ -206,7 +206,7 @@ bool CExplosionOverlay::Update( void )
 
 
 //-----------------------------------------------------------------------------
-// Recording 
+// Recording
 //-----------------------------------------------------------------------------
 void C_TEExplosion::RecordExplosion( )
 {
@@ -244,8 +244,8 @@ void C_TEExplosion::RecordExplosion( )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEExplosion::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -267,7 +267,7 @@ void C_TEExplosion::PostDataUpdate( DataUpdateType_t updateType )
 			pOverlay->m_flLifetime	= 0;
 			pOverlay->m_vPos		= m_vecOrigin;
 			pOverlay->m_nSprites	= 1;
-			
+
 			pOverlay->m_vBaseColors[0].Init( 1.0f, 0.9f, 0.7f );
 
 			pOverlay->m_Sprites[0].m_flHorzSize = 0.05f;
@@ -292,7 +292,7 @@ void C_TEExplosion::SimulateParticles( CParticleSimulateIterator *pIterator )
 
 
 void TE_Explosion( IRecipientFilter& filter, float delay,
-	const Vector* pos, int modelindex, float scale, int framerate, int flags, int radius, int magnitude, 
+	const Vector* pos, int modelindex, float scale, int framerate, int flags, int radius, int magnitude,
 	const Vector* normal = NULL, unsigned char materialType = 'C', bool bShouldAffectRagdolls = true )
 {
 	// Major hack to access singleton object for doing this event (simulate receiving network message)

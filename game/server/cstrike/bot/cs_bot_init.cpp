@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -308,7 +308,7 @@ void CCSBot::ResetValues( void )
 	m_hasVisitedEnemySpawn = false;
 	m_stillTimer.Invalidate();
 
-	// adjust morale - if we died, our morale decreased, 
+	// adjust morale - if we died, our morale decreased,
 	// but if we live, no adjustement (round win/loss also adjusts morale)
 	if (m_diedLastRound)
 		DecreaseMorale();
@@ -317,7 +317,7 @@ void CCSBot::ResetValues( void )
 
 
 	// IsRogue() randomly changes this
-	m_isRogue = false;	
+	m_isRogue = false;
 
 	m_surpriseTimer.Invalidate();
 
@@ -356,4 +356,3 @@ void CCSBot::Spawn( void )
 
 	Buy();
 }
-

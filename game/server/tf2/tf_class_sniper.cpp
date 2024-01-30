@@ -14,7 +14,7 @@
 #include "order_killmortarguy.h"
 
 
-bool IsEntityVisibleToTactical( int iLocalTeamNumber, int iLocalTeamPlayers, 
+bool IsEntityVisibleToTactical( int iLocalTeamNumber, int iLocalTeamPlayers,
 	int iLocalTeamScanners, int iEntIndex, const char *pEntName, int pEntTeamNumber, const Vector &pEntOrigin );
 
 ConVar	class_sniper_speed( "class_sniper_speed","200", FCVAR_NONE, "Sniper movement speed" );
@@ -34,7 +34,7 @@ END_SEND_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CPlayerClassSniper::GetClassModelString( int nTeam )
@@ -45,26 +45,26 @@ const char *CPlayerClassSniper::GetClassModelString( int nTeam )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPlayerClassSniper::CPlayerClassSniper( CBaseTFPlayer *pPlayer, TFClass iClass ) : CPlayerClass( pPlayer, iClass )
 {
 	for (int i = 0; i < MAX_TF_TEAMS; ++i)
 	{
-		SetClassModel( MAKE_STRING(GetClassModelString(i)), i ); 
+		SetClassModel( MAKE_STRING(GetClassModelString(i)), i );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPlayerClassSniper::~CPlayerClassSniper()
 {
 }
- 
+
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassSniper::ClassActivate( void )
 {
@@ -83,7 +83,7 @@ void CPlayerClassSniper::ClassActivate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassSniper::ClassDeactivate( void )
 {
@@ -91,19 +91,19 @@ void CPlayerClassSniper::ClassDeactivate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassSniper::RespawnClass( void )
 {
 	BaseClass::RespawnClass();
-	
+
 	// Hiding values
 	m_bHiding = false;
 	m_flHideTransparency = m_flLastHideUpdate = 0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CPlayerClassSniper::ResupplyAmmo( float flFraction, ResupplyReason_t reason )
 {
@@ -138,15 +138,15 @@ void CPlayerClassSniper::SetupSizeData( void )
 	// Initially set the player to the base player class standing hull size.
 	m_pPlayer->SetCollisionBounds( SNIPERCLASS_HULL_STAND_MIN, SNIPERCLASS_HULL_STAND_MAX );
 	m_pPlayer->SetViewOffset( SNIPERCLASS_VIEWOFFSET_STAND );
-	m_pPlayer->m_Local.m_flStepSize = SNIPERCLASS_STEPSIZE;	
+	m_pPlayer->m_Local.m_flStepSize = SNIPERCLASS_STEPSIZE;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CPlayerClassSniper::GetDeployTime( void )
-{ 
-	return 2.8; 
+{
+	return 2.8;
 };
 
 //-----------------------------------------------------------------------------
@@ -154,7 +154,7 @@ float CPlayerClassSniper::GetDeployTime( void )
 //-----------------------------------------------------------------------------
 void CPlayerClassSniper::ClassThink( void )
 {
-	// Only hide if we have the technology 
+	// Only hide if we have the technology
 	if ( m_bCanHide )
 	{
 		CheckHiding();
@@ -224,7 +224,7 @@ void CPlayerClassSniper::CreatePersonalOrder( void )
 {
 	if ( CreateInitialOrder() )
 		return;
-	
+
 	// Kill a support guy?
 	if ( COrderKillMortarGuy::CreateOrder( this ) )
 		return;
@@ -234,7 +234,7 @@ void CPlayerClassSniper::CreatePersonalOrder( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassSniper::SetPlayerHull( void )
 {
@@ -249,7 +249,7 @@ void CPlayerClassSniper::SetPlayerHull( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassSniper::ResetViewOffset( void )
 {
@@ -258,4 +258,3 @@ void CPlayerClassSniper::ResetViewOffset( void )
 		m_pPlayer->SetViewOffset( SNIPERCLASS_VIEWOFFSET_STAND );
 	}
 }
-

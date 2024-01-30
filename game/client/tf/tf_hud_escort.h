@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -168,8 +168,8 @@ public:
 
 	int	GetCapIndex( void ) { return m_iCPIndex; }
 	void SetForceOpaqueImages( bool state )
-	{ 
-		m_bForceOpaque = state; 
+	{
+		m_bForceOpaque = state;
 		UpdateImage();
 	}
 
@@ -179,7 +179,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose:  
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFHudEscort : public vgui::EditablePanel, public CGameEventListener
 {
@@ -201,7 +201,7 @@ public:
 
 	void SetTeam( int nTeam )
 	{
-		m_nTeam = nTeam; 
+		m_nTeam = nTeam;
 		if ( m_pProgressBar )
 		{
 			m_pProgressBar->SetTeam( m_nTeam );
@@ -242,7 +242,7 @@ private:
 	CEscortStatusTeardrop *m_pStatus;
 	int m_iCurrentCP;
 
-	CControlPointIconSwoop *m_pHilightSwoop;	
+	CControlPointIconSwoop *m_pHilightSwoop;
 	bool m_bShowSwoop;
 
 	float m_flRecedeTime;
@@ -269,7 +269,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose:  
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFHudMultipleEscort : public vgui::EditablePanel, public CGameEventListener
 {

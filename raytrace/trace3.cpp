@@ -49,7 +49,7 @@ void RayTracingEnvironment::AddBSPFace(int id,dface_t const &face)
 	int ntris=face.numedges-2;
 	for(int tri=0;tri<ntris;tri++)
 	{
-		
+
 		AddTriangle(id,VertCoord(face,0),VertCoord(face,(tri+1)%face.numedges),
 					VertCoord(face,(tri+2)%face.numedges),Vector(1,1,1)); //colors[id % NELEMS(colors)]);
 	}
@@ -77,14 +77,14 @@ void RayTracingEnvironment::InitializeFromLoadedBSP(void)
 // 		dface_t const &f=dorigfaces[c];
 // 		if (SidesToSkip[f.AddBSPFace(c,dorigfaces[c]);
 // 	}
-	
+
 
 
 // 	// ugly - I want to traverse all the faces. but there is no way to get from a face back to it's
 // 	// original brush, and I need to get back to the face to the contents field of the brush.  So I
 // 	// will create a temporary mapping from a "side" to its brush. I can get from the face to it
 // 	// side, which can get me back to its brush.
-	
+
 // 	CUtlVector<uint8> OrigFaceVisited;
 // 	OrigFaceVisited.EnsureCapacity(numorigfaces);
 // 	int n_added=0;
@@ -124,4 +124,3 @@ void RayTracingEnvironment::InitializeFromLoadedBSP(void)
 
 //	AddTriangle(1234,Vector(51,145,-700),Vector(71,165,-700),Vector(51,165,-700),colors[5]);
 }
-

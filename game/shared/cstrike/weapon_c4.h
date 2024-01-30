@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -41,10 +41,10 @@
 		virtual int  UpdateTransmitState();
 		virtual void SetTransmit( CCheckTransmitInfo *pInfo, bool bAlways );
 		virtual int  ShouldTransmit( const CCheckTransmitInfo *pInfo );
-		
+
 		static CPlantedC4* ShootSatchelCharge( CCSPlayer *pevOwner, Vector vecStart, QAngle vecAngles );
 		virtual void Precache();
-		
+
 		// Set these flags so CTs can use the C4 to disarm it.
 		virtual int	ObjectCaps() { return BaseClass::ObjectCaps() | (FCAP_CONTINUOUS_USE | FCAP_USE_IN_RADIUS); }
 
@@ -52,21 +52,21 @@
 
 		inline bool IsBombActive( void ) { return m_bBombTicking; }
 
-        //=============================================================================
-        // HPE_BEGIN:
-        // [tj] Accessors related to planting of the bomb
-        //=============================================================================
- 
-        CCSPlayer*  GetPlanter() { return m_pPlanter; }
-        void        SetPlanter(CCSPlayer* player) { m_pPlanter = player; }
-        
-        void SetPlantedAfterPickup (bool plantedAfterPickup) { m_bPlantedAfterPickup = plantedAfterPickup; }
- 
-        //=============================================================================
-        // HPE_END
-        //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [tj] Accessors related to planting of the bomb
+	//=============================================================================
 
-		
+	CCSPlayer*  GetPlanter() { return m_pPlanter; }
+	void        SetPlanter(CCSPlayer* player) { m_pPlanter = player; }
+
+	void SetPlantedAfterPickup (bool plantedAfterPickup) { m_bPlantedAfterPickup = plantedAfterPickup; }
+
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
+
+
 	public:
 
 		CNetworkVar( bool, m_bBombTicking );
@@ -76,7 +76,7 @@
 
 		void Init( CCSPlayer *pevOwner, Vector vecStart, QAngle vecAngles );
 		void C4Think();
-		
+
 		// This becomes the think function when the timer has expired and it is about to explode.
 		void DetonateThink();
 		void Explode( trace_t *pTrace, int bitsDamageType );
@@ -105,20 +105,20 @@
 
 		int m_iProgressBarTime;
 
-        //=============================================================================
-        // HPE_BEGIN:        
-        //=============================================================================
-         
-        // [tj] We need to store who planted the bomb so we can track who deserves credits for the kills
-        CHandle<CCSPlayer>  m_pPlanter;
+	//=============================================================================
+	// HPE_BEGIN:
+	//=============================================================================
 
-        // [tj] We need to know if this was planted by a player who recovered the bomb
-        bool m_bPlantedAfterPickup;
-         
-        //=============================================================================
-        // HPE_END
-        //=============================================================================
-        
+	// [tj] We need to store who planted the bomb so we can track who deserves credits for the kills
+	CHandle<CCSPlayer>  m_pPlanter;
+
+	// [tj] We need to know if this was planted by a player who recovered the bomb
+	bool m_bPlantedAfterPickup;
+
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
+
 	};
 
 	extern CUtlVector< CPlantedC4* > g_PlantedC4s;
@@ -132,12 +132,12 @@ class CC4 : public CWeaponCSBase
 {
 public:
 	DECLARE_CLASS( CC4, CWeaponCSBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CC4();
 	virtual ~CC4();
-	
+
 	virtual void Spawn();
 
 	bool IsPistol() const;
@@ -156,9 +156,9 @@ public:
 		virtual bool OnFireEvent( C_BaseViewModel *pViewModel, const Vector& origin, const QAngle& angles, int event, const char *options );
 		char *GetScreenText( void );
 		char m_szScreenText[32];
-		
+
 	#else
-		
+
 		virtual void Precache();
 		virtual void GetControlPanelInfo( int nPanelIndex, const char *&pPanelName );
 		virtual unsigned int PhysicsSolidMaskForEntity( void ) const;
@@ -166,18 +166,18 @@ public:
 		virtual bool Holster( CBaseCombatWeapon *pSwitchingTo );
 		virtual bool ShouldRemoveOnRoundRestart();
 
-        //=============================================================================
-        // HPE_BEGIN:
-        // [tj] Simple Setter
-        //=============================================================================
-         
-        void SetDroppedFromDeath(bool droppedFromDeath) { m_bDroppedFromDeath = droppedFromDeath; }
-         
-        //=============================================================================
-        // HPE_END
-        //=============================================================================
-        
-	
+	//=============================================================================
+	// HPE_BEGIN:
+	// [tj] Simple Setter
+	//=============================================================================
+
+	void SetDroppedFromDeath(bool droppedFromDeath) { m_bDroppedFromDeath = droppedFromDeath; }
+
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
+
+
 	#endif
 
 	void AbortBombPlant();
@@ -192,24 +192,24 @@ public:
 
 	virtual bool IsRemoveable( void ) { return false; }
 
-private:	
+private:
 	bool m_bPlayedArmingBeeps[NUM_BEEPS];
 	bool m_bBombPlanted;
-    
-    //=============================================================================
-    // HPE_BEGIN:
-    // [tj] we want to store if this bomb was dropped because the original owner was killed
-    //=============================================================================
-     
-    bool m_bDroppedFromDeath;
-     
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
-    
+
+	//=============================================================================
+	// HPE_BEGIN:
+	// [tj] we want to store if this bomb was dropped because the original owner was killed
+	//=============================================================================
+
+	bool m_bDroppedFromDeath;
+
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
+
 
 private:
-	
+
 	CC4( const CC4 & );
 };
 

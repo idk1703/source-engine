@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -38,7 +38,7 @@ public:
 
 	DECLARE_MAPCLASS(CMapEntity,CMapClass);
 
-	CMapEntity(); 
+	CMapEntity();
 	~CMapEntity();
 
 	void Debug(void);
@@ -46,7 +46,7 @@ public:
 	size_t GetSize();
 
 	int m_EntityTypeFlags;									// for fast checks w/o using class name
-	
+
 	//
 	// For flags field.
 	//

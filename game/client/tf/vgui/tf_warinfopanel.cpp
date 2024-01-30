@@ -73,7 +73,7 @@ void CWarStandingPanel::ApplySchemeSettings( IScheme *pScheme )
 	}
 }
 
-void CWarStandingPanel::ApplySettings( KeyValues *inResourceData ) 
+void CWarStandingPanel::ApplySettings( KeyValues *inResourceData )
 {
 	BaseClass::ApplySettings( inResourceData );
 
@@ -103,7 +103,7 @@ void CWarStandingPanel::OnThink()
 		{
 			// Lerp flPercent from [0,1] -> [StartScore,EndScore]
 			float flCurrentScore = RemapValClamped( flPercent, 0.f, 1.f, (float)m_Scores[i].m_nLastScore, (float)m_Scores[i].m_nNewScore );
-			
+
 			float flProgressPercent = 0.f;
 			if ( nTotal != 0 )
 			{
@@ -150,7 +150,7 @@ void CWarStandingPanel::PerformLayout()
 	FOR_EACH_MAP_FAST( pWarDef->GetSides(), i )
 	{
 		uint64 nScore = nScore = GetWarData().GetGlobalSideScore( pWarDef->GetDefIndex(), pWarDef->GetSide( i )->m_nSideIndex );
-				
+
 		m_Scores[ i ].m_nLastScore = m_Scores[ i ].m_nNewScore;
 		m_Scores[ i ].m_nNewScore = nScore;
 
@@ -251,11 +251,11 @@ void CWarLandingPanel::OnCommand( const char *pCommand )
 			DevMsg( "%d is not a valid side", nSide );
 			return;
 		}
-	
+
 		m_nPendingSide = nSide;
 		Assert( m_eJoiningState == NO_ACTION );
 		m_eJoiningState = CONFIRM_SIDE_SELECTION;
-		
+
 		UpdateUIState();
 		return;
 	}
@@ -310,7 +310,7 @@ void CWarLandingPanel::OnCommand( const char *pCommand )
 void CWarLandingPanel::OnThink()
 {
 	BaseClass::OnThink();
-	
+
 	if ( ( Plat_FloatTime() - m_flChoseTeamTime ) > 5.f && m_eJoiningState == ATTEMPTING_TO_JOIN_AND_WAITING_FOR_RESPONSE )
 	{
 		m_eJoiningState = FAILED_RESPONSE_RECIEVED_WAITING_FOR_USER_CONFIRMATION;
@@ -441,7 +441,7 @@ void CWarLandingPanel::UpdateUIState()
 		static wchar_t wszOutString[ 128 ];
 		const wchar_t *wpszFormat = g_pVGuiLocalize->Find( "#TF_War_ConfirmSideSelection" );
 		g_pVGuiLocalize->ConstructString_safe( wszOutString, wpszFormat, 1, g_pVGuiLocalize->Find( pChosenSide->m_pszLocalizedName ) );
-		
+
 		EditablePanel* pJoining = FindControl< EditablePanel >( "ConfirmSelectionContainer", true );
 		if ( pJoining )
 		{
@@ -460,7 +460,7 @@ void CWarLandingPanel::UpdateUIState()
 		static wchar_t wszOutString[ 128 ];
 		const wchar_t *wpszFormat = g_pVGuiLocalize->Find( "#TF_War_JoiningTeam" );
 		g_pVGuiLocalize->ConstructString_safe( wszOutString, wpszFormat, 1, g_pVGuiLocalize->Find( pChosenSide->m_pszLocalizedName ) );
-		
+
 		EditablePanel* pJoining = FindControl< EditablePanel >( "JoiningContainer", true );
 		if ( pJoining )
 		{

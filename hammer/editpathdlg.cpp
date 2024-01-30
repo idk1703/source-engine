@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -43,7 +43,7 @@ BEGIN_MESSAGE_MAP(CEditPathDlg, CDialog)
 END_MESSAGE_MAP()
 
 
-BOOL CEditPathDlg::OnInitDialog() 
+BOOL CEditPathDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 

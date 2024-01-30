@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -137,7 +137,7 @@ static D3DDECLTYPE VertexElementToDeclType( VertexElement_t element, VertexCompr
 #if		( COMPRESSED_NORMALS_TYPE == COMPRESSED_NORMALS_SEPARATETANGENTS_SHORT2 )
 			case VERTEX_ELEMENT_NORMAL:			return D3DDECLTYPE_SHORT2;
 			case VERTEX_ELEMENT_USERDATA4:		return D3DDECLTYPE_SHORT2;
-#else //( COMPRESSED_NORMALS_TYPE == COMPRESSED_NORMALS_COMBINEDTANGENTS_UBYTE4 ) 
+#else //( COMPRESSED_NORMALS_TYPE == COMPRESSED_NORMALS_COMBINEDTANGENTS_UBYTE4 )
 			case VERTEX_ELEMENT_NORMAL:			return D3DDECLTYPE_UBYTE4;
 			case VERTEX_ELEMENT_USERDATA4:		return D3DDECLTYPE_UBYTE4;
 #endif
@@ -540,7 +540,7 @@ IDirect3DVertexDeclaration9 *FindOrCreateVertexDecl( VertexFormat_t fmt, bool bS
 	D3DVERTEXELEMENT9 decl[32];
 	ComputeVertexSpec( fmt, decl, bStaticLit, bUsingFlex, bUsingMorph );
 
-	HRESULT hr = 
+	HRESULT hr =
 		Dx9Device()->CreateVertexDeclaration( decl, &lookup.m_pDecl );
 
 	// NOTE: can't record until we have m_pDecl!
@@ -573,4 +573,3 @@ void ReleaseAllVertexDecl()
 		i = s_VertexDeclDict.NextInorder( i );
 	}
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -28,12 +28,12 @@ public:
 
 	struct inputitem_t
 	{
-		variant_t value;	// local copy of variable (maybe make this a variant?) 
+		variant_t value;	// local copy of variable (maybe make this a variant?)
 		int	outputID;		// the ID number of the output that sent this
 		inputitem_t *next;
 
 		// allocate and free from MPool memory
-		static void *operator new( size_t stAllocBlock );	
+		static void *operator new( size_t stAllocBlock );
 		static void *operator new( size_t stAllocateBlock, int nBlockUse, const char *pFileName, int nLine );
 		static void operator delete( void *pMem );
 		static void operator delete( void *pMem, int nBlockUse, const char *pFileName, int nLine ) { operator delete(pMem); }
@@ -43,7 +43,7 @@ public:
 	int m_bUpdatedThisFrame;
 
 	void AddValue( variant_t newVal, int outputID );
-	
+
 	DECLARE_SIMPLE_DATADESC();
 };
 

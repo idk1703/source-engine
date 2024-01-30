@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -29,7 +29,7 @@ protected: // Constructed by FileCache
 
 public:
 	static CachedFileData *GetByDataPtr( void const *pvDataPtr );
-	
+
 	char const * GetFileName() const;
 	void const * GetDataPtr() const;
 	int GetDataLen() const;

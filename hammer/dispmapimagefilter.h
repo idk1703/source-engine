@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -56,7 +56,7 @@ enum ChunkFileResult_t;
 //	 1  8  5
 //   |     |
 //   0--7--6
-//  
+//
 //-----------------------------------------------------------------------------
 #define IMAGEFILTER_WEST		1
 #define IMAGEFILTER_NORTH		3
@@ -102,7 +102,7 @@ public:
 	CDispMapImageFilter();
 	~CDispMapImageFilter();
 
-	ChunkFileResult_t LoadFilter( CChunkFile *pFile ); 
+	ChunkFileResult_t LoadFilter( CChunkFile *pFile );
 
 private:
 
@@ -126,7 +126,7 @@ private:
 class CDispMapImageFilterManager
 {
 public:
-    
+
 	//=========================================================================
 	//
 	// Filter Creation/Destruction Functions
@@ -174,7 +174,7 @@ private:
 
 	void ApplyAt( CDispMapImageFilter *pFilter, CMapDisp *pDisp, int ndxVert );
 	void ApplyAddFilter( CDispMapImageFilter *pFilter, CMapDisp *pDisp, int ndxVert );
-	void ApplyMultFilter( CDispMapImageFilter *pFilter, CMapDisp *pDisp, int ndxVert );	
+	void ApplyMultFilter( CDispMapImageFilter *pFilter, CMapDisp *pDisp, int ndxVert );
 	void ApplyEqualFilter( CDispMapImageFilter *pFilter, CMapDisp *pDisp, int ndxVert );
 	void ApplySmoothFilter( CDispMapImageFilter *pFilter, CMapDisp *pDisp, int ndxVert );
 	void Apply3x3SmoothFilter( CDispMapImageFilter *pFilter, CMapDisp *pDisp, int ndxVert, Vector &vPos );

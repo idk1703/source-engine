@@ -50,7 +50,7 @@ ConVar  obj_resourcepump_amount( "obj_resourcepump_amount","0", FCVAR_NONE, "Bas
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectResourcePump::CObjectResourcePump()
 {
@@ -59,7 +59,7 @@ CObjectResourcePump::CObjectResourcePump()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectResourcePump::SetupTeamModel( void )
 {
@@ -75,7 +75,7 @@ void CObjectResourcePump::SetupTeamModel( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectResourcePump::Spawn( void )
 {
@@ -95,7 +95,7 @@ void CObjectResourcePump::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectResourcePump::Activate( void )
 {
@@ -113,7 +113,7 @@ void CObjectResourcePump::GetControlPanelInfo( int nPanelIndex, const char *&pPa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectResourcePump::FinishedBuilding( void )
 {
@@ -123,7 +123,7 @@ void CObjectResourcePump::FinishedBuilding( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectResourcePump::SetupPump( void )
 {
@@ -144,7 +144,7 @@ void CObjectResourcePump::SetupPump( void )
 
 	if ( m_hResourceZone == NULL )
 	{
-		Msg( "Resource Pump (entindex %d) at (%.2f, %.2f, %.2f) can't find it's zone.\n", 
+		Msg( "Resource Pump (entindex %d) at (%.2f, %.2f, %.2f) can't find it's zone.\n",
 			entindex(), GetAbsOrigin().x, GetAbsOrigin().y, GetAbsOrigin().z );
 		UTIL_Remove( this );
 		return;
@@ -163,7 +163,7 @@ void CObjectResourcePump::SetupPump( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectResourcePump::Precache()
 {
@@ -232,7 +232,7 @@ void CObjectResourcePump::ResourcePumpThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Handle commands sent from vgui panels on the client 
+// Purpose: Handle commands sent from vgui panels on the client
 //-----------------------------------------------------------------------------
 bool CObjectResourcePump::ClientCommand( CBaseTFPlayer *pPlayer, const char *pCmd, ICommandArguments *pArg )
 {

@@ -68,7 +68,7 @@ static HelperFactoryMap_t HelperFactoryMap[] =
 	"axis", CMapAxisHandle::Create,							// Handle used to manipulate the axis of an entity.
 	"cylinder", CMapCylinder::Create,						// Wireframe cylinder with separate radii at each end
 	"sweptplayerhull", CMapSweptPlayerHull::Create,			// A swept player sized hull between two points (ladders)
-	"overlay_transition", CMapOverlayTransition::Create,	// Notes!!	
+	"overlay_transition", CMapOverlayTransition::Create,	// Notes!!
 	"instance", CMapInstance::Create,						// A map instance used for rendering the sub-map
 };
 
@@ -99,4 +99,3 @@ CMapClass *CHelperFactory::CreateHelper(CHelperInfo *pHelperInfo, CMapEntity *pP
 
 	return(NULL);
 }
-

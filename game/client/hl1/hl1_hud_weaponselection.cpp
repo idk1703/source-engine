@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -41,7 +41,7 @@ public:
 	void SelectWeaponSlot( int iSlot );
 
 	C_BaseCombatWeapon	*GetSelectedWeapon( void )
-	{ 
+	{
 		return m_hSelectedWeapon;
 	}
 
@@ -61,8 +61,8 @@ private:
 	void				DrawAmmoBar( C_BaseCombatWeapon *pWeapon, int x, int y, int nWidth, int nHeight );
 	int					DrawBar( int x, int y, int width, int height, float f );
 
-	void SetSelectedWeapon( C_BaseCombatWeapon *pWeapon ) 
-	{ 
+	void SetSelectedWeapon( C_BaseCombatWeapon *pWeapon )
+	{
 		m_hSelectedWeapon = pWeapon;
 	}
 
@@ -152,7 +152,7 @@ void CHudWeaponSelection::Paint()
 		int ypos = 10;
 
 		icon_buckets[ i ]->DrawSelf( xpos, ypos, Color( r1, g1, b1, 255 ) );
-		
+
 		ypos = icon_buckets[ i ]->Height() + 10;
 
 		if ( i == iActiveSlot )
@@ -225,7 +225,7 @@ void CHudWeaponSelection::Paint()
 			{
 				int r2, g2, b2, a2;
 				C_BaseCombatWeapon *pWeapon = GetWeaponInSlot( i, iPos );
-				
+
 				if ( !pWeapon )
 					continue;
 
@@ -266,7 +266,7 @@ void CHudWeaponSelection::DrawAmmoBar( C_BaseCombatWeapon *pWeapon, int x, int y
 			return;
 
 		float flPct = (float)nAmmoCount / (float)GetAmmoDef()->MaxCarry( pWeapon->GetPrimaryAmmoType() );
-		
+
 		x = DrawBar( x, y, nWidth, nHeight, flPct );
 
 		// Do we have secondary ammo too?
@@ -543,7 +543,7 @@ C_BaseCombatWeapon *CHudWeaponSelection::GetWeaponInSlot( int iSlot, int iSlotPo
 	for ( int i = 0; i < MAX_WEAPONS; i++ )
 	{
 		C_BaseCombatWeapon *pWeapon = player->GetWeapon(i);
-		
+
 		if ( pWeapon == NULL )
 			continue;
 
@@ -571,7 +571,7 @@ void CHudWeaponSelection::SelectWeaponSlot( int iSlot )
 	// Don't try and read past our possible number of slots
 	if ( iSlot > HL1_MAX_WEAPON_SLOTS )
 		return;
-	
+
 	// Make sure the player's allowed to switch weapons
 	if ( pPlayer->IsAllowedToSwitchWeapons() == false )
 		return;
@@ -598,11 +598,11 @@ void CHudWeaponSelection::SelectWeaponSlot( int iSlot )
 	{
 		pActiveWeapon = GetNextActivePos( iSlot, 0 );
 	}
-	
+
 	if ( pActiveWeapon != NULL )
 	{
 		SetSelectedWeapon( pActiveWeapon );
-		
+
 		if( hud_fastswitch.GetInt() > 0 )
 		{
 			// only one active item in bucket, so change directly to weapon

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -67,7 +67,7 @@ public:
 	virtual void SetContentAlignment(Alignment alignment);
 	virtual void SetEnabled(bool state);
 	// Additional offset at the Start of the text (from whichever sides it is aligned)
-	virtual void SetTextInset(int xInset, int yInset);		
+	virtual void SetTextInset(int xInset, int yInset);
 	virtual void GetTextInset(int *xInset, int *yInset );
 
 	// Text colors
@@ -108,7 +108,7 @@ public:
 	// Images are drawn from left to right across the label, ordered by index
 	// By default there is a TextImage in position 0 (see GetTextImage()/SetTextImageIndex())
 	virtual int AddImage(IImage *image, int preOffset);  // Return the index the image was placed in
-	virtual void SetImageAtIndex(int index, IImage *image, int preOffset);	
+	virtual void SetImageAtIndex(int index, IImage *image, int preOffset);
 	virtual void SetImagePreOffset(int index, int preOffset);  // Set the offset in pixels before the image
 	virtual IImage *GetImageAtIndex(int index);
 	virtual int GetImageCount();
@@ -144,7 +144,7 @@ public:
 	virtual void SizeToContents();
 
 	// the +8 is padding to the content size
-	// the code which uses it should really set that itself; 
+	// the code which uses it should really set that itself;
 	// however a lot of existing code relies on this
 	enum Padding
 	{

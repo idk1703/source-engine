@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -31,9 +31,9 @@ public:
 	{
 	}
 
-	virtual const char *GetResFilename( void ) 
-	{ 
-		return "resource/UI/SpectatorGUIHealth.res"; 
+	virtual const char *GetResFilename( void )
+	{
+		return "resource/UI/SpectatorGUIHealth.res";
 	}
 	virtual void OnThink()
 	{
@@ -53,7 +53,7 @@ private:
 public:
 	CTFSpectatorGUI( IViewPort *pViewPort );
 	~CTFSpectatorGUI( void );
-		
+
 	virtual void Reset( void );
 	virtual void PerformLayout( void );
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -83,7 +83,7 @@ public:
 
 	virtual GameActionSet_t GetPreferredActionSet() { return GAME_ACTION_SET_SPECTATOR; }
 
-protected:	
+protected:
 	int		m_nLastSpecMode;
 	float	m_flNextTipChangeTime;		// time at which to next change the tip
 	int		m_iTipClass;				// class that current tip is for

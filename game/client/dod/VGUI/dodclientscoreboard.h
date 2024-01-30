@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,7 +21,7 @@ class CDODClientScoreBoardDialog : public CClientScoreBoardDialog
 {
 private:
 	DECLARE_CLASS_SIMPLE( CDODClientScoreBoardDialog, CClientScoreBoardDialog );
-	
+
 public:
 	CDODClientScoreBoardDialog( IViewPort *pViewPort );
 	~CDODClientScoreBoardDialog();

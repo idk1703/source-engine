@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -23,7 +23,7 @@ public:
 
 	CObjectBarbedWire();
 
-	
+
 	void BarbedWireThink();
 
 	virtual void Precache();
@@ -36,7 +36,7 @@ public:
 
 private:
 	CNetworkHandle( CObjectBarbedWire, m_hConnectedTo );
-		
+
 };
 
 

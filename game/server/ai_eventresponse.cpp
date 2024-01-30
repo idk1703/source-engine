@@ -11,7 +11,7 @@
 ConVar	ai_debug_eventresponses( "ai_debug_eventresponses", "0", FCVAR_NONE, "Set to 1 to see all NPC response events trigger, and which NPCs choose to respond to them." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CNPCEventResponseSystem g_NPCEventResponseSystem( "CNPCEventResponseSystem" );
 
@@ -21,7 +21,7 @@ CNPCEventResponseSystem *NPCEventResponse()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPCEventResponseSystem::LevelInitPreEntity( void )
 {
@@ -30,7 +30,7 @@ void CNPCEventResponseSystem::LevelInitPreEntity( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPCEventResponseSystem::TriggerEvent( const char *pResponse, bool bForce, bool bCancelScript )
 {
@@ -48,19 +48,19 @@ void CNPCEventResponseSystem::TriggerEvent( const char *pResponse, bool bForce, 
 		newEvent.bPreventExpiration = false;
 		m_ActiveEvents.Insert( pResponse, newEvent );
 
-		if ( ai_debug_eventresponses.GetBool() ) 
+		if ( ai_debug_eventresponses.GetBool() )
 		{
 			Msg( "NPCEVENTRESPONSE: (%.2f) Trigger fired for event named: %s\n", gpGlobals->curtime, pResponse );
 		}
 	}
-	else 
+	else
 	{
 		// Update the trigger time
 		m_ActiveEvents[iIndex].flEventTime = gpGlobals->curtime;
 		m_ActiveEvents[iIndex].bForce = bForce;
 		m_ActiveEvents[iIndex].bCancelScript = bCancelScript;
 
-		if ( ai_debug_eventresponses.GetBool() ) 
+		if ( ai_debug_eventresponses.GetBool() )
 		{
 			Msg( "NPCEVENTRESPONSE: (%.2f) Trigger resetting already-active event firing named: %s\n", gpGlobals->curtime, pResponse );
 		}
@@ -68,7 +68,7 @@ void CNPCEventResponseSystem::TriggerEvent( const char *pResponse, bool bForce, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPCEventResponseSystem::FrameUpdatePreEntityThink()
 {
@@ -81,17 +81,17 @@ void CNPCEventResponseSystem::FrameUpdatePreEntityThink()
 
 	// Move through all events, removing expired ones and finding NPCs for active ones.
 	for ( int i = m_ActiveEvents.First(); i != m_ActiveEvents.InvalidIndex(); )
-	{	
+	{
  		float flTime = m_ActiveEvents[i].flEventTime;
 		const char *pResponse = m_ActiveEvents.GetElementName(i);
 
 		// Save off the next index so we can safely remove this one
-		int iNext = m_ActiveEvents.Next(i); 
+		int iNext = m_ActiveEvents.Next(i);
 
 		// Should it have expired by now?
 		if ( !m_ActiveEvents[i].bPreventExpiration && (flTime + NPCEVENTRESPONSE_GIVEUP_TIME) < gpGlobals->curtime )
 		{
-			if ( ai_debug_eventresponses.GetBool() ) 
+			if ( ai_debug_eventresponses.GetBool() )
 			{
 				Msg( "NPCEVENTRESPONSE: (%.2f) Removing expired event named: %s\n", gpGlobals->curtime, pResponse );
 			}
@@ -103,7 +103,7 @@ void CNPCEventResponseSystem::FrameUpdatePreEntityThink()
 			// If we've fired once, and our current event should expire now, then expire.
 			if ( m_ActiveEvents[i].bPreventExpiration && (flTime + NPCEVENTRESPONSE_GIVEUP_TIME) < gpGlobals->curtime )
 			{
-				if ( ai_debug_eventresponses.GetBool() ) 
+				if ( ai_debug_eventresponses.GetBool() )
 				{
 					Msg( "NPCEVENTRESPONSE: (%.2f) Removing expired fired event named: %s\n", gpGlobals->curtime, pResponse );
 				}
@@ -131,7 +131,7 @@ void CNPCEventResponseSystem::FrameUpdatePreEntityThink()
 					}
 				}
 
-				// Found one? 
+				// Found one?
 				if ( pNearestNPC )
 				{
 					if ( pNearestNPC->RespondedTo( pResponse, m_ActiveEvents[i].bForce, m_ActiveEvents[i].bCancelScript ) )
@@ -141,7 +141,7 @@ void CNPCEventResponseSystem::FrameUpdatePreEntityThink()
 						m_ActiveEvents[i].bPreventExpiration = true;
 						m_ActiveEvents[i].flNextResponseTime = gpGlobals->curtime + NPCEVENTRESPONSE_REFIRE_TIME;
 
-						if ( ai_debug_eventresponses.GetBool() ) 
+						if ( ai_debug_eventresponses.GetBool() )
 						{
 							Msg( "NPCEVENTRESPONSE: (%.2f) Event '%s' responded to by NPC '%s'. Refire available at: %.2f\n", gpGlobals->curtime, pResponse, pNearestNPC->GetDebugName(), m_ActiveEvents[i].flNextResponseTime );
 						}
@@ -181,7 +181,7 @@ BEGIN_DATADESC( CNPCEventResponseSystemEntity )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPCEventResponseSystemEntity::Spawn( void )
 {
@@ -191,7 +191,7 @@ void CNPCEventResponseSystemEntity::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPCEventResponseSystemEntity::InputTriggerResponseEvent( inputdata_t &inputdata )
 {
@@ -199,7 +199,7 @@ void CNPCEventResponseSystemEntity::InputTriggerResponseEvent( inputdata_t &inpu
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPCEventResponseSystemEntity::InputForceTriggerResponseEvent( inputdata_t &inputdata )
 {
@@ -207,7 +207,7 @@ void CNPCEventResponseSystemEntity::InputForceTriggerResponseEvent( inputdata_t 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPCEventResponseSystemEntity::InputForceTriggerResponseEventNoCancel( inputdata_t &inputdata )
 {

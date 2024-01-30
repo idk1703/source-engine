@@ -15,7 +15,7 @@
 DEFINE_FALLBACK_SHADER( eyes, Eyes_dx9 )
 
 BEGIN_VS_SHADER( Eyes_dx9, "Help for Eyes" )
-			  
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( IRIS, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "iris texture" )
 		SHADER_PARAM( IRISFRAME, SHADER_PARAM_TYPE_INTEGER, "0", "frame for the iris texture" )
@@ -81,4 +81,3 @@ BEGIN_VS_SHADER( Eyes_dx9, "Help for Eyes" )
 		DrawEyes_DX8_DX9( true, this, params, pShaderAPI, pShaderShadow, info, vertexCompression );
 	}
 END_SHADER
-

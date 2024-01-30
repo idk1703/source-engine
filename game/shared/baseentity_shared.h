@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@ extern ConVar hl2_episodic;
 // entity capabilities
 // These are caps bits to indicate what an object's capabilities (currently used for +USE, save/restore and level transitions)
 #define		FCAP_MUST_SPAWN				0x00000001		// Spawn after restore
-#define		FCAP_ACROSS_TRANSITION		0x00000002		// should transfer between transitions 
+#define		FCAP_ACROSS_TRANSITION		0x00000002		// should transfer between transitions
 // UNDONE: This will ignore transition volumes (trigger_transition), but not the PVS!!!
 #define		FCAP_FORCE_TRANSITION		0x00000004		// ALWAYS goes across transitions
 #define		FCAP_NOTIFY_ON_TRANSITION	0x00000008		// Entity will receive Inside/Outside transition inputs when a transition occurs
@@ -106,7 +106,7 @@ inline int	CBaseEntity::GetFlags( void ) const
 
 inline bool CBaseEntity::IsAlive( void )
 {
-	return m_lifeState == LIFE_ALIVE; 
+	return m_lifeState == LIFE_ALIVE;
 }
 
 inline CBaseEntity	*CBaseEntity::GetOwnerEntity() const
@@ -192,12 +192,12 @@ inline void CBaseEntity::SetSimulationTime( float st )
 }
 
 inline int CBaseEntity::GetEffects( void ) const
-{ 
-	return m_fEffects; 
+{
+	return m_fEffects;
 }
 
-inline void CBaseEntity::RemoveEffects( int nEffects ) 
-{ 
+inline void CBaseEntity::RemoveEffects( int nEffects )
+{
 #if !defined( CLIENT_DLL )
 #ifdef HL2_EPISODIC
 	if ( nEffects & (EF_BRIGHTLIGHT|EF_DIMLIGHT) )
@@ -223,8 +223,8 @@ inline void CBaseEntity::RemoveEffects( int nEffects )
 	}
 }
 
-inline void CBaseEntity::ClearEffects( void ) 
-{ 
+inline void CBaseEntity::ClearEffects( void )
+{
 #if !defined( CLIENT_DLL )
 #ifdef HL2_EPISODIC
 	if ( m_fEffects & (EF_BRIGHTLIGHT|EF_DIMLIGHT) )
@@ -247,8 +247,8 @@ inline void CBaseEntity::ClearEffects( void )
 }
 
 inline bool CBaseEntity::IsEffectActive( int nEffects ) const
-{ 
-	return (m_fEffects & nEffects) != 0; 
+{
+	return (m_fEffects & nEffects) != 0;
 }
 
 // Shared EntityMessage between game and client .dlls

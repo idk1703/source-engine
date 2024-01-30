@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -91,7 +91,7 @@ static bool IsTauntItem( GameItemDefinition_t *pItemDef, const int iTeam, const 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFPlayerModelPanel::CTFPlayerModelPanel( vgui::Panel *pParent, const char *pName ) : BaseClass( pParent, pName ),
 	m_LocalToGlobal( 0, 0, FlexSettingLessFunc )
@@ -129,7 +129,7 @@ CTFPlayerModelPanel::CTFPlayerModelPanel( vgui::Panel *pParent, const char *pNam
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFPlayerModelPanel::~CTFPlayerModelPanel( void )
 {
@@ -143,7 +143,7 @@ CTFPlayerModelPanel::~CTFPlayerModelPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -179,7 +179,7 @@ void CTFPlayerModelPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::SetToPlayerClass( int iClass, bool bIsRobot, bool bForceRefresh /*= false*/ )
 {
@@ -240,7 +240,7 @@ void CTFPlayerModelPanel::SetToPlayerClass( int iClass, bool bIsRobot, bool bFor
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::HoldFirstValidItem( void )
 {
@@ -289,7 +289,7 @@ void CTFPlayerModelPanel::HoldFirstValidItem( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFPlayerModelPanel::HoldItemInSlot( int iSlot )
 {
@@ -300,7 +300,7 @@ bool CTFPlayerModelPanel::HoldItemInSlot( int iSlot )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFPlayerModelPanel::HoldItem( int iItemNumber )
 {
@@ -336,7 +336,7 @@ bool CTFPlayerModelPanel::HoldItem( int iItemNumber )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFPlayerModelPanel::UpdateHeldItem( int iDesiredSlot )
 {
@@ -369,7 +369,7 @@ bool CTFPlayerModelPanel::UpdateHeldItem( int iDesiredSlot )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::ClearScene( void )
 {
@@ -464,7 +464,7 @@ CChoreoScene *LoadSceneForModel( const char *filename, IChoreoEventCallback *pCa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::PlayVCD( const char *pszVCD, const char *pszWeaponEntityRequired /*= NULL*/, bool bLoopVCD /*= true*/, bool bFileNameOnly /*= true*/ )
 {
@@ -475,7 +475,7 @@ void CTFPlayerModelPanel::PlayVCD( const char *pszVCD, const char *pszWeaponEnti
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::FireEvent( const char *pszEventName, const char *pszEventOptions )
 {
@@ -500,7 +500,7 @@ void CTFPlayerModelPanel::FireEvent( const char *pszEventName, const char *pszEv
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::SwitchHeldItemTo( CEconItemView *pItem )
 {
@@ -602,7 +602,7 @@ void CTFPlayerModelPanel::SwitchHeldItemTo( CEconItemView *pItem )
 				// m_pszVCD should be a valid relative path
 				V_strcpy_safe( g_szSceneTmpName, m_pszVCD );
 			}
-			
+
 			m_pScene = LoadSceneForModel( g_szSceneTmpName, this, &m_flSceneEndTime );
 			m_bLoopScene = m_bLoopVCD;
 
@@ -616,13 +616,13 @@ void CTFPlayerModelPanel::SwitchHeldItemTo( CEconItemView *pItem )
 	bool bRemoveTauntParticles = true;
 
 	if ( IsTauntItem( pItem->GetStaticData(), GetTeam(), m_iCurrentClassIndex, &pSequence, &pRequiredItem, &pScene ) )
-	{	
+	{
 		MDLCACHE_CRITICAL_SECTION();
 
 		if ( pScene )
 		{
 			m_pScene = LoadSceneForModel( pScene, this, &m_flSceneEndTime );
-			
+
 			// load custom prop for taunt
 			const char *pszProp = pItem->GetStaticData()->GetTauntData()->GetProp( m_iCurrentClassIndex );
 			if ( pszProp )
@@ -653,7 +653,7 @@ void CTFPlayerModelPanel::SwitchHeldItemTo( CEconItemView *pItem )
 				{
 					requiredLoadoutItem = (loadout_positions_t)StringFieldToInt( pRequiredItem, ItemSystem()->GetItemSchema()->GetLoadoutStrings( pItem->GetItemDefinition()->GetEquipType() ) );
 				}
-				
+
 				EquipRequiredLoadoutSlot( requiredLoadoutItem );
 
 				// finally, set the sequence layers
@@ -718,7 +718,7 @@ void CTFPlayerModelPanel::SwitchHeldItemTo( CEconItemView *pItem )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::EquipRequiredLoadoutSlot( int iRequiredLoadoutSlot )
 {
@@ -738,7 +738,7 @@ void CTFPlayerModelPanel::EquipRequiredLoadoutSlot( int iRequiredLoadoutSlot )
 			{
 				iDesiredSlot = i;
 				break;
-			}					
+			}
 		}
 
 		if ( iDesiredSlot >= 0 )
@@ -758,7 +758,7 @@ void CTFPlayerModelPanel::EquipRequiredLoadoutSlot( int iRequiredLoadoutSlot )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::UpdateWeaponBodygroups( bool bModifyDeployedOnlyBodygroups )
 {
@@ -779,7 +779,7 @@ void CTFPlayerModelPanel::UpdateWeaponBodygroups( bool bModifyDeployedOnlyBodygr
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::UpdateHiddenBodyGroups( CEconItemView* pItem )
 {
@@ -827,7 +827,7 @@ void CTFPlayerModelPanel::UpdateHiddenBodyGroups( CEconItemView* pItem )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEconItemView *CTFPlayerModelPanel::GetItemInSlot( int iSlot )
 {
@@ -849,7 +849,7 @@ CEconItemView *CTFPlayerModelPanel::GetItemInSlot( int iSlot )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::EquipAllWearables( CEconItemView *pHeldItem )
 {
@@ -904,7 +904,7 @@ void CTFPlayerModelPanel::EquipAllWearables( CEconItemView *pHeldItem )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::EquipItem( CEconItemView *pItem )
 {
@@ -949,7 +949,7 @@ void CTFPlayerModelPanel::EquipItem( CEconItemView *pItem )
 	if ( pszAttached && pszAttached[0] )
 	{
 		LoadAndAttachAdditionalModel( pszAttached, pItem );
-		
+
 		int iTeam = pItemDef->GetBestVisualTeamData( m_iTeam );
 		// Set attached models if viewable third-person.
 		{
@@ -1000,7 +1000,7 @@ void CTFPlayerModelPanel::EquipItem( CEconItemView *pItem )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFPlayerModelPanel::AddCarriedItem( CEconItemView *pItem )
 {
@@ -1020,7 +1020,7 @@ int CTFPlayerModelPanel::AddCarriedItem( CEconItemView *pItem )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::ClearCarriedItems( void )
 {
@@ -1030,7 +1030,7 @@ void CTFPlayerModelPanel::ClearCarriedItems( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::RemoveAdditionalModels( void )
 {
@@ -1043,12 +1043,12 @@ void CTFPlayerModelPanel::RemoveAdditionalModels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::LoadAndAttachAdditionalModel( const char *pMDLName, CEconItemView *pItem )
 {
 	int nModelIndex = -1;
-	
+
 	if ( pItem->GetStaticData()->IsContentStreamable() )
 	{
 		// Get the client-only dynamic model index. The auto-addref
@@ -1086,7 +1086,7 @@ void CTFPlayerModelPanel::LoadAndAttachAdditionalModel( const char *pMDLName, CE
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static void SetMDLSkinForTeam( CMDL *pMDL, const CEconItemView *pItem, int iTeam )
 {
@@ -1108,7 +1108,7 @@ static void SetMDLSkinForTeam( CMDL *pMDL, const CEconItemView *pItem, int iTeam
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::OnModelLoadComplete( const model_t *pModel )
 {
@@ -1231,11 +1231,11 @@ int ClassZoomZ[] =
 	30, // TF_CLASS_HEAVYWEAPONS,
 	22, // TF_CLASS_PYRO,
 	27, // TF_CLASS_SPY,
-	20, // TF_CLASS_ENGINEER,		
+	20, // TF_CLASS_ENGINEER,
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::ToggleZoom()
 {
@@ -1248,7 +1248,7 @@ void CTFPlayerModelPanel::ToggleZoom()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Vector CTFPlayerModelPanel::GetZoomOffset()
 {
@@ -1257,7 +1257,7 @@ Vector CTFPlayerModelPanel::GetZoomOffset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::PrePaint3D( IMatRenderContext *pRenderContext )
 {
@@ -1270,7 +1270,7 @@ void CTFPlayerModelPanel::PrePaint3D( IMatRenderContext *pRenderContext )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::PostPaint3D( IMatRenderContext *pRenderContext )
 {
@@ -1331,7 +1331,7 @@ void CTFPlayerModelPanel::RenderingRootModel( IMatRenderContext *pRenderContext,
 
 	// Right hand
 	UpdateActionSlotEffects( pRenderContext, pStudioHdr, mdlHandle, pWorldMatrix );
-	
+
 	// Taunt Effects
 	UpdateTauntEffects( pRenderContext, pStudioHdr, mdlHandle, pWorldMatrix );
 }
@@ -1373,7 +1373,7 @@ void CTFPlayerModelPanel::RenderingMergedModel( IMatRenderContext *pRenderContex
 {
 	if ( !m_bUseParticle )
 		return;
-	
+
 	static struct MergeModelSlot_t
 	{
 		loadout_positions_t iPosition;
@@ -1400,7 +1400,7 @@ void CTFPlayerModelPanel::RenderingMergedModel( IMatRenderContext *pRenderContex
 		{
 			iPosition = s_mergeModelSlot[i].iPosition;
 			iSystem = s_mergeModelSlot[i].iSystem;
-			
+
 			// this is horrible but this fixes multiple unusual cosmetics with same default loadout to update their particles
 			if ( m_aParticleSystems[ iSystem ] && m_aParticleSystems[ iSystem ]->m_bIsUpdateToDate )
 				continue;
@@ -1424,7 +1424,7 @@ void CTFPlayerModelPanel::RenderingMergedModel( IMatRenderContext *pRenderContex
 	}
 }
 
-IMaterial* CTFPlayerModelPanel::GetOverrideMaterial( MDLHandle_t mdlHandle ) 
+IMaterial* CTFPlayerModelPanel::GetOverrideMaterial( MDLHandle_t mdlHandle )
 {
 	loadout_positions_t s_iPosition[] = {
 		LOADOUT_POSITION_HEAD,
@@ -1436,7 +1436,7 @@ IMaterial* CTFPlayerModelPanel::GetOverrideMaterial( MDLHandle_t mdlHandle )
 	};
 
 	int count = ARRAYSIZE( s_iPosition );
-	for ( int i = 0; i < count; ++i ) 
+	for ( int i = 0; i < count; ++i )
 	{
 		CEconItemView *pEconItem = GetLoadoutItemFromMDLHandle( s_iPosition[ i ], mdlHandle );
 		if ( pEconItem )
@@ -1480,10 +1480,10 @@ bool CTFPlayerModelPanel::RenderStatTrack( CStudioHdr *pStudioHdr, matrix3x4_t *
 }
 
 //-----------------------------------------------------------------------------
-bool CTFPlayerModelPanel::UpdateCosmeticParticles( 
-	IMatRenderContext				*pRenderContext, 
-	CStudioHdr						*pStudioHdr, 
-	MDLHandle_t						mdlHandle, 
+bool CTFPlayerModelPanel::UpdateCosmeticParticles(
+	IMatRenderContext				*pRenderContext,
+	CStudioHdr						*pStudioHdr,
+	MDLHandle_t						mdlHandle,
 	matrix3x4_t						*pWorldMatrix,
 	modelpanel_particle_system_t	iSystem,
 	CEconItemView *pEconItem
@@ -1543,9 +1543,9 @@ bool CTFPlayerModelPanel::UpdateCosmeticParticles(
 			iBone = Studio_BoneIndexByName( pStudioHdr, "prp_hat" );
 		}
 	}
-	
+
 	// default to root
-	if ( iBone < 0 ) 
+	if ( iBone < 0 )
 	{
 		iBone = 0;
 	}
@@ -1617,11 +1617,11 @@ bool CTFPlayerModelPanel::UpdateCosmeticParticles(
 
 
 //-----------------------------------------------------------------------------
-void CTFPlayerModelPanel::UpdateEyeGlows( 
-	IMatRenderContext *pRenderContext, 
-	CStudioHdr *pStudioHdr, 
-	MDLHandle_t mdlHandle, 
-	matrix3x4_t *pWorldMatrix, 
+void CTFPlayerModelPanel::UpdateEyeGlows(
+	IMatRenderContext *pRenderContext,
+	CStudioHdr *pStudioHdr,
+	MDLHandle_t mdlHandle,
+	matrix3x4_t *pWorldMatrix,
 	bool bIsRightEye
 ) {
 	float flOffset = 0;
@@ -1684,7 +1684,7 @@ void CTFPlayerModelPanel::UpdateEyeGlows(
 		{
 			m_aParticleSystems[ eyeSystem ]->UpdateControlPoints( pStudioHdr, pWorldMatrix, vecAttachments, 0, vecParticleOffset );
 		}
-		
+
 		if ( m_aParticleSystems[ sparkSystem ] )
 		{
 			m_aParticleSystems[ sparkSystem ]->UpdateControlPoints( pStudioHdr, pWorldMatrix, vecAttachments, 0, vecParticleOffset );
@@ -1693,10 +1693,10 @@ void CTFPlayerModelPanel::UpdateEyeGlows(
 }
 
 //-----------------------------------------------------------------------------
-void CTFPlayerModelPanel::UpdateActionSlotEffects( 
-	IMatRenderContext *pRenderContext, 
-	CStudioHdr *pStudioHdr, 
-	MDLHandle_t mdlHandle, 
+void CTFPlayerModelPanel::UpdateActionSlotEffects(
+	IMatRenderContext *pRenderContext,
+	CStudioHdr *pStudioHdr,
+	MDLHandle_t mdlHandle,
 	matrix3x4_t *pWorldMatrix
 ) {
 	// is this a model we care about?
@@ -1800,7 +1800,7 @@ void CTFPlayerModelPanel::InvalidateParticleEffects()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::StartEvent( float currenttime, CChoreoScene *scene, CChoreoEvent *event )
 {
@@ -1881,7 +1881,7 @@ void CTFPlayerModelPanel::StartEvent( float currenttime, CChoreoScene *scene, CC
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::EndEvent( float currenttime, CChoreoScene *scene, CChoreoEvent *event )
 {
@@ -1923,7 +1923,7 @@ void CTFPlayerModelPanel::EndEvent( float currenttime, CChoreoScene *scene, CCho
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::ProcessEvent( float currenttime, CChoreoScene *scene, CChoreoEvent *event )
 {
@@ -1979,7 +1979,7 @@ void CTFPlayerModelPanel::ProcessEvent( float currenttime, CChoreoScene *scene, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFPlayerModelPanel::CheckEvent( float currenttime, CChoreoScene *scene, CChoreoEvent *event )
 {
@@ -1988,7 +1988,7 @@ bool CTFPlayerModelPanel::CheckEvent( float currenttime, CChoreoScene *scene, CC
 
 //-----------------------------------------------------------------------------
 // Purpose: Apply a sequence
-// Input  : *event - 
+// Input  : *event -
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::ProcessSequence( CChoreoScene *scene, CChoreoEvent *event )
 {
@@ -2017,9 +2017,9 @@ void CTFPlayerModelPanel::ProcessSequence( CChoreoScene *scene, CChoreoEvent *ev
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *scene - 
-//			*event - 
+// Purpose:
+// Input  : *scene -
+//			*event -
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::ProcessLoop( CChoreoScene *scene, CChoreoEvent *event )
 {
@@ -2068,7 +2068,7 @@ void CTFPlayerModelPanel::ProcessLoop( CChoreoScene *scene, CChoreoEvent *event 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 LocalFlexController_t CTFPlayerModelPanel::GetNumFlexControllers( void )
 {
@@ -2077,7 +2077,7 @@ LocalFlexController_t CTFPlayerModelPanel::GetNumFlexControllers( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFPlayerModelPanel::GetFlexDescFacs( int iFlexDesc )
 {
@@ -2089,7 +2089,7 @@ const char *CTFPlayerModelPanel::GetFlexDescFacs( int iFlexDesc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFPlayerModelPanel::GetFlexControllerName( LocalFlexController_t iFlexController )
 {
@@ -2101,7 +2101,7 @@ const char *CTFPlayerModelPanel::GetFlexControllerName( LocalFlexController_t iF
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFPlayerModelPanel::GetFlexControllerType( LocalFlexController_t iFlexController )
 {
@@ -2113,7 +2113,7 @@ const char *CTFPlayerModelPanel::GetFlexControllerType( LocalFlexController_t iF
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 LocalFlexController_t CTFPlayerModelPanel::FindFlexController( const char *szName )
 {
@@ -2130,7 +2130,7 @@ LocalFlexController_t CTFPlayerModelPanel::FindFlexController( const char *szNam
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::SetFlexWeight( LocalFlexController_t index, float value )
 {
@@ -2151,7 +2151,7 @@ void CTFPlayerModelPanel::SetFlexWeight( LocalFlexController_t index, float valu
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFPlayerModelPanel::GetFlexWeight( LocalFlexController_t index )
 {
@@ -2263,7 +2263,7 @@ void CTFPlayerModelPanel::SetupFlexWeights( void )
 
 extern CFlexSceneFileManager g_FlexSceneFileManager;
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::ProcessExpression( CChoreoScene *scene, CChoreoEvent *event )
 {
@@ -2320,7 +2320,7 @@ void CTFPlayerModelPanel::ProcessExpression( CChoreoScene *scene, CChoreoEvent *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::ProcessFlexSettingSceneEvent( CChoreoScene *scene, CChoreoEvent *event )
 {
@@ -2352,10 +2352,10 @@ void CTFPlayerModelPanel::ProcessFlexSettingSceneEvent( CChoreoScene *scene, CCh
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *expr - 
-//			scale - 
-//			*pSettinghdr - 
+// Purpose:
+// Input  : *expr -
+//			scale -
+//			*pSettinghdr -
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::AddFlexSetting( const char *expr, float scale, const flexsettinghdr_t *pSettinghdr )
 {
@@ -2404,7 +2404,7 @@ void CTFPlayerModelPanel::AddFlexSetting( const char *expr, float scale, const f
 
 //-----------------------------------------------------------------------------
 // Purpose: Apply flexanimation to actor's face
-// Input  : *event - 
+// Input  : *event -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::ProcessFlexAnimation( CChoreoScene *scene, CChoreoEvent *event )
@@ -2499,7 +2499,7 @@ extern ConVar g_CV_PhonemeDelay;
 extern ConVar g_CV_PhonemeFilter;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::ProcessVisemes( Emphasized_Phoneme *classes )
 {
@@ -2555,7 +2555,7 @@ void CTFPlayerModelPanel::ProcessVisemes( Emphasized_Phoneme *classes )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::AddVisemesForSentence( Emphasized_Phoneme *classes, float emphasis_intensity, CSentence *sentence, float t, float dt, bool juststarted )
 {
@@ -2618,11 +2618,11 @@ void CTFPlayerModelPanel::AddVisemesForSentence( Emphasized_Phoneme *classes, fl
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *classes - 
-//			phoneme - 
-//			scale - 
-//			newexpression - 
+// Purpose:
+// Input  : *classes -
+//			phoneme -
+//			scale -
+//			newexpression -
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::AddViseme( Emphasized_Phoneme *classes, float emphasis_intensity, int phoneme, float scale, bool newexpression )
 {
@@ -2686,7 +2686,7 @@ void CTFPlayerModelPanel::AddViseme( Emphasized_Phoneme *classes, float emphasis
 // Purpose: A lot of the one time setup and also resets amount to 0.0f default
 //  for strong/weak/normal tracks
 // Returning true == skip this phoneme
-// Input  : *classes - 
+// Input  : *classes -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CTFPlayerModelPanel::SetupEmphasisBlend( Emphasized_Phoneme *classes, int phoneme )
@@ -2735,14 +2735,14 @@ bool CTFPlayerModelPanel::SetupEmphasisBlend( Emphasized_Phoneme *classes, int p
 #define WEAK_CROSSFADE_START		0.40f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Here's the formula
 // 0.5 is neutral 100 % of the default setting
 // Crossfade starts at STRONG_CROSSFADE_START and is full at STRONG_CROSSFADE_END
 // If there isn't a strong then the intensity of the underlying phoneme is fixed at 2 x STRONG_CROSSFADE_START
 //  so we don't get huge numbers
-// Input  : *classes - 
-//			emphasis_intensity - 
+// Input  : *classes -
+//			emphasis_intensity -
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::ComputeBlendedSetting( Emphasized_Phoneme *classes, float emphasis_intensity )
 {
@@ -2762,7 +2762,7 @@ void CTFPlayerModelPanel::ComputeBlendedSetting( Emphasized_Phoneme *classes, fl
 			float frac = dist_remaining / ( 1.0f - STRONG_CROSSFADE_START );
 
 			classes[ PHONEME_CLASS_NORMAL ].amount = (frac) * 2.0f * STRONG_CROSSFADE_START;
-			classes[ PHONEME_CLASS_STRONG ].amount = 1.0f - frac; 
+			classes[ PHONEME_CLASS_STRONG ].amount = 1.0f - frac;
 		}
 		else
 		{
@@ -2779,7 +2779,7 @@ void CTFPlayerModelPanel::ComputeBlendedSetting( Emphasized_Phoneme *classes, fl
 			float frac = dist_remaining / ( WEAK_CROSSFADE_START );
 
 			classes[ PHONEME_CLASS_NORMAL ].amount = (1.0f - frac) * 2.0f * WEAK_CROSSFADE_START;
-			classes[ PHONEME_CLASS_WEAK ].amount = frac; 
+			classes[ PHONEME_CLASS_WEAK ].amount = frac;
 		}
 		else
 		{
@@ -2795,7 +2795,7 @@ void CTFPlayerModelPanel::ComputeBlendedSetting( Emphasized_Phoneme *classes, fl
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::InitPhonemeMappings( void )
 {
@@ -2809,7 +2809,7 @@ void CTFPlayerModelPanel::InitPhonemeMappings( void )
 		Q_snprintf( szExpressionName, sizeof( szExpressionName ), "%s/phonemes/phonemes", szBasename );
 		if ( g_FlexSceneFileManager.FindSceneFile( this, szExpressionName, false ) )
 		{
-			SetupMappings( szExpressionName );	
+			SetupMappings( szExpressionName );
 			return;
 		}
 	}
@@ -2818,7 +2818,7 @@ void CTFPlayerModelPanel::InitPhonemeMappings( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::SetupMappings( char const *pchFileRoot )
 {
@@ -2836,9 +2836,9 @@ void CTFPlayerModelPanel::SetupMappings( char const *pchFileRoot )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Since everyone shared a pSettinghdr now, we need to set up the localtoglobal mapping per entity, but 
+// Purpose: Since everyone shared a pSettinghdr now, we need to set up the localtoglobal mapping per entity, but
 //  we just do this in memory with an array of integers (could be shorts, I suppose)
-// Input  : *pSettinghdr - 
+// Input  : *pSettinghdr -
 //-----------------------------------------------------------------------------
 void CTFPlayerModelPanel::EnsureTranslations( const flexsettinghdr_t *pSettinghdr )
 {
@@ -2862,8 +2862,8 @@ void CTFPlayerModelPanel::EnsureTranslations( const flexsettinghdr_t *pSettinghd
 
 //-----------------------------------------------------------------------------
 // Purpose: Look up instance specific mapping
-// Input  : *pSettinghdr - 
-//			key - 
+// Input  : *pSettinghdr -
+//			key -
 // Output : int
 //-----------------------------------------------------------------------------
 int CTFPlayerModelPanel::FlexControllerLocalToGlobal( const flexsettinghdr_t *pSettinghdr, int key )
@@ -2890,4 +2890,3 @@ int CTFPlayerModelPanel::FlexControllerLocalToGlobal( const flexsettinghdr_t *pS
 	int index = result.m_Mapping[ key ];
 	return index;
 }
-

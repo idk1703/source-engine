@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ class CAnimBrowserTab;
 class CCustomAnim
 {
 public:
-	CCustomAnim( const FileNameHandle_t &h ) 
+	CCustomAnim( const FileNameHandle_t &h )
 		:
 		m_bDirty( false ),
 		m_ShortName( UTL_INVAL_SYMBOL )
@@ -61,7 +61,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class AnimationBrowser : public mxWindow, public IFacePoserToolWindow
 {
@@ -86,7 +86,7 @@ public:
 	virtual int			handleEvent (mxEvent *event);
 
 	virtual void		Think( float dt );
-	
+
 	void				ThumbnailIncrease( void );
 	void				ThumbnailDecrease( void );
 	void				RestoreThumbnailSize( void );
@@ -119,7 +119,7 @@ private: // Methods
 	void				SetClickedCell( int cell );
 	void				ShowRightClickMenu( int mx, int my );
 
-	void				DrawThumbNail( int sequence, CChoreoWidgetDrawHelper& helper, 
+	void				DrawThumbNail( int sequence, CChoreoWidgetDrawHelper& helper,
 							int rcx, int rcy, int rcw, int rch );
 
 	void				DrawSequenceFocusRect( CChoreoWidgetDrawHelper& helper, int x, int y, int w, int h, COLORREF clr );

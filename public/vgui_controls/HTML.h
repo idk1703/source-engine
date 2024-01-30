@@ -267,7 +267,7 @@ private:
 
 	struct ScrollData_t
 	{
-		ScrollData_t() 
+		ScrollData_t()
 		{
 			m_bVisible = false;
 			m_nMax = m_nScroll = 0;
@@ -275,13 +275,13 @@ private:
 
 		bool operator==( ScrollData_t const &src ) const
 		{
-			return m_bVisible == src.m_bVisible && 
+			return m_bVisible == src.m_bVisible &&
 				m_nMax == src.m_nMax &&
 				m_nScroll == src.m_nScroll;
 		}
 
 		bool operator!=( ScrollData_t const &src ) const
-		{	
+		{
 			return !operator==(src);
 		}
 
@@ -308,7 +308,7 @@ private:
 		const void *m_pchData; // the pointer to the cursor char data so we can detect the same cursor being used
 		bool operator==(const CustomCursorCache_t& rhs) const
 		{
-			return m_pchData == rhs.m_pchData ; 
+			return m_pchData == rhs.m_pchData ;
 		}
 	};
 	CUtlVector<CustomCursorCache_t> m_vecHCursor;

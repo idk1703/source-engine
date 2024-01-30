@@ -11,7 +11,7 @@
 #endif
 
 
-PLATFORM_INTERFACE void ReportProgress(char const *job_name, int total_units_to_do, 
+PLATFORM_INTERFACE void ReportProgress(char const *job_name, int total_units_to_do,
 									   int n_units_completed);
 
 typedef void (*ProgressReportHandler_t)( char const*, int, int );

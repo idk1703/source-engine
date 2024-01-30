@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -173,7 +173,7 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
 
 			if ( jiggleInfo->flags & JIGGLE_HAS_LENGTH_CONSTRAINT )
 			{
-				// drive tip towards goal tip position	
+				// drive tip towards goal tip position
 				data->tipAccel += yawAccel * goalLeft + pitchAccel * goalUp;
 			}
 			else
@@ -184,18 +184,18 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
 				// along spring
 				float alongAccel = jiggleInfo->alongStiffness * localError.z - jiggleInfo->alongDamping * localVel.z;
 
-				// drive tip towards goal tip position	
+				// drive tip towards goal tip position
 				data->tipAccel += yawAccel * goalLeft + pitchAccel * goalUp + alongAccel * goalForward;
 			}
 		}
 
 
-		// simple euler integration		
+		// simple euler integration
 		data->tipVel += data->tipAccel * deltaT;
 		data->tipPos += data->tipVel * deltaT;
 
 		// clear this timestep's accumulated accelerations
-		data->tipAccel = vec3_origin;		
+		data->tipAccel = vec3_origin;
 
 		//
 		// Apply optional constraints
@@ -260,18 +260,18 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
 					yawMatrix[2][3] = 0;
 
 					// global coordinates of limit
-					matrix3x4_t limitMatrix;					
+					matrix3x4_t limitMatrix;
 					ConcatTransforms( goalMX, yawMatrix, limitMatrix );
 
-					Vector limitLeft( limitMatrix.m_flMatVal[0][0], 
+					Vector limitLeft( limitMatrix.m_flMatVal[0][0],
 									  limitMatrix.m_flMatVal[1][0],
 									  limitMatrix.m_flMatVal[2][0] );
 
-					Vector limitUp( limitMatrix.m_flMatVal[0][1], 
+					Vector limitUp( limitMatrix.m_flMatVal[0][1],
 									limitMatrix.m_flMatVal[1][1],
 									limitMatrix.m_flMatVal[2][1] );
 
-					Vector limitForward( limitMatrix.m_flMatVal[0][2], 
+					Vector limitForward( limitMatrix.m_flMatVal[0][2],
 										 limitMatrix.m_flMatVal[1][2],
 										 limitMatrix.m_flMatVal[2][2] );
 
@@ -289,7 +289,7 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
 					}
 #endif // CLIENT_DLL
 
-					Vector limitAlong( DotProduct( limitLeft, along ), 
+					Vector limitAlong( DotProduct( limitLeft, along ),
 									   DotProduct( limitUp, along ),
 									   DotProduct( limitForward, along ) );
 
@@ -358,18 +358,18 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
 					pitchMatrix[2][3] = 0;
 
 					// global coordinates of limit
-					matrix3x4_t limitMatrix;					
+					matrix3x4_t limitMatrix;
 					ConcatTransforms( goalMX, pitchMatrix, limitMatrix );
 
-					Vector limitLeft( limitMatrix.m_flMatVal[0][0], 
+					Vector limitLeft( limitMatrix.m_flMatVal[0][0],
 									  limitMatrix.m_flMatVal[1][0],
 									  limitMatrix.m_flMatVal[2][0] );
 
-					Vector limitUp( limitMatrix.m_flMatVal[0][1], 
+					Vector limitUp( limitMatrix.m_flMatVal[0][1],
 									limitMatrix.m_flMatVal[1][1],
 									limitMatrix.m_flMatVal[2][1] );
 
-					Vector limitForward( limitMatrix.m_flMatVal[0][2], 
+					Vector limitForward( limitMatrix.m_flMatVal[0][2],
 										 limitMatrix.m_flMatVal[1][2],
 										 limitMatrix.m_flMatVal[2][2] );
 
@@ -387,7 +387,7 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
 					}
 #endif // CLIENT_DLL
 
-					Vector limitAlong( DotProduct( limitLeft, along ), 
+					Vector limitAlong( DotProduct( limitLeft, along ),
 									   DotProduct( limitUp, along ),
 									   DotProduct( limitForward, along ) );
 
@@ -498,7 +498,7 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
 		data->basePos += data->baseVel * deltaT;
 
 		// clear this timestep's accumulated accelerations
-		data->baseAccel = vec3_origin;		
+		data->baseAccel = vec3_origin;
 
 		// constrain to limits
 		error = data->basePos - goalBasePosition;
@@ -569,7 +569,7 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
 		if ( !( jiggleInfo->flags & ( JIGGLE_IS_FLEXIBLE | JIGGLE_IS_RIGID ) ) )
 		{
 			// no tip flex - use bone's goal orientation
-			boneMX = goalMX;							
+			boneMX = goalMX;
 		}
 
 		// update bone position
@@ -781,9 +781,9 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
 
 		if ( cl_jiggle_bone_debug.GetInt() > 1 )
 		{
-			DevMsg( "Jiggle bone #%d, basePos( %3.2f, %3.2f, %3.2f ), tipPos( %3.2f, %3.2f, %3.2f ), left( %3.2f, %3.2f, %3.2f ), up( %3.2f, %3.2f, %3.2f ), forward( %3.2f, %3.2f, %3.2f )\n", 
+			DevMsg( "Jiggle bone #%d, basePos( %3.2f, %3.2f, %3.2f ), tipPos( %3.2f, %3.2f, %3.2f ), left( %3.2f, %3.2f, %3.2f ), up( %3.2f, %3.2f, %3.2f ), forward( %3.2f, %3.2f, %3.2f )\n",
 						data->bone,
-						goalBasePosition.x, goalBasePosition.y, goalBasePosition.z, 
+						goalBasePosition.x, goalBasePosition.y, goalBasePosition.z,
 						data->tipPos.x, data->tipPos.y, data->tipPos.z,
 						goalLeft.x, goalLeft.y, goalLeft.z,
 						goalUp.x, goalUp.y, goalUp.z,
@@ -796,14 +796,14 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
 		{
 			if ( debugoverlay )
 			{
-				debugoverlay->AddLineOverlay( goalBasePosition, 
+				debugoverlay->AddLineOverlay( goalBasePosition,
 					data->tipPos, 255, 255, 0, true, dT );
 
-				debugoverlay->AddLineOverlay( data->tipPos + Vector( -sz, 0, 0 ), 
+				debugoverlay->AddLineOverlay( data->tipPos + Vector( -sz, 0, 0 ),
 					data->tipPos + Vector( sz, 0, 0 ), 0, 255, 255, true, dT );
-				debugoverlay->AddLineOverlay( data->tipPos + Vector( 0, -sz, 0 ), 
+				debugoverlay->AddLineOverlay( data->tipPos + Vector( 0, -sz, 0 ),
 					data->tipPos + Vector( 0, sz, 0 ), 0, 255, 255, true, dT );
-				debugoverlay->AddLineOverlay( data->tipPos + Vector( 0, 0, -sz ), 
+				debugoverlay->AddLineOverlay( data->tipPos + Vector( 0, 0, -sz ),
 					data->tipPos + Vector( 0, 0, sz ), 0, 255, 255, true, dT );
 			}
 		}
@@ -812,11 +812,11 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
 		{
 			if ( debugoverlay )
 			{
-				debugoverlay->AddLineOverlay( data->basePos + Vector( -sz, 0, 0 ), 
+				debugoverlay->AddLineOverlay( data->basePos + Vector( -sz, 0, 0 ),
 					data->basePos + Vector( sz, 0, 0 ), 255, 0, 255, true, dT );
-				debugoverlay->AddLineOverlay( data->basePos + Vector( 0, -sz, 0 ), 
+				debugoverlay->AddLineOverlay( data->basePos + Vector( 0, -sz, 0 ),
 					data->basePos + Vector( 0, sz, 0 ), 255, 0, 255, true, dT );
-				debugoverlay->AddLineOverlay( data->basePos + Vector( 0, 0, -sz ), 
+				debugoverlay->AddLineOverlay( data->basePos + Vector( 0, 0, -sz ),
 					data->basePos + Vector( 0, 0, sz ), 255, 0, 255, true, dT );
 			}
 		}
@@ -832,4 +832,3 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
 	}
 #endif // CLIENT_DLL
 }
-

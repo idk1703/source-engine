@@ -41,7 +41,7 @@ public:
 	virtual void EndTouch( CBaseEntity *pEntity );
 
 	virtual int	ObjectCaps( void ) { return BaseClass::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-	
+
 	// Inputs
 	void	InputEnable( inputdata_t &inputdata );
 	void	InputDisable( inputdata_t &inputdata );
@@ -52,7 +52,7 @@ private:
 	bool		m_bStartDisabled;
 
 	CNetworkVar( float, m_Weight );
-	CNetworkVar( float, m_MaxWeight ); 
+	CNetworkVar( float, m_MaxWeight );
 	CNetworkString( m_lookupFilename, MAX_PATH );
 
 	float		m_LastEnterWeight;
@@ -191,7 +191,7 @@ void CColorCorrectionVolume::ThinkFunc( )
 		if( m_LastEnterTime > m_LastExitTime )
 		{
 			// we most recently entered the volume
-		
+
 			if( m_Weight < 1.0f )
 			{
 				float dt = gpGlobals->curtime - m_LastEnterTime;
@@ -205,7 +205,7 @@ void CColorCorrectionVolume::ThinkFunc( )
 		else
 		{
 			// we most recently exitted the volume
-		
+
 			if( m_Weight > 0.0f )
 			{
 				float dt = gpGlobals->curtime - m_LastExitTime;

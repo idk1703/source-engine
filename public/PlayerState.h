@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,16 +23,16 @@ class CPlayerState
 public:
 	DECLARE_CLASS_NOBASE( CPlayerState );
 	DECLARE_EMBEDDED_NETWORKVAR();
-	
+
 	// This virtual method is necessary to generate a vtable in all cases
 	// (DECLARE_PREDICTABLE will generate a vtable also)!
 	virtual ~CPlayerState() {}
 
 	// true if the player is dead
-	CNetworkVar( bool, deadflag );	
+	CNetworkVar( bool, deadflag );
 	// Viewing angle (player only)
-	QAngle		v_angle;		
-	
+	QAngle		v_angle;
+
 // The client .dll only cares about deadflag
 //  the game and engine .dlls need to worry about the rest of this data
 #if !defined( CLIENT_DLL )

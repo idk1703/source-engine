@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -70,7 +70,7 @@ public:
 			return TEAM_UNASSIGNED;
 
 		return m_iOwner[index_];
-	}	
+	}
 
 	int GetCappingTeam( int index_ )
 	{
@@ -127,7 +127,7 @@ public:
 		Assert( index_ < m_iNumControlPoints );
 		return m_iNumTeamMembers[ TEAM_ARRAY( index_,team) ];
 	}
-	
+
 	// get the required cappers for the passed team
 	int GetRequiredCappers( int index_, int team )
 	{
@@ -142,10 +142,10 @@ public:
 		return m_iTeamBaseIcons[ team ];
 	}
 
-	int GetBaseControlPointForTeam( int iTeam ) 
-	{ 
+	int GetBaseControlPointForTeam( int iTeam )
+	{
 		Assert( iTeam < MAX_TEAMS );
-		return m_iBaseControlPoints[iTeam]; 
+		return m_iBaseControlPoints[iTeam];
 	}
 
 	int GetPreviousPointForPoint( int index_, int team, int iPrevIndex )

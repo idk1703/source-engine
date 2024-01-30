@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,10 +18,10 @@ class CWeaponSpade : public CWeaponDODBaseMelee
 {
 public:
 	DECLARE_CLASS( CWeaponSpade, CWeaponDODBaseMelee );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponSpade()  {}
 
 	virtual Activity GetMeleeActivity( void ) { return ACT_VM_PRIMARYATTACK; }
@@ -43,7 +43,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_spade, CWeaponSpade );
 PRECACHE_WEAPON_REGISTER( weapon_spade );
 
-acttable_t CWeaponSpade::m_acttable[] = 
+acttable_t CWeaponSpade::m_acttable[] =
 {
 	{ ACT_DOD_STAND_AIM,					ACT_DOD_STAND_AIM_SPADE,				false },
 	{ ACT_DOD_CROUCH_AIM,					ACT_DOD_CROUCH_AIM_SPADE,				false },

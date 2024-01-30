@@ -22,11 +22,11 @@ static CVEfx efx;
 
 // Engine internal accessor to effects api ( see cl_parsetent.cpp, etc. )
 CVEfx *g_pEfx = &efx;
- 
+
 extern	CClientState	cl;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CVEfx::Draw_DecalIndexFromName( char *name )
 {
@@ -44,12 +44,12 @@ const char *CVEfx::Draw_DecalNameFromIndex( int nIndex )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : textureIndex - 
-//			entity - 
-//			modelIndex - 
-//			position - 
-//			flags - 
+// Purpose:
+// Input  : textureIndex -
+//			entity -
+//			modelIndex -
+//			position -
+//			flags -
 //-----------------------------------------------------------------------------
 void CVEfx::DecalShoot( int textureIndex, int entity, const model_t *model, const Vector& model_origin, const QAngle& model_angles, const Vector& position, const Vector *saxis, int flags)
 {
@@ -57,7 +57,7 @@ void CVEfx::DecalShoot( int textureIndex, int entity, const model_t *model, cons
 	DecalColorShoot( textureIndex, entity, model, model_origin, model_angles, position, saxis, flags, white );
 }
 
-void CVEfx::DecalColorShoot( int textureIndex, int entity, const model_t *model, const Vector& model_origin, const QAngle& model_angles, 
+void CVEfx::DecalColorShoot( int textureIndex, int entity, const model_t *model, const Vector& model_origin, const QAngle& model_angles,
 	const Vector& position, const Vector *saxis, int flags, const color32 &rgbaColor)
 {
 	Vector localPosition = position;
@@ -72,17 +72,17 @@ void CVEfx::DecalColorShoot( int textureIndex, int entity, const model_t *model,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *material - 
-//			userdata - 
-//			entity - 
-//			*model - 
-//			position - 
-//			*saxis - 
-//			flags - 
-//			&rgbaColor - 
+// Purpose:
+// Input  : *material -
+//			userdata -
+//			entity -
+//			*model -
+//			position -
+//			*saxis -
+//			flags -
+//			&rgbaColor -
 //-----------------------------------------------------------------------------
-void CVEfx::PlayerDecalShoot( IMaterial *material, void *userdata, int entity, const model_t *model, const Vector& model_origin, const QAngle& model_angles, 
+void CVEfx::PlayerDecalShoot( IMaterial *material, void *userdata, int entity, const model_t *model, const Vector& model_origin, const QAngle& model_angles,
 	const Vector& position, const Vector *saxis, int flags, const color32 &rgbaColor )
 {
 	Vector localPosition = position;
@@ -97,8 +97,8 @@ void CVEfx::PlayerDecalShoot( IMaterial *material, void *userdata, int entity, c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : key - 
+// Purpose:
+// Input  : key -
 // Output : dlight_t
 //-----------------------------------------------------------------------------
 dlight_t *CVEfx::CL_AllocDlight( int key )
@@ -124,8 +124,8 @@ int CVEfx::CL_GetActiveDLights( dlight_t *pList[MAX_DLIGHTS] )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : key - 
+// Purpose:
+// Input  : key -
 // Output : dlight_t
 //-----------------------------------------------------------------------------
 dlight_t *CVEfx::CL_AllocElight( int key )
@@ -146,7 +146,7 @@ dlight_t *CVEfx::GetElightByKey( int key )
 			{
 				// then if the light is active, return it. If it's died,
 				// return NULL.
-				if ( cl_elights[i].die > cl.GetTime() ) 
+				if ( cl_elights[i].die > cl.GetTime() )
 				{
 					return cl_elights + i;
 				}

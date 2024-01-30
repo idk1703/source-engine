@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -66,7 +66,7 @@ typedef CHandle<CFuncConstructionYard>	YardHandle;
 CUtlVector< YardHandle >	g_hConstructionYards;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFuncConstructionYard::CFuncConstructionYard()
 {
@@ -90,7 +90,7 @@ void CFuncConstructionYard::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncConstructionYard::UpdateOnRemove( void )
 {
@@ -102,14 +102,14 @@ void CFuncConstructionYard::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncConstructionYard::Precache( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: See if we've got a gather point specified 
+// Purpose: See if we've got a gather point specified
 //-----------------------------------------------------------------------------
 void CFuncConstructionYard::Activate( void )
 {
@@ -119,7 +119,7 @@ void CFuncConstructionYard::Activate( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncConstructionYard::InputSetActive( inputdata_t &inputdata )
 {
@@ -127,7 +127,7 @@ void CFuncConstructionYard::InputSetActive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncConstructionYard::InputSetInactive( inputdata_t &inputdata )
 {
@@ -135,7 +135,7 @@ void CFuncConstructionYard::InputSetInactive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncConstructionYard::InputToggleActive( inputdata_t &inputdata )
 {
@@ -150,7 +150,7 @@ void CFuncConstructionYard::InputToggleActive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncConstructionYard::SetActive( bool bActive )
 {
@@ -158,7 +158,7 @@ void CFuncConstructionYard::SetActive( bool bActive )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CFuncConstructionYard::GetActive() const
 {
@@ -183,14 +183,14 @@ int CFuncConstructionYard::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 	// Team rules may tell us that we should
 	CBaseEntity* pRecipientEntity = CBaseEntity::Instance( pInfo->m_pClientEnt );
 	Assert( pRecipientEntity->IsPlayer() );
-	
+
 	CBasePlayer *pPlayer = (CBasePlayer*)pRecipientEntity;
 	if ( pPlayer->GetTeam() )
 	{
 		if (pPlayer->GetTeam()->ShouldTransmitToPlayer( pPlayer, this ))
 			return FL_EDICT_ALWAYS;
 	}
-	
+
 	return FL_EDICT_DONTSEND;
 }
 
@@ -212,7 +212,7 @@ bool PointInConstructionYard( const Vector &vecBuildOrigin )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool ConstructionYardPreventsBuild( CBaseObject *pObject, const Vector &vecBuildOrigin )
 {

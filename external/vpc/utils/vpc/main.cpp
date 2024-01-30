@@ -2107,7 +2107,7 @@ void CVPC::SetMacrosAndConditionals()
 
 		SetMacro( "_EXE_EXT", ".exe", false );
 	}
-	
+
 	// DO NOT INTEGRATE OR TAKE THIS - THIS IS TEMP PORTING GLUE.
 	{
 		// CERT has been decided to be a platform permutation of RETAIL.
@@ -2806,5 +2806,3 @@ public:
 
 EXPOSE_SINGLE_INTERFACE( CVPCLaunchableDLL, ILaunchableDLL, LAUNCHABLE_DLL_INTERFACE_VERSION );
 #endif
-
-

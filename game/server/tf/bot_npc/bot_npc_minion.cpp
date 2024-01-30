@@ -247,7 +247,7 @@ void CBotNPCMinion::Deflected( CBaseEntity *pDeflectedBy, Vector &vecDir )
 
 //---------------------------------------------------------------------------------------------
 unsigned int CBotNPCMinion::PhysicsSolidMaskForEntity( void ) const
-{ 
+{
 	// Only collide with the other team
 	int teamContents = ( GetTeamNumber() == TF_TEAM_RED ) ? CONTENTS_BLUETEAM : CONTENTS_REDTEAM;
 
@@ -296,7 +296,7 @@ void CBotNPCMinion::BecomeAmmoPack( void )
 
 		// Give the ammo pack some health, so that trains can destroy it.
 		pAmmoPack->SetCollisionGroup( COLLISION_GROUP_DEBRIS );
-		pAmmoPack->m_takedamage = DAMAGE_YES;		
+		pAmmoPack->m_takedamage = DAMAGE_YES;
 		pAmmoPack->SetHealth( 900 );
 
 		pAmmoPack->SetBodygroup( 1, 1 );
@@ -371,7 +371,7 @@ CTFPlayer *CBotNPCMinion::FindTarget( void )
 			}
 		}
 	}
-	
+
 	return closeVictim;
 }
 
@@ -801,8 +801,8 @@ ActionResult< CBotNPCMinion > CBotNPCMinionRoam::Update( CBotNPCMinion *me, floa
 	// light off
 	me->m_nSkin = MINION_LIGHT_OFF;
 
-	if ( m_goalArea == NULL || 
-		 me->GetLastKnownArea() == m_goalArea || 
+	if ( m_goalArea == NULL ||
+		 me->GetLastKnownArea() == m_goalArea ||
 		 m_goalArea->IsOverlapping( me->WorldSpaceCenter() ) ||
 		 ( me->WorldSpaceCenter() - m_goalArea->GetCenter() ).AsVector2D().IsLengthLessThan( 20.0f ) )
 	{
@@ -922,7 +922,7 @@ ConVar tf_bot_npc_minion_init_vel( "tf_bot_npc_minion_init_vel", "250"/*, FCVAR_
 class CBotNPCMinionBehavior : public Action< CBotNPCMinion >
 {
 public:
-	virtual Action< CBotNPCMinion > *InitialContainedAction( CBotNPCMinion *me )	
+	virtual Action< CBotNPCMinion > *InitialContainedAction( CBotNPCMinion *me )
 	{
 		if ( TFGameRules()->GetActiveBoss() )
 		{
@@ -934,7 +934,7 @@ public:
 	}
 
 	virtual ActionResult< CBotNPCMinion > OnStart( CBotNPCMinion *me, Action< CBotNPCMinion > *priorAction )
-	{ 
+	{
 		Vector initVelocity;
 
 		float s, c;
@@ -946,7 +946,7 @@ public:
 
 		static_cast< CNextBotFlyingLocomotion * >( me->GetLocomotionInterface() )->SetVelocity( initVelocity );
 
-		return Continue(); 
+		return Continue();
 	}
 
 	virtual ActionResult< CBotNPCMinion > Update( CBotNPCMinion *me, float interval )
@@ -957,7 +957,7 @@ public:
 	}
 
 	virtual EventDesiredResult< CBotNPCMinion > OnKilled( CBotNPCMinion *me, const CTakeDamageInfo &info )
-	{ 
+	{
 		me->BecomeAmmoPack();
 
 		DispatchParticleEffect( "asplode_hoodoo_embers", me->GetAbsOrigin(), me->GetAbsAngles() );
@@ -1014,17 +1014,17 @@ void CNextBotFlyingLocomotion::MaintainAltitude( void )
 	filter.AddClassnameToIgnore( "bot_npc_minion" );
 
 	// find ceiling
-	TraceHull( me->GetAbsOrigin(), me->GetAbsOrigin() + Vector( 0, 0, 1000.0f ), 
-			   me->WorldAlignMins(), me->WorldAlignMaxs(), 
+	TraceHull( me->GetAbsOrigin(), me->GetAbsOrigin() + Vector( 0, 0, 1000.0f ),
+			   me->WorldAlignMins(), me->WorldAlignMaxs(),
 			   GetBot()->GetBodyInterface()->GetSolidMask(), &filter, &result );
 
 	float ceiling = result.endpos.z - me->GetAbsOrigin().z;
 
 	// trace wider hull to account for nearby ledges we want to float over
 	TraceHull( me->GetAbsOrigin() + Vector( 0, 0, ceiling ),
-			   me->GetAbsOrigin() + Vector( 0, 0, -1000.0f ), 
-			   Vector( 2.0f * me->WorldAlignMins().x, 2.0f * me->WorldAlignMins().y, me->WorldAlignMins().z ), 
-			   Vector( 2.0f * me->WorldAlignMaxs().x, 2.0f * me->WorldAlignMaxs().y, me->WorldAlignMaxs().z ), 
+			   me->GetAbsOrigin() + Vector( 0, 0, -1000.0f ),
+			   Vector( 2.0f * me->WorldAlignMins().x, 2.0f * me->WorldAlignMins().y, me->WorldAlignMins().z ),
+			   Vector( 2.0f * me->WorldAlignMaxs().x, 2.0f * me->WorldAlignMaxs().y, me->WorldAlignMaxs().z ),
 			   GetBot()->GetBodyInterface()->GetSolidMask(), &filter, &result );
 
 	float groundZ = result.endpos.z;
@@ -1081,7 +1081,7 @@ void CNextBotFlyingLocomotion::Update( void )
 
 	pos += m_velocity * deltaT;
 
-	// check for collisions along move	
+	// check for collisions along move
 	trace_t result;
 	CTraceFilterSkipClassname filter( me, "bot_npc_minion", COLLISION_GROUP_NONE );
 	Vector from = me->GetAbsOrigin();

@@ -635,7 +635,7 @@ bool CReplayRagdollCache::GetFrame( C_BaseAnimating* pEntity, int nTick, bool* p
 			// Get blended Eular angles - NOTE: The Lerp() here actually calls Lerp<QAngle>() which converts to quats and back
 			flInterpAmount = gpGlobals->interpolation_amount;		Assert( flInterpAmount >= 0.0f && flInterpAmount <= 1.0f );
 			AngleMatrix(
-				(const QAngle &)Lerp( flInterpAmount, pFrame->pAngles   [ objectIndex ], pNextFrame->pAngles   [ objectIndex ] ), 
+				(const QAngle &)Lerp( flInterpAmount, pFrame->pAngles   [ objectIndex ], pNextFrame->pAngles   [ objectIndex ] ),
 				Lerp( flInterpAmount, pFrame->pPositions[ objectIndex ], pNextFrame->pPositions[ objectIndex ] ),
 				localTransform
 			);

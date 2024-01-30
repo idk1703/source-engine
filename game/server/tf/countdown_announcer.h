@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@
 
 //=============================================================================
 
-class CCountdownAnnouncer 
+class CCountdownAnnouncer
 {
 public:
 	struct TimeSounds {
@@ -30,7 +30,7 @@ public:
 		const char *at1;
 	};
 
-	CCountdownAnnouncer(const TimeSounds *pTimeSounds) 
+	CCountdownAnnouncer(const TimeSounds *pTimeSounds)
 		: m_state( Disabled )
 		, m_pTimeSounds( pTimeSounds )
 		, m_fTimeRemain( 0 )
@@ -39,7 +39,7 @@ public:
 
 	void Disable() { m_state = Disabled; }
 
-	void Start( int durationSec ) 
+	void Start( int durationSec )
 	{
 		if ( m_state == Running )
 			return;
@@ -50,7 +50,7 @@ public:
 	}
 
 	// returns true once when time expires
-	bool Tick( float delta ) 
+	bool Tick( float delta )
 	{
 		assert( delta >= 0 );
 		switch ( m_state )
@@ -58,15 +58,15 @@ public:
 		case Disabled:
 		case Expired:
 			break;
-			
-		case Running: 
+
+		case Running:
 			{
 				m_fTimeRemain = MAX( 0, m_fTimeRemain - delta );
 				const int iSecondsRemain = Ceil2Int( m_fTimeRemain );
 				if ( iSecondsRemain == m_iPrevSecondsRemain )
 					break;
 				m_iPrevSecondsRemain = iSecondsRemain;
-				switch( iSecondsRemain ) 
+				switch( iSecondsRemain )
 				{
 				case 60: BroadcastSound( m_pTimeSounds->at60 ); break;
 				case 30: BroadcastSound( m_pTimeSounds->at30 ); break;
@@ -93,8 +93,8 @@ public:
 	bool IsDisabled() const { return m_state == Disabled; }
 
 private:
-	void BroadcastSound( const char* name ) 
-	{ 
+	void BroadcastSound( const char* name )
+	{
 		if ( name && *name )
 			TFGameRules()->BroadcastSound( 255, name );
 	}
@@ -106,4 +106,4 @@ private:
 	int m_iPrevSecondsRemain;
 };
 
-#endif // COUNTDOWN_ANNOUNCER_H  
+#endif // COUNTDOWN_ANNOUNCER_H

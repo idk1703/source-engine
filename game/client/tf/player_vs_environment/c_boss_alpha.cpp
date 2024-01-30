@@ -69,8 +69,8 @@ void C_BossAlpha::ClientThink( void )
 
 //-----------------------------------------------------------------------------
 // Return the origin for player observers tracking this target
-Vector C_BossAlpha::GetObserverCamOrigin( void ) 
-{ 
+Vector C_BossAlpha::GetObserverCamOrigin( void )
+{
 	return EyePosition();
 }
 

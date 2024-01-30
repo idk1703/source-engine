@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -145,7 +145,7 @@ END_DATADESC()
 CDarknessLightSourcesSystem g_DarknessLightSourcesSystem;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDarknessLightSourcesSystem *DarknessLightSourcesSystem()
 {
@@ -153,7 +153,7 @@ CDarknessLightSourcesSystem *DarknessLightSourcesSystem()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDarknessLightSourcesSystem::LevelInitPreEntity()
 {
@@ -161,7 +161,7 @@ void CDarknessLightSourcesSystem::LevelInitPreEntity()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDarknessLightSourcesSystem::AddLightSource( CInfoDarknessLightSource *pEntity, float flRadius )
 {
@@ -172,7 +172,7 @@ void CDarknessLightSourcesSystem::AddLightSource( CInfoDarknessLightSource *pEnt
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDarknessLightSourcesSystem::RemoveLightSource( CInfoDarknessLightSource *pEntity )
 {
@@ -186,7 +186,7 @@ void CDarknessLightSourcesSystem::RemoveLightSource( CInfoDarknessLightSource *p
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CDarknessLightSourcesSystem::IsEntityVisibleToTarget( CBaseEntity *pLooker, CBaseEntity *pTarget )
 {
@@ -268,9 +268,9 @@ bool CDarknessLightSourcesSystem::IsEntityVisibleToTarget( CBaseEntity *pLooker,
 					NDebugOverlay::Line( pLooker->WorldSpaceCenter(), pLooker->WorldSpaceCenter() + (vecLookerToTarget * 128), 255,0,0,true, 0.1);
 				}
 
-				// Now, we need to find out if the light source is obscured by anything. 
-				// To do this, we want to calculate the point of intersection between the light source 
-				// sphere and the line from the looker through the target. 
+				// Now, we need to find out if the light source is obscured by anything.
+				// To do this, we want to calculate the point of intersection between the light source
+				// sphere and the line from the looker through the target.
  				float flASqr = (flDistToSource * flDistToSource);
 				float flB = -2 * flDistToSource * flDot;
 				float flCSqr = m_LightSources[i].flLightRadiusSqr;
@@ -308,7 +308,7 @@ bool CDarknessLightSourcesSystem::IsEntityVisibleToTarget( CBaseEntity *pLooker,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CDarknessLightSourcesSystem::AreThereLightSourcesWithinRadius( CBaseEntity *pLooker, float flRadius )
 {
@@ -353,7 +353,7 @@ bool CDarknessLightSourcesSystem::AreThereLightSourcesWithinRadius( CBaseEntity 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDarknessLightSourcesSystem::SetDebug( bool bDebug )
 {
@@ -376,7 +376,7 @@ void CDarknessLightSourcesSystem::SetDebug( bool bDebug )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CV_Debug_Darkness( IConVar *pConVar, const char *pOldString, float flOldValue )
 {
@@ -385,14 +385,14 @@ void CV_Debug_Darkness( IConVar *pConVar, const char *pOldString, float flOldVal
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
+// Purpose:
+// Input  : *pEntity -
 //-----------------------------------------------------------------------------
 void AddEntityToDarknessCheck( CBaseEntity *pEntity, float flLightRadius /*=DARKNESS_LIGHTSOURCE_SIZE*/ )
 {
 	// Create a light source, and attach it to the entity
 	CInfoDarknessLightSource *pLightSource = (CInfoDarknessLightSource *) CreateEntityByName( "info_darknessmode_lightsource" );
-	if ( pLightSource )	
+	if ( pLightSource )
 	{
 		pLightSource->SetLightRadius( flLightRadius );
 		DispatchSpawn( pLightSource );
@@ -410,8 +410,8 @@ void AddEntityToDarknessCheck( CBaseEntity *pEntity, float flLightRadius /*=DARK
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
+// Purpose:
+// Input  : *pEntity -
 //-----------------------------------------------------------------------------
 void RemoveEntityFromDarknessCheck( CBaseEntity *pEntity )
 {
@@ -430,8 +430,8 @@ void RemoveEntityFromDarknessCheck( CBaseEntity *pEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
+// Purpose:
+// Input  : *pEntity -
 //-----------------------------------------------------------------------------
 bool LookerCouldSeeTargetInDarkness( CBaseEntity *pLooker, CBaseEntity *pTarget )
 {

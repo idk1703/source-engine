@@ -138,7 +138,7 @@ class CTraceFilterSkipTwoEntities : public CTraceFilterSimple
 public:
 	// It does have a base, but we'll never network anything below here..
 	DECLARE_CLASS( CTraceFilterSkipTwoEntities, CTraceFilterSimple );
-	
+
 	CTraceFilterSkipTwoEntities( const IHandleEntity *passentity, const IHandleEntity *passentity2, int collisionGroup );
 	virtual bool ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask );
 	virtual void SetPassEntity2( const IHandleEntity *pPassEntity2 ) { m_pPassEnt2 = pPassEntity2; }
@@ -246,7 +246,7 @@ void DebugDrawLine( const Vector& vecAbsStart, const Vector& vecAbsEnd, int r, i
 
 extern ConVar r_visualizetraces;
 
-inline void UTIL_TraceLine( const Vector& vecAbsStart, const Vector& vecAbsEnd, unsigned int mask, 
+inline void UTIL_TraceLine( const Vector& vecAbsStart, const Vector& vecAbsEnd, unsigned int mask,
 					 const IHandleEntity *ignore, int collisionGroup, trace_t *ptr )
 {
 	Ray_t ray;
@@ -261,7 +261,7 @@ inline void UTIL_TraceLine( const Vector& vecAbsStart, const Vector& vecAbsEnd, 
 	}
 }
 
-inline void UTIL_TraceLine( const Vector& vecAbsStart, const Vector& vecAbsEnd, unsigned int mask, 
+inline void UTIL_TraceLine( const Vector& vecAbsStart, const Vector& vecAbsEnd, unsigned int mask,
 					 ITraceFilter *pFilter, trace_t *ptr )
 {
 	Ray_t ray;
@@ -275,8 +275,8 @@ inline void UTIL_TraceLine( const Vector& vecAbsStart, const Vector& vecAbsEnd, 
 	}
 }
 
-inline void UTIL_TraceHull( const Vector &vecAbsStart, const Vector &vecAbsEnd, const Vector &hullMin, 
-					 const Vector &hullMax,	unsigned int mask, const IHandleEntity *ignore, 
+inline void UTIL_TraceHull( const Vector &vecAbsStart, const Vector &vecAbsEnd, const Vector &hullMin,
+					 const Vector &hullMax,	unsigned int mask, const IHandleEntity *ignore,
 					 int collisionGroup, trace_t *ptr )
 {
 	Ray_t ray;
@@ -291,7 +291,7 @@ inline void UTIL_TraceHull( const Vector &vecAbsStart, const Vector &vecAbsEnd, 
 	}
 }
 
-inline void UTIL_TraceHull( const Vector &vecAbsStart, const Vector &vecAbsEnd, const Vector &hullMin, 
+inline void UTIL_TraceHull( const Vector &vecAbsStart, const Vector &vecAbsEnd, const Vector &hullMin,
 					 const Vector &hullMax,	unsigned int mask, ITraceFilter *pFilter, trace_t *ptr )
 {
 	Ray_t ray;
@@ -305,13 +305,13 @@ inline void UTIL_TraceHull( const Vector &vecAbsStart, const Vector &vecAbsEnd, 
 	}
 }
 
-inline void UTIL_TraceRay( const Ray_t &ray, unsigned int mask, 
+inline void UTIL_TraceRay( const Ray_t &ray, unsigned int mask,
 						  const IHandleEntity *ignore, int collisionGroup, trace_t *ptr, ShouldHitFunc_t pExtraShouldHitCheckFn = NULL )
 {
 	CTraceFilterSimple traceFilter( ignore, collisionGroup, pExtraShouldHitCheckFn );
 
 	enginetrace->TraceRay( ray, mask, &traceFilter, ptr );
-	
+
 	if( r_visualizetraces.GetBool() )
 	{
 		DebugDrawLine( ptr->startpos, ptr->endpos, 255, 0, 0, true, -1.0f );
@@ -321,9 +321,9 @@ inline void UTIL_TraceRay( const Ray_t &ray, unsigned int mask,
 
 // Sweeps a particular entity through the world
 void UTIL_TraceEntity( CBaseEntity *pEntity, const Vector &vecAbsStart, const Vector &vecAbsEnd, unsigned int mask, trace_t *ptr );
-void UTIL_TraceEntity( CBaseEntity *pEntity, const Vector &vecAbsStart, const Vector &vecAbsEnd, 
+void UTIL_TraceEntity( CBaseEntity *pEntity, const Vector &vecAbsStart, const Vector &vecAbsEnd,
 					  unsigned int mask, ITraceFilter *pFilter, trace_t *ptr );
-void UTIL_TraceEntity( CBaseEntity *pEntity, const Vector &vecAbsStart, const Vector &vecAbsEnd, 
+void UTIL_TraceEntity( CBaseEntity *pEntity, const Vector &vecAbsStart, const Vector &vecAbsEnd,
 					  unsigned int mask, const IHandleEntity *ignore, int collisionGroup, trace_t *ptr );
 
 bool UTIL_EntityHasMatchingRootParent( CBaseEntity *pRootParent, CBaseEntity *pEntity );
@@ -333,8 +333,8 @@ inline int UTIL_PointContents( const Vector &vec )
 	return enginetrace->GetPointContents( vec );
 }
 
-// Sweeps against a particular model, using collision rules 
-void UTIL_TraceModel( const Vector &vecStart, const Vector &vecEnd, const Vector &hullMin, 
+// Sweeps against a particular model, using collision rules
+void UTIL_TraceModel( const Vector &vecStart, const Vector &vecEnd, const Vector &hullMin,
 					  const Vector &hullMax, CBaseEntity *pentModel, int collisionGroup, trace_t *ptr );
 
 void UTIL_ClipTraceToPlayers( const Vector& vecAbsStart, const Vector& vecAbsEnd, unsigned int mask, ITraceFilter *filter, trace_t *tr );
@@ -522,7 +522,7 @@ public:
 	void Reset( void )
 	{
 		m_timestamp = Now();
-	}		
+	}
 
 	void Start( void )
 	{
@@ -532,7 +532,7 @@ public:
 	void Invalidate( void )
 	{
 		m_timestamp = -1.0f;
-	}		
+	}
 
 	bool HasStarted( void ) const
 	{
@@ -578,7 +578,7 @@ public:
 	void Reset( void )
 	{
 		m_timestamp = Now() + m_duration;
-	}		
+	}
 
 	void Start( float duration )
 	{
@@ -589,7 +589,7 @@ public:
 	void Invalidate( void )
 	{
 		m_timestamp = -1.0f;
-	}		
+	}
 
 	bool HasStarted( void ) const
 	{

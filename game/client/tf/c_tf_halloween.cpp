@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -68,7 +68,7 @@ public:
 
 		if ( InitializeAsClientEntity( STRING(GetModelName()), RENDER_GROUP_OPAQUE_ENTITY ) == false )
 			return false;
-				
+
 		const model_t *mod = GetModel();
 		if ( mod )
 		{
@@ -79,23 +79,23 @@ public:
 
 		Spawn();
 
-		// initialize as translucent		
+		// initialize as translucent
 		float alpha = 0.0f;
-		SetRenderMode( kRenderTransTexture );		
+		SetRenderMode( kRenderTransTexture );
 		SetRenderColorA( alpha * 256 );
 		m_flTimeToReady = gpGlobals->realtime + HALLOWEEN_ITEM_TIME_TO_READY;
-		
+
 		UpdatePartitionListEntry();
-		
+
 		SetBlocksLOS( false ); // this should be a small object
-		
+
 		// Set up shadows; do it here so that objects can change shadowcasting state
 		CreateShadow();
-		
+
 		UpdateVisibility();
-		
+
 		SetNextClientThink( CLIENT_THINK_ALWAYS );
-		
+
 		return true;
 	}
 
@@ -103,7 +103,7 @@ public:
 	{
 		Precache();
 		BaseClass::Spawn();
-		SetSolid( SOLID_NONE );	
+		SetSolid( SOLID_NONE );
 		AddSolidFlags( FSOLID_NOT_SOLID );
 		SetMoveType( MOVETYPE_NONE );
 	}
@@ -127,7 +127,7 @@ public:
 		{
 			float alpha = 0.75f * ( ( HALLOWEEN_ITEM_TIME_TO_READY - flTimeDelta ) / HALLOWEEN_ITEM_TIME_TO_READY );
 			SetRenderColorA( alpha * 256 );
-		}		
+		}
 	}
 
 	void ClientThink_Active( void )
@@ -153,14 +153,14 @@ public:
 			C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
 #endif
 			CSteamID steamID;
-			if ( pPlayer == NULL || pPlayer->IsBot() == true || pPlayer->GetSteamID( &steamID ) == false || 
+			if ( pPlayer == NULL || pPlayer->IsBot() == true || pPlayer->GetSteamID( &steamID ) == false ||
 				 ( pPlayer->GetTeamNumber() != TF_TEAM_RED && pPlayer->GetTeamNumber() != TF_TEAM_BLUE ) ||
 				 pPlayer->IsAlive() == false ||
 				 pPlayer->GetObserverMode() != OBS_MODE_NONE )
 			{
 				continue;
 			}
-			
+
 			Vector vPlayerMins = pPlayer->GetAbsOrigin() + pPlayer->WorldAlignMins();
 			Vector vPlayerMaxs = pPlayer->GetAbsOrigin() + pPlayer->WorldAlignMaxs();
 			bool bIntersecting = IsBoxIntersectingBox( vBoxMin1, vBoxMax1, vPlayerMins, vPlayerMaxs );
@@ -238,13 +238,13 @@ CON_COMMAND( cl_halloween_test_spawn_pickup, "Test spawning the pickup item" )
 	C_HalloweenItemPickup *pEntity = new C_HalloweenItemPickup();
 	if ( !pEntity )
 		return;
-	
+
 	Vector vecTargetPoint;
 	trace_t tr;
 	Vector forward;
 	pLocalPlayer->EyeVectors( &forward );
 	UTIL_TraceLine( pLocalPlayer->EyePosition(),
-					pLocalPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,MASK_NPCSOLID, 
+					pLocalPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,MASK_NPCSOLID,
 					pLocalPlayer, COLLISION_GROUP_NONE, &tr );
 
 	if ( tr.fraction != 1.0 )
@@ -291,9 +291,9 @@ CON_COMMAND( cl_halloween_test_spawn_pickup, "Test spawning the pickup item" )
 //			return true;
 //
 //		// Don't spawn gifts during startup.
-//		if ( TFGameRules() == NULL 
-//			|| TFGameRules()->State_Get() != GR_STATE_RND_RUNNING 
-//			|| TFGameRules()->InSetup() 
+//		if ( TFGameRules() == NULL
+//			|| TFGameRules()->State_Get() != GR_STATE_RND_RUNNING
+//			|| TFGameRules()->InSetup()
 //			|| TFGameRules()->IsInWaitingForPlayers()
 //			|| TFGameRules()->ArePlayersInHell() )	// Dont spawn gifts if players are in 2013 Hell
 //			return true;
@@ -309,7 +309,7 @@ CON_COMMAND( cl_halloween_test_spawn_pickup, "Test spawning the pickup item" )
 //			C_HalloweenItemPickup *pEntity = new C_HalloweenItemPickup();
 //			if ( !pEntity )
 //				return true;
-//		
+//
 //			Vector position( msg.Body().x( eMap ), msg.Body().y( eMap ), msg.Body().z( eMap ) );
 //			pEntity->SetAbsOrigin( position );
 //			if ( !pEntity->Initialize() )
@@ -366,7 +366,7 @@ CON_COMMAND( cl_halloween_test_spawn_pickup, "Test spawning the pickup item" )
 //		EHalloweenMap eMap = GetHalloweenMap();
 //		if ( eMap == kHalloweenMapCount )
 //			return true;
-//		
+//
 //		// add alert
 //		const char* pPlayerName = InventoryManager()->PersonaName_Get( steamIDRecipient.GetAccountID() );
 //		wchar_t wszPlayerName[MAX_PLAYER_NAME_LENGTH] = L"";
@@ -389,7 +389,7 @@ CON_COMMAND( cl_halloween_test_spawn_pickup, "Test spawning the pickup item" )
 //			pNotification->SetText( "#TF_HalloweenItem_GrantPickupFail" );
 //			// pNotification->SetSoundFilename( "coach/coach_student_died.wav" );
 //		}
-//		
+//
 //		NotificationQueue_Add( pNotification );
 //
 //		// is this the local player? award the achievement...

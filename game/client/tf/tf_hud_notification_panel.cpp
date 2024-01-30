@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -37,7 +37,7 @@ DECLARE_HUD_MESSAGE( CHudNotificationPanel, HudNotify );
 DECLARE_HUD_MESSAGE( CHudNotificationPanel, HudNotifyCustom );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudNotificationPanel::CHudNotificationPanel( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "NotificationPanel" )
 {
@@ -69,7 +69,7 @@ CHudNotificationPanel::CHudNotificationPanel( const char *pElementName ) : CHudE
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudNotificationPanel::Init( void )
 {
@@ -80,7 +80,7 @@ void CHudNotificationPanel::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudNotificationPanel::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -91,7 +91,7 @@ void CHudNotificationPanel::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudNotificationPanel::MsgFunc_HudNotify( bf_read &msg )
 {
@@ -114,7 +114,7 @@ void CHudNotificationPanel::MsgFunc_HudNotify( bf_read &msg )
 	{
 		auto& showCount = m_mapShowCounts[ idx ];
 		// Stop here if we've met our max show count, or it's too soon
-		if ( showCount.m_pConVar->GetInt() >= showCount.m_nMaxShowCount 
+		if ( showCount.m_pConVar->GetInt() >= showCount.m_nMaxShowCount
 			|| showCount.m_flNextAllowedTime > Plat_FloatTime() )
 		{
 			return;
@@ -125,17 +125,17 @@ void CHudNotificationPanel::MsgFunc_HudNotify( bf_read &msg )
 		// Set next time we're allowed to show
 		showCount.m_flNextAllowedTime = Plat_FloatTime() + showCount.m_flCooldown;
 	}
-	
-	
+
+
 	InvalidateLayout( true, true );
 	LoadControlSettings( GetNotificationByType( iType, flDuration ) );
-	
+
 	// set up the fade time
 	m_flFadeTime = gpGlobals->curtime + flDuration;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudNotificationPanel::MsgFunc_HudNotifyCustom( bf_read &msg )
 {
@@ -158,7 +158,7 @@ void CHudNotificationPanel::MsgFunc_HudNotifyCustom( bf_read &msg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudNotificationPanel::SetupNotifyCustom( const char *pszText, const char *pszIcon, int iBackgroundTeam )
 {
@@ -188,7 +188,7 @@ void CHudNotificationPanel::SetupNotifyCustom( const char *pszText, const char *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudNotificationPanel::SetupNotifyCustom( const wchar_t *pszText, const char *pszIcon, int iBackgroundTeam )
 {
@@ -218,7 +218,7 @@ void CHudNotificationPanel::SetupNotifyCustom( const wchar_t *pszText, const cha
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudNotificationPanel::SetupNotifyCustom( const wchar_t *pszText, HudNotification_t type, float overrideDuration )
 {
@@ -236,7 +236,7 @@ void CHudNotificationPanel::SetupNotifyCustom( const wchar_t *pszText, HudNotifi
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudNotificationPanel::PerformLayout( void )
 {
@@ -286,7 +286,7 @@ void CHudNotificationPanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudNotificationPanel::ShouldDraw( void )
 {
@@ -301,7 +301,7 @@ bool CHudNotificationPanel::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudNotificationPanel::OnTick( void )
 {
@@ -324,7 +324,7 @@ void CHudNotificationPanel::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CHudNotificationPanel::GetNotificationByType( int iType, float& flDuration )
 {
@@ -491,41 +491,41 @@ const char *CHudNotificationPanel::GetNotificationByType( int iType, float& flDu
 		break;
 
 	// Passtime
-	case HUD_NOTIFY_PASSTIME_HOWTO: 
-		pszResult = "resource/UI/notifications/notify_passtime_howto.res"; 
-		flDuration = 10.f; 
+	case HUD_NOTIFY_PASSTIME_HOWTO:
+		pszResult = "resource/UI/notifications/notify_passtime_howto.res";
+		flDuration = 10.f;
 		break;
 
-	case HUD_NOTIFY_PASSTIME_NO_TELE: 
-		pszResult = "resource/UI/notifications/notify_passtime_no_tele.res"; 
+	case HUD_NOTIFY_PASSTIME_NO_TELE:
+		pszResult = "resource/UI/notifications/notify_passtime_no_tele.res";
 		break;
 
-	case HUD_NOTIFY_PASSTIME_NO_CARRY: 
-		pszResult = "resource/UI/notifications/notify_passtime_no_carry.res"; 
+	case HUD_NOTIFY_PASSTIME_NO_CARRY:
+		pszResult = "resource/UI/notifications/notify_passtime_no_carry.res";
 		break;
 
-	case HUD_NOTIFY_PASSTIME_NO_INVULN: 
-		pszResult = "resource/UI/notifications/notify_passtime_no_invuln.res"; 
+	case HUD_NOTIFY_PASSTIME_NO_INVULN:
+		pszResult = "resource/UI/notifications/notify_passtime_no_invuln.res";
 		break;
 
-	case HUD_NOTIFY_PASSTIME_NO_DISGUISE: 
-		pszResult = "resource/UI/notifications/notify_passtime_no_disguise.res"; 
+	case HUD_NOTIFY_PASSTIME_NO_DISGUISE:
+		pszResult = "resource/UI/notifications/notify_passtime_no_disguise.res";
 		break;
 
 	case HUD_NOTIFY_PASSTIME_NO_CLOAK:
-		pszResult = "resource/UI/notifications/notify_passtime_no_cloak.res"; 
+		pszResult = "resource/UI/notifications/notify_passtime_no_cloak.res";
 		break;
 
 	case HUD_NOTIFY_PASSTIME_NO_OOB:
-		pszResult = "resource/UI/notifications/notify_passtime_no_oob.res"; 
+		pszResult = "resource/UI/notifications/notify_passtime_no_oob.res";
 		break;
 
-	case HUD_NOTIFY_PASSTIME_NO_HOLSTER: 
-		pszResult = "resource/UI/notifications/notify_passtime_no_holster.res"; 
+	case HUD_NOTIFY_PASSTIME_NO_HOLSTER:
+		pszResult = "resource/UI/notifications/notify_passtime_no_holster.res";
 		break;
 
-	case HUD_NOTIFY_PASSTIME_NO_TAUNT: 
-		pszResult = "resource/UI/notifications/notify_passtime_no_taunt.res"; 
+	case HUD_NOTIFY_PASSTIME_NO_TAUNT:
+		pszResult = "resource/UI/notifications/notify_passtime_no_taunt.res";
 		break;
 
 	// Competitive
@@ -552,7 +552,7 @@ const char *CHudNotificationPanel::GetNotificationByType( int iType, float& flDu
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudNotificationPanel::LoadManifest( void )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -92,18 +92,18 @@ public:
 			{
 				*identifer-- = 0;
 			}
-			
+
 			// FIXME:  Don't hardcode CSER ip, get from Steam!!!
 			if ( NET_StringToAdr( "207.173.177.12:27013", &m_cserIP ) )
 			{
 				m_bPhoneHome = true;
-				
+
 				Q_strncpy( m_szBuildIdentifier, build_identifier, sizeof( m_szBuildIdentifier ) );
 
 				m_pSocket = new CBlockingUDPSocket();
 			}
 		}
-		
+
 	}
 
 	virtual void Message( byte msgtype, char const *mapname )
@@ -181,7 +181,7 @@ private:
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	void EncryptBuffer( IceKey& cipher, unsigned char *bufData, uint bufferSize)
 	{
@@ -201,7 +201,7 @@ private:
 
 	void BuildMessage( bf_write& buf, byte msgtype, char const *mapname, unsigned int uSessionID )
 	{
-	
+
 		bf_write	encrypted;
 		ALIGN4 byte		encrypted_data[ 2048 ] ALIGN4_POST;
 
@@ -225,7 +225,7 @@ private:
 		encrypted.WriteByte( 1 );
 
 		// Write the "build identifier"  -- unique to each person we give a build to.
-		encrypted.WriteString( m_szBuildIdentifier ); 
+		encrypted.WriteString( m_szBuildIdentifier );
 		{
 			char computername[ 64 ];
 			Q_memset( computername, 0, sizeof( computername ) );
@@ -308,7 +308,7 @@ private:
 
 		bf_write	buf;
 		ALIGN4 byte		data[ 2048 ] ALIGN4_POST;
-		
+
 		buf.StartWriting( data, sizeof( data ) );
 
 		BuildMessage( buf, msgtype, mapname, m_uSessionID );
@@ -326,7 +326,7 @@ private:
 		}
 
 		if ( m_pSocket->WaitForMessage( PHONE_HOME_TIMEOUT ) )
-		{	
+		{
 			ALIGN4 byte		readbuf[ 128 ] ALIGN4_POST;
 
 			bf_read		replybuf( readbuf, sizeof( readbuf ) );
@@ -358,7 +358,7 @@ private:
 
 		bf_write	buf;
 		ALIGN4 byte		data[ 2048 ] ALIGN4_POST;
-		
+
 		buf.StartWriting( data, sizeof( data ) );
 
 		BuildMessage( buf, PHONE_MSG_ENGINESTART, NULL, id );
@@ -371,7 +371,7 @@ private:
 		{
 			m_pSocket->SendSocketMessage( sa, (const byte *)buf.GetData(), buf.GetNumBytesWritten() ); //lint !e534
 			if ( m_pSocket->WaitForMessage( PHONE_HOME_TIMEOUT ) )
-			{	
+			{
 				ALIGN4 byte		readbuf[ 128 ] ALIGN4_POST;
 
 				bf_read		replybuf( readbuf, sizeof( readbuf ) );
@@ -411,7 +411,7 @@ private:
 			return true;
 		}
 
-		if ( !CommandLine()->FindParm( "-internalbuild" ) && 
+		if ( !CommandLine()->FindParm( "-internalbuild" ) &&
 			 !CommandLine()->CheckParm("-dev") )
 		{
 			return true;

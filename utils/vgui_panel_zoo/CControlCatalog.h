@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -90,7 +90,7 @@ public:
 	CControlCatalog();
 	~CControlCatalog();
 
-	void OnClose();	
+	void OnClose();
 
 private:
 
@@ -105,5 +105,3 @@ private:
 };
 
 #endif // CControlCatalog_H
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -25,7 +25,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CPDAPanel : public CVGuiScreenPanel
 {
@@ -44,10 +44,10 @@ protected:
 DECLARE_VGUI_SCREEN_FACTORY( CPDAPanel, "pda_panel" );
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CPDAPanel::CPDAPanel( vgui::Panel *parent, const char *panelName )
-: BaseClass( parent, "CPDAPanel", vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/PDAControlPanelScheme.res", "TFBase" ) ) 
+: BaseClass( parent, "CPDAPanel", vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/PDAControlPanelScheme.res", "TFBase" ) )
 {
 }
 
@@ -56,7 +56,7 @@ CPDAPanel::~CPDAPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CPDAPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -70,7 +70,7 @@ bool CPDAPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 }
 
 //-----------------------------------------------------------------------------
-// Returns the object it's attached to 
+// Returns the object it's attached to
 //-----------------------------------------------------------------------------
 C_BaseCombatWeapon *CPDAPanel::GetOwningWeapon()
 {
@@ -114,10 +114,10 @@ public:
 DECLARE_VGUI_SCREEN_FACTORY( CPDAPanel_Engineer_Destroy, "pda_panel_engineer_destroy" );
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CPDAPanel_Engineer_Destroy::CPDAPanel_Engineer_Destroy( vgui::Panel *parent, const char *panelName )
-: CPDAPanel( parent, "CPDAPanel_Engineer_Destroy" ) 
+: CPDAPanel( parent, "CPDAPanel_Engineer_Destroy" )
 {
 }
 
@@ -136,10 +136,10 @@ public:
 DECLARE_VGUI_SCREEN_FACTORY( CPDAPanel_Engineer_Build, "pda_panel_engineer_build" );
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CPDAPanel_Engineer_Build::CPDAPanel_Engineer_Build( vgui::Panel *parent, const char *panelName )
-: CPDAPanel( parent, "CPDAPanel_Engineer" ) 
+: CPDAPanel( parent, "CPDAPanel_Engineer" )
 {
 }
 
@@ -158,10 +158,10 @@ public:
 DECLARE_VGUI_SCREEN_FACTORY( CPDAPanel_Spy, "pda_panel_spy" );
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CPDAPanel_Spy::CPDAPanel_Spy( vgui::Panel *parent, const char *panelName )
-: CPDAPanel( parent, "CPDAPanel_Spy" ) 
+: CPDAPanel( parent, "CPDAPanel_Spy" )
 {
 }
 
@@ -186,10 +186,10 @@ private:
 DECLARE_VGUI_SCREEN_FACTORY( CPDAPanel_Spy_Invis, "pda_panel_spy_invis" );
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CPDAPanel_Spy_Invis::CPDAPanel_Spy_Invis( vgui::Panel *parent, const char *panelName )
-: CPDAPanel( parent, "CPDAPanel_Spy_Invis" ) 
+: CPDAPanel( parent, "CPDAPanel_Spy_Invis" )
 {
 	vgui::ivgui()->AddTickSignal( GetVPanel() );
 
@@ -215,7 +215,7 @@ void CPDAPanel_Spy_Invis::OnTick( void )
 			float flMeter = pPlayer->m_Shared.GetSpyCloakMeter();
 			m_pInvisProgress->SetProgress( flMeter / 100.0f );
 		}
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -238,10 +238,10 @@ protected:
 DECLARE_VGUI_SCREEN_FACTORY( CPDAPanel_Spy_Invis_Pocket, "pda_panel_spy_invis_pocket" );
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CPDAPanel_Spy_Invis_Pocket::CPDAPanel_Spy_Invis_Pocket( vgui::Panel *parent, const char *panelName )
-	: CPDAPanel( parent, "CPDAPanel_Spy_Invis_Pocket" ) 
+	: CPDAPanel( parent, "CPDAPanel_Spy_Invis_Pocket" )
 {
 	vgui::ivgui()->AddTickSignal( GetVPanel() );
 
@@ -288,7 +288,7 @@ void CPDAPanel_Spy_Invis_Pocket::OnTick( void )
 				m_pInvisProgress->SetProgress( flMeter / 100.0f );
 			}
 		}
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -305,10 +305,10 @@ public:
 DECLARE_VGUI_SCREEN_FACTORY( CPDAPanel_Spy_Invis_Pocket_TTG, "pda_panel_spy_invis_pocket_ttg" );
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CPDAPanel_Spy_Invis_Pocket_TTG::CPDAPanel_Spy_Invis_Pocket_TTG( vgui::Panel *parent, const char *panelName )
-: CPDAPanel_Spy_Invis_Pocket( parent, "CPDAPanel_Spy_Invis_Pocket_TTG" ) 
+: CPDAPanel_Spy_Invis_Pocket( parent, "CPDAPanel_Spy_Invis_Pocket_TTG" )
 {
 	dynamic_cast<CircularProgressBar*>(m_pInvisProgress)->SetStartSegment( 7 ); // Do the pellet first.
 }
@@ -328,9 +328,9 @@ public:
 DECLARE_VGUI_SCREEN_FACTORY( CPDAPanel_Spy_Invis_Pocket_HM, "pda_panel_spy_invis_pocket_hm" );
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CPDAPanel_Spy_Invis_Pocket_HM::CPDAPanel_Spy_Invis_Pocket_HM( vgui::Panel *parent, const char *panelName )
-	: CPDAPanel_Spy_Invis_Pocket( parent, "CPDAPanel_Spy_Invis_Pocket_HM" ) 
+	: CPDAPanel_Spy_Invis_Pocket( parent, "CPDAPanel_Spy_Invis_Pocket_HM" )
 {
 }

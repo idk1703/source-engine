@@ -40,7 +40,7 @@ void TossAmmoPack( CBossAlpha *me )
 	{
 /*
 		Vector vel;
-		
+
 		vel.x = RandomFloat( -1.0f, 1.0f ) * tf_boss_alpha_stun_ammo_velocity.GetFloat();
 		vel.y = RandomFloat( -1.0f, 1.0f ) * tf_boss_alpha_stun_ammo_velocity.GetFloat();
 		vel.z = tf_boss_alpha_stun_ammo_velocity.GetFloat();
@@ -51,7 +51,7 @@ void TossAmmoPack( CBossAlpha *me )
 
 		// Give the ammo pack some health, so that trains can destroy it.
 		pAmmoPack->SetCollisionGroup( COLLISION_GROUP_DEBRIS );
-		pAmmoPack->m_takedamage = DAMAGE_YES;		
+		pAmmoPack->m_takedamage = DAMAGE_YES;
 		pAmmoPack->SetHealth( 900 );
 
 		pAmmoPack->SetBodygroup( 1, 1 );

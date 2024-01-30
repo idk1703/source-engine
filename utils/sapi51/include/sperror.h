@@ -232,7 +232,7 @@
 #define SPERR_INSTANCE_CHANGE_INVALID                      MAKE_SAPI_ERROR(0x028)
 
 /*** SPERR_RULE_NAME_ID_CONFLICT                          0x80045029    -2147200983
-*   A rule exists with matching IDs (names) but different names (IDs).  
+*   A rule exists with matching IDs (names) but different names (IDs).
 */
 #define SPERR_RULE_NAME_ID_CONFLICT                        MAKE_SAPI_ERROR(0x029)
 
@@ -243,7 +243,7 @@
 #define SPERR_NO_RULES                                     MAKE_SAPI_ERROR(0x02a)
 
 /*** SPERR_CIRCULAR_RULE_REF                              0x8004502b    -2147200981
-*   Rule 'A' refers to a second rule 'B' which, in turn, refers to rule 'A'. 
+*   Rule 'A' refers to a second rule 'B' which, in turn, refers to rule 'A'.
 */
 #define SPERR_CIRCULAR_RULE_REF                            MAKE_SAPI_ERROR(0x02b)
 
@@ -386,7 +386,7 @@
 #define SPERR_TOKEN_DELETED                                MAKE_SAPI_ERROR(0x045)
 
 /*** SPERR_MULTI_LINGUAL_NOT_SUPPORTED                     0x80045046    -2147200954
-*   The selected voice was registered as multi-lingual. SAPI does not support multi-lingual registration. 
+*   The selected voice was registered as multi-lingual. SAPI does not support multi-lingual registration.
 */
 #define SPERR_MULTI_LINGUAL_NOT_SUPPORTED                  MAKE_SAPI_ERROR(0x046)
 
@@ -472,7 +472,7 @@
 #define SPERR_LEX_REQUIRES_COOKIE                          MAKE_SAPI_ERROR(0x056)
 
 /*** SP_STREAM_UNINITIALIZED                              0x00045057    282711
-*   An attempt to activate a rule/dictation/etc without calling SetInput 
+*   An attempt to activate a rule/dictation/etc without calling SetInput
 *   first in the inproc case.
 */
 #define SP_STREAM_UNINITIALIZED                            MAKE_SAPI_SCODE(0x057)
@@ -504,7 +504,7 @@
 #define SPERR_AUDIO_STOPPED_UNEXPECTEDLY                   MAKE_SAPI_ERROR(0x05c)
 
 /*** SPERR_NO_WORD_PRONUNCIATION                           0x8004505d    -2147200931
-*   The SR engine is unable to add this word to a grammar. The application may need to supply 
+*   The SR engine is unable to add this word to a grammar. The application may need to supply
 *   an explicit pronunciation for this word.
 */
 #define SPERR_NO_WORD_PRONUNCIATION                        MAKE_SAPI_ERROR(0x05d)
@@ -545,7 +545,7 @@
 
 /*** SPERR_ALREADY_DELETED                                 0x80045064    -2147200924
 *   The object is a stale reference and is invalid to use.
-*   For example having a ISpeechGrammarRule object reference and then calling 
+*   For example having a ISpeechGrammarRule object reference and then calling
 *   ISpeechRecoGrammar::Reset() will cause the rule object to be invalidated.
 *   Calling any methods after this will result in this error.
 */

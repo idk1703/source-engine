@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -45,7 +45,7 @@ BEGIN_PREDICTION_DATA( CTFWeaponPDA )
 END_PREDICTION_DATA()
 
 // Server specific.
-#if !defined( CLIENT_DLL ) 
+#if !defined( CLIENT_DLL )
 BEGIN_DATADESC( CTFWeaponPDA )
 END_DATADESC()
 #endif
@@ -148,7 +148,7 @@ void CTFWeaponPDA::SecondaryAttack( void )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CTFWeaponPDA::ShouldShowControlPanels( void )
@@ -214,7 +214,7 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_pda_engineer_build );
 
 #ifdef CLIENT_DLL
 CHudBaseBuildMenu *CTFWeaponPDA_Engineer_Build::GetBuildMenu() const
-{ 
+{
 	return GET_HUDELEMENT( CHudMenuEngyBuild );
 }
 #endif // CLIENT_DLL
@@ -234,8 +234,8 @@ LINK_ENTITY_TO_CLASS( tf_weapon_pda_engineer_destroy, CTFWeaponPDA_Engineer_Dest
 PRECACHE_WEAPON_REGISTER( tf_weapon_pda_engineer_destroy );
 
 #ifdef CLIENT_DLL
-CHudBaseBuildMenu *CTFWeaponPDA_Engineer_Destroy::GetBuildMenu() const 
-{ 
+CHudBaseBuildMenu *CTFWeaponPDA_Engineer_Destroy::GetBuildMenu() const
+{
 	return GET_HUDELEMENT( CHudMenuEngyDestroy );
 }
 #endif // CLIENT_DLL
@@ -255,7 +255,7 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_pda_spy );
 
 #ifdef CLIENT_DLL
 CHudBaseBuildMenu *CTFWeaponPDA_Spy::GetBuildMenu() const
-{ 
+{
 	return GET_HUDELEMENT( CHudMenuSpyDisguise );
 }
 #endif // CLIENT_DLL
@@ -276,8 +276,8 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_pda_spy_build );
 
 #ifdef CLIENT_DLL
 CHudBaseBuildMenu *CTFWeaponPDA_Spy_Build::GetBuildMenu() const
-{ 
-	return GET_HUDELEMENT( CHudMenuSpyBuild ); 
+{
+	return GET_HUDELEMENT( CHudMenuSpyBuild );
 }
 #endif // CLIENT_DLL
 #endif // STAGING_ONLY
@@ -490,7 +490,7 @@ bool	CTFWeaponPDA_Engineer_Destroy::VisibleInWeaponSelection( void )
 #ifdef CLIENT_DLL
 		|| ::input->IsSteamControllerActive()
 		|| tf_build_menu_controller_mode.GetBool()
-#endif 
+#endif
 		)
 	{
 		return false;
@@ -503,7 +503,7 @@ bool	CTFWeaponPDA_Engineer_Destroy::VisibleInWeaponSelection( void )
 
 #ifdef STAGING_ONLY
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFWeaponPDA_Spy_Build::CanDeploy( void )
 {
@@ -536,7 +536,7 @@ bool CTFWeaponPDA_Spy_Build::VisibleInWeaponSelection( void )
 {
 	if ( !BaseClass::VisibleInWeaponSelection() )
 		return false;
-	
+
 	return TFGameRules() && TFGameRules()->GameModeUsesUpgrades();
 }
 #endif // STAGING_ONLY

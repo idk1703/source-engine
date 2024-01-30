@@ -1,6 +1,6 @@
 
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -21,7 +21,7 @@ CDataManagerBase::CDataManagerBase( unsigned int maxSize )
 	m_listsAreFreed = 0;
 }
 
-CDataManagerBase::~CDataManagerBase() 
+CDataManagerBase::~CDataManagerBase()
 {
 	Assert( m_listsAreFreed );
 }
@@ -137,7 +137,7 @@ void CDataManagerBase::DestroyResource( memhandle_t handle )
 		Unlock();
 		return;
 	}
-	
+
 	Assert( m_memoryLists[index].lockCount == 0  );
 	if ( m_memoryLists[index].lockCount )
 		BreakLock( handle );
@@ -325,20 +325,20 @@ memhandle_t CDataManagerBase::ToHandle( unsigned short index )
 	return (memhandle_t)( hiword|index );
 }
 
-unsigned int CDataManagerBase::TargetSize() 
-{ 
-	return MemTotal_Inline(); 
+unsigned int CDataManagerBase::TargetSize()
+{
+	return MemTotal_Inline();
 }
 
 unsigned int CDataManagerBase::AvailableSize()
-{ 
-	return MemAvailable_Inline(); 
+{
+	return MemAvailable_Inline();
 }
 
 
 unsigned int CDataManagerBase::UsedSize()
-{ 
-	return MemUsed_Inline(); 
+{
+	return MemUsed_Inline();
 }
 
 // free resources until there is enough space to hold "size"
@@ -407,4 +407,3 @@ void CDataManagerBase::GetLockHandleList( CUtlVector< memhandle_t >& list )
 		list.AddToTail( ToHandle( node ) );
 	}
 }
-

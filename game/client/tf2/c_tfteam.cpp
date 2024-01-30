@@ -25,7 +25,7 @@
 void RecvProxy_ObjectList( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
 	C_TFTeam *pTeam = (C_TFTeam*)pStruct;
-	CBaseHandle *pHandle = (CBaseHandle*)(&(pTeam->m_aObjects[ pData->m_iElement ])); 
+	CBaseHandle *pHandle = (CBaseHandle*)(&(pTeam->m_aObjects[ pData->m_iElement ]));
 	RecvProxy_IntToEHandle( pData, pStruct, pHandle );
 }
 
@@ -33,7 +33,7 @@ void RecvProxy_ObjectList( const CRecvProxyData *pData, void *pStruct, void *pOu
 void RecvProxyArrayLength_TeamObjects( void *pStruct, int objectID, int currentArrayLength )
 {
 	C_TFTeam *pTeam = (C_TFTeam*)pStruct;
-	
+
 	if ( pTeam->m_aObjects.Count() != currentArrayLength )
 	{
 		pTeam->m_aObjects.SetSize( currentArrayLength );
@@ -42,21 +42,21 @@ void RecvProxyArrayLength_TeamObjects( void *pStruct, int objectID, int currentA
 
 
 IMPLEMENT_CLIENTCLASS_DT(C_TFTeam, DT_TFTeam, CTFTeam)
-	RecvPropFloat( RECVINFO(m_fResources) ), 
+	RecvPropFloat( RECVINFO(m_fResources) ),
 	RecvPropFloat( RECVINFO(m_fPotentialResources) ),
 	RecvPropInt( RECVINFO(m_bHaveZone) ),
-	
-	RecvPropArray2( 
+
+	RecvPropArray2(
 		RecvProxyArrayLength_TeamObjects,
-		RecvPropInt( "object_array_element", 0, SIZEOF_IGNORE, 0, RecvProxy_ObjectList ), 
-		MAX_OBJECTS_PER_TEAM, 
-		0, 
+		RecvPropInt( "object_array_element", 0, SIZEOF_IGNORE, 0, RecvProxy_ObjectList ),
+		MAX_OBJECTS_PER_TEAM,
+		0,
 		"object_array"
 		),
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFTeam::C_TFTeam()
 {
@@ -64,14 +64,14 @@ C_TFTeam::C_TFTeam()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFTeam::~C_TFTeam()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFTeam::NotifyBaseUnderAttack( const Vector &vecPosition, bool bPlaySound, bool bForce )
 {
@@ -96,7 +96,7 @@ void C_TFTeam::NotifyBaseUnderAttack( const Vector &vecPosition, bool bPlaySound
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float C_TFTeam::GetTeamResources( void )
 {
@@ -105,7 +105,7 @@ float C_TFTeam::GetTeamResources( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float C_TFTeam::GetPotentialTeamResources( void )
 {
@@ -123,7 +123,7 @@ bool C_TFTeam::GetHaveZone( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_TFTeam::GetNumObjects( int iObjectType )
 {
@@ -147,7 +147,7 @@ int C_TFTeam::GetNumObjects( int iObjectType )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseObject *C_TFTeam::GetObject( int iIndex )
 {
@@ -202,16 +202,15 @@ void C_TFTeam::ReceiveMessage( int classID,  bf_read &msg )
 	// Print the string
 	int width, height;
 	messagechars->GetStringLength( g_hFontTrebuchet24, &width, &height, sResourceString );
-	messagechars->DrawStringForTime( 
-		5.0, 
-		g_hFontTrebuchet24, 
-		(ScreenWidth() - width) / 2, 
-		iYPos, 
-		192, 
-		192, 
-		192, 
-		255, 
+	messagechars->DrawStringForTime(
+		5.0,
+		g_hFontTrebuchet24,
+		(ScreenWidth() - width) / 2,
+		iYPos,
+		192,
+		192,
+		192,
+		255,
 		sResourceString,
 		MESSAGESTRINGID_RESOURCESHARVESTED );
 }
-

@@ -70,8 +70,8 @@ extern void ScaleBitmap(CSize sizeSrc, CSize sizeDest, char *src, char *dest);
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nSize - 
+// Purpose:
+// Input  : nSize -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 static bool AllocateLoadBuffer(int nSize)
@@ -167,11 +167,11 @@ const char *CWADTexture::GetFileName( void ) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fd - 
-//			ulFileID - 
-//			bLoad - 
-//			pszName - 
+// Purpose:
+// Input  : fd -
+//			ulFileID -
+//			bLoad -
+//			pszName -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CWADTexture::Init(int fd, DWORD ulFileID, BOOL bLoad, LPCTSTR pszName)
@@ -228,7 +228,7 @@ BOOL CWADTexture::Init(int fd, DWORD ulFileID, BOOL bLoad, LPCTSTR pszName)
 
 	// set offset
 	m_ulFileOffset = _tell(fd);
-	
+
 	if (bLoad)
 	{
 		return(Load());
@@ -239,8 +239,8 @@ BOOL CWADTexture::Init(int fd, DWORD ulFileID, BOOL bLoad, LPCTSTR pszName)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
+// Purpose:
+// Input  :
 // Output : CPalette *
 //-----------------------------------------------------------------------------
 CPalette *CWADTexture::GetPalette(void) const
@@ -282,8 +282,8 @@ int CWADTexture::GetKeywords(char *pszKeywords) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszName - 
+// Purpose:
+// Input  : *pszName -
 // Output : Returns the length of the short name in characters.
 //-----------------------------------------------------------------------------
 int CWADTexture::GetShortName(char *pszName) const
@@ -328,7 +328,7 @@ int CWADTexture::GetShortName(char *pszName) const
 
 //-----------------------------------------------------------------------------
 // Purpose: Resizes a texture to be even powers of 2 in width and height.
-// Input  : pLoadBuf - 
+// Input  : pLoadBuf -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CWADTexture::AdjustTexture(char *pLoadBuf)
@@ -351,7 +351,7 @@ BOOL CWADTexture::AdjustTexture(char *pLoadBuf)
 		i2 = 1 << i;
 		if (i2 >= m_nHeight)
 		{
-			m_dataheight = i2;	
+			m_dataheight = i2;
 			break;
 		}
 	}
@@ -380,8 +380,8 @@ bool CWADTexture::IsLoaded() const
 
 //-----------------------------------------------------------------------------
 // Purpose: Load data from file associated with m_ulFileID.
-// Input  : fd - 
-//			hFile - 
+// Input  : fd -
+//			hFile -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CWADTexture::Load(int fd, HANDLE hFile)
@@ -390,7 +390,7 @@ BOOL CWADTexture::Load(int fd, HANDLE hFile)
 	{
 		return TRUE;	// already loaded
 	}
-	
+
 	// if fd is -1, get it from base file.. otherwise we've been
 	//  given an fd by caller, so use that in loading
 	GRAPHICSFILESTRUCT fileInfo;
@@ -401,13 +401,13 @@ BOOL CWADTexture::Load(int fd, HANDLE hFile)
 	{
 		// find graphics file - different loading based on wad type.
 		if (!g_Textures.FindGraphicsFile(&fileInfo, m_ulFileID))
-		{	
+		{
 			return(FALSE);
 		}
 
 		// keep fd
 		fd = fileInfo.fd;
-		
+
 		// seek to offset
 		_lseek(fd, m_ulFileOffset, SEEK_SET);
 	}
@@ -440,7 +440,7 @@ BOOL CWADTexture::Load(int fd, HANDLE hFile)
 		if ((nPal > 0) && (nPal < 1024))
 		{
 			m_bLocalPalette = TRUE;
-			
+
 			// setup palette
 			m_pPalette = (LOGPALETTE *)malloc(sizeof(WORD) * 2 + sizeof(PALETTEENTRY) * nPal);
 
@@ -546,8 +546,8 @@ int CWADTexture::GetImageDataRGBA( void *pImageRGBA )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : size - 
+// Purpose:
+// Input  : size -
 //-----------------------------------------------------------------------------
 void CWADTexture::GetSize(SIZE& size)
 {
@@ -558,10 +558,10 @@ void CWADTexture::GetSize(SIZE& size)
 
 //-----------------------------------------------------------------------------
 // Purpose: Draws white "No Image" text in a black rectangle.
-// Input  : pDC - 
-//			rect - 
-//			iFontHeight - 
-//			dwFlags - 
+// Input  : pDC -
+//			rect -
+//			iFontHeight -
+//			dwFlags -
 //-----------------------------------------------------------------------------
 void CWADTexture::DrawNoImage(CDC *pDC, RECT& rect, int iFontHeight)
 {
@@ -582,11 +582,11 @@ void CWADTexture::DrawNoImage(CDC *pDC, RECT& rect, int iFontHeight)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pDC - 
-//			rect - 
-//			iFontHeight - 
-//			dwFlags - 
+// Purpose:
+// Input  : *pDC -
+//			rect -
+//			iFontHeight -
+//			dwFlags -
 //-----------------------------------------------------------------------------
 void CWADTexture::Draw(CDC *pDC, RECT& rect, int iFontHeight, int iIconHeight, DrawTexData_t &DrawTexData)
 {
@@ -669,7 +669,7 @@ void CWADTexture::Draw(CDC *pDC, RECT& rect, int iFontHeight, int iIconHeight, D
 		// draw background for name
 		CBrush brCaption(RGB(0, 0, 255));
 		CRect rcCaption(rect);
-		
+
 		rcCaption.top = rcCaption.bottom - (iFontHeight + 5);
 		pDC->FillRect(rcCaption, &brCaption);
 
@@ -717,4 +717,3 @@ void CWADTexture::ShutDown(void)
 		g_pLoadBuf = NULL;
 	}
 }
-

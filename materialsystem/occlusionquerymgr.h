@@ -66,7 +66,7 @@ private:
 	//-----------------------------------------------------------------------------
 	// Occlusion query objects
 	//-----------------------------------------------------------------------------
-	struct OcclusionQueryObject_t 
+	struct OcclusionQueryObject_t
 	{
 		ShaderAPIOcclusionQuery_t m_QueryHandle[COUNT_OCCLUSION_QUERY_STACK];
 		int m_LastResult;

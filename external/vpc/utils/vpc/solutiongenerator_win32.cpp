@@ -1,6 +1,6 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. =======
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -58,13 +58,13 @@ public:
 
 				for ( int i=0; i < 200; i++ )
 				{
-					char szKeyName[MAX_PATH];	
+					char szKeyName[MAX_PATH];
 					DWORD dwKeyNameSize = sizeof( szKeyName );
 					ret = RegEnumKeyEx( hKey, i, szKeyName, &dwKeyNameSize, NULL, NULL, NULL, NULL );
 					if ( ret == ERROR_NO_MORE_ITEMS )
 						break;
-			
-					HKEY hSubKey;	
+
+					HKEY hSubKey;
 					LONG ret = RegOpenKeyEx( hKey, szKeyName, 0, KEY_READ, &hSubKey );
 					if ( ret == ERROR_SUCCESS )
 					{
@@ -113,7 +113,7 @@ public:
 		if ( !fp )
 			g_pVPC->VPCError( "Can't open %s for writing.", pSolutionFilename );
 
-		
+
 		if ( g_pVPC->Is2015() )
 		{
 			fprintf( fp, "\xef\xbb\xbf\nMicrosoft Visual Studio Solution File, Format Version 12.00\n" ); // still on 12
@@ -207,7 +207,7 @@ public:
 		fclose( fp );
 		Sys_CopyToMirror( pSolutionFilename );
 	}
-	
+
 	const char* FindInFile( const char *pFilename, const char *pFileData, const char *pSearchFor )
 	{
 		const char *pPos = V_stristr( pFileData, pSearchFor );
@@ -227,7 +227,7 @@ public:
 			const char *pFilename = pCurProject->m_ProjectFilename.String();
 
 			CVCProjInfo vcprojInfo;
-			
+
 			char *pFileData;
 			int nResult = Sys_LoadFile( pFilename, (void**)&pFileData, false );
 			if ( nResult == -1 )
@@ -268,7 +268,7 @@ public:
 			V_strncpy( szName, pPos, (pEnd - pPos) + 1 );
 			vcprojInfo.m_ProjectName = szName;
 
-			vcprojInfos.AddToTail( vcprojInfo );			
+			vcprojInfos.AddToTail( vcprojInfo );
 
 			free( pFileData );
 		}
@@ -283,7 +283,7 @@ public:
 			V_strncpy( szFullSolutionItemsPath, g_pVPC->GetSolutionItemsFilename(), sizeof( szFullSolutionItemsPath ) );
 		else
 			V_ComposeFileName( g_pVPC->GetStartDirectory(), g_pVPC->GetSolutionItemsFilename(), szFullSolutionItemsPath, sizeof( szFullSolutionItemsPath ) );
-		
+
 		g_pVPC->GetScript().PushScript( szFullSolutionItemsPath );
 
 		int numSolutionItems = 0;
@@ -329,7 +329,7 @@ public:
 				intptr_t handle = _findfirst32( szFullPath, &data );
 				if ( handle != -1L )
 				{
-					do 
+					do
 					{
 						if ( ( data.attrib & _A_SUBDIR ) == 0 )
 						{
@@ -367,4 +367,3 @@ IBaseSolutionGenerator* GetSolutionGenerator_Win32()
 {
 	return &g_SolutionGenerator_Win32;
 }
-

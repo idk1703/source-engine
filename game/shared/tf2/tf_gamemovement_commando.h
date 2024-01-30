@@ -52,7 +52,7 @@ protected:
 	void			CheckBullRush( void );
 	void			BullRushMove( void );
 
-	PlayerClassCommandoData_t  *m_pCommandoData; 
+	PlayerClassCommandoData_t  *m_pCommandoData;
 	Vector						m_vStandMins;
 	Vector						m_vStandMaxs;
 	Vector						m_vStandViewOffset;

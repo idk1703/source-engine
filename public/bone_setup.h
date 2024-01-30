@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,7 @@ class CBoneAccessor;
 class IPoseDebugger;
 
 
-// This provides access to networked arrays, so if this code actually changes a value, 
+// This provides access to networked arrays, so if this code actually changes a value,
 // the entity is marked as changed.
 abstract_class IParameterAccess
 {
@@ -68,19 +68,19 @@ private:
 // p1 = p1 * (1 - s) + p2 * s
 // q1 = q1 * (1 - s) + q2 * s
 //-----------------------------------------------------------------------------
-void SlerpBones( 
+void SlerpBones(
 	const CStudioHdr *pStudioHdr,
-	Quaternion q1[MAXSTUDIOBONES], 
-	Vector pos1[MAXSTUDIOBONES], 
+	Quaternion q1[MAXSTUDIOBONES],
+	Vector pos1[MAXSTUDIOBONES],
 	mstudioseqdesc_t &seqdesc, // source of q2 and pos2
-	int sequence, 
-	const Quaternion q2[MAXSTUDIOBONES], 
-	const Vector pos2[MAXSTUDIOBONES], 
+	int sequence,
+	const Quaternion q2[MAXSTUDIOBONES],
+	const Vector pos2[MAXSTUDIOBONES],
 	float s,
 	int boneMask
 	);
 
-// Given two samples of a bone separated in time by dt, 
+// Given two samples of a bone separated in time by dt,
 // compute the velocity and angular velocity of that bone
 void CalcBoneDerivatives( Vector &velocity, AngularImpulse &angVel, const matrix3x4_t &prev, const matrix3x4_t &current, float dt );
 // Give a derivative of a bone, compute the velocity & angular velocity of that bone
@@ -88,11 +88,11 @@ void CalcBoneVelocityFromDerivative( const QAngle &vecAngles, Vector &velocity, 
 
 // This function sets up the local transform for a single frame of animation. It doesn't handle
 // pose parameters or interpolation between frames.
-void SetupSingleBoneMatrix( 
-	CStudioHdr *pOwnerHdr, 
-	int nSequence, 
+void SetupSingleBoneMatrix(
+	CStudioHdr *pOwnerHdr,
+	int nSequence,
 	int iFrame,
-	int iBone, 
+	int iBone,
 	matrix3x4_t &mBoneLocal );
 
 
@@ -100,23 +100,23 @@ void SetupSingleBoneMatrix(
 void BuildBoneChain(
 	const CStudioHdr *pStudioHdr,
 	const matrix3x4_t &rootxform,
-	const Vector pos[], 
-	const Quaternion q[], 
+	const Vector pos[],
+	const Quaternion q[],
 	int	iBone,
 	matrix3x4_t *pBoneToWorld );
 
 void BuildBoneChain(
 	const CStudioHdr *pStudioHdr,
 	const matrix3x4_t &rootxform,
-	const Vector pos[], 
-	const Quaternion q[], 
+	const Vector pos[],
+	const Quaternion q[],
 	int	iBone,
 	matrix3x4_t *pBoneToWorld,
 	CBoneBitList &boneComputed );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 // ik info
@@ -265,7 +265,7 @@ bool Studio_SolveIK( int iThigh, int iKnee, int iFoot, Vector &targetFoot, Vecto
 
 
 
-class CIKContext 
+class CIKContext
 {
 public:
 	CIKContext( );
@@ -282,7 +282,7 @@ public:
 
 	void AddSequenceLocks( mstudioseqdesc_t &SeqDesc, Vector pos[], Quaternion q[] );
 	void SolveSequenceLocks( mstudioseqdesc_t &SeqDesc, Vector pos[], 	Quaternion q[] );
-	
+
 	void AddAllLocks( Vector pos[], Quaternion q[] );
 	void SolveAllLocks( Vector pos[], Quaternion q[] );
 
@@ -294,7 +294,7 @@ private:
 
 	CStudioHdr const *m_pStudioHdr;
 
-	bool Estimate( int iSequence, float flCycle, int iTarget, const float poseParameter[], float flWeight = 1.0f ); 
+	bool Estimate( int iSequence, float flCycle, int iTarget, const float poseParameter[], float flWeight = 1.0f );
 	void BuildBoneChain( const Vector pos[], const Quaternion q[], int iBone, matrix3x4_t *pBoneToWorld, CBoneBitList &boneComputed );
 
 	// virtual IK rules, filtered and combined from each sequence
@@ -309,7 +309,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 // replaces the bonetoworld transforms for all bones that are procedural
@@ -321,8 +321,8 @@ bool CalcProceduralBone(
 
 void Studio_BuildMatrices(
 	const CStudioHdr *pStudioHdr,
-	const QAngle& angles, 
-	const Vector& origin, 
+	const QAngle& angles,
+	const Vector& origin,
 	const Vector pos[],
 	const Quaternion q[],
 	int iBone,
@@ -407,7 +407,7 @@ public:
 
 	// was constructor, but placement new is messy wrt memdebug - so cast & init instead
 	void			Init( const bonecacheparams_t &params, unsigned int size, short *pStudioToCached, short *pCachedToStudio, int cachedBoneCount );
-	
+
 	void			UpdateBones( const matrix3x4_t *pBoneToWorld, int numbones, float curtime );
 	matrix3x4_t		*GetCachedBone( int studioIndex );
 	void			ReadCachedBones( matrix3x4_t *pBoneToWorld );

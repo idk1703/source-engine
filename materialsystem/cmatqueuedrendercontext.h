@@ -96,10 +96,10 @@ class CMatQueuedRenderContext : public CMatRenderContextBase
 	typedef CMatRenderContextBase BaseClass;
 public:
 	CMatQueuedRenderContext()
-	 :	m_pHardwareContext( NULL ), 
-		m_iRenderDepth( 0 ), 
+	 :	m_pHardwareContext( NULL ),
+		m_iRenderDepth( 0 ),
 		m_pQueuedMesh( NULL ),
-		m_WidthBackBuffer( 0 ), 
+		m_WidthBackBuffer( 0 ),
 		m_HeightBackBuffer( 0 ),
 		m_FogMode( MATERIAL_FOG_NONE ),
 		m_flFogStart( 0 ),
@@ -360,10 +360,10 @@ public:
 
 	DEFINE_QUEUED_CALL_0(					DisableAllLocalLights, IMatRenderContext, m_pHardwareContext );
 
-	int CompareMaterialCombos( IMaterial *pMaterial1, IMaterial *pMaterial2, int lightmapID1, int lightmapID2 ) 
-	{ 
+	int CompareMaterialCombos( IMaterial *pMaterial1, IMaterial *pMaterial2, int lightmapID1, int lightmapID2 )
+	{
 		CannotSupport();
-		return 0; 
+		return 0;
 	}
 
 	IMesh *GetFlexMesh();
@@ -392,7 +392,7 @@ public:
 	{
 		return 0;
 	}
-	
+
 	ITexture *GetLocalCubemap()
 	{
 		return m_pLocalCubemapTexture;
@@ -420,7 +420,7 @@ public:
 	{
 		OnAsyncUnmap( pTexToUnmap );
 
-		m_queue.QueueCall( m_pHardwareContext, &IMatRenderContextInternal::AsyncUnmap, pTexToUnmap );	
+		m_queue.QueueCall( m_pHardwareContext, &IMatRenderContextInternal::AsyncUnmap, pTexToUnmap );
 	}
 
 	virtual void AsyncCopyRenderTargetToStagingTexture( ITexture* pDst, ITexture* pSrc, IAsyncTextureOperationReceiver* pRecipient, void* pExtraArgs ) OVERRIDE
@@ -431,7 +431,7 @@ public:
 	}
 
 	DEFINE_QUEUED_CALL_0(					TextureManagerUpdate, IMatRenderContextInternal, m_pHardwareContext );
-	
+
 	bool GetUserClipTransform( VMatrix &worldToView )
 	{
 		CannotSupport();
@@ -469,7 +469,7 @@ public:
 	DEFINE_QUEUED_CALL_0(					EndFrame, IMatRenderContextInternal, m_pHardwareContext );
 
 	void									SetFrameTime( float frameTime )
-	{ 
+	{
 		m_queue.QueueCall( m_pHardwareContext, &IMatRenderContextInternal::SetFrameTime, frameTime );
 		m_FrameTime = frameTime;
 	}
@@ -483,7 +483,7 @@ public:
 	}
 	virtual bool GetMorphAccumulatorTexCoord( Vector2D *pTexCoord, IMorph *pIMorph, int nVertex )
 	{
-		// FIXME: We must assign morph ids in the queued mode 
+		// FIXME: We must assign morph ids in the queued mode
 		// and pass the ids down to the morph mgr to get the texcoord
 		Assert(0);
 		pTexCoord->Init();
@@ -593,7 +593,7 @@ public:
 	virtual void							Printf( PRINTF_FORMAT_STRING const char *fmt, ... ) {};
 	virtual void							PrintfVA( char *fmt, va_list vargs ){};
 	virtual float							Knob( char *knobname, float *setvalue=NULL ) { return 0.0f; };
-	
+
 #ifdef DX_TO_GL_ABSTRACTION
 	void									DoStartupShaderPreloading( void ) {};
 #endif

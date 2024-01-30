@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -24,7 +24,7 @@
 
 
 typedef enum {
-	pt_static, 
+	pt_static,
 	pt_grav,
 	pt_slowgrav,
 	pt_fire,
@@ -80,13 +80,13 @@ public:
 	void					SetParticleType( StandardParticle_t *pParticle, ptype_t type );
 	ptype_t					GetParticleType( StandardParticle_t *pParticle );
 
-	// Get/set lifetime. Note: lifetime here is a counter. You set it to a value and it 
+	// Get/set lifetime. Note: lifetime here is a counter. You set it to a value and it
 	// counts down and disappears after that long.
 	void					SetParticleLifetime( StandardParticle_t *pParticle, float lifetime );
 	float					GetParticleLifetime( StandardParticle_t *pParticle );
 
 
-// IParticleEffect overrides.	
+// IParticleEffect overrides.
 public:
 	virtual void RenderParticles( CParticleRenderIterator *pIterator );
 	virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
@@ -115,7 +115,7 @@ inline ptype_t CTEParticleRenderer::GetParticleType(StandardParticle_t *pParticl
 	return (ptype_t)pParticle->m_EffectData;
 }
 
-// Get/set lifetime. Note that 
+// Get/set lifetime. Note that
 inline void CTEParticleRenderer::SetParticleLifetime(StandardParticle_t *pParticle, float lifetime)
 {
 	pParticle->m_Lifetime = lifetime;
@@ -128,6 +128,3 @@ inline float CTEParticleRenderer::GetParticleLifetime(StandardParticle_t *pParti
 
 
 #endif
-
-
-

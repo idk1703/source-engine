@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@ public:
 	{
 		*flHorzSize = pSprite->m_flHorzSize;
 		*flVertSize = pSprite->m_flVertSize;
-		
+
 		Vector viewDir = ( CurrentViewOrigin() - m_vecOrigin );
 		float distToViewer = VectorNormalize( viewDir );
 
@@ -44,12 +44,12 @@ public:
 		{
 			fade = RemapValClamped( distToViewer, m_nMinDist, m_nMaxDist, 0.0f, 1.0f );
 		}
-		
+
 		*vColor = pSprite->m_vColor * fade * m_flGlowObstructionScale;
 	}
 
 	void SetOrigin( const Vector &origin ) { m_vecOrigin = origin; }
-	
+
 	void SetFadeDistances( int minDist, int maxDist, int outerMaxDist )
 	{
 		m_nMinDist = minDist;
@@ -74,7 +74,7 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_LightGlow : public C_BaseEntity
 {
@@ -92,7 +92,7 @@ public:
 	virtual void	ClientThink( void );
 
 public:
-	
+
 	int					m_nHorizontalSize;
 	int					m_nVerticalSize;
 	int					m_nMinDist;
@@ -127,7 +127,7 @@ IMPLEMENT_CLIENTCLASS_DT_NOBASE( C_LightGlow, DT_LightGlow, CLightGlow )
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Constructor 
+// Constructor
 //-----------------------------------------------------------------------------
 C_LightGlow::C_LightGlow() :
 m_nHorizontalSize( 0 ), m_nVerticalSize( 0 ), m_nMinDist( 0 ), m_nMaxDist( 0 )
@@ -144,8 +144,8 @@ void C_LightGlow::Simulate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_LightGlow::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -166,7 +166,7 @@ void C_LightGlow::OnDataChanged( DataUpdateType_t updateType )
 		m_Glow.m_Sprites[0].m_flVertSize = (float) m_nVerticalSize;
 		m_Glow.m_Sprites[0].m_flHorzSize = (float) m_nHorizontalSize;
 		m_Glow.m_Sprites[0].m_vColor = vColor;
-		
+
 		m_Glow.SetOrigin( GetAbsOrigin() );
 		m_Glow.SetFadeDistances( m_nMinDist, m_nMaxDist, m_nOuterMaxDist );
 		m_Glow.m_flProxyRadius = m_flGlowProxySize;
@@ -188,16 +188,16 @@ void C_LightGlow::OnDataChanged( DataUpdateType_t updateType )
 
 		m_Glow.m_Sprites[0].m_vColor = vColor;
 	}
-	
+
 
 	Vector forward;
 	AngleVectors( GetAbsAngles(), &forward, NULL, NULL );
-	
+
 	m_Glow.SetDirection( forward );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_LightGlow::ClientThink( void )
 {

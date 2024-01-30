@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -83,7 +83,7 @@
 #define PATHSEPARATOR(c) ((c) == '/')
 #endif	//_WIN32
 
-#define MAX_FILEPATH 512 
+#define MAX_FILEPATH 512
 
 extern CUtlSymbolTableMT g_PathIDTable;
 
@@ -260,7 +260,7 @@ public:
 	virtual void				Flush( FileHandle_t file );
 	virtual bool				Precache( const char *pFileName, const char *pPathID );
 	virtual bool				EndOfFile( FileHandle_t file );
- 
+
 	virtual int					Read( void *pOutput, int size, FileHandle_t file );
 	virtual int					ReadEx( void* pOutput, int sizeDest, int size, FileHandle_t file );
 	virtual int					Write( void const* pInput, int size, FileHandle_t file );
@@ -316,7 +316,7 @@ public:
 	virtual bool				IsFileWritable( char const *pFileName, const char *pPathID = NULL );
 	virtual bool				SetFileWritable( char const *pFileName, bool writable, const char *pPathID = 0 );
 	virtual void				FileTimeToString( char *pString, int maxChars, long fileTime );
-	
+
 	virtual const char			*FindFirst( const char *pWildCard, FileFindHandle_t *pHandle );
 	virtual const char			*FindFirstEx( const char *pWildCard, const char *pPathID, FileFindHandle_t *pHandle );
 	virtual const char			*FindNext( FileFindHandle_t handle );
@@ -339,7 +339,7 @@ public:
 	virtual bool				String( const FileNameHandle_t& handle, char *buf, int buflen );
 	virtual int					GetPathIndex( const FileNameHandle_t &handle );
 	long						GetPathTime( const char *pFileName, const char *pPathID );
-	
+
 	virtual void				EnableWhitelistFileTracking( bool bEnable, bool bCacheAllVPKHashes, bool bRecalculateAndCheckHashes );
 	virtual void				RegisterFileWhitelist( IPureServerWhitelist *pWhiteList, IFileList **ppFilesToReload ) OVERRIDE;
 	virtual	void				MarkAllCRCsUnverified();
@@ -364,7 +364,7 @@ public:
 
 	// Returns the file system statistics retreived by the implementation.  Returns NULL if not supported.
 	virtual const FileSystemStatistics *GetFilesystemStatistics();
-	
+
 	// Load dlls
 	virtual CSysModule 			*LoadModule( const char *pFileName, const char *pPathID, bool bValidatedDllOnly );
 	virtual void				UnloadModule( CSysModule *pModule );
@@ -498,7 +498,7 @@ public:
 
 		const char* GetPathString() const;
 		const char* GetDebugString() const;
-		
+
 		// Path ID ("game", "mod", "gamebin") accessors.
 		const CUtlSymbol& GetPathID() const;
 		const char* GetPathIDString() const;
@@ -519,7 +519,7 @@ public:
 
 		int					m_storeId;
 
-		// Used to track if its search 
+		// Used to track if its search
 		CPathIDInfo			*m_pPathIDInfo;
 
 		bool				m_bIsRemotePath;
@@ -553,14 +553,14 @@ public:
 		}
 
 	private:
-		CUtlVector<int> m_Visits;	// This is a copy of IDs for the search paths we've visited, so 
+		CUtlVector<int> m_Visits;	// This is a copy of IDs for the search paths we've visited, so
 	};
 
 	class CSearchPathsIterator
 	{
 	public:
 		CSearchPathsIterator( CBaseFileSystem *pFileSystem, const char **ppszFilename, const char *pszPathID, PathTypeFilter_t pathTypeFilter = FILTER_NONE )
-		  : m_iCurrent( -1 ),
+		: m_iCurrent( -1 ),
 			m_PathTypeFilter( pathTypeFilter )
 		{
 			char tempPathID[MAX_PATH];
@@ -600,10 +600,10 @@ public:
 		}
 
 		CSearchPathsIterator( CBaseFileSystem *pFileSystem, const char *pszPathID, PathTypeFilter_t pathTypeFilter = FILTER_NONE )
-		  : m_iCurrent( -1 ),
+		: m_iCurrent( -1 ),
 			m_PathTypeFilter( pathTypeFilter )
 		{
-			if ( pszPathID ) 
+			if ( pszPathID )
 			{
 				m_pathID =  g_PathIDTable.AddString( pszPathID );
 			}
@@ -707,7 +707,7 @@ protected:
 	virtual int FS_feof( FILE *fp ) = 0;
 	size_t FS_fread( void *dest, size_t size, FILE *fp ) { return FS_fread( dest, (size_t)-1, size, fp ); }
 	virtual size_t FS_fread( void *dest, size_t destSize, size_t size, FILE *fp ) = 0;
-    virtual size_t FS_fwrite( const void *src, size_t size, FILE *fp ) = 0;
+	virtual size_t FS_fwrite( const void *src, size_t size, FILE *fp ) = 0;
 	virtual bool FS_setmode( FILE *fp, FileMode_t mode ) { return false; }
 	virtual size_t FS_vfprintf( FILE *fp, const char *fmt, va_list list ) = 0;
 	virtual int FS_ferror( FILE *fp ) = 0;
@@ -813,7 +813,7 @@ protected:
 	bool LookupKeyValuesRootKeyName( char const *filename, char const *pPathID, char *rootName, size_t bufsize );
 	void UnloadCompiledKeyValues();
 
-	// If bByRequestOnly is -1, then it will default to false if it doesn't already exist, and it 
+	// If bByRequestOnly is -1, then it will default to false if it doesn't already exist, and it
 	// won't change it if it does already exist. Otherwise, it will be set to the value of bByRequestOnly.
 	CPathIDInfo*				FindOrAddPathIDInfo( const CUtlSymbol &id, int bByRequestOnly );
 	static bool					FilterByPathID( const CSearchPath *pSearchPath, const CUtlSymbol &pathID );
@@ -954,7 +954,7 @@ public:
 		Assert( m_pFS );
 		m_Timer.Start();
 	}
-	
+
 	CAutoBlockReporter( CBaseFileSystem *fs, bool synchronous, FileHandle_t handle, int eBlockType, int nTypeOfAccess ) :
 		m_pFS( fs ),
 		m_Item( eBlockType, NULL, 0.0f, nTypeOfAccess ),

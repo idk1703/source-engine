@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -28,7 +28,7 @@ class CHudRadar : public CVGuiScreenPanel
 public:
 	DECLARE_CLASS_SIMPLE( CHudRadar, CVGuiScreenPanel );
 
-	
+
 	CHudRadar( vgui::Panel *parent, const char *panelName );
 	~CHudRadar();
 
@@ -50,7 +50,7 @@ public:
 public:
 	bool			m_bUseFastUpdate;
 	int				m_ghostAlpha;			// How intense the alpha channel is for CRT ghosts
-	float			m_flTimeStopGhosting;	
+	float			m_flTimeStopGhosting;
 	float			m_flTimeStartGhosting;
 
 private:

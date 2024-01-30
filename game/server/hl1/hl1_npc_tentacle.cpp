@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose: Bullseyes act as targets for other NPC's to attack and to trigger
-//			events 
+//			events
 //
 // $Workfile:     $
 // $Date:         $
@@ -78,7 +78,7 @@ public:
 
 	bool QueryHearSound( CSound *pSound ) { return true; } // Tentacle isn't picky.
 
-	
+
 	int Level( float dz );
 	int MyLevel( void );
 	float MyHeight( void );
@@ -128,7 +128,7 @@ public:
 	bool	HeardAnything( void );
 
 	Class_T Classify ( void );
-	
+
 	CBoneFollowerManager	m_BoneFollowerManager;
 
 	DECLARE_DATADESC();
@@ -153,7 +153,7 @@ LINK_ENTITY_TO_CLASS( monster_tentacle, CNPC_Tentacle );
 #define TE_DIRT 1
 #define TE_WATER 2
 
-// animation sequence aliases 
+// animation sequence aliases
 typedef enum
 {
 	TENTACLE_ANIM_Pit_Idle,
@@ -243,9 +243,9 @@ BEGIN_DATADESC( CNPC_Tentacle )
 	DEFINE_ENTITYFUNC( HitTouch ),
 END_DATADESC()
 
-Class_T CNPC_Tentacle::Classify ( void ) 
-{ 
-	return CLASS_ALIEN_MONSTER;	
+Class_T CNPC_Tentacle::Classify ( void )
+{
+	return CLASS_ALIEN_MONSTER;
 }
 
 
@@ -298,7 +298,7 @@ void CNPC_Tentacle::Spawn( )
 
 	m_takedamage		= DAMAGE_AIM;
 	AddFlag( FL_NPC );
-	
+
 	m_bloodColor		= BLOOD_COLOR_GREEN;
 
 	ResetSequenceInfo( );
@@ -311,7 +311,7 @@ void CNPC_Tentacle::Spawn( )
 
 	m_flInitialYaw = GetAbsAngles().y;
 	GetMotor()->SetIdealYawAndUpdate( m_flInitialYaw );
-	
+
 	g_fFlySound = FALSE;
 	g_fSquirmSound = FALSE;
 
@@ -383,7 +383,7 @@ int CNPC_Tentacle::MyLevel( )
 {
 	switch( GetSequence() )
 	{
-	case TENTACLE_ANIM_Pit_Idle: 
+	case TENTACLE_ANIM_Pit_Idle:
 		return -1;
 
 	case TENTACLE_ANIM_rise_to_Temp1:
@@ -463,7 +463,7 @@ void CNPC_Tentacle::Start( void )
 		EmitSound( filter, entindex(), "Tentacle.Squirm" );
 		g_fSquirmSound = TRUE;
 	}
-	
+
 	SetNextThink( gpGlobals->curtime + 0.1 );
 }
 
@@ -490,18 +490,18 @@ void CNPC_Tentacle::Cycle( void )
 	if ( m_NPCState == NPC_STATE_SCRIPT || GetIdealState() == NPC_STATE_SCRIPT)
 	{
 		SetAbsAngles( QAngle( GetAbsAngles().x, m_flInitialYaw, GetAbsAngles().z ) );
-		GetMotor()->SetIdealYaw( m_flInitialYaw );	
+		GetMotor()->SetIdealYaw( m_flInitialYaw );
 		RemoveIgnoredConditions();
 		NPCThink( );
 		m_iGoalAnim = TENTACLE_ANIM_Pit_Idle;
 		return;
 	}
-	
+
 	StudioFrameAdvance();
 	DispatchAnimEvents( this );
 
 	GetMotor()->UpdateYaw( MaxYawSpeed() );
-	
+
 	CSound *pSound = NULL;
 
 	GetSenses()->Listen();
@@ -607,7 +607,7 @@ void CNPC_Tentacle::Cycle( void )
 						break;
 				}
 			}
-			else if (m_flSoundYaw >= -m_flMaxYaw * 2 && m_flSoundYaw <= m_flMaxYaw * 2) 
+			else if (m_flSoundYaw >= -m_flMaxYaw * 2 && m_flSoundYaw <= m_flMaxYaw * 2)
 			{
 				// tap
 				switch ( m_iSoundLevel )
@@ -777,7 +777,7 @@ void CNPC_Tentacle::Cycle( void )
 		}
 
 		SetSequence( FindTransitionSequence( GetSequence(), m_iGoalAnim, &m_iDir ) );
-		
+
 
 		if (m_iDir > 0)
 		{
@@ -841,7 +841,7 @@ void CNPC_Tentacle::HandleAnimEvent( animevent_t *pEvent )
 {
 	switch( pEvent->event )
 	{
-	case 1:	// bang 
+	case 1:	// bang
 		{
 			Vector vecSrc;
 			QAngle angAngles;
@@ -931,7 +931,7 @@ void CNPC_Tentacle::HitTouch( CBaseEntity *pOther )
 	if( pOther == NULL || pOther->GetModelIndex() == GetModelIndex() || ( pOther->GetSolidFlags() & FSOLID_TRIGGER ) )
 		 return;
 
-	//Right now the BoneFollower will always be hit in box 0, and 
+	//Right now the BoneFollower will always be hit in box 0, and
 	//will pass that to us. Make *any* touch by the physics objects a kill
 	//as the ragdoll only covers the top portion of the tentacle.
 	if ( pOther->m_takedamage )

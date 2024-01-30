@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -54,7 +54,7 @@
 #define SPOTLIGHT_ACTIVE_SEARCH_DIST	200		// How far from spotlight do I look when already have entity
 
 #define	SPOTLIGHT_BURN_TARGET_THRESH	60		// How close need to get to burn target
-#define	SPOTLIGHT_MAX_SPEED_SCALE		2	
+#define	SPOTLIGHT_MAX_SPEED_SCALE		2
 
 //#define SPOTLIGHT_DEBUG
 
@@ -112,7 +112,7 @@ class CNPC_Spotlight : public CAI_BaseNPC
 		// ------------------------------
 		Vector				m_vInspectPos;
 		float				m_flInspectEndTime;
-		float				m_flNextEntitySearchTime;	
+		float				m_flNextEntitySearchTime;
 		float				m_flNextHintSearchTime;		// Time to look for hints to inspect
 
 		void				SetInspectTargetToEntity(CBaseEntity *pEntity, float fInspectDuration);
@@ -146,7 +146,7 @@ class CNPC_Spotlight : public CAI_BaseNPC
 		float				m_flYawDir;
 
 		float				m_flPitch;
-		float				m_flPitchCenter;	
+		float				m_flPitchCenter;
 		float				m_flPitchMin;
 		float				m_flPitchMax;
 		float				m_flPitchSpeed;
@@ -161,7 +161,7 @@ class CNPC_Spotlight : public CAI_BaseNPC
 		CSpotlightEnd*		m_pSpotlightTarget;
 		Vector				m_vSpotlightDir;
 		int					m_nHaloSprite;
-		
+
 		float				m_flSpotlightMaxLength;
 		float				m_flSpotlightCurLength;
 		float				m_flSpotlightGoalWidth;
@@ -288,7 +288,7 @@ int CNPC_Spotlight::GetSoundInterests( void )
 //------------------------------------------------------------------------------
 int CNPC_Spotlight::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 {
-	// Deflect spotlight 
+	// Deflect spotlight
 	Vector vCrossProduct;
 	CrossProduct(m_vSpotlightDir,g_vecAttackDir, vCrossProduct);
 	if (vCrossProduct.y > 0)
@@ -305,11 +305,11 @@ int CNPC_Spotlight::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pInflictor - 
-//			pAttacker - 
-//			flDamage - 
-//			bitsDamageType - 
+// Purpose:
+// Input  : pInflictor -
+//			pAttacker -
+//			flDamage -
+//			bitsDamageType -
 //-----------------------------------------------------------------------------
 void CNPC_Spotlight::Event_Killed( const CTakeDamageInfo &info )
 {
@@ -326,7 +326,7 @@ void CNPC_Spotlight::Event_Killed( const CTakeDamageInfo &info )
 
 //-----------------------------------------------------------------------------
 // Purpose: Tells use whether or not the NPC cares about a given type of hint node.
-// Input  : sHint - 
+// Input  : sHint -
 // Output : TRUE if the NPC is interested in this hint type, FALSE if not.
 //-----------------------------------------------------------------------------
 bool CNPC_Spotlight::FValidateHintType(CAI_Hint *pHint)
@@ -369,7 +369,7 @@ void CNPC_Spotlight::NPCThink(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Spotlight::Precache(void)
 {
@@ -384,7 +384,7 @@ void CNPC_Spotlight::Precache(void)
 	//
 	PrecacheModel("sprites/spotlight.vmt");
 	m_nHaloSprite		= PrecacheModel("sprites/blueflare1.vmt");
-	
+
 	BaseClass::Precache();
 }
 
@@ -455,7 +455,7 @@ CBaseEntity* CNPC_Spotlight::BestInspectTarget(void)
 				continue;
 			}
 
-			
+
 			if (!pEntity->IsAlive())
 			{
 				continue;
@@ -479,7 +479,7 @@ CBaseEntity* CNPC_Spotlight::BestInspectTarget(void)
 			}
 
 			// If it's a new enemy or one that had eluded me
-			if (!GetEnemies()->HasMemory(pEntity)	|| 
+			if (!GetEnemies()->HasMemory(pEntity)	||
 				GetEnemies()->HasEludedMe(pEntity)	)
 			{
 				m_pOutputSquadDetect.Set(*((EHANDLE *)pEntity),this,this);
@@ -645,7 +645,7 @@ void CNPC_Spotlight::ClearInspectTarget(void)
 	{
 		SetState(NPC_STATE_ALERT);
 	}
-	
+
 	SetTarget( NULL );
 	SetEnemy( NULL );
 	ClearHintNode( SPOTLIGHT_HINT_INSPECT_LENGTH );
@@ -740,7 +740,7 @@ void CNPC_Spotlight::UpdateTargets(void)
 	if (m_fSpotlightFlags & BITS_SPOTLIGHT_TRACK_ON)
 	{
 		// --------------------------------------------------------------------------
-		//  Look for a nearby entity to inspect 
+		//  Look for a nearby entity to inspect
 		// --------------------------------------------------------------------------
 		CBaseEntity *pBestEntity = BestInspectTarget();
 
@@ -814,7 +814,7 @@ void CNPC_Spotlight::UpdateTargets(void)
 			}
 
 			// --------------------------------------------------------------
-			//  If I heard a sound inspect it 
+			//  If I heard a sound inspect it
 			// --------------------------------------------------------------
 			if (HasCondition(COND_HEAR_COMBAT) || HasCondition(COND_HEAR_DANGER) )
 			{
@@ -894,7 +894,7 @@ void CNPC_Spotlight::UpdateTargets(void)
 			if (fTargetDist < SPOTLIGHT_BURN_TARGET_THRESH  )
 			{
 				// Update scripted target
-				SetScriptedTarget( m_pScriptedTarget->NextScriptedTarget());	
+				SetScriptedTarget( m_pScriptedTarget->NextScriptedTarget());
 			}
 			else
 			{
@@ -943,7 +943,7 @@ void CNPC_Spotlight::SpotlightDestroy(void)
 	{
 		UTIL_Remove(m_pSpotlight);
 		m_pSpotlight = NULL;
-		
+
 		UTIL_Remove(m_pSpotlightTarget);
 		m_pSpotlightTarget = NULL;
 	}
@@ -980,7 +980,7 @@ void CNPC_Spotlight::SpotlightCreate(void)
 	}
 
 	trace_t tr;
-	AI_TraceLine ( GetAbsOrigin(), GetAbsOrigin() + m_vSpotlightDir * m_flSpotlightMaxLength, 
+	AI_TraceLine ( GetAbsOrigin(), GetAbsOrigin() + m_vSpotlightDir * m_flSpotlightMaxLength,
 		MASK_OPAQUE, this, COLLISION_GROUP_NONE, &tr);
 
 	m_pSpotlightTarget				= (CSpotlightEnd*)CreateEntityByName( "spotlight_end" );
@@ -996,7 +996,7 @@ void CNPC_Spotlight::SpotlightCreate(void)
 	}
 
 	m_pSpotlight = CBeam::BeamCreate( "sprites/spotlight.vmt", 2.0 );
-	m_pSpotlight->SetColor( m_clrRender->r, m_clrRender->g, m_clrRender->b ); 
+	m_pSpotlight->SetColor( m_clrRender->r, m_clrRender->g, m_clrRender->b );
 	m_pSpotlight->SetHaloTexture(m_nHaloSprite);
 	m_pSpotlight->SetHaloScale(40);
 	m_pSpotlight->SetEndWidth(m_flSpotlightGoalWidth);
@@ -1126,7 +1126,7 @@ Vector CNPC_Spotlight::SpotlightCurrentPos(void)
 		DevMsg("Spotlight pos. called w/o spotlight!\n");
 		return vec3_origin;
 	}
-	
+
 	if (HaveInspectTarget())
 	{
 		m_vSpotlightTargetPos	= InspectTargetPosition();
@@ -1163,7 +1163,7 @@ Vector CNPC_Spotlight::SpotlightCurrentPos(void)
 	float	myPitchDecay	= 0.7;
 	m_flYawSpeed			= (myYawDecay   * m_flYawSpeed	 +  (1-myYawDecay)   * flNewYawSpeed  );
 	m_flPitchSpeed			= (myPitchDecay * m_flPitchSpeed +  (1-myPitchDecay) * flNewPitchSpeed);
-	
+
 	// Keep speed with in bounds
 	float flMaxSpeed = SPOTLIGHT_MAX_SPEED_SCALE * SpotlightSpeed();
 	if		(m_flYawSpeed	>  flMaxSpeed)	m_flYawSpeed   =  flMaxSpeed;
@@ -1181,9 +1181,9 @@ Vector CNPC_Spotlight::SpotlightCurrentPos(void)
 
 	// ---------------------------------------------
 	// Check yaw and pitch boundaries unless I have
-	// a burn target, or an enemy 
+	// a burn target, or an enemy
 	// ---------------------------------------------
-	if (( HaveInspectTarget() &&  GetEnemy()	== NULL ) || 
+	if (( HaveInspectTarget() &&  GetEnemy()	== NULL ) ||
 		(!HaveInspectTarget() && !m_pScriptedTarget ) )
 	{
 		bool bInRange = true;
@@ -1191,7 +1191,7 @@ Vector CNPC_Spotlight::SpotlightCurrentPos(void)
 		{
 			if (m_fSpotlightFlags & BITS_SPOTLIGHT_SMOOTH_RETURN)
 			{
-				bInRange	= false;	
+				bInRange	= false;
 			}
 			else
 			{
@@ -1200,7 +1200,7 @@ Vector CNPC_Spotlight::SpotlightCurrentPos(void)
 			m_flYawDir	= SPOTLIGHT_SWING_BACK;
 		}
 		else if (UTIL_AngleDistance( m_flYaw, m_flYawCenter ) < -m_flYawRange)
-		{	
+		{
 			if (m_fSpotlightFlags & BITS_SPOTLIGHT_SMOOTH_RETURN)
 			{
 				bInRange	= false;
@@ -1227,7 +1227,7 @@ Vector CNPC_Spotlight::SpotlightCurrentPos(void)
 		{
 			if (m_fSpotlightFlags & BITS_SPOTLIGHT_SMOOTH_RETURN)
 			{
-				bInRange	= false;	
+				bInRange	= false;
 			}
 			else
 			{
@@ -1253,7 +1253,7 @@ Vector CNPC_Spotlight::SpotlightCurrentPos(void)
 	//  solid objects, not npcs
 	// ---------------------------------------------
 	trace_t tr;
-	AI_TraceLine ( GetAbsOrigin(), GetAbsOrigin() + (m_vSpotlightDir * 2 * m_flSpotlightMaxLength), 
+	AI_TraceLine ( GetAbsOrigin(), GetAbsOrigin() + (m_vSpotlightDir * 2 * m_flSpotlightMaxLength),
 		(CONTENTS_SOLID|CONTENTS_MOVEABLE|CONTENTS_MONSTER|CONTENTS_DEBRIS),
 		this, COLLISION_GROUP_NONE, &tr);
 
@@ -1280,7 +1280,7 @@ void CNPC_Spotlight::SpotlightUpdate(void)
 	// ---------------------------------------------------
 	//  If I don't have a spotlight attempt to create one
 	// ---------------------------------------------------
-	if (!m_pSpotlight && 
+	if (!m_pSpotlight &&
 		m_fSpotlightFlags & BITS_SPOTLIGHT_LIGHT_ON	)
 	{
 		SpotlightCreate();
@@ -1301,7 +1301,7 @@ void CNPC_Spotlight::SpotlightUpdate(void)
 			return;
 		}
 	}
-	
+
 	if (m_fSpotlightFlags & BITS_SPOTLIGHT_TRACK_ON)
 	{
 		// -------------------------------------------
@@ -1336,13 +1336,13 @@ void CNPC_Spotlight::SpotlightUpdate(void)
 	float flBeamLength	= VectorNormalize( m_pSpotlightTarget->m_vSpotlightDir );
 	m_flSpotlightCurLength = (0.60*m_flSpotlightCurLength) + (0.4*flBeamLength);
 
-	// Fade out spotlight end if past max length.  
+	// Fade out spotlight end if past max length.
 	if (m_flSpotlightCurLength > 2*m_flSpotlightMaxLength)
 	{
 		m_pSpotlightTarget->SetRenderColorA( 0 );
 		m_pSpotlight->SetFadeLength(m_flSpotlightMaxLength);
 	}
-	else if (m_flSpotlightCurLength > m_flSpotlightMaxLength)		
+	else if (m_flSpotlightCurLength > m_flSpotlightMaxLength)
 	{
 		m_pSpotlightTarget->SetRenderColorA( (1-((m_flSpotlightCurLength-m_flSpotlightMaxLength)/m_flSpotlightMaxLength)) );
 		m_pSpotlight->SetFadeLength(m_flSpotlightMaxLength);
@@ -1358,7 +1358,7 @@ void CNPC_Spotlight::SpotlightUpdate(void)
 	float flNewWidth = m_flSpotlightGoalWidth*(flBeamLength/m_flSpotlightMaxLength);
 	m_pSpotlight->SetEndWidth(flNewWidth);
 
-	// Adjust width of light on the end.  
+	// Adjust width of light on the end.
 	if ( FBitSet (m_spawnflags, SF_SPOTLIGHT_NO_DYNAMIC_LIGHT) )
 	{
 		m_pSpotlightTarget->m_flLightScale = 0.0;
@@ -1378,7 +1378,7 @@ void CNPC_Spotlight::SpotlightUpdate(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Spotlight::Spawn(void)
 {
@@ -1388,7 +1388,7 @@ void CNPC_Spotlight::Spawn(void)
 		DevMsg("CNPC_Spotlight::Spawn: Invalid spotlight length <= 0, setting to 500\n");
 		m_flSpotlightMaxLength = 500;
 	}
-	
+
 	if (m_flSpotlightGoalWidth <= 0)
 	{
 		DevMsg("CNPC_Spotlight::Spawn: Invalid spotlight width <= 0, setting to 10\n");
@@ -1398,7 +1398,7 @@ void CNPC_Spotlight::Spawn(void)
 	if (m_flSpotlightGoalWidth > MAX_BEAM_WIDTH)
 	{
 		DevMsg("CNPC_Spotlight::Spawn: Invalid spotlight width %.1f (max %.1f)\n", m_flSpotlightGoalWidth, MAX_BEAM_WIDTH );
-		m_flSpotlightGoalWidth = MAX_BEAM_WIDTH; 
+		m_flSpotlightGoalWidth = MAX_BEAM_WIDTH;
 	}
 
 	Precache();
@@ -1419,7 +1419,7 @@ void CNPC_Spotlight::Spawn(void)
 	CapabilitiesAdd( bits_CAP_SQUAD);
 
 	// ------------------------------------
-	//	Init all class vars 
+	//	Init all class vars
 	// ------------------------------------
 	m_vInspectPos			= vec3_origin;
 	m_flInspectEndTime		= 0;

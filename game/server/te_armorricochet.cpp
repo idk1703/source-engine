@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -37,8 +37,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEMetalSparks::CTEMetalSparks( const char *name ) :
 	CBaseTempEntity( name )
@@ -48,24 +48,24 @@ CTEMetalSparks::CTEMetalSparks( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEMetalSparks::~CTEMetalSparks( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEMetalSparks::Test( const Vector& current_origin, const QAngle& current_angles )
 {
 	// Fill in data
 	m_vecPos = current_origin;
-	
+
 	AngleVectors( current_angles, &m_vecDir.GetForModify() );
-	
+
 	Vector forward;
 
 	m_vecPos += Vector( 0, 0, 24 );
@@ -75,7 +75,7 @@ void CTEMetalSparks::Test( const Vector& current_origin, const QAngle& current_a
 	VectorNormalize( forward );
 
 	VectorMA( m_vecPos, 100.0, forward, m_vecPos.GetForModify() );
-	
+
 	CBroadcastRecipientFilter filter;
 	Create( filter, 0.0 );
 }
@@ -89,13 +89,13 @@ END_SEND_TABLE()
 static CTEMetalSparks g_TEMetalSparks( "Metal Sparks" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//			*pos - 
-//			scale - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//			*pos -
+//			scale -
 //-----------------------------------------------------------------------------
 void TE_MetalSparks( IRecipientFilter& filter, float delay,
 	const Vector* pos, const Vector* dir )
@@ -123,13 +123,13 @@ END_SEND_TABLE()
 
 static CTEArmorRicochet g_TEArmorRicochet( "Armor Ricochet" );
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//			*pos - 
-//			scale - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//			*pos -
+//			scale -
 //-----------------------------------------------------------------------------
 void TE_ArmorRicochet( IRecipientFilter& filter, float delay,
 	const Vector* pos, const Vector* dir )

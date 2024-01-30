@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -51,7 +51,7 @@ public:
 	virtual void	PowerupEnd( int iPowerup );
 
 private:
-	// Purpose: 
+	// Purpose:
 	CWeaponShield *GetProjectedShield( void );
 
 protected:

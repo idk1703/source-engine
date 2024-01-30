@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -24,7 +24,7 @@ class CWeaponIFMBaseCamera : public CWeaponIFMBase
 {
 public:
 	DECLARE_CLASS( CWeaponIFMBaseCamera, CWeaponIFMBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 #ifdef GAME_DLL

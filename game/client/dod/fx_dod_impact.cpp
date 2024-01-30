@@ -167,7 +167,7 @@ void ImpactCallback( const CEffectData &data )
 			float flDistSqr = (vecOrigin - pPlayer->GetAbsOrigin()).LengthSqr();
 
 			flScale = RemapValClamped( flDistSqr, (400*400), (1000*1000), 0.8, 1.2 );
-		}		
+		}
 
 		// Check for custom effects based on the Decal index
 		DOD_PerformCustomEffects( vecOrigin, tr, vecShotDir, iMaterial, flScale );

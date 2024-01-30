@@ -52,7 +52,7 @@ inline float SkewedRandomValue( void )
 {
 	float x = RandomFloat( 0, 1.0f );
 	float y = RandomFloat( 0, 1.0f );
-	return x < y ? y : x;	
+	return x < y ? y : x;
 }
 
 //-----------------------------------------------------------------------
@@ -60,7 +60,7 @@ class CMvMBotUpgrade
 {
 public:
 	char	szAttrib[ MAX_ATTRIBUTE_DESCRIPTION_LENGTH ];	// Debug
-	int		iAttribIndex;	
+	int		iAttribIndex;
 	float	flValue;
 	float	flMax;
 	int		nCost;
@@ -107,7 +107,7 @@ public:
 	{
 		return true;
 	}
-	
+
 	virtual bool IsVarious( void ) { return false; }
 	virtual int GetClass( int nSpawnNum = -1 ) { return TF_CLASS_UNDEFINED; }
 	virtual string_t GetClassIcon( int nSpawnNum = -1 ) { return NULL_STRING; }

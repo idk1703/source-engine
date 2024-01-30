@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #ifndef TF_WEARABLE_ITEM_DEMOSHIELD_H
@@ -29,7 +29,7 @@ class C_TFSword;
 
 //=============================================================================
 //
-// 
+//
 //
 class CTFWearableDemoShield : public CTFWearable
 {

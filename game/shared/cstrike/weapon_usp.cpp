@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -25,9 +25,9 @@ class CWeaponUSP : public CWeaponCSBase
 {
 public:
 	DECLARE_CLASS( CWeaponUSP, CWeaponCSBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponUSP();
 
 	virtual void Spawn();
@@ -307,12 +307,12 @@ void CWeaponUSP::PrimaryAttack()
 	// player "shoot" animation
 	pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
-	
+
 	if ( !m_bSilencerOn )
 	{
 		pPlayer->DoMuzzleFlash();
 	}
-	
+
 	FX_FireBullets(
 		pPlayer->entindex(),
 		pPlayer->Weapon_ShootPosition(),
@@ -328,7 +328,7 @@ void CWeaponUSP::PrimaryAttack()
 		// HEV suit - indicate out of ammo condition
 		pPlayer->SetSuitUpdate("!HEV_AMO0", false, 0);
 	}
- 
+
 	SetWeaponIdleTime( gpGlobals->curtime + 2 );
 
 	// update accuracy
@@ -344,7 +344,7 @@ bool CWeaponUSP::Reload()
 {
 	if ( !DefaultPistolReload() )
 		return false;
-	
+
 	m_flAccuracy = 0.92;
 	return true;
 }
@@ -375,7 +375,7 @@ bool CWeaponUSP::SendWeaponAnim( int iActivity )
 			}
 		}
 	}
-	
+
 	return BaseClass::SendWeaponAnim( iActivity );
 }
 

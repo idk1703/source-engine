@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,18 +21,18 @@
 #define PROP_INDEX_VECTOR_ELEM_MARKER 0x8000
 
 
-static ConVar dt_UsePartialChangeEnts( 
+static ConVar dt_UsePartialChangeEnts(
 	"dt_UsePartialChangeEnts",
 	"1",
 	0,
 	"(SP only) - enable FL_EDICT_PARTIAL_CHANGE optimization."
 	);
 
-static ConVar dt_ShowPartialChangeEnts( 
-	"dt_ShowPartialChangeEnts", 
-	"0", 
-	0, 
-	"(SP only) - show entities that were copied using small optimized lists (FL_EDICT_PARTIAL_CHANGE)." 
+static ConVar dt_ShowPartialChangeEnts(
+	"dt_ShowPartialChangeEnts",
+	"0",
+	0,
+	"(SP only) - show entities that were copied using small optimized lists (FL_EDICT_PARTIAL_CHANGE)."
 	);
 
 // Negative numbers represent entities that were fully copied.
@@ -70,17 +70,17 @@ inline void LocalTransfer_FastType(
 
 void AddPropOffsetToMap( CSendTablePrecalc *pPrecalc, int iInProp, int iInOffset )
 {
-	Assert( iInProp < 0xFFFF && iInOffset < 0xFFFF );	
+	Assert( iInProp < 0xFFFF && iInOffset < 0xFFFF );
 	unsigned short iProp = (unsigned short)iInProp;
 	unsigned short iOffset = (unsigned short)iInOffset;
-	
+
 	unsigned short iOldIndex = pPrecalc->m_PropOffsetToIndexMap.Find( iOffset );
 
 	if ( iOldIndex != pPrecalc->m_PropOffsetToIndexMap.InvalidIndex() )
 	{
 		return;
 	}
-		
+
 	pPrecalc->m_PropOffsetToIndexMap.Insert( iOffset, iProp );
 }
 
@@ -105,7 +105,7 @@ public:
 		{
 			return true;
 		}
-		
+
 		if( pSendProxies->m_ppNonModifiedPointerProxies )
 		{
 			CNonModifiedPointerProxy *pCur = *pSendProxies->m_ppNonModifiedPointerProxies;
@@ -124,7 +124,7 @@ public:
 	{
 		if ( !pStructBase )
 			return 0;
-		
+
 		const SendProp *pProp = m_pPropMapStackPrecalc->GetDatatableProp( iProp );
 		if ( IsNonPointerModifyingProxy( pProp->GetDataTableProxyFn(), m_pSendProxies ) )
 		{
@@ -140,13 +140,13 @@ public:
 
 	virtual void RecurseAndCallProxies( CSendNode *pNode, unsigned char *pStructBase )
 	{
-		// Remember where the game code pointed us for this datatable's data so 
+		// Remember where the game code pointed us for this datatable's data so
 		m_pProxies[ pNode->GetRecursiveProxyIndex() ] = pStructBase;
 
 		for ( int iChild=0; iChild < pNode->GetNumChildren(); iChild++ )
 		{
 			CSendNode *pCurChild = pNode->GetChild( iChild );
-			
+
 			unsigned char *pNewStructBase = NULL;
 			if ( pStructBase )
 			{
@@ -167,14 +167,14 @@ void BuildPropOffsetToIndexMap( CSendTablePrecalc *pPrecalc, const CStandardSend
 {
 	CPropMapStack pmStack( pPrecalc, pSendProxies );
 	pmStack.Init();
-	
+
 	for ( int i=0; i < pPrecalc->m_Props.Count(); i++ )
 	{
 		pmStack.SeekToProp( i );
 		if ( pmStack.GetCurStructBase() != 0 )
 		{
 			const SendProp *pProp = pPrecalc->m_Props[i];
-			
+
 			int offset = pProp->GetOffset() + (int)pmStack.GetCurStructBase() - 1;
 			int elementCount = 1;
 			int elementStride = 0;
@@ -205,8 +205,8 @@ void BuildPropOffsetToIndexMap( CSendTablePrecalc *pPrecalc, const CStandardSend
 }
 
 
-void LocalTransfer_InitFastCopy( 
-	const SendTable *pSendTable, 
+void LocalTransfer_InitFastCopy(
+	const SendTable *pSendTable,
 	const CStandardSendProxies *pSendProxies,
 	RecvTable *pRecvTable,
 	const CStandardRecvProxies *pRecvProxies,
@@ -226,7 +226,7 @@ void LocalTransfer_InitFastCopy(
 	pPrecalc->m_FastLocalTransfer.m_FastInt8.Purge();
 	pPrecalc->m_FastLocalTransfer.m_FastVector.Purge();
 	pPrecalc->m_FastLocalTransfer.m_OtherProps.Purge();
-	
+
 	CRecvDecoder *pDecoder = pRecvTable->m_pDecoder;
 	int iNumProp = pPrecalc->GetNumProps();
 	for ( int iProp=0; iProp < iNumProp; iProp++ )
@@ -247,21 +247,21 @@ void LocalTransfer_InitFastCopy(
 				pList = &pPrecalc->m_FastLocalTransfer.m_FastInt32;
 				++nFastCopyProps;
 			}
-			else if( pSendProp->GetType() == DPT_Int && 
+			else if( pSendProp->GetType() == DPT_Int &&
 				(pSendProp->GetProxyFn() == pSendProxies->m_Int16ToInt32 || pSendProp->GetProxyFn() == pSendProxies->m_UInt16ToInt32) &&
 				pRecvProp->GetProxyFn() == pRecvProxies->m_Int32ToInt16 )
 			{
 				pList = &pPrecalc->m_FastLocalTransfer.m_FastInt16;
 				++nFastCopyProps;
 			}
-			else if( pSendProp->GetType() == DPT_Int && 
+			else if( pSendProp->GetType() == DPT_Int &&
 				(pSendProp->GetProxyFn() == pSendProxies->m_Int8ToInt32 || pSendProp->GetProxyFn() == pSendProxies->m_UInt8ToInt32) &&
 				pRecvProp->GetProxyFn() == pRecvProxies->m_Int32ToInt8 )
 			{
 				pList = &pPrecalc->m_FastLocalTransfer.m_FastInt8;
 				++nFastCopyProps;
 			}
-			else if( pSendProp->GetType() == DPT_Float && 
+			else if( pSendProp->GetType() == DPT_Float &&
 				pSendProp->GetProxyFn() == pSendProxies->m_FloatToFloat &&
 				pRecvProp->GetProxyFn() == pRecvProxies->m_FloatToFloat )
 			{
@@ -269,7 +269,7 @@ void LocalTransfer_InitFastCopy(
 				pList = &pPrecalc->m_FastLocalTransfer.m_FastInt32;
 				++nFastCopyProps;
 			}
-			else if ( pSendProp->GetType() == DPT_Vector && 
+			else if ( pSendProp->GetType() == DPT_Vector &&
 				pSendProp->GetProxyFn() == pSendProxies->m_VectorToVector &&
 				pRecvProp->GetProxyFn() == pRecvProxies->m_VectorToVector )
 			{
@@ -291,15 +291,15 @@ void LocalTransfer_InitFastCopy(
 }
 
 
-inline int MapPropOffsetsToIndices( 
+inline int MapPropOffsetsToIndices(
 	const CBaseEdict *pEdict,
-	CSendTablePrecalc *pPrecalc, 
+	CSendTablePrecalc *pPrecalc,
 	const unsigned short *pOffsets,
 	unsigned short nOffsets,
 	unsigned short *pOut )
 {
 	int iOut = 0;
-	
+
 	for ( unsigned short i=0; i < nOffsets; i++ )
 	{
 		unsigned short index = pPrecalc->m_PropOffsetToIndexMap.Find( pOffsets[i] );
@@ -307,11 +307,11 @@ inline int MapPropOffsetsToIndices(
 		{
 			// Note: this SHOULD be fine. In all known cases, when NetworkStateChanged is called with
 			// an offset, there should be a corresponding SendProp in order for that NetworkStateChanged
-			// call to mean anything. 
+			// call to mean anything.
 			//
-			// It means that if we can't find an offset here, then there isn't a SendProp 
+			// It means that if we can't find an offset here, then there isn't a SendProp
 			// associated with the CNetworkVar that triggered the change. Therefore,
-			// the change doesn't matter and we can skip past it. 
+			// the change doesn't matter and we can skip past it.
 			//
 			// If we wanted to be anal, we could force them to use DISABLE_NETWORK_VAR_FOR_DERIVED
 			// appropriately in all these cases, but then we'd need a ton of them for certain classes
@@ -333,7 +333,7 @@ inline int MapPropOffsetsToIndices(
 		else
 		{
 			unsigned short propIndex = pPrecalc->m_PropOffsetToIndexMap[index];
-	
+
 			if ( propIndex & PROP_INDEX_VECTOR_ELEM_MARKER )
 			{
 				// Look for all 3 vector elems here.
@@ -351,7 +351,7 @@ inline int MapPropOffsetsToIndices(
 						if ( propIndex & PROP_INDEX_VECTOR_ELEM_MARKER )
 							pOut[iOut++] = (propIndex & ~PROP_INDEX_VECTOR_ELEM_MARKER);
 					}
-				
+
 					curOffset += sizeof( float );
 				}
 			}
@@ -361,7 +361,7 @@ inline int MapPropOffsetsToIndices(
 			}
 		}
 	}
-	
+
 	return iOut;
 }
 
@@ -370,7 +370,7 @@ inline void FastSortList( unsigned short *pList, unsigned short nEntries )
 {
 	if ( nEntries == 1 )
 		return;
-	
+
 	unsigned short i = 0;
 	while ( 1 )
 	{
@@ -401,7 +401,7 @@ inline void AddToPartialChangeEntsList( int iEnt, bool bPartial )
 #if !defined( _XBOX )
 	if ( !bPartial )
 		iEnt = -iEnt;
-	
+
 	if ( g_PartialChangeEnts.Find( iEnt ) == -1 )
 		g_PartialChangeEnts.AddToTail( iEnt );
 #endif
@@ -417,14 +417,14 @@ void PrintPartialChangeEntsList()
 	int iCurRow = 15;
 	Con_NPrintf( iCurRow++, "----- dt_ShowPartialChangeEnts -----" );
 	Con_NPrintf( iCurRow++, "" );
-	Con_NPrintf( iCurRow++, "Ent changes: %3d, prop changes: %3d", 
+	Con_NPrintf( iCurRow++, "Ent changes: %3d, prop changes: %3d",
 		g_nTotalEntChanges, g_nTotalPropChanges );
 	Con_NPrintf( iCurRow++, "" );
-		
+
 	char str[512];
 	bool bFirst = true;
-	
-	
+
+
 	// Write the partial ents.
 	str[0] = 0;
 	for ( int i=0; i < g_PartialChangeEnts.Count(); i++ )
@@ -433,18 +433,18 @@ void PrintPartialChangeEntsList()
 		{
 			if ( !bFirst )
 				Q_strncat( str, ", ", sizeof( str ) );
-			
+
 			char tempStr[512];
 			Q_snprintf( tempStr, sizeof( tempStr ), "%d", g_PartialChangeEnts[i] );
 			Q_strncat( str, tempStr, sizeof( str ) );
-						
+
 			bFirst = false;
 		}
 	}
 	Q_strncat( str, " - PARTIAL", sizeof( str ) );
 	Con_NPrintf( iCurRow++, "%s", str );
 
-	
+
 	// Write the full ents.
 	bFirst = true;
 	str[0] = 0;
@@ -454,28 +454,28 @@ void PrintPartialChangeEntsList()
 		{
 			if ( !bFirst )
 				Q_strncat( str, ", ", sizeof( str ) );
-			
+
 			char tempStr[512];
 			Q_snprintf( tempStr, sizeof( tempStr ), "%d", -g_PartialChangeEnts[i] );
 			Q_strncat( str, tempStr, sizeof( str ) );
-						
+
 			bFirst = false;
 		}
 	}
 	Q_strncat( str, " -    FULL", sizeof( str ) );
 	Con_NPrintf( iCurRow++, "%s", str );
-	
+
 	g_PartialChangeEnts.Purge();
 	g_nTotalPropChanges = g_nTotalEntChanges = 0;
 #endif
 }
 
 
-void LocalTransfer_TransferEntity( 
+void LocalTransfer_TransferEntity(
 	const CBaseEdict *pEdict,
-	const SendTable *pSendTable, 
-	const void *pSrcEnt, 
-	RecvTable *pRecvTable, 
+	const SendTable *pSendTable,
+	const void *pSrcEnt,
+	RecvTable *pRecvTable,
 	void *pDestEnt,
 	bool bNewlyCreated,
 	bool bJustEnteredPVS,
@@ -485,7 +485,7 @@ void LocalTransfer_TransferEntity(
 	CEdictChangeInfo *pCI = &g_pSharedChangeInfo->m_ChangeInfos[pEdict->GetChangeInfo()];
 
 	unsigned short propIndices[MAX_CHANGE_OFFSETS*3];
-	
+
 	// This code tries to only copy fields expressly marked as "changed" (by having the field offsets added to the changeoffsets vectors)
 	if ( pEdict->GetChangeInfoSerialNumber() == g_pSharedChangeInfo->m_iSerialNumber &&
 		 !bNewlyCreated &&
@@ -498,7 +498,7 @@ void LocalTransfer_TransferEntity(
 		int nChangeOffsets = MapPropOffsetsToIndices( pEdict, pPrecalc, pCI->m_ChangeOffsets, pCI->m_nChangeOffsets, propIndices );
 		if ( nChangeOffsets == 0 )
 			return;
-		
+
 		AddToPartialChangeEntsList( (edict_t*)pEdict - sv.edicts, true );
 		FastSortList( propIndices, nChangeOffsets );
 
@@ -519,7 +519,7 @@ void LocalTransfer_TransferEntity(
 			int iProp = propIndices[iChanged];
 
 			++g_nTotalPropChanges;
-			
+
 			serverStack.SeekToProp( iProp );
 			const SendProp *pSendProp = serverStack.GetCurProp();
 			unsigned char *pSendBase = serverStack.UpdateRoutesExplicit();
@@ -531,7 +531,7 @@ void LocalTransfer_TransferEntity(
 				clientStack.SeekToProp( iProp );
 				unsigned char *pRecvBase = clientStack.UpdateRoutesExplicit();
 				Assert( pRecvBase );
-				
+
 				g_PropTypeFns[pRecvProp->GetType()].FastCopy( pSendProp, pRecvProp, pSendBase, pRecvBase, objectID );
 			}
 		}
@@ -558,7 +558,7 @@ void LocalTransfer_TransferEntity(
 		// Copy the properties that require proxies.
 		CFastLocalTransferPropInfo *pPropList = pPrecalc->m_FastLocalTransfer.m_OtherProps.Base();
 		int nProps = pPrecalc->m_FastLocalTransfer.m_OtherProps.Count();
-		
+
 		for ( int i=0; i < nProps; i++ )
 		{
 			int iProp = pPropList[i].m_iProp;
@@ -575,7 +575,7 @@ void LocalTransfer_TransferEntity(
 				clientStack.SeekToProp( iProp );
 				unsigned char *pRecvBase = clientStack.GetCurStructBase();
 				Assert( pRecvBase );
-				
+
 				g_PropTypeFns[pRecvProp->GetType()].FastCopy( pSendProp, pRecvProp, pSendBase, pRecvBase, objectID );
 			}
 		}
@@ -585,10 +585,10 @@ void LocalTransfer_TransferEntity(
 		LocalTransfer_FastType( (short*)0, serverStack, clientStack, pPrecalc->m_FastLocalTransfer.m_FastInt16.Base(), pPrecalc->m_FastLocalTransfer.m_FastInt16.Count() );
 		LocalTransfer_FastType( (char*)0, serverStack, clientStack, pPrecalc->m_FastLocalTransfer.m_FastInt8.Base(), pPrecalc->m_FastLocalTransfer.m_FastInt8.Count() );
 		LocalTransfer_FastType( (Vector*)0, serverStack, clientStack, pPrecalc->m_FastLocalTransfer.m_FastVector.Base(), pPrecalc->m_FastLocalTransfer.m_FastVector.Count() );
-	}		
+	}
 
-	
-	// The old, slow method to copy all props using their proxies.		
+
+	// The old, slow method to copy all props using their proxies.
 	/*
 	int iEndProp = pPrecalc->m_Root.GetLastPropIndex();
 	for ( int iProp=0; iProp <= iEndProp; iProp++ )
@@ -612,6 +612,3 @@ void LocalTransfer_TransferEntity(
 	}
 	*/
 }
-
-
-

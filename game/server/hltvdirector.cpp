@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -66,7 +66,7 @@ static float WeightedAngle( Vector vec1, Vector vec2)
 	a = (a + 1.0f) / 2.0f;
 
 	Assert ( a <= 1 && a >= 0 );
-		
+
 	return a*a;	// vectors are facing opposite direction
 }
 
@@ -129,7 +129,7 @@ void CHLTVDirector::FireGameEvent( IGameEvent * event )
 	gameevent.m_Event = gameeventmanager->DuplicateEvent( event );
 	gameevent.m_Priority = event->GetInt( "priority", -1 ); // priorities are leveled between 0..10, -1 means ignore
 	gameevent.m_Tick = gpGlobals->tickcount;
-	
+
 	m_EventHistory.Insert( gameevent );
 }
 
@@ -142,7 +142,7 @@ void CHLTVDirector::SetHLTVServer( IHLTVServer *hltv )
 {
 	RemoveEventsFromHistory(-1); // all
 
-	if ( hltv ) 
+	if ( hltv )
 	{
 		m_pHLTVClient = UTIL_PlayerByIndex( hltv->GetHLTVSlot() + 1 );
 
@@ -204,7 +204,7 @@ void CHLTVDirector::UpdateSettings()
 	m_fDelay = tv_delay.GetFloat();
 
 	int newBroadcastTick = gpGlobals->tickcount;
-	
+
 	if ( m_fDelay < HLTV_MIN_DIRECTOR_DELAY )
 	{
 		// instant broadcast, no delay
@@ -222,7 +222,7 @@ void CHLTVDirector::UpdateSettings()
 		m_nNextShotTick = 0;
 	}
 
-	// check if camera man is still valid 
+	// check if camera man is still valid
 	if ( m_iCameraManIndex > 0 )
 	{
 		CBasePlayer *pPlayer = UTIL_PlayerByIndex( m_iCameraManIndex );
@@ -232,7 +232,7 @@ void CHLTVDirector::UpdateSettings()
 		}
 	}
 
-   	m_nBroadcastTick = MAX( 0, newBroadcastTick );
+		m_nBroadcastTick = MAX( 0, newBroadcastTick );
 }
 
 const char** CHLTVDirector::GetModEvents()
@@ -283,7 +283,7 @@ void CHLTVDirector::BuildCameraList( void )
 	}
 }
 
-// this is called with every new map 
+// this is called with every new map
 void CHLTVDirector::LevelInitPostEntity( void )
 {
 	BuildCameraList();
@@ -307,8 +307,8 @@ void CHLTVDirector::FrameUpdatePostEntityThink( void )
 	// This function is called each tick
 	UpdateSettings();	// update settings from cvars
 
-	if ( (m_nNextAnalyzeTick < gpGlobals->tickcount) && 
-		 (m_fDelay >= HLTV_MIN_DIRECTOR_DELAY) )
+	if ( (m_nNextAnalyzeTick < gpGlobals->tickcount) &&
+		(m_fDelay >= HLTV_MIN_DIRECTOR_DELAY) )
 	{
 		m_nNextAnalyzeTick = gpGlobals->tickcount + TIME_TO_TICKS( 0.5f );
 
@@ -325,7 +325,7 @@ void CHLTVDirector::FrameUpdatePostEntityThink( void )
 	else if ( m_nNextShotTick <= m_nBroadcastTick )
 	{
 		// game is being broadcasted, generate camera shots
-		StartNewShot();		
+		StartNewShot();
 	}
 }
 
@@ -373,12 +373,12 @@ void CHLTVDirector::StartBestPlayerCameraShot()
 		CHLTVGameEvent &dc = m_EventHistory[index];
 
 		if ( dc.m_Tick >= m_nNextShotTick )
-			break; 
+			break;
 
 		// search for camera ranking events
 		if ( Q_strcmp( dc.m_Event->GetName(), "hltv_rank_entity") == 0 )
 		{
-			int index = dc.m_Event->GetInt("index"); 
+			int index = dc.m_Event->GetInt("index");
 
 			if ( index < MAX_PLAYERS )
 			{
@@ -389,7 +389,7 @@ void CHLTVDirector::StartBestPlayerCameraShot()
 				{
 					iBestCamera = index;
 					flBestRank = flPlayerRanking[index];
-					iBestTarget = dc.m_Event->GetInt("target"); 
+					iBestTarget = dc.m_Event->GetInt("target");
 				}
 			}
 		}
@@ -411,7 +411,7 @@ void CHLTVDirector::StartBestPlayerCameraShot()
 void CHLTVDirector::StartFixedCameraShot(int iCamera, int iTarget)
 {
 	CBaseEntity *pCamera = m_pFixedCameras[iCamera];
-	
+
 
 	Vector vCamPos = pCamera->GetAbsOrigin();
 	QAngle aViewAngle = pCamera->GetAbsAngles();
@@ -430,7 +430,7 @@ void CHLTVDirector::StartFixedCameraShot(int iCamera, int iTarget)
 		shot->SetInt("phi", aViewAngle.y );
 		shot->SetInt("target", iTarget );
 		shot->SetFloat("fov", RandomFloat(50,110) );
-	
+
 		// send spectators the HLTV director command as a game event
 		m_pHLTVServer->BroadcastEvent( shot );
 		gameeventmanager->FreeEvent( shot );
@@ -443,14 +443,14 @@ void CHLTVDirector::StartChaseCameraShot(int iTarget1, int iTarget2, int distanc
 
 	if ( !shot )
 		return;
-	
+
 	shot->SetInt("target1", iTarget1 );
 	shot->SetInt("target2", iTarget2 );
 	shot->SetInt("distance", distance );
 	shot->SetInt("phi", phi ); // hi/low
 	shot->SetInt( "theta", theta ); // left/right
 	shot->SetInt( "ineye", bInEye?1:0 );
-		
+
 	m_iPVSEntity = iTarget1;
 
 	// send spectators the HLTV director command as a game event
@@ -482,12 +482,12 @@ void CHLTVDirector::StartBestFixedCameraShot( bool bForce )
 		CHLTVGameEvent &dc = m_EventHistory[index];
 
 		if ( dc.m_Tick >= m_nNextShotTick )
-			break; 
+			break;
 
 		// search for camera ranking events
 		if ( Q_strcmp( dc.m_Event->GetName(), "hltv_rank_camera") == 0 )
 		{
-			int index = dc.m_Event->GetInt("index"); 
+			int index = dc.m_Event->GetInt("index");
 			flCameraRanking[index] += dc.m_Event->GetFloat("rank" );
 
 			// find best camera
@@ -495,7 +495,7 @@ void CHLTVDirector::StartBestFixedCameraShot( bool bForce )
 			{
 				iBestCamera = index;
 				flBestRank = flCameraRanking[index];
-				iBestTarget = dc.m_Event->GetInt("target"); 
+				iBestTarget = dc.m_Event->GetInt("target");
 			}
 		}
 
@@ -514,7 +514,7 @@ void CHLTVDirector::StartBestFixedCameraShot( bool bForce )
 	}
 }
 
-void CHLTVDirector::StartRandomShot() 
+void CHLTVDirector::StartRandomShot()
 {
 	int toTick = m_nBroadcastTick + TIME_TO_TICKS ( DEF_SHOT_LENGTH );
 	m_nNextShotTick = MIN( m_nNextShotTick, toTick );
@@ -535,7 +535,7 @@ void CHLTVDirector::CreateShotFromEvent( CHLTVGameEvent *event )
 {
 	// show event at least for 2 more seconds after it occured
 	const char *name = event->m_Event->GetName();
-	
+
 	bool bPlayerHurt = Q_strcmp( "player_hurt", name ) == 0;
 	bool bPlayerKilled = Q_strcmp( "player_death", name ) == 0;
 	bool bRoundStart = Q_strcmp( "round_start", name ) == 0;
@@ -557,21 +557,21 @@ void CHLTVDirector::CreateShotFromEvent( CHLTVGameEvent *event )
 		else // attacker != NULL
 		{
 			// check if we would show it from ineye view
-			bool bInEye = (bPlayerKilled && RandomFloat(0,1) > 0.33) || (bPlayerHurt && RandomFloat(0,1) > 0.66); 
+			bool bInEye = (bPlayerKilled && RandomFloat(0,1) > 0.33) || (bPlayerHurt && RandomFloat(0,1) > 0.66);
 
 			// if we show ineye view, show it more likely from killer
 			if ( RandomFloat(0,1) > (bInEye?0.3f:0.7f)  )
 			{
 				::V_swap( attacker, victim );
 			}
-						
+
 			// hurting a victim is shown as chase more often
 			// view from behind over head
 			// lower view point, dramatic
 			// view over shoulder, randomly left or right
 			StartChaseCameraShot( victim->entindex(), attacker->entindex(), 96, -20, (RandomFloat()>0.5)?30:-30, bInEye );
 		}
-				
+
 		// shot 2 seconds after death/hurt
 		m_nNextShotTick = MIN( m_nNextShotTick, (event->m_Tick+TIME_TO_TICKS(2.0)) );
 	}
@@ -641,7 +641,7 @@ int CHLTVDirector::FindFirstEvent( int tick )
 	while ( event->m_Tick < tick )
 	{
 		index = m_EventHistory.NextInorder( index );
-		
+
 		if ( index == m_EventHistory.InvalidIndex() )
 			break;
 
@@ -695,7 +695,7 @@ bool CHLTVDirector::SetCameraMan( int iPlayerIndex )
 	}
 
 	filter.MakeReliable();
-	
+
 	if ( iPlayerIndex > 0 )
 	{
 		// tell all spectators that the camera is in use.
@@ -708,7 +708,7 @@ bool CHLTVDirector::SetCameraMan( int iPlayerIndex )
 		// tell all spectators that the camera is available again.
 		UTIL_ClientPrintFilter( filter, HUD_PRINTTALK, "SourceTV camera switched to auto-director mode." );
 	}
-	
+
 	return true;
 }
 
@@ -775,7 +775,7 @@ bool CHLTVDirector::StartCameraManShot()
 
 		// only check if this is the current tick
 		if ( dc.m_Tick > m_nBroadcastTick )
-			break; 
+			break;
 
 		if ( Q_strcmp( dc.m_Event->GetName(), "hltv_cameraman") == 0 )
 		{
@@ -814,7 +814,7 @@ void CHLTVDirector::StartInstantBroadcastShot()
 			gameeventmanager->FreeEvent( msg );
 
 			m_iPVSEntity = m_iCameraManIndex;
-			m_nNextShotTick = m_nBroadcastTick+TIME_TO_TICKS( MIN_SHOT_LENGTH ); 
+			m_nNextShotTick = m_nBroadcastTick+TIME_TO_TICKS( MIN_SHOT_LENGTH );
 		}
 	}
 	else
@@ -833,7 +833,7 @@ void CHLTVDirector::StartNewShot()
 {
 	// we can remove all events the
 	int smallestTick = MAX(0, gpGlobals->tickcount - TIME_TO_TICKS(HLTV_MAX_DELAY) );
-    RemoveEventsFromHistory( smallestTick );
+	RemoveEventsFromHistory( smallestTick );
 
 	// if the delay time is to short for autodirector, just show next best thing
 	if ( m_fDelay < HLTV_MIN_DIRECTOR_DELAY )
@@ -847,16 +847,16 @@ void CHLTVDirector::StartNewShot()
 		// we already have an active camera man,
 		// wait until he releases the "record" lock
 		FinishCameraManShot();
-		return;	
+		return;
 	}
 
 	if ( StartCameraManShot() )
 	{
 		// now we have an active camera man
 		return;
-	} 
+	}
 
-	   // ok, no camera man active, now check how much time
+		// ok, no camera man active, now check how much time
 	// we have for the next shot, if the time diff to the next
 	// important event we have to switch to is too short (<2sec)
 	// just extent the current shot and don't start a new one
@@ -872,7 +872,7 @@ void CHLTVDirector::StartNewShot()
 		if ( msg )
 		{
 			msg->SetString("text", "Please wait for broadcast to start ..." );
-			
+
 			// send spectators the HLTV director command as a game event
 			m_pHLTVServer->BroadcastEvent( msg );
 			gameeventmanager->FreeEvent( msg );
@@ -881,7 +881,7 @@ void CHLTVDirector::StartNewShot()
 		StartBestFixedCameraShot( true );
 		return;
 	}
-	
+
 	int index = FindFirstEvent( m_nBroadcastTick );
 
 	while( index != m_EventHistory.InvalidIndex() )
@@ -903,7 +903,7 @@ void CHLTVDirector::StartNewShot()
 		}
 
 		index = m_EventHistory.NextInorder( index );
-	} 
+	}
 
 	float flDuration = TICKS_TO_TIME(m_nNextShotTick - m_nBroadcastTick);
 
@@ -932,15 +932,15 @@ CHLTVGameEvent *CHLTVDirector::FindBestGameEvent()
 
 	Q_memset( bestEvent, 0, sizeof(bestEvent) );
 	Q_memset( bestEventPrio, 0, sizeof(bestEventPrio) );
-	
+
 	int index = FindFirstEvent( m_nBroadcastTick );
-		
+
 	// search for next 4 best events within next 8 seconds
 	for (int i = 0; i<4; i ++)
 	{
 		bestEventPrio[i] = 0;
 		bestEvent[i] = 0;
-	
+
 		int tillTick = m_nBroadcastTick + TIME_TO_TICKS( 2.0f*(1.0f+i) );
 
 		if ( tillTick > m_nNextShotTick )
@@ -961,7 +961,7 @@ CHLTVGameEvent *CHLTVDirector::FindBestGameEvent()
 				bestEvent[i] = index;
 				bestEventPrio[i] = priority;
 			}
-			
+
 			index = m_EventHistory.NextInorder( index );
 		}
 	}
@@ -972,23 +972,23 @@ CHLTVGameEvent *CHLTVDirector::FindBestGameEvent()
 	// camera cut rules :
 
 	if ( bestEventPrio[1] >= bestEventPrio[0] &&
-		 bestEventPrio[1] >= bestEventPrio[2] &&
-		 bestEventPrio[1] >= bestEventPrio[3] )
+		bestEventPrio[1] >= bestEventPrio[2] &&
+		bestEventPrio[1] >= bestEventPrio[3] )
 	{
 		return &m_EventHistory[ bestEvent[1] ];	// best case
 	}
 	else if ( bestEventPrio[0] > bestEventPrio[1] &&
-			  bestEventPrio[0] > bestEventPrio[2] )
+			bestEventPrio[0] > bestEventPrio[2] )
 	{
 		return &m_EventHistory[ bestEvent[0] ];	// event 0 is very important
 	}
-	else if (	bestEventPrio[2] > bestEventPrio[3] ) 
+	else if (	bestEventPrio[2] > bestEventPrio[3] )
 	{
-		return &m_EventHistory[ bestEvent[2] ];	
+		return &m_EventHistory[ bestEvent[2] ];
 	}
 	else
 	{
-		// event 4 is the best but too far away, so show event 1 
+		// event 4 is the best but too far away, so show event 1
 		if ( bestEvent[0] )
 			return &m_EventHistory[ bestEvent[0] ];
 		else
@@ -1055,9 +1055,9 @@ void CHLTVDirector::AnalyzeCameras()
 		if ( nCount > 0 )
 		{
 			// normalize distribution
-			flRank *= VectorLength( vDistribution ) / nCount; 
+			flRank *= VectorLength( vDistribution ) / nCount;
 		}
-		
+
 		IGameEvent *event = gameeventmanager->CreateEvent("hltv_rank_camera");
 
 		if ( event )
@@ -1091,7 +1091,7 @@ void CHLTVDirector::BuildActivePlayerList()
 
 		if ( pPlayer->GetTeamNumber() <= TEAM_SPECTATOR )
 			continue;
-        
+
 		m_pActivePlayers[m_nNumActivePlayers] = pPlayer;
 		m_nNumActivePlayers++;
 	}
@@ -1105,7 +1105,7 @@ void CHLTVDirector::AnalyzePlayers()
 	// analyzes every active player
 
 	InitRandomOrder( m_nNumActivePlayers );
-	
+
 	for ( int i = 0; i<m_nNumActivePlayers; i++ )
 	{
 		int iPlayerIndex = s_RndOrder[i];
@@ -1117,7 +1117,7 @@ void CHLTVDirector::AnalyzePlayers()
 		float	flBestFacingPlayer = 0.0f;
 		int		nCount = 0; // Number of visible targets
 		Vector	vDistribution; vDistribution.Init(); // distribution of targets
-		
+
 		Vector vCamPos = pPlayer->GetAbsOrigin();
 
 		Vector v1; AngleVectors( pPlayer->EyeAngles(), &v1 );
@@ -1128,7 +1128,7 @@ void CHLTVDirector::AnalyzePlayers()
 		{
 			if ( iPlayerIndex == j )
 				continue;  // don't check against itself
-			
+
 			CBasePlayer *pOtherPlayer = m_pActivePlayers[j];
 
 			Vector vPlayerPos = pOtherPlayer->GetAbsOrigin();
@@ -1181,4 +1181,3 @@ void CHLTVDirector::AnalyzePlayers()
 		}
 	}
 }
-

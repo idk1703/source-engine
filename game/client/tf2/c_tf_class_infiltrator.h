@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,17 +16,17 @@
 
 class C_PlayerClassInfiltrator : public C_PlayerClass
 {
-	
+
 	DECLARE_CLASS( C_PlayerClassInfiltrator, C_PlayerClass );
 
 public:
 
 	C_PlayerClassInfiltrator( C_BaseTFPlayer *pPlayer );
 	virtual ~C_PlayerClassInfiltrator();
-	
+
 	DECLARE_PREDICTABLE();
 
-	PlayerClassInfiltratorData_t *GetClassData( void ) { return &m_ClassData; } 
+	PlayerClassInfiltratorData_t *GetClassData( void ) { return &m_ClassData; }
 
 protected:
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -46,14 +46,14 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( fallingrock, CFallingRock );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CFallingRock::CFallingRock( void ) 
+CFallingRock::CFallingRock( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFallingRock::Spawn( void )
 {
@@ -71,7 +71,7 @@ void CFallingRock::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFallingRock::VPhysicsUpdate( IPhysicsObject *pPhysics )
 {
@@ -99,7 +99,7 @@ CFallingRock *CFallingRock::Create( const Vector &vecOrigin, const QAngle &vecAn
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFallingRock::RockTouch( CBaseEntity *pOther )
 {
@@ -153,7 +153,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( env_fallingrocks, CEnv_FallingRocks );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnv_FallingRocks::Spawn( void )
 {
@@ -163,7 +163,7 @@ void CEnv_FallingRocks::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnv_FallingRocks::Precache( void )
 {
@@ -174,7 +174,7 @@ void CEnv_FallingRocks::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnv_FallingRocks::RockThink( void )
 {

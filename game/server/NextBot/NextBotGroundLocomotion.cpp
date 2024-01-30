@@ -34,7 +34,7 @@ NextBotGroundLocomotion::NextBotGroundLocomotion( INextBot *bot ) : ILocomotion(
 	m_desiredLean.x = 0.0f;
 	m_desiredLean.y = 0.0f;
 	m_desiredLean.z = 0.0f;
-	
+
 	m_bRecomputePostureOnCollision = false;
 	m_ignorePhysicsPropTimer.Invalidate();
 }
@@ -57,7 +57,7 @@ void NextBotGroundLocomotion::Reset( void )
 	m_ignorePhysicsPropTimer.Invalidate();
 
 	m_nextBot = static_cast< NextBotCombatCharacter * >( GetBot()->GetEntity() );
-	
+
 	m_desiredSpeed = 0.0f;
 	m_velocity = vec3_origin;
 	m_acceleration = vec3_origin;
@@ -65,7 +65,7 @@ void NextBotGroundLocomotion::Reset( void )
 	m_desiredLean.x = 0.0f;
 	m_desiredLean.y = 0.0f;
 	m_desiredLean.z = 0.0f;
-	
+
 	m_ladder = NULL;
 
 	m_isJumping = false;
@@ -76,7 +76,7 @@ void NextBotGroundLocomotion::Reset( void )
 	m_isUsingFullFeetTrace = false;
 
 	m_moveVector = Vector( 1, 0, 0 );
-	
+
 	m_priorPos = m_nextBot->GetPosition();
 	m_lastValidPos = m_nextBot->GetPosition();
 
@@ -174,7 +174,7 @@ void NextBotGroundLocomotion::Update( void )
 				frictionAccel = -GetFrictionForward() * forwardVelocity;
 			}
 
-			// always apply lateral friction to counteract sideslip		
+			// always apply lateral friction to counteract sideslip
 			frictionAccel += -GetFrictionSideways() * sideVelocity;
 
 			m_acceleration.x += frictionAccel.x;
@@ -202,7 +202,7 @@ void NextBotGroundLocomotion::Update( void )
 		m_velocity.x += m_acceleration.x * deltaT;
 		m_velocity.y += m_acceleration.y * deltaT;
 
-		// euler integration		
+		// euler integration
 		newPos.x += m_velocity.x * deltaT;
 		newPos.y += m_velocity.y * deltaT;
 	}
@@ -217,10 +217,10 @@ void NextBotGroundLocomotion::Update( void )
 		// euler integration
 		m_velocity.z += m_acceleration.z * deltaT;
 
-		// euler integration		
+		// euler integration
 		newPos.z += m_velocity.z * deltaT;
 	}
-	
+
 	// move bot to new position, resolving collisions along the way
 	UpdatePosition( newPos );
 
@@ -277,7 +277,7 @@ void NextBotGroundLocomotion::Update( void )
 #ifdef LEANING
 	// lean sideways proportional to lateral acceleration
 	QAngle lean = GetDesiredLean();
-	
+
 	float sideAccel = DotProduct( right, m_acceleration );
 	float slide = sideAccel / GetMaxAcceleration();
 
@@ -286,7 +286,7 @@ void NextBotGroundLocomotion::Update( void )
 
 	// actual lean angle is proportional to lateral acceleration (sliding)
 	float desiredSideLean = -maxLeanAngle * slide;
-	
+
 	lean.y += ( desiredSideLean - lean.y ) * NextBotLeanRate.GetFloat() * deltaT;
 
 	SetDesiredLean( lean );
@@ -360,7 +360,7 @@ void NextBotGroundLocomotion::ApplyAccumulatedApproach( void )
 
 	// can only move in 2D - geometry moves us up and down
 	Vector pos( rawPos.x, rawPos.y, GetFeet().z );
-		
+
 	if ( !GetBot()->GetBodyInterface()->IsPostureMobile() )
 	{
 		// body is not in a movable state right now
@@ -383,16 +383,16 @@ void NextBotGroundLocomotion::ApplyAccumulatedApproach( void )
 		return;
 	}
 
-/*	
+/*
 	// lean forward/backward based on acceleration
 	float desiredLean = m_acceleration / NextBotLeanForwardAccel.GetFloat();
 
 	QAngle lean = GetDesiredLean();
 
-	lean.x = NextBotLeanMaxAngle.GetFloat() * clamp( desiredLean, -1.0f, 1.0f );	
+	lean.x = NextBotLeanMaxAngle.GetFloat() * clamp( desiredLean, -1.0f, 1.0f );
 
 	SetDesiredLean( lean );
-*/	
+*/
 
 	Vector newPos;
 
@@ -405,7 +405,7 @@ void NextBotGroundLocomotion::ApplyAccumulatedApproach( void )
 			m_moveVector = m_ledgeJumpGoalPos - currentPos;
 			m_moveVector.z = 0.0f;
 			m_moveVector.NormalizeInPlace();
-			
+
 			m_acceleration += GetMaxAcceleration() * m_moveVector;
 		}
 	}
@@ -413,24 +413,24 @@ void NextBotGroundLocomotion::ApplyAccumulatedApproach( void )
 	{
 		// on the ground - move towards the approach position
 		m_isClimbingUpToLedge = false;
-		
+
 		// snap forward movement vector along floor
 		const Vector &groundNormal = GetGroundNormal();
-		
+
 		Vector left( -m_moveVector.y, m_moveVector.x, 0.0f );
 		m_moveVector = CrossProduct( left, groundNormal );
 		m_moveVector.NormalizeInPlace();
-		
+
 		// limit maximum forward speed from self-acceleration
 		float forwardSpeed = DotProduct( m_velocity, m_moveVector );
-		
+
 		float maxSpeed = MIN( m_desiredSpeed, GetSpeedLimit() );
-		
+
 		if ( forwardSpeed < maxSpeed )
 		{
 			float ratio = ( forwardSpeed <= 0.0f ) ? 0.0f : ( forwardSpeed / maxSpeed );
 			float governor = 1.0f - ( ratio * ratio * ratio * ratio );
-			
+
 			// accelerate towards goal
 			m_acceleration += governor * GetMaxAcceleration() * m_moveVector;
 		}
@@ -440,7 +440,7 @@ void NextBotGroundLocomotion::ApplyAccumulatedApproach( void )
 
 //----------------------------------------------------------------------------------------------------------
 /**
- * Move the bot to the precise given position immediately, 
+ * Move the bot to the precise given position immediately,
  */
 void NextBotGroundLocomotion::DriveTo( const Vector &pos )
 {
@@ -509,7 +509,7 @@ bool NextBotGroundLocomotion::DetectCollision( trace_t *pTrace, int &recursionLi
 
 		if ( !other->MyCombatCharacterPointer() && IsEntityTraversable( other, IMMEDIATELY ) /*&& IsFlimsy( other )*/ )
 		{
-			if ( recursionLimit <= 0 ) 
+			if ( recursionLimit <= 0 )
 				return true;
 
 			--recursionLimit;
@@ -584,9 +584,9 @@ Vector NextBotGroundLocomotion::ResolveCollision( const Vector &from, const Vect
 		maxs = body->GetHullMaxs();
 		if ( mins.z >= maxs.z )
 		{
-			// if mins.z is greater than maxs.z, the engine will Assert 
+			// if mins.z is greater than maxs.z, the engine will Assert
 			// in UTIL_TraceHull, and it won't work as advertised.
-			mins.z = maxs.z - 2.0f;	
+			mins.z = maxs.z - 2.0f;
 		}
 	}
 	else
@@ -617,8 +617,8 @@ Vector NextBotGroundLocomotion::ResolveCollision( const Vector &from, const Vect
 		}
 
 		// Check for crouch test, if it's necessary
-		// Don't bother about checking for crouch if we hit an actor 
-		// Also don't bother checking for crouch if we hit a plane that pushes us upwards 
+		// Don't bother about checking for crouch if we hit an actor
+		// Also don't bother checking for crouch if we hit a plane that pushes us upwards
 		if ( bPerformCrouchTest )
 		{
 			// Don't do this work twice
@@ -694,19 +694,19 @@ Vector NextBotGroundLocomotion::ResolveCollision( const Vector &from, const Vect
 
 			break;
 		}
-		
+
 		if ( --recursionLimit <= 0 )
 		{
 			// reached recursion limit, no more adjusting allowed
 			resolvedGoal = trace.endpos;
 			break;
 		}
-		
+
 		// never slide downwards/concave to avoid getting stuck in the ground
 		if ( trace.plane.normal.z < 0.0f )
 		{
 			trace.plane.normal.z = 0.0f;
-			trace.plane.normal.NormalizeInPlace();	
+			trace.plane.normal.NormalizeInPlace();
 		}
 
 		// slide off of surface we hit
@@ -714,8 +714,8 @@ Vector NextBotGroundLocomotion::ResolveCollision( const Vector &from, const Vect
 		Vector leftToMove = fullMove * ( 1.0f - trace.fraction );
 
 		// obey climbing slope limit
-		if ( !body->HasActivityType( IBody::MOTION_CONTROLLED_Z ) && 
-			 trace.plane.normal.z < GetTraversableSlopeLimit() && 
+		if ( !body->HasActivityType( IBody::MOTION_CONTROLLED_Z ) &&
+			 trace.plane.normal.z < GetTraversableSlopeLimit() &&
 			 fullMove.z > 0.0f )
 		{
 			fullMove.z = 0.0f;
@@ -729,8 +729,8 @@ Vector NextBotGroundLocomotion::ResolveCollision( const Vector &from, const Vect
 
 		if ( GetBot()->IsDebugging( NEXTBOT_LOCOMOTION ) )
 		{
-			NDebugOverlay::Line( trace.endpos, 
-								 trace.endpos + 20.0f * trace.plane.normal, 
+			NDebugOverlay::Line( trace.endpos,
+								 trace.endpos + 20.0f * trace.plane.normal,
 								 255, 0, 150, true, 15.0f );
 		}
 
@@ -777,7 +777,7 @@ public:
 		m_spot = spot;
 		m_team = team;
 		m_close = NULL;
-		
+
 		if ( maxRange > 0.0f )
 		{
 			m_closeRangeSq = maxRange * maxRange;
@@ -786,15 +786,15 @@ public:
 		{
 			m_closeRangeSq = 999999999.9f;
 		}
-		
+
 		m_ignore = ignore;
 	}
-	
+
 	bool operator() ( CBaseCombatCharacter *actor )
 	{
 		if (actor == m_ignore)
 			return true;
-			
+
 		if (actor->IsAlive() && (m_team == TEAM_ANY || actor->GetTeamNumber() == m_team))
 		{
 			Vector to = actor->WorldSpaceCenter() - m_spot;
@@ -807,12 +807,12 @@ public:
 		}
 		return true;
 	}
-	
+
 	CBaseCombatCharacter *GetActor( void ) const
 	{
 		return m_close;
 	}
-	
+
 	bool IsCloserThan( float range )
 	{
 		return (m_closeRangeSq < (range * range));
@@ -822,7 +822,7 @@ public:
 	{
 		return (m_closeRangeSq > (range * range));
 	}
-	
+
 	Vector m_spot;
 	int m_team;
 	CBaseCombatCharacter *m_close;
@@ -906,7 +906,7 @@ void NextBotGroundLocomotion::UpdatePosition( const Vector &newPos )
 	//Vector adjustedNewPos = ResolveZombieCollisions( newPos );
 	Vector adjustedNewPos = newPos;
 
-	// check for collisions during move and resolve them	
+	// check for collisions during move and resolve them
 	const int recursionLimit = 3;
 	Vector safePos = ResolveCollision( m_nextBot->GetPosition(), adjustedNewPos, recursionLimit );
 
@@ -919,7 +919,7 @@ void NextBotGroundLocomotion::UpdatePosition( const Vector &newPos )
 
 
 //----------------------------------------------------------------------------------------------------------
-/** 
+/**
  * Prevent bot from sliding through floor, and snap to the ground if we're very near it
  */
 void NextBotGroundLocomotion::UpdateGroundConstraint( void )
@@ -933,7 +933,7 @@ void NextBotGroundLocomotion::UpdateGroundConstraint( void )
 		m_isUsingFullFeetTrace = false;
 		return;
 	}
-		
+
 	IBody *body = GetBot()->GetBodyInterface();
 	if ( body == NULL )
 	{
@@ -941,11 +941,11 @@ void NextBotGroundLocomotion::UpdateGroundConstraint( void )
 	}
 
 	float halfWidth = body->GetHullWidth()/2.0f;
-	
+
 	// since we only care about ground collisions, keep hull short to avoid issues with low ceilings
 	/// @TODO: We need to also check actual hull height to avoid interpenetrating the world
 	float hullHeight = GetStepHeight();
-	
+
 	// always need tolerance even when jumping/falling to make sure we detect ground penetration
 	// must be at least step height to avoid 'falling' down stairs
 	const float stickToGroundTolerance = GetStepHeight() + 0.01f;
@@ -954,9 +954,9 @@ void NextBotGroundLocomotion::UpdateGroundConstraint( void )
 	NextBotTraceFilterIgnoreActors filter( m_nextBot, body->GetCollisionGroup() );
 
 	TraceHull( m_nextBot->GetPosition() + Vector( 0, 0, GetStepHeight() + 0.001f ),
-					m_nextBot->GetPosition() + Vector( 0, 0, -stickToGroundTolerance ), 
-					Vector( -halfWidth, -halfWidth, 0 ), 
-					Vector( halfWidth, halfWidth, hullHeight ), 
+					m_nextBot->GetPosition() + Vector( 0, 0, -stickToGroundTolerance ),
+					Vector( -halfWidth, -halfWidth, 0 ),
+					Vector( halfWidth, halfWidth, hullHeight ),
 					body->GetSolidMask(), &filter, &ground );
 
 	if ( ground.startsolid )
@@ -975,11 +975,11 @@ void NextBotGroundLocomotion::UpdateGroundConstraint( void )
 		m_groundNormal = ground.plane.normal;
 
 		m_isUsingFullFeetTrace = false;
-		
+
 		// zero velocity normal to the ground
 		float normalVel = DotProduct( m_groundNormal, m_velocity );
 		m_velocity -= normalVel * m_groundNormal;
-		
+
 		// check slope limit
 		if ( ground.plane.normal.z < GetTraversableSlopeLimit() )
 		{
@@ -988,9 +988,9 @@ void NextBotGroundLocomotion::UpdateGroundConstraint( void )
 			// too steep to be ground - treat it like a wall hit
 			if ( ( m_velocity.x * ground.plane.normal.x + m_velocity.y * ground.plane.normal.y ) <= 0.0f )
 			{
-				GetBot()->OnContact( ground.m_pEnt, &ground );			
+				GetBot()->OnContact( ground.m_pEnt, &ground );
 			}
-			
+
 			// we're contacting some kind of ground
 			// zero accelerations normal to the ground
 
@@ -1009,14 +1009,14 @@ void NextBotGroundLocomotion::UpdateGroundConstraint( void )
 
 			return;
 		}
-		
+
 		// inform other components of collision if we didn't land on the 'world'
 		if ( ground.m_pEnt && !ground.m_pEnt->IsWorld() )
 		{
 			GetBot()->OnContact( ground.m_pEnt, &ground );
 		}
 
-		// snap us to the ground 
+		// snap us to the ground
 		m_nextBot->SetPosition( ground.endpos );
 
 		if ( !IsOnGround() )
@@ -1043,7 +1043,7 @@ void NextBotGroundLocomotion::UpdateGroundConstraint( void )
 				m_isUsingFullFeetTrace = true; // We're in the air and there's space below us, so use the full trace
 				m_acceleration.z -= GetGravity(); // start our gravity now
 			}
-		}		
+		}
 	}
 }
 
@@ -1057,7 +1057,7 @@ void NextBotGroundLocomotion::StandUp( void )
 	const float halfSize = GetHullWidth()/3.0f;
 	Vector standHullMin( -halfSize, -halfSize, GetStepHeight() + 0.1f );
 	Vector standHullMax( halfSize, halfSize, GetStandHullHeight() );
-	
+
 	TraceHull( GetFeet(), GetFeet(), standHullMin, standHullMax, MASK_NPCSOLID, m_nextBot, MASK_DEFAULTPLAYERSOLID, &result );
 
 	if ( result.fraction >= 1.0f && !result.startsolid )
@@ -1096,37 +1096,37 @@ void NextBotGroundLocomotion::JumpAcrossGap( const Vector &landingGoal, const Ve
 		// body can't jump right now
 		return;
 	}
-	
+
 
 	// scale impulse to land on target
 	Vector toGoal = landingGoal - GetFeet();
-	
+
 	// equation doesn't work if we're jumping upwards
 	float height = toGoal.z;
 	toGoal.z = 0.0f;
-	
+
 	float range = toGoal.NormalizeInPlace();
 
 	// jump out at 45 degree angle
 	const float cos45 = 0.7071f;
-	
+
 	// avoid division by zero
 	if ( height > 0.9f * range )
 	{
 		height = 0.9f * range;
 	}
-	
+
 	// ballistic equation to find initial velocity assuming 45 degree inclination and landing at give range and height
 	float launchVel = ( range / cos45 ) / sqrt( ( 2.0f * ( range - height ) ) / GetGravity() );
 
 	Vector up( 0, 0, 1 );
-	Vector ahead = up + toGoal;	
+	Vector ahead = up + toGoal;
 	ahead.NormalizeInPlace();
 
 	//m_velocity = cos45 * launchVel * ahead;
 	m_velocity = launchVel * ahead;
 	m_acceleration = vec3_origin;
-			
+
 	m_isJumping = true;
 	m_isJumpingAcrossGap = true;
 	m_isClimbingUpToLedge = false;
@@ -1156,7 +1156,7 @@ void NextBotGroundLocomotion::Jump( void )
 
 	// jump straight up
 	m_velocity.z = sqrt( 2.0f * GetGravity() * GetMaxJumpHeight() );
-			
+
 	m_isJumping = true;
 	m_isClimbingUpToLedge = false;
 
@@ -1221,7 +1221,7 @@ void NextBotGroundLocomotion::OnLeaveGround( CBaseEntity *ground )
 
 
 //----------------------------------------------------------------------------------------------------------
-/** 
+/**
  * Invoked when bot lands on the ground after being in the air
  */
 void NextBotGroundLocomotion::OnLandOnGround( CBaseEntity *ground )
@@ -1261,7 +1261,7 @@ void NextBotGroundLocomotion::ClimbLadder( const CNavLadder *ladder, const CNavA
 	{
 		return;
 	}
-	
+
 	m_ladder = ladder;
 	m_ladderDismountGoal = dismountGoal;
 	m_isGoingUpLadder = true;
@@ -1272,9 +1272,9 @@ void NextBotGroundLocomotion::ClimbLadder( const CNavLadder *ladder, const CNavA
 		// line them up to climb in XY
 		Vector mountSpot = m_ladder->m_bottom + m_ladder->GetNormal() * (0.75f * body->GetHullWidth());
 		mountSpot.z = GetBot()->GetPosition().z;
-		
+
 		UpdatePosition( mountSpot );
-		
+
 		body->StartActivity( ACT_CLIMB_UP, IBody::MOTION_CONTROLLED_Z );
 	}
 }
@@ -1309,7 +1309,7 @@ void NextBotGroundLocomotion::DescendLadder( const CNavLadder *ladder, const CNa
 
 		QAngle angles = m_nextBot->GetLocalAngles();
 		angles.y = ladderYaw;
-		
+
 		m_nextBot->SetLocalAngles( angles );
 
 		body->StartActivity( ACT_CLIMB_DOWN, IBody::MOTION_CONTROLLED_Z );
@@ -1413,15 +1413,15 @@ bool NextBotGroundLocomotion::DidJustJump( void ) const
 void NextBotGroundLocomotion::FaceTowards( const Vector &target )
 {
 	const float deltaT = GetUpdateInterval();
-	
+
 	QAngle angles = m_nextBot->GetLocalAngles();
-	
+
 	float desiredYaw = UTIL_VecToYaw( target - GetFeet() );
 
 	float angleDiff = UTIL_AngleDiff( desiredYaw, angles.y );
-	
+
 	float deltaYaw = GetMaxYawRate() * deltaT;
-	
+
 	if (angleDiff < -deltaYaw)
 	{
 		angles.y -= deltaYaw;
@@ -1434,9 +1434,6 @@ void NextBotGroundLocomotion::FaceTowards( const Vector &target )
 	{
 		angles.y += angleDiff;
 	}
-	
+
 	m_nextBot->SetLocalAngles( angles );
 }
-
-
-

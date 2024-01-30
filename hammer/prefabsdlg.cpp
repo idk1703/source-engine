@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -64,14 +64,14 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CPrefabsDlg message handlers
 
-void CPrefabsDlg::OnAddobject() 
+void CPrefabsDlg::OnAddobject()
 {
 	CPrefabLibrary *pLibrary = GetCurrentLibrary();
 	if(!pLibrary)
 		return;	// no lib, no add
 
 	CFileDialog dlg(TRUE, NULL, NULL, OFN_ALLOWMULTISELECT | OFN_FILEMUSTEXIST |
-		OFN_HIDEREADONLY | OFN_LONGNAMES | OFN_NOCHANGEDIR, 
+		OFN_HIDEREADONLY | OFN_LONGNAMES | OFN_NOCHANGEDIR,
 		"Prefab files (*.map;*.rmf;*.os)|*.map; *.rmf; *.os|"
 		"Game MAP files (*.map)|*.map|"
 		"Worldcraft RMF files (*.rmf)|*.rmf||", this);
@@ -79,7 +79,7 @@ void CPrefabsDlg::OnAddobject()
 	if(dlg.DoModal() == IDCANCEL)
 		return;	// aborted
 
-	// add all these files .. 
+	// add all these files ..
 	char szDir[MAX_PATH], szFiles[2048];
 	memcpy(szFiles, dlg.m_ofn.lpstrFile, dlg.m_ofn.nMaxFile);
 	strcpy(szDir, dlg.m_ofn.lpstrFile);
@@ -207,7 +207,7 @@ static BOOL IsValidFilename(LPCTSTR pszString)
 	{
 		BYTE ch = BYTE(p[0]);
 		++p;
-		if(ch > 127 || isalpha(ch) || isdigit(ch) || 
+		if(ch > 127 || isalpha(ch) || isdigit(ch) ||
 			strchr(" $%`-_@~'!(){}^#&", ch))
 			continue;
 		// not one of those chars - not correct
@@ -257,7 +257,7 @@ void CPrefabsDlg::EditObjectData()
 }
 
 
-void CPrefabsDlg::OnEditobject() 
+void CPrefabsDlg::OnEditobject()
 {
 	if(!GetCurrentObject())	// nothing
 		return;
@@ -276,7 +276,7 @@ void CPrefabsDlg::OnEditobject()
 		this, NULL);
 }
 
-void CPrefabsDlg::OnRemoveobject() 
+void CPrefabsDlg::OnRemoveobject()
 {
 	// remove marked objectsss
 	int iIndex = m_Objects.GetNextItem(-1, LVNI_SELECTED);
@@ -296,14 +296,14 @@ void CPrefabsDlg::OnRemoveobject()
 					return;	// nope!
 				m_Objects.SetRedraw(FALSE);	// no redraw while doing this
 			}
-			
+
 			bConfirmed = TRUE;
 
 			// remove from lib & delete
 			pLibrary->Remove(pPrefab);
 			delete pPrefab;
 
-			// delete from list and shift index down so we keep processing 
+			// delete from list and shift index down so we keep processing
 			// correctly
 			m_Objects.DeleteItem(iIndex--);
 		}
@@ -318,7 +318,7 @@ void CPrefabsDlg::OnRemoveobject()
 	m_Objects.Invalidate();
 }
 
-void CPrefabsDlg::OnExportobject() 
+void CPrefabsDlg::OnExportobject()
 {
 	int iIndex = m_Objects.GetNextItem(-1, LVNI_SELECTED);
 	while(iIndex != -1)
@@ -329,7 +329,7 @@ void CPrefabsDlg::OnExportobject()
 			// export it
 			CString strFilename;
 			strFilename = pPrefab->GetName();
-			CFileDialog dlg(FALSE, "map", strFilename, OFN_HIDEREADONLY | 
+			CFileDialog dlg(FALSE, "map", strFilename, OFN_HIDEREADONLY |
 				OFN_OVERWRITEPROMPT, "Map files|*.map;*.rmf|", this);
 			if(dlg.DoModal() == IDCANCEL)
 				return;	// nevermind
@@ -368,11 +368,11 @@ void CPrefabsDlg::SetCurObject(int iItem)
 	m_ObjectNotes.SetWindowText(pPrefab->GetNotes());
 }
 
-void CPrefabsDlg::OnItemchangedObjects(NMHDR* pNMHDR, LRESULT* pResult) 
+void CPrefabsDlg::OnItemchangedObjects(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	*pResult = 0;
-	
+
 	if(!(pNMListView->uChanged & LVIF_STATE))
 		return;
 
@@ -390,7 +390,7 @@ CPrefabLibrary *CPrefabsDlg::GetCurrentLibrary(int *piSel)
 {
 	if(piSel)
 		piSel[0] = -1;
-	
+
 	int iSel = m_Libraries.GetCurSel();
 	if(iSel == CB_ERR)
 		return NULL;
@@ -418,7 +418,7 @@ CPrefab *CPrefabsDlg::GetCurrentObject(int *piSel)
 	return pPrefab;
 }
 
-void CPrefabsDlg::OnSelchangeLibraries() 
+void CPrefabsDlg::OnSelchangeLibraries()
 {
 	// get last library
 	CPrefabLibrary *pLibrary = CPrefabLibrary::FindID(
@@ -463,9 +463,9 @@ static int AskAboutInvalidFilename()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CPrefabsDlg::OnAddlibrary() 
+void CPrefabsDlg::OnAddlibrary()
 {
 Again:
 	CEditPrefabDlg dlg;
@@ -479,7 +479,7 @@ Again:
 			goto Again;
 		return;	// nevermind.
 	}
-	
+
 	CPrefabLibraryRMF *pLibrary = new CPrefabLibraryRMF;
 
 	pLibrary->SetName(dlg.m_strName);
@@ -496,9 +496,9 @@ Again:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CPrefabsDlg::OnEditlibrary() 
+void CPrefabsDlg::OnEditlibrary()
 {
 	// get selection
 	int iSel;
@@ -538,7 +538,7 @@ Again:
 }
 
 
-void CPrefabsDlg::OnRemovelibrary() 
+void CPrefabsDlg::OnRemovelibrary()
 {
 	// get cur library
 	int iSel;
@@ -562,7 +562,7 @@ void CPrefabsDlg::OnRemovelibrary()
 }
 
 
-BOOL CPrefabsDlg::OnInitDialog() 
+BOOL CPrefabsDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
@@ -587,16 +587,16 @@ BOOL CPrefabsDlg::OnInitDialog()
 	bCurLibraryModified = FALSE;
 	m_Libraries.SetCurSel(0);
 	OnSelchangeLibraries();
-	
+
 	return TRUE;
 }
 
 
-void CPrefabsDlg::OnEndlabeleditObjects(NMHDR* pNMHDR, LRESULT* pResult) 
+void CPrefabsDlg::OnEndlabeleditObjects(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
 	LV_ITEM &item = pDispInfo->item;
-	
+
 	*pResult = 0;
 
 	if(item.pszText == NULL)
@@ -608,7 +608,7 @@ void CPrefabsDlg::OnEndlabeleditObjects(NMHDR* pNMHDR, LRESULT* pResult)
 	bCurLibraryModified = TRUE;
 }
 
-void CPrefabsDlg::OnClose() 
+void CPrefabsDlg::OnClose()
 {
 	// get library
 	CPrefabLibrary *pLibrary = GetCurrentLibrary();
@@ -618,6 +618,6 @@ void CPrefabsDlg::OnClose()
 	{
 		pLibrary->Save();
 	}
-	
+
 	CDialog::OnClose();
 }

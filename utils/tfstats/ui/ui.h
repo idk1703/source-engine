@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -71,7 +71,7 @@ public:
 	bool elimOldPlayers;
 	int elimDays;
 	list<CTFStatsExec>* m_pLogs;
-	
+
 	void execTFStats();
 	bool pause;
 	int pauseSecs;
@@ -106,5 +106,3 @@ string& removeSlash(string& tempbuf);
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_UI_H__D6AFABCC_5BD5_11D3_A5CF_005004039597__INCLUDED_)
-
-

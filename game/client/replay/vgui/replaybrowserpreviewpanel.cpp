@@ -161,7 +161,7 @@ CReplayPreviewPanelSlideshow::CReplayPreviewPanelSlideshow( Panel *pParent, Quer
 	if ( nScreenshotCount )
 	{
 		m_pScreenshotPanel = new CReplayScreenshotSlideshowPanel( this, "ScreenshotSlideshowPanel", hReplay );
-		
+
 		// Set pretty quick transition times based on the screenshot count
 		m_pScreenshotPanel->SetInterval( ( nScreenshotCount == 2 ) ? 3.0f : 2.0f );
 		m_pScreenshotPanel->SetTransitionTime( 0.5f );
@@ -207,7 +207,7 @@ void CReplayPreviewPanelSlideshow::LayoutView( int &nWide, int &nTall, int &nCur
 		nWide += nScreenshotW;
 		nTall += nCurY;
 
-		m_pScreenshotPanel->SetBounds( (nWide - nScreenshotW) * 0.5, YRES(9), nScreenshotW, nCurY ); 
+		m_pScreenshotPanel->SetBounds( (nWide - nScreenshotW) * 0.5, YRES(9), nScreenshotW, nCurY );
 	}
 	else
 	{

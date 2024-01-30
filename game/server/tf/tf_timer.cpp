@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -56,7 +56,7 @@ CTimer* Timer_CreateTimer( CBaseEntity *pPlayer, TFTimer_t timerType )
 	pTimer->m_hOwner = pPlayer;
 	pTimer->m_Type = timerType;
 	pTimer->m_iListIndex = g_Timers.AddToTail( pTimer );
-	
+
 	// TFTODO: Register the think functions here..
 	if ( pTimer->m_Type == TF_TIMER_ROTHEALTH )
 	{
@@ -114,4 +114,3 @@ void Timer_RemoveAll()
 {
 	g_Timers.PurgeAndDeleteElements();
 }
-

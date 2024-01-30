@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,7 +14,7 @@
 using namespace PasstimeGameEvents;
 
 //-----------------------------------------------------------------------------
-namespace 
+namespace
 {
 	//-----------------------------------------------------------------------------
 	template<class T>
@@ -43,7 +43,7 @@ BallGet::BallGet( IGameEvent *pEvent )
 	Assert( IsType<BallGet>( pEvent ) );
 }
 
-BallGet::BallGet( int ownerIndex_ ) 
+BallGet::BallGet( int ownerIndex_ )
 	: ownerIndex( ownerIndex_ )
 {
 }
@@ -147,14 +147,14 @@ PassCaught::PassCaught( IGameEvent *pEvent )
 	: passerIndex( pEvent->GetInt( s_keyPasserIndex ) )
 	, catcherIndex( pEvent->GetInt( s_keyCatcherIndex ) )
 	, dist( pEvent->GetFloat( s_keyDist ) )
-	, duration( pEvent->GetFloat( s_keyDuration ) ) 
+	, duration( pEvent->GetFloat( s_keyDuration ) )
 {
 	Assert( IsType<PassCaught>( pEvent ) );
 }
 
 PassCaught::PassCaught()
 	: passerIndex( -1 )
-	, catcherIndex( -1 ) 
+	, catcherIndex( -1 )
 	, dist( 0 )
 	, duration( 0 )
 {

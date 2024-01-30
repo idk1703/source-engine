@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -27,7 +27,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudTeamSwitch : public CHudElement, public EditablePanel
 {
@@ -53,7 +53,7 @@ private:
 DECLARE_HUDELEMENT( CHudTeamSwitch );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTeamSwitch::CHudTeamSwitch( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudTeamSwitch" )
 {
@@ -67,7 +67,7 @@ CHudTeamSwitch::CHudTeamSwitch( const char *pElementName ) : CHudElement( pEleme
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTeamSwitch::Init( void )
 {
@@ -79,7 +79,7 @@ void CHudTeamSwitch::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTeamSwitch::FireGameEvent( IGameEvent * event )
 {
@@ -100,8 +100,8 @@ void CHudTeamSwitch::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CHudTeamSwitch::OnTick( void )
 {
@@ -113,7 +113,7 @@ void CHudTeamSwitch::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTeamSwitch::LevelInit( void )
 {
@@ -122,7 +122,7 @@ void CHudTeamSwitch::LevelInit( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudTeamSwitch::ShouldDraw( void )
 {
@@ -133,7 +133,7 @@ bool CHudTeamSwitch::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTeamSwitch::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -148,7 +148,7 @@ void CHudTeamSwitch::ApplySchemeSettings( IScheme *pScheme )
 extern const char *pszTeamRoleSwitch[NUM_TEAM_ROLES];
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTeamSwitch::SetupSwitchPanel( int iNewTeam )
 {

@@ -51,7 +51,7 @@ private:
 	TimedEvent	m_teSmokeSpawn;
 
 	int		m_iAttachment;
-	
+
 	SimpleParticle	*m_pParticle[2];
 };
 
@@ -84,8 +84,8 @@ C_Flare::C_Flare() : CSimpleEmitter( "C_Flare" )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : state - 
+// Purpose:
+// Input  : state -
 //-----------------------------------------------------------------------------
 void C_Flare::NotifyShouldTransmit( ShouldTransmitState_t state )
 {
@@ -102,8 +102,8 @@ void C_Flare::NotifyShouldTransmit( ShouldTransmitState_t state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_Flare::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -120,14 +120,14 @@ void C_Flare::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_Flare::RestoreResources( void )
 {
 	if ( m_pParticle[0] == NULL )
 	{
 		m_pParticle[0] = (SimpleParticle *) AddParticle( sizeof( SimpleParticle ), GetPMaterial( "effects/redflare" ), GetAbsOrigin() );
-		
+
 		if ( m_pParticle[0] != NULL )
 		{
 			m_pParticle[0]->m_uchColor[0] = m_pParticle[0]->m_uchColor[1] = m_pParticle[0]->m_uchColor[2] = 0;
@@ -145,7 +145,7 @@ void C_Flare::RestoreResources( void )
 	if ( m_pParticle[1] == NULL )
 	{
 		m_pParticle[1] = (SimpleParticle *) AddParticle( sizeof( SimpleParticle ), GetPMaterial( "effects/yellowflare_noz" ), GetAbsOrigin() );
-		
+
 		if ( m_pParticle[1] != NULL )
 		{
 			m_pParticle[1]->m_uchColor[0] = m_pParticle[1]->m_uchColor[1] = m_pParticle[1]->m_uchColor[2] = 0;
@@ -162,8 +162,8 @@ void C_Flare::RestoreResources( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pParticle - 
+// Purpose:
+// Input  : pParticle -
 //-----------------------------------------------------------------------------
 void C_Flare::NotifyDestroyParticle( Particle* pParticle )
 {
@@ -181,8 +181,8 @@ void C_Flare::NotifyDestroyParticle( Particle* pParticle )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : timeDelta - 
+// Purpose:
+// Input  : timeDelta -
 //-----------------------------------------------------------------------------
 void C_Flare::Update( float timeDelta )
 {
@@ -202,7 +202,7 @@ void C_Flare::Update( float timeDelta )
 	pixelvis_queryparams_t params;
 	params.Init(GetAbsOrigin());
 	params.proxySize = 8.0f; // Inches
-	
+
 	float visible = PixelVisibility_FractionVisible( params, &m_queryHandle );
 
 	float	fColor;
@@ -224,7 +224,7 @@ void C_Flare::Update( float timeDelta )
 	if ( !bVisible )
 	{
 		if ( m_pParticle[0] != NULL )
-		{	
+		{
 			m_pParticle[0]->m_flDieTime		= gpGlobals->curtime;
 			m_pParticle[0]->m_uchStartSize	= m_pParticle[0]->m_uchEndSize = 0;
 			m_pParticle[0]->m_uchColor[0]	= 0;
@@ -233,7 +233,7 @@ void C_Flare::Update( float timeDelta )
 		}
 
 		if ( m_pParticle[1] != NULL )
-		{	
+		{
 			m_pParticle[1]->m_flDieTime		= gpGlobals->curtime;
 			m_pParticle[1]->m_uchStartSize	= m_pParticle[1]->m_uchEndSize = 0;
 			m_pParticle[1]->m_uchColor[0]	= 0;
@@ -252,7 +252,7 @@ void C_Flare::Update( float timeDelta )
 	{
 		dlight_t *dl= effects->CL_AllocDlight( index );
 
-		
+
 
 		if ( m_bPropFlare == false )
 		{
@@ -274,7 +274,7 @@ void C_Flare::Update( float timeDelta )
 			{
 				Vector effect_origin;
 				QAngle effect_angles;
-				
+
 				GetAttachment( m_iAttachment, effect_origin, effect_angles );
 
 				//Raise the light a little bit away from the flare so it lights it up better.
@@ -284,7 +284,7 @@ void C_Flare::Update( float timeDelta )
 
 				dl->radius	= baseScale * random->RandomFloat( 245.0f, 256.0f );
 				dl->color.g = dl->color.b = random->RandomInt( 95, 128 );
-		
+
 				dlight_t *el= effects->CL_AllocElight( index );
 
 				el->origin	= effect_origin;
@@ -315,13 +315,13 @@ void C_Flare::Update( float timeDelta )
 			smokeOrg[2] += baseScale * 4.0f;
 
 			SimpleParticle *sParticle = (SimpleParticle *) AddParticle( sizeof( SimpleParticle ), g_Mat_DustPuff[1], smokeOrg );
-				
+
 			if ( sParticle == NULL )
 				return;
 
 			sParticle->m_flLifetime		= 0.0f;
 			sParticle->m_flDieTime		= 1.0f;
-			
+
 			sParticle->m_vecVelocity	= Vector( random->RandomFloat( -16.0f, 16.0f ), random->RandomFloat( -16.0f, 16.0f ), random->RandomFloat( 8.0f, 16.0f ) + 32.0f );
 
 			if ( m_bPropFlare )
@@ -354,7 +354,7 @@ void C_Flare::Update( float timeDelta )
 	//
 
 	Vector	offset;
-	
+
 	//Cause the base of the effect to shake
 	offset.Random( -0.5f * baseScale, 0.5f * baseScale );
 	offset += GetAbsOrigin();
@@ -364,7 +364,7 @@ void C_Flare::Update( float timeDelta )
 		m_pParticle[0]->m_Pos			= offset;
 		m_pParticle[0]->m_flLifetime	= 0.0f;
 		m_pParticle[0]->m_flDieTime		= 2.0f;
-		
+
 		m_pParticle[0]->m_vecVelocity.Init();
 
 		fColor = random->RandomInt( 100.0f, 128.0f ) * visible;
@@ -377,7 +377,7 @@ void C_Flare::Update( float timeDelta )
 		m_pParticle[0]->m_uchStartSize	= baseScale * (float) random->RandomInt( 32, 48 );
 		m_pParticle[0]->m_uchEndSize	= m_pParticle[0]->m_uchStartSize;
 		m_pParticle[0]->m_flRollDelta	= 0.0f;
-		
+
 		if ( random->RandomInt( 0, 4 ) == 3 )
 		{
 			m_pParticle[0]->m_flRoll	+= random->RandomInt( 2, 8 );
@@ -397,7 +397,7 @@ void C_Flare::Update( float timeDelta )
 		m_pParticle[1]->m_Pos			= offset;
 		m_pParticle[1]->m_flLifetime	= 0.0f;
 		m_pParticle[1]->m_flDieTime		= 2.0f;
-		
+
 		m_pParticle[1]->m_vecVelocity.Init();
 
 		fColor = 255 * visible;

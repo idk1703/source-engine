@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -40,7 +40,7 @@ struct vbs_sound_update_t
 };
 
 // -----------------------------------------
-//  Information about the passenger in the car 
+//  Information about the passenger in the car
 // -----------------------------------------
 class CPassengerInfo
 {
@@ -117,7 +117,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: Base class for drivable vehicle handling. Contain it in your 
+// Purpose: Base class for drivable vehicle handling. Contain it in your
 //			drivable vehicle.
 //-----------------------------------------------------------------------------
 class CBaseServerVehicle : public IServerVehicle
@@ -154,7 +154,7 @@ public:
 	virtual bool			IsVehicleUpright( void ) { return true; }
 	virtual bool			IsPassengerEntering( void ) { Assert( 0 ); return false; }
 	virtual bool			IsPassengerExiting( void ) { Assert( 0 ); return false; }
-	
+
 	virtual void			HandlePassengerEntry( CBaseCombatCharacter *pPassenger, bool bAllowEntryOutsideZone = false );
 	virtual bool			HandlePassengerExit( CBaseCombatCharacter *pPassenger );
 
@@ -186,7 +186,7 @@ public:
 
 	// Weapon handling
 	virtual void			Weapon_PrimaryRanges( float *flMinRange, float *flMaxRange );
-	virtual void			Weapon_SecondaryRanges( float *flMinRange, float *flMaxRange );	
+	virtual void			Weapon_SecondaryRanges( float *flMinRange, float *flMaxRange );
 	virtual float			Weapon_PrimaryCanFireAt( void );		// Return the time at which this vehicle's primary weapon can fire again
 	virtual float			Weapon_SecondaryCanFireAt( void );		// Return the time at which this vehicle's secondary weapon can fire again
 
@@ -217,7 +217,7 @@ private:
 	void	ParseNPCSeatTransition( KeyValues *pTransitionKeyValues, CPassengerSeatTransition *pTransition );
 
 protected:
-	
+
 	int		FindRoleIndexByName( string_t strRoleName );
 	int		FindSeatIndexByName( int nRoleIndex, string_t strSeatName );
 	int		NPC_GetAvailableSeat_Any( CBaseCombatCharacter *pPassenger, int nRoleID );
@@ -309,7 +309,7 @@ private:
 	sound_states					m_soundState;
 	float							m_soundStateStartTime;
 	float							m_lastSpeed;
-	
+
 	void	SoundState_OnNewState( sound_states lastState );
 	void	SoundState_Update( vbs_sound_update_t &params );
 	sound_states SoundState_ChooseState( vbs_sound_update_t &params );

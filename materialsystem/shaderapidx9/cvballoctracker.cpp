@@ -223,7 +223,7 @@ static ConVar mem_vballocspew( "mem_vballocspew", "0", FCVAR_CHEAT, "How often t
 //-----------------------------------------------------------------------------
 
 CVBAllocTracker g_VBAllocTrackerShaderAPI;
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CVBAllocTracker, IVBAllocTracker, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CVBAllocTracker, IVBAllocTracker,
 						VB_ALLOC_TRACKER_INTERFACE_VERSION, g_VBAllocTrackerShaderAPI );
 
 //-----------------------------------------------------------------------------
@@ -500,7 +500,7 @@ void CVBAllocTracker::SpewExpectedSavings( void )
 	AddSaving( alreadySaved, yetToSave, "R_StudioCreateStaticMeshes (prop_dynamic)",	VERTEX_ELEMENT_COLOR,			SAVING_REMOVAL );
 	AddSaving( alreadySaved, yetToSave, "R_StudioCreateStaticMeshes (prop_static)",		VERTEX_ELEMENT_COLOR,			SAVING_REMOVAL );
 	AddSaving( alreadySaved, yetToSave, "R_StudioCreateStaticMeshes (character)",		VERTEX_ELEMENT_COLOR,			SAVING_REMOVAL );
-																					
+
 	// We expect to compress texcoords (DONE: normals+tangents, boneweights) for all studiomdls
 	AddSaving( alreadySaved, yetToSave, "R_StudioCreateStaticMeshes (prop_dynamic)",	VERTEX_ELEMENT_NORMAL,			SAVING_COMPRESSION );
 	AddSaving( alreadySaved, yetToSave, "R_StudioCreateStaticMeshes (prop_static)",		VERTEX_ELEMENT_NORMAL,			SAVING_COMPRESSION );

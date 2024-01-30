@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -20,11 +20,11 @@
 
 
 CommandMenu::CommandMenu( Panel *parent, const char *panelName, IViewPort * viewport) : Menu( parent, panelName )
-{ 
+{
 	if ( !viewport )
 		return;
 
-	m_ViewPort = viewport; 
+	m_ViewPort = viewport;
 	SetVisible( false );
 	m_CurrentMenu = this;
 
@@ -64,9 +64,9 @@ void CommandMenu::OnMessage(const KeyValues *params, VPANEL fromPanel)
 		ConVarRef convar( text );
 		if ( convar.IsValid() )
 		{
-			// toggle cvar 
+			// toggle cvar
 
-			if ( convar.GetInt() )	
+			if ( convar.GetInt() )
 			{
 				convar.SetValue( 0 );
 			}
@@ -105,7 +105,7 @@ void CommandMenu::OnMessage(const KeyValues *params, VPANEL fromPanel)
 	{
 		PostMessage( GetParent(), new KeyValues("CommandMenuClosed") );
 	}
-		
+
 	BaseClass::OnMessage( params, fromPanel );
 }
 
@@ -121,7 +121,7 @@ void CommandMenu::StartNewSubMenu(KeyValues * params)
 	m_MenuItems.AddToTail( menuitem ); // add to global list
 
 	m_pMenuStack.Push( m_CurrentMenu ); // remember current menu
-	
+
 	m_CurrentMenu = menu; // continue adding items in new menu
 }
 
@@ -159,7 +159,7 @@ void CommandMenu::ClearMenu()
 {
 	SetVisible( false );
 	m_pMenuStack.Clear();
-	m_MenuItems.RemoveAll(); 
+	m_MenuItems.RemoveAll();
 	// DeleteAllItems();
 	MarkForDeletion();
 
@@ -174,12 +174,12 @@ void CommandMenu::ClearMenu()
 void CommandMenu::RebuildMenu()
 {
 	if ( !m_MenuKeys )
-		return;	
+		return;
 
 	m_pMenuStack.Clear();
-	m_MenuItems.RemoveAll(); 
+	m_MenuItems.RemoveAll();
 	DeleteAllItems();
-	
+
 	LoadFromKeyValues( m_MenuKeys ); // and reload respecting new team, mapname etc.
 }
 
@@ -199,12 +199,12 @@ void CommandMenu::UpdateMenu()
 
 		// let custom menu items update themself
 		Q_strncpy( text,  keys->GetString("custom"), sizeof(text) );
-				
+
 		if ( text[0] )
 		{
 			// let derived class modify the menu item
-			UpdateCustomItem( keys,  menuitem.menu->GetMenuItem(menuitem.itemnr) ); 
-			continue; 
+			UpdateCustomItem( keys,  menuitem.menu->GetMenuItem(menuitem.itemnr) );
+			continue;
 		}
 
 		// update toggle buttons
@@ -267,7 +267,7 @@ bool CommandMenu::LoadFromKeyValues( KeyValues * params )
 	Q_snprintf( m_CurrentTeam, 4, "%i", GetLocalPlayerTeam() );
 
 	Q_FileBase( engine->GetLevelName(), m_CurrentMap, sizeof(m_CurrentMap) );
-	
+
 	if ( params != m_MenuKeys )
 	{
 		if ( m_MenuKeys )
@@ -290,7 +290,7 @@ bool CommandMenu::LoadFromKeyValues( KeyValues * params )
 
 		subkey = subkey->GetNextKey();
 	}
-	
+
 	UpdateMenu();
 
 	return true;
@@ -309,14 +309,14 @@ bool CommandMenu::LoadFromKeyValuesInternal(KeyValues * key, int depth)
 
 	Q_strncpy( text,  key->GetString("custom"), sizeof(text) );	 // get type
 
-	if  ( text[0] ) 
+	if  ( text[0] )
 	{
 		AddMenuCustomItem( key ); // do whatever custom item wants to
 		return true;
 	}
-	
+
 	if ( !CheckRules( key->GetString("rule"), key->GetString("ruledata") ) )
-	{	
+	{
 		return true;
 	}
 
@@ -338,7 +338,7 @@ bool CommandMenu::LoadFromKeyValuesInternal(KeyValues * key, int depth)
 	}
 
 	// not a command, nor a toggle. Must be a submenu:
-		
+
 	StartNewSubMenu( key );	// create submenu
 
 	// iterate through all subkeys
@@ -356,6 +356,6 @@ bool CommandMenu::LoadFromKeyValuesInternal(KeyValues * key, int depth)
 	}
 
 	FinishSubMenu(); // go one level back
-	
+
 	return true;
 }

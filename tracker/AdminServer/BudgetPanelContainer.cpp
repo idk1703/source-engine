@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -31,9 +31,9 @@ public:
 	virtual void OnTick();
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-	void DrawColoredText( 
-		vgui::HFont font, 
-		int x, int y, 
+	void DrawColoredText(
+		vgui::HFont font,
+		int x, int y,
 		int r, int g, int b, int a,
 		const char *pText,
 		... );
@@ -44,7 +44,7 @@ private:
 
 
 
-CBudgetPanelAdmin::CBudgetPanelAdmin( vgui::Panel *pParent, const char *pElementName ) : 
+CBudgetPanelAdmin::CBudgetPanelAdmin( vgui::Panel *pParent, const char *pElementName ) :
 	BaseClass( pParent, pElementName, BUDGETFLAG_SERVER )
 {
 	MarkAsDedicatedServer();
@@ -57,9 +57,9 @@ void CBudgetPanelAdmin::SetupCustomConfigData( CBudgetPanelConfigData &data )
 }
 
 
-void CBudgetPanelAdmin::DrawColoredText( 
-	vgui::HFont font, 
-	int x, int y, 
+void CBudgetPanelAdmin::DrawColoredText(
+	vgui::HFont font,
+	int x, int y,
 	int r, int g, int b, int a,
 	const char *pText,
 	... )
@@ -104,7 +104,7 @@ void CBudgetPanelAdmin::OnTick()
 		SnapshotVProfHistory( 0 );
 		MarkForFullRepaint();
 	}
-	
+
 	BaseClass::OnTick();
 }
 
@@ -135,7 +135,7 @@ void CBudgetPanelContainer::OnServerDataResponse( const char *value, const char 
 
 void CBudgetPanelContainer::Paint()
 {
-	
+
 }
 
 

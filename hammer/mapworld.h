@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -57,8 +57,8 @@ public:
 				return i;
 			}
 		}
-		
-		return -1;	
+
+		return -1;
 	}
 };
 
@@ -107,11 +107,11 @@ class CMapWorld : public CMapClass, public CEditGameClass
 		ChunkFileResult_t LoadVMF(CChunkFile *pFile);
 		void PostloadWorld(void);
 		void PostloadVisGroups(void);
-		
+
 		// saveFlags is a combination of SAVEFLAGS_ defines.
 		ChunkFileResult_t SaveSolids(CChunkFile *pFile, CSaveInfo *pSaveInfo, int saveFlags);
 		ChunkFileResult_t SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo, int saveFlags);
-		
+
 		virtual int SerializeRMF(std::fstream &file, BOOL fIsStoring);
 		virtual int SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pIntersecting = NULL);
 
@@ -145,7 +145,7 @@ class CMapWorld : public CMapClass, public CEditGameClass
 		bool FindEntitiesByName(CMapEntityList &Found, const char *szName, bool bVisiblesOnly);
 		bool FindEntitiesByClassName(CMapEntityList &Found, const char *szClassName, bool bVisiblesOnly);
 		bool FindEntitiesByNameOrClassName(CMapEntityList &Found, const char *pszName, bool bVisiblesOnly);
-		
+
 		bool GenerateNewTargetname( const char *startName, char *newName, int newNameBufferSize, bool bMakeUnique, const char *szPrefix, CMapClass *pRoot = NULL );
 
 		// displacement management
@@ -187,7 +187,7 @@ class CMapWorld : public CMapClass, public CEditGameClass
 		void CullTree_Free(void);
 
 		CCullTreeNode *m_pCullTree;		// This world's objects stored in a spatial hierarchy for culling.
-		
+
 		CMapEntityList m_EntityList;									// A flat list of all the entities in this world.
 		CMapEntityList m_EntityListByName[NUM_HASHED_ENTITY_BUCKETS];	// A list of all the entities in the world, hashed by name checksum.
 

@@ -33,7 +33,7 @@ float CObjectMannedPlasmagunMovement::GetMaxPitch() const
 
 void CObjectMannedPlasmagunMovement::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMove )
 {
-	CTFMoveData *pMoveData = (CTFMoveData*)pMove; 
+	CTFMoveData *pMoveData = (CTFMoveData*)pMove;
 	Assert( sizeof(MannedPlasmagunData_t) <= pMoveData->VehicleDataMaxSize() );
 
 	MannedPlasmagunData_t *pVehicleData = (MannedPlasmagunData_t*)pMoveData->VehicleData();
@@ -99,7 +99,7 @@ void CObjectMannedPlasmagunMovement::ProcessMovement( CBasePlayer *pPlayer, CMov
 	vTarget -= vTurretBase;
 
 
-	// Now we've got the target vector in local space. Now just figure out what 
+	// Now we've got the target vector in local space. Now just figure out what
 	// the gun angles need to be to hit the target.
 	QAngle vWantedAngles;
 	VectorAngles( vTarget, vWantedAngles );
@@ -113,5 +113,3 @@ void CObjectMannedPlasmagunMovement::ProcessMovement( CBasePlayer *pPlayer, CMov
 
 	pVehicle->GetAttachmentLocal(pVehicleData->m_nStandAttachment, pMove->m_vecAbsOrigin, pMove->m_vecAngles);
 }
-
-

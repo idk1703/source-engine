@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -39,24 +39,24 @@ public:
 
 
 // Clip pOutVerts/nStartVerts into the decal's texture space.
-CDecalVert* R_DoDecalSHClip( 
+CDecalVert* R_DoDecalSHClip(
 	CDecalVert *pInVerts,
-	CDecalVert *pOutVerts, 
-	decal_t *pDecal, 
+	CDecalVert *pOutVerts,
+	decal_t *pDecal,
 	int nStartVerts,
 	const Vector &vecNormal );
 
 // Generate clipped vertex list for decal pdecal projected onto polygon psurf
-CDecalVert* R_DecalVertsClip( 
-	CDecalVert *pOutVerts, 
-	decal_t *pDecal, 
-	SurfaceHandle_t surfID, 
+CDecalVert* R_DecalVertsClip(
+	CDecalVert *pOutVerts,
+	decal_t *pDecal,
+	SurfaceHandle_t surfID,
 	IMaterial *pMaterial );
 
 // Compute the unscaled basis for the decal.
-void R_DecalComputeBasis( 
-	Vector const& surfaceNormal, 
-	Vector const* pSAxis, 
+void R_DecalComputeBasis(
+	Vector const& surfaceNormal,
+	Vector const* pSAxis,
 	Vector* textureSpaceBasis );
 
 // Compute the basis for the decal and scale the axes so the whole decal fits

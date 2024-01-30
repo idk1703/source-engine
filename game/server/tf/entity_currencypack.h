@@ -43,7 +43,7 @@ public:
 	void	SetClaimed( void ) { m_bClaimed = true; }	// Radius collection code "steers" packs toward the player
 	bool	IsClaimed( void ) { return m_bClaimed; }	// So don't allow other players to interfere
 	void	DistributedBy( CBasePlayer* pMoneyMaker );
-	
+
 	virtual CurrencyRewards_t	GetPackSize( void ) { return TF_CURRENCY_PACK_LARGE; }
 	virtual const char *GetDefaultPowerupModel( void ) { return "models/items/currencypack_large.mdl"; }
 
@@ -90,5 +90,3 @@ public:
 
 
 #endif // ENTITY_CURRENCYPACK_H
-
-

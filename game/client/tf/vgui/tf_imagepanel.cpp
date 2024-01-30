@@ -24,7 +24,7 @@ using namespace vgui;
 DECLARE_BUILD_FACTORY( CTFImagePanel );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFImagePanel::CTFImagePanel( Panel *parent, const char *name ) : ScalableImagePanel( parent, name )
 {
@@ -40,7 +40,7 @@ CTFImagePanel::CTFImagePanel( Panel *parent, const char *name ) : ScalableImageP
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImagePanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -60,7 +60,7 @@ void CTFImagePanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImagePanel::UpdateBGImage( void )
 {
@@ -74,7 +74,7 @@ void CTFImagePanel::UpdateBGImage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImagePanel::FireGameEvent( IGameEvent * event )
 {

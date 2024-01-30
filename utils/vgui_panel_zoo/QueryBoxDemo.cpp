@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@ using namespace vgui;
 // They are useful for asking questions (like... "Are you sure you want to do this?").
 // In this example we will trigger the opening of a query box when
 // a button is pressed.
-// Query boxes are Message boxes that have an OK and a Cancel button, 
+// Query boxes are Message boxes that have an OK and a Cancel button,
 // each button may be linked to an additional command in order to trigger an
 // appropriate response.
 
@@ -109,14 +109,14 @@ void QueryBoxDemo::ShowQueryBox()
 
 //-----------------------------------------------------------------------------
 // Purpose:	 Respond to a message based action signal
-//   Respond to the OK button in the query box. 
+//   Respond to the OK button in the query box.
 //-----------------------------------------------------------------------------
 void QueryBoxDemo::OnOK()
 {
 	ivgui()->DPrintf("Query received the OK.\n");
 }
 
-//-----------------------------------------------------------------------------	
+//-----------------------------------------------------------------------------
 // Purpose:	 Respond to a message based action signal
 //   Respond to the Cancel button in the query box
 //-----------------------------------------------------------------------------
@@ -129,9 +129,9 @@ void QueryBoxDemo::OnCancel()
 
 MessageMapItem_t QueryBoxDemo::m_MessageMap[] =
 {
-	MAP_MESSAGE( QueryBoxDemo, "ButtonClicked", OnButtonClicked ), 
-	MAP_MESSAGE( QueryBoxDemo, "OKClicked", OnOK ), 
-	MAP_MESSAGE( QueryBoxDemo, "Cancel", OnCancel ), 
+	MAP_MESSAGE( QueryBoxDemo, "ButtonClicked", OnButtonClicked ),
+	MAP_MESSAGE( QueryBoxDemo, "OKClicked", OnOK ),
+	MAP_MESSAGE( QueryBoxDemo, "Cancel", OnCancel ),
 
 };
 
@@ -143,5 +143,3 @@ Panel* QueryBoxDemo_Create(Panel *parent)
 {
 	return new QueryBoxDemo(parent, "QueryBoxDemo");
 }
-
-

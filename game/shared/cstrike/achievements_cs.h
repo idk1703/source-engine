@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -17,17 +17,17 @@ bool GameRulesAllowsAchievements( void );
 // Base class for all CS achievements
 class CCSBaseAchievement : public CBaseAchievement
 {
-    DECLARE_CLASS( CCSBaseAchievement, CBaseAchievement );
+	DECLARE_CLASS( CCSBaseAchievement, CBaseAchievement );
 public:
 
-    CCSBaseAchievement();
+	CCSBaseAchievement();
 
 	virtual void GetSettings( KeyValues* pNodeOut );				// serialize
 	virtual void ApplySettings( /* const */ KeyValues* pNodeIn );	// unserialize
 
-    // [dwenger] Necessary for sorting achievements by award time
+	// [dwenger] Necessary for sorting achievements by award time
 	virtual void OnAchieved();
-    bool GetAwardTime( int& year, int& month, int& day, int& hour, int& minute, int& second );
+	bool GetAwardTime( int& year, int& month, int& day, int& hour, int& minute, int& second );
 
 	int64 GetSortKey() const { return GetUnlockTime(); }
 };

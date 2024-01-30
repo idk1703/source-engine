@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -58,8 +58,3 @@ void Initializer::FreeAllObjects()
 		}
 	}
 }
-
-
-
-
-

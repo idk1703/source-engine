@@ -14,7 +14,7 @@
 #include "fx_explosion.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void DODExplosionCallback( const Vector &vecOrigin, const Vector &vecNormal )
 {
@@ -61,7 +61,7 @@ void DODExplosionCallback( const Vector &vecOrigin, const Vector &vecNormal )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_TEDODExplosion : public C_BaseTempEntity
 {
@@ -80,7 +80,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEDODExplosion::C_TEDODExplosion( void )
 {
@@ -89,7 +89,7 @@ C_TEDODExplosion::C_TEDODExplosion( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEDODExplosion::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -103,4 +103,3 @@ IMPLEMENT_CLIENTCLASS_EVENT_DT( C_TEDODExplosion, DT_TEDODExplosion, CTEDODExplo
 	RecvPropFloat( RECVINFO( m_vecOrigin[2] ) ),
 	RecvPropVector( RECVINFO( m_vecNormal ) ),
 END_RECV_TABLE()
-

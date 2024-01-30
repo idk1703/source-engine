@@ -191,7 +191,7 @@ void CTFLunchBox::SecondaryAttack( void )
 
 	int nLunchBoxType = GetLunchboxType();
 
-	const char *pszHealthKit;	
+	const char *pszHealthKit;
 	switch ( nLunchBoxType )
 	{
 	case LUNCHBOX_ADDS_MAXHEALTH:
@@ -213,7 +213,7 @@ void CTFLunchBox::SecondaryAttack( void )
 		Vector vecForward, vecRight, vecUp;
 		AngleVectors( angForward, &vecForward, &vecRight, &vecUp );
 		Vector vecVelocity = vecForward * 500.0;
-		
+
 		if ( nLunchBoxType == LUNCHBOX_ADDS_MINICRITS )
 		{
 			pMedKit->SetModel( LUNCHBOX_STEAK_DROP_MODEL );
@@ -276,7 +276,7 @@ void CTFLunchBox::DrainAmmo( bool bForceCooldown )
 			StartEffectBarRegen();
 		}
 		else	// Full health regular sandwhich, I can eat forever
-		{	
+		{
 			return;
 		}
 	}
@@ -293,7 +293,7 @@ void CTFLunchBox::DrainAmmo( bool bForceCooldown )
 
 	pOwner->RemoveAmmo( 1, m_iPrimaryAmmoType );
 #else
-	
+
 	pOwner->RemoveAmmo( 1, m_iPrimaryAmmoType );
 	StartEffectBarRegen();
 
@@ -346,7 +346,7 @@ void CTFLunchBox::ApplyBiteEffects( CTFPlayer *pPlayer )
 
 		return;
 	}
-	
+
 	// Then heal the player
 	int iHeal = ( nLunchBoxType == LUNCHBOX_ADDS_MAXHEALTH ) ? 25 : 75;
 	int iHealType = DMG_GENERIC;

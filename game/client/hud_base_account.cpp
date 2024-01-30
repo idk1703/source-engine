@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -87,7 +87,7 @@ void CHudBaseAccount::Paint()
 		{
 			m_pszLastAnimationName = "AccountMoneyRemoved";
 		}
-		else 
+		else
 		{
 			m_pszLastAnimationName = "AccountMoneyAdded";
 		}

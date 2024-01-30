@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -181,7 +181,7 @@ void BuyState::OnEnter( CCSBot *me )
 				{
 					m_buyPistol = (RandomFloat( 0, 100 ) < 33.3f);
 				}
-			}			
+			}
 		}
 		else
 		{
@@ -278,7 +278,7 @@ static BuyInfo secondaryWeaponBuyInfoT[ SECONDARY_WEAPON_BUY_COUNT ] =
 inline WeaponType GetWeaponType( const char *alias )
 {
 	int i;
-	
+
 	for( i=0; i<PRIMARY_WEAPON_BUY_COUNT; ++i )
 	{
 		if (!stricmp( alias, primaryWeaponBuyInfoCT[i].buyAlias ))
@@ -512,7 +512,7 @@ void BuyState::OnUpdate( CCSBot *me )
 
 				me->PrintIfWatched( "Tried to buy a shield.\n" );
 			}
-			else 
+			else
 			{
 				// build list of allowable weapons to buy
 				BuyInfo *masterPrimary = (me->GetTeamNumber() == TEAM_TERRORIST) ? primaryWeaponBuyInfoT : primaryWeaponBuyInfoCT;
@@ -539,7 +539,7 @@ void BuyState::OnUpdate( CCSBot *me )
 						stockPrimary[ stockPrimaryCount++ ] = &masterPrimary[i];
 					}
 				}
- 
+
 				if (stockPrimaryCount)
 				{
 					// buy primary weapon if we don't have one
@@ -609,7 +609,7 @@ void BuyState::OnUpdate( CCSBot *me )
 				if (m_buyPistol)
 				{
 					int which = RandomInt( 0, SECONDARY_WEAPON_BUY_COUNT-1 );
-					
+
 					const char *what = NULL;
 
 					if (me->GetTeamNumber() == TEAM_TERRORIST)
@@ -687,4 +687,3 @@ void BuyState::OnExit( CCSBot *me )
 	me->ResetStuckMonitor();
 	me->EquipBestWeapon();
 }
-

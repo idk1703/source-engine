@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,17 +15,17 @@
  * provided that the above copyright notice appear in all copies and
  * that both that copyright notice and this permission notice appear
  * in supporting documentation.  Dr John Maddock makes no representations
- * about the suitability of this software for any purpose.  
+ * about the suitability of this software for any purpose.
  * It is provided "as is" without express or implied warranty.
  *
  */
- 
+
  /*
-  *   FILE     re_coll.h
-  *   VERSION  2.12
-  *   This is an internal header file, do not include directly
-  */
-  
+	*   FILE     re_coll.h
+	*   VERSION  2.12
+	*   This is an internal header file, do not include directly
+	*/
+
 #ifndef RE_COLL_H
 #define RE_COLL_H
 
@@ -48,8 +48,8 @@ JM_IX_DECL bool RE_CALL __re_lookup_collate(re_str<char>& buf, const char* p);
 
 inline bool RE_CALL re_lookup_collate(re_str<char>& buf, const char* first, const char* last)
 {
-   re_str<char> s(first, last);
-   return __re_lookup_collate(buf, s.c_str());
+	re_str<char> s(first, last);
+	return __re_lookup_collate(buf, s.c_str());
 }
 
 #ifndef JM_NO_WCSTRING

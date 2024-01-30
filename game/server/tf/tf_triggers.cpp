@@ -188,7 +188,7 @@ LINK_ENTITY_TO_CLASS( trigger_ignite_arrows, CTriggerIgniteArrows );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerIgniteArrows::Spawn( void )
 {
@@ -266,7 +266,7 @@ LINK_ENTITY_TO_CLASS( trigger_timer_door, CTriggerTimerDoor );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerTimerDoor::Spawn( void )
 {
@@ -429,7 +429,7 @@ public:
 
 private:
 	ETFCond m_nCondition;
-	
+
 	float m_flDuration;
 };
 
@@ -913,7 +913,7 @@ void CTriggerAddOrRemoveTFPlayerAttributes::Spawn()
 {
 	BaseClass::Spawn();
 	InitTrigger();
-	
+
 	m_bValidAttribute = false;
 	const char *pszAttrName = STRING( m_iszAttributeName );
 	if ( pszAttrName && *pszAttrName )
@@ -966,7 +966,7 @@ void CTriggerAddOrRemoveTFPlayerAttributes::StartTouch( CBaseEntity *pOther )
 	}
 	else
 	{
-		pPlayer->AddCustomAttribute( pszAttrName, m_flAttributeValue, m_flDuration ); 
+		pPlayer->AddCustomAttribute( pszAttrName, m_flAttributeValue, m_flDuration );
 	}
 
 	BaseClass::StartTouch( pOther );

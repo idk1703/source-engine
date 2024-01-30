@@ -70,7 +70,7 @@ ConVar vehicle_attach_eye_angles( "vehicle_attach_eye_angles", "0", FCVAR_REPLIC
 #endif // CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseTFVehicle::CBaseTFVehicle()
 {
@@ -78,7 +78,7 @@ CBaseTFVehicle::CBaseTFVehicle()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFVehicle::Spawn()
 {
@@ -104,7 +104,7 @@ CBaseEntity* CBaseTFVehicle::GetVehicleEnt()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFVehicle::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move )
 {
@@ -116,8 +116,8 @@ void CBaseTFVehicle::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper
 	// This calls StudioFrameAdvance, then we use the results from that to determine where to move.
 	DispatchAnimEvents( this );
 #endif
-	
-	CTFMoveData *pMoveData = (CTFMoveData*)move; 
+
+	CTFMoveData *pMoveData = (CTFMoveData*)move;
 	Assert( sizeof(VehicleBaseMoveData_t) <= pMoveData->VehicleDataMaxSize() );
 
 	VehicleBaseMoveData_t *pVehicleData = (VehicleBaseMoveData_t*)pMoveData->VehicleData();
@@ -125,7 +125,7 @@ void CBaseTFVehicle::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFVehicle::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *move )
 {
@@ -178,7 +178,7 @@ void CBaseTFVehicle::OnItemPostFrame( CBaseTFPlayer *pDriver )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseTFVehicle::GetPassengerRole( CBasePlayer *pEnt )
 {
@@ -200,7 +200,7 @@ Vector CBaseTFVehicle::GetSoundEmissionOrigin() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBasePlayer* CBaseTFVehicle::GetPassenger( int nRole )
 {
@@ -217,7 +217,7 @@ bool CBaseTFVehicle::IsPlayerInVehicle( CBaseTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseTFVehicle::GetPassengerCount() const
 {
@@ -234,7 +234,7 @@ int CBaseTFVehicle::GetPassengerCount() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseTFVehicle::GetMaxPassengerCount() const
 {
@@ -248,7 +248,7 @@ void CBaseTFVehicle::ItemPostFrame( CBasePlayer *pPassenger )
 {
 #ifndef CLIENT_DLL
 	Assert( GetPassengerRole( pPassenger ) != -1 );
-	if (pPassenger->m_afButtonPressed & (IN_USE /*| IN_JUMP*/)) 
+	if (pPassenger->m_afButtonPressed & (IN_USE /*| IN_JUMP*/))
 	{
 		// Get the player out..
 		pPassenger->LeaveVehicle();
@@ -301,7 +301,7 @@ void CBaseTFVehicle::SetMaxPassengerCount( int nCount )
 
 #if !defined (CLIENT_DLL)
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFVehicle::FinishedBuilding( void )
 {
@@ -330,7 +330,7 @@ void CBaseTFVehicle::FinishedBuilding( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFVehicle::VehicleDeteriorationThink( void )
 {
@@ -340,7 +340,7 @@ void CBaseTFVehicle::VehicleDeteriorationThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFVehicle::VehiclePassengerThink( void )
 {
@@ -386,7 +386,7 @@ int CBaseTFVehicle::GetChildVehicleRole( CBaseTFVehicle *pChild )
 {
 	int nBuildPoints = GetNumBuildPoints();
 	for( int i = 0; i < nBuildPoints; i++ )
-	{	
+	{
 		CBaseObject* pObject = GetBuildPointObject(i);
 		if (pObject == pChild)
 		{
@@ -408,17 +408,17 @@ void CBaseTFVehicle::GetVectors(Vector* pForward, Vector* pRight, Vector* pUp) c
 
 	if (pForward != NULL)
 	{
-		MatrixGetColumn( entityToWorld, 1, *pForward ); 
+		MatrixGetColumn( entityToWorld, 1, *pForward );
 	}
 
 	if (pRight != NULL)
 	{
-		MatrixGetColumn( entityToWorld, 0, *pRight ); 
+		MatrixGetColumn( entityToWorld, 0, *pRight );
 	}
 
 	if (pUp != NULL)
 	{
-		MatrixGetColumn( entityToWorld, 2, *pUp ); 
+		MatrixGetColumn( entityToWorld, 2, *pUp );
 	}
 }
 
@@ -463,16 +463,16 @@ bool CBaseTFVehicle::UseAttachedItem( CBaseEntity *pActivator, CBaseEntity *pCal
 	// Iterate through each of the build points, if any, and see which we are closest to.
 	int nBuildPoints = GetNumBuildPoints();
 	for( int i = 0; i < nBuildPoints; i++ )
-	{	
+	{
 		CBaseObject* pObject = GetBuildPointObject(i);
 
 		// If there's something in the build point that isn't in the process of being built or placed:
-		if( pObject && !pObject->IsPlacing() && !pObject->IsBuilding() ) 
+		if( pObject && !pObject->IsPlacing() && !pObject->IsBuilding() )
 		{
 			Vector vecOrigin;
 			QAngle vecAngles;
 
-			// If the build point is the default point for this role, just take it 
+			// If the build point is the default point for this role, just take it
 			if (GetBuildPointPassenger(i) == nRole)
 			{
 				nBestBuildPoint = i;
@@ -486,7 +486,7 @@ bool CBaseTFVehicle::UseAttachedItem( CBaseEntity *pActivator, CBaseEntity *pCal
 				if( fLength2dSqr < fBestDistance )
 				{
 					nBestBuildPoint = i;
-					fBestDistance = fLength2dSqr; 
+					fBestDistance = fLength2dSqr;
 				}
 			}
 		}
@@ -531,7 +531,7 @@ int CBaseTFVehicle::GetEmptyRole( void )
 			return iPassenger;
 	}
 
-	return -1;	
+	return -1;
 }
 
 
@@ -576,7 +576,7 @@ void CBaseTFVehicle::AttemptToBoardVehicle( CBaseTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Handle commands sent from vgui panels on the client 
+// Purpose: Handle commands sent from vgui panels on the client
 //-----------------------------------------------------------------------------
 bool CBaseTFVehicle::ClientCommand( CBaseTFPlayer *pPlayer, const CCommand &args )
 {
@@ -658,7 +658,7 @@ bool CBaseTFVehicle::IsValidExitPoint( int nRole, Vector *pExitPoint, QAngle *pA
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFVehicle::GetPassengerExitPoint( CBasePlayer *pPlayer, int nRole, Vector *pAbsPosition, QAngle *pAbsAngles )
 {
@@ -716,7 +716,7 @@ void CBaseTFVehicle::GetPassengerExitPoint( CBasePlayer *pPlayer, int nRole, Vec
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseTFVehicle::GetPassengerExitPoint( int nRole, Vector *pAbsPosition, QAngle *pAbsAngles )
 {
@@ -727,7 +727,7 @@ bool CBaseTFVehicle::GetPassengerExitPoint( int nRole, Vector *pAbsPosition, QAn
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseTFVehicle::GetEntryAnimForPoint( const Vector &vecPoint )
 {
@@ -735,7 +735,7 @@ int CBaseTFVehicle::GetEntryAnimForPoint( const Vector &vecPoint )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseTFVehicle::GetExitAnimToUse( Vector &vecEyeExitEndpoint, bool &bAllPointsBlocked )
 {
@@ -744,24 +744,24 @@ int CBaseTFVehicle::GetExitAnimToUse( Vector &vecEyeExitEndpoint, bool &bAllPoin
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFVehicle::HandleEntryExitFinish( bool bExitAnimOn, bool bResetAnim )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
-//			false - 
+// Purpose:
+// Input  : *pPlayer -
+//			false -
 //-----------------------------------------------------------------------------
 void CBaseTFVehicle::HandlePassengerEntry( CBasePlayer *pPlayer, bool bAllowEntryOutsideZone )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
+// Purpose:
+// Input  : *pPlayer -
 //-----------------------------------------------------------------------------
 bool CBaseTFVehicle::HandlePassengerExit( CBasePlayer *pPlayer )
 {
@@ -831,7 +831,7 @@ int CBaseTFVehicle::LocateEntryPoint( CBaseTFPlayer *pPlayer, float* fBest2dDist
 
 		if ( bOccupied && !bOwner )
 			continue;
-	
+
 		// FIXME: Cache off the entry point
 		Q_snprintf( szPassengerEyes, sizeof( szPassengerEyes ), "vehicle_feet_passenger%d", iEntryPoint );
 		int nAttachmentIndex = LookupAttachment( szPassengerEyes );
@@ -913,7 +913,7 @@ void CBaseTFVehicle::VehicleDriverGunThink( void )
 		// Transform it into the tank's local space.
 		matrix3x4_t tankToWorld;
 		AngleMatrix( GetAbsAngles(), tankToWorld );
-		
+
 		Vector vLocalTo;
 		VectorITransform( vTo, tankToWorld, vLocalTo );
 
@@ -947,7 +947,7 @@ bool CBaseTFVehicle::GetRoleViewPosition( int nRole, Vector *pVehicleEyeOrigin, 
 	QAngle vAbsAngle;
 	bool bUsingThirdPersonCamera = GetRoleAbsViewPosition( nRole, &vAbsOrigin, &vAbsAngle );
 
-	
+
 	// Make a matrix for it.
 	matrix3x4_t absMatrix;
 	AngleMatrix( vAbsAngle, absMatrix );
@@ -957,7 +957,7 @@ bool CBaseTFVehicle::GetRoleViewPosition( int nRole, Vector *pVehicleEyeOrigin, 
 	// Transform the matrix into local space.
 	matrix3x4_t worldToEntity, local;
 	MatrixInvert( EntityToWorldTransform(), worldToEntity );
-	ConcatTransforms( worldToEntity, absMatrix, local ); 
+	ConcatTransforms( worldToEntity, absMatrix, local );
 
 
 	// Suck out the origin and angles.
@@ -981,10 +981,10 @@ bool CBaseTFVehicle::GetRoleAbsViewPosition( int nRole, Vector *pAbsVehicleEyeOr
 		Vector vForward, vRight, vUp;
 		AngleVectors( *pAbsVehicleEyeAngles, &vForward, &vRight, &vUp );
 
-		*pAbsVehicleEyeOrigin = vAttachOrigin + vForward * vehicle_view_offset_forward.GetFloat() + 
-			vRight * vehicle_view_offset_right.GetFloat() + 
+		*pAbsVehicleEyeOrigin = vAttachOrigin + vForward * vehicle_view_offset_forward.GetFloat() +
+			vRight * vehicle_view_offset_right.GetFloat() +
 			vUp * vehicle_view_offset_up.GetFloat();
-	
+
 		// Returning true tells the caller that we're using a third-person camera origin.
 		return true;
 	}
@@ -995,10 +995,10 @@ bool CBaseTFVehicle::GetRoleAbsViewPosition( int nRole, Vector *pAbsVehicleEyeOr
 		char pAttachmentName[32];
 		Q_snprintf( pAttachmentName, sizeof( pAttachmentName ), "vehicle_eyes_passenger%d", nRole );
 		int eyeAttachmentIndex = LookupAttachment(pAttachmentName);
-		
+
 		QAngle vTempAngles;
 		GetAttachment( eyeAttachmentIndex, *pAbsVehicleEyeOrigin, vTempAngles );
-		
+
 		if ( vehicle_attach_eye_angles.GetInt() )
 			*pAbsVehicleEyeAngles = vTempAngles;
 
@@ -1019,8 +1019,8 @@ void CBaseTFVehicle::GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, QAng
 
 	Vector vehicleEyeOrigin;
 	QAngle vehicleEyeAngles = pPlayer->LocalEyeAngles();
-	
-	GetRoleAbsViewPosition( nRole, &vehicleEyeOrigin, &vehicleEyeAngles ); 
+
+	GetRoleAbsViewPosition( nRole, &vehicleEyeOrigin, &vehicleEyeAngles );
 
 	*pAbsOrigin = vehicleEyeOrigin;
 	*pAbsAngles = vehicleEyeAngles;
@@ -1052,7 +1052,7 @@ void CBaseTFVehicle::GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, QAng
 		{
 			vehicleEyeAngles.x = RemapAngleRange( PITCH_CURVE_ZERO * road_feel.GetFloat(), PITCH_CURVE_LINEAR, vehicleEyeAngles.x );
 			vehicleEyeAngles.z = RemapAngleRange( ROLL_CURVE_ZERO * road_feel.GetFloat(), ROLL_CURVE_LINEAR, vehicleEyeAngles.z );
-		} 
+		}
 		else
 		{
 			vehicleEyeAngles.x = RemapAngleRange( PITCH_CURVE_ZERO, PITCH_CURVE_LINEAR, vehicleEyeAngles.x );
@@ -1089,7 +1089,7 @@ void CBaseTFVehicle::ClientThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseTFVehicle::ShouldPredict( void )
 {
@@ -1107,7 +1107,7 @@ QAngle CBaseTFVehicle::GetPassengerAngles( QAngle angCurrent, int nRole )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFVehicle::DrawHudElements( void )
 {
@@ -1138,7 +1138,7 @@ void CBaseTFVehicle::DrawHudBoostData( void )
 			int nScreenY = ScreenHeight() - YRES( 12 );
 			float nOneHudHeight = ( YRES(10) + pVehicleBoostLabel->Height() );
 			nScreenY -= ( nOneHudHeight * 3 );
-		
+
 			pVehicleBoostLabel->DrawSelf( HUD_IMAGE_LEFT, nScreenY - pVehicleBoostLabel->Height(), gHUD.m_clrNormal );
 			gHUD.DrawProgressBar( HUD_IMAGE_LEFT, nScreenY + YRES( 4 ), XRES( 70 ), YRES( 4 ), m_nBoostTimeLeft / 100.0f, gHUD.m_clrNormal, CHud::HUDPB_HORIZONTAL_INV );
 		}
@@ -1148,7 +1148,7 @@ void CBaseTFVehicle::DrawHudBoostData( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Set a crosshair when in a vehicle and we don't have a proper 
+// Purpose: Set a crosshair when in a vehicle and we don't have a proper
 //          crosshair sprite (ie. a commando laser rifle).
 //-----------------------------------------------------------------------------
 void CBaseTFVehicle::SetupCrosshair( void )

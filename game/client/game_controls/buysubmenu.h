@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,14 +25,14 @@ class CBuySubMenu : public vgui::WizardSubPanel
 {
 private:
 	DECLARE_CLASS_SIMPLE( CBuySubMenu, vgui::WizardSubPanel );
-	
+
 public:
 	CBuySubMenu(vgui::Panel *parent,const char *name = "BuySubMenu");
 	~CBuySubMenu();
 
 	virtual void SetVisible( bool state );
 	virtual void DeleteSubPanels();
-		
+
 protected:
 
 	// command callbacks
@@ -41,7 +41,7 @@ protected:
 	virtual vgui::Panel *CreateControlByName(const char *controlName);
 	virtual CBuySubMenu* CreateNewSubMenu();
 	virtual MouseOverPanelButton* CreateNewMouseOverPanelButton(vgui::EditablePanel *panel);
-	
+
 	typedef struct
 	{
 		char filename[_MAX_PATH];

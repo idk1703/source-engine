@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -505,7 +505,7 @@ bool CBonusMapsDatabase::GetBlink( void )
 	KeyValues *pBlinkKey = m_pBonusMapSavedData->FindKey( "blink" );
 	if ( !pBlinkKey )
 		return false;
-	
+
 	return ( pBlinkKey->GetInt() != 0 );
 }
 
@@ -728,8 +728,8 @@ void CBonusMapsDatabase::BuildSubdirectoryList( const char *pCurrentPath, bool b
 	while (pDirFileName)
 	{
 		// Skip it if it's not a directory, is the root, is back, or is an invalid folder
-		if ( !g_pFullFileSystem->FindIsDirectory( dirHandle ) || 
-			 Q_strcmp( pDirFileName, "." ) == 0 || 
+		if ( !g_pFullFileSystem->FindIsDirectory( dirHandle ) ||
+			 Q_strcmp( pDirFileName, "." ) == 0 ||
 			 Q_strcmp( pDirFileName, ".." ) == 0 ||
 			 Q_stricmp( pDirFileName, "soundcache" ) == 0 ||
 			 Q_stricmp( pDirFileName, "graphs" ) == 0 )

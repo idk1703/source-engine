@@ -76,7 +76,7 @@ protected:
 	struct FailedVote
 	{
 		char	szFailedVoteParameter[MAX_VOTE_DETAILS_LENGTH];
-		float	flLockoutTime;					
+		float	flLockoutTime;
 	};
 
 	CUtlVector< FailedVote* > m_FailedVotes;
@@ -94,7 +94,7 @@ protected:
 class CVoteController : public CBaseEntity
 {
 	DECLARE_CLASS( CVoteController, CBaseEntity );
-	
+
 public:
 	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();
@@ -152,12 +152,12 @@ protected:
 	CNetworkVar( bool, m_bIsYesNoVote );						// Is the current issue Yes/No?
 	CountdownTimer	m_acceptingVotesTimer;						// How long from vote start until we count the ballots
 	CountdownTimer	m_executeCommandTimer;						// How long after end of vote time until we execute a passed vote
-	CountdownTimer	m_resetVoteTimer;							// when the current vote will end 
+	CountdownTimer	m_resetVoteTimer;							// when the current vote will end
 	CountdownTimer	m_waitingForGCResponseTimer;				// Some votes require approval from the GC - wait this long for a response
 	int				m_nVotesCast[MAX_PLAYERS + 1];				// arrays are zero-based and player indices are one-based
 	int				m_iEntityHoldingVote;
 	VoteParams_t	m_pendingVoteParams;						// A pending vote that's waiting for a response from the GC
-	
+
 	CUtlVector <CBaseIssue *>	m_potentialIssues;
 	CUtlVector <const char *>	m_VoteOptions;
 	CUtlMap <uint64, float>		m_VoteCallers;					// History of SteamIDs that have tried to call votes.

@@ -40,7 +40,7 @@ namespace MapSorter
 		/// <summary>
 		/// True if this is the last element in an object file.
 		/// </summary>
-		public bool bCrossObj = false;	
+		public bool bCrossObj = false;
 
 		public Element( int Segment, int Address, string Text, int RVA, string Obj )
 		{
@@ -111,7 +111,7 @@ namespace MapSorter
 	}
 
 	/// <summary>
-	/// An atomic class that loads and parses a given map file.	
+	/// An atomic class that loads and parses a given map file.
 	/// </summary>
 	public class MapFileLoader
 	{
@@ -123,7 +123,7 @@ namespace MapSorter
 		/// </summary>
 		protected static Regex ElementRegex = new Regex(@"([0-9a-fA-F]{4})\:([0-9a-fA-F]{8})\s+([^\s]*)\s+([0-9a-fA-F]{8})\s(f\s)?(i\s)?\s+(.*\.obj)",RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase );
 
-		
+
 		public MapFileLoader( string filename )
 		{
 			// Load the element data from the mapfile:
@@ -169,10 +169,10 @@ namespace MapSorter
 		{
 			// Match each appropriate line in the map file.  The summary entries at the top of each map file are NOT matched by this regex.
 			MatchCollection matches = ElementRegex.Matches(mapfile);
-				
+
 
 			Elements = new ArrayList();
-			
+
 			// Convert each match to an Element type and add them to an array list.
 			foreach( Match m in matches )
 			{
@@ -189,7 +189,7 @@ namespace MapSorter
 
 			// Sort the list by address:
 			Elements.Sort();
-			
+
 			Element previous = null;
 
 			// Compute estimated sizes for each element in the list:
@@ -200,7 +200,7 @@ namespace MapSorter
 					if( e.Segment == previous.Segment )
 					{
 						previous.Size = e.Address- previous.Address;
-					
+
 						// Take note of the symbols that cross object file boundaries:
 						if( !previous.Obj.Equals(e.Obj) )
 						{
@@ -235,7 +235,7 @@ namespace MapSorter
 			}
 
 			Modules = new ArrayList();
-			
+
 			foreach( string key in h.Keys )
 			{
 				Modules.Add( new Module(key, (int)h[key] ));

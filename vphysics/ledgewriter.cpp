@@ -85,9 +85,9 @@ static void BuildVertMap( vertmap_t &out, const Vector *pVerts, int vertexCount,
 }
 
 
-// Each IVP_Compact_Triangle and IVP_Compact_Edge occupies an index 
+// Each IVP_Compact_Triangle and IVP_Compact_Edge occupies an index
 // 0,1,2,3 is tri, edge, edge, edge (tris and edges are both 16 bytes)
-// So you can just add the index to get_first_triangle to get a pointer 
+// So you can just add the index to get_first_triangle to get a pointer
 inline int EdgeIndex( const IVP_Compact_Ledge *pLedge, const IVP_Compact_Edge *pEdge )
 {
 	return pEdge - (const IVP_Compact_Edge *)pLedge->get_first_triangle();
@@ -118,12 +118,12 @@ void PackLedgeIntoBuffer( packedhull_t *pHull, CUtlBuffer &buf, const IVP_Compac
 		edgeMap[i] = -1;
 	}
 
-	// we're going to reorder the triangles and edges so that the ones marked virtual 
+	// we're going to reorder the triangles and edges so that the ones marked virtual
 	// appear first in the list.  This way we only need a virtual count, not a per-item
 	// flag.
 
 	// also, the edges are stored relative to the first triangle that references them
-	// so an edge from 0->1 means that the first triangle that references the edge is 0->1 and the 
+	// so an edge from 0->1 means that the first triangle that references the edge is 0->1 and the
 	// second triangle is 1->0.  This way we store half the edges and the winged edge pointers are implicit
 
 	// sort triangles in two passes
@@ -225,7 +225,7 @@ void CVPhysicsVirtualMeshWriter::UnpackCompactLedgeFromHull( IVP_Compact_Ledge *
 	// write the ledge
 	pLedge->set_offset_ledge_points( (int)((char *)pPointList - (char *)pLedge) ); // byte offset from 'this' to (ledge) point array
 	pLedge->set_is_compact( IVP_TRUE );
-	pLedge->set_size(sizeof(IVP_Compact_Ledge) + sizeof(IVP_Compact_Triangle)*pHull->triangleCount);	// <0 indicates a non compact compact ledge 
+	pLedge->set_size(sizeof(IVP_Compact_Ledge) + sizeof(IVP_Compact_Triangle)*pHull->triangleCount);	// <0 indicates a non compact compact ledge
 	pLedge->n_triangles = pHull->triangleCount;
 	pLedge->has_chilren_flag = isVirtualLedge ? IVP_TRUE : IVP_FALSE;
 
@@ -298,7 +298,7 @@ void CVPhysicsVirtualMeshWriter::InitTwoSidedTriangleLege( triangleledge_t *pOut
 	IVP_Compact_Ledge *pLedge = &pOut->ledge;
 	pLedge->set_offset_ledge_points( (int)((char *)pPoints - (char *)pLedge) ); // byte offset from 'this' to (ledge) point array
 	pLedge->set_is_compact( IVP_TRUE );
-	pLedge->set_size(sizeof(triangleledge_t));	// <0 indicates a non compact compact ledge 
+	pLedge->set_size(sizeof(triangleledge_t));	// <0 indicates a non compact compact ledge
 	pLedge->n_triangles = 2;
 	pLedge->has_chilren_flag = IVP_FALSE;
 	// triangles

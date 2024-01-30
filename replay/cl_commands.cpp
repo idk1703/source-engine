@@ -131,7 +131,7 @@ CON_COMMAND_F( replay_confirmquit, "Make sure all replays are rendered before qu
 	// TODO: Check to see if any replays are downloading - warn user.  If user wants to
 	// quit anyway, make sure to set any blocks to not downloaded, save, and delete any
 	// files that were only partially downloaded.
-	
+
 	// Unrendered replays? Display the quit confirmation dialog with the option to render all and quit
 	if ( CL_GetReplayManager()->GetUnrenderedReplayCount() > 0 && g_pClient->OnConfirmQuit() )
 	{
@@ -241,7 +241,7 @@ CON_COMMAND_F( replay_printclientreplays, "Prints out all client replay info", F
 		Msg( "\n" );
 
 		pReplay->DumpGameSpecificData();
-		
+
 		// Print replay status
 		const char *pStatus;
 		switch ( pReplay->m_nStatus )

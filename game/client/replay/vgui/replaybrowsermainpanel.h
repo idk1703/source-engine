@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ public:
 
 	void			OnSaveReplay( ReplayHandle_t hNewReplay );
 	void			OnDeleteReplay( ReplayHandle_t hDeletedReplay );
-	
+
 	void			DeleteReplay( ReplayHandle_t hReplay );
 
 	virtual void	CleanupUIForReplayItem( ReplayItemHandle_t hReplay );	// After a replay has been deleted - deletes all UI (thumbnail, but maybe also row and/or collection as well)

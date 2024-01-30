@@ -27,7 +27,7 @@ class CFourWheelServerVehicle;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CFourWheelVehiclePhysics
 {
@@ -39,8 +39,8 @@ public:
 
 	// Call Precache + Spawn from the containing entity's Precache + Spawn methods
 	void Spawn();
-	void SetOuter( CBaseAnimating *pOuter, CFourWheelServerVehicle *pServerVehicle ); 
-	
+	void SetOuter( CBaseAnimating *pOuter, CFourWheelServerVehicle *pServerVehicle );
+
 	// Initializes the vehicle physics so we can drive it
 	bool Initialize( const char *pScriptName, unsigned int nVehicleType );
 
@@ -95,7 +95,7 @@ public:
 	float GetHLSpeed() const;
 	float GetSteering() const;
 	float GetSteeringDegrees() const;
-	IPhysicsVehicleController* GetVehicle(void) { return m_pVehicle; } 
+	IPhysicsVehicleController* GetVehicle(void) { return m_pVehicle; }
 	float GetWheelBaseHeight(int wheelIndex) { return m_wheelBaseHeight[wheelIndex]; }
 	float GetWheelTotalHeight(int wheelIndex) { return m_wheelTotalHeight[wheelIndex]; }
 
@@ -201,10 +201,10 @@ inline int CFourWheelVehiclePhysics::BoostTimeLeft() const
 	return m_nBoostTimeLeft;
 }
 
-inline void CFourWheelVehiclePhysics::SetOuter( CBaseAnimating *pOuter, CFourWheelServerVehicle *pServerVehicle ) 
-{ 
-	m_pOuter = pOuter; 
-	m_pOuterServerVehicle = pServerVehicle; 
+inline void CFourWheelVehiclePhysics::SetOuter( CBaseAnimating *pOuter, CFourWheelServerVehicle *pServerVehicle )
+{
+	m_pOuter = pOuter;
+	m_pOuterServerVehicle = pServerVehicle;
 }
 
 float RemapAngleRange( float startInterval, float endInterval, float value );

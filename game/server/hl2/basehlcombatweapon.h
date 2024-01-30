@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,7 +22,7 @@ public:
 	DECLARE_DATADESC();
 
 	CHLMachineGun();
-	
+
 	DECLARE_SERVERCLASS();
 
 	void	PrimaryAttack( void );
@@ -49,7 +49,7 @@ protected:
 };
 
 //=========================================================
-// Machine guns capable of switching between full auto and 
+// Machine guns capable of switching between full auto and
 // burst fire modes.
 //=========================================================
 // Mode settings for select fire weapons
@@ -69,7 +69,7 @@ class CHLSelectFireMachineGun : public CHLMachineGun
 public:
 
 	CHLSelectFireMachineGun( void );
-	
+
 	DECLARE_SERVERCLASS();
 
 	virtual float	GetBurstCycleRate( void );

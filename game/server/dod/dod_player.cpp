@@ -61,10 +61,10 @@ ConVar dod_playerstatetransitions( "dod_playerstatetransitions", "-2", FCVAR_CHE
 ConVar dod_debugdamage( "dod_debugdamage", "0", FCVAR_CHEAT );
 
 ConVar mp_bandage_heal_amount( "mp_bandage_heal_amount",
-							  "40",
-							  FCVAR_GAMEDLL,
-							  "How much health to give after a successful bandage\n",
-							  true, 0, false, 0 );
+							"40",
+							FCVAR_GAMEDLL,
+							"How much health to give after a successful bandage\n",
+							true, 0, false, 0 );
 
 ConVar dod_freezecam( "dod_freezecam", "1", FCVAR_REPLICATED | FCVAR_ARCHIVE, "show players a freezecam shot of their killer on death" );
 
@@ -78,7 +78,7 @@ int g_iCurrentLifeID = 0;
 
 int GetNextLifeID( void )
 {
-	return ++g_iCurrentLifeID; 
+	return ++g_iCurrentLifeID;
 }
 
 // -------------------------------------------------------------------------------- //
@@ -124,7 +124,7 @@ public:
 	// In case the client has the player entity, we transmit the player index.
 	// In case the client doesn't have it, we transmit the player's model index, origin, and angles
 	// so they can create a ragdoll in the right place.
-	CNetworkHandle( CBaseEntity, m_hPlayer );	// networked entity handle 
+	CNetworkHandle( CBaseEntity, m_hPlayer );	// networked entity handle
 	CNetworkVector( m_vecRagdollVelocity );
 	CNetworkVector( m_vecRagdollOrigin );
 };
@@ -182,9 +182,9 @@ void TE_PlayerAnimEvent( CBasePlayer *pPlayer, PlayerAnimEvent_t event, int nDat
 // Purpose: Filters updates to a variable so that only non-local players see
 // the changes.  This is so we can send a low-res origin to non-local players
 // while sending a hi-res one to the local player.
-// Input  : *pVarData - 
-//			*pOut - 
-//			objectID - 
+// Input  : *pVarData -
+//			*pOut -
+//			objectID -
 //-----------------------------------------------------------------------------
 
 void* SendProxy_SendNonLocalDataTable( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID )
@@ -250,19 +250,19 @@ BEGIN_SEND_TABLE_NOBASE( CDODPlayer, DT_DODNonLocalPlayerExclusive )
 	// send a lo-res origin to other players
 	SendPropVector	(SENDINFO(m_vecOrigin), -1,  SPROP_COORD|SPROP_CHANGES_OFTEN, 0.0f, HIGH_DEFAULT, SendProxy_Origin ),
 END_SEND_TABLE()
-		
+
 // main table
 IMPLEMENT_SERVERCLASS_ST( CDODPlayer, DT_DODPlayer )
 	SendPropExclude( "DT_BaseAnimating", "m_flPoseParameter" ),
-	SendPropExclude( "DT_BaseAnimating", "m_flPlaybackRate" ),	
+	SendPropExclude( "DT_BaseAnimating", "m_flPlaybackRate" ),
 	SendPropExclude( "DT_BaseAnimating", "m_nSequence" ),
 	SendPropExclude( "DT_BaseAnimating", "m_nNewSequenceParity" ),
 	SendPropExclude( "DT_BaseAnimating", "m_nResetEventsParity" ),
 	SendPropExclude( "DT_BaseEntity", "m_angRotation" ),
 	SendPropExclude( "DT_BaseAnimatingOverlay", "overlay_vars" ),
-	
+
 	// dod_playeranimstate and clientside animation takes care of these on the client
-	SendPropExclude( "DT_ServerAnimationData" , "m_flCycle" ),	
+	SendPropExclude( "DT_ServerAnimationData" , "m_flCycle" ),
 	SendPropExclude( "DT_AnimTimeMustBeFirst" , "m_flAnimTime" ),
 
 	// We need to send a hi-res origin to the local player to avoid prediction errors sliding along walls
@@ -297,9 +297,9 @@ void cc_CreatePredictionError_f()
 
 ConCommand cc_CreatePredictionError( "CreatePredictionError", cc_CreatePredictionError_f, "Create a prediction error", FCVAR_CHEAT );
 
-bool PlayerStatLessFunc( const int &lhs, const int &rhs )	
-{ 
-	return lhs < rhs; 
+bool PlayerStatLessFunc( const int &lhs, const int &rhs )
+{
+	return lhs < rhs;
 }
 
 // -------------------------------------------------------------------------------- //
@@ -317,7 +317,7 @@ CDODPlayer::CDODPlayer()
 	m_angEyeAngles.Init();
 
 	SetViewOffset( DOD_PLAYER_VIEW_OFFSET );
-	
+
 	m_pCurStateInfo = NULL;	// no state yet
 	m_lifeState = LIFE_DEAD; // Start "dead".
 
@@ -348,7 +348,7 @@ CDODPlayer::CDODPlayer()
 	Hints()->RegisterHintTimer( HINT_USE_SPRINT, 120 );
 	Hints()->RegisterHintTimer( HINT_USE_DEPLOY, 30 );
 	Hints()->RegisterHintTimer( HINT_USE_PRIME, 2 );
-	
+
 	memset( &m_WeaponStats, 0, sizeof(weaponstat_t) );
 
 	m_KilledPlayers.SetLessFunc( PlayerStatLessFunc );
@@ -400,7 +400,7 @@ void CDODPlayer::PrecachePlayerModel( const char *szPlayerModel )
 
 void CDODPlayer::Precache()
 {
-	PrecachePlayerModel( DOD_PLAYERMODEL_AXIS_RIFLEMAN );	
+	PrecachePlayerModel( DOD_PLAYERMODEL_AXIS_RIFLEMAN );
 	PrecachePlayerModel( DOD_PLAYERMODEL_AXIS_ASSAULT );
 	PrecachePlayerModel( DOD_PLAYERMODEL_AXIS_SUPPORT );
 	PrecachePlayerModel( DOD_PLAYERMODEL_AXIS_SNIPER );
@@ -450,7 +450,7 @@ void CDODPlayer::PlayerRunCommand( CUserCmd *ucmd, IMoveHelper *moveHelper )
 		return;
 
 	// don't run commands in the future
-	if ( !IsEngineThreaded() && 
+	if ( !IsEngineThreaded() &&
 		( ucmd->tick_count > (gpGlobals->tickcount + sv_max_usercmd_future_ticks.GetInt()) ) )
 	{
 		DevMsg( "Client cmd out of sync (delta %i).\n", ucmd->tick_count - gpGlobals->tickcount );
@@ -504,7 +504,7 @@ void CDODPlayer::Spawn()
 
 	SetModel( DOD_PLAYERMODEL_US_RIFLEMAN );	//temporarily
 	BaseClass::Spawn();
-	
+
 	AddFlag( FL_ONGROUND ); // set the player on the ground at the start of the round.
 
 	m_Shared.SetStamina( 100 );
@@ -532,7 +532,7 @@ void CDODPlayer::Spawn()
 
 	ResetBleeding();
 
-	// Our own version of remove decals, as we can't pass entity messages to 
+	// Our own version of remove decals, as we can't pass entity messages to
 	// the target's base class.
 
 	EntityMessageBegin( this );
@@ -562,7 +562,7 @@ void CDODPlayer::Spawn()
 
 	// Reset per-life achievement counts
 	HandleHeadshotAchievement( 0 );
-	HandleDeployedMGKillCount( 0 );	
+	HandleDeployedMGKillCount( 0 );
 	HandleEnemyWeaponsAchievement( 0 );
 	ResetComboWeaponKill();
 
@@ -587,7 +587,7 @@ void CDODPlayer::CreateRagdollEntity()
 {
 	// If we already have a ragdoll, don't make another one.
 	CDODRagdoll *pRagdoll = dynamic_cast< CDODRagdoll* >( m_hRagdoll.Get() );
-	
+
 	if( pRagdoll )
 	{
 		// MATTTODO: put ragdolls in a queue to disappear
@@ -620,7 +620,7 @@ void CDODPlayer::CreateRagdollEntity()
 void CDODPlayer::DestroyRagdoll( void )
 {
 	CDODRagdoll *pRagdoll = dynamic_cast< CDODRagdoll* >( m_hRagdoll.Get() );
-	
+
 	if( pRagdoll )
 	{
 		UTIL_Remove( pRagdoll );
@@ -672,7 +672,7 @@ void CDODPlayer::Event_Killed( const CTakeDamageInfo &info )
 					pScorer->AwardAchievement( ACHIEVEMENT_DOD_LONG_RANGE_ROCKET );
 				}
 			}
-		}		
+		}
 	}
 
 	DropPrimaryWeapon();
@@ -680,7 +680,7 @@ void CDODPlayer::Event_Killed( const CTakeDamageInfo &info )
 	if ( DODGameRules()->GetPresentDropChance() >= RandomFloat() )
 	{
 		Vector vForward, vRight, vUp;
-		AngleVectors( EyeAngles(), &vForward, &vRight, &vUp );	
+		AngleVectors( EyeAngles(), &vForward, &vRight, &vUp );
 
 		CHolidayGift::Create( WorldSpaceCenter(), GetAbsAngles(), EyeAngles(), GetAbsVelocity(), this );
 	}
@@ -715,7 +715,7 @@ void CDODPlayer::Event_Killed( const CTakeDamageInfo &info )
 			Assert( pTarget );
 
 			if ( pTarget )
-                pTarget->PlantBlocked( pScorer );
+				pTarget->PlantBlocked( pScorer );
 
 			IGameEvent *event = gameeventmanager->CreateEvent( "dod_kill_planter" );
 			if ( event )
@@ -753,7 +753,7 @@ void CDODPlayer::Event_Killed( const CTakeDamageInfo &info )
 	if( info.GetAttacker() && info.GetAttacker()->IsPlayer() )
 	{
 		// set new target
-		m_hObserverTarget.Set( info.GetAttacker() ); 
+		m_hObserverTarget.Set( info.GetAttacker() );
 
 		// reset fov to default
 		SetFOV( this, 0 );
@@ -764,7 +764,7 @@ void CDODPlayer::Event_Killed( const CTakeDamageInfo &info )
 	//update damage info with our accumulated physics force
 	CTakeDamageInfo subinfo = info;
 	subinfo.SetDamageForce( m_vecTotalBulletForce );
-	
+
 	// Note: since we're dead, it won't draw us on the client, but we don't set EF_NODRAW
 	// because we still want to transmit to the clients in our PVS.
 	CreateRagdollEntity();
@@ -811,7 +811,7 @@ void CDODPlayer::Event_Killed( const CTakeDamageInfo &info )
 				if ( info.GetDamageCustom() & MELEE_DMG_SECONDARYATTACK )
 					weaponID = pWpn->GetAltWeaponID();
 				else
-			        weaponID = pWpn->GetStatsWeaponID();
+					weaponID = pWpn->GetStatsWeaponID();
 			}
 		}
 		else
@@ -852,7 +852,7 @@ void CDODPlayer::Event_Killed( const CTakeDamageInfo &info )
 		{
 			pAttacker->Stats_BonusRoundKill();
 		}
-	}	
+	}
 
 	m_bIsDefusing = false;
 	m_bIsPlanting = false;
@@ -895,7 +895,7 @@ bool CDODPlayer::ShouldInstantRespawn( void )
 				if ( FVisible( point ) )
 				{
 					return true;
-				}			
+				}
 			}
 		}
 	}
@@ -904,7 +904,7 @@ bool CDODPlayer::ShouldInstantRespawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODPlayer::InitVCollision( const Vector &vecAbsOrigin, const Vector &vecAbsVelocity )
 {
@@ -946,18 +946,18 @@ void CDODPlayer::CheatImpulseCommands( int iImpulse )
 				extern int gEvilImpulse101;
 				gEvilImpulse101 = true;
 
-				GiveAmmo( 1000, DOD_AMMO_COLT );			
-				GiveAmmo( 1000, DOD_AMMO_P38 );		
+				GiveAmmo( 1000, DOD_AMMO_COLT );
+				GiveAmmo( 1000, DOD_AMMO_P38 );
 				GiveAmmo( 1000, DOD_AMMO_C96 );
-				GiveAmmo( 1000, DOD_AMMO_GARAND );			
-				GiveAmmo( 1000, DOD_AMMO_K98 );			
-				GiveAmmo( 1000, DOD_AMMO_M1CARBINE );	
-				GiveAmmo( 1000, DOD_AMMO_SPRING );		
-				GiveAmmo( 1000, DOD_AMMO_SUBMG );			
-				GiveAmmo( 1000, DOD_AMMO_BAR );			
-				GiveAmmo( 1000, DOD_AMMO_30CAL );			
-				GiveAmmo( 1000, DOD_AMMO_MG42 );			
-				GiveAmmo( 1000, DOD_AMMO_ROCKET );		
+				GiveAmmo( 1000, DOD_AMMO_GARAND );
+				GiveAmmo( 1000, DOD_AMMO_K98 );
+				GiveAmmo( 1000, DOD_AMMO_M1CARBINE );
+				GiveAmmo( 1000, DOD_AMMO_SPRING );
+				GiveAmmo( 1000, DOD_AMMO_SUBMG );
+				GiveAmmo( 1000, DOD_AMMO_BAR );
+				GiveAmmo( 1000, DOD_AMMO_30CAL );
+				GiveAmmo( 1000, DOD_AMMO_MG42 );
+				GiveAmmo( 1000, DOD_AMMO_ROCKET );
 
 				gEvilImpulse101 = false;
 			}
@@ -1010,7 +1010,7 @@ CBaseEntity	*CDODPlayer::GiveNamedItem( const char *pszName, int iSubType )
 
 	DispatchSpawn( pent );
 
-	if ( pent != NULL && !(pent->IsMarkedForDeletion()) ) 
+	if ( pent != NULL && !(pent->IsMarkedForDeletion()) )
 	{
 		pent->Touch( this );
 	}
@@ -1050,7 +1050,7 @@ void CDODPlayer::FlashlightTurnOff( void )
 		{
 			EmitSound( "Player.FlashlightOff" );
 		}
-	}	
+	}
 }
 
 
@@ -1071,11 +1071,11 @@ void CDODPlayer::PostThink()
 	QAngle angles = GetLocalAngles();
 	angles[PITCH] = 0;
 	SetLocalAngles( angles );
-	
+
 	// Store the eye angles pitch so the client can compute its animation state correctly.
 	m_angEyeAngles = EyeAngles();
 
-    m_PlayerAnimState->Update( m_angEyeAngles[YAW], m_angEyeAngles[PITCH] );
+	m_PlayerAnimState->Update( m_angEyeAngles[YAW], m_angEyeAngles[PITCH] );
 }
 
 void CDODPlayer::HandleCommand_Voice( const char *pcmd )
@@ -1115,7 +1115,7 @@ void CDODPlayer::VoiceCommand( int iVoiceCommand )
 
 	// Get the country text to fill into the sound name
 	char *pszCountry = "US";
-	
+
 	if( GetTeamNumber() == TEAM_AXIS )
 	{
 		pszCountry = "German";
@@ -1129,7 +1129,7 @@ void CDODPlayer::VoiceCommand( int iVoiceCommand )
 	// Don't show the subtitle to the other team
 	int oppositeTeam = ( GetTeamNumber() == TEAM_ALLIES ) ? TEAM_AXIS : TEAM_ALLIES;
 	filter.RemoveRecipientsByTeam( GetGlobalDODTeam(oppositeTeam) );
-	
+
 	// further reduce the voice command subtitle radius
 	float flDist;
 	float flMaxDist = 1900;
@@ -1228,7 +1228,7 @@ void CDODPlayer::DropGenericAmmo( void )
 
 	m_hLastDroppedAmmoBox = pAmmo;
 
-	m_bHasGenericAmmo = false;	
+	m_bHasGenericAmmo = false;
 }
 
 void CDODPlayer::ReturnGenericAmmo( void )
@@ -1264,7 +1264,7 @@ bool CDODPlayer::GiveGenericAmmo( void )
 
 			return true;
 		}
-	}	
+	}
 
 	return false;
 }
@@ -1297,14 +1297,14 @@ void CDODPlayer::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir,
 			if ( vecDist.LengthSqr() < ( flDist*flDist ) )
 			{
 				bTakeDamage = false;
-			}			
+			}
 		}
 	}
-		
+
 	if ( m_takedamage != DAMAGE_YES )
 		return;
 
-	m_LastHitGroup = ptr->hitgroup;	
+	m_LastHitGroup = ptr->hitgroup;
 	m_LastDamageType = info.GetDamageType();
 
 	Assert( ptr->hitgroup != HITGROUP_GENERIC );
@@ -1346,7 +1346,7 @@ void CDODPlayer::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir,
 					if ( info.GetDamageType() & DMG_CLUB )
 						dir *= 800;
 					else
-                        dir *= 400;
+						dir *= 400;
 
 					dir.z += 100;		// add some lift so it pops better.
 
@@ -1354,7 +1354,7 @@ void CDODPlayer::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir,
 				}
 
 				szHitbox = "head";
-				
+
 				bHeadShot = true;
 			}
 			break;
@@ -1363,17 +1363,17 @@ void CDODPlayer::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir,
 			szHitbox = "chest";
 			break;
 
-		case HITGROUP_STOMACH:	
+		case HITGROUP_STOMACH:
 			szHitbox = "stomach";
 			break;
 
 		case HITGROUP_LEFTARM:
-			flDamage *= 0.75;	
+			flDamage *= 0.75;
 			szHitbox = "left arm";
 			break;
-			
+
 		case HITGROUP_RIGHTARM:
-			flDamage *= 0.75;			
+			flDamage *= 0.75;
 			szHitbox = "right arm";
 			break;
 
@@ -1389,11 +1389,11 @@ void CDODPlayer::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir,
 				}
 
 				flDamage *= 0.75;
-				
+
 				szHitbox = "leg";
 			}
 			break;
-			
+
 		case HITGROUP_GENERIC:
 			szHitbox = "(error - hit generic)";
 			break;
@@ -1402,10 +1402,10 @@ void CDODPlayer::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir,
 			szHitbox = "(error - hit default)";
 			break;
 		}
-	}	
-	
+	}
+
 	if ( bTakeDamage )
-	{	
+	{
 		if( dod_debugdamage.GetInt() )
 		{
 			char buf[256];
@@ -1414,10 +1414,10 @@ void CDODPlayer::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir,
 				pAttacker->GetPlayerName(),
 				GetPlayerName(),
 				szHitbox,
-				flDamage, 
+				flDamage,
 				flOriginalDmg,
 				GetPlayerName(),
-				GetHealth() - (int)flDamage );	
+				GetHealth() - (int)flDamage );
 
 			// print to server
 			UTIL_LogPrintf( "%s", buf );
@@ -1529,7 +1529,7 @@ bool CDODPlayer::DropPrimaryWeapon( void )
 		return true;
 	}
 
-	return false; 
+	return false;
 }
 
 bool CDODPlayer::DODWeaponDrop( CBaseCombatWeapon *pWeapon, bool bThrowForward )
@@ -1547,7 +1547,7 @@ bool CDODPlayer::DODWeaponDrop( CBaseCombatWeapon *pWeapon, bool bThrowForward )
 			vTossPos = vTossPos + vForward * 64;
 
 		Weapon_Drop( pWeapon, &vTossPos, NULL );
-			
+
 		pWeapon->SetSolidFlags( FSOLID_NOT_STANDABLE | FSOLID_TRIGGER | FSOLID_USE_TRIGGER_BOUNDS );
 		pWeapon->SetMoveCollide( MOVECOLLIDE_FLY_BOUNCE );
 
@@ -1595,9 +1595,9 @@ bool CDODPlayer::DODWeaponDrop( CBaseCombatWeapon *pWeapon, bool bThrowForward )
 					break;
 				}
 			}
-			
+
 			if ( iWeaponBoneIndex == hdr->numbones() )
-				 return true;
+				return true;
 
 			if ( iBIndex == -1 )
 			{
@@ -1609,7 +1609,7 @@ bool CDODPlayer::DODWeaponDrop( CBaseCombatWeapon *pWeapon, bool bThrowForward )
 			iBIndex = LookupBone( "ValveBiped.Bip01_R_Hand" );
 		}
 
-		if ( iBIndex != -1)  
+		if ( iBIndex != -1)
 		{
 			Vector origin;
 			QAngle angles;
@@ -1643,12 +1643,12 @@ bool CDODPlayer::DODWeaponDrop( CBaseCombatWeapon *pWeapon, bool bThrowForward )
 			pWeapon->CollisionProp()->WorldSpaceSurroundingBounds( &mins, &maxs );
 
 			UTIL_TraceHull( WorldSpaceCenter(), origin, mins, maxs, MASK_SOLID, this, COLLISION_GROUP_NONE, &tr );
-			
+
 			if ( tr.fraction < 1.0 )
 				origin = WorldSpaceCenter();
-			
+
 			pWeapon->Teleport( &origin, &angles, NULL );
-			
+
 			//Have to teleport the physics object as well
 
 			IPhysicsObject *pWeaponPhys = pWeapon->VPhysicsGetObject();
@@ -1687,7 +1687,7 @@ bool CDODPlayer::DODWeaponDrop( CBaseCombatWeapon *pWeapon, bool bThrowForward )
 				break;
 			}
 		}
-		
+
 		bSuccess = true;
 	}
 
@@ -1706,7 +1706,7 @@ void CDODPlayer::PopHelmet( Vector vecDir, Vector vecForceOrigin )
 	// See if they already lost their helmet
 	if( GetBodygroup( BODYGROUP_HELMET ) == pClassInfo.m_iHairGroup )
 		return;
-	
+
 	// Nope.. take it off
 	SetBodygroup( BODYGROUP_HELMET, pClassInfo.m_iHairGroup );
 
@@ -1731,7 +1731,7 @@ bool CDODPlayer::BumpWeapon( CBaseCombatWeapon *pBaseWeapon )
 		Assert( false );
 		return false;
 	}
-	
+
 	CBaseCombatCharacter *pOwner = pWeapon->GetOwner();
 
 	// Can I have this weapon type?
@@ -1769,7 +1769,7 @@ bool CDODPlayer::BumpWeapon( CBaseCombatWeapon *pBaseWeapon )
 	// ----------------------------------------
 	// If I already have it just take the ammo
 	// ----------------------------------------
-	if (Weapon_OwnsThisType( pWeapon->GetClassname(), pWeapon->GetSubType())) 
+	if (Weapon_OwnsThisType( pWeapon->GetClassname(), pWeapon->GetSubType()))
 	{
 		if( Weapon_EquipAmmoOnly( pWeapon ) )
 		{
@@ -1794,7 +1794,7 @@ bool CDODPlayer::BumpWeapon( CBaseCombatWeapon *pBaseWeapon )
 	Weapon_Equip( pWeapon );
 
 	int iExtraAmmo = pWeapon->GetExtraAmmoCount();
-	
+
 	if( iExtraAmmo )
 	{
 		//Find out the index of the ammo
@@ -1888,7 +1888,7 @@ bool CDODPlayer::HandleCommand_JoinClass( int iClass )
 			if ( pWeapon )
 			{
 				if ( !pWeapon->GetOwner() )
-				{	
+				{
 					UTIL_Remove( m_hLastDroppedWeapon.Get() );
 				}
 			}
@@ -2061,7 +2061,7 @@ int CDODPlayer::GetStringForEscapeSequence( char c, char *pDest, int iDestSize )
 		break;
 	case 'c':
 		iCharsCopied = GetPlayerClassAsString( pDest, iDestSize );
-		break;		
+		break;
 	/*case 'i':
 		iCharsCopied = GetLastPlayerIDAsString( pDest, iDestSize );
 		break;
@@ -2122,7 +2122,7 @@ void CDODPlayer::CheckChatText( char *p, int bufsize )
 	// copy buf back into p
 	Q_strncpy( p, buf, bufsize );
 
-	delete[] buf;	
+	delete[] buf;
 
 	const char *pReadyCheck = p;
 
@@ -2132,7 +2132,7 @@ void CDODPlayer::CheckChatText( char *p, int bufsize )
 bool CDODPlayer::ClientCommand( const CCommand &args )
 {
 	const char *pcmd = args[0];
-	if ( FStrEq( pcmd, "jointeam" ) ) 
+	if ( FStrEq( pcmd, "jointeam" ) )
 	{
 		if ( args.ArgC() < 2 )
 		{
@@ -2175,10 +2175,10 @@ bool CDODPlayer::ClientCommand( const CCommand &args )
 		{
 			State_Transition( STATE_PICKINGTEAM );
 		}
-		
+
 		return true;
 	}
-	else if ( FStrEq( pcmd, "joinclass" ) ) 
+	else if ( FStrEq( pcmd, "joinclass" ) )
 	{
 		if ( args.ArgC() < 2 )
 		{
@@ -2299,7 +2299,7 @@ bool CDODPlayer::ClientCommand( const CCommand &args )
 		Weapon_Switch( pWpn );
 		return true;
 	}
-	else if ( FStrEq( pcmd, "resetents" )  )	
+	else if ( FStrEq( pcmd, "resetents" )  )
 	{
 		DODGameRules()->CleanUpMap();
 		return true;
@@ -2335,7 +2335,7 @@ bool CDODPlayer::ClientCommand( const CCommand &args )
 	return BaseClass::ClientCommand( args );
 }
 
-// returns true if the selection has been handled and the player's menu 
+// returns true if the selection has been handled and the player's menu
 // can be closed...false if the menu should be displayed again
 bool CDODPlayer::HandleCommand_JoinTeam( int team )
 {
@@ -2363,8 +2363,8 @@ bool CDODPlayer::HandleCommand_JoinTeam( int team )
 
 		if ( team == TEAM_UNASSIGNED )
 		{
-			// still team unassigned, try to kick a bot if possible	
-			 
+			// still team unassigned, try to kick a bot if possible
+
 			ClientPrint( this, HUD_PRINTTALK, "#All_Teams_Full" );
 
 			team = TEAM_SPECTATOR;
@@ -2373,7 +2373,7 @@ bool CDODPlayer::HandleCommand_JoinTeam( int team )
 
 	if ( team == iOldTeam )
 		return true;	// we wouldn't change the team
-	
+
 	if ( mp->TeamFull( team ) )
 	{
 		if ( team == TEAM_ALLIES )
@@ -2403,7 +2403,7 @@ bool CDODPlayer::HandleCommand_JoinTeam( int team )
 
 		return true;
 	}
-	
+
 	// If the code gets this far, the team is not TEAM_UNASSIGNED
 
 	// Player is switching to a new team (It is possible to switch to the
@@ -2412,7 +2412,7 @@ bool CDODPlayer::HandleCommand_JoinTeam( int team )
 	if (mp->TeamStacked( team, GetTeamNumber() ))//players are allowed to change to their own team so they can just change their model
 	{
 		// The specified team is full
-		ClientPrint( 
+		ClientPrint(
 			this,
 			HUD_PRINTCENTER,
 			( team == TEAM_ALLIES ) ?	"#Allies_full" : "#Axis_full" );
@@ -2457,7 +2457,7 @@ void CDODPlayer::State_Enter( DODPlayerState newState )
 		else
 			Msg( "ShowStateTransitions: entering #%d\n", newState );
 	}
-	
+
 	// Initialize the new state.
 	if ( m_pCurStateInfo && m_pCurStateInfo->pfnEnterState )
 		(this->*m_pCurStateInfo->pfnEnterState)();
@@ -2483,7 +2483,7 @@ void CDODPlayer::State_PreThink()
 
 CDODPlayerStateInfo* CDODPlayer::State_LookupInfo( DODPlayerState state )
 {
-	// This table MUST match the 
+	// This table MUST match the
 	static CDODPlayerStateInfo playerStateInfos[] =
 	{
 		{ STATE_ACTIVE,			"STATE_ACTIVE",			&CDODPlayer::State_Enter_ACTIVE, NULL, &CDODPlayer::State_PreThink_ACTIVE },
@@ -2523,7 +2523,7 @@ void CDODPlayer::State_Enter_WELCOME()
 	AddSolidFlags( FSOLID_NOT_SOLID );
 
 	PhysObjectSleep();
-	
+
 	// Show info panel
 	if ( IsBot() )
 	{
@@ -2536,7 +2536,7 @@ void CDODPlayer::State_Enter_WELCOME()
 	{
 		const ConVar *hostname = cvar->FindVar( "hostname" );
 		const char *title = (hostname) ? hostname->GetString() : "MESSAGE OF THE DAY";
-		
+
 		KeyValues *data = new KeyValues("data");
 		data->SetString( "title", title );		// info panel title
 		data->SetString( "type", "1" );			// show userdata from stringtable entry
@@ -2547,7 +2547,7 @@ void CDODPlayer::State_Enter_WELCOME()
 		ShowViewPortPanel( PANEL_INFO, true, data );
 
 		data->deleteThis();
-	}	
+	}
 }
 
 
@@ -2601,7 +2601,7 @@ void CDODPlayer::State_Enter_DEATH_ANIM()
 
 void CDODPlayer::State_PreThink_DEATH_ANIM()
 {
-	// If the anim is done playing, go to the next state (waiting for a keypress to 
+	// If the anim is done playing, go to the next state (waiting for a keypress to
 	// either respawn the guy or put him into observer mode).
 	if ( GetFlags() & FL_ONGROUND )
 	{
@@ -2712,11 +2712,11 @@ void CDODPlayer::State_PreThink_DEATH_ANIM()
 
 			State_Transition( STATE_OBSERVER_MODE );
 		}
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODPlayer::AttemptToExitFreezeCam( void )
 {
@@ -2773,9 +2773,9 @@ void CDODPlayer::State_Enter_OBSERVER_MODE()
 		// we are entering spec while playing ( not on TEAM_SPECTATOR )
 		Hints()->HintMessage( HINT_CLASSMENU, true );
 	}
-		
+
 	StartObserverMode( m_iObserverLastMode );
-	
+
 	PhysObjectSleep();
 }
 
@@ -2784,7 +2784,7 @@ void CDODPlayer::State_PreThink_OBSERVER_MODE()
 	// Make sure nobody has changed any of our state.
 	Assert( m_takedamage == DAMAGE_NO );
 	Assert( IsSolidFlagSet( FSOLID_NOT_SOLID ) );
-	
+
 	// Must be dead.
 	Assert( m_lifeState == LIFE_DEAD );
 	Assert( pl.deadflag );
@@ -2811,7 +2811,7 @@ void CDODPlayer::State_Enter_ACTIVE()
 {
 	SetMoveType( MOVETYPE_WALK );
 	RemoveSolidFlags( FSOLID_NOT_SOLID );
-    m_Local.m_iHideHUD = 0;
+	m_Local.m_iHideHUD = 0;
 	PhysObjectWake();
 }
 
@@ -2838,7 +2838,7 @@ void CDODPlayer::InitSprinting( void )
 //-----------------------------------------------------------------------------
 bool CDODPlayer::CanSprint()
 {
-	return ( 
+	return (
 		//!IsWalking() &&									// Not if we're walking
 		!( m_Local.m_bDucked && !m_Local.m_bDucking ) &&	// Nor if we're ducking
 		(GetWaterLevel() != 3) );							// Certainly not underwater
@@ -2861,11 +2861,11 @@ void CDODPlayer::MoveToNextIntroCamera()
 	else
 	{
 		Vector vIntroCamera = m_pIntroCamera->GetAbsOrigin();
-			
+
 		QAngle CamAngles = m_pIntroCamera->GetAbsAngles();
 
 		UTIL_SetSize( this, vec3_origin, vec3_origin );
-	
+
 		SetAbsOrigin( vIntroCamera );
 		SetAbsAngles( CamAngles );
 		SnapEyeAngles( CamAngles );
@@ -2972,7 +2972,7 @@ CBaseEntity *CDODPlayer::SelectSpawnSpot( CUtlVector<EHANDLE> *pSpawnPoints, int
 				pSpot->SetNextThink( gpGlobals->curtime + 0.5 );
 
 				Assert( pSpot );
-				
+
 				iLastSpawnIndex = 0;
 
 				return pSpot;
@@ -2997,14 +2997,14 @@ CBaseEntity* CDODPlayer::EntSelectSpawnPoint()
 	case TEAM_ALLIES:
 		{
 			CUtlVector<EHANDLE> *pSpawnList = DODGameRules()->GetSpawnPointListForTeam( TEAM_ALLIES );
-			pSpot = SelectSpawnSpot( pSpawnList, g_iLastAlliesSpawnIndex );	
+			pSpot = SelectSpawnSpot( pSpawnList, g_iLastAlliesSpawnIndex );
 		}
 		break;
 	case TEAM_AXIS:
 		{
 			CUtlVector<EHANDLE> *pSpawnList = DODGameRules()->GetSpawnPointListForTeam( TEAM_AXIS );
-			pSpot = SelectSpawnSpot( pSpawnList, g_iLastAxisSpawnIndex );	
-		}		
+			pSpot = SelectSpawnSpot( pSpawnList, g_iLastAxisSpawnIndex );
+		}
 		break;
 	case TEAM_SPECTATOR:
 	case TEAM_UNASSIGNED:
@@ -3012,7 +3012,7 @@ CBaseEntity* CDODPlayer::EntSelectSpawnPoint()
 		{
 			pSpot = CBaseEntity::Instance( INDEXENT(0) );
 		}
-		break;		
+		break;
 	}
 
 	if ( !pSpot )
@@ -3022,7 +3022,7 @@ CBaseEntity* CDODPlayer::EntSelectSpawnPoint()
 	}
 
 	return pSpot;
-} 
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: Put the player in the specified team
@@ -3040,13 +3040,13 @@ void CDODPlayer::ChangeTeam( int iTeamNum )
 	// if this is our current team, just abort
 	if ( iTeamNum == iOldTeam )
 		return;
-	
+
 	m_bTeamChanged = true;
 
 	// do the team change:
 	BaseClass::ChangeTeam( iTeamNum );
 
-	// update client state 
+	// update client state
 	if ( iTeamNum == TEAM_UNASSIGNED )
 	{
 		State_Transition( STATE_OBSERVER_MODE );
@@ -3054,7 +3054,7 @@ void CDODPlayer::ChangeTeam( int iTeamNum )
 	else if ( iTeamNum == TEAM_SPECTATOR )
 	{
 		RemoveAllItems( true );
-		
+
 		State_Transition( STATE_OBSERVER_MODE );
 
 		StatEvent_UploadStats();
@@ -3113,7 +3113,7 @@ bool CDODPlayer::IsReadyToPlay( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns whether or not we can switch to the given weapon.
-// Input  : pWeapon - 
+// Input  : pWeapon -
 //-----------------------------------------------------------------------------
 bool CDODPlayer::Weapon_CanSwitchTo( CBaseCombatWeapon *pWeapon )
 {
@@ -3121,14 +3121,14 @@ bool CDODPlayer::Weapon_CanSwitchTo( CBaseCombatWeapon *pWeapon )
 	IServerVehicle *pVehicle = GetVehicle();
 #else
 	IClientVehicle *pVehicle = GetVehicle();
-#endif	
+#endif
 
 	if (pVehicle && !UsingStandardWeaponsInVehicle())
 		return false;
 
 	if ( !pWeapon->CanDeploy() )
 		return false;
-	
+
 	if ( GetActiveWeapon() )
 	{
 		if ( !GetActiveWeapon()->CanHolster() )
@@ -3166,7 +3166,7 @@ void CDODPlayer::HandleSignals( void )
 			SetCPIndex(-1);
 			m_iCapAreaIconIndex = -1;
 		}
-	}	
+	}
 }
 
 void CDODPlayer::SetCapAreaIndex( int index )
@@ -3211,7 +3211,7 @@ int CDODPlayer::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 		{
 			CBasePlayer *player = ToBasePlayer( attacker );
 			event->SetInt("attacker", player->GetUserID() ); // hurt by other player
-			
+
 			// ff damage
 			// no hint for bomb explosions, it was their own fault!
 			CDODPlayer *pDODPlayer = ToDODPlayer( player );
@@ -3308,7 +3308,7 @@ int CDODPlayer::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 		}
 #endif	//CLIENT_DLL
 	}
-	
+
 	return 1;
 }
 
@@ -3329,7 +3329,7 @@ int CDODPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 
 	// if the player's team does not match the inflictor's team
 	// the player has changed teams between when they started the attack
-	if( pInflictor->GetTeamNumber() != TEAM_UNASSIGNED && 
+	if( pInflictor->GetTeamNumber() != TEAM_UNASSIGNED &&
 		info.GetAttacker() != NULL &&
 		pInflictor->GetTeamNumber() != info.GetAttacker()->GetTeamNumber() )
 	{
@@ -3400,7 +3400,7 @@ int CDODPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 			WRITE_LONG( info.GetDamageType() );
 			WRITE_VEC3COORD( info.GetInflictor()->WorldSpaceCenter() );
 		MessageEnd();
-		
+
 		gamestats->Event_PlayerDamage( this, info );
 
 		return CBaseCombatCharacter::OnTakeDamage( info );
@@ -3437,7 +3437,7 @@ void CDODPlayer::DeathSound( const CTakeDamageInfo &info )
 	{
 		EmitSound( "Player.MegaPain" );
 	}
-	else if ( m_LastHitGroup == HITGROUP_HEAD )	
+	else if ( m_LastHitGroup == HITGROUP_HEAD )
 	{
 		EmitSound( "Player.DeathHeadShot" );
 	}
@@ -3455,7 +3455,7 @@ void CDODPlayer::OnDamagedByExplosion( const CTakeDamageInfo &info )
 
 		// The blast will naturally blow the temp ent helmet away
 		PopHelmet( info.GetDamagePosition(), info.GetDamageForce() );
-	}	
+	}
 }
 
 ConVar dod_stun_min_pitch( "dod_stun_min_pitch", "30", FCVAR_CHEAT );
@@ -3598,7 +3598,7 @@ void CDODPlayer::OutputDamageTaken( void )
 				( pRecord->GetNumHits() == 1 ) ? "hit" : "hits" );
 
 			ClientPrint( this, msg_dest, "Damage Taken from \"%s1\" - %s2\n", pRecord->GetPlayerName(), buf );
-		}		
+		}
 	}
 }
 
@@ -3624,7 +3624,7 @@ void CDODPlayer::OutputDamageGiven( void )
 		pRecord = m_DamageGivenList[i];
 
 		if( pRecord )
-		{	
+		{
 			Q_snprintf( buf, sizeof(buf), "( life ID %i ) - %d in %d %s",
 				pRecord->GetLifeID(),
 				pRecord->GetDamage(),
@@ -3632,7 +3632,7 @@ void CDODPlayer::OutputDamageGiven( void )
 				( pRecord->GetNumHits() == 1 ) ? "hit" : "hits" );
 
 			ClientPrint( this, msg_dest, "Damage Given to \"%s1\" - %s2\n", pRecord->GetPlayerName(), buf );
-		}		
+		}
 	}
 }
 
@@ -3645,7 +3645,7 @@ bool CDODPlayer::SetSpeed( int speed )
 
 	return true;
 }
-	
+
 void CDODPlayer::CreateViewModel( int index /*=0*/ )
 {
 	Assert( index >= 0 && index < MAX_VIEWMODELS );
@@ -3708,9 +3708,9 @@ bool CDODPlayer::SetObserverMode(int mode)
 		break;
 
 	case OBS_MODE_CHASE :
-	case OBS_MODE_IN_EYE :	
+	case OBS_MODE_IN_EYE :
 		// udpate FOV and viewmodels
-		SetObserverTarget( m_hObserverTarget );	
+		SetObserverTarget( m_hObserverTarget );
 		SetMoveType( MOVETYPE_OBSERVER );
 		break;
 
@@ -3725,7 +3725,7 @@ bool CDODPlayer::SetObserverMode(int mode)
 
 	CheckObserverSettings();
 
-	return true;	
+	return true;
 }
 
 extern ConVar sv_alltalk;
@@ -3768,7 +3768,7 @@ void CDODPlayer::Bandage( void )
 
 void CDODPlayer::SetBandager( CDODPlayer *pPlayer )
 {
-	m_hBandager = pPlayer;	
+	m_hBandager = pPlayer;
 }
 
 bool CDODPlayer::IsBeingBandaged( void )
@@ -3785,7 +3785,7 @@ void CDODPlayer::CommitSuicide( const Vector &vecForce, bool bExplode /*= false*
 {
 	// If they're suiciding in the spawn, its most likely they're changing class
 	// ( or possible suiciding to avoid being killed in the endround )
-	// On linux the suicide option sometimes arrives before the joinclass so just 
+	// On linux the suicide option sometimes arrives before the joinclass so just
 	// reject it here
 	if ( ShouldInstantRespawn() )
 		return;
@@ -3798,7 +3798,7 @@ void CDODPlayer::CommitSuicide( const Vector &vecForce, bool bExplode /*= false*
 		return;
 
 	// don't let them suicide for 5 seconds after suiciding
-	m_fNextSuicideTime = gpGlobals->curtime + 5;  
+	m_fNextSuicideTime = gpGlobals->curtime + 5;
 
 	// have the player kill themselves
 	CTakeDamageInfo info( this, this, 0, DMG_NEVERGIB );
@@ -3850,7 +3850,7 @@ void CDODPlayer::StopReplayMode()
 
 void CDODPlayer::PickUpWeapon( CWeaponDODBase *pWeapon )
 {
-	// if we have a primary weapon and we are allowed to drop it, drop it and 
+	// if we have a primary weapon and we are allowed to drop it, drop it and
 	// pick up the one we +used
 
 	CWeaponDODBase *pCurrentPrimaryWpn = (CWeaponDODBase *)Weapon_GetSlot( WPN_SLOT_PRIMARY );
@@ -3918,26 +3918,26 @@ void CDODPlayer::SetupBones( matrix3x4_t *pBoneToWorld, int boneMask )
 		CBoneCache *pParentCache = pParent->GetBoneCache();
 		if ( pParentCache )
 		{
-			BuildMatricesWithBoneMerge( 
-				pStudioHdr, 
+			BuildMatricesWithBoneMerge(
+				pStudioHdr,
 				m_PlayerAnimState->GetRenderAngles(),
-				adjOrigin, 
-				pos, 
-				q, 
-				pBoneToWorld, 
-				pParent, 
+				adjOrigin,
+				pos,
+				q,
+				pBoneToWorld,
+				pParent,
 				pParentCache );
 
 			return;
 		}
 	}
 
-	Studio_BuildMatrices( 
-		pStudioHdr, 
+	Studio_BuildMatrices(
+		pStudioHdr,
 		m_PlayerAnimState->GetRenderAngles(),
-		adjOrigin, 
-		pos, 
-		q, 
+		adjOrigin,
+		pos,
+		q,
 		-1,
 		GetModelScale(), // Scaling
 		pBoneToWorld,
@@ -4002,7 +4002,7 @@ CBaseEntity *CDODPlayer::FindUseEntity()
 	// try the hit entity if there is one, or the ground entity if there isn't.
 	CBaseEntity *pNearest = NULL;
 	CBaseEntity *pObject = tr.m_pEnt;
-	
+
 	// UNDONE: Might be faster to just fold this range into the sphere query
 	int count = 0;
 	const int NUM_TANGENTS = 7;
@@ -4068,7 +4068,7 @@ CBaseEntity *CDODPlayer::FindUseEntity()
 		if ( dot < 0.8 )
 			continue;
 
-		//NEW FOR DOD 
+		//NEW FOR DOD
 		// if this entity is higher priority than previous ent, use this one
 
 		int iPriority = GetPriorityForPickUpEnt( pObject );
@@ -4156,7 +4156,7 @@ void CDODPlayer::PrintLifetimeStats( void )
 	//Msg( "*%9s        %2i    %2i     %3i     %5.1f     %2i        %2i         %3i          %2i         %3.1f\n",
 
 	for ( i=0;i<WEAPON_MAX;i++ )
-	{			
+	{
 		if ( m_WeaponStats[i].m_iNumShotsTaken > 0 )
 		{
 			Msg( "* %10s (%2i) %6i %6i %8i  %9.1f %7i    %9i   %9i      %9i   %9.1f\n",
@@ -4170,7 +4170,7 @@ void CDODPlayer::PrintLifetimeStats( void )
 				m_WeaponStats[i].m_iTotalDamageTaken,
 				m_WeaponStats[i].m_iTimesKilled,
 				100.0 * ( (float)m_WeaponStats[i].m_iNumShotsHit / (float)m_WeaponStats[i].m_iNumShotsTaken ) );
-		}			
+		}
 	}
 
 	Msg( "\nPlayer Stats\n================\n" );
@@ -4181,10 +4181,10 @@ void CDODPlayer::PrintLifetimeStats( void )
 
 		const char *pName = pPlayer ? pPlayer->GetPlayerName() : m_KilledByPlayers[i].m_szPlayerName;
 
-		Msg( "* Killed Player '%s' %i times ( %i damage )\n", 
+		Msg( "* Killed Player '%s' %i times ( %i damage )\n",
 			pName,
 			m_KilledPlayers[i].m_iKills,
-			m_KilledPlayers[i].m_iTotalDamage );		
+			m_KilledPlayers[i].m_iTotalDamage );
 	}
 
 	Msg( "\n" );
@@ -4197,7 +4197,7 @@ void CDODPlayer::PrintLifetimeStats( void )
 
 		const char *pName = pPlayer ? pPlayer->GetPlayerName() : m_KilledByPlayers[i].m_szPlayerName;
 
-		Msg( "* Player '%s' killed you %i times ( %i damage )\n", 
+		Msg( "* Player '%s' killed you %i times ( %i damage )\n",
 			pName,
 			m_KilledByPlayers[i].m_iKills,
 			m_KilledByPlayers[i].m_iTotalDamage );
@@ -4444,7 +4444,7 @@ void CDODPlayer::TallyLatestTimePlayedPerClass( int iOldTeam, int iOldPlayerClas
 		else if ( iOldTeam == TEAM_AXIS )
 		{
 			m_flTimePlayedPerClass_Axis[iOldPlayerClass] += ( gpGlobals->curtime - m_flLastClassChangeTime );
-		}		
+		}
 	}
 
 	m_flLastClassChangeTime = gpGlobals->curtime;
@@ -4463,7 +4463,7 @@ void CDODPlayer::SetProgressBarTime( int barTime )
 
 void CDODPlayer::SetDefusing( CDODBombTarget *pTarget )
 {
-	bool bIsDefusing = ( pTarget != NULL ); 
+	bool bIsDefusing = ( pTarget != NULL );
 
 	if ( bIsDefusing && !m_bIsDefusing )
 	{
@@ -4501,7 +4501,7 @@ void CDODPlayer::SetPlanting( CDODBombTarget *pTarget )
 	}
 
 	m_bIsPlanting = bIsPlanting;
-	m_pPlantTarget = pTarget;	
+	m_pPlantTarget = pTarget;
 }
 
 void CDODPlayer::StoreCaptureBlock( int iAreaIndex, int iCapAttempt )
@@ -4679,7 +4679,7 @@ void CDODPlayer::RecalculateAchievementAwardsMask( void )
 		CSteamID steamIDForPlayer;
 		if ( GetSteamID( &steamIDForPlayer ) && steamIDForPlayer.BIndividualAccount() )
 		{
-			steamgameserverapicontext->SteamGameServerStats()->RequestUserStats( steamIDForPlayer );				
+			steamgameserverapicontext->SteamGameServerStats()->RequestUserStats( steamIDForPlayer );
 		}
 	}
 #endif

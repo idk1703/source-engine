@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -31,7 +31,7 @@ enum TraversalState_t
 struct COperatorNode
 {
 	COperatorNode( IDmeOperator *pOp = NULL ) :
-		m_state( TS_NOT_VISITED ), 
+		m_state( TS_NOT_VISITED ),
 		m_operator( pOp ),
 		m_bInList( false )
 	{
@@ -46,7 +46,7 @@ struct COperatorNode
 class CAttributeNode
 {
 public:
-	CAttributeNode( CDmAttribute *attribute = NULL ) : 
+	CAttributeNode( CDmAttribute *attribute = NULL ) :
 		m_attribute( attribute ),
 		m_bIsOutputToOperator( false )
 	{
@@ -118,7 +118,7 @@ void CDependencyGraph::Reset( const CUtlVector< IDmeOperator * > &operators )
 		an = attrs.Count();
 		for ( int ai = 0; ai < an; ++ai )
 		{
-            CAttributeNode *pAttrNode = FindAttrNode( attrs[ ai ] );
+	CAttributeNode *pAttrNode = FindAttrNode( attrs[ ai ] );
 			pAttrNode->m_bIsOutputToOperator = true;
 			pOpNode->m_OutputAttributes.AddToTail( pAttrNode );
 
@@ -199,7 +199,7 @@ void CDependencyGraph::FindRoots()
 		pOpNode->m_bInList = true;
 	}
 
-	
+
 
 	// Do we have an attribute which is an input to us which is not an output to some other op?
 	UtlHashHandle_t h = m_attrNodes.GetFirstHandle();

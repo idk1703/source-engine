@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@
 using namespace vgui;
 
 
-enum 
+enum
 {
 	MENUBARINDENT = 4, // indent from top and bottom of panel.
 };
@@ -34,7 +34,7 @@ DECLARE_BUILD_FACTORY( MenuBar );
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-MenuBar::MenuBar(Panel *parent, const char *panelName) : 
+MenuBar::MenuBar(Panel *parent, const char *panelName) :
 	Panel(parent, panelName),
 	m_nRightEdge( 0 )
 {
@@ -48,7 +48,7 @@ MenuBar::~MenuBar()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void MenuBar::AddButton(MenuButton *button)
 {
@@ -112,13 +112,13 @@ void MenuBar::OnKeyCodeTyped(KeyCode code)
 			break;
 		}
 	}
-	
+
 	// don't chain back
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Handle key presses, Activate shortcuts
-// Input  : code - 
+// Input  : code -
 //-----------------------------------------------------------------------------
 void MenuBar::OnKeyTyped(wchar_t unichar)
 {
@@ -140,7 +140,7 @@ void MenuBar::OnKeyTyped(wchar_t unichar)
 			}
 		}
 	}
-	
+
 	// don't chain back
 }
 
@@ -201,8 +201,8 @@ void MenuBar::PerformLayout()
 
 //-----------------------------------------------------------------------------
 // Purpose: Get the size of the menus in the bar (so other children can be added to menu bar)
-// Input  : w - 
-//			int&h - 
+// Input  : w -
+//			int&h -
 //-----------------------------------------------------------------------------
 void MenuBar::GetContentSize( int& w, int&h )
 {
@@ -241,7 +241,7 @@ void MenuBar::OnCursorEnteredMenuButton(int VPanel)
 					// if its a different button than the one we already had open,
 					if (j != oldbutton)
 					{
-						// close this menu and open the one we just entered 
+						// close this menu and open the one we just entered
 						m_pMenuButtons[oldbutton]->DoClick();
 						button->DoClick();
 					}

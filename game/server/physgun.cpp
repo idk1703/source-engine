@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -65,7 +65,7 @@ public:
 	{
 		return m_isInert;
 	}
-	
+
 	bool MakeConstraint( CBaseEntity *pObject )
 	{
 		IPhysicsObject *pReference = g_PhysWorldObject;
@@ -281,7 +281,7 @@ IMotionEvent::simresult_e CGravControllerPoint::Simulate( IPhysicsMotionControll
 			fracRemainingSimTime = 1;
 		}
 	}
-	
+
 	m_timeToArrive -= deltaTime;
 	if ( m_timeToArrive < 0 )
 	{
@@ -333,8 +333,8 @@ IMotionEvent::simresult_e CGravControllerPoint::Simulate( IPhysicsMotionControll
 				alignRotation = 10;
 			}
 		}
-		
-		// Solve for the rotation around the target normal (at the local align pos) that will 
+
+		// Solve for the rotation around the target normal (at the local align pos) that will
 		// move the grabbed spot to the destination.
 		Vector worldRotCenter = tmp.VMul4x3( m_localAlignPosition );
 		Vector rotSrc = world - worldRotCenter;
@@ -401,7 +401,7 @@ IMotionEvent::simresult_e CGravControllerPoint::Simulate( IPhysicsMotionControll
 		{
 			factor = clamp( factor, 0, 5 ) * (1/5);
 			alignDir = m_targetAlignPosition - worldRotCenter;
-			// Limit movement to the part along m_targetAlignNormal if worldRotCenter is on the backside of 
+			// Limit movement to the part along m_targetAlignNormal if worldRotCenter is on the backside of
 			// of the target plane (one inch epsilon)!
 			float planeForward = DotProduct( alignDir, m_targetAlignNormal );
 			if ( planeForward > 1 )
@@ -441,11 +441,11 @@ IMotionEvent::simresult_e CGravControllerPoint::Simulate( IPhysicsMotionControll
 		Vector accel;
 		AngularImpulse angAccel;
 		pObject->CalculateForceOffset( delta, world, &accel, &angAccel );
-		
+
 		linear += accel;
 		angular += angAccel;
 	}
-	
+
 	return SIM_GLOBAL_ACCELERATION;
 }
 
@@ -537,8 +537,8 @@ public:
 		}
 	}
 
-	int ObjectCaps( void ) 
-	{ 
+	int ObjectCaps( void )
+	{
 		int caps = BaseClass::ObjectCaps();
 		if ( m_active )
 		{
@@ -566,7 +566,7 @@ private:
 	pelletlist_t m_activePellets[MAX_PELLETS];
 	int			m_pelletCount;
 	int			m_objectPelletCount;
-	
+
 	int			m_pelletHeld;
 	int			m_pelletAttract;
 	float		m_glueTime;
@@ -742,7 +742,7 @@ void CWeaponGravityGun::EffectUpdate( void )
 				m_useDown = false;
 			}
 		}
-		else 
+		else
 		{
 			if ( pOwner->m_afButtonPressed & IN_USE )
 			{
@@ -772,7 +772,7 @@ void CWeaponGravityGun::EffectUpdate( void )
 			m_distance = UTIL_Approach( 40, m_distance, m_distance * 0.1 );
 		}
 
-		// Send the object a physics damage message (0 damage). Some objects interpret this 
+		// Send the object a physics damage message (0 damage). Some objects interpret this
 		// as something else being in control of their physics temporarily.
 		pObject->TakeDamage( CTakeDamageInfo( this, pOwner, 0, DMG_PHYSGUN ) );
 
@@ -804,7 +804,7 @@ void CWeaponGravityGun::EffectUpdate( void )
 		}
 
 		CreatePelletAttraction( phys_gunglueradius.GetFloat(), pObject );
-			
+
 		// If I'm looking more than 20 degrees away from the glue point, then give up
 		// This lets the player "gesture" for the glue to let go.
 		Vector pelletDir = m_gravCallback.m_worldPosition - start;
@@ -894,7 +894,7 @@ static float UTIL_LineFraction( float value, float low, float high, float scale 
 	float delta = high - low;
 	if ( delta == 0 )
 		return 0;
-	
+
 	return scale * (value-low) / delta;
 }
 
@@ -913,7 +913,7 @@ void CWeaponGravityGun::SoundStart( void )
 	case SS_LOCKEDON:
 		{
 			// BUGBUG - If you start a sound with a pitch of 100, the pitch shift doesn't work!
-			
+
 			EmitSound( filter, GetOwner()->entindex(), "Weapon_Physgun.LockedOn" );
 			EmitSound( filter, GetOwner()->entindex(), "Weapon_Physgun.Scanning" );
 			EmitSound( filter, GetOwner()->entindex(), "Weapon_Physgun.LightObject" );
@@ -927,7 +927,7 @@ void CWeaponGravityGun::SoundStart( void )
 void CWeaponGravityGun::SoundUpdate( void )
 {
 	int newState;
-	
+
 	if ( m_hObject )
 		newState = SS_LOCKEDON;
 	else
@@ -969,7 +969,7 @@ void CWeaponGravityGun::SoundUpdate( void )
 
 			// blend the "mass" sounds between 50 and 500 kg
 			IPhysicsObject *pPhys = m_hObject->VPhysicsGetObject();
-			
+
 			float fade = UTIL_LineFraction( pPhys->GetMass(), 50, 500, 1.0 );
 
 			if ( GetParametersForSound( "Weapon_Physgun.LightObject", params, NULL ) )
@@ -1165,7 +1165,7 @@ void CWeaponGravityGun::CreatePelletAttraction( float radius, CBaseEntity *pObje
 	// check for bonding
 	if ( best < 3*3 )
 				{
-					// This makes the pull towards the pellet stop getting stronger since some part of 
+					// This makes the pull towards the pellet stop getting stronger since some part of
 					// the object is touching
 		m_glueTouching = true;
 		}
@@ -1180,7 +1180,7 @@ IPhysicsObject *CWeaponGravityGun::GetPelletPhysObject( int pelletIndex )
 	CBaseEntity *pEntity = m_activePellets[pelletIndex].parent;
 	if ( pEntity )
 		return pEntity->VPhysicsGetObject();
-	
+
 	return g_PhysWorldObject;
 }
 
@@ -1238,7 +1238,7 @@ void CWeaponGravityGun::AttachObject( CBaseEntity *pObject, const Vector& start,
 
 		pPhysics->Wake();
 		SortPelletsForObject( pObject );
-		
+
 		CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
 		if( pOwner )
 		{
@@ -1304,7 +1304,7 @@ void CWeaponGravityGun::SecondaryAttack( void )
 		return;
 
 	CBaseEntity *pHit = tr.m_pEnt;
-	
+
 	if ( pHit->entindex() == 0 )
 	{
 		pHit = NULL;
@@ -1388,7 +1388,7 @@ void CWeaponGravityGun::ItemPostFrame( void )
 	// -----------------------
 	//  No buttons down
 	// -----------------------
-	else 
+	else
 	{
 		WeaponIdle( );
 		return;
@@ -1396,7 +1396,7 @@ void CWeaponGravityGun::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponGravityGun::HasAnyAmmo( void )
@@ -1449,7 +1449,7 @@ void CC_CollisionTest( const CCommand &args )
 			theta = fabs(fmod(theta, DEG2RAD(360)));
 			phi += NUM_COLLISION_TESTS * 1997.99;
 			phi = fabs(fmod(phi, DEG2RAD(180)));
-			
+
 			float st, ct, sp, cp;
 			SinCos( theta, &st, &ct );
 			SinCos( phi, &sp, &cp );
@@ -1457,7 +1457,7 @@ void CC_CollisionTest( const CCommand &args )
 			targets[i].x = radius * ct * sp;
 			targets[i].y = radius * st * sp;
 			targets[i].z = radius * cp;
-			
+
 			// make the trace 1024 units long
 			Vector dir = targets[i] - start;
 			VectorNormalize(dir);

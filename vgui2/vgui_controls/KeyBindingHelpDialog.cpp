@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -279,7 +279,7 @@ void CKeyBindingHelpDialog::PopulateList()
 
 			// Create a new: blank item
 			KeyValues *item = new KeyValues( "Item" );
-			
+
 			// Fill in data
 			char loc[ 128 ];
 			Q_snprintf( loc, sizeof( loc ), "#%s", kbMap->bindingname );
@@ -292,14 +292,14 @@ void CKeyBindingHelpDialog::PopulateList()
 
 			// Find the binding
 			KeyBindingMap_t *bindingMap = pPanel->LookupBinding( kbMap->bindingname );
-			if ( bindingMap && 
+			if ( bindingMap &&
 				 bindingMap->helpstring )
 			{
 				AnsiText( bindingMap->helpstring, ansi, sizeof( ansi ) );
 				item->SetString( "Description", ansi );
 			}
-			
-			item->SetPtr( "Item", kbMap );			
+
+			item->SetPtr( "Item", kbMap );
 
 			sorted.Insert( item );
 		}
@@ -319,7 +319,7 @@ void CKeyBindingHelpDialog::PopulateList()
 			// Not bound, add a placeholder entry
 			// Create a new: blank item
 			KeyValues *item = new KeyValues( "Item" );
-			
+
 			// fill in data
 			char loc[ 128 ];
 			Q_snprintf( loc, sizeof( loc ), "#%s", kbMap->bindingname );
@@ -335,7 +335,7 @@ void CKeyBindingHelpDialog::PopulateList()
 				item->SetString( "Description", ansi );
 			}
 
-			item->SetPtr( "Unbound", kbMap );						
+			item->SetPtr( "Unbound", kbMap );
 
 			sorted.Insert( item );
 		}

@@ -1,17 +1,17 @@
 /*
-     File:       HITextUtils.h
- 
-     Contains:   Text utilities provided by HIToolbox.
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c)2002 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       HITextUtils.h
+
+		Contains:   Text utilities provided by HIToolbox.
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c)2002 by Apple Computer, Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __HITEXTUTILS__
 #define __HITEXTUTILS__
@@ -44,12 +44,12 @@ extern "C" {
 
 /*
  *  GetTextAndEncodingFromCFString()
- *  
+ *
  *  Summary:
  *    Converts the contents of a CFString to the one- or two-byte
  *    encoding that most accurately represents the original Unicode
  *    characters in the string.
- *  
+ *
  *  Discussion:
  *    Because the Macintosh toolbox has had, until Carbon, little
  *    support for Unicode, you may often find that your applications
@@ -79,26 +79,26 @@ extern "C" {
  *    more complex text translation, you should call the Unicode
  *    converter directly (see ConvertFromUnicodeToTextRun, which
  *    GetTextAndEncodingFromCFString uses internally).
- *  
+ *
  *  Parameters:
- *    
+ *
  *    inString:
  *      The string to convert.
- *    
+ *
  *    outText:
  *      The output buffer in which to place the converted text.
- *    
+ *
  *    inTextMaxLength:
  *      The length in bytes of the input buffer.
- *    
+ *
  *    outTextLength:
  *      On exit, contains the length in bytes of the text that was
  *      placed into the output buffer.
- *    
+ *
  *    outEncoding:
  *      On exit, contains the encoding of the text that was placed into
  *      the output buffer.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.2.5 and later
@@ -106,11 +106,11 @@ extern "C" {
  */
 EXTERN_API( OSStatus )
 GetTextAndEncodingFromCFString(
-  CFStringRef     inString,
-  BytePtr         outText,
-  ByteCount       inTextMaxLength,
-  ByteCount *     outTextLength,
-  TextEncoding *  outEncoding);          /* can be NULL */
+	CFStringRef     inString,
+	BytePtr         outText,
+	ByteCount       inTextMaxLength,
+	ByteCount *     outTextLength,
+	TextEncoding *  outEncoding);          /* can be NULL */
 
 
 
@@ -125,4 +125,3 @@ GetTextAndEncodingFromCFString(
 #endif
 
 #endif /* __HITEXTUTILS__ */
-

@@ -18,7 +18,7 @@
 #include	"weapon_molotov.h"
 #include	"grenade_molotov.h"
 #include	"in_buttons.h"
-#include	"game.h"			
+#include	"game.h"
 #include "vstdlib/random.h"
 #include "movevars_shared.h"
 
@@ -45,7 +45,7 @@ END_SEND_TABLE()
 LINK_ENTITY_TO_CLASS( weapon_molotov, CWeaponMolotov );
 PRECACHE_WEAPON_REGISTER(weapon_molotov);
 
-acttable_t	CWeaponMolotov::m_acttable[] = 
+acttable_t	CWeaponMolotov::m_acttable[] =
 {
 	{ ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK_THROW, true },
 };
@@ -144,17 +144,17 @@ void CWeaponMolotov::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatC
 			// If owner has a hand, set position to the hand bone position
 			Vector launchPos;
 			int iBIndex = pNPC->LookupBone("Bip01 R Hand");
-			if (iBIndex != -1) 
+			if (iBIndex != -1)
 			{
 				Vector origin;
 				QAngle angles;
 				pNPC->GetBonePosition( iBIndex, launchPos, angles);
 			}
 			// Otherwise just set to in front of the owner
-			else 
+			else
 			{
 				Vector vFacingDir = pNPC->BodyDirection2D( );
-				vFacingDir = vFacingDir * 60.0; 
+				vFacingDir = vFacingDir * 60.0;
 				launchPos = pNPC->GetAbsOrigin()+vFacingDir;
 			}
 
@@ -195,7 +195,7 @@ bool CWeaponMolotov::ObjectInWay( void )
 
 	Vector	vecEnd = vecSrc + (vecAiming * 32);
 	UTIL_TraceLine( vecSrc, vecEnd, MASK_SOLID, pOwner, COLLISION_GROUP_NONE, &tr );
-	
+
 	if (tr.fraction < 1.0)
 	{
 		// Don't block on a living creature
@@ -240,7 +240,7 @@ int CWeaponMolotov::WeaponRangeAttack1Condition( float flDot, float flDist )
 	{
 		return m_iThrowBits;
 	}
-	
+
 	if ( flDist < m_fMinRange1) {
 		m_iThrowBits = COND_TOO_CLOSE_TO_ATTACK;
 	}
@@ -266,7 +266,7 @@ int CWeaponMolotov::WeaponRangeAttack1Condition( float flDot, float flDist )
 		{
 			m_iThrowBits = COND_NONE;
 		}
-		// Get Enemy Position 
+		// Get Enemy Position
 		Vector vecTarget;
 		pEnemy->CollisionProp()->NormalizedToWorldSpace( Vector( 0.5f, 0.5f, 0.0f ), &vecTarget );
 
@@ -298,7 +298,7 @@ int CWeaponMolotov::WeaponRangeAttack1Condition( float flDot, float flDist )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -314,7 +314,7 @@ void CWeaponMolotov::ThrowMolotov( const Vector &vecSrc, const Vector &vecVeloci
 	pMolotov->SetAbsVelocity( vecVelocity );
 
 	// Tumble through the air
-	QAngle angVel( random->RandomFloat ( -100, -500 ), random->RandomFloat ( -100, -500 ), random->RandomFloat ( -100, -500 ) ); 
+	QAngle angVel( random->RandomFloat ( -100, -500 ), random->RandomFloat ( -100, -500 ), random->RandomFloat ( -100, -500 ) );
 	pMolotov->SetLocalAngularVelocity( angVel );
 
 	pMolotov->SetThrower( GetOwner() );
@@ -322,7 +322,7 @@ void CWeaponMolotov::ThrowMolotov( const Vector &vecSrc, const Vector &vecVeloci
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -355,7 +355,7 @@ void CWeaponMolotov::PrimaryAttack( void )
 	ThrowMolotov(vecSrc, vecAiming*800);
 	pPlayer->RemoveAmmo( 1, m_iSecondaryAmmoType );
 
-	
+
 	// Don't fire again until fire animation has completed
 	//m_flNextPrimaryAttack = gpGlobals->curtime + CurSequenceDuration();
 	//<<TEMP>> - till real animation is avaible
@@ -366,7 +366,7 @@ void CWeaponMolotov::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -377,7 +377,7 @@ void CWeaponMolotov::SecondaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------

@@ -25,7 +25,7 @@ class CBaseThumbnailCollection;
 class CReplayPreviewPanelBase;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CReplayBrowserThumbnail;
 class CExLabel;

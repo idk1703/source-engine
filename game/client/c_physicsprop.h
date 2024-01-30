@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -12,7 +12,7 @@
 
 #include "c_breakableprop.h"
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_PhysicsProp : public C_BreakableProp
 {
@@ -31,4 +31,4 @@ protected:
 	bool m_bAwakeLastTime;
 };
 
-#endif // C_PHYSICSPROP_H 
+#endif // C_PHYSICSPROP_H

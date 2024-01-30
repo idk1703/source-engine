@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -89,7 +89,7 @@ CheckButton::~CheckButton()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CheckButton::ApplySettings( KeyValues *inResourceData )
 {
@@ -99,7 +99,7 @@ void CheckButton::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CheckButton::ApplySchemeSettings(IScheme *pScheme)
 {
@@ -114,13 +114,13 @@ void CheckButton::ApplySchemeSettings(IScheme *pScheme)
 	_disabledFgColor = GetSchemeColor("CheckButton.DisabledFgColor", Color(130, 130, 130, 255), pScheme);
 	_disabledBgColor = GetSchemeColor("CheckButton.DisabledBgColor", Color(62, 70, 55, 255), pScheme);
 
-	Color bgArmedColor = GetSchemeColor( "CheckButton.ArmedBgColor", Color(62, 70, 55, 255), pScheme); 
+	Color bgArmedColor = GetSchemeColor( "CheckButton.ArmedBgColor", Color(62, 70, 55, 255), pScheme);
 	SetArmedColor( GetFgColor(), bgArmedColor );
 
-	Color bgDepressedColor = GetSchemeColor( "CheckButton.DepressedBgColor", Color(62, 70, 55, 255), pScheme); 
+	Color bgDepressedColor = GetSchemeColor( "CheckButton.DepressedBgColor", Color(62, 70, 55, 255), pScheme);
 	SetDepressedColor( GetFgColor(), bgDepressedColor );
 
-	_highlightFgColor = GetSchemeColor( "CheckButton.HighlightFgColor", Color(62, 70, 55, 255), pScheme); 
+	_highlightFgColor = GetSchemeColor( "CheckButton.HighlightFgColor", Color(62, 70, 55, 255), pScheme);
 
 	SetContentAlignment(Label::a_west);
 
@@ -133,7 +133,7 @@ void CheckButton::ApplySchemeSettings(IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 IBorder *CheckButton::GetBorder(bool depressed, bool armed, bool selected, bool keyfocus)
 {
@@ -150,7 +150,7 @@ void CheckButton::SetSelected(bool state )
 		// send a message saying we've been checked
 		KeyValues *msg = new KeyValues("CheckButtonChecked", "state", (int)state);
 		PostActionSignal(msg);
-		
+
 		BaseClass::SetSelected(state);
 	}
 }
@@ -195,14 +195,14 @@ Color CheckButton::GetButtonFgColor()
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CheckButton::OnCheckButtonChecked(Panel *panel)
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CheckButton::SetHighlightColor(Color fgColor)
 {
@@ -213,4 +213,3 @@ void CheckButton::SetHighlightColor(Color fgColor)
 		InvalidateLayout(false);
 	}
 }
-

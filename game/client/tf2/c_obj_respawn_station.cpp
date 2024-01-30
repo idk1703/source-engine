@@ -21,18 +21,17 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectRespawnStation::C_ObjectRespawnStation( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectRespawnStation::SetDormant( bool bDormant )
 {
 	BaseClass::SetDormant( bDormant );
 	ENTITY_PANEL_ACTIVATE( "respawn_station", !bDormant );
 }
-

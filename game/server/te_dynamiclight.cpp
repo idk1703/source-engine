@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -43,8 +43,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEDynamicLight::CTEDynamicLight( const char *name ) :
 	CBaseTempEntity( name )
@@ -60,16 +60,16 @@ CTEDynamicLight::CTEDynamicLight( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEDynamicLight::~CTEDynamicLight( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEDynamicLight::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -82,7 +82,7 @@ void CTEDynamicLight::Test( const Vector& current_origin, const QAngle& current_
 	m_fRadius = 200;
 	m_fTime = 2.0;
 	m_fDecay = 0.0;
-	
+
 	Vector forward;
 
 	m_vecOrigin.GetForModify()[2] += 24;
@@ -113,18 +113,18 @@ END_SEND_TABLE()
 static CTEDynamicLight g_TEDynamicLight( "Dynamic Light" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//			*org - 
-//			r - 
-//			g - 
-//			b - 
-//			radius - 
-//			time - 
-//			decay - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//			*org -
+//			r -
+//			g -
+//			b -
+//			radius -
+//			time -
+//			decay -
 //-----------------------------------------------------------------------------
 void TE_DynamicLight( IRecipientFilter& filter, float delay,
 	const Vector* org, int r, int g, int b, int exponent, float radius, float time, float decay )

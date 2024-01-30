@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ private:
 class CHudChatInputLine : public CBaseHudChatInputLine
 {
 	DECLARE_CLASS_SIMPLE( CHudChatInputLine, CBaseHudChatInputLine );
-	
+
 public:
 	CHudChatInputLine( CBaseHudChat *parent, char const *panelName ) : CBaseHudChatInputLine( parent, panelName ) {}
 
@@ -59,7 +59,7 @@ public:
 
 	void			MsgFunc_SayText( bf_read &msg );
 	void			MsgFunc_TextMsg( bf_read &msg );
-	
+
 	void			ChatPrintf( int iPlayerIndex, PRINTF_FORMAT_STRING const char *fmt, ... );
 
 	int				GetChatInputOffset( void );

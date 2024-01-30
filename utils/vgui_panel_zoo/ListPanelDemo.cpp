@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,10 +22,10 @@ class ListPanelDemo: public DemoPage
 		~ListPanelDemo();
 
 		void onButtonClicked();
-	
+
 	private:
 		ListPanel *m_pListPanel;
-		
+
 };
 
 //-----------------------------------------------------------------------------
@@ -37,20 +37,20 @@ ListPanelDemo::ListPanelDemo(Panel *parent, const char *name) : DemoPage(parent,
 	m_pListPanel = new ListPanel(this, "AListPanel");
 
 	// Add a column header
-	m_pListPanel->AddColumnHeader(0, "Muppet", "Muppet", 150, 20, 200);  
+	m_pListPanel->AddColumnHeader(0, "Muppet", "Muppet", 150, 20, 200);
 
 	// Add another column header
-	m_pListPanel->AddColumnHeader(1, "Description", "Description", 150, 20, 200 );  
+	m_pListPanel->AddColumnHeader(1, "Description", "Description", 150, 20, 200 );
 
 	// Set its position.
 	m_pListPanel->SetPos(90, 25);
 	m_pListPanel->SetSize(400, 250);
-	
+
 	// Add rows of data to the table
 	KeyValues *data = new KeyValues ("item");
 	data->SetString("Muppet", "Kermit");
 	data->SetString("Description", "The frog");
-	m_pListPanel->AddItem(data, 0, false, false); 
+	m_pListPanel->AddItem(data, 0, false, false);
 
 	data->SetString("Muppet", "Miss Piggy");
 	data->SetString("Description", "The diva");
@@ -99,5 +99,3 @@ Panel* ListPanelDemo_Create(Panel *parent)
 {
 	return new ListPanelDemo(parent, "ListPanelDemo");
 }
-
-

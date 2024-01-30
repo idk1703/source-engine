@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose: Decorator class to make a DME renderable as a MDL
-//													 
+//
 //===========================================================================//
 
 #ifndef DMEMDLRENDERABLE_H
@@ -53,14 +53,14 @@ private:
 // Construction, destruction
 //-----------------------------------------------------------------------------
 template < class T >
-void CDmeMdlRenderable<T>::OnConstruction() 
+void CDmeMdlRenderable<T>::OnConstruction()
 {
 	m_hMDL = CreateElement<CDmeMDL>( "MDLRenderable", GetFileId() );
 	m_hTransform = CreateElement<CDmeTransform>( "MDLTransform", GetFileId() );
 }
 
 template < class T >
-void CDmeMdlRenderable<T>::OnDestruction() 
+void CDmeMdlRenderable<T>::OnDestruction()
 {
 	g_pDataModel->DestroyElement( m_hMDL );
 	g_pDataModel->DestroyElement( m_hTransform );

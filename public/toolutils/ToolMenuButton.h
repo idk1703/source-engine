@@ -72,4 +72,3 @@ protected:
 
 
 #endif // TOOLMENUBUTTON_H
-

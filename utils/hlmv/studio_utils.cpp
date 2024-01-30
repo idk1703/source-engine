@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -50,7 +50,7 @@ StudioModel::StudioModel()
 void StudioModel::Init()
 {
 	m_AmbientLightColors = new Vector[g_pStudioRender->GetNumAmbientLightSamples()];
-	
+
 	// JasonM & garymcthack - should really only do this once a frame and at init time.
 	UpdateStudioRenderConfig( g_viewerSettings.renderMode == RM_WIREFRAME, false,
 							  g_viewerSettings.showNormals,
@@ -72,7 +72,7 @@ void StudioModel::SetCurrentModel()
 void StudioModel::ReleaseStudioModel()
 {
 	SaveViewerSettings( g_pStudioModel->GetFileName(), g_pStudioModel );
-	g_pStudioModel->FreeModel( true ); 
+	g_pStudioModel->FreeModel( true );
 }
 
 void StudioModel::RestoreStudioModel()
@@ -309,7 +309,7 @@ bool StudioModel::HasModel()
 	CStudioHdr *pStudioHdr = GetStudioHdr();
 	if ( !pStudioHdr )
 		return false;
-		
+
 	for ( int i = 0; i < pStudioHdr->numbodyparts(); i++ )
 	{
 		if ( pStudioHdr->pBodypart(i)->nummodels )
@@ -725,8 +725,8 @@ int StudioModel::GetNumFrames( int iSequence )
 
 static int GetSequenceFlags( CStudioHdr *pstudiohdr, int sequence )
 {
-	if ( !pstudiohdr || 
-		sequence < 0 || 
+	if ( !pstudiohdr ||
+		sequence < 0 ||
 		sequence >= pstudiohdr->GetNumSeq() )
 	{
 		return 0;
@@ -738,8 +738,8 @@ static int GetSequenceFlags( CStudioHdr *pstudiohdr, int sequence )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : iSequence - 
+// Purpose:
+// Input  : iSequence -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool StudioModel::GetSequenceLoops( int iSequence )
@@ -1111,7 +1111,7 @@ void StudioModel::scaleBones (float scale)
 	{
 		pbones[i].pos *= scale;
 		pbones[i].posscale *= scale;
-	}	
+	}
 }
 
 int	StudioModel::Physics_GetBoneCount( void )
@@ -1120,8 +1120,8 @@ int	StudioModel::Physics_GetBoneCount( void )
 }
 
 
-const char *StudioModel::Physics_GetBoneName( int index ) 
-{ 
+const char *StudioModel::Physics_GetBoneName( int index )
+{
 	CPhysmesh *pmesh = m_pPhysics->GetMesh( index );
 
 	if ( !pmesh )
@@ -1134,7 +1134,7 @@ const char *StudioModel::Physics_GetBoneName( int index )
 void StudioModel::Physics_GetData( int boneIndex, hlmvsolid_t *psolid, constraint_ragdollparams_t *pConstraint ) const
 {
 	CPhysmesh *pMesh = m_pPhysics->GetMesh( boneIndex );
-	
+
 	if ( !pMesh )
 		return;
 
@@ -1152,7 +1152,7 @@ void StudioModel::Physics_GetData( int boneIndex, hlmvsolid_t *psolid, constrain
 void StudioModel::Physics_SetData( int boneIndex, const hlmvsolid_t *psolid, const constraint_ragdollparams_t *pConstraint )
 {
 	CPhysmesh *pMesh = m_pPhysics->GetMesh( boneIndex );
-	
+
 	if ( !pMesh )
 		return;
 

@@ -118,7 +118,7 @@ ENUMSTRINGS_START( EGCTransactionAuditReason )
 ENUMSTRINGS_END( EGCTransactionAuditReason )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void econ_store_entry_t::InitCategoryTags( const char *pTags )
 {
@@ -165,7 +165,7 @@ void econ_store_entry_t::InitCategoryTags( const char *pTags )
 	m_fRentalPriceScale = fMaxRentalPriceScale <= 0.0f || fMaxRentalPriceScale >= 100.0f
 						? 1.0f
 						: fMaxRentalPriceScale * 0.01f;
-	
+
 	// Clean up
 	vecTokens.PurgeAndDeleteElements();
 }
@@ -185,7 +185,7 @@ bool econ_store_entry_t::IsListedInCategory( StoreCategoryID_t unID ) const
 		if ( m_vecCategoryTags[i].m_unID == unID )
 			return true;
 	}
-	
+
 	return false;
 }
 
@@ -271,7 +271,7 @@ bool econ_store_entry_t::HasDiscount( ECurrency eCurrency, item_price_t *out_pun
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 StoreCategoryID_t econ_store_entry_t::GetCategoryTagIDFromIndex( uint32 iIndex ) const
 {
@@ -306,7 +306,7 @@ float econ_store_entry_t::GetRentalPriceScale() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void econ_store_entry_t::ValidatePrice( ECurrency eCurrency, item_price_t unPrice )
 {
@@ -382,12 +382,12 @@ void CEconStorePriceSheet::Clear()
 //-----------------------------------------------------------------------------
 // Purpose: Gets the entry details for a specific item
 //-----------------------------------------------------------------------------
-const econ_store_entry_t *CEconStorePriceSheet::GetEntry( item_definition_index_t usDefIndex ) const 
+const econ_store_entry_t *CEconStorePriceSheet::GetEntry( item_definition_index_t usDefIndex ) const
 {
 	int iIndex = m_mapEntries.Find( usDefIndex );
 	if ( m_mapEntries.IsValidIndex( iIndex ) )
 		return &m_mapEntries[iIndex];
-	
+
 	return NULL;
 }
 
@@ -444,7 +444,7 @@ bool BInitializeCurrencyPricePoints( CurrencyPricePointMap_t& out_mapPricePoints
 			if ( !BInsertSinglePricePoint( out_mapPricePoints, key, unUSD ) )
 				return false;
 		}
-		
+
 		// Exchange rates.
 		FOR_EACH_VALUE( pKVUSD, pKVOtherCurrency )
 		{
@@ -906,7 +906,7 @@ bool CEconStorePriceSheet::InitTimedSaleEntryFromKV( KeyValues *pKVTimedSaleEntr
 				return false;
 			}
 		}
-		
+
 		econ_store_timed_sale_item_t SaleItem;
 		SaleItem.m_unItemDef = pItemDef->GetDefinitionIndex();
 		SaleItem.m_fPricePercentage = fSalePercentageOff;
@@ -914,13 +914,13 @@ bool CEconStorePriceSheet::InitTimedSaleEntryFromKV( KeyValues *pKVTimedSaleEntr
 		TimedSale.m_vecSaleItems.AddToTail( SaleItem );
 	}
 
-	
+
 	if ( TimedSale.m_vecSaleItems.Count() <= 0 )
 	{
 		EG_ERROR( GCSDK::SPEW_GC, "Timed sale '%s' has no valid items to put on sale\n", pKVTimedSaleEntry->GetName() );
 		return false;
 	}
-	
+
 	// We made it this far with no errors, so add this as a timed sale block if it actually affects
 	// any items.
 	m_vecTimedSales.AddToTail( TimedSale );
@@ -945,7 +945,7 @@ bool CEconStorePriceSheet::VerifyTimedSaleEntries()
 		for ( int j = 0; j < BaseSale.m_vecSaleItems.Count(); j++ )
 		{
 			const item_definition_index_t unSearchDefIndex = BaseSale.m_vecSaleItems[j].m_unItemDef;
-			
+
 			for ( int k = i; k < m_vecTimedSales.Count(); k++ )
 			{
 				// Does this sale overlap with our current sale?
@@ -1161,7 +1161,7 @@ void CEconStorePriceSheet::DumpTimeSaleState( const RTime32 curTime ) const
 
 	Assert( unSalePrice > 0 );
 
-	// Also set a percentage per currency, since they can be different. RMB and NXP, for example, 
+	// Also set a percentage per currency, since they can be different. RMB and NXP, for example,
 	// calculate a sale price based on the USD sale price.
 	const bool bUseDefaultDiscountPercentage = ( eCurrency == k_ECurrencyUSD );
 	const double fActualPercent = 100.0 * ( 1.0 - ( double )unSalePrice / ( double )pSaleStoreEntry->GetBasePrice( eCurrency ) );
@@ -1236,7 +1236,7 @@ bool CEconStoreEntryLess::Less( const uint16& lhs, const uint16& rhs, void *pCon
 	CEconItemDefinition *pItemDefB = pSchema->GetItemDefinition( pItemB->GetItemDefinitionIndex() );
 
 #ifdef CLIENT_DLL
-	ECurrency eCurrency = EconUI()->GetStorePanel()->GetCurrency(); 
+	ECurrency eCurrency = EconUI()->GetStorePanel()->GetCurrency();
 #else
 	ECurrency eCurrency = k_ECurrencyUSD;
 #endif
@@ -1261,7 +1261,7 @@ bool CEconStoreEntryLess::Less( const uint16& lhs, const uint16& rhs, void *pCon
 
 		case kEconStoreSortType_DevName_AToZ:
 			return Q_strcmp( pItemDefA->GetItemBaseName(), pItemDefB->GetItemBaseName() ) < 0;
-			
+
 		case kEconStoreSortType_DevName_ZToA:
 			return Q_strcmp( pItemDefA->GetItemBaseName(), pItemDefB->GetItemBaseName() ) > 0;
 
@@ -1278,7 +1278,7 @@ bool CEconStoreEntryLess::Less( const uint16& lhs, const uint16& rhs, void *pCon
 
 			// Intentionally fall through to sorting by localized name if our dates match.
 		}
-			
+
 		case kEconStoreSortType_Name_AToZ:
 		case kEconStoreSortType_Name_ZToA:
 			if ( g_pVGuiLocalize )
@@ -1291,13 +1291,13 @@ bool CEconStoreEntryLess::Less( const uint16& lhs, const uint16& rhs, void *pCon
 					return sortType == kEconStoreSortType_Name_ZToA
 						 ? wcscoll( wszItemNameA, wszItemNameB ) > 0			// only sort in reverse alphabetical order if asked to -- fall-through cases uses forward order
 						 : wcscoll( wszItemNameA, wszItemNameB ) < 0;
-				}				
+				}
 			}
 			break;
 
 		case kEconStoreSortType_ItemDefIndex:
 			return pItemDefA->GetDefinitionIndex() < pItemDefB->GetDefinitionIndex();
-			
+
 		case kEconStoreSortType_ReverseItemDefIndex:
 			return pItemDefB->GetDefinitionIndex() < pItemDefA->GetDefinitionIndex();
 		}
@@ -1388,9 +1388,9 @@ static void InitStreamLocale( std::wostringstream &stream, ELanguage eLang, uint
 
 //
 // Partial Integration from \steam\main\src\common\amount.cpp
-// 
+//
 int MakeMoneyStringInternal( wchar_t *pchDest, uint32 nDest, item_price_t unPrice, ECurrency eCurrencyCode, ELanguage eLanguage )
-{							  
+{
 	// Use the actual currency symbol with the local number formatting.
 	// assume local locale - should not be used from server to send to client
 	// without passing in a valid pszCLocale parameter.
@@ -1408,7 +1408,7 @@ int MakeMoneyStringInternal( wchar_t *pchDest, uint32 nDest, item_price_t unPric
 		// just return the value
 		return V_snwprintf( pchDest, nDest, L"%ls", wszAmount );
 	}
-	
+
 	// select symbol
 	const char *pchSymbol = "";
 	switch( eCurrencyCode )
@@ -1616,7 +1616,7 @@ void MakeMoneyString( wchar_t *pchDest, uint32 nDest, item_price_t unPrice, ECur
 #endif // CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEconStorePriceSheet::BItemExistsInPriceSheet( item_definition_index_t unDefIndex ) const
 {
@@ -1640,7 +1640,7 @@ bool CEconStorePriceSheet::BItemExistsInPriceSheet( item_definition_index_t unDe
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool ShouldUseNewStore()
 {
@@ -1648,7 +1648,7 @@ bool ShouldUseNewStore()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int GetStoreVersion()
 {
@@ -1657,7 +1657,7 @@ int GetStoreVersion()
 #endif // CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const CEconStorePriceSheet *GetEconPriceSheet()
 {
@@ -1669,4 +1669,3 @@ const CEconStorePriceSheet *GetEconPriceSheet()
 		 : NULL;
 #endif
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -123,16 +123,16 @@ BEGIN_PREDICTION_DATA( CBasePlasmaProjectile )
 	DEFINE_FIELD( m_flMaxRange, FIELD_FLOAT ),
 
 	// Predicted, but not in networking stream
-	DEFINE_PRED_TYPEDESCRIPTION( m_pPreviousPositions[0], PositionHistory_t ), 
-	DEFINE_PRED_TYPEDESCRIPTION( m_pPreviousPositions[1], PositionHistory_t ), 
-	DEFINE_PRED_TYPEDESCRIPTION( m_pPreviousPositions[2], PositionHistory_t ), 
-	DEFINE_PRED_TYPEDESCRIPTION( m_pPreviousPositions[3], PositionHistory_t ), 
-	DEFINE_PRED_TYPEDESCRIPTION( m_pPreviousPositions[4], PositionHistory_t ), 
+	DEFINE_PRED_TYPEDESCRIPTION( m_pPreviousPositions[0], PositionHistory_t ),
+	DEFINE_PRED_TYPEDESCRIPTION( m_pPreviousPositions[1], PositionHistory_t ),
+	DEFINE_PRED_TYPEDESCRIPTION( m_pPreviousPositions[2], PositionHistory_t ),
+	DEFINE_PRED_TYPEDESCRIPTION( m_pPreviousPositions[3], PositionHistory_t ),
+	DEFINE_PRED_TYPEDESCRIPTION( m_pPreviousPositions[4], PositionHistory_t ),
 
 END_PREDICTION_DATA()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBasePlasmaProjectile::CBasePlasmaProjectile()
 {
@@ -146,7 +146,7 @@ CBasePlasmaProjectile::CBasePlasmaProjectile()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBasePlasmaProjectile::~CBasePlasmaProjectile()
 {
@@ -169,7 +169,7 @@ void CBasePlasmaProjectile::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePlasmaProjectile::Spawn( void )
 {
@@ -187,7 +187,7 @@ void CBasePlasmaProjectile::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePlasmaProjectile::Activate( void )
 {
@@ -203,7 +203,7 @@ void CBasePlasmaProjectile::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePlasmaProjectile::SetDamage( float flDamage )
 {
@@ -211,7 +211,7 @@ void CBasePlasmaProjectile::SetDamage( float flDamage )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CBasePlasmaProjectile::GetDamage( void )
 {
@@ -219,7 +219,7 @@ float CBasePlasmaProjectile::GetDamage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePlasmaProjectile::SetMaxRange( float flRange )
 {
@@ -260,9 +260,9 @@ void CBasePlasmaProjectile::PerformCustomPhysics( Vector *pNewPosition, Vector *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOther - 
-//			tr - 
+// Purpose:
+// Input  : *pOther -
+//			tr -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBasePlasmaProjectile::ProjectileHitShield( CBaseEntity *pOther, trace_t& tr )
@@ -285,9 +285,9 @@ bool CBasePlasmaProjectile::ProjectileHitShield( CBaseEntity *pOther, trace_t& t
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOther - 
-//			tr - 
+// Purpose:
+// Input  : *pOther -
+//			tr -
 //-----------------------------------------------------------------------------
 void CBasePlasmaProjectile::HandleShieldImpact( CBaseEntity *pOther, trace_t& tr )
 {
@@ -301,7 +301,7 @@ void CBasePlasmaProjectile::HandleShieldImpact( CBaseEntity *pOther, trace_t& tr
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePlasmaProjectile::MissileTouch( CBaseEntity *pOther )
 {
@@ -371,7 +371,7 @@ void CBasePlasmaProjectile::Detonate( void )
 #if defined( CLIENT_DLL )
 
 //-----------------------------------------------------------------------------
-// Add the position to the history 
+// Add the position to the history
 //-----------------------------------------------------------------------------
 void CBasePlasmaProjectile::AddPositionToHistory( const Vector& org, float flSimTime )
 {
@@ -388,8 +388,8 @@ void CBasePlasmaProjectile::AddPositionToHistory( const Vector& org, float flSim
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : org - 
+// Purpose:
+// Input  : org -
 //-----------------------------------------------------------------------------
 void CBasePlasmaProjectile::ResetPositionHistories( const Vector& org )
 {
@@ -401,7 +401,7 @@ void CBasePlasmaProjectile::ResetPositionHistories( const Vector& org )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePlasmaProjectile::OnDataChanged(DataUpdateType_t updateType)
 {
@@ -418,7 +418,7 @@ void CBasePlasmaProjectile::OnDataChanged(DataUpdateType_t updateType)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePlasmaProjectile::RecalculatePositions( Vector *pNewPosition, Vector *pNewVelocity, QAngle *pNewAngles, QAngle *pNewAngVelocity )
 {
@@ -470,7 +470,7 @@ void CBasePlasmaProjectile::RecalculatePositions( Vector *pNewPosition, Vector *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePlasmaProjectile::ClientThink( void )
 {
@@ -488,9 +488,9 @@ void CBasePlasmaProjectile::ClientThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : isbeingremoved - 
-//			*predicted - 
+// Purpose:
+// Input  : isbeingremoved -
+//			*predicted -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBasePlasmaProjectile::OnPredictedEntityRemove( bool isbeingremoved, C_BaseEntity *predicted )
@@ -517,10 +517,10 @@ bool CBasePlasmaProjectile::OnPredictedEntityRemove( bool isbeingremoved, C_Base
 #define REMAP_BLEND_TIME		0.5f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : slot - 
-//			curtime - 
-//			outpos - 
+// Purpose:
+// Input  : slot -
+//			curtime -
+//			outpos -
 //-----------------------------------------------------------------------------
 void CBasePlasmaProjectile::RemapPosition( Vector &vecStart, float curtime, Vector& outpos )
 {
@@ -630,7 +630,7 @@ bool CBasePlasmaProjectile::SimulateAndRender(Particle *pInParticle, ParticleDra
 		// Texture wrapping
 		flStartV = (flFragmentLength * (i+1));
 		flEndV = (flFragmentLength * i);
-		
+
 		TransformParticle( ParticleMgr()->GetModelView(), vecWorldStart, vecScreenStart );
 		TransformParticle( ParticleMgr()->GetModelView(), vecWorldEnd, vecScreenEnd );
 		Vector vecScreenDelta = (vecScreenEnd - vecScreenStart);
@@ -660,7 +660,7 @@ bool CBasePlasmaProjectile::SimulateAndRender(Particle *pInParticle, ParticleDra
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePlasmaProjectile::Start(CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs)
 {

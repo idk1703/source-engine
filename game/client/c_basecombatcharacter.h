@@ -49,7 +49,7 @@ public:
 	virtual bool IsLookingTowards( const CBaseEntity *target, float cosTolerance = BCC_DEFAULT_LOOK_TOWARDS_TOLERANCE ) const;	// return true if our view direction is pointing at the given target, within the cosine of the angular tolerance. LINE OF SIGHT IS NOT CHECKED.
 	virtual bool IsLookingTowards( const Vector &target, float cosTolerance = BCC_DEFAULT_LOOK_TOWARDS_TOLERANCE ) const;	// return true if our view direction is pointing at the given target, within the cosine of the angular tolerance. LINE OF SIGHT IS NOT CHECKED.
 
-	virtual bool IsInFieldOfView( CBaseEntity *entity ) const;	// Calls IsLookingAt with the current field of view.  
+	virtual bool IsInFieldOfView( CBaseEntity *entity ) const;	// Calls IsLookingAt with the current field of view.
 	virtual bool IsInFieldOfView( const Vector &pos ) const;
 
 	enum LineOfSightCheckType
@@ -73,7 +73,7 @@ public:
 	C_BaseCombatWeapon*	Weapon_OwnsThisType( const char *pszWeapon, int iSubType = 0 ) const;  // True if already owns a weapon of this class
 	virtual	bool		Weapon_Switch( C_BaseCombatWeapon *pWeapon, int viewmodelindex = 0 );
 	virtual bool		Weapon_CanSwitchTo(C_BaseCombatWeapon *pWeapon);
-	
+
 	// I can't use my current weapon anymore. Switch me to the next best weapon.
 	bool SwitchToNextBestWeapon(C_BaseCombatWeapon *pCurrent);
 
@@ -109,7 +109,7 @@ public:
 
 protected:
 
-#ifdef GLOWS_ENABLE	
+#ifdef GLOWS_ENABLE
 	virtual void		UpdateGlowEffect( void );
 	virtual void		DestroyGlowEffect( void );
 #endif // GLOWS_ENABLE
@@ -177,7 +177,7 @@ inline C_BaseCombatCharacter *ToBaseCombatCharacter( C_BaseEntity *pEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline int	C_BaseCombatCharacter::WeaponCount() const
 {
@@ -185,8 +185,8 @@ inline int	C_BaseCombatCharacter::WeaponCount() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : i - 
+// Purpose:
+// Input  : i -
 //-----------------------------------------------------------------------------
 inline C_BaseCombatWeapon *C_BaseCombatCharacter::GetWeapon( int i ) const
 {

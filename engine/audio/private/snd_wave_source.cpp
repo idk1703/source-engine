@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -64,7 +64,7 @@ int ADPCMSampleCount( ADPCMWAVEFORMAT *pFormat, int length )
 
 	int blockCount = length / blockSize;
 	int blockRem = length % blockSize;
-	
+
 	// total samples in complete blocks
 	int sampleCount = blockCount * wSamplesPerBlock;
 
@@ -134,7 +134,7 @@ CAudioSourceWave::CAudioSourceWave( CSfxTable *pSfx, CAudioSourceCachedInfo *inf
 		Q_memcpy( m_pHeader, info->HeaderData(), info->HeaderSize() );
 		m_nHeaderSize = info->HeaderSize();
 	}
-	
+
 	m_bits = info->Bits();
 	m_channels = info->Channels();
 	m_sampleSize = info->SampleSize();
@@ -225,7 +225,7 @@ void CAudioSourceWave::GetCacheData( CAudioSourceCachedInfo *info )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CAudioSourceWave::GetFileName()
@@ -234,7 +234,7 @@ char const *CAudioSourceWave::GetFileName()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAudioSourceWave::IsAsyncLoad()
@@ -254,7 +254,7 @@ bool CAudioSourceWave::IsAsyncLoad()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAudioSourceWave::CheckAudioSourceCache()
 {
@@ -290,8 +290,8 @@ void CAudioSourceWave::Init( const char *pHeaderBuffer, int headerSize )
 	m_rate = LittleDWord( pHeader->nSamplesPerSec );
 	m_channels = LittleWord( pHeader->nChannels );
 	m_sampleSize = (m_bits * m_channels)/8;
-	
-	// this can never be zero -- other functions divide by this. 
+
+	// this can never be zero -- other functions divide by this.
 	// this should never happen, but avoid crashing
 	if ( m_sampleSize <= 0 )
 	{
@@ -304,46 +304,46 @@ void CAudioSourceWave::Init( const char *pHeaderBuffer, int headerSize )
 		m_pHeader = new char[headerSize];
 		memcpy( m_pHeader, pHeader, headerSize );
 		m_nHeaderSize = headerSize;
-		
+
 		// treat ADPCM sources as a file of bytes.  They are decoded by the mixer
 		m_sampleSize = 1;
 	}
 }
 
 
-int	CAudioSourceWave::SampleRate( void ) 
-{ 
-	return m_rate; 
+int	CAudioSourceWave::SampleRate( void )
+{
+	return m_rate;
 }
 
 
 //-----------------------------------------------------------------------------
 // Purpose: Size of each sample
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
-int	CAudioSourceWave::SampleSize( void ) 
-{ 
-	return m_sampleSize; 
+int	CAudioSourceWave::SampleSize( void )
+{
+	return m_sampleSize;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Total number of samples in this source
 // Output : int
 //-----------------------------------------------------------------------------
-int CAudioSourceWave::SampleCount( void ) 
+int CAudioSourceWave::SampleCount( void )
 {
-	// caller wants real samples 
+	// caller wants real samples
 	return m_numDecodedSamples;
 }
 
-int	CAudioSourceWave::Format( void ) 
-{ 
-	return m_format; 
+int	CAudioSourceWave::Format( void )
+{
+	return m_format;
 }
 
-int	CAudioSourceWave::DataSize( void ) 
-{ 
-	return m_dataSize; 
+int	CAudioSourceWave::DataSize( void )
+{
+	return m_dataSize;
 }
 
 bool CAudioSourceWave::IsVoiceSource()
@@ -406,19 +406,19 @@ void CAudioSourceWave::ParseChunk( IterateRIFF &walk, int chunkName )
 	}
 }
 
-bool CAudioSourceWave::IsLooped( void ) 
-{ 
-	return (m_loopStart >= 0) ? true : false; 
+bool CAudioSourceWave::IsLooped( void )
+{
+	return (m_loopStart >= 0) ? true : false;
 }
 
-bool CAudioSourceWave::IsStereoWav( void ) 
-{ 
+bool CAudioSourceWave::IsStereoWav( void )
+{
 	return (m_channels == 2) ? true : false;
 }
 
-bool CAudioSourceWave::IsStreaming( void ) 
-{ 
-	return false; 
+bool CAudioSourceWave::IsStreaming( void )
+{
+	return false;
 }
 
 
@@ -447,8 +447,8 @@ int	CAudioSourceWave::ZeroCrossingAfter( int sample )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &walk - 
+// Purpose:
+// Input  : &walk -
 //-----------------------------------------------------------------------------
 void CAudioSourceWave::ParseSentence( IterateRIFF &walk )
 {
@@ -468,7 +468,7 @@ void CAudioSourceWave::ParseSentence( IterateRIFF &walk )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CSentence
 //-----------------------------------------------------------------------------
 CSentence *CAudioSourceWave::GetSentence( void )
@@ -515,8 +515,8 @@ CSentence *CAudioSourceWave::GetSentence( void )
 }
 
 const char *CAudioSourceWave::GetName()
-{ 
-	return m_pSfx ? m_pSfx->getname() : NULL; 
+{
+	return m_pSfx ? m_pSfx->getname() : NULL;
 }
 
 //-----------------------------------------------------------------------------
@@ -527,7 +527,7 @@ bool CAudioSourceWave::GetXboxAudioStartupData()
 	CUtlBuffer	buf;
 	char		fileName[MAX_PATH];
 	char		tempFileName[MAX_PATH];
-	
+
 	MEM_ALLOC_CREDIT();
 
 	// try native optimal xma wav file first
@@ -757,13 +757,13 @@ void CAudioSourceWave::ParseCueChunk( IterateRIFF &walk )
 {
 	// Cue chunk as specified by RIFF format
 	// see $/research/jay/sound/riffnew.htm
-	struct 
+	struct
 	{
-		unsigned int dwName; 
+		unsigned int dwName;
 		unsigned int dwPosition;
 		unsigned int fccChunk;
 		unsigned int dwChunkStart;
-		unsigned int dwBlockStart; 
+		unsigned int dwBlockStart;
 		unsigned int dwSampleOffset;
 	} cue_chunk;
 
@@ -798,7 +798,7 @@ void CAudioSourceWave::ParseSamplerChunk( IterateRIFF &walk )
 		unsigned int	dwPlayCount;
 	};
 
-	struct 
+	struct
 	{
 		unsigned int	dwManufacturer;
 		unsigned int	dwProduct;
@@ -881,7 +881,7 @@ int CAudioSourceWave::ConvertLoopedPosition( int samplePosition )
 		// xma mixer interprets loops and *always* sends a corrected position
 		return samplePosition;
 	}
-	
+
 	// if the wave is looping and we're past the end of the sample
 	// convert to a position within the loop
 	// At the end of the loop, we return a short buffer, and subsequent call
@@ -892,7 +892,7 @@ int CAudioSourceWave::ConvertLoopedPosition( int samplePosition )
 		int loopSize = m_sampleCount - m_loopStart;
 		// subtract off starting bit of the wave
 		samplePosition -= m_loopStart;
-		
+
 		if ( loopSize )
 		{
 			// "real" position in memory (mod off extra loops)
@@ -906,7 +906,7 @@ int CAudioSourceWave::ConvertLoopedPosition( int samplePosition )
 
 //-----------------------------------------------------------------------------
 // Purpose: remove the reference for the mixer getting deleted
-// Input  : *pMixer - 
+// Input  : *pMixer -
 //-----------------------------------------------------------------------------
 void CAudioSourceWave::ReferenceRemove( CAudioMixer *pMixer )
 {
@@ -922,7 +922,7 @@ void CAudioSourceWave::ReferenceRemove( CAudioMixer *pMixer )
 
 //-----------------------------------------------------------------------------
 // Purpose: Add a mixer reference
-// Input  : *pMixer - 
+// Input  : *pMixer -
 //-----------------------------------------------------------------------------
 void CAudioSourceWave::ReferenceAdd( CAudioMixer *pMixer )
 {
@@ -972,7 +972,7 @@ public:
 	virtual void			ParseChunk( IterateRIFF &walk, int chunkName );
 	void					ParseDataChunk( IterateRIFF &walk );
 
-protected:								   
+protected:
 
 	// Whoeover derives must implement this.
 	virtual char			*GetDataPointer( void );
@@ -992,7 +992,7 @@ CAudioSourceMemWave::CAudioSourceMemWave() :
 	m_hStream = INVALID_STREAM_HANDLE;
 }
 
-CAudioSourceMemWave::CAudioSourceMemWave( CSfxTable *pSfx ) : 
+CAudioSourceMemWave::CAudioSourceMemWave( CSfxTable *pSfx ) :
 	CAudioSourceWave( pSfx )
 {
 	m_hCache = 0;
@@ -1011,7 +1011,7 @@ CAudioSourceMemWave::CAudioSourceMemWave( CSfxTable *pSfx ) :
 				DevWarning( "Failed to load sound \"%s\", substituting \"%s\"\n", pSfx->getname(), pSfx->GetFileName() );
 			}
 		}
-	
+
 		if ( bValid )
 		{
 			// a 360 memory wave is a critical resource kept locked in memory, load its data now
@@ -1027,7 +1027,7 @@ CAudioSourceMemWave::CAudioSourceMemWave( CSfxTable *pSfx, CAudioSourceCachedInf
 	m_hStream = INVALID_STREAM_HANDLE;
 }
 
-CAudioSourceMemWave::~CAudioSourceMemWave() 
+CAudioSourceMemWave::~CAudioSourceMemWave()
 {
 }
 
@@ -1043,14 +1043,14 @@ CAudioMixer *CAudioSourceMemWave::CreateMixer( int initialStreamPosition )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : **pData - output pointer to samples
-//			samplePosition - position (in samples not bytes) 
+//			samplePosition - position (in samples not bytes)
 //			sampleCount - number of samples (not bytes)
 // Output : int - number of samples available
 //-----------------------------------------------------------------------------
 int CAudioSourceMemWave::GetOutputData( void **pData, int samplePosition, int sampleCount, char copyBuf[AUDIOSOURCE_COPYBUF_SIZE] )
-{ 
+{
 	// handle position looping
 	samplePosition = ConvertLoopedPosition( samplePosition );
 
@@ -1304,7 +1304,7 @@ void CAudioSourceMemWave::ParseChunk( IterateRIFF &walk, int chunkName )
 // Input  : &walk - RIFF file
 //-----------------------------------------------------------------------------
 void CAudioSourceMemWave::ParseDataChunk( IterateRIFF &walk )
-{	
+{
 	m_dataStart = walk.ChunkFilePosition() + 8;
 	m_dataSize  = walk.ChunkSize();
 
@@ -1349,7 +1349,7 @@ void CAudioSourceMemWave::ParseDataChunk( IterateRIFF &walk )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 int CAudioSourceMemWave::GetCacheStatus( void )
@@ -1379,7 +1379,7 @@ int CAudioSourceMemWave::GetCacheStatus( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAudioSourceMemWave::CacheLoad( void )
 {
@@ -1438,7 +1438,7 @@ void CAudioSourceMemWave::CacheLoad( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAudioSourceMemWave::CacheUnload( void )
 {
@@ -1461,7 +1461,7 @@ void CAudioSourceMemWave::CacheUnload( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char
 //-----------------------------------------------------------------------------
 char *CAudioSourceMemWave::GetDataPointer( void )
@@ -1479,13 +1479,13 @@ char *CAudioSourceMemWave::GetDataPointer( void )
 		}
 
 		// mount the requested data, blocks if necessary
-		wavedatacache->GetDataPointer( 
-			m_hCache, 
-			m_pSfx->GetFileName(), 
-			m_dataSize, 
-			m_dataStart, 
-			(void **)&pWaveData, 
-			0, 
+		wavedatacache->GetDataPointer(
+			m_hCache,
+			m_pSfx->GetFileName(),
+			m_dataSize,
+			m_dataStart,
+			(void **)&pWaveData,
+			0,
 			&bSamplesConverted );
 
 		// If we have reloaded data from disk (async) and we haven't converted the samples yet, do it now
@@ -1576,7 +1576,7 @@ CAudioSourceStreamWave::CAudioSourceStreamWave( CSfxTable *pSfx ) : CAudioSource
 	}
 }
 
-CAudioSourceStreamWave::CAudioSourceStreamWave( CSfxTable *pSfx, CAudioSourceCachedInfo *info ) : 
+CAudioSourceStreamWave::CAudioSourceStreamWave( CSfxTable *pSfx, CAudioSourceCachedInfo *info ) :
 	CAudioSourceWave( pSfx, info )
 {
 	m_pSfx = pSfx;
@@ -1612,7 +1612,7 @@ CAudioMixer *CAudioSourceStreamWave::CreateMixer( int initialStreamPosition )
 		// not trusting save/load
 		if ( m_format == WAVE_FORMAT_XMA )
 		{
-			if ( ( initialStreamPosition % XBOX_DVD_SECTORSIZE ) || 
+			if ( ( initialStreamPosition % XBOX_DVD_SECTORSIZE ) ||
 				( initialStreamPosition % XMA_BLOCK_SIZE ) ||
 				( initialStreamPosition >= m_dataSize ) )
 			{
@@ -1660,9 +1660,9 @@ int CAudioSourceStreamWave::SampleToStreamPosition( int samplePosition )
 		return 0;
 	}
 
-	// Run through the seek table to find the block closest to the desired sample. 
-	// Each seek table entry is the index (counting from the beginning of the file) 
-	// of the first sample in the corresponding block, but there's no entry for the 
+	// Run through the seek table to find the block closest to the desired sample.
+	// Each seek table entry is the index (counting from the beginning of the file)
+	// of the first sample in the corresponding block, but there's no entry for the
 	// first block (since the index would always be zero).
 	int *pSeekTable = (int*)m_pHeader;
 	int packet = 0;
@@ -1724,7 +1724,7 @@ void CAudioSourceStreamWave::ParseChunk( IterateRIFF &walk, int chunkName )
 	{
 	case WAVE_DATA:
 		// data starts at chunk + 8 (chunk name, chunk size = 2*4=8 bytes)
-		// don't load the data, just know where it is so each instance 
+		// don't load the data, just know where it is so each instance
 		// can load it later
 		m_dataStart = walk.ChunkFilePosition() + 8;
 		m_dataSize = walk.ChunkSize();
@@ -1957,7 +1957,7 @@ static float Audio_GetWaveDuration( char const *pName )
 
 //-----------------------------------------------------------------------------
 // Purpose: Fast method for determining duration of .wav/.mp3, exposed to server as well
-// Input  : *pName - 
+// Input  : *pName -
 // Output : float
 //-----------------------------------------------------------------------------
 float AudioSource_GetSoundDuration( char const *pName )
@@ -2234,7 +2234,7 @@ void CAudioSourceCachedInfo::Rebuild( char const *filename )
 	Assert( s_pSfx );
 	Assert( s_CurrentType != CAudioSource::AUDIO_SOURCE_MAXTYPE );
 
-#if 0 
+#if 0
 	// Never cachify something which is not in the client precache list
 	if ( s_bIsPrecacheSound != s_pSfx->IsPrecachedSound() )
 	{
@@ -2347,7 +2347,7 @@ IAudioSourceCache *audiosourcecache = &g_ASCache;
 unsigned int CAudioSourceCachedInfoHandle_t::s_nCurrentFlushCount = 1;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAudioSourceCachedInfoHandle_t::InvalidateCache()
 {
@@ -2355,7 +2355,7 @@ void CAudioSourceCachedInfoHandle_t::InvalidateCache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAudioSourceCache::Init( unsigned int memSize )
@@ -2523,8 +2523,8 @@ unsigned int CAudioSourceCache::AsyncLookaheadMetaChecksum( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *mapname - 
+// Purpose:
+// Input  : *mapname -
 //-----------------------------------------------------------------------------
 void CAudioSourceCache::LevelInit( char const *mapname )
 {
@@ -2532,7 +2532,7 @@ void CAudioSourceCache::LevelInit( char const *mapname )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAudioSourceCache::LevelShutdown()
 {
@@ -2590,7 +2590,7 @@ CAudioSourceCache::SearchPathCache *CAudioSourceCache::LookUpCacheEntry( const c
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CAudioSourceCachedInfo *CAudioSourceCache::GetInfo( int audiosourcetype, bool soundisprecached, CSfxTable *sfx )
 {
@@ -2813,4 +2813,3 @@ CON_COMMAND( snd_buildcache, "<directory or VPK filename>  Rebulds sound cache f
 	extern void HostState_Shutdown();
 	HostState_Shutdown();
 }
-

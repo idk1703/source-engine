@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 // This class is a message box that has two buttons, ok and cancel instead of
 // just the ok button of a message box. We use a message box class for the ok button
 // and implement another button here.
@@ -35,7 +35,7 @@ static int s_iTooltipWindowCount = 0;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-BaseTooltip::BaseTooltip(Panel *parent, const char *text) 
+BaseTooltip::BaseTooltip(Panel *parent, const char *text)
 {
 	SetText(text);
 
@@ -116,7 +116,7 @@ bool BaseTooltip::ShouldLayout( void )
 		return false;
 
 	if (_delay > system()->GetTimeMillis())
-		return false;	
+		return false;
 
 	// We only need to layout when we first become visible
 	if ( !_isDirty )
@@ -156,7 +156,7 @@ void BaseTooltip::SetText(const char *text)
 		m_Text.AddToTail(text[i]);
 	}
 	m_Text.AddToTail('\0');
-	
+
 	if (s_TooltipWindow.Get() && m_pParent == s_TooltipWindow.Get()->GetParent())
 	{
 		s_TooltipWindow->SetText(m_Text.Base());
@@ -223,7 +223,7 @@ void BaseTooltip::PositionWindow( Panel *pTipPanel )
 			// menu hanging up
 			pTipPanel->SetPos(cursorX - iTipW, cursorY - iTipH - 20 );
 		}
-	}	
+	}
 }
 
 
@@ -252,7 +252,7 @@ TextTooltip::TextTooltip(Panel *parent, const char *text) : BaseTooltip( parent,
 	s_TooltipWindow->MakePopup(false, true);
 	s_TooltipWindow->SetKeyBoardInputEnabled( false );
 	s_TooltipWindow->SetMouseInputEnabled( false );
-	
+
 	SetText(text);
 	s_TooltipWindow->SetText(m_Text.Base());
 	s_TooltipWindow->SetEditable(false);
@@ -282,7 +282,7 @@ TextTooltip::~TextTooltip()
 void TextTooltip::SetText(const char *text)
 {
 	BaseTooltip::SetText( text );
-	
+
 	if (s_TooltipWindow.Get())
 	{
 		s_TooltipWindow->SetText(m_Text.Base());
@@ -378,17 +378,17 @@ void TextTooltip::SizeTextWindow()
 		s_TooltipWindow->SetMultiline(true);
 		s_TooltipWindow->SetSize((int)newWide, (int)newTall );
 		s_TooltipWindow->SetToFullHeight();
-		
+
 		s_TooltipWindow->GetSize( wide, tall );
-		
-		if (( wide < 100 ) && ( s_TooltipWindow->GetNumLines() == 2) ) 
+
+		if (( wide < 100 ) && ( s_TooltipWindow->GetNumLines() == 2) )
 		{
 			s_TooltipWindow->SetMultiline(false);
-			s_TooltipWindow->SetToFullWidth();	
+			s_TooltipWindow->SetToFullWidth();
 		}
 		else
 		{
-			
+
 			while ( (float)wide/(float)tall < 2 )
 			{
 				s_TooltipWindow->SetSize( wide + 1, tall );
@@ -397,7 +397,7 @@ void TextTooltip::SizeTextWindow()
 			}
 		}
 		s_TooltipWindow->GetSize( wide, tall );
-	//	ivgui()->DPrintf("End Ratio: %f\n", (float)wide/(float)tall);		
+	//	ivgui()->DPrintf("End Ratio: %f\n", (float)wide/(float)tall);
 	}
 }
 
@@ -413,4 +413,3 @@ void TextTooltip::HideTooltip()
 
 	BaseTooltip::HideTooltip();
 }
-

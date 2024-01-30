@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -102,7 +102,7 @@ void CAttributeElementPickerPanel::ShowPickerDialog()
 	if ( !pInfo )
 		return;
 
-	// FIXME: Sucky. Should we make GetElementChoiceList return a DmeHandleVec_t? 
+	// FIXME: Sucky. Should we make GetElementChoiceList return a DmeHandleVec_t?
 	ElementChoiceList_t choices;
 	CUtlVector< DmePickerInfo_t > vec;
 	if ( ElementPropertiesChoices()->GetElementChoiceList( pInfo->GetChoiceType(), GetPanelElement(), GetAttributeName(), IsArrayEntry(), choices ) )
@@ -171,4 +171,3 @@ void CAttributeElementPickerPanel::PerformLayout()
 
 	m_hEdit->SetBounds( x, y, inset, h );
 }
-

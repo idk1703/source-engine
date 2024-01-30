@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,9 +20,9 @@ class CSDKPlayerClassInfo : public FilePlayerClassInfo_t
 {
 public:
 	DECLARE_CLASS_GAMEROOT( CSDKPlayerClassInfo, FilePlayerClassInfo_t );
-	
+
 	CSDKPlayerClassInfo();
-	
+
 	virtual void Parse( ::KeyValues *pKeyValuesData, const char *szWeaponName );
 
 	int m_iTeam;		//which team. 2 == team 1, 3 == team 2

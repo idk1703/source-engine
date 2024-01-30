@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmecombinationoperator.h"
@@ -21,13 +21,13 @@
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeCombinationInputControl, CDmeCombinationInputControl );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeCombinationInputControl::OnConstruction()
 {
@@ -253,13 +253,13 @@ const char *CDmeCombinationInputControl::GetEyesUpDownFlexName() const
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeCombinationDominationRule, CDmeCombinationDominationRule );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeCombinationDominationRule::OnConstruction()
 {
@@ -404,13 +404,13 @@ bool CDmeCombinationDominationRule::HasSuppressedControl( const char *pSuppresse
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeCombinationOperator, CDmeCombinationOperator );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeCombinationOperator::OnConstruction()
 {
@@ -443,7 +443,7 @@ void CDmeCombinationOperator::OnAttributeChanged( CDmAttribute *pAttribute )
 
 
 //-----------------------------------------------------------------------------
-// Finds the index of the input control with the specified name (and creates one if necessary) 
+// Finds the index of the input control with the specified name (and creates one if necessary)
 //-----------------------------------------------------------------------------
 void CDmeCombinationOperator::OnElementUnserialized()
 {
@@ -452,7 +452,7 @@ void CDmeCombinationOperator::OnElementUnserialized()
 	// Mark all of the input as not being in their default state since we read it from a file
 	int nCount = m_InputControls.Count();
 	m_IsDefaultValue.SetCount( nCount );
-	for ( int i = 0; i < nCount; ++i ) 
+	for ( int i = 0; i < nCount; ++i )
 	{
 		m_IsDefaultValue[i] = false;
 	}
@@ -460,7 +460,7 @@ void CDmeCombinationOperator::OnElementUnserialized()
 
 
 //-----------------------------------------------------------------------------
-// Finds the index of the input control with the specified name (and creates one if necessary) 
+// Finds the index of the input control with the specified name (and creates one if necessary)
 //-----------------------------------------------------------------------------
 ControlIndex_t CDmeCombinationOperator::FindOrCreateControl( const char *pControlName, bool bStereo, bool bAutoAddRawControl )
 {
@@ -1098,7 +1098,7 @@ void CDmeCombinationOperator::RebuildRawControlList()
 		{
 			int k = m_RawControlInfo.AddToTail( );
 			RawControlInfo_t &info = m_RawControlInfo[k];
-			
+
 			info.m_Name = pInputControl->RawControlName( j );
 			info.m_InputControl = i;
 			info.m_bIsDefaultControl = false;
@@ -1413,7 +1413,7 @@ int CDmeCombinationOperator::ParseDeltaName(const char *pDeltaStateName, int *pC
 //-----------------------------------------------------------------------------
 void CDmeCombinationOperator::FindDominators( CombinationOperation_t& op )
 {
-	// Dominators are sets of inputs, which, when set to 1, will 
+	// Dominators are sets of inputs, which, when set to 1, will
 	// supress another set of inputs. Only combinations which contain *all*
 	// dominators will suppress any combinatation that contains *all* suppressors
 	int nDominatorCount = m_DominatorInfo.Count();
@@ -1438,7 +1438,7 @@ void CDmeCombinationOperator::FindDominators( CombinationOperation_t& op )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeCombinationOperator::ComputeCombinationInfo( int nIndex )
 {
@@ -1507,7 +1507,7 @@ void CDmeCombinationOperator::ComputeCombinationInfo( int nIndex )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeCombinationOperator::ComputeCombinationInfo()
 {
@@ -1520,7 +1520,7 @@ void CDmeCombinationOperator::ComputeCombinationInfo()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeCombinationOperator::CleanUpCombinationInfo( int nIndex )
 {
@@ -1585,7 +1585,7 @@ void CDmeCombinationOperator::AddTarget( CDmeDag *pDag )
 
 	CDmeShape *pShape = pDag->GetShape();
 	AddTarget( pShape );
-	
+
 	int nChildCount = pDag->GetChildCount();
 	for ( int i = 0; i < nChildCount; ++i )
 	{
@@ -1599,7 +1599,7 @@ void CDmeCombinationOperator::AddTarget( CDmeDag *pDag )
 	}
 }
 
- 
+
 //-----------------------------------------------------------------------------
 // Remaps non-stereo -> stereo, stereo ->left/right, also adds multilevel + filter
 //-----------------------------------------------------------------------------
@@ -1691,7 +1691,7 @@ void CDmeCombinationOperator::ComputeLaggedInputValues()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeCombinationOperator::Operate()
 {
@@ -2002,7 +2002,7 @@ void CDmeCombinationOperator::Purge()
 		} while ( bDelete );
 	}
 
-	do 
+	do
 	{
 		bDelete = false;
 
@@ -2105,7 +2105,7 @@ IMPLEMENT_ELEMENT_FACTORY( DmeMayaCombinationOperator, CDmeMayaCombinationOperat
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeMayaCombinationOperator::OnConstruction()
 {

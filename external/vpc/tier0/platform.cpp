@@ -1,6 +1,6 @@
 //===== Copyright 1996-2005, Valve Corporation, All rights reserved. ======//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -55,7 +55,7 @@ static LARGE_INTEGER g_ClockStart;
 static bool s_bTimeInitted;
 #endif
 
-// Benchmark mode uses this heavy-handed method 
+// Benchmark mode uses this heavy-handed method
 static bool g_bBenchmarkMode = false;
 #ifdef _WIN32
 static double g_FakeBenchmarkTime = 0;
@@ -137,7 +137,7 @@ uint32 Plat_MSTime()
 	return (uint32) cell::fios::FIOSAbstimeToMilliseconds( cell::fios::FIOSGetCurrentTime() - g_fiosLaunchTime );
 #else
 	#error
-#endif	
+#endif
 }
 
 uint64 Timer_GetTimeUS()
@@ -245,7 +245,7 @@ void Plat_ExitProcess( int nCode )
 #elif defined(_PS3)
 	// We do not use this path to exit on PS3 (naturally), rather we want a clear crash:
 	int *x = NULL; *x = 1;
-#else	
+#else
 	_exit( nCode );
 #endif
 }
@@ -260,7 +260,7 @@ void GetCurrentDate( int *pDay, int *pMonth, int *pYear )
 	*pYear = long_time.tm_year + 1900;
 }
 
-// Wraps the thread-safe versions of asctime. buf must be at least 26 bytes 
+// Wraps the thread-safe versions of asctime. buf must be at least 26 bytes
 char *Plat_asctime( const struct tm *tm, char *buf, size_t bufsize )
 {
 #ifdef _PS3
@@ -275,7 +275,7 @@ char *Plat_asctime( const struct tm *tm, char *buf, size_t bufsize )
 }
 
 
-// Wraps the thread-safe versions of ctime. buf must be at least 26 bytes 
+// Wraps the thread-safe versions of ctime. buf must be at least 26 bytes
 char *Plat_ctime( const time_t *timep, char *buf, size_t bufsize )
 {
 #ifdef _PS3
@@ -346,7 +346,7 @@ bool vtune( bool resume )
 		VTResume();
 		return true;
 
-	} 
+	}
 	else if( !resume && VTPause )
 	{
 		VTPause();
@@ -381,7 +381,7 @@ void Plat_DebugString( const char * psz )
 	::OutputDebugStringA( psz );
 #elif defined(_PS3)
 	printf("%s",psz);
-#else 
+#else
 	// do nothing?
 #endif
 }
@@ -458,7 +458,7 @@ void *Plat_GetProcAddress( const char *pszModule, const char *pszName )
 
 
 // -------------------------------------------------------------------------------------------------- //
-// Memory stuff. 
+// Memory stuff.
 //
 // DEPRECATED. Still here to support binary back compatability of tier0.dll
 //

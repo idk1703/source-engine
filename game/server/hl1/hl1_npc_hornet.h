@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -48,19 +48,19 @@ public:
 
 	virtual unsigned int PhysicsSolidMaskForEntity( void ) const;
 	virtual bool ShouldGib( const CTakeDamageInfo &info ) { return false; }
-	
+
 	/*	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	
+
 	void EXPORT StartTrack ( void );
-	
+
 	void EXPORT TrackTarget ( void );
 	void EXPORT TrackTouch ( CBaseEntity *pOther );
 	void EXPORT DartTouch( CBaseEntity *pOther );
-	
-	
+
+
 	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType );*/
 
 	float			m_flStopAttack;

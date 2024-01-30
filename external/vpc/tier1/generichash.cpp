@@ -1,4 +1,4 @@
-//======= Copyright © 2005, , Valve Corporation, All rights reserved. =========
+//======= Copyright ï¿½ 2005, , Valve Corporation, All rights reserved. =========
 //
 // Purpose: Variant Pearson Hash general purpose hashing algorithm described
 //			by Cargill in C++ Report 1994.  Generates a 16-bit result.
@@ -78,7 +78,7 @@ static unsigned g_nRandomValues[256] =
 };
 
 //-----------------------------------------------------------------------------
-// String 
+// String
 //-----------------------------------------------------------------------------
 unsigned FASTCALL HashString( const char *pszKey )
 {
@@ -101,7 +101,7 @@ unsigned FASTCALL HashString( const char *pszKey )
 
 
 //-----------------------------------------------------------------------------
-// Case-insensitive string 
+// Case-insensitive string
 //-----------------------------------------------------------------------------
 unsigned FASTCALL HashStringCaseless( const char *pszKey )
 {
@@ -123,7 +123,7 @@ unsigned FASTCALL HashStringCaseless( const char *pszKey )
 }
 
 //-----------------------------------------------------------------------------
-// 32 bit conventional case-insensitive string 
+// 32 bit conventional case-insensitive string
 //-----------------------------------------------------------------------------
 unsigned FASTCALL HashStringCaselessConventional( const char *pszKey )
 {
@@ -322,11 +322,11 @@ uint32 MurmurHash2( const void * key, int len, uint32 seed )
 	{
 		uint32 k = LittleDWord( *(uint32 *)data );
 
-		k *= m; 
-		k ^= k >> r; 
-		k *= m; 
+		k *= m;
+		k ^= k >> r;
+		k *= m;
 
-		h *= m; 
+		h *= m;
 		h ^= k;
 
 		data += 4;
@@ -426,4 +426,3 @@ uint64 MurmurHash64( const void * key, int len, uint32 seed )
 
 	return h;
 }
-

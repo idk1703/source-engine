@@ -13,13 +13,13 @@
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeGameModelInput, CDmeGameModelInput );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeGameModelInput::OnConstruction()
 {
@@ -76,7 +76,7 @@ void CDmeGameModelInput::SetFlags( int nFlags )
 	m_flags = nFlags;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // accessors
 //-----------------------------------------------------------------------------
@@ -126,13 +126,13 @@ void CDmeGameModelInput::SetViewTarget( const Vector &viewTarget )
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeGameSpriteInput, CDmeGameSpriteInput );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeGameSpriteInput::OnConstruction()
 {
@@ -196,13 +196,13 @@ void CDmeGameSpriteInput::SetState( bool bVisible, float nFrame, int nRenderMode
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeGameCameraInput, CDmeGameCameraInput );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeGameCameraInput::OnConstruction()
 {

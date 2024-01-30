@@ -55,13 +55,13 @@ private:
 	int m_textureID_IconSmallTick;
 
 	Vector			m_vecLocation;
-};	
+};
 
 using namespace vgui;
 
 #ifdef HL2_EPISODIC
 DECLARE_HUDELEMENT( CHudLocator );
-#endif 
+#endif
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -103,8 +103,8 @@ CHudLocator::~CHudLocator( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pScheme - 
+// Purpose:
+// Input  : *pScheme -
 //-----------------------------------------------------------------------------
 void CHudLocator::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -130,7 +130,7 @@ bool CHudLocator::ShouldDraw( void )
 
 	if( pPlayer->m_HL2Local.m_vecLocatorOrigin == vec3_invalid )
 		return false;
-	
+
 	return true;
 }
 
@@ -160,7 +160,7 @@ float CHudLocator::LocatorXPositionForYawDiff( float yawDiff )
 	float remappedAngle = RemapVal( yawDiff, -fov, fov, -90, 90 );
 	float cosine = sin(DEG2RAD(remappedAngle));
 	int element_wide = GetWide();
-	
+
 	float position = (element_wide>>1) + ((element_wide>>1) * cosine);
 
 	return position;
@@ -261,7 +261,7 @@ void CHudLocator::Paint()
 	float flYawPlayerForward = pPlayer->EyeAngles().y;
 
 	// Copy this value out of the member variable in case we decide to expand this
-	// feature later and want to iterate some kind of list. 
+	// feature later and want to iterate some kind of list.
 	Vector vecLocation = pPlayer->m_HL2Local.m_vecLocatorOrigin;
 
 	Vector vecToLocation = vecLocation - pPlayer->GetAbsOrigin();
@@ -277,7 +277,7 @@ void CHudLocator::Paint()
 	surface()->DrawSetColor( 255, 255, 255, 255 );
 
 	DrawGraduations( flYawPlayerForward );
-	
+
 	if( bObjectInFOV )
 	{
 		// The object's location maps to a valid position along the tape, so draw an icon.
@@ -287,7 +287,7 @@ void CHudLocator::Paint()
 		yawDiff = fabs(yawDiff);
 		float scale = 1.0f;
 		scale = RemapValClamped( yawDiff, (fov/4), fov, 1.0f, 0.25f );
-	
+
 		vgui::surface()->DrawSetTexture( m_textureID_IconJalopy );
 		vgui::surface()->DrawGetTextureSize( m_textureID_IconJalopy, icon_wide, icon_tall );
 
@@ -315,5 +315,3 @@ void CHudLocator::Paint()
 
 #endif // HL2_EPISODIC
 }
-
-

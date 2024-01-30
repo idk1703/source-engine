@@ -12,15 +12,15 @@
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFStorePreviewItemPanel1::CTFStorePreviewItemPanel1( vgui::Panel *pParent, const char *pResFile, const char *pPanelName, CStorePage *pOwner )
 :	BaseClass( pParent, pResFile, "storepreviewitem", pOwner )
-{								   
+{
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -28,7 +28,7 @@ void CTFStorePreviewItemPanel1::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::PerformLayout( void )
 {
@@ -36,7 +36,7 @@ void CTFStorePreviewItemPanel1::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::OnCommand( const char *command )
 {
@@ -44,7 +44,7 @@ void CTFStorePreviewItemPanel1::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::OnClassIconSelected( KeyValues *data )
 {
@@ -52,7 +52,7 @@ void CTFStorePreviewItemPanel1::OnClassIconSelected( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::OnHideClassIconMouseover( void )
 {
@@ -60,7 +60,7 @@ void CTFStorePreviewItemPanel1::OnHideClassIconMouseover( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::OnShowClassIconMouseover( KeyValues *data )
 {
@@ -68,7 +68,7 @@ void CTFStorePreviewItemPanel1::OnShowClassIconMouseover( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::PreviewItem( int iClass, CEconItemView *pItem, const econ_store_entry_t* pEntry )
 {
@@ -76,7 +76,7 @@ void CTFStorePreviewItemPanel1::PreviewItem( int iClass, CEconItemView *pItem, c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::SetState( preview_state_t iState )
 {
@@ -84,7 +84,7 @@ void CTFStorePreviewItemPanel1::SetState( preview_state_t iState )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::UpdateIcons( void )
 {
@@ -92,7 +92,7 @@ void CTFStorePreviewItemPanel1::UpdateIcons( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanel1::OnTick( void )
 {

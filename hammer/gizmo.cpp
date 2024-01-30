@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,7 +25,7 @@ static IEditorTexture* g_pTranslateHandleTexture = 0;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CGizmo::CGizmo(void)
 {
@@ -45,10 +45,10 @@ CGizmo::CGizmo(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
-//			y - 
-//			z - 
+// Purpose:
+// Input  : x -
+//			y -
+//			z -
 //-----------------------------------------------------------------------------
 CGizmo::CGizmo(float x, float y, float z)
 {
@@ -61,7 +61,7 @@ CGizmo::CGizmo(float x, float y, float z)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGizmo::Initialize(void)
 {
@@ -72,20 +72,20 @@ void CGizmo::Initialize(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : ViewPoint - 
-//			Origin - 
-//			EndPoint - 
-//			red - 
-//			green - 
-//			blue - 
-// Output : 
+// Purpose:
+// Input  : ViewPoint -
+//			Origin -
+//			EndPoint -
+//			red -
+//			green -
+//			blue -
+// Output :
 //-----------------------------------------------------------------------------
 #define GIZMO_AXIS_WIDTH	2
 #define GIZMO_HANDLE_WIDTH	4
 
-void CGizmo::DrawGizmoAxis(CRender3D *pRender, Vector& Origin, 
-						   Vector& EndPoint, int red, int green, int blue, 
+void CGizmo::DrawGizmoAxis(CRender3D *pRender, Vector& Origin,
+						   Vector& EndPoint, int red, int green, int blue,
 						   unsigned int uAxisHandle)
 {
 	CCamera *pCamera = pRender->GetCamera();
@@ -112,9 +112,9 @@ void CGizmo::DrawGizmoAxis(CRender3D *pRender, Vector& Origin,
 	//
 	VectorMA(Origin, 0.1, Axis, Start);
 	VectorMA(Origin, 0.25, Axis, End);
-	
+
 	pRender->BindTexture( g_pAxisTexture );
-	
+
 	CMeshBuilder meshBuilder;
 
 	CMatRenderContextPtr pRenderContext( MaterialSystemInterface() );
@@ -149,7 +149,7 @@ void CGizmo::DrawGizmoAxis(CRender3D *pRender, Vector& Origin,
 	//
 	Start = End;
 	VectorMA(Origin, 0.35, Axis, End);
-	
+
 	pRender->BeginRenderHitTarget(this, uAxisHandle + GIZMO_HANDLE_SCALE);
 
 	pRender->BindTexture( g_pScaleHandleTexture );
@@ -186,7 +186,7 @@ void CGizmo::DrawGizmoAxis(CRender3D *pRender, Vector& Origin,
 	//
 	Start = End;
 	VectorMA(Origin, 0.5, Axis, End);
-	
+
 	pRender->BindTexture( g_pAxisTexture );
 
 	pMesh = pRenderContext->GetDynamicMesh( );
@@ -220,7 +220,7 @@ void CGizmo::DrawGizmoAxis(CRender3D *pRender, Vector& Origin,
 	//
 	Start = End;
 	VectorMA(Origin, 0.6, Axis, End);
-	
+
 	pRender->BeginRenderHitTarget(this, uAxisHandle + GIZMO_HANDLE_ROTATE);
 
 	pRender->BindTexture( g_pRotateHandleTexture );
@@ -257,7 +257,7 @@ void CGizmo::DrawGizmoAxis(CRender3D *pRender, Vector& Origin,
 	//
 	Start = End;
 	VectorMA(Origin, 0.75, Axis, End);
-	
+
 	pRender->BindTexture( g_pAxisTexture );
 	pMesh = pRenderContext->GetDynamicMesh( );
 	meshBuilder.Begin( pMesh, MATERIAL_POLYGON, 4 );
@@ -289,7 +289,7 @@ void CGizmo::DrawGizmoAxis(CRender3D *pRender, Vector& Origin,
 	// Draw the translate handle (arrowhead).
 	//
 	Start = End;
-	
+
 	pRender->BeginRenderHitTarget(this, uAxisHandle + GIZMO_HANDLE_TRANSLATE);
 
 	pRender->BindTexture( g_pTranslateHandleTexture );
@@ -319,8 +319,8 @@ void CGizmo::DrawGizmoAxis(CRender3D *pRender, Vector& Origin,
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pRender - 
+// Purpose:
+// Input  : *pRender -
 //-----------------------------------------------------------------------------
 void CGizmo::Render(CRender3D *pRender)
 {
@@ -352,4 +352,3 @@ void CGizmo::Render(CRender3D *pRender)
 
 	pRender->SetRenderMode( RENDER_MODE_DEFAULT );
 }
-

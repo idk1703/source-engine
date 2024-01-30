@@ -19,7 +19,7 @@
 
 //------------------------------------------------------------------------------------------------------
 // Purpose: CWeaponAward is the superclass for any award that is based simply
-// on number of kills with a specific weapon. 
+// on number of kills with a specific weapon.
 //------------------------------------------------------------------------------------------------------
 class CWeaponAward: public CAward
 {
@@ -32,7 +32,7 @@ public:
 };
 
 //------------------------------------------------------------------------------------------------------
-// Purpose: CFlamethrowerAward is an award given to the player who gets the 
+// Purpose: CFlamethrowerAward is an award given to the player who gets the
 // most kills with "flames"
 //------------------------------------------------------------------------------------------------------
 class CFlamethrowerAward: public CWeaponAward
@@ -85,7 +85,7 @@ public:
 };
 
 //------------------------------------------------------------------------------------------------------
-// Purpose: CGrenadierAward is an award given to the player who gets the most 
+// Purpose: CGrenadierAward is an award given to the player who gets the most
 // kills with "gl_grenade"s
 //------------------------------------------------------------------------------------------------------
 class CGrenadierAward: public CWeaponAward

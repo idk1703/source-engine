@@ -25,7 +25,7 @@ public:
 
 };
 
-template<> 
+template<>
 class CTypedescDeducer<FIELD_EMBEDDED>
 {
 public:

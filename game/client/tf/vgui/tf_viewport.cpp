@@ -105,7 +105,7 @@ CON_COMMAND( showmapinfo, "Show map info panel" )
 	// don't let the player open the team menu themselves until they're a spectator or they're on a regular team and have picked a class
 	if ( pPlayer )
 	{
-		if ( ( pPlayer->GetTeamNumber() == TEAM_SPECTATOR ) || 
+		if ( ( pPlayer->GetTeamNumber() == TEAM_SPECTATOR ) ||
 		     ( ( pPlayer->GetTeamNumber() != TEAM_UNASSIGNED ) && ( pPlayer->GetPlayerClass()->GetClassIndex() != TF_CLASS_UNDEFINED ) ) )
 		{
 			// close all the other panels that could be open
@@ -258,7 +258,7 @@ TFViewport::TFViewport()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 TFViewport::~TFViewport()
 {
@@ -302,13 +302,13 @@ void TFViewport::ApplySchemeSettings( vgui::IScheme *pScheme )
  		vgui::surface()->PrecacheFontCharacters( pScheme->GetFont( "HudFontMediumSmallSecondary" ), pAllChars );
  		vgui::surface()->PrecacheFontCharacters( pScheme->GetFont( "HudFontSmall" ), pAllChars );
  		vgui::surface()->PrecacheFontCharacters( pScheme->GetFont( "DefaultSmall" ), pAllChars );
- 
+
  		vgui::surface()->PrecacheFontCharacters( pScheme->GetFont( "ScoreboardTeamScore" ), pNumbers );
  	}
 }
 
 //
-// This is the main function of the viewport. Right here is where we create our class menu, 
+// This is the main function of the viewport. Right here is where we create our class menu,
 // team menu, and anything else that we want to turn on and off in the UI.
 //
 IViewPortPanel* TFViewport::CreatePanelByName(const char *szPanelName)
@@ -323,11 +323,11 @@ IViewPortPanel* TFViewport::CreatePanelByName(const char *szPanelName)
 	}
 	else if ( Q_strcmp( PANEL_SPECGUI, szPanelName ) == 0 )
 	{
-		newpanel = new CTFSpectatorGUI( this );	
+		newpanel = new CTFSpectatorGUI( this );
 	}
 	else if ( Q_strcmp( PANEL_SPECMENU, szPanelName ) == 0 )
 	{
-//		newpanel = new CTFSpectatorGUI( this );	
+//		newpanel = new CTFSpectatorGUI( this );
 	}
 	else if ( Q_strcmp( PANEL_OVERVIEW, szPanelName ) == 0 )
 	{
@@ -347,15 +347,15 @@ IViewPortPanel* TFViewport::CreatePanelByName(const char *szPanelName)
 	}
 	else if ( Q_strcmp( PANEL_TEAM, szPanelName ) == 0 )
 	{
-		newpanel = new CTFTeamMenu( this );	
+		newpanel = new CTFTeamMenu( this );
 	}
 	else if ( Q_strcmp( PANEL_CLASS_RED, szPanelName ) == 0 )
 	{
-		newpanel = new CTFClassMenu_Red( this );	
+		newpanel = new CTFClassMenu_Red( this );
 	}
 	else if ( Q_strcmp( PANEL_CLASS_BLUE, szPanelName ) == 0 )
 	{
-		newpanel = new CTFClassMenu_Blue( this );	
+		newpanel = new CTFClassMenu_Blue( this );
 	}
 	else if ( Q_strcmp( PANEL_INTRO, szPanelName ) == 0 )
 	{
@@ -391,7 +391,7 @@ IViewPortPanel* TFViewport::CreatePanelByName(const char *szPanelName)
 		newpanel = BaseClass::CreatePanelByName( szPanelName );
 	}
 
-	return newpanel; 
+	return newpanel;
 }
 
 void TFViewport::CreateDefaultPanels( void )
@@ -412,7 +412,7 @@ void TFViewport::CreateDefaultPanels( void )
 	if ( pMMOverride )
 	{
 		AddNewPanel( pMMOverride, "PANEL_MAINMENUOVERRIDE" );
-		pMMOverride->AttachToGameUI();	
+		pMMOverride->AttachToGameUI();
 	}
 
 	BaseClass::CreateDefaultPanels();
@@ -436,7 +436,7 @@ int TFViewport::GetDeathMessageStartHeight( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TFViewport::OnScreenSizeChanged( int iOldWide, int iOldTall )
 {
@@ -474,7 +474,7 @@ void TFViewport::OnScreenSizeChanged( int iOldWide, int iOldTall )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TFViewport::OnTick()
 {

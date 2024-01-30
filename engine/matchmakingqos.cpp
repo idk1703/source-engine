@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -167,12 +167,12 @@ static class CQosThread
 {
 public:
 	CQosThread();
-	
+
 	MM_QOS_t GetResults();
 
 	static unsigned ThreadProc( void *pThis ) { return ( (CQosThread *) pThis )->Run(), 0; }
 	void Run();
-	
+
 private:
 	ThreadHandle_t m_hHandle;
 	CThreadEvent m_hRequestResultsEvent;	// Auto reset event to trigger next query
@@ -212,7 +212,7 @@ MM_QOS_t CQosThread::GetResults()
 	if ( !m_hHandle )
 	{
 		m_hHandle = CreateSimpleThread( ThreadProc, this );
-		
+
 		if( m_hHandle )
 		{
 			ThreadSetAffinity( m_hHandle, XBOX_PROCESSOR_3 );

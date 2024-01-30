@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,7 +15,7 @@
 
 using namespace vgui;
 
-CKeyToggleCheckButton::CKeyToggleCheckButton( Panel *parent, const char *panelName, const char *text, 
+CKeyToggleCheckButton::CKeyToggleCheckButton( Panel *parent, const char *panelName, const char *text,
 	char const *key, char const *cmdname )
  : CheckButton( parent, panelName, text )
 {
@@ -36,7 +36,7 @@ CKeyToggleCheckButton::~CKeyToggleCheckButton()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CKeyToggleCheckButton::Paint()
 {
@@ -59,15 +59,15 @@ void CKeyToggleCheckButton::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *panel - 
+// Purpose:
+// Input  : *panel -
 //-----------------------------------------------------------------------------
 /*
 void CKeyToggleCheckButton::SetSelected( bool state )
 {
 	BaseClass::SetSelected( state );
 
-	if ( !m_pszCmdName || !m_pszCmdName[ 0 ] ) 
+	if ( !m_pszCmdName || !m_pszCmdName[ 0 ] )
 		return;
 
 	if ( m_bNoCommand )
@@ -82,7 +82,7 @@ void CKeyToggleCheckButton::SetSelected( bool state )
 }*/
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CKeyToggleCheckButton::Reset()
 {
@@ -94,11 +94,11 @@ void CKeyToggleCheckButton::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CKeyToggleCheckButton::ApplyChanges()
 {
-	if ( !m_pszCmdName || !m_pszCmdName[ 0 ] ) 
+	if ( !m_pszCmdName || !m_pszCmdName[ 0 ] )
 		return;
 
 	char szCommand[ 256 ];
@@ -110,7 +110,7 @@ void CKeyToggleCheckButton::ApplyChanges()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CKeyToggleCheckButton::HasBeenModified()
 {

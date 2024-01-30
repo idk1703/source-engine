@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -42,4 +42,3 @@ void CHostageRescueZone::HostageRescueTouch( CBaseEntity *pOther )
 	variant_t emptyVariant;
 	pOther->AcceptInput( "OnRescueZoneTouch", NULL, NULL, emptyVariant, 0 );
 }
-

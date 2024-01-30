@@ -51,10 +51,10 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj *CTFGrenadeGas::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, 
+CTFWeaponBaseGrenadeProj *CTFGrenadeGas::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel,
 							        AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
 {
-	return CTFGrenadeGasProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse, 
+	return CTFGrenadeGasProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse,
 		                                pPlayer, GetTFWpnData(), flTime );
 }
 
@@ -79,14 +79,14 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGrenadeGasProjectile* CTFGrenadeGasProjectile::Create( const Vector &position, const QAngle &angles, 
-																const Vector &velocity, const AngularImpulse &angVelocity, 
+CTFGrenadeGasProjectile* CTFGrenadeGasProjectile::Create( const Vector &position, const QAngle &angles,
+																const Vector &velocity, const AngularImpulse &angVelocity,
 																CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags )
 {
 	CTFGrenadeGasProjectile *pGrenade = static_cast<CTFGrenadeGasProjectile*>( CTFWeaponBaseGrenadeProj::Create( "tf_weapon_grenade_gas_projectile", position, angles, velocity, angVelocity, pOwner, weaponInfo, timer, iFlags ) );
 	if ( pGrenade )
 	{
-		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );	
+		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );
 	}
 
 	return pGrenade;
@@ -167,7 +167,7 @@ void CTFGrenadeGasProjectile::Detonate()
 	m_hGasEffect = ( CTFGasGrenadeEffect * )CreateEntityByName("tf_gas_grenade_effect");
 	CBaseEntity *pGasEffect = m_hGasEffect.Get();
 	if ( pGasEffect )
-	{	
+	{
 		DispatchSpawn( pGasEffect );
 		pGasEffect->SetAbsOrigin( GetAbsOrigin() );
 	}

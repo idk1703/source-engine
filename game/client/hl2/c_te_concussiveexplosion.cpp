@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -40,13 +40,13 @@ public:
 IMPLEMENT_CLIENTCLASS_EVENT_DT( C_TEConcussiveExplosion, DT_TEConcussiveExplosion, CTEConcussiveExplosion )
 	RecvPropVector( RECVINFO(m_vecNormal)),
 	RecvPropFloat( RECVINFO(m_flScale)),
-	RecvPropInt( RECVINFO(m_nRadius)),	
+	RecvPropInt( RECVINFO(m_nRadius)),
 	RecvPropInt( RECVINFO(m_nMagnitude)),
 END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEConcussiveExplosion::AffectRagdolls( void )
 {
@@ -59,7 +59,7 @@ void C_TEConcussiveExplosion::AffectRagdolls( void )
 
 
 //-----------------------------------------------------------------------------
-// Recording 
+// Recording
 //-----------------------------------------------------------------------------
 static inline void RecordConcussiveExplosion( const Vector& start, const Vector &vecDirection )
 {
@@ -87,7 +87,7 @@ static inline void RecordConcussiveExplosion( const Vector& start, const Vector 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEConcussiveExplosion::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -96,7 +96,7 @@ void C_TEConcussiveExplosion::PostDataUpdate( DataUpdateType_t updateType )
 	FX_ConcussiveExplosion( m_vecOrigin, m_vecNormal );
 	RecordConcussiveExplosion( m_vecOrigin, m_vecNormal );
 }
-						  
+
 void TE_ConcussiveExplosion( IRecipientFilter& filter, float delay, KeyValues *pKeyValues )
 {
 	Vector vecOrigin, vecDirection;

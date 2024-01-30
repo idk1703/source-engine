@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -59,7 +59,7 @@ public:
 
 	// Get current model
 	void		GetSelectedMDLName( char *pBuffer, int nMaxLen );
-	
+
 	// get current selected options page
 	int			GetSelectedPage();
 
@@ -105,13 +105,13 @@ private:
 
 	MESSAGE_FUNC_PARAMS( OnCheckButtonChecked, "CheckButtonChecked", kv );
 	MESSAGE_FUNC_PARAMS( OnItemSelected, "ItemSelected", kv );
-	MESSAGE_FUNC( OnPageChanged, "PageChanged" );	
+	MESSAGE_FUNC( OnPageChanged, "PageChanged" );
 	MESSAGE_FUNC_CHARPTR( OnDirectorySelected, "DirectorySelected", dir );
 
 	CMDLPanel *m_pMDLPreview;
 	vgui::Splitter* m_pFileBrowserSplitter;
 	vgui::Splitter* m_pPreviewSplitter;
-	
+
 	vgui::PropertySheet *m_pViewsSheet;
 	vgui::PropertyPage *m_pRenderPage;
 	vgui::PropertyPage *m_pSequencesPage;

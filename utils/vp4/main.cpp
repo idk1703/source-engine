@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -30,7 +30,7 @@ void AddFileSystemSearchPaths(const char *pszExeName)
 {
 	// search locally first
 	char pExeName[MAX_PATH];
-    if ( ::GetModuleFileName( ( HINSTANCE )GetModuleHandle( NULL ), pExeName, sizeof(pExeName) ) )
+	if ( ::GetModuleFileName( ( HINSTANCE )GetModuleHandle( NULL ), pExeName, sizeof(pExeName) ) )
 	{
 		char pPlatform[MAX_PATH];
 		Q_StripFilename( pExeName );
@@ -103,7 +103,7 @@ DEFINE_WINDOWED_STEAM_APPLICATION_OBJECT( CVP4App );
 //-----------------------------------------------------------------------------
 bool CVP4App::Create()
 {
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "inputsystem.dll",		INPUTSYSTEM_INTERFACE_VERSION },
 		{ "vgui2.dll",				VGUI_IVGUI_INTERFACE_VERSION },

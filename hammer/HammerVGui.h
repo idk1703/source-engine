@@ -25,7 +25,7 @@ public:
 	void SetFocus( CVGuiWnd *pWnd );
 	bool IsInitialized() { return m_hMainWindow != NULL; };
 
-	
+
 protected:
 
 	HWND			m_hMainWindow;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -36,7 +36,7 @@ CRulesContextMenu::~CRulesContextMenu()
 void CRulesContextMenu::ShowMenu(Panel *target, unsigned int cvarID)
 {
 	ClearMenu();
-		
+
 	AddMenuItem("cvar", "&Change Value", new KeyValues("cvar", "cvarID", cvarID), CRulesContextMenu::parent);
 
 

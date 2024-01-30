@@ -83,7 +83,7 @@ int	CBaseClient::GetRate( void ) const
 {
 	if ( m_NetChannel )
 	{
-		return m_NetChannel->GetDataRate(); 
+		return m_NetChannel->GetDataRate();
 	}
 	else
 	{
@@ -162,7 +162,7 @@ bool CBaseClient::SendNetMsg(INetMessage &msg, bool bForceReliable)
 	return bret;
 }
 
-char const *CBaseClient::GetUserSetting(char const *pchCvar) const 
+char const *CBaseClient::GetUserSetting(char const *pchCvar) const
 {
 	if ( !m_ConVars || !pchCvar || !pchCvar[0] )
 	{
@@ -283,13 +283,13 @@ bool CBaseClient::SetSignonState(int state, int spawncount)
 	switch( m_nSignonState )
 	{
 		case SIGNONSTATE_CONNECTED :	// client is connected, leave client in this state and let SendPendingSignonData do the rest
-										m_bSendServerInfo = true; 
+										m_bSendServerInfo = true;
 										break;
 
 		case SIGNONSTATE_NEW		:	// client got server info, send prespawn datam_Client->SendServerInfo()
 										if ( !SendSignonData() )
 											return false;
-										
+
 										break;
 
 		case SIGNONSTATE_PRESPAWN	:	SpawnPlayer();
@@ -301,7 +301,7 @@ bool CBaseClient::SetSignonState(int state, int spawncount)
 		case SIGNONSTATE_FULL		:	OnSignonStateFull();
 										break;
 
-		case SIGNONSTATE_CHANGELEVEL:	break;	
+		case SIGNONSTATE_CHANGELEVEL:	break;
 
 	}
 
@@ -311,11 +311,11 @@ bool CBaseClient::SetSignonState(int state, int spawncount)
 void CBaseClient::Reconnect( void )
 {
 	ConMsg("Forcing client reconnect (%i)\n", m_nSignonState );
-	
+
 	m_NetChannel->Clear();
 
 	m_nSignonState = SIGNONSTATE_CONNECTED;
-	
+
 	NET_SignonState signon( m_nSignonState, -1 );
 	m_NetChannel->SendNetMsg( signon );
 }
@@ -336,14 +336,14 @@ void CBaseClient::Inactivate( void )
 	{
 		// don't do that for fakeclients
 		m_NetChannel->Clear();
-		
+
 		if ( NET_IsMultiplayer() )
 		{
 			NET_SignonState signon( m_nSignonState, m_Server->GetSpawnCount() );
 			SendNetMsg( signon );
 
 			// force sending message now
-			m_NetChannel->Transmit();	
+			m_NetChannel->Transmit();
 		}
 	}
 
@@ -452,7 +452,7 @@ void CBaseClient::SetName(const char * playerName)
 
 				if( !client->IsConnected() || client == this )
 					continue;
-				
+
 				// If it's 2 bots they're allowed to have matching names, otherwise there's a conflict
 				if( !Q_stricmp( client->GetClientName(), val ) && !( IsFakeClient() && client->IsFakeClient() ) )
 				{
@@ -489,9 +489,9 @@ void CBaseClient::SetName(const char * playerName)
 
 			Q_snprintf(newname, sizeof(newname), "(%d)%-.*s", dupc++, MAX_PLAYER_NAME_LENGTH - 4, p );
 			Q_strncpy(m_Name, newname, sizeof(m_Name));
-			
-			val = m_Name;		
-		}	
+
+			val = m_Name;
+		}
 	}
 
 	m_ConVars->SetString( "name", m_Name );
@@ -523,7 +523,7 @@ void CBaseClient::SpawnPlayer( void )
 	{
 		// free old baseline snapshot
 		FreeBaselines();
-		
+
 		// create baseline snapshot for real clients
 		m_pBaseline = framesnapshotmanager->CreateEmptySnapshot( 0, MAX_EDICTS );
 	}
@@ -531,7 +531,7 @@ void CBaseClient::SpawnPlayer( void )
 	// Set client clock to match server's
 	NET_Tick tick( m_Server->GetTick(), host_frametime_unbounded, host_frametime_stddeviation );
 	SendNetMsg( tick, true );
-	
+
 	// Spawned into server, not fully active, though
 	m_nSignonState = SIGNONSTATE_SPAWN;
 	NET_SignonState signonState (m_nSignonState, m_Server->GetSpawnCount() );
@@ -552,10 +552,10 @@ bool CBaseClient::SendSignonData( void )
 	}
 
 	m_NetChannel->SendData( m_Server->m_Signon );
-		
+
 	m_nSignonState = SIGNONSTATE_PRESPAWN;
 	NET_SignonState signonState( m_nSignonState, m_Server->GetSpawnCount() );
-	
+
 	return m_NetChannel->SendNetMsg( signonState );
 }
 
@@ -618,7 +618,7 @@ void CBaseClient::Disconnect( const char *fmt, ... )
 #endif
 	m_nSignonState = SIGNONSTATE_NONE;
 
-	// clear user info 
+	// clear user info
 	m_Server->UserInfoChanged( m_nClientSlot );
 
 	va_start (argptr,fmt);
@@ -685,7 +685,7 @@ bool CBaseClient::SendServerInfo( void )
 		char devtext[ 2048 ];
 		int curplayers = m_Server->GetNumClients();
 
-		Q_snprintf( devtext, sizeof( devtext ), 
+		Q_snprintf( devtext, sizeof( devtext ),
 			"\n%s\nMap: %s\nPlayers: %i / %i\nBuild: %d\nServer Number: %i\n\n",
 			serverGameDLL->GetGameDescription(),
 			m_Server->GetMapName(),
@@ -703,7 +703,7 @@ bool CBaseClient::SendServerInfo( void )
 	serverinfo.m_nPlayerSlot = m_nClientSlot; // own slot number
 
 	m_Server->FillServerInfo( serverinfo ); // fill rest of info message
-	
+
 	serverinfo.WriteToBuffer( msg );
 
 	if ( IsX360() && serverinfo.m_nMaxClients > 1 )
@@ -714,7 +714,7 @@ bool CBaseClient::SendServerInfo( void )
 
 	// send first tick
 	m_nSignonTick = m_Server->m_nTickCount;
-	
+
 	NET_Tick signonTick( m_nSignonTick, 0, 0 );
 	signonTick.WriteToBuffer( msg );
 
@@ -722,7 +722,7 @@ bool CBaseClient::SendServerInfo( void )
 #ifndef SHARED_NET_STRING_TABLES
 	m_Server->m_StringTables->WriteBaselines( msg );
 #endif
-	
+
 	// Write replicated ConVars to non-listen server clients only
 	if ( !m_NetChannel->IsLoopback() )
 	{
@@ -746,7 +746,7 @@ bool CBaseClient::SendServerInfo( void )
 		Disconnect("Server info data overflow");
 		return false;
 	}
-		
+
 	COM_TimestampedLog( " CBaseClient::SendServerInfo(finished)" );
 
 	MemFreeScratch();
@@ -777,7 +777,7 @@ void CBaseClient::ConnectionStart(INetChannel *chan)
 	REGISTER_CLC_MSG( VoiceData );
 	REGISTER_CLC_MSG( BaselineAck );
 	REGISTER_CLC_MSG( ListenEvents );
-	
+
 	REGISTER_CLC_MSG( RespondCvarValue );
 	REGISTER_CLC_MSG( FileCRCCheck );
 	REGISTER_CLC_MSG( FileMD5Check );
@@ -943,13 +943,13 @@ bool CBaseClient::ProcessBaselineAck( CLC_BaselineAck *msg )
 		return true;
 	}
 
-	Assert( m_pBaseline );	
+	Assert( m_pBaseline );
 
 	// copy ents send as full updates this frame into baseline stuff
 	CClientFrame *frame = GetDeltaFrame( m_nBaselineUpdateTick );
 	if ( frame == NULL )
 	{
-		// Will get here if we have a lot of packet loss and finally receive a stale ack from 
+		// Will get here if we have a lot of packet loss and finally receive a stale ack from
 		//  remote client.  Our "window" could be well beyond what it's acking, so just ignore the ack.
 		return true;
 	}
@@ -964,7 +964,7 @@ bool CBaseClient::ProcessBaselineAck( CLC_BaselineAck *msg )
 		DevMsg("CBaseClient::ProcessBaselineAck: invalid frame snapshot (%i)\n", m_nBaselineUpdateTick );
 		return false;
 	}
-	
+
 	int index = m_BaselinesSent.FindNextSetBit( 0 );
 
 	while ( index >= 0 )
@@ -987,7 +987,7 @@ bool CBaseClient::ProcessBaselineAck( CLC_BaselineAck *msg )
 
 		// increase reference
 		framesnapshotmanager->AddEntityReference( hNewEntity );
-		
+
 		// copy entity handle, class & serial number to
 		m_pBaseline->m_pEntities[index] = pSnapshot->m_pEntities[index];
 
@@ -1078,10 +1078,10 @@ void CBaseClient::EndTrace( bf_write &msg )
 	CUtlBuffer logData( 0, 0, CUtlBuffer::TEXT_BUFFER );
 
 	logData.Printf( "%f/%d Player [%s][%d][adr:%s] was sent a datagram %d bits (%8.3f bytes), took %.2fms\n",
-		realtime, 
+		realtime,
 		host_tickcount,
-		GetClientName(), 
-		GetPlayerSlot(), 
+		GetClientName(),
+		GetPlayerSlot(),
 		GetNetChannel()->GetAddress(),
 		bits, (float)bits / 8.0f,
 		flElapsedMs
@@ -1146,7 +1146,7 @@ void CBaseClient::SendSnapshot( CClientFrame *pFrame )
 	// never send the same snapshot twice
 	if ( m_pLastSnapshot == pFrame->GetSnapshot() )
 	{
-		m_NetChannel->Transmit();	
+		m_NetChannel->Transmit();
 		return;
 	}
 
@@ -1155,7 +1155,7 @@ void CBaseClient::SendSnapshot( CClientFrame *pFrame )
 	if ( m_nForceWaitForTick > 0 )
 	{
 		// just continue transmitting reliable data
-		m_NetChannel->Transmit();	
+		m_NetChannel->Transmit();
 		return;
 	}
 
@@ -1211,7 +1211,7 @@ write_again:
 		int nBits = msg.GetNumBitsWritten() - nDeltaStartBit;
 		TraceNetworkMsg( nBits, "Total Delta" );
 	}
-			
+
 	// send all unreliable temp entities between last and current frame
 	// send max 64 events in multi player, 255 in SP
 	int nMaxTempEnts = m_Server->IsMultiplayer() ? 64 : 255;
@@ -1223,7 +1223,7 @@ write_again:
 	}
 
 	WriteGameSounds( msg );
-	
+
 	// write message to packet and check for overflow
 	if ( msg.IsOverflowed() )
 	{
@@ -1299,7 +1299,7 @@ write_again:
 		// just send it as unreliable snapshot
 		bSendOK = m_NetChannel->SendDatagram( &msg ) > 0;
 	}
-		
+
 	if ( bSendOK )
 	{
 		if ( IsTracing() )
@@ -1323,7 +1323,7 @@ bool CBaseClient::ExecuteStringCommand( const char *pCommand )
 	{
 		DemoRestart();
 		// trick, dont return true, so serverGameClients gets this command too
-		return false; 
+		return false;
 	}
 
 	return false;
@@ -1331,7 +1331,7 @@ bool CBaseClient::ExecuteStringCommand( const char *pCommand )
 
 void CBaseClient::DemoRestart()
 {
-	
+
 }
 
 bool CBaseClient::ShouldSendMessages( void )
@@ -1364,7 +1364,7 @@ bool CBaseClient::ShouldSendMessages( void )
 	{
 		// we would like to send a message, but bandwidth isn't available yet
 		// tell netchannel that we are choking a packet
-		m_NetChannel->SetChoked();	
+		m_NetChannel->SetChoked();
 		// Record an ETW event to indicate that we are throttling.
 		ETWThrottled();
 		bSendMessage = false;
@@ -1381,7 +1381,7 @@ void CBaseClient::UpdateSendState( void )
 	// in single player mode always send messages
 	if ( !m_Server->IsMultiplayer() && !host_limitlocal.GetFloat() )
 	{
-		m_fNextMessageTime = net_time; // send ASAP and 
+		m_fNextMessageTime = net_time; // send ASAP and
 		m_bReceivedPacket = true;	// don't wait for incoming packets
 	}
 	else if ( IsActive() )	// multiplayer mode
@@ -1393,7 +1393,7 @@ void CBaseClient::UpdateSendState( void )
 	}
 	else // multiplayer signon mode
 	{
-		if ( m_NetChannel && m_NetChannel->HasPendingReliableData() && 
+		if ( m_NetChannel && m_NetChannel->HasPendingReliableData() &&
 			m_NetChannel->GetTimeSinceLastReceived() < 1.0f )
 		{
 			// if we have pending reliable data send as fast as possible
@@ -1444,7 +1444,7 @@ void CBaseClient::ClientRequestNameChange( const char *pszNewName )
 {
 	// This is called several times.  Only show a status message the first time.
 	bool bShowStatusMessage = ( m_szPendingNameChange[0] == '\0' );
-	
+
 	V_strcpy_safe( m_szPendingNameChange, pszNewName );
 	CheckFlushNameChange( bShowStatusMessage );
 }
@@ -1453,10 +1453,10 @@ void CBaseClient::CheckFlushNameChange( bool bShowStatusMessage /*= false*/ )
 {
 	if ( !IsConnected() )
 		return;
-	
+
 	if ( m_szPendingNameChange[0] == '\0' )
 		return;
-	
+
 	if ( m_bPlayerNameLocked )
 		return;
 
@@ -1508,7 +1508,7 @@ void CBaseClient::OnRequestFullUpdate()
 {
 	VPROF_BUDGET( "CBaseClient::OnRequestFullUpdate", VPROF_BUDGETGROUP_OTHER_NETWORKING );
 
-	// client requests a full update 
+	// client requests a full update
 	m_pLastSnapshot = NULL;
 
 	// free old baseline snapshot
@@ -1521,15 +1521,15 @@ void CBaseClient::OnRequestFullUpdate()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *cl - 
+// Purpose:
+// Input  : *cl -
 //-----------------------------------------------------------------------------
 bool CBaseClient::UpdateAcknowledgedFramecount(int tick)
 {
 	if ( IsFakeClient() )
 	{
 		// fake clients are always fine
-		m_nDeltaTick = tick; 
+		m_nDeltaTick = tick;
 		m_nStringTableAckTick = tick;
 		return true;
 	}
@@ -1568,9 +1568,9 @@ bool CBaseClient::UpdateAcknowledgedFramecount(int tick)
 		else // ( tick == m_nForceWaitForTick )
 		{
 			// great, the client acknowledge the tick we send the full update
-			m_nForceWaitForTick = -1; 
+			m_nForceWaitForTick = -1;
 			// continue sending snapshots...
-		}	 
+		}
 	}
 	else
 	{
@@ -1597,7 +1597,7 @@ bool CBaseClient::UpdateAcknowledgedFramecount(int tick)
 	}
 
 	// get acknowledged client frame
-	m_nDeltaTick = tick; 
+	m_nDeltaTick = tick;
 
 	if ( m_nDeltaTick > -1 )
 	{
@@ -1606,7 +1606,7 @@ bool CBaseClient::UpdateAcknowledgedFramecount(int tick)
 
 	if ( (m_nBaselineUpdateTick > -1) && (m_nDeltaTick > m_nBaselineUpdateTick) )
 	{
-		// server sent a baseline update, but it wasn't acknowledged yet so it was probably lost. 
+		// server sent a baseline update, but it wasn't acknowledged yet so it was probably lost.
 		m_nBaselineUpdateTick = -1;
 	}
 
@@ -1628,7 +1628,7 @@ const char *GetUserIDString( const USERID_t& id )
 		{
 			CSteamID nullID;
 
-			if ( Steam3Server().BLanOnly() && nullID == id.steamid ) 
+			if ( Steam3Server().BLanOnly() && nullID == id.steamid )
 			{
 				V_strcpy_safe( idstr, "STEAM_ID_LAN" );
 			}
@@ -1641,7 +1641,7 @@ const char *GetUserIDString( const USERID_t& id )
 				V_sprintf_safe( idstr, "%s", id.steamid.Render() );
 			}
 		}
-		break;		
+		break;
 	case IDTYPE_HLTV:
 		{
 			V_strcpy_safe( idstr, "HLTV" );
@@ -1687,7 +1687,7 @@ const USERID_t CBaseClient::GetNetworkID() const
 	USERID_t userID;
 
 	userID.steamid = m_SteamID;
-	userID.idtype = IDTYPE_STEAM; 
+	userID.idtype = IDTYPE_STEAM;
 
 	return userID;
 }

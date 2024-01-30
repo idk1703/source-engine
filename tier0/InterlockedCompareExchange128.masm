@@ -6,7 +6,7 @@ PUBLIC _InterlockedCompareExchange128
 
 _InterlockedCompareExchange128	PROC FRAME
 ; extern "C" unsigned char _InterlockedCompareExchange128( int64 volatile * Destination, int64 ExchangeHigh, int64 ExchangeLow, int64 * ComparandResult );
-        .endprolog      
+	.endprolog
 
 		; fastcall conventions:
 		; RCX = Destination
@@ -47,7 +47,7 @@ _InterlockedCompareExchange128	PROC FRAME
 
 		; Restore RBX and get out
 		mov rbx, r11
-        ret
+	ret
 
 _InterlockedCompareExchange128 ENDP
 

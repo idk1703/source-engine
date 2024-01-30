@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -43,7 +43,7 @@ class CTFShotgun : public CTFWeaponBaseGun
 public:
 
 	DECLARE_CLASS( CTFShotgun, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFShotgun();
@@ -55,7 +55,7 @@ public:
 #ifdef GAME_DLL
 	virtual CDmgAccumulator	*GetDmgAccumulator( void ) { return &m_Accumulator; }
 #endif // GAME_DLL
-	
+
 protected:
 
 	void		Fire( CTFPlayer *pPlayer );
@@ -105,7 +105,7 @@ class CTFScatterGun : public CTFShotgun
 {
 public:
 	DECLARE_CLASS( CTFScatterGun, CTFShotgun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_SCATTERGUN; }
@@ -125,7 +125,7 @@ class CTFShotgun_Soldier : public CTFShotgun
 {
 public:
 	DECLARE_CLASS( CTFShotgun_Soldier, CTFShotgun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_SHOTGUN_SOLDIER; }
@@ -136,7 +136,7 @@ class CTFShotgun_HWG : public CTFShotgun
 {
 public:
 	DECLARE_CLASS( CTFShotgun_HWG, CTFShotgun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_SHOTGUN_HWG; }
@@ -146,7 +146,7 @@ class CTFShotgun_Pyro : public CTFShotgun
 {
 public:
 	DECLARE_CLASS( CTFShotgun_Pyro, CTFShotgun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_SHOTGUN_PYRO; }
@@ -156,7 +156,7 @@ class CTFSodaPopper : public CTFScatterGun
 {
 public:
 	DECLARE_CLASS( CTFSodaPopper, CTFScatterGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_SODA_POPPER; }
@@ -172,7 +172,7 @@ class CTFPEPBrawlerBlaster : public CTFScatterGun
 {
 public:
 	DECLARE_CLASS( CTFPEPBrawlerBlaster, CTFScatterGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_PEP_BRAWLER_BLASTER; }
@@ -185,7 +185,7 @@ class CTFShotgunBuildingRescue : public CTFShotgun
 {
 public:
 	DECLARE_CLASS( CTFShotgunBuildingRescue, CTFShotgun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_SHOTGUN_BUILDING_RESCUE; }

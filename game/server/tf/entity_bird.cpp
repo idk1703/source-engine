@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -15,7 +15,7 @@ LINK_ENTITY_TO_CLASS( entity_bird, CEntityBird );
 #define ENTITYBIRD_MODEL	"models/props_forest/bird.mdl"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityBird::Spawn( void )
 {
@@ -31,7 +31,7 @@ void CEntityBird::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityBird::Precache( void )
 {
@@ -40,7 +40,7 @@ void CEntityBird::Precache( void )
 	// We deliberately allow late precaches here. It'll cause a hitch, but it'll ensure
 	// we don't load the model on any map that doesn't have birds, and we'll make sure
 	// we don't accidentally keep loading it after the birds are supposed to go away.
-	
+
 	bool bAllowPrecache = CBaseEntity::IsPrecacheAllowed();
 	CBaseEntity::SetAllowPrecache( true );
 	PrecacheModel( ENTITYBIRD_MODEL );
@@ -48,7 +48,7 @@ void CEntityBird::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityBird::Touch( CBaseEntity *pOther )
 {
@@ -59,7 +59,7 @@ void CEntityBird::Touch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CEntityBird::OnTakeDamage( const CTakeDamageInfo &info )
 {
@@ -68,7 +68,7 @@ int CEntityBird::OnTakeDamage( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityBird::Explode( void )
 {
@@ -95,10 +95,10 @@ void CEntityBird::SpawnRandomBirds( void )
 	// Build a list of birds in the map already, and make sure we don't spawn any on those spots again
 	CUtlVector<Vector>	vecExistingBirds;
 	CBaseEntity *pBird = gEntList.FindEntityByClassname( NULL, "entity_bird" );
-	while( pBird ) 
+	while( pBird )
 	{
 		vecExistingBirds.AddToTail( pBird->GetAbsOrigin() );
-		pBird = gEntList.FindEntityByClassname( pBird, "entity_bird" ); 
+		pBird = gEntList.FindEntityByClassname( pBird, "entity_bird" );
 	}
 
 	// See if we have an entry for this map
@@ -106,7 +106,7 @@ void CEntityBird::SpawnRandomBirds( void )
 	if ( pMapKV )
 	{
 		CUtlVector<Vector> vecLocations;
-	
+
 		KeyValues *pkvLoc = pMapKV->GetFirstSubKey();
 		while ( pkvLoc )
 		{
@@ -150,7 +150,7 @@ void CEntityBird::SpawnRandomBirds( void )
 #define ENTITY_FLYING_BIRD_SPEED_MAX		500
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SpawnClientsideFlyingBird( Vector &vecSpawn )
 {
@@ -175,5 +175,3 @@ void SpawnClientsideFlyingBird( Vector &vecSpawn )
 		WRITE_FLOAT( flGlideTime );
 	MessageEnd();
 }
-
-

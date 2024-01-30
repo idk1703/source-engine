@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,4 +23,3 @@ bool COrderPlayer::UpdateOnEvent( COrderEvent_Base *pEvent )
 
 	return BaseClass::UpdateOnEvent( pEvent );
 }
-

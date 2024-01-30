@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -45,13 +45,13 @@ bool IsAmmoType( int iAmmoType, const char *pAmmoName )
 	return GetAmmoDef()->Index( pAmmoName ) == iAmmoType;
 }
 
-static const char * s_WeaponAliasInfo[] = 
+static const char * s_WeaponAliasInfo[] =
 {
 	"none",	//	WEAPON_NONE = 0,
 
 	//Melee
 	"shotgun",	//WEAPON_AMERKNIFE,
-	
+
 	NULL,		// end of list marker
 };
 
@@ -65,17 +65,17 @@ IMPLEMENT_NETWORKCLASS_ALIASED( WeaponHL2MPBase, DT_WeaponHL2MPBase )
 BEGIN_NETWORK_TABLE( CWeaponHL2MPBase, DT_WeaponHL2MPBase )
 
 #ifdef CLIENT_DLL
-  
+
 #else
 	// world weapon models have no aminations
-  //	SendPropExclude( "DT_AnimTimeMustBeFirst", "m_flAnimTime" ),
+	//	SendPropExclude( "DT_AnimTimeMustBeFirst", "m_flAnimTime" ),
 //	SendPropExclude( "DT_BaseAnimating", "m_nSequence" ),
 //	SendPropExclude( "DT_LocalActiveWeaponData", "m_flTimeWeaponIdle" ),
 #endif
-	
+
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CWeaponHL2MPBase ) 
+BEGIN_PREDICTION_DATA( CWeaponHL2MPBase )
 END_PREDICTION_DATA()
 
 LINK_ENTITY_TO_CLASS( weapon_hl2mp_base, CWeaponHL2MPBase );
@@ -90,7 +90,7 @@ LINK_ENTITY_TO_CLASS( weapon_hl2mp_base, CWeaponHL2MPBase );
 #endif
 
 // ----------------------------------------------------------------------------- //
-// CWeaponHL2MPBase implementation. 
+// CWeaponHL2MPBase implementation.
 // ----------------------------------------------------------------------------- //
 CWeaponHL2MPBase::CWeaponHL2MPBase()
 {
@@ -102,7 +102,7 @@ CWeaponHL2MPBase::CWeaponHL2MPBase()
 
 
 bool CWeaponHL2MPBase::IsPredicted() const
-{ 
+{
 	return true;
 }
 
@@ -111,15 +111,15 @@ void CWeaponHL2MPBase::WeaponSound( WeaponSound_t sound_type, float soundtime /*
 #ifdef CLIENT_DLL
 
 		// If we have some sounds from the weapon classname.txt file, play a random one of them
-		const char *shootsound = GetWpnData().aShootSounds[ sound_type ]; 
+		const char *shootsound = GetWpnData().aShootSounds[ sound_type ];
 		if ( !shootsound || !shootsound[0] )
 			return;
 
 		CBroadcastRecipientFilter filter; // this is client side only
 		if ( !te->CanPredict() )
 			return;
-				
-		CBaseEntity::EmitSound( filter, GetPlayerOwner()->entindex(), shootsound, &GetPlayerOwner()->GetAbsOrigin() ); 
+
+		CBaseEntity::EmitSound( filter, GetPlayerOwner()->entindex(), shootsound, &GetPlayerOwner()->GetAbsOrigin() );
 #else
 		BaseClass::WeaponSound( sound_type, soundtime );
 #endif
@@ -137,7 +137,7 @@ CHL2MP_Player* CWeaponHL2MPBase::GetHL2MPPlayerOwner() const
 }
 
 #ifdef CLIENT_DLL
-	
+
 void CWeaponHL2MPBase::OnDataChanged( DataUpdateType_t type )
 {
 	BaseClass::OnDataChanged( type );
@@ -157,7 +157,7 @@ bool CWeaponHL2MPBase::ShouldPredict()
 
 
 #else
-	
+
 void CWeaponHL2MPBase::Spawn()
 {
 	BaseClass::Spawn();
@@ -172,7 +172,7 @@ void CWeaponHL2MPBase::Materialize( void )
 	{
 		// changing from invisible state to visible.
 		EmitSound( "AlyxEmp.Charge" );
-		
+
 		RemoveEffects( EF_NODRAW );
 		DoMuzzleFlash();
 	}
@@ -236,7 +236,7 @@ void CWeaponHL2MPBase::FallInit( void )
 			{
 				//Constrain the weapon in place
 				IPhysicsObject *pReferenceObject, *pAttachedObject;
-				
+
 				pReferenceObject = g_PhysWorldObject;
 				pAttachedObject = VPhysicsGetObject();
 
@@ -245,7 +245,7 @@ void CWeaponHL2MPBase::FallInit( void )
 					constraint_fixedparams_t fixed;
 					fixed.Defaults();
 					fixed.InitWithCurrentObjectState( pReferenceObject, pAttachedObject );
-					
+
 					fixed.constraint.forceLimit	= lbs2kg( 10000 );
 					fixed.constraint.torqueLimit = lbs2kg( 10000 );
 
@@ -261,7 +261,7 @@ void CWeaponHL2MPBase::FallInit( void )
 	}
 
 	SetPickupTouch();
-	
+
 	SetThink( &CBaseCombatWeapon::FallThink );
 
 	SetNextThink( gpGlobals->curtime + 0.1f );
@@ -327,4 +327,3 @@ void UTIL_ClipPunchAngleOffset( QAngle &in, const QAngle &punch, const QAngle &c
 }
 
 #endif
-

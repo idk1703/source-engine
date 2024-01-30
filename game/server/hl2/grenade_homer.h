@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		Projectile shot by city scanner 
+// Purpose:		Projectile shot by city scanner
 //
 // $Workfile:     $
 // $Date:         $

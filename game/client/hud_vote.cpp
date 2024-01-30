@@ -52,7 +52,7 @@ ConVar cl_vote_ui_show_notification( "cl_vote_ui_show_notification", "0" );
 #ifdef TF_CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFVoteNotification : public CEconNotification
 {
@@ -110,7 +110,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 VoteBarPanel::VoteBarPanel( vgui::Panel *parent, const char *panelName ) : vgui::Panel( parent, panelName )
 {
@@ -218,7 +218,7 @@ CVoteSetupDialog::~CVoteSetupDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVoteSetupDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -228,7 +228,7 @@ void CVoteSetupDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 	LoadControlSettings( "Resource/UI/VoteHud.res" );
 
-	m_pComboBox->GetComboButton()->SetFgColor( Color( 117,107,94,255 ) ); 
+	m_pComboBox->GetComboButton()->SetFgColor( Color( 117,107,94,255 ) );
 	m_pComboBox->GetComboButton()->SetDefaultColor( Color( 117,107,94,255), Color( 0,0,0,0) );
 	m_pComboBox->GetComboButton()->SetArmedColor( Color( 117,107,94,255), Color( 0,0,0,0) );
 	m_pComboBox->GetComboButton()->SetDepressedColor( Color( 117,107,94,255), Color( 0,0,0,0) );
@@ -259,7 +259,7 @@ void CVoteSetupDialog::PostApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVoteSetupDialog::ApplySettings(KeyValues *inResourceData)
 {
@@ -292,7 +292,7 @@ void CVoteSetupDialog::ApplySettings(KeyValues *inResourceData)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVoteSetupDialog::InitializeIssueList( void )
 {
@@ -409,12 +409,12 @@ void CVoteSetupDialog::AddVoteIssueParams_PopFiles( CUtlStringList &m_VoteSetupP
 #endif // TF_CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVoteSetupDialog::Activate()
 {
 	InvalidateLayout( true, true );
-	
+
 	BaseClass::Activate();
 
 	ResetData();
@@ -575,7 +575,7 @@ void CVoteSetupDialog::OnCommand(const char *command)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVoteSetupDialog::OnItemSelected( vgui::Panel *panel )
 {
@@ -666,7 +666,7 @@ void CVoteSetupDialog::OnItemSelected( vgui::Panel *panel )
 						bAllowKickUnassigned = true;
 					}
 #endif // TF_CLIENT_DLL
-					
+
 					// Can't kick people on the other team, so don't list them
 					if ( pPlayer->GetTeam() != pLocalPlayer->GetTeam() && !bAllowKickUnassigned )
 						continue;
@@ -711,7 +711,7 @@ void CVoteSetupDialog::OnItemSelected( vgui::Panel *panel )
 						// Use the map name
 						char szShortMapName[ MAX_MAP_NAME ];
 						V_strncpy( szShortMapName, engine->GetLevelName(), sizeof( szShortMapName ) );
-						V_StripExtension( szShortMapName, szShortMapName, sizeof( szShortMapName ) );					
+						V_StripExtension( szShortMapName, szShortMapName, sizeof( szShortMapName ) );
 
 						if ( V_strncmp( m_VoteIssuesPopFiles[index], V_GetFileName( szShortMapName ), ( V_strlen( m_VoteIssuesPopFiles[index] ) - 1 ) ) == 0 )
 							continue;
@@ -837,7 +837,7 @@ void CVoteSetupDialog::RefreshIssueParameters()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVoteSetupDialog::ResetData()
 {
@@ -848,7 +848,7 @@ void CVoteSetupDialog::ResetData()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 DECLARE_HUDELEMENT( CHudVote );
 DECLARE_HUD_MESSAGE( CHudVote, CallVoteFailed );
@@ -888,7 +888,7 @@ CHudVote::CHudVote( const char *pElementName ) : CHudElement( pElementName ), Ba
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudVote::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -902,7 +902,7 @@ void CHudVote::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudVote::Init( void )
 {
@@ -929,7 +929,7 @@ void CHudVote::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudVote::LevelInit( void )
 {
@@ -942,7 +942,7 @@ void CHudVote::LevelInit( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CHudVote::KeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
 {
@@ -1137,7 +1137,7 @@ void CHudVote::MsgFunc_CallVoteFailed( bf_read &msg )
 		case VOTE_FAILED_KICK_DENIED_BY_GC:
 			m_pCallVoteFailed->SetControlString( "FailedReason", "#GameUI_vote_failed_kick_limit_gc" );
 			break;
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1191,7 +1191,7 @@ void CHudVote::MsgFunc_VoteFailed( bf_read &msg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudVote::MsgFunc_VoteStart( bf_read &msg )
 {
@@ -1272,7 +1272,7 @@ void CHudVote::MsgFunc_VoteStart( bf_read &msg )
 
 	// Display vote caller's name
 	wchar_t wszCallerName[MAX_PLAYER_NAME_LENGTH];
-	
+
 	wchar_t wszHeaderString[k_MAX_VOTE_NAME_LENGTH];
 
 	// Player
@@ -1423,7 +1423,7 @@ void CHudVote::MsgFunc_VoteStart( bf_read &msg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudVote::MsgFunc_VotePass( bf_read &msg )
 {
@@ -1524,9 +1524,9 @@ void CHudVote::MsgFunc_VoteSetup( bf_read &msg )
 			msg.ReadString( szIssue, sizeof( szIssue ) );
 			msg.ReadString( szIssueString, sizeof( szIssueString ) );
 			bool bIsActive = (bool)msg.ReadByte();
-			
+
 			m_bVoteSystemActive |= bIsActive;
-			
+
 			bool bAdd = true;
 			FOR_EACH_VEC( m_VoteSetupIssues, j )
 			{
@@ -1549,7 +1549,7 @@ void CHudVote::MsgFunc_VoteSetup( bf_read &msg )
 				V_strcpy_safe( issue.szName, szIssue );
 				V_strcpy_safe( issue.szNameString, szIssueString );
 				issue.bIsActive = bIsActive;
-				
+
 				// Send it over to the listpanel
 				m_VoteSetupIssues.AddToTail( issue );
 			}
@@ -1648,7 +1648,7 @@ void CHudVote::PropagateOptionParameters( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudVote::FireGameEvent( IGameEvent *event )
 {
@@ -1677,7 +1677,7 @@ void CHudVote::FireGameEvent( IGameEvent *event )
 	else if ( FStrEq( eventName, "vote_options" ) )
 	{
 		m_VoteSetupChoices.RemoveAll();
-	
+
 		m_nVoteChoicesCount = event->GetInt( "count" );
 		for ( int iIndex = 0; iIndex < m_nVoteChoicesCount; iIndex++ )
 		{
@@ -1741,7 +1741,7 @@ void CHudVote::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudVote::OnThink()
 {
@@ -1799,7 +1799,7 @@ void CHudVote::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudVote::ShouldDraw( void )
 {
@@ -1807,7 +1807,7 @@ bool CHudVote::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudVote::IsPlayingDemo() const
 {
@@ -1815,7 +1815,7 @@ bool CHudVote::IsPlayingDemo() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudVote::IsVoteUIActive( void )
 {
@@ -1831,4 +1831,3 @@ bool CHudVote::IsShowingVotingUI()
 {
 	return m_pVoteActive && m_pVoteActive->IsEnabled() && m_pVoteActive->IsVisible();
 }
-

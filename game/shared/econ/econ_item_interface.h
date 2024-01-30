@@ -58,7 +58,7 @@ template < typename T > struct IsPointerType<T *> { enum { kValue = true }; };
 // would cause an assert at runtime, but it seems like getting compile-time asserts is
 // advantageous, and probably worth paying the small cost of adding to this list whenever
 // a new attribute type is added.)
-template < typename T> 
+template < typename T>
 struct IsValidAttributeValueTypeImpl { enum { kValue = false }; };
 
 template < > struct IsValidAttributeValueTypeImpl<attrib_value_t> { enum { kValue = true }; };
@@ -97,7 +97,7 @@ public:
 // Purpose: Iterator where each callback is default implemented, but the value
 //			is ignored.  Derive from this iterator when you only care about certain
 //			attribute types.
-//			
+//
 //-----------------------------------------------------------------------------
 class CEconItemSpecificAttributeIterator : public IEconItemAttributeIterator
 {
@@ -188,7 +188,7 @@ private:
 	{
 		// We don't assert because we might be reusing the same iterator between calls.
 		// Assert( !m_bFound );
-		
+
 		if ( m_pAttrDef == pAttrDef )
 		{
 			m_bFound = true;
@@ -333,7 +333,7 @@ private:
 			m_bFound = true;
 			CopyAttributeValueToOutput( &value, reinterpret_cast<TTreatAsThisType *>( m_outpValue ) );
 		}
-			
+
 		return !m_bFound;
 	}
 
@@ -497,12 +497,12 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: Classes that want default behavior for GetMaterialOverride, which 
-// currently derive from IEconItemInterface can instead derive from 
+// Purpose: Classes that want default behavior for GetMaterialOverride, which
+// currently derive from IEconItemInterface can instead derive from
 // CMaterialOverrideContainer< IEconItemInterface > and have the details
-// of material overrides hidden from them. 
+// of material overrides hidden from them.
 //-----------------------------------------------------------------------------
-template <typename TBaseClass> 
+template <typename TBaseClass>
 class CMaterialOverrideContainer : public TBaseClass
 {
 public:
@@ -532,7 +532,7 @@ protected:
 	void ResetMaterialOverrides()
 	{
 		#ifdef CLIENT_DLL
-			for ( int i = 0; i < TF_TEAM_COUNT; ++i ) 
+			for ( int i = 0; i < TF_TEAM_COUNT; ++i )
 				m_materialOverrides[ i ].Shutdown();
 		#endif
 	}

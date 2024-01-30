@@ -48,7 +48,7 @@ private:
 	void	SendNumPlayers( CBasePlayer *pPlayer = NULL );
 
 	void	SetOwner( int team );	//sets the owner of this point - useful for resetting all to -1
-	
+
 	void	InputEnable( inputdata_t &inputdata );
 	void	InputDisable( inputdata_t &inputdata );
 	void	InputRoundInit( inputdata_t &inputdata );

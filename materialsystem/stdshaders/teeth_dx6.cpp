@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -11,9 +11,9 @@
 
 DEFINE_FALLBACK_SHADER( Teeth, Teeth_DX6 )
 
-BEGIN_VS_SHADER( Teeth_DX6, 
+BEGIN_VS_SHADER( Teeth_DX6,
 			  "Help for Teeth_DX6" )
-			  
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( ILLUMFACTOR, SHADER_PARAM_TYPE_FLOAT, "1", "Amount to darken or brighten the teeth" )
 		SHADER_PARAM( FORWARD, SHADER_PARAM_TYPE_VEC3, "[1 0 0]", "Forward direction vector for teeth lighting" )

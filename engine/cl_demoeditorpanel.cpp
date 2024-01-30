@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -66,7 +66,7 @@ CNewActionButton::CNewActionButton(Panel *parent, const char *panelName, const c
 		m_pMenu->AddMenuItem( actionType, actionType, parent );
 		m_pMenu->SetItemEnabled( actionType, CBaseDemoAction::HasEditorFactory( (DEMOACTION)i ) );
 	}
-	
+
 	m_pMenu->MakePopup();
 	MenuButton::SetMenu(m_pMenu);
 	SetOpenDirection(Menu::UP);
@@ -118,7 +118,7 @@ CDemoEditorPanel::CDemoEditorPanel( vgui::Panel *parent ) : Frame( parent, "Demo
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDemoEditorPanel::~CDemoEditorPanel()
 {
@@ -143,7 +143,7 @@ void CDemoEditorPanel::OnTick()
 	else
 	{
 		m_pNew->SetEnabled( true );
-		
+
 		int count = demoaction->GetActionCount();
 
 		m_pEdit->SetEnabled( count > 0 );
@@ -161,8 +161,8 @@ void CDemoEditorPanel::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *command - 
+// Purpose:
+// Input  : *command -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoEditorPanel::IsNewActionCommand( char const *command )
@@ -176,8 +176,8 @@ bool CDemoEditorPanel::IsNewActionCommand( char const *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *actiontype - 
+// Purpose:
+// Input  : *actiontype -
 //-----------------------------------------------------------------------------
 void CDemoEditorPanel::CreateNewAction( char const *actiontype )
 {
@@ -187,7 +187,7 @@ void CDemoEditorPanel::CreateNewAction( char const *actiontype )
 	DEMOACTION type = CBaseDemoAction::TypeForName( actiontype );
 	if ( type == DEMO_ACTION_UNKNOWN )
 		return;
-	
+
 	CBaseDemoAction *action = CBaseDemoAction::CreateDemoAction( type );
 	if ( action )
 	{
@@ -205,8 +205,8 @@ void CDemoEditorPanel::CreateNewAction( char const *actiontype )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *command - 
+// Purpose:
+// Input  : *command -
 //-----------------------------------------------------------------------------
 void CDemoEditorPanel::OnCommand(const char *command)
 {
@@ -319,7 +319,7 @@ void CDemoEditorPanel::OnEdit()
 		m_hCurrentEditor->SetVisible( true );
 		m_hCurrentEditor->SetSize( 400, 300 );
 	}
-	
+
 	// edit it
 
 //	demoaction->SetDirty( true );
@@ -377,10 +377,9 @@ CBaseDemoAction *CDemoEditorPanel::FindActionByName( char const *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoEditorPanel::OnRefresh()
 {
 	PopulateActionList();
 }
-

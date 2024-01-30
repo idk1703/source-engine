@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -55,7 +55,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_InfoTeleporterCountdown, DT_InfoTeleporterCountdown,
 	RecvPropInt( RECVINFO( m_bCountdownStarted ) ),
 	RecvPropInt( RECVINFO( m_bDisabled ) ),
 	RecvPropTime( RECVINFO( m_flStartTime ) ),
-	RecvPropFloat( RECVINFO( m_flTimeRemaining ) ),	
+	RecvPropFloat( RECVINFO( m_flTimeRemaining ) ),
 END_RECV_TABLE()
 
 
@@ -63,7 +63,7 @@ END_RECV_TABLE()
 // Constructor, destructor
 //-----------------------------------------------------------------------------
 C_InfoTeleporterCountdown::C_InfoTeleporterCountdown()
-{		
+{
 	g_InfoTeleporterCountdownList.AddToTail( this );
 }
 
@@ -96,22 +96,22 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Standard VGUI panel for objects 
+// Standard VGUI panel for objects
 //-----------------------------------------------------------------------------
 DECLARE_VGUI_SCREEN_FACTORY( CTeleportCountdownScreen, "teleport_countdown_screen" );
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CTeleportCountdownScreen::CTeleportCountdownScreen( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, panelName, g_hVGuiCombineScheme ) 
+	: BaseClass( parent, panelName, g_hVGuiCombineScheme )
 {
 }
 
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CTeleportCountdownScreen::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -127,7 +127,7 @@ bool CTeleportCountdownScreen::Init( KeyValues* pKeyValues, VGuiScreenInitData_t
 	m_pTimeRemainingTitleLabel = dynamic_cast<vgui::Label*>(FindChildByName( "TimeRemainingTitle" ));
 	m_pTimeRemainingLabel = dynamic_cast<vgui::Label*>(FindChildByName( "TimeRemaining" ));
 	m_pMalfunctionLabel = dynamic_cast<vgui::Label*>( FindChildByName( "MalfunctionLabel" ) );
-	
+
 	return true;
 }
 
@@ -180,7 +180,7 @@ void CTeleportCountdownScreen::OnTick()
 				dt = 0.0f;
 			}
 
-			int nTimeRemaining = (int)(pActiveCountdown->m_flTimeRemaining - dt + 0.5f); 
+			int nTimeRemaining = (int)(pActiveCountdown->m_flTimeRemaining - dt + 0.5f);
 			if ( nTimeRemaining < 0 )
 			{
 				nTimeRemaining = 0;
@@ -191,4 +191,3 @@ void CTeleportCountdownScreen::OnTick()
 		}
 	}
 }
-

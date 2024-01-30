@@ -32,7 +32,7 @@ typedef enum { matGlass = 0, matWood, matMetal, matFlesh, matCinderBlock, matCei
 #define SF_PUSH_NO_USE						0x0100	// player cannot +use pickup this ent
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBreakable : public CBaseEntity, public IBreakableWithPropData, public CDefaultPlayerPickupVPhysics
 {
@@ -155,7 +155,7 @@ protected:
 	int				m_iBreakableSkin;
 	int				m_iBreakableCount;
 	int				m_iMaxBreakableSize;
-	string_t		m_iszBasePropData;	
+	string_t		m_iszBasePropData;
 	int				m_iInteractions;
 	PerformanceMode_t m_PerformanceMode;
 

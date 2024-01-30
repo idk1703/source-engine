@@ -23,7 +23,7 @@ class CEntityBird : public CBaseAnimating
 public:
 	virtual void	Spawn( void );
 	virtual void	Precache( void );
-	virtual void	Touch( CBaseEntity *pOther ); 
+	virtual void	Touch( CBaseEntity *pOther );
 	virtual int		OnTakeDamage( const CTakeDamageInfo &info );
 
 	// Spawn random birds at locations on certain maps.
@@ -34,5 +34,3 @@ private:
 };
 
 #endif // ENTITY_BIRD_H
-
-

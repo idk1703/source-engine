@@ -69,7 +69,7 @@ void CToolEditMenuButton::OnShowMenu( vgui::Menu *menu )
 	if ( g_pDataModel->CanUndo() )
 	{
 		m_pMenu->SetItemEnabled( id, true );
-		
+
 		wchar_t *fmt = g_pVGuiLocalize->Find( "ToolEditUndoStr" );
 		if ( fmt )
 		{

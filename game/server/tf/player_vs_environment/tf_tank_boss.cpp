@@ -362,7 +362,7 @@ void CTFTankBoss::Spawn( void )
 		}
 
 		m_lastLeftTrackPos = m_leftTracks->GetAbsOrigin();
-	}		
+	}
 
 	m_rightTracks = (CBaseAnimating *)CreateEntityByName( "prop_dynamic" );
 	if ( m_rightTracks )
@@ -384,7 +384,7 @@ void CTFTankBoss::Spawn( void )
 		}
 
 		m_lastRightTrackPos = m_rightTracks->GetAbsOrigin();
-	}		
+	}
 
 	m_bomb = (CBaseAnimating *)CreateEntityByName( "prop_dynamic" );
 	if ( m_bomb )
@@ -395,7 +395,7 @@ void CTFTankBoss::Spawn( void )
 
 		// bonemerge into our model
 		m_bomb->FollowEntity( this, true );
-	}		
+	}
 
 	GetBodyInterface()->StartSequence( "movement" );
 
@@ -538,7 +538,7 @@ int CTFTankBoss::OnTakeDamage_Alive( const CTakeDamageInfo &rawInfo )
 	{
 		DispatchParticleEffect( "bot_impact_heavy", rawInfo.GetDamagePosition(), vec3_angle );
 	}
-	
+
 	// Calculate Final Damage values
 	if ( BaseClass::OnTakeDamage_Alive( rawInfo ) && rawInfo.GetAttacker() )
 	{
@@ -893,7 +893,7 @@ void CTFTankBoss::TankBossThink( void )
 
 		const int maxCollectedEntities = 64;
 		CBaseEntity	*intersectingEntities[ maxCollectedEntities ];
-		int count = UTIL_EntitiesInBox( intersectingEntities, maxCollectedEntities,  
+		int count = UTIL_EntitiesInBox( intersectingEntities, maxCollectedEntities,
 										GetAbsOrigin() + WorldAlignMins() * 0.75f,	// a little fudge room for players on the top or sides
 										GetAbsOrigin() + WorldAlignMaxs() * 0.75f,
 										FL_CLIENT | FL_OBJECT );
@@ -1074,4 +1074,3 @@ void CTFTankBoss::UpdatePingSound( void )
 		EmitSound( "MVM.TankPing");
 	}
 }
-

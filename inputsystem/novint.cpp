@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -15,8 +15,8 @@ typedef bool (*NovintAttemptHWND_t)(void *hWnd);
 typedef void (*NovintDisableHWND_t)(void);
 typedef void (*NovintPollDevices_t)(void);
 typedef bool (*NovintButtonState_t)(int nDevice,
-									int &down, 
-									int &pressed, 
+									int &down,
+									int &pressed,
 									int &released);
 typedef int	 (*NovintDeviceCount_t)();
 typedef int	 (*NovintButtonCount_t)(int nDevice);
@@ -72,7 +72,7 @@ void CInputSystem::InitializeNovintDevices()
 	pNovintInputSystem = this;
  	// assume no novint devices
 	m_bNovintDevices = false;
-	m_nNovintDeviceCount = 0; 
+	m_nNovintDeviceCount = 0;
 
 	if(!m_pNovintDLL)
 		return;
@@ -115,7 +115,7 @@ void CInputSystem::UpdateNovintDeviceButtonState(int nDevice)
 		for ( int i = 0; i < 4; i++ )
 		{
 			ButtonCode_t code = (ButtonCode_t)( NOVINT_FIRST + ( nDevice * 4 ) + i );
-			
+
 			if( nPressed & (1 << i) )
 			{
 				PostButtonPressedEvent(IE_ButtonPressed, m_nLastSampleTick, code, KEY_NONE);

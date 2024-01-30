@@ -42,7 +42,7 @@ protected:
 	CNetworkArray( int, m_iHealth, MAX_PLAYERS+1 );
 	CNetworkArray( uint32, m_iAccountID, MAX_PLAYERS+1 );
 	CNetworkArray( int, m_bValid, MAX_PLAYERS+1 );
-		
+
 	int	m_nUpdateCounter;
 };
 

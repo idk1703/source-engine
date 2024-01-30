@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,7 +10,7 @@
 #include "portalstaticoverlay_vs11.inc"
 #include "portalstaticoverlay_ps11.inc"
 
-BEGIN_VS_SHADER( PortalStaticOverlay, 
+BEGIN_VS_SHADER( PortalStaticOverlay,
 				"Help for PortalStaticOverlay shader" )
 
 				BEGIN_SHADER_PARAMS
@@ -122,7 +122,7 @@ SHADER_DRAW
 		//x is static, y is inverse static
 		float pc0[4] = { fStaticAmount, 1.0f - fStaticAmount, 0.0f, 0.0f };
 		pShaderAPI->SetPixelShaderConstant( 0, pc0 );
-		
+
 		if( bStaticBlendTexture )
 		{
 			BindTexture( SHADER_SAMPLER0, STATICBLENDTEXTURE, STATICBLENDTEXTUREFRAME );
@@ -148,5 +148,3 @@ SHADER_DRAW
 }
 
 END_SHADER
-
-

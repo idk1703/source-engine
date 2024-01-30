@@ -24,7 +24,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTargetID : public CHudElement, public vgui::Panel
 {
@@ -47,7 +47,7 @@ private:
 DECLARE_HUDELEMENT( CTargetID );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTargetID::CTargetID( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass( NULL, "TargetID" )
@@ -214,7 +214,7 @@ void CTargetID::Paint()
 			ypos += height;
 
 			// Restore the newline
-			if ( top ) 
+			if ( top )
 			{
 				*top = '\n';
 			}

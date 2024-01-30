@@ -31,7 +31,7 @@ struct DeathNoticePlayer
 };
 
 // Contents of each entry in our list of death notices
-struct DeathNoticeItem 
+struct DeathNoticeItem
 {
 	DeathNoticePlayer	Killer;
 	DeathNoticePlayer   Victim;
@@ -43,7 +43,7 @@ struct DeathNoticeItem
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudDeathNotice : public CHudElement, public vgui::Panel
 {
@@ -74,7 +74,7 @@ private:
 	CPanelAnimationVar( vgui::HFont, m_hTextFont, "TextFont", "HudNumbersTimer" );
 
 	// Texture for skull symbol
-	CHudTexture		*m_iconD_skull;  
+	CHudTexture		*m_iconD_skull;
 
 	CUtlVector<DeathNoticeItem> m_DeathNotices;
 };
@@ -85,7 +85,7 @@ DECLARE_HUDELEMENT( CHudDeathNotice );
 // DECLARE_HUD_MESSAGE( CHudDeathNotice, DeathMsg );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudDeathNotice::CHudDeathNotice( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass( NULL, "HudDeathNotice" )
@@ -97,7 +97,7 @@ CHudDeathNotice::CHudDeathNotice( const char *pElementName ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::ApplySchemeSettings( IScheme *scheme )
 {
@@ -106,7 +106,7 @@ void CHudDeathNotice::ApplySchemeSettings( IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::Init( void )
 {
@@ -116,7 +116,7 @@ void CHudDeathNotice::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::VidInit( void )
 {
@@ -133,7 +133,7 @@ bool CHudDeathNotice::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::SetColorForNoticePlayer( C_BasePlayer *pPlayer, int iTeamNumber )
 {
@@ -153,7 +153,7 @@ void CHudDeathNotice::SetColorForNoticePlayer( C_BasePlayer *pPlayer, int iTeamN
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::Paint()
 {
@@ -284,7 +284,7 @@ void CHudDeathNotice::MsgFunc_DeathMsg(  bf_read &msg )
 	char killedwith[32];
 	char fullkilledwith[128];
 	msg.ReadString( killedwith, sizeof(killedwith) );
-	
+
 	if ( killedwith && *killedwith )
 	{
 		Q_snprintf( fullkilledwith, sizeof(fullkilledwith), "d_%s", killedwith );
@@ -373,6 +373,3 @@ void CHudDeathNotice::MsgFunc_DeathMsg(  bf_read &msg )
 
 	Msg( sDeathMsg );
 }
-
-
-

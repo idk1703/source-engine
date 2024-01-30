@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,10 +13,10 @@
 bool verbose = false;
 
 SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
-{	
+{
 	printf( "%s", pMsg );
 	OutputDebugString( pMsg );
-	
+
 	if ( type == SPEW_ERROR )
 	{
 		printf( "\n" );
@@ -27,7 +27,7 @@ SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void printusage( )
 {
@@ -86,7 +86,7 @@ void CreateTemplateVMT( const char *pcDirectory, const char *pcBaseName, const c
 	V_StripExtension( pcTGAColorFile, szTGAColorFileBase, sizeof( szTGAColorFileBase ) );
 	V_snprintf( sz_Buffer, MAX_PATH, "\t\"$baseTexture\" \"models/contrib/%s/%s/%s\"\n", pcSteamName, pcBaseName, szTGAColorFileBase );
 	fputs( sz_Buffer,  fp );
-	
+
 	if ( pcTGANormalFile && ( V_strlen( pcTGANormalFile ) > 0 ) )
 	{
 		V_StripExtension( pcTGANormalFile, szTGANormalFileBase, sizeof( szTGANormalFileBase ) );
@@ -186,7 +186,7 @@ void CreateTemplateVMT( const char *pcDirectory, const char *pcBaseName, const c
 
 	fputs( "\t\t}\n",  fp );
 	fputs( "\t}\n",  fp );
-	fputs( "}\n",  fp ); 
+	fputs( "}\n",  fp );
 	fclose( fp );
 }
 
@@ -260,7 +260,7 @@ bool ParseArguments( int argc, char* argv[], char *pcDirectory, size_t nDirector
 		V_strncpy( szFile, V_UnqualifiedFileName( argv[1] ), MAX_PATH );
 
 		// Make sure that the file passed in was an OBJ
-		if ( V_stristr( szFile, ".obj" ) ) 
+		if ( V_stristr( szFile, ".obj" ) )
 		{
 			V_FileBase( szFile, pcBaseName, nBaseNameBufSize );
 			V_strncpy( pcOBJFile, szFile, nOBJFileBufSize );
@@ -285,7 +285,7 @@ bool GetSteamUserName( char *pcSteamName, size_t nSteamNameBufSize )
 
 	pcSteamName[0] = NULL;
 
-	if ( ERROR_SUCCESS == RegOpenKey( HKEY_CURRENT_USER, "Software\\Valve\\Steam", &hKey ) ) 
+	if ( ERROR_SUCCESS == RegOpenKey( HKEY_CURRENT_USER, "Software\\Valve\\Steam", &hKey ) )
 	{
 		DWORD dwSize = sizeof( szModInstallPath );
 		RegQueryValueEx( hKey, "ModInstallPath", NULL, NULL, (LPBYTE)szModInstallPath, &dwSize );
@@ -304,14 +304,14 @@ bool GetSDKBinDirectory( char *pcSDKBinDir, size_t nBuffSize )
 	char szSDKPath[MAX_PATH];
 
 	*pcSDKBinDir = szEngineVersion[0] = szSDKPath[0] = NULL;
-	if ( ERROR_SUCCESS == RegOpenKey( HKEY_CURRENT_USER, "Software\\Valve\\Source SDK", &hKey ) ) 
+	if ( ERROR_SUCCESS == RegOpenKey( HKEY_CURRENT_USER, "Software\\Valve\\Source SDK", &hKey ) )
 	{
 		DWORD dwSize = sizeof( szEngineVersion );
 		RegQueryValueEx( hKey, "EngineVer", NULL, NULL, (LPBYTE)szEngineVersion, &dwSize );
 		RegCloseKey( hKey );
 	}
 
-	if ( ERROR_SUCCESS == RegOpenKey( HKEY_CURRENT_USER, "Environment", &hKey ) ) 
+	if ( ERROR_SUCCESS == RegOpenKey( HKEY_CURRENT_USER, "Environment", &hKey ) )
 	{
 		DWORD dwSize = sizeof( szSDKPath );
 		RegQueryValueEx( hKey, "sourcesdk", NULL, NULL, (LPBYTE)szSDKPath, &dwSize );
@@ -334,7 +334,7 @@ bool GetSDKSourcesDirectory( char *pcSDKSourcesDir, size_t nBufSize )
 	char szVProjectPath[MAX_PATH];
 
 	*pcSDKSourcesDir = NULL;
-	if ( ERROR_SUCCESS == RegOpenKey( HKEY_CURRENT_USER, "Environment", &hKey ) ) 
+	if ( ERROR_SUCCESS == RegOpenKey( HKEY_CURRENT_USER, "Environment", &hKey ) )
 	{
 		DWORD dwSize = sizeof( szSDKPath );
 		RegQueryValueEx( hKey, "sourcesdk", NULL, NULL, (LPBYTE)szSDKPath, &dwSize );
@@ -342,7 +342,7 @@ bool GetSDKSourcesDirectory( char *pcSDKSourcesDir, size_t nBufSize )
 		dwSize = sizeof( szVProjectPath );
 		RegQueryValueEx( hKey, "vproject", NULL, NULL, (LPBYTE)szVProjectPath, &dwSize );
 		RegCloseKey( hKey );
-		
+
 		V_snprintf( pcSDKSourcesDir, nBufSize, "%s_content\\%s", szSDKPath, V_UnqualifiedFileName( szVProjectPath ) );
 
 		return true;
@@ -359,8 +359,8 @@ void RunCommandLine( const char *pCmdLine, const char *pWorkingDir )
 
 	PROCESS_INFORMATION pi;
 	memset( &pi, 0, sizeof( pi ) );
-	
-	CreateProcess( 
+
+	CreateProcess(
 		NULL,
 		(char*)pCmdLine,
 		NULL,
@@ -407,7 +407,7 @@ bool GetVProjectDirectory( char *pcVProjectPath, size_t nBufSize )
 	HKEY hKey;
 	pcVProjectPath[0] = NULL;
 
-	if ( ERROR_SUCCESS == RegOpenKey( HKEY_CURRENT_USER, "Environment", &hKey ) ) 
+	if ( ERROR_SUCCESS == RegOpenKey( HKEY_CURRENT_USER, "Environment", &hKey ) )
 	{
 		DWORD dwSize = nBufSize;
 		RegQueryValueEx( hKey, "vproject", NULL, NULL, (LPBYTE)pcVProjectPath, &dwSize );
@@ -415,7 +415,7 @@ bool GetVProjectDirectory( char *pcVProjectPath, size_t nBufSize )
 
 		bRetVal = true;
 	}
-	
+
 	return bRetVal;
 }
 
@@ -450,7 +450,7 @@ void CopyVMT( const char *pcDirectory, const char *pcBaseName, const char *pcSte
 bool FileExists( const char* filePathName )
 {
 	DWORD attribs = ::GetFileAttributesA( filePathName );
-	if (attribs == INVALID_FILE_ATTRIBUTES) 
+	if (attribs == INVALID_FILE_ATTRIBUTES)
 	{
 		return false;
 	}
@@ -461,7 +461,7 @@ bool FileExists( const char* filePathName )
 bool DirectoryExists(const char* dirName)
 {
 	DWORD attribs = ::GetFileAttributesA(dirName);
-	if (attribs == INVALID_FILE_ATTRIBUTES) 
+	if (attribs == INVALID_FILE_ATTRIBUTES)
 	{
 		return false;
 	}
@@ -652,9 +652,9 @@ bool CopyModelSourcesToSrcTree( const char *pcDirectory, const char *pcSteamName
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : argc - 
-//			argv[] - 
+// Purpose:
+// Input  : argc -
+//			argv[] -
 // Output : int
 //-----------------------------------------------------------------------------
 int main( int argc, char* argv[] )
@@ -697,7 +697,7 @@ int main( int argc, char* argv[] )
 			CompileMDL( szOBJFile, szSteamName, szBaseName );
 //			printf( "--- Launching model viewer ---\n" );
 //			LaunchHLMV( szSteamName, szBaseName );
-			
+
 			return 0;
 		}
 	}

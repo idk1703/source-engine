@@ -26,7 +26,7 @@ extern ConVar tf_rd_points_approach_interval;
 extern ConVar tf_rd_points_per_approach;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHudRobotDestruction_StateImage::CTFHudRobotDestruction_StateImage( Panel *parent, const char *name, const char *pszResFile  )
 	: vgui::EditablePanel( parent, name )
@@ -39,7 +39,7 @@ CTFHudRobotDestruction_StateImage::CTFHudRobotDestruction_StateImage( Panel *par
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudRobotDestruction_StateImage::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -55,7 +55,7 @@ void CTFHudRobotDestruction_StateImage::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudRobotDestruction_StateImage::ApplySettings( KeyValues *inResourceData )
 {
@@ -78,7 +78,7 @@ void CTFHudRobotDestruction_StateImage::ApplySettings( KeyValues *inResourceData
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHudRobotDestruction_DeadImage::CTFHudRobotDestruction_DeadImage( Panel *parent, const char *name, const char *pszResFile )
 	: CTFHudRobotDestruction_StateImage( parent, name, pszResFile )
@@ -88,7 +88,7 @@ CTFHudRobotDestruction_DeadImage::CTFHudRobotDestruction_DeadImage( Panel *paren
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudRobotDestruction_DeadImage::SetProgress( float flProgress )
 {
@@ -97,14 +97,14 @@ void CTFHudRobotDestruction_DeadImage::SetProgress( float flProgress )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHudRobotDestruction_ActiveImage::CTFHudRobotDestruction_ActiveImage( Panel *parent, const char *name, const char *pszResFile )
 	: CTFHudRobotDestruction_StateImage( parent, name, pszResFile )
 {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudRobotDestruction_ActiveImage::ApplySettings( KeyValues *inResourceData )
 {
@@ -119,7 +119,7 @@ void CTFHudRobotDestruction_ActiveImage::ApplySettings( KeyValues *inResourceDat
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHudRobotDestruction_RobotIndicator::CTFHudRobotDestruction_RobotIndicator( vgui::Panel *pParent, const char *pszName, CTFRobotDestruction_RobotGroup *pGroup )
 	: EditablePanel( pParent, pszName )
@@ -142,7 +142,7 @@ CTFHudRobotDestruction_RobotIndicator::CTFHudRobotDestruction_RobotIndicator( vg
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudRobotDestruction_RobotIndicator::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -152,7 +152,7 @@ void CTFHudRobotDestruction_RobotIndicator::ApplySchemeSettings( vgui::IScheme *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudRobotDestruction_RobotIndicator::PerformLayout()
 {
@@ -162,7 +162,7 @@ void CTFHudRobotDestruction_RobotIndicator::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudRobotDestruction_RobotIndicator::ApplySettings( KeyValues *inResourceData )
 {
@@ -170,7 +170,7 @@ void CTFHudRobotDestruction_RobotIndicator::ApplySettings( KeyValues *inResource
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudRobotDestruction_RobotIndicator::OnTick()
 {
@@ -185,7 +185,7 @@ void CTFHudRobotDestruction_RobotIndicator::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudRobotDestruction_RobotIndicator::DoUnderAttackBlink()
 {
@@ -214,10 +214,10 @@ void CTFHudRobotDestruction_RobotIndicator::DoUnderAttackBlink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int	CTFHudRobotDestruction_RobotIndicator::GetGroupNumber() const 
-{ 
+int	CTFHudRobotDestruction_RobotIndicator::GetGroupNumber() const
+{
 	Assert( m_hGroup );
 	if ( !m_hGroup )
 	{
@@ -227,9 +227,9 @@ int	CTFHudRobotDestruction_RobotIndicator::GetGroupNumber() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int	CTFHudRobotDestruction_RobotIndicator::GetTeamNumber() const 
+int	CTFHudRobotDestruction_RobotIndicator::GetTeamNumber() const
 {
 	Assert( m_hGroup );
 	if ( !m_hGroup )
@@ -241,7 +241,7 @@ int	CTFHudRobotDestruction_RobotIndicator::GetTeamNumber() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudRobotDestruction_RobotIndicator::UpdateState()
 {
@@ -281,16 +281,16 @@ void CTFHudRobotDestruction_RobotIndicator::UpdateState()
 
 	bool bShowDead = m_eState == ROBOT_STATE_DEAD;
 	m_pActivePanel->SetImageVisible( !bShowDead );
-	
+
 	m_pDeadPanel->SetVisible( bStateVisibility[ ROBOT_STATE_DEAD ] || bShowDead );
 	m_pActivePanel->SetVisible( bStateVisibility[ ROBOT_STATE_ACTIVE ] );
 	m_pShieldedPanel->SetVisible( bStateVisibility[ ROBOT_STATE_SHIELDED ] );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTFHUDRobotDestruction::CTFHUDRobotDestruction( Panel *parent, const char *name ) 
+CTFHUDRobotDestruction::CTFHUDRobotDestruction( Panel *parent, const char *name )
 	: EditablePanel( parent, name )
 	, m_bPlayingRD( false )
 {
@@ -330,7 +330,7 @@ CTFHUDRobotDestruction::CTFHUDRobotDestruction( Panel *parent, const char *name 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHUDRobotDestruction::~CTFHUDRobotDestruction()
 {
@@ -342,7 +342,7 @@ CTFHUDRobotDestruction::~CTFHUDRobotDestruction()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFHUDRobotDestruction::IsVisible( void )
 {
@@ -354,7 +354,7 @@ bool CTFHUDRobotDestruction::IsVisible( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHUDRobotDestruction::ApplySettings( KeyValues *inResourceData )
 {
@@ -373,26 +373,26 @@ void CTFHUDRobotDestruction::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int SortRobotVec( CTFHudRobotDestruction_RobotIndicator * const *p1, CTFHudRobotDestruction_RobotIndicator * const *p2 )
 {
-		return (*p2)->GetGroupNumber() - (*p1)->GetGroupNumber();		
+		return (*p2)->GetGroupNumber() - (*p1)->GetGroupNumber();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHUDRobotDestruction::ApplySchemeSettings( IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
-	
+
 	CTFRobotDestructionLogic* pRoboLogic = CTFRobotDestructionLogic::GetRobotDestructionLogic();
 
 	if ( !pRoboLogic )
 		return;
 
-	
+
 	// load control settings...
 	LoadControlSettings( pRoboLogic->GetResFile() );
 
@@ -434,7 +434,7 @@ void CTFHUDRobotDestruction::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHUDRobotDestruction::PerformLayout()
 {
@@ -457,7 +457,7 @@ void CTFHUDRobotDestruction::PerformLayout()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHUDRobotDestruction::PerformRobotLayout( RobotVector_t& vecRobots, int nTeam )
 {
@@ -489,7 +489,7 @@ void CTFHUDRobotDestruction::PerformRobotLayout( RobotVector_t& vecRobots, int n
 				pRobot->SetPrevRobotIndicator( pPrevRobot );
 				pPrevRobot->SetNextRobotIndicator( pRobot );
 			}
-			
+
 			int nWide = pRobot->GetWide();
 			// The starting offset
 			int nStartPos = ( ( nXOffset ) + ( nWide * 0.5f ) ) * (bIsRed ?  1 : -1);
@@ -512,7 +512,7 @@ void CTFHUDRobotDestruction::PerformRobotLayout( RobotVector_t& vecRobots, int n
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHUDRobotDestruction::Reset()
 {
@@ -520,7 +520,7 @@ void CTFHUDRobotDestruction::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHUDRobotDestruction::SetPlayingToLabelVisible( bool bVisible )
 {
@@ -542,7 +542,7 @@ void CTFHUDRobotDestruction::SetPlayingToLabelVisible( bool bVisible )
 ConVar rd_hud_test_bars( "rd_hud_test_bars", 0 );
 #endif
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHUDRobotDestruction::OnTick()
 {
@@ -646,7 +646,7 @@ void CTFHUDRobotDestruction::OnTick()
 							}
 							else
 							{
-								bVisible = false;							
+								bVisible = false;
 							}
 						}
 
@@ -757,7 +757,7 @@ void CTFHUDRobotDestruction::OnTick()
 		{
 			m_pRedVictoryPanel->SetDialogVariable( "victorytime", (int)flFinaleProgress );
 		}
-		
+
 		// Get blue finale progress.  We hide the big scores and show the finale countdown if at max score.
 		flFinaleProgress = clamp( pRoboLogic->GetFinaleWinTime( TF_TEAM_BLUE ) - gpGlobals->curtime, 0.f, pRoboLogic->GetFinaleLength() );
 		m_pBlueVictoryPanel->SetVisible( flFinaleProgress < flFinaleTime );
@@ -784,7 +784,7 @@ void CTFHUDRobotDestruction::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHUDRobotDestruction::PaintBackground()
 {
@@ -823,13 +823,13 @@ void CTFHUDRobotDestruction::PaintPDPlayerScore( const CTFPlayer* pPlayer )
 		wchar_t wszScore[3];
 		V_snwprintf( wszScore, ARRAYSIZE( wszScore ), L"%d", iCurrentLeadingPoint );
 		const int nWidth = V_wcslen( wszScore ) * 15;
-	
+
  		// draw the name
  		vgui::surface()->DrawSetTextFont( m_hPDPlayerScoreFont );
 		vgui::surface()->DrawSetTextPos( iX - ( nWidth / 2 ), iY );
 		vgui::surface()->DrawSetTextColor( m_TextColor );
 
-		
+
 		vgui::surface()->DrawPrintText( wszScore, wcslen( wszScore ), vgui::FONT_DRAW_NONADDITIVE );
 
 	}
@@ -849,7 +849,7 @@ void CTFHUDRobotDestruction::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHUDRobotDestruction::UpdateStolenPoints( int nTeam, EditablePanel* pContainer )
 {
@@ -917,7 +917,7 @@ void CTFHUDRobotDestruction::UpdateStolenPoints( int nTeam, EditablePanel* pCont
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHUDRobotDestruction::UpdateCarriedFlagStatus( C_BasePlayer *pNewOwner /*= NULL*/, C_BaseEntity *pFlagEntity /*= NULL*/ )
 {
@@ -948,14 +948,14 @@ void CTFHUDRobotDestruction::UpdateCarriedFlagStatus( C_BasePlayer *pNewOwner /*
 	{
 		m_pCarriedContainer->SetVisible( true );
 		m_pCarriedContainer->SetDialogVariable( "flagvalue", pPlayerFlag->GetPointValue() );
-		// make sure the panels are on, set the initial alpha values, 
+		// make sure the panels are on, set the initial alpha values,
 		// set the color of the flag we're carrying, and start the animations
 		if ( m_pCarriedImage && !m_pCarriedImage->IsVisible() )
 		{
 			int nTeam;
-			if ( pPlayerFlag->GetType() == TF_FLAGTYPE_ATTACK_DEFEND || 
-				 pPlayerFlag->GetType() == TF_FLAGTYPE_TERRITORY_CONTROL || 
-				 pPlayerFlag->GetType() == TF_FLAGTYPE_INVADE || 
+			if ( pPlayerFlag->GetType() == TF_FLAGTYPE_ATTACK_DEFEND ||
+				 pPlayerFlag->GetType() == TF_FLAGTYPE_TERRITORY_CONTROL ||
+				 pPlayerFlag->GetType() == TF_FLAGTYPE_INVADE ||
 				 pPlayerFlag->GetType() == TF_FLAGTYPE_RESOURCE_CONTROL )
 			{
 				nTeam = ( ( GetLocalPlayerTeam() == TF_TEAM_BLUE ) ? ( TF_TEAM_BLUE ) : ( TF_TEAM_RED ) );
@@ -980,7 +980,7 @@ void CTFHUDRobotDestruction::UpdateCarriedFlagStatus( C_BasePlayer *pNewOwner /*
 			// What percentage needs to map to the dotted line
 			const float flProgressAtDottedLine = float( nMinToSteal ) / float( pRoboLogic->GetMaxPoints() );
 			// This is where in the texture the dotted line is
-			const float flWhereTheDottedLineIs = 0.25f;	
+			const float flWhereTheDottedLineIs = 0.25f;
 
 			// We want the progress bar range from [0, The dotted line] map to the progress value [0, Min to steal]
 			if ( flProgress <= flProgressAtDottedLine )
@@ -1002,7 +1002,7 @@ void CTFHUDRobotDestruction::UpdateCarriedFlagStatus( C_BasePlayer *pNewOwner /*
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHUDRobotDestruction::UpdateRobotElements()
 {
@@ -1013,7 +1013,7 @@ void CTFHUDRobotDestruction::UpdateRobotElements()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHUDRobotDestruction::UpdateStolenFlagStatus( int nTeam, C_BaseEntity *pFlag )
 {
@@ -1036,7 +1036,7 @@ void CTFHUDRobotDestruction::UpdateStolenFlagStatus( int nTeam, C_BaseEntity *pF
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHUDRobotDestruction::FireGameEvent( IGameEvent * pEvent )
 {
@@ -1193,7 +1193,7 @@ void CTFHUDRobotDestruction::CProgressPanel::PaintBackground()
 	BaseClass::PaintBackground();
 }
 
-void CTFHUDRobotDestruction::CProgressPanel::ApplySettings( KeyValues *inResourceData ) 
+void CTFHUDRobotDestruction::CProgressPanel::ApplySettings( KeyValues *inResourceData )
 {
 	BaseClass::ApplySettings( inResourceData );
 
@@ -1232,7 +1232,7 @@ void CTFHUDRobotDestruction::CProgressPanel::CalculateSize()
 	int nProgressWidth = m_nWideOrg - m_nRightOffset - m_nLeftOffset;
 	m_flXpos = m_bLeftToRight ? m_nXOrg
 							   : ( 1.f - m_flCurrentProgress) * nProgressWidth + m_nXOrg;
-							
+
 	// Find width
 	m_flWidth = m_flCurrentProgress * nProgressWidth;
 

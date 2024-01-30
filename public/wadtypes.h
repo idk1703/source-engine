@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -13,7 +13,7 @@
 
 // ---------------------------------------------------------
 //
-// This should include ONLY types (no function prototypes) 
+// This should include ONLY types (no function prototypes)
 // in or related to WADs that are shared among the engine
 // and tools
 //
@@ -96,4 +96,3 @@ typedef struct miptex_s					// New WAD4 files
 
 
 #endif		// WADTYPES_H
-

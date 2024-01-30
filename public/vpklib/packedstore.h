@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -220,7 +220,7 @@ struct CachedVPKRead_t
 // Read the VPK file in 1MB chunks
 // and we hang on to those chunks so we can serve other reads out of the cache
 // This sounds great, but is only of secondary importance.
-// The primary reason we do this is so that the FileTracker can calculate the 
+// The primary reason we do this is so that the FileTracker can calculate the
 // MD5 of the 1MB chunks asynchronously in another thread - while we hold
 // the chunk in cache - making the MD5 calculation "free"
 class CPackedStoreReadCache
@@ -306,7 +306,7 @@ public:
 
 	// Get a list of all files that match the given wildcard string
 	int GetFileList( const char *pWildCard, CUtlStringList &outFilenames, bool bFormattedOutput, bool bSortedOutput );
-	
+
 	/// Get a list of all files that match the given wildcard string, fetching all the details
 	/// at once
 	void GetFileList( const char *pWildcard, CUtlVector<VPKContentFileInfo_t> &outVecResults );
@@ -393,7 +393,7 @@ private:
 	IBaseFileSystem *m_pFileSystem;
 	IThreadedFileMD5Processor *m_pFileTracker;
 	CThreadFastMutex m_Mutex;
-	
+
 	CPackedStoreReadCache m_PackedStoreReadCache;
 
 	CUtlIntrusiveList<class CFileExtensionData> m_pExtensionData[PACKEDFILE_EXT_HASH_SIZE];
@@ -425,10 +425,10 @@ private:
 	uint32 m_nSizeOfSignedData;
 
 	FileHandleTracker_t m_FileHandles[MAX_ARCHIVE_FILES_TO_KEEP_OPEN_AT_ONCE];
-	
+
 	void Init( void );
 
-	struct CFileHeaderFixedData *FindFileEntry( 
+	struct CFileHeaderFixedData *FindFileEntry(
 		char const *pDirname, char const *pBaseName, char const *pExtension,
 		uint8 **pExtBaseOut = NULL, uint8 **pNameBaseOut = NULL );
 

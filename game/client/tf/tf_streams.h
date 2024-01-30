@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose:
-//			
+//
 //=============================================================================
 
 #ifndef TF_STREAMS_H

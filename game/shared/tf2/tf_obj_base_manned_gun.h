@@ -51,7 +51,7 @@ public:
 #endif
 	virtual bool	IsPassengerVisible( int nRole = VEHICLE_DRIVER ) { return true; }
 
-	// Returns the eye position 
+	// Returns the eye position
 	virtual void	GetVehicleViewPosition( int nRole, Vector *pOrigin, QAngle *pAngles, float *pFOV = NULL );
 
 	// Manned plasma passengers aren't damagable
@@ -94,7 +94,7 @@ private:
 #endif
 
 protected:
-	// Sets up various attachment points once the model is selected 
+	// Sets up various attachment points once the model is selected
 	// Derived classes should call this from within their SetTeamModel call
 	void OnModelSelected();
 
@@ -159,11 +159,11 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Inline methods 
+// Inline methods
 //-----------------------------------------------------------------------------
-inline bool	CObjectBaseMannedGun::CanBeHookedToBuffStation( void ) 
-{ 
-	return true; 
+inline bool	CObjectBaseMannedGun::CanBeHookedToBuffStation( void )
+{
+	return true;
 }
 
 #endif // TF_OBJ_BASE_MANNED_GUN_H

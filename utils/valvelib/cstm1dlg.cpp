@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -165,7 +165,7 @@ bool CCustom1Dlg::ComputeRelativePath( )
 	int targetLen = m_TargetPath.GetLength();
 	CString relativePath = m_TargetPath.Right( targetLen - rootLen );
 
-	// Now that we've got the relative source path, 
+	// Now that we've got the relative source path,
 	// find out how many slashes are in it;
 	// that'll tell us how many paths to back up....
 	int i;
@@ -177,7 +177,7 @@ bool CCustom1Dlg::ComputeRelativePath( )
 		targetRelativePath += "..\\";
 	}
 
-	// Now that we've got the relative source path, 
+	// Now that we've got the relative source path,
 	// find out how many slashes are in it;
 	// that'll tell us how many paths to back up....
 	CString rootSrcToProj = sourcePath.Right( sourceLen - rootSrcLen );
@@ -248,17 +248,17 @@ BOOL CCustom1Dlg::OnDismiss()
 	switch( m_ProjectType )
 	{
 	case 0:
-		Valvelibaw.m_Dictionary["VALVE_TARGET_TYPE"] = "lib"; 
+		Valvelibaw.m_Dictionary["VALVE_TARGET_TYPE"] = "lib";
 		Valvelibaw.m_Dictionary["PROJTYPE_LIB"]	= "1";
 		break;
 
 	case 1:
-		Valvelibaw.m_Dictionary["VALVE_TARGET_TYPE"] = "dll"; 
+		Valvelibaw.m_Dictionary["VALVE_TARGET_TYPE"] = "dll";
 		Valvelibaw.m_Dictionary["PROJTYPE_DLL"]	= "1";
 		break;
 
 	case 2:
-		Valvelibaw.m_Dictionary["VALVE_TARGET_TYPE"] = "exe"; 
+		Valvelibaw.m_Dictionary["VALVE_TARGET_TYPE"] = "exe";
 
 		if (m_ConsoleApp)
 		{
@@ -266,7 +266,7 @@ BOOL CCustom1Dlg::OnDismiss()
 		}
 		break;
 	}
-   
+
 	return TRUE;	// return FALSE if the dialog shouldn't be dismissed
 }
 
@@ -286,7 +286,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CCustom1Dlg message handlers
 
-void CCustom1Dlg::RecomputeTargetPath() 
+void CCustom1Dlg::RecomputeTargetPath()
 {
 	bool hasTerminatingSlash = ( m_RootPath.Right(1).FindOneOf("\\/") >= 0 );
 
@@ -346,7 +346,7 @@ void CCustom1Dlg::EnableCheckboxes()
 	}
 }
 
-void CCustom1Dlg::OnSelchangeSelectProjectType() 
+void CCustom1Dlg::OnSelchangeSelectProjectType()
 {
 	if (!UpdateData(TRUE))
 		return;
@@ -355,15 +355,7 @@ void CCustom1Dlg::OnSelchangeSelectProjectType()
 	EnableCheckboxes();
 }
 
-void CCustom1Dlg::OnChangeEditRootPath() 
-{	
-	if (!UpdateData(TRUE))
-		return;
-
-	RecomputeTargetPath();
-}
-
-void CCustom1Dlg::OnCheckPublic() 
+void CCustom1Dlg::OnChangeEditRootPath()
 {
 	if (!UpdateData(TRUE))
 		return;
@@ -371,7 +363,7 @@ void CCustom1Dlg::OnCheckPublic()
 	RecomputeTargetPath();
 }
 
-void CCustom1Dlg::OnCheckTool() 
+void CCustom1Dlg::OnCheckPublic()
 {
 	if (!UpdateData(TRUE))
 		return;
@@ -379,15 +371,23 @@ void CCustom1Dlg::OnCheckTool()
 	RecomputeTargetPath();
 }
 
-void CCustom1Dlg::OnCheckPublishImport() 
+void CCustom1Dlg::OnCheckTool()
 {
 	if (!UpdateData(TRUE))
 		return;
-	
+
+	RecomputeTargetPath();
+}
+
+void CCustom1Dlg::OnCheckPublishImport()
+{
+	if (!UpdateData(TRUE))
+		return;
+
 	EnableCheckboxes();
 }
 
-void CCustom1Dlg::OnChangeEditSrcPath() 
+void CCustom1Dlg::OnChangeEditSrcPath()
 {
 	if (!UpdateData(TRUE))
 		return;

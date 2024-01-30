@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -20,7 +20,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Forward declarations 
+// Forward declarations
 //-----------------------------------------------------------------------------
 class IVcdBlockDocCallback;
 class CVcdBlockDoc;
@@ -28,7 +28,7 @@ class CDmeVMFEntity;
 
 
 //-----------------------------------------------------------------------------
-// Contains all editable state 
+// Contains all editable state
 //-----------------------------------------------------------------------------
 class CVcdBlockDoc : public IDmNotify
 {
@@ -80,9 +80,9 @@ public:
 	CDmeVMFEntity *GetInfoTargetForLocation( Vector &vecStart, Vector &vecEnd );
 
 	// For element choice lists. Return false if it's an unknown choice list type
-	virtual bool GetStringChoiceList( const char *pChoiceListType, CDmElement *pElement, 
+	virtual bool GetStringChoiceList( const char *pChoiceListType, CDmElement *pElement,
 		const char *pAttributeName, bool bArrayElement, StringChoiceList_t &list );
-	virtual bool GetElementChoiceList( const char *pChoiceListType, CDmElement *pElement, 
+	virtual bool GetElementChoiceList( const char *pChoiceListType, CDmElement *pElement,
 		const char *pAttributeName, bool bArrayElement, ElementChoiceList_t &list );
 
 

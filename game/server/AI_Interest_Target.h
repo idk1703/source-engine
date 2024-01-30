@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Hooks and classes for the support of humanoid NPCs with 
+// Purpose: Hooks and classes for the support of humanoid NPCs with
 //			groovy facial animation capabilities, aka, "Actors"
 //
 //=============================================================================//
@@ -26,7 +26,7 @@ public:
 	enum CAI_InterestTarget_e
 	{
 		LOOKAT_ENTITY = 0,
-		LOOKAT_POSITION, 
+		LOOKAT_POSITION,
 		LOOKAT_BOTH
 	};
 
@@ -66,7 +66,7 @@ public:
 		}
 		return InvalidIndex();
 	}
-	
+
 	void Cleanup( void )
 	{
 		int i;

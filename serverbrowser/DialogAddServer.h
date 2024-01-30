@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -45,11 +45,11 @@ private:
 
 protected:
 	IGameList *m_pGameList;
-	
+
 	vgui::Button *m_pTestServersButton;
 	vgui::Button *m_pAddServerButton;
 	vgui::Button *m_pAddSelectedServerButton;
-	
+
 	vgui::PropertySheet *m_pTabPanel;
 	vgui::TextEntry *m_pTextEntry;
 	vgui::ListPanel *m_pDiscoveredGames;
@@ -58,7 +58,7 @@ protected:
 	CUtlVector<HServerQuery> m_Queries;
 };
 
-class CDialogAddBlacklistedServer : public CDialogAddServer 
+class CDialogAddBlacklistedServer : public CDialogAddServer
 {
 	DECLARE_CLASS_SIMPLE( CDialogAddBlacklistedServer, CDialogAddServer );
 public:

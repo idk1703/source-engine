@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -63,9 +63,9 @@ public:
 	bool IsFontAdditive(HFont font);
 	bool IsBitmapFont(HFont font );
 
-	void SetInterfaces( IFileSystem *pFileSystem, IMaterialSystem *pMaterialSystem ) 
-	{ 
-		m_pFileSystem = pFileSystem; 
+	void SetInterfaces( IFileSystem *pFileSystem, IMaterialSystem *pMaterialSystem )
+	{
+		m_pFileSystem = pFileSystem;
 		m_pMaterialSystem = pMaterialSystem;
 	}
 	IFileSystem *FileSystem() { return m_pFileSystem; }
@@ -97,7 +97,7 @@ private:
 	CUtlVector<font_t *> m_Win32Fonts;
 
 #ifdef LINUX
-	FT_Library library; 
+	FT_Library library;
 	FontDataHelper m_pFontDataHelper;
 #endif
 	char m_szLanguage[64];

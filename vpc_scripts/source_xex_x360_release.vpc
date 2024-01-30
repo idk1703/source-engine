@@ -101,7 +101,7 @@ $Configuration "Release"
 		// Advanced
 		$CompileAs							"Compile as C++ Code (/TP)"
 		$DisableSpecificWarnings
-		$ForceIncludes						"tier0/platform.h"			
+		$ForceIncludes						"tier0/platform.h"
 		$ShowIncludes						"No"
 		$UndefinePreprocessorDefinitions
 		$UndefineAllPreprocessorDefinitions	"No"
@@ -176,7 +176,7 @@ $Configuration "Release"
 
 		// Command Line
 	}
- 
+
 	$Xbox360ImageConversion
 	{
 		// General
@@ -203,7 +203,7 @@ $Configuration "Release"
 
 	$BrowseInformation
 	{
-		$SuppressStartupBanner				"Yes (/nologo)"	
+		$SuppressStartupBanner				"Yes (/nologo)"
 		$OutputFile							"$(OutDir)/$OUTBINNAME.bsc"
 		$AdditionalOptions
 	}

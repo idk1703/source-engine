@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -21,7 +21,7 @@
 
 class CHL2MP_Player;
 
-// These are the names of the ammo types that go in the CAmmoDefs and that the 
+// These are the names of the ammo types that go in the CAmmoDefs and that the
 // weapon script files reference.
 
 // Given an ammo type (like from a weapon's GetPrimaryAmmoType()), this compares it
@@ -33,14 +33,14 @@ class CWeaponHL2MPBase : public CBaseCombatWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponHL2MPBase, CBaseCombatWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponHL2MPBase();
 
 	#ifdef GAME_DLL
 		DECLARE_DATADESC();
-	
+
 		void SendReloadSoundEvent( void );
 
 		void Materialize( void );
@@ -54,16 +54,16 @@ public:
 	CHL2MP_Player* GetHL2MPPlayerOwner() const;
 
 	void WeaponSound( WeaponSound_t sound_type, float soundtime = 0.0f );
-	
+
 	CHL2MPSWeaponInfo const	&GetHL2MPWpnData() const;
 
 
 	virtual void FireBullets( const FireBulletsInfo_t &info );
 	virtual void FallInit( void );
-	
+
 public:
 	#if defined( CLIENT_DLL )
-		
+
 		virtual bool	ShouldPredict();
 		virtual void	OnDataChanged( DataUpdateType_t type );
 

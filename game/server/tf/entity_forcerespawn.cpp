@@ -100,12 +100,12 @@ void CTFForceRespawn::ForceRespawn( bool bSwitchTeams, int nTeam /* = TEAM_UNASS
 						continue;
 				}
 			}
-			
+
 			pPlayer->ForceRespawn();
 		}
 	}
 
-	// remove any dropped weapons/ammo packs	
+	// remove any dropped weapons/ammo packs
 	CBaseEntity *pEnt = NULL;
 	while ( (pEnt = gEntList.FindEntityByClassname( pEnt, "tf_ammo_pack" )) != NULL )
 	{
@@ -140,4 +140,3 @@ void CTFForceRespawn::InputForceTeamRespawn( inputdata_t &inputdata )
 	int nTeam = inputdata.value.Int();
 	ForceRespawn( false, nTeam, false );
 }
-

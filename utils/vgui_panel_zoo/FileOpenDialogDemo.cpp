@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,13 +21,13 @@ class FileOpenDemo: public DemoPage
 		~FileOpenDemo();
 
 		void SetVisible(bool status);
-	
+
 	private:
 		void OnFileSelected(const char *fullpath);
 
 		DHANDLE<FileOpenDialog> m_hFileDialog;
 
-		DECLARE_PANELMAP();		
+		DECLARE_PANELMAP();
 };
 
 //-----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ void FileOpenDemo::SetVisible(bool status)
 			m_hFileDialog->AddActionSignalTarget(this);
 		}
 		m_hFileDialog->DoModal(false);
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -74,7 +74,7 @@ void FileOpenDemo::OnFileSelected(const char *fullpath)
 
 MessageMapItem_t FileOpenDemo::m_MessageMap[] =
 {
-	MAP_MESSAGE_CONSTCHARPTR(FileOpenDemo, "FileSelected", OnFileSelected, "fullpath"), 
+	MAP_MESSAGE_CONSTCHARPTR(FileOpenDemo, "FileSelected", OnFileSelected, "fullpath"),
 };
 
 IMPLEMENT_PANELMAP(FileOpenDemo, DemoPage);
@@ -84,5 +84,3 @@ Panel* FileOpenDemo_Create(Panel *parent)
 {
 	return new FileOpenDemo(parent, "FileOpenDialogDemo");
 }
-
-

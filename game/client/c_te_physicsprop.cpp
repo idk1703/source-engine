@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -59,7 +59,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEPhysicsProp::C_TEPhysicsProp( void )
 {
@@ -73,7 +73,7 @@ C_TEPhysicsProp::C_TEPhysicsProp( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEPhysicsProp::~C_TEPhysicsProp( void )
 {
@@ -81,9 +81,9 @@ C_TEPhysicsProp::~C_TEPhysicsProp( void )
 
 
 //-----------------------------------------------------------------------------
-// Recording 
+// Recording
 //-----------------------------------------------------------------------------
-static inline void RecordPhysicsProp( const Vector& start, const QAngle &angles, 
+static inline void RecordPhysicsProp( const Vector& start, const QAngle &angles,
 	const Vector& vel, int nModelIndex, bool bBreakModel, int nSkin, int nEffects )
 {
 	if ( !ToolsEnabled() )
@@ -120,7 +120,7 @@ static inline void RecordPhysicsProp( const Vector& start, const QAngle &angles,
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TE_PhysicsProp( IRecipientFilter& filter, float delay,
 	int modelindex, int skin, const Vector& pos, const QAngle &angles, const Vector& vel, bool breakmodel, int fEffects )
@@ -130,7 +130,7 @@ void TE_PhysicsProp( IRecipientFilter& filter, float delay,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEPhysicsProp::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -162,4 +162,3 @@ void TE_PhysicsProp( IRecipientFilter& filter, float delay, KeyValues *pKeyValue
 
 	TE_PhysicsProp( filter, delay, nModelIndex, nSkin, vecOrigin, angles, vecVel, bBreakModel, nEffects );
 }
-

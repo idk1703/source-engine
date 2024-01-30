@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -49,7 +49,7 @@ void CToolOverlay::OnActivate()
 	m_bDragging = false;
 	m_pActiveOverlay = NULL;
 }
-    
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void CToolOverlay::OnDeactivate()
@@ -127,7 +127,7 @@ bool CToolOverlay::CreateOverlay( CMapSolid *pSolid, ULONG iFace, CMapView3D *pV
 	// find the point of intersection.
 	Vector vecStart, vecEnd;
 	pView->BuildRay( point, vecStart, vecEnd );
-	
+
 	Vector vecHitPos, vecHitNormal;
 	CMapFace *pFace = pSolid->GetFace( iFace );
 	if( pFace->TraceLine( vecHitPos, vecHitNormal, vecStart, vecEnd ) )
@@ -137,32 +137,32 @@ bool CToolOverlay::CreateOverlay( CMapSolid *pSolid, ULONG iFace, CMapView3D *pV
 		pEntity->SetKeyValue( "material", GetDefaultTextureName() );
 		pEntity->SetPlaceholder( TRUE );
 		pEntity->SetOrigin( vecHitPos );
-		pEntity->SetClass( "info_overlay" );				
-		
+		pEntity->SetClass( "info_overlay" );
+
 		// Add the entity to the world.
 		m_pDocument->AddObjectToWorld( pEntity );
-		
+
 		// Setup "history."
 		GetHistory()->MarkUndoPosition( NULL, "Create Overlay" );
 		GetHistory()->KeepNew( pEntity );
-				
+
 		// Initialize the overlay.
 		InitOverlay( pEntity, pFace );
 
 		pEntity->CalcBounds( TRUE );
-		
+
 		// Add to selection list.
 		m_pDocument->SelectObject( pEntity, scSelect );
 		m_bEmpty = false;
-		
+
 		// Set modified and update views.
 		m_pDocument->SetModifiedFlag();
-		
+
 		m_pShoreline = NULL;
 
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -226,16 +226,16 @@ void CToolOverlay::OverlaySelection( CMapView3D *pView, UINT nFlags, const Vecto
 
 	// Find overlays.
 	bool bUpdateViews = false;
-	
+
 	SelectMode_t eSelectMode = m_pDocument->GetSelection()->GetMode();
-	
+
 	FOR_EACH_OBJ( aSelectionList, pos )
 	{
 		CMapClass *pObject = aSelectionList.Element( pos );
 		CMapClass *pHitObject = pObject->PrepareSelection( eSelectMode );
 		if ( pHitObject )
 		{
-			if ( pHitObject->IsMapClass( MAPCLASS_TYPE( CMapEntity ) ) ) 
+			if ( pHitObject->IsMapClass( MAPCLASS_TYPE( CMapEntity ) ) )
 			{
 				const CMapObjectList *pChildren = pHitObject->GetChildren();
 				FOR_EACH_OBJ( *pChildren, pos2 )
@@ -262,7 +262,7 @@ void CToolOverlay::OverlaySelection( CMapView3D *pView, UINT nFlags, const Vecto
 	// Update the views.
 	if ( bUpdateViews )
 	{
-		m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_OBJECTS );		
+		m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_OBJECTS );
 	}
 }
 
@@ -318,7 +318,7 @@ void CToolOverlay::HandlesReset( void )
 	{
 		CMapClass *pMapClass = pSelection->Element( iSelection );
 		if ( pMapClass && pMapClass->IsMapClass( MAPCLASS_TYPE( CMapEntity ) ) )
-		{	
+		{
 			const CMapObjectList *pChildren = pMapClass->GetChildren();
 			FOR_EACH_OBJ( *pChildren, pos )
 			{
@@ -459,7 +459,7 @@ void CToolOverlay::OnDrag( Vector const &vecRayStart, Vector const &vecRayEnd, b
 	Vector vecImpact( 0.0f, 0.0f, 0.0f );
 	Vector vecImpactNormal( 0.0f, 0.0f, 0.0f );
 	CMapFace *pFace = NULL;
-		
+
 	int nFaceCount = pOverlay->GetFaceCount();
 	int iFace;
 	for ( iFace = 0; iFace < nFaceCount; iFace++ )
@@ -480,7 +480,7 @@ void CToolOverlay::OnDrag( Vector const &vecRayStart, Vector const &vecRayEnd, b
 	{
 		SnapHandle( vecImpact );
 	}
-	
+
 	// Pass the new handle position to the overlay.
 	pOverlay->HandlesDragTo( vecImpact, pFace );
 
@@ -520,7 +520,7 @@ void CToolOverlay::PostDrag( void )
 		pOverlay->DoClip();
 		pOverlay->CenterEntity();
 		pOverlay->PostUpdate( Notify_Changed );
-		m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_OBJECTS );	
+		m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_OBJECTS );
 	}
 
 	// Reset the overlay handles.
@@ -540,7 +540,7 @@ void CToolOverlay::SetupHandleDragUndo( void )
 		{
 			// Setup for drag undo.
 			GetHistory()->MarkUndoPosition( m_pDocument->GetSelection()->GetList(), "Drag Overlay Handle" );
-			GetHistory()->Keep( ( CMapClass* )pEntity );				
+			GetHistory()->Keep( ( CMapClass* )pEntity );
 		}
 	}
 }

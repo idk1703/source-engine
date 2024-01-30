@@ -36,7 +36,7 @@ public:
 	//-------------------------------------------------------------------------
 	CEnvMeteorShared();
 	void Init( int nID, float flStartTime, float flPassiveTime,
-		       const Vector &vecStartPosition, 
+		       const Vector &vecStartPosition,
 		       const Vector &vecDirection, float flSpeed, float flDamageRadius,
 			   const Vector &vecTriggerMins, const Vector &vecTriggerMaxs );
 
@@ -81,7 +81,7 @@ public:
 
 	// The objects initial parametric conditions.
 	Vector	m_vecStartPosition;
-	Vector	m_vecDirection;			
+	Vector	m_vecDirection;
 	float	m_flSpeed;				// (units/sec), unit = 1 inch
 	float	m_flStartTime;
 
@@ -99,15 +99,15 @@ public:
 	float	m_flPosTime;				// Timer used to find the position of the meteor.
 	Vector	m_vecPos;
 
-	// 
+	//
 	int		m_nLocation;				// 0 = Skybox, 1 = World
 
-	float	m_flDamageRadius;			// 
+	float	m_flDamageRadius;			//
 
 private:
 
 	// Calculate the enter/exit times. (called from Init)
-	void CalcEnterAndExitTimes( const Vector &vecTriggerMins, const Vector &vecTriggerMaxs );			
+	void CalcEnterAndExitTimes( const Vector &vecTriggerMins, const Vector &vecTriggerMaxs );
 };
 
 //=============================================================================
@@ -118,8 +118,8 @@ abstract_class IMeteorFactory
 {
 public:
 
-	virtual void CreateMeteor( int nID, int iType, 
-		                       const Vector &vecPosition, const Vector &vecDirection, 
+	virtual void CreateMeteor( int nID, int iType,
+		                       const Vector &vecPosition, const Vector &vecDirection,
 		                       float flSpeed, float flStartTime, float flDamageRadius,
 							   const Vector &vecTriggerMins, const Vector &vecTriggerMaxs ) = 0;
 };
@@ -143,7 +143,7 @@ public:
 				  const Vector &vecTriggerMins, const Vector &vecTriggerMaxs );
 
 	//-------------------------------------------------------------------------
-	// Method to generate meteors. 
+	// Method to generate meteors.
 	// Time passed in here is global time, not delta time.
 	// The function returns the time at which it must be called again.
 	//-------------------------------------------------------------------------
@@ -188,7 +188,7 @@ public:
 	// Generated data.
 	int								m_nRandomCallCount;		// Debug! Keep track of number steam calls.
 	float							m_flNextSpawnTime;		// Next meteor spawn time (random).
-	CUniformRandomStream			m_NumberStream;			// Used to generate random numbers.	
+	CUniformRandomStream			m_NumberStream;			// Used to generate random numbers.
 
 	// Use "Targets" to determine meteor direction(s).
 	struct meteortarget_t

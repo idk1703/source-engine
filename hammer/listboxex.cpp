@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -60,7 +60,7 @@ void CListBoxEx::AddItem(char *pszCaption, int iEditType, PVOID pData,
 	strcpy(lbis.szCaption, pszCaption);
 	lbis.pszSaveCaption = pszCaption;
 	lbis.iEditType = iEditType;
-	
+
 	switch(iEditType)
 	{
 	case lbeYesNo:
@@ -90,11 +90,11 @@ void CListBoxEx::AddItem(char *pszCaption, int iEditType, PVOID pData,
 	lbis.pszHelp = pszHelp;
 
 	Items[nItems++] = lbis;
-	
+
 	AddString("");	// trick windows! muahaha
 }
 
-void CListBoxEx::SetItemChoices(int iItem, CStringArray * pChoices, 
+void CListBoxEx::SetItemChoices(int iItem, CStringArray * pChoices,
 								int iDefaultChoice)
 {
 	LBEXTITEMSTRUCT& lbis = Items[iItem];
@@ -104,7 +104,7 @@ void CListBoxEx::SetItemChoices(int iItem, CStringArray * pChoices,
 	V_strcpy_safe( lbis.szDataString, pChoices->GetAt( iDefaultChoice ) );
 }
 
-void CListBoxEx::MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
+void CListBoxEx::MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
 	if(iItemHeight == -1)
 	{
@@ -144,7 +144,7 @@ void CListBoxEx::GetItemText(int iItem, char *pszText)
 	}
 }
 
-void CListBoxEx::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
+void CListBoxEx::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	CDC dc;
 	dc.Attach(lpDrawItemStruct->hDC);
@@ -152,7 +152,7 @@ void CListBoxEx::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 	RECT& r = lpDrawItemStruct->rcItem;
 
-	if(lpDrawItemStruct->itemID != -1 && 
+	if(lpDrawItemStruct->itemID != -1 &&
 		(lpDrawItemStruct->itemAction == ODA_DRAWENTIRE ||
 		lpDrawItemStruct->itemAction == ODA_SELECT))
 	{
@@ -187,15 +187,15 @@ void CListBoxEx::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		// first, draw text
 		dc.SetTextColor(GetSysColor(iForeIndex));
 		dc.SetBkColor(GetSysColor(iBackIndex));
-		dc.TextOut(r.left + 1, r.top+ 1, item.szCaption, 
+		dc.TextOut(r.left + 1, r.top+ 1, item.szCaption,
 			strlen(item.szCaption));
-		
+
 		if(!bDrawCaptionOnly)
 		{
 			// draw value ..
 			char szText[128];
 			GetItemText(lpDrawItemStruct->itemID, szText);
-			dc.TextOut(r.left + iCaptionWidthPixels + 1, r.top + 1, 
+			dc.TextOut(r.left + iCaptionWidthPixels + 1, r.top + 1,
 				szText, strlen(szText));
 		}
 
@@ -215,7 +215,7 @@ void CListBoxEx::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	dc.RestoreDC(-1);
 }
 
-void CListBoxEx::OnLButtonDown(UINT nFlags, CPoint point) 
+void CListBoxEx::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	BOOL bOutside;
 	int iItem = ItemFromPoint(point, bOutside);
@@ -230,7 +230,7 @@ void CListBoxEx::OnLButtonDown(UINT nFlags, CPoint point)
 	CListBox::OnLButtonDown(nFlags, point);
 }
 
-int CListBoxEx::CompareItem(LPCOMPAREITEMSTRUCT lpCompareItemStruct) 
+int CListBoxEx::CompareItem(LPCOMPAREITEMSTRUCT lpCompareItemStruct)
 {
 	return 0;
 }
@@ -240,7 +240,7 @@ void CListBoxEx::CreateEditControl()
 	if(IsWindow(EditCtrl.m_hWnd))
 		return;
 
-	// create edit control 
+	// create edit control
 	int iItem = GetCurSel();
 	if(iItem == LB_ERR)
 		return;
@@ -251,21 +251,21 @@ void CListBoxEx::CreateEditControl()
 	   lbis.iEditType != lbeInteger &&
 	   lbis.iEditType != lbeTexture)
 	   return;
-	
+
 	CRect r;
 	GetItemRect(iItem, r);
 	r.InflateRect(-1, -1);
 	r.left += iCaptionWidthPixels;
 
 	// create edit ctrl
-	EditCtrl.Create(ES_LEFT | ES_LOWERCASE | WS_VISIBLE | WS_TABSTOP, r, this, 
+	EditCtrl.Create(ES_LEFT | ES_LOWERCASE | WS_VISIBLE | WS_TABSTOP, r, this,
 		IDC_EDITPARAMETER);
 	// set font
 	HFONT hFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
 	if (hFont == NULL)
 		hFont = (HFONT)GetStockObject(ANSI_VAR_FONT);
 	EditCtrl.SendMessage(WM_SETFONT, (WPARAM)hFont);
-	
+
 	// set current text in edit ctrl
 	char szBuf[128];
 	GetItemText(iItem, szBuf);
@@ -283,7 +283,7 @@ void CListBoxEx::CreateComboControl()
 	if(IsWindow(ComboCtrl.m_hWnd))
 		return;
 
-	// create edit control 
+	// create edit control
 	int iItem = GetCurSel();
 	if(iItem == LB_ERR)
 		return;
@@ -292,21 +292,21 @@ void CListBoxEx::CreateComboControl()
 
 	if(lbis.iEditType != lbeChoices)
 	   return;
-	
+
 	CRect r;
 	GetItemRect(iItem, r);
 	r.left += iCaptionWidthPixels;
 	r.bottom += 80;
 
 	// create combo ctrl
-	ComboCtrl.Create(WS_CHILD | WS_VISIBLE | WS_VSCROLL | CBS_DROPDOWNLIST | 
+	ComboCtrl.Create(WS_CHILD | WS_VISIBLE | WS_VSCROLL | CBS_DROPDOWNLIST |
 		WS_TABSTOP, r, this, IDC_EDITPARAMETER);
 	// set font
 	HFONT hFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
 	if (hFont == NULL)
 		hFont = (HFONT)GetStockObject(ANSI_VAR_FONT);
 	ComboCtrl.SendMessage(WM_SETFONT, (WPARAM)hFont);
-	
+
 	// add strings to combo ctrl
 	CStringArray * pChoices = lbis.pChoices;
 	Assert(pChoices);
@@ -337,7 +337,7 @@ void CListBoxEx::DestroyControls()
 	bControlActive = FALSE;
 }
 
-void CListBoxEx::OnSelchange() 
+void CListBoxEx::OnSelchange()
 {
 	if(bControlActive)
 	{
@@ -375,7 +375,7 @@ void CListBoxEx::OnSelchange()
 	}
 }
 
-void CListBoxEx::OnLButtonUp(UINT nFlags, CPoint point) 
+void CListBoxEx::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	CListBox::OnLButtonUp(nFlags, point);
 
@@ -392,7 +392,7 @@ void CListBoxEx::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 }
 
-void CListBoxEx::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags) 
+void CListBoxEx::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	CListBox::OnChar(nChar, nRepCnt, nFlags);
 

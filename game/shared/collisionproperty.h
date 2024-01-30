@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -107,13 +107,13 @@ public:
 	// Rebuilds the scaled bounds from the pre-scaled bounds after a model's scale has changed
 	void			RefreshScaledCollisionBounds( void );
 
-	// Sets special trigger bounds. The bloat amount indicates how much bigger the 
+	// Sets special trigger bounds. The bloat amount indicates how much bigger the
 	// trigger bounds should be beyond the bounds set in SetCollisionBounds
 	// This method will also set the FSOLID flag FSOLID_USE_TRIGGER_BOUNDS
 	void			UseTriggerBounds( bool bEnable, float flBloat = 0.0f );
 
 	// Sets the method by which the surrounding collision bounds is set
-	// You must pass in values for mins + maxs if you select the USE_SPECIFIED_BOUNDS type. 
+	// You must pass in values for mins + maxs if you select the USE_SPECIFIED_BOUNDS type.
 	void			SetSurroundingBoundsType( SurroundingBoundsType_t type, const Vector *pMins = NULL, const Vector *pMaxs = NULL );
 
 	// Sets the solid type (which type of collision representation)
@@ -123,8 +123,8 @@ public:
 	// (specified by GetCollisionToWorld)
 	const Vector&	OBBSize( ) const;
 
-	// Returns a radius (or the square of the radius) of a sphere 
-	// *centered at the world space center* bounding the collision representation 
+	// Returns a radius (or the square of the radius) of a sphere
+	// *centered at the world space center* bounding the collision representation
 	// of the entity. NOTE: The world space center *may* move when the entity rotates.
 	float			BoundingRadius() const;
 	float			BoundingRadius2D() const;
@@ -138,7 +138,7 @@ public:
 	const Vector &	WorldSpaceCenter( ) const;
 
 	// Methods related to solid flags
-	void			ClearSolidFlags( void );	
+	void			ClearSolidFlags( void );
 	void			RemoveSolidFlags( int flags );
 	void			AddSolidFlags( int flags );
 	bool			IsSolidFlagSet( int flagMask ) const;
@@ -160,7 +160,7 @@ public:
 	// Transforms a direction in world space to OBB space
 	const Vector &	WorldDirectionToCollisionSpace( const Vector &in, Vector *pResult ) const;
 
-	// Selects a random point in the bounds given the normalized 0-1 bounds 
+	// Selects a random point in the bounds given the normalized 0-1 bounds
 	void			RandomPointInBounds( const Vector &vecNormalizedMins, const Vector &vecNormalizedMaxs, Vector *pPoint) const;
 
 	// Is a worldspace point within the bounds of the OBB?
@@ -252,7 +252,7 @@ private:
 	CNetworkVar( unsigned char, m_nSurroundType );
 
 	// One of the SOLID_ defines. Use GetSolid/SetSolid.
-	CNetworkVar( unsigned char, m_nSolidType );			
+	CNetworkVar( unsigned char, m_nSolidType );
 	CNetworkVar( unsigned char , m_triggerBloat );
 
 	// SUCKY: We didn't use to have to store this previously
@@ -274,7 +274,7 @@ private:
 
 	// pointer to the entity's physics object (vphysics.dll)
 	//IPhysicsObject	*m_pPhysicsObject;
-	
+
 	friend class CBaseEntity;
 };
 
@@ -387,7 +387,7 @@ inline const Vector& CCollisionProperty::OBBCenter( ) const
 //-----------------------------------------------------------------------------
 // center point of entity
 //-----------------------------------------------------------------------------
-inline const Vector &CCollisionProperty::WorldSpaceCenter( ) const 
+inline const Vector &CCollisionProperty::WorldSpaceCenter( ) const
 {
 	Vector &vecResult = AllocTempVector();
 	CollisionToWorldSpace( OBBCenter(), &vecResult );
@@ -398,7 +398,7 @@ inline const Vector &CCollisionProperty::WorldSpaceCenter( ) const
 //-----------------------------------------------------------------------------
 // Transforms a point in OBB space to world space
 //-----------------------------------------------------------------------------
-inline const Vector &CCollisionProperty::CollisionToWorldSpace( const Vector &in, Vector *pResult ) const 
+inline const Vector &CCollisionProperty::CollisionToWorldSpace( const Vector &in, Vector *pResult ) const
 {
 	// Makes sure we don't re-use the same temp twice
 	if ( !IsBoundsDefinedInEntitySpace() || ( GetCollisionAngles() == vec3_angle ) )

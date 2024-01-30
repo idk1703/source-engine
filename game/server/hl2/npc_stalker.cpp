@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -84,14 +84,14 @@ enum
 {
 	SCHED_STALKER_CHASE_ENEMY = LAST_SHARED_SCHEDULE,
 	SCHED_STALKER_RANGE_ATTACK,
-	SCHED_STALKER_ACQUIRE_PLAYER, 
+	SCHED_STALKER_ACQUIRE_PLAYER,
 	SCHED_STALKER_PATROL,
 };
 
 //=========================================================
 // Stalker Tasks
 //=========================================================
-enum 
+enum
 {
 	TASK_STALKER_ZIGZAG = LAST_SHARED_TASK,
 	TASK_STALKER_SCREAM,
@@ -163,7 +163,7 @@ int	CNPC_Stalker::OnTakeDamage_Alive( const CTakeDamageInfo &inputInfo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CNPC_Stalker::MaxYawSpeed( void )
 {
@@ -188,7 +188,7 @@ float CNPC_Stalker::MaxYawSpeed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 // Output : int
@@ -227,7 +227,7 @@ bool CNPC_Stalker::IsValidEnemy( CBaseEntity *pEnemy )
 	if( enemyClass == CLASS_BULLSEYE && pEnemy->GetParent() )
 	{
 		// This bullseye is in heirarchy with something. If that
-		// something is held by the physcannon, this bullseye is 
+		// something is held by the physcannon, this bullseye is
 		// NOT a valid enemy.
 		IPhysicsObject *pPhys = pEnemy->GetParent()->VPhysicsGetObject();
 		if( pPhys && (pPhys->GetGameFlags() & FVPHYSICS_PLAYER_HELD) )
@@ -263,7 +263,7 @@ bool CNPC_Stalker::IsValidEnemy( CBaseEntity *pEnemy )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -306,14 +306,14 @@ void CNPC_Stalker::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
 void CNPC_Stalker::Precache( void )
 {
 	PrecacheModel("models/stalker.mdl");
-	PrecacheModel("sprites/laser.vmt");	
+	PrecacheModel("sprites/laser.vmt");
 
 	PrecacheModel("sprites/redglow1.vmt");
 	PrecacheModel("sprites/orangeglow1.vmt");
@@ -333,8 +333,8 @@ void CNPC_Stalker::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Stalker::CreateBehaviors()
@@ -360,11 +360,11 @@ void CNPC_Stalker::OnScheduleChange()
 	BaseClass::OnScheduleChange();
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pInflictor - 
-//			pAttacker - 
-//			flDamage - 
-//			bitsDamageType - 
+// Purpose:
+// Input  : pInflictor -
+//			pAttacker -
+//			flDamage -
+//			bitsDamageType -
 //-----------------------------------------------------------------------------
 void CNPC_Stalker::Event_Killed( const CTakeDamageInfo &info )
 {
@@ -395,7 +395,7 @@ void CNPC_Stalker::Event_Killed( const CTakeDamageInfo &info )
 // Output :
 //-----------------------------------------------------------------------------
 void CNPC_Stalker::DeathSound( const CTakeDamageInfo &info )
-{ 
+{
 	EmitSound( "NPC_Stalker.Die" );
 };
 
@@ -405,7 +405,7 @@ void CNPC_Stalker::DeathSound( const CTakeDamageInfo &info )
 // Output :
 //-----------------------------------------------------------------------------
 void CNPC_Stalker::PainSound( const CTakeDamageInfo &info )
-{ 
+{
 	EmitSound( "NPC_Stalker.Pain" );
 	m_flNextScrambleSoundTime	= gpGlobals->curtime + 1.5;
 	m_flNextBreatheSoundTime	= gpGlobals->curtime + 1.5;
@@ -437,14 +437,14 @@ int CNPC_Stalker::GetSlotSchedule(int slotID)
 void CNPC_Stalker::UpdateAttackBeam( void )
 {
 	CBaseEntity *pEnemy = GetEnemy();
-	// If not burning at a target 
+	// If not burning at a target
 	if (pEnemy)
 	{
 		if (gpGlobals->curtime > m_fBeamEndTime)
 		{
 			TaskComplete();
 		}
-		else 
+		else
 		{
 			Vector enemyLKP = GetEnemyLKP();
 			m_vLaserTargetPos = enemyLKP + pEnemy->GetViewOffset();
@@ -538,7 +538,7 @@ void CNPC_Stalker::StartTask( const Task_t *pTask )
 
 				// Never hit target on first try
 				Vector missPos = m_vLaserTargetPos;
-				
+
 				if( pEnemy->Classify() == CLASS_BULLSEYE && hl2_episodic.GetBool() )
 				{
 					missPos.x += 60 + 120*random->RandomInt(-1,1);
@@ -566,7 +566,7 @@ void CNPC_Stalker::StartTask( const Task_t *pTask )
 					}
 					// --------------------------------------------------------
 					// If facing away or running towards laser,
-					// shoot above target's head 
+					// shoot above target's head
 					// --------------------------------------------------------
 					else
 					{
@@ -574,7 +574,7 @@ void CNPC_Stalker::StartTask( const Task_t *pTask )
 					}
 				}
 				m_vLaserDir = missPos - LaserStartPosition(GetAbsOrigin());
-				VectorNormalize(m_vLaserDir);	
+				VectorNormalize(m_vLaserDir);
 			}
 			else
 			{
@@ -617,7 +617,7 @@ void CNPC_Stalker::StartTask( const Task_t *pTask )
 			GetMotor()->SetIdealYawToTarget( m_vLaserCurPos );
 			break;
 		}
-	default: 
+	default:
 		BaseClass:: StartTask( pTask );
 		break;
 	}
@@ -769,7 +769,7 @@ int CNPC_Stalker::SelectSchedule( void )
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-int CNPC_Stalker::TranslateSchedule( int scheduleType ) 
+int CNPC_Stalker::TranslateSchedule( int scheduleType )
 {
 	switch( scheduleType )
 	{
@@ -778,7 +778,7 @@ int CNPC_Stalker::TranslateSchedule( int scheduleType )
 			return SCHED_STALKER_RANGE_ATTACK;
 		}
 	case SCHED_FAIL_ESTABLISH_LINE_OF_FIRE:
-		{	
+		{
 			return SCHED_COMBAT_STAND;
 			break;
 		}
@@ -841,7 +841,7 @@ void CNPC_Stalker::CalcBeamPosition(void)
 
 		// -----------------------------------------
 		// Add time-coherent noise to the position
-		// Must be scaled with distance 
+		// Must be scaled with distance
 		// -----------------------------------------
 		float fTargetDist = (GetAbsOrigin() - m_vLaserTargetPos).Length();
 		float noiseScale		= atan(0.2/fTargetDist);
@@ -881,7 +881,7 @@ void CNPC_Stalker::StartAttackBeam( void )
 
 		m_pBeam = CBeam::BeamCreate( "sprites/laser.vmt", 2.0 );
 		m_pBeam->PointEntInit( tr.endpos, this );
-		m_pBeam->SetEndAttachment( STALKER_LASER_ATTACHMENT );  
+		m_pBeam->SetEndAttachment( STALKER_LASER_ATTACHMENT );
 		m_pBeam->SetBrightness( 255 );
 		m_pBeam->SetNoise( 0 );
 
@@ -914,7 +914,7 @@ void CNPC_Stalker::StartAttackBeam( void )
 		// --------------------------------------------------------
 		// Play start up sound - client should always hear this!
 		// --------------------------------------------------------
-		if (pEnemy != NULL && (pEnemy->IsPlayer()) ) 
+		if (pEnemy != NULL && (pEnemy->IsPlayer()) )
 		{
 			EmitAmbientSound( 0, pEnemy->GetAbsOrigin(), "NPC_Stalker.AmbientLaserStart" );
 		}
@@ -950,7 +950,7 @@ void CNPC_Stalker::StalkerThink(void)
 	if ( m_pBeam )
 	{
 		SetNextThink( gpGlobals->curtime + g_StalkerBeamThinkTime );
-		
+
 		// sanity check?!
 		const Task_t *pTask = GetTask();
 		if ( !pTask || pTask->iTask != TASK_RANGE_ATTACK1 || !TaskIsRunning() )
@@ -1068,7 +1068,7 @@ void CNPC_Stalker::DrawAttackBeam(void)
 			}
 		}
 	}
-	
+
 	if (!pBCC || pBCC->Classify()==CLASS_BULLSEYE)
 	{
 		if (!m_bPlayingHitWall)
@@ -1087,7 +1087,7 @@ void CNPC_Stalker::DrawAttackBeam(void)
 
 		UTIL_DecalTrace( &tr, "RedGlowFade");
 		UTIL_DecalTrace( &tr, "FadingScorch" );
-		
+
 		tr.endpos.z -= 24.0f;
 		if (!bInWater)
 		{
@@ -1166,7 +1166,7 @@ bool CNPC_Stalker::InnateWeaponLOSCondition( const Vector &ownerPos, const Vecto
 	{
 		return true;
 	}
-	else if (pBCC) 
+	else if (pBCC)
 	{
 		if (IRelationType( pBCC ) == D_HT)
 		{
@@ -1269,7 +1269,7 @@ void CNPC_Stalker::HandleAnimEvent( animevent_t *pEvent )
 				{
 					pHurt->ViewPunch( QAngle( 5, 0, random->RandomInt(-10,10)) );
 				}
-				
+
 				// Spawn some extra blood if we hit a BCC
 				CBaseCombatCharacter* pBCC = ToBaseCombatCharacter( pHurt );
 				if (pBCC)
@@ -1280,7 +1280,7 @@ void CNPC_Stalker::HandleAnimEvent( animevent_t *pEvent )
 				// Play a attack hit sound
 				EmitSound( "NPC_Stalker.Hit" );
 			}
-			break;	
+			break;
 		}
 		default:
 			BaseClass::HandleAnimEvent( pEvent );
@@ -1290,7 +1290,7 @@ void CNPC_Stalker::HandleAnimEvent( animevent_t *pEvent )
 
 //-----------------------------------------------------------------------------
 // Purpose: Tells use whether or not the NPC cares about a given type of hint node.
-// Input  : sHint - 
+// Input  : sHint -
 // Output : TRUE if the NPC is interested in this hint type, FALSE if not.
 //-----------------------------------------------------------------------------
 bool CNPC_Stalker::FValidateHintType(CAI_Hint *pHint)
@@ -1336,7 +1336,7 @@ float	CNPC_Stalker::GetHintDelay( short sHintType )
 //-----------------------------------------------------------------------------
 #define ZIG_ZAG_SIZE 3600
 
-void CNPC_Stalker::AddZigZagToPath(void) 
+void CNPC_Stalker::AddZigZagToPath(void)
 {
 	// If already on a detour don't add a zigzag
 	if (GetNavigator()->GetCurWaypointFlags() & bits_WP_TO_DETOUR)
@@ -1375,7 +1375,7 @@ void CNPC_Stalker::AddZigZagToPath(void)
 		// Get zigzag position in direction of target waypoint
 		Vector zigZagPos = GetAbsOrigin() + waypointDir * 60;
 
-		// Now offset 
+		// Now offset
 		zigZagPos = zigZagPos + (vDir * distance);
 
 		// Now make sure that we can still get to the zigzag position and the waypoint
@@ -1484,7 +1484,7 @@ AI_BEGIN_CUSTOM_NPC( npc_stalker, CNPC_Stalker )
 	"	Interrupts"
 	)
 
-	DEFINE_SCHEDULE	
+	DEFINE_SCHEDULE
 	(
 	SCHED_STALKER_PATROL,
 
@@ -1492,7 +1492,7 @@ AI_BEGIN_CUSTOM_NPC( npc_stalker, CNPC_Stalker )
 	"		TASK_STOP_MOVING				0"
 	"		TASK_WAIT						0.5"// This makes them look a bit more vigilant, instead of INSTANTLY patrolling after some other action.
 	"		TASK_WAIT_RANDOM				0.5"
-	"		TASK_WANDER						18000600" 
+	"		TASK_WANDER						18000600"
 	"		TASK_FACE_PATH					0"
 	"		TASK_WALK_PATH					0"
 	"		TASK_WAIT_FOR_MOVEMENT			0"

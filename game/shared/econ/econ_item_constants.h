@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -12,10 +12,10 @@
 
 //=============================================================================
 // To avoid #include dependency chains, this file should
-// contain only constants that do not depend on other 
+// contain only constants that do not depend on other
 // header files.
 // This file is #included in cbase.h to allow schema compiles
-// to use these constants to ensure correlation between 
+// to use these constants to ensure correlation between
 // code data structures and database entries
 //=============================================================================
 
@@ -187,7 +187,7 @@ enum EItemAction
 	k_EItemActionConsumeItem_Consume_ToolRemove		= 124,
 	k_EItemActionConsumeItem_Consume_ToolAdd		= 125,
 	k_EItemActionConsumeItem_Consume_InputRemove	= 126,
-	k_EItemActionConsumeItem_Complete_OutputAdd		= 127,	
+	k_EItemActionConsumeItem_Complete_OutputAdd		= 127,
 	k_EItemActionConsumeItem_Complete_ToolRemove	= 128,
 	k_EItemActionItemEaterRecharge_Add			 = 129,
 	k_EItemActionItemEaterRecharge_Remove		 = 130,
@@ -221,7 +221,7 @@ enum EItemAction
 	k_EItemActionMvM_AwardHelpANoobBonus_Helper						= 189,
 
 	k_EItemActionHalloween_UpdateMerasmusLootLevel_Add				= 200,			// set the level of the merasmus loot
-	k_EItemActionHalloween_UpdateMerasmusLootLevel_Remove			= 201,			
+	k_EItemActionHalloween_UpdateMerasmusLootLevel_Remove			= 201,
 
 	k_EItemActionRemoveItemKillStreak_Remove = 202,
 	k_EItemActionRemoveItemKillStreak_Add	 = 203,
@@ -289,8 +289,8 @@ extern const char		*PchFriendlyNameFromEItemAction( EItemAction eAction, EItemAc
 extern const char		*PchLocalizedNameFromEItemAction( EItemAction eAction, CLocalizationProvider &localizationProvider );
 
 //-----------------------------------------------------------------------------
-// Purpose: Used to pass audit actions to asset servers for SetUnowned and 
-//			SetOwned methods. 
+// Purpose: Used to pass audit actions to asset servers for SetUnowned and
+//			SetOwned methods.
 //-----------------------------------------------------------------------------
 enum EEconOwnershipAction
 {
@@ -442,7 +442,7 @@ const war_side_t PYRO_VS_HEAVY_WAR_SIDE_PYRO = ((war_side_t)1);
 #define MAX_KILLCAM_MESSAGE_DATABASE_SIZE		((4 * MAX_KILLCAM_MESSAGE_LENGTH) + 1)
 
 // max length in the DB for claim codes
-#define MAX_CLAIM_CODE_LENGTH					128	
+#define MAX_CLAIM_CODE_LENGTH					128
 
 // The item definition index reserved for the preview item
 #define PREVIEW_ITEM_DEFINITION_INDEX			(item_definition_index_t)-1
@@ -774,7 +774,7 @@ const float k_MaxElapsedQuestReportTime = 10.f;
 //		The lowbit stores the position of the item within the bag.
 //
 // LESS OLD FORMAT (up through July, 2011):
-//		If Bit 31 is 0: 
+//		If Bit 31 is 0:
 //			Bits 1-16 are the backpack position.
 //			Bits 17-26 are a bool for whether the item is equipped in the matching class.
 //		Otherwise, if Bit 31 is 1:
@@ -783,7 +783,7 @@ const float k_MaxElapsedQuestReportTime = 10.f;
 //		Bit 32 is 1, to note the new format.
 //
 // CURRENT FORMAT:
-//		If Bit 31 is 0: 
+//		If Bit 31 is 0:
 //			Bits 1-16 are the backpack position.
 //		Otherwise, if Bit 31 is 1:
 //			Item hasn't been acknowledged by the player yet.
@@ -868,7 +868,7 @@ inline void SetBackpackPosition( uint32 *pPosition, uint32 iPackPosition )
 	(*pPosition) = iPackPosition;
 
 	// Remove the unack'd flag
-	(*pPosition) &= ~kBackendPosition_Unacked;	
+	(*pPosition) &= ~kBackendPosition_Unacked;
 }
 
 inline bool IsNewPositionFormat( uint32 iBackendPosition )

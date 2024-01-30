@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -98,8 +98,8 @@ CCDKeyEntryDialog::CCDKeyEntryDialog(vgui::Panel *parent, bool inConnect) : Base
 	m_pEntry3->SetAutoProgressOnHittingCharLimit(true);
 	m_pEntry4->SetAutoProgressOnHittingCharLimit(true);
 	m_pEntry5->SetAutoProgressOnHittingCharLimit(false);
-	
-    SetSizeable(false);
+
+	SetSizeable(false);
 	SetSize(360, 224);
 	SetTitle("#GameUI_CDKey", true);
 
@@ -141,7 +141,7 @@ bool CCDKeyEntryDialog::IsValidWeakCDKeyInRegistry()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCDKeyEntryDialog::OnCommand(const char *command)
 {
@@ -211,7 +211,7 @@ void CCDKeyEntryDialog::OnCommand(const char *command)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCDKeyEntryDialog::OnClose()
 {
@@ -225,7 +225,7 @@ void CCDKeyEntryDialog::OnClose()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCDKeyEntryDialog::OnThink()
 {
@@ -256,7 +256,7 @@ bool CCDKeyEntryDialog::IsEnteredKeyValid()
 	m_pEntry3->GetText(cdkey + 12, 6);
 	m_pEntry4->GetText(cdkey + 18, 6);
 	m_pEntry5->GetText(cdkey + 24, 6);
-	
+
 	// add in the hyphens
 	cdkey[5] = '-';
 	cdkey[11] = '-';
@@ -296,7 +296,7 @@ void CCDKeyEntryDialog::OnTextChanged(Panel *entry)
 	m_pEntry3->GetText(cdkey + 12, 6);
 	m_pEntry4->GetText(cdkey + 18, 6);
 	m_pEntry5->GetText(cdkey + 24, 6);
-	
+
 	// add in the hyphens
 	cdkey[5] = '-';
 	cdkey[11] = '-';
@@ -314,10 +314,10 @@ void CCDKeyEntryDialog::OnTextChanged(Panel *entry)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCDKeyEntryDialog::Activate()
 {
-    BaseClass::Activate();
-    m_pEntry1->RequestFocus();
+	BaseClass::Activate();
+	m_pEntry1->RequestFocus();
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -84,7 +84,7 @@ int AnalogBar::GetTotalSegmentCount()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AnalogBar::PaintBackground()
 {
@@ -156,7 +156,7 @@ void AnalogBar::PaintSegment( int &x, int &y, int tall, int wide, Color color, b
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AnalogBar::Paint()
 {
@@ -210,7 +210,7 @@ void AnalogBar::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AnalogBar::SetAnalogValue(float analogValue)
 {
@@ -240,7 +240,7 @@ float AnalogBar::GetAnalogValue()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AnalogBar::ApplySchemeSettings(IScheme *pScheme)
 {
@@ -286,10 +286,10 @@ bool AnalogBar::ConstructTimeRemainingString(wchar_t *output, int outputBufferSi
 		secondsRemaining -= 60;
 	}
 
-    char minutesBuf[16];
-    Q_snprintf(minutesBuf, sizeof( minutesBuf ), "%d", minutesRemaining);
-    char secondsBuf[16];
-    Q_snprintf(secondsBuf, sizeof( secondsBuf ), "%d", secondsRemaining);
+	char minutesBuf[16];
+	Q_snprintf(minutesBuf, sizeof( minutesBuf ), "%d", minutesRemaining);
+	char secondsBuf[16];
+	Q_snprintf(secondsBuf, sizeof( secondsBuf ), "%d", secondsRemaining);
 
 	if (minutesRemaining > 0)
 	{
@@ -350,7 +350,7 @@ bool AnalogBar::ConstructTimeRemainingString(wchar_t *output, int outputBufferSi
 // Purpose: data accessor
 //-----------------------------------------------------------------------------
 void AnalogBar::SetBarInset( int pixels )
-{ 
+{
 	m_iBarInset = pixels;
 }
 
@@ -363,7 +363,7 @@ int AnalogBar::GetBarInset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AnalogBar::ApplySettings(KeyValues *inResourceData)
 {
@@ -380,7 +380,7 @@ void AnalogBar::ApplySettings(KeyValues *inResourceData)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AnalogBar::GetSettings(KeyValues *outResourceData)
 {
@@ -429,7 +429,7 @@ ContinuousAnalogBar::ContinuousAnalogBar(Panel *parent, const char *panelName) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ContinuousAnalogBar::Paint()
 {

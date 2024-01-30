@@ -27,33 +27,33 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
-    "resource.h\0"
+	"resource.h\0"
 END
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE
 BEGIN
-    "#include ""afxres.h""\r\n"
-    "\0"
+	"#include ""afxres.h""\r\n"
+	"\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
-    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
-    "#define _AFX_NO_OLE_RESOURCES\r\n"
-    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
-    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
-    "\r\n"
-    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
-    "#ifdef _WIN32\r\n"
-    "LANGUAGE 9, 1\r\n"
-    "#pragma code_page(1252)\r\n"
-    "#endif //_WIN32\r\n"
-    "#include ""res\\vmpi_service_install.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
-    "#include ""afxres.rc""         // Standard components\r\n"
-    "#endif\r\n"
-    "\0"
+	"#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+	"#define _AFX_NO_OLE_RESOURCES\r\n"
+	"#define _AFX_NO_TRACKER_RESOURCES\r\n"
+	"#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+	"\r\n"
+	"#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+	"#ifdef _WIN32\r\n"
+	"LANGUAGE 9, 1\r\n"
+	"#pragma code_page(1252)\r\n"
+	"#endif //_WIN32\r\n"
+	"#include ""res\\vmpi_service_install.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+	"#include ""afxres.rc""         // Standard components\r\n"
+	"#endif\r\n"
+	"\0"
 END
 
 #endif    // APSTUDIO_INVOKED
@@ -86,23 +86,23 @@ VS_VERSION_INFO VERSIONINFO
  FILETYPE 0x1L
  FILESUBTYPE 0x0L
 BEGIN
-    BLOCK "StringFileInfo"
-    BEGIN
-        BLOCK "040904B0"
-        BEGIN
-            VALUE "FileDescription", "vmpi_service_install MFC Application"
-            VALUE "FileVersion", "1, 0, 0, 1"
-            VALUE "InternalName", "vmpi_service_install"
-            VALUE "LegalCopyright", "Copyright (C) 2003"
-            VALUE "OriginalFilename", "vmpi_service_install.EXE"
-            VALUE "ProductName", "vmpi_service_install Application"
-            VALUE "ProductVersion", "1, 0, 0, 1"
-        END
-    END
-    BLOCK "VarFileInfo"
-    BEGIN
-        VALUE "Translation", 0x409, 1200
-    END
+	BLOCK "StringFileInfo"
+	BEGIN
+		BLOCK "040904B0"
+		BEGIN
+			VALUE "FileDescription", "vmpi_service_install MFC Application"
+			VALUE "FileVersion", "1, 0, 0, 1"
+			VALUE "InternalName", "vmpi_service_install"
+			VALUE "LegalCopyright", "Copyright (C) 2003"
+			VALUE "OriginalFilename", "vmpi_service_install.EXE"
+			VALUE "ProductName", "vmpi_service_install Application"
+			VALUE "ProductVersion", "1, 0, 0, 1"
+		END
+	END
+	BLOCK "VarFileInfo"
+	BEGIN
+		VALUE "Translation", 0x409, 1200
+	END
 END
 
 
@@ -116,15 +116,15 @@ STYLE DS_SETFONT | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_
 CAPTION "VMPI Service Installer"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    EDITTEXT        IDC_INSTALL_LOCATION,69,52,388,14,ES_AUTOHSCROLL
-    PUSHBUTTON      "&Install / Update",IDC_INSTALL_BUTTON,9,78,107,14
-    PUSHBUTTON      "&Uninstall",IDC_UNINSTALL_BUTTON2,9,103,50,14
-    PUSHBUTTON      "&Start Existing",IDC_START_EXISTING_BUTTON,66,103,50,14
-    PUSHBUTTON      "S&top Existing",IDC_STOP_EXISTING_BUTTON,123,103,50,14
-    PUSHBUTTON      "&Quit",IDC_CANCEL_BUTTON,180,103,50,14
-    EDITTEXT        IDC_TEXTOUTPUT,9,132,448,224,ES_MULTILINE | ES_READONLY | WS_VSCROLL | WS_HSCROLL
-    LTEXT           "Install Directory:",IDC_STATIC,9,55,51,8
-    LTEXT           "This application will install the VMPI service onto your local machine.\nPlease enter a location to install it and click the Install button.",IDC_STATIC,15,9,442,36
+	EDITTEXT        IDC_INSTALL_LOCATION,69,52,388,14,ES_AUTOHSCROLL
+	PUSHBUTTON      "&Install / Update",IDC_INSTALL_BUTTON,9,78,107,14
+	PUSHBUTTON      "&Uninstall",IDC_UNINSTALL_BUTTON2,9,103,50,14
+	PUSHBUTTON      "&Start Existing",IDC_START_EXISTING_BUTTON,66,103,50,14
+	PUSHBUTTON      "S&top Existing",IDC_STOP_EXISTING_BUTTON,123,103,50,14
+	PUSHBUTTON      "&Quit",IDC_CANCEL_BUTTON,180,103,50,14
+	EDITTEXT        IDC_TEXTOUTPUT,9,132,448,224,ES_MULTILINE | ES_READONLY | WS_VSCROLL | WS_HSCROLL
+	LTEXT           "Install Directory:",IDC_STATIC,9,55,51,8
+	LTEXT           "This application will install the VMPI service onto your local machine.\nPlease enter a location to install it and click the Install button.",IDC_STATIC,15,9,442,36
 END
 
 
@@ -134,13 +134,13 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
-    IDD_SERVICE_INSTALL_DIALOG, DIALOG
-    BEGIN
-        VERTGUIDE, 9
-        VERTGUIDE, 457
-    END
+	IDD_SERVICE_INSTALL_DIALOG, DIALOG
+	BEGIN
+		VERTGUIDE, 9
+		VERTGUIDE, 457
+	END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -170,4 +170,3 @@ LANGUAGE 9, 1
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

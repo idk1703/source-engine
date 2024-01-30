@@ -16,6 +16,6 @@ struct PS_INPUT
 float4 main( PS_INPUT i ) : COLOR
 {
 	float4 input=tex2D( InputTexture, i.texCoord );
-	
+
 	return FinalOutput( float4(input.xyz,1), 0, PIXEL_FOG_TYPE_NONE, TONEMAP_SCALE_NONE );
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -62,7 +62,7 @@ void HuntState::OnUpdate( CCSBot *me )
 			{
 				const float safeTime = 3.0f;
 
-				if (TheCSBots()->IsTimeToPlantBomb() || 
+				if (TheCSBots()->IsTimeToPlantBomb() ||
 						(me->IsAtBombsite() && gpGlobals->curtime - me->GetLastSawEnemyTimestamp() > safeTime))
 				{
 					me->Idle();
@@ -152,7 +152,7 @@ void HuntState::OnUpdate( CCSBot *me )
 		me->InvestigateNoise();
 		return;
 	}
-		
+
 	// look around
 	me->UpdateLookAround();
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Revision: $
 // $NoKeywords: $
@@ -202,7 +202,7 @@ void CBSPTreeData::Remove( BSPTreeDataHandle_t handle )
 // Adds a handle to a leaf
 //-----------------------------------------------------------------------------
 void CBSPTreeData::AddHandleToLeaf( int leaf, BSPTreeDataHandle_t handle )
-{	
+{
 	// Got to a leaf baby! Add the handle to the leaf's list of elements
 	unsigned short leafElement = m_LeafElements.Alloc( true );
 	if (m_Leaf[leaf].m_FirstElement != m_LeafElements.InvalidIndex() )
@@ -246,7 +246,7 @@ void CBSPTreeData::RemoveFromTree( BSPTreeDataHandle_t handle )
 	while (i != m_HandleLeafList.InvalidIndex())
 	{
 		int leaf = m_HandleLeafList[i].m_Leaf;
-		unsigned short leafElement = m_HandleLeafList[i].m_LeafElementIndex; 
+		unsigned short leafElement = m_HandleLeafList[i].m_LeafElementIndex;
 
 		// Unhook the handle from the leaf handle list
 		if (leafElement == m_Leaf[leaf].m_FirstElement)
@@ -349,4 +349,3 @@ bool CBSPTreeData::EnumerateLeavesAlongRay( Ray_t const& ray, ISpatialLeafEnumer
 {
 	return m_pBSPTree->EnumerateLeavesAlongRay( ray, pEnum, context );
 }
-

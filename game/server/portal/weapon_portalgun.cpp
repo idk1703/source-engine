@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -94,7 +94,7 @@ void CWeaponPortalgun::Spawn( void )
 			m_iPortalLinkageGroupID = pOwner->entindex();
 
 		Assert( (m_iPortalLinkageGroupID >= 0) && (m_iPortalLinkageGroupID < 256) );
-	}	
+	}
 }
 
 void CWeaponPortalgun::Activate()
@@ -132,7 +132,7 @@ void CWeaponPortalgun::OnPickedUp( CBaseCombatCharacter *pNewOwner )
 		Assert( (m_iPortalLinkageGroupID >= 0) && (m_iPortalLinkageGroupID < 256) );
 	}
 
-	BaseClass::OnPickedUp( pNewOwner );		
+	BaseClass::OnPickedUp( pNewOwner );
 }
 
 void CWeaponPortalgun::CreateSounds()
@@ -297,7 +297,7 @@ void CWeaponPortalgun::FirePortalDirection1( inputdata_t &inputdata )
 	inputdata.value.Vector3D( vDirection );
 	FirePortal( false, &vDirection );
 	m_iLastFiredPortal = 1;
-	
+
 	CBaseCombatCharacter *pOwner = GetOwner();
 
 	if( pOwner && pOwner->IsPlayer() )
@@ -316,7 +316,7 @@ void CWeaponPortalgun::FirePortalDirection2( inputdata_t &inputdata )
 	inputdata.value.Vector3D( vDirection );
 	FirePortal( true, &vDirection );
 	m_iLastFiredPortal = 2;
-	
+
 	CBaseCombatCharacter *pOwner = GetOwner();
 
 	if( pOwner && pOwner->IsPlayer() )
@@ -627,7 +627,7 @@ float CWeaponPortalgun::FirePortal( bool bPortal2, Vector *pVector /*= 0*/, bool
 		VectorAngles( vDirection, qFireAngles );
 		DoEffectBlast( pPortal->m_bIsPortal2, ePlacedBy, vTracerOrigin, vFinalPosition, qFireAngles, fDelay );
 
-		pPortal->SetContextThink( &CProp_Portal::DelayedPlacementThink, gpGlobals->curtime + fDelay, s_pDelayedPlacementContext ); 
+		pPortal->SetContextThink( &CProp_Portal::DelayedPlacementThink, gpGlobals->curtime + fDelay, s_pDelayedPlacementContext );
 		pPortal->m_vDelayedPosition = vFinalPosition;
 		pPortal->m_hPlacedBy = this;
 	}
@@ -636,7 +636,7 @@ float CWeaponPortalgun::FirePortal( bool bPortal2, Vector *pVector /*= 0*/, bool
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponPortalgun::StartEffects( void )
 {

@@ -1,6 +1,6 @@
 //===== Copyright (c) 1996-2005, Valve Corporation, All rights reserved. ======//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -34,10 +34,10 @@ void InitPME( void )
 	{
 		if ( pPME->GetVendor() != INTEL )
 			return;
-		
+
 		if ( pPME->GetProcessorFamily() != PENTIUM4_FAMILY )
 			return;
-		
+
 		pPME->SetProcessPriority( ProcessPriorityHigh );
 
 		bInit = true;
@@ -110,15 +110,15 @@ void CL2Cache::Start( void )
 	{
 		// Set this up to check for L2 cache misses.
 		m_pL2CacheEvent->eventMask->RD_2ndL_MISS = 1;
-		
-		// Set the event mask and set the capture mode. 
+
+		// Set the event mask and set the capture mode.
 //		m_pL2CacheEvent->SetCaptureMode( USR_Only );
 		m_pL2CacheEvent->SetCaptureMode( OS_and_USR );
-		
+
 		// That's it, now sw capture events
 		m_pL2CacheEvent->StopCounter();
 		m_pL2CacheEvent->ClearCounter();
-		
+
 		m_pL2CacheEvent->StartCounter();
 		m_i64Start = m_pL2CacheEvent->ReadCounter();
 	}
@@ -134,8 +134,8 @@ void CL2Cache::End( void )
 		// Stop the counter and find the delta.
 		m_i64End = m_pL2CacheEvent->ReadCounter();
 		int64 i64Delta = m_i64End - m_i64Start;
-		m_pL2CacheEvent->StopCounter(); 
-		
+		m_pL2CacheEvent->StopCounter();
+
 		// Save the delta for later query.
 		m_iL2CacheMissCount = ( int )i64Delta;
 	}
@@ -159,4 +159,3 @@ void CL2Cache::Validate( CValidator &validator, tchar *pchName )
 	validator.Pop( );
 }
 #endif // DBGFLAG_VALIDATE
-

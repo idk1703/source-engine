@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -21,7 +21,7 @@
 
 static ConVar tfc_spanner_damage_first( "tfc_spanner_damage_first", "25", 0, "First spanner hit damage." );
 static ConVar tfc_spanner_damage_next( "tfc_spanner_damage_next", "12.5", 0, "Spanner hit damage after first hit." );
-		
+
 
 static Vector head_hull_mins( -16, -16, -18 );
 static Vector head_hull_maxs( 16, 16, 18 );
@@ -69,7 +69,7 @@ void CTFCSpanner::Precache()
 
 
 TFCWeaponID CTFCSpanner::GetWeaponID( void ) const
-{ 
+{
 	return WEAPON_SPANNER;
 }
 
@@ -98,7 +98,7 @@ TFCWeaponID CTFCSpanner::GetWeaponID( void ) const
 			return;
 
 		// Check to see if it's a trigger that's activatable by a Spanner hit
-		
+
 		// If it's not on our team, whack it.
 		if ( !pPlayer->IsAlly( pTarget ) )
 		{

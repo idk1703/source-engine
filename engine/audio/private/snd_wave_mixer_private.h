@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -39,15 +39,15 @@ public:
 	virtual int				GetSamplePosition( void );
 	virtual float			ModifyPitch( float pitch );
 	virtual float			GetVolumeScale( void );
-	
+
 	// Move the current position to newPosition
 	virtual void			SetSampleStart( int newPosition );
-	
+
 	// End playback at newEndPosition
 	virtual void			SetSampleEnd( int newEndPosition );
 
 	virtual void			SetStartupDelaySamples( int delaySamples );
-	
+
 	// private helper routines
 
 	char *					LoadMixBuffer( channel_t *pChannel, int sample_load_request, int *psamples_loaded, char copyBuf[AUDIOSOURCE_COPYBUF_SIZE] );
@@ -60,7 +60,7 @@ public:
 
 protected:
 	double				m_fsample_index;			// index of next sample to output
-	int					m_sample_max_loaded;		// count of total samples loaded - ie: the index of 
+	int					m_sample_max_loaded;		// count of total samples loaded - ie: the index of
 													// the next sample to be loaded.
 	int					m_sample_loaded_index;		// index of last sample loaded
 

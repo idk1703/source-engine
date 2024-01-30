@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -31,7 +31,7 @@
 #define	DRIVER_DEBUG_PATH_SPLINE		2
 
 //------------------------------------
-// 
+//
 //------------------------------------
 ConVar g_debug_vehicledriver( "g_debug_vehicledriver", "0", FCVAR_CHEAT );
 
@@ -72,14 +72,14 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( npc_vehicledriver, CNPC_VehicleDriver );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CNPC_VehicleDriver::CNPC_VehicleDriver( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CNPC_VehicleDriver::~CNPC_VehicleDriver( void )
 {
@@ -137,7 +137,7 @@ void CNPC_VehicleDriver::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_VehicleDriver::Precache( void )
 {
@@ -145,7 +145,7 @@ void CNPC_VehicleDriver::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_VehicleDriver::Activate( void )
 {
@@ -189,7 +189,7 @@ void CNPC_VehicleDriver::Activate( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_VehicleDriver::OnRestore( void )
 {
@@ -201,7 +201,7 @@ void CNPC_VehicleDriver::OnRestore( void )
 	}
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_VehicleDriver::UpdateOnRemove( void )
 {
@@ -215,7 +215,7 @@ void CNPC_VehicleDriver::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_VehicleDriver::PrescheduleThink( void )
 {
@@ -251,7 +251,7 @@ void CNPC_VehicleDriver::PrescheduleThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CNPC_VehicleDriver::SelectSchedule( void )
 {
@@ -303,7 +303,7 @@ int CNPC_VehicleDriver::SelectSchedule( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CNPC_VehicleDriver::RangeAttack1Conditions( float flDot, float flDist )
 {
@@ -352,9 +352,9 @@ int CNPC_VehicleDriver::RangeAttack2Conditions( float flDot, float flDist )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int CNPC_VehicleDriver::TranslateSchedule( int scheduleType ) 
+int CNPC_VehicleDriver::TranslateSchedule( int scheduleType )
 {
 	switch ( scheduleType )
 	{
@@ -384,8 +384,8 @@ int CNPC_VehicleDriver::TranslateSchedule( int scheduleType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CNPC_VehicleDriver::StartTask( const Task_t *pTask )
 {
@@ -528,7 +528,7 @@ void CNPC_VehicleDriver::RunTask( const Task_t *pTask )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_VehicleDriver::GatherEnemyConditions( CBaseEntity *pEnemy )
 {
@@ -553,7 +553,7 @@ Disposition_t CNPC_VehicleDriver::IRelationType(CBaseEntity *pTarget)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNPC_VehicleDriver::OverrideMove( float flInterval )
 {
@@ -581,7 +581,7 @@ bool CNPC_VehicleDriver::OverrideMove( float flInterval )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_VehicleDriver::CalculatePostPoints( void )
 {
@@ -637,7 +637,7 @@ bool CNPC_VehicleDriver::WaypointReached( void )
 	{
 		// Necessary for InPass outputs to be fired, is a no-op otherwise
 		GetNavigator()->AdvancePath();
-	
+
 		// Stop pathing
 		ClearWaypoints();
 		TaskComplete();
@@ -680,7 +680,7 @@ bool CNPC_VehicleDriver::WaypointReached( void )
 		return true;
 	}
 
-	m_vecDesiredPosition = GetNavigator()->GetCurWaypointPos();	
+	m_vecDesiredPosition = GetNavigator()->GetCurWaypointPos();
 	CalculatePostPoints();
 
 	// Move to the next waypoint
@@ -698,7 +698,7 @@ bool CNPC_VehicleDriver::WaypointReached( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNPC_VehicleDriver::OverridePathMove( float flInterval )
 {
@@ -707,9 +707,9 @@ bool CNPC_VehicleDriver::OverridePathMove( float flInterval )
 	{
 		m_vecPrevPoint = GetAbsOrigin();
 		m_vecPrevPrevPoint = GetAbsOrigin();
-		m_vecDesiredPosition = GetNavigator()->GetCurWaypointPos();	
+		m_vecDesiredPosition = GetNavigator()->GetCurWaypointPos();
 		CalculatePostPoints();
-	
+
 		// Init our two waypoints
 		m_Waypoints[0] = new CVehicleWaypoint( m_vecPrevPrevPoint, m_vecPrevPoint, m_vecDesiredPosition, m_vecPostPoint );
 		m_Waypoints[1] = new CVehicleWaypoint( m_vecPrevPoint, m_vecDesiredPosition, m_vecPostPoint, m_vecPostPostPoint );
@@ -992,7 +992,7 @@ void CNPC_VehicleDriver::CheckForTeleport( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CNPC_VehicleDriver::GetDefaultNavGoalTolerance()
 {
@@ -1000,7 +1000,7 @@ float CNPC_VehicleDriver::GetDefaultNavGoalTolerance()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_VehicleDriver::RecalculateSpeeds( void )
 {
@@ -1014,7 +1014,7 @@ void CNPC_VehicleDriver::RecalculateSpeeds( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_VehicleDriver::InputSetDriversMaxSpeed( inputdata_t &inputdata )
 {
@@ -1024,7 +1024,7 @@ void CNPC_VehicleDriver::InputSetDriversMaxSpeed( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_VehicleDriver::InputSetDriversMinSpeed( inputdata_t &inputdata )
 {
@@ -1034,7 +1034,7 @@ void CNPC_VehicleDriver::InputSetDriversMinSpeed( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_VehicleDriver::InputStartForward( inputdata_t &inputdata )
 {
@@ -1104,7 +1104,7 @@ void CNPC_VehicleDriver::InputStopFiring( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_VehicleDriver::InputGotoPathCorner( inputdata_t &inputdata )
 {
@@ -1143,7 +1143,7 @@ AI_BEGIN_CUSTOM_NPC( npc_vehicledriver, CNPC_VehicleDriver )
 
 	//Tasks
 	DECLARE_TASK( TASK_VEHICLEDRIVER_GET_PATH )
-	
+
 	// Schedules
 	DEFINE_SCHEDULE
 	(

@@ -15,14 +15,14 @@
 DECLARE_BUILD_FACTORY( CCommentaryModelPanel );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCommentaryModelPanel::CCommentaryModelPanel( vgui::Panel *parent, const char *name ) : CModelPanel( parent, name )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCommentaryModelViewer::CCommentaryModelViewer(IViewPort *pViewPort) : Frame(NULL, PANEL_COMMENTARY_MODELVIEWER )
 {
@@ -31,14 +31,14 @@ CCommentaryModelViewer::CCommentaryModelViewer(IViewPort *pViewPort) : Frame(NUL
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCommentaryModelViewer::~CCommentaryModelViewer()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommentaryModelViewer::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -50,9 +50,9 @@ void CCommentaryModelViewer::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCommentaryModelViewer::PerformLayout( void ) 
+void CCommentaryModelViewer::PerformLayout( void )
 {
 	int w,h;
 	GetParent()->GetSize( w, h );
@@ -67,7 +67,7 @@ void CCommentaryModelViewer::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommentaryModelViewer::SetModel( const char *pszName, const char *pszAttached )
 {
@@ -85,7 +85,7 @@ void CCommentaryModelViewer::SetModel( const char *pszName, const char *pszAttac
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommentaryModelViewer::ShowPanel(bool bShow)
 {
@@ -107,7 +107,7 @@ void CCommentaryModelViewer::ShowPanel(bool bShow)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommentaryModelViewer::OnCommand( const char *command )
 {
@@ -123,7 +123,7 @@ void CCommentaryModelViewer::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommentaryModelViewer::OnKeyCodePressed( vgui::KeyCode code )
 {
@@ -152,7 +152,7 @@ void CCommentaryModelViewer::OnKeyCodePressed( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommentaryModelViewer::OnThink( void )
 {
@@ -162,7 +162,7 @@ void CCommentaryModelViewer::OnThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommentaryModelViewer::HandleMovementInput( void )
 {
@@ -176,7 +176,7 @@ void CCommentaryModelViewer::HandleMovementInput( void )
 	// Rotation around Z
 	if ( bLeftDown )
 	{
-		if ( m_flYawSpeed > 0 ) 
+		if ( m_flYawSpeed > 0 )
 		{
 			m_flYawSpeed = 0;
 		}
@@ -184,7 +184,7 @@ void CCommentaryModelViewer::HandleMovementInput( void )
 	}
 	else if ( bRightDown )
 	{
-		if ( m_flYawSpeed < 0 ) 
+		if ( m_flYawSpeed < 0 )
 		{
 			m_flYawSpeed = 0;
 		}
@@ -192,7 +192,7 @@ void CCommentaryModelViewer::HandleMovementInput( void )
 	}
 	if ( m_flYawSpeed != 0 )
 	{
-		if ( m_bTranslating ) 
+		if ( m_bTranslating )
 		{
 			m_pModelPanel->m_pModelInfo->m_vecOriginOffset.y = clamp( m_pModelPanel->m_pModelInfo->m_vecOriginOffset.y + m_flYawSpeed, -100.f, 100.f );
 		}
@@ -210,7 +210,7 @@ void CCommentaryModelViewer::HandleMovementInput( void )
 	// Zooming
 	if ( bForwardDown )
 	{
-		if ( m_flZoomSpeed > 0 ) 
+		if ( m_flZoomSpeed > 0 )
 		{
 			m_flZoomSpeed = 0;
 		}
@@ -218,7 +218,7 @@ void CCommentaryModelViewer::HandleMovementInput( void )
 	}
 	else if ( bBackDown )
 	{
-		if ( m_flZoomSpeed < 0 ) 
+		if ( m_flZoomSpeed < 0 )
 		{
 			m_flZoomSpeed = 0;
 		}
@@ -226,7 +226,7 @@ void CCommentaryModelViewer::HandleMovementInput( void )
 	}
 	if ( m_flZoomSpeed != 0 )
 	{
-		if ( m_bTranslating ) 
+		if ( m_bTranslating )
 		{
 			m_pModelPanel->m_pModelInfo->m_vecOriginOffset.z = clamp( m_pModelPanel->m_pModelInfo->m_vecOriginOffset.z + m_flZoomSpeed, -100.f, 300.f );
 		}
@@ -245,7 +245,7 @@ void CCommentaryModelViewer::HandleMovementInput( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CommentaryShowModelViewer( const CCommand &args )
 {

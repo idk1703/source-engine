@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -74,7 +74,7 @@ struct ViewerSettings
 
 	// external
 
-	// model 
+	// model
 	float  fov;		// horizontal field of view
 
 	// render
@@ -154,4 +154,4 @@ bool LoadViewerSettingsInt( char const *keyname, int *value );
 bool SaveViewerSettingsInt ( const char *keyname, int value );
 
 
-#endif // INCLUDED_VIEWERSETTINGS 
+#endif // INCLUDED_VIEWERSETTINGS

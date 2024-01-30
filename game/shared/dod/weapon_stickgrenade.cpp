@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -52,7 +52,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_frag_ger, CWeaponStickGrenade );
 PRECACHE_WEAPON_REGISTER( weapon_frag_ger );
 
-acttable_t CWeaponStickGrenade::m_acttable[] = 
+acttable_t CWeaponStickGrenade::m_acttable[] =
 {
 	// Move this out to the specific grenades???
 	{ ACT_DOD_STAND_AIM,					ACT_DOD_STAND_AIM_GREN_STICK,				false },
@@ -79,4 +79,3 @@ acttable_t CWeaponStickGrenade::m_acttable[] =
 };
 
 IMPLEMENT_ACTTABLE( CWeaponStickGrenade );
-

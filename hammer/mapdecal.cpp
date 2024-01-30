@@ -61,8 +61,8 @@ CMapDecal::~CMapDecal(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pSolid - 
+// Purpose:
+// Input  : pSolid -
 //-----------------------------------------------------------------------------
 void CMapDecal::AddSolid(CMapSolid *pSolid)
 {
@@ -75,8 +75,8 @@ void CMapDecal::AddSolid(CMapSolid *pSolid)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bFullUpdate - 
+// Purpose:
+// Input  : bFullUpdate -
 //-----------------------------------------------------------------------------
 void CMapDecal::CalcBounds(BOOL bFullUpdate)
 {
@@ -172,7 +172,7 @@ int CMapDecal::CanDecalSolid(CMapSolid *pSolid, CMapFace **ppFaces)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CMapClass
 //-----------------------------------------------------------------------------
 CMapClass *CMapDecal::Copy(bool bUpdateDependencies)
@@ -191,7 +191,7 @@ CMapClass *CMapDecal::Copy(bool bUpdateDependencies)
 //-----------------------------------------------------------------------------
 // Purpose: Makes this object identical to the given object.
 // Input  : pObject - Object to copy.
-//			bUpdateDependencies - 
+//			bUpdateDependencies -
 //-----------------------------------------------------------------------------
 CMapClass *CMapDecal::CopyFrom(CMapClass *pObject, bool bUpdateDependencies)
 {
@@ -213,7 +213,7 @@ CMapClass *CMapDecal::CopyFrom(CMapClass *pObject, bool bUpdateDependencies)
 	// reference counting yet.
 	//
 	m_Faces.RemoveAll();
-	
+
 	FOR_EACH_OBJ( pFrom->m_Faces, pos )
 	{
 		DecalFace_t *pDecalFace = new DecalFace_t;
@@ -239,10 +239,10 @@ CMapClass *CMapDecal::CopyFrom(CMapClass *pObject, bool bUpdateDependencies)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pSolid - 
-//			org - 
-//			piFacesRvl - 
+// Purpose:
+// Input  : pSolid -
+//			org -
+//			piFacesRvl -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapDecal::DecalSolid(CMapSolid *pSolid)
@@ -385,7 +385,7 @@ void CMapDecal::DecalAllSolids(CMapWorld *pWorld)
 
 		PostUpdate(Notify_Changed);
 	}
-}		
+}
 
 
 //-----------------------------------------------------------------------------
@@ -404,7 +404,7 @@ void CMapDecal::OnNotifyDependent(CMapClass *pObject, Notify_Dependent_t eNotify
 		// Delete any decal faces that are attached to this solid. They will be
 		// rebuilt if we can still decal the solid.
 		//
-		
+
 		for( int pos = m_Faces.Count()-1; pos>=0; pos-- )
 		{
 			DecalFace_t *pDecalFace = m_Faces.Element(pos);
@@ -460,7 +460,7 @@ void CMapDecal::PostloadWorld(CMapWorld *pWorld)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapDecal::RebuildDecalFaces(void)
 {
@@ -483,13 +483,13 @@ void CMapDecal::RebuildDecalFaces(void)
 	// Attach to all eligible solids in the world.
 	//
 	CMapWorld *pWorld = (CMapWorld *)GetWorldObject(this);
-	DecalAllSolids(pWorld);	
+	DecalAllSolids(pWorld);
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pRender - 
+// Purpose:
+// Input  : pRender -
 //-----------------------------------------------------------------------------
 void CMapDecal::Render3D(CRender3D *pRender)
 {
@@ -505,7 +505,7 @@ void CMapDecal::Render3D(CRender3D *pRender)
 	{
 		nPasses = 2;
 	}
-	
+
 
 	if ( eSelectionState == SELECT_MODIFY )
 	{
@@ -519,7 +519,7 @@ void CMapDecal::Render3D(CRender3D *pRender)
 		//
 		// Render the second pass in wireframe.
 		//
-		
+
 		if ( nPass == 1 )
 		{
 			// use the texture instead of the lightmap coord for decals
@@ -548,14 +548,14 @@ void CMapDecal::Render3D(CRender3D *pRender)
 
 	pRender->RenderEnable( RENDER_POLYGON_OFFSET_FILL, false );
 
-	
+
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : File - 
-//			bRMF - 
+// Purpose:
+// Input  : File -
+//			bRMF -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapDecal::SerializeRMF(std::fstream &File, BOOL bRMF)
@@ -565,9 +565,9 @@ int CMapDecal::SerializeRMF(std::fstream &File, BOOL bRMF)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : File - 
-//			bRMF - 
+// Purpose:
+// Input  : File -
+//			bRMF -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapDecal::SerializeMAP(std::fstream &File, BOOL bRMF)
@@ -614,8 +614,8 @@ void CMapDecal::OnRemoveFromWorld(CMapWorld *pWorld, bool bNotifyChildren)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pTransBox - 
+// Purpose:
+// Input  : pTransBox -
 //-----------------------------------------------------------------------------
 void CMapDecal::DoTransform(const VMatrix &matrix)
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,9 +24,9 @@ class CWeaponGalil : public CWeaponCSBaseGun
 {
 public:
 	DECLARE_CLASS( CWeaponGalil, CWeaponCSBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponGalil();
 
 	virtual void PrimaryAttack();
@@ -67,7 +67,7 @@ float CWeaponGalil::GetInaccuracy() const
 		CCSPlayer *pPlayer = GetPlayerOwner();
 		if ( !pPlayer )
 			return 0.0f;
-	
+
 		if ( !FBitSet( pPlayer->GetFlags(), FL_ONGROUND ) )
 			return 0.04f + 0.3f * m_flAccuracy;
 		else if (pPlayer->GetAbsVelocity().Length2D() > 140)
@@ -92,7 +92,7 @@ void CWeaponGalil::PrimaryAttack()
 		m_flNextPrimaryAttack = gpGlobals->curtime + 0.15;
 		return;
 	}
-	
+
 	if ( !CSBaseGunFire( GetCSWpnData().m_flCycleTime, Primary_Mode ) )
 		return;
 
@@ -110,5 +110,3 @@ void CWeaponGalil::PrimaryAttack()
 	else
 		pPlayer->KickBack (0.65, 0.35, 0.25, 0.015, 3.5, 2.25, 7);
 }
-
-

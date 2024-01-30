@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -23,7 +23,7 @@ public:
 	virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
 
 	void		SetSpewResult( bool state );
-	 
+
 protected:
 	float ComputeDefaultValue();
 

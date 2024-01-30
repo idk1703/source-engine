@@ -21,4 +21,3 @@ void C_TFTankBoss::GetGlowEffectColor( float *r, float *g, float *b )
 {
 	TeamplayRoundBasedRules()->GetTeamGlowColor( GetTeamNumber(), *r, *g, *b );
 }
-

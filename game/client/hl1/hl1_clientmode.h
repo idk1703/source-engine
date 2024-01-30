@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -12,7 +12,7 @@
 
 #include "clientmode_shared.h"
 
-class ClientModeHL1Normal : public ClientModeShared 
+class ClientModeHL1Normal : public ClientModeShared
 {
 DECLARE_CLASS( ClientModeHL1Normal, ClientModeShared );
 

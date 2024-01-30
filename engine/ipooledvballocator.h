@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Revision: $
 // $NoKeywords: $
@@ -32,7 +32,7 @@ public:
 
 	// Get a pointer to the start of the vertex buffer data
 	virtual void			*GetVertexBufferBase() = 0;
-	virtual int				GetNumVertsAllocated() = 0; 
+	virtual int				GetNumVertsAllocated() = 0;
 
 	// Allocate a sub-range of 'numVerts' from free space in the shared vertex buffer
 	// (returns the byte offset from the start of the VB to the new allocation)

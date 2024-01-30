@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -53,7 +53,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEGlowSprite::C_TEGlowSprite( void )
 {
@@ -65,16 +65,16 @@ C_TEGlowSprite::C_TEGlowSprite( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEGlowSprite::~C_TEGlowSprite( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Recording 
+// Recording
 //-----------------------------------------------------------------------------
-static inline void RecordGlowSprite( const Vector &start, int nModelIndex, 
+static inline void RecordGlowSprite( const Vector &start, int nModelIndex,
 	float flDuration, float flSize, int nBrightness )
 {
 	if ( !ToolsEnabled() )
@@ -105,7 +105,7 @@ static inline void RecordGlowSprite( const Vector &start, int nModelIndex,
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEGlowSprite::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -146,4 +146,3 @@ void TE_GlowSprite( IRecipientFilter& filter, float delay, KeyValues *pKeyValues
 
 	TE_GlowSprite( filter, delay, &vecOrigin, nModelIndex, flDuration, flSize, nBrightness );
 }
-

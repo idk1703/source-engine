@@ -35,7 +35,7 @@ public:
 
 // Input handles.
 public:
-	
+
 	void InputTurnOn( inputdata_t &inputdata );
 	void InputTurnOff( inputdata_t &inputdata );
 
@@ -45,7 +45,7 @@ public:
 
 	CNetworkVar( color32, m_Color );
 	CNetworkVar( int, m_SpawnRate );
-	
+
 	CNetworkVar( float, m_flSizeMin );
 	CNetworkVar( float, m_flSizeMax );
 
@@ -62,7 +62,7 @@ public:
 
 	CNetworkVar( int, m_DustFlags );	// Combination of DUSTFLAGS_
 
-private:	
+private:
 	int			m_iAlpha;
 
 };
@@ -188,7 +188,7 @@ bool CFunc_Dust::KeyValue( const char *szKeyName, const char *szValue )
 			m_DustFlags &= ~DUSTFLAGS_ON;
 		else
 			m_DustFlags |= DUSTFLAGS_ON;
-	
+
 		return true;
 	}
 	else if( stricmp( szKeyName, "Alpha" ) == 0 )
@@ -202,7 +202,7 @@ bool CFunc_Dust::KeyValue( const char *szKeyName, const char *szValue )
 			m_DustFlags |= DUSTFLAGS_FROZEN;
 		else
 			m_DustFlags &= ~DUSTFLAGS_FROZEN;
-	
+
 		return true;
 	}
 	else
@@ -243,7 +243,7 @@ public:
 	virtual			~CTEDust( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles ) { };
-	
+
 	CNetworkVar( float, m_flSize );
 	CNetworkVar( float, m_flSpeed );
 	CNetworkVector( m_vecDirection );
@@ -269,9 +269,9 @@ END_SEND_TABLE()
 static CTEDust g_TEDust( "Dust" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &pos - 
-//			&angles - 
+// Purpose:
+// Input  : &pos -
+//			&angles -
 //-----------------------------------------------------------------------------
 void TE_Dust( IRecipientFilter& filter, float delay,
 	const Vector &pos, const Vector &dir, float size, float speed )
@@ -292,7 +292,7 @@ class CEnvDustPuff : public CPointEntity
 	DECLARE_CLASS( CEnvDustPuff, CPointEntity );
 
 public:
-	
+
 	DECLARE_DATADESC();
 
 protected:
@@ -318,8 +318,8 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CEnvDustPuff::InputSpawnDust( inputdata_t &inputdata )
 {

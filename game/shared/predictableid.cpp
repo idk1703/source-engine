@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -88,7 +88,7 @@ private:
 static CPredictableIdHelper g_Helper;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPredictableId::CPredictableId( void )
 {
@@ -96,7 +96,7 @@ CPredictableId::CPredictableId( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPredictableId::ResetInstanceCounters( void )
 {
@@ -116,8 +116,8 @@ bool CPredictableId::IsActive( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : playerIndex - 
+// Purpose:
+// Input  : playerIndex -
 //-----------------------------------------------------------------------------
 void CPredictableId::SetPlayer( int playerIndex )
 {
@@ -125,7 +125,7 @@ void CPredictableId::SetPlayer( int playerIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CPredictableId::GetPlayer( void ) const
@@ -134,7 +134,7 @@ int CPredictableId::GetPlayer( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CPredictableId::GetCommandNumber( void ) const
@@ -143,8 +143,8 @@ int CPredictableId::GetCommandNumber( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : commandNumber - 
+// Purpose:
+// Input  : commandNumber -
 //-----------------------------------------------------------------------------
 void CPredictableId::SetCommandNumber( int commandNumber )
 {
@@ -162,10 +162,10 @@ bool CPredictableId::IsCommandNumberEqual( int testNumber ) const
 */
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *classname - 
-//			*module - 
-//			line - 
+// Purpose:
+// Input  : *classname -
+//			*module -
+//			line -
 // Output : static int
 //-----------------------------------------------------------------------------
 static int ClassFileLineHash( const char *classname, const char *module, int line )
@@ -175,17 +175,17 @@ static int ClassFileLineHash( const char *classname, const char *module, int lin
 	CRC32_Init( &retval );
 
 	char tempbuffer[ 512 ];
-	
+
 	// ACK, have to go lower case due to issues with .dsp having different cases of drive
 	//  letters, etc.!!!
 	Q_strncpy( tempbuffer, classname, sizeof( tempbuffer ) );
 	Q_strlower( tempbuffer );
 	CRC32_ProcessBuffer( &retval, (void *)tempbuffer, Q_strlen( tempbuffer ) );
-	
+
 	Q_strncpy( tempbuffer, module, sizeof( tempbuffer ) );
 	Q_strlower( tempbuffer );
 	CRC32_ProcessBuffer( &retval, (void *)tempbuffer, Q_strlen( tempbuffer ) );
-	
+
 	CRC32_ProcessBuffer( &retval, (void *)&line, sizeof( int ) );
 
 	CRC32_Final( &retval );
@@ -195,11 +195,11 @@ static int ClassFileLineHash( const char *classname, const char *module, int lin
 
 //-----------------------------------------------------------------------------
 // Purpose: Create a predictable id of the specified parameter set
-// Input  : player - 
-//			command - 
-//			*classname - 
-//			*module - 
-//			line - 
+// Input  : player -
+//			command -
+//			*classname -
+//			*module -
+//			line -
 //-----------------------------------------------------------------------------
 void CPredictableId::Init( int player, int command, const char *classname, const char *module, int line )
 {
@@ -216,7 +216,7 @@ void CPredictableId::Init( int player, int command, const char *classname, const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CPredictableId::GetHash( void ) const
@@ -225,8 +225,8 @@ int CPredictableId::GetHash( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : counter - 
+// Purpose:
+// Input  : counter -
 //-----------------------------------------------------------------------------
 void CPredictableId::SetInstanceNumber( int counter )
 {
@@ -234,7 +234,7 @@ void CPredictableId::SetInstanceNumber( int counter )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CPredictableId::GetInstanceNumber( void ) const
@@ -244,8 +244,8 @@ int CPredictableId::GetInstanceNumber( void ) const
 
 // Client only
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : ack - 
+// Purpose:
+// Input  : ack -
 //-----------------------------------------------------------------------------
 void CPredictableId::SetAcknowledged( bool ack )
 {
@@ -253,7 +253,7 @@ void CPredictableId::SetAcknowledged( bool ack )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPredictableId::GetAcknowledged( void ) const
@@ -262,7 +262,7 @@ bool CPredictableId::GetAcknowledged( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CPredictableId::GetRaw( void ) const
@@ -271,8 +271,8 @@ int CPredictableId::GetRaw( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : raw - 
+// Purpose:
+// Input  : raw -
 //-----------------------------------------------------------------------------
 void CPredictableId::SetRaw( int raw )
 {
@@ -281,7 +281,7 @@ void CPredictableId::SetRaw( int raw )
 
 //-----------------------------------------------------------------------------
 // Purpose: Determine if one id is == another, ignores Acknowledged state
-// Input  : other - 
+// Input  : other -
 // Output : bool CPredictableId::operator
 //-----------------------------------------------------------------------------
 bool CPredictableId::operator ==( const CPredictableId& other ) const
@@ -306,7 +306,7 @@ bool CPredictableId::operator !=( const CPredictableId& other ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *CPredictableId::Describe( void ) const

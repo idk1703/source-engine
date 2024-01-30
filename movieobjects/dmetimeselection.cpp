@@ -3,7 +3,7 @@
 #include "interpolatortypes.h"
 #include "datamodel/dmelementfactoryhelper.h"
 // #include "dme_controls/RecordingState.h"
-						   
+
 IMPLEMENT_ELEMENT_FACTORY( DmeTimeSelection, CDmeTimeSelection );
 
 void CDmeTimeSelection::OnConstruction()
@@ -32,12 +32,12 @@ void CDmeTimeSelection::OnDestruction()
 {
 }
 
-static int g_InterpolatorTypes[] = 
+static int g_InterpolatorTypes[] =
 {
 	INTERPOLATE_LINEAR_INTERP,
 	INTERPOLATE_EASE_IN,
-	INTERPOLATE_EASE_OUT,								
-	INTERPOLATE_EASE_INOUT,		
+	INTERPOLATE_EASE_OUT,
+	INTERPOLATE_EASE_INOUT,
 };
 
 float CDmeTimeSelection::AdjustFactorForInterpolatorType( float factor, int side )
@@ -50,14 +50,14 @@ float CDmeTimeSelection::AdjustFactorForInterpolatorType( float factor, int side
 
 	Vector out;
 	Interpolator_CurveInterpolate
-	( 
-		GetFalloffInterpolatorType( side ), 
+	(
+		GetFalloffInterpolatorType( side ),
 			points[ 0 ], // unused
-			points[ 1 ], 
-			points[ 2 ], 
+			points[ 1 ],
+			points[ 2 ],
 			points[ 3 ], // unused
-		factor, 
-		out 
+		factor,
+		out
 	);
 	return out.y; // clamp( out.y, 0.0f, 1.0f );
 }
@@ -92,18 +92,18 @@ float CDmeTimeSelection::GetAmountForTime( DmeTime_t t, DmeTime_t curtime )
 		Vector out;
 
 		Interpolator_CurveInterpolate
-		( 
-			GetFalloffInterpolatorType( 0 ), 
+		(
+			GetFalloffInterpolatorType( 0 ),
 				points[ 0 ], // unused
-				points[ 1 ], 
-				points[ 2 ], 
+				points[ 1 ],
+				points[ 2 ],
 				points[ 3 ], // unused
-			f, 
-			out 
+			f,
+			out
 		);
 		return clamp( out.y, minfrac, 1.0f );
 	}
-	
+
 	if ( t >= times[ 1 ] && t <= times[ 2 ] )
 	{
 		return 1.0f;
@@ -116,14 +116,14 @@ float CDmeTimeSelection::GetAmountForTime( DmeTime_t t, DmeTime_t curtime )
 		Vector out;
 
 		Interpolator_CurveInterpolate
-		( 
-			GetFalloffInterpolatorType( 1 ), 
+		(
+			GetFalloffInterpolatorType( 1 ),
 				points[ 0 ], // unused
-				points[ 1 ], 
-				points[ 2 ], 
+				points[ 1 ],
+				points[ 2 ],
 				points[ 3 ], // unused
-			f, 
-			out 
+			f,
+			out
 		);
 		return clamp( out.y, minfrac, 1.0f );
 	}
@@ -200,7 +200,7 @@ void CDmeTimeSelection::SetRelative( DmeTime_t time, bool state )
 	{
 		if ( state )
 			ConvertToRelative( time );
-		else 
+		else
 			ConvertToAbsolute( time );
 	}
 }

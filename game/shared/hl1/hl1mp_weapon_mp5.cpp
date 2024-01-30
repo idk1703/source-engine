@@ -31,7 +31,7 @@
 #include "in_buttons.h"
 #include "engine/IEngineSound.h"
 
-extern ConVar    sk_plr_dmg_mp5_grenade;	
+extern ConVar    sk_plr_dmg_mp5_grenade;
 extern ConVar    sk_max_mp5_grenade;
 extern ConVar	 sk_mp5_grenade_radius;
 
@@ -77,7 +77,7 @@ void CWeaponMP5::PrimaryAttack( void )
 	// Only the player fires this way so we can cast
 	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
 
-	if ( !pPlayer )	
+	if ( !pPlayer )
 	{
 		return;
 	}
@@ -100,7 +100,7 @@ void CWeaponMP5::PrimaryAttack( void )
 	m_flNextPrimaryAttack	= gpGlobals->curtime + 0.1;
 
 	Vector vecSrc		= pPlayer->Weapon_ShootPosition();
-	Vector vecAiming	= pPlayer->GetAutoaimVector( AUTOAIM_5DEGREES );	
+	Vector vecAiming	= pPlayer->GetAutoaimVector( AUTOAIM_5DEGREES );
 
 	if ( !g_pGameRules->IsMultiplayer() )
 	{
@@ -178,7 +178,7 @@ void CWeaponMP5::SecondaryAttack( void )
 	CGrenadeMP5 * m_pMyGrenade = (CGrenadeMP5*)Create( "grenade_mp5", vecSrc, angGrenAngle, GetOwner() );
 	m_pMyGrenade->SetAbsVelocity( vecThrow );
 	m_pMyGrenade->SetLocalAngularVelocity( QAngle( random->RandomFloat( -100, -500 ), 0, 0 ) );
-	m_pMyGrenade->SetMoveType( MOVETYPE_FLYGRAVITY ); 
+	m_pMyGrenade->SetMoveType( MOVETYPE_FLYGRAVITY );
 	m_pMyGrenade->SetThrower( GetOwner() );
 	m_pMyGrenade->SetDamage( sk_plr_dmg_mp5_grenade.GetFloat() * g_pGameRules->GetDamageMultiplier() );
 #endif
@@ -203,7 +203,7 @@ void CWeaponMP5::SecondaryAttack( void )
 	if ( pPlayer->GetAmmoCount( m_iSecondaryAmmoType ) <= 0 )
 	{
 		// HEV suit - indicate out of ammo condition
-		pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0); 
+		pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0);
 	}
 
 	m_flNextPrimaryAttack = gpGlobals->curtime + 1.0;
@@ -231,7 +231,7 @@ void CWeaponMP5::WeaponIdle( void )
 	bool bElapsed = HasWeaponIdleTimeElapsed();
 
 	BaseClass::WeaponIdle();
-	
+
 	if( bElapsed )
 		SetWeaponIdleTime( gpGlobals->curtime + random->RandomInt( 3, 5 ) );
 }

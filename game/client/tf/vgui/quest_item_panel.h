@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -191,7 +191,7 @@ protected:
 	Label								*m_pTurningInLabel;
 	class CExScrollingEditablePanel		*m_pFlavorScrollingContainer;
 	CExButton							*m_pFindServerButton;
-	
+
 	// loaners
 	EditablePanel						*m_pLoanerContainerPanel;
 	CExButton							*m_pRequestLoanerItemsButton;
@@ -202,13 +202,13 @@ protected:
 
 
 	int									m_nPaperXPos;
-	int									m_nPaperYPos;	
+	int									m_nPaperYPos;
 	int									m_nPaperXShakePos;
 	int									m_nPaperYShakePos;
 	bool								m_bHasAllControls;
 	CUtlString							m_strItemTrackerResFile;
 	CUtlString							m_strQuickPlayMap;
-	
+
 	CUtlString							m_strMatchmakingGroupName;
 	CUtlString							m_strMatchmakingCategoryName;
 	CUtlString							m_strMatchmakingMapName;

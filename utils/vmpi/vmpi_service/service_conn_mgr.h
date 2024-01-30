@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,28 +30,28 @@ public:
 };
 
 
-// ------------------------------------------------------------------------------------------ // 
-// CServiceConnMgr. This class manages connections to all the UIs (there should only be one UI at 
+// ------------------------------------------------------------------------------------------ //
+// CServiceConnMgr. This class manages connections to all the UIs (there should only be one UI at
 // any given time, but it's conceivable that multiple people can be logged into NT servers
 // simultaneously).
-// ------------------------------------------------------------------------------------------ // 
+// ------------------------------------------------------------------------------------------ //
 
 class CServiceConnMgr
 {
 public:
-	
+
 			CServiceConnMgr();
 			~CServiceConnMgr();
-	
+
 	bool	InitServer();	// Registers as a systemwide server.
 	bool	InitClient();	// Connects to the server.
 	void	Term();
 
-	// Returns true if there are any connections. If you used InitClient() and there are 
+	// Returns true if there are any connections. If you used InitClient() and there are
 	// no connections, it will continuously try to connect with a server.
 	bool	IsConnected();
-	
-	// This should be called as often as possible. It checks for dead connections and it 
+
+	// This should be called as often as possible. It checks for dead connections and it
 	// handles incoming packets from UIs.
 	void	Update();
 
@@ -61,7 +61,7 @@ public:
 
 // Overridables.
 public:
-	
+
 	virtual void	OnNewConnection( int id );
 	virtual void	OnTerminateConnection( int id );
 	virtual void	HandlePacket( const char *pData, int len );
@@ -73,7 +73,7 @@ private:
 
 
 private:
-	
+
 	CUtlLinkedList<CServiceConn*, int>	m_Connections;
 
 	bool	m_bShuttingDown;

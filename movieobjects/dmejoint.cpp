@@ -14,19 +14,19 @@
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeJoint, CDmeJoint );
 
 
 //-----------------------------------------------------------------------------
-// Should I draw joints? 
+// Should I draw joints?
 //-----------------------------------------------------------------------------
 bool CDmeJoint::s_bDrawJoints = false;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeJoint::OnConstruction()
 {
@@ -49,7 +49,7 @@ void CDmeJoint::OnDestruction()
 
 
 //-----------------------------------------------------------------------------
-// Activate, deactivate joint drawing 
+// Activate, deactivate joint drawing
 //-----------------------------------------------------------------------------
 void CDmeJoint::DrawJointHierarchy( bool bDrawJoints )
 {
@@ -147,5 +147,3 @@ void CDmeJoint::Draw( CDmeDrawSettings *pDrawSettings /* = NULL */ )
 
 	BaseClass::Draw( pDrawSettings );
 }
-
-

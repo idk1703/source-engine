@@ -49,7 +49,7 @@ PRECACHE_REGISTER( env_laserdesignation );
 //-----------------------------------------------------------------------------
 CEnvLaserDesignation *CEnvLaserDesignation::Create( CBasePlayer *pOwner )
 {
-	CEnvLaserDesignation *pDesignation = (CEnvLaserDesignation*)CreateEntityByName("env_laserdesignation"); 
+	CEnvLaserDesignation *pDesignation = (CEnvLaserDesignation*)CreateEntityByName("env_laserdesignation");
 	pDesignation->Spawn();
 	pDesignation->SetOwnerEntity( pOwner );
 	pDesignation->ChangeTeam( pOwner->GetTeamNumber() );
@@ -64,7 +64,7 @@ CEnvLaserDesignation *CEnvLaserDesignation::Create( CBasePlayer *pOwner )
 CEnvLaserDesignation *CEnvLaserDesignation::CreatePredicted( CBasePlayer *pOwner )
 {
 #if !defined( NO_ENTITY_PREDICTION )
-	CEnvLaserDesignation *pDesignation = (CEnvLaserDesignation*)CREATE_PREDICTED_ENTITY("env_laserdesignation"); 
+	CEnvLaserDesignation *pDesignation = (CEnvLaserDesignation*)CREATE_PREDICTED_ENTITY("env_laserdesignation");
 	if ( pDesignation )
 	{
 		pDesignation->Spawn();
@@ -82,7 +82,7 @@ CEnvLaserDesignation *CEnvLaserDesignation::CreatePredicted( CBasePlayer *pOwner
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEnvLaserDesignation::CEnvLaserDesignation( void )
 {
@@ -92,7 +92,7 @@ CEnvLaserDesignation::CEnvLaserDesignation( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEnvLaserDesignation::~CEnvLaserDesignation( void )
 {
@@ -110,7 +110,7 @@ CEnvLaserDesignation::~CEnvLaserDesignation( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvLaserDesignation::Spawn( void )
 {
@@ -121,7 +121,7 @@ void CEnvLaserDesignation::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvLaserDesignation::ChangeTeam( int iTeamNum )
 {
@@ -142,7 +142,7 @@ void CEnvLaserDesignation::ChangeTeam( int iTeamNum )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvLaserDesignation::SetActive( bool bActive )
 {
@@ -175,11 +175,11 @@ int CEnvLaserDesignation::UpdateTransmitState()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CEnvLaserDesignation::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 {
-	// Only transmit to players who care about laser designation: 
+	// Only transmit to players who care about laser designation:
 	//	- Player designating
 	//	- Players in tanks
 	//	- Commandos
@@ -191,10 +191,10 @@ int CEnvLaserDesignation::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 		// Designating player?
 		if ( pPlayer == GetOwnerEntity() )
 			return SetTransmitState( FL_EDICT_ALWAYS );
-					
+
 		if ( !InSameTeam( pPlayer ) )
 			return FL_EDICT_DONTSEND;
-			
+
 		// In a tank?
 		if ( pPlayer->IsInAVehicle() )
 		{
@@ -251,7 +251,7 @@ int CEnvLaserDesignation::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CEnvLaserDesignation::GetNumLaserDesignators( int iTeamNumber )
 {
@@ -264,7 +264,7 @@ int	CEnvLaserDesignation::GetNumLaserDesignators( int iTeamNumber )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEnvLaserDesignation::GetLaserDesignation( int iTeamNumber, int iDesignator, Vector *vecOrigin )
 {
@@ -293,7 +293,7 @@ bool CEnvLaserDesignation::GetLaserDesignation( int iTeamNumber, int iDesignator
 #if defined( CLIENT_DLL )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CEnvLaserDesignation::DrawModel( int flags )
 {
@@ -301,8 +301,8 @@ int CEnvLaserDesignation::DrawModel( int flags )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void CEnvLaserDesignation::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -316,7 +316,7 @@ void CEnvLaserDesignation::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Add, remove object from the panel 
+// Add, remove object from the panel
 //-----------------------------------------------------------------------------
 void CEnvLaserDesignation::SetDormant( bool bDormant )
 {

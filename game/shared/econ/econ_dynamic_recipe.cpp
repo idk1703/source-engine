@@ -136,7 +136,7 @@ bool DecodeAttributeStringIntoAttributes( const CAttribute_DynamicRecipeComponen
 {
 	CUtlStringList vecAttributeStrings;	// Automatically free'd
 	V_SplitString( attribValue.attributes_string().c_str(), g_pszAttrEncodeSeparator, vecAttributeStrings );
-	
+
 	if( vecAttributeStrings.Count() % 2 != 0 )
 	{
 		AssertMsg1( 0, "%s: Uneven count of encoded attribute strings!", __FUNCTION__ );
@@ -158,7 +158,7 @@ bool DecodeAttributeStringIntoAttributes( const CAttribute_DynamicRecipeComponen
 
 		CEconItem::attribute_t& attrib = vecAttribs[vecAttribs.AddToTail()];
 		attrib.m_unDefinitionIndex = pAttrDef->GetDefinitionIndex();
-		
+
 		// Now have the attribute read in the value stored in the string
 		const ISchemaAttributeType* pAttrType = pAttrDef->GetAttributeType();
 		pAttrType->InitializeNewEconAttributeValue( &attrib.m_value );

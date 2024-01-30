@@ -68,7 +68,7 @@ static float XfadeSpeakerVolToMono( float scale, float xfade, float ispeaker, fl
 
 	// if (cspeaker == 2 )
 	scale_target = 0.9; // front 2 speakers in stereo each get 50% of total volume in mono case
-	
+
 XfadeExit:
 	scale_out = scale + (scale_target - scale) * xfade;
 	return scale_out;
@@ -96,7 +96,7 @@ static float GetSpeakerVol( float yaw_source, float pitch_source, float mono, fl
 {
 	float adif = fabs(yaw_source - yaw_speaker);
 	float pitch_angle = pitch_source;
-	float scale = 0.0; 
+	float scale = 0.0;
 	float xfade = 0.0;
 
 	if ( adif > 180 )
@@ -104,26 +104,26 @@ static float GetSpeakerVol( float yaw_source, float pitch_source, float mono, fl
 
 	// mono goes from 0.0 to 1.0 as listener moves into 'mono' radius of sound source.
 	// Also, as pitch_angle to sound source approaches 90 (sound above/below listener), sounds become mono.
-	
+
 	// convert pitch angle to 0-90 absolute pitch
 	if ( pitch_angle < 0)
 		pitch_angle += 360;
 
 	if ( pitch_angle > 180)
 		pitch_angle = 360 - pitch_angle;
-	
+
 	if ( pitch_angle > 90)
 		pitch_angle = 90 - (pitch_angle - 90);
-		
+
 	// calculate additional mono crossfade due to pitch angle
-	if ( pitch_angle > PITCH_ANGLE_THRESHOLD )	
+	if ( pitch_angle > PITCH_ANGLE_THRESHOLD )
 	{
-		xfade  = ( pitch_angle - PITCH_ANGLE_THRESHOLD ) / ( 90.0 - PITCH_ANGLE_THRESHOLD );	// 0.0 -> 1.0 as angle 45->90	
+		xfade  = ( pitch_angle - PITCH_ANGLE_THRESHOLD ) / ( 90.0 - PITCH_ANGLE_THRESHOLD );	// 0.0 -> 1.0 as angle 45->90
 
 		mono += xfade;
 		mono = clamp(mono, 0.0f, 1.0f);
 	}
-	
+
 	if ( cspeaker == 2 )
 	{
 		// 2 speaker (headphone) mix: speakers opposing, at 0 & 180 degrees
@@ -132,22 +132,22 @@ static float GetSpeakerVol( float yaw_source, float pitch_source, float mono, fl
 
 		goto GetVolExit;
 	}
-	
+
 	if ( adif >= 90.0 )
 		goto GetVolExit;	// 0.0 scale
-	
+
 	if ( cspeaker == 4 )
 	{
-		// 4 ch surround: all speakers on 90 degree angles, 
+		// 4 ch surround: all speakers on 90 degree angles,
 		// scale ranges from 0.0 (at 90 degree difference between source and speaker)
 		// to 1.0 (0 degree difference between source and speaker)
 
 		scale = (1.0 - powf(adif/90.0, VOLCURVEPOWER));
-	
+
 		goto GetVolExit;
 	}
 
-	// 5 ch surround: 
+	// 5 ch surround:
 
 	// rear speakers are on 90 degree angles and return 0.0->1.0 range over +/- 90 degrees each
 	// center speaker is on 45 degree angle to left/right front speaker
@@ -177,7 +177,7 @@ static float GetSpeakerVol( float yaw_source, float pitch_source, float mono, fl
 		{
 			if (yaw_source > yaw_speaker)
 			{
-				// if sound source is between right front speaker and center speaker, 
+				// if sound source is between right front speaker and center speaker,
 				// apply scaling over 75 degrees...
 
 					if (adif > 75.0)
@@ -188,7 +188,7 @@ static float GetSpeakerVol( float yaw_source, float pitch_source, float mono, fl
 /*
 			if (yaw_source > yaw_speaker && yaw_source < (yaw_speaker + 90.0))
 			{
-				// if sound source is between right front speaker and center speaker, 
+				// if sound source is between right front speaker and center speaker,
 				// apply scaling over 45 degrees...
 				if (adif > 45.0)
 					goto GetVolExit;	// 0.0 scale
@@ -209,7 +209,7 @@ static float GetSpeakerVol( float yaw_source, float pitch_source, float mono, fl
 		{
 			if (yaw_source < yaw_speaker )
 			{
-				// if sound source is between left front speaker and center speaker, 
+				// if sound source is between left front speaker and center speaker,
 				// apply scaling over 75 degrees...
 
 				if (adif > 75.0)
@@ -221,7 +221,7 @@ static float GetSpeakerVol( float yaw_source, float pitch_source, float mono, fl
 /*
 			if (yaw_source < yaw_speaker && yaw_source > (yaw_speaker - 90.0))
 			{
-				// if sound source is between left front speaker and center speaker, 
+				// if sound source is between left front speaker and center speaker,
 				// apply scaling over 45 degrees...
 				if (adif > 45.0)
 					goto GetVolExit;	// 0.0 scale
@@ -242,10 +242,10 @@ static float GetSpeakerVol( float yaw_source, float pitch_source, float mono, fl
 GetVolExit:
 	Assert(mono <= 1.0 && mono >= 0.0);
 	Assert(scale <= 1.0 && scale >= 0.0);
-	
+
 	// crossfade speaker volumes towards mono with increased pitch angle of sound source
 
-	scale = XfadeSpeakerVolToMono( scale, mono, ispeaker, cspeaker, fmix2channels ); 
+	scale = XfadeSpeakerVolToMono( scale, mono, ispeaker, cspeaker, fmix2channels );
 
 	Assert(scale <= 1.0 && scale >= 0.0);
 
@@ -261,7 +261,7 @@ void CAudioDeviceBase::SpatializeChannel( int volume[CCHANVOLUMES/2], int master
 	VPROF("CAudioDeviceBase::SpatializeChannel");
 	float rfscale, rrscale, lfscale, lrscale, fcscale;
 
-	fcscale = rfscale = lfscale = rrscale = lrscale = 0.0;	
+	fcscale = rfscale = lfscale = rrscale = lrscale = 0.0;
 
 	// clear volumes
 
@@ -299,7 +299,7 @@ void CAudioDeviceBase::SpatializeChannel( int volume[CCHANVOLUMES/2], int master
 	VectorAngles(source2d, angles2d);
 
 	listener_yaw = angles2d[YAW];
-	
+
 	// get yaw of sound source, with listener_yaw as reference 0.
 
 	yaw = source_yaw - listener_yaw;
@@ -321,7 +321,7 @@ void CAudioDeviceBase::SpatializeChannel( int volume[CCHANVOLUMES/2], int master
 		else
 		{
 			// stereo speakers at 45 & 135 degrees: (mono sounds mix down to 2 channels)
-		
+
 			rfscale = GetSpeakerVol( yaw, pitch, mono, 45.0,  ISPEAKER_RIGHT_FRONT, 4, true );
 			lfscale = GetSpeakerVol( yaw, pitch, mono, 135.0, ISPEAKER_LEFT_FRONT, 4, true );
 			rrscale = GetSpeakerVol( yaw, pitch, mono, 315.0, ISPEAKER_RIGHT_REAR, 4, true );
@@ -329,9 +329,9 @@ void CAudioDeviceBase::SpatializeChannel( int volume[CCHANVOLUMES/2], int master
 
 			// add sounds coming from rear (quieter)
 
-			rfscale = clamp((rfscale + rrscale * 0.75), 0.0, 1.0); 
-			lfscale = clamp((lfscale + lrscale * 0.75), 0.0, 1.0);		
-			
+			rfscale = clamp((rfscale + rrscale * 0.75), 0.0, 1.0);
+			lfscale = clamp((lfscale + lrscale * 0.75), 0.0, 1.0);
+
 			rrscale = 0;
 			lrscale = 0;
 
@@ -371,7 +371,7 @@ void CAudioDeviceBase::SpatializeChannel( int volume[CCHANVOLUMES/2], int master
 		lfscale = GetSpeakerVol( yaw, pitch, mono, 135.0, ISPEAKER_LEFT_FRONT, 5, false );
 		rrscale = GetSpeakerVol( yaw, pitch, mono, 315.0, ISPEAKER_RIGHT_REAR, 5, false );
 		lrscale = GetSpeakerVol( yaw, pitch, mono, 225.0, ISPEAKER_LEFT_REAR, 5, false );
-		
+
 		//DevMsg("lfscale=%f center= %f rfscale=%f lrscale=%f rrscale=%f\n",lfscale,fcscale, rfscale,lrscale,rrscale);
 		//DevMsg("pitch=%f yaw=%f \n",pitch, yaw);
 
@@ -388,7 +388,7 @@ SpatialExit:
 
 	volume[IFRONT_RIGHT] = (int) (master_vol * gain * rfscale);
 	volume[IFRONT_LEFT] =  (int) (master_vol * gain * lfscale);
-	
+
 	volume[IFRONT_RIGHT] = clamp( volume[IFRONT_RIGHT], 0, 255 );
 	volume[IFRONT_LEFT]  = clamp( volume[IFRONT_LEFT], 0, 255 );
 
@@ -518,14 +518,14 @@ void CAudioDeviceBase::Mix16Mono( channel_t *pChannel, short *pData, int outputO
 
 	if ( !MIX_ScaleChannelVolume( pPaint, pChannel, volume, 1 ) )
 		return;
-	
+
 	if ( FVolumeFrontNonZero(volume) )
 	{
 		Mix16MonoWavtype( pChannel, pPaint->pbuf + outputOffset, volume, pData, inputOffset, rateScaleFix, outCount );
 	}
 
 	if ( pPaint->fsurround )
-	{		
+	{
 		if ( FVolumeRearNonZero(volume) )
 		{
 			Assert( pPaint->pbufrear );
@@ -577,12 +577,12 @@ public:
 	bool		IsActive( void ) { return false; }
 	bool		Init( void ) { return true; }
 	void		Shutdown( void ) {}
-	void		Pause( void ) {} 
+	void		Pause( void ) {}
 	void		UnPause( void ) {}
 	float		MixDryVolume( void ) { return 0; }
 	bool		Should3DMix( void ) { return false; }
 	void		StopAllSounds( void ) {}
-	
+
 	int			PaintBegin( float, int, int ) { return 0; }
 	void		PaintEnd( void ) {}
 
@@ -602,7 +602,7 @@ public:
 
 	void		ChannelReset( int, int, float ) {}
 	void		TransferSamples( int end ) {}
-	
+
 	const char *DeviceName( void )			{ return "Audio Disabled"; }
 	int			DeviceChannels( void )		{ return 2; }
 	int			DeviceSampleBits( void )	{ return 16; }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -19,7 +19,7 @@
 
 using namespace vgui;
 
-// If the option is disabled, throw this on the front of it. 
+// If the option is disabled, throw this on the front of it.
 #define OPTION_DISABLED_PREFIX	"//"
 
 // The option strings for the replace
@@ -43,7 +43,7 @@ char *VarArgs( PRINTF_FORMAT_STRING const char *format, ... )
 	Q_vsnprintf(string, sizeof(string), format,argptr);
 	va_end (argptr);
 
-	return string;	
+	return string;
 }
 
 CModWizardSubPanel_TemplateOptions::CModWizardSubPanel_TemplateOptions( Panel *parent, const char *panelName )

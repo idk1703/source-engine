@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,7 +11,7 @@
 
 DEFINE_FALLBACK_SHADER( Portal, Portal_DX60 )
 
-BEGIN_VS_SHADER( Portal_DX60, 
+BEGIN_VS_SHADER( Portal_DX60,
 				"Help for Portal_DX60 shader" )
 
 				BEGIN_SHADER_PARAMS
@@ -69,7 +69,7 @@ SHADER_DRAW
 	SHADOW_STATE
 	{
 		SetInitialShadowState();
-		
+
 		bool bIsModel = IS_FLAG_SET( MATERIAL_VAR_MODEL );
 
 		FogToFogColor();
@@ -154,33 +154,33 @@ void StaticPass_WithAlphaMask( IShaderShadow *pShaderShadow, IShaderDynamicAPI *
 		//portal static
 		if( bStaticBlendTexture )
 		{
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-				SHADER_TEXCHANNEL_COLOR, 
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+				SHADER_TEXCHANNEL_COLOR,
 				SHADER_TEXOP_SELECTARG1,
 				SHADER_TEXARG_TEXTURE, SHADER_TEXARG_TEXTURE );
 		}
 		else
 		{
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-				SHADER_TEXCHANNEL_COLOR, 
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+				SHADER_TEXCHANNEL_COLOR,
 				SHADER_TEXOP_SELECTARG1,
 				SHADER_TEXARG_CONSTANTCOLOR, SHADER_TEXARG_CONSTANTCOLOR );
 		}
 
-		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-			SHADER_TEXCHANNEL_ALPHA, 
+		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+			SHADER_TEXCHANNEL_ALPHA,
 			SHADER_TEXOP_SELECTARG1,
 			SHADER_TEXARG_ZERO, SHADER_TEXARG_ZERO );
 
 
 		//alpha mask
-		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1, 
-			SHADER_TEXCHANNEL_COLOR, 
+		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
+			SHADER_TEXCHANNEL_COLOR,
 			SHADER_TEXOP_SELECTARG1,
 			SHADER_TEXARG_PREVIOUSSTAGE, SHADER_TEXARG_PREVIOUSSTAGE );
 
-		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1, 
-			SHADER_TEXCHANNEL_ALPHA, 
+		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
+			SHADER_TEXCHANNEL_ALPHA,
 			SHADER_TEXOP_SELECTARG1,
 			SHADER_TEXARG_TEXTUREALPHA, SHADER_TEXARG_TEXTUREALPHA );
 	}
@@ -190,7 +190,7 @@ void StaticPass_WithAlphaMask( IShaderShadow *pShaderShadow, IShaderDynamicAPI *
 			BindTexture( SHADER_SAMPLER0, STATICBLENDTEXTURE, STATICBLENDTEXTUREFRAME );
 		else
 			pShaderAPI->Color4f( 0.5f, 0.5f, 0.5f, 0.0f );
-		
+
 		BindTexture( SHADER_SAMPLER1, ALPHAMASKTEXTURE, ALPHAMASKTEXTUREFRAME );
 	}
 	Draw();
@@ -201,5 +201,3 @@ void StaticPass_WithAlphaMask( IShaderShadow *pShaderShadow, IShaderDynamicAPI *
 }
 
 END_SHADER
-
-

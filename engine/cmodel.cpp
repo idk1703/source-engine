@@ -142,7 +142,7 @@ vcollide_t *CM_GetVCollide( int modelIndex )
 
 	// return the model's collision data
 	return &pModel->vcollisionData;
-} 
+}
 
 
 //-----------------------------------------------------------------------------
@@ -151,7 +151,7 @@ cmodel_t *CM_InlineModel( const char *name )
 {
 	// error checking!
 	if( !name )
-		return NULL; 
+		return NULL;
 
 	// JAYHL2: HACKHACK Get rid of this
 	if( !strncmp( name, "maps/", 5 ) )
@@ -193,7 +193,7 @@ int CM_BrushContents_r( CCollisionBSPData *pBSPData, int nodenum )
 		{
 			int leafIndex = -1 - nodenum;
 			cleaf_t &leaf = pBSPData->map_leafs[leafIndex];
-			
+
 			for ( int i = 0; i < leaf.numleafbrushes; i++ )
 			{
 				unsigned short brushIndex = pBSPData->map_leafbrushes[ leaf.firstleafbrush + i ];
@@ -220,7 +220,7 @@ int CM_InlineModelContents( int index )
 
 	return CM_BrushContents_r( GetCollisionBSPData(), pModel->headnode );
 }
-			
+
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -350,8 +350,8 @@ cmodel_t *CM_LoadMap( const char *name, bool allowReusePrevious, unsigned *check
 	CollisionBSPData_Load( name, pBSPData );
 	CMapLoadHelper::Shutdown( );
 
-    // Push the displacement bounding boxes down the tree and set leaf data.
-    CM_DispTreeLeafnum( pBSPData );
+	// Push the displacement bounding boxes down the tree and set leaf data.
+	CM_DispTreeLeafnum( pBSPData );
 
 	CM_InitPortalOpenState( pBSPData );
 	FloodAreaConnections(pBSPData);
@@ -413,12 +413,12 @@ int CM_PointLeafnumMinDistSqr_r( CCollisionBSPData *pBSPData, const Vector& p, i
 	{
 		node = pBSPData->map_rootnode + num;
 		plane = node->plane;
-		
+
 		if (plane->type < 3)
 			d = p[plane->type] - plane->dist;
 		else
 			d = DotProduct (plane->normal, p) - plane->dist;
-		
+
 		minDistSqr = fpmin( d*d, minDistSqr );
 		if (d < 0)
 			num = node->children[1];
@@ -443,7 +443,7 @@ int CM_PointLeafnum_r( CCollisionBSPData *pBSPData, const Vector& p, int num)
 	{
 		node = pBSPData->map_rootnode + num;
 		plane = node->plane;
-		
+
 		if (plane->type < 3)
 			d = p[plane->type] - plane->dist;
 		else
@@ -481,7 +481,7 @@ void CM_SnapPointToReferenceLeaf_r( CCollisionBSPData *pBSPData, const Vector& p
 	{
 		node = pBSPData->map_rootnode + num;
 		plane = node->plane;
-		
+
 		if (plane->type < 3)
 		{
 			d = p[plane->type] - plane->dist;
@@ -814,7 +814,7 @@ int CM_PointContents ( const Vector &p, int headnode)
 		cbrush_t * RESTRICT pBrush = &pBSPData->map_brushes[nBrush];
 		nContents |= CM_BrushPointContents( pBSPData, p, pBrush );
 	}
-	
+
 	return nContents;
 }
 
@@ -944,7 +944,7 @@ bool IntersectRayWithBoxBrush( TraceInfo_t *pTraceInfo, const cbrush_t *pBrush, 
 
 		fltx4 firstOutTmp = FindLowestSIMD3(maxt);
 
-		// implement FindHighest of 3, but use intermediate masks to find the 
+		// implement FindHighest of 3, but use intermediate masks to find the
 		// corresponding index in faceId to the highest at the same time
 		fltx4 compareOne = RotateLeft( mint );
 		faceMask = CmpGtSIMD(mint, compareOne);
@@ -971,7 +971,7 @@ bool IntersectRayWithBoxBrush( TraceInfo_t *pTraceInfo, const cbrush_t *pBrush, 
 			Assert(faceIndex<6);
 			float t1 = SubFloat(lastIn,0);
 			trace_t * RESTRICT pTrace = &pTraceInfo->m_trace;
-			
+
 			// this condition is copied from the brush case to avoid hitting an assert and
 			// overwriting a previous start solid with a new shorter fraction
 			if ( bStartOut && pTraceInfo->m_ispoint && pTrace->fractionleftsolid > t1 )
@@ -1109,7 +1109,7 @@ bool IntersectRayWithBox( const Ray_t &ray, const VectorAligned &inInvDelta, con
 		fltx4 firstOutTmp = FindLowestSIMD3(maxt);
 
 		//fltx4 lastInTmp = FindHighestSIMD3(mint);
-		// implement FindHighest of 3, but use intermediate masks to find the 
+		// implement FindHighest of 3, but use intermediate masks to find the
 		// corresponding index in faceId to the highest at the same time
 		fltx4 compareOne = RotateLeft( mint );
 		faceMask = CmpGtSIMD(mint, compareOne);
@@ -1245,7 +1245,7 @@ void FASTCALL CM_ClipBoxToBrush( TraceInfo_t * RESTRICT pTraceInfo, const cbrush
 		const Vector &planeNormal = plane->normal;
 
 		if (!IS_POINT)
-		{	
+		{
 			// general box case
 			// push the plane out apropriately for mins/maxs
 
@@ -1256,7 +1256,7 @@ void FASTCALL CM_ClipBoxToBrush( TraceInfo_t * RESTRICT pTraceInfo, const cbrush
 		{
 			// special point case
 			dist = plane->dist;
-			// don't trace rays against bevel planes 
+			// don't trace rays against bevel planes
 			if ( side->bBevel )
 				continue;
 		}
@@ -1273,13 +1273,13 @@ void FASTCALL CM_ClipBoxToBrush( TraceInfo_t * RESTRICT pTraceInfo, const cbrush
 			if( d2 > 0.f )
 				return;
 
-		} 
+		}
 		else
 		{
 			// d1 <= 0.f && d2 <= 0.f
 			if( d2 <= 0.f )
 				continue;
- 
+
 			// d2 > 0.f
 			getout = true;
 		}
@@ -1289,7 +1289,7 @@ void FASTCALL CM_ClipBoxToBrush( TraceInfo_t * RESTRICT pTraceInfo, const cbrush
 		{	// enter
 			// NOTE: This could be negative if d1 is less than the epsilon.
 			// If the trace is short (d1-d2 is small) then it could produce a large
-			// negative fraction. 
+			// negative fraction.
 			float f = (d1-DIST_EPSILON);
 			if ( f < 0.f )
 				f = 0.f;
@@ -1315,10 +1315,10 @@ void FASTCALL CM_ClipBoxToBrush( TraceInfo_t * RESTRICT pTraceInfo, const cbrush
 	// not possible to compute for brush sweeps without a *lot* more computation
 	// So, client code will never get fractionleftsolid for box sweeps
 	if (IS_POINT && startout)
-	{ 
+	{
 		// Add a little sludge.  The sludge should already be in the fractionleftsolid
-		// (for all intents and purposes is a leavefrac value) and enterfrac values.  
-		// Both of these values have +/- DIST_EPSILON values calculated in.  Thus, I 
+		// (for all intents and purposes is a leavefrac value) and enterfrac values.
+		// Both of these values have +/- DIST_EPSILON values calculated in.  Thus, I
 		// think the test should be against "0.0."  If we experience new "left solid"
 		// problems you may want to take a closer look here!
 //		if ((trace->fractionleftsolid - enterfrac) > -1e-6)
@@ -1606,16 +1606,16 @@ void FASTCALL CM_TraceToLeaf( TraceInfo_t * RESTRICT pTraceInfo, int ndxLeaf, fl
 
 				if ( IS_POINT )
 				{
-					if (!IsBoxIntersectingRay( LoadAlignedSIMD(pDispBounds->mins.Base()), LoadAlignedSIMD(pDispBounds->maxs.Base()), 
-											   traceStart, traceDelta, traceInvDelta, vecEpsilon ))
+					if (!IsBoxIntersectingRay( LoadAlignedSIMD(pDispBounds->mins.Base()), LoadAlignedSIMD(pDispBounds->maxs.Base()),
+												traceStart, traceDelta, traceInvDelta, vecEpsilon ))
 						continue;
 				}
 				else
 				{
 					fltx4 mins = SubSIMD(LoadAlignedSIMD(pDispBounds->mins.Base()),extents);
 					fltx4 maxs = AddSIMD(LoadAlignedSIMD(pDispBounds->maxs.Base()),extents);
-					if (!IsBoxIntersectingRay( mins, maxs, 
-											   traceStart, traceDelta, traceInvDelta, vecEpsilon ))
+					if (!IsBoxIntersectingRay( mins, maxs,
+												traceStart, traceDelta, traceInvDelta, vecEpsilon ))
 						continue;
 				}
 
@@ -1643,25 +1643,25 @@ void FASTCALL CM_TraceToLeaf( TraceInfo_t * RESTRICT pTraceInfo, int ndxLeaf, fl
 					if ( !pTraceInfo->Visit( pDispBounds->GetCounter(), count, pCounters ) )
 						continue;
 				}
-		
+
 				if ( IS_POINT && !IsBoxIntersectingRay( pDispBounds->mins, pDispBounds->maxs, pTraceInfo->m_start, pTraceInfo->m_delta, pTraceInfo->m_invDelta, DISPCOLL_DIST_EPSILON ) )
 				{
 					continue;
 				}
 
-				if ( !IS_POINT && !IsBoxIntersectingRay( pDispBounds->mins - pTraceInfo->m_extents, pDispBounds->maxs + pTraceInfo->m_extents, 
+				if ( !IS_POINT && !IsBoxIntersectingRay( pDispBounds->mins - pTraceInfo->m_extents, pDispBounds->maxs + pTraceInfo->m_extents,
 					pTraceInfo->m_start, pTraceInfo->m_delta, pTraceInfo->m_invDelta, DISPCOLL_DIST_EPSILON ) )
 				{
 					continue;
 				}
-				
+
 				CDispCollTree * RESTRICT pDispTree = &g_pDispCollTrees[dispIndex];
 				CM_TraceToDispTree<IS_POINT>( pTraceInfo, pDispTree, startFrac, endFrac );
 				if( !pTraceInfo->m_trace.fraction )
 					break;
 			}
 		}
-		
+
 		CM_PostTraceToDispTree( pTraceInfo );
 	}
 }
@@ -1752,9 +1752,9 @@ static inline void CM_ComputeTraceEndpoints( const Ray_t& ray, trace_t& tr )
 //-----------------------------------------------------------------------------
 // Purpose: Get a list of leaves for a trace.
 //-----------------------------------------------------------------------------
-void CM_RayLeafnums_r( const Ray_t &ray, CCollisionBSPData *pBSPData, int iNode, 
-					  float p1f, float p2f, const Vector &vecPoint1, const Vector &vecPoint2,
-					  int *pLeafList, int nMaxLeafCount, int &nLeafCount )
+void CM_RayLeafnums_r( const Ray_t &ray, CCollisionBSPData *pBSPData, int iNode,
+					float p1f, float p2f, const Vector &vecPoint1, const Vector &vecPoint2,
+					int *pLeafList, int nMaxLeafCount, int &nLeafCount )
 {
 	cnode_t		*pNode = NULL;
 	cplane_t	*pPlane = NULL;
@@ -1807,7 +1807,7 @@ void CM_RayLeafnums_r( const Ray_t &ray, CCollisionBSPData *pBSPData, int iNode,
 
 			break;
 		}
-	} 
+	}
 	else
 	{
 		while( iNode >= 0 )
@@ -1899,7 +1899,7 @@ void CM_RayLeafnums_r( const Ray_t &ray, CCollisionBSPData *pBSPData, int iNode,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CM_RayLeafnums( const Ray_t &ray, int *pLeafList, int nMaxLeafCount, int &nLeafCount  )
 {
@@ -1990,7 +1990,7 @@ static void FASTCALL CM_RecursiveHullCheckImpl( TraceInfo_t *pTraceInfo, int num
 		CM_TraceToLeaf<IS_POINT>(pTraceInfo, -1-num, p1f, p2f);
 		return;
 	}
-	
+
 	// put the crosspoint DIST_EPSILON pixels on the near side
 	if (t1 < t2)
 	{
@@ -2100,10 +2100,10 @@ static inline void CM_UnsweptBoxTrace( TraceInfo_t *pTraceInfo, const Ray_t& ray
 // Purpose: Ray/Hull trace against the world without the RecursiveHullTrace
 //-----------------------------------------------------------------------------
 void CM_BoxTraceAgainstLeafList( const Ray_t &ray, int *pLeafList, int nLeafCount, int nBrushMask,
-							     bool bComputeEndpoint, trace_t &trace )
+								bool bComputeEndpoint, trace_t &trace )
 {
 	// For multi-check avoidance.
-	TraceInfo_t *pTraceInfo = BeginTrace();		
+	TraceInfo_t *pTraceInfo = BeginTrace();
 
 	// Setup trace data.
 	CM_ClearTrace( &pTraceInfo->m_trace );
@@ -2112,7 +2112,7 @@ void CM_BoxTraceAgainstLeafList( const Ray_t &ray, int *pLeafList, int nLeafCoun
 	pTraceInfo->m_pBSPData = GetCollisionBSPData();
 
 	// Check if the map is loaded.
-	if ( !pTraceInfo->m_pBSPData->numnodes )	
+	if ( !pTraceInfo->m_pBSPData->numnodes )
 	{
 		trace = pTraceInfo->m_trace;
 		EndTrace( pTraceInfo );
@@ -2145,7 +2145,7 @@ void CM_BoxTraceAgainstLeafList( const Ray_t &ray, int *pLeafList, int nLeafCoun
 			{
 				bFoundNonSolidLeaf = true;
 			}
-			
+
 			CM_TestInLeaf( pTraceInfo, pLeafList[iLeaf] );
 			if ( pTraceInfo->m_trace.allsolid )
 				break;
@@ -2187,11 +2187,11 @@ void CM_BoxTrace( const Ray_t& ray, int headnode, int brushmask, bool computeEnd
 {
 	VPROF("BoxTrace");
 	// for multi-check avoidance
-	TraceInfo_t *pTraceInfo = BeginTrace();		
+	TraceInfo_t *pTraceInfo = BeginTrace();
 
 #ifdef COUNT_COLLISIONS
 	// for statistics, may be zeroed
-	g_CollisionCounts.m_Traces++;		
+	g_CollisionCounts.m_Traces++;
 #endif
 
 	// fill in a default trace
@@ -2200,7 +2200,7 @@ void CM_BoxTrace( const Ray_t& ray, int headnode, int brushmask, bool computeEnd
 	pTraceInfo->m_pBSPData = GetCollisionBSPData();
 
 	// check if the map is not loaded
-	if (!pTraceInfo->m_pBSPData->numnodes)	
+	if (!pTraceInfo->m_pBSPData->numnodes)
 	{
 		tr = pTraceInfo->m_trace;
 		EndTrace( pTraceInfo );
@@ -2261,7 +2261,7 @@ void CM_TransformedBoxTrace( const Ray_t& ray, int headnode, int brushmask,
 	{
 		// NOTE: In this case, the bbox is rotated into the space of the BSP as well
 		// to insure consistency at all orientations, we must rotate the origin of the ray
-		// and reapply the offset to the center of the box.  That way all traces with the 
+		// and reapply the offset to the center of the box.  That way all traces with the
 		// same box centering will have the same transformation into local space
 		Vector worldOrigin = ray.m_Start + ray.m_StartOffset;
 		AngleMatrix( angles, origin, localToWorld );
@@ -2304,13 +2304,13 @@ PVS / PAS
 */
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pBSPData - 
-//			*out - 
+// Purpose:
+// Input  : *pBSPData -
+//			*out -
 //-----------------------------------------------------------------------------
 void CM_NullVis( CCollisionBSPData *pBSPData, byte *out )
 {
-	int numClusterBytes = (pBSPData->numclusters+7)>>3;	
+	int numClusterBytes = (pBSPData->numclusters+7)>>3;
 	byte *out_p = out;
 
 	while (numClusterBytes)
@@ -2345,20 +2345,20 @@ void CM_DecompressVis( CCollisionBSPData *pBSPData, int cluster, int visType, by
 
 	// no vis info, so make all visible
 	if ( !pBSPData->numvisibility || !pBSPData->map_vis )
-	{	
+	{
 		CM_NullVis( pBSPData, out );
-		return;		
+		return;
 	}
 
 	byte *in = ((byte *)pBSPData->map_vis) + pBSPData->map_vis->bitofs[cluster][visType];
-	numClusterBytes = (pBSPData->numclusters+7)>>3;	
+	numClusterBytes = (pBSPData->numclusters+7)>>3;
 	out_p = out;
 
 	// no vis info, so make all visible
 	if ( !in )
-	{	
+	{
 		CM_NullVis( pBSPData, out );
-		return;		
+		return;
 	}
 
 	do
@@ -2567,7 +2567,7 @@ int CM_WriteAreaBits ( byte *buffer, int buflen, int area )
 	bytes = (pBSPData->numareas+7)>>3;
 
 	if ( map_noareas.GetInt() )
-	{	
+	{
 		// for debugging, send everything
 		Q_memset( buffer, 255, 3 );
 	}
@@ -2662,7 +2662,7 @@ bool CM_HeadnodeVisible (int nodenum, const byte *visbits, int vissize )
 //-----------------------------------------------------------------------------
 // Purpose: returns true if the box is in a cluster that is visible in the visbits
 // Input  : mins - box extents
-//			maxs - 
+//			maxs -
 //			*visbits - pvs or pas of some cluster
 // Output : true if visible, false if not
 //-----------------------------------------------------------------------------
@@ -2796,10 +2796,10 @@ int CFastPointLeafNum::GetLeaf( const Vector &vPos )
 }
 
 
-bool FASTCALL IsBoxIntersectingRayNoLowest( fltx4 boxMin, fltx4  boxMax, 
-								   const fltx4 & origin, const fltx4 & delta, const fltx4 & invDelta, // ray parameters
-								   const fltx4 & vTolerance ///< eg from ReplicateX4(flTolerance)
-								   )
+bool FASTCALL IsBoxIntersectingRayNoLowest( fltx4 boxMin, fltx4  boxMax,
+									const fltx4 & origin, const fltx4 & delta, const fltx4 & invDelta, // ray parameters
+									const fltx4 & vTolerance ///< eg from ReplicateX4(flTolerance)
+									)
 {
 	/*
 	Assert( boxMin[0] <= boxMax[0] );
@@ -2824,7 +2824,7 @@ bool FASTCALL IsBoxIntersectingRayNoLowest( fltx4 boxMin, fltx4  boxMax,
 	fltx4 bvOriginOutsideBox = OrSIMD( CmpLtSIMD(origin,boxMin), CmpGtSIMD(origin,boxMax) );
 	bvDeltaTinyComponents = SetWToZeroSIMD(bvDeltaTinyComponents);
 
-	// work out entry and exit points for the ray. This may produce strange results for 
+	// work out entry and exit points for the ray. This may produce strange results for
 	// very short delta components, but those will be masked out by bvDeltaTinyComponents
 	// anyway. We could early-out on bvOriginOutsideBox, but it won't be ready to branch
 	// on for fourteen cycles.
@@ -2864,7 +2864,7 @@ bool FASTCALL IsBoxIntersectingRayNoLowest( fltx4 boxMin, fltx4  boxMax,
 		return false;
 	else
 	{
-		// however if there are tiny components inside the box, we 
+		// however if there are tiny components inside the box, we
 		// know that they are good. (we didn't really need to run
 		// the other computations on them, but it was faster to do
 		// so than branching around them).
@@ -2879,15 +2879,15 @@ bool FASTCALL IsBoxIntersectingRayNoLowest( fltx4 boxMin, fltx4  boxMax,
 	fltx4 outOfBounds = OrSIMD( CmpGtSIMD(furthestEntry, LoadOneSIMD()), CmpGtSIMD( LoadZeroSIMD(), closestExit ) );
 	fltx4 failedComponents = OrSIMD(tminOverTmax, outOfBounds); // any 1's here mean return false
 	// but, if a component is tiny and has its origin inside the box, ignore the computation against bogus invDelta.
-	failedComponents = AndNotSIMD(bvOriginOutsideBox,failedComponents); 
+	failedComponents = AndNotSIMD(bvOriginOutsideBox,failedComponents);
 	return ( IsAllZeros( SetWToZeroSIMD( failedComponents ) ) );
 }
 
-// function to time IsBoxIntersectingRay 
+// function to time IsBoxIntersectingRay
 #if 0
 /*
 //-----------------------------------------------------------------------------
-bool FASTCALL IsBoxIntersectingRay( fltx4 boxMin, fltx4 boxMax, 
+bool FASTCALL IsBoxIntersectingRay( fltx4 boxMin, fltx4 boxMax,
 fltx4 origin, fltx4 delta, fltx4 invDelta, // ray parameters
 fltx4 vTolerance ///< eg from ReplicateX4(flTolerance)
 )
@@ -2963,7 +2963,7 @@ CON_COMMAND( opt_test_rotation, "Quick timing test of vector rotation my m3x4" )
 		{
 			int in = i & 1023;
 			int out = i & 15;
-			
+
 			outScratch[out].x = testData[in] * *reinterpret_cast<Vector *>(rota[0]);
 			outScratch[out].y = testData[in] * *reinterpret_cast<Vector *>(rota[1]);
 			outScratch[out].z = testData[in] * *reinterpret_cast<Vector *>(rota[2]);

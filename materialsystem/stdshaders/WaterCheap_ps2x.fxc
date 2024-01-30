@@ -63,15 +63,15 @@ float4 main( PS_INPUT i ) : COLOR
 #else
 	float3 vNormal = DecompressNormal( NormalMapSampler, i.normalMapTexCoord, NORMAL_DECODE_MODE );
 #endif
-	
+
 	HALF3 worldSpaceNormal = mul( vNormal, i.tangentSpaceTranspose );
 	HALF3 worldSpaceEye;
-	
-	HALF flWorldSpaceDist = 1.0f;	
-	
+
+	HALF flWorldSpaceDist = 1.0f;
+
 #ifdef NV3X
 	// for some reason, fxc doesn't convert length( half3 v ) into all _pp opcodes.
-	if (bBlend) 
+	if (bBlend)
 	{
 		worldSpaceEye = i.worldSpaceEyeVect;
 		HALF  worldSpaceDistSqr = dot( worldSpaceEye, worldSpaceEye );
@@ -84,7 +84,7 @@ float4 main( PS_INPUT i ) : COLOR
 		worldSpaceEye  = NormalizeWithCubemap( NormalizeSampler, i.worldSpaceEyeVect );
 	}
 #else  // !NV3X
-	if (bBlend) 
+	if (bBlend)
 	{
 		worldSpaceEye = i.worldSpaceEyeVect;
 		flWorldSpaceDist = length( worldSpaceEye );
@@ -95,15 +95,15 @@ float4 main( PS_INPUT i ) : COLOR
 		worldSpaceEye  = NormalizeWithCubemap( NormalizeSampler, i.worldSpaceEyeVect );
 	}
 #endif
-	
+
 	HALF3 reflectVect = CalcReflectionVectorUnnormalized( worldSpaceNormal, worldSpaceEye );
 	HALF3 specularLighting = ENV_MAP_SCALE * texCUBE( EnvmapSampler, reflectVect );
 	specularLighting *= g_ReflectTint;
-	
+
 #if FRESNEL
 	// FIXME: It's unclear that we want to do this for cheap water
 	// but the code did this previously and I didn't want to change it
-	HALF flDotResult = dot( worldSpaceEye, worldSpaceNormal ); 
+	HALF flDotResult = dot( worldSpaceEye, worldSpaceNormal );
 	flDotResult = 1.0f - max( 0.0f, flDotResult );
 
 	HALF flFresnelFactor = flDotResult * flDotResult;
@@ -112,7 +112,7 @@ float4 main( PS_INPUT i ) : COLOR
 #else
 	HALF flFresnelFactor = g_ReflectTint.a;
 #endif
-	
+
 	HALF flAlpha;
 	if (bBlend)
 	{
@@ -139,14 +139,14 @@ float4 main( PS_INPUT i ) : COLOR
 	}
 
 	// multiply the color by alpha.since we are using alpha blending to blend against dest alpha for borders.
-	
-	
-		
+
+
+
 #if (PIXELFOGTYPE == PIXEL_FOG_TYPE_RANGE)
 	float fogFactor = CalcRangeFog( i.vRefract_W_ProjZ.w, g_PixelFogParams.x, g_PixelFogParams.z, g_PixelFogParams.w );
 #else
 	float fogFactor = 0;
 #endif
-	
+
 	return FinalOutput( float4( specularLighting, flAlpha ), fogFactor, PIXELFOGTYPE, TONEMAP_SCALE_LINEAR );
 }

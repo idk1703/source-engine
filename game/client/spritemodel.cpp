@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -27,14 +27,14 @@ static int scissor_height = 0;
 static bool giScissorTest = false;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Set the scissor
 //  the coordinate system for gl is upsidedown (inverted-y) as compared to software, so the
 //  specified clipping rect must be flipped
-// Input  : x - 
-//			y - 
-//			width - 
-//			height - 
+// Input  : x -
+//			y -
+//			width -
+//			height -
 //-----------------------------------------------------------------------------
 void EnableScissorTest( int x, int y, int width, int height )
 {
@@ -52,7 +52,7 @@ void EnableScissorTest( int x, int y, int width, int height )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void DisableScissorTest( void )
 {
@@ -60,13 +60,13 @@ void DisableScissorTest( void )
 	scissor_width = 0;
 	scissor_y = 0;
 	scissor_height = 0;
-	
+
 	giScissorTest = false;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Verify that this is a valid, properly ordered rectangle.
-// Input  : *prc - 
+// Input  : *prc -
 // Output : int
 //-----------------------------------------------------------------------------
 static int ValidateWRect(const wrect_t *prc)
@@ -86,13 +86,13 @@ static int ValidateWRect(const wrect_t *prc)
 
 //-----------------------------------------------------------------------------
 // Purpose: classic interview question
-// Input  : *prc1 - 
-//			*prc2 - 
-//			*prc - 
+// Input  : *prc1 -
+//			*prc2 -
+//			*prc -
 // Output : int
 //-----------------------------------------------------------------------------
 static int IntersectWRect(const wrect_t *prc1, const wrect_t *prc2, wrect_t *prc)
-{	
+{
 	wrect_t rc;
 
 	if (!prc)
@@ -115,15 +115,15 @@ static int IntersectWRect(const wrect_t *prc1, const wrect_t *prc2, wrect_t *prc
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
-//			y - 
-//			width - 
-//			height - 
-//			u0 - 
-//			v0 - 
-//			u1 - 
-//			v1 - 
+// Purpose:
+// Input  : x -
+//			y -
+//			width -
+//			height -
+//			u0 -
+//			v0 -
+//			u1 -
+//			v1 -
 // Output : static bool
 //-----------------------------------------------------------------------------
 static bool Scissor( int& x, int& y, int& width, int& height, float& u0, float& v0, float& u1, float& v1 )
@@ -168,19 +168,19 @@ static bool Scissor( int& x, int& y, int& width, int& height, float& u0, float& 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pSprite - 
-//			frame - 
-//			*pfLeft - 
-//			*pfRight - 
-//			*pfTop - 
-//			*pfBottom - 
-//			*pw - 
-//			*ph - 
-//			*prcSubRect - 
+// Purpose:
+// Input  : *pSprite -
+//			frame -
+//			*pfLeft -
+//			*pfRight -
+//			*pfTop -
+//			*pfBottom -
+//			*pw -
+//			*ph -
+//			*prcSubRect -
 // Output : static void
 //-----------------------------------------------------------------------------
-static void AdjustSubRect(CEngineSprite *pSprite, int frame, float *pfLeft, float *pfRight, float *pfTop, 
+static void AdjustSubRect(CEngineSprite *pSprite, int frame, float *pfLeft, float *pfRight, float *pfTop,
 						  float *pfBottom, int *pw, int *ph, const wrect_t *prcSubRect)
 {
 	wrect_t rc;
@@ -214,7 +214,7 @@ static void AdjustSubRect(CEngineSprite *pSprite, int frame, float *pfLeft, floa
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static unsigned int spriteOriginCache = 0;
 static unsigned int spriteOrientationCache = 0;
@@ -229,11 +229,11 @@ bool CEngineSprite::Init( const char *pName )
 	m_width = m_height = m_numFrames = 1;
 
 	Assert( g_pVideo != NULL );
-	
-	if ( g_pVideo != NULL && g_pVideo->LocateVideoSystemForPlayingFile( pName ) != VideoSystem::NONE ) 
+
+	if ( g_pVideo != NULL && g_pVideo->LocateVideoSystemForPlayingFile( pName ) != VideoSystem::NONE )
 	{
-		m_VideoMaterial = g_pVideo->CreateVideoMaterial( pName, pName, "GAME", VideoPlaybackFlags::DEFAULT_MATERIAL_OPTIONS, VideoSystem::DETERMINE_FROM_FILE_EXTENSION, false ); 
-		
+		m_VideoMaterial = g_pVideo->CreateVideoMaterial( pName, pName, "GAME", VideoPlaybackFlags::DEFAULT_MATERIAL_OPTIONS, VideoSystem::DETERMINE_FROM_FILE_EXTENSION, false );
+
 		if ( m_VideoMaterial == NULL )
 			return false;
 
@@ -277,7 +277,7 @@ bool CEngineSprite::Init( const char *pName )
 		}
 
 		for ( int i = 0; i < kRenderModeCount; ++i )
-		{	
+		{
 			if ( i == kRenderNone || i == kRenderEnvironmental )
 			{
 				m_material[i] = NULL;
@@ -334,7 +334,7 @@ bool CEngineSprite::Init( const char *pName )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEngineSprite::Shutdown( void )
 {
@@ -362,17 +362,17 @@ bool CEngineSprite::IsVideo()
 //-----------------------------------------------------------------------------
 void CEngineSprite::GetTexCoordRange( float *pMinU, float *pMinV, float *pMaxU, float *pMaxV )
 {
-	*pMaxU = 1.0f; 
+	*pMaxU = 1.0f;
 	*pMaxV = 1.0f;
 	if ( IsVideo() )
 	{
 		m_VideoMaterial->GetVideoTexCoordRange( pMaxU, pMaxV );
 	}
-	
+
 	float flOOWidth = ( m_width != 0 ) ? 1.0f / m_width : 1.0f;
 	float flOOHeight = ( m_height!= 0 ) ? 1.0f / m_height : 1.0f;
 
-	*pMinU = 0.5f * flOOWidth; 
+	*pMinU = 0.5f * flOOWidth;
 	*pMinV = 0.5f * flOOHeight;
 	*pMaxU = (*pMaxU) - (*pMinU);
 	*pMaxV = (*pMaxV) - (*pMinV);
@@ -380,7 +380,7 @@ void CEngineSprite::GetTexCoordRange( float *pMinU, float *pMinV, float *pMaxU, 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEngineSprite::SetColor( float r, float g, float b )
 {
@@ -393,7 +393,7 @@ void CEngineSprite::SetColor( float r, float g, float b )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEngineSprite::GetHUDSpriteColor( float* color )
 {
@@ -402,10 +402,10 @@ void CEngineSprite::GetHUDSpriteColor( float* color )
 
 
 //-----------------------------------------------------------------------------
-// Returns the material 
+// Returns the material
 //-----------------------------------------------------------------------------
 static unsigned int frameCache = 0;
-IMaterial *CEngineSprite::GetMaterial( RenderMode_t nRenderMode, int nFrame ) 
+IMaterial *CEngineSprite::GetMaterial( RenderMode_t nRenderMode, int nFrame )
 {
 	if ( nRenderMode == kRenderNone || nRenderMode == kRenderEnvironmental )
 		return NULL;
@@ -414,7 +414,7 @@ IMaterial *CEngineSprite::GetMaterial( RenderMode_t nRenderMode, int nFrame )
 	{
 		m_VideoMaterial->SetFrame( nFrame );
 	}
-	
+
 	IMaterial *pMaterial = m_material[nRenderMode];
 	if ( pMaterial )
 	{
@@ -426,7 +426,7 @@ IMaterial *CEngineSprite::GetMaterial( RenderMode_t nRenderMode, int nFrame )
 	}
 
 	return pMaterial;
-} 
+}
 
 void CEngineSprite::SetFrame( RenderMode_t nRenderMode, int nFrame )
 {
@@ -450,7 +450,7 @@ void CEngineSprite::SetFrame( RenderMode_t nRenderMode, int nFrame )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CEngineSprite::GetOrientation( void )
@@ -460,7 +460,7 @@ int CEngineSprite::GetOrientation( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEngineSprite::UnloadMaterial( void )
 {
@@ -476,7 +476,7 @@ void CEngineSprite::UnloadMaterial( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEngineSprite::DrawFrame( RenderMode_t nRenderMode, int frame, int x, int y, const wrect_t *prcSubRect )
 {
@@ -485,11 +485,11 @@ void CEngineSprite::DrawFrame( RenderMode_t nRenderMode, int frame, int x, int y
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frame - 
-//			x - 
-//			y - 
-//			*prcSubRect - 
+// Purpose:
+// Input  : frame -
+//			x -
+//			y -
+//			*prcSubRect -
 //-----------------------------------------------------------------------------
 void CEngineSprite::DrawFrameOfSize( RenderMode_t nRenderMode, int frame, int x, int y, int iWidth, int iHeight, const wrect_t *prcSubRect )
 {
@@ -518,7 +518,7 @@ void CEngineSprite::DrawFrameOfSize( RenderMode_t nRenderMode, int frame, int x,
 
 	float color[3];
 	GetHUDSpriteColor( color );
-	
+
 	meshBuilder.Color3fv( color );
 	meshBuilder.TexCoord2f( 0, fLeft, fTop );
 	meshBuilder.Position3f( x, y, 0.0f );

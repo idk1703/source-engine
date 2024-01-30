@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -32,7 +32,7 @@ BEGIN_SHADER( UnlitGeneric_DX6,
 		SHADER_PARAM( ENVMAPMASKSCALE, SHADER_PARAM_TYPE_FLOAT, "1", "envmap mask scale" )
 		SHADER_PARAM( ENVMAPTINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "envmap tint" )
 		SHADER_PARAM( ENVMAPOPTIONAL, SHADER_PARAM_TYPE_BOOL, "0", "Make the envmap only apply to dx9 and higher hardware" )
-		SHADER_PARAM( ALPHATESTREFERENCE, SHADER_PARAM_TYPE_FLOAT, "0.7", "" )	
+		SHADER_PARAM( ALPHATESTREFERENCE, SHADER_PARAM_TYPE_FLOAT, "0.7", "" )
 	END_SHADER_PARAMS
 
 	SHADER_INIT_PARAMS()
@@ -249,7 +249,7 @@ BEGIN_SHADER( UnlitGeneric_DX6,
 					// We can't do detail in a single pass if we're also
 					// colormodulating and have vertex color
 					bool hasDetailTexture = params[DETAIL]->IsTexture();
-					bool isModulating = IsColorModulating() || IsAlphaModulating(); 
+					bool isModulating = IsColorModulating() || IsAlphaModulating();
 					bool onePassDetail = hasDetailTexture && (!hasVertexColor || !isModulating);
 					DrawAdditiveTextured( params, pShaderAPI, pShaderShadow, onePassDetail );
 					if (hasDetailTexture && !onePassDetail)
@@ -271,7 +271,7 @@ BEGIN_SHADER( UnlitGeneric_DX6,
 					// We can't do detail in a single pass if we're also
 					// colormodulating and have vertex color
 					bool hasDetailTexture = params[DETAIL]->IsTexture();
-					bool isModulating = IsColorModulating() || IsAlphaModulating(); 
+					bool isModulating = IsColorModulating() || IsAlphaModulating();
 					bool onePassDetail = hasDetailTexture && (!hasVertexColor || !isModulating);
 					DrawTextured( params, pShaderAPI, pShaderShadow, onePassDetail );
 					if (hasDetailTexture && !onePassDetail)
@@ -290,19 +290,19 @@ BEGIN_SHADER( UnlitGeneric_DX6,
 		}
 
 		// Second pass...
-		if (params[ENVMAP]->IsTexture() && 
+		if (params[ENVMAP]->IsTexture() &&
 			(!doFirstPass || IS_FLAG_SET(MATERIAL_VAR_MULTIPASS)) )
 		{
 			if (doFirstPass || IS_FLAG_SET(MATERIAL_VAR_ADDITIVE))
 			{
 				FixedFunctionAdditiveMaskedEnvmapPass( ENVMAP, ENVMAPMASK, BASETEXTURE,
-					ENVMAPFRAME, ENVMAPMASKFRAME, FRAME, 
+					ENVMAPFRAME, ENVMAPMASKFRAME, FRAME,
 					BASETEXTURETRANSFORM, ENVMAPMASKSCALE, ENVMAPTINT );
 			}
 			else
 			{
 				FixedFunctionMaskedEnvmapPass( ENVMAP, ENVMAPMASK, BASETEXTURE,
-					ENVMAPFRAME, ENVMAPMASKFRAME, FRAME, 
+					ENVMAPFRAME, ENVMAPMASKFRAME, FRAME,
 					BASETEXTURETRANSFORM, ENVMAPMASKSCALE, ENVMAPTINT );
 			}
 		}

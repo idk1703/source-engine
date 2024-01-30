@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -36,7 +36,7 @@ public:
 
 private:
 	C_HL1_Player( const C_HL1_Player & );
-	
+
 };
 
 inline C_HL1_Player *ToHL1Player( CBaseEntity *pEntity )

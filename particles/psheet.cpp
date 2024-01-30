@@ -49,7 +49,7 @@ CSheet::CSheet( CUtlBuffer &buf )
 
 		int nTimeSamples = bSingleFrameSequence ? 1 : SEQUENCE_SAMPLE_COUNT;
 
-		m_pSamples[ nSequenceNumber ] = 
+		m_pSamples[ nSequenceNumber ] =
 			new SheetSequenceSample_t[ nTimeSamples ];
 
 		int fTotalSequenceTime = buf.GetFloat();
@@ -83,7 +83,7 @@ CSheet::CSheet( CUtlBuffer &buf )
 			float flIdxA, flIdxB, flInterp;
 			GetInterpolationData( InterpKnot, InterpValue, nFrameCount,
 								  SEQUENCE_SAMPLE_COUNT,
-								  nIdx, 
+								  nIdx,
 								  ! ( m_bClamp[nSequenceNumber] ),
 								  &flIdxA, &flIdxB, &flInterp );
 			SheetSequenceSample_t sA = Samples[(int) flIdxA];

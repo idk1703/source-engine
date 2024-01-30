@@ -37,8 +37,8 @@ class CGravityVortexController : public CBaseEntity
 	DECLARE_DATADESC();
 
 public:
-	
-			CGravityVortexController( void ) : m_flEndTime( 0.0f ), m_flRadius( 256 ), m_flStrength( 256 ), m_flMass( 0.0f ) {}	
+
+			CGravityVortexController( void ) : m_flEndTime( 0.0f ), m_flRadius( 256 ), m_flStrength( 256 ), m_flMass( 0.0f ) {}
 	float	GetConsumedMass( void ) const;
 
 	static CGravityVortexController *Create( const Vector &origin, float radius, float strength, float duration );
@@ -61,7 +61,7 @@ private:
 //-----------------------------------------------------------------------------
 // Purpose: Returns the amount of mass consumed by the vortex
 //-----------------------------------------------------------------------------
-float CGravityVortexController::GetConsumedMass( void ) const 
+float CGravityVortexController::GetConsumedMass( void ) const
 {
 	return m_flMass;
 }
@@ -79,7 +79,7 @@ void CGravityVortexController::ConsumeEntity( CBaseEntity *pEnt )
 	// Ragdolls need to report the sum of all their parts
 	CRagdollProp *pRagdoll = dynamic_cast< CRagdollProp* >( pEnt );
 	if ( pRagdoll != NULL )
-	{		
+	{
 		// Find the aggregate mass of the whole ragdoll
 		ragdoll_t *pRagdollPhys = pRagdoll->GetRagdoll();
 		for ( int j = 0; j < pRagdollPhys->listCount; ++j )
@@ -103,17 +103,17 @@ void CGravityVortexController::ConsumeEntity( CBaseEntity *pEnt )
 void CGravityVortexController::PullPlayersInRange( void )
 {
 	CBasePlayer *pPlayer = UTIL_GetLocalPlayer();
-	
+
 	Vector	vecForce = GetAbsOrigin() - pPlayer->WorldSpaceCenter();
 	float	dist = VectorNormalize( vecForce );
-	
+
 	// FIXME: Need a more deterministic method here
 	if ( dist < 128.0f )
 	{
 		// Kill the player (with falling death sound and effects)
 		CTakeDamageInfo deathInfo( this, this, GetAbsOrigin(), GetAbsOrigin(), 200, DMG_FALL );
 		pPlayer->TakeDamage( deathInfo );
-		
+
 		if ( pPlayer->IsAlive() == false )
 		{
 			color32 black = { 0, 0, 0, 255 };
@@ -133,10 +133,10 @@ void CGravityVortexController::PullPlayersInRange( void )
 	// NOTE: We might want to make this non-linear to give more of a "grace distance"
 	vecForce *= ( 1.0f - ( dist / m_flRadius ) ) * playerForce * mass;
 	vecForce[2] *= 0.025f;
-	
+
 	pPlayer->SetBaseVelocity( vecForce );
 	pPlayer->AddFlag( FL_BASEVELOCITY );
-	
+
 	// Make sure the player moves
 	if ( vecForce.z > 0 && ( pPlayer->GetFlags() & FL_ONGROUND) )
 	{
@@ -188,7 +188,7 @@ bool CGravityVortexController::KillNPCInRange( CBaseEntity *pVictim, IPhysicsObj
 void CGravityVortexController::CreateDenseBall( void )
 {
 	CBaseEntity *pBall = CreateEntityByName( "prop_physics" );
-	
+
 	pBall->SetModel( DENSE_BALL_MODEL );
 	pBall->SetAbsOrigin( GetAbsOrigin() );
 	pBall->Spawn();
@@ -227,7 +227,7 @@ void CGravityVortexController::PullThink( void )
 
 		// Attempt to kill and ragdoll any victims in range
 		if ( KillNPCInRange( pEnts[i], &pPhysObject ) == false )
-		{	
+		{
 			// If we didn't have a valid victim, see if we can just get the vphysics object
 			pPhysObject = pEnts[i]->VPhysicsGetObject();
 			if ( pPhysObject == NULL )
@@ -241,7 +241,7 @@ void CGravityVortexController::PullThink( void )
 		{
 			ragdoll_t *pRagdollPhys = pRagdoll->GetRagdoll();
 			mass = 0.0f;
-			
+
 			// Find the aggregate mass of the whole ragdoll
 			for ( int j = 0; j < pRagdollPhys->listCount; ++j )
 			{
@@ -258,7 +258,7 @@ void CGravityVortexController::PullThink( void )
 		vecForce2D[2] = 0.0f;
 		float	dist2D = VectorNormalize( vecForce2D );
 		float	dist = VectorNormalize( vecForce );
-		
+
 		// FIXME: Need a more deterministic method here
 		if ( dist < 48.0f )
 		{
@@ -272,7 +272,7 @@ void CGravityVortexController::PullThink( void )
 
 		// Find the pull force
 		vecForce *= ( 1.0f - ( dist2D / m_flRadius ) ) * m_flStrength * mass;
-		
+
 		if ( pEnts[i]->VPhysicsGetObject() )
 		{
 			// Pull the object in
@@ -350,7 +350,7 @@ IMPLEMENT_SERVERCLASS_ST( CGrenadeHopwire, DT_GrenadeHopwire )
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeHopwire::Spawn( void )
 {
@@ -358,12 +358,12 @@ void CGrenadeHopwire::Spawn( void )
 
 	SetModel( GRENADE_MODEL_CLOSED );
 	SetCollisionGroup( COLLISION_GROUP_PROJECTILE );
-	
+
 	CreateVPhysics();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CGrenadeHopwire::CreateVPhysics()
@@ -374,7 +374,7 @@ bool CGrenadeHopwire::CreateVPhysics()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeHopwire::Precache( void )
 {
@@ -384,15 +384,15 @@ void CGrenadeHopwire::Precache( void )
 
 	PrecacheModel( GRENADE_MODEL_OPEN );
 	PrecacheModel( GRENADE_MODEL_CLOSED );
-	
+
 	PrecacheModel( DENSE_BALL_MODEL );
 
 	BaseClass::Precache();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : timer - 
+// Purpose:
+// Input  : timer -
 //-----------------------------------------------------------------------------
 void CGrenadeHopwire::SetTimer( float timer )
 {
@@ -407,7 +407,7 @@ void CGrenadeHopwire::SetTimer( float timer )
 #define MAX_STRIDER_STUN_DISTANCE_VERT	(MAX_STRIDER_KILL_DISTANCE_VERT*2)	// Distance a Strider will be stunned if within
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeHopwire::KillStriders( void )
 {
@@ -459,7 +459,7 @@ void CGrenadeHopwire::KillStriders( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeHopwire::EndThink( void )
 {
@@ -475,7 +475,7 @@ void CGrenadeHopwire::EndThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeHopwire::CombatThink( void )
 {
@@ -507,7 +507,7 @@ void CGrenadeHopwire::CombatThink( void )
 		EntityMessageBegin( this, true );
 			WRITE_BYTE( 0 );
 		MessageEnd();
-		
+
 		// Begin to stop in two seconds
 		SetThink( &CGrenadeHopwire::EndThink );
 		SetNextThink( gpGlobals->curtime + 2.0f );
@@ -521,12 +521,12 @@ void CGrenadeHopwire::CombatThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeHopwire::SetVelocity( const Vector &velocity, const AngularImpulse &angVelocity )
 {
 	IPhysicsObject *pPhysicsObject = VPhysicsGetObject();
-	
+
 	if ( pPhysicsObject != NULL )
 	{
 		pPhysicsObject->AddVelocity( &velocity, &angVelocity );
@@ -562,12 +562,12 @@ void CGrenadeHopwire::Detonate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseGrenade *HopWire_Create( const Vector &position, const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity, CBaseEntity *pOwner, float timer )
 {
 	CGrenadeHopwire *pGrenade = (CGrenadeHopwire *) CBaseEntity::Create( "npc_grenade_hopwire", position, angles, pOwner );
-	
+
 	// Only set ourselves to detonate on a timer if we're not a trap hopwire
 	if ( hopwire_trap.GetBool() == false )
 	{

@@ -35,7 +35,7 @@ class CSaveRestoreSegment
 {
 public:
 	CSaveRestoreSegment();
-	
+
 	//---------------------------------
 	// Buffer operations
 	//
@@ -64,7 +64,7 @@ public:
 
 private:
 	unsigned int HashString( const char *pszToken );
-	
+
 	//---------------------------------
 	// Buffer data
 	//
@@ -72,7 +72,7 @@ private:
 	char		*pCurrentData;	// Current buffer pointer for sequential access
 	int			size;			// Current data size, aka, pCurrentData - pBaseData
 	int			bufferSize;		// Total space for data
-	
+
 	//---------------------------------
 	// Symbol table
 	//
@@ -264,7 +264,7 @@ public:
 
 	saverestorelevelinfo_t levelInfo;
 	Vector		modelSpaceOffset;			// used only for globaly entity brushes modelled in different coordinate systems.
-	
+
 private:
 	int			tableCount;		// Number of elements in the entity table
 	entitytable_t	*pTable;		// Array of entitytable_t elements (1 for each entity)
@@ -273,7 +273,7 @@ private:
 
 	struct CHashElement
 	{
-		const CBaseEntity *pEntity; 
+		const CBaseEntity *pEntity;
 		int index;
 
 		CHashElement( const CBaseEntity *pEntity, int index) : pEntity(pEntity), index(index) {}
@@ -420,7 +420,7 @@ inline bool CSaveRestoreSegment::Seek( int absPosition )
 {
 	if ( absPosition < 0 || absPosition >= bufferSize )
 		return false;
-	
+
 	size = absPosition;
 	pCurrentData = pBaseData + size;
 	return true;
@@ -461,7 +461,7 @@ inline bool CSaveRestoreSegment::DefineSymbol( const char *pszToken, int token )
 inline unsigned short CSaveRestoreSegment::FindCreateSymbol( const char *pszToken )
 {
 	unsigned short	hash = (unsigned short)(HashString( pszToken ) % (unsigned)tokenCount );
-	
+
 #if _DEBUG
 	static int tokensparsed = 0;
 	tokensparsed++;
@@ -492,8 +492,8 @@ inline unsigned short CSaveRestoreSegment::FindCreateSymbol( const char *pszToke
 			return index;
 		}
 	}
-		
-	// Token hash table full!!! 
+
+	// Token hash table full!!!
 	// [Consider doing overflow table(s) after the main table & limiting linear hash table search]
 	Warning( "CSaveRestoreBuffer::TokenHash() is COMPLETELY FULL!" );
 	Assert( 0 );

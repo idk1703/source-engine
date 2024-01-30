@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,7 +25,7 @@ class CPlayerMove
 {
 public:
 	DECLARE_CLASS_NOBASE( CPlayerMove );
-	
+
 	// Construction/destruction
 					CPlayerMove( void );
 	virtual			~CPlayerMove( void ) {}

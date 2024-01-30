@@ -15,17 +15,17 @@ using namespace vgui;
 
 class CHudAchievementTracker : public CHudBaseAchievementTracker
 {
-    DECLARE_CLASS_SIMPLE( CHudAchievementTracker, CHudBaseAchievementTracker );
+	DECLARE_CLASS_SIMPLE( CHudAchievementTracker, CHudBaseAchievementTracker );
 
 public:
-    CHudAchievementTracker( const char *pElementName );
-    virtual void OnThink();
-    virtual void PerformLayout();
-    virtual int  GetMaxAchievementsShown();
-    virtual bool ShouldShowAchievement( IAchievement *pAchievement );
+	CHudAchievementTracker( const char *pElementName );
+	virtual void OnThink();
+	virtual void PerformLayout();
+	virtual int  GetMaxAchievementsShown();
+	virtual bool ShouldShowAchievement( IAchievement *pAchievement );
 
 private:
-    CPanelAnimationVarAliasType( int, m_iNormalY, "NormalY", "5", "proportional_int" );
+	CPanelAnimationVarAliasType( int, m_iNormalY, "NormalY", "5", "proportional_int" );
 };
 
 DECLARE_HUDELEMENT( CHudAchievementTracker );
@@ -38,31 +38,31 @@ CHudAchievementTracker::CHudAchievementTracker( const char *pElementName ) : Bas
 
 void CHudAchievementTracker::OnThink()
 {
-    BaseClass::OnThink();
+	BaseClass::OnThink();
 }
 
 int CHudAchievementTracker::GetMaxAchievementsShown()
 {
-    return MIN( BaseClass::GetMaxAchievementsShown(), cMaxCSHUDAchievments );
+	return MIN( BaseClass::GetMaxAchievementsShown(), cMaxCSHUDAchievments );
 }
 
 void CHudAchievementTracker::PerformLayout()
 {
-    BaseClass::PerformLayout();
+	BaseClass::PerformLayout();
 
-    int x, y;
-    GetPos( x, y );
-    SetPos( x, m_iNormalY );
+	int x, y;
+	GetPos( x, y );
+	SetPos( x, m_iNormalY );
 }
 
 bool CHudAchievementTracker::ShouldShowAchievement( IAchievement *pAchievement )
 {
-    if ( !BaseClass::ShouldShowAchievement(pAchievement) )
-        return false;
+	if ( !BaseClass::ShouldShowAchievement(pAchievement) )
+		return false;
 
-    C_CSPlayer *pPlayer = CCSPlayer::GetLocalCSPlayer();
-    if ( !pPlayer )
-        return false;
+	C_CSPlayer *pPlayer = CCSPlayer::GetLocalCSPlayer();
+	if ( !pPlayer )
+		return false;
 
-    return true;
+	return true;
 }

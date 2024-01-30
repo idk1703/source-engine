@@ -33,6 +33,3 @@ free $worldPos
 
 dp4 oT0.x, $vTexCoord0, $SHADER_SPECIFIC_CONST_0
 dp4 oT0.y, $vTexCoord0, $SHADER_SPECIFIC_CONST_1
-
-
-

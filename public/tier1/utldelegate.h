@@ -81,7 +81,7 @@ void Test()
 
 	// Delegates maintain an internal non-templatized representation of the
 	// functions they are bound to called CUtlAbstractDelegate. These are
-	// useful when keeping a list of untyped delegates or when passing 
+	// useful when keeping a list of untyped delegates or when passing
 	// delegates across interface boundaries.
 	const CUtlAbstractDelegate &abstractDelegate3 = delegate3.GetAbstractDelegate();
 	CUtlDelegate< float ( int ) > delegate4;

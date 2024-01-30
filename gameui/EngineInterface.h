@@ -28,7 +28,7 @@ extern class IGameUIFuncs *gameuifuncs;
 extern class IEngineSound *enginesound;
 extern class IMatchmaking *matchmaking;
 extern class IXboxSystem  *xboxsystem;
-extern class IAchievementMgr *achievementmgr; 
+extern class IAchievementMgr *achievementmgr;
 extern class CSteamAPIContext *steamapicontext;
 
 #endif // ENGINEINTERFACE_H

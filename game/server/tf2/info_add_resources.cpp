@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ BEGIN_DATADESC( CInfoAddResources )
 	// outputs
 	DEFINE_OUTPUT( m_OnAdded, "OnAdded" ),
 
-	// keys 
+	// keys
 	DEFINE_KEYFIELD_NOT_SAVED( m_iResourceAmount, FIELD_INTEGER, "ResourceAmount" ),
 
 END_DATADESC()
@@ -49,14 +49,14 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( info_add_resources, CInfoAddResources );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoAddResources::Spawn( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoAddResources::InputPlayer( inputdata_t &inputdata )
 {

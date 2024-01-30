@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -77,7 +77,7 @@
 #define IDC_EXPRESSIONTOOL	5040
 #define IDC_ASSOCIATEBSP	5041
 
-#define IDC_ADDEVENT_FLEXANIMATION 5042 
+#define IDC_ADDEVENT_FLEXANIMATION 5042
 
 #define IDC_COPYEVENTS		5043
 #define IDC_PASTEEVENTS		5044
@@ -354,9 +354,9 @@ public:
 	CEventAbsoluteTag	*GetAbsoluteTagUnderCursorPos( CChoreoEventWidget *event, int mx, int my );
 
 
-	void				GetObjectsUnderMouse( int mx, int my, 
+	void				GetObjectsUnderMouse( int mx, int my,
 							CChoreoActorWidget **actor,
-							CChoreoChannelWidget **channel, 
+							CChoreoChannelWidget **channel,
 							CChoreoEventWidget **event,
 							CChoreoGlobalEventWidget **globalevent,
 							int* clickedTag,
@@ -375,7 +375,7 @@ public:
 
 	//void				StartDraggingGlobalEvent( int mx, int my );
 	void				StartDraggingEvent( int mx, int my );
-	//void				FinishDraggingGlobalEvent( int mx, int my );	
+	//void				FinishDraggingGlobalEvent( int mx, int my );
 	void				FinishDraggingEvent( mxEvent *event, int mx, int my );
 
 	// Draw focus rect while mouse dragging is going on
@@ -383,7 +383,7 @@ public:
 	int					ComputeEventDragType( int mx, int my );
 
 	void				SetCurrentWaveFile( const char *filename, CChoreoEvent *event );
-	
+
 	void				RecomputeWaves();
 
 	typedef void (CChoreoView::*CVMEMBERFUNC)( CChoreoWidget *widget, CChoreoWidget *param1 );
@@ -423,7 +423,7 @@ public:
 	void				Redo( void );
 
 	bool				CanUndo();
-	bool				CanRedo();	
+	bool				CanRedo();
 
 	// Do push before changes
 	void				PushUndo( const char *description );
@@ -472,7 +472,7 @@ public:
 	bool				IsRampOnly( void ) const;
 
 	void				SetTimeZoom( const char *tool, int tz, bool preserveFocus );
-    int					GetTimeZoom( const char *tool );
+	int					GetTimeZoom( const char *tool );
 	template< class T >
 	void				SetPreservedTimeZoom( T *other, int tz );
 	template< class T >
@@ -534,7 +534,7 @@ private:
 
 	void				RememberSelectedEvents( CUtlVector< CChoreoEvent * >& list );
 	void				ReselectEvents( CUtlVector< CChoreoEvent * >& list );
-	
+
 	void				OnAlign( bool left );
 	void				OnMakeSameSize( bool smallest );
 

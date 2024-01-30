@@ -1,17 +1,17 @@
 /*
-     File:       CGDataConsumer.h
- 
-     Contains:   CoreGraphics data consumer
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+	File:       CGDataConsumer.h
+
+	Contains:   CoreGraphics data consumer
+
+	Version:    QuickTime 7.3
+
+	Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
+
+	Bugs?:      For bug reports, consult the following page on
+				the World Wide Web:
+
+					http://developer.apple.com/bugreporter/
+
 */
 #ifndef CGDATACONSUMER_H_
 #define CGDATACONSUMER_H_
@@ -40,11 +40,11 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=mac68k
+	#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+	#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+	#pragma pack(2)
 #endif
 
 typedef struct CGDataConsumer*          CGDataConsumerRef;
@@ -56,15 +56,15 @@ typedef CALLBACK_API_C( void , CGReleaseConsumerProcPtr )(void * info);
  * can be written to the consumer.
  * `releaseConsumer', if non-NULL, is called when the consumer is freed. */
 struct CGDataConsumerCallbacks {
-  CGPutBytesProcPtr   putBytes;
-  CGReleaseConsumerProcPtr  releaseConsumer;
+	CGPutBytesProcPtr   putBytes;
+	CGReleaseConsumerProcPtr  releaseConsumer;
 };
 typedef struct CGDataConsumerCallbacks  CGDataConsumerCallbacks;
 /* Create a data consumer using `callbacks' to handle the data.  `info' is
  * passed to each of the callback functions. */
 /*
  *  CGDataConsumerCreate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -72,14 +72,14 @@ typedef struct CGDataConsumerCallbacks  CGDataConsumerCallbacks;
  */
 EXTERN_API_C( CGDataConsumerRef )
 CGDataConsumerCreate(
-  void *                           info,
-  const CGDataConsumerCallbacks *  callbacks);
+	void *                           info,
+	const CGDataConsumerCallbacks *  callbacks);
 
 
 /* Create a data consumer which writes data to `url'. */
 /*
  *  CGDataConsumerCreateWithURL()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -93,7 +93,7 @@ CGDataConsumerCreateWithURL(CFURLRef url);
  * consumers are created with an initial retain count of 1. */
 /*
  *  CGDataConsumerRetain()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -107,7 +107,7 @@ CGDataConsumerRetain(CGDataConsumerRef consumer);
  * 0, then release it and any associated resources. */
 /*
  *  CGDataConsumerRelease()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -119,11 +119,11 @@ CGDataConsumerRelease(CGDataConsumerRef consumer);
 
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+	#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+	#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+	#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -137,4 +137,3 @@ CGDataConsumerRelease(CGDataConsumerRef consumer);
 #endif
 
 #endif /* CGDATACONSUMER_H_ */
-

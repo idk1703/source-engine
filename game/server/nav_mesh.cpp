@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -75,7 +75,7 @@ CNavMesh::CNavMesh( void )
 	ListenForGameEvent( "break_prop" );
 	ListenForGameEvent( "break_breakable" );
 	ListenForGameEvent( "teamplay_round_start" );
-		
+
 	Reset();
 }
 
@@ -346,11 +346,11 @@ void CNavMesh::Update( void )
 
 		const float height = 50.0f;
 		const float width = 25.0f;
-		DrawLine( spot.pos, spot.pos + height * spot.normal, 3, 255, 0, 255 ); 
-		DrawLine( spot.pos + Vector( width, 0, 0 ), spot.pos + height * spot.normal, 3, 255, 0, 255 ); 
-		DrawLine( spot.pos + Vector( -width, 0, 0 ), spot.pos + height * spot.normal, 3, 255, 0, 255 ); 
-		DrawLine( spot.pos + Vector( 0, width, 0 ), spot.pos + height * spot.normal, 3, 255, 0, 255 ); 
-		DrawLine( spot.pos + Vector( 0, -width, 0 ), spot.pos + height * spot.normal, 3, 255, 0, 255 ); 
+		DrawLine( spot.pos, spot.pos + height * spot.normal, 3, 255, 0, 255 );
+		DrawLine( spot.pos + Vector( width, 0, 0 ), spot.pos + height * spot.normal, 3, 255, 0, 255 );
+		DrawLine( spot.pos + Vector( -width, 0, 0 ), spot.pos + height * spot.normal, 3, 255, 0, 255 );
+		DrawLine( spot.pos + Vector( 0, width, 0 ), spot.pos + height * spot.normal, 3, 255, 0, 255 );
+		DrawLine( spot.pos + Vector( 0, -width, 0 ), spot.pos + height * spot.normal, 3, 255, 0, 255 );
 	}
 }
 
@@ -425,7 +425,7 @@ void CNavMesh::FireGameEvent( IGameEvent *gameEvent )
 	if ( FStrEq( gameEvent->GetName(), "round_start" ) || FStrEq( gameEvent->GetName(), "teamplay_round_start" ) )
 	{
 		OnRoundRestart();
-		
+
 		NavRoundRestart restart;
 		ForAllAreas( restart );
 		ForAllLadders( restart );
@@ -828,7 +828,7 @@ CNavArea *CNavMesh::GetNearestNavArea( const Vector &pos, bool anyZ, float maxDi
 	VPROF_BUDGET( "CNavMesh::GetNearestNavArea", "NextBot" );
 
 	if ( !m_grid.Count() )
-		return NULL;	
+		return NULL;
 
 	CNavArea *close = NULL;
 	float closeDistSq = maxDist * maxDist;
@@ -886,7 +886,7 @@ CNavArea *CNavMesh::GetNearestNavArea( const Vector &pos, bool anyZ, float maxDi
 	// Once we find a close area, we must check one more step out in
 	// case our position is just against the edge of the cell boundary
 	// and an area in an adjacent cell is actually closer.
-	// 
+	//
 	for( int shift=0; shift <= shiftLimit; ++shift )
 	{
 		for( int x = originX - shift; x <= originX + shift; ++x )
@@ -963,7 +963,7 @@ CNavArea *CNavMesh::GetNearestNavArea( const Vector &pos, bool anyZ, float maxDi
 						{
 							// trace to the height of the original point
 							UTIL_TraceLine( areaPos + Vector( 0, 0, StepHeight ), Vector( areaPos.x, areaPos.y, safePos.z ), MASK_NPCSOLID_BRUSHONLY, NULL, COLLISION_GROUP_NONE, &result );
-							
+
 							if ( result.fraction != 1.0f )
 							{
 								continue;
@@ -1141,7 +1141,7 @@ void CNavMesh::LoadPlaceDatabase( void )
 		{
 			if ( buffer[len-1] == '\n' || buffer[len-1] == '\r' )
 				buffer[len-1] = 0;
-			
+
 			if ( buffer[len-2] == '\r' )
 				buffer[len-2] = 0;
 
@@ -1154,7 +1154,7 @@ void CNavMesh::LoadPlaceDatabase( void )
 	// allocate place name array
 	m_placeCount = placeNames.Count();
 	m_placeName = new char * [ m_placeCount ];
-	
+
 	for ( unsigned int i=0; i < m_placeCount; i++ )
 	{
 		m_placeName[i] = placeNames[i];
@@ -1335,7 +1335,7 @@ bool CNavMesh::GetGroundHeight( const Vector &pos, float *height, Vector *normal
 	trace_t result;
 	Vector to( pos.x, pos.y, pos.z - 10000.0f );
 	Vector from( pos.x, pos.y, pos.z + HalfHumanHeight + 1e-3 );
-	while( to.z - pos.z < flMaxOffset ) 
+	while( to.z - pos.z < flMaxOffset )
 	{
 		UTIL_TraceLine( from, to, MASK_NPCSOLID_BRUSHONLY, &filter, &result );
 		if ( !result.startsolid && (( result.fraction == 1.0f ) || ( ( from.z - result.endpos.z ) >= HalfHumanHeight ) ) )
@@ -1346,7 +1346,7 @@ bool CNavMesh::GetGroundHeight( const Vector &pos, float *height, Vector *normal
 				*normal = !result.plane.normal.IsZero() ? result.plane.normal : Vector( 0, 0, 1 );
 			}
 			return true;
-		}	  
+		}
 		to.z = ( result.startsolid ) ? from.z : result.endpos.z;
 		from.z = to.z + HalfHumanHeight + 1e-3;
 	}
@@ -1526,12 +1526,12 @@ void CNavMesh::IncreaseDangerNearby( int teamID, float amount, CNavArea *startAr
 
 	startArea->IncreaseDanger( teamID, finalDanger );
 
-	
+
 	while( !CNavArea::IsOpenListEmpty() )
 	{
 		// get next area to check
 		CNavArea *area = CNavArea::PopOpenList();
-		
+
 		// explore adjacent areas
 		for( int dir=0; dir<NUM_DIRECTIONS; ++dir )
 		{
@@ -1589,14 +1589,14 @@ void CommandNavDelete( void )
 static ConCommand nav_delete( "nav_delete", CommandNavDelete, "Deletes the currently highlighted Area.", FCVAR_GAMEDLL | FCVAR_CHEAT );
 
 
-//-------------------------------------------------------------------------------------------------------------- 
-void CommandNavDeleteMarked( void ) 
-{ 
-	if ( !UTIL_IsCommandIssuedByServerAdmin() || !nav_edit.GetBool() ) 
-		return; 
+//--------------------------------------------------------------------------------------------------------------
+void CommandNavDeleteMarked( void )
+{
+	if ( !UTIL_IsCommandIssuedByServerAdmin() || !nav_edit.GetBool() )
+		return;
 
-	TheNavMesh->CommandNavDeleteMarked(); 
-} 
+	TheNavMesh->CommandNavDeleteMarked();
+}
 static ConCommand nav_delete_marked( "nav_delete_marked", CommandNavDeleteMarked, "Deletes the currently marked Area (if any).", FCVAR_GAMEDLL | FCVAR_CHEAT );
 
 
@@ -2830,21 +2830,21 @@ static int NavAttributeAutocomplete( const char *input, char commands[ COMMAND_C
 	{
 		return 0;
 	}
-	
+
 	char command[ COMMAND_COMPLETION_ITEM_LENGTH+1 ];
 	Q_strncpy( command, input, sizeof( command ) );
-	
+
 	// skip to start of argument
 	char *partialArg = Q_strrchr( command, ' ' );
 	if ( partialArg == NULL )
 	{
 		return 0;
 	}
-	
+
 	// chop command from partial argument
 	*partialArg = '\000';
 	++partialArg;
-	
+
 	int partialArgLength = Q_strlen( partialArg );
 
 	int count = 0;
@@ -2871,7 +2871,7 @@ NavAttributeType NameToNavAttribute( const char *name )
 			return TheNavAttributeTable[i].attribute;
 		}
 	}
-	
+
 	return (NavAttributeType)0;
 }
 
@@ -2884,7 +2884,7 @@ void NavEditClearAttribute( const CCommand &args )
 		Msg( "Usage: %s <attribute>\n", args[0] );
 		return;
 	}
-	
+
 	NavAttributeType attribute = NameToNavAttribute( args[1] );
 
 	if ( attribute != 0 )
@@ -2894,8 +2894,8 @@ void NavEditClearAttribute( const CCommand &args )
 		TheNavMesh->ClearSelectedSet();
 		return;
 	}
-	
-	Msg( "Unknown attribute '%s'", args[1] );		
+
+	Msg( "Unknown attribute '%s'", args[1] );
 }
 static ConCommand NavClearAttribute( "nav_clear_attribute", NavEditClearAttribute, "Remove given nav attribute from all areas in the selected set.", FCVAR_CHEAT, NavAttributeAutocomplete );
 
@@ -2913,13 +2913,13 @@ void NavEditMarkAttribute( const CCommand &args )
 
 	if ( attribute != 0 )
 	{
-		NavAttributeSetter setter( attribute );	
+		NavAttributeSetter setter( attribute );
 		TheNavMesh->ForAllSelectedAreas( setter );
 		TheNavMesh->ClearSelectedSet();
 		return;
 	}
 
-	Msg( "Unknown attribute '%s'", args[1] );		
+	Msg( "Unknown attribute '%s'", args[1] );
 }
 static ConCommand NavMarkAttribute( "nav_mark_attribute", NavEditMarkAttribute, "Set nav attribute for all areas in the selected set.", FCVAR_CHEAT, NavAttributeAutocomplete );
 
@@ -3115,7 +3115,7 @@ HidingSpot *GetHidingSpotByID( unsigned int id )
 
 		if (spot->GetID() == id)
 			return spot;
-	}	
+	}
 
 	return NULL;
 }

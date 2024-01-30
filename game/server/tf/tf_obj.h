@@ -46,7 +46,7 @@ extern ConVar obj_child_range_factor;
 if ( object_verbose.GetInt() )									\
 {																\
 	Msg( "%s", str );					\
-}																
+}
 #else
 #define TRACE_OBJECT( string )
 #endif
@@ -110,15 +110,15 @@ public:
 	bool			UpdatePlacement( void );
 	bool			UpdateAttachmentPlacement( CBaseObject *pObjectOverride = NULL );
 	bool			IsValidPlacement( void ) const;
-	
+
 	virtual bool	IsPlacementPosValid( void );
 	bool			FindSnapToBuildPos( CBaseObject *pObjectOverride = NULL );
 
 	void			ReattachChildren( void );
-	
+
 	// I've finished building the specified object on the specified build point
 	virtual int		FindObjectOnBuildPoint( CBaseObject *pObject );
-	
+
 	virtual bool	StartBuilding( CBaseEntity *pPlayer );
 	virtual void	SetStartBuildingModel( void ) {}
 	void			BuildingThink( void );
@@ -164,7 +164,7 @@ public:
 	virtual int		GetType( void ) const;
 	virtual CTFPlayer *GetBuilder( void ) const;
 	CTFTeam			*GetTFTeam( void ) { return (CTFTeam*)GetTeam(); };
-	
+
 	// ID functions
 	virtual bool	IsAnUpgrade( void )			{ return false; }
 	virtual bool	IsHostileUpgrade( void )	{ return false; }	// Attaches to enemy buildings
@@ -224,7 +224,7 @@ public:
 	Activity		GetActivity( ) const;
 	void			SetActivity( Activity act );
 	void			SetObjectSequence( int sequence );
-	
+
 	// Object points
 	void			SpawnObjectPoints( void );
 
@@ -330,7 +330,7 @@ public:
 	virtual int		UpdateTransmitState( void );
 	virtual int		ShouldTransmit( const CCheckTransmitInfo *pInfo );
 	virtual void	SetTransmit( CCheckTransmitInfo *pInfo, bool bAlways );
-	
+
 	bool			IsMiniBuilding( void ) const { return m_bMiniBuilding; }
 	bool			IsDisposableBuilding( void ) const { return m_bDisposableBuilding; }
 
@@ -344,7 +344,7 @@ public:
 protected:
 
 	virtual bool CanBeUpgraded() const { return !( IsDisposableBuilding() || IsMiniBuilding() ); }
-	
+
 	virtual int  GetUpgradeMetalRequired();
 
 	// Show/hide vgui screens.
@@ -445,7 +445,7 @@ private:
 
 protected:
 	float	m_flConstructionTimeLeft;	// Current time left in construction
-	float	m_flTotalConstructionTime;	// Total construction time (the value of GetTotalTime() at the time construction 
+	float	m_flTotalConstructionTime;	// Total construction time (the value of GetTotalTime() at the time construction
 										// started, ie, incase you teleport out of a construction yard)
 	float   m_flConstructionStartTime;
 

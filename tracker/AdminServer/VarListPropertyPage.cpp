@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -139,12 +139,12 @@ void CVarListPropertyPage::SetVarString(const char *varName, const char *value)
 		rule->SetString("value", result);
 		rule->SetInt("enum", iValue);
 	}
-	else 
+	else
 	{
 		// no special type, treat it as a string
 		rule->SetString("value", value);
 	}
-		
+
 	m_pRulesList->ApplyItemChanges(itemID);
 }
 

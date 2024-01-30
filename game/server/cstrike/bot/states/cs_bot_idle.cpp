@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -322,8 +322,8 @@ void IdleState::OnUpdate( CCSBot *me )
 
 							// just use the first overlapping nav area as a reasonable approximation
 							ShortestPathCost cost = ShortestPathCost();
-							float dist = NavAreaTravelDistance( me->GetLastKnownArea(), 
-																TheNavMesh->GetNearestNavArea( TheCSBots()->GetZone(z)->m_center ), 
+							float dist = NavAreaTravelDistance( me->GetLastKnownArea(),
+																TheNavMesh->GetNearestNavArea( TheCSBots()->GetZone(z)->m_center ),
 																cost );
 
 							if (dist >= 0.0f && dist < travelDistance)
@@ -331,9 +331,9 @@ void IdleState::OnUpdate( CCSBot *me )
 								zone = TheCSBots()->GetZone(z);
 								travelDistance = dist;
 							}
-						}			
-						
-						
+						}
+
+
 						if (zone)
 						{
 							const float farAwayRange = 2000.0f;
@@ -549,7 +549,7 @@ void IdleState::OnUpdate( CCSBot *me )
 
 							// tell team to follow
 							const float repeatTime = 30.0f;
-							if (me->GetFriendsRemaining() && 
+							if (me->GetFriendsRemaining() &&
 									TheCSBots()->GetRadioMessageInterval( RADIO_FOLLOW_ME, me->GetTeamNumber() ) > repeatTime)
 								me->SendRadioMessage( RADIO_FOLLOW_ME );
 							return;
@@ -593,7 +593,7 @@ void IdleState::OnUpdate( CCSBot *me )
 					// later in the game, camp either hostages or escape zone
 					const float campZoneChance = 100.0f * (TheCSBots()->GetElapsedRoundTime() - me->GetSafeTime())/120.0f;
 
-					campHostages = (RandomFloat( 0, 100 ) > campZoneChance) ? true : false; 
+					campHostages = (RandomFloat( 0, 100 ) > campZoneChance) ? true : false;
 				}
 
 
@@ -775,7 +775,7 @@ void IdleState::OnUpdate( CCSBot *me )
 				if (!me->IsDoingScenario())
 				{
 					if (hostage)
-					{		
+					{
 						CNavArea *area = TheNavMesh->GetNearestNavArea( GetCentroid( hostage ) );
 						if (area)
 						{
@@ -800,7 +800,7 @@ void IdleState::OnUpdate( CCSBot *me )
 				if (me->GetHostageEscortCount())
 					zone = TheCSBots()->GetClosestZone( me->GetLastKnownArea(), PathCost( me, FASTEST_ROUTE ) );
 
-				// if we are escorting hostages and there are more hostages to rescue, 
+				// if we are escorting hostages and there are more hostages to rescue,
 				// determine whether it's faster to rescue the ones we have, or go get the remaining ones
 				if (hostage)
 				{
@@ -884,4 +884,3 @@ void IdleState::OnUpdate( CCSBot *me )
 	// if we have nothing special to do, go hunting for enemies
 	me->Hunt();
 }
-

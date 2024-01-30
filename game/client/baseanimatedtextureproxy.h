@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,7 +37,7 @@ protected:
 
 protected:
 	void Cleanup();
-	
+
 	IMaterialVar *m_AnimatedTextureVar;
 	IMaterialVar *m_AnimatedTextureFrameNumVar;
 	float m_FrameRate;

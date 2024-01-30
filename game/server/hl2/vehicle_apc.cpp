@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -57,7 +57,7 @@ ConVar sk_apc_health( "sk_apc_health", "750" );
 
 
 #define APC_MAX_CHUNKS	3
-static const char *s_pChunkModelName[APC_MAX_CHUNKS] = 
+static const char *s_pChunkModelName[APC_MAX_CHUNKS] =
 {
 	"models/gibs/helicopter_brokenpiece_01.mdl",
 	"models/gibs/helicopter_brokenpiece_02.mdl",
@@ -65,7 +65,7 @@ static const char *s_pChunkModelName[APC_MAX_CHUNKS] =
 };
 
 #define APC_MAX_GIBS	6
-static const char *s_pGibModelName[APC_MAX_GIBS] = 
+static const char *s_pGibModelName[APC_MAX_GIBS] =
 {
 	"models/combine_apc_destroyed_gib01.mdl",
 	"models/combine_apc_destroyed_gib02.mdl",
@@ -112,7 +112,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAPC::Precache( void )
 {
@@ -190,7 +190,7 @@ bool CPropAPC::ShouldAttractAutoAim( CBaseEntity *pAimingEnt )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAPC::Activate()
 {
@@ -212,7 +212,7 @@ void CPropAPC::Activate()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAPC::UpdateOnRemove( void )
 {
@@ -226,7 +226,7 @@ void CPropAPC::UpdateOnRemove( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAPC::CreateServerVehicle( void )
 {
@@ -237,20 +237,20 @@ void CPropAPC::CreateServerVehicle( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pMoveData - 
+// Purpose:
+// Input  : *pMoveData -
 //-----------------------------------------------------------------------------
 Class_T	CPropAPC::ClassifyPassenger( CBaseCombatCharacter *pPassenger, Class_T defaultClassification )
-{ 
-	return CLASS_COMBINE;	
+{
+	return CLASS_COMBINE;
 }
 
 
 //-----------------------------------------------------------------------------
 // Purpose: Damage events as modified for the passenger of the APC, not the APC itself
 //-----------------------------------------------------------------------------
-float CPropAPC::PassengerDamageModifier( const CTakeDamageInfo &info ) 
-{ 
+float CPropAPC::PassengerDamageModifier( const CTakeDamageInfo &info )
+{
 	CTakeDamageInfo DmgInfo = info;
 
 	// bullets, slashing and headbutts don't hurt us in the apc, neither do rockets
@@ -259,7 +259,7 @@ float CPropAPC::PassengerDamageModifier( const CTakeDamageInfo &info )
 		return (0);
 
 	// Accept everything else by default
-	return 1.0; 
+	return 1.0;
 }
 
 
@@ -275,7 +275,7 @@ Vector CPropAPC::EyePosition( )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-Vector CPropAPC::BodyTarget( const Vector &posSrc, bool bNoisy ) 
+Vector CPropAPC::BodyTarget( const Vector &posSrc, bool bNoisy )
 {
 	if( g_pGameRules->GetAutoAimMode() == AUTOAIM_ON_CONSOLE )
 	{
@@ -284,15 +284,15 @@ Vector CPropAPC::BodyTarget( const Vector &posSrc, bool bNoisy )
 
 	return BaseClass::BodyTarget( posSrc, bNoisy );
 }
-	
+
 //-----------------------------------------------------------------------------
 // Add a smoke trail since we've taken more damage
 //-----------------------------------------------------------------------------
 void CPropAPC::AddSmokeTrail( const Vector &vecPos )
 {
 	// Start this trail out with a bang!
-	ExplosionCreate( vecPos, vec3_angle, this, 1000, 500.0f, SF_ENVEXPLOSION_NODAMAGE | 
-		SF_ENVEXPLOSION_NOSPARKS | SF_ENVEXPLOSION_NODLIGHTS | SF_ENVEXPLOSION_NOSMOKE | 
+	ExplosionCreate( vecPos, vec3_angle, this, 1000, 500.0f, SF_ENVEXPLOSION_NODAMAGE |
+		SF_ENVEXPLOSION_NOSPARKS | SF_ENVEXPLOSION_NODLIGHTS | SF_ENVEXPLOSION_NOSMOKE |
 		SF_ENVEXPLOSION_NOFIREBALLSMOKE, 0 );
 	UTIL_ScreenShake( vecPos, 25.0, 150.0, 1.0, 750.0f, SHAKE_START );
 
@@ -349,7 +349,7 @@ void CPropAPC::AddSmokeTrail( const Vector &vecPos )
 //------------------------------------------------------------------------------
 void CPropAPC::ExplodeAndThrowChunk( const Vector &vecExplosionPos )
 {
-	ExplosionCreate( vecExplosionPos, vec3_angle, this, 1000, 500.0f, 
+	ExplosionCreate( vecExplosionPos, vec3_angle, this, 1000, 500.0f,
 		SF_ENVEXPLOSION_NODAMAGE | SF_ENVEXPLOSION_NOSPARKS | SF_ENVEXPLOSION_NODLIGHTS	|
 		SF_ENVEXPLOSION_NOSMOKE  | SF_ENVEXPLOSION_NOFIREBALLSMOKE, 0 );
 	UTIL_ScreenShake( vecExplosionPos, 25.0, 150.0, 1.0, 750.0f, SHAKE_START );
@@ -370,7 +370,7 @@ void CPropAPC::ExplodeAndThrowChunk( const Vector &vecExplosionPos )
 	pChunk->m_lifeTime = random->RandomFloat( 6.0f, 8.0f );
 	pChunk->SetCollisionGroup( COLLISION_GROUP_DEBRIS );
 	IPhysicsObject *pPhysicsObject = pChunk->VPhysicsInitNormal( SOLID_VPHYSICS, pChunk->GetSolidFlags(), false );
-	
+
 	// Set the velocity
 	if ( pPhysicsObject )
 	{
@@ -382,7 +382,7 @@ void CPropAPC::ExplodeAndThrowChunk( const Vector &vecExplosionPos )
 		angles.y = random->RandomFloat( 0, 360 );
 		angles.z = 0.0f;
 		AngleVectors( angles, &vecVelocity );
-		
+
 		vecVelocity *= random->RandomFloat( 300, 900 );
 		vecVelocity += GetAbsVelocity();
 
@@ -413,7 +413,7 @@ inline bool CPropAPC::ShouldTriggerDamageEffect( int nPrevHealth, int nEffectCou
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAPC::Event_Killed( const CTakeDamageInfo &info )
 {
@@ -431,9 +431,9 @@ void CPropAPC::Event_Killed( const CTakeDamageInfo &info )
 	for (int i = 0; i < 5; i++)
 	{
 		CollisionProp()->RandomPointInBounds( vecNormalizedMins, vecNormalizedMaxs, &vecAbsPoint );
-		te->Explosion( filter, random->RandomFloat( 0.0, 1.0 ),	&vecAbsPoint, 
-			g_sModelIndexFireball, random->RandomInt( 4, 10 ), 
-			random->RandomInt( 8, 15 ), 
+		te->Explosion( filter, random->RandomFloat( 0.0, 1.0 ),	&vecAbsPoint,
+			g_sModelIndexFireball, random->RandomInt( 4, 10 ),
+			random->RandomInt( 8, 15 ),
 			( i < 2 ) ? TE_EXPLFLAG_NODLIGHTS : TE_EXPLFLAG_NOPARTICLES | TE_EXPLFLAG_NOFIREBALLSMOKE | TE_EXPLFLAG_NODLIGHTS,
 			100, 0 );
 	}
@@ -458,7 +458,7 @@ void CPropAPC::Event_Killed( const CTakeDamageInfo &info )
 		pChunk->m_lifeTime = random->RandomFloat( 6.0f, 8.0f );
 		pChunk->SetCollisionGroup( COLLISION_GROUP_DEBRIS );
 		IPhysicsObject *pPhysicsObject = pChunk->VPhysicsInitNormal( SOLID_VPHYSICS, pChunk->GetSolidFlags(), false );
-		
+
 		// Set the velocity
 		if ( pPhysicsObject )
 		{
@@ -470,7 +470,7 @@ void CPropAPC::Event_Killed( const CTakeDamageInfo &info )
 			angles.y = random->RandomFloat( 0, 360 );
 			angles.z = 0.0f;
 			AngleVectors( angles, &vecVelocity );
-			
+
 			vecVelocity *= random->RandomFloat( 300, 900 );
 			vecVelocity += GetAbsVelocity();
 
@@ -539,7 +539,7 @@ void CPropAPC::InputFireMissileAt( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CPropAPC::OnTakeDamage( const CTakeDamageInfo &info )
 {
@@ -588,8 +588,8 @@ int CPropAPC::OnTakeDamage( const CTakeDamageInfo &info )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pMoveData - 
+// Purpose:
+// Input  : *pMoveData -
 //-----------------------------------------------------------------------------
 void CPropAPC::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMoveData )
 {
@@ -612,7 +612,7 @@ void CPropAPC::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMoveData )
 	vecSpot = vecStart + vecDir * 600;
 	CSoundEnt::InsertSound( SOUND_DANGER, vecSpot, 400, 0.1, this );
 
-	// put sounds a bit to left and right but slightly closer to APC to make a "cone" of sound 
+	// put sounds a bit to left and right but slightly closer to APC to make a "cone" of sound
 	// in front of it
 	QAngle leftAngles = vehicleAngles;
 	leftAngles[YAW] += 20;
@@ -633,7 +633,7 @@ void CPropAPC::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMoveData )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAPC::Think( void )
 {
@@ -673,7 +673,7 @@ void CPropAPC::Think( void )
 
 
 //-----------------------------------------------------------------------------
-// Aims the secondary weapon at a target 
+// Aims the secondary weapon at a target
 //-----------------------------------------------------------------------------
 void CPropAPC::AimSecondaryWeaponAt( CBaseEntity *pTarget )
 {
@@ -690,9 +690,9 @@ void CPropAPC::AimSecondaryWeaponAt( CBaseEntity *pTarget )
 	EnableLaserDot( m_hLaserDot, m_hRocketTarget != NULL );
 }
 
-	
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAPC::DriveVehicle( float flFrameTime, CUserCmd *ucmd, int iButtonsDown, int iButtonsReleased )
 {
@@ -735,13 +735,13 @@ void CPropAPC::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useT
 
 
 //-----------------------------------------------------------------------------
-// Primary gun 
+// Primary gun
 //-----------------------------------------------------------------------------
-void CPropAPC::AimPrimaryWeapon( const Vector &vecWorldTarget ) 
+void CPropAPC::AimPrimaryWeapon( const Vector &vecWorldTarget )
 {
 	EntityMatrix parentMatrix;
 	parentMatrix.InitFromEntity( this, m_nMachineGunBaseAttachment );
-	Vector target = parentMatrix.WorldToLocal( vecWorldTarget ); 
+	Vector target = parentMatrix.WorldToLocal( vecWorldTarget );
 
 	float quadTarget = target.LengthSqr();
 	float quadTargetXY = target.x*target.x + target.y*target.y;
@@ -750,11 +750,11 @@ void CPropAPC::AimPrimaryWeapon( const Vector &vecWorldTarget )
 	if ( quadTarget > m_vecBarrelPos.LengthSqr() )
 	{
 		// We're trying to aim the offset barrel at an arbitrary point.
-		// To calculate this, I think of the target as being on a sphere with 
+		// To calculate this, I think of the target as being on a sphere with
 		// it's center at the origin of the gun.
-		// The rotation we need is the opposite of the rotation that moves the target 
+		// The rotation we need is the opposite of the rotation that moves the target
 		// along the surface of that sphere to intersect with the gun's shooting direction
-		// To calculate that rotation, we simply calculate the intersection of the ray 
+		// To calculate that rotation, we simply calculate the intersection of the ray
 		// coming out of the barrel with the target sphere (that's the new target position)
 		// and use atan2() to get angles
 
@@ -784,11 +784,11 @@ void CPropAPC::AimPrimaryWeapon( const Vector &vecWorldTarget )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-const char *CPropAPC::GetTracerType( void ) 
+const char *CPropAPC::GetTracerType( void )
 {
-	return "HelicopterTracer"; 
+	return "HelicopterTracer";
 }
 
 
@@ -798,11 +798,11 @@ const char *CPropAPC::GetTracerType( void )
 void CPropAPC::DoImpactEffect( trace_t &tr, int nDamageType )
 {
 	UTIL_ImpactTrace( &tr, nDamageType, "HelicopterImpact" );
-} 
+}
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAPC::DoMuzzleFlash( void )
 {
@@ -817,7 +817,7 @@ void CPropAPC::DoMuzzleFlash( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAPC::FireMachineGun( void )
 {
@@ -840,7 +840,7 @@ void CPropAPC::FireMachineGun( void )
 	Vector vecMachineGunShootPos;
 	Vector vecMachineGunDir;
 	GetAttachment( m_nMachineGunMuzzleAttachment, vecMachineGunShootPos, &vecMachineGunDir );
-	
+
 	// Fire the round
 	int	bulletType = GetAmmoDef()->Index("AR2");
 	FireBullets( 1, vecMachineGunShootPos, vecMachineGunDir, VECTOR_CONE_8DEGREES, MAX_TRACE_LENGTH, bulletType, 1 );
@@ -851,7 +851,7 @@ void CPropAPC::FireMachineGun( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAPC::GetRocketShootPosition( Vector *pPosition )
 {
@@ -860,7 +860,7 @@ void CPropAPC::GetRocketShootPosition( Vector *pPosition )
 
 
 //-----------------------------------------------------------------------------
-// Create a corpse 
+// Create a corpse
 //-----------------------------------------------------------------------------
 void CPropAPC::CreateCorpse( )
 {
@@ -890,14 +890,14 @@ void CPropAPC::CreateCorpse( )
 			vecVelocity *= (100 * flRandomVel) / flMass;
 			vecVelocity.z += 100.0f;
 			AngularImpulse angImpulse = RandomAngularImpulse( -500, 500 );
-			
+
 			IPhysicsObject *pObj = pGib->VPhysicsGetObject();
 			if ( pObj != NULL )
 			{
 				pObj->AddVelocity( &vecVelocity, &angImpulse );
 			}
 			pGib->SetCollisionGroup( COLLISION_GROUP_DEBRIS );
-		}	
+		}
 		if( hl2_episodic.GetBool() )
 		{
 			// EP1 perf hit
@@ -916,7 +916,7 @@ void CPropAPC::CreateCorpse( )
 
 
 //-----------------------------------------------------------------------------
-// Death volley 
+// Death volley
 //-----------------------------------------------------------------------------
 void CPropAPC::FireDying( )
 {
@@ -962,7 +962,7 @@ void CPropAPC::FireDying( )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAPC::FireRocket( void )
 {
@@ -1024,10 +1024,10 @@ void CPropAPC::FireRocket( void )
 	EmitSound( "PropAPC.FireRocket" );
 	m_OnFiredMissile.FireOutput( this, this );
 }
-									 
+
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CPropAPC::MaxAttackRange() const
 {
@@ -1035,7 +1035,7 @@ float CPropAPC::MaxAttackRange() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropAPC::OnRestore( void )
 {
@@ -1051,7 +1051,7 @@ void CPropAPC::OnRestore( void )
 // APC FOUR WHEEL PHYSICS VEHICLE SERVER VEHICLE
 //========================================================================================================================================
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAPCFourWheelServerVehicle::NPC_AimPrimaryWeapon( Vector vecTarget )
 {
@@ -1060,7 +1060,7 @@ void CAPCFourWheelServerVehicle::NPC_AimPrimaryWeapon( Vector vecTarget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAPCFourWheelServerVehicle::NPC_AimSecondaryWeapon( Vector vecTarget )
 {
@@ -1070,7 +1070,7 @@ void CAPCFourWheelServerVehicle::NPC_AimSecondaryWeapon( Vector vecTarget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAPCFourWheelServerVehicle::Weapon_PrimaryRanges( float *flMinRange, float *flMaxRange )
 {
@@ -1079,7 +1079,7 @@ void CAPCFourWheelServerVehicle::Weapon_PrimaryRanges( float *flMinRange, float 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAPCFourWheelServerVehicle::Weapon_SecondaryRanges( float *flMinRange, float *flMaxRange )
 {
@@ -1102,4 +1102,3 @@ float CAPCFourWheelServerVehicle::Weapon_SecondaryCanFireAt( void )
 {
 	return ((CPropAPC*)m_pVehicle)->SecondaryWeaponFireTime();
 }
-

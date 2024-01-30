@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -55,13 +55,13 @@ public:
 	virtual GameActionSet_t GetPreferredActionSet() { return GAME_ACTION_SET_IN_GAME_HUD; }
 
 public:
-	
+
 	void AutoAssign();
-	
+
 protected:
 
 	// int GetNumTeams() { return m_iNumTeams; }
-	
+
 	// VGUI2 overrides
 	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	virtual void OnKeyCodePressed(vgui::KeyCode code);
@@ -70,7 +70,7 @@ protected:
 	virtual void SetLabelText(const char *textEntryName, const char *text);
 	virtual void LoadMapPage( const char *mapName );
 	// virtual void MakeTeamButtons( void );
-	
+
 	// command callbacks
 	// MESSAGE_FUNC_INT( OnTeamButton, "TeamButton", team );
 

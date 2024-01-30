@@ -49,7 +49,7 @@ END_DATADESC()
 #endif // CLIENT_DLL
 
 // This is basically a copy of s_acttableMeleeAllclass table except primary fire to use grappling hook specific
-acttable_t s_grapplinghook_normal_acttable[] = 
+acttable_t s_grapplinghook_normal_acttable[] =
 {
 	{ ACT_MP_STAND_IDLE,		ACT_MP_STAND_MELEE_ALLCLASS,				false },
 	{ ACT_MP_CROUCH_IDLE,		ACT_MP_CROUCH_MELEE_ALLCLASS,			false },
@@ -92,7 +92,7 @@ acttable_t s_grapplinghook_normal_acttable[] =
 };
 
 // This is basically a copy of s_acttableSecondary table except primary fire to use grappling hook specific
-acttable_t s_grapplinghook_engineer_acttable[] = 
+acttable_t s_grapplinghook_engineer_acttable[] =
 {
 	{ ACT_MP_STAND_IDLE,		ACT_MP_STAND_SECONDARY,				false },
 	{ ACT_MP_CROUCH_IDLE,		ACT_MP_CROUCH_SECONDARY,			false },
@@ -208,7 +208,7 @@ float m_flNextSupernovaDenyWarning = 0.f;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFGrapplingHook::CTFGrapplingHook()
 {
@@ -234,7 +234,7 @@ void CTFGrapplingHook::Precache()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseEntity *CTFGrapplingHook::FireProjectile( CTFPlayer *pPlayer )
 {
@@ -249,7 +249,7 @@ CBaseEntity *CTFGrapplingHook::FireProjectile( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrapplingHook::ItemPostFrame( void )
 {
@@ -313,7 +313,7 @@ void CTFGrapplingHook::ItemPostFrame( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFGrapplingHook::CanAttack( void )
 {
@@ -327,7 +327,7 @@ bool CTFGrapplingHook::CanAttack( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrapplingHook::PrimaryAttack( void )
 {
@@ -379,7 +379,7 @@ void CTFGrapplingHook::PrimaryAttack( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFGrapplingHook::Deploy( void )
 {
@@ -392,7 +392,7 @@ bool CTFGrapplingHook::Deploy( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFGrapplingHook::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
@@ -406,7 +406,7 @@ bool CTFGrapplingHook::Holster( CBaseCombatWeapon *pSwitchingTo )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrapplingHook::GetProjectileFireSetup( CTFPlayer *pPlayer, Vector vecOffset, Vector *vecSrc, QAngle *angForward, bool bHitTeammates /*= true*/, float flEndDist /*= 2000.f*/ )
 {
@@ -415,12 +415,12 @@ void CTFGrapplingHook::GetProjectileFireSetup( CTFPlayer *pPlayer, Vector vecOff
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFGrapplingHook::GetProjectileSpeed()
 {
 	CTFPlayer *pOwner = GetTFPlayerOwner();
-	
+
 	if ( pOwner && pOwner->m_Shared.GetCarryingRuneType() == RUNE_AGILITY )
 	{
 		switch ( pOwner->GetPlayerClass()->GetClassIndex() )
@@ -438,7 +438,7 @@ float CTFGrapplingHook::GetProjectileSpeed()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFGrapplingHook::SendWeaponAnim( int actBase )
 {
@@ -522,7 +522,7 @@ bool CTFGrapplingHook::SendWeaponAnim( int actBase )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrapplingHook::PlayWeaponShootSound( void )
 {
@@ -535,7 +535,7 @@ void CTFGrapplingHook::PlayWeaponShootSound( void )
 
 #ifdef GAME_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrapplingHook::ActivateRune()
 {
@@ -589,12 +589,12 @@ void CTFGrapplingHook::ActivateRune()
 				te_tf_particle_effects_control_point_t controlPoint = { PATTACH_ABSORIGIN, vEnd };
 				TE_TFParticleEffectComplex( filter, 0.f, pszEffect, vStart, QAngle( 0.f, 0.f, 0.f ), NULL, &controlPoint, pOther, PATTACH_CUSTOMORIGIN );
 
-					
+
 				pOther->DropRune( false, pOwner->GetTeamNumber() );
 				pOther->DropFlag();
 
 				pOther->m_Shared.StunPlayer( flStunDuration, 1.f, TF_STUN_MOVEMENT | TF_STUN_CONTROLS, pOwner );
-	
+
 				// send the player flying
 				// make sure we push players up and away
 				Vector toPlayer = pOther->WorldSpaceCenter() - pOwner->WorldSpaceCenter();
@@ -648,7 +648,7 @@ void CTFGrapplingHook::ActivateRune()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrapplingHook::RemoveHookProjectile( bool bForce /*= false*/ )
 {
@@ -691,7 +691,7 @@ void CTFGrapplingHook::OnHookReleased( bool bForce )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrapplingHook::UpdateOnRemove()
 {
@@ -702,7 +702,7 @@ void CTFGrapplingHook::UpdateOnRemove()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrapplingHook::OnDataChanged( DataUpdateType_t type )
 {
@@ -713,7 +713,7 @@ void CTFGrapplingHook::OnDataChanged( DataUpdateType_t type )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrapplingHook::StartHookSound()
 {
@@ -727,7 +727,7 @@ void CTFGrapplingHook::StartHookSound()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrapplingHook::StopHookSound()
 {
@@ -740,7 +740,7 @@ void CTFGrapplingHook::StopHookSound()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrapplingHook::UpdateHookSound()
 {
@@ -774,7 +774,7 @@ void CTFGrapplingHook::UpdateHookSound()
 void CEquipGrapplingHookNotification::Accept()
 {
 	m_bHasTriggered = true;
-		
+
 	CPlayerInventory *pLocalInv = TFInventoryManager()->GetLocalInventory();
 	if ( !pLocalInv )
 	{
@@ -816,7 +816,7 @@ void CEquipGrapplingHookNotification::Accept()
 	{
 		iItemId = pGrapplingHook->GetItemID();
 	}*/
-	
+
 	if ( iItemId == INVALID_ITEM_ID )
 	{
 		iItemId = 0;
@@ -833,7 +833,7 @@ void CEquipGrapplingHookNotification::Accept()
 	}
 
 	TFInventoryManager()->EquipItemInLoadout( pLocalPlayer->GetPlayerClass()->GetClassIndex(), LOADOUT_POSITION_ACTION, iItemId );
-	
+
 	// Tell the GC to tell server that we should respawn if we're in a respawn room
 	GCSDK::CGCMsg< GCSDK::MsgGCEmpty_t > msg( k_EMsgGCRespawnPostLoadoutChange );
 	GCClientSystem()->BSendMessage( msg );

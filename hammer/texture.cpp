@@ -88,14 +88,14 @@ bool CTexture::Allocate( int nWidth, int nHeight, int nFlags )
 
 	return( m_pImageData != NULL );
 }
-		
+
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pDC - 
-//			rect - 
-//			iFontHeight - 
-//			dwFlags - 
+// Purpose:
+// Input  : *pDC -
+//			rect -
+//			iFontHeight -
+//			dwFlags -
 //-----------------------------------------------------------------------------
 void CTexture::Draw(CDC *pDC, RECT &rect, int iFontHeight, int iIconHeight, DrawTexData_t &DrawTexData)
 {
@@ -190,9 +190,9 @@ int CTexture::GetKeywords(char *pszKeywords) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszName - 
-// Output : 
+// Purpose:
+// Input  : *pszName -
+// Output :
 //-----------------------------------------------------------------------------
 int CTexture::GetShortName(char *pszName) const
 {
@@ -206,7 +206,7 @@ int CTexture::GetShortName(char *pszName) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CTexture::Load(void)

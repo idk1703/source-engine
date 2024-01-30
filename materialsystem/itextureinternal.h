@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -66,7 +66,7 @@ public:
 	// Resets the texture's filtering and clamping mode
 	virtual void SetFilteringAndClampingMode( bool bOnlyLodValues = false ) = 0;
 
-	// Used by tools.... loads up the non-fallback information about the texture 
+	// Used by tools.... loads up the non-fallback information about the texture
 	virtual void Precache() = 0;
 
 	// Stretch blit the framebuffer into this texture.
@@ -86,35 +86,35 @@ public:
 
 	// Creates a new texture
 	static ITextureInternal *CreateFileTexture( const char *pFileName, const char *pTextureGroupName );
-	
-	static ITextureInternal *CreateProceduralTexture( 
+
+	static ITextureInternal *CreateProceduralTexture(
 		const char			*pTextureName,
-		const char			*pTextureGroupName, 
-		int					w, 
+		const char			*pTextureGroupName,
+		int					w,
 		int					h,
 		int					d,
-		ImageFormat			fmt, 
+		ImageFormat			fmt,
 		int					nFlags,
 		ITextureRegenerator *generator = NULL);
 
-	static ITextureInternal *CreateRenderTarget( 
+	static ITextureInternal *CreateRenderTarget(
 		const char *pRTName, // NULL for an auto-generated name.
-		int w, 
-		int h, 
-		RenderTargetSizeMode_t sizeMode, 
-		ImageFormat fmt, 
+		int w,
+		int h,
+		RenderTargetSizeMode_t sizeMode,
+		ImageFormat fmt,
 		RenderTargetType_t type,
-		unsigned int textureFlags, 
+		unsigned int textureFlags,
 		unsigned int renderTargetFlags );
 
 	static void ChangeRenderTarget(
 		ITextureInternal *pTexture,
-		int w, 
-		int h, 
-		RenderTargetSizeMode_t sizeMode, 
-		ImageFormat fmt, 
+		int w,
+		int h,
+		RenderTargetSizeMode_t sizeMode,
+		ImageFormat fmt,
 		RenderTargetType_t type,
-		unsigned int textureFlags, 
+		unsigned int textureFlags,
 		unsigned int renderTargetFlags );
 
 	static ITextureInternal *CreateReferenceTextureFromHandle(
@@ -170,7 +170,7 @@ inline char *NormalizeTextureName( const char *pName, char *pOutName, int nOutNa
 	if ( nLen <= 5 || Q_stricmp( pName + nLen - 5, ".hdr" ) )
 	{
 		// strip any non .hdr extension
-		Q_StripExtension( pName, pOutName, nOutNameSize ); 
+		Q_StripExtension( pName, pOutName, nOutNameSize );
 	}
 	else
 	{

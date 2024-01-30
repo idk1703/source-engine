@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -31,8 +31,8 @@ ConVar g_debug_antlionmaker( "g_debug_antlionmaker", "0", FCVAR_CHEAT );
 #define ANTLION_MAKE_SPORE_SPAWNRATE		25.0f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &vFightGoal - 
+// Purpose:
+// Input  : &vFightGoal -
 //-----------------------------------------------------------------------------
 void CAntlionMakerManager::BroadcastFightGoal( const Vector &vFightGoal )
 {
@@ -52,8 +52,8 @@ void CAntlionMakerManager::BroadcastFightGoal( const Vector &vFightGoal )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFightGoal - 
+// Purpose:
+// Input  : *pFightGoal -
 //-----------------------------------------------------------------------------
 void CAntlionMakerManager::BroadcastFightGoal( CBaseEntity *pFightGoal )
 {
@@ -73,8 +73,8 @@ void CAntlionMakerManager::BroadcastFightGoal( CBaseEntity *pFightGoal )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFightGoal - 
+// Purpose:
+// Input  : *pFightGoal -
 //-----------------------------------------------------------------------------
 void CAntlionMakerManager::BroadcastFollowGoal( CBaseEntity *pFollowGoal )
 {
@@ -95,7 +95,7 @@ void CAntlionMakerManager::BroadcastFollowGoal( CBaseEntity *pFollowGoal )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionMakerManager::GatherMakers( void )
 {
@@ -114,7 +114,7 @@ void CAntlionMakerManager::GatherMakers( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionMakerManager::LevelInitPostEntity( void )
 {
@@ -176,7 +176,7 @@ BEGIN_DATADESC( CAntlionTemplateMaker )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CAntlionTemplateMaker::CAntlionTemplateMaker( void )
 {
@@ -189,7 +189,7 @@ CAntlionTemplateMaker::CAntlionTemplateMaker( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CAntlionTemplateMaker::~CAntlionTemplateMaker( void )
 {
@@ -198,8 +198,8 @@ CAntlionTemplateMaker::~CAntlionTemplateMaker( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pAnt - 
+// Purpose:
+// Input  : *pAnt -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::AddChild( CNPC_Antlion *pAnt )
 {
@@ -210,8 +210,8 @@ void CAntlionTemplateMaker::AddChild( CNPC_Antlion *pAnt )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pAnt - 
+// Purpose:
+// Input  : *pAnt -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::RemoveChild( CNPC_Antlion *pAnt )
 {
@@ -220,7 +220,7 @@ void CAntlionTemplateMaker::RemoveChild( CNPC_Antlion *pAnt )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::FixupOrphans( void )
 {
@@ -242,7 +242,7 @@ void CAntlionTemplateMaker::FixupOrphans( void )
 				AddChild( pAntlion );
 			}
 		}
-	}	
+	}
 }
 
 
@@ -252,17 +252,17 @@ void CAntlionTemplateMaker::PrecacheTemplateEntity( CBaseEntity *pEntity )
 {
 	BaseClass::PrecacheTemplateEntity( pEntity );
 
-	// If we can spawn workers, precache the worker as well.			
+	// If we can spawn workers, precache the worker as well.
 	if ( m_flWorkerSpawnRate != 0 )
 	{
 		pEntity->AddSpawnFlags( SF_ANTLION_WORKER );
 		pEntity->Precache();
 	}
-}	
+}
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::Activate( void )
 {
@@ -308,7 +308,7 @@ void CAntlionTemplateMaker::ActivateSpore( const char* sporename, Vector vOrigin
 
 	//One already exists...
 	if ( pSpore )
-	{	
+	{
 		if ( pSpore->m_bDisabled == true )
 		{
 			inputdata_t inputdata;
@@ -323,7 +323,7 @@ void CAntlionTemplateMaker::ActivateSpore( const char* sporename, Vector vOrigin
 	if ( pEnt )
 	{
 		pSpore = dynamic_cast<SporeExplosion*>(pEnt);
-		
+
 		if ( pSpore )
 		{
 			pSpore->SetAbsOrigin( vOrigin );
@@ -344,7 +344,7 @@ void CAntlionTemplateMaker::DisableSpore( const char* sporename )
 	SporeExplosion *pSpore = (SporeExplosion*)gEntList.FindEntityByName( NULL, szName );
 
 	if ( pSpore && pSpore->m_bDisabled == false )
-	{	
+	{
 		inputdata_t inputdata;
 		pSpore->InputDisable( inputdata );
 		return;
@@ -404,7 +404,7 @@ void CAntlionTemplateMaker::DisableAllSpores( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CBaseEntity
 //-----------------------------------------------------------------------------
 CBaseEntity *CAntlionTemplateMaker::GetFightTarget( void )
@@ -416,7 +416,7 @@ CBaseEntity *CAntlionTemplateMaker::GetFightTarget( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CBaseEntity
 //-----------------------------------------------------------------------------
 CBaseEntity *CAntlionTemplateMaker::GetFollowTarget( void )
@@ -425,7 +425,7 @@ CBaseEntity *CAntlionTemplateMaker::GetFollowTarget( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::UpdateChildren( void )
 {
@@ -437,7 +437,7 @@ void CAntlionTemplateMaker::UpdateChildren( void )
 	for ( ; i < m_Children.Count(); i++ )
 	{
 		pAntlion = m_Children[i];
-		
+
 		//HACKHACK
 		//Let's just fix this up.
 		//This guy might have been killed in another level and we just came back.
@@ -447,7 +447,7 @@ void CAntlionTemplateMaker::UpdateChildren( void )
 			i--;
 			continue;
 		}
-		
+
 		if ( pAntlion->m_lifeState != LIFE_ALIVE )
 			 continue;
 
@@ -460,8 +460,8 @@ void CAntlionTemplateMaker::UpdateChildren( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : strTarget - 
+// Purpose:
+// Input  : strTarget -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::SetFightTarget( string_t strTarget, CBaseEntity *pActivator, CBaseEntity *pCaller )
 {
@@ -481,15 +481,15 @@ void CAntlionTemplateMaker::SetFightTarget( string_t strTarget, CBaseEntity *pAc
 			SetFightTarget( gEntList.FindEntityByName( NULL, strTarget, this, pActivator, pCaller ) );
 		}
 	}
-	else 
+	else
 	{
 		SetFightTarget( gEntList.FindEntityByName( NULL, strTarget, this, pActivator, pCaller ) );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
+// Purpose:
+// Input  : *pEntity -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::SetFightTarget( CBaseEntity *pEntity )
 {
@@ -498,19 +498,19 @@ void CAntlionTemplateMaker::SetFightTarget( CBaseEntity *pEntity )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &position - 
+// Purpose:
+// Input  : &position -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::SetFightTarget( const Vector &position )
 {
 	CreateProxyTarget( position );
-	
+
 	m_hFightTarget = NULL;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTarget - 
+// Purpose:
+// Input  : *pTarget -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::SetFollowTarget( CBaseEntity *pTarget )
 {
@@ -518,8 +518,8 @@ void CAntlionTemplateMaker::SetFollowTarget( CBaseEntity *pTarget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTarget - 
+// Purpose:
+// Input  : *pTarget -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::SetFollowTarget( string_t strTarget, CBaseEntity *pActivator, CBaseEntity *pCaller )
 {
@@ -532,8 +532,8 @@ void CAntlionTemplateMaker::SetFollowTarget( string_t strTarget, CBaseEntity *pA
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : state - 
+// Purpose:
+// Input  : state -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::SetChildMoveState( AntlionMoveState_e state )
 {
@@ -541,8 +541,8 @@ void CAntlionTemplateMaker::SetChildMoveState( AntlionMoveState_e state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &position - 
+// Purpose:
+// Input  : &position -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::CreateProxyTarget( const Vector &position )
 {
@@ -560,7 +560,7 @@ void CAntlionTemplateMaker::CreateProxyTarget( const Vector &position )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::DestroyProxyTarget( void )
 {
@@ -571,8 +571,8 @@ void CAntlionTemplateMaker::DestroyProxyTarget( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bIgnoreSolidEntities - 
+// Purpose:
+// Input  : bIgnoreSolidEntities -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAntlionTemplateMaker::CanMakeNPC( bool bIgnoreSolidEntities )
@@ -642,7 +642,7 @@ void CAntlionTemplateMaker::ChildPreSpawn( CAI_BaseNPC *pChild )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::MakeNPC( void )
 {
@@ -691,18 +691,18 @@ void CAntlionTemplateMaker::MakeNPC( void )
 
 		pNode->GetPosition( HULL_MEDIUM, &spawnOrigin );
 	}
-	
+
 	// Point at the current position of the enemy
 	if ( pTarget != NULL )
 	{
 		targetOrigin = pTarget->GetAbsOrigin();
-	}	
- 	
+	}
+
 	// Create the entity via a template
 	CAI_BaseNPC	*pent = NULL;
 	CBaseEntity *pEntity = NULL;
 	MapEntity_ParseEntity( pEntity, STRING(m_iszTemplateData), NULL );
-	
+
 	if ( pEntity != NULL )
 	{
 		pent = (CAI_BaseNPC *) pEntity;
@@ -713,13 +713,13 @@ void CAntlionTemplateMaker::MakeNPC( void )
 		Warning("NULL Ent in NPCMaker!\n" );
 		return;
 	}
-	
+
 	if ( !HasSpawnFlags( SF_ANTLIONMAKER_SPAWN_CLOSE_TO_TARGET ) )
 	{
 		// Lock this hint node
 		pNode->Lock( pEntity );
-		
-		// Unlock it in two seconds, this forces subsequent antlions to 
+
+		// Unlock it in two seconds, this forces subsequent antlions to
 		// reject this point as a spawn point to spread them out a bit
 		pNode->Unlock( 2.0f );
 	}
@@ -750,13 +750,13 @@ void CAntlionTemplateMaker::MakeNPC( void )
 		spawnAngles = QAngle( 0, pNode->Yaw(), 0 );
 	}
 
-	pent->SetLocalAngles( spawnAngles );	
+	pent->SetLocalAngles( spawnAngles );
 	DispatchSpawn( pent );
-	
+
 	pent->Activate();
 
 	m_iSkinCount = ( m_iSkinCount + 1 ) % ANTLION_SKIN_COUNT;
-	pent->m_nSkin = m_iSkinCount; 
+	pent->m_nSkin = m_iSkinCount;
 
 	ChildPostSpawn( pent );
 
@@ -833,11 +833,11 @@ bool CAntlionTemplateMaker::FindPositionOnVehicle( Vector &origin, float radius,
 	while ( iMaxTries > 0 )
 	{
 		Vector vForward, vRight;
-		
+
 		pTarget->GetVectors( &vForward, &vRight, NULL );
 
 		float flSpeed = (pTarget->GetSmoothedVelocity().Length() * m_flVehicleSpawnDistance) * random->RandomFloat( 1.0f, 1.5f );
-	
+
 		vSpawnOrigin = vSpawnOrigin + (vForward * flSpeed) + vRight * random->RandomFloat( -radius, radius );
 
 		if ( ValidateSpawnPosition( vSpawnOrigin, pTarget ) == false )
@@ -860,8 +860,8 @@ bool CAntlionTemplateMaker::ValidateSpawnPosition( Vector &vOrigin, CBaseEntity 
 
 	if ( g_debug_antlionmaker.GetInt() == 1 )
 		 NDebugOverlay::Line( vOrigin, tr.endpos, 0, 255, 0, false, 5 );
-		
-	// Make sure this point is clear 
+
+	// Make sure this point is clear
 	if ( tr.fraction != 1.0 )
 	{
 		if ( tr.contents & ( CONTENTS_WATER ) )
@@ -885,7 +885,7 @@ bool CAntlionTemplateMaker::ValidateSpawnPosition( Vector &vOrigin, CBaseEntity 
 
 		if ( CAntlionRepellant::IsPositionRepellantFree( tr.endpos ) == false )
 			 return false;
-	
+
 		trace_t trCheck;
 		UTIL_TraceHull( tr.endpos, tr.endpos + Vector(0,0,5), NAI_Hull::Mins( HULL_MEDIUM ), NAI_Hull::Maxs( HULL_MEDIUM ), MASK_NPCSOLID, NULL, COLLISION_GROUP_NONE, &trCheck );
 
@@ -893,7 +893,7 @@ bool CAntlionTemplateMaker::ValidateSpawnPosition( Vector &vOrigin, CBaseEntity 
 		{
 			if ( g_debug_antlionmaker.GetInt() == 1 )
 				 NDebugOverlay::Box( tr.endpos + Vector(0,0,5), NAI_Hull::Mins( HULL_MEDIUM ), NAI_Hull::Maxs( HULL_MEDIUM ), 0, 255, 0, 128, 5 );
-		
+
 			if ( pTarget )
 			{
 				if ( pTarget->IsPlayer() )
@@ -907,7 +907,7 @@ bool CAntlionTemplateMaker::ValidateSpawnPosition( Vector &vOrigin, CBaseEntity 
 					CTraceFilterSkipTwoEntities traceFilter( pPlayer, pVehicle, COLLISION_GROUP_NONE );
 
 					trace_t trVerify;
-					
+
 					Vector vVerifyOrigin = pPlayer->GetAbsOrigin() + pPlayer->GetViewOffset();
 					float flZOffset = NAI_Hull::Maxs( HULL_MEDIUM ).z;
 					UTIL_TraceLine( vVerifyOrigin, tr.endpos + Vector( 0, 0, flZOffset ), MASK_BLOCKLOS | CONTENTS_WATER, &traceFilter, &trVerify );
@@ -937,7 +937,7 @@ bool CAntlionTemplateMaker::ValidateSpawnPosition( Vector &vOrigin, CBaseEntity 
 				}
 			}
 
-	
+
 			vOrigin = trCheck.endpos + Vector(0,0,5);
 			return true;
 		}
@@ -976,7 +976,7 @@ bool CAntlionTemplateMaker::FindNearTargetSpawnPosition( Vector &origin, float r
 
 		if ( pVehicle )
 		     return FindPositionOnVehicle( origin, radius, pVehicle );
-		else 
+		else
 			 return FindPositionOnFoot( origin, radius, pTarget );
 	}
 
@@ -1009,7 +1009,7 @@ bool CAntlionTemplateMaker::FindHintSpawnPosition( const Vector &origin, float r
 	{
 		hintCriteria.SetFlag( bits_HINT_NODE_NEAREST );
 	}
-	
+
 	// If requested, deny nodes that can be seen by the player
 	if ( m_spawnflags & SF_NPCMAKER_HIDEFROMPLAYER )
 	{
@@ -1041,7 +1041,7 @@ bool CAntlionTemplateMaker::FindHintSpawnPosition( const Vector &origin, float r
 
 			return false;
 		}
-		
+
 		if ( bChosenHintBlocked == true )
 		{
 			return false;
@@ -1100,7 +1100,7 @@ CBaseEntity *CAntlionTemplateMaker::AllHintsFromClusterBlocked( CAI_Hint *pNode,
 
 		CUtlVector<CAI_Hint *> hintList;
 		CAI_HintManager::FindAllHints( vec3_origin, hintCriteria, &hintList );
-	
+
 		for ( int i = 0; i < hintList.Count(); i++ )
 		{
 			CAI_Hint *pTestHint = hintList[i];
@@ -1119,7 +1119,7 @@ CBaseEntity *CAntlionTemplateMaker::AllHintsFromClusterBlocked( CAI_Hint *pNode,
 					bBlocked = false;
 
 					CBaseEntity*	pList[20];
-				
+
 					int count = UTIL_EntitiesInBox( pList, 20, spawnOrigin + NAI_Hull::Mins( HULL_MEDIUM ), spawnOrigin + NAI_Hull::Maxs( HULL_MEDIUM ), 0 );
 
 					//Iterate over all the possible targets
@@ -1145,7 +1145,7 @@ CBaseEntity *CAntlionTemplateMaker::AllHintsFromClusterBlocked( CAI_Hint *pNode,
 
 					if ( g_debug_antlionmaker.GetInt() == 1 )
 					{
-						if ( bBlocked ) 
+						if ( bBlocked )
 						{
 							NDebugOverlay::Box( spawnOrigin + Vector(0,0,5), NAI_Hull::Mins( HULL_MEDIUM ), NAI_Hull::Maxs( HULL_MEDIUM ), 255, 0, 0, 128, 0.25f );
 						}
@@ -1219,7 +1219,7 @@ void CAntlionTemplateMaker::FindNodesCloseToPlayer( void )
 
 			Vector vHintPos;
 			pNode->GetPosition( HULL_MEDIUM, &vHintPos );
-		
+
 			bool bBlank;
 			if ( CBaseEntity *pBlocker = AllHintsFromClusterBlocked( pNode, bBlank ) )
 			{
@@ -1332,7 +1332,7 @@ void CAntlionTemplateMaker::ChildPostSpawn( CAI_BaseNPC *pChild )
 	else if ( m_strFightTarget != NULL_STRING )
 	{
 		// If we don't already have a fight target, set it up
-		SetFightTarget( m_strFightTarget );	
+		SetFightTarget( m_strFightTarget );
 		SetChildMoveState( ANTLION_MOVE_FIGHT_TO_GOAL );
 
 		// If it's valid, fight there
@@ -1355,8 +1355,8 @@ void CAntlionTemplateMaker::ChildPostSpawn( CAI_BaseNPC *pChild )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::InputSetFightTarget( inputdata_t &inputdata )
 {
@@ -1365,13 +1365,13 @@ void CAntlionTemplateMaker::InputSetFightTarget( inputdata_t &inputdata )
 
 	SetFightTarget( m_strFightTarget, inputdata.pActivator, inputdata.pCaller );
 	SetChildMoveState( ANTLION_MOVE_FIGHT_TO_GOAL );
-	
+
 	UpdateChildren();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::InputSetFollowTarget( inputdata_t &inputdata )
 {
@@ -1380,13 +1380,13 @@ void CAntlionTemplateMaker::InputSetFollowTarget( inputdata_t &inputdata )
 
 	SetFollowTarget( m_strFollowTarget, inputdata.pActivator, inputdata.pCaller );
 	SetChildMoveState( ANTLION_MOVE_FOLLOW );
-	
+
 	UpdateChildren();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::InputClearFightTarget( inputdata_t &inputdata )
 {
@@ -1397,8 +1397,8 @@ void CAntlionTemplateMaker::InputClearFightTarget( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::InputClearFollowTarget( inputdata_t &inputdata )
 {
@@ -1409,8 +1409,8 @@ void CAntlionTemplateMaker::InputClearFollowTarget( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::InputSetSpawnRadius( inputdata_t &inputdata )
 {
@@ -1418,8 +1418,8 @@ void CAntlionTemplateMaker::InputSetSpawnRadius( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::InputAddToPool( inputdata_t &inputdata )
 {
@@ -1427,8 +1427,8 @@ void CAntlionTemplateMaker::InputAddToPool( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::InputSetMaxPool( inputdata_t &inputdata )
 {
@@ -1446,8 +1446,8 @@ void CAntlionTemplateMaker::InputSetMaxPool( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::InputSetPoolRegenAmount( inputdata_t &inputdata )
 {
@@ -1455,8 +1455,8 @@ void CAntlionTemplateMaker::InputSetPoolRegenAmount( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::InputSetPoolRegenTime( inputdata_t &inputdata )
 {
@@ -1474,7 +1474,7 @@ void CAntlionTemplateMaker::InputSetPoolRegenTime( inputdata_t &inputdata )
 
 //-----------------------------------------------------------------------------
 // Purpose: Pool behavior for coast
-// Input  : iNumToAdd - 
+// Input  : iNumToAdd -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::PoolAdd( int iNumToAdd )
 {
@@ -1500,8 +1500,8 @@ void CAntlionTemplateMaker::PoolRegenThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pVictim - 
+// Purpose:
+// Input  : *pVictim -
 //-----------------------------------------------------------------------------
 void CAntlionTemplateMaker::DeathNotice( CBaseEntity *pVictim )
 {
@@ -1560,7 +1560,7 @@ int CAntlionTemplateMaker::DrawDebugTextOverlays( void )
 	if ( m_debugOverlays & OVERLAY_TEXT_BIT )
 	{
 		char tempstr[255];
-		
+
 		// Print the state of the spawner
 		if ( m_bDisabled )
 		{
@@ -1658,7 +1658,7 @@ int CAntlionTemplateMaker::DrawDebugTextOverlays( void )
 		}
 	}
 
-	return text_offset;	
+	return text_offset;
 }
 
 //-----------------------------------------------------------------------------
@@ -1706,12 +1706,12 @@ void CAntlionTemplateMaker::DrawDebugGeometryOverlays( void )
 
 				// Draw an arrow to the spot
 				NDebugOverlay::VertArrow( GetAbsOrigin(), pHint->GetAbsOrigin() + Vector( 0, 0, 32 ), 8.0f, r, g, b, 0, true, 0.05f );
-				
+
 				// Draw a box to represent where it's sitting
 				Vector vecForward;
 				AngleVectors( pHint->GetAbsAngles(), &vecForward );
 				NDebugOverlay::BoxDirection( pHint->GetAbsOrigin(), -Vector(32,32,0), Vector(32,32,16), vecForward, r, g, b, true, 0.05f );
-				
+
 				// Move to the next
 				pHint = CAI_HintManager::GetNextHint( &iter );
 			}

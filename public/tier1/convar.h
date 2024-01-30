@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -109,7 +109,7 @@ class ConCommandBase
 
 public:
 								ConCommandBase( void );
-								ConCommandBase( const char *pName, const char *pHelpString = 0, 
+								ConCommandBase( const char *pName, const char *pHelpString = 0,
 									int flags = 0 );
 
 	virtual						~ConCommandBase( void );
@@ -130,14 +130,14 @@ public:
 	// Deal with next pointer
 	const ConCommandBase		*GetNext( void ) const;
 	ConCommandBase				*GetNext( void );
-	
+
 	virtual bool				IsRegistered( void ) const;
 
 	// Returns the DLL identifier
 	virtual CVarDLLIdentifier_t	GetDLLIdentifier() const;
 
 protected:
-	virtual void				CreateBase( const char *pName, const char *pHelpString = 0, 
+	virtual void				CreateBase( const char *pName, const char *pHelpString = 0,
 									int flags = 0 );
 
 	// Used internally by OneTimeInit to initialize/shutdown
@@ -160,13 +160,13 @@ private:
 	// Static data
 	const char 					*m_pszName;
 	const char 					*m_pszHelpString;
-	
+
 	// ConVar flags
 	int							m_nFlags;
 
 protected:
-	// ConVars add themselves to this list for the executable. 
-	// Then ConVar_Register runs through  all the console variables 
+	// ConVars add themselves to this list for the executable.
+	// Then ConVar_Register runs through  all the console variables
 	// and registers them into a global list stored in vstdlib.dll
 	static ConCommandBase		*s_pConCommandBases;
 
@@ -192,7 +192,7 @@ public:
 	const char *GetCommandString() const;		// The entire command in string form, including the 0th arg
 	const char *operator[]( int nIndex ) const;	// Gets at arguments
 	const char *Arg( int nIndex ) const;		// Gets at arguments
-	
+
 	// Helper functions to parse arguments to commands.
 	const char* FindArg( const char *pName ) const;
 	int FindArgInt( const char *pName, int nDefaultVal ) const;
@@ -265,11 +265,11 @@ friend class CCvar;
 public:
 	typedef ConCommandBase BaseClass;
 
-	ConCommand( const char *pName, FnCommandCallbackVoid_t callback, 
+	ConCommand( const char *pName, FnCommandCallbackVoid_t callback,
 		const char *pHelpString = 0, int flags = 0, FnCommandCompletionCallback completionFunc = 0 );
-	ConCommand( const char *pName, FnCommandCallback_t callback, 
+	ConCommand( const char *pName, FnCommandCallback_t callback,
 		const char *pHelpString = 0, int flags = 0, FnCommandCompletionCallback completionFunc = 0 );
-	ConCommand( const char *pName, ICommandCallback *pCallback, 
+	ConCommand( const char *pName, ICommandCallback *pCallback,
 		const char *pHelpString = 0, int flags = 0, ICommandCompletionCallback *pCommandCompletionCallback = 0 );
 
 	virtual ~ConCommand( void );
@@ -297,7 +297,7 @@ private:
 	{
 		FnCommandCallbackVoid_t m_fnCommandCallbackV1;
 		FnCommandCallback_t m_fnCommandCallback;
-		ICommandCallback *m_pCommandCallback; 
+		ICommandCallback *m_pCommandCallback;
 	};
 
 	union
@@ -325,13 +325,13 @@ public:
 
 								ConVar( const char *pName, const char *pDefaultValue, int flags = 0);
 
-								ConVar( const char *pName, const char *pDefaultValue, int flags, 
+								ConVar( const char *pName, const char *pDefaultValue, int flags,
 									const char *pHelpString );
-								ConVar( const char *pName, const char *pDefaultValue, int flags, 
+								ConVar( const char *pName, const char *pDefaultValue, int flags,
 									const char *pHelpString, bool bMin, float fMin, bool bMax, float fMax );
-								ConVar( const char *pName, const char *pDefaultValue, int flags, 
+								ConVar( const char *pName, const char *pDefaultValue, int flags,
 									const char *pHelpString, FnChangeCallback_t callback );
-								ConVar( const char *pName, const char *pDefaultValue, int flags, 
+								ConVar( const char *pName, const char *pDefaultValue, int flags,
 									const char *pHelpString, bool bMin, float fMin, bool bMax, float fMax,
 									FnChangeCallback_t callback );
 								ConVar( const char *pName, const char *pDefaultValue, int flags,
@@ -361,12 +361,12 @@ public:
 
 	// Any function that allocates/frees memory needs to be virtual or else you'll have crashes
 	//  from alloc/free across dll/exe boundaries.
-	
+
 	// These just call into the IConCommandBaseAccessor to check flags and set the var (which ends up calling InternalSetValue).
 	virtual void				SetValue( const char *value );
 	virtual void				SetValue( float value );
 	virtual void				SetValue( int value );
-		
+
 	// Reset to default value
 	void						Revert( void );
 
@@ -395,8 +395,8 @@ private:
 
 	void						Create( const char *pName, const char *pDefaultValue, int flags = 0,
 									const char *pHelpString = 0, bool bMin = false, float fMin = 0.0,
-									bool bMax = false, float fMax = 0.0, 
-									bool bCompMin = false, float fCompMin = 0.0, 
+									bool bMax = false, float fMax = 0.0,
+									bool bCompMin = false, float fCompMin = 0.0,
 									bool bCompMax = false, float fCompMax = 0.0,
 									FnChangeCallback_t callback = 0 );
 
@@ -413,7 +413,7 @@ private:
 
 	// Static data
 	const char					*m_pszDefaultValue;
-	
+
 	// Value
 	// Dynamically allocated
 	char						*m_pszString;
@@ -437,7 +437,7 @@ private:
 
 	bool						m_bCompetitiveRestrictions;
 
-	
+
 	// Call this function when ConVar changes
 	FnChangeCallback_t			m_fnChangeCallback;
 };
@@ -456,7 +456,7 @@ FORCEINLINE_CVAR float ConVar::GetFloat( void ) const
 // Purpose: Return ConVar value as an int
 // Output : int
 //-----------------------------------------------------------------------------
-FORCEINLINE_CVAR int ConVar::GetInt( void ) const 
+FORCEINLINE_CVAR int ConVar::GetInt( void ) const
 {
 	return m_pParent->m_nValue;
 }
@@ -466,7 +466,7 @@ FORCEINLINE_CVAR int ConVar::GetInt( void ) const
 // Purpose: Return ConVar value as a string, return "" for bogus string pointer, etc.
 // Output : const char *
 //-----------------------------------------------------------------------------
-FORCEINLINE_CVAR const char *ConVar::GetString( void ) const 
+FORCEINLINE_CVAR const char *ConVar::GetString( void ) const
 {
 	if ( m_nFlags & FCVAR_NEVER_AS_STRING )
 		return "FCVAR_NEVER_AS_STRING";
@@ -560,7 +560,7 @@ FORCEINLINE_CVAR float ConVarRef::GetFloat( void ) const
 //-----------------------------------------------------------------------------
 // Purpose: Return ConVar value as an int
 //-----------------------------------------------------------------------------
-FORCEINLINE_CVAR int ConVarRef::GetInt( void ) const 
+FORCEINLINE_CVAR int ConVarRef::GetInt( void ) const
 {
 	return m_pConVarState->m_nValue;
 }
@@ -568,7 +568,7 @@ FORCEINLINE_CVAR int ConVarRef::GetInt( void ) const
 //-----------------------------------------------------------------------------
 // Purpose: Return ConVar value as a string, return "" for bogus string pointer, etc.
 //-----------------------------------------------------------------------------
-FORCEINLINE_CVAR const char *ConVarRef::GetString( void ) const 
+FORCEINLINE_CVAR const char *ConVarRef::GetString( void ) const
 {
 	Assert( !IsFlagSet( FCVAR_NEVER_AS_STRING ) );
 	return m_pConVarState->m_pszString;
@@ -618,7 +618,7 @@ void ConVar_Unregister( );
 
 
 //-----------------------------------------------------------------------------
-// Utility methods 
+// Utility methods
 //-----------------------------------------------------------------------------
 void ConVar_PrintFlags( const ConCommandBase *var );
 void ConVar_PrintDescription( const ConCommandBase *pVar );
@@ -681,14 +681,14 @@ private:
 // Purpose: Utility macros to quicky generate a simple console command
 //-----------------------------------------------------------------------------
 #define CON_COMMAND( name, description ) \
-   static void name( const CCommand &args ); \
-   static ConCommand name##_command( #name, name, description ); \
-   static void name( const CCommand &args )
+	static void name( const CCommand &args ); \
+	static ConCommand name##_command( #name, name, description ); \
+	static void name( const CCommand &args )
 
 #define CON_COMMAND_F( name, description, flags ) \
-   static void name( const CCommand &args ); \
-   static ConCommand name##_command( #name, name, description, flags ); \
-   static void name( const CCommand &args )
+	static void name( const CCommand &args ); \
+	static ConCommand name##_command( #name, name, description, flags ); \
+	static void name( const CCommand &args )
 
 #define CON_COMMAND_F_COMPLETION( name, description, flags, completion ) \
 	static void name( const CCommand &args ); \

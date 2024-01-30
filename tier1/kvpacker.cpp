@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Contains a branch-neutral binary packer for KeyValues trees. 
+// Purpose: Contains a branch-neutral binary packer for KeyValues trees.
 //
 // $NoKeywords: $
 //
@@ -119,7 +119,7 @@ bool KVPacker::WriteAsBinary( KeyValues *pNode, CUtlBuffer &buffer )
 
 		case KeyValues::TYPE_INT:
 			{
-				buffer.PutInt( dat->GetInt() );				
+				buffer.PutInt( dat->GetInt() );
 				break;
 			}
 
@@ -155,7 +155,7 @@ bool KVPacker::WriteAsBinary( KeyValues *pNode, CUtlBuffer &buffer )
 	}
 
 	// write tail, marks end of peers
-	buffer.PutUnsignedChar( PACKTYPE_NULLMARKER ); 
+	buffer.PutUnsignedChar( PACKTYPE_NULLMARKER );
 
 	return buffer.IsValid();
 }
@@ -248,7 +248,7 @@ bool KVPacker::ReadAsBinary( KeyValues *pNode, CUtlBuffer &buffer )
 			}
 		case PACKTYPE_COLOR:
 			{
-				Color color( 
+				Color color(
 					buffer.GetUnsignedChar(),
 					buffer.GetUnsignedChar(),
 					buffer.GetUnsignedChar(),
@@ -282,4 +282,3 @@ bool KVPacker::ReadAsBinary( KeyValues *pNode, CUtlBuffer &buffer )
 
 	return buffer.IsValid();
 }
-

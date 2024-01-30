@@ -53,7 +53,7 @@ LINK_ENTITY_TO_CLASS( dod_objective_resource, CDODObjectiveResource );
 CDODObjectiveResource *g_pObjectiveResource;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODObjectiveResource::Spawn( void )
 {

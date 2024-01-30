@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -42,7 +42,7 @@ public:
 	// decay, it equals velocity increase per second.
 	//
 	// NOTE: the damage acceleration should always be greater than the decay per second, or no damage
-	//       will be applied since it will decay faster than 
+	//       will be applied since it will decay faster than
 	void		AddDamage( CBaseEntity *pTarget, CBaseEntity *pAttacker, float flDamageAccel, bool bMakeBurnEffect );
 
 
@@ -55,12 +55,12 @@ private:
 			m_hAttacker = pAttacker;
 			m_flVelocity = flVelocity;
 			m_flDamageSum = 0;
-		}		
-		
+		}
+
 		EHANDLE	m_hAttacker;
 		float	m_flVelocity;	// Current damage velocity.
-		
-		float	m_flDamageSum;	// Damage is summed up and applied a couple times per second instead of 
+
+		float	m_flDamageSum;	// Damage is summed up and applied a couple times per second instead of
 								// each frame since fractional damage is rounded to 1.
 	};
 
@@ -76,8 +76,8 @@ private:
 
 		EHANDLE				m_hEnt;
 		CHandle<CEntityBurnEffect>	m_pBurnEffect;
-		
-		// Each attacker gets credit for a portion of 
+
+		// Each attacker gets credit for a portion of
 		CDamageAttacker	m_Attackers[MAX_ATTACKERS];
 		int				m_nAttackers;
 	};
@@ -90,7 +90,7 @@ private:
 
 
 private:
-	
+
 	CUtlLinkedList<CDamageEnt,int>	m_DamageEnts;
 
 	float	m_flMaxDamagePerSecond;

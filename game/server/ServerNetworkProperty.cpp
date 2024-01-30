@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -178,7 +178,7 @@ void CServerNetworkProperty::SetTransmitProxy( CBaseTransmitProxy *pProxy )
 	}
 
 	m_pTransmitProxy = pProxy;
-	
+
 	if ( m_pTransmitProxy )
 	{
 		m_pTransmitProxy->AddRef();
@@ -199,12 +199,12 @@ bool CServerNetworkProperty::IsInPVS( const edict_t *pRecipient, const void *pvs
 	Assert( pvs && ( edict() != pRecipient ) );
 
 	unsigned char *pPVS = ( unsigned char * )pvs;
-	
+
 	if ( m_PVSInfo.m_nClusterCount < 0 )   // too many clusters, use headnode
 	{
 		return ( engine->CheckHeadnodeVisible( m_PVSInfo.m_nHeadNode, pPVS, pvssize ) != 0);
 	}
-	
+
 	for ( int i = m_PVSInfo.m_nClusterCount; --i >= 0; )
 	{
 		if (pPVS[m_PVSInfo.m_pClusters[i] >> 3] & (1 << (m_PVSInfo.m_pClusters[i] & 7) ))
@@ -222,7 +222,7 @@ bool CServerNetworkProperty::IsInPVS( const CCheckTransmitInfo *pInfo )
 {
 	// PVS data must be up to date
 	Assert( !m_pPev || ( ( m_pPev->m_fStateFlags & FL_EDICT_DIRTY_PVS_INFORMATION ) == 0 ) );
-	
+
 	int i;
 
 	// Early out if the areas are connected
@@ -266,12 +266,12 @@ bool CServerNetworkProperty::IsInPVS( const CCheckTransmitInfo *pInfo )
 	Assert( edict() != pInfo->m_pClientEnt );
 
 	unsigned char *pPVS = ( unsigned char * )pInfo->m_PVS;
-	
+
 	if ( m_PVSInfo.m_nClusterCount < 0 )   // too many clusters, use headnode
 	{
 		return (engine->CheckHeadnodeVisible( m_PVSInfo.m_nHeadNode, pPVS, pInfo->m_nPVSSize ) != 0);
 	}
-	
+
 	for ( i = m_PVSInfo.m_nClusterCount; --i >= 0; )
 	{
 		int nCluster = m_PVSInfo.m_pClusters[i];
@@ -295,7 +295,7 @@ void CServerNetworkProperty::SetUpdateInterval( float val )
 
 void CServerNetworkProperty::FireEvent()
 {
-	// Our timer went off. If our state has changed in the background, then 
+	// Our timer went off. If our state has changed in the background, then
 	// trigger a state change in the edict.
 	if ( m_bPendingStateChange )
 	{
@@ -303,6 +303,3 @@ void CServerNetworkProperty::FireEvent()
 		m_bPendingStateChange = false;
 	}
 }
-
-
-

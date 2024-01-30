@@ -1,10 +1,10 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
-#include "cbase.h" 
+#include "cbase.h"
 #include "weapon_dodfullauto_punch.h"
 #include "in_buttons.h"
 #include "dod_shareddefs.h"

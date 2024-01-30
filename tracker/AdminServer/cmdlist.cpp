@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose: queries server for the command list, and then use QueryCommand() to see
-//			if the server supports this command. 
+//			if the server supports this command.
 //
 // $NoKeywords: $
 //=============================================================================
@@ -29,21 +29,21 @@ typedef enum
 } RCONSTATUS;
 
 
-typedef enum 
+typedef enum
 {
 	FS,
 	PAK
 } MAP_TYPES;
 
 CCMDList::CCMDList(IResponse *target,serveritem_t &server, const char *rconPassword) {
-	
+
 	memcpy(&m_Server, &server,sizeof(serveritem_t));
 
 	m_bGotCommands = false;
 	m_pResponseTarget=target;
 
 	v_strncpy(m_szRconPassword,rconPassword,100);
-	
+
 	m_pRcon = new CRcon(this  , server,rconPassword);
 	m_pRcon->SendRcon("cmdlist");
 	m_CMDList.RemoveAll();
@@ -55,11 +55,11 @@ CCMDList::~CCMDList() {
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCMDList::RunFrame()
 {
-	if(m_pRcon) 
+	if(m_pRcon)
 	{
 		m_pRcon->RunFrame();
 	}
@@ -85,18 +85,18 @@ void CCMDList::ServerResponded()
 //125 Total Commands
 //CmdList ? for syntax
 
-	while(cur!=NULL) 
-	{	
+	while(cur!=NULL)
+	{
 		if(next!=NULL)
-		{	
+		{
 			cur++;
 		}
 		next=strchr(cur,'\n');
-		if(next!=NULL) 
+		if(next!=NULL)
 		{
 			*next='\0';
 		}
-		if( strncmp(cur,"Command List",12) && strncmp(cur,"-------------",13)  
+		if( strncmp(cur,"Command List",12) && strncmp(cur,"-------------",13)
 			&& strncmp(cur,"Total Commands",14) && strncmp(cur,"CmdList ? for syntax",20)  )
 		{
 			char *removeWhiteSpace=cur;
@@ -112,14 +112,14 @@ void CCMDList::ServerResponded()
 				strcpy(cmd,cur);
 				m_CMDList.AddToTail(cmd);
 			}
-		} 
+		}
 		else if ( ! strncmp(cur,"CmdList ? for syntax",20))
 		{
 			cmd_end=true;
 		}
 		cur=next;
 	}
-	
+
 	if( cmd_end )
 	{
 		m_bGotCommands = true;
@@ -135,13 +135,13 @@ void CCMDList::ServerFailedToRespond()
 }
 
 
-serveritem_t &CCMDList::GetServer() 
+serveritem_t &CCMDList::GetServer()
 {
 	return m_Server;
 }
 
 
-bool CCMDList::QueryCommand(char *cmd) 
+bool CCMDList::QueryCommand(char *cmd)
 {
 	if(!m_bGotCommands)
 		return false;
@@ -167,7 +167,7 @@ bool CCMDList::GotCommands()
 	return m_bGotCommands;
 }
 
-void CCMDList::SetPassword(const char *newPass) 
+void CCMDList::SetPassword(const char *newPass)
 {
 	m_pRcon->SetPassword(newPass);
 	m_bGotCommands = false;

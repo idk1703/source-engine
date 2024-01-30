@@ -1,17 +1,17 @@
 /*
-     File:       QTML.h
- 
-     Contains:   QuickTime Cross-platform specific interfaces
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1997-2007 by Apple Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       QTML.h
+
+		Contains:   QuickTime Cross-platform specific interfaces
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1997-2007 by Apple Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __QTML__
 #define __QTML__
@@ -51,11 +51,11 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=mac68k
+		#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+		#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+		#pragma pack(2)
 #endif
 
 /* QuickTime is not available to 64-bit clients */
@@ -64,7 +64,7 @@ extern "C" {
 
 /*
  *  QTMLYieldCPU()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 3.0 and later
@@ -77,12 +77,12 @@ QTMLYieldCPU(void);
 
 /* QTMLYieldCPUTime flags*/
 enum {
-  kQTMLHandlePortEvents         = (1L << 0) /* ask for event handling during the yield*/
+	kQTMLHandlePortEvents         = (1L << 0) /* ask for event handling during the yield*/
 };
 
 /*
  *  QTMLYieldCPUTime()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 3.0 and later
@@ -91,8 +91,8 @@ enum {
  */
 EXTERN_API( void )
 QTMLYieldCPUTime(
-  long            milliSeconds,
-  unsigned long   flags);
+	long            milliSeconds,
+	unsigned long   flags);
 
 
 typedef struct OpaqueQTMLMutex*         QTMLMutex;
@@ -100,18 +100,18 @@ typedef struct OpaqueQTMLSyncVar*       QTMLSyncVar;
 typedef QTMLSyncVar *                   QTMLSyncVarPtr;
 /* InitializeQTML flags*/
 enum {
-  kInitializeQTMLNoSoundFlag    = (1L << 0), /* flag for requesting no sound when calling InitializeQTML*/
-  kInitializeQTMLUseGDIFlag     = (1L << 1), /* flag for requesting GDI when calling InitializeQTML*/
-  kInitializeQTMLDisableDirectSound = (1L << 2), /* disables QTML's use of DirectSound*/
-  kInitializeQTMLUseExclusiveFullScreenModeFlag = (1L << 3), /* later than QTML 3.0: qtml starts up in exclusive full screen mode*/
-  kInitializeQTMLDisableDDClippers = (1L << 4), /* flag for requesting QTML not to use DirectDraw clipper objects; QTML 5.0 and later*/
-  kInitializeQTMLEnableDoubleBufferedSurface = (1L << 6) /* flag for requesting QuickTime use a double-buffered destination surface; QT6.4 and later*/
+	kInitializeQTMLNoSoundFlag    = (1L << 0), /* flag for requesting no sound when calling InitializeQTML*/
+	kInitializeQTMLUseGDIFlag     = (1L << 1), /* flag for requesting GDI when calling InitializeQTML*/
+	kInitializeQTMLDisableDirectSound = (1L << 2), /* disables QTML's use of DirectSound*/
+	kInitializeQTMLUseExclusiveFullScreenModeFlag = (1L << 3), /* later than QTML 3.0: qtml starts up in exclusive full screen mode*/
+	kInitializeQTMLDisableDDClippers = (1L << 4), /* flag for requesting QTML not to use DirectDraw clipper objects; QTML 5.0 and later*/
+	kInitializeQTMLEnableDoubleBufferedSurface = (1L << 6) /* flag for requesting QuickTime use a double-buffered destination surface; QT6.4 and later*/
 };
 
 #if CALL_NOT_IN_CARBON
 /*
  *  InitializeQTML()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -124,7 +124,7 @@ InitializeQTML(long flag);
 
 /*
  *  TerminateQTML()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -140,15 +140,15 @@ TerminateQTML(void);
 #endif  /* CALL_NOT_IN_CARBON */
 
 enum {
-  kQTMLNoIdleEvents             = (1L << 1), /* ask for a non-auto-idled port to be created*/
-  kQTMLNoDoubleBufferPort       = (1L << 2) /* ask for QTML not to double-buffer this port*/
+	kQTMLNoIdleEvents             = (1L << 1), /* ask for a non-auto-idled port to be created*/
+	kQTMLNoDoubleBufferPort       = (1L << 2) /* ask for QTML not to double-buffer this port*/
 };
 
 #define kQTMLIsDoubleBuffered "UsesDoubleBuffer"
 #if CALL_NOT_IN_CARBON
 /*
  *  CreatePortAssociation()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -157,14 +157,14 @@ enum {
  */
 EXTERN_API( GrafPtr )
 CreatePortAssociation(
-  void *  theWnd,
-  Ptr     storage,
-  long    flags);
+	void *  theWnd,
+	Ptr     storage,
+	long    flags);
 
 
 /*
  *  DestroyPortAssociation()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -180,7 +180,7 @@ DestroyPortAssociation(CGrafPtr cgp);
 
 /*
  *  QTMLGrabMutex()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 3.0 and later
@@ -193,7 +193,7 @@ QTMLGrabMutex(QTMLMutex mu);
 
 /*
  *  QTMLTryGrabMutex()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 4.1 and later
@@ -206,7 +206,7 @@ QTMLTryGrabMutex(QTMLMutex mu);
 
 /*
  *  QTMLReturnMutex()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 3.0 and later
@@ -219,7 +219,7 @@ QTMLReturnMutex(QTMLMutex mu);
 
 /*
  *  QTMLCreateMutex()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 3.0 and later
@@ -232,7 +232,7 @@ QTMLCreateMutex(void);
 
 /*
  *  QTMLDestroyMutex()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 3.0 and later
@@ -247,7 +247,7 @@ QTMLDestroyMutex(QTMLMutex mu);
 #if CALL_NOT_IN_CARBON
 /*
  *  QTMLCreateSyncVar()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -260,7 +260,7 @@ QTMLCreateSyncVar(void);
 
 /*
  *  QTMLDestroySyncVar()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -273,7 +273,7 @@ QTMLDestroySyncVar(QTMLSyncVarPtr p);
 
 /*
  *  QTMLTestAndSetSyncVar()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -286,7 +286,7 @@ QTMLTestAndSetSyncVar(QTMLSyncVarPtr sync);
 
 /*
  *  QTMLWaitAndSetSyncVar()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -299,7 +299,7 @@ QTMLWaitAndSetSyncVar(QTMLSyncVarPtr sync);
 
 /*
  *  QTMLResetSyncVar()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -313,7 +313,7 @@ QTMLResetSyncVar(QTMLSyncVarPtr sync);
 
 /*
  *  InitializeQHdr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -326,7 +326,7 @@ InitializeQHdr(QHdr * qhdr);
 
 /*
  *  TerminateQHdr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -340,7 +340,7 @@ TerminateQHdr(QHdr * qhdr);
 
 /*
  *  QTMLAcquireWindowList()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -353,7 +353,7 @@ QTMLAcquireWindowList(void);
 
 /*
  *  QTMLReleaseWindowList()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -365,13 +365,13 @@ QTMLReleaseWindowList(void);
 
 
 /*
-   These routines are here to support "interrupt level" code
-      These are dangerous routines, only use if you know what you are doing.
+	These routines are here to support "interrupt level" code
+			These are dangerous routines, only use if you know what you are doing.
 */
 
 /*
  *  QTMLRegisterInterruptSafeThread()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -380,13 +380,13 @@ QTMLReleaseWindowList(void);
  */
 EXTERN_API( long )
 QTMLRegisterInterruptSafeThread(
-  unsigned long   threadID,
-  void *          threadInfo);
+	unsigned long   threadID,
+	void *          threadInfo);
 
 
 /*
  *  QTMLUnregisterInterruptSafeThread()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -400,7 +400,7 @@ QTMLUnregisterInterruptSafeThread(unsigned long threadID);
 
 /*
  *  NativeEventToMacEvent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -409,8 +409,8 @@ QTMLUnregisterInterruptSafeThread(unsigned long threadID);
  */
 EXTERN_API( long )
 NativeEventToMacEvent(
-  void *         nativeEvent,
-  EventRecord *  macEvent);
+	void *         nativeEvent,
+	EventRecord *  macEvent);
 
 
 #endif  /* CALL_NOT_IN_CARBON */
@@ -419,7 +419,7 @@ NativeEventToMacEvent(
 #if CALL_NOT_IN_CARBON
 /*
  *  WinEventToMacEvent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -428,14 +428,14 @@ NativeEventToMacEvent(
  */
 EXTERN_API( long )
 WinEventToMacEvent(
-  void *         winMsg,
-  EventRecord *  macEvent);
+	void *         winMsg,
+	EventRecord *  macEvent);
 
 
 #define WinEventToMacEvent  NativeEventToMacEvent
 /*
  *  IsTaskBarVisible()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -448,7 +448,7 @@ IsTaskBarVisible(void);
 
 /*
  *  ShowHideTaskBar()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -462,14 +462,14 @@ ShowHideTaskBar(Boolean showIt);
 #endif  /* CALL_NOT_IN_CARBON */
 
 enum {
-  kDDSurfaceLocked              = (1L << 0),
-  kDDSurfaceStatic              = (1L << 1)
+	kDDSurfaceLocked              = (1L << 0),
+	kDDSurfaceStatic              = (1L << 1)
 };
 
 #if CALL_NOT_IN_CARBON
 /*
  *  QTGetDDObject()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -482,7 +482,7 @@ QTGetDDObject(void ** lpDDObject);
 
 /*
  *  QTSetDDObject()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -495,7 +495,7 @@ QTSetDDObject(void * lpNewDDObject);
 
 /*
  *  QTSetDDPrimarySurface()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -504,14 +504,14 @@ QTSetDDObject(void * lpNewDDObject);
  */
 EXTERN_API( OSErr )
 QTSetDDPrimarySurface(
-  void *          lpNewDDSurface,
-  unsigned long   flags);
+	void *          lpNewDDSurface,
+	unsigned long   flags);
 
 
 
 /*
  *  QTMLGetVolumeRootPath()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -520,15 +520,15 @@ QTSetDDPrimarySurface(
  */
 EXTERN_API( OSErr )
 QTMLGetVolumeRootPath(
-  char *          fullPath,
-  char *          volumeRootPath,
-  unsigned long   volumeRootLen);
+	char *          fullPath,
+	char *          volumeRootPath,
+	unsigned long   volumeRootLen);
 
 
 
 /*
  *  QTMLSetWindowWndProc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -537,13 +537,13 @@ QTMLGetVolumeRootPath(
  */
 EXTERN_API( void )
 QTMLSetWindowWndProc(
-  WindowRef   theWindow,
-  void *      windowProc);
+	WindowRef   theWindow,
+	void *      windowProc);
 
 
 /*
  *  QTMLGetWindowWndProc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -561,7 +561,7 @@ QTMLGetWindowWndProc(WindowRef theWindow);
 #if CALL_NOT_IN_CARBON
 /*
  *  QTMLGetCanonicalPathName()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -570,26 +570,26 @@ QTMLGetWindowWndProc(WindowRef theWindow);
  */
 EXTERN_API( OSErr )
 QTMLGetCanonicalPathName(
-  char *          inName,
-  char *          outName,
-  unsigned long   outLen);
+	char *          inName,
+	char *          outName,
+	unsigned long   outLen);
 
 
 #endif  /* CALL_NOT_IN_CARBON */
 
 enum {
-  kFullNativePath               = 0,
-  kFileNameOnly                 = (1 << 0),
-  kDirectoryPathOnly            = (1 << 1),
-  kUFSFullPathName              = (1 << 2),
-  kTryVDIMask                   = (1 << 3), /*    Used in NativePathNameToFSSpec to specify to search VDI mountpoints*/
-  kFullPathSpecifiedMask        = (1 << 4) /*    the passed in name is a fully qualified full path*/
+	kFullNativePath               = 0,
+	kFileNameOnly                 = (1 << 0),
+	kDirectoryPathOnly            = (1 << 1),
+	kUFSFullPathName              = (1 << 2),
+	kTryVDIMask                   = (1 << 3), /*    Used in NativePathNameToFSSpec to specify to search VDI mountpoints*/
+	kFullPathSpecifiedMask        = (1 << 4) /*    the passed in name is a fully qualified full path*/
 };
 
 #if CALL_NOT_IN_CARBON
 /*
  *  FSSpecToNativePathName()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -598,22 +598,22 @@ enum {
  */
 EXTERN_API( OSErr )
 FSSpecToNativePathName(
-  const FSSpec *  inFile,
-  char *          outName,
-  unsigned long   outLen,
-  long            flags);
+	const FSSpec *  inFile,
+	char *          outName,
+	unsigned long   outLen,
+	long            flags);
 
 
 #endif  /* CALL_NOT_IN_CARBON */
 
 enum {
-  kErrorIfFileNotFound          = 1L << 31
+	kErrorIfFileNotFound          = 1L << 31
 };
 
 #if CALL_NOT_IN_CARBON
 /*
  *  NativePathNameToFSSpec()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -622,14 +622,14 @@ enum {
  */
 EXTERN_API( OSErr )
 NativePathNameToFSSpec(
-  char *    inName,
-  FSSpec *  outFile,
-  long      flags);
+	char *    inName,
+	FSSpec *  outFile,
+	long      flags);
 
 
 /*
  *  QTGetAliasInfo()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -638,12 +638,12 @@ NativePathNameToFSSpec(
  */
 EXTERN_API( OSErr )
 QTGetAliasInfo(
-  AliasHandle     alias,
-  AliasInfoType   index,
-  char *          outBuf,
-  long            bufLen,
-  long *          outLen,
-  unsigned long   flags);
+	AliasHandle     alias,
+	AliasInfoType   index,
+	char *          outBuf,
+	long            bufLen,
+	long *          outLen,
+	unsigned long   flags);
 
 
 
@@ -653,11 +653,11 @@ QTGetAliasInfo(
 
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+		#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+		#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+		#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -671,4 +671,3 @@ QTGetAliasInfo(
 #endif
 
 #endif /* __QTML__ */
-

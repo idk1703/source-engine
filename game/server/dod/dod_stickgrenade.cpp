@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,17 +13,17 @@
 LINK_ENTITY_TO_CLASS( grenade_frag_ger, CDODStickGrenade );
 PRECACHE_WEAPON_REGISTER( grenade_frag_ger );
 
-CDODStickGrenade* CDODStickGrenade::Create( 
-	const Vector &position, 
-	const QAngle &angles, 
-	const Vector &velocity, 
-	const AngularImpulse &angVelocity, 
-	CBaseCombatCharacter *pOwner, 
+CDODStickGrenade* CDODStickGrenade::Create(
+	const Vector &position,
+	const QAngle &angles,
+	const Vector &velocity,
+	const AngularImpulse &angVelocity,
+	CBaseCombatCharacter *pOwner,
 	float timer,
 	DODWeaponID weaponID )
 {
 	CDODStickGrenade *pGrenade = (CDODStickGrenade*)CBaseEntity::Create( "grenade_frag_ger", position, angles, pOwner );
-	
+
 	Assert( pGrenade );
 
 	if( !pGrenade )
@@ -38,7 +38,7 @@ CDODStickGrenade* CDODStickGrenade::Create(
 	pGrenade->SetupInitialTransmittedGrenadeVelocity( velocity );
 
 	// Who threw this grenade
-	pGrenade->SetThrower( pOwner ); 
+	pGrenade->SetThrower( pOwner );
 
 	pGrenade->ChangeTeam( pOwner->GetTeamNumber() );
 

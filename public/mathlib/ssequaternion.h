@@ -17,8 +17,8 @@
 // to exist on PC.
 // On PC, certain horizontal vector operations are not supported.
 // This causes the SSE implementation of quaternion math to mix the
-// vector and scalar floating point units, which is extremely 
-// performance negative if you don't compile to native SSE2 (which 
+// vector and scalar floating point units, which is extremely
+// performance negative if you don't compile to native SSE2 (which
 // we don't as of Sept 1, 2007). So, it's best not to allow these
 // functions to exist at all. It's not good enough to simply replace
 // the contents of the functions with scalar math, because each call
@@ -187,7 +187,7 @@ FORCEINLINE fltx4 QuaternionMultSIMD( const fltx4 &p, const fltx4 &q )
 	return result;
 }
 
-#else 
+#else
 
 // X360
 extern const fltx4 g_QuatMultRowSign[4];
@@ -204,12 +204,12 @@ FORCEINLINE fltx4 QuaternionMultSIMD( const fltx4 &p, const fltx4 &q )
 	row = MulSIMD( row, g_QuatMultRowSign[1] );
 	row = Dot4SIMD( row, p );
 	result = __vrlimi( result, row, 4, 0 );
-	
+
 	row = XMVectorSwizzle( q2, 1, 0, 3, 2 );
 	row = MulSIMD( row, g_QuatMultRowSign[2] );
 	row = Dot4SIMD( row, p );
 	result = __vrlimi( result, row, 2, 0 );
-	
+
 	row = MulSIMD( q2, g_QuatMultRowSign[3] );
 	row = Dot4SIMD( row, p );
 	result = __vrlimi( result, row, 1, 0 );
@@ -230,7 +230,7 @@ FORCEINLINE fltx4 QuaternionScaleSIMD( const fltx4 &p, float t )
 	float r;
 	fltx4 q;
 
-	// FIXME: nick, this isn't overly sensitive to accuracy, and it may be faster to 
+	// FIXME: nick, this isn't overly sensitive to accuracy, and it may be faster to
 	// use the cos part (w) of the quaternion (sin(omega)*N,cos(omega)) to figure the new scale.
 	float sinom = sqrt( SubFloat( p, 0 ) * SubFloat( p, 0 ) + SubFloat( p, 1 ) * SubFloat( p, 1 ) + SubFloat( p, 2 ) * SubFloat( p, 2 ) );
 	sinom = min( sinom, 1.f );
@@ -246,7 +246,7 @@ FORCEINLINE fltx4 QuaternionScaleSIMD( const fltx4 &p, float t )
 	r = 1.0f - sinsom * sinsom;
 
 	// Assert( r >= 0 );
-	if (r < 0.0f) 
+	if (r < 0.0f)
 		r = 0.0f;
 	r = sqrt( r );
 
@@ -302,19 +302,19 @@ FORCEINLINE fltx4 QuaternionSlerpNoAlignSIMD( const fltx4 &p, const fltx4 &q, fl
 	fltx4 result;
 
 	// 0.0 returns p, 1.0 return q.
-	cosom = SubFloat( p, 0 ) * SubFloat( q, 0 ) + SubFloat( p, 1 ) * SubFloat( q, 1 ) + 
+	cosom = SubFloat( p, 0 ) * SubFloat( q, 0 ) + SubFloat( p, 1 ) * SubFloat( q, 1 ) +
 		SubFloat( p, 2 ) * SubFloat( q, 2 ) + SubFloat( p, 3 ) * SubFloat( q, 3 );
 
-	if ( (1.0f + cosom ) > 0.000001f ) 
+	if ( (1.0f + cosom ) > 0.000001f )
 	{
-		if ( (1.0f - cosom ) > 0.000001f ) 
+		if ( (1.0f - cosom ) > 0.000001f )
 		{
 			omega = acos( cosom );
 			sinom = sin( omega );
 			sclp = sin( (1.0f - t)*omega) / sinom;
 			sclq = sin( t*omega ) / sinom;
 		}
-		else 
+		else
 		{
 			// TODO: add short circuit for cosom == 1.0f?
 			sclp = 1.0f - t;
@@ -325,7 +325,7 @@ FORCEINLINE fltx4 QuaternionSlerpNoAlignSIMD( const fltx4 &p, const fltx4 &q, fl
 		SubFloat( result, 2 ) = sclp * SubFloat( p, 2 ) + sclq * SubFloat( q, 2 );
 		SubFloat( result, 3 ) = sclp * SubFloat( p, 3 ) + sclq * SubFloat( q, 3 );
 	}
-	else 
+	else
 	{
 		SubFloat( result, 0 ) = -SubFloat( q, 1 );
 		SubFloat( result, 1 ) =  SubFloat( q, 0 );
@@ -364,4 +364,3 @@ FORCEINLINE fltx4 QuaternionSlerpSIMD( const fltx4 &p, const fltx4 &q, float t )
 #endif // ALLOW_SIMD_QUATERNION_MATH
 
 #endif // SSEQUATMATH_H
-

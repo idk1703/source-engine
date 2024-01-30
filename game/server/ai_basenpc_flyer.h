@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ public:
 	virtual QAngle	BodyAngles();
 
 protected:
-	
+
 	CAI_BaseFlyingBot();
 
 	Vector	VelocityToAvoidObstacles(float flInterval);
@@ -36,7 +36,7 @@ protected:
 
 	void TurnHeadToTarget( float flInterval, const Vector &moveTarget );
 
-	void MoveInDirection( float flInterval, const Vector &targetDir, 
+	void MoveInDirection( float flInterval, const Vector &targetDir,
 						 float accelXY, float accelZ, float decay)
 	{
 		decay = ExponentialDecay( decay, 1.0, flInterval );
@@ -48,7 +48,7 @@ protected:
 		m_vCurrentVelocity.z = ( decay * m_vCurrentVelocity.z + accelZ  * targetDir.z );
 	}
 
-	void MoveToLocation( float flInterval, const Vector &target, 
+	void MoveToLocation( float flInterval, const Vector &target,
 						 float accelXY, float accelZ, float decay)
 	{
 		Vector targetDir = target - GetLocalOrigin();
@@ -99,10 +99,10 @@ protected:
 		}
 	}
 
-	AI_NavPathProgress_t ProgressFlyPath(   float flInterval, 
-						const CBaseEntity *pNewTarget, 
-						unsigned collisionMask, 
-						bool bNewTrySimplify = true, 
+	AI_NavPathProgress_t ProgressFlyPath(   float flInterval,
+						const CBaseEntity *pNewTarget,
+						unsigned collisionMask,
+						bool bNewTrySimplify = true,
 						float strictPointTolerance = 32.0 );
 
 	virtual float GetHeadTurnRate( void ) { return 15.0f; }	// Degrees per second

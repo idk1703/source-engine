@@ -68,7 +68,7 @@ void CDODBombTarget::Spawn( void )
 		State_Transition( BOMB_TARGET_INACTIVE );
 	else
 		State_Transition( BOMB_TARGET_ACTIVE );
-	
+
 	BaseClass::Spawn();
 
 	// incase we have any animating bomb models
@@ -91,7 +91,7 @@ void CDODBombTarget::Precache( void )
 // Purpose: change use flags based on state
 //-----------------------------------------------------------------------------
 int	CDODBombTarget::ObjectCaps()
-{ 
+{
 	int caps = BaseClass::ObjectCaps();
 
 	if ( State_Get() != BOMB_TARGET_INACTIVE )
@@ -117,7 +117,7 @@ void CDODBombTarget::State_Transition( BombTargetState newState )
 {
 	State_Leave();
 	State_Enter( newState );
-}	
+}
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -241,7 +241,7 @@ void CDODBombTarget::State_Enter_ARMED( void )
 	if ( pCP )
 	{
 		pCP->BombPlanted( GetBombTimerLength(), m_pPlantingPlayer );
-	}	
+	}
 
 	EmitSound( "Weapon_C4.Fuse" );
 
@@ -283,7 +283,7 @@ void CDODBombTarget::ResetDefuse( int index )
 
 #include "IEffects.h"
 void TE_Sparks( IRecipientFilter& filter, float delay,
-			   const Vector *pos, int nMagnitude, int nTrailLength, const Vector *pDir );
+			const Vector *pos, int nMagnitude, int nTrailLength, const Vector *pDir );
 
 extern short g_sModelIndexFireball;
 
@@ -308,7 +308,7 @@ void CDODBombTarget::Explode( void )
 	float flDamage = 200;
 	float flDmgRadius = flDamage * 2.5;
 	// do a separate radius damage that ignores the world for added damage!
-	CTakeDamageInfo dmgInfo( this, m_pPlantingPlayer, vec3_origin, origin, flDamage, DMG_BLAST | DMG_BOMB ); 
+	CTakeDamageInfo dmgInfo( this, m_pPlantingPlayer, vec3_origin, origin, flDamage, DMG_BLAST | DMG_BOMB );
 	DODGameRules()->RadiusDamage( dmgInfo, origin, flDmgRadius, CLASS_NONE, NULL, true );
 
 	// stun players in a radius
@@ -348,13 +348,13 @@ void CDODBombTarget::Explode( void )
 					// bad situation, abandon here
 					pPlayer = NULL;
 				}
-			}				
+			}
 		}
 
 		pCP->BombExploded( pPlayer, m_iBombingTeam );
 
 		g_pObjectiveResource->SetBombBeingDefused( pCP->GetPointIndex(), false );
-	}	
+	}
 
 	// If we add time to the round timer, tell Gamerules
 	// Don't do this if this bomb ended the game
@@ -383,7 +383,7 @@ void CDODBombTarget::BombDefused( CDODPlayer *pDefuser )
 	if ( pCP )
 	{
 		pCP->BombDisarmed( pDefuser );
-	}	
+	}
 
 	if ( pDefuser )
 	{
@@ -450,7 +450,7 @@ void CDODBombTarget::State_Think_ARMED( void )
 		if ( pCP )
 		{
 			pCP->CancelBombPlanted();
-		}	
+		}
 	}
 
 	// manually advance frame so that it matches bomb timer length.
@@ -496,7 +496,7 @@ void CDODBombTarget::State_Think_ARMED( void )
 				if ( pDefuseRecord->m_flDefuseCompleteTime < gpGlobals->curtime )
 				{
 					// Defuse Complete
-					BombDefused( pPlayer );		
+					BombDefused( pPlayer );
 
 					// remove everyone from the list
 					for ( int j=m_DefusingPlayers.Count()-1;j>=0;j-- )
@@ -576,7 +576,7 @@ void CDODBombTarget::CompletePlanting( CDODPlayer *pPlantingPlayer )
 		m_pPlantingPlayer = pPlantingPlayer;
 
 		State_Transition( BOMB_TARGET_ARMED );
-	}	
+	}
 }
 
 DefusingPlayer *CDODBombTarget::FindDefusingPlayer( CDODPlayer *pPlayer )
@@ -623,7 +623,7 @@ void CDODBombTarget::State_Use_ARMED( CBaseEntity *pActivator, CBaseEntity *pCal
 	else
 	{
 		// add player to the list
-		DefusingPlayer defusingPlayer;		
+		DefusingPlayer defusingPlayer;
 
 		defusingPlayer.m_pPlayer = pPlayer;
 		defusingPlayer.m_flDefuseCompleteTime = gpGlobals->curtime + DOD_BOMB_DEFUSE_TIME;
@@ -638,7 +638,7 @@ void CDODBombTarget::State_Use_ARMED( CBaseEntity *pActivator, CBaseEntity *pCal
 		CControlPoint *pCP = GetControlPoint();
 		if ( pCP )
 		{
-            g_pObjectiveResource->SetBombBeingDefused( pCP->GetPointIndex(), true );
+	g_pObjectiveResource->SetBombBeingDefused( pCP->GetPointIndex(), true );
 		}
 	}
 }
@@ -668,7 +668,7 @@ void CDODBombTarget::InputDisable( inputdata_t &inputdata )
 			if ( pCP )
 			{
 				pCP->CancelBombPlanted();
-			}			
+			}
 		}
 
 		State_Transition( BOMB_TARGET_INACTIVE );

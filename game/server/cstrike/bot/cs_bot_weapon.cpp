@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -48,8 +48,8 @@ void CCSBot::FireWeaponAtEnemy( void )
 		!IsSurprised())
 	{
 		if (!(IsRecognizedEnemyProtectedByShield() && IsPlayerFacingMe( enemy )) &&	// don't shoot at enemies behind shields
-			!IsReloading() && 
-			!IsActiveWeaponClipEmpty() && 
+			!IsReloading() &&
+			!IsActiveWeaponClipEmpty() &&
 			//gpGlobals->curtime > m_reacquireTimestamp &&
 			IsEnemyVisible())
 		{
@@ -136,7 +136,7 @@ void CCSBot::FireWeaponAtEnemy( void )
 					if (GetProfile()->GetSkill() > 0.75f && rangeToEnemy < closePistolRange)
 					{
 						// fire as fast as possible
-						m_fireWeaponTimestamp = 0.0f; 
+						m_fireWeaponTimestamp = 0.0f;
 					}
 					else
 					{
@@ -481,10 +481,10 @@ void CCSBot::EquipBestWeapon( bool mustEquip )
 		CSWeaponType weaponClass = primary->GetCSWpnData().m_WeaponType;
 
 		if ((ctrl->AllowShotguns() && weaponClass == WEAPONTYPE_SHOTGUN) ||
-			(ctrl->AllowMachineGuns() && weaponClass == WEAPONTYPE_MACHINEGUN) || 
-			(ctrl->AllowRifles() && weaponClass == WEAPONTYPE_RIFLE) || 
+			(ctrl->AllowMachineGuns() && weaponClass == WEAPONTYPE_MACHINEGUN) ||
+			(ctrl->AllowRifles() && weaponClass == WEAPONTYPE_RIFLE) ||
 			(ctrl->AllowShotguns() && weaponClass == WEAPONTYPE_SHOTGUN) ||
-			(ctrl->AllowSnipers() && weaponClass == WEAPONTYPE_SNIPER_RIFLE) || 
+			(ctrl->AllowSnipers() && weaponClass == WEAPONTYPE_SNIPER_RIFLE) ||
 			(ctrl->AllowSubMachineGuns() && weaponClass == WEAPONTYPE_SUBMACHINEGUN))
 		{
 			if (DoEquip( primary ))
@@ -628,7 +628,7 @@ void CCSBot::ThrowGrenade( const Vector &target )
 		m_tossGrenadeTimer.Start( 2.0f );
 
 		const float angleTolerance = 3.0f;
-		SetLookAt( "GrenadeThrow", target, PRIORITY_UNINTERRUPTABLE, 4.0f, false, angleTolerance ); 
+		SetLookAt( "GrenadeThrow", target, PRIORITY_UNINTERRUPTABLE, 4.0f, false, angleTolerance );
 
 		Wait( RandomFloat( 2.0f, 4.0f ) );
 
@@ -748,7 +748,7 @@ bool CCSBot::FindGrenadeTossPathTarget( Vector *pos )
 	}
 
 	*pos = visibleSpot;
-	return true;	
+	return true;
 }
 
 
@@ -1126,7 +1126,7 @@ void CCSBot::AvoidEnemyGrenades( void )
 		return;
 	}
 
-	GrenadeResponse respond( this );	
+	GrenadeResponse respond( this );
 	if (TheBots->ForEachGrenade( respond ) == false)
 	{
 		const float avoidTime = 4.0f;
@@ -1360,4 +1360,3 @@ bool CCSBot::DidPlayerJustFireWeapon( const CCSPlayer *player ) const
 	CWeaponCSBase *weapon = player->GetActiveCSWeapon();
 	return (weapon && !weapon->IsSilenced() && weapon->m_flNextPrimaryAttack > gpGlobals->curtime);
 }
-

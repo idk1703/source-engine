@@ -13,7 +13,7 @@
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CConfirmDeleteItemDialog::CConfirmDeleteItemDialog( vgui::Panel *parent, bool bMultiItem ) : BaseClass(parent)
 {
@@ -21,7 +21,7 @@ CConfirmDeleteItemDialog::CConfirmDeleteItemDialog( vgui::Panel *parent, bool bM
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const wchar_t *CConfirmDeleteItemDialog::GetText()
 {

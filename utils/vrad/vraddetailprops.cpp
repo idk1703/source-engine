@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Revision: $
 // $NoKeywords: $
@@ -27,8 +27,8 @@ bool LoadStudioModel( char const* pModelName, CUtlBuffer& buf );
 
 //-----------------------------------------------------------------------------
 // Purpose: Writes a glview text file containing the collision surface in question
-// Input  : *pCollide - 
-//			*pFilename - 
+// Input  : *pCollide -
+//			*pFilename -
 //-----------------------------------------------------------------------------
 void DumpRayToGlView( Ray_t const& ray, float dist, Vector* pColor, const char *pFilename )
 {
@@ -236,7 +236,7 @@ static void ComputeMaxDirectLighting( DetailObjectLump_t& prop, Vector* maxcolor
 // Computes the ambient term from a particular surface
 //-----------------------------------------------------------------------------
 
-static void ComputeAmbientFromSurface( dface_t* pFace, directlight_t* pSkylight, 
+static void ComputeAmbientFromSurface( dface_t* pFace, directlight_t* pSkylight,
 									   Vector& radcolor )
 {
 	texinfo_t* pTex = &texinfo[pFace->texinfo];
@@ -248,7 +248,7 @@ static void ComputeAmbientFromSurface( dface_t* pFace, directlight_t* pSkylight,
 			if (pSkylight)
 			{
 				// add in sky ambient
-				VectorDivide( pSkylight->light.intensity, 255.0f, radcolor ); 
+				VectorDivide( pSkylight->light.intensity, 255.0f, radcolor );
 			}
 		}
 		else
@@ -271,7 +271,7 @@ static void ComputeLightmapColorFromAverage( dface_t* pFace, directlight_t* pSky
 		if (pSkylight)
 		{
 			// add in sky ambient
-			Vector amb = pSkylight->light.intensity / 255.0f; 
+			Vector amb = pSkylight->light.intensity / 255.0f;
 			pColor[0] += amb * scale;
 		}
 		return;
@@ -302,7 +302,7 @@ static void ComputeLightmapColorFromAverage( dface_t* pFace, directlight_t* pSky
 static bool SurfHasBumpedLightmaps( dface_t *pSurf )
 {
 	bool hasBumpmap = false;
-	if( ( texinfo[pSurf->texinfo].flags & SURF_BUMPLIGHT ) && 
+	if( ( texinfo[pSurf->texinfo].flags & SURF_BUMPLIGHT ) &&
 		( !( texinfo[pSurf->texinfo].flags & SURF_NOLIGHT ) ) )
 	{
 		hasBumpmap = true;
@@ -383,7 +383,7 @@ public:
 
 			texinfo_t* pTex = &texinfo[pFace->texinfo];
 
-			// Don't immediately return when we hit sky; 
+			// Don't immediately return when we hit sky;
 			// we may actually hit another surface
 			if (pTex->flags & SURF_SKY)
 			{
@@ -442,7 +442,7 @@ public:
 
 			float front = startDotN + start * deltaDotN - pPlane->dist;
 			float back = startDotN + end * deltaDotN - pPlane->dist;
-			
+
 			int side = front < 0;
 
 			// Blow it off if it doesn't split the plane...
@@ -495,25 +495,25 @@ private:
 		// no lightmaps on this surface? punt...
 		// FIXME: should be water surface?
 		if (pTex->flags & SURF_NOLIGHT)
-			return false;	
-		
-		// See where in lightmap space our intersection point is 
+			return false;
+
+		// See where in lightmap space our intersection point is
 		float s, t;
-		s = DotProduct (pt.Base(), pTex->lightmapVecsLuxelsPerWorldUnits[0]) + 
+		s = DotProduct (pt.Base(), pTex->lightmapVecsLuxelsPerWorldUnits[0]) +
 			pTex->lightmapVecsLuxelsPerWorldUnits[0][3];
-		t = DotProduct (pt.Base(), pTex->lightmapVecsLuxelsPerWorldUnits[1]) + 
+		t = DotProduct (pt.Base(), pTex->lightmapVecsLuxelsPerWorldUnits[1]) +
 			pTex->lightmapVecsLuxelsPerWorldUnits[1][3];
 
 		// Not in the bounds of our lightmap? punt...
 		if( s < pFace->m_LightmapTextureMinsInLuxels[0] || t < pFace->m_LightmapTextureMinsInLuxels[1] )
-			return false;	
-		
+			return false;
+
 		// assuming a square lightmap (FIXME: which ain't always the case),
 		// lets see if it lies in that rectangle. If not, punt...
 		float ds = s - pFace->m_LightmapTextureMinsInLuxels[0];
 		float dt = t - pFace->m_LightmapTextureMinsInLuxels[1];
 		if( ds > pFace->m_LightmapTextureSizeInLuxels[0] || dt > pFace->m_LightmapTextureSizeInLuxels[1] )
-			return false;	
+			return false;
 
 		m_LuxelCoord.x = ds;
 		m_LuxelCoord.y = dt;
@@ -573,7 +573,7 @@ bool CastRayInLeaf( int iThread, const Vector &start, const Vector &end, int lea
 }
 
 //-----------------------------------------------------------------------------
-// Computes ambient lighting along a specified ray.  
+// Computes ambient lighting along a specified ray.
 // Ray represents a cone, tanTheta is the tan of the inner cone angle
 //-----------------------------------------------------------------------------
 void CalcRayAmbientLighting( int iThread, const Vector &vStart, const Vector &vEnd, float tanTheta, Vector color[MAX_LIGHTSTYLES] )
@@ -592,10 +592,10 @@ void CalcRayAmbientLighting( int iThread, const Vector &vStart, const Vector &vE
 
 	// until 20" we use the point sample, then blend in the average until we're covering 40"
 	// This is attempting to model the ray as a cone - in the ideal case we'd simply sample all
-	// luxels in the intersection of the cone with the surface.  Since we don't have surface 
+	// luxels in the intersection of the cone with the surface.  Since we don't have surface
 	// neighbor information computed we'll just approximate that sampling with a blend between
 	// a point sample and the face average.
-	// This yields results that are similar in that aliasing is reduced at distance while 
+	// This yields results that are similar in that aliasing is reduced at distance while
 	// point samples provide accuracy for intersections with near geometry
 	float scaleAvg = RemapValClamped( dist, 20, 40, 0.0f, 1.0f );
 
@@ -663,7 +663,7 @@ void ComputeIndirectLightingAtPoint( Vector &position, Vector &normal, Vector &o
 
 	outColor.Init();
 
-	
+
 	int nSamples = NUMVERTEXNORMALS;
 	if ( do_fast || force_fast )
 		nSamples /= 4;
@@ -782,7 +782,7 @@ static void ComputeAmbientLighting( int iThread, DetailObjectLump_t& prop, Vecto
 
 static void ComputeLighting( DetailObjectLump_t& prop, int iThread )
 {
-	// We're going to take the maximum of the ambient lighting and 
+	// We're going to take the maximum of the ambient lighting and
 	// the strongest directional light. This works because we're assuming
 	// the props will have built-in faked lighting.
 
@@ -792,7 +792,7 @@ static void ComputeLighting( DetailObjectLump_t& prop, int iThread )
 	// Get the max influence of all direct lights
 	ComputeMaxDirectLighting( prop, directColor, iThread );
 
-	// Get the ambient lighting + lightstyles	  
+	// Get the ambient lighting + lightstyles
 	ComputeAmbientLighting( iThread, prop, ambColor );
 
 	// Base lighting
@@ -802,7 +802,7 @@ static void ComputeLighting( DetailObjectLump_t& prop, int iThread )
 
 	bool hasLightstyles = false;
 	prop.m_LightStyleCount = 0;
-	
+
 	// lightstyles
 	for (int i = 1; i < MAX_LIGHTSTYLES; ++i )
 	{
@@ -838,7 +838,7 @@ static void UnserializeModelDict( CUtlBuffer& buf )
 	{
 		DetailObjectDictLump_t lump;
 		buf.Get( &lump, sizeof(DetailObjectDictLump_t) );
-		
+
 		int i = g_ModelCenterOffset.AddToTail();
 
 		CUtlBuffer mdlbuf;
@@ -863,7 +863,7 @@ static void UnserializeSpriteDict( CUtlBuffer& buf )
 	{
 		DetailSpriteDictLump_t lump;
 		buf.Get( &lump, sizeof(DetailSpriteDictLump_t) );
-		
+
 		// For these sprites, x goes out the front, y right, z up
 		int i = g_SpriteCenterOffset.AddToTail();
 		g_SpriteCenterOffset[i].x = 0.0f;
@@ -967,11 +967,11 @@ void VMPI_ProcessDetailPropWU( int iThread, int iWorkUnit, MessageBuffer *pBuf )
 	DetailObjectLump_t& prop = g_pMPIDetailProps[iWorkUnit];
 	ComputeLighting( prop, iThread );
 
-	// Send the results back...	
+	// Send the results back...
 	pBuf->write( &prop.m_Lighting, sizeof( prop.m_Lighting ) );
 	pBuf->write( &prop.m_LightStyleCount, sizeof( prop.m_LightStyleCount ) );
 	pBuf->write( &prop.m_LightStyles, sizeof( prop.m_LightStyles ) );
-	
+
 	for ( int i=0; i < prop.m_LightStyleCount; i++ )
 	{
 		DetailPropLightstylesLump_t *l = &pDetailPropLump->Element( i + prop.m_LightStyles );
@@ -990,9 +990,9 @@ void VMPI_ReceiveDetailPropWU( int iWorkUnit, MessageBuffer *pBuf, int iWorker )
 	pBuf->read( &prop.m_Lighting, sizeof( prop.m_Lighting ) );
 	pBuf->read( &prop.m_LightStyleCount, sizeof( prop.m_LightStyleCount ) );
 	pBuf->read( &prop.m_LightStyles, sizeof( prop.m_LightStyles ) );
-	
+
 	pDetailPropLump->EnsureCount( prop.m_LightStyles + prop.m_LightStyleCount );
-	
+
 	for ( int i=0; i < prop.m_LightStyleCount; i++ )
 	{
 		DetailPropLightstylesLump_t *l = &pDetailPropLump->Element( i + prop.m_LightStyles );
@@ -1000,7 +1000,7 @@ void VMPI_ReceiveDetailPropWU( int iWorkUnit, MessageBuffer *pBuf, int iWorker )
 		pBuf->read( &l->m_Style, sizeof( l->m_Style ) );
 	}
 }
-	
+
 //-----------------------------------------------------------------------------
 // Computes lighting for the detail props
 //-----------------------------------------------------------------------------

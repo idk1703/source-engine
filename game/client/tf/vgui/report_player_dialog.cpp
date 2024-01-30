@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -106,7 +106,7 @@ CReportPlayerDialog::~CReportPlayerDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReportPlayerDialog::Activate()
 {
@@ -175,7 +175,7 @@ void CReportPlayerDialog::RefreshPlayerProperties()
 			continue;
 
 		int playerIndex = pData->GetInt( "index" );
-		
+
 		player_info_t pi;
 		if ( !engine->GetPlayerInfo( playerIndex, &pi ) )
 		{
@@ -198,7 +198,7 @@ void CReportPlayerDialog::RefreshPlayerProperties()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CReportPlayerDialog::IsValidPlayerSelected()
 {
@@ -220,7 +220,7 @@ bool CReportPlayerDialog::IsValidPlayerSelected()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReportPlayerDialog::OnCommand( const char *command )
 {
@@ -235,7 +235,7 @@ void CReportPlayerDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReportPlayerDialog::ReportPlayer()
 {
@@ -270,7 +270,7 @@ void CReportPlayerDialog::ReportPlayer()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReportPlayerDialog::OnItemSelected()
 {

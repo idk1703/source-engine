@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -85,7 +85,7 @@ void CAttributeColorPickerPanel::OnPreview( KeyValues *data )
 		Color c = data->GetColor( "color" );
 		SetAttributeValue( c );
 	}
-				 
+
 	Refresh( );
 	if ( IsAutoApply() )
 	{

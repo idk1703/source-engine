@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -55,7 +55,7 @@ static void ImportCombinationControls( CDmeCombinationOperator *pDestComboOp, CD
 		const char *pControlName = pSrcComboOp->GetControlName( i );
 
 		int nRawControls = pSrcComboOp->GetRawControlCount( i );
-		int nMatchCount = 0; 
+		int nMatchCount = 0;
 		bool *pFoundMatch = (bool*)_alloca( nRawControls * sizeof(bool) );
 		for ( int j = 0; j < nRawControls; ++j )
 		{
@@ -67,12 +67,12 @@ static void ImportCombinationControls( CDmeCombinationOperator *pDestComboOp, CD
 		// No match? Don't import
 		if ( nMatchCount == 0 )
 		{
-			pStatusFrame->AddOperation( pControlName, "No raw controls found!" ); 
+			pStatusFrame->AddOperation( pControlName, "No raw controls found!" );
 			continue;
 		}
 
 		bool bPartialMatch = ( nMatchCount != nRawControls );
-		pStatusFrame->AddOperation( pControlName, bPartialMatch ? "Partial rule match" : "Successful" ); 
+		pStatusFrame->AddOperation( pControlName, bPartialMatch ? "Partial rule match" : "Successful" );
 
 		// Found a match! Let's create the control and potentially raw control
 		bool bIsStereo = pSrcComboOp->IsStereoControl( i );
@@ -116,7 +116,7 @@ static void ImportDominationRules( CDmeCombinationOperator *pDestComboOp, CDmeCo
 			if ( !pDestComboOp->HasRawControl( pDominatorName ) )
 			{
 				bMismatch = true;
-				pStatusFrame->AddOperation( pDominatorName, "Missing raw control for dominance rule" ); 
+				pStatusFrame->AddOperation( pDominatorName, "Missing raw control for dominance rule" );
 				break;
 			}
 		}
@@ -128,7 +128,7 @@ static void ImportDominationRules( CDmeCombinationOperator *pDestComboOp, CDmeCo
 			if ( !pDestComboOp->HasRawControl( pSuppressedName ) )
 			{
 				bMismatch = true;
-				pStatusFrame->AddOperation( pSuppressedName, "Missing raw control for dominance rule" ); 
+				pStatusFrame->AddOperation( pSuppressedName, "Missing raw control for dominance rule" );
 				break;
 			}
 		}
@@ -170,7 +170,7 @@ static bool ImportCombinationData( vgui::Panel* pParent, CDmeCombinationOperator
 	if ( pComboOp )
 	{
 		// Actually rename the files, build an error dialog if necessary
-		COperationFileListFrame *pStatusFrame = new COperationFileListFrame( pParent, 
+		COperationFileListFrame *pStatusFrame = new COperationFileListFrame( pParent,
 			"Import Status", "Status", false, true );
 		pStatusFrame->SetOperationColumnHeaderText( "Control Name" );
 
@@ -241,7 +241,7 @@ public:
 	virtual void OnMouseDoublePressed( vgui::MouseCode code );
 
 private:
-	MESSAGE_FUNC( OnNewWrinkleText, "TextNewLine" );	
+	MESSAGE_FUNC( OnNewWrinkleText, "TextNewLine" );
 
 	CDmeCombinationControlsPanel *m_pComboPanel;
 	vgui::TextEntry *m_pWrinkleEdit;
@@ -294,8 +294,8 @@ private:
 	MESSAGE_FUNC( OnToggleStereoControl, "ToggleStereoControl" );
 	MESSAGE_FUNC( OnToggleEyelidControl, "ToggleEyelidControl" );
 	MESSAGE_FUNC( OnToggleWrinkleType, "ToggleWrinkleType" );
-	MESSAGE_FUNC_PARAMS( OnItemSelected, "ItemSelected", kv );	
-	MESSAGE_FUNC_PARAMS( OnItemDeselected, "ItemDeselected", kv );	
+	MESSAGE_FUNC_PARAMS( OnItemSelected, "ItemSelected", kv );
+	MESSAGE_FUNC_PARAMS( OnItemDeselected, "ItemDeselected", kv );
 
 	// Cleans up the context menu
 	void CleanupContextMenu();
@@ -445,10 +445,10 @@ void CDmeCombinationControlsPanel::RefreshCombinationOperator()
 {
 	const CUtlString controlName = GetSelectedControlName();
 
-	m_pControlList->RemoveAll();	
+	m_pControlList->RemoveAll();
 	if ( !m_hCombinationOperator.Get() )
 		return;
-				  
+
 	int nCount = m_hCombinationOperator->GetControlCount();
 	for ( int i = 0; i < nCount; ++i )
 	{
@@ -456,10 +456,10 @@ void CDmeCombinationControlsPanel::RefreshCombinationOperator()
 		float flDefault = m_hCombinationOperator->GetRawControlCount(i) == 2 ? 0.5f : 0.0f;
 		const char *pName = m_hCombinationOperator->GetControlName( i );
 		KeyValues *kv = new KeyValues( "node", "name", pName );
-		kv->SetString( "stereo", m_hCombinationOperator->IsStereoControl(i) ? "On" : "Off" ); 
-		kv->SetString( "eyelid", m_hCombinationOperator->IsEyelidControl(i) ? "On" : "Off" ); 
-		kv->SetFloat( "default", flDefault ); 
-		kv->SetColor( "cellcolor", bIsMultiControl ? Color( 192, 192, 0, 255 ) : Color( 255, 255, 255, 255 ) ); 
+		kv->SetString( "stereo", m_hCombinationOperator->IsStereoControl(i) ? "On" : "Off" );
+		kv->SetString( "eyelid", m_hCombinationOperator->IsEyelidControl(i) ? "On" : "Off" );
+		kv->SetFloat( "default", flDefault );
+		kv->SetColor( "cellcolor", bIsMultiControl ? Color( 192, 192, 0, 255 ) : Color( 255, 255, 255, 255 ) );
 		const int nItemId = m_pControlList->AddItem( kv, 0, false, false );
 
 		if ( !Q_strcmp( controlName.Get(), pName ) )
@@ -486,7 +486,7 @@ void CDmeCombinationControlsPanel::NotifyDataChanged()
 //-----------------------------------------------------------------------------
 void CDmeCombinationControlsPanel::RefreshRawControlNames()
 {
-	m_pRawControlList->RemoveAll();	
+	m_pRawControlList->RemoveAll();
 	if ( !m_hCombinationOperator.Get() )
 		return;
 
@@ -749,7 +749,7 @@ void CDmeCombinationControlsPanel::OnOpenContextMenu( KeyValues *kv )
 
 	if ( pPanel != m_pControlList )
 		return;
-    
+
 	bool bGroupedControls = false;
 	bool bStereoControls = false;
 	bool bEyelidControls = false;
@@ -1011,7 +1011,7 @@ void CDmeCombinationControlsPanel::PerformRenameControl( const char *pNewControl
 void CDmeCombinationControlsPanel::OnInputCompleted( KeyValues *pKeyValues )
 {
 	const char *pControlName = pKeyValues->GetString( "text", NULL );
-	if ( !pControlName || !pControlName[0] )						  
+	if ( !pControlName || !pControlName[0] )
 		return;
 
 	if ( pKeyValues->FindKey( "OnGroupControls" ) )
@@ -1157,7 +1157,7 @@ void CDmeCombinationControlsPanel::OnFileSelected( KeyValues *kv )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Import combination controls + domination rules
 //-----------------------------------------------------------------------------
@@ -1188,7 +1188,7 @@ void CDmeCombinationControlsPanel::OnImportCombination()
 //-----------------------------------------------------------------------------
 // Constructor, destructor
 //-----------------------------------------------------------------------------
-CDmeInputControlListPanel::CDmeInputControlListPanel( vgui::Panel *pParent, const char *pName, CDmeCombinationControlsPanel *pComboPanel ) : 
+CDmeInputControlListPanel::CDmeInputControlListPanel( vgui::Panel *pParent, const char *pName, CDmeCombinationControlsPanel *pComboPanel ) :
 	BaseClass( pParent, pName ), m_pComboPanel( pComboPanel )
 {
 }
@@ -1243,7 +1243,7 @@ void CDmeInputControlListPanel::OnPanelDropped( CUtlVector< KeyValues * >& msgLi
 			{
 				int x;
 				int y;
-				
+
 				vgui::input()->GetCursorPos( x, y );
 
 				int row;
@@ -1408,7 +1408,7 @@ private:
 	KeyValues *m_pContextKeyValues;
 };
 
-CRawControlPickerFrame::CRawControlPickerFrame( vgui::Panel *pParent, const char *pTitle ) : 
+CRawControlPickerFrame::CRawControlPickerFrame( vgui::Panel *pParent, const char *pTitle ) :
 	BaseClass( pParent, "RawControlPickerFrame" )
 {
 	SetDeleteSelfOnClose( true );
@@ -1442,7 +1442,7 @@ CRawControlPickerFrame::~CRawControlPickerFrame()
 //-----------------------------------------------------------------------------
 void CRawControlPickerFrame::RefreshRawControlNames( CDmeCombinationOperator *pCombinationOperator, CDmeCombinationDominationRule *pRule, bool bChooseSuppressed )
 {
-	m_pRawControlList->RemoveAll();	
+	m_pRawControlList->RemoveAll();
 	if ( !pCombinationOperator )
 		return;
 
@@ -1486,7 +1486,7 @@ void CRawControlPickerFrame::CleanUpMessage()
 //-----------------------------------------------------------------------------
 // Sets the current scene + animation list
 //-----------------------------------------------------------------------------
-void CRawControlPickerFrame::DoModal( CDmeCombinationOperator *pCombinationOperator, 
+void CRawControlPickerFrame::DoModal( CDmeCombinationOperator *pCombinationOperator,
 	CDmeCombinationDominationRule *pRule, bool bSuppressed, KeyValues *pContextKeyValues )
 {
 	CleanUpMessage();
@@ -1652,7 +1652,7 @@ static int __cdecl ControlNameSortFunc(const void *elem1, const void *elem2)
 	return Q_stricmp( pItem1, pItem2 );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Builds the list of animations
 //-----------------------------------------------------------------------------
@@ -1684,7 +1684,7 @@ void CDmeCombinationDominationRulesPanel::RefreshCombinationOperator()
 			nLen += Q_snprintf( &pTemp[nLen], sizeof(pTemp) - nLen, "%s ", ppStrings[j] );
 		}
 
-		pItemKeys->SetString( "dominator", pTemp ); 
+		pItemKeys->SetString( "dominator", pTemp );
 
 		nLen = 0;
 		nControlCount = pRule->SuppressedCount();
@@ -1699,8 +1699,8 @@ void CDmeCombinationDominationRulesPanel::RefreshCombinationOperator()
 		{
 			nLen += Q_snprintf( &pTemp[nLen], sizeof(pTemp) - nLen, "%s ", ppStrings[j] );
 		}
-		pItemKeys->SetString( "suppressed", pTemp ); 
-		pItemKeys->SetInt( "index", i ); 
+		pItemKeys->SetString( "suppressed", pTemp );
+		pItemKeys->SetInt( "index", i );
 		SetElementKeyValue( pItemKeys, "rule", pRule );
 
 		m_pDominationRulesList->AddItem( pItemKeys, 0, false, false );
@@ -2093,7 +2093,7 @@ void CDmeCombinationSystemEditorPanel::OnDmeElementChanged( KeyValues *kv )
 // Purpose: Combination system editor frame
 //
 //-----------------------------------------------------------------------------
-CDmeCombinationSystemEditorFrame::CDmeCombinationSystemEditorFrame( vgui::Panel *pParent, const char *pTitle ) : 
+CDmeCombinationSystemEditorFrame::CDmeCombinationSystemEditorFrame( vgui::Panel *pParent, const char *pTitle ) :
 	BaseClass( pParent, "DmeCombinationSystemEditorFrame" )
 {
 	SetDeleteSelfOnClose( true );

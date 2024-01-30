@@ -209,7 +209,7 @@ void CReplayInputPanel::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool IsReplayInputPanelVisible()
 {
@@ -217,7 +217,7 @@ bool IsReplayInputPanelVisible()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ShowReplayInputPanel( ReplayHandle_t hReplay )
 {

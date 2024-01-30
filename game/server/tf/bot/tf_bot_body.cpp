@@ -9,8 +9,8 @@
 #include "tf_bot_body.h"
 
 
-// 
-// Return how often we should sample our target's position and 
+//
+// Return how often we should sample our target's position and
 // velocity to update our aim tracking, to allow realistic slop in tracking
 //
 float CTFBotBody::GetHeadAimTrackingInterval( void ) const

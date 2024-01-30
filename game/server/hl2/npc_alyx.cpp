@@ -34,7 +34,7 @@ int AE_ALYX_EMPTOOL_ATTACHMENT;
 int AE_ALYX_EMPTOOL_SEQUENCE;
 
 //=========================================================
-// Classify - indicates this NPC's place in the 
+// Classify - indicates this NPC's place in the
 // relationship table.
 //=========================================================
 Class_T	CNPC_Alyx::Classify ( void )
@@ -95,7 +95,7 @@ void CNPC_Alyx::HandleAnimEvent( animevent_t *pEvent )
 }
 
 //=========================================================
-// 
+//
 //=========================================================
 bool CNPC_Alyx::CreateBehaviors()
 {
@@ -141,10 +141,10 @@ void CNPC_Alyx::Precache()
 	PrecacheScriptSound( "npc_alyx.die" );
 	PrecacheModel( STRING( GetModelName() ) );
 	PrecacheModel( "models/alyx_emptool_prop.mdl" );
-}	
+}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Alyx::SelectModel()
 {
@@ -158,7 +158,7 @@ void CNPC_Alyx::SelectModel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Alyx::SetupAlyxWithoutParent( void )
 {
@@ -177,7 +177,7 @@ void CNPC_Alyx::SetupAlyxWithoutParent( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 void CNPC_Alyx::CreateEmpTool( void )
@@ -201,7 +201,7 @@ void CNPC_Alyx::CreateEmpTool( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Alyx::PrescheduleThink( void )
 {
@@ -269,4 +269,3 @@ AI_BEGIN_CUSTOM_NPC( npc_alyx, CNPC_Alyx )
 	DECLARE_ANIMEVENT( AE_ALYX_EMPTOOL_SEQUENCE )
 
 AI_END_CUSTOM_NPC()
-

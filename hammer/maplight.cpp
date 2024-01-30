@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ CMapClass* CMapLight::CreateMapLight(CHelperInfo *pHelperInfo, CMapEntity *pPare
 
 void CMapLight::OnParentKeyChanged(const char* key, const char* value)
 {
-	
+
 }
 
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -33,7 +33,7 @@ public:
 	virtual void SetFilterMdlAndJpgFiles( bool bFilter ) = 0;
 	virtual void GetFilename( char *pOut, int outLen ) const = 0;	// Get the filename they chose.
 
-	// Call this to make the dialog itself. Returns true if they clicked OK and false 
+	// Call this to make the dialog itself. Returns true if they clicked OK and false
 	// if they canceled it.
 	virtual bool DoModal() = 0;
 

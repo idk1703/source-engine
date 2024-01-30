@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -19,7 +19,7 @@
 #include "vgui/VGUI.h"
 #include "fontabc.h"
 
-abstract_class ITextMessage 
+abstract_class ITextMessage
 {
 public:
 	virtual void		SetPosition( int x, int y ) = 0;

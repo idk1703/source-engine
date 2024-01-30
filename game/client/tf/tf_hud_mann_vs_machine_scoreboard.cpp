@@ -49,7 +49,7 @@ void CMvMScoreboardEnemyInfo::UpdateEntry( char* icon, bool bIsGiant )
 	{
 		SetDialogVariable( "description", pwchHint );
 	}
-	else 
+	else
 	{
 		SetDialogVariable( "description", VarArgs( "NYI: #TF_PVE_ROBOT_%s", icon ) );
 	}
@@ -64,7 +64,7 @@ void CMvMScoreboardEnemyInfo::UpdateEntry( char* icon, bool bIsGiant )
 	Panel *pBGPanel = dynamic_cast< Panel* >( FindChildByName( "Background" ) );
 	if ( pBGPanel )
 	{
-		if ( bIsGiant )	
+		if ( bIsGiant )
 		{
 			pBGPanel->SetBgColor( m_clrMiniBoss );
 		}
@@ -129,7 +129,7 @@ void CTFHudMannVsMachineScoreboard::ApplySchemeSettings( IScheme *pScheme )
 	if ( m_pCreditStatsPanel )
 	{
 		m_pPreviousWaveCreditsInfo = dynamic_cast<CCreditDisplayPanel*>( m_pCreditStatsPanel->FindChildByName("PreviousWaveCreditInfoPanel") );
-		m_pTotalCreditsInfo = dynamic_cast<CCreditDisplayPanel*>( m_pCreditStatsPanel->FindChildByName("TotalGameCreditInfoPanel") );	
+		m_pTotalCreditsInfo = dynamic_cast<CCreditDisplayPanel*>( m_pCreditStatsPanel->FindChildByName("TotalGameCreditInfoPanel") );
 		m_pPreviousWaveCreditsSpend = dynamic_cast<CCreditSpendPanel*>( m_pCreditStatsPanel->FindChildByName("PreviousWaveCreditSpendPanel") );
 		m_pTotalCreditsSpend = dynamic_cast<CCreditSpendPanel*>( m_pCreditStatsPanel->FindChildByName("TotalGameCreditSpendPanel") );
 		m_pRespecStatusLabel = dynamic_cast< CExLabel* >( m_pCreditStatsPanel->FindChildByName( "RespecStatusLabel" ) );
@@ -157,7 +157,7 @@ void CTFHudMannVsMachineScoreboard::FireGameEvent( IGameEvent * event )
 		{
 			WritePlayerScoreStats();
 		}
-#endif // STAGING_ONLY		
+#endif // STAGING_ONLY
 
 		// Adds current stats to "prev" containers (i.e. current wave's stats added to total of all previous wave stats)
 		g_TF_PR->UpdatePlayerScoreStats();
@@ -183,7 +183,7 @@ void CTFHudMannVsMachineScoreboard::OnTick ()
 {
 	// Ensure the panels and everything else have been initialized
 	if (!m_bInitialized
-		|| !TFGameRules() 
+		|| !TFGameRules()
 		|| !TFGameRules()->IsMannVsMachineMode()
 		|| !TFObjectiveResource() )
 	{
@@ -196,7 +196,7 @@ void CTFHudMannVsMachineScoreboard::OnTick ()
 }
 
 //-----------------------------------------------------------------------------
-void CTFHudMannVsMachineScoreboard::InitPlayerList ( IScheme *pScheme ) 
+void CTFHudMannVsMachineScoreboard::InitPlayerList ( IScheme *pScheme )
 {
 	// Scoreboard
 	if ( m_pImageList )
@@ -207,7 +207,7 @@ void CTFHudMannVsMachineScoreboard::InitPlayerList ( IScheme *pScheme )
 	m_mapAvatarsToImageList.RemoveAll();
 
 	m_pPlayerListBackground = dynamic_cast<vgui::ScalableImagePanel*>( FindChildByName("PlayerListBackground") );
-	
+
 	m_iImageDead = m_pImageList->AddImage( scheme()->GetImage( "../hud/leaderboard_dead", true ) );
 	m_iSquadSurplusTexture = m_pImageList->AddImage( scheme()->GetImage( "pve/mvm_squad_surplus_small", true ) );
 
@@ -233,7 +233,7 @@ void CTFHudMannVsMachineScoreboard::InitPlayerList ( IScheme *pScheme )
 	m_pPlayerList->SetBgColor( Color( 0, 0, 0, 0 ) );
 	m_pPlayerList->SetBorder( NULL );
 
-	m_hScoreFont = pScheme->GetFont( "ScoreboardVerySmall", true );	
+	m_hScoreFont = pScheme->GetFont( "ScoreboardVerySmall", true );
 	m_pPlayerList->AddColumnToSection( 0, "medal", "", SectionedListPanel::COLUMN_IMAGE | SectionedListPanel::COLUMN_CENTER, m_iMedalWidth );
 	m_pPlayerList->AddColumnToSection( 0, "spacer1", "", 0, m_iMedalSpacerWidth );
 	m_pPlayerList->AddColumnToSection( 0, "avatar", "", SectionedListPanel::COLUMN_IMAGE | SectionedListPanel::COLUMN_RIGHT, m_iAvatarWidth );
@@ -279,7 +279,7 @@ char *ConvertScoreboardValueToString( int iValue )
 }
 
 //-----------------------------------------------------------------------------
-void CTFHudMannVsMachineScoreboard::UpdatePlayerList () 
+void CTFHudMannVsMachineScoreboard::UpdatePlayerList ()
 {
 	m_pPlayerList->ClearSelection();
 	m_pPlayerList->RemoveAll();
@@ -294,7 +294,7 @@ void CTFHudMannVsMachineScoreboard::UpdatePlayerList ()
 			continue;
 		}
 
-		if ( g_PR->GetTeam( playerIndex ) != TF_TEAM_PVE_DEFENDERS ) 
+		if ( g_PR->GetTeam( playerIndex ) != TF_TEAM_PVE_DEFENDERS )
 		{
 			continue;
 		}
@@ -304,7 +304,7 @@ void CTFHudMannVsMachineScoreboard::UpdatePlayerList ()
 
 		pKeyValues->SetInt( "playerIndex", playerIndex );
 		pKeyValues->SetString( "name", szName );
-			
+
 		bool bAlive = g_TF_PR->IsAlive( playerIndex );
 
 		if( g_PR->IsConnected( playerIndex ) )
@@ -320,8 +320,8 @@ void CTFHudMannVsMachineScoreboard::UpdatePlayerList ()
 				{
 					iClass = iDesiredClass;
 				}
-			} 
-			else 
+			}
+			else
 			{
 				// for non-local players, show the current class
 				iClass = g_TF_PR->GetPlayerClass( playerIndex );
@@ -390,7 +390,7 @@ void CTFHudMannVsMachineScoreboard::UpdatePlayerList ()
 				const CTFLobbyMember *pMember = pLobby->GetMemberDetails( GetSteamIDForPlayerIndex( playerIndex ) );
 				if ( pMember )
 				{
-					bSurplusEnabled = pMember->squad_surplus();	
+					bSurplusEnabled = pMember->squad_surplus();
 					nTourNo = pMember->badge_level();
 				}
 
@@ -423,7 +423,7 @@ void CTFHudMannVsMachineScoreboard::UpdatePlayerList ()
 			// We do this because each have different weights.  Example: Every 250 points
 			// of healing or damage assist results in 1 point of Score.  Bonus requires
 			// only 10.  This makes it easier for players to evaluate their "support" value.
-			int nSupport = g_TF_PR->GetDamageAssist( playerIndex ) + 
+			int nSupport = g_TF_PR->GetDamageAssist( playerIndex ) +
 						   g_TF_PR->GetHealingAssist( playerIndex ) +
 						   g_TF_PR->GetDamageBlocked( playerIndex ) +
 						   ( g_TF_PR->GetBonusPoints( playerIndex ) * 25 );
@@ -436,14 +436,14 @@ void CTFHudMannVsMachineScoreboard::UpdatePlayerList ()
 			//pKeyValues->SetString( "blocked", ConvertScoreboardValueToString( g_TF_PR->GetDamageBlocked( playerIndex ) ) );
 			//pKeyValues->SetString( "bonus", ConvertScoreboardValueToString( g_TF_PR->GetBonusPoints( playerIndex ) ) );
 			pKeyValues->SetString( "credits", ConvertScoreboardValueToString( g_TF_PR->GetCurrencyCollected( playerIndex ) ) );
-		}	
+		}
 
 		int itemID = m_pPlayerList->AddItem( 0, pKeyValues );
-			
+
 		m_pPlayerList->SetItemFgColor( itemID, fgClr );
 		m_pPlayerList->SetItemBgColor( itemID, bgClr );
 		m_pPlayerList->SetItemFont( itemID, m_hScoreFont );
-			
+
 		pKeyValues->deleteThis();
 	}
 
@@ -535,7 +535,7 @@ void CTFHudMannVsMachineScoreboard::UpdateCreditStats()
 	{
 		m_pPreviousWaveCreditsSpend->SetDialogVariable( "header", "" );
 	}
-		
+
 	CPlayerWaveSpendingStats *pWaveStats = pMVMStats->GetLocalSpending( iWaveNumber );
 	int nUpgradeSpending = pWaveStats ? pWaveStats->nCreditsSpentOnUpgrades : 0;
 	int nBuyBackSpending = pWaveStats ? pWaveStats->nCreditsSpentOnBuyBacks : 0;
@@ -662,15 +662,15 @@ void CTFHudMannVsMachineScoreboard::UpdatePopFile( void )
 			{
 				const MvMMission_t &mission = GetItemSchema()->GetMvmMissions()[ iChallengeIndex ];
 				wchar_t wszChallengeName[ 256 ];
-				g_pVGuiLocalize->ConstructString_safe( wszChallengeName, L"%s1 (%s2)", 2, 
+				g_pVGuiLocalize->ConstructString_safe( wszChallengeName, L"%s1 (%s2)", 2,
 					g_pVGuiLocalize->Find( mission.m_sDisplayName.Get() ), g_pVGuiLocalize->Find( mission.m_sMode.Get() ) );
 
 				SetDialogVariable( "popfile", wszChallengeName );
-				
+
 				m_pDifficultyContainer->SetVisible( true );
 				m_pDifficultyContainer->SetDialogVariable( "difficultyvalue", g_pVGuiLocalize->Find( GetMvMChallengeDifficultyLocName( mission.m_eDifficulty ) ) );
 			}
-			else 
+			else
 			{
 				SetDialogVariable( "popfile", GetMapDisplayName(szTempName) );
 				// Hide Difficulty Panel since we dont know what it is
@@ -709,7 +709,7 @@ void CTFHudMannVsMachineScoreboard::WritePlayerScoreStats( void )
 
 				const char *pszClassName = GetPlayerClassName( g_TF_PR->GetPlayerClass( i ) );
 
-				buf.Printf( "%10.10s %8.8s\tScore: %-6d Damage: %-6d DmgAssist: %-6d Tank: %-6d Healing: %-6d HealAssist: %-6d Blocked: %-6d Money: %-6d Bonus: %-6d\n", 
+				buf.Printf( "%10.10s %8.8s\tScore: %-6d Damage: %-6d DmgAssist: %-6d Tank: %-6d Healing: %-6d HealAssist: %-6d Blocked: %-6d Money: %-6d Bonus: %-6d\n",
 					pPlayer->GetPlayerName(),
 					pszClassName ? pszClassName : "Unknown",
 					g_TF_PR->GetTotalScore( i ),
@@ -722,7 +722,7 @@ void CTFHudMannVsMachineScoreboard::WritePlayerScoreStats( void )
 					g_TF_PR->GetCurrencyCollected( i ),
 					// Bonus points come from special events and helping teammates, such as:
 					// Resetting the bomb, killing a fully charged medic, shooting down projectiles
-					// extinguishing a teammate, pushing enemy giants away with airblast, 
+					// extinguishing a teammate, pushing enemy giants away with airblast,
 					// removing a sapper from someone else's building, dispensers giving ammo to the team,
 					// someone gaining health from your sandvich, bow headshots, stunning enemies with baseballs,
 					// scouts killing medics that were actively healing

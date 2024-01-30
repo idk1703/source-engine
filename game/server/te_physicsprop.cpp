@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -24,7 +24,7 @@ public:
 	virtual			~CTEPhysicsProp( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 	virtual void	Precache( void );
 
 	DECLARE_SERVERCLASS();
@@ -40,8 +40,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEPhysicsProp::CTEPhysicsProp( const char *name ) :
 	CBaseTempEntity( name )
@@ -56,14 +56,14 @@ CTEPhysicsProp::CTEPhysicsProp( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEPhysicsProp::~CTEPhysicsProp( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTEPhysicsProp::Precache( void )
 {
@@ -71,9 +71,9 @@ void CTEPhysicsProp::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEPhysicsProp::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -82,11 +82,11 @@ void CTEPhysicsProp::Test( const Vector& current_origin, const QAngle& current_a
 	m_nSkin = 0;
 	m_vecOrigin = current_origin;
 	m_angRotation = current_angles;
-	
+
 	m_vecVelocity.Init( random->RandomFloat( -10, 10 ), random->RandomFloat( -10, 10 ), random->RandomFloat( 0, 20 ) );
 	m_nFlags = 0;
 	m_nEffects = 0;
-	
+
 	Vector forward, right;
 
 	m_vecOrigin += Vector( 0, 0, 24 );
@@ -123,7 +123,7 @@ void TE_PhysicsProp( IRecipientFilter& filter, float delay,
 	s_TEPhysicsProp.m_vecOrigin		= pos;
 	s_TEPhysicsProp.m_angRotation	= angles;
 	s_TEPhysicsProp.m_vecVelocity	= vel;
-	s_TEPhysicsProp.m_nModelIndex	= modelindex;	
+	s_TEPhysicsProp.m_nModelIndex	= modelindex;
 	s_TEPhysicsProp.m_nSkin			= skin;
 	s_TEPhysicsProp.m_nFlags		= flags;
 	s_TEPhysicsProp.m_nEffects		= effects;

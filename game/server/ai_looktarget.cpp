@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -27,7 +27,7 @@ END_DATADESC()
 
 //---------------------------------------------------------
 //---------------------------------------------------------
-int CAI_LookTarget::DrawDebugTextOverlays(void) 
+int CAI_LookTarget::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
@@ -37,7 +37,7 @@ int CAI_LookTarget::DrawDebugTextOverlays(void)
 		NDebugOverlay::Cross3D( GetAbsOrigin(), 12, color, color, color, false, 0.1 );
 	}
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 
@@ -77,7 +77,7 @@ bool CAI_LookTarget::IsEligible( CBaseEntity *pLooker )
 	if( pLooker )
 	{
 		float maxdistsqr = m_flMaxDist * m_flMaxDist;
-		
+
 		Vector vecPos = GetAbsOrigin();
 
 		if( vecPos.DistToSqr( pLooker->WorldSpaceCenter() ) > maxdistsqr )
@@ -90,7 +90,7 @@ bool CAI_LookTarget::IsEligible( CBaseEntity *pLooker )
 }
 
 //---------------------------------------------------------
-// Someone's reserving this entity because they're going 
+// Someone's reserving this entity because they're going
 // to attempt to look at it for flDuration seconds. We'll
 // make it unavailable to anyone else for that time.
 //---------------------------------------------------------

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -27,7 +27,7 @@ public:
 	void			UpdateLargeFX( void );					//Update Discharging Large FX
 	void			UpdateSmallFX( void );					//Update Discharging Small FX
 
-private:	
+private:
 
 	bool			SetupEmitters( void );
 	inline float	GetStateDurationPercentage( void );
@@ -38,7 +38,7 @@ private:
 	float			m_flDuration;
 	float			m_flStartTime;
 	int				m_spawnflags;
-	
+
 	CSmartPtr<CSimpleEmitter>		m_pSimpleEmitter;
 	CSmartPtr<CParticleAttractor>	m_pAttractorEmitter;
 };
@@ -53,7 +53,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_Env_Lightrail_Endpoint, DT_Env_Lightrail_Endpoint, C
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : RenderGroup_t
 //-----------------------------------------------------------------------------
 RenderGroup_t C_Env_Lightrail_Endpoint::GetRenderGroup( void )
@@ -62,8 +62,8 @@ RenderGroup_t C_Env_Lightrail_Endpoint::GetRenderGroup( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_Env_Lightrail_Endpoint::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -77,7 +77,7 @@ void C_Env_Lightrail_Endpoint::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_Env_Lightrail_Endpoint::SetupEmitters( void )
 {
@@ -103,8 +103,8 @@ bool C_Env_Lightrail_Endpoint::SetupEmitters( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : percentage - 
+// Purpose:
+// Input  : percentage -
 //-----------------------------------------------------------------------------
 void C_Env_Lightrail_Endpoint::UpdateIdle( float percentage )
 {
@@ -152,7 +152,7 @@ void C_Env_Lightrail_Endpoint::UpdateIdle( float percentage )
 
 		if ( sParticle == NULL )
 			return;
-		
+
 		sParticle->m_vecVelocity	= Vector(0,0,8);
 		sParticle->m_flDieTime		= 0.5f;
 		sParticle->m_flLifetime		= 0.0f;
@@ -174,8 +174,8 @@ void C_Env_Lightrail_Endpoint::UpdateIdle( float percentage )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : percentage - 
+// Purpose:
+// Input  : percentage -
 //-----------------------------------------------------------------------------
 void C_Env_Lightrail_Endpoint::UpdateCharging( float percentage )
 {
@@ -201,7 +201,7 @@ void C_Env_Lightrail_Endpoint::UpdateCharging( float percentage )
 
 		if ( sParticle == NULL )
 			return;
-		
+
 		sParticle->m_vecVelocity	= vec3_origin;
 		sParticle->m_flDieTime		= 0.1f;
 		sParticle->m_flLifetime		= 0.0f;
@@ -269,7 +269,7 @@ void C_Env_Lightrail_Endpoint::UpdateCharging( float percentage )
 
 		if ( sParticle == NULL )
 			return;
-		
+
 		sParticle->m_vecVelocity	= Vector(0,0,8);
 		sParticle->m_flDieTime		= 0.5f;
 		sParticle->m_flLifetime		= 0.0f;
@@ -291,16 +291,16 @@ void C_Env_Lightrail_Endpoint::UpdateCharging( float percentage )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : percentage - 
+// Purpose:
+// Input  : percentage -
 //-----------------------------------------------------------------------------
 void C_Env_Lightrail_Endpoint::UpdateSmallFX( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : percentage - 
+// Purpose:
+// Input  : percentage -
 //-----------------------------------------------------------------------------
 void C_Env_Lightrail_Endpoint::UpdateLargeFX( void )
 {
@@ -323,7 +323,7 @@ void C_Env_Lightrail_Endpoint::UpdateLargeFX( void )
 
 	if ( sParticle == NULL )
 		return;
-	
+
 	sParticle->m_vecVelocity	= forward * 32.0f;
 	sParticle->m_flDieTime		= 0.2f;
 	sParticle->m_flLifetime		= 0.0f;
@@ -352,7 +352,7 @@ void C_Env_Lightrail_Endpoint::UpdateLargeFX( void )
 
 		if ( sParticle == NULL )
 			return;
-		
+
 		sParticle->m_vecVelocity	= forward * ( 32.0f * (i+1) );
 		sParticle->m_flDieTime		= 0.2f;
 		sParticle->m_flLifetime		= 0.0f;
@@ -415,7 +415,7 @@ void C_Env_Lightrail_Endpoint::UpdateLargeFX( void )
 
 		if ( sParticle == NULL )
 			return;
-		
+
 		sParticle->m_vecVelocity	= Vector(0,0,2);
 		sParticle->m_flDieTime		= 0.5f;
 		sParticle->m_flLifetime		= 0.0f;
@@ -437,7 +437,7 @@ void C_Env_Lightrail_Endpoint::UpdateLargeFX( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : inline float
 //-----------------------------------------------------------------------------
 inline float C_Env_Lightrail_Endpoint::GetStateDurationPercentage( void )
@@ -449,7 +449,7 @@ inline float C_Env_Lightrail_Endpoint::GetStateDurationPercentage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_Env_Lightrail_Endpoint::NotifyShouldTransmit( ShouldTransmitState_t state )
 {
@@ -469,7 +469,7 @@ void C_Env_Lightrail_Endpoint::NotifyShouldTransmit( ShouldTransmitState_t state
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_Env_Lightrail_Endpoint::ClientThink( void )
 {

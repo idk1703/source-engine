@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -30,7 +30,7 @@
 // CSave
 //
 // --------------------------------------------------------------
-static const char *g_FieldTypes[ FIELD_TYPECOUNT ] = 
+static const char *g_FieldTypes[ FIELD_TYPECOUNT ] =
 {
 	"FIELD_VOID",			// FIELD_VOID
 	"FIELD_FLOAT",			// FIELD_FLOAT
@@ -54,14 +54,14 @@ static const char *g_FieldTypes[ FIELD_TYPECOUNT ] =
 	"FIELD_SOUNDNAME",		// FIELD_SOUNDNAME
 	"FIELD_INPUT",			// FIELD_INPUT		(uses custom type)
 	"FIELD_FUNCTION",		// FIELD_FUNCTION
-	"FIELD_VMATRIX",			
+	"FIELD_VMATRIX",
 	"FIELD_VMATRIX_WORLDSPACE",
 	"FIELD_MATRIX3X4_WORLDSPACE",
 	"FIELD_INTERVAL"		// FIELD_INTERVAL
 	"FIELD_MODELINDEX"		// FIELD_MODELINDEX
 };
 
-CPredictionCopy::CPredictionCopy( int type, void *dest, bool dest_packed, void const *src, bool src_packed, 
+CPredictionCopy::CPredictionCopy( int type, void *dest, bool dest_packed, void const *src, bool src_packed,
 	bool counterrors /*= false*/, bool reporterrors /*= false*/, bool performcopy /*= true*/,
 	bool describefields /*= false*/, FN_FIELD_COMPARE func /*= NULL*/ )
 {
@@ -86,9 +86,9 @@ CPredictionCopy::CPredictionCopy( int type, void *dest, bool dest_packed, void c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fmt - 
-//			... - 
+// Purpose:
+// Input  : *fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CPredictionCopy::ReportFieldsDiffer( const char *fmt, ... )
 {
@@ -134,9 +134,9 @@ void CPredictionCopy::ReportFieldsDiffer( const char *fmt, ... )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fmt - 
-//			... - 
+// Purpose:
+// Input  : *fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CPredictionCopy::DescribeFields( difftype_t dt, const char *fmt, ... )
 {
@@ -168,7 +168,7 @@ void CPredictionCopy::DescribeFields( difftype_t dt, const char *fmt, ... )
 	bool isnetworked = ( flags & FTYPEDESC_INSENDTABLE ) ? true : false;
 	bool isnoterrorchecked = ( flags & FTYPEDESC_NOERRORCHECK ) ? true : false;
 
-	( *m_FieldCompareFunc )( 
+	( *m_FieldCompareFunc )(
 		m_pCurrentClassName,
 		fieldname,
 		g_FieldTypes[ m_pCurrentField->fieldType ],
@@ -176,14 +176,14 @@ void CPredictionCopy::DescribeFields( difftype_t dt, const char *fmt, ... )
 		isnoterrorchecked,
 		dt != IDENTICAL ? true : false,
 		dt == WITHINTOLERANCE ? true : false,
-		data 
+		data
 	);
 
 	m_bShouldDescribe = false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPredictionCopy::CanCheck( void )
@@ -199,10 +199,10 @@ bool CPredictionCopy::CanCheck( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : size - 
-//			*outdata - 
-//			*indata - 
+// Purpose:
+// Input  : size -
+//			*outdata -
+//			*indata -
 //-----------------------------------------------------------------------------
 /*
 void CPredictionCopy::CopyData( difftype_t dt, int size, char *outdata, const char *indata )
@@ -430,13 +430,13 @@ void CPredictionCopy::DescribeVector( difftype_t dt, Vector& outValue, const Vec
 	{
 		Vector delta = outValue - inValue;
 
-		ReportFieldsDiffer( "vec differs (net %f %f %f - pred %f %f %f) delta(%f %f %f)\n", 
+		ReportFieldsDiffer( "vec differs (net %f %f %f - pred %f %f %f) delta(%f %f %f)\n",
 			inValue.x, inValue.y, inValue.z,
 			outValue.x, outValue.y, outValue.z,
 			delta.x, delta.y, delta.z );
 	}
 
-	DescribeFields( dt, "vector (%f %f %f)\n", 
+	DescribeFields( dt, "vector (%f %f %f)\n",
 				outValue.x, outValue.y, outValue.z );
 }
 
@@ -450,13 +450,13 @@ void CPredictionCopy::DescribeVector( difftype_t dt, Vector* outValue, const Vec
 		int i = 0;
 		Vector delta = outValue[ i ] - inValue[ i ];
 
-		ReportFieldsDiffer( "vec[] differs (1st diff) (net %f %f %f - pred %f %f %f) delta(%f %f %f)\n", 
+		ReportFieldsDiffer( "vec[] differs (1st diff) (net %f %f %f - pred %f %f %f) delta(%f %f %f)\n",
 			inValue[i].x, inValue[i].y, inValue[i].z,
 			outValue[i].x, outValue[i].y, outValue[i].z,
 			delta.x, delta.y, delta.z );
 	}
 
-	DescribeFields( dt, "vector (%f %f %f)\n", 
+	DescribeFields( dt, "vector (%f %f %f)\n",
 					outValue[0].x, outValue[0].y, outValue[0].z );
 }
 
@@ -486,19 +486,19 @@ void CPredictionCopy::DescribeQuaternion( difftype_t dt, Quaternion& outValue, c
 	if ( dt == DIFFERS )
 	{
 		Quaternion delta;
-		
+
 		for ( int i = 0; i < 4; i++ )
 		{
 			delta[i] = outValue[i] - inValue[i];
 		}
 
-		ReportFieldsDiffer( "quaternion differs (net %f %f %f %f - pred %f %f %f %f) delta(%f %f %f %f)\n", 
+		ReportFieldsDiffer( "quaternion differs (net %f %f %f %f - pred %f %f %f %f) delta(%f %f %f %f)\n",
 			inValue[0], inValue[1], inValue[2], inValue[3],
 			outValue[0], outValue[1], outValue[2], outValue[3],
 			delta[0], delta[1], delta[2], delta[3] );
 	}
 
-	DescribeFields( dt, "quaternion (%f %f %f %f)\n", 
+	DescribeFields( dt, "quaternion (%f %f %f %f)\n",
 				outValue[0], outValue[1], outValue[2], outValue[3] );
 }
 
@@ -517,13 +517,13 @@ void CPredictionCopy::DescribeQuaternion( difftype_t dt, Quaternion* outValue, c
 			delta[j] = outValue[i][j] - inValue[i][j];
 		}
 
-		ReportFieldsDiffer( "quaternion[] differs (1st diff) (net %f %f %f %f - pred %f %f %f %f) delta(%f %f %f %f)\n", 
+		ReportFieldsDiffer( "quaternion[] differs (1st diff) (net %f %f %f %f - pred %f %f %f %f) delta(%f %f %f %f)\n",
 			(float)inValue[i][0], (float)inValue[i][1], (float)inValue[i][2], (float)inValue[i][3],
 			(float)outValue[i][0], (float)outValue[i][1], (float)outValue[i][2], (float)outValue[i][3],
 			delta[0], delta[1], delta[2], delta[3] );
 	}
 
-	DescribeFields( dt, "quaternion (%f %f %f %f)\n", 
+	DescribeFields( dt, "quaternion (%f %f %f %f)\n",
 					(float)outValue[0][0], (float)outValue[0][1], (float)outValue[0][2], (float)outValue[0][3] );
 }
 
@@ -615,7 +615,7 @@ void CPredictionCopy::CopyShort( difftype_t dt, short *outvalue, const short *in
 	if ( dt == IDENTICAL )
 		return;
 
-	CopyData( dt, sizeof(short) * count, (char *)outvalue, (const char *)invalue ); 
+	CopyData( dt, sizeof(short) * count, (char *)outvalue, (const char *)invalue );
 }
 
 CPredictionCopy::difftype_t CPredictionCopy::CompareShort( short *outvalue, const short *invalue, int count )
@@ -738,7 +738,7 @@ CPredictionCopy::difftype_t CPredictionCopy::CompareFloat( float *outvalue, cons
 			return DIFFERS;
 		}
 	}
-	
+
 	return retval;
 }
 
@@ -794,8 +794,8 @@ CPredictionCopy::difftype_t CPredictionCopy::CompareVector( Vector& outValue, co
 			Vector delta = outValue - inValue;
 
 			if ( fabs( delta.x ) <= tolerance &&
-				 fabs( delta.y ) <= tolerance &&
-				 fabs( delta.z ) <= tolerance )
+				fabs( delta.y ) <= tolerance &&
+				fabs( delta.z ) <= tolerance )
 			{
 				return WITHINTOLERANCE;
 			}
@@ -839,9 +839,9 @@ CPredictionCopy::difftype_t CPredictionCopy::CompareQuaternion( Quaternion& outV
 			}
 
 			if ( fabs( delta[0] ) <= tolerance &&
-				 fabs( delta[1] ) <= tolerance &&
-				 fabs( delta[2] ) <= tolerance &&
-				 fabs( delta[3] ) <= tolerance )
+				fabs( delta[1] ) <= tolerance &&
+				fabs( delta[2] ) <= tolerance &&
+				fabs( delta[3] ) <= tolerance )
 			{
 				return WITHINTOLERANCE;
 			}
@@ -898,8 +898,8 @@ CPredictionCopy::difftype_t CPredictionCopy::CompareVector( Vector* outValue, co
 			if ( tolerance > 0.0f )
 			{
 				if ( fabs( delta.x ) <= tolerance &&
-					 fabs( delta.y ) <= tolerance &&
-					 fabs( delta.z ) <= tolerance )
+					fabs( delta.y ) <= tolerance &&
+					fabs( delta.z ) <= tolerance )
 				{
 					retval = WITHINTOLERANCE;
 					continue;
@@ -939,9 +939,9 @@ CPredictionCopy::difftype_t CPredictionCopy::CompareQuaternion( Quaternion* outV
 			if ( tolerance > 0.0f )
 			{
 				if ( fabs( delta[0] ) <= tolerance &&
-					 fabs( delta[1] ) <= tolerance &&
-					 fabs( delta[2] ) <= tolerance &&
-					 fabs( delta[3] ) <= tolerance )
+					fabs( delta[1] ) <= tolerance &&
+					fabs( delta[2] ) <= tolerance &&
+					fabs( delta[3] ) <= tolerance )
 				{
 					retval = WITHINTOLERANCE;
 					continue;
@@ -1189,10 +1189,10 @@ void CPredictionCopy::CopyFields( int chain_count, datamap_t *pRootMap, typedesc
 			{
 				difftype = CompareData( fieldSize, ((char *)pOutputData), (const char *)pInputData );
 				CopyData( difftype, fieldSize, ((char *)pOutputData), (const char *)pInputData );
-				
+
 				int valOut = *((char *)pOutputData);
 				int valIn  = *((const char *)pInputData);
-				
+
 				if ( m_bErrorCheck && m_bShouldDescribe ) DescribeInt( difftype, &valOut, &valIn, fieldSize );
 				if ( bShouldWatch ) WatchData( difftype, fieldSize, ((char *)pOutputData), (const char *)pInputData );
 			}
@@ -1313,9 +1313,9 @@ void ValidateChains_R( datamap_t *dmap )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fieldname - 
-//			*dmap - 
+// Purpose:
+// Input  : *fieldname -
+//			*dmap -
 // Output : typedescription_t
 //-----------------------------------------------------------------------------
 typedescription_t *FindFieldByName( const char *fieldname, datamap_t *dmap )
@@ -1327,9 +1327,9 @@ static ConVar pwatchent( "pwatchent", "-1", FCVAR_CHEAT, "Entity to watch for pr
 static ConVar pwatchvar( "pwatchvar", "", FCVAR_CHEAT, "Entity variable to watch in prediction system for changes." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fmt - 
-//			... - 
+// Purpose:
+// Input  : *fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CPredictionCopy::WatchMsg( const char *fmt, ... )
 {
@@ -1347,10 +1347,10 @@ void CPredictionCopy::WatchMsg( const char *fmt, ... )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *operation - 
-//			entindex - 
-//			*dmap - 
+// Purpose:
+// Input  : *operation -
+//			entindex -
+//			*dmap -
 //-----------------------------------------------------------------------------
 void CPredictionCopy::DetermineWatchField( const char *operation, int entindex,  datamap_t *dmap )
 {
@@ -1374,10 +1374,10 @@ void CPredictionCopy::DetermineWatchField( const char *operation, int entindex, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *operation - 
-//			entindex - 
-//			*dmap - 
+// Purpose:
+// Input  : *operation -
+//			entindex -
+//			*dmap -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPredictionCopy::TransferData( const char *operation, int entindex, datamap_t *dmap )
@@ -1388,7 +1388,7 @@ int CPredictionCopy::TransferData( const char *operation, int entindex, datamap_
 	{
 		ValidateChains_R( dmap );
 	}
-	
+
 	DetermineWatchField( operation, entindex, dmap );
 
 	TransferData_R( g_nChainCount, dmap );
@@ -1406,11 +1406,11 @@ public:
 	CPredictionDescribeData( void const *src );
 
 	void	DescribeShort( const short *invalue, int count );
-	void	DescribeInt( const int *invalue, int count );		
-	void	DescribeBool( const bool *invalue, int count );	
-	void	DescribeFloat( const float *invalue, int count );	
-	void	DescribeData( int size, const char *indata );		
-	void	DescribeString( const char *instring );			
+	void	DescribeInt( const int *invalue, int count );
+	void	DescribeBool( const bool *invalue, int count );
+	void	DescribeFloat( const float *invalue, int count );
+	void	DescribeData( int size, const char *indata );
+	void	DescribeString( const char *instring );
 	void	DescribeVector( const Vector &inValue );
 	void	DescribeVector( const Vector *inValue, int count );
 	void	DescribeEHandle( EHANDLE const *invalue, int count );
@@ -1442,9 +1442,9 @@ CPredictionDescribeData::CPredictionDescribeData( void const *src, bool src_pack
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fmt - 
-//			... - 
+// Purpose:
+// Input  : *fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CPredictionDescribeData::Describe( const char *fmt, ... )
 {
@@ -1475,9 +1475,9 @@ void CPredictionDescribeData::Describe( const char *fmt, ... )
 
 	if ( m_FieldDescFunc )
 	{
-		(*m_FieldDescFunc)( 
-			m_pCurrentClassName, 
-			m_pCurrentField->fieldName, 
+		(*m_FieldDescFunc)(
+			m_pCurrentClassName,
+			m_pCurrentField->fieldName,
 			g_FieldTypes[ m_pCurrentField->fieldType ],
 			isnetworked,
 			data );
@@ -1521,10 +1521,10 @@ void CPredictionDescribeData::Describe( const char *fmt, ... )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : size - 
-//			*outdata - 
-//			*indata - 
+// Purpose:
+// Input  : size -
+//			*outdata -
+//			*indata -
 //-----------------------------------------------------------------------------
 void CPredictionDescribeData::DescribeData( int size, const char *indata )
 {
@@ -1566,27 +1566,27 @@ void CPredictionDescribeData::DescribeString( const char *instring )
 
 void CPredictionDescribeData::DescribeVector( const Vector &inValue )
 {
-	Describe( "vector (%f %f %f)\n", 
+	Describe( "vector (%f %f %f)\n",
 				inValue.x, inValue.y, inValue.z );
 }
 
 
 void CPredictionDescribeData::DescribeVector( const Vector *inValue, int count )
 {
-	Describe( "vector (%f %f %f)\n", 
+	Describe( "vector (%f %f %f)\n",
 					inValue[0].x, inValue[0].y, inValue[0].z );
 }
 
 void CPredictionDescribeData::DescribeQuaternion( const Quaternion &inValue )
 {
-	Describe( "quaternion (%f %f %f %f)\n", 
+	Describe( "quaternion (%f %f %f %f)\n",
 				inValue[0], inValue[1], inValue[2], inValue[3] );
 }
 
 
 void CPredictionDescribeData::DescribeQuaternion( const Quaternion *inValue, int count )
 {
-	Describe( "quaternion (%f %f %f %f)\n", 
+	Describe( "quaternion (%f %f %f %f)\n",
 				inValue[0][0], inValue[0][1], inValue[0][2], inValue[0][3] );
 }
 
@@ -1612,7 +1612,7 @@ void CPredictionDescribeData::DescribeFields_R( int chain_count, datamap_t *pRoo
 	{
 		m_pCurrentField = &pFields[ i ];
 		flags = m_pCurrentField->flags;
-		
+
 		// Mark any subchains first
 		if ( m_pCurrentField->override_field != NULL )
 		{
@@ -1626,15 +1626,15 @@ void CPredictionDescribeData::DescribeFields_R( int chain_count, datamap_t *pRoo
 		}
 
 		void const *pInputData;
-		
+
 		fieldOffsetSrc = m_pCurrentField->fieldOffset[ m_nSrcOffsetIndex ];
 		fieldSize = m_pCurrentField->fieldSize;
-		
+
 		pInputData = (void const *)((char *)m_pSrc + fieldOffsetSrc );
-		
+
 		// Assume we can report
 		m_bShouldReport = true;
-		
+
 		switch( m_pCurrentField->fieldType )
 		{
 		case FIELD_EMBEDDED:
@@ -1642,9 +1642,9 @@ void CPredictionDescribeData::DescribeFields_R( int chain_count, datamap_t *pRoo
 				typedescription_t *save = m_pCurrentField;
 				void const *saveSrc = m_pSrc;
 				const char *saveName = m_pCurrentClassName;
-				
+
 				m_pCurrentClassName = m_pCurrentField->td->dataClassName;
-				
+
 				m_pSrc = pInputData;
 				if ( ( flags & FTYPEDESC_PTR ) && (m_nSrcOffsetIndex == PC_DATA_NORMAL) )
 				{
@@ -1652,7 +1652,7 @@ void CPredictionDescribeData::DescribeFields_R( int chain_count, datamap_t *pRoo
 				}
 
 				DescribeFields_R( chain_count, pRootMap, m_pCurrentField->td->dataDesc, m_pCurrentField->td->dataNumFields );
-				
+
 				m_pCurrentClassName = saveName;
 				m_pCurrentField = save;
 				m_pSrc = saveSrc;
@@ -1668,12 +1668,12 @@ void CPredictionDescribeData::DescribeFields_R( int chain_count, datamap_t *pRoo
 		case FIELD_STRING:
 			DescribeString( (char const*)pInputData );
 			break;
-			
+
 		case FIELD_MODELNAME:
 		case FIELD_SOUNDNAME:
 			Assert( 0 );
 			break;
-			
+
 		case FIELD_MODELINDEX:
 			Assert( 0 );
 			break;
@@ -1681,7 +1681,7 @@ void CPredictionDescribeData::DescribeFields_R( int chain_count, datamap_t *pRoo
 		case FIELD_CUSTOM:
 			Assert( 0 );
 			break;
-			
+
 		case FIELD_CLASSPTR:
 		case FIELD_EDICT:
 			break;
@@ -1694,26 +1694,26 @@ void CPredictionDescribeData::DescribeFields_R( int chain_count, datamap_t *pRoo
 		case FIELD_QUATERNION:
 			DescribeQuaternion( ( const Quaternion * )pInputData, fieldSize );
 			break;
-			
+
 		case FIELD_COLOR32:
 			DescribeData( 4*fieldSize, (const char *)pInputData );
 			break;
-			
+
 		case FIELD_BOOLEAN:
 			DescribeBool( (bool const *)pInputData, fieldSize );
 			break;
 		case FIELD_INTEGER:
 			DescribeInt( (int const *)pInputData, fieldSize );
 			break;
-			
+
 		case FIELD_SHORT:
 			DescribeShort( (short const *)pInputData, fieldSize );
 			break;
-			
+
 		case FIELD_CHARACTER:
 			DescribeData( fieldSize, (const char *)pInputData );
 			break;
-			
+
 		case FIELD_EHANDLE:
 			DescribeEHandle( (EHANDLE const *)pInputData, fieldSize );
 			break;
@@ -1744,7 +1744,7 @@ void CPredictionDescribeData::DumpDescription( datamap_t *pMap )
 
 	while ( pMap )
 	{
-        DescribeFields_R( g_nChainCount, pMap, pMap->dataDesc, pMap->dataNumFields );
+	DescribeFields_R( g_nChainCount, pMap, pMap->dataDesc, pMap->dataNumFields );
 		pMap = pMap->baseMap;
 	}
 }
@@ -1776,12 +1776,12 @@ void CValueChangeTracker::GetValue( char *buf, size_t bufsize )
 	for ( int i = 0; i < m_FieldStack.Count(); ++i )
 	{
 		td = m_FieldStack[ i ];
-		Assert( ( i == ( m_FieldStack.Count() -1 ) ) || 
+		Assert( ( i == ( m_FieldStack.Count() -1 ) ) ||
 			( td->fieldType & FIELD_EMBEDDED ) );
 		int fieldOffsetSrc = td->fieldOffset[ TD_OFFSET_NORMAL ];
 		const void *pSaveSrc = (const void *)( (char *)pInputData + fieldOffsetSrc );
-		if ( ( td->flags & FTYPEDESC_PTR ) && 
-			 ( td->fieldType & FIELD_EMBEDDED ) )
+		if ( ( td->flags & FTYPEDESC_PTR ) &&
+			( td->fieldType & FIELD_EMBEDDED ) )
 		{
 			pInputData = *(const void **)pSaveSrc;
 		}
@@ -2015,7 +2015,7 @@ CON_COMMAND_F( cl_pred_track, "<entindex> <fieldname>:  Track changes to entity 
 	{
 		Msg( "cl_pred_track:  Unknown ent index %d\n", iEntIndex );
 		return;
-   	}
+	}
 
 	g_pChangeTracker->SetupTracking( ent, args[2] );
 }
@@ -2188,7 +2188,7 @@ void CPredictionCopyTester::RunTests( void )
 		CPredictionCopy tester( PC_NON_NETWORKED_ONLY, foo1, false, foo3, false, true );
 		int diff_count = 0;
 		diff_count = tester.TransferData( foo3->GetPredDescMap(), foo1->GetPredDescMap()->dataDesc, foo1->GetPredDescMap()->dataNumFields );
-		
+
 		Msg( "diff_count == %i\n", diff_count );
 		Assert( !diff_count );
 	}
@@ -2199,7 +2199,7 @@ void CPredictionCopyTester::RunTests( void )
 		CPredictionCopy tester( PC_NON_NETWORKED_ONLY, foo1, false, foo2, false, true, false );
 		int diff_count = 0;
 		diff_count = tester.TransferData( foo2->GetPredDescMap(), foo1->GetPredDescMap()->dataDesc, foo1->GetPredDescMap()->dataNumFields );
-		
+
 		Msg( "diff_count == %i (should be 12)\n", diff_count );
 		Assert( diff_count == 12 );
 	}
@@ -2210,14 +2210,14 @@ void CPredictionCopyTester::RunTests( void )
 		CPredictionCopy tester( PC_NON_NETWORKED_ONLY, foo1, false, foo2, false, true );
 		int diff_count = 0;
 		diff_count = tester.TransferData( foo2->GetPredDescMap(), foo1->GetPredDescMap()->dataDesc, foo1->GetPredDescMap()->dataNumFields );
-		
+
 		Msg( "diff_count == %i (should be 12)\n", diff_count );
 		Assert( diff_count == 12 );
 	}
 
 	{
 		Msg( "Comparing and copying objects which were just made to coincide, should have zero diffcount\n" );
-	
+
 
 		CPredictionCopy tester( PC_NON_NETWORKED_ONLY, foo1, false, foo2, false, true );
 		int diff_count = 0;
@@ -2231,7 +2231,7 @@ void CPredictionCopyTester::RunTests( void )
 		CPredictionDescribeData describe( foo1, false );
 		describe.DumpDescription( foo1->GetPredDescMap(), foo1->GetPredDescMap()->dataDesc, foo1->GetPredDescMap()->dataNumFields );
 	}
-		
+
 	delete foo3;
 	delete foo2;
 	delete foo1;

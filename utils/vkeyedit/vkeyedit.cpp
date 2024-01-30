@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -75,7 +75,7 @@ void FileSystem_UnloadFileSystemModule( void )
 }
 
 //-----------------------------------------------------------------------------
-// Initialize, shutdown the file system 
+// Initialize, shutdown the file system
 //-----------------------------------------------------------------------------
 bool FileSystem_Init( )
 {
@@ -119,9 +119,9 @@ CVkeyeditApp::CVkeyeditApp()
 {
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
-	
+
 	// Start up the file system
-//	
+//
 }
 
 CVkeyeditApp::~CVkeyeditApp()
@@ -246,9 +246,9 @@ void CVkeyeditApp::OnAppAbout()
 // CVkeyeditApp message handlers
 
 
-int CVkeyeditApp::ExitInstance() 
+int CVkeyeditApp::ExitInstance()
 {
 	// TODO: Add your specialized code here and/or call the base class
-	
+
 	return CWinApp::ExitInstance();
 }

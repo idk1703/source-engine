@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ BEGIN_VS_SHADER_FLAGS( WriteZ_DX8, "Help for WriteZ", SHADER_NOT_EDITABLE )
 		{
 			pShaderShadow->EnableColorWrites( false );
 			pShaderShadow->EnableAlphaWrites( false );
-			
+
 			writez_Static_Index vshIndex;
 			pShaderShadow->SetVertexShader( "writez", vshIndex.GetIndex() );
 
@@ -57,4 +57,3 @@ BEGIN_VS_SHADER_FLAGS( WriteZ_DX8, "Help for WriteZ", SHADER_NOT_EDITABLE )
 		Draw();
 	}
 END_SHADER
-

@@ -68,7 +68,7 @@ typedef wchar_t wchar;
 #define _tcsrchr strrchr
 #define _tcslen strlen
 #define _tfopen fopen
-#define _stprintf sprintf 
+#define _stprintf sprintf
 #define _ftprintf fprintf
 #define _vsntprintf _vsnprintf
 #define _tprintf printf
@@ -105,5 +105,3 @@ typedef wchar_t uchar32;
 
 
 #endif // WCHARTYPES
-
-

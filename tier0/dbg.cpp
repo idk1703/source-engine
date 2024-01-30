@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -45,9 +45,9 @@
 //-----------------------------------------------------------------------------
 // internal structures
 //-----------------------------------------------------------------------------
-enum 
-{ 
-	MAX_GROUP_NAME_LENGTH = 48 
+enum
+{
+	MAX_GROUP_NAME_LENGTH = 48
 };
 
 struct SpewGroup_t
@@ -281,7 +281,7 @@ static SpewRetval_t _SpewMessage( SpewType_t spewType, const char *pGroupName, i
 
 	if ( len == -1 )
 		return SPEW_ABORT;
-	
+
 	/* Create the message.... */
 	int val= _vsntprintf( &pTempBuffer[len], sizeof( pTempBuffer ) - len - 1, pMsgFormat, args );
 	if ( val == -1 )
@@ -293,12 +293,12 @@ static SpewRetval_t _SpewMessage( SpewType_t spewType, const char *pGroupName, i
 	// Add \n for warning and assert
 	if ( spewType == SPEW_ASSERT )
 	{
-		len += _stprintf( &pTempBuffer[len], _T("\n") ); 
+		len += _stprintf( &pTempBuffer[len], _T("\n") );
 	}
-	
+
 	assert( len < sizeof(pTempBuffer)/sizeof(pTempBuffer[0]) - 1 ); /* use normal assert here; to avoid recursion. */
 	assert( s_SpewOutputFunc );
-	
+
 	/* direct it to the appropriate target(s) */
 	SpewRetval_t ret;
 	assert( g_pSpewInfo == NULL );
@@ -322,7 +322,7 @@ static SpewRetval_t _SpewMessage( SpewType_t spewType, const char *pGroupName, i
 			DebuggerBreak();
 		}
 		break;
-		
+
 	case SPEW_ABORT:
 	{
 //		MessageBox(NULL,"Error in _SpewMessage","Error",MB_OK);
@@ -525,8 +525,8 @@ void ErrorV( PRINTF_FORMAT_STRING const tchar *pMsg, va_list arglist )
 }
 
 //-----------------------------------------------------------------------------
-// A couple of super-common dynamic spew messages, here for convenience 
-// These looked at the "developer" group, print if it's level 1 or higher 
+// A couple of super-common dynamic spew messages, here for convenience
+// These looked at the "developer" group, print if it's level 1 or higher
 //-----------------------------------------------------------------------------
 void DevMsg( int level, const tchar* pMsgFormat, ... )
 {
@@ -596,8 +596,8 @@ void DevLog( const tchar *pMsgFormat, ... )
 
 
 //-----------------------------------------------------------------------------
-// A couple of super-common dynamic spew messages, here for convenience 
-// These looked at the "console" group, print if it's level 1 or higher 
+// A couple of super-common dynamic spew messages, here for convenience
+// These looked at the "console" group, print if it's level 1 or higher
 //-----------------------------------------------------------------------------
 void ConColorMsg( int level, const Color& clr, const tchar* pMsgFormat, ... )
 {
@@ -734,8 +734,8 @@ void ConDLog( const tchar *pMsgFormat, ... )
 
 
 //-----------------------------------------------------------------------------
-// A couple of super-common dynamic spew messages, here for convenience 
-// These looked at the "network" group, print if it's level 1 or higher 
+// A couple of super-common dynamic spew messages, here for convenience
+// These looked at the "network" group, print if it's level 1 or higher
 //-----------------------------------------------------------------------------
 void NetMsg( int level, const tchar* pMsgFormat, ... )
 {
@@ -779,14 +779,14 @@ void NetLog( int level, const tchar *pMsgFormat, ... )
 void SpewActivate( const tchar* pGroupName, int level )
 {
 	Assert( pGroupName );
-	
+
 	// check for the default group first...
 	if ((pGroupName[0] == '*') && (pGroupName[1] == '\0'))
 	{
 		s_DefaultLevel = level;
 		return;
 	}
-	
+
 	// Normal case, search in group list using binary search.
 	// If not found, grow the list of groups and insert it into the
 	// right place to maintain sorted order. Then set the level.
@@ -797,17 +797,17 @@ void SpewActivate( const tchar* pGroupName, int level )
 		++s_GroupCount;
 		if ( s_pSpewGroups )
 		{
-			s_pSpewGroups = (SpewGroup_t*)PvRealloc( s_pSpewGroups, 
+			s_pSpewGroups = (SpewGroup_t*)PvRealloc( s_pSpewGroups,
 				s_GroupCount * sizeof(SpewGroup_t) );
-			
+
 			// shift elements down to preserve order
 			int numToMove = s_GroupCount - ind - 1;
-			memmove( &s_pSpewGroups[ind+1], &s_pSpewGroups[ind], 
+			memmove( &s_pSpewGroups[ind+1], &s_pSpewGroups[ind],
 				numToMove * sizeof(SpewGroup_t) );
 
 			// Update standard groups
 			for ( int i = 0; i < GROUP_COUNT; ++i )
-			{   
+			{
 				if ( ( ind <= s_pGroupIndices[i] ) && ( s_pGroupIndices[i] >= 0 ) )
 				{
 					++s_pGroupIndices[i];
@@ -816,9 +816,9 @@ void SpewActivate( const tchar* pGroupName, int level )
 		}
 		else
 		{
-			s_pSpewGroups = (SpewGroup_t*)PvAlloc( s_GroupCount * sizeof(SpewGroup_t) ); 
+			s_pSpewGroups = (SpewGroup_t*)PvAlloc( s_GroupCount * sizeof(SpewGroup_t) );
 		}
-		
+
 		Assert( _tcslen( pGroupName ) < MAX_GROUP_NAME_LENGTH );
 		_tcscpy( s_pSpewGroups[ind].m_GroupName, pGroupName );
 
@@ -865,8 +865,8 @@ void ValidateSpew( CValidator &validator )
 
 //-----------------------------------------------------------------------------
 // Purpose: For debugging startup times, etc.
-// Input  : *fmt - 
-//			... - 
+// Input  : *fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void COM_TimestampedLog( char const *fmt, ... )
 {
@@ -944,5 +944,3 @@ void CallAssertFailedNotifyFunc( const char *pchFile, int nLine, const char *pch
 	if ( s_AssertFailedNotifyFunc )
 		s_AssertFailedNotifyFunc( pchFile, nLine, pchMessage );
 }
-
-

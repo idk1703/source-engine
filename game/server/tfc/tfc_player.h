@@ -28,7 +28,7 @@ class CPlayerStateInfo
 public:
 	TFCPlayerState m_iPlayerState;
 	const char *m_pStateName;
-	
+
 	void (CTFCPlayer::*pfnEnterState)();	// Init and deinit the state.
 	void (CTFCPlayer::*pfnLeaveState)();
 
@@ -66,7 +66,7 @@ public:
 
 	void ClientHearVox( const char *pSentence );
 	void DisplayLocalItemStatus( CTFGoal *pGoal );
-	
+
 
 public:
 
@@ -91,7 +91,7 @@ public:
 	void TeamFortress_RemoveLiveGrenades();
 	void TeamFortress_RemoveRockets();
 	void TeamFortress_DetpackStop( void );
-	
+
 	BOOL TeamFortress_RemoveDetpacks( void );
 	void RemovePipebombs( void );
 	void RemoveOwnedEnt( char *pEntName );
@@ -109,7 +109,7 @@ public:
 
 	void Engineer_RemoveBuildings();
 
-	// Building 
+	// Building
 	BOOL	is_building;	 	// TRUE for an ENGINEER if they're building something
 	EHANDLE building;			// The building the ENGINEER is using
 	float	building_wait;		// Used to prevent using a building again immediately
@@ -137,14 +137,14 @@ public:
 	int no_grenades_1() const { return GetAmmoCount( TFC_AMMO_GRENADES1 ); }
 	int no_grenades_2() const { return GetAmmoCount( TFC_AMMO_GRENADES2 ); }
 
-	
+
 public:
-	
+
 	CTFCPlayerShared m_Shared;
 
-	int	    item_list;			// Used to keep track of which goalitems are 
+	int	    item_list;			// Used to keep track of which goalitems are
 								// affecting the player at any time.
-								// GoalItems use it to keep track of their own 
+								// GoalItems use it to keep track of their own
 								// mask to apply to a player's item_list
 
 	float		armortype;
@@ -162,12 +162,12 @@ public:
 
 	BOOL	bRemoveGrenade; // removes the primed grenade if set
 
-	// Replacement_Model Stuff 
+	// Replacement_Model Stuff
 	string_t	replacement_model;
 	int			replacement_model_body;
 	int			replacement_model_skin;
 	int			replacement_model_flags;
-	
+
 	// Spy
 	int		undercover_team;		// The team the Spy is pretending to be in
 	int		undercover_skin;		// The skin the Spy is pretending to have

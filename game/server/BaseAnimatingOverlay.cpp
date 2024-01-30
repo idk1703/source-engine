@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -71,7 +71,7 @@ END_SEND_TABLE()
 
 
 BEGIN_SEND_TABLE_NOBASE( CBaseAnimatingOverlay, DT_OverlayVars )
-	SendPropUtlVector( 
+	SendPropUtlVector(
 		SENDINFO_UTLVECTOR( m_AnimOverlay ),
 		CBaseAnimatingOverlay::MAX_OVERLAYS, // max elements
 		SendPropDataTable( NULL, 0, &REFERENCE_SEND_TABLE( DT_Animationlayer ) )  )
@@ -142,7 +142,7 @@ void CAnimationLayer::StudioFrameAdvance( float flInterval, CBaseAnimating *pOwn
 			m_flCycle = 0;
 		}
 	}
-	else if (m_flCycle >= 1.0) 
+	else if (m_flCycle >= 1.0)
 	{
 		m_bSequenceFinished = true;
 
@@ -159,7 +159,7 @@ void CAnimationLayer::StudioFrameAdvance( float flInterval, CBaseAnimating *pOwn
 	if (IsAutoramp())
 	{
 		m_flWeight = 1;
-	
+
 		// blend in?
 		if ( m_flBlendIn != 0.0f )
 		{
@@ -168,7 +168,7 @@ void CAnimationLayer::StudioFrameAdvance( float flInterval, CBaseAnimating *pOwn
 				m_flWeight = m_flCycle / m_flBlendIn;
 			}
 		}
-		
+
 		// blend out?
 		if ( m_flBlendOut != 0.0f )
 		{
@@ -187,15 +187,15 @@ void CAnimationLayer::StudioFrameAdvance( float flInterval, CBaseAnimating *pOwn
 //------------------------------------------------------------------------------
 
 bool CAnimationLayer::IsAbandoned( void )
-{ 
-	if (IsActive() && !IsAutokill() && !IsKillMe() && m_flLastAccess > 0.0 && (gpGlobals->curtime - m_flLastAccess > 0.2)) 
-		return true; 
-	else 
+{
+	if (IsActive() && !IsAutokill() && !IsKillMe() && m_flLastAccess > 0.0 && (gpGlobals->curtime - m_flLastAccess > 0.2))
+		return true;
+	else
 		return false;
 }
 
 void CAnimationLayer::MarkActive( void )
-{ 
+{
 	m_flLastAccess = gpGlobals->curtime;
 }
 
@@ -238,9 +238,9 @@ void CBaseAnimatingOverlay::VerifyOrder( void )
 		if (j != MAX_OVERLAYS)
 		{
 			char tempstr[512];
-			Q_snprintf( tempstr, sizeof( tempstr ),"%d : %d :%.2f :%d:%d:%.1f", 
-				j, 
-				m_AnimOverlay[ j ].m_nSequence, 
+			Q_snprintf( tempstr, sizeof( tempstr ),"%d : %d :%.2f :%d:%d:%.1f",
+				j,
+				m_AnimOverlay[ j ].m_nSequence,
 				m_AnimOverlay[ j ].m_flWeight,
 				m_AnimOverlay[ j ].IsActive(),
 				m_AnimOverlay[ j ].IsKillMe(),
@@ -272,7 +272,7 @@ void CBaseAnimatingOverlay::StudioFrameAdvance ()
 	for ( int i = 0; i < m_AnimOverlay.Count(); i++ )
 	{
 		CAnimationLayer *pLayer = &m_AnimOverlay[i];
-		
+
 		if (pLayer->IsActive())
 		{
 			// Assert( !m_AnimOverlay[ i ].IsAbandoned() );
@@ -312,7 +312,7 @@ void CBaseAnimatingOverlay::StudioFrameAdvance ()
 		}
 		else if (pLayer->IsDying())
 		{
-			pLayer->Dead();	
+			pLayer->Dead();
 		}
 		else if (pLayer->m_flWeight > 0.0)
 		{
@@ -380,14 +380,14 @@ void CAnimationLayer::DispatchAnimEvents( CBaseAnimating *eventHandler, CBaseAni
 
 	if ( m_nSequence >= pstudiohdr->GetNumSeq() )
 		return;
-	
+
 	// don't fire if here are no events
 	if ( pstudiohdr->pSeqdesc( m_nSequence ).numevents == 0 )
 	{
 		return;
 	}
 
-	// look from when it last checked to some short time in the future	
+	// look from when it last checked to some short time in the future
 	float flCycleRate = pOwner->GetSequenceCycleRate( m_nSequence ) * m_flPlaybackRate;
 	float flStart = m_flLastEventCheck;
 	float flEnd = m_flCycle;
@@ -396,7 +396,7 @@ void CAnimationLayer::DispatchAnimEvents( CBaseAnimating *eventHandler, CBaseAni
 	{
 		// fire off events early
 		float flLastVisibleCycle = 1.0f - (pstudiohdr->pSeqdesc( m_nSequence ).fadeouttime) * flCycleRate;
-		if (flEnd >= flLastVisibleCycle || flEnd < 0.0) 
+		if (flEnd >= flLastVisibleCycle || flEnd < 0.0)
 		{
 			m_bSequenceFinished = true;
 			flEnd = 1.0f;
@@ -527,7 +527,7 @@ void CBaseAnimatingOverlay::OnRestore( )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CBaseAnimatingOverlay::AddGestureSequence( int sequence, bool autokill /*= true*/ )
@@ -543,7 +543,7 @@ int CBaseAnimatingOverlay::AddGestureSequence( int sequence, bool autokill /*= t
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CBaseAnimatingOverlay::AddGestureSequence( int nSequence, float flDuration, bool autokill /*= true*/ )
@@ -599,7 +599,7 @@ int CBaseAnimatingOverlay::AddGesture( Activity activity, float flDuration, bool
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 
@@ -614,7 +614,7 @@ void CBaseAnimatingOverlay::SetLayerDuration( int iLayer, float flDuration )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 
@@ -633,7 +633,7 @@ float CBaseAnimatingOverlay::GetLayerDuration( int iLayer )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int	CBaseAnimatingOverlay::AddLayeredSequence( int sequence, int iPriority )
@@ -664,7 +664,7 @@ int	CBaseAnimatingOverlay::AddLayeredSequence( int sequence, int iPriority )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 bool CBaseAnimatingOverlay::IsValidLayer( int iLayer )
@@ -674,7 +674,7 @@ bool CBaseAnimatingOverlay::IsValidLayer( int iLayer )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CBaseAnimatingOverlay::AllocateLayer( int iPriority )
@@ -750,7 +750,7 @@ int CBaseAnimatingOverlay::AllocateLayer( int iPriority )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 void CBaseAnimatingOverlay::SetLayerPriority( int iLayer, int iPriority )
@@ -811,8 +811,8 @@ void CBaseAnimatingOverlay::SetLayerPriority( int iLayer, int iPriority )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : activity - 
+// Purpose:
+// Input  : activity -
 //-----------------------------------------------------------------------------
 int	CBaseAnimatingOverlay::FindGestureLayer( Activity activity )
 {
@@ -835,8 +835,8 @@ int	CBaseAnimatingOverlay::FindGestureLayer( Activity activity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : activity - 
+// Purpose:
+// Input  : activity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseAnimatingOverlay::IsPlayingGesture( Activity activity )
@@ -845,8 +845,8 @@ bool CBaseAnimatingOverlay::IsPlayingGesture( Activity activity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : activity - 
+// Purpose:
+// Input  : activity -
 //-----------------------------------------------------------------------------
 void CBaseAnimatingOverlay::RestartGesture( Activity activity, bool addifmissing /*=true*/, bool autokill /*=true*/ )
 {
@@ -866,8 +866,8 @@ void CBaseAnimatingOverlay::RestartGesture( Activity activity, bool addifmissing
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : activity - 
+// Purpose:
+// Input  : activity -
 //-----------------------------------------------------------------------------
 void CBaseAnimatingOverlay::RemoveGesture( Activity activity )
 {
@@ -879,7 +879,7 @@ void CBaseAnimatingOverlay::RemoveGesture( Activity activity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseAnimatingOverlay::RemoveAllGestures( void )
 {
@@ -890,7 +890,7 @@ void CBaseAnimatingOverlay::RemoveAllGestures( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseAnimatingOverlay::SetLayerCycle( int iLayer, float flCycle )
 {
@@ -907,7 +907,7 @@ void CBaseAnimatingOverlay::SetLayerCycle( int iLayer, float flCycle )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseAnimatingOverlay::SetLayerCycle( int iLayer, float flCycle, float flPrevCycle )
 {
@@ -926,7 +926,7 @@ void CBaseAnimatingOverlay::SetLayerCycle( int iLayer, float flCycle, float flPr
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseAnimatingOverlay::SetLayerCycle( int iLayer, float flCycle, float flPrevCycle, float flLastEventCheck )
 {
@@ -945,7 +945,7 @@ void CBaseAnimatingOverlay::SetLayerCycle( int iLayer, float flCycle, float flPr
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CBaseAnimatingOverlay::GetLayerCycle( int iLayer )
 {
@@ -956,7 +956,7 @@ float CBaseAnimatingOverlay::GetLayerCycle( int iLayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseAnimatingOverlay::SetLayerPlaybackRate( int iLayer, float flPlaybackRate )
 {
@@ -969,7 +969,7 @@ void CBaseAnimatingOverlay::SetLayerPlaybackRate( int iLayer, float flPlaybackRa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseAnimatingOverlay::SetLayerWeight( int iLayer, float flWeight )
 {
@@ -983,7 +983,7 @@ void CBaseAnimatingOverlay::SetLayerWeight( int iLayer, float flWeight )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CBaseAnimatingOverlay::GetLayerWeight( int iLayer )
 {
@@ -995,7 +995,7 @@ float CBaseAnimatingOverlay::GetLayerWeight( int iLayer )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseAnimatingOverlay::SetLayerBlendIn( int iLayer, float flBlendIn )
 {
@@ -1006,7 +1006,7 @@ void CBaseAnimatingOverlay::SetLayerBlendIn( int iLayer, float flBlendIn )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseAnimatingOverlay::SetLayerBlendOut( int iLayer, float flBlendOut )
 {
@@ -1017,7 +1017,7 @@ void CBaseAnimatingOverlay::SetLayerBlendOut( int iLayer, float flBlendOut )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseAnimatingOverlay::SetLayerAutokill( int iLayer, bool bAutokill )
 {
@@ -1036,7 +1036,7 @@ void CBaseAnimatingOverlay::SetLayerAutokill( int iLayer, bool bAutokill )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseAnimatingOverlay::SetLayerLooping( int iLayer, bool bLooping )
 {
@@ -1048,7 +1048,7 @@ void CBaseAnimatingOverlay::SetLayerLooping( int iLayer, bool bLooping )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseAnimatingOverlay::SetLayerNoRestore( int iLayer, bool bNoRestore )
 {
@@ -1067,7 +1067,7 @@ void CBaseAnimatingOverlay::SetLayerNoRestore( int iLayer, bool bNoRestore )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Activity CBaseAnimatingOverlay::GetLayerActivity( int iLayer )
 {
@@ -1075,12 +1075,12 @@ Activity CBaseAnimatingOverlay::GetLayerActivity( int iLayer )
 	{
 		return ACT_INVALID;
 	}
-		
+
 	return m_AnimOverlay[iLayer].m_nActivity;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseAnimatingOverlay::GetLayerSequence( int iLayer )
 {
@@ -1088,12 +1088,12 @@ int CBaseAnimatingOverlay::GetLayerSequence( int iLayer )
 	{
 		return ACT_INVALID;
 	}
-		
+
 	return m_AnimOverlay[iLayer].m_nSequence;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseAnimatingOverlay::RemoveLayer( int iLayer, float flKillRate, float flKillDelay )
 {

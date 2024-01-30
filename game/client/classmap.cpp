@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -78,7 +78,7 @@ void CClassMap::Add( const char *mapname, const char *classname, int size, DISPA
 const char *CClassMap::Lookup( const char *classname )
 {
 	unsigned short index;
-	static classentry_t lookup; 
+	static classentry_t lookup;
 
 	index = m_ClassDict.Find( classname );
 	if ( index == m_ClassDict.InvalidIndex() )

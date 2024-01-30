@@ -26,7 +26,7 @@ extern const char* g_szDuckLeaderboardNames[];
 #define DUCK_XP_WEIGHT_DEFENSE			1
 #define DUCK_XP_WEIGHT_OBJECTIVE		3
 #define DUCK_XP_WEIGHT_TEAMMATE			3
-#define DUCK_XP_WEIGHT_BONUS			50			
+#define DUCK_XP_WEIGHT_BONUS			50
 
 
 enum EDuckLeaderboardTypes

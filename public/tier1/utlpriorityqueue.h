@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@
 // T is the type stored in the queue, it must include the priority
 // The head of the list contains the element with GREATEST priority
 // configure the LessFunc_t to get the desired queue order
-template< class T > 
+template< class T >
 class CUtlPriorityQueue
 {
 public:
@@ -48,7 +48,7 @@ public:
 
 	// Returns the count of elements in the queue
 	inline int	Count() const { return m_heap.Count(); }
-	
+
 	// doesn't deallocate memory
 	void		RemoveAll() { m_heap.RemoveAll(); }
 
@@ -73,7 +73,7 @@ inline CUtlPriorityQueue<T>::CUtlPriorityQueue( int growSize, int initSize, Less
 }
 
 template< class T >
-inline CUtlPriorityQueue<T>::CUtlPriorityQueue( T *pMemory, int numElements, LessFunc_t lessfunc )	: 
+inline CUtlPriorityQueue<T>::CUtlPriorityQueue( T *pMemory, int numElements, LessFunc_t lessfunc )	:
 	m_heap(pMemory, numElements), m_LessFunc(lessfunc)
 {
 }
@@ -110,7 +110,7 @@ void CUtlPriorityQueue<T>::RemoveAtHead()
 			if ( m_LessFunc( m_heap[larger], m_heap[child] ) )
 				larger = child;
 		}
-		
+
 		if ( larger == index )
 			break;
 
@@ -153,7 +153,7 @@ void CUtlPriorityQueue<T>::RemoveAt( int index )
 			if ( m_LessFunc( m_heap[larger], m_heap[child] ) )
 				larger = child;
 		}
-		
+
 		if ( larger == index )
 			break;
 

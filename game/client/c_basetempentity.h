@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ class C_BaseTempEntity : public IClientUnknown, public IClientNetworkable
 public:
 	DECLARE_CLASS_NOBASE( C_BaseTempEntity );
 	DECLARE_CLIENTCLASS();
-	
+
 									C_BaseTempEntity( void );
 	virtual							~C_BaseTempEntity( void );
 
@@ -51,7 +51,7 @@ public:
 // IClientNetworkable overrides.
 public:
 
-	virtual void					Release();	
+	virtual void					Release();
 	virtual void					NotifyShouldTransmit( ShouldTransmitState_t state );
 	virtual void					PreDataUpdate( DataUpdateType_t updateType );
 	virtual void					PostDataUpdate( DataUpdateType_t updateType );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -67,12 +67,12 @@ int ParseArgs( int argc, char **argv, CIPAddr &remoteIP, int &iPriority, int &iF
 			return PrintUsage();
 		}
 	}
-	
+
 	iPriority = 0;
 	const char *pPriorityStr = FindArg( argc, argv, "-priority", NULL );
 	if ( pPriorityStr )
 		iPriority = atoi( pPriorityStr );
-	
+
 	if ( iPriority < 0 || iPriority > 1000 )
 	{
 		printf( "%s is not a valid priority.\n", pPriorityStr );
@@ -94,35 +94,35 @@ int ParseArgs( int argc, char **argv, CIPAddr &remoteIP, int &iPriority, int &iF
 }
 
 
-void SendJobRequest( 
+void SendJobRequest(
 	ISocket *pSocket,
-	int argc, 
-	char **argv, 
-	CIPAddr &remoteIP, 
-	int &iPriority, 
+	int argc,
+	char **argv,
+	CIPAddr &remoteIP,
+	int &iPriority,
 	int &iFirstArg,
 	int jobID[4] )
 {
 	// Build the packet to send out the job.
 	char packetData[4096];
 	bf_write packetBuf;
-	
+
 	// Come up with a unique job ID.
 	jobID[0] = GetCurMicrosecondsAndSleep( 1 );
 	jobID[1] = GetCurMicrosecondsAndSleep( 1 );
 	jobID[2] = GetCurMicrosecondsAndSleep( 1 );
 	jobID[3] = GetCurMicrosecondsAndSleep( 1 );
 
-	
+
 	// Broadcast out to tell all the machines we want workers.
 	packetBuf.StartWriting( packetData, sizeof( packetData ) );
 	packetBuf.WriteByte( VMPI_PROTOCOL_VERSION );
 
 	const char *pPassword = FindArg( argc, argv, "-mpi_pw", "" );
 	packetBuf.WriteString( pPassword );
-	
+
 	packetBuf.WriteByte( VMPI_LOOKING_FOR_WORKERS );
-	
+
 	packetBuf.WriteShort( 0 );	// Tell the port that we're listening on.
 								// In this case, there is no VMPI master waiting for the app to connect, so
 								// this parameter doesn't matter.
@@ -162,13 +162,13 @@ bool WaitForJobStart( ISocket *pSocket, const CIPAddr &remoteIP, const int jobID
 		CIPAddr senderAddr;
 		char data[4096];
 		int len = -1;
-		
+
 		if ( g_bBroadcast == false )
 			 pSocket->RecvFrom( data, sizeof( data ), &senderAddr );
-		else 
+		else
 			 pSocket->RecvFrom( data, sizeof( data ), NULL );
 
-		if ( len == 19 && 
+		if ( len == 19 &&
 			memcmp( senderAddr.ip, remoteIP.ip, sizeof( senderAddr.ip ) ) == 0 &&
 			data[1] == VMPI_NOTIFY_START_STATUS &&
 			memcmp( &data[2], jobID, 16 ) == 0 )
@@ -188,7 +188,7 @@ bool WaitForJobStart( ISocket *pSocket, const CIPAddr &remoteIP, const int jobID
 		}
 
 		Sleep( 100 );
-	}		
+	}
 }
 
 
@@ -199,7 +199,7 @@ void WaitForJobEnd( ISocket *pSocket, const CIPAddr &remoteIP, const int jobID[4
 		CIPAddr senderAddr;
 		char data[4096];
 		int len = pSocket->RecvFrom( data, sizeof( data ), &senderAddr );
-		if ( len == 18 && 
+		if ( len == 18 &&
 			memcmp( senderAddr.ip, remoteIP.ip, sizeof( senderAddr.ip ) ) == 0 &&
 			data[1] == VMPI_NOTIFY_END_STATUS &&
 			memcmp( &data[2], jobID, 16 ) == 0 )
@@ -210,7 +210,7 @@ void WaitForJobEnd( ISocket *pSocket, const CIPAddr &remoteIP, const int jobID[4
 		}
 
 		Sleep( 100 );
-	}		
+	}
 }
 
 
@@ -221,7 +221,7 @@ int main(int argc, char* argv[])
 		return PrintUsage();
 	}
 
-	
+
 	// Parse the command line.
 	CIPAddr remoteIP;
 	int iFirstArg, iPriority;
@@ -238,7 +238,7 @@ int main(int argc, char* argv[])
 		printf( "Error binding a socket.\n" );
 		return 1;
 	}
-	
+
 	SendJobRequest( pSocket, argc, argv, remoteIP, iPriority, iFirstArg, jobID );
 
 	// Wait for a reply, positive or negative.
@@ -249,8 +249,7 @@ int main(int argc, char* argv[])
 
 		WaitForJobEnd( pSocket, remoteIP, jobID );
 	}
-	
+
 	pSocket->Release();
 	return 0;
 }
-

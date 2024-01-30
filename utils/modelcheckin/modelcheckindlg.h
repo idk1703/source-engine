@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -76,9 +76,9 @@ private:
 									char*& pFileName, char*& pDestPath );
 
 	void ResetDirectoryEntry( CString &fullPath, char *pRegEntry );
-	void PerformCheckoutCommand( ProjectType_t project, 
+	void PerformCheckoutCommand( ProjectType_t project,
 		char const* pRelativeDir, char const* pDestPath, char const* pFileName );
-	void PerformCheckinCommand( ProjectType_t project, 
+	void PerformCheckinCommand( ProjectType_t project,
 		char const* pRelativeDir, char const* pDestPath, char const* pFileName );
 };
 

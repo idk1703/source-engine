@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,13 +28,13 @@ class CMixerControls : public IMixerControls
 public:
 	CMixerControls() {}
 	virtual			~CMixerControls() {}
-	
+
 	virtual void	Release() {}
 	virtual bool	GetValue_Float(Control iControl, float &value ) {return false;}
 	virtual bool	SetValue_Float(Control iControl, float value) {return false;}
 	virtual bool	SelectMicrophoneForWaveInput() {return false;}
 	virtual const char *GetMixerName() {return "Linux"; }
-	
+
 private:
 };
 
@@ -60,13 +60,13 @@ class CMixerControls : public IMixerControls
 public:
 	CMixerControls();
 	virtual			~CMixerControls();
-	
+
 	virtual void	Release();
 	virtual bool	GetValue_Float(Control iControl, float &value);
 	virtual bool	SetValue_Float(Control iControl, float value);
 	virtual bool	SelectMicrophoneForWaveInput();
 	virtual const char *GetMixerName();
-	
+
 private:
 	AudioObjectID GetDefaultInputDevice();
 	char *m_szMixerName;
@@ -77,11 +77,11 @@ private:
 CMixerControls::CMixerControls()
 {
 	m_szMixerName = NULL;
-	
+
 	m_theDefaultDeviceID = GetDefaultInputDevice();
-	
+
 	OSStatus theStatus;
-	UInt32 outSize = sizeof(UInt32);	
+	UInt32 outSize = sizeof(UInt32);
 	theStatus = AudioDeviceGetPropertyInfo( m_theDefaultDeviceID,
 										   0,
 										   TRUE,
@@ -89,16 +89,16 @@ CMixerControls::CMixerControls()
 										   &outSize,
 										   NULL);
 	if ( theStatus == noErr )
-	{	
+	{
 		m_szMixerName = (char *)malloc( outSize*sizeof(char));
-		
+
 		theStatus = AudioDeviceGetProperty( m_theDefaultDeviceID,
 										   0,
 										   TRUE,
 										   kAudioDevicePropertyDeviceName,
 										   &outSize,
 										   m_szMixerName);
-		
+
 		if ( theStatus != noErr )
 		{
 			free( m_szMixerName );
@@ -158,17 +158,17 @@ bool CMixerControls::GetValue_Float(Control iControl, float &value)
 				if ( theError == noErr && theVolume != 0.0f )
 					break;
 			}
-			
+
 			return theError == noErr;
 		}
-			
+
 		case MicMute:
 			// Mic playback muting. You usually want this set to false, otherwise the sound card echoes whatever you say into the mic.
 		{
 			Float32 theMute = 0;
 			UInt32 theSize = sizeof(Float32);
 			AudioObjectPropertyAddress theAddress = { kAudioDevicePropertyMute,	kAudioDevicePropertyScopeInput,	1 };
-			
+
 			OSStatus theError = AudioObjectGetPropertyData(m_theDefaultDeviceID,
 														   &theAddress,
 														   0,
@@ -177,9 +177,9 @@ bool CMixerControls::GetValue_Float(Control iControl, float &value)
 														   &theMute);
 			value = theMute;
 			return theError == noErr;
-		}		
+		}
 		default:
-			assert( !"Invalid Control type" );	
+			assert( !"Invalid Control type" );
 			value = 0.0f;
 			return false;
 	};
@@ -198,21 +198,21 @@ bool CMixerControls::SetValue_Float(Control iControl, float value)
 		{
 			if ( value <= 0.0 )
 				return false; // don't let the volume be set to zero
-			
+
 			Float32 theVolume = value;
 			UInt32 size = sizeof(Float32);
 			Boolean	canset	= false;
 			AudioObjectID defaultInputDevice = m_theDefaultDeviceID;
-			
+
 			size = sizeof(canset);
 			OSStatus err = AudioDeviceGetPropertyInfo( defaultInputDevice, 0, true, kAudioDevicePropertyVolumeScalar, &size, &canset);
-			if(err==noErr && canset==true) 
+			if(err==noErr && canset==true)
 			{
 				size = sizeof(theVolume);
 				err = AudioDeviceSetProperty( defaultInputDevice, NULL, 0, true, kAudioDevicePropertyVolumeScalar, size, &theVolume);
 				return err==noErr;
 			}
-			
+
 			// try seperate channels
 			// get channels
 			UInt32	channels[2];
@@ -220,16 +220,16 @@ bool CMixerControls::SetValue_Float(Control iControl, float value)
 			err = AudioDeviceGetProperty(defaultInputDevice, 0, true, kAudioDevicePropertyPreferredChannelsForStereo, &size,&channels);
 			if(err!=noErr)
 				return false;
-			
+
 			// set volume
 			size = sizeof(float);
 			err = AudioDeviceSetProperty(defaultInputDevice, 0, channels[0], true, kAudioDevicePropertyVolumeScalar, size, &theVolume);
 			//AssertMsg1( noErr==err, "error setting volume of channel %d\n",(int)channels[0]);
 			err = AudioDeviceSetProperty(defaultInputDevice, 0, channels[1], true, kAudioDevicePropertyVolumeScalar, size, &theVolume);
 			//AssertMsg1( noErr==err, "error setting volume of channel %d\n",(int)channels[1]);
-			
+
 			return err == noErr;
-			
+
 		}
 		case MicMute:
 			// Mic playback muting. You usually want this set to false, otherwise the sound card echoes whatever you say into the mic.
@@ -245,9 +245,9 @@ bool CMixerControls::SetValue_Float(Control iControl, float value)
 											  theMuteSize,
 											  &theMute);
 			return theError == noErr;
-		}		
+		}
 		default:
-			assert( !"Invalid Control type" );	
+			assert( !"Invalid Control type" );
 			return false;
 	};
 }
@@ -283,4 +283,3 @@ void ShutdownMixerControls()
 #else
 #error
 #endif
-

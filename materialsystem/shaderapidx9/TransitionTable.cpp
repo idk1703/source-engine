@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -20,7 +20,7 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
- 
+
 
 enum
 {
@@ -96,16 +96,16 @@ bool CTransitionTable::UniqueSnapshotLessFunc::Less( const CTransitionTable::Tra
 	return src1.m_NumOperations > src2.m_NumOperations;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Constructor, destructor
 //-----------------------------------------------------------------------------
 CTransitionTable::CTransitionTable() : m_DefaultStateSnapshot(-1),
 	m_CurrentShadowId(-1), m_CurrentSnapshotId(-1), m_TransitionOps( 0, 8192 ), m_ShadowStateList( 0, 256 ),
-	m_TransitionTable( 0, 256 ), m_SnapshotList( 0, 256 ), 
-	m_ShadowStateDict(0, 256 ), 
-	m_SnapshotDict( 0, 256 ), 
-	m_UniqueTransitions( 0, 4096 ) 
+	m_TransitionTable( 0, 256 ), m_SnapshotList( 0, 256 ),
+	m_ShadowStateDict(0, 256 ),
+	m_SnapshotDict( 0, 256 ),
+	m_UniqueTransitions( 0, 4096 )
 {
 	Assert( !g_pTransitionTable );
 	g_pTransitionTable = this;
@@ -223,7 +223,7 @@ CTransitionTable::ShadowStateId_t CTransitionTable::FindShadowState( const Shado
 	CRC32_Init(	&find.m_nChecksum );
 	CRC32_ProcessBuffer( &find.m_nChecksum, &currentState, sizeof(ShadowState_t) );
 	CRC32_Final( &find.m_nChecksum );
-	
+
 	int nDictCount = m_ShadowStateDict.Count();
 	int i = m_ShadowStateDict.FindLessOrEqual( find );
 	if ( i < 0 )
@@ -283,7 +283,7 @@ StateSnapshot_t CTransitionTable::FindStateSnapshot( ShadowStateId_t id, const S
 			continue;
 
 		StateSnapshot_t nShapshot = m_SnapshotDict[i].m_nSnapshot;
-		if ( (id == m_SnapshotList[nShapshot].m_ShadowStateId) && 
+		if ( (id == m_SnapshotList[nShapshot].m_ShadowStateId) &&
 			!memcmp(&m_SnapshotList[nShapshot].m_ShaderState, &currentState, sizeof(ShadowShaderState_t)) )
 		{
 			return nShapshot;
@@ -426,7 +426,7 @@ static bool g_SpewTransitions = false;
 	{																	\
 		SetSamplerState( stage, _d3dState, shaderState.m_SamplerState[stage].m_ ## _state );	\
 		UPDATE_BOARD_SAMPLER_STATE( _d3dState, _state, stage );			\
-	}	
+	}
 
 
 // Special overridden sampler state to turn on Fetch4 on ATI hardware (and 360?)
@@ -438,15 +438,15 @@ void ApplyFetch4Enable( const ShadowState_t& shaderState, int stage )
 	}
 
 	UPDATE_BOARD_SAMPLER_STATE( ATISAMP_FETCH4, Fetch4Enable, stage );
-}																	
+}
 
 #ifdef DX_TO_GL_ABSTRACTION
 void ApplyShadowFilterEnable( const ShadowState_t& shaderState, int stage )
 {
 	SetSamplerState( stage, D3DSAMP_SHADOWFILTER, shaderState.m_SamplerState[stage].m_ShadowFilterEnable );
-	
+
 	UPDATE_BOARD_SAMPLER_STATE( D3DSAMP_SHADOWFILTER, ShadowFilterEnable, stage );
-}																	
+}
 #endif
 
 
@@ -519,7 +519,7 @@ void CTransitionTable::ApplySRGBWriteEnable( const ShadowState_t& shaderState  )
 	{
 		// render target is gamma
 
-		// SRGBWrite enable can affect the space in which fog color is defined		
+		// SRGBWrite enable can affect the space in which fog color is defined
 		if ( HardwareConfig()->NeedsShaderSRGBConversion() )
 		{
 			if ( HardwareConfig()->SupportsPixelShaders_2_b() ) //in 2b supported devices, we never actually enable SRGB writes, but instead handle the conversion in the pixel shader. But we want all other code to be unaware.
@@ -546,19 +546,19 @@ void CTransitionTable::ApplySRGBWriteEnable( const ShadowState_t& shaderState  )
 
 #ifdef _DEBUG
 	BoardState().m_SRGBWriteEnable = shaderState.m_SRGBWriteEnable;
-	if (g_SpewTransitions)											
-	{																
-		char buf[128];												
+	if (g_SpewTransitions)
+	{
+		char buf[128];
 		sprintf( buf, "Apply %s : %d\n", "D3DRS_SRGBWRITEENABLE", shaderState.m_SRGBWriteEnable );
-		Plat_DebugString(buf);										
-	}																
+		Plat_DebugString(buf);
+	}
 #endif
 }
 
 void ApplyDisableFogGammaCorrection( const ShadowState_t& shadowState, int stageUnused )
 {
 	ShaderAPI()->ApplyFogMode( shadowState.m_FogMode, shadowState.m_SRGBWriteEnable, shadowState.m_bDisableFogGammaCorrection );
-		
+
 #ifdef DEBUG_BOARD_STATE
 	g_pTransitionTable->BoardState().m_bDisableFogGammaCorrection = shadowState.m_bDisableFogGammaCorrection;
 #endif
@@ -922,7 +922,7 @@ const char *ShaderFogModeToString( ShaderFogMode_t fogMode )
 }
 #endif
 
-// Uses GetConfig().overbright and GetSceneFogMode, so 
+// Uses GetConfig().overbright and GetSceneFogMode, so
 // will have to fix up the state manually when those change.
 void ApplyFogMode( const ShadowState_t& state, int arg )
 {
@@ -943,7 +943,7 @@ void ApplyFogMode( const ShadowState_t& state, int arg )
 //-----------------------------------------------------------------------------
 // Function tables mapping enum to function
 //-----------------------------------------------------------------------------
-ApplyStateFunc_t s_pRenderFunctionTable[] = 
+ApplyStateFunc_t s_pRenderFunctionTable[] =
 {
 	ApplyDepthTest,
 	ApplyZWriteEnable,
@@ -1177,7 +1177,7 @@ void CTransitionTable::CreateTransitionTableEntry( int to, int from )
 	// This code is derived from: ADD_RENDER_STATE_TRANSITION( FogMode )
 	// If ADD_RENDER_STATE_TRANSITION ever changes, this needs to be updated!
 	// This is another reason to try to have very little fixed function in the dx8/dx9 path.
-	if( bForce || (toState.m_FogMode != fromState.m_FogMode ) || 
+	if( bForce || (toState.m_FogMode != fromState.m_FogMode ) ||
 	    ( toState.m_UsingFixedFunction != fromState.m_UsingFixedFunction ) )
 	{
 		AddTransition( RENDER_STATE_FogMode );
@@ -1202,7 +1202,7 @@ void CTransitionTable::CreateTransitionTableEntry( int to, int from )
 	}
 
 	// Look for identical transition lists, and use those instead...
-	TransitionList_t& transition = (from >= 0) ? 
+	TransitionList_t& transition = (from >= 0) ?
 							m_TransitionTable[to][from] : m_DefaultTransition;
 	Assert( numOps <= 255 );
 	transition.m_NumOperations = numOps;
@@ -1220,14 +1220,14 @@ void CTransitionTable::CreateTransitionTableEntry( int to, int from )
 	unsigned int nFirstTest = INVALID_TRANSITION_OP;
 	if (from >= 0)
 	{
-		TransitionList_t &diagonalList = m_TransitionTable[from][to]; 
+		TransitionList_t &diagonalList = m_TransitionTable[from][to];
 		if ( diagonalList.m_NumOperations == numOps )
 		{
 			nFirstTest = diagonalList.m_FirstOperation;
 		}
 	}
 
-	unsigned int identicalListFirstElem = FindIdenticalTransitionList( firstElem, numOps, nFirstTest ); 
+	unsigned int identicalListFirstElem = FindIdenticalTransitionList( firstElem, numOps, nFirstTest );
 	if (identicalListFirstElem == INVALID_TRANSITION_OP)
 	{
 		transition.m_FirstOperation = firstElem;
@@ -1319,9 +1319,9 @@ bool CTransitionTable::TestShadowState( const ShadowState_t& state, const Shadow
 }
 
 //-----------------------------------------------------------------------------
-// Finds identical transition lists and shares them 
+// Finds identical transition lists and shares them
 //-----------------------------------------------------------------------------
-unsigned int CTransitionTable::FindIdenticalTransitionList( unsigned int firstElem, 
+unsigned int CTransitionTable::FindIdenticalTransitionList( unsigned int firstElem,
 					unsigned short numOps, unsigned int nFirstTest ) const
 {
 	VPROF("CTransitionTable::FindIdenticalTransitionList");
@@ -1331,7 +1331,7 @@ unsigned int CTransitionTable::FindIdenticalTransitionList( unsigned int firstEl
 		const TransitionOp_t *pCurrOp = &m_TransitionOps[firstElem];
 		const TransitionOp_t *pTestOp = &m_TransitionOps[nFirstTest];
 		if ( !memcmp( pCurrOp, pTestOp, numOps * sizeof(TransitionOp_t) ) )
-			return nFirstTest;	
+			return nFirstTest;
 	}
 
 	// Look for a common list
@@ -1343,11 +1343,11 @@ unsigned int CTransitionTable::FindIdenticalTransitionList( unsigned int firstEl
 		const TransitionList_t &list = m_UniqueTransitions[i];
 
 		// We can early out here because we've sorted the unique transitions
-		// descending by count 
+		// descending by count
 		if ( list.m_NumOperations < numOps )
 			return INVALID_TRANSITION_OP;
 
-		// If we don't find a match in the first 
+		// If we don't find a match in the first
 		int nPotentialMatch;
 		int nLastTest = list.m_FirstOperation + list.m_NumOperations - numOps;
 		for ( nPotentialMatch = list.m_FirstOperation; nPotentialMatch <= nLastTest; ++nPotentialMatch )
@@ -1369,7 +1369,7 @@ unsigned int CTransitionTable::FindIdenticalTransitionList( unsigned int firstEl
 		const TransitionOp_t *pCurrOp = &m_TransitionOps[firstElem + 1];
 		const TransitionOp_t *pTestOp = &m_TransitionOps[nPotentialMatch + 1];
 		if ( !memcmp( pCurrOp, pTestOp, (numOps - 1) * sizeof(TransitionOp_t) ) )
-			return nPotentialMatch;	
+			return nPotentialMatch;
 	}
 	return INVALID_TRANSITION_OP;
 }
@@ -1458,7 +1458,7 @@ void CTransitionTable::ApplyTransition( TransitionList_t& list, int snapshot )
 	int nSamplerCount = HardwareConfig()->GetSamplerCount();
 	for ( i = nSamplerCount; i < MAX_SAMPLERS; ++i )
 	{
-		m_BoardState.m_SamplerState[i].m_TextureEnable = 
+		m_BoardState.m_SamplerState[i].m_TextureEnable =
 			CurrentShadowState()->m_SamplerState[i].m_TextureEnable;
 	}
 
@@ -1632,8 +1632,8 @@ void CTransitionTable::UseSnapshot( StateSnapshot_t snapshotId )
 
 #ifdef _DEBUG
 	// NOTE: We can't ship with this active because mod makers may well violate this rule
-	// We don't want no stinking fixed-function on hardware that has vertex and pixel shaders. . 
-	// This could cause a serious perf hit. 
+	// We don't want no stinking fixed-function on hardware that has vertex and pixel shaders. .
+	// This could cause a serious perf hit.
 	if( HardwareConfig()->SupportsVertexAndPixelShaders() )
 	{
 //		Assert( !CurrentShadowState().m_UsingFixedFunction );
@@ -1711,7 +1711,7 @@ void CTransitionTable::UseDefaultState( )
 		{
 			SetSamplerState( i, ATISAMP_FETCH4, SamplerState(i).m_Fetch4Enable ? ATI_FETCH4_ENABLE : ATI_FETCH4_DISABLE );
 		}
-		
+
 #ifdef DX_TO_GL_ABSTRACTION
 		SetSamplerState( i, D3DSAMP_SHADOWFILTER, SamplerState(i).m_ShadowFilterEnable );
 #endif
@@ -1803,7 +1803,7 @@ void CTransitionTable::OverrideAlphaWriteEnable( bool bOverrideEnable, bool bAlp
 
 		DWORD dwSetValue = m_CurrentState.m_ColorWriteEnable;
 		if ( m_CurrentState.m_bOverrideAlphaWriteEnable )
-		{			
+		{
 			if( m_CurrentState.m_bOverriddenAlphaWriteValue )
 			{
 				dwSetValue |= D3DCOLORWRITEENABLE_ALPHA;
@@ -1841,7 +1841,7 @@ void CTransitionTable::OverrideColorWriteEnable( bool bOverrideEnable, bool bCol
 
 		DWORD dwSetValue = m_CurrentState.m_ColorWriteEnable;
 		if ( m_CurrentState.m_bOverrideColorWriteEnable )
-		{			
+		{
 			if( m_CurrentState.m_bOverriddenColorWriteValue )
 			{
 				dwSetValue |= (D3DCOLORWRITEENABLE_RED | D3DCOLORWRITEENABLE_GREEN | D3DCOLORWRITEENABLE_BLUE);
@@ -1875,7 +1875,7 @@ void CTransitionTable::EnableLinearColorSpaceFrameBuffer( bool bEnable )
 	{
 		ShaderAPI()->FlushBufferedPrimitives();
 		m_CurrentState.m_bLinearColorSpaceFrameBufferEnable = bEnable;
-		ApplySRGBWriteEnable( *CurrentShadowState() );	
+		ApplySRGBWriteEnable( *CurrentShadowState() );
 	}
 }
 

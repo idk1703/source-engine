@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -35,7 +35,7 @@ ReadBmpFile(
 	// File exists?
 	if ((pfile = fopen(szFile, "rb")) == NULL)
 		{ rc = -1; goto GetOut; }
-	
+
 	// Read file header
 	if (fread(&bmfh, sizeof bmfh, 1/*count*/, pfile) != 1)
 		{ rc = -2; goto GetOut; }
@@ -55,7 +55,7 @@ ReadBmpFile(
 	// Bogus bit depth?  Only 8-bit supported.
 	if (bmih.biBitCount != 8)
 		{ rc = -4; goto GetOut; }
-	
+
 	// Bogus compression?  Only non-compressed supported.
 	if (bmih.biCompression != BI_RGB)
 		{ rc = -5; goto GetOut; }
@@ -65,7 +65,7 @@ ReadBmpFile(
 		{
 		cbPalBytes = (1 << bmih.biBitCount) * sizeof( RGBQUAD );
 		}
-	else 
+	else
 		{
 		cbPalBytes = bmih.biClrUsed * sizeof( RGBQUAD );
 		}
@@ -86,8 +86,8 @@ ReadBmpFile(
 	*ppbBits = pbBmpBits;
 
 
-    *pwidth = bmih.biWidth;
-    *pheight = bmih.biHeight;
+	*pwidth = bmih.biWidth;
+	*pheight = bmih.biHeight;
 
 	printf("w %d h %d s %d\n",bmih.biWidth, bmih.biHeight, cbBmpBits );
 
@@ -95,4 +95,3 @@ GetOut:
 	if (pfile) fclose(pfile);
 	return rc;
 	}
-

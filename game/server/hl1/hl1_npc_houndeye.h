@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,7 +15,7 @@
 class CNPC_Houndeye : public CHL1BaseNPC
 {
 	DECLARE_CLASS( CNPC_Houndeye, CHL1BaseNPC );
-	
+
 public:
 	void Spawn( void );
 	void Precache( void );
@@ -28,11 +28,11 @@ public:
 	void WarnSound( void );
 	void PainSound( const CTakeDamageInfo &info );
 	void IdleSound( void );
-	
+
 	float MaxYawSpeed  ( void );
 
 	Class_T	Classify ( void );
-	
+
 	void HandleAnimEvent( animevent_t *pEvent );
 
 	void SonicAttack ( void );
@@ -40,7 +40,7 @@ public:
 	Vector WriteBeamColor( void );
 	bool ShouldGoToIdleState( void );
 	bool FValidateHintType ( CAI_Hint *pHint );
-	
+
 	void SetActivity ( Activity NewActivity );
 
 	void StartTask( const Task_t *pTask );

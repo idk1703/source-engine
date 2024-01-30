@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -54,7 +54,7 @@ struct Cloak_DX9_Vars_t
 	int m_nRimMask;
 };
 
-void InitParamsCloak_DX9( CBaseVSShader *pShader, IMaterialVar** params, const char *pMaterialName, 
+void InitParamsCloak_DX9( CBaseVSShader *pShader, IMaterialVar** params, const char *pMaterialName,
 						   Cloak_DX9_Vars_t &info );
 void InitCloak_DX9( CBaseVSShader *pShader, IMaterialVar** params, Cloak_DX9_Vars_t &info );
 void DrawCloak_DX9( CBaseVSShader *pShader, IMaterialVar** params, IShaderDynamicAPI *pShaderAPI,

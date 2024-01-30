@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -14,7 +14,7 @@
 DEFINE_FALLBACK_SHADER( Teeth, Teeth_DX8 )
 
 BEGIN_VS_SHADER( Teeth_DX8, "Help for Teeth_DX8" )
-			  
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( ILLUMFACTOR, SHADER_PARAM_TYPE_FLOAT, "1", "Amount to darken or brighten the teeth" )
 		SHADER_PARAM( FORWARD, SHADER_PARAM_TYPE_VEC3, "[1 0 0]", "Forward direction vector for teeth lighting" )
@@ -56,7 +56,7 @@ BEGIN_VS_SHADER( Teeth_DX8, "Help for Teeth_DX8" )
 		SHADOW_STATE
 		{
 			pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
-			pShaderShadow->VertexShaderVertexFormat( 
+			pShaderShadow->VertexShaderVertexFormat(
 				VERTEX_POSITION | VERTEX_NORMAL, 1, 0, 0 );
 			teeth_Static_Index vshIndex;
 			vshIndex.SetHALF_LAMBERT( IS_FLAG_SET( MATERIAL_VAR_HALFLAMBERT ) );

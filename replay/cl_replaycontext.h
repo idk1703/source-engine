@@ -90,7 +90,7 @@ public:
 	CPerformanceController		*m_pPerformanceController;
 	CSessionBlockDownloader		*m_pSessionBlockDownloader;
 	CRenderQueue				*m_pRenderQueue;
-	
+
 	CHttpDownloader				*m_pTestDownloader;
 
 private:

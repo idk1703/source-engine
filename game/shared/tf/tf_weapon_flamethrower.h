@@ -63,7 +63,7 @@ class CTFFlameThrower : public CTFWeaponBaseGun
 	DECLARE_CLASS( CTFFlameThrower, CTFWeaponBaseGun );
 public:
 	DECLARE_DATADESC();
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFFlameThrower();
@@ -124,7 +124,7 @@ public:
 	void			StopFlame( bool bAbrupt = false );
 
 	virtual void		RestartParticleEffect();
-	virtual const char* FlameEffectName( bool bIsFirstPersonView );	
+	virtual const char* FlameEffectName( bool bIsFirstPersonView );
 	virtual const char* FlameCritEffectName( bool bIsFirstPersonView );
 	virtual const char* FullCritChargedEffectName( void );
 
@@ -220,14 +220,14 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Flame rocket.  Not used in TF2, but is a part of data tables in demos and 
+// Flame rocket.  Not used in TF2, but is a part of data tables in demos and
 // must live on forever.
 //-----------------------------------------------------------------------------
 class CTFFlameRocket : public CTFBaseRocket
 {
 	DECLARE_CLASS( CTFFlameRocket, CTFBaseRocket );
 public:
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 };
 
 #ifdef GAME_DLL
@@ -313,7 +313,7 @@ public:
 	virtual void OnDataChanged( DataUpdateType_t updateType );
 	virtual const char *GetTrailParticleName( void );
 #endif // CLIENT_DLL
-	
+
 	CNetworkHandle( CTFFlameThrower, m_hFlameThrower );
 
 #ifdef GAME_DLL

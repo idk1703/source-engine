@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,7 +21,7 @@
 #define BARNACLE_TONGUE_POINTS		7
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_NPC_Barnacle : public C_AI_BaseNPC
 {
@@ -61,7 +61,7 @@ public:
 	void	SetVecTip( const float *pPosition );
 	void	SetAltitude( float flAltitude );
 
-	// Purpose: 
+	// Purpose:
 	void	ComputeVisualTipPoint( Vector *pTip );
 
 protected:
@@ -82,7 +82,7 @@ private:
 	public:
 		virtual void	GetNodeForces( CSimplePhysics::CNode *pNodes, int iNode, Vector *pAccel );
 		virtual void	ApplyConstraints( CSimplePhysics::CNode *pNodes, int nNodes );
-	
+
 		C_NPC_Barnacle	*m_pBarnacle;
 	};
 	friend class CBarnaclePhysicsDelegate;
@@ -105,7 +105,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_NPC_Barnacle, DT_Barnacle, CNPC_Barnacle )
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_NPC_Barnacle::C_NPC_Barnacle( void )
 {
@@ -114,7 +114,7 @@ C_NPC_Barnacle::C_NPC_Barnacle( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_NPC_Barnacle::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -152,7 +152,7 @@ void C_NPC_Barnacle::SetVecTip( const float *pPosition )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_NPC_Barnacle::InitTonguePhysics( void )
 {
@@ -181,7 +181,7 @@ void C_NPC_Barnacle::InitTonguePhysics( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_NPC_Barnacle::ClientThink( void )
 {
@@ -193,12 +193,12 @@ void C_NPC_Barnacle::ClientThink( void )
 	// Necessary because ComputeVisualTipPoint depends on m_vecTipPrevious
 	Vector vecTemp;
 	ComputeVisualTipPoint( &vecTemp );
-	m_vecTipPrevious = vecTemp; 
+	m_vecTipPrevious = vecTemp;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_NPC_Barnacle::StandardBlendingRules( CStudioHdr *hdr, Vector pos[], Quaternion q[], float currentTime, int boneMask )
 {
@@ -266,7 +266,7 @@ void C_NPC_Barnacle::StandardBlendingRules( CStudioHdr *hdr, Vector pos[], Quate
 //===============================================================================================================================
 #define TONGUE_GRAVITY			0, 0, -1000
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_NPC_Barnacle::CBarnaclePhysicsDelegate::GetNodeForces( CSimplePhysics::CNode *pNodes, int iNode, Vector *pAccel )
 {
@@ -276,7 +276,7 @@ void C_NPC_Barnacle::CBarnaclePhysicsDelegate::GetNodeForces( CSimplePhysics::CN
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #define TIP_SNAP_FACTOR 200
 // Todo: this really ought to be SIMD.
@@ -301,7 +301,7 @@ void C_NPC_Barnacle::ComputeVisualTipPoint( Vector *pTip )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_NPC_Barnacle::CBarnaclePhysicsDelegate::ApplyConstraints( CSimplePhysics::CNode *pNodes, int nNodes )
 {

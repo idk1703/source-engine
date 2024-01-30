@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,7 +33,7 @@
 	#include "hl2mp_gameinterface.h"
 	#include "hl2mp_cvars.h"
 
-#ifdef DEBUG	
+#ifdef DEBUG
 	#include "hl2mp_bot_temp.h"
 #endif
 
@@ -72,18 +72,18 @@ LINK_ENTITY_TO_CLASS( hl2mp_gamerules, CHL2MPGameRulesProxy );
 IMPLEMENT_NETWORKCLASS_ALIASED( HL2MPGameRulesProxy, DT_HL2MPGameRulesProxy )
 
 static HL2MPViewVectors g_HL2MPViewVectors(
-	Vector( 0, 0, 64 ),       //VEC_VIEW (m_vView) 
-							  
+	Vector( 0, 0, 64 ),       //VEC_VIEW (m_vView)
+
 	Vector(-16, -16, 0 ),	  //VEC_HULL_MIN (m_vHullMin)
 	Vector( 16,  16,  72 ),	  //VEC_HULL_MAX (m_vHullMax)
-							  					
+
 	Vector(-16, -16, 0 ),	  //VEC_DUCK_HULL_MIN (m_vDuckHullMin)
 	Vector( 16,  16,  36 ),	  //VEC_DUCK_HULL_MAX	(m_vDuckHullMax)
 	Vector( 0, 0, 28 ),		  //VEC_DUCK_VIEW		(m_vDuckView)
-							  					
+
 	Vector(-10, -10, -10 ),	  //VEC_OBS_HULL_MIN	(m_vObsHullMin)
 	Vector( 10,  10,  10 ),	  //VEC_OBS_HULL_MAX	(m_vObsHullMax)
-							  					
+
 	Vector( 0, 0, 14 ),		  //VEC_DEAD_VIEWHEIGHT (m_vDeadViewHeight)
 
 	Vector(-16, -16, 0 ),	  //VEC_CROUCH_TRACE_MIN (m_vCrouchTraceMin)
@@ -219,11 +219,11 @@ const HL2MPViewVectors* CHL2MPRules::GetHL2MPViewVectors()const
 {
 	return &g_HL2MPViewVectors;
 }
-	
+
 CHL2MPRules::~CHL2MPRules( void )
 {
 #ifndef CLIENT_DLL
-	// Note, don't delete each team since they are in the gEntList and will 
+	// Note, don't delete each team since they are in the gEntList and will
 	// automatically be deleted from there, instead.
 	g_Teams.Purge();
 #endif
@@ -241,7 +241,7 @@ void CHL2MPRules::CreateStandardEntities( void )
 	g_pLastRebelSpawn = NULL;
 
 #ifdef DBGFLAG_ASSERT
-	CBaseEntity *pEnt = 
+	CBaseEntity *pEnt =
 #endif
 	CBaseEntity::Create( "hl2mp_gamerules", vec3_origin, vec3_angle );
 	Assert( pEnt );
@@ -294,7 +294,7 @@ void CHL2MPRules::Think( void )
 {
 
 #ifndef CLIENT_DLL
-	
+
 	CGameRules::Think();
 
 	if ( g_fGameOver )   // someone else quit the game already
@@ -314,7 +314,7 @@ void CHL2MPRules::Think( void )
 
 //	float flTimeLimit = mp_timelimit.GetFloat() * 60;
 	float flFragLimit = fraglimit.GetFloat();
-	
+
 	if ( GetMapRemainingTime() < 0 )
 	{
 		GoToIntermission();
@@ -351,7 +351,7 @@ void CHL2MPRules::Think( void )
 	}
 
 	if ( gpGlobals->curtime > m_tmNextPeriodicThink )
-	{		
+	{
 		CheckAllPlayersReady();
 		CheckRestartGame();
 		m_tmNextPeriodicThink = gpGlobals->curtime + 1.0;
@@ -397,7 +397,7 @@ void CHL2MPRules::GoToIntermission( void )
 		pPlayer->AddFlag( FL_FROZEN );
 	}
 #endif
-	
+
 }
 
 bool CHL2MPRules::CheckGameOver()
@@ -408,7 +408,7 @@ bool CHL2MPRules::CheckGameOver()
 		// check to see if we should change levels now
 		if ( m_flIntermissionEndTime < gpGlobals->curtime )
 		{
-			ChangeLevel(); // intermission is over			
+			ChangeLevel(); // intermission is over
 		}
 
 		return true;
@@ -418,12 +418,12 @@ bool CHL2MPRules::CheckGameOver()
 	return false;
 }
 
-// when we are within this close to running out of entities,  items 
+// when we are within this close to running out of entities,  items
 // marked with the ITEM_FLAG_LIMITINWORLD will delay their respawn
 #define ENTITY_INTOLERANCE	100
 
 //=========================================================
-// FlWeaponRespawnTime - Returns 0 if the weapon can respawn 
+// FlWeaponRespawnTime - Returns 0 if the weapon can respawn
 // now,  otherwise it returns the time at which it can try
 // to spawn again.
 //=========================================================
@@ -456,7 +456,7 @@ Vector CHL2MPRules::VecWeaponRespawnSpot( CBaseCombatWeapon *pWeapon )
 		return pHL2Weapon->GetOriginalSpawnOrigin();
 	}
 #endif
-	
+
 	return pWeapon->GetAbsOrigin();
 }
 
@@ -478,14 +478,14 @@ bool GetObjectsOriginalParameters( CBaseEntity *pObject, Vector &vOriginalOrigin
 	{
 		if ( pItem->m_flNextResetCheckTime > gpGlobals->curtime )
 			 return false;
-		
+
 		vOriginalOrigin = pItem->GetOriginalSpawnOrigin();
 		vOriginalAngles = pItem->GetOriginalSpawnAngles();
 
 		pItem->m_flNextResetCheckTime = gpGlobals->curtime + sv_hl2mp_item_respawn_time.GetFloat();
 		return true;
 	}
-	else if ( CWeaponHL2MPBase *pWeapon = IsManagedObjectAWeapon( pObject )) 
+	else if ( CWeaponHL2MPBase *pWeapon = IsManagedObjectAWeapon( pObject ))
 	{
 		if ( pWeapon->m_flNextResetCheckTime > gpGlobals->curtime )
 			 return false;
@@ -509,7 +509,7 @@ void CHL2MPRules::ManageObjectRelocation( void )
 		for ( int i = 0; i < iTotal; i++ )
 		{
 			CBaseEntity *pObject = m_hRespawnableItemsAndWeapons[i].Get();
-			
+
 			if ( pObject )
 			{
 				Vector vSpawOrigin;
@@ -658,7 +658,7 @@ void CHL2MPRules::ClientDisconnected( edict_t *pClient )
 
 
 //=========================================================
-// Deathnotice. 
+// Deathnotice.
 //=========================================================
 void CHL2MPRules::DeathNotice( CBasePlayer *pVictim, const CTakeDamageInfo &info )
 {
@@ -687,7 +687,7 @@ void CHL2MPRules::DeathNotice( CBasePlayer *pVictim, const CTakeDamageInfo &info
 		if ( pScorer )
 		{
 			killer_ID = pScorer->GetUserID();
-			
+
 			if ( pInflictor )
 			{
 				if ( pInflictor == pScorer )
@@ -759,7 +759,7 @@ void CHL2MPRules::DeathNotice( CBasePlayer *pVictim, const CTakeDamageInfo &info
 void CHL2MPRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 {
 #ifndef CLIENT_DLL
-	
+
 	CHL2MP_Player *pHL2Player = ToHL2MPPlayer( pPlayer );
 
 	if ( pHL2Player == NULL )
@@ -816,7 +816,7 @@ void CHL2MPRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 
 	BaseClass::ClientSettingsChanged( pPlayer );
 #endif
-	
+
 }
 
 int CHL2MPRules::PlayerRelationship( CBaseEntity *pPlayer, CBaseEntity *pTarget )
@@ -837,18 +837,18 @@ int CHL2MPRules::PlayerRelationship( CBaseEntity *pPlayer, CBaseEntity *pTarget 
 }
 
 const char *CHL2MPRules::GetGameDescription( void )
-{ 
+{
 	if ( IsTeamplay() )
-		return "Team Deathmatch"; 
+		return "Team Deathmatch";
 
-	return "Deathmatch"; 
-} 
+	return "Deathmatch";
+}
 
 bool CHL2MPRules::IsConnectedUserInfoChangeAllowed( CBasePlayer *pPlayer )
 {
 	return true;
 }
- 
+
 float CHL2MPRules::GetMapRemainingTime()
 {
 	// if timelimit is disabled, return 0
@@ -863,7 +863,7 @@ float CHL2MPRules::GetMapRemainingTime()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHL2MPRules::Precache( void )
 {
@@ -884,7 +884,7 @@ bool CHL2MPRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 		return false;
 	}
 
-	return BaseClass::ShouldCollide( collisionGroup0, collisionGroup1 ); 
+	return BaseClass::ShouldCollide( collisionGroup0, collisionGroup1 );
 
 }
 
@@ -919,7 +919,7 @@ CAmmoDef *GetAmmoDef()
 {
 	static CAmmoDef def;
 	static bool bInitted = false;
-	
+
 	if ( !bInitted )
 	{
 		bInitted = true;
@@ -954,16 +954,16 @@ CAmmoDef *GetAmmoDef()
 
 	// Handler for the "bot" command.
 	void Bot_f()
-	{		
+	{
 		// Look at -count.
 		int count = 1;
 		count = clamp( count, 1, 16 );
 
 		int iTeam = TEAM_COMBINE;
-				
+
 		// Look at -frozen.
 		bool bFrozen = false;
-			
+
 		// Ok, spawn all the bots.
 		while ( --count >= 0 )
 		{
@@ -977,7 +977,7 @@ CAmmoDef *GetAmmoDef()
 #endif
 
 	bool CHL2MPRules::FShouldSwitchWeapon( CBasePlayer *pPlayer, CBaseCombatWeapon *pWeapon )
-	{		
+	{
 		if ( pPlayer->GetActiveWeapon() && pPlayer->IsNetClient() )
 		{
 			// Player has an active item, so let's check cl_autowepswitch.
@@ -1010,7 +1010,7 @@ void CHL2MPRules::RestartGame()
 	}
 
 	CleanUpMap();
-	
+
 	// now respawn all players
 	for (int i = 1; i <= gpGlobals->maxClients; i++ )
 	{
@@ -1044,7 +1044,7 @@ void CHL2MPRules::RestartGame()
 	}
 
 	m_flIntermissionEndTime = 0;
-	m_flRestartGameTime = 0.0;		
+	m_flRestartGameTime = 0.0;
 	m_bCompleteReset = false;
 
 	IGameEvent * event = gameeventmanager->CreateEvent( "round_start" );
@@ -1119,7 +1119,7 @@ void CHL2MPRules::CleanUpMap()
 		{
 			if ( m_iIterator == g_MapEntityRefs.InvalidIndex() )
 			{
-				// This shouldn't be possible. When we loaded the map, it should have used 
+				// This shouldn't be possible. When we loaded the map, it should have used
 				// CCSMapLoadEntityFilter, which should have built the g_MapEntityRefs list
 				// with the same list of entities we're referring to here.
 				Assert( false );
@@ -1138,7 +1138,7 @@ void CHL2MPRules::CleanUpMap()
 				}
 				else
 				{
-					// Cool, the slot where this entity was is free again (most likely, the entity was 
+					// Cool, the slot where this entity was is free again (most likely, the entity was
 					// freed above). Now create an entity with this specific index.
 					return CreateEntityByName( pClassname, ref.m_iEdict );
 				}
@@ -1163,7 +1163,7 @@ void CHL2MPRules::CheckChatForReadySignal( CHL2MP_Player *pPlayer, const char *c
 		if( !pPlayer->IsReady() )
 		{
 			pPlayer->SetReady( true );
-		}		
+		}
 	}
 }
 
@@ -1193,7 +1193,7 @@ void CHL2MPRules::CheckRestartGame( void )
 	{
 		m_bAwaitingReadyRestart = true;
 		m_bHeardAllPlayersReady = false;
-		
+
 
 		const char *pszReadyString = mp_ready_signal.GetString();
 
@@ -1230,7 +1230,7 @@ void CHL2MPRules::CheckAllPlayersReady( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CHL2MPRules::GetChatFormat( bool bTeamOnly, CBasePlayer *pPlayer )
 {
@@ -1266,7 +1266,7 @@ const char *CHL2MPRules::GetChatFormat( bool bTeamOnly, CBasePlayer *pPlayer )
 	{
 		if ( pPlayer->GetTeamNumber() != TEAM_SPECTATOR )
 		{
-			pszFormat = "HL2MP_Chat_All";	
+			pszFormat = "HL2MP_Chat_All";
 		}
 		else
 		{

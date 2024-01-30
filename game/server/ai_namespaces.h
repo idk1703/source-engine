@@ -218,8 +218,8 @@ inline int CAI_GlobalScheduleNamespace::ConditionSymbolToId( const char *pszCond
 }
 
 inline int CAI_GlobalScheduleNamespace::NumConditions() const
-{ 
-	return m_ConditionNamespace.NextGlobalBase() - GLOBAL_IDS_BASE; 
+{
+	return m_ConditionNamespace.NextGlobalBase() - GLOBAL_IDS_BASE;
 }
 
 inline bool CAI_ClassScheduleIdSpace::Init( const char *pszClassName, CAI_GlobalScheduleNamespace *pGlobalNamespace, CAI_ClassScheduleIdSpace *pParentIDSpace )

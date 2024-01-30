@@ -28,8 +28,8 @@ END_DATADESC()
 //
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CTFIntermission::InputActivate( inputdata_t &inputdata )
 {
@@ -39,5 +39,3 @@ void CTFIntermission::InputActivate( inputdata_t &inputdata )
 		pCTFGameRules->GoToIntermission();
 	}
 }
-
-

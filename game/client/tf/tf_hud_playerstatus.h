@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ namespace vgui
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:  
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFClassImage : public vgui::ImagePanel
 {
@@ -87,7 +87,7 @@ private:
 #ifdef STAGING_ONLY
 	int					m_nLOD;
 #endif // STAGING_ONLY
-	
+
 	bool				m_bUsePlayerModel;
 };
 
@@ -207,7 +207,7 @@ private:
 	int					m_nBonusHealthOrigY;
 	int					m_nBonusHealthOrigW;
 	int					m_nBonusHealthOrigH;
-	
+
 	bool				m_bBuilding;
 	int					m_iAnimState;
 	bool				m_bAnimate;

@@ -36,7 +36,7 @@
 ConVar tf_rd_robot_repair_rate( "tf_rd_robot_repair_rate", "60", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY );
 
 RobotData_t* g_RobotData[ NUM_ROBOT_TYPES ] =
-{ 
+{
 					// Model									// Busted model										// Pain			// Death		// Collide		// Idle				// Bar offset
 	new RobotData_t( "models/bots/bot_worker/bot_worker_A.mdl",	"models/bots/bot_worker/bot_worker_A.mdl",			"Robot.Pain",	"Robot.Death",	"Robot.Collide", "Robot.Greeting", -35.f ),
 #ifdef STAGING_ONLY
@@ -58,7 +58,7 @@ void RobotData_t::Precache()
 	if ( GetStringData( MODEL_KEY ) )
 	{
 		CBaseEntity::PrecacheModel( GetStringData( MODEL_KEY ) );
-		PrecacheGibsForModel( modelinfo->GetModelIndex( GetStringData( MODEL_KEY ) ) ); 
+		PrecacheGibsForModel( modelinfo->GetModelIndex( GetStringData( MODEL_KEY ) ) );
 		PrecachePropsForModel( modelinfo->GetModelIndex( GetStringData( MODEL_KEY ) ), "spawn" );
 	}
 	if ( GetStringData( DAMAGED_MODEL_KEY ) ) CBaseEntity::PrecacheModel( GetStringData( DAMAGED_MODEL_KEY ) );
@@ -104,7 +104,7 @@ void CTFRobotDestruction_RobotAnimController::Update()
 }
 
 void CTFRobotDestruction_RobotAnimController::Impulse( const Vector& vecImpulse )
-{ 
+{
 	m_vecImpulse += vecImpulse * 5;
 }
 
@@ -114,7 +114,7 @@ void CTFRobotDestruction_RobotAnimController::Approach( Vector& vecIn, const Vec
 	if ( vecApproach.LengthSqr() > ( vecIn - vecTarget ).LengthSqr() )
 		vecIn = vecTarget;
 	else
-		vecIn += vecApproach;		
+		vecIn += vecApproach;
 }
 
 void CTFRobotDestruction_RobotAnimController::GetPoseParams()
@@ -177,7 +177,7 @@ CTFRobotDestruction_Robot::~CTFRobotDestruction_Robot()
 }
 
 void CTFRobotDestruction_Robot::StaticPrecache()
-{	
+{
 	PrecacheParticleSystem( DEATH_PARTICLE_EFFECT );
 	PrecacheParticleSystem( SCORING_POINTS_PARTICLE_EFFECT );
 	PrecacheParticleSystem( DAMAGED_ROBOT_PARTICLE_EFFECT );
@@ -226,7 +226,7 @@ void CTFRobotDestruction_Robot::Spawn()
 	if ( CTFRobotDestructionLogic::GetRobotDestructionLogic() )
 		CTFRobotDestructionLogic::GetRobotDestructionLogic()->RobotCreated( this );
 
-	// Create our dispenser	
+	// Create our dispenser
 	m_pDispenser = dynamic_cast<CRobotDispenser*>( CreateEntityByName( "rd_robot_dispenser" ) );
 	Assert( m_pDispenser );
 	m_pDispenser->SetParent( this );
@@ -283,8 +283,8 @@ void CTFRobotDestruction_Robot::UpdateDamagedEffects()
 	if ( bLowHealth && !m_hDamagedParticleEffect )
 	{
 		m_hDamagedParticleEffect = ParticleProp()->Create( DAMAGED_ROBOT_PARTICLE_EFFECT,
-														 PATTACH_ABSORIGIN_FOLLOW, 
-														 INVALID_PARTICLE_ATTACHMENT, 
+														 PATTACH_ABSORIGIN_FOLLOW,
+														 INVALID_PARTICLE_ATTACHMENT,
 														 Vector(0,0,50) );
 
 	}
@@ -422,7 +422,7 @@ void CTFRobotDestruction_Robot::UpdateOnRemove( void )
 //-----------------------------------------------------------------------------
 void CTFRobotDestruction_Robot::PlayDeathEffects()
 {
-	EmitSound( g_RobotData[ GetRobotSpawnData().m_eType ]->GetStringData( RobotData_t::DEATH_SOUND_KEY ) ); 
+	EmitSound( g_RobotData[ GetRobotSpawnData().m_eType ]->GetStringData( RobotData_t::DEATH_SOUND_KEY ) );
 	EmitSound( ROBOT_DEATH_EXPLOSION );
 	DispatchParticleEffect( DEATH_PARTICLE_EFFECT, GetAbsOrigin(), QAngle( 0,0,0 ) );
 }
@@ -488,7 +488,7 @@ void CTFRobotDestruction_Robot::Event_Killed( const CTakeDamageInfo &info )
 			{
 				event->SetInt( "assister", pAssister->GetUserID() );
 			}
-			
+
 			event->SetInt( "attacker", pScorer->GetUserID() );	// attacker
 			event->SetString( "weapon", killer_weapon_name );
 			event->SetString( "weapon_logclassname", killer_weapon_log_name );
@@ -586,7 +586,7 @@ void CTFRobotDestruction_Robot::SpewGibs()
 
 			// Give the ammo pack some health, so that trains can destroy it.
 			pAmmoPack->SetCollisionGroup( COLLISION_GROUP_DEBRIS );
-			pAmmoPack->m_takedamage = DAMAGE_YES;		
+			pAmmoPack->m_takedamage = DAMAGE_YES;
 			pAmmoPack->SetHealth( 900 );
 			pAmmoPack->m_bObjGib = true;
 		}
@@ -603,7 +603,7 @@ int CTFRobotDestruction_Robot::OnTakeDamage( const CTakeDamageInfo &info )
 	{
 		if ( InSameTeam(info.GetAttacker()) )
 			return 0;
-						
+
 		CBasePlayer *pAttacker = ToBasePlayer( info.GetAttacker() );
 		if ( pAttacker )
 		{
@@ -660,7 +660,7 @@ int CTFRobotDestruction_Robot::OnTakeDamage( const CTakeDamageInfo &info )
 	// Let the game logic know that we got hurt
 	if ( CTFRobotDestructionLogic::GetRobotDestructionLogic() )
 		CTFRobotDestructionLogic::GetRobotDestructionLogic()->RobotAttacked( this );
-	
+
 	return nBaseResult;
 }
 
@@ -684,7 +684,7 @@ void CTFRobotDestruction_Robot::ModifyDamage( CTakeDamageInfo *info ) const
 			flScale = 0.75;
 		else if ( pAttacker->IsPlayerClass( TF_CLASS_MEDIC ) )
 			flScale = 2.f;
-			
+
 		info->SetDamage( info->GetDamage() * flScale );
 	}
 }
@@ -858,7 +858,7 @@ public:
 		return Continue();
 	}
 
-	virtual ActionResult< CTFRobotDestruction_Robot > OnResume( CTFRobotDestruction_Robot *pMe, Action< CTFRobotDestruction_Robot > *interruptingAction )	
+	virtual ActionResult< CTFRobotDestruction_Robot > OnResume( CTFRobotDestruction_Robot *pMe, Action< CTFRobotDestruction_Robot > *interruptingAction )
 	{
 		PlayIdleActivity( pMe );
 
@@ -905,7 +905,7 @@ class CRobotSpawn : public Action< CTFRobotDestruction_Robot >
 		{
 			return ChangeTo( new CRobotPatrol, "I've finished my spawn sequence" );
 		}
-		
+
 		return Continue();
 	}
 
@@ -943,7 +943,7 @@ public:
 		}
 
 		// TODO: Control the materialize anim
-		
+
 		return Continue();
 	}
 
@@ -984,7 +984,7 @@ class CRobotEnterPanic : public Action< CTFRobotDestruction_Robot >
 		{
 			return ChangeTo( new CRobotPanic, "I've finished my enter panic sequence" );
 		}
-		
+
 		return Continue();
 	}
 
@@ -1010,7 +1010,7 @@ class CRobotLeavePanic : public Action< CTFRobotDestruction_Robot >
 		{
 			return Done( "I've finished my leave panic sequence" );
 		}
-		
+
 		return Continue();
 	}
 
@@ -1036,7 +1036,7 @@ ActionResult< CTFRobotDestruction_Robot > CRobotPanic::OnStart( CTFRobotDestruct
 	m_SpeakTimer.Start( 3.f );
 	const RobotSpawnData_t & data = pMe->GetRobotSpawnData();
 	pMe->EmitSound( g_RobotData[ data.m_eType ]->GetStringData( RobotData_t::HURT_SOUND_KEY ) );
-	
+
 	return Continue();
 }
 
@@ -1067,11 +1067,11 @@ ActionResult< CTFRobotDestruction_Robot > CRobotPanic::Update( CTFRobotDestructi
 	trace_t tr;
 	// See if we hit anything solid a little bit below the robot.  We dont want to jump off cliffs
 	UTIL_TraceLine( vArrivePosition, vArrivePosition + Vector(0,0,-30), MASK_PLAYERSOLID, pMe, COLLISION_GROUP_PLAYER_MOVEMENT, &tr );
-	if ( tr.fraction < 1.0f ) 
+	if ( tr.fraction < 1.0f )
 	{
 		pMe->GetLocomotionInterface()->Approach( vArrivePosition );
 	}
-		
+
 	// It's time change our spin direction, choose when to spin next, and reapply our smoke particle
 	if ( m_spinTimer.IsElapsed() )
 	{
@@ -1097,14 +1097,14 @@ EventDesiredResult< CTFRobotDestruction_Robot > CRobotPanic::OnInjured( CTFRobot
 }
 
 void CRobotPanic::OnEnd( CTFRobotDestruction_Robot *pMe, Action< CTFRobotDestruction_Robot > *nextAction )
-{ 
+{
 	pMe->SetIsPanicked( false );
 	pMe->GetLocomotionInterface()->SetDesiredSpeed( 80.f );
 }
 
 
 //---------------------------------------------------------------------------------------------
-Action< CTFRobotDestruction_Robot > *CRobotBehavior::InitialContainedAction( CTFRobotDestruction_Robot *pMe )	
+Action< CTFRobotDestruction_Robot > *CRobotBehavior::InitialContainedAction( CTFRobotDestruction_Robot *pMe )
 {
 	return new CRobotMaterialize;
 }
@@ -1134,7 +1134,7 @@ ActionResult< CTFRobotDestruction_Robot > CRobotBehavior::Update( CTFRobotDestru
 			m_SpeakTimer.Start( 1.f );
 			m_IdleSpeakTimer.Start( RandomFloat( 6.f, 10.f ) );
 			const RobotSpawnData_t & data = pMe->GetRobotSpawnData();
-			pMe->EmitSound( g_RobotData[ data.m_eType ]->GetStringData( RobotData_t::IDLE_SOUND_KEY ) ); 
+			pMe->EmitSound( g_RobotData[ data.m_eType ]->GetStringData( RobotData_t::IDLE_SOUND_KEY ) );
 		}
 	}
 
@@ -1169,8 +1169,8 @@ EventDesiredResult< CTFRobotDestruction_Robot > CRobotBehavior::OnContact( CTFRo
 
 //---------------------------------------------------------------------------------------------
 CRobotIntention::CRobotIntention( CTFRobotDestruction_Robot *pMe ) : IIntention( pMe )
-{ 
-	m_behavior = new Behavior< CTFRobotDestruction_Robot >( new CRobotBehavior ); 
+{
+	m_behavior = new Behavior< CTFRobotDestruction_Robot >( new CRobotBehavior );
 }
 
 CRobotIntention::~CRobotIntention()
@@ -1179,14 +1179,14 @@ CRobotIntention::~CRobotIntention()
 }
 
 void CRobotIntention::Reset( void )
-{ 
-	delete m_behavior; 
+{
+	delete m_behavior;
 	m_behavior = new Behavior< CTFRobotDestruction_Robot >( new CRobotBehavior );
 }
 
 void CRobotIntention::Update( void )
 {
-	m_behavior->Update( static_cast< CTFRobotDestruction_Robot * >( GetBot() ), GetUpdateInterval() ); 
+	m_behavior->Update( static_cast< CTFRobotDestruction_Robot * >( GetBot() ), GetUpdateInterval() );
 }
 
 // is this a place we can be?
@@ -1257,7 +1257,7 @@ END_NETWORK_TABLE()
 
 #ifdef GAME_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CRobotDispenser::CRobotDispenser()
 {
@@ -1289,7 +1289,7 @@ void CRobotDispenser::OnGoActive( void )
 		m_hTouchTrigger->SetParent( GetParent() );
 	}
 
-	SetModel( "" ); 
+	SetModel( "" );
 }
 
 //-----------------------------------------------------------------------------
@@ -1302,7 +1302,7 @@ void CRobotDispenser::GetControlPanelInfo( int nPanelIndex, const char *&pPanelN
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRobotDispenser::SetModel( const char *pModel )
 {

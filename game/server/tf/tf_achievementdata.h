@@ -11,8 +11,8 @@
 #define MAX_ACHIEVEMENT_DAMAGE_HISTORY_SLOTS	128
 
 //=============================================================================
-// Custom class to manage lists of history events. Maintains a prioritized list of 
-// events, but includes two extra features: 
+// Custom class to manage lists of history events. Maintains a prioritized list of
+// events, but includes two extra features:
 //		- Maximum size of the number of entries in the queue.
 //		- Ensures each associated-entity in the entries appears only once in the queue.
 template <class T, class LessFunc, int maxSize>

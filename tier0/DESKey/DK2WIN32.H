@@ -1,6 +1,6 @@
 /*
  * $History: DK2WIN32.H $
- * 
+ *
  * *****************  Version 1  *****************
  * User: Alun         Date: 1/07/99    Time: 11:31
  * Created in $/DK2/Software/C Drivers/Windows/API/DLL/DK2Win32
@@ -28,7 +28,7 @@ extern "C"
 /////////////////////////////////////////////////////////////////
 // DK2ERR_TOOMANUUSERS
 //
-// One or mode DK2 network servers were found but they were all 
+// One or mode DK2 network servers were found but they were all
 // full.
 
 #define DK2ERR_TOOMANYUSERS            0x0001
@@ -46,7 +46,7 @@ extern "C"
 /////////////////////////////////////////////////////////////////
 // DK2ERR_DESKEY_NOTFOUND
 //
-// A DK2 command failed because a DK2 was not found, either 
+// A DK2 command failed because a DK2 was not found, either
 // locally or accross the network
 
 #define DK2ERR_DESKEY_NOTFOUND         0x0003
@@ -54,7 +54,7 @@ extern "C"
 /////////////////////////////////////////////////////////////////
 // DK2ERR_NORESPONSE
 //
-// A DK2 oommand to a server failed becase the server did not 
+// A DK2 oommand to a server failed becase the server did not
 // respond.
 
 #define DK2ERR_NORESPONSE              0x0004
@@ -77,7 +77,7 @@ extern "C"
 /////////////////////////////////////////////////////////////////
 // DK2ERR_COMMANDNOTSUPPORTED
 //
-// The DK2 does not support the requested command   
+// The DK2 does not support the requested command
 
 #define DK2ERR_COMMANDNOTSUPPORTED     0x0007
 
@@ -144,7 +144,7 @@ extern "C"
 ////////////////////////////////////////////////////////////////
 // DK2ERR_BADPARAMETER
 //
-// The DK2 command failed due to an invalid parameter passed to the 
+// The DK2 command failed due to an invalid parameter passed to the
 // function
 
 #define DK2ERR_BADPARAMETER            0x8002
@@ -170,7 +170,7 @@ extern "C"
 //
 // The DK2 command failed be cause the current protocol does not
 // exist or is not loaded
- 
+
 #define DK2ERR_NOPROTOCOL              0x8005
 
 ////////////////////////////////////////////////////////////////
@@ -199,22 +199,22 @@ extern "C"
 #define DK2MEMORYMAP
 typedef struct _tDK2Memory
 {
-    WORD  wAddress;
-    WORD  wSeed;
-    WORD  wCount;
-    LPSTR lpBytes;
-    WORD  wModule;
+	WORD  wAddress;
+	WORD  wSeed;
+	WORD  wCount;
+	LPSTR lpBytes;
+	WORD  wModule;
 } DK2MEMORY, FAR *LPDK2MEMORY;
 
 typedef struct _tDateTime
 {
-    WORD wDay;
-    WORD wMonth;
-    WORD wYear;
-    WORD wHour;
-    WORD wMinute;
-    WORD wSecond;
-    WORD wMilliseconds;
+	WORD wDay;
+	WORD wMonth;
+	WORD wYear;
+	WORD wHour;
+	WORD wMinute;
+	WORD wSecond;
+	WORD wMilliseconds;
 } DATETIME, *NPDATETIME, FAR *LPDATETIME;
 
 #pragma pack()
@@ -241,68 +241,68 @@ WORD APIENTRY DK2GetDelayTime ( void );
 void APIENTRY DK2SetDelayTime( WORD Delay );
 
 void APIENTRY DK2ReadRandomNumbers( WORD  DataReg,
-                    LPSTR Id,
-                    WORD  Seed,
-                    LPSTR Buffer,
-                    WORD  BytesToRead );
+					LPSTR Id,
+					WORD  Seed,
+					LPSTR Buffer,
+					WORD  BytesToRead );
 
 void APIENTRY DK2ThroughEncryption( WORD  DataReg,
-                    LPSTR Id,
-                    WORD  Seed,
-                    LPSTR Buffer,
-                    WORD  BytesToEncrypt );
+					LPSTR Id,
+					WORD  Seed,
+					LPSTR Buffer,
+					WORD  BytesToEncrypt );
 
 
 void APIENTRY DK2ReadMemory( WORD  DataReg,
-                 LPSTR Id,
-                 WORD  Seed,
-                 WORD  Address,
-                 LPSTR Buffer,
-                 WORD  BytesToRead );
+				LPSTR Id,
+				WORD  Seed,
+				WORD  Address,
+				LPSTR Buffer,
+				WORD  BytesToRead );
 
 void APIENTRY DK2WriteMemory( WORD  DataReg,
-                  LPSTR Id,
-                  WORD  Seed,
-                  WORD  Address,
-                  LPSTR Buffer,
-                  WORD  BytesToWrite,
-                  LPSTR Password );
+				LPSTR Id,
+				WORD  Seed,
+				WORD  Address,
+				LPSTR Buffer,
+				WORD  BytesToWrite,
+				LPSTR Password );
 
 void APIENTRY DK2ReadDownCounter( WORD  DataReg,
-                  LPSTR Id,
-                  DWORD *DownCounter );
+				LPSTR Id,
+				DWORD *DownCounter );
 
 
 void APIENTRY DK2DecrementDownCounter( WORD  DataReg,
-                       LPSTR Id );
+						LPSTR Id );
 
 BOOL APIENTRY DK2RegisterModule( WORD  DataReg, WORD wModule );
 
 BOOL APIENTRY DK2UnregisterModule( WORD  DataReg, WORD wModule );
 
 void APIENTRY DK2RestartDownCounter( WORD  DataReg,
-                     LPSTR Id,
-                     DWORD NewCounter,
-                     LPSTR Password );
+					LPSTR Id,
+					DWORD NewCounter,
+					LPSTR Password );
 
 void APIENTRY DK2ReadDUSN( WORD   DataReg,
-                           LPSTR  Id,
-                           LPSTR  Password,
-                           LPWORD SecCount,
-                           LPSTR  DUSN );
+							LPSTR  Id,
+							LPSTR  Password,
+							LPWORD SecCount,
+							LPSTR  DUSN );
 
 void APIENTRY DK2SendAlgorithmString( WORD  DataReg,
-                      LPSTR Id,
-                      WORD  Iteration1,
-                      WORD  Iteration2,
-                      LPSTR Buffer1,
-                      LPSTR Buffer2 );
+					LPSTR Id,
+					WORD  Iteration1,
+					WORD  Iteration2,
+					LPSTR Buffer1,
+					LPSTR Buffer2 );
 
 void APIENTRY DK2SendAlgorithmBuffer( WORD  DataReg,
-                      LPSTR Id,
-                      LPWORD Iteration,
-                      LPSTR Buffer,
-                      WORD  BufferCount );
+					LPSTR Id,
+					LPWORD Iteration,
+					LPSTR Buffer,
+					WORD  BufferCount );
 
 void APIENTRY DK2SendAndReceive( WORD DataReg, LPSTR Id, LPSTR lpFirst, WORD wFirst, LPSTR lpSend, WORD wSend, LPSTR lpReceive, WORD wReceive, WORD wCount );
 
@@ -311,39 +311,39 @@ BOOL APIENTRY DK2Success( void );
 void APIENTRY DK2AllowChangeInterrupts( WORD Change );
 
 WORD APIENTRY DK2DetectSpeed( WORD  DataReg,
-                  LPSTR Id );
+				LPSTR Id );
 
 WORD APIENTRY DK2SubDetectSpeed( WORD  DataReg,
-                 LPSTR Id,
-                 LPSTR PKey,
-                 LPSTR Bytes );
+				LPSTR Id,
+				LPSTR PKey,
+				LPSTR Bytes );
 
 ////////////////////////////////////////////////////////////////
 // time function
 void APIENTRY DK2GetSystemTime( WORD DateReg, LPSTR Id, LPDATETIME lpDateTime );
 
 ////////////////////////////////////////////////////////////////
-// DK2 Flags 
+// DK2 Flags
 
 #define DK2_BITRONICS      0x00000001
 #define DK2_HASBITRONICS   0x00000002
 
 DWORD APIENTRY DK2GetFlags ( WORD DataReg,
-                 LPSTR Id );
+				LPSTR Id );
 
 VOID APIENTRY DK2SetFlags ( WORD  DataReg,
-                LPSTR Id,
-                DWORD Flags );
+				LPSTR Id,
+				DWORD Flags );
 
 ////////////////////////////////////////////////////////////////
 
 WORD APIENTRY DK2Encode( LPSTR lpszData,
-              WORD  cbData,
-              LPSTR lpszEncode,
-              WORD  cbEncode );
+			WORD  cbData,
+			LPSTR lpszEncode,
+			WORD  cbEncode );
 
 WORD APIENTRY DK2Decode( LPSTR lpszData,
-              LPSTR lpszDecode );
+			LPSTR lpszDecode );
 
 ////////////////////////////////////////////////////////////////
 // DK2 Access Flags - Override Searching Network or Local

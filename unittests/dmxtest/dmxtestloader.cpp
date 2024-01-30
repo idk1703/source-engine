@@ -25,7 +25,7 @@ struct TestStruct_t
 	char m_pStringBuf[256];
 };
 
-BEGIN_DMXELEMENT_UNPACK( TestStruct_t ) 
+BEGIN_DMXELEMENT_UNPACK( TestStruct_t )
 	DMXELEMENT_UNPACK_FIELD( "id_test", NULL, DmObjectId_t, m_nId )
 	DMXELEMENT_UNPACK_FIELD( "bool_test", "1", bool, m_bBool )
 	DMXELEMENT_UNPACK_FIELD( "int_test", "5", int, m_nInt )
@@ -168,7 +168,7 @@ void TestReadFile( CDmxElement *pRoot )
 DEFINE_TESTCASE_NOSUITE( DmxLoaderTest )
 {
 	Msg( "Running dmx loader tests...\n" );
-	
+
 	CDmxElement *pRoot;
 	bool bOk = UnserializeDMX( "dmxtestloader.dmx", NULL, false, &pRoot );
 	Shipping_Assert( bOk );

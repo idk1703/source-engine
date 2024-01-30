@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CL_PrintStringTables( void )
 {
@@ -29,4 +29,3 @@ void CL_PrintStringTables( void )
 		cl.m_StringTableContainer->Dump();
 	}
 }
-

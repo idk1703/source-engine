@@ -18,7 +18,7 @@ DEFINE_TESTCASE( ProcessTestSimple, ProcessTestSuite )
 {
 	Msg( "Simple process test...\n" );
 
-	ProcessHandle_t hProcess = g_pProcessUtils->StartProcess( "unittests\\testprocess.exe -delay 1.0", true ); 
+	ProcessHandle_t hProcess = g_pProcessUtils->StartProcess( "unittests\\testprocess.exe -delay 1.0", true );
 	g_pProcessUtils->WaitUntilProcessCompletes( hProcess );
 	int nLen = g_pProcessUtils->GetProcessOutputSize( hProcess );
 	char *pBuf = (char*)_alloca( nLen );
@@ -49,4 +49,3 @@ DEFINE_TESTCASE( ProcessTestBufferOverflow, ProcessTestSuite )
 		++pTest;
 	}
 }
-

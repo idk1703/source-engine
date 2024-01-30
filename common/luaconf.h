@@ -90,7 +90,7 @@
 #define LUA_CDIR	"!\\"
 #define LUA_PATH_DEFAULT  \
 		".\\?.lua;"  LUA_LDIR"?.lua;"  LUA_LDIR"?\\init.lua;" \
-		             LUA_CDIR"?.lua;"  LUA_CDIR"?\\init.lua"
+								LUA_CDIR"?.lua;"  LUA_CDIR"?\\init.lua"
 #define LUA_CPATH_DEFAULT \
 	".\\?.dll;"  LUA_CDIR"?.dll;" LUA_CDIR"loadall.dll"
 
@@ -100,7 +100,7 @@
 #define LUA_CDIR	LUA_ROOT "lib/lua/5.1/"
 #define LUA_PATH_DEFAULT  \
 		"./?.lua;"  LUA_LDIR"?.lua;"  LUA_LDIR"?/init.lua;" \
-		            LUA_CDIR"?.lua;"  LUA_CDIR"?/init.lua"
+								LUA_CDIR"?.lua;"  LUA_CDIR"?/init.lua"
 #define LUA_CPATH_DEFAULT \
 	"./?.so;"  LUA_CDIR"?.so;" LUA_CDIR"loadall.so"
 #endif
@@ -184,7 +184,7 @@
 #define LUAI_DATA	/* empty */
 
 #elif defined(__GNUC__) && ((__GNUC__*100 + __GNUC_MINOR__) >= 302) && \
-      defined(__ELF__)
+			defined(__ELF__)
 #define LUAI_FUNC	__attribute__((visibility("hidden"))) extern
 #define LUAI_DATA	LUAI_FUNC
 
@@ -278,7 +278,7 @@
 #define lua_readline(L,b,p)	((void)L, ((b)=readline(p)) != NULL)
 #define lua_saveline(L,idx) \
 	if (lua_strlen(L,idx) > 0)  /* non-empty line? */ \
-	  add_history(lua_tostring(L, idx));  /* add it to history */
+		add_history(lua_tostring(L, idx));  /* add it to history */
 #define lua_freeline(L,b)	((void)L, free(b))
 #else
 #define lua_readline(L,b,p)	\
@@ -555,7 +555,7 @@
 
 /* On a Pentium, resort to a trick */
 #if defined(LUA_NUMBER_DOUBLE) && !defined(LUA_ANSI) && !defined(__SSE2__) && \
-    (defined(__i386) || defined (_M_IX86) || defined(__i386__))
+		(defined(__i386) || defined (_M_IX86) || defined(__i386__))
 
 /* On a Microsoft compiler, use assembler */
 #if defined(_MSC_VER)
@@ -564,12 +564,12 @@
 #define lua_number2integer(i,n)		lua_number2int(i, n)
 
 /* the next trick should work on any Pentium, but sometimes clashes
-   with a DirectX idiosyncrasy */
+	with a DirectX idiosyncrasy */
 #else
 
 union luai_Cast { double l_d; long l_l; };
 #define lua_number2int(i,d) \
-  { volatile union luai_Cast u; u.l_d = (d) + 6755399441055744.0; (i) = u.l_l; }
+	{ volatile union luai_Cast u; u.l_d = (d) + 6755399441055744.0; (i) = u.l_l; }
 #define lua_number2integer(i,n)		lua_number2int(i, n)
 
 #endif
@@ -760,4 +760,3 @@ union luai_Cast { double l_d; long l_l; };
 
 
 #endif
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -137,7 +137,7 @@ void DrawRoundedBackground( Color bgColor, int wide, int tall )
 	y1 = 0;
 	y2 = tall;
 	surface()->DrawFilledRect( x1, y1, x2, y2 );
-	
+
 	// paint between top right and bottom right -------------------------------
 	x1 = wide - coord[NumSegments];
 	x2 = wide;
@@ -673,4 +673,3 @@ void LayoutBackgroundPanel( EditablePanel *pWindow )
 }
 
 //-----------------------------------------------------------------------------
-

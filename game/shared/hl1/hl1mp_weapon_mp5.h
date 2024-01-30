@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		Projectile shot from the MP5 
+// Purpose:		Projectile shot from the MP5
 //
 // $Workfile:     $
 // $Date:         $
@@ -34,7 +34,7 @@ class CWeaponMP5 : public CBaseHL1MPCombatWeapon
 	DECLARE_CLASS( CWeaponMP5, CBaseHL1MPCombatWeapon );
 public:
 
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponMP5();

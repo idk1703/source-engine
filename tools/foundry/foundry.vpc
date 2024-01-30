@@ -7,7 +7,7 @@
 $Macro SRCDIR		"..\.."
 $Macro OUTBINDIR	"$SRCDIR\..\game\bin\tools"
 
-$Include "$SRCDIR\vpc_scripts\source_dll_base.vpc"	
+$Include "$SRCDIR\vpc_scripts\source_dll_base.vpc"
 
 $Configuration
 {
@@ -48,7 +48,7 @@ $Project "foundry"
 	{
 		$File	"$SRCDIR\public\mathlib\mathlib.h"
 	}
-	
+
 	$Folder	"Link Libraries"
 	{
 		$Lib datamodel

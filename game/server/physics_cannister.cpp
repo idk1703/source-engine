@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -124,7 +124,7 @@ bool CPhysicsCannister::TestCollision( const Ray_t &ray, unsigned int mask, trac
 
 	if ( !IsBoxIntersectingRay( vecAbsMins, vecAbsMaxs, ray.m_Start, ray.m_Delta ) )
 		return false;
-	
+
 	return BaseClass::TestCollision( ray, mask, trace );
 }
 
@@ -208,7 +208,7 @@ void CPhysicsCannister::TraceAttack( const CTakeDamageInfo &info, const Vector &
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPhysicsCannister::CannisterActivate( CBaseEntity *pActivator, const Vector &thrustOffset )
 {
@@ -325,7 +325,7 @@ void CPhysicsCannister::InputWake( inputdata_t &data )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPhysicsCannister::Deactivate(void)
 {
@@ -350,7 +350,7 @@ void CPhysicsCannister::Deactivate(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPhysicsCannister::Explode( CBaseEntity *pAttacker )
 {
@@ -380,7 +380,7 @@ void CPhysicsCannister::ExplodeTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPhysicsCannister::VPhysicsCollision( int index, gamevcollisionevent_t *pEvent )
 {
@@ -403,7 +403,7 @@ void CPhysicsCannister::VPhysicsCollision( int index, gamevcollisionevent_t *pEv
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPhysicsCannister::ShutdownJet( void )
 {
@@ -432,7 +432,7 @@ void CPhysicsCannister::SetPhysicsAttacker( CBasePlayer *pEntity, float flTime )
 	m_flLastPhysicsInfluenceTime = flTime;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Keep track of physgun influence
 //-----------------------------------------------------------------------------
@@ -442,7 +442,7 @@ void CPhysicsCannister::OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPicku
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPhysicsCannister::OnPhysGunDrop( CBasePlayer *pPhysGunUser, PhysGunDrop_t Reason )
 {
@@ -454,7 +454,7 @@ void CPhysicsCannister::OnPhysGunDrop( CBasePlayer *pPhysGunUser, PhysGunDrop_t 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBasePlayer *CPhysicsCannister::HasPhysicsAttacker( float dt )
 {

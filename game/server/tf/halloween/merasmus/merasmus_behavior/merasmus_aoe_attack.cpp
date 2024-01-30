@@ -43,7 +43,7 @@ ActionResult< CMerasmus >	CMerasmusAOEAttack::OnStart( CMerasmus *me, Action< CM
 	}
 
 	me->GetBodyInterface()->StartActivity( ACT_RANGE_ATTACK1 );
-	
+
 	// This is only to play sound since animation doesn't work with the vcd
 	CFmtStr vcdName( "scenes/bot/merasmus/low/bomb_attack_00%d.vcd", RandomInt( 1, 9 ) );
 	InstancedScriptedScene( me, vcdName.Get(), NULL, 0.0f, false, NULL, true );
@@ -179,7 +179,7 @@ ActionResult< CMerasmus >	CMerasmusAOEAttack::Update( CMerasmus *me, float inter
 			if ( m_aoeStartTimer.IsElapsed() )
 			{
 				m_launchTimer.Start( 0.5f );
-				
+
 				m_state = AOE_FIRING;
 			}
 		}
@@ -188,7 +188,7 @@ ActionResult< CMerasmus >	CMerasmusAOEAttack::Update( CMerasmus *me, float inter
 		{
 			// Start the AOE particles
 			me->StartAOEAttack();
-			
+
 			CMerasmusFlyingLocomotion *fly = (CMerasmusFlyingLocomotion *)me->GetLocomotionInterface();
 
 			// float up and down a bit

@@ -34,7 +34,7 @@ void FixGameVars(char *pszSrc, char *pszDst, BOOL bUseQuotes)
 	char *pSrc = pszSrc, *pDst = pszDst;
 	BOOL bInQuote = FALSE;
 	while(pSrc[0])
-	{	
+	{
 		if(pSrc[0] == '$')	// found a parm
 		{
 			if(pSrc[1] == '$')	// nope, it's a single symbol
@@ -44,9 +44,9 @@ void FixGameVars(char *pszSrc, char *pszDst, BOOL bUseQuotes)
 			}
 			else
 			{
-				// figure out which parm it is .. 
+				// figure out which parm it is ..
 				++pSrc;
-				
+
 				if (!bInQuote && bUseQuotes)
 				{
 					// not in quote, and subbing a variable.. start quote
@@ -149,7 +149,7 @@ static void RemoveQuotes(char *pBuf)
 LPCTSTR GetErrorString()
 {
 	static char szBuf[200];
-	FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), 0, 
+	FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), 0,
 		szBuf, 200, NULL);
 	char *p = strchr(szBuf, '\r');	// get rid of \r\n
 	if(p) p[0] = 0;
@@ -169,9 +169,9 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 	//  create two sets of buffers - one set with the long filename
 	//  and one set with the 8.3 format.
 
-	char szDocLongPath[MAX_PATH] = {0}, szDocLongName[MAX_PATH] = {0}, 
+	char szDocLongPath[MAX_PATH] = {0}, szDocLongName[MAX_PATH] = {0},
 		szDocLongExt[MAX_PATH] = {0};
-	char szDocShortPath[MAX_PATH] = {0}, szDocShortName[MAX_PATH] = {0}, 
+	char szDocShortPath[MAX_PATH] = {0}, szDocShortName[MAX_PATH] = {0},
 		szDocShortExt[MAX_PATH] = {0};
 
 	GetFullPathName(pszOrigDocName, MAX_PATH, szDocLongPath, NULL);
@@ -229,7 +229,7 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 		pszDocExt = szDocLongExt;
 		pszDocName = szDocLongName;
 		pszDocPath = szDocLongPath;
-		
+
 		char szNewParms[MAX_PATH*5], szNewRun[MAX_PATH*5];
 
 		// HACK: force the spawnv call for launching the game
@@ -247,7 +247,7 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 			"** Command: %s\r\n"
 			"** Parameters: %s\r\n\r\n", szNewRun, szNewParms);
 		procWnd.Append(strTmp);
-		
+
 		// create a parameter list (not always required)
 		if(!cmd.bUseProcessWnd || cmd.iSpecialCmd)
 		{
@@ -317,9 +317,9 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 				{
 					RemoveQuotes(ppParms[1]);
 					RemoveQuotes(ppParms[2]);
-					
+
 					// don't copy if we're already there
-					if (stricmp(ppParms[1], ppParms[2]) && 					
+					if (stricmp(ppParms[1], ppParms[2]) &&
 							(!CopyFile(ppParms[1], ppParms[2], FALSE)))
 					{
 						bError = TRUE;
@@ -382,7 +382,7 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 				//  exit???  Seems to work.
 				// spawnv doesn't like quotes
 				RemoveQuotes(szNewRun);
-				_spawnv(/*cmd.bNoWait ?*/ _P_NOWAIT /*: P_WAIT*/, szNewRun, 
+				_spawnv(/*cmd.bNoWait ?*/ _P_NOWAIT /*: P_WAIT*/, szNewRun,
 					(const char *const *)ppParms);
 			}
 		}
@@ -415,4 +415,3 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 
 	return TRUE;
 }
-

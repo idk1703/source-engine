@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -28,7 +28,7 @@ public:
 	virtual			~CTEBSPDecal( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 	DECLARE_SERVERCLASS();
 
 public:
@@ -38,8 +38,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEBSPDecal::CTEBSPDecal( const char *name ) :
 	CBaseTempEntity( name )
@@ -50,16 +50,16 @@ CTEBSPDecal::CTEBSPDecal( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEBSPDecal::~CTEBSPDecal( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEBSPDecal::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -69,7 +69,7 @@ void CTEBSPDecal::Test( const Vector& current_origin, const QAngle& current_angl
 	m_vecOrigin = current_origin;
 
 	Vector vecEnd;
-	
+
 	Vector forward;
 
 	m_vecOrigin.GetForModify()[2] += 24;
@@ -103,21 +103,21 @@ END_SEND_TABLE()
 static CTEBSPDecal g_TEBSPDecal( "BSP Decal" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//			*pos - 
-//			entity - 
-//			index - 
-//			modelindex - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//			*pos -
+//			entity -
+//			index -
+//			modelindex -
 //-----------------------------------------------------------------------------
 void TE_BSPDecal( IRecipientFilter& filter, float delay,
 	const Vector* pos, int entity, int index )
 {
 	g_TEBSPDecal.m_vecOrigin	= *pos;
-	g_TEBSPDecal.m_nEntity		= entity;	
+	g_TEBSPDecal.m_nEntity		= entity;
 	g_TEBSPDecal.m_nIndex		= index;
 
 	// Send it over the wire

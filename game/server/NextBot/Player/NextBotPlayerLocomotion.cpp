@@ -31,7 +31,7 @@ PlayerLocomotion::PlayerLocomotion( INextBot *bot ) : ILocomotion( bot )
 void PlayerLocomotion::Reset( void )
 {
 	m_player = static_cast< CBasePlayer * >( GetBot()->GetEntity() );
-	
+
 	m_isJumping = false;
 	m_isClimbingUpToLedge = false;
 	m_isJumpingAcrossGap = false;
@@ -279,7 +279,7 @@ PlayerLocomotion::LadderState PlayerLocomotion::DescendLadder( void )
 		return DISMOUNTING_LADDER_BOTTOM;
 	}
 
-	// climb down this ladder - look down 
+	// climb down this ladder - look down
 	Vector goal = GetFeet() + 100.0f * ( m_ladderInfo->GetNormal() + Vector( 0, 0, -2 ) );
 
 	GetBot()->GetBodyInterface()->AimHeadTowards( goal, IBody::MANDATORY, 0.1f, NULL, "Ladder" );
@@ -310,7 +310,7 @@ PlayerLocomotion::LadderState PlayerLocomotion::DismountLadderTop( void )
 	toGoal.z = 0.0f;
 	float range = toGoal.NormalizeInPlace();
 	toGoal.z = 1.0f;
-	
+
 	body->AimHeadTowards( body->GetEyePosition() + 100.0f * toGoal, IBody::MANDATORY, 0.1f, NULL, "Ladder dismount" );
 
 	// it is important to approach precisely, so use a very large weight to wash out all other Approaches
@@ -416,7 +416,7 @@ void PlayerLocomotion::Update( void )
 			}
 		}
 
-		
+
 		Approach( m_landingGoal );
 	}
 
@@ -464,10 +464,10 @@ void PlayerLocomotion::Approach( const Vector &pos, float goalWeight )
 
 	Vector forward3D;
 	m_player->EyeVectors( &forward3D );
-	
+
 	Vector2D forward( forward3D.x, forward3D.y );
 	forward.NormalizeInPlace();
-		
+
 	Vector2D right( forward.y, -forward.x );
 
 	// compute unit vector to goal position
@@ -583,7 +583,7 @@ void PlayerLocomotion::Approach( const Vector &pos, float goalWeight )
 
 //----------------------------------------------------------------------------------------------------
 /**
- * Move the bot to the precise given position immediately, 
+ * Move the bot to the precise given position immediately,
  */
 void PlayerLocomotion::DriveTo( const Vector &pos )
 {
@@ -679,13 +679,13 @@ bool PlayerLocomotion::IsClimbingOrJumping( void ) const
 {
 	if ( !m_isJumping )
 		return false;
-		
+
 	if ( m_jumpTimer.IsElapsed() && IsOnGround() )
 	{
 		m_isJumping = false;
 		return false;
 	}
-	
+
 	return true;
 }
 
@@ -747,7 +747,7 @@ void PlayerLocomotion::ClimbLadder( const CNavLadder *ladder, const CNavArea *di
 // 	Vector goal =  GetBot()->GetPosition() + 100.0f * ( Vector( 0, 0, 1.0f ) - ladder->GetNormal() );
 // 	Approach( goal );
 // 	FaceTowards( goal );
-	
+
 	m_ladderState = APPROACHING_ASCENDING_LADDER;
 	m_ladderInfo = ladder;
 	m_ladderDismountGoal = dismountGoal;
@@ -823,4 +823,3 @@ float PlayerLocomotion::GetWalkSpeed( void ) const
 {
 	return 0.5f * m_player->MaxSpeed();
 }
-

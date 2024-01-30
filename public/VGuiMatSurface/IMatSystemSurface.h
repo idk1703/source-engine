@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: An extra interface implemented by the material system 
+// Purpose: An extra interface implemented by the material system
 // implementation of vgui::ISurface
 //
 // $Revision: $
@@ -48,7 +48,7 @@ class IMatSystemSurface : public vgui::ISurface
 {
 public:
 	// Hook needed to get input to work.
-	// If the app drives the input (like the engine needs to do for VCR mode), 
+	// If the app drives the input (like the engine needs to do for VCR mode),
 	// it can set bLetAppDriveInput to true and call HandleInputEvent for the input events.
 	virtual void AttachToWindow( void *hwnd, bool bLetAppDriveInput=false ) = 0;
 
@@ -92,7 +92,7 @@ public:
 	// Also assumes the (x,y) coordinates of the panels are defined in 640xN coords
 	// (N isn't necessary 480 because the panel may not be 4x3)
 	// The width + height specified are the size of the panel in world coordinates
-	virtual void DrawPanelIn3DSpace( vgui::VPANEL pRootPanel, const VMatrix &panelCenterToWorld, int nPixelWidth, int nPixelHeight, float flWorldWidth, float flWorldHeight ) = 0; 
+	virtual void DrawPanelIn3DSpace( vgui::VPANEL pRootPanel, const VMatrix &panelCenterToWorld, int nPixelWidth, int nPixelHeight, float flWorldWidth, float flWorldHeight ) = 0;
 
 	// Binds a material to a surface texture ID
 	virtual void DrawSetTextureMaterial( int id, IMaterial *pMaterial ) = 0;
@@ -119,4 +119,3 @@ public:
 
 
 #endif // IMATSYSTEMSURFACE_H
-

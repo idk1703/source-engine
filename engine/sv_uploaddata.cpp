@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -47,7 +47,7 @@ static inline void Encrypt8ByteSequence( IceKey& cipher, const unsigned char *pl
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static void EncryptBuffer( IceKey& cipher, unsigned char *bufData, uint bufferSize)
 {
@@ -88,7 +88,7 @@ static void BuildUploadDataMessage( bf_write& buf, char const *tablename, KeyVal
 	// Data version protocol
 	encrypted.WriteByte( C2M_UPLOADDATA_DATA_VERSION );
 
-	encrypted.WriteString( tablename ); 
+	encrypted.WriteString( tablename );
 
 	int fieldCount = CountFields( fields );
 
@@ -121,10 +121,10 @@ static void BuildUploadDataMessage( bf_write& buf, char const *tablename, KeyVal
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *cserIP - 
-//			*tablename - 
-//			*fields - 
+// Purpose:
+// Input  : *cserIP -
+//			*tablename -
+//			*fields -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool UploadData( char const *cserIP, char const *tablename, KeyValues *fields )
@@ -132,7 +132,7 @@ bool UploadData( char const *cserIP, char const *tablename, KeyValues *fields )
 #ifndef _XBOX
 	bf_write	buf;
 	ALIGN4 byte		data[ 2048 ] ALIGN4_POST;
-		
+
 	buf.StartWriting( data, sizeof( data ) );
 
 	BuildUploadDataMessage( buf, tablename, fields );

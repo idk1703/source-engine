@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -60,7 +60,7 @@ public:
 	virtual void SetViewportSize( int w, int h )
 	{
 		m_nViewport[ 0 ] = w;
-        m_nViewport[ 1 ] = h;
+	m_nViewport[ 1 ] = h;
 	}
 
 protected:

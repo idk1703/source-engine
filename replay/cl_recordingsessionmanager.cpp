@@ -86,7 +86,7 @@ void CClientRecordingSessionManager::FireGameEvent( IGameEvent *pEvent )
 
 	if ( g_pEngineClient->IsDemoPlayingBack() )
 		return;
-	
+
 	const char *pEventName = pEvent->GetName();
 
 	if ( !V_stricmp( "replay_sessioninfo", pEventName ) )

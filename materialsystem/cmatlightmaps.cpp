@@ -19,7 +19,7 @@
 #include "tier0/memdbgon.h"
 #include "bitmap/float_bm.h"
 
-static ConVar mat_lightmap_pfms( "mat_lightmap_pfms", "0", FCVAR_MATERIAL_SYSTEM_THREAD, "Outputs .pfm files containing lightmap data for each lightmap page when a level exits." ); // Write PFM files for each lightmap page in the game directory when exiting a level 
+static ConVar mat_lightmap_pfms( "mat_lightmap_pfms", "0", FCVAR_MATERIAL_SYSTEM_THREAD, "Outputs .pfm files containing lightmap data for each lightmap page when a level exits." ); // Write PFM files for each lightmap page in the game directory when exiting a level
 
 #define USE_32BIT_LIGHTMAPS_ON_360 //uncomment to use 32bit lightmaps, be sure to keep this in sync with the same #define in stdshaders/lightmappedgeneric_ps2_3_x.h
 
@@ -111,7 +111,7 @@ int CMatLightmaps::GetMaxLightmapPageWidth() const
 	// FIXME: It's unclear which we want here.
 	// It doesn't drastically increase primitives per DrawIndexedPrimitive
 	// call at the moment to increase it, so let's not for now.
-	
+
 	// If we're using dynamic textures though, we want bigger that's for sure.
 	// The tradeoff here is how much memory we waste if we don't fill the lightmap
 
@@ -146,7 +146,7 @@ void CMatLightmaps::GetLightmapPageSize( int lightmapPageID, int *pWidth, int *p
 	switch( lightmapPageID )
 	{
 	default:
- 		Assert( lightmapPageID >= 0 && lightmapPageID < GetNumLightmapPages() );
+		Assert( lightmapPageID >= 0 && lightmapPageID < GetNumLightmapPages() );
 		*pWidth = m_pLightmapPages[lightmapPageID].m_Width;
 		*pHeight = m_pLightmapPages[lightmapPageID].m_Height;
 		break;
@@ -155,7 +155,7 @@ void CMatLightmaps::GetLightmapPageSize( int lightmapPageID, int *pWidth, int *p
 		*pWidth = *pHeight = 1;
 		AssertOnce( !"Can't use CMatLightmaps to get properties of MATERIAL_SYSTEM_LIGHTMAP_PAGE_USER_DEFINED" );
 		break;
-	
+
 	case MATERIAL_SYSTEM_LIGHTMAP_PAGE_WHITE:
 	case MATERIAL_SYSTEM_LIGHTMAP_PAGE_WHITE_BUMP:
 		*pWidth = *pHeight = 1;
@@ -171,13 +171,13 @@ int CMatLightmaps::GetLightmapWidth( int lightmapPageID ) const
 	switch( lightmapPageID )
 	{
 	default:
- 		Assert( lightmapPageID >= 0 && lightmapPageID < GetNumLightmapPages() );
+		Assert( lightmapPageID >= 0 && lightmapPageID < GetNumLightmapPages() );
 		return m_pLightmapPages[lightmapPageID].m_Width;
 
 	case MATERIAL_SYSTEM_LIGHTMAP_PAGE_USER_DEFINED:
 		AssertOnce( !"Can't use CMatLightmaps to get properties of MATERIAL_SYSTEM_LIGHTMAP_PAGE_USER_DEFINED" );
 		return 1;
-	
+
 	case MATERIAL_SYSTEM_LIGHTMAP_PAGE_WHITE:
 	case MATERIAL_SYSTEM_LIGHTMAP_PAGE_WHITE_BUMP:
 		return 1;
@@ -192,13 +192,13 @@ int CMatLightmaps::GetLightmapHeight( int lightmapPageID ) const
 	switch( lightmapPageID )
 	{
 	default:
- 		Assert( lightmapPageID >= 0 && lightmapPageID < GetNumLightmapPages() );
+		Assert( lightmapPageID >= 0 && lightmapPageID < GetNumLightmapPages() );
 		return m_pLightmapPages[lightmapPageID].m_Height;
 
 	case MATERIAL_SYSTEM_LIGHTMAP_PAGE_USER_DEFINED:
 		AssertOnce( !"Can't use CMatLightmaps to get properties of MATERIAL_SYSTEM_LIGHTMAP_PAGE_USER_DEFINED" );
 		return 1;
-	
+
 	case MATERIAL_SYSTEM_LIGHTMAP_PAGE_WHITE:
 	case MATERIAL_SYSTEM_LIGHTMAP_PAGE_WHITE_BUMP:
 		return 1;
@@ -211,35 +211,35 @@ int CMatLightmaps::GetLightmapHeight( int lightmapPageID ) const
 //-----------------------------------------------------------------------------
 void CMatLightmaps::CleanupLightmaps()
 {
-   if ( mat_lightmap_pfms.GetBool())
-   {
-      // Write PFM files containing lightmap data for this page
-      for (int lightmap = 0; lightmap < GetNumLightmapPages(); lightmap++)
-      {
-         if ((NULL != m_pLightmapDataPtrArray) && (NULL != m_pLightmapDataPtrArray[lightmap]))
-         {
-            char szPFMFileName[MAX_PATH];
+	if ( mat_lightmap_pfms.GetBool())
+	{
+		// Write PFM files containing lightmap data for this page
+		for (int lightmap = 0; lightmap < GetNumLightmapPages(); lightmap++)
+		{
+			if ((NULL != m_pLightmapDataPtrArray) && (NULL != m_pLightmapDataPtrArray[lightmap]))
+			{
+				char szPFMFileName[MAX_PATH];
 
-            sprintf(szPFMFileName, "Lightmap-Page-%d.pfm", lightmap);
-            m_pLightmapDataPtrArray[lightmap]->WritePFM(szPFMFileName);
-         }
-      }
-   }
+				sprintf(szPFMFileName, "Lightmap-Page-%d.pfm", lightmap);
+				m_pLightmapDataPtrArray[lightmap]->WritePFM(szPFMFileName);
+			}
+		}
+	}
 
-   // Remove the lightmap data bitmap representations
-   if (m_pLightmapDataPtrArray)
-   {
-      int i;
-      for( i = 0; i < GetNumLightmapPages(); i++ )
-      {
-         delete m_pLightmapDataPtrArray[i];
-      }
+	// Remove the lightmap data bitmap representations
+	if (m_pLightmapDataPtrArray)
+	{
+		int i;
+		for( i = 0; i < GetNumLightmapPages(); i++ )
+		{
+			delete m_pLightmapDataPtrArray[i];
+		}
 
-      delete [] m_pLightmapDataPtrArray;
-      m_pLightmapDataPtrArray = NULL;
-   }
-   
-   // delete old lightmap pages
+		delete [] m_pLightmapDataPtrArray;
+		m_pLightmapDataPtrArray = NULL;
+	}
+
+	// delete old lightmap pages
 	if( m_pLightmapPages )
 	{
 		int i;
@@ -272,7 +272,7 @@ void CMatLightmaps::ResetMaterialLightmapPageInfo( void )
 // This is called before any lightmap allocations take place
 //-----------------------------------------------------------------------------
 void CMatLightmaps::BeginLightmapAllocation()
-{	
+{
 	// delete old lightmap pages
 	CleanupLightmaps();
 
@@ -284,7 +284,7 @@ void CMatLightmaps::BeginLightmapAllocation()
 	m_currentWhiteLightmapMaterial = 0;
 	m_numSortIDs = 0;
 
-	// need to set the min and max sorting id number for each material to 
+	// need to set the min and max sorting id number for each material to
 	// a default value that basically means that it hasn't been used yet.
 	ResetMaterialLightmapPageInfo();
 
@@ -295,9 +295,9 @@ void CMatLightmaps::BeginLightmapAllocation()
 //-----------------------------------------------------------------------------
 // Allocates space in the lightmaps; must be called after BeginLightmapAllocation
 //-----------------------------------------------------------------------------
-int CMatLightmaps::AllocateLightmap( int width, int height, 
-		                               int offsetIntoLightmapPage[2],
-									   IMaterial *iMaterial )
+int CMatLightmaps::AllocateLightmap( int width, int height,
+												int offsetIntoLightmapPage[2],
+										IMaterial *iMaterial )
 {
 	IMaterialInternal *pMaterial = static_cast<IMaterialInternal *>( iMaterial );
 	if ( !pMaterial )
@@ -306,7 +306,7 @@ int CMatLightmaps::AllocateLightmap( int width, int height,
 		return m_numSortIDs;
 	}
 	pMaterial = pMaterial->GetRealTimeVersion(); //always work with the real time versions of materials internally
-	
+
 	// material change
 	int i;
 	int nPackCount = m_ImagePackers.Count();
@@ -359,7 +359,7 @@ int CMatLightmaps::AllocateLightmap( int width, int height,
 		++m_NumLightmapPages;
 		if ( !m_ImagePackers[i].AddBlock( width, height, &offsetIntoLightmapPage[0], &offsetIntoLightmapPage[1] ) )
 		{
-			Error( "MaterialSystem_Interface_t::AllocateLightmap: lightmap (%dx%d) too big to fit in page (%dx%d)\n", 
+			Error( "MaterialSystem_Interface_t::AllocateLightmap: lightmap (%dx%d) too big to fit in page (%dx%d)\n",
 				width, height, GetMaxLightmapPageWidth(), GetMaxLightmapPageHeight() );
 		}
 
@@ -377,9 +377,9 @@ int CMatLightmaps::AllocateLightmap( int width, int height,
 
 void CMatLightmaps::EndLightmapAllocation()
 {
-	// count the last page that we were on.if it wasn't 
+	// count the last page that we were on.if it wasn't
 	// and count the last sortID that we were on
-	m_NumLightmapPages++; 
+	m_NumLightmapPages++;
 	m_numSortIDs++;
 
 	m_firstDynamicLightmap = m_NumLightmapPages;
@@ -389,7 +389,7 @@ void CMatLightmaps::EndLightmapAllocation()
 //	m_NumLightmapPages += COUNT_DYNAMIC_LIGHTMAP_PAGES;
 	m_dynamic.Init();
 
-	// Compute the dimensions of the last lightmap 
+	// Compute the dimensions of the last lightmap
 	int lastLightmapPageWidth, lastLightmapPageHeight;
 	int nLastIdx = m_ImagePackers.Count();
 	m_ImagePackers[nLastIdx - 1].GetMinimumDimensions( &lastLightmapPageWidth, &lastLightmapPageHeight );
@@ -398,11 +398,11 @@ void CMatLightmaps::EndLightmapAllocation()
 	m_pLightmapPages = new LightmapPageInfo_t[GetNumLightmapPages()];
 	Assert( m_pLightmapPages );
 
-   if ( mat_lightmap_pfms.GetBool())
-   {
-      // This array will be used to write PFM files full of lightmap data
-      m_pLightmapDataPtrArray = new FloatBitMap_t*[GetNumLightmapPages()];
-   }
+	if ( mat_lightmap_pfms.GetBool())
+	{
+		// This array will be used to write PFM files full of lightmap data
+		m_pLightmapDataPtrArray = new FloatBitMap_t*[GetNumLightmapPages()];
+	}
 
 	int i;
 	m_LightmapPageTextureHandles.EnsureCapacity( GetNumLightmapPages() );
@@ -416,11 +416,11 @@ void CMatLightmaps::EndLightmapAllocation()
 
 		AllocateLightmapTexture( i );
 
-        if ( mat_lightmap_pfms.GetBool())
-        {
-           // Initialize the pointers to lightmap data
-           m_pLightmapDataPtrArray[i] = NULL;
-        }
+			if ( mat_lightmap_pfms.GetBool())
+			{
+				// Initialize the pointers to lightmap data
+				m_pLightmapDataPtrArray[i] = NULL;
+			}
 	}
 }
 
@@ -437,7 +437,7 @@ void CMatLightmaps::AllocateLightmapTexture( int lightmap )
 
 	char debugName[256];
 	Q_snprintf( debugName, sizeof( debugName ), "[lightmap %d]", lightmap );
-	
+
 	ImageFormat imageFormat;
 	switch ( HardwareConfig()->GetHDRType() )
 	{
@@ -476,9 +476,9 @@ void CMatLightmaps::AllocateLightmapTexture( int lightmap )
 	case STATE_DEFAULT:
 		// Allow allocations in default state
 		{
-			m_LightmapPageTextureHandles[lightmap] = g_pShaderAPI->CreateTexture( 
+			m_LightmapPageTextureHandles[lightmap] = g_pShaderAPI->CreateTexture(
 				GetLightmapWidth(lightmap), GetLightmapHeight(lightmap), 1,
-				imageFormat, 
+				imageFormat,
 				1, 1, flags, debugName, TEXTURE_GROUP_LIGHTMAP );	// don't mipmap lightmaps
 
 			// Load up the texture data
@@ -556,7 +556,7 @@ void CMatLightmaps::ReleaseLightmapPages()
 	case STATE_DEFAULT:
 		// Allow release in default state only
 		break;
-	
+
 	default:
 		Warning( "ReleaseLightmapPages is expected in STATE_DEFAULT, current state = %d, discarded.\n", m_eLightmapsState );
 		Assert( !"ReleaseLightmapPages is expected in STATE_DEFAULT" );
@@ -567,7 +567,7 @@ void CMatLightmaps::ReleaseLightmapPages()
 	{
 		g_pShaderAPI->DeleteTexture( m_LightmapPageTextureHandles[i] );
 	}
-	
+
 	// We are now in released state
 	m_eLightmapsState = STATE_RELEASED;
 }
@@ -715,9 +715,9 @@ Vector4D ConvertLightmapColorToRGBScale( const float *lightmapColor )
 #ifdef _X360
 // SIMD version of above
 // input numbers from pSrc are on the domain [0..16]
-// output is RGBA 
+// output is RGBA
 // ignores contents of w channel of input
-// the shader does this: rOut = Rin * Ain * 16.0f 
+// the shader does this: rOut = Rin * Ain * 16.0f
 // where Rin is [0..1], a float computed from a byte value [0..255]
 // Ain is therefore the brightest channel (say R) divided by 16 and quantized
 // Rin is computed from pSrc->r by dividing by Ain
@@ -727,7 +727,7 @@ Vector4D ConvertLightmapColorToRGBScale( const float *lightmapColor )
 // sure to test
 fltx4 ConvertLightmapColorToRGBScale( FLTX4 lightmapColor )
 {
-	
+
 	static const fltx4 vTwoFiftyFive = {255.0f, 255.0f, 255.0f, 255.0f};
 	static const fltx4 FourPoint1s = { 0.1, 0.1, 0.1, 0.1 };
 	static const fltx4 vTwoFiftyFiveOverSixteen = {255.0f / 16.0f, 255.0f / 16.0f, 255.0f / 16.0f, 255.0f / 16.0f};
@@ -741,27 +741,27 @@ fltx4 ConvertLightmapColorToRGBScale( FLTX4 lightmapColor )
 	fl4OutofRange = OrSIMD( fl4OutofRange, CmpGtSIMD( minscale, MulSIMD( Four_PointFives, scale ) ) );
 
 	// scale needs to be divided by 16 (because the shader multiplies it by 16)
-	// then mapped to 0..255 and quantized. 
+	// then mapped to 0..255 and quantized.
 	scale = __vrfip(MulSIMD(scale, vTwoFiftyFiveOverSixteen)); // scale = ceil(scale * 255/16)
-		
+
 	fltx4 result = MulSIMD(vTwoFiftyFive, lightmapColor); // start the scale cooking on the final result
-		
+
 	fltx4 invScale = ReciprocalEstSIMD(scale); // invScale = (16/255)(1/scale). may be +inf
 	invScale = MulSIMD(invScale, vTwoFiftyFiveOverSixteen); // take the quantizing factor back out
 															// of the inverse scale (one less
 															// dependent op if you do it this way)
-		
+
 	// scale the input channels
-	// compute so the numbers are all 0..255 ints. (if one happens to 
+	// compute so the numbers are all 0..255 ints. (if one happens to
 	// be 256 due to numerical error in the reciprocation, the unsigned-saturate
 	// store we'll use later on will bake it back down to 255)
 	result = MulSIMD(result, invScale);
-		
+
 	// now, output --
 	// if the input color was nonzero, slip the scale into return value's w
 	// component and return. If the input was zero, return zero.
 
-	result = MaskedAssign( 
+	result = MaskedAssign(
 		fl4OutofRange,
 		SetWSIMD( result, scale ),
 		SetWSIMD( MulSIMD( lightmapColor, vTwoFiftyFive ), vTwoFiftyFiveOverSixteen ) );
@@ -771,7 +771,7 @@ fltx4 ConvertLightmapColorToRGBScale( FLTX4 lightmapColor )
 
 
 // write bumped lightmap update to LDR 8-bit lightmap
-void CMatLightmaps::BumpedLightmapBitsToPixelWriter_LDR( float* pFloatImage, float *pFloatImageBump1, float *pFloatImageBump2, 
+void CMatLightmaps::BumpedLightmapBitsToPixelWriter_LDR( float* pFloatImage, float *pFloatImageBump1, float *pFloatImageBump2,
 	float *pFloatImageBump3, int pLightmapSize[2], int pOffsetIntoLightmapPage[2], FloatBitMap_t *pfmOut )
 {
 	const int nLightmapSize0 = pLightmapSize[0];
@@ -783,7 +783,7 @@ void CMatLightmaps::BumpedLightmapBitsToPixelWriter_LDR( float* pFloatImage, flo
 		int srcTexelOffset = ( sizeof( Vector4D ) / sizeof( float ) ) * ( 0 + t * nLightmapSize0 );
 		m_LightmapPixelWriter.Seek( pOffsetIntoLightmapPage[0], pOffsetIntoLightmapPage[1] + t );
 
-		for( int s = 0; s < nLightmapSize0; 
+		for( int s = 0; s < nLightmapSize0;
 			s++, m_LightmapPixelWriter.SkipBytes(nRewindToNextPixel),srcTexelOffset += (sizeof(Vector4D)/sizeof(float)))
 		{
 			unsigned char color[4][3];
@@ -823,8 +823,8 @@ void CMatLightmaps::BumpedLightmapBitsToPixelWriter_LDR( float* pFloatImage, flo
 				unsigned char alpha =  RoundFloatToByte( pFloatImage[srcTexelOffset+3] * 255.0f );
 				// Write data to the bitmapped represenations so that PFM files can be written
 				PixRGBAF pixelData;
-				pixelData.Red = color[0][0];                  
-				pixelData.Green = color[0][1];                  
+				pixelData.Red = color[0][0];
+				pixelData.Green = color[0][1];
 				pixelData.Blue = color[0][2];
 				pixelData.Alpha = alpha;
 				pfmOut->WritePixelRGBAF( pOffsetIntoLightmapPage[0] + s, pOffsetIntoLightmapPage[1] + t, pixelData);
@@ -835,12 +835,12 @@ void CMatLightmaps::BumpedLightmapBitsToPixelWriter_LDR( float* pFloatImage, flo
 }
 
 // write bumped lightmap update to HDR float lightmap
-void CMatLightmaps::BumpedLightmapBitsToPixelWriter_HDRF( float* pFloatImage, float *pFloatImageBump1, float *pFloatImageBump2, 
-												 float *pFloatImageBump3, int pLightmapSize[2], int pOffsetIntoLightmapPage[2], FloatBitMap_t *pfmOut )
+void CMatLightmaps::BumpedLightmapBitsToPixelWriter_HDRF( float* pFloatImage, float *pFloatImageBump1, float *pFloatImageBump2,
+												float *pFloatImageBump3, int pLightmapSize[2], int pOffsetIntoLightmapPage[2], FloatBitMap_t *pfmOut )
 {
 	if ( IsX360() )
 	{
-		// 360 does not support HDR float mode 
+		// 360 does not support HDR float mode
 		Assert( 0 );
 		return;
 	}
@@ -856,8 +856,8 @@ void CMatLightmaps::BumpedLightmapBitsToPixelWriter_HDRF( float* pFloatImage, fl
 		int srcTexelOffset = ( sizeof( Vector4D ) / sizeof( float ) ) * ( 0 + t * nLightmapSize0 );
 		m_LightmapPixelWriter.Seek( pOffsetIntoLightmapPage[0], pOffsetIntoLightmapPage[1] + t );
 
-		for( int s = 0; 
-			s < nLightmapSize0; 
+		for( int s = 0;
+			s < nLightmapSize0;
 			s++, m_LightmapPixelWriter.SkipBytes(nRewindToNextPixel),srcTexelOffset += (sizeof(Vector4D)/sizeof(float)))
 		{
 			m_LightmapPixelWriter.WritePixelNoAdvanceF( pFloatImage[srcTexelOffset], pFloatImage[srcTexelOffset+1],
@@ -887,7 +887,7 @@ void CMatLightmaps::BumpedLightmapBitsToPixelWriter_HDRF( float* pFloatImage, fl
 
 namespace {
 	// pack a pixel into BGRA8888 and return it with the data packed into the w component
-FORCEINLINE fltx4 PackPixel_BGRA8888( FLTX4 rgba ) 
+FORCEINLINE fltx4 PackPixel_BGRA8888( FLTX4 rgba )
 {
 	// this happens to be in an order such that we can use the handy builtin packing op
 	// clamp to 0..255 (coz it might have leaked over)
@@ -899,14 +899,14 @@ FORCEINLINE fltx4 PackPixel_BGRA8888( FLTX4 rgba )
 	static const XMVECTOR   PackScale = { (1.0f / (FLOAT)(1 << 22)), (1.0f / (FLOAT)(1 << 22)), (1.0f / (FLOAT)(1 << 22)), (1.0f / (FLOAT)(1 << 22))}; // 255.0f / (FLOAT)(1 << 22)
 	static const XMVECTOR   Three = {3.0f, 3.0f, 3.0f, 3.0f};
 
-	fltx4 N = MinSIMD(vTwoFiftyFive, rgba); 
+	fltx4 N = MinSIMD(vTwoFiftyFive, rgba);
 
 	N = __vmaddfp(N, PackScale, Three);
 	N = __vpkd3d(N, N, VPACK_D3DCOLOR, VPACK_32, 0);  // pack into w word
 	return N;
 }
 
-// A small store-gather buffer used in the 
+// A small store-gather buffer used in the
 // BumpedLightmapBitsToPixelWriter_HDRI_BGRA_X360().
 // The store-gather buffers. Hopefully these will live in the L1
 // cache, which will make writing to them, then to memory, faster
@@ -996,7 +996,7 @@ struct ALIGN128 CPixelWriterStoreGather
 	}
 
 	// like commit, but the version we use when we know we're full.
-	// Takes advantage of better compile-time generation for 
+	// Takes advantage of better compile-time generation for
 	// memcpy.
 	void commitWhenFull(CPixelWriter * RESTRICT pLightmapPixelWriter) RESTRICT
 	{
@@ -1008,13 +1008,13 @@ struct ALIGN128 CPixelWriterStoreGather
 #pragma error("You have overridden memcpy(), which is an XBOX360 intrinsic. This function will not behave optimally.")
 #endif
 
-		// if we're full, use compile-time known version of 
+		// if we're full, use compile-time known version of
 		// mempcy to take advantage of its ability to generate
 		// inline code. In fact, use the dword-aligned
 		// version so that we use the 64-bit writing funcs.
 		Assert( m_wordsGathered == kWordsPerRow );
 		COMPILE_TIME_ASSERT((kWordsPerRow & 3) == 0); // the number of words per row has to be a multiple of four
-		
+
 		memcpy(pWriteInto, reinterpret_cast<uint64* RESTRICT>(m_data[0]), kWordsPerRow * sizeof(uint32));
 		pWriteInto += m_bytesBetweenWriterRows;
 		memcpy(pWriteInto, reinterpret_cast<uint64* RESTRICT>(m_data[1]), kWordsPerRow * sizeof(uint32));
@@ -1022,7 +1022,7 @@ struct ALIGN128 CPixelWriterStoreGather
 		memcpy(pWriteInto, reinterpret_cast<uint64* RESTRICT>(m_data[2]), kWordsPerRow * sizeof(uint32));
 		pWriteInto += m_bytesBetweenWriterRows;
 		memcpy(pWriteInto, reinterpret_cast<uint64* RESTRICT>(m_data[3]), kWordsPerRow * sizeof(uint32));
-		
+
 		pLightmapPixelWriter->SkipBytes(m_wordsGathered * sizeof(uint32));
 		m_wordsGathered = 0;
 	}
@@ -1042,20 +1042,20 @@ struct ALIGN128 CPixelWriterStoreGather
 // into the pixelwriter's data, because the difference between the output rows,
 // eg nLightmap0WriterSizeBytes[0], might not be a multiple of 16. Unaligned stores
 // to non-cacheable memory cause an alignment exception.
-static void BumpedLightmapBitsToPixelWriter_HDRI_BGRA_X360( float* RESTRICT pFloatImage, float * RESTRICT pFloatImageBump1, float * RESTRICT pFloatImageBump2, 
-													  float * RESTRICT pFloatImageBump3, int pLightmapSize[2], int pOffsetIntoLightmapPage[2], FloatBitMap_t *pfmOut,
-													  CPixelWriter * RESTRICT m_LightmapPixelWriter)
+static void BumpedLightmapBitsToPixelWriter_HDRI_BGRA_X360( float* RESTRICT pFloatImage, float * RESTRICT pFloatImageBump1, float * RESTRICT pFloatImageBump2,
+														float * RESTRICT pFloatImageBump3, int pLightmapSize[2], int pOffsetIntoLightmapPage[2], FloatBitMap_t *pfmOut,
+														CPixelWriter * RESTRICT m_LightmapPixelWriter)
 {
 	AssertMsg(m_LightmapPixelWriter->GetPixelSize() == 4, "BGRA format is no longer four bytes long? This is unsupported on 360, and probably immoral as well.");
 	const int nLightmap0WriterSizeBytes = pLightmapSize[0] * 4 /*m_LightmapPixelWriter->GetPixelSize()*/;
 	// const int nRewindToNextPixel = -( ( nLightmap0WriterSizeBytes * 3 ) - 4 );
 
-	// assert that 1 * 4 = 4 
-	COMPILE_TIME_ASSERT(sizeof( Vector4D ) == sizeof(float) * 4); 
+	// assert that 1 * 4 = 4
+	COMPILE_TIME_ASSERT(sizeof( Vector4D ) == sizeof(float) * 4);
 
 	AssertMsg(!pfmOut, "Runtime conversion of lightmaps to files is no longer supported on 360.\n");
 
-	
+
 	// The store-gather buffers. Hopefully these will live in the L1
 	// cache, which will make writing to them, then to memory, faster
 	// than just using __stvewx to write directly into WC memory
@@ -1074,13 +1074,13 @@ static void BumpedLightmapBitsToPixelWriter_HDRI_BGRA_X360( float* RESTRICT pFlo
 		// figure out how many four-luxel groups we can process,
 		// then do them in groups, then process the remainder.
 		unsigned int groupsOfFourLimit = (((unsigned int)pLightmapSize[0]) & ~3);
-		
+
 		// we want to hang on to this index when we're done with groups so we can do the remainder.
 		unsigned int s; // counts the number of luxels processed
-		for( s = 0; 
-			s < groupsOfFourLimit; 
+		for( s = 0;
+			s < groupsOfFourLimit;
 			s += 4, srcTexelOffset += 4 * ( FOUR ))
-		{				
+		{
 			static const fltx4 vSixteen = {16.0f, 16.0f, 16.0f, 16.0f};
 			// the store-gather simds
 			fltx4 outBaseMap = Four_Zeros, outBump1 = Four_Zeros, outBump2 = Four_Zeros, outBump3 = Four_Zeros;
@@ -1110,34 +1110,34 @@ static void BumpedLightmapBitsToPixelWriter_HDRI_BGRA_X360( float* RESTRICT pFlo
 			vFloatImageBump3[3] = LoadUnalignedSIMD(pFloatImageBump3 + srcTexelOffset + 12 );
 
 			// perform an arcane averaging operation upon the bump map values
-			// (todo: make this not an inline so it will schedule better -- inlining is 
+			// (todo: make this not an inline so it will schedule better -- inlining is
 			//  done by the linker, which is too late for operation scheduling)
 			ColorSpace::LinearToBumpedLightmap( vFloatImage[0],	vFloatImageBump1[0],
 												vFloatImageBump2[0], vFloatImageBump3[0],
 												// transform "in place":
-												vFloatImage[0], vFloatImageBump1[0], 
+												vFloatImage[0], vFloatImageBump1[0],
 												vFloatImageBump2[0], vFloatImageBump3[0] );
 			ColorSpace::LinearToBumpedLightmap( vFloatImage[1],	vFloatImageBump1[1],
 												vFloatImageBump2[1], vFloatImageBump3[1],
 												// transform "in place":
-												vFloatImage[1], vFloatImageBump1[1], 
+												vFloatImage[1], vFloatImageBump1[1],
 												vFloatImageBump2[1], vFloatImageBump3[1] );
 			ColorSpace::LinearToBumpedLightmap( vFloatImage[2],	vFloatImageBump1[2],
 												vFloatImageBump2[2], vFloatImageBump3[2],
 												// transform "in place":
-												vFloatImage[2], vFloatImageBump1[2], 
+												vFloatImage[2], vFloatImageBump1[2],
 												vFloatImageBump2[2], vFloatImageBump3[2] );
 			ColorSpace::LinearToBumpedLightmap( vFloatImage[3],	vFloatImageBump1[3],
 												vFloatImageBump2[3], vFloatImageBump3[3],
 												// transform "in place":
-												vFloatImage[3], vFloatImageBump1[3], 
+												vFloatImage[3], vFloatImageBump1[3],
 												vFloatImageBump2[3], vFloatImageBump3[3] );
-	
+
 
 			// convert each color to RGB scaled.
 			// DO NOT! make this into a for loop. The (April07 XDK) compiler
 			// in fact DOES NOT unroll them, and will perform very naive
-			// scheduling if you try. 
+			// scheduling if you try.
 
 			// clamp to 0..16 float
 			vFloatImage[0]		= MinSIMD(vFloatImage[0], vSixteen);
@@ -1161,7 +1161,7 @@ static void BumpedLightmapBitsToPixelWriter_HDRI_BGRA_X360( float* RESTRICT pFlo
 			vFloatImageBump3[3] = MinSIMD(vFloatImageBump3[3], vSixteen);
 
 
-			// compute the scaling factor, place it in w, and 
+			// compute the scaling factor, place it in w, and
 			// scale the rest by it. Obliterates whatever was
 			// already in alpha.
 			// This code is why it is important to not use a for
@@ -1224,11 +1224,11 @@ static void BumpedLightmapBitsToPixelWriter_HDRI_BGRA_X360( float* RESTRICT pFlo
 		storeGather.commit(m_LightmapPixelWriter);
 
 		for( ;  // s is where it should be from the loop above
-			s < (unsigned int) pLightmapSize[0]; 
-			s++, 
+			s < (unsigned int) pLightmapSize[0];
+			s++,
 				// m_LightmapPixelWriter->SkipBytes(nRewindToNextPixel), // now handled by store-gather
 				srcTexelOffset += ( FOUR ))
-		{				
+		{
 
 			static const fltx4 vSixteen = {16.0f, 16.0f, 16.0f, 16.0f};
 			fltx4 vColor[4];
@@ -1241,12 +1241,12 @@ static void BumpedLightmapBitsToPixelWriter_HDRI_BGRA_X360( float* RESTRICT pFlo
 			ColorSpace::LinearToBumpedLightmap( vFloatImage,
 				vFloatImageBump1, vFloatImageBump2,
 				vFloatImageBump3,
-				vColor[0], vColor[1], vColor[2], vColor[3] );		
+				vColor[0], vColor[1], vColor[2], vColor[3] );
 
 			// convert each color to RGB scaled.
 			// DO NOT! make this into a for loop. The (April07 XDK) compiler
 			// in fact DOES NOT unroll them, and will perform very naive
-			// scheduling if you try. 
+			// scheduling if you try.
 
 			// clamp to 0..16 float
 			vColor[0] = MinSIMD(vColor[0], vSixteen);
@@ -1254,7 +1254,7 @@ static void BumpedLightmapBitsToPixelWriter_HDRI_BGRA_X360( float* RESTRICT pFlo
 			vColor[2] = MinSIMD(vColor[2], vSixteen);
 			vColor[3] = MinSIMD(vColor[3], vSixteen);
 
-			// compute the scaling factor, place it in w, and 
+			// compute the scaling factor, place it in w, and
 			// scale the rest by it. Obliterates whatever was
 			// already in alpha.
 			// This code is why it is important to not use a for
@@ -1290,7 +1290,7 @@ static void BumpedLightmapBitsToPixelWriter_HDRI_BGRA_X360( float* RESTRICT pFlo
 					color[i][1] = RoundFloatToByte( vRGBScale.y * 255.0f );
 					color[i][2] = RoundFloatToByte( vRGBScale.z * 255.0f );
 					color[i][3] = RoundFloatToByte( vRGBScale.w * 255.0f );
-				}						
+				}
 			}
 
 			/*
@@ -1298,9 +1298,9 @@ static void BumpedLightmapBitsToPixelWriter_HDRI_BGRA_X360( float* RESTRICT pFlo
 			{
 				uint32 pack = (PackPixel_BGRA8888( vColor[ii] ).u[3]);
 				if (color[ii][3] != 0)
-				Assert(	color[ii][0] == (pack & 0xFF0000) >> 16	&& 
-						color[ii][1] == (pack & 0xFF00) >> 8		&& 
-						color[ii][2] == (pack & 0xFF)				&& 
+				Assert(	color[ii][0] == (pack & 0xFF0000) >> 16	&&
+						color[ii][1] == (pack & 0xFF00) >> 8		&&
+						color[ii][2] == (pack & 0xFF)				&&
 						color[ii][3] == (pack & 0xFF000000) >> 24 );
 			}
 			*/
@@ -1341,8 +1341,8 @@ static void BumpedLightmapBitsToPixelWriter_HDRI_BGRA_X360( float* RESTRICT pFlo
 #endif // _X360
 
 // write bumped lightmap update to HDR integer lightmap
-void CMatLightmaps::BumpedLightmapBitsToPixelWriter_HDRI( float* RESTRICT pFloatImage, float * RESTRICT pFloatImageBump1, float * RESTRICT pFloatImageBump2, 
-												 float * RESTRICT pFloatImageBump3, int pLightmapSize[2], int pOffsetIntoLightmapPage[2], FloatBitMap_t *pfmOut ) RESTRICT
+void CMatLightmaps::BumpedLightmapBitsToPixelWriter_HDRI( float* RESTRICT pFloatImage, float * RESTRICT pFloatImageBump1, float * RESTRICT pFloatImageBump2,
+												float * RESTRICT pFloatImageBump3, int pLightmapSize[2], int pOffsetIntoLightmapPage[2], FloatBitMap_t *pfmOut ) RESTRICT
 {
 	const int nLightmapSize0 = pLightmapSize[0];
 	const int nLightmap0WriterSizeBytes = nLightmapSize0 * m_LightmapPixelWriter.GetPixelSize();
@@ -1358,8 +1358,8 @@ void CMatLightmaps::BumpedLightmapBitsToPixelWriter_HDRI( float* RESTRICT pFloat
 				int srcTexelOffset = ( sizeof( Vector4D ) / sizeof( float ) ) * ( 0 + t * nLightmapSize0 );
 				m_LightmapPixelWriter.Seek( pOffsetIntoLightmapPage[0], pOffsetIntoLightmapPage[1] + t );
 
-				for( int s = 0; 
-					s < nLightmapSize0; 
+				for( int s = 0;
+					s < nLightmapSize0;
 					s++, m_LightmapPixelWriter.SkipBytes(nRewindToNextPixel),srcTexelOffset += (sizeof(Vector4D)/sizeof(float)))
 				{
 					unsigned short color[4][4];
@@ -1419,10 +1419,10 @@ void CMatLightmaps::BumpedLightmapBitsToPixelWriter_HDRI( float* RESTRICT pFloat
 			int srcTexelOffset = ( sizeof( Vector4D ) / sizeof( float ) ) * ( 0 + t * nLightmapSize0 );
 			m_LightmapPixelWriter.Seek( pOffsetIntoLightmapPage[0], pOffsetIntoLightmapPage[1] + t );
 
-			for( int s = 0; 
-				s < nLightmapSize0; 
+			for( int s = 0;
+				s < nLightmapSize0;
 				s++, m_LightmapPixelWriter.SkipBytes(nRewindToNextPixel),srcTexelOffset += (sizeof(Vector4D)/sizeof(float)))
-			{					
+			{
 				unsigned short color[4][4];
 
 				ColorSpace::LinearToBumpedLightmap( &pFloatImage[srcTexelOffset],
@@ -1447,7 +1447,7 @@ void CMatLightmaps::BumpedLightmapBitsToPixelWriter_HDRI( float* RESTRICT pFloat
 						color[i][1] = RoundFloatToByte( vRGBScale.y * 255.0f );
 						color[i][2] = RoundFloatToByte( vRGBScale.z * 255.0f );
 						color[i][3] = RoundFloatToByte( vRGBScale.w * 255.0f );
-					}						
+					}
 				}
 #endif
 				m_LightmapPixelWriter.WritePixelNoAdvance( color[0][0], color[0][1], color[0][2], color[0][3] );
@@ -1465,8 +1465,8 @@ void CMatLightmaps::BumpedLightmapBitsToPixelWriter_HDRI( float* RESTRICT pFloat
 				if ( pfmOut )
 				{
 					PixRGBAF pixelData;
-					pixelData.Red = color[0][0];                  
-					pixelData.Green = color[0][1];                  
+					pixelData.Red = color[0][0];
+					pixelData.Green = color[0][1];
 					pixelData.Blue = color[0][2];
 					pixelData.Alpha = alpha;
 					pfmOut->WritePixelRGBAF(pOffsetIntoLightmapPage[0] + s, pOffsetIntoLightmapPage[1] + t, pixelData);
@@ -1483,23 +1483,23 @@ void CMatLightmaps::BumpedLightmapBitsToPixelWriter_HDRI( float* RESTRICT pFloat
 		{
 			// broken out into a static to make things more readable
 			// and be nicer to the instruction cache
-			BumpedLightmapBitsToPixelWriter_HDRI_BGRA_X360( pFloatImage, pFloatImageBump1, pFloatImageBump2, 
+			BumpedLightmapBitsToPixelWriter_HDRI_BGRA_X360( pFloatImage, pFloatImageBump1, pFloatImageBump2,
 				pFloatImageBump3, pLightmapSize, pOffsetIntoLightmapPage, pfmOut, &m_LightmapPixelWriter );
 		}
 		else
 		{	// This case should actually never be hit -- we do not use RGBA.
 			for( int t = 0; t < pLightmapSize[1]; t++ )
 			{
-				// assert that 1 * 4 = 4 
-				COMPILE_TIME_ASSERT(sizeof( Vector4D ) == sizeof(float) * 4); 
+				// assert that 1 * 4 = 4
+				COMPILE_TIME_ASSERT(sizeof( Vector4D ) == sizeof(float) * 4);
 #define	FOUR (sizeof( Vector4D ) / sizeof( float ))  // in case this ever changes
 				int srcTexelOffset = ( FOUR ) * ( 0 + t * nLightmapSize0 );
 				m_LightmapPixelWriter.Seek( pOffsetIntoLightmapPage[0], pOffsetIntoLightmapPage[1] + t );
 
-				for( int s = 0; 
-					s < nLightmapSize0; 
+				for( int s = 0;
+					s < nLightmapSize0;
 					s++, m_LightmapPixelWriter.SkipBytes(nRewindToNextPixel),srcTexelOffset += ( FOUR ))
-				{				
+				{
 
 					static const fltx4 vSixteen = {16.0f, 16.0f, 16.0f, 16.0f};
 					fltx4 vColor[4];
@@ -1507,17 +1507,17 @@ void CMatLightmaps::BumpedLightmapBitsToPixelWriter_HDRI( float* RESTRICT pFloat
 					fltx4 vFloatImageBump1 = LoadUnalignedSIMD(&pFloatImageBump1[srcTexelOffset]);
 					fltx4 vFloatImageBump2 = LoadUnalignedSIMD(&pFloatImageBump2[srcTexelOffset]);
 					fltx4 vFloatImageBump3 = LoadUnalignedSIMD(&pFloatImageBump3[srcTexelOffset]);
-					
+
 					// perform an arcane averaging operation upon the bump map values
 					ColorSpace::LinearToBumpedLightmap( vFloatImage,
 						vFloatImageBump1, vFloatImageBump2,
 						vFloatImageBump3,
-						vColor[0], vColor[1], vColor[2], vColor[3] );		
+						vColor[0], vColor[1], vColor[2], vColor[3] );
 
 					// convert each color to RGB scaled.
 					// DO NOT! make this into a for loop. The (April07 XDK) compiler
 					// in fact DOES NOT unroll them, and will perform very naive
-					// scheduling if you try. 
+					// scheduling if you try.
 
 					// clamp to 0..16 float
 					vColor[0] = MinSIMD(vColor[0], vSixteen);
@@ -1557,8 +1557,8 @@ void CMatLightmaps::BumpedLightmapBitsToPixelWriter_HDRI( float* RESTRICT pFloat
 						DebuggerBreakIfDebugging();
 						/*
 						PixRGBAF pixelData;
-						pixelData.Red = color[0][0];                  
-						pixelData.Green = color[0][1];                  
+						pixelData.Red = color[0][0];
+						pixelData.Green = color[0][1];
 						pixelData.Blue = color[0][2];
 						pixelData.Alpha = alpha;
 						pfmOut->WritePixelRGBAF(pOffsetIntoLightmapPage[0] + s, pOffsetIntoLightmapPage[1] + t, pixelData);
@@ -1590,8 +1590,8 @@ void CMatLightmaps::LightmapBitsToPixelWriter_LDR( float* pFloatImage, int pLigh
 			{
 				// Write data to the bitmapped represenations so that PFM files can be written
 				PixRGBAF pixelData;
-				pixelData.Red = color[0];                  
-				pixelData.Green = color[1];                  
+				pixelData.Red = color[0];
+				pixelData.Green = color[1];
 				pixelData.Blue = color[2];
 				pixelData.Alpha = color[3];
 				pfmOut->WritePixelRGBAF( pOffsetIntoLightmapPage[0] + s, pOffsetIntoLightmapPage[1] + t, pixelData );
@@ -1605,7 +1605,7 @@ void CMatLightmaps::LightmapBitsToPixelWriter_HDRF( float* pFloatImage, int pLig
 {
 	if ( IsX360() )
 	{
-		// 360 does not support HDR float 
+		// 360 does not support HDR float
 		Assert( 0 );
 		return;
 	}
@@ -1707,12 +1707,12 @@ void CMatLightmaps::LightmapBitsToPixelWriter_HDRI( float* RESTRICT pFloatImage,
 				{
 					// Write data to the bitmapped represenations so that PFM files can be written
 					PixRGBAF pixelData;
-					pixelData.Red = pSrc[0];                  
-					pixelData.Green = pSrc[1];                  
+					pixelData.Red = pSrc[0];
+					pixelData.Green = pSrc[1];
 					pixelData.Blue = pSrc[2];
 					pixelData.Alpha = pSrc[3];
 					pfmOut->WritePixelRGBAF( pOffsetIntoLightmapPage[0] + s, pOffsetIntoLightmapPage[1] + t, pixelData );
-				}				
+				}
 			}
 		}
 	}
@@ -1777,23 +1777,23 @@ void CMatLightmaps::LightmapBitsToPixelWriter_HDRI( float* RESTRICT pFloatImage,
 		float * RESTRICT pSrc = pFloatImage;
 		// Assert((reinterpret_cast<unsigned int>(pSrc) & 15) == 0); // 16-byte aligned?
 		COMPILE_TIME_ASSERT(sizeof(Vector4D)/sizeof(*pSrc) == 4); // assert that 1 * 4 = 4
-#ifndef USE_32BIT_LIGHTMAPS_ON_360 
+#ifndef USE_32BIT_LIGHTMAPS_ON_360
 #pragma error("This function only supports 32 bit lightmaps.")
 #endif
 
 		// input numbers from pSrc are on the domain [0..+inf]
 		// we clamp them to the range [0..16]
-		// output is RGBA 
-		// the shader does this: rOut = Rin * Ain * 16.0f 
+		// output is RGBA
+		// the shader does this: rOut = Rin * Ain * 16.0f
 		// where Rin is [0..1], a float computed from a byte value [0..255]
 		// Ain is therefore the brightest channel (say R) divided by 16 and quantized
 		// Rin is computed from pSrc->r by dividing by Ain
-		
+
 		// rather than switching inside WritePixel for each different format,
 		// thus causing a 23-cycle pipeline clear for every pixel, we'll
 		// branch on the format here. That will allow us to unroll the inline
-		// pixel write functions differently depending on their different 
-		// latencies. 
+		// pixel write functions differently depending on their different
+		// latencies.
 
 		Assert(!pfmOut); // should never happen on 360.
 #ifndef ALLOW_PFM_OUTPUT_ON_360
@@ -1808,12 +1808,12 @@ void CMatLightmaps::LightmapBitsToPixelWriter_HDRI( float* RESTRICT pFloatImage,
 
 		// switch once, here, outside the loop, rather than
 		// switching inside each pixel. Switches are not fast
-		// on x360: they are usually implemented as jumps 
+		// on x360: they are usually implemented as jumps
 		// through function tables, which have a 24-cycle
-		// stall. 
+		// stall.
 		switch (m_LightmapPixelWriter.GetFormat())
 		{
-			// note: format names are low-order-byte first. 
+			// note: format names are low-order-byte first.
 		case IMAGE_FORMAT_RGBA8888:
 		case IMAGE_FORMAT_LINEAR_RGBA8888:
 		{
@@ -1821,13 +1821,13 @@ void CMatLightmaps::LightmapBitsToPixelWriter_HDRI( float* RESTRICT pFloatImage,
 			{
 				m_LightmapPixelWriter.Seek( pOffsetIntoLightmapPage[0], pOffsetIntoLightmapPage[1] + t );
 				for ( int s = 0; s < pLightmapSize[0]; ++s, pSrc += 4 )
-				{	
+				{
 					static const fltx4 vSixteen = {16.0f, 16.0f, 16.0f, 16.0f};
 					fltx4 rgba = LoadUnalignedSIMD(pSrc);
 
 					// clamp to 0..16 float
 					rgba = MinSIMD(rgba, vSixteen);
-					// compute the scaling factor, place it in w, and 
+					// compute the scaling factor, place it in w, and
 					// scale the rest by it.
 					rgba = ConvertLightmapColorToRGBScale( rgba );
 					// rgba is now  float 0..255 in each component
@@ -1841,7 +1841,7 @@ void CMatLightmaps::LightmapBitsToPixelWriter_HDRI( float* RESTRICT pFloatImage,
 						PixRGBAF pixelData;
 						XMStoreVector4(&pixelData,rgba);
 						pfmOut->WritePixelRGBAF( pOffsetIntoLightmapPage[0] + s, pOffsetIntoLightmapPage[1] + t, pixelData );
-					}			
+					}
 					*/
 				}
 			}
@@ -1850,18 +1850,18 @@ void CMatLightmaps::LightmapBitsToPixelWriter_HDRI( float* RESTRICT pFloatImage,
 
 		case IMAGE_FORMAT_BGRA8888: // NOTE! : the low order bits are first in this naming convention.
 		case IMAGE_FORMAT_LINEAR_BGRA8888:
-		{			
+		{
 			for ( int t = 0; t < pLightmapSize[1]; ++t )
 			{
 				m_LightmapPixelWriter.Seek( pOffsetIntoLightmapPage[0], pOffsetIntoLightmapPage[1] + t );
 				for ( int s = 0; s < pLightmapSize[0]; ++s, pSrc += 4 )
-				{	
+				{
 					static const fltx4 vSixteen = {16.0f, 16.0f, 16.0f, 16.0f};
 					fltx4 rgba = LoadUnalignedSIMD(pSrc);
 
 					// clamp to 0..16 float
 					rgba = MinSIMD(rgba, vSixteen);
-					// compute the scaling factor, place it in w, and 
+					// compute the scaling factor, place it in w, and
 					// scale the rest by it.
 					rgba = ConvertLightmapColorToRGBScale( rgba );
 					// rgba is now  float 0..255 in each component
@@ -1876,7 +1876,7 @@ void CMatLightmaps::LightmapBitsToPixelWriter_HDRI( float* RESTRICT pFloatImage,
 						PixRGBAF pixelData;
 						XMStoreVector4(&pixelData,rgba);
 						pfmOut->WritePixelRGBAF( pOffsetIntoLightmapPage[0] + s, pOffsetIntoLightmapPage[1] + t, pixelData );
-					}			
+					}
 					*/
 				}
 			}
@@ -1940,7 +1940,7 @@ int CMatLightmaps::AllocateDynamicLightmap( int lightmapSize[2], int *pOutOffset
 			return lightmapPageIndex;
 		}
 	}
-	
+
 	return -1;
 }
 
@@ -1948,9 +1948,9 @@ int CMatLightmaps::AllocateDynamicLightmap( int lightmapSize[2], int *pOutOffset
 // Updates the lightmap
 //-----------------------------------------------------------------------------
 void CMatLightmaps::UpdateLightmap( int lightmapPageID, int lightmapSize[2],
-									  int offsetIntoLightmapPage[2], 
-									  float *pFloatImage, float *pFloatImageBump1,
-									  float *pFloatImageBump2, float *pFloatImageBump3 )
+										int offsetIntoLightmapPage[2],
+										float *pFloatImage, float *pFloatImageBump1,
+										float *pFloatImageBump2, float *pFloatImageBump3 )
 {
 	VPROF( "CMatRenderContext::UpdateLightmap" );
 
@@ -2026,15 +2026,15 @@ void CMatLightmaps::UpdateLightmap( int lightmapPageID, int lightmapSize[2],
 			switch( HardwareConfig()->GetHDRType() )
 			{
 			case HDR_TYPE_NONE:
-				BumpedLightmapBitsToPixelWriter_LDR( pFloatImage, pFloatImageBump1, pFloatImageBump2, pFloatImageBump3, 
+				BumpedLightmapBitsToPixelWriter_LDR( pFloatImage, pFloatImageBump1, pFloatImageBump2, pFloatImageBump3,
 					lightmapSize, bLockSubRect ? subRectOffset : offsetIntoLightmapPage, pfmOut );
 				break;
 			case HDR_TYPE_INTEGER:
-				BumpedLightmapBitsToPixelWriter_HDRI( pFloatImage, pFloatImageBump1, pFloatImageBump2, pFloatImageBump3, 
+				BumpedLightmapBitsToPixelWriter_HDRI( pFloatImage, pFloatImageBump1, pFloatImageBump2, pFloatImageBump3,
 					lightmapSize, bLockSubRect ? subRectOffset : offsetIntoLightmapPage, pfmOut );
 				break;
 			case HDR_TYPE_FLOAT:
-				BumpedLightmapBitsToPixelWriter_HDRF( pFloatImage, pFloatImageBump1, pFloatImageBump2, pFloatImageBump3, 
+				BumpedLightmapBitsToPixelWriter_HDRF( pFloatImage, pFloatImageBump1, pFloatImageBump2, pFloatImageBump3,
 					lightmapSize, bLockSubRect ? subRectOffset : offsetIntoLightmapPage, pfmOut );
 				break;
 			}
@@ -2092,7 +2092,7 @@ void CMatLightmaps::ComputeSortInfo( MaterialSystem_SortInfo_t* pInfo, int& sort
 		{
 			continue;
 		}
-		
+
 		//	const IMaterialVar *pTransVar = pMaterial->GetMaterialProperty( MATERIAL_PROPERTY_OPACITY );
 		//	if( ( !alpha && ( pTransVar->GetIntValue() == MATERIAL_TRANSLUCENT ) ) ||
 		//		( alpha && !( pTransVar->GetIntValue() == MATERIAL_TRANSLUCENT ) ) )
@@ -2100,12 +2100,12 @@ void CMatLightmaps::ComputeSortInfo( MaterialSystem_SortInfo_t* pInfo, int& sort
 		//		return true;
 		//	}
 
-	
+
 //		Warning( "sort stuff: %s %s\n", material->GetName(), bAlpha ? "alpha" : "not alpha" );
-		
+
 		// fill in the lightmapped materials
-		for ( lightmapPageID = pMaterial->GetMinLightmapPageID(); 
-			 lightmapPageID <= pMaterial->GetMaxLightmapPageID(); ++lightmapPageID )
+		for ( lightmapPageID = pMaterial->GetMinLightmapPageID();
+			lightmapPageID <= pMaterial->GetMaxLightmapPageID(); ++lightmapPageID )
 		{
 			pInfo[sortId].material = pMaterial->GetQueueFriendlyVersion();
 			pInfo[sortId].lightmapPageID = lightmapPageID;
@@ -2129,7 +2129,7 @@ void CMatLightmaps::ComputeWhiteLightmappedSortInfo( MaterialSystem_SortInfo_t* 
 		IMaterialInternal* pMaterial = GetMaterialInternal(i);
 
 		// fill in the lightmapped materials that are actually used by this level
-		if( pMaterial->GetNeedsWhiteLightmap() && 
+		if( pMaterial->GetNeedsWhiteLightmap() &&
 			( pMaterial->GetReferenceCount() > 0 ) )
 		{
 			// const IMaterialVar *pTransVar = pMaterial->GetMaterialProperty( MATERIAL_PROPERTY_OPACITY );
@@ -2187,5 +2187,3 @@ void CMatLightmaps::EnableLightmapFiltering( bool enabled )
 		}
 	}
 }
-
-

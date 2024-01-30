@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -48,7 +48,7 @@ char *memfgets( unsigned char *pMemFile, int fileSize, int *pFilePos, char *pBuf
 		int size = i - filePos;
 		// copy it out
 		memcpy( pBuffer, pMemFile + filePos, sizeof(unsigned char)*size );
-		
+
 		// If the buffer isn't full, terminate (this is always true)
 		if ( size < bufferSize )
 			pBuffer[size] = 0;

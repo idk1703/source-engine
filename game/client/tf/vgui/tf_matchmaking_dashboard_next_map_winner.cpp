@@ -14,7 +14,7 @@
 using namespace vgui;
 using namespace GCSDK;
 
-#ifdef STAGING_ONLY 
+#ifdef STAGING_ONLY
 extern ConVar tf_mm_popup_state_override;
 #endif
 
@@ -30,7 +30,7 @@ public:
 	virtual bool ShouldBeActve() const OVERRIDE
 	{
 #ifdef STAGING_ONLY
-		if ( FStrEq( const_cast<CNextMapWinnerDashboardState*>(this)->GetName(), tf_mm_popup_state_override.GetString() ) ) 
+		if ( FStrEq( const_cast<CNextMapWinnerDashboardState*>(this)->GetName(), tf_mm_popup_state_override.GetString() ) )
 			return true;
 #endif
 
@@ -40,7 +40,7 @@ public:
 		if ( BInEndOfMatch() &&
 			 TFGameRules() &&
 			 TFGameRules()->GetCurrentNextMapVotingState() == CTFGameRules::NEXT_MAP_VOTE_STATE_MAP_CHOSEN_PAUSE &&
-			 eWinningVote != CTFGameRules::USER_NEXT_MAP_VOTE_UNDECIDED && 
+			 eWinningVote != CTFGameRules::USER_NEXT_MAP_VOTE_UNDECIDED &&
 			 GTFGCClientSystem()->BConnectedToMatchServer( false ) )
 		{
 			return true;
@@ -70,7 +70,7 @@ private:
 
 		// Sound effect for success
 		surface()->PlaySound( UTIL_GetRandomSoundFromEntry( "Vote.Passed" ) );
-		
+
 		const MapDef_t *pMapDef = GetItemSchema()->GetMasterMapDefByIndex( nWinningDefIndex );
 		if ( pMapDef )
 		{

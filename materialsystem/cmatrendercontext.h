@@ -69,7 +69,7 @@ public:
 	ITexture *								GetRenderTarget( void );
 	ITexture *								GetRenderTargetEx( int nRenderTargetID );
 
-	IMaterialInternal*						GetCurrentMaterialInternal() const								{ return m_pCurrentMaterial;	}	
+	IMaterialInternal*						GetCurrentMaterialInternal() const								{ return m_pCurrentMaterial;	}
 	virtual void							SetCurrentMaterialInternal(IMaterialInternal* pCurrentMaterial)	{ m_pCurrentMaterial = pCurrentMaterial; Assert( (m_pCurrentMaterial == NULL) || ((IMaterialInternal *)m_pCurrentMaterial)->IsRealTimeVersion() );	}
 	IMaterial *								GetCurrentMaterial()											{ return GetCurrentMaterialInternal(); }
 	virtual void *							GetCurrentProxy()												{ return m_pCurrentProxyData; }
@@ -214,7 +214,7 @@ protected:
 	ITextureInternal *					m_pUserDefinedLightmap;
 
 	ITexture *							m_pLocalCubemapTexture;
-	
+
 	ITexture *							m_pCurrentFrameBufferCopyTexture[MAX_FB_TEXTURES];
 
 	MaterialHeightClipMode_t			m_HeightClipMode;
@@ -239,7 +239,7 @@ protected:
 
 	float								m_FrameTime;
 
-	Vector								m_LastSetToneMapScale;							   	
+	Vector								m_LastSetToneMapScale;
 	float								m_CurToneMapScale;									// last scale for chasing purposes
 	float								m_GoalToneMapScale;
 	ShaderViewport_t					m_Viewport;
@@ -410,7 +410,7 @@ public:
 	MaterialFogMode_t						GetFogMode( void )													{ return g_pShaderAPI->GetSceneFogMode(); }
 	void									GetFogColor( unsigned char *rgb )									{ g_pShaderAPI->GetSceneFogColor( rgb ); }
 	DELEGATE_TO_OBJECT_3V(					GetFogDistances, float *, float *, float *, g_pShaderAPI );
-	int										GetCurrentNumBones( ) const											{ return g_pShaderAPI->GetCurrentNumBones(); }	
+	int										GetCurrentNumBones( ) const											{ return g_pShaderAPI->GetCurrentNumBones(); }
 
 	// Bind standard textures
 	void									BindStandardTexture( Sampler_t sampler, StandardTextureId_t id );
@@ -466,7 +466,7 @@ public:
 	void									PushCustomClipPlane( const float *fPlane );
 	void									PopCustomClipPlane( void );
 	void									ApplyCustomClipPlanes( void ); //updates the clip planes based on how many are supported by the hardware using the top of the stack first, at the end of the stack, the height clip plane will be evaluated
-	
+
 	// Force writes only when z matches. . . useful for stenciling things out
 	// by rendering the desired Z values ahead of time.
 	DELEGATE_TO_OBJECT_1V(					ForceDepthFuncEquals, bool, g_pShaderAPI );
@@ -488,7 +488,7 @@ public:
 	void									BindLightmapTexture( ITexture *pLightmapTexture );
 	void									CopyRenderTargetToTextureEx( ITexture *pTexture, int nRenderTargetID, Rect_t *pSrcRect, Rect_t *pDstRect = NULL );
 	void									CopyTextureToRenderTargetEx( int nRenderTargetID, ITexture *pTexture, Rect_t *pSrcRect, Rect_t *pDstRect = NULL );
-	
+
 	DELEGATE_TO_OBJECT_2V(					SetFloatRenderingParameter, int, float, g_pShaderAPI );
 	DELEGATE_TO_OBJECT_2V(					SetIntRenderingParameter, int, int, g_pShaderAPI );
 	DELEGATE_TO_OBJECT_2V(					SetVectorRenderingParameter, int, const Vector &, g_pShaderAPI );
@@ -590,7 +590,7 @@ public:
 
 	//---------------------------------------------------------
 protected:
-	
+
 	IMaterialInternal *GetMaterialInternal( MaterialHandle_t ) const;
 	IMaterialInternal *GetDrawFlatMaterial();
 	IMaterialInternal *GetRenderTargetBlitMaterial();
@@ -685,7 +685,7 @@ inline MorphFormat_t CMatRenderContext::GetBoundMorphFormat()
 }
 
 //-----------------------------------------------------------------------------
-// Use this to create static vertex and index buffers 
+// Use this to create static vertex and index buffers
 //-----------------------------------------------------------------------------
 inline IMesh* CMatRenderContext::CreateStaticMesh( VertexFormat_t vertexFormat, const char *pTextureBudgetGroup, IMaterial * pMaterial )
 {

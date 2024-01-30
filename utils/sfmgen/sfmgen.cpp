@@ -144,8 +144,8 @@ static StdIOWriteBinary io_out;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &walk - 
+// Purpose:
+// Input  : &walk -
 //-----------------------------------------------------------------------------
 static void SceneManager_ParseSentence( CSentence& sentence, IterateRIFF &walk )
 {
@@ -214,7 +214,7 @@ static SpewRetval_t SpewStdout( SpewType_t spewType, char const *pMsg )
 	printf( pMsg );
 	fflush( stdout );
 
-	return ( spewType == SPEW_ASSERT ) ? SPEW_DEBUGGER : SPEW_CONTINUE; 
+	return ( spewType == SPEW_ASSERT ) ? SPEW_DEBUGGER : SPEW_CONTINUE;
 }
 
 
@@ -299,7 +299,7 @@ bool CSFMGenApp::Create()
 {
 	SpewOutputFunc( SpewStdout );
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "vstdlib.dll",			PROCESS_UTILS_INTERFACE_VERSION },
 		{ "materialsystem.dll",		MATERIAL_SYSTEM_INTERFACE_VERSION },
@@ -414,7 +414,7 @@ CSFMGenApp::TokenRetVal_t CSFMGenApp::ParseToken( CUtlBuffer &buf, char *pToken,
 				pToken[nLen++] = c;
 			}
 		}
-		if ( !buf.IsValid() ) 
+		if ( !buf.IsValid() )
 		{
 			pToken[nLen] = 0;
 			return TOKEN_EOF;
@@ -439,7 +439,7 @@ void CSFMGenApp::ParseCSVFile( CUtlBuffer &buf, CUtlVector< SFMInfo_t > &infoLis
 		TokenRetVal_t nTokenRetVal = ParseToken( buf, pToken, sizeof(pToken) );
 		if ( nTokenRetVal == TOKEN_EOF )
 			return;
-		
+
 		if ( nTokenRetVal == TOKEN_COMMENT )
 		{
 			continue;
@@ -500,7 +500,7 @@ void CSFMGenApp::UniqueifyNames( CUtlVector< SFMInfo_t > &infoList )
 	{
 		const char *pName = infoList[i].m_DMXFileName;
 
-		int nFoundCount; 
+		int nFoundCount;
 		if ( !foundNames.Defined( pName ) )
 		{
 			nFoundCount = foundNames[ pName ] = 1;
@@ -661,7 +661,7 @@ void CSFMGenApp::BuildFacialControlList( CDmeFilmClip *pShot, CDmeAnimationSet *
 //-----------------------------------------------------------------------------
 // Creates a single sfm file
 //-----------------------------------------------------------------------------
-void CSFMGenApp::GenerateSFMFile( const SFMGenInfo_t& sfmGenInfo, const SFMInfo_t &info, 
+void CSFMGenApp::GenerateSFMFile( const SFMGenInfo_t& sfmGenInfo, const SFMInfo_t &info,
 	studiohdr_t *pStudioHdr, const char *pOutputDirectory, const char *pExportFacPath )
 {
 	CSFMSession session;
@@ -748,11 +748,11 @@ void CSFMGenApp::GenerateSFMFile( const SFMGenInfo_t& sfmGenInfo, const SFMInfo_
 		{
 			char pFACFileName[MAX_PATH];
 			Q_ComposeFileName( pExportFacPath, info.m_DMXFileName, pFACFileName, sizeof(pFACFileName) );
-			Q_SetExtension( pFACFileName, ".dmx", sizeof(pFACFileName) ); 
+			Q_SetExtension( pFACFileName, ".dmx", sizeof(pFACFileName) );
 			ExportFacialAnimation( pFACFileName, pMovie, pShot, pAnimationSet );
 		}
 	}
-	
+
 	if ( sfmGenInfo.m_bGenerateSFMFiles )
 	{
 		SaveSFMFile( session.Root(), pOutputDirectory, info.m_DMXFileName );
@@ -913,7 +913,7 @@ int CSFMGenApp::Main()
 	g_pDataModel->SetUndoEnabled( false );
 
 	// This bit of hackery allows us to access files on the harddrive
-	g_pFullFileSystem->AddSearchPath( "", "LOCAL", PATH_ADD_TO_HEAD ); 
+	g_pFullFileSystem->AddSearchPath( "", "LOCAL", PATH_ADD_TO_HEAD );
 
 	if ( CommandLine()->CheckParm( "-h" ) || CommandLine()->CheckParm( "-help" ) )
 	{

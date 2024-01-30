@@ -52,7 +52,7 @@ AppModule_t CAppSystemGroup::LoadModule( const char *pDLLName )
 	Q_StripExtension( pDLLName, pModuleName, nLen );
 
 	// See if we already loaded it...
-	for ( int i = m_Modules.Count(); --i >= 0; ) 
+	for ( int i = m_Modules.Count(); --i >= 0; )
 	{
 		if ( m_Modules[i].m_pModuleName )
 		{
@@ -86,7 +86,7 @@ AppModule_t CAppSystemGroup::LoadModule( CreateInterfaceFn factory )
 	}
 
 	// See if we already loaded it...
-	for ( int i = m_Modules.Count(); --i >= 0; ) 
+	for ( int i = m_Modules.Count(); --i >= 0; )
 	{
 		if ( m_Modules[i].m_Factory )
 		{
@@ -98,7 +98,7 @@ AppModule_t CAppSystemGroup::LoadModule( CreateInterfaceFn factory )
 	int nIndex = m_Modules.AddToTail();
 	m_Modules[nIndex].m_pModule = NULL;
 	m_Modules[nIndex].m_Factory = factory;
-	m_Modules[nIndex].m_pModuleName = NULL; 
+	m_Modules[nIndex].m_pModuleName = NULL;
 	return nIndex;
 }
 
@@ -122,7 +122,7 @@ void CAppSystemGroup::UnloadAllModules()
 
 
 //-----------------------------------------------------------------------------
-// Methods to add/remove various global singleton systems 
+// Methods to add/remove various global singleton systems
 //-----------------------------------------------------------------------------
 IAppSystem *CAppSystemGroup::AddSystem( AppModule_t module, const char *pInterfaceName )
 {
@@ -141,7 +141,7 @@ IAppSystem *CAppSystemGroup::AddSystem( AppModule_t module, const char *pInterfa
 	}
 
 	IAppSystem *pAppSystem = static_cast<IAppSystem*>(pSystem);
-	
+
 	int sysIndex = m_Systems.AddToTail( pAppSystem );
 
 	// Inserting into the dict will help us do named lookup later
@@ -150,7 +150,7 @@ IAppSystem *CAppSystemGroup::AddSystem( AppModule_t module, const char *pInterfa
 	return pAppSystem;
 }
 
-static char const *g_StageLookup[] = 
+static char const *g_StageLookup[] =
 {
 	"CREATION",
 	"CONNECTION",
@@ -180,7 +180,7 @@ void CAppSystemGroup::ReportStartupFailure( int nErrorStage, int nSysIndex )
 		pszSystemName = m_SystemDict.GetElementName( i );
 		break;
 	}
-		 
+
 	// Walk the dictionary
 	Warning( "System (%s) failed during stage %s\n", pszSystemName, pszStageDesc );
 }
@@ -230,7 +230,7 @@ bool CAppSystemGroup::AddSystems( AppSystemInfo_t *pSystemList )
 
 
 //-----------------------------------------------------------------------------
-// Methods to find various global singleton systems 
+// Methods to find various global singleton systems
 //-----------------------------------------------------------------------------
 void *CAppSystemGroup::FindSystem( const char *pSystemName )
 {
@@ -271,7 +271,7 @@ CAppSystemGroup *CAppSystemGroup::GetParent()
 	return m_pParentAppSystem;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Method to connect/disconnect all systems
 //-----------------------------------------------------------------------------
@@ -361,12 +361,12 @@ CreateInterfaceFn CAppSystemGroup::GetFactory()
 	return AppSystemCreateInterfaceFn;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Main application loop
 //-----------------------------------------------------------------------------
 int CAppSystemGroup::Run()
-{	
+{
 	// The factory now uses this app system group
 	s_pCurrentAppSystem	= this;
 
@@ -459,7 +459,7 @@ void CAppSystemGroup::OnShutdown()
 	case PREINITIALIZATION:
 	case INITIALIZATION:
 		goto disconnect;
-	
+
 	case CREATION:
 	case CONNECTION:
 		goto destroy;
@@ -492,7 +492,7 @@ destroy:
 }
 
 
-	
+
 //-----------------------------------------------------------------------------
 //
 // This class represents a group of app systems that are loaded through steam

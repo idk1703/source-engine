@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -35,7 +35,7 @@ public:
 	virtual			~CTEBaseBeam( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles ) = 0;
-	
+
 public:
 	CNetworkVar( int, m_nModelIndex );
 	CNetworkVar( int, m_nHaloIndex );

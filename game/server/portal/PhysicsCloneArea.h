@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,7 +26,7 @@ public:
 	static const Vector		vLocalMaxs;
 
 	virtual void			StartTouch( CBaseEntity *pOther );
-	virtual void			Touch( CBaseEntity *pOther ); 
+	virtual void			Touch( CBaseEntity *pOther );
 	virtual void			EndTouch( CBaseEntity *pOther );
 
 	virtual void			Spawn( void );
@@ -37,7 +37,7 @@ public:
 
 	void					CloneTouchingEntities( void );
 	void					CloneNearbyEntities( void );
-	static CPhysicsCloneArea *CreatePhysicsCloneArea( CProp_Portal *pFollowPortal );	
+	static CPhysicsCloneArea *CreatePhysicsCloneArea( CProp_Portal *pFollowPortal );
 private:
 
 	CProp_Portal			*m_pAttachedPortal;
@@ -48,4 +48,3 @@ private:
 };
 
 #endif //#ifndef PHYSICSCLONEAREA_H
-

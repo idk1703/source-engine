@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -20,11 +20,11 @@
 
 
 // ------------------------------------------------------------------------ //
-// Send proxies can be used to convert a variable into a networkable type 
+// Send proxies can be used to convert a variable into a networkable type
 // (a good example is converting an edict pointer into an integer index).
 
-// These allow you to translate data. For example, if you had a user-entered 
-// string number like "10" (call the variable pUserStr) and wanted to encode 
+// These allow you to translate data. For example, if you had a user-entered
+// string number like "10" (call the variable pUserStr) and wanted to encode
 // it as an integer, you would use a SendPropInt32 and write a proxy that said:
 // pOut->m_Int = atoi(pUserStr);
 
@@ -44,11 +44,11 @@ typedef void (*SendVarProxyFn)( const SendProp *pProp, const void *pStructBase, 
 // If the proxy returns null, it's the same as if pRecipients->ClearAllRecipients() was called.
 class CSendProxyRecipients;
 
-typedef void* (*SendTableProxyFn)( 
-	const SendProp *pProp, 
-	const void *pStructBase, 
-	const void *pData, 
-	CSendProxyRecipients *pRecipients, 
+typedef void* (*SendTableProxyFn)(
+	const SendProp *pProp,
+	const void *pStructBase,
+	const void *pData,
+	CSendProxyRecipients *pRecipients,
 	int objectID );
 
 
@@ -58,7 +58,7 @@ public:
 	CNonModifiedPointerProxy( SendTableProxyFn fn );
 
 public:
-	
+
 	SendTableProxyFn m_Fn;
 	CNonModifiedPointerProxy *m_pNext;
 };
@@ -92,12 +92,12 @@ public:
 	SendVarProxyFn m_UInt64ToInt64;
 #endif
 };
-	
+
 class CStandardSendProxies : public CStandardSendProxiesV1
 {
 public:
 	CStandardSendProxies();
-	
+
 	SendTableProxyFn m_DataTableToDataTable;
 	SendTableProxyFn m_SendLocalDataTable;
 	CNonModifiedPointerProxy **m_ppNonModifiedPointerProxies;
@@ -110,8 +110,8 @@ extern CStandardSendProxies g_StandardSendProxies;
 #define MAX_DATATABLE_PROXIES	32
 
 // ------------------------------------------------------------------------ //
-// Datatable send proxies are used to tell the engine where the datatable's 
-// data is and to specify which clients should get the data. 
+// Datatable send proxies are used to tell the engine where the datatable's
+// data is and to specify which clients should get the data.
 //
 // pRecipients is the object that allows you to specify which clients will
 // receive the data.
@@ -196,15 +196,15 @@ public:
 
 	SendVarProxyFn		GetProxyFn() const;
 	void				SetProxyFn( SendVarProxyFn f );
-	
+
 	SendTableProxyFn	GetDataTableProxyFn() const;
 	void				SetDataTableProxyFn( SendTableProxyFn f );
-	
+
 	SendTable*			GetDataTable() const;
 	void				SetDataTable( SendTable *pTable );
 
 	char const*			GetExcludeDTName() const;
-	
+
 	// If it's one of the numbered "000", "001", etc properties in an array, then
 	// these can be used to get its array property name for debugging.
 	const char*			GetParentArrayPropName() const;
@@ -213,9 +213,9 @@ public:
 	const char*			GetName() const;
 
 	bool				IsSigned() const;
-	
+
 	bool				IsExcludeProp() const;
-	
+
 	bool				IsInsideArray() const;	// Returns true if SPROP_INSIDEARRAY is set.
 	void				SetInsideArray();
 
@@ -238,7 +238,7 @@ public:
 	SendPropType		GetType() const;
 
 	int					GetFlags() const;
-	void				SetFlags( int flags );	
+	void				SetFlags( int flags );
 
 	// Some property types bind more data to the SendProp in here.
 	const void*			GetExtraData() const;
@@ -253,10 +253,10 @@ public:
 	int				m_nBits;
 	float			m_fLowValue;
 	float			m_fHighValue;
-	
+
 	SendProp		*m_pArrayProp;					// If this is an array, this is the property that defines each array element.
 	ArrayLengthSendProxyFn	m_ArrayLengthProxy;	// This callback returns the array length.
-	
+
 	int				m_nElements;		// Number of elements in the array (or 1 if it's not an array).
 	int				m_ElementStride;	// Pointer distance between array elements.
 
@@ -265,16 +265,16 @@ public:
 
 	const char		*m_pVarName;
 	float			m_fHighLowMul;
-	
+
 private:
 
 	int					m_Flags;				// SPROP_ flags.
 
 	SendVarProxyFn		m_ProxyFn;				// NULL for DPT_DataTable.
 	SendTableProxyFn	m_DataTableProxyFn;		// Valid for DPT_DataTable.
-	
+
 	SendTable			*m_pDataTable;
-	
+
 	// SENDPROP_VECTORELEM makes this negative to start with so we can detect that and
 	// set the SPROP_IS_VECTOR_ELEM flag.
 	int					m_Offset;
@@ -286,34 +286,34 @@ private:
 
 inline int SendProp::GetOffset() const
 {
-	return m_Offset; 
+	return m_Offset;
 }
 
 inline void SendProp::SetOffset( int i )
 {
-	m_Offset = i; 
+	m_Offset = i;
 }
 
 inline SendVarProxyFn SendProp::GetProxyFn() const
 {
 	Assert( m_Type != DPT_DataTable );
-	return m_ProxyFn; 
+	return m_ProxyFn;
 }
 
 inline void SendProp::SetProxyFn( SendVarProxyFn f )
 {
-	m_ProxyFn = f; 
+	m_ProxyFn = f;
 }
 
 inline SendTableProxyFn SendProp::GetDataTableProxyFn() const
 {
 	Assert( m_Type == DPT_DataTable );
-	return m_DataTableProxyFn; 
+	return m_DataTableProxyFn;
 }
 
 inline void SendProp::SetDataTableProxyFn( SendTableProxyFn f )
 {
-	m_DataTableProxyFn = f; 
+	m_DataTableProxyFn = f;
 }
 
 inline SendTable* SendProp::GetDataTable() const
@@ -323,12 +323,12 @@ inline SendTable* SendProp::GetDataTable() const
 
 inline void SendProp::SetDataTable( SendTable *pTable )
 {
-	m_pDataTable = pTable; 
+	m_pDataTable = pTable;
 }
 
 inline char const* SendProp::GetExcludeDTName() const
 {
-	return m_pExcludeDTName; 
+	return m_pExcludeDTName;
 }
 
 inline const char* SendProp::GetParentArrayPropName() const
@@ -344,13 +344,13 @@ inline void	SendProp::SetParentArrayPropName( char *pArrayPropName )
 
 inline const char* SendProp::GetName() const
 {
-	return m_pVarName; 
+	return m_pVarName;
 }
 
 
 inline bool SendProp::IsSigned() const
 {
-	return !(m_Flags & SPROP_UNSIGNED); 
+	return !(m_Flags & SPROP_UNSIGNED);
 }
 
 inline bool SendProp::IsExcludeProp() const
@@ -377,7 +377,7 @@ inline SendProp* SendProp::GetArrayProp() const
 {
 	return m_pArrayProp;
 }
-	 
+
 inline void SendProp::SetArrayLengthProxy( ArrayLengthSendProxyFn fn )
 {
 	m_ArrayLengthProxy = fn;
@@ -387,10 +387,10 @@ inline ArrayLengthSendProxyFn SendProp::GetArrayLengthProxy() const
 {
 	return m_ArrayLengthProxy;
 }
-	 
+
 inline int SendProp::GetNumElements() const
 {
-	return m_nElements; 
+	return m_nElements;
 }
 
 inline void SendProp::SetNumElements( int nElements )
@@ -400,12 +400,12 @@ inline void SendProp::SetNumElements( int nElements )
 
 inline int SendProp::GetElementStride() const
 {
-	return m_ElementStride; 
+	return m_ElementStride;
 }
 
 inline SendPropType SendProp::GetType() const
 {
-	return m_Type; 
+	return m_Type;
 }
 
 inline int SendProp::GetFlags() const
@@ -448,7 +448,7 @@ public:
 	void		Construct( SendProp *pProps, int nProps, const char *pNetTableName );
 
 	const char*	GetName() const;
-	
+
 	int			GetNumProps() const;
 	SendProp*	GetProp( int i );
 
@@ -474,9 +474,9 @@ public:
 	CSendTablePrecalc	*m_pPrecalc;
 
 
-protected:		
-	bool		m_bInitialized : 1;	
-	bool		m_bHasBeenWritten : 1;		
+protected:
+	bool		m_bInitialized : 1;
+	bool		m_bHasBeenWritten : 1;
 	bool		m_bHasPropsEncodedAgainstCurrentTickCount : 1; // m_flSimulationTime and m_flAnimTime, e.g.
 };
 
@@ -574,7 +574,7 @@ inline void SendTable::SetHasPropsEncodedAgainstTickcount( bool bState )
 		};\
 		sendTable.Construct(g_SendProps+1, sizeof(g_SendProps) / sizeof(SendProp) - 1, g_pSendTableName);\
 		return 1; \
-	} 
+	}
 
 // Normal offset of is invalid on non-array-types, this is dubious as hell. The rest of the codebase converted to the
 // legit offsetof from the C headers, so we'll use the old impl here to avoid exposing temptation to others
@@ -589,7 +589,7 @@ inline void SendTable::SetHasPropsEncodedAgainstTickcount( bool bState )
 #define SENDINFO_ARRAYELEM(varName, i)		#varName "[" #i "]", _hacky_dtsend_offsetof(currentSendDTClass::MakeANetworkVar_##varName, varName[i]), sizeof(((currentSendDTClass*)0)->varName[0])
 #define SENDINFO_NETWORKARRAYELEM(varName, i)#varName "[" #i "]", _hacky_dtsend_offsetof(currentSendDTClass::MakeANetworkVar_##varName, varName.m_Value[i]), sizeof(((currentSendDTClass*)0)->varName.m_Value[0])
 
-// NOTE: Be VERY careful to specify any other vector elems for the same vector IN ORDER and 
+// NOTE: Be VERY careful to specify any other vector elems for the same vector IN ORDER and
 // right after each other, otherwise it might miss the Y or Z component in SP.
 //
 // Note: this macro specifies a negative offset so the engine can detect it and setup m_pNext
@@ -728,7 +728,7 @@ SendProp SendPropString(
 SendProp SendPropDataTable(
 	const char *pVarName,
 	int offset,
-	SendTable *pTable, 
+	SendTable *pTable,
 	SendTableProxyFn varProxy=SendProxy_DataTableToDataTable
 	);
 
@@ -743,7 +743,7 @@ SendProp SendPropArray3(
 
 
 
-// Use the macro to let it automatically generate a table name. You shouldn't 
+// Use the macro to let it automatically generate a table name. You shouldn't
 // ever need to reference the table name. If you want to exclude this array, then
 // reference the name of the variable in varTemplate.
 SendProp InternalSendPropArray(
@@ -795,9 +795,9 @@ SendProp InternalSendPropArray(
 	InternalSendPropArray( elementCount, elementStride, #arrayName, arrayLengthSendProxy )
 
 
-	
 
-// Use these to create properties that exclude other properties. This is useful if you want to use most of 
+
+// Use these to create properties that exclude other properties. This is useful if you want to use most of
 // a base class's datatable data, but you want to override some of its variables.
 SendProp SendPropExclude(
 	const char *pDataTableName,	// Data table name (given to BEGIN_SEND_TABLE and BEGIN_RECV_TABLE).

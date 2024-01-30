@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@ static void PopulateSoundEntryList( HWND wnd, CSoundLookupParams *params )
 	if ( !control )
 		return;
 
-	SendMessage( control, LB_RESETCONTENT, 0, 0 ); 
+	SendMessage( control, LB_RESETCONTENT, 0, 0 );
 	SendMessage( control, WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_FIXED_FONT), MAKELPARAM (TRUE, 0) );
 
 	int c = params->entryList->Count();
@@ -34,25 +34,25 @@ static void PopulateSoundEntryList( HWND wnd, CSoundLookupParams *params )
 		{
 			char const *script = soundemitter->GetSourceFileForSound( soundindex );
 
-			int idx = SendMessage( control, LB_ADDSTRING, 0, (LPARAM)va( "%20s:  '%s'", script, text ) ); 
+			int idx = SendMessage( control, LB_ADDSTRING, 0, (LPARAM)va( "%20s:  '%s'", script, text ) );
 			SendMessage( control, LB_SETITEMDATA, idx, (LPARAM)soundindex );
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
-static BOOL CALLBACK SoundLookupDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )  
+static BOOL CALLBACK SoundLookupDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	switch(uMsg)
 	{
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		// Insert code here to put the string (to find and replace with)
 		// into the edit controls.
 		// ...
@@ -67,9 +67,9 @@ static BOOL CALLBACK SoundLookupDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wPar
 
 			SetFocus( GetDlgItem( hwndDlg, IDC_SOUNDENTRYLIST ) );
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -89,7 +89,7 @@ static BOOL CALLBACK SoundLookupDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wPar
 				EndDialog( hwndDlg, 1 );
 			}
 			break;
-        case IDCANCEL:
+		case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		case IDC_ADDENTRY:
@@ -103,8 +103,8 @@ static BOOL CALLBACK SoundLookupDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wPar
 				if ( AddSound( &params, hwndDlg ) )
 				{
 					// Add it to soundemitter and check out script files
-					if ( params.m_szSoundName[ 0 ] && 
-						 params.m_szScriptName[ 0 ] )
+					if ( params.m_szSoundName[ 0 ] &&
+						params.m_szScriptName[ 0 ] )
 					{
 						Q_strcpy( g_Params.m_szSoundName, params.m_szSoundName );
 						// Press the OK button for the user...
@@ -120,16 +120,16 @@ static BOOL CALLBACK SoundLookupDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wPar
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int SoundLookup( CSoundLookupParams *params, HWND parent )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_WAVELOOKUP ),
 		parent,
 		(DLGPROC)SoundLookupDialogProc );

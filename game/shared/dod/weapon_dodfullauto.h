@@ -1,14 +1,14 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
 #ifndef WEAPON_DODFULLAUTO_H
 #define WEAPON_DODFULLAUTO_H
 
-#include "cbase.h" 
-#include "shake.h" 
+#include "cbase.h"
+#include "shake.h"
 #include "weapon_dodbasegun.h"
 
 #if defined( CLIENT_DLL )
@@ -19,7 +19,7 @@ class CDODFullAutoWeapon : public CWeaponDODBaseGun
 {
 public:
 	DECLARE_CLASS( CDODFullAutoWeapon, CWeaponDODBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CDODFullAutoWeapon();

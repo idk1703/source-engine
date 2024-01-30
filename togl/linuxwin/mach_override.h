@@ -18,7 +18,7 @@ __BEGIN_DECLS
 	originalFunctionAddress with the implentation pointed to by overrideFunctionAddress.
 	Optionally returns a pointer to a "reentry island" which, if jumped to, will resume
 	the original implementation.
-	
+
 	@param	originalFunctionAddress			->	Required address of the function to
 												override (with overrideFunctionAddress).
 	@param	overrideFunctionAddress			->	Required address to the overriding
@@ -31,11 +31,11 @@ __BEGIN_DECLS
 
 	************************************************************************************/
 
-    mach_error_t
+	mach_error_t
 mach_override_ptr(
 	void *originalFunctionAddress,
-    const void *overrideFunctionAddress,
-    void **originalFunctionReentryIsland );
+	const void *overrideFunctionAddress,
+	void **originalFunctionReentryIsland );
 
 __END_DECLS
 
@@ -45,7 +45,7 @@ __END_DECLS
 	for example usage.
 
 	************************************************************************************/
- 
+
 #ifdef	__cplusplus
 #define MACH_OVERRIDE( ORIGINAL_FUNCTION_RETURN_TYPE, ORIGINAL_FUNCTION_NAME, ORIGINAL_FUNCTION_ARGS, ERR )		\
 {																												\

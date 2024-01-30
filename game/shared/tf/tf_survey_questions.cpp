@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,13 +25,13 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: Criteria function for competitive inquiry survey 
-//			Only include casual matches 
+// Purpose: Criteria function for competitive inquiry survey
+//			Only include casual matches
 //-----------------------------------------------------------------------------
 bool CompetitiveInquiry( const CMsgGC_Match_Result& msgMatchResult, uint32 nPlayerIndex )
 {
 	const IMatchGroupDescription* pMatchDesc = GetMatchGroupDescription( (EMatchGroup) msgMatchResult.match_group() );
-	
+
 	if ( pMatchDesc )
 	{
 		// Only show this in Casual 12v12
@@ -42,8 +42,8 @@ bool CompetitiveInquiry( const CMsgGC_Match_Result& msgMatchResult, uint32 nPlay
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Criteria function for casual inquiry survey 
-//			Only include competitive matches 
+// Purpose: Criteria function for casual inquiry survey
+//			Only include competitive matches
 //-----------------------------------------------------------------------------
 bool CasualInquiry( const CMsgGC_Match_Result& msgMatchResult, uint32 nPlayerIndex )
 {
@@ -125,7 +125,7 @@ CSurveyQuestionPanel::~CSurveyQuestionPanel()
 
 void CSurveyQuestionPanel::OnCommand( const char *command )
 {
-	if ( FStrEq( command, "close" ) ) 
+	if ( FStrEq( command, "close" ) )
 	{
 		if ( !m_bResponded )
 		{
@@ -147,7 +147,7 @@ void CSurveyQuestionPanel::OnCommand( const char *command )
 
 		return;
 	}
-	else if ( FStrEq( command, "delete" ) ) 
+	else if ( FStrEq( command, "delete" ) )
 	{
 		MarkForDeletion();
 		return;
@@ -166,10 +166,10 @@ void CSurveyQuestionPanel::ApplySchemeSettings( IScheme *pScheme )
 	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( GetParent(), "SurveyShowSequence", false );
 }
 
-void CSurveyQuestionPanel::FireGameEvent( IGameEvent *event ) 
+void CSurveyQuestionPanel::FireGameEvent( IGameEvent *event )
 {
 	const char *pEventName = event->GetName();
-	
+
 	// They left/changed servers.  Consider the survey abandoned
 	if ( !Q_stricmp( pEventName, "client_disconnect" ) ||
 		 !Q_stricmp( pEventName, "client_beginconnect" ) ||
@@ -270,7 +270,7 @@ CON_COMMAND( test_survey, "Creates a test survey" )
 	CMsgGCSurveyRequest msgSurvey;
 	msgSurvey.set_match_id( 0 );
 	msgSurvey.set_question_type( (SurveyQuestionType)nDefIndex );
-	
+
 	Panel* pSurvey =  CreateSurveyQuestionPanel( NULL, msgSurvey );
 	IViewPortPanel *pMMOverride = ( gViewPortInterface->FindPanelByName( PANEL_MAINMENUOVERRIDE ) );
 	pSurvey->SetParent( (CHudMainMenuOverride*)pMMOverride );

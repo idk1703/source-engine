@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -448,6 +448,3 @@ void CDownloadListGenerator::OnResourcePrecachedFullPath( char *fullPathFileName
 		m_pStringTable->AddString( true, relativeFileName );
 	}
 }
-
-
-	

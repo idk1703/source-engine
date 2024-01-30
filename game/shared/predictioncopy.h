@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -55,7 +55,7 @@ public:
 	} difftype_t;
 
 	CPredictionCopy( int type, void *dest, bool dest_packed, void const *src, bool src_packed,
-		bool counterrors = false, bool reporterrors = false, bool performcopy = true, 
+		bool counterrors = false, bool reporterrors = false, bool performcopy = true,
 		bool describefields = false, FN_FIELD_COMPARE func = NULL );
 
 	void	CopyShort( difftype_t dt, short *outvalue, const short *invalue, int count );
@@ -128,7 +128,7 @@ private:
 	// Report function
 	void	ReportFieldsDiffer( PRINTF_FORMAT_STRING const char *fmt, ... );
 	void	DescribeFields( difftype_t dt, PRINTF_FORMAT_STRING const char *fmt, ... );
-	
+
 	bool	CanCheck( void );
 
 	void	CopyFields( int chaincount, datamap_t *pMap, typedescription_t *pFields, int fieldCount );
@@ -171,11 +171,11 @@ public:
 	CPredictionDescribeData( void const *src, bool src_packed, FN_FIELD_DESCRIPTION func = 0 );
 
 	void	DescribeShort( const short *invalue, int count );
-	void	DescribeInt( const int *invalue, int count );		
-	void	DescribeBool( const bool *invalue, int count );	
-	void	DescribeFloat( const float *invalue, int count );	
-	void	DescribeData( int size, const char *indata );		
-	void	DescribeString( const char *instring );			
+	void	DescribeInt( const int *invalue, int count );
+	void	DescribeBool( const bool *invalue, int count );
+	void	DescribeFloat( const float *invalue, int count );
+	void	DescribeData( int size, const char *indata );
+	void	DescribeString( const char *instring );
 	void	DescribeVector( const Vector &inValue );
 	void	DescribeVector( const Vector *inValue, int count );
 	void	DescribeQuaternion( const Quaternion &inValue );
@@ -285,8 +285,8 @@ private:
 #define PREDICTION_TRACKVALUECHANGESCOPE( context )
 #define PREDICTION_TRACKVALUECHANGESCOPE_ENTITY( entity, context )
 #define PREDICTION_STARTTRACKVALUE( context )
-#define PREDICTION_ENDTRACKVALUE()	
-#define PREDICTION_SPEWVALUECHANGES() 
+#define PREDICTION_ENDTRACKVALUE()
+#define PREDICTION_SPEWVALUECHANGES()
 #endif
 
 #endif // !CLIENT_DLL

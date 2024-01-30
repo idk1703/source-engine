@@ -33,7 +33,7 @@ public:
 
 	// Unique identifier.
 	virtual unsigned int GetItemID() const;
-	
+
 	// Pick up and drop.
 	virtual void PickUp( CTFPlayer *pPlayer, bool bInvisible );
 	virtual void Drop( CTFPlayer *pPlayer, bool bVisible, bool bThrown = false, bool bMessage = true );

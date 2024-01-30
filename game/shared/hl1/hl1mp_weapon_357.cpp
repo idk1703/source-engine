@@ -34,7 +34,7 @@ class CWeapon357 : public CBaseHL1MPCombatWeapon
 {
 	DECLARE_CLASS( CWeapon357, CBaseHL1CombatWeapon );
 public:
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeapon357( void );
@@ -94,7 +94,7 @@ CWeapon357::CWeapon357( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeapon357::Precache( void )
 {
@@ -161,7 +161,7 @@ void CWeapon357::PrimaryAttack( void )
 	m_iClip1--;
 
 	Vector vecSrc		= pPlayer->Weapon_ShootPosition();
-	Vector vecAiming	= pPlayer->GetAutoaimVector( AUTOAIM_5DEGREES );	
+	Vector vecAiming	= pPlayer->GetAutoaimVector( AUTOAIM_5DEGREES );
 
 //	pPlayer->FireBullets( 1, vecSrc, vecAiming, VECTOR_CONE_1DEGREES, MAX_TRACE_LENGTH, m_iPrimaryAmmoType, 0 );
 
@@ -183,7 +183,7 @@ void CWeapon357::PrimaryAttack( void )
 	if ( !m_iClip1 && pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) <= 0 )
 	{
 		// HEV suit - indicate out of ammo condition
-		pPlayer->SetSuitUpdate( "!HEV_AMO0", FALSE, 0 ); 
+		pPlayer->SetSuitUpdate( "!HEV_AMO0", FALSE, 0 );
 	}
 }
 

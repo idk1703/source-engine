@@ -12,7 +12,7 @@ class CWeightButton : public CBaseEntity
 public:
 
 	DECLARE_DATADESC();
-	DECLARE_CLASS( CWeightButton, CBaseEntity ); 
+	DECLARE_CLASS( CWeightButton, CBaseEntity );
 
 	void Spawn( void );
 	bool CreateVPhysics( void );
@@ -21,7 +21,7 @@ public:
 	COutputEvent m_OnReleased;				// After weight has been removed to go below weight threshold
 
 	float m_fStressToActivate;				// Amount of weight required to activate
-	bool m_bHasBeenPressed;					// Once the button has been pressed, fire one 
+	bool m_bHasBeenPressed;					// Once the button has been pressed, fire one
 											// output until the weight is reduced below the threshold
 
 	void TriggerThink ( void );
@@ -37,7 +37,7 @@ BEGIN_DATADESC( CWeightButton )
 
 	DEFINE_OUTPUT( m_OnPressed, "OnPressed" ),
 	DEFINE_OUTPUT( m_OnReleased, "OnReleased" ),
-	
+
 	DEFINE_THINKFUNC( TriggerThink ),
 
 END_DATADESC()
@@ -68,7 +68,7 @@ bool CWeightButton::CreateVPhysics()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Every second, check total stress and fire an output if we have reached 
+// Purpose: Every second, check total stress and fire an output if we have reached
 //			our threshold. If the stress is relieved below our threshold, fire a different output.
 //-----------------------------------------------------------------------------
 void CWeightButton::TriggerThink( void )

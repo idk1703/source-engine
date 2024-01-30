@@ -56,7 +56,7 @@ protected:
 
 protected:
 	IVideoMaterial *m_VideoMaterial;
-	
+
 	IMaterial		*m_pMaterial;
 	int				m_nPlaybackHeight;			// Calculated to address ratio changes
 	int				m_nPlaybackWidth;
@@ -71,9 +71,9 @@ protected:
 
 
 // Creates a VGUI panel which plays a video and executes a client command at its finish (if specified)
-extern bool VideoPanel_Create( unsigned int nXPos, unsigned int nYPos, 
-							   unsigned int nWidth, unsigned int nHeight, 
-							   const char *pVideoFilename, 
+extern bool VideoPanel_Create( unsigned int nXPos, unsigned int nYPos,
+							   unsigned int nWidth, unsigned int nHeight,
+							   const char *pVideoFilename,
 							   const char *pExitCommand = NULL );
 
 #endif // VGUI_VIDEO_H

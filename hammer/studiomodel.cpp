@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -87,7 +87,7 @@ StudioModel *CStudioModelCache::FindModel(const char *pszModelPath)
 	char testPath[MAX_PATH];
 	V_strncpy( testPath, pszModelPath, sizeof( testPath ) );
 	V_FixSlashes( testPath );
-	
+
 	//
 	// First look for the model in the cache. If it's there, increment the
 	// reference count and return a pointer to the cached model.
@@ -97,14 +97,14 @@ StudioModel *CStudioModelCache::FindModel(const char *pszModelPath)
 		char testPath2[MAX_PATH];
 		V_strncpy( testPath2, m_Cache[i].pszPath, sizeof( testPath2 ) );
 		V_FixSlashes( testPath2 );
-		
+
 		if (!stricmp(testPath, testPath2))
 		{
 			m_Cache[i].nRefCount++;
 			return(m_Cache[i].pModel);
 		}
 	}
-	
+
 	return NULL;
 }
 
@@ -218,7 +218,7 @@ void CStudioModelCache::AddRef(StudioModel *pModel)
 			m_Cache[i].nRefCount++;
 			return;
 		}
-	}	
+	}
 }
 
 
@@ -261,7 +261,7 @@ void CStudioModelCache::Release(StudioModel *pModel)
 
 			break;
 		}
-	}	
+	}
 }
 
 
@@ -272,7 +272,7 @@ void CStudioModelCache::Release(StudioModel *pModel)
 void CStudioFileChangeWatcher::Init()
 {
 	m_Watcher.Init( this );
-	
+
 	char searchPaths[1024 * 16];
 	if ( g_pFullFileSystem->GetSearchPath( "GAME", false, searchPaths, sizeof( searchPaths ) ) > 0 )
 	{
@@ -283,7 +283,7 @@ void CStudioFileChangeWatcher::Init()
 		{
 			m_Watcher.AddDirectory( searchPathList[i], "models", true );
 		}
-		
+
 		searchPathList.PurgeAndDeleteElements();
 	}
 	else
@@ -297,21 +297,21 @@ void CStudioFileChangeWatcher::OnFileChange( const char *pRelativeFilename, cons
 	char relativeFilename[MAX_PATH];
 	V_ComposeFileName( "models", pRelativeFilename, relativeFilename, sizeof( relativeFilename ) );
 	V_FixSlashes( relativeFilename );
-	
+
 	// Check the cache.
 	const char *pExt = V_GetFileExtension( relativeFilename );
 	if ( !pExt )
-		return;			 
-		
+		return;
+
 	if ( V_stricmp( pExt, "mdl" ) == 0 ||
-		 V_stricmp( pExt, "vtx" ) == 0 ||
-		 V_stricmp( pExt, "phy" ) == 0 ||
-		 V_stricmp( pExt, "vvd" ) == 0 )
+		V_stricmp( pExt, "vtx" ) == 0 ||
+		V_stricmp( pExt, "phy" ) == 0 ||
+		V_stricmp( pExt, "vvd" ) == 0 )
 	{
 		// Ok, it's at least related to a model. Flush out the model.
 		char tempFilename[MAX_PATH];
 		V_strncpy( tempFilename, relativeFilename, pExt - relativeFilename );
-		
+
 		// Now it might have a "dx80" or "dx90" or some other extension. Get rid of that too.
 		const char *pTestFilename = V_UnqualifiedFileName( tempFilename );
 		pExt = V_GetFileExtension( pTestFilename );
@@ -323,7 +323,7 @@ void CStudioFileChangeWatcher::OnFileChange( const char *pRelativeFilename, cons
 
 		// Now we've got the filename with any extension or "dx80"-type stuff at the end.
 		V_strncat( filename, ".mdl", sizeof( filename ) );
-		
+
 		// Queue up the list of changes because if they copied all the files for a model,
 		// we'd like to only reload it once.
 		if ( m_ChangedModels.Find( filename ) == m_ChangedModels.InvalidIndex() )
@@ -344,7 +344,7 @@ void CStudioFileChangeWatcher::Update()
 		for ( int i=m_ChangedModels.First(); i != m_ChangedModels.InvalidIndex(); i=m_ChangedModels.Next( i ) )
 		{
 			const char *pName = m_ChangedModels.GetElementName( i );
-				
+
 			MDLHandle_t hModel = g_pMDLCache->FindMDL( pName );
 			g_pMDLCache->Flush( hModel );
 			g_pMDLCache->ResetErrorModelStatus( hModel );
@@ -357,9 +357,9 @@ void CStudioFileChangeWatcher::Update()
 				pTest->LoadModel( pName );
 			}
 		}
-		
-		m_ChangedModels.Purge();	
-	
+
+		m_ChangedModels.Purge();
+
 		for ( int i=0; i < CMapDoc::GetDocumentCount(); i++ )
 		{
 			CMapDoc *pDoc = CMapDoc::GetDocument( i );
@@ -479,14 +479,14 @@ void StudioModel::SetUpBones( bool bUpdatePose, matrix3x4_t *pBoneToWorld )
 		m_pPosePos = new Vector[pStudioHdr->numbones()] ;
 		m_pPoseAng = new Quaternion[pStudioHdr->numbones()];
 	}
-	
+
 	if ( bUpdatePose )
 	{
 		IBoneSetup boneSetup( pStudioHdr, BONE_USED_BY_ANYTHING, m_poseParameter );
 		boneSetup.InitPose( m_pPosePos, m_pPoseAng );
 		boneSetup.AccumulatePose( m_pPosePos, m_pPoseAng, m_sequence, m_cycle, 1.0f, 0.0f, NULL );
 	}
-	
+
 	mstudiobone_t *pbones = pStudioHdr->pBone( 0 );
 
 	matrix3x4_t cameraTransform;
@@ -495,7 +495,7 @@ void StudioModel::SetUpBones( bool bUpdatePose, matrix3x4_t *pBoneToWorld )
 	cameraTransform[1][3] = m_origin[1];
 	cameraTransform[2][3] = m_origin[2];
 
-	for (int i = 0; i < pStudioHdr->numbones(); i++) 
+	for (int i = 0; i < pStudioHdr->numbones(); i++)
 	{
 		if ( CalcProceduralBone( pStudioHdr, i, CBoneAccessor( pBoneToWorld ) ))
 			continue;
@@ -508,11 +508,11 @@ void StudioModel::SetUpBones( bool bUpdatePose, matrix3x4_t *pBoneToWorld )
 		bonematrix[1][3] = m_pPosePos[i][1];
 		bonematrix[2][3] = m_pPosePos[i][2];
 
-		if (pbones[i].parent == -1) 
+		if (pbones[i].parent == -1)
 		{
 			ConcatTransforms( cameraTransform, bonematrix, pBoneToWorld[ i ] );
-		} 
-		else 
+		}
+		else
 		{
 			ConcatTransforms ( pBoneToWorld[ pbones[i].parent ], bonematrix, pBoneToWorld[ i ] );
 		}
@@ -552,7 +552,7 @@ void StudioModel::SetupModel ( int bodypart )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void StudioModel::DrawModel3D( CRender3D *pRender, float flAlpha, bool bWireframe )
 {
@@ -583,7 +583,7 @@ void StudioModel::DrawModel3D( CRender3D *pRender, float flAlpha, bool bWirefram
 		Vector orgOrigin = m_origin;
 		QAngle orgAngles = m_angles;
 
-		VMatrix matrix; 
+		VMatrix matrix;
 		pRender->GetLocalTranform(matrix);
 
 		// baseclass rotates the origin
@@ -599,7 +599,7 @@ void StudioModel::DrawModel3D( CRender3D *pRender, float flAlpha, bool bWirefram
 		matrix3x4_t boneToWorld[MAXSTUDIOBONES];
 		SetUpBones( false, boneToWorld );
 		pRender->DrawModel( &info, boneToWorld, m_origin, flAlpha, bWireframe );
-		
+
 		m_origin = orgOrigin;
 		m_angles = orgAngles;
 	}
@@ -670,15 +670,15 @@ void StudioModel::DrawModel2D( CRender2D *pRender, float flAlpha, bool bWireFram
 		matrix3x4_t boneToWorld[MAXSTUDIOBONES];
 		SetUpBones( false, boneToWorld );
 		pRender->DrawModel( &info, boneToWorld, m_origin, flAlpha, bWireFrame );
-	}	
+	}
 
 
-	if ( bTransform )	
+	if ( bTransform )
 	{
 		// restore original position and angles
 		m_origin = orgOrigin;
 		m_angles = orgAngles;
-    }
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -736,7 +736,7 @@ CStudioHdr *StudioModel::GetStudioHdr() const
 studiohdr_t *StudioModel::GetStudioRenderHdr() const
 {
 	CStudioHdr *pStudioHdr = GetStudioHdr();
-	
+
 	if (pStudioHdr)
 	{
 		return (studiohdr_t *)pStudioHdr->GetRenderHdr();
@@ -827,7 +827,7 @@ bool StudioModel::PostLoadModel(const char *modelname)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int StudioModel::GetSequenceCount( void )
 {
@@ -837,9 +837,9 @@ int StudioModel::GetSequenceCount( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nIndex - 
-//			szName - 
+// Purpose:
+// Input  : nIndex -
+//			szName -
 //-----------------------------------------------------------------------------
 void StudioModel::GetSequenceName( int nIndex, char *szName )
 {
@@ -881,16 +881,16 @@ int StudioModel::SetSequence( int iSequence )
 //			bounds of the rotated box. This is used to take the rotation angles
 //			into consideration when returning the bounding box. Note that this
 //			can produce a larger than optimal bounding box.
-// Input  : Mins - 
-//			Maxs - 
-//			Angles - 
+// Input  : Mins -
+//			Maxs -
+//			Angles -
 //-----------------------------------------------------------------------------
 void StudioModel::RotateBbox(Vector &Mins, Vector &Maxs, const QAngle &Angles)
 {
 	Vector Points[8];
 
 	PointsFromBox( Mins, Maxs, Points );
-	
+
 	//
 	// Rotate the corner points by the specified angles, in the same
 	// order that our Render code uses.
@@ -898,7 +898,7 @@ void StudioModel::RotateBbox(Vector &Mins, Vector &Maxs, const QAngle &Angles)
 	VMatrix mMatrix;
 	mMatrix.SetupMatrixOrgAngles( vec3_origin, Angles );
 	matrix3x4_t fMatrix2 = mMatrix.As3x4();
-	
+
 	Vector RotatedPoints[8];
 	for (int i = 0; i < 8; i++)
 	{
@@ -927,15 +927,15 @@ void StudioModel::RotateBbox(Vector &Mins, Vector &Maxs, const QAngle &Angles)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mins - 
-//			maxs - 
+// Purpose:
+// Input  : mins -
+//			maxs -
 //-----------------------------------------------------------------------------
 void StudioModel::ExtractBbox(Vector &mins, Vector &maxs)
 {
 	CStudioHdr *pStudioHdr = GetStudioHdr();
 	mstudioseqdesc_t	&seqdesc = pStudioHdr->pSeqdesc( m_sequence );
-	
+
 	mins = seqdesc.bbmin;
 
 	maxs = seqdesc.bbmax;
@@ -1059,8 +1059,8 @@ int StudioModel::SetSkin( int iValue )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pRender - 
+// Purpose:
+// Input  : pRender -
 //-----------------------------------------------------------------------------
 
 /*void StudioModel::DrawModel2D(CRender2D *pRender)
@@ -1091,15 +1091,15 @@ int StudioModel::SetSkin( int iValue )
 	GetTriangles_Output_t tris;
 	g_pStudioRender->GetTriangles( info, tris );
 
-    for ( int batchID = 0; batchID < tris.m_MaterialBatches.Count(); batchID++ )
+	for ( int batchID = 0; batchID < tris.m_MaterialBatches.Count(); batchID++ )
 	{
 		GetTriangles_MaterialBatch_t &materialBatch = tris.m_MaterialBatches[batchID];
 
 		int numStrips = materialBatch.m_TriListIndices.Count() / 3;
 		int numVertices = materialBatch.m_Verts.Count();
-	
+
 		POINT *points = (POINT*)_alloca( sizeof(POINT) * numVertices );
-		
+
 		//	translate all vertices
 		for ( int vertID = 0; vertID < numVertices; vertID++)
 		{
@@ -1107,7 +1107,7 @@ int StudioModel::SetSkin( int iValue )
 			const Vector &pos = vert.m_Position;
 
 			Vector newPos(0,0,0);
-			
+
 			for ( int k = 0; k < vert.m_NumBones; k++ )
 			{
 				const matrix3x4_t &poseToWorld = tris.m_PoseToWorld[ vert.m_BoneIndex[k] ];
@@ -1131,8 +1131,8 @@ int StudioModel::SetSkin( int iValue )
 
 			int numPoints = 0;
 			POINT lastPt; lastPt.x = lastPt.y = -99999;
-					
- 			for ( int i = 0; i<3; i++ )
+
+			for ( int i = 0; i<3; i++ )
 			{
 				POINT pt = points[ materialBatch.m_TriListIndices[stripIndex++] ];
 
@@ -1170,6 +1170,3 @@ void UpdateStudioFileChangeWatcher()
 {
 	g_StudioFileChangeWatcher.Update();
 }
-
-
-

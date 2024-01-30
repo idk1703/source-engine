@@ -53,8 +53,8 @@ static CTEPlayerAnimEvent g_TEPlayerAnimEvent( "PlayerAnimEvent" );
 void TE_PlayerAnimEvent( CBasePlayer *pPlayer, PlayerAnimEvent_t event, int nData )
 {
 	CPVSFilter filter( pPlayer->EyePosition() );
-	
-	// The player himself doesn't need to be sent his animation events 
+
+	// The player himself doesn't need to be sent his animation events
 	// unless cs_showanimstate wants to show them.
 	if ( !ToolsEnabled() && ( cl_showanimstate.GetInt() == pPlayer->entindex() ) )
 	{
@@ -77,13 +77,13 @@ PRECACHE_REGISTER(player);
 
 IMPLEMENT_SERVERCLASS_ST( CTFCPlayer, DT_TFCPlayer )
 	SendPropExclude( "DT_BaseAnimating", "m_flPoseParameter" ),
-	SendPropExclude( "DT_BaseAnimating", "m_flPlaybackRate" ),	
+	SendPropExclude( "DT_BaseAnimating", "m_flPlaybackRate" ),
 	SendPropExclude( "DT_BaseAnimating", "m_nSequence" ),
 	SendPropExclude( "DT_BaseEntity", "m_angRotation" ),
 	SendPropExclude( "DT_BaseAnimatingOverlay", "overlay_vars" ),
-	
+
 	// cs_playeranimstate and clientside animation takes care of these on the client
-	SendPropExclude( "DT_ServerAnimationData" , "m_flCycle" ),	
+	SendPropExclude( "DT_ServerAnimationData" , "m_flCycle" ),
 	SendPropExclude( "DT_AnimTimeMustBeFirst" , "m_flAnimTime" ),
 
 	SendPropAngle( SENDINFO_VECTORELEM(m_angEyeAngles, 0), 11 ),
@@ -149,11 +149,11 @@ void CTFCPlayer::PostThink()
 	QAngle angles = GetLocalAngles();
 	angles[PITCH] = 0;
 	SetLocalAngles( angles );
-	
+
 	// Store the eye angles pitch so the client can compute its animation state correctly.
 	m_angEyeAngles = EyeAngles();
 
-    m_PlayerAnimState->Update( m_angEyeAngles[YAW], m_angEyeAngles[PITCH] );
+	m_PlayerAnimState->Update( m_angEyeAngles[YAW], m_angEyeAngles[PITCH] );
 }
 
 
@@ -186,7 +186,7 @@ void CTFCPlayer::Spawn()
 	BaseClass::Spawn();
 
 	// Kind of lame, but CBasePlayer::Spawn resets a lot of the state that we initially want on.
-	// So if we're in the welcome state, call its enter function to reset 
+	// So if we're in the welcome state, call its enter function to reset
 	if ( m_Shared.State_Get() == STATE_WELCOME )
 	{
 		State_Enter_WELCOME();
@@ -221,7 +221,7 @@ void CTFCPlayer::GiveDefaultItems()
 		case PC_HWGUY:
 		{
 			GiveNamedItem( "weapon_crowbar" );
-			
+
 			GiveNamedItem( "weapon_minigun" );
 			GiveAmmo( 176, TFC_AMMO_SHELLS );
 		}
@@ -322,7 +322,7 @@ void CTFCPlayer::State_Leave()
 
 CPlayerStateInfo* CTFCPlayer::State_LookupInfo( TFCPlayerState state )
 {
-	// This table MUST match the 
+	// This table MUST match the
 	static CPlayerStateInfo playerStateInfos[] =
 	{
 		{ STATE_ACTIVE,			"STATE_ACTIVE",			&CTFCPlayer::State_Enter_ACTIVE,		NULL,	NULL },
@@ -349,7 +349,7 @@ void CTFCPlayer::State_Enter_WELCOME()
 	AddEffects( EF_NODRAW );
 	AddSolidFlags( FSOLID_NOT_SOLID );
 	PhysObjectSleep();
-	
+
 	// Show info panel (if it's not a simple demo map).
 	KeyValues *data = new KeyValues("data");
 	data->SetString( "title", "Message of the Day" ); // info panel title
@@ -380,7 +380,7 @@ void CTFCPlayer::State_Enter_PICKINGCLASS()
 	{
 		StartObserverMode( OBS_MODE_ROAMING );
 	}
-	
+
 	PhysObjectSleep();
 
 	// show the class menu:
@@ -400,7 +400,7 @@ void CTFCPlayer::State_Enter_ACTIVE()
 	SetMoveType( MOVETYPE_WALK );
 	RemoveEffects( EF_NODRAW );
 	RemoveSolidFlags( FSOLID_NOT_SOLID );
-    m_Local.m_iHideHUD = 0;
+	m_Local.m_iHideHUD = 0;
 	PhysObjectWake();
 }
 
@@ -459,7 +459,7 @@ void CTFCPlayer::HandleCommand_JoinTeam( const char *pTeamName )
 			ClientPrint( this, HUD_PRINTCENTER, "#Cannot_Be_Spectator" );
 			return;
 		}
-		
+
 		if ( GetTeamNumber() != TEAM_UNASSIGNED && !IsDead() )
 		{
 			CommitSuicide();
@@ -549,7 +549,7 @@ void CTFCPlayer::HandleCommand_JoinClass( const char *pClassName )
 	}
 
 	m_Shared.SetPlayerClass( iClass );
-	
+
 	if ( !IsAlive() )
 		GetIntoGame();
 }
@@ -582,7 +582,7 @@ bool CTFCPlayer::ClientCommand( const CCommand& args )
 			return true;
 		}
 	}
-	else if ( FStrEq( pcmd, "joinclass" ) ) 
+	else if ( FStrEq( pcmd, "joinclass" ) )
 	{
 		if ( args.ArgC() < 2 )
 		{
@@ -771,16 +771,16 @@ void CTFCPlayer::TeamFortress_CheckClassStats()
 	// Check armor
 	if (armortype > armor_allowed)
 		armortype = armor_allowed;
-	
+
 	if (ArmorValue() > GetClassInfo()->m_iMaxArmor)
 		SetArmorValue( GetClassInfo()->m_iMaxArmor );
 
 	if (ArmorValue() < 0)
 		SetArmorValue( 0 );
-	
+
 	if (armortype < 0)
 		armortype = 0;
-	
+
 	// Check ammo
 	for ( int iAmmoType=0; iAmmoType < TFC_NUM_AMMO_TYPES; iAmmoType++ )
 	{
@@ -791,7 +791,7 @@ void CTFCPlayer::TeamFortress_CheckClassStats()
 	// Check Grenades
 	Assert( GetAmmoCount( TFC_AMMO_GRENADES1 ) >= 0 );
 	Assert( GetAmmoCount( TFC_AMMO_GRENADES2 ) >= 0 );
-	
+
 	// Limit Nails
 	if ( no_grenades_1() > g_nMaxGrenades[tp_grenades_1()] )
 		RemoveAmmo( TFC_AMMO_GRENADES1, no_grenades_1() - g_nMaxGrenades[tp_grenades_1()] );
@@ -802,7 +802,7 @@ void CTFCPlayer::TeamFortress_CheckClassStats()
 	// Check health
 	if (GetHealth() > GetMaxHealth() && !(m_Shared.GetItemFlags() & IT_SUPERHEALTH))
 		SetHealth( GetMaxHealth() );
-	
+
 	if (GetHealth() < 0)
 		SetHealth( 0 );
 
@@ -828,7 +828,7 @@ void CTFCPlayer::Spy_RemoveDisguise()
 		if ( undercover_team || undercover_skin )
 			ClientPrint( this, HUD_PRINTCENTER, "#Disguise_Lost" );
 
-		// Set their color 
+		// Set their color
 		undercover_team = 0;
 		undercover_skin = 0;
 
@@ -874,14 +874,14 @@ void CTFCPlayer::Spy_ResetExternalWeaponModel( void )
 
 
 //=========================================================================
-// Try and find the player's name who's skin and team closest fit the 
+// Try and find the player's name who's skin and team closest fit the
 // current disguise of the spy
 void CTFCPlayer::TeamFortress_SpyCalcName()
 {
 	CBaseEntity *last_target = undercover_target;// don't redisguise self as this person
 
 	undercover_target = NULL;
-	
+
 	// Find a player on the team the spy is disguised as to pretend to be
 	if (undercover_team != 0)
 	{
@@ -912,7 +912,7 @@ void CTFCPlayer::TeamFortress_SpyCalcName()
 		for ( i = 1; i <= gpGlobals->maxClients; i++ )
 		{
 			pPlayer = ToTFCPlayer( UTIL_PlayerByIndex( i ) );
-			
+
 			if ( pPlayer )
 			{
 				if (pPlayer->GetTeamNumber() == undercover_team)
@@ -936,7 +936,7 @@ void CTFCPlayer::TeamFortress_SetSkin()
 	int iClassToUse = m_Shared.GetPlayerClass();
 	if (iClassToUse == PC_SPY && undercover_skin != 0)
 		iClassToUse = undercover_skin;
-	
+
 	int iTeamToUse = GetTeamNumber();
 	if (m_Shared.GetPlayerClass() == PC_SPY && undercover_team != 0)
 		iTeamToUse = undercover_team;
@@ -949,7 +949,7 @@ void CTFCPlayer::TeamFortress_SetSkin()
 	// so they're 0-based.
 	m_nSkin = iTeamToUse - 1;
 
-	if ( FBitSet(GetFlags(), FL_DUCKING) ) 
+	if ( FBitSet(GetFlags(), FL_DUCKING) )
 		UTIL_SetSize(this, VEC_DUCK_HULL_MIN, VEC_DUCK_HULL_MAX);
 	else
 		UTIL_SetSize(this, VEC_HULL_MIN, VEC_HULL_MAX);
@@ -989,7 +989,7 @@ void CTFCPlayer::Engineer_RemoveBuildings()
 		CTimer *pTimer = Timer_FindTimer( this, TF_TIMER_BUILD );
 		if (pTimer)
 			Timer_Remove(pTimer);
-		
+
 		// Remove the building
 		UTIL_Remove( building );
 		building = NULL;
@@ -1023,7 +1023,7 @@ void CTFCPlayer::TeamFortress_RemoveLiveGrenades( void )
 
 //=========================================================================
 // Removes all rockets the player has fired into the world
-// (this prevents a team kill cheat where players would fire rockets 
+// (this prevents a team kill cheat where players would fire rockets
 // then change teams to kill their own team)
 void CTFCPlayer::TeamFortress_RemoveRockets( void )
 {
@@ -1056,9 +1056,9 @@ void CTFCPlayer::TeamFortress_DetpackStop( void )
 	CTimer *pTimer = Timer_FindTimer( this, TF_TIMER_DETPACKSET );
 
 	if (!pTimer)
-	    return;
+		return;
 
-    ClientPrint( this, HUD_PRINTNOTIFY, "#Detpack_retrieve" );
+	ClientPrint( this, HUD_PRINTNOTIFY, "#Detpack_retrieve" );
 
 	// Return the detpack
 	GiveAmmo( 1, TFC_AMMO_DETPACK );
@@ -1107,9 +1107,7 @@ void CTFCPlayer::RemoveOwnedEnt( char *pEntName )
 		// if the player owns this entity, remove it
 		if ( pEnt->GetOwnerEntity() == this )
 			pEnt->AddFlag( FL_KILLME );
-		
+
 		pEnt = gEntList.FindEntityByClassname( pEnt, pEntName );
 	}
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -31,7 +31,7 @@ public:
 	qboolean	ispoint;
 
 private:
-	 CToolTrace( const CToolTrace& );
+	CToolTrace( const CToolTrace& );
 };
 
 
@@ -149,7 +149,7 @@ public:
 };
 
 void TestLine( const FourVectors& start, const FourVectors& stop,
-               fltx4 *pFractionVisible, int static_prop_index_to_ignore )
+	fltx4 *pFractionVisible, int static_prop_index_to_ignore )
 {
 	FourRays myrays;
 	myrays.origin = start;
@@ -169,7 +169,7 @@ void TestLine( const FourVectors& start, const FourVectors& stop,
 	{
 		visibility[i] = 1.0f;
 		if ( ( rt_result.HitIds[i] != -1 ) &&
-		     ( rt_result.HitDistance.m128_f32[i] < len.m128_f32[i] ) )
+		( rt_result.HitDistance.m128_f32[i] < len.m128_f32[i] ) )
 		{
 			visibility[i] = 0.0f;
 		}
@@ -373,7 +373,7 @@ void TestLine_DoesHitSky( FourVectors const& start, FourVectors const& stop,
 	{
 		aOcclusion[i] = 0.0f;
 		if ( ( rt_result.HitIds[i] != -1 ) &&
-		     ( rt_result.HitDistance.m128_f32[i] < len.m128_f32[i] ) )
+		( rt_result.HitDistance.m128_f32[i] < len.m128_f32[i] ) )
 		{
 			int id = g_RtEnv.OptimizedTriangleList[rt_result.HitIds[i]].m_Data.m_IntersectData.m_nTriangleID;
 			if ( !( id & TRACE_ID_SKY ) )
@@ -599,7 +599,7 @@ void AddBrushesForRayTrace( void )
 
 	VMatrix identity;
 	identity.Identity();
-	
+
 	CUtlVector<int> brushList;
 	GetBrushes_r ( dmodels[0].headnode, brushList );
 

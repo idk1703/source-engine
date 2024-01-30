@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2006, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: VPC
 //
@@ -44,7 +44,7 @@ bool CProjectGenerator_Win32::WriteFile( CProjectFile *pFile )
 	}
 
 	m_XMLWriter.PopNode( true );
-	
+
 	return true;
 }
 
@@ -67,7 +67,7 @@ bool CProjectGenerator_Win32::WriteFolder( CProjectFolder *pFolder )
 	}
 
 	m_XMLWriter.PopNode( true );
-	
+
 	return true;
 }
 
@@ -106,7 +106,7 @@ bool CProjectGenerator_Win32::WriteConfiguration( CProjectConfiguration *pConfig
 		int sortedIndex = pConfig->m_PropertyStates.m_PropertiesInOutputOrder[i];
 		WriteProperty( &pConfig->m_PropertyStates.m_Properties[sortedIndex] );
 	}
-	
+
 	m_XMLWriter.Write( ">" );
 
 	if ( !WriteTool( "VCPreBuildEventTool", pConfig->GetPreBuildEventTool() ) )
@@ -168,7 +168,7 @@ bool CProjectGenerator_Win32::WriteConfiguration( CProjectConfiguration *pConfig
 
 	if ( !WriteTool( "VCPostBuildEventTool", pConfig->GetPostBuildEventTool() ) )
 		return false;
-	
+
 	m_XMLWriter.PopNode( true );
 
 	return true;
@@ -180,7 +180,7 @@ bool CProjectGenerator_Win32::WriteToXML()
 
 	m_XMLWriter.PushNode( "VisualStudioProject" );
 	m_XMLWriter.Write( "ProjectType=\"Visual C++\"" );
-	
+
 	if ( g_pVPC->BUse2008() )
 		m_XMLWriter.Write( "Version=\"9.00\"" );
 	else
@@ -202,7 +202,7 @@ bool CProjectGenerator_Win32::WriteToXML()
 	m_XMLWriter.PopNode( true );
 
 	CUtlVector< CUtlString > configurationNames;
-	m_pVCProjGenerator->GetAllConfigurationNames( configurationNames ); 
+	m_pVCProjGenerator->GetAllConfigurationNames( configurationNames );
 
 	// write the root configurations
 	m_XMLWriter.PushNode( "Configurations" );
@@ -288,9 +288,9 @@ bool CProjectGenerator_Win32::WriteTool( const char *pToolName, const CProjectTo
 	}
 
 	m_XMLWriter.PopNode( false );
-	
+
 	return true;
-}	
+}
 
 bool CProjectGenerator_Win32::WriteProperty( const PropertyState_t *pPropertyState, const char *pOutputName, const char *pOutputValue )
 {

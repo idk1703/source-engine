@@ -36,7 +36,7 @@ public:
 	CTFGameMovementChooser();
 
 	// Process the current movement command
-	virtual void ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMoveData );		
+	virtual void ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMoveData );
 
 	// Allows other parts of the engine to find out the normal and ducked player bbox sizes
 	virtual const Vector &GetPlayerMins( bool ducked ) const;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -58,7 +58,7 @@ public:
 	// changes which control settings are currently loaded
 	void ChangeControlSettingsFile(const char *controlResourceName);
 
-	// Save control settings from file, using the same resource 
+	// Save control settings from file, using the same resource
 	// name as what LoadControlSettings() was called with
 	virtual bool SaveControlSettings();
 
@@ -88,7 +88,7 @@ public:
 	virtual Panel *GetContextPanel();
 
 	// Get the list of panels in the buildgroup
-	CUtlVector<PHandle> *GetPanelList(); 
+	CUtlVector<PHandle> *GetPanelList();
 
 	// Get the resource file name used
 	virtual const char *GetResourceName(void) { return m_pResourceName; }
@@ -103,14 +103,14 @@ public:
 
 	// Toggle ruler display on/off
 	virtual void ToggleRulerDisplay();
-	
+
 	// Toggle visibility of ruler number labels
 	virtual void SetRulerLabelsVisible(bool state);
 
 	// Check if ruler display is activated
 	virtual bool HasRulersOn();
 
-	// Draw Rulers on screen 
+	// Draw Rulers on screen
 	virtual void DrawRulers();
 
 	// registers that a control settings file may be loaded
@@ -140,12 +140,12 @@ protected:
 
 	virtual HCursor GetCursor(Panel *panel);
 
-private:	
+private:
 	void ApplySnap(Panel* panel);
 	Panel *CreateBuildDialog();
 	void ActivateBuildDialog();
 	void DeleteAllControlsCreatedByControlSettingsFile();
-	
+
 	bool      _enabled;
 	int       _snapX;
 	int       _snapY;

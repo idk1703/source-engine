@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #ifndef BASEMODEL_PANEL_H
@@ -133,7 +133,7 @@ struct BMPResData_t
 		}
 
 		m_aAnimations.Purge();
-		m_aAttachModels.Purge();	
+		m_aAttachModels.Purge();
 	}
 };
 
@@ -242,7 +242,7 @@ protected:
 	};
 	CUtlVector< particle_data_t* > m_particleList;
 
-	
+
 
 	particle_data_t *CreateParticleData( const char *pszParticleName );
 	bool SafeDeleteParticleData( particle_data_t **pData );

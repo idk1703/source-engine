@@ -26,13 +26,13 @@ class CAI_FearBehavior : public CAI_SimpleBehavior
 
 public:
 	CAI_FearBehavior();
-	
+
 	void Precache( void );
 	virtual const char *GetName() {	return "Fear"; }
 
 	virtual bool 	CanSelectSchedule();
 	void GatherConditions();
-	
+
 	virtual void BeginScheduleSelection();
 	virtual void EndScheduleSelection();
 
@@ -46,7 +46,7 @@ public:
 	//void InitializeBehavior();
 
 	bool EnemyDislikesMe();
-	
+
 	void MarkAsUnsafe();
 	bool IsInASafePlace();
 	void SpoilSafePlace();
@@ -56,10 +56,10 @@ public:
 	void BuildScheduleTestBits();
 	int TranslateSchedule( int scheduleType );
 
-	
+
 	enum
 	{
-		SCHED_FEAR_MOVE_TO_SAFE_PLACE = BaseClass::NEXT_SCHEDULE,		
+		SCHED_FEAR_MOVE_TO_SAFE_PLACE = BaseClass::NEXT_SCHEDULE,
 		SCHED_FEAR_MOVE_TO_SAFE_PLACE_RETRY,
 		SCHED_FEAR_STAY_IN_SAFE_PLACE,
 		NEXT_SCHEDULE,
@@ -94,5 +94,3 @@ private:
 };
 
 #endif // AI_BEHAVIOR_FEAR_H
-
-

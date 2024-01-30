@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,7 +20,7 @@
 
 //=============================================================================
 //
-// TF Shield raising proxy. 
+// TF Shield raising proxy.
 //
 class CTFSunroofProxy : public CResultProxy
 {
@@ -62,7 +62,7 @@ void CTFSunroofProxy::OnBind( void *pArg )
 	if( pVehicle->GetPassengerCount() )
 	{
 		SetFloatResult(0.f);
-	} 
+	}
 	else
 	{
 		SetFloatResult(1.f);

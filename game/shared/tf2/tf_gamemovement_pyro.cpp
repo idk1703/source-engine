@@ -42,9 +42,9 @@ void CTFGameMovementPyro::ProcessClassMovement( CBaseTFPlayer *pPlayer, CTFMoveD
 //-----------------------------------------------------------------------------
 const Vector &CTFGameMovementPyro::GetPlayerMins( bool bDucked ) const
 {
-	return bDucked ? m_vDuckMins : m_vStandMins; 
+	return bDucked ? m_vDuckMins : m_vStandMins;
 }
-	
+
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -60,4 +60,3 @@ const Vector &CTFGameMovementPyro::GetPlayerViewOffset( bool bDucked ) const
 {
 	return bDucked ? m_vDuckViewOffset : m_vStandViewOffset;
 }
-

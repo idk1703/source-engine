@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -61,7 +61,7 @@ private:
 	float			m_flNextThink;
 
 	// Critical Data.
-	struct CriticalData_t 
+	struct CriticalData_t
 	{
 		float	m_flCurrent;
 		float	m_flAverage;
@@ -111,7 +111,7 @@ CCriticalPanel::~CCriticalPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCriticalPanel::Reset()
 {
@@ -119,7 +119,7 @@ void CCriticalPanel::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCriticalPanel::InitCritData( void )
 {
@@ -141,7 +141,7 @@ void CCriticalPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CCriticalPanel::ShouldDraw( void )
@@ -165,7 +165,7 @@ bool CCriticalPanel::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void GetCritColor( float flCritMult, unsigned char ucColor[3] )
 {
@@ -182,7 +182,7 @@ void GetCritColor( float flCritMult, unsigned char ucColor[3] )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCriticalPanel::OnThink()
 {
@@ -204,9 +204,9 @@ void CCriticalPanel::OnThink()
 			m_CritData.m_flAverage = flCritMult;
 			m_CritData.m_flLow = m_CritData.m_flAverage;
 			m_CritData.m_flHigh = m_CritData.m_flAverage;
-		} 
+		}
 		else
-		{				
+		{
 			// Average over time.
 			m_CritData.m_flCurrent = flCritMult;
 			m_CritData.m_flAverage *= ( 1.0f - CRITICAL_BLEND_WEIGHT ) ;
@@ -238,17 +238,17 @@ void CCriticalPanel::OnThink()
 
 #if 0
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
+// Purpose:
+// Input  :
 //-----------------------------------------------------------------------------
-void CCriticalPanel::Paint() 
+void CCriticalPanel::Paint()
 {
 	if ( cl_showcrit.GetInt() )
 	{
 		unsigned char ucColor[3];
 		GetCritColor( m_CritData.m_flCurrent, ucColor );
-		g_pMatSystemSurface->DrawColoredText( m_hFont, 0, 2, ucColor[0], ucColor[1], ucColor[2], 255, 
-			"%2.2f (Avg:%2.2f, Low:%2.2f, High:%2.2f)", 
+		g_pMatSystemSurface->DrawColoredText( m_hFont, 0, 2, ucColor[0], ucColor[1], ucColor[2], 255,
+			"%2.2f (Avg:%2.2f, Low:%2.2f, High:%2.2f)",
 			m_CritData.m_flCurrent, m_CritData.m_flAverage, m_CritData.m_flLow, m_CritData.m_flHigh );
 	}
 }

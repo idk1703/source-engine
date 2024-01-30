@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -42,7 +42,7 @@ public:
 	int GetBarInset( void );
 	void SetMargin( int pixels );
 	int GetMargin();
-	
+
 	virtual void ApplySettings(KeyValues *inResourceData);
 	virtual void GetSettings(KeyValues *outResourceData);
 	virtual const char *GetDescription();

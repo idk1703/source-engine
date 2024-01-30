@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -58,10 +58,10 @@ static CMapObjectList FoundEntities;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pEntity - 
-//			pKV - 
-// Output : 
+// Purpose:
+// Input  : pEntity -
+//			pKV -
+// Output :
 //-----------------------------------------------------------------------------
 static BOOL FindKeyValue(CMapEntity *pEntity, MDkeyvalue *pKV)
 {
@@ -85,8 +85,8 @@ static BOOL FindKeyValue(CMapEntity *pEntity, MDkeyvalue *pKV)
 //			test*
 //			test*stuff
 //
-// Input  : szName1 - 
-//			szName2 - 
+// Input  : szName1 -
+//			szName2 -
 // Output : int
 //-----------------------------------------------------------------------------
 int CompareEntityNames(const char *szName1, const char *szName2)
@@ -139,7 +139,7 @@ static void ReplaceNodeIDRecursive(CMapClass *pRoot, int nOldNodeID, int nNewNod
 		GDclass *pClass = pEntity->GetClass();
 		if (!pClass)
 			return;
-		
+
 		int nVarCount = pClass->GetVariableCount();
 		for (int i = 0; i < nVarCount; i++)
 		{
@@ -158,7 +158,7 @@ static void ReplaceNodeIDRecursive(CMapClass *pRoot, int nOldNodeID, int nNewNod
 	}
 	else
 	{
-		
+
 		const CMapObjectList *pChildren = pRoot->GetChildren();
 		FOR_EACH_OBJ( *pChildren, pos )
 		{
@@ -195,7 +195,7 @@ CMapEntity::CMapEntity(void) : flags(0)
 	m_vecLogicalPosition.Init( COORD_NOTINIT, COORD_NOTINIT );
 	CalculateTypeFlags();
 }
-	
+
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor.
@@ -209,7 +209,7 @@ CMapEntity::~CMapEntity(void)
 //-----------------------------------------------------------------------------
 // Purpose: Adds a bounding box helper to this entity. If this entity's class
 //			specifies a bounding box, it will be the correct size.
-// Input  : pClass - 
+// Input  : pClass -
 //-----------------------------------------------------------------------------
 void CMapEntity::AddBoundBoxForClass(GDclass *pClass, bool bLoading)
 {
@@ -237,7 +237,7 @@ void CMapEntity::AddBoundBoxForClass(GDclass *pClass, bool bLoading)
 	//
 	CMapAlignedBox *pBox = new CMapAlignedBox(Mins, Maxs);
 	pBox->SetOrigin(m_Origin);
-	
+
 	pBox->SetSelectionState(GetSelectionState());
 
 	//
@@ -274,9 +274,9 @@ void CMapEntity::AddChild(CMapClass *pChild)
 	{
 		for ( int i=GetFirstKeyValue(); i != GetInvalidKeyValue(); i=GetNextKeyValue( i ) )
 		{
-			MDkeyvalue KeyValue = m_KeyValues.GetKeyValue(i); 
+			MDkeyvalue KeyValue = m_KeyValues.GetKeyValue(i);
 			pChild->OnParentKeyChanged( KeyValue.szKey, KeyValue.szValue );
-		}	
+		}
 	}
 }
 
@@ -335,7 +335,7 @@ void CMapEntity::AddHelper(CMapClass *pHelper, bool bLoading)
 	{
 		AddChild(pHelper);
 	}
-	
+
 	//
 	// dvs: HACK for animator children. Better for CMapEntity to have a SetAnimatorChild
 	//		function that the CMapAnimator could call. Better still, eliminate the knowledge
@@ -356,7 +356,7 @@ void CMapEntity::AddHelper(CMapClass *pHelper, bool bLoading)
 //			definition does not specify any helpers, or none of the helpers
 //			could be added, a box helper is added so that the entity has some
 //			visual representation.
-// Inputs : pClass - 
+// Inputs : pClass -
 //			bLoading - True if this is being called from Postload, false otherwise.
 //-----------------------------------------------------------------------------
 void CMapEntity::AddHelpersForClass(GDclass *pClass, bool bLoading)
@@ -379,7 +379,7 @@ void CMapEntity::AddHelpersForClass(GDclass *pClass, bool bLoading)
 		// Add all the helpers that this class declares in the FGD.
 		//
 		GDclass *pClassLocal = GetClass();
-		
+
 		//
 		// For every helper in the class definition...
 		//
@@ -401,7 +401,7 @@ void CMapEntity::AddHelpersForClass(GDclass *pClass, bool bLoading)
 				}
 			}
 		}
-	
+
 		//
 		// Look for keys that define helpers.
 		//
@@ -412,7 +412,7 @@ void CMapEntity::AddHelpersForClass(GDclass *pClass, bool bLoading)
 		{
 			GDinputvariable *pVar = pClassLocal->GetVariableAt(i);
 			GDIV_TYPE eType = pVar->GetType();
-		
+
 			CHelperInfo HelperInfo;
 			bool bCreate = false;
 			switch (eType)
@@ -487,7 +487,7 @@ void CMapEntity::AddHelpersForClass(GDclass *pClass, bool bLoading)
 			bAddedOneVisual = true;
 		}
 	}
-	
+
 	//
 	// If we still haven't added any visible helpers, we need to add a bounding box so that there
 	// is some visual representation for this entity. We also add the bounding box if the
@@ -527,9 +527,9 @@ CMapClass *CMapEntity::CopyFrom(CMapClass *pobj, bool bUpdateDependencies)
 {
 	Assert(pobj->IsMapClass(MAPCLASS_TYPE(CMapEntity)));
 	CMapEntity *pFrom = (CMapEntity*) pobj;
-	
+
 	flags = pFrom->flags;
-	
+
 	m_Origin = pFrom->m_Origin;
 	m_vecLogicalPosition = pFrom->m_vecLogicalPosition;
 
@@ -562,8 +562,8 @@ CMapClass *CMapEntity::CopyFrom(CMapClass *pobj, bool bUpdateDependencies)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bFullUpdate - 
+// Purpose:
+// Input  : bFullUpdate -
 //-----------------------------------------------------------------------------
 void CMapEntity::CalcBounds(BOOL bFullUpdate)
 {
@@ -670,8 +670,8 @@ size_t CMapEntity::GetSize(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFile - 
+// Purpose:
+// Input  : *pFile -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CMapEntity::LoadVMF(CChunkFile *pFile)
@@ -694,10 +694,10 @@ ChunkFileResult_t CMapEntity::LoadVMF(CChunkFile *pFile)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szKey - 
-//			*szValue - 
-//			*pEntity - 
+// Purpose:
+// Input  : *szKey -
+//			*szValue -
+//			*pEntity -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CMapEntity::LoadKeyCallback(const char *szKey, const char *szValue, CMapEntity *pEntity)
@@ -722,8 +722,8 @@ ChunkFileResult_t CMapEntity::LoadKeyCallback(const char *szKey, const char *szV
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bVisible - 
+// Purpose:
+// Input  : bVisible -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CMapEntity::LoadHiddenCallback(CChunkFile *pFile, CMapEntity *pEntity)
@@ -750,13 +750,13 @@ ChunkFileResult_t CMapEntity::LoadEditorKeyCallback( const char *szKey, const ch
 		CChunkFile::ReadKeyValueVector2(szValue, pMapEntity->m_vecLogicalPosition );
 		return ChunkFile_Ok;
 	}
-	
+
 	return CMapClass::LoadEditorKeyCallback( szKey, szValue, pMapEntity );
 }
 
-		
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CMapEntity::LoadEditorCallback(CChunkFile *pFile, CMapEntity *pObject)
 {
@@ -765,9 +765,9 @@ ChunkFileResult_t CMapEntity::LoadEditorCallback(CChunkFile *pFile, CMapEntity *
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFile - 
-//			*pEntity - 
+// Purpose:
+// Input  : *pFile -
+//			*pEntity -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CMapEntity::LoadSolidCallback(CChunkFile *pFile, CMapEntity *pEntity)
@@ -811,7 +811,7 @@ void CMapEntity::SetOrigin(Vector& o)
 	}
 
 	if ( !CMapClass::s_bLoadingVMF )
-	{	
+	{
 		CalcBounds( TRUE );
 		PostUpdate(Notify_Changed);
 		SignalChanged();
@@ -910,14 +910,14 @@ void CMapEntity::ReplaceTargetname(const char *szOldName, const char *szNewName)
 			pConn->SetParam(szTempName);
 		}
 	}
-	
+
 	CMapClass::ReplaceTargetname(szOldName, szNewName);
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Inputs : pszClass - 
+// Purpose:
+// Inputs : pszClass -
 //			bLoading - True if this is being called from Postload, false otherwise.
 //-----------------------------------------------------------------------------
 void CMapEntity::SetClass(LPCTSTR pszClass, bool bLoading)
@@ -1032,7 +1032,7 @@ void CMapEntity::SignalChanged( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapEntity::EnsureUniqueNodeID(CMapWorld *pWorld)
 {
@@ -1152,7 +1152,7 @@ void CMapEntity::PostloadWorld(CMapWorld *pWorld)
 		AssignNodeID();
 	}
 
-	// Set a reasonable default 
+	// Set a reasonable default
 	Vector2D vecLogicalPos = GetLogicalPosition();
 	if ( vecLogicalPos.x == COORD_NOTINIT )
 	{
@@ -1183,8 +1183,8 @@ void CMapEntity::UpdateHelpers(bool bLoading)
 
 	//
 	// Add the helpers appropriate for our current class.
-	//	
-	AddHelpersForClass(GetClass(), bLoading);	
+	//
+	AddHelpersForClass(GetClass(), bLoading);
 }
 
 
@@ -1208,10 +1208,10 @@ void CMapEntity::SetMoveParent( CMapEntity *pEnt )
 			m_pMoveParent = NULL;
 			return;
 		}
-		
+
 		pCur = pCur->m_pMoveParent;
 	}
-	
+
 	m_pMoveParent = pEnt;
 }
 
@@ -1246,7 +1246,7 @@ void CMapEntity::NotifyChildKeyChanged(CMapClass *pChild, const char *szKey, con
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapEntity::DeleteKeyValue(LPCSTR pszKey)
 {
@@ -1270,7 +1270,7 @@ void CMapEntity::DeleteKeyValue(LPCSTR pszKey)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapEntity::SetKeyValue(LPCSTR pszKey, LPCSTR pszValue)
 {
@@ -1297,7 +1297,7 @@ void CMapEntity::SetKeyValue(LPCSTR pszKey, LPCSTR pszValue)
 
 //-----------------------------------------------------------------------------
 // Purpose: Notifies the entity that it has been cloned.
-// Input  : pClone - 
+// Input  : pClone -
 //-----------------------------------------------------------------------------
 void CMapEntity::OnPreClone(CMapClass *pClone, CMapWorld *pWorld, const CMapObjectList &OriginalList, CMapObjectList &NewList)
 {
@@ -1327,7 +1327,7 @@ void CMapEntity::OnPreClone(CMapClass *pClone, CMapWorld *pWorld, const CMapObje
 			pNewEntity->SetKeyValue("targetname", newName);
 		}
 	}
-	
+
 	if (IsNodeClass())
 	{
 		((CMapEntity *)pClone)->AssignNodeID();
@@ -1336,11 +1336,11 @@ void CMapEntity::OnPreClone(CMapClass *pClone, CMapWorld *pWorld, const CMapObje
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pClone - 
-//			pWorld - 
-//			OriginalList - 
-//			NewList - 
+// Purpose:
+// Input  : pClone -
+//			pWorld -
+//			OriginalList -
+//			NewList -
 //-----------------------------------------------------------------------------
 void CMapEntity::OnClone(CMapClass *pClone, CMapWorld *pWorld, const CMapObjectList &OriginalList, CMapObjectList &NewList)
 {
@@ -1398,12 +1398,12 @@ void CMapEntity::OnPrePaste( CMapClass *pCopy, CMapWorld *pSourceWorld, CMapWorl
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pCopy - 
-//			pSourceWorld - 
-//			pDestWorld - 
-//			OriginalList - 
-//			NewList - 
+// Purpose:
+// Input  : pCopy -
+//			pSourceWorld -
+//			pDestWorld -
+//			OriginalList -
+//			NewList -
 //-----------------------------------------------------------------------------
 void CMapEntity::OnPaste(CMapClass *pCopy, CMapWorld *pSourceWorld, CMapWorld *pDestWorld, const CMapObjectList &OriginalList, CMapObjectList &NewList)
 {
@@ -1417,10 +1417,10 @@ void CMapEntity::OnPaste(CMapClass *pCopy, CMapWorld *pSourceWorld, CMapWorld *p
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszKey - 
-//			pszOldValue - 
-//			pszValue - 
+// Purpose:
+// Input  : pszKey -
+//			pszOldValue -
+//			pszValue -
 //-----------------------------------------------------------------------------
 void CMapEntity::OnKeyValueChanged(const char *pszKey, const char *pszOldValue, const char *pszValue)
 {
@@ -1549,12 +1549,12 @@ void CMapEntity::OnRemoveFromWorld(CMapWorld *pWorld, bool bNotifyChildren)
 	// Disconnect this now removed entity from the rest of the world
 	Connections_FixBad(false);
 	Upstream_FixBad();
-	
+
 	CMapClass::OnRemoveFromWorld(pWorld, bNotifyChildren);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : pObject - The object that changed.
 //-----------------------------------------------------------------------------
 void CMapEntity::OnNotifyDependent(CMapClass *pObject, Notify_Dependent_t eNotifyType)
@@ -1588,8 +1588,8 @@ void CMapEntity::OnNotifyDependent(CMapClass *pObject, Notify_Dependent_t eNotif
 //-----------------------------------------------------------------------------
 // Purpose: Iterates through an object, and all it's children, looking for an
 //			entity with a matching key and value
-// Input  : key - 
-//			value - 
+// Input  : key -
+//			value -
 // Output : Returns a pointer to the entity found.
 //-----------------------------------------------------------------------------
 CMapEntity *CMapEntity::FindChildByKeyValue( LPCSTR key, LPCSTR value, bool *bIsInInstance, VMatrix *InstanceMatrix )
@@ -1613,7 +1613,7 @@ CMapEntity *CMapEntity::FindChildByKeyValue( LPCSTR key, LPCSTR value, bool *bIs
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns a coordinate frame to render in, if the entity is animating
-// Input  : matrix - 
+// Input  : matrix -
 // Output : returns true if a new matrix is returned, false if it is just the identity
 //-----------------------------------------------------------------------------
 bool CMapEntity::GetTransformMatrix( VMatrix& matrix )
@@ -1674,9 +1674,9 @@ ChunkFileResult_t CMapEntity::SaveEditorData(CChunkFile *pFile)
 	return BaseClass::SaveEditorData( pFile );
 }
 
-		
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CMapEntity::SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo)
 {
@@ -1691,7 +1691,7 @@ ChunkFileResult_t CMapEntity::SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo)
 	ChunkFileResult_t eResult = ChunkFile_Ok;
 
 	//
-	// If it's a solidentity but it doesn't have any solids, 
+	// If it's a solidentity but it doesn't have any solids,
 	// don't save it.
 	//
 	if (!IsPlaceholder() && !m_Children.Count())
@@ -1761,7 +1761,7 @@ ChunkFileResult_t CMapEntity::SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo)
 	{
 		eResult = CMapClass::SaveVMF(pFile, pSaveInfo);
 	}
-	
+
 	//
 	// End this entity's scope.
 	//
@@ -1807,9 +1807,9 @@ bool CMapEntity::UpdateObjectColor()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pWorld - 
-//			pObject - 
+// Purpose:
+// Input  : pWorld -
+//			pObject -
 //-----------------------------------------------------------------------------
 void CMapEntity::UpdateDependencies(CMapWorld *pWorld, CMapClass *pObject)
 {
@@ -1845,7 +1845,7 @@ void CMapEntity::UpdateDependencies(CMapWorld *pWorld, CMapClass *pObject)
 // Input:	pos - position on the plane
 //			plane - surface plane to align to
 //			align - alignment type (top, bottom)
-// Output: 
+// Output:
 //-----------------------------------------------------------------------------
 
 #define	ALIGN_EPSILON	1	// World units
@@ -1869,7 +1869,7 @@ void CMapEntity::AlignOnPlane( Vector& pos, PLANE *plane, alignType_e align )
 
 	//Push our point out and away from this surface
 	VectorMA( pos, fOffset + ALIGN_EPSILON, plane->normal, vecNewPos );
-	
+
 	//Update the entity and children
 	SetOrigin( vecNewPos );
 	SignalChanged();
@@ -1916,7 +1916,7 @@ bool MapEntityList_HasInput(const CMapEntityList *pList, const char *szInput, In
 //-----------------------------------------------------------------------------
 // Purpose: Returns a pointer to the object that should be added to the selection
 //			list because this object was clicked on with a given selection mode.
-// Input  : eSelectMode - 
+// Input  : eSelectMode -
 //-----------------------------------------------------------------------------
 CMapClass *CMapEntity::PrepareSelection(SelectMode_t eSelectMode)
 {
@@ -1942,8 +1942,8 @@ CMapClass *CMapEntity::PrepareSelection(SelectMode_t eSelectMode)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pRender - 
+// Purpose:
+// Input  : pRender -
 //-----------------------------------------------------------------------------
 void CMapEntity::Render2D(CRender2D *pRender)
 {
@@ -1996,7 +1996,7 @@ void CMapEntity::Render2D(CRender2D *pRender)
 	if (s_bShowEntityConnections)
 	{
 		LPCTSTR pszTarget = GetKeyValue("target");
-		
+
 		if (pszTarget != NULL)
 		{
 			CMapWorld *pWorld = GetWorldObject(this);
@@ -2008,7 +2008,7 @@ void CMapEntity::Render2D(CRender2D *pRender)
 
 			Vector vCenter1,vCenter2;
 			GetBoundsCenter( vCenter1 );
-			
+
 			FOR_EACH_OBJ( FoundEntitiesTarget, p )
 			{
 				CMapClass *pEntity = (CMapEntity *)FoundEntitiesTarget.Element(p);
@@ -2021,7 +2021,7 @@ void CMapEntity::Render2D(CRender2D *pRender)
 	// Draw the forward vector if we have an "angles" key and we're selected.
 	// HACK: don't draw the forward vector for lights, they negate pitch. The model helper will handle it.
 	if ((GetSelectionState() != SELECT_NONE) &&
-		(!GetClassName() || (strnicmp(GetClassName(), "light_", 6) != 0)) && 
+		(!GetClassName() || (strnicmp(GetClassName(), "light_", 6) != 0)) &&
 		(GetKeyValue("angles") != NULL))
 	{
 		Vector vecOrigin;
@@ -2071,7 +2071,7 @@ void CMapEntity::GetLogicalConnectionPosition( LogicalConnection_t i, Vector2D &
 {
 	Vector2D vecMins, vecMaxs;
 	GetRenderLogicalBox( vecMins, vecMaxs );
-	
+
 	vecPosition.y = ( vecMins.y + vecMaxs.y ) * 0.5f;
 
 	if ( i == LOGICAL_CONNECTION_INPUT )
@@ -2089,7 +2089,7 @@ void CMapEntity::GetLogicalConnectionPosition( LogicalConnection_t i, Vector2D &
 // Renders into the logical view
 //-----------------------------------------------------------------------------
 void CMapEntity::RenderLogical( CRender2D *pRender )
-{		    
+{
 	// Render all our children (helpers & solids)
 	BaseClass::RenderLogical(pRender);
 
@@ -2100,7 +2100,7 @@ void CMapEntity::RenderLogical( CRender2D *pRender )
 	Vector2D vecBoxMaxs = vecMaxs;
 	vecBoxMins.x += LOGICAL_BOX_CONNECTOR_INPUT_WIDTH;
 	vecBoxMaxs.x -= LOGICAL_BOX_CONNECTOR_OUTPUT_WIDTH;
-	 
+
 	// Define the entity highlight/lowlight edges
 	Vector2D vecInnerMins = vecBoxMins, vecInnerMaxs = vecBoxMaxs;
 	vecInnerMins.x += LOGICAL_BOX_INNER_OFFSET;
@@ -2169,21 +2169,21 @@ void CMapEntity::RenderLogical( CRender2D *pRender )
 	pRender->DrawCircle( Vector( vecMins.x + LOGICAL_BOX_CONNECTOR_RADIUS, flConnectorY, 0.0f ), LOGICAL_BOX_CONNECTOR_RADIUS );
 	pRender->MoveTo( Vector( vecMins.x + 2 * LOGICAL_BOX_CONNECTOR_RADIUS, flConnectorY, 0.0f ) );
 	pRender->DrawLineTo( Vector( vecBoxMins.x, flConnectorY, 0.0f ) );
-	  
+
 	pRender->MoveTo( Vector( vecBoxMaxs.x, flConnectorY, 0.0f ) );
 	pRender->DrawLineTo( Vector( vecMaxs.x - LOGICAL_BOX_ARROW_LENGTH, flConnectorY, 0.0f ) );
 	pRender->DrawLineTo( Vector( vecMaxs.x - LOGICAL_BOX_ARROW_LENGTH, flConnectorY + LOGICAL_BOX_ARROW_HEIGHT, 0.0f ) );
 	pRender->DrawLineTo( Vector( vecMaxs.x, flConnectorY, 0.0f ) );
 	pRender->DrawLineTo( Vector( vecMaxs.x - LOGICAL_BOX_ARROW_LENGTH, flConnectorY - LOGICAL_BOX_ARROW_HEIGHT, 0.0f ) );
 	pRender->DrawLineTo( Vector( vecMaxs.x - LOGICAL_BOX_ARROW_LENGTH, flConnectorY, 0.0f ) );
-	   
+
 	// Stop drawing the text once the entity itself gets too small.
 	Vector2D pt, pt2;
 	pRender->GetView()->WorldToClient( pt, Vector( vecBoxMins.x, vecBoxMins.y, 0.0f ) );
 	pRender->GetView()->WorldToClient( pt2, Vector( vecBoxMaxs.x, vecBoxMaxs.y, 0.0f ) );
 	if ( fabs( pt.y - pt2.y ) < 32 )
 		return;
-	
+
 	// Render the entity's name and class name if enabled.
  	pRender->SetTextColor( rgbColor.r, rgbColor.g, rgbColor.b );
 
@@ -2196,7 +2196,7 @@ void CMapEntity::RenderLogical( CRender2D *pRender )
 
 	if ( fabs( pt.y - pt2.y ) < 50 )
 		return;
-	
+
 	const char *pszClassName = GetClassName();
 	if (pszClassName != NULL)
 	{
@@ -2204,7 +2204,7 @@ void CMapEntity::RenderLogical( CRender2D *pRender )
 	}
 }
 
-		
+
 //-----------------------------------------------------------------------------
 // Purpose: Returns whether this entity snaps to half grid or not. Some entities,
 //			such as hinges, need to snap to a 0.5 grid to center on geometry.
@@ -2252,17 +2252,17 @@ bool CMapEntity::IsCulledByCordon(const Vector &vecMins, const Vector &vecMaxs)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pView - 
-//			vecPoint - 
-//			nHitData - 
-// Output : 
+// Purpose:
+// Input  : pView -
+//			vecPoint -
+//			nHitData -
+// Output :
 //-----------------------------------------------------------------------------
 bool CMapEntity::HitTest2D(CMapView2D *pView, const Vector2D &point, HitInfo_t &HitData)
 {
 	if ( !IsVisible() )
 		return false;
-	
+
 	if ( BaseClass::HitTest2D(pView, point, HitData) )
 		return true;
 
@@ -2271,7 +2271,7 @@ bool CMapEntity::HitTest2D(CMapView2D *pView, const Vector2D &point, HitInfo_t &
 	//
 	if ( !IsPointClass() )
 		return false;
-	
+
 	// First check center X.
 
 	Vector vecCenter, vecViewPoint;
@@ -2364,7 +2364,7 @@ bool CMapEntity::HitTestLogical( CMapViewLogical *pView, const Vector2D &vecPoin
 	return false;
 }
 
-		
+
 //-----------------------------------------------------------------------------
 // Is this logical?
 //-----------------------------------------------------------------------------
@@ -2376,18 +2376,18 @@ bool CMapEntity::IsLogical(void)
 
 
 //-----------------------------------------------------------------------------
-// Is it visible in the logical view? 
+// Is it visible in the logical view?
 //-----------------------------------------------------------------------------
 bool CMapEntity::IsVisibleLogical(void)
-{ 
-	return IsVisible(); 
+{
+	return IsVisible();
 }
 
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns true if this entity's name matches the given name, considering
 //			wildcards.
-// Input  : szName - 
+// Input  : szName -
 //-----------------------------------------------------------------------------
 bool CMapEntity::NameMatches(const char *szName)
 {
@@ -2404,7 +2404,7 @@ bool CMapEntity::NameMatches(const char *szName)
 //-----------------------------------------------------------------------------
 // Purpose: Returns true if this entity's classname matches the given name, considering
 //			wildcards.
-// Input  : szName - 
+// Input  : szName -
 //-----------------------------------------------------------------------------
 bool CMapEntity::ClassNameMatches(const char *szName)
 {

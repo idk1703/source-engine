@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -86,6 +86,6 @@ private:
 	CDoDCutEditablePanel		*m_pBackground;
 	CDoDHudStaminaIcon			*m_pIcon;
 	CDoDHudStaminaProgressBar	*m_pProgressBar;
-};	
+};
 
 #endif // DOD_HUD_PLAYERSTATUS_STAMINA_H

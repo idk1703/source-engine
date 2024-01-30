@@ -24,7 +24,7 @@ void SOTrackerSpew( const char* pszBuff, int nType )
 	if ( ( g_nQuestSpewFlags & nType ) == 0 )
 		return;
 
-	Color questDebugColor = 
+	Color questDebugColor =
 #ifdef GAME_DLL
 	Color( 255, 100, 0, 255 );
 	ConColorMsg( questDebugColor, "[SVTrackers]: %s", pszBuff );
@@ -85,7 +85,7 @@ void SOTrackerSpewTypeToggle( const CCommand &args )
 ConCommand tf_so_tracker_spew_type_toggle( "tf_so_tracker_spew_type_toggle", SOTrackerSpewTypeToggle, NULL
 #ifdef CLIENT_DLL
 	, FCVAR_CHEAT
-#endif 
+#endif
 	);
 
 CBaseSOTracker::CBaseSOTracker( const CSharedObject* pSObject, CSteamID steamIDOwner, CSOTrackerManager* pManager )
@@ -148,12 +148,12 @@ void CSOTrackerManager::Shutdown()
 void CSOTrackerManager::FireGameEvent( IGameEvent *pEvent )
 {
 	const char* pszName = pEvent->GetName();
-	
+
 	if ( FStrEq( pszName, "schema_updated" ) )
 	{
 		// Recreate all existing trackers
 		m_mapItemTrackers.PurgeAndDeleteElements();
-	
+
 		CUtlVector< CSteamID > vecIDsToUpdate;
 #ifdef GAME_DLL
 		// On the server, we need need new trackers for everyone
@@ -176,7 +176,7 @@ void CSOTrackerManager::FireGameEvent( IGameEvent *pEvent )
 			EnsureTrackersForPlayer( vecIDsToUpdate[ i ] );
 		}
 	}
-	else if ( FStrEq( pszName, "server_spawn" ) ) 
+	else if ( FStrEq( pszName, "server_spawn" ) )
 	{
 		CommitAllChanges();
 	}
@@ -237,7 +237,7 @@ void CSOTrackerManager::SOUpdated( const CSteamID & steamIDOwner, const CSharedO
 }
 
 
-void CSOTrackerManager::SODestroyed( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent) 
+void CSOTrackerManager::SODestroyed( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent)
 {
 	HandleSOEvent( steamIDOwner, pObject, TRACKER_REMOVE );
 }
@@ -290,7 +290,7 @@ CommitRecord_t* CSOTrackerManager::GetCommitRecord( CommitsMap_t::KeyType_t nKey
 }
 
 void CSOTrackerManager::UpdateTrackerForItem( const CSharedObject* pItem, ETrackerHandling_t eHandling, CSteamID steamIDOwner )
-{	
+{
 	// Do we want to make sure we have a tracker, or that we dont have a tracker
 	const bool bWantsTracker = eHandling != TRACKER_REMOVE;
 	auto idx = m_mapItemTrackers.Find( GetKeyForObjectTracker( pItem, steamIDOwner ) );
@@ -411,7 +411,7 @@ void CSOTrackerManager::CommitAllChanges()
 void CSOTrackerManager::Spew()
 {
 	DevMsg( "--- Spewing all trackers for %s ---\n", GetName() );
-	
+
 	FOR_EACH_MAP( m_mapItemTrackers, i )
 	{
 		const CBaseSOTracker* pTracker = m_mapItemTrackers[ i ];

@@ -17,7 +17,7 @@
 #include "tier0/memdbgon.h"
 
 
-VideoPlayerPanel::VideoPlayerPanel( vgui::Panel *parent, const char *panelName, int nXpos, int nYpos, int nWidth, int nHeight, const char *pVideoFile ) : 
+VideoPlayerPanel::VideoPlayerPanel( vgui::Panel *parent, const char *panelName, int nXpos, int nYpos, int nWidth, int nHeight, const char *pVideoFile ) :
 	BaseClass( parent, panelName ),
 	m_VideoMaterial( NULL ),
 	m_VideoFileName( NULL ),
@@ -30,14 +30,14 @@ VideoPlayerPanel::VideoPlayerPanel( vgui::Panel *parent, const char *panelName, 
 	ClearVideo();
 
 	SetVisible( false );
-	
+
 	SetKeyBoardInputEnabled( false );
 	SetMouseInputEnabled( false );
 
 	SetProportional( false );
 	SetPaintBackgroundEnabled( false );
 	SetPaintBorderEnabled( false );
-	
+
 	// Set us up
 	SetTall( nHeight );
 	SetWide( nWidth );
@@ -50,13 +50,13 @@ VideoPlayerPanel::VideoPlayerPanel( vgui::Panel *parent, const char *panelName, 
 
 	// Assign video file if supplied
 	SetVideo( pVideoFile );
-	
+
 	SetVisible( true );
 
-}									
+}
 
-									
-									
+
+
 
 //-----------------------------------------------------------------------------
 // Properly shutdown out materials
@@ -67,7 +67,7 @@ VideoPlayerPanel::~VideoPlayerPanel( void )
 
 	StopVideo();
 	ClearVideo();
-	
+
 }
 
 
@@ -85,19 +85,19 @@ bool VideoPlayerPanel::SetVideo( const char *pVideoFile )
 	m_VideoMaterial = g_pVideo->CreateVideoMaterial( "VideoPlayerMaterial", pVideoFile, "GAME",
 													VideoPlaybackFlags::DEFAULT_MATERIAL_OPTIONS,
 													VideoSystem::DETERMINE_FROM_FILE_EXTENSION, true );
-	
+
 	if ( m_VideoMaterial == NULL )
 	{
 		return false;
 	}
 
-	// save filename	
+	// save filename
 	int sLen = V_strlen( pVideoFile ) + 1;
 	m_VideoFileName = new char[ sLen ];
 	V_strncpy( m_VideoFileName, pVideoFile, sLen );
-	
+
 	// compute Playback dimensions
-	
+
 	int nWidth, nHeight;
 	m_VideoMaterial->GetVideoImageSize( &nWidth, &nHeight );
 	m_VideoMaterial->GetVideoTexCoordRange( &m_flU, &m_flV );
@@ -123,11 +123,11 @@ bool VideoPlayerPanel::SetVideo( const char *pVideoFile )
 		m_nPlaybackHeight = GetTall();
 		m_letterBox = 0;
 	}
-	
+
 	m_pMaterial = m_VideoMaterial->GetMaterial();
-	
+
 	m_VideoDuration = m_VideoMaterial->GetVideoDuration();
-	
+
 	m_VideoLoaded = true;
 	return true;
 }
@@ -147,7 +147,7 @@ void VideoPlayerPanel::ClearVideo()
 		g_pVideo->DestroyVideoMaterial( m_VideoMaterial );
 		m_VideoMaterial = NULL;
 	}
-	
+
 	if ( m_VideoFileName != NULL )
 	{
 		delete[] m_VideoFileName;
@@ -155,24 +155,24 @@ void VideoPlayerPanel::ClearVideo()
 	}
 
 	m_pMaterial = NULL;
-	
+
 	m_VideoLoaded = false;
 	m_VideoPlaying = false;
 	m_VideoPaused = false;
 	m_nPlaybackHeight = 0;
 	m_nPlaybackWidth = 0;
 	m_letterBox = 0;
-	
+
 	m_flU = 0.0f;
 	m_flV = 0.0f;
-	
+
 	m_VideoDuration = 0.0f;
-	
+
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VideoPlayerPanel::Activate( void )
 {
@@ -186,7 +186,7 @@ void VideoPlayerPanel::Activate( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VideoPlayerPanel::OnClose( void )
 {
@@ -216,15 +216,15 @@ void VideoPlayerPanel::Paint( void )
 	int width = GetWide();
 	int height = GetTall();
 
-	
+
 	// Are we playing the video?  Do we even have a video?
 	if ( !m_VideoLoaded || !m_VideoPlaying )
 	{
 		vgui::surface()->DrawSetColor(  0, 0, 0, 255 );
 		vgui::surface()->DrawFilledRect( 0, 0, width, height );
-		return;		
+		return;
 	}
-	
+
 	if ( m_VideoMaterial == NULL )
 		return;
 
@@ -238,23 +238,23 @@ void VideoPlayerPanel::Paint( void )
 	if ( m_letterBox != 0 )
 	{
 		vgui::surface()->DrawSetColor(  0, 0, 0, 255 );
-		
+
 		if ( m_letterBox == 1 )		// bars on top, bottom
 		{
 			int excess = ( height - m_nPlaybackHeight );
 			int top = excess /2;
 			int bot = excess - top;
-		
+
 			vgui::surface()->DrawFilledRect( 0, 0, width, top );
 			vgui::surface()->DrawFilledRect( 0, height - bot, width, height );
 		}
-		
+
 		if ( m_letterBox == 2 )		// bars on left, right
 		{
 			int excess = ( width - m_nPlaybackWidth );
 			int left = excess /2;
 			int right = excess - left;
-		
+
 			vgui::surface()->DrawFilledRect( 0, 0, left, height );
 			vgui::surface()->DrawFilledRect( width-right, 0, width, height );
 		}
@@ -262,7 +262,7 @@ void VideoPlayerPanel::Paint( void )
 
 	// Draw the polys to draw this out
 	CMatRenderContextPtr pRenderContext( materials );
-	
+
 	pRenderContext->MatrixMode( MATERIAL_VIEW );
 	pRenderContext->PushMatrix();
 	pRenderContext->LoadIdentity();
@@ -314,7 +314,7 @@ void VideoPlayerPanel::Paint( void )
 		meshBuilder.Color4f( 1.0f, 1.0f, 1.0f, alpha );
 		meshBuilder.AdvanceVertex();
 	}
-	
+
 	meshBuilder.End();
 	pMesh->Draw();
 
@@ -323,7 +323,7 @@ void VideoPlayerPanel::Paint( void )
 
 	pRenderContext->MatrixMode( MATERIAL_PROJECTION );
 	pRenderContext->PopMatrix();
-	
+
 }
 
 bool VideoPlayerPanel::StartVideo()
@@ -331,7 +331,7 @@ bool VideoPlayerPanel::StartVideo()
 	if ( !m_VideoLoaded )
 		return false;
 
-	// already playing?		
+	// already playing?
 	if ( m_VideoPlaying )
 	{
 		// paused?
@@ -339,7 +339,7 @@ bool VideoPlayerPanel::StartVideo()
 		{
 			return UnpauseVideo();
 		}
-		return true;	
+		return true;
 	}
 
 	m_VideoPlaying = m_VideoMaterial->StartVideo();
@@ -355,8 +355,8 @@ bool VideoPlayerPanel::StopVideo()
 
 	m_VideoMaterial->StopVideo();
 	m_VideoPlaying = false;
-	
-	return true;	
+
+	return true;
 }
 
 bool VideoPlayerPanel::PauseVideo()
@@ -369,7 +369,7 @@ bool VideoPlayerPanel::PauseVideo()
 		m_VideoMaterial->SetPaused( true );
 		m_VideoPaused = true;
 	}
-	
+
 	return true;
 }
 
@@ -384,7 +384,7 @@ bool VideoPlayerPanel::UnpauseVideo()
 		m_VideoMaterial->SetPaused( false );
 		m_VideoPaused = false;
 	}
-	
+
 	return true;
 }
 
@@ -394,7 +394,7 @@ float VideoPlayerPanel::GetCurrentPlaybackTime()
 	{
 		return 0.0f;
 	}
-	
+
 	return m_VideoMaterial->GetCurrentVideoTime();
 }
 
@@ -404,10 +404,10 @@ bool VideoPlayerPanel::SetCurrentPlaybackTime( float newTime )
 {
 	if ( !m_VideoLoaded )
 		return false;
-		
+
 	if ( newTime < 0.0f || newTime > m_VideoDuration )
 		return false;
-		
+
 	return m_VideoMaterial->SetTime( newTime );
 }
 
@@ -424,9 +424,9 @@ bool VideoPlayerPanel::IsMuted()
 {
 	if ( !m_VideoLoaded )
 		return false;
-	
+
 	return m_VideoMaterial->IsMuted();
-		
+
 }
 
 

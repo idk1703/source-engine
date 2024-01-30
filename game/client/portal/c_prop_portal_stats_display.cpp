@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -106,7 +106,7 @@ void C_PropPortalStatsDisplay::ClientThink( void )
 	BaseClass::ClientThink();
 
 	// Remembers if the player has cheated
-	// This doesn't persist across save/loads, 
+	// This doesn't persist across save/loads,
 	// this is only to prevent players from accidentally wiping their stats while no clipping through a map
 	if ( !sv_cheats )
 	{
@@ -277,7 +277,7 @@ void C_PropPortalStatsDisplay::ClientThink( void )
 				EmitSound( "Portal.button_up" );
 				++m_iCurrentDisplayStep;	// skip the next step
 			}
-			
+
 			++m_iCurrentDisplayStep;
 		}
 		break;

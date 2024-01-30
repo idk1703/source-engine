@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -26,7 +26,7 @@ public:
 	void			UpdateCharging( float percentage );
 	void			UpdateDischarging( void );
 
-private:	
+private:
 
 	bool			SetupEmitters( void );
 	inline float	GetStateDurationPercentage( void );
@@ -36,7 +36,7 @@ private:
 	float			m_flDuration;
 	float			m_flStartTime;
 	int				m_spawnflags;
-	
+
 	CSmartPtr<CSimpleEmitter>		m_pSimpleEmitter;
 	CSmartPtr<CParticleAttractor>	m_pAttractorEmitter;
 };
@@ -50,7 +50,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_CitadelEnergyCore, DT_CitadelEnergyCore, CCitadelEne
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : RenderGroup_t
 //-----------------------------------------------------------------------------
 RenderGroup_t C_CitadelEnergyCore::GetRenderGroup( void )
@@ -59,8 +59,8 @@ RenderGroup_t C_CitadelEnergyCore::GetRenderGroup( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_CitadelEnergyCore::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -74,7 +74,7 @@ void C_CitadelEnergyCore::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_CitadelEnergyCore::SetupEmitters( void )
 {
@@ -100,8 +100,8 @@ bool C_CitadelEnergyCore::SetupEmitters( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : percentage - 
+// Purpose:
+// Input  : percentage -
 //-----------------------------------------------------------------------------
 void C_CitadelEnergyCore::UpdateIdle( float percentage )
 {
@@ -149,7 +149,7 @@ void C_CitadelEnergyCore::UpdateIdle( float percentage )
 
 		if ( sParticle == NULL )
 			return;
-		
+
 		sParticle->m_vecVelocity	= Vector(0,0,8);
 		sParticle->m_flDieTime		= 0.5f;
 		sParticle->m_flLifetime		= 0.0f;
@@ -171,8 +171,8 @@ void C_CitadelEnergyCore::UpdateIdle( float percentage )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : percentage - 
+// Purpose:
+// Input  : percentage -
 //-----------------------------------------------------------------------------
 void C_CitadelEnergyCore::UpdateCharging( float percentage )
 {
@@ -197,7 +197,7 @@ void C_CitadelEnergyCore::UpdateCharging( float percentage )
 
 		if ( sParticle == NULL )
 			return;
-		
+
 		sParticle->m_vecVelocity	= vec3_origin;
 		sParticle->m_flDieTime		= 0.1f;
 		sParticle->m_flLifetime		= 0.0f;
@@ -265,7 +265,7 @@ void C_CitadelEnergyCore::UpdateCharging( float percentage )
 
 		if ( sParticle == NULL )
 			return;
-		
+
 		sParticle->m_vecVelocity	= Vector(0,0,8);
 		sParticle->m_flDieTime		= 0.5f;
 		sParticle->m_flLifetime		= 0.0f;
@@ -287,8 +287,8 @@ void C_CitadelEnergyCore::UpdateCharging( float percentage )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : percentage - 
+// Purpose:
+// Input  : percentage -
 //-----------------------------------------------------------------------------
 void C_CitadelEnergyCore::UpdateDischarging( void )
 {
@@ -311,7 +311,7 @@ void C_CitadelEnergyCore::UpdateDischarging( void )
 
 	if ( sParticle == NULL )
 		return;
-	
+
 	sParticle->m_vecVelocity	= forward * 32.0f;
 	sParticle->m_flDieTime		= 0.2f;
 	sParticle->m_flLifetime		= 0.0f;
@@ -340,7 +340,7 @@ void C_CitadelEnergyCore::UpdateDischarging( void )
 
 		if ( sParticle == NULL )
 			return;
-		
+
 		sParticle->m_vecVelocity	= forward * ( 32.0f * (i+1) );
 		sParticle->m_flDieTime		= 0.2f;
 		sParticle->m_flLifetime		= 0.0f;
@@ -403,7 +403,7 @@ void C_CitadelEnergyCore::UpdateDischarging( void )
 
 		if ( sParticle == NULL )
 			return;
-		
+
 		sParticle->m_vecVelocity	= Vector(0,0,2);
 		sParticle->m_flDieTime		= 0.5f;
 		sParticle->m_flLifetime		= 0.0f;
@@ -425,7 +425,7 @@ void C_CitadelEnergyCore::UpdateDischarging( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : inline float
 //-----------------------------------------------------------------------------
 inline float C_CitadelEnergyCore::GetStateDurationPercentage( void )
@@ -437,7 +437,7 @@ inline float C_CitadelEnergyCore::GetStateDurationPercentage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_CitadelEnergyCore::NotifyShouldTransmit( ShouldTransmitState_t state )
 {
@@ -457,7 +457,7 @@ void C_CitadelEnergyCore::NotifyShouldTransmit( ShouldTransmitState_t state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_CitadelEnergyCore::ClientThink( void )
 {

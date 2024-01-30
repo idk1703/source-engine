@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ public:
 };
 
 
-// Fire a global order event. It goes to all orders so they can determine if 
+// Fire a global order event. It goes to all orders so they can determine if
 // they want to react.
 void GlobalOrderEvent( COrderEvent_Base *pOrder );
 

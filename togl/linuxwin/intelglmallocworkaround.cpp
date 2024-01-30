@@ -35,7 +35,7 @@ void *IntelGLMallocWorkaround::ZeroingAlloc(size_t size)
 	void *memory = s_pWorkaround->m_pfnMallocReentry(size);
 	if (size < 96)
 	{
-		// Since the Intel driver has an issue with a small allocation 
+		// Since the Intel driver has an issue with a small allocation
 		// that's left uninitialized, we use memset to ensure it's zero-initialized.
 		memset(memory, 0, size);
 	}

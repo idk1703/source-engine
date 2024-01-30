@@ -21,7 +21,7 @@
 // description:
 //   This in an sorted order-preserving vector. Items may be inserted or removed
 //   at any point in the vector. When an item is inserted, all elements are
-//   moved down by one element using memmove. When an item is removed, all 
+//   moved down by one element using memmove. When an item is removed, all
 //   elements are shifted back down. Items are searched for in the vector
 //   using a binary search technique. Clients must pass in a Less() function
 //   into the constructor of the vector to determine the sort order.
@@ -50,10 +50,10 @@ public:
 	// constructor
 	CUtlSortVector( int nGrowSize = 0, int initSize = 0 );
 	CUtlSortVector( T* pMemory, int numElements );
-	
+
 	// inserts (copy constructs) an element in sorted order into the list
 	int		Insert( const T& src );
-	
+
 	// Finds an element within the list using a binary search
 	int		Find( const T& search ) const;
 	int		FindLessOrEqual( const T& search ) const;
@@ -64,7 +64,7 @@ public:
 	// Removes a particular element
 	void	Remove( const T& search );
 	void	Remove( int i );
-	
+
 	// Allows methods to set a context to be used with the less function..
 	void	SetLessContext( void *pCtx );
 
@@ -86,7 +86,7 @@ protected:
 	int InsertBefore( int elem, const T& src );
 	int InsertAfter( int elem, const T& src );
 	int AddMultipleToHead( int num );
-	int AddMultipleToTail( int num, const T *pToCopy=NULL );	   
+	int AddMultipleToTail( int num, const T *pToCopy=NULL );
 	int InsertMultipleBefore( int elem, int num, const T *pToCopy=NULL );
 	int InsertMultipleAfter( int elem, int num );
 	int AddVectorToTail( CUtlVector<T> const &src );
@@ -130,13 +130,13 @@ private:
 //-----------------------------------------------------------------------------
 // constructor
 //-----------------------------------------------------------------------------
-template <class T, class LessFunc, class BaseVector> 
-CUtlSortVector<T, LessFunc, BaseVector>::CUtlSortVector( int nGrowSize, int initSize ) : 
+template <class T, class LessFunc, class BaseVector>
+CUtlSortVector<T, LessFunc, BaseVector>::CUtlSortVector( int nGrowSize, int initSize ) :
 	m_pLessContext(NULL), BaseVector( nGrowSize, initSize ), m_bNeedsSort( false )
 {
 }
 
-template <class T, class LessFunc, class BaseVector> 
+template <class T, class LessFunc, class BaseVector>
 CUtlSortVector<T, LessFunc, BaseVector>::CUtlSortVector( T* pMemory, int numElements ) :
 	m_pLessContext(NULL), BaseVector( pMemory, numElements ), m_bNeedsSort( false )
 {
@@ -145,7 +145,7 @@ CUtlSortVector<T, LessFunc, BaseVector>::CUtlSortVector( T* pMemory, int numElem
 //-----------------------------------------------------------------------------
 // Allows methods to set a context to be used with the less function..
 //-----------------------------------------------------------------------------
-template <class T, class LessFunc, class BaseVector> 
+template <class T, class LessFunc, class BaseVector>
 void CUtlSortVector<T, LessFunc, BaseVector>::SetLessContext( void *pCtx )
 {
 	m_pLessContext = pCtx;
@@ -154,7 +154,7 @@ void CUtlSortVector<T, LessFunc, BaseVector>::SetLessContext( void *pCtx )
 //-----------------------------------------------------------------------------
 // grows the vector
 //-----------------------------------------------------------------------------
-template <class T, class LessFunc, class BaseVector> 
+template <class T, class LessFunc, class BaseVector>
 int CUtlSortVector<T, LessFunc, BaseVector>::Insert( const T& src )
 {
 	AssertFatal( !m_bNeedsSort );
@@ -166,7 +166,7 @@ int CUtlSortVector<T, LessFunc, BaseVector>::Insert( const T& src )
 	return pos;
 }
 
-template <class T, class LessFunc, class BaseVector> 
+template <class T, class LessFunc, class BaseVector>
 int CUtlSortVector<T, LessFunc, BaseVector>::InsertNoSort( const T& src )
 {
 	m_bNeedsSort = true;
@@ -178,7 +178,7 @@ int CUtlSortVector<T, LessFunc, BaseVector>::InsertNoSort( const T& src )
 	return lastElement;
 }
 
-template <class T, class LessFunc, class BaseVector> 
+template <class T, class LessFunc, class BaseVector>
 void CUtlSortVector<T, LessFunc, BaseVector>::QuickSort( LessFunc& less, int nLower, int nUpper )
 {
 #ifdef _WIN32
@@ -205,7 +205,7 @@ void CUtlSortVector<T, LessFunc, BaseVector>::QuickSort( LessFunc& less, int nLo
 #endif
 }
 
-template <class T, class LessFunc, class BaseVector> 
+template <class T, class LessFunc, class BaseVector>
 void CUtlSortVector<T, LessFunc, BaseVector>::RedoSort( bool bForceSort /*= false */ )
 {
 	if ( !m_bNeedsSort && !bForceSort )
@@ -219,7 +219,7 @@ void CUtlSortVector<T, LessFunc, BaseVector>::RedoSort( bool bForceSort /*= fals
 //-----------------------------------------------------------------------------
 // finds a particular element
 //-----------------------------------------------------------------------------
-template <class T, class LessFunc, class BaseVector> 
+template <class T, class LessFunc, class BaseVector>
 int CUtlSortVector<T, LessFunc, BaseVector>::Find( const T& src ) const
 {
 	AssertFatal( !m_bNeedsSort );
@@ -281,7 +281,7 @@ int CUtlSortVector<T, LessFunc, BaseVector>::FindAs( const K& key ) const
 //-----------------------------------------------------------------------------
 // finds a particular element
 //-----------------------------------------------------------------------------
-template <class T, class LessFunc, class BaseVector> 
+template <class T, class LessFunc, class BaseVector>
 int CUtlSortVector<T, LessFunc, BaseVector>::FindLessOrEqual( const T& src ) const
 {
 	AssertFatal( !m_bNeedsSort );
@@ -307,7 +307,7 @@ int CUtlSortVector<T, LessFunc, BaseVector>::FindLessOrEqual( const T& src ) con
 	return end;
 }
 
-template <class T, class LessFunc, class BaseVector> 
+template <class T, class LessFunc, class BaseVector>
 int CUtlSortVector<T, LessFunc, BaseVector>::FindLess( const T& src ) const
 {
 	AssertFatal( !m_bNeedsSort );
@@ -333,7 +333,7 @@ int CUtlSortVector<T, LessFunc, BaseVector>::FindLess( const T& src ) const
 //-----------------------------------------------------------------------------
 // Removes a particular element
 //-----------------------------------------------------------------------------
-template <class T, class LessFunc, class BaseVector> 
+template <class T, class LessFunc, class BaseVector>
 void CUtlSortVector<T, LessFunc, BaseVector>::Remove( const T& search )
 {
 	AssertFatal( !m_bNeedsSort );
@@ -345,7 +345,7 @@ void CUtlSortVector<T, LessFunc, BaseVector>::Remove( const T& search )
 	}
 }
 
-template <class T, class LessFunc, class BaseVector> 
+template <class T, class LessFunc, class BaseVector>
 void CUtlSortVector<T, LessFunc, BaseVector>::Remove( int i )
 {
 	BaseVector::Remove( i );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -49,7 +49,7 @@ inline void UpdateRefractTexture( int x, int y, int w, int h, bool bForceUpdate 
 	ITexture *pTexture = GetPowerOfTwoFrameBufferTexture();
 	if ( IsPC() || bForceUpdate || g_bAllowMultipleRefractUpdatesPerScenePerFrame || (gpGlobals->framecount != g_viewscene_refractUpdateFrame) )
 	{
-		// forced or only once per frame 
+		// forced or only once per frame
 		Rect_t rect;
 		rect.x = x;
 		rect.y = y;
@@ -91,7 +91,7 @@ inline void UpdateScreenEffectTexture( int textureIndex, int x, int y, int w, in
 	Rect_t destRect = srcRect;
 	if( !bDestFullScreen && ( nSrcWidth > nDestWidth || nSrcHeight > nDestHeight ) )
 	{
-		// the source and target sizes aren't necessarily the same (specifically in dx7 where 
+		// the source and target sizes aren't necessarily the same (specifically in dx7 where
 		// nonpow2 rendertargets aren't supported), so lets figure it out here.
 		float scaleX = ( float )nDestWidth / ( float )nSrcWidth;
 		float scaleY = ( float )nDestHeight / ( float )nSrcHeight;
@@ -129,7 +129,7 @@ inline void DrawScreenEffectMaterial( IMaterial *pMaterial, int x, int y, int w,
 	CMatRenderContextPtr pRenderContext( materials );
 
 	pRenderContext->DrawScreenSpaceRectangle( pMaterial, x, y, w, h,
-		actualRect.x, actualRect.y, actualRect.x+actualRect.width-1, actualRect.y+actualRect.height-1, 
+		actualRect.x, actualRect.y, actualRect.x+actualRect.width-1, actualRect.y+actualRect.height-1,
 		pTexture->GetActualWidth(), pTexture->GetActualHeight() );
 }
 

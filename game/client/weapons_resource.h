@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@ class CHudTexture;
 
 //-----------------------------------------------------------------------------
 // Purpose: Stores data about the Weapon Definitions passed to the client when
-//			the client first connects to a server. 
+//			the client first connects to a server.
 //-----------------------------------------------------------------------------
 class WeaponsResource
 {

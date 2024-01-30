@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,4 +30,4 @@ private:
 	COutputEvent m_onBallExit;
 };
 
-#endif // TRIGGER_PASSTIME_BALL_H 
+#endif // TRIGGER_PASSTIME_BALL_H

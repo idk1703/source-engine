@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -119,7 +119,7 @@ public:
 	int		PositionGet( void );
 	void	PositionSet( int position );
 	bool	IsValid( void ) { return m_file != 0; }
-	
+
 	void    HasLISETData( int position );
 
 private:
@@ -186,7 +186,7 @@ private:
 #define WAVE_SAMPLER			MAKEID('s','m','p','l')
 #define WAVE_VALVEDATA			MAKEID('V','D','A','T')
 #define WAVE_PADD				MAKEID('P','A','D','D')
-#define WAVE_LIST				MAKEID('L','I','S','T') 
+#define WAVE_LIST				MAKEID('L','I','S','T')
 
 #ifndef WAVE_FORMAT_PCM
 #define WAVE_FORMAT_PCM			0x0001

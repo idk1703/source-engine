@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,7 +13,7 @@
 #include "hud_numericdisplay.h"
 
 class CHudBitmapNumericDisplay : public vgui::Panel
-{	
+{
 	DECLARE_CLASS_SIMPLE( CHudBitmapNumericDisplay, vgui::Panel );
 
 public:

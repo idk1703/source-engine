@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -46,20 +46,20 @@ void CEventPropertiesExpressionDialog::PopulateExpressionList( HWND wnd )
 			continue;
 
 		// add text to combo box
-		SendMessage( wnd, CB_ADDSTRING, 0, (LPARAM)cl->GetName() ); 
+		SendMessage( wnd, CB_ADDSTRING, 0, (LPARAM)cl->GetName() );
 	}
 }
 
 void CEventPropertiesExpressionDialog::InitControlData( CEventParams *params )
 {
 	BaseClass::InitControlData( params );
-	
+
 	HWND choices1 = GetControl( IDC_EVENTCHOICES );
-	SendMessage( choices1, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( choices1, CB_RESETCONTENT, 0, 0 );
 	SendMessage( choices1, WM_SETTEXT , 0, (LPARAM)params->m_szParameters );
 
 	HWND choices2 = GetControl( IDC_EVENTCHOICES2 );
-	SendMessage( choices2, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( choices2, CB_RESETCONTENT, 0, 0 );
 	SendMessage( choices2, WM_SETTEXT , 0, (LPARAM)params->m_szParameters2 );
 
 	PopulateExpressionList( choices1 );
@@ -72,7 +72,7 @@ void CEventPropertiesExpressionDialog::InitDialog( HWND hwndDlg )
 	m_hDialog = hwndDlg;
 
 	g_Params.PositionSelf( m_hDialog );
-	
+
 	// Set working title for dialog, etc.
 	SetTitle();
 
@@ -105,18 +105,18 @@ void CEventPropertiesExpressionDialog::PopulateExpressionClass( HWND control, CE
 			if ( exp )
 			{
 				// add text to combo box
-				SendMessage( control, CB_ADDSTRING, 0, (LPARAM)exp->name ); 
+				SendMessage( control, CB_ADDSTRING, 0, (LPARAM)exp->name );
 			}
 		}
-		
+
 		break;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wnd - 
-//			*params - 
+// Purpose:
+// Input  : wnd -
+//			*params -
 // Output : static
 //-----------------------------------------------------------------------------
 
@@ -126,11 +126,11 @@ void CEventPropertiesExpressionDialog::ShowControlsForEventType( CEventParams *p
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
 static BOOL CALLBACK EventPropertiesExpressionDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
@@ -151,14 +151,14 @@ BOOL CEventPropertiesExpressionDialog::HandleMessage( HWND hwndDlg, UINT uMsg, W
 	{
 	case WM_PAINT:
 		{
-			PAINTSTRUCT ps; 
+			PAINTSTRUCT ps;
 			HDC hdc;
-			
-            hdc = BeginPaint(hwndDlg, &ps); 
-			DrawSpline( hdc, GetControl( IDC_STATIC_SPLINE ), g_Params.m_pEvent );
-            EndPaint(hwndDlg, &ps); 
 
-            return FALSE; 
+	hdc = BeginPaint(hwndDlg, &ps);
+			DrawSpline( hdc, GetControl( IDC_STATIC_SPLINE ), g_Params.m_pEvent );
+	EndPaint(hwndDlg, &ps);
+
+	return FALSE;
 		}
 		break;
 	case WM_VSCROLL:
@@ -171,13 +171,13 @@ BOOL CEventPropertiesExpressionDialog::HandleMessage( HWND hwndDlg, UINT uMsg, W
 			return FALSE;
 		}
 		break;
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		{
 			InitDialog( hwndDlg );
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -207,7 +207,7 @@ BOOL CEventPropertiesExpressionDialog::HandleMessage( HWND hwndDlg, UINT uMsg, W
 				EndDialog( hwndDlg, 1 );
 			}
 			break;
-        case IDCANCEL:
+	case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		case IDC_CHECK_ENDTIME:
@@ -278,16 +278,16 @@ BOOL CEventPropertiesExpressionDialog::HandleMessage( HWND hwndDlg, UINT uMsg, W
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int EventProperties_Expression( CEventParams *params )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_EVENTPROPERTIES_EXPRESSION ),
 		(HWND)g_MDLViewer->getHandle(),
 		(DLGPROC)EventPropertiesExpressionDialogProc );

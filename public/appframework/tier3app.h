@@ -40,7 +40,7 @@ public:
 
 		CreateInterfaceFn factory = GetFactory();
 		ConnectTier3Libraries( &factory, 1 );
-		return true;			
+		return true;
 	}
 
 	virtual void PostShutdown()
@@ -67,7 +67,7 @@ public:
 
 		CreateInterfaceFn factory = GetFactory();
 		ConnectTier3Libraries( &factory, 1 );
-		return true;			
+		return true;
 	}
 
 	virtual void PostShutdown()

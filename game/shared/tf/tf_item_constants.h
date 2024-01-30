@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -75,7 +75,7 @@ enum loadout_positions_t
 	LOADOUT_POSITION_TAUNT8,
 
 #ifdef STAGING_ONLY
-	// Extra PDA mod slots 
+	// Extra PDA mod slots
 	LOADOUT_POSITION_PDA_ADDON1,
 	LOADOUT_POSITION_PDA_ADDON2,
 
@@ -152,7 +152,7 @@ inline bool IsTauntSlot( int iSlot )
 		|| iSlot == LOADOUT_POSITION_TAUNT8;
 }
 
-inline bool IsWearableSlot( int iSlot ) 
+inline bool IsWearableSlot( int iSlot )
 {
 	return iSlot == LOADOUT_POSITION_HEAD
 		|| iSlot == LOADOUT_POSITION_MISC

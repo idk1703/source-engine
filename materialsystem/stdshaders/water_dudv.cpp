@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -72,24 +72,23 @@ BEGIN_VS_SHADER( Water_DuDv, "Help for Water_DuDv" )
 			float flAverage = ( pTint[0] + pTint[1] + pTint[2] ) / 3.0f;
 			vec.Init( flAverage, flAverage, flAverage, 1.0f );
 			pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_3, vec.Base() );
-	
+
 			// Amount to refract
 			SetPixelShaderConstant( 0, REFRACTAMOUNT );
 
 			// Used to renormalize
 			vec.Init( 1.0f, 1.0f, 1.0f, 1.0f );
-			pShaderAPI->SetPixelShaderConstant( 1, vec.Base() );	
+			pShaderAPI->SetPixelShaderConstant( 1, vec.Base() );
 
 			// Used to deal with the red channel
 			vec.Init( 0.0f, 1.0f, 1.0f, 1.0f );
-			pShaderAPI->SetPixelShaderConstant( 2, vec.Base() );	
+			pShaderAPI->SetPixelShaderConstant( 2, vec.Base() );
 
 			vec.Init( 1.0f, 0.0f, 0.0f, 0.0f );
-			pShaderAPI->SetPixelShaderConstant( 3, vec.Base() );	
+			pShaderAPI->SetPixelShaderConstant( 3, vec.Base() );
 
 			BindTexture( SHADER_TEXTURE_STAGE0, BUMPMAP, BUMPFRAME );
 		}
 		Draw();
 	}
 END_SHADER
-

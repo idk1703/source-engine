@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -62,7 +62,7 @@ typedef enum _fieldtypes
 	FIELD_INTERVAL,			// a start and range floating point interval ( e.g., 3.2->3.6 == 3.2 and 0.4 )
 	FIELD_MODELINDEX,		// a model index
 	FIELD_MATERIALINDEX,	// a material index (using the material precache string table)
-	
+
 	FIELD_VECTOR2D,			// 2 floats
 
 	FIELD_TYPECOUNT,		// MUST BE LAST
@@ -70,7 +70,7 @@ typedef enum _fieldtypes
 
 
 //-----------------------------------------------------------------------------
-// Field sizes... 
+// Field sizes...
 //-----------------------------------------------------------------------------
 template <int FIELD_TYPE>
 class CDatamapFieldSizeDeducer
@@ -224,10 +224,10 @@ extern ISaveRestoreOps *eventFuncs;
 
 #define FTYPEDESC_MODELINDEX		0x0800		// The field is a model index (used for debugging output)
 
-#define FTYPEDESC_INDEX				0x1000		// The field is an index into file data, used for byteswapping. 
+#define FTYPEDESC_INDEX				0x1000		// The field is an index into file data, used for byteswapping.
 
 // These flags apply to C_BasePlayer derived objects only
-#define FTYPEDESC_VIEW_OTHER_PLAYER		0x2000		// By default you can only view fields on the local player (yourself), 
+#define FTYPEDESC_VIEW_OTHER_PLAYER		0x2000		// By default you can only view fields on the local player (yourself),
 													//   but if this is set, then we allow you to see fields on other players
 #define FTYPEDESC_VIEW_OWN_TEAM			0x4000		// Only show this data if the player is on the same team as the local player
 #define FTYPEDESC_VIEW_NEVER			0x8000		// Never show this field to anyone, even the local player (unusual)
@@ -264,11 +264,11 @@ struct typedescription_t
 	unsigned short		fieldSize;
 	short				flags;
 	// the name of the variable in the map/fgd data, or the name of the action
-	const char			*externalName;	
+	const char			*externalName;
 	// pointer to the function set for save/restoring of custom data types
-	ISaveRestoreOps		*pSaveRestoreOps; 
+	ISaveRestoreOps		*pSaveRestoreOps;
 	// for associating function with string names
-	inputfunc_t			inputFunc; 
+	inputfunc_t			inputFunc;
 	// For embedding additional datatables inside this one
 	datamap_t			*td;
 
@@ -280,7 +280,7 @@ struct typedescription_t
 
 	// Used to track exclusion of baseclass fields
 	int					override_count;
-  
+
 	// Tolerance for field errors for float fields
 	float				fieldTolerance;
 };
@@ -406,13 +406,13 @@ struct datamap_t
 // Forward compatability with potential seperate byteswap datadescs
 
 #define DECLARE_BYTESWAP_DATADESC() DECLARE_SIMPLE_DATADESC()
-#define BEGIN_BYTESWAP_DATADESC(name) BEGIN_SIMPLE_DATADESC(name) 
-#define BEGIN_BYTESWAP_DATADESC_(name,base) BEGIN_SIMPLE_DATADESC_(name,base) 
+#define BEGIN_BYTESWAP_DATADESC(name) BEGIN_SIMPLE_DATADESC(name)
+#define BEGIN_BYTESWAP_DATADESC_(name,base) BEGIN_SIMPLE_DATADESC_(name,base)
 #define END_BYTESWAP_DATADESC() END_DATADESC()
 
 //-----------------------------------------------------------------------------
 
-template <typename T> 
+template <typename T>
 inline void DataMapAccess(T *ignored, datamap_t **p)
 {
 	*p = &T::m_DataMap;
@@ -428,7 +428,7 @@ public:
 	{
 		m_nLenBase = strlen( m_pszBase );
 	}
-	
+
 	~CDatadescGeneratedNameHolder()
 	{
 		for ( int i = 0; i < m_Names.Count(); i++ )
@@ -436,7 +436,7 @@ public:
 			delete m_Names[i];
 		}
 	}
-	
+
 	const char *GenerateName( const char *pszIdentifier )
 	{
 		char *pBuf = new char[m_nLenBase + strlen(pszIdentifier) + 1];
@@ -445,7 +445,7 @@ public:
 		m_Names.AddToTail( pBuf );
 		return pBuf;
 	}
-	
+
 private:
 	const char *m_pszBase;
 	size_t m_nLenBase;

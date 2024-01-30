@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -33,7 +33,7 @@ public:
 	float m_flCurrentScale[3];
 	bool  m_bRunningScale[3];
 	float m_flTargetScale[3];
-	
+
 private:
 
 };
@@ -43,7 +43,7 @@ void RecvProxy_ScaleX( const CRecvProxyData *pData, void *pStruct, void *pOut )
 	C_PropCoreBall *pCoreData = (C_PropCoreBall *) pStruct;
 
 	pCoreData->m_flScaleX = pData->m_Value.m_Float;
-	
+
 	if ( pCoreData->m_bRunningScale[0] == true )
 	{
 		pCoreData->m_flTargetScale[0] = pCoreData->m_flCurrentScale[0];
@@ -115,7 +115,7 @@ void C_PropCoreBall::ApplyBoneMatrixTransform( matrix3x4_t& transform )
 	float flLerpTime[3] = { m_flLerpTimeX, m_flLerpTimeY, m_flLerpTimeZ };
 	float flGoalTime[3] = { m_flGoalTimeX, m_flGoalTimeY, m_flGoalTimeZ };
 	bool *bRunning[3] = { &m_bRunningScale[0], &m_bRunningScale[1], &m_bRunningScale[2] };
-		
+
 	for ( int i = 0; i < 3; i++ )
 	{
 		if ( *flTargetScale[i] != flScale[i] )

@@ -162,10 +162,10 @@ uint32_t CTFRatingData::FilterSendFlags( uint32_t unTypeFlags ) const
 //          insert to the given transaction including an audit entry.
 //-----------------------------------------------------------------------------
 bool CTFRatingData::BYieldingUpdateRatingAndAddToTransaction( CSQLAccess &transaction,
-                                                              const MMRatingData_t &newData,
-                                                              EMMRatingSource eAdjustmentSource,
-                                                              uint64_t unSourceEventID,
-                                                              RTime32 rtTimestamp )
+	const MMRatingData_t &newData,
+	EMMRatingSource eAdjustmentSource,
+	uint64_t unSourceEventID,
+	RTime32 rtTimestamp )
 {
 	// MMRatingData_t fields
 	ASSERT_LAST_FIELD( unRatingTertiary );
@@ -195,7 +195,7 @@ bool CTFRatingData::BYieldingUpdateRatingAndAddToTransaction( CSQLAccess &transa
 
 	// Add to transaction
 	return transaction.BYieldingInsertOrUpdateOnPK( &schRatingData ) &&
-	       transaction.BYieldingInsertRecord( &schHistory );
+	transaction.BYieldingInsertRecord( &schHistory );
 }
 
 #endif	// GC

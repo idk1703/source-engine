@@ -28,7 +28,7 @@ class CAI_RappelBehavior : public CAI_SimpleBehavior
 
 public:
 	CAI_RappelBehavior();
-	
+
 	void Precache( void );
 	virtual const char *GetName() {	return "Rappel"; }
 
@@ -37,7 +37,7 @@ public:
 	virtual bool 	CanSelectSchedule();
 	void GatherConditions();
 	void CleanupOnDeath( CBaseEntity *pCulprit = NULL, bool bFireDeathOutput = true );
-	
+
 	//virtual void	BeginScheduleSelection();
 	//virtual void	EndScheduleSelection();
 
@@ -56,10 +56,10 @@ public:
 	//void OnStartSchedule( int scheduleType );
 
 	//void InitializeBehavior();
-	
+
 	enum
 	{
-		SCHED_RAPPEL_WAIT = BaseClass::NEXT_SCHEDULE,		
+		SCHED_RAPPEL_WAIT = BaseClass::NEXT_SCHEDULE,
 		SCHED_RAPPEL,
 		SCHED_CLEAR_RAPPEL_POINT, // Get out of the way for the next guy
 		NEXT_SCHEDULE,
@@ -84,10 +84,8 @@ private:
 	bool	m_bOnGround;
 	CHandle<CBeam> m_hLine;
 	Vector	m_vecRopeAnchor;
-	
+
 	DECLARE_DATADESC();
 };
 
 #endif // AI_BEHAVIOR_RAPPEL_H
-
-

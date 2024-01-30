@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -55,7 +55,7 @@ static BOOL CountObject(CMapClass *pobj, unsigned int dwParam)
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
-// Input  : pWorld - 
+// Input  : pWorld -
 //			pParent
 //-----------------------------------------------------------------------------
 CMapInfoDlg::CMapInfoDlg(CMapWorld *pWorld, CWnd* pParent /*=NULL*/)
@@ -169,7 +169,7 @@ void CMapInfoDlg::CountTexture(IEditorTexture *pTex)
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets up child windows.
-// Input  : pDX - 
+// Input  : pDX -
 //-----------------------------------------------------------------------------
 void CMapInfoDlg::DoDataExchange(CDataExchange *pDX)
 {
@@ -193,7 +193,7 @@ void CMapInfoDlg::DoDataExchange(CDataExchange *pDX)
 BOOL CMapInfoDlg::OnInitDialog(void)
 {
 	CDialog::OnInitDialog();
-	
+
 	m_uSolidCount = 0;
 	m_uPointEntityCount = 0;
 	m_uSolidEntityCount = 0;
@@ -213,7 +213,7 @@ BOOL CMapInfoDlg::OnInitDialog(void)
 
 	ultoa(m_uPointEntityCount, szBuf, 10);
 	m_PointEntities.SetWindowText(szBuf);
-	
+
 	ultoa(m_uFaceCount, szBuf, 10);
 	m_Faces.SetWindowText(szBuf);
 
@@ -223,7 +223,6 @@ BOOL CMapInfoDlg::OnInitDialog(void)
 	ultoa(m_uTextureMemory, szBuf, 10);
 	sprintf(szBuf, "%u bytes (%.2f MB)", m_uTextureMemory, (float)m_uTextureMemory / 1024000.0);
 	m_TextureMemory.SetWindowText(szBuf);
-	
+
 	return TRUE;
 }
-

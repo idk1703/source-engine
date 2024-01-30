@@ -35,7 +35,7 @@ class CWorldItem : public CBaseAnimating
 public:
 	DECLARE_CLASS( CWorldItem, CBaseAnimating );
 
-	bool	KeyValue( const char *szKeyName, const char *szValue ); 
+	bool	KeyValue( const char *szKeyName, const char *szValue );
 	void	Spawn( void );
 
 	int		m_iType;
@@ -66,7 +66,7 @@ void CWorldItem::Spawn( void )
 {
 	CBaseEntity *pEntity = NULL;
 
-	switch (m_iType) 
+	switch (m_iType)
 	{
 	case 44: // ITEM_BATTERY:
 		pEntity = CBaseEntity::Create( "item_battery", GetLocalOrigin(), GetLocalAngles() );
@@ -117,7 +117,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Constructor 
+// Constructor
 //-----------------------------------------------------------------------------
 CItem::CItem()
 {
@@ -151,7 +151,7 @@ bool CItem::CreateItemVPhysicsObject( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItem::Spawn( void )
 {
@@ -165,7 +165,7 @@ void CItem::Spawn( void )
 	SetSolid( SOLID_BBOX );
 	SetBlocksLOS( false );
 	AddEFlags( EFL_NO_ROTORWASH_PUSH );
-	
+
 	if( IsX360() )
 	{
 		AddEffects( EF_ITEM_BLINK );
@@ -215,7 +215,7 @@ void CItem::Spawn( void )
 }
 
 unsigned int CItem::PhysicsSolidMaskForEntity( void ) const
-{ 
+{
 	return BaseClass::PhysicsSolidMaskForEntity() | CONTENTS_PLAYERCLIP;
 }
 
@@ -255,7 +255,7 @@ void CItem::OnEntityEvent( EntityEvent_t event, void *pEventData )
 	{
 	case ENTITY_EVENT_WATER_TOUCH:
 		{
-			// Delay rest for a sec, to avoid changing collision 
+			// Delay rest for a sec, to avoid changing collision
 			// properties inside a collision callback.
 			SetThink( &CItem::ComeToRest );
 			SetNextThink( gpGlobals->curtime + 0.1f );
@@ -281,9 +281,9 @@ void CItem::ComeToRest( void )
 #if defined( HL2MP ) || defined( TF_DLL )
 
 //-----------------------------------------------------------------------------
-// Purpose: Items that have just spawned run this think to catch them when 
-//			they hit the ground. Once we're sure that the object is grounded, 
-//			we change its solid type to trigger and set it in a large box that 
+// Purpose: Items that have just spawned run this think to catch them when
+//			they hit the ground. Once we're sure that the object is grounded,
+//			we change its solid type to trigger and set it in a large box that
 //			helps the player get it.
 //-----------------------------------------------------------------------------
 void CItem::FallThink ( void )
@@ -409,8 +409,8 @@ bool CItem::ItemCanBeTouchedByPlayer( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pOther - 
+// Purpose:
+// Input  : pOther -
 //-----------------------------------------------------------------------------
 void CItem::ItemTouch( CBaseEntity *pOther )
 {
@@ -466,11 +466,11 @@ void CItem::ItemTouch( CBaseEntity *pOther )
 		SetTouch( NULL );
 		SetThink( NULL );
 
-		// player grabbed the item. 
+		// player grabbed the item.
 		g_pGameRules->PlayerGotItem( pPlayer, this );
 		if ( g_pGameRules->ItemShouldRespawn( this ) == GR_ITEM_RESPAWN_YES )
 		{
-			Respawn(); 
+			Respawn();
 		}
 		else
 		{
@@ -533,7 +533,7 @@ void CItem::Materialize( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItem::Precache()
 {
@@ -543,9 +543,9 @@ void CItem::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPhysGunUser - 
-//			PICKED_UP_BY_CANNON - 
+// Purpose:
+// Input  : *pPhysGunUser -
+//			PICKED_UP_BY_CANNON -
 //-----------------------------------------------------------------------------
 void CItem::OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason )
 {
@@ -565,9 +565,9 @@ void CItem::OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPhysGunUser - 
-//			reason - 
+// Purpose:
+// Input  : *pPhysGunUser -
+//			reason -
 //-----------------------------------------------------------------------------
 void CItem::OnPhysGunDrop( CBasePlayer *pPhysGunUser, PhysGunDrop_t reason )
 {

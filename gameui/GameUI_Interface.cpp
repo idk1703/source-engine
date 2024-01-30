@@ -24,7 +24,7 @@
 #ifdef SendMessage
 #undef SendMessage
 #endif
-																
+
 #include "filesystem.h"
 #include "GameUI_Interface.h"
 #include "Sys_Utils.h"
@@ -240,7 +240,7 @@ void CGameUI::SetLoadingBackgroundDialog( vgui::VPANEL panel )
 
 void CGameUI::BonusMapUnlock( const char *pchFileName, const char *pchMapName )
 {
-	if ( !pchFileName || pchFileName[ 0 ] == '\0' || 
+	if ( !pchFileName || pchFileName[ 0 ] == '\0' ||
 		 !pchMapName || pchMapName[ 0 ] == '\0' )
 	{
 		if ( !g_pBonusMapsDialog )
@@ -282,7 +282,7 @@ void CGameUI::BonusMapUnlock( const char *pchFileName, const char *pchMapName )
 
 void CGameUI::BonusMapComplete( const char *pchFileName, const char *pchMapName )
 {
-	if ( !pchFileName || pchFileName[ 0 ] == '\0' || 
+	if ( !pchFileName || pchFileName[ 0 ] == '\0' ||
 		 !pchMapName || pchMapName[ 0 ] == '\0' )
 	{
 		if ( !g_pBonusMapsDialog )
@@ -306,8 +306,8 @@ void CGameUI::BonusMapComplete( const char *pchFileName, const char *pchMapName 
 
 void CGameUI::BonusMapChallengeUpdate( const char *pchFileName, const char *pchMapName, const char *pchChallengeName, int iBest )
 {
-	if ( !pchFileName || pchFileName[ 0 ] == '\0' || 
-		 !pchMapName || pchMapName[ 0 ] == '\0' || 
+	if ( !pchFileName || pchFileName[ 0 ] == '\0' ||
+		 !pchMapName || pchMapName[ 0 ] == '\0' ||
 		 !pchChallengeName || pchChallengeName[ 0 ] == '\0' )
 	{
 		return;
@@ -405,7 +405,7 @@ void CGameUI::PlayGameStartupSound()
 	{
 		// check for a holiday sound file
 		const char *pszHoliday = NULL;
-	
+
 		if ( GameClientExports() )
 		{
 			pszHoliday = GameClientExports()->GetHolidayString();
@@ -458,7 +458,7 @@ void CGameUI::PlayGameStartupSound()
 				Q_FixSlashes( found );
 				fileNames.AddToTail( found );
 			}
-	
+
 			fn = g_pFullFileSystem->FindNext( fh );
 
 		} while ( fn );
@@ -584,7 +584,7 @@ void CGameUI::Start()
 #endif
 			}
 		}
-			
+
 		// Delay playing the startup music until the first frame
 		m_bPlayGameStartupSound = true;
 
@@ -646,7 +646,7 @@ bool CGameUI::FindPlatformDirectory(char *platformDir, int bufferSize)
 				V_AppendSlash( platformDir, bufferSize );
 				return true;
 			}
-#endif			
+#endif
 		}
 		else
 		{
@@ -680,7 +680,7 @@ void CGameUI::Shutdown()
 	g_VModuleLoader.UnloadPlatformModules();
 
 	ModInfo().FreeModInfo();
-	
+
 	// release platform mutex
 	// close the mutex
 	if (g_hMutex)
@@ -691,11 +691,11 @@ void CGameUI::Shutdown()
 	{
 		Sys_ReleaseMutex(g_hWaitMutex);
 	}
-	
+
 	BonusMapsDatabase()->WriteSaveData();
 
 	steamapicontext->Clear();
-	
+
 
 	ConVar_Unregister();
 	DisconnectTier3Libraries();
@@ -818,7 +818,7 @@ void CGameUI::RunFrame()
 		m_bPlayGameStartupSound = false;
 	}
 
-	if ( IsPC() && ( ( IsPosix() && m_bTryingToLoadFriends ) || 
+	if ( IsPC() && ( ( IsPosix() && m_bTryingToLoadFriends ) ||
 					( m_bTryingToLoadFriends && m_iFriendsLoadPauseFrames-- < 1 && g_hMutex && g_hWaitMutex ) ) )
 	{
 		// try and load Steam platform files
@@ -852,7 +852,7 @@ void CGameUI::RunFrame()
 					pKV->SetString( "game", modinfo->GetString( "game", "" ) );
 				}
 				modinfo->deleteThis();
-				
+
 				g_VModuleLoader.PostMessageToAllModules( pKV );
 			}
 
@@ -982,7 +982,7 @@ bool CGameUI::UpdateProgressBar(float progress, const char *statusText)
 	{
 		bRedraw = true;
 	}
-		
+
 	if ( SetProgressBarStatusText( statusText ) )
 	{
 		bRedraw = true;
@@ -993,7 +993,7 @@ bool CGameUI::UpdateProgressBar(float progress, const char *statusText)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGameUI::StartProgressBar()
 {
@@ -1067,7 +1067,7 @@ bool CGameUI::SetProgressBarStatusText(const char *statusText)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGameUI::SetSecondaryProgressBar(float progress /* range [0..1] */)
 {
@@ -1078,7 +1078,7 @@ void CGameUI::SetSecondaryProgressBar(float progress /* range [0..1] */)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGameUI::SetSecondaryProgressBarText(const char *statusText)
 {
@@ -1164,7 +1164,7 @@ void CGameUI::SetSavedThisMenuSession( bool bState )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGameUI::ShowNewGameDialog( int chapter )
 {
@@ -1182,7 +1182,7 @@ void CGameUI::ShowLoadingBackgroundDialog()
 	{
 		vgui::ipanel()->SetParent( g_hLoadingBackgroundDialog, staticPanel->GetVPanel() );
 		vgui::ipanel()->PerformApplySchemeSettings( g_hLoadingBackgroundDialog );
-		vgui::ipanel()->SetVisible( g_hLoadingBackgroundDialog, true );		
+		vgui::ipanel()->SetVisible( g_hLoadingBackgroundDialog, true );
 		vgui::ipanel()->MoveToFront( g_hLoadingBackgroundDialog );
 		vgui::ipanel()->SendMessage( g_hLoadingBackgroundDialog, new KeyValues( "activate" ), staticPanel->GetVPanel() );
 	}
@@ -1196,7 +1196,7 @@ void CGameUI::HideLoadingBackgroundDialog()
 	if ( g_hLoadingBackgroundDialog )
 	{
 		vgui::ipanel()->SetParent( g_hLoadingBackgroundDialog, NULL );
-		vgui::ipanel()->SetVisible( g_hLoadingBackgroundDialog, false );		
+		vgui::ipanel()->SetVisible( g_hLoadingBackgroundDialog, false );
 		vgui::ipanel()->MoveToBack( g_hLoadingBackgroundDialog );
 		vgui::ipanel()->SendMessage( g_hLoadingBackgroundDialog, new KeyValues( "deactivate" ), staticPanel->GetVPanel() );
 	}
@@ -1211,7 +1211,7 @@ bool CGameUI::HasLoadingBackgroundDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Xbox 360 calls from engine to GameUI 
+// Purpose: Xbox 360 calls from engine to GameUI
 //-----------------------------------------------------------------------------
 void CGameUI::SessionNotification( const int notification, const int param )
 {

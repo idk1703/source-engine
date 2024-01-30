@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,7 +26,7 @@ class ToggleButtonDemo: public DemoPage
 
 		void OnToggleButtonToggled();
 
-	
+
 	private:
 		ToggleButton *m_pToggleButton;
 
@@ -53,7 +53,7 @@ ToggleButtonDemo::ToggleButtonDemo(Panel *parent, const char *name) : DemoPage(p
 
 
 	// Toggle buttons are Buttons, and can send a command when clicked.
-    // Install a command to be sent when the button is toggled.
+	// Install a command to be sent when the button is toggled.
 	m_pToggleButton->SetCommand(new KeyValues("Toggle"));
 
 }
@@ -95,5 +95,3 @@ Panel* ToggleButtonDemo_Create(Panel *parent)
 {
 	return new ToggleButtonDemo(parent, "ToggleButtonDemo");
 }
-
-

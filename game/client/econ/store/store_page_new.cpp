@@ -24,15 +24,15 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CStorePricePanel_New::CStorePricePanel_New( vgui::Panel *pParent, const char *pPanelName ) 
+CStorePricePanel_New::CStorePricePanel_New( vgui::Panel *pParent, const char *pPanelName )
 : CStorePricePanel( pParent, pPanelName )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePricePanel_New::SetItem( const econ_store_entry_t *pEntry )
 {
@@ -75,9 +75,9 @@ void CStorePricePanel_New::SetItem( const econ_store_entry_t *pEntry )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CStorePricePanel_Bundles::CStorePricePanel_Bundles( vgui::Panel *pParent, const char *pPanelName ) 
+CStorePricePanel_Bundles::CStorePricePanel_Bundles( vgui::Panel *pParent, const char *pPanelName )
 :	CStorePricePanel( pParent, pPanelName ),
 	m_pLimitedLarge( NULL )
 {
@@ -85,7 +85,7 @@ CStorePricePanel_Bundles::CStorePricePanel_Bundles( vgui::Panel *pParent, const 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePricePanel_Bundles::SetItem( const econ_store_entry_t *pEntry )
 {
@@ -98,17 +98,17 @@ void CStorePricePanel_Bundles::SetItem( const econ_store_entry_t *pEntry )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePricePanel_Bundles::ApplySchemeSettings( IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
-	
+
 	m_pLimitedLarge = dynamic_cast<ImagePanel *>( FindChildByName( "LimitedLarge" ) );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePricePanel_Bundles::PerformLayout()
 {
@@ -129,15 +129,15 @@ void CStorePricePanel_Bundles::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CStorePricePanel_Jumbo::CStorePricePanel_Jumbo( vgui::Panel *pParent, const char *pPanelName ) 
+CStorePricePanel_Jumbo::CStorePricePanel_Jumbo( vgui::Panel *pParent, const char *pPanelName )
 : CStorePricePanel( pParent, pPanelName )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStorePricePanel_Popular::CStorePricePanel_Popular( vgui::Panel *pParent, const char *pPanelName, int iPopularityRank )
 : CStorePricePanel( pParent, pPanelName )
@@ -145,9 +145,9 @@ CStorePricePanel_Popular::CStorePricePanel_Popular( vgui::Panel *pParent, const 
 {
 	m_pNewLarge = NULL;
 }
- 
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePricePanel_Popular::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -157,7 +157,7 @@ void CStorePricePanel_Popular::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePricePanel_Popular::PerformLayout()
 {
@@ -177,7 +177,7 @@ void CStorePricePanel_Popular::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePricePanel_Popular::SetItem( const econ_store_entry_t *pEntry )
 {

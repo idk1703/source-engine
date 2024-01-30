@@ -1,6 +1,6 @@
 //========= Copyright � 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -77,7 +77,7 @@ class CKeyValuesGrowableStringTable;
 //  An open bracket '{' after a key name indicates a list of subkeys which is finished
 //  with a closing bracket '}'. Subkeys use the same definitions recursively.
 //  Whitespaces are space, return, newline and tabulator. Allowed Escape sequences
-//	are \n, \t, \\, \n and \". The number character '#' is used for macro purposes 
+//	are \n, \t, \\, \n and \". The number character '#' is used for macro purposes
 //	(eg #include), don't use it as first character in key names.
 //-----------------------------------------------------------------------------
 class KeyValues
@@ -92,7 +92,7 @@ public:
 	//	arbitrarily. This call must be made before any KeyValues objects are allocated or it
 	//	will result in undefined behavior. If you use the growable string table, you cannot
 	//	share KeyValues pointers directly with any other module. You can serialize them across
-	//	module boundaries. These limitations are acceptable in the Steam backend code 
+	//	module boundaries. These limitations are acceptable in the Steam backend code
 	//	this option was written for, but may not be in other situations. Make sure to
 	//	understand the implications before using this.
 	static void SetUseGrowableStringTable( bool bUseGrowableTable );
@@ -172,10 +172,10 @@ public:
 	bool ContainsSubKey( KeyValues *pSubKey ); // Returns true if this key values contains the specified sub key, false otherwise.
 	void SwapSubKey( KeyValues *pExistingSubKey, KeyValues *pNewSubKey );	// Swaps an existing subkey for a new one, DOES NOT DELETE THE OLD ONE but takes ownership of the new one
 	void ElideSubKey( KeyValues *pSubKey );	// Removes a subkey but inserts all of its children in its place, in-order (flattens a tree, like firing a manager!)
-	
+
 	// Key iteration.
 	//
-	// NOTE: GetFirstSubKey/GetNextKey will iterate keys AND values. Use the functions 
+	// NOTE: GetFirstSubKey/GetNextKey will iterate keys AND values. Use the functions
 	// below if you want to iterate over just the keys or just the values.
 	//
 	KeyValues *GetFirstSubKey();	// returns the first subkey in the list
@@ -183,7 +183,7 @@ public:
 	void SetNextKey( KeyValues * pDat);
 
 	//
-	// These functions can be used to treat it like a true key/values tree instead of 
+	// These functions can be used to treat it like a true key/values tree instead of
 	// confusing values with keys.
 	//
 	// So if you wanted to iterate all subkeys, then all values, it would look like this:
@@ -245,7 +245,7 @@ public:
 	// Adds a chain... if we don't find stuff in this keyvalue, we'll look
 	// in the one we're chained to.
 	void ChainKeyValue( KeyValues* pChain );
-	
+
 	void RecursiveSaveToFile( CUtlBuffer& buf, int indentLevel );
 
 	bool WriteAsBinary( CUtlBuffer &buffer ) const;
@@ -274,7 +274,7 @@ public:
 		TYPE_COMPILED_INT_BYTE,			// hack to collapse 1 byte ints in the compiled format
 		TYPE_COMPILED_INT_0,			// hack to collapse 0 in the compiled format
 		TYPE_COMPILED_INT_1,			// hack to collapse 1 in the compiled format
-		TYPE_NUMTYPES, 
+		TYPE_NUMTYPES,
 	};
 	types_t GetDataType(const char *keyName = NULL);
 
@@ -304,7 +304,7 @@ public:
 
 	// Assign keyvalues from a string
 	static KeyValues * FromString( char const *szName, char const *szStringVal, char const **ppEndOfParse = NULL );
-		
+
 protected:
 	KeyValues( KeyValues& );	// prevent copy constructor being used
 
@@ -312,22 +312,22 @@ protected:
 	~KeyValues();
 
 	KeyValues* CreateKey( const char *keyName );
-	
+
 	void RecursiveCopyKeyValues( KeyValues& src );
 	void RemoveEverything();
 //	void RecursiveSaveToFile( IBaseFileSystem *filesystem, CUtlBuffer &buffer, int indentLevel );
 //	void WriteConvertedString( CUtlBuffer &buffer, const char *pszString );
-	
+
 	// NOTE: If both filesystem and pBuf are non-null, it'll save to both of them.
 	// If filesystem is null, it'll ignore f.
 	void RecursiveSaveToFile( IBaseFileSystem *filesystem, FileHandle_t f, CUtlBuffer *pBuf, int indentLevel );
 	void WriteConvertedString( IBaseFileSystem *filesystem, FileHandle_t f, CUtlBuffer *pBuf, const char *pszString );
-	
+
 	void RecursiveLoadFromBuffer( char const *resourceName, CUtlBuffer &buf, GetSymbolProc_t pfnEvaluateSymbolProc );
 
 	// for handling #include "filename"
 	void AppendIncludedKeys( CUtlVector< KeyValues * >& includedKeys );
-	void ParseIncludedKeys( char const *resourceName, const char *filetoinclude, 
+	void ParseIncludedKeys( char const *resourceName, const char *filetoinclude,
 		IBaseFileSystem* pFileSystem, const char *pPathID, CUtlVector< KeyValues * >& includedKeys, GetSymbolProc_t pfnEvaluateSymbolProc );
 
 	// For handling #base "filename"
@@ -337,7 +337,7 @@ protected:
 	// NOTE: If both filesystem and pBuf are non-null, it'll save to both of them.
 	// If filesystem is null, it'll ignore f.
 	void InternalWrite( IBaseFileSystem *filesystem, FileHandle_t f, CUtlBuffer *pBuf, const void *pData, int len );
-	
+
 	void Init();
 	const char * ReadToken( CUtlBuffer &buf, bool &wasQuoted, bool &wasConditional );
 	void WriteIndents( IBaseFileSystem *filesystem, FileHandle_t f, CUtlBuffer *pBuf, int indentLevel );
@@ -364,7 +364,7 @@ protected:
 		void *m_pValue;
 		unsigned char m_Color[4];
 	};
-	
+
 	char	   m_iDataType;
 	char	   m_bHasEscapeSequences; // true, if while parsing this KeyValue, Escape Sequences are used (default false)
 	uint16	   m_iKeyNameCaseSensitive2;	// 2nd part of case sensitive symbol defined in KeyValueSystem;
@@ -372,7 +372,7 @@ protected:
 	KeyValues *m_pPeer;	// pointer to next key in list
 	KeyValues *m_pSub;	// pointer to Start of a new sub key list
 	KeyValues *m_pChain;// Search here if it's not in our list
-	
+
 	GetSymbolProc_t	m_pExpressionGetSymbolProc;
 
 private:
@@ -386,7 +386,7 @@ public:
 	// Functions that invoke the default behavior
 	static int GetSymbolForStringClassic( const char *name, bool bCreate = true );
 	static const char *GetStringForSymbolClassic( int symbol );
-	
+
 	// Functions that use the growable string table
 	static int GetSymbolForStringGrowable( const char *name, bool bCreate = true );
 	static const char *GetStringForSymbolGrowable( int symbol );

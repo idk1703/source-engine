@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -41,7 +41,7 @@ void C_ObjectBarbedWire::OnDataChanged( DataUpdateType_t type )
 
 		// Get rid of any old rope we had.
 		int iAttachment = LookupAttachment( "wire_attachment" );
-		
+
 		// Create or delete our rope?
 		if ( m_hConnectedTo )
 		{
@@ -96,15 +96,11 @@ void C_ObjectBarbedWire::ClientThink()
 		if ( m_vLastOrigin != GetAbsOrigin() || m_vLastConnectedOrigin != m_hConnectedTo->GetAbsOrigin() )
 		{
 			m_hRope->SetupHangDistance( obj_barbed_wire_hang_dist.GetFloat() );
-			
+
 			m_vLastOrigin = GetAbsOrigin();
 			m_vLastConnectedOrigin = m_hConnectedTo->GetAbsOrigin();
 		}
 	}
-	
+
 	SetNextClientThink( gpGlobals->curtime + 0.1f );
 }
-
-
-
-

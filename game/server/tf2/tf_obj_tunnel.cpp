@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ public:
 	virtual void Killed( void );
 
 	int UpdateTransmitState();
-	
+
 private:
 };
 
@@ -69,9 +69,9 @@ void CObjectTunnel::Killed( void )
 
 	// Do an explosion.
 	CPASFilter filter( GetAbsOrigin() );
-	te->Explosion( 
-		filter, 
-		0.0,				
+	te->Explosion(
+		filter,
+		0.0,
 		&GetAbsOrigin(),
 		g_sModelIndexFireball,
 		5.4,		// radius
@@ -97,7 +97,7 @@ private:
 LINK_ENTITY_TO_CLASS(info_tunnel_exit,CInfoTunnelExit);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CObjectTunnelTrigger : public CBaseTrigger
 {
@@ -153,7 +153,7 @@ private:
 
 	void		StartTunneling( CBaseTFPlayer *player );
 	bool		KeepTunneling( TunnelPlayer *tunnel );
-	
+
 
 	float							m_flTeleportDuration;
 	float							m_flTeleportVelocity;
@@ -161,7 +161,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectTunnelTrigger::CObjectTunnelTrigger()
 {
@@ -170,8 +170,8 @@ CObjectTunnelTrigger::CObjectTunnelTrigger()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *player - 
+// Purpose:
+// Input  : *player -
 //-----------------------------------------------------------------------------
 void CObjectTunnelTrigger::StartTunneling( CBaseTFPlayer *player )
 {
@@ -289,7 +289,7 @@ bool CObjectTunnelTrigger::KeepTunneling( TunnelPlayer *tunnel )
 				// Do a placement test to prevent the player from teleporting inside another player, the ground, or just to help
 				// prevent badly placed tunnels from causing stuck situations.
 				Vector vTarget = m_hTunnelExit->GetAbsOrigin();
-				Vector vOriginal = vTarget; 
+				Vector vOriginal = vTarget;
 
 				if ( !EntityPlacementTest( tunnel->player, vOriginal, vTarget, true ) )
 				{
@@ -361,7 +361,7 @@ bool CObjectTunnelTrigger::KeepTunneling( TunnelPlayer *tunnel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectTunnelTrigger::TunnelThink()
 {
@@ -389,7 +389,7 @@ void CObjectTunnelTrigger::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectTunnelTrigger::Spawn()
 {
@@ -406,7 +406,7 @@ void CObjectTunnelTrigger::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: See if we've got a gather point specified 
+// Purpose: See if we've got a gather point specified
 //-----------------------------------------------------------------------------
 void CObjectTunnelTrigger::Activate( void )
 {
@@ -437,8 +437,8 @@ void CObjectTunnelTrigger::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : active - 
+// Purpose:
+// Input  : active -
 //-----------------------------------------------------------------------------
 void CObjectTunnelTrigger::SetActive( bool active )
 {
@@ -446,7 +446,7 @@ void CObjectTunnelTrigger::SetActive( bool active )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CObjectTunnelTrigger::GetActive( void ) const
@@ -455,7 +455,7 @@ bool CObjectTunnelTrigger::GetActive( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectTunnelTrigger::InputSetActive( inputdata_t &inputdata )
 {
@@ -463,7 +463,7 @@ void CObjectTunnelTrigger::InputSetActive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectTunnelTrigger::InputSetInactive( inputdata_t &inputdata )
 {
@@ -471,7 +471,7 @@ void CObjectTunnelTrigger::InputSetInactive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectTunnelTrigger::InputToggleActive( inputdata_t &inputdata )
 {
@@ -486,8 +486,8 @@ void CObjectTunnelTrigger::InputToggleActive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CObjectTunnelTrigger::InputSetTarget( inputdata_t &inputdata )
 {
@@ -504,8 +504,8 @@ void CObjectTunnelTrigger::InputSetTarget( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CObjectTunnelTrigger::InputSetTeleportDuration( inputdata_t &inputdata )
 {
@@ -513,8 +513,8 @@ void CObjectTunnelTrigger::InputSetTeleportDuration( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CObjectTunnelTrigger::InputSetTeleportVelocity( inputdata_t &inputdata )
 {
@@ -522,8 +522,8 @@ void CObjectTunnelTrigger::InputSetTeleportVelocity( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOther - 
+// Purpose:
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void CObjectTunnelTrigger::StartTouch( CBaseEntity *pOther )
 {

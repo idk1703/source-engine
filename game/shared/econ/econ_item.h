@@ -148,7 +148,7 @@ public:
 
 	// Takes the value specified in [typedValue] and stores it in the most appropriate way
 	// somewhere attached to [out_pValue]. This may hit the heap. The storage itself is
-	// intended to be opaque but can be reversed by calling GetTypedValueContentsFromEconAttributeValue(). 
+	// intended to be opaque but can be reversed by calling GetTypedValueContentsFromEconAttributeValue().
 	void ConvertTypedValueToEconAttributeValue( const TAttribInMemoryType& typedValue, attribute_data_union_t *out_pValue ) const
 	{
 		// If our type is smaller than an int, we don't know how to copy the memory into our flat structure. We could write
@@ -184,7 +184,7 @@ public:
 		// Do we fit in the bottom 32-bits?
 		if ( sizeof( TAttribInMemoryType ) <= sizeof( uint32 ) )
 			return *reinterpret_cast<const TAttribInMemoryType *>( &value.asUint32 );
-		
+
 		// What about in the full 64-bits (if we're running a 64-bit build)?
 		if ( sizeof( TAttribInMemoryType ) <= sizeof( void * ) )
 			return *reinterpret_cast<const TAttribInMemoryType *>( &value.asBlobPointer );
@@ -352,7 +352,7 @@ public:
 
 	virtual void IterateAttributes( class IEconItemAttributeIterator *pIterator ) const OVERRIDE;
 	virtual itemid_t GetID() const { return GetItemID(); }
-	
+
 	// Accessors/Settors
 	itemid_t GetItemID() const { return m_ulID; }
 	void SetItemID( uint64 ulID );
@@ -383,7 +383,7 @@ public:
 
 	void SetFlag( uint8 unFlag ) { m_unFlags |= unFlag; }
 	void ClearFlag( uint8 unFlag ) { m_unFlags &= ~unFlag; }
-	bool CheckFlags( uint8 unFlags ) const { return ( m_unFlags & unFlags ) != 0; } 
+	bool CheckFlags( uint8 unFlags ) const { return ( m_unFlags & unFlags ) != 0; }
 
 	eEconItemOrigin GetOrigin() const { return (eEconItemOrigin)m_unOrigin; }
 	void SetOrigin( eEconItemOrigin unOrigin ) { m_unOrigin = unOrigin; Assert( m_unOrigin == unOrigin ); }
@@ -408,7 +408,7 @@ public:
 	void Equip( equipped_class_t unClass, equipped_slot_t unSlot );
 	void Unequip();
 	void UnequipFromClass( equipped_class_t unClass );
-	
+
 	// This should really only used for the WebAPIs, debugging, etc. Data manipulation during gameplay should use
 	// the above functions.
 	int GetEquippedInstanceCount() const;
@@ -459,13 +459,13 @@ public:
 		if ( !pAttrType )
 			return;
 #endif
-		
+
 		// Fail right off the bat if we're trying to write a dynamic attribute value for an item that already
 		// has this as a static value.
 		AssertMsg4( !::FindAttribute( GetItemDefinition(), pAttrDef ),
 				    "Item id %llu (%s) attempting to set dynamic attribute value for '%s' (%d) when static attribute exists!",
 				    GetItemID(), GetItemDefinition()->GetDefinitionName(), pAttrDef->GetDefinitionName(), pAttrDef->GetDefinitionIndex() );
-		
+
 		// Alright, we have a data type match so we can safely store data. Some types may need to initialize
 		// their data to a current state if it's the first time we're writing to this value (as opposed to
 		// updating an existing value).
@@ -599,14 +599,14 @@ protected:
 
 	// Call this when the appearance of this item changes (ex. paintkit, style, festive). This will
 	// cause the icon to be lazily re-evaluated (ie. so that changing the style will change the icon)
-	void DirtyIconURL() { m_pszLargeIcon = NULL; m_pszSmallIcon = NULL; } 
+	void DirtyIconURL() { m_pszLargeIcon = NULL; m_pszSmallIcon = NULL; }
 	// CSharedObject
 	// adapted from CSchemaSharedObject
 	void GetDirtyColumnSet( const CUtlVector< int > &fields, GCSDK::CColumnSet &cs ) const;
 
 	void EnsureCustomDataExists();
-	
-	bool BYieldingLoadInteriorItem();	
+
+	bool BYieldingLoadInteriorItem();
 
 	void OnTransferredOwnership();
 
@@ -683,7 +683,7 @@ public:
 	CUtlVector< CEconItem::attribute_t > m_vecAttributes;
 	CEconItem* m_pInteriorItem;
 	uint64 m_ulOriginalID;	// Original Item ID
-	uint16 m_unQuantity;	// Consumable stack count (ammo, money, etc)	
+	uint16 m_unQuantity;	// Consumable stack count (ammo, money, etc)
 
 	CUtlVector<CEconItem::EquippedInstance_t> m_vecEquipped;
 
@@ -783,7 +783,7 @@ public:
 	{
 		return m_unAuditDetailData;
 	}
-	
+
 private:
 	CCrateLootListWrapper( const CCrateLootListWrapper& );		// intentionally unimplemented
 	void operator=( const CCrateLootListWrapper& );				// intentionally unimplemented

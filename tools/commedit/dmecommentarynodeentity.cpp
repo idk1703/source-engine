@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -22,13 +22,13 @@
 #define SPHERE_RADIUS 16
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeCommentaryNodeEntity, CDmeCommentaryNodeEntity );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeCommentaryNodeEntity::OnConstruction()
 {
@@ -87,7 +87,7 @@ void CDmeCommentaryNodeEntity::OnAttributeChanged( CDmAttribute *pAttribute )
 		pAttribute->RemoveFlag( FATTRIB_DONTSAVE | FATTRIB_HAS_CALLBACK );
 		return;
 	}
-	 
+
 	if ( pAttribute == m_ClassName.GetAttribute() )
 	{
 		m_bInfoTarget = !Q_strncmp( m_ClassName, "info_target", 11 );
@@ -104,7 +104,7 @@ void CDmeCommentaryNodeEntity::OnAttributeChanged( CDmAttribute *pAttribute )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the entity ID
 //-----------------------------------------------------------------------------
@@ -131,7 +131,7 @@ bool CDmeCommentaryNodeEntity::IsTransparent( void )
 	return m_bIsDirty || m_bInfoTarget || BaseClass::IsTransparent();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Entity Key iteration
 //-----------------------------------------------------------------------------
@@ -253,7 +253,7 @@ void CDmeCommentaryNodeEntity::DrawSprite( IMaterial *pMaterial )
 // Draws the helper for the entity
 //-----------------------------------------------------------------------------
 int CDmeCommentaryNodeEntity::DrawModel( int flags )
-{  
+{
 	bool bSelected = ( g_pCommEditTool->GetCurrentEntity().Get() == this );
 	if ( !m_bInfoTarget )
 	{
@@ -301,7 +301,7 @@ int CDmeCommentaryNodeEntity::DrawModel( int flags )
 	pRenderContext->MatrixMode( MATERIAL_MODEL );
 	pRenderContext->PopMatrix();
 
-	return 1; 
+	return 1;
 }
 
 
@@ -309,7 +309,7 @@ int CDmeCommentaryNodeEntity::DrawModel( int flags )
 // Position and bounds for the model
 //-----------------------------------------------------------------------------
 void CDmeCommentaryNodeEntity::GetRenderBounds( Vector& mins, Vector& maxs )
-{ 
+{
 	if ( !m_bInfoTarget )
 	{
 		BaseClass::GetRenderBounds( mins, maxs );
@@ -335,5 +335,3 @@ void CDmeCommentaryNodeEntity::SetRenderAngles( const QAngle &angles )
 	m_vecLocalAngles = *(Vector*)&angles;
 	clienttools->MarkClientRenderableDirty( this );
 }
-
-

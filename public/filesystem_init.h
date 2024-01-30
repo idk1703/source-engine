@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -82,7 +82,7 @@ public:
 	// (default: false)
 	bool			m_bSetSteamDLLPath;
 
-	// Are we loading the Steam filesystem? This should be the same value that 
+	// Are we loading the Steam filesystem? This should be the same value that
 	// FileSystem_GetFileSystemDLLName gave you.
 	bool			m_bSteam;
 
@@ -94,7 +94,7 @@ public:
 // Outputs (if it returns FS_OK).
 public:
 	char			m_GameInfoPath[512];	// The directory that gameinfo.txt lives in.
-};	
+};
 
 
 class CFSLoadModuleInfo	: public CFSSteamSetupInfo
@@ -115,7 +115,7 @@ public:
 	// The filesystem you got from FileSystem_LoadFileSystemModule.
 	IFileSystem		*m_pFileSystem;
 	CSysModule		*m_pModule;
-};	
+};
 
 
 class CFSMountContentInfo

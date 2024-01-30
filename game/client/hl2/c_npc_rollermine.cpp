@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -23,10 +23,10 @@ public:
 
 	int		DrawModel( int flags );
 
-	RenderGroup_t GetRenderGroup( void ) 
-	{	
+	RenderGroup_t GetRenderGroup( void )
+	{
 		if ( m_bIsOpen )
-			return RENDER_GROUP_TRANSLUCENT_ENTITY;	
+			return RENDER_GROUP_TRANSLUCENT_ENTITY;
 		else
 			return RENDER_GROUP_OPAQUE_ENTITY;
 	}
@@ -50,8 +50,8 @@ END_RECV_TABLE()
 #define	NUM_ATTACHMENTS	11
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flags - 
+// Purpose:
+// Input  : flags -
 // Output : int
 //-----------------------------------------------------------------------------
 int C_RollerMine::DrawModel( int flags )
@@ -83,7 +83,7 @@ int C_RollerMine::DrawModel( int flags )
 
 				beamInfo.m_nEndAttachment = ( beamInfo.m_nStartAttachment + nextStep ) % NUM_ATTACHMENTS;
 			}
-			
+
 			beamInfo.m_nType = TE_BEAMTESLA;
 			beamInfo.m_pszModelName = "sprites/lgtning.vmt";
 			beamInfo.m_flHaloScale = 0.0f;
@@ -119,9 +119,9 @@ int C_RollerMine::DrawModel( int flags )
 			beamInfo.m_nSegments = 4;
 			beamInfo.m_bRenderable = true;
 			beamInfo.m_nFlags = 0;
-			
+
 			beams->CreateBeamEntPoint( beamInfo );
-			
+
 			// Draw the halo
 			float	color[3];
 
@@ -161,10 +161,10 @@ int C_RollerMine::DrawModel( int flags )
 
 			Vector attachOrigin;
 			QAngle attachAngles;
-			
+
 			GetAttachment( beamInfo.m_nEndAttachment, attachOrigin, attachAngles );
 			DrawHalo( pMaterial, attachOrigin, random->RandomFloat( 1.0f*scale, 1.5f*scale ), color );
-			
+
 			GetAttachment( beamInfo.m_nStartAttachment, attachOrigin, attachAngles );
 			DrawHalo( pMaterial, attachOrigin, random->RandomFloat( 1.0f*scale, 1.5f*scale ), color );
 		}

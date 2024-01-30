@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -53,7 +53,7 @@ enum
 	MAPVIEW_UPDATE_ONLY_2D			= 0x020,	// update only 2D views for some reason
 	MAPVIEW_UPDATE_ONLY_3D			= 0x040,	// update only 3D views for some reason
 	MAPVIEW_UPDATE_ONLY_LOGICAL		= 0x080,	// update only Logical views for some reason
-		
+
 	MAPVIEW_OPTIONS_CHANGED			= 0x100,	// view options has been changed
 	MAPVIEW_UPDATE_VISGROUP_STATE	= 0x200,	// a visgroup was hidden or shown.
 	MAPVIEW_UPDATE_VISGROUP_ALL		= 0x400,	// a visgroup was created or deleted.
@@ -236,7 +236,7 @@ class CMapDoc : public CDocument
 		void SetAutosaveFlag(BOOL bAutosave = TRUE);
 
 		BOOL NeedsAutosave();
-		BOOL IsAutosave();	
+		BOOL IsAutosave();
 		CString *AutosavedFrom();
 
 		void	AddReference( void );
@@ -245,7 +245,7 @@ class CMapDoc : public CDocument
 
 		// Used to track down a potential crash.
 		bool AnyNotificationsForObject(CMapClass *pObject);
-		
+
 		void SetAnimationTime( float time );
 		float GetAnimationTime( void ) { return m_flAnimationTime; }
 		bool IsAnimating( void ) { return m_bIsAnimating; }
@@ -279,7 +279,7 @@ class CMapDoc : public CDocument
 		void SelectFace(CMapSolid *pSolid, int iFace, int cmd);
 		void UpdateForApplicator(BOOL bApplicator);
 
-		
+
 		void UpdateAnimation( void );
 
 		void DeleteObject(CMapClass *pObject);
@@ -331,16 +331,16 @@ class CMapDoc : public CDocument
 
 		void CountSolids();
 		void CountSolids2();
-		
+
 		void ReplaceTextures(
-			LPCTSTR pszFind, 
-			LPCTSTR pszReplace, 
-			BOOL bEverything, 
-			int iAction, 
-			BOOL bHidden, 
+			LPCTSTR pszFind,
+			LPCTSTR pszReplace,
+			BOOL bEverything,
+			int iAction,
+			BOOL bHidden,
 			bool bRescaleTextureCoordinates);
 
-        void BatchReplaceTextures( FileHandle_t fp );
+	void BatchReplaceTextures( FileHandle_t fp );
 
 		bool Is3DGridEnabled(void) { return(m_bShow3DGrid); }
 		ShowInstance_t	GetShowInstance( void ) { return m_tShowInstance; }
@@ -385,7 +385,7 @@ class CMapDoc : public CDocument
 		void UpdateObject(CMapClass *pMapClass);
 		void UpdateVisibilityAll(void);
 		void UpdateVisibility(CMapClass *pObject);
-	        void NotifyDependents(CMapClass *pObject, Notify_Dependent_t eNotifyType);
+		void NotifyDependents(CMapClass *pObject, Notify_Dependent_t eNotifyType);
 
 		// Radius culling
 		bool IsCulledBy3DCameraDistance( CMapClass *pObject, UpdateVisibilityData_t *pData );
@@ -475,7 +475,7 @@ class CMapDoc : public CDocument
 		//}}AFX_VIRTUAL
 
 		BOOL Serialize(std::fstream &file, BOOL fIsStoring, BOOL bRMF);
-		
+
 		// Save a VMF file. saveFlags is a combination of SAVEFLAGS_ defines.
 		bool SaveVMF(const char *pszFileName, int saveFlags );
 
@@ -526,7 +526,7 @@ class CMapDoc : public CDocument
 		void RemoveFromAutoVisGroups( CMapClass *pObject );
 		void AddToFGDAutoVisGroups( CMapClass *pObject );
 
-		// Builds a list of all objects which are connected to outputs of pObj 
+		// Builds a list of all objects which are connected to outputs of pObj
 		void BuildCascadingSelectionList( CMapClass *pObj, CUtlRBTree< CMapClass*, unsigned short > &list, bool bRecursive );
 
 		void Public_SaveMap() { OnFileSave(); }
@@ -534,7 +534,7 @@ class CMapDoc : public CDocument
 
 		void AssignAllToAutoVisGroups();
 		CVisGroup *GetRootAutoVisGroup();
-			
+
 		// Tools:
 		CToolManager *m_pToolManager;
 
@@ -568,7 +568,7 @@ class CMapDoc : public CDocument
 		static ChunkFileResult_t LoadVersionInfoCallback(CChunkFile *pFile, CMapDoc *pDoc);
 		static ChunkFileResult_t LoadVersionInfoKeyCallback(const char *szKey, const char *szValue, CMapDoc *pDoc);
 		static ChunkFileResult_t LoadAutosaveCallback(CChunkFile *pFile, CMapDoc *pDoc);
-		static ChunkFileResult_t LoadAutosaveKeyCallback(const char *szKey, const char *szValue, CMapDoc *pDoc);		
+		static ChunkFileResult_t LoadAutosaveKeyCallback(const char *szKey, const char *szValue, CMapDoc *pDoc);
 		static ChunkFileResult_t LoadWorldCallback(CChunkFile *pFile, CMapDoc *pDoc);
 		static ChunkFileResult_t LoadViewSettingsCallback(CChunkFile *pFile, CMapDoc *pDoc);
 		static ChunkFileResult_t LoadViewSettingsKeyCallback(const char *szKey, const char *szValue, CMapDoc *pDoc);
@@ -600,18 +600,18 @@ class CMapDoc : public CDocument
 
 		CMapWorld *m_pWorld;				// The world that this document represents.
 		CMapObjectList m_UpdateList;		// List of objects that have changed since the last call to Update.
-		CString m_strLastExportFileName;	// The full path that we last exported this document to. 
+		CString m_strLastExportFileName;	// The full path that we last exported this document to.
 		int m_nDocVersion;					// A number that increments every time the doc is modified after being saved.
 		BOOL m_bNeedsAutosave;				// True if the document has been changed and needs autosaved.
 		BOOL m_bIsAutosave;
 		CString m_strAutosavedFrom;
-			
+
 		// Undo/Redo system.
 		CHistory *m_pUndo;
 		CHistory *m_pRedo;
 
 		CSelection *m_pSelection;				// object selection list
-		
+
 		int m_nNextMapObjectID;			// The ID that will be assigned to the next CMapClass object in this document.
 		int m_nNextNodeID;				// The ID that will be assigned to the next "info_node_xxx" object created in this document.
 
@@ -626,7 +626,7 @@ class CMapDoc : public CDocument
 
 		bool m_bShow3DGrid;				// Whether to render a grid in the 3D views.
 		bool m_bHideItems;				// Whether to render point entities in all views.
-		
+
 		int					m_nExternalReferenceCount;	// Indicates how many external references ( instances ) are pointing to this map
 		ShowInstance_t		m_tShowInstance;	// Indicates how instance contents should be displayed
 		CManifest			*m_pManifestOwner;
@@ -847,7 +847,7 @@ class CMapDoc : public CDocument
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : inline void
 //-----------------------------------------------------------------------------
 void CMapDoc::DecrementDocVersion(void)

@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose:  Contains text files that are embedded into the source code so that
-//	only the exe needs to be distributed. 
+//	only the exe needs to be distributed.
 //
 // $Workfile:     $
 // $Date:         $

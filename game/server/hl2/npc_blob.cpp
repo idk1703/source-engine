@@ -71,7 +71,7 @@ class CBlobElement : public CBaseAnimating
 public:
 	void Precache();
 	void Spawn();
-	int	DrawDebugTextOverlays(void); 
+	int	DrawDebugTextOverlays(void);
 
 	void	SetElementVelocity( Vector vecVelocity, bool bPlanarOnly );
 	void	AddElementVelocity( Vector vecVelocityAdd, bool bPlanarOnly );
@@ -165,7 +165,7 @@ void CBlobElement::Precache()
 void CBlobElement::Spawn()
 {
 	Precache();
-	
+
 	SetSolid( SOLID_NONE );
 	SetMoveType( MOVETYPE_FLY );
 	AddSolidFlags( FSOLID_NOT_STANDABLE | FSOLID_NOT_SOLID );
@@ -184,10 +184,10 @@ void CBlobElement::Spawn()
 
 //---------------------------------------------------------
 //---------------------------------------------------------
-int CBlobElement::DrawDebugTextOverlays(void) 
+int CBlobElement::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 		Q_snprintf(tempstr,sizeof(tempstr), "Element #:%d", m_iElementNumber );
@@ -211,7 +211,7 @@ void CBlobElement::SetElementVelocity( Vector vecVelocity, bool bPlanarOnly )
 }
 
 //---------------------------------------------------------
-// This is the official way to add velocity to an element. 
+// This is the official way to add velocity to an element.
 // See SetElementVelocity() for explanation.
 //---------------------------------------------------------
 void CBlobElement::AddElementVelocity( Vector vecVelocityAdd, bool bPlanarOnly )
@@ -278,7 +278,7 @@ void CBlobElement::ModifyVelocityForSurface( float flInterval, float flSpeed )
 
 //---------------------------------------------------------
 // Set velocity that will carry me towards a specified entity
-// Most often used to move along with the npc_blob that 
+// Most often used to move along with the npc_blob that
 // is directing me.
 //---------------------------------------------------------
 void CBlobElement::MoveTowardsTargetEntity( float speed )
@@ -301,7 +301,7 @@ void CBlobElement::MoveTowardsTargetEntity( float speed )
 	}
 	else
 	{
-        SetElementVelocity( vec3_origin, true );
+	SetElementVelocity( vec3_origin, true );
 	}
 }
 
@@ -339,7 +339,7 @@ void CBlobElement::ReconfigureRandomParams()
 }
 
 //---------------------------------------------------------
-// Adjust velocity if this element is moving faster than 
+// Adjust velocity if this element is moving faster than
 // flMaxSpeed or slower than flMinSpeed
 //---------------------------------------------------------
 void CBlobElement::EnforceSpeedLimits( float flMinSpeed, float flMaxSpeed )
@@ -368,7 +368,7 @@ enum
 //=========================================================
 // Custom tasks
 //=========================================================
-enum 
+enum
 {
 	TASK_MYCUSTOMTASK = LAST_SHARED_TASK,
 };
@@ -377,7 +377,7 @@ enum
 //=========================================================
 // Custom Conditions
 //=========================================================
-enum 
+enum
 {
 	COND_MYCUSTOMCONDITION = LAST_SHARED_CONDITION,
 };
@@ -492,7 +492,7 @@ CNPC_Blob::CNPC_Blob()
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-void CNPC_Blob::InitCustomSchedules(void) 
+void CNPC_Blob::InitCustomSchedules(void)
 {
 	INIT_CUSTOM_AI(CNPC_Blob);
 
@@ -504,7 +504,7 @@ void CNPC_Blob::InitCustomSchedules(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -518,7 +518,7 @@ void CNPC_Blob::Precache( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -553,10 +553,10 @@ void CNPC_Blob::Spawn( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 Class_T	CNPC_Blob::Classify( void )
 {
@@ -590,7 +590,7 @@ void CNPC_Blob::RunAI()
 			delta = -delta;
 			delta = MIN(delta, 5 );
 			RemoveExcessElements( delta );
-			
+
 			if( m_iReconfigureElement > m_iNumElements )
 			{
 				// Start this index over at zero, if it is past the new end of the utlvector.
@@ -602,7 +602,7 @@ void CNPC_Blob::RunAI()
 			delta = MIN(delta, 5 );
 			AddNewElements( delta );
 		}
-	
+
 		RecomputeIdealElementDist();
 	}
 
@@ -707,7 +707,7 @@ void CNPC_Blob::ComputeCentroid()
 }
 
 //-----------------------------------------------------------------------------
-// Run all of the AI for elements within the range iStart to iEnd 
+// Run all of the AI for elements within the range iStart to iEnd
 //-----------------------------------------------------------------------------
 void CNPC_Blob::DoBlobBatchedAI( int iStart, int iEnd )
 {
@@ -742,7 +742,7 @@ void CNPC_Blob::DoBlobBatchedAI( int iStart, int iEnd )
 	// which makes the entire group look far less orderly
 	if( GetEnemy() != NULL )
 	{
-		// If I have an enemy, the right-hand vector is perpendicular to a straight line 
+		// If I have an enemy, the right-hand vector is perpendicular to a straight line
 		// from the group's centroid to the enemy's origin.
 		vecForward = GetEnemy()->GetAbsOrigin() - m_vecCentroid;
 		VectorNormalize( vecForward );
@@ -769,8 +769,8 @@ void CNPC_Blob::DoBlobBatchedAI( int iStart, int iEnd )
 		// Initial movement
 		//--
 		// Start out with bEnforceSpeedLimit set to false. This is because an element
-		// can't overspeed if it's moving undisturbed towards its target entity or 
-		// target location. An element can only under or overspeed when it is repelled 
+		// can't overspeed if it's moving undisturbed towards its target entity or
+		// target location. An element can only under or overspeed when it is repelled
 		// by multiple other elements in the group. See "Relative Positions" below.
 		//
 		// Initialize some 'defaults' that may be changed for each iteration of this loop
@@ -846,7 +846,7 @@ void CNPC_Blob::DoBlobBatchedAI( int iStart, int iEnd )
 		//--
 		// Check this element against ALL other elements. If the two elements are closer
 		// than the allowed minimum distance, repel this element away. (The other element
-		// will repel when its AI runs). A single element can be repelled by many other 
+		// will repel when its AI runs). A single element can be repelled by many other
 		// elements. This is why bEnforceSpeedLimit is set to true if any of the repelling
 		// code runs for this element. Multiple attempts to repel an element in the same
 		// direction will cause overspeed. Conflicting attempts to repel an element in opposite
@@ -861,7 +861,7 @@ void CNPC_Blob::DoBlobBatchedAI( int iStart, int iEnd )
 				// This is the innermost loop! We should optimize here, if anywhere.
 
 				// If this element is on the wall, then don't be repelled by anyone. Repelling
-				// elements that are trying to climb a wall usually make them look like they 
+				// elements that are trying to climb a wall usually make them look like they
 				// fall off the wall a few times while climbing.
 				if( pThisElement->m_bOnWall )
 					continue;
@@ -879,11 +879,11 @@ void CNPC_Blob::DoBlobBatchedAI( int iStart, int iEnd )
 						Vector vecRepelDir = ( vecThisElementOrigin - vecThatElementOrigin );
 
 						vecRepelDir.NormalizeInPlace();
-						flRepelSpeed = (flSpeed * ( 1.0f - ( distSqr / minDistSqr ) ) ) * pThatElement->GetSinePhase(); 
+						flRepelSpeed = (flSpeed * ( 1.0f - ( distSqr / minDistSqr ) ) ) * pThatElement->GetSinePhase();
 						pThisElement->AddElementVelocity( vecRepelDir * flRepelSpeed, true );
 
 						// Since we altered this element's velocity after it was initially set, there's a chance
-						// that the sums of multiple vectors will cause the element to over or underspeed, so 
+						// that the sums of multiple vectors will cause the element to over or underspeed, so
 						// mark it for speed limit enforcement
 						bEnforceSpeedLimit = true;
 					}
@@ -928,7 +928,7 @@ void CNPC_Blob::DoBlobBatchedAI( int iStart, int iEnd )
 		pThisElement->ModifyVelocityForSurface( flInterval, flSpeed );
 
 		// For identifying stuck elements.
-		pThisElement->m_vecPrevOrigin = pThisElement->GetAbsOrigin(); 
+		pThisElement->m_vecPrevOrigin = pThisElement->GetAbsOrigin();
 
 		pThisElement->m_flDistFromCentroidSqr = pThisElement->m_vecPrevOrigin.DistToSqr( m_vecCentroid );
 
@@ -953,8 +953,8 @@ void CNPC_Blob::DoBlobBatchedAI( int iStart, int iEnd )
 }
 
 //-----------------------------------------------------------------------------
-// Throw out all elements and their entities except for the the specified 
-// index into the UTILVector. This is useful for isolating elements that 
+// Throw out all elements and their entities except for the the specified
+// index into the UTILVector. This is useful for isolating elements that
 // get into a bad state.
 //-----------------------------------------------------------------------------
 void CNPC_Blob::RemoveAllElementsExcept( int iExempt )
@@ -988,7 +988,7 @@ void CNPC_Blob::RemoveExcessElements( int iNumElements )
 	for( i = 0 ; i < iNumElements ; i++ )
 	{
 		int iLastElement = m_iNumElements - 1;
-		
+
 		// Nuke the associated entity
 		m_Elements[ iLastElement ]->SUB_Remove();
 
@@ -1005,11 +1005,11 @@ void CNPC_Blob::RemoveExcessElements( int iNumElements )
 void CNPC_Blob::AddNewElements( int iNumElements )
 {
 	int i;
-	
+
 	// Keep track of how many elements we had when we came into this function.
 	// Since the new elements copy their origins from existing elements, we only want
-	// to copy origins from elements that existed before we came into this function. 
-	// Otherwise, the more elements we create while in this function, the more likely it 
+	// to copy origins from elements that existed before we came into this function.
+	// Otherwise, the more elements we create while in this function, the more likely it
 	// becomes that several of them will stack on the same origin.
 	int iInitialElements = m_iNumElements;
 
@@ -1147,7 +1147,7 @@ void CNPC_Blob::InputSetRadius( inputdata_t &inputdata )
 void CNPC_Blob::InputChaseEntity( inputdata_t &inputdata )
 {
 	CBaseEntity *pEntity = gEntList.FindEntityByName( NULL, inputdata.value.StringID(), NULL, inputdata.pActivator, inputdata.pCaller );
-	
+
 	if ( pEntity )
 	{
 		for( int i = 0 ; i < m_Elements.Count() ; i++ )
@@ -1376,4 +1376,3 @@ void CNPC_Blob::RecomputeIdealElementDist()
 
 	//Msg("New element dist: %f\n", m_flMinElementDist );
 }
-

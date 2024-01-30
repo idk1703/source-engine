@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -39,7 +39,7 @@ public:
 public:
 
 	virtual void	Update
-					( 
+					(
 						int startframe,		// World update ( un-modded ) most recently received
 						bool validframe,		// Is frame data valid
 						int incoming_acknowledged, // Last command acknowledged to have been run by server (un-modded)
@@ -59,7 +59,7 @@ public:
 	virtual int		GetIncomingPacketNumber( void ) const;
 #endif
 
-	float			GetIdealPitch( void ) const 
+	float			GetIdealPitch( void ) const
 	{
 		return m_flIdealPitch;
 	}
@@ -94,7 +94,7 @@ protected:
 
 private:
 	virtual void	_Update
-					( 
+					(
 						bool received_new_world_update,
 						bool validframe,		// Is frame data valid
 						int incoming_acknowledged, // Last command acknowledged to have been run by server (un-modded)
@@ -145,7 +145,7 @@ private:
 	float			m_flIdealPitch;
 
 };
- 
+
 extern CPrediction *prediction;
 
 #endif // PREDICTION_H

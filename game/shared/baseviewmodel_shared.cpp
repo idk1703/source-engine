@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,7 +34,7 @@ extern ConVar in_forceuser;
 #define SCREEN_OVERLAY_MATERIAL "vgui/screens/vgui_overlay"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseViewModel::CBaseViewModel()
 {
@@ -46,7 +46,7 @@ CBaseViewModel::CBaseViewModel()
 	SetRenderColor( 255, 255, 255, 255 );
 
 	// View model of this weapon
-	m_sVMName			= NULL_STRING;		
+	m_sVMName			= NULL_STRING;
 	// Prefix of the animations that should be used by the player carrying this weapon
 	m_sAnimationPrefix	= NULL_STRING;
 
@@ -56,7 +56,7 @@ CBaseViewModel::CBaseViewModel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseViewModel::~CBaseViewModel()
 {
@@ -70,14 +70,14 @@ void CBaseViewModel::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseViewModel::Precache( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseViewModel::Spawn( void )
 {
@@ -100,7 +100,7 @@ void CBaseViewModel::Spawn( void )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseViewModel::SetControlPanelsActive( bool bState )
 {
@@ -224,7 +224,7 @@ void CBaseViewModel::SpawnControlPanels()
 		pScreen->SetActualSize( flWidth, flHeight );
 		pScreen->SetActive( false );
 		pScreen->MakeVisibleOnlyToTeammates( false );
-	
+
 #ifdef INVASION_DLL
 		pScreen->SetOverlayMaterial( SCREEN_OVERLAY_MATERIAL );
 #endif
@@ -249,8 +249,8 @@ void CBaseViewModel::DestroyControlPanels()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
+// Purpose:
+// Input  : *pEntity -
 //-----------------------------------------------------------------------------
 void CBaseViewModel::SetOwner( CBaseEntity *pEntity )
 {
@@ -262,8 +262,8 @@ void CBaseViewModel::SetOwner( CBaseEntity *pEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nIndex - 
+// Purpose:
+// Input  : nIndex -
 //-----------------------------------------------------------------------------
 void CBaseViewModel::SetIndex( int nIndex )
 {
@@ -272,7 +272,7 @@ void CBaseViewModel::SetIndex( int nIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseViewModel::ViewModelIndex( ) const
 {
@@ -306,8 +306,8 @@ void CBaseViewModel::RemoveEffects( int nEffects )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *modelname - 
+// Purpose:
+// Input  : *modelname -
 //-----------------------------------------------------------------------------
 void CBaseViewModel::SetWeaponModel( const char *modelname, CBaseCombatWeapon *weapon )
 {
@@ -342,7 +342,7 @@ void CBaseViewModel::SetWeaponModel( const char *modelname, CBaseCombatWeapon *w
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CBaseCombatWeapon
 //-----------------------------------------------------------------------------
 CBaseCombatWeapon *CBaseViewModel::GetOwningWeapon( void )
@@ -351,12 +351,12 @@ CBaseCombatWeapon *CBaseViewModel::GetOwningWeapon( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : sequence - 
+// Purpose:
+// Input  : sequence -
 //-----------------------------------------------------------------------------
 void CBaseViewModel::SendViewModelMatchingSequence( int sequence )
 {
-	// since all we do is send a sequence number down to the client, 
+	// since all we do is send a sequence number down to the client,
 	// set this here so other weapons code knows which sequence is playing.
 	SetSequence( sequence );
 
@@ -398,7 +398,7 @@ void CBaseViewModel::CalcViewModelView( CBasePlayer *owner, const Vector& eyePos
 		if ( !prediction->InPrediction() )
 #endif
 		{
-			// add weapon-specific bob 
+			// add weapon-specific bob
 			pWeapon->AddViewmodelBob( this, vmorigin, vmangles );
 #if defined ( CSTRIKE_DLL )
 			CalcViewModelLag( vmorigin, vmangles, vmangoriginal );
@@ -417,7 +417,7 @@ void CBaseViewModel::CalcViewModelView( CBasePlayer *owner, const Vector& eyePos
 	if ( !prediction->InPrediction() )
 	{
 		// Let the viewmodel shake at about 10% of the amplitude of the player's view
-		vieweffects->ApplyShake( vmorigin, vmangles, 0.1 );	
+		vieweffects->ApplyShake( vmorigin, vmangles, 0.1 );
 	}
 #endif
 
@@ -439,12 +439,12 @@ void CBaseViewModel::CalcViewModelView( CBasePlayer *owner, const Vector& eyePos
 
 		// Clamp pitch a bit to minimize seeing back of viewmodel
 		if( gun_angles[PITCH] < -max_gun_pitch )
-		{ 
-			gun_angles[PITCH] = -max_gun_pitch; 
+		{
+			gun_angles[PITCH] = -max_gun_pitch;
 		}
 
 #ifdef WIN32 // ShouldFlipViewModel comes up unresolved on osx? Mabye because it's defined inline? fixme
-		if( ShouldFlipViewModel() ) 
+		if( ShouldFlipViewModel() )
 		{
 			gun_angles[YAW] *= -1.0f;
 		}
@@ -460,7 +460,7 @@ void CBaseViewModel::CalcViewModelView( CBasePlayer *owner, const Vector& eyePos
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float g_fMaxViewModelLag = 1.5f;
 
@@ -523,8 +523,8 @@ void CBaseViewModel::CalcViewModelLag( Vector& origin, QAngle& angles, QAngle& o
 // Stub to keep networking consistent for DEM files
 //-----------------------------------------------------------------------------
 #if defined( CLIENT_DLL )
-  extern void RecvProxy_EffectFlags( const CRecvProxyData *pData, void *pStruct, void *pOut );
-  void RecvProxy_SequenceNum( const CRecvProxyData *pData, void *pStruct, void *pOut );
+	extern void RecvProxy_EffectFlags( const CRecvProxyData *pData, void *pStruct, void *pOut );
+	void RecvProxy_SequenceNum( const CRecvProxyData *pData, void *pStruct, void *pOut );
 #endif
 
 //-----------------------------------------------------------------------------
@@ -634,7 +634,7 @@ void RecvProxy_SequenceNum( const CRecvProxyData *pData, void *pStruct, void *pO
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CBaseViewModel::LookupAttachment( const char *pAttachmentName )
 {
@@ -645,7 +645,7 @@ int	CBaseViewModel::LookupAttachment( const char *pAttachmentName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseViewModel::GetAttachment( int number, matrix3x4_t &matrix )
 {
@@ -656,7 +656,7 @@ bool CBaseViewModel::GetAttachment( int number, matrix3x4_t &matrix )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseViewModel::GetAttachment( int number, Vector &origin )
 {
@@ -667,7 +667,7 @@ bool CBaseViewModel::GetAttachment( int number, Vector &origin )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseViewModel::GetAttachment( int number, Vector &origin, QAngle &angles )
 {
@@ -678,7 +678,7 @@ bool CBaseViewModel::GetAttachment( int number, Vector &origin, QAngle &angles )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseViewModel::GetAttachmentVelocity( int number, Vector &originVel, Quaternion &angleVel )
 {

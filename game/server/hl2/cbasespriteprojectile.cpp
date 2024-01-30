@@ -87,7 +87,7 @@ void CBaseSpriteProjectile::HandleTouch( CBaseEntity *pOther )
 	CTakeDamageInfo info( this, pOwner, m_iDmg, m_iDmgType );
 	GuessDamageForce( &info, (tr.endpos - tr.startpos), tr.endpos );
 	pOther->TakeDamage( info );
-	
+
 	UTIL_Remove( this );
 }
 
@@ -103,4 +103,3 @@ void CBaseSpriteProjectile::Think()
 void CBaseSpriteProjectile::HandleThink()
 {
 }
-

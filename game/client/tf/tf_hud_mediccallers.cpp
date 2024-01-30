@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,7 +26,7 @@
 #define MEDICCALLER_ARROW_TALL	(YRES(24))
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFMedicCallerPanel::CTFMedicCallerPanel( Panel *parent, const char *name ) : EditablePanel(parent,name)
 {
@@ -41,7 +41,7 @@ CTFMedicCallerPanel::CTFMedicCallerPanel( Panel *parent, const char *name ) : Ed
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFMedicCallerPanel::~CTFMedicCallerPanel( void )
 {
@@ -69,7 +69,7 @@ void CTFMedicCallerPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMedicCallerPanel::PerformLayout( void )
 {
@@ -223,7 +223,7 @@ void CTFMedicCallerPanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMedicCallerPanel::GetCallerPosition( const Vector &vecDelta, float flRadius, float *xpos, float *ypos, float *flRotation )
 {
@@ -255,7 +255,7 @@ void CTFMedicCallerPanel::GetCallerPosition( const Vector &vecDelta, float flRad
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMedicCallerPanel::OnTick( void )
 {
@@ -283,7 +283,7 @@ void CTFMedicCallerPanel::OnTick( void )
 			if ( pTFPlayer )
 			{
 				// If we're pointing to an enemy spy and they are no longer disguised, remove ourselves
-				if ( pTFPlayer->IsPlayerClass( TF_CLASS_SPY ) && 
+				if ( pTFPlayer->IsPlayerClass( TF_CLASS_SPY ) &&
 					 pTFPlayer->GetTeamNumber() != pLocalTFPlayer->GetTeamNumber() &&
 					!( pTFPlayer->m_Shared.InCond( TF_COND_DISGUISED ) && pTFPlayer->m_Shared.GetDisguiseTeam() == pLocalTFPlayer->GetTeamNumber() ) )
 				{
@@ -326,7 +326,7 @@ void CTFMedicCallerPanel::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMedicCallerPanel::PaintBackground( void )
 {
@@ -399,7 +399,7 @@ void CTFMedicCallerPanel::PaintBackground( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMedicCallerPanel::Paint( void )
 {
@@ -466,7 +466,7 @@ void CTFMedicCallerPanel::Paint( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMedicCallerPanel::SetEntity( C_BaseEntity *pEntity, float flDuration, Vector &vecOffset )
 {
@@ -483,7 +483,7 @@ void CTFMedicCallerPanel::SetMedicCallerType( MedicCallerType nType )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMedicCallerPanel::AddMedicCaller( C_BaseEntity *pEntity, float flDuration, Vector &vecOffset, MedicCallerType nType /* = CALLER_TYPE_NORMAL */ )
 {
@@ -498,7 +498,7 @@ void CTFMedicCallerPanel::AddMedicCaller( C_BaseEntity *pEntity, float flDuratio
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMedicCallerPanel::FireGameEvent( IGameEvent *event )
 {

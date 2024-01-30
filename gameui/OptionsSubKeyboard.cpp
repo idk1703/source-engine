@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -50,7 +50,7 @@ COptionsSubKeyboard::COptionsSubKeyboard(vgui::Panel *parent) : PropertyPage(par
 	SaveCurrentBindings();
 	// Parse default descriptions
 	ParseActionDescriptions();
-	
+
 	m_pSetBindingButton = new Button(this, "ChangeKeyButton", "");
 	m_pClearBindingButton = new Button(this, "ClearKeyButton", "");
 
@@ -139,7 +139,7 @@ void COptionsSubKeyboard::OnCommand( const char *command )
 	else if ( !m_pKeyBindList->IsCapturing() && !stricmp( command, "ClearKey" ) )
 	{
 		OnKeyCodePressed(KEY_DELETE);
-        m_pKeyBindList->RequestFocus();
+		m_pKeyBindList->RequestFocus();
 	}
 	else if ( !stricmp(command, "Advanced") )
 	{
@@ -170,19 +170,19 @@ char *UTIL_va(char *format, ...)
 	va_list		argptr;
 	static char	string[4][1024];
 	static int	curstring = 0;
-	
+
 	curstring = ( curstring + 1 ) % 4;
 
 	va_start (argptr, format);
 	Q_vsnprintf( string[curstring], 1024, format, argptr );
 	va_end (argptr);
 
-	return string[curstring];  
+	return string[curstring];
 }
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubKeyboard::ParseActionDescriptions( void )
 {
@@ -204,7 +204,7 @@ void COptionsSubKeyboard::ParseActionDescriptions( void )
 	{
 		data = UTIL_Parse( data, token, sizeof(token) );
 		// Done.
-		if ( strlen( token ) <= 0 )  
+		if ( strlen( token ) <= 0 )
 			break;
 
 		Q_strncpy( szBinding, token, sizeof( szBinding ) );
@@ -232,7 +232,7 @@ void COptionsSubKeyboard::ParseActionDescriptions( void )
 			{
 				// Create a new: blank item
 				item = new KeyValues( "Item" );
-				
+
 				// fill in data
 				item->SetString("Action", szDescription);
 				item->SetString("Binding", szBinding);
@@ -291,7 +291,7 @@ void COptionsSubKeyboard::AddBinding( KeyValues *item, const char *keyname )
 	const char *binding = item->GetString( "Binding", "" );
 
 	// Loop through all the key bindings and set all entries that have
-	// the same binding. This allows us to have multiple entries pointing 
+	// the same binding. This allows us to have multiple entries pointing
 	// to the same binding.
 	for (int i = 0; i < m_pKeyBindList->GetItemCount(); i++)
 	{
@@ -473,7 +473,7 @@ void COptionsSubKeyboard::DeleteSavedBindings( void )
 //-----------------------------------------------------------------------------
 void COptionsSubKeyboard::SaveCurrentBindings( void )
 {
-    DeleteSavedBindings();
+	DeleteSavedBindings();
 	for (int i = 0; i < BUTTON_CODE_LAST; i++)
 	{
 		const char *binding = gameuifuncs->GetBindingForButtonCode( (ButtonCode_t)i );
@@ -526,7 +526,7 @@ void COptionsSubKeyboard::ApplyAllBindings( void )
 	m_KeysToUnbind.RemoveAll();
 
 	// free binding memory
-    DeleteSavedBindings();
+	DeleteSavedBindings();
 
 	for (int i = 0; i < m_pKeyBindList->GetItemCount(); i++)
 	{
@@ -540,15 +540,15 @@ void COptionsSubKeyboard::ApplyAllBindings( void )
 			continue;
 
 		const char *keyname;
-		
+
 		// Check main binding
 		keyname = item->GetString( "Key", "" );
 		if ( keyname && keyname[ 0 ] )
 		{
 			// Tell the engine
 			BindKey( keyname, binding );
-            ButtonCode_t code = g_pInputSystem->StringToButtonCode( keyname );
-            if ( code != BUTTON_CODE_INVALID )
+			ButtonCode_t code = g_pInputSystem->StringToButtonCode( keyname );
+			if ( code != BUTTON_CODE_INVALID )
 			{
 				m_Bindings[ code ].binding = UTIL_CopyString( binding );
 			}
@@ -560,7 +560,7 @@ void COptionsSubKeyboard::ApplyAllBindings( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Read in defaults from game's default config file and populate list 
+// Purpose: Read in defaults from game's default config file and populate list
 //			using those defaults
 //-----------------------------------------------------------------------------
 void COptionsSubKeyboard::FillInDefaultBindings( void )
@@ -592,7 +592,7 @@ void COptionsSubKeyboard::FillInDefaultBindings( void )
 
 			char szBinding[256];
 			data = UTIL_Parse( data, szBinding, sizeof(szBinding) );
-			if ( strlen( szKeyName ) <= 0 )  
+			if ( strlen( szKeyName ) <= 0 )
 				break; // Error
 
 			// Find item
@@ -604,22 +604,22 @@ void COptionsSubKeyboard::FillInDefaultBindings( void )
 			}
 		}
 	}
-	
+
 	PostActionSignal(new KeyValues("ApplyButtonEnable"));
 
 	// Make sure console and escape key are always valid
-    KeyValues *item = GetItemForBinding( "toggleconsole" );
-    if (item)
-    {
-        // Bind it
-        AddBinding( item, "`" );
-    }
-    item = GetItemForBinding( "cancelselect" );
-    if (item)
-    {
-        // Bind it
-        AddBinding( item, "ESCAPE" );
-    }
+	KeyValues *item = GetItemForBinding( "toggleconsole" );
+	if (item)
+	{
+		// Bind it
+		AddBinding( item, "`" );
+	}
+	item = GetItemForBinding( "cancelselect" );
+	if (item)
+	{
+		// Bind it
+		AddBinding( item, "ESCAPE" );
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -680,7 +680,7 @@ void COptionsSubKeyboard::Finish( ButtonCode_t code )
 		{
 			// Bind the named key
 			AddBinding( item, g_pInputSystem->ButtonCodeToString( code ) );
-			PostActionSignal( new KeyValues( "ApplyButtonEnable" ) );	
+			PostActionSignal( new KeyValues( "ApplyButtonEnable" ) );
 		}
 
 		m_pKeyBindList->InvalidateItem(r);

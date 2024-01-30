@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,7 +13,7 @@
 
 DEFINE_FALLBACK_SHADER( Portal, Portal_DX80 )
 
-BEGIN_VS_SHADER( Portal_DX80, 
+BEGIN_VS_SHADER( Portal_DX80,
 				"Help for Portal shader" )
 
 				BEGIN_SHADER_PARAMS
@@ -55,7 +55,7 @@ SHADER_INIT
 	if (params[BASETEXTURE]->IsDefined() )
 		LoadTexture( BASETEXTURE );
 	if( params[STATICBLENDTEXTURE]->IsDefined() )
-		LoadTexture( STATICBLENDTEXTURE );	
+		LoadTexture( STATICBLENDTEXTURE );
 	if( (iMaxTextureStages > 1) && params[ALPHAMASKTEXTURE]->IsDefined() )
 		LoadTexture( ALPHAMASKTEXTURE );
 
@@ -93,9 +93,9 @@ SHADER_DRAW
 {
 	bool bStaticBlendTexture = params[STATICBLENDTEXTURE]->IsTexture();
 	bool bAlphaMaskTexture = ((iMaxTextureStages > 1) && (params[ALPHAMASKTEXTURE]->IsTexture()))?(1):(0); //must support at least 2 texture stages to use any kind of mask
-	
+
 	float fStaticAmount = params[STATICAMOUNT]->GetFloatValue();
-	
+
 	SHADOW_STATE
 	{
 		SetInitialShadowState();
@@ -131,7 +131,7 @@ SHADER_DRAW
 		int	iTexCoords = 1;
 		if( IS_FLAG_SET( MATERIAL_VAR_MODEL ) )
 		{
-			userDataSize = 4;		
+			userDataSize = 4;
 		}
 		else
 		{
@@ -191,10 +191,10 @@ SHADER_DRAW
 void SinglePass( IShaderShadow *pShaderShadow, IShaderDynamicAPI *pShaderAPI, IMaterialVar **params, float fStaticAmount, bool bStaticBlendTexture, bool bAlphaMaskTexture )
 {
 	SHADOW_STATE
-	{		
+	{
 		// source render target that contains the image that we are warping.
 		pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
-		
+
 		if( bStaticBlendTexture || bAlphaMaskTexture )
 			pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );
 
@@ -303,5 +303,3 @@ void MultiPass_StaticPass( IShaderShadow *pShaderShadow, IShaderDynamicAPI *pSha
 }
 
 END_SHADER
-
-

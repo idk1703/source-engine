@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -11,7 +11,7 @@
 #endif
 
 // Used to match against certain debug values of cvars.
-#define NET_QUEUED_PACKET_THREAD_DEBUG_VALUE 581304 
+#define NET_QUEUED_PACKET_THREAD_DEBUG_VALUE 581304
 
 class INetChannel;
 

@@ -53,7 +53,7 @@ BEGIN_VS_SHADER( LightmappedGeneric_Decal,
 	SHADER_INIT
 	{
 		LoadTexture( FLASHLIGHTTEXTURE, TEXTUREFLAGS_SRGB );
-		
+
 		if (params[BASETEXTURE]->IsDefined())
 		{
 			LoadTexture( BASETEXTURE );
@@ -84,7 +84,7 @@ BEGIN_VS_SHADER( LightmappedGeneric_Decal,
 			pShaderShadow->EnableTexture( SHADER_SAMPLER2, true );
 			pShaderShadow->EnableTexture( SHADER_SAMPLER3, true );
 
-			SetNormalBlendingShadowState( BASETEXTURE, true ); 
+			SetNormalBlendingShadowState( BASETEXTURE, true );
 
 			int pTexCoords[3] = { 2, 2, 1 };
 			pShaderShadow->VertexShaderVertexFormat( VERTEX_POSITION | VERTEX_COLOR, 3, pTexCoords, 0 );
@@ -124,7 +124,7 @@ BEGIN_VS_SHADER( LightmappedGeneric_Decal,
 	{
 		if( UsingFlashlight( params ) )
 		{
-			DrawFlashlight_dx80( params, pShaderAPI, pShaderShadow, false, -1, -1, -1, 
+			DrawFlashlight_dx80( params, pShaderAPI, pShaderShadow, false, -1, -1, -1,
 				FLASHLIGHTTEXTURE, FLASHLIGHTTEXTUREFRAME, true, false, 0, -1, -1 );
 		}
 		else

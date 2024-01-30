@@ -151,7 +151,7 @@ unsigned PopThreadFunc( void *)
 		{
 			if ( g_nPushThreads == 0 )
 			{
-				// Pop the rest 
+				// Pop the rest
 				while ( g_pTestOps->Pop( &ignored ) )
 				{
 					ThreadSleep( 0 );

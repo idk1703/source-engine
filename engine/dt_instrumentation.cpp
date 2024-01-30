@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -77,7 +77,7 @@ void DTI_Init()
 		char dtiFileName[MAX_PATH];
 		char dtiLevelName[MAX_PATH];
 		V_FileBase( engineClient->GetLevelName(), dtiLevelName, ARRAYSIZE( dtiLevelName ) );
-		V_snprintf( dtiFileName, ARRAYSIZE( dtiFileName ), "dti_client_%s_%02d%02d%02d-%02d%02d%02d.csv", 
+		V_snprintf( dtiFileName, ARRAYSIZE( dtiFileName ), "dti_client_%s_%02d%02d%02d-%02d%02d%02d.csv",
 					dtiLevelName,
 					systemTime.wYear % 100, systemTime.wMonth, systemTime.wDay,
 					systemTime.wHour, systemTime.wMinute, systemTime.wSecond );
@@ -119,28 +119,28 @@ void DTI_Flush()
 			",Avg Index Bits"
 			",=SUM(D:D)"
 			"\n" );
-	
+
 		int row = 2;
 
 		FOR_EACH_LL( g_DTIRecvTables, iTable )
 		{
 			CDTIRecvTable *pTable = g_DTIRecvTables[iTable];
-			
+
 			if ( !pTable->m_bSawAction )
 				continue;
-			
+
 			for ( int iProp=0; iProp < pTable->m_Props.Count(); iProp++ )
 			{
 				CDTIProp *pProp = &pTable->m_Props[iProp];
 
 				if ( pProp->m_nDecodes == 0 )
 					continue;
-			
+
 				g_pFileSystem->FPrintf( fp,
 					// Class/Prop names
 					"%s"
 					",%s"
-					
+
 					// Decode count
 					",%d"
 
@@ -154,7 +154,7 @@ void DTI_Flush()
 					",=D%d/H$1"
 
 					"\n",
-					
+
 					// Class/Prop names
 					pTable->m_Name.String(),
 					pProp->m_Name.String(),
@@ -190,7 +190,7 @@ void DTI_HookRecvDecoder( CRecvDecoder *pDecoder )
 
 	CDTIRecvTable *pTable = new CDTIRecvTable;
 	pTable->m_Name.Set( pDecoder->GetName() );
-	
+
 	pTable->m_Props.SetSize( pDecoder->GetNumProps() );
 	for ( int i=0; i < pTable->m_Props.Count(); i++ )
 	{
@@ -214,7 +214,7 @@ void DTI_HookRecvDecoder( CRecvDecoder *pDecoder )
 			}
 		}
 	}
-	
+
 	g_DTIRecvTables.AddToTail( pTable );
 
 	pDecoder->m_pDTITable = pTable;
@@ -234,6 +234,3 @@ void _DTI_HookDeltaBits( CRecvDecoder *pDecoder, int iProp, int nDataBits, int n
 
 	pTable->m_bSawAction = true;
 }
-
-
-

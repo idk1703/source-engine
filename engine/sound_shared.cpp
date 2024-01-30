@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Sound code shared between server and client 
+// Purpose: Sound code shared between server and client
 //
 //=============================================================================//
 
@@ -12,7 +12,7 @@
 
 ConVar snd_refdist( "snd_refdist", "36", FCVAR_CHEAT);
 ConVar snd_refdb( "snd_refdb", "60", FCVAR_CHEAT );
-ConVar snd_foliage_db_loss( "snd_foliage_db_loss", "4", FCVAR_CHEAT ); 
+ConVar snd_foliage_db_loss( "snd_foliage_db_loss", "4", FCVAR_CHEAT );
 ConVar snd_gain( "snd_gain", "1", FCVAR_CHEAT );
 ConVar snd_gain_max( "snd_gain_max", "1", FCVAR_CHEAT );
 ConVar snd_gain_min( "snd_gain_min", "0.01", FCVAR_CHEAT );
@@ -20,8 +20,8 @@ ConVar snd_gain_min( "snd_gain_min", "0.01", FCVAR_CHEAT );
 // calculate gain based on atmospheric attenuation.
 // as gain excedes threshold, round off (compress) towards 1.0 using spline
 #define SND_GAIN_COMP_EXP_MAX	2.5f	// Increasing SND_GAIN_COMP_EXP_MAX fits compression curve more closely
-										// to original gain curve as it approaches 1.0.  
-#define SND_GAIN_COMP_EXP_MIN	0.8f	
+										// to original gain curve as it approaches 1.0.
+#define SND_GAIN_COMP_EXP_MIN	0.8f
 
 #define SND_GAIN_COMP_THRESH	0.5f		// gain value above which gain curve is rounded to approach 1.0
 
@@ -60,7 +60,7 @@ float SND_GetGainFromMult( float gain, float dist_mult, vec_t dist )
 		float snd_gain_comp_power = SND_GAIN_COMP_EXP_MAX;
 		soundlevel_t sndlvl = DIST_MULT_TO_SNDLVL( dist_mult );
 		float Y;
-		
+
 		// decrease compression curve fit for higher sndlvl values
 
 		if ( sndlvl > SND_DB_MED )
@@ -73,7 +73,7 @@ float SND_GetGainFromMult( float gain, float dist_mult, vec_t dist )
 		// calculate crossover point
 
 		Y = -1.0 / ( pow(SND_GAIN_COMP_THRESH, snd_gain_comp_power) * (SND_GAIN_COMP_THRESH - 1) );
-		
+
 		// calculate compressed gain
 
 		gain = 1.0 - 1.0 / (Y * pow( gain, snd_gain_comp_power ) );
@@ -86,7 +86,7 @@ float SND_GetGainFromMult( float gain, float dist_mult, vec_t dist )
 		// sounds less than snd_gain_min fall off to 0 in distance it took them to fall to snd_gain_min
 
 		gain = snd_gain_min.GetFloat() * (2.0 - relative_dist * snd_gain_min.GetFloat());
-		
+
 		if (gain <= 0.0)
 			gain = 0.001;	// don't propagate 0 gain
 	}

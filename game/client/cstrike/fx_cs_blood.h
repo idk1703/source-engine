@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -11,7 +11,7 @@
 #endif
 
 
-void FX_CS_BloodSpray( 
+void FX_CS_BloodSpray(
 	const Vector &origin,
 	const Vector &normal,
 	float flDamage );

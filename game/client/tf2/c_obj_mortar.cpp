@@ -20,7 +20,7 @@
 #include "iusesmortarpanel.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectMortar : public C_BaseObject, public IUsesMortarPanel
 {
@@ -34,7 +34,7 @@ public:
 	virtual void SetDormant( bool bDormant );
 	virtual void Select( void );
 	virtual void RecalculateIDString( void );
-	
+
 	void		 FireMortar( void );
 
 // IUsesMortarPanel
@@ -54,14 +54,14 @@ public:
 	bool	m_bMortarReloading;
 	float	m_flPower;
 	bool	m_bAllowedToFire;
-	
+
 	// Parameters for the next shot.
 	float m_flFiringPower;
 	float m_flFiringAccuracy;
 
 	float m_flMortarYaw;	// What direction the mortar is aimed in.
 	float m_flMortarPitch;
-	
+
 	// This is what is used on the client to draw the ground line and orient the mortar.
 	// It is usually copied right over from m_flClientMortarYaw (which comes from the server),
 	// but this is also used when rotating the mortar so you can see the line move smoothly.
@@ -81,7 +81,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_ObjectMortar, DT_ObjectMortar, CObjectMortar)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectMortar::C_ObjectMortar( void )
 {
@@ -89,7 +89,7 @@ C_ObjectMortar::C_ObjectMortar( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectMortar::SetDormant( bool bDormant )
 {
@@ -138,7 +138,7 @@ void C_ObjectMortar::Select( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectMortar::RecalculateIDString( void )
 {
@@ -152,7 +152,7 @@ void C_ObjectMortar::RecalculateIDString( void )
 			{
 				Q_snprintf( m_szIDString, sizeof(m_szIDString), "%s  -  %s", GetTargetDescription(), MortarAmmoNames[ m_iRoundType ] );
 			}
-			else 
+			else
 			{
 				Q_snprintf( m_szIDString, sizeof(m_szIDString), "%s  -  %d %s", GetTargetDescription(), m_iMortarRounds[ m_iRoundType ], MortarAmmoNames[ m_iRoundType ] );
 			}
@@ -164,7 +164,7 @@ void C_ObjectMortar::RecalculateIDString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectMortar::ClickFire( void )
 {
@@ -173,12 +173,12 @@ void C_ObjectMortar::ClickFire( void )
 	case MORTAR_IDLE:
 		m_iFiringState = MORTAR_CHARGING_POWER;
 		break;
-	
+
 	case MORTAR_CHARGING_POWER:
 		m_flFiringPower = m_flPower;
 		m_iFiringState = MORTAR_CHARGING_ACCURACY;
 		break;
-	
+
 	case MORTAR_CHARGING_ACCURACY:
 		m_flFiringAccuracy = m_flPower;
 		m_iFiringState = MORTAR_IDLE;
@@ -189,7 +189,7 @@ void C_ObjectMortar::ClickFire( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectMortar::GetMortarData( float *flClientMortarYaw, bool *bAllowedToFire, float *flPower, float *flFiringPower, float *flFiringAccuracy, int *iFiringState )
 {
@@ -202,7 +202,7 @@ void C_ObjectMortar::GetMortarData( float *flClientMortarYaw, bool *bAllowedToFi
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectMortar::SendYawCommand( void )
 {
@@ -212,7 +212,7 @@ void C_ObjectMortar::SendYawCommand( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectMortar::ForceClientYawCountdown( float flTime )
 {
@@ -221,7 +221,7 @@ void C_ObjectMortar::ForceClientYawCountdown( float flTime )
 
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CMortarControlPanel : public CObjectControlPanel
 {
@@ -229,7 +229,7 @@ class CMortarControlPanel : public CObjectControlPanel
 public:
 	CMortarControlPanel( vgui::Panel *parent, const char *panelName );
 	virtual ~CMortarControlPanel();
-	
+
 	virtual bool Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData );
 	virtual void OnCommand( const char *command );
 	C_ObjectMortar* GetMortar() const;
@@ -246,17 +246,17 @@ DECLARE_VGUI_SCREEN_FACTORY( CMortarControlPanel, "mortar_control_panel" );
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CMortarControlPanel::CMortarControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CMortarControlPanel" ) 
+	: BaseClass( parent, "CMortarControlPanel" )
 {
 	m_pMinimapPanel = new CMortarMinimapPanel( this, "MinimapPanel" );
 	m_pMinimapPanel->Init( NULL );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMortarControlPanel::~CMortarControlPanel()
 {
@@ -264,7 +264,7 @@ CMortarControlPanel::~CMortarControlPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CMortarControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -284,7 +284,7 @@ bool CMortarControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pIn
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectMortar* CMortarControlPanel::GetMortar() const
 {
@@ -292,7 +292,7 @@ C_ObjectMortar* CMortarControlPanel::GetMortar() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectMortar::FireMortar( void )
 {
@@ -362,7 +362,7 @@ vgui::Panel* CMortarControlPanel::TickCurrentPanel()
 			pMortar->FireMortar();
 		}
 		break;
-	
+
 	default:
 		break;
 	}
@@ -386,4 +386,3 @@ void CMortarControlPanel::OnCommand( const char *command )
 
 	BaseClass::OnCommand(command);
 }
-

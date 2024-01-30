@@ -27,15 +27,15 @@
 extern IPhysicsSurfaceProps *physprops;
 IPhysicsObject *GetWorldPhysObject( void );
 
-extern CBaseEntity *BreakModelCreateSingle( CBaseEntity *pOwner, breakmodel_t *pModel, const Vector &position, 
+extern CBaseEntity *BreakModelCreateSingle( CBaseEntity *pOwner, breakmodel_t *pModel, const Vector &position,
 	const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity, int nSkin, const breakablepropparams_t &params );
 
 //-----------------------------------------------------------------------------
 // Purpose: Creates a "Calling Card" prop at the victim's location
 //-----------------------------------------------------------------------------
-void CreateDeathCallingCard( 
-	const Vector &vecOrigin, 
-	const QAngle &vAngle, 
+void CreateDeathCallingCard(
+	const Vector &vecOrigin,
+	const QAngle &vAngle,
 	const int iVictimIndex,
 	const int iShooterIndex,
 	const int iCallingCardIndex
@@ -70,36 +70,36 @@ void CreateDeathCallingCard(
 	breakModel.placementIsBone = false;
 	breakModel.offset = Vector( 0, 0, 50 );
 
-	CBaseEntity * pBreakModel = BreakModelCreateSingle( 
-		pVictim, 
-		&breakModel, 
-		pVictim->GetAbsOrigin() + Vector( 0, 0, 50 ), 
+	CBaseEntity * pBreakModel = BreakModelCreateSingle(
+		pVictim,
+		&breakModel,
+		pVictim->GetAbsOrigin() + Vector( 0, 0, 50 ),
 		QAngle(0, vAngle.y, 0 ),
-		vec3_origin, 
 		vec3_origin,
-		0, 
-		breakParams 
+		vec3_origin,
+		0,
+		breakParams
 	);
 
 	// Scale down the tombstones a bit
 	if ( pBreakModel )
-    {
-        CBaseAnimating *pAnim = dynamic_cast < CBaseAnimating * > ( pBreakModel );
-        if ( pAnim )
-        {
+	{
+		CBaseAnimating *pAnim = dynamic_cast < CBaseAnimating * > ( pBreakModel );
+		if ( pAnim )
+		{
 			pAnim->SetModelScale( 0.9f );
-        }
-    }
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void DeathCallingCard( const CEffectData &data )
 {
-	CreateDeathCallingCard( 
-		data.m_vOrigin, 
-		data.m_vAngles, 
+	CreateDeathCallingCard(
+		data.m_vOrigin,
+		data.m_vAngles,
 		data.m_nAttachmentIndex, // Victim
 		data.m_nHitBox,			 // iShooter
 		data.m_fFlags			// Calling card Index

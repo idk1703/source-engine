@@ -39,13 +39,13 @@ int main( int argc, char ** argv )
 			}
 			break;
 
-				
+
 			default:
 				printf("unrecogized option %s\n", argv[nCurArg] );
 				exit(1);
 		}
 		nCurArg++;
-		
+
 	}
 	argc -= ( nCurArg - 1 );
 	argv += ( nCurArg - 1 );

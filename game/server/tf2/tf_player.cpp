@@ -72,7 +72,7 @@ IMPLEMENT_SERVERCLASS_ST(CBaseTFPlayer, DT_BaseTFPlayer)
 	SendPropDataTable(SENDINFO_DT(m_TFLocal), &REFERENCE_SEND_TABLE(DT_TFLocal), SendProxy_SendLocalDataTable),
 
 	SendPropInt(SENDINFO(m_iPlayerClass), 4, SPROP_UNSIGNED),
-	
+
 	// Class Data Tables
 	SendPropDataTable( SENDINFO_DT( m_PlayerClasses ), &REFERENCE_SEND_TABLE( DT_AllPlayerClasses ), SendProxy_SendLocalDataTable ),
 
@@ -130,8 +130,8 @@ extern CBaseEntity	*g_pLastSpawn;
 
 //-----------------------------------------------------------------------------
 // Purpose: Don't do anything for now
-// Input  : *pFormat - 
-//			... - 
+// Input  : *pFormat -
+//			... -
 // Output : static void
 //-----------------------------------------------------------------------------
 void StatusPrintf( bool clear, int destination, char *pFormat, ... )
@@ -144,8 +144,8 @@ void StatusPrintf( bool clear, int destination, char *pFormat, ... )
 
 	va_start(marker, pFormat);
 	Q_vsnprintf(msg, sizeof( msg ), pFormat, marker);
-	va_end(marker);	
-	
+	va_end(marker);
+
 	Msg( msg );
 	*/
 }
@@ -174,7 +174,7 @@ CBaseTFPlayer::CBaseTFPlayer() :
 	m_TFLocal.m_pPlayer = this;
 	m_bSwitchingView = false;
 	ClearActiveWeapon();
-	
+
 	m_iPlayerClass = TFCLASS_UNDECIDED;
 	SetPlayerClass( TFCLASS_UNDECIDED );
 	m_pCurrentMenu = NULL;
@@ -184,7 +184,7 @@ CBaseTFPlayer::CBaseTFPlayer() :
 	m_bUnDeploying = false;
 	m_flFinishedDeploying = 0;
 	SetOrder( NULL );
-	
+
 	m_nPreferredTechnology = -1;
 	m_nMedicDamageBoosts = 0;
 
@@ -358,7 +358,7 @@ void CBaseTFPlayer::Spawn( void )
 		}
 
 		m_MenuRefreshTime = gpGlobals->curtime;
-		
+
 		m_nPreferredTechnology = -1;
 	}
 
@@ -387,14 +387,14 @@ void CBaseTFPlayer::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::CleanupOnActStart( void )
 {
 	// Tell all our weapons
-	for ( int i = 0; i < WeaponCount(); i++ ) 
+	for ( int i = 0; i < WeaponCount(); i++ )
 	{
-		if ( GetWeapon(i) ) 
+		if ( GetWeapon(i) )
 		{
 			((CBaseTFCombatWeapon*)GetWeapon(i))->CleanupOnActStart();
 		}
@@ -402,7 +402,7 @@ void CBaseTFPlayer::CleanupOnActStart( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::RecalculateSpeed( void )
 {
@@ -443,7 +443,7 @@ void CBaseTFPlayer::InitialSpawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::Precache( void )
 {
@@ -473,7 +473,7 @@ void CBaseTFPlayer::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::UpdateClientData( void )
 {
@@ -485,7 +485,7 @@ void CBaseTFPlayer::UpdateClientData( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::ForceClientDllUpdate( void )
 {
@@ -513,7 +513,7 @@ void CBaseTFPlayer::InputRespawn( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::InitHUD( void )
 {
@@ -624,7 +624,7 @@ bool CBaseTFPlayer::IsClassAvailable( TFClass iClass )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::ChangeClass( TFClass iClass )
 {
@@ -700,7 +700,7 @@ void CBaseTFPlayer::SetPlayerModel( void )
 	// Set the model
 	SetModel( STRING( sModel ) );
 
-	if ( GetFlags() & FL_DUCKING ) 
+	if ( GetFlags() & FL_DUCKING )
 		UTIL_SetSize(this, VEC_DUCK_HULL_MIN, VEC_DUCK_HULL_MAX);
 	else
 		UTIL_SetSize(this, VEC_HULL_MIN, VEC_HULL_MAX);
@@ -708,7 +708,7 @@ void CBaseTFPlayer::SetPlayerModel( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::PlayerRespawn( void )
 {
@@ -756,7 +756,7 @@ void CBaseTFPlayer::DeathSound( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::ItemPostFrame()
 {
@@ -773,7 +773,7 @@ void CBaseTFPlayer::ItemPostFrame()
 
 		pVehicle->ItemPostFrame( this );
 
-		// Fall through and check weapons, etc. if we're using them 
+		// Fall through and check weapons, etc. if we're using them
 		if (!bUsingStandardWeapons || !IsInAVehicle())
 			return;
 	}
@@ -794,14 +794,14 @@ void CBaseTFPlayer::ItemPostFrame()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::Jump( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::PreThink(void)
 {
@@ -870,7 +870,7 @@ void CBaseTFPlayer::PreThink(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::PostThink()
 {
@@ -999,7 +999,7 @@ int CBaseTFPlayer::RemoveShieldOverlaysExcept( Activity activity, bool addifnotp
 			RemoveLayer( i, 0.0, 0.0f );
 		}
 	}
-	
+
 	// Add it in if it's not present already
 	if ( addifnotpresent && ( skip == -1 ) )
 	{
@@ -1009,25 +1009,25 @@ int CBaseTFPlayer::RemoveShieldOverlaysExcept( Activity activity, bool addifnotp
 	{
 		return skip;
 	}
-}	
+}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : activity - i/o :  can be changed to a new activity
 //			overlayindex - o:  if an overlay is picked, this gets changed
 // Rest of paramters are input only
 //			moving - is player moving
 //			ducked - is player ducking
 //			overlay - animation choices for this state (either full body crouch/stand, or overlay on top of base crouch/stand )
-//			crouch - 
-//			normal - 
+//			crouch -
+//			normal -
 // Overlay parameters
 //			autokill - if false, overlay will loop indefinitely
 //			blendin - amount of time over which to blend in (0.0f for snap)
 //			blendout - same but for blending out instead
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::PickShieldAnimation( Activity& activity, int& overlayindex, bool moving, bool ducked, 
-	Activity overlay, Activity crouch, Activity normal, 
+void CBaseTFPlayer::PickShieldAnimation( Activity& activity, int& overlayindex, bool moving, bool ducked,
+	Activity overlay, Activity crouch, Activity normal,
 	bool autokill /*=true*/, float blendin /*=0.0f*/, float blendout /*=0.0f*/ )
 {
 	if ( moving )
@@ -1038,7 +1038,7 @@ void CBaseTFPlayer::PickShieldAnimation( Activity& activity, int& overlayindex, 
 			if ( blendin > 0.0f )
 			{
 				SetLayerBlendIn( overlayindex, blendin );
-			}	
+			}
 
 			if ( blendout > 0.0f )
 			{
@@ -1202,8 +1202,8 @@ float CBaseTFPlayer::RetrieveCycle( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Certain activities have matched cycles
-// Input  : newActivity - 
-//			currentActivity - 
+// Input  : newActivity -
+//			currentActivity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseTFPlayer::ShouldMatchCycles( Activity newActivity, Activity currentActivity )
@@ -1233,7 +1233,7 @@ void CBaseTFPlayer::SetAnimation( PLAYER_ANIM playerAnim )
 
 	bool isMoving = ( speed != 0.0f ) ? true : false;
 	bool isRunning = false;
-	
+
 	if ( GetPlayerClass()  )
 	{
 // FIXME: TF2 makes no distinction between walking and running for now,
@@ -1337,7 +1337,7 @@ void CBaseTFPlayer::SetAnimation( PLAYER_ANIM playerAnim )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::CheatImpulseCommands( int iImpulse )
 {
@@ -1362,12 +1362,12 @@ void CBaseTFPlayer::CheatImpulseCommands( int iImpulse )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::SetRespawnStation( CBaseEntity* pRespawnStation )
 {
 	// This can happen because the object may get killed and its index reused
-	// between time the message was sent and the 
+	// between time the message was sent and the
 	if( !pRespawnStation || !FClassnameIs( pRespawnStation, "obj_respawn_station" ) )
 		return;
 
@@ -1423,7 +1423,7 @@ CBaseEntity *CBaseTFPlayer::GetInitialSpawnPoint( void )
 
 CBaseEntity *FindEntityForward( CBasePlayer *pMe, bool fHull );
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseTFPlayer::ClientCommand( const CCommand &args )
 {
@@ -1516,7 +1516,7 @@ bool CBaseTFPlayer::ClientCommand( const CCommand &args )
 			else if ( !stricmp( args[ 1 ], "r" ) )
 			{
 				force = right * -1.0f;
-			}			
+			}
 			else if ( !stricmp( args[ 1 ], "l" ) )
 			{
 				force = right;
@@ -1535,7 +1535,7 @@ bool CBaseTFPlayer::ClientCommand( const CCommand &args )
 			{
 				force = fwd * -1.0f;
 				force += right;
-			}			
+			}
 			else if ( !stricmp( args[ 1 ], "bl" ) )
 			{
 				force = fwd;
@@ -1566,7 +1566,7 @@ bool CBaseTFPlayer::ClientCommand( const CCommand &args )
 	if ( FStrEq( cmd, "ragdoll" ) )
 	{
 		bool on = true;
-		
+
 		if ( args.ArgC() >= 2 )
 		{
 			on = atoi( args[ 1 ] ) ? true : false;
@@ -1636,7 +1636,7 @@ void CBaseTFPlayer::TraceAttack( const CTakeDamageInfo &info, const Vector &vecD
 		// Show the personal shield effect.
 		// What we do here is collide the trace line with an ellipse that is slightly larger
 		// than the player and put the effect there.
-		
+
 		// Translate the line so the player's (and the ellipse's) center is at the origin.
 		Vector vCenter = Center();
 		Vector vStart = ptr->startpos - vCenter;
@@ -1645,7 +1645,7 @@ void CBaseTFPlayer::TraceAttack( const CTakeDamageInfo &info, const Vector &vecD
 		// Figure out the ellipse dimensions.
 		Vector vDims = (WorldAlignMaxs() - WorldAlignMins()) * 0.5f;
 		Vector vEllipse = vDims * 1.5;
-		
+
 		// Squash the line we're testing so we're testing against a sphere of radius 1 at the origin.
 		vStart /= vEllipse;
 		vEnd /= vEllipse;
@@ -1665,7 +1665,7 @@ void CBaseTFPlayer::TraceAttack( const CTakeDamageInfo &info, const Vector &vecD
 			ShowPersonalShieldEffect( vPos, vecDir, subInfo.GetDamage() );
 		}
 */
-		
+
 		AddMultiDamage( subInfo, this );
 	}
 }
@@ -1714,7 +1714,7 @@ void CBaseTFPlayer::ApplyDamageForce( const CTakeDamageInfo &info, int nDamageTo
 	VectorNormalize( vecDir );
 
 	float flForce = (nDamageToDo * 2) + 20;
-	if (flForce > 1000.0) 
+	if (flForce > 1000.0)
 		flForce = 1000.0;
 
 	// Escorts get knocked half as far
@@ -1722,7 +1722,7 @@ void CBaseTFPlayer::ApplyDamageForce( const CTakeDamageInfo &info, int nDamageTo
 	{
 		flForce *= 0.5;
 	}
-	
+
 	vecDir *= flForce;
 
 	if ( (GetMoveType() != MOVETYPE_FLY) && (GetMoveType() != MOVETYPE_FLYGRAVITY) && ((GetFlags() & FL_ONGROUND) != 0) )
@@ -1759,7 +1759,7 @@ int CBaseTFPlayer::OnTakeDamage( const CTakeDamageInfo &info )
 	COrderEvent_PlayerDamaged event;
 	event.m_pPlayerDamaged = this;
 	event.m_TakeDamageInfo = info;
-	GlobalOrderEvent( &event );	
+	GlobalOrderEvent( &event );
 
 	// Don't do damage if the player's in a vehicle, in a non-damagable spot.
 	if ( IsInAVehicle() && m_hVehicle.Get() )
@@ -1768,7 +1768,7 @@ int CBaseTFPlayer::OnTakeDamage( const CTakeDamageInfo &info )
 		Assert( pVehicle );
 		int nRole = pVehicle->GetPassengerRole(this);
 
-		if( ( nRole < 0 ) 
+		if( ( nRole < 0 )
 		 || !pVehicle->IsPassengerVisible(nRole)
 		 || !pVehicle->IsPassengerDamagable(nRole) )
 		{
@@ -1789,7 +1789,7 @@ int CBaseTFPlayer::OnTakeDamage( const CTakeDamageInfo &info )
 			}
 			else
 			{
-				// Store off the last time we were damaged by an enemy so commandos can 
+				// Store off the last time we were damaged by an enemy so commandos can
 				// get orders to assist.
 				m_flLastTimeDamagedByEnemy = gpGlobals->curtime;
 			}
@@ -1854,9 +1854,9 @@ int CBaseTFPlayer::OnTakeDamage( const CTakeDamageInfo &info )
 }
 
 
-void CBaseTFPlayer::ShowPersonalShieldEffect( 
-	const Vector &vOffsetFromEnt, 
-	const Vector &vIncomingDirection, 
+void CBaseTFPlayer::ShowPersonalShieldEffect(
+	const Vector &vOffsetFromEnt,
+	const Vector &vIncomingDirection,
 	float flDamage )
 {
 	Vector vNormalized = vIncomingDirection;
@@ -1894,7 +1894,7 @@ int CBaseTFPlayer::TakeHealth( float flHealth, int bitsDamageType )
 //=====================================================================
 // MENU HANDLING
 //=====================================================================
-void CBaseTFPlayer::MenuDisplay( void )	
+void CBaseTFPlayer::MenuDisplay( void )
 {
 	if ( !m_pCurrentMenu )
 	{
@@ -1916,7 +1916,7 @@ void CBaseTFPlayer::MenuDisplay( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseTFPlayer::MenuInput( int iInput )
 {
@@ -1929,7 +1929,7 @@ bool CBaseTFPlayer::MenuInput( int iInput )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::MenuReset( void )
 {
@@ -1937,7 +1937,7 @@ void CBaseTFPlayer::MenuReset( void )
 	user.MakeReliable();
 
 	UserMessageBegin( user, "ShowMenu" );
-		WRITE_SHORT( 0 );  
+		WRITE_SHORT( 0 );
 		WRITE_CHAR( 0 );		// display time (-1 means unlimited)
 		WRITE_BYTE( false );	// is there more message to come? no
 		WRITE_STRING( "" );
@@ -1979,9 +1979,9 @@ int CBaseTFPlayer::UpdateTransmitState()
 //-----------------------------------------------------------------------------
 // Purpose: Note, an entity can override the send table ( e.g., to send less data or to send minimal data for
 //  objects ( prob. players ) that are not in the pvs.
-// Input  : **ppSendTable - 
-//			*recipient - 
-//			*pvs - 
+// Input  : **ppSendTable -
+//			*recipient -
+//			*pvs -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 int CBaseTFPlayer::ShouldTransmit( const CCheckTransmitInfo *pInfo )
@@ -2019,7 +2019,7 @@ int CBaseTFPlayer::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTechnologyTree *CBaseTFPlayer::GetTechTree( void )
 {
@@ -2031,7 +2031,7 @@ CTechnologyTree *CBaseTFPlayer::GetTechTree( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseTFPlayer::PlayerClass( void )
 {
@@ -2045,8 +2045,8 @@ CPlayerClass *CBaseTFPlayer::GetPlayerClass()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::SetPreferredTechnology( CTechnologyTree *pTechnologyTree, int iTechIndex )
 {
@@ -2090,7 +2090,7 @@ void CBaseTFPlayer::SetPreferredTechnology( CTechnologyTree *pTechnologyTree, in
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CBaseTFPlayer::GetPreferredTechnology( void )
@@ -2099,8 +2099,8 @@ int CBaseTFPlayer::GetPreferredTechnology( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseTFPlayer::HasNamedTechnology( const char *name )
@@ -2113,8 +2113,8 @@ bool CBaseTFPlayer::HasNamedTechnology( const char *name )
 
 //-----------------------------------------------------------------------------
 // Purpose: Networking is about to update this player, let it override and specify it's own pvs
-// Input  : **pvs - 
-//			**pas - 
+// Input  : **pvs -
+//			**pas -
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::SetupVisibility( CBaseEntity *pViewEntity, unsigned char *pvs, int pvssize )
 {
@@ -2132,7 +2132,7 @@ void CBaseTFPlayer::SetupVisibility( CBaseEntity *pViewEntity, unsigned char *pv
 	{
 		engine->AddOriginToPVS( m_vecCameraPVSOrigin );
 	}
-	
+
 	// If in tactical mode, merge in pvs from all of our teammates, too
 	// send all the others team info
 	if ( m_TFLocal.m_nInTacticalView )
@@ -2141,8 +2141,8 @@ void CBaseTFPlayer::SetupVisibility( CBaseEntity *pViewEntity, unsigned char *pv
 		for ( i = 1; i <= gpGlobals->maxClients; i++ )
 		{
 			CBaseTFPlayer *plr = ToBaseTFPlayer( UTIL_PlayerByIndex(i) );
-			if ( plr && 
-				( plr != this ) && 
+			if ( plr &&
+				( plr != this ) &&
 				( plr->TeamID() == TeamID() ) )
 			{
 				Vector org;
@@ -2163,7 +2163,7 @@ void CBaseTFPlayer::SetOrder( COrder *pOrder )
 {
 	if ( m_hSelectedOrder.Get() && m_hSelectedOrder != pOrder )
 	{
-		m_hSelectedOrder->SetOwner( NULL );	
+		m_hSelectedOrder->SetOwner( NULL );
 	}
 	m_hSelectedOrder = pOrder;
 }
@@ -2187,7 +2187,7 @@ void CBaseTFPlayer::KillResourceZoneOrders()
 //--------------------------------------------------------------------------------------------------------------
 // DEPLOYMENT
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::StartDeploying( void )
 {
@@ -2210,7 +2210,7 @@ void CBaseTFPlayer::StartDeploying( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::StartUnDeploying( void )
 {
@@ -2226,7 +2226,7 @@ void CBaseTFPlayer::StartUnDeploying( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::CheckDeployFinish( void )
 {
@@ -2261,7 +2261,7 @@ void CBaseTFPlayer::CheckDeployFinish( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::FinishDeploying( void )
 {
@@ -2271,7 +2271,7 @@ void CBaseTFPlayer::FinishDeploying( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::FinishUnDeploying( void )
 {
@@ -2281,7 +2281,7 @@ void CBaseTFPlayer::FinishUnDeploying( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseTFPlayer::IsDeployed( void )
 {
@@ -2289,7 +2289,7 @@ bool CBaseTFPlayer::IsDeployed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseTFPlayer::IsDeploying( void )
 {
@@ -2297,7 +2297,7 @@ bool CBaseTFPlayer::IsDeploying( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseTFPlayer::IsUnDeploying( void )
 {
@@ -2469,7 +2469,7 @@ void CBaseTFPlayer::PowerupStart( int iPowerup, float flAmount, CBaseEntity *pAt
 			// Power up their shield
 			if ( GetCombatShield() )
 			{
-				GetCombatShield()->AddShieldHealth( 0.06 ); 
+				GetCombatShield()->AddShieldHealth( 0.06 );
 			}
 
 			// Let their playerclass know
@@ -2566,7 +2566,7 @@ int CBaseTFPlayer::GetNumObjects( int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CBaseTFPlayer::GetObjectCount( void )
 {
@@ -2574,7 +2574,7 @@ int	CBaseTFPlayer::GetObjectCount( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseObject	*CBaseTFPlayer::GetObject( int index )
 {
@@ -2598,7 +2598,7 @@ bool CBaseTFPlayer::IsBuilding( void )
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::OwnedObjectDestroyed( CBaseObject *pObject )
 {
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseTFPlayer::OwnedObjectDestroyed player %s object %p:%s\n", gpGlobals->curtime, 
+	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseTFPlayer::OwnedObjectDestroyed player %s object %p:%s\n", gpGlobals->curtime,
 		GetPlayerName(),
 		pObject,
 		pObject->GetClassname() ) );
@@ -2624,7 +2624,7 @@ void CBaseTFPlayer::OwnedObjectDestroyed( CBaseObject *pObject )
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::RemoveObject( CBaseObject *pObject )
 {
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseTFPlayer::RemoveObject %p:%s from player %s\n", gpGlobals->curtime, 
+	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseTFPlayer::RemoveObject %p:%s from player %s\n", gpGlobals->curtime,
 		pObject,
 		pObject->GetClassname(),
 		GetPlayerName() ) );
@@ -2641,13 +2641,13 @@ void CBaseTFPlayer::RemoveObject( CBaseObject *pObject )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObject - 
-//			*pNewOwner - 
+// Purpose:
+// Input  : *pObject -
+//			*pNewOwner -
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::OwnedObjectChangeTeam( CBaseObject *pObject, CBaseTFPlayer *pNewOwner )
 {
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseTFPlayer::OwnedObjectChangeTeam player %s object %p:%s new player %s\n", gpGlobals->curtime, 
+	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseTFPlayer::OwnedObjectChangeTeam player %s object %p:%s new player %s\n", gpGlobals->curtime,
 		GetPlayerName(),
 		pObject,
 		pObject->GetClassname(),
@@ -2674,8 +2674,8 @@ void CBaseTFPlayer::OwnedObjectChangeTeam( CBaseObject *pObject, CBaseTFPlayer *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pZone - 
+// Purpose:
+// Input  : *pZone -
 // Output : int
 //-----------------------------------------------------------------------------
 int CBaseTFPlayer::NumPumpsOnResourceZone( CResourceZone *pZone )
@@ -2705,8 +2705,8 @@ int CBaseTFPlayer::NumPumpsOnResourceZone( CResourceZone *pZone )
 // Purpose: Remove all the player's objects
 //			If bForceAll is set, remove all of them immediately.
 //			Otherwise, make them all deteriorate over time.
-//			If iClass is passed in, don't remove any objects that can be built 
-//			by that class. If bReturnResources is set, the cost of any destroyed 
+//			If iClass is passed in, don't remove any objects that can be built
+//			by that class. If bReturnResources is set, the cost of any destroyed
 //			objects will be returned to the player.
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::RemoveAllObjects( bool bForceAll, int iClass, bool bReturnResources )
@@ -2763,7 +2763,7 @@ void CBaseTFPlayer::RemoveAllObjects( bool bForceAll, int iClass, bool bReturnRe
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::StopPlacement( void )
 {
@@ -2851,7 +2851,7 @@ void CBaseTFPlayer::AddObject( CBaseObject *pObject )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::SetWeaponBuilder( CWeaponBuilder *pBuilder )
 {
@@ -2859,7 +2859,7 @@ void CBaseTFPlayer::SetWeaponBuilder( CWeaponBuilder *pBuilder )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponBuilder *CBaseTFPlayer::GetWeaponBuilder( void )
 {
@@ -2867,10 +2867,10 @@ CWeaponBuilder *CBaseTFPlayer::GetWeaponBuilder( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *attacker - 
-//			sourceDir - 
-//			duration - 
+// Purpose:
+// Input  : *attacker -
+//			sourceDir -
+//			duration -
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::KnockDownPlayer( const Vector& sourceDir, float magnitude, float duration )
 {
@@ -2935,7 +2935,7 @@ void CBaseTFPlayer::KnockDownPlayer( const Vector& sourceDir, float magnitude, f
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::ResetKnockdown( void )
 {
@@ -2952,7 +2952,7 @@ void CBaseTFPlayer::ResetKnockdown( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseTFPlayer::IsKnockedDown( void )
@@ -2961,7 +2961,7 @@ bool CBaseTFPlayer::IsKnockedDown( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::CheckKnockdown( void )
 {
@@ -2976,7 +2976,7 @@ void CBaseTFPlayer::CheckKnockdown( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseTFPlayer::IsGagged( void )
@@ -2985,8 +2985,8 @@ bool CBaseTFPlayer::IsGagged( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : gag - 
+// Purpose:
+// Input  : gag -
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::SetGagged( bool gag )
 {
@@ -2994,7 +2994,7 @@ void CBaseTFPlayer::SetGagged( bool gag )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseTFPlayer::CanSpeak( void )
@@ -3003,7 +3003,7 @@ bool CBaseTFPlayer::CanSpeak( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseTFPlayer::IsUsingThermalVision( void )
@@ -3012,7 +3012,7 @@ bool CBaseTFPlayer::IsUsingThermalVision( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::SetIDEnt( CBaseEntity *pEntity )
 {
@@ -3023,8 +3023,8 @@ void CBaseTFPlayer::SetIDEnt( CBaseEntity *pEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : thermal - 
+// Purpose:
+// Input  : thermal -
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::SetUsingThermalVision( bool thermal )
 {
@@ -3144,7 +3144,7 @@ int CBaseTFPlayer::GetBankResources( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::SetBankResources( int iAmount )
 {
@@ -3198,7 +3198,7 @@ void CBaseTFPlayer::RemoveBankResources( int iAmount, bool bSpent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseTFPlayer::IsCamouflaged( void )
@@ -3233,8 +3233,8 @@ void CBaseTFPlayer::CheckCamouflage( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Goal % and rate in percent/second to achieve the goal
-// Input  : percentage - 
-//			changerate - 
+// Input  : percentage -
+//			changerate -
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::SetCamouflaged( int percentage, float changerate )
 {
@@ -3340,14 +3340,14 @@ void CBaseTFPlayer::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE
 //-----------------------------------------------------------------------------
 // The player's usable...
 //-----------------------------------------------------------------------------
-int CBaseTFPlayer::ObjectCaps( void ) 
-{ 
-	return ( (BaseClass::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_IMPULSE_USE ); 
+int CBaseTFPlayer::ObjectCaps( void )
+{
+	return ( (BaseClass::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_IMPULSE_USE );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseTFPlayer::CantMove( void )
@@ -3356,7 +3356,7 @@ bool CBaseTFPlayer::CantMove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::SetCantMove( bool bCantMove )
 {
@@ -3365,7 +3365,7 @@ void CBaseTFPlayer::SetCantMove( bool bCantMove )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::ResetViewOffset( void )
 {
@@ -3393,14 +3393,14 @@ void CBaseTFPlayer::FollowClientRagdoll( void )
 	// Follow shadow object
 	trace_t tr;
 
-	UTIL_TraceHull( 
-		m_hRagdollShadow->GetAbsOrigin() + Vector(0,0,18), 
-		m_hRagdollShadow->GetAbsOrigin(), 
+	UTIL_TraceHull(
+		m_hRagdollShadow->GetAbsOrigin() + Vector(0,0,18),
+		m_hRagdollShadow->GetAbsOrigin(),
 		vecMin,
 		vecMax,
-		MASK_PLAYERSOLID, 
-		m_hRagdollShadow, 
-		COLLISION_GROUP_NONE, 
+		MASK_PLAYERSOLID,
+		m_hRagdollShadow,
+		COLLISION_GROUP_NONE,
 		&tr );
 
 	// Only move if we can find a valid spot under where shadow rolled
@@ -3413,7 +3413,7 @@ void CBaseTFPlayer::FollowClientRagdoll( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Stop being a ragdoll
-// Input  : moveplayertofinalspot - 
+// Input  : moveplayertofinalspot -
 // Output : return whether or not the ragdoll was cleared
 //-----------------------------------------------------------------------------
 bool CBaseTFPlayer::ClearClientRagdoll( bool moveplayertofinalspot )
@@ -3456,7 +3456,7 @@ bool CBaseTFPlayer::ClearClientRagdoll( bool moveplayertofinalspot )
 							vecDirection *= 40000.0f;
 							pPhysObject->ApplyForceCenter( vecDirection );
 						}
-						
+
 						return false;
 					}
 					else
@@ -3485,14 +3485,14 @@ bool CBaseTFPlayer::CheckRagdollToStand( trace_t &trace )
 	GetPlayerClass()->GetPlayerHull( ( ( GetFlags() & FL_DUCKING ) == 1 ), vecMin, vecMax );
 
 	// Write this better -- this is just a test to get things started.
-	UTIL_TraceHull( 
+	UTIL_TraceHull(
 		m_vecLastGoodRagdollPos + Vector( 0, 0, 18 ),
 		m_vecLastGoodRagdollPos,
-		vecMin, 
-		vecMax, 
-		MASK_PLAYERSOLID, 
-		m_hRagdollShadow, 
-		COLLISION_GROUP_NONE, 
+		vecMin,
+		vecMax,
+		MASK_PLAYERSOLID,
+		m_hRagdollShadow,
+		COLLISION_GROUP_NONE,
 		&trace );
 
 	if ( !trace.allsolid )
@@ -3504,7 +3504,7 @@ bool CBaseTFPlayer::CheckRagdollToStand( trace_t &trace )
 //-----------------------------------------------------------------------------
 // Purpose: Start being a ragdoll, creates client ragdoll object and server
 //  physics shadow object
-// Input  : &force - 
+// Input  : &force -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseTFPlayer::BecomeRagdollOnClient( const Vector &force )
@@ -3562,25 +3562,25 @@ const char* CBaseTFPlayer::GetClassModelString( int iClass, int iTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bRampage - 
+// Purpose:
+// Input  : bRampage -
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::SetRampage( bool bRampage )
-{ 
-	m_bRampage = bRampage; 
+{
+	m_bRampage = bRampage;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::IsInRampage( void ) 
-{ 
-	return m_bRampage; 
+bool CBaseTFPlayer::IsInRampage( void )
+{
+	return m_bRampage;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::SetPlayerClass( TFClass iClass )
 {
@@ -3611,7 +3611,7 @@ void CBaseTFPlayer::SetPlayerClass( TFClass iClass )
 		SetPlayerModel();
 
 		m_Timer.Start();
-		
+
 		if ( GetPlayerClass() )
 		{
 			GetPlayerClass()->ClassActivate();
@@ -3622,7 +3622,7 @@ void CBaseTFPlayer::SetPlayerClass( TFClass iClass )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseTFPlayer::ClassCostAdjustment( ResupplyBuyType_t nType )
 {
@@ -3655,7 +3655,7 @@ public:
 static CPhysicsTFPlayerCallback TFPlayerCallback;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::InitVCollision( void )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -206,7 +206,7 @@ CTFClientScoreBoardDialog::CTFClientScoreBoardDialog( IViewPort *pViewPort ) : C
 	Q_memset( m_iImageClassAlt, NULL, sizeof( m_iImageClassAlt ) );
 	Q_memset( m_iImageDom, NULL, sizeof( m_iImageDom ) );
 	Q_memset( m_iImageDomDead, NULL, sizeof( m_iImageDomDead ) );
-	
+
 	ListenForGameEvent( "server_spawn" );
 #ifdef STAGING_ONLY
 //	ListenForGameEvent( "bountymode_toggled" );
@@ -231,7 +231,7 @@ CTFClientScoreBoardDialog::~CTFClientScoreBoardDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClientScoreBoardDialog::PerformLayout()
 {
@@ -239,7 +239,7 @@ void CTFClientScoreBoardDialog::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClientScoreBoardDialog::UpdatePlayerModel()
 {
@@ -305,7 +305,7 @@ void CTFClientScoreBoardDialog::UpdatePlayerModel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClientScoreBoardDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -327,7 +327,7 @@ void CTFClientScoreBoardDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 	{
 		pConditions->deleteThis();
 	}
-	 
+
 	if ( m_pImageList )
 	{
 		m_iImageDominated = m_pImageList->AddImage( scheme()->GetImage( "../hud/leaderboard_dominated", true ) );
@@ -401,7 +401,7 @@ void CTFClientScoreBoardDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClientScoreBoardDialog::ShowPanel( bool bShow )
 {
@@ -422,7 +422,7 @@ void CTFClientScoreBoardDialog::ShowPanel( bool bShow )
 	if ( m_bIsPVEMode != bIsPVEMode )
 	{
 		m_bIsPVEMode = bIsPVEMode;
-		InvalidateLayout( true, true );		
+		InvalidateLayout( true, true );
 	}
 
 	// Don't show in commentary mode
@@ -430,7 +430,7 @@ void CTFClientScoreBoardDialog::ShowPanel( bool bShow )
 	{
 		bShow = false;
 	}
-	
+
 	if ( IsVisible() == bShow )
 	{
 		return;
@@ -439,7 +439,7 @@ void CTFClientScoreBoardDialog::ShowPanel( bool bShow )
 	int iRenderGroup = gHUD.LookupRenderGroupIndexByName( "global" );
 
 	if ( bShow )
-	{		
+	{
 		SetVisible( true );
 		MoveToFront();
 		InitializeInputScheme();
@@ -478,7 +478,7 @@ void CTFClientScoreBoardDialog::ShowPanel( bool bShow )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClientScoreBoardDialog::OnCommand( const char *command )
 {
@@ -608,7 +608,7 @@ void CTFClientScoreBoardDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClientScoreBoardDialog::OnItemSelected( vgui::Panel *panel )
 {
@@ -632,7 +632,7 @@ void CTFClientScoreBoardDialog::OnItemSelected( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClientScoreBoardDialog::OnItemContextMenu( vgui::Panel *panel )
 {
@@ -690,7 +690,7 @@ void CTFClientScoreBoardDialog::OnScoreBoardMouseRightRelease( void )
 	KeyValues *pIssueKeyValues = pList->GetItemData( iSelectedItem );
 	if ( !pIssueKeyValues )
 		return;
-		
+
 	int playerIndex = pIssueKeyValues->GetInt( "playerIndex", 0 );
 	if ( GetLocalPlayerIndex() == playerIndex )
 		return;
@@ -756,7 +756,7 @@ void CTFClientScoreBoardDialog::OnScoreBoardMouseRightRelease( void )
 			}
 		}
 	}
-	
+
 	// Trade
 	if ( !bFakeClient && !bTournamentGame )
 	{
@@ -777,7 +777,7 @@ void CTFClientScoreBoardDialog::OnScoreBoardMouseRightRelease( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFClientScoreBoardDialog::UseMouseMode( void )
 {
@@ -785,7 +785,7 @@ bool CTFClientScoreBoardDialog::UseMouseMode( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClientScoreBoardDialog::InitializeInputScheme( void )
 {
@@ -867,9 +867,9 @@ void CTFClientScoreBoardDialog::InitPlayerList( SectionedListPanel *pPlayerList 
 		pPlayerList->AddColumnToSection( 0, "avatar", "", SectionedListPanel::COLUMN_IMAGE | SectionedListPanel::COLUMN_RIGHT, m_iAvatarWidth );
 		pPlayerList->AddColumnToSection( 0, "spacer", "", 0, m_iSpacerWidth );
 	}
-	
+
 	// the player avatar is always a fixed size, so as we change resolutions we need to vary the size of the name column to adjust the total width of all the columns
-	m_nExtraSpace = pPlayerList->GetWide() - m_iMedalWidth - m_iAvatarWidth - m_iSpacerWidth - m_iNameWidth - m_iKillstreakWidth - m_iKillstreakImageWidth - m_iNemesisWidth - m_iNemesisWidth - m_iScoreWidth - m_iClassWidth - m_iPingWidth - m_iSpacerWidth - ( 2 * SectionedListPanel::COLUMN_DATA_INDENT ); // the SectionedListPanel will indent the columns on either end by SectionedListPanel::COLUMN_DATA_INDENT 
+	m_nExtraSpace = pPlayerList->GetWide() - m_iMedalWidth - m_iAvatarWidth - m_iSpacerWidth - m_iNameWidth - m_iKillstreakWidth - m_iKillstreakImageWidth - m_iNemesisWidth - m_iNemesisWidth - m_iScoreWidth - m_iClassWidth - m_iPingWidth - m_iSpacerWidth - ( 2 * SectionedListPanel::COLUMN_DATA_INDENT ); // the SectionedListPanel will indent the columns on either end by SectionedListPanel::COLUMN_DATA_INDENT
 
 	pPlayerList->AddColumnToSection( 0, "name", "#TF_Scoreboard_Name", 0, m_iNameWidth + m_nExtraSpace );
 	pPlayerList->AddColumnToSection( 0, "killstreak", "", SectionedListPanel::COLUMN_RIGHT, m_iKillstreakWidth );
@@ -942,7 +942,7 @@ void CTFClientScoreBoardDialog::Update()
 		}
 	}
 
-	m_fNextUpdateTime = gpGlobals->curtime + flNextUpdate; 
+	m_fNextUpdateTime = gpGlobals->curtime + flNextUpdate;
 }
 
 //-----------------------------------------------------------------------------
@@ -1047,7 +1047,7 @@ bool AreEnemyTeams( int iTeam1, int iTeam2 )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClientScoreBoardDialog::AdjustForVisibleScrollbar( void )
 {
@@ -1067,7 +1067,7 @@ void CTFClientScoreBoardDialog::AdjustForVisibleScrollbar( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClientScoreBoardDialog::UpdateBadgePanels( CUtlVector<CTFBadgePanel*> &pBadgePanels, vgui::SectionedListPanel *pPlayerList )
 {
@@ -1354,7 +1354,7 @@ void CTFClientScoreBoardDialog::UpdatePlayerList()
 						{
 							iIndex = PING_HIGH;
 						}
-							
+
 						pKeyValues->SetInt( "ping", bAlive ? m_iImagePing[iIndex] : m_iImagePingDead[iIndex] );
 					}
 				}
@@ -1622,7 +1622,7 @@ bool CTFClientScoreBoardDialog::ShouldShowAsArenaWaitingToPlay( int iPlayerIndex
 		return false;
 
 	// see if player is connected
-	if ( g_TF_PR->IsConnected( iPlayerIndex ) ) 
+	if ( g_TF_PR->IsConnected( iPlayerIndex ) )
 	{
 		if ( g_TF_PR->IsArenaSpectator( iPlayerIndex ) == true )
 			return false;
@@ -1663,7 +1663,7 @@ void CTFClientScoreBoardDialog::UpdateArenaWaitingToPlayList()
 				nSpectators++;
 			}
 		}
-		
+
 		if ( nSpectators > 0 )
 		{
 			const char *pchFormat = ( 1 == nSpectators ? "#TF_Arena_ScoreBoard_Spectator" : "#TF_Arena_ScoreBoard_Spectators" );
@@ -1711,14 +1711,14 @@ void CTFClientScoreBoardDialog::UpdatePlayerDetails()
 
 	if ( !g_TF_PR )
 		return;
-	
+
 	// Default is local player
 	C_TFPlayer *pSelectedPlayer = C_TFPlayer::GetLocalTFPlayer();
 	if ( !pSelectedPlayer )
 		return;
 
 	int playerIndex = pSelectedPlayer->entindex();
-	
+
 	// Change to selected player when using mouse mode
 	if ( UseMouseMode() )
 	{
@@ -1740,8 +1740,8 @@ void CTFClientScoreBoardDialog::UpdatePlayerDetails()
 		}
 	}
 
-	// Make sure the selected player is still connected. 
-	if ( !g_TF_PR->IsConnected( playerIndex ) ) 
+	// Make sure the selected player is still connected.
+	if ( !g_TF_PR->IsConnected( playerIndex ) )
 		return;
 
 #if defined( REPLAY_ENABLED )
@@ -1867,7 +1867,7 @@ void CTFClientScoreBoardDialog::UpdatePlayerDetails()
 		{
 			m_pDamageLabel->SetFgColor( g_TF_PR->GetDamage( playerIndex ) ? cGreen : cWhite );
 		}
-	}		
+	}
 
 	SetDialogVariable( "playername", g_TF_PR->GetPlayerName( playerIndex ) );
 
@@ -1883,7 +1883,7 @@ void CTFClientScoreBoardDialog::UpdatePlayerDetails()
 
 		int iClass = pSelectedPlayer->m_Shared.GetDesiredPlayerClassIndex();
 		int iTeam = pSelectedPlayer->GetTeamNumber();
-		if ( ( pLocalPlayer->InSameTeam( pSelectedPlayer ) || pLocalPlayer->GetTeamNumber() < FIRST_GAME_TEAM ) && 
+		if ( ( pLocalPlayer->InSameTeam( pSelectedPlayer ) || pLocalPlayer->GetTeamNumber() < FIRST_GAME_TEAM ) &&
 			 iTeam >= FIRST_GAME_TEAM && iClass >= TF_FIRST_NORMAL_CLASS && iClass <= TF_LAST_NORMAL_CLASS )
 		{
 			if ( cl_hud_playerclass_use_playermodel.GetBool() )
@@ -1939,7 +1939,7 @@ void CTFClientScoreBoardDialog::UpdateServerTimeLeft()
 	wchar_t wzServerTimeMinLeft[128];
 	wchar_t wzServerTimeSecLeft[128];
 	wchar_t wzServerTimeLeft[128];
-	
+
 	int iTimeLeft = 0;
 	int iHours = 0;
 	int iMinutes = 0;
@@ -1947,7 +1947,7 @@ void CTFClientScoreBoardDialog::UpdateServerTimeLeft()
 	int iServerTimeLimit = mp_timelimit.GetInt() * 60;
 
 	if ( iServerTimeLimit == 0 )
-	{ 
+	{
 		g_pVGuiLocalize->ConstructString_safe( wzServerTimeLeft, g_pVGuiLocalize->Find( "#Scoreboard_NoTimeLimit" ), 0 );
 		SetDialogVariable( "servertimeleft", wzServerTimeLeft );
 
@@ -2010,7 +2010,7 @@ void CTFClientScoreBoardDialog::UpdateServerTimeLeft()
 
 		return;
 	}
-	
+
 	g_pVGuiLocalize->ConstructString_safe( wzServerTimeLeft, g_pVGuiLocalize->Find( "#Scoreboard_TimeLeft" ), 3, wzServerTimeHrsLeft, wzServerTimeMinLeft, wzServerTimeSecLeft );
 	SetDialogVariable( "servertimeleft", wzServerTimeLeft );
 
@@ -2030,7 +2030,7 @@ void CTFClientScoreBoardDialog::ClearPlayerDetails()
 	bool bVisible = !engine->IsHLTV();
 #endif
 
-	SetDialogVariable( "kills", "" ); 
+	SetDialogVariable( "kills", "" );
 	SetControlVisible( "KillsLabel", bVisible );
 
 	SetDialogVariable( "deaths", "" );
@@ -2082,7 +2082,7 @@ void CTFClientScoreBoardDialog::ClearPlayerDetails()
 
 //	SetDialogVariable( "playerscore", "" );
 
-	
+
 }
 
 //-----------------------------------------------------------------------------
@@ -2122,7 +2122,7 @@ const wchar_t *GetPointsString( int iPoints )
 	wchar_t wzScoreVal[128];
 	static wchar_t wzScore[128];
 	_snwprintf( wzScoreVal, ARRAYSIZE( wzScoreVal ), L"%i", iPoints );
-	if ( 1 == iPoints ) 
+	if ( 1 == iPoints )
 	{
 		g_pVGuiLocalize->ConstructString_safe( wzScore, g_pVGuiLocalize->Find( "#TF_ScoreBoard_Point" ), 1, wzScoreVal );
 	}
@@ -2142,7 +2142,7 @@ bool CTFClientScoreBoardDialog::ShouldShowAsSpectator( int iPlayerIndex )
 		return false;
 
 	// see if player is connected
-	if ( g_TF_PR->IsConnected( iPlayerIndex ) ) 
+	if ( g_TF_PR->IsConnected( iPlayerIndex ) )
 	{
 		// either spectating or unassigned team should show in spectator list
 		int iTeam = g_TF_PR->GetTeam( iPlayerIndex );
@@ -2177,7 +2177,7 @@ void CTFClientScoreBoardDialog::FireGameEvent( IGameEvent *event )
 	const char *type = event->GetName();
 
 	if ( FStrEq( type, "server_spawn" ) )
-	{		
+	{
 		// set server name in scoreboard
 		const char *hostname = event->GetString( "hostname" );
 		wchar_t wzHostName[256];
@@ -2203,7 +2203,7 @@ void CTFClientScoreBoardDialog::FireGameEvent( IGameEvent *event )
 	}
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 SectionedListPanel *CTFClientScoreBoardDialog::GetSelectedPlayerList( void )
 {
@@ -2255,7 +2255,7 @@ int	CTFClientScoreBoardDialog::HudElementKeyInput( int down, ButtonCode_t keynum
 			if ( pList )
 			{
 				pList->MoveSelectionUp();
-			}			
+			}
 		}
 		return 0;
 
@@ -2264,7 +2264,7 @@ int	CTFClientScoreBoardDialog::HudElementKeyInput( int down, ButtonCode_t keynum
 			if ( pList )
 			{
 				pList->MoveSelectionDown();
-			}		
+			}
 		}
 		return 0;
 
@@ -2396,7 +2396,7 @@ int	CTFClientScoreBoardDialog::HudElementKeyInput( int down, ButtonCode_t keynum
 			}
 		}
 		return 0;
-	
+
 	default:
 		break;
 	}
@@ -2406,7 +2406,7 @@ int	CTFClientScoreBoardDialog::HudElementKeyInput( int down, ButtonCode_t keynum
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool ShouldScoreBoardHandleKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
 {

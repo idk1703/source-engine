@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -74,22 +74,22 @@ public:
 
 // CHudBase overrides.
 public:
-	
+
 	// Initialize the cl_dll's voice manager.
 	virtual int Init(
 		IVoiceStatusHelper *m_pHelper,
 		vgui::VPANEL pParentPanel);
-	
+
 	// ackPosition is the bottom position of where CVoiceStatus will draw the voice acknowledgement labels.
 	virtual void VidInit();
 
 public:
-	
+
 	// Call from HUD_Frame each frame.
 	void	Frame(double frametime);
 
 	// Called when a player starts or stops talking.
-	// entindex is -1 to represent the local client talking (before the data comes back from the server). 
+	// entindex is -1 to represent the local client talking (before the data comes back from the server).
 	// When the server acknowledges that the local client is talking, then entindex will be gEngfuncs.GetLocalPlayer().
 	// entindex is -2 to represent the local client's voice being acked by the server.
 	void	UpdateSpeakerStatus(int entindex, bool bTalking);
@@ -110,7 +110,7 @@ public:
 // Squelch mode functions.
 public:
 
-	// When you enter squelch mode, pass in 
+	// When you enter squelch mode, pass in
 	void	StartSquelchMode();
 	void	StopSquelchMode();
 	bool	IsInSquelchMode();
@@ -149,13 +149,13 @@ private:
 
 	vgui::VPANEL	m_pParentPanel;
 	CPlayerBitVec	m_VoicePlayers;		// Who is currently talking. Indexed by client index.
-	
-	// This is the gamerules-defined list of players that you can hear. It is based on what teams people are on 
+
+	// This is the gamerules-defined list of players that you can hear. It is based on what teams people are on
 	// and is totally separate from the ban list. Indexed by client index.
 	CPlayerBitVec	m_AudiblePlayers;
 
 	// Players who have spoken at least once in the game so far
-	CPlayerBitVec	m_VoiceEnabledPlayers;	
+	CPlayerBitVec	m_VoiceEnabledPlayers;
 
 	// This is who the server THINKS we have banned (it can become incorrect when a new player arrives on the server).
 	// It is checked periodically, and the server is told to squelch or unsquelch the appropriate players.
@@ -165,12 +165,12 @@ private:
 
 	// Squelch mode stuff.
 	bool				m_bInSquelchMode;
-	
+
 	bool				m_bTalking;				// Set to true when the client thinks it's talking.
 	bool				m_bServerAcked;			// Set to true when the server knows the client is talking.
 
 public:
-	
+
 	CVoiceBanMgr		m_BanMgr;				// Tracks which users we have squelched and don't want to hear.
 
 private:
@@ -189,7 +189,7 @@ private:
 };
 
 
-// Get the (global) voice manager. 
+// Get the (global) voice manager.
 CVoiceStatus* GetClientVoiceMgr();
 void ClientVoiceMgr_Init();
 void ClientVoiceMgr_Shutdown();

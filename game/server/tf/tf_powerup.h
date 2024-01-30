@@ -82,5 +82,3 @@ protected:
 };
 
 #endif // TF_POWERUP_H
-
-

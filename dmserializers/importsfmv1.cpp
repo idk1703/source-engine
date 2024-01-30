@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -51,8 +51,8 @@ void InstallSFMV1Importer( IDataModel *pFactory )
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CImportSFMV1::CImportSFMV1( char const *formatName, char const *nextFormatName ) : 
-	BaseClass( formatName, nextFormatName )	
+CImportSFMV1::CImportSFMV1( char const *formatName, char const *nextFormatName ) :
+	BaseClass( formatName, nextFormatName )
 {
 	m_fixedElements.SetLessFunc( DefLessFunc( CDmElement * ) );
 }

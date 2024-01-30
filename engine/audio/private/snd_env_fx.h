@@ -16,7 +16,7 @@
 // FX presets
 //=====================================================================
 
-#define SXROOM_OFF			0		
+#define SXROOM_OFF			0
 
 #define SXROOM_GENERIC		1		// general, low reflective, diffuse room
 
@@ -52,7 +52,7 @@
 #define SXROOM_CAVERN_M		24
 #define SXROOM_CAVERN_L		25
 
-#define SXROOM_WEIRDO1		26		
+#define SXROOM_WEIRDO1		26
 #define SXROOM_WEIRDO2		27
 #define SXROOM_WEIRDO3		28
 

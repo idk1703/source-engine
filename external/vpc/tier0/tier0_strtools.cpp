@@ -1,4 +1,4 @@
-//========= Copyright © Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ Valve Corporation, All rights reserved. ============//
 #include "pch_tier0.h"
 #include "tier0_strtools.h"
 

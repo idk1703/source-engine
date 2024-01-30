@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -69,7 +69,7 @@ C_TEFootprintDecal::~C_TEFootprintDecal( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 void C_TEFootprintDecal::Precache( void )
@@ -90,13 +90,13 @@ void C_TEFootprintDecal::PostDataUpdate( DataUpdateType_t updateType )
 		C_BaseEntity *ent = cl_entitylist->GetEnt( m_nEntity );
 		if ( ent )
 		{
-			effects->DecalShoot( m_nIndex, 
+			effects->DecalShoot( m_nIndex,
 				m_nEntity, ent->GetModel(), ent->GetAbsOrigin(), ent->GetAbsAngles(), m_vecOrigin, &m_vecDirection, 0 );
 		}
 	}
 }
 
-void TE_FootprintDecal( IRecipientFilter& filter, float delay, const Vector *origin, const Vector* right, 
+void TE_FootprintDecal( IRecipientFilter& filter, float delay, const Vector *origin, const Vector* right,
 	int entity, int index, unsigned char materialType )
 {
 	if ( r_decals.GetInt() )

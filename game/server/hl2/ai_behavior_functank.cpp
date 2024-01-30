@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -53,11 +53,11 @@ bool CAI_FuncTankBehavior::CanSelectSchedule()
 	// Are you alive, in a script?
 	if ( !GetOuter()->IsInterruptable() )
 		return false;
-	
+
 	// Commander is giving you orders?
 	if ( GetOuter()->HasCondition( COND_RECEIVED_ORDERS ) )
 		return false;
-	
+
 	return true;
 }
 
@@ -80,7 +80,7 @@ void CAI_FuncTankBehavior::EndScheduleSelection()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_FuncTankBehavior::PrescheduleThink()
 {
@@ -140,14 +140,14 @@ int	CAI_FuncTankBehavior::SelectSchedule()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : activity - 
+// Purpose:
+// Input  : activity -
 // Output : Activity
 //-----------------------------------------------------------------------------
 Activity CAI_FuncTankBehavior::NPC_TranslateActivity( Activity activity )
 {
 	// If I'm on the gun, I play the idle manned gun animation
-	if ( m_bMounted ) 
+	if ( m_bMounted )
 		return ACT_IDLE_MANNEDGUN;
 
 	return BaseClass::NPC_TranslateActivity( activity );
@@ -167,7 +167,7 @@ void CAI_FuncTankBehavior::Dismount( void )
 		GetOuter()->SpeakSentence( FUNCTANK_SENTENCE_DISMOUNTING );
 
 		Assert( m_hFuncTank->IsMarkedForDeletion() || m_hFuncTank->GetController() == GetOuter() );
-		
+
 		m_hFuncTank->NPC_SetInRoute( false );
 		if ( m_hFuncTank->GetController() == GetOuter() )
 			m_hFuncTank->StopControl();
@@ -193,12 +193,12 @@ int CAI_FuncTankBehavior::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 	if ( !iResult )
 		return 0;
 
-	// If we've been hit by the player, and the player's not targetable 
+	// If we've been hit by the player, and the player's not targetable
 	// by our func_tank, get off the tank.
 	CBaseEntity *pAttacker = info.GetAttacker();
 	bool bValidDismountAttacker = (pAttacker && pAttacker->IsPlayer());
 
-#ifdef HL2_EPISODIC 
+#ifdef HL2_EPISODIC
 	bValidDismountAttacker = true;
 #endif
 
@@ -255,7 +255,7 @@ void CAI_FuncTankBehavior::StartTask( const Task_t *pTask )
 				SetBusy( gpGlobals->curtime + AI_FUNCTANK_BEHAVIOR_BUSYTIME );
 			}
 			break;
-		}		
+		}
 	case TASK_FACE_FUNCTANK:
 		{
 			if ( !m_hFuncTank )
@@ -263,7 +263,7 @@ void CAI_FuncTankBehavior::StartTask( const Task_t *pTask )
 				TaskFail( FAIL_NO_TARGET );
 				return;
 			}
-			
+
 			// Ensure we've reached the func_tank
 			Vector vecManPos;
 			m_hFuncTank->NPC_FindManPoint( vecManPos );
@@ -278,7 +278,7 @@ void CAI_FuncTankBehavior::StartTask( const Task_t *pTask )
 			}
 
 			GetMotor()->SetIdealYawToTarget( m_hFuncTank->GetAbsOrigin() );
-			GetOuter()->SetTurnActivity(); 
+			GetOuter()->SetTurnActivity();
 			break;
 		}
 
@@ -461,7 +461,7 @@ void CAI_FuncTankBehavior::RunTask( const Task_t *pTask )
 			{
 				TaskComplete();
 			}
-			
+
 			Assert( m_hFuncTank );
 
 			if ( m_hFuncTank->GetAmmoCount() == 0 )
@@ -526,20 +526,20 @@ void CAI_FuncTankBehavior::UpdateOnRemove( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CAI_FuncTankBehavior::SetFuncTank( CHandle<CFuncTank> hFuncTank )			
-{ 
+void CAI_FuncTankBehavior::SetFuncTank( CHandle<CFuncTank> hFuncTank )
+{
 	if ( m_hFuncTank && !hFuncTank )
 	{
 		SetBusy( gpGlobals->curtime + AI_FUNCTANK_BEHAVIOR_BUSYTIME );
 		SetCondition( COND_FUNCTANK_DISMOUNT );
 	}
 
-	m_hFuncTank = hFuncTank; 
+	m_hFuncTank = hFuncTank;
 	GetOuter()->ClearSchedule( "Setting a new func_tank" );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_FuncTankBehavior::AimGun( void )
 {
@@ -562,7 +562,7 @@ void CAI_FuncTankBehavior::GatherConditions()
 	BaseClass::GatherConditions();
 
 	// Since we can't pathfind, if we can't see the enemy, he's eluded us
-	// So we deliberately ignore unreachability 
+	// So we deliberately ignore unreachability
 	if ( GetEnemy() && !HasCondition(COND_SEE_ENEMY) )
 	{
 		if ( gpGlobals->curtime - GetOuter()->GetEnemyLastTimeSeen() >= 3.0f )
@@ -608,9 +608,9 @@ CBaseEntity *CAI_FuncTankBehavior::BestEnemy( void )
 		CBaseEntity *pEnemy = pEMemory->hEnemy;
 		if ( !pEnemy || !pEnemy->IsAlive() )
 			continue;
-		
+
 		// UNDONE: Move relationship checks into IsValidEnemy?
-		if ( ( pEnemy->GetFlags() & FL_NOTARGET ) || 
+		if ( ( pEnemy->GetFlags() & FL_NOTARGET ) ||
 			 ( pNPC->IRelationType( pEnemy ) != D_HT && pNPC->IRelationType( pEnemy ) != D_FR ) ||
 			 !IsValidEnemy( pEnemy ) )
 			continue;
@@ -707,7 +707,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_FuncTankBehavior )
 
 	//=========================================================
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_MOVE_TO_FUNCTANK,
 
@@ -727,7 +727,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_FuncTankBehavior )
 
 	//=========================================================
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_FIRE_FUNCTANK,
 
@@ -745,7 +745,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_FuncTankBehavior )
 		"		COND_FUNCTANK_DISMOUNT"
 	)
 
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_SCAN_WITH_FUNCTANK,
 
@@ -763,7 +763,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_FuncTankBehavior )
 		"		COND_FUNCTANK_DISMOUNT"
 	)
 
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_FAIL_MOVE_TO_FUNCTANK,
 
@@ -771,6 +771,6 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER( CAI_FuncTankBehavior )
 		"		TASK_FORGET_ABOUT_FUNCTANK		0"
 		""
 		"	Interrupts"
-	)	
+	)
 
 AI_END_CUSTOM_SCHEDULE_PROVIDER()

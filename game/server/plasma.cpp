@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -28,7 +28,7 @@ IMPLEMENT_SERVERCLASS_ST( CPlasma, DT_Plasma )
 	SendPropModelIndex( SENDINFO( m_nGlowModelIndex )),
 END_SEND_TABLE()
 
-//Data description 
+//Data description
 BEGIN_DATADESC( CPlasma )
 
 	//Client-side
@@ -45,10 +45,10 @@ BEGIN_DATADESC( CPlasma )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
-CPlasma::CPlasma( void ) 
+CPlasma::CPlasma( void )
 {
 	//Client-side
 	m_flScale				= 0.0f;
@@ -61,15 +61,15 @@ CPlasma::CPlasma( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPlasma::~CPlasma( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : state - 
+// Purpose:
+// Input  : state -
 //-----------------------------------------------------------------------------
 void CPlasma::EnableSmoke( int state )
 {
@@ -84,7 +84,7 @@ void CPlasma::EnableSmoke( int state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlasma::Precache( void )
 {

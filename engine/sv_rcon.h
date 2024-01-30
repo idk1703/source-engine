@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 #ifndef SV_RCON_H
@@ -52,8 +52,8 @@ public:
 	bool ConnectToListeningClient( const netadr_t &adr, bool bSingleSocket );
 
 	// Inherited from ISocketCreatorListener
-	virtual bool ShouldAcceptSocket( SocketHandle_t hSocket, const netadr_t & netAdr ); 
-	virtual void OnSocketAccepted( SocketHandle_t hSocket, const netadr_t & netAdr, void** ppData ); 
+	virtual bool ShouldAcceptSocket( SocketHandle_t hSocket, const netadr_t & netAdr );
+	virtual void OnSocketAccepted( SocketHandle_t hSocket, const netadr_t & netAdr, void** ppData );
 	virtual void OnSocketClosed( SocketHandle_t hSocket, const netadr_t & netAdr, void* pData );
 
 private:
@@ -80,7 +80,7 @@ private:
 
 	// NOTE: This function can remove elements. If calling it from a loop,
 	// always iterate over accepted sockets backwards to avoid problems.
-	bool SendRCONResponse( int nIndex, const void *data, int len, bool fromQueue = false );	
+	bool SendRCONResponse( int nIndex, const void *data, int len, bool fromQueue = false );
 
 	CSocketCreator m_Socket;
 	CUtlVector< FailedRCon_t >	m_failedRcons;

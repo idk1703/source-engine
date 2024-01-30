@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -222,11 +222,11 @@ public:
 	void Draw(CPrimList *pPrims, int nPrims);
 
 	// Copy verts and/or indices to a mesh builder. This only works for temp meshes!
-	virtual void CopyToMeshBuilder( 
+	virtual void CopyToMeshBuilder(
 		int iStartVert,		// Which vertices to copy.
-		int nVerts, 
+		int nVerts,
 		int iStartIndex,	// Which indices to copy.
-		int nIndices, 
+		int nIndices,
 		int indexOffset,	// This is added to each index.
 		CMeshBuilder &builder );
 
@@ -279,4 +279,3 @@ private:
 };
 
 #endif // MESHDX10_H
-

@@ -1,9 +1,9 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
-// ccs.cpp - "con command server" 
-// Not to be confused with the game's server - this is a completely different thing that allows multiple game clients to connect to a single client, 
-// so con commands can be sent simultaneously to multiple running game clients, screen captures can be sent in real-time to a single client for comparison purposes, 
+// ccs.cpp - "con command server"
+// Not to be confused with the game's server - this is a completely different thing that allows multiple game clients to connect to a single client,
+// so con commands can be sent simultaneously to multiple running game clients, screen captures can be sent in real-time to a single client for comparison purposes,
 // and all convar's can be diff'd between all connected clients and the server.
-// The server portion of this code needs socketlib, which hasn't been ported to Linux yet, and shouldn't be shipped because it could be a security risk 
+// The server portion of this code needs socketlib, which hasn't been ported to Linux yet, and shouldn't be shipped because it could be a security risk
 // (it's only intended for primarily graphics debugging and detailed comparisons of GL vs. D3D9).
 
 #include "host_state.h"
@@ -91,11 +91,11 @@ public:
 	virtual ~frame_buf_window();
 
 	// Return true if you handle the window message.
-	typedef bool (*user_window_proc_ptr_t)(LRESULT& hres, HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam, void *pData);   
+	typedef bool (*user_window_proc_ptr_t)(LRESULT& hres, HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam, void *pData);
 	void set_window_proc_callback(user_window_proc_ptr_t windowProcPtr, void *pData) { m_pWindow_proc = windowProcPtr; m_pWindow_proc_data = pData; }
 
 	int width(void) const { return m_width; }
-	int height(void) const { return m_height; }      
+	int height(void) const { return m_height; }
 
 	void update(void);
 
@@ -120,7 +120,7 @@ private:
 
 	user_window_proc_ptr_t m_pWindow_proc;
 	void *m_pWindow_proc_data;
-		
+
 	void create_window(const char* pTitle);
 
 	void create_bitmap(void);
@@ -133,29 +133,29 @@ private:
 frame_buf_window* frame_buf_window::m_pCur_app;
 
 frame_buf_window::frame_buf_window(const char* pTitle, int width, int height, int scaleX, int scaleY) :
-    m_width(width),
-    m_height(height),
-    m_orig_width(0), 
-    m_orig_height(0), 
-    m_orig_x(0), 
-    m_orig_y(0),
-    m_window(0),
-    m_pBitmap_hdr(NULL),
-    m_windowHDC(0),
-    m_pWindow_proc(NULL),
-    m_pWindow_proc_data(NULL)
+	m_width(width),
+	m_height(height),
+	m_orig_width(0),
+	m_orig_height(0),
+	m_orig_x(0),
+	m_orig_y(0),
+	m_window(0),
+	m_pBitmap_hdr(NULL),
+	m_windowHDC(0),
+	m_pWindow_proc(NULL),
+	m_pWindow_proc_data(NULL)
 {
 	m_scale_x = scaleX;
 	m_scale_y = scaleY;
 
-    create_window(pTitle);
-      
-    create_bitmap();           
+	create_window(pTitle);
+
+	create_bitmap();
 }
-      
+
 frame_buf_window::~frame_buf_window()
-{  
-    close();
+{
+	close();
 }
 
 void frame_buf_window::update(void)
@@ -176,124 +176,124 @@ void frame_buf_window::update(void)
 		//Sleep(0);
 	}
 }
-      
+
 void frame_buf_window::close(void)
-{ 
-    m_frame_buffer.clear();
-      
-    if (m_window)
-    {
-        ReleaseDC(m_window, m_windowHDC);
-        DestroyWindow(m_window);
-        m_window = 0;
-        m_windowHDC = 0;
-    }
+{
+	m_frame_buffer.clear();
+
+	if (m_window)
+	{
+		ReleaseDC(m_window, m_windowHDC);
+		DestroyWindow(m_window);
+		m_window = 0;
+		m_windowHDC = 0;
+	}
 }
-                   
+
 void frame_buf_window::create_window(const char* pTitle)
 {
-    memset( &m_window_class, 0, sizeof( m_window_class ) );
-    m_window_class.style = CS_OWNDC | CS_VREDRAW | CS_HREDRAW;
-    m_window_class.lpfnWndProc = static_window_proc;
-    m_window_class.cbWndExtra = sizeof(DWORD);
-    m_window_class.hCursor = LoadCursor(0, IDC_ARROW);
-    m_window_class.lpszClassName = pTitle;
-    m_window_class.hbrBackground = (HBRUSH)GetStockObject(NULL_BRUSH); //GetStockObject(NULL_BRUSH);
-    RegisterClass(&m_window_class);
-            
-    RECT rect;
-    rect.left = rect.top = 0;
-    rect.right = m_width * m_scale_x;
-    rect.bottom = m_height * m_scale_y;
-    AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, 0);
-    rect.right -= rect.left;
-    rect.bottom -= rect.top;
+	memset( &m_window_class, 0, sizeof( m_window_class ) );
+	m_window_class.style = CS_OWNDC | CS_VREDRAW | CS_HREDRAW;
+	m_window_class.lpfnWndProc = static_window_proc;
+	m_window_class.cbWndExtra = sizeof(DWORD);
+	m_window_class.hCursor = LoadCursor(0, IDC_ARROW);
+	m_window_class.lpszClassName = pTitle;
+	m_window_class.hbrBackground = (HBRUSH)GetStockObject(NULL_BRUSH); //GetStockObject(NULL_BRUSH);
+	RegisterClass(&m_window_class);
 
-    m_orig_x = (GetSystemMetrics(SM_CXSCREEN) - rect.right) / 2;
-    m_orig_y = (GetSystemMetrics(SM_CYSCREEN) - rect.bottom) / 2;
+	RECT rect;
+	rect.left = rect.top = 0;
+	rect.right = m_width * m_scale_x;
+	rect.bottom = m_height * m_scale_y;
+	AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, 0);
+	rect.right -= rect.left;
+	rect.bottom -= rect.top;
 
-    m_orig_width = rect.right;
-    m_orig_height = rect.bottom;
+	m_orig_x = (GetSystemMetrics(SM_CXSCREEN) - rect.right) / 2;
+	m_orig_y = (GetSystemMetrics(SM_CYSCREEN) - rect.bottom) / 2;
 
-    m_pCur_app = this;
-      
-    m_window = CreateWindowEx(
-        0, pTitle, pTitle, 
-        WS_OVERLAPPEDWINDOW, 
-        m_orig_x, m_orig_y, rect.right, rect.bottom, 0, 0, 0, 0);
+	m_orig_width = rect.right;
+	m_orig_height = rect.bottom;
 
-    SetWindowLong(m_window, 0, reinterpret_cast<LONG>(this));
-      
-    m_pCur_app = NULL;
+	m_pCur_app = this;
 
-    ShowWindow(m_window, SW_NORMAL);            
+	m_window = CreateWindowEx(
+		0, pTitle, pTitle,
+		WS_OVERLAPPEDWINDOW,
+		m_orig_x, m_orig_y, rect.right, rect.bottom, 0, 0, 0, 0);
+
+	SetWindowLong(m_window, 0, reinterpret_cast<LONG>(this));
+
+	m_pCur_app = NULL;
+
+	ShowWindow(m_window, SW_NORMAL);
 }
 
 void frame_buf_window::create_bitmap(void)
 {
-    memset( &m_bitmap_info, 0, sizeof( m_bitmap_info ) );
-      
-    m_pBitmap_hdr = reinterpret_cast<BITMAPINFO*>(&m_bitmap_info);
-    m_pBitmap_hdr->bmiHeader.biSize          = sizeof(BITMAPINFOHEADER);
-    m_pBitmap_hdr->bmiHeader.biWidth         = m_width;
-    m_pBitmap_hdr->bmiHeader.biHeight        = -m_height;
-    m_pBitmap_hdr->bmiHeader.biBitCount      = 24;
-    m_pBitmap_hdr->bmiHeader.biPlanes        = 1;
-    m_pBitmap_hdr->bmiHeader.biCompression   = BI_RGB;//BI_BITFIELDS;
-	// Only really needed for 32bpp BI_BITFIELDS
-    reinterpret_cast<uint32*>(m_pBitmap_hdr->bmiColors)[0] = 0x00FF0000;
-    reinterpret_cast<uint32*>(m_pBitmap_hdr->bmiColors)[1] = 0x0000FF00;
-    reinterpret_cast<uint32*>(m_pBitmap_hdr->bmiColors)[2] = 0x000000FF;
+	memset( &m_bitmap_info, 0, sizeof( m_bitmap_info ) );
 
-    m_windowHDC = GetDC(m_window);
-      
-    m_frame_buffer.init( m_width, m_height );
+	m_pBitmap_hdr = reinterpret_cast<BITMAPINFO*>(&m_bitmap_info);
+	m_pBitmap_hdr->bmiHeader.biSize          = sizeof(BITMAPINFOHEADER);
+	m_pBitmap_hdr->bmiHeader.biWidth         = m_width;
+	m_pBitmap_hdr->bmiHeader.biHeight        = -m_height;
+	m_pBitmap_hdr->bmiHeader.biBitCount      = 24;
+	m_pBitmap_hdr->bmiHeader.biPlanes        = 1;
+	m_pBitmap_hdr->bmiHeader.biCompression   = BI_RGB;//BI_BITFIELDS;
+	// Only really needed for 32bpp BI_BITFIELDS
+	reinterpret_cast<uint32*>(m_pBitmap_hdr->bmiColors)[0] = 0x00FF0000;
+	reinterpret_cast<uint32*>(m_pBitmap_hdr->bmiColors)[1] = 0x0000FF00;
+	reinterpret_cast<uint32*>(m_pBitmap_hdr->bmiColors)[2] = 0x000000FF;
+
+	m_windowHDC = GetDC(m_window);
+
+	m_frame_buffer.init( m_width, m_height );
 	m_frame_buffer.cls( 30, 30, 30 );
 	//m_frame_buffer.draw_text( 50, 200, 2, 255, 127, 128, "This is a test!" );
-}         
+}
 
 LRESULT frame_buf_window::window_proc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    if (m_pWindow_proc)
-    {
-        LRESULT lres;
-        bool status = m_pWindow_proc(lres, hWnd, message, wParam, lParam, m_pWindow_proc_data);
-        if (status)
+	if (m_pWindow_proc)
+	{
+		LRESULT lres;
+		bool status = m_pWindow_proc(lres, hWnd, message, wParam, lParam, m_pWindow_proc_data);
+		if (status)
 			return lres;
-    }
+	}
 
-    switch (message)
-    {
-        case WM_PAINT:
-        {
+	switch (message)
+	{
+		case WM_PAINT:
+		{
 			if (m_frame_buffer.is_valid())
 			{
 				RECT window_size;
 				GetClientRect(hWnd, &window_size);
 
-				StretchDIBits(m_windowHDC, 
-					0, 0, window_size.right, window_size.bottom, 
-					0, 0, m_width, m_height, 
-					m_frame_buffer.get_ptr(), m_pBitmap_hdr, 
+				StretchDIBits(m_windowHDC,
+					0, 0, window_size.right, window_size.bottom,
+					0, 0, m_width, m_height,
+					m_frame_buffer.get_ptr(), m_pBitmap_hdr,
 					DIB_RGB_COLORS, SRCCOPY);
 
 				ValidateRect(hWnd, NULL);
 			}
 			break;
-        }
-        case WM_KEYDOWN:
-        {
+		}
+		case WM_KEYDOWN:
+		{
 			const int cEscCode = 27;
 			if (cEscCode != (wParam & 0xFF))
 				break;
-        }
-        case WM_CLOSE:
-        {
+		}
+		case WM_CLOSE:
+		{
 			close();
 
 			break;
-        }
-    }            
+		}
+	}
 
 	return DefWindowProc( hWnd, message, wParam, lParam );
 }
@@ -301,8 +301,8 @@ LRESULT frame_buf_window::window_proc(HWND hWnd, UINT message, WPARAM wParam, LP
 class CConCommandServerProtocolTypes
 {
 public:
-	enum 
-	{ 
+	enum
+	{
 		cProtocolPort = 3779,
 		cMaxClients = 4
 	};
@@ -325,9 +325,9 @@ public:
 		uint m_nScreenshotID;
 		char m_szFilename[256];
 	};
-			
-	enum 
-	{ 
+
+	enum
+	{
 		cPacketHeaderID = 0x1234,
 		cPacketHeaderSize = sizeof( PacketHeader_t ),
 	};
@@ -380,10 +380,10 @@ static void DumpConVars( DumpedConVarVector_t &conVars )
 class CConCommandConnection : public CConCommandServerProtocolTypes
 {
 public:
-	CConCommandConnection() : 
-		m_pSocket( NULL ), 
+	CConCommandConnection() :
+		m_pSocket( NULL ),
 		m_bDeleteSocket( false ),
-		m_nEndpointIndex( -1 ), 
+		m_nEndpointIndex( -1 ),
 		m_bClientFlag( false ),
 		m_bReceivedNewCameraPos( false ),
 		m_nSendBufOfs( 0 ),
@@ -403,7 +403,7 @@ public:
 	bool Init( const char *pAddress )
 	{
 		Deinit();
-		
+
 		m_nEndpointIndex = 0;
 		m_bClientFlag = true;
 
@@ -421,12 +421,12 @@ public:
 		if ( err != SOCKET_SUCCESS )
 		{
 			Warning( "CONCMDSRV: Failed connecting to con cmd server \"%s\"!\n", pAddress );
-			
+
 			Deinit();
 
 			return false;
 		}
-		
+
 		uint n = 0;
 		while ( m_pSocket->GetEndpointSocketState( 0 ) == SSTATE_CONNECTION_IN_PROGRESS )
 		{
@@ -443,9 +443,9 @@ public:
 
 			if ( bIsConnected )
 				break;
-			
+
 			ThreadSleep( 10 );
-			
+
 			if ( ++n >= 500 )
 			{
 				Warning( "CONCMDSRV: Failed connecting to con cmd server \"%s\"!\n", pAddress );
@@ -474,10 +474,10 @@ public:
 	bool Init( CSocketConnection *pSocket, int nEndpointIndex, bool bClientFlag )
 	{
 		Deinit();
-				
+
 		int nFlag = 1;
 		pSocket->SetSocketOpt( nEndpointIndex, IPPROTO_TCP, TCP_NODELAY, &nFlag, sizeof( int ) );
-				
+
 		m_pSocket = pSocket;
 		m_bDeleteSocket = false;
 		m_nEndpointIndex = nEndpointIndex;
@@ -503,7 +503,7 @@ public:
 		if ( m_pSocket )
 		{
 			m_pSocket->ResetEndpoint( m_nEndpointIndex );
-			
+
 			if ( m_bDeleteSocket )
 			{
 				m_pSocket->Cleanup();
@@ -515,7 +515,7 @@ public:
 		m_nEndpointIndex = -1;
 		m_bDeleteSocket = false;
 		m_bClientFlag = false;
-		
+
 		m_RecvBuf.SetCountNonDestructively( 0 );
 		m_SendBuf.SetCountNonDestructively( 0 );
 		m_nSendBufOfs = 0;
@@ -523,7 +523,7 @@ public:
 		m_bHasNewScreenshot = false;
 		m_nScreenshotID = 0;
 		m_screenshot.clear();
-		
+
 		m_bReceivedNewCameraPos = false;
 		memset( &m_NewCameraPos, 0, sizeof( m_NewCameraPos ) );
 	}
@@ -564,7 +564,7 @@ public:
 				}
 			}
 		}
-			
+
 		return true;
 	}
 
@@ -599,7 +599,7 @@ public:
 	{
 		if ( !IsConnected() )
 			return false;
-				
+
 		if ( !TickConnectionSend() )
 			return false;
 		if ( !TickConnectionRecv() )
@@ -608,15 +608,15 @@ public:
 		if ( m_bReceivedNewCameraPos )
 		{
 			m_bReceivedNewCameraPos = false;
-						
+
 			char buf[256];
 			//V_snprintf( buf, sizeof( buf ), "setpos_exact %f %f %f;setang_exact %f %f %f\n", m_NewCameraPos.m_Pos.x, m_NewCameraPos.m_Pos.y, m_NewCameraPos.m_Pos.z, m_NewCameraPos.m_Angle.x, m_NewCameraPos.m_Angle.y, m_NewCameraPos.m_Angle.z );
 			V_snprintf( buf, sizeof( buf ), "setpos_exact 0x%X 0x%X 0x%X;setang_exact 0x%X 0x%X 0x%X\n", *(DWORD*)&m_NewCameraPos.m_Pos.x, *(DWORD*)&m_NewCameraPos.m_Pos.y, *(DWORD*)&m_NewCameraPos.m_Pos.z, *(DWORD*)&m_NewCameraPos.m_Angle.x, *(DWORD*)&m_NewCameraPos.m_Angle.y, *(DWORD*)&m_NewCameraPos.m_Angle.z );
-			
+
 			Cbuf_AddText( buf );
 			Cbuf_Execute();
 		}
-				
+
 		return true;
 	}
 
@@ -680,7 +680,7 @@ private:
 					if ( nNumMessageBytes )
 					{
 						ConMsg( "CONCMDSRV: Message from client %i: ", m_nEndpointIndex );
-						
+
 						CUtlVectorFixedGrowable<char, 4096> buf;
 						buf.SetCount( nNumMessageBytes + 1 );
 						memcpy( &buf[0], pMsg, nNumMessageBytes );
@@ -705,7 +705,7 @@ private:
 
 					uint nWidth = videomode->GetModeWidth();
 					uint nHeight = videomode->GetModeHeight();
-					if ( !nWidth || !nHeight ) 
+					if ( !nWidth || !nHeight )
 						break;
 
 					static void *s_pBuf;
@@ -726,8 +726,8 @@ private:
 						replyPacket.m_nType = cPacketTypeScreenshotReply;
 						V_strcpy( replyPacket.m_szFilename, requestPacket.m_szFilename );
 						replyPacket.m_nScreenshotID = requestPacket.m_nScreenshotID;
-						
-						if ( !SendData( &replyPacket, sizeof( replyPacket ) ) ) 
+
+						if ( !SendData( &replyPacket, sizeof( replyPacket ) ) )
 						{
 							free( pPNGData );
 							return false;
@@ -738,10 +738,10 @@ private:
 							free( pPNGData );
 							return false;
 						}
-						
+
 						free( pPNGData );
 					}
-					
+
 					break;
 				}
 				case cPacketTypeScreenshotReply:
@@ -755,7 +755,7 @@ private:
 
 					const void *pPNGData = &m_RecvBuf[sizeof(ScreenshotPacket_t)];
 					uint nPNGDataSize = header.m_nTotalSize - sizeof(ScreenshotPacket_t);
-					
+
 					if ( !replyPacket.m_nScreenshotID )
 					{
 						char szFilename[512];
@@ -788,7 +788,7 @@ private:
 						}
 
 						memcpy( m_screenshot.get_ptr(), pImageData, nWidth * nHeight * 3 );
-													
+
 						stbi_image_free( pImageData );
 					}
 
@@ -804,7 +804,7 @@ private:
 						buf.SetCount( nNumMessageBytes + 1 );
 						memcpy( &buf[0], pMsg, nNumMessageBytes );
 						buf[nNumMessageBytes] = '\0';
-					
+
 						//ConMsg( "\"%s\"\n", &buf[0] );
 
 						Cbuf_AddText( &buf[0] );
@@ -881,7 +881,7 @@ private:
 						}
 
 						uint nValLen = V_strlen( pCur + nNameLen + 1 );
-						
+
 						uint nTotalLenInBytes = nNameLen + 1 + nValLen + 1;
 						if ( nTotalLenInBytes > nBytesLeft )
 						{
@@ -893,12 +893,12 @@ private:
 						int nIndex = m_DumpedConVars.AddToTail();
 						m_DumpedConVars[nIndex].m_Name.Set( pCur );
 						m_DumpedConVars[nIndex].m_Value.Set( pCur + nNameLen + 1 );
-						
+
 						pCur += nTotalLenInBytes;
 					}
 
 					ConMsg( "Received convar dump reply from endpoint %i, %u total convars\n", m_nEndpointIndex, m_DumpedConVars.Count() );
-					
+
 					break;
 				}
 				default:
@@ -943,7 +943,7 @@ class CConCommandServer : public CConCommandServerProtocolTypes
 				if ( ( cKey >= '0' ) && ( cKey <= '9' ) )
 				{
 					pServer->m_nViewEndpointIndex = cKey - '0';
-				}								
+				}
 			}
 		}
 
@@ -951,7 +951,7 @@ class CConCommandServer : public CConCommandServerProtocolTypes
 	}
 
 public:
-	CConCommandServer() : 
+	CConCommandServer() :
 		m_bInitialized( false ),
 		m_pFrameBufWindow( NULL ),
 		m_nViewEndpointIndex( 0 )
@@ -976,7 +976,7 @@ public:
 		}
 
 		ConMsg( "CONCMDSVR: Listening for connections\n" );
-		
+
 		uint nWidth = 1280, nHeight = 1024;
 		if ( videomode )
 		{
@@ -997,7 +997,7 @@ public:
 
 		delete m_pFrameBufWindow;
 		m_pFrameBufWindow = NULL;
-		
+
 		for ( int i = 0; i < cMaxClients; i++ )
 		{
 			m_Clients[i].Deinit();
@@ -1007,7 +1007,7 @@ public:
 		m_nViewEndpointIndex = 0;
 
 		ConMsg( "CONCMDSVR: Deinitialized\n" );
-				
+
 		m_bInitialized = false;
 	}
 
@@ -1015,7 +1015,7 @@ public:
 	{
 		return m_bInitialized;
 	}
-	
+
 	void TickFrame( float flTime )
 	{
 		if ( !m_bInitialized )
@@ -1034,7 +1034,7 @@ public:
 				vecOrigin = localPlayer->GetAbsOrigin();
 				angles = localPlayer->GetAbsAngles();
 			}
-				
+
 			SetCameraPosPacket_t setCameraPacket;
 			setCameraPacket.m_nID = cPacketHeaderID;
 			setCameraPacket.m_nType = cPacketTypeSetCameraPos;
@@ -1070,17 +1070,17 @@ public:
 				SendDataToAllClients( &screenshotPacket, sizeof( screenshotPacket ) );
 			}
 		}
-						
+
 		bool bHasUpdatedScreenshot = false;
-				
-		simple_bgr_bitmap &frameBuf = m_pFrameBufWindow->frameBuffer();						
+
+		simple_bgr_bitmap &frameBuf = m_pFrameBufWindow->frameBuffer();
 
 		for ( int i = 0; i < cMaxClients; i++ )
 		{
 			CConCommandConnection &client = m_Clients[i];
 			if ( !client.IsConnected() )
 				continue;
-			
+
 			client.TickConnection();
 
 			if ( client.HasNewConVarDumpFlag() )
@@ -1115,9 +1115,9 @@ public:
 							videomode->ReadScreenPixels( 0, 0, nScreenWidth, nScreenHeight, m_screenshot.get_ptr(), IMAGE_FORMAT_RGB888 );
 						}
 
-						uint mx = MIN( clientScreenshot.width(), m_screenshot.width() ); 
+						uint mx = MIN( clientScreenshot.width(), m_screenshot.width() );
 						mx = MIN( mx, frameBuf.width() );
-					
+
 						uint my = MIN( clientScreenshot.height(), m_screenshot.height() );
 						my = MIN( my, frameBuf.height() );
 
@@ -1129,11 +1129,11 @@ public:
 
 							for ( uint x = 0; x < mx; ++x )
 							{
-								int r = 2 * ( pSrc1[0] - pSrc2[0] ) + 128; 
-								int g = 2 * ( pSrc1[1] - pSrc2[1] ) + 128; 
-								int b = 2 * ( pSrc1[2] - pSrc2[2] ) + 128; 
+								int r = 2 * ( pSrc1[0] - pSrc2[0] ) + 128;
+								int g = 2 * ( pSrc1[1] - pSrc2[1] ) + 128;
+								int b = 2 * ( pSrc1[2] - pSrc2[2] ) + 128;
 
-								if ( ( r | g | b ) & 0xFFFFFF00 ) 
+								if ( ( r | g | b ) & 0xFFFFFF00 )
 								{
 									if ( r & 0xFFFFFF00 ) { r = (~( r >> 31 )) & 0xFF; }
 									if ( g & 0xFFFFFF00 ) { g = (~( g >> 31 )) & 0xFF; }
@@ -1143,7 +1143,7 @@ public:
 								pDst[0] = (uint8)b;
 								pDst[1] = (uint8)g;
 								pDst[2] = (uint8)r;
-							
+
 								pSrc1 += 3;
 								pSrc2 += 3;
 								pDst += 3;
@@ -1207,7 +1207,7 @@ public:
 			Cbuf_Execute();
 		}
 	}
-	
+
 	void SendCameraPosAndAngleToClients( Vector &vecOrigin, QAngle &angles )
 	{
 		if ( !m_bInitialized )
@@ -1251,17 +1251,17 @@ public:
 		packet.m_nType = cPacketTypeConVarDumpRequest;
 		SendDataToAllClients( &packet, sizeof( packet ) );
 	}
-	
+
 private:
 	bool m_bInitialized;
 	CSocketConnection m_Socket;
-			
+
 	CConCommandConnection m_Clients[cMaxClients];
 	frame_buf_window *m_pFrameBufWindow;
 
 	simple_bitmap m_screenshot;
 	int m_nViewEndpointIndex;
-	
+
 	void AcceptNewConnections()
 	{
 		for ( ; ; )
@@ -1270,7 +1270,7 @@ private:
 			SocketErrorCode_t err = m_Socket.TryAcceptIncomingConnection( &nNewEndpointIndex );
 			if ( ( err != SOCKET_SUCCESS ) || ( nNewEndpointIndex < 0 ) )
 				break;
-			
+
 			int i;
 			for ( i = 0; i < cMaxClients; i++ )
 			{
@@ -1294,7 +1294,7 @@ private:
 			}
 		}
 	}
-	
+
 	bool SendDataToAllClients( const void *p, uint nSize )
 	{
 		if ( !nSize )
@@ -1332,7 +1332,7 @@ private:
 
 		SendDataToAllClients( buf, hdr.m_nTotalSize );
 	}
-		
+
 	static int FindConVar( const DumpedConVarVector_t &sortedConVars, const char *pName )
 	{
 		int l = 0, h = sortedConVars.Count() - 1;
@@ -1352,12 +1352,12 @@ private:
 
 	static void DiffConVars( DumpedConVarVector_t &serverConVars, DumpedConVarVector_t &clientConVars )
 	{
-		if ( serverConVars.Count() ) 
+		if ( serverConVars.Count() )
 		{
 			std::sort( &serverConVars.Head(), &serverConVars.Tail() + 1 );
 		}
 
-		if ( clientConVars.Count() ) 
+		if ( clientConVars.Count() )
 		{
 			std::sort( &clientConVars.Head(), &clientConVars.Tail() + 1 );
 		}
@@ -1526,7 +1526,7 @@ CON_COMMAND_F( ccs_screenshot, "Request screenshots from connected clients", FCV
 }
 
 CON_COMMAND_F( ccs_diff_convars, "Diffs server's convars vs. all connected clients", FCVAR_CHEAT )
-{ 
+{
 	if ( g_ConCommandServer.IsInitialized() )
 	{
 		g_ConCommandServer.DiffConVarsOfAllClients();
@@ -1538,7 +1538,7 @@ CON_COMMAND_F( ccs_diff_convars, "Diffs server's convars vs. all connected clien
 }
 
 CON_COMMAND_F( ccs_dump_convars, "Dump all convars to console", FCVAR_CHEAT )
-{ 
+{
 	DumpedConVarVector_t conVars;
 	DumpConVars( conVars );
 
@@ -1582,9 +1582,9 @@ CON_COMMAND_F( ccs_disconnect, "Disconnect from a con cmd server.", FCVAR_CHEAT 
 		Warning( "CONCMDSRV: Not connected!\n" );
 	}
 	else
-	{	
+	{
 		g_ConCommandConnection.Deinit();
-		
+
 		Warning( "CONCMDSRV: Disconnected\n" );
 	}
 }

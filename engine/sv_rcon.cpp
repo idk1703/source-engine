@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:  implementation of the rcon server 
+// Purpose:  implementation of the rcon server
 //
 //===========================================================================//
 
@@ -80,7 +80,7 @@ CRConServer & RCONServer()
 static void RconPasswordChanged_f( IConVar *pConVar, const char *pOldString, float flOldValue )
 {
 	ConVarRef var( pConVar );
-	const char *pPassword = var.GetString(); 
+	const char *pPassword = var.GetString();
 #ifndef SWDS
 	RCONClient().SetPassword( pPassword );
 #endif
@@ -242,7 +242,7 @@ void CRConServer::RunFrame()
 				break;
 			}
 		}
-		
+
 		int sendLen = g_ServerRemoteAccess.GetDataResponseSize( pData->listenerID );
 		if ( sendLen > 0 )
 		{
@@ -299,7 +299,7 @@ void CRConServer::RunFrame()
 					m_Socket.CloseAcceptedSocket( i );
 					break;
 				}
-				
+
 				if ( recvLen < 0 && !SocketWouldBlock() )
 				{
 					Warning( "RCON Cmd: recv error (%s)\n", NET_ErrorString( WSAGetLastError() ) );
@@ -309,11 +309,11 @@ void CRConServer::RunFrame()
 				response.Put( recvBuf, recvLen );
 				len += recvLen;
 			}
-			
+
 			response.SeekGet( CUtlBuffer::SEEK_HEAD, 0 );
 
 			int size = response.GetInt();
-		
+
 			if ( sv_rcon_maxpacketsize.GetInt() > 0 && size > sv_rcon_maxpacketsize.GetInt() )
 			{
 				if ( sv_rcon_maxpacketbans.GetBool() )
@@ -324,7 +324,7 @@ void CRConServer::RunFrame()
 				m_Socket.CloseAcceptedSocket( i );
 				continue;
 			}
-			
+
 			while ( size > 0 && size <= response.TellPut() - response.TellGet() )
 			{
 				SV_RedirectStart( RD_SOCKET, &socketAdr );
@@ -346,7 +346,7 @@ void CRConServer::RunFrame()
 
 			// Check and see if socket was closed as a result of processing - this can happen if the user has entered too many passwords
 			int nNewCount = m_Socket.GetAcceptedSocketCount();
-			if ( 0 == nNewCount || i > nNewCount || pData != GetSocketData( i )  ) 
+			if ( 0 == nNewCount || i > nNewCount || pData != GetSocketData( i )  )
 			{
 				response.Purge();
 				break;
@@ -386,7 +386,7 @@ void CRConServer::RunFrame()
 // Purpose: flush the response of a network command back to a user
 //-----------------------------------------------------------------------------
 void CRConServer::FinishRedirect( const char *msg, const netadr_t &adr )
-{	
+{
 	// NOTE: Has to iterate in reverse; SendRCONResponse can close sockets
 	int nCount = m_Socket.GetAcceptedSocketCount();
 	for ( int i = nCount - 1; i >= 0; --i )
@@ -404,12 +404,12 @@ void CRConServer::FinishRedirect( const char *msg, const netadr_t &adr )
 		response.PutInt(SERVERDATA_RESPONSE_VALUE);
 		response.PutString(msg);
 		response.PutString("");
-		int size = response.TellPut() - sizeof(int); 
+		int size = response.TellPut() - sizeof(int);
 		response.SeekPut( CUtlBuffer::SEEK_HEAD, 0 );
 		response.PutInt(size); // the size
 		response.SeekPut( CUtlBuffer::SEEK_CURRENT, size );
 
-		
+
 //		OutputDebugString( va("RCON: String is %i long\n", Q_strlen(msg)) ); // can't use DevMsg(), we are potentially inside the RedirectFlush() function
 //		printf("RCON: String is %i long, packet size %i\n", Q_strlen(msg), size );
 
@@ -482,7 +482,7 @@ bool CRConServer::SendRCONResponse( int nIndex, const void *data, int len, bool 
 				int index = pSocketData->m_OutstandingSends.AddToHead();
 				pSocketData->m_OutstandingSends[index].Put( (void *)((char *)data + sendLen), len - sendLen );
 			}
-			else // update the existing queued item to show we 
+			else // update the existing queued item to show we
 			     // sent some of it (we only ever send the head of the list)
 			{
 				pSocketData->m_OutstandingSends[pSocketData->m_OutstandingSends.Head()].SeekGet( CUtlBuffer::SEEK_CURRENT, sendLen );

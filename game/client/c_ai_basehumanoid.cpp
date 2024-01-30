@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -72,7 +72,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_AI_BaseHumanoid, DT_BaseHumanoid, CAI_BaseHumanoid)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_AI_BaseHumanoid::StandardBlendingRules( CStudioHdr *pStudioHdr, Vector pos[], Quaternion q[], float currentTime, int boneMask )
 {
@@ -88,7 +88,7 @@ void C_AI_BaseHumanoid::StandardBlendingRules( CStudioHdr *pStudioHdr, Vector po
 #if 0
 	float poseparam[MAXSTUDIOPOSEPARAM];
 
-	if ( GetSequence() >= hdr->numseq ) 
+	if ( GetSequence() >= hdr->numseq )
 	{
 		SetSequence( 0 );
 	}
@@ -125,8 +125,8 @@ void C_AI_BaseHumanoid::StandardBlendingRules( CStudioHdr *pStudioHdr, Vector po
 		float fWeight = m_Layer[i][1].flWeight * (1 - dadt) + m_Layer[i][2].flWeight * dadt;
 
 		/*
-		debugoverlay->AddTextOverlay( GetAbsOrigin() + Vector( 0, 0, 64 ), -i - 1, 0, 
-			"%2d %6.2f %6.2f : %2d %6.2f %6.2f : %2d %6.2f %6.2f", 
+		debugoverlay->AddTextOverlay( GetAbsOrigin() + Vector( 0, 0, 64 ), -i - 1, 0,
+			"%2d %6.2f %6.2f : %2d %6.2f %6.2f : %2d %6.2f %6.2f",
 				m_Layer[i][0].nSequence, m_Layer[i][0].flCycle, m_Layer[i][0].flWeight,
 				m_Layer[i][1].nSequence, m_Layer[i][1].flCycle, m_Layer[i][1].flWeight,
 				m_Layer[i][2].nSequence, m_Layer[i][2].flCycle, m_Layer[i][2].flWeight );

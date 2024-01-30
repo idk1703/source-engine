@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -22,10 +22,10 @@ ConVar snd_audioqueue( "snd_audioqueue", "1" );
 
 bool snd_firsttime = true;
 
-/* 
- * Global variables. Must be visible to window-procedure function 
- *  so it can unlock and free the data block after it has been played. 
- */ 
+/*
+ * Global variables. Must be visible to window-procedure function
+ *  so it can unlock and free the data block after it has been played.
+ */
 IAudioDevice *g_AudioDevice = NULL;
 
 /*
@@ -117,7 +117,7 @@ IAudioDevice *IAudioDevice::AutoDetectInit( bool waveOnly )
 		// > need to fall back to PulseAudio in our codebase if SDL is doing that
 		// > for us. I mean, is it worth me going through and debugging our Pulse
 		// > Audio path or should I just remove it?
-		// 
+		//
 		// Remove it...it never worked well, and only remained in case there were
 		// concerns about relying on SDL. The SDL codepath is way easier to read,
 		// simpler to maintain, and handles all sorts of strange audio backends,
@@ -182,4 +182,3 @@ void SNDDMA_Shutdown( void )
 		g_AudioDevice = Audio_GetNullDevice();
 	}
 }
-

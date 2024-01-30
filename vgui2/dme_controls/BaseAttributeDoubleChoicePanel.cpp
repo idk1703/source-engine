@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -105,7 +105,7 @@ void CBaseAttributeDoubleChoicePanel::Apply( )
 
 
 //-----------------------------------------------------------------------------
-// Called when it is time to set the combo box from the attribute 
+// Called when it is time to set the combo box from the attribute
 //-----------------------------------------------------------------------------
 void CBaseAttributeDoubleChoicePanel::Refresh()
 {
@@ -114,7 +114,7 @@ void CBaseAttributeDoubleChoicePanel::Refresh()
 
 
 //-----------------------------------------------------------------------------
-// Called when the text in the panel changes 
+// Called when the text in the panel changes
 //-----------------------------------------------------------------------------
 void CBaseAttributeDoubleChoicePanel::OnTextChanged( Panel *panel )
 {
@@ -124,4 +124,3 @@ void CBaseAttributeDoubleChoicePanel::OnTextChanged( Panel *panel )
 		Apply();
 	}
 }
-

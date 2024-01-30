@@ -16,7 +16,7 @@ struct PS_INPUT
 {
 	float2 baseTexCoord				: TEXCOORD0;
 };
-	   
+
 float3 RGBtoHSV( in float3 rgb )
 {
 	float3 hsv;
@@ -38,7 +38,7 @@ float3 RGBtoHSV( in float3 rgb )
 		if( hsv.r < 0 )
 			hsv.r += 360;
 	}
-	else 
+	else
 	{
 		// r = g = b = 0		// s = 0, v is undefined
 		hsv.g = 0;
@@ -55,7 +55,7 @@ float3 HSVtoRGB( in float3 hsv )
 	float s = hsv.g;
 	float v = hsv.b;
 	float f, p, q, t;
-	if( s == 0 ) 
+	if( s == 0 )
 	{
 		// achromatic (grey)
 		rgb.rgb = v;
@@ -177,14 +177,14 @@ float4 main( PS_INPUT i ) : COLOR
 
 	float startRamp = .2;
 	float endRamp = .5;
-	
+
 	float scale = 1.0f / 3.0f;
 	float gmanLum = dot( float3( scale, scale, scale ), gman );
 	float sceneLum = dot( float3( scale, scale, scale ), scene );
 
 	float blend = ( gmanLum - startRamp ) * ( 1.0f / ( endRamp - startRamp ) );
 	blend = saturate( blend );
-	
+
 //	return gmanLum * ( 1.0f - blend ) + scene * blend;
 
 	result = OutputColor( min( gmanLum.xxx, scene ) );
@@ -218,7 +218,7 @@ float4 main( PS_INPUT i ) : COLOR
 	}
 
 	blend = saturate( blend );
-	
+
 	result = OutputColor( gmanLum.xxx * ( float3( 1, 1, 1 ) - blend.xxx ) + scene * blend.xxx );
 	return FinalOutput( float4( result, g_Alpha ), 0, PIXEL_FOG_TYPE_NONE, TONEMAP_SCALE_NONE );
 #endif
@@ -272,7 +272,7 @@ float4 main( PS_INPUT i ) : COLOR
 
 //		float blend = saturate( hsv.b - .5 );
 		float blend = hsv.b - .5;
-		
+
 		hsv.b *= 1.0f + blend;
 		hsv.g *= 1.0f - blend;
 		return FinalOutput( float4( OutputColor( HSVtoRGB( hsv ) ), g_Alpha ), 0, PIXEL_FOG_TYPE_NONE, TONEMAP_SCALE_NONE );

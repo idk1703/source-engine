@@ -42,7 +42,7 @@
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
-#include "tier0/memdbgon.h"	
+#include "tier0/memdbgon.h"
 
 ConVar inv_demo( "inv_demo","0", FCVAR_REPLICATED, "Invasion demo." );
 ConVar lod_effect_distance( "lod_effect_distance","3240000", FCVAR_REPLICATED, "Distance at which effects LOD." );
@@ -152,7 +152,7 @@ static int g_iClassInfo_Pyro[] =
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool IsObjectAnUpgrade( int iObjectType )
 {
@@ -160,7 +160,7 @@ bool IsObjectAnUpgrade( int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool IsObjectAVehicle( int iObjectType )
 {
@@ -168,7 +168,7 @@ bool IsObjectAVehicle( int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool IsObjectADefensiveBuilding( int iObjectType )
 {
@@ -180,7 +180,7 @@ bool IsObjectADefensiveBuilding( int iObjectType )
 //--------------------------------------------------------------------------
 
 #if defined( CLIENT_DLL )
-	
+
 	#define DEFINE_PLAYERCLASS_ALLOC_FNS( className, iClass )				\
 		C_PlayerClass* AllocClient##className##( C_BaseTFPlayer *pPlayer )	\
 		{																	\
@@ -212,7 +212,7 @@ bool IsObjectADefensiveBuilding( int iObjectType )
 		RecvPropDataTable( RECVINFO_DT(m_pClasses[TFCLASS_SAPPER]), 0, &REFERENCE_RECV_TABLE( DT_PlayerClassSapperData ),	DataTableRecvProxy_PointerDataTable )
 	END_RECV_TABLE()
 
-#else		
+#else
 
 	#define DEFINE_PLAYERCLASS_ALLOC_FNS( className, iClass )				\
 		ConVar class_##className##_health( "class_" #className "_health", "0", FCVAR_NONE, #className "'s max health" ); \
@@ -224,7 +224,7 @@ bool IsObjectADefensiveBuilding( int iObjectType )
 		CPlayerClass* AllocServer##className##( CBaseTFPlayer *pPlayer )	\
 		{																	\
 			return new CPlayerClass##className##( pPlayer, iClass );		\
-		}																	
+		}
 
 	#define GENERATE_PLAYERCLASS_INFO( className )		\
 		AllocClient##className##, AllocServer##className, &class_##className##_health
@@ -596,7 +596,7 @@ char *MortarAmmoTechs[ MA_LASTAMMOTYPE ] =
 };
 
 // Max amounts of each mortar ammo type in a single mortar
-int	MortarAmmoMax[ MA_LASTAMMOTYPE ] = 
+int	MortarAmmoMax[ MA_LASTAMMOTYPE ] =
 {
 	-1,		// -1 is infinite ammo
 	//20,

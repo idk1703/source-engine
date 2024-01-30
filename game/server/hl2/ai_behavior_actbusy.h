@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -63,7 +63,7 @@ struct busysafezone_t
 class CAI_ActBusyGoal;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CAI_ActBusyBehavior : public CAI_SimpleBehavior
 {
@@ -81,7 +81,7 @@ public:
 		SCHED_ACTBUSY_LEAVE,
 		SCHED_ACTBUSY_TELEPORT_TO_BUSY,
 		NEXT_SCHEDULE,
-		
+
 		// Tasks
 		TASK_ACTBUSY_PLAY_BUSY_ANIM = BaseClass::NEXT_TASK,
 		TASK_ACTBUSY_PLAY_ENTRY,
@@ -91,14 +91,14 @@ public:
 		TASK_ACTBUSY_GET_PATH_TO_ACTBUSY,
 		TASK_ACTBUSY_VERIFY_EXIT,
 		NEXT_TASK,
-		
+
 		// Conditions
 		COND_ACTBUSY_LOST_SEE_ENTITY = BaseClass::NEXT_CONDITION,
 		COND_ACTBUSY_AWARE_OF_ENEMY_IN_SAFE_ZONE,
 		COND_ACTBUSY_ENEMY_TOO_CLOSE,
 		NEXT_CONDITION,
 	};
-	
+
 	virtual const char *GetName() {	return "ActBusy"; }
 
 	void	Enable( CAI_ActBusyGoal *pGoal, float flRange, bool bVisibleOnly );
@@ -160,7 +160,7 @@ private:
 	void			NotifyBusyEnding( void );
 	bool			HasAnimForActBusy( int iActBusy, busyanimparts_t AnimPart );
 	bool			PlayAnimForActBusy( busyanimparts_t AnimPart );
-	void			PlaySoundForActBusy( busyanimparts_t AnimPart ); 
+	void			PlaySoundForActBusy( busyanimparts_t AnimPart );
 
 private:
 	bool			m_bEnabled;
@@ -175,7 +175,7 @@ private:
 	bool			m_bBusy;
 	bool			m_bMovingToBusy;
 	bool			m_bNeedsToPlayExitAnim;
-	float			m_flNextBusySearchTime;	
+	float			m_flNextBusySearchTime;
 	float			m_flEndBusyAt;
 	float			m_flBusySearchRange;
 	bool			m_bInQueue;
@@ -266,7 +266,7 @@ protected:
 #define MAX_QUEUE_NODES		20
 
 //-----------------------------------------------------------------------------
-// Purpose: A level tool to control the actbusy behavior to create NPC queues 
+// Purpose: A level tool to control the actbusy behavior to create NPC queues
 //-----------------------------------------------------------------------------
 class CAI_ActBusyQueueGoal : public CAI_ActBusyGoal
 {

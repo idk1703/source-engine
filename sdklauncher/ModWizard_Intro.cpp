@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -24,7 +24,7 @@ extern char g_engineDir[50];
 //-----------------------------------------------------------------------------
 bool IsGameSubscribed( int nSteamAppId )
 {
-   bool bIsSubscribed = false;
+	bool bIsSubscribed = false;
 
 	if ( g_pFullFileSystem != NULL && g_pFullFileSystem->IsSteam() && steamapicontext->SteamApps() )
 	{
@@ -53,10 +53,10 @@ CModWizardSubPanel_Intro::CModWizardSubPanel_Intro( Panel *parent, const char *p
 	}
 
 	//
-	// Enable and select the appropriate mod types 
+	// Enable and select the appropriate mod types
 	//
 	if ( !V_strcmp( g_engineDir, "orangebox" ) || !V_strcmp( g_engineDir, "source2007" ) )
-	   m_pModHL2Button->SetEnabled( IsGameSubscribed( GetAppSteamAppId( k_App_HL2_EP2 ) ) );
+		m_pModHL2Button->SetEnabled( IsGameSubscribed( GetAppSteamAppId( k_App_HL2_EP2 ) ) );
 	else
 	{
 		// do it without nesting.
@@ -68,24 +68,24 @@ CModWizardSubPanel_Intro::CModWizardSubPanel_Intro( Panel *parent, const char *p
 
 	m_pModHL2MPButton->SetEnabled( IsGameSubscribed( GetAppSteamAppId( k_App_HL2MP ) ) );
 
-   // De-select all
-   m_pModHL2Button->SetSelected( false );
-   m_pModHL2MPButton->SetSelected( false );
-   m_pModFromScratchButton->SetSelected( false );
+	// De-select all
+	m_pModHL2Button->SetSelected( false );
+	m_pModHL2MPButton->SetSelected( false );
+	m_pModFromScratchButton->SetSelected( false );
 
-   // Select the most common possible option
-   if ( m_pModHL2Button->IsEnabled() )
-   {
-      m_pModHL2Button->SetSelected( true );
-   }
-   else if ( m_pModHL2MPButton->IsEnabled() )
-   {
-      m_pModHL2Button->SetSelected( true );
-   }
-   else if ( m_pModFromScratchButton->IsVisible() )
-   {
-	  m_pModFromScratchButton->SetSelected( true );
-   }
+	// Select the most common possible option
+	if ( m_pModHL2Button->IsEnabled() )
+	{
+		m_pModHL2Button->SetSelected( true );
+	}
+	else if ( m_pModHL2MPButton->IsEnabled() )
+	{
+		m_pModHL2Button->SetSelected( true );
+	}
+	else if ( m_pModFromScratchButton->IsVisible() )
+	{
+		m_pModFromScratchButton->SetSelected( true );
+	}
 }
 
 WizardSubPanel *CModWizardSubPanel_Intro::GetNextSubPanel()
@@ -145,10 +145,10 @@ bool CModWizardSubPanel_Intro::OnNextButton()
 	{
 		if ( pNextPanel->m_pModName )
 			pNextPanel->m_pModName->SetVisible( bShowModName );
-		
+
 		if ( pNextPanel->m_pModNameInfoLabel )
 			pNextPanel->m_pModNameInfoLabel->SetVisible( bShowModName );
-	
+
 		pNextPanel->m_ModType = GetModType();
 	}
 

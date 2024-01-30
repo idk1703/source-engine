@@ -13,7 +13,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponTwoHandedContainer::CWeaponTwoHandedContainer()
 {
@@ -23,14 +23,14 @@ CWeaponTwoHandedContainer::CWeaponTwoHandedContainer()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponTwoHandedContainer::~CWeaponTwoHandedContainer()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponTwoHandedContainer::Spawn( void )
 {
@@ -39,7 +39,7 @@ void CWeaponTwoHandedContainer::Spawn( void )
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponTwoHandedContainer::GetViewmodelBoneControllers( CBaseViewModel *pViewModel, float controllers[MAXSTUDIOBONECTRLS])
 {
@@ -81,7 +81,7 @@ void CWeaponTwoHandedContainer::SetTransmit( CCheckTransmitInfo *pInfo, bool bAl
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CWeaponTwoHandedContainer::GetViewModel( int viewmodelindex /*=0*/ )
 {
@@ -112,7 +112,7 @@ char *CWeaponTwoHandedContainer::GetDeathNoticeName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponTwoHandedContainer::ItemPostFrame( void )
 {
@@ -154,7 +154,7 @@ void CWeaponTwoHandedContainer::ItemBusyFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponTwoHandedContainer::SetWeapons( CBaseTFCombatWeapon *left, CBaseTFCombatWeapon *right )
 {
@@ -271,7 +271,7 @@ bool CWeaponTwoHandedContainer::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseCombatWeapon *CWeaponTwoHandedContainer::GetLastWeapon( void )
 {
@@ -282,7 +282,7 @@ CBaseCombatWeapon *CWeaponTwoHandedContainer::GetLastWeapon( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponTwoHandedContainer::GetDefaultAnimSpeed( void )
 {
@@ -306,7 +306,7 @@ bool CWeaponTwoHandedContainer::Holster( CBaseCombatWeapon *pSwitchingTo )
 		// For now, holster the left weapon and switch it.
 		// In the future, we might want weapons to say which side they'd like to be on
 		SetWeapons( pWeapon, m_hRightWeapon );
-		
+
 		// We might need to force the new weapon to be in the right animation
 		if ( 0 ) //if ( m_hRightWeapon.Get() && m_hRightWeapon->IsReflectingAnimations() )
 		{
@@ -351,7 +351,7 @@ int CWeaponTwoHandedContainer::GetWeight( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CBaseTFCombatWeapon
 //-----------------------------------------------------------------------------
 CBaseTFCombatWeapon *CWeaponTwoHandedContainer::GetLeftWeapon( void )
@@ -360,7 +360,7 @@ CBaseTFCombatWeapon *CWeaponTwoHandedContainer::GetLeftWeapon( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CBaseTFCombatWeapon
 //-----------------------------------------------------------------------------
 CBaseTFCombatWeapon *CWeaponTwoHandedContainer::GetRightWeapon( void )

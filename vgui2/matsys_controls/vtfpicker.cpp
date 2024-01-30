@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -23,7 +23,7 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CVTFPicker::CVTFPicker( vgui::Panel *pParent ) : 
+CVTFPicker::CVTFPicker( vgui::Panel *pParent ) :
 	BaseClass( pParent, "VTF Files", "vtf", "materials", "vtfName" )
 {
 	// Horizontal splitter for preview
@@ -59,13 +59,10 @@ void CVTFPicker::OnSelectedAssetPicked( const char *pAssetName )
 // Purpose: Modal picker frame
 //
 //-----------------------------------------------------------------------------
-CVTFPickerFrame::CVTFPickerFrame( vgui::Panel *pParent, const char *pTitle ) : 
+CVTFPickerFrame::CVTFPickerFrame( vgui::Panel *pParent, const char *pTitle ) :
 	BaseClass( pParent )
 {
 	SetAssetPicker( new CVTFPicker( this ) );
 	LoadControlSettingsAndUserConfig( "resource/vtfpickerframe.res" );
 	SetTitle( pTitle, false );
 }
-
-
-	

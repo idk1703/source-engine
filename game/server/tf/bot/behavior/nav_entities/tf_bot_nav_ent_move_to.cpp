@@ -106,5 +106,3 @@ ActionResult< CTFBot >	CTFBotNavEntMoveTo::Update( CTFBot *me, float interval )
 
 	return Continue();
 }
-
-

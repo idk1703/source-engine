@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -27,10 +27,10 @@ class CPortalgunEffect
 {
 public:
 
-	CPortalgunEffect( void ) 
-		: m_vecColor( 255, 255, 255 ), 
-		  m_bVisibleViewModel( true ), 
-		  m_bVisible3rdPerson( true ), 
+	CPortalgunEffect( void )
+		: m_vecColor( 255, 255, 255 ),
+		  m_bVisibleViewModel( true ),
+		  m_bVisible3rdPerson( true ),
 		  m_nAttachment( -1 )
 	{}
 
@@ -106,7 +106,7 @@ class C_WeaponPortalgun : public CBasePortalCombatWeapon
 public:
 	DECLARE_CLASS( C_WeaponPortalgun, CBasePortalCombatWeapon );
 
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 private:
@@ -126,7 +126,7 @@ public:
 		static Vector cone = VECTOR_CONE_10DEGREES;
 		return cone;
 	}
-	
+
 	void Precache ( void );
 
 	virtual void OnRestore( void );

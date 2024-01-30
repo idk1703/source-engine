@@ -79,7 +79,7 @@ public:
 													CreateInterfaceFn fileSystemFactory,
 													CreateInterfaceFn cvarFactory );
 
-	// Call this to set an explicit shader version to use 
+	// Call this to set an explicit shader version to use
 	// Must be called before Init().
 	void									SetShaderAPI( const char *pShaderAPIDLL );
 
@@ -93,7 +93,7 @@ private:
 	// Used to dynamically load and unload the shader api
 	CreateInterfaceFn						CreateShaderAPI( const char* pShaderDLL );
 	void									DestroyShaderAPI();
-	
+
 	// Method to get at interfaces supported by the SHADDERAPI
 	void *									QueryShaderAPI( const char *pInterfaceName );
 
@@ -144,7 +144,7 @@ public:
 	virtual bool							OverrideConfig( const MaterialSystem_Config_t &config, bool bForceUpdate );
 	const MaterialSystem_Config_t &			GetCurrentConfigForVideoCard() const;
 
-	// Gets *recommended* configuration information associated with the display card, 
+	// Gets *recommended* configuration information associated with the display card,
 	virtual bool							GetRecommendedConfigurationInfo( int nDXLevel, KeyValues * pKeyValues );
 
 	// IShaderUtil
@@ -160,7 +160,7 @@ private:
 	void									ReadConfigFromConVars( MaterialSystem_Config_t *pConfig );
 	void									WriteConfigIntoConVars( const MaterialSystem_Config_t &config );
 
-	// Write dxsupport info to configvars 
+	// Write dxsupport info to configvars
 	void									WriteConfigurationInfoToConVars( bool bOverwriteCommandLineValues = true );
 
 
@@ -208,7 +208,7 @@ public:
 
 	const MaterialSystemHardwareIdentifier_t &GetVideoCardIdentifier() const;
 
-	// Use this to spew information about the 3D layer 
+	// Use this to spew information about the 3D layer
 	void									SpewDriverInfo() const;
 
 	DELEGATE_TO_OBJECT_2V(					GetDXLevelDefaults, uint &, uint &, g_pShaderAPI );
@@ -314,11 +314,11 @@ public:
 	// Image formats
 	//---------------------------------------------------------
 	ImageFormatInfo_t const&				ImageFormatInfo( ImageFormat fmt) const;
-	
+
 	int										GetMemRequired( int width, int height, int depth, ImageFormat format, bool mipmap );
 
 	bool									ConvertImageFormat( unsigned char *src, enum ImageFormat srcImageFormat,
-																unsigned char *dst, enum ImageFormat dstImageFormat, 
+																unsigned char *dst, enum ImageFormat dstImageFormat,
 																int width, int height, int srcStride = 0, int dstStride = 0 );
 
 
@@ -393,7 +393,7 @@ public:
 	bool									IsMaterialLoaded( const char *materialName );
 	virtual IMaterial *						FindProceduralMaterial( const char *pMaterialName, const char *pTextureGroupName, KeyValues *pVMTKeyValues );
 	const char *							GetForcedTextureLoadPathID() { return m_pForcedTextureLoadPathID; }
-	
+
 	void									SetAsyncTextureLoadCache( void* h );
 	void									SetVMTFileLoadCache( void* h );
 
@@ -422,11 +422,11 @@ public:
 	void									UpdateExcludedTextures( void );
 
 	// Creates a procedural texture
-	ITexture *								CreateProceduralTexture( const char	*pTextureName, 
-																		const char			*pTextureGroupName, 
-																		int					w, 
-																		int					h, 
-																		ImageFormat			fmt, 
+	ITexture *								CreateProceduralTexture( const char	*pTextureName,
+																		const char			*pTextureGroupName,
+																		int					w,
+																		int					h,
+																		ImageFormat			fmt,
 																		int					nFlags );
 
 	//
@@ -436,36 +436,36 @@ public:
 	void									EndRenderTargetAllocation();	// Simulate an Alt-Tab in here, which causes a release/restore of all resources
 
 	// Creates a texture for use as a render target
-	ITexture *								CreateRenderTargetTexture( int w, 
-																		int h, 
+	ITexture *								CreateRenderTargetTexture( int w,
+																		int h,
 																		RenderTargetSizeMode_t sizeMode,	// Controls how size is generated (and regenerated on video mode change).
 																		ImageFormat	format,
 																		MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED );
 
 	ITexture *								CreateNamedRenderTargetTextureEx(  const char *pRTName,				// Pass in NULL here for an unnamed render target.
-																				int w, 
-																				int h, 
+																				int w,
+																				int h,
 																				RenderTargetSizeMode_t sizeMode,	// Controls how size is generated (and regenerated on video mode change).
-																				ImageFormat format, 
-																				MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED, 
+																				ImageFormat format,
+																				MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED,
 																				unsigned int textureFlags = TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT,
 																				unsigned int renderTargetFlags = 0 );
 
-	ITexture *								CreateNamedRenderTargetTexture( const char *pRTName, 
-																			int w, 
-																			int h, 
+	ITexture *								CreateNamedRenderTargetTexture( const char *pRTName,
+																			int w,
+																			int h,
 																			RenderTargetSizeMode_t sizeMode,	// Controls how size is generated (and regenerated on video mode change).
-																			ImageFormat format, 
-																			MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED, 
-																			bool bClampTexCoords = true, 
+																			ImageFormat format,
+																			MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED,
+																			bool bClampTexCoords = true,
 																			bool bAutoMipMap = false );
 
 	ITexture *								CreateNamedRenderTargetTextureEx2( const char *pRTName,				// Pass in NULL here for an unnamed render target.
-																				int w, 
-																				int h, 
+																				int w,
+																				int h,
 																				RenderTargetSizeMode_t sizeMode,	// Controls how size is generated (and regenerated on video mode change).
-																				ImageFormat format, 
-																				MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED, 
+																				ImageFormat format,
+																				MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED,
 																				unsigned int textureFlags = TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT,
 																				unsigned int renderTargetFlags = 0 );
 
@@ -490,7 +490,7 @@ public:
 
 
 	// -----------------------------------------------------------
-	
+
 	bool									OnDrawMesh( IMesh *pMesh, int firstIndex, int numIndices );
 	bool									OnDrawMesh( IMesh *pMesh, CPrimList *pLists, int nLists );
 	DELEGATE_TO_OBJECT_3( bool,				OnSetFlexMesh, IMesh *, IMesh *, int, GetRenderContextInternal() );
@@ -640,7 +640,7 @@ private:
 	//---------------------------------
 
 	IMaterialProxyFactory *					m_pMaterialProxyFactory;
-	
+
 	//---------------------------------
 	// Callback methods for releasing + restoring video memory
 	CUtlVector< MaterialBufferReleaseFunc_t > m_ReleaseFunc;
@@ -689,7 +689,7 @@ private:
 		BUFFER_CLEAR_TYPE_COUNT
 	};
 
-    IMaterialInternal *						m_pBufferClearObeyStencil[BUFFER_CLEAR_TYPE_COUNT];
+	IMaterialInternal *						m_pBufferClearObeyStencil[BUFFER_CLEAR_TYPE_COUNT];
 	IMaterialInternal *						m_pDrawFlatMaterial;
 	IMaterialInternal *						m_pRenderTargetBlitMaterial;
 	CUtlVector< IMaterialInternal* >		m_pCompositorMaterials;

@@ -40,7 +40,7 @@ public:
 
 	virtual void OnThink();
 
-	virtual bool ShouldDraw();	
+	virtual bool ShouldDraw();
 	virtual void Paint( void );
 
 private:
@@ -54,7 +54,7 @@ private:
 	CPanelAnimationVar( vgui::HFont, m_hHealthFont, "NumberFont", "HudNumbers" );
 	CPanelAnimationVarAliasType( float, health_xpos, "digit_xpos", "50", "proportional_float" );
 	CPanelAnimationVarAliasType( float, health_ypos, "digit_ypos", "2", "proportional_float" );
-};	
+};
 
 DECLARE_HUDELEMENT( CHudHealth );
 
@@ -73,7 +73,7 @@ CHudHealth::CHudHealth( const char *pElementName ) : CHudElement( pElementName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHealth::Init()
 {
@@ -86,7 +86,7 @@ void CHudHealth::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHealth::ApplySchemeSettings( IScheme *scheme )
 {
@@ -97,7 +97,7 @@ void CHudHealth::ApplySchemeSettings( IScheme *scheme )
 	if( !m_pHealthIcon )
 	{
 		m_pHealthIcon = gHUD.GetIcon( "health_icon" );
-	}	
+	}
 
 	if( m_pHealthIcon )
 	{
@@ -116,13 +116,13 @@ void CHudHealth::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHealth::OnThink()
 {
 	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
 	if ( !pPlayer )
-		return; 
+		return;
 
 	// Never below zero.
 	int nHealth = MAX( pPlayer->GetHealth(), 0 );
@@ -152,7 +152,7 @@ void CHudHealth::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudHealth::ShouldDraw()
 {
@@ -164,7 +164,7 @@ bool CHudHealth::ShouldDraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHealth::Paint( void )
 {
@@ -205,7 +205,7 @@ public:
 
 	virtual void OnThink();
 
-	virtual bool ShouldDraw();	
+	virtual bool ShouldDraw();
 	virtual void Paint();
 
 private:
@@ -259,7 +259,7 @@ void CHudArmor::ApplySchemeSettings( IScheme *scheme )
 	if( !m_pArmorIcon )
 	{
 		m_pArmorIcon = gHUD.GetIcon( "shield_bright" );
-	}	
+	}
 
 	if( m_pArmorIcon )
 	{

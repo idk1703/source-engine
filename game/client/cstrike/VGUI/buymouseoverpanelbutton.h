@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,7 +33,7 @@ private:
 	typedef MouseOverPanelButton BaseClass;
 public:
 	BuyMouseOverPanelButton(vgui::Panel *parent, const char *panelName, vgui::EditablePanel *panel) :
-	  MouseOverPanelButton( parent, panelName, panel)	
+	  MouseOverPanelButton( parent, panelName, panel)
 	  {
 		m_iPrice = 0;
 		m_iPreviousPrice = 0;
@@ -59,7 +59,7 @@ public:
 		}
 	  }
 
-	virtual void ApplySettings( KeyValues *resourceData ) 
+	virtual void ApplySettings( KeyValues *resourceData )
 	{
 		BaseClass::ApplySettings( resourceData );
 
@@ -74,7 +74,7 @@ public:
 		{
 			m_iASRestrict = kv->GetInt(); // save the as_restrict away
 		}
-		
+
 		kv = resourceData->FindKey( "de_useonly", false );
 		if( kv ) // if this button has a map limitation for it
 		{
@@ -114,7 +114,7 @@ public:
 		}
 #endif
 	}
-	
+
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
 	{
 		BaseClass::ApplySchemeSettings( pScheme );
@@ -137,7 +137,7 @@ public:
 		{
 			if ( GetParent() )
 			{
-				Panel *pPanel = dynamic_cast< Panel * >(GetParent()->FindChildByName( "MarketSticker" ) ); 
+				Panel *pPanel = dynamic_cast< Panel * >(GetParent()->FindChildByName( "MarketSticker" ) );
 
 				if ( pPanel )
 				{
@@ -165,7 +165,7 @@ public:
 			{
 				SetFgColor( m_bargainColor );
 			}
-			
+
 			SetCommand( m_command );
 		}
 	}
@@ -258,11 +258,11 @@ public:
 				pLabel->SetVisible( true );
 			}
 
-			ImagePanel *pImage = dynamic_cast< ImagePanel * >(m_pBlackMarketPrice->FindChildByName( "classimage" ) );	
+			ImagePanel *pImage = dynamic_cast< ImagePanel * >(m_pBlackMarketPrice->FindChildByName( "classimage" ) );
 
 			if ( pImage )
 			{
-				ImagePanel *pClassImage = dynamic_cast< ImagePanel * >(GetClassPanel()->FindChildByName( "classimage" ) );	
+				ImagePanel *pClassImage = dynamic_cast< ImagePanel * >(GetClassPanel()->FindChildByName( "classimage" ) );
 
 				if ( pClassImage )
 				{
@@ -273,7 +273,7 @@ public:
 
 			if ( GetParent() )
 			{
-				Panel *pPanel = dynamic_cast< Panel * >(GetParent()->FindChildByName( "MarketSticker" ) ); 
+				Panel *pPanel = dynamic_cast< Panel * >(GetParent()->FindChildByName( "MarketSticker" ) );
 
 				if ( pPanel )
 				{
@@ -294,7 +294,7 @@ public:
 	{
 		CCSGameRules *pRules = CSGameRules();
 
-		if ( pRules ) 
+		if ( pRules )
 		{
 			if( pRules->IsVIPMap() )
 			{
@@ -335,7 +335,7 @@ public:
 	{
 		return m_command;
 	}
-	
+
 	virtual void ShowPage()
 	{
 		if ( g_lastPanel )

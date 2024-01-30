@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -46,7 +46,7 @@ PackedEntity::~PackedEntity()
 bool PackedEntity::AllocAndCopyPadded( const void *pData, unsigned long size )
 {
 	FreeData();
-	
+
 	unsigned long nBytes = PAD_NUMBER( size, 4 );
 
 	// allocate the memory
@@ -57,10 +57,10 @@ bool PackedEntity::AllocAndCopyPadded( const void *pData, unsigned long size )
 		Assert( m_pData );
 		return false;
 	}
-	
+
 	Q_memcpy( m_pData, pData, size );
 	SetNumBits( nBytes * 8 );
-	
+
 	return true;
 }
 
@@ -101,9 +101,9 @@ bool PackedEntity::CompareRecipients( const CUtlMemory<CSendProxyRecipients> &re
 {
 	if ( recipients.Count() != m_Recipients.Count() )
 		return false;
-	
+
 	return memcmp( recipients.Base(), m_Recipients.Base(), sizeof( CSendProxyRecipients ) * m_Recipients.Count() ) == 0;
-}	
+}
 
 void PackedEntity::SetServerAndClientClass( ServerClass *pServerClass, ClientClass *pClientClass )
 {

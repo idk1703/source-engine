@@ -57,7 +57,7 @@ void CWhoKilledWho::makeBidMap()
 void CWhoKilledWho::generate()
 {
 	init();
-	
+
 
 	makeBidMap();
 
@@ -77,32 +77,32 @@ void CWhoKilledWho::generate()
 	{
 		if ((*it)->getType()==CLogEvent::SUICIDE || (*it)->getType()==CLogEvent::KILLED_BY_WORLD)
 		{
-			
+
 			PID plr=(*it)->getArgument(0)->asPlayerGetPID();
 			int plrTeam=g_pMatchInfo->playerList()[plr].teams.atTime((*it)->getTime());
-			
+
 			pair<int,PID> plrpr(plrTeam,plr);
-			
+
 			int plrbid=bidMap[plrpr];
 			kills[plrbid*size+plrbid]++;
 
 			deaths[plrbid]++;
-			
+
 		}
 		else if ((*it)->getType()==CLogEvent::FRAG || (*it)->getType()==CLogEvent::TEAM_FRAG)
 		{
 			PID killer=(*it)->getArgument(0)->asPlayerGetPID();
 			PID killee=(*it)->getArgument(1)->asPlayerGetPID();
-			
+
 			int killerTeam=g_pMatchInfo->playerList()[killer].teams.atTime((*it)->getTime());
 			int killeeTeam=g_pMatchInfo->playerList()[killee].teams.atTime((*it)->getTime());
 
 			pair<int,PID> killerpr(killerTeam,killer);
 			pair<int,PID> killeepr(killeeTeam,killee);
-			
+
 			int killerbid=bidMap[killerpr];
 			int killeebid=bidMap[killeepr];
-			
+
 			kills[killerbid*size+killeebid]++;
 			deaths[killeebid]++;
 		}
@@ -112,7 +112,7 @@ void CWhoKilledWho::generate()
 //------------------------------------------------------------------------------------------------------
 // Function:	CWhoKilledWho::getCellClass
 // Purpose:	 Helper function that returns the class of a cell on the board depending
-//		on where it occurs in the board. 
+//		on where it occurs in the board.
 // Input:	u - the x position of the cell
 //				v - the y position of the cell
 // Output:	const char*
@@ -148,12 +148,12 @@ void CWhoKilledWho::writeHTML(CHTMLFile& html)
 	int numcols=size+2;
 	int numrows=size+4;
 	int i=0,j=0;
-	
+
 	int playerNameWid=120;
 	int cellWid=20;
 	int lastColWid=30;
 	int tableWid=playerNameWid+size*cellWid+lastColWid;
-	
+
 	html.write("<img src=\"%s/detailed.gif\">",g_pApp->supportHTTPPath.c_str());
 
 	string jshttppath(g_pApp->supportHTTPPath);
@@ -161,10 +161,10 @@ void CWhoKilledWho::writeHTML(CHTMLFile& html)
 
 	html.write("<script language=\"JavaScript\" src=\"%s\"></script>\n",jshttppath.c_str());
 	html.write("<script language=\"JavaScript\">\n<!--\nthisBrowser = new BrowserType();\nthisBrowser.VerifyIE5()//-->\n</script>\n");
-	
+
 	html.write("<script language=\"JavaScript\"> thisBrowser.writeDetailTableTag(%li,%li,%li); </script>\n",tableWid,numrows,numcols);
-	
-	
+
+
 	//print columns
 	html.write("<tr class=header align=center> <td width=%li align =left><font class=boardtext>Player</font></td>\n",playerNameWid);
 	for (i=0;i<size;i++)
@@ -176,7 +176,7 @@ void CWhoKilledWho::writeHTML(CHTMLFile& html)
 	}
 	html.write("<td align=left width=%li><font class=boardtext>Kills</font></th>\n",lastColWid);
 	html.write("</tr>\n");
-	
+
 
 	int totalkills=0;
 	int killerbid;
@@ -189,13 +189,13 @@ void CWhoKilledWho::writeHTML(CHTMLFile& html)
 		//int tid=g_pMatchInfo->playerTeamID(pids[killerbid]);
 		int tid=bidMap2[killerbid].first;
 		html.write("<tr><td class=boardcell_b align=left width=%li><font class=player%s><nobr>%d. %s</nobr></font></th>\n",playerNameWid,Util::teamcolormap[tid], killerbid,truncatedPlayerName);
-		
+
 		int killeebid;
 		for (killeebid=0;killeebid<size;++killeebid)
 		{
 			const char* tdclass=getCellClass(killeebid,killerbid);
 			html.write("<td align=center width=%li %s><font class=boardtext>%i</font></td>\n",cellWid,tdclass,kills[killerbid*size+killeebid]);
-			
+
 			if (killeebid != killerbid)
 				tot+=kills[killerbid*size+killeebid];
 			else
@@ -206,7 +206,7 @@ void CWhoKilledWho::writeHTML(CHTMLFile& html)
 		html.write("<td align=center width=%li><font class=boardtext>%i</font></td>\n",lastColWid,tot);
 		html.write("</tr>\n");
 	}
-	
+
 	html.write("<tr align=left> <td><font class=boardtext>Deaths</font></th>\n");
 
 	int totaldeaths=0;
@@ -215,14 +215,14 @@ void CWhoKilledWho::writeHTML(CHTMLFile& html)
 		html.write("<td align=center><font class=boardtext>%i</font></td>\n",deaths[i]);
 		totaldeaths+=deaths[i];
 	}
-	
+
 	//html.write("<td align=left ><font class=boardtext>%3i\\%3i</font></td>\n",totaldeaths,totalkills);
 	html.write("<td></td>\n");
 	html.write("</tr>\n");
 	html.write("</table>\n");
 
 }
-	
+
 //------------------------------------------------------------------------------------------------------
 // Function:	CWhoKilledWho::~CWhoKilledWho
 // Purpose:	 destructor

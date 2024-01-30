@@ -90,7 +90,7 @@ const char *PchNameFromEGCTransactionAuditReason( EGCTransactionAuditReason eAud
 
 enum EGCTransactionAuditInsertReason
 {
-	k_EGCTransactionAuditInsert_Invalid = 0,					// 
+	k_EGCTransactionAuditInsert_Invalid = 0,					//
 	k_EGCTransactionAuditInsert_CDKey = 1,						// A CD Key was used for this transaction.
 	k_EGCTransactionAuditInsert_SettlementNoMatch_Failed = 2,	// We inserted a failed record during settlement to unblock the process.
 	k_EGCTransactionAuditInsert_SettlementNoMatch_Pending = 3,	// We inserted a pending record during settlement to unblock the process.
@@ -242,13 +242,13 @@ struct econ_store_entry_t
 
 	void SetItemDefinitionIndex( item_definition_index_t usDefIndex );
 	item_definition_index_t GetItemDefinitionIndex() const { return m_usDefIndex; }
-	
+
 	void InitCategoryTags( const char *pTags );	// Sets m_pchCategoryTags and initializes m_vecTagIds and m_fRentalPriceScale
 
 	bool IsListedInCategory( StoreCategoryID_t unID ) const;	// Is this item listed in the given category?
 	bool IsListedInSubcategories( const CEconStoreCategoryManager::StoreCategory_t &Category ) const;	// Is this item listed in one of Category's subcategories?
 	bool IsListedInCategoryOrSubcategories( const CEconStoreCategoryManager::StoreCategory_t &Category ) const;	// Is this item listed in Category or one of Category's subcategories?
-	
+
 	bool IsOnSale( ECurrency eCurrency ) const;
 	bool IsRentable() const;
 #ifdef CLIENT_DLL
@@ -305,7 +305,7 @@ struct econ_store_entry_t
 		// Weird-looking pattern: we're making sure that the value we're about to return fits correctly
 		// into the variable we're about to put it into. We do this to avoid integer conversion problems,
 		// especially overflow (!) where someone changes one of the return type or the storage type but
-		// not the other. 
+		// not the other.
 		Assert( (item_price_t)m_unSaleCosts[eCurrency] == m_unSaleCosts[eCurrency] );
 		return m_unSaleCosts[eCurrency];
 	}
@@ -365,7 +365,7 @@ struct econ_store_entry_t
 	{
 		m_unGiftSteamPackageID = unGiftSteamPackageID;
 	}
-	
+
 	void SetDate( const char* pszDate )
 	{
 		m_strDate.Set( pszDate );
@@ -424,7 +424,7 @@ private:
 		StoreCategoryID_t		m_unID;									// The category ID
 	};
 	CCopyableUtlVector< CategoryTag_t >	m_vecCategoryTags;				// Category tag data
-	
+
 	const char					*m_pchCategoryTags;						// All tags - this string will something like: "New" or "Weapons+New" etc.
 };
 
@@ -519,7 +519,7 @@ public:
 
 	typedef CUtlMap<uint16, econ_store_entry_t> EconStoreEntryMap_t;
 	EconStoreEntryMap_t &GetEntries() { return m_mapEntries; }
-	
+
 #ifdef GC_DLL
 	econ_store_entry_t *GetEntryWriteable( item_definition_index_t unDefIndex );
 #endif // GC_DLL
@@ -578,7 +578,7 @@ private:
 private:
 	void Clear();
 	uint32 CalculateHashFromItems() const;
-	
+
 	KeyValues	*m_pKVRaw;
 	RTime32		m_RTimeVersionStamp;
 	CEconStoreCategoryManager::StoreCategory_t	m_FeaturedItems;		// Special section, not a tab, kept outside m_vecContents

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -21,16 +21,16 @@ struct MovieInfo_t;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 abstract_class IVideoMode
 {
-public:	
+public:
 	virtual					~IVideoMode() {}
 	virtual	bool			Init( ) = 0;
 	virtual void			Shutdown( void ) = 0;
 
-	// Shows the start-up graphics based on the mod 
+	// Shows the start-up graphics based on the mod
 	// (Filesystem path for the mod must be set up first)
 	virtual void			DrawStartupGraphic() = 0;
 
@@ -106,13 +106,13 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Singleton accessor 
+// Singleton accessor
 //-----------------------------------------------------------------------------
 extern IVideoMode *videomode;
 
 
 //-----------------------------------------------------------------------------
-// Class factory 
+// Class factory
 //-----------------------------------------------------------------------------
 void VideoMode_Create();
 void VideoMode_Destroy();

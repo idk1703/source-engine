@@ -39,7 +39,7 @@ class CSave : public ISave
 {
 public:
 	CSave( CSaveRestoreData *pdata );
-	
+
 	//---------------------------------
 	// Logging
 	void			StartLogging( const char *pszLogName );
@@ -56,23 +56,23 @@ public:
 	//---------------------------------
 	// Datamap based writing
 	//
-	
+
 	int				WriteAll( const void *pLeafObject, datamap_t *pLeafMap )	{ return DoWriteAll( pLeafObject, pLeafMap, pLeafMap ); }
-	
+
 	int				WriteFields( const char *pname, const void *pBaseData, datamap_t *pMap, typedescription_t *pFields, int fieldCount );
 
 	//---------------------------------
 	// Block support
 	//
-	
+
 	virtual void	StartBlock( const char *pszBlockName );
 	virtual void	StartBlock();
 	virtual void	EndBlock();
-	
+
 	//---------------------------------
 	// Primitive types
 	//
-	
+
 	void			WriteShort( const short *value, int count = 1 );
 	void			WriteInt( const int *value, int count = 1 );		                           // Save an int
 	void			WriteBool( const bool *value, int count = 1 );		                           // Save a bool
@@ -103,7 +103,7 @@ public:
 	//---------------------------------
 	// Game types
 	//
-	
+
 	void			WriteTime( const char *pname, const float *value, int count = 1 );	           // Save a float (timevalue)
 	void			WriteTick( const char *pname, const int *value, int count = 1 );	           // Save a int (timevalue)
 	void			WritePositionVector( const char *pname, const Vector &value );		           // Offset for landmark if necessary
@@ -131,7 +131,7 @@ public:
 	void			WriteInterval( const char *pname, const interval_t *value, int count = 1 );
 
 	//---------------------------------
-	
+
 	int				EntityIndex( const CBaseEntity *pEntity );
 	int				EntityFlagsSet( int entityIndex, int flags );
 
@@ -144,16 +144,16 @@ private:
 	void			Log( const char *pName, fieldtype_t fieldType, void *value, int count );
 
 	//---------------------------------
-	
+
 	void			BufferField( const char *pname, int size, const char *pdata );
 	void			BufferData( const char *pdata, int size );
 	void			WriteHeader( const char *pname, int size );
 
 	int				DoWriteAll( const void *pLeafObject, datamap_t *pLeafMap, datamap_t *pCurMap );
 	bool 			WriteField( const char *pname, void *pData, datamap_t *pRootMap, typedescription_t *pField );
-	
+
 	bool 			WriteBasicField( const char *pname, void *pData, datamap_t *pRootMap, typedescription_t *pField );
-	
+
 	int				DataEmpty( const char *pdata, int size );
 	void			BufferString( char *pdata, int len );
 
@@ -163,17 +163,17 @@ private:
 	//---------------------------------
 	// Game info methods
 	//
-	
+
 	bool			WriteGameField( const char *pname, void *pData, datamap_t *pRootMap, typedescription_t *pField );
 	int				EntityIndex( const edict_t *pentLookup );
-	
+
 	//---------------------------------
-	
+
 	CUtlVector<int> m_BlockStartStack;
-	
+
 	// Stream data
 	CSaveRestoreSegment *m_pData;
-	
+
 	// Game data
 	CGameSaveRestoreInfo *m_pGameInfo;
 
@@ -191,32 +191,32 @@ class CRestore : public IRestore
 {
 public:
 	CRestore( CSaveRestoreData *pdata );
-	
+
 	int				GetReadPos() const;
 	void			SetReadPos( int pos );
 
 	//---------------------------------
 	// Datamap based reading
 	//
-	
+
 	int				ReadAll( void *pLeafObject, datamap_t *pLeafMap )	{ return DoReadAll( pLeafObject, pLeafMap, pLeafMap ); }
-	
+
 	int				ReadFields( const char *pname, void *pBaseData, datamap_t *pMap, typedescription_t *pFields, int fieldCount );
 	void 			EmptyFields( void *pBaseData, typedescription_t *pFields, int fieldCount );
 
 	//---------------------------------
 	// Block support
 	//
-	
+
 	virtual void	StartBlock( SaveRestoreRecordHeader_t *pHeader );
 	virtual void	StartBlock( char szBlockName[SIZE_BLOCK_NAME_BUF] );
 	virtual void	StartBlock();
 	virtual void	EndBlock();
-	
+
 	//---------------------------------
 	// Field header cracking
 	//
-	
+
 	void			ReadHeader( SaveRestoreRecordHeader_t *pheader );
 	int				SkipHeader()	{ SaveRestoreRecordHeader_t header; ReadHeader( &header ); return header.size; }
 	const char *	StringFromHeaderSymbol( int symbol );
@@ -224,7 +224,7 @@ public:
 	//---------------------------------
 	// Primitive types
 	//
-	
+
 	short			ReadShort( void );
 	int				ReadShort( short *pValue, int count = 1, int nBytesAvailable = 0);
 	int				ReadInt( int *pValue, int count = 1, int nBytesAvailable = 0);
@@ -239,26 +239,26 @@ public:
 	int				ReadQuaternion( Quaternion *pValue );
 	int				ReadQuaternion( Quaternion *pValue, int count = 1, int nBytesAvailable = 0);
 	int				ReadVMatrix( VMatrix *pValue, int count = 1, int nBytesAvailable = 0);
-	
+
 	//---------------------------------
 	// Game types
 	//
-	
+
 	int				ReadTime( float *pValue, int count = 1, int nBytesAvailable = 0);
 	int				ReadTick( int *pValue, int count = 1, int nBytesAvailable = 0);
 	int				ReadPositionVector( Vector *pValue );
 	int				ReadPositionVector( Vector *pValue, int count = 1, int nBytesAvailable = 0);
 	int				ReadFunction( datamap_t *pMap, inputfunc_t **pValue, int count = 1, int nBytesAvailable = 0);
-	
+
 	int 			ReadEntityPtr( CBaseEntity **ppEntity, int count = 1, int nBytesAvailable = 0 );
 	int				ReadEdictPtr( edict_t **ppEdict, int count = 1, int nBytesAvailable = 0 );
 	int				ReadEHandle( EHANDLE *pEHandle, int count = 1, int nBytesAvailable = 0 );
 	int				ReadVMatrixWorldspace( VMatrix *pValue, int count = 1, int nBytesAvailable = 0);
 	int				ReadMatrix3x4Worldspace( matrix3x4_t *pValue, int nElems = 1, int nBytesAvailable = 0 );
 	int				ReadInterval( interval_t *interval, int count = 1, int nBytesAvailable = 0 );
-	
+
 	//---------------------------------
-	
+
 	void			SetGlobalMode( int global ) { m_global = global; }
 	void			PrecacheMode( bool mode ) { m_precache = mode; }
 	bool			GetPrecacheMode( void ) { return m_precache; }
@@ -269,17 +269,17 @@ private:
 	//---------------------------------
 	// Read primitives
 	//
-	
+
 	char *			BufferPointer( void );
 	void			BufferSkipBytes( int bytes );
-	
+
 	int				DoReadAll( void *pLeafObject, datamap_t *pLeafMap, datamap_t *pCurMap );
-	
+
 	typedescription_t *FindField( const char *pszFieldName, typedescription_t *pFields, int fieldCount, int *pIterator );
 	void			ReadField( const SaveRestoreRecordHeader_t &header, void *pDest, datamap_t *pRootMap, typedescription_t *pField );
-	
+
 	void 			ReadBasicField( const SaveRestoreRecordHeader_t &header, void *pDest, datamap_t *pRootMap, typedescription_t *pField );
-	
+
 	void			BufferReadBytes( char *pOutput, int size );
 
 	template <typename T>
@@ -287,7 +287,7 @@ private:
 	{
 		int desired = nElems * sizeof(T);
 		int actual;
-		
+
 		if ( nBytesAvailable == 0 )
 			actual = desired;
 		else
@@ -297,10 +297,10 @@ private:
 		}
 
 		BufferReadBytes( (char *)pValue, actual );
-		
+
 		if ( actual < nBytesAvailable )
 			BufferSkipBytes( nBytesAvailable - actual );
-		
+
 		return ( actual / sizeof(T) );
 	}
 
@@ -312,11 +312,11 @@ private:
 	//
 	CBaseEntity *	EntityFromIndex( int entityIndex );
 	void 			ReadGameField( const SaveRestoreRecordHeader_t &header, void *pDest, datamap_t *pRootMap, typedescription_t *pField );
-	
+
 	//---------------------------------
-	
+
 	CUtlVector<int> m_BlockEndStack;
-	
+
 	// Stream data
 	CSaveRestoreSegment *m_pData;
 

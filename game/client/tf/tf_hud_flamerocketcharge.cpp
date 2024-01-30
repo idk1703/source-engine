@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -24,7 +24,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudFlameRocketChargeMeter : public CHudElement, public EditablePanel
 {
@@ -44,7 +44,7 @@ private:
 DECLARE_HUDELEMENT( CHudFlameRocketChargeMeter );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudFlameRocketChargeMeter::CHudFlameRocketChargeMeter( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudFlameRocketCharge" )
 {
@@ -59,7 +59,7 @@ CHudFlameRocketChargeMeter::CHudFlameRocketChargeMeter( const char *pElementName
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudFlameRocketChargeMeter::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -70,7 +70,7 @@ void CHudFlameRocketChargeMeter::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudFlameRocketChargeMeter::ShouldDraw( void )
 {
@@ -107,7 +107,7 @@ bool CHudFlameRocketChargeMeter::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudFlameRocketChargeMeter::OnTick( void )
 {

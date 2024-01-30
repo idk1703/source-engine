@@ -48,9 +48,9 @@ int	g_interactionHoundeyeGroupRetreat					= 0;
 int	g_interactionHoundeyeGroupRalley					= 0;
 
 //=========================================================
-// Specialized Tasks 
+// Specialized Tasks
 //=========================================================
-enum 
+enum
 {
 	TASK_HOUND_CLOSE_EYE = LAST_SHARED_TASK,
 	TASK_HOUND_OPEN_EYE,
@@ -113,7 +113,7 @@ int	ACT_HOUND_GUARD;
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-void CNPC_Houndeye::InitCustomSchedules(void) 
+void CNPC_Houndeye::InitCustomSchedules(void)
 {
 	INIT_CUSTOM_AI(CNPC_Houndeye);
 
@@ -126,7 +126,7 @@ void CNPC_Houndeye::InitCustomSchedules(void)
 
 	ADD_CUSTOM_TASK(CNPC_Houndeye,	TASK_HOUND_GET_PATH_TO_CIRCLE);
 	ADD_CUSTOM_TASK(CNPC_Houndeye,	TASK_HOUND_REVERSE_STRAFE_DIR);
-	
+
 	ADD_CUSTOM_CONDITION(CNPC_Houndeye,	COND_HOUND_GROUP_ATTACK);
 	ADD_CUSTOM_CONDITION(CNPC_Houndeye,	COND_HOUND_GROUP_RETREAT);
 
@@ -139,7 +139,7 @@ void CNPC_Houndeye::InitCustomSchedules(void)
 	ADD_CUSTOM_SCHEDULE(CNPC_Houndeye,	SCHED_HOUND_CHASE_ENEMY);
 	ADD_CUSTOM_SCHEDULE(CNPC_Houndeye,	SCHED_HOUND_COVER_WAIT);
 	ADD_CUSTOM_SCHEDULE(CNPC_Houndeye,	SCHED_HOUND_GROUP_RALLEY);
-	
+
 	ADD_CUSTOM_ACTIVITY(CNPC_Houndeye,	ACT_HOUND_GUARD);
 
 	g_interactionHoundeyeGroupAttack				= CBaseCombatCharacter::GetInteractionID();
@@ -167,12 +167,12 @@ BEGIN_DATADESC( CNPC_Houndeye )
 	DEFINE_FIELD( m_flNextSecondaryAttack,	FIELD_TIME ),
 	DEFINE_FIELD( m_bLoopClockwise,			FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_pEnergyWave,				FIELD_CLASSPTR ),
-	DEFINE_FIELD( m_flEndEnergyWaveTime,		FIELD_TIME ),	
+	DEFINE_FIELD( m_flEndEnergyWaveTime,		FIELD_TIME ),
 
 END_DATADESC()
 
 //=========================================================
-// Classify - indicates this monster's place in the 
+// Classify - indicates this monster's place in the
 // relationship table.
 //=========================================================
 Class_T	CNPC_Houndeye::Classify ( void )
@@ -181,16 +181,16 @@ Class_T	CNPC_Houndeye::Classify ( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
 int CNPC_Houndeye::RangeAttack1Conditions ( float flDot, float flDist )
 {
-	// I'm not allowed to attack if standing in another hound eye 
+	// I'm not allowed to attack if standing in another hound eye
 	// (note houndeyes allowed to interpenetrate)
 	trace_t tr;
-	AI_TraceHull( GetAbsOrigin(), GetAbsOrigin() + Vector(0,0,0.1), 
+	AI_TraceHull( GetAbsOrigin(), GetAbsOrigin() + Vector(0,0,0.1),
 					GetHullMins(), GetHullMaxs(),
 					MASK_NPCSOLID, this, COLLISION_GROUP_NONE, &tr );
 	if (tr.startsolid)
@@ -202,7 +202,7 @@ int CNPC_Houndeye::RangeAttack1Conditions ( float flDot, float flDist )
 		}
 	}
 
-	// If I'm really close to my enemy allow me to attack if 
+	// If I'm really close to my enemy allow me to attack if
 	// I'm facing regardless of next attack time
 	if (flDist < 100 && flDot >= 0.3)
 	{
@@ -249,13 +249,13 @@ float CNPC_Houndeye::MaxYawSpeed ( void )
 	case ACT_CROUCHIDLE://sleeping!
 		ys = 0;
 		break;
-	case ACT_IDLE:	
+	case ACT_IDLE:
 		ys = 60;
 		break;
 	case ACT_WALK:
 		ys = 90;
 		break;
-	case ACT_RUN:	
+	case ACT_RUN:
 		ys = 90;
 		break;
 	case ACT_TURN_LEFT:
@@ -429,7 +429,7 @@ void CNPC_Houndeye::Spawn()
 	m_pEnergyWave			= NULL;
 	m_flEndEnergyWaveTime	= 0;
 
-	SetCollisionGroup( HL2COLLISION_GROUP_HOUNDEYE ); 
+	SetCollisionGroup( HL2COLLISION_GROUP_HOUNDEYE );
 
 	NPCInit();
 }
@@ -459,7 +459,7 @@ void CNPC_Houndeye::Precache()
 
 	UTIL_PrecacheOther("grenade_energy");
 	BaseClass::Precache();
-}	
+}
 
 //------------------------------------------------------------------------------
 // Purpose :
@@ -497,7 +497,7 @@ void CNPC_Houndeye::WarmUpSound ( void )
 }
 
 //=========================================================
-// WarnSound 
+// WarnSound
 //=========================================================
 void CNPC_Houndeye::WarnSound ( void )
 {
@@ -505,21 +505,21 @@ void CNPC_Houndeye::WarnSound ( void )
 }
 
 //=========================================================
-// AlertSound 
+// AlertSound
 //=========================================================
 void CNPC_Houndeye::AlertSound ( void )
 {
 	// only first squad member makes ALERT sound.
 	if ( m_pSquad && !m_pSquad->IsLeader( this ) )
 	{
-		return; 
+		return;
 	}
 
 	EmitSound( "NPC_Houndeye.Alert" );
 }
 
 //=========================================================
-// DeathSound 
+// DeathSound
 //=========================================================
 void CNPC_Houndeye::DeathSound ( void )
 {
@@ -527,7 +527,7 @@ void CNPC_Houndeye::DeathSound ( void )
 }
 
 //=========================================================
-// PainSound 
+// PainSound
 //=========================================================
 void CNPC_Houndeye::PainSound ( void )
 {
@@ -535,8 +535,8 @@ void CNPC_Houndeye::PainSound ( void )
 }
 
 //=========================================================
-// WriteBeamColor - writes a color vector to the network 
-// based on the size of the group. 
+// WriteBeamColor - writes a color vector to the network
+// based on the size of the group.
 //=========================================================
 void CNPC_Houndeye::WriteBeamColor ( void )
 {
@@ -577,7 +577,7 @@ void CNPC_Houndeye::WriteBeamColor ( void )
 		bGreen	= 220;
 		bBlue	= 255;
 	}
-	
+
 	WRITE_BYTE( bRed   );
 	WRITE_BYTE( bGreen );
 	WRITE_BYTE( bBlue  );
@@ -608,11 +608,11 @@ void CNPC_Houndeye::NPCThink(void)
 	{
 		SetCollisionGroup( HL2COLLISION_GROUP_HOUNDEYE );
 	}
-	else 
+	else
 	{
-		// Don't go solid if resting in another houndeye 
+		// Don't go solid if resting in another houndeye
 		trace_t tr;
-		AI_TraceHull( GetAbsOrigin(), GetAbsOrigin() + Vector(0,0,1), 
+		AI_TraceHull( GetAbsOrigin(), GetAbsOrigin() + Vector(0,0,1),
 						GetHullMins(), GetHullMaxs(),
 						MASK_NPCSOLID, this, COLLISION_GROUP_NONE, &tr );
 		if (!tr.startsolid)
@@ -651,7 +651,7 @@ int CNPC_Houndeye::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 
 		m_pSquad->BroadcastInteraction( g_interactionHoundeyeGroupRetreat, NULL, this );
 	}
-	
+
 	return BaseClass::OnTakeDamage_Alive( info );
 }
 
@@ -735,12 +735,12 @@ void CNPC_Houndeye::SonicAttack ( void )
 			{
 				if ( pEntity->IsPlayer() )
 				{
-					// if this entity is a client, and is not in full view, inflict half damage. We do this so that players still 
+					// if this entity is a client, and is not in full view, inflict half damage. We do this so that players still
 					// take the residual damage if they don't totally leave the houndeye's effective radius. We restrict it to clients
 					// so that monsters in other parts of the level don't take the damage and get pissed.
 					flDamageAdjuster *= 0.5;
 				}
-				else if ( !FClassnameIs( pEntity, "func_breakable" ) && !FClassnameIs( pEntity, "func_pushable" ) ) 
+				else if ( !FClassnameIs( pEntity, "func_breakable" ) && !FClassnameIs( pEntity, "func_pushable" ) )
 				{
 					// do not hurt nonclients through walls, but allow damage to be done to breakables
 					continue;
@@ -783,7 +783,7 @@ void CNPC_Houndeye::SonicAttack ( void )
 		}
 	}
 }
-		
+
 //=========================================================
 // start task
 //=========================================================
@@ -797,7 +797,7 @@ void CNPC_Houndeye::StartTask( const Task_t *pTask )
 		{
 			TaskFail(FAIL_NO_ENEMY);
 		}
-		else 
+		else
 		{
 			Vector vTargetPos = GetEnemyLKP();
 			vTargetPos.z	= GetFloorZ(vTargetPos);
@@ -826,7 +826,7 @@ void CNPC_Houndeye::StartTask( const Task_t *pTask )
 		float			flMinRange	= HOUNDEYE_MIN_ATTACK_RADIUS;
 		Vector 			posLos;
 		bool			foundLos	= false;
-		
+
 		if (GetEnemy() != NULL)
 		{
 			foundLos = GetTacticalServices()->FindLos(GetEnemyLKP(),GetEnemy()->EyePosition(), flMinRange, flMaxRange, 0.0, &posLos);
@@ -887,7 +887,7 @@ void CNPC_Houndeye::StartTask( const Task_t *pTask )
 			SetIdealActivity( ACT_RANGE_ATTACK1 );
 			break;
 		}
-	default: 
+	default:
 		{
 			BaseClass::StartTask(pTask);
 			break;
@@ -896,7 +896,7 @@ void CNPC_Houndeye::StartTask( const Task_t *pTask )
 }
 
 //=========================================================
-// RunTask 
+// RunTask
 //=========================================================
 void CNPC_Houndeye::RunTask( const Task_t *pTask )
 {
@@ -910,7 +910,7 @@ void CNPC_Houndeye::RunTask( const Task_t *pTask )
 			{
 				TaskComplete();
 			}
-			
+
 			break;
 		}
 	case TASK_HOUND_CLOSE_EYE:
@@ -948,7 +948,7 @@ void CNPC_Houndeye::RunTask( const Task_t *pTask )
 void CNPC_Houndeye::PrescheduleThink ( void )
 {
 	BaseClass::PrescheduleThink();
-	
+
 	// if the hound is mad and is running, make hunt noises.
 	if ( m_NPCState == NPC_STATE_COMBAT && ( GetActivity() == ACT_RUN ) && random->RandomFloat( 0, 1 ) < 0.2 )
 	{
@@ -1066,10 +1066,10 @@ int CNPC_Houndeye::SelectSchedule( void )
 			// If a group attack was requested attack even if attack conditions not met
 			if ( HasCondition( COND_HOUND_GROUP_ATTACK ))
 			{
-				// Check that I'm not standing in another hound eye 
+				// Check that I'm not standing in another hound eye
 				// before attacking
 				trace_t tr;
-				AI_TraceHull( GetAbsOrigin(), GetAbsOrigin() + Vector(0,0,1), 
+				AI_TraceHull( GetAbsOrigin(), GetAbsOrigin() + Vector(0,0,1),
 								GetHullMins(), GetHullMaxs(),
 								MASK_NPCSOLID, this, COLLISION_GROUP_NONE, &tr );
 				if (!tr.startsolid)
@@ -1085,13 +1085,13 @@ int CNPC_Houndeye::SelectSchedule( void )
 				}
 			}
 
-			// If a group retread was requested 
+			// If a group retread was requested
 			if ( HasCondition( COND_HOUND_GROUP_RETREAT ))
 			{
 				return SCHED_HOUND_GROUP_RETREAT;
 			}
 
-			if ( HasCondition( COND_LIGHT_DAMAGE ) | 
+			if ( HasCondition( COND_LIGHT_DAMAGE ) |
 				 HasCondition( COND_HEAVY_DAMAGE ) )
 			{
 				if ( random->RandomFloat( 0 , 1 ) <= 0.4 )
@@ -1099,7 +1099,7 @@ int CNPC_Houndeye::SelectSchedule( void )
 					trace_t tr;
 					Vector forward;
 					AngleVectors( GetAbsAngles(), &forward );
-					AI_TraceHull( GetAbsOrigin(), GetAbsOrigin() + forward * -128, 
+					AI_TraceHull( GetAbsOrigin(), GetAbsOrigin() + forward * -128,
 						GetHullMins(), GetHullMaxs(),
 						MASK_NPCSOLID, this, COLLISION_GROUP_NONE, &tr );
 
@@ -1113,7 +1113,7 @@ int CNPC_Houndeye::SelectSchedule( void )
 				return SCHED_TAKE_COVER_FROM_ENEMY;
 			}
 
-			// If a group rally was requested 
+			// If a group rally was requested
 			if ( HasCondition( COND_HOUND_GROUP_RALLEY ))
 			{
 				return SCHED_HOUND_GROUP_RALLEY;
@@ -1126,7 +1126,7 @@ int CNPC_Houndeye::SelectSchedule( void )
 					if (!IsAnyoneInSquadAttacking())
 					{
 						EmitSound( "NPC_Houndeye.GroupAttack" );
-						
+
 						m_flSoundWaitTime = gpGlobals->curtime + 1.0;
 
 						m_pSquad->BroadcastInteraction( g_interactionHoundeyeGroupAttack, NULL, this );
@@ -1203,7 +1203,7 @@ bool CNPC_Houndeye::HandleInteraction(int interactionType, void *data, CBaseComb
 //
 //  Run a cirle around my enemy
 //=========================================================
-AI_DEFINE_SCHEDULE 
+AI_DEFINE_SCHEDULE
 (
 	SCHED_HOUND_ATTACK_STRAFE  ,
 
@@ -1228,7 +1228,7 @@ AI_DEFINE_SCHEDULE
 //
 //  Run a cirle around my enemy
 //=========================================================
-AI_DEFINE_SCHEDULE 
+AI_DEFINE_SCHEDULE
 (
 	SCHED_HOUND_ATTACK_STRAFE_REVERSE  ,
 
@@ -1276,7 +1276,7 @@ AI_DEFINE_SCHEDULE
 //
 //  Face enemy, pause, then attack
 //=========================================================
-AI_DEFINE_SCHEDULE 
+AI_DEFINE_SCHEDULE
 (
 	SCHED_HOUND_GROUP_ATTACK  ,
 
@@ -1292,12 +1292,12 @@ AI_DEFINE_SCHEDULE
 	"		COND_NEW_ENEMY"
 	"		COND_ENEMY_DEAD"
 	"		COND_HEAVY_DAMAGE"
-);	
-	
+);
+
 //=========================================================
 // > SCHED_HOUND_GROUP_RETREAT
 //
-//		Take cover from enemy! 
+//		Take cover from enemy!
 //=========================================================
 AI_DEFINE_SCHEDULE
 (
@@ -1323,7 +1323,7 @@ AI_DEFINE_SCHEDULE
 //=========================================================
 // > SCHED_HOUND_GROUP_RALLEY
 //
-//		Run to rally hound! 
+//		Run to rally hound!
 //=========================================================
 AI_DEFINE_SCHEDULE
 (
@@ -1359,7 +1359,7 @@ AI_DEFINE_SCHEDULE
 	"	Interrupts"
 	"		COND_SEE_ENEMY"
 	"		COND_LIGHT_DAMAGE"
-);				
+);
 
 //=========================================================
 // > SCHED_HOUND_RANGE_ATTACK1

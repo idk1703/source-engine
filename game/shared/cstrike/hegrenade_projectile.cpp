@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -17,23 +17,23 @@
 LINK_ENTITY_TO_CLASS( hegrenade_projectile, CHEGrenadeProjectile );
 PRECACHE_WEAPON_REGISTER( hegrenade_projectile );
 
-CHEGrenadeProjectile* CHEGrenadeProjectile::Create( 
-	const Vector &position, 
-	const QAngle &angles, 
-	const Vector &velocity, 
-	const AngularImpulse &angVelocity, 
-	CBaseCombatCharacter *pOwner, 
+CHEGrenadeProjectile* CHEGrenadeProjectile::Create(
+	const Vector &position,
+	const QAngle &angles,
+	const Vector &velocity,
+	const AngularImpulse &angVelocity,
+	CBaseCombatCharacter *pOwner,
 	float timer )
 {
 	CHEGrenadeProjectile *pGrenade = (CHEGrenadeProjectile*)CBaseEntity::Create( "hegrenade_projectile", position, angles, pOwner );
-	
+
 	// Set the timer for 1 second less than requested. We're going to issue a SOUND_DANGER
 	// one second before detonation.
 
 	pGrenade->SetDetonateTimerLength( 1.5 );
 	pGrenade->SetAbsVelocity( velocity );
 	pGrenade->SetupInitialTransmittedGrenadeVelocity( velocity );
-	pGrenade->SetThrower( pOwner ); 
+	pGrenade->SetThrower( pOwner );
 
 	pGrenade->SetGravity( BaseClass::GetGrenadeGravity() );
 	pGrenade->SetFriction( BaseClass::GetGrenadeFriction() );
@@ -42,7 +42,7 @@ CHEGrenadeProjectile* CHEGrenadeProjectile::Create(
 	pGrenade->m_flDamage = 100;
 	pGrenade->m_DmgRadius = pGrenade->m_flDamage * 3.5f;
 	pGrenade->ChangeTeam( pOwner->GetTeamNumber() );
-	pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );	
+	pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );
 
 	// make NPCs afaid of it while in the air
 	pGrenade->SetThink( &CHEGrenadeProjectile::DangerSoundThink );

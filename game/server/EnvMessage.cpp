@@ -36,7 +36,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMessage::Spawn( void )
 {
@@ -50,7 +50,7 @@ void CMessage::Spawn( void )
 	case 1: // Medium radius
 		m_Radius = ATTN_STATIC;
 		break;
-	
+
 	case 2:	// Large radius
 		m_Radius = ATTN_NORM;
 		break;
@@ -58,7 +58,7 @@ void CMessage::Spawn( void )
 	case 3:	//EVERYWHERE
 		m_Radius = ATTN_NONE;
 		break;
-	
+
 	default:
 	case 0: // Small radius
 		m_Radius = SNDLVL_IDLE;
@@ -117,7 +117,7 @@ void CMessage::InputShowMessage( inputdata_t &inputdata )
 	if ( m_sNoise != NULL_STRING )
 	{
 		CPASAttenuationFilter filter( this );
-		
+
 		EmitSound_t ep;
 		ep.m_nChannel = CHAN_BODY;
 		ep.m_pSoundName = (char*)STRING(m_sNoise);
@@ -218,7 +218,7 @@ void CCredits::OnRestore()
 void CCredits::RollOutroCredits()
 {
 	sv_unlockedchapters.SetValue( "15" );
-	
+
 	CBasePlayer *pPlayer = UTIL_GetLocalPlayer();
 
 	CSingleUserRecipientFilter user( pPlayer );

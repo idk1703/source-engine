@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -41,12 +41,12 @@ void CCustomAward::extendedinfo(CHTMLFile& html)
 {
 	if (extraInfoMsg.empty())
 		return;
-	
+
 	char str[500];
 	char outputstring[2000]={0};
-	
+
 	strcpy(str,extraInfoMsg.c_str());
-	
+
 	char delims[]={" \n\t"};
 	char* temp=NULL;
 
@@ -87,7 +87,7 @@ void CCustomAward::extendedinfo(CHTMLFile& html)
 
 		strcat(outputstring," ");
 		strcat(outputstring,word);
-		
+
 		temp=strtok(NULL,delims);
 	}
 
@@ -98,7 +98,7 @@ void CCustomAward::extendedinfo(CHTMLFile& html)
 //------------------------------------------------------------------------------------------------------
 // Function:	CCustomAward::noWinner
 // Purpose:	 writes some html saying that no one won this award. The noWinnerMsg
-// is defined by the user in the configuration file like all other custom 
+// is defined by the user in the configuration file like all other custom
 // award properties
 // Input:	html - the html file to write to
 //------------------------------------------------------------------------------------------------------
@@ -112,7 +112,7 @@ void CCustomAward::noWinner(CHTMLFile& html)
 
 //------------------------------------------------------------------------------------------------------
 // Function:	CCustomAward::readCustomAward
-// Purpose:	 Factory method to read an award from a config file and return an 
+// Purpose:	 Factory method to read an award from a config file and return an
 // instance of the CCustomAward class
 // Input:	f - the configuration file to read from
 //				g_pMatchInfo - a pointer to a matchinfo object to give to the new award
@@ -120,16 +120,16 @@ void CCustomAward::noWinner(CHTMLFile& html)
 //------------------------------------------------------------------------------------------------------
 CCustomAward* CCustomAward::readCustomAward(CTextFile& f)
 {
-	
+
 	const char* token=f.getToken();
 	while (token)
 	{
-		
+
 		if (!stricmp(token,"Award"))
 			break;
 		else if (!stricmp(token,"{"))
 			f.discardBlock();
-		
+
 		token=f.getToken();
 	}
 	if (!token)
@@ -137,16 +137,16 @@ CCustomAward* CCustomAward::readCustomAward(CTextFile& f)
 
 	f.discard("{");
 	token=f.getToken();
-	
+
 	CCustomAward* pCustAward=new TRACKED CCustomAward(g_pMatchInfo);
-	while (token)	
+	while (token)
 	{
 		if (stricmp(token,"trigger")==0)
 		{
-			
+
 			CCustomAwardTrigger* ptrig=CCustomAwardTrigger::readTrigger(f);
 			pCustAward->triggers.push_back(ptrig);
-			
+
 		}
 		else if (stricmp(token,"extraInfo")==0)
 		{
@@ -176,7 +176,7 @@ CCustomAward* CCustomAward::readCustomAward(CTextFile& f)
 		token = f.getToken();
 	}
 
-	
+
 	return pCustAward;
 }
 
@@ -188,7 +188,7 @@ CCustomAward* CCustomAward::readCustomAward(CTextFile& f)
 void CCustomAward::getWinner()
 {
 	fNoWinner=true;
-	
+
 	CEventListIterator it;
 	for (it=g_pMatchInfo->eventList()->begin();it!=g_pMatchInfo->eventList()->end();it++)
 	{
@@ -199,7 +199,7 @@ void CCustomAward::getWinner()
 			{
 				//increase the players count by X score.
 				//scan for best at the end
-				
+
 				//different triggers have the player name/id placed differently. :(
 				//if this returns -1, store based on name. (this way we can give awards to things other than player names
 				//while remaining in this award/trigger hierarchy structure)

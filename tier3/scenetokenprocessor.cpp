@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -41,7 +41,7 @@ CSceneTokenProcessor::CSceneTokenProcessor()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CSceneTokenProcessor::CurrentToken( void )
@@ -54,15 +54,15 @@ const char *CSceneTokenProcessor::ParseNextToken (const char *data)
 	unsigned char    c;
 	int             len;
 	characterset_t	*breaks;
-	
+
 	breaks = &m_BreakSetIncludingColons;
-	
+
 	len = 0;
 	m_szToken[0] = 0;
-	
+
 	if (!data)
 		return NULL;
-		
+
 // skip whitespace
 skipwhite:
 	while ( (c = *data) <= ' ')
@@ -71,7 +71,7 @@ skipwhite:
 			return NULL;                    // end of file;
 		data++;
 	}
-	
+
 // skip // comments
 	if (c=='/' && data[1] == '/')
 	{
@@ -79,7 +79,7 @@ skipwhite:
 			data++;
 		goto skipwhite;
 	}
-	
+
 
 // handle quoted strings specially
 	if (c == '\"')
@@ -117,14 +117,14 @@ skipwhite:
 		if ( IN_CHARACTERSET( *breaks, c ) )
 			break;
 	} while (c>32);
-	
+
 	m_szToken[len] = 0;
 	return data;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : crossline - 
+// Purpose:
+// Input  : crossline -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSceneTokenProcessor::GetToken( bool crossline )
@@ -137,7 +137,7 @@ bool CSceneTokenProcessor::GetToken( bool crossline )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSceneTokenProcessor::TokenAvailable( void )
@@ -162,9 +162,9 @@ bool CSceneTokenProcessor::TokenAvailable( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fmt - 
-//			... - 
+// Purpose:
+// Input  : *fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CSceneTokenProcessor::Error( const char *fmt, ... )
 {
@@ -179,8 +179,8 @@ void CSceneTokenProcessor::Error( const char *fmt, ... )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *buffer - 
+// Purpose:
+// Input  : *buffer -
 //-----------------------------------------------------------------------------
 void CSceneTokenProcessor::SetBuffer( char *buffer )
 {
@@ -198,4 +198,3 @@ void SetTokenProcessorBuffer( const char *buf )
 {
 	g_TokenProcessor.SetBuffer( (char *)buf );
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -16,7 +16,7 @@
 
 	#include "rocket_bazooka.h"
 	#include "dod_player.h"
-	
+
 #endif
 
 
@@ -24,10 +24,10 @@ class CWeaponBazooka : public CDODBaseRocketWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponBazooka, CDODBaseRocketWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponBazooka()  {}
 
 	virtual DODWeaponID GetWeaponID( void ) const		{ return WEAPON_BAZOOKA; }
@@ -49,7 +49,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_bazooka, CWeaponBazooka );
 PRECACHE_WEAPON_REGISTER( weapon_bazooka );
 
-acttable_t CWeaponBazooka::m_acttable[] = 
+acttable_t CWeaponBazooka::m_acttable[] =
 {
 	{ ACT_PRONE_IDLE,						ACT_DOD_PRONE_AIM_BAZOOKA,				false },
 	{ ACT_PRONE_FORWARD,					ACT_DOD_PRONEWALK_IDLE_BAZOOKA,			false },
@@ -76,7 +76,7 @@ acttable_t CWeaponBazooka::m_acttable[] =
 	// Reload ( zoomed or not, prone or not )
 	{ ACT_RELOAD,							ACT_DOD_RELOAD_BAZOOKA,					false },
 	{ ACT_DOD_RELOAD_CROUCH,				ACT_DOD_RELOAD_CROUCH_BAZOOKA,			false },
-	{ ACT_DOD_RELOAD_PRONE,					ACT_DOD_RELOAD_PRONE_BAZOOKA,			false },	
+	{ ACT_DOD_RELOAD_PRONE,					ACT_DOD_RELOAD_PRONE_BAZOOKA,			false },
 	{ ACT_DOD_RELOAD_DEPLOYED,				ACT_DOD_ZOOMLOAD_BAZOOKA,				false },
 	{ ACT_DOD_RELOAD_PRONE_DEPLOYED,		ACT_DOD_ZOOMLOAD_PRONE_BAZOOKA,			false },
 
@@ -94,8 +94,8 @@ void CWeaponBazooka::FireRocket( void )
 	CBasePlayer *pPlayer = GetPlayerOwner();
 
 #ifdef DBGFLAG_ASSERT
-	CBazookaRocket *pRocket = 
-#endif //DEBUG		
+	CBazookaRocket *pRocket =
+#endif //DEBUG
 		CBazookaRocket::Create( pPlayer->Weapon_ShootPosition(), pPlayer->EyeAngles(), pPlayer );
 
 	Assert( pRocket );

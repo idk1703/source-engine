@@ -27,7 +27,7 @@ public:
 
 	bool			IsOnPathTrack()							{ return (m_pCurrentPathTarget != NULL); }
 
-protected:	
+protected:
 	void			InitPathingData( float flTrackArrivalTolerance, float flTargetDistance, float flAvoidDistance );
 	virtual bool	GetTrackPatherTarget( Vector *pPos ) { return false; }
 	virtual CBaseEntity *GetTrackPatherTargetEnt()	{ return NULL; }
@@ -196,7 +196,7 @@ private:
 	// Is pPathTest in "front" of pPath on the same path? (Namely, does GetNext() get us there?)
 	bool IsForwardAlongPath( CPathTrack *pPath, CPathTrack *pPathTest ) const;
 
-	// Purpose: 
+	// Purpose:
 	void UpdateTargetPositionLeading( void );
 
 	// Compute a point n units along a path
@@ -228,7 +228,7 @@ private:
 	// NOTE: CurrentPathTarget changes meaning based on movement direction
 	// For this *after* means the "next" (m_pnext) side of the line segment
 	// and "before" means the "prev" (m_pprevious) side of the line segment
-	// CurrentPathTarget is *after* the desired point when moving forward, 
+	// CurrentPathTarget is *after* the desired point when moving forward,
 	// and *before* the desired point when moving backward.
 	// DestPathTarget + TargetNearestPath always represent points
 	// *after* the desired point.
@@ -252,7 +252,7 @@ private:
 	// Derived class pathing data
 	float			m_flTargetDistanceThreshold;// Distance threshold used to determine when a target has moved enough to update our navigation to it
 	float			m_flAvoidDistance;			//
-	
+
 	float			m_flTargetTolerance;		// How far from a path track do we need to be before we 'reached' it?
 	Vector			m_vecSegmentStartPoint;		// Starting point for the current segment
 	Vector			m_vecSegmentStartSplinePoint;	// Used to define a spline which is used to compute path velocity

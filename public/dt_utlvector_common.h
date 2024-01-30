@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -51,7 +51,7 @@ public:
 		CUtlVector<T,A> *pVec = (CUtlVector<T,A>*)((char*)pStruct + offsetToUtlVector);
 
 		pVec->EnsureCapacity( len );
-		
+
 		int nNumAllocated = pVec->NumAllocated();
 
 		// This is important to do because EnsureCapacity doesn't actually call the constructors

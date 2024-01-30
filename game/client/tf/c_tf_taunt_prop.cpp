@@ -19,7 +19,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_TFTauntProp, DT_TFTauntProp, CTFTauntProp )
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_TFTauntProp::StartSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event, CChoreoActor *actor, CBaseEntity *pTarget )
 {
@@ -45,7 +45,7 @@ bool C_TFTauntProp::StartSceneEvent( CSceneEventInfo *info, CChoreoScene *scene,
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_TFTauntProp::ClearSceneEvent( CSceneEventInfo *info, bool fastKill, bool canceled )
 {

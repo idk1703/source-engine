@@ -34,7 +34,7 @@ class CTFKnife : public CTFWeaponBaseMelee
 public:
 
 	DECLARE_CLASS( CTFKnife, CTFWeaponBaseMelee );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFKnife();
@@ -72,7 +72,7 @@ public:
 	virtual bool		DoSwingTrace( trace_t &trace ) OVERRIDE;
 
 	virtual void		WeaponRegenerate( void ) OVERRIDE;
-	virtual void		WeaponReset( void ) OVERRIDE; 
+	virtual void		WeaponReset( void ) OVERRIDE;
 
 #ifdef GAME_DLL
 	virtual void		ApplyOnInjuredAttributes( CTFPlayer *pVictim, CTFPlayer *pAttacker, const CTakeDamageInfo &info ) OVERRIDE;	// when owner of this weapon is hit

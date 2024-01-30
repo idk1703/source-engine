@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -13,7 +13,7 @@
 #include "clientmode_shared.h"
 #include "tfcviewport.h"
 
-class ClientModeTFCNormal : public ClientModeShared 
+class ClientModeTFCNormal : public ClientModeShared
 {
 DECLARE_CLASS( ClientModeTFCNormal, ClientModeShared );
 
@@ -36,9 +36,9 @@ public:
 	virtual void	FireGameEvent( KeyValues * event);
 	virtual void	PostRenderVGui();
 
-	
+
 private:
-	
+
 	//	void	UpdateSpectatorMode( void );
 
 };

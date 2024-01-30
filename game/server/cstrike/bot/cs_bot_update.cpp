@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -31,7 +31,7 @@ void CCSBot::Upkeep( void )
 
 	if (TheNavMesh->IsGenerating() || !IsAlive())
 		return;
-	
+
 	// If bot_flipout is on, then generate some random commands.
 	if ( cv_bot_flipout.GetBool() )
 	{
@@ -40,7 +40,7 @@ void CCSBot::Upkeep( void )
 			MoveForward();
 		else if ( val == 1 )
 			MoveBackward();
-		
+
 		val = RandomInt( 0, 2 );
 		if ( val == 0 )
 			StrafeLeft();
@@ -49,16 +49,16 @@ void CCSBot::Upkeep( void )
 
 		if ( RandomInt( 0, 5 ) == 0 )
 			Jump( true );
-		
+
 		val = RandomInt( 0, 2 );
 		if ( val == 0 )
 			Crouch();
 		else ( val == 1 );
 			StandUp();
-	
+
 		return;
 	}
-	
+
 	// BOTPORT: Remove this nasty hack
 	m_eyePosition = EyePosition();
 
@@ -114,7 +114,7 @@ void CCSBot::Upkeep( void )
 				}
 				else
 				{
-					// desired part is blocked - aim at whatever part is visible 
+					// desired part is blocked - aim at whatever part is visible
 					if (IsEnemyPartVisible( GUT ))
 					{
 						m_aimSpot = GetPartPosition( GetBotEnemy(), GUT );
@@ -268,7 +268,7 @@ void CCSBot::Update( void )
 	// update our radio chatter
 	// need to allow bots to finish their chatter even if they are dead
 	GetChatter()->Update();
-	
+
 	// check if we are dead
 	if (!IsAlive())
 	{
@@ -412,7 +412,7 @@ void CCSBot::Update( void )
 					else
 					{
 						// attack if fired on
-						doAttack = (IsPlayerLookingAtMe( threat, 0.99f ) && DidPlayerJustFireWeapon( threat ));					
+						doAttack = (IsPlayerLookingAtMe( threat, 0.99f ) && DidPlayerJustFireWeapon( threat ));
 					}
 				}
 				else
@@ -492,7 +492,7 @@ void CCSBot::Update( void )
 			{
 				m_isEnemyVisible = false;
 			}
-				
+
 			// check if enemy died
 			if (m_enemy->IsAlive())
 			{
@@ -563,7 +563,7 @@ void CCSBot::Update( void )
 		EquipBestWeapon();
 	}
 
-	// if we haven't seen an enemy in awhile, and we switched to our pistol during combat, 
+	// if we haven't seen an enemy in awhile, and we switched to our pistol during combat,
 	// switch back to our primary weapon (if it still has ammo left)
 	const float safeRearmTime = 5.0f;
 	if (!IsReloading() && IsUsingPistol() && !IsPrimaryWeaponEmpty() && GetTimeSinceLastSawEnemy() > safeRearmTime)
@@ -679,18 +679,18 @@ void CCSBot::Update( void )
 
 	//
 	// Follow nearby humans if our co-op is high and we have nothing else to do
-	// If we were just following someone, don't auto-follow again for a short while to 
+	// If we were just following someone, don't auto-follow again for a short while to
 	// give us a chance to do something else.
 	//
 	const float earliestAutoFollowTime = 5.0f;
 	const float minAutoFollowTeamwork = 0.4f;
 	if (cv_bot_auto_follow.GetBool() &&
 		TheCSBots()->GetElapsedRoundTime() > earliestAutoFollowTime &&
-		GetProfile()->GetTeamwork() > minAutoFollowTeamwork && 
+		GetProfile()->GetTeamwork() > minAutoFollowTeamwork &&
 		CanAutoFollow() &&
-		!IsBusy() && 
-		!IsFollowing() && 
-		!IsBlind() && 
+		!IsBusy() &&
+		!IsFollowing() &&
+		!IsBlind() &&
 		!GetGameState()->IsAtPlantedBombsite())
 	{
 
@@ -840,7 +840,7 @@ void CCSBot::Update( void )
 
 
 //--------------------------------------------------------------------------------------------------------------
-class DrawTravelTime 
+class DrawTravelTime
 {
 public:
 	DrawTravelTime( const CCSBot *me )
@@ -879,7 +879,7 @@ void CCSBot::DebugDisplay( void ) const
 {
 	const float duration = 0.15f;
 	CFmtStr msg;
-	
+
 	NDebugOverlay::ScreenText( 0.5f, 0.34f, msg.sprintf( "Skill: %d%%", (int)(100.0f * GetProfile()->GetSkill()) ), 255, 255, 255, 150, duration );
 
 	if ( m_pathLadder )
@@ -1059,7 +1059,7 @@ void CCSBot::DebugDisplay( void ) const
 			mstudiobbox_t *pbox = set->pHitbox( i );
 
 			const_cast< CCSBot *>( this )->GetBonePosition( pbox->bone, position, angles );
-		
+
 			AngleVectors( angles, &forward, &right, &up );
 
 			NDebugOverlay::BoxAngles( position, pbox->bbmin, pbox->bbmax, angles, 255, 0, 0, 0, 0.1f );
@@ -1113,10 +1113,10 @@ void CCSBot::DebugDisplay( void ) const
 
 		const float size = 50.0f;
 		//Vector arrow( size * cos( m_forwardAngle * M_PI/180.0f ), size * sin( m_forwardAngle * M_PI/180.0f ), 0.0f );
-		Vector arrow( size * (float)cos( m_lookAheadAngle * M_PI/180.0f ), 
-					  size * (float)sin( m_lookAheadAngle * M_PI/180.0f ), 
+		Vector arrow( size * (float)cos( m_lookAheadAngle * M_PI/180.0f ),
+					  size * (float)sin( m_lookAheadAngle * M_PI/180.0f ),
 					  0.0f );
-		
+
 		UTIL_DrawBeamPoints( from, from + arrow, 1, 0, 255, 255 );
 	}
 
@@ -1168,7 +1168,7 @@ void CCSBot::UpdateTravelDistanceToAllPlayers( void )
 
 			if (!player->IsPlayer())
 				continue;
-			
+
 			if (!player->IsAlive())
 				continue;
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -50,12 +50,12 @@ public:
 	virtual ENotificationType_t GetType() const = 0;
 	virtual float GetReplayTime() const = 0;
 
-	CEconItemHandle& GetItemHandle() { return m_hItem; } 
+	CEconItemHandle& GetItemHandle() { return m_hItem; }
 
 protected:
 	CEconItemHandle m_hItem;
 	RealTimeCountdownTimer	m_timerDialog;
-	RealTimeCountdownTimer	m_timerShow; 
+	RealTimeCountdownTimer	m_timerShow;
 };
 
 //-----------------------------------------------------------------------------
@@ -141,7 +141,7 @@ protected:
 //-----------------------------------------------------------------------------
 // The quest notification panel where a character tells the user about quest state
 //-----------------------------------------------------------------------------
-class CQuestNotificationPanel : public CHudElement, public EditablePanel 
+class CQuestNotificationPanel : public CHudElement, public EditablePanel
 {
 	DECLARE_CLASS_SIMPLE( CQuestNotificationPanel, EditablePanel );
 public:

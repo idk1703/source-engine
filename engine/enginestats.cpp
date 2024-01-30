@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -80,7 +80,7 @@ void CEngineStats::EndFrame( void )
 //-----------------------------------------------------------------------------
 // Advances the next frame for the stats...
 //-----------------------------------------------------------------------------
-void CEngineStats::NextFrame() 
+void CEngineStats::NextFrame()
 {
 }
 
@@ -128,4 +128,3 @@ double CEngineStats::GetRunTime( void )
 {
 	return m_runEndTime - m_runStartTime;
 }
-

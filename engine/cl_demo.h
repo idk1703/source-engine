@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -58,7 +58,7 @@ public: // IDemoPlayer interface implementation:
 	virtual bool	IsPlayingTimeDemo( void );
 	virtual bool	IsSkipping( void );
 	virtual bool	CanSkipBackwards( void ) { return false; }
-	
+
 	virtual void	SetPlaybackTimeScale( float timescale );
 	virtual void	InterpolateViewpoint(); // override viewpoint
 	virtual netpacket_t *ReadPacket( void );
@@ -85,7 +85,7 @@ protected:
 	virtual void	OnStopCommand();
 
 public:
-	
+
 	CDemoFile		m_DemoFile;
 	int				m_nStartTick;	// For synchronizing playback during timedemo.
 	int				m_nPreviousTick;
@@ -113,13 +113,13 @@ public:
 	double			m_flTimeDemoStartTime;	// Sys_FloatTime() at second frame of timedemo
 	float			m_flTotalFPSVariability; // Frame rate variability
 	int				m_nTimeDemoCurrentFrame; // last frame we read a packet
-	
+
 	// benchframe stuff
 	int				m_nSnapshotTick;
 	char			m_SnapshotFilename[MAX_OSPATH];
 };
 
-class CDemoRecorder : public IDemoRecorder 
+class CDemoRecorder : public IDemoRecorder
 {
 public:
 	~CDemoRecorder();
@@ -134,13 +134,13 @@ public:
 	void	PauseRecording( void );
 	void	ResumeRecording( void );
 	void	StopRecording( void );
-	
+
 	void	RecordCommand( const char *cmdstring );  // record a console command
 	void	RecordUserInput( int cmdnumber );  // record a user input command
 	void	RecordMessages( bf_read &data, int bits ); // add messages to current packet
 	void	RecordPacket( void ); // packet finished, write all recorded stuff to file
 	void	RecordServerClasses( ServerClass *pClasses ); // packet finished, write all recorded stuff to file
-	void	RecordStringTables(); 
+	void	RecordStringTables();
 
 	void	ResetDemoInterpolation( void );
 
@@ -163,7 +163,7 @@ public:
 	int				m_nStartTick; // host_tickcount when starting recoring
 
 	// Name of demo file we are appending onto.
-	char			m_szDemoBaseName[ MAX_OSPATH ];  
+	char			m_szDemoBaseName[ MAX_OSPATH ];
 
 	// For demo file handle
 	bool			m_bIsDemoHeader;	// true, if m_hDemoFile is the header file

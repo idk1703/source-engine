@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "cbase.h"
@@ -22,7 +22,7 @@
 class CClientTools;
 
 void DrawSpriteModel( IClientEntity *baseentity, CEngineSprite *psprite,
-						const Vector &origin, float fscale, float frame, 
+						const Vector &origin, float fscale, float frame,
 						int rendermode, int r, int g, int b, int a,
 						const Vector& forward, const Vector& right, const Vector& up, float flHDRColorScale = 1.0f );
 float StandardGlowBlend( const pixelvis_queryparams_t &params, pixelvis_handle_t *queryHandle,
@@ -77,7 +77,7 @@ public:
 	virtual void			UpdateFlashlightState( ClientShadowHandle_t h, const FlashlightState_t &flashlightState );
 	virtual void			AddToDirtyShadowList( ClientShadowHandle_t h, bool force = false );
 	virtual void			MarkRenderToTextureShadowDirty( ClientShadowHandle_t h );
-    virtual void			UpdateProjectedTexture( ClientShadowHandle_t h, bool bForce );
+	virtual void			UpdateProjectedTexture( ClientShadowHandle_t h, bool bForce );
 
 	// Global toggle for recording
 	virtual void			EnableRecordingMode( bool bEnable );
@@ -367,7 +367,7 @@ void CClientTools::DetachFromEntity( EntitySearchResult entityToDetach )
 	HTOOLHANDLE handle = ent->GetToolHandle();
 	ent->SetToolHandle( (HTOOLHANDLE)0 );
 
-	if ( handle == (HTOOLHANDLE)0 ) 
+	if ( handle == (HTOOLHANDLE)0 )
 	{
 		Assert( 0 );
 		return;
@@ -386,8 +386,8 @@ void CClientTools::DetachFromEntity( EntitySearchResult entityToDetach )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : handle - 
+// Purpose:
+// Input  : handle -
 // Output : C_BaseEntity
 //-----------------------------------------------------------------------------
 C_BaseEntity *CClientTools::LookupEntity( HTOOLHANDLE handle )
@@ -457,7 +457,7 @@ void CClientTools::SetEnabled( HTOOLHANDLE handle, bool enabled )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClientTools::SetRecording( HTOOLHANDLE handle, bool recording )
 {
@@ -484,7 +484,7 @@ bool CClientTools::ShouldRecord( HTOOLHANDLE handle )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CClientTools::GetModelIndex( HTOOLHANDLE handle )
 {
@@ -503,7 +503,7 @@ int CClientTools::GetModelIndex( HTOOLHANDLE handle )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char* CClientTools::GetModelName( HTOOLHANDLE handle )
 {
@@ -522,7 +522,7 @@ const char* CClientTools::GetModelName( HTOOLHANDLE handle )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char* CClientTools::GetClassname( HTOOLHANDLE handle )
 {
@@ -540,8 +540,8 @@ const char* CClientTools::GetClassname( HTOOLHANDLE handle )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : handle - 
+// Purpose:
+// Input  : handle -
 //-----------------------------------------------------------------------------
 bool CClientTools::IsValidHandle( HTOOLHANDLE handle )
 {
@@ -751,7 +751,7 @@ void CClientTools::PostToolMessage( KeyValues *pKeyValues )
 		g_pPortalRender->HandlePortalPlaybackMessage( pKeyValues );
 		return;
 	}
-	
+
 	if ( !Q_stricmp( pKeyValues->GetName(), "query CPortalRenderer" ) )
 	{
 		pKeyValues->SetInt( "IsRenderingPortal", g_pPortalRender->IsRenderingPortal() ? 1 : 0 );
@@ -774,7 +774,7 @@ void CClientTools::EnableParticleSystems( bool bEnable )
 // Is the game rendering in 3rd person mode?
 //-----------------------------------------------------------------------------
 bool CClientTools::IsRenderingThirdPerson() const
-{			  
+{
 	return !C_BasePlayer::LocalPlayerInFirstPersonView();
 }
 

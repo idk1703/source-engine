@@ -277,7 +277,7 @@ CPopulationManager::CPopulationManager( void )
 	m_iCurrentWaveIndex = 0;
 	m_nNumConsecutiveWipes = 0;
 	m_nMvMEventPopfileType = MVM_EVENT_POPFILE_NONE;
-	
+
 	SetThink( &CPopulationManager::Update );
 	SetNextThink( gpGlobals->curtime );
 
@@ -285,7 +285,7 @@ CPopulationManager::CPopulationManager( void )
 	m_pMVMStats = MannVsMachineStats_GetInstance();
 
 	m_pKvpMvMMapCycle = NULL;
-	
+
 	ListenForGameEvent( "pve_win_panel" );
 
 	// Endless
@@ -364,14 +364,14 @@ void CPopulationManager::PlayerDoneViewingLoot( const CTFPlayer* pPlayer )
 		&& playerVector.Find( pPlayer ) != playerVector.InvalidIndex() )
 	{
 		m_donePlayers.AddToTail( pPlayer );
-			
+
 		float flTimeRemaining = m_flMapRestartTime - gpGlobals->curtime;
 		const float flMinTime = 15.f;
-		
+
 		if ( flTimeRemaining > flMinTime )
 		{
 			// Figure out if this is restart or kick to lobby time
-			float flReduceTimeBy = ( tf_mm_trusted.GetBool() == true || tf_mvm_disconnect_on_victory.GetBool() == true ) 
+			float flReduceTimeBy = ( tf_mm_trusted.GetBool() == true || tf_mvm_disconnect_on_victory.GetBool() == true )
 								 ? tf_mvm_victory_disconnect_time.GetFloat()
 								 : tf_mvm_victory_reset_time.GetFloat();
 
@@ -397,7 +397,7 @@ void CPopulationManager::PlayerDoneViewingLoot( const CTFPlayer* pPlayer )
 // Purpose : Full Clear of Population Manager State and Data
 //-------------------------------------------------------------------------
 void CPopulationManager::Reset( void )
-{	
+{
 	m_nStartingCurrency = 0;
 	m_canBotsAttackWhileInSpawnRoom = true;
 	m_nRespawnWaveTime = 10;
@@ -780,7 +780,7 @@ void CPopulationManager::GameRulesThink( void )
 }
 
 //-------------------------------------------------------------------------
-// Purpose : 
+// Purpose :
 //-------------------------------------------------------------------------
 void CPopulationManager::UpdateObjectiveResource( void )
 {
@@ -790,7 +790,7 @@ void CPopulationManager::UpdateObjectiveResource( void )
 	}
 
 	TFObjectiveResource()->SetMannVsMachineEventPopfileType( m_nMvMEventPopfileType );
-	
+
 	if ( IsInEndlessWaves() )
 	{
 		TFObjectiveResource()->SetMannVsMachineMaxWaveCount( 0 );
@@ -920,7 +920,7 @@ void CPopulationManager::CycleMission ( void )
 					{
 						const char * pMap = pMission->GetString( "map", "" );
 						const char * pPopfile = pMission->GetString( "popfile", "" );
-						
+
 						if ( !Q_strcmp( pCurrentMap, pMap ) && !Q_strcmp( szCurrentPopfile, pPopfile ) )
 						{
 							// match, advance to the next entry and use those values
@@ -941,7 +941,7 @@ void CPopulationManager::CycleMission ( void )
 				} // for ( int iMap = 1; iMap <= iMapCount; ++iMap )
 			}
 		}  // for ( int iCat = 1; iCat <= iMaxCat; iCat++ )
-	}  
+	}
 
 	// Unable to load mvm mapcycle, load last known
 	LoadLastKnownMission();
@@ -963,7 +963,7 @@ bool CPopulationManager::LoadMissionCycleFile( void )
 //-------------------------------------------------------------------------
 void CPopulationManager::LoadLastKnownMission( void )
 {
-	// 
+	//
 	//
 	bool isLoaded = true;
 	if ( !m_pKvpMvMMapCycle )
@@ -1009,7 +1009,7 @@ void CPopulationManager::LoadLastKnownMission( void )
 //-------------------------------------------------------------------------
 // Returns True if the mission was successfully found and loaded
 //
-bool CPopulationManager::LoadMvMMission ( KeyValues *pNextMission ) 
+bool CPopulationManager::LoadMvMMission ( KeyValues *pNextMission )
 {
 	if ( !pNextMission )
 		return false;
@@ -1148,7 +1148,7 @@ CWave * CPopulationManager::GetCurrentWave( void )
 	{
 		return m_waveVector[m_iCurrentWaveIndex];
 	}
-	
+
 	return NULL;
 }
 
@@ -1167,7 +1167,7 @@ void CPopulationManager::JumpToWave( uint32 waveNumber, float fCleanMoneyPercent
 	CWave * pWave = GetCurrentWave();
 	if ( pWave )
 	{
-		pWave->ForceFinish();	
+		pWave->ForceFinish();
 	}
 	m_bIsWaveJumping = true;
 
@@ -1232,7 +1232,7 @@ void CPopulationManager::JumpToWave( uint32 waveNumber, float fCleanMoneyPercent
 
 //-------------------------------------------------------------------------
 // Report that a wave has been completed
-void CPopulationManager::WaveEnd( bool bSuccess ) 
+void CPopulationManager::WaveEnd( bool bSuccess )
 {
 	m_pMVMStats->RoundEvent_WaveEnd( bSuccess );
 
@@ -1376,7 +1376,7 @@ void CPopulationManager::SetCheckpoint( int waveNumber )
 void CPopulationManager::RestoreItemToCheckpointState( CTFPlayer *player, CEconItemView *item )
 {
 	CheckpointSnapshotInfo *snapshot = FindCheckpointSnapshot( player );
-	
+
 	if ( !snapshot )
 		return;
 
@@ -1400,9 +1400,9 @@ void CPopulationManager::RestoreItemToCheckpointState( CTFPlayer *player, CEconI
 					if ( tf_populator_debug.GetBool() )
 					{
 						const char *upgradeName = g_hUpgradeEntity->GetUpgradeAttributeName( snapshot->m_upgradeVector[u].m_upgrade );
-						DevMsg( "%3.2f: CHECKPOINT_RESTORE_ITEM: Player '%s', item '%s', upgrade '%s'\n", 
-								gpGlobals->curtime, 
-								player->GetPlayerName(), 
+						DevMsg( "%3.2f: CHECKPOINT_RESTORE_ITEM: Player '%s', item '%s', upgrade '%s'\n",
+								gpGlobals->curtime,
+								player->GetPlayerName(),
 								item->GetStaticData()->GetItemBaseName(),
 								upgradeName ? upgradeName : "<self>" );
 					}
@@ -1418,7 +1418,7 @@ void CPopulationManager::RestoreItemToCheckpointState( CTFPlayer *player, CEconI
 void CPopulationManager::ForgetOtherBottleUpgrades ( CTFPlayer *player, CEconItemView *pItem, int upgradeToKeep )
 {
 	PlayerUpgradeHistory *history = FindOrAddPlayerUpgradeHistory( player );
-	
+
 	// This only applies to the current class, skip bottle upgrades for other classes
 	int iClass = player->GetPlayerClass()->GetClassIndex();
 	for( int i = 0; i < history->m_upgradeVector.Count(); ++i )
@@ -1526,7 +1526,7 @@ void CPopulationManager::RestoreCheckpoint( void )
 		// Create new Entry since we Purged the list
 		PlayerUpgradeHistory *history = FindOrAddPlayerUpgradeHistory( snapshot->m_steamId );
 		history->m_currencySpent = snapshot->m_currencySpent;
-		
+
 		for (int j = 0; j < snapshot->m_upgradeVector.Count(); ++j )
 		{
 			history->m_upgradeVector.AddToTail( snapshot->m_upgradeVector[j] );
@@ -1625,7 +1625,7 @@ void CPopulationManager::OnCurrencyCollected( int nAmount, bool bCountAsDropped,
 		iWaveNumber--;
 	}
 
-	if ( bCountAsDropped ) 
+	if ( bCountAsDropped )
 	{
 		m_pMVMStats->RoundEvent_CreditsDropped( iWaveNumber, nAmount );
 	}
@@ -1707,7 +1707,7 @@ void CPopulationManager::AdjustMinPlayerSpawnTime( void )
 	}
 	else
 	{
-		flTime = m_bFixedRespawnWaveTime ? m_nRespawnWaveTime : 
+		flTime = m_bFixedRespawnWaveTime ? m_nRespawnWaveTime :
 			MIN( m_nRespawnWaveTime, float( iWaveNum * kMvMRespawnTimeAddPerWave ) );
 	}
 	TFGameRules()->SetTeamRespawnWaveTime( TF_TEAM_PVE_DEFENDERS, flTime );
@@ -1778,7 +1778,7 @@ void CPopulationManager::MvMVictory()
 void CPopulationManager::GetSentryBusterDamageAndKillThreshold( int &nDamage, int &nKills ) const
 {
 	const int nSentryThreshold = 2;
-	
+
 	int nSentries = 0;
 	for ( int i=0; i<IBaseObjectAutoList::AutoList().Count(); ++i )
 	{
@@ -1827,7 +1827,7 @@ float CPopulationManager::GetDamageMultiplier ()
 
 	// Find out how many times over t
 	// Floor of the result, ie 9 / 7 returns 1, 15 / 7 returns 2;
-	//int nRepeatCount = m_iCurrentWaveIndex / tf_mvm_endless_scale_rate.GetInt();	
+	//int nRepeatCount = m_iCurrentWaveIndex / tf_mvm_endless_scale_rate.GetInt();
 	//return tf_populator_damage_multiplier.GetFloat() + tf_mvm_endless_damage_boost_rate.GetFloat() * nRepeatCount;
 }
 
@@ -1901,7 +1901,7 @@ void CPopulationManager::EndlessParseBotUpgrades ()
 void CPopulationManager::EndlessRollEscalation( void )
 {
 	// Get the wave and calculate the amount of "money" the bots have
-	
+
 	// for now
 	int nBotCash = ( m_iCurrentWaveIndex * tf_mvm_endless_bot_cash.GetFloat() );
 
@@ -1981,7 +1981,7 @@ void CPopulationManager::EndlessRollEscalation( void )
 		V_sprintf_safe( line, "-%s %.1f\n", m_EndlessActiveBotUpgrades[iUpgrade].szAttrib, m_EndlessActiveBotUpgrades[iUpgrade].flValue );
 		V_strcat_safe( msg, line );
 	}
-	
+
 	UTIL_CenterPrintAll( msg );
 	UTIL_ClientPrintAll( HUD_PRINTCONSOLE, msg );
 }
@@ -2236,7 +2236,7 @@ bool CPopulationManager::Parse( void )
 					if ( m_waveVector.IsValidIndex( i ) )
 					{
 						CWave *pWave = m_waveVector[ i ];
-					
+
 						unsigned int iFlags = MVM_CLASS_FLAG_MISSION;
 						if ( pMission->m_spawner->IsMiniBoss() )
 						{
@@ -2309,7 +2309,7 @@ CPopulationManager::PlayerUpgradeHistory *CPopulationManager::FindOrAddPlayerUpg
 {
 	FOR_EACH_VEC( m_playerUpgrades, i )
 	{
-		if ( steamId == m_playerUpgrades[i]->m_steamId ) 
+		if ( steamId == m_playerUpgrades[i]->m_steamId )
 		{
 			return m_playerUpgrades[i];
 		}
@@ -2317,7 +2317,7 @@ CPopulationManager::PlayerUpgradeHistory *CPopulationManager::FindOrAddPlayerUpg
 
 	PlayerUpgradeHistory *history = new PlayerUpgradeHistory;
 
-	history->m_steamId = steamId; 
+	history->m_steamId = steamId;
 	history->m_currencySpent = 0;
 
 	m_playerUpgrades.AddToTail( history );
@@ -2355,7 +2355,7 @@ void CPopulationManager::RemovePlayerAndItemUpgradesFromHistory( CTFPlayer *pPla
 	// Remove player and item upgrades from current
 	FOR_EACH_VEC_BACK( m_playerUpgrades, i )
 	{
-		if ( steamId != m_playerUpgrades[i]->m_steamId ) 
+		if ( steamId != m_playerUpgrades[i]->m_steamId )
 			continue;
 
 		FOR_EACH_VEC_BACK( m_playerUpgrades[i]->m_upgradeVector, j )
@@ -2390,7 +2390,7 @@ void CPopulationManager::AddRespecToPlayer( CTFPlayer *pPlayer )
 {
 	if ( !pPlayer )
 		return;
-	
+
 	CSteamID steamID;
 	if ( pPlayer->GetSteamID( &steamID ) )
 	{
@@ -2459,7 +2459,7 @@ void CPopulationManager::SetNumRespecsForPlayer( CTFPlayer *pPlayer, int nCount 
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 int CPopulationManager::GetNumRespecsAvailableForPlayer( CTFPlayer *pPlayer )
 {
@@ -2529,7 +2529,7 @@ void CPopulationManager::RemoveBuybackCreditFromPlayer( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 int CPopulationManager::GetNumBuybackCreditsForPlayer( CTFPlayer *pPlayer )
 {
@@ -2550,7 +2550,7 @@ int CPopulationManager::GetNumBuybackCreditsForPlayer( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 bool CPopulationManager::IsPlayerBeingTrackedForBuybacks( CTFPlayer *pPlayer )
 {
@@ -2566,7 +2566,7 @@ bool CPopulationManager::IsPlayerBeingTrackedForBuybacks( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CPopulationManager::ResetRespecPoints( void )
 {
@@ -2667,7 +2667,7 @@ void CPopulationManager::PauseSpawning()
 }
 
 void CPopulationManager::UnpauseSpawning()
-{ 
+{
 	DevMsg( "Wave unpaused\n" );
 
 	m_bSpawningPaused = false;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -84,7 +84,7 @@ void CHudBitmapNumericDisplay::SetShouldDisplayValue(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBitmapNumericDisplay::PaintBackground( void )
 {
@@ -97,7 +97,7 @@ void CHudBitmapNumericDisplay::PaintBackground( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBitmapNumericDisplay::PaintNumbers(int xpos, int ypos, int value, Color col, int numSigDigits )
 {
@@ -155,13 +155,13 @@ void CHudBitmapNumericDisplay::PaintNumbers(int xpos, int ypos, int value, Color
 	{
 		digit = value / pos;
 		value = value % pos;
-		
+
 		if( bStart || digit > 0 || pos <= pow(10.0f,numSigDigits-1) )
 		{
 			bStart = true;
 			m_pNumbers[digit]->DrawSelf( xpos, ypos, width, height, col );
 			xpos += width;
-		}		
+		}
 
 		pos /= 10;
 	}

@@ -222,22 +222,22 @@ NextBotCombatCharacter::NextBotCombatCharacter( void )
 void NextBotCombatCharacter::Spawn( void )
 {
 	BaseClass::Spawn();
-	
+
 	// reset bot components
 	Reset();
 
 	SetSolid( SOLID_BBOX );
 	AddSolidFlags( FSOLID_NOT_STANDABLE );
-	
-	SetMoveType( MOVETYPE_CUSTOM );	
-	
+
+	SetMoveType( MOVETYPE_CUSTOM );
+
 	SetCollisionGroup( COLLISION_GROUP_PLAYER );
 
 	m_iMaxHealth = m_iHealth;
 	m_takedamage = DAMAGE_YES;
 
 	MDLCACHE_CRITICAL_SECTION();
-	InitBoneControllers( ); 
+	InitBoneControllers( );
 
 	// set up think callback
 	SetThink( &NextBotCombatCharacter::DoThink );
@@ -267,7 +267,7 @@ void NextBotCombatCharacter::DoThink( void )
 
 	if ( BeginUpdate() )
 	{
-		// emit model change event	
+		// emit model change event
 		if ( m_didModelChange )
 		{
 			m_didModelChange = false;
@@ -278,10 +278,10 @@ void NextBotCombatCharacter::DoThink( void )
 			for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
 			{
 				sub->OnModelChanged();
-			}	
+			}
 		}
 
-		UpdateLastKnownArea();	
+		UpdateLastKnownArea();
 
 		// update bot components
 		if ( !NextBotStop.GetBool() && (GetFlags() & FL_FROZEN) == 0 )
@@ -309,7 +309,7 @@ void NextBotCombatCharacter::Touch( CBaseEntity *other )
 			OnContact( other, &result );
 		}
 	}
-	
+
 	BaseClass::Touch( other );
 }
 
@@ -319,7 +319,7 @@ void NextBotCombatCharacter::SetModel( const char *szModelName )
 {
 	// actually change the model
 	BaseClass::SetModel( szModelName );
-	
+
 	// need to do a lazy-check because precache system also invokes this
 	m_didModelChange = true;
 }
@@ -329,7 +329,7 @@ void NextBotCombatCharacter::SetModel( const char *szModelName )
 void NextBotCombatCharacter::Ignite( float flFlameLifetime, bool bNPCOnly, float flSize, bool bCalledByLevelDesigner )
 {
 	BaseClass::Ignite( flFlameLifetime, bNPCOnly, flSize, bCalledByLevelDesigner );
-	
+
 	// propagate event to components
 	OnIgnite();
 }
@@ -368,7 +368,7 @@ int NextBotCombatCharacter::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 
 	// propagate event to components
 	OnInjured( info );
-	
+
 	return CBaseCombatCharacter::OnTakeDamage_Alive( info );
 }
 
@@ -376,7 +376,7 @@ int NextBotCombatCharacter::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 //----------------------------------------------------------------------------------------------------------
 int NextBotCombatCharacter::OnTakeDamage_Dying( const CTakeDamageInfo &info )
 {
-	// track our last attacker	
+	// track our last attacker
 	if ( info.GetAttacker()->MyCombatCharacterPointer() )
 	{
 		m_lastAttacker = info.GetAttacker()->MyCombatCharacterPointer();
@@ -403,7 +403,7 @@ void NextBotCombatCharacter::Event_Killed( const CTakeDamageInfo &info )
 
 	// propagate event to my components
 	OnKilled( info );
-	
+
 	// Advance life state to dying
 	m_lifeState = LIFE_DYING;
 

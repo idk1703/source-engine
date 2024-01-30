@@ -28,35 +28,35 @@ public:
 		y = iy;
 	}
 
-	void operator +=( const CEdgePos &other ) 
-	{ 
+	void operator +=( const CEdgePos &other )
+	{
 		x += other.x;
 		y += other.y;
 	}
 
 	void operator /=( int val )
-	{ 
+	{
 		x /= val;
 		y /= val;
 	}
 
 	CEdgePos operator >>( int shift )
-	{ 
+	{
 		return CEdgePos( x >> shift, y >> shift );
 	}
 
 	CEdgePos operator *( int shift )
-	{ 
+	{
 		return CEdgePos( x * shift, y * shift );
 	}
 
-	CEdgePos operator -( const CEdgePos &other ) 
-	{ 
+	CEdgePos operator -( const CEdgePos &other )
+	{
 		return CEdgePos( x - other.x, y - other.y );
 	}
 
-	CEdgePos operator +( const CEdgePos &other ) 
-	{ 
+	CEdgePos operator +( const CEdgePos &other )
+	{
 		return CEdgePos( x + other.x, y + other.y );
 	}
 
@@ -184,7 +184,7 @@ public:
 	virtual int LowResHeight() const;
 	virtual ImageFormat LowResFormat() const;
 
-	// Computes the size (in bytes) of a single mipmap of a single face of a single frame 
+	// Computes the size (in bytes) of a single mipmap of a single face of a single frame
 	virtual int ComputeMipSize( int iMipLevel ) const;
 
 	// Computes the size (in bytes) of a single face of a single frame
@@ -219,7 +219,7 @@ public:
 	// The look dir indicates the direction of the center of the sphere
 	virtual void GenerateSpheremap( LookDir_t lookDir );
 
-	virtual void GenerateHemisphereMap( unsigned char *pSphereMapBitsRGBA, int targetWidth, 
+	virtual void GenerateHemisphereMap( unsigned char *pSphereMapBitsRGBA, int targetWidth,
 		int targetHeight, LookDir_t lookDir, int iFrame );
 
 	// Fixes the cubemap faces orientation from our standard to the
@@ -228,7 +228,7 @@ public:
 
 	// Normalize the top mip level if necessary
 	virtual void NormalizeTopMipLevel();
-	
+
 	// Generates mipmaps from the base mip levels
 	virtual void GenerateMipmaps();
 
@@ -285,17 +285,17 @@ private:
 		CEdgeMatch edgeMatches[NUM_EDGE_MATCHES],
 		CCornerMatch cornerMatches[NUM_CORNER_MATCHES]
 		);
-	
+
 	void SetupFaceVert( int iMipLevel, int iVert, CEdgePos &out );
 	void SetupEdgeIncrement( CEdgePos &start, CEdgePos &end, CEdgePos &inc );
 
-	void SetupTextureEdgeIncrements( 
+	void SetupTextureEdgeIncrements(
 		int iMipLevel,
 		int iFace1Edge,
 		int iFace2Edge,
 		bool bFlipFace2Edge,
 		CEdgeIncrements *incs );
-	
+
 	void BlendCubeMapFaceEdges(
 		int iFrame,
 		int iMipLevel,
@@ -337,7 +337,7 @@ private:
 	// Serialization of image data
 	bool WriteImageData( CUtlBuffer &buf );
 
-	// Computes the size (in bytes) of a single mipmap of a single face of a single frame 
+	// Computes the size (in bytes) of a single mipmap of a single face of a single frame
 	int ComputeMipSize( int iMipLevel, ImageFormat fmt ) const;
 
 	// Computes the size (in bytes) of a single face of a single frame
@@ -356,7 +356,7 @@ private:
 	// Locates the resource entry info if it's present
 	ResourceEntryInfo *FindResourceEntryInfo( unsigned int eType );
 	ResourceEntryInfo const *FindResourceEntryInfo( unsigned int eType ) const;
-	
+
 	// Inserts the resource entry info if it's not present
 	ResourceEntryInfo *FindOrCreateResourceEntryInfo( unsigned int eType );
 
@@ -387,7 +387,7 @@ private:
 
 	Vector			m_vecReflectivity;
 	float			m_flBumpScale;
-	
+
 	// FIXME: Do I need this?
 	int				m_iStartFrame;
 

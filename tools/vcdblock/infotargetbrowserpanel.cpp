@@ -25,7 +25,7 @@
 
 using namespace vgui;
 
-	
+
 //-----------------------------------------------------------------------------
 // Sort by target name
 //-----------------------------------------------------------------------------
@@ -106,7 +106,7 @@ void CInfoTargetBrowserPanel::OnProperties(void)
 // Purpose: Deletes the marked objects.
 //-----------------------------------------------------------------------------
 void CInfoTargetBrowserPanel::OnDeleteEntities(void)
-{		
+{
 	int iSel = m_pEntities->GetSelectedItem( 0 );
 
 	{
@@ -139,11 +139,11 @@ void CInfoTargetBrowserPanel::OnDeleteEntities(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoTargetBrowserPanel::OnKeyCodeTyped( vgui::KeyCode code )
 {
-	if ( code == KEY_DELETE ) 
+	if ( code == KEY_DELETE )
 	{
 		OnDeleteEntities();
 	}
@@ -155,7 +155,7 @@ void CInfoTargetBrowserPanel::OnKeyCodeTyped( vgui::KeyCode code )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoTargetBrowserPanel::OnItemSelected( void )
 {
@@ -181,7 +181,7 @@ void CInfoTargetBrowserPanel::SelectNode( CDmeVMFEntity *pNode )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Called when buttons are clicked
 //-----------------------------------------------------------------------------
@@ -190,7 +190,7 @@ void CInfoTargetBrowserPanel::OnCommand( const char *pCommand )
 	if ( !Q_stricmp( pCommand, "delete" ) )
 	{
 		// Confirm we want to do it
-		MessageBox *pConfirm = new MessageBox( "#VcdBlockDeleteObjects", "#VcdBlockDeleteObjectsMsg", g_pVcdBlockTool->GetRootPanel() ); 
+		MessageBox *pConfirm = new MessageBox( "#VcdBlockDeleteObjects", "#VcdBlockDeleteObjectsMsg", g_pVcdBlockTool->GetRootPanel() );
 		pConfirm->AddActionSignalTarget( this );
 		pConfirm->SetOKButtonText( "Yes" );
 		pConfirm->SetCommand( new KeyValues( "DeleteEntities" ) );
@@ -235,7 +235,7 @@ void CInfoTargetBrowserPanel::OnCommand( const char *pCommand )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoTargetBrowserPanel::UpdateEntityList(void)
 {
@@ -257,7 +257,7 @@ void CInfoTargetBrowserPanel::UpdateEntityList(void)
 		}
 
 		KeyValues *kv = new KeyValues( "node" );
-		kv->SetString( "classname", pClassName ); 
+		kv->SetString( "classname", pClassName );
 		kv->SetPtr( "entity", pEntity );
 
 		const char *pTargetname = pEntity->GetValueString( "targetname" );
@@ -265,7 +265,7 @@ void CInfoTargetBrowserPanel::UpdateEntityList(void)
 		{
 			pTargetname = "<no targetname>";
 		}
-		kv->SetString( "targetname", pTargetname ); 
+		kv->SetString( "targetname", pTargetname );
 
 		int nItemID = m_pEntities->AddItem( kv, 0, false, false );
 
@@ -277,7 +277,7 @@ void CInfoTargetBrowserPanel::UpdateEntityList(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoTargetBrowserPanel::Refresh(void)
 {
@@ -291,7 +291,6 @@ void CInfoTargetBrowserPanel::Refresh(void)
 		{
 			pTargetname = "<no targetname>";
 		}
-		kv->SetString( "targetname", pTargetname ); 
+		kv->SetString( "targetname", pTargetname );
 	}
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -32,7 +32,7 @@ class CHudMenuSpyBuild;
 class CTFClientScoreBoardDialog;
 #endif
 
-class ClientModeTFNormal : public ClientModeShared 
+class ClientModeTFNormal : public ClientModeShared
 {
 DECLARE_CLASS( ClientModeTFNormal, ClientModeShared );
 
@@ -98,7 +98,7 @@ public:
 
 	virtual void OnDemoRecordStart( char const* pDemoBaseName ) OVERRIDE;
 	virtual void OnDemoRecordStop() OVERRIDE;
-	
+
 private:
 	//	void	UpdateSpectatorMode( void );
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -23,7 +23,7 @@ public:
 		m_EnsureCapacityFn( NULL ),
 		m_ElementStride( 0 ),
 		m_Offset( 0 ),
-		m_nMaxElements( 0 )	
+		m_nMaxElements( 0 )
 	{
 	}
 
@@ -36,12 +36,12 @@ public:
 };
 
 
-void SendProxy_UtlVectorElement( 
-	const SendProp *pProp, 
-	const void *pStruct, 
-	const void *pData, 
-	DVariant *pOut, 
-	int iElement, 
+void SendProxy_UtlVectorElement(
+	const SendProp *pProp,
+	const void *pStruct,
+	const void *pData,
+	DVariant *pOut,
+	int iElement,
 	int objectID )
 {
 	CSendPropExtra_UtlVector *pExtra = (CSendPropExtra_UtlVector*)pProp->GetExtraData();
@@ -65,11 +65,11 @@ void SendProxy_UtlVectorElement(
 	}
 }
 
-void* SendProxy_UtlVectorElement_DataTable( 
+void* SendProxy_UtlVectorElement_DataTable(
 	const SendProp *pProp,
-	const void *pStructBase, 
-	const void *pData, 
-	CSendProxyRecipients *pRecipients, 
+	const void *pStructBase,
+	const void *pData,
+	CSendProxyRecipients *pRecipients,
 	int objectID )
 {
 	CSendPropExtra_UtlVector *pExtra = (CSendPropExtra_UtlVector*)pProp->GetExtraData();
@@ -77,7 +77,7 @@ void* SendProxy_UtlVectorElement_DataTable(
 	int iElement = pProp->m_ElementStride;
 	Assert( iElement < pExtra->m_nMaxElements );
 
-	// This should have gotten called in SendProxy_LengthTable before we get here, so 
+	// This should have gotten called in SendProxy_LengthTable before we get here, so
 	// the capacity should be correct.
 #ifdef _DEBUG
 	pExtra->m_EnsureCapacityFn( (void*)pStructBase, pExtra->m_Offset, pExtra->m_nMaxElements );
@@ -90,19 +90,19 @@ void* SendProxy_UtlVectorElement_DataTable(
 	return pExtra->m_DataTableProxyFn( pProp, pData, (char*)pUtlVec->Base() + iElement*pExtra->m_ElementStride, pRecipients, objectID );
 }
 
-void SendProxy_UtlVectorLength( 
-	const SendProp *pProp, 
-	const void *pStruct, 
-	const void *pData, 
-	DVariant *pOut, 
-	int iElement, 
+void SendProxy_UtlVectorLength(
+	const SendProp *pProp,
+	const void *pStruct,
+	const void *pData,
+	DVariant *pOut,
+	int iElement,
 	int objectID )
 {
 	CSendPropExtra_UtlVector *pExtra = (CSendPropExtra_UtlVector*)pProp->GetExtraData();
-	
+
 	// NOTE: this is cheesy because we're assuming the type of the template class, but it does the trick.
 	CUtlVector<int> *pUtlVec = (CUtlVector<int>*)((char*)pStruct + pExtra->m_Offset);
-	
+
 	// Don't let them overflow the buffer because they might expect that to get transmitted to the client.
 	pOut->m_Int = pUtlVec->Count();
 	if ( pOut->m_Int > pExtra->m_nMaxElements )
@@ -127,7 +127,7 @@ void* SendProxy_LengthTable( const SendProp *pProp, const void *pStructBase, con
 //
 // You can skip the first 3 parameters in pArrayProp because they're ignored. So your array specification
 // could look like this:
-//   	 SendPropUtlVector( 
+//   	 SendPropUtlVector(
 //	    	SENDINFO_UTLVECTOR( m_FloatArray ),
 //			SendPropFloat( NULL, 0, 0, 0 [# bits], SPROP_NOSCALE [flags] ) );
 //
@@ -151,17 +151,17 @@ SendProp SendPropUtlVector(
 	ret.m_pVarName = pVarName;
 	ret.SetOffset( 0 );
 	ret.SetDataTableProxyFn( varProxy );
-	
+
 	// Handle special proxy types where they always let all clients get the results.
 	if ( varProxy == SendProxy_DataTableToDataTable || varProxy == SendProxy_DataTablePtrToDataTable )
 	{
 		ret.SetFlags( SPROP_PROXY_ALWAYS_YES );
 	}
 
-	
+
 	// Extra data bound to each of the properties.
 	CSendPropExtra_UtlVector *pExtraData = new CSendPropExtra_UtlVector;
-	
+
 	pExtraData->m_nMaxElements = nMaxElements;
 	pExtraData->m_ElementStride = sizeofVar;
 	pExtraData->m_EnsureCapacityFn = ensureFn;
@@ -200,7 +200,7 @@ SendProp SendPropUtlVector(
 		pProps[i].SetExtraData( pExtraData );
 		pProps[i].m_ElementStride = i-1;	// Kind of lame overloading element stride to hold the element index,
 											// but we can easily move it into its SetExtraData stuff if we need to.
-		
+
 		// We provide our own proxy here.
 		if ( pArrayProp.m_Type == DPT_DataTable )
 		{
@@ -213,9 +213,9 @@ SendProp SendPropUtlVector(
 		}
 	}
 
-	SendTable *pTable = new SendTable( 
-		pProps, 
-		nMaxElements+1, 
+	SendTable *pTable = new SendTable(
+		pProps,
+		nMaxElements+1,
 		AllocateUniqueDataTableName( true, "_ST_%s_%d", pVarName, nMaxElements )
 		);
 

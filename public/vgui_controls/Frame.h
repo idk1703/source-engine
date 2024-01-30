@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -52,7 +52,7 @@ public:
 	// sets the dialog to delete self on close
 	virtual void SetDeleteSelfOnClose( bool state );
 
-	// Move the dialog to the center of the screen 
+	// Move the dialog to the center of the screen
 	virtual void MoveToCenterOfScreen();
 
 	// Set the movability of the panel
@@ -87,9 +87,9 @@ public:
 	// command handling
 	virtual void OnCommand(const char *command);
 
-	// Get the system menu 
+	// Get the system menu
 	virtual Menu *GetSysMenu();
-	// Set the system menu 
+	// Set the system menu
 	virtual void SetSysMenu(Menu *menu);
 
 	// Set the system menu images
@@ -116,7 +116,7 @@ public:
 			input:	"text"	- string to set the title to be
 	*/
 
-	// Load the control settings 
+	// Load the control settings
 	virtual void LoadControlSettings( const char *dialogResourceName, const char *pathID = NULL, KeyValues *pPreloadedKeyValues = NULL, KeyValues *pConditions = NULL );
 
 	void SetChainKeysToParent( bool state );
@@ -250,7 +250,7 @@ private:
 	bool	m_bChainKeysToParent : 1;
 	bool	m_bPrimed : 1;
 	bool	m_iClientInsetXOverridden : 1;
-										 
+
 	CPanelAnimationVarAliasType( int, m_iTitleTextInsetXOverride, "titletextinsetX", "0", "proportional_int" );
 	CPanelAnimationVar( int, m_iTitleTextInsetYOverride, "titletextinsetY", "0" );
 };

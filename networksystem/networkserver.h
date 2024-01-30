@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -31,7 +31,7 @@ public:
 
 	// IConnectionlessPacketHandler
 	virtual bool	ProcessConnectionlessPacket( CNetPacket *packet );	// process a connectionless packet
-	
+
 	// INetworkMessageHandler
 	virtual void	OnConnectionClosing( INetChannel *channel, char const *reason );
 	virtual void	OnConnectionStarted( INetChannel *channel );
@@ -40,7 +40,7 @@ public:
 	virtual void	OnPacketFinished();
 
 	// ILookupChannel
-    virtual CNetChannel *FindNetChannel( const netadr_t& from ) ;
+	virtual CNetChannel *FindNetChannel( const netadr_t& from ) ;
 
 	void ReadPackets();
 	void SendUpdates();
@@ -83,4 +83,3 @@ public:
 
 
 #endif // NETWORKSERVER_H
-

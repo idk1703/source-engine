@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -87,7 +87,7 @@ protected:
 		{
 			CBaseEntity *pEntityIgnited = UTIL_EntityByIndex( event->GetInt( "entindex" ) );
 			// was it a zombie that got set on fire?
-			if ( pEntityIgnited && 
+			if ( pEntityIgnited &&
 				( ( pEntityIgnited->ClassMatches( "npc_zombie" ) ) || ( pEntityIgnited->ClassMatches( "npc_zombine" ) ) ||
 				( pEntityIgnited->ClassMatches( "npc_fastzombie" ) ) ||  ( pEntityIgnited->ClassMatches( "npc_poisonzombie" ) ) ) )
 			{

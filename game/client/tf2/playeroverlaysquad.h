@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -27,7 +27,7 @@ public:
 	bool Init( KeyValues* pInitData );
 
 	void SetSquad( const char *squadname );
-	
+
 	virtual void	Paint();
 	virtual void	ApplySchemeSettings( vgui::IScheme *pScheme );
 	virtual void	SetReflectMouse( bool reflect );

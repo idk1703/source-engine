@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -31,14 +31,14 @@ void CProp_Portal_Shared::UpdatePortalTransformationMatrix( const matrix3x4_t &l
 	matRotation.m[1][1] = -1.0f;
 
 	//final
-	matPortal2ToWorld = remoteToWorld;	
+	matPortal2ToWorld = remoteToWorld;
 	*pMatrix = matPortal2ToWorld * matRotation * matPortal1ToWorldInv;
 }
 
-static char *g_pszPortalNonTeleportable[] = 
-{ 
-	"func_door", 
-	"func_door_rotating", 
+static char *g_pszPortalNonTeleportable[] =
+{
+	"func_door",
+	"func_door_rotating",
 	"prop_door_rotating",
 	"func_tracktrain",
 	//"env_ghostanimating",
@@ -53,13 +53,13 @@ bool CProp_Portal_Shared::IsEntityTeleportable( CBaseEntity *pEntity )
 
 #ifdef CLIENT_DLL
 		//client
-	
+
 		if( dynamic_cast<C_BaseDoor *>(pEntity) != NULL )
 			return false;
 
 #else
 		//server
-		
+
 		for( int i = 0; i != ARRAYSIZE(g_pszPortalNonTeleportable); ++i )
 		{
 			if( FClassnameIs( pEntity, g_pszPortalNonTeleportable[i] ) )
@@ -74,7 +74,3 @@ bool CProp_Portal_Shared::IsEntityTeleportable( CBaseEntity *pEntity )
 
 	return true;
 }
-
-
-
-

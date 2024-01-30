@@ -81,7 +81,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline CHL2_Player	*CHL2GameMovement::GetHL2Player()
 {
@@ -89,7 +89,7 @@ inline CHL2_Player	*CHL2GameMovement::GetHL2Player()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : inline LadderMove*
 //-----------------------------------------------------------------------------
 inline LadderMove_t *CHL2GameMovement::GetLadderMove()
@@ -103,8 +103,8 @@ inline LadderMove_t *CHL2GameMovement::GetLadderMove()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *ladder - 
+// Purpose:
+// Input  : *ladder -
 //-----------------------------------------------------------------------------
 inline void CHL2GameMovement::SetLadder( CFuncLadder *ladder )
 {
@@ -120,7 +120,7 @@ inline void CHL2GameMovement::SetLadder( CFuncLadder *ladder )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CFuncLadder
 //-----------------------------------------------------------------------------
 inline CFuncLadder *CHL2GameMovement::GetLadder()

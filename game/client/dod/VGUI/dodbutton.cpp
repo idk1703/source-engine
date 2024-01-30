@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,14 +26,14 @@ void CDODButtonShape::DrawShapedBorder( int x, int y, int wide, int tall, Color 
 	surface()->DrawSetColor(fgcolor);
 
 	// top
-	surface()->DrawLine( 0, 1, wide-1, 1 );	
+	surface()->DrawLine( 0, 1, wide-1, 1 );
 
 	// left
 	surface()->DrawLine( 1, 1, 1, tall-1 );
 
 	// bottom
 	surface()->DrawLine( 0, tall-1, wide-halfheight, tall-1 );
-	
+
 	// right
 	surface()->DrawLine( wide-1, 0, wide-1, tall-halfheight );
 
@@ -53,7 +53,7 @@ void CDODButtonShape::DrawShapedBackground( int x, int y, int wide, int tall, Co
 
 	surface()->DrawSetColor(bgcolor);
 	surface()->DrawSetTexture( m_iWhiteTexture );
-	
+
 	Vertex_t verts[5];
 
 	verts[0].Init( Vector2D( 0, 0 ) );
@@ -66,7 +66,7 @@ void CDODButtonShape::DrawShapedBackground( int x, int y, int wide, int tall, Co
 
 	surface()->DrawSetTexture(0);
 }
-	
+
 //===============================================
 // CDODButton - shaped button
 //===============================================

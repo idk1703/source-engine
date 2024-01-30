@@ -54,7 +54,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CSceneTokenProcessor::CurrentToken( void )
@@ -63,8 +63,8 @@ const char *CSceneTokenProcessor::CurrentToken( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : crossline - 
+// Purpose:
+// Input  : crossline -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSceneTokenProcessor::GetToken( bool crossline )
@@ -73,7 +73,7 @@ bool CSceneTokenProcessor::GetToken( bool crossline )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSceneTokenProcessor::TokenAvailable( void )
@@ -82,9 +82,9 @@ bool CSceneTokenProcessor::TokenAvailable( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fmt - 
-//			... - 
+// Purpose:
+// Input  : *fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CSceneTokenProcessor::Error( const char *fmt, ... )
 {
@@ -101,12 +101,12 @@ void CSceneTokenProcessor::Error( const char *fmt, ... )
 static CSceneTokenProcessor g_TokenProcessor;
 
 SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
-{	
+{
 	spewed = true;
 
 	printf( "%s", pMsg );
 	OutputDebugString( pMsg );
-	
+
 	if ( type == SPEW_ERROR )
 	{
 		printf( "\n" );
@@ -117,10 +117,10 @@ SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : depth - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : depth -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void vprint( int depth, const char *fmt, ... )
 {
@@ -215,7 +215,7 @@ void Con_Printf( const char *fmt, ... )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void printusage( void )
 {
@@ -290,7 +290,7 @@ void BuildFileList( CUtlVector< CUtlSymbol >& files, char const *rootdir, char c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CheckLogFile( void )
 {
@@ -310,8 +310,8 @@ void PrintHeader()
 //-----------------------------------------------------------------------------
 // Purpose: For each .wav file in the list, see if any vcd file in the list references it
 //  First build an index of .wav to .vcd mappings, then search wav list and print results
-// Input  : vcdfiles - 
-//			wavfiles - 
+// Input  : vcdfiles -
+//			wavfiles -
 //-----------------------------------------------------------------------------
 
 struct VCDList
@@ -353,18 +353,18 @@ void SpewMoveto( bool first, char const *vcdname, CChoreoEvent *e )
 	if ( !spewmoveto )
 		return;
 
-	// 
+	//
 
 	if ( first )
 	{
 		ecounter = 0;
 	}
 
-	logprint( "moveto.txt", "\"%s\",%i,\"%s\",%.3f,\"%s\",%s\n", 
-		vcdname, 
-		++ecounter, 
-		e->GetName(), 
-		e->GetStartTime(), 
+	logprint( "moveto.txt", "\"%s\",%i,\"%s\",%.3f,\"%s\",%s\n",
+		vcdname,
+		++ecounter,
+		e->GetName(),
+		e->GetStartTime(),
 		e->GetParameters(),
 		e->IsResumeCondition() ? "YES" : "no" );
 }
@@ -472,7 +472,7 @@ void CheckForOverlappingFlexTracks( CChoreoScene *scene )
 		for ( int c = 0; c < actor->GetNumChannels(); ++c )
 		{
 			CChoreoChannel *channel = actor->GetChannel( c );
-			
+
 			for ( int e = 0 ; e < channel->GetNumEvents(); ++e )
 			{
 				CChoreoEvent *event = channel->GetEvent( e );
@@ -547,7 +547,7 @@ void ProcessVCD( CUtlDict< VCDList, int >& database, CUtlSymbol& vcdname )
 	Q_snprintf( fullname, sizeof( fullname ), "%s", g_Analysis.symbols.String( vcdname ) );
 
 	LoadScriptFile( fullname );
-	
+
 	CChoreoScene *scene = ChoreoLoadScene( fullname, NULL, &g_TokenProcessor, Con_Printf );
 	if ( scene )
 	{
@@ -602,7 +602,7 @@ void ProcessVCD( CUtlDict< VCDList, int >& database, CUtlSymbol& vcdname )
 			CheckForOverlappingFlexTracks( scene );
 		}
 	}
-	
+
 	delete scene;
 }
 
@@ -659,9 +659,9 @@ void CorrelateWavsAndVCDs( CUtlVector< CUtlSymbol >& vcdfiles, CUtlVector< CUtlS
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : argc - 
-//			argv[] - 
+// Purpose:
+// Input  : argc -
+//			argv[] -
 // Output : int
 //-----------------------------------------------------------------------------
 int main( int argc, char* argv[] )
@@ -733,7 +733,7 @@ int main( int argc, char* argv[] )
 	if ( !pSoundEmitterModule )
 	{
 		vprint( 0, "Sys_LoadModule( soundemittersystem.dll ) failed!\n" );
-		return 0;		
+		return 0;
 	}
 
 	CreateInterfaceFn hSoundEmitterFactory = Sys_GetFactory( pSoundEmitterModule );

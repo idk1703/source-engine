@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -20,7 +20,7 @@ class CAudioMixerWaveADPCM : public CAudioMixerWave
 public:
 	CAudioMixerWaveADPCM( IWaveData *data );
 	~CAudioMixerWaveADPCM( void );
-	
+
 	virtual void Mix( IAudioDevice *pDevice, channel_t *pChannel, void *pData, int outputOffset, int inputOffset, fixedint fracRate, int outCount, int timecompress );
 	virtual int	 GetOutputData( void **pData, int sampleCount, char copyBuf[AUDIOSOURCE_COPYBUF_SIZE] );
 
@@ -48,7 +48,7 @@ private:
 };
 
 
-CAudioMixerWaveADPCM::CAudioMixerWaveADPCM( IWaveData *data ) : CAudioMixerWave( data ) 
+CAudioMixerWaveADPCM::CAudioMixerWaveADPCM( IWaveData *data ) : CAudioMixerWave( data )
 {
 	m_pSamples = NULL;
 	m_sampleCount = 0;
@@ -188,7 +188,7 @@ void CAudioMixerWaveADPCM::DecompressBlockMono( short *pOut, const char *pIn, in
 			predSample = 32767L;
 		else if ( predSample < -32768L )
 			predSample = -32768L;
-		
+
 		// output
 		*pOut++ = (short)predSample;
 		// move samples over
@@ -295,7 +295,7 @@ void CAudioMixerWaveADPCM::DecompressBlockStereo( short *pOut, const char *pIn, 
 				predSample = 32767L;
 			else if ( predSample < -32768L )
 				predSample = -32768L;
-			
+
 			// output
 			*pOut++ = (short)predSample;
 			// move samples over
@@ -415,7 +415,7 @@ int CAudioMixerWaveADPCM::GetOutputData( void **pData, int sampleCount, char cop
 
 		// update count of max samples loaded in CAudioMixerWave
 		CAudioMixerWave::m_sample_max_loaded += available;
-	
+
 		// update index of last sample loaded
 		CAudioMixerWave::m_sample_loaded_index += available;
 
@@ -435,7 +435,7 @@ void CAudioMixerWaveADPCM::SetSampleStart( int newPosition )
 {
 	// cascade to base wave to update sample counter
 	CAudioMixerWave::SetSampleStart( newPosition );
-	
+
 	// which block is the desired starting sample in?
 	int blockStart = newPosition / m_pFormat->wSamplesPerBlock;
 	// how far into the block is the sample
@@ -443,15 +443,15 @@ void CAudioMixerWaveADPCM::SetSampleStart( int newPosition )
 
 	// set the file position
 	m_offset = blockStart * m_blockSize;
-	
+
 	// NOTE: Must decode a block here to properly position the sample Index
 	// THIS MEANS YOU DON'T WANT TO CALL THIS ROUTINE OFTEN FOR ADPCM SOUNDS
 	DecodeBlock();
-	
+
 	// limit to the samples decoded
 	if ( blockOffset < m_sampleCount )
 		blockOffset = m_sampleCount;
-	
+
 	// set the new current position
 	m_samplePosition = blockOffset;
 }
@@ -460,7 +460,7 @@ void CAudioMixerWaveADPCM::SetSampleStart( int newPosition )
 //-----------------------------------------------------------------------------
 // Purpose: Abstract factory function for ADPCM mixers
 // Input  : *data - wave data access object
-//			channels - 
+//			channels -
 // Output : CAudioMixer
 //-----------------------------------------------------------------------------
 CAudioMixer *CreateADPCMMixer( IWaveData *data )

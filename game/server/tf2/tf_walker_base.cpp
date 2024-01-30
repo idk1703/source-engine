@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -52,8 +52,8 @@ void CWalkerBase::SpawnWalker(
 
 	m_takedamage = DAMAGE_YES;
 	SetMaxPassengerCount( nMaxPassengers );
-	
-	
+
+
 
 	// The model should be set before the derived class calls our Spawn().
 	Assert( GetModel() );
@@ -66,11 +66,11 @@ void CWalkerBase::SpawnWalker(
 	// The base class spawn sets a default collision group, so this needs to
 	// be called post.
 	SetCollisionGroup( COLLISION_GROUP_VEHICLE );
-	
+
 	BaseClass::Spawn();
 
 
-	// HACKHACK: this is just so CBaseObject doesn't call StudioFrameAdvance for us. We should probably have 
+	// HACKHACK: this is just so CBaseObject doesn't call StudioFrameAdvance for us. We should probably have
 	// a specific flag for this behavior.
 	m_fObjectFlags |= OF_DOESNT_HAVE_A_MODEL;
 	m_fObjectFlags &= ~OF_MUST_BE_BUILT_ON_ATTACHMENT;
@@ -79,7 +79,7 @@ void CWalkerBase::SpawnWalker(
 	// We animate, so let's not use manual mode for now.
 	SetMoveType( MOVETYPE_STEP );
 	AddSolidFlags( FSOLID_CUSTOMRAYTEST | FSOLID_CUSTOMBOXTEST );
-	
+
 	EnableServerIK();
 
 	SetContextThink( WalkerThink, gpGlobals->curtime, "WalkerThink" );
@@ -114,7 +114,7 @@ void CWalkerBase::AdjustInitialBuildAngles()
 void CWalkerBase::WalkerThink()
 {
 	float dt = GetTimeDelta();
-	
+
 	// Decay our velocity.
 	if ( m_bWalkMode )
 	{
@@ -136,7 +136,7 @@ void CWalkerBase::WalkerThink()
 		SetPoseParameter( m_iMovePoseParamY, RemapVal( m_vSteerVelocity.y, -MAX_WALKER_VEL, MAX_WALKER_VEL, -1, 1 ) );
 
 		// Use an idle animation if they're not moving.
-		int iWantedSequence = LookupSequence( "walk_box" );	
+		int iWantedSequence = LookupSequence( "walk_box" );
 		if ( m_vSteerVelocity.x == 0 && m_vSteerVelocity.y == 0 )
 		{
 			iWantedSequence = LookupSequence( "idle" );
@@ -154,10 +154,10 @@ void CWalkerBase::WalkerThink()
 	// Now ask the model how far it thought it moved based on the animation.
 	// Turns out the animation thinks it's moving just a tiny bit, even when we're centered on the idle animation,
 	// so we just force it not to move here if we know we're not supposed to move.
-	if ( m_vSteerVelocity.Length() > 0 ) 
+	if ( m_vSteerVelocity.Length() > 0 )
 	{
 		Vector vNewPos = GetWalkerLocalMovement();
-				
+
 		SetLocalOrigin( vNewPos );
 	}
 
@@ -188,7 +188,7 @@ void CWalkerBase::WalkerThink()
 
 		m_vSteerVelocity += vAccel * dt;
 
-		
+
 		m_vSteerVelocity.x = clamp( m_vSteerVelocity.x, -MAX_WALKER_VEL, MAX_WALKER_VEL );
 		m_vSteerVelocity.y = clamp( m_vSteerVelocity.y, -MAX_WALKER_VEL, MAX_WALKER_VEL );
 
@@ -196,13 +196,13 @@ void CWalkerBase::WalkerThink()
 		float wantedYaw = m_vLastCmdViewAngles[YAW];
 		QAngle curAngles = GetAbsAngles();
 		curAngles[YAW] = ApproachAngle( wantedYaw, curAngles[YAW], flRotateRate * dt );
-		SetAbsAngles( curAngles );	
+		SetAbsAngles( curAngles );
 	}
 
 
 	DispatchAnimEvents( this );
 
-	
+
 	// Get another think.
 	SetContextThink( WalkerThink, gpGlobals->curtime + dt, "WalkerThink" );
 }
@@ -297,6 +297,3 @@ bool CWalkerBase::StartBuilding( CBaseEntity *pBuilder )
 	WalkerActivate();
 	return true;
 }
-
-
-

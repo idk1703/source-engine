@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -222,7 +222,7 @@ bool CPlayerPositionProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 {
 	if (!CResultProxy::Init( pMaterial, pKeyValues ))
 		return false;
-	  
+
 	m_Factor = pKeyValues->GetFloat( "scale", 0.005 );
 	return true;
 }
@@ -237,7 +237,7 @@ void CPlayerPositionProxy::OnBind( void *pC_BaseEntity )
 	// This is actually a vector...
 	Assert( m_pResult );
 	Vector res;
-	VectorMultiply( pPlayer->WorldSpaceCenter(), m_Factor, res ); 
+	VectorMultiply( pPlayer->WorldSpaceCenter(), m_Factor, res );
 	m_pResult->SetVecValue( res.Base(), 3 );
 
 	if ( ToolsEnabled() )
@@ -381,7 +381,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPlayerLogoProxy::CPlayerLogoProxy()
 : m_Logos( 0, 0, LogoLessFunc )
@@ -430,7 +430,7 @@ void CPlayerLogoProxy::OnLogoBindInternal( int playerindex )
 	player_info_t info;
 	engine->GetPlayerInfo( playerindex, &info );
 
-	if ( !info.customFiles[0] ) 
+	if ( !info.customFiles[0] )
 		return;
 
 	// So we don't trash this too hard
@@ -489,7 +489,7 @@ EXPOSE_INTERFACE( CPlayerLogoProxy, IMaterialProxy, "PlayerLogo" IMATERIAL_PROXY
 
 /* @note Tom Bui: This is here for reference, but we don't want people to use it!
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 class CPlayerLogoOnModelProxy : public CPlayerLogoProxy
 {

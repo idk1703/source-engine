@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -31,7 +31,7 @@ public:
 	virtual void	DrawPreStencilMask( void ) { }; //Do whatever drawing you need before cutting the stencil hole
 	virtual void	DrawStencilMask( void ) { }; //Draw to wherever you should see through the portal. The mask will later be filled with the portal view.
 	virtual void	DrawPostStencilFixes( void ) { }; //After done drawing to the portal mask, we need to fix the depth buffer as well as fog. So draw your mesh again, writing to z and with the fog color alpha'd in by distance
-   
+
 
 	//----------------------------------------------------------------------------
 	//Rendering of views beyond the portal
@@ -56,8 +56,8 @@ public:
 	//Portal visibility testing
 	//-----------------------------------------------------------------------------
 	//Based on view, will the camera be able to see through the portal this frame? This will allow the stencil mask to start being tested for pixel visibility.
-	virtual bool	ShouldUpdatePortalView_BasedOnView( const CViewSetup &currentView, CUtlVector<VPlane> &currentComplexFrustum ) { return false; }; 
-	
+	virtual bool	ShouldUpdatePortalView_BasedOnView( const CViewSetup &currentView, CUtlVector<VPlane> &currentComplexFrustum ) { return false; };
+
 	//Stencil mode only: You stated the portal was visible based on view, and this is how much of the screen your stencil mask took up last frame. Still want to draw this frame? Values less than zero indicate a lack of data from last frame
 	virtual bool	ShouldUpdatePortalView_BasedOnPixelVisibility( float fScreenFilledByStencilMaskLastFrame_Normalized ) { return (fScreenFilledByStencilMaskLastFrame_Normalized != 0.0f); }; // < 0 is unknown visibility, > 0 is known to be partially visible
 
@@ -92,7 +92,7 @@ protected:
 	CPortalRenderable *FindRecordedPortal( int nPortalId ); //routed through here to get friend access to CPortalRender
 
 	//routed through here to get friend access to CViewRender
-	void CopyToCurrentView( CViewRender *pViewRender, const CViewSetup &viewSetup ); 
+	void CopyToCurrentView( CViewRender *pViewRender, const CViewSetup &viewSetup );
 	void ViewDrawScene_PortalStencil( CViewRender *pViewRender, const CViewSetup &viewIn, ViewCustomVisibility_t *pCustomVisibility );
 	void Draw3dSkyboxworld_Portal( CViewRender *pViewRender, const CViewSetup &viewIn, int &nClearFlags, bool &bDrew3dSkybox, SkyboxVisibility_t &nSkyboxVisible, ITexture *pRenderTarget = NULL );
 	void ViewDrawScene( CViewRender *pViewRender, bool bDrew3dSkybox, SkyboxVisibility_t nSkyboxVisible, const CViewSetup &viewIn, int nClearFlags, view_id_t viewID, bool bDrawViewModel = false, int baseDrawFlags = 0, ViewCustomVisibility_t *pCustomVisibility = NULL );
@@ -196,8 +196,8 @@ public:
 	void WaterRenderingHandler_PostRefraction() const;
 
 	// return value indicates that something was done, and render lists should be rebuilt afterwards
-	bool DrawPortalsUsingStencils( CViewRender *pViewRender ); 
-	
+	bool DrawPortalsUsingStencils( CViewRender *pViewRender );
+
 	void DrawPortalsToTextures( CViewRender *pViewRender, const CViewSetup &cameraView ); //updates portal textures
 	void OverlayPortalRenderTargets( float w, float h );
 
@@ -207,7 +207,7 @@ public:
 
 	// adds, removes a portal to the set of renderable portals
 	void AddPortal( CPortalRenderable *pPortal );
-	void RemovePortal( CPortalRenderable *pPortal ); 
+	void RemovePortal( CPortalRenderable *pPortal );
 
 	// Methods to query about the exit portal associated with the currently rendering portal
 	void ShiftFogForExitPortalView() const;
@@ -224,7 +224,7 @@ public:
 
 	// tests if the parameter ID is being used by portal pixel vis queries
 	bool IsPortalViewID( view_id_t id );
-	
+
 private:
 	struct RecordedPortalInfo_t
 	{
@@ -235,7 +235,7 @@ private:
 
 	PortalViewIDNode_t m_HeadPortalViewIDNode; //pseudo node. Primary view id will be VIEW_MAIN. The child links are what we really care about
 	PortalViewIDNode_t* m_PortalViewIDNodeChain[MAX_PORTAL_RECURSIVE_VIEWS]; //the view id node chain we're following, 0 always being &m_HeadPortalViewIDNode (offsetting by 1 seems like it'd cause bugs in the long run)
-	
+
 	void UpdatePortalPixelVisibility( void ); //updates pixel visibility for portal surfaces
 
 	// Handles a portal update message
@@ -251,7 +251,7 @@ private:
 	PortalRenderingMaterials_t	m_Materials;
 	int							m_iViewRecursionLevel;
 	int							m_iRemainingPortalViewDepth; //let's portals know that they should do "end of the line" kludges to cover up that portals don't go infinitely recursive
-		
+
 	CPortalRenderable			*m_pRenderingViewForPortal; //the specific pointer for the portal that we're rending a view for
 	CPortalRenderable			*m_pRenderingViewExitPortal; //the specific pointer for the portal that our view exits from
 
@@ -263,7 +263,7 @@ public:
 	//frustums with more (or less) than 6 planes. Store each recursion level's custom frustum here so further recursions can be better optimized.
 	//When going into further recursions, if you've failed to fill in a complex frustum, the standard frustum will be copied in.
 	//So all parent levels are guaranteed to contain valid data
-	CUtlVector<VPlane>					m_RecursiveViewComplexFrustums[MAX_PORTAL_RECURSIVE_VIEWS]; 
+	CUtlVector<VPlane>					m_RecursiveViewComplexFrustums[MAX_PORTAL_RECURSIVE_VIEWS];
 	const PortalRenderingMaterials_t& m_MaterialsAccess;
 
 	friend class CPortalRenderable;
@@ -274,7 +274,7 @@ extern CPortalRender* g_pPortalRender;
 
 
 inline CPortalRenderable *CPortalRenderable::FindRecordedPortal( int nPortalId )
-{ 
+{
 	return g_pPortalRender->FindRecordedPortal( nPortalId );
 }
 
@@ -330,4 +330,3 @@ inline void CPortalRenderable::SetViewEntranceAndExitPortals( CPortalRenderable 
 }
 
 #endif //#ifndef PORTALRENDER_H
-

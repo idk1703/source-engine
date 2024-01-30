@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -31,7 +31,7 @@ using namespace vgui;
 
 class CHudWeaponSelection;
 
-typedef enum 
+typedef enum
 {
 	IMAGE_BACKGROUND = 0,
 	IMAGE_CURRENT,
@@ -162,7 +162,7 @@ private:
 	void TranslateColor( float percent, Color& clr );
 	void DrawBox( bool isbuildmenu, int x, int y, int wide, int tall, bool isactive, bool isvalid, float normalizedAlpha, int number );
 	int GetTeamIndex();
-	void OnWeaponSelectionDrawn( CHudWeaponSelection *selection, C_WeaponObjectSelection *weapon, bool bCurrentlySelected, 
+	void OnWeaponSelectionDrawn( CHudWeaponSelection *selection, C_WeaponObjectSelection *weapon, bool bCurrentlySelected,
 		int wide, int tall, Color& clr );
 };
 
@@ -178,7 +178,7 @@ public:
 	CHudWeaponSelection(const char *pElementName );
 
 	virtual bool ShouldDraw( void );
-	
+
 	virtual void VidInit(void);
 
 	virtual void CycleToNextWeapon( void );
@@ -191,7 +191,7 @@ public:
 	virtual void OnWeaponPickup( C_BaseCombatWeapon *pWeapon );
 
 	virtual void SelectWeapon( void );
-	
+
 	virtual C_BaseCombatWeapon	*GetSelectedWeapon( void );
 
 	virtual void OpenSelection( void );
@@ -252,7 +252,7 @@ private:
 	void	RebuildMenus();
 	void	AssignSlots( WeaponMenu& menu, int firstindex );
 	void	CollapseSingleItemBuildMenus();
-	
+
 	void	GetSlotInfo( const CWeaponMenuItem *w, C_BaseCombatWeapon *active, CSlotInfo& info );
 
 	int GetTeamIndex();
@@ -335,7 +335,7 @@ void CHudWeaponSelection::AssignSlots( WeaponMenu& menu, int firstindex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponSelection::CreateWeaponItemPanels()
 {
@@ -359,12 +359,12 @@ void CHudWeaponSelection::CreateWeaponItemPanels()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponSelection::RebuildMenus()
 {
 	int i;
-	
+
 	if ( gpGlobals->tickcount == m_nLastBuildTick )
 		return;
 
@@ -439,10 +439,10 @@ void CHudWeaponSelection::RebuildMenus()
 		item.weapon = NULL;
 		item.isvalidmenuitem = CountSelectableItems( m_BuildObjects[ i ] ) > 0 ? true : false;
 		m_Weapons.items.Insert( item );
-	
+
 		// Assign build menu slots
 		AssignSlots( m_BuildObjects[ i ], 0 );
-	
+
 		m_BuildObjects[ i ].m_bIsBuildMenu = true;
 	}
 
@@ -454,7 +454,7 @@ void CHudWeaponSelection::RebuildMenus()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponSelection::CollapseSingleItemBuildMenus()
 {
@@ -489,7 +489,7 @@ void CHudWeaponSelection::CollapseSingleItemBuildMenus()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponSelection::ClearBuildMenu()
 {
@@ -502,7 +502,7 @@ void CHudWeaponSelection::ClearBuildMenu()
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CHudWeaponSelection::CHudWeaponSelection(const char *pElementName ) : 
+CHudWeaponSelection::CHudWeaponSelection(const char *pElementName ) :
 	CBaseHudWeaponSelection(pElementName), BaseClass(NULL, "HudWeaponSelection")
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
@@ -605,7 +605,7 @@ void CHudWeaponSelection::WrapIndexToRange( int& index, int low, int high )
 	{
 		index += delta;
 	}
-	
+
 	while ( index > high )
 	{
 		index -= delta;
@@ -635,7 +635,7 @@ int CHudWeaponSelection::FindNextSelectableWeaponInMenu( WeaponMenu& menu, int s
 	for ( int offset = 1; offset <= count; offset++ )
 	{
 		int current = startindex + offset * direction;
-		
+
 		WrapIndexToRange( current, lowindex, highindex );
 
 		//int slot = FindSlotForHotKey( menu, current );
@@ -733,9 +733,9 @@ bool CHudWeaponSelection::ShouldDraw()
 		}
 		return false;
 	}
-	
+
 	bool bret = CBaseHudWeaponSelection::ShouldDraw();
-	
+
 	if ( !bret )
 		return false;
 
@@ -887,7 +887,7 @@ void CHudWeaponSelection::OnTick()
 
 	// Draw main menu
 	SetupWeaponMenu( m_Weapons, wpn, true );
-	
+
 	CWeaponMenuItem *item = FindWeapon( GetActiveMenu(), GetActiveMenu().GetActiveItem() );
 
 	WeaponMenu* otherMenu = NULL;
@@ -1043,7 +1043,7 @@ void CHudWeaponSelection::SwitchToLastWeapon( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponMenuItem *CHudWeaponSelection::FindWeapon( WeaponMenu& menu, int hotkey )
 {
@@ -1063,7 +1063,7 @@ CWeaponMenuItem *CHudWeaponSelection::FindWeapon( WeaponMenu& menu, int hotkey )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseCombatWeapon *CHudWeaponSelection::GetWeaponInSlot( int iSlot, int iSlotPos )
 {
@@ -1182,7 +1182,7 @@ void CHudWeaponSelection::SelectWeaponSlot( int iSlot )
 
 				// Check for fast weapon switch mode
 				if ( GetSelectedWeapon() && GetSelectedWeapon()->CanBeSelected() )
-				{	
+				{
 					// There's only one active item in bucket, so change directly to weapon
 					SetWeaponSelected();
 					engine->ClientCmd( "cancelselect\n" );
@@ -1211,7 +1211,7 @@ void CHudWeaponSelection::SelectWeaponSlot( int iSlot )
 
 		// Check for fast weapon switch mode
 		if ( GetSelectedWeapon() && GetSelectedWeapon()->CanBeSelected() )
-		{	
+		{
 			// There's only one active item in bucket, so change directly to weapon
 			SetWeaponSelected();
 			engine->ClientCmd( "cancelselect\n" );
@@ -1250,10 +1250,10 @@ void CHudWeaponSelection::SelectWeapon( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : down - 
-//			keynum - 
-//			*pszCurrentBinding - 
+// Purpose:
+// Input  : down -
+//			keynum -
+//			*pszCurrentBinding -
 //-----------------------------------------------------------------------------
 int	CHudWeaponSelection::KeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
 {
@@ -1289,16 +1289,16 @@ void CHudWeaponSelection::OpenSelection( void )
 {
 	HideBuildMenu();
 	m_nActiveBuildMenu = -1;
-	
+
 	CBaseHudWeaponSelection::OpenSelection();
-	
+
 	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("WeaponOpenWeaponMenu");
 }
 
 void CHudWeaponSelection::HideSelection( void )
 {
 	CBaseHudWeaponSelection::HideSelection();
-	
+
 	if ( m_bInBuildMenu )
 	{
 		HideBuildMenu();
@@ -1352,9 +1352,9 @@ void CHudWeaponSelection::ApplySettings( KeyValues *resourceData )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
-//			*panelName - 
+// Purpose:
+// Input  : *parent -
+//			*panelName -
 //-----------------------------------------------------------------------------
 CHudWeaponItemPanel::CHudWeaponItemPanel( vgui::Panel *parent, const char *panelName )
 	: BaseClass( parent, panelName )
@@ -1371,8 +1371,8 @@ CHudWeaponItemPanel::CHudWeaponItemPanel( vgui::Panel *parent, const char *panel
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *scheme - 
+// Purpose:
+// Input  : *scheme -
 //-----------------------------------------------------------------------------
 void CHudWeaponItemPanel::ApplySchemeSettings( vgui::IScheme *scheme )
 {
@@ -1381,7 +1381,7 @@ void CHudWeaponItemPanel::ApplySchemeSettings( vgui::IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponItemPanel::Paint()
 {
@@ -1448,13 +1448,13 @@ void CHudWeaponItemPanel::Paint()
 	if ( info.icon )
 	{
 		info.icon->DrawSelf( sizefracw * iconXPos, sizefrach * iconYPos, sizefracw * iconWide, sizefrach * iconTall,
-			iconColor ); 
+			iconColor );
 	}
 
 	surface()->DrawSetTextColor( textColor );
 	HFont textFont = sizefrac < 1.0 ? selection->m_hTextFontSmall : selection->m_hTextFont;
 	surface()->DrawSetTextFont( textFont );
-	//int slen = UTIL_ComputeStringWidth( textFont, info.printname ); 
+	//int slen = UTIL_ComputeStringWidth( textFont, info.printname );
 	int charCount = Q_strlen( info.printname );
 
 	int textYPos = m_flTextYPos;
@@ -1472,9 +1472,9 @@ void CHudWeaponItemPanel::Paint()
 		int ammoBarWide = m_flAmmoBarWide;
 
 		// Draw the clip ratio bar
-		gHUD.DrawProgressBar( 
-			sizefracw * ammoBarX, sizefrach * iconYPos, 
-			sizefracw * ammoBarWide, sizefrach * iconTall, info.ammoPerc, 
+		gHUD.DrawProgressBar(
+			sizefracw * ammoBarX, sizefrach * iconYPos,
+			sizefracw * ammoBarWide, sizefrach * iconTall, info.ammoPerc,
 			ammoColor, CHud::HUDPB_VERTICAL );
 	}
 
@@ -1492,7 +1492,7 @@ void CHudWeaponItemPanel::Paint()
 //-----------------------------------------------------------------------------
 // Purpose: We've just been drawn in the weapon selection
 //-----------------------------------------------------------------------------
-void CHudWeaponItemPanel::OnWeaponSelectionDrawn( CHudWeaponSelection *selection, C_WeaponObjectSelection *weapon, 
+void CHudWeaponItemPanel::OnWeaponSelectionDrawn( CHudWeaponSelection *selection, C_WeaponObjectSelection *weapon,
 	bool bCurrentlySelected, int wide, int tall, Color& clr )
 {
 	CBaseTFPlayer *pOwner = ToBaseTFPlayer( weapon->GetOwner() );
@@ -1527,9 +1527,9 @@ void CHudWeaponItemPanel::OnWeaponSelectionDrawn( CHudWeaponSelection *selection
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : percent - 
-//			clr - 
+// Purpose:
+// Input  : percent -
+//			clr -
 //-----------------------------------------------------------------------------
 void CHudWeaponItemPanel::TranslateColor( float percent, Color& clr )
 {
@@ -1571,7 +1571,7 @@ void CHudWeaponItemPanel::DrawBox( bool isbuildmenu, int x, int y, int wide, int
 	Color numberColor = selection->m_TextColor;
 
 	CHudTexture *texture;
-	
+
 	texture = m_BackgroundIcons[ team ][ (int)IMAGE_BACKGROUND ];
 	if ( texture )
 	{
@@ -1627,7 +1627,7 @@ void CHudWeaponItemPanel::DrawBox( bool isbuildmenu, int x, int y, int wide, int
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CHudWeaponItemPanel::GetTeamIndex()
@@ -1645,7 +1645,7 @@ int CHudWeaponItemPanel::GetTeamIndex()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponItemPanel::SetupIcons()
 {

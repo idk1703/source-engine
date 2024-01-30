@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -44,7 +44,7 @@ extern "C" void Sys_SetFPCW (void);
 extern "C" void Sys_TruncateFPU( void );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct FileAssociationInfo
 {

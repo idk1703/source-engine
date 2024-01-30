@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -37,7 +37,7 @@ public:
 		m_AlreadyHit = ents;
 		m_nMaxHits = nMaxEnts;
 	}
-	
+
 	// Actual work code
 	virtual IterationRetval_t EnumElement( IHandleEntity *pHandleEntity )
 	{

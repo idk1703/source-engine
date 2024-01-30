@@ -31,7 +31,7 @@ BEGIN_SHADER_FLAGS( SetZ_DX6, "Help for SetZ_DX6", SHADER_NOT_EDITABLE )
 			pShaderShadow->EnableColorWrites( false );
 			pShaderShadow->EnableAlphaWrites( false );
 			pShaderShadow->DepthFunc( SHADER_DEPTHFUNC_ALWAYS );
-			
+
 			pShaderShadow->DrawFlags( SHADER_DRAW_POSITION );
 		}
 		DYNAMIC_STATE
@@ -40,4 +40,3 @@ BEGIN_SHADER_FLAGS( SetZ_DX6, "Help for SetZ_DX6", SHADER_NOT_EDITABLE )
 		Draw();
 	}
 END_SHADER
-

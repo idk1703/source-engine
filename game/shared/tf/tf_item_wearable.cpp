@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -85,7 +85,7 @@ void CTFWearable::Break( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFWearable::CalculateVisibleClassFor( CBaseCombatCharacter *pPlayer )
 {
@@ -99,7 +99,7 @@ int CTFWearable::CalculateVisibleClassFor( CBaseCombatCharacter *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFWearable::UpdateTransmitState()
 {
@@ -107,7 +107,7 @@ int CTFWearable::UpdateTransmitState()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CTFWearable::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 {
@@ -262,7 +262,7 @@ void __MsgFunc_BreakModel_Pumpkin( bf_read &msg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CTFWearable::InternalDrawModel( int flags )
 {
@@ -283,7 +283,7 @@ int	CTFWearable::InternalDrawModel( int flags )
 			return 0;
 	}
 
-	bool bUseInvulnMaterial = ( pOwner && pOwner->m_Shared.IsInvulnerable() && 
+	bool bUseInvulnMaterial = ( pOwner && pOwner->m_Shared.IsInvulnerable() &&
 							    ( !pOwner->m_Shared.InCond( TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED ) || gpGlobals->curtime < pOwner->GetLastDamageTime() + 2.0f ) );
 
 	if ( bUseInvulnMaterial && (flags & STUDIO_RENDER) )
@@ -302,7 +302,7 @@ int	CTFWearable::InternalDrawModel( int flags )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFWearable::ShouldDraw()
 {
@@ -342,7 +342,7 @@ bool CTFWearable::ShouldDraw()
 
 			// This wearable is a part of our disguise -- we might want to draw it.
 			if ( GetEnemyTeam( pOwner->GetTeamNumber() ) != iLocalPlayerTeam )
-			{	
+			{
 				// The local player is on this spy's team. We don't see the disguise.
 				return false;
 			}
@@ -394,13 +394,13 @@ bool CTFWearable::ShouldDraw()
 				return false;
 			}
 		}
-		
+
 		return BaseClass::ShouldDraw();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFWearable::ShouldDrawParticleSystems( void )
 {
@@ -544,7 +544,7 @@ bool CTFWearable::UpdateBodygroups( CBaseCombatCharacter* pOwner, int iState )
 
 	CEconItemView *pItem = GetAttributeContainer() ? GetAttributeContainer()->GetItem() : NULL;
 	if ( pItem )
-	{		
+	{
 		int iTeam = pTFOwner->GetTeamNumber();
 		int iNumBodyGroups = pItem->GetStaticData()->GetNumCodeControlledBodyGroups( iTeam );
 		for ( int i=0; i<iNumBodyGroups; ++i )
@@ -566,7 +566,7 @@ bool CTFWearable::UpdateBodygroups( CBaseCombatCharacter* pOwner, int iState )
 		if ( iBodyGroup == -1 )
 			continue;
 		pOwner->SetBodygroup( iBodyGroup, iState );
-	}	
+	}
 
 	return true;
 }
@@ -622,7 +622,7 @@ int CTFWearable::GetSkin()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWearable::InternalSetPlayerDisplayModel( void )
 {
@@ -644,7 +644,7 @@ void CTFWearable::InternalSetPlayerDisplayModel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWearable::AddHiddenBodyGroup( const char* bodygroup )
 {
@@ -652,7 +652,7 @@ void CTFWearable::AddHiddenBodyGroup( const char* bodygroup )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWearable::ReapplyProvision( void )
 {
@@ -696,7 +696,7 @@ void CTFWearable::Equip( CBasePlayer* pOwner )
 	CEconItemView *pItem = ( (CTFWearable *)this )->GetAttributeContainer()->GetItem();
 	if ( pTFPlayer && pItem->IsValid() )
 	{
-		pTFPlayer->ReapplyItemUpgrades( pItem );	
+		pTFPlayer->ReapplyItemUpgrades( pItem );
 	}
 #endif // GAME_DLL
 }
@@ -731,7 +731,7 @@ bool CTFWearable::CanEquip( CBaseEntity *pOther )
 			int iHolidayRestriction = UTIL_GetHolidayForString( pData->GetHolidayRestriction() );
 			if ( iHolidayRestriction != kHoliday_None && !TFGameRules()->IsHolidayActive( iHolidayRestriction ) )
 				return false;
-		}		
+		}
 	}
 	return true;
 }
@@ -785,5 +785,3 @@ ShadowType_t CTFWearableVM::ShadowCastType( void )
 	return SHADOWS_RENDER_TO_TEXTURE;
 }
 #endif
-
-

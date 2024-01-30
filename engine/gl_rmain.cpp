@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -42,14 +42,14 @@
 extern ConVar r_waterforceexpensive;
 #endif
 
-ConVar r_aspectratio( "r_aspectratio", "0" 
+ConVar r_aspectratio( "r_aspectratio", "0"
 #if !defined( _X360 )
-					 , FCVAR_CHEAT
+					, FCVAR_CHEAT
 #endif
-					 );
+					);
 ConVar r_dynamiclighting( "r_dynamiclighting", "1", FCVAR_CHEAT );
 extern ConVar building_cubemaps;
-extern float scr_demo_override_fov;	
+extern float scr_demo_override_fov;
 
 extern colorVec R_LightPoint (Vector& p);
 
@@ -150,12 +150,12 @@ void R_DrawScreenRect( float left, float top, float right, float bottom )
 	pRenderContext->MatrixMode( MATERIAL_VIEW );
 	pRenderContext->PushMatrix();
 	pRenderContext->LoadIdentity();
-	
+
 	pRenderContext->MatrixMode( MATERIAL_PROJECTION );
 	pRenderContext->PushMatrix();
 	pRenderContext->LoadIdentity();
-	
-	
+
+
 	IMaterial *pMaterial = materials->FindMaterial( "debug/debugportals", TEXTURE_GROUP_OTHER );
 	IMesh *pMesh = pRenderContext->GetDynamicMesh( true, NULL, NULL, pMaterial );
 
@@ -167,10 +167,10 @@ void R_DrawScreenRect( float left, float top, float right, float bottom )
 		Vector v3( right, top, 0.5 );
 		Vector v4( right, bottom, 0.5 );
 
-		builder.Position3fv( v1.Base() ); 		builder.AdvanceVertex();  
-		builder.Position3fv( v2.Base() ); 		builder.AdvanceVertex();  
-		builder.Position3fv( v3.Base() ); 		builder.AdvanceVertex();  
-		builder.Position3fv( v4.Base() ); 		builder.AdvanceVertex();  
+		builder.Position3fv( v1.Base() ); 		builder.AdvanceVertex();
+		builder.Position3fv( v2.Base() ); 		builder.AdvanceVertex();
+		builder.Position3fv( v3.Base() ); 		builder.AdvanceVertex();
+		builder.Position3fv( v4.Base() ); 		builder.AdvanceVertex();
 
 	builder.End( false, true );
 
@@ -331,7 +331,7 @@ private:
 
 	float		m_zNear;
 	float		m_zFar;
-	
+
 	// matrices
 	VMatrix		m_matrixView;
 	VMatrix		m_matrixProjection;
@@ -361,7 +361,7 @@ CRender::CRender()
 	m_iLightmapUpdateDepth = 0;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Called when the engine is about to begin rendering for any reason
 //-----------------------------------------------------------------------------
@@ -372,7 +372,7 @@ void CRender::FrameBegin( void )
 		// This has to be before R_AnimateLight because it uses it to
 		// set the frame number of changed lightstyles
 
-		// FIXME: Why isn't this being done in DrawSceneBegin 
+		// FIXME: Why isn't this being done in DrawSceneBegin
 		// or some other client-side simulation of state?
 		r_framecount++;
 		R_AnimateLight ();
@@ -395,7 +395,7 @@ void CRender::FrameBegin( void )
 void CRender::FrameEnd( void )
 {
 	// A debugging overlay that renders all raycasts.
-	// Why, or why is this being done here instead of 
+	// Why, or why is this being done here instead of
 	// where all the other debug overlays are being done in the client DLL?
 	EngineTraceRenderRayCasts();
 
@@ -409,22 +409,22 @@ void CRender::FrameEnd( void )
 }
 
 
-const VMatrix &CRender::ViewMatrix( ) 
-{ 
+const VMatrix &CRender::ViewMatrix( )
+{
 	// If we aren't in a valid view, then use the last value cached off into the global variable instead
 	if ( m_ViewStack.Count() > 1 )
 	{
 		return m_ViewStack.Top().m_matrixView;
 	}
-	return m_matrixView; 
+	return m_matrixView;
 }
 
-const VMatrix &CRender::WorldToScreenMatrix( void ) 
-{ 
+const VMatrix &CRender::WorldToScreenMatrix( void )
+{
 	// If we aren't in a valid view, then use the last value cached off into the global variable instead
 	if ( m_ViewStack.Count() > 1 )
 	{
-		return m_ViewStack.Top().m_matrixWorldToScreen; 
+		return m_ViewStack.Top().m_matrixWorldToScreen;
 	}
 	return m_matrixWorldToScreen;
 }
@@ -559,21 +559,21 @@ float ComputeViewMatrices( VMatrix *pWorldToView, VMatrix *pViewToProjection, VM
 
 	if ( viewSetup.m_bOrtho )
 	{
-		MatrixBuildOrtho( *pViewToProjection, viewSetup.m_OrthoLeft, viewSetup.m_OrthoTop, 
+		MatrixBuildOrtho( *pViewToProjection, viewSetup.m_OrthoLeft, viewSetup.m_OrthoTop,
 			viewSetup.m_OrthoRight, viewSetup.m_OrthoBottom, viewSetup.zNear, viewSetup.zFar );
 	}
 	else if ( viewSetup.m_bOffCenter ) // Off-center projection, useful for AA jitter and tiled output of posters
 	{
-		MatrixBuildPerspectiveOffCenterX( *pViewToProjection, viewSetup.fov, flAspectRatio, 
+		MatrixBuildPerspectiveOffCenterX( *pViewToProjection, viewSetup.fov, flAspectRatio,
 			viewSetup.zNear, viewSetup.zFar, viewSetup.m_flOffCenterBottom, viewSetup.m_flOffCenterTop,
 			viewSetup.m_flOffCenterLeft, viewSetup.m_flOffCenterRight );
 	}
-    else if ( viewSetup.m_bViewToProjectionOverride )
-    {
-        *pViewToProjection = viewSetup.m_ViewToProjection;
+	else if ( viewSetup.m_bViewToProjectionOverride )
+	{
+		*pViewToProjection = viewSetup.m_ViewToProjection;
 		// ...but then override the Z range (needed for correct skybox rendering, etc).
 		MatrixBuildPerspectiveZRange ( *pViewToProjection, viewSetup.zNear, viewSetup.zFar );
-    }
+	}
 	else
 	{
 		MatrixBuildPerspectiveX( *pViewToProjection, viewSetup.fov, flAspectRatio, viewSetup.zNear, viewSetup.zFar );
@@ -587,10 +587,10 @@ float ComputeViewMatrices( VMatrix *pWorldToView, VMatrix *pViewToProjection, VM
 
 
 // Flip y, screen y goes down
-static VMatrix g_ProjectionToOffset( 0.5f,  0.0f, 0.0f, 0.5f,  
-									 0.0f, -0.5f, 0.0f, 0.5f,
-									 0.0f,  0.0f, 1.0f, 0.0f,
-									 0.0f,  0.0f, 0.0f, 1.0f );
+static VMatrix g_ProjectionToOffset( 0.5f,  0.0f, 0.0f, 0.5f,
+									0.0f, -0.5f, 0.0f, 0.5f,
+									0.0f,  0.0f, 1.0f, 0.0f,
+									0.0f,  0.0f, 0.0f, 1.0f );
 
 // NOTE: Screen coordinates go from 0->w, 0->h
 void ComputeWorldToScreenMatrix( VMatrix *pWorldToScreen, const VMatrix &worldToProjection, const CViewSetup &viewSetup )
@@ -629,7 +629,7 @@ void CRender::Push3DView( const CViewSetup &view, int nFlags, ITexture* pRenderT
 	}
 
 	ViewStack_t &viewStack = m_ViewStack.Top();
-	topView.m_flAspectRatio = ComputeViewMatrices( &viewStack.m_matrixView, 
+	topView.m_flAspectRatio = ComputeViewMatrices( &viewStack.m_matrixView,
 		&viewStack.m_matrixProjection, &viewStack.m_matrixWorldToScreen, topView );
 
 	m_zNear = topView.zNear;
@@ -646,7 +646,7 @@ void CRender::Push3DView( const CViewSetup &view, int nFlags, ITexture* pRenderT
 			pRenderTarget = pRenderContext->GetRenderTarget();
 		}
 
-		// Push render target and viewport 
+		// Push render target and viewport
 		pRenderContext->PushRenderTargetAndViewport( pRenderTarget, pDepthTexture, topView.x, topView.y, topView.width, topView.height );
 
 		// Handle an initial clear request if asked for
@@ -689,7 +689,7 @@ void CRender::Push2DView( const CViewSetup &view, int nFlags, ITexture* pRenderT
 		pRenderTarget = pRenderContext->GetRenderTarget();
 	}
 
-	// Push render target and viewport 
+	// Push render target and viewport
 	pRenderContext->PushRenderTargetAndViewport( pRenderTarget, topView.x, topView.y, topView.width, topView.height );
 
 	// Handle an initial clear request if asked for
@@ -744,7 +744,7 @@ void CRender::PopView( Frustum frustumPlanes )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Sets the main 3D view (for console commands, sound, etc.)
 //-----------------------------------------------------------------------------
@@ -828,7 +828,7 @@ void CRender::EndUpdateLightmaps( void )
 			// only do the copy when there are valid dlights to process and threading is on
 			if ( g_bActiveDlights && pCallQueue )
 			{
-				// keep a copy of the current dlight state around for the thread to work on 
+				// keep a copy of the current dlight state around for the thread to work on
 				// in parallel.  This way the main thread can continue to modify this state without
 				// generating any bad results
 				static dlight_t threadDlights[MAX_DLIGHTS*2];
@@ -856,7 +856,7 @@ void CRender::EndUpdateLightmaps( void )
 		g_LightmapTransformList.RemoveAll();
 	}
 }
-	
+
 bool CRender::InLightmapUpdate( void ) const
 {
 	return ( m_iLightmapUpdateDepth != 0 );
@@ -921,7 +921,7 @@ bool CRender::ScreenTransform( const Vector& point, Vector* pScreen )
 }
 
 void CRender::ViewDrawFade( byte *color, IMaterial* pFadeMaterial )
-{		
+{
 	if ( !color || !color[3] )
 		return;
 
@@ -937,7 +937,7 @@ void CRender::ViewDrawFade( byte *color, IMaterial* pFadeMaterial )
 	pFadeMaterial->ColorModulate( color[0] * ( 1.0f / 255.0f ),
 		color[1] * ( 1.0f / 255.0f ),
 		color[2] * ( 1.0f / 255.0f ) );
-	
+
 	bool bOldIgnoreZ = pFadeMaterial->GetMaterialVarFlag( MATERIAL_VAR_IGNOREZ );
 	pFadeMaterial->SetMaterialVarFlag( MATERIAL_VAR_IGNOREZ, true );
 
@@ -957,16 +957,16 @@ void CRender::ViewDrawFade( byte *color, IMaterial* pFadeMaterial )
 
 	pRenderContext->MatrixMode( MATERIAL_MODEL );
 	pRenderContext->PushMatrix();
-	pRenderContext->LoadIdentity();	
+	pRenderContext->LoadIdentity();
 
 	pRenderContext->MatrixMode( MATERIAL_VIEW );
 	pRenderContext->PushMatrix();
-	pRenderContext->LoadIdentity();	
+	pRenderContext->LoadIdentity();
 
 	IMesh* pMesh = pRenderContext->GetDynamicMesh();
 	CMeshBuilder meshBuilder;
 	meshBuilder.Begin( pMesh, MATERIAL_QUADS, 1 );
-	
+
 	float flOffset = 0.5f;
 
 	// Note - the viewport has already adjusted the origin
@@ -992,12 +992,12 @@ void CRender::ViewDrawFade( byte *color, IMaterial* pFadeMaterial )
 	pMesh->Draw();
 
 	pRenderContext->MatrixMode( MATERIAL_MODEL );
-    pRenderContext->PopMatrix();
+	pRenderContext->PopMatrix();
 	pRenderContext->MatrixMode( MATERIAL_VIEW );
-    pRenderContext->PopMatrix();
+	pRenderContext->PopMatrix();
 	pRenderContext->MatrixMode( MATERIAL_PROJECTION );
-    pRenderContext->PopMatrix();
-    
+	pRenderContext->PopMatrix();
+
 	pFadeMaterial->SetMaterialVarFlag( MATERIAL_VAR_IGNOREZ, bOldIgnoreZ );
 }
 
@@ -1005,7 +1005,7 @@ void CRender::ExtractFrustumPlanes( Frustum frustumPlanes )
 {
 	const CViewSetup &view = CurrentView();
 
-	GeneratePerspectiveFrustum( CurrentViewOrigin(), 
+	GeneratePerspectiveFrustum( CurrentViewOrigin(),
 		CurrentViewForward(), CurrentViewRight(), CurrentViewUp(),
 		view.zNear, view.zFar, view.fov, m_yFOV, g_Frustum );
 

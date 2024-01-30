@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -23,8 +23,8 @@
 
 //-----------------------------------------------------------------------------
 // Purpose: One ControlPointMaster is spawned per level. Shortly after spawning it detects all the Control
-// points in the map and puts them into the m_ControlPoints. From there it detects the state 
-// where all points are captured and resets them if necessary It gives points every time interval to 
+// points in the map and puts them into the m_ControlPoints. From there it detects the state
+// where all points are captured and resets them if necessary It gives points every time interval to
 // the owners of the points
 //-----------------------------------------------------------------------------
 class CTeamControlPointMaster : public CBaseEntity
@@ -40,11 +40,11 @@ public:
 	virtual const char *GetControlPointRoundName( void ) { return "team_control_point_round"; }
 
 public:
-	virtual void Spawn( void );	
+	virtual void Spawn( void );
 	virtual void UpdateOnRemove( void );
 	virtual bool KeyValue( const char *szKeyName, const char *szValue );
-	virtual void Precache( void );	
-	virtual void Activate( void );	
+	virtual void Precache( void );
+	virtual void Activate( void );
 
 	void RoundRespawn( void );
 	void Reset( void );
@@ -84,7 +84,7 @@ public:
 
 		return NULL;
 	}
-	
+
 	CTeamControlPointRound *GetCurrentRound( void )
 	{
 		if ( !PlayingMiniRounds() || m_iCurrentRoundIndex == -1 )
@@ -139,7 +139,7 @@ public:
 private:
 	void EXPORT CPMThink( void );
 
-    void SetBaseControlPoints( void );
+	void SetBaseControlPoints( void );
 	int TeamOwnsAllPoints( CTeamControlPoint *pOverridePoint = NULL, int iOverrideNewTeam = TEAM_UNASSIGNED );
 
 	bool FindControlPoints( void );	// look in the map to find active control points
@@ -173,10 +173,10 @@ private:
 	CUtlMap<int, CTeamControlPoint *> m_ControlPoints;
 
 	bool m_bFoundPoints;		// true when the control points have been found and the array is initialized
-	
+
 	CUtlVector<CTeamControlPointRound *> m_ControlPointRounds;
 	int m_iCurrentRoundIndex;
-	
+
 	DECLARE_DATADESC();
 
 	bool m_bDisabled;

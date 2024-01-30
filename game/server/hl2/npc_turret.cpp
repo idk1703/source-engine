@@ -1,8 +1,8 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
-// TODO: 
+// TODO:
 //		Take advantage of new NPC fields like GetEnemy() and get rid of that OFFSET() stuff
 //		Revisit enemy validation stuff, maybe it's not necessary with the newest NPC code
 //
@@ -67,7 +67,7 @@ public:
 	virtual void Precache(void);
 	bool KeyValue( const char *szKeyName, const char *szValue );
 	//void TurretUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	
+
 	virtual void		TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr );
 	virtual int			OnTakeDamage( const CTakeDamageInfo &info );
 	virtual Class_T		Classify(void);
@@ -90,7 +90,7 @@ public:
 
 	void Deploy(void);
 	void Retire(void);
-	
+
 	void Initialize(void);
 
 	virtual void Ping(void);
@@ -137,12 +137,12 @@ public:
 	//COutputEvent		m_OnDamaged;
 	//COutputEvent		m_OnDeath;
 	//COutputEvent		m_OnHalfHealth;
-	//COutputEHANDLE		m_OnFoundEnemy; 
-	//COutputEvent		m_OnLostEnemyLOS; 
-	//COutputEvent		m_OnLostEnemy; 
+	//COutputEHANDLE		m_OnFoundEnemy;
+	//COutputEvent		m_OnLostEnemyLOS;
+	//COutputEvent		m_OnLostEnemy;
 	//COutputEHANDLE		m_OnFoundPlayer;
 	//COutputEvent		m_OnLostPlayerLOS;
-	//COutputEvent		m_OnLostPlayer; 
+	//COutputEvent		m_OnLostPlayer;
 	//COutputEvent		m_OnHearWorld;
 	//COutputEvent		m_OnHearPlayer;
 	//COutputEvent		m_OnHearCombat;
@@ -188,7 +188,7 @@ BEGIN_DATADESC( CBaseTurret )
 
 	// Inputs
 	DEFINE_INPUTFUNC( FIELD_VOID, "Toggle", InputToggle ),
-	
+
 	// Outputs
 	DEFINE_OUTPUT(m_OnDeploy, "OnDeploy"),
 	DEFINE_OUTPUT(m_OnRetire, "OnRetire"),
@@ -198,7 +198,7 @@ END_DATADESC()
 
 
 //------------------------------------------------------------------------------
-// Purpose : 
+// Purpose :
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
@@ -228,10 +228,10 @@ bool CBaseTurret::KeyValue( const char *szKeyName, const char *szValue )
 		m_iBaseTurnRate = atoi(szValue);
 	}
 	else if (FStrEq(szKeyName, "style") ||
-			 FStrEq(szKeyName, "height") ||
-			 FStrEq(szKeyName, "value1") ||
-			 FStrEq(szKeyName, "value2") ||
-			 FStrEq(szKeyName, "value3"))
+			FStrEq(szKeyName, "height") ||
+			FStrEq(szKeyName, "value1") ||
+			FStrEq(szKeyName, "value2") ||
+			FStrEq(szKeyName, "value3"))
 	{
 	}
 	else
@@ -242,7 +242,7 @@ bool CBaseTurret::KeyValue( const char *szKeyName, const char *szValue )
 
 
 void CBaseTurret::Spawn()
-{ 
+{
 	Precache( );
 	SetNextThink( gpGlobals->curtime + 1 );
 	SetMoveType( MOVETYPE_FLY );
@@ -303,7 +303,7 @@ void CBaseTurret::Initialize(void)
 	if (m_iAutoStart)
 	{
 		m_flLastSight = gpGlobals->curtime + m_flMaxWait;
-		SetThink(AutoSearchThink);		
+		SetThink(AutoSearchThink);
 		SetNextThink( gpGlobals->curtime + .1 );
 	}
 	else
@@ -327,7 +327,7 @@ void CBaseTurret::InputToggle( inputdata_t &inputdata )
 		//!!!! this should spin down first!!BUGBUG
 		SetThink(Retire);
 	}
-	else 
+	else
 	{
 		SetNextThink( gpGlobals->curtime + 0.1f ); // turn on delay
 
@@ -336,7 +336,7 @@ void CBaseTurret::InputToggle( inputdata_t &inputdata )
 		{
 			m_iAutoStart = TRUE;
 		}
-		
+
 		SetThink(Deploy);
 	}
 }
@@ -401,7 +401,7 @@ void CBaseTurret::ActiveThink(void)
 		SetThink(SearchThink);
 		return;
 	}
-	
+
 	// if it's dead, look for something new
 	if ( !GetEnemy()->IsAlive() )
 	{
@@ -412,7 +412,7 @@ void CBaseTurret::ActiveThink(void)
 		else
 		{
 			if (gpGlobals->curtime > m_flLastSight)
-			{	
+			{
 				SetEnemy( NULL );
 				m_flLastSight = gpGlobals->curtime + m_flMaxWait;
 				SetThink(SearchThink);
@@ -428,12 +428,12 @@ void CBaseTurret::ActiveThink(void)
 	// g_pEffects->Sparks( vecMidEnemy );
 
 	// Look for our current enemy
-	//int fEnemyVisible = FBoxVisible( this, GetEnemy(), vecMidEnemy );	
-	int fEnemyVisible = FInViewCone( GetEnemy() ) && FVisible( GetEnemy() );	
+	//int fEnemyVisible = FBoxVisible( this, GetEnemy(), vecMidEnemy );
+	int fEnemyVisible = FInViewCone( GetEnemy() ) && FVisible( GetEnemy() );
 
 	vecDirToEnemy = vecMidEnemy - vecMid;	// calculate dir and dist to enemy
 	// NDebugOverlay::Line( vecMid, vecMidEnemy, 0, 255, 0, false, 0.1 );
-	
+
 	float flDistToEnemy = vecDirToEnemy.Length();
 
 	QAngle vecAnglesToEnemy;
@@ -476,7 +476,7 @@ void CBaseTurret::ActiveThink(void)
 	GetAttachment( "eyes", vecMuzzle, vecMuzzleAng );
 
 	AngleVectors( vecMuzzleAng, &vecMuzzleDir );
-	
+
 	// Is the Gun looking at the target
 	if (DotProduct(vecLOS, vecMuzzleDir) <= 0.9848) // 10 degree slop
 	{
@@ -493,7 +493,7 @@ void CBaseTurret::ActiveThink(void)
 		m_Activity = ACT_RESET;
 		SetActivity( (Activity)ACT_TURRET_FIRE );
 		Shoot(vecMuzzle, vecMuzzleDir );
-	} 
+	}
 	else
 	{
 		SetActivity( (Activity)ACT_TURRET_OPEN_IDLE );
@@ -511,7 +511,7 @@ void CBaseTurret::ActiveThink(void)
 			OnTakeDamage( CTakeDamageInfo( this, this, 1, DMG_GENERIC ) ); // don't beserk forever
 			return;
 		}
-	} 
+	}
 	else if (fEnemyVisible)
 	{
 		// DevMsg( "->[%.2f]\n", vec.x);
@@ -574,7 +574,7 @@ void CBaseTurret::Retire(void)
 	if ( m_Activity != ACT_TURRET_CLOSE )
 	{
 		SetActivity( (Activity)ACT_TURRET_OPEN_IDLE );
-		
+
 		if (!MoveTurret())
 		{
 			SetActivity( (Activity)ACT_TURRET_CLOSE );
@@ -583,8 +583,8 @@ void CBaseTurret::Retire(void)
 			m_OnRetire.FireOutput(NULL, this);
 		}
 	}
-	else if (m_fSequenceFinished) 
-	{	
+	else if (m_fSequenceFinished)
+	{
 		m_iOn = 0;
 		m_flLastSight = 0;
 
@@ -602,7 +602,7 @@ void CBaseTurret::Retire(void)
 
 		if (m_iAutoStart)
 		{
-			SetThink(AutoSearchThink);		
+			SetThink(AutoSearchThink);
 			SetNextThink( gpGlobals->curtime + .1 );
 		}
 		else
@@ -614,7 +614,7 @@ void CBaseTurret::Retire(void)
 
 
 //
-// This search function will sit with the turret deployed and look for a new target. 
+// This search function will sit with the turret deployed and look for a new target.
 // After a set amount of time, the barrel will spin down. After m_flMaxWait, the turret will
 // retact.
 //
@@ -651,13 +651,13 @@ void CBaseTurret::SearchThink(void)
 	else
 	{
 		// Are we out of time, do we need to retract?
- 		if (gpGlobals->curtime > m_flLastSight)
+		if (gpGlobals->curtime > m_flLastSight)
 		{
 			//Before we retrace, make sure that we are spun down.
 			m_flLastSight = 0;
 			SetThink(Retire);
 		}
-		
+
 		// generic hunt for new victims
 		m_vecGoalAngles.y = (m_vecGoalAngles.y + 0.1 * m_iBaseTurnRate);
 		if (m_vecGoalAngles.y >= 360)
@@ -668,7 +668,7 @@ void CBaseTurret::SearchThink(void)
 }
 
 
-// 
+//
 // This think function will deploy the turret when something comes into range. This is for
 // automatically activated turrets.
 //
@@ -715,7 +715,7 @@ void CBaseTurret ::	TurretDeath( void )
 
 		SetActivity( (Activity)ACT_TURRET_CLOSE );
 
-		EyeOn( );	
+		EyeOn( );
 	}
 
 	EyeOff( );
@@ -726,14 +726,14 @@ void CBaseTurret ::	TurretDeath( void )
 		Vector pos;
 		CollisionProp()->RandomPointInBounds( vec3_origin, Vector( 1, 1, 1 ), &pos );
 		pos.z = CollisionProp()->GetCollisionOrigin().z;
-		
+
 		CBroadcastRecipientFilter filter;
 		te->Smoke( filter, 0.0, &pos,
 			g_sModelIndexSmoke,
 			2.5,
 			10 );
 	}
-	
+
 	if (m_flDamageTime + random->RandomFloat( 0, 5 ) > gpGlobals->curtime)
 	{
 		Vector vecSrc;
@@ -820,7 +820,7 @@ int CBaseTurret::MoveTurret(void)
 	int iPose;
 
 	matrix3x4_t localToWorld;
-	
+
 	GetAttachment( LookupAttachment( "eyes" ), localToWorld );
 
 	Vector vecGoalDir;
@@ -835,7 +835,7 @@ int CBaseTurret::MoveTurret(void)
 	float flDiff;
 	QAngle vecNewAngles;
 
-  // update pitch
+	// update pitch
 	flDiff = AngleNormalize( UTIL_ApproachAngle(  vecGoalLocalAngles.x, 0.0, 0.1 * m_iBaseTurnRate ) );
 	iPose = LookupPoseParameter( TURRET_BC_PITCH );
 	SetPoseParameter( iPose, GetPoseParameter( iPose ) + flDiff / 1.5 );
@@ -908,11 +908,11 @@ public:
 LINK_ENTITY_TO_CLASS( npc_turret_ceiling, CCeilingTurret );
 
 void CCeilingTurret::Spawn()
-{ 
+{
 	Precache( );
 
 	SetModel( "models/combine_turrets/ceiling_turret.mdl" );
-	
+
 	BaseClass::Spawn( );
 
 	m_iHealth			= sk_turret_health.GetFloat();
@@ -927,8 +927,8 @@ void CCeilingTurret::Spawn()
 	m_iDeployHeight = 32;
 	m_iMinPitch	= -45;
 	UTIL_SetSize(this, Vector(-32, -32, -m_iRetractHeight), Vector(32, 32, m_iRetractHeight));
-	
-	SetThink(Initialize);	
+
+	SetThink(Initialize);
 
 	m_pEyeGlow = CSprite::SpriteCreate( TURRET_GLOW_SPRITE, GetOrigin(), FALSE );
 	m_pEyeGlow->SetTransparency( kRenderGlow, 255, 0, 0, 0, kRenderFxNoDissipation );
@@ -940,7 +940,7 @@ void CCeilingTurret::Spawn()
 
 void CCeilingTurret::Precache()
 {
-	PrecacheModel( "models/combine_turrets/ceiling_turret.mdl");	
+	PrecacheModel( "models/combine_turrets/ceiling_turret.mdl");
 	PrecacheModel( TURRET_GLOW_SPRITE );
 
 	PrecacheScriptSound( "CeilingTurret.Shoot" );
@@ -952,7 +952,7 @@ void CCeilingTurret::Shoot(const Vector &vecSrc, const Vector &vecDirToEnemy)
 	//NDebugOverlay::Line( vecSrc, vecSrc + vecDirToEnemy * 512, 0, 255, 255, false, 0.1 );
 	FireBullets( 1, vecSrc, vecDirToEnemy, TURRET_SPREAD, TURRET_RANGE, m_iAmmoType, 1 );
 	EmitSound( "CeilingTurret.Shoot" );
-	
+
 	DoMuzzleFlash();
 }
 
@@ -974,7 +974,7 @@ LINK_ENTITY_TO_CLASS( npc_miniturret, CMiniTurret );
 
 
 void CMiniTurret::Spawn()
-{ 
+{
 	Precache( );
 	SetModel( "models/miniturret.mdl" );
 	m_iHealth			= sk_miniturret_health.GetFloat();
@@ -991,14 +991,14 @@ void CMiniTurret::Spawn()
 	m_iMinPitch	= -45;
 	UTIL_SetSize(this, Vector(-16, -16, -m_iRetractHeight), Vector(16, 16, m_iRetractHeight));
 
-	SetThink(Initialize);	
+	SetThink(Initialize);
 	SetNextThink( gpGlobals->curtime + 0.3; );
 }
 
 
 void CMiniTurret::Precache()
 {
-	PrecacheModel ("models/miniturret.mdl");	
+	PrecacheModel ("models/miniturret.mdl");
 
 	PrecacheScriptSound( "MiniTurret.Shoot" );
 
@@ -1054,7 +1054,7 @@ LINK_ENTITY_TO_CLASS( NPC_sentry, CSentry );
 
 void CSentry::Precache()
 {
-	PrecacheModel ("models/sentry.mdl");	
+	PrecacheModel ("models/sentry.mdl");
 
 	PrecacheScriptSound( "Sentry.Shoot" );
 	PrecacheScriptSound( "Sentry.Die" );
@@ -1063,7 +1063,7 @@ void CSentry::Precache()
 }
 
 void CSentry::Spawn()
-{ 
+{
 	Precache( );
 	SetModel( "models/sentry.mdl" );
 	m_iHealth			= sk_sentry_health.GetFloat();
@@ -1078,7 +1078,7 @@ void CSentry::Spawn()
 	UTIL_SetSize(this, Vector(-16, -16, -m_iRetractHeight), Vector(16, 16, m_iRetractHeight));
 
 	SetTouch(SentryTouch);
-	SetThink(Initialize);	
+	SetThink(Initialize);
 	SetNextThink( gpGlobals->curtime + 0.3; );
 }
 
@@ -1165,9 +1165,9 @@ void CSentry ::	SentryDeath( void )
 	if (m_flDamageTime + random->RandomFloat( 0, 2 ) > gpGlobals->curtime)
 	{
 		// lots of smoke
-		Vector pos = vecSrc + Vector( random->RandomFloat( -16, 16 ), 
+		Vector pos = vecSrc + Vector( random->RandomFloat( -16, 16 ),
 				random->RandomFloat( -16, 16 ),
-				 -32 );
+				-32 );
 
 		CBroadcastRecipientFilter filter;
 		te->Smoke( filter, 0.0, &pos,
@@ -1175,7 +1175,7 @@ void CSentry ::	SentryDeath( void )
 			1.5,
 			8 );
 	}
-	
+
 	if (m_flDamageTime + random->RandomFloat( 0, 8 ) > gpGlobals->curtime)
 	{
 		g_pEffects->Sparks( vecSrc );
@@ -1187,4 +1187,3 @@ void CSentry ::	SentryDeath( void )
 		SetThink( NULL );
 	}
 }
-

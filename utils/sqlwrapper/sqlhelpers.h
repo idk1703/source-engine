@@ -8,7 +8,7 @@
 
 extern "C"
 {
-	#include <WinSock.H> 
+	#include <WinSock.H>
 	#include "mysql.h"
 };
 #include "utlvector.h"
@@ -29,7 +29,7 @@ public:
 //-----------------------------------------------------------------------------
 // Purpose: represents the data about a single SQL column
 //-----------------------------------------------------------------------------
-class CSQLColumn 
+class CSQLColumn
 {
 public:
 	CSQLColumn() { m_rgchName[0] = 0; }
@@ -83,7 +83,7 @@ public:
 	bool BInit() { return m_bInit; }
 	virtual int GetCSQLTable() const { return m_VecSQLTable.Count(); };
 	virtual const ISQLTable *PSQLTable( int iSQLTable ) const;
-	
+
 #ifdef DBGFLAG_VALIDATE
 	void Validate( CValidator &validator, char *pchName );
 #endif
@@ -159,4 +159,3 @@ private:
 	int m_cSQLField;
 	int m_cSQLRow;
 };
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,7 +30,7 @@ LINK_ENTITY_TO_CLASS( grenade_objectsapper, CGrenadeObjectSapper );
 PRECACHE_WEAPON_REGISTER(grenade_objectsapper);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeObjectSapper::Spawn( void )
 {
@@ -45,7 +45,7 @@ void CGrenadeObjectSapper::Spawn( void )
 	m_takedamage = DAMAGE_NO;
 	m_iHealth = 50.0;
 	m_bSapping = false;
-	
+
 	// Set my damages to the cvar values
 	SetDamage( weapon_objectsapper_damage.GetFloat() * 0.1 );
 	SetDamageRadius( 0 );
@@ -69,7 +69,7 @@ void CGrenadeObjectSapper::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeObjectSapper::PlayArmingSound( void )
 {
@@ -77,8 +77,8 @@ void CGrenadeObjectSapper::PlayArmingSound( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : armed - 
+// Purpose:
+// Input  : armed -
 //-----------------------------------------------------------------------------
 void CGrenadeObjectSapper::SetArmed( bool armed )
 {
@@ -102,7 +102,7 @@ void CGrenadeObjectSapper::SetArmed( bool armed )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CGrenadeObjectSapper::GetArmed( void ) const
@@ -172,7 +172,7 @@ void CGrenadeObjectSapper::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, U
 		SetTargetObject( NULL );
 		UTIL_Remove( this );
 	}
-/*	
+/*
 	ROBIN: Removed self-removal of sapper
 
 	else
@@ -206,6 +206,6 @@ CGrenadeObjectSapper *CGrenadeObjectSapper::Create( const Vector &vecOrigin, con
 	angles.x -= 90;
 	pGrenade->SetLocalAngles( angles );
 	pGrenade->ChangeTeam( pOwner->GetTeamNumber() );
-	
+
 	return pGrenade;
 }

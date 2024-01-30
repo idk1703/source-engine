@@ -5,7 +5,7 @@
 //=============================================================================//
 #include "cbase.h"
 
-#include "tf_halloween_souls_pickup.h"	
+#include "tf_halloween_souls_pickup.h"
 
 #ifdef CLIENT_DLL
 	#include "tf_shareddefs.h"
@@ -42,7 +42,7 @@ END_PREDICTION_DATA()
 #define SOUND_PLAYER_COLLECT_SOULS "Player.ReceiveSouls"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHalloweenSoulPack::CHalloweenSoulPack()
 	: m_flCreationTime( 0.f )
@@ -120,12 +120,12 @@ void CHalloweenSoulPack::ClientThink()
 
 #ifdef GAME_DLL
 int CHalloweenSoulPack::UpdateTransmitState()
-{ 
+{
 	return SetTransmitState( FL_EDICT_ALWAYS );
 }
 
 
-void CHalloweenSoulPack::ItemTouch( CBaseEntity *pOther ) 
+void CHalloweenSoulPack::ItemTouch( CBaseEntity *pOther )
 {
 	// Only allow our target to pick us up, if we have one
 	if ( pOther != m_hTarget && m_hTarget != NULL )

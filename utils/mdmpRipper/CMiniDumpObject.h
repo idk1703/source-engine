@@ -59,5 +59,5 @@ private:
 	CUtlVector<module>				m_unknownModuleList;
 	CUtlVector<module>				m_badChecksumList;
 	char							m_pszMiniDumpFileName[1024];
-		
+
 };

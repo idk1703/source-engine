@@ -38,7 +38,7 @@ public:
 	void insert_all_ledges_hitting_ray(IVP_Ray_Solver *ray_solver, IVP_Real_Object *object);
 	void get_radius_and_radius_dev_to_given_center(const IVP_U_Float_Point *center, IVP_FLOAT *radius, IVP_FLOAT *radius_deviation) const;
 	virtual IVP_SURMAN_TYPE get_type() { return IVP_SURMAN_POLYGON; }
-	
+
 	// assume mesh is never a single triangle
 	virtual const IVP_Compact_Ledge *get_single_convex() const;
 	void get_mass_center(IVP_U_Float_Point *mass_center_out) const;
@@ -72,8 +72,8 @@ public:
 	const triangleledge_t	*GetLedges() { return (triangleledge_t *)m_pMemory; }
 	inline int HullCount() { return m_hullCount; }
 	const IVP_Compact_Ledge *GetOuterHull() { return (m_hullCount==1) ? (const IVP_Compact_Ledge *)(m_pMemory + m_hullOffset) : NULL; }
-	int GetRootLedges( IVP_Compact_Ledge **pLedges, int outCount ) 
-	{ 
+	int GetRootLedges( IVP_Compact_Ledge **pLedges, int outCount )
+	{
 		int hullOffset = m_hullOffset;
 		int count = min(outCount, (int)m_hullCount);
 		for ( int i = 0; i < count; i++ )
@@ -190,7 +190,7 @@ const int g_MeshSize = (2048 * 1024);
 static CDataManager<CMeshInstance, virtualmeshlist_t, CMeshInstance *, CThreadFastMutex> g_MeshManager( g_MeshSize );
 static int numIndices = 0, numTriangles = 0, numBaseTriangles = 0, numSplits = 0;
 //-----------------------------------------------------------------------------
-// Purpose: This allows for just-in-time procedural triangle soup data to be 
+// Purpose: This allows for just-in-time procedural triangle soup data to be
 //			instanced & cached as IVP collision data (compact ledges)
 //-----------------------------------------------------------------------------
 // NOTE: This is the permanent in-memory representation.  It holds the compressed data
@@ -202,8 +202,8 @@ public:
 	// non-const because they may instantiate the cache.  This causes problems with the interface.
 	// Maybe the cache stuff should be mutable, but it amounts to the same kind of
 	// hackery to cast away const.
-	
-	// get a surface manager 
+
+	// get a surface manager
 	virtual IVP_SurfaceManager *CreateSurfaceManager( short &collideType ) const
 	{
 		collideType = COLLIDE_VIRTUAL;
@@ -219,14 +219,14 @@ public:
 		}
 		const_cast<CPhysCollideVirtualMesh *>(this)->Release();
 	}
-	virtual unsigned int GetSerializationSize() const 
-	{ 
+	virtual unsigned int GetSerializationSize() const
+	{
 		if ( !m_pHull )
-			return 0; 
+			return 0;
 		return m_pHull->TotalSize();
 	}
 
-	virtual unsigned int SerializeToBuffer( char *pDest, bool bSwap = false ) const 
+	virtual unsigned int SerializeToBuffer( char *pDest, bool bSwap = false ) const
 	{
 		unsigned int size = GetSerializationSize();
 		if ( size )
@@ -289,7 +289,7 @@ public:
 				Assert(ledge->get_n_triangles() == 2);
 				const IVP_Compact_Triangle *triangle = ledge->get_first_triangle();
 				IVP_DOUBLE qdist = IVP_CLS.calc_qlen_PF_F_space(ledge, triangle, observer_os);
-				if ( qdist > radiusSq ) 
+				if ( qdist > radiusSq )
 				{
 					continue;
 				}
@@ -340,15 +340,15 @@ public:
 	// releases a lock on the collision memory
 	void Release();
 	// Analagous to Release, but happens at the end of the frame
-	void FrameRelease() 
-	{ 
+	void FrameRelease()
+	{
 		CUtlVector<CPhysCollideVirtualMesh *> *pLocks = g_pMeshFrameLocks;
 		if ( !pLocks )
 		{
 			g_pMeshFrameLocks = pLocks = g_MeshFrameLocksPool.GetObject();
 			Assert( pLocks );
 		}
-		pLocks->AddToTail(this);	
+		pLocks->AddToTail(this);
 	}
 	inline void GetBounds( Vector &mins, Vector &maxs ) const
 	{
@@ -423,7 +423,7 @@ CMeshInstance *CPhysCollideVirtualMesh::AddRef()
 	Assert( pMesh );
 	return pMesh;
 }
- 
+
 void CPhysCollideVirtualMesh::Release()
 {
 	g_MeshManager.UnlockResource( m_hMemory );
@@ -443,7 +443,7 @@ CMeshInstance *CPhysCollideVirtualMesh::BuildLedges()
 	{
 		list.pHull = (byte *)m_pHull;
 	}
-	
+
 	if ( list.triangleCount )
 	{
 		m_hMemory = g_MeshManager.CreateResource( list );
@@ -583,9 +583,9 @@ void IVP_SurfaceManager_VirtualMesh::get_radius_and_radius_dev_to_given_center(c
 }
 
 // get a single convex if appropriate
-const IVP_Compact_Ledge *IVP_SurfaceManager_VirtualMesh::get_single_convex() const 
-{ 
-	return m_pMesh->GetBoundingLedge(); 
+const IVP_Compact_Ledge *IVP_SurfaceManager_VirtualMesh::get_single_convex() const
+{
+	return m_pMesh->GetBoundingLedge();
 }
 
 // get a mass center for objects using this collision rep
@@ -634,6 +634,3 @@ void IVP_SurfaceManager_VirtualMesh::get_all_terminal_ledges(IVP_U_BigVector<IVP
 {
 	m_pMesh->GetAllLedges( *resulting_ledges );
 }
-
-
-

@@ -31,7 +31,7 @@ enum target_ranges
 #define SG_MACHINEGUN_DAMAGE				5
 
 // ------------------------------------------------------------------------ //
-// The Base Sentrygun 
+// The Base Sentrygun
 // ------------------------------------------------------------------------ //
 class CObjectSentrygun : public CBaseObject
 {

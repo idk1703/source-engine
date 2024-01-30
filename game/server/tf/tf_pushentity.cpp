@@ -28,7 +28,7 @@ protected:
 	virtual bool SpeculativelyCheckRotPush( const RotatingPushMove_t &rotPushMove, CBaseEntity *pRoot );
 	virtual bool SpeculativelyCheckLinearPush( const Vector &vecAbsPush );
 	virtual void FinishRotPushedEntity( CBaseEntity *pPushedEntity, const RotatingPushMove_t &rotPushMove );
-	
+
 private:
 
 	bool RotationPushTFPlayer( PhysicsPushedInfo_t &info, const Vector &vecAbsPush, const RotatingPushMove_t &rotPushMove, bool bRotationalPush );
@@ -177,12 +177,12 @@ bool CTFPhysicsPushEntities::RotationPushTFPlayer( PhysicsPushedInfo_t &info, co
 		return false;
 
 	// Do we have a collision.
-	if ( !IsOBBIntersectingOBB( pCollisionPlayer->GetCollisionOrigin(), pCollisionPlayer->GetCollisionAngles(), pCollisionPlayer->OBBMins(), pCollisionPlayer->OBBMaxs(), 
-		pCollisionPusher->GetCollisionOrigin(), pCollisionPusher->GetCollisionAngles(), pCollisionPusher->OBBMins(), pCollisionPusher->OBBMaxs(), 
+	if ( !IsOBBIntersectingOBB( pCollisionPlayer->GetCollisionOrigin(), pCollisionPlayer->GetCollisionAngles(), pCollisionPlayer->OBBMins(), pCollisionPlayer->OBBMaxs(),
+		pCollisionPusher->GetCollisionOrigin(), pCollisionPusher->GetCollisionAngles(), pCollisionPusher->OBBMins(), pCollisionPusher->OBBMaxs(),
 		0.0f ) )
 		return false;
 
-	// For speed use spheres to approximate push distance.	
+	// For speed use spheres to approximate push distance.
 	Vector vecPlayerOrigin = pCollisionPlayer->GetCollisionOrigin();
 	float flPlayerRadius = pCollisionPlayer->BoundingRadius();
 
@@ -299,8 +299,8 @@ bool CTFPhysicsPushEntities::LinearPushTFPlayer( PhysicsPushedInfo_t &info, cons
 		return false;
 
 	// Do we have a collision.
-	if ( !IsOBBIntersectingOBB( pCollisionPlayer->GetCollisionOrigin(), pCollisionPlayer->GetCollisionAngles(), pCollisionPlayer->OBBMins(), pCollisionPlayer->OBBMaxs(), 
-		pCollisionPusher->GetCollisionOrigin(), pCollisionPusher->GetCollisionAngles(), pCollisionPusher->OBBMins(), pCollisionPusher->OBBMaxs(), 
+	if ( !IsOBBIntersectingOBB( pCollisionPlayer->GetCollisionOrigin(), pCollisionPlayer->GetCollisionAngles(), pCollisionPlayer->OBBMins(), pCollisionPlayer->OBBMaxs(),
+		pCollisionPusher->GetCollisionOrigin(), pCollisionPusher->GetCollisionAngles(), pCollisionPusher->OBBMins(), pCollisionPusher->OBBMaxs(),
 		0.0f ) )
 		return false;
 
@@ -380,13 +380,13 @@ bool CTFPhysicsPushEntities::IsPlayerAABBIntersetingPusherOBB( CBaseEntity *pEnt
 		return false;
 
 	// Do we have a collision.
-	 return IsOBBIntersectingOBB( pCollisionPlayer->GetCollisionOrigin(), pCollisionPlayer->GetCollisionAngles(), pCollisionPlayer->OBBMins(), pCollisionPlayer->OBBMaxs(), 
-		pCollisionPusher->GetCollisionOrigin(), pCollisionPusher->GetCollisionAngles(), pCollisionPusher->OBBMins(), pCollisionPusher->OBBMaxs(), 
+	 return IsOBBIntersectingOBB( pCollisionPlayer->GetCollisionOrigin(), pCollisionPlayer->GetCollisionAngles(), pCollisionPlayer->OBBMins(), pCollisionPlayer->OBBMaxs(),
+		pCollisionPusher->GetCollisionOrigin(), pCollisionPusher->GetCollisionAngles(), pCollisionPusher->OBBMins(), pCollisionPusher->OBBMaxs(),
 		0.0f );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPhysicsPushEntities::FindNewPushDirection( Vector &vecCurrent, Vector &vecNormal, Vector &vecOutput )
 {
@@ -396,7 +396,7 @@ void CTFPhysicsPushEntities::FindNewPushDirection( Vector &vecCurrent, Vector &v
 	for ( int iAxis = 0; iAxis < 3; ++iAxis )
 	{
 		float flDelta = vecNormal[iAxis] * flBackOff;
-		vecOutput[iAxis] = vecCurrent[iAxis] - flDelta; 
+		vecOutput[iAxis] = vecCurrent[iAxis] - flDelta;
 	}
 
 	// iterate once to make sure we aren't still moving through the plane
@@ -408,7 +408,7 @@ void CTFPhysicsPushEntities::FindNewPushDirection( Vector &vecCurrent, Vector &v
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPhysicsPushEntities::MovePlayer( CBaseEntity *pBlocker, PhysicsPushedInfo_t &info, float flMoveScale, bool bPusherIsTrain )
 {

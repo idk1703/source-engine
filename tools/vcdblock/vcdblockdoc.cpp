@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -48,7 +48,7 @@ void CVcdBlockDoc::NotifyDataChanged( const char *pReason, int nNotifySource, in
 	OnDataChanged( pReason, nNotifySource, nNotifyFlags );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Gets the file name
 //-----------------------------------------------------------------------------
@@ -144,7 +144,7 @@ bool CVcdBlockDoc::LoadFromFile( const char *pFileName )
 	// Store the BSP file name
 	Q_strncpy( m_pBSPFileName, pFileName, sizeof( m_pBSPFileName ) );
 
-	// Set the txt file name. 
+	// Set the txt file name.
 	// If we loaded a .bsp, clear out what we're doing
 	// load the Edits file into memory, assign it as our "root"
 	CDmElement *pEdit = NULL;
@@ -165,7 +165,7 @@ bool CVcdBlockDoc::LoadFromFile( const char *pFileName )
 		if ( g_pFileSystem->FileExists( m_pEditFileName ) )
 		{
 			char pBuf[1024];
-			Q_snprintf( pBuf, sizeof(pBuf), "File %s already exists!\n", m_pEditFileName ); 
+			Q_snprintf( pBuf, sizeof(pBuf), "File %s already exists!\n", m_pEditFileName );
 			m_pEditFileName[0] = 0;
 			vgui::MessageBox *pMessageBox = new vgui::MessageBox( "Unable to overwrite file!\n", pBuf, g_pVcdBlockTool );
 			pMessageBox->DoModal( );
@@ -201,7 +201,7 @@ void CVcdBlockDoc::SaveToFile( )
 	SetDirty( false );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the root object
 //-----------------------------------------------------------------------------
@@ -210,7 +210,7 @@ CDmElement *CVcdBlockDoc::GetRootObject()
 	return m_hEditRoot;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the entity list
 //-----------------------------------------------------------------------------
@@ -221,7 +221,7 @@ CDmAttribute *CVcdBlockDoc::GetEntityList()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVcdBlockDoc::AddNewInfoTarget( const Vector &vecOrigin, const QAngle &angAngles )
 {
@@ -246,7 +246,7 @@ void CVcdBlockDoc::AddNewInfoTarget( const Vector &vecOrigin, const QAngle &angA
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVcdBlockDoc::AddNewInfoTarget( void )
 {
@@ -254,7 +254,7 @@ void CVcdBlockDoc::AddNewInfoTarget( void )
 	QAngle angAngles;
 	float flFov;
 	clienttools->GetLocalPlayerEyePosition( vecOrigin, angAngles, flFov );
-	AddNewInfoTarget( vecOrigin, vec3_angle ); 
+	AddNewInfoTarget( vecOrigin, vec3_angle );
 }
 
 
@@ -279,9 +279,9 @@ void CVcdBlockDoc::DeleteInfoTarget( CDmeVMFEntity *pNode )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &vecOrigin - 
-//			&angAbsAngles - 
+// Purpose:
+// Input  : &vecOrigin -
+//			&angAbsAngles -
 // Output : CDmeVMFEntity
 //-----------------------------------------------------------------------------
 CDmeVMFEntity *CVcdBlockDoc::GetInfoTargetForLocation( Vector &vecOrigin, QAngle &angAbsAngles )
@@ -302,9 +302,9 @@ CDmeVMFEntity *CVcdBlockDoc::GetInfoTargetForLocation( Vector &vecOrigin, QAngle
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &vecStart - 
-//			&vecEnd - 
+// Purpose:
+// Input  : &vecStart -
+//			&vecEnd -
 // Output : CDmeVMFEntity
 //-----------------------------------------------------------------------------
 CDmeVMFEntity *CVcdBlockDoc::GetInfoTargetForLocation( Vector &vecStart, Vector &vecEnd )
@@ -342,7 +342,7 @@ CDmeVMFEntity *CVcdBlockDoc::GetInfoTargetForLocation( Vector &vecStart, Vector 
 //-----------------------------------------------------------------------------
 // Populate string choice lists
 //-----------------------------------------------------------------------------
-bool CVcdBlockDoc::GetStringChoiceList( const char *pChoiceListType, CDmElement *pElement, 
+bool CVcdBlockDoc::GetStringChoiceList( const char *pChoiceListType, CDmElement *pElement,
 									const char *pAttributeName, bool bArrayElement, StringChoiceList_t &list )
 {
 	if ( !Q_stricmp( pChoiceListType, "info_targets" ) )
@@ -375,8 +375,8 @@ bool CVcdBlockDoc::GetStringChoiceList( const char *pChoiceListType, CDmElement 
 //-----------------------------------------------------------------------------
 // Populate element choice lists
 //-----------------------------------------------------------------------------
-bool CVcdBlockDoc::GetElementChoiceList( const char *pChoiceListType, CDmElement *pElement, 
-									 const char *pAttributeName, bool bArrayElement, ElementChoiceList_t &list )
+bool CVcdBlockDoc::GetElementChoiceList( const char *pChoiceListType, CDmElement *pElement,
+									const char *pAttributeName, bool bArrayElement, ElementChoiceList_t &list )
 {
 	if ( !Q_stricmp( pChoiceListType, "allelements" ) )
 	{
@@ -411,7 +411,7 @@ bool CVcdBlockDoc::GetElementChoiceList( const char *pChoiceListType, CDmElement
 	return list.Count() > 0;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Called when data changes
 //-----------------------------------------------------------------------------
@@ -498,7 +498,7 @@ void CVcdBlockDoc::InitializeFromServer( CDmrElementArray<> &entityList )
 //-----------------------------------------------------------------------------
 void CVcdBlockDoc::VerifyAllEdits( const CDmrElementArray<> &entityList )
 {
-    // already filled in
+	// already filled in
 	for (int i = 0; i < entityList.Count(); i++)
 	{
 		CDmeVMFEntity *pEntity = CastElement<CDmeVMFEntity>( entityList[i] );
@@ -531,7 +531,7 @@ void CVcdBlockDoc::VerifyAllEdits( const CDmrElementArray<> &entityList )
 bool CVcdBlockDoc::CopyEditsToVMF( )
 {
 	const CDmrElementArray<CDmElement> entityList = GetEntityList();
-	
+
 	CDmElement *pVMF = NULL;
 	DmFileId_t fileid = g_pDataModel->FindOrCreateFileId( m_pVMFFileName );
 	if ( g_pDataModel->RestoreFromFile( m_pVMFFileName, NULL, "vmf", &pVMF ) == DMFILEID_INVALID )

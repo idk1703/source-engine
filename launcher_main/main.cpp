@@ -31,7 +31,7 @@
 #include "tier0/basetypes.h"
 
 #ifdef WIN32
-typedef int (*LauncherMain_t)( HINSTANCE hInstance, HINSTANCE hPrevInstance, 
+typedef int (*LauncherMain_t)( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 							  LPSTR lpCmdLine, int nCmdShow );
 #elif POSIX
 typedef int (*LauncherMain_t)( int argc, char **argv );
@@ -76,7 +76,7 @@ static char *GetBaseDir( const char *pszBuffer )
 	j = strlen( basedir );
 	if (j > 0)
 	{
-		if ( ( basedir[ j-1 ] == '\\' ) || 
+		if ( ( basedir[ j-1 ] == '\\' ) ||
 			 ( basedir[ j-1 ] == '/' ) )
 		{
 			basedir[ j-1 ] = 0;
@@ -106,7 +106,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 	char* pRootDir = GetBaseDir( moduleName );
 
 #ifdef _DEBUG
-	int len = 
+	int len =
 #endif
 	_snprintf( szBuffer, sizeof( szBuffer ), "PATH=%s\\bin\\;%s", pRootDir, pPath );
 	szBuffer[sizeof( szBuffer ) - 1] = '\0';
@@ -221,7 +221,7 @@ int main( int argc, char *argv[] )
 		fprintf( stderr, "Failed to load the launcher\n" );
 		return 0;
 	}
-	
+
 	LauncherMain_t main = (LauncherMain_t)dlsym( launcher, "LauncherMain" );
 	if ( !main )
 	{
@@ -293,7 +293,7 @@ bool ParseCommandLineArg( const char *pCmdLine, const char* pKey, char* pValueBu
 		{
 			return false;
 		}
-		
+
 		// found, but could be a substring
 		if ( pArg[keyLen] == '\0' || pArg[keyLen] == ' ' )
 		{
@@ -324,7 +324,7 @@ bool ParseCommandLineArg( const char *pCmdLine, const char* pKey, char* pValueBu
 		}
 		pValueBuff[i] = '\0';
 	}
-	
+
 	return true;
 }
 
@@ -498,7 +498,7 @@ LauncherMain_t GetLaunchEntryPoint( char *pNewCommandLine )
 	};
 
 	// Corresponds to pImplicitDLLs. A dll load failure is only an error if that dll is tagged as required.
-	const bool bDllRequired[] = 
+	const bool bDllRequired[] =
 	{
 		true,	// tier0
 		true,	// vstdlib
@@ -510,7 +510,7 @@ LauncherMain_t GetLaunchEntryPoint( char *pNewCommandLine )
 	bool bDoChooser = false;
 	if ( !ParseCommandLineArg( pCmdLine, "-game", gameName, sizeof( gameName ) ) )
 	{
-		// usage of remote share requires a game (default to hl2) 
+		// usage of remote share requires a game (default to hl2)
 		// remote share mandates an absolute game path which is detected by the host
 		strcpy( gameName, "hl2" );
 		bDoChooser = true;
@@ -528,7 +528,7 @@ LauncherMain_t GetLaunchEntryPoint( char *pNewCommandLine )
 	char shareName[32];
 	if ( !ParseCommandLineArg( pCmdLine, "-share", shareName, sizeof( shareName ) ) )
 	{
-		// usage of remote share requires a share name for the game folder (default to game) 
+		// usage of remote share requires a share name for the game folder (default to game)
 		strcpy( shareName, "game" );
 	}
 
@@ -549,7 +549,7 @@ LauncherMain_t GetLaunchEntryPoint( char *pNewCommandLine )
 	if ( bDoChooser )
 	{
 		// goto high level 1 of N game selector
-		pImplicitDLLs[ARRAYSIZE( pImplicitDLLs )-1] = "AppChooser_360.dll"; 
+		pImplicitDLLs[ARRAYSIZE( pImplicitDLLs )-1] = "AppChooser_360.dll";
 	}
 	else
 	{
@@ -616,7 +616,7 @@ LauncherMain_t GetLaunchEntryPoint( char *pNewCommandLine )
 
 	if ( ParseCommandLineArg( pCmdLine, "-dvd" ) )
 	{
-		// game runs from dvd only 
+		// game runs from dvd only
 		strcpy( basePath, "d:" );
 	}
 	else if ( ParseCommandLineArg( pCmdLine, "-dvddev" ) )
@@ -624,7 +624,7 @@ LauncherMain_t GetLaunchEntryPoint( char *pNewCommandLine )
 		// dvd development, game runs from dvd and can fall through to access remote path
 		// check user configuration for possible \bin exclusion from Xbox HDD
 		strcpy( basePath, "d:" );
-		
+
 		if ( IsBinExcluded( remotePath, &bExcludeAll ) )
 		{
 			searchPaths[0] = remotePath;
@@ -713,7 +713,7 @@ VOID __cdecl main()
 	LauncherMain_t newMain = GetLaunchEntryPoint( newCmdLine );
 	if ( newMain )
 	{
-		// 360 has no concept of instances, spoof one 
+		// 360 has no concept of instances, spoof one
 		newMain( (HINSTANCE)1, (HINSTANCE)0, (LPSTR)newCmdLine, 0 );
 	}
 }

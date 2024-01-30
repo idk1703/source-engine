@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -88,10 +88,10 @@ bool COrderAssist::CreateOrder( CPlayerClass *pClass )
 
 		CBaseTFPlayer *pPlayerToAssist = (CBaseTFPlayer*)pClass->GetTeam()->GetPlayer( sorted[0] );
 
-		pClass->GetTeam()->AddOrder( 
-			ORDER_ASSIST, 
-			pPlayerToAssist, 
-			info.m_pPlayer, 
+		pClass->GetTeam()->AddOrder(
+			ORDER_ASSIST,
+			pPlayerToAssist,
+			info.m_pPlayer,
 			COMMAND_ASSIST_DISTANCE,
 			25,
 			pOrder );
@@ -101,7 +101,7 @@ bool COrderAssist::CreateOrder( CPlayerClass *pClass )
 		enemySortInfo.m_pPlayer = pPlayerToAssist;
 
 		int sortedEnemies[256];
-		int nSortedEnemies = BuildSortedActiveList(	
+		int nSortedEnemies = BuildSortedActiveList(
 			sortedEnemies,
 			ARRAYSIZE( sortedEnemies ),
 			SortFn_PlayerEntitiesByDistance,
@@ -173,5 +173,3 @@ bool COrderAssist::UpdateOnEvent( COrderEvent_Base *pEvent )
 
 	return BaseClass::UpdateOnEvent( pEvent );
 }
-
-

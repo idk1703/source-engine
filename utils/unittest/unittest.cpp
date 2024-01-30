@@ -67,16 +67,16 @@ bool CUnitTestApp::Create()
 	SpewOutputFunc( UnitTestSpew );
 
 	// FIXME: This list of dlls should come from the unittests themselves
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "vstdlib.dll",			PROCESS_UTILS_INTERFACE_VERSION },
 		{ "", "" }	// Required to terminate the list
 	};
 
-	if ( !AddSystems( appSystems ) ) 
+	if ( !AddSystems( appSystems ) )
 		return false;
 
-	// Very simple... just iterate over all .DLLs in the current directory 
+	// Very simple... just iterate over all .DLLs in the current directory
 	// see if they export UNITTEST_INTERFACE_VERSION. If not, then unload them
 	// just as quick.
 

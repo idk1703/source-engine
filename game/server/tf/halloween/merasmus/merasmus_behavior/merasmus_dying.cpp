@@ -57,4 +57,3 @@ ActionResult< CMerasmus >	CMerasmusDying::Update( CMerasmus *me, float interval 
 
 	return Continue();
 }
-

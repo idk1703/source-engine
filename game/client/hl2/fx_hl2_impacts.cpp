@@ -115,10 +115,10 @@ void ImpactCallback( const CEffectData &data )
 DECLARE_CLIENT_EFFECT( "Impact", ImpactCallback );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &origin - 
-//			&normal - 
-//			scale - 
+// Purpose:
+// Input  : &origin -
+//			&normal -
+//			scale -
 //-----------------------------------------------------------------------------
 void FX_AirboatGunImpact( const Vector &origin, const Vector &normal, float scale )
 {
@@ -182,18 +182,18 @@ void FX_AirboatGunImpact( const Vector &origin, const Vector &normal, float scal
 #endif // _XBOX
 
 	// Add a quad to highlite the hit point
-	FX_AddQuad( origin, 
-				normal, 
+	FX_AddQuad( origin,
+				normal,
 				random->RandomFloat( 16, 32 ),
 				random->RandomFloat( 32, 48 ),
-				0.75f, 
+				0.75f,
 				1.0f,
 				0.0f,
 				0.4f,
-				random->RandomInt( 0, 360 ), 
+				random->RandomInt( 0, 360 ),
 				0,
-				Vector( 1.0f, 1.0f, 1.0f ), 
-				0.05f, 
+				Vector( 1.0f, 1.0f, 1.0f ),
+				0.05f,
 				"effects/combinemuzzle2_nocull",
 				(FXQUAD_BIAS_SCALE|FXQUAD_BIAS_ALPHA) );
 }
@@ -272,4 +272,3 @@ void ImpactHelicopterCallback( const CEffectData &data )
 }
 
 DECLARE_CLIENT_EFFECT( "HelicopterImpact", ImpactHelicopterCallback );
-

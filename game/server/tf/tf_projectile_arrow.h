@@ -25,8 +25,8 @@ public:
 	~CTFProjectile_Arrow();
 
 	// Creation.
-	static CTFProjectile_Arrow *Create( const Vector &vecOrigin, const QAngle &vecAngles, const float fSpeed, const float fGravity, ProjectileType_t projectileType, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL );	
-	virtual void	InitArrow( const QAngle &vecAngles, const float fSpeed, const float fGravity, ProjectileType_t projectileType, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL );	
+	static CTFProjectile_Arrow *Create( const Vector &vecOrigin, const QAngle &vecAngles, const float fSpeed, const float fGravity, ProjectileType_t projectileType, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL );
+	virtual void	InitArrow( const QAngle &vecAngles, const float fSpeed, const float fGravity, ProjectileType_t projectileType, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL );
 	virtual void	Spawn();
 	virtual void	Precache();
 	virtual int		GetWeaponID( void ) const			{ return m_iWeaponId; }
@@ -70,9 +70,9 @@ public:
 	void			RemoveTrail( void );
 
 	virtual void	IncrementDeflected( void );
-	
+
 	virtual void	Deflected( CBaseEntity *pDeflectedBy, Vector &vecDir );
-	
+
 	virtual bool	ShouldNotDetonate( void ) { return true; }
 	bool			IsAlight() { return m_bArrowAlight; }
 	void			SetArrowAlight( bool bAlight ) { m_bArrowAlight = bAlight; }
@@ -81,7 +81,7 @@ public:
 	bool			CanPenetrate() const { return m_bPenetrate; }
 	virtual bool	IsDestroyable( void ) OVERRIDE { return false; }
 	virtual bool	IsBreakable( void ) const { return true; }
-	
+
 	void SetApplyMilkOnHit() { m_bApplyMilkOnHit = true; }
 
 private:
@@ -125,7 +125,7 @@ public:
 
 	virtual bool CanHeadshot() { return false; }
 	virtual void ImpactTeamPlayer( CTFPlayer *pOther );
-	
+
 	virtual float GetCollideWithTeammatesDelay() const { return 0.f; }
 };
 
@@ -147,7 +147,7 @@ public:
 	virtual bool	OnArrowImpactObject( CBaseEntity *pOther ) OVERRIDE;
 	virtual void	OnArrowMissAllPlayers( void ) OVERRIDE {}
 	virtual void	CheckSkyboxImpact( CBaseEntity *pOther ) OVERRIDE;
-	
+
 	virtual void	BreakArrow() { /*DO NOTHING*/ }
 
 	virtual bool	IsDeflectable() OVERRIDE { return false; }
@@ -168,7 +168,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTraceFilterCollisionArrows : public CTraceFilterEntitiesOnly
 {

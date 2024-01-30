@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-typedef struct 
+typedef struct
 {
 	int iFlag;
 	uint32 unAccountID;

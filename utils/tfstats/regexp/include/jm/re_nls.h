@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,17 +15,17 @@
  * provided that the above copyright notice appear in all copies and
  * that both that copyright notice and this permission notice appear
  * in supporting documentation.  Dr John Maddock makes no representations
- * about the suitability of this software for any purpose.  
+ * about the suitability of this software for any purpose.
  * It is provided "as is" without express or implied warranty.
  *
  */
- 
+
  /*
-  *   FILE     re_nls.h
-  *   VERSION  2.12
-  *   This is an internal header file, do not include directly
-  */
-  
+	*   FILE     re_nls.h
+	*   VERSION  2.12
+	*   This is an internal header file, do not include directly
+	*/
+
 #ifndef RE_NLS_H
 #define RE_NLS_H
 
@@ -44,62 +44,62 @@ JM_NAMESPACE(__JM)
 enum char_class_type
 {
 #ifdef RE_LOCALE_CPP
-   char_class_none = 0,
-   char_class_alnum = __JM_STD::ctype_base::alnum,
-   char_class_alpha = __JM_STD::ctype_base::alpha,
-   char_class_cntrl = __JM_STD::ctype_base::cntrl,
-   char_class_digit = __JM_STD::ctype_base::digit,
-   char_class_graph = __JM_STD::ctype_base::graph,
-   char_class_lower = __JM_STD::ctype_base::lower,
-   char_class_print = __JM_STD::ctype_base::print,
-   char_class_punct = __JM_STD::ctype_base::punct,
-   char_class_space = __JM_STD::ctype_base::space,
-   char_class_upper = __JM_STD::ctype_base::upper,
-   char_class_xdigit = __JM_STD::ctype_base::xdigit,
-   char_class_blank = 1<<12,
-   char_class_underscore = 1<<13,
-   char_class_word = __JM_STD::ctype_base::alnum | char_class_underscore,
-   char_class_unicode = 1<<14,
-   char_class_all_base = char_class_alnum | char_class_alpha | char_class_cntrl
-                      | char_class_digit | char_class_graph | char_class_lower
-                      | char_class_print | char_class_punct | char_class_space
-                      | char_class_upper | char_class_xdigit
+	char_class_none = 0,
+	char_class_alnum = __JM_STD::ctype_base::alnum,
+	char_class_alpha = __JM_STD::ctype_base::alpha,
+	char_class_cntrl = __JM_STD::ctype_base::cntrl,
+	char_class_digit = __JM_STD::ctype_base::digit,
+	char_class_graph = __JM_STD::ctype_base::graph,
+	char_class_lower = __JM_STD::ctype_base::lower,
+	char_class_print = __JM_STD::ctype_base::print,
+	char_class_punct = __JM_STD::ctype_base::punct,
+	char_class_space = __JM_STD::ctype_base::space,
+	char_class_upper = __JM_STD::ctype_base::upper,
+	char_class_xdigit = __JM_STD::ctype_base::xdigit,
+	char_class_blank = 1<<12,
+	char_class_underscore = 1<<13,
+	char_class_word = __JM_STD::ctype_base::alnum | char_class_underscore,
+	char_class_unicode = 1<<14,
+	char_class_all_base = char_class_alnum | char_class_alpha | char_class_cntrl
+							| char_class_digit | char_class_graph | char_class_lower
+							| char_class_print | char_class_punct | char_class_space
+							| char_class_upper | char_class_xdigit
 
 #elif defined(RE_LOCALE_W32)
-   char_class_none = 0,
-   char_class_alnum = C1_ALPHA | C1_DIGIT,
-   char_class_alpha = C1_ALPHA,
-   char_class_cntrl = C1_CNTRL,
-   char_class_digit = C1_DIGIT,
-   char_class_graph = C1_UPPER | C1_LOWER | C1_DIGIT | C1_PUNCT | C1_ALPHA,
-   char_class_lower = C1_LOWER,
-   char_class_print = C1_UPPER | C1_LOWER | C1_DIGIT | C1_PUNCT | C1_BLANK | C1_ALPHA,
-   char_class_punct = C1_PUNCT,
-   char_class_space = C1_SPACE,
-   char_class_upper = C1_UPPER,
-   char_class_xdigit = C1_XDIGIT,
-   char_class_blank = C1_BLANK,
-   char_class_underscore = 0x0200,
-   char_class_word = C1_ALPHA | C1_DIGIT | char_class_underscore,
-   char_class_unicode = 0x0400
+	char_class_none = 0,
+	char_class_alnum = C1_ALPHA | C1_DIGIT,
+	char_class_alpha = C1_ALPHA,
+	char_class_cntrl = C1_CNTRL,
+	char_class_digit = C1_DIGIT,
+	char_class_graph = C1_UPPER | C1_LOWER | C1_DIGIT | C1_PUNCT | C1_ALPHA,
+	char_class_lower = C1_LOWER,
+	char_class_print = C1_UPPER | C1_LOWER | C1_DIGIT | C1_PUNCT | C1_BLANK | C1_ALPHA,
+	char_class_punct = C1_PUNCT,
+	char_class_space = C1_SPACE,
+	char_class_upper = C1_UPPER,
+	char_class_xdigit = C1_XDIGIT,
+	char_class_blank = C1_BLANK,
+	char_class_underscore = 0x0200,
+	char_class_word = C1_ALPHA | C1_DIGIT | char_class_underscore,
+	char_class_unicode = 0x0400
 #else
-   char_class_none = 0,
-   char_class_alpha = 1,
-   char_class_cntrl = char_class_alpha << 1,
-   char_class_digit = char_class_cntrl << 1,
-   char_class_lower = char_class_digit << 1,
-   char_class_punct = char_class_lower << 1,
-   char_class_space = char_class_punct << 1,
-   char_class_upper = char_class_space << 1,
-   char_class_xdigit = char_class_upper << 1,
-   char_class_blank = char_class_xdigit << 1,
-   char_class_unicode = char_class_blank << 1,
-   char_class_underscore = char_class_unicode << 1,
+	char_class_none = 0,
+	char_class_alpha = 1,
+	char_class_cntrl = char_class_alpha << 1,
+	char_class_digit = char_class_cntrl << 1,
+	char_class_lower = char_class_digit << 1,
+	char_class_punct = char_class_lower << 1,
+	char_class_space = char_class_punct << 1,
+	char_class_upper = char_class_space << 1,
+	char_class_xdigit = char_class_upper << 1,
+	char_class_blank = char_class_xdigit << 1,
+	char_class_unicode = char_class_blank << 1,
+	char_class_underscore = char_class_unicode << 1,
 
-   char_class_alnum = char_class_alpha | char_class_digit,
-   char_class_graph = char_class_alpha | char_class_digit | char_class_punct | char_class_underscore,
-   char_class_print = char_class_alpha | char_class_digit | char_class_punct | char_class_underscore | char_class_blank,
-   char_class_word = char_class_alpha | char_class_digit | char_class_underscore
+	char_class_alnum = char_class_alpha | char_class_digit,
+	char_class_graph = char_class_alpha | char_class_digit | char_class_punct | char_class_underscore,
+	char_class_print = char_class_alpha | char_class_digit | char_class_punct | char_class_underscore | char_class_blank,
+	char_class_word = char_class_alpha | char_class_digit | char_class_underscore
 #endif
 };
 
@@ -111,7 +111,7 @@ template <class charT>
 class re_initialiser
 {
 public:
-   void update();
+	void update();
 };
 
 JM_IX_DECL void RE_CALL re_init();
@@ -125,9 +125,9 @@ JM_TEMPLATE_SPECIALISE
 class re_initialiser<char>
 {
 public:
-   re_initialiser() { re_init(); }
-   ~re_initialiser() { re_free(); }
-   void RE_CALL update() { re_update(); }
+	re_initialiser() { re_init(); }
+	~re_initialiser() { re_free(); }
+	void RE_CALL update() { re_update(); }
 };
 
 #ifndef JM_NO_WCSTRING
@@ -135,9 +135,9 @@ JM_TEMPLATE_SPECIALISE
 class re_initialiser<wchar_t>
 {
 public:
-   re_initialiser() { re_init_w(); }
-   ~re_initialiser() { re_free_w(); }
-   void RE_CALL update() { re_update_w(); }
+	re_initialiser() { re_init_w(); }
+	~re_initialiser() { re_free_w(); }
+	void RE_CALL update() { re_update_w(); }
 };
 #endif
 
@@ -179,9 +179,9 @@ inline char RE_CALL re_tolower(char c
 )
 {
 #ifdef RE_LOCALE_CPP
-   return JM_USE_FACET(l, __JM_STD::ctype<char>).tolower(c);
+	return JM_USE_FACET(l, __JM_STD::ctype<char>).tolower(c);
 #else
-   return re_lower_case_map[(unsigned char)c];
+	return re_lower_case_map[(unsigned char)c];
 #endif
 }
 
@@ -193,9 +193,9 @@ inline wchar_t RE_CALL re_tolower(wchar_t c
 )
 {
 #ifdef RE_LOCALE_CPP
-   return JM_USE_FACET(l, __JM_STD::ctype<wchar_t>).tolower(c);
+	return JM_USE_FACET(l, __JM_STD::ctype<wchar_t>).tolower(c);
 #else
-   return c < 256 ? re_lower_case_map_w[c] : re_wtolower(c);
+	return c < 256 ? re_lower_case_map_w[c] : re_wtolower(c);
 #endif
 }
 #endif
@@ -207,15 +207,15 @@ inline bool RE_CALL re_istype(char c, jm_uintfast32_t f
 )
 {
 #ifdef RE_LOCALE_CPP
-   if(JM_USE_FACET(l, __JM_STD::ctype<char>).is((__JM_STD::ctype<char>::mask)(f & char_class_all_base), c))
-      return true;
-   if((f & char_class_underscore) && (c == '_'))
-      return true;
-   if((f & char_class_blank) && ((c == ' ') || (c == '\t')))
-      return true;
-   return false;
+	if(JM_USE_FACET(l, __JM_STD::ctype<char>).is((__JM_STD::ctype<char>::mask)(f & char_class_all_base), c))
+		return true;
+	if((f & char_class_underscore) && (c == '_'))
+		return true;
+	if((f & char_class_blank) && ((c == ' ') || (c == '\t')))
+		return true;
+	return false;
 #else
-   return re_class_map[(unsigned char)c] & f;
+	return re_class_map[(unsigned char)c] & f;
 #endif
 }
 
@@ -227,15 +227,15 @@ inline bool RE_CALL re_istype(wchar_t c, jm_uintfast32_t f
 )
 {
 #ifdef RE_LOCALE_CPP
-   if(JM_USE_FACET(l, __JM_STD::ctype<wchar_t>).is((__JM_STD::ctype<wchar_t>::mask)(f & char_class_all_base), c))
-      return true;
-   if((f & char_class_underscore) && (c == '_'))
-      return true;
-   if((f & char_class_blank) && ((c == ' ') || (c == '\t')))
-      return true;
-   return false;
+	if(JM_USE_FACET(l, __JM_STD::ctype<wchar_t>).is((__JM_STD::ctype<wchar_t>::mask)(f & char_class_all_base), c))
+		return true;
+	if((f & char_class_underscore) && (c == '_'))
+		return true;
+	if((f & char_class_blank) && ((c == ' ') || (c == '\t')))
+		return true;
+	return false;
 #else
-   return c < 256 ? re_unicode_classes[c] & f : re_iswclass(c, f);
+	return c < 256 ? re_unicode_classes[c] & f : re_iswclass(c, f);
 #endif
 }
 #endif
@@ -247,9 +247,9 @@ inline char RE_CALL re_get_zero(char
 )
 {
 #ifdef RE_LOCALE_CPP
-   return JM_USE_FACET(l, regfacet<char>).zero();
+	return JM_USE_FACET(l, regfacet<char>).zero();
 #else
-   return re_zero;
+	return re_zero;
 #endif
 }
 
@@ -261,9 +261,9 @@ inline wchar_t RE_CALL re_get_zero(wchar_t
 )
 {
 #ifdef RE_LOCALE_CPP
-   return JM_USE_FACET(l, regfacet<wchar_t>).zero();
+	return JM_USE_FACET(l, regfacet<wchar_t>).zero();
 #else
-   return re_zero_w;
+	return re_zero_w;
 #endif
 }
 #endif
@@ -275,9 +275,9 @@ inline char RE_CALL re_get_ten(char
 )
 {
 #ifdef RE_LOCALE_CPP
-   return JM_USE_FACET(l, regfacet<char>).ten();
+	return JM_USE_FACET(l, regfacet<char>).ten();
 #else
-   return re_ten;
+	return re_ten;
 #endif
 }
 
@@ -289,9 +289,9 @@ inline wchar_t RE_CALL re_get_ten(wchar_t
 )
 {
 #ifdef RE_LOCALE_CPP
-   return JM_USE_FACET(l, regfacet<wchar_t>).ten();
+	return JM_USE_FACET(l, regfacet<wchar_t>).ten();
 #else
-   return re_ten_w;
+	return re_ten_w;
 #endif
 }
 #endif
@@ -307,11 +307,11 @@ unsigned int RE_CALL re_toi(charT c
 #endif
 )
 {
-   if(re_istype(c, char_class_digit MAYBE_PASS_LOCALE(l)))
-      return c - re_get_zero(c MAYBE_PASS_LOCALE(l));
-   if(re_istype(c, char_class_xdigit MAYBE_PASS_LOCALE(l)))
-      return 10 + re_tolower(c MAYBE_PASS_LOCALE(l)) - re_tolower(re_get_ten(c MAYBE_PASS_LOCALE(l)) MAYBE_PASS_LOCALE(l));
-   return -1; // error!!
+	if(re_istype(c, char_class_digit MAYBE_PASS_LOCALE(l)))
+		return c - re_get_zero(c MAYBE_PASS_LOCALE(l));
+	if(re_istype(c, char_class_xdigit MAYBE_PASS_LOCALE(l)))
+		return 10 + re_tolower(c MAYBE_PASS_LOCALE(l)) - re_tolower(re_get_ten(c MAYBE_PASS_LOCALE(l)) MAYBE_PASS_LOCALE(l));
+	return -1; // error!!
 }
 
 //
@@ -327,32 +327,32 @@ unsigned int RE_CALL re_toi(const charT*& first, const charT*const last, int rad
 #endif
 )
 {
-   unsigned int maxval;
-   if(radix < 0)
-   {
-      // if radix is less than zero, then restrict
-      // return value to charT. NB assumes sizeof(charT) <= sizeof(int)
-      radix *= -1;
-      maxval = 1 << (sizeof(charT) * CHAR_BIT - 1);
-      maxval /= radix;
-      maxval *= 2;
-      maxval -= 1;
-   }
-   else
-   {
-      maxval = (unsigned int)-1;
-      maxval /= radix;
-   }
+	unsigned int maxval;
+	if(radix < 0)
+	{
+		// if radix is less than zero, then restrict
+		// return value to charT. NB assumes sizeof(charT) <= sizeof(int)
+		radix *= -1;
+		maxval = 1 << (sizeof(charT) * CHAR_BIT - 1);
+		maxval /= radix;
+		maxval *= 2;
+		maxval -= 1;
+	}
+	else
+	{
+		maxval = (unsigned int)-1;
+		maxval /= radix;
+	}
 
-   unsigned int result = 0;
-   unsigned int type = (radix > 10) ? char_class_xdigit : char_class_digit;
-   while((first != last) && re_istype(*first, type MAYBE_PASS_LOCALE(l)) && (result <= maxval))
-   {
-      result *= radix;
-      result += re_toi(*first MAYBE_PASS_LOCALE(l));
-      ++first;
-   }
-   return result;
+	unsigned int result = 0;
+	unsigned int type = (radix > 10) ? char_class_xdigit : char_class_digit;
+	while((first != last) && re_istype(*first, type MAYBE_PASS_LOCALE(l)) && (result <= maxval))
+	{
+		result *= radix;
+		result += re_toi(*first MAYBE_PASS_LOCALE(l));
+		++first;
+	}
+	return result;
 }
 
 
@@ -368,4 +368,3 @@ JM_IX_DECL const char* RE_CALL get_global_locale_name(int);
 JM_END_NAMESPACE
 
 #endif
-

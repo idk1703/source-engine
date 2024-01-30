@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -25,7 +25,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudSapperChargeMeter : public CHudElement, public EditablePanel
 {
@@ -47,7 +47,7 @@ DECLARE_HUDELEMENT( CHudSapperChargeMeter );
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudSapperChargeMeter::CHudSapperChargeMeter( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudSapperCharge" )
 {
@@ -64,7 +64,7 @@ CHudSapperChargeMeter::CHudSapperChargeMeter( const char *pElementName ) : CHudE
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudSapperChargeMeter::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -75,7 +75,7 @@ void CHudSapperChargeMeter::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudSapperChargeMeter::ShouldDraw( void )
 {
@@ -109,7 +109,7 @@ bool CHudSapperChargeMeter::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudSapperChargeMeter::OnTick( void )
 {

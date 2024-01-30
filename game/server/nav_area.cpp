@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -208,7 +208,7 @@ CNavArea::CNavArea( void )
 		m_clearedTimestamp[i] = 0.0f;
 
 		m_earliestOccupyTime[i] = 0.0f;
-	
+
 		m_playerCount[i] = 0;
 	}
 
@@ -478,11 +478,11 @@ public:
 	{
 		m_area = area;
 	}
-	
+
 	bool operator() ( CBasePlayer *player )
 	{
 		player->OnNavAreaRemoved( m_area );
-		
+
 		return true;
 	}
 
@@ -545,7 +545,7 @@ CNavArea::~CNavArea()
 
 	// remove the area from the grid
 	TheNavMesh->RemoveNavArea( this );
-	
+
 	// make sure no players keep a pointer to this area
 	ForgetArea forget( this );
 	ForEachActor( forget );
@@ -581,7 +581,7 @@ void CNavArea::ConnectElevators( void )
 			// overlaps in 2D - check that this area is within the shaft of the elevator
 			const Vector &center = GetCenter();
 
-			for( int f=0; f<elevator->GetNumFloors(); ++f ) 
+			for( int f=0; f<elevator->GetNumFloors(); ++f )
 			{
 				const FloorInfo	*floor = elevator->GetFloor( f );
 				const float tolerance = 30.0f;
@@ -598,8 +598,8 @@ void CNavArea::ConnectElevators( void )
 					m_elevator = elevator;
 					m_attributeFlags |= NAV_MESH_HAS_ELEVATOR;
 
-					// find the largest area overlapping this elevator on each other floor 
-					for( int of=0; of<elevator->GetNumFloors(); ++of ) 
+					// find the largest area overlapping this elevator on each other floor
+					for( int of=0; of<elevator->GetNumFloors(); ++of )
 					{
 						if ( of == f )
 						{
@@ -641,8 +641,8 @@ void CNavArea::ConnectElevators( void )
 						}
 						else
 						{
-							Warning( "Floor %d ('%s') of elevator at ( %3.2f, %3.2f, %3.2f ) has no matching navigation areas\n", 
-									 of, 
+							Warning( "Floor %d ('%s') of elevator at ( %3.2f, %3.2f, %3.2f ) has no matching navigation areas\n",
+									 of,
 									 otherFloor->name.ToCStr(),
 									 elevator->GetAbsOrigin().x, elevator->GetAbsOrigin().y, elevator->GetAbsOrigin().z );
 						}
@@ -812,8 +812,8 @@ void CNavArea::ConnectTo( CNavArea *area, NavDirType dir )
 	if ( area->m_connect[ dirOpposite ].Find( con ) == area->m_connect[ dirOpposite ].InvalidIndex() )
 	{
 		area->AddIncomingConnection( this, dirOpposite );
-	}	
-	
+	}
+
 	//static char *dirName[] = { "NORTH", "EAST", "SOUTH", "WEST" };
 	//CONSOLE_ECHO( "  Connected area #%d to #%d, %s\n", m_id, area->m_id, dirName[ dir ] );
 }
@@ -865,7 +865,7 @@ void CNavArea::Disconnect( CNavArea *area )
 				connect.area = this;
 				area->m_incomingConnect[ dirOpposite ].FindAndRemove( connect );
 			}
-		}		
+		}
 	}
 }
 
@@ -1005,7 +1005,7 @@ void CNavArea::MergeAdjacentConnections( CNavArea *adjArea )
 
 	// remove any references from this area to the adjacent area, since it is now part of us
 	Disconnect( adjArea );
-	
+
 	// Change other references to adjArea to refer instead to us
 	// We can't just replace existing connections, as several adjacent areas may have been merged into one,
 	// resulting in a large area adjacent to all of them ending up with multiple redunandant connections
@@ -1339,7 +1339,7 @@ float CNavArea::ComputeGroundHeightChange( const CNavArea *area )
 	area->GetClosestPointOnArea( GetCenter(), &closeTo );
 	GetClosestPointOnArea( area->GetCenter(), &closeFrom );
 
-	// find actual ground height at each point in case 
+	// find actual ground height at each point in case
 	// areas are below/above actual terrain
 	float toZ, fromZ;
 	if ( TheNavMesh->GetSimpleGroundHeight( closeTo + Vector( 0, 0, StepHeight ), &toZ ) == false )
@@ -1368,7 +1368,7 @@ void CNavArea::AddIncomingConnection( CNavArea *source, NavDirType incomingEdgeD
 	{
 		con.length = ( source->GetCenter() - GetCenter() ).Length();
 		m_incomingConnect[ incomingEdgeDir ].AddToTail( con );
-	}	
+	}
 }
 
 
@@ -1416,7 +1416,7 @@ void CNavArea::FinishSplitEdit( CNavArea *newArea, NavDirType ignoreEdge )
 				case SOUTH:
 					if (newArea->IsOverlappingX( adj ))
 					{
-						newArea->ConnectTo( adj, (NavDirType)d );			
+						newArea->ConnectTo( adj, (NavDirType)d );
 
 						// add reciprocal connection if needed
 						if (adj->IsConnected( this, OppositeDirection( (NavDirType)d )))
@@ -1428,7 +1428,7 @@ void CNavArea::FinishSplitEdit( CNavArea *newArea, NavDirType ignoreEdge )
 				case WEST:
 					if (newArea->IsOverlappingY( adj ))
 					{
-						newArea->ConnectTo( adj, (NavDirType)d );			
+						newArea->ConnectTo( adj, (NavDirType)d );
 
 						// add reciprocal connection if needed
 						if (adj->IsConnected( this, OppositeDirection( (NavDirType)d )))
@@ -1438,7 +1438,7 @@ void CNavArea::FinishSplitEdit( CNavArea *newArea, NavDirType ignoreEdge )
 			}
 
 			for ( int a = 0; a < m_incomingConnect[d].Count(); a++ )
-			{			
+			{
 				CNavArea *adj = m_incomingConnect[d][a].area;
 
 				switch( d )
@@ -1459,7 +1459,7 @@ void CNavArea::FinishSplitEdit( CNavArea *newArea, NavDirType ignoreEdge )
 					}
 					break;
 				}
-			}			
+			}
 		}
 	}
 
@@ -1526,7 +1526,7 @@ void CNavArea::FinishSplitEdit( CNavArea *newArea, NavDirType ignoreEdge )
 
 //--------------------------------------------------------------------------------------------------------------
 /**
- * Create a new area between this area and given area 
+ * Create a new area between this area and given area
  */
 bool CNavArea::SpliceEdit( CNavArea *other )
 {
@@ -1561,7 +1561,7 @@ bool CNavArea::SpliceEdit( CNavArea *other )
 			Warning( "SpliceEdit: Out of memory.\n" );
 			return false;
 		}
-		
+
 		newArea->Build( nw, ne, se, sw );
 
 		this->ConnectTo( newArea, WEST );
@@ -1598,7 +1598,7 @@ bool CNavArea::SpliceEdit( CNavArea *other )
 			Warning( "SpliceEdit: Out of memory.\n" );
 			return false;
 		}
-		
+
 		newArea->Build( nw, ne, se, sw );
 
 		this->ConnectTo( newArea, EAST );
@@ -1637,7 +1637,7 @@ bool CNavArea::SpliceEdit( CNavArea *other )
 				Warning( "SpliceEdit: Out of memory.\n" );
 				return false;
 			}
-			
+
 			newArea->Build( nw, ne, se, sw );
 
 			this->ConnectTo( newArea, NORTH );
@@ -1674,7 +1674,7 @@ bool CNavArea::SpliceEdit( CNavArea *other )
 				Warning( "SpliceEdit: Out of memory.\n" );
 				return false;
 			}
-			
+
 			newArea->Build( nw, ne, se, sw );
 
 			this->ConnectTo( newArea, SOUTH );
@@ -1694,7 +1694,7 @@ bool CNavArea::SpliceEdit( CNavArea *other )
 
 	TheNavAreas.AddToTail( newArea );
 	TheNavMesh->AddNavArea( newArea );
-	
+
 	TheNavMesh->OnEditCreateNotify( newArea );
 
 	return true;
@@ -1716,7 +1716,7 @@ void CNavArea::CalcDebugID()
 
 //--------------------------------------------------------------------------------------------------------------
 /**
- * Merge this area and given adjacent area 
+ * Merge this area and given adjacent area
  */
 bool CNavArea::MergeEdit( CNavArea *adj )
 {
@@ -1726,11 +1726,11 @@ bool CNavArea::MergeEdit( CNavArea *adj )
 	// check that these areas can be merged
 	const float tolerance = 1.0f;
 	bool merge = false;
-	if (fabs( m_nwCorner.x - adj->m_nwCorner.x ) < tolerance && 
+	if (fabs( m_nwCorner.x - adj->m_nwCorner.x ) < tolerance &&
 		fabs( m_seCorner.x - adj->m_seCorner.x ) < tolerance)
 		merge = true;
 
-	if (fabs( m_nwCorner.y - adj->m_nwCorner.y ) < tolerance && 
+	if (fabs( m_nwCorner.y - adj->m_nwCorner.y ) < tolerance &&
 		fabs( m_seCorner.y - adj->m_seCorner.y ) < tolerance)
 		merge = true;
 
@@ -1739,7 +1739,7 @@ bool CNavArea::MergeEdit( CNavArea *adj )
 
 	Vector originalNWCorner = m_nwCorner;
 	Vector originalSECorner = m_seCorner;
-	
+
 	// update extent
 	if (m_nwCorner.x > adj->m_nwCorner.x || m_nwCorner.y > adj->m_nwCorner.y)
 		m_nwCorner = adj->m_nwCorner;
@@ -1780,7 +1780,7 @@ bool CNavArea::MergeEdit( CNavArea *adj )
 	TheNavAreas.FindAndRemove( adj );
 	TheNavMesh->OnEditDestroyNotify( adj );
 	TheNavMesh->DestroyArea( adj );
-	
+
 	TheNavMesh->OnEditCreateNotify( this );
 
 	return true;
@@ -1881,7 +1881,7 @@ bool CNavArea::IsOverlapping( const Vector &pos, float tolerance ) const
  */
 bool CNavArea::IsOverlapping( const CNavArea *area ) const
 {
-	if (area->m_nwCorner.x < m_seCorner.x && area->m_seCorner.x > m_nwCorner.x && 
+	if (area->m_nwCorner.x < m_seCorner.x && area->m_seCorner.x > m_nwCorner.x &&
 		area->m_nwCorner.y < m_seCorner.y && area->m_seCorner.y > m_nwCorner.y)
 		return true;
 
@@ -1895,7 +1895,7 @@ bool CNavArea::IsOverlapping( const CNavArea *area ) const
  */
 bool CNavArea::IsOverlapping( const Extent &extent ) const
 {
-	return ( extent.lo.x < m_seCorner.x && extent.hi.x > m_nwCorner.x && 
+	return ( extent.lo.x < m_seCorner.x && extent.hi.x > m_nwCorner.x &&
 			 extent.lo.y < m_seCorner.y && extent.hi.y > m_nwCorner.y );
 }
 
@@ -2141,10 +2141,10 @@ bool CNavArea::IsCoplanar( const CNavArea *area ) const
 float CNavArea::GetZ( float x, float y ) const RESTRICT
 {
 	// guard against division by zero due to degenerate areas
-#ifdef _X360 
+#ifdef _X360
 	// do the compare-against-zero on the integer unit to avoid a fcmp
-	// IEEE754 float positive zero is simply 0x00. There is also a 
-	// floating-point negative zero (-0.0f == 0x80000000), but given 
+	// IEEE754 float positive zero is simply 0x00. There is also a
+	// floating-point negative zero (-0.0f == 0x80000000), but given
 	// how m_inv is computed earlier, that's not a possible value for
 	// it here, so we don't have to check for that.
 	//
@@ -2161,7 +2161,7 @@ float CNavArea::GetZ( float x, float y ) const RESTRICT
 	float v = (y - m_nwCorner.y) * m_invDyCorners;
 
 	// clamp Z values to (x,y) volume
-	
+
 	u = fsel( u, u, 0 );			// u >= 0 ? u : 0
 	u = fsel( u - 1.0f, 1.0f, u );	// u >= 1 ? 1 : u
 
@@ -2180,7 +2180,7 @@ float CNavArea::GetZ( float x, float y ) const RESTRICT
  * Return closest point to 'pos' on 'area'.
  * Returned point is in 'close'.
  */
-void CNavArea::GetClosestPointOnArea( const Vector * RESTRICT pPos, Vector *close ) const RESTRICT 
+void CNavArea::GetClosestPointOnArea( const Vector * RESTRICT pPos, Vector *close ) const RESTRICT
 {
 	float x, y, z;
 
@@ -2306,7 +2306,7 @@ void CNavArea::CollectAdjacentAreas( CUtlVector< CNavArea * > *adjVector ) const
 
 //--------------------------------------------------------------------------------------------------------------
 /**
- * Compute "portal" between two adjacent areas. 
+ * Compute "portal" between two adjacent areas.
  * Return center of portal opening, and half-width defining sides of portal from center.
  * NOTE: center->z is unset.
  */
@@ -2443,7 +2443,7 @@ NavDirType CNavArea::ComputeLargestPortal( const CNavArea *to, Vector *center, f
 
 //--------------------------------------------------------------------------------------------------------------
 /**
- * Compute closest point within the "portal" between to adjacent areas. 
+ * Compute closest point within the "portal" between to adjacent areas.
  */
 void CNavArea::ComputeClosestPointInPortal( const CNavArea *to, NavDirType dir, const Vector &fromPos, Vector *closePos ) const
 {
@@ -2482,7 +2482,7 @@ void CNavArea::ComputeClosestPointInPortal( const CNavArea *to, NavDirType dir, 
 		/// @todo Need better check whether edge is outer edge or not - partial overlap is missed
 		float leftMargin = ( to->IsEdge( WEST ) ) ? ( left + margin ) : left;
 		float rightMargin = ( to->IsEdge( EAST ) ) ? ( right - margin ) : right;
-		
+
 		// if area is narrow, margins may have crossed
 		if ( leftMargin > rightMargin )
 		{
@@ -2533,7 +2533,7 @@ void CNavArea::ComputeClosestPointInPortal( const CNavArea *to, NavDirType dir, 
 		else if (bottom > m_seCorner.y)
 			bottom = m_seCorner.y;
 		*/
-		
+
 		// keep margin if against edge
 		float topMargin = ( to->IsEdge( NORTH ) ) ? ( top + margin ) : top;
 		float bottomMargin = ( to->IsEdge( SOUTH ) ) ? ( bottom - margin ) : bottom;
@@ -2997,8 +2997,8 @@ void CNavArea::Draw( void ) const
 			for( t = 0.0f; t <= 1.0f; t += inc )
 			{
 				float x = m_nwCorner.x + t * GetSizeX();
-				
-				NavDrawLine( Vector( x, m_nwCorner.y, GetZ( x, m_nwCorner.y ) ), 
+
+				NavDrawLine( Vector( x, m_nwCorner.y, GetZ( x, m_nwCorner.y ) ),
 							 Vector( x, m_seCorner.y, GetZ( x, m_seCorner.y ) ),
 							 color );
 			}
@@ -3417,7 +3417,7 @@ void CNavArea::AddToOpenList( void )
 		// append to end of list
 		last->m_nextOpen = this;
 		this->m_prevOpen = last;
-	
+
 		this->m_nextOpen = NULL;
 
 		m_openListTail = this;
@@ -3525,7 +3525,7 @@ void CNavArea::RemoveFromOpenList( void )
 	{
 		m_openList = m_nextOpen;
 	}
-	
+
 	if ( m_nextOpen )
 	{
 		m_nextOpen->m_prevOpen = m_prevOpen;
@@ -3534,7 +3534,7 @@ void CNavArea::RemoveFromOpenList( void )
 	{
 		m_openListTail = m_prevOpen;
 	}
-	
+
 	// zero is an invalid marker
 	m_openMarker = 0;
 }
@@ -3765,7 +3765,7 @@ void CNavArea::ComputeHidingSpots( void )
 		{
 			NavConnect connect = m_connect[ d ][ it ];
 
-			// if connection is only one-way, it's a "jump down" connection (ie: a discontinuity that may mean cover) 
+			// if connection is only one-way, it's a "jump down" connection (ie: a discontinuity that may mean cover)
 			// ignore it
 			if (connect.area->IsConnected( this, OppositeDirection( static_cast<NavDirType>( d ) ) ) == false)
 				continue;
@@ -3780,7 +3780,7 @@ void CNavArea::ComputeHidingSpots( void )
 					extent.lo = connect.area->m_nwCorner.x;
 
 				if (connect.area->m_seCorner.x > extent.hi)
-					extent.hi = connect.area->m_seCorner.x;			
+					extent.hi = connect.area->m_seCorner.x;
 			}
 			else
 			{
@@ -3890,7 +3890,7 @@ void ClassifySniperSpot( HidingSpot *spot )
 			for( walkable.x = areaExtent.lo.x + GenerationStepSize/2.0f; walkable.x < areaExtent.hi.x; walkable.x += GenerationStepSize )
 			{
 				walkable.z = area->GetZ( walkable ) + HalfHumanHeight;
-				
+
 				// check line of sight
 				UTIL_TraceLine( eye, walkable, CONTENTS_SOLID|CONTENTS_MOVEABLE|CONTENTS_PLAYERCLIP, NULL, COLLISION_GROUP_NONE, &result );
 
@@ -3928,7 +3928,7 @@ void ClassifySniperSpot( HidingSpot *spot )
 							}
 						}
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -4094,7 +4094,7 @@ void CNavArea::AddSpotEncounters( const CNavArea *from, NavDirType fromDir, cons
 
 //--------------------------------------------------------------------------------------------------------------
 /**
- * Compute "spot encounter" data. This is an ordered list of spots to look at 
+ * Compute "spot encounter" data. This is an ordered list of spots to look at
  * for each possible path thru a nav area.
  */
 void CNavArea::ComputeSpotEncounters( void )
@@ -4560,7 +4560,7 @@ void CNavArea::Shift( const Vector &shift )
 {
 	m_nwCorner += shift;
 	m_seCorner += shift;
-	
+
 	m_center += shift;
 }
 
@@ -5285,7 +5285,7 @@ bool CNavArea::IsInPVS( void ) const
 	Vector eye( 0, 0, 0.75f * HumanHeight );
 
 	Extent areaExtent;
-	
+
 	areaExtent.lo = GetCenter() + eye;
 	areaExtent.hi = areaExtent.lo;
 
@@ -5446,7 +5446,7 @@ const CNavArea::CAreaBindInfoArray &CNavArea::ComputeVisibilityDelta( const CNav
 	static CAreaBindInfoArray delta;
 
 	delta.RemoveAll();
-	
+
 	// do not delta from a delta - if 'other' is already inheriting, use its inherited source directly
 	if ( other->m_inheritVisibilityFrom.area != NULL )
 	{
@@ -5727,7 +5727,7 @@ bool CNavArea::IsPotentiallyVisible( const CNavArea *viewedArea ) const
 	{
 		if ( m_potentiallyVisibleAreas[i].area == viewedArea )
 		{
-			// Found area in our list. We might be a delta from another list, 
+			// Found area in our list. We might be a delta from another list,
 			// and NOT_VISIBLE overrides that list.
 			return ( m_potentiallyVisibleAreas[i].attributes != NOT_VISIBLE );
 		}
@@ -5746,7 +5746,7 @@ bool CNavArea::IsPotentiallyVisible( const CNavArea *viewedArea ) const
 			}
 		}
 	}
-	
+
 	return false;
 }
 
@@ -5810,14 +5810,14 @@ bool CNavArea::IsPotentiallyVisibleToTeam( int teamIndex ) const
 		if ( team->GetPlayer(i)->IsAlive() )
 		{
 			CNavArea *from = (CNavArea *)team->GetPlayer(i)->GetLastKnownArea();
-			
+
 			if ( from && from->IsPotentiallyVisible( this ) )
 			{
 				return true;
 			}
 		}
 	}
-	
+
 	return false;
 }
 
@@ -5856,25 +5856,9 @@ Vector CNavArea::GetRandomPoint( void ) const
 	GetExtent( &extent );
 
 	Vector spot;
-	spot.x = RandomFloat( extent.lo.x, extent.hi.x ); 
+	spot.x = RandomFloat( extent.lo.x, extent.hi.x );
 	spot.y = RandomFloat( extent.lo.y, extent.hi.y );
 	spot.z = GetZ( spot.x, spot.y );
 
 	return spot;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

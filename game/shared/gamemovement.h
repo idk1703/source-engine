@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -40,7 +40,7 @@ class CGameMovement : public IGameMovement
 {
 public:
 	DECLARE_CLASS_NOBASE( CGameMovement );
-	
+
 	CGameMovement( void );
 	virtual			~CGameMovement( void );
 
@@ -55,7 +55,7 @@ public:
 
 // For sanity checking getting stuck on CMoveData::SetAbsOrigin
 	virtual void	TracePlayerBBox( const Vector& start, const Vector& end, unsigned int fMask, int collisionGroup, trace_t& pm );
-	
+
 	// allows derived classes to exclude entities from trace
 	virtual void	TryTouchGround( const Vector& start, const Vector& end, const Vector& mins, const Vector& maxs, unsigned int fMask, int collisionGroup, trace_t& pm );
 
@@ -67,7 +67,7 @@ public:
 protected:
 	// Input/Output for this movement
 	CMoveData		*mv;
-	
+
 	int				m_nOldWaterLevel;
 	float			m_flWaterEntryTime;
 	int				m_nOnLadder;
@@ -102,7 +102,7 @@ protected:
 
 	virtual void	AirMove( void );
 	virtual float	GetAirSpeedCap( void ) { return 30.f; }
-	
+
 	virtual bool	CanAccelerate();
 	virtual void	Accelerate( Vector& wishdir, float wishspeed, float accel);
 
@@ -155,7 +155,7 @@ protected:
 
 	// Dead player flying through air., e.g.
 	virtual void    FullTossMove( void );
-	
+
 	// Player is a Observer chasing another player
 	void			FullObserverMove( void );
 
@@ -164,7 +164,7 @@ protected:
 
 	// The basic solid body movement clip that slides along multiple planes
 	virtual int		TryPlayerMove( Vector *pFirstDest=NULL, trace_t *pFirstTrace=NULL );
-	
+
 	virtual bool	LadderMove( void );
 	virtual bool	OnLadder( trace_t &trace );
 	virtual float	LadderDistance( void ) const { return 2.0f; }	///< Returns the distance a player can be from a ladder and still attach to it
@@ -188,12 +188,12 @@ protected:
 	// try nudging slightly on all axis to
 	// allow for the cut precision of the net coordinates
 	virtual int		CheckStuck( void );
-	
+
 	// Check if the point is in water.
 	// Sets refWaterLevel and refWaterType appropriately.
 	// If in water, applies current to baseVelocity, and returns true.
 	virtual bool			CheckWater( void );
-	
+
 	// Determine if player is in water, on ground, etc.
 	virtual void CategorizePosition( void );
 
@@ -235,7 +235,7 @@ protected:
 	// Traces the player bbox as it is swept from start to end
 	virtual CBaseHandle		TestPlayerPosition( const Vector& pos, int collisionGroup, trace_t& pm );
 
-	// Checks to see if we should actually jump 
+	// Checks to see if we should actually jump
 	void			PlaySwimSound();
 
 	bool			IsDead( void ) const;
@@ -266,7 +266,7 @@ protected:
 
 	// Cache used to remove redundant calls to GetPointContents().
 	int m_CachedGetPointContents[ MAX_PLAYERS ][ MAX_PC_CACHE_SLOTS ];
-	Vector m_CachedGetPointContentsPoint[ MAX_PLAYERS ][ MAX_PC_CACHE_SLOTS ];	
+	Vector m_CachedGetPointContentsPoint[ MAX_PLAYERS ][ MAX_PC_CACHE_SLOTS ];
 
 	Vector			m_vecProximityMins;		// Used to be globals in sv_user.cpp.
 	Vector			m_vecProximityMaxs;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -67,7 +67,7 @@ public:
 	virtual bool RequestFocusPrev(VPANEL panel = NULL);
 	virtual bool RequestFocusNext(VPANEL panel = NULL);
 
-	// returns the ith panel 
+	// returns the ith panel
 	virtual Panel *GetPage(int i);
 
 	// deletes this panel from the sheet
@@ -93,10 +93,10 @@ public:
 	// returns the number of pages in the sheet
 	virtual int GetNumPages();
 
-	// disable the page with title "title" 
+	// disable the page with title "title"
 	virtual void DisablePage(const char *title);
 
-	// enable the page with title "title" 
+	// enable the page with title "title"
 	virtual void EnablePage(const char *title);
 
 	virtual void SetSmallTabs( bool state );
@@ -113,7 +113,7 @@ public:
 	virtual bool IsDroppable( CUtlVector< KeyValues * >& msglist );
 	// Mouse is now over a droppable panel
 	virtual void OnDroppablePanelPaint( CUtlVector< KeyValues * >& msglist, CUtlVector< Panel * >& dragPanels );
-	
+
 	void		ShowContextButtons( bool state );
 	bool		ShouldShowContextButtons() const;
 
@@ -145,11 +145,11 @@ protected:
 	MESSAGE_FUNC_HANDLE( OnDefaultButtonSet, "DefaultButtonSet", button );
 	// called when the current default button has been set
 	MESSAGE_FUNC_HANDLE( OnCurrentDefaultButtonSet, "CurrentDefaultButtonSet", button);
-    MESSAGE_FUNC( OnFindDefaultButton, "FindDefaultButton" );
+	MESSAGE_FUNC( OnFindDefaultButton, "FindDefaultButton" );
 
 private:
-	
-	// enable/disable the page with title "title" 
+
+	// enable/disable the page with title "title"
 	virtual void SetPageEnabled(const char *title,bool state);
 
 	struct Page_t
@@ -172,7 +172,7 @@ private:
 	int _activeTabIndex;
 	ComboBox *_combo;
 	bool _showTabs;
-    bool _tabFocus;
+	bool _tabFocus;
 
 	PHandle m_hPreviouslyActivePage;
 	float m_flPageTransitionEffectTime;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CWeaponCombatBaseGrenade : public CWeaponCombatUsedWithShieldBase
 {
@@ -41,7 +41,7 @@ public:
 	/*
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -59,8 +59,8 @@ public:
 public:
 	CNetworkVar( float, m_flStartedThrowAt );
 
-private:														
-	CWeaponCombatBaseGrenade( const CWeaponCombatBaseGrenade & );						
+private:
+	CWeaponCombatBaseGrenade( const CWeaponCombatBaseGrenade & );
 };
 
 #endif // WEAPON_COMBAT_BASEGRENADE_H

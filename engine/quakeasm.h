@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -40,4 +40,3 @@
 .extern C(snd_vol)
 .extern C(snd_out)
 .extern C(BOPS_Error)
-

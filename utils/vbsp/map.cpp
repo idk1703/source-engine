@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,8 +28,8 @@
 #define	RENDER_DIST_EPSILON	    0.01f
 
 #define BRUSH_CLIP_EPSILON	0.01f			// this should probably be the same
-                                            // as clip epsilon, but it is 0.1f and I
-											// currently don't know how that number was 
+											// as clip epsilon, but it is 0.1f and I
+											// currently don't know how that number was
 											// come to (cab) - this is 0.01 of an inch
 											// for clipping brush solids
 struct LoadSide_t
@@ -140,19 +140,19 @@ PlaneTypeForNormal
 int	PlaneTypeForNormal (Vector& normal)
 {
 	vec_t	ax, ay, az;
-	
-// NOTE: should these have an epsilon around 1.0?		
+
+// NOTE: should these have an epsilon around 1.0?
 	if (normal[0] == 1.0 || normal[0] == -1.0)
 		return PLANE_X;
 	if (normal[1] == 1.0 || normal[1] == -1.0)
 		return PLANE_Y;
 	if (normal[2] == 1.0 || normal[2] == -1.0)
 		return PLANE_Z;
-		
+
 	ax = fabs(normal[0]);
 	ay = fabs(normal[1]);
 	az = fabs(normal[2]);
-	
+
 	if (ax >= ay && ax >= az)
 		return PLANE_ANYX;
 	if (ay >= ax && ay >= az)
@@ -169,7 +169,7 @@ qboolean	PlaneEqual (plane_t *p, Vector& normal, vec_t dist, float normalEpsilon
 {
 #if 1
 	if (
-	   fabs(p->normal[0] - normal[0]) < normalEpsilon
+		fabs(p->normal[0] - normal[0]) < normalEpsilon
 	&& fabs(p->normal[1] - normal[1]) < normalEpsilon
 	&& fabs(p->normal[2] - normal[2]) < normalEpsilon
 	&& fabs(p->dist - dist) < distEpsilon )
@@ -385,7 +385,7 @@ int CMapFile::PlaneFromPoints(const Vector &p0, const Vector &p1, const Vector &
 {
 	Vector	t1, t2, normal;
 	vec_t	dist;
-	
+
 	VectorSubtract (p0, p1, t1);
 	VectorSubtract (p2, p1, t2);
 	CrossProduct (t1, t2, normal);
@@ -768,7 +768,7 @@ void CMapFile::MoveBrushesToWorldGeneral( entity_t *mapent )
 
 //-----------------------------------------------------------------------------
 // Purpose: Iterates the sides of brush and removed CONTENTS_DETAIL from each side
-// Input  : *brush - 
+// Input  : *brush -
 //-----------------------------------------------------------------------------
 void RemoveContentsDetailFromBrush( mapbrush_t *brush )
 {
@@ -791,7 +791,7 @@ void RemoveContentsDetailFromBrush( mapbrush_t *brush )
 
 //-----------------------------------------------------------------------------
 // Purpose: Iterates all brushes in an entity and removes CONTENTS_DETAIL from all brushes
-// Input  : *mapent - 
+// Input  : *mapent -
 //-----------------------------------------------------------------------------
 void CMapFile::RemoveContentsDetailFromEntity( entity_t *mapent )
 {
@@ -806,9 +806,9 @@ void CMapFile::RemoveContentsDetailFromEntity( entity_t *mapent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFile - 
-//			*pDisp - 
+// Purpose:
+// Input  : *pFile -
+//			*pDisp -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t LoadDispDistancesCallback(CChunkFile *pFile, mapdispinfo_t *pMapDispInfo)
@@ -818,10 +818,10 @@ ChunkFileResult_t LoadDispDistancesCallback(CChunkFile *pFile, mapdispinfo_t *pM
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : szKey - 
-//			szValue - 
-//			pDisp - 
+// Purpose:
+// Input  : szKey -
+//			szValue -
+//			pDisp -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t LoadDispDistancesKeyCallback(const char *szKey, const char *szValue, mapdispinfo_t *pMapDispInfo)
@@ -856,17 +856,17 @@ ChunkFileResult_t LoadDispDistancesKeyCallback(const char *szKey, const char *sz
 //-----------------------------------------------------------------------------
 ChunkFileResult_t LoadDispInfoCallback(CChunkFile *pFile, mapdispinfo_t **ppMapDispInfo )
 {
-    //
-    // check to see if we exceeded the maximum displacement info list size
-    //
-    if (nummapdispinfo > MAX_MAP_DISPINFO)
+	//
+	// check to see if we exceeded the maximum displacement info list size
+	//
+	if (nummapdispinfo > MAX_MAP_DISPINFO)
 	{
-        g_MapError.ReportError( "ParseDispInfoChunk: nummapdispinfo > MAX_MAP_DISPINFO" );
+		g_MapError.ReportError( "ParseDispInfoChunk: nummapdispinfo > MAX_MAP_DISPINFO" );
 	}
 
-    // get a pointer to the next available displacement info slot
-    mapdispinfo_t *pMapDispInfo = &mapdispinfo[nummapdispinfo];
-    nummapdispinfo++;
+	// get a pointer to the next available displacement info slot
+	mapdispinfo_t *pMapDispInfo = &mapdispinfo[nummapdispinfo];
+	nummapdispinfo++;
 
 	//
 	// Set up handlers for the subchunks that we are interested in.
@@ -900,10 +900,10 @@ ChunkFileResult_t LoadDispInfoCallback(CChunkFile *pFile, mapdispinfo_t **ppMapD
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szKey - 
-//			*szValue - 
-//			*mapent - 
+// Purpose:
+// Input  : *szKey -
+//			*szValue -
+//			*mapent -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t LoadDispInfoKeyCallback(const char *szKey, const char *szValue, mapdispinfo_t *pMapDispInfo)
@@ -942,7 +942,7 @@ ChunkFileResult_t LoadDispInfoKeyCallback(const char *szKey, const char *szValue
 #endif
 	else if (!stricmp(szKey, "mintess"))
 	{
-	    CChunkFile::ReadKeyValueInt(szValue, pMapDispInfo->minTess);
+		CChunkFile::ReadKeyValueInt(szValue, pMapDispInfo->minTess);
 	}
 	else if (!stricmp(szKey, "smooth"))
 	{
@@ -954,9 +954,9 @@ ChunkFileResult_t LoadDispInfoKeyCallback(const char *szKey, const char *szValue
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFile - 
-//			*pDisp - 
+// Purpose:
+// Input  : *pFile -
+//			*pDisp -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t LoadDispNormalsCallback(CChunkFile *pFile, mapdispinfo_t *pMapDispInfo)
@@ -966,10 +966,10 @@ ChunkFileResult_t LoadDispNormalsCallback(CChunkFile *pFile, mapdispinfo_t *pMap
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szKey - 
-//			*szValue - 
-//			*pDisp - 
+// Purpose:
+// Input  : *szKey -
+//			*szValue -
+//			*pDisp -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t LoadDispNormalsKeyCallback(const char *szKey, const char *szValue, mapdispinfo_t *pMapDispInfo)
@@ -1007,10 +1007,10 @@ ChunkFileResult_t LoadDispNormalsKeyCallback(const char *szKey, const char *szVa
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szKey - 
-//			*szValue - 
-//			*pDisp - 
+// Purpose:
+// Input  : *szKey -
+//			*szValue -
+//			*pDisp -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t LoadDispOffsetsCallback(CChunkFile *pFile, mapdispinfo_t *pMapDispInfo)
@@ -1020,10 +1020,10 @@ ChunkFileResult_t LoadDispOffsetsCallback(CChunkFile *pFile, mapdispinfo_t *pMap
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szKey - 
-//			*szValue - 
-//			*pDisp - 
+// Purpose:
+// Input  : *szKey -
+//			*szValue -
+//			*pDisp -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t LoadDispOffsetsKeyCallback(const char *szKey, const char *szValue, mapdispinfo_t *pMapDispInfo)
@@ -1103,10 +1103,10 @@ ChunkFileResult_t LoadDispOffsetNormalsKeyCallback(const char *szKey, const char
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szKey - 
-//			*szValue - 
-//			*pDisp - 
+// Purpose:
+// Input  : *szKey -
+//			*szValue -
+//			*pDisp -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t LoadDispAlphasCallback(CChunkFile *pFile, mapdispinfo_t *pMapDispInfo)
@@ -1116,10 +1116,10 @@ ChunkFileResult_t LoadDispAlphasCallback(CChunkFile *pFile, mapdispinfo_t *pMapD
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szKey - 
-//			*szValue - 
-//			*pDisp - 
+// Purpose:
+// Input  : *szKey -
+//			*szValue -
+//			*pDisp -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t LoadDispAlphasKeyCallback(const char *szKey, const char *szValue, mapdispinfo_t *pMapDispInfo)
@@ -1171,7 +1171,7 @@ ChunkFileResult_t LoadDispTriangleTagsKeyCallback(const char *szKey, const char 
 		int nIndex = nRow * nCols;
 		int iTri = nIndex * 2;
 
-		while ( pszNext != NULL ) 
+		while ( pszNext != NULL )
 		{
 			// Collapse the tags here!
 			unsigned short nTriTags = ( unsigned short )atoi( pszNext );
@@ -1212,8 +1212,8 @@ ChunkFileResult_t LoadDispTriangleTagsKeyCallback(const char *szKey, const char 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : brushSideID - 
+// Purpose:
+// Input  : brushSideID -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapFile::SideIDToIndex( int brushSideID )
@@ -1232,9 +1232,9 @@ int CMapFile::SideIDToIndex( int brushSideID )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *mapent - 
-//			*key - 
+// Purpose:
+// Input  : *mapent -
+//			*key -
 //-----------------------------------------------------------------------------
 void ConvertSideList( entity_t *mapent, char *key )
 {
@@ -1302,7 +1302,7 @@ ChunkFileResult_t HandleNoDynamicShadowsEnt( entity_t *pMapEnt )
 			}
 		} while( ( pScan = strtok( NULL, " " ) ) );
 	}
-	
+
 	// Clear out this entity.
 	pMapEnt->epairs = NULL;
 	return ( ChunkFile_Ok );
@@ -1326,7 +1326,7 @@ static ChunkFileResult_t LoadOverlayDataTransitionKeyCallback( const char *szKey
 			Error( "Overlay Material Name (%s) > OVERLAY_MAP_STRLEN (%d)", pMaterialName, OVERLAY_MAP_STRLEN );
 			return ChunkFile_Fail;
 		}
-		strcpy( pOverlay->szMaterialName, pMaterialName );	
+		strcpy( pOverlay->szMaterialName, pMaterialName );
 	}
 	else if ( !stricmp( szKey, "StartU") )
 	{
@@ -1431,7 +1431,7 @@ static ChunkFileResult_t LoadOverlayTransitionCallback( CChunkFile *pFile, int n
 //-----------------------------------------------------------------------------
 // Purpose: Iterates all brushes in a ladder entity, generates its mins and maxs.
 //          These are stored in the object, since the brushes are going to go away.
-// Input  : *mapent - 
+// Input  : *mapent -
 //-----------------------------------------------------------------------------
 void CMapFile::AddLadderKeys( entity_t *mapent )
 {
@@ -1475,9 +1475,9 @@ ChunkFileResult_t LoadEntityCallback(CChunkFile *pFile, int nParam)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFile - 
-//			ulParam - 
+// Purpose:
+// Input  : *pFile -
+//			ulParam -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CMapFile::LoadEntityCallback(CChunkFile *pFile, int nParam)
@@ -1495,7 +1495,7 @@ ChunkFileResult_t CMapFile::LoadEntityCallback(CChunkFile *pFile, int nParam)
 	mapent->numbrushes = 0;
 	//mapent->portalareas[0] = -1;
 	//mapent->portalareas[1] = -1;
-	
+
 	LoadEntity_t LoadEntity;
 	LoadEntity.pEntity = mapent;
 
@@ -1553,7 +1553,7 @@ ChunkFileResult_t CMapFile::LoadEntityCallback(CChunkFile *pFile, int nParam)
 				return(ChunkFile_Ok);
 			}
 		}
-		
+
 		// offset all of the planes and texinfo
 		if ( mapent->origin[0] || mapent->origin[1] || mapent->origin[2] )
 		{
@@ -1583,7 +1583,7 @@ ChunkFileResult_t CMapFile::LoadEntityCallback(CChunkFile *pFile, int nParam)
 		{
 			MoveBrushesToWorld (mapent);
 			mapent->numbrushes = 0;
-			
+
 			// clear out this entity
 			mapent->epairs = NULL;
 			return(ChunkFile_Ok);
@@ -1817,7 +1817,7 @@ void CMapFile::ForceFuncAreaPortalWindowContents()
 		const char *pClassName = ValueForKey( e, "classname" );
 
 		// Don't do this on "normal" func_areaportal entities.  Those are tied to doors
-		// and should be opaque when closed.  But areaportal windows (and any other 
+		// and should be opaque when closed.  But areaportal windows (and any other
 		// distance-based areaportals) should be windows because they are normally open/transparent
 		if( !IsAreaPortal( pClassName ) || !Q_stricmp( pClassName, "func_areaportal" ) )
 			continue;
@@ -2011,7 +2011,7 @@ void CMapFile::CheckForInstances( const char *pszFileName )
 
 	GD.Load( FDGPath );
 
-	// this list will grow as instances are merged onto it.  sub-instances are merged and 
+	// this list will grow as instances are merged onto it.  sub-instances are merged and
 	// automatically done in this processing.
 	for ( int i = 0; i < num_entities; i++ )
 	{
@@ -2141,7 +2141,7 @@ void CMapFile::MergeBrushes( entity_t *pInstanceEntity, CMapFile *Instance, Vect
 		{
 		}
 		brush->id += max_brush_id;
-		
+
 		int index = brush->original_sides - Instance->brushsides;
 		brush->original_sides = &brushsides[ nummapbrushsides + index ];
 	}
@@ -2180,7 +2180,7 @@ void CMapFile::MergeBrushSides( entity_t *pInstanceEntity, CMapFile *Instance, V
 		// The planes got merged & remapped.  So you need to search for the output plane index on each side
 		// NOTE: You could optimize this by saving off an index map in MergePlanes
 		side->planenum = FindFloatPlane( Instance->mapplanes[side->planenum].normal, Instance->mapplanes[side->planenum].dist );
-		side->id += max_side_id; 
+		side->id += max_side_id;
 
 		// this could be pre-processed into a list for quicker checking
 		bool	bNeedsTranslation = ( side->pMapDisp && side->pMapDisp->entitynum == 0 );
@@ -2224,7 +2224,7 @@ void CMapFile::MergeBrushSides( entity_t *pInstanceEntity, CMapFile *Instance, V
 			int		planenum = side->planenum;
 			cplane_t inPlane, outPlane;
 			inPlane.normal = mapplanes[ planenum ].normal;
-			inPlane.dist = mapplanes[ planenum ].dist; 
+			inPlane.dist = mapplanes[ planenum ].dist;
 
 			MatrixTransformPlane( InstanceMatrix, inPlane, outPlane );
 			planenum = FindFloatPlane( outPlane.normal, outPlane.dist );
@@ -2246,7 +2246,7 @@ void CMapFile::MergeBrushSides( entity_t *pInstanceEntity, CMapFile *Instance, V
 		if ( side->pMapDisp )
 		{
 			mapdispinfo_t	*disp = side->pMapDisp;
-				
+
 			disp->brushSideID = side->id;
 			Vector	inPoint = disp->startPosition;
 			VectorTransform( inPoint, InstanceMatrix, disp->startPosition );
@@ -2254,7 +2254,7 @@ void CMapFile::MergeBrushSides( entity_t *pInstanceEntity, CMapFile *Instance, V
 			disp->face.originalface = side;
 			disp->face.texinfo = side->texinfo;
 			disp->face.planenum = side->planenum;
-			disp->entitynum += num_entities; 
+			disp->entitynum += num_entities;
 
 			for( int point = 0; point < disp->face.w->numpoints; point++ )
 			{
@@ -2533,7 +2533,7 @@ bool LoadMapFile( const char *pszFileName )
 	bool				bLoadingManifest = false;
 	CManifest			*pMainManifest = NULL;
 	ChunkFileResult_t	eResult;
-	
+
 	//
 	// Dummy this up for the texture handling. This can be removed when old .MAP file
 	// support is removed.
@@ -2647,7 +2647,7 @@ bool LoadMapFile( const char *pszFileName )
 			g_LoadingMap->map_maxs[0],g_LoadingMap->map_maxs[1],g_LoadingMap->map_maxs[2]);
 
 		//TestExpandBrushes();
-		
+
 		// Clear the error reporting
 		g_MapError.ClearState();
 	}
@@ -2668,9 +2668,9 @@ ChunkFileResult_t LoadSideCallback(CChunkFile *pFile, LoadSide_t *pSideInfo)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pFile - 
-//			pParent - 
+// Purpose:
+// Input  : pFile -
+//			pParent -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CMapFile::LoadSideCallback(CChunkFile *pFile, LoadSide_t *pSideInfo)
@@ -2717,7 +2717,7 @@ ChunkFileResult_t CMapFile::LoadSideCallback(CChunkFile *pFile, LoadSide_t *pSid
 		{
 			side->contents &= ~CONTENTS_DETAIL;
 		}
-		
+
 		if (!(side->contents & (ALL_VISIBLE_CONTENTS | CONTENTS_PLAYERCLIP|CONTENTS_MONSTERCLIP)  ) )
 		{
 			side->contents |= CONTENTS_SOLID;
@@ -2765,7 +2765,7 @@ ChunkFileResult_t CMapFile::LoadSideCallback(CChunkFile *pFile, LoadSide_t *pSid
 				{
 					side->texinfo = TexinfoForBrushTexture (&mapplanes[planenum], &pSideInfo->td, vec3_origin);
 				}
-        
+
 				// save the td off in case there is an origin brush and we
 				// have to recalculate the texinfo
 				if (nummapbrushsides == MAX_MAP_BRUSHSIDES)
@@ -2797,11 +2797,11 @@ ChunkFileResult_t CMapFile::LoadSideCallback(CChunkFile *pFile, LoadSide_t *pSid
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : szKey - 
-//			szValue - 
-//			pSideInfo - 
-// Output : 
+// Purpose:
+// Input  : szKey -
+//			szValue -
+//			pSideInfo -
+// Output :
 //-----------------------------------------------------------------------------
 ChunkFileResult_t LoadSideKeyCallback(const char *szKey, const char *szValue, LoadSide_t *pSideInfo)
 {
@@ -2830,7 +2830,7 @@ ChunkFileResult_t LoadSideKeyCallback(const char *szKey, const char *szValue, Lo
 
 		// Find default flags and values for this material.
 		int mt = FindMiptex(pSideInfo->td.name);
-        pSideInfo->td.flags = textureref[mt].flags;
+		pSideInfo->td.flags = textureref[mt].flags;
 		pSideInfo->td.lightmapWorldUnitsPerLuxel = textureref[mt].lightmapWorldUnitsPerLuxel;
 
 		pSideInfo->pSide->contents = textureref[mt].contents;
@@ -2858,7 +2858,7 @@ ChunkFileResult_t LoadSideKeyCallback(const char *szKey, const char *szValue, Lo
 		if (pSideInfo->td.lightmapWorldUnitsPerLuxel == 0.0f)
 		{
 			g_MapError.ReportWarning("luxel size of 0");
-			pSideInfo->td.lightmapWorldUnitsPerLuxel = g_defaultLuxelSize; 
+			pSideInfo->td.lightmapWorldUnitsPerLuxel = g_defaultLuxelSize;
 		}
 		pSideInfo->td.lightmapWorldUnitsPerLuxel *= g_luxelScale;
 		if (pSideInfo->td.lightmapWorldUnitsPerLuxel < g_minLuxelScale)
@@ -2927,7 +2927,7 @@ ChunkFileResult_t CMapFile::LoadConnectionsKeyCallback(const char *szKey, const 
 	strcpy(pOutput->value, szValue);
 
 	m_ConnectionPairs = new CConnectionPairs( pOutput, m_ConnectionPairs );
-	
+
 	//
 	// Append it to the end of epairs list.
 	//
@@ -2956,9 +2956,9 @@ ChunkFileResult_t LoadSolidCallback(CChunkFile *pFile, LoadEntity_t *pLoadEntity
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pFile - 
-//			pParent - 
+// Purpose:
+// Input  : pFile -
+//			pParent -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CMapFile::LoadSolidCallback(CChunkFile *pFile, LoadEntity_t *pLoadEntity)
@@ -2997,7 +2997,7 @@ ChunkFileResult_t CMapFile::LoadSolidCallback(CChunkFile *pFile, LoadEntity_t *p
 		// get the content for the entire brush
 		b->contents = BrushContents (b);
 
-		// allow detail brushes to be removed 
+		// allow detail brushes to be removed
 		if (nodetail && (b->contents & CONTENTS_DETAIL) && !HasDispInfo( b ) )
 		{
 			b->numsides = 0;
@@ -3080,7 +3080,7 @@ ChunkFileResult_t CMapFile::LoadSolidCallback(CChunkFile *pFile, LoadEntity_t *p
 		if( HasDispInfo( b ) )
 		{
 			// add the base face data to the displacement surface
-			DispGetFaceInfo( b );			
+			DispGetFaceInfo( b );
 
 			// don't keep this brush
 			b->numsides = 0;
@@ -3091,7 +3091,7 @@ ChunkFileResult_t CMapFile::LoadSolidCallback(CChunkFile *pFile, LoadEntity_t *p
 		AddBrushBevels (b);
 
 		nummapbrushes++;
-		pLoadEntity->pEntity->numbrushes++;		
+		pLoadEntity->pEntity->numbrushes++;
 	}
 	else
 	{
@@ -3103,9 +3103,9 @@ ChunkFileResult_t CMapFile::LoadSolidCallback(CChunkFile *pFile, LoadEntity_t *p
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pFile - 
-//			parent - 
+// Purpose:
+// Input  : pFile -
+//			parent -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t LoadSolidKeyCallback(const char *szKey, const char *szValue, mapbrush_t *pLoadBrush)
@@ -3163,7 +3163,7 @@ void CMapFile::TestExpandBrushes (void)
 			fprintf (f,"( %i %i %i ) ", (int)w->p[1][0], (int)w->p[1][1], (int)w->p[1][2]);
 			fprintf (f,"( %i %i %i ) ", (int)w->p[2][0], (int)w->p[2][1], (int)w->p[2][2]);
 
-			fprintf (f, "%s [ 0 0 1 -512 ] [ 0 -1 0 -256 ] 0 1 1 \n", 
+			fprintf (f, "%s [ 0 0 1 -512 ] [ 0 -1 0 -256 ] 0 1 1 \n",
 				TexDataStringTable_GetString( GetTexData( texinfo[s->texinfo].texdata )->nameStringTableID ) );
 
 			FreeWinding (w);
@@ -3185,120 +3185,118 @@ void CMapFile::TestExpandBrushes (void)
 //-----------------------------------------------------------------------------
 mapdispinfo_t *ParseDispInfoChunk( void )
 {
-    int             i, j;
-    int             vertCount;
-    mapdispinfo_t   *pMapDispInfo;
+	int             i, j;
+	int             vertCount;
+	mapdispinfo_t   *pMapDispInfo;
 
-    //
-    // check to see if we exceeded the maximum displacement info list size
-    //
-    if( nummapdispinfo > MAX_MAP_DISPINFO )
-        g_MapError.ReportError( "ParseDispInfoChunk: nummapdispinfo > MAX_MAP_DISPINFO");
+	//
+	// check to see if we exceeded the maximum displacement info list size
+	//
+	if( nummapdispinfo > MAX_MAP_DISPINFO )
+		g_MapError.ReportError( "ParseDispInfoChunk: nummapdispinfo > MAX_MAP_DISPINFO");
 
-    // get a pointer to the next available displacement info slot
-    pMapDispInfo = &mapdispinfo[nummapdispinfo];
-    nummapdispinfo++;
+	// get a pointer to the next available displacement info slot
+	pMapDispInfo = &mapdispinfo[nummapdispinfo];
+	nummapdispinfo++;
 
-    //
-    // get the chunk opener - "{"
-    //
-    GetToken( false );
-    if( strcmp( token, "{" ) )
-        g_MapError.ReportError( "ParseDispInfoChunk: Illegal Chunk! - {" );
+	//
+	// get the chunk opener - "{"
+	//
+	GetToken( false );
+	if( strcmp( token, "{" ) )
+		g_MapError.ReportError( "ParseDispInfoChunk: Illegal Chunk! - {" );
 
-    //
-    //
-    // get the displacement info attribs
-    //
-    //
+	//
+	//
+	// get the displacement info attribs
+	//
+	//
 
-    // power
-    GetToken( true );
-    pMapDispInfo->power = atoi( token );
+	// power
+	GetToken( true );
+	pMapDispInfo->power = atoi( token );
 
-    // u and v mapping axes
-    for( i = 0; i < 2; i++ )
-    {
-        GetToken( false );
-        if( strcmp( token, "[" ) )
-            g_MapError.ReportError( "ParseDispInfoChunk: Illegal Chunk! - [" );
+	// u and v mapping axes
+	for( i = 0; i < 2; i++ )
+	{
+		GetToken( false );
+		if( strcmp( token, "[" ) )
+			g_MapError.ReportError( "ParseDispInfoChunk: Illegal Chunk! - [" );
 
-        for( j = 0; j < 3; j++ )
-        {
-            GetToken( false );
+		for( j = 0; j < 3; j++ )
+		{
+			GetToken( false );
 
-            if( i == 0 )
-            {
-                pMapDispInfo->uAxis[j] = atof( token );
-            }
-            else
-            {
-                pMapDispInfo->vAxis[j] = atof( token );
-            }
-        }
+			if( i == 0 )
+			{
+				pMapDispInfo->uAxis[j] = atof( token );
+			}
+			else
+			{
+				pMapDispInfo->vAxis[j] = atof( token );
+			}
+		}
 
-        GetToken( false );
-        if( strcmp( token, "]" ) )
-            g_MapError.ReportError( "ParseDispInfoChunk: Illegal Chunk! - ]" );
-    }
+		GetToken( false );
+		if( strcmp( token, "]" ) )
+			g_MapError.ReportError( "ParseDispInfoChunk: Illegal Chunk! - ]" );
+	}
 
-    // max displacement value
-   	if( g_nMapFileVersion < 350 )
+	// max displacement value
+		if( g_nMapFileVersion < 350 )
 	{
 		GetToken( false );
 		pMapDispInfo->maxDispDist = atof( token );
 	}
 
-    // minimum tesselation value
-    GetToken( false );
-    pMapDispInfo->minTess = atoi( token );
+	// minimum tesselation value
+	GetToken( false );
+	pMapDispInfo->minTess = atoi( token );
 
-    // light smoothing angle
-    GetToken( false );
-    pMapDispInfo->smoothingAngle = atof( token );
+	// light smoothing angle
+	GetToken( false );
+	pMapDispInfo->smoothingAngle = atof( token );
 
-    //
-    // get the displacement info displacement normals
-    //
-    GetToken( true );
-    pMapDispInfo->vectorDisps[0][0] = atof( token );
-    GetToken( false );
-    pMapDispInfo->vectorDisps[0][1] = atof( token );
-    GetToken( false );
-    pMapDispInfo->vectorDisps[0][2] = atof( token );
+	//
+	// get the displacement info displacement normals
+	//
+	GetToken( true );
+	pMapDispInfo->vectorDisps[0][0] = atof( token );
+	GetToken( false );
+	pMapDispInfo->vectorDisps[0][1] = atof( token );
+	GetToken( false );
+	pMapDispInfo->vectorDisps[0][2] = atof( token );
 
-    vertCount = ( ( ( 1 << pMapDispInfo->power ) + 1 ) * ( ( 1 << pMapDispInfo->power ) + 1 ) );
-    for( i = 1; i < vertCount; i++ )
-    {
-        GetToken( false );
-        pMapDispInfo->vectorDisps[i][0] = atof( token );
-        GetToken( false );
-        pMapDispInfo->vectorDisps[i][1] = atof( token );
-        GetToken( false );
-        pMapDispInfo->vectorDisps[i][2] = atof( token );
-    }
+	vertCount = ( ( ( 1 << pMapDispInfo->power ) + 1 ) * ( ( 1 << pMapDispInfo->power ) + 1 ) );
+	for( i = 1; i < vertCount; i++ )
+	{
+		GetToken( false );
+		pMapDispInfo->vectorDisps[i][0] = atof( token );
+		GetToken( false );
+		pMapDispInfo->vectorDisps[i][1] = atof( token );
+		GetToken( false );
+		pMapDispInfo->vectorDisps[i][2] = atof( token );
+	}
 
-    //
-    // get the displacement info displacement values
-    //
-    GetToken( true );
-    pMapDispInfo->dispDists[0] = atof( token );
+	//
+	// get the displacement info displacement values
+	//
+	GetToken( true );
+	pMapDispInfo->dispDists[0] = atof( token );
 
-    for( i = 1; i < vertCount; i++ )
-    {
-        GetToken( false );
-        pMapDispInfo->dispDists[i] = atof( token );
-    }
+	for( i = 1; i < vertCount; i++ )
+	{
+		GetToken( false );
+		pMapDispInfo->dispDists[i] = atof( token );
+	}
 
-    //
-    // get the chunk closer - "}"
-    //
-    GetToken( true );
-    if( strcmp( token, "}" ) )
-        g_MapError.ReportError( "ParseDispInfoChunk: Illegal Chunk! - }" );
-    
-    // return the index of the displacement info slot
-    return pMapDispInfo;
+	//
+	// get the chunk closer - "}"
+	//
+	GetToken( true );
+	if( strcmp( token, "}" ) )
+		g_MapError.ReportError( "ParseDispInfoChunk: Illegal Chunk! - }" );
+
+	// return the index of the displacement info slot
+	return pMapDispInfo;
 }
-
-

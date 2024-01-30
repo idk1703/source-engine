@@ -31,7 +31,7 @@ struct DeathNoticePlayer
 };
 
 // Contents of each entry in our list of death notices
-struct DeathNoticeItem 
+struct DeathNoticeItem
 {
 	DeathNoticePlayer	Killer;
 	DeathNoticePlayer   Victim;
@@ -42,7 +42,7 @@ struct DeathNoticeItem
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudDeathNotice : public CHudElement, public vgui::Panel
 {
@@ -58,7 +58,7 @@ public:
 
 	void SetColorForNoticePlayer( int iTeamNumber );
 	void RetireExpiredDeathNotices( void );
-	
+
 	virtual void FireGameEvent( IGameEvent * event );
 
 private:
@@ -72,8 +72,8 @@ private:
 	CPanelAnimationVar( vgui::HFont, m_hTextFont, "TextFont", "HudNumbersTimer" );
 
 	// Texture for skull symbol
-	CHudTexture		*m_iconD_skull;  
-	CHudTexture		*m_iconD_headshot;  
+	CHudTexture		*m_iconD_skull;
+	CHudTexture		*m_iconD_headshot;
 
 	CUtlVector<DeathNoticeItem> m_DeathNotices;
 };
@@ -83,7 +83,7 @@ using namespace vgui;
 DECLARE_HUDELEMENT( CHudDeathNotice );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudDeathNotice::CHudDeathNotice( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass( NULL, "HudDeathNotice" )
@@ -98,7 +98,7 @@ CHudDeathNotice::CHudDeathNotice( const char *pElementName ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::ApplySchemeSettings( IScheme *scheme )
 {
@@ -107,15 +107,15 @@ void CHudDeathNotice::ApplySchemeSettings( IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::Init( void )
 {
-	ListenForGameEvent( "player_death" );	
+	ListenForGameEvent( "player_death" );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::VidInit( void )
 {
@@ -132,7 +132,7 @@ bool CHudDeathNotice::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::SetColorForNoticePlayer( int iTeamNumber )
 {
@@ -140,7 +140,7 @@ void CHudDeathNotice::SetColorForNoticePlayer( int iTeamNumber )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::Paint()
 {
@@ -204,7 +204,7 @@ void CHudDeathNotice::Paint()
 		{
 			x = 0;
 		}
-		
+
 		// Only draw killers name if it wasn't a suicide
 		if ( !m_DeathNotices[i].iSuicide )
 		{
@@ -227,7 +227,7 @@ void CHudDeathNotice::Paint()
 		// Draw death weapon
 		//If we're using a font char, this will ignore iconTall and iconWide
 		icon->DrawSelf( x, y, iconWide, iconTall, iconColor );
-		x += iconWide;		
+		x += iconWide;
 
 		SetColorForNoticePlayer( iVictimTeam );
 
@@ -347,6 +347,3 @@ void CHudDeathNotice::FireGameEvent( IGameEvent * event )
 
 	Msg( "%s", sDeathMsg );
 }
-
-
-

@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
 #include "cbase.h"
-#include "hud.h"		
+#include "hud.h"
 #include <vgui_controls/Controls.h>
 #include <Color.h>
 #include "c_vehicle_crane.h"
@@ -40,7 +40,7 @@ END_DATADESC()
 #define CRANE_FOV	75
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_PropCrane::C_PropCrane( void )
 {
@@ -50,8 +50,8 @@ C_PropCrane::C_PropCrane( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_PropCrane::PreDataUpdate( DataUpdateType_t updateType )
 {
@@ -61,7 +61,7 @@ void C_PropCrane::PreDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PropCrane::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -84,7 +84,7 @@ void C_PropCrane::PostDataUpdate( DataUpdateType_t updateType )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseCombatCharacter *C_PropCrane::GetPassenger( int nRole )
 {
@@ -110,11 +110,11 @@ int	C_PropCrane::GetPassengerRole( C_BaseCombatCharacter *pPassenger )
 //-----------------------------------------------------------------------------
 void C_PropCrane::GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, QAngle *pAbsAngles, float *pFOV /*=NULL*/ )
 {
-	SharedVehicleViewSmoothing( m_hPlayer, 
-								pAbsOrigin, pAbsAngles, 
-								m_bEnterAnimOn, m_bExitAnimOn, 
-								m_vecEyeExitEndpoint, 
-								&m_ViewSmoothingData, 
+	SharedVehicleViewSmoothing( m_hPlayer,
+								pAbsOrigin, pAbsAngles,
+								m_bEnterAnimOn, m_bExitAnimOn,
+								m_vecEyeExitEndpoint,
+								&m_ViewSmoothingData,
 								pFOV );
 }
 
@@ -128,7 +128,7 @@ void C_PropCrane::GetVehicleClipPlanes( float &flZNear, float &flZFar ) const
 	flZNear = 6;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Renders hud elements
 //-----------------------------------------------------------------------------
@@ -137,9 +137,9 @@ void C_PropCrane::DrawHudElements( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : theMins - 
-//			theMaxs - 
+// Purpose:
+// Input  : theMins -
+//			theMaxs -
 //-----------------------------------------------------------------------------
 void C_PropCrane::GetRenderBounds( Vector &theMins, Vector &theMaxs )
 {
@@ -148,4 +148,3 @@ void C_PropCrane::GetRenderBounds( Vector &theMins, Vector &theMaxs )
 	BaseClass::GetRenderBounds( theMins, theMaxs );
 	theMaxs.y += 660.0f;
 }
-

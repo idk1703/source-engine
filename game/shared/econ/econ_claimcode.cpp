@@ -86,7 +86,7 @@ bool CJobWG_GetPromoCodes::BYieldingRunJobFromRequest( KeyValues *pkvRequest, Ke
 	CSharedObjectTypeCache *pTypeCache = pSOCache->FindBaseTypeCache( k_EEconTypeClaimCode );
 	if ( pTypeCache == NULL )
 		return true;
-	
+
 	for ( uint32 i = 0; i < pTypeCache->GetCount(); ++i )
 	{
 		CEconClaimCode *pClaimCode = (CEconClaimCode*)pTypeCache->GetObject( i );
@@ -101,7 +101,7 @@ bool CJobWG_GetPromoCodes::BYieldingRunJobFromRequest( KeyValues *pkvRequest, Ke
 		const char *pClaimCodeName = pEconClaimCodeTool->GetClaimType();
 		if ( pClaimCodeName == NULL )
 			continue;
-		
+
 		CUtlString claimURL;
 		if ( BBuildRedemptionURL( pClaimCode, claimURL ) == false )
 		{

@@ -14,7 +14,7 @@
 class CDODPlayerResource : public CPlayerResource
 {
 	DECLARE_CLASS( CDODPlayerResource, CPlayerResource );
-	
+
 public:
 	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ PRECACHE_REGISTER(grenade_rocket);
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CGrenadeRocket::CGrenadeRocket()
 {
@@ -49,7 +49,7 @@ void CGrenadeRocket::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeRocket::Spawn( void )
 {
@@ -74,7 +74,7 @@ void CGrenadeRocket::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeRocket::MissileTouch( CBaseEntity *pOther )
 {
@@ -136,7 +136,7 @@ void CGrenadeRocket::FollowThink( void )
 	QAngle angles;
 	VectorAngles( vecTarget, angles );
 	SetLocalAngles( angles );
-	
+
 	Vector vecVelocity = GetAbsVelocity();
 	float flSpeed = vecVelocity.Length();
 	vecVelocity = vecVelocity * 0.2 + vecTarget * flSpeed * 1.2;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -95,12 +95,12 @@ protected:
 	virtual int  HitTest(CMapView *pView, const Vector2D &vPoint, bool bTestHandles = false);
 	virtual bool UpdateTranslation(const Vector &vUpdate, UINT flags = 0);
 	virtual void FinishTranslation(bool bSave);
-	
+
 private:
 
 	int GetCameraCount() { return Cameras.Count(); }
 	void AddCamera(CAMSTRUCT &pCamPos);
-	
+
 	void SetNextCamera(SNCTYPE next);
 	void DeleteActiveCamera(void);
 
@@ -111,7 +111,7 @@ private:
 	static ChunkFileResult_t LoadCamerasKeyCallback(const char *szKey, const char *szValue, Camera3D *pCameras);
 	static ChunkFileResult_t LoadCameraCallback(CChunkFile *pFile, Camera3D *pCameras);
 
-	
+
 
 	CUtlVector<CAMSTRUCT> Cameras;		// The cameras that have been created.
 	CAMSTRUCT m_MoveCamera;
@@ -129,4 +129,3 @@ private:
 
 
 #endif // CAMERA3D_H
-

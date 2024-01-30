@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -67,9 +67,9 @@ PLATFORM_INTERFACE FnMiniDump SetMiniDumpFunction( FnMiniDump pfn );
 // If ptchMinidumpFileNameBuffer is NULL the name of the minidump file written will not
 // be available after the function returns.
 //
-PLATFORM_INTERFACE bool WriteMiniDumpUsingExceptionInfo( 
+PLATFORM_INTERFACE bool WriteMiniDumpUsingExceptionInfo(
 	unsigned int uStructuredExceptionCode,
-	_EXCEPTION_POINTERS * pExceptionInfo, 
+	_EXCEPTION_POINTERS * pExceptionInfo,
 	int /* MINIDUMP_TYPE */ minidumpType,
 	const char *pszFilenameSuffix = NULL,
 	tchar *ptchMinidumpFileNameBuffer = NULL
@@ -101,4 +101,3 @@ PLATFORM_INTERFACE void MinidumpUserStreamInfoAppend( const char *pFormat, ... )
 PLATFORM_INTERFACE const char *MinidumpUserStreamInfoGet( int Index );
 
 #endif // MINIDUMP_H
-

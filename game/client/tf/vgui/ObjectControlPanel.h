@@ -26,7 +26,7 @@ class CRotationSlider;
 class C_TFPlayer;
 
 //-----------------------------------------------------------------------------
-// Base class for all vgui screens on objects: 
+// Base class for all vgui screens on objects:
 //-----------------------------------------------------------------------------
 class CObjectControlPanel : public CVGuiScreenPanel
 {
@@ -69,7 +69,7 @@ class CCommandChainingPanel : public vgui::EditablePanel
 
 public:
 	CCommandChainingPanel( vgui::Panel *parent, const char *panelName ) :
-		BaseClass( parent, panelName ) 
+		BaseClass( parent, panelName )
 	{
 		SetPaintBackgroundEnabled( false );
 	}
@@ -86,7 +86,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// This is a panel for an object that has rotational controls 
+// This is a panel for an object that has rotational controls
 //-----------------------------------------------------------------------------
 class CRotatingObjectControlPanel : public CObjectControlPanel
 {

@@ -62,7 +62,7 @@ CPublishTester::CPublishTester()
 CPublishTester::~CPublishTester()
 {
 	delete [] m_pGarbageBuffer;
-	
+
 	if ( m_pJob )
 	{
 		m_pJob->Release();
@@ -271,7 +271,7 @@ bool CPublishTester::Test_IO( const char *pFilename )
 
 	// Close the file
 	g_pFullFileSystem->Close( hTmpFile );
-	
+
 	return true;
 }
 

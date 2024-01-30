@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -42,7 +42,7 @@ public:
 	void OnEntityGone( void );								///< called when the grenade in the world goes away
 	void Update( void );									///< called every frame
 	bool IsValid( void ) const	;							///< return true if this grenade is valid
-	
+
 	bool IsEntity( CBaseGrenade *grenade ) const		{ return (grenade == m_entity) ? true : false; }
 	CBaseGrenade *GetEntity( void ) const				{ return m_entity; }
 
@@ -77,7 +77,7 @@ public:
 	virtual ~CBotManager();
 
 	CBasePlayer *AllocateAndBindBotEntity( edict_t *ed );			///< allocate the appropriate entity for the bot and bind it to the given edict
-	virtual CBasePlayer *AllocateBotEntity( void ) = 0;				///< factory method to allocate the appropriate entity for the bot 
+	virtual CBasePlayer *AllocateBotEntity( void ) = 0;				///< factory method to allocate the appropriate entity for the bot
 
 	virtual void ClientDisconnect( CBaseEntity *entity ) = 0;
 	virtual bool ClientCommand( CBasePlayer *player, const CCommand &args ) = 0;
@@ -90,7 +90,7 @@ public:
 	virtual void StartFrame( void );							///< (EXTEND) called each frame
 
 	virtual unsigned int GetPlayerPriority( CBasePlayer *player ) const = 0;	///< return priority of player (0 = max pri)
-	
+
 
 	void AddGrenade( CBaseGrenade *grenade );					///< add an active grenade to the bot's awareness
 	void RemoveGrenade( CBaseGrenade *grenade );				///< the grenade entity in the world is going away

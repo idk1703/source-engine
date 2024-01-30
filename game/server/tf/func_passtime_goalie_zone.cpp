@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@ LINK_ENTITY_TO_CLASS( func_passtime_goalie_zone, CFuncPasstimeGoalieZone )
 IMPLEMENT_AUTO_LIST( IFuncPasstimeGoalieZoneAutoList );
 
 //-----------------------------------------------------------------------------
-void CFuncPasstimeGoalieZone::Spawn() 
+void CFuncPasstimeGoalieZone::Spawn()
 {
 	AddSpawnFlags( SF_TRIGGER_ALLOW_CLIENTS );
 	BaseClass::Spawn();

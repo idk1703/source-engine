@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -58,12 +58,12 @@ public:
 	// panel allocation
 	virtual VPANEL AllocPanel() = 0;
 	virtual void FreePanel(VPANEL panel) = 0;
-	
+
 	// debugging prints
 	virtual void DPrintf(PRINTF_FORMAT_STRING const char *format, ...) = 0;
 	virtual void DPrintf2(PRINTF_FORMAT_STRING const char *format, ...) = 0;
 	virtual void SpewAllActivePanelNames() = 0;
-	
+
 	// safe-pointer handle methods
 	virtual HPanel PanelToHandle(VPANEL panel) = 0;
 	virtual VPANEL HandleToPanel(HPanel index) = 0;
@@ -80,7 +80,7 @@ public:
 	// Creates/ destroys vgui contexts, which contains information
 	// about which controls have mouse + key focus, for example.
 	virtual HContext CreateContext() = 0;
-	virtual void DestroyContext( HContext context ) = 0; 
+	virtual void DestroyContext( HContext context ) = 0;
 
 	// Associates a particular panel with a vgui context
 	// Associating NULL is valid; it disconnects the panel from the context
@@ -91,7 +91,7 @@ public:
 	virtual void ActivateContext( HContext context ) = 0;
 
 	// whether to sleep each frame or not, true = sleep
-	virtual void SetSleep( bool state) = 0; 
+	virtual void SetSleep( bool state) = 0;
 
 	// data accessor for above
 	virtual bool GetShouldVGuiControlSleep() = 0;

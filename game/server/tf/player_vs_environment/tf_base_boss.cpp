@@ -397,7 +397,7 @@ void CTFBaseBoss::Event_Killed( const CTakeDamageInfo &info )
 		angRand.y = RandomFloat( -180.0f, 180.0f );
 
 		CCurrencyPackCustom *pCurrencyPack = assert_cast< CCurrencyPackCustom* >( CBaseEntity::CreateNoSpawn( "item_currencypack_custom", WorldSpaceCenter(), angRand, this ) );
-		
+
 		if ( pCurrencyPack )
 		{
 			pCurrencyPack->SetAmount( nAmount );

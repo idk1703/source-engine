@@ -216,7 +216,7 @@ ActionResult< CTFBot >	CTFBotStickybombSentrygun::Update( CTFBot *me, float inte
 		{
 			// search for angle to land sticky near sentry
 			Vector toSentry = m_sentrygun->WorldSpaceCenter() - me->EyePosition();
-			
+
 			QAngle angles;
 			VectorAngles( toSentry, angles );
 

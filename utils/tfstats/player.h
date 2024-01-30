@@ -45,27 +45,27 @@ public:
 		std::string faveWeapon();
 		int faveWeapKills();
 		plr_per_team_data(){kills=deaths=suicides=teamkills=teamkilled=faveweapkills=0;}
-		
+
 		CTimeIndexedList<player_class> classesplayed; //stores class, indexed by the time when that class was switched to.
-		
+
 		time_t timeon;
 		time_t timeOn();
 	};
-	
+
 	CTimeIndexedList<player_class> allclassesplayed; //stores class, indexed by the time when that class was switched to.
-	
+
 	CTimeIndexedList<int> teams;
 	plr_per_team_data perteam[MAX_TEAMS+1];
-	
-	CTimeIndexedList<std::string> aliases; 
+
+	CTimeIndexedList<std::string> aliases;
 	std::string name; //this will be set to the favourite name of the player
 	//int team;
 	int svrPID;
 	unsigned long WONID;
 	string ipAddress;
 	int reconnects;
-	
-	
+
+
 	PID pid;
 	time_t logontime;
 	time_t logofftime;
@@ -73,15 +73,15 @@ public:
 
 
 
-	
+
 //	int teamID(){return team;}
 	CPlayer();
 
-	void nameFound(time_t t, std::string alias);	
+	void nameFound(time_t t, std::string alias);
 
 
 
-	
+
 
 	//merge stats from all teams into 5th "team" (all teams)
 	void merge();

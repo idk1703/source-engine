@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -37,9 +37,9 @@ DECLARE_BUILD_FACTORY( CEngyDestroyMenuItem );
 DECLARE_HUDELEMENT_DEPTH( CHudMenuEngyDestroy, 40 );	// in front of engy building status
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CHudMenuEngyDestroy::CHudMenuEngyDestroy( const char *pElementName ) 
+CHudMenuEngyDestroy::CHudMenuEngyDestroy( const char *pElementName )
 	: CHudBaseBuildMenu( pElementName, "HudMenuEngyDestroy" )
 {
 	Panel *pParent = g_pClientMode->GetViewport();
@@ -79,7 +79,7 @@ void CHudMenuEngyDestroy::LevelInit( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuEngyDestroy::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -202,7 +202,7 @@ int	CHudMenuEngyDestroy::HudElementKeyInput( int down, ButtonCode_t keynum, cons
 
 		iSlot -= 1;	// adjust to be 0 based
 
-		// allow slot1 - slot4 
+		// allow slot1 - slot4
 		if ( iSlot < 0 || iSlot > 3 )
 			return 1;
 	}
@@ -309,7 +309,7 @@ void CHudMenuEngyDestroy::OnTick( void )
 		if ( pLocalPlayer )
 		{
 			pObj = pLocalPlayer->GetObjectOfType( iRemappedObjectID, iMode );
-		}			
+		}
 
 		// If the building is built, we can destroy it
 		// unless we are in training, then we check the convar
@@ -379,7 +379,7 @@ void CHudMenuEngyDestroy::SetVisible( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CHudMenuEngyDestroy::CalcCustomDestroyMenuLayout( void )
 {
@@ -394,7 +394,7 @@ int	CHudMenuEngyDestroy::CalcCustomDestroyMenuLayout( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuEngyDestroy::InitBuildings()
 {
@@ -404,7 +404,6 @@ void CHudMenuEngyDestroy::InitBuildings()
 	}
 
 	CHudMenuEngyBuild::ReplaceBuildings( m_Buildings );
-		
+
 	InvalidateLayout( true, true );
 }
-

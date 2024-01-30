@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -34,8 +34,8 @@ CUserMessages::~CUserMessages()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : int
 //-----------------------------------------------------------------------------
 int CUserMessages::LookupUserMessage( const char *name )
@@ -50,8 +50,8 @@ int CUserMessages::LookupUserMessage( const char *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : int
 //-----------------------------------------------------------------------------
 int CUserMessages::GetUserMessageSize( int index )
@@ -66,8 +66,8 @@ int CUserMessages::GetUserMessageSize( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *CUserMessages::GetUserMessageName( int index )
@@ -81,8 +81,8 @@ const char *CUserMessages::GetUserMessageName( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CUserMessages::IsValidIndex( int index )
@@ -91,8 +91,8 @@ bool CUserMessages::IsValidIndex( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //			size - -1 for variable size
 //-----------------------------------------------------------------------------
 void CUserMessages::Register( const char *name, int size )
@@ -112,9 +112,9 @@ void CUserMessages::Register( const char *name, int size )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
-//			hook - 
+// Purpose:
+// Input  : *name -
+//			hook -
 //-----------------------------------------------------------------------------
 void CUserMessages::HookMessage( const char *name, pfnUserMsgHook hook )
 {
@@ -139,10 +139,10 @@ void CUserMessages::HookMessage( const char *name, pfnUserMsgHook hook )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszName - 
-//			iSize - 
-//			*pbuf - 
+// Purpose:
+// Input  : *pszName -
+//			iSize -
+//			*pbuf -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CUserMessages::DispatchUserMessage( int msg_type, bf_read &msg_data )

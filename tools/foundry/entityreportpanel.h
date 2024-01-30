@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -68,15 +68,15 @@ private:
 	void OnFilterByClass( bool bState );
 	void OnFilterKeyValueExact( bool bState );
 	void OnFilterByType( FilterType_t type );
-	void OnChangeFilterkey( const char *pText ); 
-	void OnChangeFiltervalue( const char *pText ); 
+	void OnChangeFilterkey( const char *pText );
+	void OnChangeFiltervalue( const char *pText );
 	void OnChangeFilterclass( const char *pText );
 
 	// Methods related to updating the listpanel
 	void UpdateEntityList();
 	bool ShouldAddEntityToList( CDmeVMFEntity *pEntity );
 
-	// Methods related to saving settings 
+	// Methods related to saving settings
 	void ReadSettingsFromRegistry();
 	void SaveSettingsToRegistry();
 

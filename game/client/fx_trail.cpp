@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -36,7 +36,7 @@ void C_ParticleTrail::GetAimEntOrigin( IClientEntity *pAttachedTo, Vector *pAbsO
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Turn on the emission of particles 
+// Purpose: Turn on the emission of particles
 //-----------------------------------------------------------------------------
 void C_ParticleTrail::SetEmit( bool bEmit )
 {
@@ -66,7 +66,7 @@ void C_ParticleTrail::OnDataChanged(DataUpdateType_t updateType)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ParticleTrail::Start( CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs )
 {
@@ -75,4 +75,3 @@ void C_ParticleTrail::Start( CParticleMgr *pParticleMgr, IPrototypeArgAccess *pA
 
 	m_pParticleMgr = pParticleMgr;
 }
-

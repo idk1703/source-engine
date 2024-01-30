@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -33,7 +33,7 @@ CDmElementFactoryHelper::CDmElementFactoryHelper( const char *classname, IDmElem
 // Output : CDmElementFactoryHelper
 //-----------------------------------------------------------------------------
 CDmElementFactoryHelper *CDmElementFactoryHelper::GetNext( void )
-{ 
+{
 	return m_pNext;
 }
 
@@ -41,7 +41,7 @@ CDmElementFactoryHelper *CDmElementFactoryHelper::GetNext( void )
 //-----------------------------------------------------------------------------
 // Installs all factories into the datamodel system
 //-----------------------------------------------------------------------------
-// NOTE: The name of this extern is defined by the macro IMPLEMENT_ELEMENT_FACTORY 
+// NOTE: The name of this extern is defined by the macro IMPLEMENT_ELEMENT_FACTORY
 extern CDmElementFactoryHelper g_CDmElement_Helper;
 
 void CDmElementFactoryHelper::InstallFactories( )

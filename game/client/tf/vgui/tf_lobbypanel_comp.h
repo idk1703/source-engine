@@ -25,7 +25,7 @@ namespace vgui
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CLadderLobbyLeaderboard : public CTFLeaderboardPanel
 {
@@ -62,7 +62,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CLobbyPanel_Comp : public CBaseLobbyPanel, public CLocalSteamSharedObjectListener
 {

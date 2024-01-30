@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -65,8 +65,6 @@ void CPlasmaProjectileShared::ComputePosition( float flTime, Vector *pNewPositio
 
 		// Add in the effects of gravity!
 		pNewVelocity->z -= flFallTime * plasma_gravity.GetFloat();
-		pNewPosition->z -= 0.5f * plasma_gravity.GetFloat() * flFallTime * flFallTime; 
+		pNewPosition->z -= 0.5f * plasma_gravity.GetFloat() * flFallTime * flFallTime;
 	}
 }
-
-

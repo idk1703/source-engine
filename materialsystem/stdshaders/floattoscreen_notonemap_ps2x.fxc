@@ -33,6 +33,6 @@ float4 main( PS_INPUT i ) : COLOR
 	// linear scale for tone mapping
 //	fbSample *= lum * LINEAR_LIGHT_SCALE;
 
-	// assume that sRGB write is enabled.	
+	// assume that sRGB write is enabled.
 	return FinalOutput( fbSample, 0, PIXEL_FOG_TYPE_NONE, TONEMAP_SCALE_NONE );
 }

@@ -27,7 +27,7 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-PerforceFileExplorer::PerforceFileExplorer( Panel *pParent, const char *pPanelName ) : 
+PerforceFileExplorer::PerforceFileExplorer( Panel *pParent, const char *pPanelName ) :
 	BaseClass( pParent, pPanelName )
 {
 	m_pFileList = new PerforceFileList( this, "PerforceFileList" );
@@ -66,7 +66,7 @@ void PerforceFileExplorer::ApplySchemeSettings( IScheme *pScheme )
 	m_pFolderUpButton->AddImage( scheme()->GetImage( "resource/icon_folderup", false), -3 );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Inherited from Frame
 //-----------------------------------------------------------------------------
@@ -77,13 +77,13 @@ void PerforceFileExplorer::PerformLayout()
 	int x, y, w, h;
 	GetClientArea( x, y, w, h );
 
-	m_pFullPathCombo->SetBounds( x, y + 6, w - 30, 24 ); 
+	m_pFullPathCombo->SetBounds( x, y + 6, w - 30, 24 );
 	m_pFolderUpButton->SetBounds( x + w - 24, y + 6, 24, 24 );
 
 	m_pFileList->SetBounds( x, y + 36, w, h - 36 );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Sets the current directory
 //-----------------------------------------------------------------------------
@@ -102,7 +102,7 @@ void PerforceFileExplorer::SetCurrentDirectory( const char *pFullPath )
 
 	m_CurrentDirectory = pFullPath;
 	m_CurrentDirectory.StripTrailingSlash();
-    m_CurrentDirectory.FixSlashes();
+	m_CurrentDirectory.FixSlashes();
 
 	PopulateFileList();
 	PopulateDriveList();
@@ -120,7 +120,7 @@ void PerforceFileExplorer::SetCurrentDirectory( const char *pFullPath )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PerforceFileExplorer::PopulateDriveList()
 {
@@ -173,7 +173,7 @@ void PerforceFileExplorer::PopulateFileList()
 {
 	// clear the current list
 	m_pFileList->RemoveAllFiles();
-	
+
 	// Create filter string
 	char pFullFoundPath[MAX_PATH];
 	char pFilter[MAX_PATH+3];
@@ -211,7 +211,7 @@ void PerforceFileExplorer::PopulateFileList()
 		bool bFileExists = true;
 		if ( nItemID == m_pFileList->InvalidItemID() )
 		{
-			// If it didn't find it, the file must not exist 
+			// If it didn't find it, the file must not exist
 			// since it already would have added it above
 			bFileExists = false;
 			nItemID = m_pFileList->AddFile( pFileName, false, fileList[i].m_bDir );
@@ -271,8 +271,5 @@ void PerforceFileExplorer::OnFolderUp()
 	// This occurs at the root directory
 	if ( !Q_stricmp( pUpDirectory, "." ) )
 		return;
-	SetCurrentDirectory( pUpDirectory ); 
+	SetCurrentDirectory( pUpDirectory );
 }
-
-
-

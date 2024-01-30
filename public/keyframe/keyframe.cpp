@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -70,7 +70,7 @@ bool Motion_SetKeyAngles( int keyNum, Quaternion &quatAngles )
 //-----------------------------------------------------------------------------
 typedef float (*TimeModifierFunc_t)(float);
 
-typedef struct 
+typedef struct
 {
 	const char *szName;
 	TimeModifierFunc_t pFunc;
@@ -123,10 +123,10 @@ bool Motion_GetTimeModifierDetails( int timeInterpNum, const char **outName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : time - 
-//			timeModifierFuncNum - 
-//			*outNewTime - 
+// Purpose:
+// Input  : time -
+//			timeModifierFuncNum -
+//			*outNewTime -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool Motion_CalculateModifiedTime( float time, int timeModifierFuncNum, float *outNewTime )
@@ -233,7 +233,7 @@ void CPositionInterpolator_CatmullRom::SetKeyPosition( int keyNum, Vector const 
 
 void CPositionInterpolator_CatmullRom::InterpolatePosition( float time, Vector &vOut )
 {
-	Catmull_Rom_Spline( 
+	Catmull_Rom_Spline(
 		g_KeyFramePtr[-1].vPos,
 		g_KeyFramePtr[0].vPos,
 		g_KeyFramePtr[1].vPos,
@@ -356,14 +356,14 @@ void CPositionInterpolator_Rope::InterpolatePosition( float time, Vector &vOut )
 
 		// Run the simulation for a while to let the rope settle down..
 		m_RopePhysics.Simulate( 5 );
-	
+
 		m_bChange = false;
 	}
 
 	// Ok, now we have all the nodes setup..
 	float flNode = time * (m_RopePhysics.NumNodes()-1);
 	int iNode = (int)( flNode );
-	VectorLerp( 
+	VectorLerp(
 		m_RopePhysics.GetNode(iNode)->m_vPredicted,
 		m_RopePhysics.GetNode(iNode+1)->m_vPredicted,
 		flNode - iNode,
@@ -431,7 +431,7 @@ IPositionInterpolator* Motion_GetPositionInterpolator( int interpNum )
 //-----------------------------------------------------------------------------
 typedef void (*RotationInterpolatorFunc_t)(float time, Quaternion &outRot);
 
-typedef struct 
+typedef struct
 {
 	char *szName;
 	RotationInterpolatorFunc_t pFunc;
@@ -487,7 +487,7 @@ bool Motion_GetRotationInterpolatorDetails( int rotInterpNum, char **outName, in
 //			Time is assumed to have already been modified by the TimeModifyFunc (above)
 //			Requires the keyframes be already set
 // Input  : time - value from 0..1
-//			interpFuncNum - 
+//			interpFuncNum -
 //			*outQuatRotation - result in quaternion form
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------

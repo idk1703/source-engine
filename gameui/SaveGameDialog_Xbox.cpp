@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -37,7 +37,7 @@ extern const char *COM_GetModDirectory();
 
 using namespace vgui;
 
-CSaveGameDialogXbox::CSaveGameDialogXbox( vgui::Panel *parent ) 
+CSaveGameDialogXbox::CSaveGameDialogXbox( vgui::Panel *parent )
 :	BaseClass( parent ),
 	m_bGameSaving ( false ),
 	m_bNewSaveAvailable( false )
@@ -46,7 +46,7 @@ CSaveGameDialogXbox::CSaveGameDialogXbox( vgui::Panel *parent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSaveGameDialogXbox::PerformSelectedAction( void )
 {
@@ -71,8 +71,8 @@ void CSaveGameDialogXbox::PerformSelectedAction( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bNewSaveSelected - 
+// Purpose:
+// Input  : bNewSaveSelected -
 //-----------------------------------------------------------------------------
 void CSaveGameDialogXbox::UpdateFooterOptions( void )
 {

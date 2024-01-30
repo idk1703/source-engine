@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -73,7 +73,7 @@ public:
 	virtual bool HasChanges( bool bCheckChildren ) const { return m_bHasChanges; }
 
 protected:
-	
+
 	const IEditableDataType* GetOwningEditable() const;
 	void InvalidateChain();
 

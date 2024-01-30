@@ -1,12 +1,12 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
 #include "cbase.h"
-#include "hud.h"		
-#include "c_physicsprop.h"		
+#include "hud.h"
+#include "c_physicsprop.h"
 #include "iclientvehicle.h"
 #include <vgui_controls/Controls.h>
 #include <Color.h>
@@ -33,7 +33,7 @@ extern float RemapAngleRange( float startInterval, float endInterval, float valu
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_PropVehiclePrisonerPod : public C_PhysicsProp, public IClientVehicle
 {
@@ -45,7 +45,7 @@ public:
 	DECLARE_DATADESC();
 
 	C_PropVehiclePrisonerPod();
-	
+
 	void PreDataUpdate( DataUpdateType_t updateType );
 	void PostDataUpdate( DataUpdateType_t updateType );
 
@@ -109,7 +109,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_PropVehiclePrisonerPod::C_PropVehiclePrisonerPod( void )
 {
@@ -127,8 +127,8 @@ C_PropVehiclePrisonerPod::C_PropVehiclePrisonerPod( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_PropVehiclePrisonerPod::PreDataUpdate( DataUpdateType_t updateType )
 {
@@ -138,7 +138,7 @@ void C_PropVehiclePrisonerPod::PreDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PropVehiclePrisonerPod::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -156,7 +156,7 @@ void C_PropVehiclePrisonerPod::PostDataUpdate( DataUpdateType_t updateType )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseCombatCharacter *C_PropVehiclePrisonerPod::GetPassenger( int nRole )
 {
@@ -184,19 +184,19 @@ int	C_PropVehiclePrisonerPod::GetPassengerRole( C_BaseCombatCharacter *pPassenge
 //-----------------------------------------------------------------------------
 void C_PropVehiclePrisonerPod::GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, QAngle *pAbsAngles, float *pFOV /*=NULL*/ )
 {
-	SharedVehicleViewSmoothing( m_hPlayer, 
-								pAbsOrigin, pAbsAngles, 
-								m_bEnterAnimOn, m_bExitAnimOn, 
-								m_vecEyeExitEndpoint, 
-								&m_ViewSmoothingData, 
+	SharedVehicleViewSmoothing( m_hPlayer,
+								pAbsOrigin, pAbsAngles,
+								m_bEnterAnimOn, m_bExitAnimOn,
+								m_vecEyeExitEndpoint,
+								&m_ViewSmoothingData,
 								pFOV );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pLocalPlayer - 
-//			pCmd - 
+// Purpose:
+// Input  : pLocalPlayer -
+//			pCmd -
 //-----------------------------------------------------------------------------
 void C_PropVehiclePrisonerPod::UpdateViewAngles( C_BasePlayer *pLocalPlayer, CUserCmd *pCmd )
 {
@@ -226,12 +226,10 @@ void C_PropVehiclePrisonerPod::GetVehicleClipPlanes( float &flZNear, float &flZF
 	//flZNear = 6;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Renders hud elements
 //-----------------------------------------------------------------------------
 void C_PropVehiclePrisonerPod::DrawHudElements( )
 {
 }
-
-

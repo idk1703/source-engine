@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -102,14 +102,14 @@ COptionsSubHaptics::COptionsSubHaptics(vgui::Panel *parent) : PropertyPage(paren
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 COptionsSubHaptics::~COptionsSubHaptics()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubHaptics::OnResetData()
 {
@@ -130,7 +130,7 @@ void COptionsSubHaptics::OnResetData()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubHaptics::OnApplyChanges()
 {
@@ -152,7 +152,7 @@ void COptionsSubHaptics::OnApplyChanges()
 
 	//Write out our config file
 	engine->ClientCmd_Unrestricted("writehapticconfig");
-	engine->ClientCmd_Unrestricted("reloadhaptics"); 
+	engine->ClientCmd_Unrestricted("reloadhaptics");
 }
 
 //-----------------------------------------------------------------------------
@@ -164,7 +164,7 @@ void COptionsSubHaptics::ApplySchemeSettings(IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubHaptics::OnControlModified(Panel *panel)
 {
@@ -172,7 +172,7 @@ void COptionsSubHaptics::OnControlModified(Panel *panel)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubHaptics::OnTextChanged(Panel *panel)
 {

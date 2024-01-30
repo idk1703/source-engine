@@ -17,7 +17,7 @@
 #include "tier0/memdbgon.h"
 
 
-VideoPanel::VideoPanel( unsigned int nXPos, unsigned int nYPos, unsigned int nHeight, unsigned int nWidth, bool allowAlternateMedia ) : 
+VideoPanel::VideoPanel( unsigned int nXPos, unsigned int nYPos, unsigned int nHeight, unsigned int nWidth, bool allowAlternateMedia ) :
 	BaseClass( NULL, "VideoPanel" ),
 	m_VideoMaterial( NULL ),
 	m_nPlaybackWidth( 0 ),
@@ -27,7 +27,7 @@ VideoPanel::VideoPanel( unsigned int nXPos, unsigned int nYPos, unsigned int nHe
 	vgui::VPANEL pParent = enginevgui->GetPanel( PANEL_GAMEUIDLL );
 	SetParent( pParent );
 	SetVisible( false );
-	
+
 	// Must be passed in, off by default
 	m_szExitCommand[0] = '\0';
 
@@ -40,7 +40,7 @@ VideoPanel::VideoPanel( unsigned int nXPos, unsigned int nYPos, unsigned int nHe
 	SetVisible( true );
 	SetPaintBackgroundEnabled( false );
 	SetPaintBorderEnabled( false );
-	
+
 	// Set us up
 	SetTall( nHeight );
 	SetWide( nWidth );
@@ -97,7 +97,7 @@ bool VideoPanel::BeginPlayback( const char *pFilename )
 	m_VideoMaterial = g_pVideo->CreateVideoMaterial( "VideoMaterial", pFilename, "GAME",
 													VideoPlaybackFlags::DEFAULT_MATERIAL_OPTIONS,
 													VideoSystem::DETERMINE_FROM_FILE_EXTENSION, m_bAllowAlternateMedia );
-	
+
 	if ( m_VideoMaterial == NULL )
 		return false;
 
@@ -134,7 +134,7 @@ bool VideoPanel::BeginPlayback( const char *pFilename )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VideoPanel::Activate( void )
 {
@@ -147,7 +147,7 @@ void VideoPanel::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VideoPanel::DoModal( void )
 {
@@ -159,7 +159,7 @@ void VideoPanel::DoModal( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VideoPanel::OnKeyCodeTyped( vgui::KeyCode code )
 {
@@ -179,15 +179,15 @@ void VideoPanel::OnKeyCodeTyped( vgui::KeyCode code )
 void VideoPanel::OnKeyCodePressed( vgui::KeyCode code )
 {
 	// These keys cause the panel to shutdown
-	if ( code == KEY_ESCAPE || 
-		 code == KEY_BACKQUOTE || 
-		 code == KEY_SPACE || 
+	if ( code == KEY_ESCAPE ||
+		 code == KEY_BACKQUOTE ||
+		 code == KEY_SPACE ||
 		 code == KEY_ENTER ||
-		 code == KEY_XBUTTON_A || 
+		 code == KEY_XBUTTON_A ||
 		 code == KEY_XBUTTON_B ||
-		 code == KEY_XBUTTON_X || 
-		 code == KEY_XBUTTON_Y || 
-		 code == KEY_XBUTTON_START || 
+		 code == KEY_XBUTTON_X ||
+		 code == KEY_XBUTTON_Y ||
+		 code == KEY_XBUTTON_START ||
 		 code == KEY_XBUTTON_BACK ||
 		 code == STEAMCONTROLLER_A ||
 		 code == STEAMCONTROLLER_B )
@@ -201,7 +201,7 @@ void VideoPanel::OnKeyCodePressed( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VideoPanel::OnClose( void )
 {
@@ -226,7 +226,7 @@ void VideoPanel::OnClose( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VideoPanel::GetPanelPos( int &xpos, int &ypos )
 {
@@ -264,7 +264,7 @@ void VideoPanel::Paint( void )
 
 	// Draw the polys to draw this out
 	CMatRenderContextPtr pRenderContext( materials );
-	
+
 	pRenderContext->MatrixMode( MATERIAL_VIEW );
 	pRenderContext->PushMatrix();
 	pRenderContext->LoadIdentity();
@@ -316,7 +316,7 @@ void VideoPanel::Paint( void )
 		meshBuilder.Color4f( 1.0f, 1.0f, 1.0f, alpha );
 		meshBuilder.AdvanceVertex();
 	}
-	
+
 	meshBuilder.End();
 	pMesh->Draw();
 
@@ -329,14 +329,14 @@ void VideoPanel::Paint( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Create and playback a video in a panel
-// Input  : nWidth - Width of panel (in pixels) 
+// Input  : nWidth - Width of panel (in pixels)
 //			nHeight - Height of panel
 //			*pVideoFilename - Name of the file to play
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool VideoPanel_Create( unsigned int nXPos, unsigned int nYPos, 
-						unsigned int nWidth, unsigned int nHeight, 
-						const char *pVideoFilename, 
+bool VideoPanel_Create( unsigned int nXPos, unsigned int nYPos,
+						unsigned int nWidth, unsigned int nHeight,
+						const char *pVideoFilename,
 						const char *pExitCommand /*= NULL*/)
 {
 	// Create the base video panel
@@ -373,18 +373,18 @@ CON_COMMAND( playvideo, "Plays a video: <filename> [width height]" )
 
 	unsigned int nScreenWidth = Q_atoi( args[2] );
 	unsigned int nScreenHeight = Q_atoi( args[3] );
-	
+
 	char strFullpath[MAX_PATH];
 	Q_strncpy( strFullpath, "media/", MAX_PATH );	// Assume we must play out of the media directory
 	char strFilename[MAX_PATH];
 	Q_StripExtension( args[1], strFilename, MAX_PATH );
 	Q_strncat( strFullpath, args[1], MAX_PATH );
-	
+
 	if ( nScreenWidth == 0 )
 	{
 		nScreenWidth = ScreenWidth();
 	}
-	
+
 	if ( nScreenHeight == 0 )
 	{
 		nScreenHeight = ScreenHeight();

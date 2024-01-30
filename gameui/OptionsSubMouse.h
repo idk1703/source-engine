@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,8 +20,8 @@ class CCvarSlider;
 
 namespace vgui
 {
-    class Label;
-    class Panel;
+	class Label;
+	class Panel;
 }
 
 //-----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ public:
 	virtual void OnApplyChanges();
 
 protected:
-    virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
 	MESSAGE_FUNC_PTR( OnControlModified, "ControlModified", panel );
 	MESSAGE_FUNC_PTR( OnTextChanged, "TextChanged", panel );
@@ -64,7 +64,7 @@ private:
 	CCvarToggleCheckButton		*m_pReverseJoystickCheckBox;
 
 	CCvarSlider					*m_pMouseSensitivitySlider;
-    vgui::TextEntry             *m_pMouseSensitivityLabel;
+	vgui::TextEntry             *m_pMouseSensitivityLabel;
 
 	CCvarSlider					*m_pMouseAccelExponentSlider;
 	vgui::TextEntry             *m_pMouseAccelExponentLabel;

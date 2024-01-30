@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -76,19 +76,19 @@ void FX_AddLine( const FXLineData_t &data );
 
 void FX_AddQuad( const FXQuadData_t &data );
 
-void FX_AddQuad( const Vector &origin, 
-				 const Vector &normal, 
-				 float startSize, 
-				 float endSize, 
+void FX_AddQuad( const Vector &origin,
+				 const Vector &normal,
+				 float startSize,
+				 float endSize,
 				 float sizeBias,
-				 float startAlpha, 
+				 float startAlpha,
 				 float endAlpha,
 				 float alphaBias,
 				 float yaw,
 				 float deltaYaw,
-				 const Vector &color, 
-				 float lifeTime, 
-				 const char *shader, 
+				 const Vector &color,
+				 float lifeTime,
+				 const char *shader,
 				 unsigned int flags );
 
 // For safe addition of client effects

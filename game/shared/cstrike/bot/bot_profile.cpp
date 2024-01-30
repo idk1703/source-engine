@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -316,7 +316,7 @@ void BotProfileManager::Init( const char *filename, unsigned int *checksum )
 
 				if (c == NULL)
 					break;
-				
+
 				token = c+1;
 			}
 		}
@@ -482,7 +482,7 @@ void BotProfileManager::Init( const char *filename, unsigned int *checksum )
 
 					if (c == NULL)
 						break;
-					
+
 					token = c+1;
 				}
 			}
@@ -701,4 +701,3 @@ const BotProfile *BotProfileManager::GetRandomProfile( BotDifficultyType difficu
 	int which = RandomInt( 0, profiles.Count()-1 );
 	return profiles[which];
 }
-

@@ -62,9 +62,9 @@ QAngle CAI_BaseFlyingBot::BodyAngles()
 void CAI_BaseFlyingBot::TurnHeadToTarget(float flInterval, const Vector &MoveTarget )
 {
 	float flDestYaw = VecToYaw( MoveTarget - GetLocalOrigin() );
-	
+
 	float newYaw = AI_ClampYaw( GetHeadTurnRate() * 10.0f, m_fHeadYaw, flDestYaw, gpGlobals->curtime - GetLastThink() );
-		
+
 	if ( newYaw != m_fHeadYaw )
 	{
 		m_fHeadYaw = newYaw;
@@ -99,17 +99,17 @@ Vector CAI_BaseFlyingBot::VelocityToAvoidObstacles(float flInterval)
 	Vector endPos = GetAbsOrigin() + vTravelDir;
 	AI_TraceEntity( this, GetAbsOrigin(), endPos, MASK_NPCSOLID|CONTENTS_WATER, &tr );
 	if (tr.fraction != 1.0)
-	{	
-		// Bounce off in normal 
+	{
+		// Bounce off in normal
 		Vector vBounce = tr.plane.normal * 0.5 * m_vCurrentVelocity.Length();
 		return (vBounce);
 	}
-	
+
 	// --------------------------------
 	// Try to remain above the ground.
 	// --------------------------------
 	float flMinGroundDist = MinGroundDist();
-	AI_TraceLine(GetAbsOrigin(), GetAbsOrigin() + Vector(0, 0, -flMinGroundDist), 
+	AI_TraceLine(GetAbsOrigin(), GetAbsOrigin() + Vector(0, 0, -flMinGroundDist),
 		MASK_NPCSOLID_BRUSHONLY|CONTENTS_WATER, this, COLLISION_GROUP_NONE, &tr);
 	if (tr.fraction < 1)
 	{
@@ -132,7 +132,7 @@ Vector CAI_BaseFlyingBot::VelocityToAvoidObstacles(float flInterval)
 void CAI_BaseFlyingBot::StartTask( const Task_t *pTask )
 {
 	switch (pTask->iTask)
-	{	
+	{
 		// Skip as done via bone controller
 		case TASK_FACE_ENEMY:
 		{
@@ -154,7 +154,7 @@ void CAI_BaseFlyingBot::StartTask( const Task_t *pTask )
 			{
 				TaskFail(FAIL_NO_TARGET);
 			}
-			else 
+			else
 			{
 				if (!GetNavigator()->SetGoal( GOALTYPE_TARGETENT ) )
 				{
@@ -166,7 +166,7 @@ void CAI_BaseFlyingBot::StartTask( const Task_t *pTask )
 			break;
 		}
 		// Override to get more to get a directional path
-		case TASK_GET_PATH_TO_RANDOM_NODE:  
+		case TASK_GET_PATH_TO_RANDOM_NODE:
 		{
 			if ( GetNavigator()->SetRandomGoal( pTask->flTaskData, m_vLastPatrolDir ) )
 				TaskComplete();
@@ -190,11 +190,11 @@ void CAI_BaseFlyingBot::MoveToTarget(float flInterval, const Vector &MoveTarget)
 
 //------------------------------------------------------------------------------
 
-AI_NavPathProgress_t CAI_BaseFlyingBot::ProgressFlyPath( 
+AI_NavPathProgress_t CAI_BaseFlyingBot::ProgressFlyPath(
 	float flInterval,
-	const CBaseEntity *pNewTarget, 
-	unsigned collisionMask, 
-	bool bNewTrySimplify, 
+	const CBaseEntity *pNewTarget,
+	unsigned collisionMask,
+	bool bNewTrySimplify,
 	float strictPointTolerance)
 {
   	AI_ProgressFlyPathParams_t params( collisionMask, strictPointTolerance );
@@ -202,7 +202,7 @@ AI_NavPathProgress_t CAI_BaseFlyingBot::ProgressFlyPath(
 	params.SetCurrent( pNewTarget, bNewTrySimplify );
 
 	AI_NavPathProgress_t progress = GetNavigator()->ProgressFlyPath( params );
-	
+
 	switch ( progress )
 	{
 		case AINPP_NO_CHANGE:
@@ -211,13 +211,13 @@ AI_NavPathProgress_t CAI_BaseFlyingBot::ProgressFlyPath(
 			MoveToTarget(flInterval, GetNavigator()->GetCurWaypointPos());
 			break;
 		}
-		
+
 		case AINPP_COMPLETE:
 		{
 			TaskMovementComplete();
 			break;
 		}
-		
+
 		case AINPP_BLOCKED: // function is not supposed to test blocking, just simple path progression
 		default:
 		{
@@ -230,9 +230,9 @@ AI_NavPathProgress_t CAI_BaseFlyingBot::ProgressFlyPath(
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTarget - 
-//			&chasePosition - 
+// Purpose:
+// Input  : *pTarget -
+//			&chasePosition -
 //-----------------------------------------------------------------------------
 void CAI_BaseFlyingBot::TranslateNavGoal( CBaseEntity *pTarget, Vector &chasePosition )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -119,7 +119,7 @@ void RemoveDuplicateWindingPoints(winding_t *pWinding, float fMinDist)
 
 				pWinding->numpoints--;
 			}
-		}		
+		}
 	}
 }
 
@@ -260,7 +260,7 @@ winding_t *CreateWindingFromPlane(PLANE *pPlane)
 	float	max, v;
 	Vector	org, vright, vup;
 	winding_t	*w;
-	
+
 	// find the major axis
 	max = -BOGUS_RANGE;
 	x = -1;
@@ -349,5 +349,3 @@ error3d * Enum3dErrors(BOOL bStart)
 
 	return & Errors.GetData()[iCurrent++];
 }
-
-

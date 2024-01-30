@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose:			The "weapon" used to build objects
-//					
+//
 //
 // $Workfile:     $
 // $Date:         $
@@ -32,11 +32,11 @@ IMPLEMENT_SERVERCLASS_ST(CWeaponBuilder, DT_WeaponBuilder)
 	SendPropTime( SENDINFO( m_flStartTime ) ),
 	SendPropTime( SENDINFO( m_flTotalTime ) ),
 	SendPropArray
-	( 
+	(
 		SendPropInt( SENDINFO_ARRAY(m_bObjectValidity), 1, SPROP_UNSIGNED), m_bObjectValidity
 	),
 	SendPropArray
-	( 
+	(
 		SendPropInt( SENDINFO_ARRAY(m_bObjectBuildability), 1, SPROP_UNSIGNED), m_bObjectBuildability
 	),
 END_SEND_TABLE()
@@ -45,7 +45,7 @@ LINK_ENTITY_TO_CLASS( weapon_builder, CWeaponBuilder );
 PRECACHE_WEAPON_REGISTER(weapon_builder);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponBuilder::CWeaponBuilder()
 {
@@ -56,7 +56,7 @@ CWeaponBuilder::CWeaponBuilder()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponBuilder::Precache( void )
 {
@@ -75,7 +75,7 @@ void CWeaponBuilder::GetControlPanelInfo( int nPanelIndex, const char *&pPanelNa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponBuilder::ShouldShowControlPanels( void )
@@ -87,7 +87,7 @@ bool CWeaponBuilder::ShouldShowControlPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponBuilder::UpdateOnRemove( void )
 {
@@ -121,14 +121,14 @@ void CWeaponBuilder::AddBuildableObject( int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponBuilder::CanDeploy( void )
 {
 	if ( m_iCurrentObject != BUILDER_INVALID_OBJECT )
 	{
 		SetCurrentState( BS_PLACING );
-		StartPlacement(); 
+		StartPlacement();
 		m_flNextPrimaryAttack = gpGlobals->curtime + 0.35f;
 	}
 	else
@@ -141,7 +141,7 @@ bool CWeaponBuilder::CanDeploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponBuilder::Deploy( )
 {
@@ -167,7 +167,7 @@ bool CWeaponBuilder::CanHolster( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseCombatWeapon *CWeaponBuilder::GetLastWeapon( void )
 {
@@ -189,7 +189,7 @@ bool CWeaponBuilder::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponBuilder::ItemPostFrame( void )
 {
@@ -213,7 +213,7 @@ void CWeaponBuilder::ItemPostFrame( void )
 		PrimaryAttack();
 	}
 
-	// Allow shield post frame 
+	// Allow shield post frame
 	AllowShieldPostFrame( true );
 
 	WeaponIdle();
@@ -269,7 +269,7 @@ void CWeaponBuilder::PrimaryAttack( void )
 					{
 						// Start placing another
 						SetCurrentState( BS_PLACING );
-						StartPlacement(); 
+						StartPlacement();
 					}
 					else
 					{
@@ -454,7 +454,7 @@ const char *CWeaponBuilder::GetViewModel( int viewmodelindex /*=0*/ )  const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponBuilder::StopPlacement( void )
 {
@@ -505,7 +505,7 @@ void CWeaponBuilder::StoppedBuilding( int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponBuilder::IsBuilding( void )
 {

@@ -78,7 +78,7 @@ public:
 	virtual const char *GetToolName() { return "Foundry"; }
 	virtual const char *GetBindingsContextFile() { return "cfg/Foundry.kb"; }
 	virtual bool	Init( );
-    virtual void	Shutdown();
+	virtual void	Shutdown();
 	virtual bool	CanQuit();
 	virtual void	OnToolActivate();
 	virtual void	OnToolDeactivate();
@@ -271,7 +271,7 @@ void CFoundryTool::InitEditorDict()
 
 	pInfo = CreateElement<CDmeEditorAttributeInfo>( "name info", DMFILEID_INVALID );
 	pInfo->m_bIsVisible = false;
-	pEditorType->AddAttributeInfo( "name", pInfo ); 
+	pEditorType->AddAttributeInfo( "name", pInfo );
 	m_toolElements.AddToTail( pInfo->GetHandle() );
 
 	pInfo = CreateElement<CDmeEditorAttributeInfo>( "type info", DMFILEID_INVALID );
@@ -281,32 +281,32 @@ void CFoundryTool::InitEditorDict()
 
 	pInfo = CreateElement<CDmeEditorAttributeInfo>( "id info", DMFILEID_INVALID );
 	pInfo->m_bIsVisible = false;
-	pEditorType->AddAttributeInfo( "id", pInfo ); 
+	pEditorType->AddAttributeInfo( "id", pInfo );
 	m_toolElements.AddToTail( pInfo->GetHandle() );
 
 	pInfo = CreateElement<CDmeEditorAttributeInfo>( "editor type info", DMFILEID_INVALID );
 	pInfo->m_bIsVisible = false;
-	pEditorType->AddAttributeInfo( "editorType", pInfo ); 
+	pEditorType->AddAttributeInfo( "editorType", pInfo );
 	m_toolElements.AddToTail( pInfo->GetHandle() );
 
 	pInfo = CreateElement<CDmeEditorAttributeInfo>( "editor info", DMFILEID_INVALID );
 	pInfo->m_bIsVisible = false;
-	pEditorType->AddAttributeInfo( "editor", pInfo ); 
+	pEditorType->AddAttributeInfo( "editor", pInfo );
 	m_toolElements.AddToTail( pInfo->GetHandle() );
 
 	pInfo = CreateElement<CDmeEditorAttributeInfo>( "other info", DMFILEID_INVALID );
 	pInfo->m_bIsVisible = false;
-	pEditorType->AddAttributeInfo( "other", pInfo ); 
+	pEditorType->AddAttributeInfo( "other", pInfo );
 	m_toolElements.AddToTail( pInfo->GetHandle() );
 
 	pInfo = CreateElement<CDmeEditorAttributeInfo>( "_visible info", DMFILEID_INVALID );
 	pInfo->m_bIsVisible = false;
-	pEditorType->AddAttributeInfo( "_visible", pInfo ); 
+	pEditorType->AddAttributeInfo( "_visible", pInfo );
 	m_toolElements.AddToTail( pInfo->GetHandle() );
 
 	pInfo = CreateElement<CDmeEditorAttributeInfo>( "_placeholder info", DMFILEID_INVALID );
 	pInfo->m_bIsVisible = false;
-	pEditorType->AddAttributeInfo( "_placeholder", pInfo ); 
+	pEditorType->AddAttributeInfo( "_placeholder", pInfo );
 	m_toolElements.AddToTail( pInfo->GetHandle() );
 
 	g_pEditorTypeDict->AddEditorType( pEditorType );
@@ -321,7 +321,7 @@ inline CFoundryDoc *CFoundryTool::GetDocument()
 	return m_pDoc;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Tool activation/deactivation
 //-----------------------------------------------------------------------------
@@ -351,7 +351,7 @@ void CFoundryTool::DrawVMFEntitiesInEngine( bool bDrawInEngine )
 		CDmeVMFEntity* pEntity = CastElement<CDmeVMFEntity>( entities[i] );
 		Assert( pEntity );
 		pEntity->DrawInEngine( bDrawInEngine );
-		pEntity->AttachToEngineEntity( bDrawInEngine ); 
+		pEntity->AttachToEngineEntity( bDrawInEngine );
 	}
 }
 
@@ -367,12 +367,12 @@ void CFoundryTool::ClientLevelShutdownPreEntity()
 	BaseClass::ClientLevelShutdownPreEntity();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Derived classes can implement this to get a new scheme to be applied to this tool
 //-----------------------------------------------------------------------------
-vgui::HScheme CFoundryTool::GetToolScheme() 
-{ 
+vgui::HScheme CFoundryTool::GetToolScheme()
+{
 	return vgui::scheme()->LoadSchemeFromFile( "Resource/BoxRocket.res", "BoxRocket" );
 }
 
@@ -428,7 +428,7 @@ void CFoundryViewMenuButton::OnShowMenu(vgui::Menu *menu)
 
 		id = m_Items.Find( "entityreport" );
 		m_pMenu->SetItemEnabled( id, true );
-		
+
 		p = m_pTool->GetEntityReport();
 		Assert( p );
 		m_pMenu->SetMenuItemChecked( id, ( p && p->GetParent() ) ? true : false );
@@ -488,7 +488,7 @@ void CFoundryToolMenuButton::OnShowMenu(vgui::Menu *menu)
 //-----------------------------------------------------------------------------
 // Initializes the menu bar
 //-----------------------------------------------------------------------------
-vgui::MenuBar *CFoundryTool::CreateMenuBar( CBaseToolSystem *pParent ) 
+vgui::MenuBar *CFoundryTool::CreateMenuBar( CBaseToolSystem *pParent )
 {
 	m_pMenuBar = new CToolFileMenuBar( pParent, "Main Menu Bar" );
 
@@ -587,7 +587,7 @@ void CFoundryTool::ShowEntityInEntityProperties( CDmeVMFEntity *pEntity )
 	m_hProperties->SetObject( m_hCurrentEntity );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Destroys all tool windows
 //-----------------------------------------------------------------------------
@@ -634,7 +634,7 @@ void CFoundryTool::OnDefaultLayout()
 void CFoundryTool::OnToggleProperties()
 {
 	if ( m_hProperties.Get() )
-	{ 
+	{
 		ToggleToolWindow( m_hProperties.Get(), "#FoundryProperties" );
 	}
 }
@@ -642,7 +642,7 @@ void CFoundryTool::OnToggleProperties()
 void CFoundryTool::OnToggleEntityReport()
 {
 	if ( m_hEntityReport.Get() )
-	{ 
+	{
 		ToggleToolWindow( m_hEntityReport.Get(), "#FoundryEntityReport" );
 	}
 }
@@ -787,8 +787,8 @@ bool CFoundryTool::GetPerforceFileName( char *pFileName, int nMaxLen )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CFoundryTool::OnExit()
 {
@@ -919,7 +919,7 @@ void CFoundryTool::OnClose()
 {
 	if ( m_pDoc && m_pDoc->IsDirty() )
 	{
-		SaveFile( m_pDoc->GetVMFFileName(), "vmf", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY, 
+		SaveFile( m_pDoc->GetVMFFileName(), "vmf", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY,
 			new KeyValues( "OnClose" ) );
 		return;
 	}
@@ -1048,7 +1048,7 @@ bool CFoundryTool::CanQuit()
 	if ( m_pDoc && m_pDoc->IsDirty() )
 	{
 		// Show Save changes Yes/No/Cancel and re-quit if hit yes/no
-		SaveFile( m_pDoc->GetVMFFileName(), "vmf", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY, 
+		SaveFile( m_pDoc->GetVMFFileName(), "vmf", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY,
 			new KeyValues( "OnQuit" ) );
 		return false;
 	}
@@ -1097,7 +1097,7 @@ void CFoundryTool::OnDescribeUndo()
 //-----------------------------------------------------------------------------
 void CFoundryTool::OnReload()
 {
-	// Reloads the map, entities only, will reload every entity 
+	// Reloads the map, entities only, will reload every entity
 	enginetools->Command( "respawn_entities\n" );
 }
 

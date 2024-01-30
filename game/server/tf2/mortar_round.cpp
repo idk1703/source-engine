@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -55,7 +55,7 @@ void CMortarRound::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMortarRound::Spawn( void )
 {
@@ -88,7 +88,7 @@ void CMortarRound::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMortarRound::MissileTouch( CBaseEntity *pOther )
 {
@@ -165,7 +165,7 @@ void CMortarRound::MissileTouch( CBaseEntity *pOther )
 
 		UTIL_Remove( this );
 	}
-	else 
+	else
 	{
 		// Large explosion
 
@@ -254,4 +254,3 @@ CMortarRound* CMortarRound::Create( const Vector &vecOrigin, const Vector &vecVe
 
 	return pGrenade;
 }
-

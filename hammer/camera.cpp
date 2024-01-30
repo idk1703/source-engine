@@ -29,13 +29,13 @@
 
 static void DBG(PRINTF_FORMAT_STRING const char *fmt, ...)
 {
-    char ach[128];
-    va_list va;
+	char ach[128];
+	va_list va;
 
-    va_start(va, fmt);
-    vsprintf(ach, fmt, va);
-    va_end(va);
-    OutputDebugString(ach);
+	va_start(va, fmt);
+	vsprintf(ach, fmt, va);
+	va_end(va);
+	OutputDebugString(ach);
 }
 
 
@@ -54,7 +54,7 @@ CCamera::CCamera(void)
 	m_fNearClip = 1.0;
 	m_fFarClip = 5000;
 
-    m_fZoom = 1.0f;
+	m_fZoom = 1.0f;
 	m_bIsOrthographic = false;
 
 	m_fScaleHorz = m_fScaleVert = 1;
@@ -240,10 +240,10 @@ float CCamera::GetFarClip(void)
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets up fields of view & clip plane distances for the view frustum.
-// Input  : fHorizontalFOV - 
-//			fVerticalFOV - 
-//			fNearClip - 
-//			fFarClip - 
+// Input  : fHorizontalFOV -
+//			fVerticalFOV -
+//			fNearClip -
+//			fFarClip -
 //-----------------------------------------------------------------------------
 void CCamera::SetPerspective(float fHorizontalFOV, float fNearClip, float fFarClip)
 {
@@ -339,7 +339,7 @@ void CCamera::BuildProjMatrix()
 		// same as D3DXMatrixOrthoRH
 		float w = (float)m_nViewWidth / m_fZoom;
 		float h = (float)m_nViewHeight / m_fZoom;
-	
+
 		m[0][0] = 2/w;
 		m[1][1] = 2/h;
 
@@ -586,12 +586,12 @@ void CCamera::CameraIdentityMatrix(VMatrix& Matrix)
 void CCamera::BuildViewMatrix()
 {
 	// The camera transformation is produced by multiplying roll * yaw * pitch.
-	// This will transform a point from world space into quake camera space, 
+	// This will transform a point from world space into quake camera space,
 	// which is exactly what we want for our view matrix. However, quake
 	// camera space isn't the same as material system camera space, so
 	// we're going to have to apply a transformation that goes from quake
 	// camera space to material system camera space.
-	
+
 	CameraIdentityMatrix( m_ViewMatrix );
 
 	RotateAroundAxis(m_ViewMatrix, m_fPitch, 0 );
@@ -611,8 +611,8 @@ void CCamera::BuildViewMatrix()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : Matrix - 
+// Purpose:
+// Input  : Matrix -
 //-----------------------------------------------------------------------------
 void CCamera::GetViewMatrix(VMatrix& Matrix)
 {
@@ -644,7 +644,7 @@ void CCamera::SetZoom( float fScale )
 {
 	if ( m_fZoom != fScale )
 	{
-	    m_fZoom = fScale;
+		m_fZoom = fScale;
 		BuildProjMatrix();
 	}
 }
@@ -656,11 +656,11 @@ void CCamera::SetZoom( float fScale )
 //-----------------------------------------------------------------------------
 void CCamera::Zoom( float fScale )
 {
-    m_fZoom += fScale;
+	m_fZoom += fScale;
 
-    // don't zoom negative 
-    if( m_fZoom < 0.00001f )
-        m_fZoom = 0.00001f;
+	// don't zoom negative
+	if( m_fZoom < 0.00001f )
+		m_fZoom = 0.00001f;
 }
 
 
@@ -670,7 +670,7 @@ void CCamera::Zoom( float fScale )
 //-----------------------------------------------------------------------------
 float CCamera::GetZoom( void )
 {
-    return m_fZoom;
+	return m_fZoom;
 }
 
 void CCamera::WorldToView( const Vector& vWorld, Vector2D &vView )
@@ -686,7 +686,7 @@ void CCamera::WorldToView( const Vector& vWorld, Vector2D &vView )
 }
 
 void CCamera::ViewToWorld( const Vector2D &vView, Vector& vWorld)
-{	
+{
 	Vector vView3D;
 
 	vView3D.x = 2.0 * vView.x / m_nViewWidth - 1;
@@ -706,9 +706,7 @@ void CCamera::BuildRay( const Vector2D &vView, Vector& vStart, Vector& vEnd )
 	// Build a ray from the viewpoint through the point on the near clipping plane.
 	Vector vRay = vClickPoint - m_ViewPoint;
 	VectorNormalize( vRay );
-	
+
 	vStart = m_ViewPoint;
 	vEnd = vStart + vRay * 99999;
 }
-
-

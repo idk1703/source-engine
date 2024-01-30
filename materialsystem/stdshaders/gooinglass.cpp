@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -65,7 +65,7 @@ BEGIN_VS_SHADER( GooInGlass,
 				pShaderShadow->BlendFunc( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE );
 			}
 			// FIXME: Remove the normal (needed for tangent space gen)
-			pShaderShadow->VertexShaderVertexFormat( 
+			pShaderShadow->VertexShaderVertexFormat(
 				VERTEX_POSITION | VERTEX_NORMAL | VERTEX_TANGENT_S |
 				VERTEX_TANGENT_T, 1, 0, 0 );
 
@@ -103,7 +103,7 @@ BEGIN_VS_SHADER( GooInGlass,
 			pShaderShadow->BlendFunc( SHADER_BLEND_ONE, SHADER_BLEND_ONE );
 
 			// FIXME: Remove the normal (needed for tangent space gen)
-			pShaderShadow->VertexShaderVertexFormat( 
+			pShaderShadow->VertexShaderVertexFormat(
 				VERTEX_POSITION | VERTEX_NORMAL | VERTEX_TANGENT_S |
 				VERTEX_TANGENT_T, 1, 0, 0 );
 
@@ -133,7 +133,7 @@ BEGIN_VS_SHADER( GooInGlass,
 
 		// BASE TEXTURE * LIGHTMAP
 		SHADOW_STATE
-		{				
+		{
 			SET_FLAGS2( MATERIAL_VAR2_LIGHTING_LIGHTMAP );
 			SetInitialShadowState( );
 			pShaderShadow->EnableBlending( true );

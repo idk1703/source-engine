@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -13,14 +13,14 @@
 #include "tier0/dbg.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
-//			x - 
-//			y - 
-//			w - 
-//			h - 
-//			0 - 
-//			0 - 
+// Purpose:
+// Input  : *parent -
+//			x -
+//			y -
+//			w -
+//			h -
+//			0 -
+//			0 -
 //-----------------------------------------------------------------------------
 mxBitmapWindow::mxBitmapWindow(mxWindow *parent, int x, int y, int w, int h, int style /*= 0*/, const char *bitmap /*=0*/ )
 : mxWindow( parent, x, y, w, h, "", style )
@@ -34,7 +34,7 @@ mxBitmapWindow::mxBitmapWindow(mxWindow *parent, int x, int y, int w, int h, int
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 mxBitmapWindow::~mxBitmapWindow( void )
 {
@@ -46,8 +46,8 @@ mxBitmapWindow::~mxBitmapWindow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *bitmap - 
+// Purpose:
+// Input  : *bitmap -
 // Output : virtual void
 //-----------------------------------------------------------------------------
 void mxBitmapWindow::setImage( const char *bitmap )
@@ -64,8 +64,8 @@ void mxBitmapWindow::setImage( const char *bitmap )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *bitmap - 
+// Purpose:
+// Input  : *bitmap -
 // Output : mxImage
 //-----------------------------------------------------------------------------
 bool mxBitmapWindow::Load( const char *bitmap )
@@ -75,7 +75,7 @@ bool mxBitmapWindow::Load( const char *bitmap )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : void mxBitmapWindow::redraw
 //-----------------------------------------------------------------------------
 void mxBitmapWindow::redraw ()

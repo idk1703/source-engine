@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -40,7 +40,7 @@ static struct QuantizedValue *AllocQValue(void)
 	ret->Samples=0;
 	ret->Children[0]=ret->Children[1]=0;
 	ret->NSamples=0;
-  
+
 	ret->ErrorMeasure=new double[current_ndims];
 	ret->Mean=new uint8[current_ndims];
 	ret->Mins=new uint8[current_ndims];
@@ -92,11 +92,11 @@ static int sortlong(void const *a, void const *b)
 {
 	// treat the entire vector of values as a long integer for duplicate removal.
 	return memcmp(((struct Sample *) a)->Value,
-				  ((struct Sample *) b)->Value,current_ndims);
+					((struct Sample *) b)->Value,current_ndims);
 }
 
 
-  
+
 #define NEXTSAMPLE(s) ( (struct Sample *) (((uint8 *) s)+current_ssize))
 #define SAMPLE(s,i) NthSample(s,i,current_ndims)
 
@@ -188,7 +188,7 @@ static void UpdateStats(struct QuantizedValue *v)
 	double Errors[MAXDIMS];
 	double WorstError[MAXDIMS];
 	int i,j;
-  
+
 	memset(Means,0,sizeof(Means));
 	int N=0;
 	for(i=0;i<v->NSamples;i++)
@@ -333,7 +333,7 @@ static void SubdivideNode(struct QuantizedValue *n, int whichdim)
 			for(int w=0;w<2;w++)
 				dist[w]+=current_weights[d]*SQ(LocalMean[d][w]-s->Value[d]);
 		s->QNum=(dist[0]<dist[1]);
-    }
+		}
 
 
 	// hey ho! we have now labelled each one with a candidate bin. Let's
@@ -343,7 +343,7 @@ static void SubdivideNode(struct QuantizedValue *n, int whichdim)
 	for(i=0;i<n->NSamples;i++,NAdded++)
 		if (SAMPLE(n->Samples,i)->QNum)
 			break;
-  
+
 #else
 	if (whichdim != n->sortdim)
 	{
@@ -415,7 +415,7 @@ static void Label(struct QuantizedValue *q, int updatecolor)
 				q->Maxs[i]=max(q->Children[0]->Maxs[i],q->Children[1]->Maxs[i]);
 			}
 	}
-}    
+}
 
 struct QuantizedValue *FindQNode(struct QuantizedValue const *q, int32 code)
 {
@@ -504,7 +504,7 @@ double MaximumError(struct QuantizedValue const *q, uint8 const *sample,
 	return err;
 }
 
-				     
+
 
 // heap (priority queue) routines used for nearest-neghbor searches
 struct FHeap {
@@ -514,59 +514,59 @@ struct FHeap {
 
 void InitHeap(struct FHeap *h)
 {
-  h->heap_n=0;
+	h->heap_n=0;
 }
 
 
 void UpHeap(int k, struct FHeap *h)
 {
-  double *tmpk=h->heap[k];
-  double tmpkn=*tmpk;
-  while((k>1) && (tmpkn <= *(h->heap[k/2])))
-    {
-      h->heap[k]=h->heap[k/2];
-      k/=2;
-    }
-  h->heap[k]=tmpk;
+	double *tmpk=h->heap[k];
+	double tmpkn=*tmpk;
+	while((k>1) && (tmpkn <= *(h->heap[k/2])))
+		{
+			h->heap[k]=h->heap[k/2];
+			k/=2;
+		}
+	h->heap[k]=tmpk;
 }
 
 void HeapInsert(struct FHeap *h,double *elem)
 {
-  h->heap_n++;
-  h->heap[h->heap_n]=elem;
-  UpHeap(h->heap_n,h);
+	h->heap_n++;
+	h->heap[h->heap_n]=elem;
+	UpHeap(h->heap_n,h);
 }
 
 void DownHeap(int k, struct FHeap *h)
 {
-  double *v=h->heap[k];
-  while(k<=h->heap_n/2)
-    {
-      int j=2*k;
-      if (j<h->heap_n)
+	double *v=h->heap[k];
+	while(k<=h->heap_n/2)
+		{
+			int j=2*k;
+			if (j<h->heap_n)
 	if (*(h->heap[j]) >= *(h->heap[j+1]))
-	  j++;
-      if (*v < *(h->heap[j]))
+		j++;
+			if (*v < *(h->heap[j]))
 	{
-	  h->heap[k]=v;
-	  return;
+		h->heap[k]=v;
+		return;
 	}
-      h->heap[k]=h->heap[j]; k=j;
-    }
-  h->heap[k]=v;
+			h->heap[k]=h->heap[j]; k=j;
+		}
+	h->heap[k]=v;
 }
 
 void *RemoveHeapItem(struct FHeap *h)
 {
-  void *ret=0;
-  if (h->heap_n!=0)
-    {
-      ret=h->heap[1];
-      h->heap[1]=h->heap[h->heap_n];
-      h->heap_n--;
-      DownHeap(1,h);
-    }
-  return ret;
+	void *ret=0;
+	if (h->heap_n!=0)
+		{
+			ret=h->heap[1];
+			h->heap[1]=h->heap[h->heap_n];
+			h->heap_n--;
+			DownHeap(1,h);
+		}
+	return ret;
 }
 
 // now, nearest neighbor finder. Use a heap to traverse the tree, stopping
@@ -575,12 +575,12 @@ void *RemoveHeapItem(struct FHeap *h)
 struct FHeap TheQueue;
 
 #define PUSHNODE(a) { \
-  (a)->MinError=MinimumError(a,sample,ndims,weights); \
-  if ((a)->MinError < besterror) HeapInsert(&TheQueue,&(a)->MinError); \
+	(a)->MinError=MinimumError(a,sample,ndims,weights); \
+	if ((a)->MinError < besterror) HeapInsert(&TheQueue,&(a)->MinError); \
  }
 
 struct QuantizedValue *FindMatch(uint8 const *sample, int ndims,
-								 uint8 *weights, struct QuantizedValue *q)
+								uint8 *weights, struct QuantizedValue *q)
 {
 	InitHeap(&TheQueue);
 	struct QuantizedValue *bestmatch=0;
@@ -592,7 +592,7 @@ struct QuantizedValue *FindMatch(uint8 const *sample, int ndims,
 			RemoveHeapItem(&TheQueue);
 		if (! test) break;		// heap empty
 //    printf("got pop node =%p minerror=%f\n",test,test->MinError);
-    
+
 		if (test->MinError>besterror) break;
 		if (test->Children[0])
 		{
@@ -652,7 +652,7 @@ static void RecalcMeans(struct QuantizedValue *q)
 		}
 	}
 }
-		      
+
 void OptimizeQuantizer(struct QuantizedValue *q, int ndims)
 {
 	SetNDims(ndims);

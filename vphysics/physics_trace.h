@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,7 +37,7 @@ public:
 	//virtual void AddReference() = 0;
 	//virtual void ReleaseReference() = 0;
 
-	// get a surface manager 
+	// get a surface manager
 	virtual IVP_SurfaceManager *CreateSurfaceManager( short & ) const = 0;
 	virtual void GetAllLedges( IVP_U_BigVector<IVP_Compact_Ledge> &ledges ) const = 0;
 	virtual unsigned int GetSerializationSize() const = 0;
@@ -209,14 +209,14 @@ inline unsigned short CVisitHash::VertIndexToID( int vertIndex )
 	return (unsigned short) ((vertIndex + high) & 0xFFFF);
 }
 
-inline void CVisitHash::VisitVert( int vertIndex ) 
+inline void CVisitHash::VisitVert( int vertIndex )
 {
 	int index = vertIndex & (CONVEX_HASH_SIZE-1);
 	m_vertVisit[index].visitID = m_vertVisitID;
 	m_vertVisit[index].vertID = VertIndexToID(vertIndex);
 }
 
-inline bool CVisitHash::WasVisited( int vertIndex ) 
+inline bool CVisitHash::WasVisited( int vertIndex )
 {
 	unsigned short hashIndex = vertIndex & (CONVEX_HASH_SIZE-1);
 	unsigned short id = VertIndexToID(vertIndex);
@@ -226,8 +226,8 @@ inline bool CVisitHash::WasVisited( int vertIndex )
 	return false;
 }
 
-inline void CVisitHash::NewVisit( void ) 
-{ 
+inline void CVisitHash::NewVisit( void )
+{
 	m_vertVisitID++;
 	if ( m_vertVisitID == 0 )
 	{

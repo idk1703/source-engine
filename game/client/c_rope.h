@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ private:
 	public:
 		virtual void	GetNodeForces( CSimplePhysics::CNode *pNodes, int iNode, Vector *pAccel );
 		virtual void	ApplyConstraints( CSimplePhysics::CNode *pNodes, int nNodes );
-	
+
 		C_RopeKeyframe	*m_pKeyframe;
 	};
 
@@ -137,7 +137,7 @@ public:
 	virtual bool	GetAttachmentVelocity( int number, Vector &originVel, Quaternion &angleVel );
 
 private:
-	
+
 	void			FinishInit( const char *pMaterialName );
 
 	void			RunRopeSimulation( float flSeconds );
@@ -151,9 +151,9 @@ private:
 
 	void			UpdateBBox();
 	bool			InitRopePhysics();
-	
+
 	bool			GetEndPointAttachment( int iPt, Vector &vPos, QAngle &angle );
-	
+
 	Vector			*GetRopeSubdivVectors( int *nSubdivs );
 	void			CalcLightValues();
 
@@ -178,12 +178,12 @@ private:
 
 	int				m_RopeFlags;			// Combo of ROPE_ flags.
 	int				m_iRopeMaterialModelIndex;	// Index of sprite model with the rope's material.
-		
+
 	CRopePhysics<ROPE_MAX_SEGMENTS>	m_RopePhysics;
 	Vector			m_LightValues[ROPE_MAX_SEGMENTS]; // light info when the rope is created.
 
 	int				m_nSegments;		// Number of segments.
-	
+
 	EHANDLE			m_hStartPoint;		// StartPoint/EndPoint are entities
 	EHANDLE			m_hEndPoint;
 	short			m_iStartAttachment;	// StartAttachment/EndAttachment are attachment points.
@@ -194,7 +194,7 @@ private:
 	int				m_RopeLength;		// Length of the rope, used for tension.
 	int				m_Slack;			// Extra length the rope is given.
 	float			m_TextureScale;		// pixels per inch
-	
+
 	int				m_fLockedPoints;	// Which points are locked down.
 
 	float				m_Width;
@@ -228,7 +228,7 @@ private:
 	bool			m_bEndPointAttachmentPositionsDirty : 1;
 	bool			m_bEndPointAttachmentAnglesDirty : 1;
 	bool			m_bNewDataThisFrame : 1;			// Set to true in OnDataChanged so that we simulate that frame
-	bool			m_bPhysicsInitted : 1;				// It waits until all required entities are 
+	bool			m_bPhysicsInitted : 1;				// It waits until all required entities are
 	// present to start simulating and rendering.
 
 	friend class CRopeManager;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -15,7 +15,7 @@
 DEFINE_FALLBACK_SHADER( DecalBaseTimesLightmapAlphaBlendSelfIllum, DecalBaseTimesLightmapAlphaBlendSelfIllum_DX8 )
 
 BEGIN_VS_SHADER( DecalBaseTimesLightmapAlphaBlendSelfIllum_DX8, "" )
-			  
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM_OVERRIDE( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "decals/decalporthole001b", "decal base texture", 0 )
 		SHADER_PARAM( SELFILLUMTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "decals/decalporthole001b_mask", "self-illum texture" )
@@ -130,7 +130,7 @@ BEGIN_VS_SHADER( DecalBaseTimesLightmapAlphaBlendSelfIllum_DX8, "" )
 	{
 		if( UsingFlashlight( params ) )
 		{
-			DrawFlashlight_dx80( params, pShaderAPI, pShaderShadow, false, -1, -1, -1, 
+			DrawFlashlight_dx80( params, pShaderAPI, pShaderShadow, false, -1, -1, -1,
 				FLASHLIGHTTEXTURE, FLASHLIGHTTEXTUREFRAME, true, false, 0, -1, -1 );
 		}
 		else

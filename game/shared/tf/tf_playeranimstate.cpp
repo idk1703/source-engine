@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -34,8 +34,8 @@
 #define TF_CROUCHWALK_SPEED		110.0f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
+// Purpose:
+// Input  : *pPlayer -
 // Output : CMultiPlayerAnimState*
 //-----------------------------------------------------------------------------
 CTFPlayerAnimState* CreateTFPlayerAnimState( CTFPlayer *pPlayer )
@@ -59,8 +59,8 @@ CTFPlayerAnimState* CreateTFPlayerAnimState( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 CTFPlayerAnimState::CTFPlayerAnimState()
 {
@@ -70,9 +70,9 @@ CTFPlayerAnimState::CTFPlayerAnimState()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
-//			&movementData - 
+// Purpose:
+// Input  : *pPlayer -
+//			&movementData -
 //-----------------------------------------------------------------------------
 CTFPlayerAnimState::CTFPlayerAnimState( CBasePlayer *pPlayer, MultiPlayerMovementData_t &movementData )
 : CMultiPlayerAnimState( pPlayer, movementData )
@@ -83,8 +83,8 @@ CTFPlayerAnimState::CTFPlayerAnimState( CBasePlayer *pPlayer, MultiPlayerMovemen
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 CTFPlayerAnimState::~CTFPlayerAnimState()
 {
@@ -92,7 +92,7 @@ CTFPlayerAnimState::~CTFPlayerAnimState()
 
 //-----------------------------------------------------------------------------
 // Purpose: Initialize Team Fortress specific animation state.
-// Input  : *pPlayer - 
+// Input  : *pPlayer -
 //-----------------------------------------------------------------------------
 void CTFPlayerAnimState::InitTF( CTFPlayer *pPlayer )
 {
@@ -107,7 +107,7 @@ void CTFPlayerAnimState::InitTF( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerAnimState::ClearAnimationState( void )
 {
@@ -117,8 +117,8 @@ void CTFPlayerAnimState::ClearAnimationState( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : actDesired - 
+// Purpose:
+// Input  : actDesired -
 // Output : Activity
 //-----------------------------------------------------------------------------
 Activity CTFPlayerAnimState::TranslateActivity( Activity actDesired )
@@ -142,8 +142,8 @@ Activity CTFPlayerAnimState::TranslateActivity( Activity actDesired )
 	CTFPlayer *pPlayer = GetTFPlayer();
 	if ( pPlayer->m_Shared.InCond( TF_COND_COMPETITIVE_WINNER ) )
 	{
-		if ( translateActivity == ACT_MP_STAND_PRIMARY || 
-		   ( pPlayer->IsPlayerClass( TF_CLASS_SPY ) && ( translateActivity == ACT_MP_STAND_MELEE ) ) || 
+		if ( translateActivity == ACT_MP_STAND_PRIMARY ||
+		   ( pPlayer->IsPlayerClass( TF_CLASS_SPY ) && ( translateActivity == ACT_MP_STAND_MELEE ) ) ||
 		   ( pPlayer->IsPlayerClass( TF_CLASS_DEMOMAN ) && ( translateActivity == ACT_MP_STAND_SECONDARY ) ) )
 		{
 			translateActivity = ACT_MP_COMPETITIVE_WINNERSTATE;
@@ -154,7 +154,7 @@ Activity CTFPlayerAnimState::TranslateActivity( Activity actDesired )
 }
 
 
-static acttable_t s_acttableKartState[] = 
+static acttable_t s_acttableKartState[] =
 {
 	{ ACT_MP_STAND_IDLE,					ACT_KART_IDLE,			false },
 	{ ACT_MP_RUN,							ACT_KART_IDLE,			false },
@@ -167,7 +167,7 @@ static acttable_t s_acttableKartState[] =
 	{ ACT_MP_JUMP_LAND,						ACT_KART_JUMP_LAND,		false },
 };
 
-static acttable_t s_acttableLoserState[] = 
+static acttable_t s_acttableLoserState[] =
 {
 	{ ACT_MP_STAND_IDLE,		ACT_MP_STAND_LOSERSTATE,			false },
 	{ ACT_MP_CROUCH_IDLE,		ACT_MP_CROUCH_LOSERSTATE,			false },
@@ -188,7 +188,7 @@ static acttable_t s_acttableCompetitiveLoserState[] =
 	{ ACT_MP_STAND_IDLE, ACT_MP_COMPETITIVE_LOSERSTATE, false },
 };
 
-static acttable_t s_acttableBuildingDeployed[] = 
+static acttable_t s_acttableBuildingDeployed[] =
 {
 	{ ACT_MP_STAND_IDLE,		ACT_MP_STAND_BUILDING_DEPLOYED,			false },
 	{ ACT_MP_CROUCH_IDLE,		ACT_MP_CROUCH_BUILDING_DEPLOYED,		false },
@@ -269,7 +269,7 @@ Activity CTFPlayerAnimState::ActivityOverride( Activity baseAct, bool *pRequired
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFPlayerAnimState::ShouldUpdateAnimState( void )
 {
@@ -285,7 +285,7 @@ bool CTFPlayerAnimState::ShouldUpdateAnimState( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerAnimState::GetOuterAbsVelocity( Vector& vel )
 {
@@ -311,7 +311,7 @@ void CTFPlayerAnimState::GetOuterAbsVelocity( Vector& vel )
 			}
 			break;
 		}
-		
+
 		return;
 	}
 #endif
@@ -320,7 +320,7 @@ void CTFPlayerAnimState::GetOuterAbsVelocity( Vector& vel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerAnimState::Update( float eyeYaw, float eyePitch )
 {
@@ -397,7 +397,7 @@ void CTFPlayerAnimState::Update( float eyeYaw, float eyePitch )
 
 		if ( bInTaunt )
 		{
-			// If you are forcing aim yaw, your code is almost definitely broken if you don't include a delay between 
+			// If you are forcing aim yaw, your code is almost definitely broken if you don't include a delay between
 			// teleporting and forcing yaw. This is due to an unfortunate interaction between the command lookback window,
 			// and the fact that m_flEyeYaw is never propogated from the server to the client.
 			// TODO: Fix this after Halloween 2014.
@@ -409,7 +409,7 @@ void CTFPlayerAnimState::Update( float eyeYaw, float eyePitch )
 		}
 		else if ( bInKart )
 		{
-			// If you are forcing aim yaw, your code is almost definitely broken if you don't include a delay between 
+			// If you are forcing aim yaw, your code is almost definitely broken if you don't include a delay between
 			// teleporting and forcing yaw. This is due to an unfortunate interaction between the command lookback window,
 			// and the fact that m_flEyeYaw is never propogated from the server to the client.
 			// TODO: Fix this after Halloween 2014.
@@ -462,7 +462,7 @@ void CTFPlayerAnimState::Update( float eyeYaw, float eyePitch )
 			m_bForceAimYaw = true;
 			m_flEyeYaw = pTFPlayer->GetTauntYaw();
 		}
-		
+
 		if ( !bIsImmobilized || bInTaunt || bInKart )
 		{
 			// Pose parameter - Torso aiming (up/down).
@@ -473,7 +473,7 @@ void CTFPlayerAnimState::Update( float eyeYaw, float eyePitch )
 		}
 	}
 
-#ifdef CLIENT_DLL 
+#ifdef CLIENT_DLL
 	if ( C_BasePlayer::ShouldDrawLocalPlayer() )
 	{
 		GetBasePlayer()->SetPlaybackRate( 1.0f );
@@ -505,7 +505,7 @@ void CTFPlayerAnimState::CheckPasstimeThrowAnimation()
 		return;
 	}
 
-	if ( pGun->GetCurrentCharge() > 0 ) 
+	if ( pGun->GetCurrentCharge() > 0 )
 	{
 		if ( pPlayer->m_Shared.m_iPasstimeThrowAnimState == PASSTIME_THROW_ANIM_NONE )
 		{
@@ -562,7 +562,7 @@ void CTFPlayerAnimState::CheckStunAnimation()
 		return;
 
 	// State machine to determine the correct stun activity.
-	if ( !pPlayer->m_Shared.IsControlStunned() && 
+	if ( !pPlayer->m_Shared.IsControlStunned() &&
 		 (pPlayer->m_Shared.m_iStunAnimState == STUN_ANIM_LOOP) )
 	{
 		// Clean up if the condition went away before we finished.
@@ -609,7 +609,7 @@ void CTFPlayerAnimState::CheckStunAnimation()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Activity CTFPlayerAnimState::CalcMainActivity()
 {
@@ -628,22 +628,22 @@ Activity CTFPlayerAnimState::CalcMainActivity()
 			break;
 
 		case TI_BOTANIM_IDLE:
-			if ( bIsAiming ) 
+			if ( bIsAiming )
 				return ACT_MP_DEPLOYED_IDLE;
 			return ACT_MP_STAND_IDLE;
 
 		case TI_BOTANIM_CROUCH:
-			if ( bIsAiming ) 
+			if ( bIsAiming )
 				return ACT_MP_CROUCH_DEPLOYED_IDLE;
 			return ACT_MP_CROUCH_IDLE;
 
 		case TI_BOTANIM_CROUCH_WALK:
-			if ( bIsAiming ) 
+			if ( bIsAiming )
 				return ACT_MP_CROUCH_DEPLOYED;
 			return ACT_MP_CROUCHWALK;
 
 		case TI_BOTANIM_RUN:
-			if ( bIsAiming ) 
+			if ( bIsAiming )
 				return ACT_MP_DEPLOYED;
 			return ACT_MP_RUN;
 		}
@@ -654,7 +654,7 @@ Activity CTFPlayerAnimState::CalcMainActivity()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerAnimState::ComputePoseParam_AimYaw( CStudioHdr *pStudioHdr )
 {
@@ -707,7 +707,7 @@ void CTFPlayerAnimState::ComputePoseParam_AimYaw( CStudioHdr *pStudioHdr )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerAnimState::Taunt_ComputePoseParam_MoveX( CStudioHdr *pStudioHdr )
 {
@@ -752,7 +752,7 @@ void CTFPlayerAnimState::Taunt_ComputePoseParam_MoveX( CStudioHdr *pStudioHdr )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerAnimState::Taunt_ComputePoseParam_MoveY( CStudioHdr *pStudioHdr )
 {
@@ -844,7 +844,7 @@ void CTFPlayerAnimState::Vehicle_LeanAccel( float flInAccel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerAnimState::RestartGesture( int iGestureSlot, Activity iGestureActivity, bool bAutoKill )
 {
@@ -870,8 +870,8 @@ void CTFPlayerAnimState::RestartGesture( int iGestureSlot, Activity iGestureActi
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : event - 
+// Purpose:
+// Input  : event -
 //-----------------------------------------------------------------------------
 void CTFPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event, int nData )
 {
@@ -972,7 +972,7 @@ void CTFPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event, int nData )
 			{
 				baseActivity = ACT_MP_ATTACK_SWIM_SECONDARYFIRE;
 			}
-			
+
 			RestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, baseActivity );
 			iGestureActivity = ACT_VM_SECONDARYATTACK;
 			break;
@@ -997,7 +997,7 @@ void CTFPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event, int nData )
 				// Weapon pre-fire. Used for minigun windup while swimming
 				iGestureActivity = ACT_MP_ATTACK_SWIM_PREFIRE;
 			}
-			else if ( bInDuck ) 
+			else if ( bInDuck )
 			{
 				// Weapon pre-fire. Used for minigun windup, sniper aiming start, etc in crouch.
 				iGestureActivity = ACT_MP_ATTACK_CROUCH_PREFIRE;
@@ -1026,7 +1026,7 @@ void CTFPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event, int nData )
 				// Weapon pre-fire. Used for minigun winddown while swimming
 				iGestureActivity = ACT_MP_ATTACK_SWIM_POSTFIRE;
 			}
-			else if ( bInDuck ) 
+			else if ( bInDuck )
 			{
 				// Weapon post-fire. Used for minigun winddown in crouch.
 				iGestureActivity = ACT_MP_ATTACK_CROUCH_POSTFIRE;
@@ -1160,8 +1160,8 @@ void CTFPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event, int nData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *idealActivity - 
+// Purpose:
+// Input  : *idealActivity -
 //-----------------------------------------------------------------------------
 bool CTFPlayerAnimState::HandleSwimming( Activity &idealActivity )
 {
@@ -1191,8 +1191,8 @@ bool CTFPlayerAnimState::HandleSwimming( Activity &idealActivity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *idealActivity - 
+// Purpose:
+// Input  : *idealActivity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CTFPlayerAnimState::HandleMoving( Activity &idealActivity )
@@ -1210,7 +1210,7 @@ bool CTFPlayerAnimState::HandleMoving( Activity &idealActivity )
 		return BaseClass::HandleMoving( idealActivity );
 	}
 
-	if ( m_pTFPlayer->m_Shared.IsAiming() ) 
+	if ( m_pTFPlayer->m_Shared.IsAiming() )
 	{
 		if ( flSpeed > MOVING_MINIMUM_SPEED )
 		{
@@ -1226,7 +1226,7 @@ bool CTFPlayerAnimState::HandleMoving( Activity &idealActivity )
 		// Unless we move, hold the deployed pose for a number of seconds after being deployed
 		idealActivity = ACT_MP_DEPLOYED_IDLE;
 	}
-	else 
+	else
 	{
 		return BaseClass::HandleMoving( idealActivity );
 	}
@@ -1235,8 +1235,8 @@ bool CTFPlayerAnimState::HandleMoving( Activity &idealActivity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *idealActivity - 
+// Purpose:
+// Input  : *idealActivity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CTFPlayerAnimState::HandleDucking( Activity &idealActivity )
@@ -1251,7 +1251,7 @@ bool CTFPlayerAnimState::HandleDucking( Activity &idealActivity )
 	{
 		if ( GetOuterXYSpeed() < MOVING_MINIMUM_SPEED || m_pTFPlayer->m_Shared.IsLoser() )
 		{
-			idealActivity = ACT_MP_CROUCH_IDLE;		
+			idealActivity = ACT_MP_CROUCH_IDLE;
 			if ( m_pTFPlayer->m_Shared.IsAiming() || m_flHoldDeployedPoseUntilTime > gpGlobals->curtime )
 			{
 				idealActivity = ACT_MP_CROUCH_DEPLOYED_IDLE;
@@ -1265,7 +1265,7 @@ bool CTFPlayerAnimState::HandleDucking( Activity &idealActivity )
 			}
 			else
 			{
-				idealActivity = ACT_MP_CROUCHWALK;		
+				idealActivity = ACT_MP_CROUCHWALK;
 			}
 
 			if ( m_pTFPlayer->m_Shared.IsAiming() )
@@ -1288,12 +1288,12 @@ bool CTFPlayerAnimState::HandleDucking( Activity &idealActivity )
 
 		return true;
 	}
-	
+
 	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFPlayerAnimState::GetCurrentMaxGroundSpeed()
 {
@@ -1310,7 +1310,7 @@ float CTFPlayerAnimState::GetCurrentMaxGroundSpeed()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFPlayerAnimState::GetGesturePlaybackRate( void )
 {
@@ -1323,7 +1323,7 @@ float CTFPlayerAnimState::GetGesturePlaybackRate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFPlayerAnimState::HandleJumping( Activity &idealActivity )
 {
@@ -1339,7 +1339,7 @@ bool CTFPlayerAnimState::HandleJumping( Activity &idealActivity )
 	// Don't allow a firing heavy to jump or air walk.
 	if ( m_pTFPlayer->GetPlayerClass()->IsClass( TF_CLASS_HEAVYWEAPONS ) && m_pTFPlayer->m_Shared.InCond( TF_COND_AIMING ) )
 		return false;
-		
+
 	// Handle air walking before handling jumping - air walking supersedes jump
 	TFPlayerClassData_t *pData = m_pTFPlayer->GetPlayerClass()->GetData();
 	bool bValidAirWalkClass = ( pData && pData->m_bDontDoAirwalk == false );
@@ -1348,10 +1348,10 @@ bool CTFPlayerAnimState::HandleJumping( Activity &idealActivity )
 	{
 		// Check to see if we were in an airwalk and now we are basically on the ground.
 		if ( ( GetBasePlayer()->GetFlags() & FL_ONGROUND ) && m_bInAirWalk )
-		{				
+		{
 			m_bInAirWalk = false;
 			RestartMainSequence();
-			RestartGesture( GESTURE_SLOT_JUMP, ACT_MP_JUMP_LAND );	
+			RestartGesture( GESTURE_SLOT_JUMP, ACT_MP_JUMP_LAND );
 		}
 		else if ( GetBasePlayer()->GetWaterLevel() >= WL_Waist )
 		{
@@ -1398,7 +1398,7 @@ bool CTFPlayerAnimState::HandleJumping( Activity &idealActivity )
 
 					if ( bNewJump )
 					{
-						RestartGesture( GESTURE_SLOT_JUMP, ACT_MP_JUMP_LAND );					
+						RestartGesture( GESTURE_SLOT_JUMP, ACT_MP_JUMP_LAND );
 					}
 				}
 			}
@@ -1422,7 +1422,7 @@ bool CTFPlayerAnimState::HandleJumping( Activity &idealActivity )
 					idealActivity = ACT_MP_JUMP;
 				}
 			}
-		}	
+		}
 	}
 
 	if ( m_bJumping || m_bInAirWalk )
@@ -1432,7 +1432,7 @@ bool CTFPlayerAnimState::HandleJumping( Activity &idealActivity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFPlayerAnimState::IsItemTestingBot( void )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -19,4 +19,3 @@ typedef signed int int32;
 typedef unsigned int uint32;
 typedef float float32;
 typedef double float64;
-

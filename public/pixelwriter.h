@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -27,7 +27,7 @@
 #include "mathlib/ssemath.h"
 
 //-----------------------------------------------------------------------------
-// Color writing class 
+// Color writing class
 //-----------------------------------------------------------------------------
 
 class CPixelWriter
@@ -38,13 +38,13 @@ public:
 
 	// this is no longer used:
 #if 0 // defined( _X360 )
-	// set after SetPixelMemory() 
+	// set after SetPixelMemory()
 	FORCEINLINE void ActivateByteSwapping( bool bSwap );
 #endif
 
 	FORCEINLINE void Seek( int x, int y );
 	FORCEINLINE void* SkipBytes( int n );
-	FORCEINLINE void SkipPixels( int n );	
+	FORCEINLINE void SkipPixels( int n );
 	FORCEINLINE void WritePixel( int r, int g, int b, int a = 255 );
 	FORCEINLINE void WritePixelNoAdvance( int r, int g, int b, int a = 255 );
 	FORCEINLINE void WritePixelSigned( int r, int g, int b, int a = 255 );
@@ -73,7 +73,7 @@ public:
 #endif
 
 
-	FORCEINLINE unsigned char GetPixelSize() { return m_Size; }	
+	FORCEINLINE unsigned char GetPixelSize() { return m_Size; }
 
 	FORCEINLINE bool IsUsingFloatFormat() const;
 	FORCEINLINE unsigned char *GetCurrentPixel() { return m_pBits; }
@@ -286,7 +286,7 @@ FORCEINLINE_PIXEL void CPixelWriter::SetPixelMemory( ImageFormat format, void* p
 	case IMAGE_FORMAT_RGBA16161616:
 #if defined( _X360 )
 	case IMAGE_FORMAT_LINEAR_RGBA16161616:
-#endif		
+#endif
 		m_Size = 8;
 		if ( !IsX360() )
 		{
@@ -442,7 +442,7 @@ FORCEINLINE_PIXEL void CPixelWriter::WritePixelNoAdvanceF( float r, float g, flo
 }
 
 //-----------------------------------------------------------------------------
-// Writes a pixel, advances the write index 
+// Writes a pixel, advances the write index
 //-----------------------------------------------------------------------------
 FORCEINLINE_PIXEL void CPixelWriter::WritePixelF( float r, float g, float b, float a )
 {
@@ -450,9 +450,9 @@ FORCEINLINE_PIXEL void CPixelWriter::WritePixelF( float r, float g, float b, flo
 	m_pBits += m_Size;
 }
 
-	
+
 //-----------------------------------------------------------------------------
-// Writes a pixel, advances the write index 
+// Writes a pixel, advances the write index
 //-----------------------------------------------------------------------------
 FORCEINLINE_PIXEL void CPixelWriter::WritePixel( int r, int g, int b, int a )
 {
@@ -461,7 +461,7 @@ FORCEINLINE_PIXEL void CPixelWriter::WritePixel( int r, int g, int b, int a )
 }
 
 //-----------------------------------------------------------------------------
-// Writes a pixel, advances the write index 
+// Writes a pixel, advances the write index
 //-----------------------------------------------------------------------------
 FORCEINLINE_PIXEL void CPixelWriter::WritePixelSigned( int r, int g, int b, int a )
 {
@@ -573,12 +573,12 @@ FORCEINLINE_PIXEL void CPixelWriter::WritePixelNoAdvance( int r, int g, int b, i
 
 #ifdef _X360
 // There isn't a PC port of these because of the many varied
-// pixel formats the PC deals with. If you write SSE versions 
+// pixel formats the PC deals with. If you write SSE versions
 // of all the various necessary packers, then this can be made
 // to work on PC.
 
 //-----------------------------------------------------------------------------
-// Writes a pixel, advances the write index 
+// Writes a pixel, advances the write index
 //-----------------------------------------------------------------------------
 FORCEINLINE_PIXEL void CPixelWriter::WritePixel( FLTX4 rgba ) RESTRICT
 {
@@ -604,7 +604,7 @@ FORCEINLINE_PIXEL void CPixelWriter::WritePixelNoAdvance( FLTX4 rgba ) RESTRICT
 		AssertMsg((reinterpret_cast<unsigned int>(m_pBits) & 0x03) == 0,"Unaligned m_pBits in WritePixelNoAdvance!");
 		switch ( m_Format )
 		{
-			// note: format names are low-order-byte first. 
+			// note: format names are low-order-byte first.
 		case IMAGE_FORMAT_RGBA8888:
 		case IMAGE_FORMAT_LINEAR_RGBA8888:
 			WritePixelNoAdvance_RGBA8888(rgba);
@@ -614,7 +614,7 @@ FORCEINLINE_PIXEL void CPixelWriter::WritePixelNoAdvance( FLTX4 rgba ) RESTRICT
 		case IMAGE_FORMAT_LINEAR_BGRA8888:
 			WritePixelNoAdvance_BGRA8888(rgba);
 			break;
-			
+
 
 		default:
 			AssertMsg1(false, "Unknown four-byte pixel format %d in lightmap write.\n", m_Format);
@@ -633,7 +633,7 @@ FORCEINLINE_PIXEL void CPixelWriter::WritePixelNoAdvance( FLTX4 rgba ) RESTRICT
 // here are some explicit formats so we can avoid the switch:
 FORCEINLINE void CPixelWriter::WritePixelNoAdvance_RGBA8888( FLTX4 rgba )
 {
-	// it's easier to do tiered convert-saturates here 
+	// it's easier to do tiered convert-saturates here
 	// than  the d3d color convertor op
 
 	// first permute
@@ -645,7 +645,7 @@ FORCEINLINE void CPixelWriter::WritePixelNoAdvance_RGBA8888( FLTX4 rgba )
 	N = __vpkuhus(N, N); // convert to byte saturate
 	N = __vspltw(N, 0);  // splat w-word to all four
 
-	__stvewx(N, m_pBits, 0); // store whatever word happens to be aligned with m_pBits to that word 
+	__stvewx(N, m_pBits, 0); // store whatever word happens to be aligned with m_pBits to that word
 }
 
 FORCEINLINE void CPixelWriter::WritePixelNoAdvance_BGRA8888( FLTX4 rgba )
@@ -658,7 +658,7 @@ FORCEINLINE void CPixelWriter::WritePixelNoAdvance_BGRA8888( FLTX4 rgba, void * 
 	// this happens to be in an order such that we can use the handy builtin packing op
 	// clamp to 0..255 (coz it might have leaked over)
 	static const fltx4 vTwoFiftyFive = {255.0f, 255.0f, 255.0f, 255.0f};
-	fltx4 N = MinSIMD(vTwoFiftyFive, rgba); 
+	fltx4 N = MinSIMD(vTwoFiftyFive, rgba);
 
 	// the magic number such that when mul-accummulated against rbga,
 	// gets us a representation 3.0 + (r)*2^-22 -- puts the bits at
@@ -822,7 +822,7 @@ FORCEINLINE_PIXEL void CPixelWriter::WritePixelNoAdvanceSigned( int r, int g, in
 				pSignedBits[0] = (signed char)((val >> 16) & 0xff);
 				pSignedBits[1] = (signed char)((val >> 8) & 0xff);
 				pSignedBits[2] = (signed char)(val & 0xff);
-				break;	
+				break;
 			case 2:
 				pSignedBits[0] = (signed char)((val >> 8) & 0xff);
 				pSignedBits[1] = (signed char)(val & 0xff);

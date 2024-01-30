@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -66,7 +66,7 @@ protected:
 
 	void		PaintStringRotary( float t, const char *text, int textlen, vgui::HFont& font, int x, int y );
 
-	void		GetRotatedChar( float frac, char startchar, char endchar, 
+	void		GetRotatedChar( float frac, char startchar, char endchar,
 					char& prevchar, char& nextchar, float& subfrac );
 	void		PaintRotatedCharacter( int x, int y, vgui::HFont& font, int prevchar, int nextchar, float frac );
 	void		PaintRotatedCharacterHoriz( int x, int y, vgui::HFont& font, int prevchar, int nextchar, float frac );
@@ -118,7 +118,7 @@ protected:
 	CPanelAnimationVar( Color, m_CharBg, "CharBackground", "NumericCharBg" );
 	CPanelAnimationVar( Color, m_CharBgBorder, "CharBackgroundBorder", "NumericCharBgBorder" );
 	CPanelAnimationVar( Color, m_CharFg, "CharForeground", "NumericCharFg" );
-	
+
 	CPanelAnimationVar( vgui::HFont, m_hLabelFont, "LabelFont", "HudNumbersLabelFont" );
 	CPanelAnimationVar( vgui::HFont, m_hTextFont, "TextFont", "HudNumbersSmall" );
 	CPanelAnimationVar( vgui::HFont, m_hTextFontPulsing, "TextFontPulsing", "HudNumbersSmallGlow" );

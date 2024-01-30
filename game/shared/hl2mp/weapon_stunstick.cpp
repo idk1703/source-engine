@@ -17,7 +17,7 @@
 #endif
 
 #ifdef CLIENT_DLL
-	
+
 	#include "iviewrender_beams.h"
 	#include "beam_shared.h"
 	#include "materialsystem/imaterial.h"
@@ -50,12 +50,12 @@ extern ConVar metropolice_move_and_melee;
 class CWeaponStunStick : public CBaseHL2MPBludgeonWeapon
 {
 	DECLARE_CLASS( CWeaponStunStick, CBaseHL2MPBludgeonWeapon );
-	
+
 public:
 
 	CWeaponStunStick();
 
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 #ifndef CLIENT_DLL
@@ -68,7 +68,7 @@ public:
 	virtual void			OnDataChanged( DataUpdateType_t updateType );
 	virtual RenderGroup_t	GetRenderGroup( void );
 	virtual void			ViewModelDrawn( C_BaseViewModel *pBaseViewModel );
-	
+
 #endif
 
 	virtual void Precache();
@@ -81,7 +81,7 @@ public:
 
 	bool		Deploy( void );
 	bool		Holster( CBaseCombatWeapon *pSwitchingTo = NULL );
-	
+
 	void		Drop( const Vector &vecVelocity );
 	void		ImpactEffect( trace_t &traceHit );
 	void		SecondaryAttack( void )	{}
@@ -92,7 +92,7 @@ public:
 	void		Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator );
 	int			WeaponMeleeAttack1Condition( float flDot, float flDist );
 #endif
-	
+
 	float		GetDamageForActivity( Activity hitActivity );
 
 	CWeaponStunStick( const CWeaponStunStick & );
@@ -151,7 +151,7 @@ PRECACHE_WEAPON_REGISTER( weapon_stunstick );
 
 #ifndef CLIENT_DLL
 
-acttable_t	CWeaponStunStick::m_acttable[] = 
+acttable_t	CWeaponStunStick::m_acttable[] =
 {
 	{ ACT_RANGE_ATTACK1,				ACT_RANGE_ATTACK_SLAM, true },
 	{ ACT_HL2MP_IDLE,					ACT_HL2MP_IDLE_MELEE,					false },
@@ -222,13 +222,13 @@ float CWeaponStunStick::GetDamageForActivity( Activity hitActivity )
 extern ConVar sk_crowbar_lead_time;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponStunStick::ImpactEffect( trace_t &traceHit )
 {
-	
+
 //#ifndef CLIENT_DLL
-	
+
 	CEffectData	data;
 
 	data.m_vNormal = traceHit.plane.normal;
@@ -334,7 +334,7 @@ void CWeaponStunStick::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseComba
 				Vector vecDelta;
 				VectorSubtract( pEnemy->WorldSpaceCenter(), pOperator->Weapon_ShootPosition(), vecDelta );
 				VectorNormalize( vecDelta );
-				
+
 				Vector2D vecDelta2D = vecDelta.AsVector2D();
 				Vector2DNormalize( vecDelta2D );
 				if ( DotProduct2D( vecDelta2D, vecDirection.AsVector2D() ) > 0.8f )
@@ -346,9 +346,9 @@ void CWeaponStunStick::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseComba
 			Vector vecEnd;
 			VectorMA( pOperator->Weapon_ShootPosition(), 32, vecDirection, vecEnd );
 			// Stretch the swing box down to catch low level physics objects
-			CBaseEntity *pHurt = pOperator->CheckTraceHullAttack( pOperator->Weapon_ShootPosition(), vecEnd, 
+			CBaseEntity *pHurt = pOperator->CheckTraceHullAttack( pOperator->Weapon_ShootPosition(), vecEnd,
 				Vector(-16,-16,-40), Vector(16,16,16), GetDamageForActivity( GetActivity() ), DMG_CLUB, 0.5f, false );
-			
+
 			// did I hit someone?
 			if ( pHurt )
 			{
@@ -358,7 +358,7 @@ void CWeaponStunStick::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseComba
 				CBasePlayer *pPlayer = ToBasePlayer( pHurt );
 
 				bool bFlashed = false;
-				
+
 				// Punch angles
 				if ( pPlayer != NULL && !(pPlayer->GetFlags() & FL_GODMODE) )
 				{
@@ -392,11 +392,11 @@ void CWeaponStunStick::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseComba
 						color32 red = {128,0,0,128};
 						UTIL_ScreenFade( pPlayer, red, 0.5f, 0.1f, FFADE_IN );
 					}
-					
+
 					// Force the player to drop anyting they were holding
 					pPlayer->ForceDropOfCarriedPhysObjects();
 				}
-				
+
 				// do effect?
 			}
 			else
@@ -441,7 +441,7 @@ void CWeaponStunStick::SetStunState( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponStunStick::Deploy( void )
@@ -452,7 +452,7 @@ bool CWeaponStunStick::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponStunStick::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
@@ -466,8 +466,8 @@ bool CWeaponStunStick::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &vecVelocity - 
+// Purpose:
+// Input  : &vecVelocity -
 //-----------------------------------------------------------------------------
 void CWeaponStunStick::Drop( const Vector &vecVelocity )
 {
@@ -480,7 +480,7 @@ void CWeaponStunStick::Drop( const Vector &vecVelocity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponStunStick::GetStunState( void )
@@ -503,7 +503,7 @@ bool UTIL_GetWeaponAttachment( C_BaseCombatWeapon *pWeapon, int attachmentID, Ve
 
 	// Otherwise we need to translate the attachment to the viewmodel's version and reformat it
 	CBasePlayer *pOwner = ToBasePlayer( pWeapon->GetOwner() );
-	
+
 	if ( pOwner != NULL )
 	{
 		int ret = pOwner->GetViewModel()->GetAttachment( attachmentID, absOrigin, absAngles );
@@ -539,7 +539,7 @@ void C_WeaponStunStick::SetupAttachmentPoints( void )
 			"spark5b","spark6b","spark7b","spark8b",
 			"spark9b",
 		};
-		
+
 		// Lookup and store all connections
 		for ( int i = 0; i < NUM_BEAM_ATTACHMENTS; i++ )
 		{
@@ -602,7 +602,7 @@ void C_WeaponStunStick::ClientThink( void )
 	{
 		// Update our effects
 		if ( gpGlobals->frametime != 0.0f && ( random->RandomInt( 0, 3 ) == 0 ) )
-		{		
+		{
 			Vector	vecOrigin;
 			QAngle	vecAngles;
 
@@ -642,7 +642,7 @@ void C_WeaponStunStick::ClientThink( void )
 			beamInfo.m_nSegments = 16;
 			beamInfo.m_bRenderable = true;
 			beamInfo.m_nFlags = 0;
-			
+
 			beams->CreateBeamEntPoint( beamInfo );
 		}
 	}
@@ -681,7 +681,7 @@ bool C_WeaponStunStick::InSwing( void )
 		return true;
 
 	// These are the swing activities this weapon can play
-	if ( activity == GetPrimaryAttackActivity() || 
+	if ( activity == GetPrimaryAttackActivity() ||
 		 activity == GetSecondaryAttackActivity() ||
 		 activity == ACT_VM_MISSCENTER ||
 		 activity == ACT_VM_MISSCENTER2 )
@@ -715,7 +715,7 @@ void C_WeaponStunStick::DrawThirdPersonEffects( void )
 		color[0] = color[1] = color[2] = 0.1f;
 		scale = 20.0f;
 	}
-	
+
 	// Draw an all encompassing glow around the entire head
 	UTIL_GetWeaponAttachment( this, m_BeamCenterAttachment, vecOrigin, vecAngles );
 	DrawHalo( pMaterial, vecOrigin, scale, color );
@@ -758,7 +758,7 @@ void C_WeaponStunStick::DrawThirdPersonEffects( void )
 			beamInfo.m_pEndEnt	= cl_entitylist->GetEnt( BEAMENT_ENTITY( entindex() ) );
 			beamInfo.m_nStartAttachment = 1;
 			beamInfo.m_nEndAttachment = -1;
-			
+
 			beamInfo.m_nType = TE_BEAMTESLA;
 			beamInfo.m_pszModelName = STUNSTICK_BEAM_MATERIAL;
 			beamInfo.m_flHaloScale = 0.0f;
@@ -777,7 +777,7 @@ void C_WeaponStunStick::DrawThirdPersonEffects( void )
 			beamInfo.m_nSegments = 16;
 			beamInfo.m_bRenderable = true;
 			beamInfo.m_nFlags = FBEAM_SHADEOUT;
-			
+
 			beams->CreateBeamPoints( beamInfo );
 		}
 	}
@@ -812,7 +812,7 @@ void C_WeaponStunStick::DrawFirstPersonEffects( void )
 		color[0] = color[1] = color[2] = 0.4f * fadeAmount;
 		scale = 20.0f;
 	}
-	
+
 	if ( color[0] > 0.0f )
 	{
 		// Draw an all encompassing glow around the entire head
@@ -879,18 +879,18 @@ void StunstickImpactCallback( const CEffectData &data )
 {
 	float scale = random->RandomFloat( 16, 32 );
 
-	FX_AddQuad( data.m_vOrigin, 
-				data.m_vNormal, 
+	FX_AddQuad( data.m_vOrigin,
+				data.m_vNormal,
 				scale,
 				scale*2.0f,
-				1.0f, 
+				1.0f,
 				1.0f,
 				0.0f,
 				0.0f,
-				random->RandomInt( 0, 360 ), 
+				random->RandomInt( 0, 360 ),
 				0,
-				Vector( 1.0f, 1.0f, 1.0f ), 
-				0.1f, 
+				Vector( 1.0f, 1.0f, 1.0f ),
+				0.1f,
 				"sprites/light_glow02_add",
 				0 );
 

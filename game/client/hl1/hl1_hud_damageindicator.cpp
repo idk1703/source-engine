@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -82,7 +82,7 @@ CHudDamageIndicator::CHudDamageIndicator( const char *pElementName ) : CHudEleme
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDamageIndicator::Reset( void )
 {
@@ -100,7 +100,7 @@ void CHudDamageIndicator::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudDamageIndicator::ShouldDraw( void )
 {
@@ -225,7 +225,7 @@ void CHudDamageIndicator::DrawDamageIndicatorRight( float flFade )
 //-----------------------------------------------------------------------------
 void CHudDamageIndicator::Paint()
 {
-	// draw damage indicators	
+	// draw damage indicators
 	float flFade = gpGlobals->frametime * 2;
 	DrawDamageIndicatorFront( flFade );
 	DrawDamageIndicatorRear( flFade );

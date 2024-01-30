@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,9 +18,9 @@
 
 //-----------------------------------------------------------------------------
 // Purpose: Write a delta compressed user command.
-// Input  : *buf - 
-//			*to - 
-//			*from - 
+// Input  : *buf -
+//			*to -
+//			*from -
 // Output : static
 //-----------------------------------------------------------------------------
 void WriteUsercmd( bf_write *buf, const CUserCmd *to, const CUserCmd *from )
@@ -191,9 +191,9 @@ void WriteUsercmd( bf_write *buf, const CUserCmd *to, const CUserCmd *from )
 
 //-----------------------------------------------------------------------------
 // Purpose: Read in a delta compressed usercommand.
-// Input  : *buf - 
-//			*move - 
-//			*from - 
+// Input  : *buf -
+//			*move -
+//			*from -
 // Output : static void ReadUsercmd
 //-----------------------------------------------------------------------------
 void ReadUsercmd( bf_read *buf, CUserCmd *move, CUserCmd *from )

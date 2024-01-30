@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		Weapon that throws things from the hand 
+// Purpose:		Weapon that throws things from the hand
 //
 // $Workfile:     $
 // $Date:         $
@@ -21,7 +21,7 @@ enum BrickbatAmmo_t
 {
 	BRICKBAT_ROCK = 0,
 	BRICKBAT_BOTTLE,
-	
+
 	NUM_BRICKBAT_AMMO_TYPES
 };
 
@@ -51,7 +51,7 @@ public:
 
 	void				SetPickupTouch( void );
 	void 				BrickbatTouch( CBaseEntity *pOther );	// default weapon touch
-	void				TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr );	
+	void				TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr );
 	int					CapabilitiesGet( void ) { return bits_CAP_WEAPON_RANGE_ATTACK1; }
 
 	bool				ObjectInWay( void );

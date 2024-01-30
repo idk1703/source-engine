@@ -211,7 +211,7 @@ HALF4 main( PS_INPUT i ) : COLOR
 	baseTexCoords.xy = i.baseTexCoord.xy;
 #endif
 
-	GetBaseTextureAndNormal( BaseTextureSampler, BaseTextureSampler2, BumpmapSampler, bBaseTexture2, bBumpmap || bNormalMapAlphaEnvmapMask, 
+	GetBaseTextureAndNormal( BaseTextureSampler, BaseTextureSampler2, BumpmapSampler, bBaseTexture2, bBumpmap || bNormalMapAlphaEnvmapMask,
 		baseTexCoords, i.vertexColor.rgb, baseColor, baseColor2, vNormal );
 
 #if BUMPMAP == 1	// not ssbump
@@ -229,7 +229,7 @@ HALF4 main( PS_INPUT i ) : COLOR
 		HALF2 bumpCoord3;
 		ComputeBumpedLightmapCoordinates( i.lightmapTexCoord1And2, i.lightmapTexCoord3.xy,
 			bumpCoord1, bumpCoord2, bumpCoord3 );
-		
+
 		lightmapColor1 = LightMapSample( LightmapSampler, bumpCoord1 );
 		lightmapColor2 = LightMapSample( LightmapSampler, bumpCoord2 );
 		lightmapColor3 = LightMapSample( LightmapSampler, bumpCoord3 );
@@ -243,7 +243,7 @@ HALF4 main( PS_INPUT i ) : COLOR
 
 #if RELIEF_MAPPING
 	// in the parallax case, all texcoords must be the same in order to free
-    // up an iterator for the tangent space view vector
+	// up an iterator for the tangent space view vector
 	HALF2 detailTexCoord = i.baseTexCoord.xy;
 	HALF2 bumpmapTexCoord = i.baseTexCoord.xy;
 	HALF2 envmapMaskTexCoord = i.baseTexCoord.xy;
@@ -280,7 +280,7 @@ HALF4 main( PS_INPUT i ) : COLOR
 
 #   if OUTLINE
 	if ( ( distAlphaMask >= OUTLINE_MIN_VALUE0 ) &&
-		 ( distAlphaMask <= OUTLINE_MAX_VALUE1 ) )
+		( distAlphaMask <= OUTLINE_MAX_VALUE1 ) )
 	{
 		float oFactor=1.0;
 		if ( distAlphaMask <= OUTLINE_MIN_VALUE1 )
@@ -401,7 +401,7 @@ HALF4 main( PS_INPUT i ) : COLOR
 #if ( BUMPMAP2 == 0 )
 	if( bEnvmapMask )
 	{
-		specularFactor *= tex2D( EnvmapMaskSampler, envmapMaskTexCoord ).xyz;	
+		specularFactor *= tex2D( EnvmapMaskSampler, envmapMaskTexCoord ).xyz;
 	}
 #endif
 
@@ -438,8 +438,8 @@ HALF4 main( PS_INPUT i ) : COLOR
 // ssbump
 #if ( BUMPMAP == 2 )
 		diffuseLighting = vNormal.x * lightmapColor1 +
-						  vNormal.y * lightmapColor2 +
-						  vNormal.z * lightmapColor3;
+						vNormal.y * lightmapColor2 +
+						vNormal.z * lightmapColor3;
 		diffuseLighting *= g_TintValuesAndLightmapScale.rgb;
 
 		// now, calculate vNormal for reflection purposes. if vNormal isn't needed, hopefully
@@ -451,13 +451,13 @@ HALF4 main( PS_INPUT i ) : COLOR
 		dp.y = saturate( dot( vNormal, bumpBasis[1] ) );
 		dp.z = saturate( dot( vNormal, bumpBasis[2] ) );
 		dp *= dp;
-		
+
 #if ( DETAIL_BLEND_MODE == TCOMBINE_SSBUMP_BUMP )
 		dp *= 2*detailColor;
 #endif
 		diffuseLighting = dp.x * lightmapColor1 +
-						  dp.y * lightmapColor2 +
-						  dp.z * lightmapColor3;
+						dp.y * lightmapColor2 +
+						dp.z * lightmapColor3;
 		float sum = dot( dp, float3( 1.0f, 1.0f, 1.0f ) );
 		diffuseLighting *= g_TintValuesAndLightmapScale.rgb / sum;
 #endif
@@ -505,7 +505,7 @@ HALF4 main( PS_INPUT i ) : COLOR
 #endif
 
 	float fFlashlight = DoFlashlight( g_FlashlightPos, i.worldPos_projPosZ.xyz, i.flashlightSpacePos,
-		worldSpaceNormal, g_FlashlightAttenuationFactors.xyz, 
+		worldSpaceNormal, g_FlashlightAttenuationFactors.xyz,
 		g_FlashlightAttenuationFactors.w, FlashlightSampler, ShadowDepthSampler,
 		RandRotSampler, 0, true, false, i.vProjPos.xy / i.vProjPos.w, false, g_ShadowTweaks, bHasNormal );
 
@@ -530,10 +530,10 @@ HALF4 main( PS_INPUT i ) : COLOR
 		HALF fresnel = 1.0 - dot( worldSpaceNormal, eyeVect );
 		fresnel = pow( fresnel, 5.0 );
 		fresnel = fresnel * g_OneMinusFresnelReflection + g_FresnelReflection;
-		
+
 		specularLighting = ENV_MAP_SCALE * texCUBE( EnvmapSampler, reflectVect );
 		specularLighting *= specularFactor;
-								   
+
 		specularLighting *= g_EnvmapTint;
 #if FANCY_BLENDING == 0
 		HALF3 specularLightingSquared = specularLighting * specularLighting;
@@ -546,7 +546,7 @@ HALF4 main( PS_INPUT i ) : COLOR
 #endif
 
 	HALF3 result = diffuseComponent + specularLighting;
-	
+
 #if LIGHTING_PREVIEW
 	worldSpaceNormal = mul( vNormal, i.tangentSpaceTranspose );
 #	if LIGHTING_PREVIEW == 1
@@ -559,7 +559,7 @@ HALF4 main( PS_INPUT i ) : COLOR
 	ret.position = float4( i.worldPos_projPosZ.xyz, alpha );
 	ret.flags = float4( 1, 1, 1, alpha );
 
-	return FinalOutput( ret, 0, PIXEL_FOG_TYPE_NONE, TONEMAP_SCALE_NONE );	
+	return FinalOutput( ret, 0, PIXEL_FOG_TYPE_NONE, TONEMAP_SCALE_NONE );
 #	endif
 #else // == end LIGHTING_PREVIEW ==
 
@@ -580,4 +580,3 @@ HALF4 main( PS_INPUT i ) : COLOR
 
 #endif
 }
- 

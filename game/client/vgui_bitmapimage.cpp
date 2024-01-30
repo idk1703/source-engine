@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -142,7 +142,7 @@ void BitmapImage::DoPaint( int x, int y, int wide, int tall, float yaw, float fl
 	m_clr.GetColor( r, g, b, a );
 	a *= flAlphaModulate;
 	vgui::surface()->DrawSetColor( r, g, b, a );
-	
+
 	if (yaw == 0)
 	{
 		if ( !m_bUseViewport )
@@ -283,12 +283,12 @@ bool InitializeImage( KeyValues *pInitData, const char* pSectionName, vgui::Pane
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : use - 
-//			left - 
-//			top - 
-//			right - 
-//			bottom - 
+// Purpose:
+// Input  : use -
+//			left -
+//			top -
+//			right -
+//			bottom -
 //-----------------------------------------------------------------------------
 void BitmapImage::SetViewport( bool use, float left, float top, float right, float bottom )
 {

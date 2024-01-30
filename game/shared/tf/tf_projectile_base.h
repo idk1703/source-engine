@@ -68,7 +68,7 @@ public:
 
 	bool		  IsCritical( void ) const			{ return m_bCritical; }
 	virtual void  SetCritical( bool bCritical )		{ m_bCritical = bCritical; }
-	
+
 	CBaseEntity		*GetLauncher( void ) { return m_hLauncher; }
 
 private:
@@ -81,7 +81,7 @@ protected:
 	// Networked.
 	CNetworkVector( m_vInitialVelocity );
 
-	static CTFBaseProjectile *Create( const char *pszClassname, const Vector &vecOrigin, 
+	static CTFBaseProjectile *Create( const char *pszClassname, const Vector &vecOrigin,
 		const QAngle &vecAngles, CBaseEntity *pOwner, float flVelocity, short iProjModelIndex, const char *pszDispatchEffect = NULL, CBaseEntity *pScorer = NULL, bool bCritical = false, Vector vColor1=vec3_origin, Vector vColor2=vec3_origin );
 
 	virtual const char *GetProjectileModelName( void );

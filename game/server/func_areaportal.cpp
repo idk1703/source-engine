@@ -2,8 +2,8 @@
 //
 // Purpose: area portal entity: toggles visibility areas on/off
 //
-// NOTE: These are not really brush entities.  They are brush entities from a 
-// designer/worldcraft perspective, but by the time they reach the game, the 
+// NOTE: These are not really brush entities.  They are brush entities from a
+// designer/worldcraft perspective, but by the time they reach the game, the
 // brush model is gone and this is, in effect, a point entity.
 //
 // $NoKeywords: $
@@ -62,7 +62,7 @@ BEGIN_DATADESC( CAreaPortal )
 	DEFINE_INPUTFUNC( FIELD_VOID, "Close", InputClose ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "Toggle",  InputToggle ),
 
-	// TODO: obsolete! remove	
+	// TODO: obsolete! remove
 	DEFINE_INPUTFUNC( FIELD_VOID, "TurnOn",  InputClose ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "TurnOff", InputOpen ),
 
@@ -188,4 +188,3 @@ int CAreaPortal::UpdateTransmitState()
 	// Our brushes are kept around so don't transmit anything since we don't want to draw them.
 	return SetTransmitState( FL_EDICT_DONTSEND );
 }
-

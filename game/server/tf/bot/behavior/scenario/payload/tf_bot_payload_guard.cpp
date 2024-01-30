@@ -280,4 +280,3 @@ Vector CTFBotPayloadGuard::FindVantagePoint( CTFBot *me, CBaseEntity *cart )
 	int which = RandomInt( 0, collect.m_vantagePointVector.Count()-1 );
 	return collect.m_vantagePointVector[ which ];
 }
-

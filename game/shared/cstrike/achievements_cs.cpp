@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -30,10 +30,10 @@
 
 
 ConVar achievements_easymode( "achievement_easymode", "0", FCVAR_CLIENTDLL | FCVAR_DEVELOPMENTONLY,
-						 "Enables all stat-based achievements to be earned at 10% of goals" );
+						"Enables all stat-based achievements to be earned at 10% of goals" );
 
 // global achievement mgr for CS
-CAchievementMgr g_AchievementMgrCS;		
+CAchievementMgr g_AchievementMgrCS;
 
 // [dwenger] Necessary for achievement / stats panel
 CSAchievementsAndStatsInterface g_AchievementsAndStatsInterfaceCS;
@@ -75,7 +75,7 @@ bool CCSBaseAchievement::GetAwardTime( int& year, int& month, int& day, int& hou
 		second = structuredTime.tm_sec;
 
 		return true;
-	} 
+	}
 
 	return false;
 }
@@ -148,15 +148,15 @@ bool CheckWinNoEnemyCaps( IGameEvent *event, int iRole );
 bool IsLocalCSPlayerClass( int iClass );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCSBaseAchievementFullRound::Init() 
+void CCSBaseAchievementFullRound::Init()
 {
-	m_iFlags |= ACH_FILTER_FULL_ROUND_ONLY;		
+	m_iFlags |= ACH_FILTER_FULL_ROUND_ONLY;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSBaseAchievementFullRound::ListenForEvents()
 {
@@ -164,7 +164,7 @@ void CCSBaseAchievementFullRound::ListenForEvents()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSBaseAchievementFullRound::FireGameEvent_Internal( IGameEvent *event )
 {
@@ -175,7 +175,7 @@ void CCSBaseAchievementFullRound::FireGameEvent_Internal( IGameEvent *event )
 		{
 			// is the player currently on a game team?
 			int iTeam = pLocalPlayer->GetTeamNumber();
-			if ( iTeam >= FIRST_GAME_TEAM ) 
+			if ( iTeam >= FIRST_GAME_TEAM )
 			{
 				float flRoundTime = event->GetFloat( "round_time", 0 );
 				if ( flRoundTime > 0 )
@@ -188,13 +188,13 @@ void CCSBaseAchievementFullRound::FireGameEvent_Internal( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CCSBaseAchievementFullRound::PlayerWasInEntireRound( float flRoundTime )
 {
 	float flTeamplayStartTime = m_pAchievementMgr->GetTeamplayStartTime();
-	if ( flTeamplayStartTime > 0 ) 
-	{	
+	if ( flTeamplayStartTime > 0 )
+	{
 		// has the player been present and on a game team since the start of this round (minus a grace period)?
 		if ( flTeamplayStartTime < ( gpGlobals->curtime - flRoundTime ) + CS_FULL_ROUND_GRACE_PERIOD )
 			return true;
@@ -212,10 +212,10 @@ public:
 		m_StatId = stat;
 	}
 private:
-	virtual void Init() 
+	virtual void Init()
 	{
-		SetFlags( ACH_SAVE_GLOBAL );		
-	}	
+		SetFlags( ACH_SAVE_GLOBAL );
+	}
 
 	void OnPlayerStatsUpdate()
 	{
@@ -260,7 +260,7 @@ private:
 	pAchievement->SetGoal( iGoal );										\
 	return pAchievement;												\
 };																		\
-static CBaseAchievementHelper g_##achievementID##_Helper( Create_##achievementID );			
+static CBaseAchievementHelper g_##achievementID##_Helper( Create_##achievementID );
 
 DECLARE_ACHIEVEMENT_STATGOAL(CSEnemyKillsLow,		    "KILL_ENEMY_LOW",			10,	CSSTAT_KILLS,					25); //25
 DECLARE_ACHIEVEMENT_STATGOAL(CSEnemyKillsMed,		    "KILL_ENEMY_MED",			10,	CSSTAT_KILLS,					500); //500
@@ -366,7 +366,7 @@ DECLARE_ACHIEVEMENT_STATGOAL(CSRevengesHigh,            "REVENGES_HIGH",        
 //-----------------------------------------------------------------------------
 class CAchievementCS_ServerAwarded : public CCSBaseAchievement
 {
-	virtual void Init() 
+	virtual void Init()
 	{
 		SetGoal(1);
 		SetFlags( ACH_SAVE_GLOBAL );
@@ -463,7 +463,7 @@ DECLARE_ACHIEVEMENT_SERVERAWARDED(CSSnipeTwoFromSameSpot, "SNIPE_TWO_FROM_SAME_S
 class CAchievementCS_PistolMaster : public CAchievement_Meta
 {
 	DECLARE_CLASS( CAchievementCS_PistolMaster, CAchievement_Meta );
-	virtual void Init() 
+	virtual void Init()
 	{
 		BaseClass::Init();
 		AddRequirement(CSEnemyKillsDeagle);
@@ -482,7 +482,7 @@ DECLARE_ACHIEVEMENT(CAchievementCS_PistolMaster, CSMetaPistol, "META_PISTOL", 10
 class CAchievementCS_RifleMaster : public CAchievement_Meta
 {
 	DECLARE_CLASS( CAchievementCS_RifleMaster, CAchievement_Meta );
-	virtual void Init() 
+	virtual void Init()
 	{
 		BaseClass::Init();
 		AddRequirement(CSEnemyKillsAWP);
@@ -505,7 +505,7 @@ DECLARE_ACHIEVEMENT(CAchievementCS_RifleMaster, CSMetaRifle, "META_RIFLE", 10);
 class CAchievementCS_SubMachineGunMaster : public CAchievement_Meta
 {
 	DECLARE_CLASS( CAchievementCS_SubMachineGunMaster, CAchievement_Meta );
-	virtual void Init() 
+	virtual void Init()
 	{
 		BaseClass::Init();
 		AddRequirement(CSEnemyKillsP90);
@@ -523,7 +523,7 @@ DECLARE_ACHIEVEMENT(CAchievementCS_SubMachineGunMaster, CSMetaSMG, "META_SMG", 1
 class CAchievementCS_ShotgunMaster : public CAchievement_Meta
 {
 	DECLARE_CLASS( CAchievementCS_ShotgunMaster, CAchievement_Meta );
-	virtual void Init() 
+	virtual void Init()
 	{
 		BaseClass::Init();
 		AddRequirement(CSEnemyKillsM3);
@@ -538,10 +538,10 @@ DECLARE_ACHIEVEMENT(CAchievementCS_ShotgunMaster, CSMetaShotgun, "META_SHOTGUN",
 class CAchievementCS_WeaponMaster : public CAchievement_Meta
 {
 	DECLARE_CLASS( CAchievementCS_WeaponMaster, CAchievement_Meta );
-	virtual void Init() 
+	virtual void Init()
 	{
 		BaseClass::Init();
-		AddRequirement(CSMetaPistol);	
+		AddRequirement(CSMetaPistol);
 		AddRequirement(CSMetaRifle);
 		AddRequirement(CSMetaSMG);
 		AddRequirement(CSMetaShotgun);
@@ -556,7 +556,7 @@ DECLARE_ACHIEVEMENT(CAchievementCS_WeaponMaster, CSMetaWeaponMaster, "META_WEAPO
 
 class CAchievementCS_KillWithAllWeapons : public CCSBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -577,7 +577,7 @@ class CAchievementCS_KillWithAllWeapons : public CCSBaseAchievement
 			}
 		}
 
-		//If we haven't bailed yet, award the achievement.		
+		//If we haven't bailed yet, award the achievement.
 		IncrementCount();
 	}
 };
@@ -585,62 +585,62 @@ DECLARE_ACHIEVEMENT( CAchievementCS_KillWithAllWeapons, CSKillWithEveryWeapon, "
 
 class CAchievementCS_FriendsSameUniform : public CCSBaseAchievement
 {
-    void Init()
-    {
-        SetFlags(ACH_SAVE_GLOBAL);
-        SetGoal(1);
-    }
+	void Init()
+	{
+		SetFlags(ACH_SAVE_GLOBAL);
+		SetGoal(1);
+	}
 
-    void ListenForEvents()
-    {
-        ListenForGameEvent( "round_start" );
-    }
+	void ListenForEvents()
+	{
+		ListenForGameEvent( "round_start" );
+	}
 
-    void FireGameEvent_Internal( IGameEvent *event )
-    {
-        if ( Q_strcmp( event->GetName(), "round_start" ) == 0 )
-        {
-            int localPlayerIndex = GetLocalPlayerIndex();
-            C_CSPlayer* pLocalPlayer = ToCSPlayer(UTIL_PlayerByIndex(localPlayerIndex));
+	void FireGameEvent_Internal( IGameEvent *event )
+	{
+		if ( Q_strcmp( event->GetName(), "round_start" ) == 0 )
+		{
+			int localPlayerIndex = GetLocalPlayerIndex();
+			C_CSPlayer* pLocalPlayer = ToCSPlayer(UTIL_PlayerByIndex(localPlayerIndex));
 
-            // Initialize all to 1, since the local player doesn't get counted as we loop.
-            int numPlayersOnTeam = 1;
-            int numFriendsOnTeam = 1;
-            int numMatchingFriendsOnTeam = 1;
+			// Initialize all to 1, since the local player doesn't get counted as we loop.
+			int numPlayersOnTeam = 1;
+			int numFriendsOnTeam = 1;
+			int numMatchingFriendsOnTeam = 1;
 
-            if (pLocalPlayer)
-            {    
-                int localPlayerClass = pLocalPlayer->PlayerClass();
-                int localPlayerTeam = pLocalPlayer->GetTeamNumber();
-                for ( int i = 1; i <= gpGlobals->maxClients; i++ )
-                {
-                    if ( i != localPlayerIndex)
-                    {
-                        CCSPlayer *pPlayer = (CCSPlayer*) UTIL_PlayerByIndex( i );
+			if (pLocalPlayer)
+			{
+				int localPlayerClass = pLocalPlayer->PlayerClass();
+				int localPlayerTeam = pLocalPlayer->GetTeamNumber();
+				for ( int i = 1; i <= gpGlobals->maxClients; i++ )
+				{
+					if ( i != localPlayerIndex)
+					{
+						CCSPlayer *pPlayer = (CCSPlayer*) UTIL_PlayerByIndex( i );
 
-                        if (pPlayer)
-                        {
-                            if (pPlayer->GetTeamNumber() == localPlayerTeam)
-                            {
-                                ++numPlayersOnTeam;
-                                if (pLocalPlayer->HasPlayerAsFriend(pPlayer) )
-                                {
-                                    ++numFriendsOnTeam;
-                                    if ( pPlayer->PlayerClass() == localPlayerClass )
-                                        ++numMatchingFriendsOnTeam;
-                                }
-                            }
-                        }
-                    }
-                }
+						if (pPlayer)
+						{
+							if (pPlayer->GetTeamNumber() == localPlayerTeam)
+							{
+								++numPlayersOnTeam;
+								if (pLocalPlayer->HasPlayerAsFriend(pPlayer) )
+								{
+									++numFriendsOnTeam;
+									if ( pPlayer->PlayerClass() == localPlayerClass )
+										++numMatchingFriendsOnTeam;
+								}
+							}
+						}
+					}
+				}
 
-                if (numMatchingFriendsOnTeam >= AchievementConsts::FriendsSameUniform_MinPlayers )
-                {
-                    AwardAchievement();
-                }
-            }
-        }
-    }
+				if (numMatchingFriendsOnTeam >= AchievementConsts::FriendsSameUniform_MinPlayers )
+				{
+					AwardAchievement();
+				}
+			}
+		}
+	}
 };
 DECLARE_ACHIEVEMENT( CAchievementCS_FriendsSameUniform, CSFriendsSameUniform, "FRIENDS_SAME_UNIFORM", 5 );
 
@@ -648,43 +648,43 @@ DECLARE_ACHIEVEMENT( CAchievementCS_FriendsSameUniform, CSFriendsSameUniform, "F
 
 class CAchievementCS_AvengeFriend : public CCSBaseAchievement
 {
-    void Init()
-    {
-        SetFlags(ACH_SAVE_GLOBAL);
-        SetGoal(1);
-    }
+	void Init()
+	{
+		SetFlags(ACH_SAVE_GLOBAL);
+		SetGoal(1);
+	}
 
-    void ListenForEvents()
-    {
-        ListenForGameEvent( "player_avenged_teammate" );
-    }
+	void ListenForEvents()
+	{
+		ListenForGameEvent( "player_avenged_teammate" );
+	}
 
-    void FireGameEvent_Internal( IGameEvent *event )
-    {
-        if ( Q_strcmp( event->GetName(), "player_avenged_teammate" ) == 0 )
-        {
-            int localPlayerIndex = GetLocalPlayerIndex();
-            C_CSPlayer* pLocalPlayer = ToCSPlayer(UTIL_PlayerByIndex(localPlayerIndex));
+	void FireGameEvent_Internal( IGameEvent *event )
+	{
+		if ( Q_strcmp( event->GetName(), "player_avenged_teammate" ) == 0 )
+		{
+			int localPlayerIndex = GetLocalPlayerIndex();
+			C_CSPlayer* pLocalPlayer = ToCSPlayer(UTIL_PlayerByIndex(localPlayerIndex));
 
-            //for debugging
-            //int eventId = event->GetInt( "avenger_id" );
-            //int localUserId = pLocalPlayer->GetUserID();
+			//for debugging
+			//int eventId = event->GetInt( "avenger_id" );
+			//int localUserId = pLocalPlayer->GetUserID();
 
-            if (pLocalPlayer && pLocalPlayer->GetUserID() == event->GetInt( "avenger_id" ))
-            {
-                int avengedPlayerIndex = engine->GetPlayerForUserID( event->GetInt( "avenged_player_id" ) );
+			if (pLocalPlayer && pLocalPlayer->GetUserID() == event->GetInt( "avenger_id" ))
+			{
+				int avengedPlayerIndex = engine->GetPlayerForUserID( event->GetInt( "avenged_player_id" ) );
 
-                if ( avengedPlayerIndex > 0 )
-                {
-                    C_CSPlayer* pAvengedPlayer = ToCSPlayer(UTIL_PlayerByIndex(avengedPlayerIndex));                        
-                    if (pAvengedPlayer && pLocalPlayer->HasPlayerAsFriend(pAvengedPlayer))
-                    {
-                        AwardAchievement();
-                    }
-                }             
-            }
-        }
-    }
+				if ( avengedPlayerIndex > 0 )
+				{
+					C_CSPlayer* pAvengedPlayer = ToCSPlayer(UTIL_PlayerByIndex(avengedPlayerIndex));
+					if (pAvengedPlayer && pLocalPlayer->HasPlayerAsFriend(pAvengedPlayer))
+					{
+						AwardAchievement();
+					}
+				}
+			}
+		}
+	}
 };
 DECLARE_ACHIEVEMENT( CAchievementCS_AvengeFriend, CSAvengeFriend, "AVENGE_FRIEND", 5 );
 
@@ -692,7 +692,7 @@ DECLARE_ACHIEVEMENT( CAchievementCS_AvengeFriend, CSAvengeFriend, "AVENGE_FRIEND
 
 class CAchievementCS_CollectHolidayGifts : public CCSBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 3 );
@@ -724,4 +724,3 @@ class CAchievementCS_CollectHolidayGifts : public CCSBaseAchievement
 DECLARE_ACHIEVEMENT( CAchievementCS_CollectHolidayGifts, CSCollectHolidayGifts, "COLLECT_GIFTS", 5 );
 
 #endif // CLIENT_DLL
-

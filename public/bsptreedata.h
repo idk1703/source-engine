@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Revision: $
 // $NoKeywords: $
@@ -39,7 +39,7 @@ enum
 
 //-----------------------------------------------------------------------------
 // Interface needed by tree data to do its job
-// 
+//
 // Note that anything that has convex spatial regions with leaves identified
 // by indices can implement the ISpatialQuery. All you have to do is to implement
 // a class that can answer the 5 questions in the Query interface about the
@@ -132,5 +132,3 @@ void DestroyBSPTreeData( IBSPTreeData* pTreeData );
 
 
 #endif	// BSPTREEDATA
-
-

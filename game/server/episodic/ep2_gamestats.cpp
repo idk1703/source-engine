@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #if defined( GAME_DLL )
@@ -27,13 +27,13 @@ CEP2GameStats::CEP2GameStats( void )
 const char *CEP2GameStats::GetStatSaveFileName( void )
 {
 	//overriding the default for backwards compatibility with release stat tracking code
-	return "ep2_gamestats.dat"; 
+	return "ep2_gamestats.dat";
 }
 
 const char *CEP2GameStats::GetStatUploadRegistryKeyName( void )
 {
 	//overriding the default for backwards compatibility with release stat tracking code
-	return "GameStatsUpload_Ep2"; 
+	return "GameStatsUpload_Ep2";
 }
 
 
@@ -45,13 +45,13 @@ static char const *ep2Maps[] =
 	"ep2_outland_04",
 	"ep2_outland_05",
 	"ep2_outland_06",
-	"ep2_outland_06a", 
-	"ep2_outland_07", 
-	"ep2_outland_08", 
+	"ep2_outland_06a",
+	"ep2_outland_07",
+	"ep2_outland_08",
 	"ep2_outland_09",
 	"ep2_outland_10",
 	"ep2_outland_10a",
-	"ep2_outland_11", 
+	"ep2_outland_11",
 	"ep2_outland_11a",
 	"ep2_outland_12",
 	"ep2_outland_12a"
@@ -73,7 +73,7 @@ bool CEP2GameStats::UserPlayedAllTheMaps( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 CEP2GameStats::~CEP2GameStats()
 {
@@ -82,8 +82,8 @@ CEP2GameStats::~CEP2GameStats()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &SaveBuffer - 
+// Purpose:
+// Input  : &SaveBuffer -
 //-----------------------------------------------------------------------------
 void CEP2GameStats::AppendCustomDataToSaveBuffer( CUtlBuffer &SaveBuffer )
 {
@@ -103,7 +103,7 @@ void CEP2GameStats::LoadCustomDataFromBuffer( CUtlBuffer &LoadBuffer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEP2GameStats::Event_LevelInit( void )
 {
@@ -184,8 +184,8 @@ Ep2LevelStats_t::GenericStatsLump_t *CEP2GameStats::FindGenericLump( char const 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szMapName - 
+// Purpose:
+// Input  : *szMapName -
 // Output : Ep2LevelStats_t
 //-----------------------------------------------------------------------------
 Ep2LevelStats_t *CEP2GameStats::FindOrAddMapStats( const char *szMapName )
@@ -194,13 +194,13 @@ Ep2LevelStats_t *CEP2GameStats::FindOrAddMapStats( const char *szMapName )
 	if( iMap == m_dictMapStats.InvalidIndex() )
 	{
 		iMap = m_dictMapStats.Insert( szMapName );
-	}	
+	}
 
 	return &m_dictMapStats[iMap];
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEP2GameStats::Event_PlayerDamage( CBasePlayer *pBasePlayer, const CTakeDamageInfo &info )
 {
@@ -210,7 +210,7 @@ void CEP2GameStats::Event_PlayerDamage( CBasePlayer *pBasePlayer, const CTakeDam
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEP2GameStats::Event_PlayerKilledOther( CBasePlayer *pAttacker, CBaseEntity *pVictim, const CTakeDamageInfo &info )
 {
@@ -220,7 +220,7 @@ void CEP2GameStats::Event_PlayerKilledOther( CBasePlayer *pAttacker, CBaseEntity
 	{
 		StatsLog( "Attacker: %s\n", pAttacker->GetClassname() );
 	}
-	
+
 	if ( !pVictim  )
 	{
 		return;
@@ -259,7 +259,7 @@ void CEP2GameStats::Event_Punted( CBaseEntity *pObject )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEP2GameStats::Event_PlayerKilled( CBasePlayer *pPlayer, const CTakeDamageInfo &info )
 {
@@ -366,7 +366,7 @@ void CEP2GameStats::Event_PlayerTraveled( CBasePlayer *pBasePlayer, float distan
 
 	Ep2LevelStats_t::SaveGameInfoRecord2_t *rec = map->m_SaveGameInfo.m_pCurrentRecord;
 
-	if ( rec && 
+	if ( rec &&
 		rec->m_nSaveHealth == -1 )
 	{
 		Vector pos = pBasePlayer->GetAbsOrigin();
@@ -433,7 +433,7 @@ void CEP2GameStats::Event_SaveGame( void )
 		rec->m_nSavePos[ 1 ] = (short)pos.y;
 		rec->m_nSavePos[ 2 ] = (short)pos.z;
 		rec->m_nSaveHealth = clamp( pPlayer->GetHealth(), 0, 100 );
-		rec->m_SaveType = Q_stristr( pchSaveFile, "autosave" ) ? 
+		rec->m_SaveType = Q_stristr( pchSaveFile, "autosave" ) ?
 			Ep2LevelStats_t::SaveGameInfoRecord2_t::TYPE_AUTOSAVE : Ep2LevelStats_t::SaveGameInfoRecord2_t::TYPE_USERSAVE;
 
 		StatsLog( "save pos %i %i %i w/ health %d\n",
@@ -468,7 +468,7 @@ void CEP2GameStats::Event_LoadGame( void )
 
 	Ep2LevelStats_t::SaveGameInfo_t *pSaveGameInfo = &map->m_SaveGameInfo;
 
-	if ( pSaveGameInfo->m_nCurrentSaveFileTime == 0 || 
+	if ( pSaveGameInfo->m_nCurrentSaveFileTime == 0 ||
 		pSaveGameInfo->m_sCurrentSaveFile != name )
 	{
 		unsigned int uFileTime = filesystem->GetFileTime( name, "GAME" );
@@ -548,7 +548,7 @@ void CEP2GameStats::Event_IncrementCountedStatistic( const Vector& vecAbsOrigin,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static void CC_ListDeaths( const CCommand &args )
 {
@@ -570,7 +570,7 @@ static void CC_ListDeaths( const CCommand &args )
 		Msg( "%s killed %s with %s at (%d,%d,%d)\n",
 			g_aClassNames[ map->m_aPlayerDeaths[ i ].iAttackClass ],
 			g_aClassNames[ map->m_aPlayerDeaths[ i ].iTargetClass ],
-			WeaponIdToAlias( map->m_aPlayerDeaths[ i ].iWeapon ), 
+			WeaponIdToAlias( map->m_aPlayerDeaths[ i ].iWeapon ),
 			map->m_aPlayerDeaths[ i ].nPosition[ 0 ],
 			map->m_aPlayerDeaths[ i ].nPosition[ 1 ],
 			map->m_aPlayerDeaths[ i ].nPosition[ 2 ] );

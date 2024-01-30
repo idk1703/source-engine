@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -101,7 +101,7 @@ protected:
 	vgui::HFont	m_OverlayTextFont;
 	CUtlString m_OverlayText;
 
-	CTextureReference			m_ScreenBuffer;	
+	CTextureReference			m_ScreenBuffer;
 	CMaterialReference			m_ScreenMaterial;
 };
 
@@ -138,7 +138,7 @@ void CMiniViewportEngineRenderArea::RenderFrameBegin()
 	// has now started to use stencil for various random effects.
 	// To prevent these different stencil uses from clashing, we will
 	// render the engine prior to vgui painting + cache the result off in
-	// 
+	//
 	// Make the engine draw the scene
 	CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
 	pRenderContext->PushRenderTargetAndViewport( m_ScreenBuffer, 0, 0, w, h );
@@ -156,7 +156,7 @@ void CMiniViewportEngineRenderArea::InitSceneMaterials()
 	if ( m_ScreenBuffer )
 		return;
 
-	if ( g_pMaterialSystem->IsTextureLoaded( "_rt_LayoffResult"	) ) 
+	if ( g_pMaterialSystem->IsTextureLoaded( "_rt_LayoffResult"	) )
 	{
 		ITexture *pTexture = g_pMaterialSystem->FindTexture( "_rt_LayoffResult", TEXTURE_GROUP_RENDER_TARGET );
 		m_ScreenBuffer.Init( pTexture );
@@ -203,14 +203,14 @@ void CMiniViewportEngineRenderArea::ReleaseLayoffTexture()
 // Apply scheme settings
 //-----------------------------------------------------------------------------
 void CMiniViewportEngineRenderArea::ApplySchemeSettings( IScheme *pScheme )
-{   
+{
 	BaseClass::ApplySchemeSettings( pScheme );
 	m_OverlayTextFont = pScheme->GetFont( "DefaultLargeOutline" );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMiniViewportEngineRenderArea::ShutdownSceneMaterials()
 {
@@ -227,7 +227,7 @@ void CMiniViewportEngineRenderArea::SetOverlayText( const char *pText )
 	m_OverlayText = pText;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Paints the black borders around the engine window
 //-----------------------------------------------------------------------------
@@ -271,7 +271,7 @@ void CMiniViewportEngineRenderArea::PaintOverlayText( )
 		lx = 10;
 	}
 	int ly = ch - 10 - nTextHeight;
-	g_pMatSystemSurface->DrawColoredTextRect( m_OverlayTextFont, 
+	g_pMatSystemSurface->DrawColoredTextRect( m_OverlayTextFont,
 		lx, ly, cw - lx, ch - ly,
 		255, 255, 255, 255, "%s", m_OverlayText.Get() );
 }
@@ -333,7 +333,7 @@ void CMiniViewportEngineRenderArea::GetEngineBounds( int& x, int& y, int& w, int
 	int sx, sy;
 	surface()->GetScreenSize( sx, sy );
 
-	if ( sy > 0 && 
+	if ( sy > 0 &&
 		h > 0 )
 	{
 		float screenaspect = (float)sx / (float)sy;
@@ -392,7 +392,7 @@ void CMiniViewportPropertyPage::RenderFrameBegin()
 	m_pViewportArea->RenderFrameBegin();
 }
 
-CMiniViewport::CMiniViewport( vgui::Panel *parent, bool contextLabel, vgui::IToolWindowFactory *factory /*= 0*/, 
+CMiniViewport::CMiniViewport( vgui::Panel *parent, bool contextLabel, vgui::IToolWindowFactory *factory /*= 0*/,
 	vgui::Panel *page /*= NULL*/, char const *title /*= NULL*/, bool contextMenu /*= false*/ ) :
 	BaseClass( parent, contextLabel, factory, page, title, contextMenu, false )
 {

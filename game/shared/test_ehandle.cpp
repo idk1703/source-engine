@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -11,8 +11,8 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-// In this test, the server makes an entity (call it A) that has an EHANDLE to another 
-// entity (call it B). Intitially, A is sent to the client but B is not. Later, 
+// In this test, the server makes an entity (call it A) that has an EHANDLE to another
+// entity (call it B). Intitially, A is sent to the client but B is not. Later,
 // the server decides to send B to the client too. At that point, without resending A's EHANDLE,
 // the client's EHANDLE should access B.
 
@@ -31,7 +31,7 @@
 		{
 			m_bSendHandle = false;
 		}
-		
+
 		virtual int UpdateTransmitState()
 		{
 			// ALWAYS transmit to all clients.
@@ -44,7 +44,7 @@
 				return;
 
 			BaseClass::SetTransmit( pInfo, bAlways );
-			
+
 			// Force the thing we're pointing at to be sent too?
 			if ( m_bSendHandle )
 				m_Handle->SetTransmit( pInfo, bAlways );
@@ -58,7 +58,7 @@
 		SendPropEHandle( SENDINFO( m_Handle ) ),
 		SendPropInt( SENDINFO( m_bSendHandle ) )
 	END_SEND_TABLE()
-	
+
 	LINK_ENTITY_TO_CLASS( handle_test, CHandleTest );
 
 
@@ -91,7 +91,7 @@
 		}
 	}
 	ConCommand Test_EHandle( "Test_EHandle", CC_Test_EHandle, 0, FCVAR_CHEAT );
-	
+
 
 #else
 
@@ -100,7 +100,7 @@
 	public:
 		DECLARE_CLASS( C_HandleTest, C_BaseEntity );
 		DECLARE_CLIENTCLASS();
-		
+
 		C_HandleTest()
 		{
 		}
@@ -121,5 +121,3 @@
 
 
 #endif
-
-

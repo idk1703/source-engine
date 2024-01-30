@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -17,13 +17,13 @@
 	#include "c_dod_player.h"
 
 #else
-	
+
 	#include "dod_player.h"
 
 #endif
 
 
-#ifdef CLIENT_DLL	
+#ifdef CLIENT_DLL
 void ToolFramework_PostToolMessage( HTOOLHANDLE hEntity, KeyValues *msg );
 #endif
 
@@ -39,7 +39,7 @@ END_DATADESC()
 #endif
 
 BEGIN_NETWORK_TABLE( CWeaponMG42, DT_WeaponMG42 )
-#ifdef CLIENT_DLL	
+#ifdef CLIENT_DLL
 	RecvPropInt			( RECVINFO( m_iWeaponHeat ) ),
 	RecvPropTime		( RECVINFO( m_flNextCoolTime ) ),
 	RecvPropBool		( RECVINFO( m_bOverheated ) ),
@@ -61,7 +61,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_mg42, CWeaponMG42 );
 PRECACHE_WEAPON_REGISTER( weapon_mg42 );
 
-acttable_t CWeaponMG42::m_acttable[] = 
+acttable_t CWeaponMG42::m_acttable[] =
 {
 	{ ACT_DOD_STAND_AIM,					ACT_DOD_STAND_AIM_MG,				false },
 	{ ACT_DOD_CROUCH_AIM,					ACT_DOD_CROUCH_AIM_MG,				false },
@@ -88,7 +88,7 @@ acttable_t CWeaponMG42::m_acttable[] =
 	{ ACT_DOD_PRIMARYATTACK_DEPLOYED,		ACT_DOD_PRIMARYATTACK_DEPLOYED_MG,		false },
 	{ ACT_DOD_PRIMARYATTACK_PRONE_DEPLOYED,	ACT_DOD_PRIMARYATTACK_PRONE_DEPLOYED_MG,false },
 
-	// Reload ( prone? deployed? )	
+	// Reload ( prone? deployed? )
 	{ ACT_DOD_RELOAD_DEPLOYED,				ACT_DOD_RELOAD_DEPLOYED_MG,				false },
 	{ ACT_DOD_RELOAD_PRONE_DEPLOYED,		ACT_DOD_RELOAD_PRONE_DEPLOYED_MG,		false },
 
@@ -110,7 +110,7 @@ void CWeaponMG42::Spawn( void )
 	m_pEmitter = NULL;
 	m_flParticleAccumulator = 0.0;
 	m_hParticleMaterial = ParticleMgr()->GetPMaterial( "sprites/effects/bazookapuff" );
-#endif	
+#endif
 
 	BaseClass::Spawn();
 }
@@ -172,7 +172,7 @@ void CWeaponMG42::Spawn( void )
 		if ( GetOwner() == NULL || GetOwner()->GetActiveWeapon() == this )
 		{
 			if ( m_iWeaponHeat > 85 )
-			{	
+			{
 				flEmitRate = 30;
 			}
 			else if ( m_iWeaponHeat > 80 )
@@ -201,7 +201,7 @@ void CWeaponMG42::Spawn( void )
 
 	void CWeaponMG42::EmitSmokeParticle( void )
 	{
-		Vector vFront, vBack;	
+		Vector vFront, vBack;
 		QAngle angles;
 
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
@@ -240,7 +240,7 @@ void CWeaponMG42::Spawn( void )
 			pParticle->m_flDieTime = 1.8f;
 			pParticle->m_flLifetime = 0;
 			pParticle->m_uchColor[0] = 200;
-			pParticle->m_uchColor[1] = 200; 
+			pParticle->m_uchColor[1] = 200;
 			pParticle->m_uchColor[2] = 200;
 			pParticle->m_uchStartAlpha = 60;
 			pParticle->m_uchEndAlpha = 0;
@@ -258,11 +258,11 @@ void CWeaponMG42::Spawn( void )
 	{
 		if ( m_iWeaponHeat > 0 )
 			m_iWeaponHeat--;
-		
+
 		SetContextThink( &CWeaponMG42::CoolThink, gpGlobals->curtime + 0.1, COOL_CONTEXT );
 	}
 
-#endif	
+#endif
 
 void CWeaponMG42::Precache()
 {
@@ -322,7 +322,7 @@ void CWeaponMG42::PrimaryAttack( void )
 	if( m_iWeaponHeat >= 99 )
 	{
 		//can't fire anymore, wait until heat is below 80
-#ifdef CLIENT_DLL 
+#ifdef CLIENT_DLL
 		pPlayer->HintMessage( HINT_WEAPON_OVERHEAT );
 #endif
 		m_bOverheated = true;
@@ -334,10 +334,10 @@ void CWeaponMG42::PrimaryAttack( void )
 
 	m_iWeaponHeat += 1; //2;
 	m_flNextCoolTime = gpGlobals->curtime + 0.16f;
-	
+
 	if( !IsDeployed() )
 	{
-#ifdef CLIENT_DLL 
+#ifdef CLIENT_DLL
 		pPlayer->HintMessage( HINT_MG_FIRE_UNDEPLOYED );
 #endif
 		pPlayer->m_Shared.SetSlowedTime( 0.2 );
@@ -355,7 +355,7 @@ void CWeaponMG42::ItemPostFrame( void )
 	ItemFrameCool();
 
 	if( m_iWeaponHeat < 80 )
-		m_bOverheated = false;	
+		m_bOverheated = false;
 
 	BaseClass::ItemPostFrame();
 }
@@ -414,7 +414,7 @@ Activity CWeaponMG42::GetDrawActivity( void )
 	Activity actDraw;
 
 	if( 0 && m_iClip1 <= 0 )
-		actDraw = ACT_VM_DRAW_EMPTY;	
+		actDraw = ACT_VM_DRAW_EMPTY;
 	else
 		actDraw = ACT_VM_DRAW;
 

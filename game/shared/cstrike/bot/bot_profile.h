@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,7 @@ enum
 	LastCustomSkin = FirstCustomSkin + NumCustomSkins - 1,
 };
 
-	
+
 //--------------------------------------------------------------------------------------------------------------
 /**
  * A BotProfile describes the "personality" of a given bot
@@ -35,11 +35,11 @@ public:
 	{
 		m_name = NULL;
 		m_aggression = 0.0f;
-		m_skill = 0.0f;	
+		m_skill = 0.0f;
 		m_teamwork = 0.0f;
 		m_weaponPreferenceCount = 0;
 		m_cost = 0;
-		m_skin = 0;	
+		m_skin = 0;
 		m_difficultyFlags = 0;
 		m_voicePitch = 100;
 		m_reactionTime = 0.3f;
@@ -80,7 +80,7 @@ public:
 
 	bool InheritsFrom( const char *name ) const;
 
-private:	
+private:
 	friend class BotProfileManager;						///< for loading profiles
 
 	void Inherit( const BotProfile *parent, const BotProfile *baseline );	///< copy values from parent if they differ from baseline
@@ -186,7 +186,7 @@ public:
 		FOR_EACH_LL( m_profileList, it )
 		{
 			BotProfile *profile = m_profileList[ it ];
-	
+
 			if ( !stricmp( name, profile->GetName() ) && profile->IsValidForTeam( team ) )
 				return profile;
 		}

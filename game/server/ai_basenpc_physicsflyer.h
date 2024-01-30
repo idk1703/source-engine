@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,7 +30,7 @@ public:
 	virtual bool	ShouldSavePhysics() { return true; }
 
 protected:
-	
+
 	CAI_BasePhysicsFlyingBot();
 	~CAI_BasePhysicsFlyingBot();
 
@@ -39,7 +39,7 @@ protected:
 
 	virtual void TurnHeadToTarget( float flInterval, const Vector &moveTarget );
 
-	void MoveInDirection( float flInterval, const Vector &targetDir, 
+	void MoveInDirection( float flInterval, const Vector &targetDir,
 						 float accelXY, float accelZ, float decay)
 	{
 		decay = ExponentialDecay( decay, 1.0, flInterval );
@@ -51,7 +51,7 @@ protected:
 		m_vCurrentVelocity.z = ( decay * m_vCurrentVelocity.z + accelZ  * targetDir.z );
 	}
 
-	void MoveToLocation( float flInterval, const Vector &target, 
+	void MoveToLocation( float flInterval, const Vector &target,
 						 float accelXY, float accelZ, float decay)
 	{
 		Vector targetDir = target - GetLocalOrigin();
@@ -103,9 +103,9 @@ protected:
 	}
 
 	AI_NavPathProgress_t ProgressFlyPath( float flInterval,
-										  const CBaseEntity *pNewTarget, 
-										  unsigned collisionMask, 
-										  bool bNewTrySimplify = true, 
+										  const CBaseEntity *pNewTarget,
+										  unsigned collisionMask,
+										  bool bNewTrySimplify = true,
 										  float strictPointTolerance = 32.0 );
 
 	const Vector &GetCurrentVelocity() const		{ return m_vCurrentVelocity; }
@@ -125,7 +125,7 @@ protected:
 	IMotionEvent::simresult_e Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular );
 
 	virtual void ClampMotorForces( Vector &linear, AngularImpulse &angular )
-	{ 
+	{
 		// limit reaction forces
 		linear.x = clamp( linear.x, -3000.f, 3000.f );
 		linear.y = clamp( linear.y, -3000.f, 3000.f );

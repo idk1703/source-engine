@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,7 +12,7 @@
 #endif
 
 
-// Take the determinant of a matrix.  
+// Take the determinant of a matrix.
 // NOTE: ONLY SUPPORTS 2x2, 3x3, and 4x4
 extern float Det( float *matrix, int rows );
 

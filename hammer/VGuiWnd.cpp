@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -21,7 +21,7 @@
 
 IMPLEMENT_DYNCREATE(CVGuiPanelWnd, CWnd)
 
-#define REPAINT_TIMER_ID	1042 //random value, hopfully no collisions	
+#define REPAINT_TIMER_ID	1042 //random value, hopfully no collisions
 
 class CBaseMainPanel : public vgui::EditablePanel
 {
@@ -113,12 +113,12 @@ void CVGuiWnd::SetMainPanel( vgui::EditablePanel * pPanel )
 	Assert( m_hVGuiContext == vgui::DEFAULT_VGUI_CONTEXT );
 
 	m_pMainPanel = pPanel;
-	
+
 	m_pMainPanel->SetParent( vgui::surface()->GetEmbeddedPanel() );
 	m_pMainPanel->SetVisible( true );
 	m_pMainPanel->SetPaintBackgroundEnabled( false );
 	m_pMainPanel->SetCursor( vgui::dc_arrow );
-	
+
 	m_hVGuiContext = vgui::ivgui()->CreateContext();
 	vgui::ivgui()->AssociatePanelWithContext( m_hVGuiContext, m_pMainPanel->GetVPanel() );
 }
@@ -149,7 +149,7 @@ void CVGuiWnd::DrawVGuiPanel()
 		return;
 
 	m_bIsDrawing = true; // avoid recursion
-	
+
 	HWND hWnd = m_pParentWnd->GetSafeHwnd();
 
 	int w,h;
@@ -163,7 +163,7 @@ void CVGuiWnd::DrawVGuiPanel()
 	pRenderContext->ClearColor4ub( m_ClearColor.r(), m_ClearColor.g(), m_ClearColor.b(), m_ClearColor.a() );
 
 	pRenderContext->ClearBuffers( true, m_bClearZBuffer );
-	
+
 	MaterialSystemInterface()->BeginFrame( 0 );
 	g_pStudioRender->BeginFrame();
 
@@ -177,10 +177,10 @@ void CVGuiWnd::DrawVGuiPanel()
 		m_pMainPanel->Repaint();
 	}
 
-	HammerVGui()->Simulate(); 
+	HammerVGui()->Simulate();
 
 	vgui::surface()->PaintTraverseEx( m_pMainPanel->GetVPanel(), true );
-	
+
 	g_pStudioRender->EndFrame();
 	MaterialSystemInterface()->EndFrame();
 
@@ -197,7 +197,7 @@ LRESULT CVGuiWnd::WindowProcVGui( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	case WM_GETDLGCODE :
 		{
 			// forward all keyboard into to vgui panel
-			return DLGC_WANTALLKEYS|DLGC_WANTCHARS;	
+			return DLGC_WANTALLKEYS|DLGC_WANTCHARS;
 		}
 
 	case WM_PAINT :
@@ -219,14 +219,14 @@ LRESULT CVGuiWnd::WindowProcVGui( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	case WM_SETCURSOR:
 		return 1; // don't pass WM_SETCURSOR
 
-	case WM_LBUTTONDOWN: 
+	case WM_LBUTTONDOWN:
 	case WM_RBUTTONDOWN:
 	case WM_MBUTTONDOWN:
-	case WM_MOUSEMOVE: 
-        {
+	case WM_MOUSEMOVE:
+	{
 			// switch vgui focus to this panel
 			HammerVGui()->SetFocus( this );
-						
+
 			// request keyboard focus too on mouse down
 			if ( uMsg != WM_MOUSEMOVE)
 			{
@@ -242,19 +242,19 @@ LRESULT CVGuiWnd::WindowProcVGui( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			break;
 		}
 
-	case WM_LBUTTONUP: 
-	case WM_RBUTTONUP: 
-	case WM_MBUTTONUP: 
-	case WM_LBUTTONDBLCLK: 
-	case WM_RBUTTONDBLCLK: 
-	case WM_MBUTTONDBLCLK: 
+	case WM_LBUTTONUP:
+	case WM_RBUTTONUP:
+	case WM_MBUTTONUP:
+	case WM_LBUTTONDBLCLK:
+	case WM_RBUTTONDBLCLK:
+	case WM_MBUTTONDBLCLK:
 	case WM_MOUSEWHEEL:
-	case WM_KEYDOWN: 
+	case WM_KEYDOWN:
 	case WM_SYSKEYDOWN:
 	case WM_SYSCHAR:
-	case WM_CHAR: 
-	case WM_KEYUP: 
-	case WM_SYSKEYUP: 
+	case WM_CHAR:
+	case WM_KEYUP:
+	case WM_SYSKEYUP:
 		{
 			// redraw window
 			m_pParentWnd->Invalidate();

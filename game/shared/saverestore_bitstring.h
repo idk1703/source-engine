@@ -32,7 +32,7 @@ public:
 		pSave->WriteInt( &numBits );
 		pSave->WriteInt( pBitString->Base(), pBitString->GetNumDWords() );
 	}
-	
+
 	virtual void Restore( const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore )
 	{
 		BITSTRING *pBitString = (BITSTRING *)fieldInfo.pField;
@@ -55,7 +55,7 @@ public:
 			pRestore->ReadInt( &ignored, 1 );
 		}
 	}
-	
+
 	virtual void MakeEmpty( const SaveRestoreFieldInfo_t &fieldInfo )
 	{
 		BITSTRING *pBitString = (BITSTRING *)fieldInfo.pField;
@@ -92,4 +92,3 @@ ISaveRestoreOps *GetBitstringDataOps(BITSTRING *)
 	{ FIELD_CUSTOM, #name, { offsetof(classNameTypedef,name), 0 }, 1, FTYPEDESC_SAVE, NULL, GetBitstringDataOps(&(((classNameTypedef *)0)->name)), NULL }
 
 #endif // SAVERESTORE_BITSTRING_H
-

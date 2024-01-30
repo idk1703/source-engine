@@ -23,7 +23,7 @@ class IResponse;
 #include <VGUI_KeyValues.h>
 
 
-class CRulesInfo 
+class CRulesInfo
 {
 
 public:
@@ -42,7 +42,7 @@ public:
 	bool Refreshed();
 
 	void UpdateServer(netadr_t *adr, CUtlVector<vgui::KeyValues *> *Rules);
-	
+
 	CUtlVector<vgui::KeyValues *> *Rules();
 
 	int serverID;
@@ -52,7 +52,7 @@ private:
 
 	serveritem_t m_Server;
 	CSocket	*m_pQuery;	// Game server query socket
-	
+
 	IResponse *m_pResponseTarget;
 
 	bool m_bIsRefreshing;

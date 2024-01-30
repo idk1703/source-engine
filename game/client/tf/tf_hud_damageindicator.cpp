@@ -27,7 +27,7 @@ using namespace vgui;
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudDamageIndicator : public CHudElement, public vgui::Panel
 {
@@ -85,7 +85,7 @@ DECLARE_HUDELEMENT( CHudDamageIndicator );
 DECLARE_HUD_MESSAGE( CHudDamageIndicator, Damage );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudDamageIndicator::CHudDamageIndicator( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass(NULL, "HudDamageIndicator")
@@ -95,11 +95,11 @@ CHudDamageIndicator::CHudDamageIndicator( const char *pElementName ) :
 
 	SetHiddenBits( HIDEHUD_HEALTH );
 
-	m_WhiteAdditiveMaterial.Init( "VGUI/damageindicator", TEXTURE_GROUP_VGUI ); 
+	m_WhiteAdditiveMaterial.Init( "VGUI/damageindicator", TEXTURE_GROUP_VGUI );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDamageIndicator::Init( void )
 {
@@ -108,7 +108,7 @@ void CHudDamageIndicator::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDamageIndicator::Reset( void )
 {
@@ -116,21 +116,21 @@ void CHudDamageIndicator::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDamageIndicator::VidInit( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDamageIndicator::OnThink()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudDamageIndicator::ShouldDraw( void )
 {
@@ -170,7 +170,7 @@ void CHudDamageIndicator::GetDamagePosition( const Vector &vecDelta, float flRad
 	float yawRadians = -(*flRotation) * M_PI / 180.0f;
 	float ca = cos( yawRadians );
 	float sa = sin( yawRadians );
-				 
+
 	// Rotate it around the circle
 	*xpos = (int)((ScreenWidth() / 2) + (flRadius * sa));
 	*ypos = (int)((ScreenHeight() / 2) - (flRadius * ca));
@@ -231,7 +231,7 @@ void CHudDamageIndicator::DrawDamageIndicator(int x0, int y0, int x1, int y1, fl
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDamageIndicator::Paint()
 {

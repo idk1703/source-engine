@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -21,7 +21,7 @@
 //#define SF_CAP_POINT_NO_ANNOUNCER	(1<<4) Unused?
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTeamControlPoint : public CBaseAnimating
 {
@@ -117,7 +117,7 @@ private:
 	void		HandleScoring( int iTeam );
 	void		InternalSetLocked( bool bLocked );
 
-	int			m_iTeam;			
+	int			m_iTeam;
 	int			m_iDefaultOwner;			// Team that initially owns the cap point
 	int			m_iIndex;					// The index of this point in the controlpointArray
 	int			m_iWarnOnCap;				// Warn the team that owns the control point when the opposing team starts to capture it.

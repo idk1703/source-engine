@@ -35,12 +35,12 @@
 class CTFReviveMarker : public CBaseAnimating
 {
 	DECLARE_DATADESC();
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_CLASS( CTFReviveMarker, CBaseAnimating );
 
 public:
 	CTFReviveMarker();
-	
+
 	virtual void Precache() OVERRIDE;
 	virtual void Spawn( void ) OVERRIDE;
 	virtual bool ShouldCollide( int collisionGroup, int contentsMask ) const OVERRIDE;

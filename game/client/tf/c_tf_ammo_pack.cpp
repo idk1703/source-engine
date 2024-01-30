@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -32,8 +32,8 @@ C_TFAmmoPack::~C_TFAmmoPack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flags - 
+// Purpose:
+// Input  : flags -
 // Output : int
 //-----------------------------------------------------------------------------
 int C_TFAmmoPack::DrawModel( int flags )
@@ -54,8 +54,8 @@ int C_TFAmmoPack::DrawModel( int flags )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_TFAmmoPack::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -70,7 +70,7 @@ void C_TFAmmoPack::OnDataChanged( DataUpdateType_t updateType )
 #endif // _DEBUG
 
 	if ( updateType == DATA_UPDATE_CREATED )
-	{ 
+	{
 #ifdef _DEBUG
 		// Debug!
 		if ( tf_debug_weapontrail.GetBool() )
@@ -82,7 +82,7 @@ void C_TFAmmoPack::OnDataChanged( DataUpdateType_t updateType )
 		float flChangeTime = GetLastChangeTime( LATCH_SIMULATION_VAR );
 		Vector vecCurOrigin = GetLocalOrigin();
 
-		// Now stick our initial velocity into the interpolation history 
+		// Now stick our initial velocity into the interpolation history
 		CInterpolatedVar< Vector > &interpolator = GetOriginInterpolator();
 		interpolator.ClearHistory();
 		interpolator.AddToHead( flChangeTime - 0.15f, &vecCurOrigin, false );
@@ -118,8 +118,8 @@ void C_TFAmmoPack::ValidateModelIndex( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : currentTime - 
+// Purpose:
+// Input  : currentTime -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_TFAmmoPack::Interpolate( float currentTime )
@@ -128,8 +128,8 @@ bool C_TFAmmoPack::Interpolate( float currentTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
+// Purpose:
+// Input  : *pPlayer -
 //-----------------------------------------------------------------------------
 void C_TFAmmoPack::DisplayHintTo( C_BasePlayer *pPlayer )
 {

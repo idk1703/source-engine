@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -31,7 +31,7 @@ void AddSubKeyNamed( KeyValues *pKeys, const char *pszName );
 DECLARE_HUDELEMENT( CHudTeamGoalTournament );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTeamGoalTournament::CHudTeamGoalTournament( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudTeamGoalTournament" )
 {
@@ -46,7 +46,7 @@ CHudTeamGoalTournament::CHudTeamGoalTournament( const char *pElementName ) : CHu
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTeamGoalTournament::LevelInit( void )
 {
@@ -75,7 +75,7 @@ C_TFTeam *GetTeamRoles( int iTeamRole )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CHudTeamGoalTournament::HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
 {
@@ -95,7 +95,7 @@ int	CHudTeamGoalTournament::HudElementKeyInput( int down, ButtonCode_t keynum, c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTeamGoalTournament::FireGameEvent( IGameEvent * event )
 {
@@ -117,7 +117,7 @@ void CHudTeamGoalTournament::FireGameEvent( IGameEvent * event )
 
 			if ( ( pAttacker->Get_Score() != 0 ) && ( pDefender->Get_Score() != 0 ) )
 				return;
-		
+
 			m_flShowAt = gpGlobals->curtime + 1.f;
 		}
 	}
@@ -128,7 +128,7 @@ void CHudTeamGoalTournament::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTeamGoalTournament::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -194,7 +194,7 @@ enum
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTeamGoalTournament::SetVisible( bool bState )
 {
@@ -293,7 +293,7 @@ void CHudTeamGoalTournament::PrepareStopWatchString( wchar_t *pszString, CExRich
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTeamGoalTournament::SetupStopWatchLabel( void )
 {
@@ -317,7 +317,7 @@ void CHudTeamGoalTournament::SetupStopWatchLabel( void )
 
 	if ( !pTimer )
 		return;
-		
+
 	if ( !pTimer->IsWatchingTimeStamps() )
 	{
 		iPoints = pDefender->Get_Score();
@@ -338,7 +338,7 @@ void CHudTeamGoalTournament::SetupStopWatchLabel( void )
 		{
 			m_pStopWatchGoal->SetVisible( false );
 		}
-		
+
 		if ( m_pStopWatchGoalArrow )
 		{
 			m_pStopWatchGoalArrow->SetVisible( false );
@@ -363,15 +363,15 @@ void CHudTeamGoalTournament::SetupStopWatchLabel( void )
 	wchar_t wszAttackersName[MAX_TEAM_NAME_LENGTH];
 	wchar_t wszDefendersName[MAX_TEAM_NAME_LENGTH];
 
-	V_wcscpy_safe( wszAttackersName, ( pAttacker->GetTeamNumber() == TF_TEAM_BLUE ) ? pBlueTeamName : pRedTeamName ); 
+	V_wcscpy_safe( wszAttackersName, ( pAttacker->GetTeamNumber() == TF_TEAM_BLUE ) ? pBlueTeamName : pRedTeamName );
 	V_wcscpy_safe( wszDefendersName, ( pDefender->GetTeamNumber() == TF_TEAM_BLUE ) ? pBlueTeamName : pRedTeamName );
 
 #ifdef WIN32
 #define INT_CHAR_FMT L"%d %s"
 #else
-#define INT_CHAR_FMT L"%d %S"	
+#define INT_CHAR_FMT L"%d %S"
 #endif
-	
+
 	wchar_t wszPoints[256];
 	_snwprintf( wszPoints, ARRAYSIZE( wszPoints ), INT_CHAR_FMT, iPoints, iPoints == 1 ? g_pVGuiLocalize->Find( "Tournament_StopWatch_Point" ) : g_pVGuiLocalize->Find( "Tournament_StopWatch_Points" ) );
 
@@ -406,7 +406,7 @@ void CHudTeamGoalTournament::SetupStopWatchLabel( void )
 
 	if ( m_pStopWatchGoal )
 	{
-		m_pStopWatchGoal->SetDialogVariable( "objectivelabel", "" );	
+		m_pStopWatchGoal->SetDialogVariable( "objectivelabel", "" );
 	}
 
 	if ( pLocalPlayer->GetTeam() == pDefender )
@@ -415,10 +415,10 @@ void CHudTeamGoalTournament::SetupStopWatchLabel( void )
 
 		if ( m_pStopWatchGoal )
 		{
-			m_pStopWatchGoal->SetDialogVariable( "objectivelabel", wszLabel );	
+			m_pStopWatchGoal->SetDialogVariable( "objectivelabel", wszLabel );
 		}
 	}
-	
+
 	//Attackers capped something last round case
 	if ( iPoints > 0 )
 	{
@@ -491,7 +491,7 @@ void CHudTeamGoalTournament::SetupStopWatchLabel( void )
 
 			if ( m_pStopWatchGoal )
 			{
-				m_pStopWatchGoal->SetDialogVariable( "objectivelabel", wszLabel );	
+				m_pStopWatchGoal->SetDialogVariable( "objectivelabel", wszLabel );
 			}
 		}
 	}
@@ -538,19 +538,19 @@ void CHudTeamGoalTournament::SetupStopWatchLabel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudTeamGoalTournament::ShouldDraw( void )
 {
-	if ( !TFGameRules() || 
-		 !TFGameRules()->IsInTournamentMode() || 
+	if ( !TFGameRules() ||
+		 !TFGameRules()->IsInTournamentMode() ||
 		 !TFGameRules()->IsInStopWatch() ||
 		 ( ( TFGameRules()->State_Get() != GR_STATE_PREROUND ) && !TFGameRules()->InSetup() ) )
 	{
 		m_flShowAt = -1.f;
 		return false;
 	}
-	
+
 	if ( ObjectiveResource() )
 	{
 		int iActiveTimer = ObjectiveResource()->GetStopWatchTimer();
@@ -582,7 +582,7 @@ bool CHudTeamGoalTournament::ShouldDraw( void )
 			CHudElement *pHudSwitch = gHUD.FindElement( "CHudTeamSwitch" );
 			if ( pHudSwitch && pHudSwitch->ShouldDraw() )
 				return false;
-			
+
 			return true;
 		}
 	}

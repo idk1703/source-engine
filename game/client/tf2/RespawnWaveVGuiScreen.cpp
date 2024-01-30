@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,7 +14,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Base class for all vgui screens on objects: 
+// Base class for all vgui screens on objects:
 //-----------------------------------------------------------------------------
 class CRespawnWaveVGuiScreen : public CVGuiScreenPanel
 {
@@ -33,22 +33,22 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Standard VGUI panel for objects 
+// Standard VGUI panel for objects
 //-----------------------------------------------------------------------------
 DECLARE_VGUI_SCREEN_FACTORY( CRespawnWaveVGuiScreen, "respawn_wave_screen" );
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CRespawnWaveVGuiScreen::CRespawnWaveVGuiScreen( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, panelName, g_hVGuiObjectScheme ) 
+	: BaseClass( parent, panelName, g_hVGuiObjectScheme )
 {
 }
 
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CRespawnWaveVGuiScreen::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -63,7 +63,7 @@ bool CRespawnWaveVGuiScreen::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* 
 	// NOTE: it is valid for these controls to not exist!
 	m_pTime1RemainingLabel = dynamic_cast<vgui::Label*>(FindChildByName( "RespawnTime1Remaining" ));
 	m_pTime2RemainingLabel = dynamic_cast<vgui::Label*>(FindChildByName( "RespawnTime2Remaining" ));
-	
+
 	return true;
 }
 
@@ -82,8 +82,8 @@ void CRespawnWaveVGuiScreen::OnTick()
 	int nTime2Remaining = 0;
 	if (g_hCurrentAct.Get())
 	{
-		nTime1Remaining = g_hCurrentAct->RespawnTimeRemaining( GetEntity()->GetTeamNumber(), 1 ); 
-		nTime2Remaining = g_hCurrentAct->RespawnTimeRemaining( GetEntity()->GetTeamNumber(), 2 ); 
+		nTime1Remaining = g_hCurrentAct->RespawnTimeRemaining( GetEntity()->GetTeamNumber(), 1 );
+		nTime2Remaining = g_hCurrentAct->RespawnTimeRemaining( GetEntity()->GetTeamNumber(), 2 );
 	}
 
 	char buf[32];
@@ -98,4 +98,3 @@ void CRespawnWaveVGuiScreen::OnTick()
 		m_pTime2RemainingLabel->SetText( buf );
 	}
 }
-

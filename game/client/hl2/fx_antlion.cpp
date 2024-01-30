@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -70,7 +70,7 @@ void CAntlionGibManager::RemoveGib( C_BaseEntity *pEntity )
 {
 	m_LRU.FindAndRemove( pEntity );
 }
-	
+
 
 //-----------------------------------------------------------------------------
 // Methods of IGameSystem
@@ -79,7 +79,7 @@ void CAntlionGibManager::Update( float frametime )
 {
 	if ( m_LRU.Count() < g_antlion_maxgibs.GetInt() )
 		 return;
-	
+
 	int i = 0;
 	i = m_LRU.Head();
 
@@ -97,7 +97,7 @@ class C_AntlionGib : public C_Gib
 {
 	typedef C_Gib BaseClass;
 public:
-	
+
 	static C_AntlionGib *CreateClientsideGib( const char *pszModelName, Vector vecOrigin, Vector vecForceDir, AngularImpulse vecAngularImp, float m_flLifetime = DEFAULT_GIB_LIFETIME )
 	{
 		C_AntlionGib *pGib = new C_AntlionGib;
@@ -120,7 +120,7 @@ public:
 
 		/*
 		int index = decalsystem->GetDecalIndexForName( "YellowBlood" );
-		
+
 		if (index >= 0 )
 		{
 			effects->DecalShoot( index, pOther->entindex(), pOther->GetModel(), pOther->GetAbsOrigin(), pOther->GetAbsAngles(), GetAbsOrigin(), 0, 0 );
@@ -130,8 +130,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &origin - 
+// Purpose:
+// Input  : &origin -
 //-----------------------------------------------------------------------------
 void FX_AntlionGib( const Vector &origin, const Vector &direction, float scale )
 {
@@ -195,7 +195,7 @@ void FX_AntlionGib( const Vector &origin, const Vector &direction, float scale )
 	{
 		g_Material_Blood[0] = g_Mat_BloodPuff[0];
 	}
-	
+
 	if ( g_Material_Blood[1] == NULL )
 	{
 		g_Material_Blood[1] = g_Mat_BloodPuff[1];
@@ -213,7 +213,7 @@ void FX_AntlionGib( const Vector &origin, const Vector &direction, float scale )
 
 		sParticle->m_flLifetime		= 0.0f;
 		sParticle->m_flDieTime		= random->RandomFloat( 0.25f, 0.5f );
-			
+
 		float speed = random->RandomFloat( 16.0f, 64.0f );
 
 		sParticle->m_vecVelocity.Init();
@@ -323,8 +323,8 @@ void FX_AntlionGib( const Vector &origin, const Vector &direction, float scale )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &data - 
+// Purpose:
+// Input  : &data -
 //-----------------------------------------------------------------------------
 void AntlionGibCallback( const CEffectData &data )
 {

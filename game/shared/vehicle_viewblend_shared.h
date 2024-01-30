@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -33,7 +33,7 @@ struct ViewLockData_t
 	float	flUnlockBlendInterval;	// If this DOF is locked, how long to spend blending out of the locked view when we unlock.
 };
 
-// This is separate from the base vehicle implementation so that any class 
+// This is separate from the base vehicle implementation so that any class
 // that derives from IClientVehicle can use it. To use it, contain one of the
 // following structs, fill out the first section, and then call VehicleViewSmoothing()
 // inside your GetVehicleViewPosition() function.
@@ -69,11 +69,11 @@ struct ViewSmoothingData_t
 };
 
 // TEMP: Shared vehicle view smoothing
-void SharedVehicleViewSmoothing(CBasePlayer *pPlayer, 
-								Vector *pAbsOrigin, QAngle *pAbsAngles, 
-								bool bEnterAnimOn, bool bExitAnimOn, 
-								const Vector &vecEyeExitEndpoint, 
-								ViewSmoothingData_t *pData, 
+void SharedVehicleViewSmoothing(CBasePlayer *pPlayer,
+								Vector *pAbsOrigin, QAngle *pAbsAngles,
+								bool bEnterAnimOn, bool bExitAnimOn,
+								const Vector &vecEyeExitEndpoint,
+								ViewSmoothingData_t *pData,
 								float *pFOV );
 
 #endif // VEHICLE_VIEWBLEND_SHARED_H

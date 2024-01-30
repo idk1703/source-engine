@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -142,7 +142,7 @@ private:
 	CUtlVector<materiallist_t>			m_list;
 	CUtlVector<surfacesortgroup_t>		m_groups;		// one per sortID per MAT_SORT_GROUP, sparse
 	CUtlVector<byte>					m_groupUsed;
-	
+
 	// list of indices into m_groups in order per MAT_SORT_GROUP, compact
 	CUtlVector<surfacesortgroup_t *>	m_sortGroupLists[MAX_MAT_SORT_GROUPS];
 	surfacesortgroup_t					m_emptyGroup;
@@ -216,9 +216,9 @@ struct SurfaceCtx_t
 void SurfSetupSurfaceContext( SurfaceCtx_t& ctx, SurfaceHandle_t surfID );
 
 // Compute texture and lightmap coordinates
-void SurfComputeTextureCoordinate( SurfaceCtx_t const& ctx, SurfaceHandle_t surfID, 
+void SurfComputeTextureCoordinate( SurfaceCtx_t const& ctx, SurfaceHandle_t surfID,
 									    Vector const& vec, Vector2D& uv );
-void SurfComputeLightmapCoordinate( SurfaceCtx_t const& ctx, SurfaceHandle_t surfID, 
+void SurfComputeLightmapCoordinate( SurfaceCtx_t const& ctx, SurfaceHandle_t surfID,
 										 Vector const& vec, Vector2D& uv );
 
 extern ConVar mat_fastspecular;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -63,7 +63,7 @@ void CChatPanel::OnPageHide()
 //-----------------------------------------------------------------------------
 // Purpose: inserts a new string into the main chat panel
 //-----------------------------------------------------------------------------
-void CChatPanel::DoInsertString(const char *str) 
+void CChatPanel::DoInsertString(const char *str)
 {
 	m_pServerChatPanel->InsertString(str);
 }

@@ -180,7 +180,7 @@ int CBaseRecordingSessionManager::GetServerStartTickForSession( ReplayHandle_t h
 	CBaseRecordingSession *pSession = FindSession( hSession );
 	if ( !pSession )
 		return -1;
-	
+
 	return pSession->m_nServerStartRecordTick;
 }
 

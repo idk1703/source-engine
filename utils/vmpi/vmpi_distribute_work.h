@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -72,7 +72,7 @@ bool DistributeWorkDispatch( MessageBuffer *pBuf, int iSource, int iPacketID );
 // The masters implement receiveFn to receive a work unit's results.
 //
 // Returns time it took to finish the work.
-double DistributeWork( 
+double DistributeWork(
 	uint64 nWorkUnits,				// how many work units to dole out
 	char cPacketID,					// This packet ID must be reserved for DistributeWork and DistributeWorkDispatch
 									// must be registered with it.

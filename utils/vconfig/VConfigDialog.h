@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -37,7 +37,7 @@ public:
 	void		PopulateConfigList( bool bSelectActiveConfig = true );
 
 protected:
-	
+
 	virtual void OnClose();
 	virtual void OnCommand( const char *command );
 

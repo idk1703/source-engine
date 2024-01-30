@@ -67,7 +67,7 @@ private:
 LINK_ENTITY_TO_CLASS( vgui_neurotoxin_countdown, CNeurotoxinCountdown );
 
 //-----------------------------------------------------------------------------
-// Save/load 
+// Save/load
 //-----------------------------------------------------------------------------
 BEGIN_DATADESC( CNeurotoxinCountdown )
 	DEFINE_FIELD( m_bEnabled, FIELD_BOOLEAN ),
@@ -101,7 +101,7 @@ CNeurotoxinCountdown::~CNeurotoxinCountdown()
 //-----------------------------------------------------------------------------
 // Read in worldcraft data...
 //-----------------------------------------------------------------------------
-bool CNeurotoxinCountdown::KeyValue( const char *szKeyName, const char *szValue ) 
+bool CNeurotoxinCountdown::KeyValue( const char *szKeyName, const char *szValue )
 {
 	//!! temp hack, until worldcraft is fixed
 	// strip the # tokens from (duplicate) key names

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,7 +29,7 @@ public:
 	virtual void *GetGameData( void ) const;
 	virtual void GetSurfacePlane( Vector *pNormal, float *pDist ) const;
 	virtual float GetDensity() const;
-	virtual void WakeAllSleepingObjects(); 
+	virtual void WakeAllSleepingObjects();
 	virtual int	GetContents() const;
 
 	class IVP_Real_Object *GetIVPObject();

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -20,7 +20,7 @@ public:
 	{
 		return m_pSocket != 0;
 	}
-	
+
 	void Term();
 
 	void ThreadFn();
@@ -115,7 +115,7 @@ void CSocketInfo::ThreadFn()
 
 					Msg( "%02d: forcing an expire.\n", iInfo, m_iListenPort );
 					Sleep( 16000 );
-					
+
 					EnterCriticalSection( &g_CS );
 						g_iNextExpire = -1;
 				}
@@ -154,13 +154,13 @@ void CSocketInfo::ThreadFn()
 					int iHead = g_ListenPorts.Head();
 					if ( iHead != g_ListenPorts.InvalidIndex() )
 						iConnectPort = g_ListenPorts[iHead];
-				LeaveCriticalSection( &g_CS );				
+				LeaveCriticalSection( &g_CS );
 			}
 
 			if ( iConnectPort != -1 )
 			{
 				CIPAddr addr( 127, 0, 0, 1, iConnectPort );
-				
+
 				m_pSocket = CreateTCPSocket();
 				m_pSocket->BindToAny( 0 );
 				m_CreateTime = curTime;
@@ -245,8 +245,8 @@ int main(int argc, char* argv[])
 	for ( int i=0; i < ARRAYSIZE( g_Infos ); i++ )
 	{
 		DWORD dwThreadID = 0;
-		g_hThreads[i] = CreateThread( 
-			NULL, 
+		g_hThreads[i] = CreateThread(
+			NULL,
 			0,
 			ThreadFn,
 			&g_Infos[i],
@@ -260,7 +260,7 @@ int main(int argc, char* argv[])
 	}
 
 	g_bShouldExit = true;
-	
+
 	HANDLE hZeroArray[ ARRAYSIZE( g_Infos ) ];
 	memset( hZeroArray, 0, sizeof( hZeroArray ) );
 
@@ -268,7 +268,6 @@ int main(int argc, char* argv[])
 	{
 		Sleep( 10 );
 	}
-	
+
 	return 0;
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -148,7 +148,7 @@ float FloatBitMap_t::InterpolatedPixel(float x, float y, int comp) const
 	float Xfrac= x - Left;
 	int Right= min(Width-1,Left+1);
 	return
-		BiLinInterp(Xfrac, Yfrac, 
+		BiLinInterp(Xfrac, Yfrac,
 		Pixel(Left, Top, comp),
 		Pixel(Right, Top, comp),
 		Pixel(Left, Bot, comp),
@@ -184,7 +184,7 @@ void FloatBitMap_t::ReSize(int NewWidth, int NewHeight)
 			if (Right>=Width) Right= Width-1;
 			for(int c=0;c<4;c++)
 			{
-				newrgba[4*(y*NewWidth+x)+c] = BiLinInterp(Xfrac, Yfrac, 
+				newrgba[4*(y*NewWidth+x)+c] = BiLinInterp(Xfrac, Yfrac,
 					Pixel(Left, Top, c),
 					Pixel(Right, Top, c),
 					Pixel(Left, Bot, c),
@@ -198,7 +198,7 @@ void FloatBitMap_t::ReSize(int NewWidth, int NewHeight)
 	delete[] RGBAData;
 	RGBAData=newrgba;
 
-	Width=NewWidth; 
+	Width=NewWidth;
 	Height=NewHeight;
 }
 
@@ -241,7 +241,7 @@ bool FloatBitMap_t::WriteTGAFile(char const *filename) const
 			}
 		}
 		g_pFullFileSystem->Close( f );	// close file after reading
-		
+
 		return true;
 	}
 	return false;
@@ -270,7 +270,7 @@ FloatBitMap_t::FloatBitMap_t(char const *tgafilename)
 	}
 	AllocateRGB(width1,height1);
 
-	uint8 *pImage1Tmp = 
+	uint8 *pImage1Tmp =
 		new uint8 [ImageLoader::GetMemRequired( width1, height1, 1, imageFormat1, false )];
 
 	if( !TGALoader::Load( pImage1Tmp, tgafilename, width1, height1, imageFormat1, 2.2f, false ) )
@@ -278,7 +278,7 @@ FloatBitMap_t::FloatBitMap_t(char const *tgafilename)
 		printf( "error loading %s\n", tgafilename);
 		exit( -1 );
 	}
-	uint8 *pImage1 = 
+	uint8 *pImage1 =
 		new uint8 [ImageLoader::GetMemRequired( width1, height1, 1, IMAGE_FORMAT_ABGR8888, false )];
 
 	ImageLoader::ConvertImageFormat( pImage1Tmp, imageFormat1, pImage1, IMAGE_FORMAT_ABGR8888, width1, height1, 0, 0 );
@@ -725,5 +725,3 @@ void FloatBitMap_t::Poisson(FloatBitMap_t *deltas[4],
 		}
 	}
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -74,7 +74,7 @@ public:
 	void ClearBombsite( int zoneIndex );						///< mark bombsite as clear
 
 	const Vector *GetBombPosition( void ) const;				///< return where we think the bomb is, or NULL if we don't know
-	
+
 	// hostage rescue scenario ------------------------------------------------------------------------
 	CHostage *GetNearestFreeHostage( Vector *knowPos = NULL ) const;	///< return the closest free hostage, and where we think it is (knowPos)
 	const Vector *GetRandomFreeHostagePosition( void ) const;
@@ -93,7 +93,7 @@ public:
 	CHostage *GetNearestVisibleFreeHostage( void ) const;
 
 	enum ValidateStatusType
-	{ 
+	{
 		NO_CHANGE = 0x00,
 		HOSTAGE_DIED = 0x01,
 		HOSTAGE_GONE = 0x02,
@@ -124,7 +124,7 @@ private:
 	int m_bombsiteSearchIndex;									///< the next step in the search
 
 	int m_plantedBombsite;										///< zone index of the bombsite where the planted bomb is
-	
+
 	bool m_isPlantedBombPosKnown;								///< if true, we know the exact location of the bomb
 	Vector m_plantedBombPos;
 

@@ -24,13 +24,13 @@ ActionResult< CMerasmus >	CMerasmusDisguise::OnStart( CMerasmus *me, Action< CMe
 	m_bSpawnedProps = false;
 
 	TryToDisguiseSpawn( me );
-	
+
 	m_flStartRegenTime = gpGlobals->curtime;
 	m_nStartRegenHealth = me->GetHealth();
 
-	me->PlayHighPrioritySound( "Halloween.MerasmusInitiateHiding" ); 
+	me->PlayHighPrioritySound( "Halloween.MerasmusInitiateHiding" );
 	RandomDisguiseTauntTimer();
-	
+
 	m_findPropsFailTimer.Start( 3 );
 
 	// set boss inactive

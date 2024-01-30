@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		Projectile shot by bullsquid 
+// Purpose:		Projectile shot by bullsquid
 //
 // $Workfile:     $
 // $Date:         $

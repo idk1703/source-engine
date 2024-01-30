@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,20 +15,20 @@
  * provided that the above copyright notice appear in all copies and
  * that both that copyright notice and this permission notice appear
  * in supporting documentation.  Dr John Maddock makes no representations
- * about the suitability of this software for any purpose.  
+ * about the suitability of this software for any purpose.
  * It is provided "as is" without express or implied warranty.
  *
  */
- 
+
  /*
-  *
-  *   FILE     fileiter.h
-  *   VERSION  2.12
-  *
-  * this file declares various platform independent file and directory
-  * iterators, plus binary file input in the form of class map_file.
-  *
-  */
+	*
+	*   FILE     fileiter.h
+	*   VERSION  2.12
+	*
+	* this file declares various platform independent file and directory
+	* iterators, plus binary file input in the form of class map_file.
+	*
+	*/
 
 
 #ifndef __FILEITER_H
@@ -73,8 +73,8 @@ JM_NAMESPACE(__JM)
 
 struct _fi_find_data
 {
-   unsigned dwFileAttributes;
-   char cFileName[MAX_PATH];
+	unsigned dwFileAttributes;
+	char cFileName[MAX_PATH];
 };
 
 struct _fi_priv_data;
@@ -111,23 +111,23 @@ JM_NAMESPACE(__JM)
 
 class JM_IX_DECL mapfile
 {
-   HANDLE hfile;
-   HANDLE hmap;
-   const char* _first;
-   const char* _last;
+	HANDLE hfile;
+	HANDLE hmap;
+	const char* _first;
+	const char* _last;
 public:
 
-   typedef const char* iterator;
+	typedef const char* iterator;
 
-   mapfile(){ hfile = hmap = 0; _first = _last = 0; }
-   mapfile(const char* file){ hfile = hmap = 0; _first = _last = 0; open(file); }
-   ~mapfile(){ close(); }
-   void open(const char* file);
-   void close();
-   const char* begin(){ return _first; }
-   const char* end(){ return _last; }
-   size_t size(){ return _last - _first; }
-   bool valid(){ return (hfile != 0) && (hfile != INVALID_HANDLE_VALUE); }
+	mapfile(){ hfile = hmap = 0; _first = _last = 0; }
+	mapfile(const char* file){ hfile = hmap = 0; _first = _last = 0; open(file); }
+	~mapfile(){ close(); }
+	void open(const char* file);
+	void close();
+	const char* begin(){ return _first; }
+	const char* end(){ return _last; }
+	size_t size(){ return _last - _first; }
+	bool valid(){ return (hfile != 0) && (hfile != INVALID_HANDLE_VALUE); }
 };
 
 
@@ -137,119 +137,119 @@ class JM_IX_DECL mapfile_iterator;
 
 class JM_IX_DECL mapfile
 {
-   typedef char* pointer;
-   FILE* hfile;
-   long int _size;
-   pointer* _first;
-   pointer* _last;
-   mutable __JM_STD::list<pointer*> condemed;
-   enum sizes
-   {
-      buf_size = 4096
-   };
-   void lock(pointer* node)const;
-   void unlock(pointer* node)const;
+	typedef char* pointer;
+	FILE* hfile;
+	long int _size;
+	pointer* _first;
+	pointer* _last;
+	mutable __JM_STD::list<pointer*> condemed;
+	enum sizes
+	{
+		buf_size = 4096
+	};
+	void lock(pointer* node)const;
+	void unlock(pointer* node)const;
 public:
 
-   typedef mapfile_iterator iterator;
+	typedef mapfile_iterator iterator;
 
-   mapfile(){ hfile = 0; _size = 0; _first = _last = 0; }
-   mapfile(const char* file){ hfile = 0; _size = 0; _first = _last = 0; open(file); }
-   ~mapfile(){ close(); }
-   void open(const char* file);
-   void close();
-   iterator begin()const;
-   iterator end()const;
-   unsigned long size()const{ return _size; }
-   bool valid()const{ return hfile != 0; }
-   friend class mapfile_iterator;
+	mapfile(){ hfile = 0; _size = 0; _first = _last = 0; }
+	mapfile(const char* file){ hfile = 0; _size = 0; _first = _last = 0; open(file); }
+	~mapfile(){ close(); }
+	void open(const char* file);
+	void close();
+	iterator begin()const;
+	iterator end()const;
+	unsigned long size()const{ return _size; }
+	bool valid()const{ return hfile != 0; }
+	friend class mapfile_iterator;
 };
 
 class JM_IX_DECL mapfile_iterator : public JM_RA_ITERATOR(char, long)
 {
-   typedef mapfile::pointer pointer;
-   pointer* node;
-   const mapfile* file;
-   unsigned long offset;
-   long position()const
-   {
-      return file ? ((node - file->_first) * mapfile::buf_size + offset) : 0;
-   }
-   void position(long pos)
-   {
-      if(file)
-      {
-         node = file->_first + (pos / mapfile::buf_size);
-         offset = pos % mapfile::buf_size;
-      }
-   }
+	typedef mapfile::pointer pointer;
+	pointer* node;
+	const mapfile* file;
+	unsigned long offset;
+	long position()const
+	{
+		return file ? ((node - file->_first) * mapfile::buf_size + offset) : 0;
+	}
+	void position(long pos)
+	{
+		if(file)
+		{
+			node = file->_first + (pos / mapfile::buf_size);
+			offset = pos % mapfile::buf_size;
+		}
+	}
 public:
-   mapfile_iterator() { node = 0; file = 0; offset = 0; }
-   mapfile_iterator(const mapfile* f, long position)
-   {
-      file = f;
-      node = f->_first + position / mapfile::buf_size;
-      offset = position % mapfile::buf_size;
-      if(file)
-         file->lock(node);
-   }
-   mapfile_iterator(const mapfile_iterator& i)
-   {
-      file = i.file;
-      node = i.node;
-      offset = i.offset;
-      if(file)
-         file->lock(node);
-   }
-   ~mapfile_iterator()
-   {
-      if(file && node)
-         file->unlock(node);
-   }
-   mapfile_iterator& operator = (const mapfile_iterator& i);
-   char operator* ()const
-   {
-      assert(node >= file->_first);
-      assert(node < file->_last);
-      return file ? *(*node + sizeof(int) + offset) : char(0);
-   }
-   mapfile_iterator& operator++ ();
-   mapfile_iterator operator++ (int);
-   mapfile_iterator& operator-- ();
-   mapfile_iterator operator-- (int);
+	mapfile_iterator() { node = 0; file = 0; offset = 0; }
+	mapfile_iterator(const mapfile* f, long position)
+	{
+		file = f;
+		node = f->_first + position / mapfile::buf_size;
+		offset = position % mapfile::buf_size;
+		if(file)
+			file->lock(node);
+	}
+	mapfile_iterator(const mapfile_iterator& i)
+	{
+		file = i.file;
+		node = i.node;
+		offset = i.offset;
+		if(file)
+			file->lock(node);
+	}
+	~mapfile_iterator()
+	{
+		if(file && node)
+			file->unlock(node);
+	}
+	mapfile_iterator& operator = (const mapfile_iterator& i);
+	char operator* ()const
+	{
+		assert(node >= file->_first);
+		assert(node < file->_last);
+		return file ? *(*node + sizeof(int) + offset) : char(0);
+	}
+	mapfile_iterator& operator++ ();
+	mapfile_iterator operator++ (int);
+	mapfile_iterator& operator-- ();
+	mapfile_iterator operator-- (int);
 
-   mapfile_iterator& operator += (long off)
-   {
-      position(position() + off);
-      return *this;
-   }
-   mapfile_iterator& operator -= (long off)
-   {
-      position(position() - off);
-      return *this;
-   }
+	mapfile_iterator& operator += (long off)
+	{
+		position(position() + off);
+		return *this;
+	}
+	mapfile_iterator& operator -= (long off)
+	{
+		position(position() - off);
+		return *this;
+	}
 
-   friend inline bool operator==(const mapfile_iterator& i, const mapfile_iterator& j)
-   {
-      return (i.file == j.file) && (i.node == j.node) && (i.offset == j.offset);
-   }
+	friend inline bool operator==(const mapfile_iterator& i, const mapfile_iterator& j)
+	{
+		return (i.file == j.file) && (i.node == j.node) && (i.offset == j.offset);
+	}
 #ifndef JM_NO_NOT_EQUAL
-   friend inline bool operator!=(const mapfile_iterator& i, const mapfile_iterator& j)
-   {
-      return !(i == j);
-   }
+	friend inline bool operator!=(const mapfile_iterator& i, const mapfile_iterator& j)
+	{
+		return !(i == j);
+	}
 #endif
-   friend inline bool operator<(const mapfile_iterator& i, const mapfile_iterator& j)
-   {
-      return i.position() < j.position();
-   }
+	friend inline bool operator<(const mapfile_iterator& i, const mapfile_iterator& j)
+	{
+		return i.position() < j.position();
+	}
 
-   friend mapfile_iterator operator + (const mapfile_iterator& i, long off);
-   friend mapfile_iterator operator - (const mapfile_iterator& i, long off);
-   friend inline long operator - (const mapfile_iterator& i, const mapfile_iterator& j)
-   {
-      return i.position() - j.position();
-   }
+	friend mapfile_iterator operator + (const mapfile_iterator& i, long off);
+	friend mapfile_iterator operator - (const mapfile_iterator& i, long off);
+	friend inline long operator - (const mapfile_iterator& i, const mapfile_iterator& j)
+	{
+		return i.position() - j.position();
+	}
 };
 
 #endif
@@ -259,91 +259,91 @@ JM_IX_DECL extern const char* _fi_sep;
 
 struct file_iterator_ref
 {
-   _fi_find_handle hf;
-   _fi_find_data _data;
-   long count;
+	_fi_find_handle hf;
+	_fi_find_data _data;
+	long count;
 };
 
 
 class JM_IX_DECL file_iterator : public JM_INPUT_ITERATOR(const char*, __JM_STDC::ptrdiff_t)
 {
-   char* _root;
-   char* _path;
-   char* ptr;
-   file_iterator_ref* ref;
+	char* _root;
+	char* _path;
+	char* ptr;
+	file_iterator_ref* ref;
 
 public:
-   file_iterator();
-   file_iterator(const char* wild);
-   ~file_iterator();
-   file_iterator(const file_iterator&);
-   file_iterator& operator=(const file_iterator&);
-   const char* root() { return _root; }
-   const char* path() { return _path; }
-   _fi_find_data* data() { return &(ref->_data); }
-   void next();
-   file_iterator& operator++() { next(); return *this; }
-   file_iterator operator++(int);
-   const char* operator*() { return path(); }
+	file_iterator();
+	file_iterator(const char* wild);
+	~file_iterator();
+	file_iterator(const file_iterator&);
+	file_iterator& operator=(const file_iterator&);
+	const char* root() { return _root; }
+	const char* path() { return _path; }
+	_fi_find_data* data() { return &(ref->_data); }
+	void next();
+	file_iterator& operator++() { next(); return *this; }
+	file_iterator operator++(int);
+	const char* operator*() { return path(); }
 
-   friend inline bool operator == (const file_iterator& f1, const file_iterator& f2)
-   {
-      return ((f1.ref->hf == _fi_invalid_handle) && (f1.ref->hf == _fi_invalid_handle));
-   }
+	friend inline bool operator == (const file_iterator& f1, const file_iterator& f2)
+	{
+		return ((f1.ref->hf == _fi_invalid_handle) && (f1.ref->hf == _fi_invalid_handle));
+	}
 #ifndef JM_NO_NOT_EQUAL
-   friend inline bool operator != (const file_iterator& f1, const file_iterator& f2)
-   {
-      return !(f1 == f2);
-   }
+	friend inline bool operator != (const file_iterator& f1, const file_iterator& f2)
+	{
+		return !(f1 == f2);
+	}
 #endif
 };
 
 inline bool operator < (const file_iterator& f1, const file_iterator& f2)
 {
-   return false;
+	return false;
 }
 
 
 class JM_IX_DECL directory_iterator : public JM_INPUT_ITERATOR(const char*, __JM_STDC::ptrdiff_t)
 {
-   char* _root;
-   char* _path;
-   char* ptr;
-   file_iterator_ref* ref;
+	char* _root;
+	char* _path;
+	char* ptr;
+	file_iterator_ref* ref;
 
 public:
-   directory_iterator();
-   directory_iterator(const char* wild);
-   ~directory_iterator();
-   directory_iterator(const directory_iterator& other);
-   directory_iterator& operator=(const directory_iterator& other);
+	directory_iterator();
+	directory_iterator(const char* wild);
+	~directory_iterator();
+	directory_iterator(const directory_iterator& other);
+	directory_iterator& operator=(const directory_iterator& other);
 
-   const char* root() { return _root; }
-   const char* path() { return _path; }
-   _fi_find_data* data() { return &(ref->_data); }
-   void next();
-   directory_iterator& operator++() { next(); return *this; }
-   directory_iterator operator++(int);
-   const char* operator*() { return path(); }
+	const char* root() { return _root; }
+	const char* path() { return _path; }
+	_fi_find_data* data() { return &(ref->_data); }
+	void next();
+	directory_iterator& operator++() { next(); return *this; }
+	directory_iterator operator++(int);
+	const char* operator*() { return path(); }
 
-   static const char* separator() { return _fi_sep; }
+	static const char* separator() { return _fi_sep; }
 
-   friend inline bool operator == (const directory_iterator& f1, const directory_iterator& f2)
-   {
-      return ((f1.ref->hf == _fi_invalid_handle) && (f1.ref->hf == _fi_invalid_handle));
-   }
+	friend inline bool operator == (const directory_iterator& f1, const directory_iterator& f2)
+	{
+		return ((f1.ref->hf == _fi_invalid_handle) && (f1.ref->hf == _fi_invalid_handle));
+	}
 
 #ifndef JM_NO_NOT_EQUAL
-   friend inline bool operator != (const directory_iterator& f1, const directory_iterator& f2)
-   {
-      return !(f1 == f2);
-   }
+	friend inline bool operator != (const directory_iterator& f1, const directory_iterator& f2)
+	{
+		return !(f1 == f2);
+	}
 #endif
 };
 
 inline bool operator < (const directory_iterator& f1, const directory_iterator& f2)
 {
-   return false;
+	return false;
 }
 
 JM_END_NAMESPACE
@@ -358,11 +358,3 @@ using __JM::mapfile;
 
 
 #endif     // __WINITER_H
-
-
-
-
-
-
-
-

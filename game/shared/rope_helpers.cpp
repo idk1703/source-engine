@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ public:
 		pAccel->Init( ROPE_GRAVITY );
 	}
 
-	
+
 	virtual void ApplyConstraints( CSimplePhysics::CNode *pNodes, int nNodes )
 	{
 		// Apply spring forces.
@@ -48,7 +48,7 @@ public:
 			if ( hang > flCurHangDist )
 				flCurHangDist = hang;
 		}
-		
+
 		// Adjust our spring length accordingly.
 		if ( flCurHangDist < m_flWantedHangDist )
 			m_flCurSlack += 1;
@@ -61,7 +61,7 @@ public:
 
 // Helpers.
 public:
-	
+
 	void	ApplyNewSpringLength()
 	{
 		ResetSpringLength( (m_flRopeLength + m_flCurSlack + ROPESLACK_FUDGEFACTOR) / (NumNodes() - 1) );
@@ -73,7 +73,7 @@ public:
 
 	Vector	m_vEndPoints[2];
 	bool	m_bAdjustSlack;
-	
+
 	float	m_flRopeLength;
 	float	m_flCurSlack;
 
@@ -84,7 +84,7 @@ public:
 
 
 
-void CalcRopeStartingConditions( 
+void CalcRopeStartingConditions(
 	const Vector &vStartPos,
 	const Vector &vEndPos,
 	int const nNodes,
@@ -97,11 +97,11 @@ void CalcRopeStartingConditions(
 
 	// Initialize the rope as a straight line with no slack as our first approximation.
 	// We then relax the rope by adding slack until it hangs to the desired height.
-	//	
+	//
 	// The spring length equation is:
 	// springLength = (ropeLength + slack + ROPESLACK_FUDGEFACTOR) / (nNodes - 1)
 	//
-	// We want our rope to be a straight line, so: 
+	// We want our rope to be a straight line, so:
 	// springLength = ropeLength / (nNodes-1)
 	//
 	// Therefore our initial slack is -ROPESLACK_FUDGEFACTOR
@@ -109,13 +109,13 @@ void CalcRopeStartingConditions(
 
 	rope.m_vEndPoints[0] = vStartPos;
 	rope.m_vEndPoints[1] = vEndPos;
-	
+
 	rope.m_flRopeLength = (vEndPos - vStartPos).Length();
 	rope.m_flWantedHangDist = desiredHang;
-	
+
 	rope.m_flStartZ = MIN( vStartPos.z, vEndPos.z );	// Calculate hang as the Z distance from the
 														// lowest endpoint to the bottom of the rope.
-	
+
 	rope.SetNumNodes( nNodes );
 
 	// Set the node positions.
@@ -136,5 +136,3 @@ void CalcRopeStartingConditions(
 	*pOutputLength = rope.m_flRopeLength;
 	*pOutputSlack = rope.m_flCurSlack;
 }
-
-

@@ -22,7 +22,7 @@ LINK_ENTITY_TO_CLASS( my_brush_entity, CMyBrushEntity );
 
 // Start of our data description for the class
 BEGIN_DATADESC( CMyBrushEntity )
-	
+
 	// Declare this function as being a touch function
 	DEFINE_ENTITYFUNC( BrushTouch ),
 
@@ -38,10 +38,10 @@ void CMyBrushEntity::Spawn( void )
 
 	// We should collide with physics
 	SetSolid( SOLID_VPHYSICS );
-	
+
 	// We push things out of our way
 	SetMoveType( MOVETYPE_PUSH );
-	
+
 	// Use our brushmodel
 	SetModel( STRING( GetModelName() ) );
 

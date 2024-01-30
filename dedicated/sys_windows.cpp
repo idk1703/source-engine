@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
-#include <windows.h> 
+#include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -71,7 +71,7 @@ static CSys g_Sys;
 ISys *sys = &g_Sys;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CSys::~CSys()
 {
@@ -79,8 +79,8 @@ CSys::~CSys()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msec - 
+// Purpose:
+// Input  : msec -
 //-----------------------------------------------------------------------------
 void CSys::Sleep( int msec )
 {
@@ -91,8 +91,8 @@ void CSys::Sleep( int msec )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *lib - 
+// Purpose:
+// Input  : *lib -
 // Output : long
 //-----------------------------------------------------------------------------
 long CSys::LoadLibrary( char *lib )
@@ -102,8 +102,8 @@ long CSys::LoadLibrary( char *lib )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : library - 
+// Purpose:
+// Input  : library -
 //-----------------------------------------------------------------------------
 void CSys::FreeLibrary( long library )
 {
@@ -114,8 +114,8 @@ void CSys::FreeLibrary( long library )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *out - 
+// Purpose:
+// Input  : *out -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSys::GetExecutableName( char *out )
@@ -128,19 +128,19 @@ bool CSys::GetExecutableName( char *out )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : level - 
-//			*msg - 
+// Purpose:
+// Input  : level -
+//			*msg -
 //-----------------------------------------------------------------------------
 void CSys::ErrorMessage( int level, const char *msg )
 {
 	MessageBox( NULL, msg, "Half-Life", MB_OK );
-	PostQuitMessage(0);	
+	PostQuitMessage(0);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : force - 
+// Purpose:
+// Input  : force -
 //-----------------------------------------------------------------------------
 void CSys::UpdateStatus( int force )
 {
@@ -177,8 +177,8 @@ void CSys::UpdateStatus( int force )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *string - 
+// Purpose:
+// Input  : *string -
 // Output : void CSys::ConsoleOutput
 //-----------------------------------------------------------------------------
 void CSys::ConsoleOutput (char *string)
@@ -194,9 +194,9 @@ void CSys::ConsoleOutput (char *string)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fmt - 
-//			... - 
+// Purpose:
+// Input  : *fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CSys::Printf( PRINTF_FORMAT_STRING const char *fmt, ... )
 {
@@ -213,7 +213,7 @@ void CSys::Printf( PRINTF_FORMAT_STRING const char *fmt, ... )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char *
 //-----------------------------------------------------------------------------
 char *CSys::ConsoleInput ( int index, char *buf, int buflen )
@@ -222,8 +222,8 @@ char *CSys::ConsoleInput ( int index, char *buf, int buflen )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szText - 
+// Purpose:
+// Input  : *szText -
 //-----------------------------------------------------------------------------
 void CSys::WriteStatusText( char *szText )
 {
@@ -231,7 +231,7 @@ void CSys::WriteStatusText( char *szText )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSys::CreateConsoleWindow( void )
@@ -240,13 +240,13 @@ bool CSys::CreateConsoleWindow( void )
 	{
 		return false;
 	}
-	
+
 	InitConProc();
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSys::DestroyConsoleWindow( void )
 {
@@ -262,7 +262,7 @@ void CSys::DestroyConsoleWindow( void )
 //-----------------------------------------------------------------------------
 bool CSys::LoadModules( CDedicatedAppSystemGroup *pAppSystemGroup )
 {
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "engine.dll",				CVAR_QUERY_INTERFACE_VERSION },	// NOTE: This one must be first!!
 		{ "inputsystem.dll",		INPUTSYSTEM_INTERFACE_VERSION },
@@ -278,9 +278,9 @@ bool CSys::LoadModules( CDedicatedAppSystemGroup *pAppSystemGroup )
 		{ "", "" }	// Required to terminate the list
 	};
 
-	if ( !pAppSystemGroup->AddSystems( appSystems ) ) 
+	if ( !pAppSystemGroup->AddSystems( appSystems ) )
 		return false;
-	
+
 	engine = (IDedicatedServerAPI *)pAppSystemGroup->FindSystem( VENGINE_HLDS_API_VERSION );
 
 	IMaterialSystem* pMaterialSystem = (IMaterialSystem*)pAppSystemGroup->FindSystem( MATERIAL_SYSTEM_INTERFACE_VERSION );
@@ -290,7 +290,7 @@ bool CSys::LoadModules( CDedicatedAppSystemGroup *pAppSystemGroup )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool NET_Init( void )
 {
@@ -312,7 +312,7 @@ bool NET_Init( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void NET_Shutdown( void )
 {
@@ -321,11 +321,11 @@ void NET_Shutdown( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hInstance - 
-//			hPrevInstance - 
-//			lpszCmdLine - 
-//			nCmdShow - 
+// Purpose:
+// Input  : hInstance -
+//			hPrevInstance -
+//			lpszCmdLine -
+//			nCmdShow -
 // Output : int PASCAL
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv); // in sys_ded.cpp
@@ -349,7 +349,7 @@ static char *GetBaseDir( const char *pszBuffer )
 	j = strlen( basedir );
 	if (j > 0)
 	{
-		if ( ( basedir[ j-1 ] == '\\' ) || 
+		if ( ( basedir[ j-1 ] == '\\' ) ||
 			 ( basedir[ j-1 ] == '/' ) )
 		{
 			basedir[ j-1 ] = 0;
@@ -408,4 +408,3 @@ extern "C" __declspec(dllexport) int DedicatedMain( HINSTANCE hInstance, HINSTAN
 	GlobalFree( argv );
 	return iret;
 }
-

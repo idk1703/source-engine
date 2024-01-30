@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -49,7 +49,7 @@ static int g_whichMenu = 0;
 //
 // These methods will bring up the radio menus from the client side.
 // They mimic the old server commands of the same name, which used
-// to require a round-trip causing latency and unreliability in 
+// to require a round-trip causing latency and unreliability in
 // menu responses.  Only 1 message is sent to the server now which
 // includes both the menu name and the selected item.  The server
 // is never informed that the menu has been displayed.
@@ -263,7 +263,7 @@ void CRadioStatus::Shutdown()
 	if ( m_pHeadLabelMaterial )
 		m_pHeadLabelMaterial->DecrementReferenceCount();
 
-	m_pHeadLabelMaterial = NULL;		
+	m_pHeadLabelMaterial = NULL;
 }
 
 void CRadioStatus::LevelInitPostEntity()
@@ -298,7 +298,7 @@ void CRadioStatus::DrawHeadLabels()
 			continue;
 
 		IClientNetworkable *pClient = cl_entitylist->GetClientEntity( i+1 );
-		
+
 		// Don't show an icon if the player is not in our PVS.
 		if ( !pClient || pClient->IsDormant() )
 			continue;
@@ -319,7 +319,7 @@ void CRadioStatus::DrawHeadLabels()
 		{
 			vOrigin.z += g_flHeadIconSize;
 		}
-		
+
 		// Align it so it never points up or down.
 		Vector vUp( 0, 0, 1 );
 		Vector vRight = CurrentViewRight();
@@ -418,4 +418,3 @@ void CRadioStatus::ExpireBotVoice( bool force )
 		}
 	}
 }
-

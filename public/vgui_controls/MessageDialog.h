@@ -89,7 +89,7 @@ enum EDialogType
 //-----------------------------------------------------------------------------
 class CMessageDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CMessageDialog, vgui::Frame ); 
+	DECLARE_CLASS_SIMPLE( CMessageDialog, vgui::Frame );
 
 public:
 	CMessageDialog( vgui::Panel *parent, const uint nType, const char *pTitle, const char *pMsg, const char *pCmdA, const char *pCmdB, vgui::Panel *pParent, bool bShowActivity );
@@ -118,7 +118,7 @@ public:
 	uint				GetType( void );
 	void				SetControlSettingsKeys( KeyValues *pKeys );
 
-private:	
+private:
 	void				CreateButtonLabel( ButtonLabel_s *pButton, const char *pIcon, const char *pText );
 	void				DoCommand( int button );
 

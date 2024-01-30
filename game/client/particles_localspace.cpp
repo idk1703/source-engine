@@ -28,7 +28,7 @@ inline const matrix3x4_t& CLocalSpaceEmitter::GetTransformMatrix() const
 //-----------------------------------------------------------------------------
 // Purpose: Creates a local space emitter
 //-----------------------------------------------------------------------------
-CSmartPtr<CLocalSpaceEmitter> CLocalSpaceEmitter::Create( const char *pDebugName, 
+CSmartPtr<CLocalSpaceEmitter> CLocalSpaceEmitter::Create( const char *pDebugName,
 	ClientEntityHandle_t hEntity, int nAttachment, int fFlags )
 {
 	CLocalSpaceEmitter *pRet = new CLocalSpaceEmitter( pDebugName );
@@ -36,7 +36,7 @@ CSmartPtr<CLocalSpaceEmitter> CLocalSpaceEmitter::Create( const char *pDebugName
 	pRet->m_hEntity = hEntity;
 	pRet->m_nAttachment = nAttachment;
 	pRet->m_fFlags = fFlags;
-	
+
 	pRet->SetupTransformMatrix();
 
 	return pRet;
@@ -73,7 +73,7 @@ void CLocalSpaceEmitter::SimulateParticles( CParticleSimulateIterator *pIterator
 		{
 			pIterator->RemoveParticle( pParticle );
 		}
-	
+
 		pParticle = (SimpleParticle*)pIterator->GetNext();
 	}
 }
@@ -90,7 +90,7 @@ void CLocalSpaceEmitter::RenderParticles( CParticleRenderIterator *pIterator )
 		// Transform it
 		Vector screenPos, worldPos;
 		VectorTransform( pParticle->m_Pos, mLocalToWorld, worldPos );
-		
+
 		// Correct viewmodel squashing
 		if ( m_fFlags & FLE_VIEWMODEL )
 		{
@@ -98,7 +98,7 @@ void CLocalSpaceEmitter::RenderParticles( CParticleRenderIterator *pIterator )
 		}
 
 		TransformParticle( mModelView, worldPos, screenPos );
-		
+
 		float sortKey = (int) screenPos.z;
 
 		// Render it
@@ -108,7 +108,7 @@ void CLocalSpaceEmitter::RenderParticles( CParticleRenderIterator *pIterator )
 			UpdateColor( pParticle ),
 			UpdateAlpha( pParticle ) * GetAlphaDistanceFade( screenPos, m_flNearClipMin, m_flNearClipMax ),
 			UpdateScale( pParticle ),
-			pParticle->m_flRoll 
+			pParticle->m_flRoll
 			);
 
 		pParticle = (const SimpleParticle *)pIterator->GetNext( sortKey );
@@ -118,7 +118,7 @@ void CLocalSpaceEmitter::RenderParticles( CParticleRenderIterator *pIterator )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Create the matrix by which we'll transform the particle's local 
+// Purpose: Create the matrix by which we'll transform the particle's local
 //			space into world space, via the attachment's transform
 //-----------------------------------------------------------------------------
 void CLocalSpaceEmitter::SetupTransformMatrix( void )
@@ -132,7 +132,7 @@ void CLocalSpaceEmitter::SetupTransformMatrix( void )
 			// This attachment is bogus!
 			Assert(0);
 		}
-	
+
 		// Tell the particle effect so it knows
 		Vector origin;
 		MatrixGetColumn( mat, 3, origin );
@@ -157,4 +157,3 @@ void CLocalSpaceEmitter::SetupTransformMatrix( void )
 	// We preapply the local transform because we need to squash it for viewmodel FOV.
 	m_ParticleEffect.SetAutoApplyLocalTransform( false );
 }
-

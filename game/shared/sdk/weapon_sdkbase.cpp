@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@
 // ----------------------------------------------------------------------------- //
 
 //--------------------------------------------------------------------------------------------------------
-static const char * s_WeaponAliasInfo[] = 
+static const char * s_WeaponAliasInfo[] =
 {
 	"none",		// WEAPON_NONE
 	"mp5",		// WEAPON_MP5
@@ -73,7 +73,7 @@ IMPLEMENT_NETWORKCLASS_ALIASED( WeaponSDKBase, DT_WeaponSDKBase )
 
 BEGIN_NETWORK_TABLE( CWeaponSDKBase, DT_WeaponSDKBase )
 #ifdef CLIENT_DLL
-  
+
 #else
 	// world weapon models have no animations
   	SendPropExclude( "DT_AnimTimeMustBeFirst", "m_flAnimTime" ),
@@ -101,7 +101,7 @@ LINK_ENTITY_TO_CLASS( weapon_sdk_base, CWeaponSDKBase );
 #endif
 
 // ----------------------------------------------------------------------------- //
-// CWeaponCSBase implementation. 
+// CWeaponCSBase implementation.
 // ----------------------------------------------------------------------------- //
 CWeaponSDKBase::CWeaponSDKBase()
 {
@@ -131,7 +131,7 @@ bool CWeaponSDKBase::PlayEmptySound()
 	filter.UsePredictionRules();
 
 	EmitSound( filter, entindex(), "Default.ClipEmpty_Rifle" );
-	
+
 	return 0;
 }
 

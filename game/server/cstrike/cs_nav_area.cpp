@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -24,7 +24,7 @@
 #include <tier0/memdbgon.h>
 
 #ifdef _WIN32
-#pragma warning (disable:4701)				// disable warning that variable *may* not be initialized 
+#pragma warning (disable:4701)				// disable warning that variable *may* not be initialized
 #endif
 
 
@@ -224,7 +224,7 @@ NavErrorType CCSNavArea::LoadLegacy( CUtlBuffer &fileBuffer, unsigned int versio
 	{
 		m_invDxCorners = m_invDyCorners = 0;
 
-		DevWarning( "Degenerate Navigation Area #%d at setpos %g %g %g\n", 
+		DevWarning( "Degenerate Navigation Area #%d at setpos %g %g %g\n",
 			m_id, m_center.x, m_center.y, m_center.z );
 	}
 
@@ -288,7 +288,7 @@ NavErrorType CCSNavArea::LoadLegacy( CUtlBuffer &fileBuffer, unsigned int versio
 			HidingSpot *spot = TheNavMesh->CreateHidingSpot();
 
 			spot->Load( fileBuffer, version );
-			
+
 			m_hidingSpots.AddToTail( spot );
 		}
 	}
@@ -334,7 +334,7 @@ NavErrorType CCSNavArea::LoadLegacy( CUtlBuffer &fileBuffer, unsigned int versio
 
 			// read list of spots along this path
 			unsigned char spotCount = fileBuffer.GetUnsignedChar();
-		
+
 			for( int s=0; s<spotCount; ++s )
 			{
 				fileBuffer.GetFloat();
@@ -362,7 +362,7 @@ NavErrorType CCSNavArea::LoadLegacy( CUtlBuffer &fileBuffer, unsigned int versio
 
 		// read list of spots along this path
 		unsigned char spotCount = fileBuffer.GetUnsignedChar();
-	
+
 		SpotOrder order;
 		for( int s=0; s<spotCount; ++s )
 		{
@@ -449,7 +449,7 @@ NavErrorType CCSNavArea::LoadLegacy( CUtlBuffer &fileBuffer, unsigned int versio
 	else
 	{
 /* TODO: Re-enable when latest 360 code gets integrated (MSB 5/5/09)
-		size_t nBytes = visibleAreaCount * sizeof( AreaBindInfo ); 
+		size_t nBytes = visibleAreaCount * sizeof( AreaBindInfo );
 		m_potentiallyVisibleAreas.~CAreaBindInfoArray();
 		new ( &m_potentiallyVisibleAreas ) CAreaBindInfoArray( (AreaBindInfo *)engine->AllocLevelStaticData( nBytes ), visibleAreaCount );
 */
@@ -469,5 +469,3 @@ NavErrorType CCSNavArea::LoadLegacy( CUtlBuffer &fileBuffer, unsigned int versio
 
 	return NAV_OK;
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -13,7 +13,7 @@
 // Valve, L.L.C., or in accordance with the terms and conditions stipulated in
 // the agreement/contract under which the contents have been supplied.
 //
-// Purpose:  Implementation of the TFStatsApplication class. 
+// Purpose:  Implementation of the TFStatsApplication class.
 //
 // $Workfile:     $
 // $Date:         $
@@ -55,7 +55,7 @@ CTFStatsApplication* g_pApp; //global!
 //------------------------------------------------------------------------------------------------------
 void CTFStatsApplication::printUsage()
 {
-	
+
 	printf("TFStats version %li.%li\n",majorVer,minorVer);
 	printf("\nUSAGE:\n");
 #ifdef WIN32
@@ -70,8 +70,8 @@ void CTFStatsApplication::printUsage()
 #ifdef WIN32
 	printf("(you should just be able to do \"start index.html\")\n");
 #endif
-	printf("TFStats uses Regex++:\nRegex++ © 1998-9 Dr John Maddock.\n");
-	
+	printf("TFStats uses Regex++:\nRegex++ ï¿½ 1998-9 Dr John Maddock.\n");
+
 }
 
 #include "CustomAwardList.h"
@@ -88,7 +88,7 @@ void CTFStatsApplication::DoAwards(CHTMLFile& MatchResultsPage)
 	MatchResultsPage.p();
 	MatchResultsPage.write("<img src=\"%s/awards.gif\">\n",g_pApp->supportHTTPPath.c_str());
 	MatchResultsPage.div("awards");
-	
+
 	//do custom awards first, they're usually the important ones for the match
 	CCustomAwardList* pCust;
 	os->chdir(ruleDirectory.c_str());
@@ -96,58 +96,58 @@ void CTFStatsApplication::DoAwards(CHTMLFile& MatchResultsPage)
 	os->chdir(outputDirectory.c_str());
 	if(pCust)
 	{
-		
+
 		CCustomAwardIterator it;
 		for (it=pCust->begin();it!=pCust->end();++it)
 		{
 			(*it)->report(MatchResultsPage);
 		}
-	
+
 		delete pCust;
 		MatchResultsPage.hr(450,true);
 	}
 	os->chdir(outputDirectory.c_str());
-	
+
 	//do scout award here.
 	CSurvivalistAward csrva; csrva.report(MatchResultsPage);
 
 	//sniper award
 	CSharpshooterAward cssa; cssa.report(MatchResultsPage);
-	
+
 	//soldier award
 	CRocketryAward cra; cra.report(MatchResultsPage);
-	
+
 	//demoman awards
 	CGrenadierAward cga; cga.report(MatchResultsPage);
 	CDemolitionsAward cda; cda.report(MatchResultsPage);
-	
+
 	//medic awards
 	CCureAward cca;cca.report(MatchResultsPage);
 	CBiologicalWarfareAward cbwa; cbwa.report(MatchResultsPage);
-	
+
 	//HW award
 	CAssaultCannonAward caca;caca.report(MatchResultsPage);
-	
+
 	//pyro award
 	CFlamethrowerAward cfa;cfa.report(MatchResultsPage);
-	
+
 	//spy award
 	CKnifeAward cka;cka.report(MatchResultsPage);
 
 	//engineer awards
-	CBestSentryAward cbsa; cbsa.report(MatchResultsPage); 
+	CBestSentryAward cbsa; cbsa.report(MatchResultsPage);
 	CSentryRebuildAward cba2;cba2.report(MatchResultsPage);
-	
-	
+
+
 	MatchResultsPage.hr(450,true);
-	
+
 	//non class specific
 	CKamikazeAward ckami;ckami.report(MatchResultsPage);
 	CTalkativeAward cta;cta.report(MatchResultsPage);
-	CTeamKillAward ctka; ctka.report(MatchResultsPage); 
-	
+	CTeamKillAward ctka; ctka.report(MatchResultsPage);
 
-	
+
+
 
 	MatchResultsPage.enddiv();
 }
@@ -163,14 +163,14 @@ void CTFStatsApplication::DoMatchResults()
 	CMatchResults cmr;
 	cmr.report(MatchResultsPage);
 	DoAwards(MatchResultsPage);
-	
+
 	CScoreboard cs;
 	cs.report(MatchResultsPage);
 
-	
+
 	CWhoKilledWho cwkw; cwkw.report(MatchResultsPage);
 
-}	
+}
 
 //------------------------------------------------------------------------------------------------------
 // Function:	CTFStatsApplication::parseCmdLineArg
@@ -187,7 +187,7 @@ void CTFStatsApplication::parseCmdLineArg(const char* in, char* var, char* val)
 		var[0]=val[0]=0;
 	}
 	else
-	{	
+	{
 		*pEq=0;
 		strcpy(var,in);
 		strcpy(val,pEq+1);
@@ -200,8 +200,8 @@ void CTFStatsApplication::parseCmdLineArg(const char* in, char* var, char* val)
 
 //------------------------------------------------------------------------------------------------------
 // Function:	CTFStatsApplication::ParseCommandLine
-// Purpose:	 this parses the commandline into the cmdLineSwitches map. Also 
-//	recognizes certain switches and sets variables and creates directories 
+// Purpose:	 this parses the commandline into the cmdLineSwitches map. Also
+//	recognizes certain switches and sets variables and creates directories
 //	accordingly to their values
 // Input:	argc - count of arguments from commandline
 //				argv[] - the arguments
@@ -210,7 +210,7 @@ void CTFStatsApplication::ParseCommandLine(int argc,const char* argv[])
 {
 	char var[100];
 	char val[100];
-	
+
 	//first find if we want to display startup info
 	bool displayStartupInfo=false;
 	for(int i=2;i<argc;i++)
@@ -218,7 +218,7 @@ void CTFStatsApplication::ParseCommandLine(int argc,const char* argv[])
 		parseCmdLineArg(argv[i],var,val);
 		if (!var[0])
 			fatalError("Malformed switch,  required format is <variable>=<value> with no spaces");
-		
+
 		cmdLineSwitches[var]=val;
 		if (stricmp(var,"displaystartupinfo")==0)
 			if (stricmp(val,"yes")==0)
@@ -227,7 +227,7 @@ void CTFStatsApplication::ParseCommandLine(int argc,const char* argv[])
 				break;
 			}
 	}
-	
+
 
 
 	if (displayStartupInfo)
@@ -240,20 +240,20 @@ void CTFStatsApplication::ParseCommandLine(int argc,const char* argv[])
 		parseCmdLineArg(argv[i],var,val);
 		if (!var[0])
 			fatalError("Malformed switch,  required format is <variable>=<value> with no spaces");
-	
+
 		if (displayStartupInfo)
 			printf("%20s = %-20s\n",var,val);
 		cmdLineSwitches[var]=val;
 	}
 
 
-	
+
 	outputDirectory=os->removeDirSlash(cmdLineSwitches["outputdir"]);
 	makeAndSaveDirectory(outputDirectory);
-	
+
 	ruleDirectory=os->removeDirSlash(cmdLineSwitches["ruledir"]);
 	makeAndSaveDirectory(ruleDirectory);
-	
+
 	if (cmdLineSwitches["eliminateoldplayers"]=="yes")
 	{
 		eliminateOldPlayers=true;
@@ -265,7 +265,7 @@ void CTFStatsApplication::ParseCommandLine(int argc,const char* argv[])
 		elimDays=0;
 	}
 
-	
+
 	if (cmdLineSwitches["usesupportdir"]=="yes")
 	{
 		supportDirectory=os->removeDirSlash(cmdLineSwitches["supportdir"]);
@@ -278,8 +278,8 @@ void CTFStatsApplication::ParseCommandLine(int argc,const char* argv[])
 		supportHTTPPath="support";
 	}
 	makeAndSaveDirectory(supportDirectory);
-	
-	
+
+
 	if (cmdLineSwitches["persistplayerstats"]=="yes")
 	{
 		playerDirectory=os->removeDirSlash(cmdLineSwitches["playerdir"]);
@@ -306,16 +306,16 @@ void CTFStatsApplication::main(int argc,const char* argv[])
 {
 	if (argc<=1){printUsage();return;}
 	g_pApp=this;
-	
+
 	//TODO: move this into OS interface
 	TFStats_setNewHandler();
-	
+
 	inputDirectory=".";
 	makeAndSaveDirectory(inputDirectory);
-	
+
 	//this call also sets up various directories to be used
-	ParseCommandLine(argc,argv);		
-	
+	ParseCommandLine(argc,argv);
+
 	Util::initFriendlyWeaponNameTable();
 
 	//LogFile is read in here.
@@ -325,45 +325,45 @@ void CTFStatsApplication::main(int argc,const char* argv[])
 	plogfile=CEventList::readEventList(argv[1]);
 	if (!plogfile)
 		fatalError("No valid data found in logfile %s\n",argv[1]);
-		
-	
+
+
 	os->chdir(outputDirectory.c_str());
 	//make match information object
 	g_pMatchInfo= new CMatchInfo(plogfile);
-	
+
 	CTFStatsReport matchreport;
-	
-	
-	
+
+
+
 	matchreport.genImages();
-	
-	
+
+
 	matchreport.genJavaScript();
 	matchreport.genStyleSheet();
-	
+
 	if (cmdLineSwitches["persistplayerstats"]=="yes")
 		matchreport.genAllPlayersStyleSheet();
 
 	matchreport.genIndex();
-	
+
 	os->chdir(outputDirectory.c_str());
 	matchreport.genTopFrame();
 	matchreport.genNavFrame();
-	
-	
+
+
 	DoMatchResults();
 
-	
+
 	CCVarList ccvl;
 	ccvl.makeHTMLPage("cvars.html","Server Settings");
-	
+
 	CDialogueReadout cdr;
 	cdr.makeHTMLPage("dialogue.html","Dialogue");
 
 	CPlayerSpecifics cps;
 	cps.makeHTMLPage("players.html","Players");
 
-	
+
 	if (cmdLineSwitches["persistplayerstats"]=="yes")
 	{
 		if(!g_pMatchInfo->isLanGame())
@@ -414,7 +414,7 @@ void CTFStatsApplication::makeDirectory(string& dir)
 {
 	char startpath[500];
 	os->getcwd(startpath,500);
-	
+
 	if (!os->makeHier(dir))
 	{
 		fatalError("Failed to make directory \"%s\". (Reason: %s)",dir.c_str(),strerror(errno));
@@ -449,7 +449,7 @@ void CTFStatsApplication::warning(char* fmt,...)
 {
 	va_list v;
 	va_start(v,fmt);
-	fprintf(stderr,"Warning: ");	
+	fprintf(stderr,"Warning: ");
 	vfprintf(stderr,fmt,v);
 	fprintf(stderr,"\n");
 }
@@ -461,7 +461,7 @@ void CTFStatsApplication::warning(char* fmt,...)
 // reported in the all-player stats
 // Output:	time_t the number of cutoff seconds
 //------------------------------------------------------------------------------------------------------
-time_t CTFStatsApplication::getCutoffSeconds()	
+time_t CTFStatsApplication::getCutoffSeconds()
 {
 	return 60*60*24*elimDays;
 }

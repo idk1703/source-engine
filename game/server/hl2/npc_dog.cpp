@@ -60,7 +60,7 @@ public:
 	void InputStopWaitAndCatch( inputdata_t &inputdata );
 	void InputSetThrowArcModifier( inputdata_t &inputdata );
 	void InputSetThrowTarget( inputdata_t &inputdata );
-	
+
 	void InputTurnBoneFollowersOff( inputdata_t &inputdata );
 	void InputTurnBoneFollowersOn( inputdata_t &inputdata );
 
@@ -110,7 +110,7 @@ protected:
 
 	bool			m_bHasObject;
 	bool			m_bBeamEffects;
-	
+
 	CUtlVector< CHandle <CBaseEntity> > m_hUnreachableObjects;
 
 	// Contained Bone Follower manager
@@ -133,7 +133,7 @@ protected:
 
 
 protected:
-	
+
 	DEFINE_CUSTOM_AI;
 };
 
@@ -173,7 +173,7 @@ BEGIN_DATADESC( CNPC_Dog )
 	DEFINE_OUTPUT( m_OnThrow, "OnDogThrow"),
 	DEFINE_OUTPUT( m_OnCatch, "OnDogCatch"),
 	DEFINE_OUTPUT( m_OnPickup, "OnDogPickup"),
-	
+
 END_DATADESC()
 
 #define DOG_PHYSOBJ_MOVE_TO_DIST	96
@@ -203,7 +203,7 @@ enum
 //=========================================================
 // tasks
 //=========================================================
-enum 
+enum
 {
 	TASK_DOG_DELAY_SWAT = LAST_SHARED_TASK,
 	TASK_DOG_GET_PATH_TO_PHYSOBJ,
@@ -230,7 +230,7 @@ ConVar dog_max_wait_time( "dog_max_wait_time", "7" );
 ConVar dog_debug( "dog_debug", "0" );
 
 //-----------------------------------------------------------------------------
-// Classify - indicates this NPC's place in the 
+// Classify - indicates this NPC's place in the
 // relationship table.
 //-----------------------------------------------------------------------------
 Class_T	CNPC_Dog::Classify ( void )
@@ -424,14 +424,14 @@ void CNPC_Dog::NPCThink( void )
 		ClearBeams();
 		m_bHasObject = false;
 	}
-	
+
 	if ( m_bHasObject == true )
 	{
 		 RelaxAim();
 		 PullObject( true );
 	}
-	
-	
+
+
 	// update follower bones
 	m_BoneFollowerManager.UpdateBoneFollowers(this);
 }
@@ -470,7 +470,7 @@ void CNPC_Dog::Spawn( void )
 	m_NPCState			= NPC_STATE_NONE;
 
 	m_takedamage		= DAMAGE_NO;
-	
+
 	CapabilitiesAdd( bits_CAP_MOVE_GROUND | bits_CAP_OPEN_DOORS | bits_CAP_TURN_HEAD | bits_CAP_ANIMATEDFACE );
 	CapabilitiesAdd( bits_CAP_FRIENDLY_DMG_IMMUNE );
 
@@ -504,10 +504,10 @@ void CNPC_Dog::PrescheduleThink( void )
 		}
 	}
 
-	if ( m_flTimeToCatch < gpGlobals->curtime ) 
+	if ( m_flTimeToCatch < gpGlobals->curtime )
 		 m_flTimeToCatch = 0.0f;
 
-	
+
 	if ( GetIdealActivity() == ACT_IDLE )
 	{
 		if ( m_hPhysicsEnt && m_bHasObject == true )
@@ -532,7 +532,7 @@ int CNPC_Dog::SelectSchedule ( void )
 		if ( m_hPhysicsEnt )
 			 return SCHED_DOG_CATCH_OBJECT;
 	}
-	
+
 	if ( m_bDoCatchThrowBehavior == true )
 	{
 		if ( m_flTimeToCatch < 0.1 && m_flNextSwat <= gpGlobals->curtime )
@@ -639,7 +639,7 @@ void CNPC_Dog::PullObject( bool bMantain )
 void CNPC_Dog::Precache( void )
 {
 	PrecacheModel( "models/dog.mdl" );
-	
+
 	PrecacheScriptSound( "Weapon_PhysCannon.Launch" );
 
 	PrecacheModel( "sprites/orangelight1.vmt" );
@@ -681,10 +681,10 @@ void CNPC_Dog::CleanCatchAndThrow( bool bClearTimers )
 			{
 				pPhysObj->RecheckCollisionFilter();
 			}
-	
+
 			ClearBeams();
 		}
-		
+
 		m_hPhysicsEnt = NULL;
 	}
 
@@ -813,7 +813,7 @@ void CNPC_Dog::ThrowObject( const char *pAttachmentName )
 
 			if ( iAttachment == 0 )
 				 iAttachment = m_iPhysGunAttachment;
-			
+
 			GetAttachment( iAttachment, vGunPos, angGunAngles );
 
 			pPhysObj->Wake();
@@ -830,7 +830,7 @@ void CNPC_Dog::ThrowObject( const char *pAttachmentName )
 				pPhysObj->RecheckCollisionFilter();
 				pPhysObj->RecheckContactPoints();
 			}
-				
+
 			if ( m_hThrowTarget == NULL )
 				 m_hThrowTarget = AI_GetSinglePlayer();
 
@@ -839,7 +839,7 @@ void CNPC_Dog::ThrowObject( const char *pAttachmentName )
 			if ( m_hThrowTarget )
 			{
 				Vector vThrowOrigin = m_hThrowTarget->GetAbsOrigin();
-				
+
 				if ( m_hThrowTarget->IsPlayer() )
 					 vThrowOrigin = vThrowOrigin + Vector( random->RandomFloat( -128, 128 ), random->RandomFloat( -128, 128 ), 0 );
 
@@ -859,7 +859,7 @@ void CNPC_Dog::ThrowObject( const char *pAttachmentName )
 				}
 
 				vThrowDirection = vecToss + ( m_hThrowTarget->GetSmoothedVelocity() / 2 );
-							
+
 				Vector vLinearDrag;
 
 				Vector unitVel = vThrowDirection;
@@ -869,9 +869,9 @@ void CNPC_Dog::ThrowObject( const char *pAttachmentName )
 
 				float flDrag = pPhysObj->CalculateLinearDrag( vThrowDirection );
 				vThrowDirection = vThrowDirection + ( unitVel * ( flDrag * flDrag ) ) / flTest;
-			
+
 				pPhysObj->SetVelocity( &vThrowDirection, &angVelocity );
-				
+
 				m_flTimeToCatch = gpGlobals->curtime + dog_max_wait_time.GetFloat();
 
 				//Don't start pulling until the object is away from me.
@@ -883,11 +883,11 @@ void CNPC_Dog::ThrowObject( const char *pAttachmentName )
 			m_OnThrow.FireOutput( this, this );
 
 			ClearBeams();
-			
+
 			if ( m_bBeamEffects == true )
 			{
 				EmitSound( "Weapon_PhysCannon.Launch" );
-				
+
 				CBeam *pBeam = CBeam::BeamCreate(  "sprites/orangelight1.vmt", 1.8 );
 
 				if ( pBeam != NULL )
@@ -895,14 +895,14 @@ void CNPC_Dog::ThrowObject( const char *pAttachmentName )
 					pBeam->PointEntInit( m_hPhysicsEnt->WorldSpaceCenter(), this );
 					pBeam->SetEndAttachment( m_iPhysGunAttachment );
 					pBeam->SetWidth( 6.4 );
-					pBeam->SetEndWidth( 12.8 );					
+					pBeam->SetEndWidth( 12.8 );
 					pBeam->SetBrightness( 255 );
 					pBeam->SetColor( 255, 255, 255 );
 					pBeam->LiveForTime( 0.2f );
 					pBeam->RelinkBeam();
 					pBeam->SetNoise( 2 );
 				}
-			
+
 				Vector	shotDir = ( m_hPhysicsEnt->WorldSpaceCenter() - vGunPos );
 				VectorNormalize( shotDir );
 
@@ -923,7 +923,7 @@ void CNPC_Dog::PickupOrCatchObject( const char *pAttachmentName )
 
 		if ( iAttachment == 0 )
 			 iAttachment = m_iPhysGunAttachment;
-		
+
 		// Move physobject to shadow
 		IPhysicsObject *pPhysicsObject = m_hPhysicsEnt->VPhysicsGetObject();
 		if ( pPhysicsObject )
@@ -931,17 +931,17 @@ void CNPC_Dog::PickupOrCatchObject( const char *pAttachmentName )
 			pPhysicsObject->SetShadow( 1e4, 1e4, false, false );
 			pPhysicsObject->UpdateShadow( GetAbsOrigin(), GetAbsAngles(), false, 0 );
 		}
-		
+
 		m_iContainerMoveType = m_hPhysicsEnt->GetMoveType();
 		m_hPhysicsEnt->SetMoveType( MOVETYPE_NONE );
-		
+
 		m_hPhysicsEnt->SetParent( this, iAttachment );
-	
+
 		m_hPhysicsEnt->SetLocalOrigin( vec3_origin );
 		m_hPhysicsEnt->SetLocalAngles( vec3_angle );
 
 		m_hPhysicsEnt->SetGroundEntity( NULL );
-		
+
 
 		if ( m_hPhysicsEnt->GetOwnerEntity() == NULL )
 			 m_hPhysicsEnt->SetOwnerEntity( this );
@@ -985,7 +985,7 @@ void CNPC_Dog::HandleAnimEvent( animevent_t *pEvent )
 void CNPC_Dog::ClearBeams( void )
 {
 	ClearSprites();
-	
+
 	// Turn off sprites
 	for ( int i = 0; i < EFFECT_COUNT; i++ )
 	{
@@ -1018,7 +1018,7 @@ void CNPC_Dog::CreateSprites( void )
 		if ( m_hGlowSprites[i] )
 			continue;
 
-		const char *attachNames[] = 
+		const char *attachNames[] =
 		{
 			"physgun",
 			"thumb",
@@ -1050,7 +1050,7 @@ void CNPC_Dog::CreateBeams( void )
 		if ( m_hBeams[i] )
 			continue;
 
-		const char *attachNames[] = 
+		const char *attachNames[] =
 		{
 			"physgun",
 			"thumb",
@@ -1081,7 +1081,7 @@ bool CNPC_Dog::FindPhysicsObject( const char *pPickupName, CBaseEntity *pIgnore 
 	if ( pPickupName != NULL && strlen( pPickupName ) > 0 )
 	{
 		pEnt = gEntList.FindEntityByName( NULL, pPickupName );
-		
+
 		if ( m_hUnreachableObjects.Find( pEnt ) == -1  )
 		{
 			m_bHasObject = false;
@@ -1089,7 +1089,7 @@ bool CNPC_Dog::FindPhysicsObject( const char *pPickupName, CBaseEntity *pIgnore 
 			return true;
 		}
 	}
-	
+
 	while ( ( pEnt = gEntList.FindEntityByClassname( pEnt, "prop_physics" ) ) != NULL )
 	{
 		//We don't want this one.
@@ -1106,7 +1106,7 @@ bool CNPC_Dog::FindPhysicsObject( const char *pPickupName, CBaseEntity *pIgnore 
 
 		if ( pPhysObj->GetMass() > DOG_MAX_THROW_MASS )
 			 continue;
-		
+
 		Vector center = pEnt->WorldSpaceCenter();
 		flDist = UTIL_DistApprox2D( GetAbsOrigin(), center );
 
@@ -1121,7 +1121,7 @@ bool CNPC_Dog::FindPhysicsObject( const char *pPickupName, CBaseEntity *pIgnore 
 		if ( pPhysObj->IsMoveable() == false )
 			 continue;
 
-		if ( pEnt->GetCollisionGroup() == COLLISION_GROUP_DEBRIS || 
+		if ( pEnt->GetCollisionGroup() == COLLISION_GROUP_DEBRIS ||
 			 pEnt->GetCollisionGroup() == COLLISION_GROUP_INTERACTIVE_DEBRIS )
 			 continue;
 
@@ -1133,7 +1133,7 @@ bool CNPC_Dog::FindPhysicsObject( const char *pPickupName, CBaseEntity *pIgnore 
 
 		if ( FVisible( pEnt ) == false )
 			 continue;
-		
+
 		pNearest = pEnt;
 		flNearestDist = flDist;
 	}
@@ -1158,7 +1158,7 @@ bool CNPC_Dog::FindPhysicsObject( const char *pPickupName, CBaseEntity *pIgnore 
 }
 
 //-----------------------------------------------------------------------------
-// Can me enemy see me? 
+// Can me enemy see me?
 //-----------------------------------------------------------------------------
 bool CNPC_Dog::CanTargetSeeMe( void )
 {
@@ -1178,7 +1178,7 @@ bool CNPC_Dog::CanTargetSeeMe( void )
 				if ( pPlayer->FVisible( m_hPhysicsEnt ) == false )
 					return false;
 			}
-			
+
 			if ( pPlayer->FInViewCone( this ) )
 			{
 				return true;
@@ -1215,19 +1215,19 @@ void CNPC_Dog::RunTask( const Task_t *pTask )
 				TaskFail( "Can't find an object I like!" );
 				return;
 			}
-	
+
 			IPhysicsObject *pPhysicsObject = m_hPhysicsEnt->VPhysicsGetObject();
-			
+
 			Vector vecGoalPos;
 			Vector vecDir;
 
 			vecDir = GetLocalOrigin() - m_hPhysicsEnt->WorldSpaceCenter();
 			VectorNormalize(vecDir);
 			vecDir.z = 0;
-		
+
 			if ( m_hPhysicsEnt->GetOwnerEntity() == NULL )
 				 m_hPhysicsEnt->SetOwnerEntity( this );
-		
+
 			if ( pPhysicsObject )
 				 pPhysicsObject->RecheckCollisionFilter();
 
@@ -1253,7 +1253,7 @@ void CNPC_Dog::RunTask( const Task_t *pTask )
 
 				if ( m_hUnreachableObjects.Find( m_hPhysicsEnt ) == -1 )
 					 m_hUnreachableObjects.AddToTail( m_hPhysicsEnt );
-								
+
 				m_hPhysicsEnt = NULL;
 
 				GetNavigator()->ClearGoal();
@@ -1310,7 +1310,7 @@ void CNPC_Dog::RunTask( const Task_t *pTask )
 			if ( m_hPhysicsEnt != NULL )
 			{
 				IPhysicsObject *pPhysObj = m_hPhysicsEnt->VPhysicsGetObject();
-					
+
 				if ( !pPhysObj )
 				{
 					Warning( "npc_dog TASK_WAIT_FOR_MOVEMENT with NULL m_hPhysicsEnt->VPhysicsGetObject\n" );
@@ -1325,11 +1325,11 @@ void CNPC_Dog::RunTask( const Task_t *pTask )
 				{
 					Vector vecGoalPos;
 					Vector vecDir;
-				
+
 					vecDir = GetLocalOrigin() - m_hPhysicsEnt->WorldSpaceCenter();
 					VectorNormalize(vecDir);
 					vecDir.z = 0;
-									
+
 					vecGoalPos = m_hPhysicsEnt->WorldSpaceCenter() + (vecDir * DOG_PHYSOBJ_MOVE_TO_DIST );
 
 					GetNavigator()->ClearGoal();
@@ -1351,7 +1351,7 @@ void CNPC_Dog::RunTask( const Task_t *pTask )
 					}
 				}
 			}
-			
+
 			BaseClass::RunTask( pTask );
 		}
 		break;
@@ -1393,13 +1393,13 @@ void CNPC_Dog::RunTask( const Task_t *pTask )
 				{
 					flDistanceToPlayer = (pPlayer->GetAbsOrigin() - m_hPhysicsEnt->WorldSpaceCenter()).Length();
 				}
-			
+
 				IPhysicsObject *pPhysObj = m_hPhysicsEnt->VPhysicsGetObject();
 				if ( !pPhysObj )
 				{
 					Warning( "npc_dog:  TASK_DOG_WAIT_FOR_OBJECT with m_hPhysicsEnt->VPhysicsGetObject == NULL\n" );
 				}
-					
+
 				if ( pPhysObj && !( pPhysObj->GetGameFlags() & FVPHYSICS_PLAYER_HELD ) && flDistanceToPlayer > ( flDistance * 2 ) )
 				{
 					if ( m_flTimeToPull <= gpGlobals->curtime )
@@ -1416,7 +1416,7 @@ void CNPC_Dog::RunTask( const Task_t *pTask )
 						if ( pPhysObj && flDistance <= DOG_PULL_DISTANCE )
 						{
 							Vector vDir = ( vGunPos -  m_hPhysicsEnt->WorldSpaceCenter() );
-								
+
 							VectorNormalize( vDir );
 
 							vCurrentVel = vCurrentVel * ( flCurrentVel * DOG_PULL_VELOCITY_MOD );
@@ -1428,10 +1428,10 @@ void CNPC_Dog::RunTask( const Task_t *pTask )
 
 							Vector vAngle( 0, 0, 0 );
 							pPhysObj->AddVelocity( &vDir, &vAngle );
-							
+
 							CreateBeams();
 						}
-					
+
 						float flDot = DotProduct( vCurrentVel, vForward );
 
 						if ( flDistance >= DOG_PULL_DISTANCE && flDistance <= ( DOG_PULL_DISTANCE * 2 ) && flDot > -0.3 )
@@ -1444,7 +1444,7 @@ void CNPC_Dog::RunTask( const Task_t *pTask )
 								vecDir = GetLocalOrigin() - m_hPhysicsEnt->WorldSpaceCenter();
 								VectorNormalize(vecDir);
 								vecDir.z = 0;
-												
+
 								vecGoalPos = m_hPhysicsEnt->WorldSpaceCenter() + (vecDir * DOG_PHYSOBJ_MOVE_TO_DIST );
 
 								GetNavigator()->ClearGoal();
@@ -1454,7 +1454,7 @@ void CNPC_Dog::RunTask( const Task_t *pTask )
 
 								if ( ( vecGoalPos - GetLocalOrigin() ).Length() <= 128 )
 									 aActivity = ACT_WALK;
-									 
+
 								GetNavigator()->SetGoal( AI_NavGoal_t( vecGoalPos, aActivity ),  AIN_NO_PATH_TASK_FAIL );
 							}
 						}
@@ -1470,7 +1470,7 @@ void CNPC_Dog::RunTask( const Task_t *pTask )
 					GetMotor()->UpdateYaw();
 				}
 
-				if ( m_flTimeToCatch < gpGlobals->curtime && m_bDoWaitforObjectBehavior == false ) 
+				if ( m_flTimeToCatch < gpGlobals->curtime && m_bDoWaitforObjectBehavior == false )
 				{
 					m_hPhysicsEnt->SetOwnerEntity( NULL );
 					m_flTimeToCatch = 0.0f;
@@ -1498,7 +1498,7 @@ void CNPC_Dog::RunTask( const Task_t *pTask )
 				ClearBeams();
 				TaskFail("No Physics Object!");
 			}
-			
+
 		}
 		break;
 
@@ -1549,17 +1549,17 @@ void CNPC_Dog::StartTask( const Task_t *pTask )
 			}
 
 			IPhysicsObject *pPhysicsObject = m_hPhysicsEnt->VPhysicsGetObject();
-			
+
 			Vector vecGoalPos;
 			Vector vecDir;
 
 			vecDir = GetLocalOrigin() - m_hPhysicsEnt->WorldSpaceCenter();
 			VectorNormalize(vecDir);
 			vecDir.z = 0;
-		
+
 			if ( m_hPhysicsEnt->GetOwnerEntity() == NULL )
 				 m_hPhysicsEnt->SetOwnerEntity( this );
-		
+
 			if ( pPhysicsObject )
 				 pPhysicsObject->RecheckCollisionFilter();
 
@@ -1575,7 +1575,7 @@ void CNPC_Dog::StartTask( const Task_t *pTask )
 			{
 				 if ( m_hUnreachableObjects.Find( m_hPhysicsEnt ) == -1 )
 					  m_hUnreachableObjects.AddToTail( m_hPhysicsEnt );
-					
+
 				 FindPhysicsObject( NULL, m_hPhysicsEnt );
 
 				 m_flTimeToCatch = gpGlobals->curtime + 0.1;
@@ -1595,7 +1595,7 @@ void CNPC_Dog::StartTask( const Task_t *pTask )
 		{
 			if( m_hPhysicsEnt == NULL )
 			{
-				// Physics Object is gone! Probably was an explosive 
+				// Physics Object is gone! Probably was an explosive
 				// or something else broke it.
 				TaskFail("Physics ent NULL");
 				return;
@@ -1610,12 +1610,12 @@ void CNPC_Dog::StartTask( const Task_t *pTask )
 			TaskComplete();
 		}
 		break;
-		
+
 	case TASK_DOG_PICKUP_ITEM:
 		{
 			if( m_hPhysicsEnt == NULL )
 			{
-				// Physics Object is gone! Probably was an explosive 
+				// Physics Object is gone! Probably was an explosive
 				// or something else broke it.
 				TaskFail("Physics ent NULL");
 				return;
@@ -1627,12 +1627,12 @@ void CNPC_Dog::StartTask( const Task_t *pTask )
 		}
 
 		break;
-		
+
 	case TASK_DOG_LAUNCH_ITEM:
 		{
 			if( m_hPhysicsEnt == NULL )
 			{
-				// Physics Object is gone! Probably was an explosive 
+				// Physics Object is gone! Probably was an explosive
 				// or something else broke it.
 				TaskFail("Physics ent NULL");
 				return;
@@ -1669,7 +1669,7 @@ void CNPC_Dog::StartTask( const Task_t *pTask )
 		SetIdealActivity( (Activity)ACT_DOG_CATCH  );
 	}
 	break;
-			
+
 	case TASK_DOG_DELAY_SWAT:
 		m_flNextSwat = gpGlobals->curtime + pTask->flTaskData;
 
@@ -1711,7 +1711,7 @@ AI_BEGIN_CUSTOM_NPC( npc_dog, CNPC_Dog )
 	DECLARE_ACTIVITY( ACT_DOG_PICKUP )
 	DECLARE_ACTIVITY( ACT_DOG_WAITING )
 	DECLARE_ACTIVITY( ACT_DOG_CATCH )
-	
+
 	DECLARE_CONDITION( COND_DOG_LOST_PHYSICS_ENTITY )
 
 	DECLARE_TASK( TASK_DOG_DELAY_SWAT )
@@ -1724,12 +1724,12 @@ AI_BEGIN_CUSTOM_NPC( npc_dog, CNPC_Dog )
 
 	DECLARE_TASK( TASK_DOG_WAIT_FOR_TARGET_TO_FACE )
 	DECLARE_TASK( TASK_DOG_SETUP_THROW_TARGET )
-		
+
 	DECLARE_ANIMEVENT( AE_DOG_THROW )
 	DECLARE_ANIMEVENT( AE_DOG_PICKUP )
 	DECLARE_ANIMEVENT( AE_DOG_CATCH )
 	DECLARE_ANIMEVENT( AE_DOG_PICKUP_NOEFFECT )
-	
+
 
 	DEFINE_SCHEDULE
 	(

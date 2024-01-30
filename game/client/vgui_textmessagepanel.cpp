@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -84,7 +84,7 @@ private:
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
-// Input  : *parent - 
+// Input  : *parent -
 //-----------------------------------------------------------------------------
 CTextMessagePanel::CTextMessagePanel( vgui::VPANEL parent )
 : BaseClass( NULL, "CTextMessagePanel" )
@@ -110,7 +110,7 @@ CTextMessagePanel::CTextMessagePanel( vgui::VPANEL parent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTextMessagePanel::~CTextMessagePanel( void )
 {
@@ -118,7 +118,7 @@ CTextMessagePanel::~CTextMessagePanel( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Get font sizes
-// Input  : *pWidth - 
+// Input  : *pWidth -
 // Output : int
 //-----------------------------------------------------------------------------
 int CTextMessagePanel::GetFontInfo( FONTABC *pABCs, vgui::HFont hFont )
@@ -186,9 +186,9 @@ CTextMessagePanel::message_t *CTextMessagePanel::AllocMessage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
-//			y - 
+// Purpose:
+// Input  : x -
+//			y -
 //-----------------------------------------------------------------------------
 void CTextMessagePanel::SetPosition( int x, int y )
 {
@@ -205,13 +205,13 @@ void CTextMessagePanel::SetPosition( int x, int y )
 
 //-----------------------------------------------------------------------------
 // Purpose: Adds a character to the active list, if possible
-// Input  : x - 
-//			y - 
-//			r - 
-//			g - 
-//			b - 
-//			a - 
-//			ch - 
+// Input  : x -
+//			y -
+//			r -
+//			g -
+//			b -
+//			a -
+//			ch -
 // Output : int
 //-----------------------------------------------------------------------------
 void CTextMessagePanel::AddChar( int r, int g, int b, int a, wchar_t ch )
@@ -232,9 +232,9 @@ void CTextMessagePanel::AddChar( int r, int g, int b, int a, wchar_t ch )
 
 //-----------------------------------------------------------------------------
 // Purpose: Determine width and height of specified string
-// Input  : *wide - 
-//			*tall - 
-//			*string - 
+// Input  : *wide -
+//			*tall -
+//			*string -
 //-----------------------------------------------------------------------------
 void CTextMessagePanel::GetTextExtents( int *wide, int *tall, const char *string )
 {
@@ -243,7 +243,7 @@ void CTextMessagePanel::GetTextExtents( int *wide, int *tall, const char *string
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTextMessagePanel::SetFont( vgui::HFont hCustomFont )
 {
@@ -260,7 +260,7 @@ void CTextMessagePanel::SetFont( vgui::HFont hCustomFont )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTextMessagePanel::SetDefaultFont( void )
 {
@@ -268,7 +268,7 @@ void CTextMessagePanel::SetDefaultFont( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTextMessagePanel::OnTick( void )
 {
@@ -276,7 +276,7 @@ void CTextMessagePanel::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CTextMessagePanel::ShouldDraw( void )
@@ -290,7 +290,7 @@ bool CTextMessagePanel::ShouldDraw( void )
 //-----------------------------------------------------------------------------
 // Purpose: Draw current text items
 //-----------------------------------------------------------------------------
-void CTextMessagePanel::Paint() 
+void CTextMessagePanel::Paint()
 {
 	CTextMessagePanel::message_t *msg;
 
@@ -301,7 +301,7 @@ void CTextMessagePanel::Paint()
 	for ( int i = 0 ; i < messageCount; ++i )
 	{
 		msg = &m_Messages[ i ];
-	
+
 		switch ( msg->type )
 		{
 		default:
@@ -337,7 +337,7 @@ void CTextMessagePanel::Paint()
 	Reset();
 }
 
-class CTextMessage : public ITextMessage 
+class CTextMessage : public ITextMessage
 {
 private:
 	CTextMessagePanel *textMessagePanel;

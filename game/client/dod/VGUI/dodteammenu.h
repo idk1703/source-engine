@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ class CDODTeamMenu : public CTeamMenu
 {
 private:
 	DECLARE_CLASS_SIMPLE( CDODTeamMenu, CTeamMenu );
-		
+
 public:
 	CDODTeamMenu(IViewPort *pViewPort);
 	~CDODTeamMenu();

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,7 +25,7 @@
 	#include "c_tf_player.h"
 	#include "hud_macros.h"
 	#include "tf_hud_mann_vs_machine_status.h"
-	#include "c_tf_objective_resource.h"	
+	#include "c_tf_objective_resource.h"
 	#include "player_vs_environment/c_tf_upgrades.h"
 #endif
 
@@ -55,7 +55,7 @@ BEGIN_NETWORK_TABLE_NOBASE( CMannVsMachineWaveStats, DT_CMannVsMachineWaveStats 
 	SendPropInt( SENDINFO( nPlayerDeaths ), 16, SPROP_UNSIGNED ),
 	SendPropInt( SENDINFO( nBuyBacks ), 8, SPROP_UNSIGNED ),
 #else
-	
+
 	RecvPropInt( RECVINFO( nCreditsDropped ) ),
 	RecvPropInt( RECVINFO( nCreditsAcquired ) ),
 	RecvPropInt( RECVINFO( nCreditsBonus ) ),
@@ -69,7 +69,7 @@ IMPLEMENT_NETWORKCLASS_ALIASED( MannVsMachineStats, DT_MannVsMachineStats )
 
 BEGIN_NETWORK_TABLE( CMannVsMachineStats, DT_MannVsMachineStats )
 #if defined ( GAME_DLL )
-    SendPropInt( SENDINFO( m_iCurrentWaveIdx ), 8, SPROP_UNSIGNED ),
+	SendPropInt( SENDINFO( m_iCurrentWaveIdx ), 8, SPROP_UNSIGNED ),
 	SendPropInt( SENDINFO( m_iServerWaveID ), 8, SPROP_UNSIGNED ),
 	SendPropDataTable( SENDINFO_DT(m_runningTotalWaveStats), &REFERENCE_SEND_TABLE(DT_CMannVsMachineWaveStats) ),
 	SendPropDataTable( SENDINFO_DT(m_previousWaveStats), &REFERENCE_SEND_TABLE(DT_CMannVsMachineWaveStats) ),
@@ -249,7 +249,7 @@ static void __MsgFunc_MVMResetPlayerWaveSpendingStats( bf_read &msg )
 	// Read the data
 	// Wave(1)
 	uint8 idxWave			= msg.ReadByte();
-	
+
 	g_pMVMStats->ClearCurrentPlayerWaveSpendingStats( idxWave );
 }
 
@@ -263,7 +263,7 @@ static void __MsgFunc_MVMWaveChange( bf_read &msg )
 
 	// Read the data
 	uint16 waveID			= msg.ReadWord();
-	
+
 	CMannVsMachinePlayerStats stats;
 
 	stats.nDeaths			= msg.ReadByte();
@@ -276,7 +276,7 @@ static void __MsgFunc_MVMWaveChange( bf_read &msg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static void __MsgFunc_MVMResetPlayerUpgradeSpending( bf_read &msg )
 {
@@ -306,14 +306,14 @@ CMannVsMachineStats::CMannVsMachineStats()
 	Q_memset( m_playerStats, 0, sizeof( m_playerStats ) );
 #else
 	m_iCurrentWaveIdx = 0;
-	
+
 	m_teamActiveUpgrades.Purge();
 	m_teamActiveUpgrades.SetLessFunc( DefLessFunc (uint64) );
 #endif
 	m_currWaveSpendingStats.SetLessFunc( DefLessFunc (uint64) );
 	m_prevWaveSpendingStats.SetLessFunc( DefLessFunc (uint64) );
 	m_allPrevWaveSpendingStats.SetLessFunc( DefLessFunc (uint64) );
-	
+
 	m_iCurrencyCollectedForRespec = 0;
 	m_nRespecsAwardedInWave = 0;
 	//m_nEventID = 0;
@@ -328,7 +328,7 @@ CMannVsMachineStats::~CMannVsMachineStats()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::ResetStats( )
 {
@@ -356,7 +356,7 @@ void CMannVsMachineStats::ResetStats( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::ResetPlayerEvents( CTFPlayer *pTFPlayer )
 {
@@ -373,7 +373,7 @@ void CMannVsMachineStats::ResetPlayerEvents( CTFPlayer *pTFPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::ResetUpgradeSpending( CTFPlayer *pTFPlayer )
 {
@@ -456,7 +456,7 @@ uint32 CMannVsMachineStats::GetBonusCredits( int iWaveIdx )
 //=============================================================================//
 #ifdef GAME_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::RoundOver( bool bHumansWon )
 {
@@ -468,7 +468,7 @@ void CMannVsMachineStats::RoundOver( bool bHumansWon )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::SetCurrentWave( uint32 idxWave )
 {
@@ -486,9 +486,9 @@ void CMannVsMachineStats::SetCurrentWave( uint32 idxWave )
 		m_previousWaveStats.ClearStats();
 		m_currentWaveStats.ClearStats();
 	}
-	
+
 	m_iCurrentWaveIdx = idxWave;
-	
+
 	// Notify Players of Reset of current Wave for PlayerStats
 	CBroadcastRecipientFilter filter;
 	filter.MakeReliable();
@@ -502,7 +502,7 @@ void CMannVsMachineStats::SetCurrentWave( uint32 idxWave )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::RoundEvent_WaveStart()
 {
@@ -518,11 +518,11 @@ void CMannVsMachineStats::RoundEvent_WaveStart()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::RoundEvent_WaveEnd( bool bSuccess )
 {
-	// if failed, report immediately, 
+	// if failed, report immediately,
 	// report successes on starting the next wave because of currency picked up late
 	ConVar *sv_cheats = g_pCVar->FindVar( "sv_cheats" );
 	if ( !bSuccess && ( !sv_cheats || !sv_cheats->GetBool() ) )
@@ -536,7 +536,7 @@ void CMannVsMachineStats::RoundEvent_WaveEnd( bool bSuccess )
 		filter.MakeReliable();
 		UserMessageBegin( filter, "MVMWaveFailed" );
 		MessageEnd();
-	}	
+	}
 
 	// Send a User message to Clients to send there data
 	// Tell each client their damage
@@ -566,7 +566,7 @@ void CMannVsMachineStats::RoundEvent_WaveEnd( bool bSuccess )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::RoundEvent_AcquiredCredits( uint32 idxWave, int nAmount, bool bIsBonus )
 {
@@ -576,7 +576,7 @@ void CMannVsMachineStats::RoundEvent_AcquiredCredits( uint32 idxWave, int nAmoun
 		{
 			m_currentWaveStats.nCreditsBonus += nAmount;
 		}
-		else 
+		else
 		{
 			m_currentWaveStats.nCreditsAcquired += nAmount;
 		}
@@ -587,7 +587,7 @@ void CMannVsMachineStats::RoundEvent_AcquiredCredits( uint32 idxWave, int nAmoun
 		{
 			m_previousWaveStats.nCreditsBonus += nAmount;
 		}
-		else 
+		else
 		{
 			m_previousWaveStats.nCreditsAcquired += nAmount;
 		}
@@ -597,7 +597,7 @@ void CMannVsMachineStats::RoundEvent_AcquiredCredits( uint32 idxWave, int nAmoun
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::RoundEvent_CreditsDropped( uint32 idxWave, int nAmount )
 {
@@ -613,7 +613,7 @@ void CMannVsMachineStats::RoundEvent_CreditsDropped( uint32 idxWave, int nAmount
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::PlayerEvent_PointsChanged( CTFPlayer *pTFPlayer, int nPoints )
 {
@@ -629,7 +629,7 @@ void CMannVsMachineStats::PlayerEvent_PointsChanged( CTFPlayer *pTFPlayer, int n
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::PlayerEvent_Died( CTFPlayer *pTFPlayer )
 {
@@ -640,7 +640,7 @@ void CMannVsMachineStats::PlayerEvent_Died( CTFPlayer *pTFPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::PlayerEvent_Upgraded( CTFPlayer *pTFPlayer, uint16 nItemDef, uint16 nAttributeDef, uint8 nQuality, int16 nCost, bool bIsBottle )
 {
@@ -651,7 +651,7 @@ void CMannVsMachineStats::PlayerEvent_Upgraded( CTFPlayer *pTFPlayer, uint16 nIt
 
 	CBroadcastRecipientFilter filter;
 	filter.MakeReliable();
-	
+
 	// PlayerIdx(1), WaveIdx(1), ItemDef(2), AttributeDef(2), Quality(1), cost(2)
 	// send user message
 	UserMessageBegin( filter, "MVMPlayerUpgradedEvent" );
@@ -671,11 +671,11 @@ void CMannVsMachineStats::PlayerEvent_Upgraded( CTFPlayer *pTFPlayer, uint16 nIt
 	{
 		NotifyTargetPlayerEvent( pTFPlayer, m_iCurrentWaveIdx, kMVMEvent_Player_BoughtUpgrade, nCost );
 	}
-	
+
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::PlayerEvent_PickedUpCredits( CTFPlayer *pTFPlayer, uint32 idxWave, int nCreditsAmount )
 {
@@ -687,7 +687,7 @@ void CMannVsMachineStats::PlayerEvent_PickedUpCredits( CTFPlayer *pTFPlayer, uin
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::PlayerEvent_BoughtInstantRespawn( CTFPlayer *pTFPlayer, int nCost )
 {
@@ -701,7 +701,7 @@ void CMannVsMachineStats::PlayerEvent_BoughtInstantRespawn( CTFPlayer *pTFPlayer
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::PlayerEvent_DealtDamageToBots( CTFPlayer *pTFPlayer, int damage )
 {
@@ -712,7 +712,7 @@ void CMannVsMachineStats::PlayerEvent_DealtDamageToBots( CTFPlayer *pTFPlayer, i
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::PlayerEvent_DealtDamageToGiants( CTFPlayer *pTFPlayer, int damage )
 {
@@ -723,7 +723,7 @@ void CMannVsMachineStats::PlayerEvent_DealtDamageToGiants( CTFPlayer *pTFPlayer,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::PlayerEvent_DealtDamageToTanks( CTFPlayer *pTFPlayer, int damage )
 {
@@ -734,15 +734,15 @@ void CMannVsMachineStats::PlayerEvent_DealtDamageToTanks( CTFPlayer *pTFPlayer, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::NotifyPlayerEvent( CTFPlayer *pTFPlayer, uint32 idxWave, eMannVsMachineEvent eType, int nValue, int nParam )
 {
-	// Deprecated 
+	// Deprecated
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::NotifyTargetPlayerEvent( CTFPlayer *pTFPlayer, uint32 idxWave, eMannVsMachineEvent eType, int nCost )
 {
@@ -951,7 +951,7 @@ int CMannVsMachineStats::GetUpgradeSpending( CTFPlayer *pTFPlayer /*= NULL*/ )
 int CMannVsMachineStats::GetBottleSpending( CTFPlayer *pTFPlayer /*= NULL*/ )
 {
 	int spending = 0;
-	
+
 	CSteamID steamID;
 	if ( pTFPlayer && pTFPlayer->GetSteamID( &steamID ) )
 	{
@@ -1038,11 +1038,11 @@ int CMannVsMachineStats::GetBuyBackSpending( CTFPlayer *pTFPlayer /*= NULL*/ )
 //=============================================================================//
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineStats::OnDataChanged( DataUpdateType_t updateType )
 {
-	
+
 }
 
 //-----------------------------------------------------------------------------
@@ -1096,7 +1096,7 @@ int CMannVsMachineStats::GetPlayerActiveUpgradeCosts( uint64 steamId64 )
 
 		return nSpending;
 	}
-	else 
+	else
 	{
 		CSteamID steamId( steamId64 );
 		CBasePlayer * pPlayer = GetPlayerBySteamID( steamId );
@@ -1128,7 +1128,7 @@ void CMannVsMachineStats::AddLocalPlayerUpgrade ( int iPlayerClass, item_definit
 	upgrade.m_itemDefIndex = iItemDef;
 	upgrade.m_upgrade = 0;
 	upgrade.m_nCost = 0;
-	
+
 	m_vecLocalPlayerUpgrades.AddToTail( upgrade );
 }
 
@@ -1187,11 +1187,11 @@ void CMannVsMachineStats::SW_ReportClientUpgradePurchase( uint8 waveIdx, uint16 
 	//INT_FIELD( nItemCategoryID, MvMItemCategoryID, int16 )			// References TF2MvMItemCategoryReference
 	//INT_FIELD( nItemNameID, MvMItemNameID, int32 )					// References TF2MvMItemNameReference
 	//INT_FIELD( nItemCost, ItemCost, int32 )
-	//INT_FIELD( RTime32EventTime, EventTime, RTime32 ) 
+	//INT_FIELD( RTime32EventTime, EventTime, RTime32 )
 	//PRIMARY_KEY_CLUSTERED( 100, nID )
 	//WIPE_TABLE_BETWEEN_TESTS( k_EWipePolicyWipeForAllTests )
 	//AUTOINCREMENT_FIELD( nID )
-	//PARTITION_INTERVAL( k_EPartitionIntervalDaily ) 
+	//PARTITION_INTERVAL( k_EPartitionIntervalDaily )
 	//OWNING_APPLICATION( 440 )
 	//END_TABLE
 
@@ -1244,14 +1244,14 @@ void CMannVsMachineStats::SW_ReportClientUpgradePurchase( uint8 waveIdx, uint16 
 //		const CEconItemDefinition *pItemDef = ItemSystem()->GetItemSchema()->GetItemDefinition( nItemDef );
 //		pKVData->SetString( "MvMItemNameID", pItemDef->GetDefinitionName() );
 //	}
-//	else 
+//	else
 //	{
 //		pKVData->SetString( "MvMItemNameID", g_aPlayerClassNames_NonLocalized[ pTFPlayer->GetPlayerClass()->GetClassIndex() ] );
 //	}
 //
 //	// MvMItemCategoryID
 //	pKVData->SetString( "MvMItemCategoryID", pAttributeDef->GetDefinitionName() );
-//	
+//
 //	// ItemCost
 //	pKVData->SetInt( "ItemCost", nCost );
 //
@@ -1327,23 +1327,23 @@ void CMannVsMachineStats::SW_ReportClientWaveSummary( uint16 waveID, CMannVsMach
 	// Disabled due to bad key indexing.
 	// Make a V2 if this data is wanted
 	// Old Table
-	//-----------------------------------------------------------------------------   
-	// OGS TF2ClientMvMWaveSummary: MvM mode – Player wave summary information   
-	//-----------------------------------------------------------------------------   
-	//START_TABLE( k_ESchemaCatalogOGS, TF2ClientMvMWaveSummary, TABLE_PROP_NORMAL )   
+	//-----------------------------------------------------------------------------
+	// OGS TF2ClientMvMWaveSummary: MvM mode ï¿½ Player wave summary information
+	//-----------------------------------------------------------------------------
+	//START_TABLE( k_ESchemaCatalogOGS, TF2ClientMvMWaveSummary, TABLE_PROP_NORMAL )
 	//INT_FIELD( nID, ID, int32 )                                           // Auto-increment fake key
 	//INT_FIELD( nServerWaveID, ServerWaveID, int32 )                       // ID of ServerMvMWaveSummary Entry this is linked with, How do we get this?
 	//INT_FIELD( llSessionID, SessionID, uint64 )
 	//INT_FIELD( llServerSessionID, ServerSessionID, uint64 )               // Duplicated data from Session table due to game client anomalies
-	//INT_FIELD( ulAccountID, AccountID, uint64 )                           // Duplicated data from Session table due to game client anomalies                                             
+	//INT_FIELD( ulAccountID, AccountID, uint64 )                           // Duplicated data from Session table due to game client anomalies
 	//INT_FIELD( nDamageToBots, DamageToBots, int32 )
 	//INT_FIELD( nDamageToTanks, DamageToTanks, int32 )
 	//INT_FIELD( nDamageToGiants, DamageToGiants, int32 )
 	//INT_FIELD( nDeaths, Deaths, uint8 )
 	//INT_FIELD( nClass, Class, int64 )                                     // References TF2ClassReference
-	//INT_FIELD( nPrimaryWeapon, PrimaryWeapon, int32 )                     // References TF2MvMItemNameReference   
-	//INT_FIELD( nSecondaryWeapon, SecondaryWeapon, int32 )                 // References TF2MvMItemNameReference   
-	//INT_FIELD( nMeleeWeapon, MeleeWeapon, int32 )                         // References TF2MvMItemNameReference   
+	//INT_FIELD( nPrimaryWeapon, PrimaryWeapon, int32 )                     // References TF2MvMItemNameReference
+	//INT_FIELD( nSecondaryWeapon, SecondaryWeapon, int32 )                 // References TF2MvMItemNameReference
+	//INT_FIELD( nMeleeWeapon, MeleeWeapon, int32 )                         // References TF2MvMItemNameReference
 	//INT_FIELD( bHasBottle, HasBottle, int8 )
 	//PRIMARY_KEY_CLUSTERED( 100, nID )
 	//WIPE_TABLE_BETWEEN_TESTS( k_EWipePolicyWipeForAllTests )
@@ -1374,7 +1374,7 @@ void CMannVsMachineStats::SW_ReportClientWaveSummary( uint16 waveID, CMannVsMach
 //		return;
 //
 //	// Create and Send the report
-//	//[ID]	,[ServerWaveID]	,[SessionID]	,[AccountID]	,[DamageToBots]	,[DamageToTanks]	,[DamageToGiants]	
+//	//[ID]	,[ServerWaveID]	,[SessionID]	,[AccountID]	,[DamageToBots]	,[DamageToTanks]	,[DamageToGiants]
 //	//,[Deaths]	,[Class]	,[PrimaryWeapon]	,[SecondaryWeapon]	,[MeleeWeapon]	,[HasBottle]
 //	KeyValues* pKVData = new KeyValues( "TF2ClientMvMWaveSummary" );
 //	pKVData->SetInt( "ID", ++m_nEventID );
@@ -1392,7 +1392,7 @@ void CMannVsMachineStats::SW_ReportClientWaveSummary( uint16 waveID, CMannVsMach
 //
 //	// Death
 //	pKVData->SetInt( "Deaths", stats.nDeaths );
-//	
+//
 //	//ServerWaveID - Use provided ID not m_iServerWaveID as that may have changed
 //	pKVData->SetInt( "ServerWaveID", waveID );
 //
@@ -1527,7 +1527,7 @@ void CMannVsMachineStats::SW_ReportWaveSummary ( int waveIdx, bool bIsSuccess )
 //
 //	// WaveNumber
 //	pKVData->SetInt( "WaveNumber", waveIdx + 1 );
-//	
+//
 //	// PopulationFileID
 //	pKVData->SetString( "PopulationFileID", m_pPopFileName );
 //
@@ -1539,7 +1539,7 @@ void CMannVsMachineStats::SW_ReportWaveSummary ( int waveIdx, bool bIsSuccess )
 //	//
 //	//// Attempts
 //	pKVData->SetInt( "Attempts", stats.nAttempts );
-//	
+//
 //	// IsSuccess
 //	pKVData->SetBool( "IsSuccess", bIsSuccess );
 //
@@ -1686,4 +1686,3 @@ void MannVsMachineStats_SetPopulationFile( const char * pPopulationFile)
 }
 
 #endif // GAME_DLL
-

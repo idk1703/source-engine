@@ -104,5 +104,3 @@ mxMatSysWindow::setDrawFunc (void (*func) (void))
 {
 	d_drawFunc = func;
 }
-
-

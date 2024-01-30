@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -30,14 +30,14 @@ class CTFCMedikit : public CTFCCrowbar
 {
 public:
 	DECLARE_CLASS( CTFCMedikit, CTFCCrowbar );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	#ifndef CLIENT_DLL
 		DECLARE_DATADESC();
 	#endif
 
-	
+
 	CTFCMedikit();
 
 	virtual void Precache();

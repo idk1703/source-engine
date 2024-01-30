@@ -79,7 +79,7 @@ BEGIN_PREDICTION_DATA( CWeaponDrainBeam  )
 END_PREDICTION_DATA()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponDrainBeam::CWeaponDrainBeam( void )
 {
@@ -92,7 +92,7 @@ CWeaponDrainBeam::CWeaponDrainBeam( void )
 	m_pEmitter = NULL;
 	m_hParticleMaterial = INVALID_MATERIAL_HANDLE;
 	m_PathParticleEvent.Init( NUM_PATH_PARTICLES_PER_SEC );
-	m_DribbleParticleEvent.Init( NUM_DRIBBLE_PARTICLES_PER_SEC ); 
+	m_DribbleParticleEvent.Init( NUM_DRIBBLE_PARTICLES_PER_SEC );
 	m_bPlayingSound = false;
 #endif
 }
@@ -105,12 +105,12 @@ void CWeaponDrainBeam::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponDrainBeam::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
 	RemoveDrainTarget();
-	
+
 	return BaseClass::Holster( pSwitchingTo );
 }
 
@@ -175,7 +175,7 @@ CBaseEntity *CWeaponDrainBeam::GetTargetToDrain( CBaseEntity *pCurDrainTarget )
 			trace_t tr;
 			CDrainFilter drainFilter( pOwner );
 			engine->TraceLine( vecSrc, vecTargetCenter, MASK_SHOT, &drainFilter, &tr );
-			
+
 			if (( tr.fraction == 1.0f) || (tr.m_pEnt == pEntity))
 				return pEntity;
 		}
@@ -185,7 +185,7 @@ CBaseEntity *CWeaponDrainBeam::GetTargetToDrain( CBaseEntity *pCurDrainTarget )
 	}
 	else
 */
-	{	
+	{
 		// Ok, try to find a new target to drain.
 		// Get the target point and location
 		Vector vecAiming;
@@ -197,7 +197,7 @@ CBaseEntity *CWeaponDrainBeam::GetTargetToDrain( CBaseEntity *pCurDrainTarget )
 
 		// Use WeaponTraceLine so shields are tested...
 		TFGameRules()->WeaponTraceLine( vecSrc, vecEnd, MASK_SHOT & (~CONTENTS_HITBOX), pOwner, DMG_PROBE, &tr );
-		
+
 		if ( tr.fraction != 1.0 )
 		{
 			CBaseEntity *pEntity = tr.m_pEnt;
@@ -252,7 +252,7 @@ void CWeaponDrainBeam::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponDrainBeam::RemoveDrainTarget( void )
 {
@@ -336,7 +336,7 @@ void CWeaponDrainBeam::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponDrainBeam::PlayAttackAnimation( int activity )
 {
@@ -344,14 +344,14 @@ void CWeaponDrainBeam::PlayAttackAnimation( int activity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponDrainBeam::WeaponIdle( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponDrainBeam::GainedNewTechnology( CBaseTechnology *pTechnology )
 {
@@ -360,7 +360,7 @@ void CWeaponDrainBeam::GainedNewTechnology( CBaseTechnology *pTechnology )
 #if defined( CLIENT_DLL )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponDrainBeam::StopDrainSound( bool bStopHealingSound, bool bStopNoTargetSound )
 {
@@ -372,7 +372,7 @@ void CWeaponDrainBeam::StopDrainSound( bool bStopHealingSound, bool bStopNoTarge
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponDrainBeam::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -395,7 +395,7 @@ void CWeaponDrainBeam::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponDrainBeam::ClientThink()
 {
@@ -444,7 +444,7 @@ void CWeaponDrainBeam::ClientThink()
 				pParticle->m_flRollDelta = 0;
 				pParticle->m_flDieTime = 0.4f;
 				pParticle->m_flLifetime = 0;
-				pParticle->m_uchColor[0] = 255; 
+				pParticle->m_uchColor[0] = 255;
 				pParticle->m_uchColor[1] = 255;
 				pParticle->m_uchColor[2] = 255;
 				pParticle->m_uchStartAlpha = 32;
@@ -478,7 +478,7 @@ void CWeaponDrainBeam::ClientThink()
 	const Vector &B = vOrigin;
 	const Vector &C = m_vFireTarget;
 	const Vector  D = m_vFireTarget - vForward * flBendDist;
-	
+
 	for ( int i=0; i < NUM_DRAINBEAM_PATH_POINTS; i++ )
 	{
 		Catmull_Rom_Spline( A, B, C, D, (float)i / (NUM_DRAINBEAM_PATH_POINTS-1), points[i] );
@@ -496,7 +496,7 @@ void CWeaponDrainBeam::ClientThink()
 		Vector vPos;
 		VectorLerp( points[iPrev], points[iPrev+1], (t-tPrev) / (tNext - tPrev), vPos );
 		vPos += RandomVector( -2, 2 );
-		
+
 		SimpleParticle *pParticle = m_pEmitter->AddSimpleParticle( m_hParticleMaterial, vPos );
 		if ( pParticle )
 		{
@@ -509,7 +509,7 @@ void CWeaponDrainBeam::ClientThink()
 			pParticle->m_flRollDelta = 0;
 			pParticle->m_flDieTime = 0.2f;
 			pParticle->m_flLifetime = 0;
-			pParticle->m_uchColor[0] = 255; 
+			pParticle->m_uchColor[0] = 255;
 			pParticle->m_uchColor[1] = 255;
 			pParticle->m_uchColor[2] = 255;
 			pParticle->m_uchStartAlpha = 32;

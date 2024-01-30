@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -173,7 +173,7 @@ void SpewPerfStats( studiohdr_t *pStudioHdr, const char *pFilename, unsigned int
 
 		pVvdHdr = pNewVvdHdr;
 	}
-	
+
 	// iterate all ???.vtx files
 	for (int j=0; j<sizeof(prefix)/sizeof(prefix[0]); j++)
 	{
@@ -233,7 +233,7 @@ void SpewPerfStats( studiohdr_t *pStudioHdr, const char *pFilename, unsigned int
 				drawModelInfo.m_pClientEntity = 0;
 				drawModelInfo.m_pColorMeshes = 0;
 				drawModelInfo.m_pStudioHdr = pStudioHdr;
-				drawModelInfo.m_pHardwareData = &studioHWData;	
+				drawModelInfo.m_pHardwareData = &studioHWData;
 				CUtlBuffer statsOutput( 0, 0, CUtlBuffer::TEXT_BUFFER );
 				if( !( flags & SPEWPERFSTATS_SPREADSHEET ) )
 				{
@@ -271,4 +271,3 @@ void SpewPerfStats( studiohdr_t *pStudioHdr, const char *pFilename, unsigned int
 		SpewOutputFunc( s_pSavedSpewFunc );
 	}
 }
-

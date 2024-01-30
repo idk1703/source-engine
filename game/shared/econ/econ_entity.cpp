@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -93,7 +93,7 @@ ConVar unusual_force_cosmetic_effect( "unusual_force_cosmetic_effect", "-1", FCV
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void DrawEconEntityAttachedModels( CBaseAnimating *pEnt, CEconEntity *pAttachedModelSource, const ClientModelRenderInfo_t *pInfo, int iMatchDisplayFlags )
 {
@@ -101,7 +101,7 @@ void DrawEconEntityAttachedModels( CBaseAnimating *pEnt, CEconEntity *pAttachedM
 	if ( !pEnt || !pAttachedModelSource || !pInfo )
 		return;
 
-	// This flag says we should turn off the material overrides for attachments. 
+	// This flag says we should turn off the material overrides for attachments.
 	IMaterial* pMaterialOverride = NULL;
 	OverrideType_t nMaterialOverrideType = OVERRIDE_NORMAL;
 
@@ -119,7 +119,7 @@ void DrawEconEntityAttachedModels( CBaseAnimating *pEnt, CEconEntity *pAttachedM
 		if ( attachedModel.m_pModel && (attachedModel.m_iModelDisplayFlags & iMatchDisplayFlags) )
 		{
 			ClientModelRenderInfo_t infoAttached = *pInfo;
-			
+
 			infoAttached.pRenderable	= pEnt;
 			infoAttached.instance		= MODEL_INSTANCE_INVALID;
 			infoAttached.entity_index	= pEnt->index;
@@ -144,7 +144,7 @@ void DrawEconEntityAttachedModels( CBaseAnimating *pEnt, CEconEntity *pAttachedM
 #endif // CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEconEntity::CEconEntity()
 {
@@ -169,7 +169,7 @@ CEconEntity::CEconEntity()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEconEntity::~CEconEntity()
 {
@@ -180,7 +180,7 @@ CEconEntity::~CEconEntity()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStudioHdr * CEconEntity::OnNewModel()
 {
@@ -227,7 +227,7 @@ CStudioHdr * CEconEntity::OnNewModel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconEntity::InitializeAttributes( void )
 {
@@ -247,7 +247,7 @@ void CEconEntity::InitializeAttributes( void )
 #endif
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconEntity::DebugDescribe( void )
 {
@@ -264,7 +264,7 @@ void CEconEntity::DebugDescribe( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconEntity::UpdateOnRemove( void )
 {
@@ -275,7 +275,7 @@ void CEconEntity::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconEntity::ReapplyProvision( void )
 {
@@ -303,7 +303,7 @@ void CEconEntity::ReapplyProvision( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Activity CEconEntity::TranslateViewmodelHandActivity( Activity actBase )
 {
@@ -322,7 +322,7 @@ Activity CEconEntity::TranslateViewmodelHandActivity( Activity actBase )
 
 #if !defined( CLIENT_DLL )
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconEntity::OnOwnerClassChange( void )
 {
@@ -337,7 +337,7 @@ void CEconEntity::OnOwnerClassChange( void )
 
 #ifdef GAME_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CEconEntity::CalculateVisibleClassFor( CBaseCombatCharacter *pPlayer )
 {
@@ -419,7 +419,7 @@ void CEconEntity::UpdateModelToClass( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconEntity::PlayAnimForPlaybackEvent( wearableanimplayback_t iPlayback )
 {
@@ -440,7 +440,7 @@ void CEconEntity::PlayAnimForPlaybackEvent( wearableanimplayback_t iPlayback )
 				pData->iActivity = ActivityList_IndexForName( pData->pszActivity );
 			}
 
-			int sequence = SelectWeightedSequence( (Activity)pData->iActivity ); 
+			int sequence = SelectWeightedSequence( (Activity)pData->iActivity );
 			if ( sequence != ACTIVITY_NOT_AVAILABLE )
 			{
 				ResetSequence( sequence );
@@ -573,7 +573,7 @@ bool CEconEntity::ValidateEntityAttachedToPlayer( bool &bShouldRetry )
 		return true;
 	}
 
-	// If our owner is a disguised spy, we validate everything based 
+	// If our owner is a disguised spy, we validate everything based
 	// on the items carried by the person we're disguised as.
 	/*if ( pOwner->m_Shared.InCond( TF_COND_DISGUISED ) )
 	{
@@ -619,7 +619,7 @@ bool CEconEntity::ValidateEntityAttachedToPlayer( bool &bShouldRetry )
 			return true;
 	}
 
-	// If our player doesn't have an inventory, we're not valid. 
+	// If our player doesn't have an inventory, we're not valid.
 	CTFPlayerInventory *pInv = pOwner->Inventory();
 	if ( !pInv )
 		return false;
@@ -653,7 +653,7 @@ bool CEconEntity::ValidateEntityAttachedToPlayer( bool &bShouldRetry )
 
 	CEconItemView *pScriptItem = GetAttributeContainer()->GetItem();
 
-	// If the item isn't valid, we're probably an extra wearable for another item. See if our model is 
+	// If the item isn't valid, we're probably an extra wearable for another item. See if our model is
 	// a model specified as the extra wearable for any of the items we have equipped.
 	if ( !pScriptItem->IsValid() )
 	{
@@ -808,7 +808,7 @@ void CEconEntity::GetToolRecordingState( KeyValues *msg )
 #ifndef DOTA_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ViewmodelAttachmentModel::SetOuter( CEconEntity *pOuter )
 {
@@ -923,7 +923,7 @@ int C_ViewmodelAttachmentModel::GetSkin( void )
 #endif // !defined( DOTA_DLL )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconEntity::Release( void )
 {
@@ -971,7 +971,7 @@ void CEconEntity::Release( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconEntity::SetDormant( bool bDormant )
 {
@@ -985,7 +985,7 @@ void CEconEntity::SetDormant( bool bDormant )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconEntity::OnPreDataChanged( DataUpdateType_t type )
 {
@@ -997,7 +997,7 @@ void CEconEntity::OnPreDataChanged( DataUpdateType_t type )
 IMaterial *CreateTempMaterialForPlayerLogo( int iPlayerIndex, player_info_t *info, char *texname, int nchars );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconEntity::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -1053,7 +1053,7 @@ void CEconEntity::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconEntity::UpdateAttachmentModels( void )
 {
@@ -1190,7 +1190,7 @@ void CEconEntity::UpdateAttachmentModels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEconEntity::HasCustomParticleSystems( void ) const
 {
@@ -1357,10 +1357,10 @@ void CEconEntity::SetupWeights( const matrix3x4_t *pBoneToWorld, int nFlexWeight
 				{
 					// convert the flex controllers into actual flex values
 					C_BaseFlex::RunFlexRules( GetModelPtr(), pFlexWeights );
-					
+
 					// aim the eyes
 					// SetViewTarget( hdr ); // FIXME: Not enough info yet
-					
+
 					// process local versions of the delay weights
 					if ( pFlexDelayedWeights )
 					{
@@ -1393,12 +1393,12 @@ static void cc_dump_particlemanifest()
 static ConCommand dump_particlemanifest( "dump_particlemanifest", cc_dump_particlemanifest, "Dump the list of particles loaded.", FCVAR_CHEAT );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconEntity::GetEconParticleSystems( CUtlVector<const attachedparticlesystem_t *> *out_pvecParticleSystems ) const
 {
 	Assert( out_pvecParticleSystems );
-	
+
 	const CEconItemView *pEconItemView = m_AttributeManager.GetItem();
 	if ( pEconItemView )
 	{
@@ -1506,7 +1506,7 @@ void CEconEntity::GetEconParticleSystems( CUtlVector<const attachedparticlesyste
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconEntity::SetParticleSystemsVisible( ParticleSystemState_t nState )
 {
@@ -1540,14 +1540,14 @@ void CEconEntity::SetParticleSystemsVisible( ParticleSystemState_t nState )
 
 	CUtlVector<const attachedparticlesystem_t *> vecParticleSystems;
 	GetEconParticleSystems( &vecParticleSystems );
-	
+
 	FOR_EACH_VEC( vecParticleSystems, i )
 	{
 		const attachedparticlesystem_t *pSystem = vecParticleSystems[i];
 		Assert( pSystem );
 		Assert( pSystem->pszSystemName );
 		Assert( pSystem->pszSystemName[0] );
-		
+
 		// Ignore custom particles. Weapons handle them in custom fashions.
 		if ( pSystem->iCustomType )
 			continue;
@@ -1559,7 +1559,7 @@ void CEconEntity::SetParticleSystemsVisible( ParticleSystemState_t nState )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconEntity::UpdateSingleParticleSystem( bool bVisible, const attachedparticlesystem_t *pSystem )
 {
@@ -1571,7 +1571,7 @@ void CEconEntity::UpdateSingleParticleSystem( bool bVisible, const attachedparti
 
 	C_BaseEntity *pEffectOwnerWM = this;
 	C_BaseEntity *pEffectOwnerVM = NULL;
-	
+
 	bool bExtraWearable = false;
 	bool bExtraWearableVM = false;
 
@@ -1630,7 +1630,7 @@ void CEconEntity::UpdateSingleParticleSystem( bool bVisible, const attachedparti
 	static char pszTempName[256];
 	static char pszTempNameVM[256];
 	const char* pszSystemName = pSystem->pszSystemName;
-	
+
 
 	// Weapon Remap for a Base Effect to be used on a specific weapon
 	if ( pSystem->bUseSuffixName && pEconItemView && pEconItemView->GetItemDefinition()->GetParticleSuffix() )
@@ -1640,12 +1640,12 @@ void CEconEntity::UpdateSingleParticleSystem( bool bVisible, const attachedparti
 		V_strcat_safe( pszTempName, pEconItemView->GetItemDefinition()->GetParticleSuffix() );
 		pszSystemName = pszTempName;
 	}
-	
+
 	if ( pSystem->bHasViewModelSpecificEffect )
 	{
 		V_strcpy_safe( pszTempNameVM, pszSystemName );
 		V_strcat_safe( pszTempNameVM, "_vm" );
-		
+
 		// VM doesnt exist so fall back to regular
 		if ( g_pParticleSystemMgr->FindParticleSystem( pszTempNameVM ) == NULL )
 		{
@@ -1748,7 +1748,7 @@ void CEconEntity::UpdateSingleParticleSystem( bool bVisible, const attachedparti
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEconEntity::InitializeAsClientEntity( const char *pszModelName, RenderGroup_t renderGroup )
 {
@@ -1758,9 +1758,9 @@ bool CEconEntity::InitializeAsClientEntity( const char *pszModelName, RenderGrou
 
 //-----------------------------------------------------------------------------
 // Purpose: Get an econ material override for the given team.
-// Returns: NULL if there is no override. 
+// Returns: NULL if there is no override.
 //-----------------------------------------------------------------------------
-IMaterial* CEconEntity::GetEconWeaponMaterialOverride( int iTeam ) 
+IMaterial* CEconEntity::GetEconWeaponMaterialOverride( int iTeam )
 {
 	if ( iTeam >= 0 && iTeam < TEAM_VISUAL_SECTIONS && m_MaterialOverrides[ iTeam ].IsValid() )
 		return m_MaterialOverrides[ iTeam ];
@@ -1817,7 +1817,7 @@ bool CEconEntity::IsTransparent( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEconEntity::ViewModel_IsTransparent( void )
 {
@@ -1829,7 +1829,7 @@ bool CEconEntity::ViewModel_IsTransparent( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEconEntity::ViewModel_IsUsingFBTexture( void )
 {
@@ -1841,7 +1841,7 @@ bool CEconEntity::ViewModel_IsUsingFBTexture( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEconEntity::IsOverridingViewmodel( void )
 {
@@ -1851,7 +1851,7 @@ bool CEconEntity::IsOverridingViewmodel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CEconEntity::DrawOverriddenViewmodel( C_BaseViewModel *pViewmodel, int flags )
 {
@@ -1859,7 +1859,7 @@ int	CEconEntity::DrawOverriddenViewmodel( C_BaseViewModel *pViewmodel, int flags
 #ifndef DOTA_DLL
 	bool bIsAttachmentTranslucent = m_hViewmodelAttachment.Get() ? m_hViewmodelAttachment->IsTransparent() : false;
 	bool bUseOverride = false;
-	
+
 	CEconItemView *pItem = GetAttributeContainer()->GetItem();
 	bool bAttachesToHands = ( pItem->IsValid() && (pItem->GetStaticData()->ShouldAttachToHands() || pItem->GetStaticData()->ShouldAttachToHandsVMOnly()));
 
@@ -1871,7 +1871,7 @@ int	CEconEntity::DrawOverriddenViewmodel( C_BaseViewModel *pViewmodel, int flags
 
 	if ( flags & STUDIO_RENDER )
 	{
-		// If there is some other material override, it's probably the client asking for us to render invuln or the 
+		// If there is some other material override, it's probably the client asking for us to render invuln or the
 		// spy cloaking. Those are way more important than ours, so do them instead.
 		IMaterial* pOverrideMaterial = NULL;
 		OverrideType_t nDontcare = OVERRIDE_NORMAL;
@@ -1884,7 +1884,7 @@ int	CEconEntity::DrawOverriddenViewmodel( C_BaseViewModel *pViewmodel, int flags
 			modelrender->ForcedMaterialOverride( m_MaterialOverrides[GetTeamNumber()] );
 			flags |= STUDIO_NO_OVERRIDE_FOR_ATTACH;
 		}
-	
+
 		if ( m_hViewmodelAttachment )
 		{
 			m_hViewmodelAttachment->RemoveEffects( EF_NODRAW );
@@ -1914,7 +1914,7 @@ int	CEconEntity::DrawOverriddenViewmodel( C_BaseViewModel *pViewmodel, int flags
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEconEntity::OnInternalDrawModel( ClientModelRenderInfo_t *pInfo )
 {
@@ -1926,7 +1926,7 @@ bool CEconEntity::OnInternalDrawModel( ClientModelRenderInfo_t *pInfo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CEconEntity::LookupAttachment( const char *pAttachmentName )
 {
@@ -1937,7 +1937,7 @@ int	CEconEntity::LookupAttachment( const char *pAttachmentName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEconEntity::GetAttachment( int number, matrix3x4_t &matrix )
 {
@@ -1948,7 +1948,7 @@ bool CEconEntity::GetAttachment( int number, matrix3x4_t &matrix )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEconEntity::GetAttachment( int number, Vector &origin )
 {
@@ -1959,7 +1959,7 @@ bool CEconEntity::GetAttachment( int number, Vector &origin )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEconEntity::GetAttachment( int number, Vector &origin, QAngle &angles )
 {
@@ -1970,7 +1970,7 @@ bool CEconEntity::GetAttachment( int number, Vector &origin, QAngle &angles )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEconEntity::GetAttachmentVelocity( int number, Vector &originVel, Quaternion &angleVel )
 {
@@ -2066,7 +2066,7 @@ bool CEconEntity::UpdateBodygroups( CBaseCombatCharacter* pOwner, int iState )
 			}
 		}
 	}
-	 
+
 	return true;
 }
 

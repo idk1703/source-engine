@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -32,7 +32,7 @@ class SendTable;
 class CLocalNetworkBackdoor
 {
 public:
-	
+
 	void StartEntityStateUpdate();
 	void EndEntityStateUpdate();
 
@@ -47,12 +47,12 @@ public:
 			AddToPendingDormantEntityList( iEdict );
 	}
 
-	
-	void EntState( 
-		int iEnt, 
-		int iSerialNum, 
-		int iClass, 
-		const SendTable *pSendTable, 
+
+	void EntState(
+		int iEnt,
+		int iSerialNum,
+		int iClass,
+		const SendTable *pSendTable,
 		const void *pSourceEnt,
 		bool bChanged,
 		bool bShouldTransmit );
@@ -61,7 +61,7 @@ public:
 	void StartBackdoorMode();
 	void StopBackdoorMode();
 
-	
+
 	// This is called when the client DLL is loaded to precalculate data to let it copy data faster.
 	static void InitFastCopy();
 
@@ -69,7 +69,7 @@ public:
 private:
 	// Temporarily built up while processing a frame.
 	CBitVec<MAX_EDICTS> m_EntsAlive;
-	
+
 	// This should correspond to which m_CachedEntState entries have a non-null m_pNetworkable pointer.
 	CBitVec<MAX_EDICTS> m_PrevEntsAlive;
 
@@ -77,7 +77,7 @@ private:
 	unsigned short m_EntsCreatedIndices[MAX_EDICTS];
 	int m_nEntsCreated;
 
-	// Entities that changed but weren't created go here.	
+	// Entities that changed but weren't created go here.
 	unsigned short m_EntsChangedIndices[MAX_EDICTS];
 	int m_nEntsChanged;
 
@@ -99,7 +99,7 @@ private:
 		void	*m_pDataPointer;
 		IClientNetworkable *m_pNetworkable;
 	};
-	
+
 	CCachedEntState 	m_CachedEntState[MAX_EDICTS];
 };
 

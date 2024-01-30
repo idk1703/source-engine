@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -72,7 +72,7 @@ public:
 
 		// collect all the hiding spots in this area
 		const HidingSpotVector *pSpots = area->GetHidingSpots();
-		
+
 		FOR_EACH_VEC( (*pSpots), it )
 		{
 			const HidingSpot *spot = (*pSpots)[ it ];
@@ -383,7 +383,7 @@ public:
 	{
 		// collect all the hiding spots in this area
 		const HidingSpotVector *pSpots = area->GetHidingSpots();
-		
+
 		FOR_EACH_VEC( (*pSpots), it )
 		{
 			const HidingSpot *spot = (*pSpots)[ it ];
@@ -487,4 +487,3 @@ const HidingSpot *FindInitialEncounterSpot( CBaseEntity *me, const Vector &searc
 	int which = RandomInt( 0, collector.m_count-1 );
 	return collector.m_hidingSpot[ which ];
 }
-

@@ -24,12 +24,12 @@ CHudBaseTimer::CHudBaseTimer(vgui::Panel *parent, const char *name) : BaseClass(
 }
 
 void CHudBaseTimer::SetMinutes(int minutes)
-{	
+{
 	m_iMinutes = minutes;
 }
 
 void CHudBaseTimer::SetSeconds(int seconds)
-{	
+{
 	m_iSeconds = seconds;
 }
 
@@ -38,7 +38,7 @@ void CHudBaseTimer::PaintTime(HFont font, int xpos, int ypos, int mins, int secs
 	surface()->DrawSetTextFont(font);
 	wchar_t unicode[6];
 	V_snwprintf(unicode, ARRAYSIZE(unicode), L"%d:%.2d", mins, secs);
-	
+
 	surface()->DrawSetTextPos(xpos, ypos);
 	surface()->DrawUnicodeString( unicode );
 }
@@ -49,7 +49,7 @@ void CHudBaseTimer::Paint()
 	Color fgColor = GetFgColor();
 	fgColor[3] *= alpha;
 	SetFgColor( fgColor );
-	
+
 	surface()->DrawSetTextColor(GetFgColor());
 	PaintTime( m_hNumberFont, digit_xpos, digit_ypos, m_iMinutes, m_iSeconds );
 

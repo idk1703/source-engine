@@ -1,8 +1,8 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose: A Class to create a window that you can type and edit text in.
-//          Window can hold single line or multiline text. 
-//          If it is single it can scroll horizontally in response to 
+//          Window can hold single line or multiline text.
+//          If it is single it can scroll horizontally in response to
 //          key input and mouse selection.
 //
 // $NoKeywords: $
@@ -39,7 +39,7 @@ namespace vgui
 //  For vertical scroll bars, up and down arrows scroll one line at a time.
 //  Clicking and dragging the nob scrolls through text lines.
 //  Mouse wheel also moves the nob.
-//  User can select and highlight text in the window. 
+//  User can select and highlight text in the window.
 //  Double clicking on a word selects it.
 //
 // Non editable:
@@ -63,7 +63,7 @@ namespace vgui
 //  ctrl-shift left/right arrow selects text a word at a time
 //  right arrow move cursor before next char
 //  up arrow move cursor up one line.
-//  down arrow move cursor down one line. 
+//  down arrow move cursor down one line.
 //  home move cursor to start of current line
 //  end move cursor to end of current line
 //  backspace delete prev char or selected text.
@@ -79,8 +79,8 @@ namespace vgui
 //  If there is no text in the clipboard or panel is not editable the paste option is dimmed.
 //  If the mouse is right clicked over selected text, the text stays selected.
 //  If the mouse is right clicked over unselected text, any selected text is deselected.
-//  
-//	
+//
+//
 //-----------------------------------------------------------------------------
 class TextEntry : public Panel
 {
@@ -104,15 +104,15 @@ public:
 	virtual void GotoDown();		// move cursor one line down
 	virtual void GotoWordRight();	// move cursor to Start of next word
 	virtual void GotoWordLeft();	// move cursor to Start of prev word
-	virtual void GotoFirstOfLine();	// go to Start of the current line 
-	virtual void GotoEndOfLine();	// go to end of the current line 
+	virtual void GotoFirstOfLine();	// go to Start of the current line
+	virtual void GotoEndOfLine();	// go to end of the current line
 	virtual void GotoTextStart();	// go to Start of text buffer
 	virtual void GotoTextEnd();		// go to end of text buffer
 
 	virtual void InsertChar(wchar_t ch);
 	virtual void InsertString(const char *text);
 	virtual void InsertString(const wchar_t *wszText);
-	virtual void Backspace();								   
+	virtual void Backspace();
 	virtual void Delete();
 	virtual void SelectNone();
 	virtual void OpenEditMenu();
@@ -129,7 +129,7 @@ public:
 	MESSAGE_FUNC( ShowIMECandidates, "DoShowIMECandidates" );
 	MESSAGE_FUNC( HideIMECandidates, "DoHideIMECandidates" );
 	MESSAGE_FUNC( UpdateIMECandidates, "DoUpdateIMECandidates" );
-	
+
 	virtual void DeleteSelected();
 	virtual void Undo();
 	virtual void SaveUndoState();
@@ -139,11 +139,11 @@ public:
 	virtual bool IsEditable();
 	virtual void SetEnabled(bool state);
 	// move the cursor to line 'line', given how many pixels are in a line
-	virtual void MoveCursor(int line, int pixelsAcross);	
+	virtual void MoveCursor(int line, int pixelsAcross);
 
 	// sets the color of the background when the control is disabled
 	virtual void SetDisabledBgColor(Color col);
-	
+
 	// set whether the box handles more than one line of entry
 	virtual void SetMultiline(bool state);
 	virtual bool IsMultiline();
@@ -194,7 +194,7 @@ public:
 
 	/* MESSAGE SENDING (to action signal targets)
 		"TextChanged"	- sent when the text is edited by the user
-			
+
 		"TextNewLine" - sent when the end key is pressed in the text entry AND _sendNewLines is true
 
 		"TextKillFocus" - sent when focus leaves textentry field
@@ -269,7 +269,7 @@ protected:
 	virtual void OnCursorEntered();	 // handle cursor entering window
 	virtual void OnCursorExited();	 // handle cursor exiting window
 
-	virtual void OnMouseCaptureLost(); 
+	virtual void OnMouseCaptureLost();
 	virtual void OnSizeChanged(int newWide, int newTall);
 
 	// Returns the character index the drawing should Start at
@@ -281,12 +281,12 @@ public:
 	virtual int GetValueAsInt();
 
 protected:
-    void ScrollRight(); // scroll to right until cursor is visible
-    void ScrollLeft();  // scroll to left 
+	void ScrollRight(); // scroll to right until cursor is visible
+	void ScrollLeft();  // scroll to left
 	bool IsCursorOffRightSideOfWindow(int cursorPos); // check if cursor is off right side of window
 	bool IsCursorOffLeftSideOfWindow(int cursorPos); // check if cursor is off left side of window
-    void ScrollLeftForResize();
-	
+	void ScrollLeftForResize();
+
 	void OnSetFocus();
 	// Change keyboard layout type
 	void OnChangeIME( bool forward );
@@ -362,7 +362,7 @@ private:
 	// selection data
 	Menu				*m_pEditMenu; ///cut/copy/paste popup
 
-	int				   _recalculateBreaksIndex; // tells next linebreakindex index to Start recalculating line breaks	
+	int				   _recalculateBreaksIndex; // tells next linebreakindex index to Start recalculating line breaks
 	bool			   _selectAllOnFirstFocus : 1; // highlights all text in window when focus is gained.
 	bool				_selectAllOnFocusAlways : 1;
 	bool			   _firstFocusStatus; // keep track if we've had that first focus or not

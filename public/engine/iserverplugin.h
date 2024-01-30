@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -23,7 +23,7 @@ class CCommand;
 // you will also want to listen for game events via IGameEventManager::AddListener()
 //
 
-typedef enum 
+typedef enum
 {
 	PLUGIN_CONTINUE = 0, // keep going
 	PLUGIN_OVERRIDE, // run the game dll function but use our return value instead
@@ -67,8 +67,8 @@ public:
 	// called when a plugin should start executing again (sometime after a Pause() call)
 	virtual void			UnPause( void ) = 0;
 
-	// Returns string describing current plugin.  e.g., Admin-Mod.  
-	virtual const char     *GetPluginDescription( void ) = 0;      
+	// Returns string describing current plugin.  e.g., Admin-Mod.
+	virtual const char     *GetPluginDescription( void ) = 0;
 
 	// Called any time a new level is started (after GameInit() also on level transitions within a game)
 	virtual void			LevelInit( char const *pMapName ) = 0;
@@ -84,10 +84,10 @@ public:
 
 	// Client is going active
 	virtual void			ClientActive( edict_t *pEntity ) = 0;
-	
+
 	// Client is disconnecting from server
 	virtual void			ClientDisconnect( edict_t *pEntity ) = 0;
-	
+
 	// Client is connected and should be put in the game
 	virtual void			ClientPutInServer( edict_t *pEntity, char const *playername ) = 0;
 
@@ -104,7 +104,7 @@ public:
 	// The client has typed a command at the console
 	virtual PLUGIN_RESULT	ClientCommand( edict_t *pEntity, const CCommand &args ) = 0;
 
-	// A user has had their network id setup and validated 
+	// A user has had their network id setup and validated
 	virtual PLUGIN_RESULT	NetworkIDValidated( const char *pszUserName, const char *pszNetworkID ) = 0;
 
 	// This is called when a query from IServerPluginHelpers::StartQueryCvarValue is finished.
@@ -114,7 +114,7 @@ public:
 
 	// added with version 3 of the interface.
 	virtual void			OnEdictAllocated( edict_t *edict ) = 0;
-	virtual void			OnEdictFreed( const edict_t *edict  ) = 0;	
+	virtual void			OnEdictFreed( const edict_t *edict  ) = 0;
 };
 
 #define INTERFACEVERSION_ISERVERPLUGINHELPERS			"ISERVERPLUGINHELPERS001"
@@ -149,7 +149,7 @@ public:
 	//
 	virtual void CreateMessage( edict_t *pEntity, DIALOG_TYPE type, KeyValues *data, IServerPluginCallbacks *plugin ) = 0;
 	virtual void ClientCommand( edict_t *pEntity, const char *cmd ) = 0;
-	
+
 	// Call this to find out the value of a cvar on the client.
 	//
 	// It is an asynchronous query, and it will call IServerPluginCallbacks::OnQueryCvarValueFinished when

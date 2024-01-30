@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -51,15 +51,15 @@ void CCSTeamMenu::Update( void )
 	const ConVar *allowspecs =  cvar->FindVar( "mp_allowspectators" );
 
 	C_CSPlayer *pPlayer = C_CSPlayer::GetLocalCSPlayer();
-	
+
 	if ( !pPlayer || !CSGameRules() )
 		return;
 
 	if ( allowspecs && allowspecs->GetBool() )
 	{
 		// if we're not already a CT or T...or the freeze time isn't over yet...or we're dead
-		if ( pPlayer->GetTeamNumber() == TEAM_UNASSIGNED || 
-			CSGameRules()->IsFreezePeriod() || 
+		if ( pPlayer->GetTeamNumber() == TEAM_UNASSIGNED ||
+			CSGameRules()->IsFreezePeriod() ||
 			( pPlayer && pPlayer->IsPlayerDead() ) )
 		{
 			SetVisibleButton("specbutton", true);
@@ -84,7 +84,7 @@ void CCSTeamMenu::Update( void )
 	{
 		m_bVIPMap = true;
 	}
-		
+
 	// if this isn't a VIP map or we're a spectator/terrorist, then disable the VIP button
 	if ( !CSGameRules()->IsVIPMap() || ( pPlayer->GetTeamNumber() != TEAM_CT ) )
 	{
@@ -97,16 +97,16 @@ void CCSTeamMenu::Update( void )
 
 	if( pPlayer->GetTeamNumber() == TEAM_UNASSIGNED ) // we aren't on a team yet
 	{
-		SetVisibleButton("CancelButton", false); 
+		SetVisibleButton("CancelButton", false);
 	}
 	else
 	{
-		SetVisibleButton("CancelButton", true); 
+		SetVisibleButton("CancelButton", true);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSTeamMenu::SetVisible(bool state)
 {
@@ -124,7 +124,7 @@ void CCSTeamMenu::SetVisible(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: When a team button is pressed it triggers this function to 
+// Purpose: When a team button is pressed it triggers this function to
 //			cause the player to join a team
 //-----------------------------------------------------------------------------
 void CCSTeamMenu::OnCommand( const char *command )
@@ -133,8 +133,8 @@ void CCSTeamMenu::OnCommand( const char *command )
 	{
 		engine->ClientCmd( command );
 	}
-	
-	
+
+
 	BaseClass::OnCommand(command);
 
 	gViewPortInterface->ShowBackGround( false );
@@ -191,11 +191,10 @@ void CCSTeamMenu::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSTeamMenu::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
 	ApplyBackgroundSchemeSettings( this, pScheme );
 }
-

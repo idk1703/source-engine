@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -57,4 +57,3 @@ private:
 	vgui::ImagePanel *m_pHintImage2;
 };
 #endif // TF_HUD_MANN_VS_MACHINE_LOSS_H
-

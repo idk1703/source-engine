@@ -572,7 +572,7 @@ public:
 	}
 
 	// return true if 'adjArea' should be included in the ongoing search
-	virtual bool ShouldSearch( CNavArea *adjArea, CNavArea *currentArea, float travelDistanceSoFar ) 
+	virtual bool ShouldSearch( CNavArea *adjArea, CNavArea *currentArea, float travelDistanceSoFar )
 	{
 		CTFNavArea *area = (CTFNavArea *)adjArea;
 		float incursionDistance = area->GetIncursionDistance( TF_TEAM_BLUE );
@@ -766,7 +766,7 @@ bool CRaidLogic::SpawnSquad( CTFNavArea *spawnArea )
 	{
 		int k = RandomInt( 0, n-1 );
 		n--;
-		
+
 		int tmp = squadClasses[n];
 		squadClasses[n] = squadClasses[k];
 		squadClasses[k] = tmp;
@@ -944,7 +944,7 @@ void CRaidLogic::SpawnMobs( CUtlVector< CTFNavArea * > *spawnAreaVector )
 		if ( m_mobArea )
 		{
 			const int mobClassCount = 4;
-			static int mobClassList[ mobClassCount ] = 
+			static int mobClassList[ mobClassCount ] =
 			{
 				TF_CLASS_SCOUT,
 				TF_CLASS_HEAVYWEAPONS,
@@ -1207,7 +1207,7 @@ void CRaidLogic::SpawnSpecials( CUtlVector< CTFNavArea * > *spawnAheadVector, CU
 						// Bot will move to his home area to do his business
 						bot->SetHomeArea( homeArea );
 						return;
-					}					
+					}
 				}
 			}
 		}
@@ -1330,7 +1330,7 @@ public:
 		return true;
 	}
 
-	virtual bool ShouldSearch( CNavArea *adjArea, CNavArea *currentArea, float travelDistanceSoFar ) 
+	virtual bool ShouldSearch( CNavArea *adjArea, CNavArea *currentArea, float travelDistanceSoFar )
 	{
 		return travelDistanceSoFar < 3000.0f;
 	}
@@ -1399,7 +1399,7 @@ void CRaidLogic::DrawDebugDisplay( float deltaT )
 	{
 		for( int i=0; i<m_actualSentrySpotVector.Count(); ++i )
 		{
-			m_actualSentrySpotVector[i]->DrawFilled( 255, 155, 0, 255, deltaT, true );		
+			m_actualSentrySpotVector[i]->DrawFilled( 255, 155, 0, 255, deltaT, true );
 		}
 	}
 }
@@ -1566,7 +1566,7 @@ void CRaidLogic::Update( void )
 	bool isCapturingPoint = ( ctrlPoint && ctrlPoint->GetTeamCapPercentage( TF_TEAM_BLUE ) );
 
 	// find maximum incursion distance
-	if ( m_incursionDistanceAtEnd < 0.0f ) 
+	if ( m_incursionDistanceAtEnd < 0.0f )
 	{
 		for( int i=0; i<TheNavAreas.Count(); ++i )
 		{
@@ -1611,7 +1611,7 @@ void CRaidLogic::Update( void )
 			maxIncursion = myIncursion;
 			m_farthestAlongRaider = player;
 		}
-		
+
 		if ( minIncursion > myIncursion )
 		{
 			minIncursion = myIncursion;
@@ -1787,7 +1787,7 @@ void CRaidLogic::Update( void )
 #endif // 0
 
 	// block/unblock capture point gate doors
-	// TODO: Do this more efficiently 
+	// TODO: Do this more efficiently
 	for( i=0; i<m_gateVector.Count(); ++i )
 	{
 		CBaseDoor *door = m_gateVector[i];
@@ -2152,7 +2152,7 @@ void CRaidLogic::BuildEscapeRoute( void )
 		}
 	}
 
-	if ( entity ) 
+	if ( entity )
 	{
 		// respawn room absorigin is 0,0,0 - have to use extent
 		Extent extent;

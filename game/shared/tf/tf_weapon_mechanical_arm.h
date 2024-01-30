@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -27,7 +27,7 @@ class CTFMechanicalArm : public CTFWeaponBaseGun
 {
 public:
 	DECLARE_CLASS( CTFMechanicalArm, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFMechanicalArm();

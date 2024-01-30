@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -26,8 +26,8 @@ public:
 	DECLARE_DATADESC();
 
 	CHL2MPMachineGun();
-	
-	DECLARE_NETWORKCLASS(); 
+
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	void	PrimaryAttack( void );
@@ -45,7 +45,7 @@ public:
 	static void DoMachineGunKick( CBasePlayer *pPlayer, float dampEasy, float maxVerticleKickAngle, float fireDurationTime, float slideLimitTime );
 
 private:
-	
+
 	CHL2MPMachineGun( const CHL2MPMachineGun & );
 
 protected:

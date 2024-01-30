@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -26,7 +26,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudAlert : public CHudElement, public EditablePanel
 {
@@ -52,7 +52,7 @@ private:
 DECLARE_HUDELEMENT( CHudAlert );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudAlert::CHudAlert( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudAlert" )
 {
@@ -64,7 +64,7 @@ CHudAlert::CHudAlert( const char *pElementName ) : CHudElement( pElementName ), 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAlert::Init( void )
 {
@@ -75,7 +75,7 @@ void CHudAlert::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAlert::FireGameEvent( IGameEvent * event )
 {
@@ -90,8 +90,8 @@ void CHudAlert::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CHudAlert::OnTick( void )
 {
@@ -103,7 +103,7 @@ void CHudAlert::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAlert::LevelInit( void )
 {
@@ -112,7 +112,7 @@ void CHudAlert::LevelInit( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudAlert::ShouldDraw( void )
 {
@@ -126,7 +126,7 @@ bool CHudAlert::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAlert::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -139,7 +139,7 @@ void CHudAlert::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAlert::SetupAlertPanel( int iAlertType )
 {

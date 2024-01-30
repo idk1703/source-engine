@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -81,7 +81,7 @@ class ControlPanel : public mxWindow, public IFacePoserToolWindow
 	mxSlider *slModelGap;
 
 	mxCheckBox *cbAllWindowsDriveSpeech;
-	
+
 public:
 	// CREATORS
 	ControlPanel (mxWindow *parent);

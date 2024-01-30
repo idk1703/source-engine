@@ -78,15 +78,15 @@ public:
 		CLASS_CHANGE,
 		NUM_TYPES
 	};
-	
-	char* m_StrippedText;	
+
+	char* m_StrippedText;
 private:
 	ArgVector m_args;
 
 	char m_EventCode;
-	
+
 	time_t m_EventTime;
-	
+
 	bool m_Valid;
 	char* m_EventMessage;
 	Type m_EventType;
@@ -106,13 +106,13 @@ public:
 	CLogEvent();
 	~CLogEvent();
 	bool isValid(){return m_Valid;}
-	
+
 //	explicit CLogEvent(istream& is);
 //	virtual void readEvent(istream& is);
 //	virtual void print(ostream& os);
-	
-	
-	
+
+
+
 
 	CLogEvent::Type getType() const {return m_EventType;}
 	time_t getTime() const {return m_EventTime;}
@@ -123,11 +123,11 @@ public:
 
 
 
-	static const char* TypeNames[];	
+	static const char* TypeNames[];
 
-	
-	//unused stuff 
-protected:	
+
+	//unused stuff
+protected:
 	void readEventTime(FILE* f);
 	void readEventCode(FILE* f);
 	void readEventMessage(FILE* f);
@@ -136,7 +136,7 @@ public:
 	explicit CLogEvent(FILE* f);
 	virtual void readEvent(FILE* f);
 	virtual void print(FILE* f=stdout);
-	
+
 };
 
 

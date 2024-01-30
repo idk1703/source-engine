@@ -254,7 +254,7 @@ void CSlideshowPanel::FillWithImages( const char *pBasePath )
 		V_FixDoubleSlashes( fmtImagePath.Access() );
 		if ( !g_pFullFileSystem->FileExists( fmtImagePath.Access() ) )
 			break;
-		
+
 		fmtImagePath.sprintf( "%s%i.vmt", pBasePath, i );
 		AddImage( fmtImagePath.Access() );
 
@@ -266,7 +266,7 @@ void CSlideshowPanel::ApplySettings( KeyValues *pInResourceData )
 {
 	BaseClass::ApplySettings( pInResourceData );
 
-	int iDefaultImage = pInResourceData->GetInt( "default_index", 0 ); 
+	int iDefaultImage = pInResourceData->GetInt( "default_index", 0 );
 
 	int i = 0;
 	while ( 1 )
@@ -314,4 +314,3 @@ void CSlideshowPanel::OnTick()
 		m_flNextTransitionTime = gpGlobals->realtime + m_flInterval;
 	}
 }
-

@@ -66,7 +66,7 @@ ConVar sv_vote_issue_restart_game_allowed_mvm( "sv_vote_issue_restart_game_allow
 ConVar sv_vote_issue_restart_game_cooldown( "sv_vote_issue_restart_game_cooldown", "300", FCVAR_NONE, "Minimum time before another restart vote can occur (in seconds)." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRestartGameIssue::ExecuteCommand( void )
 {
@@ -85,7 +85,7 @@ void CRestartGameIssue::ExecuteCommand( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CRestartGameIssue::IsEnabled( void )
 {
@@ -99,7 +99,7 @@ bool CRestartGameIssue::IsEnabled( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CRestartGameIssue::CanCallVote( int iEntIndex, const char *pszDetails, vote_create_failed_t &nFailCode, int &nTime )
 {
@@ -116,7 +116,7 @@ bool CRestartGameIssue::CanCallVote( int iEntIndex, const char *pszDetails, vote
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CRestartGameIssue::GetDisplayString( void )
 {
@@ -124,7 +124,7 @@ const char *CRestartGameIssue::GetDisplayString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CRestartGameIssue::GetVotePassedString( void )
 {
@@ -132,7 +132,7 @@ const char *CRestartGameIssue::GetVotePassedString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRestartGameIssue::ListIssueDetails( CBasePlayer *pForWhom )
 {
@@ -156,7 +156,7 @@ ConVar sv_vote_issue_kick_limit_mvm( "sv_vote_issue_kick_limit_mvm", "0", FCVAR_
 ConVar sv_vote_issue_kick_limit_gc( "sv_vote_issue_kick_limit_gc", "0", FCVAR_HIDDEN, "Ask the GC if a kick vote can be called by this player.  Official servers only." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CKickIssue::Init( void )
 {
@@ -168,7 +168,7 @@ void CKickIssue::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CKickIssue::ExecuteCommand( void )
 {
@@ -201,7 +201,7 @@ void CKickIssue::ExecuteCommand( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CKickIssue::IsEnabled( void )
 {
@@ -339,7 +339,7 @@ bool CKickIssue::CanCallVote( int iEntIndex, const char *pszDetails, vote_create
 		if ( sv_vote_issue_kick_spectators_mvm.GetBool() && !m_hPlayerTarget->IsBot() && m_hPlayerTarget->GetTeamNumber() == TEAM_SPECTATOR )
 				return true;
 	}
-	
+
 	// Don't kick players on other teams
 	if ( pTFVoteCaller->GetTeamNumber() != m_hPlayerTarget->GetTeamNumber() )
 		return false;
@@ -348,7 +348,7 @@ bool CKickIssue::CanCallVote( int iEntIndex, const char *pszDetails, vote_create
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CKickIssue::OnVoteFailed( int iEntityHoldingVote )
 {
@@ -362,7 +362,7 @@ void CKickIssue::OnVoteFailed( int iEntityHoldingVote )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
  void CKickIssue::OnVoteStarted( void )
  {
@@ -379,7 +379,7 @@ void CKickIssue::OnVoteFailed( int iEntityHoldingVote )
 	if ( !m_hPlayerTarget )
 		return;
 
-	// Capture some data about the kick target now, so they can't avoid the 
+	// Capture some data about the kick target now, so they can't avoid the
 	// result by doing things like drop, retry, stop sending commands, etc.
 	if ( m_steamIDVoteTarget.IsValid() && m_steamIDVoteTarget.BIndividualAccount() )
 	{
@@ -410,7 +410,7 @@ void CKickIssue::OnVoteFailed( int iEntityHoldingVote )
  }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CKickIssue::GetDisplayString( void )
 {
@@ -425,7 +425,7 @@ const char *CKickIssue::GetDisplayString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CKickIssue::GetVotePassedString( void )
 {
@@ -438,7 +438,7 @@ const char *CKickIssue::GetVotePassedString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CKickIssue::GetDetailsString( void )
 {
@@ -448,12 +448,12 @@ const char *CKickIssue::GetDetailsString( void )
 	// If they left, use name stored at creation
 	if ( V_strlen( m_szTargetPlayerName ) )
 		return m_szTargetPlayerName;
-	
+
 	return "Unnamed";
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CKickIssue::NeedsPermissionFromGC( void )
 {
@@ -480,7 +480,7 @@ bool CKickIssue::NeedsPermissionFromGC( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CKickIssue::NotifyGCAdHocKick( bool bKickedSuccessfully )
 {
@@ -499,7 +499,7 @@ void CKickIssue::NotifyGCAdHocKick( bool bKickedSuccessfully )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CKickIssue::PrintLogData( void )
 {
@@ -515,7 +515,7 @@ void CKickIssue::PrintLogData( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CKickIssue::CreateVoteDataFromDetails( const char *pszDetails )
 {
@@ -548,7 +548,7 @@ bool CKickIssue::CreateVoteDataFromDetails( const char *pszDetails )
 			return true;
 		}
 	}
-	
+
 	// Otherwise rely on userID
 	if ( iUserID )
 	{
@@ -559,7 +559,7 @@ bool CKickIssue::CreateVoteDataFromDetails( const char *pszDetails )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CKickIssue::ListIssueDetails( CBasePlayer *pForWhom )
 {
@@ -579,7 +579,7 @@ ConVar sv_vote_issue_changelevel_allowed( "sv_vote_issue_changelevel_allowed", "
 ConVar sv_vote_issue_changelevel_allowed_mvm( "sv_vote_issue_changelevel_allowed_mvm", "0", FCVAR_NONE, "Can players call votes to change levels in MvM?" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChangeLevelIssue::ExecuteCommand( void )
 {
@@ -587,7 +587,7 @@ void CChangeLevelIssue::ExecuteCommand( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CChangeLevelIssue::CanTeamCallVote( int iTeam ) const
 {
@@ -595,7 +595,7 @@ bool CChangeLevelIssue::CanTeamCallVote( int iTeam ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CChangeLevelIssue::IsEnabled( void )
 {
@@ -609,7 +609,7 @@ bool CChangeLevelIssue::IsEnabled( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CChangeLevelIssue::CanCallVote( int iEntIndex, const char *pszDetails, vote_create_failed_t &nFailCode, int &nTime )
 {
@@ -664,7 +664,7 @@ bool CChangeLevelIssue::CanCallVote( int iEntIndex, const char *pszDetails, vote
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CChangeLevelIssue::GetDisplayString( void )
 {
@@ -672,7 +672,7 @@ const char *CChangeLevelIssue::GetDisplayString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CChangeLevelIssue::GetVotePassedString( void )
 {
@@ -680,7 +680,7 @@ const char *CChangeLevelIssue::GetVotePassedString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CChangeLevelIssue::GetDetailsString( void )
 {
@@ -688,7 +688,7 @@ const char *CChangeLevelIssue::GetDetailsString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChangeLevelIssue::ListIssueDetails( CBasePlayer *pForWhom )
 {
@@ -701,7 +701,7 @@ void CChangeLevelIssue::ListIssueDetails( CBasePlayer *pForWhom )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CChangeLevelIssue::IsYesNoVote( void )
 {
@@ -717,7 +717,7 @@ ConVar sv_vote_issue_nextlevel_allowextend( "sv_vote_issue_nextlevel_allowextend
 ConVar sv_vote_issue_nextlevel_prevent_change( "sv_vote_issue_nextlevel_prevent_change", "1", FCVAR_NONE, "Not allowed to vote for a nextlevel if one has already been set." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNextLevelIssue::GetVoteOptions( CUtlVector <const char*> &vecNames )
 {
@@ -738,7 +738,7 @@ bool CNextLevelIssue::GetVoteOptions( CUtlVector <const char*> &vecNames )
 		{
 			vecNames.AddToTail( "Extend current Map" );
 		}
-	
+
 		return true;
 	}
 
@@ -746,7 +746,7 @@ bool CNextLevelIssue::GetVoteOptions( CUtlVector <const char*> &vecNames )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNextLevelIssue::ExecuteCommand( void )
 {
@@ -775,7 +775,7 @@ void CNextLevelIssue::ExecuteCommand( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNextLevelIssue::CanTeamCallVote( int iTeam ) const
 {
@@ -783,7 +783,7 @@ bool CNextLevelIssue::CanTeamCallVote( int iTeam ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNextLevelIssue::IsEnabled( void )
 {
@@ -797,7 +797,7 @@ bool CNextLevelIssue::IsEnabled( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNextLevelIssue::CanCallVote( int iEntIndex, const char *pszDetails, vote_create_failed_t &nFailCode, int &nTime )
 {
@@ -815,7 +815,7 @@ bool CNextLevelIssue::CanCallVote( int iEntIndex, const char *pszDetails, vote_c
 
 		return false;
 	}
-	
+
 	if( !IsEnabled() )
 	{
 		nFailCode = VOTE_FAILED_ISSUE_DISABLED;
@@ -850,12 +850,12 @@ bool CNextLevelIssue::CanCallVote( int iEntIndex, const char *pszDetails, vote_c
 			return false;
 		}
 	}
-	
+
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CNextLevelIssue::GetDisplayString( void )
 {
@@ -872,7 +872,7 @@ const char *CNextLevelIssue::GetDisplayString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CNextLevelIssue::GetVotePassedString( void )
 {
@@ -883,12 +883,12 @@ const char *CNextLevelIssue::GetVotePassedString( void )
 			return "#TF_vote_passed_nextlevel_extend";
 		}
 	}
-	
+
 	return "#TF_vote_passed_nextlevel";
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CNextLevelIssue::GetDetailsString( void )
 {
@@ -896,7 +896,7 @@ const char *CNextLevelIssue::GetDetailsString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNextLevelIssue::ListIssueDetails( CBasePlayer *pForWhom )
 {
@@ -912,7 +912,7 @@ void CNextLevelIssue::ListIssueDetails( CBasePlayer *pForWhom )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNextLevelIssue::IsYesNoVote( void )
 {
@@ -922,12 +922,12 @@ bool CNextLevelIssue::IsYesNoVote( void )
 		if ( sv_vote_issue_nextlevel_choicesmode.GetBool() )
 			return false;
 	}
-	
+
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CNextLevelIssue::GetNumberVoteOptions( void )
 {
@@ -943,7 +943,7 @@ int CNextLevelIssue::GetNumberVoteOptions( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CNextLevelIssue::GetQuorumRatio( void )
 {
@@ -964,7 +964,7 @@ ConVar sv_vote_issue_extendlevel_allowed( "sv_vote_issue_extendlevel_allowed", "
 ConVar sv_vote_issue_extendlevel_quorum( "sv_vote_issue_extendlevel_quorum", "0.6", FCVAR_NONE, "What is the ratio of voters needed to reach quorum?" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExtendLevelIssue::ExecuteCommand( void )
 {
@@ -986,7 +986,7 @@ void CExtendLevelIssue::ExecuteCommand( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CExtendLevelIssue::IsEnabled( void )
 {
@@ -1000,7 +1000,7 @@ bool CExtendLevelIssue::IsEnabled( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CExtendLevelIssue::CanCallVote( int iEntIndex, const char *pszDetails, vote_create_failed_t &nFailCode, int &nTime )
 {
@@ -1017,7 +1017,7 @@ bool CExtendLevelIssue::CanCallVote( int iEntIndex, const char *pszDetails, vote
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CExtendLevelIssue::GetDisplayString( void )
 {
@@ -1025,18 +1025,18 @@ const char *CExtendLevelIssue::GetDisplayString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExtendLevelIssue::ListIssueDetails( CBasePlayer *pForWhom )
 {
-	if ( !sv_vote_issue_extendlevel_allowed.GetBool() ) 
+	if ( !sv_vote_issue_extendlevel_allowed.GetBool() )
 		return;
 
 	ListStandardNoArgCommand( pForWhom, GetTypeString() );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CExtendLevelIssue::GetVotePassedString( void )
 {
@@ -1045,11 +1045,11 @@ const char *CExtendLevelIssue::GetVotePassedString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CExtendLevelIssue::GetQuorumRatio( void )
 {
-	// Our own quorom 
+	// Our own quorom
 	return sv_vote_issue_extendlevel_quorum.GetFloat();
 }
 
@@ -1060,7 +1060,7 @@ ConVar sv_vote_issue_scramble_teams_allowed( "sv_vote_issue_scramble_teams_allow
 ConVar sv_vote_issue_scramble_teams_cooldown( "sv_vote_issue_scramble_teams_cooldown", "1200", FCVAR_NONE, "Minimum time before another scramble vote can occur (in seconds)." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScrambleTeams::ExecuteCommand( void )
 {
@@ -1073,7 +1073,7 @@ void CScrambleTeams::ExecuteCommand( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CScrambleTeams::IsEnabled( void )
 {
@@ -1087,7 +1087,7 @@ bool CScrambleTeams::IsEnabled( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CScrambleTeams::CanCallVote( int iEntIndex, const char *pszDetails, vote_create_failed_t &nFailCode, int &nTime )
 {
@@ -1110,7 +1110,7 @@ bool CScrambleTeams::CanCallVote( int iEntIndex, const char *pszDetails, vote_cr
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CScrambleTeams::GetDisplayString( void )
 {
@@ -1118,7 +1118,7 @@ const char *CScrambleTeams::GetDisplayString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CScrambleTeams::GetVotePassedString( void )
 {
@@ -1126,7 +1126,7 @@ const char *CScrambleTeams::GetVotePassedString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScrambleTeams::ListIssueDetails( CBasePlayer *pForWhom )
 {
@@ -1142,7 +1142,7 @@ void CScrambleTeams::ListIssueDetails( CBasePlayer *pForWhom )
 ConVar sv_vote_issue_mvm_challenge_allowed( "sv_vote_issue_mvm_challenge_allowed", "1", FCVAR_NONE, "Can players call votes to set the challenge level?" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineChangeChallengeIssue::ExecuteCommand( void )
 {
@@ -1157,7 +1157,7 @@ void CMannVsMachineChangeChallengeIssue::ExecuteCommand( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CMannVsMachineChangeChallengeIssue::CanTeamCallVote( int iTeam ) const
 {
@@ -1184,7 +1184,7 @@ bool CMannVsMachineChangeChallengeIssue::IsEnabled( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CMannVsMachineChangeChallengeIssue::CanCallVote( int iEntIndex, const char *pszDetails, vote_create_failed_t &nFailCode, int &nTime )
 {
@@ -1216,7 +1216,7 @@ bool CMannVsMachineChangeChallengeIssue::CanCallVote( int iEntIndex, const char 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CMannVsMachineChangeChallengeIssue::GetDisplayString( void )
 {
@@ -1224,7 +1224,7 @@ const char *CMannVsMachineChangeChallengeIssue::GetDisplayString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CMannVsMachineChangeChallengeIssue::GetVotePassedString( void )
 {
@@ -1232,7 +1232,7 @@ const char *CMannVsMachineChangeChallengeIssue::GetVotePassedString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CMannVsMachineChangeChallengeIssue::GetDetailsString( void )
 {
@@ -1240,7 +1240,7 @@ const char *CMannVsMachineChangeChallengeIssue::GetDetailsString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMannVsMachineChangeChallengeIssue::ListIssueDetails( CBasePlayer *pForWhom )
 {
@@ -1253,7 +1253,7 @@ void CMannVsMachineChangeChallengeIssue::ListIssueDetails( CBasePlayer *pForWhom
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CMannVsMachineChangeChallengeIssue::IsYesNoVote( void )
 {
@@ -1261,7 +1261,7 @@ bool CMannVsMachineChangeChallengeIssue::IsYesNoVote( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CMannVsMachineChangeChallengeIssue::GetNumberVoteOptions( void )
 {
@@ -1270,7 +1270,7 @@ int CMannVsMachineChangeChallengeIssue::GetNumberVoteOptions( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEnableTemporaryHalloweenIssue::CanCallVote( int iEntIndex, const char *pszDetails, vote_create_failed_t &nFailCode, int &nTime )
 {
@@ -1293,7 +1293,7 @@ bool CEnableTemporaryHalloweenIssue::CanCallVote( int iEntIndex, const char *psz
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnableTemporaryHalloweenIssue::ListIssueDetails( CBasePlayer *pForWhom )
 {
@@ -1301,7 +1301,7 @@ void CEnableTemporaryHalloweenIssue::ListIssueDetails( CBasePlayer *pForWhom )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static void SendVoteResponseToGC( bool bVoteResponse )
 {
@@ -1321,7 +1321,7 @@ static void SendVoteResponseToGC( bool bVoteResponse )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnableTemporaryHalloweenIssue::ExecuteCommand( void )
 {
@@ -1329,7 +1329,7 @@ void CEnableTemporaryHalloweenIssue::ExecuteCommand( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnableTemporaryHalloweenIssue::OnVoteFailed( int iEntityHoldingVote )
 {
@@ -1345,7 +1345,7 @@ ConVar sv_vote_issue_autobalance_allowed( "sv_vote_issue_autobalance_allowed", "
 ConVar sv_vote_issue_autobalance_cooldown( "sv_vote_issue_autobalance_cooldown", "300", FCVAR_NONE, "Minimum time before another auto team balance vote can occur (in seconds)." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTeamAutoBalanceIssue::GetTypeStringLocalized( void )
 {
@@ -1359,7 +1359,7 @@ const char *CTeamAutoBalanceIssue::GetTypeStringLocalized( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamAutoBalanceIssue::ExecuteCommand( void )
 {
@@ -1381,7 +1381,7 @@ void CTeamAutoBalanceIssue::ExecuteCommand( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTeamAutoBalanceIssue::IsEnabled( void )
 {
@@ -1392,7 +1392,7 @@ bool CTeamAutoBalanceIssue::IsEnabled( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTeamAutoBalanceIssue::CanCallVote( int iEntIndex, const char *pszDetails, vote_create_failed_t &nFailCode, int &nTime )
 {
@@ -1409,7 +1409,7 @@ bool CTeamAutoBalanceIssue::CanCallVote( int iEntIndex, const char *pszDetails, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTeamAutoBalanceIssue::GetDisplayString( void )
 {
@@ -1422,7 +1422,7 @@ const char *CTeamAutoBalanceIssue::GetDisplayString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTeamAutoBalanceIssue::GetVotePassedString( void )
 {
@@ -1435,7 +1435,7 @@ const char *CTeamAutoBalanceIssue::GetVotePassedString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamAutoBalanceIssue::ListIssueDetails( CBasePlayer *pForWhom )
 {
@@ -1446,7 +1446,7 @@ void CTeamAutoBalanceIssue::ListIssueDetails( CBasePlayer *pForWhom )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTeamAutoBalanceIssue::GetQuorumRatio( void )
 {
@@ -1474,7 +1474,7 @@ ConVar sv_vote_issue_classlimits_max_mvm( "sv_vote_issue_classlimits_max_mvm", "
 ConVar sv_vote_issue_classlimits_cooldown( "sv_vote_issue_classlimits_cooldown", "300", FCVAR_NONE, "Minimum time before another classlimits vote can occur (in seconds)." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CClassLimitsIssue::GetTypeStringLocalized( void )
 {
@@ -1488,7 +1488,7 @@ const char *CClassLimitsIssue::GetTypeStringLocalized( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLimitsIssue::ExecuteCommand( void )
 {
@@ -1511,7 +1511,7 @@ void CClassLimitsIssue::ExecuteCommand( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CClassLimitsIssue::IsEnabled( void )
 {
@@ -1533,7 +1533,7 @@ bool CClassLimitsIssue::IsEnabled( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CClassLimitsIssue::CanCallVote( int iEntIndex, const char *pszDetails, vote_create_failed_t &nFailCode, int &nTime )
 {
@@ -1550,7 +1550,7 @@ bool CClassLimitsIssue::CanCallVote( int iEntIndex, const char *pszDetails, vote
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CClassLimitsIssue::GetDisplayString( void )
 {
@@ -1563,7 +1563,7 @@ const char *CClassLimitsIssue::GetDisplayString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CClassLimitsIssue::GetVotePassedString( void )
 {
@@ -1576,7 +1576,7 @@ const char *CClassLimitsIssue::GetVotePassedString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLimitsIssue::ListIssueDetails( CBasePlayer *pForWhom )
 {
@@ -1590,7 +1590,7 @@ void CClassLimitsIssue::ListIssueDetails( CBasePlayer *pForWhom )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CClassLimitsIssue::GetDetailsString( void )
 {
@@ -1608,7 +1608,7 @@ ConVar sv_vote_issue_pause_game_timer( "sv_vote_issue_pause_game_timer", "120", 
 ConVar sv_vote_issue_pause_game_cooldown( "sv_vote_issue_pause_game_cooldown", "1200", FCVAR_HIDDEN, "Minimum time before another pause vote can occur (in seconds)." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPauseGameIssue::ExecuteCommand( void )
 {
@@ -1621,7 +1621,7 @@ void CPauseGameIssue::ExecuteCommand( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CPauseGameIssue::IsEnabled( void )
 {
@@ -1632,7 +1632,7 @@ bool CPauseGameIssue::IsEnabled( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CPauseGameIssue::CanCallVote( int iEntIndex, const char *pszDetails, vote_create_failed_t &nFailCode, int &nTime )
 {
@@ -1649,7 +1649,7 @@ bool CPauseGameIssue::CanCallVote( int iEntIndex, const char *pszDetails, vote_c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CPauseGameIssue::GetDisplayString( void )
 {
@@ -1657,7 +1657,7 @@ const char *CPauseGameIssue::GetDisplayString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CPauseGameIssue::GetVotePassedString( void )
 {
@@ -1665,7 +1665,7 @@ const char *CPauseGameIssue::GetVotePassedString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPauseGameIssue::ListIssueDetails( CBasePlayer *pForWhom )
 {
@@ -1676,7 +1676,7 @@ void CPauseGameIssue::ListIssueDetails( CBasePlayer *pForWhom )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CPauseGameIssue::GetDetailsString( void )
 {

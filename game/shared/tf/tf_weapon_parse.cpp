@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "cbase.h"
@@ -89,7 +89,7 @@ void CTFWeaponInfo::Parse( KeyValues *pKeyValuesData, const char *szWeaponName )
 			m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_iProjectile = i;
 			break;
 		}
-	}	 
+	}
 
 	m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flProjectileSpeed	= pKeyValuesData->GetFloat( "ProjectileSpeed", 0.0f );
 
@@ -129,7 +129,7 @@ void CTFWeaponInfo::Parse( KeyValues *pKeyValuesData, const char *szWeaponName )
 			m_WeaponData[TF_WEAPON_SECONDARY_MODE].m_iProjectile = i;
 			break;
 		}
-	}	
+	}
 
 	const char *pszWeaponType = pKeyValuesData->GetString( "WeaponType" );
 

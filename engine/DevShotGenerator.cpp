@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,11 +18,11 @@
 #define PAUSE_TIME_BETWEEN_MAPS		2.0f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void DevShotGenerator_Usage()
 {
-	// 
+	//
 	Msg( "-makedevshots usage:\n" );
 	Msg( "  [ -usedevshotsfile filename ] -- get map list from specified file, default is to build for maps/*.bsp\n" );
 	Msg( "  [ -startmap mapname ] -- restart generation at specified map (after crash, implies resume)\n" );
@@ -70,7 +70,7 @@ static ConCommand devshots_nextmap( "devshots_nextmap", CL_DevShots_NextMap, "Us
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CDevShotGenerator::CDevShotGenerator() 
+CDevShotGenerator::CDevShotGenerator()
 {
 	m_bUsingMapList = false;
 	m_bDevShotsEnabled = false;
@@ -141,9 +141,8 @@ void CDevShotGenerator::StartDevShotGeneration()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDevShotGenerator::Shutdown()
 {
 }
-

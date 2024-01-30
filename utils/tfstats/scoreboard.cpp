@@ -38,14 +38,14 @@ void CScoreboard::writeHTML(CHTMLFile& html)
 {
 	CPlayerListIterator i;
 	int t;
-	
+
 	bool teamFound=false;
-	
+
 	for (t=0;t<MAX_TEAMS;t++)
 	{
 		if (!g_pMatchInfo->teamExists(t))
 			continue;
-		
+
 		if (!teamFound)
 		{
 			html.write("<p>");
@@ -57,7 +57,7 @@ void CScoreboard::writeHTML(CHTMLFile& html)
 		int totaldeaths=0;
 		double teamrank=0;
 		int numplrs=0;
-		
+
 		html.write("<table cellpadding=3 cellspacing=0 border=0 class=scores>");
 		html.write("<tr class=header>");
 		html.write("<td ><font class=boardtext>%s</font></td>",g_pMatchInfo->teamName(t).c_str());
@@ -65,16 +65,16 @@ void CScoreboard::writeHTML(CHTMLFile& html)
 		html.write("<td><font class=boardtext>Deaths</font></td>");
 		html.write("<td><font class=boardtext>Rank</font></td>");
 		html.write("</tr>");
-		
+
 		multimap<double,CPlayer> ranksort;
 		for (i=g_pMatchInfo->playerBegin();i!=g_pMatchInfo->playerEnd();++i)
 		{
 			pair<PID,CPlayer> plr=(*i);
 			PID pid=plr.first;
 			CPlayer& p=plr.second;
-			
+
 			if (p.teams.contains(t))
-			{	
+			{
 				double rank=p.perteam[t].rank();
 				pair<double,CPlayer> insertme(rank,p);
 				ranksort.insert(insertme);
@@ -87,11 +87,11 @@ void CScoreboard::writeHTML(CHTMLFile& html)
 		{
 			double rank=(*i2).first;
 			CPlayer p=(*i2).second;
-			
+
 			if (!p.teams.contains(t))
 			{
 				continue;
-			}	
+			}
 
 			html.write("<tr>\n");
 			html.write("\n");
@@ -99,14 +99,14 @@ void CScoreboard::writeHTML(CHTMLFile& html)
 			html.write("<td width=100><font class=boardtext>%li</font></td>\n",p.perteam[t].kills);
 			html.write("<td width=100><font class=boardtext>%li</font></td>\n",p.perteam[t].deaths);
 			html.write("<td width=100><font class=boardtext>%.2lf</font></td>\n",rank);
-			
+
 			html.write("</tr>\n");
 			totalkills+=p.perteam[t].kills;
 			totaldeaths+=p.perteam[t].deaths;
 			teamrank+=rank;
 			numplrs++;
 		}
-		
+
 		html.write("<tr>");
 		html.write("<td colspan=4><hr></td>");
 		html.write("</tr>");
@@ -116,11 +116,9 @@ void CScoreboard::writeHTML(CHTMLFile& html)
 		html.write("<td><font class=boardtext>%li</font></td>",totaldeaths);
 		html.write("<td><font class=boardtext>%.2lf (avg)</font></td>",teamrank/numplrs);
 		html.write("</tr>");
-		html.write("</table>\n<p>\n");		
-		
-		
+		html.write("</table>\n<p>\n");
+
+
 	}
-	
+
 }
-
-

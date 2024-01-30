@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -43,7 +43,7 @@ protected:
 
 	virtual BOOL OnNotify(WPARAM wParam, LPARAM lParam, LRESULT *pResult);
 	virtual BOOL OnInitDialog(void);
-	void OnSelChangeTab(NMHDR *header, LRESULT *result); 
+	void OnSelChangeTab(NMHDR *header, LRESULT *result);
 
 	//{{AFX_MSG(CFilterControl)
 	afx_msg void OnSize(UINT nType, int cx, int cy);

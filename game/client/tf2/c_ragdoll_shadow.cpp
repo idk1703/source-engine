@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@
 CPhysCollide *PhysCreateBbox( const Vector &mins, const Vector &maxs );
 extern CSolidSetDefaults g_SolidSetup;
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_RagdollShadow : public C_BaseAnimating
 {
@@ -180,7 +180,7 @@ IPhysicsObject *C_RagdollShadow::VPhysicsInitShadow( bool allowPhysicsMovement, 
 	pPhysicsObject->UpdateShadow( GetAbsOrigin(), GetAbsAngles(), false, 0 );
 //	PhysAddShadow( this );
 	return pPhysicsObject;
-}	
+}
 
 void C_RagdollShadow::OnDataChanged( DataUpdateType_t updateType )
 {

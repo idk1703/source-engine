@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -221,7 +221,7 @@ CMaterialVar *CMaterialVar::AllocThreadVar()
 
 //-----------------------------------------------------------------------------
 // Purpose: Static method
-// Input  : enable - 
+// Input  : enable -
 //-----------------------------------------------------------------------------
 void IMaterialVar::DeleteUnreferencedTextures( bool enable )
 {
@@ -874,12 +874,12 @@ ITexture *CMaterialVar::GetTextureValue( void )
 	}
 
 	ITexture *retVal = NULL;
-	
+
 	if( m_pMaterial )
 	{
 		m_pMaterial->Precache();
 	}
-	
+
 	if( m_Type == MATERIAL_VAR_TYPE_TEXTURE )
 	{
 		if ( !IsTextureInternalEnvCubemap( m_pTexture ) )
@@ -947,7 +947,7 @@ void CMaterialVar::SetTextureValue( ITexture *texture )
 		s_bInitTextureRefList = true;
 	}
 
-	// Avoid the garymcthack in CShaderSystem::LoadCubeMap by ensuring we're not using 
+	// Avoid the garymcthack in CShaderSystem::LoadCubeMap by ensuring we're not using
 	// the internal env cubemap.
 	if ( ThreadInMainThread() && !IsTextureInternalEnvCubemap( static_cast<ITextureInternal*>( texture ) ) )
 	{
@@ -1030,12 +1030,12 @@ IMaterial *CMaterialVar::GetMaterialValue( void )
 	}
 
 	IMaterial *retVal = NULL;
-	
+
 	if( m_pMaterial )
 	{
 		m_pMaterial->Precache();
 	}
-	
+
 	if( m_Type == MATERIAL_VAR_TYPE_MATERIAL )
 	{
 		retVal = static_cast<IMaterial *>( m_pMaterialValue );
@@ -1282,7 +1282,7 @@ void CMaterialVar::SetVecComponentValue( float fVal, int nComponent )
 	{
 		//reset all undefined components to 0
 		for( int i = m_nNumVectorComps; i != nComponent; ++i )
-			m_VecVal[i] = 0.0f; 
+			m_VecVal[i] = 0.0f;
 
 		m_nNumVectorComps = nComponent;
 	}
@@ -1298,7 +1298,7 @@ void CMaterialVar::SetVecComponentValue( float fVal, int nComponent )
 
 
 //-----------------------------------------------------------------------------
-// Matrix 
+// Matrix
 //-----------------------------------------------------------------------------
 VMatrix const& CMaterialVar::GetMatrixValue( )
 {
@@ -1355,7 +1355,7 @@ void CMaterialVar::SetMatrixValue( VMatrix const& matrix )
 
 bool CMaterialVar::MatrixIsIdentity( void ) const
 {
-	if( m_Type != MATERIAL_VAR_TYPE_MATRIX ) 
+	if( m_Type != MATERIAL_VAR_TYPE_MATRIX )
 	{
 		return true;
 	}
@@ -1363,7 +1363,7 @@ bool CMaterialVar::MatrixIsIdentity( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Undefined 
+// Undefined
 //-----------------------------------------------------------------------------
 bool CMaterialVar::IsDefined() const
 {
@@ -1399,7 +1399,7 @@ void CMaterialVar::SetUndefined()
 
 
 //-----------------------------------------------------------------------------
-// Copy from another material var 
+// Copy from another material var
 //-----------------------------------------------------------------------------
 void CMaterialVar::CopyFrom( IMaterialVar *pMaterialVar )
 {
@@ -1509,7 +1509,7 @@ static int ParseVectorFromKeyValueString( const char *pString, float vecVal[4] )
 	{
 		Assert( *pScan == '[' );
 	}
-	
+
 	// skip the '['
 	++pScan;
 	int i;
@@ -1574,7 +1574,7 @@ void CMaterialVar::SetValueAutodetectType( const char *val )
 		SetFloatValue( fval );
 		return;
 	}
-	
+
 	if ( pIEnd == pSEnd )
 	{
 		SetIntValue( ival );

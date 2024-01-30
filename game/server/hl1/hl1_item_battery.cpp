@@ -16,7 +16,7 @@
 
 #define BATTERY_MODEL "models/w_battery.mdl"
 
-ConVar	sk_battery( "sk_battery","0" );			
+ConVar	sk_battery( "sk_battery","0" );
 
 class CItemBattery : public CHL1Item
 {
@@ -24,7 +24,7 @@ public:
 	DECLARE_CLASS( CItemBattery, CHL1Item );
 
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		SetModel( BATTERY_MODEL );
 		BaseClass::Spawn( );
@@ -55,19 +55,19 @@ public:
 				WRITE_STRING( GetClassname() );
 			MessageEnd();
 
-			
+
 			// Suit reports new power level
 			// For some reason this wasn't working in release build -- round it.
 			pct = (int)( (float)(pPlayer->ArmorValue() * 100.0) * (1.0/MAX_NORMAL_BATTERY) + 0.5);
 			pct = (pct / 5);
 			if (pct > 0)
 				pct--;
-		
+
 			Q_snprintf( szcharge,sizeof(szcharge),"!HEV_%1dP", pct );
-			
+
 			//UTIL_EmitSoundSuit(edict(), szcharge);
 			pPlayer->SetSuitUpdate(szcharge, FALSE, SUIT_NEXT_IN_30SEC);
-			return true;		
+			return true;
 		}
 		return false;
 	}
@@ -75,4 +75,3 @@ public:
 
 LINK_ENTITY_TO_CLASS(item_battery, CItemBattery);
 PRECACHE_REGISTER(item_battery);
-

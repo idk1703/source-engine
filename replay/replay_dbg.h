@@ -31,8 +31,8 @@ extern IEngineReplay	*g_pEngine;
 #define DBG2( x_ )		DBGN( x_, 2 )
 #define DBG3( x_ )		DBGN( x_, 3 )
 #else
-#define DBG( x_ )	
-#define DBG2( x_ )	
+#define DBG( x_ )
+#define DBG2( x_ )
 #endif
 
 //----------------------------------------------------------------------------------------

@@ -661,7 +661,7 @@ void CNavUIBasePanel::OnCursorMoved( int x, int y )
 	{
 		m_selectionPanel->OnCursorMoved( x, y );
 	}
-	
+
 	BaseClass::OnCursorMoved( x, y );
 }
 
@@ -783,11 +783,11 @@ float ScaleFOVByWidthRatio( float fovDegrees, float ratio )
 // Given a field of view and mouse/screen positions as well as the current
 // render origin and angles, returns a unit vector through the mouse position
 // that can be used to trace into the world under the mouse click pixel.
-// Input : 
+// Input :
 // mousex -
 // mousey -
 // fov -
-// vecRenderOrigin - 
+// vecRenderOrigin -
 // vecRenderAngles -
 // Output :
 // vecPickingRay
@@ -825,7 +825,7 @@ void ScreenToWorld( int mousex, int mousey, float fov,
 
 	// Convert to unit vector
 	VectorNormalize( vecPickingRay );
-} 
+}
 
 
 //--------------------------------------------------------------------------------------------------------

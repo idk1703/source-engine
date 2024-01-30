@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -49,11 +49,11 @@ DESTRUCTOR VWeightImportClass::~VWeightImportClass(void)
 }
 
 
-int VWeightImportClass::DoImport(const TCHAR *name, ImpInterface *ii, Interface *pi, BOOL suppressPrompts) 
+int VWeightImportClass::DoImport(const TCHAR *name, ImpInterface *ii, Interface *pi, BOOL suppressPrompts)
 {
 	ImpInterface	*pimpiface = ii;
 	Interface		*piface = pi;
-	
+
 	// Break up filename, re-assemble longer versions
 	TSTR strPath, strFile, strExt;
 	TCHAR szFile[MAX_PATH];
@@ -102,7 +102,7 @@ int VWeightImportClass::DoImport(const TCHAR *name, ImpInterface *ii, Interface 
 	fclose( pFile );
 
 	RemapSrcWeights( );
-	
+
 	NodeEnum( ip->GetSelNode( 0 ) );
 
 	// Tell user that exporting is finished (it can take a while with no feedback)
@@ -112,7 +112,7 @@ int VWeightImportClass::DoImport(const TCHAR *name, ImpInterface *ii, Interface 
 
 	return 1/*success*/;
 }
-	
+
 
 void VWeightImportClass::CollectNodes( INode *pnode )
 {
@@ -137,8 +137,8 @@ void VWeightImportClass::CollectNodes( INode *pnode )
 
 	return;
 }
-	
-	
+
+
 void VWeightImportClass::NodeEnum( INode *node )
 {
 #if 0
@@ -210,14 +210,14 @@ int VWeightImportClass::UpdateModel(INode *pnode)
 	// clear physique export parameters
 	m_mcExport = NULL;
 	m_phyExport = NULL;
-    m_phyMod = NULL;
-    m_bonesProMod = NULL;
+	m_phyMod = NULL;
+	m_bonesProMod = NULL;
 
 	ASSERT_MBOX(!(pnode)->IsRootNode(), "Encountered a root node!");
 
 	int iNode = ::GetIndexOfINode(pnode);
 	TSTR strNodeName(pnode->GetName());
-	
+
 	// The Footsteps node apparently MUST have a dummy mesh attached!  Ignore it explicitly.
 	if (FStrEq((char*)strNodeName, "Bip01 Footsteps"))
 		return TREE_CONTINUE;
@@ -251,22 +251,22 @@ int VWeightImportClass::UpdateModel(INode *pnode)
 	Matrix3 mat3ObjectTM = pnode->GetObjectTM(m_tvStart);
 
 	// initialize physique export parameters
-    m_phyMod = FindPhysiqueModifier(pnode);
-    if (m_phyMod)
+	m_phyMod = FindPhysiqueModifier(pnode);
+	if (m_phyMod)
 	{
 		// Physique Modifier exists for given Node
-	    m_phyExport = (IPhysiqueExport *)m_phyMod->GetInterface(I_PHYINTERFACE);
+		m_phyExport = (IPhysiqueExport *)m_phyMod->GetInterface(I_PHYINTERFACE);
 
-        if (m_phyExport)
-        {
-            // create a ModContext Export Interface for the specific node of the Physique Modifier
-           m_mcExport = (IPhyContextExport *)m_phyExport->GetContextInterface(pnode);
+		if (m_phyExport)
+		{
+			// create a ModContext Export Interface for the specific node of the Physique Modifier
+			m_mcExport = (IPhyContextExport *)m_phyExport->GetContextInterface(pnode);
 
-		   if (m_mcExport)
-		   {
-		       // convert all vertices to Rigid 
-                m_mcExport->ConvertToRigid(TRUE);
-		   }
+			if (m_mcExport)
+			{
+				// convert all vertices to Rigid
+				m_mcExport->ConvertToRigid(TRUE);
+			}
 		}
 	}
 
@@ -344,11 +344,9 @@ void UpdateModelTEP::cleanup(void)
 		{
 			m_phyExport->ReleaseContextInterface(m_mcExport);
 			m_mcExport = NULL;
-        }
-        m_phyMod->ReleaseInterface(I_PHYINTERFACE, m_phyExport);
+		}
+		m_phyMod->ReleaseInterface(I_PHYINTERFACE, m_phyExport);
 		m_phyExport = NULL;
 		m_phyMod = NULL;
 	}
 }
-
-

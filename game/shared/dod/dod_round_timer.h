@@ -50,7 +50,7 @@ public:
 
 	void InternalSetPaused( bool bPaused ) { m_bTimerPaused = bPaused; }
 
-#endif	
+#endif
 
 private:
 	CNetworkVar( bool, m_bTimerPaused );

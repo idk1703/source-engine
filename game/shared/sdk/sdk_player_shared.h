@@ -46,7 +46,7 @@ public:
 	void	Init( OuterClass *pOuter );
 
 	bool	IsSniperZoomed( void ) const;
-	bool	IsDucking( void ) const; 
+	bool	IsDucking( void ) const;
 
 #if defined ( SDK_USE_PLAYERCLASSES )
 	void	SetDesiredPlayerClass( int playerclass );
@@ -62,7 +62,7 @@ public:
 	void	StartGoingProne( void );
 	void	StandUpFromProne( void );
 	bool	IsProne() const;
-	bool	IsGettingUpFromProne() const;	
+	bool	IsGettingUpFromProne() const;
 	bool	IsGoingProne() const;
 	void	SetProne( bool bProne, bool bNoAnimation = false );
 	bool	CanChangePosition( void );
@@ -128,7 +128,7 @@ public:
 private:
 
 	OuterClass *m_pOuter;
-};			   
+};
 
 
 

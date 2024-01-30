@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -56,7 +56,7 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_katana );
 //
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFDecapitationMeleeWeaponBase::CTFDecapitationMeleeWeaponBase()
 	: m_bHolstering( false )
@@ -64,7 +64,7 @@ CTFDecapitationMeleeWeaponBase::CTFDecapitationMeleeWeaponBase()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFDecapitationMeleeWeaponBase::Precache()
 {
@@ -72,19 +72,19 @@ void CTFDecapitationMeleeWeaponBase::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFDecapitationMeleeWeaponBase::GetMeleeDamage( CBaseEntity *pTarget, int* piDamageType, int* piCustomDamage )
 {
 	float flBaseDamage = BaseClass::GetMeleeDamage( pTarget, piDamageType, piCustomDamage );
 
-	*piCustomDamage = TF_DMG_CUSTOM_DECAPITATION; 
+	*piCustomDamage = TF_DMG_CUSTOM_DECAPITATION;
 
 	return flBaseDamage;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Activity CTFDecapitationMeleeWeaponBase::TranslateViewmodelHandActivityInternal( Activity actBase )
 {
@@ -151,7 +151,7 @@ Activity CTFDecapitationMeleeWeaponBase::TranslateViewmodelHandActivityInternal(
 }
 /*
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFDecapitationMeleeWeaponBase::SendWeaponAnim( int iActivity )
 {
@@ -186,7 +186,7 @@ void CTFDecapitationMeleeWeaponBase::SetupGameEventListeners( void )
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFDecapitationMeleeWeaponBase::UpdateAttachmentModels( void )
 {
@@ -235,7 +235,7 @@ void CTFDecapitationMeleeWeaponBase::UpdateAttachmentModels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CTFDecapitationMeleeWeaponBase::DrawOverriddenViewmodel( C_BaseViewModel *pViewmodel, int flags )
 {
@@ -258,7 +258,7 @@ int	CTFDecapitationMeleeWeaponBase::DrawOverriddenViewmodel( C_BaseViewModel *pV
 //
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFSword::WeaponReset( void )
 {
@@ -309,7 +309,7 @@ float CTFSword::GetSwordSpeedMod( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFSword::GetSwordHealthMod( void )
 {
@@ -407,7 +407,7 @@ void CTFDecapitationMeleeWeaponBase::FireGameEvent( IGameEvent *event )
 	// Off with their heads!
 	if ( !CanDecapitate() )
 		return;
-	
+
 	OnDecapitation( ToTFPlayer( UTIL_PlayerByUserId( event->GetInt( "userid" ) ) ) );
 }
 #endif
@@ -451,7 +451,7 @@ bool CTFSword::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFSword::GetCount( void )
 {
@@ -467,7 +467,7 @@ int CTFSword::GetCount( void )
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFSword::WeaponIdle( void )
 {
@@ -494,7 +494,7 @@ void CTFSword::WeaponIdle( void )
 		float flChance = RemapValClamped( iDecaps, 0, 10, 0.25, 0.9 );
 		if ( RandomFloat() <= flChance )
 		{
-			// Chance to get the more powerful wav: 
+			// Chance to get the more powerful wav:
 			float flChanceForGoodWav = RemapValClamped( iDecaps, 0, 10, 0.1, 0.75 );
 			if ( RandomFloat() <= flChanceForGoodWav )
 			{
@@ -600,7 +600,7 @@ void CTFKatana::OnDecapitation( CTFPlayer *pDeadPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFKatana::GetSkinOverride() const
 {
@@ -612,6 +612,6 @@ int CTFKatana::GetSkinOverride() const
 			return ( ( pPlayer->GetTeamNumber() == TF_TEAM_RED ) ? 2 : 3 );
 		}
 	}
-	
+
 	return BaseClass::GetSkinOverride();
 }

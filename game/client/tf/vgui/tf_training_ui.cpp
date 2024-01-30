@@ -213,7 +213,7 @@ void Training_MarkClassComplete( int iClass, int iStage )
 			-1,						// TF_CLASS_HEAVYWEAPONS
 			-1,						// TF_CLASS_PYRO
 			TF_CLASS_ENGINEER,		// TF_CLASS_SPY
-			-1,						// TF_CLASS_ENGINEER		
+			-1,						// TF_CLASS_ENGINEER
 		};
 		const int aUnlockRequirements[ TF_CLASS_COUNT ] = {
 			-1,						// TF_CLASS_UNDEFINED
@@ -225,7 +225,7 @@ void Training_MarkClassComplete( int iClass, int iStage )
 			-1,						// TF_CLASS_HEAVYWEAPONS
 			-1,						// TF_CLASS_PYRO
 			 1,						// TF_CLASS_SPY
-			-1,						// TF_CLASS_ENGINEER		
+			-1,						// TF_CLASS_ENGINEER
 		};
 		const int iNextClass = aNextClasses[ iClass ];
 		const bool bCurrentClassCompleted = iStage >= aUnlockRequirements[ iClass ];
@@ -270,7 +270,7 @@ int Training_GetNumCoursesForClass( int iClass )
 		0,		// TF_CLASS_HEAVYWEAPONS
 		0,		// TF_CLASS_PYRO
 		1,		// TF_CLASS_SPY
-		1,		// TF_CLASS_ENGINEER		
+		1,		// TF_CLASS_ENGINEER
 	};
 
 	AssertMsg( iClass >= 0 && iClass < TF_CLASS_COUNT, "Training_GetNumCoursesForClass(): Class out of range!" );
@@ -310,7 +310,7 @@ int Training_GetProgressCount()
 			nTotalProgress += nClassProgress;
 		}
 	}
-	
+
 	return nTotalProgress;
 }
 
@@ -454,7 +454,7 @@ public:
 			{
 				pTrainingDialog->SetDialogVariable( "title", g_pVGuiLocalize->Find( m_strTitleToken.Get() ) );
 			}
-		
+
 			pTrainingDialog->SetDialogVariable( "subtitle", g_pVGuiLocalize->Find( m_strSubTitleToken ) );
 		}
 	}
@@ -483,7 +483,7 @@ public:
 		{
 			Go();
 		}
-		else if ( nButtonCode == KEY_XBUTTON_LEFT || 
+		else if ( nButtonCode == KEY_XBUTTON_LEFT ||
 				  nButtonCode == KEY_XSTICK1_LEFT ||
 				  nButtonCode == KEY_XSTICK2_LEFT ||
 				  nButtonCode == STEAMCONTROLLER_DPAD_LEFT ||
@@ -491,9 +491,9 @@ public:
 		{
 			GoPrev();
 		}
-		else if ( nButtonCode == KEY_XBUTTON_RIGHT || 
+		else if ( nButtonCode == KEY_XBUTTON_RIGHT ||
 				  nButtonCode == KEY_XSTICK1_RIGHT ||
-				  nButtonCode == KEY_XSTICK2_RIGHT || 
+				  nButtonCode == KEY_XSTICK2_RIGHT ||
 				  nButtonCode == STEAMCONTROLLER_DPAD_RIGHT ||
 				  nButtonCode == KEY_RIGHT )
 		{
@@ -525,7 +525,7 @@ public:
 	virtual void GoNext()
 	{
 	}
-	
+
 	virtual void OnBackPressed()
 	{
 	}
@@ -624,16 +624,16 @@ public:
 	{
 		ButtonCode_t nButtonCode = GetBaseButtonCode( nCode );
 
-		if ( nButtonCode == KEY_XBUTTON_LEFT || 
+		if ( nButtonCode == KEY_XBUTTON_LEFT ||
 			 nButtonCode == KEY_XSTICK1_LEFT ||
-			 nButtonCode == KEY_XSTICK2_LEFT || 
+			 nButtonCode == KEY_XSTICK2_LEFT ||
 			 nButtonCode == KEY_LEFT )
 		{
 			GoPrev();
 		}
-		else if ( nButtonCode == KEY_XBUTTON_RIGHT || 
+		else if ( nButtonCode == KEY_XBUTTON_RIGHT ||
 				  nButtonCode == KEY_XSTICK1_RIGHT ||
-				  nButtonCode == KEY_XSTICK2_RIGHT || 
+				  nButtonCode == KEY_XSTICK2_RIGHT ||
 				  nButtonCode == KEY_RIGHT )
 		{
 			GoNext();
@@ -676,7 +676,7 @@ class CModePanel : public EditablePanel
 	DECLARE_CLASS_SIMPLE( CModePanel, EditablePanel );
 public:
 	CModePanel( Panel *pParent, const char *pName )
-	:	EditablePanel( pParent, pName ) 
+	:	EditablePanel( pParent, pName )
 	{
 		HScheme hScheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme" );
 		SetScheme( hScheme );
@@ -690,7 +690,7 @@ public:
 	virtual void ApplySettings( KeyValues *pInResourceData )
 	{
 		BaseClass::ApplySettings( pInResourceData );
-		
+
 		m_strModeNameToken = pInResourceData->GetString( "modename", NULL );
 		m_strDescriptionToken = pInResourceData->GetString( "description", NULL );
 		m_strImageToken = pInResourceData->GetString( "image", NULL );
@@ -1117,7 +1117,7 @@ public:
 			{ NULL, NULL, NULL },	// TF_CLASS_HEAVYWEAPONS
 			{ NULL, NULL, NULL },	// TF_CLASS_PYRO
 			{ "revolver", "c_spy_watch", "knife", },		// TF_CLASS_SPY,
-			{ "shotgun", "pistol", "wrench" },				// TF_CLASS_ENGINEER,		
+			{ "shotgun", "pistol", "wrench" },				// TF_CLASS_ENGINEER,
 		};
 
 		Assert( iClass >= TF_FIRST_NORMAL_CLASS && iClass < TF_CLASS_COUNT );
@@ -1142,7 +1142,7 @@ public:
 	{
 		if ( !m_pStartTrainingButton )
 			return NULL;
-		
+
 		KeyValues *pCommand = m_pStartTrainingButton->GetCommand();
 		if ( !pCommand )
 			return NULL;
@@ -1318,7 +1318,7 @@ public:
 		SetProportional( true );
 		LoadMapData();
 	}
-	
+
 	~COfflinePractice_MapSelectionPanel()
 	{
 		for ( int i = 0; i < NUM_GAME_MODES; ++i )
@@ -1394,7 +1394,7 @@ public:
 		{
 			for ( int i = 0; i < ARRAYSIZE( g_pDifficultyModes ); ++i )
 			{
-				m_pDifficultyComboBox->AddItem( g_pDifficultyModes[i], NULL );  
+				m_pDifficultyComboBox->AddItem( g_pDifficultyModes[i], NULL );
 			}
 		}
 
@@ -1440,16 +1440,16 @@ public:
 				m_pDifficultyComboBox->SilentActivateItemByRow( ( m_pDifficultyComboBox->GetActiveItem() + 1 ) % ARRAYSIZE( g_pDifficultyModes ) );
 			}
 		}
-		else if ( nButtonCode == KEY_XBUTTON_UP || 
+		else if ( nButtonCode == KEY_XBUTTON_UP ||
 				  nButtonCode == KEY_XSTICK1_UP ||
-				  nButtonCode == KEY_XSTICK2_UP || 
+				  nButtonCode == KEY_XSTICK2_UP ||
 				  nButtonCode == KEY_UP )
 		{
 			SetControlInt( "NumPlayersTextEntry", clamp( GetControlInt( "NumPlayersTextEntry", 0 ) + 1, 1, 31 ) );
 		}
-		else if ( nButtonCode == KEY_XBUTTON_DOWN || 
+		else if ( nButtonCode == KEY_XBUTTON_DOWN ||
 				  nButtonCode == KEY_XSTICK1_DOWN ||
-				  nButtonCode == KEY_XSTICK2_DOWN || 
+				  nButtonCode == KEY_XSTICK2_DOWN ||
 				  nButtonCode == KEY_RIGHT )
 		{
 			SetControlInt( "NumPlayersTextEntry", clamp( GetControlInt( "NumPlayersTextEntry", 0 ) - 1, 1, 31 ) );
@@ -1459,7 +1459,7 @@ public:
 			BaseClass::OnKeyCodePressed( nCode );
 		}
 	}
-	
+
 	virtual int GetNumPages() const
 	{
 		return GetMapCount();
@@ -1581,7 +1581,7 @@ private:
 
 		int iDifficulty = -1;
 		int nQuota = 0;
-		const char *defaultMap = "";		
+		const char *defaultMap = "";
 
 		if ( m_pSavedData )
 		{
@@ -1590,7 +1590,7 @@ private:
 		}
 
 		m_pSavedData = new KeyValues( "OfflinePracticeConfig" );
-	
+
 		// load the config data
 		if ( m_pSavedData )
 		{
@@ -1725,7 +1725,7 @@ class CTrainingDialog : public EditablePanel
 {
 	DECLARE_CLASS_SIMPLE( CTrainingDialog, EditablePanel );
 public:
-	CTrainingDialog( Panel *parent ) 
+	CTrainingDialog( Panel *parent )
 	:	EditablePanel( parent, TRAINING_DIALOG_NAME ),
 		m_pBackButton( NULL ),
 		m_pCancelButton( NULL ),
@@ -1850,7 +1850,7 @@ public:
 		{
 			OfflinePractice_Start();
 		}
-		else 
+		else
 		{
 			BaseClass::OnCommand( pCommand );
 		}
@@ -1927,7 +1927,7 @@ public:
 
 	void ConfirmContinue()
 	{
-		ShowConfirmDialog( "#TR_ContinueTitle", "#TR_ContinueMsg", "#TR_Continue", "#TR_StartOver", &ConfirmDialogCallback, NULL, this ); 
+		ShowConfirmDialog( "#TR_ContinueTitle", "#TR_ContinueMsg", "#TR_Continue", "#TR_StartOver", &ConfirmDialogCallback, NULL, this );
 	}
 
 	void BasicTraining_Start()
@@ -2029,15 +2029,15 @@ public:
 	void OfflinePractice_Start()
 	{
 		// reset server enforced cvars
-		g_pCVar->RevertFlaggedConVars( FCVAR_REPLICATED );	
-		
+		g_pCVar->RevertFlaggedConVars( FCVAR_REPLICATED );
+
 		// Cheats were disabled; revert all cheat cvars to their default values.
 		// This must be done heading into multiplayer games because people can play
 		// demos etc and set cheat cvars with sv_cheats 0.
 		g_pCVar->RevertFlaggedConVars( FCVAR_CHEAT );
-		
+
 		DevMsg( "FCVAR_CHEAT cvars reverted to defaults.\n" );
-		
+
 		if ( m_pOfflinePractice_MapSelectionPanel->DoSetup() )
 		{
 			// create the command to execute
@@ -2057,9 +2057,9 @@ public:
 	virtual void ApplySchemeSettings( IScheme *pScheme )
 	{
 		BaseClass::ApplySchemeSettings( pScheme );
-		
+
 		LoadControlSettings( "Resource/ui/training/main.res" );
-		
+
 		SetupButton( "CancelButton", &m_pCancelButton );
 		SetupButton( "BackButton", &m_pBackButton );
 

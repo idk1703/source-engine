@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,7 +15,7 @@
 //-----------------------------------------------------------------------------
 // CMessageDialog
 //-----------------------------------------------------------------------------
-CMessageDialog::CMessageDialog( vgui::Panel *pParent, const uint nType, const char *pTitle, const char *pMsg, const char *pCmdA, const char *pCmdB, vgui::Panel *pCreator, bool bShowActivity  ) 
+CMessageDialog::CMessageDialog( vgui::Panel *pParent, const uint nType, const char *pTitle, const char *pMsg, const char *pCmdA, const char *pCmdB, vgui::Panel *pCreator, bool bShowActivity  )
 	: BaseClass( pParent, "MessageDialog" )
 {
 	SetSize( 500, 200 );
@@ -241,7 +241,7 @@ void CMessageDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 		m_pMsg->SetBounds( iX + m_ActivityIndent, iY, max(0,iW-m_ActivityIndent), iH );
 	}
 
-	// Invalidate the scheme on our message label so that it recalculates 
+	// Invalidate the scheme on our message label so that it recalculates
 	// its line breaks in case it was resized when we loaded our .res file.
 	m_pMsg->InvalidateLayout( false, true );
 }
@@ -266,7 +266,7 @@ void CMessageDialog::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 uint CMessageDialog::GetType( void )
 {
@@ -274,7 +274,7 @@ uint CMessageDialog::GetType( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMessageDialog::DoCommand( int button )
 {
@@ -297,7 +297,7 @@ void CMessageDialog::DoCommand( int button )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMessageDialog::OnKeyCodePressed( vgui::KeyCode code )
 {
@@ -325,7 +325,7 @@ void CMessageDialog::OnKeyCodePressed( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMessageDialog::PaintBackground( void )
 {
@@ -339,8 +339,8 @@ void CMessageDialog::PaintBackground( void )
 		m_clrNotSimpleBG[3] = nAlpha;
 		m_clrNotSimpleBGBlack[3] = nAlpha;
 
-		DrawBox( 0, 0, wide, tall, m_clrNotSimpleBGBlack, 1.0f );	
-		DrawBox( 0, 0, wide, tall - m_FooterTall, m_clrNotSimpleBG, 1.0f );	
+		DrawBox( 0, 0, wide, tall, m_clrNotSimpleBGBlack, 1.0f );
+		DrawBox( 0, 0, wide, tall - m_FooterTall, m_clrNotSimpleBG, 1.0f );
 
 		return;
 	}
@@ -350,7 +350,7 @@ void CMessageDialog::PaintBackground( void )
 
 	// offset the inset by title
 	int titleX, titleY, titleWide, titleTall;
-	m_pTitle->GetBounds( titleX, titleY, titleWide, titleTall );	
+	m_pTitle->GetBounds( titleX, titleY, titleWide, titleTall );
 	int y = titleY + titleTall;
 
 	// draw an inset

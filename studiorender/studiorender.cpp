@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -78,43 +78,43 @@ CStudioRender::~CStudioRender()
 
 void CStudioRender::InitDebugMaterials( void )
 {
-	m_pMaterialMRMWireframe = 
+	m_pMaterialMRMWireframe =
 		g_pMaterialSystem->FindMaterial( "//platform/materials/debug/debugmrmwireframe", TEXTURE_GROUP_OTHER, true );
 	m_pMaterialMRMWireframe->IncrementReferenceCount();
 
-	m_pMaterialMRMWireframeZBuffer = 
+	m_pMaterialMRMWireframeZBuffer =
 		g_pMaterialSystem->FindMaterial( "//platform/materials/debug/debugmrmwireframezbuffer", TEXTURE_GROUP_OTHER, true );
 	m_pMaterialMRMWireframeZBuffer->IncrementReferenceCount();
 
-	m_pMaterialMRMNormals = 
+	m_pMaterialMRMNormals =
 		g_pMaterialSystem->FindMaterial( "//platform/materials/debug/debugmrmnormals", TEXTURE_GROUP_OTHER, true );
 	m_pMaterialMRMNormals->IncrementReferenceCount();
 
-	m_pMaterialTangentFrame = 
+	m_pMaterialTangentFrame =
 		g_pMaterialSystem->FindMaterial( "//platform/materials/debug/debugvertexcolor", TEXTURE_GROUP_OTHER, true );
 	m_pMaterialTangentFrame->IncrementReferenceCount();
 
-	m_pMaterialTranslucentModelHulls = 
+	m_pMaterialTranslucentModelHulls =
 		g_pMaterialSystem->FindMaterial( "//platform/materials/debug/debugtranslucentmodelhulls", TEXTURE_GROUP_OTHER, true );
 	m_pMaterialTranslucentModelHulls->IncrementReferenceCount();
 
-	m_pMaterialSolidModelHulls = 
+	m_pMaterialSolidModelHulls =
 		g_pMaterialSystem->FindMaterial( "//platform/materials/debug/debugsolidmodelhulls", TEXTURE_GROUP_OTHER, true );
 	m_pMaterialSolidModelHulls->IncrementReferenceCount();
 
-	m_pMaterialAdditiveVertexColorVertexAlpha = 
+	m_pMaterialAdditiveVertexColorVertexAlpha =
 		g_pMaterialSystem->FindMaterial( "//platform/materials/debug/additivevertexcolorvertexalpha", TEXTURE_GROUP_OTHER, true );
 	m_pMaterialAdditiveVertexColorVertexAlpha->IncrementReferenceCount();
 
-	m_pMaterialModelBones = 
+	m_pMaterialModelBones =
 		g_pMaterialSystem->FindMaterial( "//platform/materials/debug/debugmodelbones", TEXTURE_GROUP_OTHER, true );
 	m_pMaterialModelBones->IncrementReferenceCount();
 
 	m_pMaterialModelEnvCubemap =
 		g_pMaterialSystem->FindMaterial( "//platform/materials/debug/env_cubemap_model", TEXTURE_GROUP_OTHER, true );
 	m_pMaterialModelEnvCubemap->IncrementReferenceCount();
-	
-	m_pMaterialWorldWireframe = 
+
+	m_pMaterialWorldWireframe =
 		g_pMaterialSystem->FindMaterial( "//platform/materials/debug/debugworldwireframe", TEXTURE_GROUP_OTHER, true );
 	m_pMaterialWorldWireframe->IncrementReferenceCount();
 
@@ -217,25 +217,25 @@ void CStudioRender::ShutdownDebugMaterials( void )
 		m_pMaterialTranslucentModelHulls->DecrementReferenceCount();
 		m_pMaterialTranslucentModelHulls = NULL;
 	}
-	
+
 	if ( m_pMaterialSolidModelHulls )
 	{
 		m_pMaterialSolidModelHulls->DecrementReferenceCount();
 		m_pMaterialSolidModelHulls = NULL;
 	}
-	
+
 	if ( m_pMaterialAdditiveVertexColorVertexAlpha )
 	{
 		m_pMaterialAdditiveVertexColorVertexAlpha->DecrementReferenceCount();
 		m_pMaterialAdditiveVertexColorVertexAlpha = NULL;
 	}
-	
+
 	if ( m_pMaterialModelBones )
 	{
 		m_pMaterialModelBones->DecrementReferenceCount();
 		m_pMaterialModelBones = NULL;
 	}
-	
+
 	if ( m_pMaterialModelEnvCubemap )
 	{
 		m_pMaterialModelEnvCubemap->DecrementReferenceCount();
@@ -322,7 +322,7 @@ void CStudioRender::SetLightingRenderState()
 {
 	CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
 
-	// FIXME: What happens when we use the fixed function pipeline but vertex shaders 
+	// FIXME: What happens when we use the fixed function pipeline but vertex shaders
 	// are active? For the time being this only works because everything that does
 	// vertex lighting does, in fact, have a vertex shader which is used to render it.
 	pRenderContext->SetAmbientLightCube( m_pRC->m_LightBoxColors );
@@ -422,7 +422,7 @@ void CStudioRender::GetFlexStats( )
 //-----------------------------------------------------------------------------
 // Main model rendering entry point
 //-----------------------------------------------------------------------------
-void CStudioRender::DrawModel( const DrawModelInfo_t& info, const StudioRenderContext_t &rc, 
+void CStudioRender::DrawModel( const DrawModelInfo_t& info, const StudioRenderContext_t &rc,
 	matrix3x4_t *pBoneToWorld, const FlexWeights_t &flex, int flags )
 {
 	if ( ( flags & STUDIORENDER_GENERATE_STATS ) != 0 )
@@ -478,7 +478,7 @@ void CStudioRender::DrawModel( const DrawModelInfo_t& info, const StudioRenderCo
 	ComputePoseToWorld( m_PoseToWorld, m_pStudioHdr, boneMask, m_pRC->m_ViewOrigin, pBoneToWorld );
 
 	R_StudioRenderModel( pRenderContext, info.m_Skin, info.m_Body, info.m_HitboxSet, info.m_pClientEntity,
-		info.m_pHardwareData->m_pLODs[info.m_Lod].ppMaterials, 
+		info.m_pHardwareData->m_pLODs[info.m_Lod].ppMaterials,
 		info.m_pHardwareData->m_pLODs[info.m_Lod].pMaterialFlags, flags, boneMask, info.m_Lod, info.m_pColorMeshes);
 
 	// Draw all the decals on this model
@@ -525,7 +525,7 @@ void CStudioRender::DrawModel( const DrawModelInfo_t& info, const StudioRenderCo
 	m_pFlexDelayedWeights = NULL;
 }
 
-void CStudioRender::DrawModelStaticProp( const DrawModelInfo_t& info, 
+void CStudioRender::DrawModelStaticProp( const DrawModelInfo_t& info,
 	const StudioRenderContext_t &rc, const matrix3x4_t& rootToWorld, int flags )
 {
 	VPROF( "CStudioRender::DrawModelStaticProp");
@@ -560,7 +560,7 @@ void CStudioRender::DrawModelStaticProp( const DrawModelInfo_t& info,
 	}
 
 	R_StudioRenderModel( pRenderContext, info.m_Skin, info.m_Body, info.m_HitboxSet, info.m_pClientEntity,
-		info.m_pHardwareData->m_pLODs[lod].ppMaterials, 
+		info.m_pHardwareData->m_pLODs[lod].ppMaterials,
 		info.m_pHardwareData->m_pLODs[lod].pMaterialFlags, flags, BONE_USED_BY_ANYTHING, lod, info.m_pColorMeshes);
 
 	// If we're not shadow depth mapping
@@ -638,7 +638,7 @@ void CStudioRender::DrawModelArray( const DrawModelInfo_t &drawInfo, const Studi
 		pskinref += ( skin * pStudioHdr->numskinref );
 	}
 
-	for ( int body = 0; body < pStudioHdr->numbodyparts; ++body ) 
+	for ( int body = 0; body < pStudioHdr->numbodyparts; ++body )
 	{
 		mstudiobodyparts_t  *pbodypart = pStudioHdr->pBodypart( body );
 
@@ -759,4 +759,3 @@ void CStudioRender::DrawModelArray( const DrawModelInfo_t &drawInfo, const Studi
 	pRenderContext->PopMatrix();
 #endif
 }
-

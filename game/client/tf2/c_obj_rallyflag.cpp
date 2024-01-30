@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -9,7 +9,7 @@
 #include "c_baseobject.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectRallyFlag : public C_BaseObject
 {
@@ -27,9 +27,8 @@ IMPLEMENT_CLIENTCLASS_DT(C_ObjectRallyFlag, DT_ObjectRallyFlag, CObjectRallyFlag
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectRallyFlag::C_ObjectRallyFlag()
 {
 }
-

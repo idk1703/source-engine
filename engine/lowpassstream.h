@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -50,7 +50,7 @@ public:
 	DataType	GetCurrentAverage();
 
 private:
-	
+
 	DataType	m_Samples[nSamples];
 	int			m_iOutSample;
 	int			m_nSamplesGotten;	// incremented until it reaches nSamples.
@@ -72,7 +72,7 @@ template< class DataType, int nSamples >
 inline void CLowPassStream<DataType, nSamples>::AddSample( DataType const &data )
 {
 	m_Samples[m_iOutSample] = data;
-	
+
 	++m_nSamplesGotten;
 	if( m_nSamplesGotten >= nSamples )
 		m_nSamplesGotten = nSamples;

@@ -39,7 +39,7 @@ static SpewRetval_t DMXConvertOutputFunc( SpewType_t spewType, char const *pMsg 
 
 	if (spewType == SPEW_ERROR)
 		return SPEW_ABORT;
-	return (spewType == SPEW_ASSERT) ? SPEW_DEBUGGER : SPEW_CONTINUE; 
+	return (spewType == SPEW_ASSERT) ? SPEW_DEBUGGER : SPEW_CONTINUE;
 }
 
 
@@ -101,7 +101,7 @@ int CDmxConvertApp::Main()
 	g_pDataModel->SetDefaultElementFactory( NULL );
 
 	// This bit of hackery allows us to access files on the harddrive
-	g_pFullFileSystem->AddSearchPath( "", "LOCAL", PATH_ADD_TO_HEAD ); 
+	g_pFullFileSystem->AddSearchPath( "", "LOCAL", PATH_ADD_TO_HEAD );
 
 	const char *pInFileName = CommandLine()->ParmValue("-i" );
 	const char *pOutFileName = CommandLine()->ParmValue("-o" );
@@ -176,6 +176,3 @@ int CDmxConvertApp::Main()
 
 	return 0;
 }
-
-
-

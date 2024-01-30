@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -68,4 +68,3 @@ private:
 
 
 #endif // UTLSTREAMBUFFER_H
-

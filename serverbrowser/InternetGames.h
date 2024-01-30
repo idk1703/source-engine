@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -71,7 +71,7 @@ private:
 	float				m_fLastSort;	// Time of last re-sort
 	bool				m_bDirty;	// Has the list been modified, thereby needing re-sort
 	bool				m_bRequireUpdate;	// checks whether we need an update upon opening
-	
+
 	// error cases for if no servers are listed
 	bool				m_bAnyServersRetrievedFromMaster;
 	bool				m_bAnyServersRespondedToQuery;

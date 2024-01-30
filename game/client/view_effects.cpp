@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -57,7 +57,7 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Purpose: Screen shake variables
 //-----------------------------------------------------------------------------
-struct screenshake_t 
+struct screenshake_t
 {
 	float	endtime;
 	float	duration;
@@ -137,10 +137,10 @@ static void ( *s_pfnFadeDoneCallback )( int parm1 );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszName - 
-//			iSize - 
-//			*pbuf - 
+// Purpose:
+// Input  : *pszName -
+//			iSize -
+//			*pbuf -
 // Output : static int
 //-----------------------------------------------------------------------------
 void __MsgFunc_Shake( bf_read &msg )
@@ -156,10 +156,10 @@ void __MsgFunc_Shake( bf_read &msg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszName - 
-//			iSize - 
-//			*pbuf - 
+// Purpose:
+// Input  : *pszName -
+//			iSize -
+//			*pbuf -
 // Output : static int
 //-----------------------------------------------------------------------------
 void __MsgFunc_Fade( bf_read &msg )
@@ -178,7 +178,7 @@ void __MsgFunc_Fade( bf_read &msg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CViewEffects::Init( void )
 {
@@ -187,7 +187,7 @@ void CViewEffects::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CViewEffects::LevelInit( void )
 {
@@ -239,9 +239,9 @@ void CViewEffects::CalcShake( void )
 			continue;
 		}
 
-		if ( ( gpGlobals->curtime > pShake->endtime ) || 
-			pShake->duration <= 0 || 
-			pShake->amplitude <= 0 || 
+		if ( ( gpGlobals->curtime > pShake->endtime ) ||
+			pShake->duration <= 0 ||
+			pShake->amplitude <= 0 ||
 			pShake->frequency <= 0 )
 		{
 			// Retire this shake.
@@ -300,7 +300,7 @@ void CViewEffects::CalcShake( void )
 			angle = 1e8;
 		}
 		fraction = fraction * sin( angle );
-		
+
 		if( pShake->command != SHAKE_START_NORUMBLE )
 		{
 			// As long as this isn't a NO RUMBLE effect, then accumulate rumble
@@ -310,7 +310,7 @@ void CViewEffects::CalcShake( void )
 		if( pShake->command != SHAKE_START_RUMBLEONLY )
 		{
 			// As long as this isn't a RUMBLE ONLY effect, then accumulate screen shake
-			
+
 			// Add to view origin
 			m_vecShakeAppliedOffset += pShake->offset * fraction;
 
@@ -335,9 +335,9 @@ void CViewEffects::CalcShake( void )
 //-----------------------------------------------------------------------------
 // Purpose: Apply the current screen shake to this origin/angles.  Factor is the amount to apply
 //  This is so you can blend in part of the shake
-// Input  : origin - 
-//			angles - 
-//			factor - 
+// Input  : origin -
+//			angles -
+//			factor -
 //-----------------------------------------------------------------------------
 void CViewEffects::ApplyShake( Vector& origin, QAngle& angles, float factor )
 {
@@ -387,17 +387,17 @@ screenshake_t *CViewEffects::FindLongestShake()
 
 //-----------------------------------------------------------------------------
 // Purpose: Message hook to parse ScreenShake messages
-// Input  : pszName - 
-//			iSize - 
-//			pbuf - 
-// Output : 
+// Input  : pszName -
+//			iSize -
+//			pbuf -
+// Output :
 //-----------------------------------------------------------------------------
 void CViewEffects::Shake( ScreenShake_t &data )
 {
 	if ( ( data.command == SHAKE_START || data.command == SHAKE_START_RUMBLEONLY ) && ( m_ShakeList.Count() < MAX_SHAKES ) )
 	{
 		screenshake_t *pNewShake = new screenshake_t;
-			
+
 		pNewShake->amplitude = data.amplitude;
 		pNewShake->frequency = data.frequency;
 		pNewShake->duration = data.duration;
@@ -434,9 +434,9 @@ void CViewEffects::Shake( ScreenShake_t &data )
 
 //-----------------------------------------------------------------------------
 // Purpose: Message hook to parse ScreenFade messages
-// Input  : *pszName - 
-//			iSize - 
-//			*pbuf - 
+// Input  : *pszName -
+//			iSize -
+//			*pbuf -
 // Output : int
 //-----------------------------------------------------------------------------
 void CViewEffects::Fade( ScreenFade_t &data )
@@ -605,13 +605,13 @@ void CViewEffects::ClearAllFades( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : context - Which call to Render is this ( CViewSetup::context )
-//			*r - 
-//			*g - 
-//			*b - 
-//			*a - 
-//			*blend - 
+//			*r -
+//			*g -
+//			*b -
+//			*a -
+//			*blend -
 //-----------------------------------------------------------------------------
 void CViewEffects::GetFadeParams( byte *r, byte *g, byte *b, byte *a, bool *blend )
 {
@@ -636,8 +636,8 @@ void CViewEffects::GetFadeParams( byte *r, byte *g, byte *b, byte *a, bool *blen
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pSave - 
+// Purpose:
+// Input  : *pSave -
 //-----------------------------------------------------------------------------
 void CViewEffects::Save( ISave *pSave )
 {
@@ -663,9 +663,9 @@ void CViewEffects::Save( ISave *pSave )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pRestore - 
-//			fCreatePlayers - 
+// Purpose:
+// Input  : *pRestore -
+//			fCreatePlayers -
 //-----------------------------------------------------------------------------
 void CViewEffects::Restore( IRestore *pRestore, bool fCreatePlayers )
 {
@@ -703,11 +703,11 @@ void CViewEffects::Restore( IRestore *pRestore, bool fCreatePlayers )
 
 			m_ShakeList.AddToTail( pNewShake );
 		}
-	}	
+	}
 }
 
 //====================================================================================================
-// CLIENTSIDE VIEW EFFECTS SAVE/RESTORE 
+// CLIENTSIDE VIEW EFFECTS SAVE/RESTORE
 //====================================================================================================
 static short VIEWEFFECTS_SAVE_RESTORE_VERSION = 2;
 
@@ -726,36 +726,36 @@ public:
 
 	//---------------------------------
 
-	virtual void PreSave( CSaveRestoreData * ) 
+	virtual void PreSave( CSaveRestoreData * )
 	{
 	}
-	
+
 	//---------------------------------
 
-	virtual void Save( ISave *pSave ) 
+	virtual void Save( ISave *pSave )
 	{
 		vieweffects->Save( pSave );
 	}
-	
+
 	//---------------------------------
 
 	virtual void WriteSaveHeaders( ISave *pSave )
 	{
 		pSave->WriteShort( &VIEWEFFECTS_SAVE_RESTORE_VERSION );
 	}
-	
+
 	//---------------------------------
 
-	virtual void PostSave() 
+	virtual void PostSave()
 	{
 	}
-	
+
 	//---------------------------------
 
-	virtual void PreRestore() 
+	virtual void PreRestore()
 	{
 	}
-	
+
 	//---------------------------------
 
 	virtual void ReadRestoreHeaders( IRestore *pRestore )
@@ -766,21 +766,21 @@ public:
 	}
 
 	//---------------------------------
-	
-	virtual void Restore( IRestore *pRestore, bool fCreatePlayers ) 
+
+	virtual void Restore( IRestore *pRestore, bool fCreatePlayers )
 	{
 		if ( m_bDoLoad )
 		{
 			vieweffects->Restore( pRestore, fCreatePlayers );
 		}
 	}
-	
+
 	//---------------------------------
-	
-	virtual void PostRestore() 
+
+	virtual void PostRestore()
 	{
 	}
-	
+
 private:
 	bool	m_bDoLoad;
 };

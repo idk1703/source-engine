@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -142,7 +142,7 @@ int	C_BeamQuadratic::DrawModel( int )
 	pEnt->GetAttachment( 1, points[0], tmpAngle );
 
 	points[1] = 0.5 * (m_targetPosition + points[0]);
-	
+
 	// a little noise 11t & 13t should be somewhat non-periodic looking
 	//points[1].z += 4*sin( gpGlobals->curtime*11 ) + 5*cos( gpGlobals->curtime*13 );
 	points[2] = m_worldPosition;
@@ -163,4 +163,3 @@ int	C_BeamQuadratic::DrawModel( int )
 	DrawBeamQuadratic( points[0], points[1], points[2], 13, color, scrollOffset );
 	return 1;
 }
-

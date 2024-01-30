@@ -179,7 +179,7 @@ $Project "hlfaceposer"
 			$File	"ChoreoWidgetDrawHelper.cpp"
 			$File	"ChoreoWidgetDrawHelper.h"
 		}
-		
+
 		$Folder "Vgui"
 		{
 			$File	"faceposer_vgui.cpp"

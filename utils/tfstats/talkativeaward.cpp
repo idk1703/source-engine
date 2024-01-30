@@ -19,7 +19,7 @@
 void CTalkativeAward::getWinner()
 {
 	CEventListIterator it;
-	
+
 	for (it=g_pMatchInfo->eventList()->begin(); it != g_pMatchInfo->eventList()->end(); ++it)
 	{
 		if ((*it)->getType()==CLogEvent::SAY ||(*it)->getType()==CLogEvent::SAY_TEAM)
@@ -32,9 +32,9 @@ void CTalkativeAward::getWinner()
 			fNoWinner=false;
 		}
 	}
-	
+
 	map<PID,int>::iterator talkiter;
-	
+
 	for (talkiter=numtalks.begin();talkiter!=numtalks.end();++talkiter)
 	{
 		int currID=(*talkiter).first;
@@ -77,4 +77,3 @@ void CTalkativeAward::extendedinfo(CHTMLFile& html)
 		html.write("%s spoke %li words.",winnerName.c_str(),i);
 	delete [] string;
 }
-

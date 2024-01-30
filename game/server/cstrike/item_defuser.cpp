@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Defuser kit that drops from counter-strike CTS 
+// Purpose: Defuser kit that drops from counter-strike CTS
 //
 //=============================================================================//
 
@@ -12,12 +12,12 @@ class CItemDefuser : public CItem
 {
 public:
 	DECLARE_CLASS( CItemDefuser, CItem );
-	
+
 	void	Spawn( void );
 	void	Precache( void );
 	void	DefuserTouch( CBaseEntity *pOther );
 	void	ActivateThink( void );
-	
+
 	DECLARE_DATADESC();
 };
 
@@ -35,7 +35,7 @@ END_DATADESC()
 
 
 void CItemDefuser::Spawn( void )
-{ 
+{
 	Precache( );
 	SetModel( "models/weapons/w_defuser.mdl" );
 	BaseClass::Spawn();
@@ -45,7 +45,7 @@ void CItemDefuser::Spawn( void )
 
 	SetTouch( NULL );
 }
-	
+
 void CItemDefuser::Precache( void )
 {
 	PrecacheModel( "models/weapons/w_defuser.mdl" );
@@ -61,7 +61,7 @@ void CItemDefuser::ActivateThink( void )
 	SetTouch( &CItemDefuser::DefuserTouch );
 	SetThink( NULL );
 }
-	
+
 void CItemDefuser::DefuserTouch( CBaseEntity *pOther )
 {
 	if ( !pOther->IsPlayer() )
@@ -81,16 +81,16 @@ void CItemDefuser::DefuserTouch( CBaseEntity *pOther )
 
 		if( pPlayer->GetTeamNumber() == TEAM_CT && !pPlayer->HasDefuser() )
 		{
-            //=============================================================================
-            // HPE_BEGIN:
-            // [dwenger] Added for fun-fact support
-            //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [dwenger] Added for fun-fact support
+	//=============================================================================
 
 			pPlayer->GiveDefuser( true );
 
-            //=============================================================================
-            // HPE_END
-            //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
 			if ( pPlayer->IsDead() == false )
 			{
@@ -100,8 +100,6 @@ void CItemDefuser::DefuserTouch( CBaseEntity *pOther )
 
 			UTIL_Remove( this );
 			return;
-		}	
+		}
 	}
 }
-
-

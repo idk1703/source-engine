@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -52,7 +52,7 @@ static int GetBestPreviousString( CUtlVector< StringHistoryEntry >& history, cha
 	{
 		char const *prev = history[ i ].string;
 		int similar = CountSimilarCharacters( prev, newstring );
-		
+
 		if ( similar < 3 )
 			continue;
 
@@ -144,12 +144,12 @@ private:
 class CNetworkStringDict : public INetworkStringDict
 {
 public:
-	CNetworkStringDict() 
+	CNetworkStringDict()
 	{
 	}
 
-	virtual ~CNetworkStringDict() 
-	{ 
+	virtual ~CNetworkStringDict()
+	{
 	}
 
 	unsigned int Count()
@@ -197,10 +197,10 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : id - 
-//			*tableName - 
-//			maxentries - 
+// Purpose:
+// Input  : id -
+//			*tableName -
+//			maxentries -
 //-----------------------------------------------------------------------------
 CNetworkStringTable::CNetworkStringTable( TABLEID id, const char *tableName, int maxentries, int userdatafixedsize, int userdatanetworkbits, bool bIsFilenames ) :
 	m_bAllowClientSideAddString( false ),
@@ -230,14 +230,14 @@ CNetworkStringTable::CNetworkStringTable( TABLEID id, const char *tableName, int
 
 	if ( m_nUserDataSizeBits > CNetworkStringTableItem::MAX_USERDATA_BITS )
 	{
-		Host_Error( "String tables user data bits restricted to %i bits, requested %i is too large\n", 
+		Host_Error( "String tables user data bits restricted to %i bits, requested %i is too large\n",
 			CNetworkStringTableItem::MAX_USERDATA_BITS,
 			m_nUserDataSizeBits );
 	}
 
 	if ( m_nUserDataSize > CNetworkStringTableItem::MAX_USERDATA_SIZE )
 	{
-		Host_Error( "String tables user data size restricted to %i bytes, requested %i is too large\n", 
+		Host_Error( "String tables user data size restricted to %i bytes, requested %i is too large\n",
 			CNetworkStringTableItem::MAX_USERDATA_SIZE,
 			m_nUserDataSize );
 	}
@@ -268,7 +268,7 @@ void CNetworkStringTable::SetAllowClientSideAddString( bool state )
 	m_bAllowClientSideAddString = state;
 	if ( m_pItemsClientSide )
 	{
-		delete m_pItemsClientSide; 
+		delete m_pItemsClientSide;
 		m_pItemsClientSide = NULL;
 	}
 
@@ -281,7 +281,7 @@ void CNetworkStringTable::SetAllowClientSideAddString( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNetworkStringTable::IsUserDataFixedSize() const
@@ -291,7 +291,7 @@ bool CNetworkStringTable::IsUserDataFixedSize() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNetworkStringTable::HasFileNameStrings() const
@@ -300,7 +300,7 @@ bool CNetworkStringTable::HasFileNameStrings() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CNetworkStringTable::GetUserDataSize() const
 {
@@ -308,7 +308,7 @@ int	CNetworkStringTable::GetUserDataSize() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CNetworkStringTable::GetUserDataSizeBits() const
 {
@@ -316,7 +316,7 @@ int	CNetworkStringTable::GetUserDataSizeBits() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CNetworkStringTable::~CNetworkStringTable( void )
 {
@@ -326,7 +326,7 @@ CNetworkStringTable::~CNetworkStringTable( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNetworkStringTable::DeleteAllStrings( void )
 {
@@ -350,15 +350,15 @@ void CNetworkStringTable::DeleteAllStrings( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : i - 
+// Purpose:
+// Input  : i -
 // Output : CNetworkStringTableItem
 //-----------------------------------------------------------------------------
 CNetworkStringTableItem *CNetworkStringTable::GetItem( int i )
 {
 	if ( i >= 0 )
 	{
-		return &m_pItems->Element( i );		
+		return &m_pItems->Element( i );
 	}
 
 	Assert( m_pItemsClientSide );
@@ -414,18 +414,18 @@ void CNetworkStringTable::Lock(	bool bLock )
 }
 
 pfnStringChanged CNetworkStringTable::GetCallback()
-{ 
-	return m_changeFunc; 
+{
+	return m_changeFunc;
 }
 
 #ifndef SHARED_NET_STRING_TABLES
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNetworkStringTable::EnableRollback()
 {
-	// stringtable must be empty 
+	// stringtable must be empty
 	Assert( m_pItems->Count() == 0);
 	m_bChangeHistoryEnabled = true;
 }
@@ -442,7 +442,7 @@ void CNetworkStringTable::RestoreTick(int tick)
 	m_nLastChangedTick = 0;
 
 	int count = m_pItems->Count();
-		
+
 	for ( int i = 0; i < count; i++ )
 	{
 		// restore tick in all entries
@@ -465,7 +465,7 @@ void CNetworkStringTable::UpdateMirrorTable( int tick_ack  )
 	m_pMirrorTable->SetTick( m_nTickCount ); // use same tick
 
 	int count = m_pItems->Count();
-	
+
 	for ( int i = 0; i < count; i++ )
 	{
 		CNetworkStringTableItem *p = &m_pItems->Element( i );
@@ -537,7 +537,7 @@ int CNetworkStringTable::WriteUpdate( CBaseClient *client, bf_write &buf, int ti
 		{
 			// this item has just been created, send string itself
 			buf.WriteOneBit( 1 );
-			
+
 			int substringsize = 0;
 			int bestprevious = GetBestPreviousString( history, pEntry, substringsize );
 			if ( bestprevious != -1 )
@@ -627,14 +627,14 @@ void CNetworkStringTable::ParseUpdate( bf_read &buf, int entries )
 		}
 
 		lastEntry = entryIndex;
-		
+
 		if ( entryIndex < 0 || entryIndex >= GetMaxStrings() )
 		{
 			Host_Error( "Server sent bogus string index %i for table %s\n", entryIndex, GetTableName() );
 		}
 
 		const char *pEntry = NULL;
-		char entry[ 1024 ]; 
+		char entry[ 1024 ];
 		char substr[ 1024 ];
 
 		if ( buf.ReadOneBit() )
@@ -661,7 +661,7 @@ void CNetworkStringTable::ParseUpdate( bf_read &buf, int entries )
 
 			pEntry = entry;
 		}
-		
+
 		// Read in the user data.
 		unsigned char tempbuf[ CNetworkStringTableItem::MAX_USERDATA_SIZE ];
 		memset( tempbuf, 0, sizeof( tempbuf ) );
@@ -707,7 +707,7 @@ void CNetworkStringTable::ParseUpdate( bf_read &buf, int entries )
 		{
 			// Grow the table (entryindex must be the next empty slot)
 			Assert( (entryIndex == GetNumStrings()) && (pEntry != NULL) );
-				
+
 			if ( pEntry == NULL )
 			{
 				Msg("CNetworkStringTable::ParseUpdate: NULL pEntry, table %s, index %i\n", GetTableName(), entryIndex );
@@ -772,8 +772,8 @@ void CNetworkStringTable::TriggerCallbacks( int tick_ack )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : changeFunc - 
+// Purpose:
+// Input  : changeFunc -
 //-----------------------------------------------------------------------------
 void CNetworkStringTable::SetStringChangedCallback( void *object, pfnStringChanged changeFunc )
 {
@@ -782,8 +782,8 @@ void CNetworkStringTable::SetStringChangedCallback( void *object, pfnStringChang
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *client - 
+// Purpose:
+// Input  : *client -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNetworkStringTable::ChangedSinceTick( int tick ) const
@@ -792,15 +792,15 @@ bool CNetworkStringTable::ChangedSinceTick( int tick ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *value - 
+// Purpose:
+// Input  : *value -
 // Output : int
 //-----------------------------------------------------------------------------
 int CNetworkStringTable::AddString( bool bIsServer, const char *string, int length /*= -1*/, const void *userdata /*= NULL*/ )
 {
 	bool bHasChanged;
 	CNetworkStringTableItem *item;
-	
+
 	if ( !string )
 	{
 		Assert( string );
@@ -946,8 +946,8 @@ int CNetworkStringTable::AddString( bool bIsServer, const char *string, int leng
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : stringNumber - 
+// Purpose:
+// Input  : stringNumber -
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CNetworkStringTable::GetString( int stringNumber )
@@ -969,10 +969,10 @@ const char *CNetworkStringTable::GetString( int stringNumber )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : stringNumber - 
-//			length - 
-//			*userdata - 
+// Purpose:
+// Input  : stringNumber -
+//			length -
+//			*userdata -
 //-----------------------------------------------------------------------------
 void CNetworkStringTable::SetStringUserData( int stringNumber, int length /*=0*/, const void *userdata /*= 0*/ )
 {
@@ -1004,8 +1004,8 @@ void CNetworkStringTable::SetStringUserData( int stringNumber, int length /*=0*/
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *item - 
+// Purpose:
+// Input  : *item -
 //-----------------------------------------------------------------------------
 void CNetworkStringTable::DataChanged( int stringNumber, CNetworkStringTableItem *item )
 {
@@ -1016,9 +1016,9 @@ void CNetworkStringTable::DataChanged( int stringNumber, CNetworkStringTableItem
 
 	// Mark table as changed
 	m_nLastChangedTick = m_nTickCount;
-	
+
 	// Invoke callback if one was installed
-	
+
 #ifndef SHARED_NET_STRING_TABLES // but not if client & server share the same containers, we trigger that later
 
 	if ( m_changeFunc != NULL )
@@ -1092,7 +1092,7 @@ bool CNetworkStringTable::ReadStringTable( bf_read& buf )
 	for ( int i = 0 ; i < numstrings; i++ )
 	{
 		char stringname[4096];
-		
+
 		buf.ReadString( stringname, sizeof( stringname ) );
 
 		if ( buf.ReadOneBit() == 1 )
@@ -1107,7 +1107,7 @@ bool CNetworkStringTable::ReadStringTable( bf_read& buf )
 			AddString( true, stringname, userDataSize, data );
 
 			delete[] data;
-			
+
 		}
 		else
 		{
@@ -1158,9 +1158,9 @@ bool CNetworkStringTable::ReadStringTable( bf_read& buf )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : stringNumber - 
-//			length - 
+// Purpose:
+// Input  : stringNumber -
+//			length -
 // Output : const void
 //-----------------------------------------------------------------------------
 const void *CNetworkStringTable::GetStringUserData( int stringNumber, int *length )
@@ -1181,7 +1181,7 @@ const void *CNetworkStringTable::GetStringUserData( int stringNumber, int *lengt
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CNetworkStringTable::GetNumStrings( void ) const
@@ -1190,9 +1190,9 @@ int CNetworkStringTable::GetNumStrings( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : stringTable - 
-//			*string - 
+// Purpose:
+// Input  : stringTable -
+//			*string -
 // Output : int
 //-----------------------------------------------------------------------------
 int CNetworkStringTable::FindStringIndex( char const *string )
@@ -1206,7 +1206,7 @@ int CNetworkStringTable::FindStringIndex( char const *string )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNetworkStringTable::Dump( void )
 {
@@ -1251,7 +1251,7 @@ bool CNetworkStringTable::WriteBaselines( SVC_CreateStringTable &msg, char *msg_
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CNetworkStringTableContainer::CNetworkStringTableContainer( void )
 {
@@ -1262,7 +1262,7 @@ CNetworkStringTableContainer::CNetworkStringTableContainer( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CNetworkStringTableContainer::~CNetworkStringTableContainer( void )
 {
@@ -1270,7 +1270,7 @@ CNetworkStringTableContainer::~CNetworkStringTableContainer( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNetworkStringTableContainer::AllowCreation( bool state )
 {
@@ -1307,9 +1307,9 @@ void CNetworkStringTableContainer::SetAllowClientSideAddString( INetworkStringTa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *tableName - 
-//			maxentries - 
+// Purpose:
+// Input  : *tableName -
+//			maxentries -
 // Output : TABLEID
 //-----------------------------------------------------------------------------
 INetworkStringTable *CNetworkStringTableContainer::CreateStringTableEx( const char *tableName, int maxentries, int userdatafixedsize /*= 0*/, int userdatanetworkbits /*= 0*/, bool bIsFilenames /*= false */ )
@@ -1355,8 +1355,8 @@ INetworkStringTable *CNetworkStringTableContainer::CreateStringTableEx( const ch
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *tableName - 
+// Purpose:
+// Input  : *tableName -
 //-----------------------------------------------------------------------------
 INetworkStringTable *CNetworkStringTableContainer::FindTable( const char *tableName ) const
 {
@@ -1371,8 +1371,8 @@ INetworkStringTable *CNetworkStringTableContainer::FindTable( const char *tableN
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : stringTable - 
+// Purpose:
+// Input  : stringTable -
 // Output : CNetworkStringTableServer
 //-----------------------------------------------------------------------------
 INetworkStringTable *CNetworkStringTableContainer::GetTable( TABLEID stringTable ) const
@@ -1391,7 +1391,7 @@ int CNetworkStringTableContainer::GetNumTables( void ) const
 #ifndef SHARED_NET_STRING_TABLES
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNetworkStringTableContainer::WriteBaselines( bf_write &buf )
 {
@@ -1443,7 +1443,7 @@ void CNetworkStringTableContainer::WriteBaselines( bf_write &buf )
 
 				// if ( compressstringtablbaselines > 1 )
 				{
-					compressTimer.End(); 
+					compressTimer.End();
 					DevMsg( "Stringtable %s compression: %d -> %d bytes: %.2fms\n",
 							table->GetTableName(), numBytes, compressedSize, compressTimer.GetDuration().GetMillisecondsF() );
 				}
@@ -1507,9 +1507,9 @@ bool CNetworkStringTableContainer::ReadStringTables( bf_read& buf )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *cl - 
-//			*msg - 
+// Purpose:
+// Input  : *cl -
+//			*msg -
 //-----------------------------------------------------------------------------
 void CNetworkStringTableContainer::WriteUpdateMessage( CBaseClient *client, int tick_ack, bf_write &buf )
 {
@@ -1547,9 +1547,9 @@ void CNetworkStringTableContainer::WriteUpdateMessage( CBaseClient *client, int 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *cl - 
-//			*msg - 
+// Purpose:
+// Input  : *cl -
+//			*msg -
 //-----------------------------------------------------------------------------
 void CNetworkStringTableContainer::DirectUpdate( int tick_ack )
 {
@@ -1561,7 +1561,7 @@ void CNetworkStringTableContainer::DirectUpdate( int tick_ack )
 		CNetworkStringTable *table = (CNetworkStringTable*) GetTable( i );
 
 		Assert( table );
-		
+
 		if ( !table->ChangedSinceTick( tick_ack ) )
 			continue;
 
@@ -1626,7 +1626,7 @@ void CNetworkStringTableContainer::SetTick( int tick_count)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNetworkStringTableContainer::RemoveAllTables( void )
 {
@@ -1639,7 +1639,7 @@ void CNetworkStringTableContainer::RemoveAllTables( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNetworkStringTableContainer::Dump( void )
 {

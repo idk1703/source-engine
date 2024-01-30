@@ -33,8 +33,8 @@ VS_OUTPUT main( const VS_INPUT v )
 	float3 worldPos;
 	if( MODEL == 1 )
 	{
-		SkinPosition( 
-				g_bSkinning, 
+		SkinPosition(
+				g_bSkinning,
 				v.vPos,
 				v.vBoneWeights, v.vBoneIndices,
 				worldPos );
@@ -43,7 +43,7 @@ VS_OUTPUT main( const VS_INPUT v )
 	{
 		worldPos = mul( v.vPos.xyz, cModel[0] );
 	}
-	
+
 	o.vProjPos = mul( float4( worldPos, 1 ), cViewProj );
 	o.vTexCoord1 = v.vTexCoord.xy;
 	o.vTexCoord2 = v.vTexCoord.xy;
@@ -51,5 +51,3 @@ VS_OUTPUT main( const VS_INPUT v )
 
 	return o;
 }
-
-	

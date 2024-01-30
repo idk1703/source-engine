@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -27,7 +27,7 @@ public:
 
 	void AppendCriteria( const char *criteria, const char *value = "", float weight = 1.0f );
 	void RemoveCriteria( const char *criteria );
-	
+
 	void Describe();
 
 	int GetCount() const;
@@ -205,9 +205,9 @@ public:
 
 	const AI_CriteriaSet* GetCriteria();
 
-	void	Init( ResponseType_t type, 
-				const char *responseName, 
-				const AI_CriteriaSet& criteria, 
+	void	Init( ResponseType_t type,
+				const char *responseName,
+				const AI_CriteriaSet& criteria,
 				const AI_ResponseParams& responseparams,
 				const char *matchingRule,
 				const char *applyContext,

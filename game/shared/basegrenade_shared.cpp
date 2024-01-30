@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,7 +21,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-extern short	g_sModelIndexFireball;		// (in combatweapon.cpp) holds the index for the fireball 
+extern short	g_sModelIndexFireball;		// (in combatweapon.cpp) holds the index for the fireball
 extern short	g_sModelIndexWExplosion;	// (in combatweapon.cpp) holds the index for the underwater explosion
 extern short	g_sModelIndexSmoke;			// (in combatweapon.cpp) holds the index for the smoke cloud
 extern ConVar    sk_plr_dmg_grenade;
@@ -68,7 +68,7 @@ BEGIN_NETWORK_TABLE( CBaseGrenade, DT_BaseGrenade )
 //	SendPropTime( SENDINFO( m_flDetonateTime ) ),
 	SendPropEHandle( SENDINFO( m_hThrower ) ),
 
-	SendPropVector( SENDINFO( m_vecVelocity ), 0, SPROP_NOSCALE ), 
+	SendPropVector( SENDINFO( m_vecVelocity ), 0, SPROP_NOSCALE ),
 	// HACK: Use same flag bits as player for now
 	SendPropInt			( SENDINFO(m_fFlags), PLAYER_FLAG_BITS, SPROP_UNSIGNED, SendProxy_CropFlagsToPlayerFlagBitsLength ),
 #else
@@ -114,7 +114,7 @@ END_PREDICTION_DATA()
 void CBaseGrenade::Explode( trace_t *pTrace, int bitsDamageType )
 {
 #if !defined( CLIENT_DLL )
-	
+
 	SetModelName( NULL_STRING );//invisible
 	AddSolidFlags( FSOLID_NOT_SOLID );
 
@@ -138,13 +138,13 @@ void CBaseGrenade::Explode( trace_t *pTrace, int bitsDamageType )
 	if ( pTrace->fraction != 1.0 )
 	{
 		Vector vecNormal = pTrace->plane.normal;
-		surfacedata_t *pdata = physprops->GetSurfaceData( pTrace->surface.surfaceProps );	
+		surfacedata_t *pdata = physprops->GetSurfaceData( pTrace->surface.surfaceProps );
 		CPASFilter filter( vecAbsOrigin );
 
 		te->Explosion( filter, -1.0, // don't apply cl_interp delay
 			&vecAbsOrigin,
 			!( contents & MASK_WATER ) ? g_sModelIndexFireball : g_sModelIndexWExplosion,
-			m_DmgRadius * .03, 
+			m_DmgRadius * .03,
 			25,
 			TE_EXPLFLAG_NONE,
 			m_DmgRadius,
@@ -156,9 +156,9 @@ void CBaseGrenade::Explode( trace_t *pTrace, int bitsDamageType )
 	{
 		CPASFilter filter( vecAbsOrigin );
 		te->Explosion( filter, -1.0, // don't apply cl_interp delay
-			&vecAbsOrigin, 
+			&vecAbsOrigin,
 			!( contents & MASK_WATER ) ? g_sModelIndexFireball : g_sModelIndexWExplosion,
-			m_DmgRadius * .03, 
+			m_DmgRadius * .03,
 			25,
 			TE_EXPLFLAG_NONE,
 			m_DmgRadius,
@@ -171,7 +171,7 @@ void CBaseGrenade::Explode( trace_t *pTrace, int bitsDamageType )
 
 	// Use the thrower's position as the reported position
 	Vector vecReported = m_hThrower ? m_hThrower->GetAbsOrigin() : vec3_origin;
-	
+
 	CTakeDamageInfo info( this, m_hThrower, GetBlastForce(), GetAbsOrigin(), m_flDamage, bitsDamageType, 0, &vecReported );
 
 	RadiusDamage( info, GetAbsOrigin(), m_DmgRadius, CLASS_NONE, NULL );
@@ -183,7 +183,7 @@ void CBaseGrenade::Explode( trace_t *pTrace, int bitsDamageType )
 	SetThink( &CBaseGrenade::SUB_Remove );
 	SetTouch( NULL );
 	SetSolid( SOLID_NONE );
-	
+
 	AddEffects( EF_NODRAW );
 	SetAbsVelocity( vec3_origin );
 
@@ -222,7 +222,7 @@ void CBaseGrenade::Smoke( void )
 	{
 		CPVSFilter filter( vecAbsOrigin );
 
-		te->Smoke( filter, 0.0, 
+		te->Smoke( filter, 0.0,
 			&vecAbsOrigin, g_sModelIndexSmoke,
 			m_DmgRadius * 0.03,
 			24 );
@@ -240,7 +240,7 @@ void CBaseGrenade::Event_Killed( const CTakeDamageInfo &info )
 
 #if !defined( CLIENT_DLL )
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseGrenade::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
@@ -309,7 +309,7 @@ void CBaseGrenade::Detonate( void )
 
 //
 // Contact grenade, explode when it touches something
-// 
+//
 void CBaseGrenade::ExplodeTouch( CBaseEntity *pOther )
 {
 	trace_t		tr;
@@ -371,7 +371,7 @@ void CBaseGrenade::BounceTouch( CBaseEntity *pOther )
 			AngleVectors( GetLocalAngles(), &forward, NULL, NULL );
 			CTakeDamageInfo info( this, m_hThrower, 1, DMG_CLUB );
 			CalculateMeleeDamageForce( &info, GetAbsVelocity(), GetAbsOrigin() );
-			pOther->DispatchTraceAttack( info, forward, &tr ); 
+			pOther->DispatchTraceAttack( info, forward, &tr );
 			ApplyMultiDamage();
 #endif
 		}
@@ -382,16 +382,16 @@ void CBaseGrenade::BounceTouch( CBaseEntity *pOther )
 	// m_vecAngVelocity = Vector (300, 300, 300);
 
 	// this is my heuristic for modulating the grenade velocity because grenades dropped purely vertical
-	// or thrown very far tend to slow down too quickly for me to always catch just by testing velocity. 
+	// or thrown very far tend to slow down too quickly for me to always catch just by testing velocity.
 	// trimming the Z velocity a bit seems to help quite a bit.
-	vecTestVelocity = GetAbsVelocity(); 
+	vecTestVelocity = GetAbsVelocity();
 	vecTestVelocity.z *= 0.45;
 
 	if ( !m_bHasWarnedAI && vecTestVelocity.Length() <= 60 )
 	{
-		// grenade is moving really slow. It's probably very close to where it will ultimately stop moving. 
+		// grenade is moving really slow. It's probably very close to where it will ultimately stop moving.
 		// emit the danger sound.
-		
+
 		// register a radius louder than the explosion, so we make sure everyone gets out of the way
 #if !defined( CLIENT_DLL )
 		CSoundEnt::InsertSound ( SOUND_DANGER, GetAbsOrigin(), m_flDamage / 0.4, 0.3, this );
@@ -432,7 +432,7 @@ void CBaseGrenade::SlideTouch( CBaseEntity *pOther )
 	if (GetFlags() & FL_ONGROUND)
 	{
 		// add a bit of static friction
-//		SetAbsVelocity( GetAbsVelocity() * 0.95 );  
+//		SetAbsVelocity( GetAbsVelocity() * 0.95 );
 
 		if (GetAbsVelocity().x != 0 || GetAbsVelocity().y != 0)
 		{
@@ -491,7 +491,7 @@ void CBaseGrenade::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CBaseCombatCharacter
 //-----------------------------------------------------------------------------
 CBaseCombatCharacter *CBaseGrenade::GetThrower( void )
@@ -542,17 +542,3 @@ CBaseGrenade::CBaseGrenade(void)
 
 	SetSimulatedEveryTick( true );
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-

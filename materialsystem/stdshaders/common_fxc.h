@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -83,42 +83,42 @@ HALF3 HuePreservingColorClamp( HALF3 c, HALF maxVal )
 }
 
 #if (AA_CLAMP==1)
-HALF2 ComputeLightmapCoordinates( HALF4 Lightmap1and2Coord, HALF2 Lightmap3Coord ) 
+HALF2 ComputeLightmapCoordinates( HALF4 Lightmap1and2Coord, HALF2 Lightmap3Coord )
 {
-    HALF2 result = saturate(Lightmap1and2Coord.xy) * Lightmap1and2Coord.wz * 0.99;
-    result += Lightmap3Coord;
-    return result;
+	HALF2 result = saturate(Lightmap1and2Coord.xy) * Lightmap1and2Coord.wz * 0.99;
+	result += Lightmap3Coord;
+	return result;
 }
 
 void ComputeBumpedLightmapCoordinates( HALF4 Lightmap1and2Coord, HALF2 Lightmap3Coord,
-									  out HALF2 bumpCoord1,
-									  out HALF2 bumpCoord2,
-									  out HALF2 bumpCoord3 ) 
+									out HALF2 bumpCoord1,
+									out HALF2 bumpCoord2,
+									out HALF2 bumpCoord3 )
 {
-    HALF2 result = saturate(Lightmap1and2Coord.xy) * Lightmap1and2Coord.wz * 0.99;
-    result += Lightmap3Coord;
-    bumpCoord1 = result + HALF2(Lightmap1and2Coord.z, 0);
-    bumpCoord2 = result + 2*HALF2(Lightmap1and2Coord.z, 0);
-    bumpCoord3 = result + 3*HALF2(Lightmap1and2Coord.z, 0);
+	HALF2 result = saturate(Lightmap1and2Coord.xy) * Lightmap1and2Coord.wz * 0.99;
+	result += Lightmap3Coord;
+	bumpCoord1 = result + HALF2(Lightmap1and2Coord.z, 0);
+	bumpCoord2 = result + 2*HALF2(Lightmap1and2Coord.z, 0);
+	bumpCoord3 = result + 3*HALF2(Lightmap1and2Coord.z, 0);
 }
 #else
-HALF2 ComputeLightmapCoordinates( HALF4 Lightmap1and2Coord, HALF2 Lightmap3Coord ) 
+HALF2 ComputeLightmapCoordinates( HALF4 Lightmap1and2Coord, HALF2 Lightmap3Coord )
 {
-    return Lightmap1and2Coord.xy;
+	return Lightmap1and2Coord.xy;
 }
 
 void ComputeBumpedLightmapCoordinates( HALF4 Lightmap1and2Coord, HALF2 Lightmap3Coord,
-									  out HALF2 bumpCoord1,
-									  out HALF2 bumpCoord2,
-									  out HALF2 bumpCoord3 ) 
+									out HALF2 bumpCoord1,
+									out HALF2 bumpCoord2,
+									out HALF2 bumpCoord3 )
 {
-    bumpCoord1 = Lightmap1and2Coord.xy;
-    bumpCoord2 = Lightmap1and2Coord.wz; // reversed order!!!
-    bumpCoord3 = Lightmap3Coord.xy;
+	bumpCoord1 = Lightmap1and2Coord.xy;
+	bumpCoord2 = Lightmap1and2Coord.wz; // reversed order!!!
+	bumpCoord3 = Lightmap3Coord.xy;
 }
 #endif
 
-// Versions of matrix multiply functions which force HLSL compiler to explictly use DOTs, 
+// Versions of matrix multiply functions which force HLSL compiler to explictly use DOTs,
 // not giving it the option of using MAD expansion.  In a perfect world, the compiler would
 // always pick the best strategy, and these shouldn't be needed.. but.. well.. umm..
 //
@@ -127,7 +127,7 @@ void ComputeBumpedLightmapCoordinates( HALF4 Lightmap1and2Coord, HALF2 Lightmap3
 float3 mul3x3(float3 v, float3x3 m)
 {
 #if !defined( _X360 )
-    return float3(dot(v, transpose(m)[0]), dot(v, transpose(m)[1]), dot(v, transpose(m)[2]));
+	return float3(dot(v, transpose(m)[0]), dot(v, transpose(m)[1]), dot(v, transpose(m)[2]));
 #else
 	// xbox360 fxc.exe (new back end) borks with transposes, generates bad code
 	return mul( v, m );
@@ -151,7 +151,7 @@ float3 DecompressHDR( float4 input )
 
 float4 CompressHDR( float3 input )
 {
-	// FIXME: want to use min so that we clamp to white, but what happens if we 
+	// FIXME: want to use min so that we clamp to white, but what happens if we
 	// have an albedo component that's less than 1/MAX_HDR_OVERBRIGHT?
 	//	float fMax = max( max( color.r, color.g ), color.b );
 	float4 output;

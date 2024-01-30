@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,7 +26,7 @@ public:
 	DECLARE_EMBEDDED_NETWORKVAR();
 
 	CTFPlayerLocalData();
-	
+
 	CBaseTFPlayer	*m_pPlayer;
 
 	CNetworkVar( bool, m_nInTacticalView );

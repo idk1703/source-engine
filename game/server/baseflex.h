@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -140,7 +140,7 @@ protected:
 	LocalFlexController_t	FlexControllerLocalToGlobal( const flexsettinghdr_t *pSettinghdr, int key );
 
 private:
-	// Starting various expression types 
+	// Starting various expression types
 
 	bool RequestStartSequenceSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event, CChoreoActor *actor, CBaseEntity *pTarget );
 	bool RequestStartGestureSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event, CChoreoActor *actor, CBaseEntity *pTarget );
@@ -192,7 +192,7 @@ private:
 			m_nCount( 0 ),
 			m_Mapping( 0 )
 		{
-		}		
+		}
 
 		void SetCount( int count )
 		{
@@ -222,7 +222,7 @@ private:
 
 		const flexsettinghdr_t	*m_Key;
 		int						m_nCount;
-		LocalFlexController_t	*m_Mapping;	
+		LocalFlexController_t	*m_Mapping;
 	};
 
 	static bool FlexSettingLessFunc( const FS_LocalToGlobal_t& lhs, const FS_LocalToGlobal_t& rhs );

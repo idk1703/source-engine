@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,7 +19,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( weapon_citizenpackage, CWeaponCitizenPackage );
 PRECACHE_WEAPON_REGISTER(weapon_citizenpackage);
 
-acttable_t	CWeaponCitizenPackage::m_acttable[] = 
+acttable_t	CWeaponCitizenPackage::m_acttable[] =
 {
 	{ ACT_IDLE,						ACT_IDLE_PACKAGE,					false },
 	{ ACT_WALK,						ACT_WALK_PACKAGE,					false },
@@ -27,7 +27,7 @@ acttable_t	CWeaponCitizenPackage::m_acttable[] =
 IMPLEMENT_ACTTABLE(CWeaponCitizenPackage);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCitizenPackage::ItemPostFrame( void )
 {
@@ -53,7 +53,7 @@ class CWeaponCitizenSuitcase : public CWeaponCitizenPackage
 	DECLARE_CLASS( CWeaponCitizenSuitcase, CWeaponCitizenPackage );
 public:
 	DECLARE_SERVERCLASS();
-	DECLARE_DATADESC();	
+	DECLARE_DATADESC();
 	DECLARE_ACTTABLE();
 };
 
@@ -66,7 +66,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( weapon_citizensuitcase, CWeaponCitizenSuitcase );
 PRECACHE_WEAPON_REGISTER(weapon_citizensuitcase);
 
-acttable_t	CWeaponCitizenSuitcase::m_acttable[] = 
+acttable_t	CWeaponCitizenSuitcase::m_acttable[] =
 {
 	{ ACT_IDLE,						ACT_IDLE_SUITCASE,					false },
 	{ ACT_WALK,						ACT_WALK_SUITCASE,					false },

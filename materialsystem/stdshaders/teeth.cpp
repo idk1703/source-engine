@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -89,7 +89,7 @@ BEGIN_VS_SHADER( Teeth_DX9, "Help for Teeth_DX9" )
 
 		BlendType_t nBlendType = EvaluateBlendRequirements( BASETEXTURE, true );
 		bool bFullyOpaque = (nBlendType != BT_BLENDADD) && (nBlendType != BT_BLEND) && !IS_FLAG_SET(MATERIAL_VAR_ALPHATEST); //dest alpha is free for special use
-		
+
 		SHADOW_STATE
 		{
 			pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );		// Base map
@@ -226,7 +226,7 @@ BEGIN_VS_SHADER( Teeth_DX9, "Help for Teeth_DX9" )
 			pShaderAPI->SetPixelShaderConstant( PSREG_EYEPOS_SPEC_EXPONENT, vEyePos_SpecExponent, 1 );
 
 			if ( hasBump )
-			{	
+			{
 #ifndef _X360
 				if ( !g_pHardwareConfig->HasFastVertexTextures() )
 #endif
@@ -240,7 +240,7 @@ BEGIN_VS_SHADER( Teeth_DX9, "Help for Teeth_DX9" )
 					SET_DYNAMIC_VERTEX_SHADER_COMBO( COMPRESSED_VERTS, (int)vertexCompression );
 					SET_DYNAMIC_VERTEX_SHADER_COMBO( NUM_LIGHTS, bUseStaticControlFlow ? 0 : lightState.m_nNumLights );
 					SET_DYNAMIC_VERTEX_SHADER( teeth_bump_vs20 );
-		
+
 					// ps_2_b version which does Phong
 					if ( g_pHardwareConfig->SupportsPixelShaders_2_b() )
 					{

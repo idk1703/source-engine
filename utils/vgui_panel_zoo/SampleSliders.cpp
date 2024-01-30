@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@ class SampleSliders: public DemoPage
 	public:
 		SampleSliders(Panel *parent, const char *name);
 		~SampleSliders();
-	
+
 	private:
 		Slider *m_pSlider;
 		Slider *m_pSlider2;
@@ -87,5 +87,3 @@ Panel* SampleSliders_Create(Panel *parent)
 {
 	return new SampleSliders(parent, "Slider Bars");
 }
-
-

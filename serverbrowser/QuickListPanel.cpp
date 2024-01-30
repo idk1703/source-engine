@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -66,7 +66,7 @@ void CMouseMessageForwardingPanel::OnMouseWheeled(int delta)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CQuickListPanel::CQuickListPanel( vgui::Panel* pParent, const char *pElementName ) : BaseClass( pParent, pElementName )
 {
@@ -94,17 +94,17 @@ CQuickListPanel::CQuickListPanel( vgui::Panel* pParent, const char *pElementName
 	{
 		pPathID = "MOD";
 	}
-	
+
 	LoadControlSettings( "servers/QuickListPanel.res", pPathID );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuickListPanel::ApplySchemeSettings(IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
-	
+
 	if ( pScheme && m_pBGroundPanel )
 	{
 		m_pBGroundPanel->SetBgColor( pScheme->GetColor("QuickListBGDeselected", Color(255, 255, 255, 0 ) ) );
@@ -112,7 +112,7 @@ void CQuickListPanel::ApplySchemeSettings(IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuickListPanel::SetRefreshing( void )
 {
@@ -147,7 +147,7 @@ void CQuickListPanel::SetRefreshing( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuickListPanel::SetMapName( const char *pMapName )
 {
@@ -161,7 +161,7 @@ void CQuickListPanel::SetMapName( const char *pMapName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuickListPanel::SetGameType( const char *pGameType )
 {
@@ -178,7 +178,7 @@ void CQuickListPanel::SetGameType( const char *pGameType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuickListPanel::SetServerInfo ( KeyValues *pKV, int iListID, int iTotalServers )
 {
@@ -227,7 +227,7 @@ void CQuickListPanel::SetServerInfo ( KeyValues *pKV, int iListID, int iTotalSer
 	g_pVGuiLocalize->ConvertANSIToUnicode( pKV->GetString( "players", " " ), playercount,  sizeof( playercount ) );
 
 	_snwprintf( players, ARRAYSIZE( players ), L"%ls %ls",  playercount, pwszPlayers );
-	
+
 	m_pPlayerCountLabel->SetText( players );
 	m_pPlayerCountLabel->SetVisible( true );
 
@@ -253,7 +253,7 @@ void CQuickListPanel::SetServerInfo ( KeyValues *pKV, int iListID, int iTotalSer
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuickListPanel::SetImage( const char *pMapName )
 {
@@ -282,7 +282,7 @@ void CQuickListPanel::SetImage( const char *pMapName )
 
 		m_pMapImage->SetImage ( imagename );
 		m_pMapImage->SetMouseInputEnabled( false );
-	}							
+	}
 }
 
 void CQuickListPanel::OnMousePressed( vgui::MouseCode code )

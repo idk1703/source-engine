@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -43,13 +43,13 @@ public:
 	virtual int		GetDamageType() const { return DMG_BLAST; }
 
 	void	ApplyRadiusEMPEffect( CBaseEntity *pOwner, const Vector& vecCenter );
-	
+
 	static CGrenadeEMP *CGrenadeEMP::Create( const Vector &vecOrigin, const Vector &vecAngles, CBasePlayer *pOwner );
 
 	// A derived class should return true here so that weapon sounds, etc, can
 	//  apply the proper filter
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 

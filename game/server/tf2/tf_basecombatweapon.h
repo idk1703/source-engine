@@ -36,4 +36,3 @@ public:
 };
 
 #endif // TF_BASECOMBATWEAPON_H
-

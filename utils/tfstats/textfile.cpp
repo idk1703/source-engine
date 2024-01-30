@@ -24,7 +24,7 @@
 // Input:	filename - name of the file that this object will represent
 //				eliminateComments - if true, C++ style comments will not be handed
 //				back as tokens to the user of this object
-// Output:	
+// Output:
 //------------------------------------------------------------------------------------------------------
 void CTextFile::init(const char* filename,bool eliminateComments)
 {
@@ -35,7 +35,7 @@ void CTextFile::init(const char* filename,bool eliminateComments)
 	memset(wordBuf,0,BUF_SIZE);
 	theFile=fopen(filename,"rt");
 
-	
+
 	//three different delim sets
 	//use this when reading strings
 	stringDelims="\"";
@@ -118,7 +118,7 @@ const char* CTextFile::getToken(char* outputBuf)
 			if (!theFile&& feof(theFile))
 				break;
 		}
-		
+
 		//these are both in the normal delimiter set, so this case won't happen unless we're reading a string
 		//which is exactly the behaviour we want
 		if (c=='\n' || c=='\r')
@@ -128,11 +128,11 @@ const char* CTextFile::getToken(char* outputBuf)
 		}
 		outputBuf[write++]=c;
 		c=fgetc(theFile);
-		
+
 		if (feof(theFile))
 			break;
 	}
-	
+
 	if (theFile && !feof(theFile))
 		fseek(theFile,-1,SEEK_CUR); //seek to before the delimiter
 
@@ -143,7 +143,7 @@ const char* CTextFile::getToken(char* outputBuf)
 		while (fgetc(theFile)!='\n');
 		goto readToken;
 	}
-	
+
 	return outputBuf;
 }
 
@@ -159,10 +159,10 @@ top:
 	c=' ';
 	while (theFile && !feof(theFile) && isspace(c))
 		c=fgetc(theFile);
-	
+
 	if (!theFile) return 0;
 	if (feof(theFile)) 	return 0;
-	
+
 	if (!noComments)
 		return c;
 
@@ -170,7 +170,7 @@ top:
 	if (c=='/')
 	{
 		char c2=fgetc(theFile);
-		if (c2=='/') //found comment?  
+		if (c2=='/') //found comment?
 		{
 			//discard and start over
 			getLine();
@@ -182,7 +182,7 @@ top:
 			return c;
 		}
 	}
-	else 
+	else
 	{
 		return c;
 	}
@@ -202,7 +202,7 @@ const char* CTextFile::readString()
 		return wordBuf;
 	}
 	char c=getNextNonWSChar();
-	
+
 	if (c=='\"')
 	{
 		delims=stringDelims;
@@ -260,7 +260,7 @@ const char* CTextFile::readString(char* buf)
 
 //------------------------------------------------------------------------------------------------------
 // Function:	CTextFile::getLine
-// Purpose:	reads and returns the contents of the file up to the next \r or \n 
+// Purpose:	reads and returns the contents of the file up to the next \r or \n
 // Output:	const char*
 //------------------------------------------------------------------------------------------------------
 const char* CTextFile::getLine()
@@ -272,7 +272,7 @@ const char* CTextFile::getLine()
 //------------------------------------------------------------------------------------------------------
 // Function:	CTextFile::discard
 // Purpose:	discards the next token, also checks to see if it is the same as the token
-//		the user of the object was expecting to discard. 
+//		the user of the object was expecting to discard.
 // Input:	test - the token that is expected to be discarded.
 // Output:	Returns true on success, false on failure.
 //------------------------------------------------------------------------------------------------------
@@ -287,7 +287,7 @@ bool CTextFile::discard(char* test)
 	int result = stricmp(wordBuf2,test);
 	if (result !=0)
 		g_pApp->fatalError("While parsing %s, expecting \"%s\", got \"%s\"",filename.c_str(),test,wordBuf2);
-	
+
 	return true;
 }
 
@@ -322,7 +322,7 @@ char* CTextFile::peekNextString()
 		return NULL;
 	fpos_t startpos;
 	fgetpos(theFile,&startpos);
-	
+
 
 	const char* c=readString(peekBuf);
 	if (!c)
@@ -356,7 +356,7 @@ void CTextFile::reset()
 
 //------------------------------------------------------------------------------------------------------
 // Function:	CTextFile::~CTextFile
-// Purpose: destructor	
+// Purpose: destructor
 //------------------------------------------------------------------------------------------------------
 CTextFile::~CTextFile()
 {
@@ -366,21 +366,21 @@ CTextFile::~CTextFile()
 		chmod(filename.c_str(),PERMIT);
 #endif
 
-} 
+}
 
 
 
 bool CTextFile::eof()
 {
 	bool retval=false;
-	
+
 	//test current pos first
 	retval = (!theFile || feof(theFile));
 	if (retval)
 		return true;
 
 	//now see if only whitespace is left
-	
+
 	fpos_t beforecheck;
 	fgetpos(theFile,&beforecheck);
 	char c=getNextNonWSChar();
@@ -390,7 +390,7 @@ bool CTextFile::eof()
 	fseek(theFile,beforecheck,SEEK_SET);
 	return retval;
 }
-	
+
 
 int CTextFile::readInt()
 {

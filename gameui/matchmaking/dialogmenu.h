@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -42,7 +42,7 @@ struct sessionProperty_t
 //-----------------------------------------------------------------------
 class CMenuItem : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CMenuItem, vgui::EditablePanel ); 
+	DECLARE_CLASS_SIMPLE( CMenuItem, vgui::EditablePanel );
 
 public:
 	CMenuItem( CDialogMenu *pParent, const char *pTitle, const char *pDescription );
@@ -65,7 +65,7 @@ protected:
 
 	Color		m_BgColor;
 	Color		m_BgColorActive;
-	
+
 	int			m_nDisabledAlpha;
 	int			m_nBottomMargin;
 	int			m_nRightMargin;
@@ -80,7 +80,7 @@ protected:
 //-----------------------------------------------------------------------
 class CCommandItem : public CMenuItem
 {
-	DECLARE_CLASS_SIMPLE( CCommandItem, CMenuItem ); 
+	DECLARE_CLASS_SIMPLE( CCommandItem, CMenuItem );
 
 public:
 	CCommandItem( CDialogMenu *pParent, const char *pTitle, const char *pDescription, const char *pCommand );
@@ -101,7 +101,7 @@ public:
 //-----------------------------------------------------------------------
 class CPlayerItem : public CCommandItem
 {
-	DECLARE_CLASS_SIMPLE( CMenuItem, CCommandItem ); 
+	DECLARE_CLASS_SIMPLE( CMenuItem, CCommandItem );
 
 public:
 	CPlayerItem( CDialogMenu *pParent, const char *pTitle, int64 nId, byte bVoice, bool bReady );
@@ -127,7 +127,7 @@ public:
 //-----------------------------------------------------------------------
 class CBrowserItem : public CCommandItem
 {
-	DECLARE_CLASS_SIMPLE( CBrowserItem, CCommandItem ); 
+	DECLARE_CLASS_SIMPLE( CBrowserItem, CCommandItem );
 
 public:
 	CBrowserItem( CDialogMenu *pParent, const char *pHost, const char *pPlayers, const char *pScenario, const char *pPing );
@@ -136,7 +136,7 @@ public:
 	virtual void	PerformLayout();
 	virtual void	ApplySettings( KeyValues *pSettings );
 	virtual void	ApplySchemeSettings( vgui::IScheme *pScheme );
-	
+
 private:
 	vgui::Label	*m_pPlayers;
 	vgui::Label *m_pScenario;
@@ -234,7 +234,7 @@ private:
 // CSectionedItem
 //
 // Menu item used to display some number of data entries, which are arranged
-// into columns.  Supports scrolling through columns horizontally with the 
+// into columns.  Supports scrolling through columns horizontally with the
 // ability to "lock" columns so they don't scroll
 //-----------------------------------------------------------------------
 class CSectionedItem : public CCommandItem
@@ -271,7 +271,7 @@ public:
 //--------------------------------------------------------------------------------------
 class CDialogMenu : public vgui::Panel
 {
-	DECLARE_CLASS_SIMPLE( CDialogMenu, vgui::Panel ); 
+	DECLARE_CLASS_SIMPLE( CDialogMenu, vgui::Panel );
 
 public:
 	CDialogMenu();

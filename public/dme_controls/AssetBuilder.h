@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -73,11 +73,11 @@ public:
 	*/
 
 private:
-	MESSAGE_FUNC_PARAMS( OnItemSelected, "ItemSelected", kv );	
-	MESSAGE_FUNC_PARAMS( OnItemDeselected, "ItemDeselected", kv );	
+	MESSAGE_FUNC_PARAMS( OnItemSelected, "ItemSelected", kv );
+	MESSAGE_FUNC_PARAMS( OnItemDeselected, "ItemDeselected", kv );
 	MESSAGE_FUNC_PARAMS( OnFileSelected, "FileSelected", kv );
 	MESSAGE_FUNC_PARAMS( OnOpenContextMenu, "OpenContextMenu", kv );
-	MESSAGE_FUNC_PARAMS( OnPicked, "Picked", kv );	
+	MESSAGE_FUNC_PARAMS( OnPicked, "Picked", kv );
 	MESSAGE_FUNC( SetDirty, "DmeElementChanged" );
 	MESSAGE_FUNC( OnAddSource, "AddSource" );
 	MESSAGE_FUNC( OnNewSourceFile, "NewSourceFile" );
@@ -106,7 +106,7 @@ private:
 
 	// Selects a particular source
 	void SelectSource( CDmeSource *pSource );
-	 
+
 	// Called when the source file name changes
 	void OnSourceFileNameChanged( const char *pFileName );
 
@@ -190,12 +190,12 @@ protected:
 	CAssetBuilder *m_pAssetBuilder;
 
 private:
-	MESSAGE_FUNC( OnDmeElementChanged, "DmeElementChanged" );	
-	MESSAGE_FUNC( OnFileNew, "FileNew" );	
-	MESSAGE_FUNC( OnFileOpen, "FileOpen" );	
-	MESSAGE_FUNC( OnFileSave, "FileSave" );	
+	MESSAGE_FUNC( OnDmeElementChanged, "DmeElementChanged" );
+	MESSAGE_FUNC( OnFileNew, "FileNew" );
+	MESSAGE_FUNC( OnFileOpen, "FileOpen" );
+	MESSAGE_FUNC( OnFileSave, "FileSave" );
 	MESSAGE_FUNC( OnFileSaveAs, "FileSaveAs" );
-	MESSAGE_FUNC_PARAMS( OnPicked, "Picked", kv );	
+	MESSAGE_FUNC_PARAMS( OnPicked, "Picked", kv );
 	MESSAGE_FUNC_PARAMS( OnFileSelected, "FileSelected", kv );
 	MESSAGE_FUNC_PARAMS( OnFileStateMachineFinished, "FileStateMachineFinished", kv );
 	MESSAGE_FUNC_PARAMS( OnPerformFileNew, "PerformFileNew", kv );

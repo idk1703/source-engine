@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -68,7 +68,7 @@ void CWeaponDODBaseMelee::Spawn()
 	CDODWeaponInfo *pWeaponInfo = dynamic_cast< CDODWeaponInfo* >( GetFileWeaponInfoFromHandle( hWpnInfo ) );
 
 	Assert( pWeaponInfo && "Failed to get CDODWeaponInfo in melee weapon spawn" );
-		
+
 	m_pWeaponInfo = pWeaponInfo;
 
 	Assert( m_pWeaponInfo );
@@ -162,13 +162,13 @@ CBaseEntity *CWeaponDODBaseMelee::MeleeAttack( int iDamageAmount, int iDamageTyp
 		bDidHit = 0;	// still play the animation, we just dont attempt to damage this player
 	}
 
-	if ( bDidHit )	//if the swing hit 
-	{	
+	if ( bDidHit )	//if the swing hit
+	{
 		// delay the decal a bit
 		m_trHit = tr;
 
 		// Store the ent in an EHANDLE, just in case it goes away by the time we get into our think function.
-		m_pTraceHitEnt = tr.m_pEnt; 
+		m_pTraceHitEnt = tr.m_pEnt;
 
 		m_iSmackDamage = iDamageAmount;
 		m_iSmackDamageType = iDamageType;
@@ -180,7 +180,7 @@ CBaseEntity *CWeaponDODBaseMelee::MeleeAttack( int iDamageAmount, int iDamageTyp
 
 		// do the mega attack if its a player, and we would do damage
 		if ( tr.m_pEnt->IsPlayer() &&
-			tr.m_pEnt->m_takedamage == DAMAGE_YES && 
+			tr.m_pEnt->m_takedamage == DAMAGE_YES &&
 			( iVictimTeam != iOwnerTeam || ( iVictimTeam == iOwnerTeam && friendlyfire.GetBool() ) ) )
 		{
 			CDODPlayer *pVictim = ToDODPlayer( tr.m_pEnt );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -48,7 +48,7 @@ class MenuSeparator;
 //   The clicking and dragging on the scroll bar nob also scrolls the menu items.
 //   If a highlighed menuitem scrolls off, and the user then begins navigating via keys,
 //    the menu will snap the scroll bar so the highlighted item is visible.
-//   If user has been navigating via keys, moving the mouse over a menu item 
+//   If user has been navigating via keys, moving the mouse over a menu item
 //    highlights it.
 // Mousewheel:
 //   You must have the mouse inside the menu/scroll bar to use the wheel.
@@ -56,14 +56,14 @@ class MenuSeparator;
 //   If the list has no scroll bar the wheel will cycle from the bottom of the list
 //    to the top of the list and vice versa.
 //   If the list has a scrollbar the mouse wheel will stop at the top or bottom
-//    of the list. 
+//    of the list.
 //   If the mouse is over the scroll bar no items are highlighted.
 // Keyboard:
 //   When a menu is opened, no items are highlighted.
 //   If a menuitem has a cascading menu it does not open when the item is highlighted.
-//   The down arrow selects the next item in the list. 
+//   The down arrow selects the next item in the list.
 //    (first item if none are highlighted and there is a scrollbar).
-//   The up arrow selects the previous item in the list 
+//   The up arrow selects the previous item in the list
 //    (first item if none are highlighted and there is a scrollbar, last item if none are
 //    highlighted and there is no scrollbar).
 //   Selecting a new menuitem closes any previously open submenus in the list.
@@ -73,7 +73,7 @@ class MenuSeparator;
 //   Pressing the left arrow closes the submenu.
 //   When the submenu is opened the cascading menuitem stays highlighted.
 //   No items in the submenu are highlighted when it is opened.
-//   
+//
 //   Note: Cascading menuitems in menus with a scrollbar is not supported.
 //         Its a clunky UI and if we want this we should design a better solution,
 //         perhaps along the lines of how explorer's bookmarks does it.
@@ -112,7 +112,7 @@ public:
 
 	virtual int AddMenuItem( const char *itemName, const char *itemText, KeyValues *message, Panel *target , const KeyValues *userData = NULL);
 	virtual int AddMenuItem( const char *itemName, const wchar_t *wszItemText, KeyValues *message, Panel *target , const KeyValues *userData = NULL);
-	
+
 	virtual int AddMenuItem( const char *itemText, const char *command, Panel *target , const KeyValues *userData = NULL);
 	virtual int AddMenuItem( const char *itemText, KeyValues *message, Panel *target, const KeyValues *userData = NULL );
 	virtual int AddMenuItem( const char *itemText, Panel *target, const KeyValues *userData = NULL );
@@ -134,7 +134,7 @@ public:
 
 	virtual int AddCascadingMenuItem( const char *itemName, const char *itemText, KeyValues *message, Panel *target, Menu *cascadeMenu, const KeyValues *userData = NULL );
 	virtual int AddCascadingMenuItem( const char *itemName, const wchar_t *wszItemText, KeyValues *message, Panel *target, Menu *cascadeMenu, const KeyValues *userData = NULL );
-	
+
 	virtual int AddCascadingMenuItem( const char *itemText, const char *command, Panel *target, Menu *cascadeMenu, const KeyValues *userData = NULL );
 	virtual int AddCascadingMenuItem( const char *itemText, KeyValues *message, Panel *target, Menu *cascadeMenu, const KeyValues *userData = NULL );
 	virtual int AddCascadingMenuItem( const char *itemText, Panel *target, Menu *cascadeMenu, const KeyValues *userData = NULL );
@@ -220,10 +220,10 @@ public:
 
 	// return the menuID of the n'th item in the menu list, valid from [0, GetItemCount)
 	virtual int GetMenuID(int index);
-	
+
 	// Return the number of items currently visible in the menu list
 	int GetCurrentlyVisibleItemsCount();
-	
+
 	MenuItem *GetMenuItem(int itemID);
 	void CloseOtherMenus(MenuItem *item);
 	virtual void OnKillFocus();
@@ -238,12 +238,12 @@ public:
 	void SetCurrentlyHighlightedItem(int itemID);
 	int GetCurrentlyHighlightedItem();
 	void ClearCurrentlyHighlightedItem();
-	
+
 	// Set the checked state of a checkable menuItem
 	void SetMenuItemChecked(int itemID, bool state);
 	bool IsChecked(int index); // check if item is checked.
 
-	
+
 	void SetMinimumWidth(int width);
 	int  GetMinimumWidth();
 
@@ -261,7 +261,7 @@ public:
 	void SetUseFallbackFont( bool bState, HFont hFallback );
 
 protected:
-	// helper functions	
+	// helper functions
 	int AddMenuItemCharCommand(MenuItem *item, const char *command, Panel *target, const KeyValues *userData);
 	int AddMenuItemKeyValuesCommand(MenuItem *item, KeyValues *message, Panel *target, const KeyValues *userData);
 
@@ -298,9 +298,9 @@ protected:
 	MESSAGE_FUNC_INT( OnCursorEnteredMenuItem, "CursorEnteredMenuItem", VPanel);
 	MESSAGE_FUNC_INT( OnCursorExitedMenuItem, "CursorExitedMenuItem", VPanel);
 
-	void MoveAlongMenuItemList(int direction, int loopCount); 
+	void MoveAlongMenuItemList(int direction, int loopCount);
 
-	enum 
+	enum
 	{
 		DEFAULT_MENU_ITEM_HEIGHT = 22, // height of items in the menu
 		MENU_UP = -1, // used for moving up/down list of menu items in the menu
@@ -323,7 +323,7 @@ private:
 	CUtlLinkedList<MenuItem*, int> 	m_MenuItems;
 
 	CUtlVector<int>					m_VisibleSortedItems;
-	CUtlVector<int>					m_SortedItems;		// used for visual 
+	CUtlVector<int>					m_SortedItems;		// used for visual
 	CUtlVector<int>					m_Separators;       // menu item ids after  which separators should be shown
 	CUtlVector<MenuSeparator *>		m_SeparatorPanels;
 

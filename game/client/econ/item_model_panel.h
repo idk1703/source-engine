@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -43,8 +43,8 @@ enum itempanel_tooltippos_t
 
 enum itempanel_tooltip_strategies_t
 {
-	IPTTP_LEFT_SIDE,				
-	IPTTP_RIGHT_SIDE,				
+	IPTTP_LEFT_SIDE,
+	IPTTP_RIGHT_SIDE,
 	IPTTP_TOP_SIDE,
 	IPTTP_BOTTOM_SIDE,
 
@@ -74,7 +74,7 @@ struct item_model_cache_t
 	vgui::DHANDLE<CEmbeddedItemModelPanel>	m_hModelPanelLock;
 };
 
-class CItemMaterialCustomizationIconPanel : public vgui::Panel 
+class CItemMaterialCustomizationIconPanel : public vgui::Panel
 {
 	DECLARE_CLASS_SIMPLE( CItemMaterialCustomizationIconPanel, vgui::Panel );
 public:
@@ -90,7 +90,7 @@ public:
 	// UGC file of custom texture we are using.  0 in the more common case of none.
 	uint64 m_hUGCId;
 
-	// Paint color. 
+	// Paint color.
 	CUtlVector<Color> m_colPaintColors;
 };
 
@@ -111,7 +111,7 @@ public:
 	virtual void	Paint( void );
 	virtual void	RenderingRootModel( IMatRenderContext *pRenderContext, CStudioHdr *pStudioHdr, MDLHandle_t mdlHandle, matrix3x4_t *pWorldMatrix ) OVERRIDE;
 	virtual IMaterial *GetOverrideMaterial( MDLHandle_t mdlHandle ) OVERRIDE;
-	
+
 	CEconItemView*	GetItem() const { return m_pItem; }
 	void			SetItem( CEconItemView *pItem );
 	bool			IsForcingModelUsage( void ) { return m_bForceUseModel; }
@@ -183,9 +183,9 @@ private:
 	CPanelAnimationVar( bool, m_bUsePedestal, "use_pedestal", "0" );
 
 	bool					UpdateParticle(
-											IMatRenderContext				*pRenderContext, 
-											CStudioHdr						*pStudioHdr, 
-											MDLHandle_t						mdlHandle, 
+											IMatRenderContext				*pRenderContext,
+											CStudioHdr						*pStudioHdr,
+											MDLHandle_t						mdlHandle,
 											matrix3x4_t						*pWorldMatrix
 											);
 
@@ -199,7 +199,7 @@ private:
 IMaterial* GetMaterialForImage( CEmbeddedItemModelPanel::InventoryImageType_t eImageType, const char* pszBaseName );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CItemModelPanel : public vgui::EditablePanel
 {
@@ -262,7 +262,7 @@ public:
 	void	UpdatePanels( void );
 
 	void	SendPanelEnterExits( bool bSend ) { m_bShouldSendPanelEnterExits = bSend; }
-	
+
 	void	SetShouldShowOthersGiftWrappedItems( bool bShow ) { m_bShowOthersGiftWrappedItems = bShow; }
 	void    Dragged( bool bDragging );
 	void	HideContainedItemPanel();
@@ -285,7 +285,7 @@ public:
 	virtual void OnCommand( const char *command ) OVERRIDE;
 
 	void	MakeFakeButton() { m_bFakeButton = true; }
-	
+
 private:
 	void	UpdateEquippedLabel( void );
 	void	CleanupNoItemWChars( void );
@@ -307,7 +307,7 @@ private:
 		LOADING_ICONS = 0,
 		LOADING_DESCRIPTIONS,
 		LOADING_RECIPE_MATCHES,
-		
+
 		NUM_LOADING_TYPES
 	};
 
@@ -423,7 +423,7 @@ private:
 // Purpose: Item model panel tooltip. Calls setvisible on the controlled panel
 //			and positions it below/above the current panel.
 //-----------------------------------------------------------------------------
-class CItemModelPanelToolTip : public vgui::BaseTooltip 
+class CItemModelPanelToolTip : public vgui::BaseTooltip
 {
 	DECLARE_CLASS_SIMPLE( CItemModelPanelToolTip, vgui::BaseTooltip );
 public:
@@ -500,7 +500,7 @@ public:
 		CEconItemView	*m_pEconItemView;
 		EItemDisplayType m_eDisplayType;
 	};
-	
+
 	typedef CUtlMap<struct item_stack_type_t, int>	DuplicateCountMap_t;
 	typedef CUtlVector<CEquippableResult>			EquippableResultsVec_t;
 

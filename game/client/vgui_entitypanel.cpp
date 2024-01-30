@@ -57,7 +57,7 @@ void CEntityPanel::SetEntity( C_BaseEntity* pEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityPanel::ComputeParent( void )
 {
@@ -176,7 +176,7 @@ void CEntityPanel::GetEntityPosition( int& sx, int& sy )
 //-----------------------------------------------------------------------------
 bool CEntityPanel::ShouldDraw()
 {
-	return ( ( IsLocalPlayerInTactical() && ClientModeCommander()->ShouldDrawEntity( m_pBaseEntity ) ) || 
+	return ( ( IsLocalPlayerInTactical() && ClientModeCommander()->ShouldDrawEntity( m_pBaseEntity ) ) ||
 			 ( !IsLocalPlayerInTactical() && m_bShowInNormal) );
 }
 
@@ -205,7 +205,7 @@ void CEntityPanel::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityPanel::OnCursorEntered()
 {
@@ -216,7 +216,7 @@ void CEntityPanel::OnCursorEntered()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityPanel::OnCursorExited()
 {
@@ -227,7 +227,7 @@ void CEntityPanel::OnCursorExited()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *CEntityPanel::GetMouseOverText( void )

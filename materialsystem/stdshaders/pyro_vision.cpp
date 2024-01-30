@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -61,13 +61,13 @@ static const float kDefaultGrayStep[ 2 ] = { 0.0f, 1.0f };
 
 BEGIN_VS_SHADER( pyro_vision, "Help for pyro vision" )
 	BEGIN_SHADER_PARAMS
-	
+
 		SHADER_PARAM( EFFECT, SHADER_PARAM_TYPE_INTEGER, "0.0", "" )
 
 		SHADER_PARAM( VERTEX_LIT, SHADER_PARAM_TYPE_INTEGER, "0.0", "" )
 		SHADER_PARAM( FULLBRIGHT, SHADER_PARAM_TYPE_INTEGER, "0.0", "" )
-		SHADER_PARAM( ALPHATESTREFERENCE, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )	
-		
+		SHADER_PARAM( ALPHATESTREFERENCE, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )
+
 		SHADER_PARAM( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "" )
 		SHADER_PARAM( BASETEXTURE2, SHADER_PARAM_TYPE_TEXTURE, "shadertest/detail", "detail texture" )
 		SHADER_PARAM( BLENDMODULATETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "texture to use r/g channels for blend range for" )
@@ -97,7 +97,7 @@ BEGIN_VS_SHADER( pyro_vision, "Help for pyro vision" )
 		SHADER_PARAM( LIGHTMAP_GRADIENTS, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )
 		SHADER_PARAM( COLORBAR, SHADER_PARAM_TYPE_TEXTURE, "", "" )
 		SHADER_PARAM( SELFILLUMTINT, SHADER_PARAM_TYPE_COLOR, "[ 1.0 1.0 1.0 ]", "Self-illumination tint" )
-		
+
 		// EFFECT 2 Depth of Field
 		SHADER_PARAM( DOF_START_DISTANCE, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )
 		SHADER_PARAM( DOF_POWER, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )
@@ -111,7 +111,7 @@ BEGIN_VS_SHADER( pyro_vision, "Help for pyro vision" )
 		SHADER_PARAM( NOISE_SCALE, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )
 		SHADER_PARAM( TIME_SCALE, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )
 		SHADER_PARAM( HEAT_HAZE_SCALE, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )
-	
+
 	END_SHADER_PARAMS
 
 	SHADER_INIT_PARAMS()
@@ -134,8 +134,8 @@ BEGIN_VS_SHADER( pyro_vision, "Help for pyro vision" )
 		SET_PARAM_FLOAT_IF_NOT_DEFINED( GRAY_POWER, 1.0f );
 		SET_PARAM_VEC_IF_NOT_DEFINED( GRAY_STEP, kDefaultGrayStep, 2 );
 		SET_PARAM_FLOAT_IF_NOT_DEFINED( LIGHTMAP_GRADIENTS, 255.0f );
-		
-		
+
+
 		SET_PARAM_VEC_IF_NOT_DEFINED( SELFILLUMTINT, kDefaultSelfIllumTint, 3 );
 
 		SET_PARAM_FLOAT_IF_NOT_DEFINED( DOF_START_DISTANCE, 0.1f );
@@ -276,7 +276,7 @@ BEGIN_VS_SHADER( pyro_vision, "Help for pyro vision" )
 			if ( bHasStripes )
 			{
 				staticCmdsBuf.BindTexture( this, SHADER_SAMPLER5, STRIPETEXTURE, -1 );
-				
+
 				params[ STRIPE_COLOR ]->GetVecValue( &vParms.x, 3 );
 				vParms.w = params[ STRIPE_LM_SCALE ]->GetFloatValue();
 				staticCmdsBuf.SetPixelShaderConstant( 5, vParms.Base() );
@@ -618,7 +618,7 @@ BEGIN_VS_SHADER( pyro_vision, "Help for pyro vision" )
 			pShaderAPI->SetDefaultState();
 
 			bool bWriteDepthToAlpha;
-			if( bFullyOpaque ) 
+			if( bFullyOpaque )
 			{
 				bWriteDepthToAlpha = pShaderAPI->ShouldWriteDepthToDestAlpha();
 			}

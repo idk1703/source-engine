@@ -27,7 +27,7 @@ public:
 
 	void	Spawn( void );
 	void	Precache( void );
-	
+
 	// Return true if the specified entity is touching this zone
 	bool	IsTouching( const CBaseEntity *pEntity ) const OVERRIDE;
 
@@ -50,15 +50,3 @@ private:
 CAchievementZone *InAchievementZone( CBaseEntity *pEntity );
 
 #endif // FUNC_ACHIEVEMENT_ZONE_H
-
-
-
-
-
-
-
-
-
-
-
-

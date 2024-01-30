@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,7 +30,7 @@ CBuySubMenu::CBuySubMenu(vgui::Panel *parent, const char *name) : WizardSubPanel
 	m_NextPanel = NULL;
 	m_pFirstButton = NULL;
 	SetProportional(true);
-	
+
 	m_pPanel = new EditablePanel( this, "ItemInfo" );// info window about these items
 	m_pPanel->SetProportional( true );
 }
@@ -50,7 +50,7 @@ Panel *CBuySubMenu::CreateControlByName( const char *controlName )
 	if( !Q_stricmp( "MouseOverPanelButton", controlName ) )
 	{
 		MouseOverPanelButton *newButton = CreateNewMouseOverPanelButton( m_pPanel );
-		
+
 		if( !m_pFirstButton )
 		{
 			m_pFirstButton = newButton;
@@ -91,7 +91,7 @@ CBuySubMenu* CBuySubMenu::CreateNewSubMenu()
 }
 
 MouseOverPanelButton* CBuySubMenu::CreateNewMouseOverPanelButton(EditablePanel *panel)
-{ 
+{
 	return new MouseOverPanelButton(this, NULL, panel);
 }
 
@@ -102,7 +102,7 @@ MouseOverPanelButton* CBuySubMenu::CreateNewMouseOverPanelButton(EditablePanel *
 void CBuySubMenu::OnCommand( const char *command)
 {
 	if ( Q_strstr( command, ".res" ) ) // if its a .res file then its a new menu
-	{ 
+	{
 		int i;
 		// check the cache
 		for ( i = 0; i < m_SubMenus.Count(); i++ )
@@ -114,7 +114,7 @@ void CBuySubMenu::OnCommand( const char *command)
 				m_NextPanel->InvalidateLayout(); // force it to reset it prices
 				break;
 			}
-		}	
+		}
 
 		if ( i == m_SubMenus.Count() )
 		{
@@ -132,11 +132,11 @@ void CBuySubMenu::OnCommand( const char *command)
 
 		GetWizardPanel()->OnNextButton();
 	}
-	else 
+	else
 	{
 		GetWizardPanel()->Close();
 		gViewPortInterface->ShowBackGround( false );
-	
+
 		if ( Q_stricmp( command, "vguicancel" ) != 0 )
 			engine->ClientCmd( command );
 
@@ -162,10 +162,6 @@ void CBuySubMenu::DeleteSubPanels()
 // Purpose: return the next panel to show
 //-----------------------------------------------------------------------------
 vgui::WizardSubPanel *CBuySubMenu::GetNextSubPanel()
-{ 
+{
 	return m_NextPanel;
 }
-
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -54,11 +54,11 @@
 using namespace vgui;
 
 IMPLEMENT_AUTO_LIST( IHudItemEffectMeterAutoList );
-											
+
 CItemEffectMeterManager g_ItemEffectMeterManager;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemEffectMeterManager::~CItemEffectMeterManager()
 {
@@ -66,7 +66,7 @@ CItemEffectMeterManager::~CItemEffectMeterManager()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemEffectMeterManager::ClearExistingMeters()
 {
@@ -79,7 +79,7 @@ void CItemEffectMeterManager::ClearExistingMeters()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CItemEffectMeterManager::GetNumEnabled( void )
 {
@@ -97,12 +97,12 @@ int CItemEffectMeterManager::GetNumEnabled( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemEffectMeterManager::SetPlayer( C_TFPlayer* pPlayer )
 {
 	StopListeningForAllEvents();
-	ListenForGameEvent( "post_inventory_application" );	
+	ListenForGameEvent( "post_inventory_application" );
 	ListenForGameEvent( "localplayer_pickup_weapon" );
 
 	ClearExistingMeters();
@@ -114,7 +114,7 @@ void CItemEffectMeterManager::SetPlayer( C_TFPlayer* pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemEffectMeterManager::Update( C_TFPlayer* pPlayer )
 {
@@ -128,7 +128,7 @@ void CItemEffectMeterManager::Update( C_TFPlayer* pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemEffectMeterManager::FireGameEvent( IGameEvent *event )
 {
@@ -159,7 +159,7 @@ void CItemEffectMeterManager::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudItemEffectMeter::CHudItemEffectMeter( const char *pszElementName, C_TFPlayer* pPlayer ) : CHudElement( pszElementName ), BaseClass( NULL, "HudItemEffectMeter" )
 {
@@ -186,14 +186,14 @@ CHudItemEffectMeter::CHudItemEffectMeter( const char *pszElementName, C_TFPlayer
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudItemEffectMeter::~CHudItemEffectMeter()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudItemEffectMeter::CreateHudElementsForClass( C_TFPlayer* pPlayer, CUtlVector< vgui::DHANDLE< CHudItemEffectMeter > >& outMeters )
 {
@@ -328,7 +328,7 @@ void CHudItemEffectMeter::CreateHudElementsForClass( C_TFPlayer* pPlayer, CUtlVe
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudItemEffectMeter::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -349,7 +349,7 @@ void CHudItemEffectMeter::ApplySchemeSettings( IScheme *pScheme )
 	}
 	else
 	{
-		m_pLabel->SetText( GetLabelText() );	
+		m_pLabel->SetText( GetLabelText() );
 	}
 
 	BaseClass::ApplySchemeSettings( pScheme );
@@ -362,7 +362,7 @@ void CHudItemEffectMeter::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudItemEffectMeter::PerformLayout()
 {
@@ -385,7 +385,7 @@ void CHudItemEffectMeter::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudItemEffectMeter::ShouldDraw( void )
 {
@@ -432,7 +432,7 @@ bool CHudItemEffectMeter::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudItemEffectMeter::Update( C_TFPlayer* pPlayer, const char* pSoundScript )
 {
@@ -466,7 +466,7 @@ void CHudItemEffectMeter::Update( C_TFPlayer* pPlayer, const char* pSoundScript 
 		pPlayer->IsAlive() && ShouldBeep() )
 	{
 		m_flOldProgress = flProgress;
-		C_TFPlayer::GetLocalTFPlayer()->EmitSound( pSoundScript );	
+		C_TFPlayer::GetLocalTFPlayer()->EmitSound( pSoundScript );
 	}
 	else
 	{
@@ -490,7 +490,7 @@ void CHudItemEffectMeter::Update( C_TFPlayer* pPlayer, const char* pSoundScript 
 }
 
 const char*	CHudItemEffectMeter::GetLabelText( void )
-{ 
+{
 	CTFWeaponInvis *pWpn = (CTFWeaponInvis *)m_pPlayer->Weapon_OwnsThisID( TF_WEAPON_INVIS );
 	if ( pWpn )
 	{
@@ -504,11 +504,11 @@ const char*	CHudItemEffectMeter::GetLabelText( void )
 		}
 	}
 
-	return "#TF_CLOAK"; 
+	return "#TF_CLOAK";
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CHudItemEffectMeter::GetProgress( void )
 {
@@ -532,7 +532,7 @@ CHudItemEffectMeter_Weapon<T>::CHudItemEffectMeter_Weapon( const char* pszElemen
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 template <class T>
 const char* CHudItemEffectMeter_Weapon<T>::GetResFile( void )
@@ -566,7 +566,7 @@ T* CHudItemEffectMeter_Weapon<T>::GetWeapon( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 template <class T>
 bool CHudItemEffectMeter_Weapon<T>::IsEnabled( void )
@@ -574,12 +574,12 @@ bool CHudItemEffectMeter_Weapon<T>::IsEnabled( void )
 	T *pWeapon = GetWeapon();
 	if ( pWeapon )
 		return true;
-	
+
 	return CHudItemEffectMeter::IsEnabled();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 template <class T>
 float CHudItemEffectMeter_Weapon<T>::GetProgress( void )
@@ -596,7 +596,7 @@ float CHudItemEffectMeter_Weapon<T>::GetProgress( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 template <class T>
 void CHudItemEffectMeter_Weapon<T>::Update( C_TFPlayer* pPlayer, const char* pSoundScript )
@@ -737,7 +737,7 @@ bool CHudItemEffectMeter_Weapon<CTFBuffItem>::ShouldDraw()
 	// do not draw for the parachute
 	if ( pWeapon->GetBuffType() == EParachute )
 		return false;
-	
+
 	return CHudItemEffectMeter::ShouldDraw();
 }
 
@@ -975,12 +975,12 @@ int CHudItemEffectMeter_Weapon<CTFSniperRifleDecap>::GetCount( void )
 
 //-----------------------------------------------------------------------------
 // Purpose:
-//-----------------------------------------------------------------------------		    
+//-----------------------------------------------------------------------------
 template <>
 Color CHudItemEffectMeter_Weapon<CTFParticleCannon>::GetFgColor( void )
 {
 	CTFParticleCannon *pWeapon = GetWeapon();
-	
+
 	if ( pWeapon && pWeapon->CanChargeFire() )
 		return Color( 255, 255, 255, 255 );
 	else
@@ -1034,7 +1034,7 @@ bool CHudItemEffectMeter_Weapon<CTFRevolver>::ShowPercentSymbol( void )
 		CALL_ATTRIB_HOOK_INT_ON_OTHER( pWeapon, iExtraDamageOnHit, extra_damage_on_hit );
 		return iExtraDamageOnHit;
 	}
-	
+
 	return false;
 }
 
@@ -1239,7 +1239,7 @@ bool CHudItemEffectMeter_Weapon<CWeaponMedigun>::ShouldFlash( void )
 
 #ifdef STAGING_ONLY
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 template <>
 bool CHudItemEffectMeter_Weapon< CTFWeaponPDA_Spy_Build >::IsEnabled( void )
@@ -1261,14 +1261,14 @@ int CHudItemEffectMeter_Weapon< CTFWeaponPDA_Spy_Build >::GetCount( void )
 {
 	if ( !m_pPlayer )
 		return false;
-	
+
 	return m_pPlayer->GetAmmoCount( TF_AMMO_GRENADES1 );
 }
 #endif // STAGING_ONLY
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 template <>
 bool CHudItemEffectMeter_Weapon< CTFLunchBox >::IsEnabled( void )
@@ -1476,7 +1476,7 @@ bool CHudItemEffectMeter_Weapon<CTFSpellBook>::ShouldDraw( void )
 
 		return true;
 	}
-	
+
 	if ( TFGameRules() && TFGameRules()->ShowMatchSummary() )
 	{
 		return false;

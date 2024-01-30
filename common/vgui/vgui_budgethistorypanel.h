@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -36,7 +36,7 @@ private:
 private:
 
 	CBaseBudgetPanel *m_pBudgetPanel;
-	
+
 	double *m_pData;
 	int m_nGroups;
 	int m_nSamplesPerGroup;

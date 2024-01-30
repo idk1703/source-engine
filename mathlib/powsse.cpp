@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -93,4 +93,3 @@ float FastPow10( float i )
 {
 	return FastPow2( i * 3.321928f );
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -14,7 +14,7 @@
 #include "tier1/tier1.h"
 
 //-----------------------------------------------------------------------------
-// At the moment, we can only run one process at a time 
+// At the moment, we can only run one process at a time
 //-----------------------------------------------------------------------------
 class CProcessUtils : public CTier1AppSystem< IProcessUtils >
 {
@@ -112,7 +112,7 @@ char *CProcessUtils::GetErrorString( char *pBuf, int nBufLen )
 {
 	FormatMessage( FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), 0, pBuf, nBufLen, NULL );
 	char *p = strchr(pBuf, '\r');	// get rid of \r\n
-	if(p) 
+	if(p)
 	{
 		p[0] = 0;
 	}
@@ -160,7 +160,7 @@ ProcessHandle_t CProcessUtils::StartProcess( const char *pCommandLine, bool bCon
 	// although in the future, I expect to have a process queue.
 	if ( m_hCurrentProcess != PROCESS_HANDLE_INVALID )
 	{
-		WaitUntilProcessCompletes( m_hCurrentProcess ); 
+		WaitUntilProcessCompletes( m_hCurrentProcess );
 	}
 
 	ProcessInfo_t info;
@@ -175,19 +175,19 @@ ProcessHandle_t CProcessUtils::StartProcess( const char *pCommandLine, bool bCon
 		return CreateProcess( info, false );
 	}
 
-    SECURITY_ATTRIBUTES saAttr; 
+	SECURITY_ATTRIBUTES saAttr;
 
-    // Set the bInheritHandle flag so pipe handles are inherited.
-	saAttr.nLength = sizeof(SECURITY_ATTRIBUTES); 
-    saAttr.bInheritHandle = TRUE; 
-    saAttr.lpSecurityDescriptor = NULL; 
- 
-    // Create a pipe for the child's STDOUT. 
-    if ( CreatePipe( &info.m_hChildStdoutRd, &info.m_hChildStdoutWr, &saAttr, 0 ) )
+	// Set the bInheritHandle flag so pipe handles are inherited.
+	saAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
+	saAttr.bInheritHandle = TRUE;
+	saAttr.lpSecurityDescriptor = NULL;
+
+	// Create a pipe for the child's STDOUT.
+	if ( CreatePipe( &info.m_hChildStdoutRd, &info.m_hChildStdoutWr, &saAttr, 0 ) )
 	{
 		if ( CreatePipe( &info.m_hChildStdinRd, &info.m_hChildStdinWr, &saAttr, 0 ) )
 		{
-			if ( DuplicateHandle( GetCurrentProcess(), info.m_hChildStdoutWr, GetCurrentProcess(), 
+			if ( DuplicateHandle( GetCurrentProcess(), info.m_hChildStdoutWr, GetCurrentProcess(),
 				&info.m_hChildStderrWr, 0, TRUE, DUPLICATE_SAME_ACCESS ) )
 			{
 //				_setmode( info.m_hChildStdoutRd, _O_TEXT );
@@ -349,7 +349,7 @@ int CProcessUtils::GetActualProcessOutput( ProcessHandle_t hProcess, char *pBuf,
 
 	dwCount = min( dwCount, (DWORD)nBufLen - 1 );
 	ReadFile( info.m_hChildStdoutRd, pTempBuf, dwCount, &dwRead, NULL);
-	
+
 	// Convert /n/r -> /n
 	int nActualCountRead = 0;
 	for ( unsigned int i = 0; i < dwRead; ++i )
@@ -451,7 +451,7 @@ void CProcessUtils::WaitUntilProcessCompletes( ProcessHandle_t hProcess )
 	{
 		// NOTE: The called process can block during writes to stderr + stdout
 		// if the pipe buffer is empty. Therefore, waiting INFINITE is not
-		// possible here. We must queue up messages received to allow the 
+		// possible here. We must queue up messages received to allow the
 		// process to continue
 		while ( WaitForSingleObject( info.m_hProcess, 100 ) == WAIT_TIMEOUT )
 		{
@@ -468,6 +468,3 @@ void CProcessUtils::WaitUntilProcessCompletes( ProcessHandle_t hProcess )
 
 	m_hCurrentProcess = PROCESS_HANDLE_INVALID;
 }
-
-
-

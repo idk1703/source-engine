@@ -69,8 +69,8 @@ int S3TCencodeEx(DDSURFACEDESC *lpSrc,		// [in]
 				unsigned int dwEncodeType,  // [in]
 				float *weight,				// [in]
 				LP_S3TC_PROGRESS_CALLBACK lpS3TCProgressProc, // [in], may be NULL
-				LPVOID lpArg1,				// in 
-				LPVOID lpArg2				// in 
+				LPVOID lpArg1,				// in
+				LPVOID lpArg2				// in
 				);
 
 // determine number of bytes needed do decompress given compressed image

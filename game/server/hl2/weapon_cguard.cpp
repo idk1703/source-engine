@@ -77,7 +77,7 @@ void TE_ConcussiveExplosion( IRecipientFilter& filter, float delay,
 
 	if ( normal )
 		g_TEConcussiveExplosion.m_vecNormal	= *normal;
-	else 
+	else
 		g_TEConcussiveExplosion.m_vecNormal	= Vector(0,0,1);
 
 	// Send it over the wire
@@ -97,7 +97,7 @@ public:
 	CConcussiveBlast( void ) {}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	// Output :
 	//-----------------------------------------------------------------------------
 	void Precache( void )
@@ -108,7 +108,7 @@ public:
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	// Output :
 	//-----------------------------------------------------------------------------
 
@@ -125,12 +125,12 @@ public:
 			256*magnitude,	//radius
 			175*magnitude,	//magnitude
 			&vecForward );	//normal
-		
+
 		int	colorRamp = random->RandomInt( 128, 255 );
 
 		//Shockring
 		CBroadcastRecipientFilter filter2;
-		te->BeamRingPoint( filter2, 0, 
+		te->BeamRingPoint( filter2, 0,
 			GetAbsOrigin(),	//origin
 			16,			//start radius
 			300*magnitude,		//end radius
@@ -196,7 +196,7 @@ public:
 	DECLARE_SERVERCLASS();
 
 	CWeaponCGuard( void );
-	
+
 	void Precache( void );
 	void PrimaryAttack( void );
 	void AddViewKick( void );
@@ -241,7 +241,7 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Maps base activities to weapons-specific ones so our characters do the right things.
 //-----------------------------------------------------------------------------
-acttable_t CWeaponCGuard::m_acttable[] = 
+acttable_t CWeaponCGuard::m_acttable[] =
 {
 	{	ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK_SNIPER_RIFLE, true }
 };
@@ -259,7 +259,7 @@ CWeaponCGuard::CWeaponCGuard( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCGuard::Precache( void )
 {
@@ -272,7 +272,7 @@ void CWeaponCGuard::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCGuard::AlertTargets( void )
 {
@@ -290,7 +290,7 @@ void CWeaponCGuard::AlertTargets( void )
 	trace_t	tr;
 
 	UTIL_TraceLine( vecSrc, impactPoint, MASK_SHOT, pPlayer, COLLISION_GROUP_NONE, &tr );
-	
+
 	if ( (vecSrc-tr.endpos).Length() > 1024 )
 		return;
 
@@ -298,7 +298,7 @@ void CWeaponCGuard::AlertTargets( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCGuard::UpdateLasers( void )
 {
@@ -355,19 +355,19 @@ void CWeaponCGuard::UpdateLasers( void )
 		UTIL_TraceLine( ofs, ofs + ( v_dir * MAX_TRACE_LENGTH ), MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
 
 		UTIL_Beam( ofs, tr.endpos, m_beamIndex, 0, 0, 2.0f, 0.1f, 2, 0, 1, 0, 255, 255, 255, 32, 100 );
-		
+
 		UTIL_Beam( ofs, tr.endpos, m_haloIndex, 0, 0, 2.0f, 0.1f, 4, 0, 1, 16, 255, 255, 255, 8, 100 );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCGuard::PrimaryAttack( void )
 {
 	if ( m_flChargeTime >= gpGlobals->curtime )
 		return;
-		
+
 	AlertTargets();
 
 	WeaponSound( SPECIAL1 );
@@ -379,7 +379,7 @@ void CWeaponCGuard::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCGuard::ItemPostFrame( void )
 {
@@ -395,7 +395,7 @@ void CWeaponCGuard::ItemPostFrame( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCGuard::DelayedFire( void )
 {
@@ -412,7 +412,7 @@ void CWeaponCGuard::DelayedFire( void )
 
 	if ( pPlayer == NULL )
 		return;
-	
+
 	// Abort here to handle burst and auto fire modes
 	if ( (GetMaxClip1() != -1 && m_iClip1 == 0) || (GetMaxClip1() == -1 && !pPlayer->GetAmmoCount(m_iPrimaryAmmoType) ) )
 		return;
@@ -422,13 +422,13 @@ void CWeaponCGuard::DelayedFire( void )
 
 	pPlayer->DoMuzzleFlash();
 
-	// To make the firing framerate independent, we may have to fire more than one bullet here on low-framerate systems, 
+	// To make the firing framerate independent, we may have to fire more than one bullet here on low-framerate systems,
 	// especially if the weapon we're firing has a really fast rate of fire.
 	if ( GetSequence() != SelectWeightedSequence( ACT_VM_PRIMARYATTACK ) )
 	{
 		m_flNextPrimaryAttack = gpGlobals->curtime;
 	}
-	
+
 	// Make sure we don't fire more than the amount in the clip, if this weapon uses clips
 	if ( UsesClipsForAmmo1() )
 	{
@@ -451,7 +451,7 @@ void CWeaponCGuard::DelayedFire( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCGuard::AddViewKick( void )
 {
@@ -474,7 +474,7 @@ void CWeaponCGuard::AddViewKick( void )
 	SetLocalAngles( angles );
 
 	pPlayer->SnapEyeAngles( angles );
-	
+
 	pPlayer->ViewPunch( QAngle( random->RandomInt( -8, -12 ), random->RandomInt( -2, 2 ), random->RandomInt( -8, 8 ) ) );
 }
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,7 +13,7 @@
 int main( int argc, char **argv )
 {
 	const char *pModuleName = "vtex_dll.dll";
-	
+
 	CSysModule *pModule = Sys_LoadModule( pModuleName );
 	if ( !pModule )
 	{
@@ -41,6 +41,3 @@ int main( int argc, char **argv )
 	Sys_UnloadModule( pModule );
 	return iRet;
 }
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -55,7 +55,7 @@ class CNPC_Leech : public CHL1BaseNPC
 public:
 
 	DECLARE_DATADESC();
-	
+
 	void Spawn( void );
 	void Precache( void );
 
@@ -87,7 +87,7 @@ public:
 
 	bool ShouldGib(	const CTakeDamageInfo &info );
 
-	
+
 /*	// Base entity functions
 	void Killed( entvars_t *pevAttacker, int iGib );
 	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType );
@@ -142,7 +142,7 @@ void CNPC_Leech::Spawn( void )
 	Precache();
 	SetModel( "models/leech.mdl" );
 
-	SetHullType(HULL_TINY_CENTERED); 
+	SetHullType(HULL_TINY_CENTERED);
 	SetHullSizeNormal();
 
 	UTIL_SetSize( this, Vector(-1,-1,0), Vector(1,1,2));
@@ -228,7 +228,7 @@ Disposition_t CNPC_Leech::IRelationType( CBaseEntity *pTarget )
 {
 	if ( pTarget->IsPlayer() )
 		return D_HT;
-	
+
 	return BaseClass::IRelationType( pTarget );
 }
 
@@ -259,20 +259,20 @@ void CNPC_Leech::HandleAnimEvent( animevent_t *pEvent )
 
 	case LEECH_AE_ATTACK:
 		AttackSound();
-		
+
 		if ( pEnemy != NULL )
 		{
 			Vector dir, face;
-	
+
 			AngleVectors( GetAbsAngles(), &face );
-			
+
 			face.z = 0;
 			dir = (pEnemy->GetLocalOrigin() - GetLocalOrigin() );
 			dir.z = 0;
-			
+
 			VectorNormalize( dir );
 			VectorNormalize( face );
-						
+
 			if ( DotProduct(dir, face) > 0.9 )		// Only take damage if the leech is facing the prey
 			{
 				CTakeDamageInfo info( this, this, sk_leech_dmg_bite.GetInt(), DMG_SLASH );
@@ -282,9 +282,9 @@ void CNPC_Leech::HandleAnimEvent( animevent_t *pEvent )
 		}
 		m_stateTime -= 2;
 		break;
-	
 
-	
+
+
 	default:
 		BaseClass::HandleAnimEvent( pEvent );
 		break;
@@ -351,7 +351,7 @@ void CNPC_Leech::RecalculateWaterlevel( void )
 	trace_t tr;
 
 	UTIL_TraceLine( GetLocalOrigin(), vecTest, MASK_SOLID, this, COLLISION_GROUP_NONE, &tr);
-	
+
 	if ( tr.fraction != 1.0 )
 		m_bottom = tr.endpos.z + 1;
 	else
@@ -423,7 +423,7 @@ void CNPC_Leech::SwimThink( void )
 			targetYaw = UTIL_VecToYaw( location );
 
 			QAngle vTestAngle = GetAbsAngles();
-			
+
 			targetYaw = UTIL_AngleDiff( targetYaw, UTIL_AngleMod( GetAbsAngles().y ) );
 
 			if ( targetYaw < (-LEECH_TURN_RATE) )
@@ -495,7 +495,7 @@ void CNPC_Leech::SwimThink( void )
 
 			vecTest = GetLocalOrigin() + ( vRight * -LEECH_SIZEX) + ( vForward * LEECH_CHECK_DIST);
 			UTIL_TraceLine( GetLocalOrigin(), vecTest, MASK_SOLID, this, COLLISION_GROUP_NONE, &tr);
-			
+
 			flLeftSide = tr.fraction;
 
 			// turn left, right or random depending on clearance ratio
@@ -509,7 +509,7 @@ void CNPC_Leech::SwimThink( void )
 		m_flSpeed = UTIL_Approach( -(LEECH_SWIM_SPEED*0.5), m_flSpeed, LEECH_SWIM_DECEL * LEECH_FRAMETIME * m_obstacle );
 		SetAbsVelocity( vForward * m_flSpeed );
 	}
-	
+
 	GetMotor()->SetIdealYaw( m_flTurning + targetYaw );
 	UpdateMotion();
 }
@@ -577,12 +577,12 @@ void CNPC_Leech::UpdateMotion( void )
 	float flapspeed = ( m_flSpeed - m_flAccelerate) / LEECH_ACCELERATE;
 	m_flAccelerate = m_flAccelerate * 0.8 + m_flSpeed * 0.2;
 
-	if (flapspeed < 0) 
+	if (flapspeed < 0)
 		flapspeed = -flapspeed;
 	flapspeed += 1.0;
-	if (flapspeed < 0.5) 
+	if (flapspeed < 0.5)
 		flapspeed = 0.5;
-	if (flapspeed > 1.9) 
+	if (flapspeed > 1.9)
 		flapspeed = 1.9;
 
 	m_flPlaybackRate = flapspeed;
@@ -649,7 +649,7 @@ void CNPC_Leech::UpdateMotion( void )
 		SetActivity ( GetIdealActivity() );
 	}
 	StudioFrameAdvance();
-	
+
 	DispatchAnimEvents ( this );
 
 	SetLocalAngles( vAngles );
@@ -671,7 +671,7 @@ void CNPC_Leech::UpdateMotion( void )
 	}
 	else
 		 NDebugOverlay::Line( GetLocalOrigin(), GetLocalOrigin() + vForward * LEECH_CHECK_DIST, 255, 255, 0, false, 0.1f );
-		 
+
 	NDebugOverlay::Line( GetLocalOrigin(), GetLocalOrigin() + vRight * (vAngularVelocity.y*0.25), 0, 0, 255, false, 0.1f );
 #endif
 
@@ -709,16 +709,16 @@ void CNPC_Leech::Event_Killed( const CTakeDamageInfo &info )
 		SetLocalAngularVelocity( qAngularVel );
 		SetAbsOrigin( vOrigin );
 
-		
+
 		SetGravity ( 0.02 );
 		SetGroundEntity( NULL );
 		SetActivity( ACT_DIESIMPLE );
 	}
 	else
 		SetActivity( ACT_DIEFORWARD );
-	
+
 	SetMoveType( MOVETYPE_FLYGRAVITY );
 	m_takedamage = DAMAGE_NO;
-	
+
 	SetThink( &CNPC_Leech::DeadThink );
 }

@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ================================== //
 //
-// Purpose: Defines a texture compositor infterface which uses simple operations and shaders to 
-// create complex procedural textures. 
+// Purpose: Defines a texture compositor infterface which uses simple operations and shaders to
+// create complex procedural textures.
 //
 //============================================================================================== //
 

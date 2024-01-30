@@ -18,7 +18,7 @@
 class IMaterial;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTargetReticle : public vgui::Panel
 {
@@ -40,7 +40,7 @@ protected:
 
 	EHANDLE			m_hTargetEntity;
 	vgui::Label		*m_pTargetLabel;
-	
+
 	int				m_iReticleId;
 	int				m_iReticleLeftId;	// When it's hanging off the edge of the screen.
 	int				m_iReticleRightId;

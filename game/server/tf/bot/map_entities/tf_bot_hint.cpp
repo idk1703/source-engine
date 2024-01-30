@@ -17,7 +17,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( func_tfbot_hint, CTFBotHint );
 
 //
-// NOTE: For simplicity and runtime efficiency, this will not 
+// NOTE: For simplicity and runtime efficiency, this will not
 // play nice with nav area hints stored in the mesh,
 // nor will overlapping hints of the same type work well.
 //
@@ -40,7 +40,7 @@ bool CTFBotHint::IsFor( CTFBot *who ) const
 
 	if ( m_team > 0 && who->GetTeamNumber() != m_team )
 	{
-		return false;		
+		return false;
 	}
 
 	return true;
@@ -52,7 +52,7 @@ void CTFBotHint::Spawn( void )
 {
 	BaseClass::Spawn();
 
-	SetSolid( SOLID_BSP );	
+	SetSolid( SOLID_BSP );
 	AddSolidFlags( FSOLID_NOT_SOLID );
 
 	SetMoveType( MOVETYPE_NONE );
@@ -124,5 +124,3 @@ void CTFBotHint::UpdateNavDecoration( void )
 		}
 	}
 }
-
-

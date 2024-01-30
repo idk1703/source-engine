@@ -18,7 +18,7 @@ static const char *k_pchHeaders = "Header Files";
 static const char *k_pchResources = "Resources";
 static const char *k_pchVPCFiles = "VPC Files";
 
-void CProjectGenerator_CodeLite::GenerateCodeLiteProject( CBaseProjectDataCollector *pCollector, const char *pOutFilename, const char *pMakefileFilename ) 
+void CProjectGenerator_CodeLite::GenerateCodeLiteProject( CBaseProjectDataCollector *pCollector, const char *pOutFilename, const char *pMakefileFilename )
 {
 	char szProjectFile[MAX_PATH];
 	sprintf( szProjectFile, "%s.project", pOutFilename );
@@ -87,7 +87,7 @@ void CProjectGenerator_CodeLite::GenerateCodeLiteProject( CBaseProjectDataCollec
 				Write( "</CustomBuild>\n" );
 				--m_nIndent;
 			}
-			Write( "</Configuration>\n" );			
+			Write( "</Configuration>\n" );
 			--m_nIndent;
 		}
 		Write( "</Settings>\n" );

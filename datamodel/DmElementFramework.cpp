@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -22,11 +22,11 @@ IDmElementFramework *g_pDmElementFramework = &g_DmElementFramework;
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CDmElementFramework::CDmElementFramework() : m_phase( PH_EDIT ), m_dirtyElements( 128, 256 ) 
+CDmElementFramework::CDmElementFramework() : m_phase( PH_EDIT ), m_dirtyElements( 128, 256 )
 {
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Methods of IAppSystem
 //-----------------------------------------------------------------------------

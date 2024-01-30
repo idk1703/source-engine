@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -92,7 +92,7 @@ IMeshMgr* MeshMgr();
 // The main hardware config interface
 //-----------------------------------------------------------------------------
 inline IMaterialSystemHardwareConfig* HardwareConfig()
-{	
+{
 	return g_pMaterialSystemHardwareConfig;
 }
 

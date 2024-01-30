@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,7 +14,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Text Entry controls are notepad-like windows that hold text. 
+// Text Entry controls are notepad-like windows that hold text.
 // In this demo we create an editable text entry window that holds multiple lines
 // of text. We initialize it with some starting text.
 // We override the enter key to clear the text. To add a newline manually you can
@@ -24,13 +24,13 @@ class TextEntryDemo5: public DemoPage
 {
 	public:
 		TextEntryDemo5(Panel *parent, const char *name);
-		~TextEntryDemo5();	
+		~TextEntryDemo5();
 	private:
 
 		void OnKeyCodeTyped(KeyCode code);
 
 		TextEntry *m_pTextEntry;
-				
+
 };
 
 //-----------------------------------------------------------------------------
@@ -43,13 +43,13 @@ TextEntryDemo5::TextEntryDemo5(Panel *parent, const char *name) : DemoPage(paren
 	// Position the window and make it nice and wide.
 	// Make it tall enough to fit several lines of text.
 	m_pTextEntry->SetBounds(100, 100, 200, 100);
-	
+
 
 	// Make this window hold multiple lines of text.
-	// This will turn off horizontal scrolling, 
+	// This will turn off horizontal scrolling,
 	// and wrap text from line to line.
 	m_pTextEntry->SetMultiline(true);
-	
+
 	// Insert text after you have set the size and position of the window
 	m_pTextEntry->InsertString("Some starting text and a pile of text. ");
 	m_pTextEntry->InsertString("Some more text to make mutiple lines. ");
@@ -83,5 +83,3 @@ Panel* TextEntryDemo5_Create(Panel *parent)
 {
 	return new TextEntryDemo5(parent, "TextEntryDemo5");
 }
-
-

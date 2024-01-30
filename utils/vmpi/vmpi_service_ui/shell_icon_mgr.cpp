@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,10 +32,10 @@ CShellIconMgr::~CShellIconMgr()
 }
 
 
-bool CShellIconMgr::Init( 
-	IShellIconMgrHelper *pHelper, 
-	const char *pToolTip, 
-	int iCallbackMessage, 
+bool CShellIconMgr::Init(
+	IShellIconMgrHelper *pHelper,
+	const char *pToolTip,
+	int iCallbackMessage,
 	int iIconResourceID )
 {
 	Term();
@@ -43,7 +43,7 @@ bool CShellIconMgr::Init(
 	m_pHelper = pHelper;
 	m_iCallbackMessage = iCallbackMessage;
 	m_pToolTip = pToolTip;
-	
+
 	// Create the window class.
 	WNDCLASS wndclass;
 	memset( &wndclass, 0, sizeof( wndclass ) );
@@ -110,7 +110,7 @@ void CShellIconMgr::Term()
 		data.cbSize = sizeof( data );
 		data.hWnd = m_hWnd;
 		Shell_NotifyIcon( NIM_DELETE, &data );
-		
+
 		DestroyWindow( m_hWnd );
 		m_hWnd = NULL;
 	}
@@ -120,15 +120,15 @@ void CShellIconMgr::Term()
 void CShellIconMgr::ChangeIcon( int iIconResourceID )
 {
 	NOTIFYICONDATA data;
-	
+
 	memset( &data, 0, sizeof( data ) );
 	data.cbSize = sizeof( data );
 	data.uFlags = NIF_ICON;
 	data.hWnd = m_hWnd;
 	data.hIcon = LoadIcon( m_pHelper->GetHInstance(), MAKEINTRESOURCE( iIconResourceID ) );
-	
+
 	Shell_NotifyIcon( NIM_MODIFY, &data );
-	
+
 	m_iCurIconResourceID = iIconResourceID;
 }
 
@@ -137,7 +137,7 @@ void CShellIconMgr::CreateTrayIcon()
 {
 	// Now create the shell icon.
 	NOTIFYICONDATA data;
-	
+
 	memset( &data, 0, sizeof( data ) );
 	data.cbSize = sizeof( data );
 	data.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE;
@@ -184,4 +184,3 @@ LRESULT CShellIconMgr::StaticWindowProc(
 		return DefWindowProc( hwnd, uMsg, wParam, lParam );
 	}
 }
-

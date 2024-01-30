@@ -1,6 +1,6 @@
 //========= Copyright (c) 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -39,16 +39,16 @@ class CAssertDisable
 {
 public:
 	tchar m_Filename[512];
-	
+
 	// If these are not -1, then this CAssertDisable only disables asserts on lines between
 	// these values (inclusive).
-	int m_LineMin;		
+	int m_LineMin;
 	int m_LineMax;
-	
-	// Decremented each time we hit this assert and ignore it, until it's 0. 
+
+	// Decremented each time we hit this assert and ignore it, until it's 0.
 	// Then the CAssertDisable is removed.
 	// If this is -1, then we always ignore this assert.
-	int m_nIgnoreTimes;	
+	int m_nIgnoreTimes;
 
 	CAssertDisable *m_pNext;
 };
@@ -83,9 +83,9 @@ static bool g_bDisableAsserts = false;
 
 #if defined(_WIN32) && !defined(STATIC_TIER0)
 BOOL WINAPI DllMain(
-  HINSTANCE hinstDLL,  // handle to the DLL module
-  DWORD fdwReason,     // reason for calling function
-  LPVOID lpvReserved   // reserved
+	HINSTANCE hinstDLL,  // handle to the DLL module
+	DWORD fdwReason,     // reason for calling function
+	LPVOID lpvReserved   // reserved
 )
 {
 	g_hTier0Instance = hinstDLL;
@@ -131,7 +131,7 @@ static bool AreAssertsEnabledInFileLine( const tchar *pFilename, int iLine )
 			bool bAssertsEnabled = true;
 			if ( pCur->m_LineMin == -1 && pCur->m_LineMax == -1 )
 				bAssertsEnabled = false;
-			
+
 			// Are asserts disabled on the specified line?
 			if ( iLine >= pCur->m_LineMin && iLine <= pCur->m_LineMax )
 				bAssertsEnabled = false;
@@ -150,7 +150,7 @@ static bool AreAssertsEnabledInFileLine( const tchar *pFilename, int iLine )
 						continue;
 					}
 				}
-				
+
 				return false;
 			}
 		}
@@ -170,10 +170,10 @@ CAssertDisable* CreateNewAssertDisable( const tchar *pFilename )
 
 	pDisable->m_LineMin = pDisable->m_LineMax = -1;
 	pDisable->m_nIgnoreTimes = -1;
-	
+
 	_tcsncpy( pDisable->m_Filename, g_Info.m_pFilename, sizeof( pDisable->m_Filename ) - 1 );
 	pDisable->m_Filename[ sizeof( pDisable->m_Filename ) - 1 ] = 0;
-	
+
 	return pDisable;
 }
 
@@ -195,10 +195,10 @@ CAssertDisable* IgnoreAssertsNearby( int nRange )
 
 #if ( defined( _WIN32 ) && !defined( _X360 ) )
 INT_PTR CALLBACK AssertDialogProc(
-  HWND hDlg,  // handle to dialog box
-  UINT uMsg,     // message
-  WPARAM wParam, // first message parameter
-  LPARAM lParam  // second message parameter
+	HWND hDlg,  // handle to dialog box
+	UINT uMsg,     // message
+	WPARAM wParam, // first message parameter
+	LPARAM lParam  // second message parameter
 )
 {
 	switch( uMsg )
@@ -215,14 +215,14 @@ INT_PTR CALLBACK AssertDialogProc(
 			SetDlgItemInt( hDlg, IDC_LINE_CONTROL, g_Info.m_iLine, false );
 			SetDlgItemInt( hDlg, IDC_IGNORE_NUMLINES, g_iLastLineRange, false );
 			SetDlgItemInt( hDlg, IDC_IGNORE_NUMTIMES, g_nLastIgnoreNumTimes, false );
-		
+
 			// Center the dialog.
 			RECT rcDlg, rcDesktop;
 			GetWindowRect( hDlg, &rcDlg );
 			GetWindowRect( GetDesktopWindow(), &rcDesktop );
-			SetWindowPos( 
-				hDlg, 
-				HWND_TOP, 
+			SetWindowPos(
+				hDlg,
+				HWND_TOP,
 				((rcDesktop.right-rcDesktop.left) - (rcDlg.right-rcDlg.left)) / 2,
 				((rcDesktop.bottom-rcDesktop.top) - (rcDlg.bottom-rcDlg.top)) / 2,
 				0,
@@ -265,7 +265,7 @@ INT_PTR CALLBACK AssertDialogProc(
 					EndDialog( hDlg, 0 );
 					return true;
 				}
-				
+
 				case IDC_IGNORE_NEARBY:
 				{
 					BOOL bTranslated = false;
@@ -303,7 +303,7 @@ INT_PTR CALLBACK AssertDialogProc(
 					return true;
 				}
 			}
-					
+
 		}
 		return true;
 	}
@@ -316,8 +316,8 @@ static HWND g_hBestParentWindow;
 
 
 static BOOL CALLBACK ParentWindowEnumProc(
-  HWND hWnd,      // handle to parent window
-  LPARAM lParam   // application-defined value
+	HWND hWnd,      // handle to parent window
+	LPARAM lParam   // application-defined value
 )
 {
 	if ( IsWindowVisible( hWnd ) )
@@ -467,15 +467,15 @@ PLATFORM_INTERFACE bool DoNewAssertDialog( const tchar *pFilename, int line, con
 	}
 #elif defined( _PS3 )
 	// There are a few ways to handle this sort of assert behavior with the PS3 / Target Manager API.
-	// One is to use a DebuggerBreak per usual, and then SNProcessContinue in the TMAPI to make 
-	// the game resume after a breakpoint. (You can use snIsDebuggerPresent() to determine if 
-	// the debugger is attached, although really it doesn't matter here.) 
+	// One is to use a DebuggerBreak per usual, and then SNProcessContinue in the TMAPI to make
+	// the game resume after a breakpoint. (You can use snIsDebuggerPresent() to determine if
+	// the debugger is attached, although really it doesn't matter here.)
 	// This doesn't work because the DebuggerBreak() is actually an interrupt op, and so Continue()
 	// won't continue past it -- you need to do that from inside the ProDG debugger itself.
 	// Another is to wait on a mutex here and then trip it from the TMAPI, but there isn't
 	// a clean way to trip sync primitives from TMAPI.
 	// Another way is to suspend the thread here and have TMAPI resume it.
-	// The simplest way is to spin-wait on a shared variable that you expect the 
+	// The simplest way is to spin-wait on a shared variable that you expect the
 	// TMAPI to poke into memory. I'm trying that.
 
 	char cmdString[XBX_MAX_RCMDLENGTH];
@@ -570,4 +570,3 @@ PLATFORM_INTERFACE bool DoNewAssertDialog( const tchar *pFilename, int line, con
 
 	return g_bBreak;
 }
-

@@ -15,7 +15,7 @@
 
 #ifdef _WIN32
 #pragma warning(push)
-#include <yvals.h>	// warnings get enabled in yvals.h 
+#include <yvals.h>	// warnings get enabled in yvals.h
 #pragma warning(disable:4663)
 #pragma warning(disable:4530)
 #pragma warning(disable:4245)
@@ -49,7 +49,7 @@ public:
 		else
 			pSave->WriteString( "<<invalid>>" );
 	}
-	
+
 	virtual void Restore( const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore )
 	{
 		std::string *pString = (std::string *)fieldInfo.pField;
@@ -58,7 +58,7 @@ public:
 		szString[MAX_SAVE_LEN - 1] = 0;
 		pString->assign( szString );
 	}
-	
+
 	virtual void MakeEmpty( const SaveRestoreFieldInfo_t &fieldInfo )
 	{
 		std::string *pString = (std::string *)fieldInfo.pField;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -49,7 +49,7 @@ enum armory_filters_t
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CArmoryPanel : public vgui::EditablePanel
 {
@@ -61,7 +61,7 @@ public:
 	// Show the armory with one of the default filters set
 	void		 ShowPanel( int iItemDef, armory_filters_t nFilter = ARMFILT_ALL_ITEMS );
 
-	// Show the armory with a custom list of item definitions, and a custom filter string 
+	// Show the armory with a custom list of item definitions, and a custom filter string
 	void		 ShowPanel( const char *pszFilterString, CUtlVector<item_definition_index_t> *vecItems );
 
 	// Select the given item and jump to the appropriate page

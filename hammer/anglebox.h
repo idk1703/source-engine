@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -27,7 +27,7 @@ public:
 
 	void SetAngles(const QAngle &vecAngles, bool bRedraw = true);
 	void SetAngles(const char *szAngles, bool bRedraw = true);
-	
+
 	void SetDifferent(bool bDifferent, bool bRedraw = true);
 	inline void SetEditControl(CAngleCombo *pEdit);
 
@@ -79,7 +79,7 @@ friend class CAngleCombo;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAngleBox::SetEditControl(CAngleCombo *pEdit)
 {
@@ -88,7 +88,7 @@ void CAngleBox::SetEditControl(CAngleCombo *pEdit)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CAngleCombo : public CComboBox
 {

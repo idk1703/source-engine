@@ -36,7 +36,7 @@ public:
 	virtual int GetLastCount() { return m_iLastCount; }
 	virtual void UpdateAchievementDisplay();
 
-protected:	
+protected:
 	vgui::Label *m_pAchievementName;
 	vgui::Label *m_pAchievementNameGlow;
 	vgui::Label *m_pAchievementDesc;
@@ -73,7 +73,7 @@ class CFloatingAchievementNumber : public vgui::EditablePanel
 public:
 	CFloatingAchievementNumber( int iProgress, int x, int y, floating_number_directions iDir, vgui::Panel* pParent );
 	virtual ~CFloatingAchievementNumber();
-	
+
 	virtual void ApplySchemeSettings( vgui::IScheme *scheme );
 	virtual void OnThink();
 

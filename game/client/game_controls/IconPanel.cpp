@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -52,13 +52,13 @@ void CIconPanel::Paint()
 		{
 			m_icon->DrawSelf( 0, 0, m_IconColor );
 		}
-	}	
+	}
 }
 
 void CIconPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
-    
+
 	if ( m_szIcon[0] != '\0' )
 	{
 		m_icon = gHUD.GetIcon( m_szIcon );

@@ -79,7 +79,7 @@ I CTimedEventQueue<T,I>::PushEvent( float flTime, const T &data )
 	I idx = m_Queue.AddToHead();
 	m_Queue[idx].m_flTime = flTime;
 	m_Queue[idx].m_Data = data;
-	
+
 	// Then retire stale events...
 	I i = m_Queue.Tail();
 	while (m_Queue[i].m_flTime < m_flQueueHeadTime - m_flMaxTime )
@@ -102,7 +102,7 @@ I CTimedEventQueue<T,I>::GetEventIndex( float flTime ) const
 {
 	// This checks for a request that fell off the queue
 	Assert( (flTime >= m_flQueueHeadTime - m_flMaxTime) && (flTime <= m_flQueueHeadTime) );
-	
+
 	// Then retire stale events...
 	I i = m_Queue.Head();
 	while( m_Queue[i].m_flTime > flTime )
@@ -139,7 +139,7 @@ class CEnvWindShared
 public:
 	DECLARE_CLASS_NOBASE( CEnvWindShared );
 	DECLARE_EMBEDDED_NETWORKVAR();
-	
+
 	CEnvWindShared();
 	~CEnvWindShared();
 
@@ -241,4 +241,3 @@ void ResetWindspeed();
 
 
 #endif // ENV_WIND_SHARED_H
-

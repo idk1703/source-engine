@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -19,7 +19,7 @@
 
 class gameserveritem_t;
 
-struct blacklisted_server_t 
+struct blacklisted_server_t
 {
 	int m_nServerID;
 	char m_szServerName[64];

@@ -16,14 +16,14 @@ IMPLEMENT_CLIENTCLASS_DT(C_TFPlayerResource, DT_TFPlayerResource, CTFPlayerResou
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFPlayerResource::C_TFPlayerResource()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFPlayerResource::~C_TFPlayerResource()
 {

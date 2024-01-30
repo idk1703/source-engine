@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -81,8 +81,8 @@ static PhonemeMap_t g_Phonemes[] =
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : code - 
+// Purpose:
+// Input  : code -
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *ConvertPhoneme( int code )
@@ -99,8 +99,8 @@ const char *ConvertPhoneme( int code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *text - 
+// Purpose:
+// Input  : *text -
 // Output : int
 //-----------------------------------------------------------------------------
 int TextToPhoneme( const char *text )
@@ -117,8 +117,8 @@ int TextToPhoneme( const char *text )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : code - 
+// Purpose:
+// Input  : code -
 // Output : float
 //-----------------------------------------------------------------------------
 float WeightForPhonemeCode( int code )
@@ -135,8 +135,8 @@ float WeightForPhonemeCode( int code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *text - 
+// Purpose:
+// Input  : *text -
 // Output : float
 //-----------------------------------------------------------------------------
 float WeightForPhoneme( char *text )
@@ -164,8 +164,8 @@ const char *NameForPhonemeByIndex( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *text - 
+// Purpose:
+// Input  : *text -
 // Output : int
 //-----------------------------------------------------------------------------
 int TextToPhonemeIndex( const char *text )

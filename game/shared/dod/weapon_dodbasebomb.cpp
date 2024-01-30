@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -47,7 +47,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( weapon_basebomb, CDODBaseBombWeapon );
 PRECACHE_WEAPON_REGISTER( weapon_basebomb );
 
-acttable_t CDODBaseBombWeapon::m_acttable[] = 
+acttable_t CDODBaseBombWeapon::m_acttable[] =
 {
 	{ ACT_PRONE_IDLE,						ACT_DOD_PRONEWALK_IDLE_PISTOL,			false },	//?
 	{ ACT_PRONE_FORWARD,					ACT_DOD_PRONEWALK_IDLE_PISTOL,			false },	//?
@@ -127,7 +127,7 @@ void CDODBaseBombWeapon::PrimaryAttack()
 		else if ( ( pTarget->GetAbsOrigin() - pPlayer->WorldSpaceCenter() ).Length() > DOD_BOMB_PLANT_RADIUS )
 		{
 			// if we're too far away, cancel
-			CancelPlanting();			
+			CancelPlanting();
 		}
 		else if ( IsLookingAtBombTarget( pPlayer, pTarget ) == false || ( pPlayer->GetFlags() & FL_ONGROUND ) == 0 )
 		{
@@ -157,7 +157,7 @@ void CDODBaseBombWeapon::PrimaryAttack()
 
 	if ( !pPlayer )
 		return;
-	
+
 	while( ( pEnt = gEntList.FindEntityByClassname( pEnt, "dod_bomb_target" ) ) != NULL )
 	{
 		CDODBombTarget *pTarget = static_cast<CDODBombTarget *>( pEnt );
@@ -328,7 +328,7 @@ void CDODBaseBombWeapon::ItemPostFrame()
 			// anim now
 			m_flTimeWeaponIdle = 0;
 		}
-		
+
 		// idle
 		if (m_flTimeWeaponIdle > gpGlobals->curtime)
 			return;
@@ -341,7 +341,7 @@ void CDODBaseBombWeapon::ItemPostFrame()
 		// switch to our next best weapon
 		pPlayer->SelectLastItem();
 	}
-	
+
 #endif	// CLIENT_DLL
 }
 

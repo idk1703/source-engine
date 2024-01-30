@@ -13,7 +13,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudResources : public CHudNumeric
 {
@@ -34,7 +34,7 @@ private:
 DECLARE_HUDELEMENT( CHudResources );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudResources::CHudResources( const char *pElementName ) : CHudNumeric( pElementName, "HudResources")
 {
@@ -65,7 +65,7 @@ bool CHudResources::GetResourceCount( int& value )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudResourcesPickup : public CHudNumeric
 {
@@ -91,7 +91,7 @@ DECLARE_HUDELEMENT( CHudResourcesPickup );
 DECLARE_HUD_MESSAGE( CHudResourcesPickup, PickupRes );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudResourcesPickup::CHudResourcesPickup( const char *pElementName ) : CHudNumeric( pElementName, "HudResourcesPickup")
 {
@@ -101,7 +101,7 @@ CHudResourcesPickup::CHudResourcesPickup( const char *pElementName ) : CHudNumer
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudResourcesPickup::Init( void )
 {
@@ -109,7 +109,7 @@ void CHudResourcesPickup::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudResourcesPickup::GetValue( char *val, int maxlen )
 {

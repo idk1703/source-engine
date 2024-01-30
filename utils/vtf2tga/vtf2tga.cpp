@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -44,7 +44,7 @@ SpewRetval_t VTF2TGAOutputFunc( SpewType_t spewType, char const *pMsg )
 
 	if (spewType == SPEW_ERROR)
 		return SPEW_ABORT;
-	return (spewType == SPEW_ASSERT) ? SPEW_DEBUGGER : SPEW_CONTINUE; 
+	return (spewType == SPEW_ASSERT) ? SPEW_DEBUGGER : SPEW_CONTINUE;
 }
 
 static void Usage( void )
@@ -99,7 +99,7 @@ int main( int argc, char **argv )
 	Q_strncpy( pActualVTFFileName, pVTFFileName, MAX_PATH );
 	if ( !Q_strstr( pActualVTFFileName, ".vtf" ) )
 	{
-		Q_strcat( pActualVTFFileName, ".vtf", MAX_PATH ); 
+		Q_strcat( pActualVTFFileName, ".vtf", MAX_PATH );
 	}
 
 	FILE *vtfFp = fopen( pActualVTFFileName, "rb" );
@@ -125,7 +125,7 @@ int main( int argc, char **argv )
 		Error( "*** Error reading in .VTF file %s\n", pActualVTFFileName );
 		exit(-1);
 	}
-	
+
 	Msg( "vtf width: %d\n", pTex->Width() );
 	Msg( "vtf height: %d\n", pTex->Height() );
 	Msg( "vtf numFrames: %d\n", pTex->FrameCount() );
@@ -151,7 +151,7 @@ int main( int argc, char **argv )
 	Msg( "TEXTUREFLAGS_DEPTHRENDERTARGET=%s\n", ( pTex->Flags() & TEXTUREFLAGS_DEPTHRENDERTARGET ) ? "true" : "false" );
 	Msg( "TEXTUREFLAGS_NODEBUGOVERRIDE=%s\n", ( pTex->Flags() & TEXTUREFLAGS_NODEBUGOVERRIDE ) ? "true" : "false" );
 	Msg( "TEXTUREFLAGS_SINGLECOPY=%s\n", ( pTex->Flags() & TEXTUREFLAGS_SINGLECOPY ) ? "true" : "false" );
-	
+
 	Vector vecReflectivity = pTex->Reflectivity();
 	Msg( "vtf reflectivity: %f %f %f\n", vecReflectivity[0], vecReflectivity[1], vecReflectivity[2] );
 	Msg( "transparency: " );
@@ -169,7 +169,7 @@ int main( int argc, char **argv )
 	}
 	ImageFormat srcFormat = pTex->Format();
 	Msg( "vtf format: %s\n", ImageLoader::GetName( srcFormat ) );
-		
+
 	int iTGANameLen = Q_strlen( pOutFileNameBase );
 
 	int iFaceCount = pTex->FaceCount();
@@ -201,37 +201,37 @@ int main( int argc, char **argv )
 					{
 						Assert( pTex->Depth() == 1 ); // shouldn't this be 1 instead of 0?
 						static const char *pCubeFaceName[7] = { "rt", "lf", "bk", "ft", "up", "dn", "sph" };
-						Q_strcat( pTempNameBuf, pCubeFaceName[iCubeFace], iTGANameLen + 13 ); 
+						Q_strcat( pTempNameBuf, pCubeFaceName[iCubeFace], iTGANameLen + 13 );
 					}
 
 					if ( nFrameCount > 1 )
 					{
 						char pTemp[4];
 						Q_snprintf( pTemp, 4, "%03d", iFrame );
-						Q_strcat( pTempNameBuf, pTemp, iTGANameLen + 13 ); 
+						Q_strcat( pTempNameBuf, pTemp, iTGANameLen + 13 );
 					}
 
 					if ( iLastMipLevel != 0 )
 					{
 						char pTemp[8];
 						Q_snprintf( pTemp, 8, "_mip%d", iMipLevel );
-						Q_strcat( pTempNameBuf, pTemp, iTGANameLen + 13 ); 
+						Q_strcat( pTempNameBuf, pTemp, iTGANameLen + 13 );
 					}
 
 					if ( pTex->Depth() > 1 )
 					{
 						char pTemp[6];
 						Q_snprintf( pTemp, 6, "_z%03d", z );
-						Q_strcat( pTempNameBuf, pTemp, iTGANameLen + 13 ); 
+						Q_strcat( pTempNameBuf, pTemp, iTGANameLen + 13 );
 					}
 
 					if( srcFormat == IMAGE_FORMAT_RGBA16161616F )
 					{
-						Q_strcat( pTempNameBuf, ".pfm", iTGANameLen + 13 ); 
+						Q_strcat( pTempNameBuf, ".pfm", iTGANameLen + 13 );
 					}
 					else
 					{
-						Q_strcat( pTempNameBuf, ".tga", iTGANameLen + 13 ); 
+						Q_strcat( pTempNameBuf, ".tga", iTGANameLen + 13 );
 					}
 
 					unsigned char *pSrcImage = pTex->ImageData( iFrame, iCubeFace, iMipLevel, 0, 0, z );
@@ -261,7 +261,7 @@ int main( int argc, char **argv )
 				//	dstFormat = IMAGE_FORMAT_BGRA4444;
 				//	printf( "dstFormat: %s\n", ImageLoader::GetName( dstFormat ) );
 					unsigned char *pDstImage = new unsigned char[ImageLoader::GetMemRequired( iWidth, iHeight, 1, dstFormat, false )];
-					if( !ImageLoader::ConvertImageFormat( pSrcImage, srcFormat, 
+					if( !ImageLoader::ConvertImageFormat( pSrcImage, srcFormat,
 						pDstImage, dstFormat, iWidth, iHeight, 0, 0 ) )
 					{
 						Error( "Error converting from %s to %s\n",

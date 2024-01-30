@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -64,7 +64,7 @@ public:
 	bool			m_fDontBlink;// don't try to open/close eye if this bit is set!
 
 	DEFINE_CUSTOM_AI;
-	
+
 	DECLARE_DATADESC();
 };
 

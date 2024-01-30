@@ -34,7 +34,7 @@ ConVar	weapon_combat_burstrifle_ducking_mod( "weapon_combat_burstrifle_ducking_m
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CWeaponCombatBurstRifle : public CWeaponCombatUsedWithShieldBase
 {
@@ -53,7 +53,7 @@ public:
 
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 private:
@@ -63,7 +63,7 @@ public:
 #if defined( CLIENT_DLL )
 	virtual bool	ShouldPredict( void )
 	{
-		if ( GetOwner() && 
+		if ( GetOwner() &&
 			GetOwner() == C_BasePlayer::GetLocalPlayer() )
 			return true;
 
@@ -99,7 +99,7 @@ LINK_ENTITY_TO_CLASS( weapon_combat_burstrifle, CWeaponCombatBurstRifle );
 PRECACHE_WEAPON_REGISTER(weapon_combat_burstrifle);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatBurstRifle::ItemPostFrame( void )
 {
@@ -129,9 +129,9 @@ void CWeaponCombatBurstRifle::ItemPostFrame( void )
 		}
 
 		// Reload button (or fire button when we're out of ammo)
-		if ( m_flNextPrimaryAttack <= gpGlobals->curtime ) 
+		if ( m_flNextPrimaryAttack <= gpGlobals->curtime )
 		{
-			if ( pOwner->m_nButtons & IN_RELOAD ) 
+			if ( pOwner->m_nButtons & IN_RELOAD )
 			{
 				Reload();
 			}
@@ -159,14 +159,14 @@ const Vector& CWeaponCombatBurstRifle::GetBulletSpread( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatBurstRifle::PrimaryAttack( void )
 {
 	CBaseTFPlayer *pPlayer = (CBaseTFPlayer*)GetOwner();
 	if (!pPlayer)
 		return;
-	
+
 	WeaponSound(SINGLE);
 
 	// Fire the bullets
@@ -178,7 +178,7 @@ void CWeaponCombatBurstRifle::PrimaryAttack( void )
 	// Add some inaccuracy
 	int seed = 0;
 	float x, y, z;
-	do 
+	do
 	{
 		float x1, x2, y1, y2;
 
@@ -235,10 +235,10 @@ void CWeaponCombatBurstRifle::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponCombatBurstRifle::GetFireRate( void )
-{	
+{
 	if ( !inv_demo.GetFloat() )
 	{
 		float flFireRate = ( SequenceDuration() * 0.6f ) + SHARED_RANDOMFLOAT( 0.0, 0.035f );
@@ -252,7 +252,7 @@ float CWeaponCombatBurstRifle::GetFireRate( void )
 				flFireRate *= weapon_combat_burstrifle_ducking_mod.GetFloat();
 			}
 		}
-		
+
 		return flFireRate;
 	}
 
@@ -282,9 +282,9 @@ float CWeaponCombatBurstRifle::GetDefaultAnimSpeed( void )
 
 #if defined ( CLIENT_DLL )
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponCombatBurstRifle::GetViewmodelBoneControllers( C_BaseViewModel *pViewModel, 
+void CWeaponCombatBurstRifle::GetViewmodelBoneControllers( C_BaseViewModel *pViewModel,
 														   float controllers[MAXSTUDIOBONECTRLS])
 {
 	float flAmmoCount;
@@ -305,13 +305,13 @@ void CWeaponCombatBurstRifle::GetViewmodelBoneControllers( C_BaseViewModel *pVie
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatBurstRifle::ViewModelDrawn( C_BaseViewModel *pViewModel )
 {
 	C_BaseTFPlayer *pPlayer = ( C_BaseTFPlayer* )GetOwner();
 	if ( pPlayer && pPlayer->IsDamageBoosted() )
-	{			
+	{
 		Vector vecBarrelPos;
 		QAngle angMuzzle;
 		int iAttachment = pViewModel->LookupAttachment( "muzzle" );

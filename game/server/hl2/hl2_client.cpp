@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 
 ===== tf_client.cpp ========================================================
 
-  HL2 client/server game specific stuff
+	HL2 client/server game specific stuff
 
 */
 
@@ -84,16 +84,16 @@ const char *GetGameDescription()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Given a player and optional name returns the entity of that 
+// Purpose: Given a player and optional name returns the entity of that
 //			classname that the player is nearest facing
-//			
+//
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
 CBaseEntity* FindEntity( edict_t *pEdict, char *classname)
 {
 	// If no name was given set bits based on the picked
-	if (FStrEq(classname,"")) 
+	if (FStrEq(classname,""))
 	{
 		return (FindPickerEntityClass( static_cast<CBasePlayer*>(GetContainingEntity(pEdict)), classname ));
 	}
@@ -117,7 +117,7 @@ void ClientGamePrecache( void )
 	CBaseEntity::PrecacheScriptSound( "Bullets.DefaultNearmiss" );
 	CBaseEntity::PrecacheScriptSound( "Bullets.GunshipNearmiss" );
 	CBaseEntity::PrecacheScriptSound( "Bullets.StriderNearmiss" );
-	
+
 	CBaseEntity::PrecacheScriptSound( "Geiger.BeepHigh" );
 	CBaseEntity::PrecacheScriptSound( "Geiger.BeepLow" );
 }
@@ -174,4 +174,3 @@ void InstallGameRules()
 		CreateGameRulesObject( "CHalfLife2" );
 	}
 }
-

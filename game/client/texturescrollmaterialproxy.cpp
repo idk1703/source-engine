@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -82,7 +82,7 @@ void CTextureScrollMaterialProxy::OnBind( void *pC_BaseEntity )
 	scale		= m_TextureScale.GetFloat();
 
 	float sOffset, tOffset;
-	
+
 	sOffset = gpGlobals->curtime * cos( angle * ( M_PI / 180.0f ) ) * rate;
 	tOffset = gpGlobals->curtime * sin( angle * ( M_PI / 180.0f ) ) * rate;
 
@@ -95,11 +95,11 @@ void CTextureScrollMaterialProxy::OnBind( void *pC_BaseEntity )
 	{
 		tOffset += 1.0f + -( int )tOffset;
 	}
-			    
+
 	// make sure that we are in a [0,1] range
 	sOffset = sOffset - ( int )sOffset;
 	tOffset = tOffset - ( int )tOffset;
-	
+
 	if (m_pTextureScrollVar->GetType() == MATERIAL_VAR_TYPE_MATRIX)
 	{
 		VMatrix mat( scale, 0.0f, 0.0f, sOffset,

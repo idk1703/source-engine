@@ -48,7 +48,7 @@ public:
 		DOWNLOADSTATUS_CONNECTING,		// Connecting to file server
 		DOWNLOADSTATUS_DOWNLOADING,		// Currently downloading
 		DOWNLOADSTATUS_DOWNLOADED,		// Successfully downloaded file
-		
+
 		MAX_DOWNLOADSTATUS
 	};
 

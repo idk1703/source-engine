@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 
 ===== grenade_base.cpp ========================================================
 
-  Base Handling for all the player's grenades
+	Base Handling for all the player's grenades
 
 */
 #include "cbase.h"
@@ -29,7 +29,7 @@ void UTIL_PrecacheOtherGrenade( const char *szClassname )
 		Msg( "NULL Ent in UTIL_PrecacheOtherGrenade\n" );
 		return;
 	}
-	
+
 	CThrownGrenade *pGrenade = dynamic_cast<CThrownGrenade *>( pEntity );
 
 	if (pGrenade)
@@ -58,7 +58,7 @@ void CThrownGrenade::Spawn( void )
 	SetLocalAngles( angles );
 	QAngle vecAngVel( random->RandomFloat ( -100, -500 ), 0, 0 );
 	SetLocalAngularVelocity( vecAngVel );
-	
+
 	SetTouch( &CThrownGrenade::BounceTouch );
 }
 
@@ -78,4 +78,3 @@ void CThrownGrenade::Thrown( Vector vecOrigin, Vector vecVelocity, float flExplo
 	SetThink( &CThrownGrenade::Detonate );
 	SetNextThink( gpGlobals->curtime + flExplodeTime );
 }
-

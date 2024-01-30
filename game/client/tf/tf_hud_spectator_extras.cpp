@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ ConVar tf_enable_glows_after_respawn( "tf_enable_glows_after_respawn", "1", FCVA
 DECLARE_HUDELEMENT( CTFHudSpectatorExtras );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHudSpectatorExtras::CTFHudSpectatorExtras( const char *pszElementName ) : CHudElement( pszElementName ), EditablePanel( NULL, "HudSpectatorExtras" )
 {
@@ -41,7 +41,7 @@ CTFHudSpectatorExtras::CTFHudSpectatorExtras( const char *pszElementName ) : CHu
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFHudSpectatorExtras::ShouldDraw( void )
 {
@@ -49,7 +49,7 @@ bool CTFHudSpectatorExtras::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudSpectatorExtras::Reset( void )
 {
@@ -76,7 +76,7 @@ void CTFHudSpectatorExtras::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudSpectatorExtras::RemoveEntity( int nRemove )
 {
@@ -91,7 +91,7 @@ void CTFHudSpectatorExtras::RemoveEntity( int nRemove )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudSpectatorExtras::OnTick()
 {
@@ -131,10 +131,10 @@ void CTFHudSpectatorExtras::OnTick()
 		}
 	}
 
-	if ( bIsHLTV || 
+	if ( bIsHLTV ||
 		( tf_spec_xray.GetBool() && ( ( nLocalPlayerTeam == TEAM_SPECTATOR ) || ( pLocalPlayer->GetObserverMode() > OBS_MODE_FREEZECAM ) || ( pLocalPlayer->m_Shared.InCond( TF_COND_TEAM_GLOWS ) && tf_enable_glows_after_respawn.GetBool() ) ) ) )
 	{
-		bool bShowEveryone = ( bIsHLTV || 
+		bool bShowEveryone = ( bIsHLTV ||
 							   ( ( nLocalPlayerTeam == TEAM_SPECTATOR ) && tf_spec_xray.GetBool() ) ||
 							   ( ( nLocalPlayerTeam >= FIRST_GAME_TEAM ) && ( pLocalPlayer->GetObserverMode() > OBS_MODE_FREEZECAM ) && ( tf_spec_xray.GetInt() > 1 ) ) );
 
@@ -155,7 +155,7 @@ void CTFHudSpectatorExtras::OnTick()
 			}
 
 			int nPlayerTeamNumber = pPlayer->GetTeamNumber();
-			
+
 			// remove the entities we don't want to draw anymore
 			if ( pPlayer->IsDormant() ||
 				( nPlayerTeamNumber < FIRST_GAME_TEAM ) ||
@@ -361,7 +361,7 @@ void CTFHudSpectatorExtras::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudSpectatorExtras::Paint()
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -70,7 +70,7 @@ enum
 
 
 //-----------------------------------------------------------------------------
-// Amount of time it takes to fade the shield in or out due to EMP 
+// Amount of time it takes to fade the shield in or out due to EMP
 //-----------------------------------------------------------------------------
 #define SHIELD_EMP_FADE_TIME 0.7f
 
@@ -240,9 +240,9 @@ private:
 //-----------------------------------------------------------------------------
 // Inline methods
 //-----------------------------------------------------------------------------
-inline const QAngle& CShieldEffect::GetCurrentAngles() const 
-{ 
-	return m_CurrentAngles; 
+inline const QAngle& CShieldEffect::GetCurrentAngles() const
+{
+	return m_CurrentAngles;
 }
 
 //-----------------------------------------------------------------------------

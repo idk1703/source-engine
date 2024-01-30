@@ -178,15 +178,15 @@ void CTFReplay::FireGameEvent( IGameEvent *pEvent )
 			{
 				AddAssisterDomination( nVictimID, nAssisterID );
 			}
-			
+
 			// Revenge?
-			if ( pEvent->GetInt( "death_flags" ) & TF_DEATH_REVENGE ) 
+			if ( pEvent->GetInt( "death_flags" ) & TF_DEATH_REVENGE )
 			{
 				AddRevenge( nVictimID );
 			}
 
 			// Assister revenge?
-			if ( pEvent->GetInt( "death_flags" ) & TF_DEATH_ASSISTER_REVENGE && ( nAssisterID > 0 ) ) 
+			if ( pEvent->GetInt( "death_flags" ) & TF_DEATH_ASSISTER_REVENGE && ( nAssisterID > 0 ) )
 			{
 				AddAssisterRevenge( nVictimID, nAssisterID );
 			}
@@ -196,7 +196,7 @@ void CTFReplay::FireGameEvent( IGameEvent *pEvent )
 			{
 				AddKill( pVictim->GetPlayerName(), pVictim->GetPlayerClass()->GetClassIndex() );
 			}
-		
+
 			// Take a quick screenshot with some delay
 			ConVarRef replay_screenshotkilldelay( "replay_screenshotkilldelay" );
 			if ( replay_screenshotkilldelay.IsValid() )
@@ -205,7 +205,7 @@ void CTFReplay::FireGameEvent( IGameEvent *pEvent )
 				g_pReplayScreenshotManager->CaptureScreenshot( params );
 			}
 		}
-		
+
 		// Player death?
 		else if ( pKiller &&
 				  nVictimID == pLocalPlayer->GetUserID() )
@@ -313,7 +313,7 @@ bool CTFReplay::GetCurrentStats( RoundStats_t &out )
 {
 	if ( !g_TF_PR )
 		return false;
-	
+
 	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 	if ( !pLocalPlayer )
 		return false;

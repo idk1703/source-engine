@@ -78,13 +78,13 @@ void CTFCompoundBow::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFCompoundBow::WeaponReset( void )
 {
 	BaseClass::WeaponReset();
 
-//	m_flChargeBeginTime = 0;	
+//	m_flChargeBeginTime = 0;
 	m_bArrowAlight = false;
 	m_bNoAutoRelease = true;
 	m_bNoFire = false;
@@ -122,7 +122,7 @@ float CTFCompoundBow::GetRandomSpreadOffset( int iLevel )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFCompoundBow::LaunchGrenade( void )
 {
@@ -168,7 +168,7 @@ void CTFCompoundBow::LaunchGrenade( void )
 	FireProjectile( pPlayer );
 #endif
 
-#if !defined( CLIENT_DLL ) 
+#if !defined( CLIENT_DLL )
 	pPlayer->SpeakWeaponFire();
 	CTF_GameStats.Event_PlayerFiredWeapon( pPlayer, IsCurrentAttackACrit() );
 #endif
@@ -181,7 +181,7 @@ void CTFCompoundBow::LaunchGrenade( void )
 	float flFireDelay = ApplyFireDelay( flBaseFireDelay );
 
 	ApplyRefireSpeedModifications( flFireDelay );
-	
+
 	float flRateMultiplyer = flBaseFireDelay / flFireDelay;
 
 	// Speed up the reload animation built in to firing
@@ -212,7 +212,7 @@ void CTFCompoundBow::LaunchGrenade( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFCompoundBow::PrimaryAttack( void )
 {
@@ -302,7 +302,7 @@ void CTFCompoundBow::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFCompoundBow::GetChargeMaxTime( void )
 {
@@ -314,7 +314,7 @@ float CTFCompoundBow::GetChargeMaxTime( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFCompoundBow::GetCurrentCharge( void )
 {
@@ -325,7 +325,7 @@ float CTFCompoundBow::GetCurrentCharge( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFCompoundBow::GetProjectileDamage( void )
 {
@@ -338,7 +338,7 @@ float CTFCompoundBow::GetProjectileDamage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFCompoundBow::GetProjectileSpeed( void )
 {
@@ -346,7 +346,7 @@ float CTFCompoundBow::GetProjectileSpeed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFCompoundBow::GetProjectileGravity( void )
 {
@@ -395,7 +395,7 @@ void CTFCompoundBow::LowerBow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFCompoundBow::DetonateRemotePipebombs( bool bFizzle )
 {
@@ -403,7 +403,7 @@ bool CTFCompoundBow::DetonateRemotePipebombs( bool bFizzle )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFCompoundBow::OwnerCanJump( void )
 {
@@ -414,7 +414,7 @@ bool CTFCompoundBow::OwnerCanJump( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFCompoundBow::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
@@ -526,13 +526,13 @@ void CTFCompoundBow::ItemPostFrame( void )
 //-----------------------------------------------------------------------------
 // Purpose: Held the arrow drawn too long. Give up & play a fail animation.
 //-----------------------------------------------------------------------------
-void CTFCompoundBow::ForceLaunchGrenade( void ) 
+void CTFCompoundBow::ForceLaunchGrenade( void )
 {
 	// LowerBow();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFCompoundBow::GetProjectileFireSetup( CTFPlayer *pPlayer, Vector vecOffset, Vector *vecSrc, QAngle *angForward, bool bHitTeammates, float flEndDist )
 {
@@ -575,7 +575,7 @@ void CTFCompoundBow::ApplyRefireSpeedModifications( float &flBaseRef )
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFCompoundBow::StartBurningEffect( void )
 {
@@ -604,7 +604,7 @@ void CTFCompoundBow::StartBurningEffect( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFCompoundBow::StopBurningEffect( void )
 {
@@ -620,7 +620,7 @@ void CTFCompoundBow::StopBurningEffect( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFCompoundBow::UpdateOnRemove( void )
 {
@@ -629,7 +629,7 @@ void CTFCompoundBow::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFCompoundBow::OnDataChanged( DataUpdateType_t type )
 {
@@ -649,7 +649,7 @@ void CTFCompoundBow::OnDataChanged( DataUpdateType_t type )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFCompoundBow::Reload( void )
 {
@@ -659,27 +659,27 @@ bool CTFCompoundBow::Reload( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFCompoundBow::CalcIsAttackCriticalHelper()
-{ 
+{
 	CTFPlayer *pPlayer = GetTFPlayerOwner();
 
 	// Crit boosted players fire all crits
 	if ( pPlayer && pPlayer->m_Shared.IsCritBoosted() )
 		return true;
 
-	return false; 
+	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFCompoundBow::SetArrowAlight( bool bAlight ) 
-{ 
+void CTFCompoundBow::SetArrowAlight( bool bAlight )
+{
 	// Don't light arrows if we're still firing one.
-	if (GetActivity() != ACT_ITEM2_VM_PRIMARYATTACK ) 
+	if (GetActivity() != ACT_ITEM2_VM_PRIMARYATTACK )
 	{
-		m_bArrowAlight = bAlight; 
+		m_bArrowAlight = bAlight;
 	}
 }

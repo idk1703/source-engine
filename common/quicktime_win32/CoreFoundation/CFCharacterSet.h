@@ -4,28 +4,28 @@
 
 /*!
 	@header CFCharacterSet
-        CFCharacterSet represents a set, or a bag, of Unicode characters.
-        The API consists of 3 groups:
-        1) creation/manipulation of CFCharacterSet instances,
-        2) query of a single Unicode character membership,
-        and 3) bitmap representation related (reading/writing).
-        Conceptually, CFCharacterSet is a 136K byte bitmap array of
-        which each bit represents a Unicode code point.  It could
-        contain the Unicode characters in ISO 10646 Basic Multilingual
-        Plane (BMP) and characters in Plane 1 through Plane 16
-        accessible via surrogate paris in the Unicode Transformation
-        Format, 16-bit encoding form (UTF-16).  In other words, it can
-        store values from 0x00000 to 0x10FFFF in the Unicode
-        Transformation Format, 32-bit encoding form (UTF-32).  However,
-        in general, how CFCharacterSet stores the information is an
-        implementation detail.  Note even CFData used for the external
-        bitmap representation rarely has 136K byte.  For detailed
-        discussion of the external bitmap representation, refer to the
-        comments for CFCharacterSetCreateWithBitmapRepresentation below.
-        Note that the existance of non-BMP characters in a character set
-        does not imply the membership of the corresponding surrogate
-        characters.  For example, a character set with U+10000 does not
-        match with U+D800.
+	CFCharacterSet represents a set, or a bag, of Unicode characters.
+	The API consists of 3 groups:
+	1) creation/manipulation of CFCharacterSet instances,
+	2) query of a single Unicode character membership,
+	and 3) bitmap representation related (reading/writing).
+	Conceptually, CFCharacterSet is a 136K byte bitmap array of
+	which each bit represents a Unicode code point.  It could
+	contain the Unicode characters in ISO 10646 Basic Multilingual
+	Plane (BMP) and characters in Plane 1 through Plane 16
+	accessible via surrogate paris in the Unicode Transformation
+	Format, 16-bit encoding form (UTF-16).  In other words, it can
+	store values from 0x00000 to 0x10FFFF in the Unicode
+	Transformation Format, 32-bit encoding form (UTF-32).  However,
+	in general, how CFCharacterSet stores the information is an
+	implementation detail.  Note even CFData used for the external
+	bitmap representation rarely has 136K byte.  For detailed
+	discussion of the external bitmap representation, refer to the
+	comments for CFCharacterSetCreateWithBitmapRepresentation below.
+	Note that the existance of non-BMP characters in a character set
+	does not imply the membership of the corresponding surrogate
+	characters.  For example, a character set with U+10000 does not
+	match with U+D800.
 */
 
 #if !defined(__COREFOUNDATION_CFCHARACTERSET__)
@@ -52,7 +52,7 @@ typedef struct __CFCharacterSet * CFMutableCharacterSetRef;
 
 /*!
 	@typedef CFCharacterSetPredefinedSet
-        Type of the predefined CFCharacterSet selector values.
+	Type of the predefined CFCharacterSet selector values.
 */
 typedef enum {
     kCFCharacterSetControl = 1, /* Control character set (Unicode General Category Cc and Cf) */
@@ -86,11 +86,11 @@ CFTypeID CFCharacterSetGetTypeID(void);
 	@function CFCharacterSetGetPredefined
 	Returns a predefined CFCharacterSet instance.
 	@param theSetIdentifier The CFCharacterSetPredefinedSet selector
-                which specifies the predefined character set.  If the
-                value is not in CFCharacterSetPredefinedSet, the behavior
-                is undefined.
+	which specifies the predefined character set.  If the
+	value is not in CFCharacterSetPredefinedSet, the behavior
+	is undefined.
 	@result A reference to the predefined immutable CFCharacterSet.
-                This instance is owned by CF.
+	This instance is owned by CF.
 */
 CF_EXPORT
 CFCharacterSetRef CFCharacterSetGetPredefined(CFCharacterSetPredefinedSet theSetIdentifier);
@@ -104,11 +104,11 @@ CFCharacterSetRef CFCharacterSetGetPredefined(CFCharacterSetPredefinedSet theSet
 		CFAllocator is used. If this reference is not a valid
 		CFAllocator, the behavior is undefined.
 	@param theRange The CFRange which should be used to specify the
-                Unicode range the character set is filled with.  It
-                accepts the range in 32-bit in the UTF-32 format.  The
-                valid character point range is from 0x00000 to 0x10FFFF.
-                If the range is outside of the valid Unicode character
-                point, the behavior is undefined.
+	Unicode range the character set is filled with.  It
+	accepts the range in 32-bit in the UTF-32 format.  The
+	valid character point range is from 0x00000 to 0x10FFFF.
+	If the range is outside of the valid Unicode character
+	point, the behavior is undefined.
 	@result A reference to the new immutable CFCharacterSet.
 */
 CF_EXPORT
@@ -123,10 +123,10 @@ CFCharacterSetRef CFCharacterSetCreateWithCharactersInRange(CFAllocatorRef alloc
 		CFAllocator is used. If this reference is not a valid
 		CFAllocator, the behavior is undefined.
 	@param theString The CFString which should be used to specify
-                the Unicode characters the character set is filled with.
-                If this parameter is not a valid CFString, the behavior
-                is undefined.
-        @result A reference to the new immutable CFCharacterSet.
+	the Unicode characters the character set is filled with.
+	If this parameter is not a valid CFString, the behavior
+	is undefined.
+	@result A reference to the new immutable CFCharacterSet.
 */
 CF_EXPORT
 CFCharacterSetRef CFCharacterSetCreateWithCharactersInString(CFAllocatorRef alloc, CFStringRef theString);
@@ -140,21 +140,21 @@ CFCharacterSetRef CFCharacterSetCreateWithCharactersInString(CFAllocatorRef allo
 		CFAllocator is used. If this reference is not a valid
 		CFAllocator, the behavior is undefined.
 	@param theData The CFData which should be used to specify the
-                bitmap representation of the Unicode character points
-                the character set is filled with.  The bitmap
-                representation could contain all the Unicode character
-                range starting from BMP to Plane 16.  The first 8K bytes
-                of the data represents the BMP range.  The BMP range 8K
-                bytes can be followed by zero to sixteen 8K byte
-                bitmaps, each one with the plane index byte prepended.
-                For example, the bitmap representing the BMP and Plane 2
-                has the size of 16385 bytes (8K bytes for BMP, 1 byte
-                index + 8K bytes bitmap for Plane 2).  The plane index
-                byte, in this case, contains the integer value two.  If
-                this parameter is not a valid CFData or it contains a
-                Plane index byte outside of the valid Plane range
-                (1 to 16), the behavior is undefined.
-        @result A reference to the new immutable CFCharacterSet.
+	bitmap representation of the Unicode character points
+	the character set is filled with.  The bitmap
+	representation could contain all the Unicode character
+	range starting from BMP to Plane 16.  The first 8K bytes
+	of the data represents the BMP range.  The BMP range 8K
+	bytes can be followed by zero to sixteen 8K byte
+	bitmaps, each one with the plane index byte prepended.
+	For example, the bitmap representing the BMP and Plane 2
+	has the size of 16385 bytes (8K bytes for BMP, 1 byte
+	index + 8K bytes bitmap for Plane 2).  The plane index
+	byte, in this case, contains the integer value two.  If
+	this parameter is not a valid CFData or it contains a
+	Plane index byte outside of the valid Plane range
+	(1 to 16), the behavior is undefined.
+	@result A reference to the new immutable CFCharacterSet.
 */
 CF_EXPORT
 CFCharacterSetRef CFCharacterSetCreateWithBitmapRepresentation(CFAllocatorRef alloc, CFDataRef theData);
@@ -169,8 +169,8 @@ CFCharacterSetRef CFCharacterSetCreateWithBitmapRepresentation(CFAllocatorRef al
 			CFAllocator is used. If this reference is not a valid
 			CFAllocator, the behavior is undefined.
 	@param theSet The CFCharacterSet which is to be inverted.  If this
-                		parameter is not a valid CFCharacterSet, the behavior is
-              		undefined.
+			parameter is not a valid CFCharacterSet, the behavior is
+			undefined.
 	@result A reference to the new immutable CFCharacterSet.
 */
 CF_EXPORT CFCharacterSetRef CFCharacterSetCreateInvertedSet(CFAllocatorRef alloc, CFCharacterSetRef theSet);
@@ -220,8 +220,8 @@ CFMutableCharacterSetRef CFCharacterSetCreateMutable(CFAllocatorRef alloc);
 		CFAllocator is used. If this reference is not a valid
 		CFAllocator, the behavior is undefined.
 	@param theSet The CFCharacterSet which is to be copied.  If this
-                parameter is not a valid CFCharacterSet, the behavior is
-                undefined.
+	parameter is not a valid CFCharacterSet, the behavior is
+	undefined.
 	@result A reference to the new CFCharacterSet.
 */
 CF_EXPORT
@@ -237,8 +237,8 @@ CFCharacterSetRef CFCharacterSetCreateCopy(CFAllocatorRef alloc, CFCharacterSetR
 		CFAllocator is used. If this reference is not a valid
 		CFAllocator, the behavior is undefined.
 	@param theSet The CFCharacterSet which is to be copied.  If this
-                parameter is not a valid CFCharacterSet, the behavior is
-                undefined.
+	parameter is not a valid CFCharacterSet, the behavior is
+	undefined.
 	@result A reference to the new mutable CFCharacterSet.
 */
 CF_EXPORT
@@ -248,12 +248,12 @@ CFMutableCharacterSetRef CFCharacterSetCreateMutableCopy(CFAllocatorRef alloc, C
 	@function CFCharacterSetIsCharacterMember
 	Reports whether or not the Unicode character is in the character set.
 	@param theSet The character set to be searched. If this parameter
-                is not a valid CFCharacterSet, the behavior is undefined.
+	is not a valid CFCharacterSet, the behavior is undefined.
 	@param theChar The Unicode character for which to test against the
-                character set.  Note that this function takes 16-bit Unicode
-                character value; hence, it does not support access to the
-                non-BMP planes.  
-        @result true, if the value is in the character set, otherwise false.
+	character set.  Note that this function takes 16-bit Unicode
+	character value; hence, it does not support access to the
+	non-BMP planes.
+	@result true, if the value is in the character set, otherwise false.
 */
 CF_EXPORT
 Boolean CFCharacterSetIsCharacterMember(CFCharacterSetRef theSet, UniChar theChar);
@@ -263,10 +263,10 @@ Boolean CFCharacterSetIsCharacterMember(CFCharacterSetRef theSet, UniChar theCha
 	@function CFCharacterSetIsLongCharacterMember
 	Reports whether or not the UTF-32 character is in the character set.
 	@param theSet The character set to be searched. If this parameter
-               		 is not a valid CFCharacterSet, the behavior is undefined.
+			is not a valid CFCharacterSet, the behavior is undefined.
 	@param theChar The UTF-32 character for which to test against the
 			character set.
-        @result true, if the value is in the character set, otherwise false.
+	@result true, if the value is in the character set, otherwise false.
 */
 CF_EXPORT Boolean CFCharacterSetIsLongCharacterMember(CFCharacterSetRef theSet, UTF32Char theChar);
 #endif
@@ -280,11 +280,11 @@ CF_EXPORT Boolean CFCharacterSetIsLongCharacterMember(CFCharacterSetRef theSet, 
 		CFAllocator is used. If this reference is not a valid
 		CFAllocator, the behavior is undefined.
 	@param theSet The CFCharacterSet which is to be used create the
-                bitmap representation from.  Refer to the comments for
-                CFCharacterSetCreateWithBitmapRepresentation for the
-                detailed discussion of the bitmap representation format.
-                If this parameter is not a valid CFCharacterSet, the
-                behavior is undefined.
+	bitmap representation from.  Refer to the comments for
+	CFCharacterSetCreateWithBitmapRepresentation for the
+	detailed discussion of the bitmap representation format.
+	If this parameter is not a valid CFCharacterSet, the
+	behavior is undefined.
 	@result A reference to the new immutable CFData.
 */
 CF_EXPORT
@@ -294,13 +294,13 @@ CFDataRef CFCharacterSetCreateBitmapRepresentation(CFAllocatorRef alloc, CFChara
 	@function CFCharacterSetAddCharactersInRange
 	Adds the given range to the charaacter set.
 	@param theSet The character set to which the range is to be added.
-                If this parameter is not a valid mutable CFCharacterSet,
-                the behavior is undefined.
-        @param theRange The range to add to the character set.  It accepts
-                the range in 32-bit in the UTF-32 format.  The valid
-                character point range is from 0x00000 to 0x10FFFF.  If the
-                range is outside of the valid Unicode character point,
-                the behavior is undefined.
+	If this parameter is not a valid mutable CFCharacterSet,
+	the behavior is undefined.
+	@param theRange The range to add to the character set.  It accepts
+	the range in 32-bit in the UTF-32 format.  The valid
+	character point range is from 0x00000 to 0x10FFFF.  If the
+	range is outside of the valid Unicode character point,
+	the behavior is undefined.
 */
 CF_EXPORT
 void CFCharacterSetAddCharactersInRange(CFMutableCharacterSetRef theSet, CFRange theRange);
@@ -309,13 +309,13 @@ void CFCharacterSetAddCharactersInRange(CFMutableCharacterSetRef theSet, CFRange
 	@function CFCharacterSetRemoveCharactersInRange
 	Removes the given range from the charaacter set.
 	@param theSet The character set from which the range is to be
-                removed.  If this parameter is not a valid mutable
-                CFCharacterSet, the behavior is undefined.
-        @param theRange The range to remove from the character set.
-                It accepts the range in 32-bit in the UTF-32 format.
-                The valid character point range is from 0x00000 to 0x10FFFF.
-                If the range is outside of the valid Unicode character point,
-                the behavior is undefined.
+	removed.  If this parameter is not a valid mutable
+	CFCharacterSet, the behavior is undefined.
+	@param theRange The range to remove from the character set.
+	It accepts the range in 32-bit in the UTF-32 format.
+	The valid character point range is from 0x00000 to 0x10FFFF.
+	If the range is outside of the valid Unicode character point,
+	the behavior is undefined.
 */
 CF_EXPORT
 void CFCharacterSetRemoveCharactersInRange(CFMutableCharacterSetRef theSet, CFRange theRange);
@@ -324,11 +324,11 @@ void CFCharacterSetRemoveCharactersInRange(CFMutableCharacterSetRef theSet, CFRa
 	@function CFCharacterSetAddCharactersInString
 	Adds the characters in the given string to the charaacter set.
 	@param theSet The character set to which the characters in the
-                string are to be added.  If this parameter is not a
-                valid mutable CFCharacterSet, the behavior is undefined.
-        @param theString The string to add to the character set.
-                If this parameter is not a valid CFString, the behavior
-                is undefined.
+	string are to be added.  If this parameter is not a
+	valid mutable CFCharacterSet, the behavior is undefined.
+	@param theString The string to add to the character set.
+	If this parameter is not a valid CFString, the behavior
+	is undefined.
 */
 CF_EXPORT
 void CFCharacterSetAddCharactersInString(CFMutableCharacterSetRef theSet,  CFStringRef theString);
@@ -337,11 +337,11 @@ void CFCharacterSetAddCharactersInString(CFMutableCharacterSetRef theSet,  CFStr
 	@function CFCharacterSetRemoveCharactersInString
 	Removes the characters in the given string from the charaacter set.
 	@param theSet The character set from which the characters in the
-                string are to be remove.  If this parameter is not a
-                valid mutable CFCharacterSet, the behavior is undefined.
-        @param theString The string to remove from the character set.
-                If this parameter is not a valid CFString, the behavior
-                is undefined.
+	string are to be remove.  If this parameter is not a
+	valid mutable CFCharacterSet, the behavior is undefined.
+	@param theString The string to remove from the character set.
+	If this parameter is not a valid CFString, the behavior
+	is undefined.
 */
 CF_EXPORT
 void CFCharacterSetRemoveCharactersInString(CFMutableCharacterSetRef theSet, CFStringRef theString);
@@ -350,12 +350,12 @@ void CFCharacterSetRemoveCharactersInString(CFMutableCharacterSetRef theSet, CFS
 	@function CFCharacterSetUnion
 	Forms the union with the given character set.
 	@param theSet The destination character set into which the
-                union of the two character sets is stored.  If this
-                parameter is not a valid mutable CFCharacterSet, the
-                behavior is undefined.
+	union of the two character sets is stored.  If this
+	parameter is not a valid mutable CFCharacterSet, the
+	behavior is undefined.
 	@param theOtherSet The character set with which the union is
-                formed.  If this parameter is not a valid CFCharacterSet,
-                the behavior is undefined.
+	formed.  If this parameter is not a valid CFCharacterSet,
+	the behavior is undefined.
 */
 CF_EXPORT
 void CFCharacterSetUnion(CFMutableCharacterSetRef theSet, CFCharacterSetRef theOtherSet);
@@ -364,12 +364,12 @@ void CFCharacterSetUnion(CFMutableCharacterSetRef theSet, CFCharacterSetRef theO
 	@function CFCharacterSetIntersect
 	Forms the intersection with the given character set.
 	@param theSet The destination character set into which the
-                intersection of the two character sets is stored.
-                If this parameter is not a valid mutable CFCharacterSet,
-                the behavior is undefined.
+	intersection of the two character sets is stored.
+	If this parameter is not a valid mutable CFCharacterSet,
+	the behavior is undefined.
 	@param theOtherSet The character set with which the intersection
-                is formed.  If this parameter is not a valid CFCharacterSet,
-                the behavior is undefined.
+	is formed.  If this parameter is not a valid CFCharacterSet,
+	the behavior is undefined.
 */
 CF_EXPORT
 void CFCharacterSetIntersect(CFMutableCharacterSetRef theSet, CFCharacterSetRef theOtherSet);
@@ -378,8 +378,8 @@ void CFCharacterSetIntersect(CFMutableCharacterSetRef theSet, CFCharacterSetRef 
 	@function CFCharacterSetInvert
 	Inverts the content of the given character set.
 	@param theSet The character set to be inverted.
-                If this parameter is not a valid mutable CFCharacterSet,
-                the behavior is undefined.
+	If this parameter is not a valid mutable CFCharacterSet,
+	the behavior is undefined.
 */
 CF_EXPORT
 void CFCharacterSetInvert(CFMutableCharacterSetRef theSet);
@@ -389,4 +389,3 @@ void CFCharacterSetInvert(CFMutableCharacterSetRef theSet);
 #endif
 
 #endif /* !__COREFOUNDATION_CFCHARACTERSET__ */
-

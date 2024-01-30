@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,4 +16,3 @@ void C_OrderResupply::GetDescription( char *pDest, int bufferSize )
 {
 	Q_strncpy( pDest, "Build Resupply Station Near Object", bufferSize );
 }
-

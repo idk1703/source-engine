@@ -1,9 +1,9 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
- 
+
 #include "imaterialinternal.h"
 #include "bitmap/tgaloader.h"
 #include "colorspace.h"
@@ -12,7 +12,7 @@
 #include <string.h>
 #include "materialsystem_global.h"
 #include "shaderapi/ishaderapi.h"
-#include "materialsystem/imaterialproxy.h"							   
+#include "materialsystem/imaterialproxy.h"
 #include "shadersystem.h"
 #include "materialsystem/imaterialproxyfactory.h"
 #include "IHardwareConfigInternal.h"
@@ -90,10 +90,10 @@ public:
 
 	//=============================
 	// Chained to the material page.
-	//=============================	
+	//=============================
 	// IMaterial Interface.
 	PreviewImageRetVal_t GetPreviewImageProperties( int *width, int *height, ImageFormat *imageFormat, bool* isTranslucent ) const
-		{ return m_pMaterialPage->GetPreviewImageProperties( width, height, imageFormat, isTranslucent ); } 
+		{ return m_pMaterialPage->GetPreviewImageProperties( width, height, imageFormat, isTranslucent ); }
 	PreviewImageRetVal_t GetPreviewImage( unsigned char *data, int width, int height, ImageFormat imageFormat ) const
 		{ return m_pMaterialPage->GetPreviewImage( data, width, height, imageFormat ); }
 
@@ -102,7 +102,7 @@ public:
 
 	void				GetLowResColorSample( float s, float t, float *color ) const
 	{
-		if ( m_pMaterialPage ) 
+		if ( m_pMaterialPage )
 			m_pMaterialPage->GetLowResColorSample( s, t, color );
 		else
 			color[ 0 ] = color[ 1 ] = color[ 2 ] = 0.0f;
@@ -115,7 +115,7 @@ public:
 	bool				NeedsPowerOfTwoFrameBufferTexture( bool bCheckSpecificToThisFrame = true )	{ return m_pMaterialPage->NeedsPowerOfTwoFrameBufferTexture( bCheckSpecificToThisFrame ); }
 	bool				NeedsFullFrameBufferTexture( bool bCheckSpecificToThisFrame = true )		{ return m_pMaterialPage->NeedsFullFrameBufferTexture( bCheckSpecificToThisFrame ); }
 	bool				NeedsLightmapBlendAlpha( void )					{ return m_pMaterialPage->NeedsLightmapBlendAlpha(); }
-	
+
 	void				AlphaModulate( float alpha )					{ m_pMaterialPage->AlphaModulate( alpha ); }
 	void				ColorModulate( float r, float g, float b )		{ m_pMaterialPage->ColorModulate( r, g, b ); }
 	float				GetAlphaModulation( )							{ return m_pMaterialPage->GetAlphaModulation( ); }
@@ -139,26 +139,26 @@ public:
 	// IMaterialInternal Interface.
 	void				DrawMesh( VertexCompressionType_t vertexCompression )	{ m_pMaterialPage->DrawMesh( vertexCompression ); }
 	void				ReloadTextures( void )									{ m_pMaterialPage->ReloadTextures(); }
-	void				SetMinLightmapPageID( int pageID )				
+	void				SetMinLightmapPageID( int pageID )
 	{
 		m_pMaterialPage->SetMinLightmapPageID( pageID );
 	}
 
-	void				SetMaxLightmapPageID( int pageID )				
-	{ 
-		m_pMaterialPage->SetMaxLightmapPageID( pageID ); 
+	void				SetMaxLightmapPageID( int pageID )
+	{
+		m_pMaterialPage->SetMaxLightmapPageID( pageID );
 	}
 
 	int					GetMinLightmapPageID( ) const					{ return m_pMaterialPage->GetMinLightmapPageID(); }
 	int					GetMaxLightmapPageID( ) const					{ return m_pMaterialPage->GetMaxLightmapPageID(); }
-	
-	void				SetNeedsWhiteLightmap( bool val )				
-	{ 
-		m_pMaterialPage->SetNeedsWhiteLightmap( val ); 
+
+	void				SetNeedsWhiteLightmap( bool val )
+	{
+		m_pMaterialPage->SetNeedsWhiteLightmap( val );
 	}
 
 	bool				GetNeedsWhiteLightmap( ) const					{ return m_pMaterialPage->GetNeedsWhiteLightmap(); }
-	
+
 	IShader *			GetShader() const								{ return m_pMaterialPage->GetShader(); }
 	void				CallBindProxy( void *proxyData )				{ m_pMaterialPage->CallBindProxy( proxyData ); }
 	IMaterial			*CheckProxyReplacement( void *proxyData )		{ return m_pMaterialPage->CheckProxyReplacement( proxyData ); }
@@ -197,11 +197,11 @@ public:
 
 	// Do we use fog?
 	bool				UseFog( void ) const							{ return m_pMaterialPage->UseFog(); }
-	
+
 	// Should we draw?
 	void				ToggleSuppression()								{ m_pMaterialPage->ToggleSuppression(); }
 	void				ToggleDebugTrace()								{ m_pMaterialPage->ToggleDebugTrace(); }
-	
+
 	// Refresh material based on current var values
 	void				Refresh()										{ m_pMaterialPage->Refresh(); }
 	void				RefreshPreservingMaterialVars()					{ m_pMaterialPage->RefreshPreservingMaterialVars(); }
@@ -250,7 +250,7 @@ private:
 	{
 		MATERIALSUBRECT_IS_PRECACHED = 0x1,
 		MATERIALSUBRECT_VARS_IS_PRECACHED = 0x2,
-		MATERIALSUBRECT_IS_MANUALLY_CREATED = 0x4,	
+		MATERIALSUBRECT_IS_MANUALLY_CREATED = 0x4,
 		MATERIALSUBRECT_USES_UNC_FILENAME = 0x20,
 		MATERIALSUBRECT_IS_PRELOADED = 0x40,
 		MATERIALSUBRECT_ARTIFICIAL_REFCOUNT = 0x80,
@@ -297,7 +297,7 @@ DEFINE_FIXEDSIZE_ALLOCATOR( CMaterialSubRect, 256, true );
 //-----------------------------------------------------------------------------
 // Purpose: Static create method for material subrect.
 //-----------------------------------------------------------------------------
-IMaterialInternal* IMaterialInternal::CreateMaterialSubRect( char const* pMaterialName, const char *pTextureGroupName, 
+IMaterialInternal* IMaterialInternal::CreateMaterialSubRect( char const* pMaterialName, const char *pTextureGroupName,
 															 KeyValues *pVMTKeyValues, KeyValues *pPatchKeyValues, bool bAssumeCreateFromFile )
 {
 	return new CMaterialSubRect( pMaterialName, pTextureGroupName, pVMTKeyValues, pPatchKeyValues, bAssumeCreateFromFile );
@@ -355,7 +355,7 @@ CMaterialSubRect::CMaterialSubRect( const char *pMaterialName, const char *pText
 		m_pVMTKeyValues = pVMTKeyValues;
 		if (m_pVMTKeyValues)
 		{
-			m_fLocal |= MATERIALSUBRECT_IS_MANUALLY_CREATED; 
+			m_fLocal |= MATERIALSUBRECT_IS_MANUALLY_CREATED;
 		}
 		// Precache immediately.  We need the material page immediately.
 		Precache();
@@ -423,7 +423,7 @@ void CMaterialSubRect::SetShaderAndParams( KeyValues *pKeyValues )
 	m_pVMTKeyValues = pKeyValues ? pKeyValues->MakeCopy() : NULL;
 	if (m_pVMTKeyValues)
 	{
-		m_fLocal |= MATERIALSUBRECT_IS_MANUALLY_CREATED; 
+		m_fLocal |= MATERIALSUBRECT_IS_MANUALLY_CREATED;
 	}
 
 	if ( g_pShaderDevice->IsUsingGraphics() )
@@ -495,7 +495,7 @@ void CMaterialSubRect::IncrementReferenceCount( void )
 // Purpose:
 //-----------------------------------------------------------------------------
 void CMaterialSubRect::DecrementReferenceCount( void )
-{ 
+{
 	--m_nRefCount;
 }
 
@@ -562,7 +562,7 @@ void CMaterialSubRect::Precache()
 	// Precached.
 	m_fLocal |= MATERIALSUBRECT_IS_PRECACHED;
 }
-		  
+
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -639,7 +639,7 @@ void CMaterialSubRect::ParseMaterialVars( KeyValues &keyValues )
 {
 	KeyValues *pKeyValues = &keyValues;
 
-	// I'm not quite sure how this can happen, but we'll see... 
+	// I'm not quite sure how this can happen, but we'll see...
 	const char *pShaderName = pKeyValues->GetName();
 	if ( !pShaderName )
 	{
@@ -678,7 +678,7 @@ void CMaterialSubRect::ParseMaterialVars( KeyValues &keyValues )
 			IMaterialVar *pNewVar = CreateMaterialVarFromKeyValue( this, pVar );
 			if ( pNewVar )
 			{
-				m_aMaterialVars.AddToTail( pNewVar );		
+				m_aMaterialVars.AddToTail( pNewVar );
 			}
 
 			// Continue getting the keys until they are all found.
@@ -717,10 +717,10 @@ void CMaterialSubRect::SetupMaterialVars( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Look through 
+// Purpose: Look through
 //-----------------------------------------------------------------------------
-IMaterialVar *CMaterialSubRect::FindVar( char const *varName, bool *found, bool complain ) 
-{ 
+IMaterialVar *CMaterialSubRect::FindVar( char const *varName, bool *found, bool complain )
+{
 	// Look for the var in the material page - it has precedence.
 	IMaterialVar *pVar = m_pMaterialPage->FindVar( varName, found, false );
 	if ( *found )
@@ -753,7 +753,7 @@ IMaterialVar *CMaterialSubRect::FindVar( char const *varName, bool *found, bool 
 	}
 
 	return GetDummyMaterialVar();
-} 
+}
 
 IMaterialVar *CMaterialSubRect::FindVarFast( char const *pVarName, unsigned int *pToken )
 {
@@ -928,7 +928,7 @@ static IMaterialVar* CreateVectorMaterialVarFromKeyValue( IMaterial* pMaterial, 
 	{
 		Assert( *pScan == '[' );
 	}
-	
+
 	// skip the '['
 	++pScan;
 	int i;
@@ -972,7 +972,7 @@ static IMaterialVar* CreateVectorMaterialVarFromKeyValue( IMaterial* pMaterial, 
 		vecVal[2] *= ( 1.0f / 255.0f );
 		vecVal[3] *= ( 1.0f / 255.0f );
 	}
-	
+
 	// Create the variable!
 	return IMaterialVar::Create( pMaterial, pKeyValue->GetName(), vecVal, i );
 }

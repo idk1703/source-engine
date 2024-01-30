@@ -41,7 +41,7 @@ struct DeathNoticePlayer
 };
 
 // Contents of each entry in our list of death notices
-struct DeathNoticeItem 
+struct DeathNoticeItem
 {
 	DeathNoticePlayer	Killer;
 	DeathNoticePlayer   Victim;
@@ -53,7 +53,7 @@ struct DeathNoticeItem
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudDeathNotice : public CHudElement, public vgui::Panel
 {
@@ -68,7 +68,7 @@ public:
 	virtual void ApplySchemeSettings( vgui::IScheme *scheme );
 
 	void RetireExpiredDeathNotices( void );
-	
+
 	void FireGameEvent( IGameEvent *event );
 
 protected:
@@ -88,8 +88,8 @@ private:
 	CPanelAnimationVar( Color, m_clrTerroristText, "TerroristTextColor", "TerroristTextColor" );
 
 	// Texture for skull symbol
-	CHudTexture		*m_iconD_skull;  
-	CHudTexture		*m_iconD_headshot;  
+	CHudTexture		*m_iconD_skull;
+	CHudTexture		*m_iconD_headshot;
 
 	int				m_iNemesisImageId;
 	int				m_iDominatedImageId;
@@ -105,7 +105,7 @@ using namespace vgui;
 DECLARE_HUDELEMENT( CHudDeathNotice );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudDeathNotice::CHudDeathNotice( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass( NULL, "HudDeathNotice" )
@@ -125,7 +125,7 @@ CHudDeathNotice::CHudDeathNotice( const char *pElementName ) :
 
 
 /**
- * Helper function to get an image id and set 
+ * Helper function to get an image id and set
  */
 int CHudDeathNotice::SetupHudImageId( const char* fname )
 {
@@ -135,7 +135,7 @@ int CHudDeathNotice::SetupHudImageId( const char* fname )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::ApplySchemeSettings( IScheme *scheme )
 {
@@ -149,15 +149,15 @@ void CHudDeathNotice::ApplySchemeSettings( IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::Init( void )
 {
-	ListenForGameEvent( "player_death" );	
+	ListenForGameEvent( "player_death" );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::VidInit( void )
 {
@@ -190,7 +190,7 @@ bool CHudDeathNotice::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::Paint()
 {
@@ -275,19 +275,19 @@ void CHudDeathNotice::Paint()
 			}
 
 			if (m_DeathNotices[i].iDominationImageId >= 0)
-			{				
+			{
 				x -= dominationDrawWidth;
 			}
 		}
 
 		if (m_DeathNotices[i].iDominationImageId >= 0)
-		{			
+		{
 			surface()->DrawSetTexture(m_DeathNotices[i].iDominationImageId);
 			surface()->DrawSetColor(m_DeathNotices[i].Killer.color);
 			surface()->DrawTexturedRect( x, y, x + dominationDrawWidth, y + dominationDrawHeight );
 			x += dominationDrawWidth;
 		}
-		
+
 		// Only draw killers name if it wasn't a suicide
 		if ( !m_DeathNotices[i].iSuicide )
 		{
@@ -311,7 +311,7 @@ void CHudDeathNotice::Paint()
 		//If we're using a font char, this will ignore iconTall and iconWide
 		Color iconColor( 255, 80, 0, 255 );
 		icon->DrawSelf( x, y, iconWide, iconTall, iconColor );
-		x += iconWide;		
+		x += iconWide;
 
 		if( m_DeathNotices[i].bHeadshot )
 		{
@@ -369,7 +369,7 @@ void CHudDeathNotice::FireGameEvent( IGameEvent *event )
 		return;
 
 	// the event should be "player_death"
-	
+
 	int iKiller = engine->GetPlayerForUserID( event->GetInt("attacker") );
 	int iVictim = engine->GetPlayerForUserID( event->GetInt("userid") );
 	const char *killedwith = event->GetString( "weapon" );
@@ -480,6 +480,3 @@ void CHudDeathNotice::FireGameEvent( IGameEvent *event )
 
 	Msg( "%s", sDeathMsg );
 }
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,7 +24,7 @@ CUtlLinkedList<C_ObjMCVSelectionPanel*,int> g_SelectionPanels;
 class C_ObjMCVSelectionPanel : public C_BaseObject
 {
 public:
-	
+
 	DECLARE_CLASS( C_ObjMCVSelectionPanel, C_BaseObject );
 	DECLARE_CLIENTCLASS();
 
@@ -33,7 +33,7 @@ public:
 
 	typedef CHandle<C_VehicleTeleportStation> VehicleTeleportStationHandle;
 	CUtlVector<VehicleTeleportStationHandle> m_DeployedTeleportStations;
-	
+
 
 private:
 	static C_ObjMCVSelectionPanel *s_pSelectionPanel;
@@ -60,13 +60,13 @@ void RecvProxy_TeleportStationElement( const CRecvProxyData *pData, void *pStruc
 	C_ObjMCVSelectionPanel *pPanel = (C_ObjMCVSelectionPanel*)pStruct;
 
 	Assert( pData->m_iElement < pPanel->m_DeployedTeleportStations.Count() );
-	
+
 	RecvProxy_IntToEHandle( pData, pStruct, &pPanel->m_DeployedTeleportStations[pData->m_iElement] );
 }
 
 
 IMPLEMENT_CLIENTCLASS_DT( C_ObjMCVSelectionPanel, DT_MCVSelectionPanel, CObjMCVSelectionPanel )
-	RecvPropVirtualArray( 
+	RecvPropVirtualArray(
 		RecvProxy_TeleportStationCount,
 		32,
 		RecvPropEHandle( "teleport_station_element", 0, 0, RecvProxy_TeleportStationElement ),
@@ -107,7 +107,7 @@ public:
 private:
 	BitmapImage m_MCVImage;
 	BitmapImage m_SelectedMCVImage;
-	int m_LastX, m_LastY;		   
+	int m_LastX, m_LastY;
 };
 
 
@@ -146,12 +146,12 @@ void CMCVMinimapPanel::Paint()
 				if ( WorldToMinimap( MINIMAP_CLAMP, pStation->GetAbsOrigin(), x, y ) )
 				{
 					int size = 20;
-					
+
 					if ( pStation == pSelectedMCV )
 						m_SelectedMCVImage.DoPaint( x-size/2, y-size/2, size, size );
 					else
 						m_MCVImage.DoPaint( x-size/2, y-size/2, size, size );
-				}				
+				}
 			}
 		}
 	}
@@ -165,12 +165,12 @@ void CMCVMinimapPanel::OnMousePressed( vgui::MouseCode code )
 
 	if ( code != vgui::MOUSE_LEFT )
 		return;
-	
+
 	// Now draw the MCVs.
 	if ( g_SelectionPanels.Count() > 0 )
 	{
 		C_ObjMCVSelectionPanel *pPanel = g_SelectionPanels[ g_SelectionPanels.Head() ];
-		
+
 		// Find the closest MCV to their mouse press.
 		int iClosest = -1;
 		float flClosest = 1e24;
@@ -202,7 +202,7 @@ void CMCVMinimapPanel::OnMousePressed( vgui::MouseCode code )
 			Q_snprintf( str, sizeof( str ), "SelectMCV %d", pClosest->entindex() );
 			pPanel->SendClientCommand( str );
 		}
-	}				
+	}
 }
 
 
@@ -226,10 +226,10 @@ class CMCVSelectionPanel : public CObjectControlPanel
 
 
 public:
-	
+
 	CMCVSelectionPanel( vgui::Panel *parent, const char *panelName );
 	virtual ~CMCVSelectionPanel();
-	
+
 	virtual bool Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData );
 	virtual void OnCommand( const char *command );
 
@@ -257,12 +257,12 @@ CMCVSelectionPanel::~CMCVSelectionPanel()
 	delete m_pMinimapPanel;
 }
 
- 
+
 bool CMCVSelectionPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
 	if ( !BaseClass::Init( pKeyValues, pInitData ) )
 		return false;
-	
+
 	m_pMinimapPanel->LevelInit( engine->GetLevelName() );
 	m_pMinimapPanel->SetVisible( true );
 
@@ -274,6 +274,3 @@ void CMCVSelectionPanel::OnCommand( const char *command )
 {
 	BaseClass::OnCommand( command );
 }
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,7 +30,7 @@ CMinimapTracePanel::CMinimapTracePanel( vgui::Panel *parent, const char *panelNa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMinimapTracePanel::~CMinimapTracePanel()
 {
@@ -80,8 +80,8 @@ bool CMinimapTracePanel::Init( KeyValues* pKeyValues, MinimapInitData_t* pInitDa
 // Entity accessor
 //-----------------------------------------------------------------------------
 C_BaseEntity* CMinimapTracePanel::GetEntity()
-{ 
-	return m_pEntity; 
+{
+	return m_pEntity;
 }
 
 void CMinimapTracePanel::SetEntity( C_BaseEntity* pEntity )
@@ -118,7 +118,7 @@ bool CMinimapTracePanel::GetEntityPosition( float &x, float &y )
 			pos = pEntity->GetAbsOrigin();
 		}
 		else if ( !pEntity->GetModel() || modelinfo->GetModelType( pEntity->GetModel() ) != mod_brush )
-		{  
+		{
 			// If it's not a brush model, use the origin
 			pos = pEntity->GetRenderOrigin();
 		}
@@ -156,7 +156,7 @@ bool CMinimapTracePanel::ComputeVisibility( )
 		return false;
 
 	C_BaseEntity* pEntity = GetEntity();
-	
+
 	// No entity? We must be a positional trace
 	if (!pEntity)
 		return true;

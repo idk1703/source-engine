@@ -46,7 +46,7 @@ class CTexture : public IEditorTexture
 		int GetShortName(char *pszName) const;
 
 		int GetKeywords(char *pszKeywords) const;
-		
+
 		int GetImageDataRGB( void *pData = NULL );
 		int GetImageDataRGBA( void *pData = NULL );
 
@@ -74,7 +74,7 @@ class CTexture : public IEditorTexture
 		{
 			return( 1.0f );
 		}
-		
+
 		inline CPalette *GetPalette( void ) const
 		{
 			return( NULL );

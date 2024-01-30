@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@ END_SEND_TABLE()
 static int SortFn_Defender( void *pUserData, int a, int b )
 {
 	CSortBase *p = (CSortBase*)pUserData;
-	
+
 	const Vector &vOrigin1 = p->m_pPlayer->GetTFTeam()->GetObject( a )->GetAbsOrigin();
 	const Vector &vOrigin2 = p->m_pPlayer->GetTFTeam()->GetObject( b )->GetAbsOrigin();
 
@@ -77,7 +77,7 @@ bool COrderRepair::CreateOrder_RepairFriendlyObjects( CPlayerClassDefender *pCla
 		&info,
 		pTeam->GetNumObjects() );
 
-	// If the player is close enough to the closest damaged object, issue an order.	
+	// If the player is close enough to the closest damaged object, issue an order.
 	if( nSorted )
 	{
 		CBaseObject *pObjToHeal = pTeam->GetObject( sorted[0] );
@@ -87,7 +87,7 @@ bool COrderRepair::CreateOrder_RepairFriendlyObjects( CPlayerClassDefender *pCla
 		{
 			COrder *pOrder = new COrderRepair;
 
-			pTeam->AddOrder( 
+			pTeam->AddOrder(
 				ORDER_REPAIR,
 				pObjToHeal,
 				pPlayer,
@@ -95,7 +95,7 @@ bool COrderRepair::CreateOrder_RepairFriendlyObjects( CPlayerClassDefender *pCla
 				60,
 				pOrder
 				);
-			
+
 			return true;
 		}
 	}
@@ -126,7 +126,7 @@ bool COrderRepair::CreateOrder_RepairOwnObjects( CPlayerClass *pClass )
 			return false;
 
 		COrderRepair *pOrder = new COrderRepair;
-		info.m_pPlayer->GetTFTeam()->AddOrder( 
+		info.m_pPlayer->GetTFTeam()->AddOrder(
 			ORDER_REPAIR,
 			pObj,
 			info.m_pPlayer,
@@ -134,7 +134,7 @@ bool COrderRepair::CreateOrder_RepairOwnObjects( CPlayerClass *pClass )
 			60,
 			pOrder
 			);
-	
+
 		return true;
 	}
 	else
@@ -153,5 +153,3 @@ bool COrderRepair::Update()
 	// Kill the order when the object is repaired.
 	return pEnt->m_iHealth >= pEnt->m_iMaxHealth;
 }
-
-

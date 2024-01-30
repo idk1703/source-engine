@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -43,7 +43,7 @@ IMPLEMENT_DMEPANEL_FACTORY( CDmeDagRenderPanel, DmeDCCMakefile, "DmeMakeFileOutp
 // Constructor, destructor
 //-----------------------------------------------------------------------------
 CDmeDagRenderPanel::CDmeDagRenderPanel( vgui::Panel *pParent, const char *pName ) : BaseClass( pParent, pName )
-{											 
+{
 	// Used to poll input
 	vgui::ivgui()->AddTickSignal( GetVPanel() );
 
@@ -170,7 +170,7 @@ void CDmeDagRenderPanel::SetDmeElement( CDmeSourceAnimation *pAnimation )
 	CDmeDag *pDag = pOutput->GetValueElement< CDmeDag >( "model" );
 	if ( !pDag )
 	{
-		pDag = pOutput->GetValueElement< CDmeDag >( "skeleton" ); 
+		pDag = pOutput->GetValueElement< CDmeDag >( "skeleton" );
 	}
 	if ( !pDag )
 		return;
@@ -204,7 +204,7 @@ void CDmeDagRenderPanel::SetDmeElement( CDmeDCCMakefile *pDCCMakefile )
 	CDmeDag *pDag = pOutputElement->GetValueElement< CDmeDag >( "model" );
 	if ( !pDag )
 	{
-		pDag = pOutputElement->GetValueElement< CDmeDag >( "skeleton" ); 
+		pDag = pOutputElement->GetValueElement< CDmeDag >( "skeleton" );
 	}
 	if ( !pDag )
 		return;

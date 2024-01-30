@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -51,7 +51,7 @@ bool CAI_BaseNPC::IsStrategySlotRangeOccupied( int slotIDStart, int slotIDEnd )
 
 
 //=========================================================
-// HasStrategySlot 
+// HasStrategySlot
 //=========================================================
 bool CAI_BaseNPC::HasStrategySlot( int squadSlotID )
 {
@@ -70,7 +70,7 @@ bool CAI_BaseNPC::HasStrategySlotRange( int slotIDStart, int slotIDEnd )
 }
 
 //=========================================================
-// VacateSlot 
+// VacateSlot
 //=========================================================
 
 void CAI_BaseNPC::VacateStrategySlot(void)
@@ -109,10 +109,10 @@ bool CAI_BaseNPC::IsValidCover( const Vector &vecCoverLocation, CAI_Hint const *
 		return m_pSquad->IsValidCover( vecCoverLocation, pHint );
 	}
 	*/
-	
+
 	// UNDONE: Do we really need this test?
 	// ----------------------------------------------------------------
-	// Make sure my hull can fit at this node before accepting it. 
+	// Make sure my hull can fit at this node before accepting it.
 	// Could be another NPC there or it could be blocked
 	// ----------------------------------------------------------------
 	// FIXME: shouldn't this see that if I crouch behind it it'll be safe?
@@ -155,7 +155,7 @@ bool CAI_BaseNPC::IsValidShootPosition( const Vector &vecShootLocation, CAI_Node
 
 bool CAI_BaseNPC::IsSquadmateInSpread( const Vector &sourcePos, const Vector &targetPos, float flSpread, float maxDistOffCenter )
 {
-	if( !m_pSquad ) 
+	if( !m_pSquad )
 		return false;
 
 	AISquadIter_t iter;
@@ -187,8 +187,8 @@ void CAI_BaseNPC::AddToSquad( string_t name )
 
 //-----------------------------------------------------------------------------
 
-void CAI_BaseNPC::SetSquad( CAI_Squad *pSquad )	
-{ 
+void CAI_BaseNPC::SetSquad( CAI_Squad *pSquad )
+{
 	if ( m_pSquad == pSquad )
 	{
 		return;
@@ -199,7 +199,7 @@ void CAI_BaseNPC::SetSquad( CAI_Squad *pSquad )
 		VacateStrategySlot();
 	}
 
-	m_pSquad = pSquad; 	
+	m_pSquad = pSquad;
 }
 
 //-----------------------------------------------------------------------------
@@ -237,7 +237,7 @@ void CAI_BaseNPC::CheckSquad()
 		{
 			bool bWarn = true;
 
-			// Rollermines and manhacks set their Class to NONE when held by the player, which makes all of 
+			// Rollermines and manhacks set their Class to NONE when held by the player, which makes all of
 			// their squadmates complain that an enemy is in the squad. Suppress this.
 			if( pSquadmate->VPhysicsGetObject() != NULL )
 			{
@@ -245,7 +245,7 @@ void CAI_BaseNPC::CheckSquad()
 				{
 					bWarn = false;
 				}
-			}	
+			}
 
 			if( bWarn )
 			{

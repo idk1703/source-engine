@@ -47,7 +47,7 @@ class CEconGameAccount : public GCSDK::CSchemaSharedObject< CSchGameAccount, k_E
 
 public:
 	CEconGameAccount()  {}
-	CEconGameAccount( uint32 unAccountID ) 
+	CEconGameAccount( uint32 unAccountID )
 	{
 		Obj().m_unAccountID = unAccountID;
 		Obj().m_rtime32FirstPlayed = CRTime::RTime32TimeCur();

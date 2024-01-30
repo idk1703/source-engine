@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,7 +13,7 @@
 struct colorentry_t
 {
 	unsigned char	index;
-	
+
 	unsigned char	r;
 	unsigned char	g;
 	unsigned char	b;

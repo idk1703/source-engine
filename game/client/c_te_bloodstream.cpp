@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -49,7 +49,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBloodStream::C_TEBloodStream( void )
 {
@@ -60,7 +60,7 @@ C_TEBloodStream::C_TEBloodStream( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBloodStream::~C_TEBloodStream( void )
 {
@@ -68,9 +68,9 @@ C_TEBloodStream::~C_TEBloodStream( void )
 
 
 //-----------------------------------------------------------------------------
-// Recording 
+// Recording
 //-----------------------------------------------------------------------------
-static inline void RecordBloodStream( const Vector &start, const Vector &direction, 
+static inline void RecordBloodStream( const Vector &start, const Vector &direction,
 	int r, int g, int b, int a, int amount )
 {
 	if ( !ToolsEnabled() )
@@ -115,11 +115,11 @@ void TE_BloodStream( IRecipientFilter& filter, float delay,
 	int			count, count2;
 	float		num;
 	float		speedCopy = amount;
-	
+
 	Vector dir;
 	VectorCopy( *direction, dir );
 	VectorNormalize( dir );
-	
+
 	for (count=0 ; count<100 ; count++)
 	{
 		StandardParticle_t *p = pRen->AddParticle();
@@ -130,18 +130,18 @@ void TE_BloodStream( IRecipientFilter& filter, float delay,
 			p->m_Pos = *org;
 			pRen->SetParticleLifetime(p, 2);
 			pRen->SetParticleType(p, pt_vox_grav);
-			
+
 			VectorCopy (dir, dirCopy);
-			
+
 			dirCopy[2] -= arc;
 			arc -= 0.005;
-			
+
 			VectorScale (dirCopy, speedCopy, p->m_Velocity);
-			
+
 			speedCopy -= 0.00001;// so last few will drip
 		}
 	}
-	
+
 	// now a few rogue voxels
 	arc = 0.075;
 	for (count = 0 ; count < (amount/5); count ++)
@@ -154,22 +154,22 @@ void TE_BloodStream( IRecipientFilter& filter, float delay,
 			p->SetAlpha(a);
 			p->m_Pos = *org;
 			pRen->SetParticleType(p, pt_vox_slowgrav);
-			
+
 			VectorCopy (dir, dirCopy);
-			
+
 			dirCopy[2] -= arc;
 			arc -= 0.005;
-			
+
 			num = random->RandomFloat(0,1);
 			speedCopy = amount * num;
-			
+
 			num *= 1.7;
-			
+
 			VectorScale (dirCopy, num, dirCopy);// randomize a bit
 			p->m_Velocity = dirCopy * speedCopy;
-			
-			
-			// add a few extra voxels directly adjacent to this one to give a 
+
+
+			// add a few extra voxels directly adjacent to this one to give a
 			// 'chunkier' appearance.
 			for (count2 = 0; count2 < 2; count2++)
 			{
@@ -183,15 +183,15 @@ void TE_BloodStream( IRecipientFilter& filter, float delay,
 						(*org)[0] + random->RandomFloat(-1,1),
 						(*org)[1] + random->RandomFloat(-1,1),
 						(*org)[2] + random->RandomFloat(-1,1));
-					
+
 					pRen->SetParticleType( pChunky, pt_vox_slowgrav);
-					
+
 					VectorCopy (dir, dirCopy);
-					
+
 					dirCopy[2] -= arc;
-					
+
 					VectorScale (dirCopy, num, dirCopy);// randomize a bit
-					
+
 					pChunky->m_Velocity = dirCopy * speedCopy;
 				}
 			}
@@ -200,7 +200,7 @@ void TE_BloodStream( IRecipientFilter& filter, float delay,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEBloodStream::PostDataUpdate( DataUpdateType_t updateType )
 {

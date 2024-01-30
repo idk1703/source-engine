@@ -32,7 +32,7 @@ COrder::COrder()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COrder::UpdateOnRemove( void )
 {
@@ -82,7 +82,7 @@ void COrder::DetachFromPlayer()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int COrder::GetType( void )
 {
@@ -90,7 +90,7 @@ int COrder::GetType( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseEntity *COrder::GetTargetEntity( void )
 {
@@ -98,7 +98,7 @@ CBaseEntity *COrder::GetTargetEntity( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COrder::SetType( int iOrderType )
 {
@@ -106,7 +106,7 @@ void COrder::SetType( int iOrderType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COrder::SetTarget( CBaseEntity *pTarget )
 {
@@ -122,7 +122,7 @@ void COrder::SetTarget( CBaseEntity *pTarget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COrder::SetDistance( float flDistance )
 {
@@ -183,7 +183,7 @@ bool COrder::UpdateOnEvent( COrderEvent_Base *pEvent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseTFPlayer *COrder::GetOwner( void )
 {
@@ -191,7 +191,7 @@ CBaseTFPlayer *COrder::GetOwner( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COrder::SetOwner( CBaseTFPlayer *pPlayer )
 {
@@ -202,14 +202,8 @@ void COrder::SetOwner( CBaseTFPlayer *pPlayer )
 	if ( hPlayer.Get() && (hPlayer != pPlayer) )
 	{
 		Assert( hPlayer->GetOrder() == this );
-		hPlayer->SetOrder( NULL );	
+		hPlayer->SetOrder( NULL );
 	}
-	
+
 	m_hOwningPlayer = pPlayer;
 }
-
-
-
-
-
-

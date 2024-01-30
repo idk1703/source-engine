@@ -56,7 +56,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: A single player's inventory. 
+// Purpose: A single player's inventory.
 //		On the client, the inventory manager contains an instance of this for the local player.
 //		On the server, each player contains an instance of this.
 //-----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ public:
 	CEconItemView		*GetItem( int i ) { return &m_aInventoryItems[i]; }
 
 	virtual CEconItemView	*GetItemInLoadout( int iClass, int iSlot ) { AssertMsg( 0, "Implement me!" ); return NULL; }
-	
+
 	// Get the item object cache data for the specified item
 	CEconItem			*GetSOCDataForItem( itemid_t iItemID );
 	GCSDK::CGCClientSharedObjectCache	*GetSOC( void ) { return m_pSOCache; }
@@ -185,7 +185,7 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CInventoryManager : public CAutoGameSystemPerFrame
 {
@@ -305,11 +305,11 @@ public:
 	// Force the player to discard an item to make room for a new item, if they have one.
 	// Returns true if the discard panel has been brought up, and the player will be forced to discard an item.
 	virtual bool		CheckForRoomAndForceDiscard( void );
-	
+
 	//-----------------------------------------------------------------------
 	// CLIENT ITEM PICKUP ACKNOWLEDGEMENT FILES
 	//
-	// This system avoids showing multiple pickups for items that we've found, but haven't been 
+	// This system avoids showing multiple pickups for items that we've found, but haven't been
 	// able to move out of unack'd position due to the GC being unavailable. We keep a list of
 	// items we've ack'd in a client file, and don't re-show pickups for them. When a GC item
 	// update tells us the item has moved out of the unack'd position, we remove it from our file.
@@ -333,7 +333,7 @@ private:
 	// by items we've moved, and haven't received a response from Steam.
 	CUtlVector<int>				m_PredictedFilledSlots;
 #endif
-	
+
 public:
 	virtual int			GetBackpackPositionFromBackend( uint32 iBackendPosition ) { return ExtractBackpackPositionFromBackend(iBackendPosition); }
 
@@ -425,7 +425,7 @@ public:
 	void SetItem( CEconItemView* pItem );
 
 	operator CEconItemView *( void ) const
-	{ 
+	{
 		return Get();
 	}
 
@@ -461,9 +461,9 @@ private:
 
 	CEconItemView* Get() const;
 
-	mutable bool m_bPointerDirty;		// Used to mark when m_pItem is no longer valid 
-	CPlayerInventory *m_pInv;			// Inventory the item belongs to.  Used to look up new CEconItemView 
-	mutable CEconItemView* m_pItem;		// The item. 
+	mutable bool m_bPointerDirty;		// Used to mark when m_pItem is no longer valid
+	CPlayerInventory *m_pInv;			// Inventory the item belongs to.  Used to look up new CEconItemView
+	mutable CEconItemView* m_pItem;		// The item.
 	uint64 m_nItemID;					// ID of the item
 	CSteamID m_OwnerSteamID;			// Steam ID of the item owner
 };

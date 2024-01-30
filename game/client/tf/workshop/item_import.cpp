@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -431,7 +431,7 @@ protected:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFileImportTextEditDialog::CTFFileImportTextEditDialog( vgui::Panel *parent, const char *pszTitle, const char *pszCommand ) : Frame( parent, "ImportFileTextEditDialog" )
 ,	m_bShowCancelButton( true )
@@ -450,7 +450,7 @@ CTFFileImportTextEditDialog::CTFFileImportTextEditDialog( vgui::Panel *parent, c
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportTextEditDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -486,7 +486,7 @@ void CTFFileImportTextEditDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportTextEditDialog::OnCommand( const char *command )
 {
@@ -509,7 +509,7 @@ void CTFFileImportTextEditDialog::OnCommand( const char *command )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportTextEditDialog::SetText( const char *pszText )
 {
@@ -523,7 +523,7 @@ void CTFFileImportTextEditDialog::SetText( const char *pszText )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportTextEditDialog::GetText( char *pszText, int nMaxSize )
 {
@@ -600,7 +600,7 @@ private:
 	int m_nSkinIndex;
 	int m_nMaterialIndex;
 	KeyValues *m_pItemValues;
-	
+
 	// unique values per skin
 	CUtlString m_strBaseTextureFile[NUM_IMPORT_MATERIALS_PER_TEAM];
 	CUtlString m_strColorTintBase[NUM_IMPORT_MATERIALS_PER_TEAM];
@@ -658,14 +658,14 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFImportMaterialEditDialog::CTFImportMaterialEditDialog( vgui::Panel *parent, int nSkinIndex, int nMaterialIndex, KeyValues* pItemValues ) : Frame( parent, "ImportMaterialEditDialog" )
 	,	m_sCommand( CFmtStr( "EditMaterialDone%d,%d", nSkinIndex, nMaterialIndex ) )
 	,	m_VMTKeyValues( "VMT" )
 	,	m_nSkinIndex( nSkinIndex )
 	,	m_nMaterialIndex( nMaterialIndex )
-	,	m_pItemValues( pItemValues ) 
+	,	m_pItemValues( pItemValues )
 {
 	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme" );
 	SetScheme(scheme);
@@ -727,7 +727,7 @@ CTFImportMaterialEditDialog::CTFImportMaterialEditDialog( vgui::Panel *parent, i
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -979,7 +979,7 @@ void CTFImportMaterialEditDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::OnCommand( const char *command )
 {
@@ -1067,7 +1067,7 @@ void CTFImportMaterialEditDialog::OnCommand( const char *command )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::OnCommandEditSkin( int nSkinIndex )
 {
@@ -1087,7 +1087,7 @@ void CTFImportMaterialEditDialog::OnCommandEditSkin( int nSkinIndex )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::OnCommandBrowseMaterial( MATERIAL_FILE_TYPE fileType )
 {
@@ -1107,7 +1107,7 @@ void CTFImportMaterialEditDialog::OnCommandBrowseMaterial( MATERIAL_FILE_TYPE fi
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFileImportDialog::BUILD_RESULT CheckImageSize( const char *fullpath, MATERIAL_FILE_TYPE materialFileType, KeyValues *pMessageVariables )
 {
@@ -1169,7 +1169,7 @@ CTFFileImportDialog::BUILD_RESULT CheckImageSize( const char *fullpath, MATERIAL
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::OnFileSelected( char const *fullpath )
 {
@@ -1210,7 +1210,7 @@ void CTFImportMaterialEditDialog::OnFileSelected( char const *fullpath )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::OnTextChanged( KeyValues *data )
 {
@@ -1328,7 +1328,7 @@ void CTFImportMaterialEditDialog::OnTextChanged( KeyValues *data )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::SetColorTintBase( int nSkinIndex, const char* pszColorTintBase )
 {
@@ -1340,7 +1340,7 @@ void CTFImportMaterialEditDialog::SetColorTintBase( int nSkinIndex, const char* 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::SetSelfIllumTint( int nSkinIndex, const char* pszSelfIllumTint )
 {
@@ -1351,7 +1351,7 @@ void CTFImportMaterialEditDialog::SetSelfIllumTint( int nSkinIndex, const char* 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::SetVMTKeyValues( const char *pszRedVMTText, const char *pszBlueVMTText )
 {
@@ -1518,7 +1518,7 @@ void CTFImportMaterialEditDialog::SetVMTKeyValues( const char *pszRedVMTText, co
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 KeyValues* CTFImportMaterialEditDialog::GetVMTKeyValues( int nSkinIndex )
 {
@@ -1532,7 +1532,7 @@ KeyValues* CTFImportMaterialEditDialog::GetVMTKeyValues( int nSkinIndex )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateBackgroundTexture( int nSkinIndex )
 {
@@ -1551,7 +1551,7 @@ void CTFImportMaterialEditDialog::UpdateBackgroundTexture( int nSkinIndex )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateBaseTexture( const char *pszBaseTextureFile )
 {
@@ -1578,7 +1578,7 @@ void CTFImportMaterialEditDialog::UpdateBaseTexture( const char *pszBaseTextureF
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateNormalTexture( const char *pszNormalTextureFile )
 {
@@ -1601,7 +1601,7 @@ void CTFImportMaterialEditDialog::UpdateNormalTexture( const char *pszNormalText
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdatePhongExponentTexture( const char* pszPhongExponentTextureFile )
 {
@@ -1626,7 +1626,7 @@ void CTFImportMaterialEditDialog::UpdatePhongExponentTexture( const char* pszPho
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateSelfIllumTexture( const char *pszSelfIllumTextureFile )
 {
@@ -1649,7 +1649,7 @@ void CTFImportMaterialEditDialog::UpdateSelfIllumTexture( const char *pszSelfIll
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateBaseMapAlphaPhongMask()
 {
@@ -1661,7 +1661,7 @@ void CTFImportMaterialEditDialog::UpdateBaseMapAlphaPhongMask()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateRimMask()
 {
@@ -1673,7 +1673,7 @@ void CTFImportMaterialEditDialog::UpdateRimMask()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateRimMaskDisplay( bool bEnable )
 {
@@ -1692,7 +1692,7 @@ void CTFImportMaterialEditDialog::UpdateRimMaskDisplay( bool bEnable )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateHalfLambert()
 {
@@ -1704,7 +1704,7 @@ void CTFImportMaterialEditDialog::UpdateHalfLambert()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateBlendTintByBaseAlpha()
 {
@@ -1717,7 +1717,7 @@ void CTFImportMaterialEditDialog::UpdateBlendTintByBaseAlpha()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateBlendTintColorOverBaseDisplay( bool bEnable )
 {
@@ -1740,7 +1740,7 @@ void CTFImportMaterialEditDialog::UpdateBlendTintColorOverBaseDisplay( bool bEna
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateColorTintBase( int nSkinIndex, const char* pszColor )
 {
@@ -1766,7 +1766,7 @@ void CTFImportMaterialEditDialog::UpdateColorTintBase( int nSkinIndex, const cha
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateAdditive()
 {
@@ -1778,7 +1778,7 @@ void CTFImportMaterialEditDialog::UpdateAdditive()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateTranslucent()
 {
@@ -1792,7 +1792,7 @@ void CTFImportMaterialEditDialog::UpdateTranslucent()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateAlphaTest()
 {
@@ -1804,7 +1804,7 @@ void CTFImportMaterialEditDialog::UpdateAlphaTest()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateAlphaTestDiaplay( bool bEnable )
 {
@@ -1823,7 +1823,7 @@ void CTFImportMaterialEditDialog::UpdateAlphaTestDiaplay( bool bEnable )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateSelfIllum()
 {
@@ -1837,7 +1837,7 @@ void CTFImportMaterialEditDialog::UpdateSelfIllum()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateSelfIllumDisplay( bool bEnable )
 {
@@ -1884,7 +1884,7 @@ void CTFImportMaterialEditDialog::UpdateSelfIllumDisplay( bool bEnable )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateSelfIllumTint( int nSkinIndex, const char* pszColor )
 {
@@ -1910,7 +1910,7 @@ void CTFImportMaterialEditDialog::UpdateSelfIllumTint( int nSkinIndex, const cha
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateEnvmapDisplay( bool bEnable )
 {
@@ -1937,7 +1937,7 @@ void CTFImportMaterialEditDialog::UpdateEnvmapDisplay( bool bEnable )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFImportMaterialEditDialog::UpdateUniqueLabels()
 {
@@ -2033,7 +2033,7 @@ protected:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CImportPreviewItemPanel::CImportPreviewItemPanel( vgui::Panel *parent, KeyValues *pItemValues, int nSelectedClass )
 : CTFStorePreviewItemPanel2( parent, "resource/ui/ImportPreviewItemPanel.res", "importpreviewitem", NULL )
@@ -2044,7 +2044,7 @@ CImportPreviewItemPanel::CImportPreviewItemPanel( vgui::Panel *parent, KeyValues
 , m_bIsVCDFileNameOnly( true )
 , m_flGestureEndTime( 0.0f )
 , m_nSelectedClass( nSelectedClass )
-{							   
+{
 	ResetHandles();
 
 	static ConVarRef r_rootlod( "r_rootlod" );
@@ -2059,7 +2059,7 @@ CImportPreviewItemPanel::CImportPreviewItemPanel( vgui::Panel *parent, KeyValues
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CImportPreviewItemPanel::~CImportPreviewItemPanel()
 {
@@ -2074,7 +2074,7 @@ CImportPreviewItemPanel::~CImportPreviewItemPanel()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImportPreviewItemPanel::PreviewItem( int iClass, CEconItemView *pItem, const econ_store_entry_t* pEntry )
 {
@@ -2110,7 +2110,7 @@ void CImportPreviewItemPanel::PreviewItem( int iClass, CEconItemView *pItem, con
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImportPreviewItemPanel::ResetHandles()
 {
@@ -2124,7 +2124,7 @@ void CImportPreviewItemPanel::ResetHandles()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImportPreviewItemPanel::OnThink()
 {
@@ -2142,7 +2142,7 @@ void CImportPreviewItemPanel::OnThink()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImportPreviewItemPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -2208,7 +2208,7 @@ void CImportPreviewItemPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 	// Default to the character view, because that's the most valuable for preview here
 	const CTFItemDefinition *pItemData = m_item.GetItemDefinition();
-	if ( pItemData ) 
+	if ( pItemData )
 	{
 		for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass < TF_LAST_NORMAL_CLASS; iClass++ )
 		{
@@ -2302,7 +2302,7 @@ void CImportPreviewItemPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImportPreviewItemPanel::OnCommand( const char *command )
 {
@@ -2334,7 +2334,7 @@ void CImportPreviewItemPanel::OnCommand( const char *command )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void  CImportPreviewItemPanel::OnKeyCodeTyped( KeyCode code )
 {
@@ -2349,7 +2349,7 @@ void  CImportPreviewItemPanel::OnKeyCodeTyped( KeyCode code )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImportPreviewItemPanel::PerformLayout( void )
 {
@@ -2364,7 +2364,7 @@ void CImportPreviewItemPanel::PerformLayout( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImportPreviewItemPanel::OnClose()
 {
@@ -2374,7 +2374,7 @@ void CImportPreviewItemPanel::OnClose()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImportPreviewItemPanel::UpdatePlayerModelButtons()
 {
@@ -2385,7 +2385,7 @@ void CImportPreviewItemPanel::UpdatePlayerModelButtons()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImportPreviewItemPanel::UpdateActivityUI()
 {
@@ -2525,7 +2525,7 @@ void CImportPreviewItemPanel::UpdateActivityUI()
 					m_pActionComboBox->AddItem(CFmtStr("#TF_ImportPreview_Action%d", iAction), pKeyValues);
 				}
 			}
-			
+
 			Assert( m_pActionComboBox->GetItemCount() >= 0 );
 			m_pActionComboBox->ActivateItemByRow( 0 );
 
@@ -2541,7 +2541,7 @@ void CImportPreviewItemPanel::UpdateActivityUI()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImportPreviewItemPanel::UpdateActivity()
 {
@@ -2574,7 +2574,7 @@ void CImportPreviewItemPanel::UpdateActivity()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CImportPreviewItemPanel::GetSequence( const char *pszGesture )
 {
@@ -2640,7 +2640,7 @@ int CImportPreviewItemPanel::GetSequence( const char *pszGesture )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImportPreviewItemPanel::UpdateMaterialButtons()
 {
@@ -2664,7 +2664,7 @@ void CImportPreviewItemPanel::UpdateMaterialButtons()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImportPreviewItemPanel::StartAction()
 {
@@ -2693,7 +2693,7 @@ void CImportPreviewItemPanel::StartAction()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImportPreviewItemPanel::StartGesture( const char *pszGesture )
 {
@@ -2716,7 +2716,7 @@ void CImportPreviewItemPanel::StartGesture( const char *pszGesture )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImportPreviewItemPanel::EndGestures()
 {
@@ -2727,7 +2727,7 @@ void CImportPreviewItemPanel::EndGestures()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImportPreviewItemPanel::OnTextChanged( KeyValues *data )
 {
@@ -2783,13 +2783,13 @@ void CImportPreviewItemPanel::OnTextChanged( KeyValues *data )
 			KeyValues *pData = pComboBox->GetActiveItemUserData();
 			g_PlayerPreviewEffect.SetEffect( (C_TFPlayerPreviewEffect::PREVIEW_EFFECT)pData->GetInt("effect") );
 		}
-		return; 
+		return;
 	}
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImportPreviewItemPanel::ResetCamera()
 {
@@ -2803,7 +2803,7 @@ void CImportPreviewItemPanel::ResetCamera()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CImportPreviewItemPanel::OnClassIconSelected( KeyValues *data )
 {
@@ -2820,7 +2820,7 @@ void CImportPreviewItemPanel::OnClassIconSelected( KeyValues *data )
 //-----------------------------------------------------------------------------
 // Purpose: Import file dialog
 //-----------------------------------------------------------------------------
-CTFFileImportDialog::CTFFileImportDialog( vgui::Panel *parent ) 
+CTFFileImportDialog::CTFFileImportDialog( vgui::Panel *parent )
 	: Frame( parent, "ImportFileDialog" ),
 	m_tempQC( 0, 0, CUtlBuffer::TEXT_BUFFER )
 {
@@ -2844,7 +2844,7 @@ CTFFileImportDialog::CTFFileImportDialog( vgui::Panel *parent )
 	m_pTFEnglishNameTextEntry = NULL;
 	m_pPerforceCheckButton = NULL;
 	m_pPartnerCheckButton = NULL;
-	
+
 	m_pEquipRegionPanel = NULL;
 	m_pEquipRegionComboBox = NULL;
 
@@ -2885,7 +2885,7 @@ CTFFileImportDialog::CTFFileImportDialog( vgui::Panel *parent )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFileImportDialog::~CTFFileImportDialog()
 {
@@ -2906,7 +2906,7 @@ CTFFileImportDialog::~CTFFileImportDialog()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -2994,7 +2994,7 @@ void CTFFileImportDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 	{
 		pLabel->SetVisible( p4 );
 	}
-	
+
 	m_pTFEnglishNameTextEntry = FindControl<vgui::TextEntry>( "TFEnglishNameTextEntry" );
 	if ( m_pTFEnglishNameTextEntry )
 	{
@@ -3038,7 +3038,7 @@ void CTFFileImportDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 		if ( m_pPaintableCheckButtons[i] )
 		{
 			m_pPaintableCheckButtons[i]->AddActionSignalTarget( this );
-		}	
+		}
 	}
 
 	for ( int i = TF_FIRST_NORMAL_CLASS; i < TF_LAST_NORMAL_CLASS; ++i )
@@ -3204,7 +3204,7 @@ void CTFFileImportDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 	}
 
 	m_pPlayerModelPanel = dynamic_cast<CTFPlayerModelPanel*>( FindChildByName("classmodelpanel") );
-	
+
 	OnOpen();
 
 	UpdateMaterialDisplay();
@@ -3213,7 +3213,7 @@ void CTFFileImportDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnCommand( const char *command )
 {
@@ -3354,7 +3354,7 @@ void CTFFileImportDialog::OnCommand( const char *command )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnCommandLoad()
 {
@@ -3373,7 +3373,7 @@ void CTFFileImportDialog::OnCommandLoad()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnCommandSave()
 {
@@ -3392,7 +3392,7 @@ void CTFFileImportDialog::OnCommandSave()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnCommandBrowseIcon()
 {
@@ -3411,7 +3411,7 @@ void CTFFileImportDialog::OnCommandBrowseIcon()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnCommandBrowseLOD( int index )
 {
@@ -3430,7 +3430,7 @@ void CTFFileImportDialog::OnCommandBrowseLOD( int index )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnCommandBrowseAnimationSource()
 {
@@ -3449,7 +3449,7 @@ void CTFFileImportDialog::OnCommandBrowseAnimationSource()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnCommandBrowseAnimationVCD()
 {
@@ -3468,7 +3468,7 @@ void CTFFileImportDialog::OnCommandBrowseAnimationVCD()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnCommandSwapVMT()
 {
@@ -3501,7 +3501,7 @@ void CTFFileImportDialog::OnCommandSwapVMT()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnCommandEditMaterial( int nSkinIndex, int nMaterialIndex )
 {
@@ -3518,7 +3518,7 @@ void CTFFileImportDialog::OnCommandEditMaterial( int nSkinIndex, int nMaterialIn
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnCommandEditMaterialDone( int nSkinIndex, int nMaterialIndex )
 {
@@ -3590,7 +3590,7 @@ void CTFFileImportDialog::OnCommandEditMaterialDone( int nSkinIndex, int nMateri
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnCommandEditQC()
 {
@@ -3617,7 +3617,7 @@ void CTFFileImportDialog::OnCommandEditQC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnCommandEditQCI()
 {
@@ -3644,7 +3644,7 @@ void CTFFileImportDialog::OnCommandEditQCI()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnCommandEditQCDone()
 {
@@ -3652,7 +3652,7 @@ void CTFFileImportDialog::OnCommandEditQCDone()
 	{
 		return;
 	}
-	
+
 	char pszText[MAX_TEXT_EDIT_SIZE];
 	m_pTextEditDialog->GetText( pszText, sizeof(pszText) );
 
@@ -3707,7 +3707,7 @@ void CTFFileImportDialog::OnCommandEditQCDone()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnCommandEditQCIDone()
 {
@@ -3715,7 +3715,7 @@ void CTFFileImportDialog::OnCommandEditQCIDone()
 	{
 		return;
 	}
-	
+
 	char pszText[MAX_TEXT_EDIT_SIZE];
 	m_pTextEditDialog->GetText( pszText, sizeof(pszText) );
 
@@ -3739,7 +3739,7 @@ void CTFFileImportDialog::OnCommandEditQCIDone()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::OnCommandBuild( BUILD_STAGE buildStage )
 {
@@ -3821,7 +3821,7 @@ bool CTFFileImportDialog::OnCommandBuild( BUILD_STAGE buildStage )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnCommandUpdateBodygroup()
 {
@@ -3845,7 +3845,7 @@ void CTFFileImportDialog::OnCommandUpdateBodygroup()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnOpen()
 {
@@ -3879,7 +3879,7 @@ void CTFFileImportDialog::OnOpen()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnClose()
 {
@@ -3890,7 +3890,7 @@ void CTFFileImportDialog::OnClose()
 	{
 		char pszSessionPath[ MAX_PATH ];
 		V_ComposeFileName( CFmtStr( kSteamWorkshopDir, GetWorkshopFolder() ), CFmtStr( "%s.txt", sName.Get() ), pszSessionPath, sizeof(pszSessionPath) );
-		SAVE_RESULT nResult = Save( pszSessionPath, "GAME" ); 
+		SAVE_RESULT nResult = Save( pszSessionPath, "GAME" );
 		if ( nResult != SAVE_OKAY )
 		{
 			ShowMessageBoxWithFile( "#TF_ImportFile_SaveFailed", kSaveResultMessages[ nResult ], pszSessionPath );
@@ -3902,7 +3902,7 @@ void CTFFileImportDialog::OnClose()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnTextChanged( KeyValues *data )
 {
@@ -3927,7 +3927,7 @@ void CTFFileImportDialog::OnTextChanged( KeyValues *data )
 			SetEquipRegion( pData->GetString( kEquipRegion ) );
 		}
 
-		return; 
+		return;
 	}
 
 	vgui::TextEntry *pTextEntry = dynamic_cast< vgui::TextEntry * >( pPanel );
@@ -3962,7 +3962,7 @@ void CTFFileImportDialog::OnTextChanged( KeyValues *data )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnFileSelected( char const *fullpath )
 {
@@ -3971,7 +3971,7 @@ void CTFFileImportDialog::OnFileSelected( char const *fullpath )
 	case FILE_OPEN_LOAD:
 		{
 			CUtlString sFailedPath;
-			LOAD_RESULT nResult = Load( fullpath, NULL, sFailedPath ); 
+			LOAD_RESULT nResult = Load( fullpath, NULL, sFailedPath );
 			if ( nResult != LOAD_OKAY )
 			{
 				ShowMessageBoxWithFile( "#TF_ImportFile_LoadFailed", kLoadResultMessages[ nResult ], sFailedPath );
@@ -3980,7 +3980,7 @@ void CTFFileImportDialog::OnFileSelected( char const *fullpath )
 		break;
 	case FILE_OPEN_SAVE:
 		{
-			SAVE_RESULT nResult = Save( fullpath, NULL ); 
+			SAVE_RESULT nResult = Save( fullpath, NULL );
 			if ( nResult != SAVE_OKAY )
 			{
 				ShowMessageBoxWithFile( "#TF_ImportFile_SaveFailed", kSaveResultMessages[ nResult ], fullpath );
@@ -4033,7 +4033,7 @@ void CTFFileImportDialog::OnFileSelected( char const *fullpath )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::OnRadioButtonChecked( Panel *panel )
 {
@@ -4051,7 +4051,7 @@ void CTFFileImportDialog::OnRadioButtonChecked( Panel *panel )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::SetItemName( const char *pszName )
 {
@@ -4064,7 +4064,7 @@ void CTFFileImportDialog::SetItemName( const char *pszName )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFFileImportDialog::GetItemName()
 {
@@ -4081,7 +4081,7 @@ const char *CTFFileImportDialog::GetItemName()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::IsValidPrefab( const char *pszPrefab )
 {
@@ -4091,7 +4091,7 @@ bool CTFFileImportDialog::IsValidPrefab( const char *pszPrefab )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::SetItemPrefab( const char *pszPrefab )
 {
@@ -4127,7 +4127,7 @@ void CTFFileImportDialog::SetItemPrefab( const char *pszPrefab )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::UpdateUIForPrefab( ImportPrefab_t nPrefab )
 {
@@ -4182,7 +4182,7 @@ void CTFFileImportDialog::UpdateUIForPrefab( ImportPrefab_t nPrefab )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFFileImportDialog::GetItemPrefab()
 {
@@ -4191,7 +4191,7 @@ const char *CTFFileImportDialog::GetItemPrefab()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::GetItemPrefabValue( const char *pszPrefab, const char *pszName, CUtlString& strOutput )
 {
@@ -4212,7 +4212,7 @@ bool CTFFileImportDialog::GetItemPrefabValue( const char *pszPrefab, const char 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::SelectClass( int nClassIndex )
 {
@@ -4236,7 +4236,7 @@ void CTFFileImportDialog::SelectClass( int nClassIndex )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::SetItemIcon( const char *pszFilePath )
 {
@@ -4327,7 +4327,7 @@ void CTFFileImportDialog::SetItemIcon( const char *pszFilePath )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFFileImportDialog::GetItemIcon()
 {
@@ -4336,7 +4336,7 @@ const char *CTFFileImportDialog::GetItemIcon()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::SetPaintable( bool bPaintable, int nMaterialIndex )
 {
@@ -4354,7 +4354,7 @@ void CTFFileImportDialog::SetPaintable( bool bPaintable, int nMaterialIndex )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::IsPaintable( int nMaterialIndex )
 {
@@ -4364,7 +4364,7 @@ bool CTFFileImportDialog::IsPaintable( int nMaterialIndex )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::IsAnyVMTPaintable()
 {
@@ -4381,7 +4381,7 @@ bool CTFFileImportDialog::IsAnyVMTPaintable()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFFileImportDialog::GetUserAnimationQCTemplate( int nSelectedClass, bool bPerforce /*= false*/ )
 {
@@ -4443,7 +4443,7 @@ const char *CTFFileImportDialog::GetUserAnimationQCTemplate( int nSelectedClass,
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFFileImportDialog::GetQCTemplate( int nSelectedClass )
 {
@@ -4471,7 +4471,7 @@ const char *CTFFileImportDialog::GetQCTemplate( int nSelectedClass )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFFileImportDialog::GetQCITemplate( int nSelectedClass )
 {
@@ -4495,7 +4495,7 @@ const char *CTFFileImportDialog::GetQCITemplate( int nSelectedClass )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::ShouldP4AddOrEdit() const
 {
@@ -4504,7 +4504,7 @@ bool CTFFileImportDialog::ShouldP4AddOrEdit() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::IsPartnerContent() const
 {
@@ -4513,7 +4513,7 @@ bool CTFFileImportDialog::IsPartnerContent() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char* CTFFileImportDialog::GetWorkshopFolder() const
 {
@@ -4522,7 +4522,7 @@ const char* CTFFileImportDialog::GetWorkshopFolder() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFFileImportDialog::GetCustomBones( int selectedClass, const char* pszFileName, CUtlStringList& strBoneList )
 {
@@ -4570,7 +4570,7 @@ int CTFFileImportDialog::GetCustomBones( int selectedClass, const char* pszFileN
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::ClearLODs()
 {
@@ -4590,7 +4590,7 @@ void CTFFileImportDialog::ClearLODs()
 			m_pClassHighlights[ iClassIndex ]->SetVisible( false );
 		}
 	}
-	
+
 	Assert( !AnyClassHasModels() );
 	ClearMaterials();
 
@@ -4599,7 +4599,7 @@ void CTFFileImportDialog::ClearLODs()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFileImportDialog::LOAD_RESULT CTFFileImportDialog::SetLOD( int selectedClass, int nModelIndex, const char *pszFilePath, KeyValues* pKV /*= NULL*/ )
 {
@@ -4767,7 +4767,7 @@ CTFFileImportDialog::LOAD_RESULT CTFFileImportDialog::SetLOD( int selectedClass,
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::UpdateLODDisplay()
 {
@@ -4790,7 +4790,7 @@ void CTFFileImportDialog::UpdateLODDisplay()
 			pszFilePath = pKey->GetString( "file" );
 			nTriCount = pKey->GetInt( "triangleCount" );
 		}
-		
+
 		if ( nPreviousTriCount != 0 && nPreviousTriCount > nMinTriRequirement )
 		{
 			SetLODPanelEnable( true, i );
@@ -4836,7 +4836,7 @@ void CTFFileImportDialog::UpdateLODDisplay()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFFileImportDialog::GetModelTriangleBudget( int selectedClass, int nModelIndex )
 {
@@ -4860,7 +4860,7 @@ int CTFFileImportDialog::GetModelTriangleBudget( int selectedClass, int nModelIn
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFFileImportDialog::GetModelBoneBudget()
 {
@@ -4870,13 +4870,13 @@ int CTFFileImportDialog::GetModelBoneBudget()
 	{
 		nBoneBudget = V_atoi( strBoneBudget.String() );
 	}
-	
+
 	return nBoneBudget;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::SetMaterial( int nMaterialPanelIndex, const char* pszFilePath, MATERIAL_FILE_TYPE fileType )
 {
@@ -4888,7 +4888,7 @@ bool CTFFileImportDialog::SetMaterial( int nMaterialPanelIndex, const char* pszF
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::SetMaterial( int selectedSkin, int nMaterialIndex, const char *pszFilePath, MATERIAL_FILE_TYPE fileType )
 {
@@ -4915,7 +4915,7 @@ bool CTFFileImportDialog::SetMaterial( int selectedSkin, int nMaterialIndex, con
 		static const char* s_removeKeyNames[] =
 		{
 			"%s_texture_file",
-			"%s_texture_width", 
+			"%s_texture_width",
 			"%s_texture_height",
 			"%s_texture_channels",
 			"%s_texture_alpha"
@@ -4945,7 +4945,7 @@ bool CTFFileImportDialog::SetMaterial( int selectedSkin, int nMaterialIndex, con
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char* CTFFileImportDialog::GetMaterialTextureFile( int selectedSkin, int nMaterialIndex, MATERIAL_FILE_TYPE fileType )
 {
@@ -4955,13 +4955,13 @@ const char* CTFFileImportDialog::GetMaterialTextureFile( int selectedSkin, int n
 		const char *pszMaterialFilePrefix = s_pszMaterialFilePrefixes[fileType];
 		return pMaterialKey->GetString( CFmtStr( "%s_texture_file", pszMaterialFilePrefix ) );
 	}
-	
+
 	return "";
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CUtlString CTFFileImportDialog::GetMaterialName( int selectedSkin, int nMaterialIndex )
 {
@@ -4980,7 +4980,7 @@ CUtlString CTFFileImportDialog::GetMaterialName( int selectedSkin, int nMaterial
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::ClearMaterials()
 {
@@ -5001,7 +5001,7 @@ void CTFFileImportDialog::ClearMaterials()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::ClearMaterial( int nSkinIndex, int nMaterialIndex )
 {
@@ -5014,7 +5014,7 @@ void CTFFileImportDialog::ClearMaterial( int nSkinIndex, int nMaterialIndex )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::UpdateMaterialDisplay()
 {
@@ -5073,7 +5073,7 @@ void CTFFileImportDialog::UpdateMaterialDisplay()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::UpdateMaterialDisplay( int nSkinIndex, int nMaterialIndex )
 {
@@ -5178,7 +5178,7 @@ const char *CTFFileImportDialog::GetMaterialText( int nSkinIndex, int nMaterialI
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::SetMaterialText( int nSkinIndex, int nMaterialIndex, const char* pszMaterialText )
 {
@@ -5193,7 +5193,7 @@ bool CTFFileImportDialog::SetMaterialText( int nSkinIndex, int nMaterialIndex, c
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFileImportDialog::BUILD_RESULT CTFFileImportDialog::ValidateMaterialValues( KeyValues *pKV, int nMaterialIndex )
 {
@@ -5286,7 +5286,7 @@ CTFFileImportDialog::BUILD_RESULT CTFFileImportDialog::ValidateMaterialValues( K
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::RemoveUnnecessaryParametersFromVMT( KeyValues *pKV, int nMaterialIndex )
 {
@@ -5299,7 +5299,7 @@ void CTFFileImportDialog::RemoveUnnecessaryParametersFromVMT( KeyValues *pKV, in
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::RemoveLightParameters( KeyValues *pKV, int nMaterialIndex )
 {
@@ -5334,7 +5334,7 @@ void CTFFileImportDialog::RemoveLightParameters( KeyValues *pKV, int nMaterialIn
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::RemovePaintParameters( KeyValues *pKV, int nMaterialIndex )
 {
@@ -5401,7 +5401,7 @@ void CTFFileImportDialog::RemovePaintParameters( KeyValues *pKV, int nMaterialIn
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::RemoveTranslucentParameters( KeyValues *pKV )
 {
@@ -5423,7 +5423,7 @@ void CTFFileImportDialog::RemoveTranslucentParameters( KeyValues *pKV )
 			pKV->RemoveSubKey( pSubKey );
 			pSubKey->deleteThis();
 		}
-		
+
 		pSubKey = pKV->FindKey( "$alphatest" );
 		if ( pSubKey )
 		{
@@ -5435,7 +5435,7 @@ void CTFFileImportDialog::RemoveTranslucentParameters( KeyValues *pKV )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::RemoveCubeMapParameters( KeyValues *pKV )
 {
@@ -5465,7 +5465,7 @@ void CTFFileImportDialog::RemoveCubeMapParameters( KeyValues *pKV )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::RemoveSelfIllumParameters( KeyValues *pKV )
 {
@@ -5499,7 +5499,7 @@ void CTFFileImportDialog::RemoveSelfIllumParameters( KeyValues *pKV )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::UpdateBodygroupsDisplay()
 {
@@ -5538,7 +5538,7 @@ void CTFFileImportDialog::UpdateBodygroupsDisplay()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::SetBodygroup( KeyValues* pBodygroupKey )
 {
@@ -5564,7 +5564,7 @@ void CTFFileImportDialog::SetBodygroup( KeyValues* pBodygroupKey )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFileImportDialog::LOAD_RESULT CTFFileImportDialog::SetAnimationSource( int selectedClass, const char *pszFilePath, KeyValues* pKV /*= NULL*/ )
 {
@@ -5646,7 +5646,7 @@ CTFFileImportDialog::LOAD_RESULT CTFFileImportDialog::SetAnimationSource( int se
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFileImportDialog::LOAD_RESULT CTFFileImportDialog::SetAnimationVCD( int selectedClass, const char *pszFilePath, KeyValues* pKV /*= NULL*/ )
 {
@@ -5693,7 +5693,7 @@ CTFFileImportDialog::LOAD_RESULT CTFFileImportDialog::SetAnimationVCD( int selec
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::SetAnimationDuration( int selectedClass, float flDuration )
 {
@@ -5716,7 +5716,7 @@ void CTFFileImportDialog::SetAnimationDuration( int selectedClass, float flDurat
 extern CChoreoScene *LoadSceneForModel( const char *filename, IChoreoEventCallback *pCallback, float *flSceneEndTime );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFileImportDialog::BUILD_RESULT CTFFileImportDialog::VerifyVCD( const CAssetTF &asset )
 {
@@ -5758,7 +5758,7 @@ CTFFileImportDialog::BUILD_RESULT CTFFileImportDialog::VerifyVCD( const CAssetTF
 					pEventSequence = pEvent;
 				}
 			}
-		
+
 			if ( !pEventSequence )
 			{
 				delete pScene;
@@ -5822,7 +5822,7 @@ CTFFileImportDialog::BUILD_RESULT CTFFileImportDialog::VerifyVCD( const CAssetTF
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::UpdateAnimationSourceDisplay()
 {
@@ -5849,7 +5849,7 @@ void CTFFileImportDialog::UpdateAnimationSourceDisplay()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::UpdateAnimationVCDDisplay()
 {
@@ -5876,7 +5876,7 @@ void CTFFileImportDialog::UpdateAnimationVCDDisplay()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::UpdateAnimDurationDisplay()
 {
@@ -5893,7 +5893,7 @@ void CTFFileImportDialog::UpdateAnimDurationDisplay()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::SetDirty( bool bDirty )
 {
@@ -5905,7 +5905,7 @@ void CTFFileImportDialog::SetDirty( bool bDirty )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static int FindSuffix( const char *pszString, const char *pszSuffix )
 {
@@ -5921,7 +5921,7 @@ static int FindSuffix( const char *pszString, const char *pszSuffix )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static bool FindTexture( const char *pszStrippedPath, const char *pszSuffix, CUtlString &sOutputPath )
 {
@@ -5945,7 +5945,7 @@ static bool FindTexture( const char *pszStrippedPath, const char *pszSuffix, CUt
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::SetLoopableTaunt( bool bLoopable, float flLoopStartTime )
 {
@@ -5965,7 +5965,7 @@ void CTFFileImportDialog::SetLoopableTaunt( bool bLoopable, float flLoopStartTim
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::IsLoopableTaunt() const
 {
@@ -5974,7 +5974,7 @@ bool CTFFileImportDialog::IsLoopableTaunt() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFFileImportDialog::GetAnimationLoopStartTime() const
 {
@@ -5988,7 +5988,7 @@ float CTFFileImportDialog::GetAnimationLoopStartTime() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFileImportDialog::BUILD_RESULT CTFFileImportDialog::AddTauntToAsset( CAssetTF &asset, int nClassIndex, bool bIsMulticlass, BUILD_STAGE buildStage, KeyValues *pItemData, KeyValues *pBuildMessageVariables )
 {
@@ -6083,7 +6083,7 @@ CTFFileImportDialog::BUILD_RESULT CTFFileImportDialog::AddTauntToAsset( CAssetTF
 			float flStartTime = Clamp( GetAnimationLoopStartTime(), 0.f, flTotalAnimTime );
 			pTargetDMX->SetAnimationLoopStartTime( flStartTime );
 		}
-	
+
 		pTargetDMX->SetSoundScriptFilePath( kWorkshopSoundScriptFile );
 
 		if ( bPreview )
@@ -6122,7 +6122,7 @@ CTFFileImportDialog::BUILD_RESULT CTFFileImportDialog::AddTauntToAsset( CAssetTF
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFileImportDialog::BUILD_RESULT CTFFileImportDialog::AddModelToAsset( CAssetTF &asset, int nClassIndex, bool bIsMulticlass, BUILD_STAGE buildStage, KeyValues *pItemData, KeyValues *pBuildMessageVariables )
 {
@@ -6252,7 +6252,7 @@ CTFFileImportDialog::BUILD_RESULT CTFFileImportDialog::AddMaterialsToAsset( CAss
 					}
 					return nMaterialResult;
 				}
-				
+
 				RemoveUnnecessaryParametersFromVMT( pKV, nValidVMTIndex );
 				pVMT->SetVMTKV( pKV, nSkinIndex );
 
@@ -6318,7 +6318,7 @@ CTFFileImportDialog::BUILD_RESULT CTFFileImportDialog::AddMaterialsToAsset( CAss
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::CheckSourceSDK()
 {
@@ -6328,7 +6328,7 @@ bool CTFFileImportDialog::CheckSourceSDK()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFileImportDialog::BUILD_RESULT CTFFileImportDialog::Build( BUILD_STAGE buildStage, KeyValues *pBuildMessageVariables )
 {
@@ -6586,7 +6586,7 @@ CTFFileImportDialog::BUILD_RESULT CTFFileImportDialog::Build( BUILD_STAGE buildS
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 KeyValues *CTFFileImportDialog::BuildSessionData( const char *pszItemName )
 {
@@ -6599,7 +6599,7 @@ KeyValues *CTFFileImportDialog::BuildSessionData( const char *pszItemName )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 KeyValues *CTFFileImportDialog::BuildItemSchema( const char *pszItemName )
 {
@@ -6632,7 +6632,7 @@ KeyValues *CTFFileImportDialog::BuildItemSchema( const char *pszItemName )
 	{
 		pData->SetString( "equip_region", GetItemValues()->GetString( kEquipRegion ) );
 	}
-	
+
 	const char *kThe = "The ";
 	if ( V_strncasecmp( pszTFEnglishName, kThe, V_strlen( kThe ) ) == 0 )
 	{
@@ -6791,7 +6791,7 @@ KeyValues *CTFFileImportDialog::BuildItemSchema( const char *pszItemName )
 	{
 		KeyValues *pTauntKey = pData->FindKey( "taunt", true );
 		KeyValues *pCustomTauntPerClass = pTauntKey->FindKey( "custom_taunt_scene_per_class", true );
-		
+
 		CSmartPtr< CTargetQC > pQC = asset.GetTargetQC();
 		CSmartPtr< CTargetVCD > pVCD = pQC->GetTargetVCD();
 
@@ -6852,7 +6852,7 @@ KeyValues *CTFFileImportDialog::BuildItemSchema( const char *pszItemName )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFileImportDialog::LOAD_RESULT CTFFileImportDialog::Load( const char *pszFilePath, const char *pathID, CUtlString &sFailedPath )
 {
@@ -6871,7 +6871,7 @@ CTFFileImportDialog::LOAD_RESULT CTFFileImportDialog::Load( const char *pszFileP
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFileImportDialog::LOAD_RESULT CTFFileImportDialog::LoadTxt( const char *pszFilePath, const char *pathID, CUtlString &sFailedPath )
 {
@@ -6882,7 +6882,7 @@ CTFFileImportDialog::LOAD_RESULT CTFFileImportDialog::LoadTxt( const char *pszFi
 
 	KeyValuesAD pData( "Data" );
 	pData->UsesEscapeSequences( true );
-	
+
 	if ( !pData->LoadFromFile( g_pFullFileSystem, pszFilePath, pathID ) )
 	{
 		sFailedPath = pszFilePath;
@@ -6902,7 +6902,7 @@ CTFFileImportDialog::LOAD_RESULT CTFFileImportDialog::LoadTxt( const char *pszFi
 	SetEquipRegion( pItemData->GetString( kEquipRegion ) );
 	SetWorkshopID( pItemData->GetString( kWorkshopID ) );
 	SetTFEnglishName( pItemData->GetString( kTFEnglishName ) );
-	
+
 	KeyValues *pBodygroup = pItemData->FindKey( kBodygroup );
 	if ( pBodygroup )
 	{
@@ -7033,7 +7033,7 @@ CTFFileImportDialog::LOAD_RESULT CTFFileImportDialog::LoadTxt( const char *pszFi
 			}
 
 			CUtlBuffer sMaterialText;
-			if ( FStrEq( pszMaterialVMT, "" ) )	   	
+			if ( FStrEq( pszMaterialVMT, "" ) )
 			{
 				sMaterialText.SetBufferType( true, true );
 				g_pFullFileSystem->ReadFile( pszMaterialFile, NULL, sMaterialText );
@@ -7069,7 +7069,7 @@ CTFFileImportDialog::LOAD_RESULT CTFFileImportDialog::LoadTxt( const char *pszFi
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFileImportDialog::LOAD_RESULT CTFFileImportDialog::LoadZip( const char *pszFilePath, const char *pathID, CUtlString &sFailedPath )
 {
@@ -7101,7 +7101,7 @@ CTFFileImportDialog::LOAD_RESULT CTFFileImportDialog::LoadZip( const char *pszFi
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFileImportDialog::SAVE_RESULT CTFFileImportDialog::Save( const char *pszFilePath, const char *pathID )
 {
@@ -7120,7 +7120,7 @@ CTFFileImportDialog::SAVE_RESULT CTFFileImportDialog::Save( const char *pszFileP
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::SavePreviewData( CAssetTF &asset )
 {
@@ -7146,7 +7146,7 @@ void CTFFileImportDialog::SavePreviewData( CAssetTF &asset )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::SetupPreviewData()
 {
@@ -7162,7 +7162,7 @@ bool CTFFileImportDialog::SetupPreviewData()
 	engine->ExecuteClientCmd( "r_flushlod" );
 	engine->ExecuteClientCmd( "mat_reloadallmaterials" );
 	engine->ExecuteClientCmd( "cl_soundemitter_flush" );
-	
+
 	if ( !m_pPreviewDialog )
 	{
 		m_pPreviewDialog = new CImportPreviewItemPanel( this, GetItemValues(), m_nSelectedClass );
@@ -7179,7 +7179,7 @@ bool CTFFileImportDialog::SetupPreviewData()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::CleanupPreviewData()
 {
@@ -7210,7 +7210,7 @@ void CTFFileImportDialog::CleanupPreviewData()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::IsMulticlass()
 {
@@ -7225,12 +7225,12 @@ bool CTFFileImportDialog::IsMulticlass()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFFileImportDialog::GetClassFolder()
 {
 	const char *pszClassName = NULL;
-	
+
 	for ( int nClassIndex = TF_FIRST_NORMAL_CLASS; nClassIndex < TF_LAST_NORMAL_CLASS; ++nClassIndex )
 	{
 		if ( ClassHasModels( nClassIndex ) || ClassHasTauntSources( nClassIndex ) )
@@ -7245,13 +7245,13 @@ const char *CTFFileImportDialog::GetClassFolder()
 			}
 		}
 	}
-	
+
 	return pszClassName;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::AnyClassHasModels()
 {
@@ -7265,7 +7265,7 @@ bool CTFFileImportDialog::AnyClassHasModels()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::ClassHasModels( int nClassIndex )
 {
@@ -7279,7 +7279,7 @@ bool CTFFileImportDialog::ClassHasModels( int nClassIndex )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::DidSpecifyAllMaterials()
 {
@@ -7312,7 +7312,7 @@ bool CTFFileImportDialog::DidSpecifyAllMaterials()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::AreClassesLODCountMatch()
 {
@@ -7347,7 +7347,7 @@ bool CTFFileImportDialog::AreClassesLODCountMatch()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::AreClassesMaterialCountMatch()
 {
@@ -7355,7 +7355,7 @@ bool CTFFileImportDialog::AreClassesMaterialCountMatch()
 	{
 		int nCurrentMaterialCount = -1;
 		for ( int nClassIndex = TF_FIRST_NORMAL_CLASS; nClassIndex < TF_LAST_NORMAL_CLASS; ++nClassIndex )
-		{		
+		{
 			KeyValues *pKey = GetItemValues()->FindKey( CFmtStr( kClassLODN, kClassFolders[ nClassIndex ], nLOD ) );
 			if ( pKey )
 			{
@@ -7380,7 +7380,7 @@ bool CTFFileImportDialog::AreClassesMaterialCountMatch()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::AnyClassHasTauntSources()
 {
@@ -7394,7 +7394,7 @@ bool CTFFileImportDialog::AnyClassHasTauntSources()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFileImportDialog::ClassHasTauntSources( int nClassIndex )
 {
@@ -7416,7 +7416,7 @@ bool CTFFileImportDialog::ClassHasTauntSources( int nClassIndex )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFileImportDialog::GetWorkshopData()
 {
@@ -7499,7 +7499,7 @@ void CTFFileImportDialog::SetEquipRegion( const char* pszEquipRegion )
 				break;
 			}
 		}
-		
+
 		GetItemValues()->SetString( kEquipRegion, bFound ? pszEquipRegion : "" );
 	}
 

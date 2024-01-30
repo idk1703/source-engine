@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,7 +20,7 @@
 #include "tier0/memdbgon.h"
 
 #define COMPARE_HISTORY(a,b) \
-	( memcmp( m_VarHistory[a].GetValue(), m_VarHistory[b].GetValue(), sizeof(Type)*GetMaxCount() ) == 0 ) 			
+	( memcmp( m_VarHistory[a].GetValue(), m_VarHistory[b].GetValue(), sizeof(Type)*GetMaxCount() ) == 0 )
 
 // Define this to have it measure whether or not the interpolated entity list
 // is accurate.
@@ -40,7 +40,7 @@
 
 #define EXTRA_INTERPOLATION_HISTORY_STORED 0.05f	// It stores this much extra interpolation history,
 													// so you can always call Interpolate() this far
-													// in the past from your last call and be able to 
+													// in the past from your last call and be able to
 													// get an interpolated value.
 
 // this global keeps the last known server packet tick (to avoid calling engine->GetLastTimestamp() all the time)
@@ -53,12 +53,12 @@ inline void Interpolation_SetLastPacketTimeStamp( float timestamp)
 }
 
 
-// Before calling Interpolate(), you can use this use this to setup the context if 
+// Before calling Interpolate(), you can use this use this to setup the context if
 // you want to enable extrapolation.
 class CInterpolationContext
 {
 public:
-	
+
 	CInterpolationContext()
 	{
 		m_bOldAllowExtrapolation = s_bAllowExtrapolation;
@@ -71,7 +71,7 @@ public:
 		m_pNext = s_pHead;
 		s_pHead = this;
 	}
-	
+
 	~CInterpolationContext()
 	{
 		// restore values from prev stack element
@@ -101,7 +101,7 @@ public:
 	{
 		s_flLastTimeStamp = timestamp;
 	}
-	
+
 	static float GetLastTimeStamp()
 	{
 		return s_flLastTimeStamp;
@@ -156,15 +156,15 @@ public:
 
 	virtual void Setup( void *pValue, int type ) = 0;
 	virtual void SetInterpolationAmount( float seconds ) = 0;
-	
+
 	// Returns true if the new value is different from the prior most recent value.
 	virtual void NoteLastNetworkedValue() = 0;
 	virtual bool NoteChanged( float changetime, bool bUpdateLastNetworkedValue ) = 0;
 	virtual void Reset() = 0;
-	
+
 	// Returns 1 if the value will always be the same if currentTime is always increasing.
 	virtual int Interpolate( float currentTime ) = 0;
-	
+
 	virtual int	 GetType() const = 0;
 	virtual void RestoreToLastNetworked() = 0;
 	virtual void Copy( IInterpolatedVar *pSrc ) = 0;
@@ -328,17 +328,17 @@ public:
 	bool IsValidIndex(int i) const { return IsIdxValid(i); }
 	static int InvalidIndex() { return -1; }
 
-	T& operator[]( int i ) 
-	{ 
-		Assert( IsIdxValid(i) ); 
+	T& operator[]( int i )
+	{
+		Assert( IsIdxValid(i) );
 		i += m_firstElement;
 		i = WrapRange(i);
 		return m_pElements[i];
 	}
 
 	const T& operator[]( int i ) const
-	{ 
-		Assert( IsIdxValid(i) ); 
+	{
+		Assert( IsIdxValid(i) );
 		i += m_firstElement;
 		i = WrapRange(i);
 		return m_pElements[i];
@@ -441,10 +441,10 @@ public:
 	CInterpolatedVarArrayBase( const char *pDebugName="no debug name" );
 	virtual ~CInterpolatedVarArrayBase();
 
-	
+
 	// IInterpolatedVar overrides.
 public:
-	
+
 	virtual void Setup( void *pValue, int type );
 	virtual void SetInterpolationAmount( float seconds );
 	virtual void NoteLastNetworkedValue();
@@ -472,14 +472,14 @@ public:
 	void AddToHead( float changeTime, const Type* values, bool bFlushNewer );
 	const Type&	GetPrev( int iArrayIndex=0 ) const;
 	const Type&	GetCurrent( int iArrayIndex=0 ) const;
-	
+
 	// Returns the time difference betweem the most recent sample and its previous sample.
 	float	GetInterval() const;
 	bool	IsValidIndex( int i );
 	Type	*GetHistoryValue( int index, float& changetime, int iArrayIndex=0 );
 	int		GetHead() { return 0; }
-	int		GetNext( int i ) 
-	{ 
+	int		GetNext( int i )
+	{
 		int next = i + 1;
 		if ( !m_VarHistory.IsValidIndex(next) )
 			return m_VarHistory.InvalidIndex();
@@ -488,7 +488,7 @@ public:
 
 	void SetHistoryValuesForItem( int item, Type& value );
 	void	SetLooping( bool looping, int iArrayIndex=0 );
-	
+
 	void SetMaxCount( int newmax );
 	int GetMaxCount() const;
 
@@ -522,27 +522,27 @@ protected:
 	void RemoveOldEntries( float oldesttime );
 	void RemoveEntriesPreviousTo( float flTime );
 
-	bool GetInterpolationInfo( 
+	bool GetInterpolationInfo(
 		CInterpolationInfo *pInfo,
-		float currentTime, 
+		float currentTime,
 		float interpolation_amount,
 		int *pNoMoreChanges );
 
-	void TimeFixup_Hermite( 
+	void TimeFixup_Hermite(
 		CInterpolatedVarEntry &fixup,
-		CInterpolatedVarEntry*& prev, 
-		CInterpolatedVarEntry*& start, 
+		CInterpolatedVarEntry*& prev,
+		CInterpolatedVarEntry*& start,
 		CInterpolatedVarEntry*& end	);
 
 	// Force the time between prev and start to be dt (and extend prev out farther if necessary).
-	void TimeFixup2_Hermite( 
+	void TimeFixup2_Hermite(
 		CInterpolatedVarEntry &fixup,
-		CInterpolatedVarEntry*& prev, 
-		CInterpolatedVarEntry*& start, 
+		CInterpolatedVarEntry*& prev,
+		CInterpolatedVarEntry*& start,
 		float dt
 		);
 
-	void _Extrapolate( 
+	void _Extrapolate(
 		Type *pOut,
 		CInterpolatedVarEntry *pOld,
 		CInterpolatedVarEntry *pNew,
@@ -552,11 +552,11 @@ protected:
 
 	void _Interpolate( Type *out, float frac, CInterpolatedVarEntry *start, CInterpolatedVarEntry *end );
 	void _Interpolate_Hermite( Type *out, float frac, CInterpolatedVarEntry *pOriginalPrev, CInterpolatedVarEntry *start, CInterpolatedVarEntry *end, bool looping = false );
-	
+
 	void _Derivative_Hermite( Type *out, float frac, CInterpolatedVarEntry *pOriginalPrev, CInterpolatedVarEntry *start, CInterpolatedVarEntry *end );
 	void _Derivative_Hermite_SmoothVelocity( Type *out, float frac, CInterpolatedVarEntry *b, CInterpolatedVarEntry *c, CInterpolatedVarEntry *d );
 	void _Derivative_Linear( Type *out, CInterpolatedVarEntry *start, CInterpolatedVarEntry *end );
-	
+
 	bool ValidOrder();
 
 protected:
@@ -638,7 +638,7 @@ inline bool CInterpolatedVarArrayBase<Type, IS_ARRAY>::NoteChanged( float change
 			bRet = false;
 		}
 	}
-	
+
 	if ( m_bDebug )
 	{
 		char const *pDiffString = bRet ? "differs" : "identical";
@@ -652,7 +652,7 @@ inline bool CInterpolatedVarArrayBase<Type, IS_ARRAY>::NoteChanged( float change
 	{
 		NoteLastNetworkedValue();
 	}
-	
+
 #if 0
 	// Since we don't clean out the old entries until Interpolate(), make sure that there
 	// aren't any super old entries hanging around.
@@ -663,10 +663,10 @@ inline bool CInterpolatedVarArrayBase<Type, IS_ARRAY>::NoteChanged( float change
 	// in first person, so the history is only truncated here and will accumulate ~40 entries instead of 2 or 3
 	// changing over to the method in Interpolate() means that we always have a 3-sample neighborhood around
 	// any data we're going to need.  Unless gpGlobals->curtime is different when samples are added vs. when
-	// they are interpolated I can't see this having any ill effects.  
+	// they are interpolated I can't see this having any ill effects.
 	RemoveEntriesPreviousTo( gpGlobals->curtime - interpolation_amount - EXTRA_INTERPOLATION_HISTORY_STORED );
 #endif
-	
+
 	return bRet;
 }
 
@@ -700,11 +700,11 @@ inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::AddToHead( float changeTi
 {
 	MEM_ALLOC_CREDIT_CLASS();
 	int newslot;
-	
+
 	if ( bFlushNewer )
 	{
 		// Get rid of anything that has a timestamp after this sample. The server might have
-		// corrected our clock and moved us back, so our current changeTime is less than a 
+		// corrected our clock and moved us back, so our current changeTime is less than a
 		// changeTime we added samples during previously.
 		while ( m_VarHistory.Count() )
 		{
@@ -796,9 +796,9 @@ inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::RemoveEntriesPreviousTo( 
 
 
 template< typename Type, bool IS_ARRAY >
-inline bool CInterpolatedVarArrayBase<Type, IS_ARRAY>::GetInterpolationInfo( 
+inline bool CInterpolatedVarArrayBase<Type, IS_ARRAY>::GetInterpolationInfo(
 	typename CInterpolatedVarArrayBase<Type, IS_ARRAY>::CInterpolationInfo *pInfo,
-	float currentTime, 
+	float currentTime,
 	float interpolation_amount,
 	int *pNoMoreChanges
 	)
@@ -812,11 +812,11 @@ inline bool CInterpolatedVarArrayBase<Type, IS_ARRAY>::GetInterpolationInfo(
 	pInfo->m_bHermite = false;
 	pInfo->frac = 0;
 	pInfo->oldest = pInfo->older = pInfo->newer = varHistory.InvalidIndex();
-	
+
 	for ( int i = 0; i < varHistory.Count(); i++ )
 	{
 		pInfo->older = i;
-		
+
 		float older_change_time = m_VarHistory[ i ].changetime;
 		if ( older_change_time == 0.0f )
 			break;
@@ -830,7 +830,7 @@ inline bool CInterpolatedVarArrayBase<Type, IS_ARRAY>::GetInterpolationInfo(
 		if ( pInfo->newer == varHistory.InvalidIndex() )
 		{
 			// Have it linear interpolate between the newest 2 entries.
-			pInfo->newer = pInfo->older; 
+			pInfo->newer = pInfo->older;
 
 			// Since the time given is PAST all of our entries, then as long
 			// as time continues to increase, we'll be returning the same value.
@@ -847,7 +847,7 @@ inline bool CInterpolatedVarArrayBase<Type, IS_ARRAY>::GetInterpolationInfo(
 			pInfo->frac = MIN( pInfo->frac, 2.0f );
 
 			int oldestindex = i+1;
-														    
+
 			if ( !(m_fType & INTERPOLATE_LINEAR_ONLY) && varHistory.IsIdxValid(oldestindex) )
 			{
 				pInfo->oldest = oldestindex;
@@ -937,7 +937,7 @@ inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::DebugInterpolate( Type *p
 		{
 			// At this point, we know we're out of data and we have the ability to get a velocity to extrapolate with.
 			//
-			// However, we only want to extraploate if the server is choking. We don't want to extrapolate if 
+			// However, we only want to extraploate if the server is choking. We don't want to extrapolate if
 			// the object legimately stopped moving and the server stopped sending updates for it.
 			//
 			// The way we know that the server is choking is if we haven't heard ANYTHING from it for a while.
@@ -968,12 +968,12 @@ template< typename Type, bool IS_ARRAY >
 inline int CInterpolatedVarArrayBase<Type, IS_ARRAY>::Interpolate( float currentTime, float interpolation_amount )
 {
 	int noMoreChanges = 0;
-	
+
 	CInterpolationInfo info;
 	if (!GetInterpolationInfo( &info, currentTime, interpolation_amount, &noMoreChanges ))
 		return noMoreChanges;
 
-	
+
 	CVarHistory &history = m_VarHistory;
 
 	if ( m_bDebug )
@@ -1007,7 +1007,7 @@ inline int CInterpolatedVarArrayBase<Type, IS_ARRAY>::Interpolate( float current
 		{
 			// At this point, we know we're out of data and we have the ability to get a velocity to extrapolate with.
 			//
-			// However, we only want to extraploate if the server is choking. We don't want to extrapolate if 
+			// However, we only want to extraploate if the server is choking. We don't want to extrapolate if
 			// the object legimately stopped moving and the server stopped sending updates for it.
 			//
 			// The way we know that the server is choking is if we haven't heard ANYTHING from it for a while.
@@ -1038,7 +1038,7 @@ inline int CInterpolatedVarArrayBase<Type, IS_ARRAY>::Interpolate( float current
 	{
 		extern int g_nInterpolatedVarsChanged;
 		extern bool g_bRestoreInterpolatedVarValues;
-		
+
 		++g_nInterpolatedVarsChanged;
 
 		// This undoes the work that we do in here so if someone is in the debugger, they
@@ -1087,7 +1087,7 @@ void CInterpolatedVarArrayBase<Type, IS_ARRAY>::GetDerivative_SmoothVelocity( Ty
 	CVarHistory &history = m_VarHistory;
 	bool bExtrapolate = false;
 	int realOlder = 0;
-	
+
 	if ( info.m_bHermite )
 	{
 		_Derivative_Hermite_SmoothVelocity( pOut, info.frac, &history[info.oldest], &history[info.older], &history[info.newer] );
@@ -1102,14 +1102,14 @@ void CInterpolatedVarArrayBase<Type, IS_ARRAY>::GetDerivative_SmoothVelocity( Ty
 		{
 			// At this point, we know we're out of data and we have the ability to get a velocity to extrapolate with.
 			//
-			// However, we only want to extraploate if the server is choking. We don't want to extrapolate if 
+			// However, we only want to extraploate if the server is choking. We don't want to extrapolate if
 			// the object legimately stopped moving and the server stopped sending updates for it.
 			//
 			// The way we know that the server is choking is if we haven't heard ANYTHING from it for a while.
 			// The server's update interval should be at least as often as our interpolation amount (otherwise,
 			// we wouldn't have the ability to interpolate).
 			//
-			// So right here, if we see that we haven't gotten any server updates for a whole interpolation 
+			// So right here, if we see that we haven't gotten any server updates for a whole interpolation
 			// interval, then we know the server is choking.
 			//
 			// The End
@@ -1224,7 +1224,7 @@ inline const Type& CInterpolatedVarArrayBase<Type, IS_ARRAY>::GetCurrent( int iA
 
 template< typename Type, bool IS_ARRAY >
 inline float CInterpolatedVarArrayBase<Type, IS_ARRAY>::GetInterval() const
-{	
+{
 	if ( m_VarHistory.Count() > 1 )
 	{
 		return m_VarHistory[0].changetime - m_VarHistory[1].changetime;
@@ -1311,7 +1311,7 @@ inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Interpolate( Type *out, 
 {
 	Assert( start );
 	Assert( end );
-	
+
 	if ( start == end )
 	{
 		// quick exit
@@ -1342,7 +1342,7 @@ inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Interpolate( Type *out, 
 
 
 template< typename Type, bool IS_ARRAY >
-inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Extrapolate( 
+inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Extrapolate(
 	Type *pOut,
 	CInterpolatedVarEntry *pOld,
 	CInterpolatedVarEntry *pNew,
@@ -1369,10 +1369,10 @@ inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Extrapolate(
 
 
 template< typename Type, bool IS_ARRAY >
-inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::TimeFixup2_Hermite( 
+inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::TimeFixup2_Hermite(
 	typename CInterpolatedVarArrayBase<Type, IS_ARRAY>::CInterpolatedVarEntry &fixup,
-	typename CInterpolatedVarArrayBase<Type, IS_ARRAY>::CInterpolatedVarEntry*& prev, 
-	typename CInterpolatedVarArrayBase<Type, IS_ARRAY>::CInterpolatedVarEntry*& start, 
+	typename CInterpolatedVarArrayBase<Type, IS_ARRAY>::CInterpolatedVarEntry*& prev,
+	typename CInterpolatedVarArrayBase<Type, IS_ARRAY>::CInterpolatedVarEntry*& start,
 	float dt1
 	)
 {
@@ -1407,10 +1407,10 @@ inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::TimeFixup2_Hermite(
 
 
 template< typename Type, bool IS_ARRAY >
-inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::TimeFixup_Hermite( 
+inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::TimeFixup_Hermite(
 	typename CInterpolatedVarArrayBase<Type, IS_ARRAY>::CInterpolatedVarEntry &fixup,
-	typename CInterpolatedVarArrayBase<Type, IS_ARRAY>::CInterpolatedVarEntry*& prev, 
-	typename CInterpolatedVarArrayBase<Type, IS_ARRAY>::CInterpolatedVarEntry*& start, 
+	typename CInterpolatedVarArrayBase<Type, IS_ARRAY>::CInterpolatedVarEntry*& prev,
+	typename CInterpolatedVarArrayBase<Type, IS_ARRAY>::CInterpolatedVarEntry*& start,
 	typename CInterpolatedVarArrayBase<Type, IS_ARRAY>::CInterpolatedVarEntry*& end	)
 {
 	TimeFixup2_Hermite( fixup, prev, start, end->changetime - start->changetime );
@@ -1418,12 +1418,12 @@ inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::TimeFixup_Hermite(
 
 
 template< typename Type, bool IS_ARRAY >
-inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Interpolate_Hermite( 
-	Type *out, 
-	float frac, 
-	CInterpolatedVarEntry *prev, 
-	CInterpolatedVarEntry *start, 
-	CInterpolatedVarEntry *end, 
+inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Interpolate_Hermite(
+	Type *out,
+	float frac,
+	CInterpolatedVarEntry *prev,
+	CInterpolatedVarEntry *start,
+	CInterpolatedVarEntry *end,
 	bool looping )
 {
 	Assert( start );
@@ -1431,7 +1431,7 @@ inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Interpolate_Hermite(
 
 	// Disable range checks because we can produce weird values here and it's not an error.
 	// After interpolation, we will clamp the values.
-	CDisableRangeChecks disableRangeChecks; 
+	CDisableRangeChecks disableRangeChecks;
 
 	CInterpolatedVarEntry fixup;
 	fixup.Init(m_nMaxCount);
@@ -1458,11 +1458,11 @@ inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Interpolate_Hermite(
 }
 
 template< typename Type, bool IS_ARRAY >
-inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Derivative_Hermite( 
-	Type *out, 
-	float frac, 
-	CInterpolatedVarEntry *prev, 
-	CInterpolatedVarEntry *start, 
+inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Derivative_Hermite(
+	Type *out,
+	float frac,
+	CInterpolatedVarEntry *prev,
+	CInterpolatedVarEntry *start,
 	CInterpolatedVarEntry *end )
 {
 	Assert( start );
@@ -1470,7 +1470,7 @@ inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Derivative_Hermite(
 
 	// Disable range checks because we can produce weird values here and it's not an error.
 	// After interpolation, we will clamp the values.
-	CDisableRangeChecks disableRangeChecks; 
+	CDisableRangeChecks disableRangeChecks;
 
 	CInterpolatedVarEntry fixup;
 	fixup.value = (Type*)_alloca( sizeof(Type) * m_nMaxCount );
@@ -1488,11 +1488,11 @@ inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Derivative_Hermite(
 
 
 template< typename Type, bool IS_ARRAY >
-inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Derivative_Hermite_SmoothVelocity( 
-	Type *out, 
-	float frac, 
-	CInterpolatedVarEntry *b, 
-	CInterpolatedVarEntry *c, 
+inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Derivative_Hermite_SmoothVelocity(
+	Type *out,
+	float frac,
+	CInterpolatedVarEntry *b,
+	CInterpolatedVarEntry *c,
 	CInterpolatedVarEntry *d )
 {
 	CInterpolatedVarEntry fixup;
@@ -1508,9 +1508,9 @@ inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Derivative_Hermite_Smoot
 
 
 template< typename Type, bool IS_ARRAY >
-inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Derivative_Linear( 
-	Type *out, 
-	CInterpolatedVarEntry *start, 
+inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Derivative_Linear(
+	Type *out,
+	CInterpolatedVarEntry *start,
 	CInterpolatedVarEntry *end )
 {
 	if ( start == end || fabs( start->changetime - end->changetime ) < 0.0001f )
@@ -1520,7 +1520,7 @@ inline void CInterpolatedVarArrayBase<Type, IS_ARRAY>::_Derivative_Linear(
 			out[ i ] = start->GetValue()[i] * 0;
 		}
 	}
-	else 
+	else
 	{
 		float divisor = 1.0f / (end->changetime - start->changetime);
 		for( int i = 0; i < m_nMaxCount; i++ )
@@ -1580,7 +1580,7 @@ class CInterpolatedVar : public CInterpolatedVarArrayBase< Type, false >
 {
 public:
 	CInterpolatedVar( const char *pDebugName = NULL )
-		: CInterpolatedVarArrayBase< Type, false >(pDebugName) 
+		: CInterpolatedVarArrayBase< Type, false >(pDebugName)
 	{
 		this->SetMaxCount( 1 );
 	}

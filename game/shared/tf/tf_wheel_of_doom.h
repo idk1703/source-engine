@@ -339,7 +339,7 @@ private:
 	private:
 		int GetNumOFTeamDancing( int nTeam ) const;
 		void SlamPosAndAngles( CTFPlayer* pPlayer, const Vector& vPos, const QAngle& vAng );
-		
+
 		struct Dancer_t
 		{
 			Vector m_vecPos;

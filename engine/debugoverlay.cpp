@@ -140,7 +140,7 @@ struct OverlayBase_t
 			m_nCreationTick = GetOverlayTick();	// stay alive for only one frame
 			return;
 		}
-		
+
 		if ( duration == NDEBUG_PERSIST_TILL_NEXT_SERVER )
 		{
 			m_flEndTime = NDEBUG_PERSIST_TILL_NEXT_SERVER;
@@ -198,7 +198,7 @@ struct OverlaySphere_t : public OverlayBase_t
 	int				a;
 };
 
-struct OverlayLine_t : public OverlayBase_t 
+struct OverlayLine_t : public OverlayBase_t
 {
 	OverlayLine_t() { m_Type = OVERLAY_LINE; }
 
@@ -211,7 +211,7 @@ struct OverlayLine_t : public OverlayBase_t
 	bool			noDepthTest;
 };
 
-struct OverlayTriangle_t : public OverlayBase_t 
+struct OverlayTriangle_t : public OverlayBase_t
 {
 	OverlayTriangle_t() { m_Type = OVERLAY_TRIANGLE; }
 
@@ -225,7 +225,7 @@ struct OverlayTriangle_t : public OverlayBase_t
 	bool			noDepthTest;
 };
 
-struct OverlaySweptBox_t : public OverlayBase_t 
+struct OverlaySweptBox_t : public OverlayBase_t
 {
 	OverlaySweptBox_t() { m_Type = OVERLAY_SWEPT_BOX; }
 
@@ -254,7 +254,7 @@ void ClearDeadOverlays();
 // Init static member variables
 //-----------------------------------------------------------------------------
 OverlayText_t*	s_pOverlayText = NULL;	// text is handled differently; for backward compatibility reasons
-OverlayBase_t*	s_pOverlays = NULL; 
+OverlayBase_t*	s_pOverlays = NULL;
 Vector			s_vGridPosition(0,0,0);
 bool			s_bDrawGrid = false;
 CThreadFastMutex s_OverlayMutex;
@@ -263,10 +263,10 @@ CThreadFastMutex s_OverlayMutex;
 //-----------------------------------------------------------------------------
 // Purpose: Hack to allow this code to run on a client that's not connected to a server
 //  (i.e., demo playback, or multiplayer game )
-// Input  : ent_num - 
-//			origin - 
-//			mins - 
-//			maxs - 
+// Input  : ent_num -
+//			origin -
+//			mins -
+//			maxs -
 // Output : static void
 //-----------------------------------------------------------------------------
 static bool GetEntityOriginClientOrServer( int ent_num, Vector& origin )
@@ -314,7 +314,7 @@ int ScreenPosition(const Vector& point, Vector& screen)
 	CMatRenderContextPtr pRenderContext( materials );
 
 	int retval = g_EngineRenderer->ClipTransform(point,&screen);
-	
+
 	int x, y, w, h;
 	pRenderContext->GetViewport( x, y, w, h );
 
@@ -326,7 +326,7 @@ int ScreenPosition(const Vector& point, Vector& screen)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Given an xy screen pos (0-1), return the screen position 
+// Purpose: Given an xy screen pos (0-1), return the screen position
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
@@ -385,7 +385,7 @@ void AddEntityTextOverlay(int ent_index, int line_offset, float duration, int r,
 // Input  : Position of text & text
 // Output :
 //-----------------------------------------------------------------------------
-void AddGridOverlay(const Vector& vPos) 
+void AddGridOverlay(const Vector& vPos)
 {
 	if ( cl.IsPaused() )
 		return;
@@ -434,7 +434,7 @@ void AddCoordFrameOverlay(const matrix3x4_t& frame, float flScale, int vColorTab
 // Input  : Position of text & text
 // Output :
 //-----------------------------------------------------------------------------
-void AddTextOverlay(const Vector& textPos, float duration, const char *text) 
+void AddTextOverlay(const Vector& textPos, float duration, const char *text)
 {
 	if ( cl.IsPaused() )
 		return;
@@ -461,7 +461,7 @@ void AddTextOverlay(const Vector& textPos, float duration, const char *text)
 // Input  : Position of text & text
 // Output :
 //-----------------------------------------------------------------------------
-void AddTextOverlay(const Vector& textPos, float duration, float alpha, const char *text) 
+void AddTextOverlay(const Vector& textPos, float duration, float alpha, const char *text)
 {
 	if ( cl.IsPaused() )
 		return;
@@ -484,7 +484,7 @@ void AddTextOverlay(const Vector& textPos, float duration, float alpha, const ch
 }
 
 //------------------------------------------------------------------------------
-// Purpose : 
+// Purpose :
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
@@ -518,12 +518,12 @@ void AddScreenTextOverlay( float flXPos, float flYPos, float duration, int r, in
 
 //-----------------------------------------------------------------------------
 // Purpose: Add new overlay text
-// Input  : Position of text 
+// Input  : Position of text
 //			How many lines to offset text from position
 //			ext
 // Output :
 //-----------------------------------------------------------------------------
-void AddTextOverlay(const Vector& textPos, int line_offset, float duration, const char *text) 
+void AddTextOverlay(const Vector& textPos, int line_offset, float duration, const char *text)
 {
 	if ( cl.IsPaused() )
 		return;
@@ -601,7 +601,7 @@ void AddTextOverlay(const Vector& textPos, int line_offset, float duration, floa
 //			duration
 // Output :
 //-----------------------------------------------------------------------------
-void AddBoxOverlay(const Vector& origin, const Vector& mins, const Vector& maxs, QAngle const& angles, int r, int g, int b, int a, float flDuration) 
+void AddBoxOverlay(const Vector& origin, const Vector& mins, const Vector& maxs, QAngle const& angles, int r, int g, int b, int a, float flDuration)
 {
 	if ( cl.IsPaused() )
 		return;
@@ -695,7 +695,7 @@ void AddSphereOverlay(const Vector& vOrigin, float flRadius, int nTheta, int nPh
 }
 
 
-void AddSweptBoxOverlay(const Vector& start, const Vector& end, 
+void AddSweptBoxOverlay(const Vector& start, const Vector& end,
 	const Vector& mins, const Vector& maxs, QAngle const& angles, int r, int g, int b, int a, float flDuration)
 {
 	if ( cl.IsPaused() )
@@ -736,7 +736,7 @@ void AddSweptBoxOverlay(const Vector& start, const Vector& end,
 //			The text to print
 // Output :
 //-----------------------------------------------------------------------------
-void AddLineOverlay(const Vector& origin, const Vector& dest, int r, int g, int b, int a, bool noDepthTest, float flDuration) 
+void AddLineOverlay(const Vector& origin, const Vector& dest, int r, int g, int b, int a, bool noDepthTest, float flDuration)
 {
 	if ( cl.IsPaused() )
 		return;
@@ -769,7 +769,7 @@ void AddLineOverlay(const Vector& origin, const Vector& dest, int r, int g, int 
 //-----------------------------------------------------------------------------
 // Purpose: Add new triangle overlay
 //-----------------------------------------------------------------------------
-void AddTriangleOverlay(const Vector& p1, const Vector& p2, const Vector &p3, 
+void AddTriangleOverlay(const Vector& p1, const Vector& p2, const Vector &p3,
 				int r, int g, int b, int a, bool noDepthTest, float flDuration)
 {
 	if ( cl.IsPaused() )
@@ -879,7 +879,7 @@ void DrawOverlay( OverlayBase_t *pOverlay )
 		{
 			// Draw the box
 			OverlayBox_t *pCurrBox = static_cast<OverlayBox_t*>(pOverlay);
-			if ( pCurrBox->a > 0 ) 
+			if ( pCurrBox->a > 0 )
 			{
 				RenderBox( pCurrBox->origin, pCurrBox->angles, pCurrBox->mins, pCurrBox->maxs, Color( pCurrBox->r, pCurrBox->g, pCurrBox->b, pCurrBox->a ), false );
 			}
@@ -891,7 +891,7 @@ void DrawOverlay( OverlayBase_t *pOverlay )
 		{
 			// Draw the box
 			OverlayBox2_t *pCurrBox = static_cast<OverlayBox2_t*>(pOverlay);
-			if ( pCurrBox->faceColor.a() > 0 ) 
+			if ( pCurrBox->faceColor.a() > 0 )
 			{
 				RenderBox( pCurrBox->origin, pCurrBox->angles, pCurrBox->mins, pCurrBox->maxs, pCurrBox->faceColor, false );
 			}
@@ -920,7 +920,7 @@ void DrawOverlay( OverlayBase_t *pOverlay )
 	case OVERLAY_TRIANGLE:
 		{
 			OverlayTriangle_t *pTriangle = static_cast<OverlayTriangle_t*>(pOverlay);
-			RenderTriangle( pTriangle->p1, pTriangle->p2, pTriangle->p3, 
+			RenderTriangle( pTriangle->p1, pTriangle->p2, pTriangle->p3,
 				Color( pTriangle->r, pTriangle->g, pTriangle->b, pTriangle->a ), !pTriangle->noDepthTest );
 		}
 		break;
@@ -949,7 +949,7 @@ void DestroyOverlay( OverlayBase_t *pOverlay )
 		}
 		break;
 
-	
+
 	case OVERLAY_BOX2:
 		{
 			OverlayBox2_t *pCurrBox = static_cast<OverlayBox2_t*>(pOverlay);
@@ -999,7 +999,7 @@ void DrawAllOverlays(void)
 	OverlayBase_t* pPrevOverlay = NULL;
 	OverlayBase_t* pNextOverlay;
 
-	while (pCurrOverlay) 
+	while (pCurrOverlay)
 	{
 		// Is it time to kill this overlay?
 		if ( pCurrOverlay->IsDead() )
@@ -1034,7 +1034,7 @@ void DrawAllOverlays(void)
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
-//0.01234f 
+//0.01234f
 void PurgeServerOverlays( void )
 {
 	AUTO_LOCK( s_OverlayMutex );
@@ -1066,7 +1066,7 @@ void PurgeTextOverlays( void )
 {
 	AUTO_LOCK( s_OverlayMutex );
 	OverlayText_t* pCurrOverlay = s_pOverlayText;
-	while ( pCurrOverlay ) 
+	while ( pCurrOverlay )
 	{
 		if ( pCurrOverlay->m_flEndTime == 0.0f &&
 			 pCurrOverlay->m_nCreationTick != -1 )
@@ -1110,14 +1110,14 @@ void Draw3DOverlays(void)
 void ClearAllOverlays(void)
 {
 	AUTO_LOCK( s_OverlayMutex );
-	while (s_pOverlays) 
+	while (s_pOverlays)
 	{
 		OverlayBase_t *pOldOverlay = s_pOverlays;
 		s_pOverlays = s_pOverlays->m_pNextOverlay;
 		DestroyOverlay( pOldOverlay );
 	}
 
-	while (s_pOverlayText) 
+	while (s_pOverlayText)
 	{
 		OverlayText_t *cur_ol = s_pOverlayText;
 		s_pOverlayText = s_pOverlayText->nextOverlayText;
@@ -1133,7 +1133,7 @@ void ClearDeadOverlays( void )
 	OverlayText_t* pCurrText = s_pOverlayText;
 	OverlayText_t* pLastText = NULL;
 	OverlayText_t* pNextText = NULL;
-	while (pCurrText) 
+	while (pCurrText)
 	{
 		// Is it time to kill this Text?
 		if ( pCurrText->IsDead() )
@@ -1244,7 +1244,7 @@ public:
 	{
 		CDebugOverlay::AddScreenTextOverlay( flXPos, flYPos, flDuration, r, g, b, a, text );
 	}
-	
+
 	void AddGridOverlay(const Vector& origin)
 	{
 		CDebugOverlay::AddGridOverlay( origin );
@@ -1305,4 +1305,3 @@ static CIVDebugOverlay g_DebugOverlay;
 
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CIVDebugOverlay, IVDebugOverlay, VDEBUG_OVERLAY_INTERFACE_VERSION, g_DebugOverlay );
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CIVDebugOverlay, IVPhysicsDebugOverlay, VPHYSICS_DEBUG_OVERLAY_INTERFACE_VERSION, g_DebugOverlay );
-

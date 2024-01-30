@@ -31,7 +31,7 @@ BEGIN_VS_SHADER( PortalRefract_dx9, "PortalRefract" )
 		info.m_nTime = TIME;
 	}
 
-	bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const 
+	bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const
 	{
 		// For setting model flag at load time
 		if ( bCheckSpecificToThisFrame == false )

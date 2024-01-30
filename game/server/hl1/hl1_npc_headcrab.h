@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -25,7 +25,7 @@ public:
 	void SetYawSpeed ( void );
 	Vector	Center( void );
 	Vector	BodyTarget( const Vector &posSrc, bool bNoisy = true );
-	
+
 	float	MaxYawSpeed( void );
 	Class_T Classify( void );
 
@@ -48,7 +48,7 @@ public:
 
 	virtual int		GetVoicePitch( void ) { return 100; }
 	virtual float	GetSoundVolume( void ) { return 1.0; }
-	
+
 	int	m_nGibCount;
 
 	DEFINE_CUSTOM_AI;

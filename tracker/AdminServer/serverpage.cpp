@@ -5,7 +5,7 @@
 // Valve, L.L.C., or in accordance with the terms and conditions stipulated in
 // the agreement/contract under which the contents have been supplied.
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -57,7 +57,7 @@
 //#include "ModList.h"
 #include "DialogGameInfo.h"
 #include "ConfigPanel.h"
- 
+
 
 // game list
 #include "FavoriteGames.h"
@@ -83,7 +83,7 @@ CSysModule * g_hTrackerNetModule = NULL;
 VInternetDlg::VInternetDlg( unsigned int userid ) : Frame(NULL, "VInternetDlg")
 {
 	s_InternetDlg = this;
-	
+
 	m_iUserID=userid;
 	m_bLoggedIn=false;
 
@@ -136,7 +136,7 @@ VInternetDlg::VInternetDlg( unsigned int userid ) : Frame(NULL, "VInternetDlg")
 
 	m_pNet->Initialize(27030, 27100);
 	m_iServerAddr=m_pNet->GetNetAddress("tracker3.valvesoftware.com:1200");
-	
+
 	// uncomment this to do the "tracker" magic
 	//SendInitialLogin();
 	*/
@@ -177,8 +177,8 @@ void VInternetDlg::Initialize()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : serverID - 
+// Purpose:
+// Input  : serverID -
 // Output : serveritem_t
 //-----------------------------------------------------------------------------
 serveritem_t &VInternetDlg::GetServer(unsigned int serverID)
@@ -187,10 +187,10 @@ serveritem_t &VInternetDlg::GetServer(unsigned int serverID)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VInternetDlg::Open( void )
-{	
+{
 	m_pTabPanel->RequestFocus();
 	// if serverbrowser file is not there we will try to transfer the favorites list.
 	FileHandle_t f = g_pFullFileSystem->Open("AdminServer.vdf", "rb");
@@ -199,7 +199,7 @@ void VInternetDlg::Open( void )
 		g_pFullFileSystem->Close( f );
 	}
 
-	
+
 	surface()->SetMinimized(GetVPanel(), false);
 	SetVisible(true);
 	RequestFocus();
@@ -216,7 +216,7 @@ void VInternetDlg::PerformLayout()
 
 	int x, y, wide, tall;
 	GetClientArea(x, y, wide, tall);
-	
+
 	// game list in middle
 	m_pTabPanel->SetBounds(8, y + 8, GetWide() - 16, tall - (28));
 	x += 4;
@@ -230,15 +230,15 @@ void VInternetDlg::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VInternetDlg::OnClose()
 {
 	// bug here if you exit before logging in.
 	SaveDialogState(this, "AdminServer");
 	SaveFilters();
-	Frame::OnClose();	
-	
+	Frame::OnClose();
+
 }
 
 //-----------------------------------------------------------------------------
@@ -294,7 +294,7 @@ void VInternetDlg::LoadFilters()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VInternetDlg::SaveFilters()
 {
@@ -319,7 +319,7 @@ void VInternetDlg::SetConfig(bool autorefresh,bool savercon,int refreshtime,bool
 	{
 		m_iRefreshTime=0;
 	}
-	
+
 	m_bGraphs = graphs;
 	if(graphs)
 	{
@@ -337,14 +337,14 @@ void VInternetDlg::SetConfig(bool autorefresh,bool savercon,int refreshtime,bool
 	m_pSavedData->SetInt("ShowGraphs",graphs);
 	m_pSavedData->SetInt("GetLogs",getlogs);
 
-	
+
 }
 
 
 //-----------------------------------------------------------------------------
 // Purpose: Updates status test at bottom of window
-// Input  : *fmt - 
-//			... - 
+// Input  : *fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void VInternetDlg::UpdateStatusText(const char *fmt, ...)
 {
@@ -370,7 +370,7 @@ VInternetDlg *VInternetDlg::GetInstance()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CServerContextMenu
 //-----------------------------------------------------------------------------
 CServerContextMenu *VInternetDlg::GetContextMenu()
@@ -430,7 +430,7 @@ CDialogGameInfo *VInternetDlg::OpenGameInfoDialog(int serverIP, int serverPort, 
 
 //-----------------------------------------------------------------------------
 // Purpose: Save position and window size of a dialog from the .vdf file.
-// Input  : *dialog - panel we are setting position and size 
+// Input  : *dialog - panel we are setting position and size
 //			*dialogName -  name of dialog in the .vdf file
 //-----------------------------------------------------------------------------
 void VInternetDlg::SaveDialogState(Panel *dialog, const char *dialogName)
@@ -450,11 +450,11 @@ void VInternetDlg::SaveDialogState(Panel *dialog, const char *dialogName)
 
 //-----------------------------------------------------------------------------
 // Purpose: Load position and window size of a dialog from the .vdf file.
-// Input  : *dialog - panel we are setting position and size 
+// Input  : *dialog - panel we are setting position and size
 //			*dialogName -  name of dialog in the .vdf file
 //-----------------------------------------------------------------------------
 void VInternetDlg::LoadDialogState(Panel *dialog, const char *dialogName)
-{						   
+{
 	// read the size and position from the document
 	KeyValues *data;
 	data = m_pSavedData->FindKey(dialogName, true);
@@ -495,10 +495,10 @@ void VInternetDlg::LoadDialogState(Panel *dialog, const char *dialogName)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *dest - 
-//			*src - 
-//			bufsize - 
+// Purpose:
+// Input  : *dest -
+//			*src -
+//			bufsize -
 //-----------------------------------------------------------------------------
 void v_strncpy(char *dest, const char *src, int bufsize)
 {
@@ -515,10 +515,10 @@ void VInternetDlg::ConfigPanel()
 		config->Run();
 }
 
-void VInternetDlg::OnManageServer(int serverID) 
+void VInternetDlg::OnManageServer(int serverID)
 {
 	int i;
-	serveritem_t &server = m_pFavoriteGames->GetServer(serverID); 
+	serveritem_t &server = m_pFavoriteGames->GetServer(serverID);
 	netadr_t addr;
 	memcpy(addr.ip,server.ip,4);
 	addr.port=(server.port & 0xff) << 8 | (server.port & 0xff00) >> 8;
@@ -536,13 +536,13 @@ void VInternetDlg::OnManageServer(int serverID)
 			break;
 		}
 	}
-	
+
 	if(i==m_pTabPanel->GetNumPages())
 	{
 
-		if(m_bSaveRcon) 
-		{ // rcons are being saved		
-			if(strlen(server.rconPassword)>0) 
+		if(m_bSaveRcon)
+		{ // rcons are being saved
+			if(strlen(server.rconPassword)>0)
 			{ // this rcon password is already saved :)
 				ManageServer(serverID,server.rconPassword);
 				return;
@@ -571,7 +571,7 @@ void VInternetDlg::OnPlayerDialog(vgui::KeyValues *data)
 {
 	const char *type=data->GetString("type");
 	const char *playerName=data->GetString("player");
-	if(!stricmp(type,"rconpassword")) 
+	if(!stricmp(type,"rconpassword"))
 	{
 		const char *value=data->GetString("value");
 		serveritem_t &server = m_pFavoriteGames->GetServer(atoi(playerName)); // we encode the serverid in the name field :)
@@ -583,7 +583,7 @@ void VInternetDlg::OnPlayerDialog(vgui::KeyValues *data)
 
 void VInternetDlg::ManageServer(int serverID,const char *pass)
 {
-	serveritem_t &server = m_pFavoriteGames->GetServer(serverID); 
+	serveritem_t &server = m_pFavoriteGames->GetServer(serverID);
 	netadr_t addr;
 	memcpy(addr.ip,server.ip,4);
 	addr.port=(server.port & 0xff) << 8 | (server.port & 0xff00) >> 8;
@@ -599,7 +599,7 @@ void VInternetDlg::ManageServer(int serverID,const char *pass)
 
 void VInternetDlg::UpdateServer(serveritem_t &server)
 {
-	m_pFavoriteGames->UpdateServer(server); 
+	m_pFavoriteGames->UpdateServer(server);
 }
 
 void VInternetDlg::OnDeleteServer(int chosenPanel)
@@ -612,7 +612,7 @@ void VInternetDlg::OnDeleteServer(int chosenPanel)
 
 }
 
-vgui::PropertySheet *VInternetDlg::GetTabPanel() 
+vgui::PropertySheet *VInternetDlg::GetTabPanel()
 {
 	return m_pTabPanel;
 }
@@ -622,12 +622,12 @@ void VInternetDlg::OnOpenContextMenu()
 {
 //	CServerContextMenu *menu = VInternetDlg::GetInstance()->GetContextMenu();
 		// no selected rows, so don't display default stuff in menu
-	if( m_pTabPanel->GetActiveTab()->IsCursorOver() || 
+	if( m_pTabPanel->GetActiveTab()->IsCursorOver() ||
 		m_pFavoriteGames->IsCursorOver() )
 	{
 		m_pContextMenu->ShowMenu(this, -1, false, false, false,false);
 	}
-}	
+}
 
 
 
@@ -670,20 +670,20 @@ void VInternetDlg::OnTick()
 
 
 
-		switch(dataName) 
+		switch(dataName)
 		{
 		case TSVC_CHALLENGE:
 			{
 				int ChallengeKey;
 				int status = COnlineStatus::ONLINE;
 				int heartbeatRate =10000;//GetHeartBeatRate();
-			
+
 				recv->ReadInt("challenge", ChallengeKey);
 				recv->ReadUInt("sessionID", m_iSessionID);
 				// respond to the challenge
 				ISendMessage *reply = CreateServerMessage(TCLS_RESPONSE);
 				reply->SetSessionID( m_iSessionID );
-			
+
 
 
 				reply->WriteInt("challenge", ChallengeKey);
@@ -698,7 +698,7 @@ void VInternetDlg::OnTick()
 				//m_iLoginTimeout = system()->getTimeMillis() + COnlineStatus::SERVERCONNECT_TIMEOUT;
 
 				m_pNet->SendMessage(reply, NET_RELIABLE);
-				
+
 				}
 			break;
 
@@ -717,7 +717,7 @@ void VInternetDlg::OnTick()
 				//char name[60];
 
 				int serverID,sessionID;
-				recv->ReadInt("uid",m_iRemoteUID);	
+				recv->ReadInt("uid",m_iRemoteUID);
 				recv->ReadInt("serverid",serverID);
 				recv->ReadInt("sessionID",sessionID);
 
@@ -737,7 +737,7 @@ void VInternetDlg::OnTick()
 
 				// lets log off
 				msg = CreateServerMessage(TCLS_HEARTBEAT);
-				msg->WriteInt("status", COnlineStatus::OFFLINE);	
+				msg->WriteInt("status", COnlineStatus::OFFLINE);
 				m_pNet->SendMessage(msg, NET_RELIABLE);
 
 			//	m_pNet->Shutdown(true);
@@ -749,7 +749,7 @@ void VInternetDlg::OnTick()
 
 		default:
 			{
-				while(recv->AdvanceField()) 
+				while(recv->AdvanceField())
 				{
 					char data[512];
 					const char *nm=recv->GetFieldName();
@@ -759,7 +759,7 @@ void VInternetDlg::OnTick()
 			}
 
 			break;
-	
+
 
 		//	{ TSVC_CHALLENGE,	CServerSession::ReceivedMsg_Challenge },
 		//	{ TSVC_LOGINOK,		CServerSession::ReceivedMsg_LoginOK },
@@ -770,7 +770,7 @@ void VInternetDlg::OnTick()
 		//	{ TSVC_GAMEINFO,	CServerSession::ReceivedMsg_GameInfo },
 		//	{ TSVC_HEARTBEAT,	CServerSession::ReceivedMsg_Heartbeat },
 		//	{ TSVC_PINGACK,		CServerSession::ReceivedMsg_PingAck },
-		
+
 
 		//default:
 		//	break;
@@ -784,13 +784,13 @@ void VInternetDlg::OnTick()
 	// get the latest fails
 	while ((recv = m_pNet->GetFailedMessage()) != NULL)
 	{
-		
+
 
 		m_pNet->ReleaseMessage(recv);
 	}
 
 	// now let it update itself
-	m_pNet->RunFrame();	
+	m_pNet->RunFrame();
 	*/
 }
 

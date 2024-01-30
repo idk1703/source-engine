@@ -30,7 +30,7 @@
 #  define REPLAY_DEATH_REVENGE				TF_DEATH_REVENGE
 #  define REPLAY_DEATH_ASSISTER_REVENGE		TF_DEATH_ASSISTER_REVENGE
 
-#  define	C_ReplayGame_PlayerResource		
+#  define	C_ReplayGame_PlayerResource
 #  include "c_tf_playerresource.h"
 typedef C_TF_PlayerResource					C_ReplayGame_PlayerResource_t;
 
@@ -55,7 +55,7 @@ typedef C_TF_PlayerResource					C_ReplayGame_PlayerResource_t;
 #  define REPLAY_CLASS_UNDEFINED			CS_CLASS_NONE
 #  define REPLAY_NUM_CLASSES				CS_NUM_CLASSES
 
-#  define REPLAY_DEATH_DOMINATION			CS_DEATH_DOMINATION	
+#  define REPLAY_DEATH_DOMINATION			CS_DEATH_DOMINATION
 #  define REPLAY_DEATH_REVENGE				CS_DEATH_REVENGE
 
 #  include "c_cs_playerresource.h"

@@ -49,7 +49,7 @@ public:
 	}
 
 private:
-	CNetworkVar( int,	m_iNumControlPoints );	
+	CNetworkVar( int,	m_iNumControlPoints );
 
 	// data variables
 	CNetworkArray(	Vector,	m_vCPPositions,		MAX_CONTROL_POINTS );

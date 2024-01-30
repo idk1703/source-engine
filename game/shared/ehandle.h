@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -116,15 +116,15 @@ inline T* CHandle<T>::Get() const
 
 
 template<class T>
-inline CHandle<T>::operator T *() 
-{ 
-	return Get( ); 
+inline CHandle<T>::operator T *()
+{
+	return Get( );
 }
 
 template<class T>
 inline CHandle<T>::operator T *() const
-{ 
-	return Get( ); 
+{
+	return Get( );
 }
 
 

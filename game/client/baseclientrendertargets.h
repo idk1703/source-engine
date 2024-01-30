@@ -40,7 +40,7 @@ public:
 	virtual void ShutdownClientRenderTargets ( void );
 
 protected:
-	
+
 	// Standard render textures used by most mods-- Classes inheriting from
 	// this can choose to init these or not depending on their needs.
 

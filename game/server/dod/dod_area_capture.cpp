@@ -61,7 +61,7 @@ BEGIN_DATADESC(CAreaCapture)
 	DEFINE_OUTPUT( m_CapOutput,		"OnEndCap" ),
 
 //	DEFINE_OUTPUT( m_OnStartCap, "OnStartCap" );
-//	DEFINE_OUTPUT( m_OnBreakCap, 
+//	DEFINE_OUTPUT( m_OnBreakCap,
 
 //	DEFINE_OUTPUT( m_OnEnterNoObj, "OnEnterNoObj" );
 
@@ -72,20 +72,20 @@ LINK_ENTITY_TO_CLASS( dod_capture_area, CAreaCapture );
 void CAreaCapture::Spawn( void )
 {
 	BaseClass::Spawn();
-	
+
 	InitTrigger();
-	
+
 	Precache();
 
 	m_iAreaIndex = -1;
-		
-	SetTouch ( &CAreaCapture::AreaTouch );		
+
+	SetTouch ( &CAreaCapture::AreaTouch );
 
 	m_bCapturing = false;
 	m_nCapturingTeam = TEAM_UNASSIGNED;
 	m_nOwningTeam = TEAM_UNASSIGNED;
 	m_fTimeRemaining = 0.0f;
-	
+
 	SetNextThink( gpGlobals->curtime + AREA_THINK_TIME );
 
 	if( m_nAlliesNumCap < 1 )
@@ -138,7 +138,7 @@ void CAreaCapture::AreaTouch( CBaseEntity *pOther )
 	{
 		m_nOwningTeam = m_pPoint->GetOwner();
 	}
-	
+
 	//dont touch for non-alive or non-players
 	if( !pOther->IsPlayer() )
 		return;
@@ -156,7 +156,7 @@ void CAreaCapture::AreaTouch( CBaseEntity *pOther )
 							( pPlayer->GetTeamNumber() == TEAM_AXIS && m_bAxisCanCap );
 
 		if ( bAbleToCap )
-            pPlayer->HintMessage( HINT_IN_AREA_CAP );
+	pPlayer->HintMessage( HINT_IN_AREA_CAP );
 	}
 
 	pPlayer->m_signals.Signal( SIGNAL_CAPTUREAREA );
@@ -167,7 +167,7 @@ void CAreaCapture::AreaTouch( CBaseEntity *pOther )
 	if ( m_pPoint )
 	{
 		pPlayer->SetCPIndex( m_pPoint->GetPointIndex() );
-	}	
+	}
 }
 
 /* three ways to be capturing a cap area
@@ -219,13 +219,13 @@ void CAreaCapture::Think( void )
 				pPlayer->GetCapAreaIndex() == m_iAreaIndex &&
 				pPlayer->IsAlive() )		// alive check is kinda unnecessary, but there is some
 											// case where non-present people are messing up this count
-			{	
+			{
 				if ( pPlayer->GetTeamNumber() == TEAM_ALLIES )
 				{
 					if ( iNumAllies == 0 )
 						pFirstAlliedTouching = pPlayer;
 
-					iNumAllies++;					
+					iNumAllies++;
 				}
 				else if ( pPlayer->GetTeamNumber() == TEAM_AXIS )
 				{
@@ -265,21 +265,21 @@ void CAreaCapture::Think( void )
 			if ( flPercentToGo <= 0.5 && m_pPoint )
 			{
 				// find the first player that is not on the capturing team
-				// they have just broken a cap and should be rewarded		
+				// they have just broken a cap and should be rewarded
 				// tell the player the capture attempt number, for checking later
 				CDODPlayer *pBlockingPlayer = ( m_nCapturingTeam == TEAM_ALLIES ) ? pFirstAxisTouching : pFirstAlliedTouching;
 
 				if ( pBlockingPlayer )
 				{
 					if ( pBlockingPlayer->GetCapAreaIndex() == m_iAreaIndex &&
-						 pBlockingPlayer->GetLastBlockCapAttempt() == m_iCapAttemptNumber )
+						pBlockingPlayer->GetLastBlockCapAttempt() == m_iCapAttemptNumber )
 					{
 						// this is a repeat block on the same cap, ignore it
 						NULL;
 					}
 					else
 					{
-                        m_pPoint->CaptureBlocked( pBlockingPlayer );
+		m_pPoint->CaptureBlocked( pBlockingPlayer );
 						pBlockingPlayer->StoreCaptureBlock( m_iAreaIndex, m_iCapAttemptNumber );
 					}
 				}
@@ -295,7 +295,7 @@ void CAreaCapture::Think( void )
 			BreakCapture( true );
 			return;
 		}
-		
+
 		if( m_nCapturingTeam == TEAM_ALLIES )
 		{
 			if( iNumAllies < m_nAlliesNumCap )
@@ -316,18 +316,18 @@ void CAreaCapture::Think( void )
 		{
 			EndCapture( m_nCapturingTeam );
 			return;		//we're done
-		}			
+		}
 	}
 	else	//not capturing yet
 	{
 		bool bStarted = false;
-		
+
 		if( iNumAllies > 0 && iNumAxis <= 0 && m_bAlliesCanCap && m_nOwningTeam != TEAM_ALLIES )
 		{
 			if( iNumAllies >= m_nAlliesNumCap )
 			{
-				m_iCappingRequired = m_nAlliesNumCap;	
-				m_iCappingPlayers = iNumAllies;	
+				m_iCappingRequired = m_nAlliesNumCap;
+				m_iCappingPlayers = iNumAllies;
 				StartCapture( TEAM_ALLIES, CAPTURE_NORMAL );
 				bStarted = true;
 			}
@@ -336,8 +336,8 @@ void CAreaCapture::Think( void )
 		{
 			if( iNumAxis >= m_nAxisNumCap )
 			{
-				m_iCappingRequired = m_nAxisNumCap;	
-				m_iCappingPlayers = iNumAxis;	
+				m_iCappingRequired = m_nAxisNumCap;
+				m_iCappingPlayers = iNumAxis;
 				StartCapture( TEAM_AXIS, CAPTURE_NORMAL );
 				bStarted = true;
 			}
@@ -383,7 +383,7 @@ void CAreaCapture::StartCapture( int team, int capmode )
 	}
 
 	m_StartOutput.FireOutput(this,this);
-	
+
 	m_nCapturingTeam = team;
 	m_fTimeRemaining = m_flCapTime;
 	m_bCapturing = true;
@@ -393,7 +393,7 @@ void CAreaCapture::StartCapture( int team, int capmode )
 	{
 		//send a message that we're starting to cap this area
 		g_pObjectiveResource->SetCappingTeam( m_pPoint->GetPointIndex(), m_nCapturingTeam );
-	}	
+	}
 }
 
 #define MAX_AREA_CAPPERS 9
@@ -433,7 +433,7 @@ void CAreaCapture::EndCapture( int team )
 			if ( pPlayer )
 			{
 				if( ( pPlayer->m_signals.GetState() & SIGNAL_CAPTUREAREA ) &&
-					pPlayer->GetCapAreaIndex() == m_iAreaIndex && 
+					pPlayer->GetCapAreaIndex() == m_iAreaIndex &&
 					pPlayer->IsAlive() )
 				{
 					if( pCappingPlayer == NULL )
@@ -447,13 +447,13 @@ void CAreaCapture::EndCapture( int team )
 				}
 			}
 		}
-	}	
+	}
 
 	if ( numcappers < MAX_AREA_CAPPERS )
 	{
 		cappingplayers[numcappers] = 0;	//null terminate :)
 	}
-			
+
 	m_nOwningTeam = team;
 	m_bCapturing = false;
 	m_fTimeRemaining = 0.0f;
@@ -479,7 +479,7 @@ void CAreaCapture::BreakCapture( bool bNotEnoughPlayers )
 	{
 		m_iCappingRequired = 0;
 		m_iCappingPlayers = 0;
-				
+
 		if( m_nCapturingTeam == TEAM_ALLIES )
 			m_AlliesBreakOutput.FireOutput(this,this);
 
@@ -503,7 +503,7 @@ void CAreaCapture::BreakCapture( bool bNotEnoughPlayers )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAreaCapture::InputDisable( inputdata_t &inputdata )
 {
@@ -511,7 +511,7 @@ void CAreaCapture::InputDisable( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAreaCapture::InputEnable( inputdata_t &inputdata )
 {

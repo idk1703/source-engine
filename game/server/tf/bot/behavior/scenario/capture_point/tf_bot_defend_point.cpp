@@ -95,7 +95,7 @@ bool CTFBotDefendPoint::WillBlockCapture( CTFBot *me ) const
 {
 	if ( TFGameRules()->IsInTraining() )
 		return false;
-	
+
 	if ( me->IsDifficulty( CTFBot::EASY ) )
 		return false;
 
@@ -220,7 +220,7 @@ ActionResult< CTFBot >	CTFBotDefendPoint::Update( CTFBot *me, float interval )
 
 			if ( m_repathTimer.IsElapsed() )
 			{
-				m_repathTimer.Start( RandomFloat( 2.0f, 3.0f ) ); 
+				m_repathTimer.Start( RandomFloat( 2.0f, 3.0f ) );
 
 				CTFBotPathCost cost( me, DEFAULT_ROUTE );
 				m_path.Compute( me, m_defenseArea->GetCenter(), cost );
@@ -439,4 +439,3 @@ CTFNavArea *CTFBotDefendPoint::SelectAreaToDefendFrom( CTFBot *me )
 	int which = RandomInt( 0, defenseAreas.Count()-1 );
 	return defenseAreas[ which ];
 }
-

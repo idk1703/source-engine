@@ -135,7 +135,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTeamplayRoundBasedRulesProxy : public CGameRulesProxy
 {
@@ -199,10 +199,10 @@ public:
 	virtual int GetWinningTeam( void )
 	{
 //tagES
-#if defined( STAGING_ONLY ) && ( defined(TF_CLIENT_DLL) || defined(TF_DLL) ) 
+#if defined( STAGING_ONLY ) && ( defined(TF_CLIENT_DLL) || defined(TF_DLL) )
 		return ( tf_test_match_summary.GetBool() ? TF_TEAM_BLUE : m_iWinningTeam.Get() );
-#endif		
-		return m_iWinningTeam; 
+#endif
+		return m_iWinningTeam;
 	}
 	int GetWinReason() { return m_iWinReason; }
 
@@ -475,7 +475,7 @@ protected:
 	virtual const char* GetStalemateSong( int nTeam ) { return "Game.Stalemate"; }
 	virtual const char* WinSongName( int nTeam ) { return "Game.YourTeamWon"; }
 	virtual const char* LoseSongName( int nTeam ) { return "Game.YourTeamLost"; }
-	
+
 	virtual void RespawnTeam( int iTeam ) { RespawnPlayers( false, true, iTeam ); }
 
 	void HideActiveTimer( void );
@@ -489,7 +489,7 @@ protected:
 	virtual float GetLastMajorEventTime( void ) OVERRIDE { return m_flLastTeamWin; }
 
 protected:
-	CGameRulesRoundStateInfo	*m_pCurStateInfo;			// Per-state data 
+	CGameRulesRoundStateInfo	*m_pCurStateInfo;			// Per-state data
 
 	float						m_flWaitingForPlayersTimeEnds;
 	CHandle<CTeamRoundTimer>	m_hWaitingForPlayersTimer;

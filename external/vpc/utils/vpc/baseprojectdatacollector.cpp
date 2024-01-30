@@ -11,7 +11,7 @@
 
 static const char * const s_rgsAmbiguousPropertyNames[] =
 {
-    "$CommandLine",
+	"$CommandLine",
 };
 
 // ------------------------------------------------------------------------------------------------ //
@@ -131,14 +131,14 @@ CBaseProjectDataCollector::~CBaseProjectDataCollector()
 
 void CBaseProjectDataCollector::StartProject()
 {
-    for (int i = 0; i < m_RelevantPropertyNames.m_nNames; i++)
-    {
-        for (int j = 0; j < V_ARRAYSIZE(s_rgsAmbiguousPropertyNames); j++ )
-        {
-            if ( V_stricmp( m_RelevantPropertyNames.m_pNames[i], s_rgsAmbiguousPropertyNames[j] ) == 0 )
-                g_pVPC->VPCWarning( "Property name %s may occur in multiple contexts and should be fully qualified", m_RelevantPropertyNames.m_pNames[i] );
-        }
-    }
+	for (int i = 0; i < m_RelevantPropertyNames.m_nNames; i++)
+	{
+		for (int j = 0; j < V_ARRAYSIZE(s_rgsAmbiguousPropertyNames); j++ )
+		{
+			if ( V_stricmp( m_RelevantPropertyNames.m_pNames[i], s_rgsAmbiguousPropertyNames[j] ) == 0 )
+				g_pVPC->VPCWarning( "Property name %s may occur in multiple contexts and should be fully qualified", m_RelevantPropertyNames.m_pNames[i] );
+		}
+	}
 	m_ProjectName = "UNNAMED";
 	m_CurFileConfig.Push( &m_BaseConfigData );
 	m_CurSpecificConfig.Push( NULL );
@@ -210,26 +210,26 @@ void CBaseProjectDataCollector::EndConfigurationBlock()
 
 bool CBaseProjectDataCollector::StartPropertySection( configKeyword_e keyword, bool *pbShouldSkip )
 {
-    m_CurPropertySection.Push( keyword );
-    return true;
+	m_CurPropertySection.Push( keyword );
+	return true;
 }
 
 void CBaseProjectDataCollector::HandleProperty( const char *pProperty, const char *pCustomScriptData )
 {
-    CFmtStr sQualifiedProperty( "%s%s%s", m_CurPropertySection.Count() ? g_pVPC->KeywordToName( m_CurPropertySection.Top() ) : "",
-                                m_CurPropertySection.Count() ? "/" : "",
-                                pProperty );
-    bool bSetQualifiedProperty = false;
+	CFmtStr sQualifiedProperty( "%s%s%s", m_CurPropertySection.Count() ? g_pVPC->KeywordToName( m_CurPropertySection.Top() ) : "",
+								m_CurPropertySection.Count() ? "/" : "",
+								pProperty );
+	bool bSetQualifiedProperty = false;
 	int i;
 	for ( i=0; i < m_RelevantPropertyNames.m_nNames; i++ )
 	{
 		if ( V_stricmp( m_RelevantPropertyNames.m_pNames[i], pProperty ) == 0 )
 			break;
 		if ( V_stricmp( m_RelevantPropertyNames.m_pNames[i], sQualifiedProperty.Access() ) == 0 )
-        {
-            bSetQualifiedProperty = true;
+		{
+			bSetQualifiedProperty = true;
 			break;
-        }
+		}
 	}
 	if ( i == m_RelevantPropertyNames.m_nNames )
 	{

@@ -25,7 +25,7 @@ int SoftLine::s_nWhiteTexture = -1;
 
 void SoftLine::DrawSoftLine(float x, float y, float x2, float y2, Color c)
 {
-	vgui::Vertex_t start, end;				
+	vgui::Vertex_t start, end;
 
 	if (s_nWhiteTexture == -1)
 	{
@@ -44,8 +44,8 @@ void SoftLine::DrawSoftLine(float x, float y, float x2, float y2, Color c)
 	start.Init(Vector2D(x,y), Vector2D(0,0));
 	end.Init(Vector2D(x2,y2), Vector2D(1,1));
 	DrawPolygonLine(start, end);
-	
-	// draw translucent ones around it to give it some softness	
+
+	// draw translucent ones around it to give it some softness
 	vgui::surface()->DrawSetColor(c);
 
 	start.Init(Vector2D(x - 0.50f,y - 0.50f), Vector2D(0,0));
@@ -85,12 +85,12 @@ void SoftLine::DrawPolygonLine(float x, float y, float x2, float y2, float width
 	short_edge.x = newx;
 	short_edge.y = newy;
 	short_edge *= width;
-	vgui::Vertex_t points[4] = 
-	{ 
-	vgui::Vertex_t( Vector2D(x, y) - short_edge * 0.5f, Vector2D(0,0) ), 
-	vgui::Vertex_t( Vector2D(x, y) - short_edge * 0.5f + long_edge, Vector2D(1,0) ), 
-	vgui::Vertex_t( Vector2D(x, y) + short_edge * 0.5f + long_edge, Vector2D(1,1) ), 
-	vgui::Vertex_t( Vector2D(x, y) + short_edge * 0.5f, Vector2D(0,1) ) 
-	}; 
+	vgui::Vertex_t points[4] =
+	{
+	vgui::Vertex_t( Vector2D(x, y) - short_edge * 0.5f, Vector2D(0,0) ),
+	vgui::Vertex_t( Vector2D(x, y) - short_edge * 0.5f + long_edge, Vector2D(1,0) ),
+	vgui::Vertex_t( Vector2D(x, y) + short_edge * 0.5f + long_edge, Vector2D(1,1) ),
+	vgui::Vertex_t( Vector2D(x, y) + short_edge * 0.5f, Vector2D(0,1) )
+	};
 	vgui::surface()->DrawTexturedPolygon(4, points);
 }

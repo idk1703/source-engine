@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,7 +16,7 @@
 //
 // commonmacros.h
 //
-// This should contain ONLY general purpose macros that are 
+// This should contain ONLY general purpose macros that are
 // appropriate for use in engine/launcher/all tools
 //
 // -------------------------------------------------------
@@ -60,11 +60,11 @@ inline bool IsPowerOfTwo( int value )
 #define RTL_NUMBER_OF_V1(A) (sizeof(A)/sizeof((A)[0]))
 
 #if defined(__cplusplus) && \
-    !defined(MIDL_PASS) && \
-    !defined(RC_INVOKED) && \
-    !defined(_PREFAST_) && \
-    (_MSC_FULL_VER >= 13009466) && \
-    !defined(SORTPP_PASS)
+	!defined(MIDL_PASS) && \
+	!defined(RC_INVOKED) && \
+	!defined(_PREFAST_) && \
+	(_MSC_FULL_VER >= 13009466) && \
+	!defined(SORTPP_PASS)
 
 // From crtdefs.h
 #if !defined(UNALIGNED)
@@ -146,4 +146,3 @@ char (*RtlpNumberOf( UNALIGNED T (&)[N] ))[N];
 #define _ARRAYSIZE(A)   RTL_NUMBER_OF_V1(A)
 
 #endif // COMMONMACROS_H
-

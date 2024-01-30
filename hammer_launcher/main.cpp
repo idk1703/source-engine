@@ -72,7 +72,7 @@ bool CHammerApp::Create( )
 	pSystem = AddSystem( cvarModule, CVAR_INTERFACE_VERSION );
 	if ( !pSystem )
 		return false;
-	
+
 	bool bSteam;
 	char pFileSystemDLL[MAX_PATH];
 	if ( FileSystem_GetFileSystemDLLName( pFileSystemDLL, MAX_PATH, bSteam ) != FS_OK )
@@ -83,7 +83,7 @@ bool CHammerApp::Create( )
 
 	FileSystem_SetBasePaths( g_pFileSystem );
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "materialsystem.dll",		MATERIAL_SYSTEM_INTERFACE_VERSION },
 		{ "inputsystem.dll",		INPUTSYSTEM_INTERFACE_VERSION },
@@ -98,7 +98,7 @@ bool CHammerApp::Create( )
 		{ "", "" }	// Required to terminate the list
 	};
 
-	if ( !AddSystems( appSystems ) ) 
+	if ( !AddSystems( appSystems ) )
 		return false;
 
 	// Add Perforce separately since it's possible it isn't there. (SDK)
@@ -176,7 +176,7 @@ bool CHammerApp::PreInit( )
 	// needed for VGUI model rendering
 	g_pMaterialSystem->SetAdapter( 0, MATERIAL_INIT_ALLOCATE_FULLSCREEN_TEXTURE );
 
-	return true; 
+	return true;
 }
 
 void CHammerApp::PostShutdown()
@@ -191,8 +191,3 @@ int CHammerApp::Main( )
 {
 	return g_pHammer->MainLoop();
 }
-
-
-
-
-

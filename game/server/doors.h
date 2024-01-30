@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -64,7 +64,7 @@ public:
 
 	void Activate( void );
 
-	virtual int	ObjectCaps( void ) 
+	virtual int	ObjectCaps( void )
 	{
 		int flags = BaseClass::ObjectCaps();
 		if ( HasSpawnFlags( SF_DOOR_PUSE ) )
@@ -106,8 +106,8 @@ public:
 	Vector m_vecMoveDir;		// The direction of motion for linear moving doors.
 
 	locksound_t m_ls;			// door lock sounds
-	
-	byte	m_bLockedSentence;	
+
+	byte	m_bLockedSentence;
 	byte	m_bUnlockedSentence;
 
 	bool	m_bForceClosed;			// If set, always close, even if we're blocked.
@@ -115,7 +115,7 @@ public:
 	bool	m_bLocked;				// Whether the door is locked
 	bool	m_bIgnoreDebris;
 	bool	m_bIgnoreNonPlayerEntsOnBlock;	// Non-player entities should never block.  This variable needs more letters.
-	
+
 	FuncDoorSpawnPos_t m_eSpawnPosition;
 
 	float	m_flBlockDamage;		// Damage inflicted when blocked.
@@ -146,7 +146,7 @@ public:
 	string_t	m_iBlockFilterName;
 	EHANDLE		m_hBlockFilter;
 #endif
-	
+
 	bool		ShouldLoopMoveSound( void ) { return m_bLoopMoveSound; }
 	bool		m_bLoopMoveSound;			// Move sound loops until stopped
 

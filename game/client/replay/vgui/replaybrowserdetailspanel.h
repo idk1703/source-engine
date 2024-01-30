@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,7 +32,7 @@ using namespace vgui;
 class CExLabel;
 class CExButton;
 class CTFReplay;
-class CReplayPerformance; 
+class CReplayPerformance;
 class IReplayItemManager;
 
 //-----------------------------------------------------------------------------
@@ -149,7 +149,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBasicLifeInfoPanel : public CBaseDetailsPanel
 {
@@ -167,7 +167,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CMovieInfoPanel : public CBaseDetailsPanel
 {
@@ -185,7 +185,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CYouTubeInfoPanel : public CBaseDetailsPanel
 {
@@ -202,7 +202,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTitleEditPanel : public EditablePanel
 {
@@ -210,7 +210,7 @@ class CTitleEditPanel : public EditablePanel
 public:
 	CTitleEditPanel( Panel *pParent, QueryableReplayItemHandle_t hReplayItem, IReplayItemManager *pItemManager );
 	~CTitleEditPanel();
-	
+
 	virtual void ApplySchemeSettings( IScheme *pScheme );
 	virtual void PerformLayout();
 	virtual void PaintBackground();
@@ -229,7 +229,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CReplayScreenshotSlideshowPanel;
 
@@ -252,7 +252,7 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CPlaybackPanelSlideshow : public CPlaybackPanel
 {
@@ -270,7 +270,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CMoviePlayerPanel;
 
@@ -292,7 +292,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CCutImagePanel : public CExImageButton
 {
@@ -311,7 +311,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CReplayDetailsPanel;
 
@@ -375,7 +375,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class IReplayItemManager;
 class CConfirmDialog;
@@ -404,7 +404,7 @@ public:
 	void FreeMovieFileLock();
 	void ShowExportDialog();
 
-	static void	OnPlayerWarningDlgConfirm( bool bConfirmed, void *pContext );	
+	static void	OnPlayerWarningDlgConfirm( bool bConfirmed, void *pContext );
 
 	enum eYouTubeStatus
 	{
@@ -412,7 +412,7 @@ public:
 		kYouTubeStatus_RetrievingInfo,
 		kYouTubeStatus_RetrievedInfo,
 		kYouTubeStatus_CouldNotRetrieveInfo,
-		kYouTubeStatus_NotUploaded		
+		kYouTubeStatus_NotUploaded
 	};
 
 	void SetYouTubeStatus( eYouTubeStatus status );

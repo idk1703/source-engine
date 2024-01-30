@@ -19,7 +19,7 @@ $Configuration
 
 	$Linker
 	{
-        $SystemLibraries                        "$BASE;z" [$OSXALL]
+	$SystemLibraries                        "$BASE;z" [$OSXALL]
 	}
 }
 
@@ -71,9 +71,9 @@ $Project
 			$File	"$SRCDIR\game\shared\econ\econ_dynamic_recipe.h"
 			$File	"$SRCDIR\game\shared\econ\econ_quests.cpp"
 			$File	"$SRCDIR\game\shared\econ\econ_quests.h"
-			
+
 			$File	"$SRCDIR\game\client\econ\econ_consumables.cpp"
-			
+
 			$File	"$SRCDIR\game\shared\gc_clientsystem.h"
 			$File	"$SRCDIR\game\shared\gc_clientsystem.cpp"
 			$File	"$SRCDIR\game\shared\gc_replicated_convars.cpp"
@@ -113,23 +113,23 @@ $Project
 			$File	"econ\client_community_market.h"
 			$File	"econ\local_steam_shared_object_listener.cpp"
 			$File	"econ\local_steam_shared_object_listener.h"
-			
+
 			// Temp UI to allow you to test
 			$File	"econ\econ_sample_rootui.cpp"
 			$File	"econ\econ_sample_rootui.h"
-			
+
 			$Folder	"Trading"
 			{
 				$File	"econ\econ_trading.cpp"
 				$File	"econ\econ_trading.h"
 			}
-			
+
 			$Folder "VGUI dependencies"
 			{
 				$File	"game_controls\navigationpanel.cpp"
 				$File	"game_controls\navigationpanel.h"
 			}
-			
+
 			$Folder	"Store"
 			{
 				$File	"econ\store\store_page.cpp"
@@ -143,7 +143,7 @@ $Project
 				$File	"econ\store\store_viewcart.cpp"
 				$File	"econ\store\store_viewcart.h"
 			}
-			
+
 			$Folder	"tool_items"
 			{
 				$File	"econ\tool_items\tool_items.cpp"
@@ -161,7 +161,7 @@ $Project
 				$File	"econ\tool_items\gift_wrap_tool.h"
 			}
 		}
-		
+
 		// For item image stamping
 		$File	"$SRCDIR\common\imageutils.h"
 		$File	"$SRCDIR\common\imageutils.cpp"
@@ -175,8 +175,8 @@ $Project
 			}
 		}
 	}
-	
-	$Folder	"Link Libraries" 
+
+	$Folder	"Link Libraries"
 	{
 		$Lib "$LIBCOMMON/libjpeg"
 		$Lib libpng [!$VS2015]

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,7 +22,7 @@ BEGIN_SHADER_FLAGS( IntroScreenSpaceEffect_dx60, "Help for IntroScreenSpaceEffec
 	SHADER_INIT
 	{
 	}
-	
+
 	SHADER_DRAW
 	{
 		SHADOW_STATE
@@ -41,16 +41,16 @@ BEGIN_SHADER_FLAGS( IntroScreenSpaceEffect_dx60, "Help for IntroScreenSpaceEffec
 			pShaderShadow->EnableConstantAlpha( true );
 			pShaderShadow->EnableBlending( true );
 
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-				SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_SELECTARG1, 
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+				SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_SELECTARG1,
 				SHADER_TEXARG_TEXTURE, SHADER_TEXARG_NONE );
-		
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1, 
-				SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_ADD, 
+
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
+				SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_ADD,
 				SHADER_TEXARG_TEXTURE, SHADER_TEXARG_PREVIOUSSTAGE );
 
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1, 
-				SHADER_TEXCHANNEL_ALPHA, SHADER_TEXOP_SELECTARG1, 
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
+				SHADER_TEXCHANNEL_ALPHA, SHADER_TEXOP_SELECTARG1,
 				SHADER_TEXARG_CONSTANTCOLOR, SHADER_TEXARG_NONE );
 		}
 		DYNAMIC_STATE
@@ -72,7 +72,7 @@ BEGIN_SHADER_FLAGS( IntroScreenSpaceEffect_dx60, "Help for IntroScreenSpaceEffec
 			}
 			float color[4] = { 1.0, 1.0, 1.0, 1.0 };
 			color[3] = params[ALPHA]->GetFloatValue();
-			s_pShaderAPI->Color4fv( color );	
+			s_pShaderAPI->Color4fv( color );
 		}
 		Draw();
 	}

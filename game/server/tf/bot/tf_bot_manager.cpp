@@ -208,7 +208,7 @@ void CTFBotManager::UpdateCreepWaves()
 		}
 
 		return;
-	}	
+	}
 
 	if ( m_creepWaveTimer.IsElapsed() )
 	{
@@ -237,7 +237,7 @@ void CTFBotManager::SpawnCreep( int team, CTFBotSquad *squad )
 {
 	CTFBot *bot = NextBotCreatePlayerBot< CTFBot >( "Creep" );
 
-	if ( !bot ) 
+	if ( !bot )
 		return;
 
 	bot->SetAttribute( CTFBot::IS_NPC );
@@ -265,9 +265,9 @@ void CTFBotManager::OnCreepKilled( CTFPlayer *killer )
 	int left = xp % tf_creep_level_up.GetInt();
 
 	char text[256];
-	Q_snprintf( text, sizeof(text), "%s killed a creep. %s team LVL = %d+%d/%d\n", 
-				killer->GetPlayerName(), 
-				killer->GetTeamNumber() == TF_TEAM_RED ? "Red" : "Blue", 
+	Q_snprintf( text, sizeof(text), "%s killed a creep. %s team LVL = %d+%d/%d\n",
+				killer->GetPlayerName(),
+				killer->GetTeamNumber() == TF_TEAM_RED ? "Red" : "Blue",
 				level+1, left, tf_creep_level_up.GetInt() );
 
 	UTIL_ClientPrintAll( HUD_PRINTTALK, text );
@@ -306,7 +306,7 @@ bool CTFBotManager::RemoveBotFromTeamAndKick( int nTeam )
 			}
 		}
 	}
-	
+
 	CTFPlayer *pVictim = NULL;
 	if ( vecCandidates.Count() > 0 )
 	{
@@ -484,7 +484,7 @@ void CTFBotManager::MaintainBotQuota()
 				CTFBot::DifficultyType skill = pBot->GetDifficulty();
 				CreateBotName( pBot->GetTeamNumber(), pBot->GetPlayerClass()->GetClassIndex(), skill, name, sizeof( name ) );
 				engine->SetFakeClientConVarValue( pBot->edict(), "name", name );
-				
+
 				// Keep track of any bots we add during a match
 				CMatchInfo *pMatchInfo = GTFGCClientSystem()->GetMatch();
 				if ( pMatchInfo )
@@ -497,7 +497,7 @@ void CTFBotManager::MaintainBotQuota()
 	else if ( desiredBotCount < nTFBotsOnGameTeams )
 	{
 		// kick a bot to maintain quota
-		
+
 		// first remove any unassigned bots
 		if ( UTIL_KickBotFromTeam( TEAM_UNASSIGNED ) )
 			return;
@@ -616,7 +616,7 @@ void CTFBotManager::LevelShutdown()
 	{
 		RevertOfflinePracticeConvars();
 		SetIsInOfflinePractice( false );
-	}		
+	}
 }
 
 
@@ -860,7 +860,7 @@ void CTFBotManager::DrawStuckBotData( float deltaT )
 
 		for( int j=0; j<m_stuckBotVector[i]->m_stuckEventVector.Count()-1; ++j )
 		{
-			NDebugOverlay::HorzArrow( m_stuckBotVector[i]->m_stuckEventVector[j]->m_stuckSpot, 
+			NDebugOverlay::HorzArrow( m_stuckBotVector[i]->m_stuckEventVector[j]->m_stuckSpot,
 									  m_stuckBotVector[i]->m_stuckEventVector[j+1]->m_stuckSpot,
 									  3, 100, 0, 255, 255, true, deltaT );
 		}
@@ -868,5 +868,3 @@ void CTFBotManager::DrawStuckBotData( float deltaT )
 		NDebugOverlay::Text( m_stuckBotVector[i]->m_stuckEventVector[0]->m_stuckSpot, CFmtStr( "%s(#%d)", m_stuckBotVector[i]->m_name, m_stuckBotVector[i]->m_id ), false, deltaT );
 	}
 }
-
-

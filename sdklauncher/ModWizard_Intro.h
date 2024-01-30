@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -32,7 +32,7 @@ namespace vgui
 
 	public:
 		CModWizardSubPanel_Intro( Panel *parent, const char *panelName );
-		
+
 		virtual WizardSubPanel* GetNextSubPanel();
 		virtual void OnDisplayAsNext();
 		virtual void PerformLayout();
@@ -48,5 +48,5 @@ namespace vgui
 
 }
 
-	
+
 #endif // MODWIZARD_INTRO_H

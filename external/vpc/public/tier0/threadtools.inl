@@ -15,7 +15,7 @@ CTHREADLOCALPTR(CThread) g_pCurThread;
 #define INLINE_ON_PS3 inline
 #endif
 
-INLINE_ON_PS3 CThread::CThread() :	
+INLINE_ON_PS3 CThread::CThread() :
 #ifdef _WIN32
 m_hThread( NULL ),
 m_threadId( 0 ),
@@ -42,7 +42,7 @@ INLINE_ON_PS3 CThread::~CThread()
 	{
 		if ( IsAlive() )
 		{
-			Msg( "Illegal termination of worker thread! Threads must negotiate an end to the thread before the CThread object is destroyed.\n" ); 
+			Msg( "Illegal termination of worker thread! Threads must negotiate an end to the thread before the CThread object is destroyed.\n" );
 #ifdef _WIN32
 
 			DoNewAssertDialog( __FILE__, __LINE__, "Illegal termination of worker thread! Threads must negotiate an end to the thread before the CThread object is destroyed.\n" );
@@ -150,17 +150,17 @@ INLINE_ON_PS3 bool CThread::Start( unsigned nBytesStack, ThreadPriorityEnum_t nP
 	m_threadEnd.Reset();
 
 	// sony documentation:
-	// "If the PPU thread is not joined by sys_ppu_thread_join() after exit, 
-	// it should always be created as non-joinable (not specifying 
-	// SYS_PPU_THREAD_CREATE_JOINABLE). Otherwise, some resources are left 
+	// "If the PPU thread is not joined by sys_ppu_thread_join() after exit,
+	// it should always be created as non-joinable (not specifying
+	// SYS_PPU_THREAD_CREATE_JOINABLE). Otherwise, some resources are left
 	// allocated after termination of the PPU thread as if memory leaks."
 	const char* threadName=m_szName;
-	if ( sys_ppu_thread_create( &m_threadId, 
-			(void(*)(uint64_t))GetThreadProc(), 
-			(uint64_t)(new ThreadInit_t( init )), 
-			nPriority, 
-			nBytesStack, 
-			SYS_PPU_THREAD_CREATE_JOINABLE  , 
+	if ( sys_ppu_thread_create( &m_threadId,
+			(void(*)(uint64_t))GetThreadProc(),
+			(uint64_t)(new ThreadInit_t( init )),
+			nPriority,
+			nBytesStack,
+			SYS_PPU_THREAD_CREATE_JOINABLE  ,
 			threadName ) != CELL_OK )
 	{
 		AssertMsg1( 0, "Failed to create thread (error 0x%x)", errno );
@@ -235,8 +235,8 @@ INLINE_ON_PS3 bool CThread::IsAlive()
 #ifdef PLATFORM_WINDOWS
 	DWORD dwExitCode;
 	return (
-		m_hThread 
-		&& GetExitCodeThread(m_hThread, &dwExitCode) 
+		m_hThread
+		&& GetExitCodeThread(m_hThread, &dwExitCode)
 		&& dwExitCode == STILL_ACTIVE );
 #elif defined(POSIX)
 	return !!m_threadId;
@@ -483,7 +483,7 @@ INLINE_ON_PS3 int CThread::Run()
 {
 	return -1;
 }
-#endif // _PS3 
+#endif // _PS3
 
 // Called when the thread exits
 INLINE_ON_PS3 void CThread::OnExit() { }
@@ -543,7 +543,7 @@ INLINE_ON_PS3 void* CThread::ThreadProc(LPVOID pv)
 	if ( pInit->pfInitSuccess )
 		*(pInit->pfInitSuccess) = false;
 
-#ifdef _PS3 
+#ifdef _PS3
 	*(pInit->pfInitSuccess) = pInit->pThread->Init();
 #else
 	try
@@ -615,7 +615,7 @@ INLINE_ON_PS3 void* CThread::ThreadProc(LPVOID pv)
 		sys_ppu_thread_exit( pInit->pThread->m_result );
 		// reacquire the lock in case thread exit didn't actually exit the thread, so that
 		// AUTO_LOCK won't double-unlock the lock (to keep it paired)
-		pThread->m_Lock.Lock(); 
+		pThread->m_Lock.Lock();
 	}
 #endif
 

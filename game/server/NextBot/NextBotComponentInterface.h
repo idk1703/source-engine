@@ -51,22 +51,22 @@ public:
 	inline float GetUpdateInterval();
 
 	virtual INextBot *GetBot( void ) const  { return m_bot; }
-	
+
 private:
 	float m_lastUpdateTime;
 	float m_curInterval;
 
 	friend class INextBot;
-	
+
 	INextBot *m_bot;
 	INextBotComponent *m_nextComponent;									// simple linked list of components in the bot
 };
 
 
-inline bool INextBotComponent::ComputeUpdateInterval() 
-{ 
-	if ( m_lastUpdateTime ) 
-	{ 
+inline bool INextBotComponent::ComputeUpdateInterval()
+{
+	if ( m_lastUpdateTime )
+	{
 		float interval = gpGlobals->curtime - m_lastUpdateTime;
 
 		const float minInterval = 0.0001f;
@@ -90,9 +90,9 @@ inline bool INextBotComponent::ComputeUpdateInterval()
 	return true;
 }
 
-inline float INextBotComponent::GetUpdateInterval() 
-{ 
-	return m_curInterval; 
+inline float INextBotComponent::GetUpdateInterval()
+{
+	return m_curInterval;
 }
 
 #endif // _NEXT_BOT_COMPONENT_INTERFACE_H_

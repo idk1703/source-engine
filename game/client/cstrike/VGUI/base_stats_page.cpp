@@ -8,7 +8,7 @@
 #include "vgui/ILocalize.h"
 #include "lifetime_stats_page.h"
 #include <vgui_controls/SectionedListPanel.h>
-#include "cs_client_gamestats.h" 
+#include "cs_client_gamestats.h"
 #include "filesystem.h"
 #include "cs_weapon_parse.h"
 #include "buy_presets/buy_presets.h"
@@ -61,7 +61,7 @@ CBaseStatsPage::~CBaseStatsPage()
 
 void CBaseStatsPage::MoveToFront()
 {
-    UpdateStatsData();
+	UpdateStatsData();
 	m_pStatCard->UpdateInfo();
 }
 
@@ -84,8 +84,8 @@ void CBaseStatsPage::UpdateStatsData()
 //-----------------------------------------------------------------------------
 void CBaseStatsPage::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
-    BaseClass::ApplySchemeSettings( pScheme );
-    LoadControlSettings("resource/ui/CSBaseStatsDialog.res");
+	BaseClass::ApplySchemeSettings( pScheme );
+	LoadControlSettings("resource/ui/CSBaseStatsDialog.res");
 
 	m_statsList->SetClickable(false);
 	m_statsList->SetDrawHeaders(false);
@@ -122,7 +122,7 @@ void CBaseStatsPage::SetActiveStatGroup (CBaseStatGroupPanel* groupPanel)
 			}
 		}
 	}
-} 
+}
 
 void CBaseStatsPage::UpdateGroupPanels()
 {

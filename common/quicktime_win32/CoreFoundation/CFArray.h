@@ -82,11 +82,11 @@ typedef void		(*CFArrayReleaseCallBack)(CFAllocatorRef allocator, const void *va
 typedef CFStringRef	(*CFArrayCopyDescriptionCallBack)(const void *value);
 typedef Boolean		(*CFArrayEqualCallBack)(const void *value1, const void *value2);
 typedef struct {
-    CFIndex				version;
-    CFArrayRetainCallBack		retain;
-    CFArrayReleaseCallBack		release;
-    CFArrayCopyDescriptionCallBack	copyDescription;
-    CFArrayEqualCallBack		equal;
+	CFIndex				version;
+	CFArrayRetainCallBack		retain;
+	CFArrayReleaseCallBack		release;
+	CFArrayCopyDescriptionCallBack	copyDescription;
+	CFArrayEqualCallBack		equal;
 } CFArrayCallBacks;
 
 /*!
@@ -387,7 +387,7 @@ void CFArrayGetValues(CFArrayRef theArray, CFRange range, const void **values);
 		pointer to a function of the correct prototype, the behavior
 		is undefined. If there are values in the range which the
 		applier function does not expect or cannot properly apply
-		to, the behavior is undefined. 
+		to, the behavior is undefined.
 	@param context A pointer-sized user-defined value, which is passed
 		as the second parameter to the applier function, but is
 		otherwise unused by this function. If the context is not
@@ -689,4 +689,3 @@ void CFArrayAppendArray(CFMutableArrayRef theArray, CFArrayRef otherArray, CFRan
 #endif
 
 #endif /* ! __COREFOUNDATION_CFARRAY__ */
-

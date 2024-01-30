@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -23,22 +23,22 @@
 class CAchievementMgr : public CAutoGameSystemPerFrame, public CGameEventListener, public IAchievementMgr
 {
 public:
-    //=============================================================================
-    // HPE_BEGIN
-    // [dwenger] Steam Cloud Support
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN
+	// [dwenger] Steam Cloud Support
+	//=============================================================================
 
-    enum SteamCloudPersisting
-    {
-        SteamCloudPersist_Off = 0,
-        SteamCloudPersist_On,
-    };
+	enum SteamCloudPersisting
+	{
+		SteamCloudPersist_Off = 0,
+		SteamCloudPersist_On,
+	};
 
 	CAchievementMgr( SteamCloudPersisting ePersistToSteamCloud = SteamCloudPersist_Off );
 
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
 	virtual bool Init();
 	virtual void PostInit();
@@ -52,7 +52,7 @@ public:
 #endif
 
 	void OnMapEvent( const char *pchEventName );
-	
+
 	// Interfaces exported to other dlls for achievement list queries
 	IAchievement* GetAchievementByIndex( int index );
 	int GetAchievementCount();
@@ -92,16 +92,16 @@ public:
 			m_bSteamDataDirty = true;
 		}
 	}
-	
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
 
 	bool CheckAchievementsEnabled();
-	bool LoggedIntoSteam() 
-	{ 
+	bool LoggedIntoSteam()
+	{
 #if !defined(NO_STEAM)
-		return ( steamapicontext->SteamUser() && steamapicontext->SteamUserStats() && steamapicontext->SteamUser()->BLoggedOn() ); 
+		return ( steamapicontext->SteamUser() && steamapicontext->SteamUserStats() && steamapicontext->SteamUser()->BLoggedOn() );
 #else
 		return false;
 #endif
@@ -149,18 +149,18 @@ private:
 	bool  m_bCheatsEverOn;				// have cheats ever been turned on in this level
 	float m_flTimeLastSaved;			// last time we uploaded to Steam
 
-    //=============================================================================
-    // HPE_BEGIN
-    // [dwenger] Steam Cloud Support
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN
+	// [dwenger] Steam Cloud Support
+	//=============================================================================
 
-    bool  m_bPersistToSteamCloud;       // true = persist data to steam cloud
+	bool  m_bPersistToSteamCloud;       // true = persist data to steam cloud
 
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
-    CUtlVector<int> m_AchievementsAwarded;
+	CUtlVector<int> m_AchievementsAwarded;
 };
 
 // helper functions

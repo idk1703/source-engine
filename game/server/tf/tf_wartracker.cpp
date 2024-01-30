@@ -53,7 +53,7 @@ CFmtStr CTFWarTrackerManager::GetDebugObjectDescription( const CSharedObject* pI
 	const CWarData* pWarData = assert_cast< const CWarData* >( pItem );
 	const CWarDefinition* pWarDef = GetItemSchema()->GetWarDefinitionByIndex( pWarData->Obj().war_id() );
 	const CWarDefinition::CWarSideDefinition_t* pSide = pWarDef->GetSide( pWarData->Obj().affiliation() );
-	
+
 	return CFmtStr( "%s: Side: %s Points: %d", pWarDef->GetDefName(), pSide->m_pszLocalizedName, pWarData->Obj().points_scored() );
 }
 

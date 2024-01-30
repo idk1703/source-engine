@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose:			The "weapon" used to build objects
-//					
+//
 //
 // $Workfile:     $
 // $Date:         $
@@ -56,7 +56,7 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_sapper );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFWeaponBuilder::CTFWeaponBuilder()
 {
@@ -69,7 +69,7 @@ CTFWeaponBuilder::CTFWeaponBuilder()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFWeaponBuilder::~CTFWeaponBuilder()
 {
@@ -81,12 +81,12 @@ CTFWeaponBuilder::~CTFWeaponBuilder()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWeaponBuilder::SetSubType( int iSubType )
 {
 	m_iObjectType = iSubType;
-	
+
 	// m_iViewModelIndex is set by the base Precache(), which didn't know what
 	// type of object we built, so it didn't get the right viewmodel index.
 	// Now that our data is filled in, go and get the right index.
@@ -140,7 +140,7 @@ void CTFWeaponBuilder::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFWeaponBuilder::CanDeploy( void )
 {
@@ -160,7 +160,7 @@ bool CTFWeaponBuilder::CanDeploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFWeaponBuilder::Deploy( void )
 {
@@ -169,7 +169,7 @@ bool CTFWeaponBuilder::Deploy( void )
 	if ( bDeploy )
 	{
 		SetCurrentState( BS_PLACING );
-		StartPlacement(); 
+		StartPlacement();
 		m_flNextPrimaryAttack = gpGlobals->curtime + 0.35f;
 		m_flNextSecondaryAttack = gpGlobals->curtime;		// asap
 
@@ -217,7 +217,7 @@ bool CTFWeaponBuilder::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
 	CTFPlayer *pOwner = ToTFPlayer( GetOwner() );
 	if ( !pOwner )
-		return false; 
+		return false;
 
 	if ( pOwner->m_Shared.IsCarryingObject() )
 		return false;
@@ -268,7 +268,7 @@ bool CTFWeaponBuilder::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWeaponBuilder::ItemPostFrame( void )
 {
@@ -277,8 +277,8 @@ void CTFWeaponBuilder::ItemPostFrame( void )
 		return;
 
 	// If we're building, and our team has lost, stop placing the object
-	if ( m_hObjectBeingBuilt.Get() && 
-		TFGameRules()->State_Get() == GR_STATE_TEAM_WIN && 
+	if ( m_hObjectBeingBuilt.Get() &&
+		TFGameRules()->State_Get() == GR_STATE_TEAM_WIN &&
 		pOwner->GetTeamNumber() != TFGameRules()->GetWinningTeam() )
 	{
 		StopPlacement();
@@ -361,7 +361,7 @@ void CTFWeaponBuilder::PrimaryAttack( void )
 			{
 				int iFlags = m_hObjectBeingBuilt->GetObjectFlags();
 
-				// Tricky, because this can re-calc the object position and change whether its a valid 
+				// Tricky, because this can re-calc the object position and change whether its a valid
 				// pos or not. Best not to do this only in debug, but we can be pretty sure that this
 				// will give the same result as was calculated in UpdatePlacementState() above.
 				Assert( IsValidPlacement() );
@@ -373,7 +373,7 @@ void CTFWeaponBuilder::PrimaryAttack( void )
 				}
 
 				CBaseEntity *pBuiltOnObject = m_hObjectBeingBuilt->GetBuiltOnObject();
-				
+
 				if ( pBuiltOnObject && m_iObjectType == OBJ_ATTACHMENT_SAPPER )
 				{
 					m_vLastKnownSapPos = pBuiltOnObject->GetAbsOrigin();
@@ -398,8 +398,8 @@ void CTFWeaponBuilder::PrimaryAttack( void )
 						{
 							// Start placing another
 							SetCurrentState( BS_PLACING );
-							StartPlacement(); 
-	
+							StartPlacement();
+
 							if ( m_hObjectBeingBuilt.Get() )
 							{
 								m_hObjectBeingBuilt->UpdateAttachmentPlacement( pTeleporter->GetMatchingTeleporter() );
@@ -414,7 +414,7 @@ void CTFWeaponBuilder::PrimaryAttack( void )
 				{
 					// Start placing another
 					SetCurrentState( BS_PLACING );
-					StartPlacement(); 
+					StartPlacement();
 				}
 				else
 				{
@@ -484,7 +484,7 @@ void CTFWeaponBuilder::SetCurrentState( int iState )
 
 //-----------------------------------------------------------------------------
 // Purpose: Set the owner's weapon and last weapon appropriately when we need to
-//			switch away from the builder weapon.  
+//			switch away from the builder weapon.
 //-----------------------------------------------------------------------------
 void CTFWeaponBuilder::SwitchOwnersWeaponToLast()
 {
@@ -651,7 +651,7 @@ float CTFWeaponBuilder::WheatleyEmitSound( const char *snd, bool bEmitToAll /*= 
 		SetWheatleyState( TF_PSAPSTATE_SPECIALIDLE_KNIFE );
 		m_iWheatleyVOSequenceOffset = 0;
 	}
-	
+
 	//Play the sound
 	// When playing a sound to all players, do it at the last known sapper location
 	// This is not played on the object itself (building or sapper) cause it may not exist in the case of death and follow up audio
@@ -716,7 +716,7 @@ void CTFWeaponBuilder::WheatleySapperIdle( CTFPlayer *pOwner )
 	{
 		//Is Wheatley coming out of the player's pocket?
 		if( m_flNextVoicePakIdleStartTime < 0.0f )
-		{			
+		{
 			pOwner->ClearSappingTracking();
 			float flSoundDuration;
 			if ( gpGlobals->curtime - m_flWheatleyLastHolster < 2.0 && gpGlobals->curtime - m_flWheatleyLastHolster >= -1.00 )
@@ -756,7 +756,7 @@ void CTFWeaponBuilder::WheatleySapperIdle( CTFPlayer *pOwner )
 						pVoicePakString = "PSap.AttachedPW";
 						SetWheatleyState( TF_PSAPSTATE_WAITINGHACK );
 					}
-					else 
+					else
 					{
 						pVoicePakString = "PSap.Attached";
 						SetWheatleyState( TF_PSAPSTATE_WAITINGHACKPW );
@@ -782,7 +782,7 @@ void CTFWeaponBuilder::WheatleySapperIdle( CTFPlayer *pOwner )
 					{
 						pVoicePakString = "PSap.HackedLoud";
 					}
-					
+
 					if ( RandomInt( 0, 3 ) == 0 )
 					{
 						SetWheatleyState( TF_PSAPSTATE_WAITINGFOLLOWUP);
@@ -1036,7 +1036,7 @@ void CTFWeaponBuilder::StartPlacement( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWeaponBuilder::StopPlacement( void )
 {
@@ -1055,7 +1055,7 @@ void CTFWeaponBuilder::StopPlacement( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWeaponBuilder::WeaponReset( void )
 {
@@ -1156,7 +1156,7 @@ bool CTFWeaponBuilder::HasAmmo( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFWeaponBuilder::GetSlot( void ) const
 {
@@ -1164,7 +1164,7 @@ int CTFWeaponBuilder::GetSlot( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFWeaponBuilder::GetPosition( void ) const
 {
@@ -1172,7 +1172,7 @@ int CTFWeaponBuilder::GetPosition( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *CTFWeaponBuilder::GetPrintName( void ) const
@@ -1235,9 +1235,9 @@ const char *CTFWeaponBuilder::GetViewModel( int iViewModel ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-const char *CTFWeaponBuilder::GetWorldModel( void ) const	
+const char *CTFWeaponBuilder::GetWorldModel( void ) const
 {
 	if ( m_iObjectType != BUILDER_INVALID_OBJECT )
 	{
@@ -1248,7 +1248,7 @@ const char *CTFWeaponBuilder::GetWorldModel( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFWeaponBuilder::AllowsAutoSwitchTo( void ) const
 {
@@ -1304,7 +1304,7 @@ const char *CTFWeaponSapper::GetViewModel( int iViewModel ) const
 	return CTFWeaponBase::GetViewModel();
 }
 //-----------------------------------------------------------------------------
-const char *CTFWeaponSapper::GetWorldModel( void ) const	
+const char *CTFWeaponSapper::GetWorldModel( void ) const
 {
 	// Skip over Builder's version
 	return CTFWeaponBase::GetWorldModel();
@@ -1317,4 +1317,3 @@ Activity CTFWeaponSapper::TranslateViewmodelHandActivity( Activity actBase )
 	// Skip over Builder's version
 	//return CTFWeaponBase::TranslateViewmodelHandActivity( actBase );
 }
-

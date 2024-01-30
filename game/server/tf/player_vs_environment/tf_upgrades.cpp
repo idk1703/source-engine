@@ -40,7 +40,7 @@ LINK_ENTITY_TO_CLASS( func_upgradestation, CUpgrades );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CUpgrades::Spawn( void )
 {
@@ -62,7 +62,7 @@ void CUpgrades::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CUpgrades::InputEnable( inputdata_t &inputdata )
 {
@@ -70,7 +70,7 @@ void CUpgrades::InputEnable( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CUpgrades::InputDisable( inputdata_t &inputdata )
 {
@@ -92,14 +92,14 @@ void CUpgrades::InputDisable( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CUpgrades::InputReset( inputdata_t &inputdata )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CUpgrades::FireGameEvent( IGameEvent *gameEvent )
 {
@@ -110,7 +110,7 @@ void CUpgrades::FireGameEvent( IGameEvent *gameEvent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CUpgrades::UpgradeTouch( CBaseEntity *pOther )
 {
@@ -128,7 +128,7 @@ void CUpgrades::UpgradeTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CUpgrades::EndTouch( CBaseEntity *pOther )
 {
@@ -145,7 +145,7 @@ void CUpgrades::EndTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CUpgrades::GrantOrRemoveAllUpgrades( CTFPlayer *pTFPlayer, bool bRemove /*= false*/, bool bRefund /*= true*/ )
 {
@@ -170,7 +170,7 @@ void CUpgrades::GrantOrRemoveAllUpgrades( CTFPlayer *pTFPlayer, bool bRemove /*=
 			{
 				loadout_positions_t nLastLoadoutPos = bRespec ? LOADOUT_POSITION_MISC2 : LOADOUT_POSITION_HEAD;
 				// for each item
-				for ( int iItemSlot = LOADOUT_POSITION_PRIMARY ; iItemSlot < nLastLoadoutPos ; iItemSlot++ )	
+				for ( int iItemSlot = LOADOUT_POSITION_PRIMARY ; iItemSlot < nLastLoadoutPos ; iItemSlot++ )
 				{
 					// Don't respec bottle charges
 					if ( bRespec && iItemSlot == LOADOUT_POSITION_ACTION )
@@ -181,7 +181,7 @@ void CUpgrades::GrantOrRemoveAllUpgrades( CTFPlayer *pTFPlayer, bool bRemove /*=
 					{
 						// If we're not removing, assume we're giving the player everything for free (cheat)
 						bool bFree = ( !bRemove || !bRefund ) ? true : false;
-						
+
 						// compute number of upgrade steps this upgrade has
 						bool bOverCap = false;
 						int iCurrentUpgradeStep = 0;
@@ -201,12 +201,12 @@ void CUpgrades::GrantOrRemoveAllUpgrades( CTFPlayer *pTFPlayer, bool bRemove /*=
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CUpgrades::PlayerPurchasingUpgrade( CTFPlayer *pTFPlayer, int iItemSlot, int iUpgrade, bool bDowngrade, bool bFree /*= false */, bool bRespec /*= false*/ )
 {
-	if ( !pTFPlayer || 
-		 iUpgrade < 0 || 
+	if ( !pTFPlayer ||
+		 iUpgrade < 0 ||
 		 iUpgrade >= g_MannVsMachineUpgrades.m_Upgrades.Count() )
 		return;
 
@@ -314,7 +314,7 @@ void CUpgrades::PlayerPurchasingUpgrade( CTFPlayer *pTFPlayer, int iItemSlot, in
 			// Remove Currency
 			pTFPlayer->RemoveCurrency( nCost );
 		}
-		
+
 		// remember our upgrades so we can restore them at a checkpoint
 		pTFPlayer->RememberUpgrade( pTFPlayer->GetPlayerClass()->GetClassIndex(), pItem, iUpgrade, nCost, bDowngrade );
 
@@ -327,7 +327,7 @@ void CUpgrades::PlayerPurchasingUpgrade( CTFPlayer *pTFPlayer, int iItemSlot, in
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static attrib_definition_index_t ApplyUpgrade_Bottle( int iUpgrade, CTFPlayer *pTFPlayer, CEconItemView *pEconItemView, int nCost, bool bDowngrade )
 {
@@ -378,7 +378,7 @@ static attrib_definition_index_t ApplyUpgrade_Bottle( int iUpgrade, CTFPlayer *p
 
 		pAttrList->SetRuntimeAttributeValue( pAttrDef, upgrade.flIncrement );
 		pAttrList->SetRuntimeAttributeRefundableCurrency( pAttrDef, nCost );
-	}			
+	}
 	// attribute exists, just increase number of charges
 	else
 	{
@@ -397,7 +397,7 @@ static attrib_definition_index_t ApplyUpgrade_Bottle( int iUpgrade, CTFPlayer *p
 		Assert( AlmostEqual( flExistingValue, upgrade.flIncrement ) );
 #endif // DBGFLAG_ASSERT
 		pAttrList->AdjustRuntimeAttributeRefundableCurrency( pAttrDef, nCost * nChange );
-		
+
 		if ( nNewCharges == 0 )
 		{
 			Assert( bDowngrade );
@@ -418,7 +418,7 @@ static attrib_definition_index_t ApplyUpgrade_Bottle( int iUpgrade, CTFPlayer *p
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static attrib_definition_index_t ApplyUpgrade_Default( const CMannVsMachineUpgrades& upgrade, CTFPlayer *pTFPlayer, CEconItemView *pEconItemView, int nCost, bool bDowngrade )
 {
@@ -426,19 +426,19 @@ static attrib_definition_index_t ApplyUpgrade_Default( const CMannVsMachineUpgra
 	Assert( upgrade.nUIGroup == UIGROUP_UPGRADE_ATTACHED_TO_PLAYER || upgrade.nUIGroup == UIGROUP_UPGRADE_ATTACHED_TO_ITEM );
 	// Assert( pEconItemView || upgrade.nUIGroup != UIGROUP_UPGRADE_ATTACHED_TO_ITEM );		// ugh, if loadouts change behind the scenes or if we have bugs elsewhere, we might
 																							// feed an empty slot in here -- check for this case below if ATTACHED_TO_ITEM
-	
+
 	const CEconItemAttributeDefinition *pAttrDef = GetItemSchema()->GetAttributeDefinitionByName( upgrade.szAttrib );
 	if ( !pAttrDef )
 		return INVALID_ATTRIB_DEF_INDEX;
 
 	Assert( !pAttrDef->BIsSetBonusAttribute() );
 
-	
+
 	CAttributeList *pAttrList = upgrade.nUIGroup == UIGROUP_UPGRADE_ATTACHED_TO_PLAYER
 							  ? pTFPlayer->GetAttributeList()
 							  : pEconItemView->GetAttributeList();
 	Assert( pAttrList );
-	
+
 	// ...
 	float fDefaultValue = pAttrDef->GetDescriptionFormat() == ATTDESCFORM_VALUE_IS_PERCENTAGE || pAttrDef->GetDescriptionFormat() == ATTDESCFORM_VALUE_IS_INVERTED_PERCENTAGE
 						? 1.0f
@@ -453,7 +453,7 @@ static attrib_definition_index_t ApplyUpgrade_Default( const CMannVsMachineUpgra
 
 		::FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pEconItemView->GetItemDefinition(), pAttrDef, &fDefaultValue );
 	}
-	
+
 	// if the attribute exists, add the increment (but not if it's a set bonus attribute, they're recreated on each respawn)
 	float flIncrement = upgrade.flIncrement;
 
@@ -467,7 +467,7 @@ static attrib_definition_index_t ApplyUpgrade_Default( const CMannVsMachineUpgra
 
 		// Add the increment
 		float flNewValue = 0.0f;
-		
+
 		if ( bDowngrade )
 		{
 			float flInitialValue = fDefaultValue;
@@ -478,7 +478,7 @@ static attrib_definition_index_t ApplyUpgrade_Default( const CMannVsMachineUpgra
 				// If we're at the cap and the initial value isn't normal, we might need to do a smaller increment
 				// This is because incrementing from the initial value in steps would have gone past the hard cap
 				float flStart = flInitialValue;
-				
+
 				if ( flIncrement > 0 )
 				{
 					while ( flStart < flCap && !AlmostEqual( flStart, flCap ) )
@@ -539,7 +539,7 @@ static attrib_definition_index_t ApplyUpgrade_Default( const CMannVsMachineUpgra
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 attrib_definition_index_t CUpgrades::ApplyUpgradeToItem( CTFPlayer *pTFPlayer, CEconItemView *pView, int iUpgrade, int nCost, bool bDowngrade, bool bIsFresh )
 {
@@ -557,13 +557,13 @@ attrib_definition_index_t CUpgrades::ApplyUpgradeToItem( CTFPlayer *pTFPlayer, C
 
 	bool bIsBottle = upgrade.nUIGroup == UIGROUP_POWERUPBOTTLE;
 
-	ReportUpgrade( 
-		pTFPlayer, 
-		pView ? pView->GetItemDefIndex() : 0, 
-		pAttrDef->GetDefinitionIndex(), 
-		upgrade.nQuality, 
+	ReportUpgrade(
+		pTFPlayer,
+		pView ? pView->GetItemDefIndex() : 0,
+		pAttrDef->GetDefinitionIndex(),
+		upgrade.nQuality,
 		nCost,
-		bDowngrade, 
+		bDowngrade,
 		bIsFresh,
 		bIsBottle
 	);
@@ -594,7 +594,7 @@ const char *CUpgrades::GetUpgradeAttributeName( int iUpgrade ) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CUpgrades::NotifyItemOnUpgrade( CTFPlayer *pTFPlayer, attrib_definition_index_t nAttrDefIndex, bool bDowngrade /*= false*/ )
 {
@@ -682,7 +682,7 @@ void CUpgrades::NotifyItemOnUpgrade( CTFPlayer *pTFPlayer, attrib_definition_ind
 #ifdef STAGING_ONLY
 	case 555:	// medigun specialist
 		{
-			static UpgradeAttribBlock_t upgradeBlock[] = 
+			static UpgradeAttribBlock_t upgradeBlock[] =
 			{
 				{ "healing mastery", 4.f, LOADOUT_POSITION_SECONDARY },
 				{ "overheal expert", 4.f, LOADOUT_POSITION_SECONDARY },
@@ -695,7 +695,7 @@ void CUpgrades::NotifyItemOnUpgrade( CTFPlayer *pTFPlayer, attrib_definition_ind
 		break;
 	case 605:	// master sniper
 		{
-			static UpgradeAttribBlock_t upgradeBlock[] = 
+			static UpgradeAttribBlock_t upgradeBlock[] =
 			{
 				{ "projectile penetration", 1.f, LOADOUT_POSITION_PRIMARY },
 				{ "SRifle Charge rate increased", 1.5f, LOADOUT_POSITION_PRIMARY },
@@ -707,7 +707,7 @@ void CUpgrades::NotifyItemOnUpgrade( CTFPlayer *pTFPlayer, attrib_definition_ind
 		break;
 	case 611:	// airborne infantry
 		{
-			static UpgradeAttribBlock_t upgradeBlock[] = 
+			static UpgradeAttribBlock_t upgradeBlock[] =
 			{
 				{ "increased air control", 10.f, LOADOUT_POSITION_PRIMARY },
 				{ "rocket launch impulse", 1, LOADOUT_POSITION_PRIMARY },
@@ -719,7 +719,7 @@ void CUpgrades::NotifyItemOnUpgrade( CTFPlayer *pTFPlayer, attrib_definition_ind
 		break;
 	case 624:	// construction expert
 		{
-			static UpgradeAttribBlock_t upgradeBlock[] = 
+			static UpgradeAttribBlock_t upgradeBlock[] =
 			{
 				{ "build rate bonus", 0.7f, LOADOUT_POSITION_MELEE },
 				{ "maxammo metal increased", 1.5f, LOADOUT_POSITION_INVALID },
@@ -731,7 +731,7 @@ void CUpgrades::NotifyItemOnUpgrade( CTFPlayer *pTFPlayer, attrib_definition_ind
 		break;
 	case 626:	// support engineer
 		{
-			static UpgradeAttribBlock_t upgradeBlock[] = 
+			static UpgradeAttribBlock_t upgradeBlock[] =
 			{
 				{ "teleporter recharge rate bonus", 0.5f, LOADOUT_POSITION_INVALID },
 				{ "teleporter speed boost", 1, LOADOUT_POSITION_INVALID },
@@ -771,7 +771,7 @@ void CUpgrades::ReportUpgrade( CTFPlayer *pTFPlayer, int nItemDef, int nAttribut
 			for( int u = 0; u < upgrades->Count(); ++u )
 			{
 				// Class Match, Check to see if we have this item equipped
-				if ( iClass == upgrades->Element(u).m_iPlayerClass) 
+				if ( iClass == upgrades->Element(u).m_iPlayerClass)
 				{
 					// Player upgrade
 					if ( upgrades->Element( u ).m_itemDefIndex == INVALID_ITEM_DEF_INDEX )
@@ -828,10 +828,10 @@ void CUpgrades::RestoreItemAttributeToBaseValue( CEconItemAttributeDefinition *p
 {
 	Assert( pAttrib );
 	Assert( pItem );
-	
+
 	CAttributeList *pAttrList = pItem->GetAttributeList();
 	Assert( pAttrList );
-	
+
 	float flCurrentValue;
 	if ( ::FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pAttrList, pAttrib, &flCurrentValue ) )
 	{
@@ -856,10 +856,10 @@ void CUpgrades::RestorePlayerAttributeToBaseValue( CEconItemAttributeDefinition 
 {
 	Assert( pAttrib );
 	Assert( pTFPlayer );
-	
+
 	CAttributeList *pAttrList = pTFPlayer->GetAttributeList();
 	Assert( pAttrList );
-	
+
 	float flCurrentValue;
 	if ( ::FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pAttrList, pAttrib, &flCurrentValue ) )
 	{
@@ -931,11 +931,6 @@ void CUpgrades::ApplyUpgradeAttributeBlock( UpgradeAttribBlock_t *upgradeBlock, 
 			pAttribList->SetRuntimeAttributeValue( pDef, upgradeBlock[i].flValue );
 		}
 	}
-			
+
 	pPlayer->NetworkStateChanged();
 }
-
-
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -44,33 +44,33 @@ void CEventPropertiesMoveToDialog::InitControlData( CEventParams *params )
 {
 	SetDlgItemText( m_hDialog, IDC_STARTTIME, va( "%f", g_Params.m_flStartTime ) );
 	SetDlgItemText( m_hDialog, IDC_ENDTIME, va( "%f", g_Params.m_flEndTime ) );
-	SendMessage( GetControl( IDC_CHECK_ENDTIME ), BM_SETCHECK, 
+	SendMessage( GetControl( IDC_CHECK_ENDTIME ), BM_SETCHECK,
 		( WPARAM ) g_Params.m_bHasEndTime ? BST_CHECKED : BST_UNCHECKED,
 		( LPARAM )0 );
 
-	SendMessage( GetControl( IDC_CHECK_RESUMECONDITION ), BM_SETCHECK, 
+	SendMessage( GetControl( IDC_CHECK_RESUMECONDITION ), BM_SETCHECK,
 		( WPARAM ) g_Params.m_bResumeCondition ? BST_CHECKED : BST_UNCHECKED,
 		( LPARAM )0 );
 
 	PopulateTagList( params );
 
 	HWND choices1 = GetControl( IDC_EVENTCHOICES );
-	SendMessage( choices1, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( choices1, CB_RESETCONTENT, 0, 0 );
 	SendMessage( choices1, WM_SETTEXT , 0, (LPARAM)params->m_szParameters );
 
 	HWND choices2 = GetControl( IDC_EVENTCHOICES2 );
-	SendMessage( choices2, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( choices2, CB_RESETCONTENT, 0, 0 );
 	SendMessage( choices2, WM_SETTEXT , 0, (LPARAM)params->m_szParameters2 );
 
 	HWND choices3 = GetControl( IDC_EVENTCHOICES3 );
-	SendMessage( choices3, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( choices3, CB_RESETCONTENT, 0, 0 );
 	SendMessage( choices3, WM_SETTEXT , 0, (LPARAM)params->m_szParameters3 );
 
 	HWND control = GetControl( IDC_SLIDER_DISTANCE );
 	SendMessage( control, TBM_SETRANGE, 0, (LPARAM)MAKELONG( 0, 200 ) );
 	SendMessage( control, TBM_SETPOS, 1, (LPARAM)(LONG)params->m_flDistanceToTarget );
 
-	SendMessage( GetControl( IDC_CHECK_FORCESHORTMOVEMENT ), BM_SETCHECK, 
+	SendMessage( GetControl( IDC_CHECK_FORCESHORTMOVEMENT ), BM_SETCHECK,
 		( WPARAM ) g_Params.m_bForceShortMovement ? BST_CHECKED : BST_UNCHECKED,
 		( LPARAM )0 );
 
@@ -83,7 +83,7 @@ void CEventPropertiesMoveToDialog::InitControlData( CEventParams *params )
 	if (strlen( params->m_szParameters3 ) != 0)
 	{
 		// make sure blank is a valid choice
-		SendMessage( choices3, CB_ADDSTRING, 0, (LPARAM)"" ); 
+		SendMessage( choices3, CB_ADDSTRING, 0, (LPARAM)"" );
 	}
 	PopulateNamedActorList( choices3, params );
 
@@ -95,7 +95,7 @@ void CEventPropertiesMoveToDialog::InitDialog( HWND hwndDlg )
 	m_hDialog = hwndDlg;
 
 	g_Params.PositionSelf( m_hDialog );
-	
+
 	// Set working title for dialog, etc.
 	SetTitle();
 
@@ -148,9 +148,9 @@ void CEventPropertiesMoveToDialog::SetDistanceToTargetText( CEventParams *params
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wnd - 
-//			*params - 
+// Purpose:
+// Input  : wnd -
+//			*params -
 // Output : static
 //-----------------------------------------------------------------------------
 
@@ -160,11 +160,11 @@ void CEventPropertiesMoveToDialog::ShowControlsForEventType( CEventParams *param
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
 static BOOL CALLBACK EventPropertiesMoveToDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
@@ -185,14 +185,14 @@ BOOL CEventPropertiesMoveToDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARA
 	{
 	case WM_PAINT:
 		{
-			PAINTSTRUCT ps; 
+			PAINTSTRUCT ps;
 			HDC hdc;
-			
-            hdc = BeginPaint(hwndDlg, &ps); 
-			DrawSpline( hdc, GetControl( IDC_STATIC_SPLINE ), g_Params.m_pEvent );
-            EndPaint(hwndDlg, &ps); 
 
-            return FALSE; 
+	hdc = BeginPaint(hwndDlg, &ps);
+			DrawSpline( hdc, GetControl( IDC_STATIC_SPLINE ), g_Params.m_pEvent );
+	EndPaint(hwndDlg, &ps);
+
+	return FALSE;
 		}
 		break;
 	case WM_VSCROLL:
@@ -205,12 +205,12 @@ BOOL CEventPropertiesMoveToDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARA
 			return FALSE;
 		}
 		break;
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		{
 			InitDialog( hwndDlg );
 		}
-		return FALSE;  
-		
+		return FALSE;
+
 	case WM_HSCROLL:
 		{
 			HWND control = (HWND)lParam;
@@ -224,7 +224,7 @@ BOOL CEventPropertiesMoveToDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARA
 		}
 		return FALSE;
 
-    case WM_COMMAND:
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -254,7 +254,7 @@ BOOL CEventPropertiesMoveToDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARA
 				EndDialog( hwndDlg, 1 );
 			}
 			break;
-        case IDCANCEL:
+	case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		case IDC_CHECK_ENDTIME:
@@ -348,16 +348,16 @@ BOOL CEventPropertiesMoveToDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARA
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int EventProperties_MoveTo( CEventParams *params )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_EVENTPROPERTIES_MOVETO ),
 		(HWND)g_MDLViewer->getHandle(),
 		(DLGPROC)EventPropertiesMoveToDialogProc );

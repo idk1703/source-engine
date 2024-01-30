@@ -45,7 +45,7 @@ IEconRootUI* EconUI( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CServerNotConnectedToSteamDialog *OpenServerNotConnectedToSteamDialog( vgui::Panel *pParent );
 
@@ -98,14 +98,14 @@ CCharacterInfoPanel::CCharacterInfoPanel( Panel *parent ) : PropertyDialog(paren
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCharacterInfoPanel::~CCharacterInfoPanel()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -120,9 +120,9 @@ void CCharacterInfoPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::PerformLayout( void ) 
+void CCharacterInfoPanel::PerformLayout( void )
 {
 	if ( GetVParent() )
 	{
@@ -135,14 +135,14 @@ void CCharacterInfoPanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::ShowPanel(bool bShow)
 {
 	m_bPreventClosure = false;
 
 	// Keep the MM dashboard on top of us
-	bShow ? GetMMDashboardParentManager()->PushModalFullscreenPopup( this ) 
+	bShow ? GetMMDashboardParentManager()->PushModalFullscreenPopup( this )
 		  : GetMMDashboardParentManager()->PopModalFullscreenPopup( this );
 
 	if ( bShow )
@@ -195,7 +195,7 @@ void CCharacterInfoPanel::ShowPanel(bool bShow)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::FireGameEvent( IGameEvent *event )
 {
@@ -215,7 +215,7 @@ void CCharacterInfoPanel::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::Close()
 {
@@ -245,7 +245,7 @@ void CCharacterInfoPanel::Close()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::NotifyListenersOfCloseEvent()
 {
@@ -262,7 +262,7 @@ void CCharacterInfoPanel::NotifyListenersOfCloseEvent()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::OnCommand( const char *command )
 {
@@ -301,41 +301,41 @@ void CCharacterInfoPanel::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::OpenLoadoutToClass( int iClassIndex, bool bOpenClassLoadout ) 
-{ 
-	Assert(iClassIndex >= TF_CLASS_UNDEFINED && iClassIndex < TF_CLASS_COUNT); 
+void CCharacterInfoPanel::OpenLoadoutToClass( int iClassIndex, bool bOpenClassLoadout )
+{
+	Assert(iClassIndex >= TF_CLASS_UNDEFINED && iClassIndex < TF_CLASS_COUNT);
 	m_pLoadoutPanel->SetClassIndex( iClassIndex, bOpenClassLoadout );
 	m_pLoadoutPanel->SetTeamIndex( m_iDefaultTeam );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::OpenLoadoutToBackpack( void ) 
-{ 
+void CCharacterInfoPanel::OpenLoadoutToBackpack( void )
+{
 	m_pLoadoutPanel->OpenToBackpack();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::OpenLoadoutToCrafting( void ) 
-{ 
+void CCharacterInfoPanel::OpenLoadoutToCrafting( void )
+{
 	m_pLoadoutPanel->OpenToCrafting();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::OpenLoadoutToArmory( void ) 
-{ 
+void CCharacterInfoPanel::OpenLoadoutToArmory( void )
+{
 	m_pLoadoutPanel->OpenToArmory();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::OnOpenArmoryDirect( KeyValues *data )
 {
@@ -344,7 +344,7 @@ void CCharacterInfoPanel::OnOpenArmoryDirect( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::OnKeyCodeTyped(vgui::KeyCode code)
 {
@@ -363,7 +363,7 @@ void CCharacterInfoPanel::OnKeyCodeTyped(vgui::KeyCode code)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::OnKeyCodePressed(vgui::KeyCode code)
 {
@@ -384,7 +384,7 @@ void CCharacterInfoPanel::OnKeyCodePressed(vgui::KeyCode code)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::OnThink()
 {
@@ -404,7 +404,7 @@ void CCharacterInfoPanel::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 IEconRootUI	*CCharacterInfoPanel::OpenEconUI( int iDirectToPage, bool bCheckForInventorySpaceOnExit )
 {
@@ -435,7 +435,7 @@ IEconRootUI	*CCharacterInfoPanel::OpenEconUI( int iDirectToPage, bool bCheckForI
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::CloseEconUI( void )
 {
@@ -447,7 +447,7 @@ void CCharacterInfoPanel::CloseEconUI( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CCharacterInfoPanel::IsUIPanelVisible( EconBaseUIPanels_t iPanel )
 {
@@ -477,7 +477,7 @@ bool CCharacterInfoPanel::IsUIPanelVisible( EconBaseUIPanels_t iPanel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Open_CharInfo( const CCommand &args )
 {
@@ -486,7 +486,7 @@ void Open_CharInfo( const CCommand &args )
 ConCommand open_charinfo( "open_charinfo", Open_CharInfo, "Open the character info panel", FCVAR_NONE );
 
 void CCharacterInfoPanel::SetPreventClosure( bool bPrevent )
-{ 
+{
 	m_bPreventClosure = bPrevent;
 
 	Panel* pBackButton = FindChildByName( "BackButton" );
@@ -497,7 +497,7 @@ void CCharacterInfoPanel::SetPreventClosure( bool bPrevent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Open_CharInfoDirect( const CCommand &args )
 {
@@ -522,34 +522,34 @@ void Open_CharInfoDirect( const CCommand &args )
 		iClass = -atoi( args.Arg( 1 ) );
 	}
 
-	EconUI()->OpenEconUI( iClass );	
+	EconUI()->OpenEconUI( iClass );
 }
 ConCommand open_charinfo_direct( "open_charinfo_direct", Open_CharInfoDirect, "Open the character info panel directly to the class you're currently playing.", FCVAR_NONE );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Open_CharInfoBackpack( const CCommand &args )
 {
-	EconUI()->OpenEconUI( ECONUI_BACKPACK );	
+	EconUI()->OpenEconUI( ECONUI_BACKPACK );
 }
 ConCommand open_charinfo_backpack( "open_charinfo_backpack", Open_CharInfoBackpack, "Open the character info panel directly to backpack.", FCVAR_NONE );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Open_CharInfoCrafting( const CCommand &args )
 {
-	EconUI()->OpenEconUI( ECONUI_CRAFTING );	
+	EconUI()->OpenEconUI( ECONUI_CRAFTING );
 }
 ConCommand open_charinfo_crafting( "open_charinfo_crafting", Open_CharInfoCrafting, "Open the character info panel directly to crafting screen.", FCVAR_NONE );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Open_CharInfoArmory( const CCommand &args )
 {
-	EconUI()->OpenEconUI( ECONUI_ARMORY );	
+	EconUI()->OpenEconUI( ECONUI_ARMORY );
 }
 ConCommand open_charinfo_armory( "open_charinfo_armory", Open_CharInfoArmory, "Open the character info panel directly to armory.", FCVAR_NONE );
 
@@ -560,14 +560,14 @@ ConCommand open_charinfo_armory( "open_charinfo_armory", Open_CharInfoArmory, "O
 static vgui::DHANDLE<CServerNotConnectedToSteamDialog> g_ServerNotConnectedPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CServerNotConnectedToSteamDialog::CServerNotConnectedToSteamDialog( vgui::Panel *pParent, const char *pElementName ) : BaseClass( pParent, "ServerNotConnectedToSteamDialog" )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CServerNotConnectedToSteamDialog::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -578,7 +578,7 @@ void CServerNotConnectedToSteamDialog::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CServerNotConnectedToSteamDialog::OnCommand( const char *command )
 {
@@ -593,7 +593,7 @@ void CServerNotConnectedToSteamDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CServerNotConnectedToSteamDialog *OpenServerNotConnectedToSteamDialog( vgui::Panel *pParent )
 {
@@ -613,29 +613,29 @@ CServerNotConnectedToSteamDialog *OpenServerNotConnectedToSteamDialog( vgui::Pan
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CBackpackPanel *CCharacterInfoPanel::GetBackpackPanel( void ) 
-{ 
-	return m_pLoadoutPanel->GetBackpackPanel(); 
+CBackpackPanel *CCharacterInfoPanel::GetBackpackPanel( void )
+{
+	return m_pLoadoutPanel->GetBackpackPanel();
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CCraftingPanel *CCharacterInfoPanel::GetCraftingPanel( void ) 
-{ 
-	return m_pLoadoutPanel->GetCraftingPanel(); 
+CCraftingPanel *CCharacterInfoPanel::GetCraftingPanel( void )
+{
+	return m_pLoadoutPanel->GetCraftingPanel();
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CArmoryPanel *CCharacterInfoPanel::GetArmoryPanel( void ) 
-{ 
-	return m_pLoadoutPanel->GetArmoryPanel(); 
+CArmoryPanel *CCharacterInfoPanel::GetArmoryPanel( void )
+{
+	return m_pLoadoutPanel->GetArmoryPanel();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::Gamestats_ItemTransaction( int eventID, CEconItemView *item, const char *pszReason, int iQuality )
 {
@@ -643,16 +643,16 @@ void CCharacterInfoPanel::Gamestats_ItemTransaction( int eventID, CEconItemView 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::Gamestats_Store( int eventID, CEconItemView* item, const char* panelName, int classId, 
+void CCharacterInfoPanel::Gamestats_Store( int eventID, CEconItemView* item, const char* panelName, int classId,
 			const cart_item_t* cartItem, int checkoutAttempts, const char* storeError, int totalPrice, int currencyCode )
 {
 	C_CTF_GameStats.Event_Store( eventID, item, panelName, classId, cartItem, checkoutAttempts, storeError, totalPrice, currencyCode );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::SetExperimentValue( uint64 experimentValue )
 {
@@ -663,7 +663,7 @@ static vgui::DHANDLE<CTFItemPickupPanel> g_TFItemPickupPanel;
 static vgui::DHANDLE<CTFItemDiscardPanel> g_TFItemDiscardPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemPickupPanel *CCharacterInfoPanel::OpenItemPickupPanel( void )
 {
@@ -680,7 +680,7 @@ CItemPickupPanel *CCharacterInfoPanel::OpenItemPickupPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemDiscardPanel *CCharacterInfoPanel::OpenItemDiscardPanel( void )
 {
@@ -699,7 +699,7 @@ CItemDiscardPanel *CCharacterInfoPanel::OpenItemDiscardPanel( void )
 static vgui::DHANDLE<CTFBaseStorePanel> g_StorePanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::CreateStorePanel( void )
 {
@@ -724,7 +724,7 @@ void CCharacterInfoPanel::CreateStorePanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStorePanel	*CCharacterInfoPanel::OpenStorePanel( int iItemDef, bool bAddToCart )
 {
@@ -766,7 +766,7 @@ CStorePanel	*CCharacterInfoPanel::OpenStorePanel( int iItemDef, bool bAddToCart 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStorePanel	*CCharacterInfoPanel::GetStorePanel( void )
 {
@@ -774,7 +774,7 @@ CStorePanel	*CCharacterInfoPanel::GetStorePanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::AddPanelCloseListener( vgui::Panel *pListener )
 {
@@ -787,7 +787,7 @@ void CCharacterInfoPanel::AddPanelCloseListener( vgui::Panel *pListener )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::SetClosePanel( int iPanel )
 {
@@ -810,14 +810,14 @@ void CCharacterInfoPanel::SetDefaultTeam( int iTeam )
 static vgui::DHANDLE<CCheatDetectionDialog> g_CheatDetectionDialog;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCheatDetectionDialog::CCheatDetectionDialog( vgui::Panel *pParent, const char *pElementName ) : BaseClass( pParent, "CheatDetectionDialog" )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCheatDetectionDialog::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -828,7 +828,7 @@ void CCheatDetectionDialog::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCheatDetectionDialog::OnCommand( const char *command )
 {
@@ -843,7 +843,7 @@ void CCheatDetectionDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCheatDetectionDialog *OpenCheatDetectionDialog( vgui::Panel *pParent, const char *pszCheatMessage )
 {

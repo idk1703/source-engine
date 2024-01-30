@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ CLocalizationDialog::CLocalizationDialog(const char *fileName) : Frame(NULL, "Lo
 	m_pTokenList = new ListPanel(this, "TokenList");
 
 	m_pTokenList->AddColumnHeader(0, "Token", "Token Name", 128, 128, 1024, 0 );
-	
+
 	m_pLanguageEdit = new TextEntry(this, "LanguageEdit");
 	m_pLanguageEdit->SetMultiline(true);
 	m_pLanguageEdit->SetVerticalScrollbar(true);
@@ -71,7 +71,7 @@ CLocalizationDialog::CLocalizationDialog(const char *fileName) : Frame(NULL, "Lo
 		msg->SetCommand("Close");
 		msg->AddActionSignalTarget(this);
 		msg->DoModal();
-		return;	
+		return;
 	}
 
 	// populate the dialog with the strings
@@ -128,7 +128,7 @@ void CLocalizationDialog::OnTokenSelected()
 		// clear the list
 		m_pLanguageEdit->SetText("");
 		m_pEnglishEdit->SetText("");
-		
+
 		//!! unicode test label
 		m_pTestLabel->SetText("");
 
@@ -265,8 +265,8 @@ char const *CLocalizationDialog::GetFileName() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *command - 
+// Purpose:
+// Input  : *command -
 //-----------------------------------------------------------------------------
 void CLocalizationDialog::OnCommand(const char *command)
 {

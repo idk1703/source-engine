@@ -115,12 +115,12 @@ public:
 				return false;
 
 			INextBot *bot = entity->MyNextBotPointer();
-			
+
 			return ( !bot || bot->IsAbleToBlockMovementOf( m_passBot ) );
 		}
 		return false;
 	}
-	
+
 	const INextBot *m_passBot;
 };
 
@@ -202,7 +202,7 @@ private:
 
 //---------------------------------------------------------------------------------------------
 /**
- * Given a vector of entities, a nav area, and a max travel distance, return 
+ * Given a vector of entities, a nav area, and a max travel distance, return
  * the entity that has the shortest travel distance.
  */
 inline CBaseEntity *SelectClosestEntityByTravelDistance( INextBot *me, const CUtlVector< CBaseEntity * > &candidateEntities, CNavArea *startArea, float travelRange )

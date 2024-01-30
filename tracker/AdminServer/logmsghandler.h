@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -27,7 +27,7 @@ public:
 	~CLogMsgHandlerDetails();
 
 	virtual bool Process(netadr_t *from, CMsgBuffer *msg);
-	
+
 	// indicates if a new message has arrived
 	bool NewMessage();
 

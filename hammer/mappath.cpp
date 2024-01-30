@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@ float GetFileVersion(void);
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapPath::CMapPath(void)
 {
@@ -30,7 +30,7 @@ CMapPath::CMapPath(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapPath::~CMapPath(void)
 {
@@ -38,7 +38,7 @@ CMapPath::~CMapPath(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapPathNode::CMapPathNode(void)
 {
@@ -54,8 +54,8 @@ CMapPathNode::CMapPathNode(const CMapPathNode& src)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : src - 
+// Purpose:
+// Input  : src -
 // Output : CMapPathNode
 //-----------------------------------------------------------------------------
 CMapPathNode &CMapPathNode::operator=(const CMapPathNode &src)
@@ -77,9 +77,9 @@ CMapPathNode &CMapPathNode::operator=(const CMapPathNode &src)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwID - 
-//			piIndex - 
+// Purpose:
+// Input  : dwID -
+//			piIndex -
 // Output : CMapPathNode *
 //-----------------------------------------------------------------------------
 CMapPathNode *CMapPath::NodeForID(DWORD dwID, int* piIndex)
@@ -99,7 +99,7 @@ CMapPathNode *CMapPath::NodeForID(DWORD dwID, int* piIndex)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : DWORD
 //-----------------------------------------------------------------------------
 DWORD CMapPath::GetNewNodeID(void)
@@ -123,10 +123,10 @@ DWORD CMapPath::GetNewNodeID(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwAfterID - 
-//			vecPos - 
-// Output : 
+// Purpose:
+// Input  : dwAfterID -
+//			vecPos -
+// Output :
 //-----------------------------------------------------------------------------
 DWORD CMapPath::AddNode(DWORD dwAfterID, const Vector &vecPos)
 {
@@ -159,9 +159,9 @@ DWORD CMapPath::AddNode(DWORD dwAfterID, const Vector &vecPos)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwID - 
-//			*pt - 
+// Purpose:
+// Input  : dwID -
+//			*pt -
 //-----------------------------------------------------------------------------
 void CMapPath::SetNodePosition(DWORD dwID, Vector& pt)
 {
@@ -173,8 +173,8 @@ void CMapPath::SetNodePosition(DWORD dwID, Vector& pt)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwID - 
+// Purpose:
+// Input  : dwID -
 //-----------------------------------------------------------------------------
 void CMapPath::DeleteNode(DWORD dwID)
 {
@@ -187,9 +187,9 @@ void CMapPath::DeleteNode(DWORD dwID)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			fIsStoring - 
+// Purpose:
+// Input  : file -
+//			fIsStoring -
 //-----------------------------------------------------------------------------
 void CMapPath::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 {
@@ -201,7 +201,7 @@ void CMapPath::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		file.write(m_szName, 128);
 		file.write(m_szClass, 128);
 		file.write((char*) &m_iDirection, sizeof(m_iDirection));
-	
+
 		iSize = m_Nodes.Count();
 		file.write((char*) &iSize, sizeof iSize);
 		for(int i = 0; i < m_Nodes.Count(); i++)
@@ -211,7 +211,7 @@ void CMapPath::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 			file.write((char*) &node.pos[0], 3 * sizeof(float));
 			file.write((char*) &node.dwID, sizeof(node.dwID));
 			file.write((char*) &node.szName, sizeof(node.szName));
-			
+
 			//
 			// Write keyvalue count.
 			//
@@ -276,10 +276,10 @@ void CMapPath::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : iIndex - 
-//			iName - 
-//			str - 
+// Purpose:
+// Input  : iIndex -
+//			iName -
+//			str -
 //-----------------------------------------------------------------------------
 void CMapPath::GetNodeName(int iIndex, int iName, CString& str)
 {
@@ -296,17 +296,17 @@ void CMapPath::GetNodeName(int iIndex, int iName, CString& str)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			fIsStoring - 
-//			*pIntersecting - 
+// Purpose:
+// Input  : file -
+//			fIsStoring -
+//			*pIntersecting -
 //-----------------------------------------------------------------------------
 void CMapPath::SerializeMAP(std::fstream& file, BOOL fIsStoring, BoundBox *pIntersecting)
 {
 	if( m_Nodes.Count() == 0)
 		return;
 
-	// if saving WITHIN a box, check all nodes to see if they all 
+	// if saving WITHIN a box, check all nodes to see if they all
 	//  fit within that box. if not, don't save ANY of the path.
 	if(pIntersecting)
 	{
@@ -336,7 +336,7 @@ void CMapPath::SerializeMAP(std::fstream& file, BOOL fIsStoring, BoundBox *pInte
 	int iMax = m_Nodes.Count()-1;
 	int iName = 0;
 
-	// resolve targets 
+	// resolve targets
 	int iLastNodeIndex = -1;
 	BOOL bFirstPass = TRUE;
 
@@ -399,7 +399,7 @@ SaveAgain:
 		CMapPathNode &node = m_Nodes[iCurNode];
 
 		// store location
-		strTemp.Format("%.0f %.0f %.0f", node.pos[0], node.pos[1], 
+		strTemp.Format("%.0f %.0f %.0f", node.pos[0], node.pos[1],
 			node.pos[2]);
 		kvTemp.Set("origin", strTemp);
 		kvTemp.SerializeMAP(file, TRUE);
@@ -459,7 +459,7 @@ void CMapPath::EditInfo()
 	dlg.m_strName = m_szName;
 	dlg.m_strClass = m_szClass;
 	dlg.m_iDirection = m_iDirection;
-	
+
 	if(dlg.DoModal() != IDOK)
 		return;
 
@@ -470,8 +470,8 @@ void CMapPath::EditInfo()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwNodeID - 
+// Purpose:
+// Input  : dwNodeID -
 // Output : CMapEntity *
 //-----------------------------------------------------------------------------
 CMapEntity *CMapPath::CreateEntityForNode(DWORD dwNodeID)
@@ -489,7 +489,7 @@ CMapEntity *CMapPath::CreateEntityForNode(DWORD dwNodeID)
 	{
 		pEntity->SetKeyValue(pNode->kv.GetKey(k), pNode->kv.GetValue(k));
 	}
-	
+
 	// store target/targetname properties:
 	CString str;
 	str.Format("%s%02d", m_szName, iIndex);
@@ -509,9 +509,9 @@ CMapEntity *CMapPath::CreateEntityForNode(DWORD dwNodeID)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwNodeID - 
-//			*pEntity - 
+// Purpose:
+// Input  : dwNodeID -
+//			*pEntity -
 //-----------------------------------------------------------------------------
 void CMapPath::CopyNodeFromEntity(DWORD dwNodeID, CMapEntity *pEntity)
 {
@@ -540,10 +540,10 @@ void CMapPath::CopyNodeFromEntity(DWORD dwNodeID, CMapEntity *pEntity)
 
 /*
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szKey - 
-//			*szValue - 
-//			*pNode - 
+// Purpose:
+// Input  : *szKey -
+//			*szValue -
+//			*pNode -
 // Output : CChunkFileResult_t
 //-----------------------------------------------------------------------------
 
@@ -568,8 +568,8 @@ CChunkFileResult_t CMapPathNode::LoadKeyCallback(const char *szKey, const char *
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFile - 
+// Purpose:
+// Input  : *pFile -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CMapPathNode::SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo)
@@ -590,7 +590,7 @@ ChunkFileResult_t CMapPathNode::SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo)
 	{
 		eResult = pFile->WriteKeyValue("name", node.szName);
 	}
-	
+
 	if (eResult == ChunkFile_Ok)
 	{
 		eResult = pFile->BeginChunk("keys");
@@ -628,10 +628,10 @@ ChunkFileResult_t CMapPathNode::SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szKey - 
-//			*szValue - 
-//			*pPath - 
+// Purpose:
+// Input  : *szKey -
+//			*szValue -
+//			*pPath -
 // Output : CChunkFileResult_t
 //-----------------------------------------------------------------------------
 CChunkFileResult_t CMapPath::LoadKeyCallback(const char *szKey, const char *szValue, CMapPath *pPath)
@@ -652,8 +652,8 @@ CChunkFileResult_t CMapPath::LoadKeyCallback(const char *szKey, const char *szVa
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFile - 
+// Purpose:
+// Input  : *pFile -
 //-----------------------------------------------------------------------------
 void CMapPath::LoadVMF(CChunkFile *pFile)
 {
@@ -680,8 +680,8 @@ void CMapPath::LoadVMF(CChunkFile *pFile)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFile - 
+// Purpose:
+// Input  : *pFile -
 //-----------------------------------------------------------------------------
 void CMapPath::SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo)
 {

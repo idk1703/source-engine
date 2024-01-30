@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -148,7 +148,7 @@ void FlexPanel::PositionSliders( int sboffset )
 
 		slFlexScale[ i ]->setBounds( x, y, slFlexScale[i]->w(), slFlexScale[i]->h() );
 
-		if ( i >= rowsneeded || 
+		if ( i >= rowsneeded ||
 			( y + LINE_HEIGHT - 5 > ( this->h2() - reservedheight ) ) )
 		{
 			slFlexScale[ i ]->setVisible( false );
@@ -204,9 +204,9 @@ int FlexPanel::handleEvent (mxEvent *event)
 						event->modifiers == SB_THUMBTRACK)
 					{
 						int offset = event->height; // ((mxScrollbar *) event->widget)->getValue( );
-						
+
 						slScrollbar->setValue( offset ); // if (offset > slScrollbar->getPagesize()
-						
+
 						PositionSliders( offset );
 
 						IFacePoserToolWindow::SetActiveTool( this );
@@ -257,14 +257,14 @@ int FlexPanel::handleEvent (mxEvent *event)
 				iret = 1;
 
 				bool pushundo = false;
-				
+
 				mxExpressionSlider *slider = ( mxExpressionSlider * )event->widget;
 				int barnumber = event->height;
 				int slidernum = ( event->action - IDC_FLEXSCALE );
 
 				float value = slider->getValue ( barnumber );
 				float influ = slider->getInfluence( );
-				
+
 				switch( event->modifiers )
 				{
 				case SB_THUMBPOSITION:
@@ -277,7 +277,7 @@ int FlexPanel::handleEvent (mxEvent *event)
 				int flex = LookupFlex( slidernum, barnumber );
 				int flex2 = LookupPairedFlex( flex );
 				float value2 = GetSlider( flex2 );
-				
+
 				CExpClass *active = expressions->GetActiveClass();
 				if ( active )
 				{
@@ -289,23 +289,23 @@ int FlexPanel::handleEvent (mxEvent *event)
 						{
 							float *settings = exp->GetSettings();
 							float *weights = exp->GetWeights();
-							Assert( settings );	
-							
-							if ( settings[ flex ] != value || 
-								 settings[ flex2 ] != value2 || 
+							Assert( settings );
+
+							if ( settings[ flex ] != value ||
+								 settings[ flex2 ] != value2 ||
 								 weights[ flex ] != influ )
 							{
 								exp->PushUndoInformation();
-								
+
 								active->SetDirty( true );
-								
+
 								settings[ flex ] = value;
 								settings[ flex2 ] = value2;
 								weights[ flex ] = influ;
 								weights[ flex2 ] = influ;
-								
+
 								exp->PushRedoInformation();
-								
+
 								g_pExpressionTrayTool->redraw();
 							}
 						}
@@ -344,7 +344,7 @@ int FlexPanel::handleEvent (mxEvent *event)
 			}
 		}
 	}
-	
+
 	return iret;
 }
 
@@ -474,7 +474,7 @@ bool FlexPanel::IsValidSlider( int iFlexController ) const
 	return true;
 }
 
-float	
+float
 FlexPanel::GetSlider( int iFlexController )
 {
 	if ( !IsValidSlider( iFlexController ) )
@@ -510,7 +510,7 @@ void FlexPanel::GetSliderRange( int iFlexController, float& minvalue, float& max
 		return;
 	}
 
-	mxExpressionSlider *sl = slFlexScale[ nFlexSliderIndex[ iFlexController ] ]; 
+	mxExpressionSlider *sl = slFlexScale[ nFlexSliderIndex[ iFlexController ] ];
 	Assert( sl );
 	minvalue = sl->getMinValue( barnum );
 	maxvalue = sl->getMaxValue( barnum );
@@ -528,7 +528,7 @@ FlexPanel::SetSlider( int iFlexController, float value )
 	slFlexScale[ nFlexSliderIndex[ iFlexController ] ]->setValue( nFlexSliderBarnum[ iFlexController ], value );
 }
 
-float	
+float
 FlexPanel::GetInfluence( int iFlexController )
 {
 	if ( !IsValidSlider( iFlexController ) )
@@ -643,8 +643,8 @@ FlexPanel::setExpression( int index )
 
 	float *settings = exp->GetSettings();
 	float *weights = exp->GetWeights();
-	Assert( settings );	
-	Assert( weights );	
+	Assert( settings );
+	Assert( weights );
 
 	for (LocalFlexController_t i = LocalFlexController_t(0); i < hdr->numflexcontrollers(); i++)
 	{
@@ -681,8 +681,8 @@ void FlexPanel::DeleteExpression( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 //-----------------------------------------------------------------------------
 void FlexPanel::RevertExpression( int index )
 {
@@ -723,8 +723,8 @@ void FlexPanel::SaveExpression( int index )
 
 	float *settings = exp->GetSettings();
 	float *weights = exp->GetWeights();
-	Assert( settings );	
-	Assert( weights );	
+	Assert( settings );
+	Assert( weights );
 	for ( LocalFlexController_t i = LocalFlexController_t(0); i < hdr->numflexcontrollers(); i++ )
 	{
 		int j = hdr->pFlexcontroller( i )->localToGlobal;
@@ -788,7 +788,7 @@ void FlexPanel::OnSetAll( int state )
 				influence = 1.0f - influence;
 				break;
 			}
-			
+
 			SetInfluence( j, influence );
 			models->GetActiveStudioModel()->SetFlexController( i, setting * influence );
 		}
@@ -824,7 +824,7 @@ void FlexPanel::ResetSliders( bool preserveundo, bool bDirtyClass )
 
 					if ( bDirtyClass )
 					{
-						active->SetDirty( true );	
+						active->SetDirty( true );
 					}
 
 					g_pExpressionTrayTool->redraw();
@@ -944,7 +944,7 @@ void FlexPanel::EditExpression( void )
 		Con_ErrorPrintf( "Can't edit face pose, must load a model first!\n" );
 		return;
 	}
-	
+
 	CExpClass *active = expressions->GetActiveClass();
 	if ( !active )
 		return;
@@ -1059,13 +1059,13 @@ void FlexPanel::NewExpression( void )
 
 		settings[ j ] = GetSlider( j );
 		weights[ j ] = GetInfluence( j );
-	}	
+	}
 
 	active->AddExpression( params.m_szName, params.m_szDescription, settings, weights, true, true );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool FlexPanel::PaintBackground( void )

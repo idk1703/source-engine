@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -16,7 +16,7 @@
 DEFINE_FALLBACK_SHADER( DecalModulate, DecalModulate_DX8 )
 
 BEGIN_VS_SHADER( DecalModulate_DX8, "" )
-			  
+
 	BEGIN_SHADER_PARAMS
 	END_SHADER_PARAMS
 
@@ -71,7 +71,7 @@ BEGIN_VS_SHADER( DecalModulate_DX8, "" )
 			Vector4D transformation[2];
 			transformation[0].Init( 1.0f, 0.0f, 0.0f, 0.0f );
 			transformation[1].Init( 0.0f, 1.0f, 0.0f, 0.0f );
-		 	pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, transformation[0].Base(), 2 ); 
+		 	pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, transformation[0].Base(), 2 );
 
 			MaterialFogMode_t fogType = s_pShaderAPI->GetSceneFogMode();
 			int fogIndex = ( fogType == MATERIAL_FOG_LINEAR_BELOW_FOG_Z ) ? 1 : 0;

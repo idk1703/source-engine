@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -26,7 +26,7 @@ class CAchievementTFMedic_TopScoreboard : public CAchievementTopScoreboard
 {
 	DECLARE_CLASS( CAchievementTFMedic_TopScoreboard, CAchievementTopScoreboard );
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_FILTER_FULL_ROUND_ONLY | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		m_bKilledAnyone = false;
@@ -53,7 +53,7 @@ class CAchievementTFMedic_TopScoreboard : public CAchievementTopScoreboard
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_TFPlayer::GetLocalTFPlayer() )
 		{
@@ -70,7 +70,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_TopScoreboard, ACHIEVEMENT_TF_MEDIC_TOP
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_ChargeBySetupEnd : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -102,7 +102,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_ChargeBySetupEnd, ACHIEVEMENT_TF_MEDIC_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_HealTargetUnderFire : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -114,7 +114,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_HealTargetUnderFire, ACHIEVEMENT_TF_MED
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_SimultaneousCharges : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -126,7 +126,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_SimultaneousCharges, ACHIEVEMENT_TF_MED
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_RapidUbercharges : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 1 );
@@ -159,7 +159,7 @@ class CAchievementTFMedic_RapidUbercharges : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		int iAssisterIndex = engine->GetPlayerForUserID( event->GetInt( "assister" ) );
 		if ( iAssisterIndex > 0 )
@@ -175,7 +175,7 @@ class CAchievementTFMedic_RapidUbercharges : public CBaseTFAchievement
 
 				CheckForSuccess();
 			}
-		}				
+		}
 	}
 
 	void CheckForSuccess( void )
@@ -207,7 +207,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_RapidUbercharges, ACHIEVEMENT_TF_MEDIC_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_CounterUbercharges : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -264,7 +264,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_CounterUbercharges, ACHIEVEMENT_TF_MEDI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_SwitchToMedic : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -385,7 +385,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_SwitchToMedic, ACHIEVEMENT_TF_MEDIC_SWI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_SaveTeammate : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -397,7 +397,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_SaveTeammate, ACHIEVEMENT_TF_MEDIC_SAVE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_ChargeBlocker : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -409,7 +409,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_ChargeBlocker, ACHIEVEMENT_TF_MEDIC_CHA
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_AssistMedic : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS | ACH_FILTER_VICTIM_IS_PLAYER_ENEMY );
 		SetGoal( 1 );
@@ -433,7 +433,7 @@ class CAchievementTFMedic_AssistMedic : public CBaseTFAchievement
 
 	// Assist a fellow Medic in killing 5 enemies in a single life.
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 		if ( pLocalPlayer )
@@ -467,13 +467,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_AssistMedic, ACHIEVEMENT_TF_MEDIC_ASSIS
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_KillScoutsWithSyringe : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 50 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 		if ( pAttacker == pLocalPlayer )
@@ -494,13 +494,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_KillScoutsWithSyringe, ACHIEVEMENT_TF_M
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_KillMedicsWithBonesaw : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 10 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 		if ( pAttacker == pLocalPlayer )
@@ -522,7 +522,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_KillMedicsWithBonesaw, ACHIEVEMENT_TF_M
 #define MAX_PARTNERS 12
 class CAchievementTFMedic_AssistHeavyLongStreak : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 1 );
@@ -556,7 +556,7 @@ class CAchievementTFMedic_AssistHeavyLongStreak : public CBaseTFAchievement
 		return -1;
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 		if ( pLocalPlayer )
@@ -675,7 +675,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_AssistHeavyLongStreak, ACHIEVEMENT_TF_M
 class CAchievementTFMedic_BaseAssistWhileCharged : public CBaseTFAchievement
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 1 );
@@ -699,7 +699,7 @@ public:
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		int iAssisterIndex = engine->GetPlayerForUserID( event->GetInt( "assister" ) );
 		if ( iAssisterIndex > 0 )
@@ -710,7 +710,7 @@ public:
 			{
 				AssistedWhileCharged( pVictim, pAttacker, pInflictor, event );
 			}
-		}				
+		}
 	}
 
 	virtual void DeployedCharge( void ) = 0;
@@ -722,7 +722,7 @@ class CAchievementTFMedic_AssistChargeScout : public CAchievementTFMedic_BaseAss
 {
 	DECLARE_CLASS( CAchievementTFMedic_AssistChargeScout, CAchievementTFMedic_BaseAssistWhileCharged );
 
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		m_iAssists = 0;
@@ -758,7 +758,7 @@ class CAchievementTFMedic_AssistChargeSoldier : public CAchievementTFMedic_BaseA
 {
 	DECLARE_CLASS( CAchievementTFMedic_AssistChargeSoldier, CAchievementTFMedic_BaseAssistWhileCharged );
 
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		m_iAssists = 0;
@@ -797,7 +797,7 @@ class CAchievementTFMedic_AssistChargeDemoman : public CAchievementTFMedic_BaseA
 {
 	DECLARE_CLASS( CAchievementTFMedic_AssistChargeDemoman, CAchievementTFMedic_BaseAssistWhileCharged );
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -837,7 +837,7 @@ class CAchievementTFMedic_AssistChargeDemoman : public CAchievementTFMedic_BaseA
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// don't count player kills in our assists
 	}
@@ -863,7 +863,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_AssistChargeDemoman, ACHIEVEMENT_TF_MED
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_HealEngineer : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -876,14 +876,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_HealEngineer, ACHIEVEMENT_TF_MEDIC_HEAL
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_AssistPyro : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
 		m_iPlayersIgnited = 0;
 	}
 
-	// Assist in burning 8 enemies with a single Uber-Charge on a Pyro. 
+	// Assist in burning 8 enemies with a single Uber-Charge on a Pyro.
 
 	virtual void ListenForEvents()
 	{
@@ -915,7 +915,7 @@ class CAchievementTFMedic_AssistPyro : public CBaseTFAchievement
 			{
 				if ( ++m_iPlayersIgnited >= 5 )
 				{
-					IncrementCount(); 
+					IncrementCount();
 				}
 			}
 		}
@@ -930,7 +930,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_AssistPyro, ACHIEVEMENT_TF_MEDIC_ASSIST
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_AssistHeavy : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -947,7 +947,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_AssistHeavy, ACHIEVEMENT_TF_MEDIC_ASSIS
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_AssistCapturer : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -962,7 +962,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_AssistCapturer, ACHIEVEMENT_TF_MEDIC_AS
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_HealCallers : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 200 );
@@ -971,7 +971,7 @@ class CAchievementTFMedic_HealCallers : public CBaseTFAchievement
 		m_iLastHealee = -1;
 	}
 
-	// Heal 200 teammates after they've called for "Medic!". 
+	// Heal 200 teammates after they've called for "Medic!".
 
 	virtual void ListenForEvents()
 	{
@@ -1020,7 +1020,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_HealCallers, ACHIEVEMENT_TF_MEDIC_HEAL_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_ExtinguishTeammates : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 100 );
@@ -1059,15 +1059,15 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_ExtinguishTeammates, ACHIEVEMENT_TF_MED
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_AssistVsNemeses : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 20 );
 	}
 
-	// Assist in killing 20 nemeses. 
+	// Assist in killing 20 nemeses.
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 		if ( !pLocalPlayer )
@@ -1095,7 +1095,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_AssistVsNemeses, ACHIEVEMENT_TF_MEDIC_A
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_KillWhileCharged : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -1104,7 +1104,7 @@ class CAchievementTFMedic_KillWhileCharged : public CBaseTFAchievement
 		m_iKillCount = 0;
 	}
 
-	// Kill 5 enemies in a single life, while having your Uber-Charge ready, but undeployed. 
+	// Kill 5 enemies in a single life, while having your Uber-Charge ready, but undeployed.
 
 	virtual void ListenForEvents()
 	{
@@ -1139,7 +1139,7 @@ class CAchievementTFMedic_KillWhileCharged : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		Assert( pAttacker == C_TFPlayer::GetLocalTFPlayer() );
 
@@ -1168,14 +1168,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_KillWhileCharged, ACHIEVEMENT_TF_MEDIC_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_BonesawNoMisses : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
 	}
 
 	// server awards this achievement, no other code within achievement necessary
-	// Hit enemies with your bonesaw 5 times in a row without dying or missing. 
+	// Hit enemies with your bonesaw 5 times in a row without dying or missing.
 };
 DECLARE_ACHIEVEMENT( CAchievementTFMedic_BonesawNoMisses, ACHIEVEMENT_TF_MEDIC_BONESAW_NOMISSES, "TF_MEDIC_BONESAW_NOMISSES", 5 );
 
@@ -1183,13 +1183,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_BonesawNoMisses, ACHIEVEMENT_TF_MEDIC_B
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_HealLarge : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 7000 );
 	}
 
-	// Accumulate 7000 heal points health in a single life. 
+	// Accumulate 7000 heal points health in a single life.
 
 	void OnPlayerStatsUpdate()
 	{
@@ -1215,13 +1215,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_HealLarge, ACHIEVEMENT_TF_MEDIC_HEAL_LA
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_HealHuge : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 10000 );
 	}
 
-	// Accumulate 10000 heal points health in a single life. 
+	// Accumulate 10000 heal points health in a single life.
 
 	void OnPlayerStatsUpdate()
 	{
@@ -1247,13 +1247,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_HealHuge, ACHIEVEMENT_TF_MEDIC_HEAL_HUG
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_HealGrind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1000000 );
 	}
 
-	// Accumulate 1 million total heal points. 
+	// Accumulate 1 million total heal points.
 
 	void OnPlayerStatsUpdate()
 	{
@@ -1277,7 +1277,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_HealGrind, ACHIEVEMENT_TF_MEDIC_HEAL_GR
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_KillHealedSpy : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1291,7 +1291,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_KillHealedSpy, ACHIEVEMENT_TF_MEDIC_KIL
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_SaveFallingTeammate : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1304,7 +1304,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_SaveFallingTeammate, ACHIEVEMENT_TF_MED
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_ChargeJuggle : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1375,7 +1375,7 @@ class CAchievementTFMedic_ChargeJuggle : public CBaseTFAchievement
 		// the first item is the guy we just invulned
 		// see if the second guy still has TF_COND_INVULNERABLE_WEARINGOFF
 
-		target_history_t *first = m_InvulnHistory.Element(0);		
+		target_history_t *first = m_InvulnHistory.Element(0);
 		target_history_t *second = m_InvulnHistory.Element(1);
 
 		if ( !first || !second )
@@ -1399,7 +1399,7 @@ class CAchievementTFMedic_ChargeJuggle : public CBaseTFAchievement
 			if ( pTarget )
 			{
 				if ( pTarget->m_Shared.InCond( TF_COND_INVULNERABLE_WEARINGOFF ) || pTarget->m_Shared.InCond( TF_COND_INVULNERABLE ) )
-				{	
+				{
 					// assume it was us that gave him the invuln
 					m_iNumJuggles++;
 				}
@@ -1440,7 +1440,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_ChargeJuggle, ACHIEVEMENT_TF_MEDIC_CHAR
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_FreezecamRagdoll : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1453,15 +1453,15 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_FreezecamRagdoll, ACHIEVEMENT_TF_MEDIC_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_BonesawSpyCallers : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	// Use your bonesaw to kill an enemy spy who has been calling for "Medic!". 
+	// Use your bonesaw to kill an enemy spy who has been calling for "Medic!".
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		Assert( pAttacker == C_TFPlayer::GetLocalTFPlayer() );
 
@@ -1492,7 +1492,7 @@ ConVar tf_chargedfriends( "tf_chargedfriends", "", FCVAR_ARCHIVE );
 
 class CAchievementTFMedic_ChargeFriends : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 5 );
@@ -1532,9 +1532,9 @@ class CAchievementTFMedic_ChargeFriends : public CBaseTFAchievement
 				// check and see if they're on the local player's friends list
 				CSteamID steamID( pi.friendsID, 1, GetUniverse(), k_EAccountTypeIndividual );
 				if ( steamapicontext->SteamFriends()->HasFriend( steamID, k_EFriendFlagImmediate ) )
-				{	
+				{
 					// get the friendsID
-					// 
+					//
 
 					//  parse tf_chargedfriends into an array
 
@@ -1589,7 +1589,7 @@ class CAchievementTFMedic_ChargeFriends : public CBaseTFAchievement
 						for ( int i=0;i<vecChargedFriends.Count();i++ )
 						{
 							Q_strncat( buf, VarArgs( ":%d", (uint32)atoi(vecChargedFriends[i]) ), sizeof(buf), COPY_ALL_CHARACTERS );
-						}			
+						}
 
 						tf_chargedfriends.SetValue( buf );
 					}
@@ -1604,7 +1604,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_ChargeFriends, ACHIEVEMENT_TF_MEDIC_CHA
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_InviteJoinCharge : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1613,7 +1613,7 @@ class CAchievementTFMedic_InviteJoinCharge : public CBaseTFAchievement
 	// Join a game that one of your friends is in and then deploy an Uber-Charge on him.
 
 	// when we first select a class, it has to be medic. Then we make a list of all our connected friends
-	// the first 
+	// the first
 
 	// called every changelevel - doh
 	virtual void ListenForEvents( void )
@@ -1736,13 +1736,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFMedic_InviteJoinCharge, ACHIEVEMENT_TF_MEDIC_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFMedic_HealAchiever : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
 	}
 
-	// Be healing a teammate as he achieves an achievement of his own. 
+	// Be healing a teammate as he achieves an achievement of his own.
 
 	virtual void ListenForEvents( void )
 	{
@@ -1781,7 +1781,7 @@ class CAchievementTFMedic_AchieveProgress1 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFMedic_AchieveProgress1, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 10, ACHIEVEMENT_TF_MEDIC_START_RANGE, ACHIEVEMENT_TF_MEDIC_END_RANGE );
@@ -1796,7 +1796,7 @@ class CAchievementTFMedic_AchieveProgress2 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFMedic_AchieveProgress2, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 16, ACHIEVEMENT_TF_MEDIC_START_RANGE, ACHIEVEMENT_TF_MEDIC_END_RANGE );
@@ -1811,7 +1811,7 @@ class CAchievementTFMedic_AchieveProgress3 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFMedic_AchieveProgress3, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 22, ACHIEVEMENT_TF_MEDIC_START_RANGE, ACHIEVEMENT_TF_MEDIC_END_RANGE );

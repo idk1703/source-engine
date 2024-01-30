@@ -40,7 +40,7 @@ enum
 class CLCDItem
 {
 public:
-	CLCDItem() : 
+	CLCDItem() :
 		m_bActive( true ),
 		m_nSubPage( 0 ),
 		m_Type( LCDITEM_UNKNOWN ),
@@ -92,7 +92,7 @@ class CLCDItemIcon : public CLCDItem
 	typedef CLCDItem BaseClass;
 
 public:
-	CLCDItemIcon() : 
+	CLCDItemIcon() :
 	  m_icon( NULL )
 	{
 		m_Type = LCDITEM_ICON;
@@ -109,7 +109,7 @@ class CLCDItemAggregate : public CLCDItem
 	typedef CLCDItem BaseClass;
 
 public:
-	CLCDItemAggregate() : 
+	CLCDItemAggregate() :
 		m_AggType( AGGTYPE_UNKNOWN ),
 		m_dwNextUpdateTime( 0 ),
 		m_yincrement( 0 )
@@ -124,7 +124,7 @@ public:
 
 	unsigned int				m_dwNextUpdateTime;
 	int							m_AggType;
-	
+
 	int							m_yincrement;
 
 	// Representative row
@@ -210,7 +210,7 @@ public:
 public:
 
 	// Init's called when the HUD's created at DLL load
-	void				Init( void );	
+	void				Init( void );
 	void				Shutdown();
 	void				Update( void );
 	bool				IsConnected() const;
@@ -251,7 +251,7 @@ private:
 
 	CUtlDict< int, int >	m_TextSizes;
 	CUtlDict< int, int >	m_TextAlignments;
-	
+
 	struct IconInfo_t
 	{
 		void	*m_handle;

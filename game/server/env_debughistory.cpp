@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "cbase.h"
@@ -20,7 +20,7 @@
 //-----------------------------------------------------------------------------
 // Purpose: Stores debug history in savegame files for debugging reference
 //-----------------------------------------------------------------------------
-class CDebugHistory : public CBaseEntity 
+class CDebugHistory : public CBaseEntity
 {
 	DECLARE_CLASS( CDebugHistory, CBaseEntity );
 public:
@@ -74,7 +74,7 @@ void CDebugHistory::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDebugHistory::AddDebugHistoryLine( int iCategory, const char *szLine )
 {
@@ -83,7 +83,7 @@ void CDebugHistory::AddDebugHistoryLine( int iCategory, const char *szLine )
 		Warning("Attempted to add a debughistory line to category %d. Valid categories are %d to %d.\n", iCategory, 0, (MAX_HISTORY_CATEGORIES-1) );
 		return;
 	}
-	
+
 	// Don't do debug history before the singleton is properly set up.
 	if ( !m_DebugLineEnd[iCategory] )
 		return;
@@ -107,7 +107,7 @@ void CDebugHistory::AddDebugHistoryLine( int iCategory, const char *szLine )
 
 		// Write into the buffer
 		int iWrote = MIN( iCharsToWrite, iCharsLeftBeforeLoop );
-		memcpy( m_DebugLineEnd[iCategory], pszRemaining, iWrote );	
+		memcpy( m_DebugLineEnd[iCategory], pszRemaining, iWrote );
 		m_DebugLineEnd[iCategory] += iWrote;
 		pszRemaining += iWrote;
 
@@ -122,7 +122,7 @@ void CDebugHistory::AddDebugHistoryLine( int iCategory, const char *szLine )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDebugHistory::DumpDebugHistory( int iCategory )
 {
@@ -141,7 +141,7 @@ void CDebugHistory::DumpDebugHistory( int iCategory )
 
 	// Are we at the start of a line? If there's a null terminator before us, then we're good to go.
 	while ( (!( pszLine == m_DebugLines[iCategory] && *(m_DebugLines[iCategory]+sizeof(m_DebugLines[iCategory])-1) == '\0' ) &&
-			!( pszLine != m_DebugLines[iCategory] && *(pszLine-1) == '\0' )) 
+			!( pszLine != m_DebugLines[iCategory] && *(pszLine-1) == '\0' ))
 			|| *pszLine == '\0' )
 	{
 		pszLine++;
@@ -196,7 +196,7 @@ void CDebugHistory::DumpDebugHistory( int iCategory )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDebugHistory::ClearHistories( void )
 {
@@ -208,7 +208,7 @@ void CDebugHistory::ClearHistories( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CDebugHistory::Save( ISave &save )
 {
@@ -227,7 +227,7 @@ int CDebugHistory::Save( ISave &save )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CDebugHistory::Restore( IRestore &restore )
 {
@@ -294,7 +294,7 @@ CDebugHistory *GetDebugHistory()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void AddDebugHistoryLine( int iCategory, const char *pszLine )
 {
@@ -315,7 +315,7 @@ void AddDebugHistoryLine( int iCategory, const char *pszLine )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CC_DebugHistory_AddLine( const CCommand &args )
 {
@@ -335,7 +335,7 @@ void CC_DebugHistory_AddLine( const CCommand &args )
 static ConCommand dbghist_addline( "dbghist_addline", CC_DebugHistory_AddLine, "Add a line to the debug history. Format: <category id> <line>", FCVAR_NONE );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CC_DebugHistory_Dump( const CCommand &args )
 {
@@ -355,7 +355,7 @@ void CC_DebugHistory_Dump( const CCommand &args )
 	}
 }
 
-static ConCommand dbghist_dump("dbghist_dump", CC_DebugHistory_Dump, 
+static ConCommand dbghist_dump("dbghist_dump", CC_DebugHistory_Dump,
 							   "Dump the debug history to the console. Format: <category id>\n"
 							   "    Categories:\n"
 							   "     0: Entity I/O\n"
@@ -364,4 +364,3 @@ static ConCommand dbghist_dump("dbghist_dump", CC_DebugHistory_Dump,
 							   "     3: Alyx Blind\n"
 							   "     4: Log of damage done to player",
 							   FCVAR_NONE );
-

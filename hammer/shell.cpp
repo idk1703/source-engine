@@ -115,8 +115,8 @@ bool CShell::CheckMapVersion(const char *pszCommand, const char *pszArguments)
 // Purpose: Verifies that the map being edited in the engine is the same name
 //			and version as the active document. This prevents problems with
 //			editing out of sync versions of the map via the engine.
-// Input  : pszCommand - 
-//			pszArguments - 
+// Input  : pszCommand -
+//			pszArguments -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CShell::DoVersionCheck(const char *pszArguments)
@@ -318,7 +318,7 @@ bool CShell::EntitySetKeyValue(const char *pszCommand, const char *pszArguments)
 				{
 					QAngle angles;
 					sscanf(szArgs[5], "%f %f %f", &angles[0], &angles[1], &angles[2]);
-					
+
 					// build a relative transform from the previous state to the current state
 					// NOTE: This only works once since solid classes destructively modify transform info (GetAngles always returns identity)
 					// NOTE: Use rotateIncremental instead!
@@ -392,7 +392,7 @@ bool CShell::NodeDelete(const char *pszCommand, const char *pszArguments)
 			CMapEntityList Found;
 			if (m_pDoc->FindEntitiesByKeyValue(Found, "nodeid", szID, false))
 			{
-                FOR_EACH_OBJ( Found, pos )
+	FOR_EACH_OBJ( Found, pos )
 				{
 					CMapEntity *pEntity = Found.Element(pos);
 					m_pDoc->DeleteObject(pEntity);
@@ -488,7 +488,7 @@ bool CShell::NodeLinkDelete(const char *pszCommand, const char *pszArguments)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Releases all video memory 
+// Purpose: Releases all video memory
 // Input  : pszCommand - Should be "release_video_memory".
 //			pszArguments - None.
 // Output : Returns true on success, false on failure.
@@ -544,4 +544,3 @@ void CShell::SetDocument(CMapDoc *pDoc)
 {
 	m_pDoc = pDoc;
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -28,5 +28,3 @@ public:
 
 
 #endif // FILTERCOMBOBOX_H
-
-	

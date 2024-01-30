@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,7 +18,7 @@ char* AllocateStringHelper2( const char *pFormat, va_list marker )
 	char str[512];
 	_vsnprintf( str, sizeof( str ), pFormat, marker );
 	str[ ARRAYSIZE(str) - 1 ] = 0;
-	
+
 	int len = strlen( str ) + 1;
 	char *pRet = new char[len];
 	memcpy( pRet, str, len );
@@ -60,7 +60,7 @@ char* AllocateUniqueDataTableName( bool bSendTable, const char *pFormat, ... )
 	if ( pDict->Find( pRet ) != pDict->InvalidIndex() )
 	{
 		// If it hits this, then they have 2 utlvectors in different data tables with the same name and the
-		// same size limit. The names of 
+		// same size limit. The names of
 		Assert( false );
 	}
 	pDict->Insert( pRet, 0 );

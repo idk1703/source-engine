@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -46,7 +46,7 @@ DEFINE_WINDOWED_STEAM_APPLICATION_OBJECT( CVLocalizeApp );
 //-----------------------------------------------------------------------------
 bool CVLocalizeApp::Create()
 {
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "inputsystem.dll",		INPUTSYSTEM_INTERFACE_VERSION },
 		{ "vgui2.dll",				VGUI_IVGUI_INTERFACE_VERSION },

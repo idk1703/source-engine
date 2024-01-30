@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -431,7 +431,7 @@ public:
 	void setModelInfo ();
 
 	void initPhysicsBones();
-	
+
 	void initLODs();
 
 	void centerView ();

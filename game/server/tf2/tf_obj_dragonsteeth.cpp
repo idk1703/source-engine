@@ -26,7 +26,7 @@ PRECACHE_REGISTER(obj_dragonsteeth);
 ConVar	obj_dragonsteeth_health( "obj_dragonsteeth_health","200", FCVAR_NONE, "Dragon's Teeth health" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectDragonsTeeth::CObjectDragonsTeeth()
 {
@@ -34,7 +34,7 @@ CObjectDragonsTeeth::CObjectDragonsTeeth()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDragonsTeeth::Spawn( void )
 {
@@ -50,7 +50,7 @@ void CObjectDragonsTeeth::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectDragonsTeeth::Precache()
 {
@@ -78,8 +78,8 @@ bool CObjectDragonsTeeth::StartBuilding( CBaseEntity *pBuilder )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : act - 
+// Purpose:
+// Input  : act -
 //-----------------------------------------------------------------------------
 void CObjectDragonsTeeth::OnActivityChanged( Activity act )
 {

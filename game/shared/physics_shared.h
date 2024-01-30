@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -42,7 +42,7 @@ extern const objectparams_t g_PhysDefaultObjectParams;
 
 #define ENERGY_VOLUME_SCALE		(1.0f / 15500.0f)
 
-#define FLUID_TIME_MAX					2.0f // keep track of last time hitting fluid for up to 2 seconds 
+#define FLUID_TIME_MAX					2.0f // keep track of last time hitting fluid for up to 2 seconds
 
 // VPHYSICS object game-specific flags
 #define FVPHYSICS_DMG_SLICE				0x0001		// does slice damage, not just blunt damage
@@ -103,7 +103,7 @@ inline unsigned short PhysSetGameFlags( IPhysicsObject *pPhys, unsigned short ga
 	unsigned short flags = pPhys->GetGameFlags();
 	flags |= gameFlags;
 	pPhys->SetGameFlags( flags );
-	
+
 	return flags;
 }
 // mask off gameFlags
@@ -112,7 +112,7 @@ inline unsigned short PhysClearGameFlags( IPhysicsObject *pPhys, unsigned short 
 	unsigned short flags = pPhys->GetGameFlags();
 	flags &= ~gameFlags;
 	pPhys->SetGameFlags( flags );
-	
+
 	return flags;
 }
 
@@ -159,9 +159,9 @@ void PhysParseSurfaceData( class IPhysicsSurfaceProps *pProps, class IFileSystem
 // fill out this solid_t with the AABB defaults (high inertia/no rotation)
 void PhysGetDefaultAABBSolid( solid_t &solid );
 
-// Compute an output velocity based on sliding along the current contact points 
+// Compute an output velocity based on sliding along the current contact points
 // in the closest direction toward inputVelocity.
-void PhysComputeSlideDirection( IPhysicsObject *pPhysics, const Vector &inputVelocity, const AngularImpulse &inputAngularVelocity, 
+void PhysComputeSlideDirection( IPhysicsObject *pPhysics, const Vector &inputVelocity, const AngularImpulse &inputAngularVelocity,
 							   Vector *pOutputVelocity, Vector *pOutputAngularVelocity, float minMass );
 
 void PhysForceClearVelocity( IPhysicsObject *pPhys );

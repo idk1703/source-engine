@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -16,13 +16,13 @@
 #include "tier0/memdbgon.h"
 
 IMPLEMENT_CLIENTCLASS_DT( C_PointCamera, DT_PointCamera, CPointCamera )
-	RecvPropFloat( RECVINFO( m_FOV ) ), 
-	RecvPropFloat( RECVINFO( m_Resolution ) ), 
+	RecvPropFloat( RECVINFO( m_FOV ) ),
+	RecvPropFloat( RECVINFO( m_Resolution ) ),
 	RecvPropInt( RECVINFO( m_bFogEnable ) ),
 	RecvPropInt( RECVINFO( m_FogColor ) ),
-	RecvPropFloat( RECVINFO( m_flFogStart ) ), 
-	RecvPropFloat( RECVINFO( m_flFogEnd ) ), 
-	RecvPropFloat( RECVINFO( m_flFogMaxDensity ) ), 
+	RecvPropFloat( RECVINFO( m_flFogStart ) ),
+	RecvPropFloat( RECVINFO( m_flFogEnd ) ),
+	RecvPropFloat( RECVINFO( m_flFogMaxDensity ) ),
 	RecvPropInt( RECVINFO( m_bActive ) ),
 	RecvPropInt( RECVINFO( m_bUseScreenAspectRatio ) ),
 END_RECV_TABLE()
@@ -109,8 +109,6 @@ void C_PointCamera::GetToolRecordingState( KeyValues *msg )
 	state.m_flFogEnd = GetFogEnd();
 	GetFogColor( r, g, b );
 	state.m_FogColor.SetColor( r, g, b, 255 );
-					  
+
 	msg->SetPtr( "monitor", &state );
 }
-
-

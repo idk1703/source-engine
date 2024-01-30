@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -37,7 +37,7 @@ public:
 	// If you pass NULL for pSpecificAddresses, it will broadcast on certain points.
 	// If you pass a non-null value, then it will send info queries directly to those ports.
 	void InternalGetNewServerList( CUtlVector<netadr_t> *pSpecificAddresses );
- 
+
 	virtual void StartRefresh();
 
 	// stops current refresh/GetNewServerList()
@@ -65,7 +65,7 @@ private:
 	MESSAGE_FUNC_INT( OnOpenContextMenu, "OpenContextMenu", itemID );
 
 	// number of servers refreshed
-	int m_iServerRefreshCount;	
+	int m_iServerRefreshCount;
 
 	// true if we're broadcasting for servers
 	bool m_bRequesting;

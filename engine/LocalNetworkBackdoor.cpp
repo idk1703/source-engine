@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "LocalNetworkBackdoor.h"
@@ -17,7 +17,7 @@
 CLocalNetworkBackdoor *g_pLocalNetworkBackdoor = NULL;
 
 #ifndef SWDS
-// This is called 
+// This is called
 void CLocalNetworkBackdoor::InitFastCopy()
 {
 	if ( !cl.m_NetChannel->IsLoopback() )
@@ -33,7 +33,7 @@ void CLocalNetworkBackdoor::InitFastCopy()
 	}
 	else
 	{
-		// If the game server is older than v4, it is using the old proxy; we set the new proxy members to the 
+		// If the game server is older than v4, it is using the old proxy; we set the new proxy members to the
 		// engine's copy.
 		static CStandardSendProxies compatSendProxy = *serverGameDLL->GetStandardSendProxies();
 
@@ -42,7 +42,7 @@ void CLocalNetworkBackdoor::InitFastCopy()
 		compatSendProxy.m_ppNonModifiedPointerProxies = g_StandardSendProxies.m_ppNonModifiedPointerProxies;
 
 		pSendProxies = &compatSendProxy;
-	} 
+	}
 
 	const CStandardRecvProxies *pRecvProxies = g_ClientDLL->GetStandardRecvProxies();
 
@@ -52,7 +52,7 @@ void CLocalNetworkBackdoor::InitFastCopy()
 	for ( int iClass=0; iClass < cl.m_nServerClasses; iClass++ )
 	{
 		ClientClass *pClientClass = cl.GetClientClass(iClass);
-		if ( !pClientClass ) 
+		if ( !pClientClass )
 			Error( "InitFastCopy - missing client class %d (Should be equivelent of server class: %s)", iClass, cl.m_pServerClasses[iClass].m_ClassName );
 
 		ServerClass *pServerClass = SV_FindServerClass( pClientClass->GetName() );
@@ -78,7 +78,7 @@ void CLocalNetworkBackdoor::InitFastCopy()
 		Assert( false );
 		Warning( "InitFastCopy: only %d%% fast props. Bug?\n", percentFast );
 	}
-} 
+}
 #endif
 
 void CLocalNetworkBackdoor::StartEntityStateUpdate()
@@ -178,7 +178,7 @@ void CLocalNetworkBackdoor::EndEntityStateUpdate()
 	Assert( FindInList( m_EntsCreatedIndices, m_nEntsCreated, i ) );
 	}
 
-	if ( (m_EntsAlive[i>>5] & (1 << (i & 31))) && 
+	if ( (m_EntsAlive[i>>5] & (1 << (i & 31))) &&
 	!(m_EntsCreated[i>>5] & (1 << (i & 31))) &&
 	(m_EntsChanged[i>>5] & (1 << (i & 31)))
 	)
@@ -215,7 +215,7 @@ void CLocalNetworkBackdoor::EntityDormant( int iEnt, int iSerialNum )
 		{
 			pNet->Release();
 			pCached->m_pNetworkable = NULL;
-			m_PrevEntsAlive.Clear( iEnt ); 
+			m_PrevEntsAlive.Clear( iEnt );
 		}
 	}
 }
@@ -229,7 +229,7 @@ void CLocalNetworkBackdoor::AddToPendingDormantEntityList( unsigned short iEdict
 		e->m_fStateFlags |= FL_EDICT_PENDING_DORMANT_CHECK;
 		m_PendingDormantEntities.AddToTail( iEdict );
 	}
-}		
+}
 
 void CLocalNetworkBackdoor::ProcessDormantEntities()
 {
@@ -251,11 +251,11 @@ void CLocalNetworkBackdoor::ProcessDormantEntities()
 	m_PendingDormantEntities.Purge();
 }
 
-void CLocalNetworkBackdoor::EntState( 
-					 int iEnt, 
-					 int iSerialNum, 
-					 int iClass, 
-					 const SendTable *pSendTable, 
+void CLocalNetworkBackdoor::EntState(
+					 int iEnt,
+					 int iSerialNum,
+					 int iClass,
+					 const SendTable *pSendTable,
 					 const void *pSourceEnt,
 					 bool bChanged,
 					 bool bShouldTransmit )
@@ -294,7 +294,7 @@ void CLocalNetworkBackdoor::EntState(
 				pCached->m_pNetworkable = NULL;
 				// Since we set this above, need to clear it now to avoid assertion in EndEntityStateUpdate()
 				m_EntsAlive.Clear(iEnt);
-				m_PrevEntsAlive.Clear( iEnt ); 
+				m_PrevEntsAlive.Clear( iEnt );
 			}
 		}
 		else
@@ -328,7 +328,7 @@ void CLocalNetworkBackdoor::EntState(
 	{
 		updateType = DATA_UPDATE_DATATABLE_CHANGED;
 	}
-	else		
+	else
 	{
 		updateType = DATA_UPDATE_CREATED;
 		pNet = pClientClass->m_pCreateFn( iEnt, iSerialNum );
@@ -350,13 +350,13 @@ void CLocalNetworkBackdoor::EntState(
 
 		Assert( pCached->m_pDataPointer == pNet->GetDataTableBasePtr() );
 
-		LocalTransfer_TransferEntity( 
-			&sv.edicts[iEnt], 
-			pSendTable, 
-			pSourceEnt, 
-			pClientClass->m_pRecvTable, 
-			pCached->m_pDataPointer, 
-			bCreated, 
+		LocalTransfer_TransferEntity(
+			&sv.edicts[iEnt],
+			pSendTable,
+			pSourceEnt,
+			pClientClass->m_pRecvTable,
+			pCached->m_pDataPointer,
+			bCreated,
 			bExistedAndWasDormant,
 			iEnt );
 
@@ -374,7 +374,7 @@ void CLocalNetworkBackdoor::EntState(
 		}
 	}
 }
-	
+
 
 void CLocalNetworkBackdoor::ClearState()
 {
@@ -392,8 +392,8 @@ void CLocalNetworkBackdoor::ClearState()
 	m_PrevEntsAlive.ClearAll();
 }
 
-void CLocalNetworkBackdoor::StartBackdoorMode() 
-{ 
+void CLocalNetworkBackdoor::StartBackdoorMode()
+{
 	ClearState();
 
 	for ( int i=0; i < MAX_EDICTS; i++ )
@@ -417,4 +417,3 @@ void CLocalNetworkBackdoor::StopBackdoorMode()
 {
 	ClearState();
 }
-

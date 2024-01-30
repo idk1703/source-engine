@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -191,7 +191,7 @@ void ProcessFiles( const char *pNormalFileNameWithoutExtension,
 
 		strcpy( buf, pNormalFileNameWithoutExtension );
 
-		// Strip '_normal' off the end because we're looking for '_height' 
+		// Strip '_normal' off the end because we're looking for '_height'
 		char *pcUnderscore = Q_stristr( buf, "_normal" );
 		*pcUnderscore = NULL;
 
@@ -203,7 +203,7 @@ void ProcessFiles( const char *pNormalFileNameWithoutExtension,
 		{
 			sprintf( heightTGAFileName, "%s_height.tga", buf );
 		}
-		
+
 		enum ImageFormat imageFormat;
 		int width, height;
 		float sourceGamma;
@@ -222,7 +222,7 @@ void ProcessFiles( const char *pNormalFileNameWithoutExtension,
 
 		int memRequired = ImageLoader::GetMemRequired( width, height, 1, IMAGE_FORMAT_IA88, false );
 		unsigned char *pImageIA88 = new unsigned char[memRequired];
-		
+
 		buf.SeekGet( CUtlBuffer::SEEK_HEAD, 0 );
 		TGALoader::Load( pImageIA88, buf, width, height, IMAGE_FORMAT_IA88, sourceGamma, false );
 
@@ -240,7 +240,7 @@ void ProcessFiles( const char *pNormalFileNameWithoutExtension,
 		{
 			memRequired = ImageLoader::GetMemRequired( width, height, 1, IMAGE_FORMAT_RGB888, false );
 			unsigned char *pImageRGB888 = new unsigned char[memRequired];
-			ImageLoader::ConvertImageFormat( pImageRGBA8888, IMAGE_FORMAT_RGBA8888, 
+			ImageLoader::ConvertImageFormat( pImageRGBA8888, IMAGE_FORMAT_RGBA8888,
 				pImageRGB888, IMAGE_FORMAT_RGB888, width, height, 0, 0 );
 			TGAWriter::WriteToBuffer( pImageRGB888, normalBuf, width, height, IMAGE_FORMAT_RGB888, IMAGE_FORMAT_RGB888 );
 			delete [] pImageRGB888;
@@ -333,7 +333,7 @@ int main( int argc, char **argv )
 		{
 			printf( "\tbumpscale: %f\n", bumpScale );
 		}
-		
+
 		Q_StripExtension( pFileName, normalFileNameWithoutExtension, sizeof( normalFileNameWithoutExtension ) );
 		ProcessFiles( normalFileNameWithoutExtension,
 					  startFrame, endFrame,

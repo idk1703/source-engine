@@ -180,7 +180,7 @@ void CHttpDownloader::Think()
 			}
 
 			bConnecting = true;
-			
+
 			// Fall-through
 
 		case HTTP_FETCH:

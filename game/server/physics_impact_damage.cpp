@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -127,7 +127,7 @@ impactdamagetable_t gDefaultNPCImpactDamageTable =
 {
 	npcLinearTable,
 	npcAngularTable,
-	
+
 	ARRAYSIZE(npcLinearTable),
 	ARRAYSIZE(npcAngularTable),
 
@@ -139,7 +139,7 @@ impactdamagetable_t gDefaultNPCImpactDamageTable =
 	5,			// never take more than 5 pts of damage from anything under 5kg
 	36*36,		// <5kg objects must go faster than 36 in/s to do damage
 
-	VPHYSICS_LARGE_OBJECT_MASS,		// large mass in kg 
+	VPHYSICS_LARGE_OBJECT_MASS,		// large mass in kg
 	4,			// large mass scale (anything over 500kg does 4X as much energy to read from damage table)
 	5,			// large mass falling scale (emphasize falling/crushing damage over sideways impacts since the stress will kill you anyway)
 	0.0f,		// min vel
@@ -170,7 +170,7 @@ impactdamagetable_t gGlassImpactDamageTable =
 {
 	glassLinearTable,
 	glassAngularTable,
-	
+
 	ARRAYSIZE(glassLinearTable),
 	ARRAYSIZE(glassAngularTable),
 
@@ -182,7 +182,7 @@ impactdamagetable_t gGlassImpactDamageTable =
 	10,			// never take more than 10 pts of damage from anything under 1kg
 	8*8,		// <1kg objects must go faster than 8 in/s to do damage
 
-	50,			// large mass in kg 
+	50,			// large mass in kg
 	4,			// large mass scale (anything over 50kg does 4X as much energy to read from damage table)
 	0.0f,		// min vel
 };
@@ -218,7 +218,7 @@ static damagetable_t gDamageTableRegistry[] =
 
 //==============================================================================================
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float ReadDamageTable( impactentry_t *pTable, int tableCount, float impulse, bool bDebug )
 {
@@ -244,7 +244,7 @@ float ReadDamageTable( impactentry_t *pTable, int tableCount, float impulse, boo
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CalculatePhysicsImpactDamage( int index, gamevcollisionevent_t *pEvent, const impactdamagetable_t &table, float energyScale, bool allowStaticDamage, int &damageType, bool bDamageFromHeldObjects )
 {
@@ -270,7 +270,7 @@ float CalculatePhysicsImpactDamage( int index, gamevcollisionevent_t *pEvent, co
 	}
 
 	// Dissolving impact damage results in death always.
-	if ( ( pEvent->pObjects[otherIndex]->GetGameFlags() & FVPHYSICS_DMG_DISSOLVE ) && 
+	if ( ( pEvent->pObjects[otherIndex]->GetGameFlags() & FVPHYSICS_DMG_DISSOLVE ) &&
 			!pEvent->pEntities[index]->IsEFlagSet(EFL_NO_DISSOLVE) )
 	{
 		damageType |= DMG_DISSOLVE;
@@ -324,7 +324,7 @@ float CalculatePhysicsImpactDamage( int index, gamevcollisionevent_t *pEvent, co
 
 	float otherSpeedSqr = pEvent->preVelocity[otherIndex].LengthSqr();
 	float otherAngSqr = 0;
-	
+
 	// factor in angular for sharp objects
 	if ( pEvent->pObjects[otherIndex]->GetGameFlags() & FVPHYSICS_DMG_SLICE )
 	{
@@ -351,7 +351,7 @@ float CalculatePhysicsImpactDamage( int index, gamevcollisionevent_t *pEvent, co
 	{
 		otherMass = PhysGetEntityMass( pEvent->pEntities[otherIndex] );
 	}
-	
+
 	if ( pEvent->pObjects[otherIndex]->GetGameFlags() & FVPHYSICS_HEAVY_OBJECT )
 	{
 		otherMass = table.largeMassMin;
@@ -361,7 +361,7 @@ float CalculatePhysicsImpactDamage( int index, gamevcollisionevent_t *pEvent, co
 		}
 	}
 
-	// UNDONE: allowStaticDamage is a hack - work out some method for 
+	// UNDONE: allowStaticDamage is a hack - work out some method for
 	// breakable props to impact the world and break!!
 	if ( !allowStaticDamage )
 	{
@@ -370,7 +370,7 @@ float CalculatePhysicsImpactDamage( int index, gamevcollisionevent_t *pEvent, co
 		// check to see if the object is small
 		if ( otherMass < table.smallMassMax && otherSpeedSqr < table.smallMassMinSpeedSqr )
 			return 0;
-		
+
 		if ( otherSpeedSqr < table.minSpeedSqr && otherAngSqr < table.minRotSpeedSqr )
 			return 0;
 	}
@@ -399,7 +399,7 @@ float CalculatePhysicsImpactDamage( int index, gamevcollisionevent_t *pEvent, co
 			damageType |= DMG_SLASH;
 		}
 	}
-	
+
 	float deltaV = pEvent->preVelocity[index].Length() - pEvent->postVelocity[index].Length();
 	float mass = pEvent->pObjects[index]->GetMass();
 
@@ -412,7 +412,7 @@ float CalculatePhysicsImpactDamage( int index, gamevcollisionevent_t *pEvent, co
 
 	deltaV = pEvent->preVelocity[otherIndex].Length() - pEvent->postVelocity[otherIndex].Length();
 	float otherEliminatedEnergy = deltaV * deltaV * otherMass;
-	
+
 	// exaggerate the effects of really large objects
 	if ( otherMass >= table.largeMassMin )
 	{
@@ -454,7 +454,7 @@ float CalculatePhysicsImpactDamage( int index, gamevcollisionevent_t *pEvent, co
 	}
 
 	eliminatedEnergy *= invMass * energyScale;
-	
+
 	damage += ReadDamageTable( table.linearTable, table.linearCount, eliminatedEnergy, bDebug );
 
 	if ( !pEvent->pObjects[otherIndex]->IsStatic() && otherMass < table.smallMassMax && table.smallMassCap > 0 )
@@ -466,7 +466,7 @@ float CalculatePhysicsImpactDamage( int index, gamevcollisionevent_t *pEvent, co
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CalculateDefaultPhysicsDamage( int index, gamevcollisionevent_t *pEvent, float energyScale, bool allowStaticDamage, int &damageType, string_t iszDamageTableName, bool bDamageFromHeldObjects )
 {
@@ -562,7 +562,7 @@ float CalculateObjectStress( IPhysicsObject *pObject, CBaseEntity *pInputOwnerEn
 					}
 				}
 				// moveable, non-friendly
-				
+
 				// aggregate contacts over each object to avoid greater stress in multiple contact cases
 				// NOTE: Contacts should be in order, so this shouldn't ever search, but just in case
 				outIndex = pObjectList.Count();
@@ -653,7 +653,7 @@ float CalculateObjectStress( IPhysicsObject *pObject, CBaseEntity *pInputOwnerEn
 		{
 			pObject->GetShadowController()->GetLastImpulse( &lastVel );
 		}
-		else 
+		else
 		{
 			if ( ( pObject->GetCallbackFlags() & CALLBACK_IS_PLAYER_CONTROLLER ) )
 			{
@@ -665,11 +665,11 @@ float CalculateObjectStress( IPhysicsObject *pObject, CBaseEntity *pInputOwnerEn
 				}
 			}
 		}
-		
+
 		// Work in progress...
 
 		// Peek into the controller for this object.  Look at the input velocity and make sure it's all
-		// accounted for in the computed stress.  If not, redistribute external to internal as it's 
+		// accounted for in the computed stress.  If not, redistribute external to internal as it's
 		// probably being reflected in a way we can't measure here.
 		float inputLen = lastVel.Length() * (1.0f / physenv->GetSimulationTimestep()) * objMass;
 		if ( inputLen > 0.0f )
@@ -706,10 +706,10 @@ float CalculateObjectStress( IPhysicsObject *pObject, CBaseEntity *pInputOwnerEn
 	externalForce *= invGravity;
 	if ( !pObject->IsMoveable() )
 	{
-		// the above algorithm will see almost all force as internal if the object is not moveable 
+		// the above algorithm will see almost all force as internal if the object is not moveable
 		// (it doesn't push on anything else, so nothing is reciprocated)
 		// exceptions for friction of a single other object with multiple contact points on this object
-		
+
 		// But the game wants to see it all as external because obviously the object can't move, so it can't have
 		// internal stress
 		externalForce = internalForce;
@@ -737,6 +737,6 @@ float CalculateObjectStress( IPhysicsObject *pObject, CBaseEntity *pInputOwnerEn
 		pOutput->hasLargeObjectContact = hasLargeObject;
 	}
 
-	// sum is now kg 
+	// sum is now kg
 	return sum;
 }

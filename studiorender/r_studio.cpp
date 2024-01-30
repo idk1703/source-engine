@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// r_studio.cpp: routines for setting up to draw 3DStudio models 
+// r_studio.cpp: routines for setting up to draw 3DStudio models
 //
 // $Workfile:     $
 // $Date:         $
@@ -68,7 +68,7 @@ FORCEINLINE StudioModelLighting_t CStudioRender::R_StudioComputeLighting( IMater
 }
 
 
-IMaterial* CStudioRender::R_StudioSetupSkinAndLighting( IMatRenderContext *pRenderContext, int index, IMaterial **ppMaterials, int materialFlags,  
+IMaterial* CStudioRender::R_StudioSetupSkinAndLighting( IMatRenderContext *pRenderContext, int index, IMaterial **ppMaterials, int materialFlags,
 	void /*IClientRenderable*/ *pClientRenderable, ColorMeshInfo_t *pColorMeshes, StudioModelLighting_t &lighting )
 {
 	VPROF( "R_StudioSetupSkin" );
@@ -217,7 +217,7 @@ IMaterial* CStudioRender::R_StudioSetupSkinAndLighting( IMatRenderContext *pRend
 		}
 	}
 
-	// TODO: It's possible we don't want to use the color texels--for example because of a convar. 
+	// TODO: It's possible we don't want to use the color texels--for example because of a convar.
 	// We should check that here in addition to whether or not we have the data available.
 	static unsigned int lightmapVarCache = 0;
 	IMaterialVar *pLightmapVar = pMaterial->FindVarFast( "$lightmap", &lightmapVarCache );
@@ -227,10 +227,10 @@ IMaterial* CStudioRender::R_StudioSetupSkinAndLighting( IMatRenderContext *pRend
 
 		if (newTex)
 			pLightmapVar->SetTextureValue(newTex);
-		else 
+		else
 			pLightmapVar->SetUndefined();
 	}
-	
+
 	pRenderContext->Bind( pMaterial, pClientRenderable );
 
 	if ( bCheckForConVarDrawTranslucentSubModels )
@@ -263,7 +263,7 @@ outputs:
 	pmdl
 =================
 */
-int R_StudioSetupModel( int bodypart, int entity_body, mstudiomodel_t **ppSubModel, 
+int R_StudioSetupModel( int bodypart, int entity_body, mstudiomodel_t **ppSubModel,
 	const studiohdr_t *pStudioHdr )
 {
 	int index;
@@ -293,44 +293,44 @@ int R_StudioSetupModel( int bodypart, int entity_body, mstudiomodel_t **ppSubMod
 
 
 //-----------------------------------------------------------------------------
-// Generates the PoseToBone Matrix nessecary to align the given bone with the 
+// Generates the PoseToBone Matrix nessecary to align the given bone with the
 // world.
 //-----------------------------------------------------------------------------
-static void ScreenAlignBone( matrix3x4_t *pPoseToWorld, mstudiobone_t *pCurBone, 
+static void ScreenAlignBone( matrix3x4_t *pPoseToWorld, mstudiobone_t *pCurBone,
 	const Vector& vecViewOrigin, const matrix3x4_t &boneToWorld )
 {
 	// Grab the world translation:
 	Vector vT( boneToWorld[0][3], boneToWorld[1][3], boneToWorld[2][3] );
 
 	// Construct the coordinate frame:
-	// Initialized to get rid of compiler 
+	// Initialized to get rid of compiler
 	Vector vX, vY, vZ;
 
 	if( pCurBone->flags & BONE_SCREEN_ALIGN_SPHERE )
 	{
-		vX = vecViewOrigin - vT;		    
+		vX = vecViewOrigin - vT;
 		VectorNormalize(vX);
 		vZ = Vector(0,0,1);
-		vY = vZ.Cross(vX);				
+		vY = vZ.Cross(vX);
 		VectorNormalize(vY);
-		vZ = vX.Cross(vY);				
+		vZ = vX.Cross(vY);
 		VectorNormalize(vZ);
-	} 
+	}
 	else
 	{
 		Assert( pCurBone->flags & BONE_SCREEN_ALIGN_CYLINDER );
 		vX.Init( boneToWorld[0][0], boneToWorld[1][0], boneToWorld[2][0] );
-		vZ = vecViewOrigin - vT;			
+		vZ = vecViewOrigin - vT;
 		VectorNormalize(vZ);
-		vY = vZ.Cross(vX);				
+		vY = vZ.Cross(vX);
 		VectorNormalize(vY);
-		vZ = vX.Cross(vY);				
+		vZ = vX.Cross(vY);
 		VectorNormalize(vZ);
 	}
 
-	matrix3x4_t matBoneBillboard( 
-		vX.x, vY.x, vZ.x, vT.x, 
-		vX.y, vY.y, vZ.y, vT.y, 
+	matrix3x4_t matBoneBillboard(
+		vX.x, vY.x, vZ.x, vT.x,
+		vX.y, vY.y, vZ.y, vT.y,
 		vX.z, vY.z, vZ.z, vT.z );
 	ConcatTransforms( matBoneBillboard, pCurBone->poseToBone, *pPoseToWorld );
 }
@@ -340,7 +340,7 @@ static void ScreenAlignBone( matrix3x4_t *pPoseToWorld, mstudiobone_t *pCurBone,
 // Computes PoseToWorld from BoneToWorld
 //-----------------------------------------------------------------------------
 void ComputePoseToWorld( matrix3x4_t *pPoseToWorld, studiohdr_t *pStudioHdr, int boneMask, const Vector& vecViewOrigin, const matrix3x4_t *pBoneToWorld )
-{ 
+{
 	if ( pStudioHdr->flags & STUDIOHDR_FLAGS_STATIC_PROP )
 	{
 		// by definition, these always have an identity poseToBone transform
@@ -381,12 +381,10 @@ void ComputePoseToWorld( matrix3x4_t *pPoseToWorld, studiohdr_t *pStudioHdr, int
 			{
 				ConcatTransforms( pBoneToWorld[ i ], pCurBone->poseToBone, pPoseToWorld[ i ] );
 			}
-			else 
+			else
 			{
 				// If this bone is screen aligned, then generate a PoseToWorld matrix that billboards the bone
 				ScreenAlignBone( &pPoseToWorld[i], pCurBone, vecViewOrigin, pBoneToWorld[i] );
-			} 	
+			}
 #endif
 }
-
-

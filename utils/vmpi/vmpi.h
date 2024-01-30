@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@
 #include "iphelpers.h"
 
 
-// These are called to handle incoming messages. 
+// These are called to handle incoming messages.
 // Return true if you handled the message and false otherwise.
 // Note: the first byte in each message is the packet ID.
 typedef bool (*VMPIDispatchFn)( MessageBuffer *pBuf, int iSource, int iPacketID );
@@ -105,11 +105,11 @@ enum VMPIFileSystemMode
 //
 // Note: runMode is only relevant for the VMPI master. The worker always connects to the master
 // the same way.
-bool VMPI_Init( 
-	int &argc, 
-	char **&argv, 
-	const char *pDependencyFilename, 
-	VMPI_Disconnect_Handler handler = NULL, 
+bool VMPI_Init(
+	int &argc,
+	char **&argv,
+	const char *pDependencyFilename,
+	VMPI_Disconnect_Handler handler = NULL,
 	VMPIRunMode runMode = VMPI_RUN_NETWORKED, // Networked or local?,
 	bool bConnectingAsService = false
 	);
@@ -141,7 +141,7 @@ bool VMPI_DispatchNextMessage( unsigned long timeout=VMPI_TIMEOUT_INFINITE );
 
 // This should be called periodically in modal loops that don't call other VMPI functions. This will
 // check for disconnected sockets and call disconnect handlers so the app can error out if
-// it loses all of its connections. 
+// it loses all of its connections.
 //
 // This can be used in place of a Sleep() call by specifying a timeout value.
 void VMPI_HandleSocketErrors( unsigned long timeout=0 );
@@ -152,7 +152,7 @@ enum VMPISendFlags
 {
 	k_eVMPISendFlags_GroupPackets = 0x0001
 };
-	
+
 // Use these to send data to one of the machines.
 // If iDest is VMPI_SEND_TO_ALL, then the message goes to all the machines.
 // Flags is a combination of the VMPISendFlags enums.
@@ -163,7 +163,7 @@ bool VMPI_Send3Chunks( const void *pChunk1, int chunk1Len, const void *pChunk2, 
 
 // Flush any groups that were queued with k_eVMPISendFlags_GroupPackets.
 // If msInterval is > 0, then it will check a timer and only flush that often (so you can call this a lot, and have it check).
-void VMPI_FlushGroupedPackets( unsigned long msInterval=0 ); 
+void VMPI_FlushGroupedPackets( unsigned long msInterval=0 );
 
 // This registers a function that gets called when a connection is terminated ungracefully.
 void VMPI_AddDisconnectHandler( VMPI_Disconnect_Handler handler );

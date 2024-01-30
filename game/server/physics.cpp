@@ -165,7 +165,7 @@ IGameSystem* PhysicsGameSystem()
 bool CPhysicsHook::Init( void )
 {
 	factorylist_t factories;
-	
+
 	// Get the list of interface factories to extract the physics DLL's factory
 	FactoryList_Retrieve( factories );
 
@@ -217,7 +217,7 @@ const char *PhysCheck( IPhysicsObject *pPhys )
 }
 #endif
 
-void CPhysicsHook::LevelInitPreEntity() 
+void CPhysicsHook::LevelInitPreEntity()
 {
 	physenv = physics->CreateEnvironment();
 	physics_performanceparams_t params;
@@ -242,7 +242,7 @@ void CPhysicsHook::LevelInitPreEntity()
 	physenv->EnableConstraintNotify( true ); // callback when an object gets deleted that is attached to a constraint
 
 	physenv->SetObjectEventHandler( &g_Collisions );
-	
+
 	physenv->SetSimulationTimestep( gpGlobals->interval_per_tick ); // 15 ms per tick
 	// HL Game gravity, not real-world gravity
 	physenv->SetGravity( Vector( 0, 0, -GetCurrentGravity() ) );
@@ -262,19 +262,19 @@ void CPhysicsHook::LevelInitPreEntity()
 
 
 
-void CPhysicsHook::LevelInitPostEntity() 
+void CPhysicsHook::LevelInitPostEntity()
 {
 	m_bPaused = false;
 }
 
-void CPhysicsHook::LevelShutdownPreEntity() 
+void CPhysicsHook::LevelShutdownPreEntity()
 {
 	if ( !physenv )
 		return;
 	physenv->SetQuickDelete( true );
 }
 
-void CPhysicsHook::LevelShutdownPostEntity() 
+void CPhysicsHook::LevelShutdownPostEntity()
 {
 	if ( !physenv )
 		return;
@@ -371,7 +371,7 @@ bool CPhysicsHook::FindOrAddVehicleScript( const char *pScriptName, vehicleparam
 }
 
 // called after entities think
-void CPhysicsHook::FrameUpdatePostEntityThink( ) 
+void CPhysicsHook::FrameUpdatePostEntityThink( )
 {
 	VPROF_BUDGET( "CPhysicsHook::FrameUpdatePostEntityThink", VPROF_BUDGETGROUP_PHYSICS );
 
@@ -522,7 +522,7 @@ int CCollisionEvent::ShouldCollide_2( IPhysicsObject *pObj0, IPhysicsObject *pOb
 	{
 		CBaseEntity *pParent0 = pEntity0->GetRootMoveParent();
 		CBaseEntity *pParent1 = pEntity1->GetRootMoveParent();
-		
+
 		// NOTE: Don't let siblings/parents collide.  If you want this behavior, do it
 		// with constraints, not hierarchy!
 		if ( pParent0 == pParent1 )
@@ -600,12 +600,12 @@ int CCollisionEvent::ShouldCollide_2( IPhysicsObject *pObj0, IPhysicsObject *pOb
 
 		return 0;
 	}
-	
-	if ( (nSolidFlags0 & FSOLID_TRIGGER) && 
+
+	if ( (nSolidFlags0 & FSOLID_TRIGGER) &&
 		!(solid1 == SOLID_VPHYSICS || solid1 == SOLID_BSP || movetype1 == MOVETYPE_VPHYSICS) )
 		return 0;
 
-	if ( (nSolidFlags1 & FSOLID_TRIGGER) && 
+	if ( (nSolidFlags1 & FSOLID_TRIGGER) &&
 		!(solid0 == SOLID_VPHYSICS || solid0 == SOLID_BSP || movetype0 == MOVETYPE_VPHYSICS) )
 		return 0;
 
@@ -659,7 +659,7 @@ bool CCollisionEvent::ShouldFreezeObject( IPhysicsObject *pObject )
 	extern bool PropIsGib(CBaseEntity *pEntity);
 	// for now, don't apply a per-object limit to ai MOVETYPE_PUSH objects
 	// NOTE: If this becomes a problem (too many collision checks this tick) we should add a path
-	// to inform the logic in VPhysicsUpdatePusher() about the limit being applied so 
+	// to inform the logic in VPhysicsUpdatePusher() about the limit being applied so
 	// that it doesn't falsely block the object when it's simply been temporarily frozen
 	// for performance reasons
 	CBaseEntity *pEntity = static_cast<CBaseEntity *>(pObject->GetGameData());
@@ -667,7 +667,7 @@ bool CCollisionEvent::ShouldFreezeObject( IPhysicsObject *pObject )
 	{
 		if (pEntity->GetMoveType() == MOVETYPE_PUSH )
 			return false;
-		
+
 		// don't limit vehicle collisions either, limit can make breaking through a pile of breakable
 		// props very hitchy
 		if (pEntity->GetServerVehicle() && !(pObject->GetCallbackFlags() & CALLBACK_IS_VEHICLE_WHEEL))
@@ -732,7 +732,7 @@ bool CCollisionEvent::ShouldFreezeContacts( IPhysicsObject **pObjectList, int ob
 	return false;
 }
 
-// NOTE: these are fully edge triggered events 
+// NOTE: these are fully edge triggered events
 // called when an object wakes up (starts simulating)
 void CCollisionEvent::ObjectWake( IPhysicsObject *pObject )
 {
@@ -967,7 +967,7 @@ static bool CanResolvePenetrationWithNPC( CBaseEntity *pEntity, IPhysicsObject *
 int CCollisionEvent::ShouldSolvePenetration( IPhysicsObject *pObj0, IPhysicsObject *pObj1, void *pGameData0, void *pGameData1, float dt )
 {
 	CallbackContext check(this);
-	
+
 	// Pointers to the entity for each physics object
 	CBaseEntity *pEntity0 = static_cast<CBaseEntity *>(pGameData0);
 	CBaseEntity *pEntity1 = static_cast<CBaseEntity *>(pGameData1);
@@ -1000,14 +1000,14 @@ int CCollisionEvent::ShouldSolvePenetration( IPhysicsObject *pObj0, IPhysicsObje
 	}
 	penetrateevent_t &event = FindOrAddPenetrateEvent( pEntity0, pEntity1 );
 	float eventTime = gpGlobals->curtime - event.startTime;
-	 
+
 	// NPC vs. physics object.  Create a game DLL solver and remove this event
 	if ( (pEntity0->MyNPCPointer() && CanResolvePenetrationWithNPC(pEntity1, pObj1)) ||
 		(pEntity1->MyNPCPointer() && CanResolvePenetrationWithNPC(pEntity0, pObj0)) )
-	{ 
+	{
 		event.collisionState = COLLSTATE_TRYNPCSOLVER;
 	}
-  
+
 	if ( (IsDebris( pEntity0->GetCollisionGroup() ) && !pObj1->IsStatic()) || (IsDebris( pEntity1->GetCollisionGroup() ) && !pObj0->IsStatic()) )
 	{
 		if ( eventTime > 0.5f )
@@ -1057,7 +1057,7 @@ int CCollisionEvent::ShouldSolvePenetration( IPhysicsObject *pObj0, IPhysicsObje
 }
 
 
-void CCollisionEvent::FluidStartTouch( IPhysicsObject *pObject, IPhysicsFluidController *pFluid ) 
+void CCollisionEvent::FluidStartTouch( IPhysicsObject *pObject, IPhysicsFluidController *pFluid )
 {
 	CallbackContext check(this);
 	if ( ( pObject == NULL ) || ( pFluid == NULL ) )
@@ -1084,7 +1084,7 @@ void CCollisionEvent::FluidStartTouch( IPhysicsObject *pObject, IPhysicsFluidCon
 	pObject->GetVelocity( &vel, &angVel );
 	Vector unitVel = vel;
 	VectorNormalize( unitVel );
-	
+
 	// normal points out of the surface, we want the direction that points in
 	float dragScale = pFluid->GetDensity() * physenv->GetSimulationTimestep();
 	normal = -normal;
@@ -1099,7 +1099,7 @@ void CCollisionEvent::FluidStartTouch( IPhysicsObject *pObject, IPhysicsFluidCon
 	float angScale = 0.25f * pObject->CalculateAngularDrag( angVel ) * dragScale;
 	angScale = clamp( angScale, 0.0f, 1.0f );
 	angVel *= -angScale;
-	
+
 	// compute the splash before we modify the velocity
 	PhysicsSplash( pFluid, pObject, pEntity );
 
@@ -1107,7 +1107,7 @@ void CCollisionEvent::FluidStartTouch( IPhysicsObject *pObject, IPhysicsFluidCon
 	pObject->AddVelocity( &vel, &angVel );
 }
 
-void CCollisionEvent::FluidEndTouch( IPhysicsObject *pObject, IPhysicsFluidController *pFluid ) 
+void CCollisionEvent::FluidEndTouch( IPhysicsObject *pObject, IPhysicsFluidController *pFluid )
 {
 	CallbackContext check(this);
 	if ( ( pObject == NULL ) || ( pFluid == NULL ) )
@@ -1212,7 +1212,7 @@ void PhysGetMassCenterOverride( CBaseEntity *pEntity, vcollide_t *pCollide, soli
 				Vector massCenterLocal, defaultMassCenterWS;
 				physcollision->CollideGetMassCenter( pCollide->solids[solidOut.index], &massCenterLocal );
 				VectorTransform( massCenterLocal, pEntity->EntityToWorldTransform(), defaultMassCenterWS );
-				massCenterWS += override.axis * 
+				massCenterWS += override.axis *
 					( DotProduct(defaultMassCenterWS,override.axis) - DotProduct( override.axis, override.center ) );
 				VectorITransform( massCenterWS, pEntity->EntityToWorldTransform(), solidOut.massCenterOverride );
 			}
@@ -1320,10 +1320,10 @@ CON_COMMAND_F(surfaceprop, "Reports the surface properties at the cursor", FCVAR
 		CFmtStr modelStuff;
 		if ( pModel )
 		{
-			modelStuff.sprintf("%s.%s ", modelinfo->IsTranslucent( pModel ) ? "Translucent" : "Opaque", 
+			modelStuff.sprintf("%s.%s ", modelinfo->IsTranslucent( pModel ) ? "Translucent" : "Opaque",
 				modelinfo->IsTranslucentTwoPass( pModel ) ? "  Two-pass." : "" );
 		}
-		
+
 		// Calculate distance to surface that was hit
 		Vector vecVelocity = tr.startpos - tr.endpos;
 		int length = vecVelocity.Length();
@@ -1817,7 +1817,7 @@ void PhysEnableFloating( IPhysicsObject *pObject, bool bEnable )
 
 
 //-----------------------------------------------------------------------------
-// CollisionEvent system 
+// CollisionEvent system
 //-----------------------------------------------------------------------------
 // NOTE: PreCollision/PostCollision ALWAYS come in matched pairs!!!
 void CCollisionEvent::PreCollision( vcollisionevent_t *pEvent )
@@ -1944,19 +1944,19 @@ void CCollisionEvent::Friction( IPhysicsObject *pObject, float energy, int surfa
 	pObject->GetVelocityAtPoint( vecPos, &vecVel );
 
 	CBaseEntity *pEntity = reinterpret_cast<CBaseEntity *>(pObject->GetGameData());
-		
+
 	if ( pEntity  )
 	{
 		friction_t *pFriction = g_Collisions.FindFriction( pEntity );
 
-		if ( pFriction && pFriction->pObject) 
+		if ( pFriction && pFriction->pObject)
 		{
 			// in MP mode play sound and effects once every 500 msecs,
 			// no ongoing updates, takes too much bandwidth
 			if ( (pFriction->flLastEffectTime + 0.5f) > gpGlobals->curtime)
 			{
 				pFriction->flLastUpdateTime = gpGlobals->curtime;
-				return; 			
+				return;
 			}
 		}
 
@@ -2164,8 +2164,8 @@ void CCollisionEvent::UpdateDamageEvents( void )
 		iEntBits |= event.pEntity->IsMarkedForDeletion() ? 0x0002 : 0;
 		iEntBits |= (event.pEntity->GetSolidFlags() & FSOLID_NOT_SOLID) ? 0x0004 : 0;
 #if 0
-		// Go ahead and compute the current static stress when hit by a large object (with a force high enough to do damage).  
-		// That way you die from the impact rather than the stress of the object resting on you whenever possible. 
+		// Go ahead and compute the current static stress when hit by a large object (with a force high enough to do damage).
+		// That way you die from the impact rather than the stress of the object resting on you whenever possible.
 		// This makes the damage effects cleaner.
 		if ( event.pInflictorPhysics && event.pInflictorPhysics->GetMass() > VPHYSICS_LARGE_OBJECT_MASS )
 		{
@@ -2479,7 +2479,7 @@ void CCollisionEvent::EndTouch( IPhysicsObject *pObject1, IPhysicsObject *pObjec
 	for ( int i = 0; i < count; i++ )
 	{
 		contactCount += CountPhysicsObjectEntityContacts( list[i], pEntity2 );
-		
+
 		// still touching
 		if ( contactCount > 1 )
 			return;
@@ -2518,7 +2518,7 @@ void CCollisionEvent::ObjectEnterTrigger( IPhysicsObject *pTrigger, IPhysicsObje
 		else
 		{
 			CallbackContext check(this);
-			m_currentTriggerEvent.Init( pTriggerEntity, pTrigger, pEntity, pObject, true ); 
+			m_currentTriggerEvent.Init( pTriggerEntity, pTrigger, pEntity, pObject, true );
 			pTriggerEntity->StartTouch( pEntity );
 			m_currentTriggerEvent.Clear();
 		}
@@ -2540,7 +2540,7 @@ void CCollisionEvent::ObjectLeaveTrigger( IPhysicsObject *pTrigger, IPhysicsObje
 		else
 		{
 			CallbackContext check(this);
-			m_currentTriggerEvent.Init( pTriggerEntity, pTrigger, pEntity, pObject, false ); 
+			m_currentTriggerEvent.Init( pTriggerEntity, pTrigger, pEntity, pObject, false );
 			pTriggerEntity->EndTouch( pEntity );
 			m_currentTriggerEvent.Clear();
 		}
@@ -2602,12 +2602,12 @@ void PhysBreakSound( CBaseEntity *pEntity, IPhysicsObject *pPhysObject, Vector v
 ConVar collision_shake_amp("collision_shake_amp", "0.2");
 ConVar collision_shake_freq("collision_shake_freq", "0.5");
 ConVar collision_shake_time("collision_shake_time", "0.5");
-				 
+
 void PhysCollisionScreenShake( gamevcollisionevent_t *pEvent, int index )
 {
 	int otherIndex = !index;
 	float mass = pEvent->pObjects[index]->GetMass();
-	if ( mass >= VPHYSICS_LARGE_OBJECT_MASS && pEvent->pObjects[otherIndex]->IsStatic() && 
+	if ( mass >= VPHYSICS_LARGE_OBJECT_MASS && pEvent->pObjects[otherIndex]->IsStatic() &&
 		!(pEvent->pObjects[index]->GetGameFlags() & FVPHYSICS_PENETRATING) )
 	{
 		mass = clamp(mass, VPHYSICS_LARGE_OBJECT_MASS, 2000.f);
@@ -2624,10 +2624,10 @@ void PhysCollisionScreenShake( gamevcollisionevent_t *pEvent, int index )
 
 #if HL2_EPISODIC
 // Uses DispatchParticleEffect because, so far as I know, that is the new means of kicking
-// off flinders for this kind of collision. Should this be in g_pEffects instead? 
+// off flinders for this kind of collision. Should this be in g_pEffects instead?
 void PhysCollisionWarpEffect( gamevcollisionevent_t *pEvent, surfacedata_t *phit )
 {
-	Vector vecPos; 
+	Vector vecPos;
 	QAngle vecAngles;
 
 	pEvent->pInternalData->GetContactPoint( vecPos );
@@ -2651,7 +2651,7 @@ void PhysCollisionDust( gamevcollisionevent_t *pEvent, surfacedata_t *phit )
 
 		if ( pEvent->collisionSpeed < 200.0f )
 			return;
-		
+
 		break;
 
 	case CHAR_TEX_CONCRETE:
@@ -2661,7 +2661,7 @@ void PhysCollisionDust( gamevcollisionevent_t *pEvent, surfacedata_t *phit )
 
 		break;
 
-#if HL2_EPISODIC 
+#if HL2_EPISODIC
 		// this is probably redundant because BaseEntity::VHandleCollision should have already dispatched us elsewhere
 	case CHAR_TEX_WARPSHIELD:
 		PhysCollisionWarpEffect(pEvent,phit);
@@ -2689,7 +2689,7 @@ void PhysFrictionSound( CBaseEntity *pEntity, IPhysicsObject *pObject, const cha
 {
 	if ( !pEntity )
 		return;
-	
+
 	// cut out the quiet sounds
 	// UNDONE: Separate threshold for starting a sound vs. continuing?
 	flVolume = clamp( flVolume, 0.0f, 1.0f );
@@ -2711,7 +2711,7 @@ void PhysFrictionSound( CBaseEntity *pEntity, IPhysicsObject *pObject, const cha
 
 			pFriction->pObject = pEntity;
 			CPASAttenuationFilter filter( pEntity, params.soundlevel );
-			pFriction->patch = CSoundEnvelopeController::GetController().SoundCreate( 
+			pFriction->patch = CSoundEnvelopeController::GetController().SoundCreate(
 				filter, pEntity->entindex(), CHAN_BODY, pSoundName, params.soundlevel );
 			CSoundEnvelopeController::GetController().Play( pFriction->patch, params.volume * flVolume, params.pitch );
 		}
@@ -2885,7 +2885,7 @@ void DebugDrawContactPoints(IPhysicsObject *pPhysics)
 
 #include "filesystem.h"
 //-----------------------------------------------------------------------------
-// Purpose: This will append a collide to a glview file.  Then you can view the 
+// Purpose: This will append a collide to a glview file.  Then you can view the
 //			collisionmodels with glview.
 // Input  : *pCollide - collision model
 //			&origin - position of the instance of this model
@@ -2930,4 +2930,3 @@ void DumpCollideToGlView( CPhysCollide *pCollide, const Vector &origin, const QA
 	physcollision->DestroyDebugMesh( vertCount, outVerts );
 }
 #endif
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -24,9 +24,9 @@
 
 DEFINE_FALLBACK_SHADER( Sprite, Sprite_DX6 )
 
-BEGIN_SHADER( Sprite_DX6, 
+BEGIN_SHADER( Sprite_DX6,
 			  "Help for Sprite_DX6" )
-			  
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( SPRITEORIGIN, SHADER_PARAM_TYPE_VEC3, "[0 0 0]", "sprite origin" )
 		SHADER_PARAM( SPRITEORIENTATION, SHADER_PARAM_TYPE_INTEGER, "0", "sprite orientation" )

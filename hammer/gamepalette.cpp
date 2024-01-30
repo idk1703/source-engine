@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -68,7 +68,7 @@ BOOL CGamePalette::Create(LPCTSTR pszFile)
 	char szRootDir[MAX_PATH];
 	char szFullPath[MAX_PATH];
 	APP()->GetDirectory(DIR_PROGRAM, szRootDir);
-	Q_MakeAbsolutePath( szFullPath, MAX_PATH, pszFile, szRootDir ); 
+	Q_MakeAbsolutePath( szFullPath, MAX_PATH, pszFile, szRootDir );
 
 	strFile = szFullPath;
 

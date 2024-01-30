@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -57,7 +57,7 @@ public:
 protected:
 	virtual void Paint();
 	virtual void PaintBackground();
-	
+
 	void DrawCircleSegment( Color c, float flEndDegrees, bool clockwise /* = true */ );
 	void SetImage(const char *imageName, progress_textures_t iPos);
 

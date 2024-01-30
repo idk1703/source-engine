@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -112,7 +112,7 @@ int	BuyPresetListBox::computeVPixelsNeeded( void )
 {
 	int pixels = 0;
 
-	int i; 
+	int i;
 	for ( i = 0; i < m_items.Count(); i++ )
 	{
 		Panel *panel = m_items[i].panel;
@@ -123,7 +123,7 @@ int	BuyPresetListBox::computeVPixelsNeeded( void )
 		panel->GetSize( w, h );
 
 		pixels += m_iPanelBuffer; // add in buffer. between items.
-		pixels += h;	
+		pixels += h;
 	}
 
 	pixels += m_iPanelBuffer; // add in buffer below last item
@@ -297,7 +297,7 @@ void BuyPresetListBox::PerformLayout()
 	int y = 0;
 	int h = 0;
 	int totalh = 0;
-	
+
 	int i;
 	for ( i = 0; i < m_items.Count(); i++, y += h )
 	{
@@ -403,4 +403,3 @@ void BuyPresetListBox::MoveScrollBarToTop()
 	m_vbar->SetValue(0);
 	OnSliderMoved(0);
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,7 +18,7 @@
 #define GLOBAL_STUDIO_FLEX_CONTROL_COUNT ( MAXSTUDIOFLEXCTRL * 4 )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CExpUndoInfo
 {
@@ -38,7 +38,7 @@ class CExpClass;
 typedef unsigned int CRC32_t;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CExpression
 {
@@ -50,7 +50,7 @@ public:
 
 	void				SetModified( bool mod );
 	bool				GetModified( void );
-						
+
 	void				ResetUndo( void );
 
 	bool				CanUndo( void );
@@ -85,7 +85,7 @@ public:
 	void				SetExpressionClass( char const *classname );
 
 	// name of expression
-	char				name[32];			
+	char				name[32];
 	int					index;
 	char				description[128];
 
@@ -103,8 +103,8 @@ public:
 
 private:
 	// settings of fields
-	float				setting[ GLOBAL_STUDIO_FLEX_CONTROL_COUNT ];		
-	float				weight[ GLOBAL_STUDIO_FLEX_CONTROL_COUNT ];		
+	float				setting[ GLOBAL_STUDIO_FLEX_CONTROL_COUNT ];
+	float				weight[ GLOBAL_STUDIO_FLEX_CONTROL_COUNT ];
 
 	char				expressionclass[ 128 ];
 

@@ -48,11 +48,11 @@ using namespace vgui;
 DECLARE_HUDELEMENT( CTFHudObjectiveStatus );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTFHudObjectiveStatus::CTFHudObjectiveStatus( const char *pElementName ) 
+CTFHudObjectiveStatus::CTFHudObjectiveStatus( const char *pElementName )
 	: CHudElement( pElementName )
-	, BaseClass( NULL, "HudObjectiveStatus" ) 
+	, BaseClass( NULL, "HudObjectiveStatus" )
 	, m_pFlagPanel( NULL )
 	, m_pControlPointIconsPanel( NULL )
 	, m_pControlPointProgressBar( NULL )
@@ -80,7 +80,7 @@ CTFHudObjectiveStatus::CTFHudObjectiveStatus( const char *pElementName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudObjectiveStatus::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -102,7 +102,7 @@ void CTFHudObjectiveStatus::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudObjectiveStatus::Reset()
 {
@@ -138,7 +138,7 @@ void CTFHudObjectiveStatus::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CControlPointProgressBar *CTFHudObjectiveStatus::GetControlPointProgressBar( void )
 {
@@ -150,7 +150,7 @@ CControlPointProgressBar *CTFHudObjectiveStatus::GetControlPointProgressBar( voi
 // [msmith] Functions for training stuff.
 //=============================================================================
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudObjectiveStatus::SetTrainingText( char *text )
 {
@@ -161,7 +161,7 @@ void CTFHudObjectiveStatus::SetTrainingText( char *text )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudObjectiveStatus::SetTrainingObjective( char *text )
 {
@@ -175,7 +175,7 @@ void CTFHudObjectiveStatus::SetTrainingObjective( char *text )
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudObjectiveStatus::SetVisiblePanels( void )
 {
@@ -203,8 +203,8 @@ void CTFHudObjectiveStatus::SetVisiblePanels( void )
 
 	if ( TFGameRules()->IsMannVsMachineMode() )
 	{
-		bCTFVisible = ( ( TFGameRules()->State_Get() != GR_STATE_BETWEEN_RNDS ) 
-					 && ( TFGameRules()->State_Get() != GR_STATE_TEAM_WIN ) 
+		bCTFVisible = ( ( TFGameRules()->State_Get() != GR_STATE_BETWEEN_RNDS )
+					 && ( TFGameRules()->State_Get() != GR_STATE_TEAM_WIN )
 					 && ( TFGameRules()->State_Get() != GR_STATE_GAME_OVER ) );
 	}
 
@@ -217,22 +217,22 @@ void CTFHudObjectiveStatus::SetVisiblePanels( void )
 		{
 			m_pFlagPanel->SetVisible( false );
 		}
-		
+
 		if ( m_pControlPointIconsPanel )
 		{
 			m_pControlPointIconsPanel->SetVisible( false );
 		}
-		
+
 		if ( m_pEscortPanel )
 		{
 			m_pEscortPanel->SetVisible( false );
 		}
-		
+
 		if ( m_pMultipleEscortPanel )
 		{
 			m_pMultipleEscortPanel->SetVisible( false );
 		}
-		
+
 		if ( m_pHudPasstime )
 		{
 			m_pHudPasstime->SetVisible( false );
@@ -307,7 +307,7 @@ void CTFHudObjectiveStatus::SetVisiblePanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudObjectiveStatus::Think()
 {
@@ -319,7 +319,7 @@ void CTFHudObjectiveStatus::Think()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFHudObjectiveStatus::ShouldDraw()
 {

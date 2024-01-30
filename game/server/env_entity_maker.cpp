@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -92,7 +92,7 @@ LINK_ENTITY_TO_CLASS( env_entity_maker, CEnvEntityMaker );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvEntityMaker::Spawn( void )
 {
@@ -104,7 +104,7 @@ void CEnvEntityMaker::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvEntityMaker::Activate( void )
 {
@@ -127,7 +127,7 @@ void CEnvEntityMaker::Activate( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPointTemplate *CEnvEntityMaker::FindTemplate()
 {
@@ -166,11 +166,11 @@ void CEnvEntityMaker::SpawnEntity( Vector vecAlternateOrigin, QAngle vecAlternat
 	CUtlVector<CBaseEntity*> hNewEntities;
 	if ( !pTemplate->CreateInstance( vecSpawnOrigin, vecSpawnAngles, &hNewEntities ) )
 		return;
-	
+
 	//Adrian: oops we couldn't spawn the entity (or entities) for some reason!
 	if ( hNewEntities.Count() == 0 )
 		 return;
-	
+
 	m_hCurrentInstance = hNewEntities[0];
 
 	// Assume it'll block us
@@ -358,7 +358,7 @@ void CEnvEntityMaker::InputForceSpawn( inputdata_t &inputdata )
 void CEnvEntityMaker::InputForceSpawnAtEntityOrigin( inputdata_t &inputdata )
 {
 	CBaseEntity *pTargetEntity = gEntList.FindEntityByName( NULL, inputdata.value.String(), this, inputdata.pActivator, inputdata.pCaller );
-		
+
 	if( pTargetEntity )
 	{
 		SpawnEntity( pTargetEntity->GetAbsOrigin(), pTargetEntity->GetAbsAngles() );

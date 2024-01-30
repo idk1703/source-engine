@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -33,13 +33,13 @@ void DownloadFile( const char *pCachePath, const char *pRemoteFileBase, const ch
 	{
 		Error( "Unable to open %s on master.\n", remoteFilename );
 	}
-	
+
 	unsigned int fileSize = g_pFileSystem->Size( fpSrc );
 	CUtlVector<char> data;
 	data.SetSize( fileSize );
 	g_pFileSystem->Read( data.Base(), fileSize, fpSrc );
 	g_pFileSystem->Close( fpSrc );
-	
+
 	// Now write the file to disk.
 	FILE *fpDest = fopen( localFilename, "wb" );
 	if ( !fpDest )
@@ -74,7 +74,7 @@ int RunVMPITransferWorker( int argc, char  **argv )
 		return 1;
 	}
 
-	SetupToolsMinidumpHandler( VMPI_ExceptionFilter );	
+	SetupToolsMinidumpHandler( VMPI_ExceptionFilter );
 
 	if ( !FileSystem_Init( ".", 0, FS_INIT_COMPATIBILITY_MODE ) )
 		return 1;
@@ -89,7 +89,7 @@ int RunVMPITransferWorker( int argc, char  **argv )
 	const char *pRemoteFileBase = pCommandLine->ParmValue( "-mpi_filebase", (char*)NULL );
 	if ( !pRemoteFileBase )
 		Error( "No -mpi_filebase specified." );
-	
+
 	// Now just ask the master for each file.
 	for ( int i=1; i < pCommandLine->ParmCount()-1; i++ )
 	{
@@ -108,7 +108,7 @@ int RunVMPITransferWorker( int argc, char  **argv )
 	FILE *fp = fopen( statusFilename, "wb" );
 	fclose( fp );
 
-	return 0;										   
+	return 0;
 }
 
 
@@ -136,14 +136,14 @@ int RunVMPITransferMaster( int argc, char **argv )
 				break;
 		}
 	}
-	
+
 	return 0;
 }
 
 
 // --------------------------------------------------------------------------------- //
-// Purpose: This app is used by vmpi_service to acquire the executables for 
-// a VMPI job. When the service is asked to join a job, it runs this program 
+// Purpose: This app is used by vmpi_service to acquire the executables for
+// a VMPI job. When the service is asked to join a job, it runs this program
 // to connect to the VMPI master and download all the exes for the job.
 //
 // This app is ALSO used to do patches. vmpi_browser_services runs it with a list
@@ -168,5 +168,3 @@ int main( int argc, char **argv )
 	CmdLib_Cleanup();
 	return ret;
 }
-
-

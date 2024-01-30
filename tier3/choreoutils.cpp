@@ -16,7 +16,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Find sequence by name 
+// Find sequence by name
 //-----------------------------------------------------------------------------
 static int LookupSequence( CStudioHdr *pStudioHdr, const char *pSequenceName )
 {
@@ -30,7 +30,7 @@ static int LookupSequence( CStudioHdr *pStudioHdr, const char *pSequenceName )
 
 
 //-----------------------------------------------------------------------------
-// Returns sequence flags 
+// Returns sequence flags
 //-----------------------------------------------------------------------------
 static int GetSequenceFlags( CStudioHdr *pStudioHdr, int nSequence )
 {
@@ -42,7 +42,7 @@ static int GetSequenceFlags( CStudioHdr *pStudioHdr, int nSequence )
 
 
 //-----------------------------------------------------------------------------
-// Does a sequence loop? 
+// Does a sequence loop?
 //-----------------------------------------------------------------------------
 static bool DoesSequenceLoop( CStudioHdr *pStudioHdr, int nSequence )
 {
@@ -53,7 +53,7 @@ static bool DoesSequenceLoop( CStudioHdr *pStudioHdr, int nSequence )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool AutoAddGestureKeys( CChoreoEvent *e, CStudioHdr *pStudioHdr, float *pPoseParameters, bool bCheckOnly )
 {
@@ -92,25 +92,25 @@ bool AutoAddGestureKeys( CChoreoEvent *e, CStudioHdr *pStudioHdr, float *pPosePa
 			Q_strncpy( szStartLoop, pkvFaceposer->GetString(), sizeof(szStartLoop) );
 			continue;
 		}
-		
+
 		if ( !Q_stricmp( pkvFaceposer->GetName(), "endloop" ) )
 		{
 			Q_strncpy( szEndLoop, pkvFaceposer->GetString(), sizeof(szEndLoop) );
 			continue;
 		}
-		
+
 		if ( !Q_stricmp( pkvFaceposer->GetName(), "entrytag" ) )
 		{
 			Q_strncpy( szEntry, pkvFaceposer->GetString(), sizeof(szEntry) );
 			continue;
 		}
-		
+
 		if ( !Q_stricmp( pkvFaceposer->GetName(), "exittag" ) )
 		{
 			Q_strncpy( szExit, pkvFaceposer->GetString(), sizeof(szExit) );
 			continue;
 		}
-		
+
 		if ( !Q_stricmp( pkvFaceposer->GetName(), "tags" ) )
 		{
 			if ( nMaxFrame <= 0 )
@@ -195,7 +195,7 @@ bool AutoAddGestureKeys( CChoreoEvent *e, CStudioHdr *pStudioHdr, float *pPosePa
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool UpdateGestureLength( CChoreoEvent *e, CStudioHdr *pStudioHdr, float *pPoseParameters, bool bCheckOnly )
 {
@@ -228,7 +228,7 @@ bool UpdateGestureLength( CChoreoEvent *e, CStudioHdr *pStudioHdr, float *pPoseP
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool UpdateSequenceLength( CChoreoEvent *e, CStudioHdr *pStudioHdr, float *pPoseParameters, bool bCheckOnly, bool bVerbose )
 {
@@ -259,7 +259,7 @@ bool UpdateSequenceLength( CChoreoEvent *e, CStudioHdr *pStudioHdr, float *pPose
 		{
 			if ( bCheckOnly )
 				return true;
-	
+
 			if ( bVerbose )
 			{
 				ConMsg( "UpdateSequenceLength:  %s is looping, removing fixed length flag\n", e->GetName() );

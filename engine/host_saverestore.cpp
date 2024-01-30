@@ -178,8 +178,8 @@ inline void GetServerSaveCommentEx( char *comment, int maxlength, float flMinute
 
 //-----------------------------------------------------------------------------
 // Purpose: Alloc/free memory for save games
-// Input  : num - 
-//			size - 
+// Input  : num -
+//			size -
 //-----------------------------------------------------------------------------
 class CSaveMemory : public CMemoryStack
 {
@@ -208,8 +208,8 @@ void *SaveAllocMemory( size_t num, size_t size, bool bClear )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pSaveMem - 
+// Purpose:
+// Input  : *pSaveMem -
 //-----------------------------------------------------------------------------
 void SaveFreeMemory( void *pSaveMem )
 {
@@ -231,7 +231,7 @@ void SaveResetMemory()
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 struct GAME_HEADER
 {
@@ -244,7 +244,7 @@ struct GAME_HEADER
 	char	landmark[256];
 };
 
-struct SAVE_HEADER 
+struct SAVE_HEADER
 {
 	DECLARE_SIMPLE_DATADESC();
 
@@ -260,7 +260,7 @@ struct SAVE_HEADER
 	char	skyName[32];
 };
 
-struct SAVELIGHTSTYLE 
+struct SAVELIGHTSTYLE
 {
 	DECLARE_SIMPLE_DATADESC();
 
@@ -269,7 +269,7 @@ struct SAVELIGHTSTYLE
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CSaveRestore : public ISaveRestore
 {
@@ -443,7 +443,7 @@ END_DATADESC()
 
 
 // The proper way to extend the file format (add a new data chunk) is to add a field here, and use it to determine
-// whether your new data chunk is in the file or not.  If the file was not saved with your new field, the chunk 
+// whether your new data chunk is in the file or not.  If the file was not saved with your new field, the chunk
 // won't be there either.
 // Structure members can be added/deleted without any problems, new structures must be reflected in an existing struct
 // and not read unless actually in the file.  New structure members will be zeroed out when reading 'old' files.
@@ -474,7 +474,7 @@ BEGIN_SIMPLE_DATADESC( SAVELIGHTSTYLE )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CSaveRestore::GetSaveGameMapName( char const *level )
@@ -587,7 +587,7 @@ void CSaveRestore::AgeSaveFile( const char *pName, const char *ext, int count, b
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CSaveRestore::IsValidSave( void )
 {
@@ -628,7 +628,7 @@ int CSaveRestore::IsValidSave( void )
 			ConMsg ("Can't savegame without a player!\n");
 			return 0;
 		}
-			
+
 		// we can't save if we're dead... unless we're reporting a bug.
 		if ( pl->deadflag != false && !bugreporter->IsVisible() )
 		{
@@ -636,7 +636,7 @@ int CSaveRestore::IsValidSave( void )
 			return 0;
 		}
 	}
-	
+
 	// Passed all checks, it's ok to save
 	return 1;
 }
@@ -722,7 +722,7 @@ int CSaveRestore::SaveGameSlot( const char *pSaveName, const char *pSaveComment,
 	if ( bIsQuick || bIsAutosave || bIsAutosaveDangerous )
 	{
 		bClearFile = false;
-		SaveMsg( "Queue AgeSaveList\n"); 
+		SaveMsg( "Queue AgeSaveList\n");
 		if ( StorageDeviceValid() )
 		{
 			g_AsyncSaveCallQueue.QueueCall( this, &CSaveRestore::AgeSaveList, CUtlEnvelope<const char *>(pSaveName), save_history_count.GetInt(), IsXSave() );
@@ -733,18 +733,18 @@ int CSaveRestore::SaveGameSlot( const char *pSaveName, const char *pSaveComment,
 	if (!SaveGameState( (pszDestMap != NULL ), NULL, false, ( bIsAutosave || bIsAutosaveDangerous )  ) )
 	{
 		m_szSaveGameName[ 0 ] = 0;
-		return 0;	
+		return 0;
 	}
 	S_ExtraUpdate();
 
 	//---------------------------------
-			
+
 	pSaveData = serverGameDLL->SaveInit( 0 );
 
 	if ( !pSaveData )
 	{
 		m_szSaveGameName[ 0 ] = 0;
-		return 0;	
+		return 0;
 	}
 
 	Q_FixSlashes( hlPath );
@@ -777,7 +777,7 @@ int CSaveRestore::SaveGameSlot( const char *pSaveName, const char *pSaveComment,
 			ConMsg( "Token Table Save/Restore overflow!" );
 			break;
 		}
-	}	
+	}
 
 	tokenSize = pSaveData->AccessCurPos() - pTokenData;
 	pSaveData->Rewind( tokenSize );
@@ -785,7 +785,7 @@ int CSaveRestore::SaveGameSlot( const char *pSaveName, const char *pSaveComment,
 
 	// open the file to validate it exists, and to clear it
 	if ( bClearFile && !IsX360() )
-	{		
+	{
 		FileHandle_t pSaveFile = g_pSaveRestoreFileSystem->Open( name, "wb" );
 		if (!pSaveFile && g_pFileSystem->FileExists( name, "GAME" ) )
 		{
@@ -825,15 +825,15 @@ int CSaveRestore::SaveGameSlot( const char *pSaveName, const char *pSaveComment,
 	saveHeader.Put( pTokenData, tokenSize );
 
 	saveHeader.Put( pSaveData->GetBuffer(), pSaveData->GetCurPos() );
-	
-	// Create the save game container before the directory copy 
+
+	// Create the save game container before the directory copy
 	g_AsyncSaveCallQueue.QueueCall( g_pSaveRestoreFileSystem, &ISaveRestoreFileSystem::AsyncWrite, CUtlEnvelope<const char *>(name), saveHeader.Base(), saveHeader.TellPut(), true, false, (FSAsyncControl_t *) NULL );
 	g_AsyncSaveCallQueue.QueueCall( this, &CSaveRestore::DirectoryCopy, CUtlEnvelope<const char *>(hlPath), CUtlEnvelope<const char *>(name), m_bIsXSave );
 
 	// Finish all writes and close the save game container
 	// @TODO: this async finish all writes has to go away, very expensive and will make game hitchy. switch to a wait on the last async op
 	g_AsyncSaveCallQueue.QueueCall( g_pFileSystem, &IFileSystem::AsyncFinishAllWrites );
-	
+
 	if ( IsXSave() && StorageDeviceValid() )
 	{
 		// Finish all pending I/O to the storage devices
@@ -882,7 +882,7 @@ void CSaveRestore::UpdateSaveGameScreenshots()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CSaveRestore::SaveReadHeader( FileHandle_t pFile, GAME_HEADER *pHeader, int readGlobalState, bool *pbOldSave )
 {
@@ -898,7 +898,7 @@ int CSaveRestore::SaveReadHeader( FileHandle_t pFile, GAME_HEADER *pHeader, int 
 		Warning( "Can't load saved game, incorrect FILEID\n" );
 		return 0;
 	}
-		
+
 	if ( g_pSaveRestoreFileSystem->Read( &tag, sizeof(int), pFile ) != sizeof(int) )
 		return 0;
 
@@ -967,13 +967,13 @@ int CSaveRestore::SaveReadHeader( FileHandle_t pFile, GAME_HEADER *pHeader, int 
 	pSaveData->levelInfo.time = 0;
 
 	// pszTokenList now points after token data
-	pSaveData->Init( pszTokenList, size ); 
+	pSaveData->Init( pszTokenList, size );
 	if ( g_pSaveRestoreFileSystem->Read( pSaveData->GetBuffer(), size, pFile ) != size )
 	{
 		Finish( pSaveData );
 		return 0;
 	}
-	
+
 	serverGameDLL->SaveReadFields( pSaveData, "GameHeader", pHeader, NULL, GAME_HEADER::m_DataMap.dataDesc, GAME_HEADER::m_DataMap.dataNumFields );
 	if ( g_szMapLoadOverride[0] )
 	{
@@ -1001,9 +1001,9 @@ int CSaveRestore::SaveReadHeader( FileHandle_t pFile, GAME_HEADER *pHeader, int 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pName - 
-//			*output - 
+// Purpose:
+// Input  : *pName -
+//			*output -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSaveRestore::CalcSaveGameName( const char *pName, char *output, int outputStringLength )
@@ -1058,8 +1058,8 @@ bool CSaveRestore::SaveFileExists( const char *pName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pName - 
+// Purpose:
+// Input  : *pName -
 // Output : int
 //-----------------------------------------------------------------------------
 bool CL_HL2Demo_MapCheck( const char *name ); // in host_cmd.cpp
@@ -1101,7 +1101,7 @@ bool CSaveRestore::LoadGame( const char *pName )
 				return false;
 		}
 	}
-	
+
 	int iElapsedMinutes = 0;
 	int iElapsedSeconds = 0;
 	bool bOldSave = false;
@@ -1154,7 +1154,7 @@ bool CSaveRestore::LoadGame( const char *pName )
 		}
 
 		g_pSaveRestoreFileSystem->Close( pFile );
-		
+
 		if ( bLoadedToMemory )
 		{
 			g_pSaveRestoreFileSystem->RemoveFile( name );
@@ -1173,7 +1173,7 @@ bool CSaveRestore::LoadGame( const char *pName )
 	}
 
 	// stop demo loop in case this fails
-	cl.demonum = -1;		
+	cl.demonum = -1;
 
 	deathmatch.SetValue( 0 );
 	coop.SetValue( 0 );
@@ -1181,13 +1181,13 @@ bool CSaveRestore::LoadGame( const char *pName )
 	if ( !CL_HL2Demo_MapCheck( gameHeader.mapName ) )
 	{
 		Warning( "Save file %s is not valid\n", name );
-		return false;	
+		return false;
 	}
-	
+
 	if ( !CL_PortalDemo_MapCheck( gameHeader.mapName ) )
 	{
 		Warning( "Save file %s is not valid\n", name );
-		return false;	
+		return false;
 	}
 
 	bool bIsTransitionSave = ( gameHeader.originMapName[0] != 0 );
@@ -1264,7 +1264,7 @@ void CSaveRestore::SetMostRecentElapsedSeconds( const int sec )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CSaveRestoreData
 //-----------------------------------------------------------------------------
 
@@ -1272,7 +1272,7 @@ struct SaveFileHeaderTag_t
 {
 	int id;
 	int version;
-	
+
 	bool operator==(const SaveFileHeaderTag_t &rhs) const { return ( memcmp( this, &rhs, sizeof(SaveFileHeaderTag_t) ) == 0 ); }
 	bool operator!=(const SaveFileHeaderTag_t &rhs) const { return ( memcmp( this, &rhs, sizeof(SaveFileHeaderTag_t) ) != 0 ); }
 };
@@ -1287,7 +1287,7 @@ struct SaveFileSectionsInfo_t
 	int nSymbols;
 	int nBytesDataHeaders;
 	int nBytesData;
-	
+
 	int SumBytes() const
 	{
 		return ( nBytesSymbols + nBytesDataHeaders + nBytesData );
@@ -1308,7 +1308,7 @@ void CSaveRestore::SaveGameStateGlobals( CSaveRestoreData *pSaveData )
 	INetworkStringTable * table = sv.GetLightStyleTable();
 
 	Assert( table );
-	
+
 	// Write global data
 	header.version 			= build_number( );
 	header.skillLevel 		= skill.GetInt();	// This is created from an int even though it's a float
@@ -1362,7 +1362,7 @@ void CSaveRestore::SaveGameStateGlobals( CSaveRestoreData *pSaveData )
 CSaveRestoreData *CSaveRestore::SaveGameStateInit( void )
 {
 	CSaveRestoreData *pSaveData = serverGameDLL->SaveInit( 0 );
-	
+
 	return pSaveData;
 }
 
@@ -1400,7 +1400,7 @@ bool CSaveRestore::SaveGameState( bool bTransition, CSaveRestoreData **ppReturnS
 	//---------------------------------
 	// Save the data
 	sections.pData = pSaveData->AccessCurPos();
-	
+
 	//---------------------------------
 	// Pre-save
 
@@ -1423,16 +1423,16 @@ bool CSaveRestore::SaveGameState( bool bTransition, CSaveRestoreData **ppReturnS
 	S_ExtraUpdate();
 	serverGameDLL->Save( pSaveData );
 	S_ExtraUpdate();
-	
+
 	sectionsInfo.nBytesData = pSaveData->AccessCurPos() - sections.pData;
 
-	
+
 	//---------------------------------
 	// Save necessary tables/dictionaries/directories
 	sections.pDataHeaders = pSaveData->AccessCurPos();
-	
+
 	serverGameDLL->WriteSaveHeaders( pSaveData );
-	
+
 	sectionsInfo.nBytesDataHeaders = pSaveData->AccessCurPos() - sections.pDataHeaders;
 
 	//---------------------------------
@@ -1446,7 +1446,7 @@ bool CSaveRestore::SaveGameState( bool bTransition, CSaveRestoreData **ppReturnS
 		{
 			break;
 		}
-	}	
+	}
 
 	sectionsInfo.nBytesSymbols = pSaveData->AccessCurPos() - sections.pSymbols;
 	sectionsInfo.nSymbols = pSaveData->SizeSymbolTable();
@@ -1454,10 +1454,10 @@ bool CSaveRestore::SaveGameState( bool bTransition, CSaveRestoreData **ppReturnS
 	//---------------------------------
 	// Output to disk
 	char name[256];
-	int nBytesStateFile = sizeof(CURRENT_SAVEFILE_HEADER_TAG) + 
-		sizeof(sectionsInfo) + 
-		sectionsInfo.nBytesSymbols + 
-		sectionsInfo.nBytesDataHeaders + 
+	int nBytesStateFile = sizeof(CURRENT_SAVEFILE_HEADER_TAG) +
+		sizeof(sectionsInfo) +
+		sectionsInfo.nBytesSymbols +
+		sectionsInfo.nBytesDataHeaders +
 		sectionsInfo.nBytesData;
 
 	void *pBuffer = new byte[nBytesStateFile];
@@ -1490,9 +1490,9 @@ bool CSaveRestore::SaveGameState( bool bTransition, CSaveRestoreData **ppReturnS
 	SaveMsg( "Queue AsyncWrite (%s)\n", name );
 	g_AsyncSaveCallQueue.QueueCall( g_pSaveRestoreFileSystem, &ISaveRestoreFileSystem::AsyncWrite, CUtlEnvelope<const char *>(name), pBuffer, nBytesStateFile, true, false, (FSAsyncControl_t *)NULL );
 	pBuffer = NULL;
-	
+
 	//---------------------------------
-	
+
 	EntityPatchWrite( pSaveData, GetSaveGameMapName( sv.GetMapName() ), true );
 	if ( !ppReturnSaveData )
 	{
@@ -1528,8 +1528,8 @@ bool CSaveRestore::SaveGameState( bool bTransition, CSaveRestoreData **ppReturnS
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *save - 
+// Purpose:
+// Input  : *save -
 //-----------------------------------------------------------------------------
 void CSaveRestore::Finish( CSaveRestoreData *save )
 {
@@ -1628,7 +1628,7 @@ int CSaveRestore::LookupRestoreSpotSaveIndex( RestoreLookupTable *table, int sav
 		if ( slot->savedindex == save )
 			return slot->restoredindex;
 	}
-	
+
 	return -1;
 }
 
@@ -1675,7 +1675,7 @@ void CSaveRestore::ReapplyDecal( bool adjacent, RestoreLookupTable *table, decal
 						IClientEntity *clientEntity = entitylist->GetClientEntity( entityToHit );
 						if ( !clientEntity )
 							return;
-						
+
 						bool found = false;
 						int decalIndex = Draw_DecalIndexFromName( entry->name, &found );
 						if ( !found )
@@ -1687,11 +1687,11 @@ void CSaveRestore::ReapplyDecal( bool adjacent, RestoreLookupTable *table, decal
 							Draw_DecalSetName( decalIndex, entry->name );
 						}
 
-						g_pEfx->DecalShoot( 
-							decalIndex, 
-							entityToHit, 
-							clientEntity->GetModel(), 
-							clientEntity->GetAbsOrigin(), 
+						g_pEfx->DecalShoot(
+							decalIndex,
+							entityToHit,
+							clientEntity->GetModel(),
+							clientEntity->GetAbsOrigin(),
 							clientEntity->GetAbsAngles(),
 							entry->position, 0, flags );
 					}
@@ -1725,7 +1725,7 @@ void CSaveRestore::ReapplyDecal( bool adjacent, RestoreLookupTable *table, decal
 					IServerEntity *pServerEntity = pEdict->GetIServerEntity();
 					if ( pServerEntity )
 					{
-						pModel = sv.GetModel( pServerEntity->GetModelIndex() );						
+						pModel = sv.GetModel( pServerEntity->GetModelIndex() );
 					}
 				}
 			}
@@ -1742,7 +1742,7 @@ void CSaveRestore::ReapplyDecal( bool adjacent, RestoreLookupTable *table, decal
 					decalIndex = sv.PrecacheDecal( entry->name, RES_FATALIFMISSING );
 					Draw_DecalSetName( decalIndex, entry->name );
 				}
-				
+
 				g_pEfx->DecalShoot( decalIndex, entityToHit, pModel, vecOrigin, vecAngle, entry->position, 0, flags );
 			}
 		}
@@ -1795,7 +1795,7 @@ void CSaveRestore::RestoreClientState( char const *fileName, bool adjacent )
 	{
 		// Rewind
 		g_pSaveRestoreFileSystem->Seek( pFile, savePos, FILESYSTEM_SEEK_HEAD );
-	
+
 		baseclientsectionsold_t oldsections;
 
 		g_pSaveRestoreFileSystem->Read( &oldsections, sizeof(baseclientsectionsold_t), pFile );
@@ -1861,7 +1861,7 @@ void CSaveRestore::RestoreClientState( char const *fileName, bool adjacent )
 	pSaveData->Init( (char *)(pszTokenList), size );	// The point pszTokenList was incremented to the end of the tokens
 
 	g_ClientDLL->ReadRestoreHeaders( pSaveData );
-	
+
 	pSaveData->Rebase();
 
 	//HACKHACK
@@ -1886,7 +1886,7 @@ void CSaveRestore::RestoreClientState( char const *fileName, bool adjacent )
 	for ( int i = 0 ; i < c; i++ )
 	{
 		entitytable_t *entry = pSaveData->GetEntityInfo( i );
-		
+
 		entry->restoreentityindex = LookupRestoreSpotSaveIndex( table, entry->saveentityindex );
 
 		//Adrian: This means we are a client entity with no index to restore and we need our model precached.
@@ -1954,8 +1954,8 @@ void CSaveRestore::RestoreAdjacenClientState( char const *map )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 bool CSaveRestore::SaveClientState( const char *name )
 {
@@ -1970,7 +1970,7 @@ bool CSaveRestore::SaveClientState( const char *name )
 	{
 		return false;
 	}
-	
+
 	sections.entitydata = pSaveData->AccessCurPos();
 
 	// Now write out the client .dll entities to the save file, too
@@ -2028,7 +2028,7 @@ bool CSaveRestore::SaveClientState( const char *name )
 			ConMsg( "Token Table Save/Restore overflow!" );
 			break;
 		}
-	}	
+	}
 
 	sections.symbolcount = pSaveData->SizeSymbolTable();
 	sections.symbolsize = pSaveData->AccessCurPos() - sections.symboldata;
@@ -2038,12 +2038,12 @@ bool CSaveRestore::SaveClientState( const char *name )
 
 	unsigned nBytes = sizeof(CURRENT_SAVEFILE_HEADER_TAG) +
 						sizeof( magicnumber ) +
-						sizeof( sectionheaderversion ) + 
+						sizeof( sectionheaderversion ) +
 						sizeof( baseclientsections_t ) +
-						sections.symbolsize + 
-						sections.headersize + 
-						sections.entitysize + 
-						sections.decalsize + 
+						sections.symbolsize +
+						sections.headersize +
+						sections.entitysize +
+						sections.decalsize +
 						sections.musicsize;
 
 
@@ -2129,7 +2129,7 @@ int CSaveRestore::SaveReadNameAndComment( FileHandle_t f, OUT_Z_CAP(nameSize) ch
 
 	char *pData;
 	int nFieldSize;
-	
+
 	pData = pSaveData;
 
 	// Allocate a table for the strings, and parse the table
@@ -2196,16 +2196,16 @@ int CSaveRestore::SaveReadNameAndComment( FileHandle_t f, OUT_Z_CAP(nameSize) ch
 	// Delete the string table we allocated
 	delete[] pTokenList;
 	delete[] pSaveData;
-	
+
 	if ( strlen( name ) > 0 && strlen( comment ) > 0 )
 		return 1;
-	
+
 	return 0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *level - 
+// Purpose:
+// Input  : *level -
 // Output : CSaveRestoreData
 //-----------------------------------------------------------------------------
 CSaveRestoreData *CSaveRestore::LoadSaveData( const char *level )
@@ -2244,7 +2244,7 @@ CSaveRestoreData *CSaveRestore::LoadSaveData( const char *level )
 	// Read the sections info and the data
 	//
 	SaveFileSectionsInfo_t sectionsInfo;
-	
+
 	if ( g_pSaveRestoreFileSystem->Read( &sectionsInfo, sizeof(sectionsInfo), pFile ) != sizeof(sectionsInfo) )
 		return NULL;
 
@@ -2256,7 +2256,7 @@ CSaveRestoreData *CSaveRestore::LoadSaveData( const char *level )
 
 	CSaveRestoreData *pSaveData = MakeSaveRestoreData( pSaveMemory );
 	Q_strncpy( pSaveData->levelInfo.szCurrentMapName, level, sizeof( pSaveData->levelInfo.szCurrentMapName ) );
-	
+
 	if ( g_pSaveRestoreFileSystem->Read( (char *)(pSaveData + 1), sectionsInfo.SumBytes(), pFile ) != sectionsInfo.SumBytes() )
 	{
 		// Free the memory and give up
@@ -2265,7 +2265,7 @@ CSaveRestoreData *CSaveRestore::LoadSaveData( const char *level )
 	}
 
 	g_pSaveRestoreFileSystem->Close( pFile );
-	
+
 	//---------------------------------
 	// Parse the symbol table
 	char *pszTokenList = (char *)(pSaveData + 1);// Skip past the CSaveRestoreData structure
@@ -2313,17 +2313,17 @@ CSaveRestoreData *CSaveRestore::LoadSaveData( const char *level )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pSaveData - 
-//			*pHeader - 
-//			updateGlobals - 
+// Purpose:
+// Input  : *pSaveData -
+//			*pHeader -
+//			updateGlobals -
 //-----------------------------------------------------------------------------
 void CSaveRestore::ParseSaveTables( CSaveRestoreData *pSaveData, SAVE_HEADER *pHeader, int updateGlobals )
 {
 	int				i;
 	SAVELIGHTSTYLE	light;
 	INetworkStringTable * table = sv.GetLightStyleTable();
-	
+
 	// Re-base the savedata since we re-ordered the entity/table / restore fields
 	pSaveData->Rebase();
 	// Process SAVE_HEADER
@@ -2339,7 +2339,7 @@ void CSaveRestore::ParseSaveTables( CSaveRestoreData *pSaveData, SAVE_HEADER *pH
 	// Read adjacency list
 	for ( i = 0; i < pSaveData->levelInfo.connectionCount; i++ )
 		serverGameDLL->SaveReadFields( pSaveData, "ADJACENCY", pSaveData->levelInfo.levelList + i, NULL, levellist_t::m_DataMap.dataDesc, levellist_t::m_DataMap.dataNumFields );
-	
+
 	if ( updateGlobals )
   	{
   		for ( i = 0; i < MAX_LIGHTSTYLES; i++ )
@@ -2360,8 +2360,8 @@ void CSaveRestore::ParseSaveTables( CSaveRestoreData *pSaveData, SAVE_HEADER *pH
 //-----------------------------------------------------------------------------
 // Purpose: Write out the list of entities that are no longer in the save file for this level
 //  (they've been moved to another level)
-// Input  : *pSaveData - 
-//			*level - 
+// Input  : *pSaveData -
+//			*level -
 //-----------------------------------------------------------------------------
 void CSaveRestore::EntityPatchWrite( CSaveRestoreData *pSaveData, const char *level, bool bAsync )
 {
@@ -2412,8 +2412,8 @@ void CSaveRestore::EntityPatchWrite( CSaveRestoreData *pSaveData, const char *le
 //-----------------------------------------------------------------------------
 // Purpose: Read the list of entities that are no longer in the save file for this level (they've been moved to another level)
 //   and correct the table
-// Input  : *pSaveData - 
-//			*level - 
+// Input  : *pSaveData -
+//			*level -
 //-----------------------------------------------------------------------------
 void CSaveRestore::EntityPatchRead( CSaveRestoreData *pSaveData, const char *level )
 {
@@ -2445,9 +2445,9 @@ void CSaveRestore::EntityPatchRead( CSaveRestoreData *pSaveData, const char *lev
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *level - 
-//			createPlayers - 
+// Purpose:
+// Input  : *level -
+//			createPlayers -
 // Output : int
 //-----------------------------------------------------------------------------
 int CSaveRestore::LoadGameState( char const *level, bool createPlayers )
@@ -2464,7 +2464,7 @@ int CSaveRestore::LoadGameState( char const *level, bool createPlayers )
 
 	ParseSaveTables( pSaveData, &header, 1 );
 	EntityPatchRead( pSaveData, level );
-	
+
 	if ( !IsX360() )
 	{
 		skill.SetValue( header.skillLevel );
@@ -2476,7 +2476,7 @@ int CSaveRestore::LoadGameState( char const *level, bool createPlayers )
 	{
 		skyname.SetValue( header.skyName );
 	}
-	
+
 	// Create entity list
 	serverGameDLL->Restore( pSaveData, createPlayers );
 
@@ -2502,8 +2502,8 @@ CSaveRestore::RestoreLookupTable *CSaveRestore::FindOrAddRestoreLookupTable( cha
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pSaveData - 
+// Purpose:
+// Input  : *pSaveData -
 // Output : int
 //-----------------------------------------------------------------------------
 void CSaveRestore::BuildRestoredIndexTranslationTable( char const *mapname, CSaveRestoreData *pSaveData, bool verbose )
@@ -2539,9 +2539,9 @@ void CSaveRestore::ClearRestoredIndexTranslationTables()
 
 //-----------------------------------------------------------------------------
 // Purpose: Find all occurances of the map in the adjacency table
-// Input  : *pSaveData - 
-//			*pMapName - 
-//			index - 
+// Input  : *pSaveData -
+//			*pMapName -
+//			index -
 // Output : int
 //-----------------------------------------------------------------------------
 int EntryInTable( CSaveRestoreData *pSaveData, const char *pMapName, int index )
@@ -2560,10 +2560,10 @@ int EntryInTable( CSaveRestoreData *pSaveData, const char *pMapName, int index )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pSaveData - 
-//			output - 
-//			*pLandmarkName - 
+// Purpose:
+// Input  : *pSaveData -
+//			output -
+//			*pLandmarkName -
 //-----------------------------------------------------------------------------
 void LandmarkOrigin( CSaveRestoreData *pSaveData, Vector& output, const char *pLandmarkName )
 {
@@ -2583,9 +2583,9 @@ void LandmarkOrigin( CSaveRestoreData *pSaveData, Vector& output, const char *pL
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOldLevel - 
-//			*pLandmarkName - 
+// Purpose:
+// Input  : *pOldLevel -
+//			*pLandmarkName -
 //-----------------------------------------------------------------------------
 void CSaveRestore::LoadAdjacentEnts( const char *pOldLevel, const char *pLandmarkName )
 {
@@ -2647,7 +2647,7 @@ void CSaveRestore::LoadAdjacentEnts( const char *pOldLevel, const char *pLandmar
 					break;
 				flags |= 1<<index;
 			}
-			
+
 			if ( flags )
 				movedCount = serverGameDLL->CreateEntityTransitionList( pSaveData, flags );
 
@@ -2670,8 +2670,8 @@ void CSaveRestore::LoadAdjacentEnts( const char *pOldLevel, const char *pLandmar
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFile - 
+// Purpose:
+// Input  : *pFile -
 // Output : int
 //-----------------------------------------------------------------------------
 int CSaveRestore::FileSize( FileHandle_t pFile )
@@ -2724,8 +2724,8 @@ void CSaveRestore::DirectoryCount( const char *pPath, int *pResult )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPath - 
+// Purpose:
+// Input  : *pPath -
 //-----------------------------------------------------------------------------
 void CSaveRestore::DirectoryClear( const char *pPath )
 {
@@ -2742,12 +2742,12 @@ void CSaveRestore::ClearSaveDir( void )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CSaveRestore::DoClearSaveDir( bool bIsXSave )
 {
-	// before we clear the save dir, we need to make sure that 
-	// any async-written save games have finished writing, 
+	// before we clear the save dir, we need to make sure that
+	// any async-written save games have finished writing,
 	// since we still may need these temp files to write the save game
 
 	char szName[MAX_OSPATH];
@@ -2908,9 +2908,9 @@ static void SaveGame( const CCommand &args )
 	iAdditionalSeconds -= iAdditionalMinutes * 60;
 
 	char comment[80];
-	GetServerSaveCommentEx( 
-		comment, 
-		sizeof( comment ), 
+	GetServerSaveCommentEx(
+		comment,
+		sizeof( comment ),
 		saverestore->GetMostRecentElapsedMinutes() + iAdditionalMinutes,
 		saverestore->GetMostRecentElapsedSeconds() + iAdditionalSeconds );
 
@@ -2933,7 +2933,7 @@ static void SaveGame( const CCommand &args )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : void Host_Savegame_f
 //-----------------------------------------------------------------------------
 CON_COMMAND_F( save, "Saves current game.", FCVAR_DONTRECORD )
@@ -2965,7 +2965,7 @@ CON_COMMAND_F( save, "Saves current game.", FCVAR_DONTRECORD )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : void Host_Savegame_f
 //-----------------------------------------------------------------------------
 CON_COMMAND_F( xsave, "Saves current game to a 360 storage device.", FCVAR_DONTRECORD )
@@ -2999,7 +2999,7 @@ CON_COMMAND_F( xsave, "Saves current game to a 360 storage device.", FCVAR_DONTR
 //-----------------------------------------------------------------------------
 // Purpose: saves the game, but only includes the state for the current level
 //			useful for bug reporting.
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 CON_COMMAND_F( minisave, "Saves game (for current level only!)", FCVAR_DONTRECORD )
 {
@@ -3015,8 +3015,8 @@ CON_COMMAND_F( minisave, "Saves game (for current level only!)", FCVAR_DONTRECOR
 	iAdditionalSeconds -= iAdditionalMinutes * 60;
 
 	char comment[80];
-	GetServerSaveCommentEx( 
-		comment, 
+	GetServerSaveCommentEx(
+		comment,
 		sizeof( comment ),
 		saverestore->GetMostRecentElapsedMinutes() + iAdditionalMinutes,
 		saverestore->GetMostRecentElapsedSeconds() + iAdditionalSeconds );
@@ -3034,8 +3034,8 @@ static void AutoSave_Silent( bool bDangerous )
 	iAdditionalSeconds -= iAdditionalMinutes * 60;
 
 	char comment[80];
-	GetServerSaveCommentEx( 
-		comment, 
+	GetServerSaveCommentEx(
+		comment,
 		sizeof( comment ),
 		saverestore->GetMostRecentElapsedMinutes() + iAdditionalMinutes,
 		saverestore->GetMostRecentElapsedSeconds() + iAdditionalSeconds );
@@ -3089,7 +3089,7 @@ CON_COMMAND( _autosavedangerous, "AutoSaveDangerous" )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : void Host_AutoSave_f
 //-----------------------------------------------------------------------------
 CON_COMMAND( autosave, "Autosave" )
@@ -3118,7 +3118,7 @@ CON_COMMAND( autosave, "Autosave" )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : void Host_AutoSaveDangerous_f
 //-----------------------------------------------------------------------------
 CON_COMMAND( autosavedangerous, "AutoSaveDangerous" )
@@ -3152,12 +3152,12 @@ CON_COMMAND( autosavedangerous, "AutoSaveDangerous" )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : void Host_AutoSaveSafe_f
 //-----------------------------------------------------------------------------
 CON_COMMAND( autosavedangerousissafe, "" )
 {
-	saverestore->AutoSaveDangerousIsSafe();	
+	saverestore->AutoSaveDangerousIsSafe();
 }
 
 //-----------------------------------------------------------------------------
@@ -3189,7 +3189,7 @@ static void LoadSaveGame( const char *savename )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : void Host_Loadgame_f
 //-----------------------------------------------------------------------------
 void Host_Loadgame_f( const CCommand &args )
@@ -3248,7 +3248,7 @@ CON_COMMAND( save_finish_async, "" )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSaveRestore::Init( void )
 {
@@ -3262,7 +3262,7 @@ void CSaveRestore::Init( void )
 		serverGameClients->GetPlayerLimits( minplayers, dummy, dummy2 );
 	}
 
-	if ( !serverGameClients || 
+	if ( !serverGameClients ||
 		( minplayers == 1 ) )
 	{
 		GetSaveMemory();
@@ -3294,7 +3294,7 @@ void CSaveRestore::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSaveRestore::Shutdown( void )
 {
@@ -3366,4 +3366,3 @@ bool CSaveRestore::IsSaveInProgress()
 {
 	return g_bSaveInProgress;
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -106,7 +106,7 @@ class CStudioRenderContext : public CTier3AppSystem< IStudioRender >
 {
 	typedef CTier3AppSystem< IStudioRender > BaseClass;
 
-	// Methods of IAppSystem 
+	// Methods of IAppSystem
 public:
 	virtual bool Connect( CreateInterfaceFn factory );
 	virtual void Disconnect();
@@ -175,8 +175,8 @@ private:
 	// Creates, destroys static meshes
 	void R_StudioCreateStaticMeshes( studiohdr_t *pStudioHdr, OptimizedModel::FileHeader_t* pVtxHdr,
 		studiohwdata_t *pStudioHWData, int lodID, int *pColorMeshID );
-	void R_StudioCreateSingleMesh( studiohdr_t *pStudioHdr, studioloddata_t *pStudioLodData, 
-		mstudiomesh_t* pMesh, OptimizedModel::MeshHeader_t* pVtxMesh, int numBones, 
+	void R_StudioCreateSingleMesh( studiohdr_t *pStudioHdr, studioloddata_t *pStudioLodData,
+		mstudiomesh_t* pMesh, OptimizedModel::MeshHeader_t* pVtxMesh, int numBones,
 		studiomeshdata_t* pMeshData, int *pColorMeshID );
 	void R_StudioDestroyStaticMeshes( int numStudioMeshes, studiomeshdata_t **ppStudioMeshes );
 
@@ -207,7 +207,7 @@ private:
 		studiohdr_t *pStudioHdr, VertexFormat_t vertexFormat );
 	void R_StudioBuildMeshStrips( studiomeshgroup_t* pMeshGroup,
 		OptimizedModel::StripGroupHeader_t *pStripGroup );
-	template <VertexCompressionType_t T> bool R_AddVertexToMesh( const char *pModelName, bool bNeedsTangentSpace, CMeshBuilder& meshBuilder, 
+	template <VertexCompressionType_t T> bool R_AddVertexToMesh( const char *pModelName, bool bNeedsTangentSpace, CMeshBuilder& meshBuilder,
 		OptimizedModel::Vertex_t* pVertex, mstudiomesh_t* pMesh, const mstudio_meshvertexdata_t *vertData, bool hwSkin );
 
 	// This will generate random flex data that has a specified # of non-zero values

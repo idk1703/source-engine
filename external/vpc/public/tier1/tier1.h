@@ -31,13 +31,13 @@ void DisconnectTier1Libraries();
 //-----------------------------------------------------------------------------
 // Helper empty implementation of an IAppSystem for tier2 libraries
 //-----------------------------------------------------------------------------
-template< class IInterface, int ConVarFlag = 0 > 
+template< class IInterface, int ConVarFlag = 0 >
 class CTier1AppSystem : public CTier0AppSystem< IInterface >
 {
 	typedef CTier0AppSystem< IInterface > BaseClass;
 
 public:
-	virtual bool Connect( CreateInterfaceFn factory ) 
+	virtual bool Connect( CreateInterfaceFn factory )
 	{
 		if ( !BaseClass::Connect( factory ) )
 			return false;
@@ -46,7 +46,7 @@ public:
 		return true;
 	}
 
-	virtual void Disconnect() 
+	virtual void Disconnect()
 	{
 		DisconnectTier1Libraries();
 		BaseClass::Disconnect();
@@ -82,4 +82,3 @@ public:
 
 
 #endif // TIER1_H
-

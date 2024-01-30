@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -66,7 +66,7 @@ public:
 	~CClientState();
 
 public: // IConnectionlessPacketHandler interface:
-		
+
 	bool ProcessConnectionlessPacket(struct netpacket_s *packet);
 
 public: // CBaseClientState overrides:
@@ -110,9 +110,9 @@ public: // CBaseClientState overrides:
 	unsigned char** GetAreaBits_BackwardCompatibility();
 
 public: // IServerMessageHandlers
-	
+
 	PROCESS_NET_MESSAGE( Tick );
-	
+
 	PROCESS_NET_MESSAGE( StringCmd );
 	PROCESS_SVC_MESSAGE( ServerInfo );
 	PROCESS_SVC_MESSAGE( ClassInfo );
@@ -145,7 +145,7 @@ public:
 	int			last_command_ack;	// last command sequence number acknowledged by server
 	int			command_ack;		// current command sequence acknowledged by server
 	int			m_nSoundSequence;	// current processed reliable sound sequence number
-	
+
 	//
 	// information that is static for the entire time connected to a server
 	//
@@ -155,11 +155,11 @@ public:
 #endif
 
 	MD5Value_t	serverMD5;              // To determine if client is playing hacked .map. (entities lump is skipped)
-	
+
 	unsigned char	m_chAreaBits[MAX_AREA_STATE_BYTES];
 	unsigned char	m_chAreaPortalBits[MAX_AREA_PORTAL_STATE_BYTES];
 	bool			m_bAreaBitsValid; // Have the area bits been set for this level yet?
-	
+
 // refresh related state
 	QAngle		viewangles;
 	CUtlVector< AddAngle >	addangle;
@@ -184,8 +184,8 @@ public:
 	// If 'insimulation', returns the time (in seconds) at the client's current tick.
 	// Otherwise, returns the exact client clock.
 	float				GetTime() const;
-	
-	
+
+
 	bool				IsPaused() const;
 	float				GetPausedExpireTime() const { return m_flPausedExpireTime; }
 
@@ -193,7 +193,7 @@ public:
 	void				SetFrameTime( float dt ) { m_frameTime = dt; }
 
 	float				GetClientInterpAmount();		// Formerly cl_interp, now based on cl_interp_ratio and cl_updaterate.
-		
+
 	void				Clear( void );
 
 	void				DumpPrecacheStats(  const char * name );
@@ -227,8 +227,8 @@ public:
 public:
 
 
-	INetworkStringTable *m_pModelPrecacheTable;	
-	INetworkStringTable *m_pGenericPrecacheTable;	
+	INetworkStringTable *m_pModelPrecacheTable;
+	INetworkStringTable *m_pGenericPrecacheTable;
 	INetworkStringTable *m_pSoundPrecacheTable;
 	INetworkStringTable *m_pDecalPrecacheTable;
 	INetworkStringTable *m_pInstanceBaselineTable;
@@ -237,7 +237,7 @@ public:
 	INetworkStringTable *m_pServerStartupTable;
 	INetworkStringTable *m_pDownloadableFileTable;
 	INetworkStringTable *m_pDynamicModelsTable;
-	
+
 	CPrecacheItem		model_precache[ MAX_MODELS ];
 	CPrecacheItem		generic_precache[ MAX_GENERIC ];
 	CPrecacheItem		sound_precache[ MAX_SOUNDS ];
@@ -261,11 +261,11 @@ private:
 	void ProcessSoundsWithProtoVersion( SVC_Sounds *msg, CUtlVector< SoundInfo_t > &sounds, int nProtoVersion );
 
 private:
-	
+
 	// Note: This is only here for backwards compatibility. If it is set to something other than NULL,
 	// then we'll copy its contents into m_chAreaBits in UpdateAreaBits_BackwardsCompatible.
 	byte		*m_pAreaBits;
-	
+
 	// Set to false when we first connect to a server and true later on before we
 	// respond to a new whitelist.
 	bool		m_bMarkedCRCsUnverified;

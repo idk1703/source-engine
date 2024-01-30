@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2006, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: VPC
 //
@@ -129,7 +129,7 @@ bool CProjectGenerator_Xbox360_2010::WriteFile( CProjectFile *pFile, const char 
 
 		m_XMLWriter.PopNode( true );
 	}
-	
+
 	return true;
 }
 
@@ -156,7 +156,7 @@ bool CProjectGenerator_Xbox360_2010::WriteFolder( CProjectFolder *pFolder, const
 	{
 		m_XMLWriter.PopNode( true );
 	}
-	
+
 	return true;
 }
 
@@ -247,7 +247,7 @@ bool CProjectGenerator_Xbox360_2010::WritePrimaryXML( const char *pOutputFilenam
 
 	m_XMLWriter.PushNode( "ItemGroup", "Label=\"ProjectConfigurations\"" );
 	CUtlVector< CUtlString > configurationNames;
-	m_pVCProjGenerator->GetAllConfigurationNames( configurationNames ); 
+	m_pVCProjGenerator->GetAllConfigurationNames( configurationNames );
 	for ( int i = 0; i < configurationNames.Count(); i++ )
 	{
 		m_XMLWriter.PushNode( "ProjectConfiguration", CFmtStr( "Include=\"%s|Xbox 360\"", configurationNames[i].Get() ) );
@@ -285,7 +285,7 @@ bool CProjectGenerator_Xbox360_2010::WritePrimaryXML( const char *pOutputFilenam
 		m_XMLWriter.Write( "<Import Project=\"$(UserRootDir)\\Microsoft.Cpp.$(Platform).user.props\" Condition=\"exists('$(UserRootDir)\\Microsoft.Cpp.$(Platform).user.props')\" Label=\"LocalAppDataPlatform\" />" );
 		m_XMLWriter.PopNode( true );
 	}
-	
+
 	m_XMLWriter.Write( "<PropertyGroup Label=\"UserMacros\" />" );
 
 	m_XMLWriter.PushNode( "PropertyGroup" );
@@ -346,7 +346,7 @@ bool CProjectGenerator_Xbox360_2010::WritePrimaryXML( const char *pOutputFilenam
 		if ( !WriteFolder( m_pVCProjGenerator->GetRootFolder(), s_TypeKeyNames[i], 0 ) )
 			return false;
 	}
-	
+
 	m_XMLWriter.Write( "<Import Project=\"$(VCTargetsPath)\\Microsoft.Cpp.targets\" />" );
 	m_XMLWriter.PushNode( "ImportGroup", "Label=\"ExtensionTargets\"" );
 	m_XMLWriter.PopNode( true );
@@ -409,7 +409,7 @@ bool CProjectGenerator_Xbox360_2010::WriteFileToSecondaryXML( CProjectFile *pFil
 	{
 		m_XMLFilterWriter.Write( CFmtStr( "<%s Include=\"%s\" />", pKeyName, pFile->m_Name.Get() ) );
 	}
-	
+
 	return true;
 }
 
@@ -512,9 +512,9 @@ bool CProjectGenerator_Xbox360_2010::WriteTool( const char *pToolName, const CPr
 	{
 		m_XMLWriter.PopNode( true );
 	}
-	
+
 	return true;
-}	
+}
 
 bool CProjectGenerator_Xbox360_2010::WriteProperty( const PropertyState_t *pPropertyState, bool bEmitConfiguration, const char *pConfigName, const char *pOutputName, const char *pOutputValue )
 {

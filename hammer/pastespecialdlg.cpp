@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -89,7 +89,7 @@ BOOL CPasteSpecialDlg::OnInitDialog()
 {
 	BOOL bEnable = m_bAddPrefix ? TRUE : FALSE;
 	GetDlgItem( IDC_PASTE_SPECIAL_PREFIX_TEXT )->EnableWindow( bEnable );
-	
+
 	return CDialog::OnInitDialog();
 }
 
@@ -149,17 +149,17 @@ void CPasteSpecialDlg::GetOffset(int iAxis, int iEditCtrl)
 	pWnd->SetWindowText(strValue);
 }
 
-void CPasteSpecialDlg::OnGetoffsetx() 
+void CPasteSpecialDlg::OnGetoffsetx()
 {
 	GetOffset(0, IDC_OFFSETX);
 }
 
-void CPasteSpecialDlg::OnGetoffsety() 
+void CPasteSpecialDlg::OnGetoffsety()
 {
 	GetOffset(1, IDC_OFFSETY);
 }
 
-void CPasteSpecialDlg::OnGetoffsetz() 
+void CPasteSpecialDlg::OnGetoffsetz()
 {
 	GetOffset(2, IDC_OFFSETZ);
 }

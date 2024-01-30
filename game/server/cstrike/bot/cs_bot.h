@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -8,7 +8,7 @@
 //
 // Author: Michael S. Booth (mike@turtlerockstudios.com), 2003
 //
-// NOTE: The CS Bot code uses Doxygen-style comments. If you run Doxygen over this code, it will 
+// NOTE: The CS Bot code uses Doxygen-style comments. If you run Doxygen over this code, it will
 // auto-generate documentation.  Visit www.doxygen.org to download the system for free.
 //
 
@@ -45,7 +45,7 @@ enum InventorySlotType
 
 //--------------------------------------------------------------------------------------------------------------
 /**
- * The definition of a bot's behavior state.  One or more finite state machines 
+ * The definition of a bot's behavior state.  One or more finite state machines
  * using these states implement a bot's behaviors.
  */
 class BotState
@@ -102,7 +102,7 @@ public:
 	virtual void OnUpdate( CCSBot *bot );
 	virtual void OnExit( CCSBot *bot );
 	virtual const char *GetName( void ) const		{ return "Attack"; }
-	
+
 	void SetCrouchAndHold( bool crouch )			{ m_crouchAndHold = crouch; }
 
 protected:
@@ -440,7 +440,7 @@ public:
 	float GetCombatRange( void ) const;
 	bool IsRogue( void ) const;									///< return true if we dont listen to teammates or pursue scenario goals
 	void SetRogue( bool rogue );
-	bool IsHurrying( void ) const;								///< return true if we are in a hurry 
+	bool IsHurrying( void ) const;								///< return true if we are in a hurry
 	void Hurry( float duration );								///< force bot to hurry
 	bool IsSafe( void ) const;									///< return true if we are in a safe region
 	bool IsWellPastSafe( void ) const;							///< return true if it is well past the early, "safe", part of the round
@@ -449,7 +449,7 @@ public:
 	float GetSafeTime( void ) const;							///< return what we think the total "safe time" for this map is
 	virtual void Blind( float holdTime, float fadeTime, float startingAlpha = 255 );	// player blinded by a flashbang
 	bool IsUnhealthy( void ) const;								///< returns true if bot is low on health
-	
+
 	bool IsAlert( void ) const;									///< return true if bot is in heightened "alert" mode
 	void BecomeAlert( void );									///< bot becomes "alert" for immediately nearby enemies
 
@@ -670,7 +670,7 @@ public:
 	bool CanSeeSniper( void ) const;							///< return true if we can see an enemy sniper
 	bool HasSeenSniperRecently( void ) const;					///< return true if we have seen a sniper recently
 
-	float GetTravelDistanceToPlayer( CCSPlayer *player ) const;	///< return shortest path travel distance to this player	
+	float GetTravelDistanceToPlayer( CCSPlayer *player ) const;	///< return shortest path travel distance to this player
 	bool DidPlayerJustFireWeapon( const CCSPlayer *player ) const;	///< return true if the given player just fired their weapon
 
 	//- navigation --------------------------------------------------------------------------------------------------
@@ -733,7 +733,7 @@ public:
 
 	// BOTPORT: EVIL VILE HACK - why is EyePosition() not const?!?!?
 	const Vector &EyePositionConst( void ) const;
-	
+
 	void SetLookAngles( float yaw, float pitch );					///< set our desired look angles
 	void UpdateLookAngles( void );									///< move actual view angles towards desired ones
 	void UpdateLookAround( bool updateNow = false );				///< update "looking around" mechanism
@@ -766,7 +766,7 @@ public:
 	bool IsVisible( const Vector &pos, bool testFOV = false, const CBaseEntity *ignore = NULL ) const;	///< return true if we can see the point
 	bool IsVisible( CCSPlayer *player, bool testFOV = false, unsigned char *visParts = NULL ) const;	///< return true if we can see any part of the player
 
-	bool IsNoticable( const CCSPlayer *player, unsigned char visibleParts ) const;	///< return true if we "notice" given player 
+	bool IsNoticable( const CCSPlayer *player, unsigned char visibleParts ) const;	///< return true if we "notice" given player
 
 	bool IsEnemyPartVisible( VisiblePartType part ) const;			///< if enemy is visible, return the part we see for our current enemy
 	const Vector &GetPartPosition( CCSPlayer *player, VisiblePartType part ) const;	///< return world space position of given part on player
@@ -947,7 +947,7 @@ private:
 	UseEntityState			m_useEntityState;
 	OpenDoorState			m_openDoorState;
 
-	/// @todo Allow multiple simultaneous state machines (look around, etc)	
+	/// @todo Allow multiple simultaneous state machines (look around, etc)
 	void SetState( BotState *state );								///< set the current behavior state
 	BotState *m_state;												///< current behavior state
 	float m_stateTimestamp;											///< time state was entered
@@ -1010,7 +1010,7 @@ private:
 	enum LadderNavState
 	{
 		APPROACH_ASCENDING_LADDER,									///< prepare to scale a ladder
-		APPROACH_DESCENDING_LADDER,									///< prepare to go down ladder 
+		APPROACH_DESCENDING_LADDER,									///< prepare to go down ladder
 		FACE_ASCENDING_LADDER,
 		FACE_DESCENDING_LADDER,
 		MOUNT_ASCENDING_LADDER,										///< move toward ladder until "on" it
@@ -1210,7 +1210,7 @@ private:
 
 	bool m_isEnemySniperVisible;									///< do we see an enemy sniper right now
 	CountdownTimer m_sawEnemySniperTimer;							///< tracking time since saw enemy sniper
-	
+
 	//- reaction time system -----------------------------------------------------------------------------------------
 	enum { MAX_ENEMY_QUEUE = 20 };
 	struct ReactionState
@@ -1236,7 +1236,7 @@ private:
 	CountdownTimer m_wiggleTimer;
 	CountdownTimer m_stuckJumpTimer;								///< time for next jump when stuck
 
-	enum { MAX_VEL_SAMPLES = 10 };	
+	enum { MAX_VEL_SAMPLES = 10 };
 	float m_avgVel[ MAX_VEL_SAMPLES ];
 	int m_avgVelIndex;
 	int m_avgVelCount;
@@ -1325,18 +1325,18 @@ inline CWeaponCSBase *CCSBot::GetActiveCSWeapon( void ) const
 
 
 inline float CCSBot::GetCombatRange( void ) const
-{ 
-	return m_combatRange; 
+{
+	return m_combatRange;
 }
 
 inline void CCSBot::SetRogue( bool rogue )
-{ 
+{
 	m_isRogue = rogue;
 }
 
 inline void CCSBot::Hurry( float duration )
-{ 
-	m_hurryTimer.Start( duration ); 
+{
+	m_hurryTimer.Start( duration );
 }
 
 inline float CCSBot::GetSafeTime( void ) const
@@ -1371,12 +1371,12 @@ inline void CCSBot::Sneak( float duration )
 }
 
 inline bool CCSBot::IsFollowing( void ) const
-{ 
+{
 	return m_isFollowing;
 }
 
 inline CCSPlayer *CCSBot::GetFollowLeader( void ) const
-{ 
+{
 	return m_leader;
 }
 
@@ -1386,17 +1386,17 @@ inline float CCSBot::GetFollowDuration( void ) const
 }
 
 inline bool CCSBot::CanAutoFollow( void ) const
-{ 
+{
 	return (gpGlobals->curtime > m_allowAutoFollowTime);
 }
 
 inline void CCSBot::AimAtEnemy( void )
-{ 
+{
 	m_isAimingAtEnemy = true;
 }
 
 inline void CCSBot::StopAiming( void )
-{ 
+{
 	m_isAimingAtEnemy = false;
 }
 
@@ -1475,7 +1475,7 @@ inline float CCSBot::GetNoiseRange( void ) const
 }
 
 inline PriorityType CCSBot::GetNoisePriority( void ) const
-{ 
+{
 	return m_noisePriority;
 }
 
@@ -1490,7 +1490,7 @@ inline CCSPlayer *CCSBot::GetBotEnemy( void ) const
 }
 
 inline int CCSBot::GetNearbyEnemyCount( void ) const
-{ 
+{
 	return MIN( GetEnemiesRemaining(), m_nearbyEnemyCount );
 }
 
@@ -1554,12 +1554,12 @@ inline const Vector &CCSBot::GetLastKnownEnemyPosition( void ) const
 	return m_lastEnemyPosition;
 }
 
-inline bool CCSBot::IsEnemyVisible( void ) const			
+inline bool CCSBot::IsEnemyVisible( void ) const
 {
 	return m_isEnemyVisible;
 }
 
-inline float CCSBot::GetEnemyDeathTimestamp( void ) const	
+inline float CCSBot::GetEnemyDeathTimestamp( void ) const
 {
 	return m_enemyDeathTimestamp;
 }
@@ -1595,19 +1595,19 @@ inline bool CCSBot::HasPath( void ) const
 	return (m_pathLength) ? true : false;
 }
 
-inline void CCSBot::DestroyPath( void )		
+inline void CCSBot::DestroyPath( void )
 {
 	m_isStopping = false;
 	m_pathLength = 0;
 	m_pathLadder = NULL;
 }
 
-inline CNavArea *CCSBot::GetLastKnownArea( void ) const		
+inline CNavArea *CCSBot::GetLastKnownArea( void ) const
 {
 	return m_lastKnownArea;
 }
 
-inline const Vector &CCSBot::GetPathEndpoint( void ) const		
+inline const Vector &CCSBot::GetPathEndpoint( void ) const
 {
 	return m_path[ m_pathLength-1 ].pos;
 }
@@ -1617,12 +1617,12 @@ inline const Vector &CCSBot::GetPathPosition( int index ) const
 	return m_path[ index ].pos;
 }
 
-inline bool CCSBot::IsUsingLadder( void ) const	
+inline bool CCSBot::IsUsingLadder( void ) const
 {
 	return (m_pathLadder) ? true : false;
 }
 
-inline void CCSBot::SetGoalEntity( CBaseEntity *entity )	
+inline void CCSBot::SetGoalEntity( CBaseEntity *entity )
 {
 	m_goalEntity = entity;
 }
@@ -1638,56 +1638,56 @@ inline void CCSBot::ForceRun( float duration )
 	m_mustRunTimer.Start( duration );
 }
 
-inline void CCSBot::Wait( float duration )			
+inline void CCSBot::Wait( float duration )
 {
 	m_waitTimer.Start( duration );
 }
 
-inline bool CCSBot::IsWaiting( void ) const		
+inline bool CCSBot::IsWaiting( void ) const
 {
 	return !m_waitTimer.IsElapsed();
 }
 
-inline void CCSBot::StopWaiting( void )			
+inline void CCSBot::StopWaiting( void )
 {
 	m_waitTimer.Invalidate();
 }
 
-inline bool CCSBot::HasVisitedEnemySpawn( void ) const		
+inline bool CCSBot::HasVisitedEnemySpawn( void ) const
 {
 	return m_hasVisitedEnemySpawn;
 }
 
-inline const Vector &CCSBot::EyePositionConst( void ) const		
+inline const Vector &CCSBot::EyePositionConst( void ) const
 {
 	return m_eyePosition;
 }
-	
+
 inline void CCSBot::SetLookAngles( float yaw, float pitch )
 {
 	m_lookYaw = yaw;
 	m_lookPitch = pitch;
 }
 
-inline void CCSBot::SetForwardAngle( float angle ) 
+inline void CCSBot::SetForwardAngle( float angle )
 {
 	m_forwardAngle = angle;
 }
 
-inline void CCSBot::SetLookAheadAngle( float angle ) 
+inline void CCSBot::SetLookAheadAngle( float angle )
 {
 	m_lookAheadAngle = angle;
 }
 
 inline void CCSBot::ClearLookAt( void )
-{ 
+{
 	//PrintIfWatched( "ClearLookAt()\n" );
-	m_lookAtSpotState = NOT_LOOKING_AT_SPOT; 
-	m_lookAtDesc = NULL; 
+	m_lookAtSpotState = NOT_LOOKING_AT_SPOT;
+	m_lookAtDesc = NULL;
 }
 
 inline bool CCSBot::IsLookingAtSpot( PriorityType pri ) const
-{ 
+{
 	if (m_lookAtSpotState != NOT_LOOKING_AT_SPOT && m_lookAtSpotPriority >= pri)
 		return true;
 
@@ -1716,7 +1716,7 @@ inline bool CCSBot::HasLookAtTarget( void ) const
 }
 
 inline bool CCSBot::IsEnemyPartVisible( VisiblePartType part ) const
-{ 
+{
 	VPROF_BUDGET( "CCSBot::IsEnemyPartVisible", VPROF_BUDGETGROUP_NPCS );
 
 	if (!IsEnemyVisible())
@@ -1743,7 +1743,7 @@ inline bool CCSBot::IsSignificantlyCloser( const CCSPlayer *testPlayer, const CC
 	return false;
 }
 
-inline void CCSBot::ClearApproachPoints( void )	
+inline void CCSBot::ClearApproachPoints( void )
 {
 	m_approachPointCount = 0;
 }
@@ -1753,12 +1753,12 @@ inline const CNavArea *CCSBot::GetInitialEncounterArea( void ) const
 	return m_initialEncounterArea;
 }
 
-inline void CCSBot::SetInitialEncounterArea( const CNavArea *area )		
+inline void CCSBot::SetInitialEncounterArea( const CNavArea *area )
 {
 	m_initialEncounterArea = area;
 }
 
-inline bool CCSBot::IsThrowingGrenade( void ) const		
+inline bool CCSBot::IsThrowingGrenade( void ) const
 {
 	return m_grenadeTossState != NOT_THROWING;
 }
@@ -1785,17 +1785,17 @@ inline CCSBot::ZoomType CCSBot::GetZoomLevel( void )
 	return HIGH_ZOOM;
 }
 
-inline bool CCSBot::IsWaitingForZoom( void ) const		
+inline bool CCSBot::IsWaitingForZoom( void ) const
 {
 	return !m_zoomTimer.IsElapsed();
 }
 
-inline int CCSBot::GetHostageEscortCount( void ) const		
+inline int CCSBot::GetHostageEscortCount( void ) const
 {
 	return m_hostageEscortCount;
 }
 
-inline void CCSBot::IncreaseHostageEscortCount( void )		
+inline void CCSBot::IncreaseHostageEscortCount( void )
 {
 	++m_hostageEscortCount;
 }
@@ -1809,7 +1809,7 @@ inline void CCSBot::ResetWaitForHostagePatience( void )
 
 inline bool CCSBot::IsUsingVoice() const
 {
-	return m_voiceEndTimestamp > gpGlobals->curtime; 
+	return m_voiceEndTimestamp > gpGlobals->curtime;
 }
 
 inline bool CCSBot::IsOpeningDoor( void ) const
@@ -1934,7 +1934,7 @@ public:
 				// these areas are very slow to move through
 				float penalty = (m_route == FASTEST_ROUTE) ? 20.0f : 5.0f;
 
-				// avoid crouch areas if we are rescuing hostages 
+				// avoid crouch areas if we are rescuing hostages
 				if ((area->GetAttributes() & NAV_MESH_CROUCH) && m_bot->GetHostageEscortCount())
 				{
 					penalty *= 3.0f;
@@ -2001,4 +2001,3 @@ extern const HidingSpot *FindInitialEncounterSpot( CBaseEntity *me, const Vector
 
 
 #endif	// _CS_BOT_H_
-

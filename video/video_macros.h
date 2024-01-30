@@ -26,7 +26,7 @@
 #endif
 
 #define ZeroVar( var )				V_memset( &var, nullchar, sizeof( var ) )
-#define ZeroVarPtr( pVar )			V_memset( pVar, nullchar, sizeof( *pVar) ) 
+#define ZeroVarPtr( pVar )			V_memset( pVar, nullchar, sizeof( *pVar) )
 
 #define SAFE_DELETE( var )			if ( var != nullptr ) { delete var; var = nullptr; }
 #define SAFE_DELETE_ARRAY( var )	if ( var != nullptr ) { delete[] var; var = nullptr; }
@@ -45,7 +45,7 @@
 
 // AssertExit macros .. in release builds, or when Assert is disabled, they exit (w/ opt return value)
 //                      if the assert condition is false
-// 
+//
 
 #ifdef DBGFLAG_ASSERT
 
@@ -54,7 +54,7 @@
 	#define AssertExitF( _exp )				Assert( _exp )
 	#define AssertExitN( _exp )				Assert( _exp )
 	#define AssertExitFunc( _exp, _func )	Assert( _exp )
-	
+
 	#define AssertPtrExit( _exp )			Assert( ( _exp ) != nullptr )
 	#define AssertPtrExitV( _exp , _rval )	Assert( ( _exp ) != nullptr )
 	#define AssertPtrExitF( _exp )			Assert( ( _exp ) != nullptr )
@@ -73,7 +73,7 @@
 	#define AssertExitF( _exp )				if ( !( _exp ) ) return false
 	#define AssertExitN( _exp )				if ( !( _exp ) ) return nullptr
 	#define AssertExitFunc( _exp, _func )	if ( !( _exp ) ) { _func; return; }
-	
+
 	#define AssertPtrExit( _exp )			if ( ( _exp ) == nullptr ) return
 	#define AssertPtrExitV( _exp , _rval )	if ( ( _exp ) == nullptr ) return _rval
 	#define AssertPtrExitF( _exp )			if ( ( _exp ) == nullptr  ) return false

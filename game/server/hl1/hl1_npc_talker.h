@@ -42,7 +42,7 @@
 class CHL1NPCTalker : public CNPCSimpleTalker
 {
 	DECLARE_CLASS( CHL1NPCTalker, CNPCSimpleTalker );
-	
+
 public:
 	CHL1NPCTalker( void )
 	{
@@ -69,7 +69,7 @@ public:
 	void			StopFollowing( void );
 	int				PlayScriptedSentence( const char *pszSentence, float delay, float volume, soundlevel_t soundlevel, bool bConcurrent, CBaseEntity *pListener );
 
-	
+
 	void			Touch( CBaseEntity *pOther );
 
 	float			PickLookTarget( bool bExcludePlayers = false, float minTime = 1.5, float maxTime = 2.5 );
@@ -91,7 +91,7 @@ private:
 	virtual void	DeclineFollowing( void ) {}
 
 	virtual int		SelectDeadSchedule( void );
-	
+
 public:
 
 	bool	m_bInBarnacleMouth;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -54,7 +54,7 @@ BEGIN_NETWORK_TABLE( CTFPipebombLauncher, DT_WeaponPipebombLauncher )
 	RecvPropDataTable( "PipebombLauncherLocalData", 0, 0, &REFERENCE_RECV_TABLE( DT_PipebombLauncherLocalData ) ),
 #else
 	SendPropDataTable( "PipebombLauncherLocalData", 0, &REFERENCE_SEND_TABLE( DT_PipebombLauncherLocalData ), SendProxy_SendLocalWeaponDataTable ),
-#endif	
+#endif
 END_NETWORK_TABLE()
 
 #ifdef CLIENT_DLL
@@ -78,8 +78,8 @@ END_DATADESC()
 //
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 CTFPipebombLauncher::CTFPipebombLauncher()
 {
@@ -94,15 +94,15 @@ CTFPipebombLauncher::CTFPipebombLauncher()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 CTFPipebombLauncher::~CTFPipebombLauncher()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPipebombLauncher::Spawn( void )
 {
@@ -131,7 +131,7 @@ bool CTFPipebombLauncher::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPipebombLauncher::WeaponReset( void )
 {
@@ -145,7 +145,7 @@ void CTFPipebombLauncher::WeaponReset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPipebombLauncher::ItemPostFrame( void )
 {
@@ -174,7 +174,7 @@ void CTFPipebombLauncher::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPipebombLauncher::PrimaryAttack( void )
 {
@@ -226,7 +226,7 @@ void CTFPipebombLauncher::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #ifdef CLIENT_DLL
 void CTFPipebombLauncher::BombHighlightThink( void )
@@ -240,7 +240,7 @@ void CTFPipebombLauncher::BombHighlightThink( void )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPipebombLauncher::WeaponIdle( void )
 {
@@ -267,7 +267,7 @@ void CTFPipebombLauncher::WeaponIdle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPipebombLauncher::LaunchGrenade( void )
 {
@@ -468,7 +468,7 @@ void CTFPipebombLauncher::SecondaryAttack( void )
 //
 #ifdef GAME_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPipebombLauncher::UpdateOnRemove(void)
 {
@@ -480,7 +480,7 @@ void CTFPipebombLauncher::UpdateOnRemove(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPipebombLauncher::ApplyPostHitEffects( const CTakeDamageInfo &inputInfo, CTFPlayer *pPlayer )
 {
@@ -566,7 +566,7 @@ bool CTFPipebombLauncher::DetonateRemotePipebombs( bool bFizzle )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFPipebombLauncher::ModifyPipebombsInView( int iEffect )
 {
@@ -632,7 +632,7 @@ bool CTFPipebombLauncher::ModifyPipebombsInView( int iEffect )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFPipebombLauncher::Reload( void )
 {

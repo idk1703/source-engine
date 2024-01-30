@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,7 +29,7 @@ public:
 	DECLARE_DATADESC();
 
 	virtual void Spawn( void );
-	
+
 	bool TestCollision( const Ray_t &ray, unsigned int mask, trace_t& trace );
 	/*
 	bool CreateVPhysics( void );

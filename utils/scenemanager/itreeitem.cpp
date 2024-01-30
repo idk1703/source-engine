@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,9 +16,9 @@
 #include "workspace.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *tree - 
-//			*parent - 
+// Purpose:
+// Input  : *tree -
+//			*parent -
 // Output : mxTreeViewItem
 //-----------------------------------------------------------------------------
 mxTreeViewItem *ITreeItem::FindItem( mxTreeView *tree, mxTreeViewItem *parent, bool recurse )
@@ -69,7 +69,7 @@ ITreeItem *ITreeItem::GetParentItem()
 	{
 		return GetScene()->GetOwnerProject();
 	}
-	
+
 	if ( GetProject() )
 	{
 		return GetProject()->GetOwnerWorkspace();

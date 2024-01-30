@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -68,7 +68,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CPhonemeTag : public CBasePhonemeTag
 {
@@ -101,7 +101,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CWordTag
 {
@@ -139,7 +139,7 @@ private:
 
 // A sentence can be closed captioned
 // The default case is the entire sentence shown at start time
-// 
+//
 // "<persist:2.0><clr:255,0,0,0>The <I>default<I> case"
 // "<sameline>is the <U>entire<U> sentence shown at <B>start time<B>"
 

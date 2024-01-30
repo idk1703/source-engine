@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -17,7 +17,7 @@
 extern IntroData_t *g_pIntroData;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ScriptIntro : public C_BaseEntity
 {
@@ -71,8 +71,8 @@ IMPLEMENT_CLIENTCLASS_DT( C_ScriptIntro, DT_ScriptIntro, CScriptIntro )
 	RecvPropFloat( RECVINFO( m_flNextBlendTime ) ),
 	RecvPropFloat( RECVINFO( m_flBlendStartTime ) ),
 	RecvPropBool( RECVINFO( m_bActive ) ),
-	
-	// Fov & fov blends 
+
+	// Fov & fov blends
 	RecvPropInt( RECVINFO( m_iFOV ) ),
 	RecvPropInt( RECVINFO( m_iNextFOV ) ),
 	RecvPropInt( RECVINFO( m_iStartFOV ) ),
@@ -88,7 +88,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_ScriptIntro, DT_ScriptIntro, CScriptIntro )
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ScriptIntro::C_ScriptIntro( void )
 {
@@ -119,7 +119,7 @@ C_ScriptIntro::C_ScriptIntro( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ScriptIntro::~C_ScriptIntro( void )
 {
@@ -127,7 +127,7 @@ C_ScriptIntro::~C_ScriptIntro( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ScriptIntro::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -231,7 +231,7 @@ void C_ScriptIntro::PostDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ScriptIntro::ClientThink( void )
 {
@@ -244,7 +244,7 @@ void C_ScriptIntro::ClientThink( void )
 	}
 
 	CalculateFOV();
-	CalculateAlpha();	
+	CalculateAlpha();
 
 	// Calculate the blend levels of each pass
 	float flPerc = 1.0;
@@ -295,7 +295,7 @@ void C_ScriptIntro::ClientThink( void )
 extern float ScriptInfo_CalculateFOV( float flFOVBlendStartTime, float flNextFOVBlendTime, int nFOV, int nNextFOV, bool bSplineRamp );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ScriptIntro::CalculateFOV( void )
 {
@@ -308,7 +308,7 @@ void C_ScriptIntro::CalculateFOV( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ScriptIntro::CalculateAlpha( void )
 {
@@ -324,4 +324,3 @@ void C_ScriptIntro::CalculateAlpha( void )
 
 	m_IntroData.m_flCurrentFadeColor[3] = flNewAlpha;
 }
-

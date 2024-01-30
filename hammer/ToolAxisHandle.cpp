@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -116,7 +116,7 @@ bool CToolAxisHandle::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector
 
 	vecPos[m_nPointIndex][pView->axHorz] = vecWorld[pView->axHorz];
 	vecPos[m_nPointIndex][pView->axVert] = vecWorld[pView->axVert];
-	
+
 	m_pAxis->UpdateEndPoint(vecPos[m_nPointIndex], m_nPointIndex);
 
 	int nOtherIndex = (m_nPointIndex == 0);
@@ -145,5 +145,3 @@ void CToolAxisHandle::RenderTool2D(CRender2D *pRender)
 	m_pAxis->Render2D(pRender);
 	m_pAxis->SetSelectionState(eState);
 }
-
-

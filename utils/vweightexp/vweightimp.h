@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -72,7 +72,7 @@ private:
 
 	IPhyContextExport		*m_mcExport;
 	IPhysiqueExport			*m_phyExport;
-    Modifier				*m_phyMod;
+	Modifier				*m_phyMod;
 	Modifier				*m_bonesProMod;
 	BonesPro_WeightArray	*m_wa;
 
@@ -120,11 +120,9 @@ public:
 	VWeightImportClass		*m_phec;
 	IPhyContextExport		*m_mcExport;
 	IPhysiqueExport			*m_phyExport;
-    Modifier				*m_phyMod;
+	Modifier				*m_phyMod;
 	Modifier				*m_bonesProMod;
 	BonesPro_WeightArray	*m_wa;
 private:
 	void					CollectWeights( int iVertex, MaxVertWeight *pweight );
 };
-
-

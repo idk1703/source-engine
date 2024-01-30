@@ -208,7 +208,7 @@ private:
 };
 #endif
 
-class CRobotDispenser : 
+class CRobotDispenser :
 #ifdef GAME_DLL
 	public CObjectDispenser
 #else
@@ -256,7 +256,7 @@ private:
 	Vector m_vecLean;
 	Vector m_vecImpulse;
 	CTFRobotDestruction_Robot *m_pOuter;
-	
+
 	struct PoseParams_t
 	{
 		int m_nMoveX;
@@ -306,7 +306,7 @@ public:
 	virtual int OnTakeDamage( const CTakeDamageInfo &info ) OVERRIDE;
 	virtual void TraceAttack( const CTakeDamageInfo &inputInfo, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator ) OVERRIDE;
 	virtual void UpdateAnimsThink( void );
-	
+
 	void RepairSelfThink( void );
 	bool GetShieldedState( void ) const { return m_bShielded; }
 	CPathTrack *GetNextPath( void ) const { return m_hNextPath; }

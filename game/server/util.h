@@ -153,8 +153,8 @@ public:
 //
 // Conversion among the three types of "entity", including identity-conversions.
 //
-inline int	  ENTINDEX( edict_t *pEdict)			
-{ 
+inline int	  ENTINDEX( edict_t *pEdict)
+{
 	int nResult = pEdict ? pEdict->m_EdictIndex : 0;
 	Assert( nResult == engine->IndexOfEdict(pEdict) );
 	return nResult;
@@ -162,20 +162,20 @@ inline int	  ENTINDEX( edict_t *pEdict)
 
 int	  ENTINDEX( CBaseEntity *pEnt );
 
-inline edict_t* INDEXENT( int iEdictNum )		
-{ 
-	return engine->PEntityOfEntIndex(iEdictNum); 
+inline edict_t* INDEXENT( int iEdictNum )
+{
+	return engine->PEntityOfEntIndex(iEdictNum);
 }
 
 // Testing the three types of "entity" for nullity
 inline bool FNullEnt(const edict_t* pent)
-{ 
-	return pent == NULL || ENTINDEX((edict_t*)pent) == 0; 
+{
+	return pent == NULL || ENTINDEX((edict_t*)pent) == 0;
 }
 
 // Dot products for view cone checking
 #define VIEW_FIELD_FULL		(float)-1.0 // +-180 degrees
-#define	VIEW_FIELD_WIDE		(float)-0.7 // +-135 degrees 0.1 // +-85 degrees, used for full FOV checks 
+#define	VIEW_FIELD_WIDE		(float)-0.7 // +-135 degrees 0.1 // +-85 degrees, used for full FOV checks
 #define	VIEW_FIELD_NARROW	(float)0.7 // +-45 degrees, more narrow check used to set up ranged attacks
 #define	VIEW_FIELD_ULTRA_NARROW	(float)0.9 // +-25 degrees, more narrow check used to set up ranged attacks
 
@@ -194,7 +194,7 @@ inline bool FStrEq(const char *sz1, const char *sz2)
 // UNDONE: Remove/alter MAKE_STRING so we can do this?
 inline bool FStrEq( string_t str1, string_t str2 )
 {
-	// now that these are pooled, we can compare them with 
+	// now that these are pooled, we can compare them with
 	// integer equality
 	return str1 == str2;
 }
@@ -261,10 +261,10 @@ public:
 	// This gets called	by the enumeration methods with each element
 	// that passes the test.
 	virtual IterationRetval_t EnumElement( IHandleEntity *pHandleEntity );
-	
+
 	int GetCount() { return m_count; }
 	bool AddToList( CBaseEntity *pEntity );
-	
+
 private:
 	CBaseEntity		**m_pList;
 	int				m_listMax;
@@ -390,7 +390,7 @@ void UTIL_PrecacheOther( const char *szClassname, const char *modelName = NULL )
 
 // prints a message to each client
 void			UTIL_ClientPrintAll( int msg_dest, const char *msg_name, const char *param1 = NULL, const char *param2 = NULL, const char *param3 = NULL, const char *param4 = NULL );
-inline void		UTIL_CenterPrintAll( const char *msg_name, const char *param1 = NULL, const char *param2 = NULL, const char *param3 = NULL, const char *param4 = NULL ) 
+inline void		UTIL_CenterPrintAll( const char *msg_name, const char *param1 = NULL, const char *param2 = NULL, const char *param3 = NULL, const char *param4 = NULL )
 {
 	UTIL_ClientPrintAll( HUD_PRINTCENTER, msg_name, param1, param2, param3, param4 );
 }
@@ -473,7 +473,7 @@ void			UTIL_HudHintText( CBaseEntity *pEntity, const char *pMessage );
 // Writes message to console with timestamp and FragLog header.
 void			UTIL_LogPrintf( PRINTF_FORMAT_STRING const char *fmt, ... ) FMTFUNCTION( 1, 2 );
 
-// Sorta like FInViewCone, but for nonNPCs. 
+// Sorta like FInViewCone, but for nonNPCs.
 float UTIL_DotPoints ( const Vector &vecSrc, const Vector &vecCheck, const Vector &vecDir );
 
 void UTIL_StripToken( const char *pKey, char *pDest, int nDestLength );// for redundant keynames

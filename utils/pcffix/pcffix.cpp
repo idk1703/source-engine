@@ -44,7 +44,7 @@ static SpewRetval_t SpewStdout( SpewType_t spewType, char const *pMsg )
 	printf( pMsg );
 	fflush( stdout );
 
-	return ( spewType == SPEW_ASSERT ) ? SPEW_DEBUGGER : SPEW_CONTINUE; 
+	return ( spewType == SPEW_ASSERT ) ? SPEW_DEBUGGER : SPEW_CONTINUE;
 }
 
 
@@ -78,7 +78,7 @@ bool CPCFFixApp::Create()
 {
 	SpewOutputFunc( SpewStdout );
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "p4lib.dll",				P4_INTERFACE_VERSION },
 		{ "", "" }	// Required to terminate the list
@@ -287,7 +287,7 @@ static CDmElement* FindOrAddDef( CDmElement *pDef, CUtlVector< CDmElement* > &de
 
 
 //-----------------------------------------------------------------------------
-// Replace references 
+// Replace references
 //-----------------------------------------------------------------------------
 static void	ReplaceChildReferences( CDmElement *pElement, CDmElement *pOldVersion, CDmElement *pNewVersion )
 {
@@ -329,7 +329,7 @@ static void	ReplaceChildReferences( CDmElement *pElement, CDmElement *pOldVersio
 
 
 //-----------------------------------------------------------------------------
-// Add unique particle defs 
+// Add unique particle defs
 //-----------------------------------------------------------------------------
 static void	AddUniqueElementsToList( CDmElement *pElement, CUtlVector<CDmElement*> &list )
 {
@@ -359,13 +359,13 @@ static void	AddUniqueElementsToList( CDmElement *pElement, CUtlVector<CDmElement
 		CDmElement *pChild = children[i]->GetValueElement<CDmElement>( "child" );
 		if ( !pChild )
 			continue;
-		AddUniqueElementsToList( pChild, list ); 
+		AddUniqueElementsToList( pChild, list );
 	}
 }
 
 
 //-----------------------------------------------------------------------------
-// Replace references 
+// Replace references
 //-----------------------------------------------------------------------------
 static void	BuildStartingDefList( CDmElement *pElement, CDmElement *pOldVersion, CDmElement *pNewVersion )
 {
@@ -474,7 +474,7 @@ int CPCFFixApp::Main()
 	g_pDataModel->SetDefaultElementFactory( NULL );
 
 	// This bit of hackery allows us to access files on the harddrive
-	g_pFullFileSystem->AddSearchPath( "", "LOCAL", PATH_ADD_TO_HEAD ); 
+	g_pFullFileSystem->AddSearchPath( "", "LOCAL", PATH_ADD_TO_HEAD );
 
 	if ( CommandLine()->CheckParm( "-h" ) || CommandLine()->CheckParm( "-help" ) )
 	{

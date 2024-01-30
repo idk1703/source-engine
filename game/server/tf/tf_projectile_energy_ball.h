@@ -25,8 +25,8 @@ public:
 	~CTFProjectile_EnergyBall();
 
 	// Creation.
-	static CTFProjectile_EnergyBall *Create( const Vector &vecOrigin, const QAngle &vecAngles, const float fSpeed, const float fGravity, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL );	
-	virtual void	InitEnergyBall( const Vector &vecOrigin, const QAngle &vecAngles, const float fSpeed, const float fGravity, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL );	
+	static CTFProjectile_EnergyBall *Create( const Vector &vecOrigin, const QAngle &vecAngles, const float fSpeed, const float fGravity, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL );
+	virtual void	InitEnergyBall( const Vector &vecOrigin, const QAngle &vecAngles, const float fSpeed, const float fGravity, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL );
 	virtual void	Spawn();
 	virtual void	Precache();
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_PARTICLE_CANNON; }

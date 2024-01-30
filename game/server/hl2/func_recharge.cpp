@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 
 ===== h_battery.cpp ========================================================
 
-  battery-related code
+	battery-related code
 
 */
 
@@ -45,20 +45,20 @@ public:
 
 private:
 	void InputRecharge( inputdata_t &inputdata );
-	
+
 	float MaxJuice() const;
 	void UpdateJuice( int newJuice );
 
 	DECLARE_DATADESC();
 
-	float	m_flNextCharge; 
+	float	m_flNextCharge;
 	int		m_iReactivate ; // DeathMatch Delay until reactvated
 	int		m_iJuice;
 	int		m_iOn;			// 0 = off, 1 = startup, 2 = going
 	float   m_flSoundTime;
-	
+
 	int		m_nState;
-	
+
 	COutputFloat m_OutRemainingCharge;
 	COutputEvent m_OnHalfEmpty;
 	COutputEvent m_OnEmpty;
@@ -86,7 +86,7 @@ BEGIN_DATADESC( CRecharge )
 	DEFINE_OUTPUT(m_OnPlayerUse, "OnPlayerUse" ),
 
 	DEFINE_INPUTFUNC( FIELD_VOID, "Recharge", InputRecharge ),
-	
+
 END_DATADESC()
 
 
@@ -125,7 +125,7 @@ void CRecharge::Spawn()
 
 	UpdateJuice( MaxJuice() );
 
-	m_nState = 0;			
+	m_nState = 0;
 
 	CreateVPhysics();
 }
@@ -136,11 +136,11 @@ bool CRecharge::CreateVPhysics()
 	return true;
 }
 
-int CRecharge::DrawDebugTextOverlays(void) 
+int CRecharge::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 		Q_snprintf(tempstr,sizeof(tempstr),"Charge left: %i", m_iJuice );
@@ -160,14 +160,14 @@ float CRecharge::MaxJuice()	const
 	{
 		return sk_suitcharger_citadel.GetFloat();
 	}
-	
+
 	return sk_suitcharger.GetFloat();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : newJuice - 
+// Purpose:
+// Input  : newJuice -
 //-----------------------------------------------------------------------------
 void CRecharge::UpdateJuice( int newJuice )
 {
@@ -200,7 +200,7 @@ void CRecharge::InputRecharge( inputdata_t &inputdata )
 }
 
 void CRecharge::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
-{ 
+{
 	// if it's not a player, ignore
 	if ( !pActivator || !pActivator->IsPlayer() )
 		return;
@@ -219,7 +219,7 @@ void CRecharge::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE use
 	// if there is no juice left, turn it off
 	if (m_iJuice <= 0)
 	{
-		m_nState = 1;			
+		m_nState = 1;
 		Off();
 	}
 
@@ -251,7 +251,7 @@ void CRecharge::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE use
 
 	if (!m_hActivator->IsPlayer() )
 		return;
-	
+
 	// Play the on sound or the looping charging sound
 	if (!m_iOn)
 	{
@@ -304,7 +304,7 @@ void CRecharge::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE use
 void CRecharge::Recharge(void)
 {
 	UpdateJuice( MaxJuice() );
-	m_nState = 0;			
+	m_nState = 0;
 	SetThink( &CRecharge::SUB_DoNothing );
 }
 
@@ -356,16 +356,16 @@ private:
 
 	DECLARE_DATADESC();
 
-	float	m_flNextCharge; 
+	float	m_flNextCharge;
 	int		m_iReactivate ; // DeathMatch Delay until reactvated
 	int		m_iJuice;
 	int		m_iOn;			// 0 = off, 1 = startup, 2 = going
 	float   m_flSoundTime;
-	
+
 	int		m_nState;
 	int		m_iCaps;
 	int		m_iMaxJuice;
-	
+
 	COutputFloat m_OutRemainingCharge;
 	COutputEvent m_OnHalfEmpty;
 	COutputEvent m_OnEmpty;
@@ -400,7 +400,7 @@ BEGIN_DATADESC( CNewRecharge )
 
 	DEFINE_INPUTFUNC( FIELD_VOID, "Recharge", InputRecharge ),
 	DEFINE_INPUTFUNC( FIELD_INTEGER, "SetCharge", InputSetCharge ),
-	
+
 END_DATADESC()
 
 
@@ -479,7 +479,7 @@ void CNewRecharge::Spawn()
 
 	UpdateJuice( MaxJuice() );
 
-	m_nState = 0;		
+	m_nState = 0;
 	m_iCaps	= FCAP_CONTINUOUS_USE;
 
 	CreateVPhysics();
@@ -497,11 +497,11 @@ bool CNewRecharge::CreateVPhysics()
 	return true;
 }
 
-int CNewRecharge::DrawDebugTextOverlays(void) 
+int CNewRecharge::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 		Q_snprintf(tempstr,sizeof(tempstr),"Charge left: %i", m_iJuice );
@@ -544,8 +544,8 @@ float CNewRecharge::MaxJuice()	const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : newJuice - 
+// Purpose:
+// Input  : newJuice -
 //-----------------------------------------------------------------------------
 void CNewRecharge::UpdateJuice( int newJuice )
 {
@@ -588,7 +588,7 @@ void CNewRecharge::InputSetCharge( inputdata_t &inputdata )
 }
 
 void CNewRecharge::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
-{ 
+{
 	// if it's not a player, ignore
 	if ( !pActivator || !pActivator->IsPlayer() )
 		return;
@@ -604,9 +604,9 @@ void CNewRecharge::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 		float flCalls = CALLS_PER_SECOND;
 
 		if ( HasSpawnFlags( SF_CITADEL_RECHARGER ) )
-			 flCharges = CITADEL_CHARGES_PER_SECOND;
+			flCharges = CITADEL_CHARGES_PER_SECOND;
 
-		m_flJuice -= flCharges / flCalls;		
+		m_flJuice -= flCharges / flCalls;
 		StudioFrameAdvance();
 	}
 
@@ -626,12 +626,12 @@ void CNewRecharge::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 	{
 		// Start our deny animation over again
 		ResetSequence( LookupSequence( "emptyclick" ) );
-		
+
 		m_nState = 1;
-		
+
 		// Shut off
 		Off();
-		
+
 		// Play a deny sound
 		if ( m_flSoundTime <= gpGlobals->curtime )
 		{
@@ -648,14 +648,14 @@ void CNewRecharge::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 	{
 		nMaxArmor = sk_suitcharger_citadel_maxarmor.GetInt();
 	}
-	
+
 	int nIncrementArmor = 1;
 
 	// The citadel charger gives more per charge and also gives health
 	if ( HasSpawnFlags(	SF_CITADEL_RECHARGER ) )
 	{
 		nIncrementArmor = 10;
-		
+
 #ifdef HL2MP
 		nIncrementArmor = 2;
 #endif
@@ -676,7 +676,7 @@ void CNewRecharge::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 			// Make the user re-use me to get started drawing health.
 			pPlayer->m_afButtonPressed &= ~IN_USE;
 			m_iCaps = FCAP_IMPULSE_USE;
-			
+
 			EmitSound( "SuitRecharge.Deny" );
 			return;
 		}
@@ -689,7 +689,7 @@ void CNewRecharge::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 	// Time to recharge yet?
 	if ( m_flNextCharge >= gpGlobals->curtime )
 		return;
-	
+
 	// Play the on sound or the looping charging sound
 	if ( !m_iOn )
 	{
@@ -730,7 +730,7 @@ void CNewRecharge::Recharge(void)
 
 	UpdateJuice( MaxJuice() );
 
-	m_nState = 0;		
+	m_nState = 0;
 	m_flJuice = m_iJuice;
 	m_iReactivate = 0;
 	StudioFrameAdvance();
@@ -745,7 +745,7 @@ void CNewRecharge::Off(void)
 	{
 		StopSound( "SuitRecharge.ChargingLoop" );
 	}
-	
+
 	if ( m_nState == 1 )
 	{
 		SetCycle( 1.0f );

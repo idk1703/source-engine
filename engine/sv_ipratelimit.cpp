@@ -69,12 +69,12 @@ bool CIPRateLimit::CheckIPInternal( netadr_t adr )
 	}
 
 	float query_rate = static_cast<float>( m_iGlobalCount ) / m_maxWindow->GetFloat(); // add one so the bottom is never zero
-	if( m_maxSecGlobal->GetFloat() > FLT_EPSILON && query_rate > m_maxSecGlobal->GetFloat() ) 
+	if( m_maxSecGlobal->GetFloat() > FLT_EPSILON && query_rate > m_maxSecGlobal->GetFloat() )
 	{
 		return false;
 	}
 
-	
+
 	// check the per ip rate (do this first, so one person dosing doesn't add to the global max rate
 	ip_t clientIP;
 	memcpy( &clientIP, adr.ip, sizeof(ip_t) );
@@ -85,12 +85,12 @@ bool CIPRateLimit::CheckIPInternal( netadr_t adr )
 		ip_t tmp = m_IPTree.LastInorder(); // we step BACKWARD's through the tree
 		int i = m_IPTree.FirstInorder();
 		while( (m_IPTree.Count() > (2*MAX_TREE_SIZE)/3) && i < m_IPTree.MaxElement() ) // trim 1/3 the entries from the tree and only traverse the max nodes
-		{ 	
+		{
 			if ( !m_IPTree.IsValidIndex( tmp ) )
 				break;
 
 			if ( (curTime - m_IPTree[ tmp ].lastTime) > FLUSH_TIMEOUT  &&
-			      m_IPTree[ tmp ].ip != clientIP ) 
+			      m_IPTree[ tmp ].ip != clientIP )
 			{
 				ip_t removeIPT = tmp;
 				tmp = m_IPTree.PrevInorder( tmp );
@@ -125,7 +125,7 @@ bool CIPRateLimit::CheckIPInternal( netadr_t adr )
 		}
 	}
 	else
-	{	
+	{
 		// not found, insert this new guy
 		struct iprate_s newEntry;
 		newEntry.count = 1;

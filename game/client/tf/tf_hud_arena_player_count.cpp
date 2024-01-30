@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -30,7 +30,7 @@ using namespace vgui;
 DECLARE_HUDELEMENT( CHudArenaPlayerCount );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudArenaPlayerCount::CHudArenaPlayerCount( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudArenaPlayerCount" )
 {
@@ -43,7 +43,7 @@ CHudArenaPlayerCount::CHudArenaPlayerCount( const char *pElementName ) : CHudEle
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaPlayerCount::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -66,7 +66,7 @@ void CHudArenaPlayerCount::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudArenaPlayerCount::ShouldDraw( void )
 {
@@ -89,7 +89,7 @@ bool CHudArenaPlayerCount::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaPlayerCount::UpdateCounts( void )
 {
@@ -100,7 +100,7 @@ void CHudArenaPlayerCount::UpdateCounts( void )
 
 		// choose dialog variables to set depending on team
 		const char *pDialogVar = NULL;
-		switch ( teamIndex ) 
+		switch ( teamIndex )
 		{
 			case TF_TEAM_RED:
 				pDialogVar = "red_alive";
@@ -129,7 +129,7 @@ void CHudArenaPlayerCount::UpdateCounts( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaPlayerCount::OnTick( void )
 {

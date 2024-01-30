@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -71,7 +71,7 @@ void CallAppRender( bool bInvalidRect )
 	GetCursorPos(&curMousePos);
 
 	int deltaX, deltaY;
-	
+
 	if( lastMousePos.x == 0xFFFF )
 	{
 		deltaX = deltaY = 0;
@@ -92,7 +92,7 @@ void CallAppRender( bool bInvalidRect )
 	{
 		lastMousePos = curMousePos;
 	}
-	
+
 	AppRender( frametime, (float)deltaX, (float)deltaY, bInvalidRect );
 }
 
@@ -116,9 +116,9 @@ SpewRetval_t D3DAppSpewFunc( SpewType_t spewType, char const *pMsg )
 }
 
 int APIENTRY WinMain(HINSTANCE hInstance,
-                     HINSTANCE hPrevInstance,
-                     LPSTR     lpCmdLine,
-                     int       nCmdShow)
+					HINSTANCE hPrevInstance,
+					LPSTR     lpCmdLine,
+					int       nCmdShow)
 {
 	CommandLine()->CreateCmdLine( Plat_GetCommandLine() );
 
@@ -127,18 +127,18 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	MathLib_Init( true, true, true, 2.2f, 2.2f, 0.0f, 2.0f );
 	MSG msg;
 	HACCEL hAccelTable;
-	
+
 	// Initialize global strings
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
 	strcpy( szWindowClass, "d3dapp" );
 	MyRegisterClass(hInstance);
-	
+
 	// Perform application initialization:
-	if (!InitInstance (hInstance, nCmdShow)) 
+	if (!InitInstance (hInstance, nCmdShow))
 	{
 		return FALSE;
 	}
-	
+
 	hAccelTable = LoadAccelerators(hInstance, (LPCTSTR)IDC_TERRAINBLEND);
 
 
@@ -147,12 +147,12 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	// Main message loop:
 	while(1)
 	{
-		while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) 
+		while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			if(msg.message == WM_QUIT)
 				break;
 
-			if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) 
+			if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
 			{
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
@@ -166,7 +166,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	}
 
 	AppExit();
-	
+
 	return msg.wParam;
 }
 
@@ -188,9 +188,9 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
 	WNDCLASSEX wcex;
-	
-	wcex.cbSize = sizeof(WNDCLASSEX); 
-	
+
+	wcex.cbSize = sizeof(WNDCLASSEX);
+
 	wcex.style			= CS_HREDRAW | CS_VREDRAW;
 	wcex.lpfnWndProc	= (WNDPROC)WndProc;
 	wcex.cbClsExtra		= 0;
@@ -202,7 +202,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	wcex.lpszMenuName	= NULL;
 	wcex.lpszClassName	= szWindowClass;
 	wcex.hIconSm		= LoadIcon(wcex.hInstance, (LPCTSTR)IDI_SMALL);
-	
+
 	return RegisterClassEx(&wcex);
 }
 
@@ -227,27 +227,27 @@ void InitD3D()
 {
 	ShutdownD3D();
 
-	
+
 	RECT rcClient;
 	GetClientRect( g_hWnd, &rcClient );
 
 	g_ScreenWidth  = rcClient.right - rcClient.left;
 	g_ScreenHeight = rcClient.bottom - rcClient.top;
-	
+
 	// Initialize D3D.
 	g_pDirect3D = Direct3DCreate8( D3D_SDK_VERSION );
 
-    // Get the current desktop display mode, so we can set up a back
-    // buffer of the same format
-    D3DDISPLAYMODE d3ddm;
-    g_pDirect3D->GetAdapterDisplayMode( D3DADAPTER_DEFAULT, &d3ddm );
+	// Get the current desktop display mode, so we can set up a back
+	// buffer of the same format
+	D3DDISPLAYMODE d3ddm;
+	g_pDirect3D->GetAdapterDisplayMode( D3DADAPTER_DEFAULT, &d3ddm );
 
 
-    // Set up the structure used to create the D3DDevice
-    ZeroMemory( &d3dpp, sizeof(d3dpp) );
-    d3dpp.Windowed = TRUE;
-    d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-    d3dpp.BackBufferFormat = d3ddm.Format;
+	// Set up the structure used to create the D3DDevice
+	ZeroMemory( &d3dpp, sizeof(d3dpp) );
+	d3dpp.Windowed = TRUE;
+	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	d3dpp.BackBufferFormat = d3ddm.Format;
 	d3dpp.EnableAutoDepthStencil = TRUE;
 	d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;
 	d3dpp.MultiSampleType = D3DMULTISAMPLE_NONE;
@@ -264,7 +264,7 @@ void InitD3D()
 		Sys_Error( "CreateDevice failed (%s)", DXGetErrorString8(hr) );
 	}
 
-    g_pDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_NONE );
+	g_pDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_NONE );
 	g_pDevice->SetRenderState( D3DRS_LIGHTING, FALSE );
 }
 
@@ -296,7 +296,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	int h = Sys_FindArgInt( "-height", CW_USEDEFAULT );
 
 	DWORD dwFlags = WS_OVERLAPPEDWINDOW;
-	
+
 	// Get the 'work area' so we don't overlap the taskbar on the top or left.
 	RECT rcWorkArea;
 	SystemParametersInfo( SPI_GETWORKAREA, 0, &rcWorkArea, 0 );
@@ -316,25 +316,25 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 		y += rcWorkArea.top;
 	}
 
-	
+
 	g_hWnd = CreateWindow(
-		szWindowClass, 
-		szTitle, 
+		szWindowClass,
+		szTitle,
 		dwFlags,				// window style
 		x,						// x
 		y,						// y
 		w,						// width
 		h,						// height
-		NULL, 
-		NULL, 
-		hInstance, 
+		NULL,
+		NULL,
+		hInstance,
 		NULL);
-	
+
 	if (!g_hWnd)
 	{
 		return FALSE;
 	}
-	
+
 	ShowWindow(g_hWnd, nCmdShow);
 	UpdateWindow(g_hWnd);
 
@@ -345,7 +345,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	// Reinitialize D3D. For some reason, D3D point primitives are way too large
 	// unless we do this.
 	DoResize();
-	
+
 	return TRUE;
 }
 
@@ -362,14 +362,14 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	switch (message) 
+	switch (message)
 	{
 	case WM_PAINT:
 	{
 		PAINTSTRUCT ps;
 		BeginPaint( hWnd, &ps );
 		EndPaint( hWnd, &ps );
-		
+
 		if( g_pDevice )
 			CallAppRender( true );
 	}
@@ -386,7 +386,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		AppKey( (int)wParam, 0 );
 	}
 	break;
-	
+
 	case WM_CHAR:
 	{
 		AppChar( (int)wParam );
@@ -396,7 +396,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
-	
+
 	case WM_LBUTTONDOWN:
 	{
 		ShowCursor( FALSE );
@@ -441,13 +441,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		g_bFocus = true;
 	}
 	break;
-	
+
 	case WM_KILLFOCUS:
 	{
 		g_bFocus = false;
 	}
 	break;
-	
+
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}
@@ -480,7 +480,7 @@ void Sys_SetWindowText( char const *pMsg, ... )
 {
 	va_list marker;
 	char msg[4096];
-	
+
 	va_start(marker, pMsg);
 	V_vsprintf_safe(msg, pMsg, marker);
 	va_end(marker);
@@ -556,5 +556,3 @@ int Sys_ScreenHeight()
 {
 	return g_ScreenHeight;
 }
-
-

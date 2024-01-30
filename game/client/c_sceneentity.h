@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -98,7 +98,7 @@ private:
 
 	CHandle< C_BaseFlex >	m_hOwner; // if set, this overrides the m_hActorList in FindNamedActor()
 
-	CUtlVector< CHandle< C_BaseFlex > > m_hActorList;		
+	CUtlVector< CHandle< C_BaseFlex > > m_hActorList;
 
 private:
 	bool		m_bWasPlaying;

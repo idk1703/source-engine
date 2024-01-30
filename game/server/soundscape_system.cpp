@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -36,7 +36,7 @@ CON_COMMAND(soundscape_flush, "Flushes the server & client side soundscapes")
 	g_SoundscapeSystem.FlushSoundscapes();	// don't bother forgetting about the entities
 	g_SoundscapeSystem.Init();
 
-	
+
 	if ( engine->IsDedicatedServer() )
 	{
 		// If the ds console typed it, send it to everyone.
@@ -114,9 +114,9 @@ void CSoundscapeSystem::PrintDebugInfo()
 	for( int entityIndex = 0; entityIndex < m_soundscapeEntities.Size(); ++entityIndex )
 	{
 		CEnvSoundscape *currentSoundscape = m_soundscapeEntities[entityIndex];
-		Msg("- %d: %s x:%.4f y:%.4f z:%.4f\n", 
-			entityIndex, 
-			STRING(currentSoundscape->GetSoundscapeName()), 
+		Msg("- %d: %s x:%.4f y:%.4f z:%.4f\n",
+			entityIndex,
+			STRING(currentSoundscape->GetSoundscapeName()),
 			currentSoundscape->GetAbsOrigin().x,
 			currentSoundscape->GetAbsOrigin().y,
 			currentSoundscape->GetAbsOrigin().z
@@ -152,7 +152,7 @@ bool CSoundscapeSystem::Init()
 				continue;
 			}
 
-			Warning( "CSoundscapeSystem::Init:  Manifest '%s' with bogus file type '%s', expecting 'file'\n", 
+			Warning( "CSoundscapeSystem::Init:  Manifest '%s' with bogus file type '%s', expecting 'file'\n",
 				SOUNDSCAPE_MANIFEST_FILE, sub->GetName() );
 		}
 
@@ -320,7 +320,7 @@ void CSoundscapeSystem::FrameUpdatePostEntityThink()
 			CBasePlayer *pPlayer = UTIL_PlayerByIndex( m_activeIndex + 1 );
 			if ( pPlayer && pPlayer->IsNetClient() )
 			{
-				// check to see if this is the sound entity that is 
+				// check to see if this is the sound entity that is
 				// currently affecting this player
 				audioparams_t &audio = pPlayer->GetAudioParams();
 
@@ -346,7 +346,7 @@ void CSoundscapeSystem::FrameUpdatePostEntityThink()
 				}
 
 				int clusterIndex = engine->GetClusterForOrigin( update.playerPosition );
-			
+
 				if ( clusterIndex >= 0 && clusterIndex < m_soundscapesInCluster.Count() )
 				{
 					// find all soundscapes that could possibly attach to this player and update them

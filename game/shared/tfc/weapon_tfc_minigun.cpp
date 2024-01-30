@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -78,7 +78,7 @@ bool CTFCMinigun::Deploy()
 
 
 TFCWeaponID CTFCMinigun::GetWeaponID( void ) const
-{ 
+{
 	return WEAPON_MINIGUN;
 }
 
@@ -117,7 +117,7 @@ void CTFCMinigun::WindDown( bool bFromHolster )
 	m_iWeaponState = AC_STATE_IDLE;
 	pOwner->m_Shared.RemoveStateFlags( TFSTATE_AIMING );
 	m_flTimeWeaponIdle = gpGlobals->curtime + 2.0;
-	
+
 	// Play the "spin down" animation.
 	SendWeaponAnim( ACT_VM_PULLBACK_LOW );
 
@@ -215,7 +215,7 @@ void CTFCMinigun::HandleFireOnEmpty()
 		if ( HasPrimaryAmmo() )
 			Spin();
 		else
-			m_iWeaponState = AC_STATE_STARTFIRING;	
+			m_iWeaponState = AC_STATE_STARTFIRING;
 
 		m_flNextPrimaryAttack = m_flTimeWeaponIdle = gpGlobals->curtime + 0.1;
 	}
@@ -263,7 +263,7 @@ bool CTFCMinigun::SendWeaponAnim( int iActivity )
 
 
 #ifdef CLIENT_DLL
-	
+
 	// ------------------------------------------------------------------------------------------------ //
 	// ------------------------------------------------------------------------------------------------ //
 	// CLIENT DLL SPECIFIC CODE

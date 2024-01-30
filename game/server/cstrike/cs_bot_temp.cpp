@@ -100,7 +100,7 @@ bool IsTempBot( CBaseEntity *pEnt )
 {
 	if ( !pEnt )
 		return false;
-	
+
 	if ( !(pEnt->GetFlags() & FL_FAKECLIENT) )
 		return false;
 
@@ -135,7 +135,7 @@ bool RunMimicCommand( CUserCmd& cmd )
 	if ( bot_mimic.GetInt() > gpGlobals->maxClients )
 		return false;
 
-	
+
 	CBasePlayer *pPlayer = UTIL_PlayerByIndex( bot_mimic.GetInt() );
 	if ( !pPlayer )
 		return false;
@@ -150,14 +150,14 @@ bool RunMimicCommand( CUserCmd& cmd )
 
 //-----------------------------------------------------------------------------
 // Purpose: Simulates a single frame of movement for a player
-// Input  : *fakeclient - 
-//			*viewangles - 
-//			forwardmove - 
-//			sidemove - 
-//			upmove - 
-//			buttons - 
-//			impulse - 
-//			msec - 
+// Input  : *fakeclient -
+//			*viewangles -
+//			forwardmove -
+//			sidemove -
+//			upmove -
+//			buttons -
+//			impulse -
+//			msec -
 // Output : 	virtual void
 //-----------------------------------------------------------------------------
 static void RunPlayerMove( CCSPlayer *fakeclient, const QAngle& viewangles, float forwardmove, float sidemove, float upmove, unsigned short buttons, byte impulse, float frametime )
@@ -281,7 +281,7 @@ void Bot_Think( CCSPlayer *pBot )
 
 					vecEnd = vecSrc + forward * 10;
 
-					UTIL_TraceHull( vecSrc, vecEnd, VEC_HULL_MIN_SCALED( pBot ), VEC_HULL_MAX_SCALED( pBot ), 
+					UTIL_TraceHull( vecSrc, vecEnd, VEC_HULL_MIN_SCALED( pBot ), VEC_HULL_MAX_SCALED( pBot ),
 						MASK_PLAYERSOLID, pBot, COLLISION_GROUP_NONE, &trace );
 
 					if ( trace.fraction == 1.0 )
@@ -439,7 +439,7 @@ CON_COMMAND_F( "bot_old", "Add a bot.", FCVAR_CHEAT )
 	// The bot command uses switches like command-line switches.
 	// -count <count> tells how many bots to spawn.
 	// -team <index> selects the bot's team. Default is -1 which chooses randomly.
-	//	Note: if you do -team !, then it 
+	//	Note: if you do -team !, then it
 	// -class <index> selects the bot's class. Default is -1 which chooses randomly.
 	// -frozen prevents the bots from running around when they spawn in.
 
@@ -477,7 +477,7 @@ CON_COMMAND_F( "bot_old", "Add a bot.", FCVAR_CHEAT )
 
 	// Look at -frozen.
 	bool bFrozen = !!args.FindArg( "-frozen" );
-		
+
 	// Ok, spawn all the bots.
 	while ( --count >= 0 )
 	{
@@ -503,9 +503,9 @@ void PossessBot_f( const CCommand &args )
 
 	int iBotClient = atoi( args[1] );
 	int iBotEnt = iBotClient + 1;
-	
-	if ( iBotClient < 0 || 
-		iBotClient >= gpGlobals->maxClients || 
+
+	if ( iBotClient < 0 ||
+		iBotClient >= gpGlobals->maxClients ||
 		pPlayer->entindex() == iBotEnt )
 	{
 		Warning( "PossessBot <client index>\n" );
@@ -530,15 +530,15 @@ void PossessBot_f( const CCommand &args )
 			// Restore things we didn't want to swap.
 			//pPlayerData->m_EntitiesTouched = oldPlayerData.m_EntitiesTouched;
 			//pBotData->m_EntitiesTouched = oldBotData.m_EntitiesTouched;
-		
+
 			CBaseEntity *pPlayerBaseEnt = CBaseEntity::Instance( pPlayerData );
 			CBaseEntity *pBotBaseEnt = CBaseEntity::Instance( pBotData );
 
 			// Make the other a bot and make the player not a bot.
 			pPlayerBaseEnt->RemoveFlag( FL_FAKECLIENT );
 			pBotBaseEnt->AddFlag( FL_FAKECLIENT );
-		
-						
+
+
 			// Point the CBaseEntities at the right players.
 			pPlayerBaseEnt->NetworkProp()->SetEdict( pPlayerData );
 			pBotBaseEnt->NetworkProp()->SetEdict( pBotData );
@@ -551,4 +551,3 @@ void PossessBot_f( const CCommand &args )
 
 
 ConCommand cc_PossessBot( "PossessBot", PossessBot_f, "Toggle. Possess a bot.\n\tArguments: <bot client number>", FCVAR_CHEAT );
-

@@ -318,11 +318,11 @@ void CreateBotName( int iTeam, int iClassIndex, CTFBot::DifficultyType skill, ch
 	{
 		pBotName = GetRandomBotName();
 	}
-	
+
 	const char *pDifficultyString = tf_bot_prefix_name_with_difficulty.GetBool() ? DifficultyLevelToString( skill ) : "";
 
 	// we use this as our formatting, because we don't know the language of the downstream clients
-	CFmtStr name( "%s%s%s", 
+	CFmtStr name( "%s%s%s",
 				  pDifficultyString, pFriendlyOrEnemyTitle, pBotName );
 	Q_strncpy( pBuffer, name.Access(), iBufferSize );
 }
@@ -398,7 +398,7 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 	{
 		skill = CTFBot::EASY;
 	}
-	
+
 	char name[256];
 	int iNumAdded = 0;
 	for( i=0; i<botCount; ++i )
@@ -418,7 +418,7 @@ CON_COMMAND_F( tf_bot_add, "Add a bot.", FCVAR_GAMEDLL )
 
 		pBot = NextBotCreatePlayerBot< CTFBot >( pszBotName );
 
-		if ( pBot ) 
+		if ( pBot )
 		{
 			if ( bQuotaManaged )
 			{
@@ -487,7 +487,7 @@ CON_COMMAND_F( tf_bot_kick, "Remove a TFBot by name, or all bots (\"all\").", FC
 		{
 			bMoveToSpectatorTeam = true;
 		}
-		else 
+		else
 		{
 			pPlayerName = args.Arg(i);
 		}
@@ -523,7 +523,7 @@ CON_COMMAND_F( tf_bot_kick, "Remove a TFBot by name, or all bots (\"all\").", FC
 				if ( pBot && pBot->HasAttribute( CTFBot::QUOTA_MANANGED ) )
 				{
 					++iNumKicked;
-				}				
+				}
 			}
 		}
 	}
@@ -566,7 +566,7 @@ CON_COMMAND_F( tf_bot_kill, "Kill a TFBot by name, or all bots (\"all\").", FCVA
 		{
 			// bMoveToSpectatorTeam = true;
 		}
-		else 
+		else
 		{
 			pPlayerName = args.Arg(i);
 		}
@@ -688,7 +688,7 @@ public:
 		m_me = me;
 		m_myTeam = teamID;
 		m_teamSize = 0;
-		
+
 		for( int i=0; i<TF_LAST_NORMAL_CLASS; ++i )
 			m_count[i] = 0;
 	}
@@ -734,7 +734,7 @@ const char *CTFBot::GetNextSpawnClassname( void ) const
 
 	const int NoLimit = -1;
 
-	static ClassSelectionInfo defenseRoster[] = 
+	static ClassSelectionInfo defenseRoster[] =
 	{
 		{ TF_CLASS_ENGINEER,		0, 4, 1, { 1, 2, 3, 3 } },
 		{ TF_CLASS_SOLDIER,			0, 0, 0, { NoLimit, NoLimit, NoLimit, NoLimit } },
@@ -748,7 +748,7 @@ const char *CTFBot::GetNextSpawnClassname( void ) const
 		{ TF_CLASS_UNDEFINED,		0, -1 },
 	};
 
-	static ClassSelectionInfo offenseRoster[] = 
+	static ClassSelectionInfo offenseRoster[] =
 	{
 		{ TF_CLASS_SCOUT,			0, 0, 1, { 3, 3, 3, 3 } },
 		{ TF_CLASS_SOLDIER,			0, 0, 0, { NoLimit, NoLimit, NoLimit, NoLimit } },
@@ -794,7 +794,7 @@ const char *CTFBot::GetNextSpawnClassname( void ) const
 
 	// assume offense
 	ClassSelectionInfo *desiredRoster = offenseRoster;
-	
+
 	if ( TFGameRules()->IsMatchTypeCompetitive() )
 	{
 		desiredRoster = compRoster;
@@ -910,7 +910,7 @@ const char *CTFBot::GetNextSpawnClassname( void ) const
 	int which = RandomInt( 0, desiredClassVector.Count()-1 );
 
 	// if we need to destroy a sentry, pick a class that can do so
-	if ( GetEnemySentry() ) 
+	if ( GetEnemySentry() )
 	{
 		// best sentry demolitions
 		int demoman = desiredClassVector.Find( TF_CLASS_DEMOMAN );
@@ -1260,7 +1260,7 @@ int CTFBot::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 void CTFBot::ChangeTeam( int iTeamNum, bool bAutoTeam, bool bSilent, bool bAutoBalance /*= false*/  )
 {
 	BaseClass::ChangeTeam( iTeamNum, bAutoTeam, bSilent, bAutoBalance );
-	
+
 	if ( TFGameRules()->IsMannVsMachineMode() )
 	{
 		SetPrevMission( CTFBot::NO_MISSION );
@@ -1333,7 +1333,7 @@ void CTFBot::ModifyMaxHealth( int nNewMaxHealth, bool bSetCurrentHealth /*= true
 
 	if ( bAllowModelScaling && IsMiniBoss() )
 	{
-		SetModelScale( m_fModelScaleOverride > 0.0f ? m_fModelScaleOverride : tf_mvm_miniboss_scale.GetFloat() );		
+		SetModelScale( m_fModelScaleOverride > 0.0f ? m_fModelScaleOverride : tf_mvm_miniboss_scale.GetFloat() );
 	}
 }
 
@@ -1383,7 +1383,7 @@ void CTFBot::FireGameEvent( IGameEvent *event )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------------------------------
 void CTFBot::Event_Killed( const CTakeDamageInfo &info )
 {
@@ -1784,7 +1784,7 @@ CCaptureFlag *CTFBot::GetFlagToFetch( void ) const
 					pClosestUncarriedFlag = NULL;
 					flClosestUncarriedFlagDist = FLT_MAX;
 				}
-				
+
 				if ( pFlag->GetNumFollowers() == nMinFollower )
 				{
 					// Find the closest
@@ -1881,7 +1881,7 @@ bool CTFBot::AreAllPointsUncontestedSoFar( void ) const
 		for( int i=0; i<master->GetNumPoints(); ++i )
 		{
 			CTeamControlPoint *point = master->GetControlPoint( i );
-			
+
 			if ( point && point->HasBeenContested() )
 				return false;
 		}
@@ -2069,7 +2069,7 @@ void CTFBot::SetupSniperSpotAccumulation( void )
 			// not my point, keep back from it a bit
 			myIncursionTolerance *= -1.0f;
 		}
-		
+
 		if ( area->GetIncursionDistance( myTeam ) <= goalEntityArea->GetIncursionDistance( myTeam ) + myIncursionTolerance )
 		{
 			m_sniperVantageAreaVector.AddToTail( area );
@@ -2247,10 +2247,10 @@ public:
 // Search outwards from startSearchArea and collect all reachable objects from the given list that pass the given filter
 // Items in selectedObjectVector will be approximately sorted in nearest-to-farthest order (because of SearchSurroundingAreas)
 //
-void CTFBot::SelectReachableObjects( const CUtlVector< CHandle< CBaseEntity > > &candidateObjectVector, 
-									 CUtlVector< CHandle< CBaseEntity > > *selectedObjectVector, 
-									 const INextBotFilter &filter, 
-									 CNavArea *startSearchArea, 
+void CTFBot::SelectReachableObjects( const CUtlVector< CHandle< CBaseEntity > > &candidateObjectVector,
+									 CUtlVector< CHandle< CBaseEntity > > *selectedObjectVector,
+									 const INextBotFilter &filter,
+									 CNavArea *startSearchArea,
 									 float maxRange ) const
 {
 	if ( startSearchArea == NULL || selectedObjectVector == NULL )
@@ -2570,7 +2570,7 @@ void CTFBot::UpdateLookingAroundForEnemies( void )
 	{
 		if ( known->IsVisibleInFOVNow() )
 		{
-			if ( IsPlayerClass( TF_CLASS_SPY ) && 
+			if ( IsPlayerClass( TF_CLASS_SPY ) &&
 				 GetDifficulty() >= CTFBot::HARD &&
 				 m_Shared.InCond( TF_COND_DISGUISED ) &&
 				 !m_Shared.IsStealthed() )
@@ -2616,7 +2616,7 @@ void CTFBot::UpdateLookingAroundForEnemies( void )
 			GetBodyInterface()->AimHeadTowards( imperfectAimSpot, IBody::IMPORTANT, 1.0f, NULL, "Turning around to find threat out of our FOV" );
 			return;
 		}
-			
+
 		if ( !IsPlayerClass( TF_CLASS_SNIPER ) )
 		{
 			// look toward potentially visible area nearest the last known position
@@ -2643,12 +2643,12 @@ void CTFBot::UpdateLookingAroundForEnemies( void )
 							GetBodyInterface()->AimHeadTowards( gazeSpot, IBody::IMPORTANT, maxLookInterval, NULL, "Looking toward potentially visible area near known but hidden threat" );
 							return;
 						}
-					}					
+					}
 
 					// can't find a clear line to look along
 					if ( IsDebugging( NEXTBOT_VISION | NEXTBOT_ERRORS ) )
 					{
-						ConColorMsg( Color( 255, 255, 0, 255 ), "%3.2f: %s can't find clear line to look at potentially visible near known but hidden entity %s(#%d)\n", 
+						ConColorMsg( Color( 255, 255, 0, 255 ), "%3.2f: %s can't find clear line to look at potentially visible near known but hidden entity %s(#%d)\n",
 										gpGlobals->curtime,
 										GetDebugIdentifier(),
 										known->GetEntity()->GetClassname(),
@@ -2657,7 +2657,7 @@ void CTFBot::UpdateLookingAroundForEnemies( void )
 				}
 				else if ( IsDebugging( NEXTBOT_VISION | NEXTBOT_ERRORS ) )
 				{
-					ConColorMsg( Color( 255, 255, 0, 255 ), "%3.2f: %s no potentially visible area to look toward known but hidden entity %s(#%d)\n", 
+					ConColorMsg( Color( 255, 255, 0, 255 ), "%3.2f: %s no potentially visible area to look toward known but hidden entity %s(#%d)\n",
 									gpGlobals->curtime,
 									GetDebugIdentifier(),
 									known->GetEntity()->GetClassname(),
@@ -2810,7 +2810,7 @@ float CTFBot::GetMaxAttackRange( void ) const
 	{
 		return 100.0f;
 	}
-	
+
 	if ( myWeapon->IsWeapon( TF_WEAPON_FLAMETHROWER ) )
 	{
 		if ( TFGameRules()->IsMannVsMachineMode() )
@@ -2867,7 +2867,7 @@ float CTFBot::GetDesiredAttackRange( void ) const
 	{
 		return 100.0f;
 	}
-	
+
 	if ( myWeapon->IsWeapon( TF_WEAPON_FLAMETHROWER ) )
 	{
 		return 100.0f;
@@ -2947,7 +2947,7 @@ void CTFBot::EquipBestWeaponForThreat( const CKnownEntity *threat )
 		}
 	}
 #endif // TF_RAID_MODE
-	 
+
 	CTFWeaponBase *primary = dynamic_cast< CTFWeaponBase *>( Weapon_GetSlot( TF_WPN_TYPE_PRIMARY ) );
 	if ( !IsCombatWeapon( primary ) )
 	{
@@ -3111,7 +3111,7 @@ bool CTFBot::EquipLongRangeWeapon( void )
 	if ( TFGameRules()->IsMannVsMachineMode() )
 		return false;
 
-	if ( IsPlayerClass( TF_CLASS_SOLDIER ) || 
+	if ( IsPlayerClass( TF_CLASS_SOLDIER ) ||
 		 IsPlayerClass( TF_CLASS_DEMOMAN ) ||
 		 IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) ||
 		 IsPlayerClass( TF_CLASS_SNIPER ) )
@@ -3301,7 +3301,7 @@ bool CTFBot::IsBarrageAndReloadWeapon( CTFWeaponBase *weapon ) const
 		weapon = m_Shared.GetActiveTFWeapon();
 	}
 
-	if ( weapon ) 
+	if ( weapon )
 	{
 		switch ( weapon->GetWeaponID() )
 		{
@@ -3327,7 +3327,7 @@ bool CTFBot::IsQuietWeapon( CTFWeaponBase *weapon ) const
 		weapon = m_Shared.GetActiveTFWeapon();
 	}
 
-	if ( weapon ) 
+	if ( weapon )
 	{
 		switch ( weapon->GetWeaponID() )
 		{
@@ -3463,7 +3463,7 @@ void CTFBot::SuspectSpy( CTFPlayer *pPlayer )
 		pSpyInfo->m_suspectedSpy = pPlayer;
 		m_suspectedSpyVector.AddToHead( pSpyInfo );
 	}
-	
+
 	// Suspicious!
 	pSpyInfo->Suspect();
 
@@ -3496,7 +3496,7 @@ bool CTFBot::SuspectedSpyInfo_t::TestForRealizing()
 
 	// Add our new entry
 	m_touchTimes.AddToHead( nCurTime );
-	
+
 	// Setup an array of bools representing the past few seconds that we want
 	// to look for suspicious activity
 	CUtlVector<bool> vecSeconds;
@@ -3589,7 +3589,7 @@ void CTFBot::RealizeSpy( CTFPlayer *pPlayer )
 			}
 		}
 	}
-	
+
 }
 
 
@@ -3865,7 +3865,7 @@ bool CTFBot::ShouldFireCompressionBlast( void )
 
 
 //---------------------------------------------------------------------------------------------
-// Compute a pseudo random value (0-1) that stays consistent for the 
+// Compute a pseudo random value (0-1) that stays consistent for the
 // given period of time, but changes unpredictably each period.
 float CTFBot::TransientlyConsistentRandomValue( float period, int seedValue ) const
 {
@@ -4153,7 +4153,7 @@ CBaseObject *CTFBot::GetNearestKnownSappableTarget( void )
 			{
 				closeObjectRangeSq = rangeSq;
 				closeObject = enemyObject;
-			}		
+			}
 		}
 	}
 
@@ -4259,7 +4259,7 @@ Action< CTFBot > *CTFBot::OpportunisticallyUseWeaponAbilities( void )
 				if ( threat && threat->IsVisibleInFOVNow() )
 				{
 					// hit a stunball
-					PressAltFireButton();			
+					PressAltFireButton();
 				}
 			}
 		}
@@ -4389,7 +4389,7 @@ bool CTFBot::ShouldAutoJump()
 		m_autoJumpTimer.Start( RandomFloat( m_flAutoJumpMin, m_flAutoJumpMax ) );
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -4506,7 +4506,7 @@ void CTFBot::OnEventChangeAttributes( const CTFBot::EventChangeAttributes_t* pEv
 			CSchemaItemDefHandle itemDef( itemAttributes.m_itemName );
 			if ( !itemDef )
 			{
-				Warning( "Unable to find item %s to update attribute.\n", itemAttributes.m_itemName.Get() ); 
+				Warning( "Unable to find item %s to update attribute.\n", itemAttributes.m_itemName.Get() );
 			}
 
 			for ( int iItemSlot = LOADOUT_POSITION_PRIMARY ; iItemSlot < CLASS_LOADOUT_POSITION_COUNT ; iItemSlot++ )
@@ -4639,6 +4639,6 @@ float CTFBot::GetUberDeployDelayDuration()
 	{
 		return flDelayUberDuration;
 	}
-	
+
 	return -1.f;
 }

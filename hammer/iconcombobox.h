@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,7 +14,7 @@
 // Icon Combo Box
 //
 // NOTE: the combo box setting should contain the following:
-//	Type: DropList	
+//	Type: DropList
 //	Owner Draw: Variable
 //  HasStrings: checked
 //	VSCROLL
@@ -29,14 +29,14 @@ public:
 	//
 	CIconComboBox();
 	virtual ~CIconComboBox();
- 
+
 	void Init( void );
 
 	//=========================================================================
 	//
 	// Operations
 	//
-    int AddIcon( LPCTSTR pIconName );
+	int AddIcon( LPCTSTR pIconName );
 	int InsertIcon( LPCTSTR pIconName, int ndx );
 	int SelectIcon( LPCTSTR pIconName );
 	int SelectIcon( int ndx );

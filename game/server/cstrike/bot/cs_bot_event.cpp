@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -47,7 +47,7 @@ void CCSBot::OnAudibleEvent( IGameEvent *event, CBasePlayer *player, float range
 		// we heard the sound
 		if ((IsLocalPlayerWatchingMe() && cv_bot_debug.GetInt() == 3) || cv_bot_debug.GetInt() == 4)
 		{
-			PrintIfWatched( "Heard noise (%s from %s, pri %s, time %3.1f)\n", 
+			PrintIfWatched( "Heard noise (%s from %s, pri %s, time %3.1f)\n",
 											(FStrEq( "weapon_fire", event->GetName() )) ? "Weapon fire " : "",
 											(player) ? player->GetPlayerName() : "NULL",
 											(priority == PRIORITY_HIGH) ? "HIGH" : ((priority == PRIORITY_MEDIUM) ? "MEDIUM" : "LOW"),
@@ -279,7 +279,7 @@ void CCSBot::OnHostageFollows( IGameEvent *event )
 
 		// only move if we hear them being rescued and can't see any hostages
 		if (GetGameState()->GetNearestVisibleFreeHostage() == NULL)
-		{			
+		{
 			// since we are guarding the hostages, presumably we know where they are
 			// if we're close enough to "hear" this event, either go to where the event occured,
 			// or head for an escape zone to head them off

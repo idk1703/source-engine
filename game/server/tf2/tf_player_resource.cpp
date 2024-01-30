@@ -16,7 +16,7 @@ END_SEND_TABLE()
 LINK_ENTITY_TO_CLASS( tf_player_manager, CTFPlayerResource );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerResource::Spawn( void )
 {
@@ -27,7 +27,7 @@ void CTFPlayerResource::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerResource::UpdatePlayerData( void )
 {

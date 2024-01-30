@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -44,7 +44,7 @@ protected:
 			if ( 5 == m_iBarnacleCount )
 			{
 				IncrementCount();
-			}			
+			}
 		}
 		m_pLastInflictor = pInflictor;
 	}
@@ -72,7 +72,7 @@ class CAchievementHL2BeatRavenholmNoWeapons : public CFailableAchievement
 	// map event where achievement is evaluated for success
 	virtual const char *GetEvaluationEventName() { return "HL2_BEAT_RAVENHOLM_NOWEAPONS_END"; }
 
-	virtual void PreRestoreSavedGame() 
+	virtual void PreRestoreSavedGame()
 	{
 		m_iInitialAttackCount = 0;
 		BaseClass::PreRestoreSavedGame();
@@ -87,7 +87,7 @@ class CAchievementHL2BeatRavenholmNoWeapons : public CFailableAchievement
 
 	virtual void OnEvaluationEvent()
 	{
-		// get current # of attacks by player w/all weapons (except grav gun) 
+		// get current # of attacks by player w/all weapons (except grav gun)
 		int iCurAttackCount = CalcPlayerAttacks( false );
 		// compare to # of attacks when we started
 		if ( iCurAttackCount > m_iInitialAttackCount )
@@ -120,7 +120,7 @@ END_DATADESC()
 
 class CAchievementHL2KillGunships : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_WITH_GAME );
 		SetVictimFilter( "npc_combinegunship" );
@@ -131,7 +131,7 @@ DECLARE_ACHIEVEMENT( CAchievementHL2KillGunships, ACHIEVEMENT_HL2_KILL_THREEGUNS
 
 class CAchievementHL2KillEnemiesWithAntlions : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_KILL_ENEMY_EVENTS | ACH_SAVE_WITH_GAME );
 		SetInflictorFilter( "npc_antlion" );
@@ -143,7 +143,7 @@ class CAchievementHL2KillEnemiesWithAntlions : public CBaseAchievement
 		CBasePlayer *pPlayer = UTIL_GetLocalPlayer();
 		if ( pPlayer )
 		{
-			// Only count antlion kills once player owns bugbait. 
+			// Only count antlion kills once player owns bugbait.
 			if ( pPlayer->Weapon_OwnsThisType( "weapon_bugbait" ) )
 			{
 				IncrementCount();
@@ -155,7 +155,7 @@ DECLARE_ACHIEVEMENT( CAchievementHL2KillEnemiesWithAntlions, ACHIEVEMENT_HL2_KIL
 
 class CAchievementHL2KillEnemyWithToilet : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_WITH_GAME );
 		SetInflictorFilter( "prop_physics" );
@@ -172,14 +172,14 @@ class CAchievementHL2KillEnemyWithToilet : public CBaseAchievement
 		if ( ( 0 == Q_stricmp( pszName, "FurnitureToilet001a.mdl" ) ) || ( 0 == Q_stricmp( pszName, "prison_toilet01.mdl" ) ) )
 		{
 			IncrementCount();
-		}		
+		}
 	}
 };
 DECLARE_ACHIEVEMENT( CAchievementHL2KillEnemyWithToilet, ACHIEVEMENT_HL2_KILL_ENEMY_WITHTOILET, "HL2_KILL_ENEMY_WITHTOILET", 5 );
 
 class CAchievementHL2DisintegrateSoldiersInField : public CBaseAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_WITH_GAME );
 		SetGoal( 15 );
@@ -201,12 +201,12 @@ class CAchievementHL2DisintegrateSoldiersInField : public CBaseAchievement
 
 				// skip past any directories and get just the file name
 				pszName = V_UnqualifiedFileName( pszName );
-	
+
 				if ( ( 0 == Q_stricmp( pszName, "combine_soldier.mdl" ) ) ||
 					( 0 == Q_stricmp( pszName, "combine_super_soldier.mdl" ) ) )
 				{
 					IncrementCount();
-				}							
+				}
 			}
 		}
 	}
@@ -224,14 +224,14 @@ class CAchievementHL2FindAllLambdas : public CBaseAchievement
 			"HL2_LAMDACACHE_TUNNELLADDER", "HL2_LAMDACACHE_REDBARN", "HL2_LAMDACACHE_ZOMBIEAMBUSH", "HL2_LAMDACACHE_BELOWAPCS",
 			"HL2_LAMDACACHE_COUNTERWEIGHT", "HL2_LAMDACACHE_RAILWAYBRIDGE", "HL2_LAMDACACHE_TUNNELPLATFORMS", "HL2_LAMDACACHE_BANKEDCANAL",
 			"HL2_LAMDACACHE_CANALWALL", "HL2_LAMDACACHE_CHANNELSPLIT", "HL2_LAMDACACHE_BMEDOCK", "HL2_LAMDACACHE_GENERATORS",
-			"HL2_LAMDACACHE_CARCRUSHERARENA", "HL2_LAMDACACHE_RAVENHOLMATTIC", "HL2_LAMDACACHE_MINETUNNELEXIT", 
+			"HL2_LAMDACACHE_CARCRUSHERARENA", "HL2_LAMDACACHE_RAVENHOLMATTIC", "HL2_LAMDACACHE_MINETUNNELEXIT",
 			"HL2_LAMDACACHE_COASTSHACK", "HL2_LAMDACACHE_POISONSHACK", "HL2_LAMDACACHE_GUNSHIPVAN", "HL2_LAMDACACHE_SUICIDECITIZEN",
 			"HL2_LAMDACACHE_RAILROADSHACK", "HL2_LAMDACACHE_COASTABOVEBATTERY", "HL2_LAMDACACHE_SANDSHACK", "HL2_LAMDACACHE_GMANCACHE",
 			"HL2_LAMDACACHE_CELLCACHE", "HL2_LAMDACACHE_POISONLAUNDRY", "HL2_LAMDACACHE_SODAMACHINE",
 			"HL2_LAMDACACHE_STREETWARDOGWALL", "HL2_LAMDACACHE_STREETWARSHACK", "HL2_LAMDACACHE_STREETWARFENCE", "HL2_LAMDACACHE_FREEWAYTUNNEL", "HL2_LAMDACACHE_DRAWBRIDGE",
 			"HL2_LAMDACACHE_PLAZAFENCE", "HL2_LAMDACACHE_SEWERSCATWALKS", "HL2_LAMDACACHE_POISONZOMBIEALCOVE", "HL2_LAMDACACHE_PIPEHOPTUNNEL",
 			"HL2_LAMDACACHE_ENDOFC1712B", "HL2_LAMDACACHE_EXITCATWALK"
-		};		
+		};
 		SetFlags( ACH_HAS_COMPONENTS | ACH_LISTEN_COMPONENT_EVENTS | ACH_SAVE_GLOBAL );
 		m_pszComponentNames = szComponents;
 		m_iNumComponents = ARRAYSIZE( szComponents );
@@ -255,11 +255,11 @@ DECLARE_MAP_EVENT_ACHIEVEMENT( ACHIEVEMENT_HL2_FIND_HEVFACEPLATE, "HL2_FIND_HEVF
 DECLARE_MAP_EVENT_ACHIEVEMENT( ACHIEVEMENT_HL2_GET_GRAVITYGUN, "HL2_GET_GRAVITYGUN", 5 );
 DECLARE_MAP_EVENT_ACHIEVEMENT( ACHIEVEMENT_HL2_MAKEABASKET, "HL2_MAKEABASKET", 2 );
 DECLARE_MAP_EVENT_ACHIEVEMENT_HIDDEN( ACHIEVEMENT_HL2_BEAT_CEMETERY, "HL2_BEAT_CEMETERY", 5 );
-DECLARE_MAP_EVENT_ACHIEVEMENT( ACHIEVEMENT_HL2_KILL_ENEMIES_WITHCRANE, "HL2_KILL_ENEMIES_WITHCRANE", 5 );	
-DECLARE_MAP_EVENT_ACHIEVEMENT( ACHIEVEMENT_HL2_PIN_SOLDIER_TOBILLBOARD, "HL2_PIN_SOLDIER_TOBILLBOARD", 5 );		
-DECLARE_MAP_EVENT_ACHIEVEMENT_HIDDEN( ACHIEVEMENT_HL2_KILL_ODESSAGUNSHIP, "HL2_KILL_ODESSAGUNSHIP", 5 );				
+DECLARE_MAP_EVENT_ACHIEVEMENT( ACHIEVEMENT_HL2_KILL_ENEMIES_WITHCRANE, "HL2_KILL_ENEMIES_WITHCRANE", 5 );
+DECLARE_MAP_EVENT_ACHIEVEMENT( ACHIEVEMENT_HL2_PIN_SOLDIER_TOBILLBOARD, "HL2_PIN_SOLDIER_TOBILLBOARD", 5 );
+DECLARE_MAP_EVENT_ACHIEVEMENT_HIDDEN( ACHIEVEMENT_HL2_KILL_ODESSAGUNSHIP, "HL2_KILL_ODESSAGUNSHIP", 5 );
 DECLARE_MAP_EVENT_ACHIEVEMENT( ACHIEVEMENT_HL2_BEAT_DONTTOUCHSAND, "HL2_BEAT_DONTTOUCHSAND", 20 );
-DECLARE_MAP_EVENT_ACHIEVEMENT( ACHIEVEMENT_HL2_BEAT_TURRETSTANDOFF2, "HL2_BEAT_TURRETSTANDOFF2", 10 );			
+DECLARE_MAP_EVENT_ACHIEVEMENT( ACHIEVEMENT_HL2_BEAT_TURRETSTANDOFF2, "HL2_BEAT_TURRETSTANDOFF2", 10 );
 DECLARE_MAP_EVENT_ACHIEVEMENT( ACHIEVEMENT_HL2_FOLLOW_FREEMAN, "HL2_FOLLOWFREEMAN", 10 );
 DECLARE_MAP_EVENT_ACHIEVEMENT( ACHIEVEMENT_HL2_BEAT_TOXICTUNNEL, "HL2_BEAT_TOXICTUNNEL", 5 );
 DECLARE_MAP_EVENT_ACHIEVEMENT( ACHIEVEMENT_HL2_BEAT_PLAZASTANDOFF, "HL2_BEAT_PLAZASTANDOFF", 10 );

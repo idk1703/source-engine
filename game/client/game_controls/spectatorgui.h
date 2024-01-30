@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -55,7 +55,7 @@ public:
 	virtual bool NeedsUpdate( void ) { return false; }
 	virtual bool HasInputElements( void ) { return false; }
 	virtual void ShowPanel( bool bShow );
-	
+
 	// both vgui::Frame and IViewPortPanel define these, so explicitly define them here as passthroughs to vgui
 	vgui::VPANEL GetVPanel( void ) { return BaseClass::GetVPanel(); }
 	virtual bool IsVisible() { return BaseClass::IsVisible(); }
@@ -64,7 +64,7 @@ public:
 
 	virtual int GetTopBarHeight() { return m_pTopBar->GetTall(); }
 	virtual int GetBottomBarHeight() { return m_pBottomBarBlank->GetTall(); }
-	
+
 	virtual bool ShouldShowPlayerLabel( int specmode );
 
 	virtual Color GetBlackBarColor( void ) { return BLACK_BAR_COLOR; }
@@ -72,7 +72,7 @@ public:
 	virtual const char *GetResFile( void );
 
 	virtual GameActionSet_t GetPreferredActionSet() { return GAME_ACTION_SET_SPECTATOR; }
-	
+
 protected:
 
 	void SetLabelText(const char *textEntryName, const char *text);
@@ -81,8 +81,8 @@ protected:
 	void UpdateTimer();
 	void SetLogoImage(const char *image);
 
-protected:	
-	enum { INSET_OFFSET = 2 } ; 
+protected:
+	enum { INSET_OFFSET = 2 } ;
 
 	// vgui overrides
 	virtual void PerformLayout();

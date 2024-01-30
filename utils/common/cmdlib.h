@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -109,8 +109,8 @@ int 	ParseNum (char *str);
 
 // Do a printf in the specified color.
 #define CP_ERROR	stderr, 1, 0, 0, 1		// default colors..
-#define CP_WARNING	stderr, 1, 1, 0, 1		
-#define CP_STARTUP	stdout, 0, 1, 1, 1		
+#define CP_WARNING	stderr, 1, 1, 0, 1
+#define CP_STARTUP	stdout, 0, 1, 1, 1
 #define CP_NOTIFY	stdout, 1, 1, 1, 1
 void ColorPrintf( FILE *pFile, bool red, bool green, bool blue, bool intensity, PRINTF_FORMAT_STRING char const *pFormat, ... );
 

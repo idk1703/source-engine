@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -40,8 +40,8 @@ CPlayerPanel::CPlayerPanel(vgui::Panel *parent, const char *name) : vgui::Proper
 	m_pPlayerListPanel->AddColumnHeader(5, "time", "#Player_Panel_Time", 75);
 
 /*
-	// TODO: update me!!	
-  m_pPlayerListPanel->SetSortFunc(0, PlayerNameCompare);
+	// TODO: update me!!
+	m_pPlayerListPanel->SetSortFunc(0, PlayerNameCompare);
 	m_pPlayerListPanel->SetSortFunc(1, PlayerAuthCompare);
 	m_pPlayerListPanel->SetSortFunc(2, PlayerPingCompare);
 	m_pPlayerListPanel->SetSortFunc(3, PlayerLossCompare);
@@ -139,7 +139,7 @@ static const char *FormatSeconds( int seconds )
 			minutes -= (hours * 60);
 		}
 	}
-	
+
 	if ( hours > 0 )
 	{
 		Q_snprintf( string, sizeof(string), "%2i:%02i:%02i", hours, minutes, seconds );
@@ -166,7 +166,7 @@ void CPlayerPanel::OnServerDataResponse(const char *value, const char *response)
 	{
 		// new list of players
 		m_pPlayerListPanel->DeleteAllItems();
-		
+
 		// parse response
 		const char *parse = response;
 		while (parse && *parse)
@@ -241,7 +241,7 @@ void CPlayerPanel::OnKickButtonPressed()
 		return;
 
 	// open a message box to ask the user if they want to follow through on this
-	QueryBox *box; 
+	QueryBox *box;
 	if (m_pPlayerListPanel->GetSelectedItemsCount() > 1)
 	{
 		box = new QueryBox("#Kick_Multiple_Players_Title", "#Kick_Multiple_Players_Question");
@@ -280,7 +280,7 @@ void CPlayerPanel::OnBanButtonPressed()
 	if (!kv)
 		return;
 
-	const char *player = kv->GetString("name");	
+	const char *player = kv->GetString("name");
 	const char *authid = kv->GetString("authid");
 	const char *netAdr = kv->GetString("netAdr");
 
@@ -368,11 +368,11 @@ void CPlayerPanel::OnOpenContextMenu(int itemID)
 {
 /* CODE DISABLED UNTIL VERIFIED AS WORKING
 	// show the player menus only if the cursor is over it
-	if (IsCursorOver() && m_pPlayerListPanel->GetNumSelectedRows()) 
+	if (IsCursorOver() && m_pPlayerListPanel->GetNumSelectedRows())
 	{
 		// get the server
 		unsigned int playerID = m_pPlayerListPanel->GetDataItem(m_pPlayerListPanel->GetSelectedRow(0))->userData;
-		
+
 		// activate context menu
 		m_pPlayerContextMenu->ShowMenu(this, playerID);
 	}

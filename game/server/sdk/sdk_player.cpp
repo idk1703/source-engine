@@ -52,7 +52,7 @@ static CTEPlayerAnimEvent g_TEPlayerAnimEvent( "PlayerAnimEvent" );
 void TE_PlayerAnimEvent( CBasePlayer *pPlayer, PlayerAnimEvent_t event, int nData )
 {
 	CPVSFilter filter( (const Vector&)pPlayer->EyePosition() );
-	
+
 	g_TEPlayerAnimEvent.m_hPlayer = pPlayer;
 	g_TEPlayerAnimEvent.m_iEvent = event;
 	g_TEPlayerAnimEvent.m_nData = nData;
@@ -75,13 +75,13 @@ END_SEND_TABLE()
 
 IMPLEMENT_SERVERCLASS_ST( CSDKPlayer, DT_SDKPlayer )
 	SendPropExclude( "DT_BaseAnimating", "m_flPoseParameter" ),
-	SendPropExclude( "DT_BaseAnimating", "m_flPlaybackRate" ),	
+	SendPropExclude( "DT_BaseAnimating", "m_flPlaybackRate" ),
 	SendPropExclude( "DT_BaseAnimating", "m_nSequence" ),
 	SendPropExclude( "DT_BaseEntity", "m_angRotation" ),
 	SendPropExclude( "DT_BaseAnimatingOverlay", "overlay_vars" ),
-	
+
 	// playeranimstate and clientside animation takes care of these on the client
-	SendPropExclude( "DT_ServerAnimationData" , "m_flCycle" ),	
+	SendPropExclude( "DT_ServerAnimationData" , "m_flCycle" ),
 	SendPropExclude( "DT_AnimTimeMustBeFirst" , "m_flAnimTime" ),
 
 	// Data that only gets sent to the local player.
@@ -110,7 +110,7 @@ public:
 	// In case the client has the player entity, we transmit the player index.
 	// In case the client doesn't have it, we transmit the player's model index, origin, and angles
 	// so they can create a ragdoll in the right place.
-	CNetworkHandle( CBaseEntity, m_hPlayer );	// networked entity handle 
+	CNetworkHandle( CBaseEntity, m_hPlayer );	// networked entity handle
 	CNetworkVector( m_vecRagdollVelocity );
 	CNetworkVector( m_vecRagdollOrigin );
 };
@@ -177,16 +177,16 @@ void CSDKPlayer::LeaveVehicle( const Vector &vecExitPoint, const QAngle &vecExit
 void CSDKPlayer::PreThink(void)
 {
 	// Riding a vehicle?
-	if ( IsInAVehicle() )	
+	if ( IsInAVehicle() )
 	{
 		// make sure we update the client, check for timed damage and update suit even if we are in a vehicle
-		UpdateClientData();		
+		UpdateClientData();
 		CheckTimeBasedDamage();
 
 		// Allow the suit to recharge when in the vehicle.
 		CheckSuitUpdate();
-		
-		WaterMove();	
+
+		WaterMove();
 		return;
 	}
 
@@ -201,11 +201,11 @@ void CSDKPlayer::PostThink()
 	QAngle angles = GetLocalAngles();
 	angles[PITCH] = 0;
 	SetLocalAngles( angles );
-	
+
 	// Store the eye angles pitch so the client can compute its animation state correctly.
 	m_angEyeAngles = EyeAngles();
 
-    m_PlayerAnimState->Update( m_angEyeAngles[YAW], m_angEyeAngles[PITCH] );
+	m_PlayerAnimState->Update( m_angEyeAngles[YAW], m_angEyeAngles[PITCH] );
 }
 
 
@@ -223,7 +223,7 @@ void CSDKPlayer::Spawn()
 	RemoveSolidFlags( FSOLID_NOT_SOLID );
 
 	m_hRagdoll = NULL;
-	
+
 	BaseClass::Spawn();
 }
 
@@ -340,7 +340,7 @@ void CSDKPlayer::CheatImpulseCommands( int iImpulse )
 	// Give the player everything!
 	GiveAmmo( 90, AMMO_BULLETS );
 	GiveAmmo( 3, AMMO_GRENADE );
-	
+
 	if ( GetHealth() < 100 )
 	{
 		TakeHealth( 25, DMG_GENERIC );

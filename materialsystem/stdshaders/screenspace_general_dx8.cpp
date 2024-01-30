@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ BEGIN_VS_SHADER_FLAGS( screenspace_general_dx8, "Help for screenspace_general", 
 		SHADER_PARAM( LINEARWRITE,SHADER_PARAM_TYPE_INTEGER,"0","")
 	END_SHADER_PARAMS
 
-    SHADER_INIT
+	SHADER_INIT
 	{
 		if ( params[BASETEXTURE]->IsDefined() )
 		{
@@ -60,7 +60,7 @@ BEGIN_VS_SHADER_FLAGS( screenspace_general_dx8, "Help for screenspace_general", 
 			LoadTexture( TEXTURE3 );
 		}
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		if ( g_pHardwareConfig->GetDXSupportLevel() < 80 )
@@ -76,7 +76,7 @@ BEGIN_VS_SHADER_FLAGS( screenspace_general_dx8, "Help for screenspace_general", 
 		SHADOW_STATE
 		{
 			pShaderShadow->EnableDepthWrites( false );
-			
+
 			if (params[BASETEXTURE]->IsDefined())
 			{
 				pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
@@ -86,7 +86,7 @@ BEGIN_VS_SHADER_FLAGS( screenspace_general_dx8, "Help for screenspace_general", 
 					pShaderShadow->EnableSRGBRead(SHADER_SAMPLER0,false);
 				else
 					pShaderShadow->EnableSRGBRead(SHADER_SAMPLER0, !params[LINEARREAD_BASETEXTURE]->IsDefined() || !params[LINEARREAD_BASETEXTURE]->GetIntValue() );
-			}				
+			}
 			if (params[TEXTURE1]->IsDefined())
 			{
 				pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );
@@ -96,7 +96,7 @@ BEGIN_VS_SHADER_FLAGS( screenspace_general_dx8, "Help for screenspace_general", 
 					pShaderShadow->EnableSRGBRead(SHADER_SAMPLER1,false);
 				else
 					pShaderShadow->EnableSRGBRead(SHADER_SAMPLER1, !params[LINEARREAD_TEXTURE1]->IsDefined() || !params[LINEARREAD_TEXTURE1]->GetIntValue() );
-			}				
+			}
 			if (params[TEXTURE2]->IsDefined())
 			{
 				pShaderShadow->EnableTexture( SHADER_SAMPLER2, true );
@@ -106,7 +106,7 @@ BEGIN_VS_SHADER_FLAGS( screenspace_general_dx8, "Help for screenspace_general", 
 					pShaderShadow->EnableSRGBRead(SHADER_SAMPLER2,false);
 				else
 					pShaderShadow->EnableSRGBRead(SHADER_SAMPLER2, !params[LINEARREAD_TEXTURE2]->IsDefined() || !params[LINEARREAD_TEXTURE2]->GetIntValue() );
-			}				
+			}
 			if (params[TEXTURE3]->IsDefined())
 			{
 				pShaderShadow->EnableTexture( SHADER_SAMPLER3, true );
@@ -116,7 +116,7 @@ BEGIN_VS_SHADER_FLAGS( screenspace_general_dx8, "Help for screenspace_general", 
 					pShaderShadow->EnableSRGBRead(SHADER_SAMPLER3,false);
 				else
 					pShaderShadow->EnableSRGBRead(SHADER_SAMPLER3, !params[LINEARREAD_TEXTURE3]->IsDefined() || !params[LINEARREAD_TEXTURE3]->GetIntValue() );
-			}				
+			}
 			int fmt = VERTEX_POSITION;
 			pShaderShadow->VertexShaderVertexFormat( fmt, 1, 0, 0 );
 

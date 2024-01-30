@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -41,13 +41,13 @@ public:
 
 	// Math utility operations
 	const T& operator=( const T &val );
-	const T& operator+=( const T &val ); 
-	const T& operator-=( const T &val ); 
-	const T& operator/=( const T &val ); 
-	const T& operator*=( const T &val ); 
-	const T& operator^=( const T &val ); 
-	const T& operator|=( const T &val ); 
-	const T& operator&=( const T &val ); 
+	const T& operator+=( const T &val );
+	const T& operator-=( const T &val );
+	const T& operator/=( const T &val );
+	const T& operator*=( const T &val );
+	const T& operator^=( const T &val );
+	const T& operator|=( const T &val );
+	const T& operator&=( const T &val );
 	T operator++();
 	T operator--();
 	T operator++( int ); // postfix version..

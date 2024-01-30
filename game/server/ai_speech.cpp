@@ -106,7 +106,7 @@ public:
 			pSave->EndBlock();
 		}
 	}
-	
+
 	virtual void Restore( const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore )
 	{
 		CUtlDict< ConceptHistory_t, int > *ch = ((CUtlDict< ConceptHistory_t, int > *)fieldInfo.pField);
@@ -268,8 +268,8 @@ static const int LEN_SPECIFIC_SCENE_MODIFIER = strlen( AI_SPECIFIC_SCENE_MODIFIE
 
 //-----------------------------------------------------------------------------
 // Purpose: Searches for a possible response
-// Input  : concept - 
-//			NULL - 
+// Input  : concept -
+//			NULL -
 // Output : AI_Response
 //-----------------------------------------------------------------------------
 bool CAI_Expresser::SpeakFindResponse( AI_Response &outResponse, AIConcept_t concept, const char *modifiers /*= NULL*/ )
@@ -355,7 +355,7 @@ bool CAI_Expresser::SpeakFindResponse( AI_Response &outResponse, AIConcept_t con
 
 //-----------------------------------------------------------------------------
 // Purpose: Dispatches the result
-// Input  : *response - 
+// Input  : *response -
 //-----------------------------------------------------------------------------
 bool CAI_Expresser::SpeakDispatchResponse( AIConcept_t concept, AI_Response& response, IRecipientFilter *filter /* = NULL */ )
 {
@@ -456,8 +456,8 @@ bool CAI_Expresser::SpeakDispatchResponse( AIConcept_t concept, AI_Response& res
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *response - 
+// Purpose:
+// Input  : *response -
 // Output : float
 //-----------------------------------------------------------------------------
 float CAI_Expresser::GetResponseDuration( AI_Response& response )
@@ -494,12 +494,12 @@ float CAI_Expresser::GetResponseDuration( AI_Response& response )
 
 //-----------------------------------------------------------------------------
 // Purpose: Placeholder for rules based response system
-// Input  : concept - 
+// Input  : concept -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_Expresser::Speak( AIConcept_t concept, const char *modifiers /*= NULL*/, char *pszOutResponseChosen /* = NULL*/, size_t bufsize /* = 0 */, IRecipientFilter *filter /* = NULL */ )
 {
-    AI_Response response;
+	AI_Response response;
 	bool result = SpeakFindResponse( response, concept, modifiers );
 	if ( !result )
 		return false;
@@ -509,15 +509,15 @@ bool CAI_Expresser::Speak( AIConcept_t concept, const char *modifiers /*= NULL*/
 	bool spoke = SpeakDispatchResponse( concept, response, filter );
 	if ( pszOutResponseChosen )
 	{
-        const char *szResponse = response.GetResponsePtr();
-        Q_strncpy( pszOutResponseChosen, szResponse, bufsize );
+		const char *szResponse = response.GetResponsePtr();
+		Q_strncpy( pszOutResponseChosen, szResponse, bufsize );
 	}
-	
+
 	return spoke;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CAI_Expresser::SpeakRawScene( const char *pszScene, float delay, AI_Response *response, IRecipientFilter *filter /* = NULL */ )
 {
@@ -591,10 +591,10 @@ int CAI_Expresser::SpeakRawSentence( const char *pszSentence, float delay, float
 
 //-------------------------------------
 
-void CAI_Expresser::BlockSpeechUntil( float time ) 	
-{ 
+void CAI_Expresser::BlockSpeechUntil( float time )
+{
 	SpeechMsg( GetOuter(), "BlockSpeechUntil(%f) %f\n", time, time - gpGlobals->curtime );
-	m_flBlockedTalkTime = time; 
+	m_flBlockedTalkTime = time;
 }
 
 
@@ -603,12 +603,12 @@ void CAI_Expresser::BlockSpeechUntil( float time )
 void CAI_Expresser::NoteSpeaking( float duration, float delay )
 {
 	duration += delay;
-	
+
 	GetSink()->OnStartSpeaking();
 
 	if ( duration <= 0 )
 	{
-		// no duration :( 
+		// no duration :(
 		m_flStopTalkTime = gpGlobals->curtime + 3;
 		duration = 0;
 	}
@@ -707,7 +707,7 @@ bool CAI_Expresser::CanSpeakConcept( AIConcept_t concept )
 	if ( !response )
 		return true;
 
-	if ( response->GetSpeakOnce() ) 
+	if ( response->GetSpeakOnce() )
 		return false;
 
 	float respeakDelay = response->GetRespeakDelay();
@@ -733,9 +733,9 @@ bool CAI_Expresser::SpokeConcept( AIConcept_t concept )
 float CAI_Expresser::GetTimeSpokeConcept( AIConcept_t concept )
 {
 	int iter = m_ConceptHistories.Find( concept );
-	if ( iter == m_ConceptHistories.InvalidIndex() ) 
+	if ( iter == m_ConceptHistories.InvalidIndex() )
 		return -1;
-	
+
 	ConceptHistory_t *h = &m_ConceptHistories[iter];
 	return h->timeSpoken;
 }
@@ -801,9 +801,9 @@ bool CAI_Expresser::IsValidResponse( ResponseType_t type, const char *pszValue )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CAI_TimedSemaphore *CAI_Expresser::GetMySpeechSemaphore( CBaseEntity *pNpc ) 
+CAI_TimedSemaphore *CAI_Expresser::GetMySpeechSemaphore( CBaseEntity *pNpc )
 {
 	if ( !pNpc->MyNPCPointer() )
 		return NULL;
@@ -812,7 +812,7 @@ CAI_TimedSemaphore *CAI_Expresser::GetMySpeechSemaphore( CBaseEntity *pNpc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_Expresser::SpeechMsg( CBaseEntity *pFlex, const char *pszFormat, ... )
 {
@@ -829,7 +829,7 @@ void CAI_Expresser::SpeechMsg( CBaseEntity *pFlex, const char *pszFormat, ... )
 	{
 		DevMsg( pFlex->MyNPCPointer(), "%s", string );
 	}
-	else 
+	else
 	{
 		DevMsg( "%s", string );
 	}
@@ -845,7 +845,7 @@ void CAI_ExpresserHost_NPC_DoModifyOrAppendCriteria( CAI_BaseNPC *pSpeaker, AI_C
 	const char *pActivityName = pSpeaker->GetActivityName( pSpeaker->GetActivity() );
 	if ( pActivityName )
 	{
-  		set.AppendCriteria( "activity", pActivityName );
+		set.AppendCriteria( "activity", pActivityName );
 	}
 
 	static const char *pStateNames[] = { "None", "Idle", "Alert", "Combat", "Scripted", "PlayDead", "Dead" };
@@ -938,7 +938,7 @@ CON_COMMAND( npc_speakall, "Force the npc to try and speak all their responses" 
 	{
 		pEntity = FindPickerEntity( UTIL_GetCommandClient() );
 	}
-		
+
 	if ( pEntity )
 	{
 		CAI_BaseNPC *pNPC = pEntity->MyNPCPointer();

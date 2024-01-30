@@ -54,7 +54,7 @@ bool LoadFileAndClose( FILE *fp, CUtlBuffer &buf, int numExtraBytesAlloc = 0 )
 
 	buf.EnsureCapacity( nFileLength + numExtraBytesAlloc );
 	int nBytesRead = fread( buf.Base(), 1, nFileLength, fp );
-	
+
 	fclose( fp );
 
 	buf.SeekPut( CUtlBuffer::SEEK_HEAD, nBytesRead );
@@ -126,7 +126,7 @@ int WriteInfo()
 			chBuffer[ len - 1 ] = '\r';
 		inBuf.Put( chBuffer, len );
 	}
-	
+
 	if ( inBuf.TellPut() &&
 		 '\r' == ( ( unsigned char const * ) inBuf.Base() )[ inBuf.TellPut() - 1 ] )
 		 inBuf.SeekPut( CUtlBuffer::SEEK_CURRENT, -1 );
@@ -156,7 +156,7 @@ int WriteInfo()
 
 		imgres.m_numBytes += addSize;
 		( ( unsigned int * ) imgres.m_pvBuffer )[ -1 ] = BigLong( imgres.m_numBytes );
-		
+
 		BufferMove( imgres.m_pvBuffer + addSize, imgres.m_pvBuffer, pvBufBase + bufFile.TellPut() - imgres.m_pvBuffer );
 		BufferMove( imgres.m_pvBuffer, chStdFileInfo, addSize );
 
@@ -234,11 +234,11 @@ int WriteInfo()
 		FILE *fp = fopen( s_opts.szFilename, "wb" );
 		if ( !fp )
 			Error( "%s cannot be opened for update!\n", s_opts.szFilename );
-		
+
 		fwrite( bufFile.Base(), 1, bufFile.TellPut(), fp );
 		fclose( fp );
 	}
-	
+
 	return 0;
 }
 
@@ -273,4 +273,3 @@ int main( int argc, char **argv )
 	// Go ahead and perform the corresponding read or write
 	return s_opts.bWriteInfo ? WriteInfo() : ReadInfo();
 }
-

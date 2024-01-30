@@ -61,7 +61,7 @@ struct MaterialCacheEntry_t
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // This class speeds up the call to IMaterial::GetPreviewImageProperties because
 // we call it thousands of times per level load when there are detail props.
 //-----------------------------------------------------------------------------
@@ -82,13 +82,13 @@ public:
 			entry.m_RetVal = pMaterial->GetPreviewImageProperties( &entry.m_Width, &entry.m_Height, &entry.m_ImageFormat, &entry.m_bIsTranslucent );
 			i = s_PreviewImagePropertiesCache.Insert( pMaterial, entry );
 		}
-		
+
 		CPreviewImagePropertiesCache::CEntry &entry = s_PreviewImagePropertiesCache[i];
 		*width = entry.m_Width;
 		*height = entry.m_Height;
 		*imageFormat = entry.m_ImageFormat;
 		*isTranslucent = entry.m_bIsTranslucent;
-		
+
 		return entry.m_RetVal;
 	}
 
@@ -103,7 +103,7 @@ private:
 		bool m_bIsTranslucent;
 		PreviewImageRetVal_t m_RetVal;
 	};
-	
+
 	static bool PreviewImageLessFunc( IMaterial* const &a, IMaterial* const &b )
 	{
 		return a < b;
@@ -135,7 +135,7 @@ protected:
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor. Allocates a pool of material pointers.
-// Input  : maxNumGraphicsLoaded - 
+// Input  : maxNumGraphicsLoaded -
 //-----------------------------------------------------------------------------
 CMaterialImageCache::CMaterialImageCache(int maxNumGraphicsLoaded)
 {
@@ -162,8 +162,8 @@ CMaterialImageCache::~CMaterialImageCache(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pMaterial - 
+// Purpose:
+// Input  : *pMaterial -
 //-----------------------------------------------------------------------------
 void CMaterialImageCache::EnCache( CMaterial *pMaterial )
 {
@@ -195,7 +195,7 @@ static CMaterialImageCache *g_pMaterialImageCache = NULL;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMaterialCache::CMaterialCache(void)
 {
@@ -205,7 +205,7 @@ CMaterialCache::CMaterialCache(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMaterialCache::~CMaterialCache(void)
 {
@@ -295,7 +295,7 @@ CMaterial *CMaterialCache::CreateMaterial(const char *pszMaterialName)
 
 //-----------------------------------------------------------------------------
 // Purpose: Finds a material in the cache.
-// Input  : char *pszMaterialName - 
+// Input  : char *pszMaterialName -
 // Output : CMaterial
 //-----------------------------------------------------------------------------
 void CMaterialCache::AddMaterial(CMaterial *pMaterial)
@@ -329,13 +329,13 @@ void CMaterialCache::AddRef(CMaterial *pMaterial)
 			m_pCache[i].nRefCount++;
 			return;
 		}
-	}	
+	}
 }
 
 
 //-----------------------------------------------------------------------------
 // Purpose: Finds a material in the cache by name.
-// Input  : char *pszMaterialName - 
+// Input  : char *pszMaterialName -
 // Output : CMaterial
 //-----------------------------------------------------------------------------
 CMaterial *CMaterialCache::FindMaterial(const char *pszMaterialName)
@@ -378,7 +378,7 @@ void CMaterialCache::Release(CMaterial *pMaterial)
 
 					memset(&m_pCache[m_nEntries], 0, sizeof(m_pCache[0]));
 				}
-	
+
 				break;
 			}
 		}
@@ -397,7 +397,7 @@ CMaterial::CMaterial(void)
 
 	m_nWidth = 0;
 	m_nHeight = 0;
-    m_nTextureID = 0;
+	m_nTextureID = 0;
 	m_pData = NULL;
 	m_bLoaded = false;
 	m_pMaterial = NULL;
@@ -463,7 +463,7 @@ bool CMaterial::LoadMaterialsInDirectory( char const* pDirectoryName, int nDirec
 			char *pFileNameWithPath;
 			int nAllocSize = nDirectoryNameLen + Q_strlen(pFileName) + 2;
 			pFileNameWithPath = (char *)stackalloc( nAllocSize );
-			Q_snprintf(	pFileNameWithPath, nAllocSize, "%s/%s", &pDirectoryName[MATERIAL_PREFIX_LEN], pFileName ); 
+			Q_snprintf(	pFileNameWithPath, nAllocSize, "%s/%s", &pDirectoryName[MATERIAL_PREFIX_LEN], pFileName );
 			Q_strnlwr( pFileNameWithPath, nAllocSize );
 
 			// Strip off the extension...
@@ -486,9 +486,9 @@ bool CMaterial::LoadMaterialsInDirectory( char const* pDirectoryName, int nDirec
 //-----------------------------------------------------------------------------
 // Discovers all .VMT files lying under a particular directory
 // It only finds their names so we can generate shell materials for them
-// that we can load up at a later time 
+// that we can load up at a later time
 //-----------------------------------------------------------------------------
-bool CMaterial::InitDirectoryRecursive( char const* pDirectoryName, 
+bool CMaterial::InitDirectoryRecursive( char const* pDirectoryName,
 						IMaterialEnumerator *pEnum, int nContext, int nFlags )
 {
 	// Make sure this is an ok directory, otherwise don't bother
@@ -527,7 +527,7 @@ bool CMaterial::InitDirectoryRecursive( char const* pDirectoryName,
 				}
 			}
 		}
-		pFileName = g_pFullFileSystem->FindNext( findHandle );		
+		pFileName = g_pFullFileSystem->FindNext( findHandle );
 	}
 
 	return true;
@@ -537,7 +537,7 @@ bool CMaterial::InitDirectoryRecursive( char const* pDirectoryName,
 //-----------------------------------------------------------------------------
 // Discovers all .VMT files lying under a particular directory
 // It only finds their names so we can generate shell materials for them
-// that we can load up at a later time 
+// that we can load up at a later time
 //-----------------------------------------------------------------------------
 void CMaterial::EnumerateMaterials( IMaterialEnumerator *pEnum, const char *szRoot, int nContext, int nFlags )
 {
@@ -573,7 +573,7 @@ bool CMaterial::ShouldSkipMaterial(const char *pszName, int nFlags)
 			return true;
 	}
 	// also check against any FGD-defined exclusions
-	if (pGD != NULL)	
+	if (pGD != NULL)
 	{
 		for( int i = 0; i < pGD->m_FGDMaterialExclusions.Count(); i++ )
 		{
@@ -613,7 +613,7 @@ bool CMaterial::ShouldSkipMaterial(const char *pszName, int nFlags)
 
 	return(bSkip);
 #endif
-}	
+}
 
 
 //-----------------------------------------------------------------------------
@@ -626,7 +626,7 @@ CMaterial *CMaterial::CreateMaterial(const char *pszMaterialName, bool bLoadImme
 {
 	Assert (pszMaterialName);
 
- 	CMaterial *pMaterial = new CMaterial;
+	CMaterial *pMaterial = new CMaterial;
 	Assert( pMaterial );
 
 	// Store off the material name so we can load it later if we need to
@@ -734,7 +734,7 @@ void CMaterial::Reload( bool bFullReload )
 
 	m_nWidth = width;
 	m_nHeight = height;
-	m_TranslucentBaseTexture = translucentBaseTexture; 
+	m_TranslucentBaseTexture = translucentBaseTexture;
 
 	// Find the keywords for this material from the vmt file.
 	bool bFound;
@@ -762,13 +762,13 @@ IMaterial* CMaterial::GetMaterial( bool bForceLoad )
 {
 	if ( bForceLoad )
 		LoadMaterial();
-		
+
 	return m_pMaterial;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMaterial::DrawIcon( CDC *pDC, CMaterial* pIcon, RECT& dstRect )
 {
@@ -794,10 +794,10 @@ void CMaterial::DrawIcon( CDC *pDC, CMaterial* pIcon, RECT& dstRect )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pDC - 
-//			dstRect - 
-//			detectErrors - 
+// Purpose:
+// Input  : pDC -
+//			dstRect -
+//			detectErrors -
 //-----------------------------------------------------------------------------
 void CMaterial::DrawBrowserIcons( CDC *pDC, RECT& dstRect, bool detectErrors )
 {
@@ -826,17 +826,17 @@ void CMaterial::DrawBrowserIcons( CDC *pDC, RECT& dstRect, bool detectErrors )
 		DrawIcon( pDC, pTranslucentIcon, dstRect );
 		if (detectErrors)
 		{
-			error = error || !m_TranslucentBaseTexture; 
+			error = error || !m_TranslucentBaseTexture;
 		}
 	}
 	else
 	{
-		DrawIcon( pDC, pOpaqueIcon, dstRect ); 
+		DrawIcon( pDC, pOpaqueIcon, dstRect );
 	}
 
 	if ( pMaterial->GetMaterialVarFlag( MATERIAL_VAR_SELFILLUM ))
 	{
-		DrawIcon( pDC, pSelfIllumIcon, dstRect ); 
+		DrawIcon( pDC, pSelfIllumIcon, dstRect );
 		if (detectErrors)
 		{
 			error = error || !m_TranslucentBaseTexture;
@@ -845,7 +845,7 @@ void CMaterial::DrawBrowserIcons( CDC *pDC, RECT& dstRect, bool detectErrors )
 
 	if ( pMaterial->GetMaterialVarFlag( MATERIAL_VAR_BASEALPHAENVMAPMASK ))
 	{
-		DrawIcon( pDC, pBaseAlphaEnvMapMaskIcon, dstRect ); 
+		DrawIcon( pDC, pBaseAlphaEnvMapMaskIcon, dstRect );
 		if (detectErrors)
 		{
 			error = error || !m_TranslucentBaseTexture;
@@ -860,10 +860,10 @@ void CMaterial::DrawBrowserIcons( CDC *pDC, RECT& dstRect, bool detectErrors )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pDC - 
-//			srcRect - 
-//			dstRect - 
+// Purpose:
+// Input  : pDC -
+//			srcRect -
+//			dstRect -
 //-----------------------------------------------------------------------------
 void CMaterial::DrawBitmap( CDC *pDC, RECT& srcRect, RECT& dstRect )
 {
@@ -901,7 +901,7 @@ void CMaterial::DrawBitmap( CDC *pDC, RECT& srcRect, RECT& dstRect )
 
 	// ** bits **
 	SetStretchBltMode(pDC->m_hDC, COLORONCOLOR);
-	if (StretchDIBits(pDC->m_hDC, dstRect.left, dstRect.top, dest_width, dest_height, 
+	if (StretchDIBits(pDC->m_hDC, dstRect.left, dstRect.top, dest_width, dest_height,
 		srcRect.left, -srcRect.top, srcWidth, srcHeight, m_pData, (BITMAPINFO*)&bmi, DIB_RGB_COLORS, SRCCOPY) == GDI_ERROR)
 	{
 		Msg(mwError, "CMaterial::Draw(): StretchDIBits failed.");
@@ -910,11 +910,11 @@ void CMaterial::DrawBitmap( CDC *pDC, RECT& srcRect, RECT& dstRect )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pDC - 
-//			rect - 
-//			iFontHeight - 
-//			dwFlags - 
+// Purpose:
+// Input  : *pDC -
+//			rect -
+//			iFontHeight -
+//			dwFlags -
 //-----------------------------------------------------------------------------
 void CMaterial::Draw(CDC *pDC, RECT& rect, int iFontHeight, int iIconHeight, DrawTexData_t &DrawTexData)//, BrowserData_t *pBrowserData)
 {
@@ -923,7 +923,7 @@ void CMaterial::Draw(CDC *pDC, RECT& rect, int iFontHeight, int iIconHeight, Dra
 	{
 		return;
 	}
-	
+
 	if (m_nWidth <= 0)
 	{
 NoData:
@@ -991,9 +991,9 @@ NoData:
 		dstRect = rect;
 		if (DrawTexData.nFlags & drawCaption)
 		{
-			dstRect.bottom -= iFontHeight + 5; 
+			dstRect.bottom -= iFontHeight + 5;
 		}
-		dstRect.top = dstRect.bottom - iIconHeight; 
+		dstRect.top = dstRect.bottom - iIconHeight;
 		DrawBrowserIcons(pDC, dstRect, (DrawTexData.nFlags & drawErrors) != 0 );
 	}
 
@@ -1003,7 +1003,7 @@ NoData:
 		// draw background for name
 		CBrush brCaption(RGB(0, 0, 255));
 		CRect rcCaption(rect);
-		
+
 		rcCaption.top = rcCaption.bottom - (iFontHeight + 5);
 		pDC->FillRect(rcCaption, &brCaption);
 
@@ -1025,7 +1025,7 @@ NoData:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMaterial::FreeData( void )
 {
@@ -1054,8 +1054,8 @@ int CMaterial::GetKeywords(char *pszKeywords) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszName - 
+// Purpose:
+// Input  : *pszName -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMaterial::GetShortName(char *pszName) const
@@ -1070,8 +1070,8 @@ int CMaterial::GetShortName(char *pszName) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : material - 
+// Purpose:
+// Input  : material -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMaterial::LoadMaterialHeader( IMaterial *pMat )
@@ -1090,7 +1090,7 @@ bool CMaterial::LoadMaterialHeader( IMaterial *pMat )
 
 	m_nWidth = width;
 	m_nHeight = height;
-	m_TranslucentBaseTexture = translucentBaseTexture; 
+	m_TranslucentBaseTexture = translucentBaseTexture;
 
 	// Find the keywords for this material from the vmt file.
 	bool bFound;
@@ -1194,7 +1194,7 @@ int CMaterial::GetImageDataRGBA(void *pImageRGBA)
 		src = (unsigned char *)m_pData;
 		dst = (unsigned char *)pImageRGBA;
 
-		while (src < (unsigned char *)m_pData + m_nWidth * m_nHeight * 4);	
+		while (src < (unsigned char *)m_pData + m_nWidth * m_nHeight * 4);
 		{
 			dst[0] = src[2];
 			dst[1] = src[1];
@@ -1211,8 +1211,8 @@ int CMaterial::GetImageDataRGBA(void *pImageRGBA)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : size - 
+// Purpose:
+// Input  : size -
 //-----------------------------------------------------------------------------
 void CMaterial::GetSize(SIZE &size) const
 {
@@ -1268,7 +1268,7 @@ float CMaterial::GetDecalScale(void) const
 
 	IMaterialVar *decalScaleVar;
 	bool found;
-	
+
 	decalScaleVar = m_pMaterial->FindVar( "$decalScale", &found, false );
 	if( !found )
 	{
@@ -1281,7 +1281,7 @@ float CMaterial::GetDecalScale(void) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMaterial::LoadMaterialImage( void )
@@ -1304,10 +1304,10 @@ bool CMaterial::LoadMaterialImage( void )
 	{
 		imageFormat = IMAGE_FORMAT_BGR888;
 	}
-	
+
 	PreviewImageRetVal_t retVal;
 	retVal = m_pMaterial->GetPreviewImage( (unsigned char *)m_pData, m_nWidth, m_nHeight, imageFormat );
-	return (retVal != MATERIAL_PREVIEW_IMAGE_BAD); 
+	return (retVal != MATERIAL_PREVIEW_IMAGE_BAD);
 }
 
 
@@ -1322,12 +1322,12 @@ static void InitMaterialSystemConfig(MaterialSystem_Config_t *pConfig)
 
 
 static char const *s_rt_names[]={"_rt_albedo","_rt_normal","_rt_position","_rt_flags",
-							   "_rt_accbuf_0","_rt_accbuf_1"};
-ImageFormat s_rt_formats[]={ IMAGE_FORMAT_RGBA32323232F, IMAGE_FORMAT_RGBA32323232F, 
-							 IMAGE_FORMAT_RGBA32323232F, IMAGE_FORMAT_RGBA32323232F,
-							 IMAGE_FORMAT_RGBA16161616F, IMAGE_FORMAT_RGBA16161616F };
+								"_rt_accbuf_0","_rt_accbuf_1"};
+ImageFormat s_rt_formats[]={ IMAGE_FORMAT_RGBA32323232F, IMAGE_FORMAT_RGBA32323232F,
+							IMAGE_FORMAT_RGBA32323232F, IMAGE_FORMAT_RGBA32323232F,
+							IMAGE_FORMAT_RGBA16161616F, IMAGE_FORMAT_RGBA16161616F };
 
-// ImageFormat s_rt_formats[]={ 
+// ImageFormat s_rt_formats[]={
 // 	IMAGE_FORMAT_RGBA16161616F, IMAGE_FORMAT_RGBA16161616F,
 // 	IMAGE_FORMAT_RGBA16161616F, IMAGE_FORMAT_RGBA16161616F,
 // 	IMAGE_FORMAT_RGBA16161616F, IMAGE_FORMAT_RGBA16161616F,
@@ -1348,11 +1348,11 @@ void AllocateLightingPreviewtextures(void)
 				materials->CreateNamedRenderTargetTextureEx2(
 					s_rt_names[idx],
 					512, 512, RT_SIZE_DEFAULT, s_rt_formats[idx],
-					MATERIAL_RT_DEPTH_SHARED, 
+					MATERIAL_RT_DEPTH_SHARED,
 					TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT,
 					CREATERENDERTARGETFLAGS_HDR )
 				);
-		
+
 		// End block in which all render targets should be allocated (kicking off an Alt-Tab type
 		// behavior)
 		MaterialSystemInterface()->EndRenderTargetAllocation();
@@ -1360,7 +1360,7 @@ void AllocateLightingPreviewtextures(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMaterial::Initialize( HWND hwnd )
@@ -1394,7 +1394,7 @@ bool CMaterial::Initialize( HWND hwnd )
 
 	return true;
 }
-						    
+
 
 
 //-----------------------------------------------------------------------------
@@ -1415,5 +1415,3 @@ void CMaterial::ShutDown(void)
 	delete g_pMaterialImageCache;
 	g_pMaterialImageCache = NULL;
 }
-
-

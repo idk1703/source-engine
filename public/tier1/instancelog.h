@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -14,35 +14,35 @@ template <class Object, class RecordType>
 class InstanceLogger
 {
 public:
-    typedef RecordType RecordType_t;
+	typedef RecordType RecordType_t;
 
 protected:
-    void InstanceLog( const char* pMsg )
-    {
-        m_records.AddToTail( BuildRecord( pMsg ) );
-    }
+	void InstanceLog( const char* pMsg )
+	{
+		m_records.AddToTail( BuildRecord( pMsg ) );
+	}
 
-    void DumpInstanceLog( )
-    {
+	void DumpInstanceLog( )
+	{
 		CUtlString str;
 
 		Msg( "--------\nDumping instance log for 0x%08p\n", this );
-        for ( auto it : m_records )
+		for ( auto it : m_records )
 		{
 			FormatRecord( &str, it );
-            Msg( "%s\n", str.Get() );
+			Msg( "%s\n", str.Get() );
 		}
-        Msg( "========\nInstance log complete for 0x%08p\n", this );
-    }
+		Msg( "========\nInstance log complete for 0x%08p\n", this );
+	}
 
 	virtual RecordType_t BuildRecord( const char* pMsg ) = 0;
 
 private:
-    CUtlVector< RecordType > m_records;
+	CUtlVector< RecordType > m_records;
 };
 
-// // Your class needs to implement something like this. You don't have to use a tuple, 
-// // but if you don't you also need to implement FormatRecord for your type. 
+// // Your class needs to implement something like this. You don't have to use a tuple,
+// // but if you don't you also need to implement FormatRecord for your type.
 // RecordType BuildRecord( const char* pMsg )
 // {
 //     return std::make_tuple( this, pMsg, g_FrameNum, Plat_FloatTime(), m_nAllocatedWidth, m_nAllocatedHeight, m_nAllocatedDepth, m_nTargetResidence, m_nCurrentResidence );
@@ -78,7 +78,7 @@ void format( std::stringstream& os, const std::tuple<Args...>& t )
 template <class RecordType>
 void FormatRecord( CUtlString *pOutStr, const RecordType& rt )
 {
-    std::stringstream stream;
-    format( stream, rt );
+	std::stringstream stream;
+	format( stream, rt );
 	( *pOutStr ) = stream.str().c_str();
 }

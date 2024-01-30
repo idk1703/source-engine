@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -44,11 +44,11 @@ public:
 
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 	virtual void OnTick( void );
-	
+
 	void ResetVictoryPanel();
 
 	void SetMapAndPopFile ();
-	
+
 private:
 	enum
 	{
@@ -218,7 +218,7 @@ private:
 		}
 		~CMvMLootItem()
 		{}
-		
+
 		vgui::ImagePanel *m_pUnopenedPanel;
 		CMsgMvMVictoryInfo_GrantReason m_eReason;
 		int m_nIndex;
@@ -226,7 +226,7 @@ private:
 
 	CUtlVector< CMvMLootItem* > m_vecLootPanels;
 	CUtlVector< vgui::EditablePanel* > m_vecRows;
-	
+
 	KeyValues *m_pItemModelPanelKVs;
 	KeyValues *m_pRowKVs;
 	KeyValues *m_pUnopenedLootKVs;
@@ -290,7 +290,7 @@ private:
 	CUtlVector< CMvMVictoryMannUpPlayerTab* > m_vecTabs;
 	CUtlVector< CMvMVictoryMannUpEntry* > m_PlayerEntryPanels;
 	CExImageButton *m_pDoneButton;
-	
+
 	CItemModelPanel *m_pMouseOverItemPanel;
 	CItemModelPanelToolTip *m_pMouseOverTooltip;
 
@@ -322,7 +322,7 @@ public:
 	virtual void OnKeyCodePressed( vgui::KeyCode code );
 
 	void MannUpServerResponse( CMsgMvMVictoryInfo &pData )
-	{ 
+	{
 		m_pVictoryPanelMannUp->MannUpServerResponse( pData );
 		m_pObjective = TFObjectiveResource();
 	}

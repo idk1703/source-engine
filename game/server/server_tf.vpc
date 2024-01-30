@@ -96,7 +96,7 @@ $Project "Server (TF)"
 			$File	"$SRCDIR\game\shared\tf\tf_weapon_passtime_gun.cpp"
 			$File	"$SRCDIR\game\shared\tf\tf_weapon_passtime_gun.h"
 			$File	"$SRCDIR\game\shared\tf\passtime_game_events.cpp"
-			$File	"$SRCDIR\game\shared\tf\passtime_game_events.h"	
+			$File	"$SRCDIR\game\shared\tf\passtime_game_events.h"
 			$File	"$SRCDIR\game\shared\tf\passtime_convars.cpp"
 			$File	"$SRCDIR\game\shared\tf\passtime_convars.h"
 			$File	"$SRCDIR\game\shared\tf\trigger_catapult_shared.cpp"
@@ -202,7 +202,7 @@ $Project "Server (TF)"
 			$File	"tf\tf_ammo_pack.cpp"
 			$File	"tf\tf_ammo_pack.h"
 			$File	"tf\tf_autobalance.cpp"
-			$File	"tf\tf_autobalance.h"			
+			$File	"tf\tf_autobalance.h"
 			$File	"tf\tf_bot_temp.cpp"
 			$File	"tf\tf_bot_temp.h"
 			$File	"tf\tf_client.cpp"
@@ -499,10 +499,10 @@ $Project "Server (TF)"
 					$File	"tf\bot\behavior\tf_bot_escort.cpp"
 					$File	"tf\bot\behavior\tf_bot_escort.h"
 					$File	"tf\bot\behavior\tf_bot_use_item.cpp"
-					$File	"tf\bot\behavior\tf_bot_use_item.h"						
+					$File	"tf\bot\behavior\tf_bot_use_item.h"
 					$File	"tf\bot\behavior\tf_bot_mvm_deploy_bomb.cpp"
 					$File	"tf\bot\behavior\tf_bot_mvm_deploy_bomb.h"
-					
+
 					$Folder	"Scenario"
 					{
 						$Folder	"CapturePoint"
@@ -557,7 +557,7 @@ $Project "Server (TF)"
 							$File	"tf\bot\behavior\scenario\capture_the_flag\tf_bot_attack_flag_defenders.h"
 						}
 					}
-					
+
 					$Folder	"Engineer"
 					{
 						$Folder	"MvMEngineer"
@@ -631,7 +631,7 @@ $Project "Server (TF)"
 						$File	"tf\bot\behavior\demoman\tf_bot_stickybomb_sentrygun.cpp"
 						$File	"tf\bot\behavior\demoman\tf_bot_stickybomb_sentrygun.h"
 					}
-					
+
 					$Folder	"NavEntities"
 					{
 						$File	"tf\bot\behavior\nav_entities\tf_bot_nav_ent_move_to.cpp"
@@ -641,13 +641,13 @@ $Project "Server (TF)"
 						$File	"tf\bot\behavior\nav_entities\tf_bot_nav_ent_destroy_entity.cpp"
 						$File	"tf\bot\behavior\nav_entities\tf_bot_nav_ent_destroy_entity.h"
 					}
-					
+
 					$Folder "Training"
 					{
 						$File	"tf\bot\behavior\training\tf_bot_training.cpp"
 						$File	"tf\bot\behavior\training\tf_bot_training.h"
 					}
-					
+
 					$Folder "Missions"
 					{
 						$File	"tf\bot\behavior\missions\tf_bot_mission_destroy_sentries.cpp"
@@ -664,7 +664,7 @@ $Project "Server (TF)"
 						$File	"tf\bot\behavior\squad\tf_bot_escort_squad_leader.h"
 					}
 				}
-				
+
 				$Folder "MapEntities"
 				{
 						$File	"tf\bot\map_entities\tf_bot_generator.cpp"
@@ -682,13 +682,13 @@ $Project "Server (TF)"
 						$File	"tf\bot\map_entities\tf_bot_roster.cpp"
 						$File	"tf\bot\map_entities\tf_bot_roster.h"
 						$File	"tf\bot\map_entities\tf_bot_hint.cpp"
-						$File	"tf\bot\map_entities\tf_bot_hint.h"						
+						$File	"tf\bot\map_entities\tf_bot_hint.h"
 						$File	"tf\bot\map_entities\tf_spawner_boss.cpp"
 						$File	"tf\bot\map_entities\tf_spawner_boss.h"
 						$File	"tf\bot\map_entities\tf_spawner.cpp"
 						$File	"tf\bot\map_entities\tf_spawner.h"
 				}
-				
+
 				$File	"tf\bot\tf_bot.cpp"
 				$File	"tf\bot\tf_bot.h"
 				$File	"tf\bot\tf_bot_manager.cpp"
@@ -702,7 +702,7 @@ $Project "Server (TF)"
 				$File	"tf\bot\tf_bot_locomotion.cpp"
 				$File	"tf\bot\tf_bot_locomotion.h"
 			}
-			
+
 			$Folder "NavMesh"
 			{
 				$File	"tf\nav_mesh\tf_nav_mesh.h"
@@ -751,7 +751,7 @@ $Project "Server (TF)"
 					$File	"tf\halloween\eyeball_boss\eyeball_boss.h"
 					$File	"$SRCDIR\game\shared\tf\halloween\eyeball_boss\teleport_vortex.cpp"
 					$File	"$SRCDIR\game\shared\tf\halloween\eyeball_boss\teleport_vortex.h"
-					
+
 					$Folder "Behavior"
 					{
 						$File	"tf\halloween\eyeball_boss\eyeball_behavior\eyeball_boss_behavior.cpp"
@@ -884,7 +884,7 @@ $Project "Server (TF)"
 				$File	"tf\player_vs_environment\tf_tank_boss_body.cpp"
 				$File	"tf\player_vs_environment\tf_tank_boss_body.h"
 				$File	"tf\player_vs_environment\tf_point_weapon_mimic.cpp"
-				
+
 				$Folder "Boss Alpha"
 				{
 					$File	"tf\player_vs_environment\boss_alpha\boss_alpha.cpp"
@@ -979,7 +979,7 @@ $Project "Server (TF)"
 				$File	"NextBot\Path\NextBotPathFollow.cpp"
 				$File	"NextBot\Path\NextBotPathFollow.h"
 			}
-			
+
 			$Folder "NextBotPlayer"
 			{
 				$File	"NextBot\Player\NextBotPlayerBody.cpp"
@@ -1014,4 +1014,3 @@ $Project "Server (TF)"
 		}
 	}
 }
-

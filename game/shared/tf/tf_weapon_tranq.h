@@ -24,7 +24,7 @@ class CTFTranq : public CTFWeaponBaseGun
 public:
 
 	DECLARE_CLASS( CTFTranq, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 // Server specific.

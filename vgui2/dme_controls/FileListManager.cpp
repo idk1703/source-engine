@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -574,7 +574,7 @@ void CFileListManager::OnCommand( const char *cmd )
 
 //-----------------------------------------------------------------------------
 //
-// CFileManagerFrame methods 
+// CFileManagerFrame methods
 //
 //-----------------------------------------------------------------------------
 CFileManagerFrame::CFileManagerFrame( vgui::Panel *parent ) : BaseClass( parent, "FileManagerFrame" )

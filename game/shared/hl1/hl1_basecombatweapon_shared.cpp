@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -31,7 +31,7 @@ void CBaseHL1CombatWeapon::Spawn( void )
 	RemoveEFlags( EFL_USE_PARTITION_WHEN_NOT_SOLID );
 
 	m_iState = WEAPON_NOT_CARRIED;
-	// Assume 
+	// Assume
 	m_nViewModelIndex = 0;
 
 	// If I use clips, set my clips to the default
@@ -109,7 +109,7 @@ static ConVar	v_iroll_level( "v_iroll_level", "0.1"/*, FCVAR_UNREGISTERED*/ );
 static ConVar	v_ipitch_level( "v_ipitch_level", "0.3"/*, FCVAR_UNREGISTERED*/ );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CBaseHL1CombatWeapon::CalcViewmodelBob( void )
@@ -117,7 +117,7 @@ float CBaseHL1CombatWeapon::CalcViewmodelBob( void )
 	static	float bobtime;
 	static	float lastbobtime;
 	float	cycle;
-	
+
 	CBasePlayer *player = ToBasePlayer( GetOwner() );
 	//Assert( player );
 
@@ -138,7 +138,7 @@ float CBaseHL1CombatWeapon::CalcViewmodelBob( void )
 	speed = clamp( speed, -320, 320 );
 
 	float bob_offset = RemapVal( speed, 0, 320, 0.0f, 1.0f );
-	
+
 	bobtime += ( gpGlobals->curtime - lastbobtime ) * bob_offset;
 	lastbobtime = gpGlobals->curtime;
 
@@ -154,7 +154,7 @@ float CBaseHL1CombatWeapon::CalcViewmodelBob( void )
 	{
 		cycle = M_PI + M_PI*(cycle-HL1_BOB_UP)/(1.0 - HL1_BOB_UP);
 	}
-	
+
 	g_verticalBob = speed*0.005f;
 	g_verticalBob = g_verticalBob*0.3 + g_verticalBob*0.7*sin(cycle);
 
@@ -176,16 +176,16 @@ float CBaseHL1CombatWeapon::CalcViewmodelBob( void )
 	g_lateralBob = speed*0.005f;
 	g_lateralBob = g_lateralBob*0.3 + g_lateralBob*0.7*sin(cycle);
 	g_lateralBob = clamp( g_lateralBob, -7.0f, 4.0f );
-	
+
 	//NOTENOTE: We don't use this return value in our case (need to restructure the calculation function setup!)
 	return 0.0f;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &origin - 
-//			&angles - 
-//			viewmodelindex - 
+// Purpose:
+// Input  : &origin -
+//			&angles -
+//			viewmodelindex -
 //-----------------------------------------------------------------------------
 void CBaseHL1CombatWeapon::AddViewmodelBob( CBaseViewModel *viewmodel, Vector &origin, QAngle &angles )
 {
@@ -196,10 +196,10 @@ void CBaseHL1CombatWeapon::AddViewmodelBob( CBaseViewModel *viewmodel, Vector &o
 
 	// Apply bob, but scaled down to 40%
 	VectorMA( origin, g_verticalBob * 0.1f, forward, origin );
-	
+
 	// Z bob a bit more
 	origin[2] += g_verticalBob * 0.1f;
-	
+
 	// bob the angles
 	angles[ ROLL ]	+= g_verticalBob * 0.5f;
 	angles[ PITCH ]	-= g_verticalBob * 0.4f;

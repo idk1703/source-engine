@@ -114,21 +114,21 @@ static bool WeaponInfoLessFunc( const int& e1, const int&e2 )
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 C_CTFGameStats::C_CTFGameStats()
 {
 	m_ulExperimentValue = (uint64) ~0;
 
 	gamestats = this;
-	Clear();	
+	Clear();
 
 	m_mapWeaponInfo.SetLessFunc( WeaponInfoLessFunc );
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 C_CTFGameStats::~C_CTFGameStats()
 {
@@ -136,7 +136,7 @@ C_CTFGameStats::~C_CTFGameStats()
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets all game stats to their default value
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void C_CTFGameStats::Clear( void )
 {
@@ -206,7 +206,7 @@ bool C_CTFGameStats::Init( void )
 
 		// Now lets get the text language that Steam is in (If the game supports the language, then the UI is changed to that language).
 		engine->GetUILanguage( m_szTextLanguage, sizeof( m_szTextLanguage ) );
-		
+
 		V_strcpy_safe( m_szAudioLanguage, steamapicontext->SteamApps()->GetCurrentGameLanguage() );
 
 		m_currentSession.m_SessionStart = GetSteamWorksSGameStatsUploader().GetTimeSinceEpoch();
@@ -235,7 +235,7 @@ void C_CTFGameStats::Shutdown()
 {
 	if ( !steamapicontext )
 		return;
-	
+
 	if ( !steamapicontext->SteamUser() )
 		return;
 
@@ -279,7 +279,7 @@ void C_CTFGameStats::ClientDisconnect( int iReason )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_CTFGameStats::FireGameEvent( IGameEvent *event )
 {
@@ -758,7 +758,7 @@ void C_CTFGameStats::SW_GameStats_WriteClientRound( int winningTeam, int fullRou
 
 	if ( pData->m_iInvulns > 0 )
 	{
-		pKVData->SetInt( "Invulns", pData->m_iInvulns );		
+		pKVData->SetInt( "Invulns", pData->m_iInvulns );
 	}
 
 	if ( pData->m_iTeleports > 0 )
@@ -907,7 +907,7 @@ TF_Gamestats_AchievementEvent_t::TF_Gamestats_AchievementEvent_t( int in_achieve
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 TF_Gamestats_ClientSession_t::TF_Gamestats_ClientSession_t()
 {
@@ -1057,7 +1057,7 @@ TF_Gamestats_CraftingEvent::TF_Gamestats_CraftingEvent( int in_eventNum, CEconIt
 //----------------------------------------------------------------------------
 // Purpose: Records a store event for reporting.
 //-----------------------------------------------------------------------------
-void C_CTFGameStats::Event_Store( int eventID, CEconItemView* item, const char* panelName, int classId, 
+void C_CTFGameStats::Event_Store( int eventID, CEconItemView* item, const char* panelName, int classId,
 								 const cart_item_t* cartItem, int checkoutAttempts, const char* storeError, int totalPrice, int currencyCode )
 {
 	TF_Gamestats_StoreEvent event( eventID, item, panelName, classId, cartItem, checkoutAttempts, storeError, totalPrice, currencyCode );
@@ -1129,7 +1129,7 @@ void C_CTFGameStats::Event_Store( int eventID, CEconItemView* item, const char* 
 //-----------------------------------------------------------------------------
 // Purpose: Store event recorder.
 //-----------------------------------------------------------------------------
-TF_Gamestats_StoreEvent::TF_Gamestats_StoreEvent( int in_eventNum, CEconItemView* in_item, const char* in_panelName, int in_classId, 
+TF_Gamestats_StoreEvent::TF_Gamestats_StoreEvent( int in_eventNum, CEconItemView* in_item, const char* in_panelName, int in_classId,
 												 const cart_item_t* in_cartItem, int in_checkoutAttempts, const char* in_storeError, int in_totalPrice, int in_currencyCode )
 : TF_Gamestats_ItemEvent( in_eventNum, in_item )
 {
@@ -1302,7 +1302,7 @@ void C_CTFGameStats::Event_Trading( TF_Gamestats_TradeEvent& event )
 void C_CTFGameStats::Event_Trading( int eventID, CEconItemView* item, bool localPlayerIsPartyA,
 								   uint64 steamIDPartyA, uint64 steamIDPartyB, int iTradeRequests, int iTradeAttempts )
 {
-	TF_Gamestats_TradeEvent event( eventID, item, localPlayerIsPartyA, 
+	TF_Gamestats_TradeEvent event( eventID, item, localPlayerIsPartyA,
 		steamIDPartyA, steamIDPartyB, iTradeRequests, iTradeAttempts );
 	m_vecTradeEvents.AddToTail( event );
 
@@ -1329,7 +1329,7 @@ void C_CTFGameStats::Event_Trading( int eventID, int iTradeRequests, const char*
 // Purpose: Trade event recorder.
 //-----------------------------------------------------------------------------
 TF_Gamestats_TradeEvent::TF_Gamestats_TradeEvent( int in_eventNum, CEconItemView* in_item, bool in_localPlayerIsPartyA,
-												 uint64 in_steamIDPartyA, uint64 in_steamIDPartyB, 
+												 uint64 in_steamIDPartyA, uint64 in_steamIDPartyB,
 												 int in_tradeRequests, int in_tradeAttempts )
 : TF_Gamestats_ItemEvent( in_eventNum, in_item )
 {
@@ -1345,7 +1345,7 @@ TF_Gamestats_TradeEvent::TF_Gamestats_TradeEvent( int in_eventNum, CEconItemView
 	reason = NULL;
 }
 
-TF_Gamestats_TradeEvent::TF_Gamestats_TradeEvent( int in_eventNum, uint64 in_steamIDRequested, 
+TF_Gamestats_TradeEvent::TF_Gamestats_TradeEvent( int in_eventNum, uint64 in_steamIDRequested,
 												 int in_tradeRequests, int in_tradeAttempts )
 : TF_Gamestats_ItemEvent( in_eventNum, NULL )
 {
@@ -1391,7 +1391,7 @@ static const bool g_bRecordClientInterfaceEventsToOGS = false;
 
 	KeyValues* pKVData = new KeyValues( "TF2UIEvents" );
 	pKVData->SetInt( "EventCounter", s_unEventCount++ );
-	
+
 	if ( pszEventType )
 	{
 		pKVData->SetString( "EventTypeID", pszEventType );

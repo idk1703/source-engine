@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,7 +14,7 @@
 
 using namespace vgui;
 
-namespace vgui 
+namespace vgui
 {
 	class Panel;
 	class Label;
@@ -44,10 +44,10 @@ public:
 
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 	virtual void Start( IGameUIFuncs *pGameUIFuncs, IGameEventManager2 * pGameEventManager );
-		
+
 	int GetDeathMessageStartHeight( void );
 
-	virtual void ShowBackGround(bool bShow) 
+	virtual void ShowBackGround(bool bShow)
 	{
 		m_pBackGround->SetVisible( false );	// CS:S menus paint their own backgrounds...
 	}

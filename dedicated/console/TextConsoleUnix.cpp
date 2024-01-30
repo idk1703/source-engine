@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -54,7 +54,7 @@ TINFO_SYM(char *, tgetstr,  (char *id, char **area), (id, area), return);
 static bool init_tinfo_functions()
 {
 #if !defined( LINUX )
-    return true;
+	return true;
 #else
 	static void *s_ncurses_handle = NULL;
 
@@ -94,7 +94,7 @@ static bool init_tinfo_functions()
 		if ( !s_ncurses_handle )
 		{
 			fprintf( stderr, "\nWARNING: Failed to load 32-bit libtinfo.so.5 or libncurses.so.5.\n"
-							 "  Please install (lib32tinfo5 / ncurses-libs.i686 / equivalent) to enable readline.\n\n");
+							"  Please install (lib32tinfo5 / ncurses-libs.i686 / equivalent) to enable readline.\n\n");
 		}
 	}
 
@@ -134,16 +134,16 @@ static unsigned char editline_complete( EditLine *el, int ch __attribute__((__un
 				continue;
 
 			if ( !Q_strncmp( cmd, s_cmds[i], len ) )
-			{ 
+			{
 				if ( el_insertstr( el, s_cmds[i] + len ) == -1 )
 					return CC_ERROR;
-				else 
+				else
 					return CC_REFRESH;
 			}
 		}
 	}
 
-	return CC_ERROR; 
+	return CC_ERROR;
 }
 
 static const char *editline_prompt( EditLine *e )
@@ -166,7 +166,7 @@ static bool add_command( const char *cmd, int cmd_len )
 {
 	if ( cmd )
 	{
-		tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ ); 
+		tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
 
 		// Trim trailing whitespace.
 		while ( ( cmd_len > 0 ) && isspace( cmd[ cmd_len - 1 ] ) )
@@ -311,7 +311,7 @@ bool CTextConsoleUnix::Init()
 		if ( pthread_create( &g_threadid, NULL, terminal_threadproc, (void *)m_tty ) != 0 )
 		{
 			g_threadid = (pthread_t)-1;
-			fprintf( stderr, "WARNING: pthread_create failed: %s.\n", strerror(errno) ); 
+			fprintf( stderr, "WARNING: pthread_create failed: %s.\n", strerror(errno) );
 		}
 	}
 	else
@@ -341,7 +341,7 @@ void CTextConsoleUnix::ShutDown()
 		pthread_join( tid, &status );
 	}
 
-	pthread_mutex_destroy( &g_lock ); 
+	pthread_mutex_destroy( &g_lock );
 }
 
 void CTextConsoleUnix::Print( char * pszMsg )

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -14,7 +14,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: encapsulates the data string in the map file 
+// Purpose: encapsulates the data string in the map file
 //			that is used to initialise entities.  The data
 //			string contains a set of key/value pairs.
 //-----------------------------------------------------------------------------
@@ -26,7 +26,7 @@ private:
 	char	*m_pCurrentKey;
 
 public:
-	explicit CEntityMapData( char *entBlock, int nEntBlockSize = -1 ) : 
+	explicit CEntityMapData( char *entBlock, int nEntBlockSize = -1 ) :
 		m_pEntData(entBlock), m_nEntDataSize(nEntBlockSize), m_pCurrentKey(entBlock) {}
 
 	// find the keyName in the entdata and puts it's value into Value.  returns false if key is not found
@@ -35,7 +35,7 @@ public:
 	// find the nth keyName in the endata and change its value to specified one
 	// where n == nKeyInstance
 	bool SetValue( const char *keyName, char *NewValue, int nKeyInstance = 0 );
-	
+
 	bool GetFirstKey( char *keyName, char *Value );
 	bool GetNextKey( char *keyName, char *Value );
 

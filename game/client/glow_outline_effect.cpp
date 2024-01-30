@@ -134,7 +134,7 @@ void CGlowObjectManager::RenderGlowModels( const CViewSetup *pSetup, int nSplitS
 		render->SetColorModulation( &vGlowColor[0] ); // This only sets rgb, not alpha
 
 		m_GlowObjectDefinitions[i].DrawModel();
-	}	
+	}
 
 	if ( g_bDumpRenderTargets )
 	{
@@ -144,7 +144,7 @@ void CGlowObjectManager::RenderGlowModels( const CViewSetup *pSetup, int nSplitS
 	g_pStudioRender->ForcedMaterialOverride( NULL );
 	render->SetColorModulation( vOrigColor.Base() );
 	render->SetBlend( flOrigBlend );
-	
+
 	ShaderStencilState_t stencilStateDisable;
 	stencilStateDisable.m_bEnable = false;
 	stencilStateDisable.SetStencilState( pRenderContext );
@@ -260,13 +260,13 @@ void CGlowObjectManager::ApplyEntityGlowEffects( const CViewSetup *pSetup, int n
 		return;
 
 	//=============================================
-	// Render the glow colors to _rt_FullFrameFB 
+	// Render the glow colors to _rt_FullFrameFB
 	//=============================================
 	{
 		PIXEvent pixEvent( pRenderContext, "RenderGlowModels" );
 		RenderGlowModels( pSetup, nSplitScreenSlot, pRenderContext );
 	}
-	
+
 	// Get viewport
 	int nSrcWidth = pSetup->width;
 	int nSrcHeight = pSetup->height;

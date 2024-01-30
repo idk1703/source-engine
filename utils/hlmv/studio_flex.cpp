@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -57,7 +57,7 @@ void StudioModel::RunFlexRules( )
 		pSrcModel = this;
 		pSrcStudioHdr = GetStudioHdr();
 	}
-	
+
 	float src[MAXSTUDIOFLEXCTRL*4];
 
 	for (LocalFlexController_t i = LocalFlexController_t(0); i < pSrcStudioHdr->numflexcontrollers(); i++)
@@ -67,10 +67,9 @@ void StudioModel::RunFlexRules( )
 		// remap m_flexweights to full dynamic range, global flexcontroller indexes
 		if (j >= 0 && j < MAXSTUDIOFLEXCTRL*4)
 		{
-			src[j] = pSrcModel->m_flexweight[i] * (pflex->max - pflex->min) + pflex->min; 
+			src[j] = pSrcModel->m_flexweight[i] * (pflex->max - pflex->min) + pflex->min;
 		}
 	}
-	
+
 	pDstStudioHdr->RunFlexRules( src, g_flexdescweight );
 }
-

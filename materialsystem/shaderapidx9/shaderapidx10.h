@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -159,7 +159,7 @@ public:
 	virtual KeyValues* GetDebugTextureList() { return NULL; }
 	virtual int GetTextureMemoryUsed( TextureMemoryType eTextureMemory ) { return 0; }
 	virtual bool SetDebugTextureRendering( bool bEnable ) { return false; }
-	
+
 public:
 	// Other public methods
 	void Unbind( VertexShaderHandle_t hShader );
@@ -369,8 +369,8 @@ private:
 	virtual MaterialFogMode_t GetSceneFogMode( );
 	virtual int GetPixelFogCombo( );
 
-	void SetHeightClipZ( float z ); 
-	void SetHeightClipMode( enum MaterialHeightClipMode_t heightClipMode ); 
+	void SetHeightClipZ( float z );
+	void SetHeightClipMode( enum MaterialHeightClipMode_t heightClipMode );
 
 	void SetClipPlane( int index, const float *pPlane );
 	void EnableClipPlane( int index, bool bEnable );
@@ -401,7 +401,7 @@ private:
 		Assert(0);
 	}
 
-	
+
 	void SetBooleanPixelShaderConstant( int var, BOOL const* pVec, int numBools = 1, bool bForce = false )
 	{
 		Assert(0);
@@ -476,13 +476,13 @@ private:
 	void ModifyTexture( ShaderAPITextureHandle_t textureHandle );
 
 	// Texture management methods
-	void TexImage2D( int level, int cubeFace, ImageFormat dstFormat, int zOffset, int width, int height, 
+	void TexImage2D( int level, int cubeFace, ImageFormat dstFormat, int zOffset, int width, int height,
 		ImageFormat srcFormat, bool bSrcIsTiled, void *imageData );
 	void TexSubImage2D( int level, int cubeFace, int xOffset, int yOffset, int zOffset, int width, int height,
 		ImageFormat srcFormat, int srcStride, bool bSrcIsTiled, void *imageData );
 	void TexImageFromVTF( IVTFTexture *pVTF, int iVTFFrame );
 
-	bool TexLock( int level, int cubeFaceID, int xOffset, int yOffset, 
+	bool TexLock( int level, int cubeFaceID, int xOffset, int yOffset,
 		int width, int height, CPixelWriter& writer );
 	void TexUnlock( );
 
@@ -490,28 +490,28 @@ private:
 	void TexMinFilter( ShaderTexFilterMode_t texFilterMode );
 	void TexMagFilter( ShaderTexFilterMode_t texFilterMode );
 	void TexWrap( ShaderTexCoordComponent_t coord, ShaderTexWrapMode_t wrapMode );
-	void TexSetPriority( int priority );	
+	void TexSetPriority( int priority );
 
-	ShaderAPITextureHandle_t CreateTexture( 
-		int width, 
+	ShaderAPITextureHandle_t CreateTexture(
+		int width,
 		int height,
 		int depth,
-		ImageFormat dstImageFormat, 
-		int numMipLevels, 
-		int numCopies, 
-		int flags, 
+		ImageFormat dstImageFormat,
+		int numMipLevels,
+		int numCopies,
+		int flags,
 		const char *pDebugName,
 		const char *pTextureGroupName );
-	void CreateTextures( 
+	void CreateTextures(
 		ShaderAPITextureHandle_t *pHandles,
 		int count,
-		int width, 
+		int width,
 		int height,
 		int depth,
-		ImageFormat dstImageFormat, 
-		int numMipLevels, 
-		int numCopies, 
-		int flags, 
+		ImageFormat dstImageFormat,
+		int numMipLevels,
+		int numCopies,
+		int flags,
 		const char *pDebugName,
 		const char *pTextureGroupName );
 	ShaderAPITextureHandle_t CreateDepthTexture( ImageFormat renderFormat, int width, int height, const char *pDebugName, bool bTexture );
@@ -680,13 +680,13 @@ private:
 	{
 	}
 
-	virtual const FlashlightState_t &GetFlashlightState( VMatrix &worldToTexture ) const 
+	virtual const FlashlightState_t &GetFlashlightState( VMatrix &worldToTexture ) const
 	{
 		static FlashlightState_t  blah;
 		return blah;
 	}
 
-	virtual const FlashlightState_t &GetFlashlightStateEx( VMatrix &worldToTexture, ITexture **pFlashlightDepthTexture ) const 
+	virtual const FlashlightState_t &GetFlashlightStateEx( VMatrix &worldToTexture, ITexture **pFlashlightDepthTexture ) const
 	{
 		static FlashlightState_t  blah;
 		return blah;
@@ -745,7 +745,7 @@ private:
 	{
 	}
 
-	// Lets the shader know about the full-screen texture so it can 
+	// Lets the shader know about the full-screen texture so it can
 	virtual void SetFullScreenTextureHandle( ShaderAPITextureHandle_t h )
 	{
 	}
@@ -894,7 +894,7 @@ private:
 		*pNumDefsOut = 0;
 		return 0;
 	}
-	
+
 	virtual bool OwnGPUResources( bool bEnable )
 	{
 		return false;
@@ -937,4 +937,3 @@ private:
 extern CShaderAPIDx10* g_pShaderAPIDx10;
 
 #endif // SHADERAPIDX10_H
-

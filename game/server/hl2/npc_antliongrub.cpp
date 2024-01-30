@@ -56,9 +56,9 @@ public:
 	virtual void Spawn( void );
 	virtual void Precache( void );
 	virtual void VPhysicsCollision( int index, gamevcollisionevent_t *pEvent );
-	virtual void Event_Killed( const CTakeDamageInfo &info ); 
+	virtual void Event_Killed( const CTakeDamageInfo &info );
 	virtual bool VPhysicsIsFlesh( void );
-	
+
 	bool	MyTouch( CBasePlayer *pPlayer );
 	void	SetDenomination( int nSize ) { Assert( nSize <= NUGGET_LARGE && nSize >= NUGGET_SMALL ); m_nDenomination = nSize; }
 
@@ -156,7 +156,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( npc_antlion_grub, CAntlionGrub );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionGrub::CreateGlow( void )
 {
@@ -173,14 +173,14 @@ void CAntlionGrub::CreateGlow( void )
 	int nAttachment = LookupAttachment( "glow" );
 	m_hGlowSprite->SetParent( this, nAttachment );
 	m_hGlowSprite->SetLocalOrigin( vec3_origin );
-	
+
 	// Don't uselessly animate, we're a static sprite!
 	m_hGlowSprite->SetThink( NULL );
 	m_hGlowSprite->SetNextThink( TICK_NEVER_THINK );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionGrub::FadeGlow( void )
 {
@@ -191,7 +191,7 @@ void CAntlionGrub::FadeGlow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionGrub::UpdateOnRemove( void )
 {
@@ -207,7 +207,7 @@ int CAntlionGrub::GetNuggetDenomination( void )
 {
 	// Find the desired health perc we want to be at
 	float flDesiredHealthPerc = DynamicResupply_GetDesiredHealthPercentage();
-	
+
 	CBasePlayer *pPlayer = AI_GetSinglePlayer();
 	if ( pPlayer == NULL )
 		return -1;
@@ -227,7 +227,7 @@ int CAntlionGrub::GetNuggetDenomination( void )
 	// The larger to discrepancy, the higher the chance to move quickly to close it
 	float flSeed = random->RandomFloat( 0.0f, 1.0f );
 	float flRandomPerc = Bias( flSeed, (1.0f-flPercDelta) );
-	
+
 	int nDenomination;
 	if ( flRandomPerc < 0.25f )
 	{
@@ -248,7 +248,7 @@ int CAntlionGrub::GetNuggetDenomination( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionGrub::CreateNugget( void )
 {
@@ -263,7 +263,7 @@ void CAntlionGrub::CreateNugget( void )
 	// Find out what size to make this nugget!
 	int nDenomination = GetNuggetDenomination();
 	pNugget->SetDenomination( nDenomination );
-	
+
 	pNugget->SetAbsOrigin( vecOrigin );
 	pNugget->SetAbsAngles( RandomAngle( 0, 360 ) );
 	DispatchSpawn( pNugget );
@@ -273,7 +273,7 @@ void CAntlionGrub::CreateNugget( void )
 	{
 		Vector vecForward;
 		GetVectors( &vecForward, NULL, NULL );
-		
+
 		Vector vecVelocity = RandomVector( -35.0f, 35.0f ) + ( vecForward * -RandomFloat( 50.0f, 75.0f ) );
 		AngularImpulse vecAngImpulse = RandomAngularImpulse( -100.0f, 100.0f );
 
@@ -282,8 +282,8 @@ void CAntlionGrub::CreateNugget( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &info - 
+// Purpose:
+// Input  : &info -
 //-----------------------------------------------------------------------------
 void CAntlionGrub::Event_Killed( const CTakeDamageInfo &info )
 {
@@ -315,8 +315,8 @@ void CAntlionGrub::Event_Killed( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &info - 
+// Purpose:
+// Input  : &info -
 //-----------------------------------------------------------------------------
 int CAntlionGrub::OnTakeDamage( const CTakeDamageInfo &info )
 {
@@ -343,7 +343,7 @@ inline bool CAntlionGrub::InPVS( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionGrub::SetNextThinkByDistance( void )
 {
@@ -361,7 +361,7 @@ void CAntlionGrub::SetNextThinkByDistance( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionGrub::Spawn( void )
 {
@@ -369,7 +369,7 @@ void CAntlionGrub::Spawn( void )
 	BaseClass::Spawn();
 
 	SetModel( ANTLIONGRUB_MODEL );
-	
+
 	// FIXME: This is a big perf hit with the number of grubs we're using! - jdw
 	CreateGlow();
 
@@ -411,7 +411,7 @@ void CAntlionGrub::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionGrub::Activate( void )
 {
@@ -423,10 +423,10 @@ void CAntlionGrub::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &vecTestPos - 
-//			*vecResult - 
-//			*flDist - 
+// Purpose:
+// Input  : &vecTestPos -
+//			*vecResult -
+//			*flDist -
 // Output : inline bool
 //-----------------------------------------------------------------------------
 inline bool CAntlionGrub::ProbeSurface( const Vector &vecTestPos, const Vector &vecDir, Vector *vecResult, Vector *vecNormal )
@@ -457,7 +457,7 @@ void CAntlionGrub::AttachToSurface( void )
 	Vector vecForward, vecRight, vecDown;
 	GetVectors( &vecForward, &vecRight, &vecDown );
 	vecDown.Negate();
-	
+
 	Vector vecOffset = ( vecDown * -8.0f );
 
 	// Middle
@@ -495,7 +495,7 @@ void CAntlionGrub::AttachToSurface( void )
 
 		bNegate = false;
 	}
-	
+
 	// Find the line we'll lay on if these two points are connected by a line
 	Vector vecLieDir = ( vecPivot - vecMid );
 	VectorNormalize( vecLieDir );
@@ -515,7 +515,7 @@ void CAntlionGrub::AttachToSurface( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionGrub::MakeIdleSounds( void )
 {
@@ -594,7 +594,7 @@ void CAntlionGrub::IdleThink( void )
 		SetNextThinkByDistance();
 		return;
 	}
-	
+
 	// At this range, the player agitates us with his presence
 	bool bPlayerWithinAgitationRange = ( flDistToPlayerSqr <= Square( (6*12) ) );
 	bool bAgitated = (bPlayerWithinAgitationRange || bFlinching );
@@ -635,7 +635,7 @@ void CAntlionGrub::IdleThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionGrub::FlinchThink( void )
 {
@@ -651,7 +651,7 @@ void CAntlionGrub::FlinchThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionGrub::GrubTouch( CBaseEntity *pOther )
 {
@@ -665,7 +665,7 @@ void CAntlionGrub::GrubTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionGrub::Precache( void )
 {
@@ -697,7 +697,7 @@ void CAntlionGrub::InputSquash( inputdata_t &data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionGrub::SpawnSquashedGrub( void )
 {
@@ -715,7 +715,7 @@ void CAntlionGrub::SpawnSquashedGrub( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionGrub::MakeSquashDecals( const Vector &vecOrigin )
 {
@@ -742,7 +742,7 @@ void CAntlionGrub::MakeSquashDecals( const Vector &vecOrigin )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAntlionGrub::Squash( CBaseEntity *pOther, bool bDealDamage, bool bSpawnBlood )
 {
@@ -754,7 +754,7 @@ void CAntlionGrub::Squash( CBaseEntity *pOther, bool bDealDamage, bool bSpawnBlo
 
 	AddEffects( EF_NODRAW );
 	AddSolidFlags( FSOLID_NOT_SOLID );
-	
+
 	// Stop being attached to us
 	if ( m_hGlowSprite )
 	{
@@ -789,7 +789,7 @@ void CAntlionGrub::Squash( CBaseEntity *pOther, bool bDealDamage, bool bSpawnBlo
 		QAngle vecAngles;
 		VectorAngles( vecDir, vecAngles );
 		DispatchParticleEffect( "GrubSquashBlood", vecSplortPos, vecAngles );
-		
+
 		MakeSquashDecals( GetAbsOrigin() + vecForward * 32.0f );
 		MakeSquashDecals( GetAbsOrigin() - vecForward * 32.0f );
 	}
@@ -803,10 +803,10 @@ void CAntlionGrub::Squash( CBaseEntity *pOther, bool bDealDamage, bool bSpawnBlo
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &info - 
-//			&vecDir - 
-//			*ptr - 
+// Purpose:
+// Input  : &info -
+//			&vecDir -
+//			*ptr -
 //-----------------------------------------------------------------------------
 void CAntlionGrub::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr )
 {
@@ -838,19 +838,19 @@ void CAntlionGrub::InputAgitate( inputdata_t &inputdata )
 // =====================================================================
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrubNugget::Spawn( void )
 {
 	Precache();
-	
+
 	if ( m_nDenomination == NUGGET_LARGE )
 	{
 		SetModel( "models/grub_nugget_large.mdl" );
 	}
 	else if ( m_nDenomination == NUGGET_MEDIUM )
 	{
-		SetModel( "models/grub_nugget_medium.mdl" );	
+		SetModel( "models/grub_nugget_medium.mdl" );
 	}
 	else
 	{
@@ -868,7 +868,7 @@ void CGrubNugget::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrubNugget::Precache( void )
 {
@@ -891,8 +891,8 @@ bool CGrubNugget::VPhysicsIsFlesh( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
+// Purpose:
+// Input  : *pPlayer -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CGrubNugget::MyTouch( CBasePlayer *pPlayer )
@@ -925,15 +925,15 @@ bool CGrubNugget::MyTouch( CBasePlayer *pPlayer )
 	CPASAttenuationFilter filter( pPlayer, "GrubNugget.Touch" );
 	EmitSound( filter, pPlayer->entindex(), "GrubNugget.Touch" );
 
-	UTIL_Remove( this );	
+	UTIL_Remove( this );
 
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
-//			*pEvent - 
+// Purpose:
+// Input  : index -
+//			*pEvent -
 //-----------------------------------------------------------------------------
 void CGrubNugget::VPhysicsCollision( int index, gamevcollisionevent_t *pEvent )
 {
@@ -947,7 +947,7 @@ void CGrubNugget::VPhysicsCollision( int index, gamevcollisionevent_t *pEvent )
 			// hit world
 			pHitEntity = GetContainingEntity( INDEXENT(0) );
 		}
-		
+
 		Vector damagePos;
 		pEvent->pInternalData->GetContactPoint( damagePos );
 		Vector damageForce = pEvent->postVelocity[index] * pEvent->pObjects[index]->GetMass();
@@ -966,8 +966,8 @@ void CGrubNugget::VPhysicsCollision( int index, gamevcollisionevent_t *pEvent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &info - 
+// Purpose:
+// Input  : &info -
 //-----------------------------------------------------------------------------
 void CGrubNugget::Event_Killed( const CTakeDamageInfo &info )
 {

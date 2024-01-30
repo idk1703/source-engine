@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -77,7 +77,7 @@ class CFogSystem : public CAutoGameSystem
 public:
 
 	// Creation/Init.
-	CFogSystem( char const *name ) : CAutoGameSystem( name ) 
+	CFogSystem( char const *name ) : CAutoGameSystem( name )
 	{
 		m_pMasterController = NULL;
 	}

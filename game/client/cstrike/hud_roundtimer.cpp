@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -23,7 +23,7 @@ public:
 
 	CHudRoundTimer( const char *name );
 
-protected:	
+protected:
 	virtual void Paint();
 	virtual void Think();
 	virtual bool ShouldDraw();
@@ -119,7 +119,7 @@ void CHudRoundTimer::Think()
 		SetFgColor(m_TextColor);
 		return;
 	}
-	
+
 	if(timer <= 0)
 	{
 		timer = 0;
@@ -206,10 +206,10 @@ void CHudRoundTimer::Paint()
 		// in freeze period countdown to round start time
 		timer = (int)ceil(pRules->GetRoundStartTime()-gpGlobals->curtime);
 	}
-	
-	if(timer < 0) 
+
+	if(timer < 0)
 		timer = 0;
-		
+
 	int minutes = timer / 60;
 	int seconds = timer % 60;
 
@@ -227,7 +227,7 @@ void CHudRoundTimer::PaintTime(HFont font, int xpos, int ypos, int mins, int sec
 	surface()->DrawSetTextFont(font);
 	wchar_t unicode[6];
 	V_snwprintf(unicode, ARRAYSIZE(unicode), L"%d:%.2d", mins, secs);
-	
+
 	surface()->DrawSetTextPos(xpos, ypos);
 	surface()->DrawUnicodeString( unicode );
 }

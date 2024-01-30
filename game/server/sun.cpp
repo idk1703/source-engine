@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,14 +34,14 @@ public:
 
 public:
 	CNetworkVector( m_vDirection );
-	
+
 	string_t	m_strMaterial;
 	string_t	m_strOverlayMaterial;
 
 	int		m_bUseAngles;
 	float	m_flPitch;
 	float	m_flYaw;
-	
+
 	CNetworkVar( int, m_nSize );		// Size of the main core image
 	CNetworkVar( int, m_nOverlaySize ); // Size for the glow overlay
 	CNetworkVar( color32, m_clrOverlay );
@@ -70,7 +70,7 @@ LINK_ENTITY_TO_CLASS( env_sun, CSun );
 BEGIN_DATADESC( CSun )
 
 	DEFINE_FIELD( m_vDirection,		FIELD_VECTOR ),
-	
+
 	DEFINE_KEYFIELD( m_bUseAngles, FIELD_INTEGER, "use_angles" ),
 	DEFINE_KEYFIELD( m_flPitch, FIELD_FLOAT, "pitch" ),
 	DEFINE_KEYFIELD( m_flYaw, FIELD_FLOAT, "angle" ),
@@ -79,7 +79,7 @@ BEGIN_DATADESC( CSun )
 	DEFINE_KEYFIELD( m_nOverlaySize, FIELD_INTEGER, "overlaysize" ),
 	DEFINE_KEYFIELD( m_strMaterial, FIELD_STRING, "material" ),
 	DEFINE_KEYFIELD( m_strOverlayMaterial, FIELD_STRING, "overlaymaterial" ),
-	
+
 	// NOT SAVED
 	// m_nOverlayMaterial
 	// m_nMaterial
@@ -96,7 +96,7 @@ END_DATADESC()
 CSun::CSun()
 {
 	m_vDirection.Init( 0, 0, 1 );
-	
+
 	m_bUseAngles = false;
 	m_flPitch = 0;
 	m_flYaw = 0;
@@ -142,7 +142,7 @@ void CSun::Activate()
 	{
 		m_strMaterial = AllocPooledString( "sprites/light_glow02_add_noz.vmt" );
 	}
-	else 
+	else
 	{
 		const char *pExtension = V_GetFileExtension( STRING( m_strMaterial ) );
 		if ( !pExtension )
@@ -158,7 +158,7 @@ void CSun::Activate()
 	{
 		m_strOverlayMaterial = AllocPooledString( "sprites/light_glow02_add_noz.vmt" );
 	}
-	else 
+	else
 	{
 		const char *pExtension = V_GetFileExtension( STRING( m_strOverlayMaterial ) );
 		if ( !pExtension )
@@ -199,5 +199,3 @@ int CSun::UpdateTransmitState()
 {
 	return SetTransmitState( FL_EDICT_ALWAYS );
 }
-
-

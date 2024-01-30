@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -76,7 +76,7 @@ void CAttributeInterpolatorChoicePanel::SetAttributeFromComboBoxes( vgui::ComboB
 
 
 //-----------------------------------------------------------------------------
-// Sets the combo box from the attribute 
+// Sets the combo box from the attribute
 //-----------------------------------------------------------------------------
 void CAttributeInterpolatorChoicePanel::SetComboBoxesFromAttribute( vgui::ComboBox *pComboBox[ 2 ] )
 {

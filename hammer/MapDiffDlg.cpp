@@ -59,7 +59,7 @@ void CMapDiffDlg::MapDiff(CWnd *pwndParent, CMapDoc *pCurrentMapDoc)
 		s_pDlg->Create(IDD, pwndParent);
 		s_pDlg->ShowWindow(SW_SHOW);
 		s_pCurrentMap = pCurrentMapDoc;
-	}	
+	}
 }
 
 // MapDiffDlg message handlers
@@ -73,7 +73,7 @@ void CMapDiffDlg::OnBnClickedSimilarcheck()
 void CMapDiffDlg::OnBnClickedMapbrowse()
 {
 	CString	m_pszFilename;
-	
+
 	// TODO: Add your control notification handler code here
 	static char szInitialDir[MAX_PATH] = "";
 	if (szInitialDir[0] == '\0')
@@ -106,27 +106,27 @@ void CMapDiffDlg::OnBnClickedOk()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapDiffDlg::OnOK()
 {
 	CString strFilename;
 	m_mapName.GetWindowText( strFilename );
 	CHammer *pApp = (CHammer*) AfxGetApp();
-	CMapDoc *pDoc = (CMapDoc*) pApp->pMapDocTemplate->OpenDocumentFile( strFilename );	
-    CUtlVector <int> IDList;
-	
+	CMapDoc *pDoc = (CMapDoc*) pApp->pMapDocTemplate->OpenDocumentFile( strFilename );
+	CUtlVector <int> IDList;
+
 	const CMapObjectList *pChildren = pDoc->GetMapWorld()->GetChildren();
 
 	FOR_EACH_OBJ( *pChildren, pos )
-	{		
+	{
 		int nID = pChildren->Element(pos)->GetID();
 		IDList.AddToTail( nID );
-	}	
+	}
 
 	pDoc->OnCloseDocument();
-	
-	CVisGroup *resultsVisGroup = NULL;	
+
+	CVisGroup *resultsVisGroup = NULL;
 	pChildren = s_pCurrentMap->GetMapWorld()->GetChildren();
 	int nTotalSimilarities = 0;
 	if ( m_bCheckSimilar )
@@ -136,7 +136,7 @@ void CMapDiffDlg::OnOK()
 			CMapClass *pChild = pChildren->Element(pos)	;
 			int ID = pChild->GetID();
 			if ( IDList.Find( ID ) != -1 )
-			{	
+			{
 				if ( resultsVisGroup == NULL )
 				{
 					resultsVisGroup = s_pCurrentMap->VisGroups_AddGroup( "Similar" );
@@ -144,7 +144,7 @@ void CMapDiffDlg::OnOK()
 				}
 				pChild->AddVisGroup( resultsVisGroup );
 			}
-		}	
+		}
 	}
 	if ( nTotalSimilarities > 0 )
 	{

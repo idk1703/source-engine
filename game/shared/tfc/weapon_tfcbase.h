@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -55,7 +55,7 @@ typedef enum
 
 /*
 
-  CWeaponTFCBase
+	CWeaponTFCBase
 	|
 	|--> CTFCCrowbar
 	|		|
@@ -73,13 +73,13 @@ typedef enum
 	|--> CTFCNailgun
 	|		|
 	|		|--> CTFCSuperNailgun
-					
+
 */
 class CWeaponTFCBase : public CBaseCombatWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponTFCBase, CBaseCombatWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponTFCBase();
@@ -111,14 +111,14 @@ public:
 	virtual void Spawn();
 	virtual bool DefaultReload( int iClipSize1, int iClipSize2, int iActivity );
 	void SendReloadSoundEvent();
-	
+
 	virtual Vector GetSoundEmissionOrigin() const;
 
 #endif
 
 
 private:
-	
+
 	CWeaponTFCBase( const CWeaponTFCBase & );
 };
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		Projectile shot by bullsquid 
+// Purpose:		Projectile shot by bullsquid
 //
 // $Workfile:     $
 // $Date:         $
@@ -47,9 +47,9 @@ public:
 
 private:
 	DECLARE_DATADESC();
-	
+
 	void	InitHissSound( void );
-	
+
 	CHandle< CParticleSystem >	m_hSpitEffect;
 	CSoundPatch		*m_pHissSound;
 	bool			m_bPlaySound;

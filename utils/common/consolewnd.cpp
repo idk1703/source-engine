@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ class CConsoleWnd : public IConsoleWnd
 public:
 					CConsoleWnd();
 					~CConsoleWnd();
-	
+
 	bool			Init( void *hInstance, int dialogResourceID, int editControlID, bool bVisible );
 	void			Term();
 
@@ -41,24 +41,24 @@ public:
 
 private:
 
-	int				WindowProc( 
+	int				WindowProc(
 		HWND hwndDlg,  // handle to dialog box
 		UINT uMsg,     // message
 		WPARAM wParam, // first message parameter
 		LPARAM lParam  // second message parameter
-		);	
-	
+		);
+
 	static int		CALLBACK StaticWindowProc(
 		HWND hwndDlg,  // handle to dialog box
 		UINT uMsg,     // message
 		WPARAM wParam, // first message parameter
 		LPARAM lParam  // second message parameter
-		);	
+		);
 
 	void			RepositionEditControl();
 
-	
-private:	
+
+private:
 
 	HWND			m_hWnd;
 	HWND			m_hEditControl;
@@ -105,8 +105,8 @@ bool CConsoleWnd::Init( void *hInstance, int dialogResourceID, int editControlID
 
 	RepositionEditControl();
 
-	m_bVisible = bVisible;		
-	return true; 
+	m_bVisible = bVisible;
+	return true;
 }
 
 
@@ -129,13 +129,13 @@ void CConsoleWnd::Release()
 void CConsoleWnd::SetVisible( bool bVisible )
 {
 	ShowWindow( m_hWnd, bVisible ? SW_RESTORE : SW_HIDE );
-	
+
 	if ( bVisible )
 	{
 		ShowWindow( m_hWnd, SW_SHOW );
 		SetWindowPos( m_hWnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE );
 		UpdateWindow( m_hWnd );
-		
+
 		int nLen = (int)SendMessage( m_hEditControl, EM_GETLIMITTEXT, 0, 0 );
 		SendMessage( m_hEditControl, EM_SETSEL, nLen, nLen );
 	}
@@ -143,7 +143,7 @@ void CConsoleWnd::SetVisible( bool bVisible )
 	{
 		SetWindowPos( m_hWnd, 0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_HIDEWINDOW | SWP_NOOWNERZORDER );
 	}
-	
+
 	m_bVisible = bVisible;
 }
 
@@ -155,7 +155,7 @@ bool CConsoleWnd::IsVisible() const
 
 
 void CConsoleWnd::PrintToConsole( const char *pMsg )
-{								
+{
 	if ( m_nCurrentChars >= 16*1024 )
 	{
 		// Clear the edit control otherwise it'll stop outputting anything.
@@ -164,7 +164,7 @@ void CConsoleWnd::PrintToConsole( const char *pMsg )
 		int nLen = (int)SendMessage( m_hEditControl, EM_GETLIMITTEXT, 0, 0 );
 		SendMessage( m_hEditControl, EM_SETSEL, 0, nLen );
 		SendMessage( m_hEditControl, EM_REPLACESEL, FALSE, (LPARAM)"" );
-	}		
+	}
 
 	FormatAndSendToEditControl( m_hEditControl, pMsg );
 	m_nCurrentChars += (int)strlen( pMsg );
@@ -177,7 +177,7 @@ void CConsoleWnd::SetTitle( const char *pTitle )
 }
 
 
-int	CConsoleWnd::WindowProc( 
+int	CConsoleWnd::WindowProc(
 	HWND hwndDlg,  // handle to dialog box
 	UINT uMsg,     // message
 	WPARAM wParam, // first message parameter
@@ -185,7 +185,7 @@ int	CConsoleWnd::WindowProc(
 	)
 {
 	lParam = lParam; // avoid compiler warning
-	
+
 	if ( hwndDlg != m_hWnd )
 		return false;
 
@@ -221,8 +221,8 @@ int	CConsoleWnd::WindowProc(
 		}
 		break;
 	}
-	
-	return false;	
+
+	return false;
 }
 
 
@@ -252,7 +252,7 @@ void CConsoleWnd::RepositionEditControl()
 	rcNew.top = rcMain.top + EDITCONTROL_BORDER_SIZE;
 	rcNew.bottom = rcMain.bottom - EDITCONTROL_BORDER_SIZE;
 
-	SetWindowPos( 
+	SetWindowPos(
 		m_hEditControl,
 		NULL,
 		rcNew.left,
@@ -327,7 +327,3 @@ IConsoleWnd* CreateConsoleWnd( void *hInstance, int dialogResourceID, int editCo
 		return NULL;
 	}
 }
-
-
-
-

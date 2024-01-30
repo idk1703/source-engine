@@ -28,8 +28,8 @@ END_MESSAGE_MAP()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pParent - 
+// Purpose:
+// Input  : pParent -
 //-----------------------------------------------------------------------------
 CNewVisGroupDlg::CNewVisGroupDlg(CString &str, CWnd *pParent)
 	: CDialog(CNewVisGroupDlg::IDD, pParent)
@@ -43,8 +43,8 @@ CNewVisGroupDlg::CNewVisGroupDlg(CString &str, CWnd *pParent)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pDX - 
+// Purpose:
+// Input  : pDX -
 //-----------------------------------------------------------------------------
 void CNewVisGroupDlg::DoDataExchange(CDataExchange* pDX)
 {
@@ -58,17 +58,17 @@ void CNewVisGroupDlg::DoDataExchange(CDataExchange* pDX)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 BOOL CNewVisGroupDlg::OnInitDialog(void)
 {
 	m_bHideObjects = s_bLastHideObjects;
-	
+
 	CDialog::OnInitDialog();
 
 	CButton *pButton = (CButton *)GetDlgItem(IDC_CREATE_NEW_VISGROUP);
 	pButton->SetCheck(1);
-	
+
 	m_cGroupList.SubclassDlgItem(IDC_GROUP_LIST, this);
 	UpdateGroupList();
 
@@ -89,9 +89,9 @@ void CNewVisGroupDlg::GetName(CString &str)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CNewVisGroupDlg::OnOK() 
+void CNewVisGroupDlg::OnOK()
 {
 	CDialog::OnOK();
 	s_bLastHideObjects = m_bHideObjects;
@@ -102,7 +102,7 @@ void CNewVisGroupDlg::OnOK()
 // Purpose: Switches the mode of the dialog to pick an existing visgroup rather than
 //			create a new one.
 //-----------------------------------------------------------------------------
-void CNewVisGroupDlg::OnPlaceInExistingVisGroup() 
+void CNewVisGroupDlg::OnPlaceInExistingVisGroup()
 {
 	CEdit *pEdit = (CEdit *)GetDlgItem(IDC_VISGROUP_NAME);
 	pEdit->EnableWindow(FALSE);
@@ -116,7 +116,7 @@ void CNewVisGroupDlg::OnPlaceInExistingVisGroup()
 // Purpose: Switches the mode of the dialog to create a new visgroup rather than
 //			pick an existing one.
 //-----------------------------------------------------------------------------
-void CNewVisGroupDlg::OnCreateNewVisGroup() 
+void CNewVisGroupDlg::OnCreateNewVisGroup()
 {
 	CEdit *pEdit = (CEdit *)GetDlgItem(IDC_VISGROUP_NAME);
 	pEdit->EnableWindow(TRUE);
@@ -139,7 +139,7 @@ LRESULT CNewVisGroupDlg::OnSelChangeGroupList(WPARAM wParam, LPARAM lParam)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNewVisGroupDlg::UpdateGroupList(void)
 {
@@ -164,10 +164,9 @@ void CNewVisGroupDlg::UpdateGroupList(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CVisGroup *CNewVisGroupDlg::GetPickedVisGroup(void)
 {
 	return m_pPickedVisGroup;
 }
-

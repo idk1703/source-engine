@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -56,7 +56,7 @@ protected:
 	void	UpdateFlames( void );
 	void	AddFlames( void );
 	void	Start( void );
-	
+
 	float	GetFlickerScale( void );
 
 //C_BaseEntity
@@ -101,12 +101,12 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pRecvProp - 
-//			*pStruct - 
-//			*pVarData - 
-//			*pIn - 
-//			objectID - 
+// Purpose:
+// Input  : *pRecvProp -
+//			*pStruct -
+//			*pVarData -
+//			*pIn -
+//			objectID -
 //-----------------------------------------------------------------------------
 void RecvProxy_PlasmaScale( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
@@ -117,19 +117,19 @@ void RecvProxy_PlasmaScale( const CRecvProxyData *pData, void *pStruct, void *pO
 	if ( pPlasmaSmoke->m_flScale != scale )
 	{
 		pPlasmaSmoke->m_flScaleStart	= pPlasmaSmoke->m_flScaleRegister;
-		pPlasmaSmoke->m_flScaleEnd		= scale;			
+		pPlasmaSmoke->m_flScaleEnd		= scale;
 
 		pPlasmaSmoke->m_flScale = scale;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pRecvProp - 
-//			*pStruct - 
-//			*pVarData - 
-//			*pIn - 
-//			objectID - 
+// Purpose:
+// Input  : *pRecvProp -
+//			*pStruct -
+//			*pVarData -
+//			*pIn -
+//			objectID -
 //-----------------------------------------------------------------------------
 void RecvProxy_PlasmaScaleTime( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
@@ -153,7 +153,7 @@ void RecvProxy_PlasmaScaleTime( const CRecvProxyData *pData, void *pStruct, void
 		pPlasmaSmoke->m_flScaleTime = time;
 	}
 
-	
+
 }
 
 //Receive datatable
@@ -190,9 +190,9 @@ C_Plasma::C_Plasma()
 	m_flScaleTimeEnd	= 0.0f;
 	m_flGlowScale		= 0.0f;
 	m_bClipTested		= false;
-	
+
 	m_entGlow.Clear();
-	
+
 	//Clear all child flames
 	for ( int i = 0; i < NUM_CHILD_FLAMES; i++ )
 	{
@@ -205,7 +205,7 @@ C_Plasma::~C_Plasma()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float C_Plasma::GetFlickerScale( void )
@@ -215,12 +215,12 @@ float C_Plasma::GetFlickerScale( void )
 	result = sin( gpGlobals->curtime * 10000.0f );
 	result += 0.5f * sin( gpGlobals->curtime * 2000.0f );
 	result -= 0.5f * cos( gpGlobals->curtime * 8000.0f );
-	
+
 	return result * 0.1f;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_Plasma::AddEntity( void )
 {
@@ -245,7 +245,7 @@ void C_Plasma::AddEntity( void )
 #define	FLAME_TRANS_START	0.75f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_Plasma::AddFlames( void )
 {
@@ -274,8 +274,8 @@ void C_Plasma::AddFlames( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bnewentity - 
+// Purpose:
+// Input  : bnewentity -
 //-----------------------------------------------------------------------------
 void C_Plasma::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -288,7 +288,7 @@ void C_Plasma::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_Plasma::ShouldDraw()
@@ -297,7 +297,7 @@ bool C_Plasma::ShouldDraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_Plasma::Start( void )
 {
@@ -316,9 +316,9 @@ void C_Plasma::Start( void )
 		offset[0] = 0.0f;
 		offset[1] = random->RandomFloat( 0, 360 );
 		offset[2] = 0.0f;
-	
+
   		AngleVectors( offset, &m_entFlames[i].m_vecMoveDir );
-		
+
 		int	nModelIndex = ( i % 2 ) ? m_nPlasmaModelIndex : m_nPlasmaModelIndex2;
 
 		model_t *pModel	= (model_t *) modelinfo->GetModel( nModelIndex );
@@ -335,7 +335,7 @@ void C_Plasma::Start( void )
 		m_entFlames[i].SetRenderColor( 255, 255, 255, 255 );
 		m_entFlames[i].SetBrightness( 255 );
 		m_entFlames[i].index				= -1;
-		
+
 		if ( i == 0 )
 		{
 			m_entFlameScales[i] = 1.0f;
@@ -356,7 +356,7 @@ void C_Plasma::Start( void )
 	m_entGlow.SetRenderColor( 255, 255, 255, 255 );
 	m_entGlow.SetBrightness( 255 );
 	m_entGlow.index				= -1;
-	
+
 	m_flGlowScale				= m_flStartScale;
 
 	m_entGlow.AddToLeafSystem( RENDER_GROUP_TRANSLUCENT_ENTITY );
@@ -366,7 +366,7 @@ void C_Plasma::Start( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_Plasma::UpdateAnimation( void )
 {
@@ -388,7 +388,7 @@ void C_Plasma::UpdateAnimation( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_Plasma::UpdateFlames( void )
 {
@@ -408,7 +408,7 @@ void C_Plasma::UpdateFlames( void )
 
 		// Note: Sprite render assumes 0 scale means 1.0
 		m_entFlames[i].SetScale ( MAX(0.000001,newScale) );
-		
+
 		if ( i != 0 )
 		{
 			m_entFlames[i].SetLocalOrigin( offset + ( m_entFlames[i].m_vecMoveDir * ((m_entFlames[i].GetScale())*CHILD_SPREAD) ) );
@@ -420,7 +420,7 @@ void C_Plasma::UpdateFlames( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_Plasma::UpdateScale( void )
 {
@@ -436,7 +436,7 @@ void C_Plasma::UpdateScale( void )
 		else
 		{
 			//Lerp the scale and set it
-			float	timeFraction = 1.0f - ( m_flScaleTimeEnd - time ) / ( m_flScaleTimeEnd - m_flScaleTimeStart );	
+			float	timeFraction = 1.0f - ( m_flScaleTimeEnd - time ) / ( m_flScaleTimeEnd - m_flScaleTimeStart );
 			float	newScale = m_flScaleStart + ( ( m_flScaleEnd - m_flScaleStart ) * timeFraction );
 
 			m_flScaleRegister = m_flStartScale = newScale;
@@ -445,8 +445,8 @@ void C_Plasma::UpdateScale( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fTimeDelta - 
+// Purpose:
+// Input  : fTimeDelta -
 //-----------------------------------------------------------------------------
 void C_Plasma::Update( void )
 {
@@ -473,4 +473,3 @@ void C_Plasma::Update( void )
 		}
 	}
 }
-

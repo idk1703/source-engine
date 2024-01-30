@@ -64,7 +64,7 @@ BEGIN_DATADESC( CNPC_GroundTurret )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_GroundTurret::Precache( void )
 {
@@ -82,7 +82,7 @@ void CNPC_GroundTurret::Precache( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_GroundTurret::Spawn( void )
 {
@@ -178,8 +178,8 @@ void CNPC_GroundTurret::PrescheduleThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 Class_T	CNPC_GroundTurret::Classify( void )
 {
@@ -238,7 +238,7 @@ void CNPC_GroundTurret::Event_Killed( const CTakeDamageInfo &info )
 		return;
 
 	m_pSmoke = SmokeTrail::CreateSmokeTrail();
-	
+
 	if ( m_pSmoke )
 	{
 		m_pSmoke->m_SpawnRate			= 18;
@@ -249,7 +249,7 @@ void CNPC_GroundTurret::Event_Killed( const CTakeDamageInfo &info )
 		m_pSmoke->m_MinSpeed			= 8;
 		m_pSmoke->m_MaxSpeed			= 32;
 		m_pSmoke->m_Opacity 			= 0.6;
-		
+
 		m_pSmoke->m_StartColor.Init( 0.25f, 0.25f, 0.25f );
 		m_pSmoke->m_EndColor.Init( 0, 0, 0 );
 		m_pSmoke->SetLifetime( 30.0f );
@@ -311,7 +311,7 @@ void CNPC_GroundTurret::MakeTracer( const Vector &vecTracerSrc, const trace_t &t
 	pBeam = CBeam::BeamCreate( GROUNDTURRET_BEAM_SPRITE, width );
 	if ( !pBeam )
 		return;
-	
+
 	pBeam->SetStartPos( vecTracerSrc );
 	pBeam->SetEndPos( tr.endpos );
 	pBeam->SetWidth( width );
@@ -486,7 +486,7 @@ int CNPC_GroundTurret::SelectSchedule( void )
 
 //---------------------------------------------------------
 //---------------------------------------------------------
-int CNPC_GroundTurret::TranslateSchedule( int scheduleType ) 
+int CNPC_GroundTurret::TranslateSchedule( int scheduleType )
 {
 	switch( scheduleType )
 	{
@@ -522,7 +522,7 @@ void CNPC_GroundTurret::Shoot()
 	for( int i = 0 ; i < 1 ; i++ )
 	{
 		info.m_vecSrc = vecSrc;
-		
+
 		if( i > 0 || !GetEnemy()->IsPlayer() )
 		{
 			// Subsequent shots or shots at non-players random
@@ -535,7 +535,7 @@ void CNPC_GroundTurret::Shoot()
 			info.m_vecDirShooting = GetActualShootTrajectory( vecSrc );
 			info.m_vecSpread = VECTOR_CONE_PRECALCULATED;
 		}
-		
+
 		info.m_iTracerFreq = 1;
 		info.m_iShots = 1;
 		info.m_pAttacker = this;
@@ -576,7 +576,7 @@ void CNPC_GroundTurret::ProjectBeam( const Vector &vecStart, const Vector &vecDi
 
 	trace_t tr;
 	AI_TraceLine( vecStart, vecStart + vecDir * m_flSensingDist, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
-	
+
 	pBeam->SetStartPos( tr.endpos );
 	pBeam->SetEndPos( tr.startpos );
 	pBeam->SetWidth( width );
@@ -640,7 +640,7 @@ void CNPC_GroundTurret::Scan()
 	// Draw a sweeping beam
 	scanAngle = GetAbsAngles();
 	scanAngle.y += (GROUNDTURRET_VIEWCONE / 2.0f) * sin( gpGlobals->curtime * 3.0f );
-	
+
 	AngleVectors( scanAngle, &forward, NULL, NULL );
 	ProjectBeam( vecEye, forward, 1, 30, 0.3 );
 }
@@ -651,7 +651,7 @@ void CNPC_GroundTurret::InputEnable( inputdata_t &inputdata )
 {
 	m_bEnabled = true;
 
-	// Because the turret might not ever ACQUIRE an enemy, we need to arrange to 
+	// Because the turret might not ever ACQUIRE an enemy, we need to arrange to
 	// retire after a few seconds.
 	m_flTimeLastSawEnemy = gpGlobals->curtime;
 }
@@ -701,4 +701,3 @@ AI_BEGIN_CUSTOM_NPC( npc_groundturret, CNPC_GroundTurret )
 	)
 
 AI_END_CUSTOM_NPC()
-

@@ -69,7 +69,7 @@ $Project "hammer_dll"
 				}
 			}
 		}
-		
+
 		$File	"$SRCDIR\public\bone_setup.cpp"						\
 				"$SRCDIR\public\builddisp.cpp"						\
 				"BuildNum.cpp"										\
@@ -99,7 +99,7 @@ $Project "hammer_dll"
 						}
 					}
 				}
-	
+
 		$File	"ActiveItemList.h"
 		$File	"$SRCDIR\public\tier0\afxmem_override.cpp"
 		$File	"AnchorMgr.cpp"
@@ -688,7 +688,7 @@ $Project "hammer_dll"
 	}
 
 	$Folder	"Link Libraries"
-	{		
+	{
 		$Lib bitmap
 		$Lib choreoobjects
 		$Lib dmxloader

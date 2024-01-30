@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -12,7 +12,7 @@ DEFINE_FALLBACK_SHADER( BlurFilterY, BlurFilterY_DX80 )
 
 BEGIN_VS_SHADER_FLAGS( BlurFilterY_DX80, "Help for BlurFilterY_DX80", SHADER_NOT_EDITABLE )
 	BEGIN_SHADER_PARAMS
-        SHADER_PARAM( BLOOMAMOUNT, SHADER_PARAM_TYPE_FLOAT, "1.0", "" )
+	SHADER_PARAM( BLOOMAMOUNT, SHADER_PARAM_TYPE_FLOAT, "1.0", "" )
 		SHADER_PARAM( FRAMETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "_rt_SmallHDR0", "" )
 	END_SHADER_PARAMS
 
@@ -25,7 +25,7 @@ BEGIN_VS_SHADER_FLAGS( BlurFilterY_DX80, "Help for BlurFilterY_DX80", SHADER_NOT
 		if ( !( params[BLOOMAMOUNT]->IsDefined() ) )
 			params[BLOOMAMOUNT]->SetFloatValue(1.0);
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		if ( g_pHardwareConfig->GetDXSupportLevel() < 80 )
@@ -67,7 +67,7 @@ BEGIN_VS_SHADER_FLAGS( BlurFilterY_DX80, "Help for BlurFilterY_DX80", SHADER_NOT
 
 			// The temp buffer is 1/4 back buffer size
 			float dY = 2.0f / height;
-			
+
 			// 4 Tap offsets, expected from pixel center
 			float v[4][4];
 			v[0][0] = 0;

@@ -24,7 +24,7 @@ class CTFNailgun : public CTFWeaponBaseGun
 public:
 
 	DECLARE_CLASS( CTFNailgun, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	// Server specific.

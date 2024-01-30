@@ -213,7 +213,7 @@ void CHalfLife2Survival::ParseSurvivalSettings( KeyValues *pSubKey )
 		{
 			m_SurvivalSettings.m_szPickups = MAKE_STRING( pTestKey->GetString() );
 		}
-		
+
 		pTestKey = pTestKey->GetNextKey();
 	}
 }

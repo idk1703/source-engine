@@ -18,7 +18,7 @@
 #include "server.h"
 #include "host.h"
 
-#if defined( _X360 )   
+#if defined( _X360 )
 #include "xbox/xbox_win32stubs.h"
 #include "audio/private/snd_dev_xaudio.h"
 #include "audio_pch.h"
@@ -191,7 +191,7 @@ void CMatchmaking::SetSessionProperties( KeyValues *pPropertyKeys )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMatchmaking::AddSessionPropertyInternal( KeyValues *pProperty )
 {
@@ -577,7 +577,7 @@ bool CMatchmaking::SendHeartbeat( CClientInfo *pClient )
 
 		// Send a heartbeat to the client
 		MM_Heartbeat beat;
-		pChannel->SendNetMsg( beat );	
+		pChannel->SendNetMsg( beat );
 		pChannel->Transmit();
 	}
 	return true;
@@ -675,7 +675,7 @@ bool CMatchmaking::ConnectedToServer()
 
 bool CMatchmaking::IsInMigration()
 {
-	return ( m_CurrentState >= MMSTATE_HOSTMIGRATE_STARTINGMIGRATION && 
+	return ( m_CurrentState >= MMSTATE_HOSTMIGRATE_STARTINGMIGRATION &&
 			 m_CurrentState <= MMSTATE_HOSTMIGRATE_WAITINGFORHOST );
 }
 
@@ -866,7 +866,7 @@ void CMatchmaking::OnLevelLoadingFinished()
 // 	if ( !IsServer() )
 // 	{
 // 		char cmd[MAX_PATH];
-// 		Q_snprintf( cmd, sizeof( cmd ), "connect 127.0.0.1\n" );		
+// 		Q_snprintf( cmd, sizeof( cmd ), "connect 127.0.0.1\n" );
 // 		Cbuf_AddText( cmd );
 // 		return;
 // 	}
@@ -1089,7 +1089,7 @@ void CMatchmaking::ClientDropped( CClientInfo *pClient )
 		{
 			// X360TBD: Migration still doesn't work correctly
 			SessionNotification( SESSION_NOTIFY_LOST_HOST );
-			/* 
+			/*
 			// Start migrating
 			if ( !IsInMigration() )
 			{
@@ -1119,7 +1119,7 @@ void CMatchmaking::ClientDropped( CClientInfo *pClient )
 			{
 				IClient *pIClient = sv.GetClient(i);
 				bool bFound = false;
-				
+
 				if ( pIClient )
 				{
 					for ( int j = 0; j < pClient->m_cPlayers; ++j )
@@ -1396,7 +1396,7 @@ void CMatchmaking::GenerateMutelist( MM_Mutelist *pMsg )
 
 	// Loop through local players and update mutes
 	for ( int iLocal = 0; iLocal < m_Local.m_cPlayers; ++iLocal )
-	{	
+	{
 		pMsg->m_cMuted[iLocal] = 0;
 
 		pMsg->m_xuid[pMsg->m_cPlayers] = m_Local.m_xuids[iLocal];
@@ -1573,7 +1573,7 @@ bool CMatchmaking::ProcessCheckpoint( MM_Checkpoint *pMsg )
 					SwitchToNextOpenTeam( pClient );
 				}
 			}
-		}	
+		}
 		break;
 
 	case MM_Checkpoint::CHECKPOINT_PREGAME:
@@ -1588,7 +1588,7 @@ bool CMatchmaking::ProcessCheckpoint( MM_Checkpoint *pMsg )
 		break;
 
 	case MM_Checkpoint::CHECKPOINT_GAME_LOBBY:
-		
+
 		// returning to game lobby, pregame canceled
 		// reset the countdown
 		SessionNotification( SESSION_NOTIFY_COUNTDOWN, -1 );
@@ -1631,7 +1631,7 @@ bool CMatchmaking::ProcessCheckpoint( MM_Checkpoint *pMsg )
 	case MM_Checkpoint::CHECKPOINT_CONNECT:
 
 		// If we're already connected or in the game, don't connect again.
-		if ( m_CurrentState == MMSTATE_CONNECTED_TO_SERVER || 
+		if ( m_CurrentState == MMSTATE_CONNECTED_TO_SERVER ||
 			 m_CurrentState == MMSTATE_INGAME )
 		{
 			break;
@@ -1659,7 +1659,7 @@ bool CMatchmaking::ProcessCheckpoint( MM_Checkpoint *pMsg )
 		if ( !IsServer() )
 		{
 			char cmd[MAX_PATH];
-			Q_snprintf( cmd, sizeof( cmd ), "connect %d.%d.%d.%d", m_Host.m_adr.ip[0], m_Host.m_adr.ip[1], m_Host.m_adr.ip[2], m_Host.m_adr.ip[3] );		
+			Q_snprintf( cmd, sizeof( cmd ), "connect %d.%d.%d.%d", m_Host.m_adr.ip[0], m_Host.m_adr.ip[1], m_Host.m_adr.ip[2], m_Host.m_adr.ip[3] );
 			Cbuf_AddText( cmd );
 
 			SessionNotification( SESSION_NOTIFY_CONNECTED_TOSERVER );
@@ -1709,7 +1709,7 @@ bool CMatchmaking::ProcessCheckpoint( MM_Checkpoint *pMsg )
 
 			if ( bFinished && m_Local.m_bReportedStats )
 			{
-				EndStatsReporting();	
+				EndStatsReporting();
 			}
 		}
 		break;
@@ -2104,7 +2104,7 @@ void CMatchmaking::UpdateVoiceStatus( void )
 		{
 			MM_ClientInfo info;
 			ClientInfoToNetMessage( &info, pClient );
-		
+
 			if ( bIsHost == true )
 			{
 				// Tell all the clients
@@ -2123,7 +2123,7 @@ void CMatchmaking::UpdateVoiceStatus( void )
 }
 
 //-----------------------------------------------------------------------------
-//	Update matchmaking and any active session 
+//	Update matchmaking and any active session
 //-----------------------------------------------------------------------------
 void CMatchmaking::RunFrame()
 {
@@ -2281,12 +2281,12 @@ MM_QOS_t CMatchmaking::GetQosWithLIVE()
 }
 
 //-----------------------------------------------------------------------------
-// Debugging helpers 
+// Debugging helpers
 //-----------------------------------------------------------------------------
 void CMatchmaking::ShowSessionInfo()
 {
-	Msg( "[MM] Filled Slots:\n[MM] Public: %d of %d\n[MM] Private: %d of %d\n", 
-			m_Session.GetSessionSlots( SLOTS_FILLEDPUBLIC ), 
+	Msg( "[MM] Filled Slots:\n[MM] Public: %d of %d\n[MM] Private: %d of %d\n",
+			m_Session.GetSessionSlots( SLOTS_FILLEDPUBLIC ),
 			m_Session.GetSessionSlots( SLOTS_TOTALPUBLIC ),
 			m_Session.GetSessionSlots( SLOTS_FILLEDPRIVATE ),
 			m_Session.GetSessionSlots( SLOTS_TOTALPRIVATE ) );
@@ -2294,7 +2294,7 @@ void CMatchmaking::ShowSessionInfo()
 	Msg( "[MM] Current state: %d\n", m_CurrentState );
 	Msg( "[MM] Send timer: %f\n", GetTime() - m_fSendTimer );
 	Msg( "[MM] Wait timer: %f\n", GetTime() - m_fWaitTimer );
-	
+
 	int total = 0;
 	for ( int i = 0; i < m_nTotalTeams; ++i )
 	{
@@ -2306,7 +2306,7 @@ void CMatchmaking::ShowSessionInfo()
 }
 
 //-----------------------------------------------------------------------------
-// Debugging helpers 
+// Debugging helpers
 //-----------------------------------------------------------------------------
 void CMatchmaking::TestSendMessage()
 {

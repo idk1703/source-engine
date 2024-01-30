@@ -20,7 +20,7 @@ $Configuration
 $Project "Pfmcomp"
 {
 	$Folder	"Source Files"
-	{		
+	{
 		$File	"$SRCDIR\public\chunkfile.cpp"
 		$File	"..\common\scriplib.cpp"
 		$File	"$SRCDIR\public\collisionutils.cpp"

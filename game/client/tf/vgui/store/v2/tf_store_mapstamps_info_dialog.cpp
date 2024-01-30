@@ -17,16 +17,16 @@ DECLARE_BUILD_FACTORY( CTFMapStampsInfoDialog );
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFMapStampsInfoDialog::CTFMapStampsInfoDialog( vgui::Panel *pParent, const char *pName )
 :	BaseClass( pParent, "MapStampsInfoDialog" )
-{								   
+{
 	m_pBgPanel = new CMouseMessageForwardingPanel( this, "BgPanel" );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapStampsInfoDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -38,7 +38,7 @@ void CTFMapStampsInfoDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapStampsInfoDialog::PerformLayout( void )
 {
@@ -46,7 +46,7 @@ void CTFMapStampsInfoDialog::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapStampsInfoDialog::OnCommand( const char *command )
 {
@@ -61,7 +61,7 @@ void CTFMapStampsInfoDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapStampsInfoDialog::OnMouseReleased(MouseCode code)
 {
@@ -74,7 +74,7 @@ void CTFMapStampsInfoDialog::OnMouseReleased(MouseCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMapStampsInfoDialog::DoClose()
 {

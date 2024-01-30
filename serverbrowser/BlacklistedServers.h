@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -30,13 +30,13 @@ public:
 	void AddServer(gameserveritem_t &server);
 
 	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
-	
+
 	// passed from main server browser window instead of messages
 	void OnConnectToGame();
 	void OnDisconnectFromGame( void );
 
 	blacklisted_server_t *GetBlacklistedServer( int iServerID );
-	bool IsServerBlacklisted(gameserveritem_t &server); 
+	bool IsServerBlacklisted(gameserveritem_t &server);
 
 private:
 	// context menu message handlers

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@ class SampleRadioButtons: public DemoPage
 	public:
 		SampleRadioButtons(Panel *parent, const char *name);
 		~SampleRadioButtons();
-	
+
 	private:
 
 };
@@ -46,5 +46,3 @@ Panel* SampleRadioButtons_Create(Panel *parent)
 {
 	return new SampleRadioButtons(parent, "Radio buttons");
 }
-
-

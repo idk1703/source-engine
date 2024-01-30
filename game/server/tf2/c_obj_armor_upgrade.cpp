@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -39,5 +39,3 @@ int C_ArmorUpgrade::DrawModel( int flags )
 
 	return BaseClass::DrawModel( 0 );
 }
-
-

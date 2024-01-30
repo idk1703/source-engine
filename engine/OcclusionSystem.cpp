@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -224,9 +224,9 @@ void CWingedEdgeList::Clear()
 //-----------------------------------------------------------------------------
 // Iterate over the winged edges
 //-----------------------------------------------------------------------------
-inline int CWingedEdgeList::EdgeCount() const 
-{ 
-	return m_WingedEdges.Count(); 
+inline int CWingedEdgeList::EdgeCount() const
+{
+	return m_WingedEdges.Count();
 }
 
 inline CWingedEdgeList::WingedEdge_t &CWingedEdgeList::WingedEdge( int i )
@@ -291,23 +291,23 @@ int CWingedEdgeList::AddSurface( const cplane_t &plane )
 // Active edges...
 //-----------------------------------------------------------------------------
 inline CWingedEdgeList::WingedEdge_t *CWingedEdgeList::FirstActiveEdge( )
-{ 
-	return m_StartTerminal.m_pNextActiveEdge; 
+{
+	return m_StartTerminal.m_pNextActiveEdge;
 }
 
 inline CWingedEdgeList::WingedEdge_t *CWingedEdgeList::LastActiveEdge( )
-{ 
-	return m_EndTerminal.m_pPrevActiveEdge; 
+{
+	return m_EndTerminal.m_pPrevActiveEdge;
 }
 
 inline bool CWingedEdgeList::AtListEnd( const WingedEdge_t* pEdge ) const
-{ 
-	return pEdge == &m_EndTerminal; 
+{
+	return pEdge == &m_EndTerminal;
 }
 
 inline bool CWingedEdgeList::AtListStart( const WingedEdge_t* pEdge ) const
-{ 
-	return pEdge == &m_StartTerminal; 
+{
+	return pEdge == &m_StartTerminal;
 }
 
 inline void CWingedEdgeList::LinkActiveEdgeAfter( WingedEdge_t *pPrevEdge, WingedEdge_t *pInsertEdge )
@@ -390,7 +390,7 @@ inline float CWingedEdgeList::ComputeZValue( const Surface_t *pSurface, float x,
 {
 	const cplane_t &plane = pSurface->m_Plane;
 	Assert( plane.normal.z == 1.0f );
-	return plane.dist - plane.normal.x * x - plane.normal.y * y; 
+	return plane.dist - plane.normal.x * x - plane.normal.y * y;
 }
 
 
@@ -518,7 +518,7 @@ bool CWingedEdgeList::AdvanceActiveEdgeList( float flCurrY )
 		// This is necessary because of our initial skip up to y == -1.0f
 		if ( pCurEdge->m_vecPositionEnd.y > flCurrY )
 		{
-			float flDy = flCurrY - pCurEdge->m_vecPosition.y; 
+			float flDy = flCurrY - pCurEdge->m_vecPosition.y;
 			pCurEdge->m_flX = pCurEdge->m_vecPosition.x + flDy * pCurEdge->m_flDxDy;
 			if ( pCurEdge->m_vecPositionEnd.y < m_flNextDiscontinuity )
 			{
@@ -576,7 +576,7 @@ bool CWingedEdgeList::IsOccludingActiveEdgeList( CWingedEdgeList &testList, floa
 	if ( testList.AtListEnd( pTestEdge ) )
 		return true;
 
-	// Start at the first edge whose x value is <= -1.0f 
+	// Start at the first edge whose x value is <= -1.0f
 	// if the occludee goes off the left side of the screen.
 	float flNextTestX = pTestEdge->m_flX;
 	if ( !testList.AtListStart( pTestEdge->m_pPrevActiveEdge ) )
@@ -660,7 +660,7 @@ bool CWingedEdgeList::IsOccludingEdgeList( CWingedEdgeList &testList )
 	ResetActiveEdgeList();
 
 	// What we're going to do is look for the first discontinuities we can find
-	// in both edge lists. Then, at each discontinuity, we must check the 
+	// in both edge lists. Then, at each discontinuity, we must check the
 	// active edge lists against each other and see if the occluders always
 	// block the occludees...
 	float flCurrentY = testList.NextDiscontinuity();
@@ -699,10 +699,10 @@ bool CWingedEdgeList::IsOccludingEdgeList( CWingedEdgeList &testList )
 			flCurrentY = 1.0f;
 		}
 
-		// If the occludee list is empty, then it's occluded! 
+		// If the occludee list is empty, then it's occluded!
 		if ( !testList.AdvanceActiveEdgeList( flCurrentY ) )
 			return true;
-		
+
 		// If the occluder list is empty, then the occludee is not occluded!
 		if ( !AdvanceActiveEdgeList( flCurrentY ) )
 			return false;
@@ -870,7 +870,7 @@ private:
 	};
 
 	typedef CUtlVector<Edge_t> EdgeList_t;
-	 
+
 private:
 	// Gets an edge
 	const Edge_t &Edge( int nIndex ) const;
@@ -939,7 +939,7 @@ private:
 	class EdgeLess
 	{
 	public:
-        bool Less( const unsigned short& src1, const unsigned short& src2, void *pCtx );
+	bool Less( const unsigned short& src1, const unsigned short& src2, void *pCtx );
 	};
 
 	static int __cdecl SurfCompare( const void *elem1, const void *elem2 );
@@ -978,7 +978,7 @@ private:
 	int m_nPrevReduceCount;
 };
 
-		
+
 //-----------------------------------------------------------------------------
 // Used to sort the edge list
 //-----------------------------------------------------------------------------
@@ -1081,33 +1081,33 @@ inline const CEdgeList::Edge_t &CEdgeList::Edge( int nIndex ) const
 // Active edges...
 //-----------------------------------------------------------------------------
 inline const CEdgeList::Edge_t *CEdgeList::FirstActiveEdge( ) const
-{ 
-	return m_StartTerminal.m_pNextActiveEdge; 
+{
+	return m_StartTerminal.m_pNextActiveEdge;
 }
 
 inline CEdgeList::Edge_t *CEdgeList::FirstActiveEdge( )
-{ 
-	return m_StartTerminal.m_pNextActiveEdge; 
+{
+	return m_StartTerminal.m_pNextActiveEdge;
 }
 
 inline const CEdgeList::Edge_t *CEdgeList::LastActiveEdge( ) const
-{ 
-	return m_EndTerminal.m_pPrevActiveEdge; 
+{
+	return m_EndTerminal.m_pPrevActiveEdge;
 }
 
 inline CEdgeList::Edge_t *CEdgeList::LastActiveEdge( )
-{ 
-	return m_EndTerminal.m_pPrevActiveEdge; 
+{
+	return m_EndTerminal.m_pPrevActiveEdge;
 }
 
 inline bool CEdgeList::AtListEnd( const Edge_t* pEdge ) const
-{ 
-	return pEdge == &m_EndTerminal; 
+{
+	return pEdge == &m_EndTerminal;
 }
 
 inline bool CEdgeList::AtListStart( const Edge_t* pEdge ) const
-{ 
-	return pEdge == &m_StartTerminal; 
+{
+	return pEdge == &m_StartTerminal;
 }
 
 inline void CEdgeList::LinkActiveEdgeAfter( Edge_t *pPrevEdge, Edge_t *pInsertEdge )
@@ -1166,7 +1166,7 @@ inline float CEdgeList::ComputeZValue( const Surface_t *pSurface, float x, float
 {
 	const cplane_t &plane = pSurface->m_Plane;
 	Assert( plane.normal.z == 1.0f );
-	return plane.dist - plane.normal.x * x - plane.normal.y * y; 
+	return plane.dist - plane.normal.x * x - plane.normal.y * y;
 }
 
 
@@ -1263,7 +1263,7 @@ int __cdecl CEdgeList::SurfCompare( const void *elem1, const void *elem2 )
 // Removal of small occluders
 //-----------------------------------------------------------------------------
 void CEdgeList::CullSmallOccluders()
-{	 
+{
 	// Cull out all surfaces with too small of a screen area...
 	// Sort the surfaces by screen area, in descending order
 	int nSurfCount = m_Surfaces.Count();
@@ -1282,7 +1282,7 @@ void CEdgeList::CullSmallOccluders()
 
 	bool *bUseSurface = (bool*)stackalloc( nSurfCount * sizeof(bool) );
 	memset( bUseSurface, 0, nSurfCount * sizeof(bool) );
-	
+
 	int i;
 	for ( i = 0; i < nSurfCount; ++i )
 	{
@@ -1302,7 +1302,7 @@ void CEdgeList::CullSmallOccluders()
 		int nEdgeIndex = m_OrigSortIndices[i];
 		if ( bUseSurface[ m_Edges[ nEdgeIndex ].m_nSurfID ] )
 		{
-			m_SortIndices.AddToTail( nEdgeIndex ); 
+			m_SortIndices.AddToTail( nEdgeIndex );
 		}
 	}
 }
@@ -1474,7 +1474,7 @@ void CEdgeList::IntroduceNewActiveEdges( float y )
 		// This is necessary because of our initial skip up to y == -1.0f
 		if (pCurEdge->m_vecPositionEnd.y > y)
 		{
-			float flDy = y - pCurEdge->m_vecPosition.y; 
+			float flDy = y - pCurEdge->m_vecPosition.y;
 			pCurEdge->m_flX = pCurEdge->m_vecPosition.x + flDy * pCurEdge->m_flDxDy;
 			if ( pCurEdge->m_vecPositionEnd.y < m_flNextDiscontinuity )
 			{
@@ -1521,9 +1521,9 @@ void CEdgeList::ReduceActiveEdgeList( CWingedEdgeList &wingedEdgeList, float flM
 	// NOTE: This algorithm depends on the fact that the active edge
 	// list is not only sorted by ascending X, but also because edges
 	// that land on the same X value are sorted by ascending dy/dx
-	float flPrevX = pCurEdge->m_flX; 
+	float flPrevX = pCurEdge->m_flX;
 
-	for ( ; !AtListEnd( pCurEdge ); pCurEdge = pNextEdge ) 
+	for ( ; !AtListEnd( pCurEdge ); pCurEdge = pNextEdge )
 	{
 		if ( pCurEdge->m_flX != flPrevX )
 		{
@@ -1562,7 +1562,7 @@ void CEdgeList::ReduceActiveEdgeList( CWingedEdgeList &wingedEdgeList, float flM
 				continue;
 
 			ComputePointAlongEdge( m_pPrevReduceInfo[i].m_pEdge, nEdgeSurfID, flMaxY, &testEdge.m_vecPositionEnd );
-			
+
 			// Don't try to seam up edges that end on this line...
 			if ( pCurEdge->m_vecPositionEnd.y > flMaxY )
 			{
@@ -1583,9 +1583,9 @@ void CEdgeList::ReduceActiveEdgeList( CWingedEdgeList &wingedEdgeList, float flM
 			newWingedEdge.m_nLeaveSurfID = nLeaveSurfID;
 			newWingedEdge.m_nEnterSurfID = nEnterSurfID;
 			newWingedEdge.m_flDxDy = pCurEdge->m_flDxDy;
-			ComputePointAlongEdge( pCurEdge, nEdgeSurfID, flMinY, &newWingedEdge.m_vecPosition ); 
-			ComputePointAlongEdge( pCurEdge, nEdgeSurfID, flMaxY, &newWingedEdge.m_vecPositionEnd ); 
-			
+			ComputePointAlongEdge( pCurEdge, nEdgeSurfID, flMinY, &newWingedEdge.m_vecPosition );
+			ComputePointAlongEdge( pCurEdge, nEdgeSurfID, flMaxY, &newWingedEdge.m_vecPositionEnd );
+
 			// Enforce sort order...
 			// Required because we're computing the x position here, which can introduce error.
 			if ( i != 0 )
@@ -1593,7 +1593,7 @@ void CEdgeList::ReduceActiveEdgeList( CWingedEdgeList &wingedEdgeList, float flM
 				CWingedEdgeList::WingedEdge_t &prevWingedEdge = wingedEdgeList.WingedEdge(i - 1);
 				if ( newWingedEdge.m_vecPosition.y == prevWingedEdge.m_vecPosition.y )
 				{
-					if ( newWingedEdge.m_vecPosition.x < prevWingedEdge.m_vecPosition.x ) 
+					if ( newWingedEdge.m_vecPosition.x < prevWingedEdge.m_vecPosition.x )
 					{
 						newWingedEdge.m_vecPosition.x = prevWingedEdge.m_vecPosition.x;
 					}
@@ -1635,7 +1635,7 @@ float CEdgeList::LocateEdgeCrossingDiscontinuity( float flNextY, float flPrevY, 
 	float flCurrY = flNextY;
 
 	Vector2D vecDelta, vecIntersection;
-	
+
 	Edge_t *pCurEdge;
 	for ( pCurEdge = FirstActiveEdge(); !AtListEnd(pCurEdge); flCurrX = flNextX, pCurEdge = pCurEdge->m_pNextActiveEdge )
 	{
@@ -1676,7 +1676,7 @@ float CEdgeList::LocateEdgeCrossingDiscontinuity( float flNextY, float flPrevY, 
 		float flNumerator = - vecDelta.x + pCurEdge->m_flDxDy * vecDelta.y;
 		float t = flNumerator * flDenominator;
 		float flYCrossing = pPrevEdge->m_vecPosition.y + t;
-		
+
 		// Precision errors...
 		// NOTE: The optimizer unfortunately causes this test to not return ==
 		// if the bitpattern of flYCrossing and flNextY are the exact same, because it's
@@ -1697,7 +1697,7 @@ float CEdgeList::LocateEdgeCrossingDiscontinuity( float flNextY, float flPrevY, 
 			flCurrY	= flYCrossing;
 			nCount = 0;
 		}
-		
+
 		Assert( nCount < MAX_EDGE_CROSSINGS );
 		flNextX = pPrevEdge->m_vecPosition.x + t * pPrevEdge->m_flDxDy;
 		ppInfo[nCount++] = pCurEdge;
@@ -1800,7 +1800,7 @@ void CEdgeList::ReorderActiveEdgeList( int nCount, Edge_t **ppCrossings )
 		}
 	}
 
-	// Now re-insert everything to take into account other edges which may well have 
+	// Now re-insert everything to take into account other edges which may well have
 	// crossed on this line
 	Edge_t *pEdge;
 	Edge_t *pNextEdge;
@@ -1941,7 +1941,7 @@ void CEdgeList::ReduceActiveList( CWingedEdgeList &newEdgeList )
 		else
 		{
 			ReorderActiveEdgeList( nEdgeCrossingCount, pEdgeCrossings );
-			
+
 			// The next edge in y will also present a discontinuity
 			if ( m_nCurrentEdgeIndex < nEdgeCount )
 			{
@@ -2083,7 +2083,7 @@ private:
 
 	// Used to clip the screen space polygons to the screen
 	void ResetClipTempVerts();
-	int ClipPolygonToAxisAlignedPlane( Vector **ppVertices, int nVertexCount, 
+	int ClipPolygonToAxisAlignedPlane( Vector **ppVertices, int nVertexCount,
 								const AxisAlignedPlane_t &plane, Vector **ppOutVerts ) const;
 
 	// Is the point within an axis-aligned plane?
@@ -2210,7 +2210,7 @@ int COcclusionSystem::ClipPolygonToNearPlane( Vector **ppVertices, int nVertexCo
 			{
 				// Started outside, ended inside, need to clip the edge
 				ppOutVerts[nOutVertCount] = &s_TempVertMemory[ nNewVertCount++ ];
-				IntersectWithNearPlane( *pStart, *pEnd, *ppOutVerts[nOutVertCount] ); 
+				IntersectWithNearPlane( *pStart, *pEnd, *ppOutVerts[nOutVertCount] );
 				++nOutVertCount;
 				*pClipped = true;
 			}
@@ -2222,7 +2222,7 @@ int COcclusionSystem::ClipPolygonToNearPlane( Vector **ppVertices, int nVertexCo
 			{
 				// Started inside, ended outside, need to clip the edge
 				ppOutVerts[nOutVertCount] = &s_TempVertMemory[ nNewVertCount++ ];
-				IntersectWithNearPlane( *pStart, *pEnd, *ppOutVerts[nOutVertCount] ); 
+				IntersectWithNearPlane( *pStart, *pEnd, *ppOutVerts[nOutVertCount] );
 				++nOutVertCount;
 				*pClipped = true;
 			}
@@ -2260,7 +2260,7 @@ void COcclusionSystem::ResetClipTempVerts()
 	s_nTempVertCount = 0;
 }
 
-int COcclusionSystem::ClipPolygonToAxisAlignedPlane( Vector **ppVertices, int nVertexCount, 
+int COcclusionSystem::ClipPolygonToAxisAlignedPlane( Vector **ppVertices, int nVertexCount,
 							const AxisAlignedPlane_t &plane, Vector **ppOutVerts ) const
 {
 	// Ye Olde Sutherland-Hodgman clipping algorithm
@@ -2278,7 +2278,7 @@ int COcclusionSystem::ClipPolygonToAxisAlignedPlane( Vector **ppVertices, int nV
 			{
 				// Started outside, ended inside, need to clip the edge
 				ppOutVerts[nOutVertCount] = &s_TempVertMemory[ s_nTempVertCount++ ];
-				IntersectWithAAPlane( *pStart, *pEnd, plane, *ppOutVerts[nOutVertCount] ); 
+				IntersectWithAAPlane( *pStart, *pEnd, plane, *ppOutVerts[nOutVertCount] );
 				++nOutVertCount;
 			}
 			ppOutVerts[nOutVertCount++] = pEnd;
@@ -2289,7 +2289,7 @@ int COcclusionSystem::ClipPolygonToAxisAlignedPlane( Vector **ppVertices, int nV
 			{
 				// Started inside, ended outside, need to clip the edge
 				ppOutVerts[nOutVertCount] = &s_TempVertMemory[ s_nTempVertCount++ ];
-				IntersectWithAAPlane( *pStart, *pEnd, plane, *ppOutVerts[nOutVertCount] ); 
+				IntersectWithAAPlane( *pStart, *pEnd, plane, *ppOutVerts[nOutVertCount] );
 				++nOutVertCount;
 			}
 		}
@@ -2307,7 +2307,7 @@ int COcclusionSystem::ClipPolygonToAxisAlignedPlane( Vector **ppVertices, int nV
 void COcclusionSystem::ComputeScreenSpacePlane( const cplane_t &cameraSpacePlane, cplane_t *pScreenSpacePlane )
 {
 	// Here's how this is computed:
-	// If the *camera* space plane is Ax+By+Cz = D, 
+	// If the *camera* space plane is Ax+By+Cz = D,
 	// and xs = -(xf) * x/z, ys = -(yf) y/z, zs = - (zc + zf * ooz)
 	// Then x = -xs * z / xf, y = -ys * z / yf, ooz = -(zs + zc) / zf
 	// So - A * xs * z / xf - B * ys * z / yf + C * z = D
@@ -2318,7 +2318,7 @@ void COcclusionSystem::ComputeScreenSpacePlane( const cplane_t &cameraSpacePlane
 	// -zf * (A/D) xs/xf - zf * (B/D) ys/yf + zs = -zf * (C/D) - zc
 	// Let A' = -zf/xf*(A/D), B' = -zf/yf*(B/D), D' =  -zf * (C/D) - zc
 	// A' xs + B' ys + zs = D'	is the screen space plane equation
-	
+
 	float ooD = (cameraSpacePlane.dist != 0) ? (1.0f / cameraSpacePlane.dist) : 0.0f;
 	pScreenSpacePlane->normal.x = cameraSpacePlane.normal.x * ooD * m_flXProjScale;
 	pScreenSpacePlane->normal.y = cameraSpacePlane.normal.y * ooD * m_flYProjScale;
@@ -2358,7 +2358,7 @@ void COcclusionSystem::StitchClippedVertices( Vector *pVertices, int nCount )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Project world-space verts + add into the edge list
 //-----------------------------------------------------------------------------
@@ -2462,7 +2462,7 @@ void COcclusionSystem::RecomputeOccluderEdgeList()
 	// Tracker 17772:  If building cubemaps can end up calling into here w/o cl.pAreaBits setup yet, oh well.
 	if ( !cl.m_bAreaBitsValid && CommandLine()->FindParm( "-buildcubemaps" ) )
 		return;
-	 
+
 	m_bEdgeListDirty = false;
 	m_EdgeList.RemoveAll();
 	m_WingedEdgeList.Clear();
@@ -2515,7 +2515,7 @@ void COcclusionSystem::RecomputeOccluderEdgeList()
 			cplane_t projectionSpacePlane;
 			cplane_t cameraSpacePlane;
 			MatrixTransformPlane( m_WorldToCamera, surfPlane, cameraSpacePlane );
-			ComputeScreenSpacePlane( cameraSpacePlane, &projectionSpacePlane ); 
+			ComputeScreenSpacePlane( cameraSpacePlane, &projectionSpacePlane );
 			int nEdgeSurfID = m_EdgeList.AddSurface( projectionSpacePlane );
 
 			// Transform into projection space (extra logic here is to simply guarantee that we project each vert exactly once)
@@ -2524,7 +2524,7 @@ void COcclusionSystem::RecomputeOccluderEdgeList()
 	}
 
 	m_EdgeList.CullSmallOccluders();
-	m_EdgeList.ReduceActiveList( m_WingedEdgeList ); 
+	m_EdgeList.ReduceActiveList( m_WingedEdgeList );
 //	Msg("Edge count %d -> %d\n", m_EdgeList.EdgeCount(), m_WingedEdgeList.EdgeCount() );
 
 	// Draw the occluders
@@ -2554,7 +2554,7 @@ void COcclusionSystem::ActivateOccluder( int nOccluderIndex, bool bActive )
 }
 
 
-void COcclusionSystem::SetView( const Vector &vecCameraPos, float flFOV, const VMatrix &worldToCamera, 
+void COcclusionSystem::SetView( const Vector &vecCameraPos, float flFOV, const VMatrix &worldToCamera,
 			const VMatrix &cameraToProjection, const VPlane &nearClipPlane )
 {
 	m_vecCameraPosition = vecCameraPos;
@@ -2602,20 +2602,20 @@ static int s_pFaceIndices[6][4] =
 	{ 4, 5, 7, 6 },		// +z
 };
 
-static int s_pSourceIndices[8] = 
+static int s_pSourceIndices[8] =
 {
-	-1, 0, 0, 1, 0, 1, 2, 3  
+	-1, 0, 0, 1, 0, 1, 2, 3
 };
 
-static int s_pDeltaIndices[8] = 
+static int s_pDeltaIndices[8] =
 {
 	-1, 0, 1, 1, 2, 2, 2, 2
 };
 
-static unsigned char s_VisualizationColor[2][4] = 
-{ 
-	{ 255, 0, 0, 255 }, 
-	{ 0, 255, 0, 255 } 
+static unsigned char s_VisualizationColor[2][4] =
+{
+	{ 255, 0, 0, 255 },
+	{ 0, 255, 0, 255 }
 };
 
 struct EdgeInfo_t
@@ -2629,7 +2629,7 @@ struct EdgeInfo_t
 // NOTE: The face indices here have to very carefully ordered for the algorithm
 // to work. They must be ordered so that vert0 -> vert1 is clockwise
 // for the first face listed and vert1 -> vert0 is clockwise for the 2nd face listed
-static EdgeInfo_t s_pEdges[12] = 
+static EdgeInfo_t s_pEdges[12] =
 {
 	{ { 0, 1 }, { 2, 4 }, 0, 0 },		// 0: Edge between -y + -z
 	{ { 2, 0 }, { 0, 4 }, 0, 0 },		// 1: Edge between -x + -z
@@ -2645,7 +2645,7 @@ static EdgeInfo_t s_pEdges[12] =
 	{ { 6, 7 }, { 3, 5 }, 0, 0 },		// 11:Edge between +y + +z
 };
 
-static int s_pFaceEdges[6][4] = 
+static int s_pFaceEdges[6][4] =
 {
 	{ 4, 9, 6, 1 },
 	{ 2, 7, 10, 5 },
@@ -2742,7 +2742,7 @@ bool COcclusionSystem::IsOccluded( const Vector &vecAbsMins, const Vector &vecAb
 	s_WingedTestEdgeList.Clear();
 
 	// NOTE: This assumes that frustum culling has already occurred on this object
-	// If that were not the case, we'd need to add a little extra into this 
+	// If that were not the case, we'd need to add a little extra into this
 	// (probably a single plane test, which tests if the box is wholly behind the camera )
 
 	// Convert the bbox into a max of 3 quads...
@@ -2780,7 +2780,7 @@ bool COcclusionSystem::IsOccluded( const Vector &vecAbsMins, const Vector &vecAb
 	vecDeltaProj[1].Init( vecSize.y * m_WorldToProjection[0][1], vecSize.y * m_WorldToProjection[1][1],	vecSize.y * m_WorldToProjection[2][1], vecSize.y * m_WorldToProjection[3][1] );
 	vecDeltaProj[2].Init( vecSize.z * m_WorldToProjection[0][2], vecSize.z * m_WorldToProjection[1][2],	vecSize.z * m_WorldToProjection[2][2], vecSize.z * m_WorldToProjection[3][2] );
 
-	pVecProjectedVertex[0].Init( vecProjVert[0].x * flOOW, vecProjVert[0].y * flOOW, vecProjVert[0].z * flOOW ); 
+	pVecProjectedVertex[0].Init( vecProjVert[0].x * flOOW, vecProjVert[0].y * flOOW, vecProjVert[0].z * flOOW );
 	if ( pVecProjectedVertex[0].z <= 0.0f )
 		return false;
 
@@ -2792,7 +2792,7 @@ bool COcclusionSystem::IsOccluded( const Vector &vecAbsMins, const Vector &vecAb
 		if ( vecProjVert[ i ].w <= 0.0f )
 			return false;
 		flOOW = 1.0f / vecProjVert[i].w;
-		pVecProjectedVertex[ i ].Init( vecProjVert[i].x * flOOW, vecProjVert[i].y * flOOW, vecProjVert[i].z * flOOW ); 
+		pVecProjectedVertex[ i ].Init( vecProjVert[i].x * flOOW, vecProjVert[i].y * flOOW, vecProjVert[i].z * flOOW );
 		if ( pVecProjectedVertex[ i ].z <= 0.0f )
 			return false;
 	}
@@ -2822,7 +2822,7 @@ bool COcclusionSystem::IsOccluded( const Vector &vecAbsMins, const Vector &vecAb
 		float flSign = pSign[nInd];
 		float flPlaneDist = (*pCornerVert[nInd])[ nDim ] * flSign;
 		MatrixTransformAxisAlignedPlane( m_WorldToCamera, nDim, flSign, flPlaneDist, cameraSpacePlane );
-		ComputeScreenSpacePlane( cameraSpacePlane, &projectionSpacePlane ); 
+		ComputeScreenSpacePlane( cameraSpacePlane, &projectionSpacePlane );
 		int nSurfID = s_WingedTestEdgeList.AddSurface( projectionSpacePlane );
 		pSurfInd[i] = nSurfID;
 

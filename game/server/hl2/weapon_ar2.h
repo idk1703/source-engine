@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		Projectile shot from the AR2 
+// Purpose:		Projectile shot from the AR2
 //
 // $Workfile:     $
 // $Date:         $
@@ -28,7 +28,7 @@ public:
 
 	void	ItemPostFrame( void );
 	void	Precache( void );
-	
+
 	void	SecondaryAttack( void );
 	void	DelayedAttack( void );
 
@@ -51,13 +51,13 @@ public:
 	int		CapabilitiesGet( void ) { return bits_CAP_WEAPON_RANGE_ATTACK1; }
 
 	Activity	GetPrimaryAttackActivity( void );
-	
+
 	void	DoImpactEffect( trace_t &tr, int nDamageType );
 
 	virtual const Vector& GetBulletSpread( void )
 	{
 		static Vector cone;
-		
+
 		cone = VECTOR_CONE_3DEGREES;
 
 		return cone;
@@ -70,7 +70,7 @@ protected:
 	float					m_flDelayedFire;
 	bool					m_bShotDelayed;
 	int						m_nVentPose;
-	
+
 	DECLARE_ACTTABLE();
 	DECLARE_DATADESC();
 };

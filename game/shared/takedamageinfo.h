@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,7 +15,7 @@
 #include "networkvar.h" // todo: change this when DECLARE_CLASS is moved into a better location.
 
 // Used to initialize m_flBaseDamage to something that we know pretty much for sure
-// hasn't been modified by a user. 
+// hasn't been modified by a user.
 #define BASEDAMAGE_NOT_SPECIFIED	FLT_MAX
 
 class CBaseEntity;
@@ -40,14 +40,14 @@ public:
 					CTakeDamageInfo( CBaseEntity *pInflictor, CBaseEntity *pAttacker, CBaseEntity *pWeapon, float flDamage, int bitsDamageType, int iKillType = 0 );
 					CTakeDamageInfo( CBaseEntity *pInflictor, CBaseEntity *pAttacker, const Vector &damageForce, const Vector &damagePosition, float flDamage, int bitsDamageType, int iKillType = 0, Vector *reportedPosition = NULL );
 					CTakeDamageInfo( CBaseEntity *pInflictor, CBaseEntity *pAttacker, CBaseEntity *pWeapon, const Vector &damageForce, const Vector &damagePosition, float flDamage, int bitsDamageType, int iKillType = 0, Vector *reportedPosition = NULL );
-	
+
 
 	// Inflictor is the weapon or rocket (or player) that is dealing the damage.
 	CBaseEntity*	GetInflictor() const;
 	void			SetInflictor( CBaseEntity *pInflictor );
 
 	// Weapon is the weapon that did the attack.
-	// For hitscan weapons, it'll be the same as the inflictor. For projectile weapons, the projectile 
+	// For hitscan weapons, it'll be the same as the inflictor. For projectile weapons, the projectile
 	// is the inflictor, and this contains the weapon that created the projectile.
 	CBaseEntity*	GetWeapon() const;
 	void			SetWeapon( CBaseEntity *pWeapon );
@@ -98,7 +98,7 @@ public:
 
 	int				GetPlayerPenetrationCount() const { return m_iPlayerPenetrationCount; }
 	void			SetPlayerPenetrationCount( int iPlayerPenetrationCount ) { m_iPlayerPenetrationCount = iPlayerPenetrationCount; }
-	
+
 	int				GetDamagedOtherPlayers() const     { return m_iDamagedOtherPlayers; }
 	void			SetDamagedOtherPlayers( int iVal ) { m_iDamagedOtherPlayers = iVal; }
 
@@ -114,7 +114,7 @@ public:
 	// For designer debug output.
 	static void		DebugGetDamageTypeString(unsigned int DamageType, char *outbuf, int outbuflength );
 
-	void			SetCritType( ECritType eType ); 
+	void			SetCritType( ECritType eType );
 
 	ECritType		GetCritType() const { return m_eCritType; }
 
@@ -179,7 +179,7 @@ void ApplyMultiDamage( void );
 void AddMultiDamage( const CTakeDamageInfo &info, CBaseEntity *pEntity );
 
 //-----------------------------------------------------------------------------
-// Purpose: Utility functions for physics damage force calculation 
+// Purpose: Utility functions for physics damage force calculation
 //-----------------------------------------------------------------------------
 float ImpulseScale( float flTargetMass, float flDesiredSpeed );
 void CalculateExplosiveDamageForce( CTakeDamageInfo *info, const Vector &vecDir, const Vector &vecForceOrigin, float flScale = 1.0 );
@@ -386,7 +386,7 @@ inline void CTakeDamageInfo::SetAmmoType( int iAmmoType )
 }
 
 inline void CTakeDamageInfo::CopyDamageToBaseDamage()
-{ 
+{
 	m_flBaseDamage = m_flDamage;
 }
 

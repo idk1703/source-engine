@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -51,37 +51,37 @@ static const int ANIMSLIDER_NUMTICS = 100;
 //-----------------------------------------------------------------------------
 bool CMapAnimationDlg::Create( CWnd *pParentWnd )
 {
-    //
-    // create a modeless dialog toolbar
-    //
-    if( !( CHammerBar::Create( pParentWnd, IDD, CBRS_RIGHT, IDCB_ANIMATIONBAR ) ) )
-    {
-        return false;
-    }
+	//
+	// create a modeless dialog toolbar
+	//
+	if( !( CHammerBar::Create( pParentWnd, IDD, CBRS_RIGHT, IDCB_ANIMATIONBAR ) ) )
+	{
+		return false;
+	}
 
-    // to remain consistant with the other toolbars in the editor
-    SetWindowText( _T( "Animation" ) );
+	// to remain consistant with the other toolbars in the editor
+	SetWindowText( _T( "Animation" ) );
 
-    // set dialog bar style
-    SetBarStyle( GetBarStyle() | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_FIXED );
-    
-    // enable docking
-    EnableDocking( CBRS_ALIGN_ANY );
+	// set dialog bar style
+	SetBarStyle( GetBarStyle() | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_FIXED );
 
-    //
-    // initialize the dialog items
-    //
-    InitTimeSlider();
+	// enable docking
+	EnableDocking( CBRS_ALIGN_ANY );
+
+	//
+	// initialize the dialog items
+	//
+	InitTimeSlider();
 
 	m_Play.SubclassDlgItem( IDC_ANIMATIONPLAY, this );
 
-    // show the dialog
-    ShowWindow( SW_SHOW );
+	// show the dialog
+	ShowWindow( SW_SHOW );
 
 	m_bEnabled = false;
 
-    // created successfully
-    return true;
+	// created successfully
+	return true;
 }
 
 
@@ -101,26 +101,26 @@ void CMapAnimationDlg::RunFrame( void )
 //-----------------------------------------------------------------------------
 void CMapAnimationDlg::InitTimeSlider( void )
 {
-    m_TimeSlider.SubclassDlgItem( IDC_TIMESLIDER, this );
-    m_TimeSlider.SetRange( 0, ANIMSLIDER_NUMTICS );
-    m_TimeSlider.SetTicFreq( ANIMSLIDER_NUMTICS / 4 );
-    m_TimeSlider.SetPos( 0 );
+	m_TimeSlider.SubclassDlgItem( IDC_TIMESLIDER, this );
+	m_TimeSlider.SetRange( 0, ANIMSLIDER_NUMTICS );
+	m_TimeSlider.SetTicFreq( ANIMSLIDER_NUMTICS / 4 );
+	m_TimeSlider.SetPos( 0 );
 
 	m_TimeSlider.EnableWindow( false );
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets Enable/Disable state for any controls
-// Input  : *pCmdUI - 
+// Input  : *pCmdUI -
 //-----------------------------------------------------------------------------
 void CMapAnimationDlg::UpdateControl( CCmdUI *pCmdUI )
 {
-    CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-    if ( !pDoc || !m_bEnabled )
-    {
+	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
+	if ( !pDoc || !m_bEnabled )
+	{
 		pCmdUI->Enable( false );
-        return;
-    }
+		return;
+	}
 	else
 	{
 		pCmdUI->Enable( true );
@@ -129,22 +129,22 @@ void CMapAnimationDlg::UpdateControl( CCmdUI *pCmdUI )
 
 //-----------------------------------------------------------------------------
 // Purpose: Communicates to the doc the current animation time
-// Input  : time - 
+// Input  : time -
 //-----------------------------------------------------------------------------
 void CMapAnimationDlg::UpdateAnimationTime( void )
 {
-    CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-    if( !pDoc )
-    {
-        return;
-    }
+	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
+	if( !pDoc )
+	{
+		return;
+	}
 
 	pDoc->SetAnimationTime( m_flAnimTime );
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CMapAnimationDlg::OnHScroll( UINT nSBCode, UINT nPos, CScrollBar *pScrollBar ) 
+void CMapAnimationDlg::OnHScroll( UINT nSBCode, UINT nPos, CScrollBar *pScrollBar )
 {
 	// get the new time from the slider bar
 	m_flAnimTime = ((float)m_TimeSlider.GetPos() / ANIMSLIDER_NUMTICS) * m_flAnimationDuration;
@@ -161,11 +161,11 @@ void CMapAnimationDlg::OnHScroll( UINT nSBCode, UINT nPos, CScrollBar *pScrollBa
 //-----------------------------------------------------------------------------
 void CMapAnimationDlg::OnPlay( void )
 {
-    CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-    if ( !pDoc )
-    {
-        return;
-    }
+	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
+	if ( !pDoc )
+	{
+		return;
+	}
 
 	// if we're not playing, start
 	if ( !m_bPlaying )
@@ -208,7 +208,7 @@ void CMapAnimationDlg::OnCreateKeyFrame( void )
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
 
 	const CMapObjectList *pSelection = pDoc->GetSelection()->GetList();
-	
+
 	for (int i = 0; i < pSelection->Count(); i++)
 	{
 		CMapEntity *ent = dynamic_cast<CMapEntity*>( pSelection->Element( i ) );
@@ -244,11 +244,11 @@ void CMapAnimationDlg::AdvanceAnimationTime( void )
 	if ( !m_bPlaying )
 		return;
 
-    CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-    if ( !pDoc )
-    {
-        return;
-    }
+	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
+	if ( !pDoc )
+	{
+		return;
+	}
 
 	// make sure the animation is long enough to play
 	if ( m_flAnimationDuration <= 0.01 )
@@ -289,7 +289,7 @@ void CMapAnimationDlg::ResetTimeSlider( void )
 //-----------------------------------------------------------------------------
 // Purpose: Called whenever the selection changes, so the slider bar can update
 //			with the selected keyframe info
-// Input  : &selection - 
+// Input  : &selection -
 //-----------------------------------------------------------------------------
 void CMapAnimationDlg::SelectionChanged( CMapObjectList &selection )
 {
@@ -299,7 +299,7 @@ void CMapAnimationDlg::SelectionChanged( CMapObjectList &selection )
 
 	// loop through the selection looking for potential animating objects
 	CMapEntity *ent = NULL;
-	
+
 	FOR_EACH_OBJ( selection, pos )
 	{
 		ent = dynamic_cast<CMapEntity*>( selection.Element(pos) );
@@ -317,10 +317,10 @@ void CMapAnimationDlg::SelectionChanged( CMapObjectList &selection )
 	// find out our enabled state
 	if ( !m_bEnabled )
 	{
-	    m_TimeSlider.EnableWindow( false );
+		m_TimeSlider.EnableWindow( false );
 		return;
 	}
-		
+
 	m_TimeSlider.EnableWindow( true );
 
 	// set up the slider from the selection
@@ -329,4 +329,3 @@ void CMapAnimationDlg::SelectionChanged( CMapObjectList &selection )
 
 	m_flAnimationDuration = anim->GetRemainingTime();
 }
-

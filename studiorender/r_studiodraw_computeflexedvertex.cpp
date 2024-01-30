@@ -46,7 +46,7 @@ CLinkedMiniProfiler g_mp_morph_V5("morph_V5", &g_pOtherMiniProfilers);
 CLinkedMiniProfiler g_mp_morph_V6("morph_V6", &g_pOtherMiniProfilers);
 CLinkedMiniProfiler g_mp_morph_V7("morph_V7", &g_pOtherMiniProfilers);
 
-CLinkedMiniProfiler* g_mp_ComputeFlexedVertex_StreamOffset[8] = 
+CLinkedMiniProfiler* g_mp_ComputeFlexedVertex_StreamOffset[8] =
 {
 	NULL,
 	&g_mp_morph_V1,
@@ -159,7 +159,7 @@ __declspec(naked) int ComputeFlexedVertex_StreamOffset_V7(
 		vxor vr8,vr8,vr8
 
 		li r15, 16
-		
+
 		li r11,0x100
 		li r24, MAXSTUDIOFLEXVERTS - 4
 
@@ -176,57 +176,57 @@ label_start_V7: // 52 instructions run in 45 cycles, although compiler predicts 
 		// IMPORTANT: DO NOT REMOVE NOPS UNLESS YOU KNOW WHAT YOU ARE DOING AND WHY!
 		// nops are essential here, removing them will make the code about 2% slower because dual-issue will be broken
 		////////////////
-		lhz r14, 0(r6) // int n = pVert->index;	
-		addi r16, r3, 2	
+		lhz r14, 0(r6) // int n = pVert->index;
+		addi r16, r3, 2
 		dcbt r11,r6
 		cmpw r3, r24     // compare nThinFlexVertexCount to MAXSTUDIOFLEXVERTS - 2
-		lvlx vr9,r0,r6	
-		rldicl r14, r14, 2, 0 // r14 = n*4	
-		lvrx vr10,r15,r6	
-		rldicl r16, r16, 5, 0 // r16 = (nThinFlexVertexCount+2) * 32 + pThinFlexVerts	
-		vor vr9,vr9,vr10  // vr9 = packedVert = LoadUnalignedSIMD(pVert)	
+		lvlx vr9,r0,r6
+		rldicl r14, r14, 2, 0 // r14 = n*4
+		lvrx vr10,r15,r6
+		rldicl r16, r16, 5, 0 // r16 = (nThinFlexVertexCount+2) * 32 + pThinFlexVerts
+		vor vr9,vr9,vr10  // vr9 = packedVert = LoadUnalignedSIMD(pVert)
 			addi r31,r31,0//vpermwi128 vr40,vr40,0x1B //mr r31,r31
-		add r16, r16, r4	
+		add r16, r16, r4
 			vpermwi128 vr40,vr40,0x1B //mr r30,r30
-		addi r6, r6, 0x10 // pVert++	
+		addi r6, r6, 0x10 // pVert++
 			vpermwi128 vr41,vr41,0x1B//nop
-		lwzx r17, r14, r5    // r17 = oldCache	
+		lwzx r17, r14, r5    // r17 = oldCache
 			//addi r30,r30,0//nop
-		vperm vr10, vr8, vr9, vr4	
+		vperm vr10, vr8, vr9, vr4
 			//addi r29,r29,0//nop
-		xor r18, r17, r7     // cacheVertexIndex = oldCache^nCurrentTag	
-		vperm vr11, vr8, vr9, vr5	
-		stvx vr8, r0,r16	
-		/*S:2*/		vmsum4fp128 vr29,vr19, vr1  // vr29 = scWeight 
-		subf r18,r18,r10     // (0xFFFF-cacheVertexIndex) >> 32	
+		xor r18, r17, r7     // cacheVertexIndex = oldCache^nCurrentTag
+		vperm vr11, vr8, vr9, vr5
+		stvx vr8, r0,r16
+		/*S:2*/		vmsum4fp128 vr29,vr19, vr1  // vr29 = scWeight
+		subf r18,r18,r10     // (0xFFFF-cacheVertexIndex) >> 32
 		/*S:1*/	vpermwi128 vr25, vr20, 0x22 // depends on vmadd vr20 = f4sb
-		stvx vr8, r15,r16	
-		/*S:1*/	vpermwi128 vr26, vr20, 0xF5		
-		vcsxwfp vr10,vr10,8		
-		or r19,r3,r7		
-		vperm vr12, vr8, vr9, vr6		
-		sradi r18,r18,32     // r18 = isCacheInvalid : form mask		
+		stvx vr8, r15,r16
+		/*S:1*/	vpermwi128 vr26, vr20, 0xF5
+		vcsxwfp vr10,vr10,8
+		or r19,r3,r7
+		vperm vr12, vr8, vr9, vr6
+		sradi r18,r18,32     // r18 = isCacheInvalid : form mask
 		/*S:3*/			stvx vr30, r0,r23
 			//nop
 		/*S:3*/			stvx vr31, r15,r23
 			//nop
-		andc r17, r17, r18   // r17 = oldCache & ~isCacheInvalid		
+		andc r17, r17, r18   // r17 = oldCache & ~isCacheInvalid
 			//nop
-		subf r3, r18, r3  // nThinFlexVertexCount = nThinFlexVertexCount + (isCacheInvalid&1);	
+		subf r3, r18, r3  // nThinFlexVertexCount = nThinFlexVertexCount + (isCacheInvalid&1);
 			//nop
-		and r19,r19,r18      // r19 = newCache & isCacheInvalid		
+		and r19,r19,r18      // r19 = newCache & isCacheInvalid
 			//nop
 		/*S:2*/mr r23,r22
 			//nop
-		or r19, r19, r17     // r19 = updateCache		
-		/*S:2*/	lvx vr13, r0,r22    // vr13 = vfPosition	
-		/*S:2*/	lvx vr14, r15,r22    // vr14 = vfNormal	
+		or r19, r19, r17     // r19 = updateCache
+		/*S:2*/	lvx vr13, r0,r22    // vr13 = vfPosition
+		/*S:2*/	lvx vr14, r15,r22    // vr14 = vfNormal
 			//nop
-		rldicl r17, r19, 5,43 // r17 = (updateCache & 0xFFFF) * 32   = nVertexIndex * 32		
+		rldicl r17, r19, 5,43 // r17 = (updateCache & 0xFFFF) * 32   = nVertexIndex * 32
 			//nop
-		/*S:1*/	vmulfp128 vr19, vr25, vr26		
+		/*S:1*/	vmulfp128 vr19, vr25, vr26
 		/*S:1*/mr r22, r21
-		vmaddfp vr20, vr10, vr2, vr3 // vr20 = f4sb	
+		vmaddfp vr20, vr10, vr2, vr3 // vr20 = f4sb
 		add r21, r17, r4      // r21 = pFlexedVertex, goes to Stage:1
 		/*S:2*/	vmaddfp vr30, vr29, vr21, vr13 // MaddSIMD(scWeight,f3Delta, vfPosition)
 		stwx r19, r14, r5
@@ -240,16 +240,16 @@ label_start_V7: // 52 instructions run in 45 cycles, although compiler predicts 
 		dcbt r11, r21
 		bdnz label_start_V7
 label_end_V7:
-		
-		/*S:2*/		vmsum4fp128 vr29,vr19, vr1  // vr29 = scWeight 
+
+		/*S:2*/		vmsum4fp128 vr29,vr19, vr1  // vr29 = scWeight
 		/*S:1*/	vpermwi128 vr25, vr20, 0x22 // depends on vmadd vr20 = f4sb
-		/*S:1*/	vpermwi128 vr26, vr20, 0xF5		
+		/*S:1*/	vpermwi128 vr26, vr20, 0xF5
 		/*S:3*/			stvx vr30, r0,r23
 		/*S:3*/			stvx vr31, r15,r23
 		/*S:2*/mr r23,r22
-		/*S:2*/	lvx vr13, r0,r22    // vr13 = vfPosition	
-		/*S:2*/	lvx vr14, r15,r22    // vr14 = vfNormal	
-		/*S:1*/	vmulfp128 vr19, vr25, vr26		
+		/*S:2*/	lvx vr13, r0,r22    // vr13 = vfPosition
+		/*S:2*/	lvx vr14, r15,r22    // vr14 = vfNormal
+		/*S:1*/	vmulfp128 vr19, vr25, vr26
 		/*S:1*/mr r22, r21
 		/*S:2*/		vmaddfp vr30, vr29, vr21, vr13 // MaddSIMD(scWeight,f3Delta, vfPosition)
 		/*S:2*/		vmaddfp vr31, vr29, vr22, vr14 // MaddSIMD(scWeight,f3NDelta, vfNormal)
@@ -257,12 +257,12 @@ label_end_V7:
 		/*S:1*/	vpermwi128 vr22, vr33, 0x1B
 
 
-		/*S:2*/		vmsum4fp128 vr29,vr19, vr1  // vr29 = scWeight 
+		/*S:2*/		vmsum4fp128 vr29,vr19, vr1  // vr29 = scWeight
 		/*S:3*/			stvx vr30, r0,r23
 		/*S:3*/			stvx vr31, r15,r23
 		/*S:2*/mr r23,r22
-		/*S:2*/	lvx vr13, r0,r22    // vr13 = vfPosition	
-		/*S:2*/	lvx vr14, r15,r22    // vr14 = vfNormal	
+		/*S:2*/	lvx vr13, r0,r22    // vr13 = vfPosition
+		/*S:2*/	lvx vr14, r15,r22    // vr14 = vfNormal
 		/*S:2*/		vmaddfp vr30, vr29, vr21, vr13 // MaddSIMD(scWeight,f3Delta, vfPosition)
 		/*S:2*/		vmaddfp vr31, vr29, vr22, vr14 // MaddSIMD(scWeight,f3NDelta, vfNormal)
 
@@ -359,7 +359,7 @@ __declspec(naked) int ComputeFlexedVertexWrinkle_StreamOffset_V7(
 		vxor vr8,vr8,vr8
 
 		li r15, 16
-		
+
 		li r11,0x100
 		li r24, MAXSTUDIOFLEXVERTS - 4
 
@@ -376,58 +376,58 @@ label_start_V7: // 52 instructions run in 45 cycles, although compiler predicts 
 		// IMPORTANT: DO NOT REMOVE NOPS UNLESS YOU KNOW WHAT YOU ARE DOING AND WHY!
 		// nops are essential here, removing them will make the code about 2% slower because dual-issue will be broken
 		////////////////
-		lhz r14, 0(r6) // int n = pVert->index;	
-		addi r16, r3, 2	
+		lhz r14, 0(r6) // int n = pVert->index;
+		addi r16, r3, 2
 		dcbt r11,r6
 		cmpw r3, r24     // compare nThinFlexVertexCount to MAXSTUDIOFLEXVERTS - 2
-		lvlx vr9,r0,r6	
-		rldicl r14, r14, 2, 0 // r14 = n*4	
-		lvrx vr10,r15,r6	
-		rldicl r16, r16, 5, 0 // r16 = (nThinFlexVertexCount+2) * 32 + pThinFlexVerts	
+		lvlx vr9,r0,r6
+		rldicl r14, r14, 2, 0 // r14 = n*4
+		lvrx vr10,r15,r6
+		rldicl r16, r16, 5, 0 // r16 = (nThinFlexVertexCount+2) * 32 + pThinFlexVerts
 		lvlx vr27,r15,r6  // f3PreDelta
-		vor vr9,vr9,vr10  // vr9 = packedVert = LoadUnalignedSIMD(pVert)	
+		vor vr9,vr9,vr10  // vr9 = packedVert = LoadUnalignedSIMD(pVert)
 			addi r31,r31,0//vpermwi128 vr40,vr40,0x1B //mr r31,r31
-		add r16, r16, r4	
+		add r16, r16, r4
 			vpermwi128 vr40,vr40,0x1B //mr r30,r30
-		addi r6, r6, 0x12 // pVert++	
+		addi r6, r6, 0x12 // pVert++
 			vpermwi128 vr41,vr41,0x1B//nop
-		lwzx r17, r14, r5    // r17 = oldCache	
+		lwzx r17, r14, r5    // r17 = oldCache
 			//addi r30,r30,0//nop
-		vperm vr10, vr8, vr9, vr4 //__vperm(f4Zero, packedVert, permuteSpeedSide)	
+		vperm vr10, vr8, vr9, vr4 //__vperm(f4Zero, packedVert, permuteSpeedSide)
 		vrlimi128 vr27,vr9,7,0// f3PreDelta
-		xor r18, r17, r7     // cacheVertexIndex = oldCache^nCurrentTag	
+		xor r18, r17, r7     // cacheVertexIndex = oldCache^nCurrentTag
 		vperm vr12, vr8, vr9, vr6 //f3NDelta = __vperm(f4Zero, packedVert, permuteNDelta)
-		stvx vr8, r0,r16	
-		/*S:2*/		vmsum4fp128 vr29,vr19, vr1  // vr29 = scWeight 
-		subf r18,r18,r10     // (0xFFFF-cacheVertexIndex) >> 32	
+		stvx vr8, r0,r16
+		/*S:2*/		vmsum4fp128 vr29,vr19, vr1  // vr29 = scWeight
+		subf r18,r18,r10     // (0xFFFF-cacheVertexIndex) >> 32
 		/*S:1*/	vpermwi128 vr25, vr20, 0x22 // depends on vmadd vr20 = f4sb
-		stvx vr8, r15,r16	
-		/*S:1*/	vpermwi128 vr26, vr20, 0xF5		
-		vcsxwfp vr10,vr10,8		
-		or r19,r3,r7		
-		vperm vr11, vr8, vr27, vr5 //f3Delta = __vperm(f4Zero, f3PreDelta, permuteDelta)	
-		sradi r18,r18,32     // r18 = isCacheInvalid : form mask		
+		stvx vr8, r15,r16
+		/*S:1*/	vpermwi128 vr26, vr20, 0xF5
+		vcsxwfp vr10,vr10,8
+		or r19,r3,r7
+		vperm vr11, vr8, vr27, vr5 //f3Delta = __vperm(f4Zero, f3PreDelta, permuteDelta)
+		sradi r18,r18,32     // r18 = isCacheInvalid : form mask
 		/*S:3*/			stvx vr30, r0,r23
 			//nop
 		/*S:3*/			stvx vr31, r15,r23
 			//nop
-		andc r17, r17, r18   // r17 = oldCache & ~isCacheInvalid		
+		andc r17, r17, r18   // r17 = oldCache & ~isCacheInvalid
 			//nop
-		subf r3, r18, r3  // nThinFlexVertexCount = nThinFlexVertexCount + (isCacheInvalid&1);	
+		subf r3, r18, r3  // nThinFlexVertexCount = nThinFlexVertexCount + (isCacheInvalid&1);
 			//nop
-		and r19,r19,r18      // r19 = newCache & isCacheInvalid		
+		and r19,r19,r18      // r19 = newCache & isCacheInvalid
 			//nop
 		/*S:2*/mr r23,r22
 			//nop
-		or r19, r19, r17     // r19 = updateCache		
-		/*S:2*/	lvx vr13, r0,r22    // vr13 = vfPosition	
-		/*S:2*/	lvx vr14, r15,r22    // vr14 = vfNormal	
+		or r19, r19, r17     // r19 = updateCache
+		/*S:2*/	lvx vr13, r0,r22    // vr13 = vfPosition
+		/*S:2*/	lvx vr14, r15,r22    // vr14 = vfNormal
 			//nop
-		rldicl r17, r19, 5,43 // r17 = (updateCache & 0xFFFF) * 32   = nVertexIndex * 32		
+		rldicl r17, r19, 5,43 // r17 = (updateCache & 0xFFFF) * 32   = nVertexIndex * 32
 			//nop
-		/*S:1*/	vmulfp128 vr19, vr25, vr26		
+		/*S:1*/	vmulfp128 vr19, vr25, vr26
 		/*S:1*/mr r22, r21
-		vmaddfp vr20, vr10, vr2, vr3 // vr20 = f4sb	
+		vmaddfp vr20, vr10, vr2, vr3 // vr20 = f4sb
 		add r21, r17, r4      // r21 = pFlexedVertex, goes to Stage:1
 		/*S:2*/	vmaddfp vr30, vr29, vr21, vr13 // MaddSIMD(scWeight,f3Delta, vfPosition)
 		stwx r19, r14, r5
@@ -441,16 +441,16 @@ label_start_V7: // 52 instructions run in 45 cycles, although compiler predicts 
 		dcbt r11, r21
 		bdnz label_start_V7
 label_end_V7:
-		
-		/*S:2*/		vmsum4fp128 vr29,vr19, vr1  // vr29 = scWeight 
+
+		/*S:2*/		vmsum4fp128 vr29,vr19, vr1  // vr29 = scWeight
 		/*S:1*/	vpermwi128 vr25, vr20, 0x22 // depends on vmadd vr20 = f4sb
-		/*S:1*/	vpermwi128 vr26, vr20, 0xF5		
+		/*S:1*/	vpermwi128 vr26, vr20, 0xF5
 		/*S:3*/			stvx vr30, r0,r23
 		/*S:3*/			stvx vr31, r15,r23
 		/*S:2*/mr r23,r22
-		/*S:2*/	lvx vr13, r0,r22    // vr13 = vfPosition	
-		/*S:2*/	lvx vr14, r15,r22    // vr14 = vfNormal	
-		/*S:1*/	vmulfp128 vr19, vr25, vr26		
+		/*S:2*/	lvx vr13, r0,r22    // vr13 = vfPosition
+		/*S:2*/	lvx vr14, r15,r22    // vr14 = vfNormal
+		/*S:1*/	vmulfp128 vr19, vr25, vr26
 		/*S:1*/mr r22, r21
 		/*S:2*/		vmaddfp vr30, vr29, vr21, vr13 // MaddSIMD(scWeight,f3Delta, vfPosition)
 		/*S:2*/		vmaddfp vr31, vr29, vr22, vr14 // MaddSIMD(scWeight,f3NDelta, vfNormal)
@@ -458,12 +458,12 @@ label_end_V7:
 		/*S:1*/	vpermwi128 vr22, vr33, 0x1B
 
 
-		/*S:2*/		vmsum4fp128 vr29,vr19, vr1  // vr29 = scWeight 
+		/*S:2*/		vmsum4fp128 vr29,vr19, vr1  // vr29 = scWeight
 		/*S:3*/			stvx vr30, r0,r23
 		/*S:3*/			stvx vr31, r15,r23
 		/*S:2*/mr r23,r22
-		/*S:2*/	lvx vr13, r0,r22    // vr13 = vfPosition	
-		/*S:2*/	lvx vr14, r15,r22    // vr14 = vfNormal	
+		/*S:2*/	lvx vr13, r0,r22    // vr13 = vfPosition
+		/*S:2*/	lvx vr14, r15,r22    // vr14 = vfNormal
 		/*S:2*/		vmaddfp vr30, vr29, vr21, vr13 // MaddSIMD(scWeight,f3Delta, vfPosition)
 		/*S:2*/		vmaddfp vr31, vr29, vr22, vr14 // MaddSIMD(scWeight,f3NDelta, vfNormal)
 
@@ -559,7 +559,7 @@ __declspec(naked) int ComputeFlexedVertex_StreamOffset_V6(
 			vxor vr8,vr8,vr8
 
 			li r15, 16
-			
+
 			lau r14,g_nStreamOffset_prefetch
 			lal r14,r14,g_nStreamOffset_prefetch
 			lwz r11,0(r14)
@@ -570,56 +570,56 @@ __declspec(naked) int ComputeFlexedVertex_StreamOffset_V6(
 			mftb r23
 
 label_start:
-			lhz r14, 0(r6) // int n = pVert->index;	
+			lhz r14, 0(r6) // int n = pVert->index;
 			dcbt r11,r6
-			addi r16, r3, 2	
+			addi r16, r3, 2
 			cmpw r3, r24     // compare nThinFlexVertexCount to MAXSTUDIOFLEXVERTS - 2
-			lvlx vr9,r0,r6	
-			lvrx vr10,r15,r6	
-			rldicl r14, r14, 2, 0 // r14 = n*4	
-			rldicl r16, r16, 5, 0 // r16 = (nThinFlexVertexCount+2) * 32 + pThinFlexVerts	
-			add r16, r16, r4	
-			vor vr9,vr9,vr10  // vr9 = packedVert = LoadUnalignedSIMD(pVert)	
-			stvx vr8, r0,r16	
-			lwzx r17, r14, r5    // r17 = oldCache	
-			stvx vr8, r15,r16	
-				vmsum4fp128 vr19,vr19, vr1   // vr15 = scWeight 
-			vperm vr10, vr8, vr9, vr4	
-			xor r18, r17, r7     // cacheVertexIndex = oldCache^nCurrentTag	
-			vperm vr11, vr8, vr9, vr5	
-			subf r18,r18,r10     // (0xFFFF-cacheVertexIndex) >> 32	
-			vcsxwfp vr10,vr10,8		
-			vperm vr12, vr8, vr9, vr6		
+			lvlx vr9,r0,r6
+			lvrx vr10,r15,r6
+			rldicl r14, r14, 2, 0 // r14 = n*4
+			rldicl r16, r16, 5, 0 // r16 = (nThinFlexVertexCount+2) * 32 + pThinFlexVerts
+			add r16, r16, r4
+			vor vr9,vr9,vr10  // vr9 = packedVert = LoadUnalignedSIMD(pVert)
+			stvx vr8, r0,r16
+			lwzx r17, r14, r5    // r17 = oldCache
+			stvx vr8, r15,r16
+				vmsum4fp128 vr19,vr19, vr1   // vr15 = scWeight
+			vperm vr10, vr8, vr9, vr4
+			xor r18, r17, r7     // cacheVertexIndex = oldCache^nCurrentTag
+			vperm vr11, vr8, vr9, vr5
+			subf r18,r18,r10     // (0xFFFF-cacheVertexIndex) >> 32
+			vcsxwfp vr10,vr10,8
+			vperm vr12, vr8, vr9, vr6
 					stvx vr23, r0,r22
-			sradi r18,r18,32     // r18 = isCacheInvalid : form mask		
-			vmaddfp vr10, vr10, vr2, vr3 // vr10 = f4sb		
+			sradi r18,r18,32     // r18 = isCacheInvalid : form mask
+			vmaddfp vr10, vr10, vr2, vr3 // vr10 = f4sb
 					stvx vr24, r15,r22
-			or r19,r3,r7		
-			andc r17, r17, r18   // r17 = oldCache & ~isCacheInvalid		
-			and r19,r19,r18      // r19 = newCache & isCacheInvalid		
-			vpermwi128 vr15, vr10, 0x22		
-			or r19, r19, r17     // r19 = updateCache		
-			vpermwi128 vr16, vr10, 0xF5		
-			rldicl r17, r19, 5,43 // r17 = (updateCache & 0xFFFF) * 32   = nVertexIndex * 32		
+			or r19,r3,r7
+			andc r17, r17, r18   // r17 = oldCache & ~isCacheInvalid
+			and r19,r19,r18      // r19 = newCache & isCacheInvalid
+			vpermwi128 vr15, vr10, 0x22
+			or r19, r19, r17     // r19 = updateCache
+			vpermwi128 vr16, vr10, 0xF5
+			rldicl r17, r19, 5,43 // r17 = (updateCache & 0xFFFF) * 32   = nVertexIndex * 32
 				vmaddfp vr24, vr19, vr22, vr14 // MaddSIMD(scWeight,f3NDelta, vfNormal)
 				vmaddfp vr23, vr19, vr21, vr13 // MaddSIMD(scWeight,f3Delta, vfPosition)
-			vmulfp128 vr19, vr15, vr16		
-			add r17, r17, r4      // r17 = pFlexedVertex		
-			stwx r19, r14, r5		
-			subf r3, r18, r3// nThinFlexVertexCount = nThinFlexVertexCount + (isCacheInvalid&1);	
-			lvx vr13, r0,r17       // vr13 = vfPosition	
-			addi r6, r6, 0x10 // pVert++	
-			lvx vr14, r15,r17     // vr14 = vfNormal	
-			vcsxwfp vr21, vr11, 28	
+			vmulfp128 vr19, vr15, vr16
+			add r17, r17, r4      // r17 = pFlexedVertex
+			stwx r19, r14, r5
+			subf r3, r18, r3// nThinFlexVertexCount = nThinFlexVertexCount + (isCacheInvalid&1);
+			lvx vr13, r0,r17       // vr13 = vfPosition
+			addi r6, r6, 0x10 // pVert++
+			lvx vr14, r15,r17     // vr14 = vfNormal
+			vcsxwfp vr21, vr11, 28
 			mr r22,r21
-			vcsxwfp vr22, vr12, 28	
+			vcsxwfp vr22, vr12, 28
 			mr r21,r17
 			bgt label_end
 			dcbt r11, r17
 
 			bdnz label_start
 label_end:
-			
+
 			mftb r17
 			subf r17, r23, r17
 			lau r18, g_mp_morph_Vx
@@ -632,7 +632,7 @@ label_end:
 			stw r23, 4(r18)
 
 
-			vmsum4fp128 vr19,vr19, vr1   // vr15 = scWeight 
+			vmsum4fp128 vr19,vr19, vr1   // vr15 = scWeight
 			stvx vr23, r0,r22
 			stvx vr24, r15,r22
 			vmaddfp vr24, vr19, vr22, vr14 // MaddSIMD(scWeight,f3NDelta, vfNormal)
@@ -757,7 +757,7 @@ label_start_schlp:
 			lvx vr13, r0,r17       // vr13 = vfPosition
 			lvx vr14, r15,r17     // vr14 = vfNormal
 
-			vmsum4fp128 vr15,vr15, vr1   // vr15 = scWeight 
+			vmsum4fp128 vr15,vr15, vr1   // vr15 = scWeight
 
 			stwx r19, r14, r5	  // pFirstThinFlexIndex[n] = updateCache
 			subf r3, r18, r3// nThinFlexVertexCount = nThinFlexVertexCount + (isCacheInvalid&1);
@@ -774,7 +774,7 @@ label_start_schlp:
 			stvx vr17, r0,r20	 // stage 1; deferred storing saves 15 cycles (10%!)
 			stvx vr18, r15,r20
 
-			ld r14, -0x08(r1) 
+			ld r14, -0x08(r1)
 			ld r15, -0x10(r1)
 			ld r16, -0x18(r1)
 			ld r17, -0x20(r1)
@@ -838,14 +838,14 @@ __declspec(naked) int ComputeFlexedVertex_StreamOffset_V4(
 			vxor vr8,vr8,vr8
 
 			li r15, 16
-			li r24, MAXSTUDIOFLEXVERTS - 3 // critical number at which to stop processing 
+			li r24, MAXSTUDIOFLEXVERTS - 3 // critical number at which to stop processing
 
 			mtctr r8
 label_start:
 		lhz r14, 0(r6) // int n = pVert->index;
 			dcbt r11,r16
 			rldicl r14, r14, 2, 0 // r14 = n*4
-			
+
 
 			addi r16, r3, 2
 			rldicl r16, r16, 5, 0 // r16 = (nThinFlexVertexCount+2) * 32 + pThinFlexVerts
@@ -885,7 +885,7 @@ label_start:
 			vpermwi128 vr15, vr10, 0x22
 			vpermwi128 vr16, vr10, 0xF5
 			vmulfp128 vr15, vr15, vr16
-			vmsum4fp128 vr15,vr15, vr1   // vr15 = scWeight 
+			vmsum4fp128 vr15,vr15, vr1   // vr15 = scWeight
 
 			stwx r19, r14, r5     // pFirstThinFlexIndex[n] = updateCache
 			subf r3, r18, r3      // nThinFlexVertexCount = nThinFlexVertexCount + (isCacheInvalid&1);
@@ -968,7 +968,7 @@ __declspec(naked) int ComputeFlexedVertexWrinkle_StreamOffset_V4(
 		vxor vr8,vr8,vr8
 
 		li r15, 16
-		li r24, MAXSTUDIOFLEXVERTS - 3 // critical number at which to stop processing 
+		li r24, MAXSTUDIOFLEXVERTS - 3 // critical number at which to stop processing
 
 		mtctr r8
 	label_start:
@@ -1017,7 +1017,7 @@ __declspec(naked) int ComputeFlexedVertexWrinkle_StreamOffset_V4(
 		vpermwi128 vr15, vr10, 0x22
 		vpermwi128 vr16, vr10, 0xF5
 		vmulfp128 vr15, vr15, vr16
-		vmsum4fp128 vr15,vr15, vr1   // vr15 = scWeight 
+		vmsum4fp128 vr15,vr15, vr1   // vr15 = scWeight
 
 		stwx r19, r14, r5     // pFirstThinFlexIndex[n] = updateCache
 		subf r3, r18, r3      // nThinFlexVertexCount = nThinFlexVertexCount + (isCacheInvalid&1);
@@ -1341,7 +1341,7 @@ int ComputeFlexedVertex_StreamOffset_V1(int nThinFlexVertexCount, CachedPosNorm_
 
 
 typedef int (*Fn_ComputeFlexedVertex_StreamOffset)(int nThinFlexVertexCount, CachedPosNorm_t *pThinFlexVerts, int32 *pFirstThinFlexIndex, mstudiovertanim_t * pVert, uint32 nCurrentTag, uint32 numVertsToProcess, fltx4 w1234);
-Fn_ComputeFlexedVertex_StreamOffset g_fn_ComputeFlexedVertex_StreamOffset[8] = 
+Fn_ComputeFlexedVertex_StreamOffset g_fn_ComputeFlexedVertex_StreamOffset[8] =
 {
 	NULL,
 	ComputeFlexedVertex_StreamOffset_V1,
@@ -1354,7 +1354,7 @@ Fn_ComputeFlexedVertex_StreamOffset g_fn_ComputeFlexedVertex_StreamOffset[8] =
 };
 
 typedef int (*Fn_ComputeFlexedVertexWrinkle_StreamOffset)(int nThinFlexVertexCount, CachedPosNorm_t *pThinFlexVerts, int32 *pFirstThinFlexIndex, mstudiovertanim_wrinkle_t * pVert, uint32 nCurrentTag, uint32 numVertsToProcess, fltx4 w1234);
-Fn_ComputeFlexedVertexWrinkle_StreamOffset g_fn_ComputeFlexedVertexWrinkle_StreamOffset[8] = 
+Fn_ComputeFlexedVertexWrinkle_StreamOffset g_fn_ComputeFlexedVertexWrinkle_StreamOffset[8] =
 {
 	NULL,
 	ComputeFlexedVertexWrinkle_StreamOffset_V3,
@@ -1386,10 +1386,10 @@ void AlwaysAssert(bool mustBeTrue)
 #endif
 
 template
-void CCachedRenderData::ComputeFlexedVertex_StreamOffset<mstudiovertanim_t>( studiohdr_t *pStudioHdr, mstudioflex_t *pflex, 
+void CCachedRenderData::ComputeFlexedVertex_StreamOffset<mstudiovertanim_t>( studiohdr_t *pStudioHdr, mstudioflex_t *pflex,
 														 mstudiovertanim_t *pvanim, int vertCount, float w1, float w2, float w3, float w4 );
 template
-void CCachedRenderData::ComputeFlexedVertex_StreamOffset<mstudiovertanim_wrinkle_t>( studiohdr_t *pStudioHdr, mstudioflex_t *pflex, 
+void CCachedRenderData::ComputeFlexedVertex_StreamOffset<mstudiovertanim_wrinkle_t>( studiohdr_t *pStudioHdr, mstudioflex_t *pflex,
 														 mstudiovertanim_wrinkle_t *pvanim, int vertCount, float w1, float w2, float w3, float w4 );
 
 // vectorized
@@ -1438,7 +1438,7 @@ void CCachedRenderData::ComputeFlexedVertex_StreamOffset_Optimized( studiohdr_t 
 			if(numVertsToProcess > maxVertsSaved)
 			{
 				maxVertsSaved = numVertsToProcess;
-				
+
 				FileHandle_t fh = g_pFullFileSystem->Open( "vertices.bin", "wb" );
 				if(fh != FILESYSTEM_INVALID_HANDLE)
 				{

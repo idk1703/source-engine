@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -34,7 +34,7 @@ int ComputeTextureMemorySize( const GUID &nDeviceId, D3DDEVTYPE deviceType );
 //-----------------------------------------------------------------------------
 // Texture creation
 //-----------------------------------------------------------------------------
-IDirect3DBaseTexture *CreateD3DTexture( int width, int height, int depth, 
+IDirect3DBaseTexture *CreateD3DTexture( int width, int height, int depth,
 	ImageFormat dstFormat, int numLevels, int creationFlags, char *debugLabel=NULL );	// OK to not-supply the last param
 
 
@@ -68,7 +68,7 @@ struct TextureLoadInfo_t
 	ShaderAPITextureHandle_t	m_TextureHandle;
 	int							m_nCopy;
 	IDirect3DBaseTexture		*m_pTexture;
-	int							m_nLevel; 
+	int							m_nLevel;
 	D3DCUBEMAP_FACES			m_CubeFaceID;
 	int							m_nWidth;
 	int							m_nHeight;
@@ -100,11 +100,11 @@ void LoadSubTexture( TextureLoadInfo_t &info, int xOffset, int yOffset, int srcS
 //-----------------------------------------------------------------------------
 // Lock, unlock a texture...
 //-----------------------------------------------------------------------------
-bool LockTexture( ShaderAPITextureHandle_t textureHandle, int copy, IDirect3DBaseTexture* pTexture, int level, 
+bool LockTexture( ShaderAPITextureHandle_t textureHandle, int copy, IDirect3DBaseTexture* pTexture, int level,
 	D3DCUBEMAP_FACES cubeFaceID, int xOffset, int yOffset, int width, int height, bool bDiscard,
 	CPixelWriter& writer );
 
-void UnlockTexture( ShaderAPITextureHandle_t textureHandle, int copy, IDirect3DBaseTexture* pTexture, int level, 
+void UnlockTexture( ShaderAPITextureHandle_t textureHandle, int copy, IDirect3DBaseTexture* pTexture, int level,
 	D3DCUBEMAP_FACES cubeFaceID );
 
 #endif // TEXTUREDX8_H

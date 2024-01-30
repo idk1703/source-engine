@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@ class IChoreoStringPool;
 #pragma pack(1)
 struct EdgeInfo_t
 {
-	EdgeInfo_t() : 
+	EdgeInfo_t() :
 		m_bActive( false ),
 		m_CurveType( CURVE_DEFAULT ),
 		m_flZeroPos( 0.0f )
@@ -108,7 +108,7 @@ public:
 	float	GetIntensity( ICurveDataAccessor *data, float time );
 	CExpressionSample *GetBoundedSample( ICurveDataAccessor *data, int number, bool& bClamped );
 
-	CCurveData & operator = (const CCurveData &src) 
+	CCurveData & operator = (const CCurveData &src)
 	{
 		// Copy ramp over
 		m_Ramp.RemoveAll();

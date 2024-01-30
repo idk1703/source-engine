@@ -42,14 +42,14 @@ CTeamBitmapImage::~CTeamBitmapImage()
 //-----------------------------------------------------------------------------
 bool CTeamBitmapImage::Init( vgui::Panel *pParent, KeyValues* pInitData, C_BaseEntity* pEntity )
 {
-	static const char *pRelativeTeamNames[BITMAP_COUNT] = 
+	static const char *pRelativeTeamNames[BITMAP_COUNT] =
 	{
 		"NoTeam",
 		"MyTeam",
 		"EnemyTeam",
 	};
 
-	static const char *pAbsoluteTeamNames[BITMAP_COUNT] = 
+	static const char *pAbsoluteTeamNames[BITMAP_COUNT] =
 	{
 		"Team0",
 		"Team1",
@@ -169,4 +169,3 @@ bool InitializeTeamImage( KeyValues *pInitData, const char* pSectionName, vgui::
 
 	return pTeamImage->Init( pParent, pTeamImageSection, pEntity );
 }
-

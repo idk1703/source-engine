@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -16,7 +16,7 @@
 class CCustomFilename
 {
 public:
-	CCustomFilename( CRC32_t value ) 
+	CCustomFilename( CRC32_t value )
 	{
 		char hex[16];
 		Q_binarytohex( (byte *)&value, sizeof( value ), hex, sizeof( hex ) );

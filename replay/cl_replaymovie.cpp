@@ -231,7 +231,7 @@ ReplayHandle_t CReplayMovie::GetItemReplayHandle() const
 QueryableReplayItemHandle_t	CReplayMovie::GetItemHandle() const
 {
 	return (QueryableReplayItemHandle_t)GetHandle();
-}	
+}
 
 const wchar_t *CReplayMovie::GetItemTitle() const
 {
@@ -258,7 +258,7 @@ void CReplayMovie::SetUserData( void *pUserData )
 	m_pUserData = pUserData;
 }
 
-bool CReplayMovie::IsItemAMovie() const											
+bool CReplayMovie::IsItemAMovie() const
 {
 	return true;
 }

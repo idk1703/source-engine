@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -25,7 +25,7 @@
 static CGameEventManager s_GameEventManager;
 CGameEventManager &g_GameEventManager = s_GameEventManager;
 
-static const char *s_GameEnventTypeMap[] = 
+static const char *s_GameEnventTypeMap[] =
 {	"local",	// 0 : don't network this field
 	"string",	// 1 : zero terminated ASCII string
 	"float",	// 2 : float 32 bit
@@ -150,7 +150,7 @@ void CGameEventManager::Reset()
 			e.keys->deleteThis(); // free the value keys
 			e.keys = NULL;
 		}
-					
+
 		e.listeners.Purge();	// remove listeners
 	}
 
@@ -159,7 +159,7 @@ void CGameEventManager::Reset()
 	m_EventFiles.RemoveAll();
 	m_EventFileNames.RemoveAll();
 	m_bClientListenersChanged = true;
-	
+
 	Assert( m_GameEvents.Count() == 0 );
 }
 
@@ -191,8 +191,8 @@ void CGameEventManager::WriteEventList(SVC_GameEventList *msg)
 
 		msg->m_DataOut.WriteUBitLong( descriptor.eventid, MAX_EVENT_BITS );
 		msg->m_DataOut.WriteString( descriptor.name );
-		
-		KeyValues *key = descriptor.keys->GetFirstSubKey(); 
+
+		KeyValues *key = descriptor.keys->GetFirstSubKey();
 
 		while ( key )
 		{
@@ -208,7 +208,7 @@ void CGameEventManager::WriteEventList(SVC_GameEventList *msg)
 		}
 
 		msg->m_DataOut.WriteUBitLong( TYPE_LOCAL, 3 ); // end marker
-	
+
 		msg->m_nNumEvents++;
 	}
 }
@@ -224,13 +224,13 @@ bool CGameEventManager::ParseEventList(SVC_GameEventList *msg)
 		descriptor.eventid = -1;
 	}
 
-	// map server event IDs 
+	// map server event IDs
 	for (i = 0; i<msg->m_nNumEvents; i++)
 	{
 		int id = msg->m_DataIn.ReadUBitLong( MAX_EVENT_BITS );
 		char name[MAX_EVENT_NAME_LENGTH];
 		msg->m_DataIn.ReadString( name, sizeof(name) );
-        		
+
 		CGameEventDescriptor *descriptor = GetEventDescriptor( name );
 
 		if ( !descriptor )
@@ -266,7 +266,7 @@ bool CGameEventManager::ParseEventList(SVC_GameEventList *msg)
 
 	return true;
 }
-	
+
 void CGameEventManager::WriteListenEventList(CLC_ListenEvents *msg)
 {
 	msg->m_EventArray.ClearAll();
@@ -283,7 +283,7 @@ void CGameEventManager::WriteListenEventList(CLC_ListenEvents *msg)
 			CGameEventCallback *listener = descriptor.listeners[j];
 
 			if ( listener->m_nListenerType == CGameEventManager::CLIENTSIDE ||
-				 listener->m_nListenerType == CGameEventManager::CLIENTSIDE_OLD	)
+				listener->m_nListenerType == CGameEventManager::CLIENTSIDE_OLD	)
 			{
 				// if we have a client side listener and server knows this event, add it
 				bHasClientListener = true;
@@ -329,7 +329,7 @@ IGameEvent *CGameEventManager::CreateEvent( const char *name, bool bForce )
 		return NULL;
 	}
 
-	// create & return the new event 
+	// create & return the new event
 	return new CGameEvent ( descriptor );
 }
 
@@ -369,7 +369,7 @@ void CGameEventManager::ConPrintEvent( IGameEvent *event)
 	if ( !descriptor )
 		return;
 
-	KeyValues *key = descriptor->keys->GetFirstSubKey(); 
+	KeyValues *key = descriptor->keys->GetFirstSubKey();
 
 	while ( key )
 	{
@@ -395,7 +395,7 @@ bool CGameEventManager::FireEventIntern( IGameEvent *event, bool bServerOnly, bo
 
 	Assert( !(bServerOnly && bClientOnly) ); // it can't be both
 
-	VPROF_("CGameEventManager::FireEvent", 1, VPROF_BUDGETGROUP_OTHER_UNACCOUNTED, false, 
+	VPROF_("CGameEventManager::FireEvent", 1, VPROF_BUDGETGROUP_OTHER_UNACCOUNTED, false,
 		bClientOnly ? BUDGETFLAG_CLIENT : ( bServerOnly ? BUDGETFLAG_SERVER : BUDGETFLAG_OTHER ) );
 
 	CGameEventDescriptor *descriptor = GetEventDescriptor( event );
@@ -432,14 +432,14 @@ bool CGameEventManager::FireEventIntern( IGameEvent *event, bool bServerOnly, bo
 
 		// don't trigger server listners for clientside only events
 		if ( ( listener->m_nListenerType == SERVERSIDE ||
-			   listener->m_nListenerType == SERVERSIDE_OLD ) &&
-			   bClientOnly  )
+			listener->m_nListenerType == SERVERSIDE_OLD ) &&
+			bClientOnly  )
 			continue;
 
-        // don't trigger clientside events, if not explicit a clientside event
+	// don't trigger clientside events, if not explicit a clientside event
 		if ( ( listener->m_nListenerType == CLIENTSIDE ||
-			   listener->m_nListenerType == CLIENTSIDE_OLD ) &&  
-			   !bClientOnly  )
+			listener->m_nListenerType == CLIENTSIDE_OLD ) &&
+			!bClientOnly  )
 			continue;
 
 		// don't broadcast events if server side only
@@ -450,7 +450,7 @@ bool CGameEventManager::FireEventIntern( IGameEvent *event, bool bServerOnly, bo
 
 		// fire event in this listener module
 		if ( listener->m_nListenerType == CLIENTSIDE_OLD ||
-			 listener->m_nListenerType == SERVERSIDE_OLD )
+			listener->m_nListenerType == SERVERSIDE_OLD )
 		{
 			tmZone( TELEMETRY_LEVEL1, TMZF_NONE, "FireGameEvent (i: %d, listenertype: %d (old))", i, listener->m_nListenerType );
 
@@ -468,7 +468,7 @@ bool CGameEventManager::FireEventIntern( IGameEvent *event, bool bServerOnly, bo
 			IGameEventListener2 *pCallback =  static_cast<IGameEventListener2*>(listener->m_pCallback);
 
 			pCallback->FireGameEvent( event );
-		}	 
+		}
 	}
 
 	// free event resources
@@ -493,7 +493,7 @@ bool CGameEventManager::SerializeEvent( IGameEvent *event, bf_write* buf )
 	{
 		DevMsg("Serializing event '%s' (%i):\n", descriptor->name, descriptor->eventid );
 	}
-	
+
 	while ( key )
 	{
 		const char * keyName = key->GetName();
@@ -553,7 +553,7 @@ IGameEvent *CGameEventManager::UnserializeEvent( bf_read *buf)
 		return NULL;
 	}
 
-	KeyValues * key = descriptor->keys->GetFirstSubKey(); 
+	KeyValues * key = descriptor->keys->GetFirstSubKey();
 
 	while ( key )
 	{
@@ -563,10 +563,10 @@ IGameEvent *CGameEventManager::UnserializeEvent( bf_read *buf)
 
 		switch ( type )
 		{
-			case TYPE_LOCAL		: break; // ignore 
+			case TYPE_LOCAL		: break; // ignore
 			case TYPE_STRING	: if ( buf->ReadString( databuf, sizeof(databuf) ) )
 									event->SetString( keyName, databuf );
-								  break;
+								break;
 			case TYPE_FLOAT		: event->SetFloat( keyName, buf->ReadFloat() ); break;
 			case TYPE_LONG		: event->SetInt( keyName, buf->ReadLong() ); break;
 			case TYPE_SHORT		: event->SetInt( keyName, buf->ReadShort() ); break;
@@ -616,13 +616,13 @@ CGameEventCallback* CGameEventManager::FindEventListener( void* pCallback )
 void CGameEventManager::RemoveListener(IGameEventListener2 *listener)
 {
 	CGameEventCallback *pCallback = FindEventListener( listener );
-	
+
 	if ( pCallback == NULL )
 	{
 		return;
 	}
 
-	// remove reference from events 
+	// remove reference from events
 	for (int i=0; i < m_GameEvents.Count(); i++ )
 	{
 		CGameEventDescriptor &et = m_GameEvents.Element( i );
@@ -719,7 +719,7 @@ bool CGameEventManager::AddListener( void *listener, CGameEventDescriptor *descr
 
 	if ( pCallback == NULL )
 	{
-		// add new callback 
+		// add new callback
 		pCallback = new CGameEventCallback;
 		m_Listeners.AddToTail( pCallback );
 
@@ -768,7 +768,7 @@ bool CGameEventManager::RegisterEvent( KeyValues * event)
 
 		AssertMsg2( V_strlen( event->GetName() ) <= MAX_EVENT_NAME_LENGTH, "Event named '%s' exceeds maximum name length %d", event->GetName(), MAX_EVENT_NAME_LENGTH );
 
-		Q_strncpy( descriptor->name, event->GetName(), MAX_EVENT_NAME_LENGTH );	
+		Q_strncpy( descriptor->name, event->GetName(), MAX_EVENT_NAME_LENGTH );
 	}
 	else
 	{
@@ -778,7 +778,7 @@ bool CGameEventManager::RegisterEvent( KeyValues * event)
 
 	// create new descriptor keys
 	descriptor->keys = new KeyValues("descriptor");
-	
+
 	KeyValues *subkey = event->GetFirstSubKey();
 
 	// interate through subkeys
@@ -791,7 +791,7 @@ bool CGameEventManager::RegisterEvent( KeyValues * event)
 		const char * type = subkey->GetString();
 
 		if ( !Q_strcmp( "local", keyName) )
-		{	
+		{
 			descriptor->local = Q_atoi( type ) != 0;
 		}
 		else if ( !Q_strcmp( "reliable", keyName) )
@@ -818,10 +818,10 @@ bool CGameEventManager::RegisterEvent( KeyValues * event)
 				DevMsg( "CGameEventManager:: unknown type '%s' for key '%s'.\n", type, subkey->GetName() );
 			}
 		}
-		
+
 		subkey = subkey->GetNextKey();
 	}
-	
+
 	return true;
 }
 
@@ -902,7 +902,7 @@ void CGameEventManager::RemoveListenerOld( void *listener)
 		return;
 	}
 
-	// remove reference from events 
+	// remove reference from events
 	for (int i=0; i < m_GameEvents.Count(); i++ )
 	{
 		CGameEventDescriptor &et = m_GameEvents.Element( i );

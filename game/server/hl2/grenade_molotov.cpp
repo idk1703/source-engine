@@ -47,7 +47,7 @@ LINK_ENTITY_TO_CLASS( grenade_molotov, CGrenade_Molotov );
 void CGrenade_Molotov::Spawn( void )
 {
 	SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_BOUNCE );
-	SetSolid( SOLID_BBOX ); 
+	SetSolid( SOLID_BBOX );
 	SetCollisionGroup( COLLISION_GROUP_PROJECTILE );
 
 	SetModel( "models/weapons/w_molotov.mdl");
@@ -74,10 +74,10 @@ void CGrenade_Molotov::Spawn( void )
 	{
 		m_pFireTrail->m_SpawnRate			= 48;
 		m_pFireTrail->m_ParticleLifetime	= 1.0f;
-		
+
 		m_pFireTrail->m_StartColor.Init( 0.2f, 0.2f, 0.2f );
 		m_pFireTrail->m_EndColor.Init( 0.0, 0.0, 0.0 );
-		
+
 		m_pFireTrail->m_StartSize	= 8;
 		m_pFireTrail->m_EndSize		= 32;
 		m_pFireTrail->m_SpawnRadius	= 4;
@@ -101,11 +101,11 @@ void CGrenade_Molotov::MolotovTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
-void CGrenade_Molotov::Detonate( void ) 
+void CGrenade_Molotov::Detonate( void )
 {
 	SetModelName( NULL_STRING );		//invisible
 	AddSolidFlags( FSOLID_NOT_SOLID );	// intangible
@@ -113,7 +113,7 @@ void CGrenade_Molotov::Detonate( void )
 	m_takedamage = DAMAGE_NO;
 
 	trace_t trace;
-	UTIL_TraceLine ( GetAbsOrigin(), GetAbsOrigin() + Vector ( 0, 0, -128 ),  MASK_SOLID_BRUSHONLY, 
+	UTIL_TraceLine ( GetAbsOrigin(), GetAbsOrigin() + Vector ( 0, 0, -128 ),  MASK_SOLID_BRUSHONLY,
 		this, COLLISION_GROUP_NONE, &trace);
 
 	// Pull out of the wall a bit
@@ -123,7 +123,7 @@ void CGrenade_Molotov::Detonate( void )
 	}
 
 	int contents = UTIL_PointContents ( GetAbsOrigin() );
-	
+
 	if ( (contents & MASK_WATER) )
 	{
 		UTIL_Remove( this );
@@ -170,13 +170,13 @@ void CGrenade_Molotov::Detonate( void )
 		}
 	}
 // End Start some fires
-	
+
 	CPASFilter filter2( trace.endpos );
 
 	te->Explosion( filter2, 0.0,
-		&trace.endpos, 
+		&trace.endpos,
 		g_sModelIndexFireball,
-		2.0, 
+		2.0,
 		15,
 		TE_EXPLFLAG_NOPARTICLES,
 		m_DmgRadius,
@@ -241,4 +241,3 @@ void CGrenade_Molotov::Precache( void )
 
 	PrecacheScriptSound( "Grenade_Molotov.Detonate" );
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -22,13 +22,13 @@ BEGIN_VS_SHADER_FLAGS( Shadow, "Help for Shadow", SHADER_NOT_EDITABLE )
 		/*
 		The alpha blending state either must be:
 
-		Src Color * Dst Color + Dst Color * 0	
+		Src Color * Dst Color + Dst Color * 0
 		(src color = C*A + 1-A)
 
 		or
 
 		// Can't be this, doesn't work with fog
-		Src Color * Dst Color + Dst Color * (1-Src Alpha)	
+		Src Color * Dst Color + Dst Color * (1-Src Alpha)
 		(src color = C * A, Src Alpha = A)
 		*/
 	}

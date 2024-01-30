@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -11,7 +11,7 @@
 #include "stdafx.h"
 #include "hammer.h"
 #include "OPTView2D.h"
-#include "Options.h"	
+#include "Options.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
@@ -85,7 +85,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // COPTView2D message handlers
 
-BOOL COPTView2D::OnInitDialog() 
+BOOL COPTView2D::OnInitDialog()
 {
 	CWnd *pwnd = GetDlgItem(IDC_GRIDHIGH1024);
 	if (pwnd != NULL)
@@ -98,8 +98,8 @@ BOOL COPTView2D::OnInitDialog()
 	return TRUE;
 }
 
-BOOL COPTView2D::OnApply() 
+BOOL COPTView2D::OnApply()
 {
-	Options.PerformChanges(COptions::secView2D);	
+	Options.PerformChanges(COptions::secView2D);
 	return CPropertyPage::OnApply();
 }

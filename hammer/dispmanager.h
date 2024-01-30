@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -60,9 +60,9 @@ public:
 
 	virtual void AddToWorld( EditDispHandle_t handle ) = 0;
 	virtual void RemoveFromWorld( EditDispHandle_t handle ) = 0;
-	
+
 	virtual void FindWorldNeighbors( EditDispHandle_t handle ) = 0;
-	
+
 	//
 	// Selection List
 	//
@@ -86,7 +86,7 @@ public:
 	//
 	// Helpers.
 	//
-	
+
 	// Return the # of points that these disps share (1=corner neighbors, 2=edge neighbors).
 	virtual int NumSharedPoints( CMapDisp *pDisp, CMapDisp *pNeighborDisp, int *edge1, int *edge2 ) = 0;
 };

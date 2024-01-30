@@ -2,7 +2,7 @@
 //
 // Purpose:
 //
-// $NoKeywords: $ 
+// $NoKeywords: $
 //
 //===========================================================================//
 
@@ -26,7 +26,7 @@
 #error "Unrecognized PS3 compiler; either __SNC__ or __GCC__ must be defined"
 #endif
 
-#endif // SN_TARGET_PS3 
+#endif // SN_TARGET_PS3
 
 #ifdef __GCC__
 #define COMPILER_GCC 1
@@ -44,7 +44,7 @@
 #if defined (_PS3)
 	#include <ppu_intrinsics.h>
 
-	// We want to force the assert to be redefined, because the STD assert might have been 
+	// We want to force the assert to be redefined, because the STD assert might have been
 	// included and redefined. ps3_assert.h will do a check for assert being redefined.
 	// #include "ps3/ps3_assert.h"
 	#ifndef COMPILER_PS3
@@ -94,7 +94,7 @@
 
 #endif
 
-// This macro 
+// This macro
 #if defined( _PS3 ) && defined ( COMPILER_SNC )
 
 // There are known bugs in the PS3 optimizer.  The following macros allow us to lower optimization for a subset of a file
@@ -200,7 +200,7 @@
 	#define IsPlatformPS3_PPU()	0
 	#define IsPlatformPS3_SPU()	0
 	#define PLATFORM_WINDOWS	1
-    #define PLATFORM_OPENGL 0
+	#define PLATFORM_OPENGL 0
 
 	#ifndef _X360
 		#define IsPlatformX360() 0
@@ -228,7 +228,7 @@
 	#endif // _X360
 #elif defined(_PS3)
 
-	
+
 #define IsPlatformX360()		0
 #define IsPlatformPS3()			1
 #ifdef SPU
@@ -249,7 +249,7 @@
 #define IsPlatformOSX() 0
 #define IsOSXOpenGL() 0
 
-	
+
 #elif defined(POSIX)
 	#define IsPlatformX360()		0
 	#define IsPlatformPS3()			0
@@ -272,7 +272,7 @@
 		#define IsPlatformOSX() 1
 		#define IsOSXOpenGL() 1
 		#define PLATFORM_OSX 1
-	    #define PLATFORM_OPENGL 1
+		#define PLATFORM_OPENGL 1
 	#else
 		#define IsPlatformLinux() 0
 		#define IsPlatformOSX() 0
@@ -317,7 +317,7 @@
 //-----------------------------------------------------------------------------
 #if CROSS_PLATFORM_VERSION < 2
 
-#define IsLinux()	IsPlatformLinux() 
+#define IsLinux()	IsPlatformLinux()
 #define IsOSX()		IsPlatformOSX()
 #define IsPosix()	IsPlatformPosix()
 #define IsX360()	IsPlatformX360()
@@ -407,8 +407,8 @@ typedef signed char					int8;
 
 	// intp is an integer that can accomodate a pointer
 	// (ie, sizeof(intp) >= sizeof(int) && sizeof(intp) >= sizeof(void *)
-	typedef intptr_t				intp;		
-	typedef uintptr_t				uintp;		
+	typedef intptr_t				intp;
+	typedef uintptr_t				uintp;
 
 	#if defined( COMPILER_MSVCX360 )
 		#ifdef __m128
@@ -449,13 +449,13 @@ const __m128 VMX_ONE_HALF=(vector float)(0.5f);
 const __m128 VMX_ONE=(vector float)(1.0f);
 
 // Syntaxic sugar for multiply
-inline __attribute__ ((always_inline)) __m128 __vec_mul(const __m128 a, const __m128 b) 
+inline __attribute__ ((always_inline)) __m128 __vec_mul(const __m128 a, const __m128 b)
 {
 	return vec_madd(a,b,VMX_ZERO);
 }
 
 // Refined reciprocal function
-inline __attribute__ ((always_inline)) __m128 __vec_rec(const __m128 a) 
+inline __attribute__ ((always_inline)) __m128 __vec_rec(const __m128 a)
 {
 	//Get the reciprocal estimate
 	vector float estimate = vec_re( a );
@@ -465,7 +465,7 @@ inline __attribute__ ((always_inline)) __m128 __vec_rec(const __m128 a)
 }
 
 // refined reciprocal square root
-inline __attribute__ ((always_inline)) __m128 __vec_rsqrt(const __m128 a) 
+inline __attribute__ ((always_inline)) __m128 __vec_rsqrt(const __m128 a)
 {
 	//Get the square root reciprocal estimate
 	__m128 estimate = vec_rsqrte( a );
@@ -477,46 +477,46 @@ inline __attribute__ ((always_inline)) __m128 __vec_rsqrt(const __m128 a)
 }
 
 // refined square root
-inline __attribute__ ((always_inline)) __m128 __vec_sqrt(const __m128 a) 
+inline __attribute__ ((always_inline)) __m128 __vec_sqrt(const __m128 a)
 {
 	return __vec_mul( a, __vec_rsqrt( a ));
 }
 
 // estimate square root
-inline __attribute__ ((always_inline)) __m128 __vec_sqrtest(const __m128 a) 
-{	
+inline __attribute__ ((always_inline)) __m128 __vec_sqrtest(const __m128 a)
+{
 	return __vec_mul( a, vec_rsqrte( a ));
 }
 
 // Syntaxic sugar for multiply
-inline __attribute__ ((always_inline)) __m128 __vec_div(const __m128 a, const __m128 b) 
+inline __attribute__ ((always_inline)) __m128 __vec_div(const __m128 a, const __m128 b)
 {
 	return __vec_mul( a, __vec_rec( b ));
 }
 
 // load an unaligned array of float in a vector of floats
-inline __attribute__ ((always_inline)) __m128 __vec_ld_unaligned(const float* in) 
+inline __attribute__ ((always_inline)) __m128 __vec_ld_unaligned(const float* in)
 {
-	return vec_perm(vec_ld(0,in), 
+	return vec_perm(vec_ld(0,in),
 					vec_ld(sizeof(__m128),in),
 					vec_lvsl( 0, in ));
 }
 
 // load an unaligned array of 3 floats in a vector of floats, last member being 0.
-inline __attribute__ ((always_inline)) __m128 __vec_ld_unaligned3(const float* in) 
+inline __attribute__ ((always_inline)) __m128 __vec_ld_unaligned3(const float* in)
 {
 	return vec_and(__vec_ld_unaligned(in),(__m128)(vector unsigned int)(0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF ,0));
 }
 
 // stores a vector of floats in an unaligned array of float
-inline __attribute__ ((always_inline)) void __vec_st_unaligned(__m128 in, float* out) 
+inline __attribute__ ((always_inline)) void __vec_st_unaligned(__m128 in, float* out)
 {
 	__m128 temp0 = vec_ld(0,out);
 	__m128 temp1 = vec_ld(16,out);
 	vector unsigned char align = vec_lvsr(0,out);
 	vector unsigned char mask  = vec_perm ((vector unsigned char)(0), (vector unsigned char)(0xFF), align);
 
-	in  = vec_perm ( in, in, align); 
+	in  = vec_perm ( in, in, align);
 	temp0 = vec_sel  ( temp0,  in, (vector bool)mask);
 	temp1 = vec_sel  (  in, temp1, (vector bool)mask);
 	vec_st ( temp0,  0, out);
@@ -524,16 +524,16 @@ inline __attribute__ ((always_inline)) void __vec_st_unaligned(__m128 in, float*
 }
 
 // stores x,y,z from a vector of floats in an unaligned array of 3 floats
-inline __attribute__ ((always_inline)) void __vec_st_unaligned3(__m128 in, float* out) 
+inline __attribute__ ((always_inline)) void __vec_st_unaligned3(__m128 in, float* out)
 {
 	__m128 temp0 = vec_ld(0,out);
 	__m128 temp1 = vec_ld(16,out);
 	vector unsigned char align = vec_lvsr(0,out);
-	vector unsigned char mask  = vec_perm ((vector unsigned char)(0), 
-										   (vector unsigned char)(0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0,0,0,0), 
-										   align);
+	vector unsigned char mask  = vec_perm ((vector unsigned char)(0),
+											(vector unsigned char)(0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0,0,0,0),
+											align);
 
-	in  = vec_perm ( in, in, align); 
+	in  = vec_perm ( in, in, align);
 	temp0 = vec_sel  ( temp0,  in, (vector bool)mask);
 	temp1 = vec_sel  (  in, temp1, (vector bool)mask);
 	vec_st ( temp0,  0, out);
@@ -598,7 +598,7 @@ typedef void * HINSTANCE;
 #ifdef GNUC
 #undef offsetof
 // Note: can't use builtin offsetof because many use cases (esp. in templates) wouldn't compile due to restrictions on the builtin offsetof
-//#define offsetof( type, var ) __builtin_offsetof( type, var ) 
+//#define offsetof( type, var ) __builtin_offsetof( type, var )
 #define offsetof(s,m)	( (size_t)&(((s *)0x1000000)->m) - 0x1000000u )
 #else
 #include <stddef.h>
@@ -673,7 +673,7 @@ typedef void * HINSTANCE;
 	// decls for aligning data
 	#define DECL_ALIGN(x)			__declspec( align( x ) )
 
-	// GCC had a few areas where it didn't construct objects in the same order 
+	// GCC had a few areas where it didn't construct objects in the same order
 	// that Windows does. So when CVProfile::CVProfile() would access g_pMemAlloc,
 	// it would crash because the allocator wasn't initalized yet.
 	#define CONSTRUCT_EARLY
@@ -687,7 +687,7 @@ typedef void * HINSTANCE;
 
 #if !defined( NO_THREAD_LOCAL )
 	#define DECL_THREAD_LOCAL		__declspec(thread)
-#endif 
+#endif
 
 	#define DISABLE_VC_WARNING( x ) __pragma(warning(disable:4310) )
 	#define DEFAULT_VC_WARNING( x ) __pragma(warning(default:4310) )
@@ -726,7 +726,7 @@ typedef void * HINSTANCE;
 	#define EXPLICIT
 	#define NO_VTABLE
 
-	#define NULLTERMINATED			
+	#define NULLTERMINATED
 
 #if defined( COMPILER_SNC )
 	#define TEMPLATE_STATIC static
@@ -736,22 +736,22 @@ typedef void * HINSTANCE;
 
 	// Used for dll exporting and importing
 	#ifdef COMPILER_SNC
-		#define DLL_DECLARATION_DEFAULT_VISIBILITY 
+		#define DLL_DECLARATION_DEFAULT_VISIBILITY
 	#else
 		#define DLL_DECLARATION_DEFAULT_VISIBILITY __attribute__ ((visibility("default")))
 	#endif
-	#define DLL_EXPORT				extern "C" DLL_DECLARATION_DEFAULT_VISIBILITY 
-	#define DLL_IMPORT				extern "C" 
+	#define DLL_EXPORT				extern "C" DLL_DECLARATION_DEFAULT_VISIBILITY
+	#define DLL_IMPORT				extern "C"
 
 	// Can't use extern "C" when DLL exporting a class
 #ifndef _PS3
 	#define  __stdcall			__attribute__ ((__stdcall__))
 #endif
-	#define DLL_CLASS_EXPORT		DLL_DECLARATION_DEFAULT_VISIBILITY 
+	#define DLL_CLASS_EXPORT		DLL_DECLARATION_DEFAULT_VISIBILITY
 	#define DLL_CLASS_IMPORT
 
 	// Can't use extern "C" when DLL exporting a global
-	#define DLL_GLOBAL_EXPORT		DLL_DECLARATION_DEFAULT_VISIBILITY 
+	#define DLL_GLOBAL_EXPORT		DLL_DECLARATION_DEFAULT_VISIBILITY
 	#define DLL_GLOBAL_IMPORT		extern
 
 	#define HINT(THE_HINT)			__builtin_expect( THE_HINT, 1 )
@@ -780,7 +780,7 @@ typedef void * HINSTANCE;
 #if defined( GNUC )	&& !defined( COMPILER_PS3 ) // use pre-align on PS3
 // gnuc has the align decoration at the end
 #define ALIGN4
-#define ALIGN8 
+#define ALIGN8
 #define ALIGN16
 #define ALIGN32
 #define ALIGN128
@@ -936,7 +936,7 @@ typedef void * HINSTANCE;
 	#define DebuggerBreak()		DebugBreak()
 #elif COMPILER_GCC
 	#if defined( _PS3 )
-		#define DebuggerBreak() {  __asm volatile ("tw 31,1,1"); } 
+		#define DebuggerBreak() {  __asm volatile ("tw 31,1,1"); }
 	#elif defined( OSX )
 		#define DebuggerBreak()  if ( Plat_IsInDebugSession() ) { __asm__ __volatile__ ( "int $3" ); } else { raise(SIGTRAP); }
 	#elif defined( PLATFORM_CYGWIN ) || defined( PLATFORM_POSIX )
@@ -945,7 +945,7 @@ typedef void * HINSTANCE;
 		#define DebuggerBreak()		asm( "int3" )
 	#endif
 #elif defined( COMPILER_SNC ) && defined( COMPILER_PS3 )
-static bool sPS3_SuppressAssertsInThisFile = false; // you can throw this in the debugger to temporarily disable asserts inside any particular .cpp module. 
+static bool sPS3_SuppressAssertsInThisFile = false; // you can throw this in the debugger to temporarily disable asserts inside any particular .cpp module.
 	#define DebuggerBreak() if (!sPS3_SuppressAssertsInThisFile) __builtin_snpause(); // <sergiy> from SNC Migration Guide, tw 31,1,1
 #else
 #error DebuggerBreak() is not defined for this platform!
@@ -955,7 +955,7 @@ static bool sPS3_SuppressAssertsInThisFile = false; // you can throw this in the
 	#if defined( fsel )
 	#error
 	#endif
-#else 
+#else
 
 FORCEINLINE float fsel(float fComparand, float fValGE, float fLT)
 {
@@ -1085,7 +1085,7 @@ typedef int socklen_t;
 //-----------------------------------------------------------------------------
 
 // need macro for constant expression
-#define ALIGN_VALUE( val, alignment ) ( ( val + alignment - 1 ) & ~( alignment - 1 ) ) 
+#define ALIGN_VALUE( val, alignment ) ( ( val + alignment - 1 ) & ~( alignment - 1 ) )
 
 // Force a function call site -not- to inlined. (useful for profiling)
 #define DONT_INLINE(a) (((int)(a)+1)?(a):(a))
@@ -1158,7 +1158,7 @@ typedef int socklen_t;
 
 #elif defined ( COMPILER_GCC )
 
-// Works for PS3 
+// Works for PS3
 	inline void SetupFPUControlWord()
 	{
 #ifdef _PS3
@@ -1177,7 +1177,7 @@ typedef int socklen_t;
 
 #elif defined ( COMPILER_SNC )
 
-// Works for PS3 
+// Works for PS3
 	inline void SetupFPUControlWord()
 	{
 #ifdef _PS3
@@ -1244,25 +1244,25 @@ typedef int socklen_t;
 template <typename T>
 inline T WordSwapC( T w )
 {
-   uint16 temp;
+	uint16 temp;
 
-   temp  = ((*((uint16 *)&w) & 0xff00) >> 8);
-   temp |= ((*((uint16 *)&w) & 0x00ff) << 8);
+	temp  = ((*((uint16 *)&w) & 0xff00) >> 8);
+	temp |= ((*((uint16 *)&w) & 0x00ff) << 8);
 
-   return *((T*)&temp);
+	return *((T*)&temp);
 }
 
 template <typename T>
 inline T DWordSwapC( T dw )
 {
-   uint32 temp;
+	uint32 temp;
 
-   temp  =   *((uint32 *)&dw) 				>> 24;
-   temp |= ((*((uint32 *)&dw) & 0x00FF0000) >> 8);
-   temp |= ((*((uint32 *)&dw) & 0x0000FF00) << 8);
-   temp |= ((*((uint32 *)&dw) & 0x000000FF) << 24);
+	temp  =   *((uint32 *)&dw) 				>> 24;
+	temp |= ((*((uint32 *)&dw) & 0x00FF0000) >> 8);
+	temp |= ((*((uint32 *)&dw) & 0x0000FF00) << 8);
+	temp |= ((*((uint32 *)&dw) & 0x000000FF) << 24);
 
-   return *((T*)&temp);
+	return *((T*)&temp);
 }
 
 //-------------------------------------
@@ -1301,21 +1301,21 @@ inline T DWordSwapC( T dw )
 	template <typename T>
 	inline T WordSwapAsm( T w )
 	{
-	   __asm
-	   {
-		  mov ax, w
-		  xchg al, ah
-	   }
+		__asm
+		{
+			mov ax, w
+			xchg al, ah
+		}
 	}
 
 	template <typename T>
 	inline T DWordSwapAsm( T dw )
 	{
-	   __asm
-	   {
-		  mov eax, dw
-		  bswap eax
-	   }
+		__asm
+		{
+			mov eax, dw
+			bswap eax
+		}
 	}
 
 	#pragma warning(pop)
@@ -1463,7 +1463,7 @@ inline void SwapFloat( float *pOut, const float *pIn )		{ SafeSwapFloat( pOut, p
 //
 // It should not be changed after startup unless you really know what you're doing. The only place
 // that should do this is the benchmark code itself so it can output a legit duration.
-PLATFORM_INTERFACE void				Plat_SetBenchmarkMode( bool bBenchmarkMode );	
+PLATFORM_INTERFACE void				Plat_SetBenchmarkMode( bool bBenchmarkMode );
 PLATFORM_INTERFACE bool				Plat_IsInBenchmarkMode();
 
 
@@ -1508,29 +1508,29 @@ PLATFORM_INTERFACE void				Plat_ExitProcess( int nCode );
 			memcpy( this, &src, sizeof(_classname) );	\
 			return *this;								\
 		}
-	
+
 // Processor Information:
 struct CPUInformation
 {
 	int	 m_Size;		// Size of this structure, for forward compatability.
 
 	bool m_bRDTSC : 1,	// Is RDTSC supported?
-		 m_bCMOV  : 1,  // Is CMOV supported?
-		 m_bFCMOV : 1,  // Is FCMOV supported?
-		 m_bSSE	  : 1,	// Is SSE supported?
-		 m_bSSE2  : 1,	// Is SSE2 Supported?
-		 m_b3DNow : 1,	// Is 3DNow! Supported?
-		 m_bMMX   : 1,	// Is MMX supported?
-		 m_bHT	  : 1;	// Is HyperThreading supported?
+		m_bCMOV  : 1,  // Is CMOV supported?
+		m_bFCMOV : 1,  // Is FCMOV supported?
+		m_bSSE	  : 1,	// Is SSE supported?
+		m_bSSE2  : 1,	// Is SSE2 Supported?
+		m_b3DNow : 1,	// Is 3DNow! Supported?
+		m_bMMX   : 1,	// Is MMX supported?
+		m_bHT	  : 1;	// Is HyperThreading supported?
 
 	uint8 m_nLogicalProcessors;		// Number op logical processors.
 	uint8 m_nPhysicalProcessors;	// Number of physical processors
-	
+
 	bool m_bSSE3 : 1,
-		 m_bSSSE3 : 1,
-		 m_bSSE4a : 1,
-		 m_bSSE41 : 1,
-		 m_bSSE42 : 1;	
+		m_bSSSE3 : 1,
+		m_bSSE4a : 1,
+		m_bSSE41 : 1,
+		m_bSSE42 : 1;
 
 	int64 m_Speed;						// In cycles per second.
 
@@ -1740,14 +1740,14 @@ inline void Destruct( T* pMemory )
 //	};
 
 #define GET_OUTER( OuterType, OuterMember ) \
-   ( ( OuterType * ) ( (uint8 *)this - offsetof( OuterType, OuterMember ) ) )
+	( ( OuterType * ) ( (uint8 *)this - offsetof( OuterType, OuterMember ) ) )
 
 
 /*	TEMPLATE_FUNCTION_TABLE()
 
-    (Note added to platform.h so platforms that correctly support templated
-	 functions can handle portions as templated functions rather than wrapped
-	 functions)
+	(Note added to platform.h so platforms that correctly support templated
+	functions can handle portions as templated functions rather than wrapped
+	functions)
 
 	Helps automate the process of creating an array of function
 	templates that are all specialized by a single integer.
@@ -1830,7 +1830,7 @@ struct __MetaLooper_##NAME<0>											\
 class NAME																\
 {																		\
 private:																\
-    static const __MetaLooper_##NAME<COUNT> m;							\
+	static const __MetaLooper_##NAME<COUNT> m;							\
 public:																	\
 	enum { count = COUNT };												\
 	static const __Type_##NAME* functions;								\
@@ -2026,7 +2026,7 @@ int	_V_stricmp_NegativeForUnequal	  ( const char *s1, const char *s2 );
 #define stricmp(s1,s2) _V_stricmp(s1, s2)
 #define strcmpi(s1,s2) _V_stricmp(s1, s2)
 #undef strnicmp
-#define strnicmp V_strncasecmp 
+#define strnicmp V_strncasecmp
 #endif
 
 #endif /* PLATFORM_H */

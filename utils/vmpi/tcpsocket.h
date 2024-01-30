@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,14 +41,14 @@ public:
 
 	// Send data. Returns true if successful.
 	//
-	// Note: TCP likes to clump your packets together in one, so the data multiple send() calls will 
+	// Note: TCP likes to clump your packets together in one, so the data multiple send() calls will
 	// get concatenated and returned in one recv() call. ITCPSocket FIXES this behavior so your recv()
 	// calls match your send() calls.
 	//
 	virtual bool	Send( const void *pData, int size ) = 0;
-	
-	// Receive data. Returns the number of bytes received. 
-	// This will wait as long as flTimeout for something to come in. 
+
+	// Receive data. Returns the number of bytes received.
+	// This will wait as long as flTimeout for something to come in.
 	// Returns false if no data was waiting.
 	virtual bool	Recv( CUtlVector<unsigned char> &data, double flTimeout=0 ) = 0;
 };
@@ -60,10 +60,10 @@ class ITCPListenSocket
 public:
 	// Call this to stop listening for connections and delete the object.
 	virtual void		Release() = 0;
-	
+
 	// Keep calling this as long as you want to wait for connections.
 	virtual ITCPSocket*	UpdateListen( CIPAddr *pAddr ) = 0;	// pAddr is set to the remote process's address.
-};	
+};
 
 
 

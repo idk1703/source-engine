@@ -100,7 +100,7 @@ void CPortalCredits::OnRestore()
 void CPortalCredits::RollOutroCredits()
 {
 	sv_unlockedchapters.SetValue( "15" );
-	
+
 	CBasePlayer *pPlayer = UTIL_GetLocalPlayer();
 
 	CSingleUserRecipientFilter user( pPlayer );
@@ -124,7 +124,7 @@ void CPortalCredits::InputRollOutroCredits( inputdata_t &inputdata )
 void CPortalCredits::RollPortalOutroCredits()
 {
 	sv_unlockedchapters.SetValue( "15" );
-	
+
 	CBasePlayer *pPlayer = UTIL_GetLocalPlayer();
 
 	CSingleUserRecipientFilter user( pPlayer );

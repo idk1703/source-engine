@@ -21,7 +21,7 @@ END_SEND_TABLE()
 LINK_ENTITY_TO_CLASS( tf_taunt_prop, CTFTauntProp );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFTauntProp::CTFTauntProp()
 {
@@ -30,7 +30,7 @@ CTFTauntProp::CTFTauntProp()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFTauntProp::StartSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event, CChoreoActor *actor, CBaseEntity *pTarget )
 {
@@ -63,7 +63,7 @@ bool CTFTauntProp::StartSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFTauntProp::ProcessSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event )
 {
@@ -76,7 +76,7 @@ bool CTFTauntProp::ProcessSceneEvent( CSceneEventInfo *info, CChoreoScene *scene
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFTauntProp::PlayScene( const char *pszScene, float flDelay /*= 0.0f*/, AI_Response *response /*= NULL*/, IRecipientFilter *filter /*= NULL*/ )
 {
@@ -93,7 +93,7 @@ float CTFTauntProp::PlayScene( const char *pszScene, float flDelay /*= 0.0f*/, A
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTauntProp::UpdateOnRemove()
 {
@@ -102,6 +102,6 @@ void CTFTauntProp::UpdateOnRemove()
 		StopScriptedScene( this, m_hScene );
 		m_hScene = NULL;
 	}
-		
+
 	BaseClass::UpdateOnRemove();
 }

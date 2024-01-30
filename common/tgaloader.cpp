@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -65,7 +65,7 @@ bool GetTGADimensions( int32 iBytes, char *pData, int * width, int *height )
 	header.pixel_size = *(p++);
 	header.attributes = *(p++);
 
-	if ( header.image_type != 2 && header.image_type != 10 ) 
+	if ( header.image_type != 2 && header.image_type != 10 )
 	{
 		Msg( "LoadTGA: Only type 2 and 10 targa RGB images supported\n" );
 		return false;
@@ -104,7 +104,7 @@ bool LoadTGA( int32 iBytes, char *pData, byte **rawImage, int * rawImageBytes, i
 	header.pixel_size = *(p++);
 	header.attributes = *(p++);
 
-	if ( header.image_type != 2 && header.image_type != 10 ) 
+	if ( header.image_type != 2 && header.image_type != 10 )
 	{
 		Msg( "LoadTGA: Only type 2 and 10 targa RGB images supported\n" );
 		return false;
@@ -122,7 +122,7 @@ bool LoadTGA( int32 iBytes, char *pData, byte **rawImage, int * rawImageBytes, i
 
 	if (width) *width = header.width;
 	if (height) *height = header.height;
-	if (rawImageBytes) *rawImageBytes = header.width * header.height * 4; 
+	if (rawImageBytes) *rawImageBytes = header.width * header.height * 4;
 
 	*rawImage = new byte[ numPixels * 4 ];
 	byte *pixbuf = *rawImage;
@@ -131,14 +131,14 @@ bool LoadTGA( int32 iBytes, char *pData, byte **rawImage, int * rawImageBytes, i
 		p += header.id_length;  // skip TARGA image comment.
 
 	if ( header.image_type == 2 ) {  // Uncompressed, RGB images
-		for(int row = rows - 1; row >=0; row-- ) 
+		for(int row = rows - 1; row >=0; row-- )
 		{
 			if ( header.attributes & TGA_ATTRIBUTE_VFLIP )
 				pixbuf = *rawImage + (rows-row-1)*columns*4;
 			else
-				pixbuf = *rawImage + row*columns*4;				
+				pixbuf = *rawImage + row*columns*4;
 
-			for(int column=0; column < columns; column++) 
+			for(int column=0; column < columns; column++)
 			{
 				unsigned char red,green,blue,alphabyte;
 				switch ( header.pixel_size )
@@ -167,11 +167,11 @@ bool LoadTGA( int32 iBytes, char *pData, byte **rawImage, int * rawImageBytes, i
 			}
 		}
 	}
-	else if ( header.image_type == 10 ) 
-	{   
+	else if ( header.image_type == 10 )
+	{
 		// Runlength encoded RGB images
 		unsigned char red,green,blue,alphabyte,packetHeader,packetSize,j;
-		for( int row = rows - 1; row >= 0; row--) 
+		for( int row = rows - 1; row >= 0; row--)
 		{
 			if ( header.attributes & TGA_ATTRIBUTE_VFLIP )
 				pixbuf = *rawImage + (rows-row-1)*columns*4;
@@ -182,7 +182,7 @@ bool LoadTGA( int32 iBytes, char *pData, byte **rawImage, int * rawImageBytes, i
 				packetHeader=*(p++);
 				packetSize = 1 + (packetHeader & 0x7f);
 				if (packetHeader & 0x80) {        // run-length packet
-					switch ( header.pixel_size ) 
+					switch ( header.pixel_size )
 					{
 					case 24:
 						blue = *(p++);
@@ -199,7 +199,7 @@ bool LoadTGA( int32 iBytes, char *pData, byte **rawImage, int * rawImageBytes, i
 						break;
 					}
 
-					for(j=0;j<packetSize;j++) 
+					for(j=0;j<packetSize;j++)
 					{
 						*pixbuf++=red;
 						*pixbuf++=green;
@@ -216,7 +216,7 @@ bool LoadTGA( int32 iBytes, char *pData, byte **rawImage, int * rawImageBytes, i
 						}
 					}
 				}
-				else 
+				else
 				{                            // non run-length packet
 					for(j=0;j<packetSize;j++) {
 						switch (header.pixel_size) {
@@ -241,7 +241,7 @@ bool LoadTGA( int32 iBytes, char *pData, byte **rawImage, int * rawImageBytes, i
 								break;
 						}
 						column++;
-						if (column==columns) 
+						if (column==columns)
 						{ // pixel packet run spans across rows
 							column=0;
 							if (row>0)
@@ -249,7 +249,7 @@ bool LoadTGA( int32 iBytes, char *pData, byte **rawImage, int * rawImageBytes, i
 							else
 								goto breakOut;
 							pixbuf = *rawImage + row*columns*4;
-						}						
+						}
 					}
 				}
 			}
@@ -268,12 +268,10 @@ void WriteTGA( const char *pchFileName, void *rgba, int wide, int tall )
 	header.height = tall;
 	header.image_type = 2;
 	header.pixel_size = 32;
-	
+
 	FILE *fp = fopen( pchFileName, "w+" );
 	fwrite( &header, 1, sizeof(header), fp );
 	fwrite( rgba, 1, wide*tall*4, fp );
 	fclose(fp);
-	
+
 }
-
-

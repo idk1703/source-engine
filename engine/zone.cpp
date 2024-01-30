@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //						ZONE MEMORY ALLOCATION
 //
@@ -128,7 +128,7 @@ void Hunk_Print()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Memory_Init( void )
 {
@@ -137,7 +137,7 @@ void Memory_Init( void )
 	const int nMinCommitBytes = 0x8000;
 #ifndef HUNK_USE_16MB_PAGE
 	const int nInitialCommit = 0x280000;
-	while ( !g_HunkMemoryStack.Init( nMaxBytes, nMinCommitBytes, nInitialCommit ) )	 
+	while ( !g_HunkMemoryStack.Init( nMaxBytes, nMinCommitBytes, nInitialCommit ) )
 	{
 		Warning( "Unable to allocate %d MB of memory, trying %d MB instead\n", nMaxBytes, nMaxBytes/2 );
 		nMaxBytes /= 2;
@@ -158,7 +158,7 @@ void Memory_Init( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Memory_Shutdown( void )
 {

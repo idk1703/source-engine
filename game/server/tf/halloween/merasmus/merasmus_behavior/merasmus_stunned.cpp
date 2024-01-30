@@ -14,7 +14,7 @@
 ActionResult< CMerasmus > CMerasmusStunned::OnStart( CMerasmus *me, Action< CMerasmus > *priorAction )
 {
 	m_nStunStage = STUN_BEGIN;
-	
+
 	int iLayer = me->AddGesture( ACT_MP_STUN_BEGIN );
 	float flDuration = me->GetLayerDuration( iLayer );
 	m_stunAnimationTimer.Start( flDuration );

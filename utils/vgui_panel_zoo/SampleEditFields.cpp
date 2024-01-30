@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,7 +22,7 @@ class SampleEditFields: public DemoPage
 		SampleEditFields(Panel *parent, const char *name);
 		~SampleEditFields();
 
-	
+
 	private:
 		TextEntry *m_pTextEntry;
 };
@@ -54,5 +54,3 @@ Panel* SampleEditFields_Create(Panel *parent)
 {
 	return new SampleEditFields(parent, "Edit Fields");
 }
-
-

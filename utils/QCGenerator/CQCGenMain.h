@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -26,12 +26,12 @@ class CQCGenMain : public Frame
 
 public:
 
-    CQCGenerator *m_pQCGenerator;
+	CQCGenerator *m_pQCGenerator;
 	CQCGenMain(Panel *parent, const char *name, const char *pszMDParam, const char *pszCollisionParam );
 	virtual ~CQCGenMain();
-		
+
 protected:
-	
+
 	virtual void OnClose();
 	virtual void OnCommand( const char *command );
 
@@ -43,8 +43,8 @@ private:
 	bool			m_bChanged;
 	vgui::MenuBar	*m_pMenuBar;
 	vgui::Panel		*m_pClientArea;
-	
-	MESSAGE_FUNC( OnRefresh, "refresh" );	
+
+	MESSAGE_FUNC( OnRefresh, "refresh" );
 };
 
 

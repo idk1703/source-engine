@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ class CItemModelPanel;
 #define SELECTION_DISPLAY_COLUMNS			(SELECTION_DISPLAY_SLOTS_PER_PAGE / SELECTION_DISPLAY_ROWS)
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct item_stack_type_t
 {
@@ -126,7 +126,7 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CEquipSlotItemSelectionPanel : public CItemSelectionPanel
 {
@@ -137,7 +137,7 @@ public:
 
 	virtual void	ApplySchemeSettings( vgui::IScheme *pScheme );
 	virtual void	PerformLayout( void );
-	
+
 	virtual const char *GetSchemeFile( void ) { return "Resource/UI/ItemSelectionPanel.res"; }
 	virtual bool	ShouldItemPanelBeVisible( CItemModelPanel *pPanel, int iPanelIndex );
 	virtual void	UpdateModelPanelsForSelection( void );
@@ -196,7 +196,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CAccountSlotItemSelectionPanel : public CEquipSlotItemSelectionPanel
 {

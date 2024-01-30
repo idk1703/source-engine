@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -23,7 +23,7 @@ BEGIN_NETWORK_TABLE( C_TFProjectile_EnergyBall, DT_TFProjectile_EnergyBall )
 END_NETWORK_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFProjectile_EnergyBall::C_TFProjectile_EnergyBall( void )
 {
@@ -31,7 +31,7 @@ C_TFProjectile_EnergyBall::C_TFProjectile_EnergyBall( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFProjectile_EnergyBall::~C_TFProjectile_EnergyBall( void )
 {
@@ -42,7 +42,7 @@ C_TFProjectile_EnergyBall::~C_TFProjectile_EnergyBall( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFProjectile_EnergyBall::CreateTrails( void )
 {
@@ -87,7 +87,7 @@ void C_TFProjectile_EnergyBall::CreateTrails( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *C_TFProjectile_EnergyBall::GetTrailParticleName( void )
 {

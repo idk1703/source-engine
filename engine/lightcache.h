@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,8 +16,8 @@
 #define MAXLOCALLIGHTS 4
 
 class IHandleEntity;
-struct dworldlight_t;												   
-FORWARD_DECLARE_HANDLE( LightCacheHandle_t ); 
+struct dworldlight_t;
+FORWARD_DECLARE_HANDLE( LightCacheHandle_t );
 
 struct LightingState_t;
 
@@ -101,8 +101,8 @@ void R_StudioCheckReinitLightingCache();
 
 // static prop version
 LightingState_t *LightcacheGetStatic( LightCacheHandle_t cache, ITexture **pEnvCubemap,
-				    unsigned int flags = ( LIGHTCACHEFLAGS_STATIC | 
-						                   LIGHTCACHEFLAGS_DYNAMIC | 
+				    unsigned int flags = ( LIGHTCACHEFLAGS_STATIC |
+						                   LIGHTCACHEFLAGS_DYNAMIC |
 					                       LIGHTCACHEFLAGS_LIGHTSTYLE ) );
 // dynamic prop version
 struct LightcacheGetDynamic_Stats
@@ -112,10 +112,10 @@ struct LightcacheGetDynamic_Stats
 	bool m_bHasDLights;
 	bool m_bNeedsSwitchableLightStyleUpdate;
 };
-ITexture *LightcacheGetDynamic( const Vector& origin, LightingState_t& lightingState, 
+ITexture *LightcacheGetDynamic( const Vector& origin, LightingState_t& lightingState,
 							   LightcacheGetDynamic_Stats &stats,
-							   unsigned int flags = ( LIGHTCACHEFLAGS_STATIC | 
-						                              LIGHTCACHEFLAGS_DYNAMIC | 
+							   unsigned int flags = ( LIGHTCACHEFLAGS_STATIC |
+						                              LIGHTCACHEFLAGS_DYNAMIC |
 					                                  LIGHTCACHEFLAGS_LIGHTSTYLE ), bool bDebugModel=false );
 
 // Reset the light cache.
@@ -138,7 +138,7 @@ LightCacheHandle_t CreateStaticLightingCache( const Vector& origin, const Vector
 void ClearStaticLightingCache();
 
 // Computes the static vertex lighting term from a large number of spherical samples
-bool ComputeVertexLightingFromSphericalSamples( const Vector& vecVertex, 
+bool ComputeVertexLightingFromSphericalSamples( const Vector& vecVertex,
 	const Vector &vecNormal, IHandleEntity *pIgnoreEnt, Vector *pLinearColor );
 
 bool StaticLightCacheAffectedByDynamicLight( LightCacheHandle_t handle );
@@ -152,7 +152,7 @@ void AddWorldLightToAmbientCube( dworldlight_t* pWorldLight, const Vector &vecLi
 
 void InitDLightGlobals( int nMapVersion );
 
-// This is different for shipped HL2. . . 
+// This is different for shipped HL2. . .
 extern float g_flMinLightingValue;
 
 #endif // LIGHTCACHE_H

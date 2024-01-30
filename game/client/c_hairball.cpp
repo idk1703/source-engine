@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,13 +22,13 @@ private:
 	public:
 		virtual void	GetNodeForces( CSimplePhysics::CNode *pNodes, int iNode, Vector *pAccel );
 		virtual void	ApplyConstraints( CSimplePhysics::CNode *pNodes, int nNodes );
-	
+
 		C_Hairball		*m_pParent;
 	};
 
 
 public:
-	
+
 						C_Hairball();
 
 	void				Init();
@@ -36,7 +36,7 @@ public:
 
 // IClientThinkable.
 public:
-	
+
 	virtual void		ClientThink();
 
 
@@ -72,7 +72,7 @@ public:
 	float	m_flSpinDuration;
 	float	m_flCurSpinTime;
 	float	m_flSpinRateX, m_flSpinRateY;
-	
+
 	bool	m_bFirstThink;
 };
 
@@ -123,17 +123,17 @@ C_Hairball::C_Hairball()
 {
 	m_nHairs = 100;
 	m_nNodesPerHair = 3;
-	
+
 	float flHairLength = 20;
 	m_flSpringDist = flHairLength / (m_nNodesPerHair - 1);
-	
+
 	m_Nodes.SetSize( m_nHairs * m_nNodesPerHair );
 	m_HairPositions.SetSize( m_nHairs );
 	m_TransformedHairPositions.SetSize( m_nHairs );
 
 	m_flSphereRadius = 20;
 	m_vMoveDir.Init();
-	
+
 	m_flSpinDuration = 1;
 	m_flCurSpinTime = 0;
 	m_flSpinRateX = m_flSpinRateY = 0;
@@ -143,12 +143,12 @@ C_Hairball::C_Hairball()
 	{
 		float theta = RandomFloat( -M_PI, M_PI );
 		float phi   = RandomFloat( -M_PI/2, M_PI/2 );
-		
+
 		float cosPhi = cos( phi );
 
-		m_HairPositions[i].Init( 
-			cos(theta) * cosPhi * m_flSphereRadius, 
-			sin(theta) * cosPhi * m_flSphereRadius, 
+		m_HairPositions[i].Init(
+			cos(theta) * cosPhi * m_flSphereRadius,
+			sin(theta) * cosPhi * m_flSphereRadius,
 			sin(phi) * m_flSphereRadius );
 	}
 
@@ -165,7 +165,7 @@ void C_Hairball::Init()
 {
 	ClientEntityList().AddNonNetworkableEntity( this );
 	ClientThinkList()->SetNextClientThink( GetClientHandle(), CLIENT_THINK_ALWAYS );
-	
+
 	AddToLeafSystem( RENDER_GROUP_OPAQUE_ENTITY );
 
 	m_pMaterial = materials->FindMaterial( "cable/cable", TEXTURE_GROUP_OTHER );
@@ -216,7 +216,7 @@ void C_Hairball::ClientThink()
 		m_flCurSpinTime = 0;
 	}
 
-	
+
 	if ( m_flSitStillTime > 0 )
 	{
 		m_flSitStillTime -= gpGlobals->frametime;
@@ -267,7 +267,7 @@ void C_Hairball::ClientThink()
 		}
 	}
 
-	
+
 	// Transform the base hair positions so we can lock them down.
 	VMatrix mTransform;
 	mTransform.SetupMatrixOrgAngles( GetLocalOrigin(), GetLocalAngles() );
@@ -303,7 +303,7 @@ int C_Hairball::DrawModel( int flags )
 	for ( int iHair=0; iHair < m_nHairs; iHair++ )
 	{
 		CSimplePhysics::CNode *pBase = &m_Nodes[iHair * m_nNodesPerHair];
-		
+
 		CBeamSegDraw beamDraw;
 		beamDraw.Start( pRenderContext, m_nNodesPerHair-1, m_pMaterial );
 
@@ -319,7 +319,7 @@ int C_Hairball::DrawModel( int flags )
 
 			beamDraw.NextSeg( &seg );
 		}
-		
+
 		beamDraw.End();
 	}
 
@@ -333,10 +333,10 @@ void CreateHairballCallback()
 	{
 		C_Hairball *pHairball = new C_Hairball;
 		pHairball->Init();
-		
+
 		// Put it a short distance in front of the player.
 		C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
-		
+
 		if ( !pPlayer )
 			return;
 
@@ -347,4 +347,3 @@ void CreateHairballCallback()
 }
 
 ConCommand cc_CreateHairball( "CreateHairball", CreateHairballCallback, 0, FCVAR_CHEAT );
-

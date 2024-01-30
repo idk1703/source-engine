@@ -41,7 +41,7 @@
 extern ConVar sk_plr_dmg_xbow_bolt_plr;
 extern ConVar sk_plr_dmg_xbow_bolt_npc;
 
-extern short	g_sModelIndexFireball;		// (in combatweapon.cpp) holds the index for the fireball 
+extern short	g_sModelIndexFireball;		// (in combatweapon.cpp) holds the index for the fireball
 
 #if !defined(CLIENT_DLL)
 
@@ -54,9 +54,9 @@ class CCrossbowBolt : public CBaseCombatCharacter
 
 public:
 	CCrossbowBolt()
-    {
-        m_bExplode = true;
-    }
+	{
+		m_bExplode = true;
+	}
 
 	Class_T Classify( void ) { return CLASS_NONE; }
 
@@ -65,8 +65,8 @@ public:
 	void Precache( void );
 	void BubbleThink( void );
 	void BoltTouch( CBaseEntity *pOther );
-    void ExplodeThink( void );
-    void SetExplode( bool bVal ) { m_bExplode = bVal; }
+	void ExplodeThink( void );
+	void SetExplode( bool bVal ) { m_bExplode = bVal; }
 	bool CreateVPhysics( void );
 	unsigned int PhysicsSolidMaskForEntity() const;
 
@@ -75,7 +75,7 @@ public:
 	DECLARE_DATADESC();
 
 private:
-    bool m_bExplode;
+	bool m_bExplode;
 };
 LINK_ENTITY_TO_CLASS( crossbow_bolt, CCrossbowBolt );
 
@@ -83,7 +83,7 @@ BEGIN_DATADESC( CCrossbowBolt )
 	// Function Pointers
 	DEFINE_FUNCTION( BubbleThink ),
 	DEFINE_FUNCTION( BoltTouch ),
-    DEFINE_FUNCTION( ExplodeThink ),
+	DEFINE_FUNCTION( ExplodeThink ),
 END_DATADESC()
 
 CCrossbowBolt *CCrossbowBolt::BoltCreate( const Vector &vecOrigin, const QAngle &angAngles, CBasePlayer *pentOwner )
@@ -114,14 +114,14 @@ void CCrossbowBolt::Spawn( )
 	SetThink( &CCrossbowBolt::BubbleThink );
 	SetNextThink( gpGlobals->curtime + 0.2 );
 
-    m_bExplode = true;
+	m_bExplode = true;
 }
 
 
 void CCrossbowBolt::Precache( )
 {
 	PrecacheModel( BOLT_MODEL );
-	PrecacheScriptSound( "BaseGrenade.Explode" );    
+	PrecacheScriptSound( "BaseGrenade.Explode" );
 }
 
 void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
@@ -143,12 +143,12 @@ void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
 
 		if ( pOther->IsPlayer() )
 		{
-            float m_fDamage = sk_plr_dmg_xbow_bolt_plr.GetFloat() * g_pGameRules->GetDamageMultiplier();
+			float m_fDamage = sk_plr_dmg_xbow_bolt_plr.GetFloat() * g_pGameRules->GetDamageMultiplier();
 
-            // If multiplayer sniper bolt, multiply damage by 4
-            if ( g_pGameRules->IsMultiplayer() && !m_bExplode )
-                m_fDamage *= 4;
-            
+			// If multiplayer sniper bolt, multiply damage by 4
+			if ( g_pGameRules->IsMultiplayer() && !m_bExplode )
+				m_fDamage *= 4;
+
 			CTakeDamageInfo	dmgInfo( this, GetOwnerEntity(), m_fDamage,DMG_NEVERGIB );
 			CalculateMeleeDamageForce( &dmgInfo, vecNormalizedVel, tr.endpos );
 			pOther->DispatchTraceAttack( dmgInfo, vecNormalizedVel, &tr );
@@ -171,7 +171,7 @@ void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
 
 		AngleVectors( GetAbsAngles(), &vForward );
 		VectorNormalize ( vForward );
-		
+
 		UTIL_TraceLine( GetAbsOrigin(),	GetAbsOrigin() + vForward * 128, MASK_OPAQUE, pOther, COLLISION_GROUP_NONE, &tr2 );
 
 		if ( tr2.fraction != 1.0f )
@@ -184,11 +184,11 @@ void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
 			data.m_vOrigin = tr2.endpos;
 			data.m_vNormal = vForward;
 			data.m_nEntIndex = tr2.fraction != 1.0f;
-		
+
 			DispatchEffect( "BoltImpact", data );
 		}
 
-        if ( !g_pGameRules->IsMultiplayer() || !m_bExplode )
+		if ( !g_pGameRules->IsMultiplayer() || !m_bExplode )
 		{
 			UTIL_Remove( this );
 		}
@@ -221,45 +221,45 @@ void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
 		}
 	}
 
-    // Set up an explosion in one tenth of a second
+	// Set up an explosion in one tenth of a second
 	if ( g_pGameRules->IsMultiplayer() && m_bExplode )
 	{
-        SetThink( &CCrossbowBolt::ExplodeThink );
-        SetNextThink( gpGlobals->curtime + 0.1f );
+		SetThink( &CCrossbowBolt::ExplodeThink );
+		SetNextThink( gpGlobals->curtime + 0.1f );
 	}
 }
 
 void CCrossbowBolt::ExplodeThink( void )
 {
-    //    int iContents = UTIL_PointContents( pev->origin );
-    CTakeDamageInfo	dmgInfo( this, GetOwnerEntity(), sk_plr_dmg_xbow_bolt_npc.GetFloat() * g_pGameRules->GetDamageMultiplier(), DMG_BLAST );
+	//    int iContents = UTIL_PointContents( pev->origin );
+	CTakeDamageInfo	dmgInfo( this, GetOwnerEntity(), sk_plr_dmg_xbow_bolt_npc.GetFloat() * g_pGameRules->GetDamageMultiplier(), DMG_BLAST );
 
-    ::RadiusDamage( dmgInfo, GetAbsOrigin(), 128, CLASS_NONE, NULL );
+	::RadiusDamage( dmgInfo, GetAbsOrigin(), 128, CLASS_NONE, NULL );
 
 #if !defined( CLIENT_DLL )
-    CPASFilter filter( GetAbsOrigin() );
+	CPASFilter filter( GetAbsOrigin() );
 
-    te->Explosion( filter,                /* filter */
-                   0.0,                   /* delay  */
-                   &GetAbsOrigin(),       /* pos    */
-                   g_sModelIndexFireball, /* modelindex */
-                   0.2,                   /* scale  */
-                   25,                    /* framerate */
-                   TE_EXPLFLAG_NONE,      /* flags */
-                   128,                   /* radius */
-                   64,                    /* magnitude */
-                   NULL,                  /* normal */
-                   'C' );                 /* materialType */
+	te->Explosion( filter,                /* filter */
+					0.0,                   /* delay  */
+					&GetAbsOrigin(),       /* pos    */
+					g_sModelIndexFireball, /* modelindex */
+					0.2,                   /* scale  */
+					25,                    /* framerate */
+					TE_EXPLFLAG_NONE,      /* flags */
+					128,                   /* radius */
+					64,                    /* magnitude */
+					NULL,                  /* normal */
+					'C' );                 /* materialType */
 
 	//CSoundEnt::InsertSound ( SOUND_COMBAT, GetAbsOrigin(), BASEGRENADE_EXPLOSION_VOLUME, 3.0 );
-	EmitSound( "BaseGrenade.Explode" );    
+	EmitSound( "BaseGrenade.Explode" );
 #endif
 
-    
-    SetThink( &CCrossbowBolt::SUB_Remove );
-    SetNextThink( gpGlobals->curtime );
-    
-    AddEffects( EF_NODRAW );
+
+	SetThink( &CCrossbowBolt::SUB_Remove );
+	SetNextThink( gpGlobals->curtime );
+
+	AddEffects( EF_NODRAW );
 }
 
 void CCrossbowBolt::BubbleThink( void )
@@ -279,7 +279,7 @@ void CCrossbowBolt::BubbleThink( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CCrossbowBolt::CreateVPhysics( void )
@@ -313,7 +313,7 @@ class CWeaponCrossbow : public CBaseHL1MPCombatWeapon
 	DECLARE_CLASS( CWeaponCrossbow, CBaseHL1MPCombatWeapon );
 public:
 
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponCrossbow( void );
@@ -371,7 +371,7 @@ END_DATADESC()
 #if 0
 #ifndef CLIENT_DLL
 
-acttable_t	CWeaponCrossbow::m_acttable[] = 
+acttable_t	CWeaponCrossbow::m_acttable[] =
 {
 	{ ACT_HL2MP_IDLE,					ACT_HL2MP_IDLE_CROSSBOW,					false },
 //	{ ACT_HL2MP_RUN,					ACT_HL2MP_RUN_CROSSBOW,						false },
@@ -398,7 +398,7 @@ CWeaponCrossbow::CWeaponCrossbow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCrossbow::Precache( void )
 {
@@ -456,11 +456,11 @@ void CWeaponCrossbow::FireBolt( void )
 	}
 
 	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-	
+
 	if ( pOwner == NULL )
 		return;
 
-	Vector vecAiming	= pOwner->GetAutoaimVector( AUTOAIM_2DEGREES );	
+	Vector vecAiming	= pOwner->GetAutoaimVector( AUTOAIM_2DEGREES );
 	Vector vecSrc		= pOwner->Weapon_ShootPosition();
 
 	QAngle angAiming;
@@ -469,42 +469,42 @@ void CWeaponCrossbow::FireBolt( void )
 #ifndef CLIENT_DLL
 	CCrossbowBolt *pBolt = CCrossbowBolt::BoltCreate( vecSrc, angAiming, pOwner );
 
-    // In multiplayer, secondary fire is instantaneous.
-    if ( g_pGameRules->IsMultiplayer() && m_fInZoom )
-    {
-        Vector vecEnd = vecSrc + ( vecAiming * MAX_TRACE_LENGTH );
-        
-        trace_t trace;
-        UTIL_TraceLine( vecSrc, vecEnd, MASK_SHOT, GetOwner(), COLLISION_GROUP_NONE, &trace );
-        pBolt->SetAbsOrigin( trace.endpos );
+	// In multiplayer, secondary fire is instantaneous.
+	if ( g_pGameRules->IsMultiplayer() && m_fInZoom )
+	{
+		Vector vecEnd = vecSrc + ( vecAiming * MAX_TRACE_LENGTH );
 
-        // We hit someone
-        if ( trace.m_pEnt && trace.m_pEnt->m_takedamage )
-        {
-            pBolt->SetExplode( false );            
-            pBolt->BoltTouch( trace.m_pEnt );
-            return;
-        }
-    }
-    else
-    {
-        if ( pOwner->GetWaterLevel() == 3 )
-        {
-            pBolt->SetAbsVelocity( vecAiming * BOLT_WATER_VELOCITY );
-        }
-        else
-        {
-            pBolt->SetAbsVelocity( vecAiming * BOLT_AIR_VELOCITY );
-        }
-    }
+		trace_t trace;
+		UTIL_TraceLine( vecSrc, vecEnd, MASK_SHOT, GetOwner(), COLLISION_GROUP_NONE, &trace );
+		pBolt->SetAbsOrigin( trace.endpos );
+
+		// We hit someone
+		if ( trace.m_pEnt && trace.m_pEnt->m_takedamage )
+		{
+			pBolt->SetExplode( false );
+			pBolt->BoltTouch( trace.m_pEnt );
+			return;
+		}
+	}
+	else
+	{
+		if ( pOwner->GetWaterLevel() == 3 )
+		{
+			pBolt->SetAbsVelocity( vecAiming * BOLT_WATER_VELOCITY );
+		}
+		else
+		{
+			pBolt->SetAbsVelocity( vecAiming * BOLT_AIR_VELOCITY );
+		}
+	}
 
 	pBolt->SetLocalAngularVelocity( QAngle( 0, 0, 10 ) );
 
-    if ( m_fInZoom || !g_pGameRules->IsMultiplayer() )
-    {
-        pBolt->SetExplode( false );
-        
-    }
+	if ( m_fInZoom || !g_pGameRules->IsMultiplayer() )
+	{
+		pBolt->SetExplode( false );
+
+	}
 #endif
 
 	m_iClip1--;

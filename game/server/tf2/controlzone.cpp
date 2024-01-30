@@ -15,10 +15,10 @@
 //-----------------------------------------------------------------------------
 // Purpose: Since the control zone is a data only class, force it to always be sent ( shouldn't change often so )
 //  bandwidth usage should be small.
-// Input  : **ppSendTable - 
-//			*recipient - 
-//			*pvs - 
-//			clientArea - 
+// Input  : **ppSendTable -
+//			*recipient -
+//			*pvs -
+//			clientArea -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 int CControlZone::UpdateTransmitState()
@@ -48,7 +48,7 @@ BEGIN_DATADESC( CControlZone )
 	DEFINE_INPUTFUNC( FIELD_VOID, "SetTeam", InputSetTeam ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "LockTeam", InputLockControllingTeam ),
 
-	// keys 
+	// keys
 	DEFINE_KEYFIELD_NOT_SAVED( m_iLockAfterChange, FIELD_INTEGER, "LockAfterChange" ),
 	DEFINE_KEYFIELD_NOT_SAVED( m_flTimeTillCaptured, FIELD_FLOAT, "UncontestedTime" ),
 	DEFINE_KEYFIELD_NOT_SAVED( m_flTimeTillContested, FIELD_FLOAT, "ContestedTime" ),
@@ -81,7 +81,7 @@ void CControlZone::Spawn( void )
 
 	// TF2 rules
 	m_flTimeTillContested = 10.0;	// Go to contested 10 seconds after enemies enter the zone
-	m_flTimeTillCaptured = 5.0;		// Go to captured state as soon as only one team holds the zone	
+	m_flTimeTillCaptured = 5.0;		// Go to captured state as soon as only one team holds the zone
 
 	if ( m_nZoneNumber == 0 )
 	{
@@ -175,7 +175,7 @@ void CControlZone::ReevaluateControllingTeam( void )
 			}
 
 			foundAnyTeam = true;
-			teamFound = i;			
+			teamFound = i;
 		}
 	}
 
@@ -205,10 +205,10 @@ void CControlZone::ReevaluateControllingTeam( void )
 
 	// Find out if the zone isn't owned by anyone at all (hasn't been touched since the map started, and it started un-owned)
 	bool bHasBeenOwned = true;
-	if ( m_iDefendingTeam == 0 && GetTeamNumber() == 0 ) 
+	if ( m_iDefendingTeam == 0 && GetTeamNumber() == 0 )
 		bHasBeenOwned = false;
 
-	// if it's not contested, always go to contested mode 
+	// if it's not contested, always go to contested mode
 	if ( GetTeamNumber() != ZONE_CONTESTED && teamFound != GetTeamNumber() )
 	{
 		// Unowned zones are captured immediately (no contesting stage)
@@ -314,18 +314,17 @@ void CControlZone::SetControllingTeam( CBaseEntity *pActivator, int newTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlZone::LockControllingTeam( void )
 {
 	// never lock a zone in contested mode
 	if ( GetTeamNumber() == ZONE_CONTESTED )
 		return;
-		
+
 	// zones never lock to the defenders
 	if ( GetTeamNumber() == m_iDefendingTeam )
 		return;
 
 	m_iLocked = TRUE;
 }
-

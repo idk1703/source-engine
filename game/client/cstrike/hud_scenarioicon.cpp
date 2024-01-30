@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,11 +22,11 @@ public:
 
 	CHudScenarioIcon( const char *name );
 
-	virtual bool ShouldDraw();	
+	virtual bool ShouldDraw();
 	virtual void Paint();
 
 private:
-	CPanelAnimationVar( Color, m_clrIcon, "IconColor", "IconColor" );	
+	CPanelAnimationVar( Color, m_clrIcon, "IconColor", "IconColor" );
 
 	CHudTexture *m_pC4Icon;
 	CHudTexture *m_pHostageIcon;
@@ -106,4 +106,3 @@ void CHudScenarioIcon::Paint()
 		}
 	}
 }
-

@@ -103,8 +103,8 @@ void C_BotNPCMinion::ClientThink( void )
 
 //-----------------------------------------------------------------------------
 // Return the origin for player observers tracking this target
-Vector C_BotNPCMinion::GetObserverCamOrigin( void ) 
-{ 
+Vector C_BotNPCMinion::GetObserverCamOrigin( void )
+{
 	return GetAbsOrigin();
 }
 

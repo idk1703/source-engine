@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -310,7 +310,7 @@ void CTFBat_Wood::SetWeaponVisible( bool visible )
 #ifdef CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBat_Wood::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -326,7 +326,7 @@ void CTFBat_Wood::OnDataChanged( DataUpdateType_t updateType )
 	{
 		AddBallChild();
 	}
-	else 
+	else
 	{
 		RemoveBallChild();
 	}
@@ -382,7 +382,7 @@ void CTFBat_Wood::Drop( const Vector &vecVelocity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBat_Wood::WeaponReset( void )
 {
@@ -392,7 +392,7 @@ void CTFBat_Wood::WeaponReset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBat_Wood::UpdateOnRemove( void )
 {
@@ -402,7 +402,7 @@ void CTFBat_Wood::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBat_Wood::RemoveBallChild()
 {
@@ -432,7 +432,7 @@ bool CTFBat_Wood::CanCreateBall( CTFPlayer* pPlayer )
 	AngleVectors( pPlayer->EyeAngles(), &vecForward, NULL, &vecUp );
 	Vector vecBallStart = pPlayer->GetAbsOrigin() + Vector( 0, 0, 50 );
 	Vector vecBallEnd   = vecBallStart + vecForward * 32.f;
-	
+
 	// Trace out and see if we hit a wall.
 	trace_t trace;
 	CTraceFilterSimple traceFilter( this, COLLISION_GROUP_NONE );
@@ -750,7 +750,7 @@ void CTFStunBall::ApplyBallImpactEffectOnVictim( CBaseEntity *pOther )
 		{
 			// If max range, freeze them in place - otherwise adjust it based on distance
 			flStun = flLifeTimeRatio >= 1.f ? 1.f : RemapValClamped( flLifeTimeRatio, 0.1f, 0.99f, 0.5f, 0.75 );
-			iStunFlags = flLifeTimeRatio >= 1.f ? ( TF_STUN_SPECIAL_SOUND | TF_STUN_MOVEMENT ) : TF_STUN_MOVEMENT; 
+			iStunFlags = flLifeTimeRatio >= 1.f ? ( TF_STUN_SPECIAL_SOUND | TF_STUN_MOVEMENT ) : TF_STUN_MOVEMENT;
 		}
 
 		if ( pPlayer->GetWaterLevel() != WL_Eyes )
@@ -775,7 +775,7 @@ void CTFStunBall::ApplyBallImpactEffectOnVictim( CBaseEntity *pOther )
 	CBaseEntity *pInflictor = GetLauncher();
 	CTakeDamageInfo info;
 	info.SetAttacker( GetOwnerEntity() );
-	info.SetInflictor( pInflictor ); 
+	info.SetInflictor( pInflictor );
 	info.SetWeapon( pInflictor );
 	info.SetDamage( GetDamage() );
 	info.SetDamageCustom( TF_DMG_CUSTOM_BASEBALL );
@@ -925,7 +925,7 @@ void CTFStunBall::RemoveBallTrail( void )
 			UTIL_Remove( m_pBallTrail);
 			m_flBallTrailLife = 1.0f;
 		}
-		else	
+		else
 		{
 			float fAlpha = STUNBALL_TRAIL_ALPHA * m_flBallTrailLife;
 
@@ -947,7 +947,7 @@ void CTFStunBall::RemoveBallTrail( void )
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFStunBall::GetTrailParticleName( void )
 {
@@ -973,7 +973,7 @@ const char *CTFStunBall::GetTrailParticleName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStunBall::CreateTrailParticles( void )
 {
@@ -1002,7 +1002,7 @@ void CTFStunBall::CreateTrailParticles( void )
 		if ( iTeamNumber == TF_TEAM_BLUE )
 		{
 			pEffectCrit = ParticleProp()->Create( "stunballtrail_blue_crit", PATTACH_ABSORIGIN_FOLLOW );
-			
+
 		}
 		else
 		{
@@ -1014,7 +1014,7 @@ void CTFStunBall::CreateTrailParticles( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBat_Giftwrap::Spawn( void )
 {
@@ -1026,7 +1026,7 @@ void CTFBat_Giftwrap::Spawn( void )
 
 #ifdef GAME_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseEntity *CTFBat_Giftwrap::CreateBall( void )
 {
@@ -1112,7 +1112,7 @@ const char *CTFBall_Ornament::GetBallViewModelName( void ) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBall_Ornament::ApplyBallImpactEffectOnVictim( CBaseEntity *pOther )
 {
@@ -1160,7 +1160,7 @@ void CTFBall_Ornament::ApplyBallImpactEffectOnVictim( CBaseEntity *pOther )
 	CBaseEntity *pInflictor = GetLauncher();
 	CTakeDamageInfo info;
 	info.SetAttacker( GetOwnerEntity() );
-	info.SetInflictor( pInflictor ); 
+	info.SetInflictor( pInflictor );
 	info.SetWeapon( pInflictor );
 	info.SetDamage( GetDamage() );
 	info.SetDamageCustom( TF_DMG_CUSTOM_BASEBALL );
@@ -1291,4 +1291,3 @@ void CTFBall_Ornament::Explode( trace_t *pTrace, int bitsDamageType )
 
 
 #endif
-

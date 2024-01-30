@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,7 +24,6 @@ void EmitDistanceToWaterInfo( void )
 		}
 
 		// Get the vis set for this leaf.
-		
+
 	}
 }
-

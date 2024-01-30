@@ -128,7 +128,7 @@ ActionResult< CTFBot > CTFBotEscortSquadLeader::Update( CTFBot *me, float interv
 
 	Vector leaderForward = leaderSegment->pos - leader->GetAbsOrigin();
 
-	// if the leader is very close to the goal, use the next goal to ensure 
+	// if the leader is very close to the goal, use the next goal to ensure
 	// the forward vector stays forward
 	const float atGoal = 25.0f;
 	if ( leaderForward.IsLengthLessThan( atGoal ) )
@@ -177,7 +177,7 @@ ActionResult< CTFBot > CTFBotEscortSquadLeader::Update( CTFBot *me, float interv
 
 
 	const float maxSeparationAngle = 30.0f * M_PI / 180.0f;
-	
+
 	float formationRadius = 125.0f;
 	if ( squad->GetFormationSize() > 0.0f )
 	{
@@ -246,12 +246,12 @@ ActionResult< CTFBot > CTFBotEscortSquadLeader::Update( CTFBot *me, float interv
 		normalizedError = error / maxError;
 	}
 
-	// this error term is used in CTFPlayer::TeamFortress_CalculateMaxSpeed() to 
+	// this error term is used in CTFPlayer::TeamFortress_CalculateMaxSpeed() to
 	// modulate our speed
 	// 0 = in position (no error)
 	// 1 = far out of position (max error)
 	me->SetSquadFormationError( normalizedError );
-	
+
 	// move to my formation spot
 	if ( error < 50.0f )
 	{

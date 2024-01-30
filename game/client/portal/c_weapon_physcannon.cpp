@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -50,7 +50,7 @@ C_WeaponPhysCannon::C_WeaponPhysCannon( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_WeaponPhysCannon::SetupEmitter( void )
@@ -119,7 +119,7 @@ static inline void SortAbsVectorComponents( const Vector& src, int* pVecIdx )
 //-----------------------------------------------------------------------------
 // Compute the bounding box's center, size, and basis
 //-----------------------------------------------------------------------------
-void ComputeRenderInfo( mstudiobbox_t *pHitBox, const matrix3x4_t &hitboxToWorld, 
+void ComputeRenderInfo( mstudiobbox_t *pHitBox, const matrix3x4_t &hitboxToWorld,
 										 Vector *pVecAbsOrigin, Vector *pXVec, Vector *pYVec )
 {
 	// Compute the center of the hitbox in worldspace
@@ -188,8 +188,8 @@ void ComputeRenderInfo( mstudiobbox_t *pHitBox, const matrix3x4_t &hitboxToWorld
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flags - 
+// Purpose:
+// Input  : flags -
 // Output : int
 //-----------------------------------------------------------------------------
 int C_WeaponPhysCannon::DrawModel( int flags )
@@ -273,7 +273,7 @@ int C_WeaponPhysCannon::DrawModel( int flags )
 
 					if ( sParticle == NULL )
 						return 1;
-					
+
 					sParticle->m_vecVelocity	= vec3_origin;
 					sParticle->m_uchStartSize	= 16.0f * spriteScale;
 					sParticle->m_flDieTime		= 0.2f;
@@ -310,7 +310,7 @@ int C_WeaponPhysCannon::DrawModel( int flags )
 
 		if ( sParticle == NULL )
 			return 1;
-		
+
 		sParticle->m_vecVelocity	= vec3_origin;
 		sParticle->m_flDieTime		= 0.1f;
 		sParticle->m_flLifetime		= 0.0f;
@@ -362,7 +362,7 @@ int C_WeaponPhysCannon::DrawModel( int flags )
 
 			if ( sParticle == NULL )
 				return 1;
-			
+
 			sParticle->m_vecVelocity	= Vector(0,0,8);
 			sParticle->m_flDieTime		= 0.5f;
 			sParticle->m_flLifetime		= 0.0f;
@@ -385,4 +385,3 @@ int C_WeaponPhysCannon::DrawModel( int flags )
 
 	return BaseClass::DrawModel( flags );
 }
-

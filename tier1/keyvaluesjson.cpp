@@ -384,7 +384,7 @@ void KeyValuesJSONParser::NextToken()
 					// Leave newline as the next character, we'll handle it above
 					break;
 				}
-				// | fall 
+				// | fall
 				// | through
 				// V
 

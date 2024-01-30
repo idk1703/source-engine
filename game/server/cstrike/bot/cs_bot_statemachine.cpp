@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -383,7 +383,7 @@ void CCSBot::Attack( CCSPlayer *victim )
 		m_attackState.SetCrouchAndHold( false );
 
 	//SetState( &m_attackState );
-	//PrintIfWatched( "ATTACK BEGIN (reaction time = %g (+ update time), surprise time = %g, attack delay = %g)\n", 
+	//PrintIfWatched( "ATTACK BEGIN (reaction time = %g (+ update time), surprise time = %g, attack delay = %g)\n",
 	//				GetProfile()->GetReactionTime(), m_surpriseDelay, GetProfile()->GetAttackDelay() );
 	m_isAttacking = true;
 	m_attackState.OnEnter( this );
@@ -690,4 +690,3 @@ bool CCSBot::MoveToInitialEncounter( void )
 
 	return true;
 }
-

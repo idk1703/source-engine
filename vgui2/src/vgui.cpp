@@ -70,9 +70,9 @@ struct MessageItem_t
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool PriorityQueueComp(const MessageItem_t& x, const MessageItem_t& y) 
+bool PriorityQueueComp(const MessageItem_t& x, const MessageItem_t& y)
 {
 	if (x._arrivalTime > y._arrivalTime)
 	{
@@ -102,7 +102,7 @@ public:
 
 //-----------------------------------------------------------------------------
 	// SRC specific stuff
-	// Here's where the app systems get to learn about each other 
+	// Here's where the app systems get to learn about each other
 	virtual bool Connect( CreateInterfaceFn factory );
 	virtual void Disconnect();
 
@@ -163,7 +163,7 @@ public:
 	// Creates/ destroys vgui contexts, which contains information
 	// about which controls have mouse + key focus, for example.
 	virtual HContext CreateContext();
-	virtual void DestroyContext( HContext context ); 
+	virtual void DestroyContext( HContext context );
 
 	// Associates a particular panel with a vgui context
 	// Associating NULL is valid; it disconnects the panel from the context
@@ -215,9 +215,9 @@ private:
 	bool DispatchMessages();
 	void DestroyAllContexts( );
 	void ClearMessageQueues();
-	inline bool IsReentrant() const 
-	{ 
-		return m_nReentrancyCount > 0; 
+	inline bool IsReentrant() const
+	{
+		return m_nReentrancyCount > 0;
 	}
 
 	// safe panel handle stuff
@@ -399,7 +399,7 @@ void CVGui::ActivateContext( HContext context )
 		}
 
 		m_hContext = context;
-		g_pInput->ActivateInputContext( GetContext(m_hContext)->m_hInputContext ); 
+		g_pInput->ActivateInputContext( GetContext(m_hContext)->m_hInputContext );
 
 		if ( context != DEFAULT_VGUI_CONTEXT && !IsReentrant() )
 		{
@@ -411,7 +411,7 @@ void CVGui::ActivateContext( HContext context )
 //-----------------------------------------------------------------------------
 // Purpose: Runs a single vgui frame, pumping all message to panels
 //-----------------------------------------------------------------------------
-void CVGui::RunFrame() 
+void CVGui::RunFrame()
 {
 	// NOTE: This can happen when running in Maya waiting for modal dialogs
 	bool bIsReentrant = m_InDispatcher;
@@ -486,7 +486,7 @@ void CVGui::RunFrame()
 
 				t->nexttick = time + t->interval;
 			}
-			
+
 			t->panel->Client()->OnTick();
 			tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s - Ticks: %s", __FUNCTION__, t->panel->Client()->GetName() );
 		}
@@ -526,7 +526,7 @@ void CVGui::RunFrame()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 VPANEL CVGui::AllocPanel()
 {
@@ -540,7 +540,7 @@ VPANEL CVGui::AllocPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVGui::FreePanel(VPANEL ipanel)
 {
@@ -702,7 +702,7 @@ void CVGui::AddTickSignal(VPANEL panel, int intervalMilliseconds /*=0*/ )
 
 	if ( t )
 	{
-		// add the element to the end list 
+		// add the element to the end list
 		m_TickSignalVec.AddToTail( t );
 		// panel is removed from list when deleted
 	}
@@ -717,7 +717,7 @@ void CVGui::AddTickSignalToHead(VPANEL panel, int intervalMilliseconds /*=0*/ )
 
 	if ( t )
 	{
-		// simply add the element to the head list 
+		// simply add the element to the head list
 		m_TickSignalVec.AddToHead( t );
 		// panel is removed from list when deleted
 	}
@@ -725,7 +725,7 @@ void CVGui::AddTickSignalToHead(VPANEL panel, int intervalMilliseconds /*=0*/ )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVGui::RemoveTickSignal( VPANEL panel )
 {
@@ -748,7 +748,7 @@ void CVGui::RemoveTickSignal( VPANEL panel )
 			{
 				tick->bMarkDeleted = true;
 			}
-			
+
 			return;
 		}
 	}
@@ -783,7 +783,7 @@ bool CVGui::DispatchMessages()
 			int messageIndex = 0;
 
 			// use the secondary queue until it empties. empty it after each message in the
-			// primary queue. this makes primary messages completely resolve 
+			// primary queue. this makes primary messages completely resolve
 			bool bUsingSecondaryQueue = (m_SecondaryQueue.Count() > 0);
 			if (bUsingSecondaryQueue)
 			{
@@ -810,14 +810,14 @@ bool CVGui::DispatchMessages()
 				messageItem = &m_MessageQueue[messageIndex];
 			}
 
-			// message debug code 
+			// message debug code
 
 			if ( m_bDebugMessages )
 			{
 				const char *qname = bUsingSecondaryQueue ? "Secondary" : "Primary";
 
 				if (strcmp(messageItem->_params->GetName(), "Tick")
-					&& strcmp(messageItem->_params->GetName(), "MouseFocusTicked") 
+					&& strcmp(messageItem->_params->GetName(), "MouseFocusTicked")
 					&& strcmp(messageItem->_params->GetName(), "KeyFocusTicked")
 					&& strcmp(messageItem->_params->GetName(), "CursorMoved"))
 				{
@@ -895,7 +895,7 @@ bool CVGui::DispatchMessages()
 		}
 	}
 
-	// Make sure the windows cursor is in the right place after processing input 
+	// Make sure the windows cursor is in the right place after processing input
 	// Needs to be done here because a message provoked by the cursor moved
 	// message may move the cursor also
 	g_pInput->HandleExplicitSetCursor( );
@@ -905,7 +905,7 @@ bool CVGui::DispatchMessages()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVGui::MarkPanelForDeletion(VPANEL panel)
 {
@@ -938,7 +938,7 @@ void CVGui::PostMessage(VPANEL target, KeyValues *params, VPANEL from, float del
 	}
 
 	MessageItem_t messageItem;
-	 
+
 #ifdef _X360
 	// Special coded target that will always send the message to the key focus
 	// this is needed since we might send two messages on a tice, and the first
@@ -948,7 +948,7 @@ void CVGui::PostMessage(VPANEL target, KeyValues *params, VPANEL from, float del
 		messageItem._messageTo = 0xFFFFFFFE;
 	}
 	else
-#endif	
+#endif
 	{
 		messageItem._messageTo = (target != (VPANEL) MESSAGE_CURSOR_POS ) ? g_pIVgui->PanelToHandle(target) : 0xFFFFFFFF;
 	}
@@ -964,7 +964,7 @@ void CVGui::PostMessage(VPANEL target, KeyValues *params, VPANEL from, float del
 		g_pIVgui->DPrintf2( "posting( %s -- %i )\n", messageItem._params->GetName(), messageItem._messageID );
 	}
 	*/
-				
+
 	// add the message to the correct message queue
 	if (delay > 0.0f)
 	{
@@ -982,7 +982,7 @@ void CVGui::PostMessage(VPANEL target, KeyValues *params, VPANEL from, float del
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVGui::ShutdownMessage(unsigned int shutdownID)
 {
@@ -1126,7 +1126,7 @@ void vgui::vgui_strcpy(char* dst,int dstLen,const char* src)
 //-----------------------------------------------------------------------------
 	// HL2/TFC specific stuff
 //-----------------------------------------------------------------------------
-// Here's where the app systems get to learn about each other 
+// Here's where the app systems get to learn about each other
 //-----------------------------------------------------------------------------
 bool CVGui::Connect( CreateInterfaceFn factory )
 {

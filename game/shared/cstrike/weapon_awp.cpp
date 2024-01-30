@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -26,7 +26,7 @@ const int cAWPMidZoomFOV = 40;
 const int cAWPMaxZoomFOV = 10;
 
 #ifdef AWP_UNZOOM
-	ConVar sv_awpunzoomdelay( 
+	ConVar sv_awpunzoomdelay(
 			"sv_awpunzoomdelay",
 			"1.0",
 			0,
@@ -41,13 +41,13 @@ class CWeaponAWP : public CWeaponCSBaseGun
 {
 public:
 	DECLARE_CLASS( CWeaponAWP, CWeaponCSBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 #ifndef CLIENT_DLL
 	DECLARE_DATADESC();
 #endif
-	
+
 	CWeaponAWP();
 
 	virtual void Spawn();
@@ -138,8 +138,8 @@ void CWeaponAWP::SecondaryAttack()
 #ifndef CLIENT_DLL
 	// If this isn't guarded, the sound will be emitted twice, once by the server and once by the client.
 	// Let the server play it since if only the client plays it, it's liable to get played twice cause of
-	// a prediction error. joy.	
-	
+	// a prediction error. joy.
+
 	//=============================================================================
 	// HPE_BEGIN:
 	// [tj] Playing this from the player so that we don't try to play the sound outside the level.
@@ -161,7 +161,7 @@ void CWeaponAWP::SecondaryAttack()
 #endif
 
 	m_flNextSecondaryAttack = gpGlobals->curtime + 0.3f;
-	m_zoomFullyActiveTime = gpGlobals->curtime + 0.15; // The worst zoom time from above.  
+	m_zoomFullyActiveTime = gpGlobals->curtime + 0.15; // The worst zoom time from above.
 
 }
 
@@ -172,30 +172,30 @@ float CWeaponAWP::GetInaccuracy() const
 		CCSPlayer *pPlayer = GetPlayerOwner();
 		if ( !pPlayer )
 			return 0.0f;
-	
+
 		float fSpread = 0.0f;
-	
+
 		if ( !FBitSet( pPlayer->GetFlags(), FL_ONGROUND ) )
 			fSpread = 0.85f;
-	
+
 		else if ( pPlayer->GetAbsVelocity().Length2D() > 140 )
 			fSpread = 0.25f;
-	
+
 		else if ( pPlayer->GetAbsVelocity().Length2D() > 10 )
 			fSpread = 0.10f;
-	
+
 		else if ( FBitSet( pPlayer->GetFlags(), FL_DUCKING ) )
 			fSpread = 0.0f;
-	
+
 		else
 			fSpread = 0.001f;
-	
+
 		// If we are not zoomed in, or we have very recently zoomed and are still transitioning, the bullet diverts more.
 		if (pPlayer->GetFOV() == pPlayer->GetDefaultFOV() || (gpGlobals->curtime < m_zoomFullyActiveTime))
 		{
 			fSpread += 0.08f;
 		}
-	
+
 		return fSpread;
 	}
 	else
@@ -214,7 +214,7 @@ void CWeaponAWP::PrimaryAttack()
 		return;
 
 	if ( m_weaponMode == Secondary_Mode )
-	{	
+	{
 		float	midFOVdistance = fabs( pPlayer->GetFOV() - (float)cAWPMidZoomFOV );
 		float	farFOVdistance = fabs( pPlayer->GetFOV() - (float)cAWPMaxZoomFOV );
 		if ( midFOVdistance < farFOVdistance )
@@ -225,7 +225,7 @@ void CWeaponAWP::PrimaryAttack()
 		{
 			pPlayer->m_iLastZoom = cAWPMaxZoomFOV;
 		}
-		
+
 		#ifdef AWP_UNZOOM
 			SetContextThink( &CWeaponAWP::UnzoomThink, gpGlobals->curtime + sv_awpunzoomdelay.GetFloat(), SNIPER_ZOOM_CONTEXT );
 		#else

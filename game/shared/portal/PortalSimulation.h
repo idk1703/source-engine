@@ -71,11 +71,11 @@ public:
 // terribly from evolving variables with increasingly cryptic names with no clear
 // definition of what part of the system the variable was involved with.
 //
-// It's my hope that a nested structure with clear boundaries will eliminate that 
+// It's my hope that a nested structure with clear boundaries will eliminate that
 // horrible, awful, nasty, frustrating confusion. (It was really really bad). This
 // system has the added benefit of pseudo-forcing a naming structure.
 //
-// Lastly, if it all roots in one struct, we can const reference it out to allow 
+// Lastly, if it all roots in one struct, we can const reference it out to allow
 // easy reads without writes
 //
 // It's broken out like this to solve a few problems....
@@ -121,7 +121,7 @@ struct PS_SD_Static_World_Brushes_t
 #else
 	PS_SD_Static_World_Brushes_t() : pCollideable(NULL) {};
 #endif
-	
+
 };
 
 
@@ -169,7 +169,7 @@ struct PS_SD_Static_Wall_Local_Tube_t //a minimal tube, an object must fit insid
 #endif
 };
 
-struct PS_SD_Static_Wall_Local_Brushes_t 
+struct PS_SD_Static_Wall_Local_Brushes_t
 {
 	CUtlVector<CPolyhedron *> Polyhedrons; //the building blocks of more complex collision
 	CPhysCollide *pCollideable;
@@ -233,7 +233,7 @@ struct PS_SD_Dynamic_PhysicsShadowClones_t
 {
 	CUtlVector<CBaseEntity *> ShouldCloneFromMain; //a list of entities that should be cloned from main if physics simulation is enabled
 													//in single-environment mode, this helps us track who should collide with who
-	
+
 	CUtlVector<CPhysicsShadowClone *> FromLinkedPortal;
 };
 
@@ -288,15 +288,15 @@ public:
 	CPortalSimulator	*GetLinkedPortalSimulator( void ) const;
 
 	void				SetPortalSimulatorCallbacks( CPortalSimulatorEventCallbacks *pCallbacks );
-	
+
 	bool				IsReadyToSimulate( void ) const; //is active and linked to another portal
-	
+
 	void				SetCollisionGenerationEnabled( bool bEnabled ); //enable/disable collision generation for the hole in the wall, needed for proper vphysics simulation
 	bool				IsCollisionGenerationEnabled( void ) const;
 
 	void				SetVPhysicsSimulationEnabled( bool bEnabled ); //enable/disable vphysics simulation. Will automatically update the linked portal to be the same
 	bool				IsSimulatingVPhysics( void ) const; //this portal is setup to handle any physically simulated object, false means the portal is handling player movement only
-	
+
 	bool				EntityIsInPortalHole( CBaseEntity *pEntity ) const; //true if the entity is within the portal cutout bounds and crossing the plane. Not just *near* the portal
 	bool				EntityHitBoxExtentIsInPortalHole( CBaseAnimating *pBaseAnimating ) const; //true if the entity is within the portal cutout bounds and crossing the plane. Not just *near* the portal
 	void				RemoveEntityFromPortalHole( CBaseEntity *pEntity ); //if the entity is in the portal hole, this forcibly moves it out by any means possible
@@ -341,7 +341,7 @@ protected:
 	bool				m_bSharedCollisionConfiguration; //when portals are in certain configurations, they need to cross-clip and share some collision data and things get nasty. For the love of all that is holy, pray that this is false.
 	CPortalSimulator	*m_pLinkedPortal;
 	bool				m_bInCrossLinkedFunction; //A flag to mark that we're already in a linked function and that the linked portal shouldn't call our side
-	CPortalSimulatorEventCallbacks *m_pCallbacks; 
+	CPortalSimulatorEventCallbacks *m_pCallbacks;
 #ifdef PORTAL_SIMULATORS_EMBED_GUID
 	int					m_iPortalSimulatorGUID;
 #endif
@@ -478,4 +478,3 @@ inline CPortalSimulator	*CPortalSimulator::GetLinkedPortalSimulator( void ) cons
 
 
 #endif //#ifndef PORTALSIMULATION_H
-

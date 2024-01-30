@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -34,7 +34,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TELargeFunnel::C_TELargeFunnel( void )
 {
@@ -43,7 +43,7 @@ C_TELargeFunnel::C_TELargeFunnel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TELargeFunnel::~C_TELargeFunnel( void )
 {
@@ -70,7 +70,7 @@ void C_TELargeFunnel::CreateFunnel( void )
 	{
 		for ( j = -256 ; j <= 256 ; j += 24 )
 		{
-			pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), hMaterial, m_vecOrigin );			
+			pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), hMaterial, m_vecOrigin );
 			if( pParticle )
 			{
 				if ( m_nReversed )
@@ -99,10 +99,10 @@ void C_TELargeFunnel::CreateFunnel( void )
 
 				vecDir *= ratio;
 
-				pParticle->m_vecVelocity = vecDir;			
+				pParticle->m_vecVelocity = vecDir;
 
 				pParticle->m_flLifetime = 0;
-				pParticle->m_flDieTime = invratio;	
+				pParticle->m_flDieTime = invratio;
 
 				if( random->RandomInt( 0, 10 ) < 5 )
 				{
@@ -110,7 +110,7 @@ void C_TELargeFunnel::CreateFunnel( void )
 					pParticle->m_uchColor[0] = 0;
 					pParticle->m_uchColor[1] = 255;
 					pParticle->m_uchColor[2] = 0;
-				
+
 					pParticle->m_uchStartSize	= 4.0;
 				}
 				else
@@ -119,7 +119,7 @@ void C_TELargeFunnel::CreateFunnel( void )
 					pParticle->m_uchColor[0] = 255;
 					pParticle->m_uchColor[1] = 255;
 					pParticle->m_uchColor[2] = 255;
-				
+
 					pParticle->m_uchStartSize	= 15.0;
 				}
 
@@ -136,8 +136,8 @@ void C_TELargeFunnel::CreateFunnel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TELargeFunnel::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -159,5 +159,3 @@ void TE_LargeFunnel( IRecipientFilter& filter, float delay,
 
 	__g_C_TELargeFunnel.PostDataUpdate( DATA_UPDATE_CREATED );
 }
-
-

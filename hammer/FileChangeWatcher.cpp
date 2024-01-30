@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -30,7 +30,7 @@ bool CFileChangeWatcher::AddDirectory( const char *pSearchPathBase, const char *
 {
 	char fullDirName[MAX_PATH];
 	V_ComposeFileName( pSearchPathBase, pDirName, fullDirName, sizeof( fullDirName ) );
-	
+
 	HANDLE hDir = CreateFile( fullDirName, GENERIC_READ, FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE, NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS|FILE_FLAG_OVERLAPPED, NULL );
 	if ( hDir == INVALID_HANDLE_VALUE )
 	{
@@ -75,13 +75,13 @@ int CFileChangeWatcher::Update()
 {
 	CUtlDict< int, int > queuedChanges;
 	int nTotalChanges = 0;
-	
+
 	// Check each CDirWatch.
 	int i = 0;
 	while ( i < m_DirWatches.Count() )
 	{
 		CDirWatch *pDirWatch = m_DirWatches[i];
-	
+
 		DWORD dwBytes = 0;
 		if ( GetOverlappedResult( pDirWatch->m_hDir, &pDirWatch->m_Overlapped, &dwBytes, FALSE ) )
 		{
@@ -91,7 +91,7 @@ int CFileChangeWatcher::Update()
 			while ( nBytesLeft >= sizeof( FILE_NOTIFY_INFORMATION ) )
 			{
 				FILE_NOTIFY_INFORMATION *pNotify = (FILE_NOTIFY_INFORMATION*)pCurPos;
-			
+
 				if ( m_pCallbacks )
 				{
 					// Figure out what happened to this file.
@@ -101,7 +101,7 @@ int CFileChangeWatcher::Update()
 					nullTerminated[nBytesToCopy/2] = 0;
 					char ansiFilename[1024];
 					V_UnicodeToUTF8( nullTerminated, ansiFilename, sizeof( ansiFilename ) );
-					
+
 					// Now add it to the queue.	We use this queue because sometimes Windows will give us multiple
 					// of the same modified notification back to back, and we want to reduce redundant calls.
 					int iExisting = queuedChanges.Find( ansiFilename );
@@ -110,15 +110,15 @@ int CFileChangeWatcher::Update()
 						iExisting = queuedChanges.Insert( ansiFilename, 0 );
 						++nTotalChanges;
 					}
-				}		
-			
+				}
+
 				if ( pNotify->NextEntryOffset == 0 )
 					break;
-					
+
 				pCurPos += pNotify->NextEntryOffset;
 				nBytesLeft -= (int)pNotify->NextEntryOffset;
 			}
-			
+
 			CallReadDirectoryChanges( pDirWatch );
 			continue;	// Check again because sometimes it queues up duplicate notifications.
 		}
@@ -131,13 +131,13 @@ int CFileChangeWatcher::Update()
 		queuedChanges.Purge();
 		++i;
 	}
-	
+
 	return nTotalChanges;
 }
 
 void CFileChangeWatcher::SendNotification( CFileChangeWatcher::CDirWatch *pDirWatch, const char *pRelativeFilename )
 {
-	// Use this for full filenames although you don't strictly need it.. 
+	// Use this for full filenames although you don't strictly need it..
 	char fullFilename[MAX_PATH];
 	V_ComposeFileName( pDirWatch->m_FullDirName, pRelativeFilename, fullFilename, sizeof( fullFilename ) );
 
@@ -146,15 +146,12 @@ void CFileChangeWatcher::SendNotification( CFileChangeWatcher::CDirWatch *pDirWa
 
 BOOL CFileChangeWatcher::CallReadDirectoryChanges( CFileChangeWatcher::CDirWatch *pDirWatch )
 {
-	return ReadDirectoryChangesW( pDirWatch->m_hDir, 
-		pDirWatch->m_Buffer, 
-		sizeof( pDirWatch->m_Buffer ), 
-		true, 
-		FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_SIZE | FILE_NOTIFY_CHANGE_LAST_WRITE, 
-		NULL, 
-		&pDirWatch->m_Overlapped, 
+	return ReadDirectoryChangesW( pDirWatch->m_hDir,
+		pDirWatch->m_Buffer,
+		sizeof( pDirWatch->m_Buffer ),
+		true,
+		FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_SIZE | FILE_NOTIFY_CHANGE_LAST_WRITE,
+		NULL,
+		&pDirWatch->m_Overlapped,
 		NULL );
 }
-
-
-

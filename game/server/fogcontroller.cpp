@@ -116,19 +116,19 @@ void CFogController::Spawn( void )
 //-----------------------------------------------------------------------------
 // Activate!
 //-----------------------------------------------------------------------------
-void CFogController::Activate( ) 
+void CFogController::Activate( )
 {
 	BaseClass::Activate();
 
 	if ( m_bUseAngles )
 	{
 		AngleVectors( GetAbsAngles(), &m_fog.dirPrimary.GetForModify() );
-		m_fog.dirPrimary.GetForModify() *= -1.0f; 
-	}	    
+		m_fog.dirPrimary.GetForModify() *= -1.0f;
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CFogController::UpdateTransmitState()
 {
@@ -228,11 +228,11 @@ void CFogController::InputSetAngles( inputdata_t &inputdata )
 // Purpose: Draw any debug text overlays
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CFogController::DrawDebugTextOverlays(void) 
+int CFogController::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 
@@ -311,7 +311,7 @@ void CFogController::InputStartFogTransition(inputdata_t &data)
 	SetThink( &CFogController::SetLerpValues );
 
 	m_fog.lerptime = gpGlobals->curtime + m_fog.duration + 0.1;
-    SetNextThink( gpGlobals->curtime + m_fog.duration );
+	SetNextThink( gpGlobals->curtime + m_fog.duration );
 }
 
 void CFogController::SetLerpValues( void )
@@ -324,7 +324,7 @@ void CFogController::SetLerpValues( void )
 	if ( m_iChangedVariables & FOG_CONTROLLER_COLORSECONDARY_LERP )
 	{
 		m_fog.colorSecondary = m_fog.colorSecondaryLerpTo;
-	} 
+	}
 
 	if ( m_iChangedVariables & FOG_CONTROLLER_START_LERP )
 	{
@@ -350,7 +350,7 @@ void CFogSystem::LevelInitPreEntity( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: On level load find the master fog controller.  If no controller is 
+// Purpose: On level load find the master fog controller.  If no controller is
 //			set as Master, use the first fog controller found.
 //-----------------------------------------------------------------------------
 void CFogSystem::LevelInitPostEntity( void )
@@ -388,4 +388,3 @@ void CFogSystem::LevelInitPostEntity( void )
 		}
 	}
 }
-

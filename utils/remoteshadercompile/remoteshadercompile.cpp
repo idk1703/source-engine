@@ -148,7 +148,7 @@ void ServerThread( void * )
 				if ( hr != D3D_OK )
 				{
 					pSendbuf[0] = 0;
-					
+
 					printf( "Compilation error in %s\n", pShaderFilename );
 
 					if ( pErrorMessages )
@@ -163,8 +163,8 @@ void ServerThread( void * )
 						((uint8*)(pSendbuf+1))[1] = '\0';
 						nSendBufLen = 2 + 4; // account for uint32 at front of the buffer
 					}
-					
-					
+
+
 				}
 				else  // Success!
 				{

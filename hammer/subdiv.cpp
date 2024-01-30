@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -260,7 +260,7 @@ bool CompareSubdivPoints( const CSubdivPoint *pPoint1, const CSubdivPoint *pPoin
 		if( fabs( pPoint1->m_Point[i] - pPoint2->m_Point[i] ) > tolerance )
 			return false;
 	}
-	
+
 	return true;
 }
 
@@ -274,7 +274,7 @@ bool CompareSubdivPointToPoint( const CSubdivPoint *pSubdivPoint, const Vector& 
 		if( fabs( pSubdivPoint->m_Point[i] - point[i] ) > tolerance )
 			return false;
 	}
-	
+
 	return true;
 }
 
@@ -370,7 +370,7 @@ void CSubdivEdge::CalcNewEdgeNormal( void )
 		m_Sharpness = 1.0f;
 		m_pQuads[0]->CalcNormal();
 	}
-			
+
 	//
 	// calculate the new edge point
 	//
@@ -434,7 +434,7 @@ void CSubdivEdge::CalcNewEdgePoint( void )
 		m_Sharpness = 1.0f;
 		m_pQuads[0]->CalcCentroid();
 	}
-			
+
 	//
 	// calculate the new edge point
 	//
@@ -454,7 +454,7 @@ bool CompareSubdivEdges( const CSubdivEdge *pEdge1, const CSubdivEdge *pEdge2 )
 		( ( pEdge1->m_ndxPoint[0] == pEdge2->m_ndxPoint[1] ) && ( pEdge1->m_ndxPoint[1] == pEdge2->m_ndxPoint[0] ) ) )
 		return true;
 
-	return false;	
+	return false;
 }
 
 
@@ -578,7 +578,7 @@ CSubdivMesh::CSubdivMesh()
 	Clear();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 CSubdivMesh::~CSubdivMesh()
@@ -612,7 +612,7 @@ int CSubdivMesh::AddPoint( const Vector& point, const Vector& normal )
 	return ( m_PointCount - 1 );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void CSubdivMesh::RemovePoint( Vector& point )
@@ -634,12 +634,12 @@ void CSubdivMesh::RemovePoint( Vector& point )
 			m_pPoints[i].Copy( &m_pPoints[m_PointCount-1] );
 			m_pPoints[m_PointCount-1].Clear();
 		}
-		
+
 		m_PointCount--;
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 int CSubdivMesh::AddEdge( CSubdivEdge *edge )
@@ -678,7 +678,7 @@ int CSubdivMesh::AddEdge( CSubdivEdge *edge )
 	return ( m_EdgeCount - 1 );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void CSubdivMesh::RemoveEdge( CSubdivEdge *edge )
@@ -851,7 +851,7 @@ bool CSubdivMesh::PreSubdivide( void )
 
 	// mark the subdivision undo
 	GetHistory()->MarkUndoPosition( NULL, "Subdivision" );
-	
+
 	//
 	// add all surfaces to mesh to subdivide
 	//
@@ -861,7 +861,7 @@ bool CSubdivMesh::PreSubdivide( void )
 		CMapDisp *pDisp = pDispManager->GetFromSelectionList( i );
 		if( !pDisp )
 			continue;
-			
+
 		//
 		// setup for undo
 		//
@@ -887,19 +887,19 @@ void CSubdivMesh::SetEdgeData( CSubdivQuad *pRoot, int index, int parentIndex, i
 	for( int i = 0; i < 4; i++ )
 	{
 		CSubdivEdge edge;
-		
+
 		//
 		// add vert indices
 		//
 		edge.m_ndxPoint[0] = pRoot[index].m_ndxVert[i];
 		edge.m_ndxPoint[1] = pRoot[index].m_ndxVert[(i+1)%4];
-		
+
 		//
 		// set initial quads and edges data
 		//
 		edge.m_pQuads[0] = &pRoot[index];
 		edge.m_pQuads[1] = NULL;
-		
+
 		edge.m_ndxQuadEdge[0] = i;
 		edge.m_ndxQuadEdge[1] = -1;
 
@@ -914,7 +914,7 @@ void CSubdivMesh::SetEdgeData( CSubdivQuad *pRoot, int index, int parentIndex, i
 		{
 			edge.m_Sharpness = 0.0f;
 		}
-	
+
 		// add edge to global list
 		pRoot[index].m_ndxEdge[i] = AddEdge( &edge );
 	}
@@ -936,7 +936,7 @@ void CSubdivMesh::CreateChildQuad4( CSubdivQuad *pRoot, int index, int parentInd
 	//
 	// set vert indices
 	//
-	pRoot[index].m_ndxVert[0] = AddPoint( m_pEdges[pRoot[parentIndex].m_ndxEdge[3]].m_NewEdgePoint, 
+	pRoot[index].m_ndxVert[0] = AddPoint( m_pEdges[pRoot[parentIndex].m_ndxEdge[3]].m_NewEdgePoint,
 		                                  m_pEdges[pRoot[parentIndex].m_ndxEdge[3]].m_NewEdgeNormal );
 	pRoot[index].m_ndxVert[1] = AddPoint( pRoot[parentIndex].m_Centroid, pRoot[parentIndex].m_Normal );
 	pRoot[index].m_ndxVert[2] = AddPoint( m_pEdges[pRoot[parentIndex].m_ndxEdge[2]].m_NewEdgePoint,
@@ -1112,13 +1112,13 @@ void CSubdivMesh::Subdivide( void )
 			CSubdivQuad *pTree = m_ppTrees[treeIndex];
 			if( !pTree )
 				continue;
-			
+
 			//
 			// for each quad in the tree (at the given level)
 			//
 			for( int index = startIndex; index <= endIndex; index++ )
 			{
-				CreateChildQuads( pTree, index );			
+				CreateChildQuads( pTree, index );
 			}
 		}
 	}

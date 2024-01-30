@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -92,7 +92,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: used by the TryTouchGround function to exclude non-standables from 
+// Purpose: used by the TryTouchGround function to exclude non-standables from
 // consideration
 //-----------------------------------------------------------------------------
 
@@ -156,7 +156,7 @@ unsigned int CCSGameMovement::PlayerSolidMask( bool brushOnly )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSGameMovement::CheckParameters( void )
 {
@@ -243,7 +243,7 @@ void CCSGameMovement::CheckParameters( void )
 
 
 	if ( player->GetFlags() & FL_FROZEN ||
-		 player->GetFlags() & FL_ONTRAIN || 
+		 player->GetFlags() & FL_ONTRAIN ||
 		 IsDead() )
 	{
 		mv->m_flForwardMove = 0;
@@ -336,7 +336,7 @@ bool CCSGameMovement::CanAccelerate()
 		return true;
 	}
 	else
-	{	
+	{
 		return false;
 	}
 }
@@ -377,12 +377,12 @@ void CCSGameMovement::PlayerMove()
 
 		Vector vHullMin = GetPlayerMins( player->m_Local.m_bDucked );
 		vHullMin.z = 0.0f;
-		Vector vHullMax = GetPlayerMaxs( player->m_Local.m_bDucked ); 
+		Vector vHullMax = GetPlayerMaxs( player->m_Local.m_bDucked );
 
 		Vector start = player->GetAbsOrigin();
 		start.z += vHullMax.z;
 		Vector end = start;
-		end.z += eyeClearance - vHullMax.z; 
+		end.z += eyeClearance - vHullMax.z;
 		end.z += player->m_Local.m_bDucked ? VEC_DUCK_VIEW_SCALED( player ).z : VEC_VIEW_SCALED( player ).z;
 
 		vHullMax.z = 0.0f;
@@ -433,7 +433,7 @@ void CCSGameMovement::PlayerMove()
 			}
 		}
 	}
-#endif	
+#endif
 }
 
 
@@ -444,9 +444,9 @@ void CCSGameMovement::WalkMove( void )
 		float flRatio;
 
 		flRatio = ( STAMINA_MAX - ( ( m_pCSPlayer->m_flStamina / 1000.0 ) * STAMINA_RECOVER_RATE ) ) / STAMINA_MAX;
-		
+
 		// This Goldsrc code was run with variable timesteps and it had framerate dependencies.
-		// People looking at Goldsrc for reference are usually 
+		// People looking at Goldsrc for reference are usually
 		// (these days) measuring the stoppage at 60fps or greater, so we need
 		// to account for the fact that Goldsrc was applying more stopping power
 		// since it applied the slowdown across more frames.
@@ -642,7 +642,7 @@ void CCSGameMovement::PreventBunnyJumping()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CCSGameMovement::CheckJumpButton( void )
 {
@@ -658,13 +658,13 @@ bool CCSGameMovement::CheckJumpButton( void )
 		m_pCSPlayer->m_flWaterJumpTime -= gpGlobals->frametime;
 		if (m_pCSPlayer->m_flWaterJumpTime < 0)
 			m_pCSPlayer->m_flWaterJumpTime = 0;
-		
+
 		return false;
 	}
 
 	// If we are in the water most of the way...
 	if ( m_pCSPlayer->GetWaterLevel() >= 2 )
-	{	
+	{
 		// swimming, not jumping
 		SetGroundEntity( NULL );
 
@@ -672,7 +672,7 @@ bool CCSGameMovement::CheckJumpButton( void )
 			mv->m_vecVelocity[2] = 100;
 		else if (m_pCSPlayer->GetWaterType() == CONTENTS_SLIME)
 			mv->m_vecVelocity[2] = 80;
-		
+
 		// play swiming sound
 		if ( m_pCSPlayer->m_flSwimSoundTime <= 0 )
 		{
@@ -701,16 +701,16 @@ bool CCSGameMovement::CheckJumpButton( void )
 
 	// In the air now.
 	SetGroundEntity( NULL );
-	
+
 	m_pCSPlayer->PlayStepSound( (Vector &)mv->GetAbsOrigin(), player->m_pSurfaceData, 1.0, true );
-	
+
 	//MoveHelper()->PlayerSetAnimation( PLAYER_JUMP );
 	m_pCSPlayer->DoAnimationEvent( PLAYERANIMEVENT_JUMP );
 
 	float flGroundFactor = 1.0f;
 	if (player->m_pSurfaceData)
 	{
-		flGroundFactor = player->m_pSurfaceData->game.jumpFactor; 
+		flGroundFactor = player->m_pSurfaceData->game.jumpFactor;
 	}
 
 	// if we weren't ducking, bots and hostages do a crouchjump programatically
@@ -731,7 +731,7 @@ bool CCSGameMovement::CheckJumpButton( void )
 		// v = g * sqrt(2.0 * 45 / g )
 		// v^2 = g * g * 2.0 * 45 / g
 		// v = sqrt( g * 2.0 * 45 )
-		
+
 		mv->m_vecVelocity[2] = flGroundFactor * sqrt(2 * 800 * 57.0);  // 2 * gravity * height
 	}
 	else
@@ -749,7 +749,7 @@ bool CCSGameMovement::CheckJumpButton( void )
 	}
 
 	m_pCSPlayer->m_flStamina = ( STAMINA_COST_JUMP / STAMINA_RECOVER_RATE ) * 1000.0;
-	
+
 	FinishGravity();
 
 	mv->m_outWishVel.z += mv->m_vecVelocity[2] - startz;
@@ -782,7 +782,7 @@ void CCSGameMovement::DecayPunchAngle( void )
 	vPunchAngle.x = m_pCSPlayer->m_Local.m_vecPunchAngle->x;
 	vPunchAngle.y = m_pCSPlayer->m_Local.m_vecPunchAngle->y;
 	vPunchAngle.z = m_pCSPlayer->m_Local.m_vecPunchAngle->z;
-	
+
 	len = VectorNormalize ( vPunchAngle );
 	len -= (10.0 + len * 0.5) * gpGlobals->frametime;
 	len = MAX( len, 0.0 );
@@ -798,7 +798,7 @@ void CCSGameMovement::HandleDuckingSpeedCrop()
 {
 	//=============================================================================
 	// HPE_BEGIN:
-	// [Forrest] 
+	// [Forrest]
 	//=============================================================================
 	// Movement speed in free look camera mode is unaffected by ducking state.
 	if ( player->GetObserverMode() == OBS_MODE_ROAMING )
@@ -836,14 +836,14 @@ bool CCSGameMovement::CanUnduck()
 		//  up for uncrouching
  		Vector hullSizeNormal = VEC_HULL_MAX_SCALED( player ) - VEC_HULL_MIN_SCALED( player );
 		Vector hullSizeCrouch = VEC_DUCK_HULL_MAX_SCALED( player ) - VEC_DUCK_HULL_MIN_SCALED( player );
-		
+
 		newOrigin += -0.5f * ( hullSizeNormal - hullSizeCrouch );
 	}
 
 	UTIL_TraceHull( mv->GetAbsOrigin(), newOrigin, VEC_HULL_MIN_SCALED( player ), VEC_HULL_MAX_SCALED( player ), PlayerSolidMask(), player, COLLISION_GROUP_PLAYER_MOVEMENT, &trace );
 
 	if ( trace.startsolid || ( trace.fraction != 1.0f ) )
-		return false;	
+		return false;
 
 	return true;
 }
@@ -879,7 +879,7 @@ void CCSGameMovement::FinishUnDuck( void )
 	player->m_Local.m_bDucking  = false;
 	player->SetViewOffset( GetPlayerViewOffset( false ) );
 	player->m_Local.m_flDucktime = 0;
-	
+
 	mv->SetAbsOrigin( newOrigin );
 
 	// Recategorize position since ducking can change origin
@@ -891,7 +891,7 @@ void CCSGameMovement::FinishUnDuck( void )
 //-----------------------------------------------------------------------------
 void CCSGameMovement::FinishDuck( void )
 {
-	
+
 	Vector hullSizeNormal = VEC_HULL_MAX_SCALED( player ) - VEC_HULL_MIN_SCALED( player );
 	Vector hullSizeCrouch = VEC_DUCK_HULL_MAX_SCALED( player ) - VEC_DUCK_HULL_MIN_SCALED( player );
 
@@ -903,7 +903,7 @@ void CCSGameMovement::FinishDuck( void )
 
 	if ( !player->m_Local.m_bDucked )
 	{
-	
+
 		Vector org = mv->GetAbsOrigin();
 
 		if ( player->GetGroundEntity() != NULL )
@@ -1045,14 +1045,14 @@ void CCSGameMovement::Duck( void )
 			float duckseconds = duckmilliseconds / 1000.0f;
 
 			//time = MAX( 0.0, ( 1.0 - (float)player->m_Local.m_flDucktime / 1000.0 ) );
-			
+
 			if ( player->m_Local.m_bDucking )
 			{
 				if ( !( player->GetFlags() & FL_ANIMDUCKING ) )
 					player->AddFlag( FL_ANIMDUCKING );
 
 				// Finish ducking immediately if duck time is over or not on ground
-				if ( ( duckseconds > TIME_TO_DUCK ) || 
+				if ( ( duckseconds > TIME_TO_DUCK ) ||
 					( player->GetGroundEntity() == NULL ) ||
 					alreadyDucked)
 				{
@@ -1084,7 +1084,7 @@ void CCSGameMovement::Duck( void )
 
 				if ( CanUnduck() )
 				{
-					if ( player->m_Local.m_bDucking || 
+					if ( player->m_Local.m_bDucking ||
 						 player->m_Local.m_bDucked ) // or unducking
 					{
 						if ( player->GetFlags() & FL_ANIMDUCKING )
@@ -1119,7 +1119,7 @@ void CCSGameMovement::Duck( void )
 void CCSGameMovement::OnJump( float fImpulse )
 {
 	m_pCSPlayer->OnJump( fImpulse );
-}	
+}
 
 void CCSGameMovement::OnLand( float fVelocity )
 {
@@ -1127,7 +1127,7 @@ void CCSGameMovement::OnLand( float fVelocity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Essentially the same as TracePlayerBBox, but adds a callback to 
+// Purpose: Essentially the same as TracePlayerBBox, but adds a callback to
 // exclude entities that are not standable (except for other players)
 //-----------------------------------------------------------------------------
 void  CCSGameMovement::TryTouchGround( const Vector& start, const Vector& end, const Vector& mins, const Vector& maxs, unsigned int fMask, int collisionGroup, trace_t& pm )

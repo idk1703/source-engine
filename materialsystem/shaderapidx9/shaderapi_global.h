@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -49,7 +49,7 @@ extern IShaderShadow *g_pShaderShadow;
 
 
 //-----------------------------------------------------------------------------
-// Memory debugging 
+// Memory debugging
 //-----------------------------------------------------------------------------
 #define MEM_ALLOC_D3D_CREDIT()	MEM_ALLOC_CREDIT_("D3D:" __FILE__)
 #define BEGIN_D3D_ALLOCATION()	MemAlloc_PushAllocDbgInfo("D3D:" __FILE__, __LINE__)

@@ -53,7 +53,7 @@ void CHandGrenade::Spawn( void )
 	SetSolid( SOLID_BBOX );
 	AddSolidFlags( FSOLID_NOT_STANDABLE );
 
-	SetModel( HANDGRENADE_MODEL ); 
+	SetModel( HANDGRENADE_MODEL );
 
 	UTIL_SetSize( this, Vector( 0, 0, 0 ), Vector( 0, 0, 0 ) );
 
@@ -99,7 +99,7 @@ void CHandGrenade::ShootTimed( CBaseCombatCharacter *pOwner, Vector vecVelocity,
 	angImpulse[0] = random->RandomInt( -200, 200 );
 	angImpulse[1] = random->RandomInt( 400, 500 );
 	angImpulse[2] = random->RandomInt( -100, 100 );
-	ApplyLocalAngularVelocityImpulse( angImpulse );	
+	ApplyLocalAngularVelocityImpulse( angImpulse );
 
 	SetGravity( UTIL_ScaleForGravity( 400 ) );	// use a lower gravity for grenades to make them easier to see
 	SetFriction( 0.8 );
@@ -143,7 +143,7 @@ void CHandGrenade::BounceTouch( CBaseEntity *pOther )
 
 			CTakeDamageInfo info( this, GetThrower(), 1, DMG_CLUB );
 			CalculateMeleeDamageForce( &info, forward, tr.endpos );
-			pOther->DispatchTraceAttack( info, forward, &tr ); 
+			pOther->DispatchTraceAttack( info, forward, &tr );
 			ApplyMultiDamage();
 		}
 		m_flNextAttack = gpGlobals->curtime + 1.0; // debounce
@@ -153,16 +153,16 @@ void CHandGrenade::BounceTouch( CBaseEntity *pOther )
 	// m_vecAngVelocity = Vector (300, 300, 300);
 
 	// this is my heuristic for modulating the grenade velocity because grenades dropped purely vertical
-	// or thrown very far tend to slow down too quickly for me to always catch just by testing velocity. 
+	// or thrown very far tend to slow down too quickly for me to always catch just by testing velocity.
 	// trimming the Z velocity a bit seems to help quite a bit.
-	vecTestVelocity = GetAbsVelocity(); 
+	vecTestVelocity = GetAbsVelocity();
 	vecTestVelocity.z *= 0.45;
 
 	if ( !m_bHasWarnedAI && vecTestVelocity.Length() <= 60 )
 	{
-		// grenade is moving really slow. It's probably very close to where it will ultimately stop moving. 
+		// grenade is moving really slow. It's probably very close to where it will ultimately stop moving.
 		// emit the danger sound.
-		
+
 		// register a radius louder than the explosion, so we make sure everyone gets out of the way
 		CSoundEnt::InsertSound ( SOUND_DANGER, GetAbsOrigin(), m_flDamage / 0.4, 0.3 );
 		m_bHasWarnedAI = TRUE;
@@ -205,7 +205,7 @@ class CWeaponHandGrenade : public CBaseHL1MPCombatWeapon
 	DECLARE_CLASS( CWeaponHandGrenade, CBaseHL1MPCombatWeapon );
 public:
 
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponHandGrenade( void );
@@ -265,7 +265,7 @@ CWeaponHandGrenade::CWeaponHandGrenade( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponHandGrenade::Precache( void )
 {
@@ -410,7 +410,7 @@ void CWeaponHandGrenade::WeaponIdle( void )
 			SendWeaponAnim( ACT_VM_IDLE );
 			SetWeaponIdleTime( gpGlobals->curtime + random->RandomFloat( 10, 15 ) );// how long till we do this again.
 		}
-		else 
+		else
 		{
 			SendWeaponAnim( ACT_VM_FIDGET );
 		}

@@ -197,7 +197,7 @@ void DrawFleshInteriorBlendedPass( CBaseVSShader *pShader, IMaterialVar** params
 		vshIndex.SetSKINNING( pShaderAPI->GetCurrentNumBones() > 0 );
 		pShaderAPI->SetVertexShaderIndex( vshIndex.GetIndex() );
 
-		// Set Vertex Shader Constants 
+		// Set Vertex Shader Constants
 
 		// Time % 1000
 		float flCurrentTime = IS_PARAM_DEFINED( info.m_nTime ) && params[info.m_nTime]->GetFloatValue() > 0.0f ? params[info.m_nTime]->GetFloatValue() : pShaderAPI->CurrentTime();
@@ -254,7 +254,7 @@ void DrawFleshInteriorBlendedPass( CBaseVSShader *pShader, IMaterialVar** params
 		// Bind textures
 		pShader->BindTexture( SHADER_SAMPLER0, info.m_nFleshTexture );
 
-		// Set Pixel Shader Constants 
+		// Set Pixel Shader Constants
 
 		// Border color tint
 		pShaderAPI->SetPixelShaderConstant( 3, IS_PARAM_DEFINED( info.m_ncBorderTint ) ? params[info.m_ncBorderTint]->GetVecValue() : kDefaultBorderTint, 1 );

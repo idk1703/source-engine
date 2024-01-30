@@ -305,7 +305,7 @@ CDominationsPanel::CDominationsPanel( Panel *pParent, ReplayHandle_t hReplay )
 	// Setup the # of dominations image
 	V_snprintf( szImage, sizeof( szImage ), "../hud/leaderboard_dom%i", nNumDominations );
 	m_pNumDominationsImage->SetImage( szImage );
-	
+
 	// Add avatars for each person dominated
 	EUniverse localUniverse = GetUniverse();
 	if ( localUniverse != k_EUniverseInvalid )
@@ -343,7 +343,7 @@ void CDominationsPanel::PerformLayout()
 	m_pNumDominationsImage->SetBounds( 0, 0, nImageWidth, nImageHeight );
 	int nX = nImageWidth + 2*nBuffer;
 	int nY = 0;
-	
+
 	for ( int i = 0; i < m_vecDominationImages.Count(); ++i )
 	{
 		ImagePanel *pImagePanel = m_vecDominationImages[ i ];
@@ -511,7 +511,7 @@ void CYouTubeInfoPanel::SetInfo( const wchar_t *pInfo )
 }
 
 //-----------------------------------------------------------------------------
-	
+
 CTitleEditPanel::CTitleEditPanel( Panel *pParent, QueryableReplayItemHandle_t hReplayItem, IReplayItemManager *pItemManager )
 :	EditablePanel( pParent, "TitleEditPanel" ),
 	m_hReplayItem( hReplayItem ),
@@ -535,7 +535,7 @@ void CTitleEditPanel::ApplySchemeSettings( IScheme *pScheme )
 	BaseClass::ApplySchemeSettings( pScheme );
 
 	LoadControlSettings( "resource/ui/replaybrowser/titleeditpanel.res", "GAME" );
-	
+
 	// Get ptr to carat label
 	m_pCaratLabel = dynamic_cast< CExLabel * >( FindChildByName( "CaratLabel" ) );
 
@@ -545,7 +545,7 @@ void CTitleEditPanel::ApplySchemeSettings( IScheme *pScheme )
 	// Setup title entry
 	m_pTitleEntry = dynamic_cast< TextEntry * >( FindChildByName( "TitleInput" ) );
 	m_pTitleEntry->SelectAllOnFocusAlways( true );
-	
+
 #if !defined( TF_CLIENT_DLL )
 	m_pTitleEntry->SetPaintBorderEnabled( false );
 #endif
@@ -739,7 +739,7 @@ void CPlaybackPanelSlideshow::ApplySchemeSettings( IScheme *pScheme )
 	CGenericClassBasedReplay *pReplay = GetGenericClassBasedReplay( m_hReplay );
 	if ( !pReplay )
 		return;
-	
+
 	if ( !pReplay->GetScreenshotCount() && m_pNoScreenshotLabel )	// Show no-screenshot label
 	{
 		m_pNoScreenshotLabel->SetVisible( true );
@@ -1053,7 +1053,7 @@ void CCutsPanel::OnTick()
 		if ( pAddToRenderQueueButton )
 		{
 			pAddToRenderQueueButton->SetVisible( bIsHoverButton );
-			
+
 			if ( iHoverPerformance >= -1 )
 			{
 				// Set the text and command based on whether or not the take's already been queued
@@ -1177,7 +1177,7 @@ int CCutsPanel::PerformanceToButton( int iPerformance ) const
 void CCutsPanel::UpdateNameLabel( int iPerformance )
 {
 	const CReplayPerformance *pPerformance = GetPerformance( iPerformance );
-	m_pNameLabel->SetText( pPerformance ? pPerformance->m_wszTitle : L"" );	
+	m_pNameLabel->SetText( pPerformance ? pPerformance->m_wszTitle : L"" );
 
 	// Get the button (in the range [0,BUTTONS_PER_PAGE]).
 	const int iPerformanceButton = PerformanceToButton( iPerformance );	// Not necessarily the selected button - can be hover button
@@ -1239,7 +1239,7 @@ static void ConfirmUploadMovie( bool bConfirmed, void *pContext )
 				YouTube_ShowLoginDialog( pMovie, pPanel );
 			}
 			else
-			{	
+			{
 				YouTube_ShowUploadDialog( pMovie, pPanel );
 			}
 		}
@@ -1327,7 +1327,7 @@ public:
 
 			iNumFavorited = Q_atoi( favoriteCount.Get() );
 			iNumViews = Q_atoi( viewCount.Get() );
-			
+
 			g_pVGuiLocalize->ConvertANSIToUnicode( favoriteCount.Get(), wszFavorited, sizeof( wszFavorited ) );
 			g_pVGuiLocalize->ConvertANSIToUnicode( viewCount.Get(), wszViews, sizeof( wszViews ) );
 		}
@@ -1350,7 +1350,7 @@ public:
 		}
 
 		wchar_t wszStats[256] = L"";
-		g_pVGuiLocalize->ConstructString_safe( wszStats, g_pVGuiLocalize->Find( "#YouTube_Stats" ), 3, 
+		g_pVGuiLocalize->ConstructString_safe( wszStats, g_pVGuiLocalize->Find( "#YouTube_Stats" ), 3,
 			wszFavorited,
 			wszViews,
 			wszLikes );
@@ -1410,7 +1410,7 @@ CReplayDetailsPanel::CReplayDetailsPanel( Panel *pParent, QueryableReplayItemHan
 		m_pScrollPanel->GetScrollbar()->GetButton( i )->SetPaintBorderEnabled( false );
 	}
 #endif
-	
+
 	m_pBasicInfoPanel = new CBasicLifeInfoPanel( m_pInfoPanel, m_hReplay );
 	m_pStatsPanel = new CStatsPanel( m_pInfoPanel, m_hReplay );
 	m_pKillsPanel = new CKillsPanel( m_pInfoPanel, m_hReplay );
@@ -1423,7 +1423,7 @@ CReplayDetailsPanel::CReplayDetailsPanel( Panel *pParent, QueryableReplayItemHan
 	else
 	{
 		m_pCutsPanel = new CCutsPanel( GetInset(), m_hReplay, m_iSelectedPerformance );
-	}	
+	}
 
 	// Add info panels to a list
 
@@ -1528,7 +1528,7 @@ void CReplayDetailsPanel::PerformLayout()
 	m_pScrollPanel->SetPos( nScreenshotWidth + nLeftRightBuffer, nInfoPanelsCurrentY );
 	m_pScrollPanel->SetWide( nRightColumnWidth + XRES(20) );
 	m_pScrollPanel->SetTall( GetTall() - insetY - nInfoPanelsCurrentY );
-	m_pInfoPanel->SetWide( nRightColumnWidth );	
+	m_pInfoPanel->SetWide( nRightColumnWidth );
 
 	int nCurrentY = 0;
 	for ( int i = 0; i < m_vecInfoPanels.Count(); ++i )
@@ -1600,7 +1600,7 @@ void CReplayDetailsPanel::PerformLayout()
 		m_pYouTubeUpload->SetPos( nButtonX, nButtonY );
 		m_pYouTubeView->SetPos( nButtonX, nButtonY );
 		nButtonX += m_pYouTubeUpload->GetWide() + XRES( 5 );
-		
+
 		m_pYouTubeShareURL->SetPos( nButtonX, nButtonY );
 		nButtonX += m_pYouTubeShareURL->GetWide() + XRES( 5 );
 
@@ -1755,7 +1755,7 @@ void CReplayDetailsPanel::OnCommand( const char *pCommand )
 		if ( replay_movie_reveal_warning.GetBool() )
 		{
 #ifdef USE_WEBM_FOR_REPLAY
-			CTFMessageBoxDialog *pDialog = ShowMessageBox( "#Replay_Tip", "#Replay_UseVLCPlayer", "#Replay_ThanksIWill",  OnPlayerWarningDlgConfirm );			
+			CTFMessageBoxDialog *pDialog = ShowMessageBox( "#Replay_Tip", "#Replay_UseVLCPlayer", "#Replay_ThanksIWill",  OnPlayerWarningDlgConfirm );
 #else
 			CTFMessageBoxDialog *pDialog = ShowMessageBox( "#Replay_Tip", "#Replay_UseQuickTimePlayer", "#Replay_ThanksIWill",  OnPlayerWarningDlgConfirm );
 #endif
@@ -1818,7 +1818,7 @@ void CReplayDetailsPanel::OnCommand( const char *pCommand )
 	{
 		system()->SetClipboardText( m_pYouTubeResponseHandler->m_strVideoURL.Get(), m_pYouTubeResponseHandler->m_strVideoURL.Length() );
 		ShowMessageBox( "#Replay_CopyURL_Title", "#Replay_CopyURL_Text", "#GameUI_OK" );
-	}	
+	}
 
 	else if ( FStrEq( pCommand, "showrenderinfo" ) )
 	{

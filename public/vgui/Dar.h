@@ -28,7 +28,7 @@ namespace vgui
 template<class ELEMTYPE> class Dar : public CUtlVector< ELEMTYPE >
 {
 	typedef CUtlVector< ELEMTYPE > BaseClass;
-	
+
 public:
 	Dar()
 	{
@@ -102,14 +102,14 @@ public:
 	void RemoveElementAt(int index)
 	{
 		this->Remove( index );
-	} 
+	}
 
 	void RemoveElementsBefore(int index)
 	{
 		if ( index <= 0 )
 			return;
 		this->RemoveMultiple( 0, index - 1 );
-	}  
+	}
 
 	void RemoveElement(ELEMTYPE elem)
 	{

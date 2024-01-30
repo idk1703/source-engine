@@ -57,7 +57,7 @@ bool CRecentFileList::IsEmpty() const
 	return m_RecentFiles.Count() == 0;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Gets the file in a particular slot
 //-----------------------------------------------------------------------------
@@ -83,7 +83,7 @@ const char *CRecentFileList::GetFileFormat( int slot ) const
 
 
 //-----------------------------------------------------------------------------
-// Loads the file list from the registry 
+// Loads the file list from the registry
 //-----------------------------------------------------------------------------
 void CRecentFileList::LoadFromRegistry( const char *pToolKeyName )
 {
@@ -94,9 +94,9 @@ void CRecentFileList::LoadFromRegistry( const char *pToolKeyName )
 	{
 		char sz[ 128 ];
 		char szType[ 128 ];
-		Q_snprintf( sz, sizeof( sz ), "%s\\history%02i", pToolKeyName, i ); 
-		Q_snprintf( szType, sizeof( szType ), "%s\\history_fileformat%02i", pToolKeyName, i ); 
-		
+		Q_snprintf( sz, sizeof( sz ), "%s\\history%02i", pToolKeyName, i );
+		Q_snprintf( szType, sizeof( szType ), "%s\\history_fileformat%02i", pToolKeyName, i );
+
 		// NOTE: Can't call registry->ReadString twice in a row!
 		char pFileName[MAX_PATH];
 		Q_strncpy( pFileName, registry->ReadString( sz, "" ), sizeof(pFileName) );
@@ -111,7 +111,7 @@ void CRecentFileList::LoadFromRegistry( const char *pToolKeyName )
 
 
 //-----------------------------------------------------------------------------
-// Saves file list into the registry 
+// Saves file list into the registry
 //-----------------------------------------------------------------------------
 void CRecentFileList::SaveToRegistry( const char *pToolKeyName ) const
 {
@@ -121,27 +121,27 @@ void CRecentFileList::SaveToRegistry( const char *pToolKeyName ) const
 	c = m_RecentFiles.Count();
 	for ( i = 0 ; i < c; ++i )
 	{
-		Q_snprintf( sz, sizeof( sz ), "%s\\history%02i", pToolKeyName, i ); 
+		Q_snprintf( sz, sizeof( sz ), "%s\\history%02i", pToolKeyName, i );
 		registry->WriteString( sz, m_RecentFiles[i].m_pFileName );
 
-		Q_snprintf( sz, sizeof( sz ), "%s\\history_fileformat%02i", pToolKeyName, i ); 
+		Q_snprintf( sz, sizeof( sz ), "%s\\history_fileformat%02i", pToolKeyName, i );
 		registry->WriteString( sz, m_RecentFiles[i].m_pFileFormat );
 	}
 
 	// Clear out all other registry settings
 	for ( ; i < MAX_RECENT_FILES; ++i )
 	{
-		Q_snprintf( sz, sizeof( sz ), "%s\\history%02i", pToolKeyName, i ); 
+		Q_snprintf( sz, sizeof( sz ), "%s\\history%02i", pToolKeyName, i );
 		registry->WriteString( sz, "" );
 
-		Q_snprintf( sz, sizeof( sz ), "%s\\history_fileformat%02i", pToolKeyName, i ); 
+		Q_snprintf( sz, sizeof( sz ), "%s\\history_fileformat%02i", pToolKeyName, i );
 		registry->WriteString( sz, "" );
 	}
 }
 
 
 //-----------------------------------------------------------------------------
-// Adds the list of files to a particular menu 
+// Adds the list of files to a particular menu
 //-----------------------------------------------------------------------------
 void CRecentFileList::AddToMenu( vgui::Menu *menu, vgui::Panel *pActionTarget, const char *pCommandName ) const
 {

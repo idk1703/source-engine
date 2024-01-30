@@ -75,12 +75,12 @@ CBaseHudWeaponSelection *GetHudWeaponSelection()
 CBaseHudWeaponSelection::CBaseHudWeaponSelection( const char *pElementName ) : CHudElement( pElementName )
 {
 	s_pInstance = this;
-	
+
 	SetHiddenBits( HIDEHUD_WEAPONSELECTION | HIDEHUD_NEEDSUIT | HIDEHUD_PLAYERDEAD | HIDEHUD_INVEHICLE );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseHudWeaponSelection::Init(void)
 {
@@ -93,7 +93,7 @@ void CBaseHudWeaponSelection::Init(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseHudWeaponSelection::Reset(void)
 {
@@ -106,7 +106,7 @@ void CBaseHudWeaponSelection::Reset(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseHudWeaponSelection::UpdateSelectionTime( void )
 {
@@ -114,7 +114,7 @@ void CBaseHudWeaponSelection::UpdateSelectionTime( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseHudWeaponSelection::VidInit(void)
 {
@@ -132,7 +132,7 @@ void CBaseHudWeaponSelection::VidInit(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseHudWeaponSelection::OnThink( void )
 {
@@ -202,7 +202,7 @@ void CBaseHudWeaponSelection::ProcessInput()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseHudWeaponSelection::IsInSelectionMode()
 {
@@ -210,7 +210,7 @@ bool CBaseHudWeaponSelection::IsInSelectionMode()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseHudWeaponSelection::OpenSelection( void )
 {
@@ -219,7 +219,7 @@ void CBaseHudWeaponSelection::OpenSelection( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseHudWeaponSelection::HideSelection( void )
 {
@@ -256,7 +256,7 @@ bool CBaseHudWeaponSelection::CanBeSelectedInHUD( C_BaseCombatWeapon *pWeapon )
 //-----------------------------------------------------------------------------
 // Purpose: handles keyboard input
 //-----------------------------------------------------------------------------
-int	CBaseHudWeaponSelection::KeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding ) 
+int	CBaseHudWeaponSelection::KeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
 {
 	if (IsInSelectionMode() && pszCurrentBinding && !stricmp(pszCurrentBinding, "cancelselect"))
 	{
@@ -283,7 +283,7 @@ void CBaseHudWeaponSelection::OnWeaponPickup( C_BaseCombatWeapon *pWeapon )
 {
 	// add to pickup history
 	CHudHistoryResource *pHudHR = GET_HUDELEMENT( CHudHistoryResource );
-	
+
 	if ( pHudHR )
 	{
 		pHudHR->AddToHistory( pWeapon );
@@ -523,8 +523,8 @@ void CBaseHudWeaponSelection::UserCmd_LastWeapon(void)
 		return;
 
 	/*
-	if ( IsHudMenuPreventingWeaponSelection() )	
-	{ 
+	if ( IsHudMenuPreventingWeaponSelection() )
+	{
 		return;
 	}
 	*/
@@ -546,7 +546,7 @@ void CBaseHudWeaponSelection::SwitchToLastWeapon( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseHudWeaponSelection::SetWeaponSelected( void )
 {
@@ -579,9 +579,9 @@ void CBaseHudWeaponSelection::SelectWeapon( void )
 	else
 	{
 		SetWeaponSelected();
-	
+
 		m_hSelectedWeapon = NULL;
-	
+
 		engine->ClientCmd( "cancelselect\n" );
 
 		// Play the "weapon selected" sound
@@ -649,7 +649,7 @@ C_BaseCombatWeapon *CBaseHudWeaponSelection::GetFirstPos( int iSlot )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseCombatWeapon *CBaseHudWeaponSelection::GetNextActivePos( int iSlot, int iSlotPos )
 {

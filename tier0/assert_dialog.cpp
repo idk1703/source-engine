@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -45,16 +45,16 @@ class CAssertDisable
 {
 public:
 	tchar m_Filename[512];
-	
+
 	// If these are not -1, then this CAssertDisable only disables asserts on lines between
 	// these values (inclusive).
-	int m_LineMin;		
+	int m_LineMin;
 	int m_LineMax;
-	
-	// Decremented each time we hit this assert and ignore it, until it's 0. 
+
+	// Decremented each time we hit this assert and ignore it, until it's 0.
 	// Then the CAssertDisable is removed.
 	// If this is -1, then we always ignore this assert.
-	int m_nIgnoreTimes;	
+	int m_nIgnoreTimes;
 
 	CAssertDisable *m_pNext;
 };
@@ -89,9 +89,9 @@ static CDialogInitInfo g_Info;
 extern "C" BOOL APIENTRY MemDbgDllMain( HMODULE hDll, DWORD dwReason, PVOID pvReserved );
 
 BOOL WINAPI DllMain(
-  HINSTANCE hinstDLL,  // handle to the DLL module
-  DWORD fdwReason,     // reason for calling function
-  LPVOID lpvReserved   // reserved
+	HINSTANCE hinstDLL,  // handle to the DLL module
+	DWORD fdwReason,     // reason for calling function
+	LPVOID lpvReserved   // reserved
 )
 {
 	g_hTier0Instance = hinstDLL;
@@ -105,8 +105,8 @@ BOOL WINAPI DllMain(
 static bool IsDebugBreakEnabled()
 {
 	static bool bResult = ( _tcsstr( Plat_GetCommandLine(), _T("-debugbreak") )    != NULL ) || \
-	                      ( _tcsstr( Plat_GetCommandLine(), _T("-raiseonassert") ) != NULL ) || \
-	                      getenv( "RAISE_ON_ASSERT" );
+												( _tcsstr( Plat_GetCommandLine(), _T("-raiseonassert") ) != NULL ) || \
+												getenv( "RAISE_ON_ASSERT" );
 	return bResult;
 }
 
@@ -130,7 +130,7 @@ static bool AreAssertsEnabledInFileLine( const tchar *pFilename, int iLine )
 			bool bAssertsEnabled = true;
 			if ( pCur->m_LineMin == -1 && pCur->m_LineMax == -1 )
 				bAssertsEnabled = false;
-			
+
 			// Are asserts disabled on the specified line?
 			if ( iLine >= pCur->m_LineMin && iLine <= pCur->m_LineMax )
 				bAssertsEnabled = false;
@@ -149,7 +149,7 @@ static bool AreAssertsEnabledInFileLine( const tchar *pFilename, int iLine )
 						continue;
 					}
 				}
-				
+
 				return false;
 			}
 		}
@@ -169,10 +169,10 @@ CAssertDisable* CreateNewAssertDisable( const tchar *pFilename )
 
 	pDisable->m_LineMin = pDisable->m_LineMax = -1;
 	pDisable->m_nIgnoreTimes = -1;
-	
+
 	_tcsncpy( pDisable->m_Filename, g_Info.m_pFilename, sizeof( pDisable->m_Filename ) - 1 );
 	pDisable->m_Filename[ sizeof( pDisable->m_Filename ) - 1 ] = 0;
-	
+
 	return pDisable;
 }
 
@@ -194,10 +194,10 @@ CAssertDisable* IgnoreAssertsNearby( int nRange )
 
 #if ( defined( _WIN32 ) && !defined( _X360 ) )
 INT_PTR CALLBACK AssertDialogProc(
-  HWND hDlg,  // handle to dialog box
-  UINT uMsg,     // message
-  WPARAM wParam, // first message parameter
-  LPARAM lParam  // second message parameter
+	HWND hDlg,  // handle to dialog box
+	UINT uMsg,     // message
+	WPARAM wParam, // first message parameter
+	LPARAM lParam  // second message parameter
 )
 {
 	switch( uMsg )
@@ -214,14 +214,14 @@ INT_PTR CALLBACK AssertDialogProc(
 			SetDlgItemInt( hDlg, IDC_LINE_CONTROL, g_Info.m_iLine, false );
 			SetDlgItemInt( hDlg, IDC_IGNORE_NUMLINES, g_iLastLineRange, false );
 			SetDlgItemInt( hDlg, IDC_IGNORE_NUMTIMES, g_nLastIgnoreNumTimes, false );
-		
+
 			// Center the dialog.
 			RECT rcDlg, rcDesktop;
 			GetWindowRect( hDlg, &rcDlg );
 			GetWindowRect( GetDesktopWindow(), &rcDesktop );
-			SetWindowPos( 
-				hDlg, 
-				HWND_TOP, 
+			SetWindowPos(
+				hDlg,
+				HWND_TOP,
 				((rcDesktop.right-rcDesktop.left) - (rcDlg.right-rcDlg.left)) / 2,
 				((rcDesktop.bottom-rcDesktop.top) - (rcDlg.bottom-rcDlg.top)) / 2,
 				0,
@@ -264,7 +264,7 @@ INT_PTR CALLBACK AssertDialogProc(
 					EndDialog( hDlg, 0 );
 					return true;
 				}
-				
+
 				case IDC_IGNORE_NEARBY:
 				{
 					BOOL bTranslated = false;
@@ -302,7 +302,7 @@ INT_PTR CALLBACK AssertDialogProc(
 					return true;
 				}
 			}
-					
+
 		}
 		return true;
 	}
@@ -315,8 +315,8 @@ static HWND g_hBestParentWindow;
 
 
 static BOOL CALLBACK ParentWindowEnumProc(
-  HWND hWnd,      // handle to parent window
-  LPARAM lParam   // application-defined value
+	HWND hWnd,      // handle to parent window
+	LPARAM lParam   // application-defined value
 )
 {
 	if ( IsWindowVisible( hWnd ) )
@@ -438,7 +438,7 @@ DBG_INTERFACE bool DoNewAssertDialog( const tchar *pFilename, int line, const tc
 		#define COLOR_RED 		"\033[1;31m"
 		#define COLOR_END		"\033[0m"
 		fprintf(stderr, COLOR_YELLOW "ASSERT:" COLOR_END " " COLOR_RED "%s" COLOR_GREEN ":%i:" COLOR_END " " COLOR_RED "%s" COLOR_END "\n",
-		        pFilename, line, pExpression);
+						pFilename, line, pExpression);
 		if ( getenv( "POSIX_ASSERT_BACKTRACE" ) )
 		{
 			SpewBacktrace();
@@ -613,4 +613,3 @@ DBG_INTERFACE bool DoNewAssertDialog( const tchar *pFilename, int line, const tc
 
 	return g_bBreak;
 }
-

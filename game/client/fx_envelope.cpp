@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -75,7 +75,7 @@ void C_EnvelopeFX::EffectInit( int entityIndex, int attachment )
 //-----------------------------------------------------------------------------
 // Purpose: Shuts down the effect
 //-----------------------------------------------------------------------------
-void C_EnvelopeFX::EffectShutdown( void ) 
+void C_EnvelopeFX::EffectShutdown( void )
 {
 	m_active = 0;
 	m_t = 0;

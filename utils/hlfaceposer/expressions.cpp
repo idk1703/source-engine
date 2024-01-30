@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,20 +22,20 @@ bool Sys_Error(const char *pMsg, ...);
 extern char g_appTitle[];
 
 static CUtlVector< CUtlSymbol > g_GlobalFlexControllers;
-static CUtlDict< int, int >		g_GlobalFlexControllerLookup; 
+static CUtlDict< int, int >		g_GlobalFlexControllerLookup;
 
 void ChecksumFlexControllers( bool bSpew, char const *name, CRC32_t &crc, const float *settings, const float *weights )
 {
 	CRC32_Init( &crc );
 
 	// Walk them alphabetically so that load order doesn't matter
-	for ( int i = g_GlobalFlexControllerLookup.First() ; 
-		i != g_GlobalFlexControllerLookup.InvalidIndex(); 
+	for ( int i = g_GlobalFlexControllerLookup.First() ;
+		i != g_GlobalFlexControllerLookup.InvalidIndex();
 		i = g_GlobalFlexControllerLookup.Next( i ) )
 	{
 		int controllerIndex = g_GlobalFlexControllerLookup[ i ];
 		char const *pszName = g_GlobalFlexControllerLookup.GetElementName( i );
-		
+
 		// Only count active controllers in checksum
 		float s = settings[ controllerIndex ];
 		float w = weights[ controllerIndex ];
@@ -66,8 +66,8 @@ void ChecksumFlexControllers( bool bSpew, char const *name, CRC32_t &crc, const 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *GetGlobalFlexControllerName( int index )
@@ -76,7 +76,7 @@ char const *GetGlobalFlexControllerName( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int GetGlobalFlexControllerCount( void )
@@ -85,7 +85,7 @@ int GetGlobalFlexControllerCount( void )
 }
 //-----------------------------------------------------------------------------
 // Purpose: Accumulates throughout runtime session, oh well
-// Input  : *szName - 
+// Input  : *szName -
 // Output : int
 //-----------------------------------------------------------------------------
 int AddGlobalFlexController( StudioModel *model, const char *szName )
@@ -105,8 +105,8 @@ int AddGlobalFlexController( StudioModel *model, const char *szName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *model - 
+// Purpose:
+// Input  : *model -
 //-----------------------------------------------------------------------------
 void SetupModelFlexcontrollerLinks( StudioModel *model )
 {
@@ -133,7 +133,7 @@ void SetupModelFlexcontrollerLinks( StudioModel *model )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CExpressionManager : public IExpressionManager
 {
@@ -183,7 +183,7 @@ static CExpressionManager g_ExpressionManager;
 IExpressionManager *expressions = &g_ExpressionManager;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CExpressionManager::CExpressionManager( void )
 {
@@ -192,7 +192,7 @@ CExpressionManager::CExpressionManager( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CExpressionManager::~CExpressionManager( void )
 {
@@ -200,7 +200,7 @@ CExpressionManager::~CExpressionManager( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExpressionManager::Reset( void )
 {
@@ -217,7 +217,7 @@ void CExpressionManager::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CExpClass	*CExpressionManager::GetActiveClass( void )
 {
@@ -225,8 +225,8 @@ CExpClass	*CExpressionManager::GetActiveClass( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : num - 
+// Purpose:
+// Input  : num -
 // Output : CExpClass
 //-----------------------------------------------------------------------------
 CExpClass *CExpressionManager::GetClass( int num )
@@ -235,9 +235,9 @@ CExpClass *CExpressionManager::GetClass( int num )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *classname - 
-//			*filename - 
+// Purpose:
+// Input  : *classname -
+//			*filename -
 // Output : CExpClass *
 //-----------------------------------------------------------------------------
 CExpClass * CExpressionManager::AddCExpClass( const char *classname, const char *filename )
@@ -247,7 +247,7 @@ CExpClass * CExpressionManager::AddCExpClass( const char *classname, const char 
 	CExpClass *pclass = new CExpClass( classname );
 	if ( !pclass )
 		return NULL;
-	
+
 	m_Classes.AddToTail( pclass );
 
 	pclass->SetFileName( filename );
@@ -256,8 +256,8 @@ CExpClass * CExpressionManager::AddCExpClass( const char *classname, const char 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *cl - 
+// Purpose:
+// Input  : *cl -
 //-----------------------------------------------------------------------------
 void CExpressionManager::RemoveCExpClass( CExpClass *cl )
 {
@@ -283,8 +283,8 @@ void CExpressionManager::RemoveCExpClass( CExpClass *cl )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *cl - 
+// Purpose:
+// Input  : *cl -
 //-----------------------------------------------------------------------------
 void CExpressionManager::ActivateExpressionClass( CExpClass *cl )
 {
@@ -299,12 +299,12 @@ void CExpressionManager::ActivateExpressionClass( CExpClass *cl )
 			break;
 		}
 	}
-	
+
 	g_pExpressionClass->select( select );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CExpressionManager::GetNumClasses( void )
@@ -313,8 +313,8 @@ int CExpressionManager::GetNumClasses( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *classname - 
+// Purpose:
+// Input  : *classname -
 // Output : CExpClass
 //-----------------------------------------------------------------------------
 CExpClass *CExpressionManager::FindClass( const char *classname, bool bMatchBaseNameOnly )
@@ -346,8 +346,8 @@ CExpClass *CExpressionManager::FindClass( const char *classname, bool bMatchBase
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *filename - 
+// Purpose:
+// Input  : *filename -
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CExpressionManager::GetClassnameFromFilename( const char *filename )
@@ -378,7 +378,7 @@ const char *CExpressionManager::GetClassnameFromFilename( const char *filename )
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CExpression
 //-----------------------------------------------------------------------------
 CExpression *CExpressionManager::GetCopyBuffer( void )
@@ -387,7 +387,7 @@ CExpression *CExpressionManager::GetCopyBuffer( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CExpressionManager::CanClose( void )
@@ -404,8 +404,8 @@ bool CExpressionManager::CanClose( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *filename - 
+// Purpose:
+// Input  : *filename -
 //-----------------------------------------------------------------------------
 void CExpressionManager::LoadClass( const char *inpath )
 {
@@ -428,7 +428,7 @@ void CExpressionManager::LoadClass( const char *inpath )
 	Con_Printf( "Loading expressions from %s\n", filename );
 
 	const char *classname = GetClassnameFromFilename( filename );
-	
+
 	// Already loaded, don't do anything
 	if ( FindClass( classname, false ) )
 		return;
@@ -537,7 +537,7 @@ void CExpressionManager::LoadClass( const char *inpath )
 						mstudioflexcontroller_t *pFlex = hdr->pFlexcontroller( localflexmap[i] );
 						if ( pFlex->min != pFlex->max )
 						{
-							setting[flexmap[i]] = Lerp( setting[flexmap[i]], pFlex->min, pFlex->max );  
+							setting[flexmap[i]] = Lerp( setting[flexmap[i]], pFlex->min, pFlex->max );
 						}
 					}
 				}
@@ -580,8 +580,8 @@ void CExpressionManager::LoadClass( const char *inpath )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *filename - 
+// Purpose:
+// Input  : *filename -
 //-----------------------------------------------------------------------------
 void CExpressionManager::CreateNewClass( const char *filename )
 {
@@ -594,7 +594,7 @@ void CExpressionManager::CreateNewClass( const char *filename )
 
 	// Tell the use that the filename was loaded, expressions are empty for now
 	const char *classname = GetClassnameFromFilename( filename );
-	
+
 	// Already loaded, don't do anything
 	if ( FindClass( classname, false ) )
 		return;
@@ -618,8 +618,8 @@ void CExpressionManager::CreateNewClass( const char *filename )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *cl - 
+// Purpose:
+// Input  : *cl -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CExpressionManager::CloseClass( CExpClass *cl )
@@ -667,8 +667,8 @@ bool CExpressionManager::CloseClass( CExpClass *cl )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : classnum - 
+// Purpose:
+// Input  : classnum -
 //-----------------------------------------------------------------------------
 void CExpressionManager::PopulateClassCB( CExpClass *current )
 {
@@ -681,12 +681,12 @@ void CExpressionManager::PopulateClassCB( CExpClass *current )
 			continue;
 
 		g_pExpressionClass->add( cl->GetName() );
-		
+
 		if ( cl == current )
 		{
 			select = i;
 		}
 	}
-	
+
 	g_pExpressionClass->select( select );
 }

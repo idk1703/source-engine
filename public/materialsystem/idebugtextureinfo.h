@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -21,11 +21,11 @@ class KeyValues;
 abstract_class IDebugTextureInfo
 {
 public:
-	
+
 	// Use this to turn on the mode where it builds the debug texture list.
 	// At the end of the next frame, GetDebugTextureList() will return a valid list of the textures.
 	virtual void EnableDebugTextureList( bool bEnable ) = 0;
-	
+
 	// If this is on, then it will return all textures that exist, not just the ones that were bound in the last frame.
 	// It is required to enable debug texture list to get this.
 	virtual void EnableGetAllTextures( bool bEnable ) = 0;

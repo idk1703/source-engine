@@ -45,12 +45,12 @@ IBaseFileSystem *filesystem = NULL;
 static bool spewed = false;
 
 SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
-{	
+{
 	spewed = true;
 
 	printf( "%s", pMsg );
 	OutputDebugString( pMsg );
-	
+
 	if ( type == SPEW_ERROR )
 	{
 		printf( "\n" );
@@ -61,10 +61,10 @@ SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : depth - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : depth -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void vprint( int depth, const char *fmt, ... )
 {
@@ -159,7 +159,7 @@ void Con_Printf( const char *fmt, ... )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void printusage( void )
 {
@@ -173,7 +173,7 @@ void printusage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CheckLogFile( void )
 {
@@ -219,7 +219,7 @@ bool CCompileCaptionsApp::Create()
 	SpewOutputFunc( SpewFunc );
 	SpewActivate( "kvc", 2 );
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "vgui2.dll",				VGUI_IVGUI_INTERFACE_VERSION },
 		{ "", "" }	// Required to terminate the list
@@ -271,7 +271,7 @@ bool CCompileCaptionsApp::PreInit( )
 	if ( !SetupSearchPaths() )
 		return false;
 
-	return true; 
+	return true;
 }
 
 void CCompileCaptionsApp::PostShutdown()
@@ -304,7 +304,7 @@ void CCompileCaptionsApp::CompileCaptionFile( char const *infile, char const *ou
 		char const *entryName = g_pVGuiLocalize->GetNameByIndex( i );
 		CaptionLookup_t entry;
 		entry.SetHash( entryName );
-		
+
 		// 	vprint( 0, "%d / %d:  %s == %u\n", c, i, g_pVGuiLocalize->GetNameByIndex( i ), entry.hash );
 
 		if ( hashcollision.Find( entry.hash ) != hashcollision.InvalidIndex() )
@@ -341,7 +341,7 @@ void CCompileCaptionsApp::CompileCaptionFile( char const *infile, char const *ou
 
 			totalsize += leftover;
 
-            freeSpace += leftover;
+	freeSpace += leftover;
 
 			while ( --leftover >= 0 )
 			{
@@ -365,7 +365,7 @@ void CCompileCaptionsApp::CompileCaptionFile( char const *infile, char const *ou
 
 		directory.AddToTail( entry );
 	}
-	
+
 	int leftover = ( blockSize - usedBytes );
 	totalsize += leftover;
 	freeSpace += leftover;
@@ -544,11 +544,11 @@ int CCompileCaptionsApp::Main()
 	char outfile[ 512 ];
 	if ( Q_stristr( worklist[ worklist.Count() - 1 ].String(), gamedir ) )
 	{
-        Q_strncpy( outfile, &worklist[ worklist.Count() - 1 ].String()[ Q_strlen( gamedir ) ] , sizeof( outfile ) );
+	Q_strncpy( outfile, &worklist[ worklist.Count() - 1 ].String()[ Q_strlen( gamedir ) ] , sizeof( outfile ) );
 	}
 	else
 	{
-        Q_snprintf( outfile, sizeof( outfile ), "resource\\%s", worklist[ worklist.Count() - 1 ].String() );
+	Q_snprintf( outfile, sizeof( outfile ), "resource\\%s", worklist[ worklist.Count() - 1 ].String() );
 	}
 
 	char infile[ 512 ];
@@ -583,6 +583,6 @@ int CCompileCaptionsApp::Main()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Main entry point 
+// Purpose: Main entry point
 //-----------------------------------------------------------------------------
 DEFINE_CONSOLE_STEAM_APPLICATION_OBJECT( CCompileCaptionsApp )

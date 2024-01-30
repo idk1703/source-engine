@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,16 +19,16 @@ using namespace vgui;
 // A ScrollBar is an class for selecting a numerical value from a range.
 // E.g. in the case of a scrolling text window we use the scroll bar to select
 // what line/char of text display should start at in the text window.
- 
+
 // Some terms:
-//   
+//
 //	There are arrow buttons on either end of the scroll bar.
 //  These move the scroll bar 'slider' or 'nob' across the space between the arrows.
 //  The nob moves over a user specified 'range' of numbers.
 //
 //    ----------------------------------------------------
-//    |	/ |..............|         |................ | \ |			
-//    | \ |..............|   nob   |.................| / | 
+//    |	/ |..............|         |................ | \ |
+//    | \ |..............|   nob   |.................| / |
 //    ----------------------------------------------------
 //
 // In this demo we create a horizongal scroll bar that is not attached to anything.
@@ -41,7 +41,7 @@ class ScrollBar2Demo: public DemoPage
 		~ScrollBar2Demo();
 
 		void OnSliderMoved();
-		
+
 	private:
 		ScrollBar *m_pScrollbar;
 		Label *m_pScrollValue;
@@ -69,12 +69,12 @@ ScrollBar2Demo::ScrollBar2Demo(Panel *parent, const char *name) : DemoPage(paren
 	// With a size of 10, the scroll bar value will pass from 0 to 100.
 	m_pScrollbar->SetRangeWindow(50);
 
-	// Set the range of the bar, 
+	// Set the range of the bar,
 	// We want our range displayed to go from 0 to 100.
 	// We must take size of the bar nob into account, and set the max to 110.
 	m_pScrollbar->SetRange(0, 110);
 
-	// Set how far the scroll bar slider moves 
+	// Set how far the scroll bar slider moves
 	// when a scroll bar arrow button is pressed
 	m_pScrollbar->SetButtonPressedScrollValue(5);
 
@@ -83,7 +83,7 @@ ScrollBar2Demo::ScrollBar2Demo(Panel *parent, const char *name) : DemoPage(paren
 	m_pScrollbar->SetValue(0);
 
 	// Finally we create a little label to tell us what the current value
-	// of the scroll bar is. 
+	// of the scroll bar is.
 	// We will update it every time the slider is moved.
 	m_pScrollValue = new Label (this, "ScrollBarValue", "0");
 
@@ -123,4 +123,3 @@ Panel* ScrollBar2Demo_Create(Panel *parent)
 {
 	return new ScrollBar2Demo(parent, "ScrollBar2Demo");
 }
-

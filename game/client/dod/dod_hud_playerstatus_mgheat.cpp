@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -26,7 +26,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudMGHeatProgressBar::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -39,7 +39,7 @@ void CDoDHudMGHeatProgressBar::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudMGHeatProgressBar::Paint()
 {
@@ -80,7 +80,7 @@ void CDoDHudMGHeatProgressBar::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudMGHeatIcon::SetType( int nType )
 {
@@ -99,18 +99,18 @@ void CDoDHudMGHeatIcon::SetType( int nType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudMGHeatIcon::ApplySettings( KeyValues *inResourceData )
 {
 //	Q_strncpy( m_szIcon30cal, inResourceData->GetString( "icon_30cal", "mgheat_30cal" ), sizeof( m_szIcon30cal ) );
 	Q_strncpy( m_szIconMg42, inResourceData->GetString( "icon_mg42", "mgheat_mg42" ), sizeof( m_szIconMg42 ) );
-	
+
 	BaseClass::ApplySettings( inResourceData );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudMGHeatIcon::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -121,7 +121,7 @@ void CDoDHudMGHeatIcon::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudMGHeatIcon::Paint()
 {
@@ -137,7 +137,7 @@ void CDoDHudMGHeatIcon::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDoDHudMGHeat::CDoDHudMGHeat( vgui::Panel *parent, const char *name ) : vgui::EditablePanel( parent, name )
 {
@@ -155,7 +155,7 @@ void CDoDHudMGHeat::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudMGHeat::SetVisible( bool state )
 {
@@ -176,7 +176,7 @@ void CDoDHudMGHeat::SetVisible( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudMGHeat::OnThink()
 {
@@ -218,7 +218,7 @@ void CDoDHudMGHeat::OnThink()
 			if ( pWeapon->IsA( WEAPON_MG42 ) )
 			{
 				CWeaponMG42 *pMG42 = (CWeaponMG42 *)pWeapon;
-									
+
 				if( pMG42 )
 				{
 					float flPercentage = (float)pMG42->GetWeaponHeat() / 100.0;

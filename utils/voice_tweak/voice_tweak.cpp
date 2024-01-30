@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -170,7 +170,7 @@ char const* FindArg(char const *pName)
 // CVoiceTweakApp initialization
 BOOL CVoiceTweakApp::InitInstance()
 {
-	// Set the thread locale so it grabs the string resources for the right language. If 
+	// Set the thread locale so it grabs the string resources for the right language. If
 	// we don't have resources for the system default language, it just uses English.
 	if( FindArg("-french") )
 		g_CurrentLanguage = LANGUAGE_FRENCH;
@@ -182,14 +182,14 @@ BOOL CVoiceTweakApp::InitInstance()
 		g_CurrentLanguage = LANGUAGE_GERMAN;
 	else
 		g_CurrentLanguage = LANGUAGE_ENGLISH;
-	
+
 	CString errStr, str;
 	errStr.LoadString( MapLanguageStringID(IDS_ERROR) );
 
-	m_pMixerControls = GetMixerControls(); 
+	m_pMixerControls = GetMixerControls();
 
 	// Initialize the mixer controls.
-	bool bFoundVolume, bFoundMute;	
+	bool bFoundVolume, bFoundMute;
 
 	float volume, mute;
 	bFoundVolume = m_pMixerControls->GetValue_Float(IMixerControls::Control::MicVolume, volume);
@@ -210,13 +210,13 @@ BOOL CVoiceTweakApp::InitInstance()
 	}
 
 	// Set mute and boost for them automatically.
-	m_pMixerControls->SetValue_Float(IMixerControls::Control::MicMute, 1);	
+	m_pMixerControls->SetValue_Float(IMixerControls::Control::MicMute, 1);
 
 	// We cycle the mic boost because for some reason Windows misses the first call to set it to 1, but
 	// if the user clicks the checkbox on and off again, it works.
-	m_pMixerControls->SetValue_Float(IMixerControls::Control::MicBoost, 1);	
-	m_pMixerControls->SetValue_Float(IMixerControls::Control::MicBoost, 0);	
-	m_pMixerControls->SetValue_Float(IMixerControls::Control::MicBoost, 1);	
+	m_pMixerControls->SetValue_Float(IMixerControls::Control::MicBoost, 1);
+	m_pMixerControls->SetValue_Float(IMixerControls::Control::MicBoost, 0);
+	m_pMixerControls->SetValue_Float(IMixerControls::Control::MicBoost, 1);
 
 	// Enable the mic for wave input.
 	m_pMixerControls->SelectMicrophoneForWaveInput();

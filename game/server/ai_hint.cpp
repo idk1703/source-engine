@@ -77,29 +77,29 @@ int	CHintCriteria::GetHintType( int idx ) const
 }
 
 bool CHintCriteria::MatchesSingleHintType() const
-{ 
+{
 	if ( m_HintTypes.Count() != 0 )
 	{
 		return false;
 	}
 
-	if ( m_iFirstHintType != HINT_ANY && 
-		    m_iLastHintType == HINT_NONE )
+	if ( m_iFirstHintType != HINT_ANY &&
+		m_iLastHintType == HINT_NONE )
 	{
 		return true;
 	}
-	
+
 	return false;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHintCriteria::MatchesHintType( int hintType ) const
 {
 	int c = m_HintTypes.Count();
- 	for ( int i = 0; i < c; ++i )
+	for ( int i = 0; i < c; ++i )
 	{
 		if ( m_HintTypes[i] == hintType )
 			return true;
@@ -149,8 +149,8 @@ void CHintCriteria::SetHintTypeRange( int firstType, int lastType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bitmask - 
+// Purpose:
+// Input  : bitmask -
 //-----------------------------------------------------------------------------
 void CHintCriteria::SetFlag( int bitmask )
 {
@@ -158,8 +158,8 @@ void CHintCriteria::SetFlag( int bitmask )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bitmask - 
+// Purpose:
+// Input  : bitmask -
 //-----------------------------------------------------------------------------
 void CHintCriteria::ClearFlag( int bitmask )
 {
@@ -167,8 +167,8 @@ void CHintCriteria::ClearFlag( int bitmask )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : group - 
+// Purpose:
+// Input  : group -
 //-----------------------------------------------------------------------------
 void CHintCriteria::SetGroup( string_t group )
 {
@@ -264,7 +264,7 @@ CAI_Hint *CAI_HintManager::AddFoundHint( CAI_Hint *hint )
 		gm_pLastFoundHints[ CAI_HintManager::gm_nFoundHintIndex ] = hint;
 	}
 	return hint;
-	
+
 }
 
 int CAI_HintManager::GetFoundHintCount()
@@ -336,10 +336,10 @@ int CAI_HintManager::FindAllHints( CAI_BaseNPC *pNPC, const Vector &position, co
 //-----------------------------------------------------------------------------
 // Purpose: Finds a random hint within the requested radious of the npc
 //  Builds a list of all suitable hints and chooses randomly from amongst them.
-// Input  : *pNPC - 
-//			nHintType - 
-//			nFlags - 
-//			flMaxDist - 
+// Input  : *pNPC -
+//			nHintType -
+//			nFlags -
+//			flMaxDist -
 // Output : CAI_Hint
 //-----------------------------------------------------------------------------
 CAI_Hint *CAI_HintManager::FindHintRandom( CAI_BaseNPC *pNPC, const Vector &position, const CHintCriteria &hintCriteria )
@@ -369,8 +369,8 @@ static void AppendTimer( int idx, char *buf, size_t bufsize, CFastTimer& timer )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *hintCriteria - 
+// Purpose:
+// Input  : *hintCriteria -
 // Output : CAI_Hint
 //-----------------------------------------------------------------------------
 CAI_Hint *CAI_HintManager::FindHint( CAI_BaseNPC *pNPC, const Vector &position, const CHintCriteria &hintCriteria )
@@ -422,7 +422,7 @@ CAI_Hint *CAI_HintManager::FindHint( CAI_BaseNPC *pNPC, const Vector &position, 
 
 	if ( listCount == 0 )
 		return NULL;
-	
+
 	// Try the fast match path
 	int i, count;
 	// Start with hint after the last one used
@@ -481,7 +481,7 @@ CAI_Hint *CAI_HintManager::FindHint( CAI_BaseNPC *pNPC, const Vector &position, 
 				{
 					pBestHint = pTestHint;
 				}
-				else 
+				else
 				{
 					// If we're not looking for the nearest, we're done
 					CAI_HintManager::AddFoundHint( pTestHint );
@@ -491,14 +491,14 @@ CAI_Hint *CAI_HintManager::FindHint( CAI_BaseNPC *pNPC, const Vector &position, 
 					return pTestHint;
 				}
 			}
-		} 
+		}
 	}
 	// Return the nearest node that we found
 	if ( pBestHint )
 	{
 		CAI_HintManager::AddFoundHint( pBestHint );
 	}
-	
+
 #if defined( HINT_PROFILING )
 	timer.End();
 
@@ -591,7 +591,7 @@ CAI_Hint* CAI_HintManager::CreateHint( HintNodeData *pNodeData, const char *pMap
 
 	CAI_Hint *pHint = (CAI_Hint*)CreateEntityByName("ai_hint");
 	if ( pHint )
-	{	
+	{
 		// First, parse the mapdata chunk we were passed
 		if ( pMapData )
 		{
@@ -670,8 +670,8 @@ void CAI_HintManager::RemoveHint( CAI_Hint *pHintToRemove )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *token - 
+// Purpose:
+// Input  : *token -
 // Output : int
 //-----------------------------------------------------------------------------
 int CAI_HintManager::GetFlags( const char *token )
@@ -710,7 +710,7 @@ int CAI_HintManager::GetFlags( const char *token )
 
 	// Can't be nearest and random, defer to nearest
 	if ( ( bits & bits_HINT_NODE_NEAREST ) &&
-		 ( bits & bits_HINT_NODE_RANDOM ) )
+		( bits & bits_HINT_NODE_RANDOM ) )
 	{
 		// Remove random
 		bits &= ~bits_HINT_NODE_RANDOM;
@@ -723,21 +723,21 @@ int CAI_HintManager::GetFlags( const char *token )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CAI_Hint *CAI_HintManager::GetFirstHint( AIHintIter_t *pIter )					
-{ 
+CAI_Hint *CAI_HintManager::GetFirstHint( AIHintIter_t *pIter )
+{
 	if ( !gm_AllHints.Count() )
 	{
 		*pIter = (AIHintIter_t)gm_AllHints.InvalidIndex();
 		return NULL;
 	}
-	*pIter = (AIHintIter_t)0; 
-	return gm_AllHints[0]; 
+	*pIter = (AIHintIter_t)0;
+	return gm_AllHints[0];
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CAI_Hint *CAI_HintManager::GetNextHint(  AIHintIter_t *pIter )
 {
@@ -749,14 +749,14 @@ CAI_Hint *CAI_HintManager::GetNextHint(  AIHintIter_t *pIter )
 			*pIter = (AIHintIter_t)gm_AllHints.InvalidIndex();
 			return NULL;
 		}
-		*pIter = (AIHintIter_t)i; 
-		return gm_AllHints[i]; 
+		*pIter = (AIHintIter_t)i;
+		return gm_AllHints[i];
 	}
 	return NULL;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_HintManager::DumpHints()
 {
@@ -775,7 +775,7 @@ void CAI_HintManager::DumpHints()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_HintManager::ValidateHints()
 {
@@ -809,7 +809,7 @@ void CAI_HintManager::DrawHintOverlays(float flDrawDuration)
 	int c = gm_AllHints.Count();
 	for ( int i = 0; i < c; ++i )
 	{
-        CAI_Hint *pHint = gm_AllHints[ i ];
+	CAI_Hint *pHint = gm_AllHints[ i ];
 		int		r		= 0;
 		int		g		= 0;
 		int		b		= 255;
@@ -898,7 +898,7 @@ BEGIN_DATADESC( CAI_Hint )
 END_DATADESC( );
 
 //------------------------------------------------------------------------------
-// Purpose : 
+// Purpose :
 //------------------------------------------------------------------------------
 void CAI_Hint::InputEnableHint( inputdata_t &inputdata )
 {
@@ -950,7 +950,7 @@ void CAI_Hint::UpdateOnRemove( void )
 // Purpose :  If connected to a node returns node position, otherwise
 //			  returns local hint position
 //
-//			  NOTE: Assumes not using multiple AI networks  
+//			  NOTE: Assumes not using multiple AI networks
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
@@ -967,9 +967,9 @@ void CAI_Hint::GetPosition(CBaseCombatCharacter *pBCC, Vector *vPosition)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hull - 
-//			*vPosition - 
+// Purpose:
+// Input  : hull -
+//			*vPosition -
 //-----------------------------------------------------------------------------
 void CAI_Hint::GetPosition( Hull_t hull, Vector *vPosition )
 {
@@ -987,7 +987,7 @@ void CAI_Hint::GetPosition( Hull_t hull, Vector *vPosition )
 // Purpose :  If connected to a node returns node direction, otherwise
 //			  returns local hint direction
 //
-//			  NOTE: Assumes not using multiple AI networks  
+//			  NOTE: Assumes not using multiple AI networks
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
@@ -1000,7 +1000,7 @@ Vector CAI_Hint::GetDirection( )
 // Purpose :  If connected to a node returns node yaw, otherwise
 //			  returns local hint yaw
 //
-//			  NOTE: Assumes not using multiple AI networks  
+//			  NOTE: Assumes not using multiple AI networks
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
@@ -1021,7 +1021,7 @@ float CAI_Hint::Yaw(void)
 //------------------------------------------------------------------------------
 // Purpose :  Returns if this is something that's interesting to look at
 //
-//			  NOTE: Assumes not using multiple AI networks  
+//			  NOTE: Assumes not using multiple AI networks
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
@@ -1039,7 +1039,7 @@ bool CAI_Hint::IsViewable(void)
 	case HINT_WORLD_VISUALLY_INTERESTING_STEALTH:
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -1052,7 +1052,7 @@ bool CAI_Hint::IsInNodeFOV( CBaseEntity *pOther )
 		return true;
 	}
 
-#if 0 
+#if 0
 	NDebugOverlay::Line( GetAbsOrigin(), GetAbsOrigin() + m_vecForward * 16, 255, 255, 0, false, 1 );
 #endif
 
@@ -1062,13 +1062,13 @@ bool CAI_Hint::IsInNodeFOV( CBaseEntity *pOther )
 
 	if( flDot > m_nodeFOV )
 	{
-#if 0 
+#if 0
 		NDebugOverlay::Line( GetAbsOrigin(), pOther->GetAbsOrigin(), 0, 255, 0, false, 1 );
 #endif
 		return true;
 	}
 
-#if 0 
+#if 0
 	NDebugOverlay::Line( GetAbsOrigin(), pOther->GetAbsOrigin(), 255, 0, 0, false, 1 );
 #endif
 
@@ -1124,7 +1124,7 @@ bool CAI_Hint::IsLocked( void )
 	{
 		return true;
 	}
-	
+
 	if (m_hHintOwner != NULL)
 	{
 		return true;
@@ -1311,7 +1311,7 @@ bool CAI_Hint::HintMatchesCriteria( CAI_BaseNPC *pNPC, const CHintCriteria &hint
 		{
 			trace_t tr;
 			// Can my bounding box fit there?
-			AI_TraceHull ( GetAbsOrigin(), GetAbsOrigin(), pNPC->WorldAlignMins(), pNPC->WorldAlignMaxs(), 
+			AI_TraceHull ( GetAbsOrigin(), GetAbsOrigin(), pNPC->WorldAlignMins(), pNPC->WorldAlignMaxs(),
 				MASK_SOLID, pNPC, COLLISION_GROUP_NONE, &tr );
 
 			if ( tr.fraction != 1.0 )
@@ -1347,7 +1347,7 @@ bool CAI_Hint::HintMatchesCriteria( CAI_BaseNPC *pNPC, const CHintCriteria &hint
 
 		if( pPlayer != NULL )
 		{
-			Vector vecDest = GetAbsOrigin(); 
+			Vector vecDest = GetAbsOrigin();
 
 			if( hintCriteria.HasFlag(bits_HAS_EYEPOSITION_LOS_TO_PLAYER) )
 			{
@@ -1370,7 +1370,7 @@ bool CAI_Hint::HintMatchesCriteria( CAI_BaseNPC *pNPC, const CHintCriteria &hint
 		for ( int i = 1; i <= gpGlobals->maxClients; i++ )
 		{
 			CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
-			
+
 			if ( pPlayer )
 			{
 				// Only spawn if the player's looking away from me
@@ -1383,7 +1383,7 @@ bool CAI_Hint::HintMatchesCriteria( CAI_BaseNPC *pNPC, const CHintCriteria &hint
 				{
 					trace_t tr;
 					UTIL_TraceLine( pPlayer->EyePosition(), GetAbsOrigin(), MASK_SOLID_BRUSHONLY, pPlayer, COLLISION_GROUP_NONE, &tr);
-					
+
 					if ( tr.fraction == 1.0 )
 					{
 						if ( hintCriteria.HasFlag( bits_HINT_NODE_NOT_VISIBLE_TO_PLAYER ) )
@@ -1412,11 +1412,11 @@ bool CAI_Hint::HintMatchesCriteria( CAI_BaseNPC *pNPC, const CHintCriteria &hint
 // Input  :
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CAI_Hint::DrawDebugTextOverlays(void) 
+int CAI_Hint::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 		Q_snprintf(tempstr,sizeof(tempstr),"%s (%i)", GetHintTypeDescription( HintType() ), HintType());
@@ -1458,7 +1458,7 @@ CAI_Hint::~CAI_Hint(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Sometimes FValidateHint, etc. will want to examine the underlying node to 
+// Purpose: Sometimes FValidateHint, etc. will want to examine the underlying node to
 //  see if it's truly suitable ( e.g., in the same air/ground network of nodes? )
 // Output : C_AINode *
 //-----------------------------------------------------------------------------
@@ -1502,7 +1502,7 @@ void CAI_Hint::OnRestore()
 	FixupTargetNode();
 
 	CAI_Node *pNode = GetNode();
-	
+
 	if ( !pNode )
 	{
 		if ( m_NodeData.nWCNodeID > 0 )
@@ -1517,7 +1517,7 @@ void CAI_Hint::OnRestore()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_Hint::NPCStartedUsing( CAI_BaseNPC *pNPC )
 {
@@ -1525,7 +1525,7 @@ void CAI_Hint::NPCStartedUsing( CAI_BaseNPC *pNPC )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_Hint::NPCStoppedUsing( CAI_BaseNPC *pNPC )
 {
@@ -1548,7 +1548,7 @@ CON_COMMAND(ai_dump_hints, "")
 // hints - these MUST coincide with the HINTS listed under Hint_e
 //
 //-----------------------------------------------------------------------------
-struct hinttypedescs_t 
+struct hinttypedescs_t
 {
 	Hint_e iType;
 	const char *pszDesc;
@@ -1600,7 +1600,7 @@ hinttypedescs_t g_pszHintDescriptions[] =
 
 	//{	HINT_NOT_USED_ROLLER_PATROL_POINT, "Obsolete / Unused"	},
 	//{	HINT_NOT_USED_ROLLER_CLEANUP_POINT, "Obsolete / Unused"	},
-	
+
 	//{	HINT_NOT_USED_PSTORM_ROCK_SPAWN, "Obsolete / Unused"	},
 
 	{	HINT_CROW_FLYTO_POINT, "Crow: Flyto Point"	},
@@ -1624,7 +1624,7 @@ hinttypedescs_t g_pszHintDescriptions[] =
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *GetHintTypeDescription( Hint_e iHintType )
 {
@@ -1638,7 +1638,7 @@ const char *GetHintTypeDescription( Hint_e iHintType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *GetHintTypeDescription( CAI_Hint *pHint )
 {
@@ -1681,7 +1681,7 @@ void CC_ai_drop_hint( const CCommand &args )
 	{
 		((CBaseEntity *)pHint)->Activate();
 		pHint->KeyValue( "nodeFOV", "360" );
-		pHint->m_debugOverlays |= (OVERLAY_TEXT_BIT | OVERLAY_BBOX_BIT); 
+		pHint->m_debugOverlays |= (OVERLAY_TEXT_BIT | OVERLAY_BBOX_BIT);
 	}
 }
 ConCommand ai_drop_hint( "ai_drop_hint", CC_ai_drop_hint, "Drop an ai_hint at the player's current eye position.", FCVAR_CHEAT );

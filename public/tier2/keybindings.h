@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //===========================================================================//
-	   
+
 #ifndef KEYBINDINGS_H
 #define KEYBINDINGS_H
 

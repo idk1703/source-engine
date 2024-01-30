@@ -21,7 +21,7 @@
 #include "ai_behavior.h"
 #include "ai_goalentity.h"
 
-enum 
+enum
 {
 	OPERATOR_STATE_NOT_READY = 0,
 	OPERATOR_STATE_READY,
@@ -140,5 +140,3 @@ private:
 };
 
 #endif // AI_BEHAVIOR_OPERATOR_H
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,7 +27,7 @@
 class CSelectMostHelpfulFriendDialog : public CSelectPlayerDialog
 {
 public:
-	CSelectMostHelpfulFriendDialog( vgui::Panel *parent ) 
+	CSelectMostHelpfulFriendDialog( vgui::Panel *parent )
 		: CSelectPlayerDialog( parent )
 		, m_iNumFriends( 0 )
 		, m_bRefreshing( false )
@@ -53,7 +53,7 @@ public:
 		if ( pLabelRetrieving )
 		{
 			pLabelRetrieving->SetVisible( m_bRefreshing );
-		}	
+		}
 	}
 
 	virtual void Reset()
@@ -151,7 +151,7 @@ protected:
 				for ( int i = 0; i < m_iNumFriends; i++ )
 				{
 					CSteamID friendSteamID = steamapicontext->SteamFriends()->GetFriendByIndex( i, k_EFriendFlagImmediate );
-					
+
 					const char *pszName = steamapicontext->SteamFriends()->GetFriendPersonaName( friendSteamID );
 					int idx = m_EntireFriendsList.AddToTail();
 					partner_info_t &info = m_EntireFriendsList[idx];
@@ -385,4 +385,3 @@ CSelectPlayerDialog *OpenSelectMostHelpfulFriendDialog( vgui::Panel *pParent )
 
 	return g_hSelectMostHelpfulFriendDialog;
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -70,7 +70,7 @@ bool ArenaClassLayoutKeyInput( int down, ButtonCode_t keynum, const char *pszCur
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudArenaClassLayout::CHudArenaClassLayout( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudArenaClassLayout" )
 {
@@ -102,7 +102,7 @@ CHudArenaClassLayout::CHudArenaClassLayout( const char *pElementName ) : CHudEle
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaClassLayout::Init( void )
 {
@@ -110,7 +110,7 @@ void CHudArenaClassLayout::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaClassLayout::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -121,7 +121,7 @@ void CHudArenaClassLayout::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaClassLayout::PerformLayout( void )
 {
@@ -147,7 +147,7 @@ void CHudArenaClassLayout::PerformLayout( void )
 	{
 		if ( g_TF_PR->GetTeam( i ) == GetLocalPlayerTeam() )
 		{
-			if ( g_TF_PR->GetPlayerClass( i ) > TF_CLASS_UNDEFINED ) 
+			if ( g_TF_PR->GetPlayerClass( i ) > TF_CLASS_UNDEFINED )
 			{
 				teamPlayers.AddToTail( i );
 			}
@@ -265,7 +265,7 @@ void CHudArenaClassLayout::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudArenaClassLayout::ShouldDraw( void )
 {
@@ -292,7 +292,7 @@ bool CHudArenaClassLayout::ShouldDraw( void )
 				if ( pClass && pClass->GetClassIndex() != TF_CLASS_UNDEFINED )
 				{
 					return true;
-				}					
+				}
 			}
 		}
 	}
@@ -301,7 +301,7 @@ bool CHudArenaClassLayout::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaClassLayout::SetVisible( bool state )
 {
@@ -316,7 +316,7 @@ void CHudArenaClassLayout::SetVisible( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaClassLayout::OnTick( void )
 {
@@ -329,12 +329,12 @@ void CHudArenaClassLayout::OnTick( void )
 
 	if ( !bVisible )
 		return;
-	
+
 	InvalidateLayout( true );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudArenaClassLayout::HandleKeyCodePressed( vgui::KeyCode code )
 {
@@ -352,4 +352,3 @@ bool CHudArenaClassLayout::HandleKeyCodePressed( vgui::KeyCode code )
 
 	return false;
 }
-

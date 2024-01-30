@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -18,11 +18,11 @@ class CMiniViewport : public vgui::ToolWindow
 {
 	DECLARE_CLASS_SIMPLE( CMiniViewport, vgui::ToolWindow );
 public:
-	CMiniViewport( vgui::Panel *parent, 
-		bool contextLabel, 
-		vgui::IToolWindowFactory *factory = 0, 
-		vgui::Panel *page = NULL, 
-		char const *title = NULL, 
+	CMiniViewport( vgui::Panel *parent,
+		bool contextLabel,
+		vgui::IToolWindowFactory *factory = 0,
+		vgui::Panel *page = NULL,
+		char const *title = NULL,
 		bool contextMenu = false );
 
 	void	GetViewport( bool& enabled, int& x, int& y, int& width, int& height );

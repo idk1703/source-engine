@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -16,8 +16,8 @@ void RegisterUserMessages()
 {
 	usermessages->Register( "Geiger", 1 );		// geiger info data
 	usermessages->Register( "Train", 1 );		// train control data
-	usermessages->Register( "HudText", -1 );	
-	usermessages->Register( "SayText", -1 );	
+	usermessages->Register( "HudText", -1 );
+	usermessages->Register( "SayText", -1 );
 	usermessages->Register( "SayText2", -1 );
 	usermessages->Register( "TextMsg", -1 );
 	usermessages->Register( "ResetHUD", 1 );	// called every respawn
@@ -38,7 +38,7 @@ void RegisterUserMessages()
 	usermessages->Register( "Damage", -1 );		// for HUD damage indicators
 	usermessages->Register( "HintText", -1 );	// Displays hint text display
 	usermessages->Register( "KeyHintText", -1 );	// Displays hint text display
-	
+
 	usermessages->Register( "HudMsg", -1 );
 	usermessages->Register( "AmmoDenied", 2 );
 	usermessages->Register( "AchievementEvent", -1 );
@@ -59,7 +59,7 @@ void RegisterUserMessages()
 	usermessages->Register( "HudArenaNotify", 2 );
 
 	usermessages->Register( "UpdateAchievement", -1 );
-	
+
 //=============================================================================
 // HPE_BEGIN:
 // [msmith]	Training Messages
@@ -131,4 +131,3 @@ void RegisterUserMessages()
 	// NVNT register haptic user messages
 	RegisterHapticMessages();
 }
-

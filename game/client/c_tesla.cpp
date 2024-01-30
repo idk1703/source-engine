@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -35,12 +35,12 @@ void C_Tesla::ReceiveMessage( int classID, bf_read &msg )
 	teslaInfo.m_vColor.x = ((unsigned char)msg.ReadChar()) / 255.0f;
 	teslaInfo.m_vColor.y = ((unsigned char)msg.ReadChar()) / 255.0f;
 	teslaInfo.m_vColor.z = ((unsigned char)msg.ReadChar()) / 255.0f;
-	
+
 	float flAlpha = 0;
 	flAlpha = ((unsigned char)msg.ReadChar()) / 255.0f;
 
 	teslaInfo.m_nBeams = msg.ReadChar();
-	
+
 	teslaInfo.m_flBeamWidth = msg.ReadFloat();
 	teslaInfo.m_flTimeVisible = msg.ReadFloat();
 	teslaInfo.m_pszSpriteName = m_iszSpriteName;
@@ -61,5 +61,3 @@ void C_Tesla::ClientThink()
 	m_QueuedCommands.Purge();
 	SetNextClientThink( CLIENT_THINK_NEVER );
 }
-
-

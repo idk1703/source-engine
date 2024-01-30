@@ -42,7 +42,7 @@ typedef ULONG (__stdcall *tEventRegister)( LPCGUID ProviderId, PENABLECALLBACK E
 typedef ULONG (__stdcall *tEventWrite)( REGHANDLE RegHandle, PCEVENT_DESCRIPTOR EventDescriptor, ULONG UserDataCount, PEVENT_DATA_DESCRIPTOR UserData);
 typedef ULONG (__stdcall *tEventUnregister)( REGHANDLE RegHandle );
 
-// Helper class to dynamically load Advapi32.dll, find the ETW functions, 
+// Helper class to dynamically load Advapi32.dll, find the ETW functions,
 // register the providers if possible, and get the performance counter frequency.
 class CETWRegister
 {

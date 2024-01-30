@@ -54,7 +54,7 @@ CScrollableEditablePanel::CScrollableEditablePanel( vgui::Panel *pParent, vgui::
 	m_pChild = pChild;
 	m_pChild->SetParent( this );
 
-	m_pScrollBar = new vgui::ScrollBar( this, "VerticalScrollBar", true ); 
+	m_pScrollBar = new vgui::ScrollBar( this, "VerticalScrollBar", true );
 	m_pScrollBar->SetWide( 16 );
 	m_pScrollBar->SetAutoResize( PIN_TOPRIGHT, AUTORESIZE_DOWN, 0, 0, -16, 0 );
 	m_pScrollBar->AddActionSignalTarget( this );
@@ -78,10 +78,10 @@ void CScrollableEditablePanel::OnScrollBarSliderMoved()
 	InvalidateLayout();
 
 	int nScrollAmount = m_pScrollBar->GetValue();
-	m_pChild->SetPos( 0, -nScrollAmount ); 
+	m_pChild->SetPos( 0, -nScrollAmount );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
@@ -207,7 +207,7 @@ void CInfoTargetPropertiesPanel::SetObject( CDmeVMFEntity *pEntity )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Called when text is changed
 //-----------------------------------------------------------------------------
@@ -220,6 +220,3 @@ void CInfoTargetPropertiesPanel::OnTextChanged( KeyValues *pParams )
 		return;
 	}
 }
-
-
-

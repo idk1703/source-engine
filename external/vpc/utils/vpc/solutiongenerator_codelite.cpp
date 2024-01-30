@@ -153,8 +153,8 @@ public:
 
 			CUtlGraph<int, int> dependencyGraph;
 
-			// walk the project list building a dependency graph 
-			for ( int i=0; i < projects.Count(); i++ ) 
+			// walk the project list building a dependency graph
+			for ( int i=0; i < projects.Count(); i++ )
 			{
 
 				CDependency_Project *pCurProject = projects[i];

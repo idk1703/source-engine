@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -33,7 +33,7 @@ LINK_ENTITY_TO_CLASS( func_buyzone, CBuyZone );
 
 BEGIN_DATADESC( CBuyZone )
 	DEFINE_FUNCTION( BuyZoneTouch ),
-	
+
 	// This is here to support maps that haven't updated to using "teamnum" yet.
 	DEFINE_INPUT( m_LegacyTeamNum, FIELD_INTEGER, "team" )
 END_DATADESC()
@@ -61,7 +61,7 @@ void CBuyZone::Spawn()
 	}
 }
 
-	
+
 void CBuyZone::BuyZoneTouch( CBaseEntity* pOther )
 {
 	CCSPlayer *p = dynamic_cast< CCSPlayer* >( pOther );
@@ -74,4 +74,3 @@ void CBuyZone::BuyZoneTouch( CBaseEntity* pOther )
 		}
 	}
 }
-

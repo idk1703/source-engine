@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: A panel "metaclass" is a name given to a particular type of 
+// Purpose: A panel "metaclass" is a name given to a particular type of
 // panel with particular instance data. Such panels tend to be dynamically
 // added and removed from their parent panels.
 //
@@ -61,7 +61,7 @@ public:
 	// Chain name is used as a filter of the metaclass data; if specified,
 	// it recursively iterates through the keyvalue sections and calls
 	// chainKeyValue on sections whose name matches the chain name
-	virtual vgui::Panel *CreatePanelMetaClass( const char *pMetaClassType, 
+	virtual vgui::Panel *CreatePanelMetaClass( const char *pMetaClassType,
 		int sortorder, void *pInitData, vgui::Panel *pParent, const char *pChainName = NULL ) = 0;
 
 	// removes a particular panel meta class
@@ -107,11 +107,11 @@ public:
 	{
 		// NOTE: make sure this matches the panel allocation pattern;
 		// it will break if panels are deleted differently
-		CPanel* pPanel = new CPanel( pParent, pMetaClassName ); 
+		CPanel* pPanel = new CPanel( pParent, pMetaClassName );
 		if (pPanel)
 		{
 			// Set parent before Init; it may be needed there...
-			CInitData* pInitData = (CInitData*)(pVoidInitData); 
+			CInitData* pInitData = (CInitData*)(pVoidInitData);
 			if (!pPanel->Init( pKeyValues, pInitData ))
 			{
 				delete pPanel;

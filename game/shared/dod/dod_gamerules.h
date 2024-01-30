@@ -70,7 +70,7 @@ class CDODRoundStateInfo
 public:
 	DODRoundState m_iRoundState;
 	const char *m_pStateName;
-	
+
 	void (CDODGameRules::*pfnEnterState)();	// Init and deinit the state.
 	void (CDODGameRules::*pfnLeaveState)();
 	void (CDODGameRules::*pfnThink)();	// Do a PreThink() in this state.
@@ -88,7 +88,7 @@ typedef enum
 
 	STARTROUND_FLAGS,
 } startround_voice_t;
- 
+
 class CDODGamePlayRules
 {
 public:
@@ -108,13 +108,13 @@ public:
 
 	void Reset( void )
 	{
-		//RespawnFactor	
+		//RespawnFactor
 		m_fAlliesRespawnFactor	= 1.0f;
 		m_fAxisRespawnFactor	= 1.0f;
 	}
-	
+
 	//Respawn Factors
-	float			m_fAlliesRespawnFactor;	//How delayed are respawning players 
+	float			m_fAlliesRespawnFactor;	//How delayed are respawning players
 	float			m_fAxisRespawnFactor;	//1.0 is normal, 2.0 is twice as long
 
 	int				m_iAlliesStartRoundVoice;	// Which voice to play at round start
@@ -144,7 +144,7 @@ private:
 class CDODViewVectors : public CViewVectors
 {
 public:
-	CDODViewVectors( 
+	CDODViewVectors(
 		Vector vView,
 		Vector vHullMin,
 		Vector vHullMax,
@@ -156,7 +156,7 @@ public:
 		Vector vDeadViewHeight,
 		Vector vProneHullMin,
 		Vector vProneHullMax ) :
-			CViewVectors( 
+			CViewVectors(
 				vView,
 				vHullMin,
 				vHullMax,
@@ -172,7 +172,7 @@ public:
 	}
 
 	Vector m_vProneHullMin;
-	Vector m_vProneHullMax;	
+	Vector m_vProneHullMax;
 };
 
 //GAMERULES
@@ -247,7 +247,7 @@ public:
 	void CreateStandardEntities( void );
 
 	virtual const char *GetChatPrefix( bool bTeamOnly, CBasePlayer *pPlayer );
-	
+
 	CBaseEntity *GetPlayerSpawnSpot( CBasePlayer *pPlayer );
 	bool IsSpawnPointValid( CBaseEntity *pSpot, CBasePlayer *pPlayer );
 	virtual void PlayerSpawn( CBasePlayer *pPlayer );
@@ -262,7 +262,7 @@ public:
 
 	CDODRoundStateInfo *m_pCurStateInfo;	//Fn ptrs for the current state
 	float m_flStateTransitionTime;			//Timer for round states
-	
+
 	// Find the state info for the specified state.
 	static CDODRoundStateInfo* State_LookupInfo( DODRoundState state );
 
@@ -348,7 +348,7 @@ public:
 	bool AreAxisReady( void ) { return m_bHeardAxisReady; }
 
 	void CreateOrJoinRespawnWave( CDODPlayer *pPlayer );
-	
+
 	virtual bool InRoundRestart( void );
 
 	void SendTeamScoresEvent( void );
@@ -378,7 +378,7 @@ public:
 
 	virtual void GetTaggedConVarList( KeyValues *pCvarTagList );
 
-protected:	
+protected:
 	virtual void GoToIntermission( void );
 	virtual bool UseSuicidePenalty() { return false; }
 
@@ -407,7 +407,7 @@ private:
 	float m_flNextPeriodicThink;
 
 	Vector2D	m_vecPlayerPositions[MAX_PLAYERS];
-	
+
 
 	//BELOW HERE NEED TO BE HOOKED UP
 
@@ -518,7 +518,7 @@ inline CDODGameRules* DODGameRules()
 
 #ifdef CLIENT_DLL
 
-#else	
+#else
 	bool EntityPlacementTest( CBaseEntity *pMainEnt, const Vector &vOrigin, Vector &outPos, bool bDropToGround );
 #endif //CLIENT_DLL
 

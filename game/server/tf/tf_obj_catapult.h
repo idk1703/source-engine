@@ -42,7 +42,7 @@ public:
 	virtual void	OnGoActive();
 
 	// Wrench hits
-	//virtual bool	Command_Repair( CTFPlayer *pActivator, float flRepairMod ); 
+	//virtual bool	Command_Repair( CTFPlayer *pActivator, float flRepairMod );
 	//virtual bool	InputWrenchHit( CTFPlayer *pPlayer, CTFWrench *pWrench, Vector hitLoc );
 
 	// Upgrading

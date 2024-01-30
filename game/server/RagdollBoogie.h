@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 // Makes ragdolls DANCE!
 //-----------------------------------------------------------------------------
-class CRagdollBoogie : public CBaseEntity 
+class CRagdollBoogie : public CBaseEntity
 {
 	DECLARE_DATADESC();
 	DECLARE_CLASS( CRagdollBoogie, CBaseEntity );
@@ -40,7 +40,7 @@ private:
 	void	SetMagnitude( float flMagnitude );
 	void	BoogieThink( void );
 	void	ZapThink();
-	
+
 	float m_flStartTime;
 	float m_flBoogieLength;
 	float m_flMagnitude;

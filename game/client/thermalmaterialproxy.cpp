@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -90,12 +90,12 @@ return;
 	min		= m_ThermalMin		? m_ThermalMin->GetFloatValue()	: 0.0f;
 	max		= m_ThermalMax		? m_ThermalMax->GetFloatValue()	: 1.0f;
 	period	= m_ThermalPeriod	? m_ThermalPeriod->GetFloatValue() : 1.0f;
-	
+
 	// get a value in [0,1]
 	value = ( sin( 2.0f * M_PI * gpGlobals->curtime / period ) * 0.5f ) + 0.5f;
-	// get a value in [min,max]	
+	// get a value in [min,max]
 	value = ( max - min ) * value + min;
-	
+
 	Vector color;
 	HueToRGB( 360.f * value, color );
 

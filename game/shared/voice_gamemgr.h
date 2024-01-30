@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,7 +33,7 @@ class CVoiceGameMgr
 public:
 						CVoiceGameMgr();
 	virtual				~CVoiceGameMgr();
-	
+
 	bool				Init(
 		IVoiceGameMgrHelper *m_pHelper,
 		int maxClients

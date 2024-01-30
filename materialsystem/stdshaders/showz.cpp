@@ -95,4 +95,3 @@ BEGIN_VS_SHADER_FLAGS( showz, "Help for ShowZ", SHADER_NOT_EDITABLE )
 		Draw();
 	}
 END_SHADER
-

@@ -22,7 +22,7 @@ class CTFLayeredMapPanel;
 class CTFLayeredMapItemPanel;
 
 //=========================================================
-class CLayeredMapToolTip : public vgui::BaseTooltip 
+class CLayeredMapToolTip : public vgui::BaseTooltip
 {
 	DECLARE_CLASS_SIMPLE( CLayeredMapToolTip, vgui::BaseTooltip );
 public:
@@ -57,11 +57,11 @@ public:
 	virtual void ApplySettings( KeyValues *inResourceData );
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-	// Button 
+	// Button
 	virtual void OnCursorEntered();
 	virtual void OnCursorExited();
 	virtual void OnMousePressed(vgui::MouseCode code);
-	
+
 	//
 	void SetCompletionState( bool bIsCompleted );
 	KeyValues * GetItemKvData () { return m_kvData; }
@@ -89,7 +89,7 @@ public:
 
 	virtual void ApplySettings( KeyValues *inResourceData );
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	
+
 
 	//CUtlVector<vgui::ImagePanel*> m_pImages;
 

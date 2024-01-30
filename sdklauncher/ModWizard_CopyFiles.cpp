@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -91,7 +91,7 @@ bool CModWizardSubPanel_CopyFiles::BuildCopyFiles_R( const char *pSourceDir, con
 
 			char fullOutName[MAX_PATH];
 			Q_snprintf( fullOutName, sizeof( fullOutName ), "%s%c%s", pOutputDirName, CORRECT_PATH_SEPARATOR, pFilename );
-			
+
 			// We were doing this for Linux but disabled it.
 			//Q_strlower( fullOutName );
 
@@ -119,7 +119,7 @@ bool CModWizardSubPanel_CopyFiles::BuildCopyFiles_R( const char *pSourceDir, con
 
 		pFilename = g_pFullFileSystem->FindNext( findHandle );
 	}
-	
+
 	g_pFullFileSystem->FindClose( findHandle );
 
 
@@ -184,10 +184,10 @@ bool CModWizardSubPanel_CopyFiles_Source2006::BuildCopyFilesForMod_HL2()
 	Q_strncpy( outputGamedirNameNoSlash, m_OutModGamedirName, sizeof( outputGamedirNameNoSlash ) );
 	if ( strlen( outputGamedirNameNoSlash ) > 0 )
 		outputGamedirNameNoSlash[strlen(outputGamedirNameNoSlash)-1] = 0;
-	
+
 	// These go in c:\steam\steamapps\sourcemods\modname
-	char *content_mappings[] = 
-	{ 
+	char *content_mappings[] =
+	{
 		"game_content\\half-life 2\\hl2","lights.rad",	outputGamedirNameNoSlash,
 		"game_content\\half-life 2\\hl2","detail.vbsp",	outputGamedirNameNoSlash,
 		"hl2\\scripts",		"*.*",						outputScriptsDir,
@@ -202,16 +202,16 @@ bool CModWizardSubPanel_CopyFiles_Source2006::BuildCopyFilesForMod_HL2()
 	};
 
 	// Copy gameinfo.txt
-	const char *replacements[] = 
+	const char *replacements[] =
 	{
 		"%modname%", m_ModName
 	};
-	
+
 	retVal = CopyWithReplacements("CreateModFiles\\hl2\\gameinfo_ep1.txt", replacements, ARRAYSIZE( replacements ), "%s%s", m_OutModGamedirName, "gameinfo.txt" );
-	
+
 	if ( retVal &&
-	     BuildCopyFilesForMappings( sources_mappings, ARRAYSIZE( sources_mappings ) ) &&
-		 BuildCopyFilesForMappings( content_mappings, ARRAYSIZE( content_mappings ) ) )
+	BuildCopyFilesForMappings( sources_mappings, ARRAYSIZE( sources_mappings ) ) &&
+		BuildCopyFilesForMappings( content_mappings, ARRAYSIZE( content_mappings ) ) )
 	{
 		retVal = true;
 	}
@@ -219,7 +219,7 @@ bool CModWizardSubPanel_CopyFiles_Source2006::BuildCopyFilesForMod_HL2()
 	{
 		retVal = false;
 	}
-	
+
 	return retVal;
 }
 
@@ -253,8 +253,8 @@ bool CModWizardSubPanel_CopyFiles_Source2009::BuildCopyFilesForMod_HL2()
 		outputGamedirNameNoSlash[strlen(outputGamedirNameNoSlash)-1] = 0;
 
 	// These go in c:\steam\steamapps\sourcemods\modname
-	char *content_mappings[] = 
-	{ 
+	char *content_mappings[] =
+	{
 		"game_content\\half-life 2\\hl2","lights.rad",										outputGamedirNameNoSlash,
 		"game_content\\half-life 2\\hl2","detail.vbsp",										outputGamedirNameNoSlash,
 		"CreateModFiles\\source2009\\singleplayer\\scripts",		"*.*",						outputScriptsDir,
@@ -264,7 +264,7 @@ bool CModWizardSubPanel_CopyFiles_Source2009::BuildCopyFilesForMod_HL2()
 	};
 
 	// Copy gameinfo.txt
-	const char *replacements[] = 
+	const char *replacements[] =
 	{
 		"%modname%", m_ModName
 	};
@@ -315,8 +315,8 @@ bool CModWizardSubPanel_CopyFiles_Source2007::BuildCopyFilesForMod_HL2()
 		outputGamedirNameNoSlash[strlen(outputGamedirNameNoSlash)-1] = 0;
 
 	// These go in c:\steam\steamapps\sourcemods\modname
-	char *content_mappings[] = 
-	{ 
+	char *content_mappings[] =
+	{
 		"game_content\\half-life 2\\hl2","lights.rad",										outputGamedirNameNoSlash,
 		"game_content\\half-life 2\\hl2","detail.vbsp",										outputGamedirNameNoSlash,
 		"CreateModFiles\\orangebox\\singleplayer\\scripts",		"*.*",						outputScriptsDir,
@@ -326,7 +326,7 @@ bool CModWizardSubPanel_CopyFiles_Source2007::BuildCopyFilesForMod_HL2()
 	};
 
 	// Copy gameinfo.txt
-	const char *replacements[] = 
+	const char *replacements[] =
 	{
 		"%modname%", m_ModName
 	};
@@ -365,23 +365,23 @@ bool CModWizardSubPanel_CopyFiles_Source2006::BuildCopyFilesForMod_FromScratch()
 	CreateSubdirectory( m_OutputDirName, "modelsrc" );
 	CreateSubdirectory( m_OutputDirName, "materialsrc" );
 	CreateSubdirectory( m_OutputDirName, "mapsrc" );
-		
+
 	char *content_mappings[] =
 	{
 		"sampleapp",			"*.*",				m_OutModGamedirName,
 	};
 
 	// Copy gameinfo.txt
-	const char *replacements[] = 
+	const char *replacements[] =
 	{
 		"%modname%", m_ModName
 	};
-	
+
 	retVal = CopyWithReplacements( "CreateModFiles\\base\\gameinfo_ep1.txt", replacements, ARRAYSIZE( replacements ), "%s%s", m_OutModGamedirName, "gameinfo.txt" );
-	
+
 	if ( retVal &&
-	     BuildCopyFilesForMappings( sources_mappings, ARRAYSIZE( sources_mappings ) ) &&
-		 BuildCopyFilesForMappings( content_mappings, ARRAYSIZE( content_mappings ) ) )
+	BuildCopyFilesForMappings( sources_mappings, ARRAYSIZE( sources_mappings ) ) &&
+		BuildCopyFilesForMappings( content_mappings, ARRAYSIZE( content_mappings ) ) )
 	{
 		retVal = true;
 	}
@@ -389,7 +389,7 @@ bool CModWizardSubPanel_CopyFiles_Source2006::BuildCopyFilesForMod_FromScratch()
 	{
 		retVal = false;
 	}
-	
+
 	return retVal;
 }
 
@@ -418,7 +418,7 @@ bool CModWizardSubPanel_CopyFiles_Source2009::BuildCopyFilesForMod_FromScratch()
 	};
 
 	// Copy gameinfo.txt
-	const char *replacements[] = 
+	const char *replacements[] =
 	{
 		"%modname%", m_ModName
 	};
@@ -466,7 +466,7 @@ bool CModWizardSubPanel_CopyFiles_Source2007::BuildCopyFilesForMod_FromScratch()
 	};
 
 	// Copy gameinfo.txt
-	const char *replacements[] = 
+	const char *replacements[] =
 	{
 		"%modname%", m_ModName
 	};
@@ -517,8 +517,8 @@ bool CModWizardSubPanel_CopyFiles_Source2006::BuildCopyFilesForMod_HL2MP()
 		outputGamedirNameNoSlash[strlen(outputGamedirNameNoSlash)-1] = 0;
 
 	// These go in c:\steam\steamapps\sourcemods\modname
-	char *content_mappings[] = 
-	{ 
+	char *content_mappings[] =
+	{
 		"game_content\\half-life 2 deathmatch\\hl2mp",	"lights.rad",	outputGamedirNameNoSlash,
 		"game_content\\half-life 2 deathmatch\\hl2mp",	"detail.vbsp",	outputGamedirNameNoSlash,
 		"CreateModFiles\\hl2mp\\scripts",				"*.*",			outputScriptsDir,
@@ -527,14 +527,14 @@ bool CModWizardSubPanel_CopyFiles_Source2006::BuildCopyFilesForMod_HL2MP()
 	};
 
 	// Copy gameinfo.txt
-	const char *replacements[] = 
+	const char *replacements[] =
 	{
 		"%modname%", m_ModName
 	};
 
 	retVal = CopyWithReplacements( "CreateModFiles\\hl2mp\\gameinfo_ep1.txt", replacements, ARRAYSIZE( replacements ), "%s%s", m_OutModGamedirName, "gameinfo.txt" );
 
-	if ( retVal && 
+	if ( retVal &&
 		BuildCopyFilesForMappings( sources_mappings, ARRAYSIZE( sources_mappings ) ) &&
 		BuildCopyFilesForMappings( content_mappings, ARRAYSIZE( content_mappings ) ) )
 	{
@@ -577,22 +577,22 @@ bool CModWizardSubPanel_CopyFiles_Source2009::BuildCopyFilesForMod_HL2MP()
 		outputGamedirNameNoSlash[strlen(outputGamedirNameNoSlash)-1] = 0;
 
 	// These go in c:\steam\steamapps\sourcemods\modname
-	char *content_mappings[] = 
-	{ 
+	char *content_mappings[] =
+	{
 		"game_content\\half-life 2 deathmatch\\hl2mp",					"lights.rad",	outputGamedirNameNoSlash,
 		"game_content\\half-life 2 deathmatch\\hl2mp",					"detail.vbsp",	outputGamedirNameNoSlash,
 		"CreateModFiles\\source2009\\multiplayer",						"*.*",			m_OutModGamedirName,
 	};
 
 	// Copy gameinfo.txt
-	const char *replacements[] = 
+	const char *replacements[] =
 	{
 		"%modname%", m_ModName
 	};
 
 	retVal = CopyWithReplacements( "CreateModFiles\\source2009\\gameinfo_mp.txt", replacements, ARRAYSIZE( replacements ), "%s%s", m_OutModGamedirName, "gameinfo.txt" );
 
-	if ( retVal && 
+	if ( retVal &&
 		BuildCopyFilesForMappings( sources_mappings, ARRAYSIZE( sources_mappings ) ) &&
 		BuildCopyFilesForMappings( content_mappings, ARRAYSIZE( content_mappings ) ) )
 	{
@@ -633,26 +633,26 @@ bool CModWizardSubPanel_CopyFiles_Source2007::BuildCopyFilesForMod_HL2MP()
 	Q_strncpy( outputGamedirNameNoSlash, m_OutModGamedirName, sizeof( outputGamedirNameNoSlash ) );
 	if ( strlen( outputGamedirNameNoSlash ) > 0 )
 		outputGamedirNameNoSlash[strlen(outputGamedirNameNoSlash)-1] = 0;
-	
+
 	// These go in c:\steam\steamapps\sourcemods\modname
-	char *content_mappings[] = 
-	{ 
+	char *content_mappings[] =
+	{
 		"game_content\\half-life 2 deathmatch\\hl2mp",					"lights.rad",	outputGamedirNameNoSlash,
 		"game_content\\half-life 2 deathmatch\\hl2mp",					"detail.vbsp",	outputGamedirNameNoSlash,
 		"CreateModFiles\\orangebox\\multiplayer",						"*.*",			m_OutModGamedirName,
 	};
 
 	// Copy gameinfo.txt
-	const char *replacements[] = 
+	const char *replacements[] =
 	{
 		"%modname%", m_ModName
 	};
-	
+
 	retVal = CopyWithReplacements( "CreateModFiles\\orangebox\\gameinfo_mp.txt", replacements, ARRAYSIZE( replacements ), "%s%s", m_OutModGamedirName, "gameinfo.txt" );
-	
-	if ( retVal && 
-	     BuildCopyFilesForMappings( sources_mappings, ARRAYSIZE( sources_mappings ) ) &&
-		 BuildCopyFilesForMappings( content_mappings, ARRAYSIZE( content_mappings ) ) )
+
+	if ( retVal &&
+	BuildCopyFilesForMappings( sources_mappings, ARRAYSIZE( sources_mappings ) ) &&
+		BuildCopyFilesForMappings( content_mappings, ARRAYSIZE( content_mappings ) ) )
 	{
 		retVal = true;
 	}
@@ -660,7 +660,7 @@ bool CModWizardSubPanel_CopyFiles_Source2007::BuildCopyFilesForMod_HL2MP()
 	{
 		retVal = false;
 	}
-	
+
 	return retVal;
 }
 
@@ -760,7 +760,7 @@ void CModWizardSubPanel_CopyFiles::OnTick()
 			Q_StrSlice( m_OutModGamedirName, 0, -1, outModGamedirNameNoSlash, sizeof( outModGamedirNameNoSlash ) );
 
 			// Figure out the steam directory. Starting with gamedir, which is
-			// 
+			//
 			char steamdir[MAX_PATH];
 			Q_strncpy( steamdir, gamedir, sizeof( steamdir ) );	// c:\valve\steam\steamapps\name\sourcesdk\launcher
 			Q_StripLastDir( steamdir, sizeof( steamdir ) );		// c:\valve\steam\steamapps\name\sourcesdk
@@ -803,7 +803,7 @@ void CModWizardSubPanel_CopyFiles::OnTick()
 			}
 
 			// Copy the batch files.
-			const char *replacements[] = 
+			const char *replacements[] =
 			{
 				"%steamdir%", steamdir,
 				"%appid%", szAppID,
@@ -813,17 +813,17 @@ void CModWizardSubPanel_CopyFiles::OnTick()
 			};
 			const char *filenames[] =
 			{
-				"run_mod.bat",		
-				"run_hlmv.bat",		
+				"run_mod.bat",
+				"run_hlmv.bat",
 				"run_studiomdl.bat",
-				"run_hammer.bat"	
+				"run_hammer.bat"
 			};
 			for ( int iFilename=0; iFilename < ARRAYSIZE( filenames ); iFilename++ )
 			{
 				char srcFilename[MAX_PATH];
 				Q_snprintf( srcFilename, sizeof( srcFilename ), "CreateModFiles\\%s", filenames[iFilename] );
-				if ( !CopyWithReplacements( 
-						srcFilename, replacements, ARRAYSIZE( replacements ), 
+				if ( !CopyWithReplacements(
+						srcFilename, replacements, ARRAYSIZE( replacements ),
 						"%s%s", m_OutputDirName, filenames[iFilename] ) )
 				{
 					vgui::ivgui()->RemoveTickSignal( GetVPanel() );
@@ -865,7 +865,7 @@ void CModWizardSubPanel_CopyFiles::OnTick()
 				}
 
 				pNextPanel->GetReady( m_OutputDirName );
-				
+
 				// Direct them out..
 				GetWizardPanel()->SetNextButtonEnabled( true );
 
@@ -918,7 +918,7 @@ bool IsVCProjFile( const char *pFilename )
 	char ext[512];
 	Q_StrRight( pFilename, 7, ext, sizeof( ext ) );
 	return ( Q_stricmp( ext, ".vcproj" ) == 0 );
-}	
+}
 
 
 bool CModWizardSubPanel_CopyFiles_Source2009::HandleReplacements_GameProjectFiles( CFileCopyInfo *pInfo, bool &bErrorStatus )
@@ -928,10 +928,10 @@ bool CModWizardSubPanel_CopyFiles_Source2009::HandleReplacements_GameProjectFile
 		return false;
 
 	char replaceWith[MAX_PATH] = {0};
-	const char *replacements[] = 
+	const char *replacements[] =
 	{
 		"..\\..\\game\\template\\", replaceWith,
-		"..\\..\\game\\sdksample\\", replaceWith, 
+		"..\\..\\game\\sdksample\\", replaceWith,
 		"..\\..\\game\\hl2\\", replaceWith,
 		"..\\..\\game\\hl2mp\\", replaceWith,
 		"..\\game\\bin", "..\\bin"
@@ -973,7 +973,7 @@ bool CModWizardSubPanel_CopyFiles_Source2009::HandleReplacements_GameProjectFile
 
 		return true;
 	}
-	else if ( Q_stricmp( pInfo->m_InFilename, "src_mod\\source2009\\game\\client\\client_hl2mp-2005.vcproj" ) == 0 || 
+	else if ( Q_stricmp( pInfo->m_InFilename, "src_mod\\source2009\\game\\client\\client_hl2mp-2005.vcproj" ) == 0 ||
 		Q_stricmp( pInfo->m_InFilename, "src_mod\\source2009\\game\\server\\server_hl2mp-2005.vcproj" ) == 0 )
 	{
 		bErrorStatus = true;
@@ -998,10 +998,10 @@ bool CModWizardSubPanel_CopyFiles_Source2007::HandleReplacements_GameProjectFile
 		return false;
 
 	char replaceWith[MAX_PATH] = {0};
-	const char *replacements[] = 
+	const char *replacements[] =
 	{
 		"..\\..\\game\\template\\", replaceWith,
-		"..\\..\\game\\sdksample\\", replaceWith, 
+		"..\\..\\game\\sdksample\\", replaceWith,
 		"..\\..\\game\\hl2\\", replaceWith,
 		"..\\..\\game\\hl2mp\\", replaceWith,
 		"..\\game\\bin", "..\\bin"
@@ -1017,7 +1017,7 @@ bool CModWizardSubPanel_CopyFiles_Source2007::HandleReplacements_GameProjectFile
 		return true;
 	}
 	else if ( Q_stricmp( pInfo->m_InFilename, "src_mod\\orangebox\\game\\client\\client_scratch-2005.vcproj" ) == 0 ||
-		      Q_stricmp( pInfo->m_InFilename, "src_mod\\orangebox\\game\\server\\server_scratch-2005.vcproj" ) == 0 )
+		Q_stricmp( pInfo->m_InFilename, "src_mod\\orangebox\\game\\server\\server_scratch-2005.vcproj" ) == 0 )
 	{
 		bErrorStatus = true;
 		if ( m_ModType == ModType_FromScratch )
@@ -1031,7 +1031,7 @@ bool CModWizardSubPanel_CopyFiles_Source2007::HandleReplacements_GameProjectFile
 	}
 	// removed 'hl2' projects as they're not needed in orange box anymore.
 	else if ( Q_stricmp( pInfo->m_InFilename, "src_mod\\orangebox\\game\\client\\client_episodic-2005.vcproj" ) == 0 ||
-			  Q_stricmp( pInfo->m_InFilename, "src_mod\\orangebox\\game\\server\\server_episodic-2005.vcproj" ) == 0 )
+			Q_stricmp( pInfo->m_InFilename, "src_mod\\orangebox\\game\\server\\server_episodic-2005.vcproj" ) == 0 )
 	{
 		bErrorStatus = true;
 		if ( m_ModType == ModType_HL2 || m_ModType == ModType_SourceCodeOnly )
@@ -1043,8 +1043,8 @@ bool CModWizardSubPanel_CopyFiles_Source2007::HandleReplacements_GameProjectFile
 
 		return true;
 	}
-	else if ( Q_stricmp( pInfo->m_InFilename, "src_mod\\orangebox\\game\\client\\client_hl2mp-2005.vcproj" ) == 0 || 
-			  Q_stricmp( pInfo->m_InFilename, "src_mod\\orangebox\\game\\server\\server_hl2mp-2005.vcproj" ) == 0 )
+	else if ( Q_stricmp( pInfo->m_InFilename, "src_mod\\orangebox\\game\\client\\client_hl2mp-2005.vcproj" ) == 0 ||
+			Q_stricmp( pInfo->m_InFilename, "src_mod\\orangebox\\game\\server\\server_hl2mp-2005.vcproj" ) == 0 )
 	{
 		bErrorStatus = true;
 		if ( m_ModType == ModType_HL2_Multiplayer )
@@ -1067,18 +1067,18 @@ bool CModWizardSubPanel_CopyFiles_Source2006::HandleReplacements_GameProjectFile
 		return false;
 
 	char replaceWith[MAX_PATH] = {0};
-	const char *replacements[] = 
+	const char *replacements[] =
 	{
-		"..\\..\\game\\sdksample\\", replaceWith, 
+		"..\\..\\game\\sdksample\\", replaceWith,
 		"..\\..\\game\\hl2\\", replaceWith,
 		"..\\..\\game\\hl2mp\\", replaceWith,
 		"..\\game\\bin", "..\\bin"
 	};
 
 	if ( Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\materialsystem\\stdshaders\\stdshader_dx8-2003.vcproj" ) == 0 ||
-		 Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\materialsystem\\stdshaders\\stdshader_dx8-2005.vcproj" ) == 0 || 
-		 Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\materialsystem\\stdshaders\\stdshader_dx9-2003.vcproj" ) == 0 ||
-		 Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\materialsystem\\stdshaders\\stdshader_dx9-2005.vcproj" ) == 0 )
+		Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\materialsystem\\stdshaders\\stdshader_dx8-2005.vcproj" ) == 0 ||
+		Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\materialsystem\\stdshaders\\stdshader_dx9-2003.vcproj" ) == 0 ||
+		Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\materialsystem\\stdshaders\\stdshader_dx9-2005.vcproj" ) == 0 )
 	{
 		bErrorStatus = true;
 		Q_snprintf( replaceWith, sizeof( replaceWith ), "%s", m_OutModGamedirName );
@@ -1086,25 +1086,25 @@ bool CModWizardSubPanel_CopyFiles_Source2006::HandleReplacements_GameProjectFile
 
 		return true;
 	}
-	else if ( Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\cl_dll\\client_scratch-2003.vcproj" ) == 0 || 
-              Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\cl_dll\\client_scratch-2005.vcproj" ) == 0 ||
-              Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\dlls\\server_scratch-2003.vcproj" ) == 0 ||
-              Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\dlls\\server_scratch-2005.vcproj" ) == 0 )
+	else if ( Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\cl_dll\\client_scratch-2003.vcproj" ) == 0 ||
+	Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\cl_dll\\client_scratch-2005.vcproj" ) == 0 ||
+	Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\dlls\\server_scratch-2003.vcproj" ) == 0 ||
+	Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\dlls\\server_scratch-2005.vcproj" ) == 0 )
 	{
 		bErrorStatus = true;
 		if ( m_ModType == ModType_FromScratch )
 		{
 			Q_snprintf( replaceWith, sizeof( replaceWith ), "%s", m_OutModGamedirName );
-			
+
 			bErrorStatus = CopyWithReplacements( pInfo->m_InFilename, replacements, ARRAYSIZE( replacements ), "%s", pInfo->m_OutFilename );
 		}
 
 		return true;
 	}
-	else if ( Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\cl_dll\\client_hl2-2003.vcproj" ) == 0 || 
-		      Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\cl_dll\\client_hl2-2005.vcproj" ) == 0 ||
-			  Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\dlls\\server_hl2-2003.vcproj" ) == 0 ||
-		      Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\dlls\\server_hl2-2005.vcproj" ) == 0 )
+	else if ( Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\cl_dll\\client_hl2-2003.vcproj" ) == 0 ||
+		Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\cl_dll\\client_hl2-2005.vcproj" ) == 0 ||
+			Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\dlls\\server_hl2-2003.vcproj" ) == 0 ||
+		Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\dlls\\server_hl2-2005.vcproj" ) == 0 )
 	{
 		bErrorStatus = true;
 		if ( m_ModType == ModType_HL2 || m_ModType == ModType_SourceCodeOnly )
@@ -1113,13 +1113,13 @@ bool CModWizardSubPanel_CopyFiles_Source2006::HandleReplacements_GameProjectFile
 
 			bErrorStatus = CopyWithReplacements( pInfo->m_InFilename, replacements, ARRAYSIZE( replacements ), "%s", pInfo->m_OutFilename );
 		}
-		
+
 		return true;
 	}
-	else if ( Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\cl_dll\\client_hl2mp-2003.vcproj" ) == 0 || 
-		      Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\cl_dll\\client_hl2mp-2005.vcproj" ) == 0 || 
-		      Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\dlls\\server_hl2mp-2003.vcproj" ) == 0 ||
-			  Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\dlls\\server_hl2mp-2005.vcproj" ) == 0 )
+	else if ( Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\cl_dll\\client_hl2mp-2003.vcproj" ) == 0 ||
+		Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\cl_dll\\client_hl2mp-2005.vcproj" ) == 0 ||
+		Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\dlls\\server_hl2mp-2003.vcproj" ) == 0 ||
+			Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\dlls\\server_hl2mp-2005.vcproj" ) == 0 )
 	{
 		bErrorStatus = true;
 		if ( m_ModType == ModType_HL2_Multiplayer )
@@ -1128,7 +1128,7 @@ bool CModWizardSubPanel_CopyFiles_Source2006::HandleReplacements_GameProjectFile
 
 			bErrorStatus = CopyWithReplacements( pInfo->m_InFilename, replacements, ARRAYSIZE( replacements ), "%s", pInfo->m_OutFilename );
 		}
-		
+
 		return true;
 	}
 
@@ -1139,7 +1139,7 @@ bool CModWizardSubPanel_CopyFiles_Source2006::HandleReplacements_GameProjectFile
 bool CModWizardSubPanel_CopyFiles::HandleReplacements_GenericVCProj( CFileCopyInfo *pInfo, bool &bErrorStatus )
 {
 	if ( IsVCProjFile( pInfo->m_InFilename ) )
-	{	
+	{
 		// This code is for all the tools. Internally, Valve uses <base dir>\game\bin, and externally,
 		// they're using <game dir>\bin to store tools.
 		const char *vcprojReplacements[] =
@@ -1158,7 +1158,7 @@ bool CModWizardSubPanel_CopyFiles::HandleReplacements_GenericVCProj( CFileCopyIn
 bool CModWizardSubPanel_CopyFiles_Source2006::HandleReplacements_Solution( CFileCopyInfo *pInfo, bool &bErrorStatus )
 {
 	if ( Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\game_scratch-2003.sln" ) == 0 ||
-		 Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\game_scratch-2005.sln" ) == 0)
+		Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\game_scratch-2005.sln" ) == 0)
 	{
 		bErrorStatus = true;
 		if ( m_ModType == ModType_FromScratch )
@@ -1167,25 +1167,25 @@ bool CModWizardSubPanel_CopyFiles_Source2006::HandleReplacements_Solution( CFile
 		return true;
 	}
 	else if ( Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\game_hl2-2003.sln" ) == 0 ||
-		      Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\game_hl2-2005.sln" ) == 0)
+		Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\game_hl2-2005.sln" ) == 0)
 	{
 		bErrorStatus = true;
 		if ( m_ModType == ModType_HL2 || m_ModType == ModType_SourceCodeOnly )
 		{
 			bErrorStatus = DoCopyFile( pInfo->m_InFilename, pInfo->m_OutFilename );
 		}
-		
+
 		return true;
 	}
 	else if ( Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\game_hl2mp-2003.sln" ) == 0 ||
-		      Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\game_hl2mp-2005.sln" ) == 0)
+		Q_stricmp( pInfo->m_InFilename, "src_mod\\ep1\\game_hl2mp-2005.sln" ) == 0)
 	{
 		bErrorStatus = true;
 		if ( m_ModType == ModType_HL2_Multiplayer )
 		{
 			bErrorStatus = DoCopyFile( pInfo->m_InFilename, pInfo->m_OutFilename );
 		}
-		
+
 		return true;
 	}
 
@@ -1274,10 +1274,10 @@ bool CModWizardSubPanel_CopyFiles_Source2009::HandleReplacements_TemplateOptions
 		if ( !pTemplate )
 			return false;
 
-		const char *replacements[] = 
+		const char *replacements[] =
 		{
 			"%TemplateOptionTeams%", pTemplate->GetOption(TPOPTION_TEAMS),
-			"%TemplateOptionClasses%", pTemplate->GetOption(TPOPTION_CLASSES), 
+			"%TemplateOptionClasses%", pTemplate->GetOption(TPOPTION_CLASSES),
 			"%TemplateOptionStamina%", pTemplate->GetOption(TPOPTION_STAMINA),
 			"%TemplateOptionSprinting%", pTemplate->GetOption(TPOPTION_SPRINTING),
 			"%TemplateOptionProne%", pTemplate->GetOption(TPOPTION_PRONE),
@@ -1306,10 +1306,10 @@ bool CModWizardSubPanel_CopyFiles_Source2007::HandleReplacements_TemplateOptions
 		if ( !pTemplate )
 			return false;
 
-		const char *replacements[] = 
+		const char *replacements[] =
 		{
 			"%TemplateOptionTeams%", pTemplate->GetOption(TPOPTION_TEAMS),
-			"%TemplateOptionClasses%", pTemplate->GetOption(TPOPTION_CLASSES), 
+			"%TemplateOptionClasses%", pTemplate->GetOption(TPOPTION_CLASSES),
 			"%TemplateOptionStamina%", pTemplate->GetOption(TPOPTION_STAMINA),
 			"%TemplateOptionSprinting%", pTemplate->GetOption(TPOPTION_SPRINTING),
 			"%TemplateOptionProne%", pTemplate->GetOption(TPOPTION_PRONE),

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@ using namespace vgui;
 
 
 // ----------------------------------------------------------------------------- //
-// Class image panels. These maintain a list of the class image panels so 
+// Class image panels. These maintain a list of the class image panels so
 // it can render 3D images into them.
 // ----------------------------------------------------------------------------- //
 
@@ -46,7 +46,7 @@ void CCSClassImagePanel::ApplySettings( KeyValues *inResourceData )
 	{
 		Q_strncpy( m_ModelName, pName, sizeof( m_ModelName ) );
 	}
-	
+
 	BaseClass::ApplySettings( inResourceData );
 }
 
@@ -68,9 +68,9 @@ CClassMenu_TER::CClassMenu_TER(IViewPort *pViewPort) : CClassMenu(pViewPort, PAN
 	m_backgroundLayoutFinished = false;
 }
 
-const char *CClassMenu_TER::GetName( void ) 
-{ 
-	return PANEL_CLASS_TER; 
+const char *CClassMenu_TER::GetName( void )
+{
+	return PANEL_CLASS_TER;
 }
 
 void CClassMenu_TER::ShowPanel(bool bShow)
@@ -121,7 +121,7 @@ void CClassMenu_TER::Update()
 	}
 	else
 	{
-		SetVisibleButton( "CancelButton", false ); 
+		SetVisibleButton( "CancelButton", false );
 	}
 
 	// if we don't have the new models installed,
@@ -163,9 +163,9 @@ Panel *CClassMenu_CT::CreateControlByName(const char *controlName)
 	return BaseClass::CreateControlByName( controlName );
 }
 
-const char *CClassMenu_CT::GetName( void ) 
-{ 
-	return PANEL_CLASS_CT; 
+const char *CClassMenu_CT::GetName( void )
+{
+	return PANEL_CLASS_CT;
 }
 
 void CClassMenu_CT::ShowPanel(bool bShow)
@@ -203,7 +203,7 @@ void CClassMenu_CT::Update()
 	}
 	else
 	{
-		SetVisibleButton( "CancelButton", false ); 
+		SetVisibleButton( "CancelButton", false );
 	}
 
 	// if we don't have the new models installed,
@@ -233,7 +233,7 @@ void CClassMenu_TER::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassMenu_TER::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -262,11 +262,10 @@ void CClassMenu_CT::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassMenu_CT::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
 	ApplyBackgroundSchemeSettings( this, pScheme );
 }
-

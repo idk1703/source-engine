@@ -148,7 +148,7 @@ class CEconTool_StrangeCountTransfer : public IEconTool
 {
 public:
 	CEconTool_StrangeCountTransfer( const char *pszTypeName, item_capabilities_t unCapabilities );
-	
+
 	static bool AreItemsEligibleForStrangeCountTransfer( const IEconItemInterface *pItem1, const IEconItemInterface *pItem2 );
 
 #ifdef CLIENT_DLL
@@ -169,7 +169,7 @@ class CEconTool_StrangePart : public IEconTool
 {
 public:
 	CEconTool_StrangePart( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV )
-		: IEconTool( pszTypeName, pszUseString, NULL, unCapabilities ) 
+		: IEconTool( pszTypeName, pszUseString, NULL, unCapabilities )
 		, m_RequiredTags( pUsageKV ? pUsageKV->FindKey( "required_tags" ) : NULL )
 		, m_RequiredMissingTags( pUsageKV ? pUsageKV->FindKey( "required_missing_tags" ) : NULL )
 	{
@@ -183,7 +183,7 @@ public:
 
 	virtual void OnClientApplyTool( CEconItemView *pTool, CEconItemView *pSubject, vgui::Panel *pParent ) const;
 #endif // CLIENT_DLL
- 
+
 private:
 	CEconTool_TagsList m_RequiredTags;
 	CEconTool_TagsList m_RequiredMissingTags;
@@ -207,7 +207,7 @@ public:
 
 	unsigned int GetRestrictionType() const { return m_eRestrictionType; }
 	unsigned int GetRestrictionValue() const { return m_unRestrictionValue; }
- 
+
 private:
 	unsigned int /*strange_event_restriction_t*/ m_eRestrictionType;
 
@@ -220,7 +220,7 @@ private:
 //			generated in the form of an item itself.  Players can "feed" in items on the
 //			recipe's input list, either all at once or once at a time, until the inputs
 //			are all fulfilled. Once that happens at which the outputs of the recipe are given to the player.
-//			
+//
 //			This is done using new attribute types that encode the recipe's inputs and outputs.
 //			Inputs and outputs can either be specific items of specific qualities, or lootlist
 //			with a specific quality -- for now.  Lootlist will roll the specific item to be the input/output
@@ -304,7 +304,7 @@ public:
 		int RollCount() const;
 		virtual bool AddRecipeComponentAsAttribute( CEconItem *pItem, const CEconGameAccount *pGameAccount ) const = 0;
 #endif
-	protected: 
+	protected:
 #ifdef GC_DLL
 		virtual const char* GetAttributeName() const { return "recipe component defined item"; }
 		static CEconItemAttributeDefinition* GetNextAvailableAttributeWithBaseName( const char* pszBaseAttribName, ComponentAttribVector_t *pAttribVec );
@@ -356,7 +356,7 @@ public:
 		friend class CDynamicRecipeComponentLootList;
 	};
 
-	// Lootlist type: Use this when you want a random item from a lootlist to be a 
+	// Lootlist type: Use this when you want a random item from a lootlist to be a
 	//				  component in a recipe.  You must specify a quality in the definition
 	//				  but it can get stomped if the lootlist-generated item gets an "elevate quality"
 	//				  attribute rolled onto it.
@@ -369,7 +369,7 @@ public:
 		virtual bool BFinishInitialization_Internal( CUtlVector<CUtlString>* pVecErrors, ComponentAttribVector_t* attribVec ) OVERRIDE;
 	protected:
 		virtual bool ParseKV( KeyValues *pKV, CUtlVector<CUtlString> *pVecErrors ) OVERRIDE;
-	
+
 	private:
 #ifdef GC_DLL
 		virtual bool AddRecipeComponentAsAttribute( CEconItem *pItem, const CEconGameAccount *pGameAccount ) const OVERRIDE;
@@ -436,7 +436,7 @@ class CEconTool_Xifier : public IEconTool
 {
 public:
 	CEconTool_Xifier( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV )
-		: IEconTool( pszTypeName, pszUseString, NULL, unCapabilities ) 
+		: IEconTool( pszTypeName, pszUseString, NULL, unCapabilities )
 		, m_RequiredTags( pUsageKV ? pUsageKV->FindKey( "required_tags" ) : NULL )
 	{
 		if ( pUsageKV )
@@ -558,7 +558,7 @@ class CEconTool_ItemEaterRecharger: public IEconTool
 {
 public:
 	CEconTool_ItemEaterRecharger( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV )
-		: IEconTool( pszTypeName, pszUseString, NULL, unCapabilities ) 
+		: IEconTool( pszTypeName, pszUseString, NULL, unCapabilities )
 		, m_RequiredTags( pUsageKV ? pUsageKV->FindKey( "required_tags" ) : NULL )
 	{
 		if ( pUsageKV )
@@ -603,14 +603,14 @@ class CEconTool_UpgradeCard : public IEconTool
 public:
 	struct upgrade_card_attr_value_t
 	{
-		const CEconItemAttributeDefinition *m_pAttrDef; 
+		const CEconItemAttributeDefinition *m_pAttrDef;
 		attrib_value_t m_value;
 	};
 
 	typedef CUtlVectorFixedGrowable<upgrade_card_attr_value_t, 1>	UpgradeCardAttributeVec_t;
 
 	CEconTool_UpgradeCard( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV )
-		: IEconTool( pszTypeName, pszUseString, NULL, unCapabilities ) 
+		: IEconTool( pszTypeName, pszUseString, NULL, unCapabilities )
 		, m_RequiredTags( pUsageKV ? pUsageKV->FindKey( "required_tags" ) : NULL )
 	{
 		COMPILE_TIME_ASSERT( sizeof( attrib_value_t ) == sizeof( uint32 ) );
@@ -673,7 +673,7 @@ public:
 
 	virtual void OnClientApplyTool( CEconItemView *pTool, CEconItemView *pSubject, vgui::Panel *pParent ) const;
 #endif // CLIENT_DLL
- 
+
 private:
 	CEconTool_TagsList m_RequiredTags;
 	UpgradeCardAttributeVec_t m_vecAttributes;
@@ -686,7 +686,7 @@ class CEconTool_ClassTransmogrifier : public IEconTool
 {
 public:
 	CEconTool_ClassTransmogrifier( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV )
-		: IEconTool( pszTypeName, pszUseString, NULL, unCapabilities ) 
+		: IEconTool( pszTypeName, pszUseString, NULL, unCapabilities )
 		, m_RequiredTags( pUsageKV ? pUsageKV->FindKey( "required_tags" ) : NULL )
 		, m_iClass( -1 )
 	{
@@ -796,7 +796,7 @@ class CEconTool_GrantOperationPass : public IEconTool
 {
 public:
 	CEconTool_GrantOperationPass( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV ) : IEconTool( pszTypeName, pszUseString, NULL, ITEM_CAP_NONE )
-	{ 
+	{
 		m_pOperationPassName = NULL;
 		m_pOptionalBonusLootList = NULL;
 		if ( pUsageKV )
@@ -814,7 +814,7 @@ public:
 #ifdef GC_DLL
 	virtual class CGCEconConsumableBehavior *CreateGCConsumableBehavior() const;
 #endif // GC_DLL
-	
+
 	const char *m_pOperationPassName;
 	const char *m_pOptionalBonusLootList;
 };
@@ -1033,7 +1033,7 @@ public:
 
 		return true;
 	}
-	
+
 	int GetCount() const { return m_iCount; }
 
 private:

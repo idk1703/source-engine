@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -26,16 +26,16 @@
 // Purpose: Engine interface into global game event management
 //-----------------------------------------------------------------------------
 
-/* 
+/*
 
-The GameEventManager keeps track and fires of all global game events. Game events 
+The GameEventManager keeps track and fires of all global game events. Game events
 are fired by game.dll for events like player death or team wins. Each event has a
 unique name and comes with a KeyValue structure providing informations about this
 event. Some events are generated also by the engine.
 
 Events are networked to connected clients and invoked there to. Therefore you
 have to specify all data fields and there data types in an public resource
-file which is parsed by server and broadcasted to it's clients. A typical game 
+file which is parsed by server and broadcasted to it's clients. A typical game
 event is defined like this:
 
 	"game_start"				// a new game starts
@@ -49,7 +49,7 @@ event is defined like this:
 All events must have unique names (case sensitive) and may have a list
 of data fields. each data field must specify a data type, so the engine
 knows how to serialize/unserialize that event for network transmission.
-Valid data types are string, float, long, short, byte & bool. If a 
+Valid data types are string, float, long, short, byte & bool. If a
 data field should not be broadcasted to clients, use the type "local".
 */
 
@@ -71,7 +71,7 @@ public:
 	virtual bool  IsReliable() const = 0; // if event handled reliable
 	virtual bool  IsLocal() const = 0; // if event is never networked
 	virtual bool  IsEmpty(const char *keyName = NULL) = 0; // check if data field exists
-	
+
 	// Data access
 	virtual bool  GetBool( const char *keyName = NULL, bool defaultValue = false ) = 0;
 	virtual int   GetInt( const char *keyName = NULL, int defaultValue = 0 ) = 0;
@@ -104,7 +104,7 @@ public:
 	virtual int LoadEventsFromFile( const char *filename ) = 0;
 
 	// removes all and anything
-	virtual void  Reset() = 0;	
+	virtual void  Reset() = 0;
 
 	// adds a listener for a particular event
 	virtual bool AddListener( IGameEventListener2 *listener, const char *name, bool bServerSide ) = 0;
@@ -112,7 +112,7 @@ public:
 	// returns true if this listener is listens to given event
 	virtual bool FindListener( IGameEventListener2 *listener, const char *name ) = 0;
 
-	// removes a listener 
+	// removes a listener
 	virtual void RemoveListener( IGameEventListener2 *listener) = 0;
 
 	// create an event by name, but doesn't fire it. returns NULL is event is not
@@ -152,23 +152,23 @@ abstract_class IGameEventManager : public IBaseInterface
 {
 public:
 	virtual	~IGameEventManager( void ) {};
-	
+
 	// load game event descriptions from a file eg "resource\gameevents.res"
 	virtual int LoadEventsFromFile( const char * filename ) = 0;
 
 	// removes all and anything
-	virtual void  Reset() = 0;	
-				
+	virtual void  Reset() = 0;
+
 	virtual KeyValues *GetEvent(const char * name) = 0; // returns keys for event
-	
+
 	// adds a listener for a particular event
 	virtual bool AddListener( IGameEventListener * listener, const char * event, bool bIsServerSide ) = 0;
 	// registers for all known events
-	virtual bool AddListener( IGameEventListener * listener, bool bIsServerSide ) = 0; 
-	
-	// removes a listener 
+	virtual bool AddListener( IGameEventListener * listener, bool bIsServerSide ) = 0;
+
+	// removes a listener
 	virtual void RemoveListener( IGameEventListener * listener) = 0;
-		
+
 	// fires an global event, specific event data is stored in KeyValues
 	// local listeners will receive the event instantly
 	// a network message will be send to all connected clients to invoke
@@ -179,7 +179,7 @@ public:
 	virtual bool FireEventServerOnly( KeyValues * event ) = 0;
 
 	// fires an event only on this local client
-	// can be used to fake events coming over the network 
+	// can be used to fake events coming over the network
 	virtual bool FireEventClientOnly( KeyValues * event ) = 0;
 
 	// write/read event to/from bitbuffer

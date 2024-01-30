@@ -40,15 +40,3 @@ private:
 	bool	m_bDisabled;
 };
 #endif // FUNC_POWERUP_VOLUME_H
-
-
-
-
-
-
-
-
-
-
-
-

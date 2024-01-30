@@ -82,7 +82,7 @@ struct sHappyCamperSnipePosition
 	Vector	m_vPos;
 };
 
-struct SMarketPurchases : public BaseStatData 
+struct SMarketPurchases : public BaseStatData
 {
 	SMarketPurchases( uint64 ulPlayerID, int iPrice, const char *pName ) : m_nPlayerID(ulPlayerID), ItemCost(iPrice)
 	{
@@ -115,7 +115,7 @@ struct WeaponStats
 	int damage;
 };
 
-struct SCSSWeaponData : public BaseStatData 
+struct SCSSWeaponData : public BaseStatData
 {
 	SCSSWeaponData( const char *pWeaponName, const WeaponStats &wpnData )
 	{
@@ -133,7 +133,7 @@ struct SCSSWeaponData : public BaseStatData
 		Kills = wpnData.kills;
 		Damage = wpnData.damage;
 	}
-	
+
 	char	WeaponID[64];
 	int		Shots;
 	int		Hits;
@@ -158,7 +158,7 @@ struct SCSSDeathData : public BaseStatData
 
 		m_DeathPos = info.GetDamagePosition();
 		m_iVictimTeam = pVictim->GetTeamNumber();
-		
+
 		CCSPlayer *pCSPlayer = ToCSPlayer( info.GetAttacker() );
 		if ( pCSPlayer )
 		{
@@ -170,7 +170,7 @@ struct SCSSDeathData : public BaseStatData
 		}
 
 		const char *pszWeaponName = info.GetInflictor() ? info.GetInflictor()->GetClassname() : "unknown";
-		
+
 		if ( pszWeaponName )
 		{
 			if ( V_strcmp(pszWeaponName, "player") == 0 )
@@ -199,7 +199,7 @@ struct SCSSDeathData : public BaseStatData
 	int		m_iDamageType;
 	uint64	m_uiDeathParam;
 	char	m_szMapName[64];
-	
+
 	BEGIN_STAT_TABLE( "Deaths" )
 		REGISTER_STAT_NAMED( m_DeathPos.x, "XCoord" )
 		REGISTER_STAT_NAMED( m_DeathPos.y, "YCoord" )
@@ -243,24 +243,24 @@ public:
 	virtual void Event_PlayerDisconnected( CBasePlayer *pPlayer );
 	virtual void Event_WindowShattered( CBasePlayer *pPlayer );
 	virtual void Event_PlayerKilledOther( CBasePlayer *pAttacker, CBaseEntity *pVictim, const CTakeDamageInfo &info );
-			
+
 
 	// CSS specific events
-    void Event_BombPlanted( CCSPlayer *pPlayer );
-    void Event_BombDefused( CCSPlayer *pPlayer );
+	void Event_BombPlanted( CCSPlayer *pPlayer );
+	void Event_BombDefused( CCSPlayer *pPlayer );
 	void Event_PlayerDamage( CBasePlayer *pBasePlayer, const CTakeDamageInfo &info );
 	void Event_BombExploded( CCSPlayer *pPlayer );
 	void Event_MoneyEarned( CCSPlayer *pPlayer, int moneyEarned );
 	void Event_MoneySpent( CCSPlayer *pPlayer, int moneySpent, const char *pItemName );
-    void Event_HostageRescued( CCSPlayer *pPlayer );
-    void Event_PlayerSprayedDecal( CCSPlayer*pPlayer );
+	void Event_HostageRescued( CCSPlayer *pPlayer );
+	void Event_PlayerSprayedDecal( CCSPlayer*pPlayer );
 	void Event_AllHostagesRescued();
 	void Event_BreakProp( CCSPlayer *pPlayer, CBreakableProp *pProp );
-    void Event_PlayerDonatedWeapon (CCSPlayer* pPlayer);
-    void Event_PlayerDominatedOther( CCSPlayer* pAttacker, CCSPlayer* pVictim);
-    void Event_PlayerRevenge( CCSPlayer* pAttacker );
-    void Event_PlayerAvengedTeammate( CCSPlayer* pAttacker, CCSPlayer* pAvengedPlayer );
-	void Event_MVPEarned( CCSPlayer* pPlayer );	
+	void Event_PlayerDonatedWeapon (CCSPlayer* pPlayer);
+	void Event_PlayerDominatedOther( CCSPlayer* pAttacker, CCSPlayer* pVictim);
+	void Event_PlayerRevenge( CCSPlayer* pAttacker );
+	void Event_PlayerAvengedTeammate( CCSPlayer* pAttacker, CCSPlayer* pAvengedPlayer );
+	void Event_MVPEarned( CCSPlayer* pPlayer );
 	void Event_KnifeUse( CCSPlayer* pPlayer, bool bStab, int iDamage );
 
 	virtual void FireGameEvent( IGameEvent *event );
@@ -275,15 +275,15 @@ public:
 
 	const StatsCollection_t&	GetTeamStats( int iTeamIndex ) const;
 	void						ResetAllTeamStats();
-    void						ResetAllStats();
+	void						ResetAllStats();
 	void						ResetWeaponStats();
- 	void						IncrementTeamStat( int iTeamIndex, int iStatIndex, int iAmount );
+	void						IncrementTeamStat( int iTeamIndex, int iStatIndex, int iAmount );
 	void                        CalcDominationAndRevenge( CCSPlayer *pAttacker, CCSPlayer *pVictim, int *piDeathFlags );
-    void                        CalculateOverkill( CCSPlayer* pAttacker, CCSPlayer* pVictim );
+	void                        CalculateOverkill( CCSPlayer* pAttacker, CCSPlayer* pVictim );
 	void						PlayerKilled( CBasePlayer *pVictim, const CTakeDamageInfo &info );
 
 	void						IncrementStat( CCSPlayer* pPlayer, CSStatType_t statId, int iValue, bool bPlayerOnly = false );
-	// Steamworks Gamestats 
+	// Steamworks Gamestats
 	virtual void SubmitGameStats( KeyValues *pKV );
 
 	virtual StatContainerList_t* GetStatContainerList( void )
@@ -291,22 +291,22 @@ public:
 		return s_StatLists;
 	}
 
-protected:	
+protected:
 	void						SetStat( CCSPlayer *pPlayer, CSStatType_t statId, int iValue );
-    void						TrackKillStats( CCSPlayer *pAttacker, CCSPlayer *pVictim );
-    void                        ComputeRollingStatAverages();
+	void						TrackKillStats( CCSPlayer *pAttacker, CCSPlayer *pVictim );
+	void                        ComputeRollingStatAverages();
 	void                        ComputeDirectStatAverages();
-    void                        SendRollingStatsAveragesToAllPlayers();
+	void                        SendRollingStatsAveragesToAllPlayers();
 	void                        SendDirectStatsAveragesToAllPlayers();
 	void						SendStatsToPlayer( CCSPlayer * pPlayer, int iMinStatPriority );
 
 private:
-	PlayerStats_t				m_aPlayerStats[MAX_PLAYERS+1];	// List of stats for each player for current life - reset after each death    
+	PlayerStats_t				m_aPlayerStats[MAX_PLAYERS+1];	// List of stats for each player for current life - reset after each death
 	StatsCollection_t			m_aTeamStats[TEAM_MAXCOUNT - FIRST_GAME_TEAM];
 
-    RoundStatsRollingAverage_t  m_rollingCTStatAverages;	
-    RoundStatsRollingAverage_t  m_rollingTStatAverages;	
-    RoundStatsRollingAverage_t	m_rollingPlayerStatAverages;	
+	RoundStatsRollingAverage_t  m_rollingCTStatAverages;
+	RoundStatsRollingAverage_t  m_rollingTStatAverages;
+	RoundStatsRollingAverage_t	m_rollingPlayerStatAverages;
 
 	RoundStatsDirectAverage_t	m_directCTStatAverages;
 	RoundStatsDirectAverage_t	m_directTStatAverages;
@@ -323,7 +323,7 @@ private:
 
 	CUtlLinkedList<sHappyCamperSnipePosition, int>		m_PlayerSnipedPosition;
 	WeaponStats					m_weaponStats[WEAPON_MAX][2];
-	
+
 	// Steamworks Gamestats
 	VectorMarketPurchaseData	m_MarketPurchases;
 	CSSWeaponData				m_WeaponData;

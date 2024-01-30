@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -55,5 +55,3 @@ void CProxyHealth::OnBind( void *pC_BaseEntity )
 }
 
 EXPOSE_INTERFACE( CProxyHealth, IMaterialProxy, "Health" IMATERIAL_PROXY_INTERFACE_VERSION );
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -40,5 +40,3 @@ extern Vector	g_SmokeFogOverlayColor;
 
 
 #endif
-
-

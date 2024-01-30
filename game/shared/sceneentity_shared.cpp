@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -14,9 +14,9 @@ static ConVar scene_print( "scene_print", "0", FCVAR_REPLICATED, "When playing b
 ConVar scene_clientflex( "scene_clientflex", "1", FCVAR_REPLICATED, "Do client side flex animation." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFormat - 
-//			... - 
+// Purpose:
+// Input  : *pFormat -
+//			... -
 // Output : static void
 //-----------------------------------------------------------------------------
 void Scene_Printf( const char *pFormat, ... )
@@ -31,7 +31,7 @@ void Scene_Printf( const char *pFormat, ... )
 		{
 			return;
 		}
-        else if ( !CBaseEntity::IsServer() && val != 3 )
+	else if ( !CBaseEntity::IsServer() && val != 3 )
 		{
 			return;
 		}
@@ -42,13 +42,13 @@ void Scene_Printf( const char *pFormat, ... )
 
 	va_start(marker, pFormat);
 	Q_vsnprintf(msg, sizeof(msg), pFormat, marker);
-	va_end(marker);	
-	
+	va_end(marker);
+
 	Msg( "%8.3f[%d] %s:  %s", gpGlobals->curtime, gpGlobals->tickcount, CBaseEntity::IsServer() ? "sv" : "cl", msg );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CSceneTokenProcessor::CurrentToken( void )
@@ -57,8 +57,8 @@ const char *CSceneTokenProcessor::CurrentToken( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : crossline - 
+// Purpose:
+// Input  : crossline -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSceneTokenProcessor::GetToken( bool crossline )
@@ -71,7 +71,7 @@ bool CSceneTokenProcessor::GetToken( bool crossline )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSceneTokenProcessor::TokenAvailable( void )
@@ -96,9 +96,9 @@ bool CSceneTokenProcessor::TokenAvailable( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fmt - 
-//			... - 
+// Purpose:
+// Input  : *fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CSceneTokenProcessor::Error( const char *fmt, ... )
 {
@@ -113,8 +113,8 @@ void CSceneTokenProcessor::Error( const char *fmt, ... )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *buffer - 
+// Purpose:
+// Input  : *buffer -
 //-----------------------------------------------------------------------------
 void CSceneTokenProcessor::SetBuffer( char *buffer )
 {

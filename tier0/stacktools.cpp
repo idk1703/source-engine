@@ -1,6 +1,6 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ======//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -193,7 +193,7 @@ int GetCallStack_Fast( void **pReturnAddressesOut, int iArrayCount, int iSkipCou
 
 	CStackTop_FriendFuncs *pTop = (CStackTop_FriendFuncs *)(CStackTop_Base *)g_StackTop;
 	if( pTop != NULL ) //we can do fewer error checks if we have a valid reference point for the top of the stack
-	{		
+	{
 		void *pNoGreaterThan = pTop->m_pStackBase;
 
 		//skips
@@ -222,7 +222,7 @@ int GetCallStack_Fast( void **pReturnAddressesOut, int iArrayCount, int iSkipCou
 	}
 	else
 	{
-		void *pNoGreaterThan = ((unsigned char *)pNoLessThan) + (1024 * 1024); //standard stack is 1MB. TODO: Get actual stack end address if available since this check isn't foolproof	
+		void *pNoGreaterThan = ((unsigned char *)pNoLessThan) + (1024 * 1024); //standard stack is 1MB. TODO: Get actual stack end address if available since this check isn't foolproof
 
 		//skips
 		for( i = 0; i != iSkipCount; ++i )
@@ -396,7 +396,7 @@ public:
 #if defined( USE_CAPTURESTACKBACKTRACE )
 		m_pCaptureStackBackTrace = CaptureStackBackTrace_DummyFn;
 		m_hNTDllDll = NULL;
-#endif				
+#endif
 	}
 
 	~CHelperFunctionsLoader( void )
@@ -490,7 +490,7 @@ public:
 				*pDisplacementOut = dwDisplacement;
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -503,8 +503,8 @@ public:
 
 		tchar szBuffer[1024];
 		szBuffer[0] = _T('\0');
-		
-		IMAGEHLP_LINE64 imageHelpLine64;		
+
+		IMAGEHLP_LINE64 imageHelpLine64;
 		imageHelpLine64.SizeOfStruct = sizeof(IMAGEHLP_LINE64);
 		imageHelpLine64.FileName = szBuffer;
 
@@ -513,13 +513,13 @@ public:
 		{
 			strncpy( pFileNameOut, imageHelpLine64.FileName, iMaxFileNameLength );
 			iLineNumberOut = imageHelpLine64.LineNumber;
-			
+
 			if( pDisplacementOut != NULL )
 				*pDisplacementOut = dwDisplacement;
 
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -576,7 +576,7 @@ public:
 				++pWrite;
 				--iTranslationBufferLength;
 				*pWrite = '\0';
-			}			
+			}
 		}
 
 		//use symbol name to test if the rest is going to work. So grab it whether they want it or not
@@ -648,7 +648,7 @@ public:
 
 						--pShortened;
 					}
-					
+
 					iLength = (int)strlen( pShortened );
 					if( iTranslationBufferLength < iLength + 1 )
 					{
@@ -725,7 +725,7 @@ public:
 		{
 			//it's possible it's just way too early to initialize (as shown with attempts at using these tools in the memory allocator)
 			if( m_szPDBSearchPath == NULL ) //not a rock solid check, but pretty good compromise between endless failing initialization and general failure due to trying too early
-				m_bIsInitialized = false; 
+				m_bIsInitialized = false;
 
 			return;
 		}
@@ -857,10 +857,10 @@ int CrawlStack_StackWalk64( CONTEXT *pExceptionContext, void **pReturnAddressesO
 	STACKFRAME64 sfFrame = { 0 }; //memset(&sfFrame, 0x0, sizeof(sfFrame));
 	sfFrame.AddrPC.Mode = sfFrame.AddrFrame.Mode = AddrModeFlat;
 #ifdef _M_X64
-	sfFrame.AddrPC.Offset = currentContext.Rip;	
+	sfFrame.AddrPC.Offset = currentContext.Rip;
 	sfFrame.AddrFrame.Offset = currentContext.Rbp; // ????
 #else
-	sfFrame.AddrPC.Offset = currentContext.Eip;	
+	sfFrame.AddrPC.Offset = currentContext.Eip;
 	sfFrame.AddrFrame.Offset = currentContext.Ebp;
 #endif
 
@@ -883,7 +883,7 @@ int CrawlStack_StackWalk64( CONTEXT *pExceptionContext, void **pReturnAddressesO
 		{
 			break;
 		}
-		pReturnAddressesOut[i] = (void *)sfFrame.AddrPC.Offset;	
+		pReturnAddressesOut[i] = (void *)sfFrame.AddrPC.Offset;
 	}
 
 	return i;
@@ -1017,7 +1017,7 @@ public:
 	~C360StackTranslationHelper( void )
 	{
 		StringSet_t::const_iterator iter;
-		
+
 		//module names
 		{
 			iter = m_ModuleNameSet.begin();
@@ -1052,7 +1052,7 @@ public:
 				iter++;
 			}
 			m_SymbolNameSet.clear();
-		}		
+		}
 
 		m_bInitialized = false;
 	}
@@ -1068,7 +1068,7 @@ public:
 			return &retval.first->second; //already initialized
 
 		retval.first->second.iLine = info.iLine;
-		
+
 
 		//share strings
 
@@ -1206,10 +1206,10 @@ public:
 	inline void LoadStackInformation( void * const *pAddresses, int iAddressCount )
 	{
 		Assert( (iAddressCount > 0) && (pAddresses != NULL) );
-		
+
 		int iNeedLoading = 0;
-		void **pNeedLoading = (void **)stackalloc( sizeof( const void * ) * iAddressCount ); //addresses we need to ask VXConsole about		
-		
+		void **pNeedLoading = (void **)stackalloc( sizeof( const void * ) * iAddressCount ); //addresses we need to ask VXConsole about
+
 		for( int i = 0; i != iAddressCount; ++i )
 		{
 			if( FindInfoEntry( pAddresses[i] ) == NULL )
@@ -1222,11 +1222,11 @@ public:
 
 		if( iNeedLoading != 0 )
 		{
-			//ask VXConsole for information about the addresses we're clueless about			
+			//ask VXConsole for information about the addresses we're clueless about
 			FullStackInfo_t *pReturnedStructs = (FullStackInfo_t *)stackalloc( sizeof( FullStackInfo_t ) * iNeedLoading );
-			
+
 			for( int i = 0; i < iNeedLoading; ++i )
-			{				
+			{
 				pReturnedStructs[i].pAddress = 0;
 				pReturnedStructs[i].szFileName[0] = '\0'; //strncpy( pReturnedStructs[i].szFileName, "FileUninitialized", sizeof( pReturnedStructs[i].szFileName ) );
 				pReturnedStructs[i].szModuleName[0] = '\0'; //strncpy( pReturnedStructs[i].szModuleName, "ModuleUninitialized", sizeof( pReturnedStructs[i].szModuleName ) );
@@ -1238,7 +1238,7 @@ public:
 			int iTranslated = RetrieveStackInfo( pNeedLoading, pReturnedStructs, iNeedLoading );
 
 			if( iTranslated == iNeedLoading )
-			{				
+			{
 				//store
 				for( int i = 0; i < iTranslated; ++i )
 				{
@@ -1318,7 +1318,7 @@ private:
 	class CStringLess
 	{
 	public:
-		bool operator()(const char *pszLeft, const char *pszRight ) const 
+		bool operator()(const char *pszLeft, const char *pszRight ) const
 		{
 			return ( V_tier0_stricmp( pszLeft, pszRight ) < 0 );
 		}
@@ -1409,7 +1409,7 @@ int TranslateStackInfo( const void * const *pCallStack, int iCallStackCount, tch
 	{
 		COMPILE_TIME_ASSERT( TSISTYLEFLAG_LAST < (1<<8) ); //need to update the encoder/decoder to use more than a byte for style flags
 
-		uint8 *pData = (uint8 *)stackalloc( iDataSize );		
+		uint8 *pData = (uint8 *)stackalloc( iDataSize );
 		pData[0] = (uint8)style;
 		memcpy( pData + 1, szEntrySeparator, iSeparatorLength * sizeof( tchar ) );
 		memcpy( pData + 1 + (iSeparatorLength * sizeof( tchar )), pCallStack, iCallStackCount * sizeof( void * ) );
@@ -1495,7 +1495,7 @@ CStackTop_CopyParentStack::CStackTop_CopyParentStack( void * const *pParentStack
 			m_pParentStackTrace = new void * [iParentStackTraceLength];
 			memcpy( (void **)m_pParentStackTrace, pParentStackTrace, sizeof( void * ) * iParentStackTraceLength );
 		}
-	}	
+	}
 
 	m_iParentStackTraceLength = iParentStackTraceLength;
 
@@ -1547,7 +1547,7 @@ CStackTop_ReferenceParentStack::CStackTop_ReferenceParentStack( void * const *pP
 		{
 			--iParentStackTraceLength;
 		}
-	}	
+	}
 
 	m_iParentStackTraceLength = iParentStackTraceLength;
 
@@ -1580,7 +1580,7 @@ void CStackTop_ReferenceParentStack::ReleaseParentStackReferences( void )
 
 //Encodes data so that every byte's most significant bit is a 1. Ensuring no null terminators.
 //This puts the encoded data in the 128-255 value range. Leaving all standard ascii characters for control.
-//Returns string length (not including the written null terminator as is standard). 
+//Returns string length (not including the written null terminator as is standard).
 //Or if the buffer is too small. Returns negative of necessary buffer size (including room needed for null terminator)
 int EncodeBinaryToString( const void *pToEncode, int iDataLength, char *pEncodeOut, int iEncodeBufferSize )
 {
@@ -1591,7 +1591,7 @@ int EncodeBinaryToString( const void *pToEncode, int iDataLength, char *pEncodeO
 	if( (iEncodedSize > iEncodeBufferSize) || (pEncodeOut == NULL) || (pToEncode == NULL) )
 		return -iEncodedSize; //not enough room
 
-	uint8 *pEncodeWrite = (uint8 *)pEncodeOut;	
+	uint8 *pEncodeWrite = (uint8 *)pEncodeOut;
 
 	//first encode the data size. Encodes lowest 28 bits and discards the high 4
 	pEncodeWrite[0] = ((iDataLength >> 21) & 0xFF) | 0x80;
@@ -1676,7 +1676,7 @@ int DecodeBinaryFromString( const char *pString, void *pDestBuffer, int iDestBuf
 		return -iDecodedSize; //dest buffer not big enough to hold the data
 	}
 
-	const uint8 *pStopDecoding = pDecodeRead + iTextLength;		
+	const uint8 *pStopDecoding = pDecodeRead + iTextLength;
 	uint8 *pDecodeWrite = (uint8 *)pDestBuffer;
 	int iControl = 0;
 	int iLSBXOR = 0;
@@ -1701,7 +1701,5 @@ int DecodeBinaryFromString( const char *pString, void *pDestBuffer, int iDestBuf
 	if( ppParseFinishOut != NULL )
 		*ppParseFinishOut = (char *)pDecodeRead;
 
-	return iDecodedSize;	
+	return iDecodedSize;
 }
-
-

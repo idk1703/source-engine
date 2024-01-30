@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -13,7 +13,7 @@
 #include "tier0/memdbgon.h"
 
 // NOTE: If CStringRegistry allowed storing arbitrary data, we could just use that.
-// in this case we have the "isPrivate" member and the replacement rules 
+// in this case we have the "isPrivate" member and the replacement rules
 // (eventIndex can be reused by private activities), so a custom table is necessary
 struct eventlist_t
 {
@@ -25,7 +25,7 @@ struct eventlist_t
 
 CUtlVector<eventlist_t> g_EventList;
 
-// This stores the actual event names.  Also, the string ID in the registry is simply an index 
+// This stores the actual event names.  Also, the string ID in the registry is simply an index
 // into the g_EventList array.
 CStringRegistry	g_EventStrings;
 
@@ -58,7 +58,7 @@ eventlist_t *EventList_AddEventEntry( const char *pName, int iEventIndex, bool i
 	pList->eventIndex = iEventIndex;
 	pList->stringKey = g_EventStrings.AddString( pName, index );
 	pList->isPrivate = isPrivate;
-	pList->iType = iType;	
+	pList->iType = iType;
 
 	// UNDONE: This implies that ALL shared activities are added before ANY custom activities
 	// UNDONE: Segment these instead?  It's a 32-bit int, how many activities do we need?
@@ -115,7 +115,7 @@ bool EventList_RegisterSharedEvent( const char *pszEventName, int iEventIndex, i
 	// They really only matter when you change the list of code controlled activities.  IDs
 	// for content controlled activities never collide because they are generated.
 
-	// first, check to make sure the slot we're asking for is free. It must be for 
+	// first, check to make sure the slot we're asking for is free. It must be for
 	// a shared event.
 	eventlist_t *pList = ListFromString( pszEventName );
 	if ( !pList )
@@ -139,7 +139,7 @@ Animevent EventList_RegisterPrivateEvent( const char *pszEventName )
 	eventlist_t *pList = ListFromString( pszEventName );
 	if ( pList )
 	{
-		// this activity is already in the list. If the activity we collided with is also private, 
+		// this activity is already in the list. If the activity we collided with is also private,
 		// then the collision is OK. Otherwise, it's a bug.
 		if ( pList->isPrivate )
 		{
@@ -189,7 +189,7 @@ const char *EventList_NameForIndex( int eventIndex )
 void EventList_RegisterSharedEvents( void )
 {
 	REGISTER_SHARED_ANIMEVENT( AE_EMPTY, AE_TYPE_SERVER );
-	
+
 	REGISTER_SHARED_ANIMEVENT( AE_NPC_LEFTFOOT, AE_TYPE_SERVER );
 	REGISTER_SHARED_ANIMEVENT( AE_NPC_RIGHTFOOT, AE_TYPE_SERVER  );
 	REGISTER_SHARED_ANIMEVENT( AE_NPC_BODYDROP_LIGHT, AE_TYPE_SERVER  );

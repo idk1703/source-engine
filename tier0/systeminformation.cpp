@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -10,7 +10,7 @@
 #include "tier0/platform.h"
 #include "tier0/systeminformation.h"
 
-#ifdef IS_WINDOWS_PC 
+#ifdef IS_WINDOWS_PC
 #include <windows.h>
 #include <tchar.h>
 
@@ -229,7 +229,7 @@ SYSTEM_CALL_RESULT_t Plat_GetPagedPoolInfo( PAGED_POOL_INFO_t *pPPI )
 	memset( pPPI, 0, sizeof( *pPPI ) );
 
 	static CSysCallCacheEntry_FindModule qsi( _T( "ntdll.dll" ), "NtQuerySystemInformation" );
-	
+
 	if ( qsi.CallResult() != SYSCALL_SUCCESS )
 		return qsi.CallResult();
 
@@ -263,7 +263,7 @@ SYSTEM_CALL_RESULT_t Plat_GetPagedPoolInfo( PAGED_POOL_INFO_t *pPPI )
 				qsi.SetFailed( SYSCALL_UNSUPPORTED );
 			}
 		}
-		
+
 		if ( qsi.CallResult() != SYSCALL_SUCCESS )
 			return qsi.CallResult();
 	}

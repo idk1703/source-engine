@@ -22,7 +22,7 @@ struct PS_INPUT
 {
 	float2 vTexCoord0	: TEXCOORD0;
 	float2 vTexCoord1	: TEXCOORD1;
-	
+
 	float4 worldPos_projPosZ		: TEXCOORD7;		// Necessary for pixel fog
 
 	float4 directionalLightColor : COLOR0;
@@ -38,7 +38,7 @@ float4 main( PS_INPUT i ) : COLOR
 	//TODO: find if there's a better way to expand a color normal to a full vector ( _bx2 was used in the assembly code )
 	vNormalMapDir = (vNormalMapDir - 0.5) * 2.0;
 	float3 vLightDir = float3( 0.0f, 0.0f, 1.0f );
-	
+
 	float lightDirDotNormalMap = dot( vNormalMapDir, vLightDir ); //normalMap dot dirLightDir
 
 	// do half-lambert on the dot

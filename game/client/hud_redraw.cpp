@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -103,13 +103,13 @@ void CHud::Think(void)
 
 //-----------------------------------------------------------------------------
 // Purpose:  The percentage passed in is expected and clamped to 0.0f to 1.0f
-// Input  : x - 
-//			y - 
-//			width - 
-//			height - 
-//			percentage - 
-//			clr - 
-//			type - 
+// Input  : x -
+//			y -
+//			width -
+//			height -
+//			percentage -
+//			clr -
+//			type -
 //-----------------------------------------------------------------------------
 void CHud::DrawProgressBar( int x, int y, int width, int height, float percentage, Color& clr, unsigned char type )
 {
@@ -157,12 +157,12 @@ void CHud::DrawProgressBar( int x, int y, int width, int height, float percentag
 
 //-----------------------------------------------------------------------------
 // Purpose:  The percentage passed in is expected and clamped to 0.0f to 1.0f
-// Input  : x - 
-//			y - 
-//			*icon - 
-//			percentage - 
-//			clr - 
-//			type - 
+// Input  : x -
+//			y -
+//			*icon -
+//			percentage -
+//			clr -
+//			type -
 //-----------------------------------------------------------------------------
 void CHud::DrawIconProgressBar( int x, int y, CHudTexture *icon, CHudTexture *icon2, float percentage, Color& clr, int type )
 {
@@ -181,13 +181,13 @@ void CHud::DrawIconProgressBar( int x, int y, CHudTexture *icon, CHudTexture *ic
 	{
 		int	barOfs = height * percentage;
 
-		icon2->DrawSelfCropped( 
+		icon2->DrawSelfCropped(
 			x, y,  // Pos
 			0, 0, width, barOfs, // Cropped subrect
 			clr );
 
-		icon->DrawSelfCropped( 
-			x, y + barOfs, 
+		icon->DrawSelfCropped(
+			x, y + barOfs,
 			0, barOfs, width, height - barOfs, // Cropped subrect
 			clr );
 	}
@@ -195,16 +195,14 @@ void CHud::DrawIconProgressBar( int x, int y, CHudTexture *icon, CHudTexture *ic
 	{
 		int	barOfs = width * percentage;
 
-		icon2->DrawSelfCropped( 
+		icon2->DrawSelfCropped(
 			x, y,  // Pos
 			0, 0, barOfs, height, // Cropped subrect
 			clr );
 
-		icon->DrawSelfCropped( 
-			x + barOfs, y, 
+		icon->DrawSelfCropped(
+			x + barOfs, y,
 			barOfs, 0, width - barOfs, height, // Cropped subrect
 			clr );
 	}
 }
-
-

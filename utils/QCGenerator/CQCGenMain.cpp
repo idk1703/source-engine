@@ -38,7 +38,7 @@ public:
 public:
 	vgui::VPANEL	m_PrevAppFocusPanel;
 };
-		
+
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
@@ -46,22 +46,22 @@ CQCGenMain::CQCGenMain( Panel *parent, const char *pszPath, const char *pszScene
 {
 	Assert( !g_pCQCGenMain );
 	g_pCQCGenMain = this;
-	
-	SetMinimizeButtonVisible( true );	
+
+	SetMinimizeButtonVisible( true );
 
 	SetSize( 846, 770 );
-	SetMinimumSize(846, 770);	
+	SetMinimumSize(846, 770);
 	char szTitle[MAX_PATH];
 	strcpy( szTitle, pszPath );
 	strcat( szTitle, "\\" );
 	strcat( szTitle, pszScene );
 	SetTitle( szTitle, true );
 
-    m_pQCGenerator = new CQCGenerator( this, pszPath, pszScene );
+	m_pQCGenerator = new CQCGenerator( this, pszPath, pszScene );
 }
 
 //-----------------------------------------------------------------------------
-// Destructor 
+// Destructor
 //-----------------------------------------------------------------------------
 CQCGenMain::~CQCGenMain()
 {
@@ -76,14 +76,14 @@ CQCGenMain::~CQCGenMain()
 void CQCGenMain::OnClose( void )
 {
 	BaseClass::OnClose();
-	ivgui()->Stop();	
+	ivgui()->Stop();
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Parse commands coming in from the VGUI dialog
 //-----------------------------------------------------------------------------
 void CQCGenMain::OnCommand( const char *command )
-{		
+{
 	BaseClass::OnCommand( command );
 }
 
@@ -91,4 +91,3 @@ void CQCGenMain::OnRefresh()
 {
 	Repaint();
 }
-

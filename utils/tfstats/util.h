@@ -99,16 +99,14 @@ public:
 	static void initFriendlyWeaponNameTable();
 	//map of team colors, indexed by team ID
 	static const char* teamcolormap[];
-	
+
 	static map<string,string> frWeapNmTbl;
 	static int string2svrID(string s);
-	
-	
+
+
 	static const char* makeDurationString(time_t start, time_t end,char* out,char* tostr=" - ");
 };
 
 
 
 #endif // UTIL_H
-
-

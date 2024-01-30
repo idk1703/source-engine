@@ -14,7 +14,7 @@
 #define CWeaponHarpoon C_WeaponHarpoon
 #endif
 
-class CHarpoon; 
+class CHarpoon;
 
 // Fist defines
 #define	FIST_RANGE			90
@@ -82,7 +82,7 @@ BEGIN_DATADESC( CHarpoon )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHarpoon::CHarpoon( void )
 {
@@ -90,7 +90,7 @@ CHarpoon::CHarpoon( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHarpoon::Spawn( void )
 {
@@ -110,7 +110,7 @@ void CHarpoon::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHarpoon::Precache( void )
 {
@@ -125,7 +125,7 @@ void CHarpoon::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHarpoon::SetHarpoonAngles( void )
 {
@@ -135,7 +135,7 @@ void CHarpoon::SetHarpoonAngles( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHarpoon::HarpoonTouch( CBaseEntity *pOther )
 {
@@ -255,7 +255,7 @@ void CHarpoon::CheckLinkedHarpoon( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHarpoon::ImpaleTarget( CBaseEntity *pOther )
 {
@@ -280,7 +280,7 @@ void CHarpoon::ImpaleTarget( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHarpoon::FlyThink( void )
 {
@@ -298,7 +298,7 @@ void CHarpoon::ConstrainThink( void )
 		return;
 
 	// Moved too far away?
-	float flDistSq = m_hLinkedHarpoon->GetAbsOrigin().DistToSqr( GetImpaledTarget()->GetAbsOrigin() ); 
+	float flDistSq = m_hLinkedHarpoon->GetAbsOrigin().DistToSqr( GetImpaledTarget()->GetAbsOrigin() );
 	if ( flDistSq > m_flConstrainLength )
 	{
 		// Break the rope
@@ -325,7 +325,7 @@ void CHarpoon::ConstrainThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHarpoon *CHarpoon::Create( const Vector &vecOrigin, const Vector &vecForward, CBasePlayer *pOwner )
 {
@@ -344,7 +344,7 @@ CHarpoon *CHarpoon::Create( const Vector &vecOrigin, const Vector &vecForward, C
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CWeaponHarpoon : public CBaseTFCombatWeapon
 {
@@ -369,7 +369,7 @@ public:
 	/*
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -395,7 +395,7 @@ public:
 	CHandle< CHarpoon >			m_hHarpoon;
 #endif
 
-private:														
+private:
 	CWeaponHarpoon( const CWeaponHarpoon & );
 };
 
@@ -418,7 +418,7 @@ BEGIN_PREDICTION_DATA( CWeaponHarpoon  )
 END_PREDICTION_DATA()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponHarpoon::CWeaponHarpoon( void )
 {
@@ -428,15 +428,15 @@ CWeaponHarpoon::CWeaponHarpoon( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponHarpoon::GetFireRate( void )
-{	
-	return 2.0; 
+{
+	return 2.0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponHarpoon::ItemPostFrame( void )
 {
@@ -487,7 +487,7 @@ void CWeaponHarpoon::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponHarpoon::PrimaryAttack( void )
 {
@@ -512,7 +512,7 @@ void CWeaponHarpoon::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponHarpoon::SecondaryAttack( void )
 {
@@ -581,7 +581,7 @@ void CWeaponHarpoon::SecondaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponHarpoon::ThrowGrenade( void )
 {
@@ -672,7 +672,7 @@ void CWeaponHarpoon::YankHarpoon( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponHarpoon::DetachRope( void )
 {
@@ -687,7 +687,7 @@ void CWeaponHarpoon::DetachRope( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHarpoon *CWeaponHarpoon::CreateHarpoon( const Vector &vecOrigin, const Vector &vecAngles, CBasePlayer *pOwner )
 {
@@ -713,7 +713,7 @@ CHarpoon *CWeaponHarpoon::CreateHarpoon( const Vector &vecOrigin, const Vector &
 		else
 		{
 			m_hRope->SetEndPoint( pHarpoon, 0 );
-			pHarpoon->SetRope( m_hRope ); 
+			pHarpoon->SetRope( m_hRope );
 			m_hRope = NULL;
 		}
 

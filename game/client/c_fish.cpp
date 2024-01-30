@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -352,4 +352,3 @@ void C_Fish::OnDataChanged( DataUpdateType_t type )
 		return;
 	}
 }
-

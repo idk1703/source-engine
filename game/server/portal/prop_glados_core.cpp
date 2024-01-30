@@ -10,7 +10,7 @@
 #include "props.h"				// CPhysicsProp base class
 #include "saverestore_utlvector.h"
 
-#define GLADOS_CORE_MODEL_NAME "models/props_bts/glados_ball_reference.mdl" 
+#define GLADOS_CORE_MODEL_NAME "models/props_bts/glados_ball_reference.mdl"
 
 static const char *s_pAnimateThinkContext = "Animate";
 
@@ -33,7 +33,7 @@ public:
 	CPropGladosCore();
 	~CPropGladosCore();
 
-	typedef enum 
+	typedef enum
 	{
 		CORETYPE_CURIOUS,
 		CORETYPE_AGGRESSIVE,
@@ -60,7 +60,7 @@ public:
 	void	AnimateThink ( void );
 
 	void	SetupVOList ( void );
-	
+
 	void	OnPhysGunPickup( CBasePlayer* pPhysGunUser, PhysGunPickup_t reason );
 
 private:
@@ -83,7 +83,7 @@ private:
 LINK_ENTITY_TO_CLASS( prop_glados_core, CPropGladosCore );
 
 //-----------------------------------------------------------------------------
-// Save/load 
+// Save/load
 //-----------------------------------------------------------------------------
 BEGIN_DATADESC( CPropGladosCore )
 
@@ -105,7 +105,7 @@ BEGIN_DATADESC( CPropGladosCore )
 	DEFINE_THINKFUNC( TalkingThink ),
 	DEFINE_THINKFUNC( PanicThink ),
 	DEFINE_THINKFUNC( AnimateThink ),
-	
+
 END_DATADESC()
 
 CPropGladosCore::CPropGladosCore()
@@ -236,7 +236,7 @@ void CPropGladosCore::Precache( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Switch to panic think, play panic vo and animations
-// Input  : &inputdata - 
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CPropGladosCore::InputPanic( inputdata_t &inputdata )
 {
@@ -273,7 +273,7 @@ void CPropGladosCore::PanicThink ( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Start playing personality VO list
-// Input  : &inputdata - 
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CPropGladosCore::InputStartTalking ( inputdata_t &inputdata )
 {
@@ -328,8 +328,8 @@ void CPropGladosCore::TalkingThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CPropGladosCore::AnimateThink()
 {
@@ -366,7 +366,7 @@ void CPropGladosCore::SetupVOList( void )
 			m_iszPanicSoundScriptName =  AllocPooledString( "Portal.Glados_core.Curiosity_15" );
 			m_iszLookAnimationName = AllocPooledString( CURIOUS_LOOK_ANINAME );
 			m_nSkin = CURIOUS_SKIN;
-			
+
 		}
 		break;
 	case CORETYPE_AGGRESSIVE:

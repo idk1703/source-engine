@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -75,7 +75,7 @@ class CTrailParticles : public CSimpleEmitter
 	DECLARE_CLASS( CTrailParticles, CSimpleEmitter );
 public:
 	CTrailParticles( const char *pDebugName );
-	
+
 	static CTrailParticles	*Create( const char *pDebugName )	{	return new CTrailParticles( pDebugName );	}
 
 	virtual void RenderParticles( CParticleRenderIterator *pIterator );
@@ -83,7 +83,7 @@ public:
 
 	//Setup for point emission
 	virtual void	Setup( const Vector &origin, const Vector *direction, float angularSpread, float minSpeed, float maxSpeed, float gravity, float dampen, int flags, bool bNotCollideable = false );
-	
+
 	void SetFlag( int flags )				{	m_fFlags |= flags;	}
 	void SetVelocityDampen( float dampen )	{	m_flVelocityDampen = dampen;	}
 	void SetGravity( float gravity )		{	m_ParticleCollision.SetGravity( gravity );	}
@@ -110,7 +110,7 @@ class CSphereTrails : public CSimpleEmitter
 	DECLARE_CLASS( CSphereTrails, CSimpleEmitter );
 public:
 	CSphereTrails( const char *pDebugName, const Vector &origin, float innerRadius, float outerRadius, float speed, int entityIndex, int attachment );
-	
+
 	virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
 	virtual void RenderParticles( CParticleRenderIterator *pIterator );
 	virtual void Update( float flTimeDelta );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -25,20 +25,20 @@ Vector g_MainViewOrigin(0, 0, 0), g_MainViewForward(1, 0, 0), g_MainViewRight(0,
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pMaterial - 
+// Purpose:
+// Input  : *pMaterial -
 //-----------------------------------------------------------------------------
 void GL_UnloadMaterial( IMaterial *pMaterial )
 {
-	if ( pMaterial ) 
+	if ( pMaterial )
 	{
 		pMaterial->DecrementReferenceCount();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pName - 
+// Purpose:
+// Input  : *pName -
 // Output : IMaterial
 //-----------------------------------------------------------------------------
 static IMaterial *GL_LoadMaterialNoRef( const char *pName, const char *pTextureGroupName )
@@ -53,19 +53,19 @@ static IMaterial *GL_LoadMaterialNoRef( const char *pName, const char *pTextureG
 	{
 		material = g_materialEmpty;
 	}
-	
+
 	return material;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pName - 
+// Purpose:
+// Input  : *pName -
 // Output : IMaterial
 //-----------------------------------------------------------------------------
 IMaterial *GL_LoadMaterial( const char *pName, const char *pTextureGroupName )
 {
 	IMaterial *material;
-	
+
 	material = GL_LoadMaterialNoRef( pName, pTextureGroupName );
 	if( material )
 	{
@@ -73,4 +73,3 @@ IMaterial *GL_LoadMaterial( const char *pName, const char *pTextureGroupName )
 	}
 	return material;
 }
-

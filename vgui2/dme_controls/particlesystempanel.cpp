@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -30,7 +30,7 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Enums
 //-----------------------------------------------------------------------------
-enum 
+enum
 {
 	SCROLLBAR_SIZE=18,  // the width of a scrollbar
 	WINDOW_BORDER_WIDTH=2 // the width of the window's border
@@ -303,7 +303,7 @@ void CParticleSystemPanel::OnPaint3D()
 	CMatRenderContextPtr pRenderContext( MaterialSystem() );
 	pRenderContext->BindLightmapTexture( m_pLightmapTexture );
 	pRenderContext->BindLocalCubemap( m_DefaultEnvCubemap );
-	 
+
 	// Draw axes
 	pRenderContext->MatrixMode( MATERIAL_MODEL );
 	pRenderContext->PushMatrix();
@@ -335,7 +335,7 @@ void CParticleSystemPanel::OnPaint3D()
 	pRenderContext->MatrixMode( MATERIAL_MODEL );
 	pRenderContext->PopMatrix();
 }
-	    
+
 
 //-----------------------------------------------------------------------------
 //
@@ -366,7 +366,7 @@ private:
 	CParticleSystemPanel *m_pParticleSystemPanel;
 };
 
-	
+
 //-----------------------------------------------------------------------------
 // Contstructor
 //-----------------------------------------------------------------------------
@@ -593,7 +593,7 @@ void CParticleSystemPreviewPanel::OnThink()
 	else
 	{
 		char buf[256];
-		Q_snprintf( buf, sizeof(buf), "Particle Count: %5d/%5d", 
+		Q_snprintf( buf, sizeof(buf), "Particle Count: %5d/%5d",
 			pParticleSystem->m_nActiveParticles, pParticleSystem->m_nAllocatedParticles );
 		m_pParticleCount->SetText( buf );
 	}

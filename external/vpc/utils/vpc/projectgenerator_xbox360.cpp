@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2006, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: VPC
 //
@@ -44,7 +44,7 @@ bool CProjectGenerator_Xbox360::WriteFile( CProjectFile *pFile )
 	}
 
 	m_XMLWriter.PopNode( true );
-	
+
 	return true;
 }
 
@@ -67,7 +67,7 @@ bool CProjectGenerator_Xbox360::WriteFolder( CProjectFolder *pFolder )
 	}
 
 	m_XMLWriter.PopNode( true );
-	
+
 	return true;
 }
 
@@ -104,7 +104,7 @@ bool CProjectGenerator_Xbox360::WriteConfiguration( CProjectConfiguration *pConf
 		int sortedIndex = pConfig->m_PropertyStates.m_PropertiesInOutputOrder[i];
 		WriteProperty( &pConfig->m_PropertyStates.m_Properties[sortedIndex] );
 	}
-	
+
 	if ( !pConfig->m_bIsFileConfig && pConfig->m_PropertyStates.m_Properties.Count() )
 	{
 		WriteProperty( NULL, "UseOfMFC", "-1" );
@@ -160,7 +160,7 @@ bool CProjectGenerator_Xbox360::WriteConfiguration( CProjectConfiguration *pConf
 
 	if ( !WriteTool( "VCPostBuildEventTool", pConfig->GetPostBuildEventTool() ) )
 		return false;
-	
+
 	if ( !pConfig->m_bIsFileConfig )
 	{
 		m_XMLWriter.PushNode( "DebuggerTool" );
@@ -176,7 +176,7 @@ bool CProjectGenerator_Xbox360::WriteToXML()
 {
 	m_XMLWriter.PushNode( "VisualStudioProject" );
 	m_XMLWriter.Write( "ProjectType=\"Visual C++\"" );
-	
+
 	if ( g_pVPC->BUse2008() )
 		m_XMLWriter.Write( "Version=\"9.00\"" );
 	else
@@ -196,7 +196,7 @@ bool CProjectGenerator_Xbox360::WriteToXML()
 	m_XMLWriter.PopNode( true );
 
 	CUtlVector< CUtlString > configurationNames;
-	m_pVCProjGenerator->GetAllConfigurationNames( configurationNames ); 
+	m_pVCProjGenerator->GetAllConfigurationNames( configurationNames );
 
 	// write the root configurations
 	m_XMLWriter.PushNode( "Configurations" );
@@ -282,9 +282,9 @@ bool CProjectGenerator_Xbox360::WriteTool( const char *pToolName, const CProject
 	}
 
 	m_XMLWriter.PopNode( false );
-	
+
 	return true;
-}	
+}
 
 bool CProjectGenerator_Xbox360::WriteProperty( const PropertyState_t *pPropertyState, const char *pOutputName, const char *pOutputValue )
 {

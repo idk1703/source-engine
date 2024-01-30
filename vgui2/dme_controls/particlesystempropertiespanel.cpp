@@ -65,7 +65,7 @@ static int __cdecl ParticleFunctionNameSortFunc( vgui::ListPanel *pPanel, const 
 	return Q_stricmp( string1, string2 );
 }
 
-CParticleFunctionPickerFrame::CParticleFunctionPickerFrame( vgui::Panel *pParent, const char *pTitle ) : 
+CParticleFunctionPickerFrame::CParticleFunctionPickerFrame( vgui::Panel *pParent, const char *pTitle ) :
 	BaseClass( pParent, "ParticleFunctionPickerFrame" )
 {
 	SetDeleteSelfOnClose( true );
@@ -100,7 +100,7 @@ CParticleFunctionPickerFrame::~CParticleFunctionPickerFrame()
 //-----------------------------------------------------------------------------
 void CParticleFunctionPickerFrame::RefreshParticleFunctions( CDmeParticleSystemDefinition *pParticleSystem, ParticleFunctionType_t type )
 {
-	m_pFunctionList->RemoveAll();	
+	m_pFunctionList->RemoveAll();
 	if ( !pParticleSystem )
 		return;
 
@@ -264,7 +264,7 @@ static int __cdecl ParticleChildrenNameSortFunc( vgui::ListPanel *pPanel, const 
 	return Q_stricmp( string1, string2 );
 }
 
-CParticleChildrenPickerFrame::CParticleChildrenPickerFrame( vgui::Panel *pParent, const char *pTitle, IParticleSystemPropertiesPanelQuery *pQuery ) : 
+CParticleChildrenPickerFrame::CParticleChildrenPickerFrame( vgui::Panel *pParent, const char *pTitle, IParticleSystemPropertiesPanelQuery *pQuery ) :
 	BaseClass( pParent, "ParticleChildrenPickerFrame" ), m_pQuery( pQuery )
 {
 	SetDeleteSelfOnClose( true );
@@ -323,7 +323,7 @@ void CParticleChildrenPickerFrame::RefreshChildrenList( CDmeParticleSystemDefini
 		}
 
 		KeyValues *kv = new KeyValues( "node" );
-		kv->SetString( "name", pName ); 
+		kv->SetString( "name", pName );
 		SetElementKeyValue( kv, "particleSystem", pParticleSystem );
 
 		m_pChildrenList->AddItem( kv, 0, false, false );
@@ -424,8 +424,8 @@ public:
 
 private:
 	MESSAGE_FUNC_PARAMS( OnOpenContextMenu, "OpenContextMenu", kv );
-	MESSAGE_FUNC_PARAMS( OnItemSelected, "ItemSelected", kv );	
-	MESSAGE_FUNC_PARAMS( OnItemDeselected, "ItemDeselected", kv );	
+	MESSAGE_FUNC_PARAMS( OnItemSelected, "ItemSelected", kv );
+	MESSAGE_FUNC_PARAMS( OnItemDeselected, "ItemDeselected", kv );
 	MESSAGE_FUNC( OnAdd, "Add" );
 	MESSAGE_FUNC( OnRemove, "Remove" );
 	MESSAGE_FUNC( OnRename, "Rename" );
@@ -572,7 +572,7 @@ void CParticleFunctionBrowser::RefreshParticleFunctionList()
 		selectedItems.AddToTail( GetSelectedFunction( i ) );
 	}
 
-	m_pFunctionList->RemoveAll();	
+	m_pFunctionList->RemoveAll();
 
 	int nSelectedCount = selectedItems.Count();
 	nCount = m_hParticleSystem->GetParticleFunctionCount( m_FuncType );
@@ -658,7 +658,7 @@ void CParticleFunctionBrowser::OnMoveDown( )
 	{
 		CUndoScopeGuard guard( 0, NOTIFY_SETDIRTYFLAG, "Move Function Down", "Move Function Down" );
 		m_hParticleSystem->MoveFunctionDown( m_FuncType, pFunction );
-	}	
+	}
 	PostActionSignal( new KeyValues( "ParticleSystemModified" ) );
 }
 
@@ -766,7 +766,7 @@ void CParticleFunctionBrowser::OnRemove( )
 		{
 			nRow = 0;
 		}
-		else if ( nRow >= m_pFunctionList->GetItemCount() ) 
+		else if ( nRow >= m_pFunctionList->GetItemCount() )
 		{
 			nRow = m_pFunctionList->GetItemCount() - 1;
 		}
@@ -894,11 +894,11 @@ void CParticleFunctionBrowser::OnOpenContextMenu( KeyValues *kv )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CParticleFunctionBrowser::OnKeyCodeTyped( vgui::KeyCode code )
 {
-	if ( code == KEY_DELETE ) 
+	if ( code == KEY_DELETE )
 	{
 		OnRemove();
 	}

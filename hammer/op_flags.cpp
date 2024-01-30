@@ -63,26 +63,26 @@ void COP_Flags::UpdateData( int Mode, PVOID pData, bool bCanEdit )
 	{
 		return;
 	}
-	
+
 	CEditGameClass *pObj = (CEditGameClass*) pData;
 
 	if (Mode == LoadFirstData)
 	{
 		UpdateForClass(pObj);
-		
+
 	}
 	else if (Mode == LoadData)
 	{
 		MergeForClass(pObj);
 	}
-    CreateCheckList();
+	CreateCheckList();
 
 	m_CheckList.EnableWindow( m_bCanEdit ? TRUE : FALSE );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool COP_Flags::SaveData(void)
@@ -143,7 +143,7 @@ void COP_Flags::UpdateForClass(CEditGameClass* pObj)
 
 		if (pVar)
 		{
-			int nItems = pVar->GetFlagCount();		
+			int nItems = pVar->GetFlagCount();
 
 			for ( int i = 0; i < nItems; i++ )
 			{
@@ -151,7 +151,7 @@ void COP_Flags::UpdateForClass(CEditGameClass* pObj)
 				newItem.nItemBit = pVar->GetFlagMask( i );
 				newItem.pszItemString = pVar->GetFlagCaption( i );
 				newItem.state = pObj->GetSpawnFlag( newItem.nItemBit ) ? 1 : 0;
-				m_CheckListItems.AddToTail( newItem );			
+				m_CheckListItems.AddToTail( newItem );
 			}
 		}
 	}
@@ -180,7 +180,7 @@ void COP_Flags::UpdateForClass(CEditGameClass* pObj)
 				newItem.pszItemString = "????";
 				newItem.state = 1;
 				m_CheckListItems.AddToTail( newItem );
-			}				
+			}
 		}
 	}
 }
@@ -204,9 +204,9 @@ void COP_Flags::MergeForClass(CEditGameClass* pObj)
 		GDinputvariable *pVar = pClass->VarForName("spawnflags");
 
 		for ( int i = m_CheckListItems.Count() - 1; i >= 0; i-- )
-		{	
+		{
 			bool bFound = false;
-			CheckListItem currentItem = m_CheckListItems.Element( i ); 
+			CheckListItem currentItem = m_CheckListItems.Element( i );
 			if ( pVar )
 			{
 				for ( int j = 0; j < pVar->GetFlagCount(); j++ )
@@ -232,7 +232,7 @@ void COP_Flags::MergeForClass(CEditGameClass* pObj)
 			}
 		}
 	}
-	Assert( m_CheckListItems.Count() <= 32 );	
+	Assert( m_CheckListItems.Count() <= 32 );
 }
 
 //-----------------------------------------------------------------------------
@@ -242,7 +242,7 @@ void COP_Flags::MergeForClass(CEditGameClass* pObj)
 void COP_Flags::CreateCheckList()
 {
 	m_CheckList.ResetContent();
-	
+
 	if ( m_nNumSelectedObjects > 1 )
 	{
 		m_CheckList.SetCheckStyle(BS_AUTO3STATE);
@@ -265,8 +265,8 @@ void COP_Flags::OnUpdateSpawnFlags( unsigned long value )
 	}
 }
 
-BOOL COP_Flags::OnInitDialog() 
-{	
+BOOL COP_Flags::OnInitDialog()
+{
 	CObjectPage::OnInitDialog();
 
 	m_nNumSelectedObjects = 0;
@@ -281,11 +281,11 @@ BOOL COP_Flags::OnInitDialog()
 		CAnchorDef( IDC_CHECKLIST, k_eSimpleAnchorAllSides )
 	};
 	m_AnchorMgr.Init( GetSafeHwnd(), anchorDefs, ARRAYSIZE( anchorDefs ) );
-	
-	return TRUE;	             
+
+	return TRUE;
 }
 
-void COP_Flags::OnCheckListChange() 
+void COP_Flags::OnCheckListChange()
 {
 	if ( !m_pEntityPage )
 		return;
@@ -293,11 +293,11 @@ void COP_Flags::OnCheckListChange()
 	unsigned long bitsSet = 0;
 	unsigned long triStateMask = 0;
 
-	// This is just like SaveData.. collect the state of all the checks.	
+	// This is just like SaveData.. collect the state of all the checks.
 	for ( int i = 0; i < m_CheckListItems.Count(); i++ )
 	{
 		CheckListItem currentItem = m_CheckListItems.Element( i );
-		
+
 		// If multiple of the selected entities have a different value for this flag,
 		// note that. The entity page will use triStateMask to denote flags that
 		// it should leave alone.
@@ -307,7 +307,7 @@ void COP_Flags::OnCheckListChange()
 			bitsSet |= currentItem.nItemBit;
 	}
 
-	m_pEntityPage->OnUpdateSpawnFlags( triStateMask, bitsSet );    
+	m_pEntityPage->OnUpdateSpawnFlags( triStateMask, bitsSet );
 }
 
 void COP_Flags::OnSize( UINT nType, int cx, int cy )

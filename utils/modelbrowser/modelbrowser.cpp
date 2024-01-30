@@ -133,7 +133,7 @@ void UpdateStudioRenderConfig( void )
 	s_StudioRenderConfig.fEyeShiftX = r_eyeshift_x.GetFloat();
 	s_StudioRenderConfig.fEyeShiftY = r_eyeshift_y.GetFloat();
 	s_StudioRenderConfig.fEyeShiftZ = r_eyeshift_z.GetFloat();
-	s_StudioRenderConfig.fEyeSize = r_eyesize.GetFloat();	
+	s_StudioRenderConfig.fEyeSize = r_eyesize.GetFloat();
 	if( mat_softwareskin.GetInt() || mat_wireframe.GetInt() )
 	{
 		s_StudioRenderConfig.bSoftwareSkin = true;
@@ -153,7 +153,7 @@ void UpdateStudioRenderConfig( void )
 	s_StudioRenderConfig.skin = r_skin.GetInt();
 	s_StudioRenderConfig.maxDecalsPerModel = r_maxmodeldecal.GetInt();
 	s_StudioRenderConfig.bWireframeDecals = r_modelwireframedecal.GetInt() != 0;
-	
+
 	s_StudioRenderConfig.fullbright = g_pMaterialSystemConfig->nFullbright;
 	s_StudioRenderConfig.bSoftwareLighting = g_pMaterialSystemConfig->bSoftwareLighting;
 
@@ -198,7 +198,7 @@ bool CModelBrowserApp::Create()
 	if ( !BaseClass::Create() )
 		return false;
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "vstdlib.dll",			PROCESS_UTILS_INTERFACE_VERSION },
 		{ "studiorender.dll",		STUDIO_RENDER_INTERFACE_VERSION },
@@ -238,7 +238,7 @@ bool CModelBrowserApp::PreInit( )
 		return false;
 
 	// initialize interfaces
-	CreateInterfaceFn appFactory = GetFactory(); 
+	CreateInterfaceFn appFactory = GetFactory();
 	if (!vgui::VGui_InitMatSysInterfacesList( "ModelBrowser", &appFactory, 1 ))
 		return false;
 
@@ -281,7 +281,7 @@ class CMDLBrowserFrame : public vgui::Frame
 {
 	DECLARE_CLASS_SIMPLE( CMDLBrowserFrame, vgui::Frame );
 public:
-	CMDLBrowserFrame() : BaseClass( NULL, "MDLPickerFrame" ) 
+	CMDLBrowserFrame() : BaseClass( NULL, "MDLPickerFrame" )
 	{
 		m_pMDLPicker = new CMDLPicker( this );
 		SetTitle( "Model Browser", true );
@@ -298,7 +298,7 @@ public:
 		m_pConsole->AddActionSignalTarget( this );
 	}
 
-	virtual ~CMDLBrowserFrame() 
+	virtual ~CMDLBrowserFrame()
 	{
 		delete m_pMDLPicker;
 	}
@@ -390,7 +390,7 @@ private:
 //-----------------------------------------------------------------------------
 vgui::PHandle CreatePickerFrame()
 {
-	vgui::Frame *pMainPanel = new CMDLBrowserFrame( ); 
+	vgui::Frame *pMainPanel = new CMDLBrowserFrame( );
 	pMainPanel->SetParent( g_pVGuiSurface->GetEmbeddedPanel() );
 
 	vgui::PHandle hMainPanel;
@@ -456,13 +456,13 @@ int CModelBrowserApp::Main()
 		UpdateStudioRenderConfig();
 
 		AppPumpMessages();
-	
+
 		vgui::GetAnimationController()->UpdateAnimations( Sys_FloatTime() );
 
 		g_pMaterialSystem->BeginFrame( 0 );
 		g_pStudioRender->BeginFrame();
 
-		pRenderContext->ClearColor4ub( 76, 88, 68, 255 ); 
+		pRenderContext->ClearColor4ub( 76, 88, 68, 255 );
 		pRenderContext->ClearBuffers( true, true );
 
 		g_pVGui->RunFrame();
@@ -493,6 +493,3 @@ int CModelBrowserApp::Main()
 	SpewOutputFunc( NULL );
 	return 1;
 }
-
-
-

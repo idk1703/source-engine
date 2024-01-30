@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,7 +37,7 @@ public:
 
 private:
 
-	EHANDLE				m_hEntity;	
+	EHANDLE				m_hEntity;
 
 	CMaterialReference	m_RedMaterial;
 	CMaterialReference	m_BlueMaterial;
@@ -53,7 +53,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose:  
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFFlagStatus : public vgui::EditablePanel
 {
@@ -67,7 +67,7 @@ public:
 	void UpdateStatus( void );
 
 	void SetEntity( EHANDLE hEntity )
-	{ 
+	{
 		m_hEntity = hEntity;
 
 		if ( m_pArrow )
@@ -91,7 +91,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Purpose:  
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFHudFlagObjectives : public vgui::EditablePanel, public CGameEventListener
 {
@@ -110,7 +110,7 @@ public: // IGameEventListener:
 	virtual void FireGameEvent( IGameEvent *event );
 
 private:
-	
+
 	void UpdateStatus( C_BasePlayer *pNewOwner = NULL, C_BaseEntity *pFlagEntity = NULL );
 	void SetPlayingToLabelVisible( bool bVisible );
 	void SetCarriedImage( const char *pchIcon );
@@ -141,7 +141,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFFlagCalloutPanel : public CHudElement, public vgui::EditablePanel
 {
@@ -155,13 +155,13 @@ public:
 	virtual void OnTick( void );
 	virtual void PaintBackground( void );
 	virtual void Paint( void );
-	
+
 	void	GetCalloutPosition( const Vector &vecDelta, float flRadius, float *xpos, float *ypos, float *flRotation );
 	void	SetFlag( CCaptureFlag *pFlag, float flDuration, Vector &vecOffset );
 	static CTFFlagCalloutPanel *AddFlagCalloutIfNotFound( CCaptureFlag *pFlag, float flDuration, Vector &vecLocation );
 	bool	ShouldShowFlagIconToLocalPlayer( void );
 	void	ScaleAndPositionCallout( float flScale = 1.f );
-	
+
 	CHandle< CCaptureFlag > m_hFlag;
 
 private:

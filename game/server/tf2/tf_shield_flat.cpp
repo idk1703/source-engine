@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -73,7 +73,7 @@ void CShieldFlat::SetSize( float w, float h )
 //-----------------------------------------------------------------------------
 void CShieldFlat::ComputeWorldSpaceSurroundingBox( Vector *pWorldMins, Vector *pWorldMaxs )
 {
-	TransformAABB( CollisionProp()->CollisionToWorldTransform(), 
+	TransformAABB( CollisionProp()->CollisionToWorldTransform(),
 		CollisionProp()->OBBMins(), CollisionProp()->OBBMaxs(), *pWorldMins, *pWorldMaxs );
 }
 
@@ -81,7 +81,7 @@ void CShieldFlat::ComputeWorldSpaceSurroundingBox( Vector *pWorldMins, Vector *p
 //-----------------------------------------------------------------------------
 // Shield points
 //-----------------------------------------------------------------------------
-const Vector& CShieldFlat::GetPoint( int x, int y ) 
+const Vector& CShieldFlat::GetPoint( int x, int y )
 {
 	if ((m_LastAngles != GetAbsAngles()) || (m_LastPosition != GetAbsOrigin() ))
 	{
@@ -147,4 +147,3 @@ CShieldFlat* CreateFlatShield( CBaseEntity *pOwner, float w, float h, const Vect
 
 	return pShield;
 }
-

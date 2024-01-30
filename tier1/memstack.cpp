@@ -43,7 +43,7 @@ CMemoryStack::CMemoryStack()
  	m_maxSize( 0 )
 {
 }
-	
+
 //-------------------------------------
 
 CMemoryStack::~CMemoryStack()
@@ -95,7 +95,7 @@ bool CMemoryStack::Init( unsigned maxSize, unsigned commitSize, unsigned initial
 	}
 
 	m_maxSize = AlignValue( m_maxSize, m_commitSize );
-	
+
 	Assert( m_maxSize % pageSize == 0 && m_commitSize % pageSize == 0 && m_commitSize <= m_maxSize );
 
 	m_pBase = (unsigned char *)VirtualAlloc( NULL, m_maxSize, VA_RESERVE_FLAGS, PAGE_NOACCESS );
@@ -173,9 +173,9 @@ void CMemoryStack::Term()
 //-------------------------------------
 
 int CMemoryStack::GetSize()
-{ 
+{
 #ifdef _WIN32
-	return m_pCommitLimit - m_pBase; 
+	return m_pCommitLimit - m_pBase;
 #else
 	return m_maxSize;
 #endif
@@ -195,7 +195,7 @@ bool CMemoryStack::CommitTo( byte *pNextAlloc ) RESTRICT
 #if defined(_WIN32)
 	unsigned char *	pNewCommitLimit = AlignValue( pNextAlloc, m_commitSize );
 	unsigned 		commitSize 		= pNewCommitLimit - m_pCommitLimit;
-	
+
 	if ( GetSize() )
 		MemAlloc_RegisterExternalDeallocation( CMemoryStack, GetBase(), GetSize() );
 
@@ -226,7 +226,7 @@ void CMemoryStack::FreeToAllocPoint( MemoryStackMark_t mark, bool bDecommit )
 {
 	void *pAllocPoint = m_pBase + mark;
 	Assert( pAllocPoint >= m_pBase && pAllocPoint <= m_pNextAlloc );
-	
+
 	if ( pAllocPoint >= m_pBase && pAllocPoint < m_pNextAlloc )
 	{
 		if ( bDecommit )

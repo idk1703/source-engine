@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose: A collection of utility classes to simplify file I/O, and
-//			as much as possible contain portability problems. Here avoiding 
+//			as much as possible contain portability problems. Here avoiding
 //			including windows.h.
 //
 //=============================================================================
@@ -27,10 +27,10 @@
 #if defined(_WIN32)
 //#include <direct.h>
 #include <io.h>
-// unset to force to use stdio implementation 
+// unset to force to use stdio implementation
 #define WIN32_FILEIO
 
-#if defined(ASYNC_FILEIO) 
+#if defined(ASYNC_FILEIO)
 #if defined(_WIN32) && !defined(WIN32_FILEIO)
 #error "trying to use async io without win32 filesystem API usage, that isn't doable"
 #endif
@@ -63,7 +63,7 @@
 #define _A_SYSTEM 0
 #define _A_ARCH   0
 
-#endif 
+#endif
 
 #include "tier1/fileio.h"
 #include "tier1/utlbuffer.h"
@@ -132,13 +132,13 @@ const char * CPathString::GetUTF8Path()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Gets wchar_t based path, with \\?\ pre-pended (allowing long paths 
+// Purpose: Gets wchar_t based path, with \\?\ pre-pended (allowing long paths
 // on Win32, should only be used with unicode extended path aware filesystem calls)
 //-----------------------------------------------------------------------------
 const wchar_t *CPathString::GetWCharPathPrePended()
 {
 	PopulateWCharPath();
-	return m_pwchWideCharPathPrepended; 
+	return m_pwchWideCharPathPrepended;
 }
 
 
@@ -230,7 +230,7 @@ CDirWatcher::~CDirWatcher()
 	{
 		FSEventStreamStop( (FSEventStreamRef)m_WatcherStream );
 		FSEventStreamInvalidate( (FSEventStreamRef)m_WatcherStream );
-		FSEventStreamRelease( (FSEventStreamRef)m_WatcherStream );		
+		FSEventStreamRelease( (FSEventStreamRef)m_WatcherStream );
 		m_WatcherStream = 0;
 	}
 #endif
@@ -265,7 +265,7 @@ public:
 		if ( dwNumberOfBytesTransfered > sizeof(FILE_NOTIFY_INFORMATION) )
 		{
 			FILE_NOTIFY_INFORMATION *pFileNotifyInformation = (FILE_NOTIFY_INFORMATION *)pDirWatcherOverlapped->m_pDirWatcher->m_pFileInfo;
-			do 
+			do
 			{
 				// null terminate the string and turn it to UTF-8
 				int cNumWChars = pFileNotifyInformation->FileNameLength / sizeof(wchar_t);
@@ -298,24 +298,24 @@ void CheckDirectoryForChanges( const char *path_buff, CDirWatcher *pDirWatch, bo
 	struct dirent *dirent;
 	struct timespec ts = { 0, 0 };
 	bool bTimeSet = false;
-	
-	while ( (dirent = readdir(dir)) != NULL ) 
+
+	while ( (dirent = readdir(dir)) != NULL )
 	{
 		if (strcmp(dirent->d_name, ".") == 0 || strcmp(dirent->d_name, "..") == 0)
 			continue;
-		
+
 		snprintf( fullpath, PATH_MAX, "%s/%s", path_buff, dirent->d_name );
-		
+
 		struct stat    st;
 		if (lstat(fullpath, &st) != 0)
 			continue;
-		
+
 		if ( S_ISDIR(st.st_mode) && bRecurse )
 		{
 			CheckDirectoryForChanges( fullpath, pDirWatch, bRecurse );
 		}
 		else if ( st.st_mtimespec.tv_sec > pDirWatch->m_modTime.tv_sec ||
-				 ( st.st_mtimespec.tv_sec == pDirWatch->m_modTime.tv_sec && st.st_mtimespec.tv_nsec > pDirWatch->m_modTime.tv_nsec ) )
+				( st.st_mtimespec.tv_sec == pDirWatch->m_modTime.tv_sec && st.st_mtimespec.tv_nsec > pDirWatch->m_modTime.tv_nsec ) )
 		{
 			ts = st.st_mtimespec;
 			bTimeSet = true;
@@ -326,39 +326,39 @@ void CheckDirectoryForChanges( const char *path_buff, CDirWatcher *pDirWatch, bo
 
 	if ( bTimeSet )
 		pDirWatch->m_modTime = ts;
-	closedir(dir);	
+	closedir(dir);
 }
 
-static void fsevents_callback( ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents,void *eventPaths, 
-							  const FSEventStreamEventFlags eventMasks[], const FSEventStreamEventId eventIDs[] )
+static void fsevents_callback( ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents,void *eventPaths,
+							const FSEventStreamEventFlags eventMasks[], const FSEventStreamEventId eventIDs[] )
 {
-    char  path_buff[PATH_MAX];
-	for (int i=0; i < numEvents; i++) 
+	char  path_buff[PATH_MAX];
+	for (int i=0; i < numEvents; i++)
 	{
 		char **paths = (char **)eventPaths;
-		
-        strcpy(path_buff, paths[i]);
-        int len = strlen(path_buff);
-        if (path_buff[len-1] == '/') 
+
+		strcpy(path_buff, paths[i]);
+		int len = strlen(path_buff);
+		if (path_buff[len-1] == '/')
 		{
-            // chop off a trailing slash
-            path_buff[--len] = '\0';
-        }
-		
+			// chop off a trailing slash
+			path_buff[--len] = '\0';
+		}
+
 		bool bRecurse = false;
-		
-        if (eventMasks[i] & kFSEventStreamEventFlagMustScanSubDirs
+
+		if (eventMasks[i] & kFSEventStreamEventFlagMustScanSubDirs
 			|| eventMasks[i] & kFSEventStreamEventFlagUserDropped
-			|| eventMasks[i] & kFSEventStreamEventFlagKernelDropped) 
+			|| eventMasks[i] & kFSEventStreamEventFlagKernelDropped)
 		{
-            bRecurse = true;
-        } 
-		
+			bRecurse = true;
+		}
+
 		CDirWatcher *pDirWatch = (CDirWatcher *)clientCallBackInfo;
 		// make sure its in our subdir
 		if ( !V_strnicmp( path_buff, pDirWatch->m_BaseDir.String(), pDirWatch->m_BaseDir.Length() ) )
 			CheckDirectoryForChanges( path_buff, pDirWatch, bRecurse );
-    }
+	}
 }
 
 
@@ -373,7 +373,7 @@ void CDirWatcher::SetDirToWatch( const char *pchDir )
 {
 	if ( !pchDir || !*pchDir )
 		return;
-	
+
 	CPathString strPath( pchDir );
 #ifdef WIN32
 	// open the directory
@@ -392,34 +392,34 @@ void CDirWatcher::SetDirToWatch( const char *pchDir )
 		Assert( !"Failed to CFStringCreateWithCString watcher path" );
 		return;
 	}
-	
-    CFArrayRef pathsToWatch = CFArrayCreate(NULL, (const void **)&mypath, 1, NULL);
-    FSEventStreamContext callbackInfo = {0, this, NULL, NULL, NULL};
-    CFAbsoluteTime latency = 1.0; // Latency in seconds
 
-    m_WatcherStream = (void *)FSEventStreamCreate(NULL,
-								 &fsevents_callback,
-								 &callbackInfo,
-								 pathsToWatch,
-								 kFSEventStreamEventIdSinceNow, 
-								 latency,
-								 kFSEventStreamCreateFlagNoDefer
-								 );
-	
-    FSEventStreamScheduleWithRunLoop( (FSEventStreamRef)m_WatcherStream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+	CFArrayRef pathsToWatch = CFArrayCreate(NULL, (const void **)&mypath, 1, NULL);
+	FSEventStreamContext callbackInfo = {0, this, NULL, NULL, NULL};
+	CFAbsoluteTime latency = 1.0; // Latency in seconds
+
+	m_WatcherStream = (void *)FSEventStreamCreate(NULL,
+								&fsevents_callback,
+								&callbackInfo,
+								pathsToWatch,
+								kFSEventStreamEventIdSinceNow,
+								latency,
+								kFSEventStreamCreateFlagNoDefer
+								);
+
+	FSEventStreamScheduleWithRunLoop( (FSEventStreamRef)m_WatcherStream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
 	CFRelease(pathsToWatch );
 	CFRelease( mypath );
-	
+
 	FSEventStreamStart( (FSEventStreamRef)m_WatcherStream );
 
 	char szFullPath[MAX_PATH];
 	Q_MakeAbsolutePath( szFullPath, sizeof(szFullPath), pchDir );
 	m_BaseDir = szFullPath;
-	
+
 	struct timeval tv;
 	gettimeofday( &tv, NULL );
 	TIMEVAL_TO_TIMESPEC( &tv, &m_modTime );
-		
+
 #else
 	Assert( !"Impl me" );
 #endif

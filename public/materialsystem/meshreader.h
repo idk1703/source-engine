@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -26,13 +26,13 @@ public:
 	~CBaseMeshReader();
 
 	// Use BeginRead/EndRead to initialize the mesh reader.
-	void BeginRead( 
-		IMesh* pMesh, 
-		int firstVertex = 0, 
-		int numVertices = 0, 
-		int firstIndex = 0, 
+	void BeginRead(
+		IMesh* pMesh,
+		int firstVertex = 0,
+		int numVertices = 0,
+		int firstIndex = 0,
 		int numIndices = 0 );
-		
+
 	void EndRead();
 
 	// PC can use this if it stores its own copy of meshes around, in case
@@ -41,7 +41,7 @@ public:
 
 	// Resets the mesh builder so it points to the start of everything again
 	void Reset();
-	
+
 
 protected:
 	IMesh *m_pMesh;
@@ -62,7 +62,7 @@ public:
 	const Vector& Position( int iVertex ) const;
 
 	unsigned int Color( int iVertex ) const;
-	
+
 	const float *TexCoord( int iVertex, int stage ) const;
 	void TexCoord2f( int iVertex, int stage, float &s, float &t ) const;
 	const Vector2D& TexCoordVector2D( int iVertex, int stage ) const;
@@ -99,11 +99,11 @@ inline CBaseMeshReader::~CBaseMeshReader()
 	Assert( !m_pMesh );
 }
 
-inline void CBaseMeshReader::BeginRead( 
-	IMesh* pMesh, 
-	int firstVertex, 
-	int numVertices, 
-	int firstIndex, 
+inline void CBaseMeshReader::BeginRead(
+	IMesh* pMesh,
+	int firstVertex,
+	int numVertices,
+	int firstIndex,
 	int numIndices )
 {
 	Assert( pMesh && (!m_pMesh) );
@@ -259,10 +259,3 @@ inline float CMeshReader::BoneWeight( int iVertex ) const
 }
 
 #endif // MESHREADER_H
-
-
-
-
-
-
-

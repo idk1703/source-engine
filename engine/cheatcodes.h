@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //===========================================================================//
-	   
+
 #ifndef CHEATCODES_H
 #define CHEATCODES_H
 

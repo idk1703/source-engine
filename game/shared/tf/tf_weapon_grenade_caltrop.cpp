@@ -53,14 +53,14 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj *CTFGrenadeCaltrop::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, 
+CTFWeaponBaseGrenadeProj *CTFGrenadeCaltrop::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel,
 							        AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
 {
 	// Release several at a time (different directions, angles, speeds, etc.)
 	for ( int i = 0 ; i < GRENADE_CALTROP_RELEASE_COUNT ; i++ )
 	{
 		Vector velocity( random->RandomFloat(-100,100), random->RandomFloat(-100,100), random->RandomFloat(150,200) );
-		CTFGrenadeCaltropProjectile::Create( vecSrc, vecAngles, velocity, angImpulse, 
+		CTFGrenadeCaltropProjectile::Create( vecSrc, vecAngles, velocity, angImpulse,
 			                                 pPlayer, GetTFWpnData(), random->RandomFloat( 10.0f, 15.0f ) );
 	}
 
@@ -88,8 +88,8 @@ END_NETWORK_TABLE()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGrenadeCaltropProjectile* CTFGrenadeCaltropProjectile::Create( const Vector &position, const QAngle &angles, 
-																  const Vector &velocity, const AngularImpulse &angVelocity, 
+CTFGrenadeCaltropProjectile* CTFGrenadeCaltropProjectile::Create( const Vector &position, const QAngle &angles,
+																  const Vector &velocity, const AngularImpulse &angVelocity,
 																  CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo,
 																  float timer, int iFlags )
 {
@@ -192,17 +192,17 @@ void CTFGrenadeCaltropProjectile::Touch( CBaseEntity *pOther )
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGrenadeCaltropProjectile::OnDataChanged(DataUpdateType_t updateType)
 {
 	BaseClass::OnDataChanged(updateType);
-	
+
 	if ( updateType == DATA_UPDATE_CREATED )
 	{
 		/*
 		SetSolidFlags( FSOLID_NOT_STANDABLE );
-		SetSolid( SOLID_BBOX );	
+		SetSolid( SOLID_BBOX );
 
 		SetCollisionBounds( Vector( -2.0f, -2.0f, -2.0f ), Vector( 2.0f, 2.0f, 2.0f ) );
 

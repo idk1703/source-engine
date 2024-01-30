@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -144,7 +144,7 @@ void CGraphPanel::OnTick()
 		return;
 
 	m_flNextStatsUpdateTime = (float)system()->GetFrameTime() + STATS_UPDATE_RATE;
-	RemoteServer().RequestValue(this, "stats");	
+	RemoteServer().RequestValue(this, "stats");
 }
 
 //-----------------------------------------------------------------------------
@@ -223,12 +223,12 @@ void CGraphPanel::CGraphsImage::Paint()
 
 
 	if(!cpu && !fps && !net_i && !net_o && !ping && !players) // no graphs selected
-		return; 
+		return;
 
 	if(points.Count()<2)
 		return; // not enough points yet...
 
-	if(x<=200 || y<=100) 
+	if(x<=200 || y<=100)
 		return; // to small
 
 
@@ -254,7 +254,7 @@ void CGraphPanel::CGraphsImage::Paint()
 	{
 		RangePing+=static_cast<float>(maxPing*0.1); // don't let the top of the range touch the top of the panel
 
-		if(RangePing<=1) 
+		if(RangePing<=1)
 		{ // don't let the zero be at the top of the screen
 			RangePing=1.0;
 		}
@@ -267,12 +267,12 @@ void CGraphPanel::CGraphsImage::Paint()
 		pCpuX = new int[points.Count()];
 		pCpuY = new int[points.Count()];
 	}
-	
+
 	if(fps)
-	{			
+	{
 		RangeFPS+=static_cast<float>(maxFPS*0.1); // don't let the top of the range touch the top of the panel
 
-		if(RangeFPS<=1) 
+		if(RangeFPS<=1)
 		{ // don't let the zero be at the top of the screen
 			RangeFPS=1.0;
 		}
@@ -282,13 +282,13 @@ void CGraphPanel::CGraphsImage::Paint()
 
 	if(net_i)
 	{
-	
-		// put them on a common scale, base it at zero 
+
+		// put them on a common scale, base it at zero
 		Range = max(maxIn,maxOut);
-			
+
 		Range+=static_cast<float>(Range*0.1); // don't let the top of the range touch the top of the panel
 
-		if(Range<=1) 
+		if(Range<=1)
 		{ // don't let the zero be at the top of the screen
 			Range=1.0;
 		}
@@ -299,12 +299,12 @@ void CGraphPanel::CGraphsImage::Paint()
 
 	if(net_o)
 	{
-		// put them on a common scale, base it at zero 
+		// put them on a common scale, base it at zero
 		Range = max(maxIn,maxOut);
-			
+
 		Range+=static_cast<float>(Range*0.1); // don't let the top of the range touch the top of the panel
 
-		if(Range<=1) 
+		if(Range<=1)
 		{ // don't let the zero be at the top of the screen
 			Range=1.0;
 		}
@@ -324,19 +324,19 @@ void CGraphPanel::CGraphsImage::Paint()
 	for(int i=0;i<points.Count();i++)
 	// draw the graphs, left to right
 	{
-	
-		if(cpu) 
+
+		if(cpu)
 		{
 			pCpuX[i] = left+static_cast<int>(i*distPoints);
 			pCpuY[i] = static_cast<int>((1-points[i].cpu)*y);
 		}
-	
+
 		if(net_i)
 		{
 			pInX[i] = left+static_cast<int>(i*distPoints);
 			pInY[i] = static_cast<int>(( (Range-points[i].in)/Range)*y-bottom);
 		}
-		
+
 		if(net_o)
 		{
 			pOutX[i] = left+static_cast<int>(i*distPoints);
@@ -361,36 +361,36 @@ void CGraphPanel::CGraphsImage::Paint()
 			pPlayersY[i] = static_cast<int>(( (RangePlayers-points[i].players)/RangePlayers)*y-bottom);
 		}
 
-	
+
 	}
 	// we use DrawPolyLine, its much, much, much more efficient than calling lots of DrawLine()'s
 
 	if(cpu)
 	{
 		SetColor(CPUColor); // green
-		DrawPolyLine(pCpuX, pCpuY, points.Count());	
+		DrawPolyLine(pCpuX, pCpuY, points.Count());
 		delete [] pCpuX;
 		delete [] pCpuY;
-	} 
+	}
 
-	if(net_i) 
+	if(net_i)
 	{
 		SetColor(NetInColor); // red
-		DrawPolyLine(pInX, pInY, points.Count());	
+		DrawPolyLine(pInX, pInY, points.Count());
 		delete [] pInX;
 		delete [] pInY;
 	}
 	if(net_o)
 	{
 		SetColor(NetOutColor); //yellow
-		DrawPolyLine(pOutX, pOutY, points.Count());	
+		DrawPolyLine(pOutX, pOutY, points.Count());
 		delete [] pOutX;
 		delete [] pOutY;
 	}
 	if(fps)
 	{
 		SetColor(FPSColor);
-		DrawPolyLine(pFPSX, pFPSY, points.Count());	
+		DrawPolyLine(pFPSX, pFPSY, points.Count());
 		delete [] pFPSX;
 		delete [] pFPSY;
 	}
@@ -398,7 +398,7 @@ void CGraphPanel::CGraphsImage::Paint()
 	if(ping)
 	{
 		SetColor(PingColor);
-		DrawPolyLine(pPingX, pPingY, points.Count());	
+		DrawPolyLine(pPingX, pPingY, points.Count());
 		delete [] pPingX;
 		delete [] pPingY;
 	}
@@ -406,11 +406,11 @@ void CGraphPanel::CGraphsImage::Paint()
 	if(players)
 	{
 		SetColor(PlayersColor);
-		DrawPolyLine(pPlayersX, pPlayersY, points.Count());	
+		DrawPolyLine(pPlayersX, pPlayersY, points.Count());
 		delete [] pPlayersX;
 		delete [] pPlayersY;
 	}
-}  
+}
 
 
 //-----------------------------------------------------------------------------
@@ -501,11 +501,11 @@ void CGraphPanel::CGraphsImage::CheckBounds(Points_t p)
 	{
 		minPlayers=avgPoint.players;
 	}
-	
+
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: adds a point to the graph image. 
+// Purpose: adds a point to the graph image.
 //-----------------------------------------------------------------------------
 bool CGraphPanel::CGraphsImage::AddPoint(Points_t p)
 {
@@ -513,7 +513,7 @@ bool CGraphPanel::CGraphsImage::AddPoint(Points_t p)
 	bool recalcBounds=false;
 
 	GetSize(x,y);
-	
+
 	if(avgPoint.cpu>1)  // cpu is a percent !
 	{
 		return false;
@@ -532,7 +532,7 @@ bool CGraphPanel::CGraphsImage::AddPoint(Points_t p)
 		{
 			points.Remove(0);
 		}
-	} 
+	}
 	else if ( timeBetween==MINUTES) // most recent day
 	{
 			while(points.Count() && (p.time-points[0].time)>60*60*24)
@@ -554,7 +554,7 @@ bool CGraphPanel::CGraphsImage::AddPoint(Points_t p)
 
 	int k=0;
 
-	if(x!=0 && points.Count()> x/2) 
+	if(x!=0 && points.Count()> x/2)
 	// there are more points than pixels so thin them out
 	{
 		while(points.Count()> x/2)
@@ -570,14 +570,14 @@ bool CGraphPanel::CGraphsImage::AddPoint(Points_t p)
 			}
 			points.Remove(k); // remove the head node
 			k+=2;
-			if(k>points.Count()) 
+			if(k>points.Count())
 			{
 				k=0;
 			}
 		}
 	}
 
-	if(recalcBounds) 
+	if(recalcBounds)
 	{
 		for(int i=0;i<points.Count();i++)
 		{
@@ -589,7 +589,7 @@ bool CGraphPanel::CGraphsImage::AddPoint(Points_t p)
 	CheckBounds(avgPoint);
 
 	points.AddToTail(avgPoint);
-	
+
 	memset(&avgPoint,0x0,sizeof(Points_t));
 
 	return true;
@@ -699,7 +699,7 @@ void CGraphPanel::OnTextChanged(Panel *panel, const char *text)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGraphPanel::SetAxisLabels(Color c, char *max, char *mid, char *min)
 {

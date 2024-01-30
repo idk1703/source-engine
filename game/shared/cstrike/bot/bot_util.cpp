@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -149,7 +149,7 @@ bool UTIL_KickBotFromTeam( int kickTeam )
 			continue;
 
 		if (!player->IsBot())
-			continue;	
+			continue;
 
 		if (!player->IsAlive() && player->GetTeamNumber() == kickTeam)
 		{
@@ -169,7 +169,7 @@ bool UTIL_KickBotFromTeam( int kickTeam )
 			continue;
 
 		if (!player->IsBot())
-			continue;	
+			continue;
 
 		if (player->GetTeamNumber() == kickTeam)
 		{
@@ -242,7 +242,7 @@ extern CBasePlayer *UTIL_GetClosestPlayer( const Vector &pos, float *distance )
 			closePlayer = static_cast<CBasePlayer *>( player );
 		}
 	}
-	
+
 	if (distance)
 		*distance = (float)sqrt( closeDistSq );
 
@@ -280,7 +280,7 @@ extern CBasePlayer *UTIL_GetClosestPlayer( const Vector &pos, int team, float *d
 			closePlayer = static_cast<CBasePlayer *>( player );
 		}
 	}
-	
+
 	if (distance)
 		*distance = (float)sqrt( closeDistSq );
 
@@ -468,7 +468,7 @@ void InitBotTrig( void )
 	for( int i=0; i<COS_TABLE_SIZE; ++i )
 	{
 		float angle = (float)(2.0f * M_PI * i / (float)(COS_TABLE_SIZE-1));
-		cosTable[i] = (float)cos( angle ); 
+		cosTable[i] = (float)cos( angle );
 	}
 }
 
@@ -537,7 +537,7 @@ bool IsCrossingLineOfFire( const Vector &start, const Vector &finish, CBaseEntit
 		if (ignoreTeam && player->GetTeamNumber() == ignoreTeam)
 			continue;
 
-		// compute player's unit aiming vector 
+		// compute player's unit aiming vector
 		Vector viewForward;
 		AngleVectors( player->EyeAngles() + player->GetPunchAngle(), &viewForward );
 
@@ -599,6 +599,3 @@ bool WildcardMatch( const char *query, const char *test )
 
 	return false;
 }
-
-
-

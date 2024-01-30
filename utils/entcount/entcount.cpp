@@ -109,7 +109,7 @@ int main( int argc, char *argv[] )
 		ParseFGD( buffer, bufend, "SolidClass" );
 
 		// reset the usage counts to 0
-		ClearUsageCountTable();	
+		ClearUsageCountTable();
 
 		free( buffer );
 	}
@@ -117,7 +117,7 @@ int main( int argc, char *argv[] )
 	// parse through all the bsp files
 	_finddata_t fileinfo;
 	int FHandle = _findfirst( fileMask, &fileinfo );
-	
+
 	if ( FHandle == -1 )
 	{
 		printf( "error: no files found in current directory\n" );
@@ -204,7 +204,7 @@ void ParseFGD( char *buffer, char *bufend, const char *searchKey )
 		while ( *bufpos != '=' )
 			bufpos++;
 		bufpos++;
-		
+
 		// find the classname
 		static char Token[256];
 		ParseToken( bufpos, Token );
@@ -275,7 +275,7 @@ void PrintOutTable( void )
 		// check for no more ents
 		if ( highestUsage == -1 )
 			return;
-		
+
 		// display usage stats of item
 		printf( " %5d  %s\n", highestUsage, EntNames[highestEnt] );
 
@@ -299,7 +299,7 @@ void SetSearchWord( const char *Word )
 	SearchWordLen = strlen( SearchWord );
 
 	// build the jump table
-	
+
 	// initialize all values to jump the length of the string
 	memset( JumpTable, SearchWordLen, sizeof(JumpTable) );
 
@@ -371,13 +371,13 @@ char *ParseToken( char *data, char *newToken )
 {
 	int             c;
 	int             len;
-	
+
 	len = 0;
 	newToken[0] = 0;
-	
+
 	if (!data)
 		return NULL;
-		
+
 // skip whitespace
 skipwhite:
 	while ( (c = *data) <= ' ')
@@ -386,7 +386,7 @@ skipwhite:
 			return NULL;                    // end of file;
 		data++;
 	}
-	
+
 // skip // comments
 	if (c=='/' && data[1] == '/')
 	{
@@ -394,7 +394,7 @@ skipwhite:
 			data++;
 		goto skipwhite;
 	}
-	
+
 
 // handle quoted strings specially
 	if (c == '\"')
@@ -446,7 +446,7 @@ skipwhite:
 		}
 
 	} while (c>32);
-	
+
 	newToken[len] = 0;
 	return data;
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -69,8 +69,8 @@ void Test_RandomPlayerPosition()
 		Error( "Test_RandomPlayerPosition: no world entity." );
 	}
 
-	
-	
+
+
 	Vector vMin, vMax;
 	pWorld->GetWorldBounds( vMin, vMax );
 
@@ -84,5 +84,3 @@ void Test_RandomPlayerPosition()
 
 ConCommand cc_Test_CreateEntity( "Test_CreateEntity", Test_CreateEntity, 0, FCVAR_CHEAT );
 ConCommand cc_Test_RandomPlayerPosition( "Test_RandomPlayerPosition", Test_RandomPlayerPosition, 0, FCVAR_CHEAT );
-
-

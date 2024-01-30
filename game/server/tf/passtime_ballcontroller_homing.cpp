@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,10 +19,10 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-CPasstimeBallControllerHoming::CPasstimeBallControllerHoming() 
+CPasstimeBallControllerHoming::CPasstimeBallControllerHoming()
 	: CPasstimeBallController( 1 )
 	, m_fTargetSpeed( 0 )
-	, m_bIsHoming( false ) 
+	, m_bIsHoming( false )
 	, m_fHomingStrength( 0 )
 {}
 
@@ -71,14 +71,14 @@ void CPasstimeBallControllerHoming::StopHoming()
 }
 
 //-----------------------------------------------------------------------------
-void CPasstimeBallControllerHoming::SetTargetSpeed( float f ) 
-{ 
+void CPasstimeBallControllerHoming::SetTargetSpeed( float f )
+{
 	m_fTargetSpeed = MAX(1.0f, f);
 }
 
 //-----------------------------------------------------------------------------
-bool CPasstimeBallControllerHoming::IsActive() const 
-{ 
+bool CPasstimeBallControllerHoming::IsActive() const
+{
 	return m_bIsHoming;
 }
 
@@ -93,7 +93,7 @@ bool CPasstimeBallControllerHoming::Apply( CPasstimeBall *ball )
 		StopHoming();
 		return false;
 	}
-	
+
 	CTFPlayer *pPlayer = m_hTarget.Get();
 	if( !pPlayer )
 	{
@@ -126,7 +126,7 @@ bool CPasstimeBallControllerHoming::Apply( CPasstimeBall *ball )
 	Vector targetvel = pPlayer->EyePosition() - ballpos;
 	targetvel.NormalizeInPlace();
 	targetvel *= m_fTargetSpeed;
-	
+
 	Vector currentvel;
 	pPhys->GetVelocity( &currentvel, 0 );
 	Vector steer = targetvel - currentvel;
@@ -137,7 +137,7 @@ bool CPasstimeBallControllerHoming::Apply( CPasstimeBall *ball )
 }
 
 //-----------------------------------------------------------------------------
-void CPasstimeBallControllerHoming::OnBallCollision( 
+void CPasstimeBallControllerHoming::OnBallCollision(
 	CPasstimeBall *ball, int index, gamevcollisionevent_t *ev )
 {
 	Assert( IsActive() && IsEnabled() );
@@ -157,7 +157,7 @@ void CPasstimeBallControllerHoming::OnBallCollision(
 }
 
 //-----------------------------------------------------------------------------
-void CPasstimeBallControllerHoming::OnBallPickedUp( 
+void CPasstimeBallControllerHoming::OnBallPickedUp(
 	CPasstimeBall *ball, CTFPlayer *catcher )
 {
 	Assert( IsActive() && IsEnabled() );
@@ -166,7 +166,7 @@ void CPasstimeBallControllerHoming::OnBallPickedUp(
 }
 
 //-----------------------------------------------------------------------------
-void CPasstimeBallControllerHoming::OnBallDamaged( CPasstimeBall *ball ) 
+void CPasstimeBallControllerHoming::OnBallDamaged( CPasstimeBall *ball )
 {
 	Assert( IsActive() && IsEnabled() );
 	if ( ball == m_hBall && m_bIsHoming )
@@ -179,20 +179,20 @@ void CPasstimeBallControllerHoming::OnBallDamaged( CPasstimeBall *ball )
 }
 
 //-----------------------------------------------------------------------------
-void CPasstimeBallControllerHoming::OnBallSpawned( CPasstimeBall *ball ) 
+void CPasstimeBallControllerHoming::OnBallSpawned( CPasstimeBall *ball )
 {
 	Assert( IsActive() && IsEnabled() );
 	StopHoming();
 }
 
 //-----------------------------------------------------------------------------
-void CPasstimeBallControllerHoming::OnDisabled() 
-{ 
+void CPasstimeBallControllerHoming::OnDisabled()
+{
 	if ( m_bIsHoming )
 	{
 		++CTF_GameStats.m_passtimeStats.summary.nTotalPassesShotDown;
 		++CTF_GameStats.m_passtimeStats.summary.nTotalPassesFailed;
 		CTF_GameStats.m_passtimeStats.AddPassTravelDistSample( m_hBall->GetAirtimeDistance() );
 	}
-	StopHoming(); 
+	StopHoming();
 }

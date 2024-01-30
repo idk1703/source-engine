@@ -257,19 +257,19 @@ public:
 	CNetworkVar( bool, m_bNightVisionOn );
 	CNetworkVar( bool, m_bHasNightVision );
 
-    //=============================================================================
-    // HPE_BEGIN:
-    // [dwenger] Added for fun-fact support
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [dwenger] Added for fun-fact support
+	//=============================================================================
 
-    //CNetworkVar( bool, m_bPickedUpDefuser );
-    //CNetworkVar( bool, m_bDefusedWithPickedUpKit );
+	//CNetworkVar( bool, m_bPickedUpDefuser );
+	//CNetworkVar( bool, m_bDefusedWithPickedUpKit );
 
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
-    CNetworkVar( float, m_flVelocityModifier );
+	CNetworkVar( float, m_flVelocityModifier );
 
 	bool		m_bDetected;
 
@@ -337,7 +337,7 @@ private:
 	bool	m_bInHostageRescueZone;
 	float	m_fNextThinkPushAway;
 
-    bool    m_bPlayingFreezeCamSound;
+	bool    m_bPlayingFreezeCamSound;
 
 #ifdef CS_SHIELD_ENABLED
 	bool	m_bHasShield;
@@ -379,17 +379,17 @@ private:
 
 
 
-    //=============================================================================
-    // HPE_BEGIN:
-    // [tj] Network variables that track who are dominating and being dominated by
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [tj] Network variables that track who are dominating and being dominated by
+	//=============================================================================
 
-    CNetworkArray( bool, m_bPlayerDominated, MAX_PLAYERS+1 );		// array of state per other player whether player is dominating other players
-    CNetworkArray( bool, m_bPlayerDominatingMe, MAX_PLAYERS+1 );	// array of state per other player whether other players are dominating this player
+	CNetworkArray( bool, m_bPlayerDominated, MAX_PLAYERS+1 );		// array of state per other player whether player is dominating other players
+	CNetworkArray( bool, m_bPlayerDominatingMe, MAX_PLAYERS+1 );	// array of state per other player whether other players are dominating this player
 
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
 
 

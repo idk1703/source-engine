@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -54,7 +54,7 @@ CCSTextWindow::~CCSTextWindow()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSTextWindow::Update()
 {
@@ -64,7 +64,7 @@ void CCSTextWindow::Update()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSTextWindow::SetVisible(bool state)
 {
@@ -94,7 +94,7 @@ void CCSTextWindow::ShowPanel(bool bShow)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSTextWindow::OnKeyCodePressed( KeyCode code )
 {
@@ -103,7 +103,7 @@ void CCSTextWindow::OnKeyCodePressed( KeyCode code )
 	if ( code == KEY_ENTER || code == KEY_XBUTTON_A || code == KEY_XBUTTON_B )
 	{
 		m_pOK->DoClick();
-	}	
+	}
 	else if ( m_iScoreBoardKey != BUTTON_CODE_INVALID && m_iScoreBoardKey == code )
 	{
 		gViewPortInterface->ShowPanel( PANEL_SCOREBOARD, true );
@@ -136,11 +136,10 @@ void CCSTextWindow::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSTextWindow::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
 	ApplyBackgroundSchemeSettings( this, pScheme );
 }
-

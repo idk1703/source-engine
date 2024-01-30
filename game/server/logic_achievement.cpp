@@ -1,5 +1,5 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
-//	
+//
 //	Defines a logical entity which passes achievement related events to the gamerules system.
 
 #include "cbase.h"
@@ -89,7 +89,7 @@ protected:
 	void InputEnable( inputdata_t &inputdata );
 	void InputDisable( inputdata_t &inputdata );
 	void InputToggle( inputdata_t &inputdata );
-	
+
 	bool			m_bDisabled;
 	string_t		m_iszAchievementEventID;				// Which achievement event this entity marks
 
@@ -168,7 +168,7 @@ void CLogicAchievement::InputEnable( inputdata_t &inputdata )
 // Purpose: Turns off the relay, preventing it from firing outputs.
 //------------------------------------------------------------------------------
 void CLogicAchievement::InputDisable( inputdata_t &inputdata )
-{ 
+{
 	m_bDisabled = true;
 }
 
@@ -177,6 +177,6 @@ void CLogicAchievement::InputDisable( inputdata_t &inputdata )
 // Purpose: Toggles the enabled/disabled state of the relay.
 //------------------------------------------------------------------------------
 void CLogicAchievement::InputToggle( inputdata_t &inputdata )
-{ 
+{
 	m_bDisabled = !m_bDisabled;
 }

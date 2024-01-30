@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -23,7 +23,7 @@ struct NameTranslationLookup_t
 	CUtlSymbol m_PatchFileName;
 };
 
-static bool NameTranslationLessFunc( NameTranslationLookup_t const& src1, 
+static bool NameTranslationLessFunc( NameTranslationLookup_t const& src1,
 							  NameTranslationLookup_t const& src2 )
 {
 	return src1.m_PatchFileName < src2.m_PatchFileName;
@@ -34,7 +34,7 @@ CUtlRBTree<NameTranslationLookup_t, int> s_MapPatchedMatToOriginalMat( 0, 256, N
 void AddNewTranslation( const char *pOriginalMaterialName, const char *pNewMaterialName )
 {
 	NameTranslationLookup_t newEntry;
-	
+
 	newEntry.m_OriginalFileName = s_SymbolTable.AddString( pOriginalMaterialName );
 	newEntry.m_PatchFileName = s_SymbolTable.AddString( pNewMaterialName );
 
@@ -90,12 +90,12 @@ void CreateMaterialPatchRecursive( KeyValues *pOriginalKeyValues, KeyValues *pPa
 //-----------------------------------------------------------------------------
 void CreateMaterialPatch( const char *pOriginalMaterialName, const char *pNewMaterialName,
 						 int nKeys, const MaterialPatchInfo_t *pInfo, MaterialPatchType_t nPatchType )
-{	
+{
 	char pOldVMTFile[ 512 ];
 	char pNewVMTFile[ 512 ];
 
 	AddNewTranslation( pOriginalMaterialName, pNewMaterialName );
-	
+
 	Q_snprintf( pOldVMTFile, 512, "materials/%s.vmt", pOriginalMaterialName );
 	Q_snprintf( pNewVMTFile, 512, "materials/%s.vmt", pNewMaterialName );
 
@@ -135,7 +135,7 @@ void CreateMaterialPatch( const char *pOriginalMaterialName, const char *pNewMat
 			section->SetString( pInfo[i].m_pKey, pInfo[i].m_pValue );
 		}
 	}
-	
+
 	// Write patched .vmt into a memory buffer
 	CUtlBuffer buf( 0, 0, CUtlBuffer::TEXT_BUFFER );
 	kv->RecursiveSaveToFile( buf, 0 );
@@ -149,7 +149,7 @@ void CreateMaterialPatch( const char *pOriginalMaterialName, const char *pNewMat
 
 
 //-----------------------------------------------------------------------------
-// Patches a single keyvalue in a material 
+// Patches a single keyvalue in a material
 //-----------------------------------------------------------------------------
 void CreateMaterialPatch( const char *pOriginalMaterialName, const char *pNewMaterialName,
 						 const char *pNewKey, const char *pNewValue, MaterialPatchType_t nPatchType )
@@ -176,7 +176,7 @@ static bool DoesMaterialHaveKey( KeyValues *pKeyValues, const char *pKeyName )
 		if ( DoesMaterialHaveKey( pSubKey, pKeyName) )
 			return true;
 	}
-	
+
 	return false;
 }
 
@@ -195,7 +195,7 @@ static bool DoesMaterialHaveKeyValuePair( KeyValues *pKeyValues, const char *pKe
 		if ( DoesMaterialHaveKeyValuePair( pSubKey, pKeyName, pSearchValue ) )
 			return true;
 	}
-	
+
 	return false;
 }
 

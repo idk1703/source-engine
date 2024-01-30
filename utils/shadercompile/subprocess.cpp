@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -37,7 +37,7 @@ SubProcessKernelObjects::~SubProcessKernelObjects( void )
 BOOL SubProcessKernelObjects::Create( char const *szBaseName )
 {
 	char chBufferName[0x100] = { 0 };
-	
+
 	sprintf( chBufferName, "%s_msec", szBaseName );
 	m_hMemorySection = CreateFileMapping( INVALID_HANDLE_VALUE, NULL,
 		PAGE_READWRITE, 0, 4 * 1024 * 1024, chBufferName ); // 4Mb for a piece
@@ -118,13 +118,13 @@ void * SubProcessKernelObjects_Memory::Lock( void )
 		case WAIT_OBJECT_0:
 			{
 				m_pLockData = MapViewOfFile( m_pObjs->m_hMemorySection, FILE_MAP_ALL_ACCESS, 0, 0, 0 );
-				
+
 				if ( * ( const DWORD * ) m_pLockData != m_pObjs->m_dwCookie )
 				{
 					// Yes, this is our turn, set our cookie in that memory segment
 					* ( DWORD * ) m_pLockData = m_pObjs->m_dwCookie;
 					m_pMemory = ( ( byte * ) m_pLockData ) + 2 * sizeof( DWORD );
-					
+
 					return m_pMemory;
 				}
 				else
@@ -132,15 +132,15 @@ void * SubProcessKernelObjects_Memory::Lock( void )
 					// We just acted, still waiting for result
 					UnmapViewOfFile( m_pLockData );
 					m_pLockData = NULL;
-					
+
 					SetEvent( m_pObjs->m_hEvent[ !m_pObjs->m_dwCookie ] );
 					Sleep( 1 );
-					
+
 					continue;
 				}
 			}
 			break;
-		
+
 		case WAIT_TIMEOUT:
 			{
 				char chMsg[0x100];
@@ -155,7 +155,7 @@ void * SubProcessKernelObjects_Memory::Lock( void )
 			return NULL;
 		}
 	}
-	
+
 	OutputDebugString( "Ran out of wait attempts in Memory::Lock\n" );
 	SetLastError( ERROR_NOT_READY );
 	return NULL;
@@ -167,11 +167,11 @@ BOOL SubProcessKernelObjects_Memory::Unlock( void )
 	{
 		// Assert that the memory hasn't been spoiled
 		Assert( m_pObjs->m_dwCookie == * ( const DWORD * ) m_pLockData );
-		
+
 		UnmapViewOfFile( m_pLockData );
 		m_pMemory = NULL;
 		m_pLockData = NULL;
-		
+
 		SetEvent( m_pObjs->m_hEvent[ !m_pObjs->m_dwCookie ] );
 		Sleep( 1 );
 
@@ -203,7 +203,7 @@ CSubProcessResponse::CSubProcessResponse( void const *pvMemory ) :
 	m_pvMemory( pvMemory )
 {
 	byte const *pBytes = ( byte const * ) pvMemory;
-	
+
 	m_dwResult = * ( DWORD const * ) pBytes;
 	pBytes += sizeof( DWORD );
 
@@ -246,7 +246,7 @@ int ShaderCompile_Subprocess_Main( char const *szSubProcessData )
 	{
 		// The memory is actually a command
 		char const *szCommand = ( char const * ) pvMemory;
-		
+
 		if ( !stricmp( "keepalive", szCommand ) )
 		{
 			ZeroMemory( pvMemory, 4 * sizeof( DWORD ) );
@@ -263,7 +263,7 @@ int ShaderCompile_Subprocess_Main( char const *szSubProcessData )
 		if ( InterceptFxc::TryExecuteCommand( szCommand, &pResponse ) )
 		{
 			byte *pBytes = ( byte * ) pvMemory;
-			
+
 			// Result
 			DWORD dwSucceededResult = pResponse->Succeeded() ? 1 : 0;
 			* ( DWORD * ) pBytes = dwSucceededResult;

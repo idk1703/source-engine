@@ -85,36 +85,36 @@ public:
 		}
 	}
 
-	virtual void InputActivate( inputdata_t &inputdata )		
-	{ 
+	virtual void InputActivate( inputdata_t &inputdata )
+	{
 		if ( !m_fActive )
 		{
-			m_fActive = true; 
-			NotifyChangeTacticalConstraints(); 
+			m_fActive = true;
+			NotifyChangeTacticalConstraints();
 
 			SetThink(&CAI_BattleLine::MovementThink);
 			SetNextThink( gpGlobals->curtime + AIBL_THINK_INTERVAL );
 			m_SelfMoveMonitor.SetMark( this, 60 );
 		}
 	}
-	
-	virtual void InputDeactivate( inputdata_t &inputdata )	
-	{ 
+
+	virtual void InputDeactivate( inputdata_t &inputdata )
+	{
 		if ( m_fActive )
 		{
-			m_fActive = false; 
-			NotifyChangeTacticalConstraints(); 
+			m_fActive = false;
+			NotifyChangeTacticalConstraints();
 
 			SetThink(NULL);
 		}
 	}
-	
+
 	void UpdateOnRemove()
 	{
 		if ( m_fActive )
 		{
-			m_fActive = false; 
-			NotifyChangeTacticalConstraints(); 
+			m_fActive = false;
+			NotifyChangeTacticalConstraints();
 		}
 		BaseClass::UpdateOnRemove();
 	}
@@ -131,7 +131,7 @@ public:
 		}
 		return false;
 	}
-	
+
 	void MovementThink()
 	{
 		if ( m_SelfMoveMonitor.TargetMoved( this ) )
@@ -160,7 +160,7 @@ private:
 	}
 
 	CAI_MoveMonitor m_SelfMoveMonitor;
-	
+
 	DECLARE_DATADESC();
 };
 
@@ -177,7 +177,7 @@ BEGIN_DATADESC( CAI_BattleLine )
 	// Inputs
 	DEFINE_INPUTFUNC( FIELD_VOID, "Activate", 		InputActivate ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "Deactivate",		InputDeactivate ),
-	
+
 	DEFINE_THINKFUNC( MovementThink ),
 
 END_DATADESC()
@@ -287,7 +287,7 @@ bool CAI_StandoffBehavior::CanSelectSchedule()
 
 	if ( !m_fActive )
 		return false;
-		
+
 	return ( GetNpcState() == NPC_STATE_COMBAT && GetOuter()->GetActiveWeapon() != NULL );
 }
 
@@ -315,7 +315,7 @@ void CAI_StandoffBehavior::BeginScheduleSelection()
 
 	m_SavedDistTooFar = GetOuter()->m_flDistTooFar;
 	GetOuter()->m_flDistTooFar = FLT_MAX;
-	
+
 	m_TimeForceCoverHint.Set( 8, false );
 	m_RandomCoverChangeTimer.Set( 8, 16, false );
 	UpdateTranslateActivityMap();
@@ -350,7 +350,7 @@ void CAI_StandoffBehavior::PrescheduleThink()
 	VPROF_BUDGET( "CAI_StandoffBehavior::PrescheduleThink", VPROF_BUDGETGROUP_NPCS );
 
 	BaseClass::PrescheduleThink();
-	
+
 	if( DrawBattleLines.GetInt() != 0 )
 	{
 		CBaseEntity *pEntity = NULL;
@@ -409,10 +409,10 @@ void CAI_StandoffBehavior::GatherConditions()
 	{
 		AI_EnemyInfo_t *pEnemyInfo = GetOuter()->GetEnemies()->Find( GetEnemy() );
 		if ( pEnemyInfo &&
-			 m_params.flAbandonTimeLimit > 0 && 
-			 ( ( pEnemyInfo->timeAtFirstHand != AI_INVALID_TIME && 
+			 m_params.flAbandonTimeLimit > 0 &&
+			 ( ( pEnemyInfo->timeAtFirstHand != AI_INVALID_TIME &&
 			     gpGlobals->curtime  - pEnemyInfo->timeLastSeen > m_params.flAbandonTimeLimit ) ||
-			   ( pEnemyInfo->timeAtFirstHand == AI_INVALID_TIME && 
+			   ( pEnemyInfo->timeAtFirstHand == AI_INVALID_TIME &&
 			     gpGlobals->curtime  - pEnemyInfo->timeFirstSeen > m_params.flAbandonTimeLimit * 2 ) ) )
 		{
 			SetCondition( COND_ABANDON_TIME_EXPIRED );
@@ -427,7 +427,7 @@ void CAI_StandoffBehavior::GatherConditions()
 					{
 						CAI_StandoffBehavior *pSquadmateStandoff;
 						pSquadMate->GetBehavior( &pSquadmateStandoff );
-						if ( pSquadmateStandoff && pSquadmateStandoff->IsActive() && 
+						if ( pSquadmateStandoff && pSquadmateStandoff->IsActive() &&
 							 pSquadmateStandoff->m_hStandoffGoal == m_hStandoffGoal &&
 							 !pSquadmateStandoff->HasCondition( COND_ABANDON_TIME_EXPIRED ) )
 						{
@@ -484,10 +484,10 @@ int CAI_StandoffBehavior::SelectScheduleUpdateWeapon( void )
 			GetOuter()->SpeakSentence( STANDOFF_SENTENCE_OUT_OF_AMMO );
 			return SCHED_HIDE_AND_RELOAD;
 		}
-		
+
 		return SCHED_RELOAD;
 	}
-	
+
 	// Otherwise, update planned shots to fire before taking cover again
 	if ( HasCondition( COND_LIGHT_DAMAGE ) )
 	{
@@ -522,7 +522,7 @@ int CAI_StandoffBehavior::SelectScheduleCheckCover( void )
 			return SCHED_TAKE_COVER_FROM_ENEMY;
 		}
 	}
-		
+
 	if ( GetOuter()->GetShotRegulator()->IsInRestInterval() )
 	{
 		StandoffMsg( "Regulated to not shoot\n" );
@@ -535,7 +535,7 @@ int CAI_StandoffBehavior::SelectScheduleCheckCover( void )
 			SetReuseCurrentCover();
 		return SCHED_TAKE_COVER_FROM_ENEMY;
 	}
-	
+
 	return SCHED_NONE;
 }
 
@@ -579,7 +579,7 @@ int CAI_StandoffBehavior::SelectScheduleAttack( void )
 {
 	if ( GetPosture() == AIP_PEEKING || GetPosture() == AIP_STANDING )
 	{
-		if ( !HasCondition( COND_CAN_RANGE_ATTACK1 ) && 
+		if ( !HasCondition( COND_CAN_RANGE_ATTACK1 ) &&
 			 !HasCondition( COND_CAN_MELEE_ATTACK1 ) &&
 			  HasCondition( COND_TOO_FAR_TO_ATTACK ) )
 		{
@@ -604,23 +604,23 @@ int CAI_StandoffBehavior::SelectSchedule( void )
 		case NPC_STATE_COMBAT:
 		{
 			int schedule = SCHED_NONE;
-			
+
 			schedule = SelectScheduleUpdateWeapon();
 			if ( schedule != SCHED_NONE )
 				return schedule;
-				
+
 			schedule = SelectScheduleCheckCover();
 			if ( schedule != SCHED_NONE )
 				return schedule;
-				
+
 			schedule = SelectScheduleEstablishAim();
 			if ( schedule != SCHED_NONE )
 				return schedule;
-				
+
 			schedule = SelectScheduleAttack();
 			if ( schedule != SCHED_NONE )
 				return schedule;
-				
+
 			break;
 		}
 	}
@@ -678,7 +678,7 @@ Activity CAI_StandoffBehavior::NPC_TranslateActivity( Activity activity )
 		if ( GetPosture() == AIP_STANDING && coverActivity == ACT_COVER_LOW )
 			SetPosture( AIP_CROUCHING );
 	}
-	
+
 	Activity result = GetMappedActivity( GetPosture(), activity );
 	if ( result != ACT_INVALID)
 		return result;
@@ -688,8 +688,8 @@ Activity CAI_StandoffBehavior::NPC_TranslateActivity( Activity activity )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &vecPos - 
+// Purpose:
+// Input  : &vecPos -
 //-----------------------------------------------------------------------------
 void CAI_StandoffBehavior::SetStandoffGoalPosition( const Vector &vecPos )
 {
@@ -700,8 +700,8 @@ void CAI_StandoffBehavior::SetStandoffGoalPosition( const Vector &vecPos )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &vecPos - 
+// Purpose:
+// Input  : &vecPos -
 //-----------------------------------------------------------------------------
 void CAI_StandoffBehavior::ClearStandoffGoalPosition()
 {
@@ -715,10 +715,10 @@ void CAI_StandoffBehavior::ClearStandoffGoalPosition()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Vector
 //-----------------------------------------------------------------------------
-Vector CAI_StandoffBehavior::GetStandoffGoalPosition() 
+Vector CAI_StandoffBehavior::GetStandoffGoalPosition()
 {
 	if( m_vecStandoffGoalPosition != GOAL_POSITION_INVALID )
 	{
@@ -734,10 +734,10 @@ Vector CAI_StandoffBehavior::GetStandoffGoalPosition()
 		for (;;)
 		{
 			pBattleLine = (CAI_BattleLine *)gEntList.FindEntityByClassname( pBattleLine, "ai_battle_line" );
-			
+
 			if ( !pBattleLine )
 				break;
-				
+
 			if ( pBattleLine->m_fActive && pBattleLine->Affects( GetOuter() ) )
 			{
 				StandoffMsg1( "Using battleline %s as goal\n", STRING( pBattleLine->GetEntityName() ) );
@@ -764,7 +764,7 @@ void CAI_StandoffBehavior::UpdateBattleLines()
 		{
 			// If we have a valid standoff goal position, it takes precendence.
 			const float DIST_GOAL_PLANE = 180;
-			
+
 			BattleLine_t goalLine;
 
 			if ( GetDirectionOfStandoff( &goalLine.normal ) )
@@ -779,7 +779,7 @@ void CAI_StandoffBehavior::UpdateBattleLines()
 			{
 				const float DIST_PLAYER_PLANE = 180;
 				CBaseEntity *pPlayer = UTIL_GetLocalPlayer();
-				
+
 				BattleLine_t playerLine;
 
 				if ( GetDirectionOfStandoff( &playerLine.normal ) )
@@ -789,25 +789,25 @@ void CAI_StandoffBehavior::UpdateBattleLines()
 				}
 			}
 		}
-		
+
 		CAI_BattleLine *pBattleLine = NULL;
 		for (;;)
 		{
 			pBattleLine = (CAI_BattleLine *)gEntList.FindEntityByClassname( pBattleLine, "ai_battle_line" );
-			
+
 			if ( !pBattleLine )
 				break;
-				
+
 			if ( pBattleLine->m_fActive && (pBattleLine->m_fStrict || !bHaveGoalPosition ) && pBattleLine->Affects( GetOuter() ) )
 			{
 				BattleLine_t battleLine;
-				
+
 				battleLine.point = pBattleLine->GetAbsOrigin();
 				battleLine.normal = UTIL_YawToVector( pBattleLine->GetAbsAngles().y );
 
 				m_BattleLines.AddToTail( battleLine );
 			}
-				
+
 		}
 	}
 }
@@ -819,13 +819,13 @@ bool CAI_StandoffBehavior::IsBehindBattleLines( const Vector &point )
 	UpdateBattleLines();
 
 	Vector vecToPoint;
-	
+
 	for ( int i = 0; i < m_BattleLines.Count(); i++ )
 	{
 		vecToPoint = point - m_BattleLines[i].point;
 		VectorNormalize( vecToPoint );
 		vecToPoint.z = 0;
-		
+
 		if ( DotProduct( m_BattleLines[i].normal, vecToPoint ) > 0 )
 		{
 			if( DrawBattleLines.GetInt() != 0 )
@@ -836,7 +836,7 @@ bool CAI_StandoffBehavior::IsBehindBattleLines( const Vector &point )
 			return false;
 		}
 	}
-	
+
 	if( DrawBattleLines.GetInt() != 0 )
 	{
 		NDebugOverlay::Box( point, -Vector(48,48,4), Vector(48,48,4), 255,0,0,8, 1 );
@@ -874,7 +874,7 @@ bool CAI_StandoffBehavior::IsValidShootPosition( const Vector &vLocation, CAI_No
 void CAI_StandoffBehavior::StartTask( const Task_t *pTask )
 {
 	bool fCallBase = false;
-	
+
 	switch ( pTask->iTask )
 	{
 		case TASK_RANGE_ATTACK1:
@@ -882,7 +882,7 @@ void CAI_StandoffBehavior::StartTask( const Task_t *pTask )
 			fCallBase = true;
 			break;
 		}
-		
+
 		case TASK_FIND_COVER_FROM_ENEMY:
 		{
 			StandoffMsg( "TASK_FIND_COVER_FROM_ENEMY\n" );
@@ -937,18 +937,18 @@ void CAI_StandoffBehavior::StartTask( const Task_t *pTask )
 					StandoffMsg1( "Trying goal pos, %s\n", ( coverPos == vec3_origin  ) ? "failed" :  "succeeded" );
 				}
 
-				if ( coverPos == vec3_origin  ) 
+				if ( coverPos == vec3_origin  )
 				{
 					// Otherwise, find a node near to self
 					StandoffMsg( "Looking for near cover\n" );
-					if ( !GetTacticalServices()->FindCoverPos( enemyPos, enemyEyePos, 0, coverRadius, &coverPos ) ) 
+					if ( !GetTacticalServices()->FindCoverPos( enemyPos, enemyEyePos, 0, coverRadius, &coverPos ) )
 					{
 						// Try local lateral cover
 						if ( !GetTacticalServices()->FindLateralCover( enemyEyePos, 0, &coverPos ) )
 						{
 							// At this point, try again ignoring front lines. Any cover probably better than hanging out in the open
 							m_fIgnoreFronts = true;
-							if ( !GetTacticalServices()->FindCoverPos( enemyPos, enemyEyePos, 0, coverRadius, &coverPos ) ) 
+							if ( !GetTacticalServices()->FindCoverPos( enemyPos, enemyEyePos, 0, coverRadius, &coverPos ) )
 							{
 								if ( !GetTacticalServices()->FindLateralCover( enemyEyePos, 0, &coverPos ) )
 								{
@@ -983,7 +983,7 @@ void CAI_StandoffBehavior::StartTask( const Task_t *pTask )
 			fCallBase = true;
 		}
 	}
-	
+
 	if ( fCallBase )
 		BaseClass::StartTask( pTask );
 }
@@ -1107,7 +1107,7 @@ void CAI_MappedActivityBehavior_Temporary::UpdateTranslateActivityMap()
 		{	AIP_CROUCHING,	ACT_RELOAD,				NULL, 				ACT_RELOAD_LOW,				},
 		{	AIP_CROUCHING,	ACT_RANGE_ATTACK_SMG1,	NULL,				ACT_RANGE_ATTACK_SMG1_LOW,	},
 		{	AIP_CROUCHING,	ACT_RANGE_ATTACK_AR2,	NULL,				ACT_RANGE_ATTACK_AR2_LOW,	},
-		
+
 		//----
 		{	AIP_PEEKING, 	ACT_IDLE,				NULL,				ACT_RANGE_AIM_LOW,			},
 		{	AIP_PEEKING, 	ACT_IDLE_ANGRY,			NULL,				ACT_RANGE_AIM_LOW,			},
@@ -1117,7 +1117,7 @@ void CAI_MappedActivityBehavior_Temporary::UpdateTranslateActivityMap()
 	};
 
 	m_ActivityMap.RemoveAll();
-	
+
 	CBaseCombatWeapon *pWeapon = GetOuter()->GetActiveWeapon();
 	const char *pszWeaponClass = ( pWeapon ) ? pWeapon->GetClassname() : "";
 	for ( int i = 0; i < ARRAYSIZE(mappings); i++ )
@@ -1136,11 +1136,11 @@ void CAI_MappedActivityBehavior_Temporary::UpdateTranslateActivityMap()
 void CAI_StandoffBehavior::UpdateTranslateActivityMap()
 {
 	BaseClass::UpdateTranslateActivityMap();
-	
+
 	Activity lowCoverActivity = GetMappedActivity( AIP_CROUCHING, ACT_COVER_LOW );
 	if ( lowCoverActivity == ACT_INVALID )
 		lowCoverActivity = ACT_COVER_LOW;
-		
+
 	m_bHasLowCoverActivity = ( ( CapabilitiesGet() & bits_CAP_DUCK ) && (GetOuter()->TranslateActivity( lowCoverActivity ) != ACT_INVALID));
 
 	CBaseCombatWeapon *pWeapon = GetOuter()->GetActiveWeapon();
@@ -1198,7 +1198,7 @@ class CAI_StandoffGoal : public CAI_GoalEntity
 public:
 	CAI_StandoffGoal()
 	{
-		m_aggressiveness = AGGR_MEDIUM;	
+		m_aggressiveness = AGGR_MEDIUM;
 		m_fPlayerIsBattleline = true;
 		m_HintChangeReaction = AIHCR_DEFAULT_AI;
 		m_fStayAtCover = false;
@@ -1208,17 +1208,17 @@ public:
 
 	//---------------------------------
 
-	void EnableGoal( CAI_BaseNPC *pAI )	
+	void EnableGoal( CAI_BaseNPC *pAI )
 	{
 		CAI_StandoffBehavior *pBehavior;
 		if ( !pAI->GetBehavior( &pBehavior ) )
 			return;
-		
+
 		pBehavior->SetActive( true );
 		SetBehaviorParams( pBehavior);
 	}
 
-	void DisableGoal( CAI_BaseNPC *pAI  ) 
+	void DisableGoal( CAI_BaseNPC *pAI  )
 	{
 		// @TODO (toml 04-07-03): remove the no damage spawn flag once stable. The implementation isn't very good.
 		CAI_StandoffBehavior *pBehavior;
@@ -1233,20 +1233,20 @@ public:
 		ValidateAggression();
 		BaseClass::InputActivate( inputdata );
 	}
-	
-	void InputDeactivate( inputdata_t &inputdata ) 	
+
+	void InputDeactivate( inputdata_t &inputdata )
 	{
 		ValidateAggression();
 		BaseClass::InputDeactivate( inputdata );
 	}
-	
+
 	void InputSetAggressiveness( inputdata_t &inputdata )
 	{
 		int newVal = inputdata.value.Int();
-		
+
 		m_aggressiveness = (Aggressiveness_t)newVal;
 		ValidateAggression();
-		
+
 		UpdateActors();
 
 		const CUtlVector<AIHANDLE> &actors = AccessActors();
@@ -1280,7 +1280,7 @@ public:
 		if ( pBehavior->IsRunning() )
 			pBehavior->GetOuter()->ClearSchedule( "Standoff behavior parms changed" );
 	}
-	
+
 	void ValidateAggression()
 	{
 		if ( m_aggressiveness < AGGR_VERY_LOW || m_aggressiveness > AGGR_VERY_HIGH )
@@ -1288,7 +1288,7 @@ public:
 			if ( m_aggressiveness != AGGR_CUSTOM )
 			{
 				DevMsg( "Invalid aggressiveness value %d\n", m_aggressiveness );
-				
+
 				if ( m_aggressiveness < AGGR_VERY_LOW )
 					m_aggressiveness = AGGR_VERY_LOW;
 				else if ( m_aggressiveness > AGGR_VERY_HIGH )
@@ -1309,11 +1309,11 @@ private:
 		AGGR_MEDIUM,
 		AGGR_HIGH,
 		AGGR_VERY_HIGH,
-		
+
 		AGGR_CUSTOM,
 	};
 
-	Aggressiveness_t 		m_aggressiveness;	
+	Aggressiveness_t 		m_aggressiveness;
 	AI_HintChangeReaction_t m_HintChangeReaction;
 	bool					m_fPlayerIsBattleline;
 	bool					m_fStayAtCover;

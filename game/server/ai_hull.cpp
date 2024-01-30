@@ -52,7 +52,7 @@ ai_hull_t  Medium_Tall_Hull		(bits_MEDIUM_TALL_HULL,		"MEDIUM_TALL_HULL",		Vecto
 //
 // Array of hulls. These hulls must correspond with the enumerations in AI_Hull.h!
 //
-ai_hull_t*	hull[NUM_HULLS] =	
+ai_hull_t*	hull[NUM_HULLS] =
 {
 	&Human_Hull,
 	&Small_Centered_Hull,
@@ -72,8 +72,8 @@ ai_hull_t*	hull[NUM_HULLS] =
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-const Vector &NAI_Hull::Mins(int id)			
-{ 
+const Vector &NAI_Hull::Mins(int id)
+{
 	return hull[id]->mins;
 }
 
@@ -82,8 +82,8 @@ const Vector &NAI_Hull::Mins(int id)
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-const Vector &NAI_Hull::Maxs(int id)			
-{ 
+const Vector &NAI_Hull::Maxs(int id)
+{
 	return hull[id]->maxs;
 }
 
@@ -92,8 +92,8 @@ const Vector &NAI_Hull::Maxs(int id)
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-const Vector &NAI_Hull::SmallMins(int id)			
-{ 
+const Vector &NAI_Hull::SmallMins(int id)
+{
 	return hull[id]->smallMins;
 }
 
@@ -102,8 +102,8 @@ const Vector &NAI_Hull::SmallMins(int id)
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-const Vector &NAI_Hull::SmallMaxs(int id)			
-{ 
+const Vector &NAI_Hull::SmallMaxs(int id)
+{
 	return hull[id]->smallMaxs;
 }
 
@@ -115,7 +115,7 @@ const Vector &NAI_Hull::SmallMaxs(int id)
 //-----------------------------------------------------------------------------
 float NAI_Hull::Length(int id)
 {
-	return (hull[id]->maxs.x - hull[id]->mins.x); 
+	return (hull[id]->maxs.x - hull[id]->mins.x);
 }
 
 //-----------------------------------------------------------------------------
@@ -135,7 +135,7 @@ float NAI_Hull::Width(int id)
 //-----------------------------------------------------------------------------
 float NAI_Hull::Height(int id)
 {
-	return (hull[id]->maxs.z - hull[id]->mins.z); 
+	return (hull[id]->maxs.z - hull[id]->mins.z);
 }
 
 //-----------------------------------------------------------------------------
@@ -143,9 +143,9 @@ float NAI_Hull::Height(int id)
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-int NAI_Hull::Bits(int id)			
-{ 
-	return hull[id]->hullBit;		
+int NAI_Hull::Bits(int id)
+{
+	return hull[id]->hullBit;
 }
 
 //-----------------------------------------------------------------------------
@@ -153,9 +153,9 @@ int NAI_Hull::Bits(int id)
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-const char *NAI_Hull::Name(int id)	
-{ 
-	return hull[id]->name;	
+const char *NAI_Hull::Name(int id)
+{
+	return hull[id]->name;
 }
 
 
@@ -164,8 +164,8 @@ const char *NAI_Hull::Name(int id)
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-Hull_t NAI_Hull::LookupId(const char *szName)	
-{ 
+Hull_t NAI_Hull::LookupId(const char *szName)
+{
 	int i;
 	if (!szName)
 	{
@@ -180,6 +180,3 @@ Hull_t NAI_Hull::LookupId(const char *szName)
 	}
 	return HULL_HUMAN;
 }
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -41,7 +41,7 @@ COptionsSubAudio::COptionsSubAudio(vgui::Panel *parent) : PropertyPage(parent, N
 {
 	m_pSFXSlider = new CCvarSlider( this, "SFXSlider", "#GameUI_SoundEffectVolume", 0.0f, 1.0f, "volume" );
 	m_pMusicSlider = new CCvarSlider( this, "MusicSlider", "#GameUI_MusicVolume", 0.0f, 1.0f, "Snd_MusicVolume" );
-	
+
 	m_pCloseCaptionCombo = new ComboBox( this, "CloseCaptionCheck", 6, false );
 	m_pCloseCaptionCombo->AddItem( "#GameUI_NoClosedCaptions", NULL );
 	m_pCloseCaptionCombo->AddItem( "#GameUI_SubtitlesAndSoundEffects", NULL );
@@ -62,9 +62,9 @@ COptionsSubAudio::COptionsSubAudio(vgui::Panel *parent) : PropertyPage(parent, N
 	m_pSpeakerSetupCombo->AddItem( "#GameUI_5Speakers", new KeyValues("SpeakerSetup", "speakers", 5) );
 	m_pSpeakerSetupCombo->AddItem( "#GameUI_7Speakers", new KeyValues("SpeakerSetup", "speakers", 7) );
 #endif
-   m_pSpokenLanguageCombo = new ComboBox (this, "AudioSpokenLanguage", 6, false );
+	m_pSpokenLanguageCombo = new ComboBox (this, "AudioSpokenLanguage", 6, false );
 
-   m_pSoundMuteLoseFocusCheckButton = new CCvarToggleCheckButton( this, "snd_mute_losefocus", "#GameUI_SndMuteLoseFocus", "snd_mute_losefocus" );
+	m_pSoundMuteLoseFocusCheckButton = new CCvarToggleCheckButton( this, "snd_mute_losefocus", "#GameUI_SndMuteLoseFocus", "snd_mute_losefocus" );
 
 	LoadControlSettings("Resource\\OptionsSubAudio.res");
 }
@@ -110,7 +110,7 @@ void COptionsSubAudio::OnResetData()
 	// speakers
 	ConVarRef snd_surround_speakers("Snd_Surround_Speakers");
 	int speakers = snd_surround_speakers.GetInt();
-	
+
 #ifdef POSIX
 	// On Posix there is no headphone option, so we upgrade to 2 speakers if Snd_Surround_Speakers == 0
 	if ( speakers == 0 )
@@ -120,7 +120,7 @@ void COptionsSubAudio::OnResetData()
 	// if Snd_Surround_Speakers is -1, then upgrade to 2 speakers
 	if ( speakers < 0 )
 		speakers = 2;
-	
+
 	{for (int itemID = 0; itemID < m_pSpeakerSetupCombo->GetItemCount(); itemID++)
 	{
 		KeyValues *kv = m_pSpeakerSetupCombo->GetItemUserData( itemID );
@@ -130,7 +130,7 @@ void COptionsSubAudio::OnResetData()
 			break;
 		}
 	}}
-	
+
 	// sound quality is made up from several cvars
 	ConVarRef Snd_PitchQuality("Snd_PitchQuality");
 	ConVarRef dsp_slow_cpu("dsp_slow_cpu");
@@ -153,63 +153,63 @@ void COptionsSubAudio::OnResetData()
 		}
 	}}
 
-   //
-   // Audio Languages
-   //
-   char szCurrentLanguage[50];
-   char szAvailableLanguages[512];
-   szCurrentLanguage[0] = 0;
-   szAvailableLanguages[0] = 0;
+	//
+	// Audio Languages
+	//
+	char szCurrentLanguage[50];
+	char szAvailableLanguages[512];
+	szCurrentLanguage[0] = 0;
+	szAvailableLanguages[0] = 0;
 
-   // Fallback to current engine language
-   engine->GetUILanguage( szCurrentLanguage, sizeof( szCurrentLanguage ));
+	// Fallback to current engine language
+	engine->GetUILanguage( szCurrentLanguage, sizeof( szCurrentLanguage ));
 
-   // In a Steam environment we get the current language 
+	// In a Steam environment we get the current language
 #if !defined( NO_STEAM )
-   // When Steam isn't running we can't get the language info... 
-   if ( steamapicontext->SteamApps() )
-   {
-      Q_strncpy( szCurrentLanguage, steamapicontext->SteamApps()->GetCurrentGameLanguage(), sizeof(szCurrentLanguage) );
-	  Q_strncpy( szAvailableLanguages, steamapicontext->SteamApps()->GetAvailableGameLanguages(), sizeof(szAvailableLanguages) );
-   }
+	// When Steam isn't running we can't get the language info...
+	if ( steamapicontext->SteamApps() )
+	{
+		Q_strncpy( szCurrentLanguage, steamapicontext->SteamApps()->GetCurrentGameLanguage(), sizeof(szCurrentLanguage) );
+		Q_strncpy( szAvailableLanguages, steamapicontext->SteamApps()->GetAvailableGameLanguages(), sizeof(szAvailableLanguages) );
+	}
 #endif
 
-   // Get the spoken language and store it for comparison purposes
-   m_nCurrentAudioLanguage = PchLanguageToELanguage( szCurrentLanguage );
+	// Get the spoken language and store it for comparison purposes
+	m_nCurrentAudioLanguage = PchLanguageToELanguage( szCurrentLanguage );
 
-   // Check to see if we have a list of languages from Steam
-   if ( V_strlen( szAvailableLanguages ) )
-   {
-      // Populate the combo box with each available language
-      CUtlVector<char*> languagesList;
-      V_SplitString( szAvailableLanguages, ",", languagesList );
+	// Check to see if we have a list of languages from Steam
+	if ( V_strlen( szAvailableLanguages ) )
+	{
+		// Populate the combo box with each available language
+		CUtlVector<char*> languagesList;
+		V_SplitString( szAvailableLanguages, ",", languagesList );
 
-      for ( int i=0; i < languagesList.Count(); i++ )
-      {
-         const ELanguage languageCode = PchLanguageToELanguage( languagesList[i] );
-         m_pSpokenLanguageCombo->AddItem( GetLanguageVGUILocalization( languageCode ), new KeyValues ("Audio Languages", "language", languageCode) );
-      }
+		for ( int i=0; i < languagesList.Count(); i++ )
+		{
+			const ELanguage languageCode = PchLanguageToELanguage( languagesList[i] );
+			m_pSpokenLanguageCombo->AddItem( GetLanguageVGUILocalization( languageCode ), new KeyValues ("Audio Languages", "language", languageCode) );
+		}
 
-	  languagesList.PurgeAndDeleteElements();
-   }
-   else
-   {
-      // Add the current language to the combo
-      m_pSpokenLanguageCombo->AddItem( GetLanguageVGUILocalization( m_nCurrentAudioLanguage ), new KeyValues ("Audio Languages", "language", m_nCurrentAudioLanguage) );
-   }
+		languagesList.PurgeAndDeleteElements();
+	}
+	else
+	{
+		// Add the current language to the combo
+		m_pSpokenLanguageCombo->AddItem( GetLanguageVGUILocalization( m_nCurrentAudioLanguage ), new KeyValues ("Audio Languages", "language", m_nCurrentAudioLanguage) );
+	}
 
-   // Activate the current language in the combo
-   {for (int itemID = 0; itemID < m_pSpokenLanguageCombo->GetItemCount(); itemID++)
-   {
-      KeyValues *kv = m_pSpokenLanguageCombo->GetItemUserData( itemID );
-      if ( kv && kv->GetInt( "language" ) == m_nCurrentAudioLanguage )
-      {
-         m_pSpokenLanguageCombo->ActivateItem( itemID );
-         break;
-      }
-   }}
+	// Activate the current language in the combo
+	{for (int itemID = 0; itemID < m_pSpokenLanguageCombo->GetItemCount(); itemID++)
+	{
+		KeyValues *kv = m_pSpokenLanguageCombo->GetItemUserData( itemID );
+		if ( kv && kv->GetInt( "language" ) == m_nCurrentAudioLanguage )
+		{
+			m_pSpokenLanguageCombo->ActivateItem( itemID );
+			break;
+		}
+	}}
 
-   m_pSoundMuteLoseFocusCheckButton->Reset();
+	m_pSoundMuteLoseFocusCheckButton->Reset();
 }
 
 //-----------------------------------------------------------------------------
@@ -289,28 +289,28 @@ void COptionsSubAudio::OnApplyChanges()
 		dsp_enhance_stereo.SetValue( 0 );
 	}
 
-   // Audio spoken language
-   KeyValues *kv = m_pSpokenLanguageCombo->GetItemUserData( m_pSpokenLanguageCombo->GetActiveItem() );
-   const ELanguage nUpdatedAudioLanguage = (ELanguage)( kv ? kv->GetInt( "language" ) : k_Lang_English );
+	// Audio spoken language
+	KeyValues *kv = m_pSpokenLanguageCombo->GetItemUserData( m_pSpokenLanguageCombo->GetActiveItem() );
+	const ELanguage nUpdatedAudioLanguage = (ELanguage)( kv ? kv->GetInt( "language" ) : k_Lang_English );
 
-   if ( nUpdatedAudioLanguage != m_nCurrentAudioLanguage )
-   {
-      // Store new language in static member so that it can be accessed during shutdown when this instance is gone
-      m_pchUpdatedAudioLanguage = (char *) GetLanguageShortName( nUpdatedAudioLanguage );
-      
-      // Inform user that they need to restart in order change language at this time
-      QueryBox *qb = new QueryBox( "#GameUI_ChangeLanguageRestart_Title", "#GameUI_ChangeLanguageRestart_Info", GetParent()->GetParent()->GetParent() );
-      if (qb != NULL)
-      {
-         qb->SetOKCommand( new KeyValues( "Command", "command", "RestartWithNewLanguage" ) );
-         qb->SetOKButtonText( "#GameUI_ChangeLanguageRestart_OkButton" );
-         qb->SetCancelButtonText( "#GameUI_ChangeLanguageRestart_CancelButton" );
-         qb->AddActionSignalTarget( GetParent()->GetParent()->GetParent() );
-         qb->DoModal();
-      }
-   }
+	if ( nUpdatedAudioLanguage != m_nCurrentAudioLanguage )
+	{
+		// Store new language in static member so that it can be accessed during shutdown when this instance is gone
+		m_pchUpdatedAudioLanguage = (char *) GetLanguageShortName( nUpdatedAudioLanguage );
 
-   m_pSoundMuteLoseFocusCheckButton->ApplyChanges();
+		// Inform user that they need to restart in order change language at this time
+		QueryBox *qb = new QueryBox( "#GameUI_ChangeLanguageRestart_Title", "#GameUI_ChangeLanguageRestart_Info", GetParent()->GetParent()->GetParent() );
+		if (qb != NULL)
+		{
+			qb->SetOKCommand( new KeyValues( "Command", "command", "RestartWithNewLanguage" ) );
+			qb->SetOKButtonText( "#GameUI_ChangeLanguageRestart_OkButton" );
+			qb->SetCancelButtonText( "#GameUI_ChangeLanguageRestart_CancelButton" );
+			qb->AddActionSignalTarget( GetParent()->GetParent()->GetParent() );
+			qb->DoModal();
+		}
+	}
+
+	m_pSoundMuteLoseFocusCheckButton->ApplyChanges();
 }
 
 //-----------------------------------------------------------------------------
@@ -331,7 +331,7 @@ bool COptionsSubAudio::RequiresRestart()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubAudio::OnCommand( const char *command )
 {
@@ -362,10 +362,10 @@ void COptionsSubAudio::OnCommand( const char *command )
 			RunTestSpeakers();
 		}
 	}
-   else if ( !stricmp( command, "ShowThirdPartyAudioCredits" ) )
-   {
-      OpenThirdPartySoundCreditsDialog();
-   }
+	else if ( !stricmp( command, "ShowThirdPartyAudioCredits" ) )
+	{
+		OpenThirdPartySoundCreditsDialog();
+	}
 
 	BaseClass::OnCommand( command );
 }
@@ -383,39 +383,39 @@ void COptionsSubAudio::RunTestSpeakers()
 //-----------------------------------------------------------------------------
 class COptionsSubAudioThirdPartyCreditsDlg : public vgui::Frame
 {
-   DECLARE_CLASS_SIMPLE( COptionsSubAudioThirdPartyCreditsDlg, vgui::Frame );
+	DECLARE_CLASS_SIMPLE( COptionsSubAudioThirdPartyCreditsDlg, vgui::Frame );
 public:
-   COptionsSubAudioThirdPartyCreditsDlg( vgui::VPANEL hParent ) : BaseClass( NULL, NULL )
-   {
-      // parent is ignored, since we want look like we're steal focus from the parent (we'll become modal below)
+	COptionsSubAudioThirdPartyCreditsDlg( vgui::VPANEL hParent ) : BaseClass( NULL, NULL )
+	{
+		// parent is ignored, since we want look like we're steal focus from the parent (we'll become modal below)
 
-      SetTitle("#GameUI_ThirdPartyAudio_Title", true);
-      SetSize( 500, 200 );
-      LoadControlSettings( "resource/OptionsSubAudioThirdPartyDlg.res" );
-      MoveToCenterOfScreen();
-      SetSizeable( false );
-      SetDeleteSelfOnClose( true );
-   }
+		SetTitle("#GameUI_ThirdPartyAudio_Title", true);
+		SetSize( 500, 200 );
+		LoadControlSettings( "resource/OptionsSubAudioThirdPartyDlg.res" );
+		MoveToCenterOfScreen();
+		SetSizeable( false );
+		SetDeleteSelfOnClose( true );
+	}
 
-   virtual void Activate()
-   {
-      BaseClass::Activate();
+	virtual void Activate()
+	{
+		BaseClass::Activate();
 
-      input()->SetAppModalSurface(GetVPanel());
-   }
+		input()->SetAppModalSurface(GetVPanel());
+	}
 
-   void OnKeyCodeTyped(KeyCode code)
-   {
-      // force ourselves to be closed if the escape key it pressed
-      if (code == KEY_ESCAPE)
-      {
-         Close();
-      }
-      else
-      {
-         BaseClass::OnKeyCodeTyped(code);
-      }
-   }
+	void OnKeyCodeTyped(KeyCode code)
+	{
+		// force ourselves to be closed if the escape key it pressed
+		if (code == KEY_ESCAPE)
+		{
+			Close();
+		}
+		else
+		{
+			BaseClass::OnKeyCodeTyped(code);
+		}
+	}
 };
 
 
@@ -424,9 +424,9 @@ public:
 //-----------------------------------------------------------------------------
 void COptionsSubAudio::OpenThirdPartySoundCreditsDialog()
 {
-   if (!m_OptionsSubAudioThirdPartyCreditsDlg.Get())
-   {
-      m_OptionsSubAudioThirdPartyCreditsDlg = new COptionsSubAudioThirdPartyCreditsDlg(GetVParent());
-   }
-   m_OptionsSubAudioThirdPartyCreditsDlg->Activate();
+	if (!m_OptionsSubAudioThirdPartyCreditsDlg.Get())
+	{
+		m_OptionsSubAudioThirdPartyCreditsDlg = new COptionsSubAudioThirdPartyCreditsDlg(GetVParent());
+	}
+	m_OptionsSubAudioThirdPartyCreditsDlg->Activate();
 }

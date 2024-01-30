@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -26,9 +26,9 @@ class CWeaponShotgun : public CWeaponSDKBase
 {
 public:
 	DECLARE_CLASS( CWeaponShotgun, CWeaponSDKBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponShotgun();
 
 	virtual void PrimaryAttack();
@@ -108,10 +108,10 @@ void CWeaponShotgun::PrimaryAttack()
 	pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
 	// Dispatch the FX right away with full accuracy.
-	FX_FireBullets( 
+	FX_FireBullets(
 		pPlayer->entindex(),
-		pPlayer->Weapon_ShootPosition(), 
-		pPlayer->EyeAngles() + 2.0f * pPlayer->GetPunchAngle(), 
+		pPlayer->Weapon_ShootPosition(),
+		pPlayer->EyeAngles() + 2.0f * pPlayer->GetPunchAngle(),
 		GetWeaponID(),
 		Primary_Mode,
 		CBaseEntity::GetPredictionRandomSeed() & 255, // wrap it for network traffic so it's the same between client and server
@@ -160,7 +160,7 @@ bool CWeaponShotgun::Reload()
 	// don't reload until recoil is done
 	if (m_flNextPrimaryAttack > gpGlobals->curtime)
 		return true;
-		
+
 	// check to see if we're ready to reload
 	if (m_fInSpecialReload == 0)
 	{
@@ -188,11 +188,11 @@ bool CWeaponShotgun::Reload()
 	{
 		// Add them to the clip
 		m_iClip1 += 1;
-		
+
 #ifdef GAME_DLL
 		SendReloadEvents();
 #endif
-		
+
 		CSDKPlayer *pPlayer = GetPlayerOwner();
 
 		if ( pPlayer )
@@ -232,7 +232,7 @@ void CWeaponShotgun::WeaponIdle()
 				// reload debounce has timed out
 				//MIKETODO: shotgun anims
 				SendWeaponAnim( ACT_SHOTGUN_RELOAD_FINISH );
-				
+
 				// play cocking sound
 				m_fInSpecialReload = 0;
 				SetWeaponIdleTime( gpGlobals->curtime + 1.5 );

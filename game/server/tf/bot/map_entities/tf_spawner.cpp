@@ -31,7 +31,7 @@ LINK_ENTITY_TO_CLASS( tf_spawner, CTFSpawner );
 
 
 //------------------------------------------------------------------------------
-CTFSpawner::CTFSpawner( void ) 
+CTFSpawner::CTFSpawner( void )
 {
 	Reset();
 }

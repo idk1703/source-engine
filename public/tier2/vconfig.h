@@ -21,7 +21,7 @@
 void SetVConfigRegistrySetting( const char *pName, const char *pValue, bool bNotify = true );
 bool GetVConfigRegistrySetting( const char *pName, char *pReturn, int size );
 #ifdef _WIN32
-bool RemoveObsoleteVConfigRegistrySetting( const char *pValueName, char *pOldValue = NULL , int size = 0 ); 
+bool RemoveObsoleteVConfigRegistrySetting( const char *pValueName, char *pOldValue = NULL , int size = 0 );
 #endif
 bool ConvertObsoleteVConfigRegistrySetting( const char *pValueName );
 

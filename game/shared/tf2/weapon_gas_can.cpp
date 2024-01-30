@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -31,5 +31,3 @@ END_PREDICTION_DATA()
 CWeaponGasCan::CWeaponGasCan() : CWeaponFlameThrower( true )
 {
 }
-
-

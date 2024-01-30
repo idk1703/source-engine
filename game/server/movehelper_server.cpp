@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -50,17 +50,17 @@ public:
 	// Touch list...
 	virtual void	ResetTouchList( void );
 	virtual bool	AddToTouched( const trace_t &tr, const Vector& impactvelocity );
- 	virtual void	ProcessImpacts( void );
+	virtual void	ProcessImpacts( void );
 
 	virtual bool	PlayerFallingDamage( void );
 	virtual void	PlayerSetAnimation( PLAYER_ANIM eAnim );
 
 	// Numbered line printf
 	virtual void	Con_NPrintf( int idx, char const* fmt, ... );
-	
+
 	// These have separate server vs client impementations
 	virtual void	StartSound( const Vector& origin, int channel, char const* sample, float volume, soundlevel_t soundlevel, int fFlags, int pitch );
-	virtual void	StartSound( const Vector& origin, const char *soundname ); 
+	virtual void	StartSound( const Vector& origin, const char *soundname );
 
 	virtual void	PlaybackEventFull( int flags, int clientindex, unsigned short eventindex, float delay, Vector& origin, Vector& angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2 );
 	virtual IPhysicsSurfaceProps *GetSurfaceProps( void );
@@ -144,7 +144,7 @@ char const* CMoveHelperServer::GetName( EntityHandle_t handle ) const
 	// This ain't pertickulerly fast, but it's for debugging anyways
 	edict_t* pEdict = GetEdict(handle);
 	CBaseEntity *ent = CBaseEntity::Instance( pEdict );
-	
+
 	// Is it the world?
 	if (ENTINDEX(pEdict) == 0)
 		return STRING(gpGlobals->mapname);
@@ -159,10 +159,10 @@ char const* CMoveHelperServer::GetName( EntityHandle_t handle ) const
 	}
 
 	return "?";
-}	
+}
 
 //-----------------------------------------------------------------------------
-// When we do a collision test, we report everything we hit.. 
+// When we do a collision test, we report everything we hit..
 //-----------------------------------------------------------------------------
 
 void CMoveHelperServer::ResetTouchList( void )
@@ -197,7 +197,7 @@ bool CMoveHelperServer::AddToTouched( const trace_t &tr, const Vector& impactvel
 			return false;
 		}
 	}
-	
+
 	int i = m_TouchList.AddToTail();
 	m_TouchList[i].trace = tr;
 	VectorCopy( impactvelocity, m_TouchList[i].deltavelocity );
@@ -251,7 +251,7 @@ void CMoveHelperServer::ProcessImpacts( void )
 
 		// Use the velocity we had when we collided, so boxes will move, etc.
 		m_pHostPlayer->SetAbsVelocity( m_TouchList[i].deltavelocity );
-		
+
 		entity->PhysicsImpact( m_pHostPlayer, m_TouchList[i].trace );
 	}
 
@@ -263,9 +263,9 @@ void CMoveHelperServer::ProcessImpacts( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : origin - 
-//			*soundname - 
+// Purpose:
+// Input  : origin -
+//			*soundname -
 //-----------------------------------------------------------------------------
 void CMoveHelperServer::StartSound( const Vector& origin, const char *soundname )
 {
@@ -281,7 +281,7 @@ void CMoveHelperServer::StartSound( const Vector& origin, const char *soundname 
 //-----------------------------------------------------------------------------
 // plays a sound
 //-----------------------------------------------------------------------------
-void CMoveHelperServer::StartSound( const Vector& origin, int channel, char const* sample, 
+void CMoveHelperServer::StartSound( const Vector& origin, int channel, char const* sample,
 						float volume, soundlevel_t soundlevel, int fFlags, int pitch )
 {
 
@@ -337,8 +337,8 @@ IPhysicsSurfaceProps *CMoveHelperServer::GetSurfaceProps( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Note that this only works on a listen server (since it requires graphical output)
-//			*pFormat - 
-//			... - 
+//			*pFormat -
+//			... -
 //-----------------------------------------------------------------------------
 void CMoveHelperServer::Con_NPrintf( int idx, char const* pFormat, ...)
 {
@@ -348,7 +348,7 @@ void CMoveHelperServer::Con_NPrintf( int idx, char const* pFormat, ...)
 	va_start(marker, pFormat);
 	Q_vsnprintf(msg, sizeof( msg ), pFormat, marker);
 	va_end(marker);
-	
+
 	engine->Con_NPrintf( idx, msg );
 }
 
@@ -359,33 +359,33 @@ void CMoveHelperServer::Con_NPrintf( int idx, char const* pFormat, ...)
 //-----------------------------------------------------------------------------
 bool CMoveHelperServer::PlayerFallingDamage( void )
 {
-	float flFallDamage = g_pGameRules->FlPlayerFallDamage( m_pHostPlayer );	
+	float flFallDamage = g_pGameRules->FlPlayerFallDamage( m_pHostPlayer );
 	if ( flFallDamage > 0 )
 	{
-		m_pHostPlayer->TakeDamage( CTakeDamageInfo( GetContainingEntity(INDEXENT(0)), GetContainingEntity(INDEXENT(0)), flFallDamage, DMG_FALL ) ); 
+		m_pHostPlayer->TakeDamage( CTakeDamageInfo( GetContainingEntity(INDEXENT(0)), GetContainingEntity(INDEXENT(0)), flFallDamage, DMG_FALL ) );
 		StartSound( m_pHostPlayer->GetAbsOrigin(), "Player.FallDamage" );
 
-        //=============================================================================
-        // HPE_BEGIN:
-        // [dwenger] Needed for fun-fact implementation
-        //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [dwenger] Needed for fun-fact implementation
+	//=============================================================================
 
 #ifdef CSTRIKE_DLL
 
-        // Increment the stat for fall damage
-        CCSPlayer*  pPlayer = ToCSPlayer(m_pHostPlayer);
+	// Increment the stat for fall damage
+	CCSPlayer*  pPlayer = ToCSPlayer(m_pHostPlayer);
 
-        if ( pPlayer )
-        {
-            CCS_GameStats.IncrementStat( pPlayer, CSSTAT_FALL_DAMAGE, (int)flFallDamage );
-        }
+	if ( pPlayer )
+	{
+	CCS_GameStats.IncrementStat( pPlayer, CSSTAT_FALL_DAMAGE, (int)flFallDamage );
+	}
 
 #endif
-        //=============================================================================
-        // HPE_END
-        //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
-    }
+	}
 
 	if ( m_pHostPlayer->m_iHealth <= 0 )
 	{

@@ -47,7 +47,7 @@ public:
 
 	virtual bool			IsInitialized() const = 0;
 	virtual bool			Commit( CBaseReplay *pNewReplay ) = 0;
-	
+
 	virtual void			Save() = 0;	// Write the entire index and any replays/groups/movies that are marked as dirty
 	virtual void			FlagReplayForFlush( CBaseReplay *pReplay, bool bForceImmediateWrite ) = 0;	// Mark the given replay as dirty - flush to disk at the next opportunity (see CBaseReplayHistoryManager::FlushThink())
 

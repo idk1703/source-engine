@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose: A fast stack memory allocator that uses virtual memory if available
 //
@@ -36,13 +36,13 @@ public:
 	int GetSize();
 	int GetMaxSize();
 	int	GetUsed();
-	
+
 	void *Alloc( unsigned bytes, bool bClear = false ) RESTRICT;
 
 	MemoryStackMark_t GetCurrentAllocPoint();
 	void FreeToAllocPoint( MemoryStackMark_t mark, bool bDecommit = true );
 	void FreeAll( bool bDecommit = true );
-	
+
 	void Access( void **ppRegion, unsigned *pBytes );
 
 	void PrintContents();
@@ -62,7 +62,7 @@ private:
 	byte *m_pNextAlloc;
 	byte *m_pCommitLimit;
 	byte *m_pAllocLimit;
-	
+
 	byte *m_pBase;
 	bool m_bRegisteredAllocation;
 	bool m_bPhysical;
@@ -123,15 +123,15 @@ inline bool CMemoryStack::CommitSize( int nBytes )
 //-------------------------------------
 
 inline int CMemoryStack::GetMaxSize()
-{ 
+{
 	return m_maxSize;
 }
 
 //-------------------------------------
 
-inline int CMemoryStack::GetUsed() 
-{ 
-	return ( m_pNextAlloc - m_pBase ); 
+inline int CMemoryStack::GetUsed()
+{
+	return ( m_pNextAlloc - m_pBase );
 }
 
 //-------------------------------------
@@ -267,7 +267,7 @@ private:
 	};
 
 	PhysicalChunk_t m_InitialChunk;
-	CUtlVector< PhysicalChunk_t > m_ExtraChunks; 
+	CUtlVector< PhysicalChunk_t > m_ExtraChunks;
 	size_t m_nUsage;
 	size_t m_nFramePeakUsage;
 	size_t m_nPeakUsage;
@@ -307,7 +307,7 @@ FORCEINLINE void *CPhysicalMemoryStack::Alloc( size_t nSizeInBytes, bool bClear 
 	}
 
 	m_nUsage += nSizeInBytes;
-	m_nFramePeakUsage = MAX( m_nUsage, m_nFramePeakUsage ); 
+	m_nFramePeakUsage = MAX( m_nUsage, m_nFramePeakUsage );
 	m_nPeakUsage = MAX( m_nUsage, m_nPeakUsage );
 
 	if ( bClear )
@@ -321,20 +321,20 @@ FORCEINLINE void *CPhysicalMemoryStack::Alloc( size_t nSizeInBytes, bool bClear 
 //-------------------------------------
 
 inline size_t CPhysicalMemoryStack::GetPeakUsed() const
-{ 
+{
 	return m_nPeakUsage;
 }
 
 //-------------------------------------
 
 inline size_t CPhysicalMemoryStack::GetUsed() const
-{ 
-	return m_nUsage; 
+{
+	return m_nUsage;
 }
 
 inline size_t CPhysicalMemoryStack::GetFramePeakUsed() const
-{ 
-	return m_nFramePeakUsage; 
+{
+	return m_nFramePeakUsage;
 }
 
 inline MemoryStackMark_t CPhysicalMemoryStack::GetCurrentAllocPoint() const

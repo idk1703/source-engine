@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose: Random number generator
 //
@@ -94,19 +94,19 @@ int CUniformRandomStream::GenerateRandomNumber()
 	AUTO_LOCK( m_mutex );
 	int j;
 	int k;
-	
+
 	if (m_idum <= 0 || !m_iy)
 	{
-		if (-(m_idum) < 1) 
+		if (-(m_idum) < 1)
 			m_idum=1;
-		else 
+		else
 			m_idum = -(m_idum);
 
 		for ( j=NTAB+7; j>=0; j--)
 		{
 			k = (m_idum)/IQ;
 			m_idum = IA*(m_idum-k*IQ)-IR*k;
-			if (m_idum < 0) 
+			if (m_idum < 0)
 				m_idum += IM;
 			if (j < NTAB)
 				m_iv[j] = m_idum;
@@ -115,12 +115,12 @@ int CUniformRandomStream::GenerateRandomNumber()
 	}
 	k=(m_idum)/IQ;
 	m_idum=IA*(m_idum-k*IQ)-IR*k;
-	if (m_idum < 0) 
+	if (m_idum < 0)
 		m_idum += IM;
 	j=m_iy/NDIV;
 
-	// We're seeing some strange memory corruption in the contents of s_pUniformStream. 
-	// Perhaps it's being caused by something writing past the end of this array? 
+	// We're seeing some strange memory corruption in the contents of s_pUniformStream.
+	// Perhaps it's being caused by something writing past the end of this array?
 	// Bounds-check in release to see if that's the case.
 	if (j >= NTAB || j < 0)
 	{
@@ -139,7 +139,7 @@ float CUniformRandomStream::RandomFloat( float flLow, float flHigh )
 {
 	// float in [0,1)
 	float fl = AM * GenerateRandomNumber();
-	if (fl > RNMX) 
+	if (fl > RNMX)
 	{
 		fl = RNMX;
 	}

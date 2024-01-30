@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,7 +21,7 @@
 bool CBaseCombatCharacter::SwitchToNextBestWeapon(CBaseCombatWeapon *pCurrent)
 {
 	CBaseCombatWeapon *pNewWeapon = g_pGameRules->GetNextBestWeapon(this, pCurrent);
-	
+
 	if ( ( pNewWeapon != NULL ) && ( pNewWeapon != pCurrent ) )
 	{
 		return Weapon_Switch( pNewWeapon );
@@ -35,7 +35,7 @@ bool CBaseCombatCharacter::SwitchToNextBestWeapon(CBaseCombatWeapon *pCurrent)
 // Input  :
 // Output : true is switch succeeded
 //-----------------------------------------------------------------------------
-bool CBaseCombatCharacter::Weapon_Switch( CBaseCombatWeapon *pWeapon, int viewmodelindex /*=0*/ ) 
+bool CBaseCombatCharacter::Weapon_Switch( CBaseCombatWeapon *pWeapon, int viewmodelindex /*=0*/ )
 {
 	if ( pWeapon == NULL )
 		return false;
@@ -66,7 +66,7 @@ bool CBaseCombatCharacter::Weapon_Switch( CBaseCombatWeapon *pWeapon, int viewmo
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns whether or not we can switch to the given weapon.
-// Input  : pWeapon - 
+// Input  : pWeapon -
 //-----------------------------------------------------------------------------
 bool CBaseCombatCharacter::Weapon_CanSwitchTo( CBaseCombatWeapon *pWeapon )
 {
@@ -87,7 +87,7 @@ bool CBaseCombatCharacter::Weapon_CanSwitchTo( CBaseCombatWeapon *pWeapon )
 
 	if ( !pWeapon->CanDeploy() )
 		return false;
-	
+
 	if ( m_hActiveWeapon )
 	{
 		if ( !m_hActiveWeapon->CanHolster() && !pWeapon->ForceWeaponSwitch() )
@@ -113,7 +113,7 @@ bool CBaseCombatCharacter::Weapon_CanSwitchTo( CBaseCombatWeapon *pWeapon )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CBaseCombatWeapon
 //-----------------------------------------------------------------------------
 CBaseCombatWeapon *CBaseCombatCharacter::GetActiveWeapon() const
@@ -122,9 +122,9 @@ CBaseCombatWeapon *CBaseCombatCharacter::GetActiveWeapon() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : iCount - 
-//			iAmmoIndex - 
+// Purpose:
+// Input  : iCount -
+//			iAmmoIndex -
 //-----------------------------------------------------------------------------
 void CBaseCombatCharacter::RemoveAmmo( int iCount, int iAmmoIndex )
 {
@@ -145,7 +145,7 @@ void CBaseCombatCharacter::RemoveAmmo( int iCount, const char *szName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseCombatCharacter::RemoveAllAmmo( )
 {
@@ -196,7 +196,7 @@ int	CBaseCombatCharacter::GetAmmoCount( char *szName ) const
 CBaseCombatWeapon* CBaseCombatCharacter::Weapon_OwnsThisType( const char *pszWeapon, int iSubType ) const
 {
 	// Check for duplicates
-	for (int i=0;i<MAX_WEAPONS;i++) 
+	for (int i=0;i<MAX_WEAPONS;i++)
 	{
 		if ( m_hMyWeapons[i].Get() && FClassnameIs( m_hMyWeapons[i], pszWeapon ) )
 		{
@@ -225,7 +225,7 @@ void CBaseCombatCharacter::SetBloodColor( int nBloodColor )
 
 //-----------------------------------------------------------------------------
 /**
-	The main visibility check.  Checks all the entity specific reasons that could 
+	The main visibility check.  Checks all the entity specific reasons that could
 	make IsVisible fail.  Then checks points in space to get environmental reasons.
 	This is LOS, plus invisibility and fog and smoke and such.
 */
@@ -342,7 +342,7 @@ VisCacheResult_t CCombatCharVisCache::HasVisibility( int iCache ) const
 {
 	if ( iCache == VIS_CACHE_INVALID )
 		return VISCACHE_UNKNOWN;
-	
+
 	m_nTestCount++;
 
 	bool bReverse = ( iCache < 0 );
@@ -401,7 +401,7 @@ bool CBaseCombatCharacter::IsAbleToSee( const CBaseEntity *pEntity, FieldOfViewC
 #ifdef GAME_DLL
 	Vector vecEyeToTarget;
 	VectorSubtract( vecTargetPosition, vecEyePosition, vecEyeToTarget );
-	float flDistToOther = VectorNormalize( vecEyeToTarget ); 
+	float flDistToOther = VectorNormalize( vecEyeToTarget );
 
 	// We can't see because they are too far in the fog
 	if ( IsHiddenByFog( flDistToOther ) )
@@ -439,7 +439,7 @@ static void ComputeSeeTestPosition( Vector *pEyePosition, CBaseCombatCharacter *
 #endif
 	{
 		*pEyePosition = pBCC->EyePosition();
-	}	
+	}
 }
 
 bool CBaseCombatCharacter::IsAbleToSee( CBaseCombatCharacter *pBCC, FieldOfViewCheckType checkFOV )
@@ -451,7 +451,7 @@ bool CBaseCombatCharacter::IsAbleToSee( CBaseCombatCharacter *pBCC, FieldOfViewC
 #ifdef GAME_DLL
 	Vector vecEyeToTarget;
 	VectorSubtract( vecOtherEyePosition, vecEyePosition, vecEyeToTarget );
-	float flDistToOther = VectorNormalize( vecEyeToTarget ); 
+	float flDistToOther = VectorNormalize( vecEyeToTarget );
 
 	// Test this every time; it's cheap.
 	// We can't see because they are too far in the fog
@@ -564,7 +564,7 @@ bool CBaseCombatCharacter::ComputeTargetIsInDarkness( const Vector &vecEyePositi
 
 	trace_t result;
 	UTIL_TraceLine( vecTargetPos, vecTargetPos + vecSightDirection * 32768.0f, MASK_L4D_VISION, &lightingFilter, &result );
-	if ( ( result.fraction < 1.0f ) && ( ( result.surface.flags & SURF_SKY ) == 0 ) )	
+	if ( ( result.fraction < 1.0f ) && ( ( result.surface.flags & SURF_SKY ) == 0 ) )
 	{
 		const float flMaxDistance = 100.0f;
 		TerrorNavArea *pFarArea = (TerrorNavArea *)TheNavMesh->GetNearestNavArea( result.endpos, false, flMaxDistance );
@@ -581,7 +581,7 @@ bool CBaseCombatCharacter::ComputeTargetIsInDarkness( const Vector &vecEyePositi
 
 //-----------------------------------------------------------------------------
 /**
-	Return true if our view direction is pointing at the given target, 
+	Return true if our view direction is pointing at the given target,
 	within the cosine of the angular tolerance. LINE OF SIGHT IS NOT CHECKED.
 */
 bool CBaseCombatCharacter::IsLookingTowards( const CBaseEntity *target, float cosTolerance ) const
@@ -592,7 +592,7 @@ bool CBaseCombatCharacter::IsLookingTowards( const CBaseEntity *target, float co
 
 //-----------------------------------------------------------------------------
 /**
-	Return true if our view direction is pointing at the given target, 
+	Return true if our view direction is pointing at the given target,
 	within the cosine of the angular tolerance. LINE OF SIGHT IS NOT CHECKED.
 */
 bool CBaseCombatCharacter::IsLookingTowards( const Vector &target, float cosTolerance ) const
@@ -609,7 +609,7 @@ bool CBaseCombatCharacter::IsLookingTowards( const Vector &target, float cosTole
 
 //-----------------------------------------------------------------------------
 /**
-	Returns true if we are looking towards something within a tolerence determined 
+	Returns true if we are looking towards something within a tolerence determined
 	by our field of view
 */
 bool CBaseCombatCharacter::IsInFieldOfView( CBaseEntity *entity ) const
@@ -623,7 +623,7 @@ bool CBaseCombatCharacter::IsInFieldOfView( CBaseEntity *entity ) const
 
 	// FIXME: Use a faster check than this!
 
-	// Check 3 spots, or else when standing right next to someone looking at their eyes, 
+	// Check 3 spots, or else when standing right next to someone looking at their eyes,
 	// the angle will be too great to see their center.
 	Vector vecToTarget = entity->GetAbsOrigin() - vecEyePosition;
 	vecToTarget.NormalizeInPlace();
@@ -642,7 +642,7 @@ bool CBaseCombatCharacter::IsInFieldOfView( CBaseEntity *entity ) const
 
 //-----------------------------------------------------------------------------
 /**
-	Returns true if we are looking towards something within a tolerence determined 
+	Returns true if we are looking towards something within a tolerence determined
 	by our field of view
 */
 bool CBaseCombatCharacter::IsInFieldOfView( const Vector &pos ) const

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,7 +24,7 @@
 	#define CSDKPlayer C_SDKPlayer
 #else
 	class CBaseAnimatingOverlay;
-	class CWeaponSDKBase; 
+	class CWeaponSDKBase;
 	class CSDKPlayer;
 #endif
 
@@ -40,7 +40,7 @@ enum PlayerAnimEvent_t
 	PLAYERANIMEVENT_THROW_GRENADE,
 	PLAYERANIMEVENT_JUMP,
 	PLAYERANIMEVENT_RELOAD,
-	
+
 	PLAYERANIMEVENT_COUNT
 };
 
@@ -51,7 +51,7 @@ public:
 	// This is called by both the client and the server in the same way to trigger events for
 	// players firing, jumping, throwing grenades, etc.
 	virtual void DoAnimationEvent( PlayerAnimEvent_t event, int nData = 0 ) = 0;
-	
+
 	// Returns true if we're playing the grenade prime or throw animation.
 	virtual bool IsThrowingGrenade() = 0;
 };

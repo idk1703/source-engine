@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -62,7 +62,7 @@ typedescription_t *FindFieldByName( const char *fieldname, datamap_t *dmap );
 #if !defined( NO_ENTITY_PREDICTION )
 //-----------------------------------------------------------------------------
 // Purpose: For debugging, find predictable by classname
-// Input  : *classname - 
+// Input  : *classname -
 // Output : static C_BaseEntity
 //-----------------------------------------------------------------------------
 static C_BaseEntity *FindPredictableByGameClass( const char *classname )
@@ -89,7 +89,7 @@ static C_BaseEntity *FindPredictableByGameClass( const char *classname )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPrediction::CPrediction( void )
 {
@@ -124,7 +124,7 @@ void CPrediction::Shutdown( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 void CPrediction::CheckError( int commands_acknowledged )
@@ -147,13 +147,13 @@ void CPrediction::CheckError( int commands_acknowledged )
 	player = C_BasePlayer::GetLocalPlayer();
 	if ( !player )
 		return;
-	
+
 	// Not predictable yet (flush entity packet?)
 	if ( !player->IsIntermediateDataAllocated() )
 		return;
 
 	origin = player->GetNetworkOrigin();
-		
+
 	const void *slot = player->GetPredictedFrame( commands_acknowledged - 1 );
 	if ( !slot )
 		return;
@@ -167,13 +167,13 @@ void CPrediction::CheckError( int commands_acknowledged )
 	Vector predicted_origin;
 
 	memcpy( (Vector *)&predicted_origin, (Vector *)( (byte *)slot + td->fieldOffset[ PC_DATA_PACKED ] ), sizeof( Vector ) );
-	
+
 	// Compare what the server returned with what we had predicted it to be
 	VectorSubtract ( predicted_origin, origin, delta );
 
 	len = VectorLength( delta );
 	if (len > MAX_PREDICTION_ERROR )
-	{	
+	{
 		// A teleport or something, clear out error
 		len = 0;
 	}
@@ -201,7 +201,7 @@ void CPrediction::CheckError( int commands_acknowledged )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPrediction::ShutdownPredictables( void )
 {
@@ -233,7 +233,7 @@ void CPrediction::ShutdownPredictables( void )
 		}
 	}
 
-	if ( ( release_count > 0 ) || 
+	if ( ( release_count > 0 ) ||
 		 ( shutdown_count > 0 ) )
 	{
 		Msg( "Shutdown %i predictable entities and %i client-created entities\n",
@@ -247,7 +247,7 @@ void CPrediction::ShutdownPredictables( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPrediction::ReinitPredictables( void )
 {
@@ -260,7 +260,7 @@ void CPrediction::ReinitPredictables( void )
 		C_BaseEntity *e = ClientEntityList().GetBaseEntity( i );
 		if ( !e )
 			continue;
-		
+
 		if ( e->GetPredictable() )
 			continue;
 
@@ -273,7 +273,7 @@ void CPrediction::ReinitPredictables( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPrediction::OnReceivedUncompressedPacket( void )
 {
@@ -285,9 +285,9 @@ void CPrediction::OnReceivedUncompressedPacket( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : commands_acknowledged - 
-//			current_world_update_packet - 
+// Purpose:
+// Input  : commands_acknowledged -
+//			current_world_update_packet -
 // Output : void CPrediction::PreEntityPacketReceived
 //-----------------------------------------------------------------------------
 void CPrediction::PreEntityPacketReceived ( int commands_acknowledged, int current_world_update_packet )
@@ -370,8 +370,8 @@ void CPrediction::PostEntityPacketReceived( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *ent - 
+// Purpose:
+// Input  : *ent -
 // Output : static bool
 //-----------------------------------------------------------------------------
 bool CPrediction::ShouldDumpEntity( C_BaseEntity *ent )
@@ -411,8 +411,8 @@ bool CPrediction::ShouldDumpEntity( C_BaseEntity *ent )
 
 //-----------------------------------------------------------------------------
 // Purpose: Called at the end of the frame if any packets were received
-// Input  : error_check - 
-//			last_predicted - 
+// Input  : error_check -
+//			last_predicted -
 //-----------------------------------------------------------------------------
 void CPrediction::PostNetworkDataReceived( int commands_acknowledged )
 {
@@ -494,8 +494,8 @@ void CPrediction::PostNetworkDataReceived( int commands_acknowledged )
 					int size = GetClassMap().GetClassSize( ent->GetClassname() );
 					int intermediate_size = ent->GetIntermediateDataSize() * ( MULTIPLAYER_BACKUP + 1 );
 
-					engine->Con_NXPrintf( &np, "%15s %30s (%5i / %5i bytes): %15s", 
-						sz, 
+					engine->Con_NXPrintf( &np, "%15s %30s (%5i / %5i bytes): %15s",
+						sz,
 						ent->GetClassname(),
 						size,
 						intermediate_size,
@@ -506,14 +506,14 @@ void CPrediction::PostNetworkDataReceived( int commands_acknowledged )
 				}
 				else
 				{
-					engine->Con_NXPrintf( &np, "%15s %30s: %15s", 
-						sz, 
+					engine->Con_NXPrintf( &np, "%15s %30s: %15s",
+						sz,
 						ent->GetClassname(),
 						ent->GetPredictable() ? "predicted" : "client created" );
 				}
 			}
 #ifndef _XBOX
-			if ( error_check && 
+			if ( error_check &&
 				!entityDumped &&
 				dump &&
 				ShouldDumpEntity( ent ) )
@@ -533,8 +533,8 @@ void CPrediction::PostNetworkDataReceived( int commands_acknowledged )
 			Q_strncpy( sz1, Q_pretifymem( (float)totalsize ), sizeof( sz1 ) );
 			Q_strncpy( sz2, Q_pretifymem( (float)totalsize_intermediate ), sizeof( sz2 ) );
 
-			engine->Con_NXPrintf( &np, "%15s %27s (%s / %s)  %14s", 
-				"totals:", 
+			engine->Con_NXPrintf( &np, "%15s %27s (%s / %s)  %14s",
+				"totals:",
 				"",
 				sz1,
 				sz2,
@@ -600,18 +600,18 @@ void CPrediction::PostNetworkDataReceived( int commands_acknowledged )
 
 //-----------------------------------------------------------------------------
 // Purpose: Prepare for running prediction code
-// Input  : *ucmd - 
-//			*from - 
-//			*pHelper - 
-//			&moveInput - 
+// Input  : *ucmd -
+//			*from -
+//			*pHelper -
+//			&moveInput -
 //-----------------------------------------------------------------------------
-void CPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move ) 
+void CPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move )
 {
 #if !defined( NO_ENTITY_PREDICTION )
 	VPROF( "CPrediction::SetupMove" );
 
 	move->m_bFirstRunOfFunctions = IsFirstTimePredicted();
-	
+
 	move->m_nPlayerHandle = player->GetClientHandle();
 	move->m_vecVelocity		= player->GetAbsVelocity();
 	move->SetAbsOrigin( player->GetNetworkOrigin() );
@@ -622,7 +622,7 @@ void CPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *
 
 	move->m_vecAngles		= ucmd->viewangles;
 	move->m_vecViewAngles	= ucmd->viewangles;
-	move->m_nImpulseCommand = ucmd->impulse;	
+	move->m_nImpulseCommand = ucmd->impulse;
 	move->m_nButtons		= ucmd->buttons;
 
 	CBaseEntity *pMoveParent = player->GetMoveParent();
@@ -652,11 +652,11 @@ void CPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *
 		move->m_flSideMove			= ucmd->sidemove;
 		move->m_flUpMove			= ucmd->upmove;
 	}
-		
+
 	IClientVehicle *pVehicle = player->GetVehicle();
 	if (pVehicle)
 	{
-		pVehicle->SetupMove( player, ucmd, pHelper, move ); 
+		pVehicle->SetupMove( player, ucmd, pHelper, move );
 	}
 
 	// Copy constraint information
@@ -684,8 +684,8 @@ void CPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *
 
 //-----------------------------------------------------------------------------
 // Purpose: Finish running prediction code
-// Input  : &move - 
-//			*to - 
+// Input  : &move -
+//			*to -
 //-----------------------------------------------------------------------------
 void CPrediction::FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *move )
 {
@@ -697,21 +697,21 @@ void CPrediction::FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *m
 	player->m_vecVelocity = move->m_vecVelocity;
 
 	player->m_vecNetworkOrigin = move->GetAbsOrigin();
-	
+
 	player->m_Local.m_nOldButtons = move->m_nButtons;
 
 
 	// NOTE: Don't copy this.  the movement code modifies its local copy but is not expecting to be authoritative
 	//player->m_flMaxspeed = move->m_flClientMaxSpeed;
-	
+
 	m_hLastGround = player->GetGroundEntity();
- 
+
 	player->SetLocalOrigin( move->GetAbsOrigin() );
 
 	IClientVehicle *pVehicle = player->GetVehicle();
 	if (pVehicle)
 	{
-		pVehicle->FinishMove( player, ucmd, move ); 
+		pVehicle->FinishMove( player, ucmd, move );
 	}
 
 	// Sanity checks
@@ -727,8 +727,8 @@ void CPrediction::FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *m
 
 //-----------------------------------------------------------------------------
 // Purpose: Called before any movement processing
-// Input  : *player - 
-//			*cmd - 
+// Input  : *player -
+//			*cmd -
 //-----------------------------------------------------------------------------
 void CPrediction::StartCommand( C_BasePlayer *player, CUserCmd *cmd )
 {
@@ -745,7 +745,7 @@ void CPrediction::StartCommand( C_BasePlayer *player, CUserCmd *cmd )
 
 //-----------------------------------------------------------------------------
 // Purpose: Called after any movement processing
-// Input  : *player - 
+// Input  : *player -
 //-----------------------------------------------------------------------------
 void CPrediction::FinishCommand( C_BasePlayer *player )
 {
@@ -760,8 +760,8 @@ void CPrediction::FinishCommand( C_BasePlayer *player )
 
 //-----------------------------------------------------------------------------
 // Purpose: Called before player thinks
-// Input  : *player - 
-//			thinktime - 
+// Input  : *player -
+//			thinktime -
 //-----------------------------------------------------------------------------
 void CPrediction::RunPreThink( C_BasePlayer *player )
 {
@@ -785,9 +785,9 @@ void CPrediction::RunPreThink( C_BasePlayer *player )
 //  function will be called, because it is called before any movement is done
 //  in a frame.  Not used for pushmove objects, because they must be exact.
 //  Returns false if the entity removed itself.
-// Input  : *ent - 
-//			frametime - 
-//			clienttimebase - 
+// Input  : *ent -
+//			frametime -
+//			clienttimebase -
 // Output : void CPlayerMove::RunThink
 //-----------------------------------------------------------------------------
 void CPrediction::RunThink (C_BasePlayer *player, double frametime )
@@ -799,7 +799,7 @@ void CPrediction::RunThink (C_BasePlayer *player, double frametime )
 
 	if ( thinktick <= 0 || thinktick > player->m_nTickBase )
 		return;
-	
+
 	player->SetNextThink( TICK_NEVER_THINK );
 
 	// Think
@@ -809,9 +809,9 @@ void CPrediction::RunThink (C_BasePlayer *player, double frametime )
 
 //-----------------------------------------------------------------------------
 // Purpose: Called after player movement
-// Input  : *player - 
-//			thinktime - 
-//			frametime - 
+// Input  : *player -
+//			thinktime -
+//			frametime -
 //-----------------------------------------------------------------------------
 void CPrediction::RunPostThink( C_BasePlayer *player )
 {
@@ -825,9 +825,9 @@ void CPrediction::RunPostThink( C_BasePlayer *player )
 
 //-----------------------------------------------------------------------------
 // Purpose: Predicts a single movement command for player
-// Input  : *moveHelper - 
-//			*player - 
-//			*u - 
+// Input  : *moveHelper -
+//			*player -
+//			*u -
 //-----------------------------------------------------------------------------
 void CPrediction::RunCommand( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *moveHelper )
 {
@@ -864,7 +864,7 @@ void CPrediction::RunCommand( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 	if ( ucmd->impulse )
 	{
 		// Discard impulse commands unless the vehicle allows them.
-		// FIXME: UsingStandardWeapons seems like a bad filter for this. 
+		// FIXME: UsingStandardWeapons seems like a bad filter for this.
 		// The flashlight is an impulse command, for example.
 		if ( !pVehicle || player->UsingStandardWeaponsInVehicle() )
 		{
@@ -895,7 +895,7 @@ void CPrediction::RunCommand( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 
 	// Setup input.
 	{
-	
+
 		SetupMove( player, ucmd, moveHelper, g_pMoveData );
 	}
 
@@ -944,7 +944,7 @@ void CPrediction::SetIdealPitch ( C_BasePlayer *player, const Vector& origin, co
 
 	if ( player->GetGroundEntity() == NULL )
 		return;
-	
+
 	// Don't do this on the 360..
 	if ( IsX360() )
 		return;
@@ -957,7 +957,7 @@ void CPrediction::SetIdealPitch ( C_BasePlayer *player, const Vector& origin, co
 	for (i=0 ; i<MAX_FORWARD ; i++)
 	{
 		VectorMA( origin, (i+3)*12, forward, top );
-		
+
 		top[2] += viewheight[ 2 ];
 
 		VectorCopy( top, bottom );
@@ -968,15 +968,15 @@ void CPrediction::SetIdealPitch ( C_BasePlayer *player, const Vector& origin, co
 
 		// looking at a wall, leave ideal the way it was
 		if ( tr.allsolid )
-			return;	
+			return;
 
 		// near a dropoff/ledge
 		if ( tr.fraction == 1 )
-			return;	
-		
+			return;
+
 		floor_height[i] = top[2] + tr.fraction*( bottom[2] - top[2] );
 	}
-	
+
 	dir = 0;
 	steps = 0;
 	for (j=1 ; j<i ; j++)
@@ -988,16 +988,16 @@ void CPrediction::SetIdealPitch ( C_BasePlayer *player, const Vector& origin, co
 		if (dir && ( step-dir > ON_EPSILON || step-dir < -ON_EPSILON ) )
 			return;		// mixed changes
 
-		steps++;	
+		steps++;
 		dir = step;
 	}
-	
+
 	if (!dir)
 	{
 		m_flIdealPitch = 0;
 		return;
 	}
-	
+
 	if (steps < 2)
 		return;
 	m_flIdealPitch = -dir * cl_idealpitchscale.GetFloat();
@@ -1009,7 +1009,7 @@ void CPrediction::SetIdealPitch ( C_BasePlayer *player, const Vector& origin, co
 //  such as projectiles which were
 // 1) not actually ack'd by the server or
 // 2) were ack'd and made dormant and can now safely be removed
-// Input  : last_command_packet - 
+// Input  : last_command_packet -
 //-----------------------------------------------------------------------------
 void CPrediction::RemoveStalePredictedEntities( int sequence_number )
 {
@@ -1103,7 +1103,7 @@ void CPrediction::RemoveStalePredictedEntities( int sequence_number )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPrediction::RestoreOriginalEntityState( void )
 {
@@ -1131,12 +1131,12 @@ void CPrediction::RestoreOriginalEntityState( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : current_command - 
-//			curtime - 
-//			*cmd - 
-//			*tcmd - 
-//			*localPlayer - 
+// Purpose:
+// Input  : current_command -
+//			curtime -
+//			*cmd -
+//			*tcmd -
+//			*localPlayer -
 //-----------------------------------------------------------------------------
 void CPrediction::RunSimulation( int current_command, float curtime, CUserCmd *cmd, C_BasePlayer *localPlayer )
 {
@@ -1146,7 +1146,7 @@ void CPrediction::RunSimulation( int current_command, float curtime, CUserCmd *c
 	Assert( localPlayer );
 	C_CommandContext *ctx = localPlayer->GetCommandContext();
 	Assert( ctx );
-	
+
 	ctx->needsprocessing = true;
 	ctx->cmd = *cmd;
 	ctx->command_number = current_command;
@@ -1179,7 +1179,7 @@ void CPrediction::RunSimulation( int current_command, float curtime, CUserCmd *c
 
 		bool islocal = ( localPlayer == entity ) ? true : false;
 
-		// Local player simulates first, if this assert fires then the predictables list isn't sorted 
+		// Local player simulates first, if this assert fires then the predictables list isn't sorted
 		//  correctly (or we started predicting C_World???)
 		if ( islocal )
 		{
@@ -1203,7 +1203,7 @@ void CPrediction::RunSimulation( int current_command, float curtime, CUserCmd *c
 			entity->OnPreDataChanged( DATA_UPDATE_DATATABLE_CHANGED );
 		}
 
-		// Certain entities can be created locally and if so created, should be 
+		// Certain entities can be created locally and if so created, should be
 		//  simulated until a network update arrives
 		if ( entity->IsClientCreated() )
 		{
@@ -1228,7 +1228,7 @@ void CPrediction::RunSimulation( int current_command, float curtime, CUserCmd *c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPrediction::Untouch( void )
 {
@@ -1253,7 +1253,7 @@ void CPrediction::Untouch( void )
 
 #if !defined( NO_ENTITY_PREDICTION )
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void InvalidateEFlagsRecursive( C_BaseEntity *pEnt, int nDirtyFlags, int nChildFlags = 0 )
 {
@@ -1282,14 +1282,14 @@ void CPrediction::StorePredictionResults( int predicted_frame )
 		if ( !entity )
 			continue;
 
-		// Certain entities can be created locally and if so created, should be 
+		// Certain entities can be created locally and if so created, should be
 		//  simulated until a network update arrives
 		if ( !entity->GetPredictable() )
 			continue;
 
 		// FIXME: The lack of this call inexplicably actually creates prediction errors
 		InvalidateEFlagsRecursive( entity, EFL_DIRTY_ABSTRANSFORM | EFL_DIRTY_ABSVELOCITY | EFL_DIRTY_ABSANGVELOCITY );
-  
+
 		entity->SaveData( "StorePredictionResults", predicted_frame, PC_EVERYTHING );
 	}
 #endif
@@ -1298,9 +1298,9 @@ void CPrediction::StorePredictionResults( int predicted_frame )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : slots_to_remove - 
-//			previous_last_slot - 
+// Purpose:
+// Input  : slots_to_remove -
+//			previous_last_slot -
 //-----------------------------------------------------------------------------
 void CPrediction::ShiftIntermediateDataForward( int slots_to_remove, int number_of_commands_run )
 {
@@ -1335,8 +1335,8 @@ void CPrediction::ShiftIntermediateDataForward( int slots_to_remove, int number_
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : predicted_frame - 
+// Purpose:
+// Input  : predicted_frame -
 //-----------------------------------------------------------------------------
 void CPrediction::RestoreEntityToPredictedFrame( int predicted_frame )
 {
@@ -1373,8 +1373,8 @@ void CPrediction::RestoreEntityToPredictedFrame( int predicted_frame )
 //-----------------------------------------------------------------------------
 // Purpose: Computes starting destination for intermediate prediction data results and
 //  does any fixups required by network optimization
-// Input  : received_new_world_update - 
-//			incoming_acknowledged - 
+// Input  : received_new_world_update -
+//			incoming_acknowledged -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPrediction::ComputeFirstCommandToExecute( bool received_new_world_update, int incoming_acknowledged, int outgoing_command )
@@ -1383,9 +1383,9 @@ int CPrediction::ComputeFirstCommandToExecute( bool received_new_world_update, i
 #if !defined( NO_ENTITY_PREDICTION )
 	int skipahead = 0;
 
-	// If we didn't receive a new update ( or we received an update that didn't ack any new CUserCmds -- 
-	//  so for the player it should be just like receiving no update ), just jump right up to the very 
-	//  last command we created for this very frame since we probably wouldn't have had any errors without 
+	// If we didn't receive a new update ( or we received an update that didn't ack any new CUserCmds --
+	//  so for the player it should be just like receiving no update ), just jump right up to the very
+	//  last command we created for this very frame since we probably wouldn't have had any errors without
 	//  being notified by the server of such a case.
 	// NOTE:  received_new_world_update only gets set to false if cl_pred_optimize >= 1
 	if ( !received_new_world_update || !m_nServerCommandsAcknowledged )
@@ -1400,7 +1400,7 @@ int CPrediction::ComputeFirstCommandToExecute( bool received_new_world_update, i
 		// Always restore since otherwise we might start prediction using an "interpolated" value instead of a purely predicted value
 		RestoreEntityToPredictedFrame( skipahead - 1 );
 
-		//Msg( "%i/%i no world, skip to %i restore from slot %i\n", 
+		//Msg( "%i/%i no world, skip to %i restore from slot %i\n",
 		//	gpGlobals->framecount,
 		//	gpGlobals->tickcount,
 		//	skipahead,
@@ -1408,19 +1408,19 @@ int CPrediction::ComputeFirstCommandToExecute( bool received_new_world_update, i
 	}
 	else
 	{
-#ifdef STAGING_ONLY	
+#ifdef STAGING_ONLY
 		int nPredictedLimit = cl_pred_optimize_prefer_server_data.GetBool() ? m_nCommandsPredicted - 1 : m_nCommandsPredicted;
 #else
-		int nPredictedLimit = m_nCommandsPredicted;		
+		int nPredictedLimit = m_nCommandsPredicted;
 #endif // STAGING_ONLY
 		// Otherwise, there is a second optimization, wherein if we did receive an update, but no
 		//  values differed (or were outside their epsilon) and the server actually acknowledged running
-		//  one or more commands, then we can revert the entity to the predicted state from last frame, 
+		//  one or more commands, then we can revert the entity to the predicted state from last frame,
 		//  shift the # of commands worth of intermediate state off of front the intermediate state array, and
 		//  only predict the usercmd from the latest render frame.
-		if ( cl_pred_optimize.GetInt() >= 2 && 
-			!m_bPreviousAckHadErrors && 
-			m_nCommandsPredicted > 0 && 
+		if ( cl_pred_optimize.GetInt() >= 2 &&
+			!m_bPreviousAckHadErrors &&
+			m_nCommandsPredicted > 0 &&
 			m_nServerCommandsAcknowledged <= nPredictedLimit )
 		{
 			// Copy all of the previously predicted data back into entity so we can skip repredicting it
@@ -1429,12 +1429,12 @@ int CPrediction::ComputeFirstCommandToExecute( bool received_new_world_update, i
 
 			// Shift intermediate state blocks down by # of commands ack'd
 			ShiftIntermediateDataForward( m_nServerCommandsAcknowledged, m_nCommandsPredicted );
-			
+
 			// Only predict new commands (note, this should be the same number that we could compute
 			//  above based on outgoing_command - incoming_acknowledged - 1
 			skipahead = ( m_nCommandsPredicted - m_nServerCommandsAcknowledged );
 
-			//Msg( "%i/%i optimize2, skip to %i restore from slot %i\n", 
+			//Msg( "%i/%i optimize2, skip to %i restore from slot %i\n",
 			//	gpGlobals->framecount,
 			//	gpGlobals->tickcount,
 			//	skipahead,
@@ -1445,7 +1445,7 @@ int CPrediction::ComputeFirstCommandToExecute( bool received_new_world_update, i
 			if ( m_bPreviousAckHadErrors )
 			{
 				C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
-				
+
 				// If an entity gets a prediction error, then we want to clear out its interpolated variables
 				// so we don't mix different samples at the same timestamps. We subtract 1 tick interval here because
 				// if we don't, we'll have 3 interpolation entries with the same timestamp as this predicted
@@ -1453,7 +1453,7 @@ int CPrediction::ComputeFirstCommandToExecute( bool received_new_world_update, i
 				// ANY entity like your gun gets a prediction error).
 				float flPrev = gpGlobals->curtime;
 				gpGlobals->curtime = pLocalPlayer->GetTimeBase() - TICK_INTERVAL;
-				
+
 				for ( int i = 0; i < predictables->GetPredictableCount(); i++ )
 				{
 					C_BaseEntity *entity = predictables->GetPredictable( i );
@@ -1481,7 +1481,7 @@ int CPrediction::ComputeFirstCommandToExecute( bool received_new_world_update, i
 //-----------------------------------------------------------------------------
 // Actually does the prediction work, returns false if an error occurred
 //-----------------------------------------------------------------------------
-bool CPrediction::PerformPrediction( bool received_new_world_update, C_BasePlayer *localPlayer, 
+bool CPrediction::PerformPrediction( bool received_new_world_update, C_BasePlayer *localPlayer,
 									int incoming_acknowledged, int outgoing_command )
 {
 	MDLCACHE_CRITICAL_SECTION();
@@ -1504,7 +1504,7 @@ bool CPrediction::PerformPrediction( bool received_new_world_update, C_BasePlaye
 		entity = entity->GetMoveParent();
 	}
 
-	// Start at command after last one server has processed and 
+	// Start at command after last one server has processed and
 	//  go until we get to targettime or we run out of new commands
 	int i = ComputeFirstCommandToExecute( received_new_world_update, incoming_acknowledged, outgoing_command );
 
@@ -1515,7 +1515,7 @@ bool CPrediction::PerformPrediction( bool received_new_world_update, C_BasePlaye
 
 	//for ( int k = 1; k < i; k++ )
 	//{
-	//	Msg( "%i/%i Skip final tick %i into slot %i\n", 
+	//	Msg( "%i/%i Skip final tick %i into slot %i\n",
 	//		gpGlobals->framecount, gpGlobals->tickcount,
 	//		localPlayer->m_nTickBase - i + k + 1,
 	//		k - 1 );
@@ -1526,7 +1526,7 @@ bool CPrediction::PerformPrediction( bool received_new_world_update, C_BasePlaye
 	{
 		// Incoming_acknowledged is the last usercmd the server acknowledged having acted upon
 		int current_command		= incoming_acknowledged + i;
-		
+
 		// We've caught up to the current command.
 		if ( current_command > outgoing_command )
 			break;
@@ -1535,10 +1535,10 @@ bool CPrediction::PerformPrediction( bool received_new_world_update, C_BasePlaye
 			break;
 
 		CUserCmd *cmd = input->GetUserCmd( current_command );
-		
+
 		if ( !cmd )
 		{
-			break;	
+			break;
 		}
 
 
@@ -1569,7 +1569,7 @@ bool CPrediction::PerformPrediction( bool received_new_world_update, C_BasePlaye
 		if ( 0 )
 		{
 			localPlayer->m_nFinalPredictedTick = localPlayer->m_nTickBase;
-			Msg( "%i/%i Latch final tick %i start == %i into slot %i\n", 
+			Msg( "%i/%i Latch final tick %i start == %i into slot %i\n",
 				gpGlobals->framecount, gpGlobals->tickcount,
 				localPlayer->m_nFinalPredictedTick,
 				localPlayer->m_nFinalPredictedTick - i,
@@ -1578,7 +1578,7 @@ bool CPrediction::PerformPrediction( bool received_new_world_update, C_BasePlaye
 		*/
 
 		/*
-		Msg( "%i/%i Predicted command %i tickbase == %i first %s\n", 
+		Msg( "%i/%i Predicted command %i tickbase == %i first %s\n",
 			gpGlobals->framecount, gpGlobals->tickcount,
 			m_nCommandsPredicted,
 			localPlayer->m_nTickBase,
@@ -1592,16 +1592,16 @@ bool CPrediction::PerformPrediction( bool received_new_world_update, C_BasePlaye
 		i++;
 	}
 
-//	Msg( "%i : predicted %i commands forward, %i ack'd last frame, had errors %s\n", 
-//		gpGlobals->tickcount, 
-//		m_nCommandsPredicted, 
+//	Msg( "%i : predicted %i commands forward, %i ack'd last frame, had errors %s\n",
+//		gpGlobals->tickcount,
+//		m_nCommandsPredicted,
 //		m_nServerCommandsAcknowledged,
 //		m_bPreviousAckHadErrors ? "true" : "false" );
 
 
 	m_bInPrediction = false;
 
-	
+
 	// Somehow we looped past the end of the list (severe lag), don't predict at all
 	if ( i > MULTIPLAYER_BACKUP )
 	{
@@ -1613,13 +1613,13 @@ bool CPrediction::PerformPrediction( bool received_new_world_update, C_BasePlaye
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : startframe - 
-//			validframe - 
-//			incoming_acknowledged - 
-//			outgoing_command - 
+// Purpose:
+// Input  : startframe -
+//			validframe -
+//			incoming_acknowledged -
+//			outgoing_command -
 //-----------------------------------------------------------------------------
-void CPrediction::Update( int startframe, bool validframe, 
+void CPrediction::Update( int startframe, bool validframe,
 						 int incoming_acknowledged, int outgoing_command )
 {
 #if !defined( NO_ENTITY_PREDICTION )
@@ -1630,7 +1630,7 @@ void CPrediction::Update( int startframe, bool validframe,
 	bool received_new_world_update = true;
 
 	// Still starting at same frame, so make sure we don't do extra prediction ,etc.
-	if ( ( m_nPreviousStartFrame == startframe ) && 
+	if ( ( m_nPreviousStartFrame == startframe ) &&
 		cl_pred_optimize.GetBool() &&
 		cl_predict->GetInt() )
 	{
@@ -1653,7 +1653,7 @@ void CPrediction::Update( int startframe, bool validframe,
 //-----------------------------------------------------------------------------
 // Do the dirty deed of predicting the local player
 //-----------------------------------------------------------------------------
-void CPrediction::_Update( bool received_new_world_update, bool validframe, 
+void CPrediction::_Update( bool received_new_world_update, bool validframe,
 						 int incoming_acknowledged, int outgoing_command )
 {
 #if !defined( NO_ENTITY_PREDICTION )
@@ -1681,13 +1681,13 @@ void CPrediction::_Update( bool received_new_world_update, bool validframe,
 		return;
 	}
 
-	// This is cheesy, but if we have entities that are parented to attachments on other entities, then 
+	// This is cheesy, but if we have entities that are parented to attachments on other entities, then
 	// it'll wind up needing to get a bone transform.
 	{
 		C_BaseAnimating::InvalidateBoneCaches();
 		C_BaseAnimating::AutoAllowBoneAccess boneaccess( true, true );
 
-		// Remove any purely client predicted entities that were left "dangling" because the 
+		// Remove any purely client predicted entities that were left "dangling" because the
 		//  server didn't acknowledge them or which can now safely be removed
 		RemoveStalePredictedEntities( incoming_acknowledged );
 
@@ -1706,7 +1706,7 @@ void CPrediction::_Update( bool received_new_world_update, bool validframe,
 
 	// This allows us to sample the world when it may not be ready to be sampled
 	Assert( C_BaseEntity::IsAbsQueriesValid() );
-	
+
 	// FIXME: What about hierarchy here?!?
 	SetIdealPitch( localPlayer, localPlayer->GetLocalOrigin(), localPlayer->GetLocalAngles(), localPlayer->m_vecViewOffset );
 #endif
@@ -1715,7 +1715,7 @@ void CPrediction::_Update( bool received_new_world_update, bool validframe,
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPrediction::IsFirstTimePredicted( void ) const
@@ -1728,8 +1728,8 @@ bool CPrediction::IsFirstTimePredicted( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : org - 
+// Purpose:
+// Input  : org -
 //-----------------------------------------------------------------------------
 void CPrediction::GetViewOrigin( Vector& org )
 {
@@ -1738,15 +1738,15 @@ void CPrediction::GetViewOrigin( Vector& org )
 	{
 		org.Init();
 	}
-	else 
+	else
 	{
 		org = player->GetLocalOrigin();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : org - 
+// Purpose:
+// Input  : org -
 //-----------------------------------------------------------------------------
 void CPrediction::SetViewOrigin( Vector& org )
 {
@@ -1761,8 +1761,8 @@ void CPrediction::SetViewOrigin( Vector& org )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : ang - 
+// Purpose:
+// Input  : ang -
 //-----------------------------------------------------------------------------
 void CPrediction::GetViewAngles( QAngle& ang )
 {
@@ -1771,15 +1771,15 @@ void CPrediction::GetViewAngles( QAngle& ang )
 	{
 		ang.Init();
 	}
-	else 
+	else
 	{
 		ang = player->GetLocalAngles();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : ang - 
+// Purpose:
+// Input  : ang -
 //-----------------------------------------------------------------------------
 void CPrediction::SetViewAngles( QAngle& ang )
 {
@@ -1792,8 +1792,8 @@ void CPrediction::SetViewAngles( QAngle& ang )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : ang - 
+// Purpose:
+// Input  : ang -
 //-----------------------------------------------------------------------------
 void CPrediction::GetLocalViewAngles( QAngle& ang )
 {
@@ -1802,15 +1802,15 @@ void CPrediction::GetLocalViewAngles( QAngle& ang )
 	{
 		ang.Init();
 	}
-	else 
+	else
 	{
 		ang = player->pl.v_angle;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : ang - 
+// Purpose:
+// Input  : ang -
 //-----------------------------------------------------------------------------
 void CPrediction::SetLocalViewAngles( QAngle& ang )
 {
@@ -1834,7 +1834,7 @@ int CPrediction::GetIncomingPacketNumber( void ) const
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPrediction::InPrediction( void ) const

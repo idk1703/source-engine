@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -38,7 +38,7 @@ public:
 protected:
 
 	//{{AFX_MSG( CDispCreateDlg )
-    afx_msg void OnVScroll( UINT nSBCode, UINT nPos, CScrollBar* pScrollBar );
+	afx_msg void OnVScroll( UINT nSBCode, UINT nPos, CScrollBar* pScrollBar );
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
@@ -186,7 +186,7 @@ public:
 	CPaintSculptDlg( CWnd *pParent = NULL );
 	~CPaintSculptDlg();
 
-	bool	GetAutoSew( ) { return m_bAutoSew; } 
+	bool	GetAutoSew( ) { return m_bAutoSew; }
 
 	void	UpdateSpatialData( );
 
@@ -204,7 +204,7 @@ protected:
 	afx_msg void OnCheckAutoSew( );
 
 	afx_msg void OnClose( );
-	afx_msg void OnDestroy( void );	
+	afx_msg void OnDestroy( void );
 	afx_msg void OnLButtonUp( UINT nFlags, CPoint point );
 	afx_msg void OnLButtonDown( UINT nFlags, CPoint point );
 	afx_msg void OnMouseMove( UINT nFlags, CPoint point );
@@ -291,7 +291,7 @@ protected:
 	afx_msg void OnEditValue( void );
 
 	afx_msg void OnClose( void );
-	afx_msg void OnDestroy( void );	
+	afx_msg void OnDestroy( void );
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

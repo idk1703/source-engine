@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -26,7 +26,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudDemomanPipes : public CHudElement, public EditablePanel
 {
@@ -54,7 +54,7 @@ private:
 DECLARE_HUDELEMENT( CHudDemomanPipes );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudDemomanPipes::CHudDemomanPipes( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudDemomanPipes" )
 {
@@ -86,7 +86,7 @@ CHudDemomanPipes::CHudDemomanPipes( const char *pElementName ) : CHudElement( pE
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDemomanPipes::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -97,7 +97,7 @@ void CHudDemomanPipes::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudDemomanPipes::ShouldDraw( void )
 {
@@ -122,7 +122,7 @@ bool CHudDemomanPipes::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDemomanPipes::OnTick( void )
 {

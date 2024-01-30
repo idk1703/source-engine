@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,7 +22,7 @@ ConVar hud_c4pickuppanel( "hud_c4pickuppanel", "1", FCVAR_CLIENTDLL | FCVAR_ARCH
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CDODHudTNTPickupPanel::CDODHudTNTPickupPanel( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudTNTPickupPanel" ) 
+CDODHudTNTPickupPanel::CDODHudTNTPickupPanel( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudTNTPickupPanel" )
 {
 	SetParent( g_pClientMode->GetViewport() );
 
@@ -43,7 +43,7 @@ CDODHudTNTPickupPanel::CDODHudTNTPickupPanel( const char *pElementName ) : CHudE
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODHudTNTPickupPanel::Init()
 {
@@ -52,7 +52,7 @@ void CDODHudTNTPickupPanel::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODHudTNTPickupPanel::VidInit()
 {
@@ -63,7 +63,7 @@ void CDODHudTNTPickupPanel::VidInit()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODHudTNTPickupPanel::OnScreenSizeChanged( int iOldWide, int iOldTall )
 {
@@ -73,7 +73,7 @@ void CDODHudTNTPickupPanel::OnScreenSizeChanged( int iOldWide, int iOldTall )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODHudTNTPickupPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -100,7 +100,7 @@ void CDODHudTNTPickupPanel::FireGameEvent( IGameEvent *event )
 		if ( hud_c4pickuppanel.GetBool() )
 		{
 			// fire the show animation
-			SetVisible( true ); 
+			SetVisible( true );
 			m_flShowUntilTime = gpGlobals->curtime + 3.5;
 
 			m_pTNTImage->SetVisible( true );

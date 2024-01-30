@@ -35,16 +35,16 @@ public:
 	// Inherited from IParticleSystemQuery
 	virtual void GetLightingAtPoint( const Vector& vecOrigin, Color &cTint );
 	virtual void TraceLine( const Vector& vecAbsStart,
-							const Vector& vecAbsEnd, unsigned int mask, 
+							const Vector& vecAbsEnd, unsigned int mask,
 							const IHandleEntity *ignore,
 							int collisionGroup, CBaseTrace *ptr );
 
 	virtual bool MovePointInsideControllingObject( CParticleCollection *pParticles,
 												   void *pObject,
 												   Vector *pPnt );
-	virtual void GetRandomPointsOnControllingObjectHitBox( 
+	virtual void GetRandomPointsOnControllingObjectHitBox(
 		CParticleCollection *pParticles,
-		int nControlPointNumber, 
+		int nControlPointNumber,
 		int nNumPtsOut,
 		float flBBoxScale,
 		int nNumTrysToGetAPointInsideTheModel,
@@ -63,7 +63,7 @@ public:
 		int nBufSize,										// # of output slots available
 		ModelHitBoxInfo_t *pHitBoxOutputBuffer );
 
-	virtual	bool IsPointInControllingObjectHitBox( 
+	virtual	bool IsPointInControllingObjectHitBox(
 		CParticleCollection *pParticles,
 		int nControlPointNumber, Vector vecPos, bool bBBoxOnly );
 
@@ -137,7 +137,7 @@ void CParticleSystemQuery::SetUpLightingEnvironment( const Vector& pos )
 }
 
 void CParticleSystemQuery::TraceLine( const Vector& vecAbsStart,
-									  const Vector& vecAbsEnd, unsigned int mask, 
+									  const Vector& vecAbsEnd, unsigned int mask,
 									  const IHandleEntity *ignore,
 									  int collisionGroup, CBaseTrace *ptr )
 {
@@ -159,7 +159,7 @@ void CParticleSystemQuery::TraceLine( const Vector& vecAbsStart,
 
 }
 
-bool CParticleSystemQuery::MovePointInsideControllingObject( 
+bool CParticleSystemQuery::MovePointInsideControllingObject(
 	CParticleCollection *pParticles, void *pObject, Vector *pPnt )
 {
 #ifdef GAME_DLL
@@ -172,7 +172,7 @@ bool CParticleSystemQuery::MovePointInsideControllingObject(
 	trace_t tr;
 	ray.Init( *pPnt, *pPnt );
 	enginetrace->ClipRayToEntity( ray, MASK_ALL, (CBaseEntity *) pObject, &tr );
-	
+
 	return ( tr.startsolid );
 #endif
 }
@@ -184,9 +184,9 @@ static float GetSurfaceCoord( float flRand, float flMinX, float flMaxX )
 }
 
 
-void CParticleSystemQuery::GetRandomPointsOnControllingObjectHitBox( 
+void CParticleSystemQuery::GetRandomPointsOnControllingObjectHitBox(
 	CParticleCollection *pParticles,
-	int nControlPointNumber, 
+	int nControlPointNumber,
 	int nNumPtsOut,
 	float flBBoxScale,
 	int nNumTrysToGetAPointInsideTheModel,
@@ -219,22 +219,22 @@ void CParticleSystemQuery::GetRandomPointsOnControllingObjectHitBox(
 		C_BaseAnimating *pAnimating = pMoveParent->GetBaseAnimating();
 		if ( pAnimating )
 		{
-			
+
 			matrix3x4_t	*hitboxbones[MAXSTUDIOBONES];
-			
+
 			if ( pAnimating->HitboxToWorldTransforms( hitboxbones ) )
 			{
-		
+
 				studiohdr_t *pStudioHdr = modelinfo->GetStudiomodel( pAnimating->GetModel() );
-				
+
 				if ( pStudioHdr )
 				{
 					mstudiohitboxset_t *set = pStudioHdr->pHitboxSet( pAnimating->GetHitboxSet() );
-					
+
 					if ( set )
 					{
 						bSucesss = true;
-						
+
 						Vector vecWorldPosition(0, 0, 0);
 						float u = 0, v = 0, w = 0;
 						int nHitbox = 0;
@@ -250,7 +250,7 @@ void CParticleSystemQuery::GetRandomPointsOnControllingObjectHitBox(
 							{
 								int nTryHitbox = pParticles->RandomInt( 0, set->numhitboxes - 1 );
 								mstudiobbox_t *pBox = set->pHitbox(nTryHitbox);
-								
+
 								float flTryU = pParticles->RandomFloat( flRandMin, flRandMax );
 								float flTryV = pParticles->RandomFloat( flRandMin, flRandMax );
 								float flTryW = pParticles->RandomFloat( flRandMin, flRandMax );
@@ -263,10 +263,10 @@ void CParticleSystemQuery::GetRandomPointsOnControllingObjectHitBox(
 								Vector vecTryWorldPosition;
 
 								VectorTransform( vecLocalPosition, *hitboxbones[pBox->bone], vecTryWorldPosition );
-								
-								
+
+
 								float flPointGoodness = pParticles->RandomFloat( 0, 72 )
-									+ DotProduct( vecTryWorldPosition - vecBasePos, 
+									+ DotProduct( vecTryWorldPosition - vecBasePos,
 												  vecDirectionalBias );
 
 								if ( nNumTrysToGetAPointInsideTheModel )
@@ -310,7 +310,7 @@ void CParticleSystemQuery::GetRandomPointsOnControllingObjectHitBox(
 			VecOrigin = pMoveParent->GetRenderOrigin();
 			matOrientation = pMoveParent->EntityToWorldTransform();
 
-			
+
 
 			Vector vecWorldPosition(0, 0, 0);
 			float u = 0, v = 0, w = 0;
@@ -338,7 +338,7 @@ void CParticleSystemQuery::GetRandomPointsOnControllingObjectHitBox(
 					VectorTransform( vecLocalPosition, matOrientation, vecTryWorldPosition );
 
 					float flPointGoodness = pParticles->RandomFloat( 0, 72 )
-						+ DotProduct( vecTryWorldPosition - vecBasePos, 
+						+ DotProduct( vecTryWorldPosition - vecBasePos,
 						vecDirectionalBias );
 
 					if ( nNumTrysToGetAPointInsideTheModel )
@@ -378,10 +378,10 @@ void CParticleSystemQuery::GetRandomPointsOnControllingObjectHitBox(
 		for( int i=0 ; i < nNumPtsOut; i++)
 		{
 			pPntsOut[i] = pParticles->m_ControlPoints[nControlPointNumber].m_Position; // fallback if anything goes wrong
-			
+
 			if ( pHitBoxIndexOut )
 				pHitBoxIndexOut[i] = 0;
-			
+
 			if ( pHitBoxRelativeCoordOut )
 				pHitBoxRelativeCoordOut[i].Init();
 		}
@@ -413,16 +413,16 @@ int CParticleSystemQuery::GetControllingObjectHitBoxInfo(
 		if ( pAnimating )
 		{
 			matrix3x4_t	*hitboxbones[MAXSTUDIOBONES];
-			
+
 			if ( pAnimating->HitboxToWorldTransforms( hitboxbones ) )
 			{
-		
+
 				studiohdr_t *pStudioHdr = modelinfo->GetStudiomodel( pAnimating->GetModel() );
-				
+
 				if ( pStudioHdr )
 				{
 					mstudiohitboxset_t *set = pStudioHdr->pHitboxSet( pAnimating->GetHitboxSet() );
-					
+
 					if ( set )
 					{
 						nRet = MIN( nBufSize, set->numhitboxes );
@@ -463,7 +463,7 @@ int CParticleSystemQuery::GetControllingObjectHitBoxInfo(
 
 
 
-bool CParticleSystemQuery::IsPointInControllingObjectHitBox( 
+bool CParticleSystemQuery::IsPointInControllingObjectHitBox(
 	CParticleCollection *pParticles,
 	int nControlPointNumber, Vector vecPos, bool bBBoxOnly )
 {
@@ -554,7 +554,7 @@ static CollisionGroupNameRecord_t s_NameMap[]={
 	{ "INTERACTIVE", COLLISION_GROUP_INTERACTIVE },
 	{ "NPC", COLLISION_GROUP_NPC },
 	{ "ACTOR", COLLISION_GROUP_NPC_ACTOR },
-	{ "PASSABLE", COLLISION_GROUP_PASSABLE_DOOR },	
+	{ "PASSABLE", COLLISION_GROUP_PASSABLE_DOOR },
 #if defined( TF_CLIENT_DLL )
 	{ "ROCKETS", TFCOLLISION_GROUP_ROCKETS },
 #endif
@@ -579,7 +579,7 @@ Vector CParticleSystemQuery::GetLocalPlayerPos( void )
 		return vec3_origin;
 	return pPlayer->WorldSpaceCenter();
 #else
-	CBasePlayer *pPlayer = AI_GetSinglePlayer();	
+	CBasePlayer *pPlayer = AI_GetSinglePlayer();
 	if ( !pPlayer )
 		return vec3_origin;
 	return pPlayer->WorldSpaceCenter();
@@ -599,7 +599,7 @@ void CParticleSystemQuery::GetLocalPlayerEyeVectors( Vector *pForward, Vector *p
 	}
 	pPlayer->EyeVectors( pForward, pRight, pUp );
 #else
-	CBasePlayer *pPlayer = AI_GetSinglePlayer();	
+	CBasePlayer *pPlayer = AI_GetSinglePlayer();
 	if ( !pPlayer )
 	{
 		*pForward = vec3_origin;

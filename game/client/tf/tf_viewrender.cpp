@@ -46,7 +46,7 @@ ConVarFlags s_flaggedConVars[] =
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFViewRender::Init()
 {
@@ -83,4 +83,3 @@ void CTFViewRender::Render2DEffectsPostHUD( const CViewSetup &viewTF )
 	}
 #endif //_X360
 }
-

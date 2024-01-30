@@ -55,20 +55,20 @@ class CAutoRef
 {
 public:
 	CAutoRef( T *pRef )
-	  : m_pRef( pRef )
+		: m_pRef( pRef )
 	{
 		if ( m_pRef )
 			m_pRef->AddRef();
 	}
 
-   ~CAutoRef()
-   {
-      if (m_pRef)
-         m_pRef->Release();
-   }
+	~CAutoRef()
+	{
+		if (m_pRef)
+			m_pRef->Release();
+	}
 
 private:
-   T *m_pRef;
+	T *m_pRef;
 };
 
 //-----------------------------------------------------------------------------
@@ -102,8 +102,8 @@ public:
 	int			operator=( int i )							{ AssertMsg( i == 0, "Only NULL allowed on integer assign" ); m_pObject = 0; return 0; }
 	T *			operator=( T *p )							{ m_pObject = p; return p; }
 
-    bool        operator !() const							{ return ( !m_pObject ); }
-    bool        operator!=( int i ) const					{ AssertMsg( i == 0, "Only NULL allowed on integer compare" ); return (m_pObject != NULL); }
+	bool        operator !() const							{ return ( !m_pObject ); }
+	bool        operator!=( int i ) const					{ AssertMsg( i == 0, "Only NULL allowed on integer compare" ); return (m_pObject != NULL); }
 	bool		operator==( const void *p ) const			{ return ( m_pObject == p ); }
 	bool		operator!=( const void *p ) const			{ return ( m_pObject != p ); }
 	bool		operator==( T *p ) const					{ return operator==( (void *)p ); }
@@ -180,7 +180,7 @@ class NO_VTABLE CRefCountServiceBase
 {
 protected:
 	CRefCountServiceBase()
-	  : m_iRefs( 1 )
+		: m_iRefs( 1 )
 	{
 	}
 
@@ -275,7 +275,7 @@ typedef CRefCountServiceMT					CRefCountService;
 // Purpose:	Base classes to implement reference counting
 //-----------------------------------------------------------------------------
 
-template < class REFCOUNT_SERVICE = CRefCountService > 
+template < class REFCOUNT_SERVICE = CRefCountService >
 class NO_VTABLE CRefCounted : public REFCOUNT_SERVICE
 {
 public:
@@ -286,9 +286,9 @@ public:
 
 //-------------------------------------
 
-template < class BASE1, class REFCOUNT_SERVICE = CRefCountService > 
+template < class BASE1, class REFCOUNT_SERVICE = CRefCountService >
 class NO_VTABLE CRefCounted1 : public BASE1,
-							   public REFCOUNT_SERVICE
+								public REFCOUNT_SERVICE
 {
 public:
 	virtual ~CRefCounted1()	{}
@@ -298,9 +298,9 @@ public:
 
 //-------------------------------------
 
-template < class BASE1, class BASE2, class REFCOUNT_SERVICE = CRefCountService > 
+template < class BASE1, class BASE2, class REFCOUNT_SERVICE = CRefCountService >
 class NO_VTABLE CRefCounted2 : public BASE1, public BASE2,
-							   public REFCOUNT_SERVICE
+								public REFCOUNT_SERVICE
 {
 public:
 	virtual ~CRefCounted2()	{}
@@ -310,9 +310,9 @@ public:
 
 //-------------------------------------
 
-template < class BASE1, class BASE2, class BASE3, class REFCOUNT_SERVICE = CRefCountService > 
+template < class BASE1, class BASE2, class BASE3, class REFCOUNT_SERVICE = CRefCountService >
 class NO_VTABLE CRefCounted3 : public BASE1, public BASE2, public BASE3,
-							   public REFCOUNT_SERVICE
+								public REFCOUNT_SERVICE
 {
 	virtual ~CRefCounted3()	{}
 	int AddRef() 			{ return REFCOUNT_SERVICE::DoAddRef(); }
@@ -321,9 +321,9 @@ class NO_VTABLE CRefCounted3 : public BASE1, public BASE2, public BASE3,
 
 //-------------------------------------
 
-template < class BASE1, class BASE2, class BASE3, class BASE4, class REFCOUNT_SERVICE = CRefCountService > 
+template < class BASE1, class BASE2, class BASE3, class BASE4, class REFCOUNT_SERVICE = CRefCountService >
 class NO_VTABLE CRefCounted4 : public BASE1, public BASE2, public BASE3, public BASE4,
-							   public REFCOUNT_SERVICE
+								public REFCOUNT_SERVICE
 {
 public:
 	virtual ~CRefCounted4()	{}
@@ -333,9 +333,9 @@ public:
 
 //-------------------------------------
 
-template < class BASE1, class BASE2, class BASE3, class BASE4, class BASE5, class REFCOUNT_SERVICE = CRefCountService > 
+template < class BASE1, class BASE2, class BASE3, class BASE4, class BASE5, class REFCOUNT_SERVICE = CRefCountService >
 class NO_VTABLE CRefCounted5 : public BASE1, public BASE2, public BASE3, public BASE4, public BASE5,
-							   public REFCOUNT_SERVICE
+								public REFCOUNT_SERVICE
 {
 public:
 	virtual ~CRefCounted5()	{}

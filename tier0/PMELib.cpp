@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -30,88 +30,88 @@ PME* PME::_singleton = 0;
 // Single interface.
 PME* PME::Instance()
 {
-   if (_singleton == 0)
-   {
-      _singleton = new PME;
-   }      
-   return _singleton;
-}    
+	if (_singleton == 0)
+	{
+	_singleton = new PME;
+	}
+	return _singleton;
+}
 
 //---------------------------------------------------------------------------
 // Open the device driver and detect the processor
 //---------------------------------------------------------------------------
 HRESULT PME::Init( void )
 {
-    OSVERSIONINFO	OS;
+	OSVERSIONINFO	OS;
 
-    if ( bDriverOpen )
-        return E_DRIVER_ALREADY_OPEN;
+	if ( bDriverOpen )
+	return E_DRIVER_ALREADY_OPEN;
 
-    switch( vendor )
-    {
-    case INTEL:
-    case AMD:
-        break;
-    default:
-        bDriverOpen = FALSE;		// not an Intel or Athlon processor so return false
-        return E_UNKNOWN_CPU_VENDOR;
-    }
+	switch( vendor )
+	{
+	case INTEL:
+	case AMD:
+	break;
+	default:
+	bDriverOpen = FALSE;		// not an Intel or Athlon processor so return false
+	return E_UNKNOWN_CPU_VENDOR;
+	}
 
-    //-----------------------------------------------------------------------
-    // Get the operating system version
-    //-----------------------------------------------------------------------
-    OS.dwOSVersionInfoSize = sizeof( OSVERSIONINFO );
-    GetVersionEx( &OS );
+	//-----------------------------------------------------------------------
+	// Get the operating system version
+	//-----------------------------------------------------------------------
+	OS.dwOSVersionInfoSize = sizeof( OSVERSIONINFO );
+	GetVersionEx( &OS );
 
-    if ( OS.dwPlatformId == VER_PLATFORM_WIN32_NT )
-    {
-        hFile = CreateFile(						// WINDOWS NT
-            "\\\\.\\GDPERF",
-            GENERIC_READ,
-            0,
-            NULL,
-            OPEN_EXISTING,
-            FILE_ATTRIBUTE_NORMAL,
-            NULL);
-    }
-    else
-    {
-        hFile = CreateFile(						// WINDOWS 95
-            "\\\\.\\GDPERF.VXD",
-            GENERIC_READ,
-            0,
-            NULL,
-            OPEN_EXISTING,
-            FILE_ATTRIBUTE_NORMAL,
-            NULL);
-    }
+	if ( OS.dwPlatformId == VER_PLATFORM_WIN32_NT )
+	{
+	hFile = CreateFile(						// WINDOWS NT
+		"\\\\.\\GDPERF",
+		GENERIC_READ,
+		0,
+		NULL,
+		OPEN_EXISTING,
+		FILE_ATTRIBUTE_NORMAL,
+		NULL);
+	}
+	else
+	{
+	hFile = CreateFile(						// WINDOWS 95
+		"\\\\.\\GDPERF.VXD",
+		GENERIC_READ,
+		0,
+		NULL,
+		OPEN_EXISTING,
+		FILE_ATTRIBUTE_NORMAL,
+		NULL);
+	}
 
-    if (hFile == INVALID_HANDLE_VALUE )
-        return E_CANT_OPEN_DRIVER;
-
-
-    bDriverOpen = TRUE;
+	if (hFile == INVALID_HANDLE_VALUE )
+	return E_CANT_OPEN_DRIVER;
 
 
-    //-------------------------------------------------------------------
-    // We have successfully opened the device driver, get the family
-    // of the processor.
-    //-------------------------------------------------------------------
+	bDriverOpen = TRUE;
+
+
+	//-------------------------------------------------------------------
+	// We have successfully opened the device driver, get the family
+	// of the processor.
+	//-------------------------------------------------------------------
 
 
 
-    //-------------------------------------------------------------------
-    // We need to write to counter 0 on the pro family to enable both
-    // of the performance counters. We write to both so they start in a
-    // known state. For the pentium this is not necessary.
-    //-------------------------------------------------------------------
-    if (vendor == INTEL && version.Family == PENTIUMPRO_FAMILY)
-    {
-        SelectP5P6PerformanceEvent(P6_CLOCK, 0, TRUE, TRUE);
-        SelectP5P6PerformanceEvent(P6_CLOCK, 1, TRUE, TRUE);
-    }
+	//-------------------------------------------------------------------
+	// We need to write to counter 0 on the pro family to enable both
+	// of the performance counters. We write to both so they start in a
+	// known state. For the pentium this is not necessary.
+	//-------------------------------------------------------------------
+	if (vendor == INTEL && version.Family == PENTIUMPRO_FAMILY)
+	{
+	SelectP5P6PerformanceEvent(P6_CLOCK, 0, TRUE, TRUE);
+	SelectP5P6PerformanceEvent(P6_CLOCK, 1, TRUE, TRUE);
+	}
 
-    return S_OK;
+	return S_OK;
 
 
 }
@@ -126,17 +126,17 @@ HRESULT PME::Close(void)
 	if (bDriverOpen == false)				// driver is not going
 		return E_DRIVER_NOT_OPEN;
 
-    bDriverOpen = false;
+	bDriverOpen = false;
 
 	if (hFile)					// if we have no driver handle, return FALSE
 	{
-        BOOL result = CloseHandle(hFile);
+	BOOL result = CloseHandle(hFile);
 
-        hFile = NULL;
+	hFile = NULL;
 		return result ? S_OK : HRESULT_FROM_WIN32( GetLastError() );
-	}  
-    else
-	    return E_DRIVER_NOT_OPEN;
+	}
+	else
+		return E_DRIVER_NOT_OPEN;
 
 
 }
@@ -145,7 +145,7 @@ HRESULT PME::Close(void)
 // Select the event to monitor with counter 0
 //
 HRESULT PME::SelectP5P6PerformanceEvent(uint32 dw_event, uint32 dw_counter,
-								  bool b_user, bool b_kernel)
+								bool b_user, bool b_kernel)
 {
 	HRESULT	hr = S_OK;
 
@@ -165,68 +165,68 @@ HRESULT PME::SelectP5P6PerformanceEvent(uint32 dw_event, uint32 dw_counter,
 		return E_ILLEGAL_OPERATION;		// this operation is not for this counter
 	}
 
-    switch(version.Family)
-    {
-    case PENTIUM_FAMILY:
-        {
-            uint64	i64_cesr;
-            int	i_kernel_bit,i_user_bit;
-            BYTE u1_event = (BYTE)((dw_event & (0x3F0000))>>16);
+	switch(version.Family)
+	{
+	case PENTIUM_FAMILY:
+	{
+		uint64	i64_cesr;
+		int	i_kernel_bit,i_user_bit;
+		BYTE u1_event = (BYTE)((dw_event & (0x3F0000))>>16);
 
-            if (dw_counter==0)		// the kernel and user mode bits depend on
-            {						// counter being used.
-                i_kernel_bit = 6;
-                i_user_bit = 7;
-            }
-            else
-            {
-                i_kernel_bit = 22;
-                i_user_bit = 23;
-            }
+		if (dw_counter==0)		// the kernel and user mode bits depend on
+		{						// counter being used.
+			i_kernel_bit = 6;
+			i_user_bit = 7;
+		}
+		else
+		{
+			i_kernel_bit = 22;
+			i_user_bit = 23;
+		}
 
-            ReadMSR(0x11, &i64_cesr);	// get current P5 event select (cesr)
+		ReadMSR(0x11, &i64_cesr);	// get current P5 event select (cesr)
 
-            // top 32bits of cesr are not valid so ignore them
-            i64_cesr &= ((dw_counter == 0)?0xffff0000:0x0000ffff); 
-            WriteMSR(0x11,i64_cesr); 				// stop the counter
-            WriteMSR((dw_counter==0)?0x12:0x13,0ui64);	// clear the p.counter
+		// top 32bits of cesr are not valid so ignore them
+		i64_cesr &= ((dw_counter == 0)?0xffff0000:0x0000ffff);
+		WriteMSR(0x11,i64_cesr); 				// stop the counter
+		WriteMSR((dw_counter==0)?0x12:0x13,0ui64);	// clear the p.counter
 
-            // set the user and kernel mode bits
-            i64_cesr |= ( b_user?(1<<7):0 ) | ( b_kernel?(1<<6):0 );
+		// set the user and kernel mode bits
+		i64_cesr |= ( b_user?(1<<7):0 ) | ( b_kernel?(1<<6):0 );
 
-            // is this the special P5 value that signals count clocks??
-            if (u1_event == 0x3f)
-            {
-                WriteMSR(0x11, i64_cesr|0x100);	// Count clocks
-            }
-            else
-            {
-                WriteMSR(0x11, i64_cesr|u1_event);	// Count events
-            }
+		// is this the special P5 value that signals count clocks??
+		if (u1_event == 0x3f)
+		{
+			WriteMSR(0x11, i64_cesr|0x100);	// Count clocks
+		}
+		else
+		{
+			WriteMSR(0x11, i64_cesr|u1_event);	// Count events
+		}
 
-        }
-        break;
+	}
+	break;
 
-    case PENTIUMPRO_FAMILY:
+	case PENTIUMPRO_FAMILY:
 
-        {
-            BYTE u1_event = (BYTE)((dw_event & (0xFF0000))>>16);
-            BYTE u1_mask = (BYTE)((dw_event & 0xFF));
+	{
+		BYTE u1_event = (BYTE)((dw_event & (0xFF0000))>>16);
+		BYTE u1_mask = (BYTE)((dw_event & 0xFF));
 
-            // Event select 0 and 1 are identical.
-            hr = WriteMSR((dw_counter==0)?0x186:0x187,
-                
-                
-                uint64((u1_event | (b_user?(1<<16):0) | (b_kernel?(1<<17):0) | (1<<22) | (1<<18) | (u1_mask<<8)) ) 
-                );
-        }
-        break;
+		// Event select 0 and 1 are identical.
+		hr = WriteMSR((dw_counter==0)?0x186:0x187,
 
-    case PENTIUM4_FAMILY:
-        // use the p4 path
-        break;
 
-    default:
+			uint64((u1_event | (b_user?(1<<16):0) | (b_kernel?(1<<17):0) | (1<<22) | (1<<18) | (u1_mask<<8)) )
+			);
+	}
+	break;
+
+	case PENTIUM4_FAMILY:
+	// use the p4 path
+	break;
+
+	default:
 		return E_UNKNOWN_CPU;
 	}
 
@@ -346,7 +346,7 @@ HRESULT PME::WriteMSR(uint32 dw_reg, const uint64 & i64_value)
 		NULL					  	// NULL means wait till op. completes.
 	);
 
-    //E_POINTER
+	//E_POINTER
 	HRESULT hr = result ? S_OK : HRESULT_FROM_WIN32( GetLastError() );
 	if (hr == S_OK && dw_ret_len != 0)
 		hr = E_BAD_DATA;
@@ -420,222 +420,222 @@ double PME::GetCPUClockSpeedFast(void)
 double PME::GetCPUClockSpeedSlow(void)
 {
 
-    if (m_CPUClockSpeed != 0)
-        return m_CPUClockSpeed;
+	if (m_CPUClockSpeed != 0)
+	return m_CPUClockSpeed;
 
-    unsigned long start_ms, stop_ms;
-    unsigned long start_tsc,stop_tsc;
+	unsigned long start_ms, stop_ms;
+	unsigned long start_tsc,stop_tsc;
 
-    // boosting priority helps with noise. its optional and i dont think
-    //  it helps all that much
+	// boosting priority helps with noise. its optional and i dont think
+	//  it helps all that much
 
-    PME * pme = PME::Instance();
+	PME * pme = PME::Instance();
 
-    pme->SetProcessPriority(ProcessPriorityHigh);
+	pme->SetProcessPriority(ProcessPriorityHigh);
 
-    // wait for millisecond boundary
-    start_ms = GetTickCount() + 5;
-    while (start_ms <= GetTickCount());
+	// wait for millisecond boundary
+	start_ms = GetTickCount() + 5;
+	while (start_ms <= GetTickCount());
 
-    // read timestamp (you could use QueryPerformanceCounter in hires mode if you want)
-#ifdef COMPILER_MSVC64 
-    RDTSC(start_tsc);
-#else
-    __asm
-    {
-        rdtsc
-        mov dword ptr [start_tsc+0],eax
-        mov dword ptr [start_tsc+4],edx
-    }
-#endif
-
-    // wait for end
-    stop_ms = start_ms + 1000; // longer wait gives better resolution
-    while (stop_ms > GetTickCount());
-
-    // read timestamp (you could use QueryPerformanceCounter in hires mode if you want)
+	// read timestamp (you could use QueryPerformanceCounter in hires mode if you want)
 #ifdef COMPILER_MSVC64
-    RDTSC(stop_tsc);
+	RDTSC(start_tsc);
 #else
-    __asm
-    {
-        rdtsc
-        mov dword ptr [stop_tsc+0],eax
-        mov dword ptr [stop_tsc+4],edx
-    }
+	__asm
+	{
+	rdtsc
+	mov dword ptr [start_tsc+0],eax
+	mov dword ptr [start_tsc+4],edx
+	}
+#endif
+
+	// wait for end
+	stop_ms = start_ms + 1000; // longer wait gives better resolution
+	while (stop_ms > GetTickCount());
+
+	// read timestamp (you could use QueryPerformanceCounter in hires mode if you want)
+#ifdef COMPILER_MSVC64
+	RDTSC(stop_tsc);
+#else
+	__asm
+	{
+	rdtsc
+	mov dword ptr [stop_tsc+0],eax
+	mov dword ptr [stop_tsc+4],edx
+	}
 #endif
 
 
-    // normalize priority
-    pme->SetProcessPriority(ProcessPriorityNormal);
+	// normalize priority
+	pme->SetProcessPriority(ProcessPriorityNormal);
 
-    // return clock speed
-    //  optionally here you could round to known clocks, like speeds that are multimples
-    //  of 100, 133, 166, etc.
-    m_CPUClockSpeed =  ((stop_tsc - start_tsc) * 1000.0) / (double)(stop_ms - start_ms);
-    return m_CPUClockSpeed;
+	// return clock speed
+	//  optionally here you could round to known clocks, like speeds that are multimples
+	//  of 100, 133, 166, etc.
+	m_CPUClockSpeed =  ((stop_tsc - start_tsc) * 1000.0) / (double)(stop_ms - start_ms);
+	return m_CPUClockSpeed;
 
 }
 
 
 
-const unsigned short cccr_escr_map[NCOUNTERS][8] = 
+const unsigned short cccr_escr_map[NCOUNTERS][8] =
 {
-      {       
-      0x3B2,
-      0x3B4,
-      0x3AA,
-      0x3B6,
-      0x3AC,
-      0x3C8,
-      0x3A2,
-      0x3A0,
-      },
-      {   
-      0x3B2,
-      0x3B4,
-      0x3AA,
-      0x3B6,
-      0x3AC,
-      0x3C8, 
-      0x3A2,
-      0x3A0,
-      },
-      {       
-      0x3B3,
-      0x3B5,
-      0x3AB,
-      0x3B7,
-      0x3AD,
-      0x3C9, 
-      0x3A3,
-      0x3A1,
-      },
-      {   
-      0x3B3,
-      0x3B5,
-      0x3AB,
-      0x3B7,
-      0x3AD,
-      0x3C9, 
-      0x3A3,
-      0x3A1,
-      },
-      {       
-          
-      0x3C0,
-      0x3C4, 
-      0x3C2,
-      },
-      {   
-      0x3C0,
-      0x3C4, 
-      0x3C2,
-      },
-      {       
-      0x3C1,
-      0x3C5, 
-      0x3C3,
-      },
-      {   
-      0x3C1,
-      0x3C5,
-      0x3C3,
-      },
-      {       
-      0x3A6,
-      0x3A4,
-      0x3AE,
-      0x3B0, 
-      0,
-      0x3A8,
-      },
-      {   
-      0x3A6,
-      0x3A4,
-      0x3AE,
-      0x3B0, 
-      0,
-      0x3A8,
-      },
-      {       
-        
-      0x3A7,
-      0x3A5,
-      0x3AF,
-      0x3B1, 
-      0,
-      0x3A9,
-      },
-      {   
-          
-      0x3A7,
-      0x3A5,
-      0x3AF,
-      0x3B1, 
-      0,
-      0x3A9,
-      },
-      {       
+	{
+	0x3B2,
+	0x3B4,
+	0x3AA,
+	0x3B6,
+	0x3AC,
+	0x3C8,
+	0x3A2,
+	0x3A0,
+	},
+	{
+	0x3B2,
+	0x3B4,
+	0x3AA,
+	0x3B6,
+	0x3AC,
+	0x3C8,
+	0x3A2,
+	0x3A0,
+	},
+	{
+	0x3B3,
+	0x3B5,
+	0x3AB,
+	0x3B7,
+	0x3AD,
+	0x3C9,
+	0x3A3,
+	0x3A1,
+	},
+	{
+	0x3B3,
+	0x3B5,
+	0x3AB,
+	0x3B7,
+	0x3AD,
+	0x3C9,
+	0x3A3,
+	0x3A1,
+	},
+	{
 
-      0x3BA,
-      0x3CA, 
-      0x3BC,
-      0x3BE,
-      0x3B8,
-      0x3CC,
-      0x3E0,
-      },
-      {   
+	0x3C0,
+	0x3C4,
+	0x3C2,
+	},
+	{
+	0x3C0,
+	0x3C4,
+	0x3C2,
+	},
+	{
+	0x3C1,
+	0x3C5,
+	0x3C3,
+	},
+	{
+	0x3C1,
+	0x3C5,
+	0x3C3,
+	},
+	{
+	0x3A6,
+	0x3A4,
+	0x3AE,
+	0x3B0,
+	0,
+	0x3A8,
+	},
+	{
+	0x3A6,
+	0x3A4,
+	0x3AE,
+	0x3B0,
+	0,
+	0x3A8,
+	},
+	{
 
-      0x3BA,
-      0x3CA, 
-      0x3BC,
-      0x3BE,
-      0x3B8,
-      0x3CC,
-      0x3E0,
-      },
-      {       
+	0x3A7,
+	0x3A5,
+	0x3AF,
+	0x3B1,
+	0,
+	0x3A9,
+	},
+	{
 
-      0x3BB,
-      0x3CB, 
-      0x3BD,
-      0,
-      0x3B9,
-      0x3CD,
-      0x3E1,
-      },
-      {   
-          
+	0x3A7,
+	0x3A5,
+	0x3AF,
+	0x3B1,
+	0,
+	0x3A9,
+	},
+	{
 
-      0x3BB,
-      0x3CB, 
-      0x3BD,
-      0,
-      0x3B9,
-      0x3CD,
-      0x3E1,
-      },
-      {       
-      0x3BA,
-      0x3CA, 
-      0x3BC,
-      0x3BE,
-      0x3B8,
-      0x3CC,
-      0x3E0,
-      },
-      {    
+	0x3BA,
+	0x3CA,
+	0x3BC,
+	0x3BE,
+	0x3B8,
+	0x3CC,
+	0x3E0,
+	},
+	{
 
-      0x3BB,
-      0x3CB,
-      0x3BD,
-      0,
-      0x3B9,
-      0x3CD,
-      0x3E1,
-      },
+	0x3BA,
+	0x3CA,
+	0x3BC,
+	0x3BE,
+	0x3B8,
+	0x3CC,
+	0x3E0,
+	},
+	{
+
+	0x3BB,
+	0x3CB,
+	0x3BD,
+	0,
+	0x3B9,
+	0x3CD,
+	0x3E1,
+	},
+	{
+
+
+	0x3BB,
+	0x3CB,
+	0x3BD,
+	0,
+	0x3B9,
+	0x3CD,
+	0x3E1,
+	},
+	{
+	0x3BA,
+	0x3CA,
+	0x3BC,
+	0x3BE,
+	0x3B8,
+	0x3CC,
+	0x3E0,
+	},
+	{
+
+	0x3BB,
+	0x3CB,
+	0x3BD,
+	0,
+	0x3B9,
+	0x3CD,
+	0x3E1,
+	},
 };
 
 #ifdef DBGFLAG_VALIDATE
@@ -662,4 +662,3 @@ void PME::Validate( CValidator &validator, tchar *pchName )
 
 #pragma warning( default : 4530 )   // warning: exception handler -GX option
 #endif
-

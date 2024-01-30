@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -105,7 +105,7 @@ BOOL CFolderSelectProps::OnSetActive()
 		m_DefOutput.SetCheck(1);
 		m_DefTFStats.SetCheck(1);
 		m_DefRule.SetCheck(1);
-		
+
 		m_BoolSupportDefault=1;
 		m_BoolTFStatsDefault=1;
 		m_BoolOutputDefault=1;
@@ -113,7 +113,7 @@ BOOL CFolderSelectProps::OnSetActive()
 		m_BoolPlayerDefault=1;
 	}
 
-	
+
 	m_TFStatsDir.EnableWindow(!m_DefTFStats.GetCheck());
 
 	m_SupportHTTPPath.EnableWindow(!m_DefSupport.GetCheck());
@@ -148,8 +148,8 @@ BOOL CFolderSelectProps::OnSetActive()
 	addSlash(sbuf);
 	m_TFStatsDir.SetWindowText(sbuf.c_str());
 
-	OnDefaultCheckBoxClick() ;	
-	
+	OnDefaultCheckBoxClick() ;
+
 	windowInitted=true;
 	UpdateFolders();
 	return bRes;
@@ -168,54 +168,54 @@ BOOL CFolderSelectProps::OnKillActive()
 	m_BoolRuleDefault=m_DefRule.GetCheck();
 	m_BoolPlayerDefault=m_DefPlayer.GetCheck();
 
-	
 
-	
+
+
 
 	DWORD numbytes;
 	char tempbuf[1000];
 	numbytes=m_OutDir.GetWindowText(tempbuf,1000);
 	m_StrOutDir=theApp.m_OutDir=tempbuf;
-		
+
 	numbytes=m_TFStatsDir.GetWindowText(tempbuf,1000);
 	m_StrTFStatsDir=theApp.m_TFStatsDir=(tempbuf);
-		
+
 	numbytes=m_SupportDir.GetWindowText(tempbuf,1000);
 	m_StrSupportDir=theApp.m_SupportDir=(tempbuf);
-	
+
 
 	numbytes=m_SupportHTTPPath.GetWindowText(tempbuf,1000);
 	m_StrSupportHTTPPath=theApp.m_SupportHTTPPath=(tempbuf);
-	
-	
+
+
 	numbytes=m_RuleDir.GetWindowText(tempbuf,1000);
 	m_StrRuleDir=theApp.m_RuleDir=(tempbuf);
-	
+
 	numbytes=m_PlayerDir.GetWindowText(tempbuf,1000);
 	m_StrPlayerDir=theApp.m_PlayerDir=(tempbuf);
-	
-		
+
+
 	numbytes=m_PlayerHTTPPath.GetWindowText(tempbuf,1000);
 	m_StrPlayerHTTPPath=theApp.m_PlayerHTTPPath=(tempbuf);
-	
+
 
 	windowInitted=false;
 	return bRes;
 
 }
 
-void CFolderSelectProps::OnDefaultCheckBoxClick() 
+void CFolderSelectProps::OnDefaultCheckBoxClick()
 {
-	
+
 UpdateFolders();
 }
 
 void CFolderSelectProps::UpdateFolders(bool safe)
 {
-	
+
 	if (!windowInitted)
 		return;
-	
+
 
 	char buf[1000];
 
@@ -234,7 +234,7 @@ void CFolderSelectProps::UpdateFolders(bool safe)
 
 
 
-	string basedir;	
+	string basedir;
 	if (m_DefTFStats.GetCheck())
 	{
 		//find in registry
@@ -251,8 +251,8 @@ void CFolderSelectProps::UpdateFolders(bool safe)
 		basedir=buf;
 		addSlash(basedir);
 	}
-	
-	
+
+
 	string outputdir;
 	if (m_DefOutput.GetCheck())
 	{
@@ -260,18 +260,18 @@ void CFolderSelectProps::UpdateFolders(bool safe)
 		if (!lockOutDir)
 			m_OutDir.SetWindowText(outputdir.c_str());
 	}
-	else 
+	else
 	{
 		m_OutDir.GetWindowText(buf,1000);
 		outputdir=buf;
 		addSlash(outputdir);
 	}
-	
+
 	string supportdir=outputdir+"support\\";
 	string playerdir=outputdir+"players\\";
-	
 
-		
+
+
 	if (m_DefSupport.GetCheck())
 	{
 		m_SupportDir.SetWindowText(supportdir.c_str());
@@ -287,7 +287,7 @@ void CFolderSelectProps::UpdateFolders(bool safe)
 		m_PlayerHTTPPath.SetWindowText("../players");
 	}
 }
-void CFolderSelectProps::OnChangeTfstatsdir() 
+void CFolderSelectProps::OnChangeTfstatsdir()
 {
 	// TODO: Add your control notification handler code here
 	if (!lockTFSDir)
@@ -296,10 +296,10 @@ void CFolderSelectProps::OnChangeTfstatsdir()
 		UpdateFolders();
 		lockTFSDir=false;
 	}
-	
+
 }
 
-void CFolderSelectProps::OnChangeOutputdir() 
+void CFolderSelectProps::OnChangeOutputdir()
 {
 
 	// TODO: Add your control notification handler code here

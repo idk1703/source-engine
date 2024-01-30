@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -18,10 +18,10 @@ ConVar vgui_nav_lock_default_button( "vgui_nav_lock_default_button", "0", FCVAR_
 
 //-----------------------------------------------------------------------------
 // Purpose: Determine length of text string
-// Input  : *font - 
-//			*fmt - 
-//			... - 
-// Output : 
+// Input  : *font -
+//			*fmt -
+//			... -
+// Output :
 //-----------------------------------------------------------------------------
 int DrawTextLen( vgui::HFont font, const wchar_t *text )
 {
@@ -51,20 +51,20 @@ int DrawTextLen( vgui::HFont font, const wchar_t *text )
 // Purpose: Draws colored text to a vgui panel
 // Input  : *font - font to use
 //			x - position of text
-//			y - 
+//			y -
 //			r - color of text
-//			g - 
-//			b - 
+//			g -
+//			b -
 //			a - alpha ( 0 = opaque, 255 = transparent )
 //			*fmt - va_* text string
-//			... - 
+//			... -
 // Output : int - horizontal # of pixels drawn
 //-----------------------------------------------------------------------------
 
 int DrawColoredText( vgui::HFont font, int x, int y, int r, int g, int b, int a, const wchar_t *text )
 {
 	int len = wcslen( text );
-	
+
 	if ( len <= 0 )
 		return x;
 
@@ -98,7 +98,7 @@ int DrawCenteredColoredText( vgui::HFont font, int left, int top, int right, int
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBasePanel::CBasePanel( vgui::Panel *parent, char const *panelName )
 : vgui::Panel( parent, panelName )
@@ -107,7 +107,7 @@ CBasePanel::CBasePanel( vgui::Panel *parent, char const *panelName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBasePanel::~CBasePanel( void )
 {
@@ -127,4 +127,3 @@ void CBasePanel::OnTick()
 
 	SetVisible( ShouldDraw() );
 }
-

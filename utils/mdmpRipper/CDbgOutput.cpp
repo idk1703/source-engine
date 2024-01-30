@@ -33,33 +33,33 @@ CDbgOutput::~CDbgOutput()
 
 
 STDMETHODIMP CDbgOutput::QueryInterface( THIS_ IN REFIID InterfaceId,
-										 OUT PVOID* Interface)
+										OUT PVOID* Interface)
 {
-    *Interface = NULL;
+	*Interface = NULL;
 
-    if ( IsEqualIID( InterfaceId, __uuidof( IUnknown ) ) ||
-         IsEqualIID( InterfaceId, __uuidof( IDebugOutputCallbacks ) ) )
-    {
-        *Interface = ( IDebugOutputCallbacks * )this;
-        AddRef( );
-        return S_OK;
-    }
-    else
-    {
-        return E_NOINTERFACE;
-    }
+	if ( IsEqualIID( InterfaceId, __uuidof( IUnknown ) ) ||
+		IsEqualIID( InterfaceId, __uuidof( IDebugOutputCallbacks ) ) )
+	{
+		*Interface = ( IDebugOutputCallbacks * )this;
+		AddRef( );
+		return S_OK;
+	}
+	else
+	{
+		return E_NOINTERFACE;
+	}
 }
 
 
 STDMETHODIMP_( ULONG )CDbgOutput::AddRef( THIS )
 {
-    return ( ++m_iRefCount );
+	return ( ++m_iRefCount );
 }
 
 
 STDMETHODIMP_( ULONG )CDbgOutput::Release( THIS )
 {
-    return ( --m_iRefCount );
+	return ( --m_iRefCount );
 }
 
 
@@ -69,12 +69,12 @@ STDMETHODIMP CDbgOutput::Output( THIS_ IN ULONG Mask, IN PCSTR Text )
 	{
 		KeyValues *pkv = new KeyValues( "DebugOutput", "iMask", Mask );
 		pkv->SetString( "pszDebugText", Text );
-		
+
 		ivgui()->DPrintf( "CDbgOutput::Output() about to post [%s]", Text );
 		g_pCMDRipperMain->PostMessage( m_Target, pkv );
 	}
 
-    return S_OK;
+	return S_OK;
 }
 
 

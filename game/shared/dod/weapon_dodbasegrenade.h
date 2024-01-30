@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -16,7 +16,7 @@
 
 
 #ifdef CLIENT_DLL
-	
+
 	#define CWeaponDODBaseGrenade C_WeaponDODBaseGrenade
 
 #endif

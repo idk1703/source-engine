@@ -113,7 +113,7 @@ $Project "vgui2"
 		$File	"ScalableImageBorder.h"
 		$File	"ImageBorder.h"
 	}
-	
+
 	$Folder "Link Libraries"
 	{
 		$Lib	vgui_surfacelib

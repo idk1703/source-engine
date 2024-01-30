@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -63,7 +63,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_ExtinguisherJet, DT_ExtinguisherJet, CExtinguisherJe
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ExtinguisherJet::C_ExtinguisherJet( void )
 {
@@ -78,8 +78,8 @@ C_ExtinguisherJet::~C_ExtinguisherJet( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bnewentity - 
+// Purpose:
+// Input  : bnewentity -
 //-----------------------------------------------------------------------------
 void C_ExtinguisherJet::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -92,7 +92,7 @@ void C_ExtinguisherJet::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ExtinguisherJet::Start( void )
 {
@@ -102,7 +102,7 @@ void C_ExtinguisherJet::Start( void )
 
 	//Create the basic emitter
 	m_pEmitter = CSimpleEmitter::Create("C_ExtinguisherJet::m_pEmitter");
-	
+
 	Assert( m_pEmitter.IsValid() );
 	if ( m_pEmitter.IsValid() )
 	{
@@ -122,12 +122,12 @@ void C_ExtinguisherJet::Start( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ExtinguisherJet::AddExtinguisherDecal( trace_t &tr )
 {
 	C_BaseEntity *ent = cl_entitylist->GetEnt( 0 );
-	
+
 	if ( ent != NULL )
 	{
 		int	index = decalsystem->GetDecalIndexForName( "Extinguish" );
@@ -136,15 +136,15 @@ void C_ExtinguisherJet::AddExtinguisherDecal( trace_t &tr )
 			Vector	endpos;
 			endpos.Random( -24.0f, 24.0f );
 			endpos += tr.endpos;
-	
+
 			effects->DecalShoot( index, 0, ent->GetModel(), ent->GetAbsOrigin(), ent->GetAbsAngles(), endpos, 0, 0 );
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fTimeDelta - 
+// Purpose:
+// Input  : fTimeDelta -
 //-----------------------------------------------------------------------------
 void C_ExtinguisherJet::Update( float fTimeDelta )
 {
@@ -174,7 +174,7 @@ void C_ExtinguisherJet::Update( float fTimeDelta )
 	Vector	shotDir, vRight, vUp;
 
 	AngleVectors( GetAbsAngles(), &shotDir, &vRight, &vUp );
-	
+
 	//FIXME: Muzzle point is incorrect on the model!
 	if ( m_bUseMuzzlePoint )
 	{
@@ -182,7 +182,7 @@ void C_ExtinguisherJet::Update( float fTimeDelta )
 	}
 
 	Vector	endPoint = GetAbsOrigin() + ( shotDir * 150.0f );
-	
+
 	UTIL_TraceLine( GetAbsOrigin(), endPoint, MASK_SHOT, NULL, COLLISION_GROUP_NONE, &tr );
 
 	bool	hitWall = ( tr.fraction < 1.0f );
@@ -193,9 +193,9 @@ void C_ExtinguisherJet::Update( float fTimeDelta )
 		SimpleParticle	*pParticle;
 
 		m_pEmitter->SetSortOrigin( GetAbsOrigin() );
-	
+
 		float tempDelta = fTimeDelta;
-		
+
 		//FIXME: All particles need to be within this loop
 		while( m_ParticleSpawn.NextEvent( tempDelta ) )
 		{
@@ -205,15 +205,15 @@ void C_ExtinguisherJet::Update( float fTimeDelta )
 			{
 				pParticle->m_flDieTime	= 0.2f;
 				pParticle->m_flLifetime	= 0.0f;
-				
+
 				pParticle->m_flRoll		= random->RandomInt( 0, 360 );
 				pParticle->m_flRollDelta= random->RandomFloat( -4.0f, 4.0f );
-				
+
 				pParticle->m_uchStartSize	= 1;
 				pParticle->m_uchEndSize		= random->RandomInt( 32, 48 );
 				pParticle->m_uchStartAlpha	= random->RandomInt( 128, 164 );
 				pParticle->m_uchEndAlpha	= 0;
-				
+
 				int	cScale = random->RandomInt( 192, 255 );
 				pParticle->m_uchColor[0]	= cScale;
 				pParticle->m_uchColor[1]	= cScale;
@@ -242,15 +242,15 @@ void C_ExtinguisherJet::Update( float fTimeDelta )
 			{
 				pParticle->m_flDieTime	= 0.1f;
 				pParticle->m_flLifetime	= 0.0f;
-				
+
 				pParticle->m_flRoll		= random->RandomInt( 0, 360 );
 				pParticle->m_flRollDelta= random->RandomFloat( -4.0f, 4.0f );
-				
+
 				pParticle->m_uchStartSize	= 1;
 				pParticle->m_uchEndSize		= random->RandomInt( 8, 16 );
 				pParticle->m_uchStartAlpha	= random->RandomInt( 128, 255 );
 				pParticle->m_uchEndAlpha	= 0;
-				
+
 				int	cScale = random->RandomInt( 192, 255 );
 				pParticle->m_uchColor[0]	= cScale;
 				pParticle->m_uchColor[1]	= cScale;
@@ -287,15 +287,15 @@ void C_ExtinguisherJet::Update( float fTimeDelta )
 				{
 					pParticle->m_flDieTime	= 0.4f;
 					pParticle->m_flLifetime	= 0.0f;
-					
+
 					pParticle->m_flRoll		= random->RandomInt( 0, 360 );
 					pParticle->m_flRollDelta= random->RandomFloat( -2.0f, 2.0f );
-					
+
 					pParticle->m_uchStartSize	= random->RandomInt( 8, 16 );
 					pParticle->m_uchEndSize		= random->RandomInt( 24, 32 );
 					pParticle->m_uchStartAlpha	= random->RandomInt( 64, 128 );
 					pParticle->m_uchEndAlpha	= 0;
-					
+
 					int	cScale = random->RandomInt( 192, 255 );
 					pParticle->m_uchColor[0]	= cScale;
 					pParticle->m_uchColor[1]	= cScale;
@@ -309,7 +309,7 @@ void C_ExtinguisherJet::Update( float fTimeDelta )
 					rDir[2] += random->RandomFloat( -0.9f, 0.9f );
 
 					pParticle->m_vecVelocity = rDir * random->RandomInt( 32, 64 );
-				}			
+				}
 			}
 
 			//Add small ember-like particles
@@ -318,7 +318,7 @@ void C_ExtinguisherJet::Update( float fTimeDelta )
 				m_pEmberEmitter->SetSortOrigin( GetAbsOrigin() );
 
 				pParticle = (SimpleParticle *) m_pEmberEmitter->AddParticle( sizeof(SimpleParticle), g_Mat_DustPuff[0], GetAbsOrigin() );
-				
+
 				assert(pParticle);
 
 				if ( pParticle )
@@ -336,7 +336,7 @@ void C_ExtinguisherJet::Update( float fTimeDelta )
 					pParticle->m_uchEndAlpha	= 0;
 					pParticle->m_uchStartSize	= 1;
 					pParticle->m_uchEndSize		= 0;
-					
+
 					Vector	dir;
 					QAngle  ofsAngles;
 
@@ -380,7 +380,7 @@ void C_ExtinguisherJet::Update( float fTimeDelta )
 
 	beamDraw.Start( numPoints, pMat );
 
-	//Setup and draw those points	
+	//Setup and draw those points
 	for( i = 0; i < numPoints; i++ )
 	{
 		float	t = (float) i / (numPoints - 1);
@@ -394,13 +394,13 @@ void C_ExtinguisherJet::Update( float fTimeDelta )
 
 		beamDraw.NextSeg( &seg );
 	}
-	
+
 	beamDraw.End();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flags - 
+// Purpose:
+// Input  : flags -
 //-----------------------------------------------------------------------------
 int C_ExtinguisherJet::DrawModel( int flags )
 {

@@ -68,7 +68,7 @@ void CTFRaygun::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFRaygun::GetMuzzleFlashParticleEffect( void )
 {
@@ -76,7 +76,7 @@ const char *CTFRaygun::GetMuzzleFlashParticleEffect( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRaygun::PrimaryAttack( void )
 {
@@ -87,7 +87,7 @@ void CTFRaygun::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRaygun::ModifyProjectile( CBaseEntity* pProj )
 {
@@ -106,7 +106,7 @@ void CTFRaygun::ModifyProjectile( CBaseEntity* pProj )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFRaygun::GetProgress( void )
 {
@@ -115,7 +115,7 @@ float CTFRaygun::GetProgress( void )
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRaygun::DispatchMuzzleFlash( const char* effectName, C_BaseEntity* pAttachEnt )
 {
@@ -124,7 +124,7 @@ void CTFRaygun::DispatchMuzzleFlash( const char* effectName, C_BaseEntity* pAtta
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFRaygun::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
@@ -136,7 +136,7 @@ bool CTFRaygun::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFRaygun::Deploy( void )
 {
@@ -149,7 +149,7 @@ bool CTFRaygun::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRaygun::ItemPostFrame( void )
 {
@@ -167,7 +167,7 @@ void CTFRaygun::ItemPostFrame( void )
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRaygun::ClientEffectsThink( void )
 {
@@ -197,7 +197,7 @@ void CTFRaygun::ClientEffectsThink( void )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFRaygun::GetProjectileSpeed( void )
 {
@@ -205,7 +205,7 @@ float CTFRaygun::GetProjectileSpeed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFRaygun::GetProjectileGravity( void )
 {
@@ -213,9 +213,9 @@ float CTFRaygun::GetProjectileGravity( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFRaygun::IsViewModelFlipped( void )
 {
-	return !BaseClass::IsViewModelFlipped(); 
+	return !BaseClass::IsViewModelFlipped();
 }

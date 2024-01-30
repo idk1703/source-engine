@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -59,7 +59,7 @@ protected:
 
 	CBuySubMenu *m_pMainMenu;
 	IViewPort	*m_pViewPort;
-	
+
 	int			m_iTeam;
 	int			m_iClass;
 };

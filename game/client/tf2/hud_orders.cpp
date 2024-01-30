@@ -16,7 +16,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudLabel::SetSelected( bool bSelected )
 {
@@ -25,7 +25,7 @@ void CHudLabel::SetSelected( bool bSelected )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudOrderList *GetHudOrderList( void )
 {
@@ -34,7 +34,7 @@ CHudOrderList *GetHudOrderList( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudOrder::CHudOrder( int x,int y,int wide,int tall ) : vgui::Panel( NULL, "CHudOrder")
 {
@@ -44,14 +44,14 @@ CHudOrder::CHudOrder( int x,int y,int wide,int tall ) : vgui::Panel( NULL, "CHud
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudOrder::~CHudOrder( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudOrder::Init( void )
 {
@@ -66,7 +66,7 @@ void CHudOrder::Paint( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudOrder::SetOrder( C_Order *pOrder )
 {
@@ -86,7 +86,7 @@ void CHudOrder::SetOrder( C_Order *pOrder )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_Order *CHudOrder::GetOrder( void )
 {
@@ -94,7 +94,7 @@ C_Order *CHudOrder::GetOrder( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudOrder::UpdateOrder( void )
 {
@@ -111,7 +111,7 @@ void CHudOrder::OrderRemoved( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudOrder::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
@@ -130,7 +130,7 @@ void CHudOrder::ApplySchemeSettings(vgui::IScheme *pScheme)
 //================================================================================================================
 // LARGE STATUS PANEL.
 //================================================================================================================
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudOrderList::CHudOrderList( const char *pElementName ) :
 	CHudElement( pElementName ), vgui::Panel( NULL, "HudOrderList" )
@@ -151,7 +151,7 @@ CHudOrderList::CHudOrderList( const char *pElementName ) :
 DECLARE_HUDELEMENT( CHudOrderList );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudOrderList::~CHudOrderList( void )
 {
@@ -166,7 +166,7 @@ CHudOrderList::~CHudOrderList( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudOrderList::LevelInit( void )
 {
@@ -190,7 +190,7 @@ void CHudOrderList::LevelInit( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudOrderList::LevelShutdown( void )
 {
@@ -204,7 +204,7 @@ void CHudOrderList::LevelShutdown( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudOrderList::OnThink( void )
 {
@@ -219,7 +219,7 @@ void CHudOrderList::OnThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudOrderList::Paint( void )
 {
@@ -275,4 +275,3 @@ void CHudOrderList::RecalculateOrderList( void )
 		m_pOrderLabels[0]->SetBgColor( Color( 0,0,0, 192) );
 	}
 }
-

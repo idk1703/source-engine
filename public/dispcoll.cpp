@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -90,7 +90,7 @@ void CDispCollTri::CalcPlane( void )
 	//
 	// calculate the projection axes
 	//
-    if( FloatMakePositive( m_Normal[0] ) > FloatMakePositive( m_Normal[1] ) )
+	if( FloatMakePositive( m_Normal[0] ) > FloatMakePositive( m_Normal[1] ) )
 	{
 		if( FloatMakePositive( m_Normal[0] ) > FloatMakePositive( m_Normal[2] ) )
 		{
@@ -216,7 +216,7 @@ CDispCollTree::~CDispCollTree()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispCollTree::InitAABBData( void )
 {
@@ -232,7 +232,7 @@ void CDispCollTree::InitAABBData( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispCollTree::CalcBounds( CDispCollNode *pNode, int nodeIndex )
 {
@@ -252,16 +252,16 @@ void CDispCollTree::CalcBounds( CDispCollNode *pNode, int nodeIndex )
 				//
 				// minimum
 				//
-				if( bounds[0].x > pNode->m_Tris[i].m_Points[j].x ) { bounds[0].x = pNode->m_Tris[i].m_Points[j].x; } 
-				if( bounds[0].y > pNode->m_Tris[i].m_Points[j].y ) { bounds[0].y = pNode->m_Tris[i].m_Points[j].y; } 
-				if( bounds[0].z > pNode->m_Tris[i].m_Points[j].z ) { bounds[0].z = pNode->m_Tris[i].m_Points[j].z; } 
+				if( bounds[0].x > pNode->m_Tris[i].m_Points[j].x ) { bounds[0].x = pNode->m_Tris[i].m_Points[j].x; }
+				if( bounds[0].y > pNode->m_Tris[i].m_Points[j].y ) { bounds[0].y = pNode->m_Tris[i].m_Points[j].y; }
+				if( bounds[0].z > pNode->m_Tris[i].m_Points[j].z ) { bounds[0].z = pNode->m_Tris[i].m_Points[j].z; }
 
 				//
 				// maximum
 				//
-				if( bounds[1].x < pNode->m_Tris[i].m_Points[j].x ) { bounds[1].x = pNode->m_Tris[i].m_Points[j].x; } 
-				if( bounds[1].y < pNode->m_Tris[i].m_Points[j].y ) { bounds[1].y = pNode->m_Tris[i].m_Points[j].y; } 
-				if( bounds[1].z < pNode->m_Tris[i].m_Points[j].z ) { bounds[1].z = pNode->m_Tris[i].m_Points[j].z; } 
+				if( bounds[1].x < pNode->m_Tris[i].m_Points[j].x ) { bounds[1].x = pNode->m_Tris[i].m_Points[j].x; }
+				if( bounds[1].y < pNode->m_Tris[i].m_Points[j].y ) { bounds[1].y = pNode->m_Tris[i].m_Points[j].y; }
+				if( bounds[1].z < pNode->m_Tris[i].m_Points[j].z ) { bounds[1].z = pNode->m_Tris[i].m_Points[j].z; }
 			}
 		}
 	}
@@ -281,16 +281,16 @@ void CDispCollTree::CalcBounds( CDispCollNode *pNode, int nodeIndex )
 			//
 			// minimum
 			//
-			if( bounds[0].x > childBounds[0].x ) { bounds[0].x = childBounds[0].x; } 
-			if( bounds[0].y > childBounds[0].y ) { bounds[0].y = childBounds[0].y; } 
-			if( bounds[0].z > childBounds[0].z ) { bounds[0].z = childBounds[0].z; } 
-			
+			if( bounds[0].x > childBounds[0].x ) { bounds[0].x = childBounds[0].x; }
+			if( bounds[0].y > childBounds[0].y ) { bounds[0].y = childBounds[0].y; }
+			if( bounds[0].z > childBounds[0].z ) { bounds[0].z = childBounds[0].z; }
+
 			//
 			// maximum
 			//
-			if( bounds[1].x < childBounds[1].x ) { bounds[1].x = childBounds[1].x; } 
-			if( bounds[1].y < childBounds[1].y ) { bounds[1].y = childBounds[1].y; } 
-			if( bounds[1].z < childBounds[1].z ) { bounds[1].z = childBounds[1].z; } 
+			if( bounds[1].x < childBounds[1].x ) { bounds[1].x = childBounds[1].x; }
+			if( bounds[1].y < childBounds[1].y ) { bounds[1].y = childBounds[1].y; }
+			if( bounds[1].z < childBounds[1].z ) { bounds[1].z = childBounds[1].z; }
 		}
 	}
 
@@ -299,12 +299,12 @@ void CDispCollTree::CalcBounds( CDispCollNode *pNode, int nodeIndex )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispCollTree::CreateNodes_r( CCoreDispInfo *pDisp, int nodeIndex, int termLevel )
 {
 	int nodeLevel = GetNodeLevel( nodeIndex );
-	
+
 	//
 	// terminating condition -- set node info (leaf or otherwise)
 	//
@@ -328,7 +328,7 @@ void CDispCollTree::CreateNodes_r( CCoreDispInfo *pDisp, int nodeIndex, int term
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispCollTree::CreateNodes( CCoreDispInfo *pDisp )
 {
@@ -336,10 +336,10 @@ void CDispCollTree::CreateNodes( CCoreDispInfo *pDisp )
 	// create all nodes in tree
 	//
 	int power = pDisp->GetPower() + 1;
-    for( int level = power; level > 0; level-- )
-    {
+	for( int level = power; level > 0; level-- )
+	{
 		CreateNodes_r( pDisp, 0 /* rootIndex */, level );
-    }
+	}
 }
 
 
@@ -350,7 +350,7 @@ int CDispCollTree::GetNodeIndexFromComponents( int x, int y )
 	int index = 0;
 
 	// Interleave bits from the x and y values to create the index:
-	
+
 	for( int shift = 0; x != 0; shift += 2, x >>= 1 )
 	{
 		index |= ( x & 1 ) << shift;
@@ -459,8 +459,8 @@ bool CDispCollTree::Create( CCoreDispInfo *pDisp )
 	// allocate tree space
 	//
 	if( !AllocNodes( m_NodeCount ) )
-		return false;	
-	
+		return false;
+
 	// initialize leaves
 	InitLeaves( pDisp );
 
@@ -505,7 +505,7 @@ void CDispCollTree::FreeNodes( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: calculate the number of tree nodes given the size of the 
+// Purpose: calculate the number of tree nodes given the size of the
 //          displacement surface
 //   Input: power - size of the displacement surface
 //  Output: int - the number of tree nodes
@@ -549,8 +549,8 @@ inline int CDispCollTree::GetChildNode( int nodeIndex, int direction )
 	Assert( nodeIndex >= 0 );
 	Assert( nodeIndex < m_NodeCount );
 
-    // ( nodeIndex * 4 ) + ( direction + 1 )
-    return ( ( nodeIndex << 2 ) + ( direction + 1 ) );	
+	// ( nodeIndex * 4 ) + ( direction + 1 )
+	return ( ( nodeIndex << 2 ) + ( direction + 1 ) );
 }
 
 
@@ -577,7 +577,7 @@ inline int CDispCollTree::GetNodeLevel( int nodeIndex )
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 bool CDispCollTree::RayTriTest( Vector const &rayStart, Vector const &rayDir, float const rayLength,
-							    CDispCollTri const *pTri, float *fraction )
+								CDispCollTri const *pTri, float *fraction )
 {
 	const float DET_EPSILON = 0.001f;
 	const float DIST_EPSILON = 0.001f;
@@ -598,7 +598,7 @@ bool CDispCollTree::RayTriTest( Vector const &rayStart, Vector const &rayDir, fl
 	float det = pVec.Dot( edge1 );
 
 	// if determinant is zero -- ray lies in plane
-	if( ( det > -DET_EPSILON ) && ( det < DET_EPSILON ) ) 
+	if( ( det > -DET_EPSILON ) && ( det < DET_EPSILON ) )
 		return false;
 
 	//
@@ -733,14 +733,14 @@ void CDispCollTree::CreatePlanesFromBounds( CDispCollTreeTempData *pTemp, Vector
 //	m_AABBNormals[4].z = -1;
 //	m_AABBNormals[5].z = 1;
 
-	pTemp->m_AABBDistances[0] = -bbMin.x;	
-	pTemp->m_AABBDistances[1] = bbMax.x;	
-	
-	pTemp->m_AABBDistances[2] = -bbMin.y;	
-	pTemp->m_AABBDistances[3] = bbMax.y;	
+	pTemp->m_AABBDistances[0] = -bbMin.x;
+	pTemp->m_AABBDistances[1] = bbMax.x;
 
-	pTemp->m_AABBDistances[4] = -bbMin.z;	
-	pTemp->m_AABBDistances[5] = bbMax.z;	
+	pTemp->m_AABBDistances[2] = -bbMin.y;
+	pTemp->m_AABBDistances[3] = bbMax.y;
+
+	pTemp->m_AABBDistances[4] = -bbMin.z;
+	pTemp->m_AABBDistances[5] = bbMax.z;
 }
 
 
@@ -814,12 +814,12 @@ bool CDispCollTree::RayTestAllTris( CDispCollData *pData, int power )
 			bool bResult = RayTriTest( pData->m_StartPos, rayDir, rayLength, &m_pNodes[index].m_Tris[j], &fraction );
 			if( !bResult )
 				continue;
-			
+
 			if( pData->m_bOcclude )
 			{
 				return true;
 			}
-			
+
 			if( fraction < pData->m_Fraction )
 			{
 				pData->m_Fraction = fraction;
@@ -867,8 +867,8 @@ bool CDispCollTree::RayTest( CDispCollData *pData )
 // Purpose:
 //-----------------------------------------------------------------------------
 bool CDispCollTree::SweptAABBTriIntersect( Vector &rayStart, Vector &rayEnd, Vector &extents,
-										   CDispCollTri const *pTri, Vector &plNormal, float *plDist,
-										   float *fraction )
+											CDispCollTri const *pTri, Vector &plNormal, float *plDist,
+											float *fraction )
 {
 
 	//
@@ -957,8 +957,8 @@ bool CDispCollTree::SweptAABBTriIntersect( Vector &rayStart, Vector &rayEnd, Vec
 	//
 	// check for an early out
 	//
-	if( ( pTri->m_Normal[0] > ONE_MINUS_COLLISION_EPSILON ) || 
-		( pTri->m_Normal[1] > ONE_MINUS_COLLISION_EPSILON ) || 
+	if( ( pTri->m_Normal[0] > ONE_MINUS_COLLISION_EPSILON ) ||
+		( pTri->m_Normal[1] > ONE_MINUS_COLLISION_EPSILON ) ||
 		( pTri->m_Normal[2] > ONE_MINUS_COLLISION_EPSILON ) )
 	{
 		if( *fraction == 1.0f )
@@ -966,7 +966,7 @@ bool CDispCollTree::SweptAABBTriIntersect( Vector &rayStart, Vector &rayEnd, Vec
 
 		return true;
 	}
-	
+
 	//
 	// handle 9 edge tests
 	//
@@ -974,7 +974,7 @@ bool CDispCollTree::SweptAABBTriIntersect( Vector &rayStart, Vector &rayEnd, Vec
 	Vector  edge;
 	float	dist;
 
-	// find the closest box point	
+	// find the closest box point
 	Vector boxPt( 0.0f, 0.0f, 0.0f );
 	for( dir = 0; dir < 3; dir++ )
 	{
@@ -999,7 +999,7 @@ bool CDispCollTree::SweptAABBTriIntersect( Vector &rayStart, Vector &rayEnd, Vec
 	normal.z = edge.y;
 
 	// extents adjusted dist
-	dist = ( normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) + ( normal.z * ( boxPt.z - pTri->m_Points[0].z ) ); 
+	dist = ( normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) + ( normal.z * ( boxPt.z - pTri->m_Points[0].z ) );
 
 	// find distances from plane (start, end)
 	distStart = ( normal.y * rayStart.y ) + ( normal.z * rayStart.z ) - dist;
@@ -1034,7 +1034,7 @@ bool CDispCollTree::SweptAABBTriIntersect( Vector &rayStart, Vector &rayEnd, Vec
 	normal.z = edge.y;
 
 	// extents adjusted dist
-	dist = ( normal.x * ( boxPt.x - pTri->m_Points[0].x ) ) + ( normal.z * ( boxPt.z - pTri->m_Points[0].z ) ); 
+	dist = ( normal.x * ( boxPt.x - pTri->m_Points[0].x ) ) + ( normal.z * ( boxPt.z - pTri->m_Points[0].z ) );
 
 	// find distances from plane (start, end)
 	distStart = ( normal.x * rayStart.x ) + ( normal.z * rayStart.z ) - dist;
@@ -1069,7 +1069,7 @@ bool CDispCollTree::SweptAABBTriIntersect( Vector &rayStart, Vector &rayEnd, Vec
 	normal.z = 0.0f;
 
 	// extents adjusted dist
-	dist = ( normal.x * ( boxPt.x - pTri->m_Points[0].x ) ) + ( normal.y * ( boxPt.y - pTri->m_Points[0].y ) ); 
+	dist = ( normal.x * ( boxPt.x - pTri->m_Points[0].x ) ) + ( normal.y * ( boxPt.y - pTri->m_Points[0].y ) );
 
 	// find distances from plane (start, end)
 	distStart = ( normal.x * rayStart.x ) + ( normal.y * rayStart.y ) - dist;
@@ -1109,7 +1109,7 @@ bool CDispCollTree::SweptAABBTriIntersect( Vector &rayStart, Vector &rayEnd, Vec
 	normal.z = edge.y;
 
 	// extents adjusted dist
-	dist = ( normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) + ( normal.z * ( boxPt.z - pTri->m_Points[0].z ) ); 
+	dist = ( normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) + ( normal.z * ( boxPt.z - pTri->m_Points[0].z ) );
 
 	// find distances from plane (start, end)
 	distStart = ( normal.y * rayStart.y ) + ( normal.z * rayStart.z ) - dist;
@@ -1144,7 +1144,7 @@ bool CDispCollTree::SweptAABBTriIntersect( Vector &rayStart, Vector &rayEnd, Vec
 	normal.z = edge.y;
 
 	// extents adjusted dist
-	dist = ( normal.x * ( boxPt.x - pTri->m_Points[0].x ) ) + ( normal.z * ( boxPt.z - pTri->m_Points[0].z ) ); 
+	dist = ( normal.x * ( boxPt.x - pTri->m_Points[0].x ) ) + ( normal.z * ( boxPt.z - pTri->m_Points[0].z ) );
 
 	// find distances from plane (start, end)
 	distStart = ( normal.x * rayStart.x ) + ( normal.z * rayStart.z ) - dist;
@@ -1179,7 +1179,7 @@ bool CDispCollTree::SweptAABBTriIntersect( Vector &rayStart, Vector &rayEnd, Vec
 	normal.z = 0.0f;
 
 	// extents adjusted dist
-	dist = ( normal.x * ( boxPt.x - pTri->m_Points[0].x ) ) + ( normal.y * ( boxPt.y - pTri->m_Points[0].y ) ); 
+	dist = ( normal.x * ( boxPt.x - pTri->m_Points[0].x ) ) + ( normal.y * ( boxPt.y - pTri->m_Points[0].y ) );
 
 	// find distances from plane (start, end)
 	distStart = ( normal.x * rayStart.x ) + ( normal.y * rayStart.y ) - dist;
@@ -1219,7 +1219,7 @@ bool CDispCollTree::SweptAABBTriIntersect( Vector &rayStart, Vector &rayEnd, Vec
 	normal.z = edge.y;
 
 	// extents adjusted dist
-	dist = ( normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) + ( normal.z * ( boxPt.z - pTri->m_Points[0].z ) ); 
+	dist = ( normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) + ( normal.z * ( boxPt.z - pTri->m_Points[0].z ) );
 
 	// find distances from plane (start, end)
 	distStart = ( normal.y * rayStart.y ) + ( normal.z * rayStart.z ) - dist;
@@ -1254,7 +1254,7 @@ bool CDispCollTree::SweptAABBTriIntersect( Vector &rayStart, Vector &rayEnd, Vec
 	normal.z = edge.y;
 
 	// extents adjusted dist
-	dist = ( normal.x * ( boxPt.x - pTri->m_Points[0].x ) ) + ( normal.z * ( boxPt.z - pTri->m_Points[0].z ) ); 
+	dist = ( normal.x * ( boxPt.x - pTri->m_Points[0].x ) ) + ( normal.z * ( boxPt.z - pTri->m_Points[0].z ) );
 
 	// find distances from plane (start, end)
 	distStart = ( normal.x * rayStart.x ) + ( normal.z * rayStart.z ) - dist;
@@ -1289,7 +1289,7 @@ bool CDispCollTree::SweptAABBTriIntersect( Vector &rayStart, Vector &rayEnd, Vec
 	normal.z = 0.0f;
 
 	// extents adjusted dist
-	dist = ( normal.x * ( boxPt.x - pTri->m_Points[0].x ) ) + ( normal.y * ( boxPt.y - pTri->m_Points[0].y ) ); 
+	dist = ( normal.x * ( boxPt.x - pTri->m_Points[0].x ) ) + ( normal.y * ( boxPt.y - pTri->m_Points[0].y ) );
 
 	// find distances from plane (start, end)
 	distStart = ( normal.x * rayStart.x ) + ( normal.y * rayStart.y ) - dist;
@@ -1322,8 +1322,8 @@ bool CDispCollTree::SweptAABBTriIntersect( Vector &rayStart, Vector &rayEnd, Vec
 	// test face plane
 	//
 	dist = ( pTri->m_Normal.x * ( boxPt.x - pTri->m_Points[0].x ) ) +
-		   ( pTri->m_Normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) +
-		   ( pTri->m_Normal.z * ( boxPt.z - pTri->m_Points[0].z ) );
+			( pTri->m_Normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) +
+			( pTri->m_Normal.z * ( boxPt.z - pTri->m_Points[0].z ) );
 
 	distStart = pTri->m_Normal.Dot( rayStart ) - dist;
 	distEnd = pTri->m_Normal.Dot( rayEnd ) - dist;
@@ -1376,7 +1376,7 @@ bool CDispCollTree::AABBTriIntersect( CDispCollTreeTempData *pTemp, CDispCollDat
 		if( pTemp->m_ppTriList[i]->IsIntersect() )
 		{
 			bResult = SweptAABBTriIntersect( pData->m_StartPos, pData->m_EndPos, pData->m_Extents,
-				                             pTemp->m_ppTriList[i], normal, &dist, &fraction );
+											pTemp->m_ppTriList[i], normal, &dist, &fraction );
 			if( bResult )
 			{
 				if( fraction < pData->m_Fraction )
@@ -1396,8 +1396,8 @@ bool CDispCollTree::AABBTriIntersect( CDispCollTreeTempData *pTemp, CDispCollDat
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CDispCollTree::IntersectAABBTriTest( Vector &rayStart, Vector &extents, 
-										  CDispCollTri const *pTri )
+bool CDispCollTree::IntersectAABBTriTest( Vector &rayStart, Vector &extents,
+										CDispCollTri const *pTri )
 {
 	int   dir, ptIndex;
 	float dist;
@@ -1438,8 +1438,8 @@ bool CDispCollTree::IntersectAABBTriTest( Vector &rayStart, Vector &extents,
 	//
 	// add a test here to see if triangle face normal is close to axial -- done if so!!!
 	//
-	if( ( pTri->m_Normal[0] > ONE_MINUS_COLLISION_EPSILON ) || 
-		( pTri->m_Normal[1] > ONE_MINUS_COLLISION_EPSILON ) || 
+	if( ( pTri->m_Normal[0] > ONE_MINUS_COLLISION_EPSILON ) ||
+		( pTri->m_Normal[1] > ONE_MINUS_COLLISION_EPSILON ) ||
 		( pTri->m_Normal[2] > ONE_MINUS_COLLISION_EPSILON ) )
 		return true;
 
@@ -1462,9 +1462,9 @@ bool CDispCollTree::IntersectAABBTriTest( Vector &rayStart, Vector &extents,
 	//
 	// do the opposite because the ray has been negated
 	if( ( ( pTri->m_Normal.x * ( boxPt.x - pTri->m_Points[0].x ) ) +
-		  ( pTri->m_Normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) +
-		  ( pTri->m_Normal.z * ( boxPt.z - pTri->m_Points[0].z ) ) ) > 0.0f )
-		  return false;
+		( pTri->m_Normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) +
+		( pTri->m_Normal.z * ( boxPt.z - pTri->m_Points[0].z ) ) ) > 0.0f )
+		return false;
 
 	//
 	// test edge planes - 9 of them
@@ -1481,7 +1481,7 @@ bool CDispCollTree::IntersectAABBTriTest( Vector &rayStart, Vector &extents,
 	normal.x = 0.0f;
 	normal.y = -edge.z;
 	normal.z = edge.y;
-    if(	( ( normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) + ( normal.z * ( boxPt.z - pTri->m_Points[0].z ) ) ) > 0.0f )
+	if(	( ( normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) + ( normal.z * ( boxPt.z - pTri->m_Points[0].z ) ) ) > 0.0f )
 		return false;
 
 	// cross y
@@ -1507,7 +1507,7 @@ bool CDispCollTree::IntersectAABBTriTest( Vector &rayStart, Vector &extents,
 	normal.x = 0.0f;
 	normal.y = -edge.z;
 	normal.z = edge.y;
-    if(	( ( normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) + ( normal.z * ( boxPt.z - pTri->m_Points[0].z ) ) ) > 0.0f )
+	if(	( ( normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) + ( normal.z * ( boxPt.z - pTri->m_Points[0].z ) ) ) > 0.0f )
 		return false;
 
 	// cross y
@@ -1533,7 +1533,7 @@ bool CDispCollTree::IntersectAABBTriTest( Vector &rayStart, Vector &extents,
 	normal.x = 0.0f;
 	normal.y = -edge.z;
 	normal.z = edge.y;
-    if(	( ( normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) + ( normal.z * ( boxPt.z - pTri->m_Points[0].z ) ) ) > 0.0f )
+	if(	( ( normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) + ( normal.z * ( boxPt.z - pTri->m_Points[0].z ) ) ) > 0.0f )
 		return false;
 
 	// cross y
@@ -1559,8 +1559,8 @@ bool CDispCollTree::IntersectAABBTriTest( Vector &rayStart, Vector &extents,
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CDispCollTree::SweptAABBTriTest( Vector &rayStart, Vector &rayEnd, Vector &extents, 
-									  CDispCollTri const *pTri )
+bool CDispCollTree::SweptAABBTriTest( Vector &rayStart, Vector &rayEnd, Vector &extents,
+									CDispCollTri const *pTri )
 {
 	// get ray direction
 	Vector rayDir = rayEnd - rayStart;
@@ -1573,7 +1573,7 @@ bool CDispCollTree::SweptAABBTriTest( Vector &rayStart, Vector &rayEnd, Vector &
 
 	//
 	// calc the swept triangle face (negate the ray -- opposite direction of box travel)
-	//	
+	//
 	rayDir.Negate();
 
 	Vector points[3];
@@ -1622,19 +1622,19 @@ bool CDispCollTree::SweptAABBTriTest( Vector &rayStart, Vector &rayEnd, Vector &
 		if( bOutside )
 			return false;
 	}
-	
+
 	//
 	// add a test here to see if triangle face normal is close to axial -- done if so!!!
 	//
-	if( ( pTri->m_Normal[0] > ONE_MINUS_COLLISION_EPSILON ) || 
-		( pTri->m_Normal[1] > ONE_MINUS_COLLISION_EPSILON ) || 
+	if( ( pTri->m_Normal[0] > ONE_MINUS_COLLISION_EPSILON ) ||
+		( pTri->m_Normal[1] > ONE_MINUS_COLLISION_EPSILON ) ||
 		( pTri->m_Normal[2] > ONE_MINUS_COLLISION_EPSILON ) )
 		return true;
 
 	//
 	// handle 9 edge tests - always use the newly swept face for this
 	//
-	Vector normal;	
+	Vector normal;
 	Vector edge;
 
 	// find the closest box point - (is written opposite to normal due to negating ray)
@@ -1660,7 +1660,7 @@ bool CDispCollTree::SweptAABBTriTest( Vector &rayStart, Vector &rayEnd, Vector &
 	normal.x = 0.0f;
 	normal.y = -edge.z;
 	normal.z = edge.y;
-    if(	( ( normal.y * ( boxPt.y - points[0].y ) ) + ( normal.z * ( boxPt.z - points[0].z ) ) ) > 0.0f )
+	if(	( ( normal.y * ( boxPt.y - points[0].y ) ) + ( normal.z * ( boxPt.z - points[0].z ) ) ) > 0.0f )
 		return false;
 
 	// cross, y-edge
@@ -1686,7 +1686,7 @@ bool CDispCollTree::SweptAABBTriTest( Vector &rayStart, Vector &rayEnd, Vector &
 	normal.x = 0.0f;
 	normal.y = -edge.z;
 	normal.z = edge.y;
-    if(	( ( normal.y * ( boxPt.y - points[0].y ) ) + ( normal.z * ( boxPt.z - points[0].z ) ) ) > 0.0f )
+	if(	( ( normal.y * ( boxPt.y - points[0].y ) ) + ( normal.z * ( boxPt.z - points[0].z ) ) ) > 0.0f )
 		return false;
 
 	// cross, y-edge
@@ -1712,7 +1712,7 @@ bool CDispCollTree::SweptAABBTriTest( Vector &rayStart, Vector &rayEnd, Vector &
 	normal.x = 0.0f;
 	normal.y = -edge.z;
 	normal.z = edge.y;
-    if(	( ( normal.y * ( boxPt.y - points[0].y ) ) + ( normal.z * ( boxPt.z - points[0].z ) ) ) > 0.0f )
+	if(	( ( normal.y * ( boxPt.y - points[0].y ) ) + ( normal.z * ( boxPt.z - points[0].z ) ) ) > 0.0f )
 		return false;
 
 	// cross, y-edge
@@ -1734,9 +1734,9 @@ bool CDispCollTree::SweptAABBTriTest( Vector &rayStart, Vector &rayEnd, Vector &
 	//
 	// do the opposite because the ray has been negated
 	if( ( ( pTri->m_Normal.x * ( boxPt.x - points[0].x ) ) +
-		  ( pTri->m_Normal.y * ( boxPt.y - points[0].y ) ) +
-		  ( pTri->m_Normal.z * ( boxPt.z - points[0].z ) ) ) > 0.0f )
-		  return false;
+		( pTri->m_Normal.y * ( boxPt.y - points[0].y ) ) +
+		( pTri->m_Normal.z * ( boxPt.z - points[0].z ) ) ) > 0.0f )
+		return false;
 
 	return true;
 }
@@ -1904,11 +1904,11 @@ bool CDispCollTree::SweptAABBAABBTest( CDispCollTreeTempData *pTemp, const Vecto
 // Purpose:
 //-----------------------------------------------------------------------------
 void CDispCollTree::BuildTriList_r( CDispCollTreeTempData *pTemp, int nodeIndex, Vector &rayStart, Vector &rayEnd, Vector &extents,
-								    bool bIntersect )
+									bool bIntersect )
 {
 	//
 	// get the current nodes bounds and create collision test planes
-	// (saved in the in class cache m_AABBNormals, m_AABBDistances) 
+	// (saved in the in class cache m_AABBNormals, m_AABBDistances)
 	//
 	Vector bounds[2];
 	CDispCollNode *pNode = &m_pNodes[nodeIndex];

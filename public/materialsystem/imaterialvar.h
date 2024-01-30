@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -31,8 +31,8 @@ class ITexture;
 //-----------------------------------------------------------------------------
 // Various material var types
 //-----------------------------------------------------------------------------
-enum MaterialVarType_t 
-{ 
+enum MaterialVarType_t
+{
 	MATERIAL_VAR_TYPE_FLOAT = 0,
 	MATERIAL_VAR_TYPE_STRING,
 	MATERIAL_VAR_TYPE_VECTOR,
@@ -50,7 +50,7 @@ class IMaterialVar
 {
 public:
 	typedef unsigned long FourCC;
-	
+
 protected:
 	// base data and accessors
 	char* m_pStringVal;
@@ -84,15 +84,15 @@ public:
 	virtual MaterialVarSym_t	GetNameAsSymbol() const = 0;
 
 	virtual void			SetFloatValue( float val ) = 0;
-	
+
 	virtual void			SetIntValue( int val ) = 0;
-	
+
 	virtual void			SetStringValue( char const *val ) = 0;
 	virtual char const *	GetStringValue( void ) const = 0;
 
 	// Use FourCC values to pass app-defined data structures between
 	// the proxy and the shader. The shader should ignore the data if
-	// its FourCC type not correct.	
+	// its FourCC type not correct.
 	virtual void			SetFourCCValue( FourCC type, void *pData ) = 0;
 	virtual void			GetFourCCValue( FourCC *type, void **ppData ) = 0;
 
@@ -167,7 +167,7 @@ public:
 		return m_VecVal.Base();
 	}
 
-	FORCEINLINE void GetVecValueFast( float *val, int numcomps ) const 
+	FORCEINLINE void GetVecValueFast( float *val, int numcomps ) const
 	{
 		Assert( ( numcomps >0 ) && ( numcomps <= 4 ) );
 		for( int i=0 ; i < numcomps; i++ )
@@ -197,7 +197,7 @@ public:
 		return GetVecValueFast();
 	}
 
-	FORCEINLINE void GetVecValue( float *val, int numcomps ) const 
+	FORCEINLINE void GetVecValue( float *val, int numcomps ) const
 	{
 		GetVecValueFast( val, numcomps );
 	}
@@ -222,7 +222,7 @@ public:
 		return GetVecValueInternal();
 	}
 
-	FORCEINLINE void GetVecValue( float *val, int numcomps ) const 
+	FORCEINLINE void GetVecValue( float *val, int numcomps ) const
 	{
 		return GetVecValueInternal( val, numcomps );
 	}

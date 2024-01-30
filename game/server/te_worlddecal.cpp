@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -28,7 +28,7 @@ public:
 	virtual			~CTEWorldDecal( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 	DECLARE_SERVERCLASS();
 
 public:
@@ -37,8 +37,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEWorldDecal::CTEWorldDecal( const char *name ) :
 	CBaseTempEntity( name )
@@ -48,16 +48,16 @@ CTEWorldDecal::CTEWorldDecal( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEWorldDecal::~CTEWorldDecal( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEWorldDecal::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -66,7 +66,7 @@ void CTEWorldDecal::Test( const Vector& current_origin, const QAngle& current_an
 	m_vecOrigin = current_origin;
 
 	Vector vecEnd;
-	
+
 	Vector forward;
 
 	m_vecOrigin.GetForModify()[2] += 24;
@@ -102,13 +102,13 @@ END_SEND_TABLE()
 static CTEWorldDecal g_TEWorldDecal( "World Decal" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//			*pos - 
-//			index - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//			*pos -
+//			index -
 //-----------------------------------------------------------------------------
 void TE_WorldDecal( IRecipientFilter& filter, float delay,
 	const Vector* pos, int index )

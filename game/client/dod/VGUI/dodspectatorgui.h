@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,13 +24,13 @@ private:
 
 public:
 	CDODSpectatorGUI( IViewPort *pViewPort );
-		
+
 	virtual void Update( void );
 	virtual bool NeedsUpdate( void );
 	virtual Color GetClientColor(int index);
 
 	virtual bool ShouldShowPlayerLabel( int specmode );
-	
+
 	//virtual bool HasInputElements( void ) { return true; }
 
 protected:

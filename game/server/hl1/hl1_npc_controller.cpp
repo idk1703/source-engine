@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose: Bullseyes act as targets for other NPC's to attack and to trigger
-//			events 
+//			events
 //
 // $Workfile:     $
 // $Date:         $
@@ -115,7 +115,7 @@ public:
 
 	int RangeAttack1Conditions ( float flDot, float flDist );	// balls
 	int RangeAttack2Conditions ( float flDot, float flDist );	// head
-	int MeleeAttack1Conditions ( float flDot, float flDist ) { return COND_NONE; }	
+	int MeleeAttack1Conditions ( float flDot, float flDist ) { return COND_NONE; }
 	int MeleeAttack2Conditions ( float flDot, float flDist ) { return COND_NONE; }
 
 	int TranslateSchedule( int scheduleType );
@@ -193,8 +193,8 @@ public:
 };
 
 class CNPC_ControllerZapBall : public CAI_BaseNPC
-{	
-public:	
+{
+public:
 	DECLARE_CLASS( CNPC_ControllerHeadBall, CAI_BaseNPC );
 
 	DECLARE_DATADESC();
@@ -262,7 +262,7 @@ void CNPC_Controller::Spawn()
 
 	NPCInit();
 
-	
+
 	SetDefaultEyeOffset();
 }
 
@@ -275,7 +275,7 @@ void CNPC_Controller::Precache()
 
 	PrecacheModel( "sprites/xspark4.vmt");
 
-	UTIL_PrecacheOther( "controller_energy_ball" );	
+	UTIL_PrecacheOther( "controller_energy_ball" );
 	UTIL_PrecacheOther( "controller_head_ball" );
 
 	PrecacheScriptSound( "Controller.Pain" );
@@ -284,10 +284,10 @@ void CNPC_Controller::Precache()
 	PrecacheScriptSound( "Controller.Idle" );
 	PrecacheScriptSound( "Controller.Attack" );
 
-}	
+}
 
 //=========================================================
-// TakeDamage - 
+// TakeDamage -
 //=========================================================
 int CNPC_Controller::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 {
@@ -302,9 +302,9 @@ bool CNPC_Controller::ShouldGib( const CTakeDamageInfo &info )
 
 	if ( ( g_pGameRules->Damage_ShouldGibCorpse( info.GetDamageType() ) && m_iHealth < GIB_HEALTH_VALUE ) || ( info.GetDamageType() & DMG_ALWAYSGIB ) )
 		 return true;
-	
+
 	return false;
-	
+
 }
 
 int CNPC_Controller::IRelationPriority( CBaseEntity *pTarget )
@@ -321,7 +321,7 @@ void CNPC_Controller::Event_Killed( const CTakeDamageInfo &info )
 {
 	if( ShouldGib(info) )
 	{
-		//remove the balls 
+		//remove the balls
 		if (m_pBall[0])
 		{
 			UTIL_Remove( m_pBall[0] );
@@ -363,7 +363,7 @@ void CNPC_Controller::PainSound( const CTakeDamageInfo &info )
 void CNPC_Controller::AlertSound( void )
 {
 	CPASAttenuationFilter filter( this );
-	EmitSound( filter, entindex(), "Controller.Alert" ); 
+	EmitSound( filter, entindex(), "Controller.Alert" );
 }
 
 void CNPC_Controller::IdleSound( void )
@@ -396,14 +396,14 @@ void CNPC_Controller::HandleAnimEvent( animevent_t *pEvent )
 		{
 			Vector vecStart;
 			QAngle angleGun;
-			
+
 			GetAttachment( 0, vecStart, angleGun );
 
 			// BUGBUG - attach to attachment point!
 
 			CBroadcastRecipientFilter filter;
 			te->DynamicLight( filter, 0.0, &vecStart, 255, 192, 64, 0, 1 /*radius*/, 0.2, -32 );
-		
+
 			m_iBall[0] = 192;
 			m_iBallTime[0] = gpGlobals->curtime + atoi( pEvent->options ) / 15.0;
 			m_iBall[1] = 255;
@@ -416,7 +416,7 @@ void CNPC_Controller::HandleAnimEvent( animevent_t *pEvent )
 		{
 			Vector vecStart;
 			QAngle angleGun;
-			
+
 			GetAttachment( 1, vecStart, angleGun );
 
 			CBroadcastRecipientFilter filter;
@@ -635,7 +635,7 @@ int CNPC_Controller::LookupFloat( )
 
 
 //=========================================================
-// RunTask 
+// RunTask
 //=========================================================
 void CNPC_Controller::RunTask ( const Task_t *pTask )
 {
@@ -643,14 +643,14 @@ void CNPC_Controller::RunTask ( const Task_t *pTask )
 	{
 		Vector vecHand;
 		QAngle vecAngle;
-		
+
 		GetAttachment( 2, vecHand, vecAngle );
-	
+
 		while (m_flShootTime < m_flShootEnd && m_flShootTime < gpGlobals->curtime)
 		{
 			Vector vecSrc = vecHand + GetAbsVelocity() * (m_flShootTime - gpGlobals->curtime);
 			Vector vecDir;
-			
+
 			if (GetEnemy() != NULL)
 			{
 				if (HasCondition( COND_SEE_ENEMY ))
@@ -662,7 +662,7 @@ void CNPC_Controller::RunTask ( const Task_t *pTask )
 					m_vecEstVelocity = m_vecEstVelocity * 0.8;
 				}
 				vecDir = Intersect( vecSrc, GetEnemy()->BodyTarget( GetAbsOrigin() ), m_vecEstVelocity, sk_controller_speedball.GetFloat() );
-			
+
 				float delta = 0.03490; // +-2 degree
 				vecDir = vecDir + Vector( random->RandomFloat( -delta, delta ), random->RandomFloat( -delta, delta ), random->RandomFloat( -delta, delta ) ) * sk_controller_speedball.GetFloat();
 
@@ -672,7 +672,7 @@ void CNPC_Controller::RunTask ( const Task_t *pTask )
 
 //				DevMsg( 2, "controller shooting energy ball\n" );
 			}
-			
+
 			m_flShootTime += 0.2;
 		}
 
@@ -711,7 +711,7 @@ void CNPC_Controller::RunTask ( const Task_t *pTask )
 				if( HasCondition( COND_CAN_RANGE_ATTACK1 ))
 				{
 					SetActivity( ACT_RANGE_ATTACK1 );
-					SetCycle( 0 ); 
+					SetCycle( 0 );
 					ResetSequenceInfo( );
 					m_fInCombat = true;
 				}
@@ -733,7 +733,7 @@ void CNPC_Controller::RunTask ( const Task_t *pTask )
 			}
 		}
 		break;
-	default: 
+	default:
 		BaseClass::RunTask ( pTask );
 		break;
 	}
@@ -833,7 +833,7 @@ Activity CNPC_Controller::NPC_TranslateActivity( Activity eNewActivity )
 }
 
 //=========================================================
-// SetActivity  - 
+// SetActivity  -
 //=========================================================
 void CNPC_Controller::SetActivity ( Activity NewActivity )
 {
@@ -887,16 +887,16 @@ void CNPC_Controller::RunAI( void )
 }
 
 //=========================================================
-// Stop  - 
+// Stop  -
 //=========================================================
-void CNPC_Controller::Stop( void ) 
-{ 
+void CNPC_Controller::Stop( void )
+{
 	SetIdealActivity( GetStoppedActivity() );
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles movement towards the last move target.
-// Input  : flInterval - 
+// Input  : flInterval -
 //-----------------------------------------------------------------------------
 bool CNPC_Controller::OverridePathMove( float flInterval )
 {
@@ -937,9 +937,9 @@ bool CNPC_Controller::OverridePathMove( float flInterval )
 	}
 
 	// ----------------------------------------------
-	
+
 	Vector lastPatrolDir = GetNavigator()->GetCurWaypointPos() - GetLocalOrigin();
-	
+
 	if ( ProgressFlyPath( flInterval, pMoveTarget, MASK_NPCSOLID, false, 64 ) == AINPP_COMPLETE )
 	{
 		{
@@ -959,7 +959,7 @@ bool CNPC_Controller::OverrideMove( float flInterval )
 	}
 
 	// ----------------------------------------------
-	//	Select move target 
+	//	Select move target
 	// ----------------------------------------------
 	CBaseEntity *pMoveTarget = NULL;
 	if (GetTarget() != NULL )
@@ -972,7 +972,7 @@ bool CNPC_Controller::OverrideMove( float flInterval )
 	}
 
 	// ----------------------------------------------
-	//	Select move target position 
+	//	Select move target position
 	// ----------------------------------------------
 	Vector vMoveTargetPos(0,0,0);
 	if (GetTarget())
@@ -993,7 +993,7 @@ bool CNPC_Controller::OverrideMove( float flInterval )
 
 		if (pMoveTarget)
 		{
-			UTIL_TraceEntity( this, GetAbsOrigin(), vMoveTargetPos, 
+			UTIL_TraceEntity( this, GetAbsOrigin(), vMoveTargetPos,
 				MASK_NPCSOLID_BRUSHONLY, pMoveTarget, GetCollisionGroup(), &tr);
 		}
 		else
@@ -1035,7 +1035,7 @@ void CNPC_Controller::MoveToTarget( float flInterval, const Vector &vecMoveTarge
 {
 	const float	myAccel	 = 300.0;
 	const float	myDecay	 = 9.0;
-	
+
 	//TurnHeadToTarget( flInterval, MoveTarget );
 	MoveToLocation( flInterval, vecMoveTarget, myAccel, (2 * myAccel), myDecay );
 }
@@ -1095,7 +1095,7 @@ void CNPC_ControllerHeadBall::Precache( void )
 	PrecacheModel( "sprites/xspark4.vmt");
 }
 
-extern short		g_sModelIndexLaser;	
+extern short		g_sModelIndexLaser;
 
 void CNPC_ControllerHeadBall::HuntThink( void  )
 {
@@ -1147,8 +1147,8 @@ void CNPC_ControllerHeadBall::HuntThink( void  )
 			int fadelength = 0;
 			int amplitude = 0;
 			const Vector vecEnd = tr.endpos;
-			te->BeamEntPoint( filter, 0.0, entindex(), NULL, 0, &(tr.m_pEnt->GetAbsOrigin()), 
-				g_sModelIndexLaser, haloindex /* no halo */, 0, 10, 3, 20, 20, fadelength, 
+			te->BeamEntPoint( filter, 0.0, entindex(), NULL, 0, &(tr.m_pEnt->GetAbsOrigin()),
+				g_sModelIndexLaser, haloindex /* no halo */, 0, 10, 3, 20, 20, fadelength,
 				amplitude, 255, 255, 255, 255, 10 );
 
 		}
@@ -1260,7 +1260,7 @@ void CNPC_ControllerZapBall::Precache( void )
 void CNPC_ControllerZapBall::AnimateThink( void  )
 {
 	SetNextThink( gpGlobals->curtime + 0.1 );
-	
+
 	SetCycle( ((int)GetCycle() + 1) % 11 );
 
 	if (gpGlobals->curtime - m_flSpawnTime > 5 || GetAbsVelocity().Length() < 10)

@@ -35,7 +35,7 @@ using namespace vgui;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudBaseDeathNotice::CHudBaseDeathNotice( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass( NULL, "HudDeathNotice" )
@@ -46,7 +46,7 @@ CHudBaseDeathNotice::CHudBaseDeathNotice( const char *pElementName ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBaseDeathNotice::ApplySchemeSettings( IScheme *scheme )
 {
@@ -57,12 +57,12 @@ void CHudBaseDeathNotice::ApplySchemeSettings( IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBaseDeathNotice::Init( void )
 {
 	ListenForGameEvent( "player_death" );
-	ListenForGameEvent( "object_destroyed" );	
+	ListenForGameEvent( "object_destroyed" );
 	ListenForGameEvent( "teamplay_point_captured" );
 	ListenForGameEvent( "teamplay_capture_blocked" );
 	ListenForGameEvent( "teamplay_flag_event" );
@@ -72,7 +72,7 @@ void CHudBaseDeathNotice::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBaseDeathNotice::VidInit( void )
 {
@@ -88,7 +88,7 @@ bool CHudBaseDeathNotice::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Color CHudBaseDeathNotice::GetTeamColor( int iTeamNumber, bool bLocalPlayerInvolved /* = false */ )
 {
@@ -97,7 +97,7 @@ Color CHudBaseDeathNotice::GetTeamColor( int iTeamNumber, bool bLocalPlayerInvol
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CHudBaseDeathNotice::UseExistingNotice( IGameEvent *event )
 {
@@ -124,7 +124,7 @@ int CHudBaseDeathNotice::UseExistingNotice( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBaseDeathNotice::Paint()
 {
@@ -143,7 +143,7 @@ void CHudBaseDeathNotice::Paint()
 	for ( int i = 0; i < iCount; i++ )
 	{
 		DeathNoticeItem &msg = m_DeathNotices[i];
-		
+
 		CHudTexture *icon = msg.iconDeath;
 		CHudTexture *iconPostKillerName = msg.iconPostKillerName;
 		CHudTexture *iconPreKillerName = msg.iconPreKillerName;
@@ -165,9 +165,9 @@ void CHudBaseDeathNotice::Paint()
 		int iLineTall = m_flLineHeight;
 		int iTextTall = surface()->GetFontTall( m_hTextFont );
 		int iconWide = 0, iconTall = 0, iDeathInfoOffset = 0, iVictimTextOffset = 0, iconActualWide = 0;
-		
+
 		int iPreKillerTextWide = msg.wzPreKillerText[0] ? UTIL_ComputeStringWidth( m_hTextFont, msg.wzPreKillerText ) - xSpacing : 0;
-		
+
 		int iconPrekillerWide = 0, iconPrekillerActualWide = 0, iconPrekillerTall = 0;
 		int iconPostkillerWide = 0, iconPostkillerActualWide = 0, iconPostkillerTall = 0;
 
@@ -175,11 +175,11 @@ void CHudBaseDeathNotice::Paint()
 
 		// Get the local position for this notice
 		if ( icon )
-		{			
+		{
 			iconActualWide = icon->EffectiveWidth( 1.0f );
 			iconWide = iconActualWide + xSpacing;
 			iconTall = icon->EffectiveHeight( 1.0f );
-			
+
 			int iconTallDesired = iLineTall-YRES(2);
 			Assert( 0 != iconTallDesired );
 			float flScale = (float) iconTallDesired / (float) iconTall;
@@ -218,7 +218,7 @@ void CHudBaseDeathNotice::Paint()
 			iconPostkillerTall *= flScale;
 			iconPostkillerWide *= flScale;
 		}
-		
+
 		if ( iconPostVictimName )
 		{
 			iconPostVictimActualWide = iconPostVictimName->EffectiveWidth( 1.0f );
@@ -237,7 +237,7 @@ void CHudBaseDeathNotice::Paint()
 		int iTotalWide = iKillerTextWide + iconWide + iVictimTextWide + iDeathInfoTextWide + iDeathInfoEndTextWide + ( xMargin * 2 );
 		iTotalWide += iconPrekillerWide + iconPostkillerWide + iPreKillerTextWide + iconPostVictimWide;
 
-		int y = yStart + ( ( iLineTall + m_flLineSpacing ) * i );				
+		int y = yStart + ( ( iLineTall + m_flLineSpacing ) * i );
 		int yText = y + ( ( iLineTall - iTextTall ) / 2 );
 		int yIcon = y + ( ( iLineTall - iconTall ) / 2 );
 
@@ -249,13 +249,13 @@ void CHudBaseDeathNotice::Paint()
 
 		// draw a background panel for the message
 		Vertex_t vert[NUM_BACKGROUND_COORD];
-		GetBackgroundPolygonVerts( x, y+1, x+iTotalWide, y+iLineTall-1, ARRAYSIZE( vert ), vert );		
+		GetBackgroundPolygonVerts( x, y+1, x+iTotalWide, y+iLineTall-1, ARRAYSIZE( vert ), vert );
 		surface()->DrawSetTexture( -1 );
 		surface()->DrawSetColor( GetBackgroundColor ( i ) );
 		surface()->DrawTexturedPolygon( ARRAYSIZE( vert ), vert );
 
 		x += xMargin;
-	
+
 		// prekiller icon
 		if ( iconPreKillerName )
 		{
@@ -300,7 +300,7 @@ void CHudBaseDeathNotice::Paint()
 			x += iconWide;
 		}
 
-		// Draw additional info text next to death icon 
+		// Draw additional info text next to death icon
 		if ( msg.wzInfoText[0] )
 		{
 			if ( msg.bSelfInflicted )
@@ -351,8 +351,8 @@ void CHudBaseDeathNotice::RetireExpiredDeathNotices()
 	// Do we have too many death messages in the queue?
 	if ( m_DeathNotices.Count() > 0 &&
 		m_DeathNotices.Count() > (int)m_flMaxDeathNotices )
-	{		 
-		// First, remove any notices not involving the local player, since they are lower priority.		
+	{
+		// First, remove any notices not involving the local player, since they are lower priority.
 		iCount = m_DeathNotices.Count();
 		int iNeedToRemove = iCount - (int)m_flMaxDeathNotices;
 		// loop condition is iCount-1 because we won't remove the most recent death notice, otherwise
@@ -364,14 +364,14 @@ void CHudBaseDeathNotice::RetireExpiredDeathNotices()
 				m_DeathNotices.Remove( i );
 				iCount--;
 				iNeedToRemove--;
-			}	
+			}
 		}
 
 		// Now that we've culled any non-local-player-involved messages up to the amount we needed to remove, see
 		// if we've removed enough
 		iCount = m_DeathNotices.Count();
 		iNeedToRemove = iCount - (int)m_flMaxDeathNotices;
-		if ( iNeedToRemove > 0 )		
+		if ( iNeedToRemove > 0 )
 		{
 			// if we still have too many messages, then just remove however many we need, oldest first
 			for ( int i = 0; i < iNeedToRemove; i++ )
@@ -410,7 +410,7 @@ void CHudBaseDeathNotice::FireGameEvent( IGameEvent *event )
 
 	int iLocalPlayerIndex = GetLocalPlayerIndex();
 	const char *pszEventName = event->GetName();
-	
+
 	bool bPlayerDeath = EventIsPlayerDeath( pszEventName );
 	bool bObjectDeath = FStrEq( pszEventName, "object_destroyed" );
 	bool bSpecialScore = FStrEq( pszEventName, "special_score" );
@@ -513,7 +513,7 @@ void CHudBaseDeathNotice::FireGameEvent( IGameEvent *event )
 		if ( killedwith && *killedwith )
 		{
 			Q_snprintf( m_DeathNotices[iMsg].szIcon, sizeof(m_DeathNotices[iMsg].szIcon), "d_%s", killedwith );
-		}			
+		}
 		if ( !killer || killer == victim )
 		{
 			m_DeathNotices[iMsg].bSelfInflicted = true;
@@ -533,7 +533,7 @@ void CHudBaseDeathNotice::FireGameEvent( IGameEvent *event )
 			{
 				// special case icon for hit-by-vehicle death
 				Q_strncpy( m_DeathNotices[iMsg].szIcon, "d_vehicle", ARRAYSIZE( m_DeathNotices[iMsg].szIcon ) );
-			}			
+			}
 		}
 
 		m_DeathNotices[iMsg].iWeaponID = event->GetInt( "weaponid" );
@@ -579,7 +579,7 @@ void CHudBaseDeathNotice::FireGameEvent( IGameEvent *event )
 				Msg( "%s\n", sDeathMsg );
 			}
 		}
-	} 
+	}
 	else if ( FStrEq( "teamplay_point_captured", pszEventName ) )
 	{
 		GetLocalizedControlPointName( event, m_DeathNotices[iMsg].Victim.szName, ARRAYSIZE( m_DeathNotices[iMsg].Victim.szName ) );
@@ -613,14 +613,14 @@ void CHudBaseDeathNotice::FireGameEvent( IGameEvent *event )
 			Q_strncat( szCappers, pPlayerName, sizeof(szCappers), COPY_ALL_CHARACTERS );
 			if ( iLocalPlayerIndex == iPlayerIndex )
 				m_DeathNotices[iMsg].bLocalPlayerInvolved = true;
-		}		
+		}
 
 		Q_strncpy( m_DeathNotices[iMsg].Killer.szName, szCappers, sizeof(m_DeathNotices[iMsg].Killer.szName) );
 		V_wcsncpy( m_DeathNotices[iMsg].wzInfoText, g_pVGuiLocalize->Find( len > 1 ? "#Msg_Captured_Multiple" : "#Msg_Captured" ), sizeof( m_DeathNotices[iMsg].wzInfoText ) );
 
 		// print a log message
 		Msg( "%s captured %s for team #%d\n", m_DeathNotices[iMsg].Killer.szName, m_DeathNotices[iMsg].Victim.szName, m_DeathNotices[iMsg].Killer.iTeam );
-	} 
+	}
 	else if ( FStrEq( "teamplay_capture_blocked", pszEventName ) )
 	{
 		GetLocalizedControlPointName( event, m_DeathNotices[iMsg].Victim.szName, ARRAYSIZE( m_DeathNotices[iMsg].Victim.szName ) );
@@ -638,7 +638,7 @@ void CHudBaseDeathNotice::FireGameEvent( IGameEvent *event )
 	}
 	else if ( FStrEq( "teamplay_flag_event", pszEventName ) )
 	{
-		// don't handle any flag events for death notices while in player destruction mode 
+		// don't handle any flag events for death notices while in player destruction mode
 		if ( CTFPlayerDestructionLogic::GetRobotDestructionLogic() && CTFPlayerDestructionLogic::GetRobotDestructionLogic()->GetType() == CTFPlayerDestructionLogic::TYPE_PLAYER_DESTRUCTION )
 		{
 			// don't put anything up
@@ -655,7 +655,7 @@ void CHudBaseDeathNotice::FireGameEvent( IGameEvent *event )
 			// MvM only cares about Defend notifications
 			if ( iEventType != TF_FLAGEVENT_DEFEND )
 			{
-				// unsupported, don't put anything up			
+				// unsupported, don't put anything up
 				m_DeathNotices.Remove( iMsg );
 				return;
 			}
@@ -665,13 +665,13 @@ void CHudBaseDeathNotice::FireGameEvent( IGameEvent *event )
 
 		switch ( iEventType )
 		{
-		case TF_FLAGEVENT_PICKUP: 
-			pszMsgKey = bIsHalloween2014 ? "#Msg_PickedUpFlagHalloween2014" : "#Msg_PickedUpFlag"; 
+		case TF_FLAGEVENT_PICKUP:
+			pszMsgKey = bIsHalloween2014 ? "#Msg_PickedUpFlagHalloween2014" : "#Msg_PickedUpFlag";
 			break;
-		case TF_FLAGEVENT_CAPTURE: 
-			pszMsgKey = bIsHalloween2014 ? "#Msg_CapturedFlagHalloween2014" : "#Msg_CapturedFlag"; 
+		case TF_FLAGEVENT_CAPTURE:
+			pszMsgKey = bIsHalloween2014 ? "#Msg_CapturedFlagHalloween2014" : "#Msg_CapturedFlag";
 			break;
-		case TF_FLAGEVENT_DEFEND: 
+		case TF_FLAGEVENT_DEFEND:
 			if ( bIsMvM )
 			{
 				pszMsgKey = "#Msg_DefendedBomb";
@@ -685,12 +685,12 @@ void CHudBaseDeathNotice::FireGameEvent( IGameEvent *event )
 			break;
 
 		// Add this when we can get localization for it
-		//case TF_FLAGEVENT_DROPPED: 
-		//	pszMsgKey = "#Msg_DroppedFlag"; 
+		//case TF_FLAGEVENT_DROPPED:
+		//	pszMsgKey = "#Msg_DroppedFlag";
 		//	break;
 
 		default:
-			// unsupported, don't put anything up			
+			// unsupported, don't put anything up
 			m_DeathNotices.Remove( iMsg );
 			return;
 		}
@@ -731,7 +731,7 @@ void CHudBaseDeathNotice::FireGameEvent( IGameEvent *event )
 		msg.bCrit = false;
 		msg.iconCritDeath = NULL;
 		msg.bSpecialScore = true;
-		
+
 		wchar_t wzCount[10];
 		_snwprintf( wzCount, ARRAYSIZE( wzCount ), L"%d", ++msg.iCount );
 		g_pVGuiLocalize->ConstructString_safe( msg.wzInfoText, g_pVGuiLocalize->Find( "#SpecialScore_Count" ), 1, wzCount );
@@ -892,7 +892,7 @@ CHudTexture *CHudBaseDeathNotice::GetIcon( const char *szIcon, EDeathNoticeIconF
 		char szIconTmp[kIconTempStringLen];
 		V_strncpy( szIconTmp, cszNewPrefix, kIconTempStringLen );
 		V_strncat( szIconTmp, szIcon + 2, kIconTempStringLen - iNewPrefixLen );
-		
+
 		CHudTexture *pIcon = gHUD.GetIcon( szIconTmp );
 
 		// return inverted version if found

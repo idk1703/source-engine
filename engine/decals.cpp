@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // Functionality common to wad and decal code in gl_draw.c and draw.c
 //
@@ -37,7 +37,7 @@ CUtlMap< FileNameHandle_t, DecalEntry >	g_DecalDictionary( 0, 0, DefLessFunc( Fi
 CUtlVector< int > g_DecalLookup;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int Draw_DecalMax( void )
@@ -46,12 +46,12 @@ int Draw_DecalMax( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Sets the name of the bitmap from decals.wad to be used in a specific slot #
 // called from cl_parse.cpp twice
 // This sets the name of a decal prototype texture
-// Input  : decal - 
-//			*name - 
+// Input  : decal -
+//			*name -
 //-----------------------------------------------------------------------------
 // called from gl_rsurf.cpp
 IMaterial *Draw_DecalMaterial( int index )
@@ -64,7 +64,7 @@ IMaterial *Draw_DecalMaterial( int index )
 		return NULL;
 
 	DecalEntry * entry = &g_DecalDictionary[slot];
-	
+
 	if ( entry )
 	{
 		return entry->material;
@@ -154,7 +154,7 @@ void Decal_Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Decal_Shutdown( void )
 {
@@ -172,4 +172,3 @@ void Decal_Shutdown( void )
 	g_DecalLookup.Purge();
 	g_DecalDictionary.RemoveAll();
 }
-

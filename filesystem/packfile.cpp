@@ -446,7 +446,7 @@ void CZipPackFile::GetFileAndDirLists( const char *pRawWildCard, CUtlStringList 
 		// only exist in that files in the zip reference them, so handle subdirectory matches from filenames as well.
 		CUtlDict<int,int> ConsideredDirectories; // Will have duplicate directory matches when multiple files reside in them
 		if  ( ( nLenWildcardPath && ( 0 == V_strnicmp( szCandidateName, szWildCardPath, nLenWildcardPath ) ) )
-		      || ( !nLenWildcardPath && strchr( szCandidateName, '/' ) ) )
+		|| ( !nLenWildcardPath && strchr( szCandidateName, '/' ) ) )
 		{
 			// Check if we matched because of a sub-directory, e.g. a/b/*.* would match /a/b/c/d/foo (in which case we
 			// want to add /a/b/c to the matched directories list, ignoring the actual specific file)
@@ -707,9 +707,9 @@ bool CZipPackFile::Prepare( int64 fileLen, int64 nFileOfs )
 	{
 		m_nPreloadSectionSize = zipFileHeader.uncompressedSize;
 		m_nPreloadSectionOffset = zipFileHeader.relativeOffsetOfLocalHeader +
-						  sizeof( ZIP_LocalFileHeader ) +
-						  zipFileHeader.fileNameLength +
-						  zipFileHeader.extraFieldLength;
+						sizeof( ZIP_LocalFileHeader ) +
+						zipFileHeader.fileNameLength +
+						zipFileHeader.extraFieldLength;
 		SetupPreloadData();
 
 		// Set up to extract the remaining files
@@ -885,11 +885,11 @@ static std::atomic<int> sLZMAPackFileHandles( 0 );
 #endif // defined( _DEBUG ) && !defined( OSX )
 
 CLZMAZipPackFileHandle::CLZMAZipPackFileHandle( CZipPackFile* pOwner, int64 nBase, unsigned int nOriginalSize, unsigned int nCompressedSize,
-                                                unsigned int nIndex, unsigned int nFilePointer )
+	unsigned int nIndex, unsigned int nFilePointer )
 	: CZipPackFileHandle( pOwner, nBase, nCompressedSize, nIndex, nFilePointer ),
-	  m_BackSeekBuffer( 0, PACKFILE_COMPRESSED_FILEHANDLE_SEEK_BUFFER ),
-	  m_ReadBuffer( 0, PACKFILE_COMPRESSED_FILEHANDLE_READ_BUFFER ),
-	  m_pLZMAStream( NULL ), m_nSeekPosition( 0 ), m_nOriginalSize( nOriginalSize )
+	m_BackSeekBuffer( 0, PACKFILE_COMPRESSED_FILEHANDLE_SEEK_BUFFER ),
+	m_ReadBuffer( 0, PACKFILE_COMPRESSED_FILEHANDLE_READ_BUFFER ),
+	m_pLZMAStream( NULL ), m_nSeekPosition( 0 ), m_nOriginalSize( nOriginalSize )
 {
 	Reset();
 #if defined( _DEBUG ) && !defined( OSX )
@@ -898,8 +898,8 @@ CLZMAZipPackFileHandle::CLZMAZipPackFileHandle( CZipPackFile* pOwner, int64 nBas
 		// By my count a live filehandle is currently around 270k, mostly due to the LZMA dictionary (256k) with the
 		// rest being the read/seek buffers.
 		Warning( "More than %u compressed file handles in use. "
-		         "These carry large buffers around, and can cause high memory usage\n",
-		         PACKFILE_COMPRESSED_FILE_HANDLES_WARNING );
+		"These carry large buffers around, and can cause high memory usage\n",
+		PACKFILE_COMPRESSED_FILE_HANDLES_WARNING );
 	}
 #endif // defined( _DEBUG ) && !defined( OSX )
 }
@@ -947,8 +947,8 @@ int CLZMAZipPackFileHandle::Read( void* pBuffer, int nDestSize, int nBytes )
 		unsigned int nCompressedBytesRead = 0;
 		unsigned int nOutputBytesWritten = 0;
 		bool bSuccess = m_pLZMAStream->Read( (unsigned char *)m_ReadBuffer.PeekGet(), nRemainingReadBuffer,
-		                                     (unsigned char *)pBuffer + nBytesRead, nMaxRead - nBytesRead,
-		                                     nCompressedBytesRead, nOutputBytesWritten );
+			(unsigned char *)pBuffer + nBytesRead, nMaxRead - nBytesRead,
+			nCompressedBytesRead, nOutputBytesWritten );
 
 		if ( bSuccess )
 		{
@@ -958,12 +958,12 @@ int CLZMAZipPackFileHandle::Read( void* pBuffer, int nDestSize, int nBytes )
 			nBytesRead += nOutputBytesWritten;
 
 			AssertMsg( nCompressedBytesRead == (unsigned int)nRemainingReadBuffer || nBytesRead == nMaxRead,
-			           "Should have consumed the readbuffer or reached nMaxRead" );
+			"Should have consumed the readbuffer or reached nMaxRead" );
 
 			if ( nCompressedBytesRead == 0 && nOutputBytesWritten == 0 )
 			{
 				AssertMsg( nCompressedBytesRead > 0 || nOutputBytesWritten > 0,
-				           "Stuck progress in read loop, aborting. Stream may be defunct." );
+				"Stuck progress in read loop, aborting. Stream may be defunct." );
 				break;
 			}
 		}
@@ -983,8 +983,8 @@ int CLZMAZipPackFileHandle::Read( void* pBuffer, int nDestSize, int nBytes )
 	{
 		// Shift the reused chunk to the front
 		V_memmove( m_BackSeekBuffer.Base(),
-		           (unsigned char *)m_BackSeekBuffer.Base() + m_BackSeekBuffer.TellPut() - nReuseBackSeek,
-		           nReuseBackSeek );
+		(unsigned char *)m_BackSeekBuffer.Base() + m_BackSeekBuffer.TellPut() - nReuseBackSeek,
+		nReuseBackSeek );
 	}
 
 	// Update get/put position
@@ -1045,9 +1045,9 @@ int CLZMAZipPackFileHandle::Seek( int nOffset, int nWhence )
 		{
 			// Seeking backwards beyond our backseek buffer. Have to restart stream. This kills the performance.
 			Warning( "LZMA file handle: seeking backwards beyond backseek buffer size ( %u ), "
-			         "replaying read & decompression of %u bytes. Should avoid large back seeks in compressed files or "
-			         "increase backseek buffer sizing.",
-			         m_BackSeekBuffer.Size(), nNewPosition );
+			"replaying read & decompression of %u bytes. Should avoid large back seeks in compressed files or "
+			"increase backseek buffer sizing.",
+			m_BackSeekBuffer.Size(), nNewPosition );
 
 			// Reset to beginning of underlying stream
 			Reset();

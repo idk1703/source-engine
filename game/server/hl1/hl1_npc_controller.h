@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -62,7 +62,7 @@ public:
 
 	int RangeAttack1Conditions ( float flDot, float flDist );	// balls
 	int RangeAttack2Conditions ( float flDot, float flDist );	// head
-	int MeleeAttack1Conditions ( float flDot, float flDist ) { return COND_NONE; }	
+	int MeleeAttack1Conditions ( float flDot, float flDist ) { return COND_NONE; }
 	int MeleeAttack2Conditions ( float flDot, float flDist ) { return COND_NONE; }
 
 	int TranslateSchedule( int scheduleType );
@@ -89,7 +89,7 @@ public:
 	bool HasAlienGibs( void ) { return true; }
 	bool HasHumanGibs( void ) { return false; }
 
-	float m_flNextFlinch; 
+	float m_flNextFlinch;
 
 	float m_flShootTime;
 	float m_flShootEnd;
@@ -147,8 +147,8 @@ public:
 };
 
 class CNPC_ControllerZapBall : public CAI_BaseNPC
-{	
-public:	
+{
+public:
 	DECLARE_CLASS( CNPC_ControllerHeadBall, CAI_BaseNPC );
 
 	DECLARE_DATADESC();

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -63,7 +63,7 @@ public:
 	RadioButton(Panel *parent, const char *panelName, const char *text);
 	~RadioButton();
 
-	// Set the radio button checked. When a radio button is checked, a 
+	// Set the radio button checked. When a radio button is checked, a
 	// message is sent to all other radio buttons in the same group so
 	// they will become unchecked.
 	virtual void SetSelected(bool state);

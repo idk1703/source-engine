@@ -1,6 +1,6 @@
 //===== Copyright (c) 1996-2005, Valve Corporation, All rights reserved. ======//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -17,7 +17,7 @@
 #include "tier0/memdbgon.h"
 
 BEGIN_SHADER_FLAGS( DebugLuxels, "Help for DebugLuxels", SHADER_NOT_EDITABLE )
-			  
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( NOSCALE, SHADER_PARAM_TYPE_BOOL, "0", "fixme" )
 	END_SHADER_PARAMS
@@ -90,7 +90,7 @@ BEGIN_SHADER_FLAGS( DebugLuxels, "Help for DebugLuxels", SHADER_NOT_EDITABLE )
 			Vector4D transformation[2];
 			transformation[0].Init( texCoordScaleX, 0.0f, 0.0f, 0.0f );
 			transformation[1].Init( 0.0f, texCoordScaleY, 0.0f, 0.0f );
-			s_pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, transformation[0].Base(), 2 ); 
+			s_pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, transformation[0].Base(), 2 );
 		}
 		Draw();
 	}

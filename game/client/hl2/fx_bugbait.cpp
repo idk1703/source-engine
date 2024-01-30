@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -41,9 +41,9 @@ SporeSmokeEffect* SporeSmokeEffect::Create( const char *pDebugName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParticle - 
-//			timeDelta - 
+// Purpose:
+// Input  : *pParticle -
+//			timeDelta -
 // Output : float
 //-----------------------------------------------------------------------------
 float SporeSmokeEffect::UpdateAlpha( const SimpleParticle *pParticle )
@@ -53,11 +53,10 @@ float SporeSmokeEffect::UpdateAlpha( const SimpleParticle *pParticle )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParticle - 
-//			timeDelta - 
+// Purpose:
+// Input  : *pParticle -
+//			timeDelta -
 //-----------------------------------------------------------------------------
 void SporeSmokeEffect::UpdateVelocity( SimpleParticle *pParticle, float timeDelta )
 {
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -49,4 +49,3 @@ friend class CHudAmmoSecondary;
 CHudAmmo* GetHudAmmo();
 
 #endif // HUD_AMMO_H
-

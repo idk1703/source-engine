@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,12 +16,12 @@
 #include "utlvector.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CEngineRecipientFilter : public IRecipientFilter
 {
 public:	// IRecipientFilter interface:
-	
+
 					CEngineRecipientFilter();
 	virtual int		GetRecipientCount( void ) const;
 	virtual int		GetRecipientIndex( int slot ) const;
@@ -43,7 +43,7 @@ public:
 	void			AddRecipient( int playerindex );
 	void			RemoveRecipient( int playerindex );
 	bool			IncludesPlayer(int playerindex);
-	
+
 private:
 
 	bool				m_bInit;

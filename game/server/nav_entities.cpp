@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -71,7 +71,7 @@ void CFuncNavCost::Spawn( void )
 	gm_masterCostVector.AddToTail( this );
 	gm_dirtyTimer.Start( UPDATE_DIRTY_TIME );
 
-	SetSolid( SOLID_BSP );	
+	SetSolid( SOLID_BSP );
 	AddSolidFlags( FSOLID_NOT_SOLID );
 
 	SetMoveType( MOVETYPE_NONE );
@@ -212,7 +212,7 @@ bool CFuncNavCost::IsApplicableTo( CBaseCombatCharacter *who ) const
 				return true;
 			}
 		}
-		
+
 		if ( bot->HasMission( CTFBot::MISSION_SNIPER ) )
 		{
 			if ( HasTag( "mission_sniper" ) )
@@ -220,7 +220,7 @@ bool CFuncNavCost::IsApplicableTo( CBaseCombatCharacter *who ) const
 				return true;
 			}
 		}
-		
+
 		if ( bot->HasMission( CTFBot::MISSION_SPY ) )
 		{
 			if ( HasTag( "mission_spy" ) )
@@ -303,7 +303,7 @@ void CFuncNavCost::UpdateAllNavCostDecoration( void )
 			ray.Init( overlapVector[j]->GetCenter(), overlapVector[j]->GetCenter() );
 
 			enginetrace->ClipRayToCollideable( ray, MASK_ALL, pCollide, &tr );
-			
+
 			if ( tr.startsolid )
 			{
 				overlapVector[j]->AddFuncNavCostEntity( cost );
@@ -365,7 +365,7 @@ int CFuncNavBlocker::DrawDebugTextOverlays( void )
 {
 	int offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		CFmtStr str;
 
@@ -569,17 +569,17 @@ bool CFuncNavBlocker::CalculateBlocked( bool *pResultByTeam, const Vector &vecMi
 		{
 			break;
 		}
- 	}
+	}
 	return bBlocked;
 }
 
 
 //-----------------------------------------------------------------------------------------------------
 /**
-  * An entity that can obstruct nav areas.  This is meant for semi-transient areas that obstruct
-  * pathfinding but can be ignored for longer-term queries like computing L4D flow distances and
-  * escape routes.
-  */
+	* An entity that can obstruct nav areas.  This is meant for semi-transient areas that obstruct
+	* pathfinding but can be ignored for longer-term queries like computing L4D flow distances and
+	* escape routes.
+	*/
 class CFuncNavObstruction : public CBaseEntity, public INavAvoidanceObstacle
 {
 	DECLARE_DATADESC();
@@ -630,7 +630,7 @@ int CFuncNavObstruction::DrawDebugTextOverlays( void )
 {
 	int offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		if ( CanObstructNavAreas() )
 		{

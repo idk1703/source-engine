@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Revision: $
 // $NoKeywords: $
@@ -51,6 +51,3 @@ void DestroySpatialPartitionOld( ISpatialPartition * );
 
 
 #endif	// ISPATIALPARTITIONINTERNAL_H
-
-
-

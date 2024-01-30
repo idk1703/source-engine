@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -45,14 +45,14 @@ private:
 	char m_HostName[256];
 	Color m_bgColor;
 	int m_OriginalWidth;					// Don't get less than this wide.
-	
+
 	double m_flAnimationEndTime;				// -1 if not playing
 
 	Label *m_pInfoLabel;
-	
+
 	Label *m_pHostNameLabel;
 	int m_HostNameLabelRightSidePadding;	// Grow the whole panel to make sure there's this much padding on the right of the hostname label.
-	
+
 	Label *m_pAcceptLabel;
 	AnimationController *m_pAnimationController;
 };
@@ -60,7 +60,7 @@ private:
 CAskConnectPanel *CAskConnectPanel::s_pAskConnectPanel = NULL;
 
 
-CAskConnectPanel::CAskConnectPanel( VPANEL parent ) 
+CAskConnectPanel::CAskConnectPanel( VPANEL parent )
 	: BaseClass( NULL, "AskConnectPanel" ), m_bgColor( 0, 0, 0, 192 )
 {
 	SetParent( parent );
@@ -75,7 +75,7 @@ CAskConnectPanel::CAskConnectPanel( VPANEL parent )
 	m_pHostNameLabel = new Label( this, "HostNameLabel", "" );
 	m_pAcceptLabel = new Label( this, "AcceptLabel", "" );
 	m_pInfoLabel = new Label( this, "InfoLabel", "" );
-	
+
 	m_HostName[0] = 0;
 	vgui::ivgui()->AddTickSignal( GetVPanel() );
 	SetAutoDelete( true );
@@ -87,7 +87,7 @@ CAskConnectPanel::CAskConnectPanel( VPANEL parent )
 
 	LoadControlSettings( "resource\\askconnectpanel.res" );
 	InvalidateLayout( true );
-	
+
 	m_OriginalWidth = GetWide();
 	int x, y, wide, tall;
 	m_pHostNameLabel->GetBounds( x, y, wide, tall );
@@ -108,30 +108,30 @@ void CAskConnectPanel::SetHostName( const char *pHostName )
 {
 	V_strncpy( m_HostName, pHostName, sizeof( m_HostName ) );
 	m_pHostNameLabel->SetText( pHostName );
-	
+
 	// Update our width.
 	int x, y, wide, tall;
 	m_pHostNameLabel->SizeToContents();
-	m_pHostNameLabel->GetBounds( x, y, wide, tall );	
+	m_pHostNameLabel->GetBounds( x, y, wide, tall );
 
 	int x2, y2, wide2, tall2;
 	wchar_t wcMessage[512];
 	g_pVGuiLocalize->ConstructString_safe( wcMessage, g_pVGuiLocalize->Find("#Valve_ServerOfferingToConnect"), 0 );
 	m_pInfoLabel->SetText( wcMessage );
 	m_pInfoLabel->SizeToContents();
-	m_pInfoLabel->GetBounds( x2, y2, wide2, tall2 );	
+	m_pInfoLabel->GetBounds( x2, y2, wide2, tall2 );
 
 	int desiredWidth = max(x+wide,x2+wide2) + m_HostNameLabelRightSidePadding;
 	if ( desiredWidth < m_OriginalWidth )
 		desiredWidth = m_OriginalWidth;
-	
+
 	SetWide( desiredWidth );
 }
 
 void CAskConnectPanel::ApplySettings(KeyValues *inResourceData)
 {
 	BaseClass::ApplySettings(inResourceData);
-	
+
 	const char *pStr = inResourceData->GetString( "BgColor", NULL );
 	if ( pStr )
 	{
@@ -147,7 +147,7 @@ void CAskConnectPanel::ApplySettings(KeyValues *inResourceData)
 void CAskConnectPanel::StartSlideAnimation( float flDuration )
 {
 	m_flAnimationEndTime = Plat_FloatTime() + flDuration;
-	
+
 	// Figure out what key they have bound...
 	const char *pKeyName = Key_NameForBinding( "askconnect_accept" );
 	if ( pKeyName )
@@ -162,7 +162,7 @@ void CAskConnectPanel::StartSlideAnimation( float flDuration )
 		m_pAcceptLabel->SetText( "#Valve_BindKeyToAccept" );
 	}
 
-	m_pAnimationController->StartAnimationSequence( "AskConnectShow" ); 
+	m_pAnimationController->StartAnimationSequence( "AskConnectShow" );
 	SetVisible( true );
 	InvalidateLayout();
 	UpdateCurrentPosition();
@@ -182,7 +182,7 @@ void CAskConnectPanel::OnTick()
 		if ( Plat_FloatTime() > m_flAnimationEndTime )
 		{
 			m_flAnimationEndTime = -1;
-			m_pAnimationController->StartAnimationSequence( "AskConnectHide" ); 
+			m_pAnimationController->StartAnimationSequence( "AskConnectHide" );
 		}
 	}
 
@@ -205,7 +205,7 @@ void CAskConnectPanel::UpdateCurrentPosition()
 	int x=0, y=0, wide=0, tall=0;
 	if ( g_PluginManager )
 		g_PluginManager->GetHudMessagePosition( x, y, wide, tall );
-	
+
 	SetPos( x, y+tall );
 }
 
@@ -283,4 +283,3 @@ bool IsAskConnectPanelActive( char *pHostName, int maxHostNameBytes )
 		return false;
 	}
 }
-

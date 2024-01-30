@@ -22,7 +22,7 @@ class CDmeModel;
 class CDmeDag;
 class CDmeCombinationOperator;
 
-									 
+
 //-----------------------------------------------------------------------------
 // A class representing an attachment point
 //-----------------------------------------------------------------------------
@@ -37,8 +37,8 @@ public:
 	CDmaElement< CDmeDag >		m_Skeleton;
 	CDmaElement< CDmeCombinationOperator >	m_CombinationOperator;
 	CDmaVar< float >			m_flSwitchMetric;
-	CDmaVar< bool >				m_bNoFlex;	
-	CDmaVar< bool >				m_bIsShadowLOD;	
+	CDmaVar< bool >				m_bNoFlex;
+	CDmaVar< bool >				m_bIsShadowLOD;
 };
 
 

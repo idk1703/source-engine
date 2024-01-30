@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -71,17 +71,17 @@ bool Process_File( char *pInputBaseName, int maxlen )
 {
 	Q_FixSlashes( pInputBaseName, '/' );
 	// Q_StripExtension( pInputBaseName, pInputBaseName, maxlen );
-	
+
 	if( !g_Quiet )
 	{
 		printf( "input file: %s\n", pInputBaseName );
 	}
-	
+
 	FileHandle_t f = g_pFullFileSystem->Open(pInputBaseName, "rb", "vice" );
-		
+
 	if (!f)
 		Error("Could not open input file");
-		
+
 	int fileSize = g_pFullFileSystem->Size(f);
 
 	unsigned char *buffer = (unsigned char*)_alloca(fileSize);
@@ -97,7 +97,7 @@ bool Process_File( char *pInputBaseName, int maxlen )
 	unsigned char *temp = (unsigned char *)_alloca( fileSize );
 	unsigned char *p1 = buffer;
 	unsigned char *p2 = temp;
-				
+
 	// encrypt data in 8 byte blocks
 	int bytesLeft = fileSize;
 	while ( bytesLeft >= blockSize )
@@ -130,20 +130,20 @@ bool Process_File( char *pInputBaseName, int maxlen )
 	}
 
 	f = g_pFullFileSystem->Open(pInputBaseName, "wb", "vice" );
-	
+
 	if (!f)
 		Exit("Could not open output file");
-		
+
 	g_pFullFileSystem->Write( temp, fileSize, f ); // read into local buffer
 	g_pFullFileSystem->Close( f );	// close file after reading
-	
+
 	return TRUE;
 }
 
 int main(int argc, char* argv[])
 {
 	CommandLine()->CreateCmdLine( argc, argv );
-	
+
 
 	if( argc < 2 )
 	{
@@ -177,7 +177,7 @@ int main(int argc, char* argv[])
 
 			Q_strncpy( g_ICEKey, argv[i], sizeof(g_ICEKey) );
 			i++;
-			
+
 		}
 		if( stricmp( argv[i], "-decrypt" ) == 0 )
 		{
@@ -191,7 +191,7 @@ int main(int argc, char* argv[])
 
 			Q_strncpy( g_ICEKey, argv[i], sizeof(g_ICEKey) );
 			i++;
-			
+
 		}
 		if( stricmp( argv[i], "-newext" ) == 0 )
 		{
@@ -204,7 +204,7 @@ int main(int argc, char* argv[])
 
 			Q_strncpy( g_Extension, argv[i], sizeof(g_Extension) );
 			i++;
-			
+
 		}
 		else
 		{
@@ -247,7 +247,7 @@ int main(int argc, char* argv[])
 			WIN32_FIND_DATA wfd;
 			HANDLE hResult;
 			memset(&wfd, 0, sizeof(WIN32_FIND_DATA));
-			
+
 			hResult = FindFirstFile( search, &wfd );
 
 			while ( hResult != INVALID_HANDLE_VALUE )
@@ -260,18 +260,17 @@ int main(int argc, char* argv[])
 
 				if ( !FindNextFile( hResult, &wfd) )
 					break;
-							
+
 			}
-			
+
 			FindClose( hResult );
 		}
 		else
 		{
-			Process_File( pInputBaseName, maxlen ); 			
+			Process_File( pInputBaseName, maxlen );
 		}
 	}
 
 	Pause();
 	return 0;
 }
-

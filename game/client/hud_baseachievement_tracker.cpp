@@ -63,7 +63,7 @@ ConVar hud_achievement_glowtime("hud_achievement_glowtime", "2.5", FCVAR_NONE, "
 ConVar hud_achievement_tracker("hud_achievement_tracker", "1", FCVAR_NONE, "Show or hide the achievement tracker" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudBaseAchievementTracker::CHudBaseAchievementTracker( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass( NULL, "HudAchievementTracker" )
@@ -84,7 +84,7 @@ CHudBaseAchievementTracker::CHudBaseAchievementTracker( const char *pElementName
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBaseAchievementTracker::Reset()
 {
@@ -113,7 +113,7 @@ void CHudBaseAchievementTracker::LevelInit()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBaseAchievementTracker::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -121,7 +121,7 @@ void CHudBaseAchievementTracker::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudBaseAchievementTracker::ShouldDraw()
 {
@@ -132,7 +132,7 @@ bool CHudBaseAchievementTracker::ShouldDraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBaseAchievementTracker::OnThink()
 {
@@ -173,12 +173,12 @@ void CHudBaseAchievementTracker::UpdateAchievementItems()
 	int iCount = pAchievementMgr->GetAchievementCount();
 	int iShown = 0;
 	for ( int i = 0; i < iCount; ++i )
-	{		
+	{
 		IAchievement* pCur = pAchievementMgr->GetAchievementByIndex( i );
 		if ( !ShouldShowAchievement( pCur ) )
 		{
 			// don't remove achievements that are still glowing (typically a just completed achievement)
-			if ( pCur && m_AchievementItem.Count() > iShown && m_AchievementItem[iShown]->GetAchievementID() == pCur->GetAchievementID() 
+			if ( pCur && m_AchievementItem.Count() > iShown && m_AchievementItem[iShown]->GetAchievementID() == pCur->GetAchievementID()
 					&& m_AchievementItem[iShown]->GetGlow() > 0 )
 			{
 				iShown++;
@@ -297,7 +297,7 @@ CAchievementTrackerItem::~CAchievementTrackerItem()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAchievementTrackerItem::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -309,7 +309,7 @@ void CAchievementTrackerItem::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAchievementTrackerItem::PerformLayout()
 {
@@ -317,19 +317,19 @@ void CAchievementTrackerItem::PerformLayout()
 
 	int x, y, w, t;
 
-    //=============================================================================
-    // HPE_BEGIN
-    // [dwenger] Necessary for HUD Achievement display
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN
+	// [dwenger] Necessary for HUD Achievement display
+	//=============================================================================
 
-    m_pAchievementName->GetContentSize( w, t );     // needed in order to load up font for the name
-    m_pAchievementNameGlow->GetContentSize( w, t ); // needed in order to load up font for the glow
+	m_pAchievementName->GetContentSize( w, t );     // needed in order to load up font for the name
+	m_pAchievementNameGlow->GetContentSize( w, t ); // needed in order to load up font for the glow
 
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
-    if ( hud_achievement_description.GetBool() )
+	if ( hud_achievement_description.GetBool() )
 	{
 		m_pAchievementDesc->GetContentSize( w, t );
 		m_pAchievementDesc->SetTall( t );
@@ -358,7 +358,7 @@ void CAchievementTrackerItem::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAchievementTrackerItem::SetAchievement( IAchievement* pAchievement )
 {
@@ -394,27 +394,27 @@ void CAchievementTrackerItem::UpdateAchievementDisplay()
 	CBaseAchievement* pAchievement = pAchievementMgr->GetAchievementByID( m_iAchievementID );
 	if ( !pAchievement )
 		return;
-	
+
 	if ( m_iAchievementID != m_iLastPaintedAchievementID )
 	{
 		// need to update labels
 
-        //=============================================================================
-        // HPE_BEGIN
-        // [dwenger] Necessary for HUD Achievement display
-        //=============================================================================
+		//=============================================================================
+		// HPE_BEGIN
+		// [dwenger] Necessary for HUD Achievement display
+		//=============================================================================
 
-        m_pAchievementName->SetText( ACHIEVEMENT_LOCALIZED_NAME( pAchievement ) );
-        m_pAchievementNameGlow->SetText( ACHIEVEMENT_LOCALIZED_NAME( pAchievement ) );
-        m_pAchievementDesc->SetText( ACHIEVEMENT_LOCALIZED_DESC( pAchievement ) );
+		m_pAchievementName->SetText( ACHIEVEMENT_LOCALIZED_NAME( pAchievement ) );
+		m_pAchievementNameGlow->SetText( ACHIEVEMENT_LOCALIZED_NAME( pAchievement ) );
+		m_pAchievementDesc->SetText( ACHIEVEMENT_LOCALIZED_DESC( pAchievement ) );
 
-        //=============================================================================
-        // HPE_END
-        //=============================================================================
+		//=============================================================================
+		// HPE_END
+		//=============================================================================
 
 		m_pProgressBarBackground->SetVisible( pAchievement->GetGoal() > 1 );
 		m_pProgressBar->SetVisible( pAchievement->GetGoal() > 1 );
-		
+
 		m_iLastPaintedAchievementID = m_iAchievementID;
 		m_flGlow = 0.0f;
 		m_flGlowTime = 0.0f;
@@ -454,7 +454,7 @@ void CAchievementTrackerItem::UpdateAchievementDisplay()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Achievement count has gone up, make it flash 
+// Purpose: Achievement count has gone up, make it flash
 //-----------------------------------------------------------------------------
 void CAchievementTrackerItem::AchievementIncremented( int iNewCount )
 {
@@ -496,7 +496,7 @@ void CAchievementTrackerItem::AchievementIncremented( int iNewCount )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Show all the increments we've accumulated 
+// Purpose: Show all the increments we've accumulated
 //-----------------------------------------------------------------------------
 void CAchievementTrackerItem::ShowAccumulatedIncrements()
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -35,7 +35,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBeamEntPoint::C_TEBeamEntPoint( void )
 {
@@ -44,32 +44,32 @@ C_TEBeamEntPoint::C_TEBeamEntPoint( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBeamEntPoint::~C_TEBeamEntPoint( void )
 {
 }
 
 void TE_BeamEntPoint( IRecipientFilter& filter, float delay,
-	int	nStartEntity, const Vector *pStart, int nEndEntity, const Vector* pEnd, 
+	int	nStartEntity, const Vector *pStart, int nEndEntity, const Vector* pEnd,
 	int modelindex, int haloindex, int startframe, int framerate,
-	float life, float width, float endWidth, int fadeLength, float amplitude, 
+	float life, float width, float endWidth, int fadeLength, float amplitude,
 	int r, int g, int b, int a, int speed )
 {
-	beams->CreateBeamEntPoint( nStartEntity, pStart, nEndEntity, pEnd, 
+	beams->CreateBeamEntPoint( nStartEntity, pStart, nEndEntity, pEnd,
 		modelindex, haloindex, 0.0f, life,  width, endWidth, fadeLength, amplitude,
 		a, 0.1 * (float)speed, startframe, 0.1f * (float)framerate, r, g, b );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEBeamEntPoint::PostDataUpdate( DataUpdateType_t updateType )
 {
-	beams->CreateBeamEntPoint( m_nStartEntity, &m_vecStartPoint, m_nEndEntity, &m_vecEndPoint, 
+	beams->CreateBeamEntPoint( m_nStartEntity, &m_vecStartPoint, m_nEndEntity, &m_vecEndPoint,
 		m_nModelIndex, m_nHaloIndex, 0.0f,
-		m_fLife,  m_fWidth, m_fEndWidth, m_nFadeLength, m_fAmplitude, a, 0.1 * m_nSpeed, 
+		m_fLife,  m_fWidth, m_fEndWidth, m_nFadeLength, m_fAmplitude, a, 0.1 * m_nSpeed,
 		m_nStartFrame, 0.1 * m_nFrameRate, r, g, b );
 }
 
@@ -79,4 +79,3 @@ IMPLEMENT_CLIENTCLASS_EVENT_DT(C_TEBeamEntPoint, DT_TEBeamEntPoint, CTEBeamEntPo
 	RecvPropVector(RECVINFO(m_vecStartPoint)),
 	RecvPropVector(RECVINFO(m_vecEndPoint)),
 END_RECV_TABLE()
-

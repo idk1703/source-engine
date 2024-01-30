@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -150,12 +150,12 @@ void FloodSolidPixels( RGBAColor *pTexels, int width, int height )
 	for ( int y=0; y < height; y++ )
 		for ( int x=0; x < width; x++ )
 			pAlphaMap[y*width+x] = pTexels[y*width+x].a;
-	
+
 	bool bHappy = false;
 	while ( !bHappy )
 	{
 		bHappy = true;
-	
+
 		memcpy( pNewAlphaMap, pAlphaMap, width * height );
 
 		for ( int y=0; y < height; y++ )
@@ -247,15 +247,15 @@ RGBAColor* ResampleImage( RGBAColor *pRGB, int width, int height, int newWidth, 
 }
 
 
-bool WriteTGAFile( 
-	const char *pFilename, 
+bool WriteTGAFile(
+	const char *pFilename,
 	bool bAllowTranslucent,
-	byte *pBits, 
-	int width, 
-	int height, 
+	byte *pBits,
+	int width,
+	int height,
 	byte *pPalette,
 	bool bPowerOf2,
-	bool *bTranslucent, 
+	bool *bTranslucent,
 	bool *bResized
 	)
 {
@@ -293,7 +293,7 @@ bool WriteTGAFile(
 			RGBAColor *pResampled = ResampleImage( pRGB, width, height, newWidth, newHeight );
 			delete [] pRGB;
 			pRGB = pResampled;
-			
+
 			width = newWidth;
 			height = newHeight;
 
@@ -301,7 +301,7 @@ bool WriteTGAFile(
 		}
 	}
 
-	// Write it..	
+	// Write it..
 	TGAHeader_t hdr;
 	memset( &hdr, 0, sizeof( hdr ) );
 
@@ -310,13 +310,13 @@ bool WriteTGAFile(
 	hdr.colormap_type = 0;	// no, no colormap please
 	hdr.image_type = 2;		// uncompressed, true-color
 	hdr.pixel_size = 32;	// 32 bits per pixel
-	
+
 	FILE *fp = fopen( pFilename, "wb" );
 	if ( !fp )
 		return false;
 
 	SafeWrite( fp, &hdr, sizeof( hdr ) );
-	SafeWrite( fp, pRGB, sizeof( RGBAColor ) * width * height );	
+	SafeWrite( fp, pRGB, sizeof( RGBAColor ) * width * height );
 	fclose( fp );
 
 	delete [] pRGB;
@@ -331,7 +331,7 @@ int PrintUsage( const char *pExtra, ... )
 	vprintf( pExtra, marker );
 	va_end( marker );
 
-	printf( 
+	printf(
 		"%s \n"
 		"\t[-AutoDir]\n"
 			"\t\tAutomatically detects -basedir and -wadfile or -bmpfile based\n"
@@ -377,7 +377,7 @@ int PrintUsage( const char *pExtra, ... )
 	printf( "ex: %s -vtex -BaseDir c:\\hl2\\dod -WadFile c:\\hl1\\dod\\*.wad\n", __argv[0] );
 	printf( "ex: %s -vtex -BaseDir c:\\hl2\\dod -bmpfile test.bmp -SubDir models\\props\n", __argv[0] );
 	printf( "ex: %s -vtex -vmtparam $ignorez 1 -BaseDir c:\\hl2\\dod -sprfile test.spr -SubDir sprites\\props\n", __argv[0] );
-	
+
 	PrintExitStuff();
 	return 1;
 }
@@ -413,7 +413,7 @@ void EnsureDirExists( const char *pDir )
 {
 	if ( _access( pDir, 0 ) != 0 )
 	{
-		// We use the shell's "md" command here instead of the _mkdir() function because 
+		// We use the shell's "md" command here instead of the _mkdir() function because
 		// md will create all the subdirectories leading up to the bottom one and _mkdir() won't.
 		char cmd[1024];
 		_snprintf( cmd, sizeof( cmd ), "md \"%s\"", pDir );
@@ -436,10 +436,10 @@ void WriteVMTFile( const char *pBaseDir, const char *pSubDir, const char *pName,
 		Error( "\tWriteVMTFile failed to open %s for writing.\n", vmtFilename );
 		return;
 	}
-	
+
 	fprintf( fp, "\"%s\"\n{\n", g_pShader );
 	fprintf( fp, "\t\"$basetexture\"\t\"%s\\%s\"\n", pSubDir, pName );
-	
+
 	if ( bTranslucent || g_bDecal )
 	{
 		fprintf( fp, "\t\"$alphatest\"\t\"1\"\n" );
@@ -449,15 +449,15 @@ void WriteVMTFile( const char *pBaseDir, const char *pSubDir, const char *pName,
 	if ( g_bDecal )
 	{
 		fprintf( fp, "\t\"$decal\"\t\t\"1\"\n" );
-		
+
 	}
-	
+
 	int i;
 	for( i=0;i<g_NumVMTParams;i++ )
 	{
 		fprintf( fp, "\t\"%s\" \"%s\"\n", g_VMTParams[i].m_szParam, g_VMTParams[i].m_szValue );
 	}
-	
+
 	fprintf( fp, "}" );
 
 	fclose( fp );
@@ -489,7 +489,7 @@ void WriteResizeInfoFile( const char *pBaseDir, const char *pSubDir, const char 
 		Error( "\tWriteResizeInfoFile failed to open %s for writing.\n", filename );
 		return;
 	}
-	
+
 	fprintf( fp, "%d %d", width, height );
 	fclose( fp );
 }
@@ -499,11 +499,11 @@ void RunVTexOnFile( const char *pBaseDir, const char *pFilename )
 {
 	char executableDir[MAX_PATH];
 	GetModuleFileName( NULL, executableDir, sizeof( executableDir ) );
-	
+
 	char *pLastSlash = max( strrchr( executableDir, '/' ), strrchr( executableDir, '\\' ) );
 	if ( !pLastSlash )
 		Error( "Can't find filename in '%s'.\n", executableDir );
-	
+
 	*pLastSlash = 0;
 
 	// Set the vproject environment variable (vtex doesn't allow game yet).
@@ -538,15 +538,15 @@ void WriteOutputFiles(
 
 	char tgaFilename[1024];
 	sprintf( tgaFilename, "%s\\materialsrc\\%s\\%s.tga", pBaseDir, pSubDir, pName );
-	if ( !WriteTGAFile( 
-		tgaFilename, 
-		bAllowTranslucent, 
-		buffer, 
-		width, 
-		height, 
-		pPalette, 
-		bPowerOf2, 
-		&bTranslucent, 
+	if ( !WriteTGAFile(
+		tgaFilename,
+		bAllowTranslucent,
+		buffer,
+		width,
+		height,
+		pPalette,
+		bPowerOf2,
+		&bTranslucent,
 		&bResized ) )
 	{
 		Error( "\tError writing %s.\n", tgaFilename );
@@ -597,7 +597,7 @@ void ProcessWadFile( const char *pWadFilename, const char *pBaseDir, const char 
 	}
 
 	EnsureDirectoriesExist( pBaseDir, pSubDir );
-		
+
 
 	// Now process all the images in the wad.
 	W_OpenWad( pWadFilename );
@@ -605,7 +605,7 @@ void ProcessWadFile( const char *pWadFilename, const char *pBaseDir, const char 
 	#define MAXLUMP (640*480*85/64)
 	byte inbuffer[MAXLUMP];
 
-	for (int i = 0; i < numlumps; i++) 
+	for (int i = 0; i < numlumps; i++)
 	{
 		if ( pOnlyTex && stricmp( pOnlyTex, lumpinfo[i].name ) != 0 )
 			continue;
@@ -633,25 +633,25 @@ void ProcessWadFile( const char *pWadFilename, const char *pBaseDir, const char 
 		byte *psrc, *pdest;
 
 		byte outbuffer[(640+320)*480];
-	
+
 		// The old xwad	put the mipmaps in there too, but we don't want that now (usually).
 		// copy in 0 image
 		psrc = inbuffer + LittleLong( qtex->offsets[0] );
 		pdest = outbuffer;
-		for (int t = 0; t < height; t++) 
+		for (int t = 0; t < height; t++)
 		{
 			memcpy( pdest + t * width, psrc + t * width, width );
 		}
 
-		
-		WriteOutputFiles( 
+
+		WriteOutputFiles(
 			pBaseDir,				// base directory
 			pSubDir,				// subdir under materials
 			qtex->name,				// filename (w/o extension)
 			qtex->name[0] == '{',	// allow transparency?
-			outbuffer, 
-			width, 
-			height, 
+			outbuffer,
+			width,
+			height,
 			pPalette,
 			bVTex
 			);
@@ -686,9 +686,9 @@ void ProcessBMPFile( const char *pBaseDir, const char *pSubDir, const char *pFil
 	SafeRead( fp, &bih, sizeof( bih ) );
 
 	// Make sure it's an 8-bit one like we want.
-	if ( bih.biSize != sizeof( bih ) || 
-		bih.biPlanes != 1 || 
-		bih.biBitCount != 8 || 
+	if ( bih.biSize != sizeof( bih ) ||
+		bih.biPlanes != 1 ||
+		bih.biBitCount != 8 ||
 		bih.biCompression != BI_RGB ||
 		bih.biHeight < 0 ||
 		bih.biWidth * bih.biHeight > sizeof( pixelData ) )
@@ -712,7 +712,7 @@ void ProcessBMPFile( const char *pBaseDir, const char *pSubDir, const char *pFil
 
 	// Now read the bitmap data.
 	SafeRead( fp, pixelData, bih.biWidth * bih.biHeight );
-	
+
 	fclose( fp );
 
 
@@ -739,14 +739,14 @@ void ProcessBMPFile( const char *pBaseDir, const char *pSubDir, const char *pFil
 	GetBaseFilename( pFilename, baseFilename );
 
 	// Save it out.
-	WriteOutputFiles( 
+	WriteOutputFiles(
 		pBaseDir,		// base directory
 		pSubDir,		// subdir under materials
 		baseFilename,	// filename (w/o extension)
 		g_bBMPAllowTranslucent,	// allow transparency
-		pixelData, 
-		bih.biWidth, 
-		bih.biHeight, 
+		pixelData,
+		bih.biWidth,
+		bih.biHeight,
 		(byte*)palette,
 		bVTex
 		);
@@ -771,12 +771,12 @@ void ProcessSPRFile( const char *pBaseDir, const char *pSubDir, const char *pFil
 	FILE *fp = fopen( pFilename, "rb" );
 	if ( !fp )
 		Error( "ProcessSPRFile( %s ) can't open the file for reading.\n", pFilename );
-	
+
 	dsprite_t header;
 	SafeRead( fp, &header, sizeof( header ) );
 
 	// Make sure it's a sprite file.
-	if ( ((header.ident>>0) & 0xFF) != 'I' || 
+	if ( ((header.ident>>0) & 0xFF) != 'I' ||
 		((header.ident>>8) & 0xFF) != 'D' ||
 		((header.ident>>16) & 0xFF) != 'S' ||
 		((header.ident>>24) & 0xFF) != 'P' )
@@ -815,7 +815,7 @@ void ProcessSPRFile( const char *pBaseDir, const char *pSubDir, const char *pFil
 				fclose( fp );
 				return;
 			}
-				
+
 			byte *frameData = new byte[frame.width * frame.height];
 			SafeRead( fp, frameData, frame.width * frame.height );
 
@@ -825,15 +825,15 @@ void ProcessSPRFile( const char *pBaseDir, const char *pSubDir, const char *pFil
 			bool bTranslucent, bResized;
 			char frameFilename[512];
 			_snprintf( frameFilename, sizeof( frameFilename ), "%s\\materialsrc\\%s\\%s%03d.tga", pBaseDir, pSubDir, baseFilename, i );
-			if ( !WriteTGAFile( 
-				frameFilename, 
-				g_bBMPAllowTranslucent, 
-				frameData, 
-				frame.width, 
-				frame.height, 
-				palette, 
+			if ( !WriteTGAFile(
+				frameFilename,
+				g_bBMPAllowTranslucent,
+				frameData,
+				frame.width,
+				frame.height,
+				palette,
 				true,			// allow power-of-2
-				&bTranslucent, 
+				&bTranslucent,
 				&bResized ) )
 			{
 				Error( "\tError writing %s.\n", frameFilename );
@@ -855,7 +855,7 @@ void ProcessSPRFile( const char *pBaseDir, const char *pSubDir, const char *pFil
 			return;
 		}
 	}
-		
+
 	fclose( fp );
 
 	//
@@ -932,10 +932,10 @@ void ExtractDirectory( const char *pFilename, char *prefix )
 
 // This allows them to have a WAD or BMP under their materialsrc directory and it'll try to figure out
 // all the other parameters for them.
-bool DragAndDropCheck( 
-	const char **pBaseDir, 
-	const char **pSubDir, 
-	const char **pWadFilenames, 
+bool DragAndDropCheck(
+	const char **pBaseDir,
+	const char **pSubDir,
+	const char **pWadFilenames,
 	const char **pBMPFilenames,
 	const char **pSPRFilenames,
 	bool *bVTex )
@@ -959,7 +959,7 @@ bool DragAndDropCheck(
 		*pSPRFilenames = pLastParam;
 	else
 		return false;
-	
+
 	// Ok, we know that argv[1] has a valid filename. Is it under materialsrc?
 	char *pMatSrc = strstr( arg1, "MATERIALSRC" );
 	if ( !pMatSrc || pMatSrc == arg1 )
@@ -985,7 +985,7 @@ bool DragAndDropCheck(
 	memcpy( subDir, pSubDirSrc, pEnd - pSubDirSrc );
 	subDir[pEnd-pSubDirSrc] = 0;
 
-	// Always use vtex in drag-and-drop mode.	
+	// Always use vtex in drag-and-drop mode.
 	*bVTex = true;
 	return true;
 }
@@ -993,7 +993,7 @@ bool DragAndDropCheck(
 
 int main (int argc, char **argv)
 {
-	if (argc < 2) 
+	if (argc < 2)
 	{
 		return PrintUsage( "" );
 	}
@@ -1023,7 +1023,7 @@ int main (int argc, char **argv)
 
 				if( !g_bQuiet )
 				{
-					fprintf( stderr, "Adding .vmt parameter: \"%s\"\t\"%s\"\n", 
+					fprintf( stderr, "Adding .vmt parameter: \"%s\"\t\"%s\"\n",
 								g_VMTParams[g_NumVMTParams].m_szParam,
 								g_VMTParams[g_NumVMTParams].m_szValue );
 				}
@@ -1072,7 +1072,7 @@ int main (int argc, char **argv)
 				++i;
 			}
 		}
-		
+
 		if ( stricmp( argv[i], "-AutoDir" ) == 0 )
 		{
 			bAutoDir = true;
@@ -1082,7 +1082,7 @@ int main (int argc, char **argv)
 			g_bBMPAllowTranslucent = true;
 		}
 		else if ( stricmp( argv[i], "-Decal" ) == 0 )
-		{	
+		{
 			g_bDecal = true;
 			if ( g_pShader == g_pDefaultShader )
 				g_pShader = "DecalModulate";
@@ -1096,7 +1096,7 @@ int main (int argc, char **argv)
 			bVTex = true;
 		}
 	}
-	
+
 	if ( bAutoDir )
 	{
 		if ( !DragAndDropCheck( &pBaseDir, &pSubDir, &pWadFilenames, &pBMPFilenames, &pSPRFilenames, &bVTex ) )
@@ -1178,5 +1178,4 @@ int main (int argc, char **argv)
 
 	PrintExitStuff();
 	return 0;
-}	
-
+}

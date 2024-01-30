@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -100,7 +100,7 @@ bool CMapSolid::AddPlane(const CMapFace *p)
 	PostUpdate(Notify_Changed);
 
 	RemoveEmptyFaces();
-	
+
 	return(GetFaceCount() >= 4);
 }
 
@@ -225,19 +225,19 @@ void CMapSolid::ClipByFace(const CMapFace *fa, CMapSolid **fsolid, CMapSolid **b
 	fb.plane.planepts[0] = fb.plane.planepts[2];
 	fb.plane.planepts[2] = temp;
 	fb.CalcPlane();
-	
+
 	front->CopyFrom(this, false);
 	front->SetParent(NULL);
-	
+
 	back->CopyFrom(this, false);
 	back->SetParent(NULL);
-	
+
 	if (!back->AddPlane(fa))
 	{
 		delete back;
 		back = NULL;
 	}
-	
+
 	if (!front->AddPlane(&fb))
 	{
 		delete front;
@@ -272,7 +272,7 @@ CMapFace *CMapSolid::FindFaceID(int nFaceID)
 {
 	int nFaceCount = GetFaceCount();
 	for (int nFace = 0; nFace < nFaceCount; nFace++)
-	{	
+	{
 		CMapFace *pFace = GetFace(nFace);
 		if (pFace->GetFaceID() == nFaceID)
 		{
@@ -285,8 +285,8 @@ CMapFace *CMapSolid::FindFaceID(int nFaceID)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pWorld - 
+// Purpose:
+// Input  : pWorld -
 //-----------------------------------------------------------------------------
 void CMapSolid::GenerateNewFaceIDs(CMapWorld *pWorld)
 {
@@ -329,10 +329,10 @@ void CMapSolid::OnPrePaste(CMapClass *pCopy, CMapWorld *pSourceWorld, CMapWorld 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: to split the solid by the given plane into frontside and backside 
+// Purpose: to split the solid by the given plane into frontside and backside
 //          solids; memory is allocated in the function for the solids;
-//          solids are only generated for (pointers to) CMapSolid pointers that 
-//          exist -- if a pointer is NULL that sidedness is ignored; the 
+//          solids are only generated for (pointers to) CMapSolid pointers that
+//          exist -- if a pointer is NULL that sidedness is ignored; the
 //          function returns whether or not an actual split happened (TRUE/FALSE)
 //   Input: pPlane - the plane to split the solid with
 //          pFront - the front sided solid (if any)
@@ -343,10 +343,10 @@ void CMapSolid::OnPrePaste(CMapClass *pCopy, CMapWorld *pSourceWorld, CMapWorld 
 //-----------------------------------------------------------------------------
 int CMapSolid::Split( PLANE *pPlane, CMapSolid **pFront, CMapSolid **pBack )
 {
-    const float SPLIT_DIST_EPSILON = 0.001f;
-    CMapSolid *pFrontSolid = NULL;
-    CMapSolid *pBackSolid = NULL;
-    CMapFace  face;
+	const float SPLIT_DIST_EPSILON = 0.001f;
+	CMapSolid *pFrontSolid = NULL;
+	CMapSolid *pBackSolid = NULL;
+	CMapFace  face;
 
 	//
 	// The newly added face should get its texture from face zero of the solid.
@@ -357,35 +357,35 @@ int CMapSolid::Split( PLANE *pPlane, CMapSolid **pFront, CMapSolid **pBack )
 		face.SetTexture(pFirstFace->GetTexture());
 	}
 
-    //
-    // check for plane intersection with solid
-    //
-    int   frontCount = 0;
-    int   backCount = 0;
-    
-    int faceCount = GetFaceCount();
-    for( int i = 0; i < faceCount; i++ )
-    {
-        CMapFace *pFace = GetFace( i );
+	//
+	// check for plane intersection with solid
+	//
+	int   frontCount = 0;
+	int   backCount = 0;
 
-        for( int j = 0; j < pFace->nPoints; j++ )
-        {
-            float dist = DotProduct( pFace->Points[j], pPlane->normal ) - pPlane->dist;
-            if( dist > SPLIT_DIST_EPSILON )
-            {
-                frontCount++;
-            }
-            else if( dist < -SPLIT_DIST_EPSILON )
-            {
-                backCount++;
-            }
-        }
-    }
+	int faceCount = GetFaceCount();
+	for( int i = 0; i < faceCount; i++ )
+	{
+		CMapFace *pFace = GetFace( i );
 
-    //
-    // If we're all on one side of the splitting plane, copy ourselves into the appropriate
+		for( int j = 0; j < pFace->nPoints; j++ )
+		{
+			float dist = DotProduct( pFace->Points[j], pPlane->normal ) - pPlane->dist;
+			if( dist > SPLIT_DIST_EPSILON )
+			{
+				frontCount++;
+			}
+			else if( dist < -SPLIT_DIST_EPSILON )
+			{
+				backCount++;
+			}
+		}
+	}
+
+	//
+	// If we're all on one side of the splitting plane, copy ourselves into the appropriate
 	// destination solid.
-    //
+	//
 	if ((frontCount == 0) || (backCount == 0))
 	{
 		CMapSolid **pReturn;
@@ -418,81 +418,81 @@ int CMapSolid::Split( PLANE *pPlane, CMapSolid **pFront, CMapSolid **pBack )
 		//
 		if (pReturnSolid->CreateFromPlanes( CREATE_FROM_PLANES_CLIPPING ))
 		{
-            // Initialize the texture axes only of the newly created faces. Leave the others alone.
+			// Initialize the texture axes only of the newly created faces. Leave the others alone.
 			pReturnSolid->InitializeTextureAxes(Options.GetTextureAlignment(), INIT_TEXTURE_ALL);
 			pReturnSolid->PostUpdate(Notify_Changed);
 		}
-				
+
 		*pReturn = pReturnSolid;
 		return 1;
 	}
 
-    //
-    // split the solid and create the "front" solid
-    //
-    if( pFront )
-    {
-        //
-        // copy the original solid info
-        //
-        pFrontSolid = new CMapSolid;
-        pFrontSolid->CopyFrom(this, false);
+	//
+	// split the solid and create the "front" solid
+	//
+	if( pFront )
+	{
+		//
+		// copy the original solid info
+		//
+		pFrontSolid = new CMapSolid;
+		pFrontSolid->CopyFrom(this, false);
 		pFrontSolid->SetParent(NULL);
-        pFrontSolid->SetTemporary( TRUE );
+		pFrontSolid->SetTemporary( TRUE );
 
-        face.plane.normal = pPlane->normal;
-        VectorNegate( face.plane.normal );
-        face.plane.dist = -pPlane->dist;
+		face.plane.normal = pPlane->normal;
+		VectorNegate( face.plane.normal );
+		face.plane.dist = -pPlane->dist;
 
-        pFrontSolid->AddFace( &face );
+		pFrontSolid->AddFace( &face );
 
 		//
 		// The new face doesn't have plane points, only a normal and a distance, so we tell CreateFromPlanes
 		// to generate new plane points for us after creation.
 		//
-        if (pFrontSolid->CreateFromPlanes(CREATE_BUILD_PLANE_POINTS | CREATE_FROM_PLANES_CLIPPING))
-        {
-            // Initialize the texture axes only of the newly created faces. Leave the others alone.
+		if (pFrontSolid->CreateFromPlanes(CREATE_BUILD_PLANE_POINTS | CREATE_FROM_PLANES_CLIPPING))
+		{
+			// Initialize the texture axes only of the newly created faces. Leave the others alone.
 			pFrontSolid->InitializeTextureAxes( Options.GetTextureAlignment(), INIT_TEXTURE_ALL );
 			pFrontSolid->PostUpdate(Notify_Clipped_Intermediate);
 
-            *pFront = pFrontSolid;
-        }
-    }
+			*pFront = pFrontSolid;
+		}
+	}
 
-    //
-    // split the solid and create the "back" solid
-    //
-    if( pBack )
-    {
-        //
-        // copy the original solid info
-        //
-        pBackSolid = new CMapSolid;
-        pBackSolid->CopyFrom(this, false);
+	//
+	// split the solid and create the "back" solid
+	//
+	if( pBack )
+	{
+		//
+		// copy the original solid info
+		//
+		pBackSolid = new CMapSolid;
+		pBackSolid->CopyFrom(this, false);
 		pBackSolid->SetParent(NULL);
-        pBackSolid->SetTemporary( TRUE );
+		pBackSolid->SetTemporary( TRUE );
 
-        face.plane.normal = pPlane->normal;
-        face.plane.dist = pPlane->dist;
+		face.plane.normal = pPlane->normal;
+		face.plane.dist = pPlane->dist;
 
-        pBackSolid->AddFace( &face );
+		pBackSolid->AddFace( &face );
 
 		//
 		// The new face doesn't have plane points, only a normal and a distance, so we tell CreateFromPlanes
 		// to generate new plane points for us after creation.
 		//
-        if (pBackSolid->CreateFromPlanes(CREATE_BUILD_PLANE_POINTS | CREATE_FROM_PLANES_CLIPPING))
-        {
-            // Initialize the texture axes only of the newly created faces. Leave the others alone.
+		if (pBackSolid->CreateFromPlanes(CREATE_BUILD_PLANE_POINTS | CREATE_FROM_PLANES_CLIPPING))
+		{
+			// Initialize the texture axes only of the newly created faces. Leave the others alone.
 			pBackSolid->InitializeTextureAxes( Options.GetTextureAlignment(), INIT_TEXTURE_ALL );
 			pBackSolid->PostUpdate(Notify_Clipped_Intermediate);
 
-            *pBack = pBackSolid;
-        }
-    }
+			*pBack = pBackSolid;
+		}
+	}
 
-    return 2;
+	return 2;
 }
 
 
@@ -529,7 +529,7 @@ void CMapSolid::AddFace(CMapFace *pFace)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CMapClass
 //-----------------------------------------------------------------------------
 CMapClass *CMapSolid::Copy(bool bUpdateDependencies)
@@ -542,7 +542,7 @@ CMapClass *CMapSolid::Copy(bool bUpdateDependencies)
 
 //-----------------------------------------------------------------------------
 // Purpose: Turns this solid into a duplicate of the given solid.
-// Input  : pobj - Object to copy, must be a CMapSolid. 
+// Input  : pobj - Object to copy, must be a CMapSolid.
 // Output : Returns a pointer to this object.
 //-----------------------------------------------------------------------------
 CMapClass *CMapSolid::CopyFrom(CMapClass *pobj, bool bUpdateDependencies)
@@ -554,17 +554,17 @@ CMapClass *CMapSolid::CopyFrom(CMapClass *pobj, bool bUpdateDependencies)
 	m_eSolidType = pFrom->GetHL1SolidType();
 
 	m_bIsCordonBrush = pFrom->m_bIsCordonBrush;
-	
+
 	int nFaces = pFrom->Faces.GetCount();
 	Faces.SetCount(nFaces);
-	
+
 	// copy faces
 	CMapFace *pFromFace;
 	CMapFace *pToFace;
 
 	for (int i = nFaces - 1; i >= 0; i--)
 	{
-		
+
 		pToFace = &Faces[i];
 		pFromFace = &pFrom->Faces[i];
 
@@ -600,8 +600,8 @@ void CMapSolid::DebugSolid(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : iIndex - 
+// Purpose:
+// Input  : iIndex -
 //-----------------------------------------------------------------------------
 void CMapSolid::DeleteFace(int iIndex)
 {
@@ -655,7 +655,7 @@ void CMapSolid::CalcBounds(BOOL bFullUpdate)
 		{
 			m_Render2DBox.UpdateBounds( mins, maxs );
 		}
-	
+
 		//
 		// Get the culling bounds and update the solid
 		//
@@ -672,8 +672,8 @@ void CMapSolid::CalcBounds(BOOL bFullUpdate)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : t - 
+// Purpose:
+// Input  : t -
 //-----------------------------------------------------------------------------
 void CMapSolid::DoTransform(const VMatrix &matrix)
 {
@@ -718,8 +718,8 @@ void CMapSolid::SetRenderColor(unsigned char uchRed, unsigned char uchGreen, uns
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
+// Purpose:
+// Input  :
 // Output : size_t
 //-----------------------------------------------------------------------------
 size_t CMapSolid::GetSize(void)
@@ -794,9 +794,9 @@ LPCTSTR CMapSolid::GetTexture(int iFace)
 int CMapSolid::CreateFromPlanes( DWORD dwFlags )
 {
 	int i, j, k;
-    BOOL useplane[MAPSOLID_MAX_FACES];
+	BOOL useplane[MAPSOLID_MAX_FACES];
 
-	m_Render2DBox.SetBounds(Vector(COORD_NOTINIT, COORD_NOTINIT, COORD_NOTINIT), 
+	m_Render2DBox.SetBounds(Vector(COORD_NOTINIT, COORD_NOTINIT, COORD_NOTINIT),
 							Vector(-COORD_NOTINIT, -COORD_NOTINIT, -COORD_NOTINIT));
 
 	m_bValid = TRUE;
@@ -827,15 +827,15 @@ int CMapSolid::CreateFromPlanes( DWORD dwFlags )
 		CMapFace *pFace = GetFace(i);
 		PLANE *f = &pFace->plane;
 
-        //
-        // Don't use this plane if it has a zero-length normal.
-        //
-        if (VectorCompare(f->normal, vec3_origin))
-        {
-            useplane[i] = FALSE;
+		//
+		// Don't use this plane if it has a zero-length normal.
+		//
+		if (VectorCompare(f->normal, vec3_origin))
+		{
+			useplane[i] = FALSE;
 			continue;
-        }
-        
+		}
+
 		//
 		// If the plane duplicates another plane, don't use it (assume it is a brush
 		// being edited that will be fixed).
@@ -913,7 +913,7 @@ int CMapSolid::CreateFromPlanes( DWORD dwFlags )
 					float v1 = V_rint(v);
 					if ((v != v1) && (fabs(v - v1) < ROUND_VERTEX_EPSILON))
 					{
-					   w->p[j][k] = v1;
+						w->p[j][k] = v1;
 					}
 				}
 			}
@@ -937,7 +937,7 @@ int CMapSolid::CreateFromPlanes( DWORD dwFlags )
 			{
 				pFace->CreateFace(w, CREATE_FACE_PRESERVE_PLANE);
 			}
-			
+
 			//
 			// Done with the winding, we can free it now.
 			//
@@ -999,19 +999,19 @@ int CMapSolid::CreateFromPlanes( DWORD dwFlags )
 		}
 	}
 
-    // 
-    // remove faces that do not contribute -- not just "unused or ignored" faces
-    //
+	//
+	// remove faces that do not contribute -- not just "unused or ignored" faces
+	//
 	int faceCount = Faces.GetCount();
-    for( i = 0; i < faceCount; i++ )
-    {
-        if( Faces[i].nPoints == 0 )
-        {
-            DeleteFace( i );
-            i--;
-            faceCount--;
-        }
-    }
+	for( i = 0; i < faceCount; i++ )
+	{
+		if( Faces[i].nPoints == 0 )
+		{
+			DeleteFace( i );
+			i--;
+			faceCount--;
+		}
+	}
 
 	return(m_bValid ? TRUE : FALSE);
 }
@@ -1033,9 +1033,9 @@ void CMapSolid::InitializeTextureAxes(TextureAlignment_t eAlignment, DWORD dwFla
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pLoadInfo - 
-//			*pSolid - 
+// Purpose:
+// Input  : *pLoadInfo -
+//			*pSolid -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CMapSolid::LoadSideCallback(CChunkFile *pFile, CMapSolid *pSolid)
@@ -1067,9 +1067,9 @@ ChunkFileResult_t CMapSolid::LoadSideCallback(CChunkFile *pFile, CMapSolid *pSol
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pFile - 
-//			pData - 
+// Purpose:
+// Input  : pFile -
+//			pData -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CMapSolid::LoadVMF(CChunkFile *pFile, bool &bValid)
@@ -1207,7 +1207,7 @@ void CMapSolid::OnAddToWorld(CMapWorld *pWorld)
 		while (pChild != NULL)
 		{
 			CMapSolid *pSolid = dynamic_cast<CMapSolid *>(pChild);
-			
+
 			if ( pSolid && pSolid != this )
 			{
 				CUtlRBTree<int,int> faceIDs;
@@ -1215,11 +1215,11 @@ void CMapSolid::OnAddToWorld(CMapWorld *pWorld)
 
 				nFaceCount = GetFaceCount();
 				for (int nFace = 0; nFace < nFaceCount; nFace++)
-				{	
+				{
 					CMapFace *pFace = GetFace(nFace);
 					faceIDs.Insert( pFace->GetFaceID() );
 				}
-				
+
 				for (int i = CheckList.Count() - 1; i >= 0; i--)
 				{
 					CMapFace *pFace = CheckList.Element(i);
@@ -1233,14 +1233,14 @@ void CMapSolid::OnAddToWorld(CMapWorld *pWorld)
 						CheckList.FastRemove(i);
 					}
 				}
-								
+
 				if (CheckList.Count() <= 0)
 				{
 					// We've handled all the faces in our list, early out.
 					break;
 				}
 			}
-			
+
 			pChild = pWorld->GetNextDescendent(pos);
 		}
 	}
@@ -1283,8 +1283,8 @@ void CMapSolid::PostloadWorld(CMapWorld *pWorld)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : eSelectMode - 
+// Purpose:
+// Input  : eSelectMode -
 // Output : CMapClass
 //-----------------------------------------------------------------------------
 CMapClass *CMapSolid::PrepareSelection(SelectMode_t eSelectMode)
@@ -1306,7 +1306,7 @@ CMapClass *CMapSolid::PrepareSelection(SelectMode_t eSelectMode)
 		}
 	}
 
-	return this;	
+	return this;
 }
 
 
@@ -1333,7 +1333,7 @@ void CMapSolid::OnRemoveFromWorld(CMapWorld *pWorld, bool bNotifyChildren)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapSolid::RemoveEmptyFaces(void)
 {
@@ -1426,14 +1426,14 @@ void CMapSolid::Render3D(CRender3D *pRender)
 	{
 		nPasses = 2;
 	}
-	
+
 	if ( ( eSolidSelectionState == SELECT_MODIFY ) )
 	{
 		nPasses = 2;
 		iStartPass = 2;
 	}
-	
- 	for (int nPass = iStartPass; nPass <= nPasses; nPass++)
+
+	for (int nPass = iStartPass; nPass <= nPasses; nPass++)
 	{
 		//
 		// Render the second pass in wireframe.
@@ -1502,7 +1502,7 @@ bool CMapSolid::HasDisp( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns a solid type for the given texture name.
-// Input  : pszTexture - 
+// Input  : pszTexture -
 //-----------------------------------------------------------------------------
 HL1_SolidType_t CMapSolid::HL1SolidTypeFromTextureName(const char *pszTexture)
 {
@@ -1522,7 +1522,7 @@ HL1_SolidType_t CMapSolid::HL1SolidTypeFromTextureName(const char *pszTexture)
 		{
 			eSolidType = btWater;
 		}
-	} 
+	}
 	else
 	{
 		eSolidType = btSolid;
@@ -1533,8 +1533,8 @@ HL1_SolidType_t CMapSolid::HL1SolidTypeFromTextureName(const char *pszTexture)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFile - 
+// Purpose:
+// Input  : *pFile -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CMapSolid::SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo)
@@ -1612,7 +1612,7 @@ ChunkFileResult_t CMapSolid::SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo)
 		eResult = pFile->EndChunk();
 	}
 
-	return(eResult);	
+	return(eResult);
 }
 
 
@@ -1627,8 +1627,8 @@ bool CMapSolid::ShouldAppearInRaytracedLightingPreview(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFile - 
+// Purpose:
+// Input  : *pFile -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CMapSolid::SaveEditorData(CChunkFile *pFile)
@@ -1740,7 +1740,7 @@ bool CMapSolid::Subtract(CMapObjectList *pInside, CMapObjectList *pOutside, CMap
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 color32 CMapSolid::GetLineColor( CRender2D *pRender )
 {
@@ -1805,8 +1805,8 @@ color32 CMapSolid::GetLineColor( CRender2D *pRender )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pRender - 
+// Purpose:
+// Input  : pRender -
 //-----------------------------------------------------------------------------
 
 void CMapSolid::Render2D(CRender2D *pRender)
@@ -1829,25 +1829,25 @@ void CMapSolid::Render2D(CRender2D *pRender)
 	color32 rgbLineColor = GetLineColor( pRender );
 
 	// check if we should draw handles & vertices
-	
+
 	bool bIsSmall  = sizex < (HANDLE_RADIUS*2) || sizey < (HANDLE_RADIUS*2);
 	bool bIsTiny = sizex < 2 || sizey < 2;
 	bool bDrawHandles  = pRender->IsActiveView() && !bIsSmall && IsEditable();
 	bool bDrawVertices = Options.view2d.bDrawVertices && !bIsTiny;
 
 	pRender->SetDrawColor( rgbLineColor.r, rgbLineColor.g, rgbLineColor.b );
-	
+
 	//
 	// Draw center handle if the solid is larger than the handle along either axis.
 	//
 	if ( bDrawHandles )
-	{		
+	{
 		// draw center handle as cross
 		pRender->SetHandleStyle( HANDLE_RADIUS, CRender::HANDLE_CROSS );
 		pRender->SetHandleColor( rgbLineColor.r, rgbLineColor.g, rgbLineColor.b );
 		pRender->DrawHandle( (vecMins+vecMaxs)/2 );
 	}
-	
+
 	if ( bDrawVertices )
 	{
 		// set handle style for upcoming vertex drawing
@@ -1888,17 +1888,17 @@ void CMapSolid::Render2D(CRender2D *pRender)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pView - 
-//			vecPoint - 
-//			nHitData - 
-// Output : 
+// Purpose:
+// Input  : pView -
+//			vecPoint -
+//			nHitData -
+// Output :
 //-----------------------------------------------------------------------------
 bool CMapSolid::HitTest2D(CMapView2D *pView, const Vector2D &point, HitInfo_t &HitData)
 {
 	if (!IsVisible())
 		return false;
-	
+
 	//
 	// First check center X.
 	//
@@ -2007,4 +2007,3 @@ void CMapSolid::OnUndoRedo()
 		pFace->OnUndoRedo();
 	}
 }
-

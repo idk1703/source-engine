@@ -13,7 +13,7 @@
 using namespace vgui;
 using namespace GCSDK;
 
-#ifdef STAGING_ONLY 
+#ifdef STAGING_ONLY
 extern ConVar tf_mm_popup_state_override;
 #endif
 
@@ -25,7 +25,7 @@ public:
 		, m_flAutoJoinTime( 0.f )
 	{}
 
-	virtual void OnEnter() OVERRIDE	
+	virtual void OnEnter() OVERRIDE
 	{
 		CTFMatchmakingPopup::OnEnter();
 
@@ -49,7 +49,7 @@ public:
 		}
 	}
 
-	virtual void OnUpdate() OVERRIDE	
+	virtual void OnUpdate() OVERRIDE
 	{
 		CTFMatchmakingPopup::OnUpdate();
 
@@ -59,9 +59,9 @@ public:
 		// Update the countdown label
 		double flTimeUntilAutoJoin = Max( 0., m_flAutoJoinTime - gpGlobals->curtime );
 		pwszAutoJoinTime = LocalizeNumberWithToken( "TF_Matchmaking_RollingQueue_AutojoinWarning", ceil( flTimeUntilAutoJoin ) );
-		
+
 		SetDialogVariable( "auto_join", pwszAutoJoinTime );
-		
+
 
 		if ( m_flAutoJoinTime != 0.f && gpGlobals->curtime > m_flAutoJoinTime )
 		{
@@ -69,7 +69,7 @@ public:
 		}
 	}
 
-	virtual void OnExit() OVERRIDE	
+	virtual void OnExit() OVERRIDE
 	{
 		CTFMatchmakingPopup::OnExit();
 
@@ -80,7 +80,7 @@ public:
 	virtual bool ShouldBeActve() const OVERRIDE
 	{
 #ifdef STAGING_ONLY
-		if ( FStrEq( const_cast<CNewMatchFoundDashboardState*>(this)->GetName(), tf_mm_popup_state_override.GetString() ) ) 
+		if ( FStrEq( const_cast<CNewMatchFoundDashboardState*>(this)->GetName(), tf_mm_popup_state_override.GetString() ) )
 			return true;
 #endif
 

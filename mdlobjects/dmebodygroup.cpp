@@ -13,13 +13,13 @@
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeBodyGroup, CDmeBodyGroup );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeBodyGroup::OnConstruction()
 {
@@ -32,7 +32,7 @@ void CDmeBodyGroup::OnDestruction()
 
 
 //-----------------------------------------------------------------------------
-// Finds a body part by name 
+// Finds a body part by name
 //-----------------------------------------------------------------------------
 CDmeLODList *CDmeBodyGroup::FindBodyPart( const char *pName )
 {

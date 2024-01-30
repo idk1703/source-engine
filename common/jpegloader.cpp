@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -17,7 +17,7 @@ class CFileWriter
 
 };
 
-class CJpegDestMgr : public jpeg_destination_mgr 
+class CJpegDestMgr : public jpeg_destination_mgr
 {
 public:
 	CJpegDestMgr( CFileWriter &refOutputFileWriter )
@@ -41,7 +41,7 @@ public:
 		this->term_destination = &CJpegDestMgr::imp_term_destination;
 
 		this->next_output_byte = 0;
-		this->free_in_buffer = 0;	
+		this->free_in_buffer = 0;
 	}
 
 	static void imp_init_dest( j_compress_ptr cinfo )
@@ -92,7 +92,7 @@ public:
 		}
 
 		if ( pInstance->m_pOutputFileWriter )
-			 pInstance->m_pOutputFileWriter->Flush();	
+			 pInstance->m_pOutputFileWriter->Flush();
 			 */
 	}
 
@@ -149,9 +149,9 @@ public:
 
 	static void imp_skip_input_data(j_decompress_ptr cinfo, long num_bytes)
 	{
-		// The library is asking us to skip a chunk of data, usually exif header data or such.  Need 
+		// The library is asking us to skip a chunk of data, usually exif header data or such.  Need
 		// to actually do that.  The library tries to be robust and skip obviously bad data on its own
-		// one byte at a time as well, but faster here, and safer as the library can't always do it 
+		// one byte at a time as well, but faster here, and safer as the library can't always do it
 		// correctly if we fail these calls.
 		CJpegSourceMgr *pInstance = (CJpegSourceMgr*)cinfo->src;
 		pInstance->bytes_in_buffer -= num_bytes;
@@ -216,7 +216,7 @@ bool GetJpegDimensions( const byte *pubData, int cubData, uint32 &width, uint32 
 	{
 		jpeg_destroy_decompress(&jpegInfo);
 		return false;
-	}	
+	}
 
 	width = jpegInfo.image_width;
 	height = jpegInfo.image_height;
@@ -262,7 +262,7 @@ bool ConvertJpegToRGB( const byte *pubData, int cubData, CUtlVector<byte> &buf, 
 	{
 		jpeg_destroy_decompress(&jpegInfo);
 		return false;
-	}	
+	}
 
 	// start the decompress with the jpeg engine.
 	if ( !jpeg_start_decompress(&jpegInfo) || jpegInfo.output_components != 3)

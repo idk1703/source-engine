@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -38,7 +38,7 @@ private:
 };
 
 
-// Get the (global) head icon manager. 
+// Get the (global) head icon manager.
 CHeadIconManager* HeadIconManager();
 
 

@@ -125,7 +125,7 @@ public:
 	bool GetRememberPlayerPosition( void ) { return m_bRememberPlayerPosition; };
 	void QuickLoad();
 	void QuickSave();
-	
+
 	bool IsInNodeDrag( void ) { return m_bInNodeDragMode; };
 
 public:
@@ -202,7 +202,7 @@ private:
 
 	// Gets the position of the preview object
 	void GetPlacementInfo( Vector &vecOrigin, QAngle &angles );
-	
+
 private:
 	// Document
 	CVcdBlockDoc *m_pDoc;

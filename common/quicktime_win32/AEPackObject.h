@@ -1,17 +1,17 @@
 /*
-     File:       AEPackObject.h
- 
-     Contains:   AppleEvents object packing Interfaces.
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1991-2001 by Apple Computer, Inc., all rights reserved
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       AEPackObject.h
+
+		Contains:   AppleEvents object packing Interfaces.
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1991-2001 by Apple Computer, Inc., all rights reserved
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __AEPACKOBJECT__
 #define __AEPACKOBJECT__
@@ -38,7 +38,7 @@ extern "C" {
 /* These are the object packing routines.  */
 /*
  *  CreateOffsetDescriptor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in ObjectSupportLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -46,13 +46,13 @@ extern "C" {
  */
 EXTERN_API( OSErr )
 CreateOffsetDescriptor(
-  long      theOffset,
-  AEDesc *  theDescriptor);
+	long      theOffset,
+	AEDesc *  theDescriptor);
 
 
 /*
  *  CreateCompDescriptor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in ObjectSupportLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -60,16 +60,16 @@ CreateOffsetDescriptor(
  */
 EXTERN_API( OSErr )
 CreateCompDescriptor(
-  DescType   comparisonOperator,
-  AEDesc *   operand1,
-  AEDesc *   operand2,
-  Boolean    disposeInputs,
-  AEDesc *   theDescriptor);
+	DescType   comparisonOperator,
+	AEDesc *   operand1,
+	AEDesc *   operand2,
+	Boolean    disposeInputs,
+	AEDesc *   theDescriptor);
 
 
 /*
  *  CreateLogicalDescriptor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in ObjectSupportLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -77,16 +77,16 @@ CreateCompDescriptor(
  */
 EXTERN_API( OSErr )
 CreateLogicalDescriptor(
-  AEDescList *  theLogicalTerms,
-  DescType      theLogicOperator,
-  Boolean       disposeInputs,
-  AEDesc *      theDescriptor);
+	AEDescList *  theLogicalTerms,
+	DescType      theLogicOperator,
+	Boolean       disposeInputs,
+	AEDesc *      theDescriptor);
 
 
 
 /*
  *  CreateObjSpecifier()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in ObjectSupportLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -94,17 +94,17 @@ CreateLogicalDescriptor(
  */
 EXTERN_API( OSErr )
 CreateObjSpecifier(
-  DescType   desiredClass,
-  AEDesc *   theContainer,
-  DescType   keyForm,
-  AEDesc *   keyData,
-  Boolean    disposeInputs,
-  AEDesc *   objSpecifier);
+	DescType   desiredClass,
+	AEDesc *   theContainer,
+	DescType   keyForm,
+	AEDesc *   keyData,
+	Boolean    disposeInputs,
+	AEDesc *   objSpecifier);
 
 
 /*
  *  CreateRangeDescriptor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in ObjectSupportLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -112,10 +112,10 @@ CreateObjSpecifier(
  */
 EXTERN_API( OSErr )
 CreateRangeDescriptor(
-  AEDesc *  rangeStart,
-  AEDesc *  rangeStop,
-  Boolean   disposeInputs,
-  AEDesc *  theDescriptor);
+	AEDesc *  rangeStart,
+	AEDesc *  rangeStop,
+	Boolean   disposeInputs,
+	AEDesc *  theDescriptor);
 
 
 
@@ -130,4 +130,3 @@ CreateRangeDescriptor(
 #endif
 
 #endif /* __AEPACKOBJECT__ */
-

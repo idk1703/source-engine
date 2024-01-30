@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -25,7 +25,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudBowChargeMeter : public CHudElement, public EditablePanel
 {
@@ -47,7 +47,7 @@ private:
 DECLARE_HUDELEMENT( CHudBowChargeMeter );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudBowChargeMeter::CHudBowChargeMeter( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudBowCharge" )
 {
@@ -64,7 +64,7 @@ CHudBowChargeMeter::CHudBowChargeMeter( const char *pElementName ) : CHudElement
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBowChargeMeter::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -75,7 +75,7 @@ void CHudBowChargeMeter::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBowChargeMeter::Init( void )
 {
@@ -83,7 +83,7 @@ void CHudBowChargeMeter::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBowChargeMeter::FireGameEvent( IGameEvent *event )
 {
@@ -105,11 +105,11 @@ void CHudBowChargeMeter::FireGameEvent( IGameEvent *event )
 			return;
 
 		int boneIndexAttached = event->GetInt( "boneIndexAttached" );
-		Vector bonePosition( 
+		Vector bonePosition(
 			event->GetFloat( "bonePositionX"),
 			event->GetFloat( "bonePositionY"),
 			event->GetFloat( "bonePositionZ") );
-		QAngle boneAngles( 
+		QAngle boneAngles(
 			event->GetFloat( "boneAnglesX"),
 			event->GetFloat( "boneAnglesY"),
 			event->GetFloat( "boneAnglesZ") );
@@ -192,7 +192,7 @@ void CHudBowChargeMeter::FireGameEvent( IGameEvent *event )
 			Warning( " Unsupported Projectile type on event arrow_impact - %d", type );
 			return;
 		}
-		
+
 		pArrow->InitializeAsClientEntity( pszModelName, RENDER_GROUP_OPAQUE_ENTITY );
 		pArrow->SetModelScale( flScale );
 
@@ -207,7 +207,7 @@ void CHudBowChargeMeter::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudBowChargeMeter::ShouldDraw( void )
 {
@@ -236,7 +236,7 @@ bool CHudBowChargeMeter::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBowChargeMeter::OnTick( void )
 {

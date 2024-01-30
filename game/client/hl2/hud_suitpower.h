@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -52,6 +52,6 @@ private:
 	float m_flSuitPower;
 	int m_nSuitPowerLow;
 	int m_iActiveSuitDevices;
-};	
+};
 
 #endif // HUD_SUITPOWER_H

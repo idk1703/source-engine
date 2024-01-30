@@ -414,7 +414,7 @@ L 07/22/1999 - 21:44:17: "MCGILLA<74>" disconnected
 L 07/22/1999 - 21:44:17: "<-1>" destroyed "MCGILLA<74>"'s "sentry".
 L 07/22/1999 - 21:48:39: "DaBigPinoy<90><WON:4294928726>" connected, address "208.25.51.109:27005"
 L 07/22/1999 - 21:49:44: =------= MATCH RESULTS =------=
-L 07/22/1999 - 21:49:44: "blue" defeated "red" 
+L 07/22/1999 - 21:49:44: "blue" defeated "red"
 L 07/22/1999 - 21:49:44: "blue" RESULTS: "0" players. "53" frags, "0" unaccounted for. "40" team score. Allies:
 L 07/22/1999 - 21:49:44: "red" RESULTS: "0" players. "4" frags, "0" unaccounted for. "0" team score. Allies:
 L 07/22/1999 - 21:51:50: Log closed.

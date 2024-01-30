@@ -25,7 +25,7 @@ class CDmeAnimationSet;
 //-----------------------------------------------------------------------------
 // Creates an animation set
 //-----------------------------------------------------------------------------
-CDmeAnimationSet *CreateAnimationSet( CDmeFilmClip *pMovie, CDmeFilmClip *pShot, 
+CDmeAnimationSet *CreateAnimationSet( CDmeFilmClip *pMovie, CDmeFilmClip *pShot,
 	CDmeGameModel *pGameModel, const char *pAnimationSetName, int nSequenceToUse, bool bAttachToGameRecording );
 
 

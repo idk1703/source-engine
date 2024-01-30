@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -122,7 +122,7 @@ static void Pause( void )
 		printf( "Hit a key to continue\n" );
 #ifdef WIN32
 		getch();
-#endif	
+#endif
 	}
 }
 
@@ -158,7 +158,7 @@ static void VTexError( const char *pFormat, ... )
 		fprintf( stderr, "ERROR: %s", str );
 		Pause();
 		exit( 1 );
-	}	
+	}
 }
 
 
@@ -178,7 +178,7 @@ static void VTexWarning( const char *pFormat, ... )
 	{
 		fprintf( stderr, "WARN: %s", str );
 		Pause();
-	}	
+	}
 }
 
 
@@ -264,7 +264,7 @@ struct VTexConfigInfo_t
 
 		memset( &m_vtfProcOptions, 0, sizeof( m_vtfProcOptions ) );
 		m_vtfProcOptions.cbSize = sizeof( m_vtfProcOptions );
-		
+
 		m_vtfProcOptions.flags0 |= VtfProcessingOptions::OPT_FILTER_NICE;
 
 		CRC32_Init( &m_uiInputHash );
@@ -599,7 +599,7 @@ void VTexConfigInfo_t::ParseOptionKey( const char *pKeyName,  const char *pKeyVa
 			// r=0e.75 - exponential decay targeting 0 with exponent base 0.75
 
 			int nSteps = 0; // default
-			
+
 			for ( char const *szParse = pKeyValue; szParse; szParse = strchr( szParse, ':' ), szParse ? ++ szParse : 0 )
 			{
 				if ( char const *sz = StringAfterPrefix( szParse, "skip=" ) )
@@ -619,13 +619,13 @@ void VTexConfigInfo_t::ParseOptionKey( const char *pKeyName,  const char *pKeyVa
 					case 'b': case 'B': ch = 2; break;
 					case 'a': case 'A': ch = 3; break;
 					}
-					
+
 					szParse += 2;
 					m_vtfProcOptions.flags0 |= VtfProcessingOptions::OPT_DECAY_R << ch;
 					m_vtfProcOptions.flags0 &= ~(VtfProcessingOptions::OPT_DECAY_EXP_R << ch);
 					m_vtfProcOptions.numNotDecayMips[ch] = nSteps;
 					m_vtfProcOptions.clrDecayGoal[ch] = atoi( szParse );
-					
+
 					while ( isdigit( *szParse ) )
 						++ szParse;
 
@@ -765,7 +765,7 @@ static ImageFormat ComputeDesiredImageFormat( IVTFTexture *pTexture, VTexConfigI
 #endif
 	}
 	return targetFormat;
-} 
+}
 
 
 //-----------------------------------------------------------------------------
@@ -840,7 +840,7 @@ static void CreateLowResImage( IVTFTexture *pVTFTexture )
 //-----------------------------------------------------------------------------
 // Computes the source file name
 //-----------------------------------------------------------------------------
-void MakeSrcFileName( char *pSrcName, unsigned int flags, const char *pFullNameWithoutExtension, int frameID, 
+void MakeSrcFileName( char *pSrcName, unsigned int flags, const char *pFullNameWithoutExtension, int frameID,
 					 int faceID, int z, bool isCubeMap, int startFrame, int endFrame, bool bNormalToDUDV )
 {
 	bool bAnimated = !( startFrame == -1 || endFrame == -1 );
@@ -951,7 +951,7 @@ static void InitializeSrcTexture_PSD( IVTFTexture *pTexture, const char *pInputF
 {
 	int nWidth, nHeight;
 	ImageFormat imageFormat;
-	float flSrcGamma; 
+	float flSrcGamma;
 	bool ok = PSDGetInfo( psdBuffer, &nWidth, &nHeight, &imageFormat, &flSrcGamma );
 	if (!ok)
 	{
@@ -976,7 +976,7 @@ static void InitializeSrcTexture_TGA( IVTFTexture *pTexture, const char *pInputF
 {
 	int nWidth, nHeight;
 	ImageFormat imageFormat;
-	float flSrcGamma; 
+	float flSrcGamma;
 	bool ok = TGALoader::GetInfo( tgaBuffer, &nWidth, &nHeight, &imageFormat, &flSrcGamma );
 	if (!ok)
 	{
@@ -1037,7 +1037,7 @@ static void EatWhiteSpace( CUtlBuffer &buf )
 // Creates a texture the size of the PFM image stored in the buffer
 //-----------------------------------------------------------------------------
 static void InitializeSrcTexture_PFM( IVTFTexture *pTexture, const char *pInputFileName,
-									  CUtlBuffer &fileBuffer, int nDepth, int nFrameCount, 
+									  CUtlBuffer &fileBuffer, int nDepth, int nFrameCount,
 									  const VTexConfigInfo_t &info )
 {
 	fileBuffer.SeekGet( CUtlBuffer::SEEK_HEAD, 0 );
@@ -1121,7 +1121,7 @@ static bool LoadFaceFromPSD( IVTFTexture *pTexture, CUtlBuffer &psdBuffer, int z
 	// Load the psd and create all mipmap levels
 	unsigned char *pDestBits = pTexture->ImageData( nFrame, nFace, 0, 0, 0, z );
 
-	if ( ( info.m_bAlphaToDistance ) || 
+	if ( ( info.m_bAlphaToDistance ) ||
 		( nWidth != pTexture->Width() ) ||
 		( nHeight != pTexture->Height() ) )
 	{
@@ -1200,7 +1200,7 @@ static bool LoadFaceFromPSD( IVTFTexture *pTexture, CUtlBuffer &psdBuffer, int z
 						}
 						uint8 &nOutAlpha= tmpDest[3+4*(x+pTexture->Width()*y )];
 						nOutAlpha = min( 255.0, 255.0*( 0.5+flOutDist ) );
-						if ( ( nOutAlpha != 0 ) && 
+						if ( ( nOutAlpha != 0 ) &&
 							(
 							( x == 0 ) ||
 							( y == 0 ) ||
@@ -1226,7 +1226,7 @@ static bool LoadFaceFromPSD( IVTFTexture *pTexture, CUtlBuffer &psdBuffer, int z
 
 		// now, store in dest
 		ImageLoader::ConvertImageFormat( tmpDest.Base(), IMAGE_FORMAT_RGBA8888, pDestBits,
-			pTexture->Format(), pTexture->Width(), pTexture->Height(), 
+			pTexture->Format(), pTexture->Width(), pTexture->Height(),
 			0, 0 );
 		return true;
 
@@ -1264,17 +1264,17 @@ static bool LoadFaceFromTGA( IVTFTexture *pTexture, CUtlBuffer &tgaBuffer, int z
 
 	// Seek back so TGALoader::Load can see the tga header...
 	tgaBuffer.SeekGet( CUtlBuffer::SEEK_HEAD, 0 );
-	
+
 	// Load the tga and create all mipmap levels
 	unsigned char *pDestBits = pTexture->ImageData( nFrame, nFace, 0, 0, 0, z );
 
-	if ( ( info.m_bAlphaToDistance ) || 
+	if ( ( info.m_bAlphaToDistance ) ||
 		 ( nWidth != pTexture->Width() ) ||
 		 ( nHeight != pTexture->Height() ) )
 	{
 		// load into temp and resample
 		CUtlMemory<uint8> tmpImage( 0, nWidth*nHeight*4 );
-		if ( ! TGALoader::Load( tmpImage.Base(), tgaBuffer, nWidth, 
+		if ( ! TGALoader::Load( tmpImage.Base(), tgaBuffer, nWidth,
 								nHeight, IMAGE_FORMAT_RGBA8888, flGamma, false ) )
 		{
 			return false;
@@ -1318,7 +1318,7 @@ static bool LoadFaceFromTGA( IVTFTexture *pTexture, CUtlBuffer &tgaBuffer, int z
 						// map to original image coords
 						int nOrig_x=FLerp(0,nWidth-1,0,pTexture->Width()-1,x);
 						int nOrig_y=FLerp(0,nHeight-1,0,pTexture->Height()-1,y);
-						
+
 						uint8 nOrigAlpha=tmpImage[3+4*(nOrig_x+nWidth*nOrig_y)];
 						bool bInOrOut=nOrigAlpha > DISTANCE_CODE_ALPHA_INOUT_THRESHOLD;
 
@@ -1350,7 +1350,7 @@ static bool LoadFaceFromTGA( IVTFTexture *pTexture, CUtlBuffer &tgaBuffer, int z
 						}
 						uint8 &nOutAlpha= tmpDest[3+4*(x+pTexture->Width()*y )];
 						nOutAlpha = min( 255.0, 255.0*( 0.5+flOutDist ) );
-						if ( ( nOutAlpha != 0 ) && 
+						if ( ( nOutAlpha != 0 ) &&
 							 (
 								 ( x == 0 ) ||
 								 ( y == 0 ) ||
@@ -1372,18 +1372,18 @@ static bool LoadFaceFromTGA( IVTFTexture *pTexture, CUtlBuffer &tgaBuffer, int z
 							 info.m_SrcName );
 			}
 		}
-		
-		
+
+
 		// now, store in dest
 		ImageLoader::ConvertImageFormat( tmpDest.Base(), IMAGE_FORMAT_RGBA8888, pDestBits,
-										 pTexture->Format(), pTexture->Width(), pTexture->Height(), 
+										 pTexture->Format(), pTexture->Width(), pTexture->Height(),
 										 0, 0 );
 		return true;
-		
+
 	}
 	else
 	{
-		return TGALoader::Load( pDestBits, tgaBuffer, pTexture->Width(), 
+		return TGALoader::Load( pDestBits, tgaBuffer, pTexture->Width(),
 			pTexture->Height(), pTexture->Format(), flGamma, false );
 	}
 }
@@ -1440,7 +1440,7 @@ static bool LoadFaceFromPFM( IVTFTexture *pTexture, CUtlBuffer &fileBuffer, int 
 	return true;
 }
 
-static bool LoadFaceFromX( IVTFTexture *pTexture, CUtlBuffer &tgaBuffer, int z, int nFrame, int nFace, 
+static bool LoadFaceFromX( IVTFTexture *pTexture, CUtlBuffer &tgaBuffer, int z, int nFrame, int nFace,
 						   float flGamma, const VTexConfigInfo_t &info )
 {
 	switch ( g_eMode )
@@ -1459,7 +1459,7 @@ static bool LoadFaceFromX( IVTFTexture *pTexture, CUtlBuffer &tgaBuffer, int z, 
 	}
 }
 
-static bool LoadFace( IVTFTexture *pTexture, CUtlBuffer &tgaBuffer, int z, int nFrame, int nFace, 
+static bool LoadFace( IVTFTexture *pTexture, CUtlBuffer &tgaBuffer, int z, int nFrame, int nFace,
 					  float flGamma, const VTexConfigInfo_t &info )
 {
 	if ( !LoadFaceFromX( pTexture, tgaBuffer, z, nFrame, nFace, flGamma, info ) )
@@ -1488,10 +1488,10 @@ static bool LoadFace( IVTFTexture *pTexture, CUtlBuffer &tgaBuffer, int z, int n
 			unsigned char *pDestBits = pTexture->ImageData( nFrame, nFace, 0, 0, 0, z );
 			int nWidth = pTexture->Width();
 			int nHeight = pTexture->Height();
-			
+
 			int nPaintOff = info.m_numChannelsMax;
 			int nPaintBytes = 4 - nPaintOff;
-			
+
 			pDestBits += nPaintOff;
 
 			for( int j = 0; j < nHeight; ++ j )
@@ -1508,7 +1508,7 @@ static bool LoadFace( IVTFTexture *pTexture, CUtlBuffer &tgaBuffer, int z, int n
 }
 
 //-----------------------------------------------------------------------------
-// Loads source image data 
+// Loads source image data
 //-----------------------------------------------------------------------------
 static bool LoadSourceImages( IVTFTexture *pTexture, const char *pFullNameWithoutExtension,
 							  bool *pbGenerateSphereMaps,
@@ -1546,7 +1546,7 @@ static bool LoadSourceImages( IVTFTexture *pTexture, const char *pFullNameWithou
 			for ( int z = 0; z < info.m_nVolumeTextureDepth; ++z )
 			{
 				// Generate the filename to load....
-				MakeSrcFileName( pSrcName, info.m_nFlags, pFullNameWithoutExtension, 
+				MakeSrcFileName( pSrcName, info.m_nFlags, pFullNameWithoutExtension,
 					iFrame, iFace, bIsVolumeTexture ? z : -1, bIsCubeMap, info.m_nStartFrame, info.m_nEndFrame, info.m_bNormalToDuDv );
 
 				// Don't fail if the 7th iFace of a cubemap isn't loaded...
@@ -1599,7 +1599,7 @@ static bool LoadSourceImages( IVTFTexture *pTexture, const char *pFullNameWithou
 
 void PreprocessSkyBox( char *pFullNameWithoutExtension, int *iSkyboxFace )
 {
-	// When we get here, it means that we're processing one face of a skybox, but we're going to 
+	// When we get here, it means that we're processing one face of a skybox, but we're going to
 	// load all the faces and treat it as a cubemap so we can do the edge matching.
 
 	// Since they passed in only one face of the skybox, there's a 2 letter extension we want to get rid of.
@@ -1749,8 +1749,8 @@ static void AttachShtFile( const char *pFullNameWithoutExtension, IVTFTexture *p
 //-----------------------------------------------------------------------------
 // Does the dirty deed and generates a VTF file
 //-----------------------------------------------------------------------------
-bool ProcessFiles( const char *pFullNameWithoutExtension, 
-				  const char *pOutputDir, const char *pBaseName, 
+bool ProcessFiles( const char *pFullNameWithoutExtension,
+				  const char *pOutputDir, const char *pBaseName,
 				  bool isCubeMap, VTexConfigInfo_t &info )
 {
 	// force clamps/clampt for cube maps
@@ -1775,7 +1775,7 @@ bool ProcessFiles( const char *pFullNameWithoutExtension,
 
 	// Load the source images into the texture
 	bool bGenerateSpheremaps = false;
-	bool bLoadedSourceImages = LoadSourceImages( pVTFTexture.Get(), 
+	bool bLoadedSourceImages = LoadSourceImages( pVTFTexture.Get(),
 		pFullNameWithoutExtension, &bGenerateSpheremaps, info );
 	if ( !bLoadedSourceImages )
 	{
@@ -2022,7 +2022,7 @@ static bool LoadConfigFile( const char *pFileBaseName, VTexConfigInfo_t &info, b
 
 	info.m_LookDir = LOOK_DOWN_Z;
 
-	
+
 	// Try TGA file with config
 	memcpy( pFileName + lenBaseName, ".tga", 4 );
 	if ( !bOK && !g_bNoTga && ( 00 == access( pFileName, 00 ) ) ) // TGA file exists
@@ -2241,7 +2241,7 @@ static bool LoadConfigFile( const char *pFileBaseName, VTexConfigInfo_t &info, b
 
 void Usage( void )
 {
-	VTexError( 
+	VTexError(
 		"Usage: vtex [-outdir dir] [-quiet] [-nopause] [-mkdir] [-shader ShaderName] [-vmtparam Param Value] tex1.txt tex2.txt . . .\n"
 		"-quiet            : don't print anything out, don't pause for input\n"
 		"-warningsaserrors : treat warnings as errors\n"
@@ -2403,7 +2403,7 @@ bool Process_File( char *pInputBaseName, int maxlen )
 			int numExtraBytes = strlen( "/content/.../materialsrc/" ) - strlen( "/game/.../materials/" );
 			int numConvertBytes = pMaterials + strlen( "/materials/" ) - outputDir;
 			memmove( outputDir + numConvertBytes + numExtraBytes, outputDir + numConvertBytes, strlen( outputDir ) - numConvertBytes + 1 );
-			
+
 			int numMidBytes = pMaterials - pGame - strlen( "/game" );
 			memmove( pGame + strlen( "/content" ), pGame + strlen( "/game" ), numMidBytes );
 
@@ -2577,7 +2577,7 @@ static SpewRetval_t VTexOutputFunc( SpewType_t spewType, char const *pMsg )
 		Pause();
 		return SPEW_ABORT;
 	}
-	return (spewType == SPEW_ASSERT) ? SPEW_DEBUGGER : SPEW_CONTINUE; 
+	return (spewType == SPEW_ASSERT) ? SPEW_DEBUGGER : SPEW_CONTINUE;
 }
 
 
@@ -2708,22 +2708,22 @@ int CVTex::VTex( int argc, char **argv )
 			i++;
 			g_bUseStandardError = true;
 		}
-		else if ( stricmp( argv[i], "-nopsd" ) == 0 ) 
+		else if ( stricmp( argv[i], "-nopsd" ) == 0 )
 		{
 			i++;
 			g_bNoPsd = true;
 		}
-		else if ( stricmp( argv[i], "-notga" ) == 0 ) 
+		else if ( stricmp( argv[i], "-notga" ) == 0 )
 		{
 			i++;
 			g_bNoTga = true;
 		}
-		else if ( stricmp( argv[i], "-nomkdir" ) == 0 ) 
+		else if ( stricmp( argv[i], "-nomkdir" ) == 0 )
 		{
 			i++;
 			g_CreateDir = false;
 		}
-		else if ( stricmp( argv[i], "-mkdir" ) == 0 ) 
+		else if ( stricmp( argv[i], "-mkdir" ) == 0 )
 		{
 			i++;
 			g_CreateDir = true;
@@ -2793,7 +2793,7 @@ int CVTex::VTex( int argc, char **argv )
 
 					if( !g_Quiet )
 					{
-						fprintf( stderr, "Adding .vmt parameter: \"%s\"\t\"%s\"\n", 
+						fprintf( stderr, "Adding .vmt parameter: \"%s\"\t\"%s\"\n",
 							g_VMTParams[g_NumVMTParams].m_szParam,
 							g_VMTParams[g_NumVMTParams].m_szValue );
 					}
@@ -2945,7 +2945,7 @@ int CVTex::VTex( int argc, char **argv )
 		{
 			sprintf( filename, "%s%s", basedir, wfd.cFileName );
 
-			if ( wfd.cFileName[0] != '.' ) 
+			if ( wfd.cFileName[0] != '.' )
 				Process_File( filename, sizeof( filename ) );
 
 			int iFFType = Find_Files( wfd, hResult, basedir, ext );
@@ -2954,7 +2954,7 @@ int CVTex::VTex( int argc, char **argv )
 			{
 				sprintf( filename, "%s%s", basedir, wfd.cFileName );
 
-				if ( wfd.cFileName[0] != '.' && iFFType != FF_DONTPROCESS ) 
+				if ( wfd.cFileName[0] != '.' && iFFType != FF_DONTPROCESS )
 					Process_File( filename, sizeof( filename ) );
 
 				iFFType = Find_Files( wfd, hResult, basedir, ext );
@@ -2968,7 +2968,7 @@ int CVTex::VTex( int argc, char **argv )
 #endif
 
 	}
-	
+
 	// Shutdown P4
 	if ( g_bUsedAsLaunchableDLL && p4 && !CommandLine()->FindParm( "-p4skip" ) )
 	{

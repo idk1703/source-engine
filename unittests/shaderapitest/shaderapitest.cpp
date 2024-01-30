@@ -34,7 +34,7 @@ class CShaderUtilTemp : public CBaseAppSystem< IShaderUtil >
 {
 public:
 	// Method to allow clients access to the MaterialSystem_Config
-	virtual MaterialSystem_Config_t& GetConfig() 
+	virtual MaterialSystem_Config_t& GetConfig()
 	{
 		static MaterialSystem_Config_t config;
 		return config;
@@ -42,8 +42,8 @@ public:
 
 	// Allows us to convert image formats
 	virtual bool ConvertImageFormat( unsigned char *src, enum ImageFormat srcImageFormat,
-		unsigned char *dst, enum ImageFormat dstImageFormat, 
-		int width, int height, int srcStride = 0, int dstStride = 0 ) 
+		unsigned char *dst, enum ImageFormat dstImageFormat,
+		int width, int height, int srcStride = 0, int dstStride = 0 )
 	{
 		return true;
 	}
@@ -129,9 +129,9 @@ public:
 
 	ShaderAPITextureHandle_t GetShaderAPITextureBindHandle( ITexture *pTexture, int nFrame, int nTextureChannel ) { return 0; }
 
- 	// Remove any materials from memory that aren't in use as determined
- 	// by the IMaterial's reference count.
- 	virtual void UncacheUnusedMaterials( bool bRecomputeStateSnapshots = false ) {}
+	// Remove any materials from memory that aren't in use as determined
+	// by the IMaterial's reference count.
+	virtual void UncacheUnusedMaterials( bool bRecomputeStateSnapshots = false ) {}
 
 	virtual MaterialThreadMode_t			GetThreadMode( ) { return MATERIAL_SINGLE_THREADED; }
 	virtual bool							IsRenderThreadSafe( ) { return true; }
@@ -142,13 +142,13 @@ static CShaderUtilTemp g_pTemp;
 
 static IShaderDeviceMgr *g_pShaderDeviceMgr;
 
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderUtilTemp, IShaderUtil, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderUtilTemp, IShaderUtil,
 	SHADER_UTIL_INTERFACE_VERSION, g_pTemp )
 
 //-----------------------------------------------------------------------------
 // Purpose: Warning/Msg call back through this API
-// Input  : type - 
-//			*pMsg - 
+// Input  : type -
+//			*pMsg -
 // Output : SpewRetval_t
 //-----------------------------------------------------------------------------
 SpewRetval_t SpewFunc( SpewType_t type, const char *pMsg )
@@ -275,7 +275,7 @@ bool CShaderAPITestApp::Create()
 			}
 		}
 	}
-	
+
 	g_pShaderDeviceMgr = (IShaderDeviceMgr*)AddSystem( module, SHADER_DEVICE_MGR_INTERFACE_VERSION );
 
 	// So that shaderapi can get ahold of our bogus IShaderUtil
@@ -317,18 +317,18 @@ bool CShaderAPITestApp::CreateAppWindow( const char *pTitle, bool bWindowed, int
 	WNDCLASSEX		wc;
 	memset( &wc, 0, sizeof( wc ) );
 	wc.cbSize		 = sizeof( wc );
-    wc.style         = CS_OWNDC | CS_DBLCLKS;
-    wc.lpfnWndProc   = ShaderAPITestWndProc;
-    wc.hInstance     = (HINSTANCE)GetAppInstance();
-    wc.lpszClassName = "Valve001";
+	wc.style         = CS_OWNDC | CS_DBLCLKS;
+	wc.lpfnWndProc   = ShaderAPITestWndProc;
+	wc.hInstance     = (HINSTANCE)GetAppInstance();
+	wc.lpszClassName = "Valve001";
 	wc.hIcon		 = NULL; //LoadIcon( s_HInstance, MAKEINTRESOURCE( IDI_LAUNCHER ) );
 	wc.hIconSm		 = wc.hIcon;
 
-    RegisterClassEx( &wc );
+	RegisterClassEx( &wc );
 
 	// Note, it's hidden
 	DWORD style = WS_POPUP | WS_CLIPSIBLINGS;
-	
+
 	if ( bWindowed )
 	{
 		// Give it a frame
@@ -349,14 +349,14 @@ bool CShaderAPITestApp::CreateAppWindow( const char *pTitle, bool bWindowed, int
 	AdjustWindowRectEx(&windowRect, style, FALSE, 0);
 
 	// Create the window
-	m_HWnd = CreateWindow( wc.lpszClassName, pTitle, style, 0, 0, 
-		windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, 
+	m_HWnd = CreateWindow( wc.lpszClassName, pTitle, style, 0, 0,
+		windowRect.right - windowRect.left, windowRect.bottom - windowRect.top,
 		NULL, NULL, (HINSTANCE)GetAppInstance(), NULL );
 
 	if (!m_HWnd)
 		return false;
 
-    int     CenterX, CenterY;
+	int     CenterX, CenterY;
 
 	CenterX = (GetSystemMetrics(SM_CXSCREEN) - w) / 2;
 	CenterY = (GetSystemMetrics(SM_CYSCREEN) - h) / 2;
@@ -365,7 +365,7 @@ bool CShaderAPITestApp::CreateAppWindow( const char *pTitle, bool bWindowed, int
 
 	// In VCR modes, keep it in the upper left so mouse coordinates are always relative to the window.
 	SetWindowPos (m_HWnd, NULL, CenterX, CenterY, 0, 0,
-				  SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW | SWP_DRAWFRAME);
+				SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW | SWP_DRAWFRAME);
 
 	return true;
 }
@@ -457,7 +457,7 @@ void CShaderAPITestApp::DisplayAdapterInfo()
 		g_pShaderDeviceMgr->GetAdapterInfo( i, info );
 
 		Msg( "Adapter %d\n", i );
-		Msg( "\tName: %s\n\tVendor: 0x%X\n\tDevice: 0x%X\n\tSubSystem: 0x%X\n\tRevision: 0x%X\n\tRecommended DX Level: %d\n\tMax DX Level: %d\n", 
+		Msg( "\tName: %s\n\tVendor: 0x%X\n\tDevice: 0x%X\n\tSubSystem: 0x%X\n\tRevision: 0x%X\n\tRecommended DX Level: %d\n\tMax DX Level: %d\n",
 			info.m_pDriverName, info.m_VendorID, info.m_DeviceID, info.m_SubSysID, info.m_Revision, info.m_nDXSupportLevel, info.m_nMaxDXSupportLevel );
 
 		CUtlBuffer buf( 0, 0, CUtlBuffer::TEXT_BUFFER );
@@ -473,7 +473,7 @@ void CShaderAPITestApp::DisplayAdapterInfo()
 		{
 			ShaderDisplayMode_t mode;
 			g_pShaderDeviceMgr->GetModeInfo( &mode, i, j );
-			Msg( "\t\tH: %5d W: %5d Format: %3d Refresh %3d/%3d\n", 
+			Msg( "\t\tH: %5d W: %5d Format: %3d Refresh %3d/%3d\n",
 				mode.m_nWidth, mode.m_nHeight, mode.m_Format, mode.m_nRefreshRateNumerator, mode.m_nRefreshRateDenominator );
 		}
 	}
@@ -529,16 +529,16 @@ void CShaderAPITestApp::CreateSimpleBuffers( ShaderBufferType_t nVBType, ShaderB
 	VertexFormat_t fmt = VERTEX_POSITION | VERTEX_NORMAL | VERTEX_COLOR;
 	if ( IsDynamicBufferType( nVBType ) )
 	{
-		m_pVertexBuffer = m_pShaderDevice->CreateVertexBuffer( 
+		m_pVertexBuffer = m_pShaderDevice->CreateVertexBuffer(
 			nVBType, VERTEX_FORMAT_UNKNOWN, 1024, "test" );
 	}
 	else
 	{
-		m_pVertexBuffer = m_pShaderDevice->CreateVertexBuffer( 
+		m_pVertexBuffer = m_pShaderDevice->CreateVertexBuffer(
 			nVBType, fmt, 4, "test" );
 	}
 
-	static unsigned char s_pColors[4][4] = 
+	static unsigned char s_pColors[4][4] =
 	{
 		{ 255,   0,   0, 255 },
 		{   0, 255,   0, 255 },
@@ -623,7 +623,7 @@ void CShaderAPITestApp::DestroyBuffers()
 //-----------------------------------------------------------------------------
 // shader programs
 //-----------------------------------------------------------------------------
-static const char s_pSimpleVertexShader[] = 
+static const char s_pSimpleVertexShader[] =
 	"struct VS_INPUT															"
 	"{																			"
 	"	float3 vPos						: POSITION0;							"
@@ -647,7 +647,7 @@ static const char s_pSimpleVertexShader[] =
 	"}																			"
 	"";
 
-static const char s_pSimplePixelShader[] = 
+static const char s_pSimplePixelShader[] =
 	"struct PS_INPUT															"
 	"{																			"
 	"	float4 projPos					: POSITION0;							"
@@ -712,7 +712,7 @@ void CShaderAPITestApp::TestColoredQuad( ShaderBufferType_t nVBType, ShaderBuffe
 	CreateSimpleBuffers( nVBType, nIBType, bBuffered );
 
 	// Draw a quad!
-	CreateShaders( s_pSimpleVertexShader, sizeof(s_pSimpleVertexShader), 
+	CreateShaders( s_pSimpleVertexShader, sizeof(s_pSimpleVertexShader),
 		NULL, 0, s_pSimplePixelShader, sizeof(s_pSimplePixelShader) );
 
 	m_pShaderAPI->Draw( MATERIAL_TRIANGLES, 0, 6 );
@@ -729,19 +729,19 @@ void CShaderAPITestApp::TestColoredQuad( ShaderBufferType_t nVBType, ShaderBuffe
 //-----------------------------------------------------------------------------
 void CShaderAPITestApp::TestDynamicBuffers()
 {
-	m_pVertexBuffer = m_pShaderDevice->CreateVertexBuffer( 
+	m_pVertexBuffer = m_pShaderDevice->CreateVertexBuffer(
 		SHADER_BUFFER_TYPE_DYNAMIC, VERTEX_FORMAT_UNKNOWN, 0x100, "test" );
-	m_pIndexBuffer = m_pShaderDevice->CreateIndexBuffer( 
+	m_pIndexBuffer = m_pShaderDevice->CreateIndexBuffer(
 		SHADER_BUFFER_TYPE_DYNAMIC, MATERIAL_INDEX_FORMAT_UNKNOWN, 30, "test" );
 
-	CreateShaders( s_pSimpleVertexShader, sizeof(s_pSimpleVertexShader), 
+	CreateShaders( s_pSimpleVertexShader, sizeof(s_pSimpleVertexShader),
 		NULL, 0, s_pSimplePixelShader, sizeof(s_pSimplePixelShader) );
 
 	// clear (so that we can make sure that we aren't getting results from the previous quad)
 	m_pShaderAPI->ClearColor3ub( RandomInt( 0, 100 ), RandomInt( 0, 100 ), RandomInt( 190, 255 ) );
 	m_pShaderAPI->ClearBuffers( true, false, false, -1, -1 );
 
-	static unsigned char s_pColors[4][4] = 
+	static unsigned char s_pColors[4][4] =
 	{
 		{ 255,   0,   0, 255 },
 		{   0, 255,   0, 255 },
@@ -831,7 +831,7 @@ bool CShaderAPITestApp::CreateDynamicCombos_Ver5( uint8 *pComboBuffer, bool bVer
 	while ( bOK )
 	{
 		uint32 nBlockSize = NextULONG( pCompressedShaders );
-		if ( nBlockSize == 0xffffffff )	
+		if ( nBlockSize == 0xffffffff )
 		{
 			// any more blocks?
 			break;
@@ -843,7 +843,7 @@ bool CShaderAPITestApp::CreateDynamicCombos_Ver5( uint8 *pComboBuffer, bool bVer
 			{
 				// uncompress
 				uint32 nOutsize = MAX_SHADER_UNPACKED_BLOCK_SIZE;
-				int nRslt = BZ2_bzBuffToBuffDecompress( 
+				int nRslt = BZ2_bzBuffToBuffDecompress(
 					reinterpret_cast<char *>( pUnpackBuffer ),
 					&nOutsize,
 					reinterpret_cast<char *>( pCompressedShaders ),
@@ -933,7 +933,7 @@ void CShaderAPITestApp::LoadShaderFile( const char *pName, bool bVertexShader )
 		return;
 	}
 
-	ShaderHeader_t header; 
+	ShaderHeader_t header;
 	g_pFullFileSystem->Read( &header, sizeof( ShaderHeader_t ), hFile );
 
 	// cache the dictionary
@@ -951,7 +951,7 @@ void CShaderAPITestApp::LoadShaderFile( const char *pName, bool bVertexShader )
 		g_pFullFileSystem->Seek( hFile, nStartingOffset, FILESYSTEM_SEEK_HEAD );
 		g_pFullFileSystem->Read( pBuf, nShaderSize, hFile );
 
-		CreateDynamicCombos_Ver5( pBuf, bVertexShader ); 
+		CreateDynamicCombos_Ver5( pBuf, bVertexShader );
 		free( pBuf );
 
 	}
@@ -1028,7 +1028,7 @@ int CShaderAPITestApp::Main()
 			{
 				TestColoredQuad( (ShaderBufferType_t)nVBType, (ShaderBufferType_t)nIBType, nBuffered != 0 );
 
-				sprintf( buf, "TestColoredQuad results VB: %d IB: %d Buffered: %d HIT A KEY!", 
+				sprintf( buf, "TestColoredQuad results VB: %d IB: %d Buffered: %d HIT A KEY!",
 					nVBType, nIBType, nBuffered != 0 );
 				SetWindowText( m_HWnd, buf );
 

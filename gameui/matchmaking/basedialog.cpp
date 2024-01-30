@@ -28,7 +28,7 @@ CBaseDialog::CBaseDialog( vgui::Panel *pParent, const char *pName ) : BaseClass(
 
 	m_pTitle = new vgui::Label( this, "DialogTitle", "" );
 	m_pFooterInfo = NULL;
-	
+
 	m_nBorderWidth = 0;
 	m_nButtonGap = -1;
 }
@@ -182,7 +182,7 @@ void CBaseDialog::OnKeyCodePressed( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseDialog::OnKeyCodeReleased( vgui::KeyCode code )
 {
@@ -192,7 +192,7 @@ void CBaseDialog::OnKeyCodeReleased( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseDialog::HandleKeyRepeated( vgui::KeyCode code )
 {
@@ -200,7 +200,7 @@ void CBaseDialog::HandleKeyRepeated( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseDialog::OnThink()
 {
@@ -213,7 +213,7 @@ void CBaseDialog::OnThink()
 		}
 		else
 		{
-			// This can happen because of the slight delay after selecting a 
+			// This can happen because of the slight delay after selecting a
 			// menu option and the resulting action. The selection caused the
 			// key repeater to be reset, but the player can press a movement
 			// key before the action occurs, leaving us with a key repeating

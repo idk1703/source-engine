@@ -38,7 +38,7 @@ public:
 
 protected:
 
-	PlayerClassSniperData_t	*m_pSniperData; 
+	PlayerClassSniperData_t	*m_pSniperData;
 	Vector					m_vStandMins;
 	Vector					m_vStandMaxs;
 	Vector					m_vStandViewOffset;

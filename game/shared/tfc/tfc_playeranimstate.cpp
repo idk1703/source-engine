@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -35,7 +35,7 @@
 class CTFCPlayerAnimState : public ITFCPlayerAnimState, public CBasePlayerAnimState
 {
 public:
-	
+
 	DECLARE_CLASS( CTFCPlayerAnimState, CBasePlayerAnimState );
 
 	CTFCPlayerAnimState();
@@ -53,16 +53,16 @@ public:
 
 
 private:
-	
+
 	const char* GetWeaponSuffix();
 	bool HandleJumping();
 	bool HandleDeath( Activity *deathActivity );
 
 
 private:
-	
+
 	CTFCPlayer *m_pOuterTFC;
-	
+
 	bool m_bJumping;
 	bool m_bFirstJumpFrame;
 	float m_flJumpStartTime;
@@ -99,7 +99,7 @@ CTFCPlayerAnimState::CTFCPlayerAnimState()
 void CTFCPlayerAnimState::InitTFC( CTFCPlayer *pPlayer )
 {
 	m_pOuterTFC = pPlayer;
-	
+
 	CModAnimConfig config;
 	config.m_flMaxBodyYawDegrees = 30;
 	config.m_LegAnimType = LEGANIM_GOLDSRC;
@@ -136,7 +136,7 @@ int CTFCPlayerAnimState::CalcAimLayerSequence( float *flCycle, float *flAimSeque
 	if ( m_bDying )
 	{
 		// While dying, only play the main sequence.. don't layer this one on top.
-		*flAimSequenceWeight = 0;	
+		*flAimSequenceWeight = 0;
 	}
 	else
 	{
@@ -150,7 +150,7 @@ int CTFCPlayerAnimState::CalcAimLayerSequence( float *flCycle, float *flAimSeque
 	}
 
 	iSequence = CalcSequenceIndex( "%s_%s_%s", pPrefix, pAimOrShoot, pWeaponSuffix );
-	
+
 	// Check if we're done firing.
 	if ( m_bFiring )
 	{
@@ -161,7 +161,7 @@ int CTFCPlayerAnimState::CalcAimLayerSequence( float *flCycle, float *flAimSeque
 			*flCycle = 1;
 			m_bFiring = false;
 		}
-	}	
+	}
 
 	return iSequence;
 }
@@ -186,8 +186,8 @@ void CTFCPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event, int nData )
 	{
 		m_bFiring = m_bJumping = false;
 		m_bDying = true;
-		
-		Activity acts[] = 
+
+		Activity acts[] =
 		{
 			ACT_DIESIMPLE,
 			ACT_DIEBACKWARD,
@@ -320,4 +320,3 @@ bool CTFCPlayerAnimState::ShouldUpdateAnimState()
 {
 	return true;
 }
-

@@ -32,7 +32,7 @@ public:
 	virtual const Path::Segment *GetCurrentGoal( void ) const;				// return current goal along the path we are trying to reach
 
 	virtual void SetMinLookAheadDistance( float value );					// minimum range movement goal must be along path
-	
+
 private:
 	const Path::Segment *m_goal;					// our current goal along the path
 	float m_minLookAheadRange;
@@ -54,5 +54,3 @@ inline void CTFPathFollower::SetMinLookAheadDistance( float value )
 }
 
 #endif // TF_PATH_FOLLOWER_H
-
-

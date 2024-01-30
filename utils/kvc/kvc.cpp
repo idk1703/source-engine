@@ -44,12 +44,12 @@ IBaseFileSystem *filesystem = NULL;
 static bool spewed = false;
 
 SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
-{	
+{
 	spewed = true;
 
 	printf( "%s", pMsg );
 	OutputDebugString( pMsg );
-	
+
 	if ( type == SPEW_ERROR )
 	{
 		printf( "\n" );
@@ -60,10 +60,10 @@ SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : depth - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : depth -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void vprint( int depth, const char *fmt, ... )
 {
@@ -158,24 +158,24 @@ void Con_Printf( const char *fmt, ... )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void printusage( void )
 {
 	vprint( 0, "usage:  kvc <wildcard path> [<wildcard path>] <outputfile>\n\
 \n\
-    -v = verbose output\n\
-    -l = log to file log.txt\n\
-    -t = perform load timing tests\n\
-    -p = perform paint kit macro expansion\n\
-         in this mode if no output file is specified,\n\
-         the input file is copied to <input>_bak and <input> is overwritten\n\
-         with -p, each file specified is processed separately without wildcards\n\
-    -f = With -p, output is to <input>_fix and <input> is unchanged\n\
+	-v = verbose output\n\
+	-l = log to file log.txt\n\
+	-t = perform load timing tests\n\
+	-p = perform paint kit macro expansion\n\
+		in this mode if no output file is specified,\n\
+		the input file is copied to <input>_bak and <input> is overwritten\n\
+		with -p, each file specified is processed separately without wildcards\n\
+	-f = With -p, output is to <input>_fix and <input> is unchanged\n\
 \n\
 e.g.:  kvc -l u:/xbox/game/hl2x/materials/*.vmt u:/xbox/game/hl2x/kvc/vmt.kv\n\
 \n\
-       kvc -v -p americanpastoral_rocketlauncher.paintkit\n\
+		kvc -v -p americanpastoral_rocketlauncher.paintkit\n\
 \n" );
 
 	// Exit app
@@ -338,7 +338,7 @@ void BuildFileListFromWildcard( CUtlVector< CUtlSymbol >& files, char const *sea
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CheckLogFile( void )
 {
@@ -460,9 +460,9 @@ void ExamineKVFile( char const *filename )
 		DescribeKV( 1, NULL, kv );
 	}
 	*/
-	vprint( 0, "loading of %d elements took %.3f msec, create %.3f in-place %.3f\n", 
-		results.Count(), 
-		(float)timer.GetDuration().GetMillisecondsF(), 
+	vprint( 0, "loading of %d elements took %.3f msec, create %.3f in-place %.3f\n",
+		results.Count(),
+		(float)timer.GetDuration().GetMillisecondsF(),
 		(float)timer2.GetDuration().GetMillisecondsF(),
 		(float)timer3.GetDuration().GetMillisecondsF());
 
@@ -519,12 +519,12 @@ bool CCompileKeyValuesApp::Create()
 	SpewOutputFunc( SpewFunc );
 	SpewActivate( "kvc", 2 );
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "", "" }	// Required to terminate the list
 	};
 
-	if ( !AddSystems( appSystems ) ) 
+	if ( !AddSystems( appSystems ) )
 		return false;
 
 	g_pFullFileSystem = (IFileSystem*)FindSystem( FILESYSTEM_INTERFACE_VERSION );
@@ -572,7 +572,7 @@ bool CCompileKeyValuesApp::PreInit( )
 	if ( !SetupSearchPaths() )
 		return false;
 
-	return true; 
+	return true;
 }
 
 void CCompileKeyValuesApp::PostShutdown()
@@ -664,7 +664,7 @@ int CCompileKeyValuesApp::Main()
 
 	for ( i = 0; i < worklist.Count() - 1; ++i )
 	{
-        char workdir[ 256 ];
+		char workdir[ 256 ];
 		Q_snprintf( workdir, sizeof( workdir ), "%s", worklist[ i ].String() );
 
 		Q_StripTrailingSlash( workdir );
@@ -674,7 +674,7 @@ int CCompileKeyValuesApp::Main()
 		int oldc = diskfiles.Count();
 		BuildFileListFromWildcard( diskfiles, workdir );
 		int added = diskfiles.Count() - oldc;
-        vprint( 0, "found %i files\n\n", added  );
+		vprint( 0, "found %i files\n\n", added  );
 	}
 
 	{
@@ -693,9 +693,9 @@ int CCompileKeyValuesApp::Main()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : argc - 
-//			argv[] - 
+// Purpose:
+// Input  : argc -
+//			argv[] -
 // Output : int
 //-----------------------------------------------------------------------------
 int main( int argc, char* argv[] )
@@ -706,5 +706,5 @@ int main( int argc, char* argv[] )
 	CSteamApplication steamApplication( &kvCompiler );
 	int nRetVal = steamApplication.Run();
 
-	return nRetVal;	
+	return nRetVal;
 }

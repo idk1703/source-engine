@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@
 #define CBaseTFCombatWeapon C_BaseTFCombatWeapon
 #endif
 //-----------------------------------------------------------------------------
-// Purpose: Client side rep of CBaseTFCombatWeapon 
+// Purpose: Client side rep of CBaseTFCombatWeapon
 //-----------------------------------------------------------------------------
 class CBaseTFCombatWeapon : public CBaseCombatWeapon
 {
@@ -51,7 +51,7 @@ public:
 
 	virtual void	WeaponSound( WeaponSound_t sound_type, float soundtime = 0.0f );
 
-	virtual void	PlayAttackAnimation( int activity ); 
+	virtual void	PlayAttackAnimation( int activity );
 
 	virtual bool	SendWeaponAnim( int iActivity );
 	virtual void	SetReflectViewModelAnimations( bool reflect );
@@ -73,7 +73,7 @@ public:
 	/*
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 	*/
@@ -147,6 +147,3 @@ protected:
 };
 
 #endif // BASETFCOMBATWEAPON_SHARED_H
-
-
-

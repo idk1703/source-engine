@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,7 +29,7 @@ public:
 
 	CPredictedViewModel( void );
 	virtual ~CPredictedViewModel( void );
-							
+
 	virtual void CalcViewModelLag( Vector& origin, QAngle& angles, QAngle& original_angles );
 
 #if defined( CLIENT_DLL )
@@ -43,7 +43,7 @@ public:
 #endif
 
 private:
-	
+
 #if defined( CLIENT_DLL )
 
 	// This is used to lag the angles.

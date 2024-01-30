@@ -124,7 +124,7 @@ private:
 	void SendFrameToDagRenderPanel( vgui::Panel *pPanel );
 
 	vgui::MenuBar *m_pMenuBar;
-	
+
 	vgui::DHANDLE< vgui::FileOpenDialog > m_hFileOpenDialog;
 	vgui::DHANDLE< CElementPropertiesTree > m_hProperties;
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -21,7 +21,7 @@
 CDynamicDialogWnd::CDynamicDialogWnd(CWnd *pParent)
 {
 	m_pDialog = NULL;
-	Create(NULL, "DynamicDialogWnd", WS_BORDER | WS_CAPTION | WS_CHILD, 
+	Create(NULL, "DynamicDialogWnd", WS_BORDER | WS_CAPTION | WS_CHILD,
 		CRect(0, 0, 50, 50), pParent, 1);
 	SetWindowPos(&wndTopMost, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,7 +14,7 @@
 #include "tier0/memdbgon.h"
 
 #ifdef _WIN32
-#pragma warning (disable:4701)				// disable warning that variable *may* not be initialized 
+#pragma warning (disable:4701)				// disable warning that variable *may* not be initialized
 #endif
 
 
@@ -273,10 +273,10 @@ bool CCSBot::UpdateLadderMovement( void )
 		PrintIfWatched( "Ladder timeout!\n" );
 		giveUp = true;
 	}
-	else if (m_pathLadderState == APPROACH_ASCENDING_LADDER || 
-			 m_pathLadderState == APPROACH_DESCENDING_LADDER || 
-			 m_pathLadderState == ASCEND_LADDER || 
-			 m_pathLadderState == DESCEND_LADDER || 
+	else if (m_pathLadderState == APPROACH_ASCENDING_LADDER ||
+			 m_pathLadderState == APPROACH_DESCENDING_LADDER ||
+			 m_pathLadderState == ASCEND_LADDER ||
+			 m_pathLadderState == DESCEND_LADDER ||
 			 m_pathLadderState == DISMOUNT_ASCENDING_LADDER ||
 			 m_pathLadderState == MOVE_TO_DESTINATION)
 	{
@@ -930,7 +930,7 @@ int CCSBot::FindPathPoint( float aheadRange, Vector *point, int *prevIndex )
 		return index;
 	}
 
-	// make sure we use a node a minimum distance ahead of us, to avoid wiggling 
+	// make sure we use a node a minimum distance ahead of us, to avoid wiggling
 	while (startIndex < m_pathLength-1)
 	{
 		Vector pos = m_path[ startIndex+1 ].pos;
@@ -948,7 +948,7 @@ int CCSBot::FindPathPoint( float aheadRange, Vector *point, int *prevIndex )
 	}
 
 	// if we hit a ladder, stop, or jump area, must stop (dont use ladder behind us)
-	if (startIndex > m_pathIndex && startIndex < m_pathLength && 
+	if (startIndex > m_pathIndex && startIndex < m_pathLength &&
 		(m_path[ startIndex ].ladder || m_path[ startIndex ].area->GetAttributes() & (NAV_MESH_JUMP | NAV_MESH_STOP)))
 	{
 		*point = m_path[ startIndex ].pos;
@@ -961,7 +961,7 @@ int CCSBot::FindPathPoint( float aheadRange, Vector *point, int *prevIndex )
 		startIndex = m_pathLength-1;
 
 	// if we hit a ladder, stop, or jump area, must stop
-	if (startIndex < m_pathLength && 
+	if (startIndex < m_pathLength &&
 		(m_path[ startIndex ].ladder || m_path[ startIndex ].area->GetAttributes() & (NAV_MESH_JUMP | NAV_MESH_STOP)))
 	{
 		*point = m_path[ startIndex ].pos;
@@ -1017,7 +1017,7 @@ int CCSBot::FindPathPoint( float aheadRange, Vector *point, int *prevIndex )
 		}
 
 		// if we encounter a ladder or jump area, we must stop
-		if (i < m_pathLength && 
+		if (i < m_pathLength &&
 				(m_path[ i ].ladder || m_path[ i ].area->GetAttributes() & NAV_MESH_JUMP))
 			break;
 
@@ -1205,7 +1205,7 @@ bool CCSBot::IsFriendInTheWay( const Vector &goalPos )
 	Vector myOrigin = GetCentroid( this );
 	Vector moveDir = goalPos - myOrigin;
 
-	// make it a unit vector 
+	// make it a unit vector
 	float length = moveDir.NormalizeInPlace();
 
 	m_isFriendInTheWay = false;
@@ -1631,7 +1631,7 @@ CCSBot::PathResult CCSBot::UpdatePathMovement( bool allowSpeedChange )
 
 							// if we are too close to the ladder, back off a bit
 							const float tooCloseRange = 100.0f;
-							Vector2D delta( m_path[i].ladder->m_top.x - myOrigin.x, 
+							Vector2D delta( m_path[i].ladder->m_top.x - myOrigin.x,
 											m_path[i].ladder->m_top.y - myOrigin.y );
 							if (delta.IsLengthLessThan( tooCloseRange ))
 							{
@@ -1770,7 +1770,7 @@ CCSBot::PathResult CCSBot::UpdatePathMovement( bool allowSpeedChange )
 	}
 
 	//
-	// This timeout check is needed if the bot somehow slips way off 
+	// This timeout check is needed if the bot somehow slips way off
 	// of its path and cannot progress, but also moves around
 	// enough that it never becomes "stuck"
 	//
@@ -2072,4 +2072,3 @@ void CCSBot::DrawPath( void )
 		UTIL_DrawBeamPoints( close + Vector( 0, 25, 0 ), close + Vector( 0, -25, 0 ), 1, 0, 255, 0 );
 	}
 }
-

@@ -10,7 +10,7 @@
 #include "materialsystem/imaterialvar.h"
 #include "materialsystem/imaterial.h"
 
-#define REPAINT_TIMER_ID	1042 //random value, hopfully no collisions	
+#define REPAINT_TIMER_ID	1042 //random value, hopfully no collisions
 
 inline MaterialSystem_Config_t& MaterialSystemConfig()
 {
@@ -160,7 +160,7 @@ void CVGuiWnd::DrawVGuiPanel()
 	HWND hWnd = (HWND)m_pParentWnd->getHandle();
 
 	int w,h;
-	RECT rect; 
+	RECT rect;
 	::GetClientRect(hWnd, &rect);
 	CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
 
@@ -184,7 +184,7 @@ void CVGuiWnd::DrawVGuiPanel()
 		m_pMainPanel->Repaint();
 	}
 
-	FaceposerVGui()->Simulate(); 
+	FaceposerVGui()->Simulate();
 
 	vgui::surface()->PaintTraverseEx( m_pMainPanel->GetVPanel(), true );
 
@@ -218,7 +218,7 @@ int CVGuiWnd::HandeEventVGui( mxEvent *event )
 //	case WM_GETDLGCODE :
 //		{
 //			// forward all keyboard into to vgui panel
-//			return DLGC_WANTALLKEYS|DLGC_WANTCHARS;	
+//			return DLGC_WANTALLKEYS|DLGC_WANTCHARS;
 //		}
 
 //	case WM_PAINT :
@@ -241,10 +241,10 @@ int CVGuiWnd::HandeEventVGui( mxEvent *event )
 //		return 1; // don't pass WM_SETCURSOR
 
 /*
-	case WM_LBUTTONDOWN: 
+	case WM_LBUTTONDOWN:
 	case WM_RBUTTONDOWN:
 	case WM_MBUTTONDOWN:
-	case WM_MOUSEMOVE: 
+	case WM_MOUSEMOVE:
 		{
 			// switch vgui focus to this panel
 			FaceposerVGui()->SetFocus( this );
@@ -264,19 +264,19 @@ int CVGuiWnd::HandeEventVGui( mxEvent *event )
 			break;
 		}
 
-	case WM_LBUTTONUP: 
-	case WM_RBUTTONUP: 
-	case WM_MBUTTONUP: 
-	case WM_LBUTTONDBLCLK: 
-	case WM_RBUTTONDBLCLK: 
-	case WM_MBUTTONDBLCLK: 
+	case WM_LBUTTONUP:
+	case WM_RBUTTONUP:
+	case WM_MBUTTONUP:
+	case WM_LBUTTONDBLCLK:
+	case WM_RBUTTONDBLCLK:
+	case WM_MBUTTONDBLCLK:
 	case WM_MOUSEWHEEL:
-	case WM_KEYDOWN: 
+	case WM_KEYDOWN:
 	case WM_SYSKEYDOWN:
 	case WM_SYSCHAR:
-	case WM_CHAR: 
-	case WM_KEYUP: 
-	case WM_SYSKEYUP: 
+	case WM_CHAR:
+	case WM_KEYUP:
+	case WM_SYSKEYUP:
 		{
 			// redraw window
 			m_pParentWnd->Invalidate();

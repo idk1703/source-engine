@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,7 +37,7 @@ ComboBoxButton::ComboBoxButton(ComboBox *parent, const char *panelName, const ch
 void ComboBoxButton::ApplySchemeSettings(IScheme *pScheme)
 {
 	Button::ApplySchemeSettings(pScheme);
-	
+
 	SetFont(pScheme->GetFont("Marlett", IsProportional()));
 	SetContentAlignment(Label::a_west);
 #ifdef OSX
@@ -46,7 +46,7 @@ void ComboBoxButton::ApplySchemeSettings(IScheme *pScheme)
 	SetTextInset(3, 0);
 #endif
 	SetDefaultBorder(pScheme->GetBorder("ScrollBarButtonBorder"));
-	
+
 	// arrow changes color but the background doesnt.
 	SetDefaultColor(GetSchemeColor("ComboBoxButton.ArrowColor", pScheme), GetSchemeColor("ComboBoxButton.BgColor", pScheme));
 	SetArmedColor(GetSchemeColor("ComboBoxButton.ArmedArrowColor", pScheme), GetSchemeColor("ComboBoxButton.BgColor", pScheme));
@@ -208,7 +208,7 @@ bool ComboBox::IsItemIDValid( int itemID )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ComboBox::SetItemEnabled(const char *itemText, bool state)
 {
@@ -216,7 +216,7 @@ void ComboBox::SetItemEnabled(const char *itemText, bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ComboBox::SetItemEnabled(int itemID, bool state)
 {
@@ -232,7 +232,7 @@ void ComboBox::RemoveAll()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int ComboBox::GetItemCount() const
 {
@@ -324,7 +324,7 @@ void ComboBox::PerformLayout()
 	int fontTall = surface()->GetFontTall( buttonFont );
 
 	int buttonSize = min( tall, fontTall );
-	
+
 	int buttonY = ( ( tall - 1 ) - buttonSize ) / 2;
 
 	// Some dropdown button icons in our games are wider than they are taller. We need to factor that in.
@@ -348,7 +348,7 @@ void ComboBox::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ComboBox::DoMenuLayout()
 {
@@ -376,21 +376,21 @@ int ComboBox::GetActiveItem()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 KeyValues *ComboBox::GetActiveItemUserData()
 {
 	return m_pDropDown->GetItemUserData(GetActiveItem());
-}	
+}
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 KeyValues *ComboBox::GetItemUserData(int itemID)
 {
 	return m_pDropDown->GetItemUserData(itemID);
-}	
+}
 
 
 //-----------------------------------------------------------------------------
@@ -408,7 +408,7 @@ void ComboBox::GetItemText( int itemID, char *text, int bufLenInBytes )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool ComboBox::IsDropdownVisible()
@@ -417,8 +417,8 @@ bool ComboBox::IsDropdownVisible()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *inResourceData - 
+// Purpose:
+// Input  : *inResourceData -
 //-----------------------------------------------------------------------------
 void ComboBox::ApplySchemeSettings(IScheme *pScheme)
 {
@@ -488,20 +488,20 @@ void ComboBox::OnMousePressed(MouseCode code)
 //-----------------------------------------------------------------------------
 void ComboBox::OnMouseDoublePressed(MouseCode code)
 {
-    if (IsEditable())
-    {
-        BaseClass::OnMouseDoublePressed(code);
-    }
-    else
-    {
-	    OnMousePressed(code);
-    }
+	if (IsEditable())
+	{
+		BaseClass::OnMouseDoublePressed(code);
+	}
+	else
+	{
+		OnMousePressed(code);
+	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Called when a command is received from the menu
 //			Changes the label text to be that of the command
-// Input  : char *command - 
+// Input  : char *command -
 //-----------------------------------------------------------------------------
 void ComboBox::OnCommand( const char *command )
 {
@@ -515,7 +515,7 @@ void ComboBox::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ComboBox::OnSetText(const wchar_t *newtext)
 {
@@ -530,7 +530,7 @@ void ComboBox::OnSetText(const wchar_t *newtext)
 
 		// try lookup in localization tables
 		StringIndex_t unlocalizedTextSymbol = g_pVGuiLocalize->FindIndex(cbuf + 1);
-		
+
 		if (unlocalizedTextSymbol != INVALID_LOCALIZE_STRING_INDEX)
 		{
 			// we have a new text value
@@ -540,7 +540,7 @@ void ComboBox::OnSetText(const wchar_t *newtext)
 
 	wchar_t wbuf[255];
 	GetText(wbuf, 254);
-	
+
 	if ( wcscmp(wbuf, text) )
 	{
 		// text has changed
@@ -607,9 +607,9 @@ void ComboBox::OnMenuClose()
 	else if ( m_bHighlight )
 	{
 		m_bHighlight = false;
-        // we want the text to be highlighted when we request the focus
+		// we want the text to be highlighted when we request the focus
 //		SelectAllOnFirstFocus(true);
-        RequestFocus();
+		RequestFocus();
 	}
 	// if cursor is in this box or the arrow box
 	else if ( IsCursorOver() )// make sure it's getting pressed over us (it may not be due to mouse capture)
@@ -648,7 +648,7 @@ void ComboBox::DoClick()
 
 	// make sure we're at the top of the draw order (and therefore our children as well)
 	// RequestFocus();
-	
+
 	// We want the item that is shown in the combo box to show as selected
 	int itemToSelect = -1;
 	int i;
@@ -710,7 +710,7 @@ void ComboBox::DoClick()
 //-----------------------------------------------------------------------------
 void ComboBox::OnCursorEntered()
 {
-	// want the arrow to go white when we enter the box 
+	// want the arrow to go white when we enter the box
 	m_pButton->OnCursorEntered();
 	TextEntry::OnCursorEntered();
 }
@@ -729,7 +729,7 @@ void ComboBox::OnCursorExited()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #ifdef _X360
 void ComboBox::OnMenuItemSelected()
@@ -740,12 +740,12 @@ void ComboBox::OnMenuItemSelected()
 	//=============================================================================
 	// HPE_BEGIN:
 	// [pfreese] The text for the combo box should be updated regardless of its
-	// editable state, and in any case, the member variable below was never 
+	// editable state, and in any case, the member variable below was never
 	// correctly initialized.
 	//=============================================================================
-	
+
 	// if ( m_bAllowEdit )
-	
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
@@ -790,7 +790,7 @@ void ComboBox::OnMenuItemSelected()
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ComboBox::OnSizeChanged(int wide, int tall)
 {
@@ -804,12 +804,12 @@ void ComboBox::OnSizeChanged(int wide, int tall)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #ifdef _X360
 void ComboBox::OnSetFocus()
 {
-    BaseClass::OnSetFocus();
+	BaseClass::OnSetFocus();
 
 	GotoTextEnd();
 	SelectAllText(true);
@@ -817,7 +817,7 @@ void ComboBox::OnSetFocus()
 #else
 void ComboBox::OnSetFocus()
 {
-    BaseClass::OnSetFocus();
+	BaseClass::OnSetFocus();
 
 	GotoTextEnd();
 	SelectAllText(false);
@@ -825,17 +825,17 @@ void ComboBox::OnSetFocus()
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #ifdef _X360
 void ComboBox::OnKeyCodePressed(KeyCode code)
 {
 	switch ( GetBaseButtonCode( code ) )
-    {
+	{
 	case KEY_XBUTTON_A:
 		DoClick();
 		break;
-    case KEY_XBUTTON_UP:
+	case KEY_XBUTTON_UP:
 	case KEY_XSTICK1_UP:
 	case KEY_XSTICK2_UP:
 		if(m_pDropDown->IsVisible())
@@ -846,8 +846,8 @@ void ComboBox::OnKeyCodePressed(KeyCode code)
 		{
 			BaseClass::OnKeyCodePressed(code);
 		}
-        break;
-    case KEY_XBUTTON_DOWN:
+		break;
+	case KEY_XBUTTON_DOWN:
 	case KEY_XSTICK1_DOWN:
 	case KEY_XSTICK2_DOWN:
 		if(m_pDropDown->IsVisible())
@@ -858,11 +858,11 @@ void ComboBox::OnKeyCodePressed(KeyCode code)
 		{
 			BaseClass::OnKeyCodePressed(code);
 		}
-        break;
-    default:
-        BaseClass::OnKeyCodePressed(code);
-        break;
-    }
+		break;
+	default:
+		BaseClass::OnKeyCodePressed(code);
+		break;
+	}
 }
 #endif
 
@@ -884,7 +884,7 @@ void ComboBox::OnKeyCodeTyped(KeyCode code)
 				break;
 			}
 		default:
-			{				
+			{
 				BaseClass::OnKeyCodeTyped(code);
 				break;
 			}
@@ -902,7 +902,7 @@ void ComboBox::OnKeyCodeTyped(KeyCode code)
 		case KEY_DOWN:
 			{
 				int itemSelected = m_pDropDown->GetCurrentlyHighlightedItem();
-				m_pDropDown->OnKeyCodeTyped(code);				
+				m_pDropDown->OnKeyCodeTyped(code);
 				int itemToSelect = m_pDropDown->GetCurrentlyHighlightedItem();
 
 				if ( itemToSelect != itemSelected )
@@ -944,7 +944,7 @@ void ComboBox::OnKeyTyped(wchar_t unichar)
 	int itemToSelect = m_pDropDown->GetCurrentlyHighlightedItem();
 
 	if ( itemToSelect != itemSelected )
-    {
+	{
 		SelectMenuItem(itemToSelect);
 	}
 	else
@@ -963,18 +963,18 @@ void ComboBox::SelectMenuItem(int itemToSelect)
 		int menuID = m_pDropDown->GetMenuID(itemToSelect);
 		m_pDropDown->GetMenuItem(menuID)->GetText(menuItemName, 254);
 		OnSetText(menuItemName);
-		SelectAllText(false);		
+		SelectAllText(false);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ComboBox::MoveAlongMenuItemList(int direction)
 {
 	// We want the item that is shown in the combo box to show as selected
 	int itemToSelect = -1;
-    wchar_t menuItemName[255];
+	wchar_t menuItemName[255];
 	int i;
 
 	wchar_t comboBoxContents[255];

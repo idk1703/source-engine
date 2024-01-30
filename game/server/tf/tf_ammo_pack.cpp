@@ -190,8 +190,8 @@ void CTFAmmoPack::MakeHolidayPack( void )
 		return;
 
 	// Only do this on the halloween maps.
-	if ( TFGameRules()->IsHolidayActive( kHoliday_Halloween ) 
-		&& TFGameRules()->IsHolidayMap( kHoliday_Halloween ) 
+	if ( TFGameRules()->IsHolidayActive( kHoliday_Halloween )
+		&& TFGameRules()->IsHolidayMap( kHoliday_Halloween )
 		&& !TFGameRules()->IsHalloweenScenario( CTFGameRules::HALLOWEEN_SCENARIO_HIGHTOWER ) )
 	{
 		m_PackType = AP_HALLOWEEN;
@@ -214,7 +214,7 @@ void CTFAmmoPack::SetBonusScale( float flBonusScale /*= 1.f*/ )
 
 
 void CTFAmmoPack::SetInitialVelocity( Vector &vecVelocity )
-{ 
+{
 	if ( m_PackType != AP_NORMAL )
 	{
 		// Unusual physics for the halloween/christmas packs to make them noticable.
@@ -442,6 +442,6 @@ void CTFAmmoPack::PackTouch( CBaseEntity *pOther )
 // Purpose:
 //-----------------------------------------------------------------------------
 unsigned int CTFAmmoPack::PhysicsSolidMaskForEntity( void ) const
-{ 
+{
 	return BaseClass::PhysicsSolidMaskForEntity() | CONTENTS_DEBRIS;
 }

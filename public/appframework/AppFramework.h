@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: An application framework 
+// Purpose: An application framework
 //
 // $Revision: $
 // $NoKeywords: $
@@ -71,7 +71,7 @@ void AppShutdown( CAppSystemGroup *pAppSystemGroup );
 #else
 #error
 #endif
-	
+
 #else
 #define DEFINE_WINDOWED_APPLICATION_OBJECT_GLOBALVAR( _globalVarName )	\
 	void __cdecl main()																\

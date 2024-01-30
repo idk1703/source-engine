@@ -38,7 +38,7 @@ CTFWeaponInfo *GetTFWeaponInfo( int iWeapon )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TFExplosionCallback( const Vector &vecOrigin, const Vector &vecNormal, int iWeaponID, ClientEntityHandle_t hEntity, int nDefID, int nSound, int iCustomParticleIndex )
 {
@@ -153,7 +153,7 @@ void TFExplosionCallback( const Vector &vecOrigin, const Vector &vecNormal, int 
 			}
 		}
 	}
-	
+
 	if ( iWeaponID == TF_WEAPON_PUMPKIN_BOMB )
 	{
 		pszSound = "Halloween.PumpkinExplode";
@@ -171,7 +171,7 @@ void TFExplosionCallback( const Vector &vecOrigin, const Vector &vecNormal, int 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_TETFExplosion : public C_BaseTempEntity
 {
@@ -196,7 +196,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TETFExplosion::C_TETFExplosion( void )
 {
@@ -210,7 +210,7 @@ C_TETFExplosion::C_TETFExplosion( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TETFExplosion::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -239,4 +239,3 @@ IMPLEMENT_CLIENTCLASS_EVENT_DT( C_TETFExplosion, DT_TETFExplosion, CTETFExplosio
 	RecvPropInt( RECVINFO( m_nSound ) ),
 	RecvPropInt( RECVINFO( m_iCustomParticleIndex ) ),
 END_RECV_TABLE()
-

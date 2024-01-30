@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -71,4 +71,3 @@ bool CEP1GameStats::UserPlayedAllTheMaps( void )
 
 	return true;
 }
-

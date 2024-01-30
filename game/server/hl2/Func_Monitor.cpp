@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -81,7 +81,7 @@ void CFuncMonitor::ReleaseCameraLink()
 
 
 //-----------------------------------------------------------------------------
-// Sets camera 
+// Sets camera
 //-----------------------------------------------------------------------------
 void CFuncMonitor::SetCameraByName(const char *szName)
 {
@@ -94,14 +94,14 @@ void CFuncMonitor::SetCameraByName(const char *szName)
 		{
 			// Keep the target up-to-date for save/load
 			m_target = MAKE_STRING( szName );
-			m_hInfoCameraLink = CreateInfoCameraLink( this, pCamera ); 
+			m_hInfoCameraLink = CreateInfoCameraLink( this, pCamera );
 		}
 	}
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncMonitor::InputSetCamera(inputdata_t &inputdata)
 {

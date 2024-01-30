@@ -222,7 +222,7 @@ public:
 	typedef CTFPlayer OuterClass;
 
 #endif
-	
+
 	DECLARE_EMBEDDED_NETWORKVAR()
 	DECLARE_CLASS_NOBASE( CTFPlayerShared );
 
@@ -251,7 +251,7 @@ public:
 		kTFStreak_Kills				= 0,
 		kTFStreak_KillsAll			= 1,	// Counts all kills not just attr based killstreak.  For Data collection purposes
 		kTFStreak_Ducks				= 2,
-		kTFStreak_Duck_levelup		= 3, 
+		kTFStreak_Duck_levelup		= 3,
 		kTFStreak_COUNT				= 4,
 	};
 
@@ -444,7 +444,7 @@ public:
 	bool	IsFullyInvisible( void ) { return GetPercentInvisible() == 1.f || InCond( TF_COND_STEALTHED_PHASE ); }
 #else
 	bool	IsFullyInvisible( void ) { return ( GetPercentInvisible() == 1.f ); }
-#endif 
+#endif
 
 	bool	IsEnteringOrExitingFullyInvisible( void );
 
@@ -687,11 +687,11 @@ public:
 #endif
 		return m_iItemFindBonus;
 	}
-	
+
 	void	RecalculatePlayerBodygroups( void );
 
 	void	FireGameEvent( IGameEvent *event );
-	
+
 	float	GetFlameBurnTime( void ) const { return m_flFlameBurnTime; }
 
 	void GetConditionsBits( CBitVec< TF_COND_LAST >& vbConditions ) const;
@@ -873,7 +873,7 @@ private:
 	void OnRemoveInPurgatory( void );
 	void OnRemoveCompetitiveWinner( void );
 	void OnRemoveCompetitiveLoser( void );
-	
+
 #ifdef STAGING_ONLY
 	void OnRemoveTranqMark( void );
 	void OnRemoveSpaceGravity( void );
@@ -984,7 +984,7 @@ private:
 		int		iKillsWhileBeingHealed; // for engineer achievement ACHIEVEMENT_TF_ENGINEER_TANK_DAMAGE
 		float	flHealedLastSecond;
 	};
-	CUtlVector< healers_t >	m_aHealers;	
+	CUtlVector< healers_t >	m_aHealers;
 	float					m_flHealFraction;	// Store fractional health amounts
 	float					m_flDisguiseHealFraction;	// Same for disguised healing
 	float					m_flBestOverhealDecayMult;
@@ -999,7 +999,7 @@ private:
 
 #endif
 
-	// King Rune buff 
+	// King Rune buff
 	float		m_flKingRuneBuffCheckTime;
 	CNetworkVar( bool, m_bKingRuneBuffActive );
 
@@ -1094,7 +1094,7 @@ private:
 	CNetworkVar( float, m_flRuneCharge );
 
 #ifdef STAGING_ONLY
-	// Space 
+	// Space
 	CNetworkVar( float, m_flSpaceJumpCharge );
 #endif
 
@@ -1194,7 +1194,7 @@ public:
 	float	m_flStunMid;
 	int		m_iStunAnimState;
 	int		m_iPhaseDamage;
-	
+
 	// Movement stun state.
 	bool		m_bStunNeedsFadeOut;
 	float		m_flStunLerpTarget;
@@ -1230,11 +1230,11 @@ public:
 public:
 	void SetHasPasstimeBall( bool has ) { m_bHasPasstimeBall = has; }
 	bool HasPasstimeBall() const { return m_bHasPasstimeBall; }
-	
+
 	bool IsTargetedForPasstimePass() const { return m_bIsTargetedForPasstimePass; }
 	void SetPasstimePassTarget( CTFPlayer *ent );
 	CTFPlayer *GetPasstimePassTarget() const;
-	
+
 	void SetAskForBallTime( float time ) { m_askForBallTime = time; }
 	float AskForBallTime() const { return m_askForBallTime; }
 

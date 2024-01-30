@@ -130,14 +130,14 @@ void CTFMiniGame::FireGameEvent( IGameEvent * pEvent )
 {
 	// Only look for dead players when the round is running or else we'll get
 	// victories while in the spawn room as we respawn
-	if ( ( TFGameRules() && TFGameRules()->State_Get() != GR_STATE_RND_RUNNING ) || !m_bIsActive ) 
+	if ( ( TFGameRules() && TFGameRules()->State_Get() != GR_STATE_RND_RUNNING ) || !m_bIsActive )
 		return;
 
 	const char *pszEventName = pEvent->GetName();
-	
-	if ( !V_strcmp( pszEventName, "player_turned_to_ghost" ) 
+
+	if ( !V_strcmp( pszEventName, "player_turned_to_ghost" )
 		|| !V_strcmp( pszEventName, "player_disconnect" )
-		|| !V_strcmp( pszEventName, "player_team" ) 
+		|| !V_strcmp( pszEventName, "player_team" )
 		|| !V_strcmp( pszEventName, "player_death" )
 		|| !V_strcmp( pszEventName, "player_spawn" ) )
 	{
@@ -248,13 +248,13 @@ void CTFMiniGame::ScorePointsForTeam( int nTeamNum, int nPoints )
 	}
 
 	// Can not be specified, and we dont want to do anything in that case
-	if ( m_iszYourTeamScoreSound.ToCStr() && *m_iszYourTeamScoreSound.ToCStr() 
+	if ( m_iszYourTeamScoreSound.ToCStr() && *m_iszYourTeamScoreSound.ToCStr()
 		 && m_iszEnemyTeamScoreSound.ToCStr() && *m_iszEnemyTeamScoreSound.ToCStr() )
 	{
 		// Get everyone
 		CUtlVector< CTFPlayer* > vecPlayer;
 		CollectPlayers( &vecPlayer );
-	
+
 		// Play a sound based on if the scoring team is the player's team
 		for( CTFPlayer *pPlayer : vecPlayer )
 		{
@@ -298,7 +298,7 @@ void CTFMiniGame::InputChangeHudResFile( inputdata_t &inputdata )
 	if ( resFile && resFile[ 0 ] )
 	{
 		V_strncpy( m_pszHudResFile.GetForModify(), resFile, MAX_PATH );
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -343,7 +343,7 @@ void CTFMiniGame::UpdateDeadPlayers( int nTeam, COutputEvent& eventWin, COutputE
 			eventWin.FireOutput( this, this );
 			bCanWin = false;
 		}
-			
+
 		// Fire the team dead event
 		eventAllDead.FireOutput( this, this );
 
@@ -379,7 +379,7 @@ void CTFMiniGame::SuddenDeathTimeStartThink()
 #else
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFMiniGame::GetScoreForTeam( int nTeamNum ) const
 {
@@ -684,7 +684,7 @@ void CTFHalloweenMinigame_FallingPlatforms::InputChoosePlatform( inputdata_t &in
 void CTFHalloweenMinigame_FallingPlatforms::FireGameEvent( IGameEvent * pEvent )
 {
 	const char *pszEventName = pEvent->GetName();
-	
+
 	// In the falling platforms game, we dont want ghosts to get stuck in platforms.
 	// This hack sets the collision of ghosts to collide with triggers, but not with
 	// other players.  This should allow us to use the relative teleport trigger on the
@@ -822,7 +822,7 @@ void CTFMinigameLogic::InputTeleportToRandomMinigame( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-class CConditionFortuneTellerEffect 
+class CConditionFortuneTellerEffect
 #ifdef GAME_DLL
 	: public CGameEventListener
 #endif
@@ -859,7 +859,7 @@ public:
 #ifdef GAME_DLL
 		m_bUseTimer = false;
 		StopListeningForAllEvents();
-		
+
 		CUtlVector< CTFPlayer* > vecPlayers;
 		CollectPlayers<CTFPlayer>( &vecPlayers, TEAM_ANY, true );
 
@@ -916,7 +916,7 @@ static CConditionFortuneTellerEffect *g_GlobalFortuneTellerEffects[] =
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static const char *s_pszFortuneTellerSpinSound = "Halloween.WheelofFateQuiet";
 
@@ -945,7 +945,7 @@ LINK_ENTITY_TO_CLASS( halloween_fortune_teller, CTFHalloweenFortuneTeller );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHalloweenFortuneTeller::CTFHalloweenFortuneTeller()
 {
@@ -961,7 +961,7 @@ CTFHalloweenFortuneTeller::~CTFHalloweenFortuneTeller()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHalloweenFortuneTeller::Precache()
 {

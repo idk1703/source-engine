@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,7 +30,7 @@ public:
 };
 
 
-// Fire a global hint event. It goes to all hint types so they can determine if 
+// Fire a global hint event. It goes to all hint types so they can determine if
 // they want to react.
 void GlobalHintEvent( C_HintEvent_Base *pEvent );
 
@@ -51,7 +51,7 @@ public:
 							{
 								m_pObject = pObj;
 							}
-	
+
 	virtual HintEventType	GetType()	{ return HINTEVENT_OBJECT_BUILT_BY_LOCAL_PLAYER; }
 
 public:

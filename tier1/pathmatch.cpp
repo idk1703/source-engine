@@ -172,7 +172,7 @@ inline __attribute__ ((always_inline)) static uint32_t utf8codepoint(const char 
 
 		*_str += 4;  // skip to next possible start of codepoint.
 		retval = ( ((octet << 18)) | ((octet2 - 128) << 12) |
-		           ((octet3 - 128) << 6) | ((octet4 - 128)) );
+					((octet3 - 128) << 6) | ((octet4 - 128)) );
 		if ((retval >= 0x10000) && (retval <= 0x10FFFF))
 			return retval;
 	}
@@ -333,19 +333,19 @@ static int utf8casecmp(const char *str1, const char *str2)
 class CDirPtr
 {
 public:
-    CDirPtr() { m_pDir = NULL; }
-    CDirPtr( DIR *pDir ) : m_pDir(pDir) {}
-    ~CDirPtr() { Close(); }
+	CDirPtr() { m_pDir = NULL; }
+	CDirPtr( DIR *pDir ) : m_pDir(pDir) {}
+	~CDirPtr() { Close(); }
 
-    void operator=(DIR *pDir) { Close(); m_pDir = pDir; }
+	void operator=(DIR *pDir) { Close(); m_pDir = pDir; }
 
-    operator DIR *() { return m_pDir; }
-    operator bool() { return m_pDir != NULL; }
+	operator DIR *() { return m_pDir; }
+	operator bool() { return m_pDir != NULL; }
 private:
 
-    void Close() { if ( m_pDir ) closedir( m_pDir ); }
+	void Close() { if ( m_pDir ) closedir( m_pDir ); }
 
-    DIR *m_pDir;
+	DIR *m_pDir;
 };
 
 // Object used to temporarily slice a path into a smaller componentent
@@ -354,21 +354,21 @@ private:
 class CDirTrimmer
 {
 public:
-    CDirTrimmer( char * pPath, size_t nTrimIdx )
-    {
-        m_pPath = pPath;
-        m_idx = nTrimIdx;
-        m_c = m_pPath[nTrimIdx];
-        m_pPath[nTrimIdx] = '\0';
-    }
-    ~CDirTrimmer() { m_pPath[m_idx] = m_c; }
+	CDirTrimmer( char * pPath, size_t nTrimIdx )
+	{
+		m_pPath = pPath;
+		m_idx = nTrimIdx;
+		m_c = m_pPath[nTrimIdx];
+		m_pPath[nTrimIdx] = '\0';
+	}
+	~CDirTrimmer() { m_pPath[m_idx] = m_c; }
 
-    operator const char *() { return m_pPath; }
+	operator const char *() { return m_pPath; }
 
 private:
-    size_t m_idx;
-    char *m_pPath;
-    char m_c;
+	size_t m_idx;
+	char *m_pPath;
+	char m_c;
 };
 
 
@@ -427,50 +427,50 @@ static bool Descend( char *pPath, size_t nStartIdx, bool bAllowBasenameMismatch,
 		const char *pRoot = ".";
 		if ( *pPath == '/' )
 		{
-		    pRoot = "/";
-		    nStartIdx++;
+			pRoot = "/";
+			nStartIdx++;
 		}
 		spDir = __real_opendir( pRoot );
 	}
 
-    errno = 0;
-    struct dirent *pEntry = spDir ? readdir( spDir ) : NULL;
-    char *pszComponent = pPath + nStartIdx;
-    size_t cbComponent = nNextSlash - nStartIdx;
-    while ( pEntry )
-    {
-        DEBUG_MSG( "\t(%zu) comparing %s with %s\n", nLevel, pEntry->d_name, (const char *)CDirTrimmer(pszComponent, cbComponent) );
+	errno = 0;
+	struct dirent *pEntry = spDir ? readdir( spDir ) : NULL;
+	char *pszComponent = pPath + nStartIdx;
+	size_t cbComponent = nNextSlash - nStartIdx;
+	while ( pEntry )
+	{
+		DEBUG_MSG( "\t(%zu) comparing %s with %s\n", nLevel, pEntry->d_name, (const char *)CDirTrimmer(pszComponent, cbComponent) );
 
-        // the candidate must match the target, but not be a case-identical match (we would
-        // have looked there in the short-circuit code above, so don't look again)
-        bool bMatches = ( strcasecmp( CDirTrimmer(pszComponent, cbComponent), pEntry->d_name ) == 0 &&
-                          strcmp( CDirTrimmer(pszComponent, cbComponent), pEntry->d_name ) != 0 );
+		// the candidate must match the target, but not be a case-identical match (we would
+		// have looked there in the short-circuit code above, so don't look again)
+		bool bMatches = ( strcasecmp( CDirTrimmer(pszComponent, cbComponent), pEntry->d_name ) == 0 &&
+						strcmp( CDirTrimmer(pszComponent, cbComponent), pEntry->d_name ) != 0 );
 
-        if ( bMatches )
-        {
-            char *pSrc = pEntry->d_name;
-            char *pDst = &pPath[nStartIdx];
-            // found a match; copy it in.
-            while ( *pSrc && (*pSrc != '/') )
-            {
-                *pDst++ = *pSrc++;
-            }
+		if ( bMatches )
+		{
+			char *pSrc = pEntry->d_name;
+			char *pDst = &pPath[nStartIdx];
+			// found a match; copy it in.
+			while ( *pSrc && (*pSrc != '/') )
+			{
+				*pDst++ = *pSrc++;
+			}
 
-            if ( !bIsDir )
-                return true;
+			if ( !bIsDir )
+				return true;
 
-            if ( Descend( pPath, nNextSlash, bAllowBasenameMismatch, nLevel+1 ) )
-                return true;
+			if ( Descend( pPath, nNextSlash, bAllowBasenameMismatch, nLevel+1 ) )
+				return true;
 
-            // If descend fails, try more directories
-        }
-        pEntry = readdir( spDir );
-    }
+			// If descend fails, try more directories
+		}
+		pEntry = readdir( spDir );
+	}
 
-    if ( bIsDir )
-    {
-        DEBUG_MSG( "(%zu) readdir failed to find '%s' in '%s'\n", nLevel, (const char *)CDirTrimmer(pszComponent, cbComponent), (const char *)CDirTrimmer( pPath, nStartIdx ) );
-    }
+	if ( bIsDir )
+	{
+		DEBUG_MSG( "(%zu) readdir failed to find '%s' in '%s'\n", nLevel, (const char *)CDirTrimmer(pszComponent, cbComponent), (const char *)CDirTrimmer( pPath, nStartIdx ) );
+	}
 
 	// Sometimes it's ok for the filename portion to not match
 	// since we might be opening for write.  Note that if
@@ -513,7 +513,7 @@ PathMod_t pathmatch( const char *pszIn, char **ppszOut, bool bAllowBasenameMisma
 	if ( cachedResult != resultCache.end() )
 	{
 		unsigned int age = time( NULL ) - cachedResult->second.second;
-		const char *pszResult = cachedResult->second.first.c_str(); 
+		const char *pszResult = cachedResult->second.first.c_str();
 		if ( pszResult[0] != '\0' || age <= k_cMaxCacheLifetimeSeconds )
 		{
 			if ( pszResult[0] != '\0' )
@@ -530,7 +530,7 @@ PathMod_t pathmatch( const char *pszIn, char **ppszOut, bool bAllowBasenameMisma
 		}
 		else if ( age <= k_cMaxCacheLifetimeSeconds )
 		{
-			DEBUG_MSG( "Rechecking '%s' - cache is %u seconds old\n", pszIn, age );			
+			DEBUG_MSG( "Rechecking '%s' - cache is %u seconds old\n", pszIn, age );
 		}
 	}
 #endif // DO_PATHMATCH_CACHE
@@ -550,7 +550,7 @@ PathMod_t pathmatch( const char *pszIn, char **ppszOut, bool bAllowBasenameMisma
 	{
 		// I believe this code is broken. I'm guessing someone wanted to avoid lowercasing
 		//	the path before the steam directory - but it's actually skipping lowercasing
-		//	whenever steam is found anywhere - including the filename. For example, 
+		//	whenever steam is found anywhere - including the filename. For example,
 		//	  /home/mikesart/valvesrc/console/l4d2/game/left4dead2_dlc1/particles/steam_fx.pcf
 		//	winds up only having the "steam_fx.pcf" portion lowercased.
 #ifdef NEVER
@@ -630,13 +630,13 @@ PathMod_t pathmatch( const char *pszIn, char **ppszOut, bool bAllowBasenameMisma
 		time_t now = time(NULL);
 		if ( bSuccess )
 		{
-			resultCache[ pszIn ] = std::make_pair( *ppszOut, now ); 
+			resultCache[ pszIn ] = std::make_pair( *ppszOut, now );
 			return kPathChanged;
 		}
 		else
 		{
-			resultCache[ pszIn ] = std::make_pair( "", now ); 
-			return kPathFailed;			
+			resultCache[ pszIn ] = std::make_pair( "", now );
+			return kPathFailed;
 		}
 #endif
 	}
@@ -650,7 +650,7 @@ public:
 	CWrap( const char *pSuppliedPath, bool bAllowMismatchedBasename )
 		: m_pSuppliedPath( pSuppliedPath ), m_pBestMatch( NULL )
 	{
-	    m_eResult = pathmatch( m_pSuppliedPath, &m_pBestMatch, bAllowMismatchedBasename, m_BestMatchBuf, sizeof( m_BestMatchBuf ) );
+		m_eResult = pathmatch( m_pSuppliedPath, &m_pBestMatch, bAllowMismatchedBasename, m_BestMatchBuf, sizeof( m_BestMatchBuf ) );
 		if ( m_pBestMatch == NULL )
 		{
 			m_pBestMatch = const_cast<char*>( m_pSuppliedPath );
@@ -679,54 +679,54 @@ private:
 #ifdef MAIN_TEST
 void usage()
 {
-    puts("pathmatch [options] <path>");
-    //puts("options:");
-    //puts("\t");
+	puts("pathmatch [options] <path>");
+	//puts("options:");
+	//puts("\t");
 
-    exit(-1);
+	exit(-1);
 }
 
 void test( const char *pszFile, bool bAllowBasenameMismatch )
 {
-    char *pNewPath;
+	char *pNewPath;
 	char NewPathBuf[ 512 ];
-    PathMod_t nStat = pathmatch( pszFile, &pNewPath, bAllowBasenameMismatch, NewPathBuf, sizeof( NewPathBuf ) );
+	PathMod_t nStat = pathmatch( pszFile, &pNewPath, bAllowBasenameMismatch, NewPathBuf, sizeof( NewPathBuf ) );
 
-    printf("AllowMismatchedBasename: %s\n", bAllowBasenameMismatch ? "true" : "false" );
-    printf("Path Was: ");
-    switch ( nStat )
-    {
-    case kPathUnchanged:
-        puts("kPathUnchanged");
-        break;
-    case kPathLowered:
-        puts("kPathLowered");
-        break;
-    case kPathChanged:
-        puts("kPathChanged");
-        break;
-    case kPathFailed:
-        puts("kPathFailed");
-        break;
-    }
+	printf("AllowMismatchedBasename: %s\n", bAllowBasenameMismatch ? "true" : "false" );
+	printf("Path Was: ");
+	switch ( nStat )
+	{
+	case kPathUnchanged:
+		puts("kPathUnchanged");
+		break;
+	case kPathLowered:
+		puts("kPathLowered");
+		break;
+	case kPathChanged:
+		puts("kPathChanged");
+		break;
+	case kPathFailed:
+		puts("kPathFailed");
+		break;
+	}
 
-    printf(" Path In: %s\n", pszFile );
-    printf("Path Out: %s\n",  nStat == kPathUnchanged ? pszFile : pNewPath );
+	printf(" Path In: %s\n", pszFile );
+	printf("Path Out: %s\n",  nStat == kPathUnchanged ? pszFile : pNewPath );
 
-    if ( pNewPath )
-        free( pNewPath );
+	if ( pNewPath )
+		free( pNewPath );
 }
 
 int
 main(int argc, char **argv)
 {
-    if ( argc <= 1 || argc > 2 )
-        usage();
+	if ( argc <= 1 || argc > 2 )
+		usage();
 
-    test( argv[1], false );
-    test( argv[1], true );
+	test( argv[1], false );
+	test( argv[1], true );
 
-    return 0;
+	return 0;
 }
 #endif
 
@@ -795,8 +795,8 @@ extern "C" {
 	}
 
 	WRAP(scandir, int, const char *dirp, struct dirent ***namelist,
-		 int (*filter)(const struct dirent *),
-		 int (*compar)(const struct dirent **, const struct dirent **))
+		int (*filter)(const struct dirent *),
+		int (*compar)(const struct dirent **, const struct dirent **))
 	{
 		return CALL(scandir)( CWrap( dirp, false ), namelist, filter, compar );
 	}
@@ -806,86 +806,86 @@ extern "C" {
 		return CALL(opendir)( CWrap( name, false ) );
 	}
 
-    WRAP(__xstat, int, int __ver, __const char *__filename, struct stat *__stat_buf)
-    {
-        return CALL(__xstat)( __ver, CWrap( __filename, false), __stat_buf );
-    }
+	WRAP(__xstat, int, int __ver, __const char *__filename, struct stat *__stat_buf)
+	{
+		return CALL(__xstat)( __ver, CWrap( __filename, false), __stat_buf );
+	}
 
-    WRAP(__lxstat, int, int __ver, __const char *__filename, struct stat *__stat_buf)
-    {
-        return CALL(__lxstat)( __ver, CWrap( __filename, false), __stat_buf );
-    }
+	WRAP(__lxstat, int, int __ver, __const char *__filename, struct stat *__stat_buf)
+	{
+		return CALL(__lxstat)( __ver, CWrap( __filename, false), __stat_buf );
+	}
 
-    WRAP(__xstat64, int, int __ver, __const char *__filename, struct stat *__stat_buf)
-    {
-        return CALL(__xstat64)( __ver, CWrap( __filename, false), __stat_buf );
-    }
+	WRAP(__xstat64, int, int __ver, __const char *__filename, struct stat *__stat_buf)
+	{
+		return CALL(__xstat64)( __ver, CWrap( __filename, false), __stat_buf );
+	}
 
-    WRAP(__lxstat64, int, int __ver, __const char *__filename, struct stat *__stat_buf)
-    {
-        return CALL(__lxstat64)( __ver, CWrap( __filename, false), __stat_buf );
-    }
+	WRAP(__lxstat64, int, int __ver, __const char *__filename, struct stat *__stat_buf)
+	{
+		return CALL(__lxstat64)( __ver, CWrap( __filename, false), __stat_buf );
+	}
 
 	WRAP(chmod, int, const char *path, mode_t mode)
 	{
-        return CALL(chmod)( CWrap( path, false), mode );
+		return CALL(chmod)( CWrap( path, false), mode );
 	}
 
 	WRAP(chown, int, const char *path, uid_t owner, gid_t group)
 	{
-        return CALL(chown)( CWrap( path, false), owner, group );
+		return CALL(chown)( CWrap( path, false), owner, group );
 	}
 
 	WRAP(lchown, int, const char *path, uid_t owner, gid_t group)
 	{
-        return CALL(lchown)( CWrap( path, false), owner, group );
+		return CALL(lchown)( CWrap( path, false), owner, group );
 	}
 
 	WRAP(symlink, int, const char *oldpath, const char *newpath)
 	{
-        return CALL(symlink)( CWrap( oldpath, false), CWrap( newpath, true ) );
+		return CALL(symlink)( CWrap( oldpath, false), CWrap( newpath, true ) );
 	}
 
 	WRAP(link, int, const char *oldpath, const char *newpath)
 	{
-        return CALL(link)( CWrap( oldpath, false), CWrap( newpath, true ) );
+		return CALL(link)( CWrap( oldpath, false), CWrap( newpath, true ) );
 	}
 
 	WRAP(mknod, int, const char *pathname, mode_t mode, dev_t dev)
 	{
-        return CALL(mknod)( CWrap( pathname, true), mode, dev );
+		return CALL(mknod)( CWrap( pathname, true), mode, dev );
 	}
 
 	WRAP(mount, int, const char *source, const char *target,
-		 const char *filesystemtype, unsigned long mountflags,
-		 const void *data)
+		const char *filesystemtype, unsigned long mountflags,
+		const void *data)
 	{
 		return CALL(mount)( CWrap( source, false ), CWrap( target, false ), filesystemtype, mountflags, data );
 	}
 
 	WRAP(unlink, int, const char *pathname)
 	{
-        return CALL(unlink)( CWrap( pathname, false ) );
+		return CALL(unlink)( CWrap( pathname, false ) );
 	}
 
 	WRAP(mkfifo, int, const char *pathname, mode_t mode)
 	{
-        return CALL(mkfifo)( CWrap( pathname, true ), mode );
+		return CALL(mkfifo)( CWrap( pathname, true ), mode );
 	}
 
 	WRAP(rename, int, const char *oldpath, const char *newpath)
 	{
-        return CALL(rename)( CWrap( oldpath, false), CWrap( newpath, true ) );
+		return CALL(rename)( CWrap( oldpath, false), CWrap( newpath, true ) );
 	}
 
 	WRAP(utime, int, const char *filename, const struct utimbuf *times)
 	{
-        return CALL(utime)( CWrap( filename, false), times );
+		return CALL(utime)( CWrap( filename, false), times );
 	}
 
 	WRAP(utimes, int, const char *filename, const struct timeval times[2])
 	{
-        return CALL(utimes)( CWrap( filename, false), times );
+		return CALL(utimes)( CWrap( filename, false), times );
 	}
 
 	WRAP(realpath, char *, const char *path, char *resolved_path)

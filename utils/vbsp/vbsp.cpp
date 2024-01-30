@@ -68,7 +68,7 @@ char		outbase[32];
 
 char		g_szEmbedDir[MAX_PATH] = { 0 };
 
-// HLTOOLS: Introduce these calcs to make the block algorithm proportional to the proper 
+// HLTOOLS: Introduce these calcs to make the block algorithm proportional to the proper
 // world coordinate extents.  Assumes square spatial constraints.
 #define BLOCKS_SIZE		1024
 #define BLOCKS_SPACE	(COORD_EXTENT/BLOCKS_SIZE)
@@ -182,14 +182,14 @@ void ProcessBlock_Thread (int threadnum, int blocknum)
 		node->contents = CONTENTS_SOLID;
 		block_nodes[xblock+BLOCKX_OFFSET][yblock+BLOCKY_OFFSET] = node;
 		return;
-	}    
+	}
 
 	FixupAreaportalWaterBrushes( brushes );
 	if (!nocsg)
 		brushes = ChopBrushes (brushes);
 
 	tree = BrushBSP (brushes, mins, maxs);
-	
+
 	block_nodes[xblock+BLOCKX_OFFSET][yblock+BLOCKY_OFFSET] = tree->headnode;
 }
 
@@ -343,7 +343,7 @@ void ProcessWorldModel (void)
 	start = Plat_FloatTime();
 
 	Msg("FixTjuncs...\n");
-	
+
 	// This unifies the vertex list for all edges (splits collinear edges to remove t-junctions)
 	// It also welds the list of vertices out of each winding/portal and rounds nearly integer verts to integer
 	pLeafFaceList = FixTjuncs (tree->headnode, pLeafFaceList);
@@ -397,7 +397,7 @@ void ProcessSubModel( )
 	if (!nocsg)
 		list = ChopBrushes (list);
 	tree = BrushBSP (list, mins, maxs);
-	
+
 	// This would wind up crashing the engine because we'd have a negative leaf index in dmodel_t::headnode.
 	if ( tree->headnode->planenum == PLANENUM_LEAF )
 	{
@@ -407,7 +407,7 @@ void ProcessSubModel( )
 	}
 
 	MakeTreePortals (tree);
-	
+
 #if DEBUG_BRUSHMODEL
 	if ( entity_num == DEBUG_BRUSHMODEL )
 		WriteGLView( tree, "tree_all" );
@@ -418,7 +418,7 @@ void ProcessSubModel( )
 
 	FixTjuncs( tree->headnode, NULL );
 	WriteBSP( tree->headnode, NULL );
-	
+
 #if DEBUG_BRUSHMODEL
 	if ( entity_num == DEBUG_BRUSHMODEL )
 	{
@@ -604,7 +604,7 @@ static void EmitOccluderBrushes()
 
 		int nIndex = g_OccluderInfo.AddToTail();
 		g_OccluderInfo[nIndex].m_nOccluderEntityIndex = entity_num;
-		
+
 		sideList.RemoveAll();
 		GenerateOccluderSideList( entity_num, sideList );
 		for ( int i = faceList.Count(); --i >= 0; )
@@ -642,7 +642,7 @@ static void EmitOccluderBrushes()
 				{
 					g_OccluderVertexIndices.AddToTail( f->vertexnums[k] );
 
-					const Vector &p = dvertexes[f->vertexnums[k]].point; 
+					const Vector &p = dvertexes[f->vertexnums[k]].point;
 					VectorMin( occluderData.mins, p, occluderData.mins );
 					VectorMax( occluderData.maxs, p, occluderData.maxs );
 				}
@@ -712,7 +712,7 @@ void AssignAreaToOccluder( int nOccluder, tree_t *pTree, bool bCrossAreaPortals 
 				if ((!bCrossAreaPortals) && pPortal->nodes[nOtherSideIndex]->contents & CONTENTS_AREAPORTAL)
 					continue;
 
-				int nAdjacentArea = pPortal->nodes[nOtherSideIndex] ? pPortal->nodes[nOtherSideIndex]->area : 0; 
+				int nAdjacentArea = pPortal->nodes[nOtherSideIndex] ? pPortal->nodes[nOtherSideIndex]->area : 0;
 				SetOccluderArea( nOccluder, nAdjacentArea, nEntityNum );
 			}
 		}
@@ -770,7 +770,7 @@ void MarkNoDynamicShadowSides()
 	for ( int i=0; i < g_NoDynamicShadowSides.Count(); i++ )
 	{
 		int brushSideID = g_NoDynamicShadowSides[i];
-	
+
 		// Find the side with this ID.
 		for ( int iSide=0; iSide < g_MainMap->nummapbrushsides; iSide++ )
 		{
@@ -811,7 +811,7 @@ bool Is3DSkyboxArea( int area )
 	return false;
 }
 
-		
+
 /*
 ============
 ProcessModels
@@ -827,7 +827,7 @@ void ProcessModels (void)
 	// emit the displacement surfaces
 	EmitInitialDispInfos();
 
-	// Clip occluder brushes against each other, 
+	// Clip occluder brushes against each other,
 	// Remove them from the list of models to process below
 	EmitOccluderBrushes( );
 
@@ -891,7 +891,7 @@ int RunVBSP( int argc, char **argv )
 	MathLib_Init( 2.2f, 2.2f, 0.0f, OVERBRIGHT, false, false, false, false );
 	InstallSpewFunction();
 	SpewActivate( "developer", 1 );
-	
+
 	CmdLib_InitFileSystem( argv[ argc-1 ] );
 
 	Q_StripExtension( ExpandArg( argv[ argc-1 ] ), source, sizeof( source ) );
@@ -1036,7 +1036,7 @@ int RunVBSP( int argc, char **argv )
 			block_yl = atoi(argv[i+2]);
 			block_xh = atoi(argv[i+3]);
 			block_yh = atoi(argv[i+4]);
-			Msg ("blocks: %i,%i to %i,%i\n", 
+			Msg ("blocks: %i,%i to %i,%i\n",
 				block_xl, block_yl, block_xh, block_yh);
 			i+=4;
 		}
@@ -1164,7 +1164,7 @@ int RunVBSP( int argc, char **argv )
 	{
 		PrintCommandLine( argc, argv );
 
-		Warning(	
+		Warning(
 			"usage  : vbsp [options...] mapfile\n"
 			"example: vbsp -onlyents c:\\hl2\\hl2\\maps\\test\n"
 			"\n"
@@ -1303,7 +1303,7 @@ int RunVBSP( int argc, char **argv )
 	sprintf (path, "%s.lin", source);
 	remove (path);
 
-	strcpy (name, ExpandArg (argv[i]));	
+	strcpy (name, ExpandArg (argv[i]));
 
 	const char *pszExtension = V_GetFileExtension( name );
 	if ( !pszExtension )
@@ -1414,7 +1414,7 @@ int RunVBSP( int argc, char **argv )
 	}
 
 	end = Plat_FloatTime();
-	
+
 	char str[512];
 	GetHourMinuteSecondsString( (int)( end - start ), str, sizeof( str ) );
 	Msg( "%s elapsed\n", str );
@@ -1439,5 +1439,3 @@ int main (int argc, char **argv)
 	SetupDefaultToolsMinidumpHandler();
 	return RunVBSP( argc, argv );
 }
-
-

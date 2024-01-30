@@ -51,7 +51,7 @@ BEGIN_DATADESC(CControlPoint)
 	DEFINE_OUTPUT(	m_OwnerChangedToAxis,		"AxisCapturePoint" ),
 
 END_DATADESC();
-	
+
 
 CControlPoint::CControlPoint( )
 {
@@ -60,13 +60,13 @@ CControlPoint::CControlPoint( )
 
 	m_iAlliesIcon = 0;
 	m_iAxisIcon = 0;
-	m_iNeutralIcon = 0;	
+	m_iNeutralIcon = 0;
 	m_iNeutralIcon = 0;
 
 	//default group is 0 for backwards compatibility
 	m_iAlliesModelBodygroup = 0;
 	m_iAxisModelBodygroup = 0;
-	m_iResetModelBodygroup = 0;	
+	m_iResetModelBodygroup = 0;
 
 	m_bBombPlanted = false;
 }
@@ -139,7 +139,7 @@ void CControlPoint::InputSetOwner( inputdata_t &input )
 	{
 		InternalSetOwner( team, true, 1, &iCappingPlayer );
 		g_pObjectiveResource->SetOwningTeam( GetPointIndex(), m_iTeam );
-	}	
+	}
 }
 
 void CControlPoint::SetOwner( int owner, bool bMakeSound, int iNumCappers, int *pCappingPlayers )
@@ -203,7 +203,7 @@ int CControlPoint::GetBombedHudIcon( void )
 
 // SetOwner
 // ========
-// Sets the new owner of the point 
+// Sets the new owner of the point
 // plays the appropriate sound
 // and shows the right model
 
@@ -213,47 +213,47 @@ void CControlPoint::InternalSetOwner( int owner, bool bMakeSound, int iNumCapper
 
 	switch ( m_iTeam )
 	{
-	case TEAM_UNASSIGNED: 
+	case TEAM_UNASSIGNED:
 		{
 			if( bMakeSound )
 			{
 				CBroadcastRecipientFilter filter;
 				EmitSound( filter, entindex(), STRING(m_iszResetSound) );
 			}
-			
-			SetModel( STRING(m_iszResetModel) );	
+
+			SetModel( STRING(m_iszResetModel) );
 			SetBodygroup( 0, m_iResetModelBodygroup );
-			
+
 			m_PointResetOutput.FireOutput( this, this );
 		}
 		break;
-	case TEAM_ALLIES: 
+	case TEAM_ALLIES:
 		{
 			if( bMakeSound )
 			{
 				CBroadcastRecipientFilter filter;
 				EmitSound( filter, entindex(), STRING(m_iszAlliesCapSound) );
 			}
-			
-			SetModel( STRING(m_iszAlliesModel) );	
+
+			SetModel( STRING(m_iszAlliesModel) );
 			SetBodygroup( 0, m_iAlliesModelBodygroup );
-			
+
 			m_AlliesCapOutput.FireOutput( this, this );
 		}
 		break;
-	case TEAM_AXIS: 
+	case TEAM_AXIS:
 		{
 			if( bMakeSound )
 			{
 				CBroadcastRecipientFilter filter;
 				EmitSound( filter, entindex(), STRING(m_iszAxisCapSound) );
 			}
-			
-			SetModel( STRING(m_iszAxisModel) );	
+
+			SetModel( STRING(m_iszAxisModel) );
 			SetBodygroup( 0, m_iAxisModelBodygroup );
-			
+
 			m_AxisCapOutput.FireOutput( this, this );
-		}		
+		}
 		break;
 	default:
 		Assert(0);
@@ -402,7 +402,7 @@ void CControlPoint::CaptureBlocked( CDODPlayer *pPlayer )
 // 0 if noone owns it
 
 int CControlPoint::GetOwner( void ) const
-{ 
+{
 	return m_iTeam;
 }
 
@@ -462,7 +462,7 @@ void CControlPoint::Precache( void )
 	}
 	if ( m_iszResetSound != NULL_STRING )
 	{
-		PrecacheScriptSound( STRING(m_iszResetSound) );	
+		PrecacheScriptSound( STRING(m_iszResetSound) );
 	}
 
 	PrecacheModel( STRING( m_iszAlliesModel ) );
@@ -519,17 +519,17 @@ void CControlPoint::Precache( void )
 //point_team_points - number of team points to give to the capper's team for capping
 
 bool CControlPoint::KeyValue( const char *szKeyName, const char *szValue )
-{	
+{
 	if (FStrEq(szKeyName, "point_default_owner"))
 	{
 		m_iDefaultOwner = atoi(szValue);
 
-		Assert( m_iDefaultOwner == TEAM_ALLIES || 
-				m_iDefaultOwner == TEAM_AXIS || 
+		Assert( m_iDefaultOwner == TEAM_ALLIES ||
+				m_iDefaultOwner == TEAM_AXIS ||
 				m_iDefaultOwner == TEAM_UNASSIGNED );
 
 		if( m_iDefaultOwner != TEAM_ALLIES &&
-			m_iDefaultOwner != TEAM_AXIS && 
+			m_iDefaultOwner != TEAM_AXIS &&
 			m_iDefaultOwner != TEAM_UNASSIGNED )
 		{
 			Warning( "dod_control_point with bad point_default_owner - probably '1'\n" );
@@ -552,23 +552,23 @@ bool CControlPoint::KeyValue( const char *szKeyName, const char *szValue )
 	{
 		m_iPointIndex = atoi(szValue);
 	}
-	else if (FStrEq(szKeyName, "point_hud_icon_allies")) 
+	else if (FStrEq(szKeyName, "point_hud_icon_allies"))
 	{
 		m_iszAlliesIcon = AllocPooledString(szValue);
 	}
-	else if (FStrEq(szKeyName, "point_hud_icon_axis")) 
+	else if (FStrEq(szKeyName, "point_hud_icon_axis"))
 	{
 		m_iszAxisIcon = AllocPooledString(szValue);
 	}
-	else if (FStrEq(szKeyName, "point_hud_icon_neutral")) 
+	else if (FStrEq(szKeyName, "point_hud_icon_neutral"))
 	{
 		m_iszNeutralIcon = AllocPooledString(szValue);
 	}
-	else if (FStrEq(szKeyName, "point_hud_icon_timercap")) 
+	else if (FStrEq(szKeyName, "point_hud_icon_timercap"))
 	{
 		m_iszTimerCapIcon = AllocPooledString(szValue);
 	}
-	else if (FStrEq(szKeyName, "point_hud_icon_bombed")) 
+	else if (FStrEq(szKeyName, "point_hud_icon_bombed"))
 	{
 		m_iszBombedIcon = AllocPooledString(szValue);
 	}
@@ -581,7 +581,7 @@ bool CControlPoint::KeyValue( const char *szKeyName, const char *szValue )
 void CControlPoint::SetActive( bool active )
 {
 	m_bActive = active;
-	
+
 	if( active )
 	{
 		RemoveEffects( EF_NODRAW );

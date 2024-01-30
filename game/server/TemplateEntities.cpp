@@ -133,7 +133,7 @@ string_t Templates_FindByIndex( int iIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int Templates_GetStringSize( int iIndex )
 {
@@ -194,7 +194,7 @@ void Templates_ReconnectIOForGroup( CPointTemplate *pGroup )
 		char keyName[MAPKEY_MAXLENGTH];
 		char value[MAPKEY_MAXLENGTH];
 		char valueclipped[MAPKEY_MAXLENGTH];
-		
+
 		// Now go through all the entities in the group and parse their mapdata keyvalues.
 		// We're looking for any values that match targetnames of any of the group entities.
 		for ( i = 0; i < iCount; i++ )
@@ -208,13 +208,13 @@ void Templates_ReconnectIOForGroup( CPointTemplate *pGroup )
 			if ( !mapData->GetFirstKey(keyName, value) )
 				continue;
 
-			do 
+			do
 			{
 				// Ignore targetnames
 				if ( !stricmp( keyName, "targetname" ) )
 					continue;
 
-				// Add to the count for this 
+				// Add to the count for this
 				int idx = KeyInstanceCount.Find( keyName );
 				if ( idx == KeyInstanceCount.InvalidIndex() )
 				{
@@ -265,7 +265,7 @@ void Templates_ReconnectIOForGroup( CPointTemplate *pGroup )
 						Q_strncat( newvalue, ENTITYIO_FIXUP_STRING, sizeof(newvalue), COPY_ALL_CHARACTERS );
 						mapData->SetValue( keyName, newvalue, nKeyInstance );
 					}
-					
+
 					// Remember we changed this targetname
 					GroupTemplates[iTName].bChangeTargetname = true;
 
@@ -273,7 +273,7 @@ void Templates_ReconnectIOForGroup( CPointTemplate *pGroup )
 					g_Templates[ GroupTemplates[i].iIndex ]->bNeedsEntityIOFixup = true;
 					g_Templates[ GroupTemplates[iTName].iIndex ]->bNeedsEntityIOFixup = true;
 				}
-			} 
+			}
 			while ( mapData->GetNextKey(keyName, value) );
 		}
 
@@ -450,7 +450,7 @@ public:
 	{
 		pSave->WriteShort( &TEMPLATE_SAVE_RESTORE_VERSION );
 	}
-	
+
 	//---------------------------------
 
 	void ReadRestoreHeaders( IRestore *pRestore )
@@ -491,7 +491,7 @@ public:
 				g_Templates.AddToTail( pNewTemplate );
 			}
 		}
-		
+
 	}
 
 private:

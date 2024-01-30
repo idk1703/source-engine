@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@
 class CEntityBurnEffect : public CBaseEntity
 {
 public:
-	
+
 	DECLARE_CLASS( CEntityBurnEffect, CBaseEntity );
 	DECLARE_SERVERCLASS();
 

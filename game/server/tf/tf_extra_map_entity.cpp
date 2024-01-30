@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -40,13 +40,13 @@ END_DATADESC();
 IMPLEMENT_AUTO_LIST( IExtraMapEntityAutoList );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExtraMapEntity::Spawn( void )
 {
 	Precache();
 	BaseClass::Spawn();
-	
+
 	SetModel( STRING( GetModelName() ) );
 
 	SetMoveType( MOVETYPE_NONE );
@@ -130,7 +130,7 @@ void CExtraMapEntity::SpawnExtraModel( void )
 			const char *pszEntName = ValidateKeyName( pSubKeyEnt->GetName() );
 			if ( !pszEntName )
 				continue;
-			
+
 			FOR_EACH_SUBKEY( pSubKeyEnt, pSubKeyCount )
 			{
 				Vector loc = vec3_origin;

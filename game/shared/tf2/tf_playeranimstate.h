@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -33,7 +33,7 @@ public:
 	void				Update();
 
 	const QAngle&		GetRenderAngles();
-				
+
 	void				GetPoseParameters( float poseParameter[MAXSTUDIOPOSEPARAM] );
 
 	CBaseTFPlayer		*GetOuter();

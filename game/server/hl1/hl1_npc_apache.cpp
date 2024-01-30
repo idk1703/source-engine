@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -63,7 +63,7 @@ public:
 	void DyingThink( void );
 
 	int  ObjectCaps( void );
-	
+
 	void TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator );
 
 /*	bool OnInternalDrawModel( ClientModelRenderInfo_t *pInfo )
@@ -80,16 +80,16 @@ public:
 		BaseClass::SetAbsOrigin( absOrigin );
 	}*/
 
-	
 
-   /* int		Save( CSave &save );
+
+	/* int		Save( CSave &save );
 	int		Restore( CRestore &restore );
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	void Spawn( void );
 	void Precache( void );
 
-	
+
 	void Killed( entvars_t *pevAttacker, int iGib );
 	void GibMonster( void );
 
@@ -104,7 +104,7 @@ public:
 	void Flight( void );
 	void FireRocket( void );
 	BOOL FireGun( void );
-	
+
 	int  TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
 	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);*/
 
@@ -123,7 +123,7 @@ public:
 	Vector m_vecGoal;
 
 	QAngle m_angGun;
-	
+
 	int m_iSoundState; // don't save this
 
 	int m_iExplode;
@@ -198,12 +198,12 @@ void CNPC_Apache::Spawn( void )
 
 LINK_ENTITY_TO_CLASS ( monster_apache, CNPC_Apache );
 
-int CNPC_Apache::ObjectCaps( void ) 
-{ 
+int CNPC_Apache::ObjectCaps( void )
+{
 	if ( GetSpawnFlags() & SF_NOTRANSITION )
-	     return BaseClass::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; 
-	else 
-		 return BaseClass::ObjectCaps();
+			return BaseClass::ObjectCaps() & ~FCAP_ACROSS_TRANSITION;
+	else
+		return BaseClass::ObjectCaps();
 }
 
 void CNPC_Apache::Precache( void )
@@ -215,7 +215,7 @@ void CNPC_Apache::Precache( void )
 
 	// Gun
 	PrecacheScriptSound( "Apache.FireGun" );
-	m_iAmmoType = GetAmmoDef()->Index("9mmRound"); 
+	m_iAmmoType = GetAmmoDef()->Index("9mmRound");
 
 	// Rockets
 	UTIL_PrecacheOther( "grenade_homer" );
@@ -270,7 +270,7 @@ void CNPC_Apache::Flight( void )
 		AngleVectors( GetGoalEnt()->GetAbsAngles(), &m_vecGoalOrientation );
 	}
 //	SetGoalOrientation( vecGoalOrientation );
-	
+
 
 	if (GetGoalEnt())
 	{
@@ -290,7 +290,7 @@ void CNPC_Apache::Flight( void )
 			if (GetGoalEnt())
 			{
 				m_vecDesiredPosition = GetGoalEnt()->GetAbsOrigin();
-				
+
 //				Vector vecGoalOrientation;
 				AngleVectors( GetGoalEnt()->GetAbsAngles(), &m_vecGoalOrientation );
 
@@ -314,7 +314,7 @@ void CNPC_Apache::Flight( void )
 	AngleVectors( GetAbsAngles() + GetLocalAngularVelocity() * 2 + angAdj, &forward, &right, &up );
 	// Vector vecEst1 = GetAbsOrigin() + pev->velocity + gpGlobals->v_up * m_flForce - Vector( 0, 0, 384 );
 	// float flSide = DotProduct( m_posDesired - vecEst1, gpGlobals->v_right );
-	
+
 
 	QAngle angVel = GetLocalAngularVelocity();
 	float flSide = DotProduct( m_vecGoalOrientation, right );
@@ -323,14 +323,14 @@ void CNPC_Apache::Flight( void )
 	{
 		if ( angVel.y < 60)
 		{
-			 angVel.y += 8; // 9 * (3.0/2.0);
+			angVel.y += 8; // 9 * (3.0/2.0);
 		}
 	}
 	else
 	{
 		if ( angVel.y > -60)
 		{
-			 angVel.y -= 8; // 9 * (3.0/2.0);
+			angVel.y -= 8; // 9 * (3.0/2.0);
 		}
 	}
 	angVel.y *= 0.98;
@@ -382,7 +382,7 @@ void CNPC_Apache::Flight( void )
 
 	// sideways drag
 	vecVel.x = vecVel.x * (1.0 - fabs( right.x ) * 0.05);
-    vecVel.y = vecVel.y * (1.0 - fabs( right.y ) * 0.05);
+	vecVel.y = vecVel.y * (1.0 - fabs( right.y ) * 0.05);
 	vecVel.z = vecVel.z * (1.0 - fabs( right.z ) * 0.05);
 
 	// general drag
@@ -390,15 +390,15 @@ void CNPC_Apache::Flight( void )
 
 	// Set final computed velocity
 	SetAbsVelocity( vecVel );
-	
+
 	// apply power to stay correct height
-	if (m_flForce < 80 && vecEst.z < m_vecDesiredPosition.z) 
+	if (m_flForce < 80 && vecEst.z < m_vecDesiredPosition.z)
 	{
 		m_flForce += 12;
 	}
 	else if (m_flForce > 30)
 	{
-		if (vecEst.z > m_vecDesiredPosition.z) 
+		if (vecEst.z > m_vecDesiredPosition.z)
 			m_flForce -= 8;
 	}
 
@@ -431,8 +431,8 @@ void CNPC_Apache::Flight( void )
 	// Set final computed angular velocity
 	SetLocalAngularVelocity( angVel );
 
-	// ALERT( at_console, "%.0f %.0f : %.0f %.0f : %.0f %.0f : %.0f\n", GetAbsOrigin().x, pev->velocity.x, flDist, flSpeed, GetAbsAngles().x, pev->avelocity.x, m_flForce ); 
-	// ALERT( at_console, "%.0f %.0f : %.0f %0.f : %.0f\n", GetAbsOrigin().z, pev->velocity.z, vecEst.z, m_posDesired.z, m_flForce ); 
+	// ALERT( at_console, "%.0f %.0f : %.0f %.0f : %.0f %.0f : %.0f\n", GetAbsOrigin().x, pev->velocity.x, flDist, flSpeed, GetAbsAngles().x, pev->avelocity.x, m_flForce );
+	// ALERT( at_console, "%.0f %.0f : %.0f %0.f : %.0f\n", GetAbsOrigin().z, pev->velocity.z, vecEst.z, m_posDesired.z, m_flForce );
 }
 
 //------------------------------------------------------------------------------
@@ -456,7 +456,7 @@ bool CNPC_Apache::FireGun( )
 	Vector vForward, vRight, vUp;
 
 	AngleVectors( GetAbsAngles(), &vForward, &vUp, &vRight );
-		
+
 	Vector posGun;
 	QAngle angGun;
 	GetAttachment( 1, posGun, angGun );
@@ -474,9 +474,9 @@ bool CNPC_Apache::FireGun( )
 	QAngle angles;
 
 	VectorAngles( vecOut, angles );
-	
+
 	angles.y = AngleNormalize(angles.y);
-	angles.x = AngleNormalize(angles.x);	
+	angles.x = AngleNormalize(angles.x);
 
 	if (angles.x > m_angGun.x)
 		m_angGun.x = MIN( angles.x, m_angGun.x + 12 );
@@ -559,10 +559,10 @@ void CNPC_Apache::FireRocket( void )
 void CNPC_Apache::AimRocketGun( void )
 {
 	Vector vForward, vRight, vUp;
-	
+
 	if (m_iRockets <= 0)
 		return;
-	
+
 	Vector vTargetDir = m_vecTargetPosition - GetAbsOrigin();
 	VectorNormalize ( vTargetDir );
 
@@ -601,7 +601,7 @@ void CNPC_Apache::AimRocketGun( void )
 				//if (DotProduct( vTargetDir, vecEst) > 0.5)
 				{
 					trace_t tr;
-					
+
 					UTIL_TraceLine( GetAbsOrigin(), GetAbsOrigin() + vecEst * 4096, MASK_ALL, this, COLLISION_GROUP_NONE, &tr);
 
 			//		NDebugOverlay::Line(GetAbsOrigin(), tr.endpos, 255,0,255, false, 5);
@@ -614,7 +614,7 @@ void CNPC_Apache::AimRocketGun( void )
 			else
 			{
 				trace_t tr;
-				
+
 				UTIL_TraceLine( GetAbsOrigin(), GetAbsOrigin() + vecEst * 4096, MASK_ALL, this, COLLISION_GROUP_NONE, &tr);
 				// just fire when close
 				if ((tr.endpos - m_vecTargetPosition).Length() < 512)
@@ -633,9 +633,9 @@ void CNPC_Apache::AimRocketGun( void )
 void CNPC_Apache::LaunchRocket( Vector &viewDir, int damage, int radius, Vector vecLaunchPoint )
 {
 
-	CGrenadeHomer *pGrenade = CGrenadeHomer::CreateGrenadeHomer( 
-		MAKE_STRING("models/weapons/w_missile.mdl"), 
-		MAKE_STRING( "Apache.RPG" ), 
+	CGrenadeHomer *pGrenade = CGrenadeHomer::CreateGrenadeHomer(
+		MAKE_STRING("models/weapons/w_missile.mdl"),
+		MAKE_STRING( "Apache.RPG" ),
 		vecLaunchPoint, vec3_angle, edict() );
 	pGrenade->Spawn( );
 	pGrenade->SetHoming(MISSILE_HOMING_STRENGTH, MISSILE_HOMING_DELAY,
@@ -668,11 +668,11 @@ void CNPC_Apache::DyingThink( void )
 		pos.z += random->RandomFloat( -150, -50 );
 
 		te->Explosion( pasFilter, 0.0,	&pos, g_sModelIndexFireball, 10, 15, TE_EXPLFLAG_NONE, 100, 0 );
-		
+
 		Vector vecSize = Vector( 500, 500, 60 );
 		CPVSFilter pvsFilter( GetAbsOrigin() );
 
-		te->BreakModel( pvsFilter, 0.0, GetAbsOrigin(), vec3_angle, vecSize, vec3_origin, 
+		te->BreakModel( pvsFilter, 0.0, GetAbsOrigin(), vec3_angle, vecSize, vec3_origin,
 			m_nDebrisModel, 100, 0, 2.5, BREAK_METAL );
 
 		m_flNextCrashExplosion = gpGlobals->curtime + random->RandomFloat( 0.3, 0.5 );
@@ -727,7 +727,7 @@ void CNPC_Apache::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir
 				m_hSmoke->m_EndSize = 64;
 				m_hSmoke->m_SpawnRadius = 8;
 				m_hSmoke->m_MinSpeed = 2;
-				m_hSmoke->m_MaxSpeed = 24;				
+				m_hSmoke->m_MaxSpeed = 24;
 
 				m_hSmoke->SetLifetime( 1e6 );
 				m_hSmoke->FollowEntity( this );
@@ -756,7 +756,7 @@ void CNPC_Apache::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir
 			m_hSmoke->m_EndSize = 64;
 			m_hSmoke->m_SpawnRadius = 8;
 			m_hSmoke->m_MinSpeed = 2;
-			m_hSmoke->m_MaxSpeed = 24;				
+			m_hSmoke->m_MaxSpeed = 24;
 
 			m_hSmoke->SetLifetime( 1e6 );
 			m_hSmoke->FollowEntity( this );

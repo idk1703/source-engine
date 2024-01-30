@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -17,7 +17,7 @@
 #include "commanderoverlay.h"
 #include "hud_commander_statuspanel.h"
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudPlayerOverlaySelected::CHudPlayerOverlaySelected( CHudPlayerOverlay *baseOverlay )
  : BaseClass( NULL, "CHudPlayerOverlaySelected" )
@@ -37,14 +37,14 @@ CHudPlayerOverlaySelected::CHudPlayerOverlaySelected( CHudPlayerOverlay *baseOve
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudPlayerOverlaySelected::~CHudPlayerOverlaySelected( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 
 bool CHudPlayerOverlaySelected::Init( KeyValues* pInitData )

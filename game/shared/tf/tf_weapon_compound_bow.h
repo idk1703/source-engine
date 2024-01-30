@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #ifndef TF_WEAPON_COMPOUND_BOW_H
@@ -28,7 +28,7 @@ class CTFCompoundBow : public CTFPipebombLauncher
 public:
 
 	DECLARE_CLASS( CTFCompoundBow, CTFPipebombLauncher );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 // Server specific.
@@ -80,7 +80,7 @@ public:
 	virtual bool	CanReload( void ){ return false; }
 
 	virtual bool	CanPickupOtherWeapon() const { return m_flChargeBeginTime == 0.f; }
-	
+
 #ifdef CLIENT_DLL
 	virtual void	OnDataChanged( DataUpdateType_t type );
 	virtual void	UpdateOnRemove( void );
@@ -109,7 +109,7 @@ private:
 #ifdef CLIENT_DLL
 	EHANDLE		   m_hParticleEffectOwner;
 	HPARTICLEFFECT m_pBurningArrowEffect;
-#endif 
+#endif
 
 	CTFCompoundBow( const CTFCompoundBow & ) {}
 };

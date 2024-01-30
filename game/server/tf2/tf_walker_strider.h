@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -31,10 +31,10 @@ protected:
 // CBaseObject.
 public:
 	virtual bool StartBuilding( CBaseEntity *pBuilder );
-	
+
 
 // CBaseEntity.
-public:	
+public:
 	virtual void Precache();
 	virtual void Spawn();
 	virtual void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
@@ -47,7 +47,7 @@ public:
 
 
 // IServerVehicle.
-public:	
+public:
 	virtual bool IsPassengerVisible( int nRole );
 
 
@@ -69,7 +69,7 @@ private:
 private:
 	CNetworkVar( bool, m_bCrouched );
 	float m_flNextCrouchTime;
-	
+
 	bool m_bFiring;
 	float m_flFireEndTime;
 	float m_flNextShootTime;
@@ -79,7 +79,7 @@ private:
 	float m_flWantedZ;
 
 	QAngle m_vDriverAngles;
-};	
+};
 
 
 #endif // TF_WALKER_STRIDER_H

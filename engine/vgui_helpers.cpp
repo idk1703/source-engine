@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,7 +18,7 @@
 #include "tier0/memdbgon.h"
 
 
-CConVarCheckButton::CConVarCheckButton( vgui::Panel *parent, const char *panelName, const char *text ) : 
+CConVarCheckButton::CConVarCheckButton( vgui::Panel *parent, const char *panelName, const char *text ) :
 	vgui::CheckButton( parent, panelName, text )
 {
 	m_pConVar = NULL;
@@ -33,13 +33,13 @@ void CConVarCheckButton::SetConVar( ConVar *pVar )
 void CConVarCheckButton::SetSelected( bool state )
 {
 	BaseClass::SetSelected( state );
-	
+
 	m_pConVar->SetValue( state );
 }
 
 
-void IncrementalUpdateTree_R( 
-	vgui::TreeView *pTree, 
+void IncrementalUpdateTree_R(
+	vgui::TreeView *pTree,
 	int iCurTreeNode,
 	KeyValues *pValues,
 	bool &bChanges,
@@ -62,7 +62,7 @@ void IncrementalUpdateTree_R(
 				{
 					// Compare the items here.
 					int iChildItemId = pTree->GetChild( iCurTreeNode, iCurChild );
-					
+
 					if ( fn( pTree, iChildItemId, pSub ) )
 						bChanges = true;
 
@@ -73,13 +73,13 @@ void IncrementalUpdateTree_R(
 					// This means that the KeyValues has an extra node..
 					bChanges = true;
 					int iChildItemId = pTree->AddItem( pSub, iCurTreeNode );
-					
+
 					if ( fn( pTree, iChildItemId, pSub ) )
 						bChanges = true;
 
 					IncrementalUpdateTree_R( pTree, iChildItemId, pSub, bChanges, fn );
 				}
-				
+
 				++iCurChild;
 			}
 
@@ -92,7 +92,7 @@ void IncrementalUpdateTree_R(
 			--nChildren;
 			bChanges = true;
 
-			// HACK: I put a hack in there so if you give a negative number for the item, it'll 
+			// HACK: I put a hack in there so if you give a negative number for the item, it'll
 			// delete the panels immediately. This gets around a bug in the TreeView where the
 			// panels don't always get deleted when using MarkPanelForDeletion.
 			pTree->RemoveItem( -iChildItemId, false );
@@ -101,8 +101,8 @@ void IncrementalUpdateTree_R(
 }
 
 
-bool IncrementalUpdateTree( 
-	vgui::TreeView *pTree, 
+bool IncrementalUpdateTree(
+	vgui::TreeView *pTree,
 	KeyValues *pValues,
 	UpdateItemStateFn fn,
 	int iRoot )
@@ -136,11 +136,11 @@ void CopyListPanelToClipboard( vgui::ListPanel *pListPanel )
 	{
 		if ( i != 0 )
 			textBuf.AddToTail( '\t' );
-		
+
 		char tempText[512];
 		if ( !pListPanel->GetColumnHeaderText( i, tempText, sizeof( tempText ) ) )
 			Error( "GetColumHeaderText( %d ) failed", i );
-		
+
 		textBuf.AddMultipleToTail( strlen( tempText ), tempText );
 	}
 	textBuf.AddToTail( '\n' );
@@ -154,7 +154,7 @@ void CopyListPanelToClipboard( vgui::ListPanel *pListPanel )
 		{
 			if ( i != 0 )
 				textBuf.AddToTail( '\t' );
-		
+
 			wchar_t tempTextWC[512];
 			char tempText[512];
 

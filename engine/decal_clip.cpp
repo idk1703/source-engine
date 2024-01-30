@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -56,7 +56,7 @@ template< class Clipper >
 static inline void Intersect( Clipper &clip, CDecalVert *one, CDecalVert *two, CDecalVert *out )
 {
 	float t = Clipper::Clip( one, two );
-	
+
 	VectorLerp( one->m_vPos, two->m_vPos, t, out->m_vPos );
 	Vector2DLerp( one->m_cLMCoords, two->m_cLMCoords, t, out->m_cLMCoords );
 	Vector2DLerp( one->m_ctCoords, two->m_ctCoords, t, out->m_ctCoords );
@@ -74,18 +74,18 @@ static inline int SHClip( CDecalVert *pDecalClipVerts, int vertCount, CDecalVert
 	outCount = 0;
 
 	s = &pDecalClipVerts[ vertCount-1 ];
-	for ( j = 0; j < vertCount; j++ ) 
+	for ( j = 0; j < vertCount; j++ )
 	{
 		p = &pDecalClipVerts[ j ];
-		if ( Clipper::Inside( p ) ) 
+		if ( Clipper::Inside( p ) )
 		{
-			if ( Clipper::Inside( s ) ) 
+			if ( Clipper::Inside( s ) )
 			{
 				*out = *p;
 				outCount++;
 				out++;
 			}
-			else 
+			else
 			{
 				Intersect( clip, s, p, out );
 				out++;
@@ -96,9 +96,9 @@ static inline int SHClip( CDecalVert *pDecalClipVerts, int vertCount, CDecalVert
 				out++;
 			}
 		}
-		else 
+		else
 		{
-			if ( Clipper::Inside( s ) ) 
+			if ( Clipper::Inside( s ) )
 			{
 				Intersect( clip, p, s, out );
 				out++;
@@ -107,7 +107,7 @@ static inline int SHClip( CDecalVert *pDecalClipVerts, int vertCount, CDecalVert
 		}
 		s = p;
 	}
-				
+
 	return outCount;
 }
 
@@ -157,9 +157,9 @@ CDecalVert* R_DoDecalSHClip( CDecalVert *pInVerts, CDecalVert *pOutVerts, decal_
 }
 
 // Build the initial list of vertices from the surface verts into the global array, 'verts'.
-void R_SetupDecalVertsForMSurface( 
-	decal_t * RESTRICT pDecal, 
-	SurfaceHandle_t surfID, 
+void R_SetupDecalVertsForMSurface(
+	decal_t * RESTRICT pDecal,
+	SurfaceHandle_t surfID,
 	Vector * RESTRICT pTextureSpaceBasis,
 	CDecalVert * RESTRICT pVerts )
 {
@@ -171,7 +171,7 @@ void R_SetupDecalVertsForMSurface(
 	for ( int j = 0; j < count; j++ )
 	{
 		int vertIndex = pIndices[j];
-		
+
 		pVerts[j].m_vPos = host_state.worldbrush->vertexes[vertIndex].position; // Copy model space coordinates
 		// garymcthack - what about m_ParentTexCoords?
 		pVerts[j].m_ctCoords.x = DotProduct( pVerts[j].m_vPos, pTextureSpaceBasis[0] ) + uOffset;
@@ -187,19 +187,19 @@ void R_SetupDecalVertsForMSurface(
 
 #define SIN_45_DEGREES ( 0.70710678118654752440084436210485f )
 
-void R_DecalComputeBasis( Vector const& surfaceNormal, Vector const* pSAxis, 
+void R_DecalComputeBasis( Vector const& surfaceNormal, Vector const* pSAxis,
 								 Vector* textureSpaceBasis )
 {
 	/*
 	// s, t, textureSpaceNormal (T cross S = textureSpaceNormal(N))
-	//   N     
-	//   \   
-	//    \     
-	//     \  
+	//   N
+	//   \
+	//    \
+	//     \
 	//      |---->S
-	//      | 
-	//		|  
-	//      |T    
+	//      |
+	//		|
+	//      |T
 	// S = textureSpaceBasis[0]
 	// T = textureSpaceBasis[1]
 	// N = textureSpaceBasis[2]
@@ -317,7 +317,7 @@ void R_SetupDecalClip( CDecalVert* &pOutVerts, decal_t *pDecal, Vector &vSurfNor
 CDecalVert* R_DecalVertsClip( CDecalVert *pOutVerts, decal_t *pDecal, SurfaceHandle_t surfID, IMaterial *pMaterial )
 {
 	float decalWorldScale[2];
-	Vector textureSpaceBasis[3]; 
+	Vector textureSpaceBasis[3];
 
 	// Figure out where the decal maps onto the surface.
 	R_SetupDecalClip( pOutVerts, pDecal, MSurf_Plane( surfID ).normal, pMaterial, textureSpaceBasis, decalWorldScale );

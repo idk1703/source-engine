@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@ DEFINE_FALLBACK_SHADER( Core, Core_dx70 )
 DEFINE_FALLBACK_SHADER( Core_dx70, Wireframe )
 
 #if 0
-BEGIN_VS_SHADER( Core_DX70, 
+BEGIN_VS_SHADER( Core_DX70,
 			  "Help for Core_DX70" )
 
 	BEGIN_SHADER_PARAMS

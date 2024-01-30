@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,7 +15,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CViewC4Panel : public CVGuiScreenPanel
 {
@@ -39,10 +39,10 @@ private:
 DECLARE_VGUI_SCREEN_FACTORY( CViewC4Panel, "c4_view_panel" );
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CViewC4Panel::CViewC4Panel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CViewC4Panel", vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/C4Panel.res", "ClientScheme" ) ) 
+	: BaseClass( parent, "CViewC4Panel", vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/C4Panel.res", "ClientScheme" ) )
 {
 	SetSize( 10, 10 ); // Quiet "parent not sized yet" spew
 	m_pTimeLabel = new vgui::Label( this, "TimerLabel", "" );
@@ -61,7 +61,7 @@ void CViewC4Panel::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CViewC4Panel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -113,5 +113,5 @@ void CViewC4Panel::OnTick()
 		{
 			m_pTimeLabel->SetText( display );
 		}
-	}		
+	}
 }

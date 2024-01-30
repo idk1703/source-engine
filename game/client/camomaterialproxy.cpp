@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,7 +27,7 @@ class CCamoMaterialProxy;
 class CCamoTextureRegen : public ITextureRegenerator
 {
 public:
-	CCamoTextureRegen( CCamoMaterialProxy *pProxy ) : m_pProxy(pProxy) {} 
+	CCamoTextureRegen( CCamoMaterialProxy *pProxy ) : m_pProxy(pProxy) {}
 	virtual void RegenerateTextureBits( ITexture *pTexture, IVTFTexture *pVTFTexture, Rect_t *pSubRect );
 	virtual void Release() {}
 
@@ -57,8 +57,8 @@ protected:
 private:
 	void LoadCamoPattern( void );
 	void GenerateRandomPointsInNormalizedCube( void );
-	void GetColors( Vector &lighting, Vector &base, int index, 
-						  const Vector &boxMin, const Vector &boxExtents, 
+	void GetColors( Vector &lighting, Vector &base, int index,
+						  const Vector &boxMin, const Vector &boxExtents,
 						  const Vector &forward, const Vector &right, const Vector &up,
 						  const Vector& entityPosition );
 	// this needs to go in a base class
@@ -72,13 +72,13 @@ private:
 		void *data;
 		struct InstanceData_s *next;
 	};
-	
+
 	struct CamoInstanceData_t
 	{
 		int dummy;
 	};
 #endif
-	
+
 	unsigned char *m_pCamoPatternImage;
 
 #if 0
@@ -98,7 +98,7 @@ private:
 	cache_user_t m_camoImageDataCache;
 #endif
 	unsigned char m_CamoPalette[256][3];
-	// these represent that part of the entitiy's bounding box that we 
+	// these represent that part of the entitiy's bounding box that we
 	// want to cast rays through to get colors for the camo
 	Vector m_SubBoundingBoxMin; // normalized
 	Vector m_SubBoundingBoxMax; // normalized
@@ -222,7 +222,7 @@ bool CCamoMaterialProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 	ITexture *pCamoTexture = m_pCamoTextureVar->GetTextureValue();
 	if (pCamoTexture)
 		pCamoTexture->SetTextureRegenerator( &m_TextureRegen );
-	
+
 	// Need to get the palettized texture to create the procedural texture from
 	// somewhere.
 	m_pCamoPatternTextureVar = m_pMaterial->FindVar( "$camoPatternTexture", &found );
@@ -231,7 +231,7 @@ bool CCamoMaterialProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 		m_pCamoTextureVar = NULL;
 		return false;
 	}
-	
+
 	IMaterialVar *subBoundingBoxMinVar, *subBoundingBoxMaxVar;
 
 	subBoundingBoxMinVar = m_pMaterial->FindVar( "$camoBoundingBoxMin", &found, false );
@@ -253,23 +253,23 @@ bool CCamoMaterialProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 	{
 		subBoundingBoxMaxVar->GetVecValue( m_SubBoundingBoxMax.Base(), 3 );
 	}
-	
+
 	LoadCamoPattern();
 	GenerateRandomPointsInNormalizedCube();
 
 	return true;
 }
 
-void CCamoMaterialProxy::GetColors( Vector &diffuseColor, Vector &baseColor, int index, 
-										  const Vector &boxMin, const Vector &boxExtents, 
+void CCamoMaterialProxy::GetColors( Vector &diffuseColor, Vector &baseColor, int index,
+										  const Vector &boxMin, const Vector &boxExtents,
 										  const Vector &forward, const Vector &right, const Vector &up,
 										  const Vector& entityPosition )
 {
 	Vector position, transformedPosition;
-	
+
 	// hack
 //	m_pointsInNormalizedBox[index] = Vector( 0.5f, 0.5f, 1.0f );
-	
+
 	position[0] = m_pointsInNormalizedBox[index][0] * boxExtents[0] + boxMin[0];
 	position[1] = m_pointsInNormalizedBox[index][1] * boxExtents[1] + boxMin[1];
 	position[2] = m_pointsInNormalizedBox[index][2] * boxExtents[2] + boxMin[2];
@@ -281,7 +281,7 @@ void CCamoMaterialProxy::GetColors( Vector &diffuseColor, Vector &baseColor, int
 	VectorNormalize( direction );
 	direction = direction * ( COORD_EXTENT * 1.74f );
 	Vector endPoint = position + direction;
-	
+
 	// baseColor is already in gamma space
 //	engine->TraceLineMaterialAndLighting( g_vecInstantaneousRenderOrigin, endPoint, diffuseColor, baseColor );
 	engine->TraceLineMaterialAndLighting( transformedPosition, endPoint, diffuseColor, baseColor );
@@ -292,12 +292,12 @@ void CCamoMaterialProxy::GetColors( Vector &diffuseColor, Vector &baseColor, int
 	diffuseColor[2] = pow( diffuseColor[2], 1.0f / 2.2f );
 
 #if 0
-	Msg( "%f %f %f\n", 
-		diffuseColor[0], 
-		diffuseColor[1], 
+	Msg( "%f %f %f\n",
+		diffuseColor[0],
+		diffuseColor[1],
 		diffuseColor[2] );
 #endif
-	
+
 #if 0
 	float max;
 	max = diffuseColor[0];
@@ -366,14 +366,14 @@ void CCamoMaterialProxy::GenerateCamoTexture( ITexture* pTexture, IVTFTexture *p
 	Vector mins, maxs;
 	mins = m_pEnt->WorldAlignMins();
 	maxs = m_pEnt->WorldAlignMaxs();
-	
+
 	Vector traceDirection;
 	Vector traceEnd;
 	trace_t	traceResult;
-	
+
 	Vector forward, right, up;
 	AngleVectors( entityAngles, &forward, &right, &up );
-	
+
 	Vector position, transformedPosition;
 	Vector maxsMinusMins = maxs - mins;
 
@@ -404,14 +404,14 @@ void CCamoMaterialProxy::GenerateCamoTexture( ITexture* pTexture, IVTFTexture *p
 		camoPalette[i][2] = diffuseColor[i][2] * 255.0f;
 #endif
 	}
-	
+
 	int width = pVTFTexture->Width();
 	int height = pVTFTexture->Height();
 	if( width != m_CamoPatternWidth || height != m_CamoPatternHeight )
 	{
 		return;
 	}
-	
+
 	unsigned char *imageData = pVTFTexture->ImageData( 0, 0, 0 );
 	enum ImageFormat imageFormat = pVTFTexture->Format();
 	if( imageFormat != IMAGE_FORMAT_RGB888 )
@@ -453,8 +453,8 @@ void CCamoMaterialProxy::OnBind( C_BaseEntity *pEntity )
 	{
 		return;
 	}
-	
-	m_pEnt = pEntity;	
+
+	m_pEnt = pEntity;
 	ITexture *pCamoTexture = m_pCamoTextureVar->GetTextureValue();
 	pCamoTexture->Download();
 
@@ -466,21 +466,21 @@ void CCamoMaterialProxy::LoadCamoPattern( void )
 {
 #if 0
 	// hack - need to figure out a name to attach that isn't too long.
-	m_pCamoPatternImage = 
+	m_pCamoPatternImage =
 		( unsigned char * )datacache->FindByName( &m_camoImageDataCache, "camopattern" );
-	
+
 	if( m_pCamoPatternImage )
 	{
 		// is already in the cache.
 		return m_pCamoPatternImage;
 	}
 #endif
-	
+
 	enum ImageFormat indexImageFormat;
 	int indexImageSize;
 #ifndef _XBOX
 	float dummyGamma;
-	if( !TGALoader::GetInfo( m_pCamoPatternTextureVar->GetStringValue(), 
+	if( !TGALoader::GetInfo( m_pCamoPatternTextureVar->GetStringValue(),
 		&m_CamoPatternWidth, &m_CamoPatternHeight, &indexImageFormat, &dummyGamma ) )
 	{
 		//Warning( "Can't get tga info for hl2/materials/models/combine_elite/camo7paletted.tga for camo material\n" );
@@ -493,14 +493,14 @@ void CCamoMaterialProxy::LoadCamoPattern( void )
 	m_pCamoTextureVar = NULL;
 	return;
 #endif
-	
+
 	if( indexImageFormat != IMAGE_FORMAT_I8 )
 	{
 		//	Warning( "Camo material texture hl2/materials/models/combine_elite/camo7paletted.tga must be 8-bit greyscale\n" );
 		m_pCamoTextureVar = NULL;
 		return;
 	}
-	
+
 	indexImageSize = ImageLoader::GetMemRequired( m_CamoPatternWidth, m_CamoPatternHeight, 1, indexImageFormat, false );
 #if 0
 	m_pCamoPatternImage = ( unsigned char * )
@@ -512,7 +512,7 @@ void CCamoMaterialProxy::LoadCamoPattern( void )
 		m_pCamoTextureVar = NULL;
 		return;
 	}
-	
+
 #ifndef _XBOX
 	if( !TGALoader::Load( m_pCamoPatternImage, m_pCamoPatternTextureVar->GetStringValue(),
 		m_CamoPatternWidth, m_CamoPatternHeight, IMAGE_FORMAT_I8, dummyGamma, false ) )
@@ -525,7 +525,7 @@ void CCamoMaterialProxy::LoadCamoPattern( void )
 	// xboxissue - no tga support, why is the camo done this way?
 	Assert( 0 );
 #endif
-	
+
 	bool colorUsed[256];
 	int colorRemap[256];
 	// count the number of colors used in the image.
@@ -564,7 +564,7 @@ void CCamoMaterialProxy::GenerateRandomPointsInNormalizedCube( void )
 		m_pCamoTextureVar = NULL;
 		return;
 	}
-	
+
 	int i;
 	for( i = 0; i < m_CamoPatternNumColors; i++ )
 	{

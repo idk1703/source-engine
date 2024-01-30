@@ -50,7 +50,7 @@ DEFINE_CONSOLE_STEAM_APPLICATION_OBJECT( CItemTestConApp );
 //-----------------------------------------------------------------------------
 bool CItemTestConApp::Create()
 {
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "", "" }	// Required to terminate the list
 	};
@@ -234,4 +234,3 @@ bool CItemTestConApp::DoSteamId()
 
 	return true;
 }
-

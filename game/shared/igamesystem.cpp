@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Deals with singleton  
+// Purpose: Deals with singleton
 //
 // $Revision: $
 // $NoKeywords: $
@@ -32,7 +32,7 @@ static void InvokeMethodReverseOrder( GameSystemFunc_t f );
 // Used to invoke a method of all added Game systems in order
 static void InvokePerFrameMethod( PerFrameGameSystemFunc_t f, char const *timed = 0 );
 
-static bool s_bSystemsInitted = false; 
+static bool s_bSystemsInitted = false;
 
 // List of all installed Game systems
 static CUtlVector<IGameSystem*> s_GameSystems( 0, 4 );
@@ -338,7 +338,7 @@ void IGameSystem::FrameUpdatePostEntityThinkAllSystems()
 	InvokePerFrameMethod( &IGameSystemPerFrame::FrameUpdatePostEntityThink );
 }
 
-void IGameSystem::PreClientUpdateAllSystems() 
+void IGameSystem::PreClientUpdateAllSystems()
 {
 	InvokePerFrameMethod( &IGameSystemPerFrame::PreClientUpdate );
 }
@@ -396,5 +396,3 @@ void InvokeMethodReverseOrder( GameSystemFunc_t f )
 		(sys->*f)();
 	}
 }
-
-

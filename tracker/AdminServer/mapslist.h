@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -58,7 +58,7 @@ private:
 	IResponse *m_pResponseTarget;
 	CRcon *m_pRcon;
 	char m_sMod[64];
-	
+
 	bool m_bIsRefreshing;
 	bool m_bNewMapsList;
 	bool m_bRconFailed;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -67,8 +67,8 @@ void CBaseFire::Scale( float start, float size, float time )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : state - 
+// Purpose:
+// Input  : state -
 //-----------------------------------------------------------------------------
 void CBaseFire::Enable( int state )
 {
@@ -99,7 +99,7 @@ IMPLEMENT_SERVERCLASS_ST( CFireSmoke, DT_FireSmoke )
 	SendPropModelIndex(	SENDINFO( m_nFlameFromAboveModelIndex ) ),
 END_SEND_TABLE()
 
-//Data description 
+//Data description
 BEGIN_DATADESC( CFireSmoke )
 
 	DEFINE_FIELD( m_flStartScale,		FIELD_FLOAT ),
@@ -112,10 +112,10 @@ BEGIN_DATADESC( CFireSmoke )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
-CFireSmoke::CFireSmoke( void ) 
+CFireSmoke::CFireSmoke( void )
 {
 	//Client-side
 	m_flScale			= 0.0f;
@@ -127,14 +127,14 @@ CFireSmoke::CFireSmoke( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFireSmoke::~CFireSmoke( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFireSmoke::Precache()
 {
@@ -147,8 +147,8 @@ void CFireSmoke::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : state - 
+// Purpose:
+// Input  : state -
 //-----------------------------------------------------------------------------
 void CFireSmoke::EnableSmoke( int state )
 {
@@ -163,8 +163,8 @@ void CFireSmoke::EnableSmoke( int state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : state - 
+// Purpose:
+// Input  : state -
 //-----------------------------------------------------------------------------
 void CFireSmoke::EnableGlow( int state )
 {

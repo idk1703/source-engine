@@ -22,12 +22,12 @@ int CSelectPlayerDialog::SortPartnerInfoFunc( const partner_info_t *pA, const pa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CSelectPlayerDialog::CSelectPlayerDialog( vgui::Panel *parent ) 
-  : vgui::EditablePanel( parent, "SelectPlayerDialog" )
-  , m_bAllowSameTeam( true )
-  , m_bAllowOutsideServer( true )
+CSelectPlayerDialog::CSelectPlayerDialog( vgui::Panel *parent )
+	: vgui::EditablePanel( parent, "SelectPlayerDialog" )
+	, m_bAllowSameTeam( true )
+	, m_bAllowOutsideServer( true )
 {
 	if ( parent == NULL )
 	{
@@ -53,7 +53,7 @@ CSelectPlayerDialog::CSelectPlayerDialog( vgui::Panel *parent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CSelectPlayerDialog::~CSelectPlayerDialog( void )
 {
@@ -65,7 +65,7 @@ CSelectPlayerDialog::~CSelectPlayerDialog( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSelectPlayerDialog::Reset( void )
 {
@@ -73,7 +73,7 @@ void CSelectPlayerDialog::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSelectPlayerDialog::ApplySettings( KeyValues *inResourceData )
 {
@@ -94,7 +94,7 @@ void CSelectPlayerDialog::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSelectPlayerDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -131,9 +131,9 @@ void CSelectPlayerDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CSelectPlayerDialog::PerformLayout( void ) 
+void CSelectPlayerDialog::PerformLayout( void )
 {
 	BaseClass::PerformLayout();
 
@@ -157,7 +157,7 @@ void CSelectPlayerDialog::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSelectPlayerDialog::OnCommand( const char *command )
 {
@@ -207,7 +207,7 @@ void CSelectPlayerDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSelectPlayerDialog::UpdateState( void )
 {
@@ -249,7 +249,7 @@ void CSelectPlayerDialog::UpdateState( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSelectPlayerDialog::SetupSelectFriends( void )
 {
@@ -294,7 +294,7 @@ void CSelectPlayerDialog::SetupSelectFriends( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSelectPlayerDialog::SetupSelectServer( bool bFriendsOnly )
 {
@@ -348,7 +348,7 @@ void CSelectPlayerDialog::SetupSelectServer( bool bFriendsOnly )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSelectPlayerDialog::UpdatePlayerList( void )
 {
@@ -402,14 +402,14 @@ void CSelectPlayerDialog::UpdatePlayerList( void )
 			{
 				m_pPlayerPanels[i]->ApplySettings( m_pButtonKV );
 				m_pPlayerPanels[i]->InvalidateLayout( true );
-			} 
+			}
 		}
 
 		m_pPlayerPanels[i]->SetInfo( m_PlayerInfoList[i].m_steamID, m_PlayerInfoList[i].m_name );
 	}
 
 	m_pPlayerListScroller->GetScrollbar()->SetAutohideButtons( true );
-	m_pPlayerListScroller->GetScrollbar()->SetValue( 0 );	
+	m_pPlayerListScroller->GetScrollbar()->SetValue( 0 );
 
 	// Remove any extra player panels
 	for ( int i = m_pPlayerPanels.Count()-1; i >= m_PlayerInfoList.Count(); i-- )
@@ -432,7 +432,7 @@ void CSelectPlayerDialog::UpdatePlayerList( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSelectPlayerTargetPanel::SetInfo( const CSteamID &steamID, const char *pszName )
 {
@@ -443,4 +443,3 @@ void CSelectPlayerTargetPanel::SetInfo( const CSteamID &steamID, const char *psz
 
 	m_pButton->SetText( pszName );
 }
-

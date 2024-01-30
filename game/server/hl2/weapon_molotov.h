@@ -44,7 +44,7 @@ public:
 
 	void				SetPickupTouch( void );
 	void				MolotovTouch( CBaseEntity *pOther );	// default weapon touch
-	
+
 	int					CapabilitiesGet( void ) { return bits_CAP_WEAPON_RANGE_ATTACK1; }
 
 	bool				ObjectInWay( void );

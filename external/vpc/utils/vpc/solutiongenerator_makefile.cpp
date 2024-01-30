@@ -336,6 +336,3 @@ IBaseSolutionGenerator* GetMakefileSolutionGenerator()
 {
 	return &g_SolutionGenerator_Makefile;
 }
-
-
-

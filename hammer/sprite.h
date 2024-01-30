@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -24,8 +24,8 @@ class CRender3D;
 // must match definition in modelgen.h
 enum synctype_t
 {
-	ST_SYNC=0, 
-	ST_RAND 
+	ST_SYNC=0,
+	ST_RAND
 };
 
 #define SPR_VP_PARALLEL_UPRIGHT		0
@@ -50,7 +50,7 @@ class CSpriteModel
 
 		CSpriteModel(void);
 		~CSpriteModel(void);
-			
+
 		bool LoadSprite(const char *pszSpritePath);
 
 		int GetFrameCount(void);
@@ -157,4 +157,3 @@ class CSpriteCache
 
 
 #endif // SPRITE_H
-

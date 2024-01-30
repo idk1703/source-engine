@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -271,7 +271,7 @@ float CFish::Avoid( void )
 {
 	const float avoidPower = 100.0f; // 50.0f; // 25.0f;
 
-	// 
+	//
 	// Stay within pool bounds.
 	// This may cause problems with pools with oddly concave portions
 	// right at the max range.
@@ -433,7 +433,7 @@ void CFish::Update( float deltaT )
 	// flock towards center of pool
 	FlockTo( NULL, (1.0f - danger) );
 
-	
+
 	//
 	// Update orientation
 	//
@@ -636,7 +636,7 @@ bool CFishPool::KeyValue( const char *szKeyName, const char *szValue )
 void CFishPool::FireGameEvent( IGameEvent *event )
 {
 	CBasePlayer *player = UTIL_PlayerByUserId( event->GetInt( "userid" ) );
-	
+
 	// the fish panic
 	const float loudRange = 500.0f;
 	const float quietRange = 75.0f;
@@ -677,7 +677,7 @@ void CFishPool::Update( void )
 			{
 				m_fishes[i]->SetAbsVelocity( Vector( 0, 0, 0 ) );
 			}
-			
+
 			m_isDormant = true;
 		}
 
@@ -721,7 +721,7 @@ void CFishPool::Update( void )
 					m_fishes[j]->AddVisible( m_fishes[i] );
 				}
 			}
-		}		
+		}
 	}
 
 	// simulate the fishes behavior
@@ -730,4 +730,3 @@ void CFishPool::Update( void )
 		m_fishes[i]->Update( deltaT );
 	}
 }
-

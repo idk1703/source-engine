@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -36,7 +36,7 @@ struct AttributeRemap_t
 	const char *m_pDmeName;
 };
 
-static AttributeRemap_t s_pAttributeRemap[] = 
+static AttributeRemap_t s_pAttributeRemap[] =
 {
 	{ "type", "_type" }, // FIXME - remove this once we've made type no longer be an attribute
 	{ "name", "_name" },
@@ -59,8 +59,8 @@ public:
 	virtual int GetCurrentVersion() const { return 0; } // doesn't store a version
 	virtual bool Serialize( CUtlBuffer &buf, CDmElement *pRoot );
 	virtual bool Unserialize( CUtlBuffer &buf, const char *pEncodingName, int nEncodingVersion,
-							  const char *pSourceFormatName, int nSourceFormatVersion,
-							  DmFileId_t fileid, DmConflictResolution_t idConflictResolution, CDmElement **ppRoot );
+							const char *pSourceFormatName, int nSourceFormatVersion,
+							DmFileId_t fileid, DmConflictResolution_t idConflictResolution, CDmElement **ppRoot );
 
 private:
 	// Methods related to serialization
@@ -147,7 +147,7 @@ bool CDmSerializerKeyValues::SerializeAttributes( CUtlBuffer& buf, CDmElement *p
 			}
 		}
 
-  		DmAttributeType_t nAttrType = pAttribute->GetType();
+		DmAttributeType_t nAttrType = pAttribute->GetType();
 		if ( ( nAttrType ==  AT_ELEMENT_ARRAY ) && !Q_stricmp( pName, "subkeys" ) )
 		{
 			SerializeSubKeys( buf, pAttribute );
@@ -163,7 +163,7 @@ bool CDmSerializerKeyValues::SerializeAttributes( CUtlBuffer& buf, CDmElement *p
 		case AT_VOID_ARRAY:
 		case AT_ELEMENT:
 		case AT_ELEMENT_ARRAY:
-			Warning("KeyValues: Can't serialize attribute of type %s into KeyValues files!\n", 
+			Warning("KeyValues: Can't serialize attribute of type %s into KeyValues files!\n",
 				g_pDataModel->GetAttributeNameForType( nAttrType ) );
 			buf.PutChar( '\"' );
 			buf.PutChar( '\"' );
@@ -188,7 +188,7 @@ bool CDmSerializerKeyValues::SerializeAttributes( CUtlBuffer& buf, CDmElement *p
 			break;
 		}
 
- 		buf.PutChar( '\n' );
+		buf.PutChar( '\n' );
 	}
 
 	return true;
@@ -265,8 +265,8 @@ DmAttributeType_t CDmSerializerKeyValues::DetermineAttributeType( KeyValues *pKe
 				return AT_VECTOR2;
 
 			int i = pKeyValues->GetInt( NULL, INT_MAX );
-			if ( ( sscanf( pKeyValues->GetString(), "%d", &i ) == 1 ) && 
-				 ( !strchr( pKeyValues->GetString(), '.' ) ) )
+			if ( ( sscanf( pKeyValues->GetString(), "%d", &i ) == 1 ) &&
+				( !strchr( pKeyValues->GetString(), '.' ) ) )
 				return AT_INT;
 
 			if ( sscanf( pKeyValues->GetString(), "%f", &f1 ) == 1 )
@@ -313,7 +313,7 @@ void CDmSerializerKeyValues::UnserializeAttribute( CDmElement *pElement, KeyValu
 		}
 	}
 
-	// Element types are stored out by GUID, we need to hang onto the guid and 
+	// Element types are stored out by GUID, we need to hang onto the guid and
 	// link it back up once all elements have been loaded from the file
 	DmAttributeType_t type = DetermineAttributeType( pKeyValues );
 
@@ -336,16 +336,16 @@ void CDmSerializerKeyValues::UnserializeAttribute( CDmElement *pElement, KeyValu
 	{
 	case AT_STRING:
 		{
-			// Strings have different delimiter rules for KeyValues, 
+			// Strings have different delimiter rules for KeyValues,
 			// so let's just directly copy the string instead of going through unserialize
 			pAttribute->SetValue( pAttributeValue );
 		}
 		break;
-	
+
 	default:
 		{
 			int nLen = Q_strlen( pAttributeValue );
-			CUtlBuffer buf( pAttributeValue, nLen, CUtlBuffer::TEXT_BUFFER | CUtlBuffer::READ_ONLY ); 
+			CUtlBuffer buf( pAttributeValue, nLen, CUtlBuffer::TEXT_BUFFER | CUtlBuffer::READ_ONLY );
 			pAttribute->Unserialize( buf );
 		}
 		break;
@@ -406,7 +406,7 @@ CDmElement* CDmSerializerKeyValues::UnserializeFromKeyValues( KeyValues *pKeyVal
 	m_ElementList.RemoveAll();
 
 	m_hRoot = CreateDmElement( "DmElement", "root" );
- 	CDmElement *pRoot = g_pDataModel->GetElement( m_hRoot );
+	CDmElement *pRoot = g_pDataModel->GetElement( m_hRoot );
 	CDmrElementArray<> subkeys( pRoot->AddAttribute( "subkeys", AT_ELEMENT_ARRAY ) );
 
 	int iNestingLevel = 0;
@@ -430,16 +430,16 @@ CDmElement* CDmSerializerKeyValues::UnserializeFromKeyValues( KeyValues *pKeyVal
 
 	g_pDmElementFrameworkImp->RemoveCleanElementsFromDirtyList( );
 	m_ElementList.RemoveAll();
-    return pRoot;
+	return pRoot;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Main entry point for the unserialization
 //-----------------------------------------------------------------------------
 bool CDmSerializerKeyValues::Unserialize( CUtlBuffer &buf, const char *pEncodingName, int nEncodingVersion,
-										  const char *pSourceFormatName, int nSourceFormatVersion,
-										  DmFileId_t fileid, DmConflictResolution_t idConflictResolution, CDmElement **ppRoot )
+										const char *pSourceFormatName, int nSourceFormatVersion,
+										DmFileId_t fileid, DmConflictResolution_t idConflictResolution, CDmElement **ppRoot )
 {
 	Assert( !V_stricmp( pEncodingName, "keyvalues" ) );
 

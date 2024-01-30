@@ -28,7 +28,7 @@ typedef enum
 } RCONSTATUS;
 
 CServerInfo::CServerInfo(IResponse *target,serveritem_t &server) {
-	
+
 	memcpy(&m_Server, &server,sizeof(serveritem_t));
 	m_pResponseTarget=target;
 
@@ -54,8 +54,8 @@ void CServerInfo::Query()
 {
 	CMsgBuffer *buffer = m_pQuery->GetSendBuffer();
 	assert( buffer );
-	
-	if ( !buffer ) 
+
+	if ( !buffer )
 	{
 		return;
 	}
@@ -87,20 +87,20 @@ void CServerInfo::Query()
 	m_pQuery->SendMessage( &adr );
 
 	m_fSendTime = CSocket::GetClock();
-	
+
 }
 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CServerInfo::RunFrame()
 {
 
 	float curtime = CSocket::GetClock();
 	if(m_fSendTime!=0 && (curtime-m_fSendTime)> 5.0f) // 10 seconds timeout
-	{	
+	{
 		m_fSendTime = 0;
 		m_pResponseTarget->ServerFailedToRespond();
 	}
@@ -113,8 +113,8 @@ void CServerInfo::RunFrame()
 
 }
 
-void CServerInfo::UpdateServer(netadr_t *adr, bool proxy, const char *serverName, const char *map, 
-						 const char *gamedir, const char *gameDescription, int players, 
+void CServerInfo::UpdateServer(netadr_t *adr, bool proxy, const char *serverName, const char *map,
+						 const char *gamedir, const char *gameDescription, int players,
 						 int maxPlayers, float recvTime, bool password)
 {
 
@@ -142,7 +142,7 @@ void CServerInfo::UpdateServer(netadr_t *adr, bool proxy, const char *serverName
 		ping = 1200;
 	}
 
-	// add to ping times list 
+	// add to ping times list
 //	server.pings[0] = server.pings[1];
 //	server.pings[1] = server.pings[2];
 //	server.pings[2] = ping;
@@ -162,23 +162,23 @@ void CServerInfo::UpdateServer(netadr_t *adr, bool proxy, const char *serverName
 
 }
 
-void CServerInfo::Refresh() 
+void CServerInfo::Refresh()
 {
 	Query();
 }
 
-bool CServerInfo::IsRefreshing() 
+bool CServerInfo::IsRefreshing()
 {
 
 	return m_bIsRefreshing;
 }
 
-serveritem_t &CServerInfo::GetServer() 
+serveritem_t &CServerInfo::GetServer()
 {
 	return m_Server;
 }
 
-bool CServerInfo::Refreshed() 
+bool CServerInfo::Refreshed()
 {
 	bool val = m_bRefreshed;
 	m_bRefreshed=false;

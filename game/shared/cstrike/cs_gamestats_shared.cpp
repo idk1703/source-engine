@@ -140,7 +140,7 @@ CSStatProperty CSStatProperty_Table[] =
 	{	CSSTAT_SHOTS_XM1014,					"total_shots_xm1014",				"#GAMEUI_Stat_XM1014Shots",				CSSTAT_PRIORITY_LOW,			},
 	{	CSSTAT_SHOTS_M249,						"total_shots_m249",					"#GAMEUI_Stat_M249Shots",				CSSTAT_PRIORITY_LOW,			},
 	{	CSSTAT_SHOTS_KNIFE,						NULL,								NULL,									CSSTAT_PRIORITY_NEVER,			},
-	{	CSSTAT_SHOTS_HEGRENADE,					NULL,								NULL,									CSSTAT_PRIORITY_NEVER,			},	
+	{	CSSTAT_SHOTS_HEGRENADE,					NULL,								NULL,									CSSTAT_PRIORITY_NEVER,			},
 
 	{	CSSTAT_HITS_DEAGLE,						"total_hits_deagle",				"#GAMEUI_Stat_DeagleHits",				CSSTAT_PRIORITY_LOW,			},
 	{	CSSTAT_HITS_USP,						"total_hits_usp",					"#GAMEUI_Stat_USPHits",					CSSTAT_PRIORITY_LOW,			},
@@ -167,7 +167,7 @@ CSStatProperty CSStatProperty_Table[] =
 	{	CSSTAT_HITS_XM1014,						"total_hits_xm1014",				"#GAMEUI_Stat_XM1014Hits",				CSSTAT_PRIORITY_LOW,			},
 	{	CSSTAT_HITS_M249,						"total_hits_m249",					"#GAMEUI_Stat_M249Hits",				CSSTAT_PRIORITY_LOW,			},
 	{	CSSTAT_HITS_KNIFE,						NULL,								NULL,									CSSTAT_PRIORITY_NEVER,			},
-	{	CSSTAT_HITS_HEGRENADE,					NULL,								NULL,									CSSTAT_PRIORITY_NEVER,			},	
+	{	CSSTAT_HITS_HEGRENADE,					NULL,								NULL,									CSSTAT_PRIORITY_NEVER,			},
 
 	{	CSSTAT_DAMAGE_DEAGLE,					NULL,								NULL,									CSSTAT_PRIORITY_NEVER,			},
 	{	CSSTAT_DAMAGE_USP,						NULL,								NULL,									CSSTAT_PRIORITY_NEVER,			},
@@ -194,7 +194,7 @@ CSStatProperty CSStatProperty_Table[] =
 	{	CSSTAT_DAMAGE_XM1014,					NULL,								NULL,									CSSTAT_PRIORITY_NEVER,			},
 	{	CSSTAT_DAMAGE_M249,						NULL,								NULL,									CSSTAT_PRIORITY_NEVER,			},
 	{	CSSTAT_DAMAGE_KNIFE,					NULL,								NULL,									CSSTAT_PRIORITY_NEVER,			},
-	{	CSSTAT_DAMAGE_HEGRENADE,				NULL,								NULL,									CSSTAT_PRIORITY_NEVER,			},	
+	{	CSSTAT_DAMAGE_HEGRENADE,				NULL,								NULL,									CSSTAT_PRIORITY_NEVER,			},
 
 	{	CSSTAT_KILLS_HEADSHOT,					"total_kills_headshot",				"#GAMEUI_Stat_HeadshotKills",			CSSTAT_PRIORITY_HIGH,			},
 	{	CSSTAT_KILLS_ENEMY_BLINDED,				"total_kills_enemy_blinded",		"#GAMEUI_Stat_BlindedEnemyKills",		CSSTAT_PRIORITY_HIGH,			},
@@ -236,7 +236,7 @@ CSStatProperty CSStatProperty_Table[] =
 	{	CSSTAT_GRENADE_DAMAGE,					NULL,								NULL,									CSSTAT_PRIORITY_NEVER,			},
 	{	CSSTAT_GRENADE_POSTHUMOUSKILLS,			NULL,								NULL,									CSSTAT_PRIORITY_NEVER,			},
 	{	CSSTAT_GRENADES_THROWN,					NULL,								NULL,									CSSTAT_PRIORITY_NEVER,			},
-    {	CSTAT_ITEMS_DROPPED_VALUE,              NULL,								NULL,									CSSTAT_PRIORITY_NEVER,			},
+	{	CSTAT_ITEMS_DROPPED_VALUE,              NULL,								NULL,									CSSTAT_PRIORITY_NEVER,			},
 
 	{	CSSTAT_MAP_WINS_CS_ASSAULT,				"total_wins_map_cs_assault",		"#GAMEUI_Stat_WinsMapCSAssault",		CSSTAT_PRIORITY_ENDROUND,		},
 	{	CSSTAT_MAP_WINS_CS_COMPOUND,			"total_wins_map_cs_compound",		"#GAMEUI_Stat_WinsMapCSCompound",		CSSTAT_PRIORITY_ENDROUND,		},

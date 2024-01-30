@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -123,18 +123,18 @@ void C_WalkerStrider::OnDataChanged( DataUpdateType_t type )
 		if ( cl_brush_ropes.GetInt() )
 		{
 			// Create some ropes and hang them off certain attachments.
-			int indices[7] = 
+			int indices[7] =
 			{
 				LookupAttachment( "kneeL" ),
 				LookupAttachment( "kneeR" ),
 				LookupAttachment( "kneeB" ),
-				
+
 				LookupAttachment( "MiniGun" ),
 				LookupAttachment( "left foot" ),
 				LookupAttachment( "right foot" ),
 				LookupAttachment( "back foot" )
 			};
-			
+
 			m_hRopes[0] = C_RopeKeyframe::Create( this, this, indices[0], indices[1] );
 			m_hRopes[1] = C_RopeKeyframe::Create( this, this, indices[0], indices[2] );
 			m_hRopes[2] = C_RopeKeyframe::Create( this, this, indices[1], indices[2] );
@@ -167,7 +167,7 @@ void C_WalkerStrider::ClientThink()
 	for ( int i=m_BeamEffects.Head(); i != m_BeamEffects.InvalidIndex(); i=iNext )
 	{
 		iNext = m_BeamEffects.Next( i );
-	
+
 		if ( gpGlobals->curtime >= (m_BeamEffects[i].m_flStartTime + STRIDER_BEAM_LIFETIME) )
 		{
 			m_BeamEffects.Remove( i );
@@ -209,10 +209,9 @@ int C_WalkerStrider::DrawModel( int flags )
 		seg.m_flTexCoord = 1;
 		seg.m_vPos = pEff->m_vHitPos;
 		segDraw.NextSeg( &seg );
-		
+
 		segDraw.End();
 	}
 
 	return 1;
 }
-

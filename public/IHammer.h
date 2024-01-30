@@ -51,6 +51,6 @@ public:
 	virtual const char *GetDefaultModFullPath() = 0;
 
 	virtual int MainLoop() = 0;
-};	
+};
 
 #endif // IHAMMER_H

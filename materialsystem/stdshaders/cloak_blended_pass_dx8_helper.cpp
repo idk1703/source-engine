@@ -7,7 +7,7 @@
 			"$cloakPassEnabled" "1"
 
 		#include "cloak_blended_pass_helper.h"
- 
+
 		In BEGIN_SHADER_PARAMS:
 			// Cloak Pass
 			SHADER_PARAM( CLOAKPASSENABLED, SHADER_PARAM_TYPE_BOOL, "0", "Enables cloak render in a second pass" )
@@ -24,8 +24,8 @@
 				info.m_nRefractAmount = REFRACTAMOUNT;
 			}
 
-			bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const 
-			{ 
+			bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const
+			{
 				if ( params[CLOAKPASSENABLED]->GetIntValue() ) // If material supports cloaking
 				{
 					if ( bCheckSpecificToThisFrame == false ) // For setting model flag at load time
@@ -36,7 +36,7 @@
 				}
 
 				// Check flag2 if not drawing cloak pass
-				return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE ); 
+				return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE );
 			}
 
 			bool IsTranslucent( IMaterialVar **params ) const
@@ -49,7 +49,7 @@
 				}
 
 				// Check flag if not drawing cloak pass
-				return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT ); 
+				return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT );
 			}
 
 		In SHADER_INIT_PARAMS()
@@ -197,7 +197,7 @@ void DrawCloakBlendedPass( CBaseVSShader *pShader, IMaterialVar** params, IShade
 		vshIndex.SetSKINNING( pShaderAPI->GetCurrentNumBones() > 0 );
 		pShaderAPI->SetVertexShaderIndex( vshIndex.GetIndex() );
 
-		// Set Vertex Shader Constants 
+		// Set Vertex Shader Constants
 		float vVsConst3[4] = { 1.35f, 0.0f, 0.4f, ( 1.0f / ( 0.425f - 0.4f ) ) };
 		vVsConst3[1] = clamp( IS_PARAM_DEFINED( info.m_nCloakFactor ) ? params[info.m_nCloakFactor]->GetFloatValue() : kDefaultCloakFactor, 0.0f, 1.0f );
 
@@ -213,7 +213,7 @@ void DrawCloakBlendedPass( CBaseVSShader *pShader, IMaterialVar** params, IShade
 		// Bind textures
 		pShaderAPI->BindStandardTexture( SHADER_SAMPLER0, TEXTURE_FRAME_BUFFER_FULL_TEXTURE_0 ); // Refraction Map
 
-		// Set Pixel Shader Constants 
+		// Set Pixel Shader Constants
 
 		// Refract color tint
 		float vPsConst0[4] = { 0.0f, 0.0f, 0.0f, 0.0f };

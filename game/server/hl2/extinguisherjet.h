@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,7 +15,7 @@
 
 class CExtinguisherJet : public CBaseEntity
 {
-public:	
+public:
 	DECLARE_CLASS( CExtinguisherJet, CBaseEntity );
 
 	CExtinguisherJet( void );
@@ -31,7 +31,7 @@ public:
 	void	InputToggle( inputdata_t &inputdata );
 
 	virtual void Think( void );
-	
+
 	void	ExtinguishThink( void );
 
 	DECLARE_DATADESC();
@@ -46,7 +46,7 @@ public:
 	float	m_flStrength;	// Strength of the extinguisher
 
 	bool	m_bEnabled;
-	
+
 	//Used for viewmodel
 	CNetworkVar( bool, m_bUseMuzzlePoint );
 	bool	m_bAutoExtinguish;	//Whether extinguisher should put out fires in its think, or let owner do it

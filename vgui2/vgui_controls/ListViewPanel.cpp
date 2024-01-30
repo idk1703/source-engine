@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,8 +29,8 @@
 #include <tier0/memdbgon.h>
 
 using namespace vgui;
-	
-enum 
+
+enum
 {
 	WINDOW_BORDER_WIDTH=2 // the width of the window's border
 };
@@ -80,7 +80,7 @@ public:
 	}
 
 	KeyValues *GetData()
-	{ 
+	{
 		return m_pData;
 	}
 
@@ -118,29 +118,29 @@ public:
 		}
 		else
 		{
-			textImage->SetColor(GetFgColor());					
+			textImage->SetColor(GetFgColor());
 		}
 		BaseClass::PerformLayout();
 		Repaint();
 	}
 
-	virtual void PaintBackground()	
+	virtual void PaintBackground()
 	{
 		int wide, tall;
 		GetSize(wide, tall);
 
 		if ( m_bSelected )
 		{
-            VPANEL focus = input()->GetFocus();
-            // if one of the children of the SectionedListPanel has focus, then 'we have focus' if we're selected
-            if (HasFocus() || (focus && ipanel()->HasParent(focus, GetVParent())))
-            {
-			    surface()->DrawSetColor(m_ArmedBgColor);
-            }
-            else
-            {
-			    surface()->DrawSetColor(m_SelectionBG2Color);
-            }
+	VPANEL focus = input()->GetFocus();
+	// if one of the children of the SectionedListPanel has focus, then 'we have focus' if we're selected
+	if (HasFocus() || (focus && ipanel()->HasParent(focus, GetVParent())))
+	{
+			surface()->DrawSetColor(m_ArmedBgColor);
+	}
+	else
+	{
+			surface()->DrawSetColor(m_SelectionBG2Color);
+	}
 		}
 		else
 		{
@@ -187,7 +187,7 @@ public:
 			}
 			else
 			{
-				// use the default 
+				// use the default
 				SetImageAtIndex(0, m_pListViewPanel->m_pImageList->GetImage(1), 0);
 			}
 			SizeToContents();
@@ -240,7 +240,7 @@ ListViewPanel::ListViewPanel(Panel *parent, const char *panelName) : Panel(paren
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ListViewPanel::~ListViewPanel()
 {
@@ -256,7 +256,7 @@ ListViewPanel::~ListViewPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int ListViewPanel::AddItem(const KeyValues *data, bool bScrollToItem, bool bSortOnAdd)
 {
@@ -286,7 +286,7 @@ int ListViewPanel::AddItem(const KeyValues *data, bool bScrollToItem, bool bSort
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::ScrollToItem(int itemID)
 {
@@ -314,7 +314,7 @@ void ListViewPanel::ScrollToItem(int itemID)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int ListViewPanel::GetItemCount()
 {
@@ -322,7 +322,7 @@ int ListViewPanel::GetItemCount()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 KeyValues *ListViewPanel::GetItem(int itemID)
 {
@@ -348,13 +348,13 @@ int ListViewPanel::GetItemIDFromPos(int iPos)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::ApplyItemChanges(int itemID)
 {
 	if ( !m_DataItems.IsValidIndex(itemID) )
 		return;
-		
+
 	KeyValues *kv = m_DataItems[itemID]->GetData();
 	ListViewItem *pLabel = m_DataItems[itemID];
 
@@ -371,7 +371,7 @@ void ListViewPanel::ApplyItemChanges(int itemID)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::RemoveItem(int itemID)
 {
@@ -389,7 +389,7 @@ void ListViewPanel::RemoveItem(int itemID)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::DeleteAllItems()
 {
@@ -403,7 +403,7 @@ void ListViewPanel::DeleteAllItems()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int ListViewPanel::InvalidItemID()
 {
@@ -411,7 +411,7 @@ int ListViewPanel::InvalidItemID()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool ListViewPanel::IsValidItemID(int itemID)
 {
@@ -419,7 +419,7 @@ bool ListViewPanel::IsValidItemID(int itemID)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::SetSortFunc(ListViewSortFunc_t func)
 {
@@ -431,7 +431,7 @@ void ListViewPanel::SetSortFunc(ListViewSortFunc_t func)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::SortList()
 {
@@ -449,7 +449,7 @@ void ListViewPanel::SortList()
 				if ( m_pSortFunc(m_DataItems[i]->GetData(), m_DataItems[m_SortedItems[insertionPoint]]->GetData() ) )
 					break;
 			}
-	
+
 			if (insertionPoint == m_SortedItems.Count())
 			{
 				m_SortedItems.AddToTail(i);
@@ -468,7 +468,7 @@ void ListViewPanel::SortList()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::SetImageList(ImageList *imageList, bool deleteImageListWhenDone)
 {
@@ -489,7 +489,7 @@ void ListViewPanel::SetImageList(ImageList *imageList, bool deleteImageListWhenD
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::SetFont(HFont font)
 {
@@ -499,7 +499,7 @@ void ListViewPanel::SetFont(HFont font)
 
 	m_hFont = font;
 	m_iRowHeight = surface()->GetFontTall(font) + 1;
-	
+
 	FOR_EACH_LL( m_DataItems, i )
 	{
 		m_DataItems[i]->SetFont(m_hFont);
@@ -508,9 +508,9 @@ void ListViewPanel::SetFont(HFont font)
 		m_DataItems[i]->SizeToContents();
 	}
 }
-	
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int ListViewPanel::GetSelectedItemsCount()
 {
@@ -518,7 +518,7 @@ int ListViewPanel::GetSelectedItemsCount()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int ListViewPanel::GetSelectedItem(int selectionIndex)
 {
@@ -529,7 +529,7 @@ int ListViewPanel::GetSelectedItem(int selectionIndex)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::ClearSelectedItems()
 {
@@ -545,7 +545,7 @@ void ListViewPanel::ClearSelectedItems()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::AddSelectedItem(int itemID)
 {
@@ -560,7 +560,7 @@ void ListViewPanel::AddSelectedItem(int itemID)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::SetSingleSelectedItem(int itemID)
 {
@@ -569,7 +569,7 @@ void ListViewPanel::SetSingleSelectedItem(int itemID)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::OnMouseWheeled(int delta)
 {
@@ -579,7 +579,7 @@ void ListViewPanel::OnMouseWheeled(int delta)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::OnSizeChanged(int wide, int tall)
 {
@@ -587,9 +587,9 @@ void ListViewPanel::OnSizeChanged(int wide, int tall)
 	InvalidateLayout();
 	Repaint();
 }
-	
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int ListViewPanel::GetItemsMaxWidth()
 {
@@ -607,7 +607,7 @@ int ListViewPanel::GetItemsMaxWidth()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::PerformLayout()
 {
@@ -648,9 +648,9 @@ void ListViewPanel::PerformLayout()
 
 		m_hbar->SetEnabled(false);
 		m_hbar->SetRangeWindow( maxColVisible );
-		m_hbar->SetRange( 0, cols);	
+		m_hbar->SetRange( 0, cols);
 		m_hbar->SetButtonPressedScrollValue( 1 );
-	
+
 		m_hbar->SetPos(0, tall - (m_hbar->GetTall()+WINDOW_BORDER_WIDTH));
 		m_hbar->SetSize(wide - (WINDOW_BORDER_WIDTH*2), m_hbar->GetTall());
 		m_hbar->InvalidateLayout();
@@ -692,9 +692,9 @@ void ListViewPanel::PerformLayout()
 		}
 	}
 }
- 
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::Paint()
 {
@@ -702,7 +702,7 @@ void ListViewPanel::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::ApplySchemeSettings(IScheme *pScheme)
 {
@@ -713,19 +713,19 @@ void ListViewPanel::ApplySchemeSettings(IScheme *pScheme)
 
 	m_LabelFgColor = GetSchemeColor("ListPanel.TextColor", pScheme);
 	m_SelectionFgColor = GetSchemeColor("ListPanel.SelectedTextColor", m_LabelFgColor, pScheme);
-		
+
 	m_hFont = pScheme->GetFont("Default", IsProportional());
 	SetFont(m_hFont);
 }
-	
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::OnMousePressed( MouseCode code)
 {
 	if (code == MOUSE_LEFT || code == MOUSE_RIGHT)
 	{
-		ClearSelectedItems();		
+		ClearSelectedItems();
 		RequestFocus();
 	}
 	// check for context menu open
@@ -737,7 +737,7 @@ void ListViewPanel::OnMousePressed( MouseCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::OnShiftSelect(int itemID)
 {
@@ -747,7 +747,7 @@ void ListViewPanel::OnShiftSelect(int itemID)
 		m_ShiftStartItemID = m_DataItems.Head();
 	}
 
-	// find out if the just pressed item is "earlier" or is the 'last selected item' 
+	// find out if the just pressed item is "earlier" or is the 'last selected item'
 	int lowerPos = -1, upperPos = -1;
 	int i;
 	for ( i = 0 ; i < m_SortedItems.Count() ; i++ )
@@ -768,7 +768,7 @@ void ListViewPanel::OnShiftSelect(int itemID)
 	assert(lowerPos <= upperPos);
 	if ( !input()->IsKeyDown(KEY_LCONTROL) && !input()->IsKeyDown(KEY_RCONTROL) )
 	{
-		ClearSelectedItems();		
+		ClearSelectedItems();
 	}
 
 	for ( i = lowerPos ; i <= upperPos ; i ++)
@@ -781,21 +781,21 @@ void ListViewPanel::OnShiftSelect(int itemID)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::OnItemMousePressed(ListViewItem* pItem, MouseCode code)
 {
 	int itemID = m_DataItems.Find(pItem);
 	if (!m_DataItems.IsValidIndex(itemID))
 		return;
-	
+
 	// check for context menu open
 	if (code == MOUSE_RIGHT)
 	{
 		// if this is a new item - unselect everything else
 		if ( m_SelectedItems.Find(itemID) == -1)
 		{
-			ClearSelectedItems();		
+			ClearSelectedItems();
 			AddSelectedItem(itemID);
 		}
 
@@ -803,7 +803,7 @@ void ListViewPanel::OnItemMousePressed(ListViewItem* pItem, MouseCode code)
 	}
 	else
 	{
-		if ( input()->IsKeyDown(KEY_LSHIFT) || input()->IsKeyDown(KEY_RSHIFT) ) 
+		if ( input()->IsKeyDown(KEY_LSHIFT) || input()->IsKeyDown(KEY_RSHIFT) )
 		{
 			OnShiftSelect(itemID);
 		}
@@ -813,7 +813,7 @@ void ListViewPanel::OnItemMousePressed(ListViewItem* pItem, MouseCode code)
 			{
 				m_SelectedItems.FindAndRemove(itemID);
 				pItem->SetSelected(false);
-	
+
 				// manually select these since we 'last' clicked on these items
 				m_ShiftStartItemID = itemID;
 				m_LastSelectedItemID = itemID;
@@ -826,21 +826,21 @@ void ListViewPanel::OnItemMousePressed(ListViewItem* pItem, MouseCode code)
 		}
 		else
 		{
-			ClearSelectedItems();		
+			ClearSelectedItems();
 			AddSelectedItem(itemID);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::OnMouseDoublePressed( MouseCode code)
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::OnItemMouseDoublePressed(ListViewItem* pItem, MouseCode code)
 {
@@ -851,11 +851,11 @@ void ListViewPanel::OnItemMouseDoublePressed(ListViewItem* pItem, MouseCode code
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::FinishKeyPress(int itemID)
 {
-	if ( input()->IsKeyDown(KEY_LSHIFT) || input()->IsKeyDown(KEY_RSHIFT) ) 
+	if ( input()->IsKeyDown(KEY_LSHIFT) || input()->IsKeyDown(KEY_RSHIFT) )
 	{
 		OnShiftSelect(itemID);
 	}
@@ -872,7 +872,7 @@ void ListViewPanel::FinishKeyPress(int itemID)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::OnKeyCodeTyped( KeyCode code )
 {
@@ -910,7 +910,7 @@ void ListViewPanel::OnKeyCodeTyped( KeyCode code )
 			FinishKeyPress(m_SortedItems[itemPos]);
 			break;
 		}
-		
+
 		case KEY_DOWN:
 		{
 			int itemPos = m_SortedItems.Find( m_LastSelectedItemID );
@@ -1001,7 +1001,7 @@ void ListViewPanel::OnKeyCodeTyped( KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::OnKeyTyped(wchar_t unichar)
 {
@@ -1014,7 +1014,7 @@ void ListViewPanel::OnKeyTyped(wchar_t unichar)
 		char buf[2];
 		g_pVGuiLocalize->ConvertUnicodeToANSI(uniString, buf, sizeof(buf));
 
-		int i; 
+		int i;
 		int itemPos = m_SortedItems.Find(m_LastSelectedItemID);
 		if ( m_SortedItems.IsValidIndex(itemPos))
 		{
@@ -1056,16 +1056,16 @@ void ListViewPanel::OnKeyTyped(wchar_t unichar)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ListViewPanel::OnSliderMoved()
 {
 	InvalidateLayout();
 	Repaint();
 }
- 
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int ListViewPanel::GetItemsPerColumn()
 {
@@ -1079,4 +1079,3 @@ int ListViewPanel::GetItemsPerColumn()
 
 	return tall / m_iRowHeight;	// should round down
 }
-

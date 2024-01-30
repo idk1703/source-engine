@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -120,19 +120,19 @@ inline wchar_t *_wcsupr( wchar_t *start )
 
 #ifdef _DEBUG
 
-#define V_memset(dest, fill, count)		_V_memset   (__FILE__, __LINE__, (dest), (fill), (count))	
-#define V_memcpy(dest, src, count)		_V_memcpy	(__FILE__, __LINE__, (dest), (src), (count))	
-#define V_memmove(dest, src, count)		_V_memmove	(__FILE__, __LINE__, (dest), (src), (count))	
-#define V_memcmp(m1, m2, count)			_V_memcmp	(__FILE__, __LINE__, (m1), (m2), (count))		
-#define V_strlen(str)					_V_strlen	(__FILE__, __LINE__, (str))				
-#define V_strcpy(dest, src)				_V_strcpy	(__FILE__, __LINE__, (dest), (src))			
-#define V_strrchr(s, c)					_V_strrchr	(__FILE__, __LINE__, (s), (c))				
-#define V_strcmp(s1, s2)				_V_strcmp	(__FILE__, __LINE__, (s1), (s2))			
-#define V_wcscmp(s1, s2)				_V_wcscmp	(__FILE__, __LINE__, (s1), (s2))			
-#define V_strstr(s1, search )			_V_strstr	(__FILE__, __LINE__, (s1), (search) )		
-#define V_wcslen(pwch)					_V_wcslen	(__FILE__, __LINE__, (pwch))		
-#define V_wcslower(start)				_V_wcslower (__FILE__, __LINE__, (start))		
-#define V_wcsupr(start)					_V_wcsupr	(__FILE__, __LINE__, (start))				
+#define V_memset(dest, fill, count)		_V_memset   (__FILE__, __LINE__, (dest), (fill), (count))
+#define V_memcpy(dest, src, count)		_V_memcpy	(__FILE__, __LINE__, (dest), (src), (count))
+#define V_memmove(dest, src, count)		_V_memmove	(__FILE__, __LINE__, (dest), (src), (count))
+#define V_memcmp(m1, m2, count)			_V_memcmp	(__FILE__, __LINE__, (m1), (m2), (count))
+#define V_strlen(str)					_V_strlen	(__FILE__, __LINE__, (str))
+#define V_strcpy(dest, src)				_V_strcpy	(__FILE__, __LINE__, (dest), (src))
+#define V_strrchr(s, c)					_V_strrchr	(__FILE__, __LINE__, (s), (c))
+#define V_strcmp(s1, s2)				_V_strcmp	(__FILE__, __LINE__, (s1), (s2))
+#define V_wcscmp(s1, s2)				_V_wcscmp	(__FILE__, __LINE__, (s1), (s2))
+#define V_strstr(s1, search )			_V_strstr	(__FILE__, __LINE__, (s1), (search) )
+#define V_wcslen(pwch)					_V_wcslen	(__FILE__, __LINE__, (pwch))
+#define V_wcslower(start)				_V_wcslower (__FILE__, __LINE__, (start))
+#define V_wcsupr(start)					_V_wcsupr	(__FILE__, __LINE__, (start))
 
 #else
 
@@ -140,7 +140,7 @@ inline wchar_t *_wcsupr( wchar_t *start )
 inline void		V_memset (void *dest, int fill, int count)			{ memset( dest, fill, count ); }
 inline void		V_memcpy (void *dest, const void *src, int count)	{ memcpy( dest, src, count ); }
 inline void		V_memmove (void *dest, const void *src, int count)	{ memmove( dest, src, count ); }
-inline int		V_memcmp (const void *m1, const void *m2, int count){ return memcmp( m1, m2, count ); } 
+inline int		V_memcmp (const void *m1, const void *m2, int count){ return memcmp( m1, m2, count ); }
 inline int		V_strlen (const char *str)							{ return (int) strlen ( str ); }
 inline void		V_strcpy (char *dest, const char *src)				{ strcpy( dest, src ); }
 inline int		V_wcslen(const wchar_t *pwch)						{ return (int)wcslen(pwch); }
@@ -196,7 +196,7 @@ inline bool V_strEndsWith(  const char *pStr, const char *pSuffix ) { return _V_
 inline bool V_striEndsWith( const char *pStr, const char *pSuffix ) { return _V_strEndsWithInner<FALSE>( pStr, pSuffix ); }
 
 
-// Normalizes a float string in place.  
+// Normalizes a float string in place.
 // (removes leading zeros, trailing zeros after the decimal point, and the decimal point itself where possible)
 void			V_normalizeFloatString( char* pFloat );
 
@@ -207,9 +207,9 @@ inline bool V_isdigit( char c )
 	return c >= '0' && c <= '9';
 }
 
-inline bool V_iswdigit( int c ) 
-{ 
-	return ( ( (uint)( c - '0' ) ) < 10 ); 
+inline bool V_iswdigit( int c )
+{
+	return ( ( (uint)( c - '0' ) ) < 10 );
 }
 
 inline bool V_isempty( const char* pszString ) { return !pszString || !pszString[ 0 ]; }
@@ -314,9 +314,9 @@ inline bool V_isstrlower( const char *pch )
 void V_strncpy( OUT_Z_CAP(maxLenInChars) char *pDest, const char *pSrc, int maxLenInChars );
 
 // Ultimate safe strcpy function, for arrays only -- buffer size is inferred by the compiler
-template <size_t maxLenInChars> void V_strcpy_safe( OUT_Z_ARRAY char (&pDest)[maxLenInChars], const char *pSrc ) 
-{ 
-	V_strncpy( pDest, pSrc, (int)maxLenInChars ); 
+template <size_t maxLenInChars> void V_strcpy_safe( OUT_Z_ARRAY char (&pDest)[maxLenInChars], const char *pSrc )
+{
+	V_strncpy( pDest, pSrc, (int)maxLenInChars );
 }
 
 // A function which duplicates a string using new[] to allocate the new string.
@@ -329,28 +329,28 @@ inline char *V_strdup( const char *pSrc )
 }
 
 void V_wcsncpy( OUT_Z_BYTECAP(maxLenInBytes) wchar_t *pDest, wchar_t const *pSrc, int maxLenInBytes );
-template <size_t maxLenInChars> void V_wcscpy_safe( OUT_Z_ARRAY wchar_t (&pDest)[maxLenInChars], wchar_t const *pSrc ) 
-{ 
-	V_wcsncpy( pDest, pSrc, maxLenInChars * sizeof(*pDest) ); 
+template <size_t maxLenInChars> void V_wcscpy_safe( OUT_Z_ARRAY wchar_t (&pDest)[maxLenInChars], wchar_t const *pSrc )
+{
+	V_wcsncpy( pDest, pSrc, maxLenInChars * sizeof(*pDest) );
 }
 
 #define COPY_ALL_CHARACTERS -1
 char *V_strncat( INOUT_Z_CAP(cchDest) char *pDest, const char *pSrc, size_t cchDest, int max_chars_to_copy=COPY_ALL_CHARACTERS );
 template <size_t cchDest> char *V_strcat_safe( INOUT_Z_ARRAY char (&pDest)[cchDest], const char *pSrc, int nMaxCharsToCopy=COPY_ALL_CHARACTERS )
-{ 
-	return V_strncat( pDest, pSrc, (int)cchDest, nMaxCharsToCopy ); 
+{
+	return V_strncat( pDest, pSrc, (int)cchDest, nMaxCharsToCopy );
 }
 
 wchar_t *V_wcsncat( INOUT_Z_CAP(cchDest) wchar_t *pDest, const wchar_t *pSrc, size_t cchDest, int nMaxCharsToCopy=COPY_ALL_CHARACTERS );
 template <size_t cchDest> wchar_t *V_wcscat_safe( INOUT_Z_ARRAY wchar_t (&pDest)[cchDest], const wchar_t *pSrc, int nMaxCharsToCopy=COPY_ALL_CHARACTERS )
-{ 
-	return V_wcsncat( pDest, pSrc, (int)cchDest, nMaxCharsToCopy ); 
+{
+	return V_wcsncat( pDest, pSrc, (int)cchDest, nMaxCharsToCopy );
 }
 
 char *V_strnlwr( INOUT_Z_CAP(cchBuf) char *pBuf, size_t cchBuf);
 template <size_t cchDest> char *V_strlwr_safe( INOUT_Z_ARRAY char (&pBuf)[cchDest] )
-{ 
-	return _V_strnlwr( pBuf, (int)cchDest ); 
+{
+	return _V_strnlwr( pBuf, (int)cchDest );
 }
 
 // Unicode string conversion policies - what to do if an illegal sequence is encountered
@@ -367,7 +367,7 @@ enum EStringConvertErrorPolicy
 	STRINGCONVERT_ASSERT_REPLACE =	_STRINGCONVERTFLAG_ASSERT + STRINGCONVERT_REPLACE,
 	STRINGCONVERT_ASSERT_SKIP =		_STRINGCONVERTFLAG_ASSERT + STRINGCONVERT_SKIP,
 	STRINGCONVERT_ASSERT_FAIL =		_STRINGCONVERTFLAG_ASSERT + STRINGCONVERT_FAIL,
-}; 
+};
 
 // Unicode (UTF-8, UTF-16, UTF-32) fundamental conversion functions.
 bool Q_IsValidUChar32( uchar32 uValue );
@@ -471,7 +471,7 @@ int Q_UTF16ToUChar32( const uchar16 *pUTF16, uchar32 &uValueOut, bool &bErrorOut
 int Q_LocaleSpecificANSIToUTF8( const char *pANSI, int cubSrcInBytes, OUT_Z_BYTECAP(cubDestSizeInBytes) char *pUTF8, int cubDestSizeInBytes );
 #endif
 
-// Windows-1252 is mostly the same as ISO Latin-1, and probably what you want if you are 
+// Windows-1252 is mostly the same as ISO Latin-1, and probably what you want if you are
 // saddled with an 8-bit ANSI string that originated on a Windows system.
 int Q_Windows1252CharsToUTF8( const char *pchSrc, int cchSrc, OUT_Z_BYTECAP(cchDestUTF8) char *pchDestUTF8, int cchDestUTF8 );
 
@@ -496,8 +496,8 @@ int Q_NormalizeUTF8( const char *pchSrc, OUT_Z_CAP(cchDest) char *pchDest, int c
 // This operation is destructive (i.e. you can't roundtrip through the normalized
 // form).
 //-----------------------------------------------------------------------------
-template <size_t maxLenInChars> int Q_NormalizeUTF8ToASCII( OUT_Z_ARRAY char (&pchDest)[maxLenInChars], const char *pchSrc ) 
-{ 
+template <size_t maxLenInChars> int Q_NormalizeUTF8ToASCII( OUT_Z_ARRAY char (&pchDest)[maxLenInChars], const char *pchSrc )
+{
 	int nResult = Q_NormalizeUTF8( pchSrc, pchDest, maxLenInChars );
 
 	// replace non ASCII characters with ?
@@ -518,10 +518,10 @@ template <size_t maxLenInChars> int Q_NormalizeUTF8ToASCII( OUT_Z_ARRAY char (&p
 
 #ifdef  _M_ALPHA
 
-struct va_list 
+struct va_list
 {
-    char *a0;       /* pointer to first homed integer argument */
-    int offset;     /* byte offset of next parameter */
+	char *a0;       /* pointer to first homed integer argument */
+	int offset;     /* byte offset of next parameter */
 };
 
 #else  // !_M_ALPHA
@@ -632,7 +632,7 @@ template< typename T, typename U > inline int V_UTF8ToUCS2( const char *pUTF8, T
 bool Q_StripPrecedingAndTrailingWhitespace( char *pch );
 bool Q_StripPrecedingAndTrailingWhitespaceW( wchar_t *pwch );
 
-// strips leading and trailing whitespace, also taking "aggressive" characters 
+// strips leading and trailing whitespace, also taking "aggressive" characters
 // like punctuation spaces, non-breaking spaces, composing characters, and so on
 bool Q_AggressiveStripPrecedingAndTrailingWhitespace( char *pch );
 bool Q_AggressiveStripPrecedingAndTrailingWhitespaceW( wchar_t *pwch );
@@ -640,7 +640,7 @@ bool Q_RemoveAllEvilCharacters( char *pch );
 
 // Functions for converting hexidecimal character strings back into binary data etc.
 //
-// e.g., 
+// e.g.,
 // int output;
 // V_hextobinary( "ffffffff", 8, &output, sizeof( output ) );
 // would make output == 0xfffffff or -1
@@ -695,7 +695,7 @@ const char *V_GetFileName( const char * path );
 
 // This removes "./" and "../" from the pathname. pFilename should be a full pathname.
 // Also incorporates the behavior of V_FixSlashes and optionally V_FixDoubleSlashes.
-// Returns false if it tries to ".." past the root directory in the drive (in which case 
+// Returns false if it tries to ".." past the root directory in the drive (in which case
 // it is an invalid path).
 bool V_RemoveDotSlashes( char *pFilename, char separator = CORRECT_PATH_SEPARATOR, bool bRemoveDoubleSlashes = true );
 
@@ -791,7 +791,7 @@ inline void V_wcscat( INOUT_Z_CAP(cchDest) wchar_t *dest, const wchar_t *src, in
 	V_wcsncat( dest, src, cchDest, COPY_ALL_CHARACTERS );
 }
 
-// Encode a string for display as HTML -- this only encodes ' " & < >, which are the important ones to encode for 
+// Encode a string for display as HTML -- this only encodes ' " & < >, which are the important ones to encode for
 // security and ensuring HTML display doesn't break.  Other special chars like the ? sign and so forth will not
 // be encoded
 //
@@ -1148,7 +1148,7 @@ void Q_URLEncodeRaw( OUT_Z_CAP(nDestLen) char *pchDest, int nDestLen, const char
 // Dest buffer should be at least as large as source buffer to gurantee room for decode.
 // Dest buffer being the same as the source buffer (decode in-place) is explicitly allowed.
 //
-// Returns the amount of space actually used in the output buffer.  
+// Returns the amount of space actually used in the output buffer.
 size_t Q_URLDecodeRaw( OUT_CAP(nDecodeDestLen) char *pchDecodeDest, int nDecodeDestLen, const char *pchEncodedSource, int nEncodedSourceLen );
 
 // trim right whitespace
@@ -1179,17 +1179,17 @@ inline const char * SkipBlanks( const char *pString )
 }
 
 inline int	V_strcspn( const char *s1, const char *search )		{ return (int)( strcspn( s1, search ) ); }
-// Encodes a string (or binary data) in URL encoding format, this isn't the strict rfc1738 format, but instead uses + for spaces.  
+// Encodes a string (or binary data) in URL encoding format, this isn't the strict rfc1738 format, but instead uses + for spaces.
 // This is for historical reasons and HTML spec foolishness that lead to + becoming a de facto standard for spaces when encoding form data.
 // Dest buffer should be 3 times the size of source buffer to guarantee it has room to encode.
 void Q_URLEncode( OUT_Z_CAP(nDestLen) char *pchDest, int nDestLen, const char *pchSource, int nSourceLen );
 
-// Decodes a string (or binary data) in URL encoding format, this isn't the strict rfc1738 format, but instead uses + for spaces.  
+// Decodes a string (or binary data) in URL encoding format, this isn't the strict rfc1738 format, but instead uses + for spaces.
 // This is for historical reasons and HTML spec foolishness that lead to + becoming a de facto standard for spaces when encoding form data.
 // Dest buffer should be at least as large as source buffer to gurantee room for decode.
 // Dest buffer being the same as the source buffer (decode in-place) is explicitly allowed.
 //
-// Returns the amount of space actually used in the output buffer.  
+// Returns the amount of space actually used in the output buffer.
 size_t Q_URLDecode( OUT_CAP(nDecodeDestLen) char *pchDecodeDest, int nDecodeDestLen, const char *pchEncodedSource, int nEncodedSourceLen );
 
 
@@ -1211,7 +1211,7 @@ size_t Q_URLDecode( OUT_CAP(nDecodeDestLen) char *pchDecodeDest, int nDecodeDest
 #define Q_strupr				V_strupr
 #define Q_strlower				V_strlower
 #define Q_wcslen				V_wcslen
-#define	Q_strncmp				V_strncmp 
+#define	Q_strncmp				V_strncmp
 #define	Q_strcasecmp			V_strcasecmp
 #define	Q_strncasecmp			V_strncasecmp
 #define	Q_strnicmp				V_strnicmp

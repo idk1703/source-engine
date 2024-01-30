@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -43,7 +43,7 @@ public:
 */
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDODFreezePanelCallout : public EditablePanel
 {
@@ -55,7 +55,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDODFreezePanel : public EditablePanel, public CHudElement
 {
@@ -84,7 +84,7 @@ public:
 	bool IsHoldingAfterScreenShot( void ) { return m_bHoldingAfterScreenshot; }
 
 protected:
-	CDODFreezePanelCallout *TestAndAddCallout( Vector &origin, Vector &vMins, Vector &vMaxs, CUtlVector<Vector> *vecCalloutsTL, 
+	CDODFreezePanelCallout *TestAndAddCallout( Vector &origin, Vector &vMins, Vector &vMaxs, CUtlVector<Vector> *vecCalloutsTL,
 		CUtlVector<Vector> *vecCalloutsBR, Vector &vecFreezeTL, Vector &vecFreezeBR, Vector &vecStatTL, Vector &vecStatBR, int *iX, int *iY );
 
 private:
@@ -111,7 +111,7 @@ private:
 
 	CDoDHudHealth	*m_pHealthStatus;
 
-	enum 
+	enum
 	{
 		SHOW_NO_NEMESIS = 0,
 		SHOW_NEW_NEMESIS,

@@ -68,7 +68,7 @@ public:
 	DEFINE_CUSTOM_SCHEDULE_PROVIDER;
 
 protected:
-	
+
 	int					SelectOutsideSchedule( void );
 	int					SelectInsideSchedule( void );
 	virtual	int			FindExitSequence( void );

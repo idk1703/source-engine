@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -93,9 +93,9 @@ typedef struct
 static inline bool RenderingModeIsTextured(EditorRenderMode_t mode)
 {
 	return (
-		(mode==RENDER_MODE_TEXTURED) || 
-		(mode==RENDER_MODE_TEXTURED_SHADED) || 
-		(mode==RENDER_MODE_LIGHT_PREVIEW_RAYTRACED) || 
+		(mode==RENDER_MODE_TEXTURED) ||
+		(mode==RENDER_MODE_TEXTURED_SHADED) ||
+		(mode==RENDER_MODE_LIGHT_PREVIEW_RAYTRACED) ||
 		(mode==RENDER_MODE_LIGHT_PREVIEW2) );
 }
 
@@ -133,21 +133,21 @@ typedef struct
 
 typedef struct
 {
-    HINSTANCE        hInstance;
-    int              iCmdShow;
-    HWND             hWnd;
+	HINSTANCE        hInstance;
+	int              iCmdShow;
+	HWND             hWnd;
 	HDC				 hDC;
-    bool             bActive;
-    bool             bFullScreen;
-    ATOM             wndclass;
-    WNDPROC          wndproc;
-    bool             bChangeBPP;
-    bool             bAllowSoft;
-    char            *szCmdLine;
-    int              argc;
-    char           **argv;
-    int              iResCount;
-    int              iVidMode;
+	bool             bActive;
+	bool             bFullScreen;
+	ATOM             wndclass;
+	WNDPROC          wndproc;
+	bool             bChangeBPP;
+	bool             bAllowSoft;
+	char            *szCmdLine;
+	int              argc;
+	char           **argv;
+	int              iResCount;
+	int              iVidMode;
 } MatWinData_t;
 
 
@@ -165,16 +165,16 @@ public:
 	float GetElapsedTime(void);
 	float GetGridDistance(void);
 	float GetGridSize(void);
-	
+
 	bool DeferRendering() const { return m_DeferRendering; }
 	bool IsEnabled(RenderState_t eRenderState);
 	bool IsPicking(void);
 
 	virtual bool IsInLightingPreview();
 	virtual void SetInLightingPreview( bool bLightingPreview );
-	
+
 	// Operations.
-	
+
 	float LightPlane(Vector& Normal);
 	void UncacheAllTextures();
 
@@ -199,13 +199,13 @@ public:
 	void RenderBox(const Vector &Mins, const Vector &Maxs, unsigned char chRed, unsigned char chGreen, unsigned char chBlue, SelectionState_t eBoxSelectionState);
 	void RenderArrow(Vector const &vStartPt, Vector const &vEndPt, unsigned char chRed, unsigned char chGreen, unsigned char chBlue);
 	void RenderCone(Vector const &vBasePt, Vector const &vTipPt, float fRadius, int nSlices,
-		            unsigned char chRed, unsigned char chGreen, unsigned char chBlue );
+					unsigned char chRed, unsigned char chGreen, unsigned char chBlue );
 	void RenderSphere(Vector const &vCenter, float flRadius, int nTheta, int nPhi,
-							  unsigned char chRed, unsigned char chGreen, unsigned char chBlue );
+							unsigned char chRed, unsigned char chGreen, unsigned char chBlue );
 	void RenderWireframeSphere(Vector const &vCenter, float flRadius, int nTheta, int nPhi,
-							            unsigned char chRed, unsigned char chGreen, unsigned char chBlue );
+										unsigned char chRed, unsigned char chGreen, unsigned char chBlue );
 	void RenderInstanceMapClass( CMapInstance *pInstanceClass, CMapClass *pMapClass, Vector &InstanceOrigin, QAngle &InstanceAngles );
-	
+
 
 	int ObjectsAt( float x, float y, float fWidth, float fHeight, HitInfo_t *pObjects, int nMaxObjects, unsigned nFlags = 0 );
 
@@ -218,7 +218,7 @@ public:
 	void BuildLightList( CUtlVector<CLightingPreviewLightDescription> *pList ) const;
 
 	void SendLightList();									// send lighting list to lighting preview thread
-	
+
 	void SendShadowTriangles();
 	void AddTranslucentDeferredRendering( CMapPoint *pMapPoint );
 
@@ -233,7 +233,7 @@ protected:
 	void RenderOverlayElements(void);
 	void RenderTool(void);
 	void RenderTree( CMapWorld *pWorld );
-    void RenderPointsAndPortals(void);
+	void RenderPointsAndPortals(void);
 	void RenderWorldAxes();
 	void RenderTranslucentObjects( void );
 
@@ -261,7 +261,7 @@ protected:
 	int m_nLastLPreviewHeight;
 
 	Vector4D m_FrustumPlanes[6];		// Plane normals and constants for the current view frustum.
-	
+
 	MatWinData_t m_WinData;				// Defines our render window parameters.
 	PickInfo_t m_Pick;					// Contains information used when rendering in pick mode.
 	RenderStateInfo_t m_RenderState;	// Render state set via RenderEnable.

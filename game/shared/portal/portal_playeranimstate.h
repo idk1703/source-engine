@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -43,7 +43,7 @@
 class CPortalPlayerAnimState : public CMultiPlayerAnimState
 {
 public:
-	
+
 	DECLARE_CLASS( CPortalPlayerAnimState, CMultiPlayerAnimState );
 
 	CPortalPlayerAnimState();
@@ -66,7 +66,7 @@ public:
 	bool	HandleDucking( Activity &idealActivity );
 
 private:
-	
+
 	CPortal_Player   *m_pPortalPlayer;
 	bool		m_bInAirWalk;
 

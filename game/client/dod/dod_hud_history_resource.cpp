@@ -28,19 +28,19 @@ DECLARE_HUDELEMENT( CHudHistoryResource );
 DECLARE_HUD_MESSAGE( CHudHistoryResource, ItemPickup );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudHistoryResource::CHudHistoryResource( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass( NULL, "HudHistoryResource" )
-{	
+{
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
 	SetParent( pParent );
 	SetHiddenBits( HIDEHUD_MISCSTATUS );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pScheme - 
+// Purpose:
+// Input  : *pScheme -
 //-----------------------------------------------------------------------------
 void CHudHistoryResource::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -48,7 +48,7 @@ void CHudHistoryResource::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHistoryResource::Init( void )
 {
@@ -56,7 +56,7 @@ void CHudHistoryResource::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHistoryResource::Reset( void )
 {
@@ -96,7 +96,7 @@ void CHudHistoryResource::CheckClearHistory( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudHistoryResource::ShouldDraw( void )
 {
@@ -109,5 +109,3 @@ bool CHudHistoryResource::ShouldDraw( void )
 void CHudHistoryResource::Paint( void )
 {
 }
-
-

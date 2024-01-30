@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -44,7 +44,7 @@ CMaterialReference CDmeMesh::s_NormalErrorMaterial;
 
 
 //-----------------------------------------------------------------------------
-// Computes a skin matrix 
+// Computes a skin matrix
 //-----------------------------------------------------------------------------
 static const matrix3x4_t *ComputeSkinMatrix( int nBoneCount, const float *pJointWeight, const int *pJointIndices, const matrix3x4_t *pPoseToWorld, matrix3x4_t &result )
 {
@@ -136,7 +136,7 @@ static const matrix3x4_t *ComputeSkinMatrix( int nBoneCount, const float *pJoint
 
 
 //-----------------------------------------------------------------------------
-// Helper class to deal with software skinning 
+// Helper class to deal with software skinning
 //-----------------------------------------------------------------------------
 class CRenderInfo
 {
@@ -184,7 +184,7 @@ CRenderInfo::CRenderInfo( const CDmeVertexData *pBaseState ) :
 	m_nJointCount = pBaseState->JointCount();
 	m_bHasSkinningData = pBaseState->HasSkinningData() && m_nJointCount > 0;
 }
-	
+
 
 //-----------------------------------------------------------------------------
 // Computes where a vertex is
@@ -298,13 +298,13 @@ void CRenderInfo::ComputeVertex( int vi, const matrix3x4_t *pPoseToWorld, CDmeMe
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeMesh, CDmeMesh );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeMesh::OnConstruction()
 {
@@ -448,7 +448,7 @@ template< class T > bool CDmeMesh::AddVertexDelta(
 	}
 	return true;
 }
-	
+
 
 //-----------------------------------------------------------------------------
 //
@@ -532,7 +532,7 @@ template< class T > bool CDmeMesh::AddStereoVertexDelta(
 			Assert( list.Count() > 0 );
 			// FIXME: Average everything in the list.. shouldn't be necessary though
 			float flRightAmount = balanceDelta[ balanceIndices[ list[0] ] ];
-			float flWeight = Lerp( flRightAmount, flLeftWeight, flRightWeight );	
+			float flWeight = Lerp( flRightAmount, flLeftWeight, flRightWeight );
 
 			T* pDeltaData = (T*)( (char*)pVertexData + nStride * nDataIndex );
 			*pDeltaData += delta.Get( j ) * flWeight;
@@ -547,14 +547,14 @@ template< class T > bool CDmeMesh::AddStereoVertexDelta(
 	const CDmrArray<int> pSpeedIndices = pBaseState->GetIndexData( nSpeedFieldIndex );
 	const CDmrArray<float> pSpeedDelta = pBaseState->GetVertexData( nSpeedFieldIndex );
 	for ( int j = 0; j < nDeltaCount; ++j )
-	{   
+	{
 		int nDataIndex = indices.Get( j );
 		const CUtlVector<int> &list = pBaseState->FindVertexIndicesFromDataIndex( nBaseFieldIndex, nDataIndex );
 		Assert( list.Count() > 0 );
 		// FIXME: Average everything in the list.. shouldn't be necessary though
 		float flRightAmount = balanceDelta[ balanceIndices[ list[0] ] ];
-		float flWeight = Lerp( flRightAmount, flLeftWeight, flRightWeight );	
-		float flLaggedWeight = Lerp( flRightAmount, flLeftWeightLagged, flRightWeightLagged );	
+		float flWeight = Lerp( flRightAmount, flLeftWeight, flRightWeight );
+		float flLaggedWeight = Lerp( flRightAmount, flLeftWeightLagged, flRightWeightLagged );
 		float flSpeed = pSpeedDelta.Get( pSpeedIndices.Get( list[0] ) );
 		float flActualWeight = Lerp( flSpeed, flLaggedWeight, flWeight );
 
@@ -664,7 +664,7 @@ void CDmeMesh::DrawDynamicMesh( CDmeFaceSet *pFaceSet, matrix3x4_t *pPoseToWorld
 
 	// NOTE: This is inherently inefficient; we re-skin the *entire* mesh,
 	// even if it's not being used by the entire model. This is because we can't
-	// guarantee the various materials from the various face sets use the 
+	// guarantee the various materials from the various face sets use the
 	// same vertex format (even though they should), and we don't want to
 	// spend the work to detemine the sub-part of the mesh used by this face set.
 
@@ -787,7 +787,7 @@ void CDmeMesh::DrawDynamicMesh( CDmeFaceSet *pFaceSet, matrix3x4_t *pPoseToWorld
 
 
 //-----------------------------------------------------------------------------
-// Renders normals 
+// Renders normals
 //-----------------------------------------------------------------------------
 #define NORMAL_LINE_SIZE 0.25f
 
@@ -890,7 +890,7 @@ void CDmeMesh::RenderNormals( matrix3x4_t *pPoseToWorld, RenderVertexDelta_t *pD
 // Draws the passed DmeFaceSet in wireframe mode
 //-----------------------------------------------------------------------------
 void CDmeMesh::DrawWireframeFaceSet( CDmeFaceSet *pFaceSet, matrix3x4_t *pPoseToWorld, bool bHasActiveDeltaStates, CDmeDrawSettings *pDrawSettings )
-{ 
+{
 	CDmeVertexData *pBind = GetBindBaseState();
 	if ( !pBind )
 		return;
@@ -1262,7 +1262,7 @@ int CDmeMesh::DeltaStateCount() const
 
 
 //-----------------------------------------------------------------------------
-// Returns the delta 
+// Returns the delta
 //-----------------------------------------------------------------------------
 CDmeVertexDeltaData *CDmeMesh::GetDeltaState( int nDeltaIndex ) const
 {
@@ -1615,7 +1615,7 @@ void CDmeMesh::ComputeTriangulatedIndices( const CDmeVertexData *pBaseState, CDm
 			flMinDistance = flDistance;
 		}
 	}
-	 
+
 	// Compute the triangulation indices
 	Assert( nOutCount == ( nVertexCount - 2 ) * 3 );
 	int nOutIndex = 0;
@@ -1684,7 +1684,7 @@ void CDmeMesh::ComputeTriangleTangets( const CDmeVertexData *pVertexData, CUtlVe
 		const Vector2D &t1 = pVertexData->GetTexCoord( triangle.m_nIndex[1] );
 		const Vector2D &t2 = pVertexData->GetTexCoord( triangle.m_nIndex[2] );
 		CalcTriangleTangentSpace( p0, p1, p2, t0, t1, t2, triangle.m_vecTangentS, triangle.m_vecTangentT );
-	}	
+	}
 }
 
 
@@ -1810,7 +1810,7 @@ void CDmeMesh::ComputeDefaultTangentData( CDmeVertexData *pVertexData, bool bSmo
 	if ( posField < 0 || uvField < 0 || normalField < 0 )
 		return;
 
-	// FIXME: Need to do a pass to make sure no vertex is referenced by 
+	// FIXME: Need to do a pass to make sure no vertex is referenced by
 	// multiple facesets that have different materials in them.
 	// In that case, we need to add extra copies of that vertex and modify
 	// the face set data to refer to the new vertices
@@ -1829,7 +1829,7 @@ void CDmeMesh::ComputeDefaultTangentData( CDmeVertexData *pVertexData, bool bSmo
 
 	ComputeTriangleTangets( pVertexData, triangles );
 
-	// FIXME: We could do a pass to determine the unique combinations of 
+	// FIXME: We could do a pass to determine the unique combinations of
 	// position + tangent indices in the vertex data. We only need to have
 	// a unique tangent for each of these unique vertices. For simplicity
 	// (and speed), I'll assume all tangents are unique per vertex.
@@ -2015,7 +2015,7 @@ void CDmeMesh::ComputeCorrectedNormalsFromActualNormals( const CUtlVector<int> &
 void CDmeMesh::SetDeltaNormalData( int nDeltaIndex, int nNormalCount, Vector *pNormals )
 {
 	// pNormals represents the correct normal delta state for this combination
-	// Copy it into the delta state for this combination. 
+	// Copy it into the delta state for this combination.
 	// Use tolerance to deal with precision errors introduced by the various computations
 	CDmeVertexDeltaData *pDeltaState = GetDeltaState( nDeltaIndex );
 	FieldIndex_t nNormalField = pDeltaState->FindFieldIndex( CDmeVertexDeltaData::FIELD_NORMAL );
@@ -2041,7 +2041,7 @@ void CDmeMesh::SetDeltaNormalData( int nDeltaIndex, int nNormalCount, Vector *pN
 
 
 //-----------------------------------------------------------------------------
-// Discovers the atomic controls used by the various delta states 
+// Discovers the atomic controls used by the various delta states
 //-----------------------------------------------------------------------------
 static int DeltaStateUsageLessFunc( const int * lhs, const int * rhs )
 {
@@ -2059,7 +2059,7 @@ void CDmeMesh::BuildAtomicControlLists( int nCount, DeltaComputation_t *pInfo, C
 
 	// Build a list of atomic controls
 	int nCurrentDelta;
-	for ( nCurrentDelta = 0; nCurrentDelta < nCount; ++nCurrentDelta ) 
+	for ( nCurrentDelta = 0; nCurrentDelta < nCount; ++nCurrentDelta )
 	{
 		if ( pInfo[nCurrentDelta].m_nDimensionality != 1 )
 			break;
@@ -2103,7 +2103,7 @@ void CDmeMesh::BuildAtomicControlLists( int nCount, DeltaComputation_t *pInfo, C
 
 
 //-----------------------------------------------------------------------------
-// Construct list of all n-1 -> 1 dimensional delta states 
+// Construct list of all n-1 -> 1 dimensional delta states
 // that will be active when this delta state is active
 //-----------------------------------------------------------------------------
 void CDmeMesh::ComputeDependentDeltaStateList( CUtlVector< DeltaComputation_t > &compList )
@@ -2309,7 +2309,7 @@ void CDmeMesh::SetDeltaNormalDataFromActualNormals( int nDeltaIndex, const CUtlV
 
 //-----------------------------------------------------------------------------
 // A recursive algorithm to compute nCk, i.e. the number of order independent
-// Combinations without any repeats of k items taking n at a time 
+// Combinations without any repeats of k items taking n at a time
 // The size of the returned array is:
 //
 //       n!
@@ -2424,7 +2424,7 @@ bool CDmeMesh::GetControlDeltaIndices(
 //               { 0, 2 },
 //               { 0, 1, 2 }
 //             }
-// 
+//
 // Returns true if all of the control states exist, false otherwise
 //-----------------------------------------------------------------------------
 bool CDmeMesh::BuildCompleteDeltaStateControlList(
@@ -3259,7 +3259,7 @@ bool CDmeMesh::CreateDeltaFieldFromBaseField(
 //-----------------------------------------------------------------------------
 CDmeVertexDeltaData *CDmeMesh::ModifyOrCreateDeltaStateFromBaseState( const char *pDeltaName, CDmeVertexData *pPassedBase /* = NULL */, bool absolute /* = false */ )
 {
-	// Find All States Which Have This Guy 
+	// Find All States Which Have This Guy
 	CDmeVertexData *pBase = pPassedBase ? pPassedBase : GetCurrentBaseState();
 	if ( !pBase )
 		return NULL;
@@ -3280,7 +3280,7 @@ CDmeVertexDeltaData *CDmeMesh::ModifyOrCreateDeltaStateFromBaseState( const char
 		char idBuf[ MAX_PATH ];
 
 		CDmeVertexData *pTmpBaseState = NULL;
-		do 
+		do
 		{
 			CreateUniqueId( &id );
 			UniqueIdToString( id, idBuf, sizeof( idBuf ) );
@@ -3733,7 +3733,7 @@ CDmeSingleIndexedComponent *CDmeMesh::FeatherSelection(
 	int insideCount = 0;
 
 	CFalloff< T > falloff;
-	
+
 	do
 	{
 		insideCount = 0;
@@ -4260,7 +4260,7 @@ int ControlIndexLessFunc( const void *lhs, const void *rhs )
 // separated by underscores.  The states will be returned in order from
 // most superior to least superior.  Since the deltas need to be broken down
 // by the control deltas, if any control delta doesn't exist it will return false.
-// 
+//
 // A superior delta state is defined as a delta which has this delta as
 // a dependent (or inferior) delta.
 //
@@ -4396,7 +4396,7 @@ CDmeVertexData *CDmeMesh::FindOrAddBaseState( CDmeVertexData *pBase )
 void CDmeMesh::GetBoundingSphere(
 	Vector &c, float &r,
 	CDmeVertexData *pPassedBase /* = NULL */, CDmeSingleIndexedComponent *pPassedSelection /* = NULL */ ) const
-{ 
+{
 	c.Zero();
 	r = 0.0f;
 

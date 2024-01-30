@@ -17,7 +17,7 @@
 
 //----------------------------------------------------------------------------------------------
 /**
- * A RetreatPath extends a PathFollower to periodically recompute a path 
+ * A RetreatPath extends a PathFollower to periodically recompute a path
  * away from a threat, and to move along the path away from that threat.
  */
 class RetreatPath : public PathFollower
@@ -58,7 +58,7 @@ inline void RetreatPath::Invalidate( void )
 	m_pathThreat = NULL;
 
 	// extend
-	PathFollower::Invalidate();	
+	PathFollower::Invalidate();
 }
 
 
@@ -106,7 +106,7 @@ public:
 	{
 		m_me = me;
 		m_mover = me->GetLocomotionInterface();
-		
+
 		m_threat = threat;
 		m_retreatRange = retreatRange;
 	}
@@ -114,10 +114,10 @@ public:
 	CNavArea *ComputePath( void )
 	{
 		VPROF_BUDGET( "NavAreaBuildRetreatPath", "NextBot" );
-		
+
 		if ( m_mover == NULL )
 			return NULL;
-		
+
 		CNavArea *startArea = m_me->GetEntity()->GetLastKnownArea();
 
 		if ( startArea == NULL )
@@ -141,7 +141,7 @@ public:
 		startArea->SetTotalCost( initCost );
 
 		startArea->AddToOpenList();
-		
+
 		// keep track of the area farthest away from the threat
 		CNavArea *farthestArea = NULL;
 		float farthestRange = 0.0f;
@@ -165,16 +165,16 @@ public:
 
 			// build adjacent area array
 			CollectAdjacentAreas( area );
-			
+
 			// search adjacent areas
 			for( int i=0; i<m_adjAreaIndex; ++i )
 			{
 				CNavArea *newArea = m_adjAreaVector[ i ].area;
-				
+
 				// only visit each area once
 				if ( newArea->IsClosed() )
 					continue;
-				
+
 				// don't consider blocked areas
 				if ( newArea->IsBlocked( teamID ) )
 					continue;
@@ -182,14 +182,14 @@ public:
 				// don't use this area if it is out of range
 				if ( ( newArea->GetCenter() - m_me->GetEntity()->GetAbsOrigin() ).IsLengthGreaterThan( m_retreatRange ) )
 					continue;
-				
+
 				// determine cost of traversing this area
 				float newCost = Cost( newArea, area, m_adjAreaVector[ i ].ladder );
-				
+
 				// don't use adjacent area if cost functor says it is a dead-end
 				if ( newCost < 0.0f )
 					continue;
-					
+
 				if ( newArea->IsOpen() && newArea->GetTotalCost() <= newCost )
 				{
 					// we have already visited this area, and it has a better path
@@ -235,9 +235,9 @@ public:
 	 */
 	void CollectAdjacentAreas( CNavArea *area )
 	{
-		m_adjAreaIndex = 0;			
+		m_adjAreaIndex = 0;
 
-		const NavConnectVector &adjNorth = *area->GetAdjacentAreas( NORTH );		
+		const NavConnectVector &adjNorth = *area->GetAdjacentAreas( NORTH );
 		FOR_EACH_VEC( adjNorth, it )
 		{
 			if ( m_adjAreaIndex >= MAX_ADJ_AREAS )
@@ -249,7 +249,7 @@ public:
 			++m_adjAreaIndex;
 		}
 
-		const NavConnectVector &adjSouth = *area->GetAdjacentAreas( SOUTH );		
+		const NavConnectVector &adjSouth = *area->GetAdjacentAreas( SOUTH );
 		FOR_EACH_VEC( adjSouth, it )
 		{
 			if ( m_adjAreaIndex >= MAX_ADJ_AREAS )
@@ -261,7 +261,7 @@ public:
 			++m_adjAreaIndex;
 		}
 
-		const NavConnectVector &adjWest = *area->GetAdjacentAreas( WEST );		
+		const NavConnectVector &adjWest = *area->GetAdjacentAreas( WEST );
 		FOR_EACH_VEC( adjWest, it )
 		{
 			if ( m_adjAreaIndex >= MAX_ADJ_AREAS )
@@ -273,7 +273,7 @@ public:
 			++m_adjAreaIndex;
 		}
 
-		const NavConnectVector &adjEast = *area->GetAdjacentAreas( EAST );	
+		const NavConnectVector &adjEast = *area->GetAdjacentAreas( EAST );
 		FOR_EACH_VEC( adjEast, it )
 		{
 			if ( m_adjAreaIndex >= MAX_ADJ_AREAS )
@@ -332,7 +332,7 @@ public:
 			}
 		}
 	}
-	
+
 	/**
 	 * Cost minimizes path length traveled thus far and "danger" (proximity to threat(s))
 	 */
@@ -349,7 +349,7 @@ public:
 		{
 			return -1.0f;
 		}
-		
+
 		const float debugDeltaT = 3.0f;
 
 		float cost;
@@ -360,12 +360,12 @@ public:
 		if ( fromArea == NULL )
 		{
 			cost = 0.0f;
-			
+
 			if ( area->Contains( m_threat->GetAbsOrigin() ) )
 			{
 				// maximum danger - threat is in the area with us
 				cost += 10.0f * dangerDensity;
-				
+
 				if ( m_me->IsDebugging( INextBot::PATH ) )
 				{
 					area->DrawFilled( 255, 0, 0, 128 );
@@ -384,7 +384,7 @@ public:
 					{
 						NDebugOverlay::Line( m_me->GetEntity()->GetAbsOrigin(), m_threat->GetAbsOrigin(), 255, 0, 0, true, debugDeltaT );
 					}
-				}				
+				}
 			}
 		}
 		else
@@ -407,7 +407,7 @@ public:
 				Vector closeFrom, closeTo;
 				area->GetClosestPointOnArea( fromArea->GetCenter(), &closeTo );
 				fromArea->GetClosestPointOnArea( area->GetCenter(), &closeFrom );
-				
+
 				float deltaZ = closeTo.z - closeFrom.z;
 
 				if ( deltaZ > m_mover->GetMaxJumpHeight() )
@@ -428,15 +428,15 @@ public:
 
 			cost = dist + fromArea->GetTotalCost();
 
-			
+
 			// Add in danger cost due to threat
 			// Assume straight line between areas and find closest point
 			// to the threat along that line segment. The distance between
-			// the threat and closest point on the line is the danger cost.		
-			
+			// the threat and closest point on the line is the danger cost.
+
 			// path danger is CUMULATIVE
 			float dangerCost = fromArea->GetCostSoFar();
-			
+
 			Vector close;
 			float t;
 			CalcClosestPointOnLineSegment( m_threat->GetAbsOrigin(), area->GetCenter(), fromArea->GetCenter(), close, &t );
@@ -466,32 +466,32 @@ public:
 					NDebugOverlay::Line( close, close - 50.0f * to, 255, 0, 0, true, debugDeltaT );
 				}
 			}
-			
+
 			cost += dangerCost;
 		}
 
 		return cost;
 	}
-	
-private:	
+
+private:
 	INextBot *m_me;
 	ILocomotion *m_mover;
-	
+
 	CBaseEntity *m_threat;
 	float m_retreatRange;
 
 	enum { MAX_ADJ_AREAS = 64 };
-	
+
 	struct AdjInfo
 	{
 		CNavArea *area;
 		CNavLadder *ladder;
-		NavTraverseType how;		
+		NavTraverseType how;
 	};
-	
+
 	AdjInfo m_adjAreaVector[ MAX_ADJ_AREAS ];
 	int m_adjAreaIndex;
-	
+
 };
 
 
@@ -525,10 +525,10 @@ inline void RetreatPath::RefreshPath( INextBot *bot, CBaseEntity *threat )
 
 	// the closer we get, the more accurate our path needs to be
 	Vector to = threat->GetAbsOrigin() - bot->GetPosition();
-	
+
 	const float minTolerance = 0.0f;
 	const float toleranceRate = 0.33f;
-	
+
 	float tolerance = minTolerance + toleranceRate * to.Length();
 
 	if ( !IsValid() || ( threat->GetAbsOrigin() - m_pathThreatPos ).IsLengthGreaterThan( tolerance ) )
@@ -554,7 +554,7 @@ inline void RetreatPath::RefreshPath( INextBot *bot, CBaseEntity *threat )
 		if ( goalArea )
 		{
 			AssemblePrecomputedPath( bot, goalArea->GetCenter(), goalArea );
-		}	
+		}
 		else
 		{
 			// all adjacent areas are too far away - just move directly away from threat
@@ -562,7 +562,7 @@ inline void RetreatPath::RefreshPath( INextBot *bot, CBaseEntity *threat )
 
 			BuildTrivialPath( bot, bot->GetPosition() - to );
 		}
-			
+
 		const float minRepathInterval = 0.5f;
 		m_throttleTimer.Start( minRepathInterval );
 	}

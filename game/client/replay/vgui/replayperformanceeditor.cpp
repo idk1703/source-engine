@@ -169,7 +169,7 @@ void HighlightTipWords( Label *pLabel )
 
 		// Find any instance of the word in the label text and highlight it in red
 		const wchar_t *p = wszLabelText;
-		do 
+		do
 		{
 			const wchar_t *pInst = wcsstr( p, pwWord );
 			if ( !pInst )
@@ -209,7 +209,7 @@ class CSavingDialog : public CGenericWaitingDialog
 {
 	DECLARE_CLASS_SIMPLE( CSavingDialog, CGenericWaitingDialog );
 public:
-	CSavingDialog( CReplayPerformanceEditorPanel *pEditorPanel ) 
+	CSavingDialog( CReplayPerformanceEditorPanel *pEditorPanel )
 	:	CGenericWaitingDialog( pEditorPanel )
 	{
 		m_pEditorPanel = pEditorPanel;
@@ -293,7 +293,7 @@ public:
 	{
 		m_pTextLabel = new CReplayTipLabel( this, "TextLabel", pText );
 	}
-	
+
 	virtual void OnThink()
 	{
 		// Delete the panel if life exceeded
@@ -344,7 +344,7 @@ public:
 		int aContentSize[2];
 		m_pTextLabel->GetContentSize( aContentSize[0], aContentSize[1] );
 		const int nLabelHeight = aContentSize[1];
-		SetBounds( 
+		SetBounds(
 			0,
 			3 * nScreenH / 4 - nLabelHeight / 2,
 			nScreenW,
@@ -457,7 +457,7 @@ public:
 
 	ON_MESSAGE( Reset, OnReset )
 	{
-		SetValue( 
+		SetValue(
 	}
 
 private:
@@ -550,9 +550,9 @@ public:
 
 		if ( !m_bControlsAdded )
 		{
-            const char *pResFile = GetResFile();
-            if ( pResFile )
-            {
+	const char *pResFile = GetResFile();
+	if ( pResFile )
+	{
 				LoadControlSettings( pResFile, "GAME" );
 			}
 
@@ -935,7 +935,7 @@ public:
 	void OnTick()
 	{
 		float flScale;
-		
+
 		if ( m_flPressTime == 0.0f )
 		{
 			flScale = 1.0f;
@@ -1011,7 +1011,7 @@ public:
 		m_pCameraFringe = dynamic_cast< ImagePanel *>( FindChildByName( "CameraFringe" ) );
 		m_pCameraCrosshair = dynamic_cast< ImagePanel *>( FindChildByName( "CameraCrosshair" ) );
 	}
-	
+
 	virtual void PerformLayout()
 	{
 		BaseClass::PerformLayout();
@@ -1068,8 +1068,8 @@ public:
 	{
 		const float flTime = gpGlobals->realtime;
 		bool bPauseAnimating = m_flPlayPauseTime > 0.0f &&
-			                   flTime >= m_flPlayPauseTime &&
-							   flTime < ( m_flPlayPauseTime + m_flAnimTime );
+					flTime >= m_flPlayPauseTime &&
+							flTime < ( m_flPlayPauseTime + m_flAnimTime );
 
 		// Setup light visibility
 		int nOnOff = fmod( flTime * 2.0f, 2.0f );
@@ -1094,7 +1094,7 @@ public:
 			const int nScreenXCenter = aCrossHairPos[0] + m_pCameraCrosshair->GetWide() / 2;
 			const int nScreenYCenter = aCrossHairPos[1] + m_pCameraCrosshair->GetTall() / 2;
 
-			m_pPlayPause[ iPlayPauseActive ]->SetBounds( 
+			m_pPlayPause[ iPlayPauseActive ]->SetBounds(
 				nScreenXCenter - nSize / 2,
 				nScreenYCenter - nSize / 2,
 				nSize,
@@ -1521,7 +1521,7 @@ void CReplayPerformanceEditorPanel::OnTick()
 				// Already in a controllable camera mode?
 				if ( bMouseInputEnabled )
 				{
-					DisplayPerformanceTip( "#Replay_PerfTip_ExitFreeCam", &replay_perftip_count_freecam_exit, MAX_TIP_DISPLAYS );	
+					DisplayPerformanceTip( "#Replay_PerfTip_ExitFreeCam", &replay_perftip_count_freecam_exit, MAX_TIP_DISPLAYS );
 					surface()->PlaySound( "replay\\cameracontrolmodeentered.wav" );
 				}
 				else
@@ -1627,7 +1627,7 @@ void CReplayPerformanceEditorPanel::OnTick()
 		if ( iPlayerClass == REPLAY_CLASS_UNDEFINED )
 			continue;
 #endif
-					 
+
 		int nCurTeamCount = nTeamCounts[ nCurTeam ];
 		CPlayerCell* pCell = m_pPlayerCells[ nCurTeam ][ nCurTeamCount-1 ];
 
@@ -1738,7 +1738,7 @@ void CReplayPerformanceEditorPanel::OnTick()
 		pCamera->SetPrimaryTarget( m_iCurPlayerTarget );
 	}
 
-	// fixes a case where the replay would be paused and the player would cycle cameras but the 
+	// fixes a case where the replay would be paused and the player would cycle cameras but the
 	// target's visibility wouldn't be updated until the replay was unpaused (they would be invisible)
 	if ( m_bCurrentTargetNeedsVisibilityUpdate )
 	{
@@ -1778,7 +1778,7 @@ void CReplayPerformanceEditorPanel::Achievements_Think( float flElapsed )
 	// Already awarded one this editing session?
 	if ( m_bAchievementAwarded )
 		return;
-	
+
 	// Too much idle time since last activity?
 	if ( gpGlobals->realtime - m_flLastTimeSpaceBarPressed > 60.0f )
 	{
@@ -1923,7 +1923,7 @@ void CReplayPerformanceEditorPanel::LayoutPlayerCells()
 	}
 }
 
-void CReplayPerformanceEditorPanel::PerformLayout() 
+void CReplayPerformanceEditorPanel::PerformLayout()
 {
 	int w = ScreenWidth(), h = ScreenHeight();
 	SetBounds(0,0,w,h);
@@ -1935,7 +1935,7 @@ void CReplayPerformanceEditorPanel::PerformLayout()
 		if ( !pCurOptionsPanel )
 			continue;
 
-		CExImageButton *pCurCameraButton = m_pCameraButtons[ i ];	
+		CExImageButton *pCurCameraButton = m_pCameraButtons[ i ];
 		if ( !pCurCameraButton )
 			continue;
 
@@ -2262,7 +2262,7 @@ void CReplayPerformanceEditorPanel::DisplaySavedTip( bool bSucceess )
 
 void CReplayPerformanceEditorPanel::OnSaveComplete()
 {
-	DisplaySavedTip( g_pReplayPerformanceController->GetLastSaveStatus() );	
+	DisplaySavedTip( g_pReplayPerformanceController->GetLastSaveStatus() );
 
 	m_pSavingDlg = NULL;
 }

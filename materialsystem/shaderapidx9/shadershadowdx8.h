@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -120,7 +120,7 @@ struct ShadowState_t
 
 //-----------------------------------------------------------------------------
 // These are part of the "shadow" since they describe the shading algorithm
-// but aren't actually captured in the state transition table 
+// but aren't actually captured in the state transition table
 // because it would produce too many transitions
 //-----------------------------------------------------------------------------
 struct ShadowShaderState_t

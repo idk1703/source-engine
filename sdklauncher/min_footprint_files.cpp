@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -22,9 +22,9 @@
 #include "SourceAppInfo.h"
 
 extern void OpenLocalizedURL( const char *lpszLocalName );
-extern FSReturnCode_t LoadGameInfoFile( const char *pDirectoryName, 
-										KeyValues *&pMainFile, 
-										KeyValues *&pFileSystemInfo, 
+extern FSReturnCode_t LoadGameInfoFile( const char *pDirectoryName,
+										KeyValues *&pMainFile,
+										KeyValues *&pFileSystemInfo,
 										KeyValues *&pSearchPaths );
 using namespace vgui;
 
@@ -111,7 +111,7 @@ public:
 		SetMenuButtonVisible( false );
 		SetMenuButtonResponsive( false );
 		SetCloseButtonVisible( false );
-		
+
 		// Take the focus.
 		m_PrevAppFocusPanel = input()->GetAppModalSurface();
 		input()->SetAppModalSurface( GetVPanel() );
@@ -155,7 +155,7 @@ public:
 
 				// Copy the new version in.
 				SafeCopy( pFilename->m_SrcFilename, pFilename->m_DestFilename );
-				
+
 				// Set its access permissions.
 				if ( pFilename->m_Flags & MF_MAKE_WRITABLE )
 					_chmod( pFilename->m_DestFilename, _S_IREAD | _S_IWRITE );
@@ -186,7 +186,7 @@ public:
 
 		// Remove our panel.
 		PostMessage(this, new KeyValues("Close"));
-		
+
 		ShowDeprecatedAppIDNotice();
 
 		ShowContentMigrationNotice();
@@ -210,7 +210,7 @@ public:
 			g_pFullFileSystem->Close( fp );
 
 			//
-			// Look for all of the mods under 'SourceMods', check if the SteamAppId is out of date, and warn the user if 
+			// Look for all of the mods under 'SourceMods', check if the SteamAppId is out of date, and warn the user if
 			// this is the case
 			//
 			ModConfigsHelper mch;
@@ -218,7 +218,7 @@ public:
 			vgui::MessageBox *alert = NULL;
 			char szProblemMods[5*MAX_PATH];
 			bool bProblemModExists = false;
-			
+
 			// Set up the error string
 			Q_strncpy(szProblemMods, "The SteamAppId values for the following mods should be changed from 220 to 215:\r\n\r\n", 5*MAX_PATH);
 
@@ -242,7 +242,7 @@ public:
 				{
 					// Close the file handle
 					g_pFullFileSystem->Close( fpGameInfo );
-				
+
 					// Load up the "gameinfo.txt"
 					KeyValues *pMainFile, *pFileSystemInfo, *pSearchPaths;
 					LoadGameInfoFile( szDirPath, pMainFile, pFileSystemInfo, pSearchPaths );
@@ -252,7 +252,7 @@ public:
 						const int iAppId = pFileSystemInfo->GetInt( "SteamAppId", -1 );
 
 						// This is the one that needs replacing add this mod to the list of suspect mods
-                  if ( GetAppSteamAppId( k_App_HL2 ) == iAppId)
+	if ( GetAppSteamAppId( k_App_HL2 ) == iAppId)
 						{
 							bProblemModExists = true;
 							Q_strncat( szProblemMods, modDirs[i], MAX_PATH , COPY_ALL_CHARACTERS );
@@ -261,14 +261,14 @@ public:
 					}
 				}
 			}
-			
-			// If necessary, pop up a message box informing the user that 
+
+			// If necessary, pop up a message box informing the user that
 			if (bProblemModExists)
 			{
 				// Amend the warning message text
 				Q_strncat( szProblemMods, "\r\nIf you did not author any of the above mods you can ignore this message.\r\nIf you did author any of the above mods you should change the SteamAppId\nvalue in the gameinfo.txt file for each mod listed above.\r\n", 5*MAX_PATH , COPY_ALL_CHARACTERS );
-			
-				// Pop up a message box 
+
+				// Pop up a message box
 				alert = new vgui::MessageBox( "Warning", szProblemMods );
 				alert->SetOKButtonText("Close");
 				alert->DoModal();
@@ -298,7 +298,7 @@ public:
 	int m_iOutputVersionNumber;
 
 
-private:	
+private:
 	vgui::VPANEL m_PrevAppFocusPanel;
 	ProgressBar *m_pProgressBar;
 	int m_iCurCopyFile;
@@ -351,11 +351,11 @@ void GetMinFootprintFiles_R( CUtlVector<CMinFootprintFilename> &filenames, const
 				AddMinFootprintFile( filenames, fullSrcFilename, fullDestFilename, 0 );
 			}
 		}
-		
+
 		pFilename = g_pFullFileSystem->FindNext( findHandle );
 	}
 	g_pFullFileSystem->FindClose( findHandle );
-	
+
 	// Recurse.
 	for ( int i=0; i < subDirs.Count(); i++ )
 	{
@@ -385,7 +385,7 @@ void DumpMinFootprintFiles( bool bForceRefresh )
 	// What is the current version?
 	int latestVersion = 0;
 	KeyValues *kv = new KeyValues( "" );
-	
+
 	bool bValidFile = true;
 	if ( !kv->LoadFromFile( g_pFullFileSystem, MIN_FOOTPRINT_FILES_FILENAME ) )
 		bValidFile = false;
@@ -394,7 +394,7 @@ void DumpMinFootprintFiles( bool bForceRefresh )
 	if ( bValidFile && (pFileList = kv->FindKey( "files" )) == NULL )
 		bValidFile = false;
 
-	if ( !bValidFile )		
+	if ( !bValidFile )
 	{
 		VGUIMessageBox( (vgui::Frame *) g_pMainFrame, "#Warning", "#CantLoadMinFootprintFiles" );
 		kv->deleteThis();
@@ -407,7 +407,7 @@ void DumpMinFootprintFiles( bool bForceRefresh )
 
 	CMinFootprintFilesPanel *pDisplay = new CMinFootprintFilesPanel( (vgui::Frame *) g_pMainFrame, "MinFootprintFilesPanel" );
 	pDisplay->m_iOutputVersionNumber = latestVersion;
-	
+
 	// Our version is out of date, let's copy out all the min footprint files.
 	// NOTE: copy files that are set to always_copy whether the version changed or not.
 	for ( KeyValues *pCur=pFileList->GetFirstSubKey(); pCur; pCur=pCur->GetNextKey() )
@@ -426,7 +426,7 @@ void DumpMinFootprintFiles( bool bForceRefresh )
 		else if ( Q_stricmp( pCur->GetName(), "single_file" ) == 0 )
 		{
 			const char *pDestMapping = pCur->GetString();
-			
+
 			// If the filename is preceded by the right prefix, then make it writable.
 			int flags = 0;
 			if ( Q_stristr( pDestMapping, WRITABLE_PREFIX ) == pDestMapping )
@@ -462,6 +462,5 @@ void DumpMinFootprintFiles( bool bForceRefresh )
 		}
 	}
 
-	pDisplay->StartDumpingFiles();		
+	pDisplay->StartDumpingFiles();
 }
-

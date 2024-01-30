@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -41,7 +41,7 @@ bool g_bIsReplayRewinding = false;
 const char *g_pszTipsClassImages[] =
 {
 	"",						// TF_CLASS_UNDEFINED = 0,
-	"class_portraits/scout",	// TF_CLASS_SCOUT,			
+	"class_portraits/scout",	// TF_CLASS_SCOUT,
 	"class_portraits/sniper",// TF_CLASS_SNIPER,
 	"class_portraits/soldier",		// TF_CLASS_SOLDIER,
 	"class_portraits/demoman",		// TF_CLASS_DEMOMAN,
@@ -49,7 +49,7 @@ const char *g_pszTipsClassImages[] =
 	"class_portraits/heavy",	// TF_CLASS_HEAVYWEAPONS,
 	"class_portraits/pyro",	// TF_CLASS_PYRO,
 	"class_portraits/spy",		// TF_CLASS_SPY,
-	"class_portraits/engineer",		// TF_CLASS_ENGINEER,		
+	"class_portraits/engineer",		// TF_CLASS_ENGINEER,
 };
 
 ClassDetails_t g_PerClassStatDetails[15] =
@@ -92,7 +92,7 @@ CTFStatsSummaryPanel *g_pTFStatsSummaryPanel = NULL;
 CUtlVector<CTFStatsSummaryPanel *> g_vecStatPanels;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void UpdateStatSummaryPanels( CUtlVector<ClassStats_t> &vecClassStats )
 {
@@ -129,10 +129,10 @@ void DestroyStatsSummaryPanel()
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CTFStatsSummaryPanel::CTFStatsSummaryPanel() 
-  : BaseClass( NULL, "TFStatsSummary", vgui::scheme()->LoadSchemeFromFile( "Resource/ClientScheme.res", "ClientScheme" ) )
-  ,	m_bShowingLeaderboard( false )
-  , m_bLoadingCommunityMap( false )
+CTFStatsSummaryPanel::CTFStatsSummaryPanel()
+	: BaseClass( NULL, "TFStatsSummary", vgui::scheme()->LoadSchemeFromFile( "Resource/ClientScheme.res", "ClientScheme" ) )
+	,	m_bShowingLeaderboard( false )
+	, m_bLoadingCommunityMap( false )
 {
 	Init();
 }
@@ -155,7 +155,7 @@ void CTFStatsSummaryPanel::Init( void )
 	m_pNonInteractiveHeaders = new vgui::EditablePanel( m_pPlayerData, "NonInteractiveHeaders" );
 	m_pBarChartComboBoxA = new vgui::ComboBox( m_pInteractiveHeaders, "BarChartComboA", 10, false );
 	m_pBarChartComboBoxB = new vgui::ComboBox( m_pInteractiveHeaders, "BarChartComboB", 10, false );
-	m_pClassComboBox = new vgui::ComboBox( m_pInteractiveHeaders, "ClassCombo", 10, false );	
+	m_pClassComboBox = new vgui::ComboBox( m_pInteractiveHeaders, "ClassCombo", 10, false );
 	m_pTipImage = new CTFImagePanel( this, "TipImage" );
 	m_pTipText = new vgui::Label( this, "TipText", "" );
 	m_pMapInfoPanel = NULL;
@@ -167,9 +167,9 @@ void CTFStatsSummaryPanel::Init( void )
 	m_pFooter = new CTFFooter( this, "Footer" );
 	m_bShowBackButton = false;
 #else
-	m_pNextTipButton = new vgui::Button( this, "NextTipButton", "" );	
+	m_pNextTipButton = new vgui::Button( this, "NextTipButton", "" );
 	m_pResetStatsButton = new vgui::Button( this, "ResetStatsButton", "" );
-	m_pCloseButton = new vgui::Button( this, "CloseButton", "" );	
+	m_pCloseButton = new vgui::Button( this, "CloseButton", "" );
 #endif
 
 	m_pBarChartComboBoxA->AddActionSignalTarget( this );
@@ -186,14 +186,14 @@ void CTFStatsSummaryPanel::Init( void )
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CTFStatsSummaryPanel::CTFStatsSummaryPanel( vgui::Panel *parent ) : BaseClass( parent, "TFStatsSummary", 
+CTFStatsSummaryPanel::CTFStatsSummaryPanel( vgui::Panel *parent ) : BaseClass( parent, "TFStatsSummary",
 	vgui::scheme()->LoadSchemeFromFile( "Resource/ClientScheme.res", "ClientScheme" ) )
 {
 	Init();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFStatsSummaryPanel::~CTFStatsSummaryPanel()
 {
@@ -220,7 +220,7 @@ void CTFStatsSummaryPanel::ShowModal()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStatsSummaryPanel::SetupForEmbedded( void )
 {
@@ -233,7 +233,7 @@ void CTFStatsSummaryPanel::SetupForEmbedded( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStatsSummaryPanel::PerformLayout()
 {
@@ -458,7 +458,7 @@ void CTFStatsSummaryPanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStatsSummaryPanel::OnKeyCodePressed( KeyCode code )
 {
@@ -478,9 +478,9 @@ void CTFStatsSummaryPanel::OnKeyCodePressed( KeyCode code )
 //-----------------------------------------------------------------------------
 // Purpose: Sets stats to use
 //-----------------------------------------------------------------------------
-void CTFStatsSummaryPanel::SetStats( CUtlVector<ClassStats_t> &vecClassStats ) 
+void CTFStatsSummaryPanel::SetStats( CUtlVector<ClassStats_t> &vecClassStats )
 {
-	m_aClassStats = vecClassStats; 
+	m_aClassStats = vecClassStats;
 	if ( m_bControlsLoaded )
 	{
 		UpdateDialog();
@@ -514,7 +514,7 @@ void CTFStatsSummaryPanel::ClearMapLabel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStatsSummaryPanel::ShowMapInfo( bool bShowMapInfo, bool bIsMVM /*= false*/, bool bBackgroundOverride /*= false*/ )
 {
@@ -538,7 +538,7 @@ void CTFStatsSummaryPanel::ShowMapInfo( bool bShowMapInfo, bool bIsMVM /*= false
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStatsSummaryPanel::OnMapLoad( const char *pMapName )
 {
@@ -567,12 +567,12 @@ void CTFStatsSummaryPanel::OnMapLoad( const char *pMapName )
 				bWidescreenBackground = true;
 			}
 		}
-		
+
 		if ( !bWideScreen && !pszBackgroundOverride )
 		{
 			pszBackgroundOverride = pMatchDesc->GetMapLoadBackgroundOverride( false );
 		}
-		
+
 	}
 	else if ( bIsMVM )
 	{
@@ -582,14 +582,14 @@ void CTFStatsSummaryPanel::OnMapLoad( const char *pMapName )
 
 	bool bIsCommunityMap = false;
 	const char *pAuthors = NULL;
-	
+
 	const MapDef_t *pMapInfo = GetItemSchema()->GetMasterMapDefByName( pMapName );
 	if ( pMapInfo )
 	{
 		bIsCommunityMap = pMapInfo->IsCommunityMap();
 		pAuthors = pMapInfo->pszAuthorsLocKey;
 	}
-	
+
 	ShowMapInfo( true, bIsMVM, ( pszBackgroundOverride != NULL ) );
 
 	m_xStartLeaderboard = 0;
@@ -657,7 +657,7 @@ void CTFStatsSummaryPanel::OnMapLoad( const char *pMapName )
 			{
 				pBackgroundImage->SetWide( GetWide() );
 			}
-			else 
+			else
 			{
 				pBackgroundImage->SetWide( GetTall() * ( 4.f / 3.f ) );
 			}
@@ -690,7 +690,7 @@ void CTFStatsSummaryPanel::OnMapLoad( const char *pMapName )
 				{
 					m_pMapInfoPanel->SetDialogVariable( "title", g_pVGuiLocalize->Find( "#TF_MapAuthors_Community_Title" ) );
 					m_pMapInfoPanel->SetDialogVariable( "map_leaderboard_title", "" );
-					m_pMapInfoPanel->SetDialogVariable( "authors", g_pVGuiLocalize->Find( pAuthors ) ); 
+					m_pMapInfoPanel->SetDialogVariable( "authors", g_pVGuiLocalize->Find( pAuthors ) );
 					m_pLeaderboardTitle = m_pMapInfoPanel->FindChildByName( "MapLeaderboardTitle" );
 				}
 				else
@@ -827,8 +827,8 @@ void CTFStatsSummaryPanel::UpdateLeaderboard()
 					pAvatar->SetShouldDrawFriendIcon( false );
 					pAvatar->SetPlayer( steamID, k_EAvatarSize32x32 );
 				}
-			}								
-		}			
+			}
+		}
 	}
 
 	if ( m_pLeaderboardTitle )
@@ -884,7 +884,7 @@ void CTFStatsSummaryPanel::UpdateDialog()
 
 	m_iTotalSpawns = 0;
 
-	// if we don't have stats for any class, add empty stat entries for them 
+	// if we don't have stats for any class, add empty stat entries for them
 	for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass <= TF_LAST_NORMAL_CLASS; iClass++ )
 	{
 		if ( iClass == TF_CLASS_CIVILIAN )
@@ -924,7 +924,7 @@ void CTFStatsSummaryPanel::UpdateDialog()
 	// update the tip
 	UpdateTip();
 	// show or hide controls depending on if we're interactive or not
-	UpdateControls();		
+	UpdateControls();
 }
 
 //-----------------------------------------------------------------------------
@@ -950,7 +950,7 @@ void CTFStatsSummaryPanel::UpdateBarCharts()
 		// TODO: Fix up after the civilian becomes playable.
 		int iChartBar = 0;
 		for ( int i = 0; i < m_aClassStats.Count(); i++ )
-		{	
+		{
 			int iClass = m_aClassStats[i].iPlayerClass;
 			if ( iClass == TF_CLASS_CIVILIAN )
 			{
@@ -1049,11 +1049,11 @@ void CTFStatsSummaryPanel::UpdateClassDetails( bool bIsMVM )
 		{
 			// just show the value
 			g_pVGuiLocalize->ConstructString_safe( wzStatVal, wzWithoutClassFmt, 1, wzStatNum );
-		}				
+		}
 
 		// set the label
 		m_pPlayerData->SetDialogVariable( CFmtStr( "classrecord%dlabel", iRow+1 ), g_pVGuiLocalize->Find( pStatDetails[i].szResourceName ) );
-		// set the value 
+		// set the value
 		m_pPlayerData->SetDialogVariable( CFmtStr( "classrecord%dvalue", iRow+1 ), wzStatVal );
 
 		iRow++;
@@ -1245,13 +1245,13 @@ void CTFStatsSummaryPanel::DisplayBarValue( int iChart, int iBar, ClassStats_t &
 	pLabel->GetPos( xLabel,yLabel );
 
 	m_pPlayerData->SetDialogVariable( CFmtStr( "classbarlabel%d%s", iBar+1, szControlSuffix ), szLabel );
-	if ( 1 == iChart )	
+	if ( 1 == iChart )
 	{
 		// drawing code for RH bar chart
 		xBar = m_xStartRHBar;
 		pBar->SetBounds( xBar, yBar, iBarWidth, m_iBarHeight );
 		if ( bLabelOutsideBar )
-		{	
+		{
 			pLabel->SetPos( xBar + iBarWidth + iLabelSpacing, yLabel );
 		}
 		else
@@ -1265,18 +1265,18 @@ void CTFStatsSummaryPanel::DisplayBarValue( int iChart, int iBar, ClassStats_t &
 		xBar = m_xStartLHBar + m_iBarMaxWidth - iBarWidth;
 		pBar->SetBounds( xBar, yBar, iBarWidth, m_iBarHeight );
 		if ( bLabelOutsideBar )
-		{	
+		{
 			pLabel->SetPos( xBar - ( iLabelWidth + iLabelSpacing ), yLabel );
 		}
 		else
 		{
 			pLabel->SetPos( xBar + iLabelSpacing, yLabel );
 		}
-	}		
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Calculates a fraction and guards from divide by 0.  (Returns 0 if 
+// Purpose: Calculates a fraction and guards from divide by 0.  (Returns 0 if
 //			denominator is 0.)
 //-----------------------------------------------------------------------------
 float CTFStatsSummaryPanel::SafeCalcFraction( float flNumerator, float flDemoninator )
@@ -1359,7 +1359,7 @@ void CTFStatsSummaryPanel::OnTextChanged( KeyValues *data )
 {
 	Panel *pPanel = reinterpret_cast<vgui::Panel *>( data->GetPtr("panel") );
 	vgui::ComboBox *pComboBox = dynamic_cast<vgui::ComboBox *>( pPanel );
-	
+
 	if ( m_pBarChartComboBoxA == pComboBox || m_pBarChartComboBoxB == pComboBox )
 	{
 		// a bar chart combo box changed, update the bar charts
@@ -1373,7 +1373,7 @@ void CTFStatsSummaryPanel::OnTextChanged( KeyValues *data )
 		m_statBarGraph[1] = (TFStatType_t) pUserDataB->GetInt( "stattype" );
 		m_displayBarGraph[1] = (StatDisplay_t) pUserDataB->GetInt( "statdisplay" );
 		UpdateBarCharts();
-	}	
+	}
 	else if ( m_pClassComboBox == pComboBox )
 	{
 		// the class selection combo box changed, update class details
@@ -1434,7 +1434,7 @@ const char *CTFStatsSummaryPanel::RenderValue( float flValue, TFStatType_t statT
 		return FormatSeconds( (int) flValue );
 	}
 	else if ( SHOW_AVG == statDisplay )
-	{	
+	{
 		// if it's an average, render as a float w/2 decimal places
 		Q_snprintf( szValue, ARRAYSIZE( szValue ), "%.2f", flValue );
 	}
@@ -1454,7 +1454,7 @@ void CTFStatsSummaryPanel::FireGameEvent( IGameEvent *event )
 {
 	const char *pEventName = event->GetName();
 
-	// when we are changing levels and 
+	// when we are changing levels and
 	if ( 0 == Q_strcmp( pEventName, "server_spawn" ) )
 	{
 		if ( !m_bInteractive )
@@ -1463,7 +1463,7 @@ void CTFStatsSummaryPanel::FireGameEvent( IGameEvent *event )
 			if ( pMapName )
 			{
 				OnMapLoad( pMapName );
-			}	
+			}
 		}
 	}
 }

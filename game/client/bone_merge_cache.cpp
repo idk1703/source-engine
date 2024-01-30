@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -63,7 +63,7 @@ void CBoneMergeCache::UpdateCache()
 	{
 		m_MergedBones.Purge();
 		m_BoneMergeBits.Purge();
-	
+
 		// Update the cache.
 		if ( pTestFollow && pTestHdr && pOwnerHdr )
 		{
@@ -76,7 +76,7 @@ void CBoneMergeCache::UpdateCache()
 			memset( m_BoneMergeBits.Base(), 0, m_BoneMergeBits.Count() );
 
 			mstudiobone_t *pOwnerBones = m_pOwnerHdr->pBone( 0 );
-			
+
 			m_nFollowBoneSetupMask = BONE_USED_BY_BONE_MERGE;
 			for ( int i = 0; i < m_pOwnerHdr->numbones(); i++ )
 			{
@@ -96,7 +96,7 @@ void CBoneMergeCache::UpdateCache()
 				{
 					m_nFollowBoneSetupMask = BONE_USED_BY_ANYTHING;
 //					Warning("Performance warning: Merge with '%s'. Mark bone '%s' in model '%s' as being used by bone merge in the .qc!\n",
-//						pOwnerHdr->pszName(), m_pFollowHdr->pBone( parentBoneIndex )->pszName(), m_pFollowHdr->pszName() ); 
+//						pOwnerHdr->pszName(), m_pFollowHdr->pBone( parentBoneIndex )->pszName(), m_pFollowHdr->pszName() );
 				}
 			}
 
@@ -157,7 +157,7 @@ void CBoneMergeCache::MergeMatchingBones( int boneMask )
 		for ( int i=0; i < m_MergedBones.Count(); i++ )
 		{
 			int iOwnerBone = m_MergedBones[i].m_iMyBone;
-		
+
 			// Only update bones reference by the bone mask.
 			if ( !( m_pOwnerHdr->boneFlags( iOwnerBone ) & boneMask ) )
 				continue;
@@ -172,7 +172,7 @@ void CBoneMergeCache::MergeMatchingBones( int boneMask )
 		{
 			int iOwnerBone = m_MergedBones[i].m_iMyBone;
 			int iParentBone = m_MergedBones[i].m_iParentBone;
-		
+
 			// Only update bones reference by the bone mask.
 			if ( !( m_pOwnerHdr->boneFlags( iOwnerBone ) & boneMask ) )
 				continue;
@@ -197,7 +197,7 @@ void CBoneMergeCache::CopyParentToChild( const Vector parentPos[], const Quatern
 	{
 		int iOwnerBone = m_MergedBones[i].m_iMyBone;
 		int iParentBone = m_MergedBones[i].m_iParentBone;
-		
+
 		if ( m_pOwnerHdr->boneParent( iOwnerBone ) == -1 || m_pFollowHdr->boneParent( iParentBone ) == -1 )
 			continue;
 
@@ -223,7 +223,7 @@ void CBoneMergeCache::CopyChildToParent( const Vector childPos[], const Quaterni
 	{
 		int iOwnerBone = m_MergedBones[i].m_iMyBone;
 		int iParentBone = m_MergedBones[i].m_iParentBone;
-		
+
 		if ( m_pOwnerHdr->boneParent( iOwnerBone ) == -1 || m_pFollowHdr->boneParent( iParentBone ) == -1 )
 			continue;
 
@@ -253,7 +253,7 @@ bool CBoneMergeCache::GetAimEntOrigin( Vector *pAbsOrigin, QAngle *pAbsAngles )
 	//
 	// Note: the code below doesn't take animation into account. If the attached entity animates
 	// all over the place, then this won't get the right results.
-	
+
 	// Get mFollowBone.
 	m_pFollow->SetupBones( NULL, -1, m_nFollowBoneSetupMask, gpGlobals->curtime );
 	const matrix3x4_t &mFollowBone = m_pFollow->GetBone( m_MergedBones[0].m_iParentBone );
@@ -284,5 +284,3 @@ bool CBoneMergeCache::GetRootBone( matrix3x4_t &rootBone )
 	rootBone = m_pFollow->GetBone( m_MergedBones[0].m_iParentBone );
 	return true;
 }
-
-

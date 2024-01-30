@@ -8,7 +8,7 @@
 #include "c_playerrelativemodel.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_PlayerRelativeModel *C_PlayerRelativeModel::Create( const char *pszModelName, C_BaseEntity *pParent, Vector vecOffset, QAngle angleOffset, float flAnimSpeed, float flLifetime, int iFlags )
 {
@@ -23,7 +23,7 @@ C_PlayerRelativeModel *C_PlayerRelativeModel::Create( const char *pszModelName, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_PlayerRelativeModel::Initialize( const char *pszModelName, C_BaseEntity *pParent, Vector vecOffset, QAngle angleOffset, float flAnimSpeed, float flLifetime, int iFlags )
 {
@@ -37,7 +37,7 @@ bool C_PlayerRelativeModel::Initialize( const char *pszModelName, C_BaseEntity *
 	m_vecOffsetPos = vecOffset;
 	m_angleOffset = angleOffset;
 
-	SetParent( pParent, 0 ); 
+	SetParent( pParent, 0 );
 	SetLocalOrigin( vec3_origin );
 	SetLocalAngles( vec3_angle );
 
@@ -50,13 +50,13 @@ bool C_PlayerRelativeModel::Initialize( const char *pszModelName, C_BaseEntity *
 
 	m_qOffsetRotation = vec3_angle;
 	m_flAnimSpeed = flAnimSpeed;
-	
+
 	m_iFlags = iFlags;
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PlayerRelativeModel::SetLifetime( float flLifetime )
 {
@@ -72,7 +72,7 @@ void C_PlayerRelativeModel::SetLifetime( float flLifetime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PlayerRelativeModel::ClientThink( void )
 {
@@ -82,7 +82,7 @@ void C_PlayerRelativeModel::ClientThink( void )
 		return;
 	}
 
-	// Animate 
+	// Animate
 	C_BaseEntity *pParent = GetMoveParent();
 
 	Vector out(0, 0, 0);
@@ -117,7 +117,7 @@ bool C_MerasmusBombEffect::Initialize( const char *pszModelName, C_TFPlayer *pPa
 	if ( !BaseClass::Initialize(pszModelName, pParent, vecOffset, angleOffset, flAnimSpeed, flLifetime, iFlags ) )
 		return false;
 
-	// Create a particle effect 
+	// Create a particle effect
 	const char *pszEffectName = "bombonomicon_spell_trail";
 
 	if ( m_pBombonomiconBeam )

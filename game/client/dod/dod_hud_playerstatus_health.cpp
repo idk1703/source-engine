@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -27,7 +27,7 @@
 #include "dod_hud_playerstatus_health.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDoDHudHealthBar::CDoDHudHealthBar( vgui::Panel *parent, const char *name ) : vgui::ImagePanel( parent, name )
 {
@@ -36,14 +36,14 @@ CDoDHudHealthBar::CDoDHudHealthBar( vgui::Panel *parent, const char *name ) : vg
 	m_iMaterialIndex = vgui::surface()->DrawGetTextureId( "vgui/white" );
 	if ( m_iMaterialIndex == -1 ) // we didn't find it, so create a new one
 	{
-		m_iMaterialIndex = vgui::surface()->CreateNewTextureID();	
+		m_iMaterialIndex = vgui::surface()->CreateNewTextureID();
 	}
 
 	vgui::surface()->DrawSetTextureFile( m_iMaterialIndex, "vgui/white", true, false );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudHealthBar::OnThink()
 {
@@ -52,14 +52,14 @@ void CDoDHudHealthBar::OnThink()
 	C_DODPlayer *pPlayer = GetHealthDelegatePlayer();
 	if ( pPlayer )
 	{
-		// m_nHealth >= 0 
+		// m_nHealth >= 0
 		int nHealth = MAX( pPlayer->GetHealth(), 0 );
 		m_flPercentage = nHealth / 100.0f;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudHealthBar::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -73,7 +73,7 @@ void CDoDHudHealthBar::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudHealthBar::Paint( void )
 {
@@ -89,11 +89,11 @@ void CDoDHudHealthBar::Paint( void )
 
 	if ( m_flPercentage > m_flFirstWarningLevel )
 	{
-		pclrHealth = &m_clrHealthHigh; 
+		pclrHealth = &m_clrHealthHigh;
 	}
 	else if ( m_flPercentage > m_flSecondWarningLevel )
 	{
-		pclrHealth = &m_clrHealthMed; 
+		pclrHealth = &m_clrHealthMed;
 	}
 	else
 	{
@@ -111,12 +111,12 @@ void CDoDHudHealthBar::Paint( void )
 	Vector2D uv22( uv2, uv2 );
 	Vector2D uv12( uv1, uv2 );
 
-	vgui::Vertex_t vert[4];	
+	vgui::Vertex_t vert[4];
 
 	// background
 	vert[0].Init( Vector2D( xpos, ypos ), uv11 );
 	vert[1].Init( Vector2D( xpos + w, ypos ), uv21 );
-	vert[2].Init( Vector2D( xpos + w, ypos + h ), uv22 );				
+	vert[2].Init( Vector2D( xpos + w, ypos + h ), uv22 );
 	vert[3].Init( Vector2D( xpos, ypos + h ), uv12 );
 
 	if ( m_flPercentage <= 0.01 )
@@ -132,7 +132,7 @@ void CDoDHudHealthBar::Paint( void )
 	// damage part
 	vert[0].Init( Vector2D( xpos, flDamageY ), uv11 );
 	vert[1].Init( Vector2D( xpos + w, flDamageY ), uv21 );
-	vert[2].Init( Vector2D( xpos + w, ypos + h ), uv22 );				
+	vert[2].Init( Vector2D( xpos + w, ypos + h ), uv22 );
 	vert[3].Init( Vector2D( xpos, ypos + h ), uv12 );
 
 	vgui::surface()->DrawSetColor( *pclrHealth );
@@ -141,7 +141,7 @@ void CDoDHudHealthBar::Paint( void )
 	// outline
 	vert[0].Init( Vector2D( xpos, ypos ), uv11 );
 	vert[1].Init( Vector2D( xpos + w - 1, ypos ), uv21 );
-	vert[2].Init( Vector2D( xpos + w - 1, ypos + h - 1 ), uv22 );				
+	vert[2].Init( Vector2D( xpos + w - 1, ypos + h - 1 ), uv22 );
 	vert[3].Init( Vector2D( xpos, ypos + h - 1 ), uv12 );
 
 	vgui::surface()->DrawSetColor( m_clrBorder );
@@ -178,7 +178,7 @@ CDoDHudHealth::CDoDHudHealth( vgui::Panel *parent, const char *name ) : vgui::Ed
 	m_pHealthBar = new CDoDHudHealthBar( this, "HealthBar" );
 	m_pClassImageBG = new vgui::ImagePanel( this, "HealthClassImageBG" );
 	m_pClassImage = new vgui::ImagePanel( this, "HealthClassImage" );
-	
+
 	m_nPrevClass = PLAYERCLASS_UNDEFINED;
 	m_nPrevTeam = TEAM_INVALID;
 
@@ -194,7 +194,7 @@ void CDoDHudHealth::OnScreenSizeChanged(int iOldWide, int iOldTall)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudHealth::OnThink()
 {

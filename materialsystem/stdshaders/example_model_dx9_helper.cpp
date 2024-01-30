@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -32,7 +32,7 @@ static ConVar r_rimlight( "r_rimlight", "1", FCVAR_NONE );
 // Initialize shader parameters
 //-----------------------------------------------------------------------------
 void InitParamsExampleModel_DX9( CBaseVSShader *pShader, IMaterialVar** params, const char *pMaterialName, ExampleModel_DX9_Vars_t &info )
-{	
+{
 	// FLASHLIGHTFIXME: Do ShaderAPI::BindFlashlightTexture
 	Assert( info.m_nFlashlightTexture >= 0 );
 
@@ -57,12 +57,12 @@ void InitExampleModel_DX9( CBaseVSShader *pShader, IMaterialVar** params, Exampl
 {
 	Assert( info.m_nFlashlightTexture >= 0 );
 	pShader->LoadTexture( info.m_nFlashlightTexture, TEXTUREFLAGS_SRGB );
-	
+
 	bool bIsBaseTextureTranslucent = false;
 	if ( params[info.m_nBaseTexture]->IsDefined() )
 	{
 		pShader->LoadTexture( info.m_nBaseTexture, TEXTUREFLAGS_SRGB );
-		
+
 		if ( params[info.m_nBaseTexture]->GetTextureValue()->IsTranslucent() )
 		{
 			bIsBaseTextureTranslucent = true;
@@ -117,7 +117,7 @@ void DrawExampleModel_DX9_Internal( CBaseVSShader *pShader, IMaterialVar** param
 
 			if( bIsAlphaTested )
 			{
-				// disable alpha test and use the zfunc zequals since alpha isn't guaranteed to 
+				// disable alpha test and use the zfunc zequals since alpha isn't guaranteed to
 				// be the same on both the regular pass and the flashlight pass.
 				pShaderShadow->EnableAlphaTest( false );
 				pShaderShadow->DepthFunc( SHADER_DEPTHFUNC_EQUAL );
@@ -137,7 +137,7 @@ void DrawExampleModel_DX9_Internal( CBaseVSShader *pShader, IMaterialVar** param
 				pShader->SetDefaultBlendingShadowState( info.m_nBaseTexture, true );
 			}
 		}
-		
+
 		unsigned int flags = VERTEX_POSITION | VERTEX_NORMAL;
 		int userDataSize = 0;
 
@@ -161,7 +161,7 @@ void DrawExampleModel_DX9_Internal( CBaseVSShader *pShader, IMaterialVar** param
 		userDataSize = 4; // tangent S
 		pShaderShadow->EnableTexture( SHADER_SAMPLER5, true );		// Normalizing cube map
 		pShaderShadow->EnableSRGBWrite( true );
-		
+
 		// texcoord0 : base texcoord, texcoord2 : decal hw morph delta
 		int pTexCoordDim[3] = { 2, 0, 3 };
 		int nTexCoordCount = 1;
@@ -236,7 +236,7 @@ void DrawExampleModel_DX9_Internal( CBaseVSShader *pShader, IMaterialVar** param
 
 		bool bWriteDepthToAlpha = false;
 		bool bWriteWaterFogToAlpha = false;
-		if( bFullyOpaque ) 
+		if( bFullyOpaque )
 		{
 			bWriteDepthToAlpha = pShaderAPI->ShouldWriteDepthToDestAlpha();
 			bWriteWaterFogToAlpha = (fogType == MATERIAL_FOG_LINEAR_BELOW_FOG_Z);

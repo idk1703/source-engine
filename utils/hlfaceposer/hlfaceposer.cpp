@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -40,7 +40,7 @@ StudioModel *FindAssociatedModel( CChoreoScene *scene, CChoreoActor *a );
 
 //-----------------------------------------------------------------------------
 // Purpose: Takes a full path and determines if the file exists on the disk
-// Input  : *filename - 
+// Input  : *filename -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool FPFullpathFileExists( const char *filename )
@@ -63,7 +63,7 @@ char *FacePoser_MakeWindowsSlashes( char *pname )
 	strcpy( returnString, pname );
 	pname = returnString;
 
-	while ( *pname ) 
+	while ( *pname )
 	{
 		if ( *pname == '/' )
 		{
@@ -77,7 +77,7 @@ char *FacePoser_MakeWindowsSlashes( char *pname )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int GetCloseCaptionLanguageId()
@@ -87,8 +87,8 @@ int GetCloseCaptionLanguageId()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : id - 
+// Purpose:
+// Input  : id -
 //-----------------------------------------------------------------------------
 void SetCloseCaptionLanguageId( int id, bool force /* = false */ )
 {
@@ -201,8 +201,8 @@ void Con_ErrorPrintf( const char *fmt, ... )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *filename - 
+// Purpose:
+// Input  : *filename -
 //-----------------------------------------------------------------------------
 void MakeFileWriteable( const char *filename )
 {
@@ -227,8 +227,8 @@ void MakeFileWriteable( const char *filename )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *filename - 
+// Purpose:
+// Input  : *filename -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool IsFileWriteable( const char *filename )
@@ -359,8 +359,8 @@ void FacePoser_RemoveWindowExStyle( mxWindow *w, int removebits )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *w - 
+// Purpose:
+// Input  : *w -
 //-----------------------------------------------------------------------------
 void FacePoser_MakeToolWindow( mxWindow *w, bool smallcaption )
 {
@@ -383,7 +383,7 @@ void FacePoser_LoadWindowPositions( char const *name, bool& visible, int& x, int
 	Q_snprintf( subkey, sizeof( subkey ), "%s - visible", name );
 	LoadViewerSettingsInt( subkey, &v );
 	visible = v ? true : false;
-	
+
 	Q_snprintf( subkey, sizeof( subkey ), "%s - locked", name );
 	LoadViewerSettingsInt( subkey, &v );
 	locked = v ? true : false;
@@ -428,7 +428,7 @@ void FacePoser_SetPhonemeRootDir( char const *pchRootDir )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void FacePoser_EnsurePhonemesLoaded( void )
 {
@@ -439,7 +439,7 @@ void FacePoser_EnsurePhonemesLoaded( void )
 		return;
 	}
 
-	char const *ext[] = 
+	char const *ext[] =
 	{
 		"",
 		"_strong",
@@ -494,19 +494,19 @@ bool FacePoser_ShowFileNameDialog( bool openFile, char *relative, size_t bufsize
 
 // Show file io
 	const char *fullpath = NULL;
-	
+
 	if ( openFile )
 	{
-		fullpath = mxGetOpenFileName( 
-			0, 
-			inWorkingDirectoryAlready ? "." : FacePoser_MakeWindowsSlashes( va( "%s%s/", GetGameDirectory(), subdir ) ), 
+		fullpath = mxGetOpenFileName(
+			0,
+			inWorkingDirectoryAlready ? "." : FacePoser_MakeWindowsSlashes( va( "%s%s/", GetGameDirectory(), subdir ) ),
 			wildcard );
 	}
 	else
 	{
-		fullpath = mxGetSaveFileName( 
-			0, 
-			inWorkingDirectoryAlready ? "." : FacePoser_MakeWindowsSlashes( va( "%s%s/", GetGameDirectory(), subdir ) ), 
+		fullpath = mxGetSaveFileName(
+			0,
+			inWorkingDirectoryAlready ? "." : FacePoser_MakeWindowsSlashes( va( "%s%s/", GetGameDirectory(), subdir ) ),
 			wildcard );
 	}
 	if ( !fullpath || !fullpath[ 0 ] )
@@ -544,7 +544,7 @@ int ConvertUnicodeToANSI(const wchar_t *unicode, char *ansi, int ansiBufferSize)
 
 //-----------------------------------------------------------------------------
 // Purpose: If FPS is set and "using grid", snap to proper fractional time value
-// Input  : t - 
+// Input  : t -
 // Output : float
 //-----------------------------------------------------------------------------
 float FacePoser_SnapTime( float t )
@@ -560,8 +560,8 @@ float FacePoser_SnapTime( float t )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : t - 
+// Purpose:
+// Input  : t -
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *FacePoser_DescribeSnappedTime( float t )
@@ -591,7 +591,7 @@ char const *FacePoser_DescribeSnappedTime( float t )
 	}
 	else
 	{
-		Q_snprintf( desc, sizeof( desc ), "frame %i (time %i + %i/%i s.)", 
+		Q_snprintf( desc, sizeof( desc ), "frame %i (time %i + %i/%i s.)",
 			frame, ipart,fracpart, fps );
 	}
 
@@ -599,7 +599,7 @@ char const *FacePoser_DescribeSnappedTime( float t )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int FacePoser_GetSceneFPS( void )
@@ -615,7 +615,7 @@ int FacePoser_GetSceneFPS( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool FacePoser_IsSnapping( void )
@@ -670,7 +670,7 @@ char const *FacePoser_TranslateSoundName( CChoreoEvent *event )
 	CChoreoActor *a = event->GetActor();
 	CChoreoScene *s = event->GetScene();
 
-	if ( a != NULL && 
+	if ( a != NULL &&
 		 s != NULL )
 	{
 		model = FindAssociatedModel( s, a );
@@ -702,7 +702,7 @@ char *Q_stristr_slash( char const *pStr, char const *pSearch )
 	AssertValidStringPtr(pStr);
 	AssertValidStringPtr(pSearch);
 
-	if (!pStr || !pSearch) 
+	if (!pStr || !pSearch)
 		return 0;
 
 	char const* pLetter = pStr;

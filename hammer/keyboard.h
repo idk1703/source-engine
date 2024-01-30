@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -236,7 +236,7 @@ typedef struct
 class CKeyboard
 {
 	public:
-			
+
 		CKeyboard(void);
 		~CKeyboard(void);
 

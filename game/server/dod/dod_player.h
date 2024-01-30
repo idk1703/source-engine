@@ -27,7 +27,7 @@ class CDODPlayerStateInfo
 public:
 	DODPlayerState m_iPlayerState;
 	const char *m_pStateName;
-	
+
 	void (CDODPlayer::*pfnEnterState)();	// Init and deinit the state.
 	void (CDODPlayer::*pfnLeaveState)();
 	void (CDODPlayer::*pfnPreThink)();	// Do a PreThink() in this state.
@@ -82,7 +82,7 @@ public:
 	{
 		m_iCurrentLifePlayerClass = -1;
 		m_bRecordingStats = false;
-		ResetPerLifeStats();	
+		ResetPerLifeStats();
 	}
 
 	~CDODPlayerStatProperty() {}
@@ -100,14 +100,14 @@ public:
 	void SendStatsToPlayer( CDODPlayer *pPlayer );
 
 private:
-	
+
 	bool m_bRecordingStats;	// not recording until we get a valid class. stop recording when we join spectator
 
 	int m_iCurrentLifePlayerClass;
 	int m_iCurrentLifePlayerTeam;
 
 	// single life's worth of player stats
-	dod_stat_accumulator_t m_PlayerStatsPerLife;	
+	dod_stat_accumulator_t m_PlayerStatsPerLife;
 
 	// single life's worth of weapon stats
 	dod_stat_accumulator_t m_WeaponStatsPerLife[WEAPON_MAX];
@@ -141,7 +141,7 @@ public:
 	void			PrecachePlayerModel( const char *szPlayerModel );
 	virtual void	Spawn();
 	virtual void	InitialSpawn( void );
-		
+
 	virtual void	CheatImpulseCommands( int iImpulse );
 	virtual void	PlayerRunCommand( CUserCmd *ucmd, IMoveHelper *moveHelper );
 
@@ -166,7 +166,7 @@ public:
 	virtual bool	SetObserverMode(int mode); // sets new observer mode, returns true if successful
 	virtual bool	ModeWantsSpectatorGUI( int iMode ) { return ( iMode != OBS_MODE_DEATHCAM && iMode != OBS_MODE_FREEZECAM ); }
 
-		
+
 	// from CBasePlayer
 	void			SetupVisibility( CBaseEntity *pViewEntity, unsigned char *pvs, int pvssize );
 
@@ -258,7 +258,7 @@ public:
 	void				ClearCapAreaIndex() { SetCapAreaIndex(-1); }
 
 	void				SetCPIndex( int index );
-		
+
 	float				m_fHandleSignalsTime;	//time to next check the area signals
 	void				HandleSignals( void );	//check if signals need to do anything, like turn icons on or off
 
@@ -270,7 +270,7 @@ public:
 
 	// Hints
 	virtual CHintSystem	*Hints( void ) { return &m_Hints; }
-	
+
 	// Reset all scores
 	void				ResetScores( void );
 
@@ -282,9 +282,9 @@ public:
 	int GetTimeleftAsString( char *pDest, int iDestSize );
 	int GetStringForEscapeSequence( char c,  char *pDest, int iDestSize );
 	virtual void		CheckChatText( char *p, int bufsize );
-	
+
 	void PushawayThink();
-	
+
 	void DestroyRagdoll( void );
 
 	virtual bool CanHearChatFrom( CBasePlayer *pPlayer );
@@ -338,9 +338,9 @@ public:
 	DODPlayerState State_Get() const;				// Get the current state.
 
 	void MoveToNextIntroCamera();	//Cycle view through available intro cameras
- 
+
 	bool ClientCommand( const CCommand &args );
-	
+
 	virtual bool IsReadyToPlay( void );
 
 	void FireBullets( const FireBulletsInfo_t &info );
@@ -388,9 +388,9 @@ public:
 	int GetLastBlockAreaIndex( void );
 
 public:
-	
+
 	CNetworkVarEmbedded( CDODPlayerShared, m_Shared );
-	
+
 	int m_flNextTimeCheck;		// Next time the player can execute a "timeleft" command
 
 	Vector m_lastStandingPos; // used by the gamemovement code for finding ladders
@@ -463,7 +463,7 @@ private:
 	void State_PreThink_DEATH_ANIM();
 
 	virtual void PlayerDeathThink();
-	
+
 	// When the player joins, it cycles their view between trigger_camera entities.
 	// This is the current camera, and the time that we'll switch to the next one.
 	EHANDLE m_pIntroCamera;
@@ -477,7 +477,7 @@ private:
 	// invisible, etc).
 	CNetworkVar( DODPlayerState, m_iPlayerState );
 	// Tracks our ragdoll entity.
-	CNetworkHandle( CBaseEntity, m_hRagdoll );	// networked entity handle 
+	CNetworkHandle( CBaseEntity, m_hRagdoll );	// networked entity handle
 
 	float m_flLastMovement;	// Time the player last moved, used for mp_autokick
 
@@ -505,7 +505,7 @@ private:
 	friend void Bot_Think( CDODPlayer *pBot ); // needs to use the HandleCommand_ stuff.
 	bool HandleCommand_JoinTeam( int iTeam );
 	bool HandleCommand_JoinClass( int iClass );
-	
+
 	CDODPlayerStateInfo *m_pCurStateInfo;			// This can be NULL if no state info is defined for m_iPlayerState.
 
 	bool	m_bTeamChanged;		//have we changed teams this spawn? Used to enforce one team switch per death rule
@@ -528,7 +528,7 @@ private:
 	int		m_iPlayerSpeed;	//last updated player max speed
 
 	bool	SetSpeed( int speed );
-	
+
 	bool	m_bAutoReload;	// does the player want to autoreload their weapon when empty
 
 	bool	m_bAutoRezoom;	// does the player want to re-zoom after each shot for sniper rifles and bazookas
@@ -542,7 +542,7 @@ private:
 	CHintSystem m_Hints;
 
 	float m_flMinNextStepSoundTime;
-	
+
 	int m_LastHitGroup;			// the last body region that took damage
 	int m_LastDamageType;		// the type of damage we last took
 
@@ -577,7 +577,7 @@ public:
 
 	// LifeID is a unique int assigned to a player each time they spawn
 	int GetLifeID() { return m_iLifeID; }
-	int m_iLifeID;	
+	int m_iLifeID;
 
 	// Stats variables
 	//==================
@@ -615,7 +615,7 @@ public:
 		m_iPerRoundKills = 0;
 	}
 
-	int GetPerRoundCaps( void ) 
+	int GetPerRoundCaps( void )
 	{
 		return m_iPerRoundCaptures;
 	}
@@ -636,7 +636,7 @@ public:
 	}
 
 	int m_iPerRoundCaptures;		// how many caps this round
-	int m_iPerRoundDefenses;		// how many defenses this round	
+	int m_iPerRoundDefenses;		// how many defenses this round
 	int m_iPerRoundBombsDetonated;
 	int m_iPerRoundKills;
 };

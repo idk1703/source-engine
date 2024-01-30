@@ -33,7 +33,7 @@ public:
 	virtual const Path::Segment *GetCurrentGoal( void ) const;	// return current goal along the path we are trying to reach
 
 	virtual void SetMinLookAheadDistance( float value );		// minimum range movement goal must be along path
-	
+
 	virtual CBaseEntity *GetHindrance( void ) const;			// returns entity that is hindering our progress along the path
 
 	virtual bool IsDiscontinuityAhead( INextBot *bot, Path::SegmentType type, float range = -1.0f ) const;	// return true if there is a the given discontinuity ahead in the path within the given range (-1 = entire remaining path)
@@ -54,7 +54,7 @@ private:
 
 	CountdownTimer m_waitTimer;						// for waiting for a blocker to move off our path
 	CHandle< CBaseEntity > m_hindrance;
-	
+
 	// debug display data for avoid volumes
 	bool m_didAvoidCheck;
 	Vector m_leftFrom;
@@ -68,7 +68,7 @@ private:
 	void AdjustSpeed( INextBot *bot );				// adjust speed based on path curvature
 
 	Vector Avoid( INextBot *bot, const Vector &goalPos, const Vector &forward, const Vector &left );		// avoidance movements for very nearby obstacles. returns modified goal position
-	bool Climbing( INextBot *bot, const Path::Segment *goal, const Vector &forward, const Vector &left, float goalRange );		// climb up ledges 
+	bool Climbing( INextBot *bot, const Path::Segment *goal, const Vector &forward, const Vector &left, float goalRange );		// climb up ledges
 	bool JumpOverGaps( INextBot *bot, const Path::Segment *goal, const Vector &forward, const Vector &left, float goalRange );	// jump over gaps
 
 	bool LadderUpdate( INextBot *bot );				// move bot along ladder
@@ -102,5 +102,3 @@ inline CBaseEntity *PathFollower::GetHindrance( void ) const
 
 
 #endif // _NEXT_BOT_PATH_FOLLOWER_
-
-

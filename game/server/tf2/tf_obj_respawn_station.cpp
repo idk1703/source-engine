@@ -17,7 +17,7 @@ END_SEND_TABLE();
 
 BEGIN_DATADESC( CObjectRespawnStation )
 
-	// keys 
+	// keys
 	DEFINE_KEYFIELD_NOT_SAVED( m_bIsInitialSpawnPoint,	FIELD_BOOLEAN, "InitialSpawn" ),
 
 END_DATADESC()
@@ -28,7 +28,7 @@ PRECACHE_REGISTER(obj_respawn_station);
 ConVar	obj_respawnstation_health( "obj_respawnstation_health","300", FCVAR_NONE, "Respawn Station health" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectRespawnStation::CObjectRespawnStation()
 {
@@ -37,7 +37,7 @@ CObjectRespawnStation::CObjectRespawnStation()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectRespawnStation::Precache()
 {
@@ -46,7 +46,7 @@ void CObjectRespawnStation::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectRespawnStation::Spawn()
 {
@@ -101,9 +101,9 @@ void CObjectRespawnStation::PerformRespawnEffect()
 
 		CBroadcastRecipientFilter filter;
 		te->BeamPoints( filter, 0.0,
-			&GetAbsOrigin(), 
-			&vecEnd, 
-			m_iSpriteTexture, 
+			&GetAbsOrigin(),
+			&vecEnd,
+			m_iSpriteTexture,
 			0,		// Halo index
 			0,		// Start frame
 			15,		// Frame rate
@@ -124,7 +124,7 @@ void CObjectRespawnStation::PerformRespawnEffect()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectRespawnStation* CObjectRespawnStation::Create(const Vector &vOrigin, const QAngle &vAngles )
 {
@@ -135,7 +135,7 @@ CObjectRespawnStation* CObjectRespawnStation::Create(const Vector &vOrigin, cons
 		pRet->SetLocalAngles( vAngles );
 		pRet->Spawn();
 	}
-	
+
 	return pRet;
 }
 
@@ -163,5 +163,3 @@ bool CObjectRespawnStation::IsInitialSpawnPoint( void )
 {
 	return m_bIsInitialSpawnPoint;
 }
-
-

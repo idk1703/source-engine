@@ -28,7 +28,7 @@ class CEconItemFactory
 {
 public:
 	CEconItemFactory( );
-	
+
 	// Gets a pointer to the underlying item schema the factory is using
 	GameItemSchema_t &GetSchema() { return m_schema; }
 

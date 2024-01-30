@@ -34,10 +34,10 @@ public:
 	{
 		m_hCurrentTalker = NULL;
 	}
-	
+
 	void Acquire( float time, CBaseEntity *pTalker )		{ m_ReleaseTime = gpGlobals->curtime + time; m_hCurrentTalker = pTalker; }
 	void Release()					{ m_ReleaseTime = 0; m_hCurrentTalker = NULL; }
-	
+
 	// Current owner of the semaphore is always allowed to talk
 	bool IsAvailable( CBaseEntity *pTalker ) const		{ return ((gpGlobals->curtime > m_ReleaseTime) || (m_hCurrentTalker == pTalker)); }
 	float GetReleaseTime() const 	{ return m_ReleaseTime; }
@@ -89,12 +89,12 @@ const soundlevel_t AIS_DEF_SNDLVL 	 	= SNDLVL_TALKING;
 //-------------------------------------
 
 //-------------------------------------
-// An id that represents the core meaning of a spoken phrase, 
+// An id that represents the core meaning of a spoken phrase,
 // eventually to be mapped to a sentence group or scene
 
 typedef const char *AIConcept_t;
 
-inline bool CompareConcepts( AIConcept_t c1, AIConcept_t c2 ) 
+inline bool CompareConcepts( AIConcept_t c1, AIConcept_t c2 )
 {
 	return ( (void *)c1 == (void *)c2 || ( c1 && c2 && Q_stricmp( c1, c2 ) == 0 ) );
 }
@@ -148,14 +148,14 @@ public:
 	~CAI_Expresser();
 
 	// --------------------------------
-	
+
 	bool Connect( CAI_ExpresserSink *pSink )		{ m_pSink = pSink; return true; }
 	bool Disconnect( CAI_ExpresserSink *pSink )	{ m_pSink = NULL; return true;}
 
 	void TestAllResponses();
 
 	// --------------------------------
-	
+
 	bool Speak( AIConcept_t concept, const char *modifiers = NULL, char *pszOutResponseChosen = NULL, size_t bufsize = 0, IRecipientFilter *filter = NULL );
 
 	// These two methods allow looking up a response and dispatching it to be two different steps
@@ -164,12 +164,12 @@ public:
 	float GetResponseDuration( AI_Response &response );
 
 	virtual int SpeakRawSentence( const char *pszSentence, float delay, float volume = VOL_NORM, soundlevel_t soundlevel = SNDLVL_TALKING, CBaseEntity *pListener = NULL );
-	
+
 	bool SemaphoreIsAvailable( CBaseEntity *pTalker );
 	float GetSemaphoreAvailableTime( CBaseEntity *pTalker );
 
 	// --------------------------------
-	
+
 	virtual bool IsSpeaking();
 	bool CanSpeak();
 	bool CanSpeakAfterMyself();
@@ -177,15 +177,15 @@ public:
 	void  BlockSpeechUntil( float time );
 
 	// --------------------------------
-	
+
 	bool CanSpeakConcept( AIConcept_t concept );
 	bool SpokeConcept( AIConcept_t concept );
 	float GetTimeSpokeConcept( AIConcept_t concept ); // returns -1 if never
 	void SetSpokeConcept( AIConcept_t concept, AI_Response *response, bool bCallback = true );
 	void ClearSpokeConcept( AIConcept_t concept );
-	
+
 	// --------------------------------
-	
+
 	void SetVoicePitch( int voicePitch )	{ m_voicePitch = voicePitch; }
 	int GetVoicePitch() const;
 
@@ -206,7 +206,7 @@ protected:
 	void SpeechMsg( CBaseEntity *pFlex, PRINTF_FORMAT_STRING const char *pszFormat, ... );
 
 	// --------------------------------
-	
+
 	CAI_ExpresserSink *GetSink() { return m_pSink; }
 
 private:
@@ -215,16 +215,16 @@ private:
 	virtual bool IsValidResponse( ResponseType_t type, const char *pszValue );
 
 	// --------------------------------
-	
+
 	CAI_ExpresserSink *m_pSink;
-	
+
 	// --------------------------------
 	//
 	// Speech concept data structures
 	//
 
 	CUtlDict< ConceptHistory_t, int > m_ConceptHistories;
-	
+
 	// --------------------------------
 	//
 	// Speaking states
@@ -235,7 +235,7 @@ private:
 	float				m_flBlockedTalkTime;
 	int					m_voicePitch;					// pitch of voice for this head
 	float				m_flLastTimeAcceptedSpeak;		// because speech may not be blocked until NoteSpeaking called by scene ent, this handles in-think blocking
-	
+
 	DECLARE_SIMPLE_DATADESC();
 
 	// --------------------------------
@@ -311,17 +311,17 @@ protected:
 //-----------------------------------------------------------------------------
 template <class BASE_NPC>
 inline void CAI_ExpresserHost<BASE_NPC>::NoteSpeaking( float duration, float delay )
-{ 
-	this->GetExpresser()->NoteSpeaking( duration, delay ); 
+{
+	this->GetExpresser()->NoteSpeaking( duration, delay );
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 template <class BASE_NPC>
-inline bool CAI_ExpresserHost<BASE_NPC>::Speak( AIConcept_t concept, const char *modifiers /*= NULL*/, char *pszOutResponseChosen /*=NULL*/, size_t bufsize /* = 0 */, IRecipientFilter *filter /* = NULL */ ) 
+inline bool CAI_ExpresserHost<BASE_NPC>::Speak( AIConcept_t concept, const char *modifiers /*= NULL*/, char *pszOutResponseChosen /*=NULL*/, size_t bufsize /* = 0 */, IRecipientFilter *filter /* = NULL */ )
 {
 	AssertOnce( this->GetExpresser()->GetOuter() == this );
-	return this->GetExpresser()->Speak( concept, modifiers, pszOutResponseChosen, bufsize, filter ); 
+	return this->GetExpresser()->Speak( concept, modifiers, pszOutResponseChosen, bufsize, filter );
 }
 
 //-----------------------------------------------------------------------------

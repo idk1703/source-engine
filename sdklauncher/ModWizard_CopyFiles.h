@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -36,7 +36,7 @@ namespace vgui
 
 		// Called to store the settings it'll use to copy all the files over.
 		void GetReady( const char *pOutputDirName, const char *pOutputModGamedirName, const char *modName ) ;
-		
+
 		virtual WizardSubPanel* GetNextSubPanel();
 		virtual void OnDisplayAsNext();
 		virtual void OnTick();
@@ -72,7 +72,7 @@ namespace vgui
 		// Right now only one of these files gets modified, but keeping it here for expansion in the future.
 		virtual bool HandleReplacements_TemplateOptions( CFileCopyInfo *pInfo, bool &bErrorStatus ) = 0;
 
-	protected:	
+	protected:
 
 		CUtlVector<CFileCopyInfo> m_FileCopyInfos;
 		int m_iCurCopyFile;	// -1 at the beginning.

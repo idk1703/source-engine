@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,11 +20,11 @@
 
 HINTCOMPLETIONFUNCTION LookupCompletionFunction( const char *name );
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : id - 
-//			priority - 
-//			player - 
-//			entity - 
+// Purpose:
+// Input  : id -
+//			priority -
+//			player -
+//			entity -
 //-----------------------------------------------------------------------------
 C_TFBaseHint::C_TFBaseHint( int id, int priority, int entity, HINTCOMPLETIONFUNCTION pfn /*=NULL*/ )
 	: vgui::Panel( NULL, "TFBaseHint" ), m_CursorNone( vgui::dc_none )
@@ -36,7 +36,7 @@ C_TFBaseHint::C_TFBaseHint( int id, int priority, int entity, HINTCOMPLETIONFUNC
 
 	// Child of main panel
 	SetParent( VGui_GetClientDLLRootPanel() );
-	
+
 	// Put at top of z-order (happens in Think, too)
 //	MoveToFront();
 
@@ -53,8 +53,8 @@ C_TFBaseHint::C_TFBaseHint( int id, int priority, int entity, HINTCOMPLETIONFUNC
 	SetEntity( entity );
 	SetCompleted( false );
 	// Target panel
-	m_hTarget		= NULL; 
-	
+	m_hTarget		= NULL;
+
 	m_bMoving		= false;
 	m_flMoveRemaining	= 0.0f;
 	m_flMoveTotal		= 0.0f;
@@ -85,7 +85,7 @@ C_TFBaseHint::C_TFBaseHint( int id, int priority, int entity, HINTCOMPLETIONFUNC
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFBaseHint::~C_TFBaseHint( void )
 {
@@ -108,8 +108,8 @@ void C_TFBaseHint::ApplySchemeSettings(vgui::IScheme *pScheme)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pkv - 
+// Purpose:
+// Input  : *pkv -
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::ParseFromData( KeyValues *pkv )
 {
@@ -146,7 +146,7 @@ void C_TFBaseHint::ParseFromData( KeyValues *pkv )
 				item->ComputeTitle();
 
 				item->SetSize( GetWide(), 20 );
-				
+
 				AddHintItem( item );
 			}
 			else
@@ -158,11 +158,11 @@ void C_TFBaseHint::ParseFromData( KeyValues *pkv )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : int&x - 
-//			y - 
-//			w - 
-//			&h - 
+// Purpose:
+// Input  : int&x -
+//			y -
+//			w -
+//			&h -
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::GetClientArea( int&x, int& y, int& w, int &h )
 {
@@ -178,8 +178,8 @@ void C_TFBaseHint::GetClientArea( int&x, int& y, int& w, int &h )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *title - 
+// Purpose:
+// Input  : *title -
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::SetTitle( const char *title )
 {
@@ -190,7 +190,7 @@ void C_TFBaseHint::SetTitle( const char *title )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::PaintBackground()
 {
@@ -217,7 +217,7 @@ void C_TFBaseHint::PaintBackground()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::PerformLayout()
 {
@@ -276,7 +276,7 @@ void C_TFBaseHint::PerformLayout()
 
 //-----------------------------------------------------------------------------
 // Purpose: Install completion function
-// Input  : pfn - 
+// Input  : pfn -
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::SetCompletionFunction( HINTCOMPLETIONFUNCTION pfn )
 {
@@ -284,7 +284,7 @@ void C_TFBaseHint::SetCompletionFunction( HINTCOMPLETIONFUNCTION pfn )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::CheckForCompletion( void )
 {
@@ -299,7 +299,7 @@ void C_TFBaseHint::CheckForCompletion( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::OnTick()
 {
@@ -384,7 +384,7 @@ void C_TFBaseHint::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int C_TFBaseHint::GetID( void )
@@ -393,8 +393,8 @@ int C_TFBaseHint::GetID( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : id - 
+// Purpose:
+// Input  : id -
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::SetID( int id )
 {
@@ -402,7 +402,7 @@ void C_TFBaseHint::SetID( int id )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int C_TFBaseHint::GetPriority( void )
@@ -411,8 +411,8 @@ int C_TFBaseHint::GetPriority( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : priority - 
+// Purpose:
+// Input  : priority -
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::SetPriority( int priority )
 {
@@ -420,7 +420,7 @@ void C_TFBaseHint::SetPriority( int priority )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int C_TFBaseHint::GetEntity( void )
@@ -429,7 +429,7 @@ int C_TFBaseHint::GetEntity( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : C_BaseEntity
 //-----------------------------------------------------------------------------
 C_BaseEntity *C_TFBaseHint::GetBaseEntity( void )
@@ -438,8 +438,8 @@ C_BaseEntity *C_TFBaseHint::GetBaseEntity( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : entity - 
+// Purpose:
+// Input  : entity -
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::SetEntity( int entity )
 {
@@ -447,8 +447,8 @@ void C_TFBaseHint::SetEntity( int entity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *entity - 
+// Purpose:
+// Input  : *entity -
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::SetBaseEntity( C_BaseEntity *entity )
 {
@@ -456,7 +456,7 @@ void C_TFBaseHint::SetBaseEntity( C_BaseEntity *entity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_TFBaseHint::GetCompleted( void )
@@ -465,8 +465,8 @@ bool C_TFBaseHint::GetCompleted( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : completed - 
+// Purpose:
+// Input  : completed -
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::SetCompleted( bool completed )
 {
@@ -476,8 +476,8 @@ void C_TFBaseHint::SetCompleted( bool completed )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *item - 
+// Purpose:
+// Input  : *item -
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::AddHintItem( ITFHintItem *item )
 {
@@ -486,8 +486,8 @@ void C_TFBaseHint::AddHintItem( ITFHintItem *item )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::RemoveHintItem( int index )
 {
@@ -501,7 +501,7 @@ void C_TFBaseHint::RemoveHintItem( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int C_TFBaseHint::GetNumHintItems( void )
@@ -510,8 +510,8 @@ int C_TFBaseHint::GetNumHintItems( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : deleteitems - 
+// Purpose:
+// Input  : deleteitems -
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::RemoveAllHintItems( bool deleteitems )
 {
@@ -529,8 +529,8 @@ void C_TFBaseHint::RemoveAllHintItems( bool deleteitems )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 //-----------------------------------------------------------------------------
 ITFHintItem	*C_TFBaseHint::GetHintItem( int index )
 {
@@ -543,10 +543,10 @@ ITFHintItem	*C_TFBaseHint::GetHintItem( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
-//			y - 
-//			movementtime - 
+// Purpose:
+// Input  : x -
+//			y -
+//			movementtime -
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::SetDesiredPosition( int x, int y, float movementtime /*=0.3f*/ )
 {
@@ -554,7 +554,7 @@ void C_TFBaseHint::SetDesiredPosition( int x, int y, float movementtime /*=0.3f*
 
 	m_flMoveRemaining = movementtime;
 	m_flMoveTotal = movementtime;
-	
+
 	int ox, oy;
 	GetPos( ox, oy );
 
@@ -566,20 +566,20 @@ void C_TFBaseHint::SetDesiredPosition( int x, int y, float movementtime /*=0.3f*
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float C_TFBaseHint::GetMovementFraction( void )
 {
 	float frac = 0.0f;
-	
+
 	if ( m_flMoveTotal > 0.0f )
 	{
 		frac = 1.0f - ( m_flMoveRemaining / m_flMoveTotal );
 	}
 
 	float squared = frac * frac;
-	
+
 	frac = 3 * squared - 2 * frac * squared;
 
 	// Simple spline
@@ -589,7 +589,7 @@ float C_TFBaseHint::GetMovementFraction( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::AnimatePosition( void )
 {
@@ -619,7 +619,7 @@ void C_TFBaseHint::AnimatePosition( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Helper to center a panel
-// Input  : *panel - 
+// Input  : *panel -
 // Output : static void
 //-----------------------------------------------------------------------------
 static void PositionHintNoTarget( C_TFBaseHint *panel )
@@ -632,8 +632,8 @@ static void PositionHintNoTarget( C_TFBaseHint *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *panel - 
+// Purpose:
+// Input  : *panel -
 //-----------------------------------------------------------------------------
 void C_TFBaseHint::SetHintTarget( vgui::Panel *panel )
 {
@@ -642,7 +642,7 @@ void C_TFBaseHint::SetHintTarget( vgui::Panel *panel )
 	if ( panel )
 	{
 		int hintW, hintH;
-		
+
 		GetSize( hintW, hintH );
 
 		int x, y, w, h;
@@ -663,7 +663,7 @@ void C_TFBaseHint::SetHintTarget( vgui::Panel *panel )
 
 			x -= over;
 		}
-		
+
 		if ( y < 3 )
 		{
 			y = 3;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -36,7 +36,7 @@
 
 ExpressionTool *g_pExpressionTool = 0;
 
-#define TRAY_HEIGHT 55 
+#define TRAY_HEIGHT 55
 
 #define TRAY_ITEM_INSET 10
 
@@ -172,9 +172,9 @@ void CExpressionToolWorkspace::redraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *elem1 - 
-//			*elem2 - 
+// Purpose:
+// Input  : *elem1 -
+//			*elem2 -
 // Output : int
 //-----------------------------------------------------------------------------
 int SortFuncByUse(const void *elem1, const void *elem2 )
@@ -192,9 +192,9 @@ int SortFuncByUse(const void *elem1, const void *elem2 )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *elem1 - 
-//			*elem2 - 
+// Purpose:
+// Input  : *elem1 -
+//			*elem2 -
 // Output : int
 //-----------------------------------------------------------------------------
 int SortFuncByName(const void *elem1, const void *elem2 )
@@ -347,14 +347,14 @@ int	CExpressionToolWorkspace::handleEvent( mxEvent *event )
 					iret = item->handleEvent( event );
 				}
 			}
-			
+
 			iret = 1;
 		}
 		break;
 	case mxEvent::MouseDrag:
 	case mxEvent::MouseMove:
 		{
-			// 
+			//
 			bool handled = false;
 
 			if ( m_nFocusItem != -1 )
@@ -373,7 +373,7 @@ int	CExpressionToolWorkspace::handleEvent( mxEvent *event )
 					if ( event->event == mxEvent::MouseDrag )
 					{
 						int mx, my;
-						
+
 						item->GetLastMouse( mx, my );
 						mx += rc.left;
 						my += rc.top;
@@ -403,7 +403,7 @@ int	CExpressionToolWorkspace::handleEvent( mxEvent *event )
 		break;
 	case mxEvent::MouseUp:
 		{
-			// 
+			//
 			{
 				int mx = (short)event->x;
 				int my = (short)event->y;
@@ -529,7 +529,7 @@ int	CExpressionToolWorkspace::handleEvent( mxEvent *event )
 						processed = false;
 						break;
 					}
-		
+
 					if ( processed )
 					{
 						m_pVertScrollBar->setValue( offset );
@@ -573,7 +573,7 @@ TimelineItem *CExpressionToolWorkspace::GetClickedItem( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExpressionToolWorkspace::ClearClickedItem( void )
 {
@@ -583,8 +583,8 @@ void CExpressionToolWorkspace::ClearClickedItem( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : force - force vert scrollbar recomputation	
+// Purpose:
+// Input  : force - force vert scrollbar recomputation
 //-----------------------------------------------------------------------------
 void CExpressionToolWorkspace::LayoutItems( bool force /* = false */ )
 {
@@ -641,7 +641,7 @@ int CExpressionToolWorkspace::ComputeVPixelsNeeded( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExpressionToolWorkspace::RepositionVSlider( void )
 {
@@ -657,10 +657,10 @@ void CExpressionToolWorkspace::RepositionVSlider( void )
 		m_pVertScrollBar->setVisible( true );
 	}
 
-	m_pVertScrollBar->setBounds( 
-		w2() - m_nScrollbarHeight, 
-		0, 
-		m_nScrollbarHeight, 
+	m_pVertScrollBar->setBounds(
+		w2() - m_nScrollbarHeight,
+		0,
+		m_nScrollbarHeight,
 		h2() );
 
 	m_nTopOffset = max( 0, m_nTopOffset );
@@ -674,7 +674,7 @@ void CExpressionToolWorkspace::RepositionVSlider( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExpressionToolWorkspace::DisableAllExcept( void )
 {
@@ -697,7 +697,7 @@ void CExpressionToolWorkspace::DisableAllExcept( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExpressionToolWorkspace::EnableValid( void )
 {
@@ -715,7 +715,7 @@ void CExpressionToolWorkspace::EnableValid( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExpressionToolWorkspace::CollapseAll( TimelineItem *keepExpanded )
 {
@@ -730,7 +730,7 @@ void CExpressionToolWorkspace::CollapseAll( TimelineItem *keepExpanded )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExpressionToolWorkspace::ExpandAll( void )
 {
@@ -744,7 +744,7 @@ void CExpressionToolWorkspace::ExpandAll( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExpressionToolWorkspace::OnSnapAll()
 {
@@ -762,7 +762,7 @@ void CExpressionToolWorkspace::OnSnapAll()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExpressionToolWorkspace::OnDeleteColumn()
 {
@@ -827,7 +827,7 @@ void CExpressionToolWorkspace::OnDeleteColumn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExpressionToolWorkspace::ExpandValid( void )
 {
@@ -842,7 +842,7 @@ void CExpressionToolWorkspace::ExpandValid( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CExpressionToolWorkspace::CountSelectedSamples( void )
@@ -901,7 +901,7 @@ void CExpressionToolWorkspace::MoveSelectedSamples( float dfdx, float dfdy, bool
 				sample->value = clamp( sample->value, 0.0f, 1.0f );
 			}
 		}
-				
+
 		track->Resort();
 
 		item->DrawSelf();
@@ -948,7 +948,7 @@ void CExpressionToolWorkspace::DeleteSelectedSamples( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExpressionToolWorkspace::DeselectAll( void )
 {
@@ -1028,7 +1028,7 @@ ExpressionTool::ExpressionTool( mxWindow *parent )
 	m_nClickedY			= 0;
 
 	m_hPrevCursor		= 0;
-	
+
 	m_nStartX			= 0;
 	m_nStartY			= 0;
 
@@ -1117,7 +1117,7 @@ void ExpressionTool::SetEvent( CChoreoEvent *event )
 			{
 				// Force re-lookup
 				event->SetTrackLookupSet( false );
-				
+
 				SetupFlexControllerTracks( hdr, event );
 
 				int itemCount = 0;
@@ -1141,7 +1141,7 @@ void ExpressionTool::SetEvent( CChoreoEvent *event )
 	}
 
 	DeselectAll();
-	
+
 	if ( event )
 	{
 		m_flLastDuration = event->GetDuration();
@@ -1161,7 +1161,7 @@ void ExpressionTool::SetEvent( CChoreoEvent *event )
 #pragma optimize( "g", on )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool ExpressionTool::HasCopyData( void )
@@ -1170,8 +1170,8 @@ bool ExpressionTool::HasCopyData( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *source - 
+// Purpose:
+// Input  : *source -
 //-----------------------------------------------------------------------------
 void ExpressionTool::Copy( CFlexAnimationTrack *source )
 {
@@ -1191,8 +1191,8 @@ void ExpressionTool::Copy( CFlexAnimationTrack *source )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *destination - 
+// Purpose:
+// Input  : *destination -
 //-----------------------------------------------------------------------------
 void ExpressionTool::Paste( CFlexAnimationTrack *destination )
 {
@@ -1219,7 +1219,7 @@ void ExpressionTool::Paste( CFlexAnimationTrack *destination )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CChoreoEvent *ExpressionTool::GetSafeEvent( void )
 {
@@ -1252,8 +1252,8 @@ CChoreoEvent *ExpressionTool::GetSafeEvent( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rcHandle - 
+// Purpose:
+// Input  : rcHandle -
 //-----------------------------------------------------------------------------
 void ExpressionTool::GetScrubHandleRect( RECT& rcHandle, bool clipped )
 {
@@ -1274,9 +1274,9 @@ void ExpressionTool::GetScrubHandleRect( RECT& rcHandle, bool clipped )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			rcHandle - 
+// Purpose:
+// Input  : drawHelper -
+//			rcHandle -
 //-----------------------------------------------------------------------------
 void ExpressionTool::DrawScrubHandle( CChoreoWidgetDrawHelper& drawHelper, RECT& rcHandle )
 {
@@ -1291,7 +1291,7 @@ void ExpressionTool::DrawScrubHandle( CChoreoWidgetDrawHelper& drawHelper, RECT&
 
 	drawHelper.DrawFilledRect( br, rcHandle );
 
-	// 
+	//
 	char sz[ 32 ];
 	sprintf( sz, "%.3f", m_flScrub );
 
@@ -1323,8 +1323,8 @@ void ExpressionTool::DrawScrubHandle( CChoreoWidgetDrawHelper& drawHelper, RECT&
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool ExpressionTool::IsMouseOverScrubHandle( mxEvent *event )
@@ -1344,7 +1344,7 @@ bool ExpressionTool::IsMouseOverScrubHandle( mxEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool ExpressionTool::IsProcessing( void )
@@ -1401,8 +1401,8 @@ void ExpressionTool::SetScrubTargetTime( float t )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dt - 
+// Purpose:
+// Input  : dt -
 //-----------------------------------------------------------------------------
 void ExpressionTool::ScrubThink( float dt, bool scrubbing )
 {
@@ -1477,7 +1477,7 @@ void ExpressionTool::redraw()
 		rcSelection.left = left;
 		rcSelection.right = right;
 		rcSelection.bottom = TRAY_HEIGHT;
-		
+
 		drawHelper.DrawFilledRect( RGB( 200, 220, 230 ), rcSelection );
 
 		drawHelper.DrawColoredLine( RGB( 100, 100, 255 ), PS_SOLID, 3, rcSelection.left, rcSelection.top, rcSelection.left, rcSelection.bottom );
@@ -1510,9 +1510,9 @@ void ExpressionTool::redraw()
 		}
 
 		rcText.left += 60;
-		
+
 		// Found it, write out description
-		// 
+		//
 		drawHelper.DrawColoredText( "Arial", 11, 900, RGB( 200, 150, 100 ), rcText,
 			"Event:  %s",
 			ev->GetName() );
@@ -1564,8 +1564,8 @@ void ExpressionTool::redraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *tag - 
+// Purpose:
+// Input  : *tag -
 //-----------------------------------------------------------------------------
 bool ExpressionTool::GetTimingTagRect( RECT& rcClient, CChoreoEvent *event, CFlexTimingTag *tag, RECT& rcTag )
 {
@@ -1603,9 +1603,9 @@ void ExpressionTool::GetWorkspaceLeftRight( int& left, int& right )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			my - 
+// Purpose:
+// Input  : mx -
+//			my -
 // Output : CFlexTimingTag
 //-----------------------------------------------------------------------------
 CFlexTimingTag *ExpressionTool::IsMouseOverTag( int mx, int my )
@@ -1651,8 +1651,8 @@ CFlexTimingTag *ExpressionTool::IsMouseOverTag( int mx, int my )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
+// Purpose:
+// Input  : drawHelper -
 //-----------------------------------------------------------------------------
 void ExpressionTool::DrawRelativeTags( CChoreoWidgetDrawHelper& drawHelper )
 {
@@ -1710,32 +1710,32 @@ void ExpressionTool::DrawRelativeTags( CChoreoWidgetDrawHelper& drawHelper )
 					if ( !tag )
 						continue;
 
-					//SendMessage( control, CB_ADDSTRING, 0, (LPARAM)va( "\"%s\" \"%s\"", tag->GetName(), e->GetParameters() ) ); 
+					//SendMessage( control, CB_ADDSTRING, 0, (LPARAM)va( "\"%s\" \"%s\"", tag->GetName(), e->GetParameters() ) );
 					bool clipped;
 					int tagx = GetPixelForTimeValue( tag->GetStartTime() - event->GetStartTime(), &clipped );
 					if ( clipped )
 						continue;
 
 					//drawHelper.DrawColoredLine( RGB( 180, 180, 220 ), PS_SOLID, 1, tagx, rcClient.top, tagx, rcClient.bottom );
-					
+
 					RECT rcMark;
 					rcMark = rcClient;
 					rcMark.top = rcClient.bottom - 6;
 					rcMark.left = tagx - 3;
 					rcMark.right = tagx + 3;
-					
+
 					drawHelper.DrawTriangleMarker( rcMark, RGB( 0, 100, 250 ) );
-					
+
 					RECT rcText;
 					rcText = rcMark;
 					rcText.top -= 10;
-					
+
 					int len = drawHelper.CalcTextWidth( "Arial", 9, FW_NORMAL, tag->GetName() );
 					rcText.left = tagx - len / 2;
 					rcText.right = rcText.left + len + 2;
-					
+
 					rcText.bottom = rcText.top + 10;
-					
+
 					drawHelper.DrawColoredText( "Arial", 9, FW_NORMAL, RGB( 0, 100, 200 ), rcText, tag->GetName() );
 
 				}
@@ -1755,11 +1755,11 @@ void ExpressionTool::DrawRelativeTags( CChoreoWidgetDrawHelper& drawHelper )
 			continue;
 
 		drawHelper.DrawTriangleMarker( rcMark, RGB( 250, 100, 0 ) );
-		
+
 		RECT rcText;
 		rcText = rcMark;
 		rcText.top -= 20;
-		
+
 		char text[ 256 ];
 		sprintf( text, "%s", tag->GetName() );
 		if ( tag->GetLocked() )
@@ -1770,16 +1770,16 @@ void ExpressionTool::DrawRelativeTags( CChoreoWidgetDrawHelper& drawHelper )
 		int len = drawHelper.CalcTextWidth( "Arial", 9, FW_NORMAL, text );
 		rcText.left = ( rcMark.left + rcMark.right ) / 2 - len / 2;
 		rcText.right = rcText.left + len + 2;
-		
+
 		rcText.bottom = rcText.top + 10;
-		
+
 		drawHelper.DrawColoredText( "Arial", 9, FW_NORMAL, RGB( 200, 100, 0 ), rcText, text );
 
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ExpressionTool::ShowContextMenu( mxEvent *event, bool include_track_menus )
 {
@@ -1807,7 +1807,7 @@ void ExpressionTool::ShowContextMenu( mxEvent *event, bool include_track_menus )
 		{
 			pop->add( va( "Undo %s", g_pChoreoView->GetUndoDescription() ), IDC_UNDO_FA );
 		}
-		
+
 		if ( current <= total - 1 )
 		{
 			pop->add( va( "Redo %s", g_pChoreoView->GetRedoDescription() ), IDC_REDO_FA );
@@ -1841,7 +1841,7 @@ void ExpressionTool::ShowContextMenu( mxEvent *event, bool include_track_menus )
 	pop->addSeparator();
 
 	pop->add( va( "Enable all valid" ), IDC_ENABLE_ALL_VALID );
-	
+
 	if ( item && track )
 	{
 		if ( item->IsActive() )
@@ -1935,7 +1935,7 @@ void ExpressionTool::ShowContextMenu( mxEvent *event, bool include_track_menus )
 	{
 		mxPopupMenu *selectionMenu = new mxPopupMenu();
 
-		if ( bMouseOverSelection ) 
+		if ( bMouseOverSelection )
 		{
 			selectionMenu->add( "Copy samples", IDC_ET_SELECTION_COPY );
 		}
@@ -1971,7 +1971,7 @@ void ExpressionTool::ShowContextMenu( mxEvent *event, bool include_track_menus )
 	flexmenu->add( "Copy from sliders", IDC_COPY_FROM_FLEX );
 	pop->addMenu( "Flex", flexmenu );
 
-	pop->add( "Create expression...", IDC_NEW_EXPRESSION_FROM_FLEXANIMATION ); 
+	pop->add( "Create expression...", IDC_NEW_EXPRESSION_FROM_FLEXANIMATION );
 
 	CChoreoEvent *e = GetSafeEvent();
 	if ( e )
@@ -1996,7 +1996,7 @@ void ExpressionTool::ShowContextMenu( mxEvent *event, bool include_track_menus )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ExpressionTool::DrawFocusRect( void )
 {
@@ -2032,10 +2032,10 @@ float ExpressionTool::GetTimeForClickedPos( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dragtype - 
-//			startx - 
-//			cursor - 
+// Purpose:
+// Input  : dragtype -
+//			startx -
+//			cursor -
 //-----------------------------------------------------------------------------
 void ExpressionTool::StartDragging( int dragtype, int startx, int starty, HCURSOR cursor )
 {
@@ -2044,7 +2044,7 @@ void ExpressionTool::StartDragging( int dragtype, int startx, int starty, HCURSO
 	m_nLastX	= startx;
 	m_nStartY	= starty;
 	m_nLastY	= starty;
-	
+
 	if ( m_hPrevCursor )
 	{
 		SetCursor( m_hPrevCursor );
@@ -2117,7 +2117,7 @@ void ExpressionTool::StartDragging( int dragtype, int startx, int starty, HCURSO
 	{
 		AddFocusRect( rcStart );
 	}
-	
+
 	DrawFocusRect();
 }
 
@@ -2300,7 +2300,7 @@ int	ExpressionTool::handleEvent( mxEvent *event )
 				ShowContextMenu( event, false );
 				return iret;
 			}
-		
+
 			if ( m_nDragType == DRAGTYPE_NONE )
 			{
 				if ( IsMouseOverScrubHandle( event ) )
@@ -2797,7 +2797,7 @@ int	ExpressionTool::handleEvent( mxEvent *event )
 			TimelineItem *item = m_pWorkspace->GetClickedItem();
 			if ( item )
 			{
-				iret = item->handleEvent( event );					
+				iret = item->handleEvent( event );
 			}
 
 			if ( !iret )
@@ -2821,8 +2821,8 @@ int	ExpressionTool::handleEvent( mxEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : false - 
+// Purpose:
+// Input  : false -
 //-----------------------------------------------------------------------------
 void ExpressionTool::LayoutItems( bool force /*= false*/ )
 {
@@ -2830,8 +2830,8 @@ void ExpressionTool::LayoutItems( bool force /*= false*/ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 //-----------------------------------------------------------------------------
 void ExpressionTool::AddFlexTimingTag( int mx )
 {
@@ -2863,7 +2863,7 @@ void ExpressionTool::AddFlexTimingTag( int mx )
 		Con_ErrorPrintf( "Timing Tag Name:  No name entered!\n" );
 		return;
 	}
-	
+
 	// Convert click to frac
 	float t = GetTimeValueForMouse( mx );
 	float frac = 0.0f;
@@ -2897,7 +2897,7 @@ void ExpressionTool::DeleteFlexTimingTag( int mx, int my )
 	CFlexTimingTag *tag = IsMouseOverTag( mx, my );
 	if ( !tag )
 		return;
-	
+
 	g_pChoreoView->SetDirty( true );
 
 	g_pChoreoView->PushUndo( "Delete Timing Tag" );
@@ -3004,41 +3004,41 @@ void ExpressionTool::CalcBounds( int movetype )
 			rcClient.bottom = TRAY_HEIGHT;
 
 			CFlexTimingTag *tag = IsMouseOverTag( m_nStartX, m_nStartY );
-			if ( tag && 
+			if ( tag &&
 				tag->GetOwner() )
 			{
 				CChoreoEvent *e = tag->GetOwner();
-				
+
 				float st = e->GetStartTime();
 				float ed = e->GetEndTime();
-				
+
 				if ( ed > st )
 				{
-					
-					
+
+
 					// Find previous tag, if any
 					CFlexTimingTag *prev = NULL;
 					CFlexTimingTag *next = NULL;
-					
+
 					for ( int i = 0; i < e->GetNumTimingTags(); i++ )
 					{
 						CFlexTimingTag *test = e->GetTimingTag( i );
 						if ( test != tag )
 							continue;
-						
+
 						// Found it
 						if ( i > 0 )
 						{
 							prev = e->GetTimingTag( i - 1 );
 						}
-						
+
 						if ( i + 1  < e->GetNumTimingTags() )
 						{
 							next = e->GetTimingTag( i + 1 );
 						}
 						break;
 					}
-					
+
 					if ( prev )
 					{
 						// Compute x pixel of prev tag
@@ -3046,11 +3046,11 @@ void ExpressionTool::CalcBounds( int movetype )
 						if ( frac >= 0.0f && frac <= 1.0f )
 						{
 							int tagx = rcClient.left + (int)( frac * (float)( rcClient.right - rcClient.left ) );
-							
+
 							m_nMinX = max( m_nMinX, tagx + 5 );
 						}
 					}
-					
+
 					if ( next )
 					{
 						// Compute x pixel of next tag
@@ -3070,9 +3070,9 @@ void ExpressionTool::CalcBounds( int movetype )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *tag - 
-//			newposition - 
+// Purpose:
+// Input  : *tag -
+//			newposition -
 //-----------------------------------------------------------------------------
 void ExpressionTool::ResampleControlPoints( CFlexTimingTag *tag, float newposition )
 {
@@ -3084,18 +3084,18 @@ void ExpressionTool::ResampleControlPoints( CFlexTimingTag *tag, float newpositi
 
 	float leftedge = 0.0f;
 	float rightedge = duration;
-	
+
 	// Find neighboring locked tags, if any
 	CFlexTimingTag *prev = NULL;
 	CFlexTimingTag *next = NULL;
-	
+
 	int i;
 	for ( i = 0; i < e->GetNumTimingTags(); i++ )
 	{
 		CFlexTimingTag *test = e->GetTimingTag( i );
 		if ( test != tag )
 			continue;
-		
+
 		// Found it
 		if ( i > 0 )
 		{
@@ -3115,7 +3115,7 @@ void ExpressionTool::ResampleControlPoints( CFlexTimingTag *tag, float newpositi
 				i1--;
 			}
 		}
-		
+
 		if ( i + 1  < e->GetNumTimingTags() )
 		{
 			int i1 = i + 1;
@@ -3159,14 +3159,14 @@ void ExpressionTool::ResampleControlPoints( CFlexTimingTag *tag, float newpositi
 	float newrightrange = rightedge - newpivot;
 
 	if ( oldleftrange <= 0.0f ||
-		 oldrightrange <= 0.0f ||
-		 newleftrange <= 0.0f ||
-		 newrightrange <= 0.0f )
+		oldrightrange <= 0.0f ||
+		newleftrange <= 0.0f ||
+		newrightrange <= 0.0f )
 	{
 		Con_Printf( "Range problem!!! avoiding division by zero\n" );
 		return;
 	}
-		 
+
 	for ( i = 0 ; i < e->GetNumFlexAnimationTracks(); i++ )
 	{
 		CFlexAnimationTrack *track = e->GetFlexAnimationTrack( i );
@@ -3212,7 +3212,7 @@ void ExpressionTool::ResampleControlPoints( CFlexTimingTag *tag, float newpositi
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ExpressionTool::OnNewExpression( void )
 {
@@ -3304,7 +3304,7 @@ void ExpressionTool::OnNewExpression( void )
 	}
 
 	if ( ( strlen( params.m_szDescription ) <= 0 ) ||
-   	   !stricmp( params.m_szDescription, "description" ) )
+		!stricmp( params.m_szDescription, "description" ) )
 	{
 		Con_ErrorPrintf( "You must type in a valid description\n" );
 		return;
@@ -3370,7 +3370,7 @@ void ExpressionTool::OnCopyToFlex( float scenetime, bool isEdited )
 	CExpClass *active = expressions->GetActiveClass();
 	if ( active )
 	{
-		
+
 		int index = active->GetSelectedExpression();
 		if ( index != -1 )
 		{
@@ -3462,7 +3462,7 @@ void ExpressionTool::OnSetSingleKeyFromFlex( char const *sliderName )
 		return;
 
 	float scenetime = g_pChoreoView->GetScene()->GetTime();
-	
+
 	if ( scenetime < e->GetStartTime() || scenetime > e->GetEndTime() )
 		return;
 
@@ -3541,7 +3541,7 @@ void ExpressionTool::OnSetSingleKeyFromFlex( char const *sliderName )
 					CExpressionSample *s = track->GetSample( j, side );
 					s->value = normalized;
 				}
-				
+
 				track->SetTrackActive( true );
 
 				break;
@@ -3669,7 +3669,7 @@ bool ExpressionTool::SetFlexAnimationTrackFromExpression( int mx, int my, CExpCl
 	}
 
 	float t = GetTimeValueForMouse( (short)pt.x );
-	
+
 	// Get spline intensity for controller
 	// Get spline intensity for controller
 	float relativetime = t;
@@ -3706,7 +3706,7 @@ bool ExpressionTool::SetFlexAnimationTrackFromExpression( int mx, int my, CExpCl
 			{
 
 				//Con_Printf( "%s %i(side %i):  amount %f inf %f\n", track->GetFlexControllerName(), j, side, s, inf );
-				
+
 				float mag, leftright;
 
 				if (leftval < rightval)
@@ -3872,7 +3872,7 @@ void ExpressionTool::ForceScrubPosition( float frac )
 {
 	m_flScrub = frac;
 	m_flScrubTarget = frac;
-	
+
 	CChoreoEvent *e = GetSafeEvent();
 	if ( e )
 	{
@@ -3913,8 +3913,8 @@ void ExpressionTool::GetMouseOverPos( int &x, int& y )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rcPos - 
+// Purpose:
+// Input  : rcPos -
 //-----------------------------------------------------------------------------
 void ExpressionTool::GetMouseOverPosRect( RECT& rcPos )
 {
@@ -3925,9 +3925,9 @@ void ExpressionTool::GetMouseOverPosRect( RECT& rcPos )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			rcPos - 
+// Purpose:
+// Input  : drawHelper -
+//			rcPos -
 //-----------------------------------------------------------------------------
 void ExpressionTool::DrawMouseOverPos( CChoreoWidgetDrawHelper& drawHelper, RECT& rcPos )
 {
@@ -3942,7 +3942,7 @@ void ExpressionTool::DrawMouseOverPos( CChoreoWidgetDrawHelper& drawHelper, RECT
 	float snapped = FacePoser_SnapTime( t );
 
 	// Found it, write out description
-	// 
+	//
 	char sz[ 128 ];
 	if ( t != snapped )
 	{
@@ -3962,7 +3962,7 @@ void ExpressionTool::DrawMouseOverPos( CChoreoWidgetDrawHelper& drawHelper, RECT
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ExpressionTool::DrawMouseOverPos()
 {
@@ -3996,9 +3996,9 @@ void ExpressionTool::DeselectAll( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : start - 
-//			end - 
+// Purpose:
+// Input  : start -
+//			end -
 //-----------------------------------------------------------------------------
 void ExpressionTool::SelectPoints( float starttime, float endtime )
 {
@@ -4069,9 +4069,9 @@ void ExpressionTool::FinishMoveSelectionEnd( int startx, int mx )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : startx - 
-//			mx - 
+// Purpose:
+// Input  : startx -
+//			mx -
 //-----------------------------------------------------------------------------
 void ExpressionTool::FinishSelect( int startx, int mx )
 {
@@ -4086,9 +4086,9 @@ void ExpressionTool::FinishSelect( int startx, int mx )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			my - 
+// Purpose:
+// Input  : mx -
+//			my -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool ExpressionTool::IsMouseOverPoints( int mx, int my )
@@ -4107,9 +4107,9 @@ bool ExpressionTool::IsMouseOverPoints( int mx, int my )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			my - 
+// Purpose:
+// Input  : mx -
+//			my -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool ExpressionTool::IsMouseOverSelection( int mx, int my )
@@ -4123,7 +4123,7 @@ bool ExpressionTool::IsMouseOverSelection( int mx, int my )
 	float t = GetTimeValueForMouse( mx );
 
 	if ( t >= m_flSelection[ 0 ] &&
-		 t <= m_flSelection[ 1 ] )
+		t <= m_flSelection[ 1 ] )
 	{
 		return true;
 	}
@@ -4180,13 +4180,13 @@ bool ExpressionTool::IsMouseOverSelectionEndEdge( mxEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &rc - 
+// Purpose:
+// Input  : &rc -
 //-----------------------------------------------------------------------------
 void ExpressionTool::GetWorkspaceRect( RECT &rc )
 {
 	GetClientRect( (HWND)getHandle(), &rc );
-	
+
 	rc.top = TRAY_HEIGHT - 17;
 	rc.bottom = TRAY_HEIGHT - 1;
 	//InflateRect( &rc, -1, -1 );
@@ -4211,7 +4211,7 @@ void ExpressionTool::AddFocusRect( RECT& rc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int ExpressionTool::ComputeHPixelsNeeded( void )
@@ -4229,7 +4229,7 @@ int ExpressionTool::ComputeHPixelsNeeded( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ExpressionTool::RepositionHSlider( void )
 {
@@ -4256,7 +4256,7 @@ void ExpressionTool::RepositionHSlider( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float ExpressionTool::GetPixelsPerSecond( void )
@@ -4265,8 +4265,8 @@ float ExpressionTool::GetPixelsPerSecond( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
+// Purpose:
+// Input  : x -
 //-----------------------------------------------------------------------------
 void ExpressionTool::MoveTimeSliderToPos( int x )
 {
@@ -4277,7 +4277,7 @@ void ExpressionTool::MoveTimeSliderToPos( int x )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ExpressionTool::InvalidateLayout( void )
 {
@@ -4295,15 +4295,15 @@ void ExpressionTool::InvalidateLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : time - 
-//			*clipped - 
+// Purpose:
+// Input  : time -
+//			*clipped -
 // Output : int
 //-----------------------------------------------------------------------------
 int ExpressionTool::GetPixelForTimeValue( float time, bool *clipped /*=NULL*/ )
 {
 	int left, right;
-	
+
 	GetWorkspaceLeftRight( left, right );
 
 	if ( clipped )
@@ -4355,9 +4355,9 @@ void ExpressionTool::OnChangeScale( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : st - 
-//			ed - 
+// Purpose:
+// Input  : st -
+//			ed -
 //-----------------------------------------------------------------------------
 void ExpressionTool::GetStartAndEndTime( float& st, float& ed )
 {
@@ -4370,13 +4370,13 @@ void ExpressionTool::GetStartAndEndTime( float& st, float& ed )
 	}
 	else
 	{
-        ed = st + (float)( right - left ) / GetPixelsPerSecond();
+	ed = st + (float)( right - left ) / GetPixelsPerSecond();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : float
 //-----------------------------------------------------------------------------
 float ExpressionTool::GetEventEndTime()
@@ -4390,15 +4390,15 @@ float ExpressionTool::GetEventEndTime()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			clip - 
+// Purpose:
+// Input  : mx -
+//			clip -
 // Output : float
 //-----------------------------------------------------------------------------
 float ExpressionTool::GetTimeValueForMouse( int mx, bool clip /*=false*/)
 {
 	int left, right;
-	
+
 	GetWorkspaceLeftRight( left, right );
 
 	float st, ed;
@@ -4454,8 +4454,8 @@ void ExpressionTool::OnSortByName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *item - 
+// Purpose:
+// Input  : *item -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool ExpressionTool::IsFocusItem( TimelineItem *item )
@@ -4466,7 +4466,7 @@ bool ExpressionTool::IsFocusItem( TimelineItem *item )
 //-----------------------------------------------------------------------------
 // Purpose: Delete a vertical column of samples between the selection
 // markers.  If excise_time is true, shifts remaining samples left
-// Input  : excise_time - 
+// Input  : excise_time -
 //-----------------------------------------------------------------------------
 void ExpressionTool::OnDeleteSelection( bool excise_time )
 {
@@ -4510,7 +4510,7 @@ void ExpressionTool::OnDeleteSelection( bool excise_time )
 			if ( !excise_time )
 				continue;
 
-	
+
 			// Now shift things after m_flSelection[0] to the left
 			for ( i = track->GetNumSamples( t ) - 1; i >= 0 ; i-- )
 			{
@@ -4533,7 +4533,7 @@ void ExpressionTool::OnDeleteSelection( bool excise_time )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ExpressionTool::OnResetItemSize()
 {
@@ -4547,7 +4547,7 @@ void ExpressionTool::OnResetItemSize()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ExpressionTool::OnResetAllItemSizes()
 {
@@ -4564,7 +4564,7 @@ void ExpressionTool::OnResetAllItemSizes()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ExpressionTool::OnScaleSamples()
 {
@@ -4654,7 +4654,7 @@ void ExpressionTool::OnEdgeProperties()
 	}
 
 	char const *undotext = "Change Edge Properties";
-	
+
 	g_pChoreoView->SetDirty( true );
 	g_pChoreoView->PushUndo( undotext );
 

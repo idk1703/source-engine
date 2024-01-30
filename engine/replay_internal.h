@@ -35,7 +35,7 @@ extern IReplayPerformanceManager	*g_pReplayPerformanceManager;
 extern IReplayPerformanceController	*g_pReplayPerformanceController;
 extern IReplayMovieRenderer			*g_pReplayMovieRenderer;
 #endif
- 
+
 //----------------------------------------------------------------------------------------
 
 #define	SETUP_CVAR_REF( _cvar )	ConVarRef _cvar( #_cvar );	Assert( _cvar.IsValid() );

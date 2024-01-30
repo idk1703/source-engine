@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,7 +21,7 @@ class CNavigationPanel;
 class CExLabel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CFullscreenStorePreviewItem : public EditablePanel
 {
@@ -60,7 +60,7 @@ private:
 	{
 		Stats_t() { Clear(); }
 		void Clear() { V_memset( this, 0, sizeof( Stats_t ) ); }
-		
+
 		float			m_flRotationTime;
 	}
 	m_Stats;
@@ -90,7 +90,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFStorePreviewItemPanel2 : public CTFStorePreviewItemPanelBase
 {
@@ -101,7 +101,7 @@ public:
 	virtual void	PreviewItem( int iClass, CEconItemView *pItem, const econ_store_entry_t* pEntry=NULL ) OVERRIDE;
 	void			PreviewItemCopy( int iClass, CEconItemView *pItem, const econ_store_entry_t* pEntry=NULL );
 	virtual void	SetState( preview_state_t iState );
-	
+
 	MESSAGE_FUNC_PARAMS( OnClassIconSelected, "ClassIconSelected", data );
 	MESSAGE_FUNC( OnHideClassIconMouseover, "HideClassIconMouseover" );
 	MESSAGE_FUNC_PARAMS( OnShowClassIconMouseover, "ShowClassIconMouseover", data );

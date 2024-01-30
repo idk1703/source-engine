@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -139,7 +139,7 @@ void CheckCheatCodes()
 			++iCode;
 			++iLogIndex;
 		}
-		
+
 		if ( iCode == pCheatCode->iCodeLength )
 		{
 			// Every part of the code was correct

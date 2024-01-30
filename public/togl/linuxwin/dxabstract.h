@@ -38,7 +38,7 @@
 
 // turn this on to get refcount logging from IUnknown
 #define	IUNKNOWN_ALLOC_SPEW 0
-#define	IUNKNOWN_ALLOC_SPEW_MARK_ALL 0	
+#define	IUNKNOWN_ALLOC_SPEW_MARK_ALL 0
 
 
 TOGL_INTERFACE void toglGetClientRect( VD3DHWND hWnd, RECT *destRect );
@@ -48,7 +48,7 @@ struct TOGL_CLASS IUnknown
 {
 	int	m_refcount[2];
 	bool m_mark;
-		
+
 	IUnknown()
 	{
 		m_refcount[0] = 1;
@@ -62,7 +62,7 @@ struct TOGL_CLASS IUnknown
 			}
 		#endif
 	};
-				
+
 	virtual	~IUnknown()
 	{
 		#if IUNKNOWN_ALLOC_SPEW
@@ -72,13 +72,13 @@ struct TOGL_CLASS IUnknown
 			}
 		#endif
 	};
-		
+
 	void	AddRef( int which=0, char *comment = NULL )
 	{
 		Assert( which >= 0 );
 		Assert( which < 2 );
 		m_refcount[which]++;
-			
+
 		#if IUNKNOWN_ALLOC_SPEW
 			if (m_mark)
 			{
@@ -90,21 +90,21 @@ struct TOGL_CLASS IUnknown
 			}
 		#endif
 	};
-		
+
 	ULONG __stdcall	Release( int which=0, char *comment = NULL )
 	{
 		Assert( which >= 0 );
 		Assert( which < 2 );
-			
+
 		//int oldrefcs[2] = { m_refcount[0], m_refcount[1] };
 		bool deleting = false;
-			
+
 		m_refcount[which]--;
 		if ( (!m_refcount[0]) && (!m_refcount[1]) )
 		{
 			deleting = true;
 		}
-			
+
 		#if IUNKNOWN_ALLOC_SPEW
 			if (m_mark)
 			{
@@ -130,7 +130,7 @@ struct TOGL_CLASS IUnknown
 			return m_refcount[0];
 		}
 	};
-		
+
 	void	SetMark( bool markValue, char *comment=NULL )
 	{
 		#if IUNKNOWN_ALLOC_SPEW
@@ -154,7 +154,7 @@ struct TOGL_CLASS IDirect3DResource9 : public IUnknown
 {
 	IDirect3DDevice9	*m_device;		// parent device
 	D3DRESOURCETYPE		m_restype;
-	
+
 	DWORD SetPriority(DWORD PriorityNew);
 };
 
@@ -170,7 +170,7 @@ struct TOGL_CLASS IDirect3DBaseTexture9 : public IDirect3DResource9						// "A T
 };
 
 struct TOGL_CLASS IDirect3DTexture9 : public IDirect3DBaseTexture9							// "Texture 2D"
-{	
+{
 	IDirect3DSurface9 *m_surfZero;				// surf of top level.
 	virtual ~IDirect3DTexture9();
 	HRESULT TOGLMETHODCALLTYPE LockRect(UINT Level,D3DLOCKED_RECT* pLockedRect,CONST RECT* pRect,DWORD Flags);
@@ -198,14 +198,14 @@ struct TOGL_CLASS IDirect3DVolumeTexture9 : public IDirect3DBaseTexture9					// 
 
 
 // for the moment, a "D3D surface" is modeled as a GLM tex, a face, and a mip.
-// no Create method, these are filled in by the various create surface methods.	
+// no Create method, these are filled in by the various create surface methods.
 
 struct TOGL_CLASS IDirect3DSurface9 : public IDirect3DResource9
 {
 	virtual ~IDirect3DSurface9();
 	HRESULT TOGLMETHODCALLTYPE LockRect(D3DLOCKED_RECT* pLockedRect,CONST RECT* pRect,DWORD Flags);
 	HRESULT TOGLMETHODCALLTYPE UnlockRect();
-	 HRESULT TOGLMETHODCALLTYPE GetDesc(D3DSURFACE_DESC *pDesc);
+	HRESULT TOGLMETHODCALLTYPE GetDesc(D3DSURFACE_DESC *pDesc);
 
 	D3DSURFACE_DESC			m_desc;
 	CGLMTex					*m_tex;
@@ -237,9 +237,9 @@ struct TOGL_CLASS IDirect3DVertexDeclaration9 : public IUnknown
 	IDirect3DDevice9		*m_device;
 	uint					m_elemCount;
 	D3DVERTEXELEMENT9_GL	m_elements[ MAX_D3DVERTEXELEMENTS ];
-		
+
 	uint8					m_VertexAttribDescToStreamIndex[256];
-				
+
 	virtual					~IDirect3DVertexDeclaration9();
 };
 
@@ -248,16 +248,16 @@ struct TOGL_CLASS IDirect3DQuery9 : public IDirect3DResource9	//was IUnknown
 	D3DQUERYTYPE			m_type;		// D3DQUERYTYPE_OCCLUSION or D3DQUERYTYPE_EVENT
 	GLMContext				*m_ctx;
 	CGLMQuery				*m_query;
-	
+
 	uint					m_nIssueStartThreadID, m_nIssueEndThreadID;
 	uint					m_nIssueStartDrawCallIndex, m_nIssueEndDrawCallIndex;
 	uint					m_nIssueStartFrameIndex, m_nIssueEndFrameIndex;
 	uint					m_nIssueStartQueryCreationCounter, m_nIssueEndQueryCreationCounter;
-			
+
 	virtual					~IDirect3DQuery9();
 
-    HRESULT					Issue(DWORD dwIssueFlags);
-    HRESULT					GetData(void* pData,DWORD dwSize,DWORD dwGetDataFlags);
+	HRESULT					Issue(DWORD dwIssueFlags);
+	HRESULT					GetData(void* pData,DWORD dwSize,DWORD dwGetDataFlags);
 };
 
 struct TOGL_CLASS IDirect3DVertexBuffer9 : public IDirect3DResource9	//was IUnknown
@@ -265,10 +265,10 @@ struct TOGL_CLASS IDirect3DVertexBuffer9 : public IDirect3DResource9	//was IUnkn
 	GLMContext				*m_ctx;
 	CGLMBuffer				*m_vtxBuffer;
 	D3DVERTEXBUFFER_DESC	m_vtxDesc;		// to satisfy GetDesc
-		
+
 	virtual					~IDirect3DVertexBuffer9();
-    HRESULT					Lock(UINT OffsetToLock,UINT SizeToLock,void** ppbData,DWORD Flags);
-    HRESULT					Unlock();
+	HRESULT					Lock(UINT OffsetToLock,UINT SizeToLock,void** ppbData,DWORD Flags);
+	HRESULT					Unlock();
 	void					UnlockActualSize( uint nActualSize, const void *pActualData = NULL );
 };
 
@@ -277,14 +277,14 @@ struct TOGL_CLASS IDirect3DIndexBuffer9 : public IDirect3DResource9	//was IUnkno
 	GLMContext				*m_ctx;
 	CGLMBuffer				*m_idxBuffer;
 	D3DINDEXBUFFER_DESC		m_idxDesc;		// to satisfy GetDesc
-		
+
 	virtual					~IDirect3DIndexBuffer9();
 
-    HRESULT					Lock(UINT OffsetToLock,UINT SizeToLock,void** ppbData,DWORD Flags);
-    HRESULT					Unlock();
+	HRESULT					Lock(UINT OffsetToLock,UINT SizeToLock,void** ppbData,DWORD Flags);
+	HRESULT					Unlock();
 	void					UnlockActualSize( uint nActualSize, const void *pActualData = NULL );
 
-    HRESULT					GetDesc(D3DINDEXBUFFER_DESC *pDesc);
+	HRESULT					GetDesc(D3DINDEXBUFFER_DESC *pDesc);
 };
 
 struct TOGL_CLASS IDirect3DPixelShader9 : public IDirect3DResource9	//was IUnknown
@@ -295,7 +295,7 @@ struct TOGL_CLASS IDirect3DPixelShader9 : public IDirect3DResource9	//was IUnkno
 												// this can help FlushSamplers avoid SRGB flipping on textures not being referenced...
 	uint					m_pixSamplerTypes;  // SAMPLER_TYPE_2D, etc.
 	uint					m_pixFragDataMask;  // (1<<n) mask of gl_FragData[n] referenced by this pixel shader
-	
+
 	virtual					~IDirect3DPixelShader9();
 };
 
@@ -306,7 +306,7 @@ struct TOGL_CLASS IDirect3DVertexShader9 : public IDirect3DResource9	//was IUnkn
 	uint					m_vtxHighWaterBone;
 	unsigned char			m_vtxAttribMap[16];	// high nibble is usage, low nibble is usageindex, array position is attrib number
 	uint					m_maxVertexAttrs;
-	
+
 	virtual					~IDirect3DVertexShader9();
 };
 
@@ -328,9 +328,9 @@ struct TOGL_CLASS ID3DXMatrixStack //: public IUnknown
 	ID3DXMatrixStack();
 	void  AddRef( int which=0, char *comment = NULL );
 	ULONG Release( int which=0, char *comment = NULL );
-	
+
 	HRESULT	Create( void );
-	
+
 	D3DXMATRIX* GetTop();
 	void Push();
 	void Pop();
@@ -371,7 +371,7 @@ struct RenderTargetState_t
 		return false;
 	}
 
-	static inline bool LessFunc( const RenderTargetState_t &lhs, const RenderTargetState_t &rhs ) 
+	static inline bool LessFunc( const RenderTargetState_t &lhs, const RenderTargetState_t &rhs )
 	{
 		COMPILE_TIME_ASSERT( sizeof( lhs.m_pRenderTargets[0] ) == sizeof( uint32 ) );
 		uint64 lhs0 = reinterpret_cast<const uint64 *>(lhs.m_pRenderTargets)[0];
@@ -419,109 +419,109 @@ struct TOGL_CLASS IDirect3DDevice9 : public IUnknown
 
 	IDirect3DDevice9();
 	virtual	~IDirect3DDevice9();
-	
+
 	// Create call invoked from IDirect3D9
 	HRESULT	TOGLMETHODCALLTYPE Create( IDirect3DDevice9Params *params );
-	
+
 	//
 	// Basics
 	//
 	HRESULT TOGLMETHODCALLTYPE Reset(D3DPRESENT_PARAMETERS* pPresentationParameters);
 	HRESULT TOGLMETHODCALLTYPE SetViewport(CONST D3DVIEWPORT9* pViewport);
 	HRESULT TOGLMETHODCALLTYPE GetViewport(D3DVIEWPORT9* pViewport);
-    HRESULT TOGLMETHODCALLTYPE BeginScene();
+	HRESULT TOGLMETHODCALLTYPE BeginScene();
 	HRESULT TOGLMETHODCALLTYPE Clear(DWORD Count,CONST D3DRECT* pRects,DWORD Flags,D3DCOLOR Color,float Z,DWORD Stencil);
-    HRESULT TOGLMETHODCALLTYPE EndScene();
-    HRESULT TOGLMETHODCALLTYPE Present(CONST RECT* pSourceRect,CONST RECT* pDestRect,VD3DHWND hDestWindowOverride,CONST RGNDATA* pDirtyRegion);
+	HRESULT TOGLMETHODCALLTYPE EndScene();
+	HRESULT TOGLMETHODCALLTYPE Present(CONST RECT* pSourceRect,CONST RECT* pDestRect,VD3DHWND hDestWindowOverride,CONST RGNDATA* pDirtyRegion);
 
 	// textures
 	HRESULT TOGLMETHODCALLTYPE CreateTexture(UINT Width,UINT Height,UINT Levels,DWORD Usage,D3DFORMAT Format,D3DPOOL Pool,IDirect3DTexture9** ppTexture,VD3DHANDLE* pSharedHandle, char *debugLabel=NULL);
-    HRESULT TOGLMETHODCALLTYPE CreateCubeTexture(UINT EdgeLength,UINT Levels,DWORD Usage,D3DFORMAT Format,D3DPOOL Pool,IDirect3DCubeTexture9** ppCubeTexture,VD3DHANDLE* pSharedHandle, char *debugLabel=NULL);
-    HRESULT TOGLMETHODCALLTYPE CreateVolumeTexture(UINT Width,UINT Height,UINT Depth,UINT Levels,DWORD Usage,D3DFORMAT Format,D3DPOOL Pool,IDirect3DVolumeTexture9** ppVolumeTexture,VD3DHANDLE* pSharedHandle, char *debugLabel=NULL);
-	
+	HRESULT TOGLMETHODCALLTYPE CreateCubeTexture(UINT EdgeLength,UINT Levels,DWORD Usage,D3DFORMAT Format,D3DPOOL Pool,IDirect3DCubeTexture9** ppCubeTexture,VD3DHANDLE* pSharedHandle, char *debugLabel=NULL);
+	HRESULT TOGLMETHODCALLTYPE CreateVolumeTexture(UINT Width,UINT Height,UINT Depth,UINT Levels,DWORD Usage,D3DFORMAT Format,D3DPOOL Pool,IDirect3DVolumeTexture9** ppVolumeTexture,VD3DHANDLE* pSharedHandle, char *debugLabel=NULL);
+
 	FORCEINLINE HRESULT TOGLMETHODCALLTYPE SetTexture(DWORD Stage,IDirect3DBaseTexture9* pTexture);
 	HRESULT TOGLMETHODCALLTYPE SetTextureNonInline(DWORD Stage,IDirect3DBaseTexture9* pTexture);
 
-    HRESULT TOGLMETHODCALLTYPE GetTexture(DWORD Stage,IDirect3DBaseTexture9** ppTexture);
+	HRESULT TOGLMETHODCALLTYPE GetTexture(DWORD Stage,IDirect3DBaseTexture9** ppTexture);
 
 	// render targets, color and depthstencil, surfaces, blit
-    HRESULT TOGLMETHODCALLTYPE CreateRenderTarget(UINT Width,UINT Height,D3DFORMAT Format,D3DMULTISAMPLE_TYPE MultiSample,DWORD MultisampleQuality,BOOL Lockable,IDirect3DSurface9** ppSurface,VD3DHANDLE* pSharedHandle, char *debugLabel=NULL);
-    HRESULT TOGLMETHODCALLTYPE SetRenderTarget(DWORD RenderTargetIndex,IDirect3DSurface9* pRenderTarget);
-    HRESULT TOGLMETHODCALLTYPE GetRenderTarget(DWORD RenderTargetIndex,IDirect3DSurface9** ppRenderTarget);
+	HRESULT TOGLMETHODCALLTYPE CreateRenderTarget(UINT Width,UINT Height,D3DFORMAT Format,D3DMULTISAMPLE_TYPE MultiSample,DWORD MultisampleQuality,BOOL Lockable,IDirect3DSurface9** ppSurface,VD3DHANDLE* pSharedHandle, char *debugLabel=NULL);
+	HRESULT TOGLMETHODCALLTYPE SetRenderTarget(DWORD RenderTargetIndex,IDirect3DSurface9* pRenderTarget);
+	HRESULT TOGLMETHODCALLTYPE GetRenderTarget(DWORD RenderTargetIndex,IDirect3DSurface9** ppRenderTarget);
 
-    HRESULT TOGLMETHODCALLTYPE CreateOffscreenPlainSurface(UINT Width,UINT Height,D3DFORMAT Format,D3DPOOL Pool,IDirect3DSurface9** ppSurface,VD3DHANDLE* pSharedHandle);
+	HRESULT TOGLMETHODCALLTYPE CreateOffscreenPlainSurface(UINT Width,UINT Height,D3DFORMAT Format,D3DPOOL Pool,IDirect3DSurface9** ppSurface,VD3DHANDLE* pSharedHandle);
 
-    HRESULT TOGLMETHODCALLTYPE CreateDepthStencilSurface(UINT Width,UINT Height,D3DFORMAT Format,D3DMULTISAMPLE_TYPE MultiSample,DWORD MultisampleQuality,BOOL Discard,IDirect3DSurface9** ppSurface,VD3DHANDLE* pSharedHandle);
-    HRESULT TOGLMETHODCALLTYPE SetDepthStencilSurface(IDirect3DSurface9* pNewZStencil);
-    HRESULT TOGLMETHODCALLTYPE GetDepthStencilSurface(IDirect3DSurface9** ppZStencilSurface);
+	HRESULT TOGLMETHODCALLTYPE CreateDepthStencilSurface(UINT Width,UINT Height,D3DFORMAT Format,D3DMULTISAMPLE_TYPE MultiSample,DWORD MultisampleQuality,BOOL Discard,IDirect3DSurface9** ppSurface,VD3DHANDLE* pSharedHandle);
+	HRESULT TOGLMETHODCALLTYPE SetDepthStencilSurface(IDirect3DSurface9* pNewZStencil);
+	HRESULT TOGLMETHODCALLTYPE GetDepthStencilSurface(IDirect3DSurface9** ppZStencilSurface);
 
 	HRESULT TOGLMETHODCALLTYPE GetRenderTargetData(IDirect3DSurface9* pRenderTarget,IDirect3DSurface9* pDestSurface);	// ? is anyone using this ?
-    HRESULT TOGLMETHODCALLTYPE GetFrontBufferData(UINT iSwapChain,IDirect3DSurface9* pDestSurface);
-    HRESULT TOGLMETHODCALLTYPE StretchRect(IDirect3DSurface9* pSourceSurface,CONST RECT* pSourceRect,IDirect3DSurface9* pDestSurface,CONST RECT* pDestRect,D3DTEXTUREFILTERTYPE Filter);
+	HRESULT TOGLMETHODCALLTYPE GetFrontBufferData(UINT iSwapChain,IDirect3DSurface9* pDestSurface);
+	HRESULT TOGLMETHODCALLTYPE StretchRect(IDirect3DSurface9* pSourceSurface,CONST RECT* pSourceRect,IDirect3DSurface9* pDestSurface,CONST RECT* pDestRect,D3DTEXTUREFILTERTYPE Filter);
 
 	// pixel shaders
-    HRESULT TOGLMETHODCALLTYPE CreatePixelShader(CONST DWORD* pFunction,IDirect3DPixelShader9** ppShader, const char *pShaderName, char *debugLabel = NULL, const uint32 *pCentroidMask = NULL );
+	HRESULT TOGLMETHODCALLTYPE CreatePixelShader(CONST DWORD* pFunction,IDirect3DPixelShader9** ppShader, const char *pShaderName, char *debugLabel = NULL, const uint32 *pCentroidMask = NULL );
 
 	FORCEINLINE HRESULT TOGLMETHODCALLTYPE SetPixelShader(IDirect3DPixelShader9* pShader);
 	HRESULT TOGLMETHODCALLTYPE SetPixelShaderNonInline(IDirect3DPixelShader9* pShader);
-    
+
 	FORCEINLINE HRESULT TOGLMETHODCALLTYPE SetPixelShaderConstantF(UINT StartRegister,CONST float* pConstantData,UINT Vector4fCount);
 	HRESULT TOGLMETHODCALLTYPE SetPixelShaderConstantFNonInline(UINT StartRegister,CONST float* pConstantData,UINT Vector4fCount);
 
-    HRESULT TOGLMETHODCALLTYPE SetPixelShaderConstantB(UINT StartRegister,CONST BOOL* pConstantData,UINT  BoolCount);
-    HRESULT TOGLMETHODCALLTYPE SetPixelShaderConstantI(UINT StartRegister,CONST int* pConstantData,UINT Vector4iCount);
+	HRESULT TOGLMETHODCALLTYPE SetPixelShaderConstantB(UINT StartRegister,CONST BOOL* pConstantData,UINT  BoolCount);
+	HRESULT TOGLMETHODCALLTYPE SetPixelShaderConstantI(UINT StartRegister,CONST int* pConstantData,UINT Vector4iCount);
 
 	// vertex shaders
-    HRESULT TOGLMETHODCALLTYPE CreateVertexShader(CONST DWORD* pFunction,IDirect3DVertexShader9** ppShader, const char *pShaderName, char *debugLabel = NULL);
+	HRESULT TOGLMETHODCALLTYPE CreateVertexShader(CONST DWORD* pFunction,IDirect3DVertexShader9** ppShader, const char *pShaderName, char *debugLabel = NULL);
 
 	FORCEINLINE HRESULT TOGLMETHODCALLTYPE SetVertexShader(IDirect3DVertexShader9* pShader);
-    HRESULT TOGLMETHODCALLTYPE SetVertexShaderNonInline(IDirect3DVertexShader9* pShader);
-    
+	HRESULT TOGLMETHODCALLTYPE SetVertexShaderNonInline(IDirect3DVertexShader9* pShader);
+
 	FORCEINLINE HRESULT TOGLMETHODCALLTYPE SetVertexShaderConstantF(UINT StartRegister,CONST float* pConstantData,UINT Vector4fCount);
 	HRESULT TOGLMETHODCALLTYPE SetVertexShaderConstantFNonInline(UINT StartRegister,CONST float* pConstantData,UINT Vector4fCount);
 
-    FORCEINLINE HRESULT TOGLMETHODCALLTYPE SetVertexShaderConstantB(UINT StartRegister,CONST BOOL* pConstantData,UINT  BoolCount);
+	FORCEINLINE HRESULT TOGLMETHODCALLTYPE SetVertexShaderConstantB(UINT StartRegister,CONST BOOL* pConstantData,UINT  BoolCount);
 	HRESULT TOGLMETHODCALLTYPE SetVertexShaderConstantBNonInline(UINT StartRegister,CONST BOOL* pConstantData,UINT  BoolCount);
 
 	FORCEINLINE HRESULT TOGLMETHODCALLTYPE SetVertexShaderConstantI(UINT StartRegister,CONST int* pConstantData,UINT Vector4iCount);
-    HRESULT TOGLMETHODCALLTYPE SetVertexShaderConstantINonInline(UINT StartRegister,CONST int* pConstantData,UINT Vector4iCount);
+	HRESULT TOGLMETHODCALLTYPE SetVertexShaderConstantINonInline(UINT StartRegister,CONST int* pConstantData,UINT Vector4iCount);
 
 	// POSIX only - preheating for a specific vertex/pixel shader pair - trigger GLSL link inside GLM
 	HRESULT TOGLMETHODCALLTYPE LinkShaderPair( IDirect3DVertexShader9* vs, IDirect3DPixelShader9* ps );
 	HRESULT TOGLMETHODCALLTYPE ValidateShaderPair( IDirect3DVertexShader9* vs, IDirect3DPixelShader9* ps );
 	HRESULT TOGLMETHODCALLTYPE QueryShaderPair( int index, GLMShaderPairInfo *infoOut );
-	
+
 	// vertex buffers
-    HRESULT TOGLMETHODCALLTYPE CreateVertexDeclaration(CONST D3DVERTEXELEMENT9* pVertexElements,IDirect3DVertexDeclaration9** ppDecl);
-	
+	HRESULT TOGLMETHODCALLTYPE CreateVertexDeclaration(CONST D3DVERTEXELEMENT9* pVertexElements,IDirect3DVertexDeclaration9** ppDecl);
+
 	FORCEINLINE HRESULT TOGLMETHODCALLTYPE SetVertexDeclaration(IDirect3DVertexDeclaration9* pDecl);
 	HRESULT TOGLMETHODCALLTYPE SetVertexDeclarationNonInline(IDirect3DVertexDeclaration9* pDecl);
 
-    HRESULT TOGLMETHODCALLTYPE SetFVF(DWORD FVF);		// we might not be using these ?
+	HRESULT TOGLMETHODCALLTYPE SetFVF(DWORD FVF);		// we might not be using these ?
 	HRESULT TOGLMETHODCALLTYPE GetFVF(DWORD* pFVF);
 
-    HRESULT CreateVertexBuffer(UINT Length,DWORD Usage,DWORD FVF,D3DPOOL Pool,IDirect3DVertexBuffer9** ppVertexBuffer,VD3DHANDLE* pSharedHandle);
-    
+	HRESULT CreateVertexBuffer(UINT Length,DWORD Usage,DWORD FVF,D3DPOOL Pool,IDirect3DVertexBuffer9** ppVertexBuffer,VD3DHANDLE* pSharedHandle);
+
 	FORCEINLINE HRESULT TOGLMETHODCALLTYPE SetStreamSource(UINT StreamNumber,IDirect3DVertexBuffer9* pStreamData,UINT OffsetInBytes,UINT Stride);
 	HRESULT SetStreamSourceNonInline(UINT StreamNumber,IDirect3DVertexBuffer9* pStreamData,UINT OffsetInBytes,UINT Stride);
-		
+
 	// index buffers
-    HRESULT TOGLMETHODCALLTYPE CreateIndexBuffer(UINT Length,DWORD Usage,D3DFORMAT Format,D3DPOOL Pool,IDirect3DIndexBuffer9** ppIndexBuffer,VD3DHANDLE* pSharedHandle);
-    
+	HRESULT TOGLMETHODCALLTYPE CreateIndexBuffer(UINT Length,DWORD Usage,D3DFORMAT Format,D3DPOOL Pool,IDirect3DIndexBuffer9** ppIndexBuffer,VD3DHANDLE* pSharedHandle);
+
 	FORCEINLINE HRESULT TOGLMETHODCALLTYPE SetIndices(IDirect3DIndexBuffer9* pIndexData);
 	HRESULT TOGLMETHODCALLTYPE SetIndicesNonInline(IDirect3DIndexBuffer9* pIndexData);
 
 	// State management.
-    FORCEINLINE HRESULT TOGLMETHODCALLTYPE SetRenderStateInline(D3DRENDERSTATETYPE State,DWORD Value);
+	FORCEINLINE HRESULT TOGLMETHODCALLTYPE SetRenderStateInline(D3DRENDERSTATETYPE State,DWORD Value);
 	FORCEINLINE HRESULT TOGLMETHODCALLTYPE SetRenderStateConstInline(D3DRENDERSTATETYPE State,DWORD Value);
 	HRESULT TOGLMETHODCALLTYPE SetRenderState(D3DRENDERSTATETYPE State,DWORD Value);
 
-    FORCEINLINE HRESULT TOGLMETHODCALLTYPE SetSamplerState(DWORD Sampler,D3DSAMPLERSTATETYPE Type,DWORD Value);
+	FORCEINLINE HRESULT TOGLMETHODCALLTYPE SetSamplerState(DWORD Sampler,D3DSAMPLERSTATETYPE Type,DWORD Value);
 	HRESULT TOGLMETHODCALLTYPE SetSamplerStateNonInline(DWORD Sampler,D3DSAMPLERSTATETYPE Type,DWORD Value);
 
 	FORCEINLINE void TOGLMETHODCALLTYPE SetSamplerStates(DWORD Sampler, DWORD AddressU, DWORD AddressV, DWORD AddressW, DWORD MinFilter, DWORD MagFilter, DWORD MipFilter, DWORD MinLod, float LodBias );
 	void TOGLMETHODCALLTYPE SetSamplerStatesNonInline(DWORD Sampler, DWORD AddressU, DWORD AddressV, DWORD AddressW, DWORD MinFilter, DWORD MagFilter, DWORD MipFilter, DWORD MinLod, float LodBias );
-			
+
 #ifdef OSX
 	// required for 10.6 support
 	HRESULT TOGLMETHODCALLTYPE FlushIndexBindings(void);		// push index buffer (set index ptr)
@@ -529,37 +529,37 @@ struct TOGL_CLASS IDirect3DDevice9 : public IUnknown
 #endif
 
 	// Draw.
-    HRESULT TOGLMETHODCALLTYPE DrawPrimitive(D3DPRIMITIVETYPE PrimitiveType,UINT StartVertex,UINT PrimitiveCount);
-    HRESULT TOGLMETHODCALLTYPE DrawIndexedPrimitive(D3DPRIMITIVETYPE PrimitiveType,INT BaseVertexIndex,UINT MinVertexIndex,UINT NumVertices,UINT startIndex,UINT primCount);
+	HRESULT TOGLMETHODCALLTYPE DrawPrimitive(D3DPRIMITIVETYPE PrimitiveType,UINT StartVertex,UINT PrimitiveCount);
+	HRESULT TOGLMETHODCALLTYPE DrawIndexedPrimitive(D3DPRIMITIVETYPE PrimitiveType,INT BaseVertexIndex,UINT MinVertexIndex,UINT NumVertices,UINT startIndex,UINT primCount);
 	HRESULT TOGLMETHODCALLTYPE DrawIndexedPrimitiveUP(D3DPRIMITIVETYPE PrimitiveType,UINT MinVertexIndex,UINT NumVertices,UINT PrimitiveCount,CONST void* pIndexData,D3DFORMAT IndexDataFormat,CONST void* pVertexStreamZeroData,UINT VertexStreamZeroStride);
 
 	// misc
-    BOOL TOGLMETHODCALLTYPE ShowCursor(BOOL bShow);
-    HRESULT TOGLMETHODCALLTYPE ValidateDevice(DWORD* pNumPasses);
-    HRESULT TOGLMETHODCALLTYPE SetMaterial(CONST D3DMATERIAL9* pMaterial);
-    HRESULT TOGLMETHODCALLTYPE LightEnable(DWORD Index,BOOL Enable);
-    HRESULT TOGLMETHODCALLTYPE SetScissorRect(CONST RECT* pRect);
+	BOOL TOGLMETHODCALLTYPE ShowCursor(BOOL bShow);
+	HRESULT TOGLMETHODCALLTYPE ValidateDevice(DWORD* pNumPasses);
+	HRESULT TOGLMETHODCALLTYPE SetMaterial(CONST D3DMATERIAL9* pMaterial);
+	HRESULT TOGLMETHODCALLTYPE LightEnable(DWORD Index,BOOL Enable);
+	HRESULT TOGLMETHODCALLTYPE SetScissorRect(CONST RECT* pRect);
 	HRESULT TOGLMETHODCALLTYPE CreateQuery(D3DQUERYTYPE Type,IDirect3DQuery9** ppQuery);
-    HRESULT TOGLMETHODCALLTYPE GetDeviceCaps(D3DCAPS9* pCaps);
-    HRESULT TOGLMETHODCALLTYPE TestCooperativeLevel();
-    HRESULT TOGLMETHODCALLTYPE EvictManagedResources();
-    HRESULT TOGLMETHODCALLTYPE SetLight(DWORD Index,CONST D3DLIGHT9*);
-    void TOGLMETHODCALLTYPE SetGammaRamp(UINT iSwapChain,DWORD Flags,CONST D3DGAMMARAMP* pRamp);
-	
+	HRESULT TOGLMETHODCALLTYPE GetDeviceCaps(D3DCAPS9* pCaps);
+	HRESULT TOGLMETHODCALLTYPE TestCooperativeLevel();
+	HRESULT TOGLMETHODCALLTYPE EvictManagedResources();
+	HRESULT TOGLMETHODCALLTYPE SetLight(DWORD Index,CONST D3DLIGHT9*);
+	void TOGLMETHODCALLTYPE SetGammaRamp(UINT iSwapChain,DWORD Flags,CONST D3DGAMMARAMP* pRamp);
+
 
 	void TOGLMETHODCALLTYPE SaveGLState();
 	void TOGLMETHODCALLTYPE RestoreGLState();
 
 	// Talk to JasonM about this one. It's tricky in GL.
-    HRESULT TOGLMETHODCALLTYPE SetClipPlane(DWORD Index,CONST float* pPlane);
+	HRESULT TOGLMETHODCALLTYPE SetClipPlane(DWORD Index,CONST float* pPlane);
 
 	//
 	//
 	// **** FIXED FUNCTION STUFF - None of this stuff needs support in GL.
 	//
 	//
-    HRESULT TOGLMETHODCALLTYPE SetTransform(D3DTRANSFORMSTATETYPE State,CONST D3DMATRIX* pMatrix);
-    HRESULT TOGLMETHODCALLTYPE SetTextureStageState(DWORD Stage,D3DTEXTURESTAGESTATETYPE Type,DWORD Value);
+	HRESULT TOGLMETHODCALLTYPE SetTransform(D3DTRANSFORMSTATETYPE State,CONST D3DMATRIX* pMatrix);
+	HRESULT TOGLMETHODCALLTYPE SetTextureStageState(DWORD Stage,D3DTEXTURESTAGESTATETYPE Type,DWORD Value);
 
 	void TOGLMETHODCALLTYPE AcquireThreadOwnership( );
 	void TOGLMETHODCALLTYPE ReleaseThreadOwnership( );
@@ -573,7 +573,7 @@ struct TOGL_CLASS IDirect3DDevice9 : public IUnknown
 #if GLMDEBUG
 	void DumpTextures( const CCommand *pArgs );
 #endif
-		
+
 private:
 	IDirect3DDevice9( const IDirect3DDevice9& );
 	IDirect3DDevice9& operator= ( const IDirect3DDevice9& );
@@ -584,10 +584,10 @@ private:
 	void UpdateBoundFBO();
 	void ResetFBOMap();
 	void ScrubFBOMap( CGLMTex *pTex );
-	
+
 	// response to retired objects (when refcount goes to zero and they self-delete..)
 	void ReleasedVertexDeclaration( IDirect3DVertexDeclaration9 *pDecl );
-	void ReleasedTexture( IDirect3DBaseTexture9 *baseTex );			// called from texture destructor - need to scrub samplers	
+	void ReleasedTexture( IDirect3DBaseTexture9 *baseTex );			// called from texture destructor - need to scrub samplers
 	void ReleasedCGLMTex( CGLMTex *pTex );
 	void ReleasedSurface( IDirect3DSurface9 *surface );				// called from any surface destructor - need to scrub RT table if an RT
 	void ReleasedPixelShader( IDirect3DPixelShader9 *pixelShader );		// called from IDirect3DPixelShader9 destructor
@@ -595,7 +595,7 @@ private:
 	void ReleasedVertexBuffer( IDirect3DVertexBuffer9 *vertexBuffer );	// called from IDirect3DVertexBuffer9 destructor
 	void ReleasedIndexBuffer( IDirect3DIndexBuffer9 *indexBuffer );		// called from IDirect3DIndexBuffer9 destructor
 	void ReleasedQuery( IDirect3DQuery9 *query );					// called from IDirect3DQuery9 destructor
-			
+
 	// Member variables
 
 	DWORD						m_nValidMarker;
@@ -620,7 +620,7 @@ private:
 	IDirect3DPixelShader9		*m_pixelShader;					// Set by SetPixelShader...
 
 	IDirect3DBaseTexture9		*m_textures[GLM_SAMPLER_COUNT];				// set by SetTexture... NULL if stage inactive
-	
+
 	// GLM flavor stuff
 	GLMContext					*m_ctx;
 	CGLMFBOMap					*m_pFBOs;
@@ -641,7 +641,7 @@ private:
 
 		void clear() { V_memset( this, 0, sizeof(* this ) ); }
 
-		ObjectStats_t &operator -= ( const ObjectStats_t &rhs ) 
+		ObjectStats_t &operator -= ( const ObjectStats_t &rhs )
 		{
 			m_nTotalFBOs -= rhs.m_nTotalFBOs;
 			m_nTotalVertexShaders -= rhs.m_nTotalVertexShaders;
@@ -659,9 +659,9 @@ private:
 	ObjectStats_t					m_ObjectStats;
 	ObjectStats_t					m_PrevObjectStats;
 	void PrintObjectStats( const ObjectStats_t &stats );
-	
-	// GL state 
-	struct 
+
+	// GL state
+	struct
 	{
 		// render state buckets
 		GLAlphaTestEnable_t			m_AlphaTestEnable;
@@ -708,19 +708,19 @@ private:
 		// samplers
 		//GLMTexSamplingParams		m_samplers[GLM_SAMPLER_COUNT];
 	} gl;
-	
+
 #if GL_BATCH_PERF_ANALYSIS
 	simple_bitmap *m_pBatch_vis_bitmap;
 	uint m_nBatchVisY;
 	uint m_nBatchVisFrameIndex, m_nBatchVisFileIdx;
 	uint m_nNumProgramChanges;
-		
+
 	uint m_nTotalD3DCalls;
 	double m_flTotalD3DTime;
 	uint m_nTotalGLCalls;
 	double m_flTotalGLTime;
 	uint m_nTotalPrims;
-		
+
 	uint m_nOverallProgramChanges;
 	uint m_nOverallDraws;
 	uint m_nOverallPrims;
@@ -744,7 +744,7 @@ FORCEINLINE HRESULT TOGLMETHODCALLTYPE IDirect3DDevice9::SetSamplerState( DWORD 
 #else
 	Assert( GetCurrentOwnerThreadId() == ThreadGetCurrentId() );
 	Assert( Sampler < GLM_SAMPLER_COUNT );
-	
+
 	m_ctx->SetSamplerDirty( Sampler );
 
 	switch( Type )
@@ -764,29 +764,29 @@ FORCEINLINE HRESULT TOGLMETHODCALLTYPE IDirect3DDevice9::SetSamplerState( DWORD 
 		case D3DSAMP_MAGFILTER:
 			m_ctx->SetSamplerMagFilter( Sampler, Value );
 			break;
-		case D3DSAMP_MIPFILTER:	
+		case D3DSAMP_MIPFILTER:
 			m_ctx->SetSamplerMipFilter( Sampler, Value );
 			break;
-		case D3DSAMP_MINFILTER:	
+		case D3DSAMP_MINFILTER:
 			m_ctx->SetSamplerMinFilter( Sampler, Value );
 			break;
-		case D3DSAMP_MIPMAPLODBIAS: 
+		case D3DSAMP_MIPMAPLODBIAS:
 			m_ctx->SetSamplerMipMapLODBias( Sampler, Value );
-			break;		
-		case D3DSAMP_MAXMIPLEVEL: 
+			break;
+		case D3DSAMP_MAXMIPLEVEL:
 			m_ctx->SetSamplerMaxMipLevel( Sampler, Value);
 			break;
-		case D3DSAMP_MAXANISOTROPY: 
+		case D3DSAMP_MAXANISOTROPY:
 			m_ctx->SetSamplerMaxAnisotropy( Sampler, Value);
 			break;
-		case D3DSAMP_SRGBTEXTURE: 
+		case D3DSAMP_SRGBTEXTURE:
 			//m_samplers[ Sampler ].m_srgb = Value;
 			m_ctx->SetSamplerSRGBTexture(Sampler, Value);
 			break;
-		case D3DSAMP_SHADOWFILTER: 
+		case D3DSAMP_SHADOWFILTER:
 			m_ctx->SetShadowFilter(Sampler, Value);
 			break;
-		
+
 		default: DXABSTRACT_BREAK_ON_ERROR(); break;
 	}
 	return S_OK;
@@ -803,9 +803,9 @@ FORCEINLINE void TOGLMETHODCALLTYPE IDirect3DDevice9::SetSamplerStates(
 #else
 	Assert( GetCurrentOwnerThreadId() == ThreadGetCurrentId() );
 	Assert( Sampler < GLM_SAMPLER_COUNT);
-		
+
 	m_ctx->SetSamplerDirty( Sampler );
-		
+
 	m_ctx->SetSamplerStates( Sampler, AddressU, AddressV, AddressW, MinFilter, MagFilter, MipFilter, MinLod, LodBias );
 #endif
 }
@@ -876,7 +876,7 @@ FORCEINLINE GLenum D3DBlendFactorToGL( DWORD equation )
 			case	D3DBLEND_BOTHSRCALPHA	: Assert(0); return GL_ZERO;		// Obsolete. Starting with DirectX 6, you can achieve the same effect by setting the source and destination blend factors to D3DBLEND_SRCALPHA and D3DBLEND_INVSRCALPHA in separate calls.
 			case	D3DBLEND_BOTHINVSRCALPHA: Assert(0); return GL_ZERO;		// Source blend factor is (1 - As, 1 - As, 1 - As, 1 - As), and destination blend factor is (As, As, As, As); the destination blend selection is overridden. This blend mode is supported only for the D3DRS_SRCBLEND render state.
 			case	D3DBLEND_BLENDFACTOR	: Assert(0); return GL_ZERO;		// Constant color blending factor used by the frame-buffer blender. This blend mode is supported only if D3DPBLENDCAPS_BLENDFACTOR is set in the SrcBlendCaps or DestBlendCaps members of D3DCAPS9.
-		
+
 		dxabstract.h has not heard of these, so let them hit the debugger if they come through
 			case	D3DBLEND_INVBLENDFACTOR:	//Inverted constant color-blending factor used by the frame-buffer blender. This blend mode is supported only if the D3DPBLENDCAPS_BLENDFACTOR bit is set in the SrcBlendCaps or DestBlendCaps members of D3DCAPS9.
 			case	D3DBLEND_SRCCOLOR2:		// Blend factor is (PSOutColor[1]r, PSOutColor[1]g, PSOutColor[1]b, not used).	This flag is available in Direct3D 9Ex only.
@@ -928,7 +928,7 @@ FORCEINLINE HRESULT TOGLMETHODCALLTYPE IDirect3DDevice9::SetRenderStateInline( D
 			m_ctx->WriteDepthMask( &gl.m_DepthMask );
 			break;
 		}
-		case D3DRS_ZFUNC:	
+		case D3DRS_ZFUNC:
 		{
 			// kGLDepthFunc
 			GLenum func = D3DCompareFuncToGL( Value );
@@ -939,7 +939,7 @@ FORCEINLINE HRESULT TOGLMETHODCALLTYPE IDirect3DDevice9::SetRenderStateInline( D
 		case D3DRS_COLORWRITEENABLE:		// kGLColorMaskSingle
 		{
 			gl.m_ColorMaskSingle.r	=	((Value & D3DCOLORWRITEENABLE_RED)  != 0) ? 0xFF : 0x00;
-			gl.m_ColorMaskSingle.g	=	((Value & D3DCOLORWRITEENABLE_GREEN)!= 0) ? 0xFF : 0x00;	
+			gl.m_ColorMaskSingle.g	=	((Value & D3DCOLORWRITEENABLE_GREEN)!= 0) ? 0xFF : 0x00;
 			gl.m_ColorMaskSingle.b	=	((Value & D3DCOLORWRITEENABLE_BLUE) != 0) ? 0xFF : 0x00;
 			gl.m_ColorMaskSingle.a	=	((Value & D3DCOLORWRITEENABLE_ALPHA)!= 0) ? 0xFF : 0x00;
 			m_ctx->WriteColorMaskSingle( &gl.m_ColorMaskSingle );
@@ -952,13 +952,13 @@ FORCEINLINE HRESULT TOGLMETHODCALLTYPE IDirect3DDevice9::SetRenderStateInline( D
 				case D3DCULL_NONE:
 				{
 					gl.m_CullFaceEnable.enable = false;
-					gl.m_CullFrontFace.value = GL_CCW;	//doesn't matter																
+					gl.m_CullFrontFace.value = GL_CCW;	//doesn't matter
 
 					m_ctx->WriteCullFaceEnable( &gl.m_CullFaceEnable );
 					m_ctx->WriteCullFrontFace( &gl.m_CullFrontFace );
 					break;
 				}
-					
+
 				case D3DCULL_CW:
 				{
 					gl.m_CullFaceEnable.enable = true;
@@ -977,9 +977,9 @@ FORCEINLINE HRESULT TOGLMETHODCALLTYPE IDirect3DDevice9::SetRenderStateInline( D
 					m_ctx->WriteCullFrontFace( &gl.m_CullFrontFace );
 					break;
 				}
-				default:	
+				default:
 				{
-					DXABSTRACT_BREAK_ON_ERROR();	
+					DXABSTRACT_BREAK_ON_ERROR();
 					break;
 				}
 			}
@@ -1019,7 +1019,7 @@ FORCEINLINE HRESULT TOGLMETHODCALLTYPE IDirect3DDevice9::SetRenderStateInline( D
 		{
 			gl.m_BlendEnableSRGB.enable = Value;
 			m_ctx->WriteBlendEnableSRGB( &gl.m_BlendEnableSRGB );
-			break;					
+			break;
 		}
 		//-------------------------------------------------------------------------------------------- alphatest stuff
 		case D3DRS_ALPHATESTENABLE:
@@ -1142,7 +1142,7 @@ FORCEINLINE HRESULT TOGLMETHODCALLTYPE IDirect3DDevice9::SetRenderStateInline( D
 		case D3DRS_CLIPPLANEENABLE:		// kGLClipPlaneEnable
 		{
 			// d3d packs all the enables into one word.
-			// we break that out so we don't do N glEnable calls to sync - 
+			// we break that out so we don't do N glEnable calls to sync -
 			// GLM is tracking one unique enable per plane.
 			for( int i=0; i<kGLMUserClipPlanes; i++)
 			{
@@ -1164,12 +1164,12 @@ FORCEINLINE HRESULT TOGLMETHODCALLTYPE IDirect3DDevice9::SetRenderStateInline( D
 				case D3DFILL_SOLID:			mode = GL_FILL; break;
 				default:					DXABSTRACT_BREAK_ON_ERROR(); break;
 			}
-			gl.m_PolygonMode.values[0] = gl.m_PolygonMode.values[1] = mode;						
+			gl.m_PolygonMode.values[0] = gl.m_PolygonMode.values[1] = mode;
 			m_ctx->WritePolygonMode( &gl.m_PolygonMode );
 			break;
 		}
 	}
-		
+
 	return S_OK;
 #endif
 }
@@ -1199,14 +1199,14 @@ FORCEINLINE HRESULT TOGLMETHODCALLTYPE IDirect3DDevice9::SetStreamSource(UINT St
 #else
 	Assert( GetCurrentOwnerThreadId() == ThreadGetCurrentId() );
 	Assert( StreamNumber < D3D_MAX_STREAMS );
-	Assert( ( Stride & 3 ) == 0 ); // we support non-DWORD aligned strides, but on some drivers (like AMD's) perf goes off a cliff 
-	
+	Assert( ( Stride & 3 ) == 0 ); // we support non-DWORD aligned strides, but on some drivers (like AMD's) perf goes off a cliff
+
 	// perfectly legal to see a vertex buffer of NULL get passed in here.
 	// so we need an array to track these.
 	// OK, we are being given the stride, we don't need to calc it..
 
 	GLMPRINTF(("-X- IDirect3DDevice9::SetStreamSource setting stream #%d to D3D buf %p (GL name %d); offset %d, stride %d", StreamNumber, pStreamData, (pStreamData) ? pStreamData->m_vtxBuffer->m_name: -1, OffsetInBytes, Stride));
-	
+
 	if ( !pStreamData )
 	{
 		OffsetInBytes = 0;

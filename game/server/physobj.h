@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -52,7 +52,7 @@ public:
 	void	Move( const Vector &force );
 	virtual int ObjectCaps();
 	virtual void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	
+
 	virtual int DrawDebugTextOverlays(void);
 
 	virtual void VPhysicsUpdate( IPhysicsObject *pPhysics );
@@ -78,7 +78,7 @@ public:
 	void InputDisableFloating( inputdata_t &inputdata );
 
 	DECLARE_DATADESC();
-	
+
 protected:
 	int				m_damageType;
 	float			m_massScale;
@@ -123,15 +123,15 @@ public:
 
 	DECLARE_DATADESC();
 private:
-	
+
 	float		GetRadius( void );
 
 	float		m_damage;
 	float		m_radius;
 	string_t	m_targetEntityName;
 	float		m_flInnerRadius;
-	
-	COutputEvent	m_OnPushedPlayer;	
+
+	COutputEvent	m_OnPushedPlayer;
 };
 
 
@@ -162,7 +162,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: A magnet that creates constraints between itself and anything it touches 
+// Purpose: A magnet that creates constraints between itself and anything it touches
 //-----------------------------------------------------------------------------
 
 struct magnetted_objects_t
@@ -211,7 +211,7 @@ public:
 // IPhysicsConstraintEvent
 public:
 	void	ConstraintBroken( IPhysicsConstraint *pConstraint );
-	
+
 protected:
 	// Outputs
 	COutputEvent	m_OnMagnetAttach;

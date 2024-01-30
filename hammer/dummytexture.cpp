@@ -72,9 +72,9 @@ int CDummyTexture::GetKeywords(char *pszKeywords) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszName - 
-// Output : 
+// Purpose:
+// Input  : *pszName -
+// Output :
 //-----------------------------------------------------------------------------
 // dvs: move into a common place for CWADTexture & CDummyTexture
 int CDummyTexture::GetShortName(char *pszName) const
@@ -143,8 +143,8 @@ int CDummyTexture::GetImageDataRGBA( void *pImageRGBA )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : size - 
+// Purpose:
+// Input  : size -
 //-----------------------------------------------------------------------------
 void CDummyTexture::GetSize( SIZE &size ) const
 {
@@ -156,10 +156,10 @@ void CDummyTexture::GetSize( SIZE &size ) const
 //-----------------------------------------------------------------------------
 // Purpose: Renders "No Image" into a device context as a placeholder for the
 //			missing texture.
-// Input  : pDC - 
-//			rect - 
-//			iFontHeight - 
-//			dwFlags - 
+// Input  : pDC -
+//			rect -
+//			iFontHeight -
+//			dwFlags -
 //-----------------------------------------------------------------------------
 void CDummyTexture::Draw(CDC *pDC, RECT &rect, int iFontHeight, int iIconHeight, DrawTexData_t &DrawTexData)
 {

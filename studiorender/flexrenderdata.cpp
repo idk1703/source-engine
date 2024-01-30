@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,21 +22,21 @@ CCachedRenderData::CCachedRenderData() : m_CurrentTag(0), m_pFirstFlexIndex(0),
 	float val = VEC_T_NAN;
 	for( i = 0; i < MAXSTUDIOFLEXVERTS; i++ )
 	{
-		m_pFlexVerts[i].m_Position[0] = val; 
+		m_pFlexVerts[i].m_Position[0] = val;
 		m_pFlexVerts[i].m_Position[1] = val;
 		m_pFlexVerts[i].m_Position[2] = val;
-		m_pFlexVerts[i].m_Normal[0] = val; 
+		m_pFlexVerts[i].m_Normal[0] = val;
 		m_pFlexVerts[i].m_Normal[1] = val;
 		m_pFlexVerts[i].m_Normal[2] = val;
 
-		m_pThinFlexVerts[i].m_Position[0] = val; 
+		m_pThinFlexVerts[i].m_Position[0] = val;
 		m_pThinFlexVerts[i].m_Position[1] = val;
 		m_pThinFlexVerts[i].m_Position[2] = val;
-		m_pThinFlexVerts[i].m_Normal[0] = val; 
+		m_pThinFlexVerts[i].m_Normal[0] = val;
 		m_pThinFlexVerts[i].m_Normal[1] = val;
 		m_pThinFlexVerts[i].m_Normal[2] = val;
 
-		m_pFlexVerts[i].m_TangentS[0] = val; 
+		m_pFlexVerts[i].m_TangentS[0] = val;
 		m_pFlexVerts[i].m_TangentS[1] = val;
 		m_pFlexVerts[i].m_TangentS[2] = val;
 		m_pFlexVerts[i].m_TangentS[3] = val;
@@ -235,4 +235,3 @@ CachedPosNorm_t* CCachedRenderData::CreateWorldVertex( int vertex )
 	}
 	return GetWorldVertex( vertex );
 }
-

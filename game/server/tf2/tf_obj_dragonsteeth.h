@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -29,7 +29,7 @@ public:
 	virtual float	GetNearbyObjectCheckRadius( void ) { return 10.0; }
 	virtual bool	StartBuilding( CBaseEntity *pBuilder );
 	virtual void	OnActivityChanged( Activity act );
-	
+
 public:
 	CHandle< CBaseObject >	m_hOwningObject;		// Object I was created for
 };

@@ -47,7 +47,7 @@ public:
 	const char		*m_pStateName;
 
 	// Enter/Leave state.
-	void ( CTFPlayer::*pfnEnterState )();	
+	void ( CTFPlayer::*pfnEnterState )();
 	void ( CTFPlayer::*pfnLeaveState )();
 
 	// Think (called every frame).
@@ -188,7 +188,7 @@ public:
 	bool				HasItem( void ) const;					// Currently can have only one item at a time.
 	void				SetItem( CTFItem *pItem );
 	CTFItem				*GetItem( void ) const;
-	
+
 	void				SaveLastWeaponSlot( void );
 	void				SetRememberLastWeapon( bool bRememberLastWeapon ) { m_bRememberLastWeapon = bRememberLastWeapon; }
 	void				SetRememberActiveWeapon( bool bRememberActiveWeapon ) { m_bRememberActiveWeapon = bRememberActiveWeapon; }
@@ -311,7 +311,7 @@ public:
 	Vector EstimateStickybombProjectileImpactPosition( float pitch, float yaw, float charge );	// Estimate where a stickybomb projectile will hit, using given pitch, yaw, and weapon charge (0-1)
 
 	CTFTeamSpawn *GetSpawnPoint( void ){ return m_pSpawnPoint; }
-		
+
 	void SetAnimation( PLAYER_ANIM playerAnim );
 
 	bool IsPlayerClass( int iClass ) const;
@@ -382,7 +382,7 @@ public:
 	virtual void CreateRagdollEntity( void );
 	void CreateRagdollEntity( bool bGib, bool bBurning, bool bElectrocuted, bool bOnGround, bool bCloakedCorpse, bool bGoldRagdoll, bool bIceRagdoll, bool bBecomeAsh, int iDamageCustom = 0, bool bCritOnHardHit = false );
 	void DestroyRagdoll( void );
-	CNetworkHandle( CBaseEntity, m_hRagdoll );	// networked entity handle 
+	CNetworkHandle( CBaseEntity, m_hRagdoll );	// networked entity handle
 	virtual bool ShouldGib( const CTakeDamageInfo &info ) OVERRIDE;
 	bool HasBombinomiconEffectOnDeath( void );
 	void StopRagdollDeathAnim( void );
@@ -400,7 +400,7 @@ public:
 	void DropExtraAmmo( const CTakeDamageInfo& info, bool bFromDeath = false );
 	void DropHealthPack( const CTakeDamageInfo &info, bool bEmpty );
 	void DropCurrencyPack( CurrencyRewards_t nSize = TF_CURRENCY_PACK_SMALL, int nAmount = 0, bool bForceDistribute = false, CBasePlayer* pMoneyMaker = NULL );	// Only pass in an amount when nSize = TF_CURRENCY_PACK_CUSTOM
-	
+
 	bool CanDisguise( void );
 	bool CanDisguise_OnKill( void );
 	bool CanGoInvisible( bool bAllowWhileCarryingFlag = false );
@@ -597,7 +597,7 @@ public:
 	int m_flNextTimeCheck;		// Next time the player can execute a "timeleft" command
 
 	CNetworkVar( bool, m_bSaveMeParity );
-	
+
 	CNetworkVar( bool, m_bIsCoaching);
 	CNetworkHandle( CTFPlayer, m_hCoach );
 	CNetworkHandle( CTFPlayer, m_hStudent );
@@ -614,7 +614,7 @@ public:
 
 	float				GetSpawnTime() { return m_flSpawnTime; }
 
-	
+
 	virtual void 		SelectItem( const char *pstr, int iSubType = 0 ) OVERRIDE;
 	virtual bool		Weapon_Switch( CBaseCombatWeapon *pWeapon, int viewmodelindex = 0 ) OVERRIDE;
 	virtual void		Weapon_Drop( CBaseCombatWeapon *pWeapon, const Vector *pvecTarget , const Vector *pVelocity ) OVERRIDE;
@@ -666,7 +666,7 @@ public:
 
 	int					GetTauntConcept( CEconItemDefinition *pItemDef );
 	bool				PlayTauntSceneFromItem( CEconItemView *pEconItemView );
-	
+
 	void				OnTauntSucceeded( const char* pszSceneName, int iTauntIndex = 0, int iTauntConcept = 0 );
 	void				Taunt( taunts_t iTauntIndex = TAUNT_BASE_WEAPON, int iTauntConcept = 0 );
 	bool				IsTaunting( void ) const { return m_Shared.InCond( TF_COND_TAUNTING ); }
@@ -767,10 +767,10 @@ public:
 	int					GetMaxSentryKills() { return m_iMaxSentryKills; }
 
 	CNetworkVar( bool, m_iSpawnCounter );
-	
+
 	void				CheckForIdle( void );
 	inline bool			IsAwayFromKeyboard( void ) { return m_bIsAFK; }
-	
+
 	void				PickWelcomeObserverPoint();
 
 	virtual	bool		ProcessSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event );
@@ -1116,7 +1116,7 @@ private:
 	bool				m_bJustPlayed;
 	int					m_iPreviousteam;
 	bool				m_bGibbedOnLastDeath;
-	CUtlMap<int, float> m_Cappers;		
+	CUtlMap<int, float> m_Cappers;
 	float				m_fMaxHealthTime;
 
 	// Feign death.
@@ -1171,7 +1171,7 @@ private:
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
-	
+
 	bool				m_bIsTargetDummy;
 
 	bool				m_bCollideWithSentry;
@@ -1196,12 +1196,12 @@ public:
 
 	void				SetBombHeadTimestamp();
 	float				GetTimeSinceWasBombHead() const;
-	
+
 	float				GetKartSpeedBoost( void );
 	float				GetKartHealth( void )				{ return m_iKartHealth; }
 	void				AddKartDamage( int iDamage )		{ m_iKartHealth = Max(0, m_iKartHealth + iDamage); }
 	float				GetKartKnockbackMultiplier( float flExtraMultiplier ) const;
-	
+
 	void				ResetKartDamage();
 	CBaseEntity			*GetKartBombHeadTarget() const { return m_hKartBombHeadTarget; }
 	void				SetKartBombHeadTarget( CBaseEntity* pEnt ) { m_hKartBombHeadTarget = pEnt; }
@@ -1211,7 +1211,7 @@ public:
 
 	void				CancelEurekaTeleport();
 
-	
+
 	CNetworkVar( int,	m_iKartState );
 	CNetworkVar( float, m_flKartNextAvailableBoost );
 	float				m_flHHHKartAttackTime;
@@ -1357,7 +1357,7 @@ private:
 	CUtlMap<int, float> m_PlayersExtinguished;	// userID and most recent time they were extinguished for bonus points
 
 	float m_flLastAutobalanceTime;
-	
+
 	// begin passtime
 public:
 	bool SayAskForBall();

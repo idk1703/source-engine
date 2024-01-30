@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -64,7 +64,7 @@ struct VertexLitGeneric_DX95_Vars_t
 
 void InitParamsVertexLitGeneric_DX95( CBaseVSShader *pShader, IMaterialVar** params, const char *pMaterialName, bool bVertexLitGeneric, VertexLitGeneric_DX95_Vars_t &info );
 void InitVertexLitGeneric_DX95( CBaseVSShader *pShader, IMaterialVar** params, bool bVertexLitGeneric, VertexLitGeneric_DX95_Vars_t &info );
-void DrawVertexLitGeneric_DX95( CBaseVSShader *pShader, IMaterialVar** params, 
+void DrawVertexLitGeneric_DX95( CBaseVSShader *pShader, IMaterialVar** params,
 	IShaderDynamicAPI *pShaderAPI, IShaderShadow* pShaderShadow, bool bVertexLitGeneric, VertexLitGeneric_DX95_Vars_t &info );
 
 

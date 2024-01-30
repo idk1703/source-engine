@@ -1007,8 +1007,8 @@ $Project
 		$File	"toolframework_server.cpp"
 		$File	"toolframework_server.h"
 	}
-	
-	$Folder	"Link Libraries" 
+
+	$Folder	"Link Libraries"
 	{
 		$Lib	choreoobjects
 		$Lib	dmxloader

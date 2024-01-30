@@ -33,7 +33,7 @@ LINK_ENTITY_TO_CLASS( env_flare, CSignalFlare );
 PRECACHE_REGISTER( env_flare );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CSignalFlare::CSignalFlare( void )
 {
@@ -43,7 +43,7 @@ CSignalFlare::CSignalFlare( void )
 	m_bFading = false;
 	m_bLight = true;
 	m_bSmoke = true;
-	
+
 	m_flNextDamage = gpGlobals->curtime;
 	m_lifeState = LIFE_ALIVE;
 	m_iHealth = 100;
@@ -51,7 +51,7 @@ CSignalFlare::CSignalFlare( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSignalFlare::Precache( void )
 {
@@ -67,7 +67,7 @@ void CSignalFlare::Precache( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSignalFlare::Spawn( void )
 {
@@ -108,10 +108,10 @@ void CSignalFlare::Spawn( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : vecOrigin - 
-//			vecAngles - 
-//			*pOwner - 
+// Purpose:
+// Input  : vecOrigin -
+//			vecAngles -
+//			*pOwner -
 // Output : CSignalFlare
 //-----------------------------------------------------------------------------
 CSignalFlare *CSignalFlare::Create( Vector vecOrigin, QAngle vecAngles, CBaseEntity *pOwner, float lifetime )
@@ -131,7 +131,7 @@ CSignalFlare *CSignalFlare::Create( Vector vecOrigin, QAngle vecAngles, CBaseEnt
 	// Set the flare's touch and think functions.
 	pFlare->SetTouch( FlareTouch );
 	pFlare->SetThink( FlareThink );
-	
+
 	// Don't start sparking immediately.
 	pFlare->SetNextThink( gpGlobals->curtime + 0.5f );
 
@@ -151,7 +151,7 @@ CSignalFlare *CSignalFlare::Create( Vector vecOrigin, QAngle vecAngles, CBaseEnt
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSignalFlare::FlareThink( void )
 {
@@ -176,7 +176,7 @@ void CSignalFlare::FlareThink( void )
 			return;
 		}
 	}
-	
+
 	//Act differently underwater
 	if ( GetWaterLevel() > 1 )
 	{
@@ -198,8 +198,8 @@ void CSignalFlare::FlareThink( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOther - 
+// Purpose:
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void CSignalFlare::FlareTouch( CBaseEntity *pOther )
 {
@@ -221,21 +221,21 @@ void CSignalFlare::FlareTouch( CBaseEntity *pOther )
 		// Emit an impact sound.
 		EmitSound( "SignalFlare.Impact" );
 	}
-	
+
 	// Change our flight characteristics
 	SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_BOUNCE );
 	SetGravity( UTIL_ScaleForGravity( 640 ) );
-	
+
 	m_nBounces++;
-	
+
 	// After the first bounce, smacking into whoever fired the flare is fair game
-	SetOwnerEntity( this );	
-	
+	SetOwnerEntity( this );
+
 	//Slow down
 	Vector newVelocity = GetAbsVelocity();
 	newVelocity.x *= 0.8f;
 	newVelocity.y *= 0.8f;
-	
+
 	// Stopped?
 	if ( newVelocity.Length() < 64.0f )
 	{

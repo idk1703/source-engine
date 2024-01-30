@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -88,7 +88,7 @@ class CNPC_SecurityCamera : public CNPCBaseInteractive<CAI_BaseNPC>, public CDef
 {
 	DECLARE_CLASS( CNPC_SecurityCamera, CNPCBaseInteractive<CAI_BaseNPC> );
 public:
-	
+
 	CNPC_SecurityCamera( void );
 	~CNPC_SecurityCamera( void );
 
@@ -126,17 +126,17 @@ public:
 
 	virtual bool CanBeAnEnemyOf( CBaseEntity *pEnemy );
 
-	Class_T	Classify( void ) 
+	Class_T	Classify( void )
 	{
-		if( m_bEnabled ) 
+		if( m_bEnabled )
 			return CLASS_COMBINE;
 
 		return CLASS_NONE;
 	}
-	
+
 	bool	FVisible( CBaseEntity *pEntity, int traceMask = MASK_BLOCKLOS, CBaseEntity **ppBlocker = NULL );
 
-	Vector	EyeOffset( Activity nActivity ) 
+	Vector	EyeOffset( Activity nActivity )
 	{
 		Vector vForward;
 
@@ -152,9 +152,9 @@ public:
 
 
 protected:
-	
+
 	bool	PreThink( turretState_e state );
-	void	Ping( void );	
+	void	Ping( void );
 	void	Toggle( void );
 	void	Enable( void );
 	void	Disable( void );
@@ -175,7 +175,7 @@ private:
 	bool	m_bActive;		//Denotes the turret is deployed and looking for targets
 	bool	m_bBlinkState;
 	bool	m_bEnabled;		//Denotes whether the turret is able to deploy or not
-	
+
 	float	m_flLastSight;
 	float	m_flPingTime;
 
@@ -260,17 +260,17 @@ CNPC_SecurityCamera::~CNPC_SecurityCamera( void )
 //-----------------------------------------------------------------------------
 void CNPC_SecurityCamera::Precache( void )
 {
-	PrecacheModel( SECURITY_CAMERA_MODEL );	
+	PrecacheModel( SECURITY_CAMERA_MODEL );
 
 	PrecacheScriptSound( "Portalgun.pedestal_rotate_loop" );
 
-	// Scenes for when the player dismounts a security camera. Spoken only if Aperture_AI actor is in the 
+	// Scenes for when the player dismounts a security camera. Spoken only if Aperture_AI actor is in the
 	PrecacheInstancedScene( CAMERA_DESTROYED_SCENE_1 );
 	PrecacheInstancedScene( CAMERA_DESTROYED_SCENE_2 );
 	PrecacheInstancedScene( CAMERA_DESTROYED_SCENE_3 );
 	PrecacheInstancedScene( CAMERA_DESTROYED_SCENE_4 );
 	PrecacheInstancedScene( CAMERA_DESTROYED_SCENE_5 );
-	
+
 	BaseClass::Precache();
 }
 
@@ -301,11 +301,11 @@ void CNPC_SecurityCamera::StopLoopingSounds()
 // Purpose: Spawn the entity
 //-----------------------------------------------------------------------------
 void CNPC_SecurityCamera::Spawn( void )
-{ 
+{
 	Precache();
 
 	SetModel( SECURITY_CAMERA_MODEL );
-	
+
 	BaseClass::Spawn();
 
 	m_HackedGunPos	= Vector( 0, 0, 12.75 );
@@ -314,7 +314,7 @@ void CNPC_SecurityCamera::Spawn( void )
 	m_takedamage	= DAMAGE_NO;
 	m_iHealth		= 1000;
 	m_bloodColor	= BLOOD_COLOR_MECH;
-	
+
 	SetSolid( SOLID_BBOX );
 	AddSolidFlags( FSOLID_NOT_STANDABLE );
 
@@ -400,7 +400,7 @@ void CNPC_SecurityCamera::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, US
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CNPC_SecurityCamera::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 {
@@ -439,7 +439,7 @@ int CNPC_SecurityCamera::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 //-----------------------------------------------------------------------------
 // Purpose: We override this code because otherwise we start to move into the
 //			tricky realm of player avoidance.  Since we don't go through the
-//			normal NPC thinking but we ARE an NPC (...) we miss a bunch of 
+//			normal NPC thinking but we ARE an NPC (...) we miss a bunch of
 //			book keeping.  This means we can become invisible and then never
 //			reappear.
 //-----------------------------------------------------------------------------
@@ -516,7 +516,7 @@ void CNPC_SecurityCamera::SetLastSightTime()
 	}
 	else
 	{
-		m_flLastSight = gpGlobals->curtime + SECURITY_CAMERA_MAX_WAIT;	
+		m_flLastSight = gpGlobals->curtime + SECURITY_CAMERA_MAX_WAIT;
 	}
 }
 
@@ -600,8 +600,8 @@ bool CNPC_SecurityCamera::UpdateFacing( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
+// Purpose:
+// Input  : *pEntity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_SecurityCamera::FVisible( CBaseEntity *pEntity, int traceMask, CBaseEntity **ppBlocker )
@@ -648,7 +648,7 @@ void CNPC_SecurityCamera::ActiveThink( void )
 		m_vecGoalAngles = GetAbsAngles();
 		return;
 	}
-	
+
 	//Get our shot positions
 	Vector vecMid = EyePosition();
 	Vector vecMidEnemy = pEnemy->GetAbsOrigin();
@@ -660,7 +660,7 @@ void CNPC_SecurityCamera::ActiveThink( void )
 	bool bEnemyVisible = pEnemy->IsAlive() && FInViewCone( pEnemy ) && FVisible( pEnemy );
 
 	//Calculate dir and dist to enemy
-	Vector	vecDirToEnemy = vecMidEnemy - vecMid;	
+	Vector	vecDirToEnemy = vecMidEnemy - vecMid;
 	float	flDistToEnemy = VectorNormalize( vecDirToEnemy );
 
 	CProp_Portal *pPortal = NULL;
@@ -676,7 +676,7 @@ void CNPC_SecurityCamera::ActiveThink( void )
 			UTIL_Portal_PointTransform( pPortal->m_hLinkedPortal->MatrixThisToLinked(), vecMidEnemy, vecMidEnemyTransformed );
 
 			//Calculate dir and dist to enemy
-			Vector	vecDirToEnemyTransformed = vecMidEnemyTransformed - vecMid;	
+			Vector	vecDirToEnemyTransformed = vecMidEnemyTransformed - vecMid;
 			float	flDistToEnemyTransformed = VectorNormalize( vecDirToEnemyTransformed );
 
 			// If it's not visible through normal means or the enemy is closer through the portal, use the translated info
@@ -902,7 +902,7 @@ void CNPC_SecurityCamera::Toggle( void )
 	{
 		Disable();
 	}
-	else 
+	else
 	{
 		Enable();
 	}
@@ -1009,7 +1009,7 @@ void CNPC_SecurityCamera::InputToggle( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_SecurityCamera::InputEnable( inputdata_t &inputdata )
 {
@@ -1017,7 +1017,7 @@ void CNPC_SecurityCamera::InputEnable( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_SecurityCamera::InputDisable( inputdata_t &inputdata )
 {
@@ -1028,7 +1028,7 @@ void CNPC_SecurityCamera::InputRagdoll( inputdata_t &inputdata )
 {
 	if ( !m_bEnabled )
 		return;
-	
+
 	// Leave decal on wall (may want to disable this once decal for where cam touches wall is made)
 	Vector vForward;
 	GetVectors( &vForward, NULL, NULL );
@@ -1055,7 +1055,7 @@ void CNPC_SecurityCamera::InputRagdoll( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_SecurityCamera::DeathThink( void )
 {
@@ -1077,11 +1077,11 @@ void CNPC_SecurityCamera::DeathThink( void )
 	// lots of smoke
 	Vector pos;
 	CollisionProp()->RandomPointInBounds( vec3_origin, Vector( 1, 1, 1 ), &pos );
-	
+
 	CBroadcastRecipientFilter filter;
-	
+
 	te->Smoke( filter, 0.0, &pos, g_sModelIndexSmoke, 2.5, 10 );
-	
+
 	g_pEffects->Sparks( pos );
 
 	if ( !UpdateFacing() )
@@ -1092,8 +1092,8 @@ void CNPC_SecurityCamera::DeathThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEnemy - 
+// Purpose:
+// Input  : *pEnemy -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_SecurityCamera::CanBeAnEnemyOf( CBaseEntity *pEnemy )
@@ -1103,7 +1103,7 @@ bool CNPC_SecurityCamera::CanBeAnEnemyOf( CBaseEntity *pEnemy )
 	{
 		if ( pEnemy->Classify() == CLASS_PLAYER_ALLY_VITAL )
 			return false;
-	} 
+	}
 
 	return BaseClass::CanBeAnEnemyOf( pEnemy );
 }
@@ -1114,7 +1114,7 @@ void PlayDismountSounds()
 	// Play GLaDOS's audio reaction
 	CPortal_Player* pPlayer = ToPortalPlayer( UTIL_PlayerByIndex( 1 ) );
 	CAI_BaseActor* pGlaDOS  = (CAI_BaseActor*)gEntList.FindEntityByName( NULL, "Aperture_AI" );
-	
+
 	if ( !pPlayer || !pGlaDOS )
 	{
 		DevMsg( 2, "Could not play CNPC_SecurityCamera dismount scene, make sure actor named 'Aperture_AI' is present in map.\n" );
@@ -1126,7 +1126,7 @@ void PlayDismountSounds()
 	{
 		gameeventmanager->FireEvent( event );
 	}
-	
+
 	// If glados is currently talking, don't let her talk over herself or interrupt a potentially important speech.
 	// Should we play the dismount sound after she's done? or is that too disjointed from the camera dismounting act to make sense...
 	if ( IsRunningScriptedScene( pGlaDOS, false ) )

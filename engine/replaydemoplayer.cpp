@@ -430,7 +430,7 @@ void CReplayDemoPlayer::StopPlayback()
 
 		// Update the movie's state - the render succeeded
 		m_pMovie->SetIsRendered( true );
-		
+
 		// Compute the time it took to render
 		m_pMovie->SetRenderTime( MAX( 0, realtime - m_flStartRenderTime ) );
 

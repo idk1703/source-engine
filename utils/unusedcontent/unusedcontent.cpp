@@ -61,37 +61,37 @@ public:
 	CUtlSymbol( UtlSymId_t id ) : m_Id(id) {}
 	CUtlSymbol( char const* pStr );
 	CUtlSymbol( CUtlSymbol const& sym ) : m_Id(sym.m_Id) {}
-	
+
 	// operator=
 	CUtlSymbol& operator=( CUtlSymbol const& src ) { m_Id = src.m_Id; return *this; }
-	
+
 	// operator==
 	bool operator==( CUtlSymbol const& src ) const { return m_Id == src.m_Id; }
 	bool operator==( char const* pStr ) const;
-	
+
 	// Is valid?
 	bool IsValid() const { return m_Id != UTL_INVAL_SYMBOL; }
-	
+
 	// Gets at the symbol
 	operator UtlSymId_t const() const { return m_Id; }
-	
+
 	// Gets the string associated with the symbol
 	char const* String( ) const;
 
 	// Modules can choose to disable the static symbol table so to prevent accidental use of them.
 	static void DisableStaticSymbolTable();
-		
+
 protected:
 	UtlSymId_t   m_Id;
-		
+
 	// Initializes the symbol table
 	static void Initialize();
-	
+
 	// returns the current symbol table
 	static CUtlSymbolTable* CurrTable();
-		
+
 	// The standard global symbol table
-	static CUtlSymbolTable* s_pSymbolTable; 
+	static CUtlSymbolTable* s_pSymbolTable;
 
 	static bool s_bAllowStaticSymbolTable;
 
@@ -114,16 +114,16 @@ public:
 	// constructor, destructor
 	CUtlSymbolTable( int growSize = 0, int initSize = 32, bool caseInsensitive = false );
 	~CUtlSymbolTable();
-	
+
 	// Finds and/or creates a symbol based on the string
 	CUtlSymbol AddString( char const* pString );
 
 	// Finds the symbol for pString
 	CUtlSymbol Find( char const* pString );
-	
+
 	// Look up the string associated with a particular symbol
 	char const* String( CUtlSymbol id ) const;
-	
+
 	// Remove all symbols in the table.
 	void  RemoveAll();
 
@@ -159,8 +159,8 @@ protected:
 	CUtlRBTree<CStringPoolIndex, unsigned int>	m_Lookup;
 
 	typedef struct
-	{	
-		int m_TotalLen;		// How large is 
+	{
+		int m_TotalLen;		// How large is
 		int m_SpaceUsed;
 		char m_Data[1];
 	} StringPool_t;
@@ -175,7 +175,7 @@ private:
 	int FindPoolWithSpace( int len ) const;
 
 	const char* StringFromIndex( const CStringPoolIndex &index ) const;
-		
+
 	// Less function, for sorting strings
 	static bool SymLess( CStringPoolIndex const& i1, CStringPoolIndex const& i2 );
 	// case insensitive less function
@@ -205,7 +205,7 @@ private:
 // globals
 //-----------------------------------------------------------------------------
 
-CUtlSymbolTable* CUtlSymbol::s_pSymbolTable = 0; 
+CUtlSymbolTable* CUtlSymbol::s_pSymbolTable = 0;
 bool CUtlSymbol::s_bAllowStaticSymbolTable = true;
 
 
@@ -247,7 +247,7 @@ static CCleanupUtlSymbolTable g_CleanupSymbolTable;
 CUtlSymbolTable* CUtlSymbol::CurrTable()
 {
 	Initialize();
-	return s_pSymbolTable; 
+	return s_pSymbolTable;
 }
 
 
@@ -276,7 +276,7 @@ void CUtlSymbol::DisableStaticSymbolTable()
 
 bool CUtlSymbol::operator==( char const* pStr ) const
 {
-	if (m_Id == UTL_INVAL_SYMBOL) 
+	if (m_Id == UTL_INVAL_SYMBOL)
 		return false;
 	return strcmp( String(), pStr ) == 0;
 }
@@ -291,7 +291,7 @@ struct LessCtx_t
 {
 	char const* m_pUserString;
 	CUtlSymbolTable* m_pTable;
-	
+
 	LessCtx_t( ) : m_pUserString(0), m_pTable(0) {}
 };
 
@@ -313,7 +313,7 @@ bool CUtlSymbolTable::SymLess( CStringPoolIndex const& i1, CStringPoolIndex cons
 											g_LessCtx.m_pTable->StringFromIndex( i1 );
 	char const* str2 = (i2 == INVALID_STRING_INDEX) ? g_LessCtx.m_pUserString :
 											g_LessCtx.m_pTable->StringFromIndex( i2 );
-	
+
 	return strcmp( str1, str2 ) < 0;
 }
 
@@ -324,7 +324,7 @@ bool CUtlSymbolTable::SymLessi( CStringPoolIndex const& i1, CStringPoolIndex con
 											g_LessCtx.m_pTable->StringFromIndex( i1 );
 	char const* str2 = (i2 == INVALID_STRING_INDEX) ? g_LessCtx.m_pUserString :
 											g_LessCtx.m_pTable->StringFromIndex( i2 );
-	
+
 	return strcmpi( str1, str2 ) < 0;
 }
 
@@ -332,7 +332,7 @@ bool CUtlSymbolTable::SymLessi( CStringPoolIndex const& i1, CStringPoolIndex con
 // constructor, destructor
 //-----------------------------------------------------------------------------
 
-CUtlSymbolTable::CUtlSymbolTable( int growSize, int initSize, bool caseInsensitive ) : 
+CUtlSymbolTable::CUtlSymbolTable( int growSize, int initSize, bool caseInsensitive ) :
 	m_Lookup( growSize, initSize, caseInsensitive ? SymLessi : SymLess ), m_StringPools( 8 )
 {
 }
@@ -343,14 +343,14 @@ CUtlSymbolTable::~CUtlSymbolTable()
 
 
 CUtlSymbol CUtlSymbolTable::Find( char const* pString )
-{	
+{
 	if (!pString)
 		return CUtlSymbol();
-	
+
 	// Store a special context used to help with insertion
 	g_LessCtx.m_pUserString = pString;
 	g_LessCtx.m_pTable = this;
-	
+
 	// Passing this special invalid symbol makes the comparison function
 	// use the string passed in the context
 	UtlSymId_t idx = m_Lookup.Find( INVALID_STRING_INDEX );
@@ -380,11 +380,11 @@ int CUtlSymbolTable::FindPoolWithSpace( int len )	const
 
 CUtlSymbol CUtlSymbolTable::AddString( char const* pString )
 {
-	if (!pString) 
+	if (!pString)
 		return CUtlSymbol( UTL_INVAL_SYMBOL );
 
 	CUtlSymbol id = Find( pString );
-	
+
 	if (id.IsValid())
 		return id;
 
@@ -406,7 +406,7 @@ CUtlSymbol CUtlSymbolTable::AddString( char const* pString )
 	StringPool_t *pPool = m_StringPools[iPool];
 	Assert( pPool->m_SpaceUsed < 0xFFFF );	// This should never happen, because if we had a string > 64k, it
 											// would have been given its entire own pool.
-	
+
 	unsigned int iStringOffset = pPool->m_SpaceUsed;
 
 	memcpy( &pPool->m_Data[pPool->m_SpaceUsed], pString, len );
@@ -428,9 +428,9 @@ CUtlSymbol CUtlSymbolTable::AddString( char const* pString )
 
 char const* CUtlSymbolTable::String( CUtlSymbol id ) const
 {
-	if (!id.IsValid()) 
+	if (!id.IsValid())
 		return "";
-	
+
 	Assert( m_Lookup.IsValidIndex((UtlSymId_t)id) );
 	return StringFromIndex( m_Lookup[id] );
 }
@@ -443,7 +443,7 @@ char const* CUtlSymbolTable::String( CUtlSymbol id ) const
 void CUtlSymbolTable::RemoveAll()
 {
 	m_Lookup.RemoveAll();
-	
+
 	for ( int i=0; i < m_StringPools.Count(); i++ )
 		free( m_StringPools[i] );
 
@@ -552,12 +552,12 @@ IUniformRandomStream *random = &g_Random;
 static bool spewed = false;
 
 SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
-{	
+{
 	spewed = true;
 
 	printf( "%s", pMsg );
 	OutputDebugString( pMsg );
-	
+
 	if ( type == SPEW_ERROR )
 	{
 		printf( "\n" );
@@ -579,10 +579,10 @@ char *va( const char *fmt, ... )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : depth - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : depth -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void vprint( int depth, const char *fmt, ... )
 {
@@ -1019,8 +1019,8 @@ void BuildWhiteList()
 		vprint( 1, "Whitelist:\n\n" );
 
 
-		for ( int i = g_WhiteList.FirstInorder(); 
-			i != g_WhiteList.InvalidIndex(); 
+		for ( int i = g_WhiteList.FirstInorder();
+			i != g_WhiteList.InvalidIndex();
 			i = g_WhiteList.NextInorder( i ) )
 		{
 			UnusedContent::CUtlSymbol& sym = g_WhiteList[ i ];
@@ -1033,8 +1033,8 @@ void BuildWhiteList()
 	// dump the whitelist file list anyway
 	{
 		filesystem->RemoveFile( "whitelist_files.txt", "GAME" );
-		for ( int i = g_WhiteList.FirstInorder(); 
-			i != g_WhiteList.InvalidIndex(); 
+		for ( int i = g_WhiteList.FirstInorder();
+			i != g_WhiteList.InvalidIndex();
 			i = g_WhiteList.NextInorder( i ) )
 		{
 			UnusedContent::CUtlSymbol& sym = g_WhiteList[ i ];
@@ -1048,7 +1048,7 @@ void BuildWhiteList()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void printusage( void )
 {
@@ -1137,7 +1137,7 @@ void ParseFilesFromResList( UnusedContent::CUtlSymbol & resfilesymbol, CUtlRBTre
 						}
 						else
 						{
-							// 
+							//
 							ReferencedFile & slot = files[ idx ];
 							if ( slot.maplist.Find( resfilesymbol ) == slot.maplist.InvalidIndex() )
 							{
@@ -1252,7 +1252,7 @@ bool BuildReferencedFileList( CUtlVector< UnusedContent::CUtlSymbol >& resfiles,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CheckLogFile( void )
 {
@@ -1270,7 +1270,7 @@ void PrintHeader()
 }
 
 static bool ReferencedFileLessFunc( const ReferencedFile &lhs, const ReferencedFile &rhs )
-{ 
+{
 	char const *s1 = g_Analysis.symbols.String( lhs.sym );
 	char const *s2 = g_Analysis.symbols.String( rhs.sym );
 
@@ -1278,7 +1278,7 @@ static bool ReferencedFileLessFunc( const ReferencedFile &lhs, const ReferencedF
 }
 
 static bool FileEntryLessFunc( const FileEntry &lhs, const FileEntry &rhs )
-{ 
+{
 	char const *s1 = g_Analysis.symbols.String( lhs.sym );
 	char const *s2 = g_Analysis.symbols.String( rhs.sym );
 
@@ -1286,7 +1286,7 @@ static bool FileEntryLessFunc( const FileEntry &lhs, const FileEntry &rhs )
 }
 
 static bool RefFileLessFunc( const ReferencedFile &lhs, const ReferencedFile &rhs )
-{ 
+{
 	char const *s1 = g_Analysis.symbols.String( lhs.sym );
 	char const *s2 = g_Analysis.symbols.String( rhs.sym );
 
@@ -1311,7 +1311,7 @@ void Correlate( CUtlRBTree< ReferencedFile, int >& referencedfiles, CUtlVector< 
 {
 	int i;
 	int c = contentfiles.Count();
-	
+
 	double totalDiskSize = 0;
 	double totalReferencedDiskSize = 0;
 	double totalWhiteListDiskSize = 0;
@@ -1322,7 +1322,7 @@ void Correlate( CUtlRBTree< ReferencedFile, int >& referencedfiles, CUtlVector< 
 	}
 
 	vprint( 0, "Content tree size on disk %s\n", Q_pretifymem( totalDiskSize, 3 ) );
-	
+
 	// Analysis is to walk tree and see which files on disk are referenced in the .lst files
 	// Need a fast lookup from file symbol to referenced list
 	CUtlRBTree< ReferencedFile, int >	tree( 0, 0, ReferencedFileLessFunc );
@@ -1395,7 +1395,7 @@ void Correlate( CUtlRBTree< ReferencedFile, int >& referencedfiles, CUtlVector< 
 		{
 			vprint( 1, "%6i %12s: %s\n", ++index, Q_pretifymem( entry.size, 2 ), g_Analysis.symbols.String( entry.sym ) );
 		}
-		
+
 		i = unreftree.NextInorder( i );
 	}
 
@@ -1425,7 +1425,7 @@ void Correlate( CUtlRBTree< ReferencedFile, int >& referencedfiles, CUtlVector< 
 			}
 
 			logprint( "referenced.csv", "\n" );
-			
+
 			i = tree.NextInorder( i );
 		}
 	}
@@ -1455,7 +1455,7 @@ void Correlate( CUtlRBTree< ReferencedFile, int >& referencedfiles, CUtlVector< 
 			Q_strncpy( dir, dirname, backslash - dirname + 1);
 		}
 
-		
+
 		int idx = directories.Find( dir );
 		if ( idx == invalidindex )
 		{
@@ -1510,7 +1510,7 @@ void Correlate( CUtlRBTree< ReferencedFile, int >& referencedfiles, CUtlVector< 
 			++deletionCount;
 			deletionSize += entry.size;
 
-			if ( immediatedelete ) 
+			if ( immediatedelete )
 			{
 				if ( _chmod( g_Analysis.symbols.String( entry.sym ), _S_IWRITE ) == -1 )
 				{
@@ -1598,9 +1598,9 @@ void Correlate( CUtlRBTree< ReferencedFile, int >& referencedfiles, CUtlVector< 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : argc - 
-//			argv[] - 
+// Purpose:
+// Input  : argc -
+//			argv[] -
 // Output : int
 //-----------------------------------------------------------------------------
 int main( int argc, char* argv[] )
@@ -1651,7 +1651,7 @@ int main( int argc, char* argv[] )
 					Q_strlower( g_szReslistDir );
 					Q_FixSlashes( g_szReslistDir );
 					Q_AppendSlash( g_szReslistDir, sizeof( g_szReslistDir ) );
-					
+
 				}
 				break;
 			default:

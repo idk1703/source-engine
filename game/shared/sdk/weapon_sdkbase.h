@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -35,7 +35,7 @@ typedef enum
 	WEAPON_MP5,
 	WEAPON_SHOTGUN,
 	WEAPON_GRENADE,
-	
+
 	WEAPON_MAX,		// number of weapons weapon index
 } SDKWeaponID;
 
@@ -51,7 +51,7 @@ class CWeaponSDKBase : public CBaseCombatWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponSDKBase, CBaseCombatWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponSDKBase();
@@ -63,7 +63,7 @@ public:
 	// All predicted weapons need to implement and return true
 	virtual bool	IsPredicted() const { return true; }
 	virtual SDKWeaponID GetWeaponID( void ) const { return WEAPON_NONE; }
-	
+
 	// Get SDK weapon specific weapon data.
 	CSDKWeaponInfo const	&GetSDKWpnData() const;
 

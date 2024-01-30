@@ -1,6 +1,6 @@
 //===== Copyright (c) Valve Corporation, All rights reserved. ========//
 //
-// Purpose:  
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -31,9 +31,9 @@ class Color;
 // Usage model for the Dbg library
 //
 // 1. Assertions.
-// 
+//
 //   Assertions are used to detect and warn about invalid states
-//   
+//
 //   To use an assertion, use
 //
 //   Assert( (f == 5) );
@@ -43,7 +43,7 @@ class Color;
 //   AssertFloatEquals( f, 5.0f, 1e-3 );
 //
 //   The first will simply report that an assertion failed on a particular
-//   code file and line. The second version will display a print-f formatted message 
+//   code file and line. The second version will display a print-f formatted message
 //   along with the file and line, the third will display a generic message and
 //   will also cause the function BadFunc to be executed, and the last two
 //   will report an error if f is not equal to 5 (the last one asserts within
@@ -59,10 +59,10 @@ class Color;
 //					int x = 5;
 //					++x;
 //				}
-//           ); 
+//           );
 //
 //   Code can be activated based on the dynamic spew groups also. Use
-//  
+//
 //   DBG_DCODE( "group", level,
 //              { int x = 5; ++x; }
 //            );
@@ -154,7 +154,7 @@ PLATFORM_INTERFACE bool DoNewAssertDialog( const tchar *pFile, int line, const t
 #define  AssertFatalMsg( _exp, _msg )							_AssertMsg( _exp, _msg, ((void)0), true )
 #define  AssertFatalMsgOnce( _exp, _msg )						_AssertMsgOnce( _exp, _msg, true )
 #define  AssertFatalFunc( _exp, _f )							_AssertMsg( _exp, _T("Assertion Failed: " _T(#_exp), _f, true )
-#define  AssertFatalEquals( _exp, _expectedValue )				AssertFatalMsg2( (_exp) == (_expectedValue), _T("Expected %d but got %d!"), (_expectedValue), (_exp) ) 
+#define  AssertFatalEquals( _exp, _expectedValue )				AssertFatalMsg2( (_exp) == (_expectedValue), _T("Expected %d but got %d!"), (_expectedValue), (_exp) )
 #define  AssertFatalFloatEquals( _exp, _expectedValue, _tol )   AssertFatalMsg2( fabs((_exp) - (_expectedValue)) <= (_tol), _T("Expected %f but got %f!"), (_expectedValue), (_exp) )
 #define  VerifyFatal( _exp )									AssertFatal( _exp )
 #define  VerifyEqualsFatal( _exp, _expectedValue )				AssertFatalEquals( _exp, _expectedValue )
@@ -196,7 +196,7 @@ PLATFORM_INTERFACE bool DoNewAssertDialog( const tchar *pFile, int line, const t
 #endif // DBGFLAG_ASSERTFATAL
 
 // lightweight assert macros: in theory, can be run in release without slowing it down
-#if defined(_CERT) || defined(_RETAIL) 
+#if defined(_CERT) || defined(_RETAIL)
 #define AssertAligned(PTR)
 #else
 #  if defined( _X360 )
@@ -204,7 +204,7 @@ PLATFORM_INTERFACE bool DoNewAssertDialog( const tchar *pFile, int line, const t
 #  elif defined( DBGFLAG_ASSERT )
 #    define  AssertAligned( adr )                               Assert( ( ( ( intp ) ( adr ) ) & 0xf ) == 0 )
 #  else
-#  define AssertAligned(PTR) 
+#  define AssertAligned(PTR)
 #  endif
 #endif
 
@@ -219,7 +219,7 @@ PLATFORM_INTERFACE bool DoNewAssertDialog( const tchar *pFile, int line, const t
 #define  AssertOnce( _exp )       							_AssertMsgOnce( _exp, _T("Assertion Failed: ") _T(#_exp), false )
 #define  AssertMsgOnce( _exp, _msg )  						_AssertMsgOnce( _exp, _msg, false )
 #define  AssertFunc( _exp, _f )   							_AssertMsg( _exp, _T("Assertion Failed: ") _T(#_exp), _f, false )
-#define  AssertEquals( _exp, _expectedValue )              	AssertMsg2( (_exp) == (_expectedValue), _T("Expected %d but got %d!"), (_expectedValue), (_exp) ) 
+#define  AssertEquals( _exp, _expectedValue )              	AssertMsg2( (_exp) == (_expectedValue), _T("Expected %d but got %d!"), (_expectedValue), (_exp) )
 #define  AssertFloatEquals( _exp, _expectedValue, _tol )  	AssertMsg2( fabs((_exp) - (_expectedValue)) <= (_tol), _T("Expected %f but got %f!"), (_expectedValue), (_exp) )
 #define  Verify( _exp )           							Assert( _exp )
 #define  VerifyEquals( _exp, _expectedValue )           	AssertEquals( _exp, _expectedValue )
@@ -374,12 +374,12 @@ PLATFORM_INTERFACE void _Error_AlwaysSpewCallStack_Length( int iMaxCallStackLeng
 #define DBG_CODE( _code )            if (0) ; else { _code }
 #define DBG_CODE_NOSCOPE( _code )	 _code
 #define DBG_DCODE( _g, _l, _code )   if (IsSpewActive( _g, _l )) { _code } else {}
-#define DBG_BREAK()                  DebuggerBreak()	/* defined in platform.h */ 
+#define DBG_BREAK()                  DebuggerBreak()	/* defined in platform.h */
 
 #else /* not _DEBUG */
 
 #define DBG_CODE( _code )            ((void)0)
-#define DBG_CODE_NOSCOPE( _code )	 
+#define DBG_CODE_NOSCOPE( _code )
 #define DBG_DCODE( _g, _l, _code )   ((void)0)
 #define DBG_BREAK()                  ((void)0)
 
@@ -400,8 +400,8 @@ PLATFORM_INTERFACE void _Error_AlwaysSpewCallStack_Length( int iMaxCallStackLeng
 template<typename DEST_POINTER_TYPE, typename SOURCE_POINTER_TYPE>
 inline DEST_POINTER_TYPE assert_cast(SOURCE_POINTER_TYPE* pSource)
 {
-    Assert( static_cast<DEST_POINTER_TYPE>(pSource) == dynamic_cast<DEST_POINTER_TYPE>(pSource) );
-    return static_cast<DEST_POINTER_TYPE>(pSource);
+	Assert( static_cast<DEST_POINTER_TYPE>(pSource) == dynamic_cast<DEST_POINTER_TYPE>(pSource) );
+	return static_cast<DEST_POINTER_TYPE>(pSource);
 }
 #else
 #define assert_cast static_cast
@@ -429,7 +429,7 @@ inline void AssertValidStringPtr( const tchar* ptr, int maxchar = 0xFFFFFF ) 		 
 template<class T> inline void AssertValidReadPtr( T* ptr, int count = 1 )		     {  }
 template<class T> inline void AssertValidWritePtr( T* ptr, int count = 1 )		     {  }
 template<class T> inline void AssertValidReadWritePtr( T* ptr, int count = 1 )	     {  }
-#define AssertValidThis() 
+#define AssertValidThis()
 #endif
 
 //-----------------------------------------------------------------------------
@@ -440,16 +440,16 @@ class CReentryGuard
 {
 public:
 	CReentryGuard(int *pSemaphore)
-	 : m_pSemaphore(pSemaphore)
+	: m_pSemaphore(pSemaphore)
 	{
 		++(*m_pSemaphore);
 	}
-	
+
 	~CReentryGuard()
 	{
 		--(*m_pSemaphore);
 	}
-	
+
 private:
 	int *m_pSemaphore;
 };
@@ -483,7 +483,7 @@ class CDbgFmtMsg
 {
 public:
 	CDbgFmtMsg(const tchar *pszFormat, ...)
-	{ 
+	{
 		va_list arg_ptr;
 
 		va_start(arg_ptr, pszFormat);
@@ -493,9 +493,9 @@ public:
 		m_szBuf[sizeof(m_szBuf)-1] = 0;
 	}
 
-	operator const tchar *() const				
-	{ 
-		return m_szBuf; 
+	operator const tchar *() const
+	{
+		return m_szBuf;
 	}
 
 private:
@@ -526,108 +526,108 @@ template< class Type >
 class CDataWatcher
 {
 public:
-	const Type& operator=( const Type &val ) 
-	{ 
-		return Set( val ); 
+	const Type& operator=( const Type &val )
+	{
+		return Set( val );
 	}
-	
-	const Type& operator=( const CDataWatcher<Type> &val ) 
-	{ 
-		return Set( val.m_Value ); 
+
+	const Type& operator=( const CDataWatcher<Type> &val )
+	{
+		return Set( val.m_Value );
 	}
-	
+
 	const Type& Set( const Type &val )
 	{
 		// Put your breakpoint here
 		m_Value = val;
 		return m_Value;
 	}
-	
+
 	Type& GetForModify()
 	{
 		return m_Value;
 	}
-	
-	const Type& operator+=( const Type &val ) 
+
+	const Type& operator+=( const Type &val )
 	{
-		return Set( m_Value + val ); 
+		return Set( m_Value + val );
 	}
-	
-	const Type& operator-=( const Type &val ) 
+
+	const Type& operator-=( const Type &val )
 	{
-		return Set( m_Value - val ); 
+		return Set( m_Value - val );
 	}
-	
-	const Type& operator/=( const Type &val ) 
+
+	const Type& operator/=( const Type &val )
 	{
-		return Set( m_Value / val ); 
+		return Set( m_Value / val );
 	}
-	
-	const Type& operator*=( const Type &val ) 
+
+	const Type& operator*=( const Type &val )
 	{
-		return Set( m_Value * val ); 
+		return Set( m_Value * val );
 	}
-	
-	const Type& operator^=( const Type &val ) 
+
+	const Type& operator^=( const Type &val )
 	{
-		return Set( m_Value ^ val ); 
+		return Set( m_Value ^ val );
 	}
-	
-	const Type& operator|=( const Type &val ) 
+
+	const Type& operator|=( const Type &val )
 	{
-		return Set( m_Value | val ); 
+		return Set( m_Value | val );
 	}
-	
+
 	const Type& operator++()
 	{
 		return (*this += 1);
 	}
-	
+
 	Type operator--()
 	{
 		return (*this -= 1);
 	}
-	
+
 	Type operator++( int ) // postfix version..
 	{
 		Type val = m_Value;
 		(*this += 1);
 		return val;
 	}
-	
+
 	Type operator--( int ) // postfix version..
 	{
 		Type val = m_Value;
 		(*this -= 1);
 		return val;
 	}
-	
-	// For some reason the compiler only generates type conversion warnings for this operator when used like 
+
+	// For some reason the compiler only generates type conversion warnings for this operator when used like
 	// CNetworkVarBase<unsigned tchar> = 0x1
 	// (it warns about converting from an int to an unsigned char).
 	template< class C >
-	const Type& operator&=( C val ) 
-	{ 
-		return Set( m_Value & val ); 
-	}
-	
-	operator const Type&() const 
+	const Type& operator&=( C val )
 	{
-		return m_Value; 
+		return Set( m_Value & val );
 	}
-	
-	const Type& Get() const 
+
+	operator const Type&() const
 	{
-		return m_Value; 
+		return m_Value;
 	}
-	
-	const Type* operator->() const 
+
+	const Type& Get() const
 	{
-		return &m_Value; 
+		return m_Value;
 	}
-	
+
+	const Type* operator->() const
+	{
+		return &m_Value;
+	}
+
 	Type m_Value;
-	
+
 };
 
 #else

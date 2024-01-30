@@ -34,11 +34,11 @@ CLeaderboardDialog::CLeaderboardDialog( vgui::Panel *pParent ) : BaseClass( pPar
 	m_pProgressBg		= new vgui::Panel( this, "ProgressBg" );
 	m_pProgressBar		= new vgui::Panel( this, "ProgressBar" );
 	m_pProgressPercent	= new vgui::Label( this, "ProgressPercent", "" );
-	m_pNumbering		= new vgui::Label( this, "Numbering", "" ); 
+	m_pNumbering		= new vgui::Label( this, "Numbering", "" );
 	m_pUpArrow			= new vgui::Label( this, "UpArrow", "" );
 	m_pDownArrow		= new vgui::Label( this, "DownArrow", "" );
 	m_pBestMoments		= new vgui::Label( this, "BestMoments", "" );
-} 
+}
 
 CLeaderboardDialog::~CLeaderboardDialog()
 {
@@ -133,7 +133,7 @@ void CLeaderboardDialog::PerformLayout( void )
 }
 
 //----------------------------------------------------------
-// 
+//
 //----------------------------------------------------------
 void CLeaderboardDialog::ApplySettings( KeyValues *pResourceData )
 {
@@ -146,7 +146,7 @@ void CLeaderboardDialog::ApplySettings( KeyValues *pResourceData )
 }
 
 //----------------------------------------------------------
-// 
+//
 //----------------------------------------------------------
 void CLeaderboardDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -159,7 +159,7 @@ void CLeaderboardDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //----------------------------------------------------------
-// 
+//
 //----------------------------------------------------------
 void CLeaderboardDialog::OnCommand( const char *pCommand )
 {
@@ -180,7 +180,7 @@ void CLeaderboardDialog::OnCommand( const char *pCommand )
 }
 
 //----------------------------------------------------------
-// 
+//
 //----------------------------------------------------------
 void CLeaderboardDialog::AddLeaderboardEntry( const char **ppEntries, int ct )
 {
@@ -250,7 +250,7 @@ bool CLeaderboardDialog::GetPlayerStats( int rank, bool bFriends )
 			// Center on the player's xuid
 			XUserGetXUID( XBX_GetPrimaryUserId(), &xuid );
 
-			ret = XUserCreateStatsEnumeratorByXuid( 
+			ret = XUserCreateStatsEnumeratorByXuid(
 				0,
 				xuid,
 				NUM_ROWS_PER_QUERY,
@@ -262,7 +262,7 @@ bool CLeaderboardDialog::GetPlayerStats( int rank, bool bFriends )
 		else
 		{
 			// Start at the requested rank
-			ret = XUserCreateStatsEnumeratorByRank( 
+			ret = XUserCreateStatsEnumeratorByRank(
 				0,
 				rank,
 				NUM_ROWS_PER_QUERY,
@@ -467,7 +467,7 @@ void CLeaderboardDialog::UpdateLeaderboard( int iNewRank )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLeaderboardDialog::HandleKeyRepeated( vgui::KeyCode code )
 {
@@ -490,7 +490,7 @@ void CLeaderboardDialog::OnKeyCodePressed( vgui::KeyCode code )
 			if ( m_pStats && idx < (int)m_pStats->pViews[0].dwNumRows )
 			{
 				XUSER_STATS_ROW &row = m_pStats->pViews[0].pRows[idx];
-				XShowGamerCardUI( XBX_GetPrimaryUserId(), row.xuid );		
+				XShowGamerCardUI( XBX_GetPrimaryUserId(), row.xuid );
 			}
 		}
 #endif

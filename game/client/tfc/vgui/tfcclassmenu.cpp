@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,9 +30,9 @@ CTFCClassMenu::CTFCClassMenu(IViewPort *pViewPort) : CClassMenu(pViewPort)
 {
 }
 
-const char *CTFCClassMenu::GetName( void ) 
-{ 
-	return PANEL_CLASS; 
+const char *CTFCClassMenu::GetName( void )
+{
+	return PANEL_CLASS;
 }
 
 void CTFCClassMenu::ShowPanel(bool bShow)
@@ -55,7 +55,6 @@ void CTFCClassMenu::Update()
 	}
 	else
 	{
-		SetVisibleButton( "CancelButton", true ); 
+		SetVisibleButton( "CancelButton", true );
 	}
 }
-

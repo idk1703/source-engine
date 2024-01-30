@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -19,9 +19,9 @@ extern void v_strncpy(char *dest, const char *src, int bufsize);
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CRulesInfoMsgHandlerDetails::CRulesInfoMsgHandlerDetails( CRulesInfo *baseobject, HANDLERTYPE type, void *typeinfo /*= NULL*/ ) 
+CRulesInfoMsgHandlerDetails::CRulesInfoMsgHandlerDetails( CRulesInfo *baseobject, HANDLERTYPE type, void *typeinfo /*= NULL*/ )
 	: CMsgHandler( type, typeinfo )
-{ 
+{
 	m_pRulesInfo = baseobject;
 	m_vRules = new CUtlVector<vgui::KeyValues *>();
 }
@@ -34,9 +34,9 @@ bool CRulesInfoMsgHandlerDetails::Process( netadr_t *from, CMsgBuffer *msg )
 	m_vRules->RemoveAll();
 	m_vRules->Purge();
 
-	
+
 	// Check type of data.
-	if (msg->ReadByte() != S2A_RULES) 
+	if (msg->ReadByte() != S2A_RULES)
 		return false;
 
 
@@ -81,9 +81,7 @@ bool CRulesInfoMsgHandlerDetails::Process( netadr_t *from, CMsgBuffer *msg )
 
 
 	m_pRulesInfo->UpdateServer(from, m_vRules);
-	
+
 
 	return true;
 }
-
-

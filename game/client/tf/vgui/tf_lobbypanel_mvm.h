@@ -23,7 +23,7 @@ class CLobbyPanel_MvM : public CBaseLobbyPanel
 
 public:
 	CLobbyPanel_MvM( vgui::Panel *pParent, CBaseLobbyContainerFrame* pLobbyContainer );
-	
+
 	virtual ~CLobbyPanel_MvM();
 
 	//

@@ -30,5 +30,3 @@ public:
 };
 
 #endif // ENTITY_ARMOR_H
-
-

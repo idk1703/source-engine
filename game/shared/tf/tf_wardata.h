@@ -22,7 +22,7 @@
 #endif
 
 //---------------------------------------------------------------------------------
-// Purpose: The shared object that contains a user's stats for a war	
+// Purpose: The shared object that contains a user's stats for a war
 //---------------------------------------------------------------------------------
 class CWarData : public GCSDK::CProtoBufSharedObject< CSOWarData, k_EEConTypeWarData >
 {
@@ -47,7 +47,7 @@ public:
 // Purpose: Holds the global stats for a war
 //
 //			On the GC, the global stats are tabulated at load-time from all current
-//			SQL records and is then modified in-memory.  
+//			SQL records and is then modified in-memory.
 //
 //			On the client, the global stats are requested whenever they are queried
 //			but we limit how often we request.
@@ -118,7 +118,7 @@ private:
 CTFWarGlobalDataHelper& GetWarData();
 #endif // CLIENT_DLL || GC
 
-CWarData* GetPlayerWarData( const CSteamID& steamID, war_definition_index_t warDefIndex, bool bLoadEvenIfWarInactive 
+CWarData* GetPlayerWarData( const CSteamID& steamID, war_definition_index_t warDefIndex, bool bLoadEvenIfWarInactive
 #ifdef GC_DLL
 	, bool bLoadSOCacheIfNeeded
 #endif

@@ -37,7 +37,7 @@ ConVar	obj_selfheal_amount( "obj_selfheal_amount","3", FCVAR_NONE, "Amount of he
 #define SELFHEAL_THINK_CONTEXT		"SelfHealThink"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectSelfHeal::CObjectSelfHeal()
 {
@@ -45,7 +45,7 @@ CObjectSelfHeal::CObjectSelfHeal()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSelfHeal::Spawn()
 {
@@ -58,14 +58,14 @@ void CObjectSelfHeal::Spawn()
 	m_iHealth = obj_selfheal_health.GetInt();
 
 	SetType( OBJ_SELFHEAL );
-	m_fObjectFlags |= OF_SUPPRESS_NOTIFY_UNDER_ATTACK | OF_SUPPRESS_TECH_ANALYZER | 
+	m_fObjectFlags |= OF_SUPPRESS_NOTIFY_UNDER_ATTACK | OF_SUPPRESS_TECH_ANALYZER |
 		OF_DONT_AUTO_REPAIR | OF_MUST_BE_BUILT_ON_ATTACHMENT;
 
 	BaseClass::Spawn();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSelfHeal::Precache()
 {
@@ -73,7 +73,7 @@ void CObjectSelfHeal::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSelfHeal::FinishedBuilding( void )
 {

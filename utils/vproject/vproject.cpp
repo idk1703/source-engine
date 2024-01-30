@@ -36,7 +36,7 @@ int					g_numProjects;
 NOTIFYICONDATA		g_iconData;
 HMENU				g_hMenu;
 int					g_nActiveVProject;
-POINT				g_cursorPoint;			
+POINT				g_cursorPoint;
 
 void TrayMessageHandler( HWND hWnd, UINT uMessageID );
 
@@ -78,7 +78,7 @@ void SetVProject( const char *pProjectName )
 	}
 
 	// Changed to CURRENT_USER to solve security issues in vista!
-	Sys_SetRegistryString( 
+	Sys_SetRegistryString(
 		//"HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Environment\\VProject",
 		"HKEY_CURRENT_USER\\Environment\\VProject"
 		pGamedir );
@@ -211,7 +211,7 @@ void SaveRegistryValues()
 	char			keyBuff[32];
 	char			*pProjectName;
 	char			*pGamedir;
-	int				len;	
+	int				len;
 	int				i;
 
 	for ( i=0; i<MAX_PROJECTS; i++ )
@@ -234,7 +234,7 @@ void SaveRegistryValues()
 		if ( len == -1 )
 		{
 			// kill it
-			valueBuff[0] = '\0';		
+			valueBuff[0] = '\0';
 		}
 
 		Sys_SetRegistryString( keyBuff, valueBuff );
@@ -291,14 +291,14 @@ void ShiftActiveProjectDown()
 //	ModifyDlg_Proc
 //
 //-----------------------------------------------------------------------------
-BOOL CALLBACK ModifyDlg_Proc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam ) 
+BOOL CALLBACK ModifyDlg_Proc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 {
 	size_t	len;
 	int		width;
 	int		height;
 	RECT	rect;
 
-	switch ( message ) 
+	switch ( message )
 	{
 		case WM_INITDIALOG:
 			SetDlgItemText( hWnd, IDC_MODIFY_PROJECT, g_project_name );
@@ -306,15 +306,15 @@ BOOL CALLBACK ModifyDlg_Proc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 
 			// center dialog
 			GetWindowRect( hWnd, &rect );
-			width = GetSystemMetrics( SM_CXSCREEN ); 
-			height = GetSystemMetrics( SM_CYSCREEN ); 
+			width = GetSystemMetrics( SM_CXSCREEN );
+			height = GetSystemMetrics( SM_CYSCREEN );
 			SetWindowPos( hWnd, NULL, ( width - ( rect.right - rect.left ) )/2, ( height - ( rect.bottom - rect.top ) )/2, 0, 0, SWP_NOSIZE | SWP_NOZORDER );
 			return ( TRUE );
 
-		case WM_COMMAND: 
-            switch ( LOWORD( wParam ) ) 
-            {
-				case IDC_OK: 
+		case WM_COMMAND:
+			switch ( LOWORD( wParam ) )
+			{
+				case IDC_OK:
 					GetDlgItemText( hWnd, IDC_MODIFY_PROJECT, g_project_name, sizeof( g_project_name ) );
 					GetDlgItemText( hWnd, IDC_MODIFY_GAMEDIR, g_project_gamedir, sizeof( g_project_gamedir ) );
 
@@ -328,14 +328,14 @@ BOOL CALLBACK ModifyDlg_Proc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 					// fall through
 
 				case IDCANCEL:
-				case IDC_CANCEL: 
+				case IDC_CANCEL:
 					EndDialog( hWnd, wParam );
-					return ( TRUE ); 
+					return ( TRUE );
 			}
-			break; 
+			break;
 	}
-	return ( FALSE ); 
-} 
+	return ( FALSE );
+}
 
 //-----------------------------------------------------------------------------
 //	ModifyDlg_Open
@@ -344,7 +344,7 @@ BOOL CALLBACK ModifyDlg_Proc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 BOOL ModifyDlg_Open()
 {
 	int result;
-	
+
 	result = DialogBox( g_hInstance, MAKEINTRESOURCE( IDD_VPROJECT ), g_hWnd, ( DLGPROC )ModifyDlg_Proc );
 	if ( LOWORD( result ) != IDC_OK )
 	{
@@ -472,7 +472,7 @@ void TrayMessageHandler( HWND hWnd, UINT uMessageID )
 
 //-----------------------------------------------------------------------------
 //	Main_WndProc
-// 
+//
 //-----------------------------------------------------------------------------
 LRESULT CALLBACK Main_WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 {
@@ -481,7 +481,7 @@ LRESULT CALLBACK Main_WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
 		case WM_DESTROY:
 			PostQuitMessage( 0 );
 			return 0L;
-	
+
 		case WM_TRAY:
 			if ( lParam == WM_LBUTTONDOWN || lParam == WM_RBUTTONDOWN )
 			{
@@ -493,7 +493,7 @@ LRESULT CALLBACK Main_WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
 		case WM_COMMAND:
 			TrayMessageHandler( hWnd, LOWORD( wParam ) );
 			break;
-	}	
+	}
 
 	return ( DefWindowProc( hWnd, message, wParam, lParam ) );
 }
@@ -525,7 +525,7 @@ bool Startup()
 	}
 
 	// create the hidden window
-	g_hWnd = CreateWindow( 
+	g_hWnd = CreateWindow(
 				VPROJECT_CLASSNAME,
 				0,
 				WS_OVERLAPPEDWINDOW,
@@ -537,7 +537,7 @@ bool Startup()
 				NULL,
 				g_hInstance,
 				NULL );
-	
+
 	// Create tray icon
 	g_iconData.cbSize           = sizeof( NOTIFYICONDATA );
 	g_iconData.hIcon            = LoadIcon( g_hInstance, (LPCTSTR)IDI_VPROJECT );
@@ -581,7 +581,7 @@ bool Startup()
 
 //-----------------------------------------------------------------------------
 //	Shutdown
-// 
+//
 // Free all resources
 //-----------------------------------------------------------------------------
 void Shutdown()
@@ -611,23 +611,23 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine
 	}
 
 	HWND hwnd = FindWindow( VPROJECT_CLASSNAME, NULL );
-	if ( hwnd ) 
+	if ( hwnd )
 	{
 		// single instance only
 		return ( FALSE );
 	}
 
-    if ( !Startup() )
+	if ( !Startup() )
 	{
 		goto cleanUp;
 	}
 
 	// message pump
 	while ( GetMessage( &msg, NULL, 0, 0 ) )
-    {
+	{
 		TranslateMessage( &msg );
 		DispatchMessage( &msg );
-    }
+	}
 
 	// no-error, end of app
 	error = false;
@@ -635,14 +635,12 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine
 cleanUp:
 	if ( error )
 	{
-        char str[255];
-        FormatMessage( FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS, NULL, GetLastError(), 0, str, 255, NULL );
+		char str[255];
+		FormatMessage( FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS, NULL, GetLastError(), 0, str, 255, NULL );
 		MessageBox( NULL, str, NULL, MB_OK );
 	}
 
 	Shutdown();
 
-    return ( (int)msg.wParam );
+	return ( (int)msg.wParam );
 }
-
-

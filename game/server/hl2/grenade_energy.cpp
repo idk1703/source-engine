@@ -23,7 +23,7 @@ BEGIN_DATADESC( CGrenadeEnergy )
 
 	DEFINE_FIELD( m_flMaxFrame,	  FIELD_INTEGER ),
 	DEFINE_FIELD( m_nEnergySprite, FIELD_INTEGER ),
-	DEFINE_FIELD( m_flLaunchTime, FIELD_TIME ),		
+	DEFINE_FIELD( m_flLaunchTime, FIELD_TIME ),
 
 	// Function pointers
 	DEFINE_FUNCTION( Animate ),
@@ -53,7 +53,7 @@ void CGrenadeEnergy::Spawn( void )
 	m_flCycle		= 0;
 	m_flLaunchTime	= gpGlobals->curtime;
 
-	SetCollisionGroup( HL2COLLISION_GROUP_HOUNDEYE ); 
+	SetCollisionGroup( HL2COLLISION_GROUP_HOUNDEYE );
 
 	UTIL_SetSize( this, vec3_origin, vec3_origin );
 
@@ -70,7 +70,7 @@ void CGrenadeEnergy::Shoot( CBaseEntity* pOwner, const Vector &vStart, Vector vV
 {
 	CGrenadeEnergy *pEnergy = (CGrenadeEnergy *)CreateEntityByName( "grenade_energy" );
 	pEnergy->Spawn();
-	
+
 	UTIL_SetOrigin( pEnergy, vStart );
 	pEnergy->SetAbsVelocity( vVelocity );
 	pEnergy->SetOwnerEntity( pOwner );
@@ -131,7 +131,7 @@ void CGrenadeEnergy::GrenadeEnergyTouch( CBaseEntity *pOther )
 			pPlayer->m_Local.m_vecPunchAngle.SetY( flKick * (random->RandomInt(0,1) == 1) ? -1 : 1 );
 		}
 		float flDamage = m_flDamage * flLifeLeft;
-		if (flDamage < 1) 
+		if (flDamage < 1)
 		{
 			flDamage = 1;
 		}
@@ -147,7 +147,7 @@ void CGrenadeEnergy::GrenadeEnergyTouch( CBaseEntity *pOther )
 
 void CGrenadeEnergy::Detonate(void)
 {
-	m_takedamage	= DAMAGE_NO;	
+	m_takedamage	= DAMAGE_NO;
 	UTIL_Remove( this );
 }
 

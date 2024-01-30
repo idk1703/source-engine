@@ -312,7 +312,7 @@ static void TransferRemainingChannels( CDmeFilmClip *shot, CDmeChannelsClip *des
 	}
 }
 
-static void SetupBoneTransform( CDmeFilmClip *shot, CDmeChannelsClip *srcChannelsClip, CDmeChannelsClip *channelsClip, 
+static void SetupBoneTransform( CDmeFilmClip *shot, CDmeChannelsClip *srcChannelsClip, CDmeChannelsClip *channelsClip,
 	CDmElement *control, CDmeGameModel *gameModel, const char *basename, studiohdr_t *hdr, int bonenum, const char *boneName, bool bAttachToGameRecording )
 {
 	const char *channelNames[] = { "position", "orientation" };
@@ -470,7 +470,7 @@ static void SetupBoneTransform( CDmeFilmClip *shot, CDmeChannelsClip *srcChannel
 //-----------------------------------------------------------------------------
 // Sets up the root transform
 //-----------------------------------------------------------------------------
-static void SetupRootTransform( CDmeFilmClip *shot, CDmeChannelsClip *srcChannelsClip, 
+static void SetupRootTransform( CDmeFilmClip *shot, CDmeChannelsClip *srcChannelsClip,
 	CDmeChannelsClip *channelsClip, CDmElement *control, CDmeGameModel *gameModel, const char *basename, bool bAttachToGameRecording )
 {
 	char *channelNames[] = { "position", "orientation" };
@@ -598,7 +598,7 @@ static void CreateProceduralPreset( CDmePresetGroup *pPresetGroup, const char *p
 		if ( !bIdentity && !bRandomize )
 			continue;
 
-		CDmElement *pControlValue = pPreset->FindOrAddControlValue( pControl->GetName() ); 
+		CDmElement *pControlValue = pPreset->FindOrAddControlValue( pControl->GetName() );
 
 		if ( !bIdentity )
 		{
@@ -811,7 +811,7 @@ void AddIllumPositionAttribute( CDmeGameModel *pGameModel )
 //-----------------------------------------------------------------------------
 // Creates an animation set
 //-----------------------------------------------------------------------------
-CDmeAnimationSet *CreateAnimationSet( CDmeFilmClip *pMovie, CDmeFilmClip *pShot, 
+CDmeAnimationSet *CreateAnimationSet( CDmeFilmClip *pMovie, CDmeFilmClip *pShot,
 	CDmeGameModel *pGameModel, const char *pAnimationSetName, int nSequenceToUse, bool bAttachToGameRecording )
 {
 	CDmeAnimationSet *pAnimationSet = CreateElement< CDmeAnimationSet >( pAnimationSetName, pMovie->GetFileId() );
@@ -879,7 +879,7 @@ CDmeAnimationSet *CreateAnimationSet( CDmeFilmClip *pMovie, CDmeFilmClip *pShot,
 
 	// Create default preset groups for the animation set
 	CreatePresetGroups( pAnimationSet, pGameModel->GetModelName() );
-	
+
 	// Builds the preset groups displayed in the upper left of the animation set panel
 	BuildGroupMappings( pAnimationSet );
 

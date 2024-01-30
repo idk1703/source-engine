@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -31,7 +31,7 @@ LINK_ENTITY_TO_CLASS( grenade_antipersonnel, CGrenadeAntiPersonnel );
 PRECACHE_WEAPON_REGISTER(grenade_antipersonnel);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CGrenadeAntiPersonnel::CGrenadeAntiPersonnel()
 {
@@ -50,7 +50,7 @@ void CGrenadeAntiPersonnel::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeAntiPersonnel::Spawn( void )
 {
@@ -83,7 +83,7 @@ void CGrenadeAntiPersonnel::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeAntiPersonnel::UpdateOnRemove( void )
 {
@@ -158,7 +158,7 @@ void CGrenadeAntiPersonnel::Detonate( void )
 		if ( pEntity->GetTeam() == GetTeam() )
 			continue;
 
-		if ( pEntity->GetServerVehicle() ) 
+		if ( pEntity->GetServerVehicle() )
 		{
 			IPhysicsObject *pPhysObject = pEntity->VPhysicsGetObject();
 			if ( pPhysObject )
@@ -171,17 +171,17 @@ void CGrenadeAntiPersonnel::Detonate( void )
 				{
 					vecForceDir.z = 1.0f;
 					VectorNormalize( vecForceDir );
-					
+
 					float flForce = pPhysObject->GetMass();
 					flForce += ( 4 * 500.0f );				// Wheels
 					flForce *= weapon_antipersonnel_grenade_force.GetFloat();
 					flForce *= ( 1.0f - ( flDistance / m_DmgRadius ) );
-					
+
 					vecForceDir *= flForce;
-					
+
 					pPhysObject->ApplyForceOffset( vecForceDir, GetAbsOrigin() );
 				}
-			}		
+			}
 		}
 	}
 }
@@ -206,6 +206,3 @@ CGrenadeAntiPersonnel *CGrenadeAntiPersonnel::Create( const Vector &vecOrigin, c
 
 	return pGrenade;
 }
-
-
-

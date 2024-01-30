@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -66,7 +66,7 @@ public:
 	};
 	virtual bool AddColumnToSection(int sectionID, const char *columnName, const char *columnText, int columnFlags, int width, HFont fallbackFont = INVALID_FONT );
 	virtual bool AddColumnToSection(int sectionID, const char *columnName, const wchar_t *columnText, int columnFlags, int width, HFont fallbackFont = INVALID_FONT );
-	
+
 	// modifies the text in an existing column
 	virtual bool ModifyColumn(int sectionID, const char *columnName, const wchar_t *columnText);
 
@@ -89,7 +89,7 @@ public:
 	//=============================================================================
 	// HPE_BEGIN:
 	// [menglish] Getters and setters for several item and section objects
-	//=============================================================================	 
+	//=============================================================================
 	virtual void SetItemBgColor( int itemID, Color color );
 	virtual int GetColumnIndexByName(int sectionID, char* name);
 	virtual int GetLineSpacing() { return m_iLineSpacing; }
@@ -108,7 +108,7 @@ public:
 		"RowLeftClick"			"itemID"
 		"RowDoubleLeftClick"	"itemID"
 	*/
-	
+
 	// returns the number of columns in a section
 	virtual int GetColumnCountBySection(int sectionID);
 
@@ -147,7 +147,7 @@ public:
 	virtual int GetItemCount();
 
 	// returns the item ID from the row, again ignoring section dividers - valid from [0, GetItemCount )
-	virtual int GetItemIDFromRow(int row);		
+	virtual int GetItemIDFromRow(int row);
 
 	// returns the row that this itemID occupies. -1 if the itemID is invalid
 	virtual int GetRowFromItemID(int itemID);
@@ -162,7 +162,7 @@ public:
 	// HPE_BEGIN:
 	// [menglish] Get the bounds of an item or column.
 	//=============================================================================
-	 
+
 	// gets the local coordinates of a cell using the max width for every column
 	virtual bool GetMaxCellBounds(int itemID, int column, int &x, int &y, int &wide, int &tall);
 
@@ -176,7 +176,7 @@ public:
 	// [tj] Accessors for header drawing
 	void SetDrawHeaders(bool drawHeaders) { m_bDrawSectionHeaders = drawHeaders; }
 	bool GetDrawHeaders() { return m_bDrawSectionHeaders; }
-	 
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
@@ -199,7 +199,7 @@ public:
 	// image handling
 	virtual void SetImageList(ImageList *imageList, bool deleteImageListWhenDone);
 
-    virtual void ScrollToItem(int iItem);
+	virtual void ScrollToItem(int iItem);
 
 	virtual void SetProportional(bool state);
 
@@ -286,7 +286,7 @@ private:
 	CUtlVector<section_t> 				m_Sections;
 	CUtlLinkedList<CItemButton *, int> 	m_Items;
 	CUtlLinkedList<CItemButton *, int> 	m_FreeItems;
-    CUtlVector<CItemButton *> 			m_SortedItems;
+	CUtlVector<CItemButton *> 			m_SortedItems;
 
 	CUtlVector<color_override_t> 		m_ColorOverrides;
 
@@ -299,7 +299,7 @@ private:
 	int m_iSectionGap;
 
 	int FindSectionIndexByID(int sectionID);
-    void ReSortList();
+	void ReSortList();
 
 	ScrollBar *m_pScrollBar;
 	ImageList *m_pImageList;
@@ -310,7 +310,7 @@ private:
 	HFont m_hHeaderFont;
 	HFont m_hRowFont;
 	//=============================================================================
-	// HPE_BEGIN:	
+	// HPE_BEGIN:
 	//=============================================================================
 	// [tj] Whether or not this list should respond to the mouse
 	bool m_clickable;

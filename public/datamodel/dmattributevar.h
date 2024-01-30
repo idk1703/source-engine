@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -143,7 +143,7 @@ public:
 	// Array count
 	int			Count() const;
 
-	// Gets 
+	// Gets
 	const void*	GetUntyped( int i ) const;
 
 	// String conversion
@@ -227,7 +227,7 @@ protected:
 template< class T, class B >
 class CDmaArrayBase : public CDmaArrayConstBase< T, B >
 {
-public:	
+public:
 	// Insertion
 	int		AddToTail();
 	int		InsertBefore( int elem );
@@ -459,16 +459,16 @@ class CDmaArray : public CDmaDecorator< T, CDmaArrayBase< T, CDmaDataInternal< C
 	DECLARE_ATTRIBUTE_ARRAY_VARIABLE( CDmaArray, T );
 
 public:
-	const CDmaArray<T>& operator=( const CDmaArray<T> &val ) 
-	{ 
-		CopyArray( val.Base(), val.Count() ); 
-		return *this; 
+	const CDmaArray<T>& operator=( const CDmaArray<T> &val )
+	{
+		CopyArray( val.Base(), val.Count() );
+		return *this;
 	}
 
-	template< class C > const CDmaArray<T>& operator=( const C &val ) 
-	{ 
-		CopyArray( val.Base(), val.Count() ); 
-		return *this; 
+	template< class C > const CDmaArray<T>& operator=( const C &val )
+	{
+		CopyArray( val.Base(), val.Count() );
+		return *this;
 	}
 
 private:
@@ -491,16 +491,16 @@ class CDmrArray : public CDmrDecorator< T, CDmaArrayBase< T, CDmaDataExternal< C
 	DECLARE_ATTRIBUTE_ARRAY_REFERENCE( CDmrArray, T );
 
 public:
-	const CDmrArray<T>& operator=( const CDmrArray<T> &val ) 
-	{ 
-		CopyArray( val.Base(), val.Count() ); 
-		return *this; 
+	const CDmrArray<T>& operator=( const CDmrArray<T> &val )
+	{
+		CopyArray( val.Base(), val.Count() );
+		return *this;
 	}
 
-	template< class C > const CDmrArray<T>& operator=( const C &val ) 
-	{ 
-		CopyArray( val.Base(), val.Count() ); 
-		return *this; 
+	template< class C > const CDmrArray<T>& operator=( const C &val )
+	{
+		CopyArray( val.Base(), val.Count() );
+		return *this;
 	}
 };
 
@@ -511,16 +511,16 @@ class CDmaStringArray : public CDmaDecorator< CUtlString, CDmaStringArrayBase< C
 	DECLARE_ATTRIBUTE_ARRAY_VARIABLE( CDmaStringArray, CUtlString );
 
 public:
-	const CDmaStringArray& operator=( const CDmaStringArray &val ) 
-	{ 
-		CopyArray( val.Base(), val.Count() ); 
-		return *this; 
+	const CDmaStringArray& operator=( const CDmaStringArray &val )
+	{
+		CopyArray( val.Base(), val.Count() );
+		return *this;
 	}
 
-	template< class C > const CDmaStringArray& operator=( const C &val ) 
-	{ 
-		CopyArray( val.Base(), val.Count() ); 
-		return *this; 
+	template< class C > const CDmaStringArray& operator=( const C &val )
+	{
+		CopyArray( val.Base(), val.Count() );
+		return *this;
 	}
 
 private:
@@ -536,16 +536,16 @@ public:
 	CDmrStringArray( CDmaStringArray& var ) { Init( var.GetAttribute() ); }
 	CDmrStringArray( CDmrStringArray& var ) { Init( var.GetAttribute() ); }
 
-	const CDmrStringArray& operator=( const CDmrStringArray &val ) 
-	{ 
-		CopyArray( val.Base(), val.Count() ); 
-		return *this; 
+	const CDmrStringArray& operator=( const CDmrStringArray &val )
+	{
+		CopyArray( val.Base(), val.Count() );
+		return *this;
 	}
 
-	template< class C > const CDmrStringArray& operator=( const C &val ) 
-	{ 
-		CopyArray( val.Base(), val.Count() ); 
-		return *this; 
+	template< class C > const CDmrStringArray& operator=( const C &val )
+	{
+		CopyArray( val.Base(), val.Count() );
+		return *this;
 	}
 };
 
@@ -586,17 +586,17 @@ public:
 		}
 	}
 
-	template< typename C > CDmaElementArray<E>& operator=( const C &val ) 
-	{ 
-		CopyArray( val.Base(), val.Count() ); 
-		return *this; 
+	template< typename C > CDmaElementArray<E>& operator=( const C &val )
+	{
+		CopyArray( val.Base(), val.Count() );
+		return *this;
 	}
 
 	// NOTE: The copy operator= must be defined in addition to the generic one
-	const CDmaElementArray<E>& operator=( const CDmaElementArray<E> &val ) 
-	{ 
-		CopyArray( val.Base(), val.Count() ); 
-		return *this; 
+	const CDmaElementArray<E>& operator=( const CDmaElementArray<E> &val )
+	{
+		CopyArray( val.Base(), val.Count() );
+		return *this;
 	}
 
 private:
@@ -733,16 +733,16 @@ public:
 	}
 
 	template< typename C > CDmrElementArray<T>& operator=( const C &val )
-	{ 
-		CopyArray( val.Base(), val.Count() ); 
-		return *this; 
+	{
+		CopyArray( val.Base(), val.Count() );
+		return *this;
 	}
 
 	// NOTE: The copy operator= must be defined in addition to the generic one
 	const CDmrElementArray<T>& operator=( const CDmrElementArray<T> &val )
-	{ 
-		CopyArray( val.Base(), val.Count() ); 
-		return *this; 
+	{
+		CopyArray( val.Base(), val.Count() );
+		return *this;
 	}
 };
 
@@ -788,7 +788,7 @@ template< class T > inline const T& CDmaVar<T>::Set( const T &val )
 	return m_Storage;
 }
 
-template< class T > inline const T& CDmaVar<T>::operator=( const T &val ) 
+template< class T > inline const T& CDmaVar<T>::operator=( const T &val )
 {
 	return Set( val );
 }
@@ -799,38 +799,38 @@ template< class T > inline const CDmaVar<T>& CDmaVar<T>::operator=( const CDmaVa
 	return *this;
 }
 
-template< class T > inline const T& CDmaVar<T>::operator+=( const T &val ) 
+template< class T > inline const T& CDmaVar<T>::operator+=( const T &val )
 {
 	return Set( Value() + val );
 }
 
-template< class T > inline const T& CDmaVar<T>::operator-=( const T &val ) 
+template< class T > inline const T& CDmaVar<T>::operator-=( const T &val )
 {
 	return Set( Value() - val );
 }
 
-template< class T > inline const T& CDmaVar<T>::operator/=( const T &val ) 
+template< class T > inline const T& CDmaVar<T>::operator/=( const T &val )
 {
 	return Set( Value() / val );
 }
 
-template< class T > inline const T& CDmaVar<T>::operator*=( const T &val ) 
+template< class T > inline const T& CDmaVar<T>::operator*=( const T &val )
 {
 	return Set( Value() * val );
 }
 
-template< class T > inline const T& CDmaVar<T>::operator^=( const T &val ) 
+template< class T > inline const T& CDmaVar<T>::operator^=( const T &val )
 {
 	return Set( Value() ^ val );
 }
 
-template< class T > inline const T& CDmaVar<T>::operator|=( const T &val ) 
+template< class T > inline const T& CDmaVar<T>::operator|=( const T &val )
 {
 	return Set( Value() | val );
 }
 
-template< class T > inline const T& CDmaVar<T>::operator&=( const T &val ) 
-{	
+template< class T > inline const T& CDmaVar<T>::operator&=( const T &val )
+{
 	return Set( Value() & val );
 }
 
@@ -858,19 +858,19 @@ template< class T > inline T CDmaVar<T>::operator--( int ) // postfix version..
 	return oldValue;
 }
 
-template< class T > inline CDmaVar<T>::operator const T&() const 
+template< class T > inline CDmaVar<T>::operator const T&() const
 {
-	return Value(); 
+	return Value();
 }
 
-template< class T > inline const T& CDmaVar<T>::Get() const 
+template< class T > inline const T& CDmaVar<T>::Get() const
 {
-	return Value(); 
+	return Value();
 }
 
-template< class T > inline const T* CDmaVar<T>::operator->() const 
+template< class T > inline const T* CDmaVar<T>::operator->() const
 {
-	return &Value(); 
+	return &Value();
 }
 
 template< class T > inline CDmAttribute *CDmaVar<T>::GetAttribute()
@@ -891,34 +891,34 @@ template< class T > inline bool CDmaVar<T>::IsDirty() const
 	return m_pAttribute->IsFlagSet( FATTRIB_DIRTY );
 }
 
-template< class T > inline const T& CDmaVar<T>::Value() const 
-{ 
-	return m_Storage; 
+template< class T > inline const T& CDmaVar<T>::Value() const
+{
+	return m_Storage;
 }
 
-template< class T > inline T& CDmaVar<T>::Value() 
-{ 
-	return m_Storage; 
+template< class T > inline T& CDmaVar<T>::Value()
+{
+	return m_Storage;
 }
 
-template<> inline const DmElementHandle_t& CDmaVar< DmElementHandle_t >::Value() const 
+template<> inline const DmElementHandle_t& CDmaVar< DmElementHandle_t >::Value() const
 {
 	return m_Storage.m_Handle;
 }
 
-template<> inline DmElementHandle_t& CDmaVar< DmElementHandle_t >::Value() 
+template<> inline DmElementHandle_t& CDmaVar< DmElementHandle_t >::Value()
 {
 	return m_Storage.m_Handle;
 }
 
-template< class T > inline const typename CDmaVar<T>::D& CDmaVar<T>::Storage() const 
-{ 
-	return m_Storage; 
+template< class T > inline const typename CDmaVar<T>::D& CDmaVar<T>::Storage() const
+{
+	return m_Storage;
 }
 
-template< class T > inline typename CDmaVar<T>::D& CDmaVar<T>::Storage() 
-{ 
-	return m_Storage; 
+template< class T > inline typename CDmaVar<T>::D& CDmaVar<T>::Storage()
+{
+	return m_Storage;
 }
 
 
@@ -1000,7 +1000,7 @@ inline void CDmaColor::SetRawColor( int color )
 //
 //-----------------------------------------------------------------------------
 inline void CDmaObjectId::CreateObjectId( )
-{ 
+{
 	DmObjectId_t id;
 	CreateUniqueId( &id );
 	m_pAttribute->SetValue( id );
@@ -1347,7 +1347,7 @@ inline int CDmaStringArrayBase<B>::InsertBefore( int elem, const char *pValue )
 // Inline methods for CDmaElementArrayBase
 //
 //-----------------------------------------------------------------------------
-template< class E, class B > 
+template< class E, class B >
 inline UtlSymId_t CDmaElementArrayConstBase<E,B>::GetElementType() const
 {
 	return this->Data().m_ElementType;

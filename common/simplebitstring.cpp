@@ -49,14 +49,14 @@
 
 
 //-----------------------------------------------------------------------------
-// 
-// Function:	
-// 
+//
+// Function:
+//
 //-----------------------------------------------------------------------------
 void CSimpleBitString::AppendBits( uint64 u64Data, uint32 NumSignificantLowBitsOfData )
 {
 	Assert
-		( 
+		(
 		NumSignificantLowBitsOfData <= 64
 		);
 
@@ -71,14 +71,14 @@ void CSimpleBitString::AppendBits( uint64 u64Data, uint32 NumSignificantLowBitsO
 
 		uint32 NumAvailableBitsInLastByte = 8 - NumUsedBitsInLastByte;
 
-		uint32 NumBitsToPutInThisByte 
+		uint32 NumBitsToPutInThisByte
 				= min( NumAvailableBitsInLastByte, NumSignificantLowBitsOfData );
 
 		uint8 BitsForThisByte
 				=	( u64Data >> (NumSignificantLowBitsOfData - NumBitsToPutInThisByte) )
 						& ( (1ULL << NumBitsToPutInThisByte) - 1 );
 
-		m_vecU8[Idx] |= ( BitsForThisByte 
+		m_vecU8[Idx] |= ( BitsForThisByte
 							<< ( NumAvailableBitsInLastByte - NumBitsToPutInThisByte ) );
 
 		m_uNumBits += NumBitsToPutInThisByte;
@@ -88,7 +88,7 @@ void CSimpleBitString::AppendBits( uint64 u64Data, uint32 NumSignificantLowBitsO
 		{
 			m_vecU8[ m_vecU8.AddToTail() ] = 0x00;
 		}
-		
+
 		// We've used the top N bits of data
 		NumSignificantLowBitsOfData -= NumBitsToPutInThisByte;
 	}
@@ -96,9 +96,9 @@ void CSimpleBitString::AppendBits( uint64 u64Data, uint32 NumSignificantLowBitsO
 
 
 //-----------------------------------------------------------------------------
-// 
-// Function:	
-// 
+//
+// Function:
+//
 //-----------------------------------------------------------------------------
 void CSimpleBitString::AppendBits( const uint8 * pData, uint32 NumBitsOfData )
 {
@@ -116,9 +116,9 @@ void CSimpleBitString::AppendBits( const uint8 * pData, uint32 NumBitsOfData )
 
 
 //-----------------------------------------------------------------------------
-// 
-// Function:	
-// 
+//
+// Function:
+//
 //-----------------------------------------------------------------------------
 void CSimpleBitString::ReversiblyObfusticateBitsFromStart( uint NumBits, const uint8 * pObfusticationData, size_t uSizeOfObfusticationData )
 {
@@ -148,9 +148,9 @@ void CSimpleBitString::ReversiblyObfusticateBitsFromStart( uint NumBits, const u
 
 
 //-----------------------------------------------------------------------------
-// 
-// Function:	
-// 
+//
+// Function:
+//
 //-----------------------------------------------------------------------------
 uint8 CSimpleBitString::GetByteChecksumFromStart( uint NumBits ) const
 {
@@ -185,7 +185,7 @@ uint8 CSimpleBitString::GetByteChecksumFromStart( uint NumBits ) const
 uint32 CSimpleBitString::iterator::GetNextBits( uint32 NumBitsToGet )
 {
 	Assert
-		( 
+		(
 		NumBitsToGet <= 32
 		);
 
@@ -195,7 +195,7 @@ uint32 CSimpleBitString::iterator::GetNextBits( uint32 NumBitsToGet )
 uint64 CSimpleBitString::iterator::GetNextBits64( uint32 NumBitsToGet )
 {
 	Assert
-		( 
+		(
 		NumBitsToGet <= 64
 		);
 
@@ -215,7 +215,7 @@ uint64 CSimpleBitString::iterator::GetNextBits64( uint32 NumBitsToGet )
 		uint32 NumConsumedBitsInThisByte	= m_uNextBitIdx % 8;
 		uint32 NumAvailableBitsInThisByte = 8 - NumConsumedBitsInThisByte;
 
-		uint32 NumBitsToGetFromThisByte 
+		uint32 NumBitsToGetFromThisByte
 				= min( NumAvailableBitsInThisByte, NumBitsToGet );
 
 		uint8 BitsFromThisByte
@@ -231,4 +231,3 @@ uint64 CSimpleBitString::iterator::GetNextBits64( uint32 NumBitsToGet )
 
 	return u64Data;
 }
-

@@ -42,7 +42,7 @@ CBuildFactoryHelper::CBuildFactoryHelper( char const *className, PANELCREATEFUNC
 // Output : CBuildFactoryHelper
 //-----------------------------------------------------------------------------
 CBuildFactoryHelper *CBuildFactoryHelper::GetNext( void )
-{ 
+{
 	return m_pNext;
 }
 
@@ -99,6 +99,3 @@ void CBuildFactoryHelper::GetFactoryNames( CUtlVector< char const * >& list )
 		p = p->GetNext();
 	}
 }
-
-
-

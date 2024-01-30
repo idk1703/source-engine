@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -56,7 +56,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEProjectedDecal::C_TEProjectedDecal( void )
 {
@@ -67,14 +67,14 @@ C_TEProjectedDecal::C_TEProjectedDecal( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEProjectedDecal::~C_TEProjectedDecal( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEProjectedDecal::Precache( void )
 {
@@ -82,9 +82,9 @@ void C_TEProjectedDecal::Precache( void )
 
 
 //-----------------------------------------------------------------------------
-// Recording 
+// Recording
 //-----------------------------------------------------------------------------
-static inline void RecordProjectDecal( const Vector &pos, const QAngle &angles, 
+static inline void RecordProjectDecal( const Vector &pos, const QAngle &angles,
 	float flDistance, int index )
 {
 	if ( !ToolsEnabled() )
@@ -144,13 +144,13 @@ void TE_ProjectDecal( IRecipientFilter& filter, float delay,
 	else
 	{
 		// Only decal the world + brush models
-		ent->AddDecal( *pos, endpos, endpos, hitbox, 
+		ent->AddDecal( *pos, endpos, endpos, hitbox,
 			index, false, tr );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEProjectedDecal::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -179,4 +179,3 @@ void TE_ProjectDecal( IRecipientFilter& filter, float delay, KeyValues *pKeyValu
 
 	TE_ProjectDecal( filter, 0.0f, &vecOrigin, &angles, flDistance, effects->Draw_DecalIndexFromName( (char*)pDecalName ) );
 }
-

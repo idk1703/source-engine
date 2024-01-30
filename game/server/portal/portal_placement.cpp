@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -299,7 +299,7 @@ Vector FindBumpVectorInCorner( const Vector &ptCorner1, const Vector &ptCorner2,
 	Vector ptClosestSegment1, ptClosestSegment2;
 	float fT1, fT2;
 
-	CalcLineToLineIntersectionSegment( ptIntersectionPoint1, ptIntersectionPoint1 + vIntersectionDirection1, 
+	CalcLineToLineIntersectionSegment( ptIntersectionPoint1, ptIntersectionPoint1 + vIntersectionDirection1,
 		ptIntersectionPoint2, ptIntersectionPoint2 + vIntersectionDirection2,
 		&ptClosestSegment1, &ptClosestSegment2, &fT1, &fT2 );
 
@@ -399,9 +399,9 @@ Vector FindBumpVectorInCorner( const Vector &ptCorner1, const Vector &ptCorner2,
 }
 
 
-bool FitPortalOnSurface( const CProp_Portal *pIgnorePortal, Vector &vOrigin, const Vector &vForward, const Vector &vRight, 
-						 const Vector &vTopEdge, const Vector &vBottomEdge, const Vector &vRightEdge, const Vector &vLeftEdge, 
-						 int iPlacedBy, ITraceFilter *pTraceFilterPortalShot, 
+bool FitPortalOnSurface( const CProp_Portal *pIgnorePortal, Vector &vOrigin, const Vector &vForward, const Vector &vRight,
+						 const Vector &vTopEdge, const Vector &vBottomEdge, const Vector &vRightEdge, const Vector &vLeftEdge,
+						 int iPlacedBy, ITraceFilter *pTraceFilterPortalShot,
 						 int iRecursions /*= 0*/, const CPortalCornerFitData *pPortalCornerFitData /*= 0*/, const int *p_piIntersectionIndex /*= 0*/, const int *piIntersectionCount /*= 0*/ )
 {
 	// Don't infinitely recurse
@@ -487,8 +487,8 @@ bool FitPortalOnSurface( const CProp_Portal *pIgnorePortal, Vector &vOrigin, con
 					{
 						for ( int iIntersection = 0; iIntersection < 4; ++iIntersection )
 						{
-							NDebugOverlay::Line( sFitData[ iIntersection ].ptIntersectionPoint - sFitData[ iIntersection ].vIntersectionDirection * 32.0f, 
-								sFitData[ iIntersection ].ptIntersectionPoint + sFitData[ iIntersection ].vIntersectionDirection * 32.0f, 
+							NDebugOverlay::Line( sFitData[ iIntersection ].ptIntersectionPoint - sFitData[ iIntersection ].vIntersectionDirection * 32.0f,
+								sFitData[ iIntersection ].ptIntersectionPoint + sFitData[ iIntersection ].vIntersectionDirection * 32.0f,
 								0, 0, 255, true, 0.5f );
 						}
 					}
@@ -530,8 +530,8 @@ bool FitPortalOnSurface( const CProp_Portal *pIgnorePortal, Vector &vOrigin, con
 
 	case 1:
 		{
-			float fBumpDistance = CalcDistanceToLine( pptCorner[ piIntersectionIndex[ 0 ] ], 
-				sFitData[ piIntersectionIndex[ 0 ] ].ptIntersectionPoint, 
+			float fBumpDistance = CalcDistanceToLine( pptCorner[ piIntersectionIndex[ 0 ] ],
+				sFitData[ piIntersectionIndex[ 0 ] ].ptIntersectionPoint,
 				sFitData[ piIntersectionIndex[ 0 ] ].ptIntersectionPoint + sFitData[ piIntersectionIndex[ 0 ] ].vIntersectionDirection );
 
 			fBumpDistance += PORTAL_BUMP_FORGIVENESS;
@@ -595,7 +595,7 @@ bool FitPortalOnSurface( const CProp_Portal *pIgnorePortal, Vector &vOrigin, con
 				sFitData[ piIntersectionIndex[ 0 ] ].bCornerIntersection = false;
 				sFitData[ piIntersectionIndex[ 1 ] ].bCornerIntersection = false;
 
-				return FitPortalOnSurface( pIgnorePortal, vOrigin, vForward, vRight, vTopEdge, vBottomEdge, vRightEdge, vLeftEdge, iPlacedBy, pTraceFilterPortalShot, iRecursions + 1, sFitData, piIntersectionIndex, &iIntersectionCount );	
+				return FitPortalOnSurface( pIgnorePortal, vOrigin, vForward, vRight, vTopEdge, vBottomEdge, vRightEdge, vLeftEdge, iPlacedBy, pTraceFilterPortalShot, iRecursions + 1, sFitData, piIntersectionIndex, &iIntersectionCount );
 			}
 
 			// If they are the same there's an easy way
@@ -609,8 +609,8 @@ bool FitPortalOnSurface( const CProp_Portal *pIgnorePortal, Vector &vOrigin, con
 
 				for ( int iIntersection = 0; iIntersection < 2; ++iIntersection )
 				{
-					pfBumpDistance[ iIntersection ] = CalcDistanceToLine( pptCorner[ piIntersectionIndex[ iIntersection ] ], 
-						sFitData[ piIntersectionIndex[ iClosestIntersection ] ].ptIntersectionPoint, 
+					pfBumpDistance[ iIntersection ] = CalcDistanceToLine( pptCorner[ piIntersectionIndex[ iIntersection ] ],
+						sFitData[ piIntersectionIndex[ iClosestIntersection ] ].ptIntersectionPoint,
 						sFitData[ piIntersectionIndex[ iClosestIntersection ] ].ptIntersectionPoint + sFitData[ piIntersectionIndex[ iClosestIntersection ] ].vIntersectionDirection );
 
 					pfBumpDistance[	iIntersection ] += PORTAL_BUMP_FORGIVENESS;
@@ -646,7 +646,7 @@ bool FitPortalOnSurface( const CProp_Portal *pIgnorePortal, Vector &vOrigin, con
 			}
 
 			// Intersections are angled, bump based on math using the corner
-			vOrigin += FindBumpVectorInCorner( pptCorner[ piIntersectionIndex[ 0 ] ], pptCorner[ piIntersectionIndex[ 1 ] ], 
+			vOrigin += FindBumpVectorInCorner( pptCorner[ piIntersectionIndex[ 0 ] ], pptCorner[ piIntersectionIndex[ 1 ] ],
 				sFitData[ piIntersectionIndex[ 0 ] ].ptIntersectionPoint, sFitData[ piIntersectionIndex[ 1 ] ].ptIntersectionPoint,
 				sFitData[ piIntersectionIndex[ 0 ] ].vIntersectionDirection, sFitData[ piIntersectionIndex[ 1 ] ].vIntersectionDirection,
 				sFitData[ piIntersectionIndex[ 0 ] ].vBumpDirection, sFitData[ piIntersectionIndex[ 1 ] ].vBumpDirection );
@@ -778,8 +778,8 @@ bool FitPortalOnSurface( const CProp_Portal *pIgnorePortal, Vector &vOrigin, con
 
 				for ( int iIntersection = 0; iIntersection < 3; ++iIntersection )
 				{
-					pfBumpDistance[ iIntersection ] = CalcDistanceToLine( pptCorner[ piIntersectionIndex[ iIntersection ] ], 
-						sFitData[ piIntersectionIndex[ iClosestIntersection ] ].ptIntersectionPoint, 
+					pfBumpDistance[ iIntersection ] = CalcDistanceToLine( pptCorner[ piIntersectionIndex[ iIntersection ] ],
+						sFitData[ piIntersectionIndex[ iClosestIntersection ] ].ptIntersectionPoint,
 						sFitData[ piIntersectionIndex[ iClosestIntersection ] ].ptIntersectionPoint + sFitData[ piIntersectionIndex[ iClosestIntersection ] ].vIntersectionDirection );
 					pfBumpDistance[ iIntersection ] += PORTAL_BUMP_FORGIVENESS;
 				}
@@ -861,14 +861,14 @@ bool FitPortalOnSurface( const CProp_Portal *pIgnorePortal, Vector &vOrigin, con
 
 				if ( ( fPortalDot < 0.0001f && fPortalDot > -0.0001f ) || fPortalDot > 0.9999f || fPortalDot < -0.9999f )
 				{
-					float fBump1 = CalcDistanceToLine( pptCorner[ piIntersectionIndex[ iIndex1 ] ], 
-						sFitData[ piIntersectionIndex[ iIndex1 ] ].ptIntersectionPoint, 
+					float fBump1 = CalcDistanceToLine( pptCorner[ piIntersectionIndex[ iIndex1 ] ],
+						sFitData[ piIntersectionIndex[ iIndex1 ] ].ptIntersectionPoint,
 						sFitData[ piIntersectionIndex[ iIndex1 ] ].ptIntersectionPoint + sFitData[ piIntersectionIndex[ iIndex1 ] ].vIntersectionDirection );
 
 					fBump1 += PORTAL_BUMP_FORGIVENESS;
 
-					float fBump2 = CalcDistanceToLine( pptCorner[ piIntersectionIndex[ iIndex2 ] ], 
-						sFitData[ piIntersectionIndex[ iIndex2 ] ].ptIntersectionPoint, 
+					float fBump2 = CalcDistanceToLine( pptCorner[ piIntersectionIndex[ iIndex2 ] ],
+						sFitData[ piIntersectionIndex[ iIndex2 ] ].ptIntersectionPoint,
 						sFitData[ piIntersectionIndex[ iIndex2 ] ].ptIntersectionPoint + sFitData[ piIntersectionIndex[ iIndex2 ] ].vIntersectionDirection );
 
 					fBump2 += PORTAL_BUMP_FORGIVENESS;
@@ -887,7 +887,7 @@ bool FitPortalOnSurface( const CProp_Portal *pIgnorePortal, Vector &vOrigin, con
 				}
 			}
 
-			vOrigin += FindBumpVectorInCorner( pptCorner[ piIntersectionIndex[ iIndex1 ] ], pptCorner[ piIntersectionIndex[ iIndex2 ] ], 
+			vOrigin += FindBumpVectorInCorner( pptCorner[ piIntersectionIndex[ iIndex1 ] ], pptCorner[ piIntersectionIndex[ iIndex2 ] ],
 				sFitData[ piIntersectionIndex[ iIndex1 ] ].ptIntersectionPoint, sFitData[ piIntersectionIndex[ iIndex2 ] ].ptIntersectionPoint,
 				sFitData[ piIntersectionIndex[ iIndex1 ] ].vIntersectionDirection, sFitData[ piIntersectionIndex[ iIndex2 ] ].vIntersectionDirection,
 				sFitData[ piIntersectionIndex[ iIndex1 ] ].vBumpDirection, sFitData[ piIntersectionIndex[ iIndex2 ] ].vBumpDirection );
@@ -896,12 +896,12 @@ bool FitPortalOnSurface( const CProp_Portal *pIgnorePortal, Vector &vOrigin, con
 			iIntersectionCount = 0;
 			sFitData[ piIntersectionIndex[ iIndex3 ] ].bCornerIntersection = false;
 
-			return FitPortalOnSurface( pIgnorePortal, vOrigin, vForward, vRight, vTopEdge, vBottomEdge, vRightEdge, vLeftEdge, iPlacedBy, pTraceFilterPortalShot, iRecursions + 1, sFitData, piIntersectionIndex, &iIntersectionCount );				
+			return FitPortalOnSurface( pIgnorePortal, vOrigin, vForward, vRight, vTopEdge, vBottomEdge, vRightEdge, vLeftEdge, iPlacedBy, pTraceFilterPortalShot, iRecursions + 1, sFitData, piIntersectionIndex, &iIntersectionCount );
 		}
 		break;
 
 	default:
-		{	
+		{
 			if ( sFitData[ piIntersectionIndex[ 0 ] ].bSoftBump || sFitData[ piIntersectionIndex[ 1 ] ].bSoftBump || sFitData[ piIntersectionIndex[ 2 ] ].bSoftBump || sFitData[ piIntersectionIndex[ 3 ] ].bSoftBump )
 			{
 				// Prepare data for recursion
@@ -1001,7 +1001,7 @@ bool IsPortalIntersectingNoPortalVolume( const Vector &vOrigin, const QAngle &qA
 				DevMsg( "Portal placed in no portal volume.\n" );
 			}
 
-			return true; 
+			return true;
 		}
 	}
 
@@ -1038,7 +1038,7 @@ bool IsPortalOverlappingOtherPortals( const CProp_Portal *pIgnorePortal, const V
 				if ( vForward.Dot( vLinkedForward ) < 0.95f )
 					continue;
 
-				if ( IsOBBIntersectingOBB( vOrigin, qAngles, vPortalOBBMin, vPortalOBBMax, 
+				if ( IsOBBIntersectingOBB( vOrigin, qAngles, vPortalOBBMin, vPortalOBBMax,
 										   vOtherOrigin, qOtherAngles, vPortalOBBMin, vPortalOBBMax, 0.0f ) )
 				{
 					if ( sv_portal_placement_debug.GetBool() )

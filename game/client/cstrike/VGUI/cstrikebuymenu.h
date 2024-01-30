@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -95,7 +95,7 @@ private:
 
 public:
 	CCSBuyMenu_TER(IViewPort *pViewPort);
-	
+
 	virtual const char *GetName( void ) { return PANEL_BUY_TER; }
 };
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -28,7 +28,7 @@ BEGIN_VS_SHADER( Modulate_DX8,
 	END_SHADER_PARAMS
 
 	SHADER_FALLBACK
-	{	
+	{
 		if ( IsPC() && !g_pHardwareConfig->SupportsVertexAndPixelShaders() )
 			return "Modulate_DX6";
 		return 0;
@@ -42,8 +42,8 @@ BEGIN_VS_SHADER( Modulate_DX8,
 		info.m_nRefractAmount = REFRACTAMOUNT;
 	}
 
-	bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const 
-	{ 
+	bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const
+	{
 		if ( params[CLOAKPASSENABLED]->GetIntValue() ) // If material supports cloaking
 		{
 			if ( bCheckSpecificToThisFrame == false ) // For setting model flag at load time
@@ -54,7 +54,7 @@ BEGIN_VS_SHADER( Modulate_DX8,
 		}
 
 		// Check flag2 if not drawing cloak pass
-		return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE ); 
+		return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE );
 	}
 
 	bool IsTranslucent( IMaterialVar **params ) const
@@ -67,7 +67,7 @@ BEGIN_VS_SHADER( Modulate_DX8,
 		}
 
 		// Check flag if not drawing cloak pass
-		return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT ); 
+		return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT );
 	}
 
 	SHADER_INIT_PARAMS()
@@ -162,7 +162,7 @@ BEGIN_VS_SHADER( Modulate_DX8,
 				vshIndex.SetENVMAPSPHERE( false );
 				vshIndex.SetSEPARATEDETAILUVS( false );
 				vshIndex.SetVERTEXCOLOR( bVertexColorOrAlpha );
-				
+
 				pShaderShadow->SetVertexShader( "unlitgeneric_vs11", vshIndex.GetIndex() );
 				pShaderShadow->SetPixelShader( "Modulate_ps11" );
 

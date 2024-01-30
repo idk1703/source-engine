@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -38,7 +38,7 @@ void PhysicsSplash( IPhysicsFluidController *pFluid, IPhysicsObject *pObject, CB
 	pFluid->GetSurfacePlane( &normal, &dist );
 
 	matrix3x4_t &matrix = pEntity->EntityToWorldTransform();
-	
+
 	// Find the local axis that best matches the water surface normal
 	int bestAxis = BestAxisMatchingNormal( matrix, normal );
 
@@ -51,7 +51,7 @@ void PhysicsSplash( IPhysicsFluidController *pFluid, IPhysicsObject *pObject, CB
 
 	// Now we have a basis tangent to the surface that matches the object's local orientation as well as possible
 	// compute an OBB using this basis
-	
+
 	// Get object extents in basis
 	Vector tanPts[2], binPts[2];
 	tanPts[0] = physcollision->CollideGetExtent( pObject->GetCollide(), pEntity->GetAbsOrigin(), pEntity->GetAbsAngles(), -tangent );
@@ -109,7 +109,7 @@ void PhysicsSplash( IPhysicsFluidController *pFluid, IPhysicsObject *pObject, CB
 		data.m_flScale = random->RandomFloat( 8, 10 );
 
 		DispatchEffect( "watersplash", data );
-		
+
 		int		splashes = 4;
 		Vector	point;
 

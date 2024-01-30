@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -22,7 +22,7 @@ class CBaseTFPlayer;
 class COrder;
 class CBaseObject;
 class CBaseTechnology;
-class CWeaponCombatShield; 
+class CWeaponCombatShield;
 
 
 enum ResupplyReason_t
@@ -62,11 +62,11 @@ public:
 
 	virtual void		SetMaxHealth( float flMaxHealth );	// Set the player's max health
 	int					GetMaxHealthCVarValue();			// Return the player class's max health cvar
-	
+
 	virtual float		GetMaxSpeed( void );				// Calculate and return the player's max speed
 	virtual	float		GetMaxWalkSpeed( void );			// Calculate and return the player's max walking speed
 	virtual void		SetMaxSpeed( float flMaxSpeed );	// Set the player's max speed
-	
+
 	virtual string_t	GetClassModel( int nTeam );			// Return a string containing this class's model
 	virtual const char*	GetClassModelString( int nTeam );
 
@@ -135,7 +135,7 @@ public:
 	// they try to create class-specific orders. This function returns true if an order is
 	// created.
 	bool				CreateInitialOrder();
-	
+
 	bool				AnyResourceZoneOrders();
 	bool				AnyNonResourceZoneOrders();		// Returns true if there are any non-resource-zone orders.
 														// If there are, then no class should make any overriding orders.
@@ -143,20 +143,20 @@ public:
 	// Respawn ( allow classes to override spawn points )
 	virtual CBaseEntity		*SelectSpawnPoint( void );
 
-    void *operator new( size_t stAllocateBlock )	
-	{												
-		Assert( stAllocateBlock != 0 );				
+	void *operator new( size_t stAllocateBlock )
+	{
+		Assert( stAllocateBlock != 0 );
 		void *pMem = malloc( stAllocateBlock );
 		memset( pMem, 0, stAllocateBlock );
-		return pMem;												
+		return pMem;
 	}
-	
-	void* operator new( size_t stAllocateBlock, int nBlockUse, const char *pFileName, int nLine )  
-	{ 
-		Assert( stAllocateBlock != 0 );				
+
+	void* operator new( size_t stAllocateBlock, int nBlockUse, const char *pFileName, int nLine )
+	{
+		Assert( stAllocateBlock != 0 );
 		void *pMem = _malloc_dbg( stAllocateBlock, nBlockUse, pFileName, nLine );
 		memset( pMem, 0, stAllocateBlock );
-		return pMem;												
+		return pMem;
 	}
 
 	void operator delete( void *pMem )
@@ -169,11 +169,11 @@ public:
 	// Weapon & Tech Associations
 	void AddWeaponTechAssoc( char *pWeaponTech );
 
-	
+
 	// Accessors.
 	inline CBaseTFPlayer*	GetPlayer() { return m_pPlayer; }
 	CTFTeam*				GetTeam();
-	
+
 	virtual void ResetViewOffset( void );
 
 	virtual TFClass			GetTFClass( void );
@@ -186,7 +186,7 @@ public:
 	TFClass					m_TFClass;
 
 protected:
-	double m_flNormalizedEngagementNextTime;	
+	double m_flNormalizedEngagementNextTime;
 
 	CBaseTFPlayer			*m_pPlayer;		// Reference to the player
 

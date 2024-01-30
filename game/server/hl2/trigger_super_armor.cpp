@@ -13,7 +13,7 @@
 
 ConVar	sk_max_super_armor( "sk_max_super_armor","500");
 
-#define MAX_SUPER_ARMOR		sk_max_super_armor.GetInt()	
+#define MAX_SUPER_ARMOR		sk_max_super_armor.GetInt()
 
 
 //-----------------------------------------------------------------------------
@@ -28,7 +28,7 @@ public:
 
 	virtual void StartTouch( CBaseEntity *pOther );
 	virtual void EndTouch( CBaseEntity *pOther );
-	
+
 private:
 
 	virtual void Precache();
@@ -48,7 +48,7 @@ BEGIN_DATADESC( CTriggerSuperArmor )
 
 	DEFINE_SOUNDPATCH( m_pChargingSound ),
 	DEFINE_FIELD( m_flLoopingSoundTime, FIELD_TIME ),
-	
+
 	DEFINE_THINKFUNC( RechargeThink ),
 
 END_DATADESC()
@@ -107,7 +107,7 @@ void CTriggerSuperArmor::StopLoopingSounds()
 	BaseClass::StopLoopingSounds();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Begins super-powering the entities
 //-----------------------------------------------------------------------------

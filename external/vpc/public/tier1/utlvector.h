@@ -1,6 +1,6 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======//
+//====== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. =======//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -48,7 +48,7 @@ public:
 	CUtlVector( int growSize = 0, int initSize = 0 );
 	CUtlVector( T* pMemory, int allocationCount, int numElements = 0 );
 	~CUtlVector();
-	
+
 	// Copy the array.
 	CUtlVector<T, A>& operator=( const CUtlVector<T, A> &other );
 
@@ -87,8 +87,8 @@ public:
 
 	// Adds multiple elements, uses default constructor
 	int AddMultipleToHead( int num );
-	int AddMultipleToTail( int num );	   
-	int AddMultipleToTail( int num, const T *pToCopy );	   
+	int AddMultipleToTail( int num );
+	int AddMultipleToTail( int num, const T *pToCopy );
 	int InsertMultipleBefore( int elem, int num );
 	int InsertMultipleBefore( int elem, int num, const T *pToCopy );
 	int InsertMultipleAfter( int elem, int num );
@@ -97,13 +97,13 @@ public:
 	void SetSize( int size );
 	void SetCount( int count );
 	void SetCountNonDestructively( int count ); //sets count by adding or removing elements to tail TODO: This should probably be the default behavior for SetCount
-	
+
 	// Calls SetSize and copies each element.
 	void CopyArray( const T *pArray, int size );
 
 	// Fast swap
 	void Swap( CUtlVector< T, A > &vec );
-	
+
 	// Add the specified array to the tail.
 	int AddVectorToTail( CUtlVector<T, A> const &src );
 
@@ -135,7 +135,7 @@ public:
 	// Purges the list and calls delete on each element in it.
 	void PurgeAndDeleteElements();
 
-	// Compacts the vector to the number of elements actually in use 
+	// Compacts the vector to the number of elements actually in use
 	void Compact();
 
 	// Set the size by which it grows when it needs to allocate more memory.
@@ -533,14 +533,14 @@ public:
 // constructor, destructor
 //-----------------------------------------------------------------------------
 template< typename T, class A >
-inline CUtlVector<T, A>::CUtlVector( int growSize, int initSize )	: 
+inline CUtlVector<T, A>::CUtlVector( int growSize, int initSize )	:
 	m_Memory(growSize, initSize), m_Size(0)
 {
 	ResetDbgInfo();
 }
 
 template< typename T, class A >
-inline CUtlVector<T, A>::CUtlVector( T* pMemory, int allocationCount, int numElements )	: 
+inline CUtlVector<T, A>::CUtlVector( T* pMemory, int allocationCount, int numElements )	:
 	m_Memory(pMemory, allocationCount), m_Size(numElements)
 {
 	ResetDbgInfo();
@@ -643,7 +643,7 @@ inline bool CUtlVector<T, A>::IsValidIndex( int i ) const
 {
 	return (i >= 0) && (i < m_Size);
 }
- 
+
 
 //-----------------------------------------------------------------------------
 // Returns in invalid index
@@ -859,7 +859,7 @@ template< typename T, class A >
 inline int CUtlVector<T, A>::AddToHead( const T& src )
 {
 	// Can't insert something that's in the list... reallocation may hose us
-	Assert( (Base() == NULL) || (&src < Base()) || (&src >= (Base() + Count()) ) ); 
+	Assert( (Base() == NULL) || (&src < Base()) || (&src >= (Base() + Count()) ) );
 	return InsertBefore( 0, src );
 }
 
@@ -867,7 +867,7 @@ template< typename T, class A >
 inline int CUtlVector<T, A>::AddToTail( const T& src )
 {
 	// Can't insert something that's in the list... reallocation may hose us
-	Assert( (Base() == NULL) || (&src < Base()) || (&src >= (Base() + Count()) ) ); 
+	Assert( (Base() == NULL) || (&src < Base()) || (&src >= (Base() + Count()) ) );
 	return InsertBefore( m_Size, src );
 }
 
@@ -875,7 +875,7 @@ template< typename T, class A >
 inline int CUtlVector<T, A>::InsertAfter( int elem, const T& src )
 {
 	// Can't insert something that's in the list... reallocation may hose us
-	Assert( (Base() == NULL) || (&src < Base()) || (&src >= (Base() + Count()) ) ); 
+	Assert( (Base() == NULL) || (&src < Base()) || (&src >= (Base() + Count()) ) );
 	return InsertBefore( elem + 1, src );
 }
 
@@ -883,7 +883,7 @@ template< typename T, class A >
 int CUtlVector<T, A>::InsertBefore( int elem, const T& src )
 {
 	// Can't insert something that's in the list... reallocation may hose us
-	Assert( (Base() == NULL) || (&src < Base()) || (&src >= (Base() + Count()) ) ); 
+	Assert( (Base() == NULL) || (&src < Base()) || (&src >= (Base() + Count()) ) );
 
 	// Can insert at the end
 	Assert( (elem == Count()) || IsValidIndex(elem) );
@@ -914,7 +914,7 @@ template< typename T, class A >
 inline int CUtlVector<T, A>::AddMultipleToTail( int num, const T *pToCopy )
 {
 	// Can't insert something that's in the list... reallocation may hose us
-	Assert( (Base() == NULL) || !pToCopy || (pToCopy + num <= Base()) || (pToCopy >= (Base() + Count()) ) ); 
+	Assert( (Base() == NULL) || !pToCopy || (pToCopy + num <= Base()) || (pToCopy >= (Base() + Count()) ) );
 
 	return InsertMultipleBefore( m_Size, num, pToCopy );
 }
@@ -951,7 +951,7 @@ template< typename T, class A >
 void CUtlVector<T, A>::CopyArray( const T *pArray, int size )
 {
 	// Can't insert something that's in the list... reallocation may hose us
-	Assert( (Base() == NULL) || !pArray || (Base() >= (pArray + size)) || (pArray >= (Base() + Count()) ) ); 
+	Assert( (Base() == NULL) || !pArray || (Base() >= (pArray + size)) || (pArray >= (Base() + Count()) ) );
 
 	SetSize( size );
 	for( int i=0; i < size; i++ )
@@ -976,12 +976,12 @@ int CUtlVector<T, A>::AddVectorToTail( CUtlVector const &src )
 	Assert( &src != this );
 
 	int base = Count();
-	
+
 	// Make space.
 	int nSrcCount = src.Count();
 	EnsureCapacity( base + nSrcCount );
 
-	// Copy the elements.	
+	// Copy the elements.
 	m_Size += nSrcCount;
 	for ( int i=0; i < nSrcCount; i++ )
 	{
@@ -1016,7 +1016,7 @@ inline int CUtlVector<T, A>::InsertMultipleBefore( int elem, int num, const T *p
 {
 	if( num == 0 )
 		return elem;
-	
+
 	// Can insert at the end
 	Assert( (elem == Count()) || IsValidIndex(elem) );
 

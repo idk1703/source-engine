@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -36,10 +36,10 @@ void CBanContextMenu::ShowMenu(Panel *target, unsigned int banID)
 {
 	DeleteAllItems();
 
-	if(banID==-1) 
+	if(banID==-1)
 	{
 		AddMenuItem("ban", "#Ban_Menu_Add", new KeyValues("addban", "banID", banID), CBanContextMenu::parent);
-	} 
+	}
 	else
 	{
 		AddMenuItem("ban", "#Ban_Menu_Remove", new KeyValues("removeban", "banID", banID), CBanContextMenu::parent);

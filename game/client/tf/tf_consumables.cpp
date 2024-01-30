@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -287,7 +287,7 @@ void CEconTool_Noisemaker::OnClientUseConsumable( CEconItemView *pItem, vgui::Pa
 	if ( !pLocalPlayer->IsAlive() )
 		return;
 
-	if ( pLocalPlayer->GetTeamNumber() < FIRST_GAME_TEAM ) 
+	if ( pLocalPlayer->GetTeamNumber() < FIRST_GAME_TEAM )
 		return;
 
 	// This may not be ideal. We're going to have the game server do the noise effect,
@@ -355,8 +355,8 @@ void CEconTool_WeddingRing::OnClientUseConsumable( CEconItemView *pItem, vgui::P
 
 	// We have been gifted, so pop up a dialog box to allow the user to accept/reject
 	// the proposal.
-	CTFGenericConfirmDialog *pDialog = ShowConfirmDialog( "#TF_UseWeddingRing_Title", "#TF_UseWeddingRing_Text", 
-														  "#TF_WeddingRing_AcceptProposal", "#TF_WeddingRing_RejectProposal", 
+	CTFGenericConfirmDialog *pDialog = ShowConfirmDialog( "#TF_UseWeddingRing_Title", "#TF_UseWeddingRing_Text",
+														  "#TF_WeddingRing_AcceptProposal", "#TF_WeddingRing_RejectProposal",
 														  &UseItemConfirm );
 
 	pDialog->AddStringToken( "item_name", pItem->GetItemName() );
@@ -393,9 +393,9 @@ void CEconTool_BackpackExpander::OnClientUseConsumable( CEconItemView *pItem, vg
 		ShowMessageBox( "#TF_UseBackpackExpanderFail_Title",  "#TF_UseBackpackExpanderFail_Text", "#GameUI_OK" );
 		return;
 	}
-	
-	CTFGenericConfirmDialog *pDialog = ShowConfirmDialog( "#TF_UseBackpackExpander_Title", "#TF_UseBackpackExpander_Text", 
-														  "#GameUI_OK", "#Cancel", 
+
+	CTFGenericConfirmDialog *pDialog = ShowConfirmDialog( "#TF_UseBackpackExpander_Title", "#TF_UseBackpackExpander_Text",
+														  "#GameUI_OK", "#Cancel",
 														  &UseItemConfirm );
 	pDialog->AddStringToken( "item_name", pItem->GetItemName() );
 	wchar_t wszUsesLeft[32];
@@ -422,8 +422,8 @@ void CEconTool_AccountUpgradeToPremium::OnClientUseConsumable( CEconItemView *pI
 	}
 
 	// show a confirmation dialog to make sure they want to consume the charge
-	CTFGenericConfirmDialog *pDialog = ShowConfirmDialog( "#TF_UseAccountUpgradeToPremium_Title", "#TF_UseAccountUpgradeToPremium_Text", 
-														  "#GameUI_OK", "#Cancel", 
+	CTFGenericConfirmDialog *pDialog = ShowConfirmDialog( "#TF_UseAccountUpgradeToPremium_Title", "#TF_UseAccountUpgradeToPremium_Text",
+														  "#GameUI_OK", "#Cancel",
 														  &UseItemConfirm );
 	pDialog->AddStringToken( "item_name", pItem->GetItemName() );
 	wchar_t wszUsesLeft[32];
@@ -439,8 +439,8 @@ void CEconTool_ClaimCode::OnClientUseConsumable( CEconItemView *pItem, vgui::Pan
 {
 	Assert( pItem );
 
-	CTFGenericConfirmDialog *pDialog = ShowConfirmDialog( "#TF_UseClaimCode_Title", "#TF_UseClaimCode_Text", 
-														  "#GameUI_OK", "#Cancel", 
+	CTFGenericConfirmDialog *pDialog = ShowConfirmDialog( "#TF_UseClaimCode_Title", "#TF_UseClaimCode_Text",
+														  "#GameUI_OK", "#Cancel",
 														  &UseItemConfirm );
 	pDialog->AddStringToken( "item_name", pItem->GetItemName() );
 
@@ -466,8 +466,8 @@ static void ClientConsumableTool_Generic( CEconItemView *pItem, vgui::Panel *pPa
 	Assert( pItem->GetItemDefinition() );
 	Assert( pItem->GetItemDefinition()->GetEconTool() );
 
-	CTFGenericConfirmDialog *pDialog = ShowConfirmDialog( "#TF_UseItem_Title", "#TF_UseItem_Text", 
-														  "#GameUI_OK", "#Cancel", 
+	CTFGenericConfirmDialog *pDialog = ShowConfirmDialog( "#TF_UseItem_Title", "#TF_UseItem_Text",
+														  "#GameUI_OK", "#Cancel",
 														  &UseItemConfirm );
 	pDialog->AddStringToken( "item_name", pItem->GetItemName() );
 	wchar_t wszUsesLeft[32];
@@ -574,7 +574,7 @@ void CEconTool_GrantOperationPass::OnClientUseConsumable( CEconItemView *pItem, 
 		Assert( pItemLocal );
 		if ( pItemLocal->GetItemDefinition() == pActivePassItemDef )
 		{
-			ShowMessageBox( "#TF_UseOperationPassAlreadyActive_Title", "#TF_UseOperationPassAlreadyActive_Text", "#GameUI_OK" );	
+			ShowMessageBox( "#TF_UseOperationPassAlreadyActive_Title", "#TF_UseOperationPassAlreadyActive_Text", "#GameUI_OK" );
 			return;
 		}
 	}
@@ -584,7 +584,7 @@ void CEconTool_GrantOperationPass::OnClientUseConsumable( CEconItemView *pItem, 
 	const char *pszTitle = "#TF_UseOperationPass_Title";
 	const char *pszBody = "#TF_UseOperationPass_Text";
 
-	static CSchemaItemDefHandle pItemDef_InvasionPass( "Unused Invasion Pass" ); 
+	static CSchemaItemDefHandle pItemDef_InvasionPass( "Unused Invasion Pass" );
 	if ( pItem->GetItemDefinition() == pItemDef_InvasionPass )
 	{
 		pszBody = "#TF_UseInvasionPass_Text";
@@ -633,7 +633,7 @@ public:
 			ShowMessageBox( "#TF_ServerEnchantmentType", "#TF_Eternaween__EventAlreadyActive", (KeyValues *)NULL );
 			break;
 		}
-		
+
 		return true;
 	}
 };
@@ -664,7 +664,7 @@ void UseConsumableItem( CEconItemView *pItem, vgui::Panel *pParent )
 		if ( pLocalPlayer == NULL )
 			return;
 	}
-	
+
 	// make sure this item meets our baseline useable criteria
 	if ( pItem->GetItemQuantity() <= 0 )
 		return;
@@ -701,10 +701,10 @@ void UseGift( CEconItemView* pItem, CSteamID targetID )
 	msg.Body().m_unGiftID = pItem->GetItemID();
 	msg.Body().m_ulTargetSteamID = targetID.ConvertToUint64();
 	GCClientSystem()->BSendMessage( msg );
-																	  
+
 	CSteamID steamID = steamapicontext->SteamUser()->GetSteamID();
 
-	C_CTF_GameStats.Event_Trading( IE_TRADING_ITEM_GIFTED, pItem, true, 
+	C_CTF_GameStats.Event_Trading( IE_TRADING_ITEM_GIFTED, pItem, true,
 		steamID.ConvertToUint64(), targetID.ConvertToUint64() );
 }
 
@@ -726,7 +726,7 @@ private:
 	CEconItemView* m_pItem;
 };
 
-CDeliverGiftSelectDialog::CDeliverGiftSelectDialog( vgui::Panel *parent ) 
+CDeliverGiftSelectDialog::CDeliverGiftSelectDialog( vgui::Panel *parent )
 : CSelectPlayerDialog( parent )
 {
 }
@@ -836,7 +836,7 @@ static void StartUseActionSlotItem( const CCommand &args )
 			g_bUsedGCItem = true;
 		}
 	}
-	
+
 	// otherwise, forward to game server
 	if ( !g_bUsedGCItem )
 	{
@@ -952,8 +952,8 @@ static ConCommand end_context_action( "-context_action", EndContextAction );
 class CTFGiftNotification : public CEconNotification
 {
 public:
-	CTFGiftNotification( GCSDK::CProtoBufMsg<CMsgGCGiftedItems> &msg ) 
-		: CEconNotification() 
+	CTFGiftNotification( GCSDK::CProtoBufMsg<CMsgGCGiftedItems> &msg )
+		: CEconNotification()
 	{
 		const EUniverse eUniverse = GetUniverse();
 
@@ -1000,14 +1000,14 @@ public:
 				m_vecSteamIDRecipients.AddToTail( recipientSteamID );
 			}
 		}
-		
+
 		char szGifterName[ MAX_PLAYER_NAME_LENGTH ];
 		GetPlayerNameBySteamID( m_steamID, szGifterName, sizeof( szGifterName ) );
 		g_pVGuiLocalize->ConvertANSIToUnicode( szGifterName, m_wszPlayerName, sizeof( m_wszPlayerName ) );
 		AddStringToken( "giver", m_wszPlayerName );
 
 		PrintToChatLog();
-		
+
 		SetSoundFilename( "misc/happy_birthday.wav" );
 	}
 
@@ -1036,13 +1036,13 @@ public:
 				g_pVGuiLocalize->ConvertANSIToUnicode( szRecipientName, wszRecipientName, sizeof( wszRecipientName ) );
 
 				wchar_t wszNotification[1024]=L"";
-				g_pVGuiLocalize->ConstructString_safe( wszNotification, 
+				g_pVGuiLocalize->ConstructString_safe( wszNotification,
 												  pFormat,
 												  2, m_wszPlayerName, wszRecipientName );
 
 				char szAnsi[1024];
 				g_pVGuiLocalize->ConvertUnicodeToANSI( wszNotification, szAnsi, sizeof(szAnsi) );
-			
+
 				pHUDChat->Printf( CHAT_FILTER_NONE, "%s", szAnsi );
 			}
 		}
@@ -1094,12 +1094,12 @@ public:
 class CTFUseItemNotification : public CEconNotification
 {
 public:
-	CTFUseItemNotification( EGCMsgUseItemResponse eResponse) 
-		: CEconNotification() 
+	CTFUseItemNotification( EGCMsgUseItemResponse eResponse)
+		: CEconNotification()
 	{
 		switch ( eResponse )
 		{
-		case k_EGCMsgUseItemResponse_ItemUsed: 		
+		case k_EGCMsgUseItemResponse_ItemUsed:
 			SetText( "#TF_UseItem_Success" );
 			break;
 		case k_EGCMsgUseItemResponse_GiftNoOtherPlayers:
@@ -1187,7 +1187,7 @@ public:
 		{
 			return true;
 		}
-		
+
 		// notify UI
 		NotificationQueue_Add( new CTFGiftNotification( msg ) );
 		return true;
@@ -1229,7 +1229,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGCUsedClaimCodeItem, "CGCUsedClaimCodeItem", k_EM
 
 
 //-----------------------------------------------------------------------------
-// Duel mini-game 
+// Duel mini-game
 //-----------------------------------------------------------------------------
 
 class CDuelMiniGameEventListener;
@@ -1287,8 +1287,8 @@ public:
 class CTFDuelRequestNotification : public CEconNotification, public CGameEventListener
 {
 public:
-	CTFDuelRequestNotification( const char *pInitiatorName, const CSteamID &steamIDInitiator, const CSteamID &steamIDTarget, const int iRequiredPlayerClass ) 
-		: CEconNotification() 
+	CTFDuelRequestNotification( const char *pInitiatorName, const CSteamID &steamIDInitiator, const CSteamID &steamIDTarget, const int iRequiredPlayerClass )
+		: CEconNotification()
 		, m_steamIDInitiator( steamIDInitiator )
 		, m_steamIDTarget( steamIDTarget )
 		, m_iRequiredPlayerClass( iRequiredPlayerClass )
@@ -1450,7 +1450,7 @@ public:
 				kDuelScoreType_Assist,
 				kMaxDuelScoreTypes,
 			};
-			
+
 			int iScoreType = event->GetInt( "score_type" );
 
 			KeyValues *pKeyValues = new KeyValues( "DuelStatus" );
@@ -1459,7 +1459,7 @@ public:
 			pKeyValues->SetWString( "target", wszTargetName );
 			pKeyValues->SetWString( "initiator_score", wszInitiatorScore );
 			pKeyValues->SetWString( "target_score", wszTargetScore );
-			
+
 			// if we aren't involved in the duel, don't show the notification
 			if ( pLocalPlayer->entindex() == iInitiatorID || pLocalPlayer->entindex() == iTargetID )
 			{
@@ -1670,7 +1670,7 @@ public:
 			}
 			gDuelMiniGameLocalData.m_iRequiredPlayerClass = msg.Body().m_usAsPlayerClass;
 		}
-		
+
 		pKeyValues->deleteThis();
 
 		return true;
@@ -1705,17 +1705,17 @@ public:
 		const char *pText = "TF_Duel_InProgress";
 		switch ( msg.Body().m_usStatus )
 		{
-		case kDuel_Status_AlreadyInDuel_Inititator: 
-			pText = "TF_Duel_InADuel_Initiator"; 
+		case kDuel_Status_AlreadyInDuel_Inititator:
+			pText = "TF_Duel_InADuel_Initiator";
 			break;
-		case kDuel_Status_AlreadyInDuel_Target: 
-			pText = "TF_Duel_InADuel_Target"; 
+		case kDuel_Status_AlreadyInDuel_Target:
+			pText = "TF_Duel_InADuel_Target";
 			break;
 		case kDuel_Status_DuelBanned_Initiator:
-			pText = "TF_Duel_TempBanned_Initiator"; 
+			pText = "TF_Duel_TempBanned_Initiator";
 			break;
 		case kDuel_Status_DuelBanned_Target:
-			pText = "TF_Duel_TempBanned_Target"; 
+			pText = "TF_Duel_TempBanned_Target";
 			break;
 		case kDuel_Status_Cancelled:
 			pText = "TF_Duel_Cancelled";
@@ -1756,7 +1756,7 @@ public:
 
 		if ( steamapicontext == NULL || steamapicontext->SteamUser() == NULL )
 			return true;
-		
+
 		CSteamID localSteamID = steamapicontext->SteamUser()->GetSteamID();
 
 		// get player names
@@ -1852,7 +1852,7 @@ public:
 			NotificationQueue_Add( pNotification );
 			gDuelMiniGameLocalData.m_steamIDOpponent = CSteamID();
 		}
-		
+
 		// print out to chat
 		PrintTextToChat( pText, pKeyValues );
 
@@ -1870,7 +1870,7 @@ GC_REG_JOB( GCSDK::CGCClient, CGC_Duel_Results, "CGC_Duel_Results", k_EMsgGC_Due
 
 static bool RemoveRelatedDuelNotifications( CEconNotification *pNotification )
 {
-	return ( CTFDuelRequestNotification::IsDuelRequestNotification( pNotification ) || 
+	return ( CTFDuelRequestNotification::IsDuelRequestNotification( pNotification ) ||
 			 CTFDuelInfoNotification::IsDuelInfoNotification( pNotification ) );
 }
 
@@ -1905,7 +1905,7 @@ bool DuelMiniGame_GetStats( C_TFPlayer **ppPlayer, uint32 &unMyScore, uint32 &un
 		{
 			CSteamID steamID;
 			C_TFPlayer *pPlayer = ToTFPlayer( UTIL_PlayerByIndex( iPlayerIndex ) );
-			if ( pPlayer && pPlayer->GetSteamID( &steamID ) && steamID == gDuelMiniGameLocalData.m_steamIDOpponent ) 
+			if ( pPlayer && pPlayer->GetSteamID( &steamID ) && steamID == gDuelMiniGameLocalData.m_steamIDOpponent )
 			{
 				*ppPlayer = pPlayer;
 				break;
@@ -1945,7 +1945,7 @@ public:
 	MESSAGE_FUNC( OnHideClassIconMouseover, "HideClassIconMouseover" );
 
 protected:
-	virtual const char *GetResFile() { return "resource/ui/SelectPlayerDialog_Duel.res"; } 
+	virtual const char *GetResFile() { return "resource/ui/SelectPlayerDialog_Duel.res"; }
 	void SetSelectedClass( int iClass );
 	void SetupClassImage( const char *pImageControlName, int iClass );
 
@@ -1956,7 +1956,7 @@ protected:
 
 static vgui::DHANDLE< CSelectPlayerForDuelDialog > g_pSelectPlayerForDuelingDialog;
 
-CSelectPlayerForDuelDialog::CSelectPlayerForDuelDialog( uint64 iItemID ) 
+CSelectPlayerForDuelDialog::CSelectPlayerForDuelDialog( uint64 iItemID )
 	: CSelectPlayerDialog( NULL )
 	, m_iItemID( iItemID )
 	, m_iPlayerClass( TF_CLASS_UNDEFINED )
@@ -2065,7 +2065,7 @@ void CSelectPlayerForDuelDialog::SetSelectedClass( int iClass )
 	m_iPlayerClass = iClass;
 
 	const char* pClassName = "#TF_SelectPlayer_DuelClass_None";
-	
+
 	switch ( m_iPlayerClass )
 	{
 	case TF_CLASS_SCOUT: 			pClassName = "#TF_Class_Name_Scout"; break;
@@ -2080,9 +2080,9 @@ void CSelectPlayerForDuelDialog::SetSelectedClass( int iClass )
 	}
 
 	wchar_t wszText[1024]=L"";
-	g_pVGuiLocalize->ConstructString_safe( wszText, 
+	g_pVGuiLocalize->ConstructString_safe( wszText,
 									  g_pVGuiLocalize->Find( "#TF_SelectPlayer_DuelClass" ),
-									  1, 
+									  1,
 									  g_pVGuiLocalize->Find( pClassName ) );
 
 	SetDialogVariable( "player_class", wszText );
@@ -2126,7 +2126,7 @@ public:
 
 		if ( steamapicontext == NULL || steamapicontext->SteamUser() == NULL )
 			return true;
-		
+
 		if ( !engine->IsInGame() )
 			return true;
 
@@ -2159,7 +2159,7 @@ public:
 			{
 				pHUDChat->SetCustomColor( pszQualityColorString );
 			}
-	
+
 			wchar_t wszLocalizedString[256];
 			g_pVGuiLocalize->ConstructString_safe( wszLocalizedString, wszItemRenamed, 3, wszPlayerName, CEconItemLocalizedFullNameGenerator( GLocalizationProvider(), pItemDefinition, iItemQuality ).GetFullName(), wszCustomName );
 

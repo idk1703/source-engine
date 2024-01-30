@@ -61,7 +61,7 @@ public:
 	MESSAGE_FUNC( OpenPingOptions, "Context_Ping" );
 
 protected:
-	
+
 	bool ShouldShowPartyButton() const;
 	virtual void WriteControls();
 	virtual void HandleBackPressed();
@@ -72,7 +72,7 @@ protected:
 	vgui::Button *m_pBackButton;
 
 private:
-	
+
 	virtual const char* GetResFile() const = 0;
 	virtual TF_MatchmakingMode GetHandledMode() const = 0;
 	virtual bool VerifyPartyAuthorization() const = 0;

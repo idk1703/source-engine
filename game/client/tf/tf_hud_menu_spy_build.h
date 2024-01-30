@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,7 +34,7 @@ struct SpyConstructBuilding_t
 
 	SpyConstructBuilding_t( bool bEnabled,
 							 ObjectType_t type,
-							 int iMode, 
+							 int iMode,
 							 const char *pszConstructAvailableObjectRes,
 							 const char *pszConstructAlreadyBuiltObjectRes,
 							 const char *pszConstructCantAffordObjectRes,
@@ -69,7 +69,7 @@ struct SpyConstructBuilding_t
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct SpyConstructBuildingReplacement_t
 {

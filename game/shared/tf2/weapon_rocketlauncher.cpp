@@ -23,7 +23,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
- 
+
 PRECACHE_WEAPON_REGISTER( weapon_rocket_launcher );
 LINK_ENTITY_TO_CLASS( weapon_rocket_launcher, CWeaponRocketLauncher );
 
@@ -119,9 +119,9 @@ void CWeaponRocketLauncher::ItemPostFrame( void )
 		}
 
 		// Reload button (or fire button when we're out of ammo)
-		if ( m_flNextPrimaryAttack <= gpGlobals->curtime ) 
+		if ( m_flNextPrimaryAttack <= gpGlobals->curtime )
 		{
-			if ( pPlayer->m_nButtons & IN_RELOAD ) 
+			if ( pPlayer->m_nButtons & IN_RELOAD )
 			{
 				Reload();
 			}
@@ -204,7 +204,7 @@ bool CWeaponRocketLauncher::ShouldPredict( void )
 {
 	if ( GetOwner() == C_BasePlayer::GetLocalPlayer() )
 		return true;
-	
+
 	return BaseClass::ShouldPredict();
 }
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -30,7 +30,7 @@ enum
 	dem_packet,
 	// sync client clock to demo tick
 	dem_synctick,
-	// console command 
+	// console command
 	dem_consolecmd,
 	// user input command
 	dem_usercmd,

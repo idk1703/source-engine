@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -41,7 +41,7 @@ ExpandButton::~ExpandButton()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ExpandButton::ApplySchemeSettings(IScheme *pScheme)
 {
@@ -55,7 +55,7 @@ void ExpandButton::ApplySchemeSettings(IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 IBorder *ExpandButton::GetBorder(bool depressed, bool armed, bool selected, bool keyfocus)
 {
@@ -105,9 +105,9 @@ void ExpandButton::Paint()
 	surface()->DrawUnicodeChar( code );
 }
 
-	
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ExpandButton::OnExpanded(Panel *panel)
 {

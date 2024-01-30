@@ -110,12 +110,12 @@ void CTFRune::Precache( void )
 	PrecacheScriptSound( "Powerup.Knockout_Melee_Hit" );
 	PrecacheScriptSound( "Powerup.Reflect.Reflect" );
 	PrecacheScriptSound( "Powerup.PickUpKing" );
-	PrecacheScriptSound( "Powerup.PickUpPlague" ); 
+	PrecacheScriptSound( "Powerup.PickUpPlague" );
 	PrecacheScriptSound( "Powerup.PickUpSupernova" );
 	PrecacheScriptSound( "Powerup.PickUpSupernovaActivate" );
 	PrecacheScriptSound( "Powerup.PickUpPlagueInfected" );
 	PrecacheScriptSound( "Powerup.PickUpPlagueInfectedLoop" );
-	PrecacheModel( GetDefaultPowerupModel() ); 
+	PrecacheModel( GetDefaultPowerupModel() );
 	PrecacheModel( TF_RUNE_STRENGTH );
 	PrecacheModel( TF_RUNE_RESIST );
 	PrecacheModel( TF_RUNE_REGEN );
@@ -137,7 +137,7 @@ void CTFRune::Precache( void )
 		PrecacheParticleSystem( GetPowerupIconName( type, TF_TEAM_BLUE ) );
 	}
 
-	PrecacheParticleSystem( "plague_infect_player" ); 
+	PrecacheParticleSystem( "plague_infect_player" );
 	PrecacheParticleSystem( "plague_healthkit_pickup" );
 	PrecacheParticleSystem( "powerup_king_red" );
 	PrecacheParticleSystem( "powerup_king_blue" );
@@ -187,8 +187,8 @@ bool CTFRune::MyTouch( CBasePlayer *pPlayer )
 				return false;
 			}
 
-		if ( pTFPlayer->m_Shared.IsStealthed() || 
-			pTFPlayer->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) || 
+		if ( pTFPlayer->m_Shared.IsStealthed() ||
+			pTFPlayer->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ||
 			pTFPlayer->m_Shared.GetPercentInvisible() > 0.25f )
 		{
 			return false;
@@ -347,7 +347,7 @@ void CTFRune::ComeToRest( void )
 			return;
 		}
 	}
-	
+
 	for ( int j = 0; j < IFuncRespawnRoomAutoList::AutoList().Count(); j++ )
 	{
 		CFuncRespawnRoom *pRespawnRoom = static_cast<CFuncRespawnRoom*>( IFuncRespawnRoomAutoList::AutoList()[j] );
@@ -446,12 +446,12 @@ bool CTFRune::RepositionRune( RuneTypes_t nType, int nTeamNumber )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 float CTFRune::GetRuneRepositionTime()
 {
-	// In freeforall mode, killed players drop enemy team colored powerups. These powerups reposition quicker 
+	// In freeforall mode, killed players drop enemy team colored powerups. These powerups reposition quicker
 	if ( m_nTeam != TEAM_ANY )
 	{
 		return 30.f;
@@ -519,7 +519,7 @@ bool CTFRuneTemp::MyTouch( CBasePlayer *pPlayer )
 		{
 			return false;
 		}
-		
+
 		if ( pTFPlayer->m_Shared.InCond( TF_COND_RUNE_IMBALANCE ) )
 		{
 			return false;
@@ -529,7 +529,7 @@ bool CTFRuneTemp::MyTouch( CBasePlayer *pPlayer )
 		{
 			return false;
 		}
-		
+
 		if ( pTFPlayer->m_Shared.InCond( TF_COND_INVULNERABLE_USER_BUFF ) || pTFPlayer->m_Shared.InCond( TF_COND_CRITBOOSTED_RUNE_TEMP ) )
 		{
 			return false;

@@ -1,18 +1,18 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======//
+//====== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. =======//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
-	   
+
 #ifndef UNITLIB_H
 #define UNITLIB_H
 
 #ifdef _WIN32
 #pragma once
 #endif
- 
+
 #include "tier0/platform.h"
 
 
@@ -22,7 +22,7 @@
 // The general methodology here is that clients are expected to create unit
 // test DLLs that statically link to the unit test DLL and which implement
 // tests of various libraries. The unit test application will dynamically
-// load all DLLs in a directory, which causes them to install their test cases 
+// load all DLLs in a directory, which causes them to install their test cases
 // into the unit test system. The application then runs through all tests and
 // executes them all, displaying the results.
 //
@@ -31,16 +31,16 @@
 //  I couldn't come up with a good way of disabling the code in release builds.
 //	(The only options I could come up with would still compile in the functions,
 //	just not install them into the unit test library, or would make it so that
-//	you couldn't step through the unit test code). 
+//	you couldn't step through the unit test code).
 //
-//	Even though this is the case, there's no reason not to add test cases 
-//	directly into your shipping DLLs, as long as you surround the code with 
+//	Even though this is the case, there's no reason not to add test cases
+//	directly into your shipping DLLs, as long as you surround the code with
 //	#ifdef _DEBUG. To error check a project to make sure it's not compiling
 //	in unit tests in Release build, just don't link in unitlib.lib in Release.
-//	You can of course also put your test suites into separate DLLs. 
+//	You can of course also put your test suites into separate DLLs.
 //
 //	All tests inherit from the ITestCase interface. There are two major kinds
-//	of tests; the first is a single test case meant to run a piece of 
+//	of tests; the first is a single test case meant to run a piece of
 //	code and check its results match expected values using the Assert macros.
 //	The second kind is a test suite which is simply a list of other tests.
 //
@@ -51,7 +51,7 @@
 //  to add as many test cases as you like to that test suite, as follows:
 //
 //  DEFINE_TESTSUITE( VectorTestSuite )
-//  
+//
 //  DEFINE_TESTCASE( VectorAdditionTest, VectorTestSuite )
 //  {
 //     .. test code here ..
@@ -96,7 +96,7 @@
 
 
 //-----------------------------------------------------------------------------
-// All unit test libraries can be asked for a unit test 
+// All unit test libraries can be asked for a unit test
 // AppSystem to perform connection
 //-----------------------------------------------------------------------------
 #define UNITTEST_INTERFACE_VERSION		"UnitTestV001"
@@ -151,7 +151,7 @@ UNITLIB_INTERFACE	ITestCase* GetUnitTest( int i );
 #define USE_UNITTEST_APPSYSTEM( _className )	\
 	static _className s_UnitTest ## _className;	\
 	EXPOSE_SINGLE_INTERFACE_GLOBALVAR( _className, IAppSystem, UNITTEST_INTERFACE_VERSION, s_UnitTest ## _className );
-	
+
 
 //-----------------------------------------------------------------------------
 // Base class for test cases
@@ -181,7 +181,7 @@ public:
 
 	// This runs the test
 	void RunTest();
-	
+
 	// Add a test to the suite...
 	void AddTest( ITestCase* pTest );
 
@@ -200,7 +200,7 @@ protected:
 	public:									\
 		CTS ## _suite();					\
 	};
-	
+
 #define TESTSUITE_ACCESSOR( _suite ) 		\
 	CTS ## _suite* GetTS ## _suite()		\
 	{										\

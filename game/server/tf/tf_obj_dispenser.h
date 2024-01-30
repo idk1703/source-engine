@@ -20,12 +20,12 @@ class CTFPlayer;
 
 #define DISPENSER_MINI_MAX_HEALTH	100
 #define DISPENSER_MINI_MAX_LEVEL	1
-#define DISPENSER_MINI_HEAL_RATE	10.0 
-#define DISPENSER_MINI_AMMO_RATE	0.2 
+#define DISPENSER_MINI_HEAL_RATE	10.0
+#define DISPENSER_MINI_AMMO_RATE	0.2
 #define DISPENSER_MINI_AMMO_THINK	0.5
 
 #define SF_DISPENSER_IGNORE_LOS					(SF_BASEOBJ_INVULN<<1)
-#define SF_DISPENSER_DONT_HEAL_DISGUISED_SPIES	(SF_BASEOBJ_INVULN<<2)	
+#define SF_DISPENSER_DONT_HEAL_DISGUISED_SPIES	(SF_BASEOBJ_INVULN<<2)
 
 // ------------------------------------------------------------------------ //
 // Repair Trigger
@@ -110,7 +110,7 @@ public:
 	virtual void	DetonateObject( void ) OVERRIDE;
 	virtual void	DestroyObject( void ) OVERRIDE;		// Silent cleanup
 
-	virtual void	OnGoActive( void );	
+	virtual void	OnGoActive( void );
 	virtual void	StartPlacement( CTFPlayer *pPlayer ) OVERRIDE;
 	virtual bool	StartBuilding( CBaseEntity *pBuilder ) OVERRIDE;
 	virtual void	SetStartBuildingModel( void ) OVERRIDE;

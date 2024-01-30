@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmepackoperators.h"
@@ -60,7 +60,7 @@ void CDmePackColorOperator::GetOutputAttributes( CUtlVector< CDmAttribute * > &a
 
 
 //-----------------------------------------------------------------------------
-// CDmePackVector2Operator 
+// CDmePackVector2Operator
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmePackVector2Operator, CDmePackVector2Operator );
 
@@ -99,7 +99,7 @@ void CDmePackVector2Operator::GetOutputAttributes( CUtlVector< CDmAttribute * > 
 
 
 //-----------------------------------------------------------------------------
-// CDmePackVector3Operator 
+// CDmePackVector3Operator
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmePackVector3Operator, CDmePackVector3Operator );
 
@@ -140,7 +140,7 @@ void CDmePackVector3Operator::GetOutputAttributes( CUtlVector< CDmAttribute * > 
 
 
 //-----------------------------------------------------------------------------
-// CDmePackVector4Operator 
+// CDmePackVector4Operator
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmePackVector4Operator, CDmePackVector4Operator );
 
@@ -183,7 +183,7 @@ void CDmePackVector4Operator::GetOutputAttributes( CUtlVector< CDmAttribute * > 
 
 
 //-----------------------------------------------------------------------------
-// CDmePackQAngleOperator 
+// CDmePackQAngleOperator
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmePackQAngleOperator, CDmePackQAngleOperator );
 
@@ -224,7 +224,7 @@ void CDmePackQAngleOperator::GetOutputAttributes( CUtlVector< CDmAttribute * > &
 
 
 //-----------------------------------------------------------------------------
-// CDmePackQuaternionOperator 
+// CDmePackQuaternionOperator
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmePackQuaternionOperator, CDmePackQuaternionOperator );
 
@@ -267,7 +267,7 @@ void CDmePackQuaternionOperator::GetOutputAttributes( CUtlVector< CDmAttribute *
 
 
 //-----------------------------------------------------------------------------
-// CDmePackVMatrixOperator 
+// CDmePackVMatrixOperator
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmePackVMatrixOperator, CDmePackVMatrixOperator );
 

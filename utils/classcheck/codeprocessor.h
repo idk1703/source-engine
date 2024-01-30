@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -53,15 +53,15 @@ public:
 	bool		GetCheckHungarian() const;
 
 	CClass		*FindClass( const char *name ) const;
-	
+
 	void		ResolveBaseClasses( const char *baseentityclass );
 	void		Clear( void );
 	void		PrintClassList( void ) const;
 	void		PrintMissingTDFields( void ) const;
 	void		ReportHungarianNotationErrors();
-	
+
 	int			Count( void ) const;
-	
+
 	void		SortClassList( void );
 
 private:
@@ -69,16 +69,16 @@ private:
 	char		*ParsePredictionTypeDescription( char *current );
 	char		*ParseReceiveTable( char *current );
 
-	void		ProcessModule( bool forcequiet, int depth, int& maxdepth, int& numheaders, int& skippedfiles, 
+	void		ProcessModule( bool forcequiet, int depth, int& maxdepth, int& numheaders, int& skippedfiles,
 		const char *srcroot, const char *baseroot, const char *root, const char *module );
 	void		ProcessModules( const char *srcroot, const char *root, const char *rootmodule );
 	void		PrintResults( const char *baseentityclass );
 	void		ConstructModuleList_R( int level, const char *baseentityclass, const char *gamespecific, const char *root, char const *srcroot );
-	
+
 	void		AddHeader( int depth, const char *filename, const char *rootmodule );
 
 	bool		CheckShouldSkip( bool forcequiet, int depth, char const *filename, int& numheaders, int& skippedfiles);
-	bool		LoadFile( char **buffer, char *filename, char const *module, bool forcequiet, 
+	bool		LoadFile( char **buffer, char *filename, char const *module, bool forcequiet,
 					int depth, int& filelength, int& numheaders, int& skippedfiles,
 					char const *srcroot, char const *root, char const *baseroot );
 

@@ -27,7 +27,7 @@ $Project "tier2test"
 	$Folder	"Header Files"
 	{
 	}
-	
+
 	$Folder "Link Libraries"
 	{
 		$Lib mathlib

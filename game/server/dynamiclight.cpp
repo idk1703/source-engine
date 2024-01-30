@@ -63,7 +63,7 @@ BEGIN_DATADESC( CDynamicLight )
 	DEFINE_INPUT( m_OuterAngle,	FIELD_FLOAT,	"_cone" ),
 	DEFINE_INPUT( m_SpotRadius,	FIELD_FLOAT,	"spotlight_radius" ),
 	DEFINE_INPUT( m_LightStyle,	FIELD_CHARACTER,"style" ),
-	
+
 	// Input functions
 	DEFINE_INPUTFUNC( FIELD_VOID, "TurnOn", InputTurnOn ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "TurnOff", InputTurnOff ),
@@ -83,7 +83,7 @@ IMPLEMENT_SERVERCLASS_ST(CDynamicLight, DT_DynamicLight)
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CDynamicLight::KeyValue( const char *szKeyName, const char *szValue )
 {
@@ -125,8 +125,8 @@ void CDynamicLight::InputTurnOn( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CDynamicLight::InputTurnOff( inputdata_t &inputdata )
 {
@@ -136,8 +136,8 @@ void CDynamicLight::InputTurnOff( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CDynamicLight::InputToggle( inputdata_t &inputdata )
 {
@@ -168,22 +168,22 @@ void CDynamicLight::Spawn( void )
 		SetThink( &CDynamicLight::DynamicLightThink );
 		SetNextThink( gpGlobals->curtime + 0.1 );
 	}
-	
+
 	int clampedExponent = clamp( (int) m_Exponent, MIN_DL_EXPONENT_VALUE, MAX_DL_EXPONENT_VALUE );
 	if ( m_Exponent != clampedExponent )
 	{
 		Warning( "light_dynamic at [%d %d %d] has invalid exponent value (%d must be between %d and %d).\n",
-			(int)GetAbsOrigin().x, (int)GetAbsOrigin().x, (int)GetAbsOrigin().x, 
+			(int)GetAbsOrigin().x, (int)GetAbsOrigin().x, (int)GetAbsOrigin().x,
 			m_Exponent.Get(),
 			MIN_DL_EXPONENT_VALUE,
 			MAX_DL_EXPONENT_VALUE );
-		
+
 		m_Exponent = clampedExponent;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDynamicLight::DynamicLightThink( void )
 {
@@ -198,6 +198,6 @@ void CDynamicLight::DynamicLightThink( void )
 		VectorAngles( vecToTarget, vecAngles );
 		SetAbsAngles( vecAngles );
 	}
-	
+
 	SetNextThink( gpGlobals->curtime + 0.1 );
 }

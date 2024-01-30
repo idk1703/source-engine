@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -30,12 +30,12 @@ public:
 
 	void SetAmmo(int ammo, bool playAnimation);
 	void SetAmmo2(int ammo2, bool playAnimation);
-		
+
 protected:
 	virtual void OnThink();
 	virtual void Paint( void );
 	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
-	
+
 private:
 	CHandle< C_BaseCombatWeapon > m_hCurrentActiveWeapon;
 	int		m_iAmmo;
@@ -79,7 +79,7 @@ CHudAmmo::CHudAmmo( const char *pElementName ) : BaseClass(NULL, "HudAmmo"), CHu
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAmmo::Init( void )
 {
@@ -93,7 +93,7 @@ void CHudAmmo::ApplySchemeSettings(vgui::IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAmmo::VidInit( void )
 {
@@ -248,7 +248,7 @@ void CHudAmmo::Paint( void )
 	int charWidth = vgui::surface()->GetCharacterWidth( m_hNumberFont, '0' );
 
 	int digits = clamp( log10((double)m_iAmmo)+1, 1, 3 );
-	
+
 	x += ( 3 - digits ) * charWidth;
 
 	// draw primary ammo

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,11 +15,11 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct viddef_t
 {
-	unsigned int	width;		
+	unsigned int	width;
 	unsigned int	height;
 	int				recalc_refdef;	// if non-zero, recalc vid-based stuff
 	int				bits;

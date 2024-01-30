@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -98,11 +98,11 @@ int C_FuncAreaPortalWindow::DrawModel( int flags )
 		mode = ( flags & STUDIO_TRANSPARENCY ) ? DBM_DRAW_TRANSLUCENT_ONLY : DBM_DRAW_OPAQUE_ONLY;
 	}
 
-	render->DrawBrushModelEx( 
-		this, 
-		(model_t *)GetModel(), 
-		GetAbsOrigin(), 
-		GetAbsAngles(), 
+	render->DrawBrushModelEx(
+		this,
+		(model_t *)GetModel(),
+		GetAbsOrigin(),
+		GetAbsAngles(),
 		mode );
 
 	// Draw the optional foreground model next.
@@ -113,11 +113,11 @@ int C_FuncAreaPortalWindow::DrawModel( int flags )
 		model_t *pBackground = ( model_t * )modelinfo->GetModel( m_iBackgroundModelIndex );
 		if( pBackground && modelinfo->GetModelType( pBackground ) == mod_brush )
 		{
-			render->DrawBrushModelEx( 
-				this, 
-				pBackground, 
-				GetAbsOrigin(), 
-				GetAbsAngles(), 
+			render->DrawBrushModelEx(
+				this,
+				pBackground,
+				GetAbsOrigin(),
+				GetAbsAngles(),
 				mode );
 		}
 	}
@@ -135,7 +135,7 @@ float C_FuncAreaPortalWindow::GetDistanceBlend()
 	{
 		flDist *= local->GetFOVDistanceAdjustFactor();
 	}
-	
+
 	return RemapValClamped( flDist, m_flFadeStartDist, m_flFadeDist, m_flTranslucencyLimit, 1 );
 }
 
@@ -143,5 +143,3 @@ bool C_FuncAreaPortalWindow::ShouldReceiveProjectedTextures( int flags )
 {
 	return false;
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,7 +13,7 @@
 #include "clientmode_shared.h"
 #include "sdkviewport.h"
 
-class ClientModeSDKNormal : public ClientModeShared 
+class ClientModeSDKNormal : public ClientModeShared
 {
 DECLARE_CLASS( ClientModeSDKNormal, ClientModeShared );
 
@@ -33,9 +33,9 @@ public:
 
 	virtual void	PostRenderVGui();
 
-	
+
 private:
-	
+
 	//	void	UpdateSpectatorMode( void );
 
 };

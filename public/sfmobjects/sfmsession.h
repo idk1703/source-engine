@@ -149,7 +149,7 @@ inline CDmAttribute *CSFMSession::GetSettingsAttribute( const char *pSettingName
 	return NULL;
 }
 
-template< class T > 
+template< class T >
 inline void CSFMSession::SetSettings( const char *pSettingName, const T& value )
 {
 	CDmElement *pSettings = m_hRoot.Get() ? m_hRoot->GetValueElement< CDmElement >( "settings" ) : NULL;

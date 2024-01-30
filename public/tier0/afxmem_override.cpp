@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -198,7 +198,7 @@ void AFXAPI AfxSetAllocStop(LONG lRequestNumber)
 }
 
 BOOL AFXAPI AfxCheckMemory()
-  // check all of memory (look for memory tromps)
+	// check all of memory (look for memory tromps)
 {
 	return _CrtCheckMemory();
 }

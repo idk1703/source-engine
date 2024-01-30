@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -49,7 +49,7 @@ END_DATADESC()
 
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void CScriptedTarget::InputEnable( inputdata_t &inputdata )
 {
@@ -66,7 +66,7 @@ void CScriptedTarget::InputDisable( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScriptedTarget::TurnOn( void )
 {
@@ -141,7 +141,7 @@ CScriptedTarget* CScriptedTarget::NextScriptedTarget(void)
 		m_LeaveTarget.FireOutput( GetTarget(), this );
 
 		// ------------------------------------------------------------
-		//  Get next target.  
+		//  Get next target.
 		// ------------------------------------------------------------
 		CScriptedTarget* pNextTarget = ((CScriptedTarget*)GetNextTarget());
 
@@ -163,7 +163,7 @@ CScriptedTarget* CScriptedTarget::NextScriptedTarget(void)
 			//  Make sure there is a LOS between these two targets
 			// ----------------------------------------------------
 			trace_t tr;
-			UTIL_TraceLine(GetAbsOrigin(), pNextTarget->GetAbsOrigin(), MASK_SHOT, this, COLLISION_GROUP_NONE, &tr);	
+			UTIL_TraceLine(GetAbsOrigin(), pNextTarget->GetAbsOrigin(), MASK_SHOT, this, COLLISION_GROUP_NONE, &tr);
 			if (tr.fraction != 1.0)
 			{
 				Warning( "WARNING: Scripted Target from (%s) to (%s) is occluded!\n",GetDebugName(),pNextTarget->GetDebugName() );
@@ -230,7 +230,7 @@ CBaseEntity* CScriptedTarget::FindEntity( void )
 			}
 		}
 	}
-	
+
 	// UNDONE: If nearest fails, try next nearest
 	if (pNearestEnt)
 	{
@@ -266,18 +266,18 @@ void CScriptedTarget::ScriptThink( void )
 // Purpose: Draw any debug text overlays
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CScriptedTarget::DrawDebugTextOverlays(void) 
+int CScriptedTarget::DrawDebugTextOverlays(void)
 {
 	// Skip AIClass debug overlays
 	int text_offset = CBaseEntity::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		// --------------
 		// Print State
 		// --------------
 		char tempstr[512];
-		if (m_iDisabled) 
+		if (m_iDisabled)
 		{
 			Q_strncpy(tempstr,"State: Off",sizeof(tempstr));
 		}
@@ -292,7 +292,7 @@ int CScriptedTarget::DrawDebugTextOverlays(void)
 		// Print Next Entity
 		// -----------------
 		CBaseEntity *pTarget = GetNextTarget();
-		if (pTarget) 
+		if (pTarget)
 		{
 			Q_snprintf(tempstr,sizeof(tempstr),"Next: %s",pTarget->GetDebugName() );
 		}
@@ -306,7 +306,7 @@ int CScriptedTarget::DrawDebugTextOverlays(void)
 		// --------------
 		// Print Target
 		// --------------
-		if (GetTarget()!=NULL) 
+		if (GetTarget()!=NULL)
 		{
 			Q_snprintf(tempstr,sizeof(tempstr),"User: %s",GetTarget()->GetDebugName() );
 		}
@@ -314,7 +314,7 @@ int CScriptedTarget::DrawDebugTextOverlays(void)
 		{
 			Q_strncpy(tempstr,"User: -NONE-",sizeof(tempstr));
 		}
-		else 
+		else
 		{
 			Q_strncpy(tempstr,"User: -LOOKING-",sizeof(tempstr));
 		}
@@ -328,7 +328,7 @@ int CScriptedTarget::DrawDebugTextOverlays(void)
 //-----------------------------------------------------------------------------
 // Purpose: Override base class to add display of paths
 //-----------------------------------------------------------------------------
-void CScriptedTarget::DrawDebugGeometryOverlays(void) 
+void CScriptedTarget::DrawDebugGeometryOverlays(void)
 {
 	// ----------------------------------------------
 	// Draw line to next target is bbox is selected
@@ -359,4 +359,3 @@ void CScriptedTarget::DrawDebugGeometryOverlays(void)
 	}
 	CBaseEntity::DrawDebugGeometryOverlays();
 }
-

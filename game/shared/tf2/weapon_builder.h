@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ public:
 	virtual void	ItemPostFrame( void );
 	virtual void	PrimaryAttack( void );
 	virtual void	WeaponIdle( void );
-	virtual bool	Deploy( void );	
+	virtual bool	Deploy( void );
 	virtual const char	*GetViewModel( int viewmodelindex = 0 ) const;
 
 	void	SetCurrentState( int iState );

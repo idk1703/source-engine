@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -58,7 +58,7 @@ public:
 	void			SetTick( int tick );
 	bool			ChangedSinceTick( int tick ) const;
 
-	int				AddString( bool bIsServer, const char *value, int length = -1, const void *userdata = NULL ); 
+	int				AddString( bool bIsServer, const char *value, int length = -1, const void *userdata = NULL );
 	const char		*GetString( int stringNumber );
 
 	void			SetStringUserData( int stringNumber, int length, const void *userdata );
@@ -73,7 +73,7 @@ public:
 	int				GetUserDataSize() const;
 
 public:
-	
+
 #ifndef SHARED_NET_STRING_TABLES
 	int				WriteUpdate( CBaseClient *client, bf_write &buf, int tick_ack );
 	void			ParseUpdate( bf_read &buf, int entries );
@@ -81,7 +81,7 @@ public:
 	// HLTV change history & rollback
 	void			EnableRollback();
 	void			RestoreTick(int tick);
-	
+
 	// local backdoor tables
 	void			SetMirrorTable( INetworkStringTable *table );
 	void			UpdateMirrorTable( int tick_ack  );
@@ -94,13 +94,13 @@ public:
 #endif
 
 	void			TriggerCallbacks( int tick_ack  );
-	
+
 	CNetworkStringTableItem *GetItem( int i );
-	
+
 	// debug ouptput
 	virtual void	Dump( void );
 	virtual void	Lock( bool bLock );
-	
+
 	void SetAllowClientSideAddString( bool state );
 	pfnStringChanged	GetCallback();
 
@@ -134,7 +134,7 @@ protected:
 	// Optional context/object
 	void					*m_pObject;
 
-	// pointer to local backdoor table 
+	// pointer to local backdoor table
 	INetworkStringTable		*m_pMirrorTable;
 
 	INetworkStringDict		*m_pItems;
@@ -157,7 +157,7 @@ public:
 	INetworkStringTable	*CreateStringTable( const char *tableName, int maxentries, int userdatafixedsize = 0, int userdatanetworkbits = 0 )	{ return CreateStringTableEx( tableName, maxentries, userdatafixedsize, userdatanetworkbits, false ); }
 	INetworkStringTable	*CreateStringTableEx( const char *tableName, int maxentries, int userdatafixedsize = 0, int userdatanetworkbits = 0, bool bIsFilenames = false );
 	void				RemoveAllTables( void );
-	
+
 	// table infos
 	INetworkStringTable	*FindTable( const char *tableName ) const ;
 	INetworkStringTable	*GetTable( TABLEID stringTable ) const;
@@ -184,15 +184,15 @@ public:
 	void		DirectUpdate( int tick_ack );	// fill mirror table directly with updates
 #endif
 
-	void		TriggerCallbacks( int tick_ack ); // fire callback functions 
+	void		TriggerCallbacks( int tick_ack ); // fire callback functions
 
-	
-		
+
+
 	// Guards so game .dll can't create tables at the wrong time
 	void		AllowCreation( bool state );
 
-	
-	
+
+
 	// Print table data to console
 	void		Dump( void );
 	// Sets the lock and returns the previous lock state

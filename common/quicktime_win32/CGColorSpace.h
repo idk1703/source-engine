@@ -1,17 +1,17 @@
 /*
-     File:       CGColorSpace.h
- 
-     Contains:   CoreGraphics color space
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       CGColorSpace.h
+
+		Contains:   CoreGraphics color space
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 
 #ifndef CGCOLORSPACE_H_
@@ -41,27 +41,27 @@ extern "C" {
 #endif
 
 #if PRAGMA_ENUM_ALWAYSINT
-    #if defined(__fourbyteints__) && !__fourbyteints__ 
-        #define __CGCOLORSPACE__RESTORE_TWOBYTEINTS
-        #pragma fourbyteints on
-    #endif
-    #pragma enumsalwaysint on
+		#if defined(__fourbyteints__) && !__fourbyteints__
+				#define __CGCOLORSPACE__RESTORE_TWOBYTEINTS
+				#pragma fourbyteints on
+		#endif
+		#pragma enumsalwaysint on
 #elif PRAGMA_ENUM_OPTIONS
-    #pragma option enum=int
+		#pragma option enum=int
 #elif PRAGMA_ENUM_PACK
-    #if __option(pack_enums)
-        #define __CGCOLORSPACE__RESTORE_PACKED_ENUMS
-        #pragma options(!pack_enums)
-    #endif
+		#if __option(pack_enums)
+				#define __CGCOLORSPACE__RESTORE_PACKED_ENUMS
+				#pragma options(!pack_enums)
+		#endif
 #endif
 
 typedef struct CGColorSpace*            CGColorSpaceRef;
 enum CGColorRenderingIntent {
-  kCGRenderingIntentDefault     = 0,
-  kCGRenderingIntentAbsoluteColorimetric = 1,
-  kCGRenderingIntentRelativeColorimetric = 2,
-  kCGRenderingIntentPerceptual  = 3,
-  kCGRenderingIntentSaturation  = 4
+	kCGRenderingIntentDefault     = 0,
+	kCGRenderingIntentAbsoluteColorimetric = 1,
+	kCGRenderingIntentRelativeColorimetric = 2,
+	kCGRenderingIntentPerceptual  = 3,
+	kCGRenderingIntentSaturation  = 4
 };
 typedef enum CGColorRenderingIntent CGColorRenderingIntent;
 
@@ -70,7 +70,7 @@ typedef enum CGColorRenderingIntent CGColorRenderingIntent;
 /* Create a DeviceGray colorspace. */
 /*
  *  CGColorSpaceCreateDeviceGray()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -83,7 +83,7 @@ CGColorSpaceCreateDeviceGray(void);
 /* Create a DeviceRGB colorspace. */
 /*
  *  CGColorSpaceCreateDeviceRGB()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -96,7 +96,7 @@ CGColorSpaceCreateDeviceRGB(void);
 /* Create a DeviceCMYK colorspace. */
 /*
  *  CGColorSpaceCreateDeviceCMYK()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -114,7 +114,7 @@ CGColorSpaceCreateDeviceCMYK(void);
  * black point. `gamma' defines the gamma for the gray component. */
 /*
  *  CGColorSpaceCreateCalibratedGray()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -122,9 +122,9 @@ CGColorSpaceCreateDeviceCMYK(void);
  */
 EXTERN_API_C( CGColorSpaceRef )
 CGColorSpaceCreateCalibratedGray(
-  const float   whitePoint[3],
-  const float   blackPoint[3],
-  float         gamma);
+	const float   whitePoint[3],
+	const float   blackPoint[3],
+	float         gamma);
 
 
 /* Create a calibrated RGB colorspace.  `whitePoint' is an array of 3
@@ -138,7 +138,7 @@ CGColorSpaceCreateCalibratedGray(
  * XYZ representation. */
 /*
  *  CGColorSpaceCreateCalibratedRGB()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -146,10 +146,10 @@ CGColorSpaceCreateCalibratedGray(
  */
 EXTERN_API_C( CGColorSpaceRef )
 CGColorSpaceCreateCalibratedRGB(
-  const float   whitePoint[3],
-  const float   blackPoint[3],
-  const float   gamma[3],
-  const float   matrix[9]);
+	const float   whitePoint[3],
+	const float   blackPoint[3],
+	const float   gamma[3],
+	const float   matrix[9]);
 
 
 /* Create an L*a*b* colorspace.  `whitePoint' is an array of 3 numbers
@@ -160,7 +160,7 @@ CGColorSpaceCreateCalibratedRGB(
  * values for the a* and b* components of the color space. */
 /*
  *  CGColorSpaceCreateLab()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -168,9 +168,9 @@ CGColorSpaceCreateCalibratedRGB(
  */
 EXTERN_API_C( CGColorSpaceRef )
 CGColorSpaceCreateLab(
-  const float   whitePoint[3],
-  const float   blackPoint[3],
-  const float   range[4]);
+	const float   whitePoint[3],
+	const float   blackPoint[3],
+	const float   range[4]);
 
 
 /* Create an ICC-based colorspace.  `nComponents' specifies the number of
@@ -188,7 +188,7 @@ CGColorSpaceCreateLab(
  * respectively. */
 /*
  *  CGColorSpaceCreateICCBased()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -196,10 +196,10 @@ CGColorSpaceCreateLab(
  */
 EXTERN_API_C( CGColorSpaceRef )
 CGColorSpaceCreateICCBased(
-  size_t              nComponents,
-  const float *       range,
-  CGDataProviderRef   profile,
-  CGColorSpaceRef     alternateSpace);
+	size_t              nComponents,
+	const float *       range,
+	CGDataProviderRef   profile,
+	CGColorSpaceRef     alternateSpace);
 
 
 /** Special colorspaces. **/
@@ -214,7 +214,7 @@ CGColorSpaceCreateICCBased(
  * range of the corresponding color component in the base color space. */
 /*
  *  CGColorSpaceCreateIndexed()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -222,9 +222,9 @@ CGColorSpaceCreateICCBased(
  */
 EXTERN_API_C( CGColorSpaceRef )
 CGColorSpaceCreateIndexed(
-  CGColorSpaceRef        baseSpace,
-  size_t                 lastIndex,
-  const unsigned char *  colorTable);
+	CGColorSpaceRef        baseSpace,
+	size_t                 lastIndex,
+	const unsigned char *  colorTable);
 
 
 /* Create a pattern colorspace. `baseSpace' is the underlying colorspace of
@@ -233,7 +233,7 @@ CGColorSpaceCreateIndexed(
  * colors which will be painted through the pattern. */
 /*
  *  CGColorSpaceCreatePattern()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -248,7 +248,7 @@ CGColorSpaceCreatePattern(CGColorSpaceRef baseSpace);
  * `platformColorSpaceReference' should be a pointer to a CMProfileRef. */
 /*
  *  CGColorSpaceCreateWithPlatformColorSpace()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -263,7 +263,7 @@ CGColorSpaceCreateWithPlatformColorSpace(void * platformColorSpaceReference);
 /* Return the number of color components supported by the colorspace `cs'. */
 /*
  *  CGColorSpaceGetNumberOfComponents()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -278,7 +278,7 @@ CGColorSpaceGetNumberOfComponents(CGColorSpaceRef cs);
  * created with an initial retain count of 1. */
 /*
  *  CGColorSpaceRetain()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -292,7 +292,7 @@ CGColorSpaceRetain(CGColorSpaceRef cs);
  * release it and any associated resources. */
 /*
  *  CGColorSpaceRelease()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -304,14 +304,14 @@ CGColorSpaceRelease(CGColorSpaceRef cs);
 
 
 #if PRAGMA_ENUM_ALWAYSINT
-    #pragma enumsalwaysint reset
-    #ifdef __CGCOLORSPACE__RESTORE_TWOBYTEINTS
-        #pragma fourbyteints off
-    #endif
+		#pragma enumsalwaysint reset
+		#ifdef __CGCOLORSPACE__RESTORE_TWOBYTEINTS
+				#pragma fourbyteints off
+		#endif
 #elif PRAGMA_ENUM_OPTIONS
-    #pragma option enum=reset
+		#pragma option enum=reset
 #elif defined(__CGCOLORSPACE__RESTORE_PACKED_ENUMS)
-    #pragma options(pack_enums)
+		#pragma options(pack_enums)
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -325,4 +325,3 @@ CGColorSpaceRelease(CGColorSpaceRef cs);
 #endif
 
 #endif /* CGCOLORSPACE_H_ */
-

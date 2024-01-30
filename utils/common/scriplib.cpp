@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -49,7 +49,7 @@ char    token[MAXTOKEN];
 qboolean endofscript;
 qboolean tokenready;                     // only true if UnGetToken was just called
 
-typedef struct 
+typedef struct
 {
 	char *param;
 	char *value;
@@ -87,7 +87,7 @@ void AddScriptToStack (char *filename, ScriptPathMode_t pathMode = SCRIPT_USE_AB
 	script++;
 	if (script == &scriptstack[MAX_INCLUDES])
 		Error ("script file exceeded MAX_INCLUDES");
-	
+
 	if ( pathMode == SCRIPT_USE_RELATIVE_PATH )
 		Q_strncpy( script->filename, filename, sizeof( script->filename ) );
 	else
@@ -195,7 +195,7 @@ void DefineMacro( char *macroname )
 	pmacro->buffer = (char *)malloc( size + 1);
 	memcpy( pmacro->buffer, script->script_p, size );
 	pmacro->buffer[size] = '\0';
-	pmacro->end_p = &pmacro->buffer[size]; 
+	pmacro->end_p = &pmacro->buffer[size];
 
 	macrolist[nummacros++] = pmacro;
 
@@ -210,7 +210,7 @@ void DefineVariable( char *variablename )
 	v.param = strdup( variablename );
 
 	GetToken( false );
-	
+
 	v.value = strdup( token );
 
 	g_definevariable.AddToTail( v );
@@ -315,11 +315,11 @@ bool ExpandMacroToken( char *&token_p )
 			Error("unknown macro token \"%s\" in %s\n", tp, script->filename );
 		}
 
-		// paste token into 
+		// paste token into
 		len = strlen( script->macrovalue[index] );
 		strcpy( token_p, script->macrovalue[index] );
 		token_p += len;
-		
+
 		script->script_p = cp + 1;
 
 		if (script->script_p >= script->end_p)
@@ -368,17 +368,17 @@ bool ExpandVariableToken( char *&token_p )
 			if (Q_strnicmp( g_definevariable[index].param, tp, len ) == 0)
 				break;
 		}
-	
+
 		if (index >= g_definevariable.Count() )
 		{
 			Error("unknown variable token \"%s\" in %s\n", tp, script->filename );
 		}
 
-		// paste token into 
+		// paste token into
 		len = strlen( g_definevariable[index].value );
 		strcpy( token_p, g_definevariable[index].value );
 		token_p += len;
-		
+
 		script->script_p = cp + 1;
 
 		if (script->script_p >= script->end_p)
@@ -626,7 +626,7 @@ skipspace:
 	// strip single line comments
 	if (*script->script_p == ';' || *script->script_p == '#' ||		 // semicolon and # is comment field
 		(*script->script_p == '/' && *((script->script_p)+1) == '/')) // also make // a comment field
-	{											
+	{
 		if (!crossline)
 			Error ("Line %i is incomplete\n",scriptline);
 		while (*script->script_p++ != '\n')
@@ -801,7 +801,7 @@ skipspace:
 
 	if (*script->script_p == ';' || *script->script_p == '#' ||		 // semicolon and # is comment field
 		(*script->script_p == '/' && *((script->script_p)+1) == '/')) // also make // a comment field
-	{											
+	{
 		if (!crossline)
 			Error ("Line %i is incomplete\n",scriptline);
 		while (*script->script_p++ != '\n')
@@ -1020,7 +1020,7 @@ bool CScriptLib::WriteBufferToFile( const char *pTargetName, CUtlBuffer &buffer,
 	strcpy( dirPath, pTargetName );
 	ptr = strchr( dirPath, '\\' );
 	while ( ptr )
-	{		
+	{
 		ptr = strchr( ptr+1, '\\' );
 		if ( ptr )
 		{
@@ -1266,7 +1266,7 @@ int CScriptLib::GetFileList( const char* pDirPath, const char* pPattern, CUtlVec
 #else
 #error
 #endif
-	
+
 
 	return fileList.Count();
 }
@@ -1342,7 +1342,7 @@ int CScriptLib::FindFiles( char* pFileMask, bool bRecurse, CUtlVector<fileList_t
 			{
 				fileList[start+j] = tempList[j];
 			}
-		}	
+		}
 	}
 
 	return fileList.Count();

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -74,14 +74,14 @@ struct MaterialSystem_Config_t
 	{
 		if( val )
 		{
-			m_Flags |= flag;	
+			m_Flags |= flag;
 		}
 		else
 		{
-			m_Flags &= ~flag;	
+			m_Flags &= ~flag;
 		}
 	}
-	
+
 	// control panel stuff
 	MaterialVideoMode_t m_VideoMode;
 	float m_fMonitorGamma;
@@ -110,7 +110,7 @@ struct MaterialSystem_Config_t
 	bool bAllowCheats;
 	char nShowMipLevels;
 	bool bShowLowResImage;
-	bool bShowNormalMap; 
+	bool bShowNormalMap;
 	bool bMipMapTextures;
 	unsigned char nFullbright;
 	bool m_bFastNoBump;

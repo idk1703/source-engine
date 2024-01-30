@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -93,7 +93,7 @@ CTFIntroMenu::~CTFIntroMenu()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFIntroMenu::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -112,7 +112,7 @@ void CTFIntroMenu::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFIntroMenu::SetNextThink( float flActionThink, int iAction )
 {
@@ -121,7 +121,7 @@ void CTFIntroMenu::SetNextThink( float flActionThink, int iAction )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFIntroMenu::OnTick()
 {
@@ -150,11 +150,11 @@ void CTFIntroMenu::OnTick()
 	{
 		if ( m_iAction == INTRO_STARTVIDEO )
 		{
-				
+
 			//=============================================================================
 			// HPE_BEGIN
 			// [msmith] Pulled start video into a separate function.
-			//=============================================================================	
+			//=============================================================================
 			StartVideo();
 			//=============================================================================
 			// HPE_END
@@ -200,8 +200,8 @@ void CTFIntroMenu::OnTick()
 				C_TFPlayer *pPlayer =  C_TFPlayer::GetLocalTFPlayer();
 
 				// only open the class menu if they're not on team Spectator and they haven't already picked a class
-				if (  pPlayer && 
-					( GetLocalPlayerTeam() != TEAM_SPECTATOR ) && 
+				if (  pPlayer &&
+					( GetLocalPlayerTeam() != TEAM_SPECTATOR ) &&
 					( pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_UNDEFINED ) )
 				{
 					if ( tf_arena_force_class.GetBool() == false )
@@ -233,7 +233,7 @@ void CTFIntroMenu::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFIntroMenu::OnThink()
 {
@@ -248,7 +248,7 @@ void CTFIntroMenu::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFIntroMenu::LoadCaptions( void )
 {
@@ -273,8 +273,8 @@ bool CTFIntroMenu::LoadCaptions( void )
 			Q_strncpy( strFullpath, szVideoFileName, MAX_PATH );	// Assume we must play out of the media directory
 			//=============================================================================
 			// HPE_END
-			//=============================================================================		
-			
+			//=============================================================================
+
 			Q_strncat( strFullpath, ".res", MAX_PATH );					// Assume we're a .res extension type
 
 			if ( g_pFullFileSystem->FileExists( strFullpath ) )
@@ -318,7 +318,7 @@ bool CTFIntroMenu::LoadCaptions( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFIntroMenu::UpdateCaptions( void )
 {
@@ -329,8 +329,8 @@ void CTFIntroMenu::UpdateCaptions( void )
 	float testTime = m_bPlayingInGameVideo ? gpGlobals->realtime : gpGlobals->curtime;
 	//=============================================================================
 	// HPE_END
-	//=============================================================================		
-	
+	//=============================================================================
+
 	if ( m_pCaptionLabel && m_pCaptionLabel->IsVisible() && ( m_Captions.Count() > 0 ) )
 	{
 		CVideoCaption *pCaption = m_Captions[m_iCurrentCaption];
@@ -369,7 +369,7 @@ void CTFIntroMenu::UpdateCaptions( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFIntroMenu::ShowPanel( bool bShow )
 {
@@ -384,7 +384,7 @@ void CTFIntroMenu::ShowPanel( bool bShow )
 	{
 		m_pBack->SetVisible( false );
 		if ( PendingInGameVideo() == false )
-		{			
+		{
 			VideoSystem_t  playbackSystem = VideoSystem::NONE;
 			char resolvedFile[MAX_PATH];
 			if ( g_pVideo != NULL && g_pVideo->LocatePlayableVideoFile( GetVideoFileName(), "GAME", &playbackSystem, resolvedFile, sizeof(resolvedFile) ) != VideoResult::SUCCESS  )
@@ -419,12 +419,12 @@ void CTFIntroMenu::ShowPanel( bool bShow )
 			//			we can pause the game during the video.
 			//			If we're showing an intro training movie, we also need to tell the server that
 			//			we're whatching the intro movie so that the round does not start until it's over.
-			//			If we are watching an in game video, we do NOT send a message for that because 
+			//			If we are watching an in game video, we do NOT send a message for that because
 			//			tf_training_client_message will contain the name of the video we're watching.
-			//=============================================================================			
+			//=============================================================================
 			ShutdownVideo();
 			SetNextThink( gpGlobals->curtime + m_pVideo->GetStartDelay(), INTRO_STARTVIDEO );
-			
+
 			if ( TFGameRules() && TFGameRules()->IsInTraining() )
 			{
 				if ( PendingInGameVideo() )
@@ -457,7 +457,7 @@ void CTFIntroMenu::ShowPanel( bool bShow )
 		// HPE_BEGIN
 		// [msmith] We must disable the ability to pause.  If we don't, it looks like
 		//			some other function in TF2 causes the entire game to pause if sv_pausable is enabled.
-		//=============================================================================	
+		//=============================================================================
 		if ( TFGameRules() && TFGameRules()->IsInTraining() )
 		{
 			engine->ClientCmd( "sv_pausable 0" );
@@ -465,12 +465,12 @@ void CTFIntroMenu::ShowPanel( bool bShow )
 		//=============================================================================
 		// HPE_END
 		//=============================================================================
-	
+
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFIntroMenu::OnIntroFinished( void )
 {
@@ -499,7 +499,7 @@ void CTFIntroMenu::OnIntroFinished( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFIntroMenu::OnCommand( const char *command )
 {
@@ -537,7 +537,7 @@ void CTFIntroMenu::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFIntroMenu::OnKeyCodePressed( KeyCode code )
 {
@@ -557,14 +557,14 @@ void CTFIntroMenu::OnKeyCodePressed( KeyCode code )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFIntroMenu::Shutdown( void )
 {
 	//=============================================================================
 	// HPE_BEGIN
 	// [msmith] Refactored the shutdown video logic into a containing function.
-	//=============================================================================			
+	//=============================================================================
 	ShutdownVideo();
 	//=============================================================================
 	// HPE_END
@@ -586,7 +586,7 @@ void CTFIntroMenu::Shutdown( void )
 //=============================================================================
 // HPE_BEGIN
 // [msmith] New helper functions
-//=============================================================================	
+//=============================================================================
 void CTFIntroMenu::ShutdownVideo()
 {
 	if ( m_pVideo )
@@ -610,7 +610,7 @@ bool CTFIntroMenu::PendingInGameVideo( void )
 		//If the message is a string, it's a video name.
 		return strlen( tf_training_client_message.GetString() ) > 3;
 	}
-	
+
 	return false;
 }
 

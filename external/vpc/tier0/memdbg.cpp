@@ -56,7 +56,7 @@
 
 #if defined(_WIN32) && ( !defined(_X360) && !defined(_WIN64) )
 //be sure to disable frame pointer omission for all projects. "vpc /nofpo" when using stack traces
-//#define USE_STACK_TRACES 
+//#define USE_STACK_TRACES
 // or:
 //#define USE_STACK_TRACES_DETAILED
 const size_t STACK_TRACE_LENGTH = 32;
@@ -107,7 +107,7 @@ static char s_szStatsComment[256];
 
 bool GetModuleFromAddress( void *address, char *pResult, int iLength )
 {
-	return GetModuleNameFromAddress( address, pResult, iLength );	
+	return GetModuleNameFromAddress( address, pResult, iLength );
 }
 
 bool GetCallerModule( char *pDest, int iLength )
@@ -254,7 +254,7 @@ struct Sentinal_t
 	DWORD value[4];
 };
 
-Sentinal_t g_HeadSentinelAllocated = 
+Sentinal_t g_HeadSentinelAllocated =
 {
 	0xeee1beef,
 	0xeee1f00d,
@@ -262,7 +262,7 @@ Sentinal_t g_HeadSentinelAllocated =
 	0xbeefbeef,
 };
 
-Sentinal_t g_HeadSentinelFree = 
+Sentinal_t g_HeadSentinelFree =
 {
 	0xdeadbeef,
 	0xbaadf00d,
@@ -270,7 +270,7 @@ Sentinal_t g_HeadSentinelFree =
 	0xdeadbeef,
 };
 
-Sentinal_t g_TailSentinel = 
+Sentinal_t g_TailSentinel =
 {
 	0xbaadf00d,
 	0xbd122969,
@@ -382,7 +382,7 @@ inline void *InternalMalloc( size_t nSize, const char *pFileName, int nLine )
 #if defined( POSIX ) || defined( _PS3 )
 	void *pAllocedMem = NULL;
 #ifdef OSX
-	pAllocedMem = malloc_zone_malloc( malloc_default_zone(), nSize + sizeof(DbgMemHeader_t) + sizeof( Sentinal_t ) );	
+	pAllocedMem = malloc_zone_malloc( malloc_default_zone(), nSize + sizeof(DbgMemHeader_t) + sizeof( Sentinal_t ) );
 	DbgMemHeader_t *pInternalMem = GetCrtDbgMemHeader( pAllocedMem );
 #elif defined( _PS3 )
 	pAllocedMem = (g_pMemOverrideRawCrtFns->pfn_malloc)( nSize + sizeof(DbgMemHeader_t) + sizeof( Sentinal_t ) );
@@ -392,12 +392,12 @@ inline void *InternalMalloc( size_t nSize, const char *pFileName, int nLine )
 	pAllocedMem = malloc( nSize + sizeof(DbgMemHeader_t) + sizeof( Sentinal_t ) );
 	DbgMemHeader_t *pInternalMem = (DbgMemHeader_t *)pAllocedMem;
 #endif
-	
+
 	pInternalMem->m_pFileName = pFileName;
 	pInternalMem->m_nLineNumber = nLine;
 	pInternalMem->nLogicalSize = nSize;
 	*((int*)pInternalMem->m_Reserved) = 0xf00df00d;
-	
+
 	pInternalMem->sentinal = g_HeadSentinelAllocated;
 	*( (Sentinal_t *)( ((byte*)pInternalMem) + sizeof( DbgMemHeader_t ) + nSize ) ) = g_TailSentinel;
 	LMDValidateBlock( pInternalMem, false );
@@ -405,12 +405,12 @@ inline void *InternalMalloc( size_t nSize, const char *pFileName, int nLine )
 #ifdef OSX
 	return pAllocedMem;
 #else
-	return pInternalMem + 1;	
+	return pInternalMem + 1;
 #endif
-	
+
 #else // WIN32
 	DbgMemHeader_t *pInternalMem;
-#if !defined( _DEBUG ) 
+#if !defined( _DEBUG )
 	pInternalMem = (DbgMemHeader_t *)malloc( nSize + sizeof(DbgMemHeader_t) );
 	pInternalMem->m_pFileName = pFileName;
 	pInternalMem->m_nLineNumber = nLine;
@@ -429,7 +429,7 @@ inline void *InternalMallocAligned( size_t nSize, size_t align, const char *pFil
 #if defined( POSIX ) || defined( _PS3 )
 	void *pAllocedMem = NULL;
 #ifdef OSX
-	pAllocedMem = malloc_zone_malloc( malloc_default_zone(), nSize + sizeof(DbgMemHeader_t) + sizeof( Sentinal_t ) );	
+	pAllocedMem = malloc_zone_malloc( malloc_default_zone(), nSize + sizeof(DbgMemHeader_t) + sizeof( Sentinal_t ) );
 	DbgMemHeader_t *pInternalMem = GetCrtDbgMemHeader( pAllocedMem );
 #elif defined( _PS3 )
 	size_t numWastedAlignPages = ( sizeof( DbgMemHeader_t ) / align );
@@ -443,7 +443,7 @@ inline void *InternalMallocAligned( size_t nSize, size_t align, const char *pFil
 	pAllocedMem = malloc( nSize + sizeof(DbgMemHeader_t) + sizeof( Sentinal_t ) );
 	DbgMemHeader_t *pInternalMem = (DbgMemHeader_t *)pAllocedMem;
 #endif
-	
+
 	pInternalMem->m_pFileName = pFileName;
 	pInternalMem->m_nLineNumber = nLine;
 	pInternalMem->nLogicalSize = nSize;
@@ -456,12 +456,12 @@ inline void *InternalMallocAligned( size_t nSize, size_t align, const char *pFil
 #ifdef OSX
 	return pAllocedMem;
 #else
-	return pInternalMem + 1;	
+	return pInternalMem + 1;
 #endif
-	
+
 #else // WIN32
 	DbgMemHeader_t *pInternalMem;
-#if !defined( _DEBUG ) 
+#if !defined( _DEBUG )
 	pInternalMem = (DbgMemHeader_t *)malloc( nSize + sizeof(DbgMemHeader_t) );
 	pInternalMem->m_pFileName = pFileName;
 	pInternalMem->m_nLineNumber = nLine;
@@ -495,7 +495,7 @@ inline void *InternalRealloc( void *pMem, size_t nNewSize, const char *pFileName
 	pNewAllocedMem = (DbgMemHeader_t *)realloc( pInternalMem, nNewSize + sizeof(DbgMemHeader_t) + sizeof( Sentinal_t ) );
 	pInternalMem = (DbgMemHeader_t *)pNewAllocedMem;
 #endif
-	
+
 	pInternalMem->m_pFileName = pFileName;
 	pInternalMem->m_nLineNumber = nLine;
 	pInternalMem->nLogicalSize = static_cast<unsigned int>( nNewSize );
@@ -504,13 +504,13 @@ inline void *InternalRealloc( void *pMem, size_t nNewSize, const char *pFileName
 	pInternalMem->sentinal = g_HeadSentinelAllocated;
 	*( (Sentinal_t *)( ((byte*)pInternalMem) + sizeof( DbgMemHeader_t ) + nNewSize ) ) = g_TailSentinel;
 	LMDValidateBlock( pInternalMem, false );
-	
+
 #ifdef OSX
 	return pNewAllocedMem;
 #else
 	return pInternalMem + 1;
 #endif
-	
+
 #else // WIN32
 	DbgMemHeader_t *pInternalMem = (DbgMemHeader_t *)pMem - 1;
 #if !defined( _DEBUG )
@@ -542,7 +542,7 @@ inline void *InternalReallocAligned( void *pMem, size_t nNewSize, size_t align, 
 	if ( align * numWastedAlignPages < sizeof( DbgMemHeader_t ) )
 		++ numWastedAlignPages;
 	size_t nSizeRequired = nNewSize + numWastedAlignPages*align + sizeof( Sentinal_t );
-	
+
 	DbgMemHeader_t *pInternalMem = GetCrtDbgMemHeader( pMem );
 	pNewAllocedMem = (DbgMemHeader_t *)(g_pMemOverrideRawCrtFns->pfn_reallocalign)( *((void**)pInternalMem->m_Reserved2), nSizeRequired, align );
 	pInternalMem = GetCrtDbgMemHeader( ((char*)pNewAllocedMem) + numWastedAlignPages*align );
@@ -552,7 +552,7 @@ inline void *InternalReallocAligned( void *pMem, size_t nNewSize, size_t align, 
 	pNewAllocedMem = (DbgMemHeader_t *)realloc( pInternalMem, nNewSize + sizeof(DbgMemHeader_t) + sizeof( Sentinal_t ) );
 	pInternalMem = (DbgMemHeader_t *)pNewAllocedMem;
 #endif
-	
+
 	pInternalMem->m_pFileName = pFileName;
 	pInternalMem->m_nLineNumber = nLine;
 	pInternalMem->nLogicalSize = static_cast<unsigned int>( nNewSize );
@@ -561,13 +561,13 @@ inline void *InternalReallocAligned( void *pMem, size_t nNewSize, size_t align, 
 	pInternalMem->sentinal = g_HeadSentinelAllocated;
 	*( (Sentinal_t *)( ((byte*)pInternalMem) + sizeof( DbgMemHeader_t ) + nNewSize ) ) = g_TailSentinel;
 	LMDValidateBlock( pInternalMem, false );
-	
+
 #ifdef OSX
 	return pNewAllocedMem;
 #else
 	return pInternalMem + 1;
 #endif
-	
+
 #else // WIN32
 	DbgMemHeader_t *pInternalMem = (DbgMemHeader_t *)pMem - 1;
 #if !defined( _DEBUG )
@@ -641,7 +641,7 @@ inline void InternalFree( void *pMem )
 #elif LINUX
 	free( pToFree );
 #else
-	free( pToFree );	
+	free( pToFree );
 #endif
 #elif defined( _DEBUG )
 	_free_dbg( pInternalMem, _NORMAL_BLOCK );
@@ -664,7 +664,7 @@ inline size_t InternalMSize( void *pMem )
 #else
 	DbgMemHeader_t *pInternalMem = (DbgMemHeader_t *)pMem - 1;
 	return _msize_dbg( pInternalMem, _NORMAL_BLOCK ) - sizeof(DbgMemHeader_t);
-#endif	
+#endif
 }
 
 inline size_t InternalLogicalSize( void *pMem )
@@ -735,7 +735,7 @@ bool operator!=(const CNoRecurseAllocator<T1>&, const CNoRecurseAllocator<T2>&)
 class CStringLess
 {
 public:
-	bool operator()(const char *pszLeft, const char *pszRight ) const 
+	bool operator()(const char *pszLeft, const char *pszRight ) const
 	{
 		return ( V_tier0_stricmp( pszLeft, pszRight ) < 0 );
 	}
@@ -760,7 +760,7 @@ public:
 	virtual void *Alloc( size_t nSize );
 	virtual void *Realloc( void *pMem, size_t nSize );
 	virtual void  Free( void *pMem );
-    virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize );
+	virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize );
 
 #ifdef MEMALLOC_SUPPORTS_ALIGNED_ALLOCATIONS
 	virtual void *AllocAlign( size_t nSize, size_t align );
@@ -770,10 +770,10 @@ public:
 #endif
 
 	// Debug versions
-    virtual void *Alloc( size_t nSize, const char *pFileName, int nLine );
-    virtual void *Realloc( void *pMem, size_t nSize, const char *pFileName, int nLine );
-    virtual void  Free( void *pMem, const char *pFileName, int nLine );
-    virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize, const char *pFileName, int nLine );
+	virtual void *Alloc( size_t nSize, const char *pFileName, int nLine );
+	virtual void *Realloc( void *pMem, size_t nSize, const char *pFileName, int nLine );
+	virtual void  Free( void *pMem, const char *pFileName, int nLine );
+	virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize, const char *pFileName, int nLine );
 
 	virtual void *RegionAlloc( int region, size_t nSize ) { return Alloc( nSize ); }
 	virtual void *RegionAlloc( int region, size_t nSize, const char *pFileName, int nLine ) { return Alloc( nSize, pFileName, nLine ); }
@@ -781,9 +781,9 @@ public:
 	// Returns the size of a particular allocation (NOTE: may be larger than the size requested!)
 	virtual size_t GetSize( void *pMem );
 
-    // Force file + line information for an allocation
-    virtual void PushAllocDbgInfo( const char *pFileName, int nLine );
-    virtual void PopAllocDbgInfo();
+	// Force file + line information for an allocation
+	virtual void PushAllocDbgInfo( const char *pFileName, int nLine );
+	virtual void PopAllocDbgInfo();
 
 	virtual int32 CrtSetBreakAlloc( int32 lNewBreakAlloc );
 	virtual	int CrtSetReportMode( int nReportType, int nReportMode );
@@ -796,7 +796,7 @@ public:
 	// handles storing allocation info for coroutines
 	virtual uint32 GetDebugInfoSize();
 	virtual void SaveDebugInfo( void *pvDebugInfo );
-	virtual void RestoreDebugInfo( const void *pvDebugInfo );	
+	virtual void RestoreDebugInfo( const void *pvDebugInfo );
 	virtual void InitDebugInfo( void *pvDebugInfo, const char *pchRootFileName, int nLine );
 
 	// FIXME: Remove when we have our own allocator
@@ -811,7 +811,7 @@ public:
 
 	virtual int GetVersion() { return MEMALLOC_VERSION; }
 
-	virtual void CompactHeap() 
+	virtual void CompactHeap()
 	{
 #if defined( _X360 ) && defined( _DEBUG )
 		HeapCompact( GetProcessHeap(), 0 );
@@ -901,7 +901,7 @@ private:
 
 		const char *m_pFileName;
 		int			m_nLine;
-	};	
+	};
 
 	// NOTE: Deliberately using STL here because the UTL stuff
 	// is a client of this library; want to avoid circular dependency
@@ -955,7 +955,7 @@ private:
 	virtual void DumpStatsFileBase( char const *pchFileBase );
 	virtual void DumpBlockStats( void *p );
 	virtual void GlobalMemoryStatus( size_t *pUsedMemory, size_t *pFreeMemory );
-	
+
 	virtual size_t ComputeMemoryUsedBy( char const *pchSubStr );
 
 	virtual IVirtualMemorySection * AllocateVirtualMemorySection( size_t numMaxBytes )
@@ -1096,16 +1096,16 @@ CThreadMutex g_DbgMemMutex CONSTRUCT_EARLY;
 //-----------------------------------------------------------------------------
 // Byte count buckets
 //-----------------------------------------------------------------------------
-size_t CDbgMemAlloc::s_pCountSizes[CDbgMemAlloc::NUM_BYTE_COUNT_BUCKETS] = 
+size_t CDbgMemAlloc::s_pCountSizes[CDbgMemAlloc::NUM_BYTE_COUNT_BUCKETS] =
 {
 	16, 32, 128, 2048, INT_MAX
 };
 
-const char *CDbgMemAlloc::s_pCountHeader[CDbgMemAlloc::NUM_BYTE_COUNT_BUCKETS] = 
+const char *CDbgMemAlloc::s_pCountHeader[CDbgMemAlloc::NUM_BYTE_COUNT_BUCKETS] =
 {
-	"<=16 byte allocations", 
+	"<=16 byte allocations",
 	"17-32 byte allocations",
-	"33-128 byte allocations", 
+	"33-128 byte allocations",
 	"129-2048 byte allocations",
 	">2048 byte allocations"
 };
@@ -1341,7 +1341,7 @@ void CDbgMemAlloc::RestoreDebugInfo( const void *pvDebugInfo )
 void CDbgMemAlloc::InitDebugInfo( void *pvDebugInfo, const char *pchRootFileName, int nLine )
 {
 	int32 *pnStackDepth = (int32*) pvDebugInfo;
-		
+
 	if( pchRootFileName )
 	{
 		*pnStackDepth = 0;
@@ -1440,7 +1440,7 @@ const char *CDbgMemAlloc::FindOrCreateFilename( const char *pFileName )
 CDbgMemAlloc::MemInfo_t &CDbgMemAlloc::FindOrCreateEntry( const char *pFileName, int line )
 {
 	// Oh how I love crazy STL. retval.first == the StatMapIter_t in the std::pair
-	// retval.first->second == the MemInfo_t that's part of the StatMapIter_t 
+	// retval.first->second == the MemInfo_t that's part of the StatMapIter_t
 	std::pair<StatMapIter_FileLine_t, bool> retval;
 	retval = m_StatMap_FileLine.insert( StatMapEntry_FileLine_t( MemInfoKey_FileLine_t( pFileName, line ), MemInfo_t() ) );
 	return retval.first->second;
@@ -1523,7 +1523,7 @@ void CDbgMemAlloc::RegisterAllocation( MemInfo_t &info, size_t nLogicalSize, siz
 		if ( info.m_nCurTargetRange > info.m_nMaxTargetRange )
 		{
 			info.m_nMaxTargetRange = info.m_nCurTargetRange;
-		}	
+		}
 	}
 
 	for (int i = 0; i < NUM_BYTE_COUNT_BUCKETS; ++i)
@@ -1778,13 +1778,13 @@ void *CDbgMemAlloc::Realloc( void *pMem, size_t nSize, const char *pFileName, in
 		GetAllocationStatIndex_Internal( pMem ) = iStatEntryIndex;
 	}
 #endif
-	
+
 #if defined( USE_STACK_TRACES )
 	RegisterAllocation( GetAllocationStatIndex_Internal( pMem ), InternalLogicalSize( pMem ), InternalMSize( pMem ), m_Timer.GetDuration().GetMicroseconds() );
 #else
 	RegisterAllocation( GetAllocatonFileName( pMem ), GetAllocatonLineNumber( pMem ), InternalLogicalSize( pMem ), InternalMSize( pMem ), m_Timer.GetDuration().GetMicroseconds() );
 #endif
-	
+
 	if ( !pMem )
 	{
 		SetCRTAllocFailed( nSize );
@@ -1860,13 +1860,13 @@ void *CDbgMemAlloc::ReallocAlign( void *pMem, size_t nSize, size_t align, const 
 		GetAllocationStatIndex_Internal( pMem ) = iStatEntryIndex;
 	}
 #endif
-	
+
 #if defined( USE_STACK_TRACES )
 	RegisterAllocation( GetAllocationStatIndex_Internal( pMem ), InternalLogicalSize( pMem ), InternalMSize( pMem ), m_Timer.GetDuration().GetMicroseconds() );
 #else
 	RegisterAllocation( GetAllocatonFileName( pMem ), GetAllocatonLineNumber( pMem ), InternalLogicalSize( pMem ), InternalMSize( pMem ), m_Timer.GetDuration().GetMicroseconds() );
 #endif
-	
+
 	if ( !pMem )
 	{
 		SetCRTAllocFailed( nSize );
@@ -1889,7 +1889,7 @@ void  CDbgMemAlloc::Free( void *pMem, const char * /*pFileName*/, int nLine )
 	}
 
 	size_t nOldLogicalSize = InternalLogicalSize( pMem );
-	size_t nOldSize = InternalMSize( pMem );	
+	size_t nOldSize = InternalMSize( pMem );
 
 #if defined( USE_STACK_TRACES )
 	unsigned int oldStatIndex = GetAllocationStatIndex_Internal( pMem );
@@ -1901,7 +1901,7 @@ void  CDbgMemAlloc::Free( void *pMem, const char * /*pFileName*/, int nLine )
 
 	m_Timer.Start();
 	InternalFree( pMem );
- 	m_Timer.End();
+	m_Timer.End();
 
 #if defined( USE_STACK_TRACES )
 	RegisterDeallocation( oldStatIndex, nOldLogicalSize, nOldSize, m_Timer.GetDuration().GetMicroseconds() );
@@ -2130,13 +2130,13 @@ void CDbgMemAlloc::DumpStatsFileBase( char const *pchFileBase )
 #elif defined( _PS3 )
 		pPath = "/app_home/";
 #endif
-		
+
 
 #if defined( _MEMTEST ) && defined( _WIN32 )
 		char szXboxName[32];
 		strcpy( szXboxName, "xbox" );
 		DWORD numChars = sizeof( szXboxName );
-		DmGetXboxName( szXboxName, &numChars ); 
+		DmGetXboxName( szXboxName, &numChars );
 		char *pXboxName = strstr( szXboxName, "_360" );
 		if ( pXboxName )
 		{
@@ -2311,7 +2311,7 @@ void CDbgMemAlloc::DumpCallStackFlow( char const *pchFileBase )
 
 	char szFileName[MAX_PATH];
 	static int s_FileCount = 0;
-	
+
 	char *pPath = "";
 	if ( IsX360() )
 	{
@@ -2322,7 +2322,7 @@ void CDbgMemAlloc::DumpCallStackFlow( char const *pchFileBase )
 	char szXboxName[32];
 	strcpy( szXboxName, "xbox" );
 	DWORD numChars = sizeof( szXboxName );
-	DmGetXboxName( szXboxName, &numChars ); 
+	DmGetXboxName( szXboxName, &numChars );
 	char *pXboxName = strstr( szXboxName, "_360" );
 	if ( pXboxName )
 	{
@@ -2362,7 +2362,7 @@ void CDbgMemAlloc::SetCRTAllocFailed( size_t nSize )
 	DebuggerBreak();
 #endif // _PS3
 
-#ifdef _X360 
+#ifdef _X360
 	XBX_OutputDebugString( buffer );
 	if ( !Plat_IsInDebugSession() )
 	{
@@ -2421,57 +2421,57 @@ CThreadMutex g_HookMutex;
 
 static void *override_malloc_hook(size_t s, const void *caller)
 {
-    void *retval;
-    AUTO_LOCK( g_HookMutex );
-    set_glibc_hooks();  /* put glibc back in control. */
-    retval = InternalMalloc( s, NULL, 0 );
-    save_glibc_hooks();  /* update in case glibc changed them. */
+	void *retval;
+	AUTO_LOCK( g_HookMutex );
+	set_glibc_hooks();  /* put glibc back in control. */
+	retval = InternalMalloc( s, NULL, 0 );
+	save_glibc_hooks();  /* update in case glibc changed them. */
 
-    set_override_hooks(); /* only restore hooks if daemon is listening */
+	set_override_hooks(); /* only restore hooks if daemon is listening */
 
-    return(retval);
+	return(retval);
 } /* override_malloc_hook */
 
 
 static void *override_realloc_hook(void *ptr, size_t s, const void *caller)
 {
-    void *retval;
-    AUTO_LOCK( g_HookMutex );
+	void *retval;
+	AUTO_LOCK( g_HookMutex );
 
-    set_glibc_hooks();  /* put glibc back in control. */
-    retval = InternalRealloc(ptr, s, NULL, 0);  /* call glibc version. */
-    save_glibc_hooks();  /* update in case glibc changed them. */
+	set_glibc_hooks();  /* put glibc back in control. */
+	retval = InternalRealloc(ptr, s, NULL, 0);  /* call glibc version. */
+	save_glibc_hooks();  /* update in case glibc changed them. */
 
-    set_override_hooks(); /* only restore hooks if daemon is listening */
+	set_override_hooks(); /* only restore hooks if daemon is listening */
 
-    return(retval);
+	return(retval);
 } /* override_realloc_hook */
 
 
 static void *override_memalign_hook(size_t a, size_t s, const void *caller)
 {
-    void *retval;
-    AUTO_LOCK( g_HookMutex );
+	void *retval;
+	AUTO_LOCK( g_HookMutex );
 
-    set_glibc_hooks();  /* put glibc back in control. */
-    retval = memalign(a, s);  /* call glibc version. */
-    save_glibc_hooks();  /* update in case glibc changed them. */
+	set_glibc_hooks();  /* put glibc back in control. */
+	retval = memalign(a, s);  /* call glibc version. */
+	save_glibc_hooks();  /* update in case glibc changed them. */
 
-    set_override_hooks(); /* only restore hooks if daemon is listening */
+	set_override_hooks(); /* only restore hooks if daemon is listening */
 
-    return(retval);
+	return(retval);
 } /* override_memalign_hook */
 
 
 static void override_free_hook(void *ptr, const void *caller)
 {
-    AUTO_LOCK( g_HookMutex );
+	AUTO_LOCK( g_HookMutex );
 
-    set_glibc_hooks();  /* put glibc back in control. */
-    InternalFree(ptr);  /* call glibc version. */
-    save_glibc_hooks();  /* update in case glibc changed them. */
+	set_glibc_hooks();  /* put glibc back in control. */
+	InternalFree(ptr);  /* call glibc version. */
+	save_glibc_hooks();  /* update in case glibc changed them. */
 
-    set_override_hooks(); /* only restore hooks if daemon is listening */
+	set_override_hooks(); /* only restore hooks if daemon is listening */
 } /* override_free_hook */
 
 
@@ -2489,10 +2489,10 @@ static void override_free_hook(void *ptr, const void *caller)
  */
 static inline void save_glibc_hooks(void)
 {
-    glibc_malloc_hook = (void *)__malloc_hook;
-    glibc_realloc_hook = (void *)__realloc_hook;
-    glibc_memalign_hook = (void *)__memalign_hook;
-    glibc_free_hook = (void *)__free_hook;
+	glibc_malloc_hook = (void *)__malloc_hook;
+	glibc_realloc_hook = (void *)__realloc_hook;
+	glibc_memalign_hook = (void *)__memalign_hook;
+	glibc_free_hook = (void *)__free_hook;
 } /* save_glibc_hooks */
 
 /*
@@ -2503,10 +2503,10 @@ static inline void save_glibc_hooks(void)
  */
 static inline void set_glibc_hooks(void)
 {
-    __malloc_hook = (void* (*)(size_t, const void*))glibc_malloc_hook;
-    __realloc_hook = (void* (*)(void*, size_t, const void*))glibc_realloc_hook;
-    __memalign_hook = (void* (*)(size_t, size_t, const void*))glibc_memalign_hook;
-    __free_hook = (void (*)(void*, const void*))glibc_free_hook;
+	__malloc_hook = (void* (*)(size_t, const void*))glibc_malloc_hook;
+	__realloc_hook = (void* (*)(void*, size_t, const void*))glibc_realloc_hook;
+	__memalign_hook = (void* (*)(size_t, size_t, const void*))glibc_memalign_hook;
+	__free_hook = (void (*)(void*, const void*))glibc_free_hook;
 } /* set_glibc_hooks */
 
 
@@ -2518,10 +2518,10 @@ static inline void set_glibc_hooks(void)
  */
 static inline void set_override_hooks(void)
 {
-    __malloc_hook = override_malloc_hook;
-    __realloc_hook = override_realloc_hook;
-    __memalign_hook = override_memalign_hook;
-    __free_hook = override_free_hook;
+	__malloc_hook = override_malloc_hook;
+	__realloc_hook = override_realloc_hook;
+	__memalign_hook = override_memalign_hook;
+	__free_hook = override_free_hook;
 } /* set_override_hooks */
 
 
@@ -2536,11 +2536,11 @@ static inline void set_override_hooks(void)
  */
 static void override_init_hook(void)
 {
-    AUTO_LOCK( g_HookMutex );
+	AUTO_LOCK( g_HookMutex );
 
-    /* install our hooks. Will connect to daemon on first malloc, etc. */
-    save_glibc_hooks();
-    set_override_hooks();
+	/* install our hooks. Will connect to daemon on first malloc, etc. */
+	save_glibc_hooks();
+	set_override_hooks();
 } /* override_init_hook */
 
 
@@ -2559,7 +2559,7 @@ static void *osx_malloc_hook = NULL;
 static void *osx_realloc_hook = NULL;
 static void *osx_free_hook = NULL;
 
-// convenience functions for setting the hooks... 
+// convenience functions for setting the hooks...
 static inline void save_osx_hooks(void);
 static inline void set_osx_hooks(void);
 static inline void set_override_hooks(void);
@@ -2572,25 +2572,25 @@ CThreadMutex g_HookMutex;
 
 static void *override_malloc_hook(struct _malloc_zone_t *zone, size_t s)
 {
-    void *retval;
-    set_osx_hooks(); 
-    retval = InternalMalloc( s, NULL, 0 );
-    set_override_hooks(); 
-	
-    return(retval);
-} 
+	void *retval;
+	set_osx_hooks();
+	retval = InternalMalloc( s, NULL, 0 );
+	set_override_hooks();
+
+	return(retval);
+}
 
 
 static void *override_realloc_hook(struct _malloc_zone_t *zone, void *ptr, size_t s)
 {
-    void *retval;
-	
-    set_osx_hooks();  
-    retval = InternalRealloc(ptr, s, NULL, 0);	
-    set_override_hooks(); 
-	
-    return(retval);
-} 
+	void *retval;
+
+	set_osx_hooks();
+	retval = InternalRealloc(ptr, s, NULL, 0);
+	set_override_hooks();
+
+	return(retval);
+}
 
 
 static void override_free_hook(struct _malloc_zone_t *zone, void *ptr)
@@ -2598,36 +2598,36 @@ static void override_free_hook(struct _malloc_zone_t *zone, void *ptr)
 	// sometime they pass in a null pointer from higher level calls, just ignore it
 	if ( !ptr )
 		return;
-	
-    set_osx_hooks(); 
-	
+
+	set_osx_hooks();
+
 	DbgMemHeader_t *pInternalMem = GetCrtDbgMemHeader( ptr );
 	if ( *((int*)pInternalMem->m_Reserved) == 0xf00df00d )
 	{
 		InternalFree( ptr );
 	}
-    
-    set_override_hooks(); 
-} 
+
+	set_override_hooks();
+}
 
 
 /*
- 
+
  These are func's we could optionally override right now on OSX but don't need to
- 
+
  static size_t override_size_hook(struct _malloc_zone_t *zone, const void *ptr)
  {
- set_osx_hooks();  
+ set_osx_hooks();
  DbgMemHeader_t *pInternalMem = GetCrtDbgMemHeader( (void *)ptr );
- set_override_hooks(); 
+ set_override_hooks();
  if ( *((int*)pInternalMem->m_Reserved) == 0xf00df00d )
  {
  return pInternalMem->nLogicalSize;
  }
  return 0;
- } 
- 
- 
+ }
+
+
  static void *override_calloc_hook(struct _malloc_zone_t *zone, size_t num_items, size_t size )
  {
  void *ans = override_malloc_hook( zone, num_items*size );
@@ -2636,12 +2636,12 @@ static void override_free_hook(struct _malloc_zone_t *zone, void *ptr)
  memset( ans, 0x0, num_items*size );
  return ans;
  }
- 
+
  static void *override_valloc_hook(struct _malloc_zone_t *zone, size_t size )
  {
  return override_calloc_hook( zone, 1, size );
  }
- 
+
  static void override_destroy_hook(struct _malloc_zone_t *zone)
  {
  }
@@ -2657,40 +2657,40 @@ static void override_free_hook(struct _malloc_zone_t *zone, void *ptr)
 //   the originals.
 //
 static inline void save_osx_hooks(void)
-{ 
+{
 	malloc_zone_t *malloc_zone = malloc_default_zone();
-	
-    osx_malloc_hook = (void *)malloc_zone->malloc;
-    osx_realloc_hook = (void *)malloc_zone->realloc;
-    osx_free_hook = (void *)malloc_zone->free;
-	
+
+	osx_malloc_hook = (void *)malloc_zone->malloc;
+	osx_realloc_hook = (void *)malloc_zone->realloc;
+	osx_free_hook = (void *)malloc_zone->free;
+
 	// These are func's we could optionally override right now on OSX but don't need to
 	// osx_size_hook = (void *)malloc_zone->size;
 	// osx_calloc_hook = (void *)malloc_zone->calloc;
 	// osx_valloc_hook = (void *)malloc_zone->valloc;
 	// osx_destroy_hook = (void *)malloc_zone->destroy;
-} 
+}
 
 //
 //  Restore the hooks to the osx versions. This is needed since, say,
 //   their realloc() might call malloc() or free() under the hood, etc, so
 //   it's safer to let them have complete control over the subsystem, which
 //   also makes our logging saner, too.
-// 
+//
 static inline void set_osx_hooks(void)
 {
 	malloc_zone_t *malloc_zone = malloc_default_zone();
 	malloc_zone->malloc = (void* (*)(_malloc_zone_t*, size_t))osx_malloc_hook;
-    malloc_zone->realloc = (void* (*)(_malloc_zone_t*, void*, size_t))osx_realloc_hook;
-    malloc_zone->free = (void (*)(_malloc_zone_t*, void*))osx_free_hook;
-	
+	malloc_zone->realloc = (void* (*)(_malloc_zone_t*, void*, size_t))osx_realloc_hook;
+	malloc_zone->free = (void (*)(_malloc_zone_t*, void*))osx_free_hook;
+
 	// These are func's we could optionally override right now on OSX but don't need to
-	
+
 	//malloc_zone->size = (size_t (*)(_malloc_zone_t*, const void *))osx_size_hook;
-    //malloc_zone->calloc = (void* (*)(_malloc_zone_t*, size_t, size_t))osx_calloc_hook;
-    //malloc_zone->valloc = (void* (*)(_malloc_zone_t*, size_t))osx_valloc_hook;
-    //malloc_zone->destroy = (void (*)(_malloc_zone_t*))osx_destroy_hook;
-} 
+	//malloc_zone->calloc = (void* (*)(_malloc_zone_t*, size_t, size_t))osx_calloc_hook;
+	//malloc_zone->valloc = (void* (*)(_malloc_zone_t*, size_t))osx_valloc_hook;
+	//malloc_zone->destroy = (void (*)(_malloc_zone_t*))osx_destroy_hook;
+}
 
 
 /*
@@ -2702,17 +2702,17 @@ static inline void set_osx_hooks(void)
 static inline void set_override_hooks(void)
 {
 	malloc_zone_t *malloc_zone = malloc_default_zone();
-	
+
 	malloc_zone->malloc = override_malloc_hook;
-    malloc_zone->realloc = override_realloc_hook;
-    malloc_zone->free = override_free_hook;
-	
+	malloc_zone->realloc = override_realloc_hook;
+	malloc_zone->free = override_free_hook;
+
 	// These are func's we could optionally override right now on OSX but don't need to
 	//malloc_zone->size = override_size_hook;
-    //malloc_zone->calloc = override_calloc_hook;
+	//malloc_zone->calloc = override_calloc_hook;
 	// malloc_zone->valloc = override_valloc_hook;
-    //malloc_zone->destroy = override_destroy_hook;
-} 
+	//malloc_zone->destroy = override_destroy_hook;
+}
 
 
 //
@@ -2724,24 +2724,24 @@ static inline void set_override_hooks(void)
 
 void __attribute__ ((constructor)) mem_init(void)
 {
-    AUTO_LOCK( g_HookMutex );
+	AUTO_LOCK( g_HookMutex );
 	save_osx_hooks();
-    set_override_hooks();
+	set_override_hooks();
 }
 
 void *operator new( size_t nSize, int nBlockUse, const char *pFileName, int nLine )
 {
-	set_osx_hooks(); 
+	set_osx_hooks();
 	void *pMem = g_pMemAlloc->Alloc(nSize, pFileName, nLine);
-	set_override_hooks(); 
+	set_override_hooks();
 	return pMem;
 }
 
 void *operator new[] ( size_t nSize, int nBlockUse, const char *pFileName, int nLine )
 {
-	set_osx_hooks(); 
+	set_osx_hooks();
 	void *pMem = g_pMemAlloc->Alloc(nSize, pFileName, nLine);
-	set_override_hooks(); 
+	set_override_hooks();
 	return pMem;
 }
 

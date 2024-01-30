@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -31,14 +31,14 @@ IMPLEMENT_CLIENTCLASS_DT(C_GrenadeAntiPersonnel, DT_GrenadeAntiPersonnel, CGrena
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_GrenadeAntiPersonnel::C_GrenadeAntiPersonnel( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_GrenadeAntiPersonnel::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -80,5 +80,3 @@ void C_GrenadeAntiPersonnel::ClientThink( void )
 		pParticle->m_uchColor[2] = 50;
 	}
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -26,17 +26,17 @@ CScratchPadGraph::CScratchPadGraph()
 }
 
 
-void CScratchPadGraph::Init( 
+void CScratchPadGraph::Init(
 	IScratchPad3D *pPad,
 
-	Vector vTimeAxis, 
+	Vector vTimeAxis,
 	float flInchesPerSecond,
 	Vector vTimeLineColor,
 	float flTimeOrigin,
 
 	float flTimeLabelEveryNSeconds,
-	
-	Vector vValueAxis, 
+
+	Vector vValueAxis,
 	float flInchesPerValue,
 	Vector vValueLineColor,
 	float flValueOrigin
@@ -91,10 +91,10 @@ void CScratchPadGraph::AddSample( LineID iLine, float flTime, float flValue )
 
 		m_pPad->DrawLine(
 			CSPVert( vStart, pInfo->m_vColor ),
-			CSPVert( vEnd, pInfo->m_vColor ) 
+			CSPVert( vEnd, pInfo->m_vColor )
 			);
 	}
-	
+
 	pInfo->m_flLastTime = flTime;
 	pInfo->m_flLastValue = flValue;
 	pInfo->m_bFirst = false;
@@ -126,7 +126,7 @@ void CScratchPadGraph::UpdateTicksAndStuff( float flTime, float flValue )
 
 		m_flHighestTime = flTime;
 	}
-	
+
 	if ( flValue > m_flHighestValue )
 	{
 		// Update the left part of the time axis.
@@ -157,13 +157,13 @@ void CScratchPadGraph::UpdateTicksAndStuff( float flTime, float flValue )
 	while ( m_nTimeLabelsDrawn < iHighestTextLabel )
 	{
 		CTextParams params;
-		
+
 		float flTimeLabel = m_flTimeOrigin + m_nTimeLabelsDrawn * m_flTimeLabelEveryNSeconds;
 
 		params.m_bSolidBackground = true;
 		params.m_vPos = GetSamplePosition( flTimeLabel, m_flValueOrigin-5 );
 		params.m_bTwoSided = true;
-		
+
 		char str[512];
 		Q_snprintf( str, sizeof( str ), "time: %.2f", flTimeLabel );
 		m_pPad->DrawText( str, params );
@@ -174,7 +174,7 @@ void CScratchPadGraph::UpdateTicksAndStuff( float flTime, float flValue )
 			CSPVert(  (const Vector&)GetSamplePosition( flTimeLabel, m_flValueOrigin ) ),
 			CSPVert( (const Vector&)GetSamplePosition( flTimeLabel, m_flHighestValue ) )
 			);
-		
+
 
 		m_nTimeLabelsDrawn++;
 	}
@@ -183,10 +183,10 @@ void CScratchPadGraph::UpdateTicksAndStuff( float flTime, float flValue )
 
 Vector CScratchPadGraph::GetSamplePosition( float flTime, float flValue )
 {
-	Vector vRet = 
-		m_vTimeAxis * ((flTime - m_flTimeOrigin) * m_flInchesPerSecond) + 
+	Vector vRet =
+		m_vTimeAxis * ((flTime - m_flTimeOrigin) * m_flInchesPerSecond) +
 		m_vValueAxis * ((flValue - m_flValueOrigin) * m_flInchesPerValue);
-	
+
 	return vRet;
 }
 
@@ -196,7 +196,7 @@ Vector CScratchPadGraph::GetSamplePosition( float flTime, float flValue )
 // Global functions.
 // --------------------------------------------------------------------------------------------------------------------- //
 
-void ScratchPad_DrawLitCone( 
+void ScratchPad_DrawLitCone(
 	IScratchPad3D *pPad,
 	const Vector &vBaseCenter,
 	const Vector &vTip,
@@ -224,10 +224,10 @@ void ScratchPad_DrawLitCone(
 	Vector topColor, bottomColor;
 	VectorLerp( vDarkColor, vBrightColor, RemapVal( -flDot, -1, 1, 0, 1 ), bottomColor );
 
-	
+
 	// Draw each quad.
 	Vector vPrevBottom = vBaseCenter + vRight;
-	
+
 	for ( int i=0; i < nSegments; i++ )
 	{
 		float flAngle = (float)(i+1) * M_PI * 2.0 / nSegments;
@@ -258,7 +258,7 @@ void ScratchPad_DrawLitCone(
 }
 
 
-void ScratchPad_DrawLitCylinder( 
+void ScratchPad_DrawLitCylinder(
 	IScratchPad3D *pPad,
 	const Vector &v1,
 	const Vector &v2,
@@ -279,7 +279,7 @@ void ScratchPad_DrawLitCylinder(
 
 	// Setup the top and bottom caps.
 	CSPVertList topCap, bottomCap, quad;
-	
+
 	topCap.m_Verts.SetSize( nSegments );
 	bottomCap.m_Verts.SetSize( nSegments );
 	quad.m_Verts.SetSize( 4 );
@@ -290,11 +290,11 @@ void ScratchPad_DrawLitCylinder(
 	VectorLerp( vDarkColor, vBrightColor, RemapVal( flDot,  -1, 1, 0, 1 ), topColor );
 	VectorLerp( vDarkColor, vBrightColor, RemapVal( -flDot, -1, 1, 0, 1 ), bottomColor );
 
-	
+
 	// Draw each quad.
 	Vector vPrevTop = v1 + vRight;
 	Vector vPrevBottom = v2 + vRight;
-	
+
 	for ( int i=0; i < nSegments; i++ )
 	{
 		float flAngle = (float)(i+1) * M_PI * 2.0 / nSegments;
@@ -324,12 +324,12 @@ void ScratchPad_DrawLitCylinder(
 }
 
 
-void ScratchPad_DrawArrow( 
+void ScratchPad_DrawArrow(
 	IScratchPad3D *pPad,
-	const Vector &vPos, 
+	const Vector &vPos,
 	const Vector &vDirection,
-	const Vector &vColor, 
-	float flLength, 
+	const Vector &vColor,
+	float flLength,
 	float flLineWidth,
 	float flHeadWidth,
 	int nCylinderSegments,
@@ -339,10 +339,10 @@ void ScratchPad_DrawArrow(
 {
 	Vector vNormDir = vDirection;
 	VectorNormalize( vNormDir );
-	
+
 	Vector vConeBase = vPos + vNormDir * (flLength * ( 1 - flArrowHeadPercentage ) );
 	Vector vConeEnd = vPos + vNormDir * flLength;
-	
+
 	Vector vLightDir( -1, -1, -1 );
 	VectorNormalize( vLightDir ); // could precalculate this
 
@@ -354,15 +354,15 @@ void ScratchPad_DrawArrow(
 }
 
 
-void ScratchPad_DrawArrowSimple( 
+void ScratchPad_DrawArrowSimple(
 	IScratchPad3D *pPad,
-	const Vector &vPos, 
+	const Vector &vPos,
 	const Vector &vDirection,
-	const Vector &vColor, 
+	const Vector &vColor,
 	float flLength )
 {
 	ScratchPad_DrawArrow(
-		pPad, 
+		pPad,
 		vPos,
 		vDirection,
 		vColor,
@@ -383,7 +383,7 @@ void ScratchPad_DrawSphere(
 {
 	CUtlVector<Vector> prevPoints;
 	prevPoints.SetSize( nSubDivs );
-	
+
 	// For each vertical slice.. (the top and bottom ones are just a single point).
 	for ( int iSlice=0; iSlice < nSubDivs; iSlice++ )
 	{
@@ -401,7 +401,7 @@ void ScratchPad_DrawSphere(
 			{
 				float flHalfAngle = M_PI * (float)iSubPt / (nSubDivs - 1);
 				float flAngle = flHalfAngle * 2;
-				
+
 				Vector pt;
 				if ( iSlice == (nSubDivs - 1) )
 				{
@@ -412,15 +412,15 @@ void ScratchPad_DrawSphere(
 					pt.x = cos( flAngle ) * sin( flHalfSliceAngle );
 					pt.y = sin( flAngle ) * sin( flHalfSliceAngle );
 					pt.z = cos( flHalfSliceAngle );
-					
+
 					pt *= flRadius;
 					pt += vCenter;
 				}
-				
+
 				pPad->DrawLine( CSPVert( pt, vColor ), CSPVert( prevPoints[iSubPt], vColor ) );
 				prevPoints[iSubPt] = pt;
 			}
-			
+
 			if ( iSlice != (nSubDivs - 1) )
 			{
 				for ( int i=0; i < nSubDivs; i++ )
@@ -439,14 +439,14 @@ void ScratchPad_DrawAABB(
 {
 	int vertOrder[4][2] = {{0,0},{1,0},{1,1},{0,1}};
 	const Vector *vecs[2] = {&vMins, &vMaxs};
-	
+
 	Vector vTop, vBottom, vPrevTop, vPrevBottom;
 	vTop.z = vPrevTop.z = vMaxs.z;
 	vBottom.z = vPrevBottom.z = vMins.z;
 
 	vPrevTop.x = vPrevBottom.x = vecs[vertOrder[3][0]]->x;
 	vPrevTop.y = vPrevBottom.y = vecs[vertOrder[3][1]]->y;
-	
+
 	for ( int i=0; i < 4; i++ )
 	{
 		vTop.x = vBottom.x = vecs[vertOrder[i][0]]->x;
@@ -456,7 +456,7 @@ void ScratchPad_DrawAABB(
 		pPad->DrawLine( CSPVert( vPrevTop, vColor ), CSPVert( vTop, vColor ) );
 		pPad->DrawLine( CSPVert( vPrevBottom, vColor ), CSPVert( vBottom, vColor ) );
 		pPad->DrawLine( CSPVert( vTop, vColor ), CSPVert( vBottom, vColor ) );
-		
+
 		vPrevTop = vTop;
 		vPrevBottom = vBottom;
 	}
@@ -464,4 +464,3 @@ void ScratchPad_DrawAABB(
 
 
 #endif // !_STATIC_LINKED || _SHARED_LIB
-

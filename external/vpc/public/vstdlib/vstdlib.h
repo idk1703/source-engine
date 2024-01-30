@@ -1,11 +1,11 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
-	   
+
 #ifndef VSTDLIB_H
 #define VSTDLIB_H
 
@@ -21,8 +21,8 @@
 #ifdef STATIC_VSTDLIB
 #define VSTDLIB_INTERFACE
 #define VSTDLIB_OVERLOAD
-#define VSTDLIB_CLASS	
-#define VSTDLIB_GLOBAL	
+#define VSTDLIB_CLASS
+#define VSTDLIB_GLOBAL
 #else
 #ifdef VSTDLIB_DLL_EXPORT
 #define VSTDLIB_INTERFACE	DLL_EXPORT
@@ -36,5 +36,5 @@
 #define VSTDLIB_GLOBAL		DLL_GLOBAL_IMPORT
 #endif
 #endif
- 
+
 #endif // VSTDLIB_H

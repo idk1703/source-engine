@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -42,7 +42,7 @@ enum
 	MAXUSERCLIPPLANES = 2,
 #else
 	MAXUSERCLIPPLANES = 6,
-#endif	
+#endif
 	MAX_NUM_LIGHTS = 4,
 	MAX_OUTPUTS = 3,
 };
@@ -67,7 +67,7 @@ struct HardwareCaps_t : public MaterialAdapterInfo_t
 	// If you change any members, make sure and reflect the changes in CHardwareConfig::ForceCapsToDXLevel for every dxlevel!!!!!
 	// If you change any members, make sure and reflect the changes in CHardwareConfig::ForceCapsToDXLevel for every dxlevel!!!!!
 	// *****************************NOTE*********************************************
-	// 
+	//
 	// NOTE: Texture stages are an obsolete concept; used by fixed-function hardware
 	// Samplers are dx9+, indicating how many textures we can simultaneously bind
 	// In Dx8, samplers didn't exist and texture stages were used to indicate the

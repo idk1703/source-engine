@@ -104,7 +104,7 @@ enum
 // The maximum number of headcrabs we can have riding on our back.
 // NOTE: If you change this value you must also change the lookup table in Spawn!
 //-----------------------------------------------------------------------------
-#define MAX_CRABS	3	
+#define MAX_CRABS	3
 
 int AE_ZOMBIE_POISON_THROW_WARN_SOUND;
 int AE_ZOMBIE_POISON_PICKUP_CRAB;
@@ -252,7 +252,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_PoisonZombie::Precache( void )
 {
@@ -279,7 +279,7 @@ void CNPC_PoisonZombie::Precache( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_PoisonZombie::Spawn( void )
 {
@@ -320,7 +320,7 @@ void CNPC_PoisonZombie::Spawn( void )
 	// Generate a random set of crabs based on the crab count
 	// specified by the level designer.
 	//
-	int nBits[] = 
+	int nBits[] =
 	{
 		// One bit
 		0x01,
@@ -411,7 +411,7 @@ void CNPC_PoisonZombie::EnableCrab( int nCrab, bool bEnable )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_PoisonZombie::StopLoopingSounds( void )
 {
@@ -426,12 +426,12 @@ void CNPC_PoisonZombie::StopLoopingSounds( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : info - 
+// Purpose:
+// Input  : info -
 //-----------------------------------------------------------------------------
 void CNPC_PoisonZombie::Event_Killed( const CTakeDamageInfo &info )
 {
-	if ( !( info.GetDamageType() & ( DMG_BLAST | DMG_ALWAYSGIB) ) ) 
+	if ( !( info.GetDamageType() & ( DMG_BLAST | DMG_ALWAYSGIB) ) )
 	{
 		EmitSound( "NPC_PoisonZombie.Die" );
 	}
@@ -446,8 +446,8 @@ void CNPC_PoisonZombie::Event_Killed( const CTakeDamageInfo &info )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputInfo - 
+// Purpose:
+// Input  : &inputInfo -
 // Output : int
 //-----------------------------------------------------------------------------
 int CNPC_PoisonZombie::OnTakeDamage_Alive( const CTakeDamageInfo &inputInfo )
@@ -471,7 +471,7 @@ int CNPC_PoisonZombie::OnTakeDamage_Alive( const CTakeDamageInfo &inputInfo )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CNPC_PoisonZombie::MaxYawSpeed( void )
 {
@@ -480,7 +480,7 @@ float CNPC_PoisonZombie::MaxYawSpeed( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Class_T	CNPC_PoisonZombie::Classify( void )
 {
@@ -489,7 +489,7 @@ Class_T	CNPC_PoisonZombie::Classify( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 // NOTE: This function is still heavy with common code (found at the bottom).
 //		 we should consider moving some into the base class! (sjb)
@@ -549,7 +549,7 @@ int CNPC_PoisonZombie::RangeAttack1Conditions( float flDot, float flDist )
 		//DevMsg("Range1: Too close to attack\n");
 		return COND_TOO_CLOSE_TO_ATTACK;
 	}
-	
+
 	if ( flDist > ZOMBIE_HC_LEAP_RANGE_MAX )
 	{
 		//DevMsg("Range1: Too far to attack\n");
@@ -591,7 +591,7 @@ int CNPC_PoisonZombie::RangeAttack2Conditions( float flDot, float flDist )
 		//DevMsg("Range2: Too close to attack\n");
 		return COND_TOO_CLOSE_TO_ATTACK;
 	}
-	
+
 	if ( flDist > ZOMBIE_THROW_RANGE_MAX )
 	{
 		//DevMsg("Range2: Too far to attack\n");
@@ -644,11 +644,11 @@ void CNPC_PoisonZombie::BreatheOffShort( void )
 //-----------------------------------------------------------------------------
 // Purpose: Catches the monster-specific events that occur when tagged animation
 //			frames are played.
-// Input  : pEvent - 
+// Input  : pEvent -
 //-----------------------------------------------------------------------------
 void CNPC_PoisonZombie::HandleAnimEvent( animevent_t *pEvent )
 {
-	
+
 	if ( pEvent->event == AE_ZOMBIE_POISON_PICKUP_CRAB )
 	{
 		EnableCrab( m_nThrowCrab, false );
@@ -676,7 +676,7 @@ void CNPC_PoisonZombie::HandleAnimEvent( animevent_t *pEvent )
 
 		CBlackHeadcrab *pCrab = (CBlackHeadcrab *)CreateNoSpawn( GetHeadcrabClassname(), EyePosition(), vec3_angle, this );
 		pCrab->AddSpawnFlags( SF_NPC_FALL_TO_GROUND );
-		
+
 		// Fade if our parent is supposed to
 		if ( HasSpawnFlags( SF_NPC_FADE_CORPSE ) )
 		{
@@ -745,7 +745,7 @@ int CNPC_PoisonZombie::RandomThrowCrab( void )
 			nCrab = nTest;
 		}
 	} while ( nCrab == -1 );
-	
+
 	return nCrab;
 }
 
@@ -819,7 +819,7 @@ void CNPC_PoisonZombie::EvacuateNest( bool bExplosion, float flDamage, CBaseEnti
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_PoisonZombie::PrescheduleThink( void )
 {
@@ -889,7 +889,7 @@ void CNPC_PoisonZombie::BuildScheduleTestBits( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CNPC_PoisonZombie::SelectFailSchedule( int nFailedSchedule, int nFailedTask, AI_TaskFailureCode_t eTaskFailCode )
 {
@@ -905,7 +905,7 @@ int CNPC_PoisonZombie::SelectFailSchedule( int nFailedSchedule, int nFailedTask,
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CNPC_PoisonZombie::SelectSchedule( void )
@@ -922,8 +922,8 @@ int CNPC_PoisonZombie::SelectSchedule( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : scheduleType - 
+// Purpose:
+// Input  : scheduleType -
 // Output : int
 //-----------------------------------------------------------------------------
 int CNPC_PoisonZombie::TranslateSchedule( int scheduleType )
@@ -950,7 +950,7 @@ int CNPC_PoisonZombie::TranslateSchedule( int scheduleType )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNPC_PoisonZombie::ShouldPlayIdleSound( void )
 {
@@ -1003,7 +1003,7 @@ void CNPC_PoisonZombie::PainSound( const CTakeDamageInfo &info )
 {
 	// Don't make pain sounds too often.
 	if ( m_flNextPainSoundTime <= gpGlobals->curtime )
-	{	
+	{
 		BreatheOffShort();
 		EmitSound( "NPC_PoisonZombie.Pain" );
 		m_flNextPainSoundTime = gpGlobals->curtime + random->RandomFloat( 4.0, 7.0 );
@@ -1141,5 +1141,3 @@ AI_BEGIN_CUSTOM_NPC( npc_poisonzombie, CNPC_PoisonZombie )
 	)
 
 AI_END_CUSTOM_NPC()
-
-

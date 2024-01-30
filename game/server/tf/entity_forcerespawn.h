@@ -15,7 +15,7 @@
 // CTF Force Respawn Entity.
 //
 
-class CTFForceRespawn : public CPointEntity 
+class CTFForceRespawn : public CPointEntity
 {
 public:
 	DECLARE_CLASS( CTFForceRespawn, CPointEntity );
@@ -38,5 +38,3 @@ private:
 };
 
 #endif // ENTITY_FORCERESPAWN_H
-
-

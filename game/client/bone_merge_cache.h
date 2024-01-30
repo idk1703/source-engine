@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -23,13 +23,13 @@ class CBoneMergeCache
 public:
 
 	CBoneMergeCache();
-	
+
 	void Init( C_BaseAnimating *pOwner );
 
 	// Updates the lookups that let it merge bones quickly.
 	void UpdateCache();
-	
-	// This copies the transform from all bones in the followed entity that have 
+
+	// This copies the transform from all bones in the followed entity that have
 	// names that match our bones.
 	void MergeMatchingBones( int boneMask );
 

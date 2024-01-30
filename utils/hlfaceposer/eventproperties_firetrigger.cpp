@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -43,7 +43,7 @@ void CEventPropertiesFireTriggerDialog::PopulateTriggerList( HWND wnd )
 		sprintf( szName, "%d", i + 1 );
 
 		// add text to combo box
-		SendMessage( wnd, CB_ADDSTRING, 0, (LPARAM)szName ); 
+		SendMessage( wnd, CB_ADDSTRING, 0, (LPARAM)szName );
 	}
 }
 
@@ -52,7 +52,7 @@ void CEventPropertiesFireTriggerDialog::InitControlData( CEventParams *params )
 	BaseClass::InitControlData( params );
 
 	HWND choices1 = GetControl( IDC_EVENTCHOICES );
-	SendMessage( choices1, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( choices1, CB_RESETCONTENT, 0, 0 );
 	SendMessage( choices1, WM_SETTEXT , 0, (LPARAM)params->m_szParameters );
 
 	PopulateTriggerList( choices1 );
@@ -63,7 +63,7 @@ void CEventPropertiesFireTriggerDialog::InitDialog( HWND hwndDlg )
 	m_hDialog = hwndDlg;
 
 	g_Params.PositionSelf( m_hDialog );
-	
+
 	// Set working title for dialog, etc.
 	SetTitle();
 
@@ -79,9 +79,9 @@ void CEventPropertiesFireTriggerDialog::InitDialog( HWND hwndDlg )
 static CEventPropertiesFireTriggerDialog g_EventPropertiesFireTriggerDialog;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wnd - 
-//			*params - 
+// Purpose:
+// Input  : wnd -
+//			*params -
 // Output : static
 //-----------------------------------------------------------------------------
 
@@ -91,11 +91,11 @@ void CEventPropertiesFireTriggerDialog::ShowControlsForEventType( CEventParams *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
 static BOOL CALLBACK EventPropertiesFireTriggerDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
@@ -116,14 +116,14 @@ BOOL CEventPropertiesFireTriggerDialog::HandleMessage( HWND hwndDlg, UINT uMsg, 
 	{
 	case WM_PAINT:
 		{
-			PAINTSTRUCT ps; 
+			PAINTSTRUCT ps;
 			HDC hdc;
-			
-            hdc = BeginPaint(hwndDlg, &ps); 
-			DrawSpline( hdc, GetControl( IDC_STATIC_SPLINE ), g_Params.m_pEvent );
-            EndPaint(hwndDlg, &ps); 
 
-            return FALSE; 
+	hdc = BeginPaint(hwndDlg, &ps);
+			DrawSpline( hdc, GetControl( IDC_STATIC_SPLINE ), g_Params.m_pEvent );
+	EndPaint(hwndDlg, &ps);
+
+	return FALSE;
 		}
 		break;
 	case WM_VSCROLL:
@@ -136,13 +136,13 @@ BOOL CEventPropertiesFireTriggerDialog::HandleMessage( HWND hwndDlg, UINT uMsg, 
 			return FALSE;
 		}
 		break;
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		{
 			InitDialog( hwndDlg );
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -171,7 +171,7 @@ BOOL CEventPropertiesFireTriggerDialog::HandleMessage( HWND hwndDlg, UINT uMsg, 
 				EndDialog( hwndDlg, 1 );
 			}
 			break;
-        case IDCANCEL:
+	case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		case IDC_CHECK_ENDTIME:
@@ -220,16 +220,16 @@ BOOL CEventPropertiesFireTriggerDialog::HandleMessage( HWND hwndDlg, UINT uMsg, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int EventProperties_FireTrigger( CEventParams *params )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_EVENTPROPERTIES_FIRETRIGGER ),
 		(HWND)g_MDLViewer->getHandle(),
 		(DLGPROC)EventPropertiesFireTriggerDialogProc );

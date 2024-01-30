@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,7 +15,7 @@
 
 #define DRAWN_LINE_SOLID_TIME 15.0f
 #define DRAWN_LINE_FADE_TIME 3.0f
-							   
+
 class MapLine
 {
 public:
@@ -77,7 +77,7 @@ private:
 
 	CUtlVector<MapLine> m_vecDrawnLines[MAX_PLAYERS+1];
 
-	int m_iPanelType;	
+	int m_iPanelType;
 	bool m_bTeamColors;
 };
 

@@ -69,7 +69,7 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
 	// Stuff that isn't seen by the pixel shader
-	float4 projPos												: POSITION;	
+	float4 projPos												: POSITION;
 #if !defined( _X360 )
 	float  fog													: FOG;
 #endif
@@ -110,7 +110,7 @@ VS_OUTPUT main( const VS_INPUT v )
 #if !defined( SHADER_MODEL_VS_3_0 ) || !MORPHING
 	ApplyMorph( v.vPosFlex, v.vNormalFlex, vPosition.xyz, vNormal, vTangent.xyz );
 #else
-	ApplyMorph( morphSampler, cMorphTargetTextureDim, cMorphSubrect, 
+	ApplyMorph( morphSampler, cMorphTargetTextureDim, cMorphSubrect,
 		v.vVertexID, v.vTexCoord2, vPosition.xyz, vNormal, vTangent.xyz );
 #endif
 

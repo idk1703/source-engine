@@ -21,7 +21,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_EyeballBoss, DT_EyeballBoss, CEyeballBoss )
 
 	RecvPropVector( RECVINFO( m_lookAtSpot ) ),
 	RecvPropInt( RECVINFO( m_attitude ) ),
-	
+
 END_RECV_TABLE()
 
 
@@ -179,7 +179,7 @@ void C_EyeballBoss::ClientThink( void )
 	{
 		QAngle myAbsAngles = GetAbsAngles();
 
-		DevMsg( "%3.2f: EYEBALL BEFORE AIM m_myAngles( %f, %f, %f ), myForward( %f, %f, %f ), GetAbsAngles( %f, %f, %f )\n", 
+		DevMsg( "%3.2f: EYEBALL BEFORE AIM m_myAngles( %f, %f, %f ), myForward( %f, %f, %f ), GetAbsAngles( %f, %f, %f )\n",
 				gpGlobals->curtime, m_myAngles.x, m_myAngles.y, m_myAngles.z, myForward.x, myForward.y, myForward.z,
 				myAbsAngles.x, myAbsAngles.y, myAbsAngles.z );
 	}
@@ -204,7 +204,7 @@ void C_EyeballBoss::ClientThink( void )
 	{
 		QAngle myAbsAngles = GetAbsAngles();
 
-		DevMsg( "%3.2f: EYEBALL AFTER AIM m_myAngles( %f, %f, %f ), myForward( %f, %f, %f ), GetAbsAngles( %f, %f, %f )\n", 
+		DevMsg( "%3.2f: EYEBALL AFTER AIM m_myAngles( %f, %f, %f ), myForward( %f, %f, %f ), GetAbsAngles( %f, %f, %f )\n",
 				gpGlobals->curtime, m_myAngles.x, m_myAngles.y, m_myAngles.z, myForward.x, myForward.y, myForward.z,
 				myAbsAngles.x, myAbsAngles.y, myAbsAngles.z );
 	}
@@ -251,7 +251,7 @@ QAngle const &C_EyeballBoss::GetRenderAngles( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	C_EyeballBoss::InternalDrawModel( int flags )
 {

@@ -69,7 +69,7 @@ public:
 		COND_INJURED_OVERWHELMED,
 		NEXT_CONDITION
 	};
-	
+
 	bool	IsReadinessCapable( void ) { return ( IsInjured() == false ); }	// Never use the readiness system when injured
 	bool	IsInjured( void ) const;
 

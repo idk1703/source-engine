@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -45,7 +45,7 @@ public:
 
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -62,7 +62,7 @@ private:
 	// A hack to work around missing animation feature
 	float	m_flStartedThrowAt;
 
-private:														
+private:
 	CWeaponShieldGrenade( const CWeaponShieldGrenade & );
 };
 
@@ -89,11 +89,11 @@ CWeaponShieldGrenade::CWeaponShieldGrenade( void )
 void CWeaponShieldGrenade::Spawn( void )
 {
 	BaseClass::Spawn();
-    m_flStartedThrowAt = 0.0f;
+	m_flStartedThrowAt = 0.0f;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponShieldGrenade::ItemPostFrame( void )
 {
@@ -125,7 +125,7 @@ void CWeaponShieldGrenade::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponShieldGrenade::PrimaryAttack( void )
 {
@@ -156,7 +156,7 @@ void CWeaponShieldGrenade::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponShieldGrenade::ThrowGrenade( void )
 {

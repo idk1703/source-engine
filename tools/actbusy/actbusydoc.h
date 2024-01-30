@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -19,13 +19,13 @@
 
 
 //-----------------------------------------------------------------------------
-// Forward declarations 
+// Forward declarations
 //-----------------------------------------------------------------------------
 class IActBusyDocCallback;
 
 
 //-----------------------------------------------------------------------------
-// Contains all editable state 
+// Contains all editable state
 //-----------------------------------------------------------------------------
 class CActBusyDoc : public IDmNotify
 {

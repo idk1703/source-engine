@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,11 +25,11 @@ public:
 		STATE_FINISHED=2
 	};
 
-	virtual				~IBSPLightingThread() {}	
+	virtual				~IBSPLightingThread() {}
 
 	virtual void		Release() = 0;
 
-	// Start processing light in the background thread. 
+	// Start processing light in the background thread.
 	//
 	// Goes to STATE_LIGHTING, then if it's successful, it goes to STATE_FINISHED.
 	// If unsuccessful or interrupted, it goes to STATE_IDLE.

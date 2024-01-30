@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -108,7 +108,7 @@ C_TEAntlionDust::~C_TEAntlionDust()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : bNewEntity - whether or not to start a new entity
 //-----------------------------------------------------------------------------
 
@@ -145,13 +145,13 @@ void C_TEAntlionDust::PostDataUpdate( DataUpdateType_t updateType )
 		offset[0] = random->RandomFloat( -DUST_RADIUS, DUST_RADIUS );
 		offset[1] = random->RandomFloat( -DUST_RADIUS, DUST_RADIUS );
 		offset[2] = random->RandomFloat(  -16, 8 );
-		
+
 		offset += m_vecOrigin;
 
 		particle.m_Pos = offset;
 		particle.m_flDieTime	= random->RandomFloat( 0.75f, 1.25f );
 		particle.m_flLifetime	= 0.0f;
-		
+
 		Vector	dir	= particle.m_Pos - m_vecOrigin;
 		particle.m_vecVelocity = dir * random->RandomFloat( 0.5f, 1.0f );
 		dir.z = fabs(dir.z);
@@ -189,13 +189,13 @@ void C_TEAntlionDust::PostDataUpdate( DataUpdateType_t updateType )
 void GetColorForSurface( trace_t *trace, Vector *color );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &color - 
+// Purpose:
+// Input  : &color -
 //-----------------------------------------------------------------------------
 void C_TEAntlionDust::GetDustColor( Vector &color )
 {
 	trace_t	tr;
-	UTIL_TraceLine( m_vecOrigin+Vector(0,0,1), m_vecOrigin+Vector(0,0,-32), 
+	UTIL_TraceLine( m_vecOrigin+Vector(0,0,1), m_vecOrigin+Vector(0,0,-32),
 		MASK_SOLID_BRUSHONLY, NULL, COLLISION_GROUP_NONE, &tr );
 
 	if ( tr.fraction < 1.0f )
@@ -216,4 +216,3 @@ void C_TEAntlionDust::RenderParticles( CParticleRenderIterator *pIterator )
 void C_TEAntlionDust::SimulateParticles( CParticleSimulateIterator *pIterator )
 {
 }
-

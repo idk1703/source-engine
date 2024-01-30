@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -40,7 +40,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( npc_satchel, CSatchelCharge );
 
 //=========================================================
-// Deactivate - do whatever it is we do to an orphaned 
+// Deactivate - do whatever it is we do to an orphaned
 // satchel when we don't want it in the world anymore.
 //=========================================================
 void CSatchelCharge::Deactivate( void )
@@ -55,7 +55,7 @@ void CSatchelCharge::Spawn( void )
 	Precache( );
 	// motor
 	SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_BOUNCE );
-	SetSolid( SOLID_BBOX ); 
+	SetSolid( SOLID_BBOX );
 	SetCollisionGroup( COLLISION_GROUP_PROJECTILE );
 	SetModel( "models/Weapons/w_slam.mdl" );
 
@@ -91,7 +91,7 @@ void CSatchelCharge::InitSlideSound(void)
 {
 	CSoundEnvelopeController &controller = CSoundEnvelopeController::GetController();
 	CPASAttenuationFilter filter( this );
-	m_soundSlide = controller.SoundCreate( filter, entindex(), CHAN_STATIC, "SatchelCharge.Slide", ATTN_NORM );	
+	m_soundSlide = controller.SoundCreate( filter, entindex(), CHAN_STATIC, "SatchelCharge.Slide", ATTN_NORM );
 }
 
 //-----------------------------------------------------------------------------
@@ -129,7 +129,7 @@ void CSatchelCharge::SatchelTouch( CBaseEntity *pOther )
 	if ( !pOther->IsSolid() )
 		return;
 
-	// If successfully thrown and touching the 
+	// If successfully thrown and touching the
 	// NPC that released this grenade, pick it up
 	if ( pOther == GetThrower() && GetOwnerEntity() == NULL )
 	{
@@ -196,7 +196,7 @@ void CSatchelCharge::SatchelTouch( CBaseEntity *pOther )
 }
 
 void CSatchelCharge::UpdateSlideSound( void )
-{	
+{
 	if (!m_soundSlide)
 	{
 		return;
@@ -214,7 +214,7 @@ void CSatchelCharge::UpdateSlideSound( void )
 
 	CSoundEnvelopeController &controller = CSoundEnvelopeController::GetController();
 
-	
+
 	if ( tr.fraction < 1.0 )
 	{
 		if (m_flSlideVolume == -1.0)
@@ -223,7 +223,7 @@ void CSatchelCharge::UpdateSlideSound( void )
 			controller.Play( m_soundSlide, 1.0, 100 );
 			m_flSlideVolume = 1.0;
 		}
-		else 
+		else
 		{
 			float volume = GetAbsVelocity().Length()/1000;
 			if ( volume < m_flSlideVolume )
@@ -234,7 +234,7 @@ void CSatchelCharge::UpdateSlideSound( void )
 			}
 		}
 	}
-	else 
+	else
 	{
 		controller.CommandClear( m_soundSlide );
 		controller.SoundChangeVolume( m_soundSlide, 0.0, 0.01 );
@@ -270,8 +270,8 @@ void CSatchelCharge::SatchelThink( void )
 			SetOwnerEntity( saveOwner );
 		}
 	}
-	
-	// Bounce movement code gets this think stuck occasionally so check if I've 
+
+	// Bounce movement code gets this think stuck occasionally so check if I've
 	// succeeded in moving, otherwise kill my motions.
 	else if ((GetAbsOrigin() - m_vLastPosition).LengthSqr()<1)
 	{

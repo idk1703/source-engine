@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -76,9 +76,9 @@ void CShieldProxy::OnBind( C_BaseEntity *pEnt )
 	{
 		return;
 	}
-	
+
 	float sOffset, tOffset;
-	
+
 	sOffset = gpGlobals->curtime * sin( m_ScrollAngle * ( M_PI / 180.0f ) ) * m_ScrollRate;
 	tOffset = gpGlobals->curtime * cos( m_ScrollAngle * ( M_PI / 180.0f ) ) * m_ScrollRate;
 
@@ -91,11 +91,11 @@ void CShieldProxy::OnBind( C_BaseEntity *pEnt )
 	{
 		tOffset += 1.0f + -( int )tOffset;
 	}
-	
+
 	// make sure that we are in a [0,1] range
 	sOffset = sOffset - ( int )sOffset;
 	tOffset = tOffset - ( int )tOffset;
-	
+
 	m_pTextureScrollVar->SetVecValue( sOffset, tOffset, 0.0f );
 }
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -49,7 +49,7 @@ public:
 
 	// Use budgetFlags to filter out which budget groups you're interested in.
 	virtual int GetNumBudgetGroups() = 0;
-	
+
 	// pInfos must have space to hold the return value from GetNumBudgetGroups().
 	virtual void GetBudgetGroupInfos( CExportedBudgetGroupInfo *pInfos ) = 0;
 

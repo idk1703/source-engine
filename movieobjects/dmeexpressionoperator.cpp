@@ -519,7 +519,7 @@ bool CExpressionCalculator::Parse1ArgFunc( const char *&expr )
 {
 	ParseState_t ps( m_stack, expr );
 
-	const char *pFuncs[] = 
+	const char *pFuncs[] =
 	{
 		"abs", "sqr", "sqrt", "sin", "asin", "cos", "acos", "tan",
 		"exp", "log", "dtor", "rtod", "floor", "ceiling", "round", "sign"
@@ -845,13 +845,13 @@ void TestCalculator()
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeExpressionOperator, CDmeExpressionOperator );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeExpressionOperator::OnConstruction()
 {
@@ -870,7 +870,7 @@ void CDmeExpressionOperator::OnDestruction()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CDmeExpressionOperator::IsInputAttribute( CDmAttribute *pAttribute )
 {

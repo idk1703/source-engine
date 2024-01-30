@@ -24,7 +24,7 @@ LINK_ENTITY_TO_CLASS( pd_dispenser, CPlayerDestructionDispenser );
 
 BEGIN_NETWORK_TABLE( CPlayerDestructionDispenser, DT_PlayerDestructionDispenser )
 END_NETWORK_TABLE()
-				   
+
 #ifdef GAME_DLL
 BEGIN_DATADESC( CTFPlayerDestructionLogic )
 	DEFINE_KEYFIELD( m_iszPropModelName, FIELD_STRING, "prop_model_name" ),
@@ -69,7 +69,7 @@ END_NETWORK_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFPlayerDestructionLogic::CTFPlayerDestructionLogic()
 {
@@ -96,7 +96,7 @@ CTFPlayerDestructionLogic::CTFPlayerDestructionLogic()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFPlayerDestructionLogic* CTFPlayerDestructionLogic::GetPlayerDestructionLogic()
 {
@@ -106,7 +106,7 @@ CTFPlayerDestructionLogic* CTFPlayerDestructionLogic::GetPlayerDestructionLogic(
 
 #ifdef GAME_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerDestructionLogic::Precache()
 {
@@ -119,7 +119,7 @@ void CTFPlayerDestructionLogic::Precache()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFPlayerDestructionLogic::GetPropModelName() const
 {
@@ -128,7 +128,7 @@ const char *CTFPlayerDestructionLogic::GetPropModelName() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerDestructionLogic::CalcTeamLeader( int iTeam )
 {
@@ -377,7 +377,7 @@ CObjectDispenser *CTFPlayerDestructionLogic::CreateDispenser( int iTeam )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerDestructionLogic::PlayPropDropSound( CTFPlayer *pPlayer )
 {
@@ -386,7 +386,7 @@ void CTFPlayerDestructionLogic::PlayPropDropSound( CTFPlayer *pPlayer )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerDestructionLogic::PlayPropPickupSound( CTFPlayer *pPlayer )
 {
@@ -395,7 +395,7 @@ void CTFPlayerDestructionLogic::PlayPropPickupSound( CTFPlayer *pPlayer )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerDestructionLogic::PlaySound( const char *pszSound, CTFPlayer *pPlayer )
 {
@@ -433,7 +433,7 @@ void CPlayerDestructionDispenser::OnGoActive( void )
 		m_hTouchTrigger->SetParent( GetParent() );
 	}
 
-	SetModel( "" ); 
+	SetModel( "" );
 }
 
 //-----------------------------------------------------------------------------
@@ -446,7 +446,7 @@ void CPlayerDestructionDispenser::GetControlPanelInfo( int nPanelIndex, const ch
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPlayerDestructionLogic::TeamWin( int nTeam )
 {
@@ -459,10 +459,9 @@ void CTFPlayerDestructionLogic::TeamWin( int nTeam )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFPlayer *CTFPlayerDestructionLogic::GetTeamLeader( int iTeam ) const
 {
 	return iTeam == TF_TEAM_RED ? m_hRedTeamLeader.Get() : m_hBlueTeamLeader.Get();
 }
-

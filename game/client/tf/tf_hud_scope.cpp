@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -235,7 +235,7 @@ class CHudScope : public vgui::Panel, public CHudElement
 public:
 	CHudScope( const char *pElementName );
 	virtual ~CHudScope( void );
-	
+
 	void	Init( void );
 
 protected:
@@ -260,7 +260,7 @@ CHudScope::CHudScope( const char *pElementName ) : CHudElement(pElementName), Ba
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
 	SetParent( pParent );
-	
+
 	SetHiddenBits( HIDEHUD_PLAYERDEAD );
 
 	for ( int i = 0; i < ARRAYSIZE( m_iScopeTexture ); i++ )
@@ -367,7 +367,7 @@ void CHudScope::ApplySchemeSettings( vgui::IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudScope::ShouldDraw( void )
 {
@@ -444,8 +444,8 @@ void CHudScope::Paint( void )
 
 	float uv1 = 0.5f / 256.0f, uv2 = 1.0f - uv1;
 
-	vgui::Vertex_t vert[4];	
-	
+	vgui::Vertex_t vert[4];
+
 	Vector2D uv11( uv1, uv1 );
 	Vector2D uv12( uv1, uv2 );
 	Vector2D uv21( uv2, uv1 );

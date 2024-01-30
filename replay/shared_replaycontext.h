@@ -36,7 +36,7 @@ public:
 	virtual void						Think();
 
 	virtual bool						IsInitialized() const	{ return m_bInit; }
-	
+
 	virtual const char					*GetRelativeBaseDir() const;
 	virtual const char					*GetBaseDir() const;
 	virtual const char					*GetReplaySubDir() const;

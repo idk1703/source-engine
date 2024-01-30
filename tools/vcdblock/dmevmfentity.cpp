@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -26,7 +26,7 @@
 #define SPHERE_RADIUS 16
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeVMFEntity, CDmeVMFEntity );
 
@@ -38,7 +38,7 @@ int CDmeVMFEntity::s_nNextEntityId;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeVMFEntity::OnConstruction()
 {
@@ -142,7 +142,7 @@ void CDmeVMFEntity::OnAttributeChanged( CDmAttribute *pAttribute )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the entity ID
 //-----------------------------------------------------------------------------
@@ -235,7 +235,7 @@ void CDmeVMFEntity::AttachToEngineEntity( HTOOLHANDLE hToolHandle )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Position and bounds for the model
 //-----------------------------------------------------------------------------
@@ -250,7 +250,7 @@ const QAngle &CDmeVMFEntity::GetRenderAngles( void )
 }
 
 void CDmeVMFEntity::GetRenderBounds( Vector& mins, Vector& maxs )
-{ 
+{
 	if ( !m_bInfoTarget )
 	{
 		BaseClass::GetRenderBounds( mins, maxs );
@@ -442,7 +442,7 @@ void CDmeVMFEntity::DrawFloorTarget( IMaterial *pMaterial )
 	unsigned char nBaseB = 0;
 	unsigned char nAlpha = m_bIsDirty ? (unsigned char)(255 * t) : 255;
 
-	float block[4][2][3] = { 
+	float block[4][2][3] = {
 		{ { -13, -13, 0 }, { -13, -13, 10 } },
 		{ {  13, -13, 0 }, {  13, -13, 10 } },
 		{ {  13,  13, 0 }, {  13,  13, 10 } },
@@ -556,7 +556,7 @@ int CDmeVMFEntity::DrawModel( int flags )
 
 		DrawFloorTarget( m_Wireframe );
 
-		if (g_pVcdBlockTool->IsInNodeDrag()) 
+		if (g_pVcdBlockTool->IsInNodeDrag())
 		{
 			DrawDragHelpers( m_Wireframe );
 		}
@@ -567,7 +567,7 @@ int CDmeVMFEntity::DrawModel( int flags )
 	pRenderContext->MatrixMode( MATERIAL_MODEL );
 	pRenderContext->PopMatrix();
 
-	return 1; 
+	return 1;
 }
 
 

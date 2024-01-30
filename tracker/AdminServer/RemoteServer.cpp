@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -18,7 +18,7 @@ extern IGameServerData *g_pGameServerData;
 //-----------------------------------------------------------------------------
 CRemoteServer &RemoteServer()
 {
-	static CRemoteServer s_RemoteServer;	
+	static CRemoteServer s_RemoteServer;
 	return s_RemoteServer;
 }
 
@@ -180,7 +180,7 @@ bool CRemoteServer::ProcessServerResponse()
 
 						// remove from list
 						m_ResponseHandlers.Remove(i);
-						
+
 						// there is only ever one handler for a message
 						break;
 					}

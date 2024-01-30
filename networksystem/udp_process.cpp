@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -44,7 +44,7 @@ void CNetPacket::Release()
 		delete this;
 	}
 }
-	
+
 bool UDP_ReceiveDatagram( CUDPSocket *pSocket, CNetPacket* pPacket )
 {
 	Assert( pPacket );
@@ -68,19 +68,19 @@ CNetPacket *UDP_GetPacket( CUDPSocket *pSocket )
 	pPacket->m_From.SetType( NA_IP );
 	pPacket->m_From.Clear();
 	pPacket->m_flReceivedTime = g_pNetworkSystemImp->GetTime();
-	pPacket->m_pSource = pSocket;	
+	pPacket->m_pSource = pSocket;
 	pPacket->m_nSizeInBytes = 0;
 	pPacket->m_Message.SetDebugName("inpacket.message");
 
-	// then check UDP data 
+	// then check UDP data
 	if ( !UDP_ReceiveDatagram( pSocket, pPacket ) )
 	{
 		delete pPacket;
 		return NULL;
 	}
-		
-	Assert( pPacket->m_nSizeInBytes ); 
-	
+
+	Assert( pPacket->m_nSizeInBytes );
+
 	// prepare bitbuffer for reading packet with new size
 	pPacket->m_Message.StartReading( pPacket->m_pData, pPacket->m_nSizeInBytes );
 	return pPacket;
@@ -89,7 +89,7 @@ CNetPacket *UDP_GetPacket( CUDPSocket *pSocket )
 void UDP_ProcessSocket( CUDPSocket *pSocket, IConnectionlessPacketHandler *pHandler, ILookupChannel *pLookup )
 {
 	CNetPacket *pPacket;
-	
+
 	Assert( pSocket );
 
 	// Get datagrams from sockets
@@ -100,7 +100,7 @@ void UDP_ProcessSocket( CUDPSocket *pSocket, IConnectionlessPacketHandler *pHand
 		{
 			Filter_SendBan( pPacket->m_From );	// tell them we aren't listening...
 			continue;
-		} 
+		}
 		*/
 
 		// Find the netchan it came from

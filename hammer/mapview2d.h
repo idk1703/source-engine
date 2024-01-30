@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -25,7 +25,7 @@ protected:
 	CMapView2D();           // protected constructor used by dynamic creation
 	virtual ~CMapView2D();
 	DECLARE_DYNCREATE(CMapView2D)
-	
+
 	virtual bool IsLogical() { return false; }
 	virtual void OnRenderListDirty();
 
@@ -42,7 +42,7 @@ private:
 
 	void RenderInstanceMapClass_r( CMapClass *pObject );
 
-	// general variables:	
+	// general variables:
 	bool m_bLastActiveView;					// is this the last active view?
 	CUtlVector<CMapClass *> m_RenderList;	// list of current rendered objects
 	bool m_bUpdateRenderObjects;			// if true, update render list on next draw
@@ -64,9 +64,9 @@ private:
 	DECLARE_MESSAGE_MAP()
 };
 
-inline bool CMapView2D::UpdateRenderObjects() 
-{ 
-	return m_bUpdateRenderObjects;	
+inline bool CMapView2D::UpdateRenderObjects()
+{
+	return m_bUpdateRenderObjects;
 }
 
 

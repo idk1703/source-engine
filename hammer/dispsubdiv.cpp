@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -84,11 +84,11 @@ private: // typedefs, enums, structs
 		// generated
 		Vector				m_vCentroid;						// quad center
 		Vector				m_vNormal;							// quad normal
-		
+
 		// linkage
 		SubdivQuadHandle_t	m_ndxParent;						// parent quad index
 		SubdivQuadHandle_t	m_ndxChild[EDITDISP_QUADSIZE];		// chilren (4 of them) indices
-		
+
 		// quad data
 		SubdivPointHandle_t	m_PointHandles[EDITDISP_QUADSIZE];	// point indices - unique list
 		SubdivEdgeHandle_t	m_EdgeHandles[EDITDISP_QUADSIZE];	// edge indices - unique list
@@ -197,7 +197,7 @@ CEditDispSubdivMesh::SubdivQuad_t *CEditDispSubdivMesh::GetQuad( SubdivQuadHandl
 
 //=============================================================================
 //
-// Subdivision Edit Displacement Point Functions 
+// Subdivision Edit Displacement Point Functions
 //
 
 //-----------------------------------------------------------------------------
@@ -212,14 +212,14 @@ void CEditDispSubdivMesh::Point_Init( SubdivPointHandle_t ptHandle )
 		VectorClear( pPoint->m_vNormal );
 		VectorClear( pPoint->m_vNewPoint );
 		VectorClear( pPoint->m_vNewNormal );
-		
+
 		pPoint->m_uType = (unsigned short)-1;
 		pPoint->m_uValence = 0;
 
 		for ( int ndxEdge = 0; ndxEdge < ( EDITDISP_QUADSIZE*2 ); ndxEdge++ )
 		{
 			pPoint->m_EdgeHandles[ndxEdge] = m_Edges.InvalidIndex();
-		}			
+		}
 	}
 }
 
@@ -314,7 +314,7 @@ void CEditDispSubdivMesh::Point_PointOrdinary( SubdivPoint_t *pPoint )
 	VectorScale( centroidAccum, ratio, centroidAccum );
 
 	//
-	// 
+	//
 	//
 	ratio = ( ( float )pPoint->m_uValence - 2.0f ) / ( float )pPoint->m_uValence;
 
@@ -360,7 +360,7 @@ void CEditDispSubdivMesh::Point_PointCrease( SubdivPoint_t *pPoint )
 	}
 
 	//
-	// 
+	//
 	//
 	VectorScale( pPoint->m_vPoint, 6.0f, pPoint->m_vNewPoint );
 	VectorAdd( pPoint->m_vNewPoint, edgeAccumPoint, pPoint->m_vNewPoint );
@@ -491,10 +491,10 @@ void CEditDispSubdivMesh::Quad_Init( SubdivQuadHandle_t quadHandle )
 		for ( int ndx = 0; ndx < EDITDISP_QUADSIZE; ndx++ )
 		{
 			pQuad->m_ndxChild[ndx] = m_Quads.InvalidIndex();
-			
+
 			pQuad->m_PointHandles[ndx] = m_Points.InvalidIndex();
 			pQuad->m_EdgeHandles[ndx] = m_Edges.InvalidIndex();
-			pQuad->m_QuadIndices[ndx] = -1;			
+			pQuad->m_QuadIndices[ndx] = -1;
 		}
 	}
 }
@@ -547,7 +547,7 @@ void CEditDispSubdivMesh::Quad_CalcNormal( SubdivQuadHandle_t quadHandle )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CEditDispSubdivMesh::CompareSubdivPoints( Vector const &pt1, Vector const &pt2, 
+bool CEditDispSubdivMesh::CompareSubdivPoints( Vector const &pt1, Vector const &pt2,
 											   float flTolerance )
 {
 	for ( int axis = 0 ; axis < 3 ; axis++ )
@@ -555,7 +555,7 @@ bool CEditDispSubdivMesh::CompareSubdivPoints( Vector const &pt1, Vector const &
 		if ( fabs( pt1[axis] - pt2[axis] ) > flTolerance )
 			return false;
 	}
-	
+
 	return true;
 }
 
@@ -598,7 +598,7 @@ CEditDispSubdivMesh::SubdivPointHandle_t CEditDispSubdivMesh::BuildSubdivPoint( 
 		}
 	}
 
-	ptHandle = m_Points.AddToTail();	
+	ptHandle = m_Points.AddToTail();
 	Point_Init( ptHandle );
 	SubdivPoint_t *pPoint = GetPoint( ptHandle );
 	VectorCopy( vPoint, pPoint->m_vPoint );
@@ -634,7 +634,7 @@ CEditDispSubdivMesh::SubdivEdgeHandle_t CEditDispSubdivMesh::BuildSubdivEdge( in
 				                     pEdge->m_PointHandles[0], pEdge->m_PointHandles[1] ) )
 			{
 				// check to see if the quad is quad 0 or 1 (or if it needs to be quad 1)
-				if ( ( pEdge->m_QuadHandles[0] != quadHandle ) && 
+				if ( ( pEdge->m_QuadHandles[0] != quadHandle ) &&
 				 	 ( pEdge->m_QuadHandles[1] == m_Quads.InvalidIndex() ) )
 				{
 					pEdge->m_QuadHandles[1] = quadHandle;
@@ -655,7 +655,7 @@ CEditDispSubdivMesh::SubdivEdgeHandle_t CEditDispSubdivMesh::BuildSubdivEdge( in
 	pEdge->m_QuadHandles[0] = quadHandle;
 	pEdge->m_bActive = true;
 
-	// extra data for children (get edge sharpness from parent or 
+	// extra data for children (get edge sharpness from parent or
 	// it may be an internal edge and its sharpness will be 0)
 	if( ndxChild != -1 )
 	{
@@ -681,7 +681,7 @@ CEditDispSubdivMesh::SubdivEdgeHandle_t CEditDispSubdivMesh::BuildSubdivEdge( in
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CEditDispSubdivMesh::SubdivQuadHandle_t CEditDispSubdivMesh::BuildSubdivQuad( int ndxChild, 
+CEditDispSubdivMesh::SubdivQuadHandle_t CEditDispSubdivMesh::BuildSubdivQuad( int ndxChild,
 																			  SubdivQuadHandle_t parentHandle )
 {
 	// get parent quad
@@ -807,7 +807,7 @@ void CEditDispSubdivMesh::Init( void )
 	if( !pDispMgr )
 		return;
 
-	int selectCount = pDispMgr->SelectCount();	
+	int selectCount = pDispMgr->SelectCount();
 	m_Points.EnsureCapacity( SUBDIV_DISPPOINTS * selectCount );
 	m_Edges.EnsureCapacity( SUBDIV_DISPEDGES * selectCount );
 	m_Quads.EnsureCapacity( SUBDIV_DISPQUADS * selectCount );
@@ -884,7 +884,7 @@ void CEditDispSubdivMesh::AddDispTo( CMapDisp *pDisp )
 			{
 				Vector vPoint;
 				pSelectDisp->GetSurfPoint( ndxPt2, vPoint );
-				
+
 				if( CompareSubdivPoints( vPoints[ndxPt], vPoint, 0.01f ) )
 				{
 					Vector vNormal;

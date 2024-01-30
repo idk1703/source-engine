@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,7 +32,7 @@ public:
 	static bool CheckForRequiredSteamComponents( const char* pszSteamRequried, const char* pszOverlayRequired );
 
 private:
-	
+
 	float m_flPresentTime;
 };
 
@@ -105,7 +105,7 @@ private:
 	int m_nTransitionStartOffsetX;
 	bool m_bTransitionRight;
 	int m_nXPos;
-	
+
 	RealTimeCountdownTimer m_TransitionTimer;
 	RealTimeCountdownTimer m_ShowTimer;
 };

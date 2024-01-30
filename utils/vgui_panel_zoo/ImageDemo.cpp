@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ public:
 
 	virtual void ApplySchemeSettings(IScheme *pScheme);
 	virtual void Paint();
-	
+
 private:
 	IImage *m_pImage;
 };
@@ -61,7 +61,7 @@ void ImageDemo::ApplySchemeSettings(IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Paint the image on screen. Images are not panels, 
+// Purpose: Paint the image on screen. Images are not panels,
 // You must call the Paint method explicitly for them.
 // and set thier position in the frame every time you draw them.
 //-----------------------------------------------------------------------------
@@ -76,4 +76,3 @@ Panel* ImageDemo_Create(Panel *parent)
 {
 	return new ImageDemo(parent, "ImageDemo");
 }
-

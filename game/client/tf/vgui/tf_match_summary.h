@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -81,7 +81,7 @@ public:
 	CPanelAnimationVarAliasType( int, m_iStatsWidth,		"stats_width",		"s.1",	"proportional_width" );
 	CPanelAnimationVarAliasType( int, m_iHorizFillInset,	"horiz_inset",		"5",	"proportional_int" );
 };
-																				   
+
 class CTFMatchSummary : public CHudElement, public vgui::EditablePanel
 {
 private:
@@ -103,7 +103,7 @@ public:
 	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
 
 	bool ShowPerformanceMedals( void );
-	
+
 private:
 
 	void Update( void );

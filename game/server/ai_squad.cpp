@@ -101,11 +101,11 @@ void CAI_SquadManager::DeleteSquad( CAI_Squad *pSquad )
 // Purpose: Delete all the squads (called between levels / loads)
 //-------------------------------------
 
-void CAI_SquadManager::DeleteAllSquads(void) 
+void CAI_SquadManager::DeleteAllSquads(void)
 {
 	CAI_Squad *squad = CAI_SquadManager::m_pSquads;
 
-	while (squad) 
+	while (squad)
 	{
 		CAI_Squad *temp = squad->m_pNextSquad;
 		delete squad;
@@ -153,7 +153,7 @@ END_DATADESC()
 
 //-------------------------------------
 
-CAI_Squad::CAI_Squad(string_t newName) 
+CAI_Squad::CAI_Squad(string_t newName)
 #ifndef PER_ENEMY_SQUADSLOTS
  :	m_squadSlotsUsed(MAX_SQUADSLOTS)
 #endif
@@ -163,7 +163,7 @@ CAI_Squad::CAI_Squad(string_t newName)
 
 //-------------------------------------
 
-CAI_Squad::CAI_Squad() 
+CAI_Squad::CAI_Squad()
 #ifndef PER_ENEMY_SQUADSLOTS
  :	m_squadSlotsUsed(MAX_SQUADSLOTS)
 #endif
@@ -173,7 +173,7 @@ CAI_Squad::CAI_Squad()
 
 //-------------------------------------
 
-void CAI_Squad::Init(string_t newName) 
+void CAI_Squad::Init(string_t newName)
 {
 	m_Name = AllocPooledString( STRING(newName) );
 	m_pNextSquad = NULL;
@@ -225,7 +225,7 @@ void CAI_Squad::RemoveFromSquad( CAI_BaseNPC *pNPC, bool bDeath )
 	}
 	m_SquadMembers.Remove(myIndex);
 
-	// Notify squad members of death 
+	// Notify squad members of death
 	if ( bDeath )
 	{
 		for (member = 0; member < m_SquadMembers.Count(); member++)
@@ -495,8 +495,8 @@ void CAI_Squad::SquadNewEnemy( CBaseEntity *pEnemy )
 		if (pMember)
 		{
 			// reset members who aren't activly engaged in fighting (only do this if the NPC's using the squad memory, or it'll fail)
-			if ( !pMember->GetEnemy() || 
-				 ( pMember->GetEnemy() != pEnemy && 
+			if ( !pMember->GetEnemy() ||
+				 ( pMember->GetEnemy() != pEnemy &&
 				   !pMember->HasCondition( COND_SEE_ENEMY) &&
 				   gpGlobals->curtime - pMember->GetEnemyLastTimeSeen() > 3.0 ) )
 			{
@@ -528,7 +528,7 @@ int	CAI_Squad::BroadcastInteraction( int interactionType, void *data, CBaseComba
 	for ( int i = 0; i < m_SquadMembers.Count(); i++ )
 	{
 		CAI_BaseNPC *pMember = m_SquadMembers[i]->MyNPCPointer();
-		
+
 		//Validate and don't send again to the sender
 		if ( ( pMember != NULL) && ( pMember != sender ) )
 		{
@@ -543,7 +543,7 @@ int	CAI_Squad::BroadcastInteraction( int interactionType, void *data, CBaseComba
 
 //-----------------------------------------------------------------------------
 // Purpose: is it ok to make a sound of the given priority?  Check for conflicts
-// Input  : soundPriority - 
+// Input  : soundPriority -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_Squad::FOkToMakeSound( int soundPriority )
@@ -561,7 +561,7 @@ bool CAI_Squad::FOkToMakeSound( int soundPriority )
 // Purpose: A squad member made an exclusive sound.  Keep track so other squad
 //			members don't talk over it
 // Input  : soundPriority - for sorting
-//			time - 
+//			time -
 //-----------------------------------------------------------------------------
 void CAI_Squad::JustMadeSound( int soundPriority, float time )
 {
@@ -579,7 +579,7 @@ void CAI_Squad::JustMadeSound( int soundPriority, float time )
 bool CAI_Squad::OccupyStrategySlotRange( CBaseEntity *pEnemy, int slotIDStart, int slotIDEnd, int *pSlot )
 {
 #ifndef PER_ENEMY_SQUADSLOTS
-	// FIXME: combat slots need to be per enemy, not per squad.  
+	// FIXME: combat slots need to be per enemy, not per squad.
 	// As it is, once a squad is occupied it stops making even simple attacks to other things nearby.
 	// This code may make soldiers too aggressive
 	if (GetLeader() && pEnemy != GetLeader()->GetEnemy())
@@ -688,7 +688,7 @@ AISquadEnemyInfo_t *CAI_Squad::FindEnemyInfo( CBaseEntity *pEnemy )
 					activeEnemies.Insert( pMemberEnemy );
 				}
 			}
-			
+
 			// Remove the records for deleted or unused enemies
 			for ( i = m_EnemyInfos.Count() - 1; i >= 0; --i )
 			{
@@ -698,7 +698,7 @@ AISquadEnemyInfo_t *CAI_Squad::FindEnemyInfo( CBaseEntity *pEnemy )
 				}
 			}
 		}
-		
+
 		m_flEnemyInfoCleanupTime = gpGlobals->curtime + 30;
 	}
 
@@ -723,40 +723,40 @@ AISquadEnemyInfo_t *CAI_Squad::FindEnemyInfo( CBaseEntity *pEnemy )
 }
 
 #endif
-	
+
 //------------------------------------------------------------------------------
 
-void CAI_Squad::OccupySlot( CBaseEntity *pEnemy, int i )			
-{ 
+void CAI_Squad::OccupySlot( CBaseEntity *pEnemy, int i )
+{
 #ifdef PER_ENEMY_SQUADSLOTS
 	AISquadEnemyInfo_t *pInfo = FindEnemyInfo( pEnemy );
 	pInfo->slots.Set(i);
 #else
-	m_squadSlotsUsed.Set(i); 
+	m_squadSlotsUsed.Set(i);
 #endif
 }
 
 //------------------------------------------------------------------------------
 
-void CAI_Squad::VacateSlot( CBaseEntity *pEnemy, int i )			
-{ 
+void CAI_Squad::VacateSlot( CBaseEntity *pEnemy, int i )
+{
 #ifdef PER_ENEMY_SQUADSLOTS
 	AISquadEnemyInfo_t *pInfo = FindEnemyInfo( pEnemy );
 	pInfo->slots.Clear(i);
 #else
-	m_squadSlotsUsed.Clear(i); 
+	m_squadSlotsUsed.Clear(i);
 #endif
 }
 
 //------------------------------------------------------------------------------
 
-bool CAI_Squad::IsSlotOccupied( CBaseEntity *pEnemy, int i ) const	
-{ 
+bool CAI_Squad::IsSlotOccupied( CBaseEntity *pEnemy, int i ) const
+{
 #ifdef PER_ENEMY_SQUADSLOTS
 	const AISquadEnemyInfo_t *pInfo = FindEnemyInfo( pEnemy );
 	return pInfo->slots.IsBitSet(i);
 #else
-	return m_squadSlotsUsed.IsBitSet(i); 
+	return m_squadSlotsUsed.IsBitSet(i);
 #endif
 }
 
@@ -784,4 +784,3 @@ bool CAI_Squad::IsSquadInflictor( CBaseEntity *pInflictor )
 }
 
 //=============================================================================
-

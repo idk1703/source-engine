@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -9,9 +9,9 @@
 #include "paneleffect.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
-//			*panelName - 
+// Purpose:
+// Input  : *parent -
+//			*panelName -
 //-----------------------------------------------------------------------------
 CHintItemOrderBase::CHintItemOrderBase( vgui::Panel *parent, const char *panelName )
 : BaseClass( parent, panelName )
@@ -24,7 +24,7 @@ CHintItemOrderBase::CHintItemOrderBase( vgui::Panel *parent, const char *panelNa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHintItemOrderBase::DrawAxialLineToOrder( void )
 {
@@ -43,8 +43,8 @@ void CHintItemOrderBase::DrawAxialLineToOrder( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *panel - 
+// Purpose:
+// Input  : *panel -
 //-----------------------------------------------------------------------------
 void CHintItemOrderBase::SetHintTarget( vgui::Panel *panel )
 {
@@ -56,13 +56,13 @@ void CHintItemOrderBase::SetHintTarget( vgui::Panel *panel )
 	// Update effect target
 	if ( !panel || !g_pTF2RootPanel )
 		return;
-	
+
 	CPanelEffect *e = g_pTF2RootPanel->FindEffect( m_LineEffect );
 	if ( e )
 	{
 		e->SetPanelOther( panel );
 	}
-	
+
 	e = g_pTF2RootPanel->FindEffect( m_FlashEffect );
 	if ( e )
 	{

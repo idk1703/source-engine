@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -77,7 +77,7 @@ void CUtlMsgBuffer::WriteString(const char *name, const char *data)
 	// write out the variable type
 	unsigned char vtype = PACKBIT_CONTROLBIT;	// stringname var, string data
 	Write(&vtype, 1);
-	
+
 	// write out the variable name
 	Write(name, strlen(name) + 1);
 
@@ -97,7 +97,7 @@ void CUtlMsgBuffer::WriteBlob(const char *name, const void *data, int dataSize)
 	// write out the variable type
 	unsigned char vtype = PACKBIT_CONTROLBIT | PACKBIT_BINARYDATA;	// stringname var, binary data
 	Write(&vtype, 1);
-	
+
 	// write out the variable name
 	Write(name, strlen(name) + 1);
 
@@ -125,8 +125,8 @@ void CUtlMsgBuffer::WriteBuffer(const char *name, const CUtlMsgBuffer *buffer)
 	unsigned short size = (unsigned short) buffer->DataSize();
 	Write(&size, 2);
 
-    // write out the data itself
-    Write(buffer->Base(), size);
+	// write out the data itself
+	Write(buffer->Base(), size);
 }
 
 //-----------------------------------------------------------------------------
@@ -155,7 +155,7 @@ bool CUtlMsgBuffer::ReadUntilNull(void *buffer, int bufferSize)
 	{
 		nullPos++;
 	}
-	
+
 	if (nullPos >= m_Memory.NumAllocated())
 	{
 		// never found a null terminator
@@ -185,7 +185,7 @@ void CUtlMsgBuffer::Write(void const *data, int size)
 {
 	// make sure it will fit
 	m_Memory.EnsureCapacity(m_iWritePos + size);
-		
+
 	// normal write
 	memcpy(&m_Memory[m_iWritePos], data, size);
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -88,7 +88,7 @@ void HideState::OnUpdate( CCSBot *me )
 			{
 				// leader is running, stay with him
 				me->Follow( leader );
-				return;			
+				return;
 			}
 
 			// if leader has moved, stay with him
@@ -113,7 +113,7 @@ void HideState::OnUpdate( CCSBot *me )
 				if (me->GetTeamNumber() == TEAM_CT)
 				{
 					// if we are just holding position (due to a radio order) and the bomb has just planted, go defuse it
-					if (me->GetTask() == CCSBot::HOLD_POSITION && 
+					if (me->GetTask() == CCSBot::HOLD_POSITION &&
 						TheCSBots()->IsBombPlanted() &&
 						TheCSBots()->GetBombPlantTimestamp() > me->GetStateTimestamp())
 					{
@@ -219,8 +219,8 @@ void HideState::OnUpdate( CCSBot *me )
 
 		// only investigate noises if we are initiating attacks, and we aren't a "settled in" sniper
 		// dont investigate noises if we are reloading
-		if (!me->IsReloading() && 
-			!isSettledInSniper && 
+		if (!me->IsReloading() &&
+			!isSettledInSniper &&
 			me->GetDisposition() == CCSBot::ENGAGE_AND_INVESTIGATE)
 		{
 			// if we are holding position, and have heard the enemy nearby, investigate after our hold time is up
@@ -270,7 +270,7 @@ void HideState::OnUpdate( CCSBot *me )
 		}
 
 		// check if duration has expired
-		if (m_hideTimer.IsElapsed()) 
+		if (m_hideTimer.IsElapsed())
 		{
 			if (me->GetTask() == CCSBot::GUARD_LOOSE_BOMB)
 			{
@@ -338,8 +338,8 @@ void HideState::OnUpdate( CCSBot *me )
 		{
 			if (me->GetTeamNumber() == TEAM_CT)
 			{
-				if (me->GetTask() == CCSBot::GUARD_BOMB_ZONE && 
-					me->IsAtHidingSpot() && 
+				if (me->GetTask() == CCSBot::GUARD_BOMB_ZONE &&
+					me->IsAtHidingSpot() &&
 					TheCSBots()->IsBombPlanted())
 				{
 					if (me->GetNearbyEnemyCount() == 0)
@@ -479,7 +479,7 @@ void HideState::OnUpdate( CCSBot *me )
 				}
 			}
 
-			
+
 			// determine which way to look
 			trace_t result;
 			float outAngle = 0.0f;

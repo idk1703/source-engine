@@ -72,31 +72,31 @@ END_DATADESC()
 #if defined( POSIX ) || defined( _X360 )
 // stub functions
 const char* S3TC_GetBlock(
-        const void *pCompressed,
-        ImageFormat format,
-        int nBlocksWide, // How many blocks wide is the image (pixels wide / 4).
-        int xBlock,
-        int yBlock )
+	const void *pCompressed,
+	ImageFormat format,
+	int nBlocksWide, // How many blocks wide is the image (pixels wide / 4).
+	int xBlock,
+	int yBlock )
 {
 	return NULL;
 }
 
 char* S3TC_GetBlock(
-        void *pCompressed,
-        ImageFormat format,
-        int nBlocksWide, // How many blocks wide is the image (pixels wide / 4).
-        int xBlock,
-        int yBlock )
+	void *pCompressed,
+	ImageFormat format,
+	int nBlocksWide, // How many blocks wide is the image (pixels wide / 4).
+	int xBlock,
+	int yBlock )
 {
 	return NULL;
 }
 
 S3PaletteIndex S3TC_GetPaletteIndex(
-        unsigned char *pFaceData,
-        ImageFormat format,
-        int imageWidth,
-        int x,
-        int y )
+	unsigned char *pFaceData,
+	ImageFormat format,
+	int imageWidth,
+	int x,
+	int y )
 {
 	S3PaletteIndex nullPalette;
 	memset(&nullPalette, 0x0, sizeof(nullPalette));
@@ -105,23 +105,23 @@ S3PaletteIndex S3TC_GetPaletteIndex(
 
 // Merge the two palettes and copy the colors
 void S3TC_MergeBlocks(
-        char **blocks,
-        S3RGBA **pOriginals, 
-        int nBlocks,
-        int lPitch,     // (in BYTES)
-        ImageFormat format
-        )
+	char **blocks,
+	S3RGBA **pOriginals,
+	int nBlocks,
+	int lPitch,     // (in BYTES)
+	ImageFormat format
+	)
 {
 }
 
 // Note: width, x, and y are in texels, not S3 blocks.
 void S3TC_SetPaletteIndex(
-        unsigned char *pFaceData,
-        ImageFormat format,
-        int imageWidth,
-        int x,
-        int y,
-        S3PaletteIndex paletteIndex )
+	unsigned char *pFaceData,
+	ImageFormat format,
+	int imageWidth,
+	int x,
+	int y,
+	S3PaletteIndex paletteIndex )
 {
 }
 #endif
@@ -151,12 +151,12 @@ int *g_FaceVerts[6] =
 // (assuming X goes forward, Y goes left, and Z goes up).
 //
 //				 6 ------------- 5
-//			   /  			   /  
+//			   /  			   /
 //			 /	 |			 /	 |
 //		   /	 |		   /	 |
 //		 2 ------------- 1		 |
 //		  		 |		  		 |
-//		 |		  		 |		  
+//		 |		  		 |
 //		 |		 7 ------|------ 4
 //		 |	   /		 |	   /
 //		 |	 /			 |	 /
@@ -228,7 +228,7 @@ int VTFFileHeaderSize( int nMajorVersion, int nMinorVersion )
 			return result;
 		}
 		break;
-	
+
 	case VTF_X360_MAJOR_VERSION:
 		return sizeof( VTFFileHeaderX360_t ) + sizeof( ResourceEntryInfo ) * MAX_X360_RSRC_DICTIONARY_ENTRIES;
 	}
@@ -461,7 +461,7 @@ void CVTFTexture::InitLowResImage( int nWidth, int nHeight, ImageFormat fmt )
 	m_LowResImageFormat = fmt;
 
 	// Allocate low-res bits
-	int iLowResImageSize = ImageLoader::GetMemRequired( m_nLowResImageWidth, 
+	int iLowResImageSize = ImageLoader::GetMemRequired( m_nLowResImageWidth,
 		m_nLowResImageHeight, 1, m_LowResImageFormat, false );
 
 	if ( !AllocateLowResImageData( iLowResImageSize ) )
@@ -503,14 +503,14 @@ void CVTFTexture::ReleaseResources()
 	m_arrResourcesInfo.RemoveAll();
 
 	for ( ResourceMemorySection *pRms = m_arrResourcesData.Base(),
-		 *pRmsEnd = pRms + m_arrResourcesData.Count(); pRms < pRmsEnd; ++pRms )
+		*pRmsEnd = pRms + m_arrResourcesData.Count(); pRms < pRmsEnd; ++pRms )
 	{
 		delete [] pRms->m_pData;
 	}
 	m_arrResourcesData.RemoveAll();
 
 	for ( ResourceMemorySection *pRms = m_arrResourcesData_ForReuse.Base(),
-		 *pRmsEnd = pRms + m_arrResourcesData_ForReuse.Count(); pRms < pRmsEnd; ++pRms )
+		*pRmsEnd = pRms + m_arrResourcesData_ForReuse.Count(); pRms < pRmsEnd; ++pRms )
 	{
 		delete [] pRms->m_pData;
 	}
@@ -549,7 +549,7 @@ void CVTFTexture::LowResFileInfo( int *pStartLocation, int *pSizeInBytes ) const
 	if ( ResourceEntryInfo const *pLowResData = FindResourceEntryInfo( VTF_LEGACY_RSRC_LOW_RES_IMAGE ) )
 	{
 		*pStartLocation = pLowResData->resData;
-		*pSizeInBytes = ImageLoader::GetMemRequired( m_nLowResImageWidth, 
+		*pSizeInBytes = ImageLoader::GetMemRequired( m_nLowResImageWidth,
 			m_nLowResImageHeight, 1, m_LowResImageFormat, false );
 	}
 	else
@@ -609,10 +609,10 @@ void CVTFTexture::ImageFileInfo( int nFrame, int nFace, int nMipLevel, int *pSta
 
 	int nFrameSize = nFacesToRead * nFaceSize;
 	nOffset += nFrameSize * nFrame;
-	
+
 	// get to the right face
 	nOffset += nFace * nFaceSize;
-	
+
 	*pStartLocation = nOffset;
 	*pSizeInBytes = nFaceSize;
 }
@@ -643,7 +643,7 @@ bool CVTFTexture::LoadLowResData( CUtlBuffer &buf )
 {
 	// Allocate low-res bits
 	InitLowResImage( m_nLowResImageWidth, m_nLowResImageHeight, m_LowResImageFormat );
-	int nLowResImageSize = ImageLoader::GetMemRequired( m_nLowResImageWidth, 
+	int nLowResImageSize = ImageLoader::GetMemRequired( m_nLowResImageWidth,
 		m_nLowResImageHeight, 1, m_LowResImageFormat, false );
 	buf.Get( m_pLowResImageData, nLowResImageSize );
 
@@ -685,25 +685,25 @@ bool CVTFTexture::LoadImageData( CUtlBuffer &buf, const VTFFileHeader_t &header,
 			nFacesToRead = 6;
 	}
 
-	// Even if we are preloading partial data, always do the full allocation here. We'll use LOD clamping to ensure we only 
+	// Even if we are preloading partial data, always do the full allocation here. We'll use LOD clamping to ensure we only
 	// reference data that is available.
 	if ( !AllocateImageData( iImageSize ) )
 		return false;
 
-	// We may only have part of the data available--if so we will stream in the rest later. 
-	// If we have the data available but we're ignoring it (for example during development), then we 
+	// We may only have part of the data available--if so we will stream in the rest later.
+	// If we have the data available but we're ignoring it (for example during development), then we
 	// need to skip over the data we're ignoring below, otherwise we'll be sad pandas.
 	bool bMipDataPresent = true;
 	int nFirstAvailableMip = 0;
 	int nLastAvailableMip = m_nMipCount - 1;
 	TextureStreamSettings_t const *pStreamSettings = ( TextureStreamSettings_t const * ) GetResourceData( VTF_RSRC_TEXTURE_STREAM_SETTINGS, NULL );
-	if ( pStreamSettings ) 
+	if ( pStreamSettings )
 	{
 		nFirstAvailableMip = Max( 0, pStreamSettings->m_firstAvailableMip - nSkipMipLevels );
 		nLastAvailableMip = Max( 0, pStreamSettings->m_lastAvailableMip - nSkipMipLevels );
 		bMipDataPresent = false;
-	} 
-	
+	}
+
 	// If we have coarse mips but not the fine mips (yet)
 	if ( ( header.flags & TEXTUREFLAGS_STREAMABLE ) == TEXTUREFLAGS_STREAMABLE_COARSE )
 	{
@@ -717,7 +717,7 @@ bool CVTFTexture::LoadImageData( CUtlBuffer &buf, const VTFFileHeader_t &header,
 		nLastAvailableMip = Min( nLastAvailableMip, STREAMING_START_MIPMAP - 1 );
 	}
 
-	// Valid settings? 
+	// Valid settings?
 	Assert( nFirstAvailableMip >= 0 && nFirstAvailableMip <= nLastAvailableMip && nLastAvailableMip < m_nMipCount );
 
 	// Store the clamp settings
@@ -734,11 +734,11 @@ bool CVTFTexture::LoadImageData( CUtlBuffer &buf, const VTFFileHeader_t &header,
 
 		int iMipSize = ComputeMipSize( iMip );
 
-		// Skip over any levels we don't have data for--we'll get them later. 
+		// Skip over any levels we don't have data for--we'll get them later.
 		if ( iMip > nLastAvailableMip || iMip < nFirstAvailableMip )
 		{
 			// If the data is there but we're ignoring it, need to update the get pointer.
-			if ( bMipDataPresent ) 
+			if ( bMipDataPresent )
 			{
 				for ( int iFrame = 0; iFrame < m_nFrameCount; ++iFrame )
 					for ( int iFace = 0; iFace < nFacesToRead; ++iFace )
@@ -847,8 +847,8 @@ bool CVTFTexture::HasResourceEntry( uint32 eType ) const
 unsigned int CVTFTexture::GetResourceTypes( unsigned int *arrTypesBuffer, int numTypesBufferElems ) const
 {
 	for ( ResourceEntryInfo const *pInfo = m_arrResourcesInfo.Base(),
-		  *pInfoEnd = pInfo + m_arrResourcesInfo.Count();
-		  numTypesBufferElems-- > 0 && pInfo < pInfoEnd; )
+		*pInfoEnd = pInfo + m_arrResourcesInfo.Count();
+		numTypesBufferElems-- > 0 && pInfo < pInfoEnd; )
 	{
 		*( arrTypesBuffer++ ) = ( ( pInfo++ )->eType & ~RSRCF_MASK );
 	}
@@ -883,7 +883,7 @@ bool CVTFTexture::ResourceMemorySection::WriteData( CUtlBuffer &buf ) const
 {
 	Assert( m_nDataLength && m_pData );
 	int iBufSize = m_nDataLength;
-	
+
 	buf.Put( &iBufSize, sizeof( iBufSize ) );
 	buf.Put( m_pData, m_nDataLength );
 
@@ -1008,7 +1008,7 @@ bool CVTFTexture::ReadHeader( CUtlBuffer &buf, VTFFileHeader_t &header )
 		return false;
 	}
 
-	// version fixups 
+	// version fixups
 	switch ( header.version[1] )
 	{
 	case 0:
@@ -1070,7 +1070,7 @@ bool CVTFTexture::UnserializeEx( CUtlBuffer &buf, bool bHeaderOnly, int nForceFl
 		Warning( "*** Encountered VTF invalid image format!\n" );
 		return false;
 	}
-	
+
 	// If the header says we should be doing a texture allocation of more than 32M, just tell the caller we failed.
 	const int cMaxImageSizeLog2 = Q_log2( 32 * 1024 * 1024 );
 	if ( ( Q_log2( header.width ) + Q_log2( header.height ) + Q_log2( header.depth ) + Q_log2( header.numFrames ) > cMaxImageSizeLog2 ) || ( header.numResources > MAX_RSRC_DICTIONARY_ENTRIES ) )
@@ -1089,7 +1089,7 @@ bool CVTFTexture::UnserializeEx( CUtlBuffer &buf, bool bHeaderOnly, int nForceFl
 
 	m_nFaceCount = (m_nFlags & TEXTUREFLAGS_ENVMAP) ? CUBEMAP_FACE_COUNT : 1;
 
-	// NOTE: We're going to store space for all mip levels, even if we don't 
+	// NOTE: We're going to store space for all mip levels, even if we don't
 	// have data on disk for them. This is for backward compatibility
 	m_nMipCount = ComputeMipCount();
 
@@ -1143,7 +1143,7 @@ bool CVTFTexture::UnserializeEx( CUtlBuffer &buf, bool bHeaderOnly, int nForceFl
 	{
 		m_arrResourcesInfo.RemoveAll();
 		m_arrResourcesInfo.SetCount( header.numResources );
-		
+
 		buf.Get( m_arrResourcesInfo.Base(), m_arrResourcesInfo.Count() * sizeof( ResourceEntryInfo ) );
 		if ( !buf.IsValid() )
 			return false;
@@ -1169,14 +1169,14 @@ bool CVTFTexture::UnserializeEx( CUtlBuffer &buf, bool bHeaderOnly, int nForceFl
 		m_arrResourcesInfo.RemoveAll();
 
 		// Low-res image data
-		int nLowResImageSize = ImageLoader::GetMemRequired( m_nLowResImageWidth, 
+		int nLowResImageSize = ImageLoader::GetMemRequired( m_nLowResImageWidth,
 			m_nLowResImageHeight, 1, m_LowResImageFormat, false );
 		if ( nLowResImageSize )
 		{
 			ResourceEntryInfo &rei = *FindOrCreateResourceEntryInfo( VTF_LEGACY_RSRC_LOW_RES_IMAGE );
 			rei.resData = buf.TellGet();
 		}
-		
+
 		// Image data
 		ResourceEntryInfo &rei = *FindOrCreateResourceEntryInfo( VTF_LEGACY_RSRC_IMAGE );
 		rei.resData = buf.TellGet() + nLowResImageSize;
@@ -1375,7 +1375,7 @@ bool CVTFTexture::WriteImageData( CUtlBuffer &buf )
 {
 	// NOTE: We load the bits this way because we store the bits in memory
 	// differently that the way they are stored on disk; we store on disk
-	// differently so we can only load up 
+	// differently so we can only load up
 	// NOTE: The smallest mip levels are stored first!!
 	for (int iMip = m_nMipCount; --iMip >= 0; )
 	{
@@ -1472,7 +1472,7 @@ bool CVTFTexture::Serialize( CUtlBuffer &buf )
 		pRei->resData = buf.TellPut();
 
 		Assert( m_pLowResImageData );
-		int iLowResImageSize = ImageLoader::GetMemRequired( m_nLowResImageWidth, 
+		int iLowResImageSize = ImageLoader::GetMemRequired( m_nLowResImageWidth,
 			m_nLowResImageHeight, 1, m_LowResImageFormat, false );
 		buf.Put( m_pLowResImageData, iLowResImageSize );
 		if ( !buf.IsValid() )
@@ -1567,17 +1567,17 @@ int CVTFTexture::Flags() const
 
 bool CVTFTexture::IsCubeMap() const
 {
-	return (m_nFlags & TEXTUREFLAGS_ENVMAP) != 0; 
+	return (m_nFlags & TEXTUREFLAGS_ENVMAP) != 0;
 }
 
 bool CVTFTexture::IsNormalMap() const
 {
-	return (m_nFlags & TEXTUREFLAGS_NORMAL) != 0; 
+	return (m_nFlags & TEXTUREFLAGS_NORMAL) != 0;
 }
 
 bool CVTFTexture::IsVolumeTexture() const
 {
-	return (m_nDepth > 1); 
+	return (m_nDepth > 1);
 }
 
 float CVTFTexture::BumpScale() const
@@ -1677,14 +1677,14 @@ unsigned char *CVTFTexture::ImageData( int iFrame, int iFace, int iMipLevel, int
 }
 
 //-----------------------------------------------------------------------------
-// Computes the size (in bytes) of a single mipmap of a single face of a single frame 
+// Computes the size (in bytes) of a single mipmap of a single face of a single frame
 //-----------------------------------------------------------------------------
 inline int CVTFTexture::ComputeMipSize( int iMipLevel, ImageFormat fmt ) const
 {
 	Assert( iMipLevel < m_nMipCount );
 	int w, h, d;
 	ComputeMipLevelDimensions( iMipLevel, &w, &h, &d );
-	return ImageLoader::GetMemRequired( w, h, d, fmt, false );		
+	return ImageLoader::GetMemRequired( w, h, d, fmt, false );
 }
 
 int CVTFTexture::ComputeMipSize( int iMipLevel ) const
@@ -1695,7 +1695,7 @@ int CVTFTexture::ComputeMipSize( int iMipLevel ) const
 
 
 //-----------------------------------------------------------------------------
-// Computes the size of a single face of a single frame 
+// Computes the size of a single face of a single frame
 // All mip levels starting at the specified mip level are included
 //-----------------------------------------------------------------------------
 inline int CVTFTexture::ComputeFaceSize( int iStartingMipLevel, ImageFormat fmt ) const
@@ -1784,7 +1784,7 @@ int CVTFTexture::GetImageOffset( int iFrame, int iFace, int iMipLevel, ImageForm
 		ComputeMipLevelDimensions( iMipLevel, &iMipWidth, &iMipHeight, &iMipDepth );
 		int nFaceSize = ImageLoader::GetMemRequired( iMipWidth, iMipHeight, iMipDepth, fmt, false );
 		iOffset += iFrame * m_nFaceCount * nFaceSize;
-		
+
 		// get to the right face
 		iOffset += iFace * nFaceSize;
 
@@ -1803,7 +1803,7 @@ int CVTFTexture::GetImageOffset( int iFrame, int iFace, int iMipLevel, ImageForm
 	{
 		iOffset += ComputeMipSize( i, fmt );
 	}
-	
+
 	return iOffset;
 }
 
@@ -1838,10 +1838,10 @@ void CVTFTexture::ComputeMipLevelDimensions( int iMipLevel, int *pMipWidth, int 
 //-----------------------------------------------------------------------------
 void CVTFTexture::ComputeMipLevelSubRect( Rect_t *pSrcRect, int nMipLevel, Rect_t *pSubRect ) const
 {
-	Assert( pSrcRect->x >= 0 && pSrcRect->y >= 0 && 
-		(pSrcRect->x + pSrcRect->width <= m_nWidth) &&  
+	Assert( pSrcRect->x >= 0 && pSrcRect->y >= 0 &&
+		(pSrcRect->x + pSrcRect->width <= m_nWidth) &&
 		(pSrcRect->y + pSrcRect->height <= m_nHeight) );
-	
+
 	if (nMipLevel == 0)
 	{
 		*pSubRect = *pSrcRect;
@@ -1904,15 +1904,15 @@ void CVTFTexture::ConvertImageFormat( ImageFormat fmt, bool bNormalToDUDV )
 		int nMipWidth, nMipHeight, nMipDepth;
 		ComputeMipLevelDimensions( iMip, &nMipWidth, &nMipHeight, &nMipDepth );
 
- 		int nSrcFaceStride = ImageLoader::GetMemRequired( nMipWidth, nMipHeight, 1, m_Format, false ); 
- 		int nDstFaceStride = ImageLoader::GetMemRequired( nMipWidth, nMipHeight, 1, fmt, false ); 
+		int nSrcFaceStride = ImageLoader::GetMemRequired( nMipWidth, nMipHeight, 1, m_Format, false );
+		int nDstFaceStride = ImageLoader::GetMemRequired( nMipWidth, nMipHeight, 1, fmt, false );
 
 		for (int iFrame = 0; iFrame < m_nFrameCount; ++iFrame)
 		{
 			for (int iFace = 0; iFace < m_nFaceCount; ++iFace)
 			{
 				unsigned char *pSrcData = ImageData( iFrame, iFace, iMip );
-				unsigned char *pDstData = pConvertedImage + 
+				unsigned char *pDstData = pConvertedImage +
 					GetImageOffset( iFrame, iFace, iMip, fmt );
 
 				for ( int z = 0; z < nMipDepth; ++z, pSrcData += nSrcFaceStride, pDstData += nDstFaceStride )
@@ -1942,7 +1942,7 @@ void CVTFTexture::ConvertImageFormat( ImageFormat fmt, bool bNormalToDUDV )
 					}
 					else
 					{
-						ImageLoader::ConvertImageFormat( pSrcData, m_Format, 
+						ImageLoader::ConvertImageFormat( pSrcData, m_Format,
 							pDstData, fmt, nMipWidth, nMipHeight );
 					}
 				}
@@ -2015,7 +2015,7 @@ static void CalcInit( SphereCalc_t *pCalc, int iSize, unsigned char **ppCubeFace
 	pCalc->m_flRadiusSq = pCalc->m_flRadius * pCalc->m_flRadius;
 	pCalc->m_flOORadius = 1.0f / pCalc->m_flRadius;
 	pCalc->m_LookDir = lookDir;
-    pCalc->m_ppCubeFaces = ppCubeFaces;
+	pCalc->m_ppCubeFaces = ppCubeFaces;
 	pCalc->m_iSize = iSize;
 
 	switch( lookDir)
@@ -2134,7 +2134,7 @@ static void CalcColor( SphereCalc_t *pCalc, int iFace, const Vector &normal, uns
 
 	int size = pCalc->m_iSize;
 	float hw = 0.5 * size;
-	
+
 	if ( (iFace == CUBEMAP_FACE_LEFT) || (iFace == CUBEMAP_FACE_RIGHT) )
 	{
 		w = hw / normal[0];
@@ -2195,7 +2195,7 @@ static void CalcSphereColor( SphereCalc_t *pCalc, float x, float y )
 	}
 	else
 	{
-		// Compute the z distance based on x*x + y*y + z*z = r*r 
+		// Compute the z distance based on x*x + y*y + z*z = r*r
 		float z = sqrt( pCalc->m_flRadiusSq - flRadiusSq );
 
 		// Here's the untransformed surface normal
@@ -2232,7 +2232,7 @@ static void CalcHemisphereColor( SphereCalc_t *pCalc, float x, float y )
 		flRadiusSq = pCalc->m_flRadiusSq;
 	}
 
-	// Compute the z distance based on x*x + y*y + z*z = r*r 
+	// Compute the z distance based on x*x + y*y + z*z = r*r
 	float z = sqrt( pCalc->m_flRadiusSq - flRadiusSq );
 
 	// Here's the untransformed surface normal
@@ -2243,7 +2243,7 @@ static void CalcHemisphereColor( SphereCalc_t *pCalc, float x, float y )
 	TransformNormal( pCalc, normal );
 
 //	printf( "x: %f y: %f normal: %f %f %f\n", x, y, normal.x, normal.y, normal.z );
-	
+
 	/*
 	// Compute the reflection vector (full spheremap solution)
 	// R = 2 * (N dot L)N - L
@@ -2397,7 +2397,7 @@ void CVTFTexture::GenerateSpheremap( LookDir_t lookDir )
 
 		// Compute the mip levels of the spheremap, converting from RGBA8888 to our format
 		unsigned char *pFinalSphereMapBits = ImageData( iFrame, CUBEMAP_FACE_SPHEREMAP, 0 );
-		ImageLoader::GenerateMipmapLevels( pSphereMapBits, pFinalSphereMapBits, 
+		ImageLoader::GenerateMipmapLevels( pSphereMapBits, pFinalSphereMapBits,
 			m_nWidth, m_nHeight, m_nDepth, m_Format, 2.2, 2.2, m_nMipCount );
 	}
 
@@ -2405,7 +2405,7 @@ void CVTFTexture::GenerateSpheremap( LookDir_t lookDir )
 	delete [] pSphereMapBits;
 }
 
-void CVTFTexture::GenerateHemisphereMap( unsigned char *pSphereMapBitsRGBA, int targetWidth, 
+void CVTFTexture::GenerateHemisphereMap( unsigned char *pSphereMapBitsRGBA, int targetWidth,
 		int targetHeight, LookDir_t lookDir, int iFrame )
 {
 	Assert( m_Format == IMAGE_FORMAT_RGBA8888 );
@@ -2429,7 +2429,7 @@ void CVTFTexture::GenerateHemisphereMap( unsigned char *pSphereMapBitsRGBA, int 
 //-----------------------------------------------------------------------------
 static void FixCubeMapFacing( unsigned char* pImage, int cubeFaceID, int size, ImageFormat fmt )
 {
-	int retVal;	
+	int retVal;
 	switch( cubeFaceID )
 	{
 	case CUBEMAP_FACE_RIGHT:	// +x
@@ -2598,7 +2598,7 @@ void CVTFTexture::GenerateMipmaps()
 			for ( int ch = 0; ch < 3; ++ ch )
 				info.m_flColorScale[ch] = 1.0f / ( float )( 1 << iMipLevel );
 		}
-		
+
 		// don't use the 0th mip level since NICE filtering blows up!
 		int nSrcMipLevel = iMipLevel - 4;
 		if ( nSrcMipLevel < 0 )
@@ -2618,7 +2618,7 @@ void CVTFTexture::GenerateMipmaps()
 
 			// Decay is only active starting from numDecayMips
 			if ( !( ( ( iMipLevel == m_nMipCount - 1 ) || ( iMipLevel > iLastNonDecayMip ) ) && // last 1x1 mip  or  past clamped and skipped
-				    ( m_Options.flags0 & ( VtfProcessingOptions::OPT_DECAY_R << ch ) ) ) )	// the channel has decay
+				( m_Options.flags0 & ( VtfProcessingOptions::OPT_DECAY_R << ch ) ) ) )	// the channel has decay
 				continue;
 
 			// Color goal
@@ -2740,7 +2740,7 @@ void CVTFTexture::ComputeReflectivity( )
 				vecFaceReflect[0] += TextureToLinear( pSrc[0] );
 				vecFaceReflect[1] += TextureToLinear( pSrc[1] );
 				vecFaceReflect[2] += TextureToLinear( pSrc[2] );
-			}	
+			}
 
 			vecFaceReflect /= nNumPixels;
 
@@ -2766,13 +2766,13 @@ void CVTFTexture::ComputeAlphaFlags()
 	Assert( m_Format == IMAGE_FORMAT_RGBA8888 );
 
 	m_nFlags &= ~(TEXTUREFLAGS_EIGHTBITALPHA | TEXTUREFLAGS_ONEBITALPHA);
-	
+
 	if( m_Options.flags0 & VtfProcessingOptions::OPT_SET_ALPHA_ONEOVERMIP )
 	{
 		m_nFlags |= TEXTUREFLAGS_EIGHTBITALPHA;
 		return;
 	}
-	
+
 	for( int iFrame = 0; iFrame < m_nFrameCount; ++iFrame )
 	{
 		for( int iFace = 0; iFace < m_nFaceCount; ++iFace )
@@ -2847,7 +2847,7 @@ void CVTFTexture::PostProcess( bool bGenerateSpheremap, LookDir_t lookDir, bool 
 
 	// Normalize the top mip level if necessary.
 	NormalizeTopMipLevel();
-	
+
 	// Generate mipmap levels
 	GenerateMipmaps();
 
@@ -2855,7 +2855,7 @@ void CVTFTexture::PostProcess( bool bGenerateSpheremap, LookDir_t lookDir, bool 
 	{
 		PutOneOverMipLevelInAlpha();
 	}
-	
+
 	// Compute reflectivity
 	ComputeReflectivity();
 
@@ -2903,13 +2903,13 @@ bool CVTFTexture::ConstructLowResImage()
 
 	if( !ImageLoader::ResampleRGBA8888( info ) )
 		return false;
-	
+
 	// convert to the low-res size version with the correct image format
 	unsigned char *tmpImage = lowResSizeImage.Base();
-	return ImageLoader::ConvertImageFormat( tmpImage, IMAGE_FORMAT_RGBA8888, 
-		m_pLowResImageData, m_LowResImageFormat, m_nLowResImageWidth, m_nLowResImageHeight ); 
+	return ImageLoader::ConvertImageFormat( tmpImage, IMAGE_FORMAT_RGBA8888,
+		m_pLowResImageData, m_LowResImageFormat, m_nLowResImageWidth, m_nLowResImageHeight );
 }
-	
+
 // -----------------------------------------------------------------------------
 // Cubemap edge-filtering functions.
 // -----------------------------------------------------------------------------
@@ -2949,7 +2949,7 @@ void CVTFTexture::SetupEdgeIncrement( CEdgePos &start, CEdgePos &end, CEdgePos &
 	}
 }
 
-void CVTFTexture::SetupTextureEdgeIncrements( 
+void CVTFTexture::SetupTextureEdgeIncrements(
 	int iMipLevel,
 	int iFace1Edge,
 	int iFace2Edge,
@@ -3011,12 +3011,12 @@ void CVTFTexture::BlendCubeMapFaceEdges(
 	unsigned char *pFace2Data = ImageData( iFrame, pMatch->m_iFaces[1], iMipLevel );
 
 	CEdgeIncrements incs;
-	SetupTextureEdgeIncrements( iMipLevel, pMatch->m_iEdges[0], pMatch->m_iEdges[1], pMatch->m_bFlipFace2Edge, &incs ); 
+	SetupTextureEdgeIncrements( iMipLevel, pMatch->m_iEdges[0], pMatch->m_iEdges[1], pMatch->m_bFlipFace2Edge, &incs );
 
 	// Do all pixels but the first and the last one (those will be handled when blending corners).
 	CEdgePos iFace1Cur = incs.iFace1Start + incs.iFace1Inc;
 	CEdgePos iFace2Cur = incs.iFace2Start + incs.iFace2Inc;
-	
+
 	if ( m_Format == IMAGE_FORMAT_DXT1 || m_Format == IMAGE_FORMAT_DXT5 )
 	{
 		if ( iFace1Cur != incs.iFace1End )
@@ -3026,7 +3026,7 @@ void CVTFTexture::BlendCubeMapFaceEdges(
 				// Copy the palette index from image 1 to image 2.
 				S3PaletteIndex paletteIndex = S3TC_GetPaletteIndex( pFace1Data, m_Format, nMipWidth, iFace1Cur.x, iFace1Cur.y );
 				S3TC_SetPaletteIndex( pFace2Data, m_Format, nMipWidth, iFace2Cur.x, iFace2Cur.y, paletteIndex );
-				
+
 				iFace1Cur += incs.iFace1Inc;
 				iFace2Cur += incs.iFace2Inc;
 			}
@@ -3039,14 +3039,14 @@ void CVTFTexture::BlendCubeMapFaceEdges(
 			while ( iFace1Cur != incs.iFace1End )
 			{
 				// Now we know the 2 pixels. Average them and copy the averaged value to both pixels.
-				unsigned char *texels[2] = 
+				unsigned char *texels[2] =
 				{
 					pFace1Data + ((iFace1Cur.y * nMipWidth) + iFace1Cur.x) * 4,
 					pFace2Data + ((iFace2Cur.y * nMipWidth) + iFace2Cur.x) * 4
 				};
 
 				BlendTexels( texels, 2 );
-				
+
 				iFace1Cur += incs.iFace1Inc;
 				iFace2Cur += incs.iFace2Inc;
 			}
@@ -3081,7 +3081,7 @@ void CVTFTexture::BlendCubeMapFaceCorners(
 	{
 		if ( nMipWidth < 4 || nMipHeight < 4 )
 			return;
-  
+
 		// Copy the first palette index to the other blocks.
 		S3PaletteIndex paletteIndex = S3TC_GetPaletteIndex( pImageData[0], m_Format, nMipWidth, texelPos[0].x, texelPos[0].y );
 		S3TC_SetPaletteIndex( pImageData[1], m_Format, nMipWidth, texelPos[1].x, texelPos[1].y, paletteIndex );
@@ -3095,7 +3095,7 @@ void CVTFTexture::BlendCubeMapFaceCorners(
 		{
 			CEdgePos facePos;
 			SetupFaceVert( iMipLevel, pMatch->m_iFaceEdges[iEdge], facePos );
-		
+
 			texels[iEdge] = pImageData[iEdge];
 			texels[iEdge] += (facePos.y * nMipWidth + facePos.x) * 4;
 		}
@@ -3109,8 +3109,8 @@ void CVTFTexture::BlendCubeMapFaceCorners(
 	}
 }
 
-void CVTFTexture::BuildCubeMapMatchLists( 
-	CEdgeMatch edgeMatches[NUM_EDGE_MATCHES], 
+void CVTFTexture::BuildCubeMapMatchLists(
+	CEdgeMatch edgeMatches[NUM_EDGE_MATCHES],
 	CCornerMatch cornerMatches[NUM_CORNER_MATCHES],
 	bool bSkybox )
 {
@@ -3133,7 +3133,7 @@ void CVTFTexture::BuildCubeMapMatchLists(
 				{
 					int o1 = faceVertsList[iOtherFace][iOtherEdge];
 					int o2 = faceVertsList[iOtherFace][(iOtherEdge+1)%4];
-				
+
 					if ( (i1 == o1 && i2 == o2) || (i2 == o1 && i1 == o2) )
 					{
 						CEdgeMatch *pMatch = &edgeMatches[nTotalEdgesMatched];
@@ -3198,18 +3198,18 @@ void CVTFTexture::BlendCubeMapEdgePalettes(
 	S3RGBA *pFace2Original = &m_OriginalData[ GetImageOffset( iFrame, pMatch->m_iFaces[1], iMipLevel, IMAGE_FORMAT_RGBA8888 ) / 4 ];
 
 	CEdgeIncrements incs;
-	SetupTextureEdgeIncrements( iMipLevel, pMatch->m_iEdges[0], pMatch->m_iEdges[1], pMatch->m_bFlipFace2Edge, &incs ); 
-	
+	SetupTextureEdgeIncrements( iMipLevel, pMatch->m_iEdges[0], pMatch->m_iEdges[1], pMatch->m_bFlipFace2Edge, &incs );
+
 	// Divide the coordinates by 4 since we're dealing with S3 blocks here.
 	incs.iFace1Start /= 4; incs.iFace1End /= 4; incs.iFace2Start /= 4; incs.iFace2End /= 4;
-	
+
 	// Now walk along the edges, blending the edge pixels.
 	CEdgePos iFace1Cur = incs.iFace1Start + incs.iFace1Inc;
 	CEdgePos iFace2Cur = incs.iFace2Start + incs.iFace2Inc;
 	while ( iFace1Cur != incs.iFace1End ) // We intentionally want to not process the last block here..
 	{
 		// Merge the palette of these two blocks.
-		char *blocks[2] = 
+		char *blocks[2] =
 		{
 			S3TC_GetBlock( pFace1Data, m_Format, nMipWidth>>2, iFace1Cur.x, iFace1Cur.y ),
 			S3TC_GetBlock( pFace2Data, m_Format, nMipWidth>>2, iFace2Cur.x, iFace2Cur.y )
@@ -3221,13 +3221,13 @@ void CVTFTexture::BlendCubeMapEdgePalettes(
 			&pFace2Original[(iFace2Cur.y * 4 * nMipWidth) + iFace2Cur.x * 4]
 		};
 
-		S3TC_MergeBlocks( 
-			blocks, 
+		S3TC_MergeBlocks(
+			blocks,
 			originals,
 			2,
 			nMipWidth*4,
 			m_Format );
-		
+
 		iFace1Cur += incs.iFace1Inc;
 		iFace2Cur += incs.iFace2Inc;
 	}
@@ -3262,7 +3262,7 @@ void CVTFTexture::BlendCubeMapCornerPalettes(
 		originals[iEdge] = &pFaceOriginal[ (facePos.y * 4 * nMipWidth) + facePos.x * 4 ];
 	}
 
-	S3TC_MergeBlocks( 
+	S3TC_MergeBlocks(
 		blocks,
 		originals,
 		3,
@@ -3283,7 +3283,7 @@ void CVTFTexture::MatchCubeMapS3TCPalettes(
 			// along the edge since those S3 blocks are handled in the corner case).
 			for ( int iEdgeMatch=0; iEdgeMatch < NUM_EDGE_MATCHES; iEdgeMatch++ )
 			{
-				BlendCubeMapEdgePalettes( 
+				BlendCubeMapEdgePalettes(
 					iFrame,
 					iMipLevel,
 					&edgeMatches[iEdgeMatch] );
@@ -3297,7 +3297,7 @@ void CVTFTexture::MatchCubeMapS3TCPalettes(
 					&cornerMatches[iCornerMatch] );
 			}
 		}
-	}	
+	}
 }
 
 void CVTFTexture::MatchCubeMapBorders( int iStage, ImageFormat finalFormat, bool bSkybox )
@@ -3309,7 +3309,7 @@ void CVTFTexture::MatchCubeMapBorders( int iStage, ImageFormat finalFormat, bool
 	}
 	if ( !IsCubeMap() )
 		return;
-	
+
 	Assert( IsCubeMap() );
 	Assert( m_nFaceCount >= 6 );
 
@@ -3326,11 +3326,11 @@ void CVTFTexture::MatchCubeMapBorders( int iStage, ImageFormat finalFormat, bool
 			int nTotalBytes = ComputeTotalSize();
 			m_OriginalData.SetSize( nTotalBytes / 4 );
 			memcpy( m_OriginalData.Base(), ImageData(), nTotalBytes );
-			
+
 			// Swap R and B in these because IMAGE_FORMAT_RGBA8888 is swapped from the way S3RGBAs are.
 			for ( int i=0; i < nTotalBytes/4; i++ )
 				V_swap( m_OriginalData[i].r, m_OriginalData[i].b );
-		
+
 			return;
 		}
 		else
@@ -3345,13 +3345,13 @@ void CVTFTexture::MatchCubeMapBorders( int iStage, ImageFormat finalFormat, bool
 			Assert( m_Format == finalFormat );
 		}
 		else
-		{	
+		{
 			// If we're not winding up S3 compressed, then we already fixed the cubemap borders.
 			return;
 		}
 	}
 
-	// Figure out 
+	// Figure out
 	CEdgeMatch edgeMatches[NUM_EDGE_MATCHES];
 	CCornerMatch cornerMatches[NUM_CORNER_MATCHES];
 
@@ -3370,7 +3370,7 @@ void CVTFTexture::MatchCubeMapBorders( int iStage, ImageFormat finalFormat, bool
 		{
 			for ( int iEdgeMatch=0; iEdgeMatch < NUM_EDGE_MATCHES; iEdgeMatch++ )
 			{
-				BlendCubeMapFaceEdges( 
+				BlendCubeMapFaceEdges(
 					iFrame,
 					iMipLevel,
 					&edgeMatches[iEdgeMatch] );
@@ -3388,9 +3388,9 @@ void CVTFTexture::MatchCubeMapBorders( int iStage, ImageFormat finalFormat, bool
 }
 
 
-/* 
+/*
 
-Test code used to draw the cubemap into a scratchpad file. Useful for debugging, or at least 
+Test code used to draw the cubemap into a scratchpad file. Useful for debugging, or at least
 it was once.
 
 	IScratchPad3D *pPad = ScratchPad3D_Create();
@@ -3402,7 +3402,7 @@ it was once.
 	data.SetSize( nMipWidth*nMipHeight );
 
 	float cubeSize = 200;
-	Vector vertPositions[8] = 
+	Vector vertPositions[8] =
 	{
 		Vector( 0, cubeSize, 0 ),
 		Vector( 0, cubeSize, cubeSize ),
@@ -3442,7 +3442,7 @@ it was once.
 				const char *pBlock = S3TC_GetBlock( pFace1Data, m_Format, nMipWidth/4, x/4, y/4 );
 				unsigned char a0 = pBlock[0];
 				unsigned char a1 = pBlock[1];
-				
+
 				if ( index.m_AlphaIndex == 0 )
 				{
 					data[y*nMipWidth+x] = a0;
@@ -3472,22 +3472,21 @@ it was once.
 			vCorners[iCorner] = vertPositions[g_FaceVerts[iFace][iCorner]];
 
 		pPad->DrawImageBW( data.Base(), nMipWidth, nMipHeight, nMipWidth, false, true, vCorners );
-		
+
 		CTextParams params;
 		params.m_vPos = (vCorners[0] + vCorners[1] + vCorners[2] + vCorners[3]) / 4;
 		params.m_bCentered = true;
 		params.m_vColor.Init( 1, 0, 0 );
 		params.m_bTwoSided = true;
 		params.m_flLetterWidth = 10;
-		
+
 		Vector vNormal = (vCorners[1] - vCorners[0]).Cross( vCorners[2] - vCorners[1] );
 		VectorNormalize( vNormal );
 		params.m_vPos += vNormal*5;
 		VectorAngles( vNormal, params.m_vAngles );
 
 		pPad->DrawText( faceNames[iFace], params );
-		
+
 		pPad->Flush();
 	}
 */
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -38,7 +38,7 @@ CSender::~CSender()
 {
 	if ( m_pSocket )
 		m_pSocket->Release();
-	
+
 	if ( m_pConsoleWnd )
 		m_pConsoleWnd->Release();
 }
@@ -97,14 +97,14 @@ BOOL CMessageWatchDlg::OnInitDialog()
 	//  when the application's main window is not a dialog
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
-	
-	// Setup our listen socket and thread.	
+
+	// Setup our listen socket and thread.
 	m_pListenSocket = CreateIPSocket();
 	m_pListenSocket->BindToAny( MSGMGR_BROADCAST_PORT );
 
 	m_cWinIdle.StartIdle( GetSafeHwnd(), WM_STARTIDLE, 0, 0, 100 );
 	m_cWinIdle.NextIdle();
-	
+
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -149,7 +149,7 @@ void CMessageWatchDlg::OnIdle()
 			*((int*)&data[1]) == MSGMGR_VERSION )
 		{
 			int iPort = *((int*)&data[5]);
-		
+
 			// See if we have a machine with this info yet.
 			CIPAddr connectAddr = ipFrom;
 			connectAddr.port = iPort;
@@ -167,14 +167,14 @@ void CMessageWatchDlg::OnIdle()
 					char title[512];
 					if ( !ConvertIPAddrToString( &ipFrom, nameStr, sizeof( nameStr ) ) )
 						Q_snprintf( nameStr, sizeof( nameStr ), "%d.%d.%d.%d", ipFrom.ip[0], ipFrom.ip[1], ipFrom.ip[2], ipFrom.ip[3] );
-					
+
 					Q_snprintf( title, sizeof( title ), "%s:%d", nameStr, iPort );
 
 					// If the sender didn't exist yet, add a new one.
 					if ( !pSender )
 					{
 						pSender = new CSender;
-						
+
 						IConsoleWnd *pWnd = CreateConsoleWnd(
 							AfxGetInstanceHandle(),
 							IDD_OUTPUT,
@@ -184,7 +184,7 @@ void CMessageWatchDlg::OnIdle()
 
 						pSender->m_pConsoleWnd = pWnd;
 						pWnd->SetTitle( title );
-						
+
 						Q_strncpy( pSender->m_Name, title, sizeof( pSender->m_Name ) );
 						m_Senders.AddToTail( pSender );
 						m_Machines.AddString( pSender->m_Name );
@@ -201,7 +201,7 @@ void CMessageWatchDlg::OnIdle()
 		}
 	}
 
-	
+
 	// Read input from our current connections.
 	FOR_EACH_LL( m_Senders, i )
 	{
@@ -227,7 +227,7 @@ void CMessageWatchDlg::OnIdle()
 }
 
 
-void CMessageWatchDlg::OnDestroy() 
+void CMessageWatchDlg::OnDestroy()
 {
 	// Stop the idling thread
 	m_cWinIdle.EndIdle();
@@ -261,7 +261,7 @@ CSender* CMessageWatchDlg::FindSenderByName( const char *pName )
 //  to draw the icon.  For MFC applications using the document/view model,
 //  this is automatically done for you by the framework.
 
-void CMessageWatchDlg::OnPaint() 
+void CMessageWatchDlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -293,7 +293,7 @@ HCURSOR CMessageWatchDlg::OnQueryDragIcon()
 	return (HCURSOR) m_hIcon;
 }
 
-void CMessageWatchDlg::OnDblclkMachines() 
+void CMessageWatchDlg::OnDblclkMachines()
 {
 	int index = m_Machines.GetCurSel();
 	if ( index != LB_ERR )
@@ -304,21 +304,21 @@ void CMessageWatchDlg::OnDblclkMachines()
 		CSender *pSender = FindSenderByName( str );
 		if ( pSender )
 			pSender->m_pConsoleWnd->SetVisible( true );
-	}	
+	}
 }
 
-void CMessageWatchDlg::OnShowall() 
+void CMessageWatchDlg::OnShowall()
 {
 	FOR_EACH_LL( m_Senders, i )
 	{
 		m_Senders[i]->m_pConsoleWnd->SetVisible( true );
-	}	
+	}
 }
 
-void CMessageWatchDlg::OnHideall() 
+void CMessageWatchDlg::OnHideall()
 {
 	FOR_EACH_LL( m_Senders, i )
 	{
 		m_Senders[i]->m_pConsoleWnd->SetVisible( false );
-	}	
+	}
 }

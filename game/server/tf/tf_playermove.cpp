@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -101,7 +101,7 @@ void CTFPlayerMove::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 					pTFPlayer->SnapEyeAngles( ucmd->viewangles );
 				}
 			}
-			
+
 			pTFPlayer->m_qPreviousChargeEyeAngle = ucmd->viewangles;
 		}
 		else
@@ -117,7 +117,7 @@ void CTFPlayerMove::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 //-----------------------------------------------------------------------------
 // Purpose: This is called post player movement to copy back all data that
 //          movement could have modified and that is necessary for future
-//          movement. (Server-side, the client-side version of this code can 
+//          movement. (Server-side, the client-side version of this code can
 //          be found in prediction.cpp.)
 //-----------------------------------------------------------------------------
 void CTFPlayerMove::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *move )

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -33,7 +33,7 @@ END_DATADESC()
 CUtlVector< CHandle<CEnvPlayerSurfaceTrigger> >	g_PlayerSurfaceTriggers;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEnvPlayerSurfaceTrigger::~CEnvPlayerSurfaceTrigger( void )
 {
@@ -41,7 +41,7 @@ CEnvPlayerSurfaceTrigger::~CEnvPlayerSurfaceTrigger( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvPlayerSurfaceTrigger::Spawn( void )
 {
@@ -55,7 +55,7 @@ void CEnvPlayerSurfaceTrigger::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvPlayerSurfaceTrigger::OnRestore( void )
 {
@@ -65,7 +65,7 @@ void CEnvPlayerSurfaceTrigger::OnRestore( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvPlayerSurfaceTrigger::SetPlayerSurface( CBasePlayer *pPlayer, char gameMaterial )
 {
@@ -82,7 +82,7 @@ void CEnvPlayerSurfaceTrigger::SetPlayerSurface( CBasePlayer *pPlayer, char game
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvPlayerSurfaceTrigger::PlayerSurfaceChanged( CBasePlayer *pPlayer, char gameMaterial )
 {
@@ -112,14 +112,14 @@ void CEnvPlayerSurfaceTrigger::UpdateMaterialThink( void )
 	{
 		m_OnSurfaceChangedToTarget.FireOutput( NULL, this );
 	}
-	else 
+	else
 	{
 		m_OnSurfaceChangedFromTarget.FireOutput( NULL, this );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvPlayerSurfaceTrigger::InputDisable( inputdata_t &inputdata )
 {
@@ -127,7 +127,7 @@ void CEnvPlayerSurfaceTrigger::InputDisable( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvPlayerSurfaceTrigger::InputEnable( inputdata_t &inputdata )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ static CFrameSnapshotManager g_FrameSnapshotManager;
 CFrameSnapshotManager *framesnapshotmanager = &g_FrameSnapshotManager;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFrameSnapshotManager::CFrameSnapshotManager( void ) : m_PackedEntitiesPool( MAX_EDICTS / 16, CUtlMemoryPool::GROW_SLOW )
 {
@@ -38,7 +38,7 @@ CFrameSnapshotManager::CFrameSnapshotManager( void ) : m_PackedEntitiesPool( MAX
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFrameSnapshotManager::~CFrameSnapshotManager( void )
 {
@@ -90,7 +90,7 @@ CFrameSnapshot*	CFrameSnapshotManager::CreateEmptySnapshot( int tickcount, int m
 	snap->m_pEntities = new CFrameSnapshotEntry[maxEntities];
 
 	CFrameSnapshotEntry *entry = snap->m_pEntities;
-	
+
 	// clear entries
 	for ( int i=0; i < maxEntities; i++)
 	{
@@ -105,20 +105,20 @@ CFrameSnapshot*	CFrameSnapshotManager::CreateEmptySnapshot( int tickcount, int m
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : framenumber - 
+// Purpose:
+// Input  : framenumber -
 //-----------------------------------------------------------------------------
 CFrameSnapshot* CFrameSnapshotManager::TakeTickSnapshot( int tickcount )
 {
 	unsigned short nValidEntities[MAX_EDICTS];
 
 	CFrameSnapshot *snap = CreateEmptySnapshot( tickcount, sv.num_edicts );
-	
+
 	int maxclients = sv.GetClientCount();
 
 	CFrameSnapshotEntry *entry = snap->m_pEntities - 1;
 	edict_t *edict= sv.edicts - 1;
-	
+
 	// Build the snapshot.
 	for ( int i = 0; i < sv.num_edicts; i++ )
 	{
@@ -129,10 +129,10 @@ CFrameSnapshot* CFrameSnapshotManager::TakeTickSnapshot( int tickcount )
 
 		if ( !pUnk )
 			continue;
-																		  
+
 		if ( edict->IsFree() )
 			continue;
-		
+
 		// We don't want entities from inactive clients in the fullpack,
 		if ( i > 0 && i <= maxclients )
 		{
@@ -140,7 +140,7 @@ CFrameSnapshot* CFrameSnapshotManager::TakeTickSnapshot( int tickcount )
 			if ( !sv.GetClient(i-1)->IsActive() )
 				continue;
 		}
-		
+
 		// entity exists and is not marked as 'free'
 		Assert( edict->m_NetworkSerialNumber != -1 );
 		Assert( edict->GetNetworkable() );
@@ -237,7 +237,7 @@ void CFrameSnapshotManager::AddExplicitDelete( int iSlot )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Returns true if the "basis" for encoding m_flAnimTime, m_flSimulationTime has changed 
+// Purpose: Returns true if the "basis" for encoding m_flAnimTime, m_flSimulationTime has changed
 //  since the time this entity was packed to the time we're trying to re-use the packing.
 //-----------------------------------------------------------------------------
 bool CFrameSnapshotManager::ShouldForceRepack( CFrameSnapshot* pSnapshot, int entity, PackedEntityHandle_t handle )
@@ -260,13 +260,13 @@ bool CFrameSnapshotManager::ShouldForceRepack( CFrameSnapshot* pSnapshot, int en
 	return false;
 }
 
-bool CFrameSnapshotManager::UsePreviouslySentPacket( CFrameSnapshot* pSnapshot, 
+bool CFrameSnapshotManager::UsePreviouslySentPacket( CFrameSnapshot* pSnapshot,
 											int entity, int entSerialNumber )
 {
-	PackedEntityHandle_t handle = m_pPackedData[entity]; 
+	PackedEntityHandle_t handle = m_pPackedData[entity];
 	if ( handle != INVALID_PACKED_ENTITY_HANDLE )
 	{
-		// NOTE: We can't use the previously sent packet if there was a 
+		// NOTE: We can't use the previously sent packet if there was a
 		// serial number change....
 		if ( m_pSerialNumber[entity] == entSerialNumber )
 		{
@@ -286,17 +286,17 @@ bool CFrameSnapshotManager::UsePreviouslySentPacket( CFrameSnapshot* pSnapshot,
 			return false;
 		}
 	}
-	
+
 	return false;
 }
 
 
 PackedEntity* CFrameSnapshotManager::GetPreviouslySentPacket( int iEntity, int iSerialNumber )
 {
-	PackedEntityHandle_t handle = m_pPackedData[iEntity]; 
+	PackedEntityHandle_t handle = m_pPackedData[iEntity];
 	if ( handle != INVALID_PACKED_ENTITY_HANDLE )
 	{
-		// NOTE: We can't use the previously sent packet if there was a 
+		// NOTE: We can't use the previously sent packet if there was a
 		// serial number change....
 		if ( m_pSerialNumber[iEntity] == iSerialNumber )
 		{
@@ -307,7 +307,7 @@ PackedEntity* CFrameSnapshotManager::GetPreviouslySentPacket( int iEntity, int i
 			return NULL;
 		}
 	}
-	
+
 	return NULL;
 }
 
@@ -326,10 +326,10 @@ PackedEntity* CFrameSnapshotManager::CreatePackedEntity( CFrameSnapshot* pSnapsh
 	PackedEntity *packedEntity = m_PackedEntitiesPool.Alloc();
 	PackedEntityHandle_t handle = reinterpret_cast< PackedEntityHandle_t >( packedEntity );
 	m_WriteMutex.Unlock();
-	
+
 	Assert( entity < pSnapshot->m_nNumEntities );
 
-	// Referenced twice: in the mru 
+	// Referenced twice: in the mru
 	packedEntity->m_ReferenceCount = 2;
 	packedEntity->m_nEntityIndex = entity;
 	pSnapshot->m_pEntities[entity].m_pPackedData = handle;
@@ -340,7 +340,7 @@ PackedEntity* CFrameSnapshotManager::CreatePackedEntity( CFrameSnapshot* pSnapsh
 	{
 		RemoveEntityReference( m_pPackedData[entity] );
 	}
-	
+
 	m_pPackedData[entity] = handle;
 	m_pSerialNumber[entity] = pSnapshot->m_pEntities[entity].m_nSerialNumber;
 
@@ -359,7 +359,7 @@ PackedEntity* CFrameSnapshotManager::GetPackedEntity( CFrameSnapshot* pSnapshot,
 		return NULL;
 
 	Assert( entity < pSnapshot->m_nNumEntities );
-		
+
 	PackedEntityHandle_t index = pSnapshot->m_pEntities[entity].m_pPackedData;
 
 	if ( index == INVALID_PACKED_ENTITY_HANDLE )
@@ -504,5 +504,3 @@ CFrameSnapshot* CFrameSnapshot::NextSnapshot() const
 {
 	return g_FrameSnapshotManager.NextSnapshot( this );
 }
-
-

@@ -80,9 +80,9 @@ protected:
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
-CSceneViewerMenuButton::CSceneViewerMenuButton( 
-	CSceneViewerPanel *parent, 
-	const char *panelName, 
+CSceneViewerMenuButton::CSceneViewerMenuButton(
+	CSceneViewerPanel *parent,
+	const char *panelName,
 	const char *text )
 : BaseClass( (vgui::Panel * )parent, panelName, text )
 , m_pUI( parent )
@@ -90,7 +90,7 @@ CSceneViewerMenuButton::CSceneViewerMenuButton(
 {
 	m_pMenu = new vgui::Menu( this, "Menu" );
 }
-	
+
 
 //-----------------------------------------------------------------------------
 //
@@ -184,7 +184,7 @@ void CSceneViewerMenuBar::PerformLayout()
 	int nearedge = barx + 2;
 
 	int mid = ( nearedge + faredge ) * 0.5f;
-	
+
 	int cw, ch;
 	m_pFileName->GetContentSize( cw, ch );
 	m_pFileName->SetBounds( mid - cw * 0.5f, 0, cw, h );
@@ -291,7 +291,7 @@ void CSceneViewerEditMenuButton::OnShowMenu(vgui::Menu *menu)
 	// save and saveas are active it there's a document and it's dirty
 	// close is active if there's a document
 	int id;
-	
+
 	char sz[ 512 ];
 
 	id = m_Items.Find( "undo" );
@@ -640,7 +640,7 @@ bool CSceneViewerPanel::OnWriteFileToDisk(
 		// I'd like a better way to figure out what the 'default' format should be
 		pEncoding = "binary";
 	}
-	bool retVal = g_pDataModel->SaveToFile( pFilename, NULL, pEncoding, pPassedFileFormat, m_pRoot ); 
+	bool retVal = g_pDataModel->SaveToFile( pFilename, NULL, pEncoding, pPassedFileFormat, m_pRoot );
 	if ( !retVal || !g_pFullFileSystem->FileExists( pFilename ) )
 	{
 		char pBuf[1024];
@@ -858,7 +858,7 @@ void CSceneViewerPanel::SetScene()
 //-----------------------------------------------------------------------------
 // Data for a cube
 //-----------------------------------------------------------------------------
-static Vector g_pPosition[8] = 
+static Vector g_pPosition[8] =
 {
 	Vector( -10.0f, -10.0f, -10.0f ),
 	Vector(  10.0f, -10.0f, -10.0f ),
@@ -870,17 +870,17 @@ static Vector g_pPosition[8] =
 	Vector(  10.0f,  10.0f,  10.0f ),
 };
 
-static float g_pBalance[8] = 
+static float g_pBalance[8] =
 {
 	0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f
 };
 
-static float g_pSpeed[8] = 
+static float g_pSpeed[8] =
 {
 	0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f
 };
 
-static int g_pBoneIndices[] = 
+static int g_pBoneIndices[] =
 {
 	0, 0, 0,
 	0, 0, 0,
@@ -892,19 +892,19 @@ static int g_pBoneIndices[] =
 	1, 0, 0,
 };
 
-static float g_pBoneWeights[] = 
+static float g_pBoneWeights[] =
 {
-	1.0f, 0.0f, 0.0f, 
 	1.0f, 0.0f, 0.0f,
-	1.0f, 0.0f, 0.0f, 
 	1.0f, 0.0f, 0.0f,
-	1.0f, 0.0f, 0.0f, 
 	1.0f, 0.0f, 0.0f,
-	1.0f, 0.0f, 0.0f, 
+	1.0f, 0.0f, 0.0f,
+	1.0f, 0.0f, 0.0f,
+	1.0f, 0.0f, 0.0f,
+	1.0f, 0.0f, 0.0f,
 	1.0f, 0.0f, 0.0f,
 };
 
-static Vector g_pNormal[24] = 
+static Vector g_pNormal[24] =
 {
 	Vector( -1.0f,  0.0f,  0.0f ),
 	Vector( -1.0f,  0.0f,  0.0f ),
@@ -932,7 +932,7 @@ static Vector g_pNormal[24] =
 	Vector(  0.0f,  0.0f,  1.0f ),
 };
 
-static Vector2D g_pUV[4] = 
+static Vector2D g_pUV[4] =
 {
 	Vector2D( 1.0f,  1.0f ),
 	Vector2D( 0.0f,  1.0f ),
@@ -940,7 +940,7 @@ static Vector2D g_pUV[4] =
 	Vector2D( 1.0f,  0.0f ),
 };
 
-static Color g_pColor[8] = 
+static Color g_pColor[8] =
 {
 	Color(   0,   0,   0, 255 ),
 	Color( 255,   0,   0, 255 ),
@@ -952,7 +952,7 @@ static Color g_pColor[8] =
 	Color( 255, 255, 255, 255 ),
 };
 
-static int g_pPositionIndices[24] = 
+static int g_pPositionIndices[24] =
 {
 	0, 4, 6, 2, // -x face
 	1, 3, 7, 5,	// +x face
@@ -962,7 +962,7 @@ static int g_pPositionIndices[24] =
 	4, 5, 7, 6,	// +z face
 };
 
-static int g_pBalanceIndices[24] = 
+static int g_pBalanceIndices[24] =
 {
 	0, 4, 6, 2, // -x face
 	1, 3, 7, 5,	// +x face
@@ -972,7 +972,7 @@ static int g_pBalanceIndices[24] =
 	4, 5, 7, 6,	// +z face
 };
 
-static int g_pSpeedIndices[24] = 
+static int g_pSpeedIndices[24] =
 {
 	0, 4, 6, 2, // -x face
 	1, 3, 7, 5,	// +x face
@@ -982,7 +982,7 @@ static int g_pSpeedIndices[24] =
 	4, 5, 7, 6,	// +z face
 };
 
-static int g_pNormalIndices[24] = 
+static int g_pNormalIndices[24] =
 {
 	 0,  1,  2,  3,
 	 4,  5,  6,  7,
@@ -992,7 +992,7 @@ static int g_pNormalIndices[24] =
 	20, 21, 22, 23,
 };
 
-static int g_pUVIndices[24] = 
+static int g_pUVIndices[24] =
 {
 	0, 1, 2, 3,
 	0, 1, 2, 3,
@@ -1002,7 +1002,7 @@ static int g_pUVIndices[24] =
 	0, 1, 2, 3,
 };
 
-static int g_pColorIndices[24] = 
+static int g_pColorIndices[24] =
 {
 	6, 6, 6, 6, // -x face
 	1, 1, 1, 1,	// +x face
@@ -1012,7 +1012,7 @@ static int g_pColorIndices[24] =
 	5, 5, 5, 5,	// +z face
 };
 
-static int g_pFaceIndices[] = 
+static int g_pFaceIndices[] =
 {
 	 0,  1,  2,  3, -1,
 	 4,  5,  6,  7, -1,
@@ -1023,7 +1023,7 @@ static int g_pFaceIndices[] =
 };
 
 
-static Vector g_pPositionDelta[] = 
+static Vector g_pPositionDelta[] =
 {
 	Vector(  20.0f,  0.0f,  0.0f ),
 	Vector(  20.0f,  0.0f,  0.0f ),
@@ -1031,37 +1031,37 @@ static Vector g_pPositionDelta[] =
 	Vector(  20.0f,  0.0f,  0.0f ),
 };
 
-static int g_pPositionDeltaIndices[] = 
-{
-	1, 3, 5, 7
-};
-
-static Vector g_pPositionDelta1a[] = 
-{
-	Vector(  -10.0f,  0.0f,  0.0f ),
-	Vector(  -10.0f,  0.0f,  0.0f ),
-	Vector(  -10.0f,  0.0f,  0.0f ),
-	Vector(  -10.0f,  0.0f,  0.0f ),
-};
-
-static int g_pPositionDeltaIndices1a[] = 
+static int g_pPositionDeltaIndices[] =
 {
 	1, 3, 5, 7
 };
 
+static Vector g_pPositionDelta1a[] =
+{
+	Vector(  -10.0f,  0.0f,  0.0f ),
+	Vector(  -10.0f,  0.0f,  0.0f ),
+	Vector(  -10.0f,  0.0f,  0.0f ),
+	Vector(  -10.0f,  0.0f,  0.0f ),
+};
 
-static Vector g_pPositionDelta2a[] = 
+static int g_pPositionDeltaIndices1a[] =
+{
+	1, 3, 5, 7
+};
+
+
+static Vector g_pPositionDelta2a[] =
 {
 	Vector(  0.0f,  0.0f,  20.0f ),
 	Vector(  0.0f,  0.0f,  20.0f ),
 };
 
-static int g_pPositionDeltaIndices2a[] = 
+static int g_pPositionDeltaIndices2a[] =
 {
 	4, 6
 };
 
-static Vector g_pPositionDelta2[] = 
+static Vector g_pPositionDelta2[] =
 {
 	Vector(  0.0f,  0.0f,  20.0f ),
 	Vector(  0.0f,  0.0f,  20.0f ),
@@ -1069,34 +1069,34 @@ static Vector g_pPositionDelta2[] =
 	Vector(  0.0f,  0.0f,  20.0f ),
 };
 
-static int g_pPositionDeltaIndices2[] = 
+static int g_pPositionDeltaIndices2[] =
 {
 	4, 5, 6, 7
 };
 
-static Vector g_pPositionDelta2c[] = 
+static Vector g_pPositionDelta2c[] =
 {
 	Vector(  0.0f,  0.0f,  20.0f ),
 	Vector(  0.0f,  0.0f,  20.0f ),
 };
 
-static int g_pPositionDeltaIndices2c[] = 
+static int g_pPositionDeltaIndices2c[] =
 {
 	5, 7
 };
 
-static Vector g_pPositionDelta12[] = 
+static Vector g_pPositionDelta12[] =
 {
 	Vector( -20.0f,  0.0f, -20.0f ),
 	Vector( -20.0f,  0.0f, -20.0f ),
 };
 
-static int g_pPositionDeltaIndices12[] = 
+static int g_pPositionDeltaIndices12[] =
 {
 	5, 7
 };
 
-static Vector g_pPositionDelta3[] = 
+static Vector g_pPositionDelta3[] =
 {
 	Vector( 0.0f,  20.0f, 0.0f ),
 	Vector( 0.0f,  20.0f, 0.0f ),
@@ -1108,7 +1108,7 @@ static Vector g_pPositionDelta3[] =
 	Vector( 0.0f,  20.0f, 0.0f ),
 };
 
-static int g_pPositionDeltaIndices3[] = 
+static int g_pPositionDeltaIndices3[] =
 {
 	0, 1, 2, 3, 4, 5, 6, 7
 };
@@ -1170,7 +1170,7 @@ CDmeModel *CSceneViewerPanel::CreateNewMeshDag( CDmeMesh **ppMesh, DmFileId_t fi
 
 	pVertexData->AddVertexData( norm, nNormCount );
 	pVertexData->SetVertexData( norm, 0, nNormCount, AT_VECTOR3, g_pNormal );
-	 
+
 	pVertexData->AddVertexData( uv, nUVCount );
 	pVertexData->SetVertexData( uv, 0, nUVCount, AT_VECTOR2, g_pUV );
 
@@ -1762,7 +1762,7 @@ void CSceneViewerPanel::PerformLayout()
 	// Make the editor panel fill the space
 	int iWidth, iHeight;
 
-	vgui::VPANEL parent = GetParent() ? GetParent()->GetVPanel() : vgui::surface()->GetEmbeddedPanel(); 
+	vgui::VPANEL parent = GetParent() ? GetParent()->GetVPanel() : vgui::surface()->GetEmbeddedPanel();
 	vgui::ipanel()->GetSize( parent, iWidth, iHeight );
 	SetSize( iWidth, iHeight );
 	m_pMenuBar->SetSize( iWidth, 28 );

@@ -59,9 +59,9 @@ CHistory::~CHistory()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bUndo - 
-//			pOpposite - 
+// Purpose:
+// Input  : bUndo -
+//			pOpposite -
 //-----------------------------------------------------------------------------
 void CHistory::SetOpposite(BOOL bUndo_, CHistory *pOpposite)
 {
@@ -71,7 +71,7 @@ void CHistory::SetOpposite(BOOL bUndo_, CHistory *pOpposite)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CHistory::IsUndoable()
@@ -82,8 +82,8 @@ BOOL CHistory::IsUndoable()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bActive - 
+// Purpose:
+// Input  : bActive -
 //-----------------------------------------------------------------------------
 void CHistory::SetActive(BOOL bActive)
 {
@@ -105,7 +105,7 @@ void CHistory::SetActive(BOOL bActive)
 
 //-----------------------------------------------------------------------------
 // Purpose: Actually, this implements both Undo and Redo, because a Redo is just
-//			an Undo in the opposite history track. 
+//			an Undo in the opposite history track.
 // Input  : pNewSelection - List to populate with the new selection set after the Undo.
 //-----------------------------------------------------------------------------
 void CHistory::Undo(CMapObjectList *pNewSelection)
@@ -127,7 +127,7 @@ void CHistory::Undo(CMapObjectList *pNewSelection)
 
 	//
 	// Get the objects that should be selected from the track entry.
-	// 
+	//
 	pNewSelection->RemoveAll();
 	pNewSelection->AddVectorToTail(CurTrack->Selected);
 
@@ -153,10 +153,10 @@ void CHistory::Undo(CMapObjectList *pNewSelection)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pSelection - 
-//			pszName - 
-//			bFromOpposite - 
+// Purpose:
+// Input  : *pSelection -
+//			pszName -
+//			bFromOpposite -
 //-----------------------------------------------------------------------------
 void CHistory::MarkUndoPosition( const CMapObjectList *pSelection, LPCTSTR pszName, BOOL bFromOpposite)
 {
@@ -220,7 +220,7 @@ void CHistory::Keep(CMapClass *pObject)
 	}
 
 	CurTrack->Keep(pObject, true);
-	
+
 	//
 	// Keep this object's children.
 	//
@@ -264,8 +264,8 @@ void CHistory::Keep(const CMapObjectList *pList)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObject - 
+// Purpose:
+// Input  : *pObject -
 //-----------------------------------------------------------------------------
 void CHistory::KeepForDestruction(CMapClass *pObject)
 {
@@ -331,7 +331,7 @@ void CHistory::SetHistory(class CHistory *pHistory)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHistory::OnRemoveVisGroup(CVisGroup *pVisGroup)
 {
@@ -362,7 +362,7 @@ CTrackEntry::CTrackEntry()
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructs a track entry from a list of parameters.
-// Input  : t - 
+// Input  : t -
 //-----------------------------------------------------------------------------
 CTrackEntry::CTrackEntry(TrackType_t eType, ...)
 {
@@ -387,7 +387,7 @@ CTrackEntry::CTrackEntry(TrackType_t eType, ...)
 			m_nDataSize = sizeof(*this) + m_Copy.pKeptObject->GetSize();
 			break;
 		}
-		
+
 		//
 		// Keep track of an object that was created by the user. An Undo will cause this
 		// object to be removed from the world.
@@ -482,7 +482,7 @@ CTrackEntry::~CTrackEntry()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTrackEntry::SetKeptChildren(bool bSet)
 {
@@ -595,7 +595,7 @@ void CTrackEntry::DispatchUndoNotify(void)
 //-----------------------------------------------------------------------------
 // Purpose: The given visgroup is being deleted. Remove pointers to it from
 //			the object in this track entry.
-// Input  : pVisGroup - 
+// Input  : pVisGroup -
 //-----------------------------------------------------------------------------
 void CTrackEntry::OnRemoveVisGroup(CVisGroup *pVisGroup)
 {
@@ -606,7 +606,7 @@ void CTrackEntry::OnRemoveVisGroup(CVisGroup *pVisGroup)
 			m_Copy.pKeptObject->RemoveVisGroup(pVisGroup);
 			break;
 		}
-		
+
 		case ttCreate:
 		{
 			break;
@@ -622,10 +622,10 @@ void CTrackEntry::OnRemoveVisGroup(CVisGroup *pVisGroup)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParent - 
-//			*pSelected - 
-// Output : 
+// Purpose:
+// Input  : *pParent -
+//			*pSelected -
+// Output :
 //-----------------------------------------------------------------------------
 CHistoryTrack::CHistoryTrack(CHistory *pParent, const CMapObjectList *pSelected)
 {
@@ -637,7 +637,7 @@ CHistoryTrack::CHistoryTrack(CHistory *pParent, const CMapObjectList *pSelected)
 
 	static int dwTrackerID = 1;	// objects start at 0, so we don't want to
 	dwID = dwTrackerID ++;
-	
+
 	// add to local list of selected objects at time of creation
 	if (pSelected)
 	{
@@ -665,9 +665,9 @@ CHistoryTrack::~CHistoryTrack()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObject - 
-//			iFlag - 
+// Purpose:
+// Input  : *pObject -
+//			iFlag -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CHistoryTrack::CheckObjectFlag(CMapClass *pObject, int iFlag)
@@ -684,7 +684,7 @@ BOOL CHistoryTrack::CheckObjectFlag(CMapClass *pObject, int iFlag)
 		// if we've already stored that this is a new object in this
 		//  track, there is no point in storing a copy since UNDOing
 		//  this track will delete the object.
-		if(iFlag == CTrackEntry::ttCopy && 
+		if(iFlag == CTrackEntry::ttCopy &&
 			(pObject->Kept.Types & CTrackEntry::ttCreate))
 		{
 			return TRUE;
@@ -706,7 +706,7 @@ BOOL CHistoryTrack::CheckObjectFlag(CMapClass *pObject, int iFlag)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHistoryTrack::OnRemoveVisGroup(CVisGroup *pVisGroup)
 {
@@ -718,8 +718,8 @@ void CHistoryTrack::OnRemoveVisGroup(CVisGroup *pVisGroup)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObject - 
+// Purpose:
+// Input  : *pObject -
 //-----------------------------------------------------------------------------
 void CHistoryTrack::Keep(CMapClass *pObject, bool bKeepChildren)
 {
@@ -736,15 +736,15 @@ void CHistoryTrack::Keep(CMapClass *pObject, bool bKeepChildren)
 	te.SetKeptChildren(bKeepChildren);
 	Data.AddToTail(te);
 	te.m_bAutoDestruct = false;
-	
+
 	uDataSize += te.GetSize();
 	Parent->Resume();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObject - 
+// Purpose:
+// Input  : *pObject -
 //-----------------------------------------------------------------------------
 void CHistoryTrack::KeepForDestruction(CMapClass *pObject)
 {
@@ -758,7 +758,7 @@ void CHistoryTrack::KeepForDestruction(CMapClass *pObject)
 	Parent->Pause();
 	CTrackEntry te(CTrackEntry::ttDelete, pObject);
 	Data.AddToTail(te);
-	
+
 	te.m_bAutoDestruct = false;
 	uDataSize += te.GetSize();
 	Parent->Resume();
@@ -766,8 +766,8 @@ void CHistoryTrack::KeepForDestruction(CMapClass *pObject)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObject - 
+// Purpose:
+// Input  : *pObject -
 //-----------------------------------------------------------------------------
 void CHistoryTrack::KeepNew(CMapClass *pObject)
 {
@@ -780,7 +780,7 @@ void CHistoryTrack::KeepNew(CMapClass *pObject)
 	Parent->Pause();
 	CTrackEntry te(CTrackEntry::ttCreate, pObject);
 	Data.AddToTail(te);
-	
+
 	te.m_bAutoDestruct = false;
 	uDataSize += te.GetSize();
 	Parent->Resume();

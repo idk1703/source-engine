@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=====================================================================================//
@@ -233,7 +233,7 @@ void CPortalSimulator::MoveTo( const Vector &ptCenter, const QAngle &angles )
 		m_InternalData.Placement.ptCenter = ptCenter;
 		m_InternalData.Placement.qAngles = angles;
 		AngleVectors( angles, &m_InternalData.Placement.vForward, &m_InternalData.Placement.vRight, &m_InternalData.Placement.vUp );
-		
+
 		m_InternalData.Placement.PortalPlane.Init( m_InternalData.Placement.vForward, m_InternalData.Placement.vForward.Dot( m_InternalData.Placement.ptCenter ) );
 	}
 
@@ -317,7 +317,7 @@ void CPortalSimulator::MoveTo( const Vector &ptCenter, const QAngle &angles )
 	}
 #endif
 
-	CreatePolyhedrons();	
+	CreatePolyhedrons();
 	CreateAllCollision();
 #ifndef CLIENT_DLL
 	CreateAllPhysics();
@@ -368,7 +368,7 @@ void CPortalSimulator::UpdateLinkMatrix( void )
 
 		Vector vRemoteLeft = -m_pLinkedPortal->m_InternalData.Placement.vRight;
 		VMatrix matRemoteToWorld( m_pLinkedPortal->m_InternalData.Placement.vForward, vRemoteLeft, m_pLinkedPortal->m_InternalData.Placement.vUp );
-		matRemoteToWorld.SetTranslation( m_pLinkedPortal->m_InternalData.Placement.ptCenter );	
+		matRemoteToWorld.SetTranslation( m_pLinkedPortal->m_InternalData.Placement.ptCenter );
 
 		//final
 		m_InternalData.Placement.matThisToLinked = matRemoteToWorld * matRotation * matLocalToWorldInverse;
@@ -377,7 +377,7 @@ void CPortalSimulator::UpdateLinkMatrix( void )
 	{
 		m_InternalData.Placement.matThisToLinked.Identity();
 	}
-	
+
 	m_InternalData.Placement.matThisToLinked.InverseTR( m_InternalData.Placement.matLinkedToThis );
 
 	MatrixAngles( m_InternalData.Placement.matThisToLinked.As3x4(), m_InternalData.Placement.ptaap_ThisToLinked.qAngleTransform, m_InternalData.Placement.ptaap_ThisToLinked.ptOriginTransform );
@@ -422,7 +422,7 @@ bool CPortalSimulator::EntityIsInPortalHole( CBaseEntity *pEntity ) const
 		{
 			ICollideable *pCollideable = pEntity->GetCollideable();
 			vcollide_t *pVCollide = modelinfo->GetVCollide( pCollideable->GetCollisionModel() );
-			
+
 			//Assert( pVCollide != NULL ); //brush models?
 			if( pVCollide != NULL )
 			{
@@ -434,7 +434,7 @@ bool CPortalSimulator::EntityIsInPortalHole( CBaseEntity *pEntity ) const
 				{
 					for( int i = 0; i != pVCollide->solidCount; ++i )
 						PortalSimulatorDumps_DumpCollideToGlView( m_InternalData.Placement.pHoleShapeCollideable, vec3_origin, vec3_angle, 0.4f, szDumpFileName );
-				
+
 					sv_debug_dumpportalhole_nextcheck.SetValue( false );
 				}
 #endif
@@ -596,7 +596,7 @@ void CPortalSimulator::ClearEverything( void )
 
 	STARTDEBUGTIMER( functionTimer );
 	DEBUGTIMERONLY( DevMsg( 2, "[PSDT:%d] %sCPortalSimulator::Clear() START\n", GetPortalSimulatorGUID(), TABSPACING ); );
-	INCREMENTTABSPACING();	
+	INCREMENTTABSPACING();
 
 #ifndef CLIENT_DLL
 	ClearAllPhysics();
@@ -629,7 +629,7 @@ void CPortalSimulator::AttachTo( CPortalSimulator *pLinkedPortalSimulator )
 	STARTDEBUGTIMER( functionTimer );
 	DEBUGTIMERONLY( DevMsg( 2, "[PSDT:%d] %sCPortalSimulator::AttachTo() START\n", GetPortalSimulatorGUID(), TABSPACING ); );
 	INCREMENTTABSPACING();
-	
+
 	DetachFromLinked();
 
 	m_pLinkedPortal = pLinkedPortalSimulator;
@@ -676,7 +676,7 @@ void CPortalSimulator::TakeOwnershipOfEntity( CBaseEntity *pEntity )
 
 	if( pEntity->IsWorld() )
 		return;
-	
+
 	if( CPhysicsShadowClone::IsShadowClone( pEntity ) )
 		return;
 
@@ -710,7 +710,7 @@ void CPortalSimulator::TakeOwnershipOfEntity( CBaseEntity *pEntity )
 		pObject->Wake();
 		pObject->RecheckContactPoints();
 	}
-	
+
 	CUtlVector<CBaseEntity *> childrenList;
 	GetAllChildren( pEntity, childrenList );
 	for ( int i = childrenList.Count(); --i >= 0; )
@@ -739,7 +739,7 @@ void CPortalSimulator::TakePhysicsOwnership( CBaseEntity *pEntity )
 
 	Assert( CPhysicsShadowClone::IsShadowClone( pEntity ) == false );
 	Assert( OwnsEntity( pEntity ) ); //taking physics ownership happens AFTER general ownership
-	
+
 	if( OwnsPhysicsForEntity( pEntity ) )
 		return;
 
@@ -748,7 +748,7 @@ void CPortalSimulator::TakePhysicsOwnership( CBaseEntity *pEntity )
 
 
 	//physics cloning
-	{	
+	{
 #ifdef _DEBUG
 		{
 			int iDebugIndex;
@@ -757,7 +757,7 @@ void CPortalSimulator::TakePhysicsOwnership( CBaseEntity *pEntity )
 				if( m_InternalData.Simulation.Dynamic.ShadowClones.FromLinkedPortal[iDebugIndex]->GetClonedEntity() == pEntity )
 					break;
 			}
-			AssertMsg( iDebugIndex < 0, "Trying to own an entity, when a clone from the linked portal already exists" ); 
+			AssertMsg( iDebugIndex < 0, "Trying to own an entity, when a clone from the linked portal already exists" );
 
 			if( m_pLinkedPortal )
 			{
@@ -943,7 +943,7 @@ void CPortalSimulator::ReleasePhysicsOwnership( CBaseEntity *pEntity, bool bCont
 
 	int iEntIndex = pEntity->entindex();
 	m_InternalData.Simulation.Dynamic.EntFlags[iEntIndex] &= ~PSEF_OWNS_PHYSICS;
-	
+
 	//physics cloning
 	{
 #ifdef _DEBUG
@@ -1139,7 +1139,7 @@ void CPortalSimulator::CreateAllPhysics( void )
 	STARTDEBUGTIMER( functionTimer );
 	DEBUGTIMERONLY( DevMsg( 2, "[PSDT:%d] %sCPortalSimulator::CreateAllPhysics() START\n", GetPortalSimulatorGUID(), TABSPACING ); );
 	INCREMENTTABSPACING();
-	
+
 	CreateMinimumPhysics();
 	CreateLocalPhysics();
 	CreateLinkedPhysics();
@@ -1189,7 +1189,7 @@ void CPortalSimulator::CreateLocalPhysics( void )
 	STARTDEBUGTIMER( functionTimer );
 	DEBUGTIMERONLY( DevMsg( 2, "[PSDT:%d] %sCPortalSimulator::CreateLocalPhysics() START\n", GetPortalSimulatorGUID(), TABSPACING ); );
 	INCREMENTTABSPACING();
-	
+
 	CreateMinimumPhysics();
 
 	//int iDefaultSurfaceIndex = physprops->GetSurfaceIndex( "default" );
@@ -1207,7 +1207,7 @@ void CPortalSimulator::CreateLocalPhysics( void )
 		if( m_InternalData.Simulation.Static.World.Brushes.pCollideable != NULL )
 		{
 			m_InternalData.Simulation.Static.World.Brushes.pPhysicsObject = m_InternalData.Simulation.pPhysicsEnvironment->CreatePolyObjectStatic( m_InternalData.Simulation.Static.World.Brushes.pCollideable, m_InternalData.Simulation.Static.SurfaceProperties.surface.surfaceProps, vec3_origin, vec3_angle, &params );
-			
+
 			if( (m_InternalData.Simulation.pCollisionEntity != NULL) && (m_InternalData.Simulation.pCollisionEntity->VPhysicsGetObject() == NULL) )
 				m_InternalData.Simulation.pCollisionEntity->VPhysicsSetObject(m_InternalData.Simulation.Static.World.Brushes.pPhysicsObject);
 
@@ -1221,7 +1221,7 @@ void CPortalSimulator::CreateLocalPhysics( void )
 			Assert( m_InternalData.Simulation.Static.World.StaticProps.ClippedRepresentations[i].pPhysicsObject == NULL ); //Be sure to find graceful fixes for asserts, performance is a big concern with portal simulation
 		}
 #endif
-		
+
 		if( m_InternalData.Simulation.Static.World.StaticProps.ClippedRepresentations.Count() != 0 )
 		{
 			Assert( m_InternalData.Simulation.Static.World.StaticProps.bCollisionExists );
@@ -1230,7 +1230,7 @@ void CPortalSimulator::CreateLocalPhysics( void )
 				PS_SD_Static_World_StaticProps_ClippedProp_t &Representation = m_InternalData.Simulation.Static.World.StaticProps.ClippedRepresentations[i];
 				Assert( Representation.pCollide != NULL );
 				Assert( Representation.pPhysicsObject == NULL );
-				
+
 				Representation.pPhysicsObject = m_InternalData.Simulation.pPhysicsEnvironment->CreatePolyObjectStatic( Representation.pCollide, Representation.iTraceSurfaceProps, vec3_origin, vec3_angle, &params );
 				Assert( Representation.pPhysicsObject != NULL );
 				Representation.pPhysicsObject->RecheckCollisionFilter(); //some filters only work after the variable is stored in the class
@@ -1245,7 +1245,7 @@ void CPortalSimulator::CreateLocalPhysics( void )
 		if( m_InternalData.Simulation.Static.Wall.Local.Brushes.pCollideable != NULL )
 		{
 			m_InternalData.Simulation.Static.Wall.Local.Brushes.pPhysicsObject = m_InternalData.Simulation.pPhysicsEnvironment->CreatePolyObjectStatic( m_InternalData.Simulation.Static.Wall.Local.Brushes.pCollideable, m_InternalData.Simulation.Static.SurfaceProperties.surface.surfaceProps, vec3_origin, vec3_angle, &params );
-			
+
 			if( (m_InternalData.Simulation.pCollisionEntity != NULL) && (m_InternalData.Simulation.pCollisionEntity->VPhysicsGetObject() == NULL) )
 				m_InternalData.Simulation.pCollisionEntity->VPhysicsSetObject(m_InternalData.Simulation.Static.World.Brushes.pPhysicsObject);
 
@@ -1256,7 +1256,7 @@ void CPortalSimulator::CreateLocalPhysics( void )
 		if( m_InternalData.Simulation.Static.Wall.Local.Tube.pCollideable != NULL )
 		{
 			m_InternalData.Simulation.Static.Wall.Local.Tube.pPhysicsObject = m_InternalData.Simulation.pPhysicsEnvironment->CreatePolyObjectStatic( m_InternalData.Simulation.Static.Wall.Local.Tube.pCollideable, m_InternalData.Simulation.Static.SurfaceProperties.surface.surfaceProps, vec3_origin, vec3_angle, &params );
-			
+
 			if( (m_InternalData.Simulation.pCollisionEntity != NULL) && (m_InternalData.Simulation.pCollisionEntity->VPhysicsGetObject() == NULL) )
 				m_InternalData.Simulation.pCollisionEntity->VPhysicsSetObject(m_InternalData.Simulation.Static.World.Brushes.pPhysicsObject);
 
@@ -1270,7 +1270,7 @@ void CPortalSimulator::CreateLocalPhysics( void )
 
 	if( m_InternalData.Simulation.pCollisionEntity )
 		m_InternalData.Simulation.pCollisionEntity->CollisionRulesChanged();
-	
+
 	STOPDEBUGTIMER( functionTimer );
 	DECREMENTTABSPACING();
 	DEBUGTIMERONLY( DevMsg( 2, "[PSDT:%d] %sCPortalSimulator::CreateLocalPhysics() FINISH: %fms\n", GetPortalSimulatorGUID(), TABSPACING, functionTimer.GetDuration().GetMillisecondsF() ); );
@@ -1297,7 +1297,7 @@ void CPortalSimulator::CreateLinkedPhysics( void )
 	STARTDEBUGTIMER( functionTimer );
 	DEBUGTIMERONLY( DevMsg( 2, "[PSDT:%d] %sCPortalSimulator::CreateLinkedPhysics() START\n", GetPortalSimulatorGUID(), TABSPACING ); );
 	INCREMENTTABSPACING();
-	
+
 	CreateMinimumPhysics();
 
 	//int iDefaultSurfaceIndex = physprops->GetSurfaceIndex( "default" );
@@ -1317,7 +1317,7 @@ void CPortalSimulator::CreateLinkedPhysics( void )
 		m_InternalData.Simulation.Static.Wall.RemoteTransformedToLocal.Brushes.pPhysicsObject = m_InternalData.Simulation.pPhysicsEnvironment->CreatePolyObjectStatic( RemoteSimulationStaticWorld.Brushes.pCollideable, m_pLinkedPortal->m_InternalData.Simulation.Static.SurfaceProperties.surface.surfaceProps, m_InternalData.Placement.ptaap_LinkedToThis.ptOriginTransform, m_InternalData.Placement.ptaap_LinkedToThis.qAngleTransform, &params );
 		m_InternalData.Simulation.Static.Wall.RemoteTransformedToLocal.Brushes.pPhysicsObject->RecheckCollisionFilter(); //some filters only work after the variable is stored in the class
 	}
-	
+
 
 	Assert( m_InternalData.Simulation.Static.Wall.RemoteTransformedToLocal.StaticProps.PhysicsObjects.Count() == 0 ); //Be sure to find graceful fixes for asserts, performance is a big concern with portal simulation
 	if( RemoteSimulationStaticWorld.StaticProps.ClippedRepresentations.Count() != 0 )
@@ -1351,8 +1351,8 @@ void CPortalSimulator::CreateLinkedPhysics( void )
 
 		if( j >= 0 ) //already cloning
 			continue;
-					
-		
+
+
 
 		EHANDLE hEnt = RemoteOwnedEntities[i];
 		CPhysicsShadowClone *pClone = CPhysicsShadowClone::CreateShadowClone( m_InternalData.Simulation.pPhysicsEnvironment, hEnt, "CPortalSimulator::CreateLinkedPhysics(): From Linked Portal", &m_InternalData.Placement.matLinkedToThis.As3x4() );
@@ -1392,7 +1392,7 @@ void CPortalSimulator::ClearAllPhysics( void )
 	STARTDEBUGTIMER( functionTimer );
 	DEBUGTIMERONLY( DevMsg( 2, "[PSDT:%d] %sCPortalSimulator::ClearAllPhysics() START\n", GetPortalSimulatorGUID(), TABSPACING ); );
 	INCREMENTTABSPACING();
-	
+
 	ClearLinkedPhysics();
 	ClearLocalPhysics();
 	ClearMinimumPhysics();
@@ -1437,7 +1437,7 @@ void CPortalSimulator::ClearLocalPhysics( void )
 	STARTDEBUGTIMER( functionTimer );
 	DEBUGTIMERONLY( DevMsg( 2, "[PSDT:%d] %sCPortalSimulator::ClearLocalPhysics() START\n", GetPortalSimulatorGUID(), TABSPACING ); );
 	INCREMENTTABSPACING();
-	
+
 	m_InternalData.Simulation.pPhysicsEnvironment->CleanupDeleteList();
 	m_InternalData.Simulation.pPhysicsEnvironment->SetQuickDelete( true ); //if we don't do this, things crash the next time we cleanup the delete list while checking mindists
 
@@ -1447,7 +1447,7 @@ void CPortalSimulator::ClearLocalPhysics( void )
 		m_InternalData.Simulation.Static.World.Brushes.pPhysicsObject = NULL;
 	}
 
-	if( m_InternalData.Simulation.Static.World.StaticProps.bPhysicsExists && 
+	if( m_InternalData.Simulation.Static.World.StaticProps.bPhysicsExists &&
 		(m_InternalData.Simulation.Static.World.StaticProps.ClippedRepresentations.Count() != 0) )
 	{
 		for( int i = m_InternalData.Simulation.Static.World.StaticProps.ClippedRepresentations.Count(); --i >= 0; )
@@ -1486,7 +1486,7 @@ void CPortalSimulator::ClearLocalPhysics( void )
 			pClone->Free();
 		}
 
-		m_InternalData.Simulation.Dynamic.ShadowClones.FromLinkedPortal.RemoveAll();		
+		m_InternalData.Simulation.Dynamic.ShadowClones.FromLinkedPortal.RemoveAll();
 	}
 
 	Assert( m_InternalData.Simulation.Dynamic.ShadowClones.FromLinkedPortal.Count() == 0 );
@@ -1541,7 +1541,7 @@ void CPortalSimulator::ClearLinkedPhysics( void )
 		{
 			for( int i = m_InternalData.Simulation.Static.Wall.RemoteTransformedToLocal.StaticProps.PhysicsObjects.Count(); --i >= 0; )
 				m_InternalData.Simulation.pPhysicsEnvironment->DestroyObject( m_InternalData.Simulation.Static.Wall.RemoteTransformedToLocal.StaticProps.PhysicsObjects[i] );
-			
+
 			m_InternalData.Simulation.Static.Wall.RemoteTransformedToLocal.StaticProps.PhysicsObjects.RemoveAll();
 		}
 	}
@@ -1568,7 +1568,7 @@ void CPortalSimulator::ClearLinkedPhysics( void )
 		m_bInCrossLinkedFunction = false;
 	}
 
-	Assert( (m_InternalData.Simulation.Dynamic.ShadowClones.FromLinkedPortal.Count() == 0) && 
+	Assert( (m_InternalData.Simulation.Dynamic.ShadowClones.FromLinkedPortal.Count() == 0) &&
 		((m_pLinkedPortal == NULL) || (m_pLinkedPortal->m_InternalData.Simulation.Dynamic.ShadowClones.FromLinkedPortal.Count() == 0)) );
 
 	m_InternalData.Simulation.pPhysicsEnvironment->CleanupDeleteList();
@@ -1638,7 +1638,7 @@ void CPortalSimulator::CreateLocalCollision( void )
 	STARTDEBUGTIMER( functionTimer );
 	DEBUGTIMERONLY( DevMsg( 2, "[PSDT:%d] %sCPortalSimulator::CreateLocalCollision() START\n", GetPortalSimulatorGUID(), TABSPACING ); );
 	INCREMENTTABSPACING();
-	
+
 	CREATEDEBUGTIMER( worldBrushTimer );
 	STARTDEBUGTIMER( worldBrushTimer );
 	Assert( m_InternalData.Simulation.Static.World.Brushes.pCollideable == NULL ); //Be sure to find graceful fixes for asserts, performance is a big concern with portal simulation
@@ -1663,7 +1663,7 @@ void CPortalSimulator::CreateLocalCollision( void )
 		for( int i = m_InternalData.Simulation.Static.World.StaticProps.ClippedRepresentations.Count(); --i >= 0; )
 		{
 			PS_SD_Static_World_StaticProps_ClippedProp_t &Representation = m_InternalData.Simulation.Static.World.StaticProps.ClippedRepresentations[i];
-			
+
 			Assert( Representation.pCollide == NULL );
 			Representation.pCollide = ConvertPolyhedronsToCollideable( &pPolyhedronsBase[Representation.PolyhedronGroup.iStartIndex], Representation.PolyhedronGroup.iNumPolyhedrons );
 			Assert( Representation.pCollide != NULL );
@@ -1719,11 +1719,11 @@ void CPortalSimulator::CreateLocalCollision( void )
 			m_InternalData.Simulation.Static.SurfaceProperties.pEntity = GetClientWorldEntity();
 #endif
 		}
-		
+
 #ifndef CLIENT_DLL
 		if( m_InternalData.Simulation.pCollisionEntity )
 			m_InternalData.Simulation.Static.SurfaceProperties.pEntity = m_InternalData.Simulation.pCollisionEntity;
-#endif		
+#endif
 	}
 
 	STOPDEBUGTIMER( functionTimer );
@@ -1744,7 +1744,7 @@ void CPortalSimulator::CreateLinkedCollision( void )
 		return;
 
 	//nothing to do for now, the current set of collision is just transformed from the linked simulator when needed. It's really cheap to transform in traces and physics generation.
-	
+
 	m_CreationChecklist.bLinkedCollisionGenerated = true;
 }
 
@@ -1757,7 +1757,7 @@ void CPortalSimulator::ClearAllCollision( void )
 	STARTDEBUGTIMER( functionTimer );
 	DEBUGTIMERONLY( DevMsg( 2, "[PSDT:%d] %sCPortalSimulator::ClearAllCollision() START\n", GetPortalSimulatorGUID(), TABSPACING ); );
 	INCREMENTTABSPACING();
-	
+
 	ClearLinkedCollision();
 	ClearLocalCollision();
 
@@ -1774,7 +1774,7 @@ void CPortalSimulator::ClearLinkedCollision( void )
 		return;
 
 	//nothing to do for now, the current set of collision is just transformed from the linked simulator when needed. It's really cheap to transform in traces and physics generation.
-	
+
 	m_CreationChecklist.bLinkedCollisionGenerated = false;
 }
 
@@ -1790,7 +1790,7 @@ void CPortalSimulator::ClearLocalCollision( void )
 	STARTDEBUGTIMER( functionTimer );
 	DEBUGTIMERONLY( DevMsg( 2, "[PSDT:%d] %sCPortalSimulator::ClearLocalCollision() START\n", GetPortalSimulatorGUID(), TABSPACING ); );
 	INCREMENTTABSPACING();
-	
+
 	if( m_InternalData.Simulation.Static.Wall.Local.Brushes.pCollideable )
 	{
 		physcollision->DestroyCollide( m_InternalData.Simulation.Static.Wall.Local.Brushes.pCollideable );
@@ -1809,7 +1809,7 @@ void CPortalSimulator::ClearLocalCollision( void )
 		m_InternalData.Simulation.Static.World.Brushes.pCollideable = NULL;
 	}
 
-	if( m_InternalData.Simulation.Static.World.StaticProps.bCollisionExists && 
+	if( m_InternalData.Simulation.Static.World.StaticProps.bCollisionExists &&
 		(m_InternalData.Simulation.Static.World.StaticProps.ClippedRepresentations.Count() != 0) )
 	{
 		for( int i = m_InternalData.Simulation.Static.World.StaticProps.ClippedRepresentations.Count(); --i >= 0; )
@@ -1891,7 +1891,7 @@ void CPortalSimulator::CreatePolyhedrons( void )
 
 		vOBBForward *= flScaleX;
 		vOBBRight	*= flScaleY;
-		vOBBUp		*= flScaleZ;	// default size for scale z (252) is player (height + portal half height) * 2. Any smaller than this will allow for players to 
+		vOBBUp		*= flScaleZ;	// default size for scale z (252) is player (height + portal half height) * 2. Any smaller than this will allow for players to
 									// reach unsimulated geometry before an end touch with teh portal.
 
 		Vector ptOBBOrigin = m_InternalData.Placement.ptCenter;
@@ -1979,7 +1979,7 @@ void CPortalSimulator::CreatePolyhedrons( void )
 					{
 						studiohdr_t *pStudioHdr = modelinfo->GetStudiomodel( pModel );
 						Assert( pStudioHdr != NULL );
-						NewEntry.iTraceContents = pStudioHdr->contents;						
+						NewEntry.iTraceContents = pStudioHdr->contents;
 						NewEntry.iTraceSurfaceProps = physprops->GetSurfaceIndex( pStudioHdr->pszSurfaceProp() );
 					}
 					else
@@ -2090,7 +2090,7 @@ void CPortalSimulator::CreatePolyhedrons( void )
 
 			if( WallBrushes.Count() != 0 )
 				ConvertBrushListToClippedPolyhedronList( WallBrushes.Base(), WallBrushes.Count(), fPlanes, 1, PORTAL_POLYHEDRON_CUT_EPSILON, &WallBrushPolyhedrons_ClippedToWall );
-			
+
 			if( WallBrushPolyhedrons_ClippedToWall.Count() != 0 )
 			{
 				for( int i = WallBrushPolyhedrons_ClippedToWall.Count(); --i >= 0; )
@@ -2138,7 +2138,7 @@ void CPortalSimulator::CreatePolyhedrons( void )
 			fPlanes[(4*4) + 3] = fFarLeftPlaneDistance;
 			fPlanes[(5*4) + 3] = fFarRightPlaneDistance;
 
-			
+
 
 			ClipPolyhedrons( pWallClippedPolyhedrons, iWallClippedPolyhedronCount, fSidePlanesOnly, 4, PORTAL_POLYHEDRON_CUT_EPSILON, &m_InternalData.Simulation.Static.Wall.Local.Brushes.Polyhedrons );
 		}
@@ -2237,12 +2237,12 @@ void CPortalSimulator::ClearPolyhedrons( void )
 	STARTDEBUGTIMER( functionTimer );
 	DEBUGTIMERONLY( DevMsg( 2, "[PSDT:%d] %sCPortalSimulator::ClearPolyhedrons() START\n", GetPortalSimulatorGUID(), TABSPACING ); );
 	INCREMENTTABSPACING();
-	
+
 	if( m_InternalData.Simulation.Static.World.Brushes.Polyhedrons.Count() != 0 )
 	{
 		for( int i = m_InternalData.Simulation.Static.World.Brushes.Polyhedrons.Count(); --i >= 0; )
 			m_InternalData.Simulation.Static.World.Brushes.Polyhedrons[i]->Release();
-		
+
 		m_InternalData.Simulation.Static.World.Brushes.Polyhedrons.RemoveAll();
 	}
 
@@ -2251,7 +2251,7 @@ void CPortalSimulator::ClearPolyhedrons( void )
 		for( int i = m_InternalData.Simulation.Static.World.StaticProps.Polyhedrons.Count(); --i >= 0; )
 			m_InternalData.Simulation.Static.World.StaticProps.Polyhedrons[i]->Release();
 
-		m_InternalData.Simulation.Static.World.StaticProps.Polyhedrons.RemoveAll();		
+		m_InternalData.Simulation.Static.World.StaticProps.Polyhedrons.RemoveAll();
 	}
 #ifdef _DEBUG
 	for( int i = m_InternalData.Simulation.Static.World.StaticProps.ClippedRepresentations.Count(); --i >= 0; )
@@ -2299,7 +2299,7 @@ void CPortalSimulator::DetachFromLinked( void )
 	STARTDEBUGTIMER( functionTimer );
 	DEBUGTIMERONLY( DevMsg( 2, "[PSDT:%d] %sCPortalSimulator::DetachFromLinked() START\n", GetPortalSimulatorGUID(), TABSPACING ); );
 	INCREMENTTABSPACING();
-	
+
 	//IMPORTANT: Physics objects must be destroyed before their associated collision data or a fairly cryptic crash will ensue
 #ifndef CLIENT_DLL
 	ClearLinkedEntities();
@@ -2345,7 +2345,7 @@ void CPortalSimulator::SetVPhysicsSimulationEnabled( bool bEnabled )
 	STARTDEBUGTIMER( functionTimer );
 	DEBUGTIMERONLY( DevMsg( 2, "[PSDT:%d] %sCPortalSimulator::SetVPhysicsSimulationEnabled() START\n", GetPortalSimulatorGUID(), TABSPACING ); );
 	INCREMENTTABSPACING();
-	
+
 	m_bSimulateVPhysics = bEnabled;
 	if( bEnabled )
 	{
@@ -2446,7 +2446,7 @@ void CPortalSimulator::PostPhysFrame( void )
 		{
 			Warning ( "Player is simulated in a physics environment but isn't touching a portal! Can't teleport, but can fall through portal hole. Returning player to main environment.\n" );
 			ADD_DEBUG_HISTORY( HISTORY_PLAYER_DAMAGE, UTIL_VarArgs( "Player in PortalSimulator but not touching a portal, removing from sim at : %f\n",  gpGlobals->curtime ) );
-			
+
 			if ( pSim )
 			{
 				pSim->ReleaseOwnershipOfEntity( pPlayer, false );
@@ -2477,7 +2477,7 @@ int CPortalSimulator::GetMoveableOwnedEntities( CBaseEntity **pEntsOut, int iEnt
 		if( pEnt->GetMoveType() == MOVETYPE_NONE )
 			continue;
 
-        pEntsOut[iOutputCount] = pEnt;
+	pEntsOut[iOutputCount] = pEnt;
 		++iOutputCount;
 
 		if( iOutputCount == iEntOutLimit )
@@ -2515,7 +2515,7 @@ CPortalSimulator *CPortalSimulator::GetSimulatorThatCreatedPhysicsObject( const 
 		if( s_PortalSimulators[i]->CreatedPhysicsObject( pObject, pOut_SourceType ) )
 			return s_PortalSimulators[i];
 	}
-	
+
 	return NULL;
 }
 
@@ -2564,7 +2564,7 @@ bool CPortalSimulator::CreatedPhysicsObject( const IPhysicsObject *pObject, PS_P
 			*pOut_SourceType = PSPOST_HOLYWALL_TUBE;
 
 		return true;
-	}	
+	}
 
 	return false;
 }
@@ -2630,9 +2630,9 @@ static CPhysCollide *ConvertPolyhedronsToCollideable( CPolyhedron **pPolyhedrons
 		pConvexes[iConvexCount] = physcollision->ConvexFromConvexPolyhedron( *pPolyhedrons[i] );
 
 		Assert( pConvexes[iConvexCount] != NULL );
-		
+
 		if( pConvexes[iConvexCount] )
-			++iConvexCount;		
+			++iConvexCount;
 	}
 	STOPDEBUGTIMER( convexTimer );
 	DEBUGTIMERONLY( DevMsg( 2, "[PSDT:%d] %sConvex Generation:%fms\n", s_iPortalSimulatorGUID, TABSPACING, convexTimer.GetDuration().GetMillisecondsF() ); );
@@ -2693,7 +2693,7 @@ static inline CPolyhedron *TransformAndClipSinglePolyhedron( CPolyhedron *pExist
 }
 
 static int GetEntityPhysicsObjects( IPhysicsEnvironment *pEnvironment, CBaseEntity *pEntity, IPhysicsObject **pRetList, int iRetListArraySize )
-{	
+{
 	int iCount, iRetCount = 0;
 	const IPhysicsObject **pList = pEnvironment->GetObjectList( &iCount );
 
@@ -3001,7 +3001,7 @@ void DumpActiveCollision( const CPortalSimulator *pPortalSimulator, const char *
 {
 	CREATEDEBUGTIMER( collisionDumpTimer );
 	STARTDEBUGTIMER( collisionDumpTimer );
-	
+
 	//color coding scheme, static prop collision is brighter than brush collision. Remote world stuff transformed to the local wall is darker than completely local stuff
 #define PSDAC_INTENSITY_LOCALBRUSH 0.25f
 #define PSDAC_INTENSITY_LOCALPROP 1.0f
@@ -3010,13 +3010,13 @@ void DumpActiveCollision( const CPortalSimulator *pPortalSimulator, const char *
 
 	if( pPortalSimulator->m_DataAccess.Simulation.Static.World.Brushes.pCollideable )
 		PortalSimulatorDumps_DumpCollideToGlView( pPortalSimulator->m_DataAccess.Simulation.Static.World.Brushes.pCollideable, vec3_origin, vec3_angle, PSDAC_INTENSITY_LOCALBRUSH, szFileName );
-	
+
 	if( pPortalSimulator->m_DataAccess.Simulation.Static.World.StaticProps.bCollisionExists )
 	{
 		for( int i = pPortalSimulator->m_DataAccess.Simulation.Static.World.StaticProps.ClippedRepresentations.Count(); --i >= 0; )
 		{
 			Assert( pPortalSimulator->m_DataAccess.Simulation.Static.World.StaticProps.ClippedRepresentations[i].pCollide );
-			PortalSimulatorDumps_DumpCollideToGlView( pPortalSimulator->m_DataAccess.Simulation.Static.World.StaticProps.ClippedRepresentations[i].pCollide, vec3_origin, vec3_angle, PSDAC_INTENSITY_LOCALPROP, szFileName );	
+			PortalSimulatorDumps_DumpCollideToGlView( pPortalSimulator->m_DataAccess.Simulation.Static.World.StaticProps.ClippedRepresentations[i].pCollide, vec3_origin, vec3_angle, PSDAC_INTENSITY_LOCALPROP, szFileName );
 		}
 	}
 
@@ -3035,13 +3035,13 @@ void DumpActiveCollision( const CPortalSimulator *pPortalSimulator, const char *
 			PortalSimulatorDumps_DumpCollideToGlView( pLinkedPortal->m_DataAccess.Simulation.Static.World.Brushes.pCollideable, pPortalSimulator->m_DataAccess.Placement.ptaap_LinkedToThis.ptOriginTransform, pPortalSimulator->m_DataAccess.Placement.ptaap_LinkedToThis.qAngleTransform, PSDAC_INTENSITY_REMOTEBRUSH, szFileName );
 
 		//for( int i = pPortalSimulator->m_DataAccess.Simulation.Static.Wall.RemoteTransformedToLocal.StaticProps.Collideables.Count(); --i >= 0; )
-		//	PortalSimulatorDumps_DumpCollideToGlView( pPortalSimulator->m_DataAccess.Simulation.Static.Wall.RemoteTransformedToLocal.StaticProps.Collideables[i], vec3_origin, vec3_angle, PSDAC_INTENSITY_REMOTEPROP, szFileName );	
+		//	PortalSimulatorDumps_DumpCollideToGlView( pPortalSimulator->m_DataAccess.Simulation.Static.Wall.RemoteTransformedToLocal.StaticProps.Collideables[i], vec3_origin, vec3_angle, PSDAC_INTENSITY_REMOTEPROP, szFileName );
 		if( pLinkedPortal->m_DataAccess.Simulation.Static.World.StaticProps.bCollisionExists )
 		{
 			for( int i = pLinkedPortal->m_DataAccess.Simulation.Static.World.StaticProps.ClippedRepresentations.Count(); --i >= 0; )
 			{
 				Assert( pLinkedPortal->m_DataAccess.Simulation.Static.World.StaticProps.ClippedRepresentations[i].pCollide );
-				PortalSimulatorDumps_DumpCollideToGlView( pLinkedPortal->m_DataAccess.Simulation.Static.World.StaticProps.ClippedRepresentations[i].pCollide, pPortalSimulator->m_DataAccess.Placement.ptaap_LinkedToThis.ptOriginTransform, pPortalSimulator->m_DataAccess.Placement.ptaap_LinkedToThis.qAngleTransform, PSDAC_INTENSITY_REMOTEPROP, szFileName );	
+				PortalSimulatorDumps_DumpCollideToGlView( pLinkedPortal->m_DataAccess.Simulation.Static.World.StaticProps.ClippedRepresentations[i].pCollide, pPortalSimulator->m_DataAccess.Placement.ptaap_LinkedToThis.ptOriginTransform, pPortalSimulator->m_DataAccess.Placement.ptaap_LinkedToThis.qAngleTransform, PSDAC_INTENSITY_REMOTEPROP, szFileName );
 			}
 		}
 	}
@@ -3120,7 +3120,7 @@ static void PortalSimulatorDumps_DumpBoxToGlView( const Vector &vMins, const Vec
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMins.x, vMaxs.y, vMaxs.z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMins.x, vMaxs.y, vMins.z, fRed, fGreen, fBlue );
 
-	filesystem->FPrintf( fp, "4\n" );	
+	filesystem->FPrintf( fp, "4\n" );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMins.x, vMaxs.y, vMins.z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMins.x, vMaxs.y, vMaxs.z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMins.x, vMins.y, vMaxs.z, fRed, fGreen, fBlue );
@@ -3133,7 +3133,7 @@ static void PortalSimulatorDumps_DumpBoxToGlView( const Vector &vMins, const Vec
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMaxs.z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMins.z, fRed, fGreen, fBlue );
 
-	filesystem->FPrintf( fp, "4\n" );	
+	filesystem->FPrintf( fp, "4\n" );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMins.z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMaxs.z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMins.y, vMaxs.z, fRed, fGreen, fBlue );
@@ -3147,7 +3147,7 @@ static void PortalSimulatorDumps_DumpBoxToGlView( const Vector &vMins, const Vec
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMins.y, vMaxs.z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMins.y, vMins.z, fRed, fGreen, fBlue );
 
-	filesystem->FPrintf( fp, "4\n" );	
+	filesystem->FPrintf( fp, "4\n" );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMins.y, vMins.z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMins.y, vMaxs.z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMins.x, vMins.y, vMaxs.z, fRed, fGreen, fBlue );
@@ -3162,7 +3162,7 @@ static void PortalSimulatorDumps_DumpBoxToGlView( const Vector &vMins, const Vec
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMaxs.z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMins.z, fRed, fGreen, fBlue );
 
-	filesystem->FPrintf( fp, "4\n" );	
+	filesystem->FPrintf( fp, "4\n" );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMins.z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMaxs.z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMins.x, vMaxs.y, vMaxs.z, fRed, fGreen, fBlue );
@@ -3177,7 +3177,7 @@ static void PortalSimulatorDumps_DumpBoxToGlView( const Vector &vMins, const Vec
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMins.z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMins.y, vMins.z, fRed, fGreen, fBlue );
 
-	filesystem->FPrintf( fp, "4\n" );	
+	filesystem->FPrintf( fp, "4\n" );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMins.y, vMins.z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMins.z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMins.x, vMaxs.y, vMins.z, fRed, fGreen, fBlue );
@@ -3192,7 +3192,7 @@ static void PortalSimulatorDumps_DumpBoxToGlView( const Vector &vMins, const Vec
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMaxs.z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMins.y, vMaxs.z, fRed, fGreen, fBlue );
 
-	filesystem->FPrintf( fp, "4\n" );	
+	filesystem->FPrintf( fp, "4\n" );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMins.y, vMaxs.z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMaxs.x, vMaxs.y, vMaxs.z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", vMins.x, vMaxs.y, vMaxs.z, fRed, fGreen, fBlue );
@@ -3222,7 +3222,7 @@ static void PortalSimulatorDumps_DumpOBBoxToGlView( const Vector &ptOrigin, cons
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[6].x, ptExtents[6].y, ptExtents[6].z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[2].x, ptExtents[2].y, ptExtents[2].z, fRed, fGreen, fBlue );
 
-	filesystem->FPrintf( fp, "4\n" );	
+	filesystem->FPrintf( fp, "4\n" );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[2].x, ptExtents[2].y, ptExtents[2].z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[6].x, ptExtents[6].y, ptExtents[6].z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[4].x, ptExtents[4].y, ptExtents[4].z, fRed, fGreen, fBlue );
@@ -3235,7 +3235,7 @@ static void PortalSimulatorDumps_DumpOBBoxToGlView( const Vector &ptOrigin, cons
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[7].x, ptExtents[7].y, ptExtents[7].z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[3].x, ptExtents[3].y, ptExtents[3].z, fRed, fGreen, fBlue );
 
-	filesystem->FPrintf( fp, "4\n" );	
+	filesystem->FPrintf( fp, "4\n" );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[3].x, ptExtents[3].y, ptExtents[3].z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[7].x, ptExtents[7].y, ptExtents[7].z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[5].x, ptExtents[5].y, ptExtents[5].z, fRed, fGreen, fBlue );
@@ -3249,7 +3249,7 @@ static void PortalSimulatorDumps_DumpOBBoxToGlView( const Vector &ptOrigin, cons
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[5].x, ptExtents[5].y, ptExtents[5].z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[1].x, ptExtents[1].y, ptExtents[1].z, fRed, fGreen, fBlue );
 
-	filesystem->FPrintf( fp, "4\n" );	
+	filesystem->FPrintf( fp, "4\n" );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[1].x, ptExtents[1].y, ptExtents[1].z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[5].x, ptExtents[5].y, ptExtents[5].z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[4].x, ptExtents[4].y, ptExtents[4].z, fRed, fGreen, fBlue );
@@ -3264,7 +3264,7 @@ static void PortalSimulatorDumps_DumpOBBoxToGlView( const Vector &ptOrigin, cons
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[7].x, ptExtents[7].y, ptExtents[7].z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[3].x, ptExtents[3].y, ptExtents[3].z, fRed, fGreen, fBlue );
 
-	filesystem->FPrintf( fp, "4\n" );	
+	filesystem->FPrintf( fp, "4\n" );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[3].x, ptExtents[3].y, ptExtents[3].z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[7].x, ptExtents[7].y, ptExtents[7].z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[6].x, ptExtents[6].y, ptExtents[6].z, fRed, fGreen, fBlue );
@@ -3279,7 +3279,7 @@ static void PortalSimulatorDumps_DumpOBBoxToGlView( const Vector &ptOrigin, cons
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[3].x, ptExtents[3].y, ptExtents[3].z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[1].x, ptExtents[1].y, ptExtents[1].z, fRed, fGreen, fBlue );
 
-	filesystem->FPrintf( fp, "4\n" );	
+	filesystem->FPrintf( fp, "4\n" );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[1].x, ptExtents[1].y, ptExtents[1].z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[3].x, ptExtents[3].y, ptExtents[3].z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[2].x, ptExtents[2].y, ptExtents[2].z, fRed, fGreen, fBlue );
@@ -3294,7 +3294,7 @@ static void PortalSimulatorDumps_DumpOBBoxToGlView( const Vector &ptOrigin, cons
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[7].x, ptExtents[7].y, ptExtents[7].z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[5].x, ptExtents[5].y, ptExtents[5].z, fRed, fGreen, fBlue );
 
-	filesystem->FPrintf( fp, "4\n" );	
+	filesystem->FPrintf( fp, "4\n" );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[5].x, ptExtents[5].y, ptExtents[5].z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[7].x, ptExtents[7].y, ptExtents[7].z, fRed, fGreen, fBlue );
 	filesystem->FPrintf( fp, "%6.3f %6.3f %6.3f %.2f %.2f %.2f\n", ptExtents[6].x, ptExtents[6].y, ptExtents[6].z, fRed, fGreen, fBlue );
@@ -3306,17 +3306,3 @@ static void PortalSimulatorDumps_DumpOBBoxToGlView( const Vector &ptOrigin, cons
 
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-

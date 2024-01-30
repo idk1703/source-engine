@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -49,7 +49,7 @@ public:
 		{
 			FILE_SOURCE,
 			FILE_HEADER,
-			FILE_LIBRARY, 
+			FILE_LIBRARY,
 			FILE_TYPE_UNKNOWN_E
 		} FileType_e;
 
@@ -80,12 +80,12 @@ public:
 		void ResetDefines() { m_Defines.RemoveAll(); }
 		void AddDefine( CUtlSymbol define ) { m_Defines.AddToTail( define ); }
 		int GetNumDefines() { return m_Defines.Count(); }
-		const char *GetDefine( int i ) { return m_Defines[i].String(); } 
+		const char *GetDefine( int i ) { return m_Defines[i].String(); }
 
 		void ResetIncludes() { m_Includes.RemoveAll(); }
 		void AddInclude( CUtlSymbol include ) { m_Includes.AddToTail( include ); }
 		int GetNumIncludes() { return m_Includes.Count(); }
-		const char *GetInclude( int i ) { return m_Includes[i].String(); } 
+		const char *GetInclude( int i ) { return m_Includes[i].String(); }
 
 	private:
 		CUtlSymbol m_Name;

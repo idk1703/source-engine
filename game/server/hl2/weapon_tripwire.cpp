@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -42,7 +42,7 @@ LINK_ENTITY_TO_CLASS( weapon_tripwire, CWeapon_Tripwire );
 // BUGBUG: Enable this when the script & resources are checked in.
 //PRECACHE_WEAPON_REGISTER(weapon_tripwire);
 
-acttable_t	CWeapon_Tripwire::m_acttable[] = 
+acttable_t	CWeapon_Tripwire::m_acttable[] =
 {
 	{ ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK_TRIPWIRE, true },
 };
@@ -154,7 +154,7 @@ void CWeapon_Tripwire::PrimaryAttack( void )
 {
 	CBaseCombatCharacter *pOwner  = GetOwner();
 	if (!pOwner)
-	{ 
+	{
 		return;
 	}
 
@@ -199,7 +199,7 @@ void CWeapon_Tripwire::TripwireAttach( void )
 	trace_t tr;
 
 	UTIL_TraceLine( vecSrc, vecSrc + (vecAiming * 128), MASK_SOLID, pOwner, COLLISION_GROUP_NONE, &tr );
-	
+
 	if (tr.fraction < 1.0)
 	{
 		CBaseEntity *pEntity = tr.m_pEnt;
@@ -208,7 +208,7 @@ void CWeapon_Tripwire::TripwireAttach( void )
 			QAngle angles;
 			VectorAngles(tr.plane.normal, angles);
 			angles.x += 90;
-			
+
 			CBaseEntity *pEnt = CBaseEntity::Create( "npc_tripwire", tr.endpos + tr.plane.normal * 3, angles, NULL );
 
 			CTripwireGrenade *pMine = (CTripwireGrenade *)pEnt;
@@ -241,7 +241,7 @@ void CWeapon_Tripwire::StartTripwireAttach( void )
 	trace_t tr;
 
 	UTIL_TraceLine( vecSrc, vecSrc + (vecAiming * 128), MASK_SOLID, pPlayer, COLLISION_GROUP_NONE, &tr );
-	
+
 	if (tr.fraction < 1.0)
 	{
 		// ALERT( at_console, "hit %f\n", tr.flFraction );
@@ -290,7 +290,7 @@ bool CWeapon_Tripwire::CanAttachTripwire( void )
 
 	Vector	vecEnd = vecSrc + (vecAiming * 42);
 	UTIL_TraceLine( vecSrc, vecEnd, MASK_SOLID, pOwner, COLLISION_GROUP_NONE, &tr );
-	
+
 	if (tr.fraction < 1.0)
 	{
 		// Don't attach to a living creature
@@ -312,7 +312,7 @@ bool CWeapon_Tripwire::CanAttachTripwire( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
@@ -336,7 +336,7 @@ void CWeapon_Tripwire::ItemPostFrame( void )
 	// -----------------------
 	//  No buttons down
 	// -----------------------
-	else 
+	else
 	{
 		WeaponIdle( );
 		return;
@@ -370,9 +370,9 @@ void CWeapon_Tripwire::WeaponIdle( void )
 		{
 			TripwireAttach();
 			iAnim = ACT_SLAM_TRIPMINE_ATTACH2;
-		}	
+		}
 		else if (m_bNeedReload)
-		{	
+		{
 			// If owner had ammo draw the correct tripwire type
 			if (pOwner->GetAmmoCount(m_iSecondaryAmmoType) > 0)
 			{
@@ -417,7 +417,7 @@ bool CWeapon_Tripwire::Deploy( void )
 
 	// If detonator is already armed
 	m_bNeedReload = false;
-	iActivity = ACT_SLAM_STICKWALL_ND_DRAW; 
+	iActivity = ACT_SLAM_STICKWALL_ND_DRAW;
 	return DefaultDeploy( (char*)GetViewModel(), (char*)GetWorldModel(), iActivity, (char*)GetAnimPrefix() );
 }
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,14 +33,14 @@ class CConstantForceController : public IMotionEvent
 	DECLARE_SIMPLE_DATADESC();
 
 public:
-	void Init( IMotionEvent::simresult_e controlType ) 
-	{ 
+	void Init( IMotionEvent::simresult_e controlType )
+	{
 		m_controlType = controlType;
 	}
 
 	void SetConstantForce( const Vector &linear, const AngularImpulse &angular );
 	void ScaleConstantForce( float scale );
-	
+
 	IMotionEvent::simresult_e Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular );
 	IMotionEvent::simresult_e	m_controlType;
 	Vector			m_linear;
@@ -78,13 +78,13 @@ IMotionEvent::simresult_e CConstantForceController::Simulate( IPhysicsMotionCont
 {
 	linear = m_linear;
 	angular = m_angular;
-	
+
 	return m_controlType;
 }
 
 // UNDONE: Make these logical entities
 //-----------------------------------------------------------------------------
-// Purpose: This is a general entity that has a force/motion controller that 
+// Purpose: This is a general entity that has a force/motion controller that
 //			simply integrates a constant linear/angular acceleration
 //-----------------------------------------------------------------------------
 abstract_class CPhysForce : public CPointEntity
@@ -119,7 +119,7 @@ public:
 	// optional
 	virtual void OnActivate( void ) {}
 
-protected:	
+protected:
 	IPhysicsMotionController	*m_pController;
 
 	string_t		m_nameAttach;
@@ -141,11 +141,11 @@ BEGIN_DATADESC( CPhysForce )
 	DEFINE_FIELD( m_attachedObject, FIELD_EHANDLE ),
 	//DEFINE_FIELD( m_wasRestored, FIELD_BOOLEAN ), // NOTE: DO NOT save/load this - it's used to detect loads
 	DEFINE_EMBEDDED( m_integrator ),
-	
+
 	DEFINE_INPUTFUNC( FIELD_VOID, "Activate", InputActivate ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "Deactivate", InputDeactivate ),
 	DEFINE_INPUTFUNC( FIELD_FLOAT, "scale", InputForceScale ),
-	
+
 	// Function Pointers
 	DEFINE_FUNCTION( ForceOff ),
 
@@ -204,7 +204,7 @@ void CPhysForce::Activate( void )
 	{
 		m_attachedObject = gEntList.FindEntityByName( NULL, m_nameAttach );
 	}
-	
+
 	// Let the derived class set up before we throw the switch
 	OnActivate();
 
@@ -216,7 +216,7 @@ void CPhysForce::Activate( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPhysForce::InputActivate( inputdata_t &inputdata )
 {
@@ -225,7 +225,7 @@ void CPhysForce::InputActivate( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPhysForce::InputDeactivate( inputdata_t &inputdata )
 {
@@ -234,7 +234,7 @@ void CPhysForce::InputDeactivate( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPhysForce::InputForceScale( inputdata_t &inputdata )
 {
@@ -243,7 +243,7 @@ void CPhysForce::InputForceScale( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPhysForce::ForceOn( void )
 {
@@ -266,7 +266,7 @@ void CPhysForce::ActivateForce( void )
 	{
 		pPhys = m_attachedObject->VPhysicsGetObject();
 	}
-	
+
 	if ( !pPhys )
 		return;
 
@@ -327,7 +327,7 @@ public:
 	virtual void OnActivate( void );
 	virtual void SetupForces( IPhysicsObject *pPhys, Vector &linear, AngularImpulse &angular );
 
-private:	
+private:
 	Vector			m_localOrigin;
 };
 
@@ -422,7 +422,7 @@ public:
 	DECLARE_DATADESC();
 	void Spawn( void );
 	virtual void SetupForces( IPhysicsObject *pPhys, Vector &linear, AngularImpulse &angular );
-private:	
+private:
 	Vector m_axis;
 };
 
@@ -510,14 +510,14 @@ IMotionEvent::simresult_e CMotorController::Simulate( IPhysicsMotionController *
 	matrix3x4_t matrix;
 	pObject->GetPositionMatrix( &matrix );
 	AngularImpulse currentRotAxis;
-	
+
 	// currentRotAxis is in local space
 	pObject->GetVelocity( NULL, &currentRotAxis );
 	// transform motor axis to local space
 	Vector motorAxis_ls;
 	VectorIRotate( m_axis, matrix, motorAxis_ls );
 	float currentSpeed = DotProduct( currentRotAxis, motorAxis_ls );
-	
+
 	float inertia = DotProductAbs( pObject->GetInertia(), motorAxis_ls );
 
 	// compute absolute acceleration, don't integrate over the timestep
@@ -536,7 +536,7 @@ IMotionEvent::simresult_e CMotorController::Simulate( IPhysicsMotionController *
 			factor = 1 - clamp( factor, 0.f, 1.f );
 			rotForce += m_lastForce * factor * m_restistanceDamping;
 		}
-		else 
+		else
 		{
 			if ( currentSpeed != 0 )
 			{
@@ -570,7 +570,7 @@ IMotionEvent::simresult_e CMotorController::Simulate( IPhysicsMotionController *
 
 	// this is in local space
 	angular = motorAxis_ls * rotForce;
-	
+
 	return SIM_LOCAL_FORCE;
 }
 
@@ -624,7 +624,7 @@ BEGIN_DATADESC( CPhysMotor )
 	DEFINE_FIELD( m_lastTime, FIELD_TIME ),
 	DEFINE_PHYSPTR( m_pHinge ),
 	DEFINE_PHYSPTR( m_pController ),
-	
+
 	DEFINE_INPUTFUNC( FIELD_FLOAT, "SetSpeed", InputSetTargetSpeed ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "TurnOn", InputTurnOn ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "TurnOff", InputTurnOff ),
@@ -747,7 +747,7 @@ void CPhysMotor::TurnOn( void )
 void CPhysMotor::Activate( void )
 {
 	BaseClass::Activate();
-	
+
 	// This gets called after all objects spawn and after all objects restore
 	if ( m_attachedObject == NULL )
 	{
@@ -824,7 +824,7 @@ void CPhysMotor::OnRestore()
 
 void CPhysMotor::Think( void )
 {
-	// angular acceleration is always positive - it should be treated as a magnitude - the controller 
+	// angular acceleration is always positive - it should be treated as a magnitude - the controller
 	// will apply it in the proper direction
 	Assert(m_angularAcceleration>=0);
 
@@ -869,7 +869,7 @@ public:
 		m_angularLimit = inputdata.value.Float();
 	}
 
-private:	
+private:
 	friend CBaseEntity *CreateKeepUpright( const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner, float flAngularLimit, bool bActive );
 
 	Vector						m_worldGoalAxis;
@@ -942,7 +942,7 @@ void CKeepUpright::Spawn()
 void CKeepUpright::Activate()
 {
 	BaseClass::Activate();
-	
+
 	if ( !m_pController )
 	{
 		// This case occurs when spawning
@@ -1075,4 +1075,3 @@ AngularImpulse ComputeRotSpeedToAlignAxes( const Vector &testAxis, const Vector 
 
 	return angular * len;
 }
-

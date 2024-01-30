@@ -24,23 +24,23 @@
 // add and remove elements, and to iterate over all elements in a bucket.
 //
 // For this to work, you must initialize the set with two functions one that
-// maps from bucket to the index of the first element in that bucket, and one 
+// maps from bucket to the index of the first element in that bucket, and one
 // that maps from element to the index of the first bucket that element lies in.
 // The set will completely manage the index, it's just expected that those
 // indices will be stored outside the set.
 //
-// S is the storage type of the index; it is the type that you may use to 
+// S is the storage type of the index; it is the type that you may use to
 // save indices into memory. I is the local iterator type, which you should
-// use in any local scope (eg, inside a for() loop.) The reason for this is 
+// use in any local scope (eg, inside a for() loop.) The reason for this is
 // that you may wish to use unsigned shorts inside the structs you are
 // saving with a CBidirectionalSet; but 16-bit arithmetic is catastrophically
 // slow on a PowerPC -- during testing we saw CBidirectionalSet:: operations
 // consume as much as 8% of the frame.
-// 
+//
 // For this reason, on the 360, the handles have been typedef'd to native
-// register types (U32) which are accepted as parameters by the functions. 
+// register types (U32) which are accepted as parameters by the functions.
 // The implicit assumption is that CBucketHandle and CElementHandle can
-// be safely cast to ints! You can increase to U64 without performance 
+// be safely cast to ints! You can increase to U64 without performance
 // penalty if necessary; the PowerPC is a 64-bit processor.
 //-----------------------------------------------------------------------------
 template< class CBucketHandle, class CElementHandle, class S, class I = S >
@@ -76,7 +76,7 @@ public:
 	// Test if an element is in a particular bucket.
 	// NOTE: EXPENSIVE!!!
 	bool IsElementInBucket( CBucketHandlePram bucket, CElementHandlePram element );
-	
+
 	// Remove an element from a particular bucket
 	void RemoveElementFromBucket( CBucketHandlePram bucket, CElementHandlePram element );
 
@@ -117,7 +117,7 @@ private:
 		S				m_ElementListIndex;	// what's the m_ElementsInBucket index of the entry?
 	};
 
-	// Maintains a list of all elements in a particular bucket 
+	// Maintains a list of all elements in a particular bucket
 	CUtlLinkedList< BucketListInfo_t, S, true, I >	m_ElementsInBucket;
 
 	// Maintains a list of all buckets a particular element lives in
@@ -180,7 +180,7 @@ void CBidirectionalSet<CBucketHandle,CElementHandle,S,I>::ValidateAddElementToBu
 #endif
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Adds an element to the bucket
 //-----------------------------------------------------------------------------
@@ -259,7 +259,7 @@ void CBidirectionalSet<CBucketHandle,CElementHandle,S,I>::RemoveElement( CElemen
 	while (i != m_BucketsUsedByElement.InvalidIndex())
 	{
 		CBucketHandlePram bucket = m_BucketsUsedByElement[i].m_Bucket;
-		I elementListIndex = m_BucketsUsedByElement[i].m_ElementListIndex; 
+		I elementListIndex = m_BucketsUsedByElement[i].m_ElementListIndex;
 
 		// Unhook the element from the bucket's list of elements
 		if (elementListIndex == m_FirstElement(bucket))
@@ -286,7 +286,7 @@ void CBidirectionalSet<CBucketHandle,CElementHandle,S,I>::RemoveBucket( CBucketH
 	while (i != m_ElementsInBucket.InvalidIndex())
 	{
 		CElementHandlePram element = m_ElementsInBucket[i].m_Element;
-		I bucketListIndex = m_ElementsInBucket[i].m_BucketListIndex; 
+		I bucketListIndex = m_ElementsInBucket[i].m_BucketListIndex;
 
 		// Unhook the bucket from the element's list of buckets
 		if (bucketListIndex == m_FirstBucket(element))
@@ -390,5 +390,5 @@ inline CBucketHandle CBidirectionalSet<CBucketHandle,CElementHandle,S,I>::Bucket
 {
 	return m_BucketsUsedByElement[idx].m_Bucket;
 }
-   
+
 #endif // UTLBIDIRECTIONALSET_H

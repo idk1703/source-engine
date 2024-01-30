@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -88,7 +88,7 @@ BEGIN_VS_SHADER( WorldVertexTransition_DX8,
 				params[ENVMAP]->SetUndefined();
 			}
 		}
-		
+
 		if( !params[ENVMAPMASKSCALE]->IsDefined() )
 		{
 			params[ENVMAPMASKSCALE]->SetFloatValue( 1.0f );
@@ -118,7 +118,7 @@ BEGIN_VS_SHADER( WorldVertexTransition_DX8,
 		{
 			params[ENVMAPMASKFRAME]->SetIntValue( 0 );
 		}
-		
+
 		if( !params[ENVMAPFRAME]->IsDefined() )
 		{
 			params[ENVMAPFRAME]->SetIntValue( 0 );
@@ -133,12 +133,12 @@ BEGIN_VS_SHADER( WorldVertexTransition_DX8,
 		{
 			params[ENVMAPCONTRAST]->SetFloatValue( 0.0f );
 		}
-		
+
 		if( !params[ENVMAPSATURATION]->IsDefined() )
 		{
 			params[ENVMAPSATURATION]->SetFloatValue( 1.0f );
 		}
-		
+
 		// No texture means no self-illum or env mask in base alpha
 		if ( !params[BASETEXTURE]->IsDefined() )
 		{
@@ -189,7 +189,7 @@ BEGIN_VS_SHADER( WorldVertexTransition_DX8,
 
 		if( params[SSBUMP]->IsDefined() && params[SSBUMP]->GetIntValue() != 0 )
 		{
-			// turn of normal mapping since we have ssbump defined, which 
+			// turn of normal mapping since we have ssbump defined, which
 			// means that we didn't make a dx8 fallback for this material.
 			params[BUMPMAP]->SetUndefined();
 		}
@@ -211,7 +211,7 @@ BEGIN_VS_SHADER( WorldVertexTransition_DX8,
 		{
 			LoadTexture( DETAIL );
 		}
-		
+
 		if ( g_pHardwareConfig->SupportsPixelShaders_1_4() && params[BLENDMODULATETEXTURE]->IsDefined() )
 		{
 			LoadTexture( BLENDMODULATETEXTURE );
@@ -254,9 +254,9 @@ BEGIN_VS_SHADER( WorldVertexTransition_DX8,
 
 			writevertexalphatodestalpha_vs11_Static_Index vshIndex;
 			pShaderShadow->SetVertexShader( "writevertexalphatodestalpha_vs11", vshIndex.GetIndex() );
-		
+
 			pShaderShadow->SetPixelShader( "writevertexalphatodestalpha_ps11" );
-			pShaderShadow->VertexShaderVertexFormat( 
+			pShaderShadow->VertexShaderVertexFormat(
 				VERTEX_POSITION | VERTEX_COLOR, 2, 0, 0 );
 		}
 		else
@@ -270,13 +270,13 @@ BEGIN_VS_SHADER( WorldVertexTransition_DX8,
 	void DrawFlashlightPass( IMaterialVar** params, IShaderDynamicAPI *pShaderAPI, IShaderShadow* pShaderShadow, int passID )
 	{
 		bool bBump = ( passID == 0 ) && ShouldUseBumpmapping( params ) && params[BUMPMAP]->IsTexture();
-		DrawFlashlight_dx80( params, pShaderAPI, pShaderShadow, bBump, BUMPMAP, BUMPFRAME, BUMPTRANSFORM, 
+		DrawFlashlight_dx80( params, pShaderAPI, pShaderShadow, bBump, BUMPMAP, BUMPFRAME, BUMPTRANSFORM,
 			FLASHLIGHTTEXTURE, FLASHLIGHTTEXTUREFRAME, true, true, passID, BASETEXTURE2, FRAME2 );
 	}
 
-	bool ShouldUseBumpmapping( IMaterialVar **params ) 
-	{ 
-		return g_pConfig->UseBumpmapping() && params[BUMPMAP]->IsDefined(); 
+	bool ShouldUseBumpmapping( IMaterialVar **params )
+	{
+		return g_pConfig->UseBumpmapping() && params[BUMPMAP]->IsDefined();
 	}
 
 	void DrawFlashlight( IMaterialVar** params, IShaderDynamicAPI *pShaderAPI, IShaderShadow* pShaderShadow )
@@ -285,7 +285,7 @@ BEGIN_VS_SHADER( WorldVertexTransition_DX8,
 		DrawFlashlightPass( params, pShaderAPI, pShaderShadow, 0 );
 		DrawFlashlightPass( params, pShaderAPI, pShaderShadow, 1 );
 	}
-	
+
 	SHADER_DRAW
 	{
 		bool bLightingOnly = mat_fullbright.GetInt() == 2 && !IS_FLAG_SET( MATERIAL_VAR_NO_DEBUG_OVERRIDE );
@@ -306,7 +306,7 @@ BEGIN_VS_SHADER( WorldVertexTransition_DX8,
 				pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
 				pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );
 				pShaderShadow->EnableTexture( SHADER_SAMPLER2, true );
-				
+
 				// lightmap
 				pShaderShadow->EnableTexture( SHADER_SAMPLER3, true );
 
@@ -407,7 +407,7 @@ BEGIN_VS_SHADER( WorldVertexTransition_DX8,
 					pshIndex += bBlendModulate ? 2 : 0;
 					pShaderShadow->SetPixelShader( "WorldVertexTransition_ps14", pshIndex );
 				}
-			
+
 				FogToFogColor();
 			}
 
@@ -435,7 +435,7 @@ BEGIN_VS_SHADER( WorldVertexTransition_DX8,
 
 				// always set the transform for detail textures since I'm assuming that you'll
 				// always have a detailscale.
-				// go ahead and set this even if we don't have a detail texture so the vertex shader doesn't 
+				// go ahead and set this even if we don't have a detail texture so the vertex shader doesn't
 				// barf chunks with unitialized data.
 				SetVertexShaderTextureScaledTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_4, BASETEXTURETRANSFORM, DETAILSCALE );
 
@@ -446,9 +446,9 @@ BEGIN_VS_SHADER( WorldVertexTransition_DX8,
 
 				// Texture 3 = lightmap
 				pShaderAPI->BindStandardTexture( SHADER_SAMPLER2, TEXTURE_LIGHTMAP );
-				
+
 				EnablePixelShaderOverbright( 0, true, true );
-				
+
 				SetVertexShaderTextureTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, BASETEXTURETRANSFORM );
 				SetVertexShaderTextureTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_2, BASETEXTURETRANSFORM2 );
 				if ( !bSupports14 )
@@ -471,7 +471,7 @@ BEGIN_VS_SHADER( WorldVertexTransition_DX8,
 			if( params[BUMPBASETEXTURE2WITHBUMPMAP]->GetIntValue() )
 			{
 				DrawWorldBumpedUsingVertexShader( BASETEXTURE, BASETEXTURETRANSFORM,
-					BUMPMAP, BUMPFRAME, BUMPTRANSFORM, ENVMAPMASK, ENVMAPMASKFRAME, ENVMAP, 
+					BUMPMAP, BUMPFRAME, BUMPTRANSFORM, ENVMAPMASK, ENVMAPMASKFRAME, ENVMAP,
 					ENVMAPFRAME, ENVMAPTINT, COLOR, ALPHA, ENVMAPCONTRAST, ENVMAPSATURATION, FRAME,
 					FRESNELREFLECTION, true, BASETEXTURE2, BASETEXTURETRANSFORM2, FRAME2, false );
 			}
@@ -492,7 +492,7 @@ BEGIN_VS_SHADER( WorldVertexTransition_DX8,
 				{
 					pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
 					pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );
-					pShaderShadow->VertexShaderVertexFormat( 
+					pShaderShadow->VertexShaderVertexFormat(
 						VERTEX_POSITION | VERTEX_COLOR, 2, 0, 0 );
 					pShaderShadow->EnableBlending( true );
 					pShaderShadow->BlendFunc( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE_MINUS_SRC_ALPHA );
@@ -519,7 +519,7 @@ BEGIN_VS_SHADER( WorldVertexTransition_DX8,
 						BindTexture( SHADER_SAMPLER0, BASETEXTURE2, FRAME2 );
 					}
 					pShaderAPI->BindStandardTexture( SHADER_SAMPLER1, TEXTURE_LIGHTMAP );
-					
+
 					float half[4] = { 0.5f, 0.5f, 0.5f, 0.5f };
 					pShaderAPI->SetPixelShaderConstant( 4, half );
 					EnablePixelShaderOverbright( 0, true, true );
@@ -534,4 +534,3 @@ BEGIN_VS_SHADER( WorldVertexTransition_DX8,
 		}
 	}
 END_SHADER
-

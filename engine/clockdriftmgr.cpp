@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,14 +20,14 @@ ConVar cl_clock_showdebuginfo( "cl_clock_showdebuginfo", "0", FCVAR_CHEAT, "Show
 
 ConVar cl_clock_correction_force_server_tick( "cl_clock_correction_force_server_tick", "999", FCVAR_CHEAT, "Force clock correction to match the server tick + this offset (-999 disables it)."  );
 
-ConVar cl_clock_correction_adjustment_max_amount( "cl_clock_correction_adjustment_max_amount", "200", FCVAR_CHEAT, 
+ConVar cl_clock_correction_adjustment_max_amount( "cl_clock_correction_adjustment_max_amount", "200", FCVAR_CHEAT,
 	"Sets the maximum number of milliseconds per second it is allowed to correct the client clock. "
 	"It will only correct this amount if the difference between the client and server clock is equal to or larger than cl_clock_correction_adjustment_max_offset." );
 
-ConVar cl_clock_correction_adjustment_min_offset( "cl_clock_correction_adjustment_min_offset", "10", FCVAR_CHEAT, 
+ConVar cl_clock_correction_adjustment_min_offset( "cl_clock_correction_adjustment_min_offset", "10", FCVAR_CHEAT,
 	"If the clock offset is less than this amount (in milliseconds), then no clock correction is applied." );
 
-ConVar cl_clock_correction_adjustment_max_offset( "cl_clock_correction_adjustment_max_offset", "90", FCVAR_CHEAT, 
+ConVar cl_clock_correction_adjustment_max_offset( "cl_clock_correction_adjustment_max_offset", "90", FCVAR_CHEAT,
 	"As the clock offset goes from cl_clock_correction_adjustment_min_offset to this value (in milliseconds), "
 	"it moves towards applying cl_clock_correction_adjustment_max_amount of adjustment. That way, the response "
 	"is small when the offset is small." );
@@ -46,7 +46,7 @@ static float GetClockAdjustmentAmount( float flCurDiffInMS )
 
 	return flReturnValue;
 }
-	 
+
 
 // -------------------------------------------------------------------------------------------------- /
 // CClockDriftMgr implementation.
@@ -81,17 +81,17 @@ void CClockDriftMgr::SetServerTick( int nTick )
 #if !defined( SWDS )
 	m_nServerTick = nTick;
 
-	int nMaxDriftTicks = IsEngineThreaded() ? 
+	int nMaxDriftTicks = IsEngineThreaded() ?
 		TIME_TO_TICKS( (cl_clockdrift_max_ms_threadmode.GetFloat() / 1000.0) ) :
 		TIME_TO_TICKS( (cl_clockdrift_max_ms.GetFloat() / 1000.0) );
 
 	int clientTick = cl.GetClientTickCount() + g_ClientGlobalVariables.simTicksThisFrame - 1;
 	if ( cl_clock_correction_force_server_tick.GetInt() == 999 )
 	{
-		// If this is the first tick from the server, or if we get further than cl_clockdrift_max_ticks off, then 
+		// If this is the first tick from the server, or if we get further than cl_clockdrift_max_ticks off, then
 		// use the old behavior and slam the server's tick into the client tick.
 		if ( !IsClockCorrectionEnabled() ||
-			 clientTick == 0 || 
+			 clientTick == 0 ||
 			 abs(nTick - clientTick) > nMaxDriftTicks
 			)
 		{
@@ -120,7 +120,7 @@ float CClockDriftMgr::AdjustFrameTime( float inputFrameTime )
 {
 	float flAdjustmentThisFrame = 0;
 	float flAdjustmentPerSec = 0;
-	if ( IsClockCorrectionEnabled() 
+	if ( IsClockCorrectionEnabled()
 #if !defined( _XBOX ) && !defined( SWDS )
 		 && !demoplayer->IsPlayingBack()
 #endif
@@ -205,7 +205,7 @@ void CClockDriftMgr::AdjustAverageDifferenceBy( float flAmountInSeconds )
 
 	for ( int i=0; i < NUM_CLOCKDRIFT_SAMPLES; i++ )
 		m_ClockOffsets[i] *= factor;
-	
+
 	Assert( fabs( GetCurrentClockDifference() - (c + flAmountInTicks) ) < 0.001f );
 }
 
@@ -234,7 +234,7 @@ bool CClockDriftMgr::IsClockCorrectionEnabled()
 	}
 
 	// Only in multi-threaded client/server OR in multi player, but don't use it if we're the listen server w/ no fake lag
-	return cl_clock_correction.GetInt() && 
-		( IsEngineThreaded() ||	bWantsClockDriftMgr );		
+	return cl_clock_correction.GetInt() &&
+		( IsEngineThreaded() ||	bWantsClockDriftMgr );
 #endif
 }

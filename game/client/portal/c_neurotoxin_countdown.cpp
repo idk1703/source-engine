@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -37,7 +37,7 @@ int C_NeurotoxinCountdown::GetMinutes( void )
 	C_BasePlayer *player = UTIL_PlayerByIndex( 1 );
 	if ( player )
 		return player->GetBonusProgress() / 60;
-	
+
 	return 0.0f;
 }
 

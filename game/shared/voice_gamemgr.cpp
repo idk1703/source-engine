@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -58,7 +58,7 @@ static CBasePlayer* FindPlayerByName(const char *pTestName)
 		{
 			CBaseEntity *pEnt = CBaseEntity::Instance(pEdict);
 			if(pEnt && pEnt->IsPlayer())
-			{			
+			{
 				const char *pNetName = STRING(pEnt->GetEntityName());
 				if(stricmp(pNetName, pTestName) == 0)
 				{
@@ -114,7 +114,7 @@ CVoiceGameMgr::~CVoiceGameMgr()
 bool CVoiceGameMgr::Init(
 	IVoiceGameMgrHelper *pHelper,
 	int maxClients)
-{		  
+{
 	m_pHelper = pHelper;
 	m_nMaxPlayers = VOICE_MAX_PLAYERS < maxClients ? VOICE_MAX_PLAYERS : maxClients;
 
@@ -142,7 +142,7 @@ void CVoiceGameMgr::Update(double frametime)
 void CVoiceGameMgr::ClientConnected(struct edict_t *pEdict)
 {
 	int index = ENTINDEX(pEdict) - 1;
-	
+
 	// Clear out everything we use for deltas on this guy.
 	g_bWantModEnable[index] = true;
 	g_SentGameRulesMasks[index].Init(0);
@@ -179,7 +179,7 @@ bool CVoiceGameMgr::ClientCommand( CBasePlayer *pPlayer, const CCommand &args )
 		}
 
 		// Force it to update the masks now.
-		//UpdateMasks();		
+		//UpdateMasks();
 		return true;
 	}
 	else if(stricmp( args[0], "VModEnable") == 0 && args.ArgC() >= 2)
@@ -187,7 +187,7 @@ bool CVoiceGameMgr::ClientCommand( CBasePlayer *pPlayer, const CCommand &args )
 		VoiceServerDebug( "CVoiceGameMgr::ClientCommand: VModEnable (%d)\n", !!atoi( args[1] ) );
 		g_PlayerModEnable[playerClientIndex] = !!atoi( args[1] );
 		g_bWantModEnable[playerClientIndex] = false;
-		//UpdateMasks();		
+		//UpdateMasks();
 		return true;
 	}
 	else
@@ -232,7 +232,7 @@ void CVoiceGameMgr::UpdateMasks()
 			for(int iOtherClient=0; iOtherClient < m_nMaxPlayers; iOtherClient++)
 			{
 				CBaseEntity *pEnt = UTIL_PlayerByIndex(iOtherClient+1);
-				if(pEnt && pEnt->IsPlayer() && 
+				if(pEnt && pEnt->IsPlayer() &&
 					(bAllTalk || m_pHelper->CanPlayerHearPlayer(pPlayer, (CBasePlayer*)pEnt, bProximity )) )
 				{
 					gameRulesMask[iOtherClient] = true;
@@ -241,8 +241,8 @@ void CVoiceGameMgr::UpdateMasks()
 			}
 		}
 
-		// If this is different from what the client has, send an update. 
-		if(gameRulesMask != g_SentGameRulesMasks[iClient] || 
+		// If this is different from what the client has, send an update.
+		if(gameRulesMask != g_SentGameRulesMasks[iClient] ||
 			g_BanMasks[iClient] != g_SentBanMasks[iClient])
 		{
 			g_SentGameRulesMasks[iClient] = gameRulesMask;

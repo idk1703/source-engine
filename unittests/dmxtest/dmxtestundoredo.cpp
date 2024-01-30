@@ -34,8 +34,8 @@ bool AssertUnEqualElementHierarchies( CDmElement *src1, CDmElement *src2 )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void DescribeUndo()
 {
@@ -622,7 +622,7 @@ void RunUndoTests( CUtlVector< DmElementHandle_t >& handles, CDmElement *pTest, 
 
 		AssertEqualElementHierarchies( false, pTest, pOriginal );
 	}
-	
+
 	// Now run a test with multiple items in the stack
 	{
 		// Push 1
@@ -725,7 +725,7 @@ DEFINE_TESTCASE_NOSUITE( DmxUndoRedoTest )
 	DmFileId_t fileid = g_pDataModel->FindOrCreateFileId( "<DmxUndoRedoTest>" );
 	CUtlVector< DmElementHandle_t > handles;
 	CreateTestScene( handles, fileid );
-	DmElementHandle_t hOriginal = handles[ 0 ]; 
+	DmElementHandle_t hOriginal = handles[ 0 ];
 	handles.RemoveAll();
 	CreateTestScene( handles, fileid );
 	DmElementHandle_t hTest = handles[ 0 ];

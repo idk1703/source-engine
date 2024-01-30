@@ -44,7 +44,7 @@ static SpewRetval_t SpewStdout( SpewType_t spewType, char const *pMsg )
 	printf( pMsg );
 	fflush( stdout );
 
-	return ( spewType == SPEW_ASSERT ) ? SPEW_DEBUGGER : SPEW_CONTINUE; 
+	return ( spewType == SPEW_ASSERT ) ? SPEW_DEBUGGER : SPEW_CONTINUE;
 }
 
 
@@ -77,7 +77,7 @@ bool CMkEntityPatchApp::Create()
 {
 	SpewOutputFunc( SpewStdout );
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "p4lib.dll",				P4_INTERFACE_VERSION },
 		{ "", "" }	// Required to terminate the list
@@ -183,7 +183,7 @@ entity_t *FindEntity( KeyValues *pEntity )
 				{
 					//Warning( "Encountered multiple entities that matched targetname %s!\n", pTargetName );
 					//return false;
-					nMatch = -1; // force a fallback to scanning classname and origin 
+					nMatch = -1; // force a fallback to scanning classname and origin
 					break;
 				}
 				else
@@ -318,7 +318,7 @@ int CMkEntityPatchApp::Main()
 	g_pFileSystem = g_pFullFileSystem;
 
 	// This bit of hackery allows us to access files on the harddrive
-	g_pFullFileSystem->AddSearchPath( "", "LOCAL", PATH_ADD_TO_HEAD ); 
+	g_pFullFileSystem->AddSearchPath( "", "LOCAL", PATH_ADD_TO_HEAD );
 
 	if ( CommandLine()->CheckParm( "-h" ) || CommandLine()->CheckParm( "-help" ) || CommandLine()->ParmCount() == 1 )
 	{
@@ -374,7 +374,7 @@ int CMkEntityPatchApp::Main()
 		epair_t *pNext = NULL;
 		epair_t *pPrev = NULL;
 		for ( epair_t *e = pCur->epairs; e; e = pNext )
-		{	
+		{
 			pNext = e->next;
 			e->next = pPrev;
 			pPrev = e;

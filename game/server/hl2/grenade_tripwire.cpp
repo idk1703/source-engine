@@ -18,7 +18,7 @@
 #include "tier0/memdbgon.h"
 
 ConVar    sk_dmg_tripwire		( "sk_dmg_tripwire","0");
-ConVar    sk_tripwire_radius	( "sk_tripwire_radius","0"); 
+ConVar    sk_tripwire_radius	( "sk_tripwire_radius","0");
 
 #define GRENADETRIPWIRE_MISSILEMDL	"models/Weapons/ar2_grenade.mdl"
 
@@ -64,11 +64,11 @@ void CTripwireGrenade::Spawn( void )
 	SetModel( "models/Weapons/w_slam.mdl" );
 
 	m_nMissileCount	= 0;
-	
+
 	UTIL_SetSize(this, Vector( -4, -4, -2), Vector(4, 4, 2));
 
 	m_flPowerUp = gpGlobals->curtime + 1.2;//<<CHECK>>get rid of this
-	
+
 	SetThink( WarningThink );
 	SetNextThink( gpGlobals->curtime + 1.0f );
 
@@ -89,7 +89,7 @@ void CTripwireGrenade::Spawn( void )
 
 void CTripwireGrenade::Precache( void )
 {
-	PrecacheModel("models/Weapons/w_slam.mdl"); 
+	PrecacheModel("models/Weapons/w_slam.mdl");
 
 	PrecacheModel(GRENADETRIPWIRE_MISSILEMDL);
 }
@@ -195,7 +195,7 @@ void CTripwireGrenade::RopeBreakThink( void  )
 		BreakRope();
 		m_vTargetPos = m_pHook->GetAbsOrigin();
 		CrossProduct ( m_vecDir, Vector(0,0,1), m_vTargetOffset );
-		m_vTargetOffset *=TGRENADE_MISSILE_OFFSET; 
+		m_vTargetOffset *=TGRENADE_MISSILE_OFFSET;
 		SetThink(FireThink);
 		FireThink();
 	}
@@ -214,7 +214,7 @@ void CTripwireGrenade::RopeBreakThink( void  )
 		BreakRope();
 		m_vTargetPos = tr.endpos;
 		CrossProduct ( m_vecDir, Vector(0,0,1), m_vTargetOffset );
-		m_vTargetOffset *=TGRENADE_MISSILE_OFFSET; 
+		m_vTargetOffset *=TGRENADE_MISSILE_OFFSET;
 		SetThink(FireThink);
 		FireThink();
 		return;
@@ -349,7 +349,7 @@ bool CTripwireHook::CreateVPhysics()
 {
 	// Create the object in the physics system
 	IPhysicsObject *pPhysicsObject = VPhysicsInitNormal( SOLID_BBOX, 0, false );
-	
+
 	// Make sure I get touch called for static geometry
 	if ( pPhysicsObject )
 	{

@@ -48,8 +48,8 @@ protected:
 	int		m_iPlayerC4;	// entity index of C4 carrier or 0
 	int		m_iPlayerVIP;	// entity index of VIP player or 0
 	Vector	m_vecC4;		// position of C4
-	Vector	m_bombsiteCenterA;	
-	Vector	m_bombsiteCenterB;	
+	Vector	m_bombsiteCenterA;
+	Vector	m_bombsiteCenterB;
 
 	bool	m_bHostageAlive[MAX_HOSTAGES];
 	bool	m_isHostageFollowingSomeone[MAX_HOSTAGES];
@@ -68,7 +68,7 @@ protected:
 
 	char	m_szClan[MAX_PLAYERS+1][MAX_CLAN_TAG_LENGTH];
 
-	int		m_iMVPs[ MAX_PLAYERS + 1 ];	 
+	int		m_iMVPs[ MAX_PLAYERS + 1 ];
 	bool	m_bHasDefuser[ MAX_PLAYERS + 1 ];
 };
 

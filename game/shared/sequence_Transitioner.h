@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -17,10 +17,10 @@
 class CSequenceTransitioner
 {
 public:
-	void CheckForSequenceChange( 
+	void CheckForSequenceChange(
 		// Describe the current animation state with these parameters.
 		CStudioHdr *hdr,
-		int nCurSequence, 
+		int nCurSequence,
 
 		// Even if the sequence hasn't changed, you can force it to interpolate from the previous
 		// spot in the same sequence to the current spot in the same sequence by setting this to true.
@@ -30,10 +30,10 @@ public:
 		bool bInterpolate
 		);
 
-	void UpdateCurrent( 
+	void UpdateCurrent(
 		// Describe the current animation state with these parameters.
 		CStudioHdr *hdr,
-		int nCurSequence, 
+		int nCurSequence,
 		float flCurCycle,
 		float flCurPlaybackRate,
 		float flCurTime

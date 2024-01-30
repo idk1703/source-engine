@@ -139,7 +139,7 @@ C_SteamJet::C_SteamJet()
 {
 	m_pParticleMgr = NULL;
 	m_MaterialHandle = INVALID_MATERIAL_HANDLE;
-	
+
 	m_SpreadSpeed = 15;
 	m_Speed = 120;
 	m_StartSize = 10;
@@ -164,7 +164,7 @@ C_SteamJet::~C_SteamJet()
 
 //-----------------------------------------------------------------------------
 // Purpose: Called after a data update has occured
-// Input  : bnewentity - 
+// Input  : bnewentity -
 //-----------------------------------------------------------------------------
 void C_SteamJet::OnDataChanged(DataUpdateType_t updateType)
 {
@@ -183,13 +183,13 @@ void C_SteamJet::OnDataChanged(DataUpdateType_t updateType)
 
 //-----------------------------------------------------------------------------
 // Purpose: Starts the effect
-// Input  : *pParticleMgr - 
-//			*pArgs - 
+// Input  : *pParticleMgr -
+//			*pArgs -
 //-----------------------------------------------------------------------------
 void C_SteamJet::Start(CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs)
 {
 	pParticleMgr->AddEffect( &m_ParticleEffect, this );
-	
+
 	switch(m_nType)
 	{
 	case STEAM_NORMAL:
@@ -211,9 +211,9 @@ void C_SteamJet::Start(CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : **ppTable - 
-//			**ppObj - 
+// Purpose:
+// Input  : **ppTable -
+//			**ppObj -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_SteamJet::GetPropEditInfo( RecvTable **ppTable, void **ppObj )
@@ -243,7 +243,7 @@ void CalcFastApproximateRenderBoundsAABB( C_BaseEntity *pEnt, float flBloatSize,
 	}
 	else
 	{
-		// Start out with our own render bounds. Since we don't have a parent, this won't incur any nasty 
+		// Start out with our own render bounds. Since we don't have a parent, this won't incur any nasty
 		pEnt->GetRenderBoundsWorldspace( *pMin, *pMax );
 	}
 
@@ -258,8 +258,8 @@ void CalcFastApproximateRenderBoundsAABB( C_BaseEntity *pEnt, float flBloatSize,
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fTimeDelta - 
+// Purpose:
+// Input  : fTimeDelta -
 //-----------------------------------------------------------------------------
 
 void C_SteamJet::Update(float fTimeDelta)
@@ -281,7 +281,7 @@ void C_SteamJet::Update(float fTimeDelta)
 		if ( nToEmit > 0 )
 		{
 			Vector forward, right, up;
-			AngleVectors(GetAbsAngles(), &forward, &right, &up);			
+			AngleVectors(GetAbsAngles(), &forward, &right, &up);
 
 			// Legacy env_steamjet entities faced left instead of forward.
 			if (m_bFaceLeft)
@@ -307,12 +307,12 @@ void C_SteamJet::Update(float fTimeDelta)
 					if( SteamJetParticle *pParticle = (SteamJetParticle*) m_ParticleEffect.AddParticle( sizeof(SteamJetParticle), m_MaterialHandle ) )
 					{
 						pParticle->m_Pos = GetAbsOrigin();
-						
-						pParticle->m_Velocity = 
+
+						pParticle->m_Velocity =
 							FRand(-m_SpreadSpeed,m_SpreadSpeed) * right +
 							FRand(-m_SpreadSpeed,m_SpreadSpeed) * up +
 							m_Speed * forward;
-						
+
 						pParticle->m_Lifetime	= 0;
 						pParticle->m_DieTime	= m_Lifetime;
 
@@ -326,7 +326,7 @@ void C_SteamJet::Update(float fTimeDelta)
 			}
 
 			UpdateLightingRamp();
-		}	
+		}
 	}
 }
 
@@ -334,7 +334,7 @@ void C_SteamJet::Update(float fTimeDelta)
 // Render a quad on the screen where you pass in color and size.
 // Normal is random and "flutters"
 inline void RenderParticle_ColorSizePerturbNormal(
-	ParticleDraw* pDraw,									
+	ParticleDraw* pDraw,
 	const Vector &pos,
 	const Vector &color,
 	const float alpha,
@@ -356,9 +356,9 @@ inline void RenderParticle_ColorSizePerturbNormal(
 	ubColor[3] = (unsigned char)RoundFloatToInt( alpha * 254.9f );
 
 	Vector vNorm;
-	
+
 	vNorm.Random( -1.0f, 1.0f );
-	
+
 	// Add the 4 corner vertices.
 	pBuilder->Position3f( pos.x-size, pos.y-size, pos.z );
 	pBuilder->Color4ubv( ubColor );
@@ -400,7 +400,7 @@ void C_SteamJet::RenderParticles( CParticleRenderIterator *pIterator )
 		float fRamp = lifetimeT * (STEAMJET_NUMRAMPS-1);
 		int iRamp = (int)fRamp;
 		float fraction = fRamp - iRamp;
-		
+
 		Vector vRampColor = m_Ramps[iRamp] + (m_Ramps[iRamp+1] - m_Ramps[iRamp]) * fraction;
 
 		vRampColor[0] = MIN( 1.0f, vRampColor[0] );
@@ -446,7 +446,7 @@ void C_SteamJet::SimulateParticles( CParticleSimulateIterator *pIterator )
 	{
 		// Should this particle die?
 		pParticle->m_Lifetime += pIterator->GetTimeDelta();
-		
+
 		if( pParticle->m_Lifetime > pParticle->m_DieTime )
 		{
 			pIterator->RemoveParticle( pParticle );
@@ -464,7 +464,7 @@ void C_SteamJet::SimulateParticles( CParticleSimulateIterator *pIterator )
 
 void C_SteamJet::UpdateLightingRamp()
 {
-	if( VectorsAreEqual( m_vLastRampUpdatePos, GetAbsOrigin(), 0.1 ) && 
+	if( VectorsAreEqual( m_vLastRampUpdatePos, GetAbsOrigin(), 0.1 ) &&
 		QAnglesAreEqual( m_vLastRampUpdateAngles, GetAbsAngles(), 0.1 ) )
 	{
 		return;
@@ -492,10 +492,10 @@ void C_SteamJet::UpdateLightingRamp()
 	{
 		float t = (float)iRamp / (STEAMJET_NUMRAMPS-1);
 		Vector vTestPos = startPos + (endPos - startPos) * t;
-		
+
 		Vector *pRamp = &m_Ramps[iRamp];
 		*pRamp = WorldGetLightForPoint(vTestPos, false);
-		
+
 		if ( IsEmissive() )
 		{
 			pRamp->x += (m_clrRender->r/255.0f);
@@ -521,5 +521,3 @@ void C_SteamJet::UpdateLightingRamp()
 		}
 	}
 }
-
-

@@ -66,15 +66,15 @@ class CWeaponEgon : public CBaseHL1MPCombatWeapon
 	DECLARE_CLASS( CWeaponEgon, CBaseHL1MPCombatWeapon );
 public:
 
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
-    CWeaponEgon(void);
+	CWeaponEgon(void);
 
 	virtual bool	Deploy( void );
 	void	PrimaryAttack( void );
-    virtual void    Precache( void );
-    
+	virtual void    Precache( void );
+
 	void	SecondaryAttack( void )
 	{
 		PrimaryAttack();
@@ -83,8 +83,8 @@ public:
 	void	WeaponIdle( void );
 	bool	Holster( CBaseCombatWeapon *pSwitchingTo = NULL );
 
-    //	DECLARE_SERVERCLASS();
-    //	DECLARE_DATADESC();
+	//	DECLARE_SERVERCLASS();
+	//	DECLARE_DATADESC();
 
 private:
 	bool	HasAmmo( void );
@@ -109,7 +109,7 @@ private:
 IMPLEMENT_NETWORKCLASS_ALIASED( WeaponEgon, DT_WeaponEgon );
 
 BEGIN_NETWORK_TABLE( CWeaponEgon, DT_WeaponEgon )
-END_NETWORK_TABLE()    
+END_NETWORK_TABLE()
 
 BEGIN_PREDICTION_DATA( CWeaponEgon )
 END_PREDICTION_DATA()
@@ -122,7 +122,7 @@ IMPLEMENT_SERVERCLASS_ST( CWeaponEgon, DT_WeaponEgon )
 END_SEND_TABLE()
 */
 
-    /*
+	/*
 BEGIN_DATADESC( CWeaponEgon )
 	DEFINE_FIELD( m_fireState, FIELD_INTEGER ),
 	DEFINE_FIELD( m_flAmmoUseTime, FIELD_TIME ),
@@ -133,7 +133,7 @@ BEGIN_DATADESC( CWeaponEgon )
 	DEFINE_FIELD( m_hBeam, FIELD_EHANDLE ),
 	DEFINE_FIELD( m_hNoise, FIELD_EHANDLE ),
 END_DATADESC()
-    */
+	*/
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -145,13 +145,13 @@ CWeaponEgon::CWeaponEgon( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponEgon::Precache( void )
 {
-    PrecacheScriptSound( "Weapon_Gluon.Start" );
-    PrecacheScriptSound( "Weapon_Gluon.Run" );
-    PrecacheScriptSound( "Weapon_Gluon.Off" );
+	PrecacheScriptSound( "Weapon_Gluon.Start" );
+	PrecacheScriptSound( "Weapon_Gluon.Run" );
+	PrecacheScriptSound( "Weapon_Gluon.Off" );
 
 	PrecacheModel( EGON_BEAM_SPRITE );
 	PrecacheModel( EGON_FLARE_SPRITE );
@@ -239,10 +239,10 @@ void CWeaponEgon::PrimaryAttack( void )
 
 			m_flAmmoUseTime = gpGlobals->curtime;// start using ammo ASAP.
 
-            EmitSound( "Weapon_Gluon.Start" );                
+			EmitSound( "Weapon_Gluon.Start" );
 
 			SendWeaponAnim( ACT_VM_PRIMARYATTACK );
-						
+
 			m_flShakeTime = 0;
 			m_flStartFireTime = gpGlobals->curtime;
 
@@ -256,10 +256,10 @@ void CWeaponEgon::PrimaryAttack( void )
 		case FIRE_STARTUP:
 		{
 			Fire( vecSrc, vecAiming );
-		
+
 			if ( gpGlobals->curtime >= ( m_flStartFireTime + 2.0 ) )
 			{
-                EmitSound( "Weapon_Gluon.Run" );
+				EmitSound( "Weapon_Gluon.Run" );
 
 				m_fireState = FIRE_CHARGE;
 			}
@@ -274,7 +274,7 @@ void CWeaponEgon::PrimaryAttack( void )
 		case FIRE_CHARGE:
 		{
 			Fire( vecSrc, vecAiming );
-		
+
 			if ( !HasAmmo() )
 			{
 				EndAttack();
@@ -295,7 +295,7 @@ void CWeaponEgon::Fire( const Vector &vecOrigSrc, const Vector &vecDir )
 	}
 
 	//CSoundEnt::InsertSound( SOUND_COMBAT, GetAbsOrigin(), 450, 0.1 );
-    WeaponSound( SINGLE );
+	WeaponSound( SINGLE );
 
 	Vector vecDest	= vecOrigSrc + (vecDir * MAX_TRACE_LENGTH);
 
@@ -415,7 +415,7 @@ void CWeaponEgon::UpdateEffect( const Vector &startPoint, const Vector &endPoint
 
 void CWeaponEgon::CreateEffect( void )
 {
-#ifndef CLIENT_DLL    
+#ifndef CLIENT_DLL
 	CHL1_Player *pPlayer = ToHL1Player( GetOwner() );
 	if ( !pPlayer )
 	{
@@ -450,13 +450,13 @@ void CWeaponEgon::CreateEffect( void )
 	m_hSprite->SetTransparency( kRenderGlow, 255, 255, 255, 255, kRenderFxNoDissipation );
 	m_hSprite->AddSpawnFlags( SF_SPRITE_TEMPORARY );
 	m_hSprite->SetOwnerEntity( pPlayer );
-#endif    
+#endif
 }
 
 
 void CWeaponEgon::DestroyEffect( void )
 {
-#ifndef CLIENT_DLL    
+#ifndef CLIENT_DLL
 	if ( m_hBeam )
 	{
 		UTIL_Remove( m_hBeam );
@@ -477,11 +477,11 @@ void CWeaponEgon::DestroyEffect( void )
 
 void CWeaponEgon::EndAttack( void )
 {
-    StopSound( "Weapon_Gluon.Run" );
-	
+	StopSound( "Weapon_Gluon.Run" );
+
 	if ( m_fireState != FIRE_OFF )
 	{
-        EmitSound( "Weapon_Gluon.Off" );
+		EmitSound( "Weapon_Gluon.Off" );
 	}
 
 	SetWeaponIdleTime( gpGlobals->curtime + 2.0 );
@@ -495,7 +495,7 @@ void CWeaponEgon::EndAttack( void )
 
 bool CWeaponEgon::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
-    EndAttack();
+	EndAttack();
 
 	return BaseClass::Holster( pSwitchingTo );
 }
@@ -506,8 +506,8 @@ void CWeaponEgon::WeaponIdle( void )
 		return;
 
 	if ( m_fireState != FIRE_OFF )
-		 EndAttack();
-	
+		EndAttack();
+
 	int iAnim;
 
 	float flRand = random->RandomFloat( 0,1 );
@@ -517,7 +517,7 @@ void CWeaponEgon::WeaponIdle( void )
 		iAnim = ACT_VM_IDLE;
 		flIdleTime = gpGlobals->curtime + random->RandomFloat( 10, 15 );
 	}
-	else 
+	else
 	{
 		iAnim = ACT_VM_FIDGET;
 		flIdleTime = gpGlobals->curtime + 3.0;

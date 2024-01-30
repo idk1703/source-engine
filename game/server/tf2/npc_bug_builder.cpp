@@ -29,7 +29,7 @@
 #include "npc_bug_hole.h"
 
 ConVar	npc_bug_builder_health( "npc_bug_builder_health", "100" );
- 
+
 BEGIN_DATADESC( CNPC_Bug_Builder )
 
 	DEFINE_FIELD( m_flIdleDelay,		FIELD_FLOAT ),
@@ -82,7 +82,7 @@ enum BugTasks
 //==================================================
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CNPC_Bug_Builder::CNPC_Bug_Builder( void )
 {
@@ -93,7 +93,7 @@ CNPC_Bug_Builder::CNPC_Bug_Builder( void )
 //-----------------------------------------------------------------------------
 // Purpose: Setup our schedules and tasks, etc.
 //-----------------------------------------------------------------------------
-void CNPC_Bug_Builder::InitCustomSchedules( void ) 
+void CNPC_Bug_Builder::InitCustomSchedules( void )
 {
 	INIT_CUSTOM_AI( CNPC_Bug_Builder );
 
@@ -105,7 +105,7 @@ void CNPC_Bug_Builder::InitCustomSchedules( void )
 
 	// Conditions
 	ADD_CUSTOM_CONDITION( CNPC_Bug_Builder, COND_BBUG_RETURN_TO_BUGHOLE );
-		
+
 	// Tasks
 	ADD_CUSTOM_TASK( CNPC_Bug_Builder,	TASK_BBUG_GET_PATH_TO_FLEE );
 	ADD_CUSTOM_TASK( CNPC_Bug_Builder,	TASK_BBUG_GET_PATH_TO_BUGHOLE );
@@ -123,7 +123,7 @@ void CNPC_Bug_Builder::InitCustomSchedules( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Builder::Spawn( void )
 {
@@ -137,7 +137,7 @@ void CNPC_Bug_Builder::Spawn( void )
 	SetViewOffset( (WorldAlignMins() + WorldAlignMaxs()) * 0.5 );	// See from my center
 	SetDistLook( 1024.0 );
 	m_flNextDawdle = 0;
-	
+
 	SetNavType(NAV_GROUND);
 	m_NPCState		= NPC_STATE_NONE;
 	SetBloodColor( BLOOD_COLOR_YELLOW );
@@ -155,7 +155,7 @@ void CNPC_Bug_Builder::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Builder::Precache( void )
 {
@@ -168,7 +168,7 @@ void CNPC_Bug_Builder::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CNPC_Bug_Builder::SelectSchedule( void )
@@ -239,8 +239,8 @@ int CNPC_Bug_Builder::SelectSchedule( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Builder::StartTask( const Task_t *pTask )
 {
@@ -345,8 +345,8 @@ void CNPC_Bug_Builder::StartTask( const Task_t *pTask )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Builder::RunTask( const Task_t *pTask )
 {
@@ -369,7 +369,7 @@ void CNPC_Bug_Builder::RunTask( const Task_t *pTask )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNPC_Bug_Builder::FValidateHintType(CAI_Hint *pHint)
 {
@@ -377,8 +377,8 @@ bool CNPC_Bug_Builder::FValidateHintType(CAI_Hint *pHint)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pVictim - 
+// Purpose:
+// Input  : *pVictim -
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Builder::Event_Killed( const CTakeDamageInfo &info )
 {
@@ -393,8 +393,8 @@ void CNPC_Bug_Builder::Event_Killed( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEvent - 
+// Purpose:
+// Input  : *pEvent -
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Builder::HandleAnimEvent( animevent_t *pEvent )
 {
@@ -402,7 +402,7 @@ void CNPC_Bug_Builder::HandleAnimEvent( animevent_t *pEvent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CNPC_Bug_Builder::MaxYawSpeed( void )
 {
@@ -410,7 +410,7 @@ float CNPC_Bug_Builder::MaxYawSpeed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Builder::IdleSound( void )
 {
@@ -419,7 +419,7 @@ void CNPC_Bug_Builder::IdleSound( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Builder::PainSound( const CTakeDamageInfo &info )
 {
@@ -427,7 +427,7 @@ void CNPC_Bug_Builder::PainSound( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Bug_Builder::ShouldPlayIdleSound( void )
@@ -452,7 +452,7 @@ bool CNPC_Bug_Builder::ShouldPlayIdleSound( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Builder::SetBugHole( CMaker_BugHole *pBugHole )
 {
@@ -468,7 +468,7 @@ void CNPC_Bug_Builder::ReturnToBugHole( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Bug_Builder::AlertSound( void )
 {
@@ -499,7 +499,7 @@ Disposition_t CNPC_Bug_Builder::IRelationType( CBaseEntity *pTarget )
 //=========================================================
 // Dawdle around
 //=========================================================
-AI_DEFINE_SCHEDULE 
+AI_DEFINE_SCHEDULE
 (
 	SCHED_BBUG_DAWDLE,
 
@@ -518,7 +518,7 @@ AI_DEFINE_SCHEDULE
 //=========================================================
 // Flee from our enemy
 //=========================================================
-AI_DEFINE_SCHEDULE 
+AI_DEFINE_SCHEDULE
 (
 	SCHED_BBUG_FLEE_ENEMY,
 
@@ -537,7 +537,7 @@ AI_DEFINE_SCHEDULE
 //=========================================================
 // Retreat to a bughole
 //=========================================================
-AI_DEFINE_SCHEDULE 
+AI_DEFINE_SCHEDULE
 (
 	SCHED_BBUG_RETURN_TO_BUGHOLE,
 
@@ -556,7 +556,7 @@ AI_DEFINE_SCHEDULE
 //=========================================================
 // Return to a bughole and remove myself
 //=========================================================
-AI_DEFINE_SCHEDULE 
+AI_DEFINE_SCHEDULE
 (
 	SCHED_BBUG_RETURN_TO_BUGHOLE_AND_REMOVE,
 
@@ -574,4 +574,3 @@ AI_DEFINE_SCHEDULE
 	"		COND_HEAR_COMBAT"
 	"		COND_HEAR_DANGER"
 );
-

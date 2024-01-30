@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmeunpackoperators.h"
@@ -63,7 +63,7 @@ void CDmeUnpackColorOperator::GetOutputAttributes( CUtlVector< CDmAttribute * > 
 
 
 //-----------------------------------------------------------------------------
-// CDmeUnpackVector2Operator 
+// CDmeUnpackVector2Operator
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeUnpackVector2Operator, CDmeUnpackVector2Operator );
 
@@ -103,7 +103,7 @@ void CDmeUnpackVector2Operator::GetOutputAttributes( CUtlVector< CDmAttribute * 
 
 
 //-----------------------------------------------------------------------------
-// CDmeUnpackVector3Operator 
+// CDmeUnpackVector3Operator
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeUnpackVector3Operator, CDmeUnpackVector3Operator );
 
@@ -146,7 +146,7 @@ void CDmeUnpackVector3Operator::GetOutputAttributes( CUtlVector< CDmAttribute * 
 
 
 //-----------------------------------------------------------------------------
-// CDmeUnpackVector4Operator 
+// CDmeUnpackVector4Operator
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeUnpackVector4Operator, CDmeUnpackVector4Operator );
 
@@ -192,7 +192,7 @@ void CDmeUnpackVector4Operator::GetOutputAttributes( CUtlVector< CDmAttribute * 
 
 
 //-----------------------------------------------------------------------------
-// CDmeUnpackQAngleOperator 
+// CDmeUnpackQAngleOperator
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeUnpackQAngleOperator, CDmeUnpackQAngleOperator );
 
@@ -235,7 +235,7 @@ void CDmeUnpackQAngleOperator::GetOutputAttributes( CUtlVector< CDmAttribute * >
 
 
 //-----------------------------------------------------------------------------
-// CDmeUnpackQuaternionOperator 
+// CDmeUnpackQuaternionOperator
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeUnpackQuaternionOperator, CDmeUnpackQuaternionOperator );
 
@@ -281,7 +281,7 @@ void CDmeUnpackQuaternionOperator::GetOutputAttributes( CUtlVector< CDmAttribute
 
 
 //-----------------------------------------------------------------------------
-// CDmeUnpackVMatrixOperator 
+// CDmeUnpackVMatrixOperator
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeUnpackVMatrixOperator, CDmeUnpackVMatrixOperator );
 

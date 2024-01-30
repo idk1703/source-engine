@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -417,7 +417,7 @@ LONG RegViewerSettingsKey( const char *filename, PHKEY phKey, LPDWORD lpdwDispos
 {
 	if (strlen( filename ) == 0)
 		return ERROR_KEY_DELETED;
-	
+
 	char szFileName[1024];
 
 	strcpy( szFileName, filename );
@@ -434,12 +434,12 @@ LONG RegViewerSettingsKey( const char *filename, PHKEY phKey, LPDWORD lpdwDispos
 	sprintf( szModelKey, "Software\\Valve\\%s\\%s", g_viewerSettings.registrysubkey, szFileName );
 
 	return RegCreateKeyEx(
-		HKEY_CURRENT_USER,	// handle of open key 
-		szModelKey,			// address of name of subkey to open 
-		0,					// DWORD ulOptions,	  // reserved 
+		HKEY_CURRENT_USER,	// handle of open key
+		szModelKey,			// address of name of subkey to open
+		0,					// DWORD ulOptions,	  // reserved
 		NULL,			// Type of value
 		REG_OPTION_NON_VOLATILE, // Store permanently in reg.
-		KEY_ALL_ACCESS,		// REGSAM samDesired, // security access mask 
+		KEY_ALL_ACCESS,		// REGSAM samDesired, // security access mask
 		NULL,
 		phKey,				// Key we are creating
 		lpdwDisposition);    // Type of creation
@@ -453,12 +453,12 @@ LONG RegViewerRootKey( PHKEY phKey, LPDWORD lpdwDisposition )
 	sprintf( szRootKey, "Software\\Valve\\%s", g_viewerSettings.registrysubkey );
 
 	return RegCreateKeyEx(
-		HKEY_CURRENT_USER,	// handle of open key 
-		szRootKey,			// address of name of subkey to open 
-		0,					// DWORD ulOptions,	  // reserved 
+		HKEY_CURRENT_USER,	// handle of open key
+		szRootKey,			// address of name of subkey to open
+		0,					// DWORD ulOptions,	  // reserved
 		NULL,			// Type of value
 		REG_OPTION_NON_VOLATILE, // Store permanently in reg.
-		KEY_ALL_ACCESS,		// REGSAM samDesired, // security access mask 
+		KEY_ALL_ACCESS,		// REGSAM samDesired, // security access mask
 		NULL,
 		phKey,				// Key we are creating
 		lpdwDisposition);    // Type of creation
@@ -473,7 +473,7 @@ bool LoadViewerSettingsInt( char const *keyname, int *value )
 	HKEY hModelKey;
 
 	lResult = RegViewerSettingsKey( "hlfaceposer", &hModelKey, &dwDisposition);
-	
+
 	if (lResult != ERROR_SUCCESS)  // Failure
 		return false;
 
@@ -514,7 +514,7 @@ bool LoadViewerSettings (const char *filename, StudioModel *pModel )
 		return false;
 
 	lResult = RegViewerSettingsKey( filename, &hModelKey, &dwDisposition);
-	
+
 	if (lResult != ERROR_SUCCESS)  // Failure
 		return false;
 
@@ -591,7 +591,7 @@ bool LoadViewerSettings (const char *filename, StudioModel *pModel )
 		Q_snprintf( merge_buffer, sizeof( merge_buffer ), "merge%d", i + 1 );
 		RegReadString( hModelKey, merge_buffer, g_viewerSettings.mergeModelFile[i], sizeof( g_viewerSettings.mergeModelFile[i] ) );
 	}
-	
+
 	return true;
 }
 

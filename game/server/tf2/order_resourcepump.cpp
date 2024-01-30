@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -62,5 +62,3 @@ bool COrderResourcePump::Update()
 
 	return BaseClass::Update();
 }
-
-

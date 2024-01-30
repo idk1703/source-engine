@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -313,7 +313,7 @@ void CDialogGameInfo::OnButtonToggled(Panel *panel)
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets whether the extended auto-retry options are visible or not
-// Input  : state - 
+// Input  : state -
 //-----------------------------------------------------------------------------
 void CDialogGameInfo::ShowAutoRetryOptions(bool state)
 {
@@ -329,7 +329,7 @@ void CDialogGameInfo::ShowAutoRetryOptions(bool state)
 	GetSize(wide, tall);
 	tall += growSize;
 	SetSize(wide, tall);
-	
+
 	InvalidateLayout();
 }
 
@@ -486,7 +486,7 @@ void CDialogGameInfo::ConnectToServer()
 			strcat(command, m_szPassword);
 			strcat(command, "\"");\
 		}
-		
+
 		g_pRunGameEngine->RunEngine(gameDir, command);
 	}
 

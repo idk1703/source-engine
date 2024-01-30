@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,4 +32,4 @@ private:
 	float m_fEnableTime;
 };
 
-#endif // PASSTIME_BALLCONTROLLER_PLAYERSEEK_H  
+#endif // PASSTIME_BALLCONTROLLER_PLAYERSEEK_H

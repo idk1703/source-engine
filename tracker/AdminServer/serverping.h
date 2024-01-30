@@ -18,7 +18,7 @@ class CSocket;
 class IResponse;
 
 
-class CServerPing 
+class CServerPing
 {
 
 public:
@@ -42,7 +42,7 @@ private:
 
 	serveritem_t m_Server;
 	CSocket	*m_pQuery;	// Game server query socket
-	
+
 	IResponse *m_pResponseTarget;
 
 	bool m_bIsRefreshing;

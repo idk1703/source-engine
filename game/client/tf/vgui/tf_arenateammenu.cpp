@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -108,13 +108,13 @@ void CTFArenaTeamMenu::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFArenaTeamMenu::ShowPanel( bool bShow )
 {
 	if ( BaseClass::IsVisible() == bShow )
 		return;
-	
+
 	if ( !gameuifuncs || !gViewPortInterface || !engine )
 		return;
 
@@ -123,10 +123,10 @@ void CTFArenaTeamMenu::ShowPanel( bool bShow )
 		if ( !C_TFPlayer::GetLocalTFPlayer() )
 			return;
 
-		if ( TFGameRules()->State_Get() == GR_STATE_TEAM_WIN && 
-			 C_TFPlayer::GetLocalTFPlayer() && 
+		if ( TFGameRules()->State_Get() == GR_STATE_TEAM_WIN &&
+			 C_TFPlayer::GetLocalTFPlayer() &&
 			 C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TFGameRules()->GetWinningTeam()
-			 && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_SPECTATOR 
+			 && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_SPECTATOR
 	  		 && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_UNASSIGNED )
 		{
 			SetVisible( false );
@@ -242,7 +242,7 @@ void CTFArenaTeamMenu::Update( void )
 
 #ifdef _X360
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFArenaTeamMenu::Join_Team( const CCommand &args )
 {
@@ -264,12 +264,12 @@ void CTFArenaTeamMenu::LoadMapPage( const char *mapName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFArenaTeamMenu::OnKeyCodePressed( KeyCode code )
 {
 	if ( ( m_iTeamMenuKey != BUTTON_CODE_INVALID && m_iTeamMenuKey == code ) ||
-		   code == KEY_XBUTTON_BACK || 
+		   code == KEY_XBUTTON_BACK ||
 		   code == KEY_XBUTTON_B ||
 		   code == STEAMCONTROLLER_B )
 	{
@@ -298,7 +298,7 @@ void CTFArenaTeamMenu::OnKeyCodePressed( KeyCode code )
 	else if( code == KEY_XBUTTON_RIGHT || code == KEY_XSTICK1_RIGHT || code == STEAMCONTROLLER_DPAD_RIGHT )
 	{
 		CTFTeamButton *pButton;
-			
+
 		pButton = dynamic_cast< CTFTeamButton *> ( GetFocusNavGroup().GetCurrentFocus() );
 		if ( pButton )
 		{
@@ -401,7 +401,7 @@ void CTFArenaTeamMenu::OnTick()
 
 	if ( !pRules )
 		return;
-	
+
 	if ( m_pSpecTeamButton && m_pSpecLabel )
 	{
 		{

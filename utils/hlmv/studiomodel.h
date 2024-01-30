@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -220,7 +220,7 @@ public:
 	int								GetNumLODs() const;
 	float							GetLODSwitchValue( int lod ) const;
 	void							SetLODSwitchValue( int lod, float switchValue );
-	
+
 	void							scaleMeshes( float scale );
 	void							scaleBones( float scale );
 
@@ -254,7 +254,7 @@ public:
 	Vector							m_origin;	// trans
 
 protected:
-	int								m_bodynum;			// bodypart selection	
+	int								m_bodynum;			// bodypart selection
 	int								m_skinnum;			// skin group selection
 	float							m_controller[4];	// bone controllers
 
@@ -388,7 +388,7 @@ public:
 private:
 
 	// 0 == no, 1 == based on dt, 2 == completely.
-	int						m_nSolveHeadTurn; 
+	int						m_nSolveHeadTurn;
 	CUtlVector < StudioLookTarget >	m_vecHeadTargets;
 
 	float					m_flModelYaw;
@@ -418,10 +418,10 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Inline methods 
+// Inline methods
 //-----------------------------------------------------------------------------
-inline CStudioHdr *StudioModel::GetStudioHdr( void ) const 
-{ 
+inline CStudioHdr *StudioModel::GetStudioHdr( void ) const
+{
 	if (!m_pStudioHdr || m_pStudioHdr->IsReadyForAccess())
 		return m_pStudioHdr;
 
@@ -435,35 +435,35 @@ inline CStudioHdr *StudioModel::GetStudioHdr( void ) const
 	return NULL;
 }
 
-inline studiohdr_t *StudioModel::GetStudioRenderHdr( void ) const 
+inline studiohdr_t *StudioModel::GetStudioRenderHdr( void ) const
 {
 	return g_pMDLCache->GetStudioHdr( m_MDLHandle );
 }
 
-inline studiohwdata_t *StudioModel::GetHardwareData( void ) const 
-{ 
+inline studiohwdata_t *StudioModel::GetHardwareData( void ) const
+{
 	return g_pMDLCache->GetHardwareData( m_MDLHandle );
 }
 
-inline studiohdr_t *StudioModel::getAnimHeader( int i ) const 
-{ 
+inline studiohdr_t *StudioModel::getAnimHeader( int i ) const
+{
 //	return g_pMDLCache->GetStudioHdr( m_AnimHandle[i] );
-//	return m_panimhdr[i]; 
+//	return m_panimhdr[i];
 }
 
-inline char const *StudioModel::GetFileName( void ) 
-{ 
-	return m_pModelName; 
+inline char const *StudioModel::GetFileName( void )
+{
+	return m_pModelName;
 }
 
-inline IStudioRender *StudioModel::GetStudioRender() 
-{ 
-	return g_pStudioRender; 
+inline IStudioRender *StudioModel::GetStudioRender()
+{
+	return g_pStudioRender;
 }
 
-inline bool StudioModel::IsModelLoaded() const 
-{ 
-	return m_MDLHandle != MDLHANDLE_INVALID; 
+inline bool StudioModel::IsModelLoaded() const
+{
+	return m_MDLHandle != MDLHANDLE_INVALID;
 }
 
 inline const matrix3x4_t* StudioModel::BoneToWorld( int nBoneIndex ) const

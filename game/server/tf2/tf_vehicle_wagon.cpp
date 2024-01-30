@@ -14,7 +14,7 @@
 #define WAGON_MINS			Vector(-30, -50, -10)
 #define WAGON_MAXS			Vector( 30,  50, 55)
 #define WAGON_MODEL			"models/objects/vehicle_wagon.mdl"
-  
+
 
 IMPLEMENT_SERVERCLASS_ST(CVehicleWagon, DT_VehicleWagon)
 END_SEND_TABLE();
@@ -27,7 +27,7 @@ ConVar	vehicle_wagon_health( "vehicle_wagon_health","800", FCVAR_NONE, "Wagon he
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CVehicleWagon::CVehicleWagon()
 {
@@ -36,7 +36,7 @@ CVehicleWagon::CVehicleWagon()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleWagon::Precache()
 {
@@ -44,18 +44,18 @@ void CVehicleWagon::Precache()
 
 	PrecacheVGuiScreen( "screen_vehicle_wagon" );
 	PrecacheVGuiScreen( "screen_vulnerable_point");
-	
+
 	BaseClass::Precache();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleWagon::Spawn()
 {
 	SetModel( WAGON_MODEL );
-	
+
 	// This size is used for placement only...
 	UTIL_SetSize(this, WAGON_MINS, WAGON_MAXS);
 	m_takedamage = DAMAGE_YES;
@@ -76,5 +76,3 @@ void CVehicleWagon::GetControlPanelInfo( int nPanelIndex, const char *&pPanelNam
 	//pPanelName = "screen_vehicle_wagon";
 	pPanelName = "screen_vulnerable_point";
 }
-
-

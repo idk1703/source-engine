@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -29,20 +29,20 @@ class CKnife : public CWeaponCSBase
 {
 public:
 	DECLARE_CLASS( CKnife, CWeaponCSBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	#ifndef CLIENT_DLL
 		DECLARE_DATADESC();
 	#endif
 
-	
+
 	CKnife();
 
 	// We say yes to this so the weapon system lets us switch to it.
 	virtual bool HasPrimaryAmmo();
 	virtual bool CanBeSelected();
-	
+
 	virtual void Precache();
 
 	void Spawn();
@@ -66,7 +66,7 @@ public:
 	virtual CSWeaponID GetWeaponID( void ) const		{ return WEAPON_KNIFE; }
 
 public:
-	
+
 	trace_t m_trHit;
 	EHANDLE m_pTraceHitEnt;
 

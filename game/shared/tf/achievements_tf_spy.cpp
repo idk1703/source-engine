@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -27,7 +27,7 @@
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyBackstabSnipers : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -57,7 +57,7 @@ class CAchievementTFSpy_SpyBackstabSnipers : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// Achievement for backstabbing 3 snipers in a single life.
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
@@ -84,7 +84,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyBackstabSnipers, ACHIEVEMENT_TF_SPY_BA
 class CAchievementTFSpy_FreezecamFlick : public CBaseTFAchievement
 {
 	// Achievement for freeze camming on a cig flick w/ enemy corpse on screen.
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -95,13 +95,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_FreezecamFlick, ACHIEVEMENT_TF_SPY_FREEZE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyBackstabDisguisedSpy : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// Achievement for backstabbing a disguised spy.
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
@@ -123,13 +123,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyBackstabDisguisedSpy, ACHIEVEMENT_TF_S
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyBackstabDisguiseTarget : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// Achievement for backstabbing the player you are disguised as.
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
@@ -149,7 +149,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyBackstabDisguiseTarget, ACHIEVEMENT_TF
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyFastCap : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -195,13 +195,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyFastCap, ACHIEVEMENT_TF_SPY_FAST_CAP, 
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyDominateSniper : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -213,7 +213,7 @@ class CAchievementTFSpy_SpyDominateSniper : public CBaseTFAchievement
 
 				if ( pTFVictim && pTFVictim->IsPlayerClass( TF_CLASS_SNIPER ) )
 				{
-					IncrementCount(); 
+					IncrementCount();
 				}
 			}
 		}
@@ -224,7 +224,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyDominateSniper, ACHIEVEMENT_TF_SPY_DOM
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyBumpCloakedSpy : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -237,13 +237,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyBumpCloakedSpy, ACHIEVEMENT_TF_SPY_BUM
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyKillSpyWithKnife : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -255,7 +255,7 @@ class CAchievementTFSpy_SpyKillSpyWithKnife : public CBaseTFAchievement
 				{
 					if ( pTFVictim->GetActiveTFWeapon()->GetWeaponID() == TF_WEAPON_REVOLVER )
 					{
-						IncrementCount(); 
+						IncrementCount();
 					}
 				}
 			}
@@ -267,13 +267,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyKillSpyWithKnife, ACHIEVEMENT_TF_SPY_K
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyRevengeBackstab : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -284,7 +284,7 @@ class CAchievementTFSpy_SpyRevengeBackstab : public CBaseTFAchievement
 
 				if ( bRevenge == true )
 				{
-					IncrementCount(); 
+					IncrementCount();
 				}
 			}
 		}
@@ -295,13 +295,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyRevengeBackstab, ACHIEVEMENT_TF_SPY_RE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyKnifeKillWhileJarated : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -310,7 +310,7 @@ class CAchievementTFSpy_SpyKnifeKillWhileJarated : public CBaseTFAchievement
 				CTFPlayer *pTFAttacker = ToTFPlayer( pAttacker );
 				if ( pTFAttacker && pTFAttacker->m_Shared.InCond( TF_COND_URINE ) )
 				{
-					IncrementCount(); 
+					IncrementCount();
 				}
 			}
 		}
@@ -321,21 +321,21 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyKnifeKillWhileJarated, ACHIEVEMENT_TF_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyBackstabGrind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1000 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
 			int customkill = event->GetInt( "customkill" );
 			if ( customkill == TF_DMG_CUSTOM_BACKSTAB )
 			{
-				IncrementCount(); 
+				IncrementCount();
 			}
 		}
 	}
@@ -345,7 +345,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyBackstabGrind, ACHIEVEMENT_TF_SPY_BACK
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyBackstabMedicCharged : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -358,13 +358,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyBackstabMedicCharged, ACHIEVEMENT_TF_S
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyBackstabDominatingEnemy : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -378,7 +378,7 @@ class CAchievementTFSpy_SpyBackstabDominatingEnemy : public CBaseTFAchievement
 
 					if ( g_TF_PR && g_TF_PR->GetActiveDominations( pTFVictim->entindex() ) >= nDominationsNeeded )
 					{
-						IncrementCount(); 
+						IncrementCount();
 					}
 				}
 			}
@@ -390,14 +390,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyBackstabDominatingEnemy, ACHIEVEMENT_T
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyBackstabFriends : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 10 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -418,7 +418,7 @@ class CAchievementTFSpy_SpyBackstabFriends : public CBaseTFAchievement
 				CSteamID steamID( pi.friendsID, 1, GetUniverse(), k_EAccountTypeIndividual );
 				if ( steamapicontext->SteamFriends()->HasFriend( steamID, k_EFriendFlagImmediate ) )
 				{
-					IncrementCount(); 
+					IncrementCount();
 				}
 			}
 		}
@@ -429,14 +429,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyBackstabFriends, ACHIEVEMENT_TF_SPY_BA
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyAmbassadorGrind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 50 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -444,7 +444,7 @@ class CAchievementTFSpy_SpyAmbassadorGrind : public CBaseTFAchievement
 			{
 				if ( FStrEq( event->GetString( "weapon_logclassname", "" ), "ambassador" ) )
 				{
-					IncrementCount(); 
+					IncrementCount();
 				}
 			}
 		}
@@ -455,14 +455,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyAmbassadorGrind, ACHIEVEMENT_TF_SPY_AM
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyAmbassadorSniperGrind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 20 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -475,7 +475,7 @@ class CAchievementTFSpy_SpyAmbassadorSniperGrind : public CBaseTFAchievement
 					{
 						if ( IsHeadshot( event->GetInt( "customkill" ) ) )
 						{
-							IncrementCount(); 
+							IncrementCount();
 						}
 					}
 				}
@@ -488,14 +488,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyAmbassadorSniperGrind, ACHIEVEMENT_TF_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyAmbassadorScoutGrind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 3 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -508,7 +508,7 @@ class CAchievementTFSpy_SpyAmbassadorScoutGrind : public CBaseTFAchievement
 					{
 						if ( IsHeadshot( event->GetInt( "customkill" ) ) )
 						{
-							IncrementCount(); 
+							IncrementCount();
 						}
 					}
 				}
@@ -521,13 +521,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyAmbassadorScoutGrind, ACHIEVEMENT_TF_S
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyMedicHealingKillEnemy : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -544,7 +544,7 @@ class CAchievementTFSpy_SpyMedicHealingKillEnemy : public CBaseTFAchievement
 						// are they a medic that's healing me?
 						if ( pTFPlayer->IsPlayerClass( TF_CLASS_MEDIC ) && pTFPlayer->MedicGetHealTarget() == pAttacker )
 						{
-							IncrementCount(); 
+							IncrementCount();
 						}
 					}
 				}
@@ -557,13 +557,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyMedicHealingKillEnemy, ACHIEVEMENT_TF_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyBackstabQuickKills : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -598,13 +598,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyBackstabQuickKills, ACHIEVEMENT_TF_SPY
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyTauntKill : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -622,7 +622,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyTauntKill, ACHIEVEMENT_TF_SPY_TAUNT_KI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyBackstabCappingEnemies : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 50 );
@@ -636,7 +636,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyBackstabCappingEnemies, ACHIEVEMENT_TF
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyKillCPDefenders : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 15 );
@@ -652,10 +652,10 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyKillCPDefenders, ACHIEVEMENT_TF_SPY_KI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_FYIMedic : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
-		SetGoal( 1 );	
+		SetGoal( 1 );
 		m_hTargets.Purge();
 	}
 
@@ -683,7 +683,7 @@ class CAchievementTFSpy_FYIMedic : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_TFPlayer::GetLocalTFPlayer() )
 		{
@@ -745,7 +745,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_FYIMedic, ACHIEVEMENT_TF_SPY_BACKSTAB_MED
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_KillMedicPair : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL  | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -796,7 +796,7 @@ class CAchievementTFSpy_KillMedicPair : public CBaseTFAchievement
 		m_hTargets[iTargetIndex].flTimeToBeat = gpGlobals->curtime + 10.0f; // 10 seconds to kill the target
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -837,7 +837,7 @@ class CAchievementTFSpy_KillMedicPair : public CBaseTFAchievement
 				{
 					pNewTarget = ToTFPlayer( pTFVictim->MedicGetHealTarget() );
 					if ( pNewTarget )
-					{	
+					{
 						AddNewTarget( pNewTarget );
 					}
 				}
@@ -867,7 +867,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_KillMedicPair, ACHIEVEMENT_TF_SPY_BACKSTA
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SapBuildingGrind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1000 );
@@ -904,7 +904,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SapBuildingGrind, ACHIEVEMENT_TF_SPY_SAPP
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_FeignDeathKill : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -936,7 +936,7 @@ class CAchievementTFSpy_FeignDeathKill : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -960,10 +960,10 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_FeignDeathKill, ACHIEVEMENT_TF_SPY_FEIGN_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_ShieldKill : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
-		SetGoal( 1 );	
+		SetGoal( 1 );
 
 		m_iBlockerIndex = 0;
 		m_flAttackTime = 0.0f;
@@ -989,7 +989,7 @@ class CAchievementTFSpy_ShieldKill : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( m_flAttackTime <= gpGlobals->curtime )
 		{
@@ -1015,7 +1015,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_ShieldKill, ACHIEVEMENT_TF_SPY_BREAK_SHIE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_KillWorkingEngineer : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1029,7 +1029,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_KillWorkingEngineer, ACHIEVEMENT_TF_SPY_K
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_TFSpySurviveBurning : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1069,10 +1069,10 @@ class CAchievementTFSpy_TFSpySurviveBurning : public CBaseTFAchievement
 			{
 				// Am I on fire?
 				if ( (iDmgType & DMG_IGNITE) )
-				{	
+				{
 					// Am I cloaked?
 					if ( pLocalPlayer->m_Shared.InCond ( TF_COND_STEALTHED ) )
-					{					
+					{
 						SetNextThink( 30 );
 						m_bIsThinking = true;
 					}
@@ -1098,7 +1098,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_TFSpySurviveBurning, ACHIEVEMENT_TF_SPY_S
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyBackstabEnemySwitchPyro : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -1118,7 +1118,7 @@ class CAchievementTFSpy_SpyBackstabEnemySwitchPyro : public CBaseTFAchievementSi
 		m_BackstabbedPlayers.Purge();
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// no progress in endround
 		if ( !GameRulesAllowsAchievements() )
@@ -1177,7 +1177,7 @@ class CAchievementTFSpy_SpyBackstabEnemySwitchPyro : public CBaseTFAchievementSi
 				m_BackstabbedPlayers.Remove( iIndex );
 			}
 		}
-		else if ( FStrEq( pszEventName, "localplayer_changeclass" ) || 
+		else if ( FStrEq( pszEventName, "localplayer_changeclass" ) ||
 				  FStrEq( pszEventName, "localplayer_changeteam" ) )
 		{
 			ResetBackstabbedPlayers();
@@ -1192,7 +1192,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyBackstabEnemySwitchPyro, ACHIEVEMENT_T
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyBackstabEngySapBuilding : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -1219,7 +1219,7 @@ class CAchievementTFSpy_SpyBackstabEngySapBuilding : public CBaseTFAchievement
 	{
 		int nCount = 0;
 
-		if ( m_hTargets.IsValidIndex( iIndex ) ) 
+		if ( m_hTargets.IsValidIndex( iIndex ) )
 		{
 			if ( m_hTargets[iIndex].bSentry )
 			{
@@ -1242,7 +1242,7 @@ class CAchievementTFSpy_SpyBackstabEngySapBuilding : public CBaseTFAchievement
 
 	void SetObjectSapped( int iIndex, int nType )
 	{
-		if ( m_hTargets.IsValidIndex( iIndex ) ) 
+		if ( m_hTargets.IsValidIndex( iIndex ) )
 		{
 			switch( nType )
 			{
@@ -1280,7 +1280,7 @@ class CAchievementTFSpy_SpyBackstabEngySapBuilding : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -1349,7 +1349,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpyBackstabEngySapBuilding, ACHIEVEMENT_T
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpySapBuildingBackstabEngy : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -1384,7 +1384,7 @@ class CAchievementTFSpy_SpySapBuildingBackstabEngy : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -1455,7 +1455,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SpySapBuildingBackstabEngy, ACHIEVEMENT_T
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SapperTeamwork : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1496,7 +1496,7 @@ class CAchievementTFSpy_SapperTeamwork : public CBaseTFAchievement
 		// has it been longer than 3 seconds since the local player sapped something?
 		if ( gpGlobals->curtime - m_flLocalPlayerTime > 3.0 )
 		{
-			// reset the local player target and time, this fixes the local player sapping something and 
+			// reset the local player target and time, this fixes the local player sapping something and
 			// then a teammate saps something > 3 seconds later (otherwise, the new entry would be removed in the for loop below)
 			m_nLocalPlayerTarget = -1;
 			m_flLocalPlayerTime = -1;
@@ -1566,7 +1566,7 @@ private:
 	struct teammates_t
 	{
 		int	nSpy; // who built the sapper
-		int nTarget; // owner of the gun 
+		int nTarget; // owner of the gun
 		float flTime; // time it was sapped
 	};
 
@@ -1580,7 +1580,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSpy_SapperTeamwork, ACHIEVEMENT_TF_SPY_SAPPER
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSpy_SpyCampPosition : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -1637,7 +1637,7 @@ class CAchievementTFSpy_SpyCampPosition : public CBaseTFAchievement
 		return false;
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -1648,7 +1648,7 @@ class CAchievementTFSpy_SpyCampPosition : public CBaseTFAchievement
 				{
 					// they're already in our list
 					Vector vecOrigin = pVictim->GetAbsOrigin();
-					
+
 					if ( ( m_hTargets[iIndex].vecOrigin - vecOrigin ).LengthSqr() > (1024*1024) )
 					{
 						// we killed them too far away from our last position, so reset
@@ -1703,7 +1703,7 @@ class CAchievementTFSpy_AchieveProgress1 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFSpy_AchieveProgress1, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 5, ACHIEVEMENT_TF_SPY_START_RANGE, ACHIEVEMENT_TF_SPY_END_RANGE );
@@ -1716,7 +1716,7 @@ class CAchievementTFSpy_AchieveProgress2 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFSpy_AchieveProgress2, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 11, ACHIEVEMENT_TF_SPY_START_RANGE, ACHIEVEMENT_TF_SPY_END_RANGE );
@@ -1729,7 +1729,7 @@ class CAchievementTFSpy_AchieveProgress3 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFSpy_AchieveProgress3, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 17, ACHIEVEMENT_TF_SPY_START_RANGE, ACHIEVEMENT_TF_SPY_END_RANGE );

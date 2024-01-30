@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -17,7 +17,7 @@
 
 #define	MAX_LIGHTMAPS	256
 
-// NOTE: This is used for a hack that deals with viewmodels creating dlights 
+// NOTE: This is used for a hack that deals with viewmodels creating dlights
 // behind walls
 #define DLIGHT_BEHIND_PLANE_DIST	-15
 

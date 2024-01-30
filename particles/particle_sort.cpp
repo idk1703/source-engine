@@ -60,7 +60,7 @@ template<EParticleSortKeyType eSortKeyMode> void s_GenerateData( Vector CameraPo
 		fltx4 fl4X = pXYZ->x;
 		fltx4 fl4Y = pXYZ->y;
 		fltx4 fl4Z = pXYZ->z;
-		
+
 		fltx4 fl4SortKey;
 		if ( eSortKeyMode == SORT_KEY_DISTANCE )
 		{
@@ -90,7 +90,7 @@ template<EParticleSortKeyType eSortKeyMode> void s_GenerateData( Vector CameraPo
 								  AddSIMD( MulSIMD( Ydiff, Ydiff ),
 										   MulSIMD( Zdiff, Zdiff ) ) );
 		}
-		else 
+		else
 		{
 			Assert ( eSortKeyMode == SORT_KEY_CREATION_TIME || eSortKeyMode == SORT_KEY_NONE );
 			fl4SortKey = *pCreationTimeStamp;
@@ -115,7 +115,7 @@ template<EParticleSortKeyType eSortKeyMode> void s_GenerateData( Vector CameraPo
 		pOutUnSorted[1] = i4Indices;
 		pOutUnSorted[2] = fl4FinalRadius;
 		pOutUnSorted[3] = fl4FinalAlpha;
-		
+
 		pOutUnSorted += 4;
 		fl4OutIdx = AddSIMD( fl4OutIdx, Four_Fours );
 
@@ -136,7 +136,7 @@ template<EParticleSortKeyType eSortKeyMode> void s_GenerateData( Vector CameraPo
 static bool SortLessFunc( const ParticleRenderData_t &left, const ParticleRenderData_t &right )
 {
 	return TREATASINT( left.m_flSortKey ) < TREATASINT( right.m_flSortKey );
-	
+
 }
 
 
@@ -188,7 +188,3 @@ const ParticleRenderData_t *CParticleCollection::GetRenderList( IMatRenderContex
 	GenerateSortedIndexList( vecCamera, pVisibilityData, bSorted );
 	return s_SortedIndexList+m_nActiveParticles;
 }
-
-
-
-

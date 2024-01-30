@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -48,7 +48,7 @@ private:
 	virtual void OnFileSave();
 	virtual void OnCreateToken();
 	virtual void OnTokenCreated(const char *tokenName);
-	
+
 	vgui::ListPanel *m_pTokenList;
 	vgui::TextEntry *m_pLanguageEdit;
 	vgui::TextEntry *m_pEnglishEdit;

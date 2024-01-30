@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -10,7 +10,7 @@
 #pragma once
 #endif
 
-// These are given to FindMaterial to reference the texture groups that show up on the 
+// These are given to FindMaterial to reference the texture groups that show up on the
 #define TEXTURE_GROUP_LIGHTMAP						"Lightmaps"
 #define TEXTURE_GROUP_WORLD							"World textures"
 #define TEXTURE_GROUP_MODEL							"Model textures"

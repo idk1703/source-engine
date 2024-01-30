@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -23,7 +23,7 @@ class CWeaponPortalgun : public CBasePortalCombatWeapon
 public:
 	DECLARE_CLASS( CWeaponPortalgun, CBasePortalCombatWeapon );
 
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 private:
@@ -36,7 +36,7 @@ private:
 
 public:
 	unsigned char m_iPortalLinkageGroupID; //which portal linkage group this gun is tied to, usually set by mapper, or inherited from owning player's index
-	
+
 	// HACK HACK! Used to make the gun visually change when going through a cleanser!
 	CNetworkVar( float,	m_fEffectsMaxSize1 );
 	CNetworkVar( float,	m_fEffectsMaxSize2 );
@@ -47,7 +47,7 @@ public:
 		static Vector cone = VECTOR_CONE_10DEGREES;
 		return cone;
 	}
-	
+
 	virtual void Precache ( void );
 
 	virtual void CreateSounds( void );

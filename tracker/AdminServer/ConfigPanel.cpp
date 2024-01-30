@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -71,7 +71,7 @@ CConfigPanel::CConfigPanel(vgui::Panel *parent, bool autorefresh,bool savercon,i
 	_snprintf(refreshText,20,"%i",refreshtime);
 
 	m_pRefreshTextEntry->SetText(refreshText);
-	
+
 	_snprintf(refreshText,20,"%i",graphsrefreshtime);
 
 	m_pGraphsRefreshTimeTextEntry->SetText(refreshText);
@@ -110,13 +110,13 @@ void CConfigPanel::OnClose()
 //-----------------------------------------------------------------------------
 void CConfigPanel::OnButtonToggled(Panel *panel)
 {
-	if (panel == m_pRefreshCheckButton) 
+	if (panel == m_pRefreshCheckButton)
 		// you can only edit the refresh time if you allow auto refresh
 	{
 		m_pRefreshTextEntry->SetEnabled(m_pRefreshCheckButton->IsSelected());
 		m_pRefreshTextEntry->SetEditable(m_pRefreshCheckButton->IsSelected());
 	}
-	else if (panel == m_pGraphsButton) 
+	else if (panel == m_pGraphsButton)
 		// you can only edit the refresh time if you allow auto refresh
 	{
 		m_pGraphsRefreshTimeTextEntry->SetEnabled(m_pGraphsButton->IsSelected());
@@ -144,7 +144,7 @@ void CConfigPanel::SetControlText(const char *textEntryName, const char *text)
 
 //-----------------------------------------------------------------------------
 // Purpose: Parse posted messages
-//			 
+//
 //-----------------------------------------------------------------------------
 void CConfigPanel::OnCommand(const char *command)
 {
@@ -156,13 +156,13 @@ void CConfigPanel::OnCommand(const char *command)
 
 		m_pRefreshTextEntry->GetText(timeText,20);
 		sscanf(timeText,"%i",&time);
-	
+
 		memset(timeText, 0x0, sizeof(timeText));
 		m_pGraphsRefreshTimeTextEntry->GetText(timeText, 20);
 		sscanf(timeText,"%i",&timeGraphs);
 
 
-		if(time>0 && time < 9999 && timeGraphs>0 && timeGraphs< 9999) 
+		if(time>0 && time < 9999 && timeGraphs>0 && timeGraphs< 9999)
 		{
 
 			OnClose();

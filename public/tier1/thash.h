@@ -48,7 +48,7 @@ private:
 	} RecHdr_t;
 
 	// Bucket
-	// Each hash bucket is represented by a Bucket structure, which points to the 
+	// Each hash bucket is represented by a Bucket structure, which points to the
 	// first record with the bucket's hash.
 	typedef struct Bucket_t
 	{
@@ -77,7 +77,7 @@ public:
 	void Remove( Data * pvRecord );
 	// Remove all records
 	void RemoveAll();
-	
+
 	// Find a record
 	Data *PvRecordFind( I unKey ) const;
 
@@ -225,7 +225,7 @@ Data *CTHash<Data,I>::PvRecordInsert( I unKey )
 
 	// Find a free record
 	RecHdr_t *pRecHdr = ( RecHdr_t * ) m_pMemoryPoolRecord->Alloc();
-	
+
 	return PvRecordInsertInternal( pRecHdr, unKey );
 }
 
@@ -240,7 +240,7 @@ Data *CTHash<Data,I>::PvRecordInsertAutoKey()
 {
 	// Find a free record
 	RecHdr_t *pRecHdr = ( RecHdr_t * ) m_pMemoryPoolRecord->Alloc();
-	
+
 	return PvRecordInsertInternal( pRecHdr, (I) PvRecordFromPRecHdr( pRecHdr ) );
 }
 
@@ -551,7 +551,7 @@ int CTHash<Data,I>::IBucket( I unKey ) const
 		--size;
 		n    = *k++;
 		byte_one = g_CTHashRandomValues[byte_one ^ n];
-		
+
 		if (size)
 		{
 			--size;
@@ -560,7 +560,7 @@ int CTHash<Data,I>::IBucket( I unKey ) const
 		}
 		else
 			break;
-		
+
 		if (size)
 		{
 			--size;
@@ -569,7 +569,7 @@ int CTHash<Data,I>::IBucket( I unKey ) const
 		}
 		else
 			break;
-		
+
 		if (size)
 		{
 			--size;
@@ -582,7 +582,7 @@ int CTHash<Data,I>::IBucket( I unKey ) const
 
 	uint32 idx = ( byte_four << 24 ) | ( byte_three << 16 ) | ( byte_two << 8 ) | byte_one;
 	idx = idx % m_cBucket;
-	return ( (int) idx ); 
+	return ( (int) idx );
 }
 
 

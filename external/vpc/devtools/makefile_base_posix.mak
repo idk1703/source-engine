@@ -2,11 +2,11 @@
 # Base makefile for Linux and OSX
 #
 # !!!!! Note to future editors !!!!!
-# 
+#
 # before you make changes, make sure you grok:
-# 1. the difference between =, :=, +=, and ?= 
+# 1. the difference between =, :=, +=, and ?=
 # 2. how and when this base makefile gets included in the generated makefile(s)
-# 
+#
 
 OS := $(shell uname)
 HOSTNAME := $(shell hostname)
@@ -21,14 +21,14 @@ else
 endif
 
 # CPPFLAGS == "c/c++ *preprocessor* flags" - not "cee-plus-plus flags"
-ARCH_FLAGS = 
+ARCH_FLAGS =
 BUILDING_MULTI_ARCH = 0
 CPPFLAGS = $(DEFINES) $(addprefix -I, $(abspath $(INCLUDEDIRS) ))
 CFLAGS = $(ARCH_FLAGS) $(CPPFLAGS) $(WARN_FLAGS) -fvisibility=$(SymbolVisibility) $(OptimizerLevel) -fPIC -pipe $(GCC_ExtraCompilerFlags) -Usprintf -Ustrncpy -UPROTECTED_THINGS_ENABLE
 CXXFLAGS = $(CFLAGS)
-DEFINES += -DVPROF_LEVEL=1 -DGNUC 
+DEFINES += -DVPROF_LEVEL=1 -DGNUC
 LDFLAGS = $(CFLAGS) $(GCC_ExtraLinkerFlags) $(OptimizerLevel)
-GENDEP_CXXFLAGS = -MD -MP -MF $(@:.o=.P) 
+GENDEP_CXXFLAGS = -MD -MP -MF $(@:.o=.P)
 
 ifeq ($(STEAM_BRANCH),1)
 	WARN_FLAGS = -Wall -Wextra -Wshadow -Wno-invalid-offsetof
@@ -47,7 +47,7 @@ ifeq ($(OS),Linux)
 		AR = $(VALVE_BINDIR)/ar rs
 	endif
 	ifeq ($(origin CC),default)
-		CC = $(CCACHE) $(VALVE_BINDIR)/gcc-$(GCC_VER)	
+		CC = $(CCACHE) $(VALVE_BINDIR)/gcc-$(GCC_VER)
 	endif
 	ifeq ($(origin CXX), default)
 		CXX = $(CCACHE) $(VALVE_BINDIR)/g++-$(GCC_VER)
@@ -57,7 +57,7 @@ ifeq ($(OS),Linux)
 	ifeq ($(TARGET_PLATFORM),linux64)
 		VALVE_BINDIR = /valve/bin64
 		# nocona = pentium4 + 64bit + MMX, SSE, SSE2, SSE3 - no SSSE3 (that's three s's - added in core2)
-		ARCH_FLAGS += -march=nocona 
+		ARCH_FLAGS += -march=nocona
 		LD_SO = ld-linux-x86_64.so.2
 		LIBSTDCXX := $(shell $(CXX) -print-file-name=libstdc++.a)
 		LIBSTDCXXPIC := $(shell $(CXX) -print-file-name=libstdc++-pic.a)
@@ -85,14 +85,14 @@ ifeq ($(OS),Linux)
 	ifeq ($(STEAM_BRANCH),1)
 		_WRAP := -Xlinker --wrap=
 		PATHWRAP = $(_WRAP)fopen $(_WRAP)freopen $(_WRAP)open    $(_WRAP)creat    $(_WRAP)access  $(_WRAP)__xstat \
-	    		   $(_WRAP)stat  $(_WRAP)lstat   $(_WRAP)fopen64 $(_WRAP)open64   $(_WRAP)opendir $(_WRAP)__lxstat \
-			   $(_WRAP)chmod $(_WRAP)chown   $(_WRAP)lchown  $(_WRAP)symlink  $(_WRAP)link    $(_WRAP)__lxstat64 \
-			   $(_WRAP)mknod $(_WRAP)utimes  $(_WRAP)unlink  $(_WRAP)rename   $(_WRAP)utime   $(_WRAP)__xstat64 \
-			   $(_WRAP)mount $(_WRAP)mkfifo  $(_WRAP)mkdir   $(_WRAP)rmdir    $(_WRAP)scandir $(_WRAP)realpath
+						$(_WRAP)stat  $(_WRAP)lstat   $(_WRAP)fopen64 $(_WRAP)open64   $(_WRAP)opendir $(_WRAP)__lxstat \
+				$(_WRAP)chmod $(_WRAP)chown   $(_WRAP)lchown  $(_WRAP)symlink  $(_WRAP)link    $(_WRAP)__lxstat64 \
+				$(_WRAP)mknod $(_WRAP)utimes  $(_WRAP)unlink  $(_WRAP)rename   $(_WRAP)utime   $(_WRAP)__xstat64 \
+				$(_WRAP)mount $(_WRAP)mkfifo  $(_WRAP)mkdir   $(_WRAP)rmdir    $(_WRAP)scandir $(_WRAP)realpath
 	endif
 
 	LIB_START_EXE = $(PATHWRAP) -static-libgcc -Wl,--start-group
-	LIB_END_EXE = -Wl,--end-group -lm -ldl $(LIBSTDCXX) -lpthread 
+	LIB_END_EXE = -Wl,--end-group -lm -ldl $(LIBSTDCXX) -lpthread
 
 	LIB_START_SHLIB = $(PATHWRAP) -static-libgcc -Wl,--start-group
 	LIB_END_SHLIB = -Wl,--end-group -lm -ldl $(LIBSTDCXXPIC) -lpthread -l:$(LD_SO) -Wl,--version-script=$(SRCROOT)/devtools/version_script.linux.txt
@@ -100,11 +100,11 @@ ifeq ($(OS),Linux)
 endif
 
 ifeq ($(OS),Darwin)
-    	OSXVER := $(shell sw_vers -productVersion)
+			OSXVER := $(shell sw_vers -productVersion)
 	CCACHE := $(SRCROOT)/devtools/bin/osx32/ccache
 	DEVELOPER_DIR := $(shell /usr/bin/xcode-select -print-path)
 
-	ifeq (,$(findstring 10.7, $(OSXVER))) 
+	ifeq (,$(findstring 10.7, $(OSXVER)))
 		BUILDING_ON_LION := 0
 		COMPILER_BIN_DIR := $(DEVELOPER_DIR)/usr/bin
 		SDK_DIR := $(DEVELOPER_DIR)/SDKs
@@ -128,9 +128,9 @@ ifeq ($(OS),Darwin)
 	LINK ?= $(CXX)
 
 	ifeq (($TARGET_PLATFORM),osx64)
-		ARCH_FLAGS += -arch x86_64 -m64 -march=core2 
+		ARCH_FLAGS += -arch x86_64 -m64 -march=core2
 	else ifeq (,$(findstring -arch x86_64,$(GCC_ExtraCompilerFlags)))
-		ARCH_FLAGS += -arch i386 -m32 -march=prescott 
+		ARCH_FLAGS += -arch i386 -m32 -march=prescott
 	else
 		# dirty hack to build a universal binary - don't specify the architecture
 		ARCH_FLAGS += -arch i386 -Xarch_i386 -march=prescott -Xarch_x86_64 -march=core2
@@ -152,15 +152,15 @@ ifeq ($(OS),Darwin)
 	CFLAGS += -isysroot $(SDKROOT) -mmacosx-version-min=10.5 -fasm-blocks
 
 	LIB_START_EXE = -lm -ldl -lpthread
-	LIB_END_EXE = 
+	LIB_END_EXE =
 
-	LIB_START_SHLIB = 
-	LIB_END_SHLIB = 
+	LIB_START_SHLIB =
+	LIB_END_SHLIB =
 
-	SHLIBLDFLAGS = $(LDFLAGS) -bundle -flat_namespace -undefined suppress -Wl,-dead_strip -Wl,-no_dead_strip_inits_and_terms 
+	SHLIBLDFLAGS = $(LDFLAGS) -bundle -flat_namespace -undefined suppress -Wl,-dead_strip -Wl,-no_dead_strip_inits_and_terms
 
 	ifeq (lib,$(findstring lib,$(GAMEOUTPUTFILE)))
-		SHLIBLDFLAGS = $(LDFLAGS) -dynamiclib -current_version 1.0 -compatibility_version 1.0 -install_name @loader_path/$(basename $(notdir $(GAMEOUTPUTFILE))).dylib $(SystemLibraries) -Wl,-dead_strip -Wl,-no_dead_strip_inits_and_terms 
+		SHLIBLDFLAGS = $(LDFLAGS) -dynamiclib -current_version 1.0 -compatibility_version 1.0 -install_name @loader_path/$(basename $(notdir $(GAMEOUTPUTFILE))).dylib $(SystemLibraries) -Wl,-dead_strip -Wl,-no_dead_strip_inits_and_terms
 	endif
 
 endif
@@ -190,31 +190,31 @@ C_TO_OBJ = $(MM_TO_OBJ:.c=.o)
 OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(C_TO_OBJ)))
 
 ifeq ($(MAKE_VERBOSE),1)
-	QUIET_PREFIX = 
-	QUIET_ECHO_POSTFIX = 
+	QUIET_PREFIX =
+	QUIET_ECHO_POSTFIX =
 else
 	QUIET_PREFIX = @
 	QUIET_ECHO_POSTFIX = > /dev/null
 endif
 
 ifeq ($(CONFTYPE),lib)
-  LIB_File = $(OUTPUTFILE)
+	LIB_File = $(OUTPUTFILE)
 endif
 
 ifeq ($(CONFTYPE),dll)
-  SO_File = $(OUTPUTFILE)
+	SO_File = $(OUTPUTFILE)
 endif
 
 ifeq ($(CONFTYPE),exe)
-  EXE_File = $(OUTPUTFILE)
+	EXE_File = $(OUTPUTFILE)
 endif
 
 # we generate dependencies as a side-effect of compilation now
 GEN_DEP_FILE=
 
-PRE_COMPILE_FILE = 
+PRE_COMPILE_FILE =
 
-POST_COMPILE_FILE = 
+POST_COMPILE_FILE =
 
 ifeq ($(BUILDING_MULTI_ARCH),1)
 	SINGLE_ARCH_CXXFLAGS=$(subst -arch x86_64,,$(CXXFLAGS))
@@ -240,8 +240,8 @@ ifneq "$(origin VALVE_NO_AUTO_P4)" "undefined"
 else
 	P4_EDIT_START := for f in
 	P4_EDIT_END := ; do if [ -n $$f ]; then if [ -d $$f ]; then find $$f -type f -print | p4 -x - edit; else p4 edit $$f; fi; fi; done $(QUIET_ECHO_POSTFIX)
-	P4_REVERT_START := for f in  
-	P4_REVERT_END := ; do if [ -n $$f ]; then if [ -d $$f ]; then find $$f -type f -print | p4 -x - revert; else p4 revert $$f; fi; fi; done $(QUIET_ECHO_POSTFIX) 
+	P4_REVERT_START := for f in
+	P4_REVERT_END := ; do if [ -n $$f ]; then if [ -d $$f ]; then find $$f -type f -print | p4 -x - revert; else p4 revert $$f; fi; fi; done $(QUIET_ECHO_POSTFIX)
 endif
 
 ifeq ($(CONFTYPE),dll)
@@ -299,8 +299,8 @@ cleantargets:
 	$(QUIET_PREFIX) rm -f $(OUTPUTFILE) $(GAMEOUTPUTFILE)
 
 
-$(LIB_File): $(OTHER_DEPENDENCIES) $(OBJS) 
-	$(QUIET_PREFIX) -$(P4_EDIT_START) $(LIB_File) $(P4_EDIT_END); 
+$(LIB_File): $(OTHER_DEPENDENCIES) $(OBJS)
+	$(QUIET_PREFIX) -$(P4_EDIT_START) $(LIB_File) $(P4_EDIT_END);
 	$(QUIET_PREFIX) $(AR) $(LIB_File) $(OBJS) $(LIBFILES);
 
 SO_GameOutputFile = $(GAMEOUTPUTFILE)
@@ -315,7 +315,7 @@ $(SO_GameOutputFile): $(SO_File)
 	$(QUIET_PREFIX) -mkdir -p `dirname $(GAMEOUTPUTFILE)` > /dev/null;
 	$(QUIET_PREFIX) cp -v $(OUTPUTFILE) $(GAMEOUTPUTFILE) $(QUIET_ECHO_POSTFIX);
 	$(QUIET_PREFIX) -$(P4_EDIT_START) $(GAMEOUTPUTFILE)$(SYM_EXT) $(P4_EDIT_END);
-	$(QUIET_PREFIX) $(GEN_SYM) $(GAMEOUTPUTFILE); 
+	$(QUIET_PREFIX) $(GEN_SYM) $(GAMEOUTPUTFILE);
 	$(QUIET_PREFIX) -$(STRIP) $(GAMEOUTPUTFILE);
 	$(QUIET_PREFIX) $(VSIGN) -signvalve $(GAMEOUTPUTFILE);
 	$(QUIET_PREFIX) if [ "$(IMPORTLIBRARY)" != "" ]; then\

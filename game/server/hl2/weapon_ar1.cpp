@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,7 +19,7 @@
 
 #define MAX_SETTINGS	5
 
-float RateOfFire[ MAX_SETTINGS ] = 
+float RateOfFire[ MAX_SETTINGS ] =
 {
 	0.1,
 	0.2,
@@ -80,7 +80,7 @@ public:
 
 				CAI_BaseNPC *npc = pOperator->MyNPCPointer();
 				ASSERT( npc != NULL );
-				
+
 				vecShootDir = npc->GetActualShootTrajectory( vecShootOrigin );
 
 				WeaponSound(SINGLE_NPC);
@@ -102,7 +102,7 @@ END_SEND_TABLE()
 LINK_ENTITY_TO_CLASS( weapon_ar1, CWeaponAR1 );
 PRECACHE_WEAPON_REGISTER(weapon_ar1);
 
-acttable_t	CWeaponAR1::m_acttable[] = 
+acttable_t	CWeaponAR1::m_acttable[] =
 {
 	{ ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK_AR1, true },
 };

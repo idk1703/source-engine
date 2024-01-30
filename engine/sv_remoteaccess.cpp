@@ -187,9 +187,9 @@ void CServerRemoteAccess::WriteDataRequest( CRConServer *pNetworkListener, ra_li
 							invalidRequest = true;
 							break;
 						}
-						
+
 						ExecCommand(command);
-						
+
 						if ( listener != m_AdminUIID )
 						{
 							LogCommand( listener, va( "command \"%s\"", command) );
@@ -307,7 +307,7 @@ void CServerRemoteAccess::WriteDataRequest( CRConServer *pNetworkListener, ra_li
 					}
 				}
 				break;
-		
+
 			case SERVERDATA_REMOVE_VPROF:
 				{
 					char password[25];
@@ -385,7 +385,7 @@ void CServerRemoteAccess::LogCommand( ra_listener_id listener, const char *msg )
 {
 	if ( !sv_rcon_log.GetBool() )
 		return;
-		
+
 	if ( listener < (ra_listener_id)m_ListenerIDs.Count() && m_ListenerIDs[listener].m_bHasAddress )
 	{
 		Log( "rcon from \"%s\": %s\n", m_ListenerIDs[listener].adr.ToString(), msg );
@@ -647,7 +647,7 @@ bool CServerRemoteAccess::LookupValue(const char *variable, CUtlBuffer &value)
 	}
 	else if (!stricmp(variable, "playerlist"))
 	{
-		GetPlayerList(value);		
+		GetPlayerList(value);
 	}
 	else if (!stricmp(variable, "maplist"))
 	{
@@ -676,7 +676,7 @@ bool CServerRemoteAccess::LookupValue(const char *variable, CUtlBuffer &value)
 
 			if ( f == FILESYSTEM_INVALID_HANDLE )
 				return true;
-			
+
 			int len = g_pFileSystem->Size(f);
 			char *mapcycleData = (char *)_alloca( len+1 );
 			if ( len && g_pFileSystem->Read( mapcycleData, len, f ) )
@@ -702,7 +702,7 @@ bool CServerRemoteAccess::LookupValue(const char *variable, CUtlBuffer &value)
 		value.PutChar(0);
 		return false;
 	}
-	
+
 	return true;
 }
 
@@ -729,13 +729,13 @@ const char *CServerRemoteAccess::LookupStringValue(const char *variable)
 		Q_snprintf( s_ReturnBuf, sizeof(s_ReturnBuf) - 1, "%d", sv.GetNumClients() - sv.GetNumProxies());
 		return s_ReturnBuf;
 	}
-	
+
 	if ( !Q_stricmp( variable, "maxplayers" ) )
 	{
 		Q_snprintf( s_ReturnBuf, sizeof(s_ReturnBuf) - 1, "%d", sv.GetMaxClients() );
 		return s_ReturnBuf;
 	}
-	
+
 	if ( !Q_stricmp( variable, "gamedescription" ) && serverGameDLL )
 		return serverGameDLL->GetGameDescription();
 
@@ -773,7 +773,7 @@ void CServerRemoteAccess::GetStatsString(char *buf, int bufSize)
 
 	// format: CPU percent, Bandwidth in, Bandwidth out, uptime, changelevels, framerate, total players
 	_snprintf(buf, bufSize - 1, "%-6.2f %-10.2f %-11.2f %-7i %-12i %-8.2f %-8i %-8i",
-				sv.GetCPUUsage() * 100, 
+				sv.GetCPUUsage() * 100,
 				avgIn / 1024.0f,
 				avgOut / 1024.0f,
 				(int)(Sys_FloatTime()) / 60,
@@ -816,7 +816,7 @@ void CServerRemoteAccess::GetPlayerList(CUtlBuffer &value)
 		}
 		else
 		{
-			value.Printf("\"%s\" %s %s %d %d %d %d\n", 
+			value.Printf("\"%s\" %s %s %d %d %d %d\n",
 				client->GetClientName(),
 				client->GetNetworkIDString(),
 				client->GetNetChannel()->GetAddress(),
@@ -841,14 +841,14 @@ void CServerRemoteAccess::GetMapList(CUtlBuffer &value)
 	strcpy(mapwild, "maps/*.bsp");
 	Q_strncpy( friendly_com_gamedir, com_gamedir, sizeof(friendly_com_gamedir) );
 	Q_strlower( friendly_com_gamedir );
-	
+
 	char const *findfn = Sys_FindFirst( mapwild, NULL, 0 );
 	while ( findfn )
 	{
 		char curDir[MAX_PATH];
 		_snprintf(curDir, MAX_PATH, "maps/%s", findfn);
 		g_pFileSystem->GetLocalPath(curDir, curDir, MAX_PATH);
-		
+
 		// limit maps displayed to ones for the mod only
 		if (strstr(curDir, friendly_com_gamedir))
 		{

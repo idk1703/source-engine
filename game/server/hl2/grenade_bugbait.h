@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -78,12 +78,12 @@ public:
 		return ( !HasSpawnFlags( SF_BUGBAIT_NOT_THROWN ) );
 	}
 
-	float GetRadius( void ) const 
-	{ 
+	float GetRadius( void ) const
+	{
 		if ( m_flRadius == 0 )
 			return bugbait_radius.GetFloat();
 
-		return m_flRadius; 
+		return m_flRadius;
 	}
 
 	bool IsDisabled( void ) const

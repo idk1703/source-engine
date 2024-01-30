@@ -11,7 +11,7 @@
 #define GIB_H
 
 #ifdef _WIN32
-#pragma once 
+#pragma once
 #endif
 
 #include "baseanimating.h"
@@ -62,7 +62,7 @@ public:
 
 	void SetSprite( CBaseEntity *pSprite )
 	{
-		m_hSprite = pSprite;	
+		m_hSprite = pSprite;
 	}
 
 	CBaseEntity *GetSprite( void )
@@ -72,7 +72,7 @@ public:
 
 	void SetFlame( CBaseEntity *pFlame )
 	{
-		m_hFlame = pFlame;	
+		m_hFlame = pFlame;
 	}
 
 	CBaseEntity *GetFlame( void )

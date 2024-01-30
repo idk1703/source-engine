@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -101,7 +101,7 @@ inline bool ElementTree_GetDroppableItems( CUtlVector< KeyValues * >& msglist, c
 {
 	int c = msglist.Count();
 	for ( int i = 0; i < c; ++i )
-	{	
+	{
 		KeyValues *data = msglist[ i ];
 
 		CDmElement *e = GetElementKeyValue<CDmElement>( data, "dmeelement" );

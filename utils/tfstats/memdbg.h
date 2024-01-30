@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose: declarations to track allocations via replacing the global new operator
-//	some of this code was written by Paul Andre LeBlanc 
+//	some of this code was written by Paul Andre LeBlanc
 // <paul.a.leblanc@sympatico.ca> I got it off of dejanews.com
 //	usage: new TRACKED object-type
 //
@@ -26,12 +26,12 @@
 #endif
 
 #ifdef _MDEBUG
-  #define TRACKED (__FILE__, __LINE__)
+	#define TRACKED (__FILE__, __LINE__)
 #else
-  #define TRACKED
+	#define TRACKED
 #endif
 
-#ifdef _MDEBUG 
+#ifdef _MDEBUG
 void *operator new(size_t size, const char *file, const int line);
 void *operator new[](size_t size, const char *file, const int line);
 void operator delete(void *ptr, const char *file, const int line);

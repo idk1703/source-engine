@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -89,7 +89,7 @@ bool CAdminServer::PostInitialize(CreateInterfaceFn *modules, int factoryCount)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CAdminServer::IsValid()
 {
@@ -97,7 +97,7 @@ bool CAdminServer::IsValid()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CAdminServer::Activate()
 {
@@ -192,6 +192,6 @@ IManageServer *CAdminServer::GetManageServerInterface(ManageServerUIHandle_t han
 	vgui::VPANEL panel = vgui::ivgui()->HandleToPanel(m_OpenedManageDialog[handle].handle);
 	if (!panel)
 		return NULL;
-	
+
 	return m_OpenedManageDialog[handle].manageInterface;
 }

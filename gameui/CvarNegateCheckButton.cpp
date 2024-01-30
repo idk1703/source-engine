@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -17,7 +17,7 @@
 
 using namespace vgui;
 
-CCvarNegateCheckButton::CCvarNegateCheckButton( Panel *parent, const char *panelName, const char *text, 
+CCvarNegateCheckButton::CCvarNegateCheckButton( Panel *parent, const char *panelName, const char *text,
 	const char *cvarname )
  : CheckButton( parent, panelName, text )
 {
@@ -32,7 +32,7 @@ CCvarNegateCheckButton::~CCvarNegateCheckButton()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCvarNegateCheckButton::Paint()
 {
@@ -49,7 +49,7 @@ void CCvarNegateCheckButton::Paint()
 		return;
 
 	float value = var.GetFloat();
-		
+
 	if ( value < 0 )
 	{
 		if ( !m_bStartState )
@@ -78,7 +78,7 @@ void CCvarNegateCheckButton::Reset()
 		return;
 
 	float value = var.GetFloat();
-		
+
 	if ( value < 0 )
 	{
 		m_bStartState = true;
@@ -96,8 +96,8 @@ bool CCvarNegateCheckButton::HasBeenModified()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *panel - 
+// Purpose:
+// Input  : *panel -
 //-----------------------------------------------------------------------------
 void CCvarNegateCheckButton::SetSelected( bool state )
 {
@@ -106,12 +106,12 @@ void CCvarNegateCheckButton::SetSelected( bool state )
 
 void CCvarNegateCheckButton::ApplyChanges()
 {
-	if ( !m_pszCvarName || !m_pszCvarName[ 0 ] ) 
+	if ( !m_pszCvarName || !m_pszCvarName[ 0 ] )
 		return;
 
 	ConVarRef var( m_pszCvarName );
 	float value = var.GetFloat();
-	
+
 	value = (float)fabs( value );
 	if (value < 0.00001)
 	{

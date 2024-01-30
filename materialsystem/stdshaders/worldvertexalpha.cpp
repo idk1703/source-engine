@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -12,7 +12,7 @@
 #include "worldvertexalpha_ps20.inc"
 #include "worldvertexalpha_ps20b.inc"
 
-BEGIN_VS_SHADER( WorldVertexAlpha, 
+BEGIN_VS_SHADER( WorldVertexAlpha,
 			  "Help for WorldVertexAlpha" )
 
 	BEGIN_SHADER_PARAMS
@@ -60,7 +60,7 @@ BEGIN_VS_SHADER( WorldVertexAlpha,
 					// Looks backwards, but this is done so that lightmap alpha = 1 when only
 					// using 1 texture (needed for translucent displacements).
 					pShaderShadow->BlendFunc( SHADER_BLEND_ONE_MINUS_SRC_ALPHA, SHADER_BLEND_SRC_ALPHA );
-					
+
 					worldvertexalpha_Static_Index vshIndex;
 					pShaderShadow->SetVertexShader( "WorldVertexAlpha", vshIndex.GetIndex() );
 
@@ -244,7 +244,7 @@ BEGIN_VS_SHADER( WorldVertexAlpha,
 					colorFlag |= SHADER_DRAW_COLOR;
 				}
 
-				pShaderShadow->DrawFlags( colorFlag | SHADER_DRAW_POSITION | SHADER_DRAW_TEXCOORD1 | 
+				pShaderShadow->DrawFlags( colorFlag | SHADER_DRAW_POSITION | SHADER_DRAW_TEXCOORD1 |
 					                      SHADER_DRAW_LIGHTMAP_TEXCOORD0 );
 			}
 			DYNAMIC_STATE

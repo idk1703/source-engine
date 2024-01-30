@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -18,7 +18,7 @@
 #include "filesystem.h"
 #include "mathlib/vector.h" // @Note (toml 05-01-02): solely for definition of QAngle
 #include "qlimits.h"
-#define INCLUDED_STEAM2_USERID_STRUCTS	
+#define INCLUDED_STEAM2_USERID_STRUCTS
 #include "steamcommon.h"
 #include "steam/steamclientpublic.h"
 
@@ -66,7 +66,7 @@ void COM_ParseDirectoryFromCmd( const char *pCmdName, char *pDirName, int maxlen
 
 #define Bits2Bytes(b) ((b+7)>>3)
 
-// returns a temp buffer of at least 512 bytes 
+// returns a temp buffer of at least 512 bytes
 char	*tmpstr512();
 // does a varargs printf into a temp buffer.
 // Returns char* because of bad historical reasons.

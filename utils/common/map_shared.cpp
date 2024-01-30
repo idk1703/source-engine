@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,10 +15,10 @@ int g_nMapFileVersion;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szKey - 
-//			*szValue - 
-//			*pLoadEntity - 
+// Purpose:
+// Input  : *szKey -
+//			*szValue -
+//			*pLoadEntity -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t LoadEntityKeyCallback(const char *szKey, const char *szValue, LoadEntity_t *pLoadEntity)
@@ -132,5 +132,3 @@ bool LoadEntsFromMapFile( char const *pFilename )
 		return false;
 	}
 }
-
-

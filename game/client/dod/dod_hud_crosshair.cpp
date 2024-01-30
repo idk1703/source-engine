@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -134,7 +134,7 @@ void CHudDODCrosshair::Paint()
 	}
 
 	if ( m_pFrameVar )
-	{	
+	{
 		if ( cl_dynamic_crosshair.GetBool() == false )
 		{
 			m_pFrameVar->SetIntValue( 0 );
@@ -180,4 +180,3 @@ void CHudDODCrosshair::Paint()
 	vgui::surface()->DrawTexturedRect( iX-iWidth, iY-iHeight, iX+iWidth, iY+iHeight );
 	vgui::surface()->DrawSetTexture(0);
 }
-

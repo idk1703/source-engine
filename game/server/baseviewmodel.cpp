@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -24,7 +24,7 @@ void SendProxy_SequenceChanged( const void *pStruct, const void *pVarData, DVari
 
 //-----------------------------------------------------------------------------
 // Purpose: Save Data for Base Weapon object
-//-----------------------------------------------------------------------------// 
+//-----------------------------------------------------------------------------//
 BEGIN_DATADESC( CBaseViewModel )
 
 	DEFINE_FIELD( m_hOwner, FIELD_EHANDLE ),
@@ -105,7 +105,7 @@ void CBaseViewModel::SetTransmit( CCheckTransmitInfo *pInfo, bool bAlways )
 		return;
 
 	BaseClass::SetTransmit( pInfo, bAlways );
-	
+
 	// Force our screens to be sent too.
 	for ( int i=0; i < m_hScreens.Count(); i++ )
 	{

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -23,7 +23,7 @@ using namespace vgui;
 
 
 //-----------------------------------------------------------------------------
-// Expose DmeEditorAttributeInfo to the scene database 
+// Expose DmeEditorAttributeInfo to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeEditorBoolChoicesInfo, CDmeEditorBoolChoicesInfo );
 
@@ -134,7 +134,7 @@ void CAttributeBoolChoicePanel::SetAttributeFromComboBox( vgui::ComboBox *pCombo
 
 
 //-----------------------------------------------------------------------------
-// Sets the combo box from the attribute 
+// Sets the combo box from the attribute
 //-----------------------------------------------------------------------------
 void CAttributeBoolChoicePanel::SetComboBoxFromAttribute( vgui::ComboBox *pComboBox )
 {

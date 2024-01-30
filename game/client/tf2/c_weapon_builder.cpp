@@ -24,8 +24,8 @@
 //-----------------------------------------------------------------------------
 // Purpose: Draw a material on a quad
 //-----------------------------------------------------------------------------
-void DrawQuadMaterial( IMaterial *pMaterial, int iX, int iY, int iWidth, int iHeight, 
-	unsigned char r = 255, unsigned char g = 255, unsigned char b = 255, unsigned char a = 255, 
+void DrawQuadMaterial( IMaterial *pMaterial, int iX, int iY, int iWidth, int iHeight,
+	unsigned char r = 255, unsigned char g = 255, unsigned char b = 255, unsigned char a = 255,
 	float flTextureLeft = 0.0, float flTextureRight = 1.0, bool bRotated = false )
 {
 	IMesh* pMesh = materials->GetDynamicMesh( true, NULL, NULL, pMaterial );
@@ -95,18 +95,18 @@ IMPLEMENT_CLIENTCLASS_DT(C_WeaponBuilder, DT_WeaponBuilder, CWeaponBuilder)
 	RecvPropTime( RECVINFO(m_flStartTime) ),
 	RecvPropTime( RECVINFO(m_flTotalTime) ),
 	RecvPropArray
-	( 
+	(
 		RecvPropInt( RECVINFO(m_bObjectValidity[0])), m_bObjectValidity
 	),
 	RecvPropArray
-	( 
+	(
 		RecvPropInt( RECVINFO(m_bObjectBuildability[0])), m_bObjectBuildability
 	),
 END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_WeaponBuilder::C_WeaponBuilder()
 {
@@ -120,14 +120,14 @@ C_WeaponBuilder::C_WeaponBuilder()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_WeaponBuilder::~C_WeaponBuilder()
 {
 }
 
 //-----------------------------------------------------------------------------
-// A couple helper methods for drawing builder status 
+// A couple helper methods for drawing builder status
 //-----------------------------------------------------------------------------
 static void DrawTextIcon( IMaterial* pMaterial, int parentWidth, int parentHeight, float r = 1.0f, float g = 1.0f, float b = 1.0f )
 {
@@ -143,7 +143,7 @@ static void DrawTextIcon( IMaterial* pMaterial, int parentWidth, int parentHeigh
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *C_WeaponBuilder::GetCurrentSelectionObjectName( void )
@@ -155,7 +155,7 @@ const char *C_WeaponBuilder::GetCurrentSelectionObjectName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_WeaponBuilder::Redraw()
 {
@@ -192,7 +192,7 @@ void C_WeaponBuilder::Redraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_WeaponBuilder::IsPlacingObject( void )
@@ -203,7 +203,7 @@ bool C_WeaponBuilder::IsPlacingObject( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_WeaponBuilder::IsBuildingObject( void )
@@ -218,7 +218,7 @@ bool C_WeaponBuilder::IsBuildingObject( void )
 
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CHumanPDAPanel : public CVGuiScreenPanel
 {
@@ -253,10 +253,10 @@ DECLARE_VGUI_SCREEN_FACTORY( CHumanPDAPanel, "human_pda" );
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CHumanPDAPanel::CHumanPDAPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CHumanPDAPanel", vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/PDAControlPanelScheme.res", "TFBase" ) ) 
+	: BaseClass( parent, "CHumanPDAPanel", vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/PDAControlPanelScheme.res", "TFBase" ) )
 {
 	m_pObjectImage = NULL;
 
@@ -285,7 +285,7 @@ CHumanPDAPanel::~CHumanPDAPanel()
 
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CHumanPDAPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -300,7 +300,7 @@ bool CHumanPDAPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitDat
 }
 
 //-----------------------------------------------------------------------------
-// Returns the object it's attached to 
+// Returns the object it's attached to
 //-----------------------------------------------------------------------------
 C_BaseCombatWeapon *CHumanPDAPanel::GetOwningWeapon()
 {
@@ -364,7 +364,7 @@ void CHumanPDAPanel::OnTick()
 	Q_snprintf( buf, sizeof( buf ), "hud/menu/%s", info->m_pClassName );
 	m_pObjectImage->SetImageFile( buf );
 	m_pObjectImage->SetColor( GetFgColor() );
-	
+
 	Q_snprintf( buf, sizeof( buf ), "%s", info->m_pStatusName );
 	m_pObjectName->SetText( buf );
 

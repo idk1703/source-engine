@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -141,9 +141,9 @@ void LoadHudTextures( CUtlDict< CHudTexture *, int >& list, const char *szFilena
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : * - 
-//			list - 
+// Purpose:
+// Input  : * -
+//			list -
 //-----------------------------------------------------------------------------
 void FreeHudTextureList( CUtlDict< CHudTexture *, int >& list )
 {
@@ -258,7 +258,7 @@ CHudElement::~CHudElement()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudElement::SetActive( bool bActive )
 {
@@ -266,8 +266,8 @@ void CHudElement::SetActive( bool bActive )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : needsremove - 
+// Purpose:
+// Input  : needsremove -
 //-----------------------------------------------------------------------------
 void CHudElement::SetNeedsRemove( bool needsremove )
 {
@@ -275,7 +275,7 @@ void CHudElement::SetNeedsRemove( bool needsremove )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudElement::SetHiddenBits( int iBits )
 {
@@ -283,7 +283,7 @@ void CHudElement::SetHiddenBits( int iBits )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudElement::ShouldDraw( void )
 {
@@ -304,7 +304,7 @@ bool CHudElement::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CHudElement::IsParentedToClientDLLRootPanel() const
@@ -313,8 +313,8 @@ bool CHudElement::IsParentedToClientDLLRootPanel() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : parented - 
+// Purpose:
+// Input  : parented -
 //-----------------------------------------------------------------------------
 void CHudElement::SetParentedToClientDLLRootPanel( bool parented )
 {
@@ -358,7 +358,7 @@ void CHudElement::HideLowerPriorityHudElementsInGroup( const char *pszGroupName 
 // Purpose: Stop obscuring other elements in this group
 //-----------------------------------------------------------------------------
 void CHudElement::UnhideLowerPriorityHudElementsInGroup( const char *pszGroupName )
-{	
+{
 	// look up the render group
 	int iGroupIndex = gHUD.LookupRenderGroupIndexByName( pszGroupName );
 
@@ -367,7 +367,7 @@ void CHudElement::UnhideLowerPriorityHudElementsInGroup( const char *pszGroupNam
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CHudElement::GetRenderGroupPriority( void )
 {
@@ -395,7 +395,7 @@ CHud::CHud()
 void CHud::Init( void )
 {
 	HOOK_HUD_MESSAGE( gHUD, ResetHUD );
-	
+
 #ifdef CSTRIKE_DLL
 	HOOK_HUD_MESSAGE( gHUD, SendAudio );
 #endif
@@ -440,7 +440,7 @@ void CHud::Init( void )
 				}
 
 				// Note:  When a panel is parented to the module root, it's "parent" is returned as NULL.
-				if ( !element->IsParentedToClientDLLRootPanel() && 
+				if ( !element->IsParentedToClientDLLRootPanel() &&
 					 !pPanel->GetParent() )
 				{
 					DevMsg( "Hud element '%s'/'%s' doesn't have a parent\n", m_HudList[i]->GetName(), pPanel->GetName() );
@@ -473,7 +473,7 @@ void CHud::Init( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Init Hud global colors
-// Input  : *scheme - 
+// Input  : *scheme -
 //-----------------------------------------------------------------------------
 void CHud::InitColors( vgui::IScheme *scheme )
 {
@@ -493,7 +493,7 @@ void CHud::InitFonts()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHud::Shutdown( void )
 {
@@ -600,7 +600,7 @@ void CHudTexture::DrawSelf( int x, int y, int w, int h, const Color& clr ) const
 
 		vgui::surface()->DrawSetTexture( textureId );
 		vgui::surface()->DrawSetColor( clr );
-		vgui::surface()->DrawTexturedSubRect( x, y, x + w, y + h, 
+		vgui::surface()->DrawTexturedSubRect( x, y, x + w, y + h,
 			texCoords[ 0 ], texCoords[ 1 ], texCoords[ 2 ], texCoords[ 3 ] );
 	}
 }
@@ -654,10 +654,10 @@ void CHudTexture::DrawSelfCropped( int x, int y, int cropx, int cropy, int cropw
 
 		vgui::surface()->DrawSetTexture( textureId );
 		vgui::surface()->DrawSetColor( clr );
-		vgui::surface()->DrawTexturedSubRect( 
-			x, y, 
-			x + finalWidth, y + finalHeight, 
-			tCoords[ 0 ], tCoords[ 1 ], 
+		vgui::surface()->DrawTexturedSubRect(
+			x, y,
+			x + finalWidth, y + finalHeight,
+			tCoords[ 0 ], tCoords[ 1 ],
 			tCoords[ 2 ], tCoords[ 3 ] );
 	}
 }
@@ -679,7 +679,7 @@ int CHudTexture::EffectiveWidth( float flScale ) const
 	}
 	else
 	{
-		return vgui::surface()->GetCharacterWidth( hFont, cCharacterInFont );		
+		return vgui::surface()->GetCharacterWidth( hFont, cCharacterInFont );
 	}
 }
 
@@ -730,7 +730,7 @@ void CHud::SetupNewHudTexture( CHudTexture *t )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTexture *CHud::AddUnsearchableHudIconToList( CHudTexture& texture )
 {
@@ -764,7 +764,7 @@ CHudTexture *CHud::AddUnsearchableHudIconToList( CHudTexture& texture )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTexture *CHud::AddSearchableHudIconToList( CHudTexture& texture )
 {
@@ -796,7 +796,7 @@ CHudTexture *CHud::GetIcon( const char *szIcon )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHud::RefreshHudTextures()
 {
@@ -869,7 +869,7 @@ void CHud::RefreshHudTextures()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHud::OnRestore()
 {
@@ -877,7 +877,7 @@ void CHud::OnRestore()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHud::VidInit( void )
 {
@@ -891,7 +891,7 @@ void CHud::VidInit( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudElement *CHud::FindElement( const char *pName )
 {
@@ -909,7 +909,7 @@ CHudElement *CHud::FindElement( const char *pName )
 //-----------------------------------------------------------------------------
 // Purpose: Adds a member to the HUD
 //-----------------------------------------------------------------------------
-void CHud::AddHudElement( CHudElement *pHudElement ) 
+void CHud::AddHudElement( CHudElement *pHudElement )
 {
 	// Add the hud element to the end of the array
 	m_HudList.AddToTail( pHudElement );
@@ -920,7 +920,7 @@ void CHud::AddHudElement( CHudElement *pHudElement )
 //-----------------------------------------------------------------------------
 // Purpose: Remove an element from the HUD
 //-----------------------------------------------------------------------------
-void CHud::RemoveHudElement( CHudElement *pHudElement ) 
+void CHud::RemoveHudElement( CHudElement *pHudElement )
 {
 	m_HudList.FindAndRemove( pHudElement );
 }
@@ -1052,12 +1052,12 @@ bool CHud::LockRenderGroup( int iGroupIndex, CHudElement *pLocker /* = NULL */ )
 
 		return true;
 	}
-	
+
 	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: A hud element wants to release the lock on this render group 
+// Purpose: A hud element wants to release the lock on this render group
 //-----------------------------------------------------------------------------
 bool CHud::UnlockRenderGroup( int iGroupIndex, CHudElement *pLocker /* = NULL */ )
 {
@@ -1137,7 +1137,7 @@ int CHud::RegisterForRenderGroup( const char *pszGroupName )
 	int iGroupNameIndex = m_RenderGroupNames.Find( pszGroupName );
 
 	if ( iGroupNameIndex != m_RenderGroupNames.InvalidIndex() )
-	{	
+	{
 		return iGroupNameIndex;
 	}
 
@@ -1160,7 +1160,7 @@ int CHud::AddHudRenderGroup( const char *pszGroupName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:  
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHud::DoesRenderGroupExist( int iGroupIndex )
 {
@@ -1169,8 +1169,8 @@ bool CHud::DoesRenderGroupExist( int iGroupIndex )
 
 //-----------------------------------------------------------------------------
 // Purpose: Allows HUD to Think and modify input data
-// Input  : *cdata - 
-//			time - 
+// Input  : *cdata -
+//			time -
 // Output : int - 1 if there were changes, 0 otherwise
 //-----------------------------------------------------------------------------
 void CHud::UpdateHud( bool bActive )
@@ -1196,4 +1196,3 @@ CON_COMMAND_F( testhudanim, "Test a hud element animation.\n\tArguments: <anim n
 
 	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( args[1] );
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -60,14 +60,14 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_GunshipFX::C_GunshipFX( void )
 {
 	m_pOwner = NULL;
 }
 
-enum 
+enum
 {
 	GUNSHIPFX_WARP_SCALE = 0,
 	GUNSHIPFX_DARKNESS,
@@ -76,7 +76,7 @@ enum
 
 	GUNSHIPFX_NARROW_BEAM_COLOR,
 	GUNSHIPFX_NARROW_BEAM_SIZE,
-	
+
 	GUNSHIPFX_WIDE_BEAM_COLOR,
 	GUNSHIPFX_WIDE_BEAM_SIZE,
 
@@ -176,7 +176,7 @@ static void DrawSpriteTangentSpace( const Vector &vecOrigin, float flWidth, floa
 		}
 		else
 		{
-			// In this case, fwd == g_vecVUp, it's right above or 
+			// In this case, fwd == g_vecVUp, it's right above or
 			// below us in screen space
 			CrossProduct( fwd, CurrentViewRight(), up );
 			VectorNormalize( up );
@@ -189,7 +189,7 @@ static void DrawSpriteTangentSpace( const Vector &vecOrigin, float flWidth, floa
 	Vector back = -fwd;
 
 	CMatRenderContextPtr pRenderContext( materials );
-	
+
 	CMeshBuilder meshBuilder;
 	Vector point;
 	IMesh* pMesh = pRenderContext->GetDynamicMesh( );
@@ -235,7 +235,7 @@ static void DrawSpriteTangentSpace( const Vector &vecOrigin, float flWidth, floa
 	meshBuilder.Normal3fv( back.Base() );
 	meshBuilder.Position3fv (point.Base());
 	meshBuilder.AdvanceVertex();
-	
+
 	meshBuilder.End();
 	pMesh->Draw();
 }
@@ -255,8 +255,8 @@ void Gunship_DrawSprite( const Vector &vecOrigin, float size, const color32 &col
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : int - 
+// Purpose:
+// Input  : int -
 //-----------------------------------------------------------------------------
 int	C_GunshipFX::DrawModel( int )
 {
@@ -340,16 +340,16 @@ int	C_GunshipFX::DrawModel( int )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOwner - 
-//			&targetPos - 
+// Purpose:
+// Input  : *pOwner -
+//			&targetPos -
 //-----------------------------------------------------------------------------
 void C_GunshipFX::Update( C_BaseEntity *pOwner, const Vector &targetPos )
 {
 	BaseClass::Update();
 
 	m_pOwner = pOwner;
-	
+
 	if ( m_active )
 	{
 		m_targetPosition = targetPos;
@@ -367,7 +367,7 @@ public:
 	DECLARE_CLIENTCLASS();
 
 	C_CombineGunship( void ) {}
-	
+
 	virtual ~C_CombineGunship( void )
 	{
 		m_cannonFX.EffectShutdown();
@@ -377,9 +377,9 @@ public:
 	Vector		m_vecHitPos;
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
-	// Input  : length - 
-	//			*data - 
+	// Purpose:
+	// Input  : length -
+	//			*data -
 	// Output : 	void
 	//-----------------------------------------------------------------------------
 	void ReceiveMessage( int classID, bf_read &msg )
@@ -473,4 +473,3 @@ void ImpactGunshipCallback( const CEffectData &data )
 }
 
 DECLARE_CLIENT_EFFECT( "ImpactGunship", ImpactGunshipCallback );
-

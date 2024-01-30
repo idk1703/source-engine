@@ -44,13 +44,13 @@ public:
 	}
 
 	virtual const char *GetDefaultPowerupModel( void )
-	{ 
+	{
 		if ( TFGameRules() && TFGameRules()->IsHolidayActive( kHoliday_TFBirthday ) )
 		{
 			return TF_AMMOPACK_LARGE_BDAY;
 		}
 
-		return "models/items/ammopack_large.mdl"; 
+		return "models/items/ammopack_large.mdl";
 	}
 };
 
@@ -77,13 +77,13 @@ public:
 	}
 
 	virtual const char *GetDefaultPowerupModel( void )
-	{ 
+	{
 		if ( TFGameRules() && TFGameRules()->IsHolidayActive( kHoliday_TFBirthday ) )
 		{
 			return TF_AMMOPACK_SMALL_BDAY;
 		}
-		
-		return "models/items/ammopack_small.mdl"; 
+
+		return "models/items/ammopack_small.mdl";
 	}
 };
 
@@ -108,18 +108,16 @@ public:
 			SetModelIndexOverride( VISION_MODE_PYRO, modelinfo->GetModelIndex( TF_AMMOPACK_MEDIUM_BDAY ) );
 		}
 	}
-	 
-	virtual const char *GetDefaultPowerupModel( void ) 
+
+	virtual const char *GetDefaultPowerupModel( void )
 	{
 		if ( TFGameRules() && TFGameRules()->IsHolidayActive( kHoliday_TFBirthday ) )
 		{
 			return TF_AMMOPACK_MEDIUM_BDAY;
 		}
-		
-		return "models/items/ammopack_medium.mdl"; 
+
+		return "models/items/ammopack_medium.mdl";
 	}
 };
 
 #endif // ENTITY_AMMOPACK_H
-
-

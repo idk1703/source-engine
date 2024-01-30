@@ -102,7 +102,7 @@ int CCircularBuffer::Peek(char *pchDest, int nCount)
 	{
 		return(0);
 	}
-	
+
 	//
 	// Requested amount should not exceed the available amount.
 	//
@@ -126,7 +126,7 @@ int CCircularBuffer::Peek(char *pchDest, int nCount)
 	{
 		memcpy(pchDest, &m_chData[m_nRead], nCount);
 	}
-	
+
 	AssertValid();
 	return nCount;
 }
@@ -146,13 +146,13 @@ int CCircularBuffer::Advance(int nCount)
 	{
 		return(0);
 	}
-	
+
 	//
 	// Requested amount should not exceed the available amount.
 	//
 	nCount = MIN(m_nCount, nCount);
 
-	// Advance the read pointer, checking for buffer 
+	// Advance the read pointer, checking for buffer
 	//wrap.
 	//
 	m_nRead = (m_nRead + nCount) % m_nSize;
@@ -220,12 +220,12 @@ int CCircularBuffer::Write(void *pData, int nBytesRequested)
 	// Write all the data.
 	int nBytesToWrite = nBytesRequested;
 	char *pDataToWrite = (char*)pData;
-	
+
 	while(nBytesToWrite)
 	{
 		int from = m_nWrite;
 		int to = m_nWrite + nBytesToWrite;
-		
+
 		if(to >= m_nSize)
 		{
 			to = m_nSize;
@@ -268,4 +268,3 @@ void FreeCircularBuffer( CCircularBuffer *pCircularBuffer )
 {
 	free( (char*)pCircularBuffer );
 }
-

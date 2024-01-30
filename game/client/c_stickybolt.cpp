@@ -39,7 +39,7 @@ extern ITempEnts* tempents;
 class CRagdollBoltEnumerator : public IPartitionEnumerator
 {
 public:
-	//Forced constructor   
+	//Forced constructor
 	CRagdollBoltEnumerator( Ray_t& shot, Vector vOrigin )
 	{
 		m_rayShot = shot;
@@ -62,7 +62,7 @@ public:
 		enginetrace->ClipRayToEntity( m_rayShot, MASK_SHOT, pModel, &tr );
 
 		IPhysicsObject	*pPhysicsObject = NULL;
-		
+
 		//Find the real object we hit.
 		if( tr.physicsbone >= 0 )
 		{
@@ -91,16 +91,16 @@ public:
 
 			if ( pReference == NULL || pPhysicsObject == NULL )
 				 return ITERATION_CONTINUE;
-			
+
 			float flMass = pPhysicsObject->GetMass();
 			pPhysicsObject->SetMass( flMass * 2 );
 
 			constraint_ballsocketparams_t ballsocket;
 			ballsocket.Defaults();
-		
+
 			pReference->WorldToLocal( &ballsocket.constraintPosition[0], m_vWorld );
 			pPhysicsObject->WorldToLocal( &ballsocket.constraintPosition[1], tr.endpos );
-	
+
 			physenv->CreateBallsocketConstraint( pReference, pPhysicsObject, NULL, ballsocket );
 
 			//Play a sound
@@ -114,7 +114,7 @@ public:
 			ep.m_pOrigin = &pEnt->GetAbsOrigin();
 
 			C_BaseEntity::EmitSound( filter, SOUND_FROM_WORLD, ep );
-	
+
 			return ITERATION_STOP;
 		}
 
@@ -133,7 +133,7 @@ void CreateCrossbowBolt( const Vector &vecOrigin, const Vector &vecDirection )
 	QAngle vAngles;
 
 	VectorAngles( vecDirection, vAngles );
-	
+
 	if ( gpGlobals->maxClients > 1 )
 	{
 		tempents->SpawnTempModel( pModel, vecOrigin - vecDirection * 8, vAngles, Vector(0, 0, 0 ), 30.0f, FTENT_NONE );
@@ -148,7 +148,7 @@ void StickRagdollNow( const Vector &vecOrigin, const Vector &vecDirection )
 {
 	Ray_t	shotRay;
 	trace_t tr;
-	
+
 	UTIL_TraceLine( vecOrigin, vecOrigin + vecDirection * 16, MASK_SOLID_BRUSHONLY, NULL, COLLISION_GROUP_NONE, &tr );
 
 	if ( tr.surface.flags & SURF_SKY )
@@ -160,13 +160,13 @@ void StickRagdollNow( const Vector &vecOrigin, const Vector &vecDirection )
 
 	CRagdollBoltEnumerator	ragdollEnum( shotRay, vecOrigin );
 	::partition->EnumerateElementsAlongRay( PARTITION_CLIENT_RESPONSIVE_EDICTS, shotRay, false, &ragdollEnum );
-	
+
 	CreateCrossbowBolt( vecOrigin, vecDirection );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &data - 
+// Purpose:
+// Input  : &data -
 //-----------------------------------------------------------------------------
 void StickyBoltCallback( const CEffectData &data )
 {

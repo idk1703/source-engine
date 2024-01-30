@@ -50,7 +50,7 @@ public:
 	{
 		return GetSteamWorksSGameStatsUploader().GetServerSessionID();
 	}
-	
+
 	virtual IReplayScreenshotSystem *GetReplayScreenshotSystem()
 	{
 		if ( g_pEngineReplay->IsSupportedModAndPlatform() )
@@ -115,7 +115,7 @@ public:
 	{
 		if ( !pText || !pText[0] )
 			return;
-	
+
 		const int nLen = wcslen( pText ) + 1;
 		char *pAnsi = new char[ nLen ];
 		g_pVGuiLocalize->ConvertUnicodeToANSI( pText, pAnsi, nLen );

@@ -70,7 +70,7 @@ void ClientModeTFNormal::Viewport::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ClientModeTFNormal::Viewport::ReloadScheme()
 {
@@ -101,7 +101,7 @@ void ClientModeTFNormal::Viewport::ReloadScheme()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : vgui::Panel
 //-----------------------------------------------------------------------------
 vgui::Panel *ClientModeTFNormal::GetMinimapParent( void )
@@ -110,7 +110,7 @@ vgui::Panel *ClientModeTFNormal::GetMinimapParent( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ClientModeTFNormal::Update()
 {
@@ -119,9 +119,9 @@ void ClientModeTFNormal::Update()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frametime - 
-//			*cmd - 
+// Purpose:
+// Input  : frametime -
+//			*cmd -
 //-----------------------------------------------------------------------------
 void ClientModeTFNormal::CreateMove( float flInputSampleTime, CUserCmd *cmd )
 {
@@ -155,7 +155,7 @@ void ClientModeTFNormal::CreateMove( float flInputSampleTime, CUserCmd *cmd )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool ClientModeTFNormal::ShouldDrawViewModel( void )
@@ -166,8 +166,3 @@ bool ClientModeTFNormal::ShouldDrawViewModel( void )
 
 	return pPlayer->ShouldDrawViewModel();
 }
-
-
-
-
-

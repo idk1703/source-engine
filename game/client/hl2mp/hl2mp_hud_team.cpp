@@ -75,14 +75,14 @@ CTeamPlayHud::CTeamPlayHud( const char *pElementName ) : BaseClass(NULL, "TeamDi
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamPlayHud::Reset()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTeamPlayHud::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -160,7 +160,7 @@ void CTeamPlayHud::OnThink()
 			m_bSuitAuxPowerUsed = false;
 		}
 	}
-	
+
 	int iTeamNumber = pLocalPlayer->GetTeamNumber();
 	Color c = GameResources()->GetTeamColor( iTeamNumber );
 
@@ -171,9 +171,9 @@ void CTeamPlayHud::OnThink()
 	{
 		wchar_t TeamName[64];
 		g_pVGuiLocalize->ConvertANSIToUnicode( pTeam->Get_Name(), TeamName, sizeof(TeamName) );
-		
+
 		g_pVGuiLocalize->ConstructString( string1, sizeof(string1), g_pVGuiLocalize->Find("#Team"), 1, TeamName );
-		
+
 		m_pBackground->SetFgColor( GetFgColor() );
 		m_pWarmupLabel->SetFgColor(c);
 

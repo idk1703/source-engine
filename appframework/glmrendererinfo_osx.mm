@@ -36,10 +36,10 @@ bool	GLMDetectSLGU( void )
 {
 	CGLError	cgl_error = (CGLError)0;
 	bool		result = false;
-	
+
 	CGLContextObj oldctx = CGLGetCurrentContext();
 
-	static CGLPixelFormatAttribute attribs[] = 
+	static CGLPixelFormatAttribute attribs[] =
 	{
 		kCGLPFADoubleBuffer,
 		kCGLPFANoRecovery,
@@ -54,14 +54,14 @@ bool	GLMDetectSLGU( void )
 
 	CGLPixelFormatObj	pixfmtobj = NULL;
 	GLint				npix;
-	
+
 	CGLContextObj		ctxobj = NULL;
-	
+
 	cgl_error = CGLChoosePixelFormat( attribs, &pixfmtobj, &npix );
 	if (!cgl_error)
 	{
 		// got pixel format, make a context
-		
+
 		cgl_error = CGLCreateContext( pixfmtobj, NULL, &ctxobj );
 		if (!cgl_error)
 		{
@@ -75,12 +75,12 @@ bool	GLMDetectSLGU( void )
 			cgl_error = CGLGetParameter( CGLGetCurrentContext(), kCGLCPGCDMPEngine, &dummyval );
 
 			result = (!cgl_error);
-			
+
 			// all done, go back to old context, and destroy the temp one
 			CGLSetCurrentContext( oldctx );
 			CGLDestroyContext( ctxobj );
 		}
-		
+
 		// destroy the pixel format obj
 		CGLDestroyPixelFormat( pixfmtobj );
 	}
@@ -93,38 +93,38 @@ bool	GLMDetectScaledResolveMode( uint osComboVersion, bool hasSLGU );
 bool	GLMDetectScaledResolveMode( uint osComboVersion, bool hasSLGU )
 {
 	bool result = false;
-	
+
 	// note this function assumes a current context on the renderer in question
 	// and that FB blit and SLGU are present..
-	
+
 	if (!hasSLGU)
 		return false;
-		
+
 	if (osComboVersion <= 0x000A0604)	// we know no one has it before 10.6.5
 		return false;
-	
+
 	// in 10.6.6 and later, just check for the ext string.
 	char *gl_ext_string = (char*)glGetString(GL_EXTENSIONS);
 	// avoid crashing due to strstr'ing NULL pointer returned from glGetString
 	if (!gl_ext_string)
 		gl_ext_string = "";
-	
+
 	result = strstr(gl_ext_string, "GL_EXT_framebuffer_multisample_blit_scaled") != NULL;
-	
+
 	if ( !result )
 	{
 		// make two FBO's
 		GLuint	fbos[2];
 		GLuint	rbos[2];
 		int extent = 64;
-		
+
 		// make two render buffers
 
 		for( int fbi = 0; fbi < 2; fbi++ )
 		{
 			glGenFramebuffersEXT( 1, &fbos[fbi] ); CheckGLError( __LINE__ );
 			glBindFramebufferEXT( fbi ? GL_DRAW_FRAMEBUFFER_EXT : GL_READ_FRAMEBUFFER_EXT , fbos[fbi] );  CheckGLError( __LINE__ );
-			
+
 			glGenRenderbuffersEXT( 1, &rbos[fbi] ); CheckGLError( __LINE__ );
 			glBindRenderbufferEXT( GL_RENDERBUFFER_EXT, rbos[fbi] ); CheckGLError( __LINE__ );
 
@@ -138,7 +138,7 @@ bool	GLMDetectScaledResolveMode( uint osComboVersion, bool hasSLGU )
 				glRenderbufferStorageEXT( GL_RENDERBUFFER_EXT, GL_RGBA8, extent,extent ); CheckGLError( __LINE__ );
 			}
 
-			// attach it 
+			// attach it
 			// #0 gets to be read and multisampled
 			// #1 gets to be draw and multisampled
 			glFramebufferRenderbufferEXT( fbi ? GL_DRAW_FRAMEBUFFER_EXT : GL_READ_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_RENDERBUFFER_EXT, rbos[fbi] ); CheckGLError( __LINE__ );
@@ -160,22 +160,22 @@ bool	GLMDetectScaledResolveMode( uint osComboVersion, bool hasSLGU )
 		switch(errorcode)
 		{
 			// expected outcomes.
-			
+
 			// positive
 			case GL_NO_ERROR:
 			case GL_INVALID_OPERATION:
 				result = true;			// new scaled resolve detected
 				break;
-				
+
 			default:
 				result = false;			// no scaled resolve
 				break;
 		}
-		
+
 		// unbind and wipe stuff
-		
+
 		glBindRenderbufferEXT( GL_RENDERBUFFER_EXT, 0 ); CheckGLError( __LINE__ );
-		
+
 		for( int xfbi = 0; xfbi < 2; xfbi++ )
 		{
 			// unbind FBO
@@ -201,7 +201,7 @@ GLMRendererInfo::GLMRendererInfo( GLMRendererInfoFields *info )
 	m_displays = NULL;
 
 	// gather more info using a dummy context
-	unsigned int attribs[] = 
+	unsigned int attribs[] =
 	{
 		kCGLPFADoubleBuffer, kCGLPFANoRecovery, kCGLPFAAccelerated,
 		kCGLPFADepthSize, 0,
@@ -210,11 +210,11 @@ GLMRendererInfo::GLMRendererInfo( GLMRendererInfoFields *info )
 		0
 	};
 
-	NSOpenGLPixelFormat	*pixFmt		=	[[NSOpenGLPixelFormat alloc] initWithAttributes:(NSOpenGLPixelFormatAttribute*)attribs]; 
+	NSOpenGLPixelFormat	*pixFmt		=	[[NSOpenGLPixelFormat alloc] initWithAttributes:(NSOpenGLPixelFormatAttribute*)attribs];
 	NSOpenGLContext		*nsglCtx	=	[[NSOpenGLContext alloc] initWithFormat: pixFmt shareContext: NULL ];
 
 	[nsglCtx makeCurrentContext];
-		
+
 	// run queries.
 	char *gl_ext_string = (char*)glGetString(GL_EXTENSIONS);
 
@@ -229,7 +229,7 @@ GLMRendererInfo::GLMRendererInfo( GLMRendererInfoFields *info )
 		m_info.m_vidMemory = 1;
 		m_info.m_texMemory = 1;
 	}
-	
+
 	//-------------------------------------------------------------------
 	// booleans
 	//-------------------------------------------------------------------
@@ -239,18 +239,18 @@ GLMRendererInfo::GLMRendererInfo( GLMRendererInfoFields *info )
 	{
 		m_info.m_hasGammaWrites = false;
 	}
-	
+
 	if (m_info.m_atiR5xx)
 	{
 		m_info.m_hasGammaWrites = false;	// it just don't, even post 10.6.3
 	}
-	
+
 	// if CLI option for fake SRGB mode is enabled, turn off this cap, act like we do not have EXT FB SRGB
 	if (CommandLine()->FindParm("-glmenablefakesrgb"))
 	{
 		m_info.m_hasGammaWrites = false;
 	}
-	
+
 	// extension string *could* be checked, but on 10.6.3 the ext string is not there, but the func *is*
 
 	//-------------------------------------------------------------------
@@ -292,14 +292,14 @@ GLMRendererInfo::GLMRendererInfo( GLMRendererInfoFields *info )
 	{
 		m_info.m_hasNewFullscreenMode = false;
 	}
-	
+
 	//-------------------------------------------------------------------
 	m_info.m_hasNativeClipVertexMode = true;
 	// this one uses a heuristic, and allows overrides in case the heuristic is wrong
 	// or someone wants to try a beta driver or something.
 
 	// known bad combinations get turned off here..
-	
+
 	// any ATI hardware...
 	// TURNED OFF OS CHECK if (m_info.m_osComboVersion <= 0x000A0603)
 	// still believe to be broken in 10.6.4
@@ -309,7 +309,7 @@ GLMRendererInfo::GLMRendererInfo( GLMRendererInfoFields *info )
 			m_info.m_hasNativeClipVertexMode = false;
 		}
 	}
-	
+
 	// R500, forever..
 	if (m_info.m_atiR5xx)
 	{
@@ -321,30 +321,30 @@ GLMRendererInfo::GLMRendererInfo( GLMRendererInfoFields *info )
 	{
 		m_info.m_hasNativeClipVertexMode = false;
 	}
-	
+
 	// or maybe enabled them..
 	if (CommandLine()->FindParm("-glmenableclipplanes"))
 	{
 		m_info.m_hasNativeClipVertexMode = true;
 	}
-	
+
 	//-------------------------------------------------------------------
 	m_info.m_hasOcclusionQuery = true;
 	if (!strstr(gl_ext_string, "ARB_occlusion_query"))
 	{
 		m_info.m_hasOcclusionQuery = false;		// you don't got it!
 	}
-	
+
 	//-------------------------------------------------------------------
 	m_info.m_hasFramebufferBlit = true;
 	if (!strstr(gl_ext_string, "EXT_framebuffer_blit"))
 	{
 		m_info.m_hasFramebufferBlit = false;	// you know you don't got it!
 	}
-	
+
 	//-------------------------------------------------------------------
 	m_info.m_maxAniso = 4;			//FIXME needs real query
-	
+
 	//-------------------------------------------------------------------
 	m_info.m_hasBindableUniforms = true;
 	if (!strstr(gl_ext_string, "EXT_bindable_uniform"))
@@ -352,7 +352,7 @@ GLMRendererInfo::GLMRendererInfo( GLMRendererInfoFields *info )
 		m_info.m_hasBindableUniforms = false;
 	}
 	m_info.m_hasBindableUniforms = false;		// hardwiring this path to false until we see how to accelerate it properly
-	
+
 	//-------------------------------------------------------------------
 	m_info.m_hasUniformBuffers = true;
 	if (!strstr(gl_ext_string, "ARB_uniform_buffer"))
@@ -364,17 +364,17 @@ GLMRendererInfo::GLMRendererInfo( GLMRendererInfoFields *info )
 	// test for performance pack (10.6.4+)
 
 	bool perfPackageDetected = GLMDetectSLGU();
-	
+
 	if (perfPackageDetected)
 	{
 		m_info.m_hasPerfPackage1 = true;
-	}	
+	}
 
 	if (CommandLine()->FindParm("-glmenableperfpackage"))	// force it on
 	{
 		m_info.m_hasPerfPackage1 = true;
 	}
-	
+
 	if (CommandLine()->FindParm("-glmdisableperfpackage"))	// force it off
 	{
 		m_info.m_hasPerfPackage1 = false;
@@ -388,7 +388,7 @@ GLMRendererInfo::GLMRendererInfo( GLMRendererInfoFields *info )
 
 	//-------------------------------------------------------------------
 	// "can'ts "
-	
+
 	m_info.m_cantBlitReliably = (m_info.m_osComboVersion < 0x000A0606) && m_info.m_intel;		//don't trust FBO blit on Intel before 10.6.6
 	if (CommandLine()->FindParm("-glmenabletrustblit"))
 	{
@@ -405,13 +405,13 @@ GLMRendererInfo::GLMRendererInfo( GLMRendererInfoFields *info )
 
 	// MSAA resolve issues
 	m_info.m_cantResolveFlipped	= false;	// initial stance
-	
+
 	if (m_info.m_ati)
 	{
 		//Jan 2011 - ATI says it's better to do two step blit than to try and resolve upside down
 		m_info.m_cantResolveFlipped = true;
 	}
-	
+
 	if (m_info.m_nv)
 	{
 		// we're going to mark it 'broken' unless perf package 1 (10.6.4+) is present
@@ -420,7 +420,7 @@ GLMRendererInfo::GLMRendererInfo( GLMRendererInfoFields *info )
 			m_info.m_cantResolveFlipped = true;
 		}
 	}
-	
+
 	// this is just the private assessment of whather scaled resolve is available.
 	// the activation of it will stay tied to the gl_minify_resolve_mode / gl_magnify_resolve_mode convars in glmgr
 	if 	(m_info.m_osComboVersion > 0x000A0700 || CommandLine()->FindParm("-gl_enable_scaled_resolve") )
@@ -438,12 +438,12 @@ GLMRendererInfo::GLMRendererInfo( GLMRendererInfoFields *info )
 	{
 		m_info.m_cantResolveScaled = false;
 	}
-	
+
 	// gamma decode impacting shader codegen
 	m_info.m_costlyGammaFlips = false;
 	if (m_info.m_osComboVersion < 0x000A0600)		// if Leopard
 		m_info.m_costlyGammaFlips = true;
-		
+
 	if (m_info.m_atiR5xx)							// or r5xx - always
 		m_info.m_costlyGammaFlips = true;
 
@@ -465,7 +465,7 @@ GLMRendererInfo::GLMRendererInfo( GLMRendererInfoFields *info )
 
 	[nsglCtx release];
 	[pixFmt release];
-	
+
 	[tempPool release];
 }
 
@@ -492,10 +492,10 @@ extern "C" int DisplayInfoSortFunction( GLMDisplayInfo* const *A, GLMDisplayInfo
 
 	uint maskOfMainDisplay = CGDisplayIDToOpenGLDisplayMask( CGMainDisplayID() );
 	//Assert( maskOfMainDisplay==1 );	// just curious
-	
+
 	int mainscreena = (*A)->m_info.m_glDisplayMask & maskOfMainDisplay;
 	int mainscreenb = (*B)->m_info.m_glDisplayMask & maskOfMainDisplay;
-	
+
 	if ( mainscreena > mainscreenb )
 	{
 		return bigger;
@@ -504,20 +504,20 @@ extern "C" int DisplayInfoSortFunction( GLMDisplayInfo* const *A, GLMDisplayInfo
 	{
 		return smaller;
 	}
-	
+
 	// check area - larger screen should win
 	int areaa = (*A)->m_info.m_displayPixelWidth * (*A)->m_info.m_displayPixelHeight;
 	int areab = (*B)->m_info.m_displayPixelWidth * (*B)->m_info.m_displayPixelHeight;
 
 	if ( areaa > areab )
-	{	
+	{
 		return bigger;
 	}
 	else if ( areaa < areab )
 	{
 		return smaller;
 	}
-	
+
 	return 0;	// equal rank
 }
 
@@ -526,27 +526,27 @@ void	GLMRendererInfo::PopulateDisplays( void )
 {
 	Assert( !m_displays );
 	m_displays = new CUtlVector< GLMDisplayInfo* >;
-	
+
 	for( int i=0; i<32; i++)
 	{
 		// check mask to see if the selected display intersects this renderer
 		CGOpenGLDisplayMask dspMask = (CGOpenGLDisplayMask)(1<<i);
-		
+
 		if ( m_info.m_displayMask & dspMask )
 		{
 			// exclude teeny displays (they may represent offline displays)
 			// exclude inactive displays
-			
+
 			CGDirectDisplayID cgid = CGOpenGLDisplayMaskToDisplayID ( dspMask );
 
 			if ( (cgid != kCGNullDirectDisplay) && CGDisplayIsActive( cgid ) && (CGDisplayPixelsWide( cgid ) >= 512) && (CGDisplayPixelsHigh( cgid ) >= 384) )
 			{
 				GLMDisplayInfo *newdisp = new GLMDisplayInfo( cgid, dspMask );
-				m_displays->AddToTail( newdisp );			
+				m_displays->AddToTail( newdisp );
 			}
 		}
 	}
-	
+
 	// now sort the table of displays.
 	m_displays->Sort( DisplayInfoSortFunction );
 
@@ -612,7 +612,7 @@ void	GLMRendererInfo::Dump( int which )
 
 GLMDisplayDB::GLMDisplayDB	( void )
 {
-	m_renderers = NULL;	
+	m_renderers = NULL;
 }
 
 GLMDisplayDB::~GLMDisplayDB	( void )
@@ -633,37 +633,37 @@ extern "C" int RendererInfoSortFunction( GLMRendererInfo * const *A, GLMRenderer
 {
 	int bigger = -1;
 	int smaller = 1;
-	
+
 	// check VRAM
 	if ( (*A)->m_info.m_vidMemory > (*B)->m_info.m_vidMemory )
-	{	
+	{
 		return bigger;
 	}
 	else if ( (*A)->m_info.m_vidMemory < (*B)->m_info.m_vidMemory )
 	{
 		return smaller;
 	}
-	
+
 	// check MSAA limit
 	if ( (*A)->m_info.m_maxSamples > (*B)->m_info.m_maxSamples )
-	{	
+	{
 		return bigger;
 	}
 	else if ( (*A)->m_info.m_maxSamples < (*B)->m_info.m_maxSamples )
 	{
 		return smaller;
 	}
-	
+
 	/*
 		// this was not a great idea here..
-		
+
 		// check if one has the main screen - is that index 0 in all cases?
 		uint maskOfMainDisplay = CGDisplayIDToOpenGLDisplayMask( CGMainDisplayID() );
 		Assert( maskOfMainDisplay==1 );	// just curious
-		
+
 		int mainscreena = (*A)->m_info.m_displayMask & maskOfMainDisplay;
 		int mainscreenb = (*B)->m_info.m_displayMask & maskOfMainDisplay;
-		
+
 		if ( mainscreena > mainscreenb )
 		{
 			return bigger;
@@ -673,7 +673,7 @@ extern "C" int RendererInfoSortFunction( GLMRendererInfo * const *A, GLMRenderer
 			return smaller;
 		}
 	*/
-	
+
 	return 0;	// equal rank
 }
 
@@ -707,7 +707,7 @@ extern "C" int RendererInfoSortFunction( GLMRendererInfo * const *A, GLMRenderer
 		void	GetDriverInfoString_NV( char *driverNameBuf, int driverNameBufLen )
 		{
 			// courtesy NVIDIA dev rel
-			
+
 			io_registry_entry_t registry;
 			kern_return_t ret;
 
@@ -778,7 +778,7 @@ void	GLMDisplayDB::PopulateRenderers( void )
 {
 	Assert( !m_renderers );
 	m_renderers = new CUtlVector< GLMRendererInfo* >;
-	
+
 	// now walk the renderer list
 	// find the eligible ones and insert them into vector
 	// if more than one, sort the vector by desirability with favorite at 0
@@ -786,20 +786,20 @@ void	GLMDisplayDB::PopulateRenderers( void )
 
 	// turns out how you have to do this is to walk the display mask 1<<n..
 	// and query at each one, what renderers can hit that one.
-	
+
 	// when you find one, see if it's already in the vector above. if not, add it.
 	// later, we sort them.
-	
+
 	for( int i=0; i<32; i++ )
 	{
 		CGLError			cgl_err		= (CGLError)0;
 		CGLRendererInfoObj	cgl_rend	= NULL;
 		GLint				nrend;
-	
-		CGOpenGLDisplayMask	dspMask		= (CGOpenGLDisplayMask)(1<<i);	
+
+		CGOpenGLDisplayMask	dspMask		= (CGOpenGLDisplayMask)(1<<i);
 		CGDirectDisplayID	cgid		= CGOpenGLDisplayMaskToDisplayID( dspMask );
 
-		bool selected = true;	// assume the best		
+		bool selected = true;	// assume the best
 
 		if (selected)
 		{
@@ -822,7 +822,7 @@ void	GLMDisplayDB::PopulateRenderers( void )
 				for( int j=0; j<nrend; j++)
 				{
 					int problems = 0;
-					
+
 					GLMRendererInfoFields	fields;
 					memset( &fields, 0, sizeof(fields) );
 
@@ -838,7 +838,7 @@ void	GLMDisplayDB::PopulateRenderers( void )
 					cgl_err = CGLDescribeRenderer( cgl_rend, j,   kCGLRPColorModes, &fields.m_colorModes );			problems += (cgl_err != 0);
 					cgl_err = CGLDescribeRenderer( cgl_rend, j,   kCGLRPDepthModes, &fields.m_depthModes );			problems += (cgl_err != 0);
 					cgl_err = CGLDescribeRenderer( cgl_rend, j,   kCGLRPStencilModes, &fields.m_stencilModes );		problems += (cgl_err != 0);
-					cgl_err = CGLDescribeRenderer( cgl_rend, j,   kCGLRPMaxAuxBuffers, &fields.m_maxAuxBuffers );	problems += (cgl_err != 0);				
+					cgl_err = CGLDescribeRenderer( cgl_rend, j,   kCGLRPMaxAuxBuffers, &fields.m_maxAuxBuffers );	problems += (cgl_err != 0);
 					cgl_err = CGLDescribeRenderer( cgl_rend, j,   kCGLRPMaxSampleBuffers, &fields.m_maxSampleBuffers );	problems += (cgl_err != 0);
 					cgl_err = CGLDescribeRenderer( cgl_rend, j,   kCGLRPMaxSamples, &fields.m_maxSamples );			problems += (cgl_err != 0);
 					cgl_err = CGLDescribeRenderer( cgl_rend, j,   kCGLRPSampleModes, &fields.m_sampleModes );		problems += (cgl_err != 0);
@@ -854,17 +854,17 @@ void	GLMDisplayDB::PopulateRenderers( void )
 					// decide if this renderer goes in the table.
 
 					bool	selected = !problems;
-					
+
 					if (selected)
 					{
 						// grab the OS version
 
 						long vMajor = 0;	long vMinor = 0;	long vMinorMinor = 0;
-						
+
 						OSStatus gestalt_err = 0;
 						gestalt_err = Gestalt(gestaltSystemVersionMajor, &vMajor);
 						Assert(!gestalt_err);
-						
+
 						gestalt_err = Gestalt(gestaltSystemVersionMinor, &vMinor);
 						Assert(!gestalt_err);
 
@@ -879,7 +879,7 @@ void	GLMDisplayDB::PopulateRenderers( void )
 							// lie
 							fields.m_osComboVersion = 0x000A0508;
 						}
-						
+
 						if (fields.m_osComboVersion < 0x000A0508)
 						{
 							// no support below 10.5.8
@@ -887,26 +887,26 @@ void	GLMDisplayDB::PopulateRenderers( void )
 							selected = false;
 						}
 					}
-					
+
 					if (selected)
 					{
 						// gather more info from IOKit
 						// cribbed from http://developer.apple.com/mac/library/samplecode/VideoHardwareInfo/listing3.html
-						
+
 						CFTypeRef typeCode;
 						CFDataRef vendorID, deviceID, model;
 						io_registry_entry_t dspPort;
-							
+
 						// Get the I/O Kit service port for the display
 						dspPort = CGDisplayIOServicePort( cgid );
 
 						// Get the information for the device
 						// The vendor ID, device ID, and model are all available as properties of the hardware's I/O Kit service port
-						
+
 						vendorID	= (CFDataRef)IORegistryEntrySearchCFProperty(dspPort,kIOServicePlane,CFSTR("vendor-id"),	kCFAllocatorDefault,kIORegistryIterateRecursively | kIORegistryIterateParents);
 						deviceID	= (CFDataRef)IORegistryEntrySearchCFProperty(dspPort,kIOServicePlane,CFSTR("device-id"),	kCFAllocatorDefault,kIORegistryIterateRecursively | kIORegistryIterateParents);
 						model		= (CFDataRef)IORegistryEntrySearchCFProperty(dspPort,kIOServicePlane,CFSTR("model"),		kCFAllocatorDefault,kIORegistryIterateRecursively | kIORegistryIterateParents);
-						
+
 						// Send the appropriate data to the outputs checking to validate the data
 						if(vendorID)
 						{
@@ -916,7 +916,7 @@ void	GLMDisplayDB::PopulateRenderers( void )
 						{
 							fields.m_pciVendorID = 0;
 						}
-						
+
 						if(deviceID)
 						{
 							fields.m_pciDeviceID = *((UInt32*)CFDataGetBytePtr(deviceID));
@@ -925,7 +925,7 @@ void	GLMDisplayDB::PopulateRenderers( void )
 						{
 							fields.m_pciDeviceID = 0;
 						}
-						
+
 						if(model)
 						{
 							int length = CFDataGetLength(model);
@@ -936,18 +936,18 @@ void	GLMDisplayDB::PopulateRenderers( void )
 						{
 							Q_strncpy( fields.m_pciModelString, "UnknownModel", sizeof(fields.m_pciModelString) );
 						}
-						
+
 
 						// iterate through IOAccelerators til we find one that matches the vendorid and deviceid of this renderer (ugh!)
 						// this provides the driver version string which can in turn be used to uniquely identify bad drivers and special case for them
 						// first example to date - forcing vsync on 10.6.4 + NV
-						
+
 						{
 							io_iterator_t	ioIterator		= (io_iterator_t)0;
 							io_service_t	ioAccelerator;
 							kern_return_t	ioResult		= 0;
 							bool			ioDone			= false;
-														
+
 							ioResult = IOServiceGetMatchingServices( kIOMasterPortDefault, IOServiceMatching("IOAccelerator"), &ioIterator );
 							if( ioResult == KERN_SUCCESS )
 							{
@@ -956,44 +956,44 @@ void	GLMDisplayDB::PopulateRenderers( void )
 								while( ( !ioDone ) && ( ioAccelerator = IOIteratorNext( ioIterator ) )  )
 								{
 									io_service_t ioDevice;
-									
+
 									ioDevice = 0;
 									ioResult = IORegistryEntryGetParentEntry( ioAccelerator, kIOServicePlane, &ioDevice);
-									
+
 									CFDataRef this_vendorID, this_deviceID;
 
 									if(ioResult == KERN_SUCCESS)
 									{
 										this_vendorID	=	(CFDataRef)IORegistryEntryCreateCFProperty(ioDevice, CFSTR("vendor-id"), kCFAllocatorDefault, kNilOptions );
 										this_deviceID	=	(CFDataRef)IORegistryEntryCreateCFProperty(ioDevice, CFSTR("device-id"), kCFAllocatorDefault, kNilOptions );
-										
+
 										if (this_vendorID && this_deviceID)	// null check..
 										{
 											// see if it matches. if so, do our business (get the extended version string), set ioDone, call it a day
 											unsigned short this_vendorIDValue = *(unsigned short*)CFDataGetBytePtr(this_vendorID);
 											unsigned short this_deviceIDValue = *(unsigned short*)CFDataGetBytePtr(this_deviceID);
-											
+
 											if ( (fields.m_pciVendorID == this_vendorIDValue) && (fields.m_pciDeviceID == this_deviceIDValue) )
 											{
 												// see if it matches. if so, do our business (get the extended version string), set ioDone, call it a day
 												unsigned short* this_vendorIDBytes = (unsigned short*)CFDataGetBytePtr( this_vendorID );
 												unsigned short* this_deviceIDBytes = (unsigned short*)CFDataGetBytePtr( this_deviceID );
-												
+
 												if (this_vendorIDBytes && this_deviceIDBytes)	// null check...
 												{
 													unsigned short this_vendorIDValue = *this_vendorIDBytes;
 													unsigned short this_deviceIDValue = *this_deviceIDBytes;
-													
+
 													if ( (fields.m_pciVendorID == this_vendorIDValue) && (fields.m_pciDeviceID == this_deviceIDValue) )
 													{
 														// match, stop looking
 														ioDone = true;
-														
+
 														// get extended info
 														CFStringRef this_ioglName = (CFStringRef)IORegistryEntryCreateCFProperty( ioAccelerator, CFSTR("IOGLBundleName"), kCFAllocatorDefault, kNilOptions );
-	
+
 														NSString *bundlePath = [ NSString stringWithFormat:@"/System/Library/Extensions/%@.bundle", this_ioglName ];
-														
+
 														NSDictionary* this_driverDict = [ [NSBundle bundleWithPath: bundlePath] infoDictionary ];
 														if (this_driverDict)
 														{
@@ -1001,17 +1001,17 @@ void	GLMDisplayDB::PopulateRenderers( void )
 															if ( this_driverInfo )
 															{
 																const char* theString = [ this_driverInfo UTF8String ];
-																
+
 																strncpy(fields.m_driverInfoString, theString, sizeof( fields.m_driverInfoString )  );
-															}												
+															}
 														}
-														
+
 														// [bundlePath release];
-														
+
 														CFRelease(this_ioglName);
 													}
 												}
-	
+
 												CFRelease(this_vendorID);
 												CFRelease(this_deviceID);
 											}
@@ -1040,7 +1040,7 @@ void	GLMDisplayDB::PopulateRenderers( void )
 								fields.m_ati = true;
 
 								// http://www.pcidatabase.com/search.php?device_search_str=radeon&device_search.x=0&device_search.y=0&device_search=search+devices
-								
+
 								// Mac-relevant ATI R5xx PCI device ID's lie in this range: 0x7100 - 0x72FF
 								// X1600, X1900, X1950
 								if ( (fields.m_pciDeviceID >= 0x7100) && (fields.m_pciDeviceID <= 0x72ff) )
@@ -1051,7 +1051,7 @@ void	GLMDisplayDB::PopulateRenderers( void )
 								// R6xx PCI device ID's lie in these ranges:
 									// 0x94C1 - 0x9515 ... also 0x9581 - 0x9713
 									// 2400HD, 2600HD, 3870, et al
-								if	( 
+								if	(
 										( (fields.m_pciDeviceID >= 0x94C1) && (fields.m_pciDeviceID <= 0x9515) )
 									||	( (fields.m_pciDeviceID >= 0x9581) && (fields.m_pciDeviceID <= 0x9713) )
 									)
@@ -1061,14 +1061,14 @@ void	GLMDisplayDB::PopulateRenderers( void )
 
 								// R7xx PCI device ID's lie in: 0x9440 - 0x9460, also 9480-94b5.
 								// why there is an HD5000 at 9462, I dunno.  Don't think that's an R8xx part.
-								if	( 
+								if	(
 										( (fields.m_pciDeviceID >= 0x9440) && (fields.m_pciDeviceID <= 0x9460) )
 									||	( (fields.m_pciDeviceID >= 0x9480) && (fields.m_pciDeviceID <= 0x94B5) )
 									)
 								{
 									fields.m_atiR7xx = true;
 								}
-								
+
 								// R8xx: 0x6898-0x68BE
 								if ( (fields.m_pciDeviceID >= 0x6898) && (fields.m_pciDeviceID <= 0x68Be) )
 								{
@@ -1078,7 +1078,7 @@ void	GLMDisplayDB::PopulateRenderers( void )
 								#if 0
 										// turned off, but we could use this for cross check.
 										// we could also use the bit encoding of the renderer ID to ferret out a geberation clue.
-										
+
 										// string-scan for each generation
 										// this could be a lot better if we got the precise PCI ID's used and/or cross-ref'd that against the driver name
 										if (strstr("X1600", fields.m_pciModelString) || strstr("X1900", fields.m_pciModelString) || strstr("X1950", fields.m_pciModelString) )
@@ -1098,11 +1098,11 @@ void	GLMDisplayDB::PopulateRenderers( void )
 								#endif
 							}
 							break;
-							
+
 							case	0x8086:	//INTC
 							{
 								fields.m_intel = true;
-								
+
 								switch( fields.m_pciDeviceID )
 								{
 									case	0x27A6:	fields.m_intel95x = true;		break;	// GMA 950
@@ -1111,7 +1111,7 @@ void	GLMDisplayDB::PopulateRenderers( void )
 								}
 							}
 							break;
-							
+
 							case	0x10DE:	//NV
 							{
 								fields.m_nv = true;
@@ -1121,7 +1121,7 @@ void	GLMDisplayDB::PopulateRenderers( void )
 								{
 									fields.m_nvG7x = true;
 								}
-								
+
 								// G8x: 0400-04ff, also 0x5E1 (GTX280) through 0x08FF
 								if	(
 										( (fields.m_pciDeviceID >= 0x0400) && (fields.m_pciDeviceID <= 0x04ff) )
@@ -1135,7 +1135,7 @@ void	GLMDisplayDB::PopulateRenderers( void )
 								{
 									fields.m_nvNewer = true;
 								}
-								
+
 								// detect the specific revision of NV driver in 10.6.4 that caused all the grief
 								if (strstr(fields.m_driverInfoString, "1.6.16.11 (19.5.8f01)"))
 								{
@@ -1143,16 +1143,16 @@ void	GLMDisplayDB::PopulateRenderers( void )
 								}
 							}
 							break;
-						}						
+						}
 					}
-					
+
 					if (selected)
 					{
 						// dupe check
 						FOR_EACH_VEC( *m_renderers, i )
 						{
 							uint rendid = (*m_renderers)[i]->m_info.m_rendererID;
-							
+
 							if ( rendid == fields.m_rendererID )
 							{
 								// don't add to table, it's a dupe
@@ -1160,7 +1160,7 @@ void	GLMDisplayDB::PopulateRenderers( void )
 							}
 						}
 					}
-					
+
 					if (selected)
 					{
 						// criteria check
@@ -1173,7 +1173,7 @@ void	GLMDisplayDB::PopulateRenderers( void )
 					}
 
 					Assert( fields.m_displayMask != 0 );
-					
+
 					if (selected)
 					{
 						// add to table
@@ -1189,7 +1189,7 @@ void	GLMDisplayDB::PopulateRenderers( void )
 			}
 		}
 	}
-	
+
 	// now sort the table.
 	m_renderers->Sort( RendererInfoSortFunction );
 
@@ -1205,19 +1205,19 @@ void	GLMDisplayDB::PopulateFakeAdapters( uint realRendererIndex )		// fake adapt
 	// presumption is that renderers have been populated.
 	Assert( GetRendererCount() > 0 );
 	Assert( realRendererIndex < GetRendererCount() );
-	
+
 	m_fakeAdapters.RemoveAll();
-	
+
 	// for( int r = 0; r < GetRendererCount(); r++ )
 	int r = realRendererIndex;
 	{
 		for( int d = 0; d < GetDisplayCount( r ); d++ )
 		{
 			GLMFakeAdapter temp;
-			
+
 			temp.m_rendererIndex = r;
 			temp.m_displayIndex = d;
-			
+
 			m_fakeAdapters.AddToTail( temp );
 		}
 	}
@@ -1226,10 +1226,10 @@ void	GLMDisplayDB::PopulateFakeAdapters( uint realRendererIndex )		// fake adapt
 void	GLMDisplayDB::Populate(void)
 {
 	this->PopulateRenderers();
-	
+
 	// passing in zero here, constrains the set of fake adapters (GL renderer + a display) to the ones using the highest ranked renderer.
 	//FIXME introduce some kind of convar allowing selection of other GPU's in the system.
-	
+
 	int realRendererIndex = 0;
 
 	if (CommandLine()->FindParm("-glmrenderer0"))
@@ -1240,20 +1240,20 @@ void	GLMDisplayDB::Populate(void)
 		realRendererIndex = 2;
 	if (CommandLine()->FindParm("-glmrenderer3"))
 		realRendererIndex = 3;
-		
+
 	if (realRendererIndex >= GetRendererCount())
 	{
 		// fall back to 0
 		realRendererIndex = 0;
 	}
-	
+
 	this->PopulateFakeAdapters( 0 );
 
 	#if GLMDEBUG
 		this->Dump();
 	#endif
 }
-	
+
 
 
 int		GLMDisplayDB::GetFakeAdapterCount( void )
@@ -1275,10 +1275,10 @@ bool	GLMDisplayDB::GetFakeAdapterInfo( int fakeAdapterIndex, int *rendererOut, i
 
 	bool rendResult = GetRendererInfo( *rendererOut, rendererInfoOut );
 	bool dispResult = GetDisplayInfo( *rendererOut, *displayOut, displayInfoOut );
-	
+
 	return rendResult || dispResult;
 }
-	
+
 
 int		GLMDisplayDB::GetRendererCount( void )
 {
@@ -1291,8 +1291,8 @@ bool	GLMDisplayDB::GetRendererInfo( int rendererIndex, GLMRendererInfoFields *in
 
 	if (rendererIndex >= GetRendererCount())
 		return true; // fail
-	
-	GLMRendererInfo *rendInfo = (*m_renderers)[rendererIndex];		
+
+	GLMRendererInfo *rendInfo = (*m_renderers)[rendererIndex];
 	*infoOut = rendInfo->m_info;
 
 	return false;
@@ -1302,22 +1302,22 @@ int		GLMDisplayDB::GetDisplayCount( int rendererIndex )
 {
 	if (rendererIndex >= GetRendererCount())
 		return 0; // fail
-	
+
 	GLMRendererInfo *rendInfo = (*m_renderers)[rendererIndex];
-		
+
 	return	rendInfo->m_displays->Count();
 }
 
 bool	GLMDisplayDB::GetDisplayInfo( int rendererIndex, int displayIndex, GLMDisplayInfoFields *infoOut )
 {
 	memset( infoOut, 0, sizeof( GLMDisplayInfoFields ) );
-	
+
 	if (rendererIndex >= GetRendererCount())
 		return true; // fail
-	
+
 	if (displayIndex >= GetDisplayCount(rendererIndex))
 		return true; // fail
-	
+
 	GLMDisplayInfo *displayInfo = (*(*m_renderers)[rendererIndex]->m_displays)[displayIndex];
 	*infoOut = displayInfo->m_info;
 
@@ -1328,10 +1328,10 @@ int		GLMDisplayDB::GetModeCount( int rendererIndex, int displayIndex )
 {
 	if (rendererIndex >= GetRendererCount())
 		return 0; // fail
-	
+
 	if (displayIndex >= GetDisplayCount(rendererIndex))
 		return 0; // fail
-		
+
 	GLMDisplayInfo *displayInfo = (*(*m_renderers)[rendererIndex]->m_displays)[displayIndex];
 
 	return displayInfo->m_modes->Count();
@@ -1340,16 +1340,16 @@ int		GLMDisplayDB::GetModeCount( int rendererIndex, int displayIndex )
 bool	GLMDisplayDB::GetModeInfo( int rendererIndex, int displayIndex, int modeIndex, GLMDisplayModeInfoFields *infoOut )
 {
 	memset( infoOut, 0, sizeof( GLMDisplayModeInfoFields ) );
-	
+
 	if (rendererIndex >= GetRendererCount())
 		return true; // fail
-	
+
 	if (displayIndex >= GetDisplayCount(rendererIndex))
 		return true; // fail
-	
+
 	if (modeIndex >= GetModeCount(rendererIndex,displayIndex))
 		return true; // fail
-	
+
 	if (modeIndex>=0)
 	{
 		GLMDisplayMode *displayModeInfo = (*(*(*m_renderers)[rendererIndex]->m_displays)[displayIndex]->m_modes)[ modeIndex ];
@@ -1360,15 +1360,15 @@ bool	GLMDisplayDB::GetModeInfo( int rendererIndex, int displayIndex, int modeInd
 		// passing modeIndex = -1 means "tell me about current mode"..
 
 		GLMRendererInfo		*rendInfo = (*m_renderers)[ rendererIndex ];
-		GLMDisplayInfo		*dispinfo = (*rendInfo ->m_displays)[displayIndex];	
+		GLMDisplayInfo		*dispinfo = (*rendInfo ->m_displays)[displayIndex];
 		CGDirectDisplayID	cgid = dispinfo->m_info.m_cgDisplayID;
-		
+
 		CFDictionaryRef		curModeDict = CGDisplayCurrentMode( cgid );
 		CFNumberRef			number;
 		CFBooleanRef		boolean;
 		CFArrayRef			modeList;
 		CGDisplayErr		cgderr;
-		
+
 		// get the mode number from the mode dict (using system mode numbering, not our sorted numbering)
 		if (curModeDict)
 		{
@@ -1380,15 +1380,15 @@ bool	GLMDisplayDB::GetModeInfo( int rendererIndex, int displayIndex, int modeInd
 			int screenWidth=0;
 			int screenHeight=0;
 			int refreshHz=0;
-			
+
 			number = (CFNumberRef)CFDictionaryGetValue(curModeDict, kCGDisplayWidth);
 			CFNumberGetValue(number, kCFNumberLongType, &screenWidth);
 			number = (CFNumberRef)CFDictionaryGetValue(curModeDict, kCGDisplayHeight);
 			CFNumberGetValue(number, kCFNumberLongType, &screenHeight);
 			number = (CFNumberRef)CFDictionaryGetValue(curModeDict, kCGDisplayRefreshRate);
 			CFNumberGetValue(number, kCFNumberLongType, &refreshHz);
-			
-			GLMPRINTF(( "-D- GLMDisplayDB::GetModeInfo sees mode-index=%d, width=%d, height=%d on CGID %08x (display index %d on rendererindex %d)", 
+
+			GLMPRINTF(( "-D- GLMDisplayDB::GetModeInfo sees mode-index=%d, width=%d, height=%d on CGID %08x (display index %d on rendererindex %d)",
 				modeIndex,
 				screenWidth,
 				screenHeight,
@@ -1401,7 +1401,7 @@ bool	GLMDisplayDB::GetModeInfo( int rendererIndex, int displayIndex, int modeInd
 			FOR_EACH_VEC( (*dispinfo->m_modes), i )
 			{
 				GLMDisplayMode *mode = (*dispinfo->m_modes)[i];
-				
+
 				if (mode->m_info.m_modePixelWidth == screenWidth)
 				{
 					if (mode->m_info.m_modePixelHeight == screenHeight)
@@ -1438,10 +1438,10 @@ void	GLMDisplayDB::Dump( void )
 //===============================================================================
 
 GLMDisplayInfo::GLMDisplayInfo( CGDirectDisplayID displayID, CGOpenGLDisplayMask displayMask )
-{	
+{
 	m_info.m_cgDisplayID			= displayID;
 	m_info.m_glDisplayMask			= displayMask;
-	
+
 	// extract info about this display such as pixel width and height
 	m_info.m_displayPixelWidth		= (uint)CGDisplayPixelsWide( m_info.m_cgDisplayID );
 	m_info.m_displayPixelHeight		= (uint)CGDisplayPixelsHigh( m_info.m_cgDisplayID );
@@ -1471,7 +1471,7 @@ extern "C" int DisplayModeSortFunction( GLMDisplayMode * const *A, GLMDisplayMod
 
 	// check refreshrate - higher should win
 	if ( (*A)->m_info.m_modeRefreshHz > (*B)->m_info.m_modeRefreshHz )
-	{	
+	{
 		return bigger;
 	}
 	else if ( (*A)->m_info.m_modeRefreshHz < (*B)->m_info.m_modeRefreshHz )
@@ -1484,14 +1484,14 @@ extern "C" int DisplayModeSortFunction( GLMDisplayMode * const *A, GLMDisplayMod
 	int areab = (*B)->m_info.m_modePixelWidth * (*B)->m_info.m_modePixelHeight;
 
 	if ( areaa > areab )
-	{	
+	{
 		return bigger;
 	}
 	else if ( areaa < areab )
 	{
 		return smaller;
 	}
-	
+
 	return 0;	// equal rank
 }
 
@@ -1500,56 +1500,56 @@ void	GLMDisplayInfo::PopulateModes( void )
 {
 	Assert( !m_modes );
 	m_modes = new CUtlVector< GLMDisplayMode* >;
-	
+
 	CFArrayRef		modeList;
 //	CGDisplayErr	cgderr;
 	CFDictionaryRef cgvidmode;
 	CFNumberRef		number;
 	CFBooleanRef	boolean;
-	
+
 	modeList = CGDisplayAvailableModes( m_info.m_cgDisplayID );
 	if ( modeList != NULL )
 	{
 		//  examine each mode
 		CFIndex count = CFArrayGetCount( modeList );
-		
-		for (CFIndex i = 0; i < count; i++) 
+
+		for (CFIndex i = 0; i < count; i++)
 		{
 			long modeHeight = 0, modeWidth = 0;
 			long depth = 0;
 			long refreshrate = 0;
 			Boolean usable, stretched = false;
-			
+
 			// grab the mode dictionary
 			cgvidmode = (CFDictionaryRef)CFArrayGetValueAtIndex( modeList, i);
-			
+
 			// grab mode params we need
 			number = (CFNumberRef)CFDictionaryGetValue(cgvidmode, kCGDisplayBitsPerPixel);
 			CFNumberGetValue(number, kCFNumberLongType, &depth);
-			
+
 			boolean = (CFBooleanRef)CFDictionaryGetValue(cgvidmode, kCGDisplayModeUsableForDesktopGUI) ;
 			usable = CFBooleanGetValue(boolean);
-			
+
 			boolean = (CFBooleanRef)CFDictionaryGetValue(cgvidmode, kCGDisplayModeIsStretched);
-			if (NULL != boolean) 
+			if (NULL != boolean)
 			{
 				stretched = CFBooleanGetValue(boolean);
 			}
-			
+
 			if ( usable && (!stretched) && (depth==32) )
 			{
 				// we're going to log this mode to the mode table.
-				
+
 				// get height of mode
 				number = (CFNumberRef)CFDictionaryGetValue( cgvidmode, kCGDisplayHeight );
 				CFNumberGetValue(number, kCFNumberLongType, &modeHeight);
-				
+
 				// get width of mode
 				number = (CFNumberRef)CFDictionaryGetValue( cgvidmode, kCGDisplayWidth );
 				CFNumberGetValue(number, kCFNumberLongType, &modeWidth);
-				
+
 				// get refresh rate of mode
-				number = (CFNumberRef)CFDictionaryGetValue( cgvidmode, kCGDisplayRefreshRate ); 
+				number = (CFNumberRef)CFDictionaryGetValue( cgvidmode, kCGDisplayRefreshRate );
 				double flrefreshrate = 0.0f;
 				CFNumberGetValue( number, kCFNumberDoubleType, &flrefreshrate );
 				refreshrate = (int)flrefreshrate;
@@ -1563,7 +1563,7 @@ void	GLMDisplayInfo::PopulateModes( void )
 			}
 		}
 	}
-	
+
 	// now sort the modes
 	// primary key is refresh rate
 	// secondary key is area

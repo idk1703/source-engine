@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -90,7 +90,7 @@ LINK_ENTITY_TO_CLASS( grenade_shield, CShieldGrenade );
 PRECACHE_REGISTER( grenade_shield );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CShieldGrenade::CShieldGrenade()
 {
@@ -99,7 +99,7 @@ CShieldGrenade::CShieldGrenade()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CShieldGrenade::Precache( void )
 {
@@ -114,7 +114,7 @@ void CShieldGrenade::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CShieldGrenade::Spawn( void )
 {
@@ -142,7 +142,7 @@ void CShieldGrenade::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CShieldGrenade::UpdateOnRemove( void )
 {
@@ -156,7 +156,7 @@ void CShieldGrenade::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CShieldGrenade::SetLifetime( float timer )
 {
@@ -227,7 +227,7 @@ void CShieldGrenade::StickyTouch( CBaseEntity *pOther )
 	Vector up( 0, 0, 1 );
 	if ( DotProduct( GetTouchTrace().plane.normal, up ) < 0.5f )
 		return;
-	
+
 	// Only stick to BSP models
 	if ( pOther->IsBSPModel() == false )
 		return;
@@ -254,7 +254,7 @@ void CShieldGrenade::StickyTouch( CBaseEntity *pOther )
 void CShieldGrenade::CreateShield( void )
 {
 	/*
-	// Set the orientation of the shield based on 
+	// Set the orientation of the shield based on
 	// the closest teammate's relative position...
 	float mindist = FLT_MAX;
 	Vector dir;
@@ -297,7 +297,7 @@ void CShieldGrenade::CreateShield( void )
 	MatrixFromAngles( GetAngles(), parentMatrix );
 
 #ifdef _DEBUG
-	bool ok = 
+	bool ok =
 #endif
 		MatrixInverseGeneral( parentMatrix, parentInvMatrix );
 	Assert( ok );
@@ -313,9 +313,9 @@ void CShieldGrenade::CreateShield( void )
 	MatrixMultiply( parentInvMatrix, worldShieldMatrix, relativeMatrix );
 	MatrixToAngles( relativeMatrix, relAngles );
 	*/
-	
+
 	Vector offset( 0, 0, SHIELD_GRENADE_HEIGHT * 0.5f );
-	m_hDeployedShield = CreateFlatShield( this, SHIELD_GRENADE_WIDTH, 
+	m_hDeployedShield = CreateFlatShield( this, SHIELD_GRENADE_WIDTH,
 		SHIELD_GRENADE_HEIGHT, offset, vec3_angle );
 
 	// Notify it about EMP state
@@ -393,7 +393,7 @@ void CShieldGrenade::ShieldActiveThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CShieldGrenade::DeathThink( void )
 {

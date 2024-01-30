@@ -57,7 +57,7 @@ static const char *g_pszClassSubdirectories[] =
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTestItemDialog::CTestItemDialog( vgui::Panel *parent, testitem_itemtypes_t iItemType, int iClassUsage, KeyValues *pExistingKVs ) : vgui::EditablePanel( parent, "TestItemDialog" )
 {
@@ -74,7 +74,7 @@ CTestItemDialog::CTestItemDialog( vgui::Panel *parent, testitem_itemtypes_t iIte
 	m_pNoItemsToReplaceLabel = NULL;
 	m_pSelectModelButton = NULL;
 	m_pOkButton = NULL;
-	
+
 	m_pItemReplacedPanel = new vgui::EditablePanel( this, "ItemReplacedPanel" );
 	m_pItemReplacedComboBox = new vgui::ComboBox( m_pItemReplacedPanel, "ItemReplacedComboBox", 20, false );
 	m_pItemReplacedComboBox->AddActionSignalTarget( this );
@@ -127,7 +127,7 @@ CTestItemDialog::CTestItemDialog( vgui::Panel *parent, testitem_itemtypes_t iIte
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemDialog::InitializeFromExistingKVs( KeyValues *pExistingKVs )
 {
@@ -232,14 +232,14 @@ void CTestItemDialog::InitializeFromExistingKVs( KeyValues *pExistingKVs )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTestItemDialog::~CTestItemDialog( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -258,15 +258,15 @@ void CTestItemDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTestItemDialog::PerformLayout( void ) 
+void CTestItemDialog::PerformLayout( void )
 {
 	BaseClass::PerformLayout();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemDialog::FireGameEvent( IGameEvent *event )
 {
@@ -279,7 +279,7 @@ void CTestItemDialog::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemDialog::Close( void )
 {
@@ -289,7 +289,7 @@ void CTestItemDialog::Close( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemDialog::CloseAndUpdateItem( void )
 {
@@ -299,7 +299,7 @@ void CTestItemDialog::CloseAndUpdateItem( void )
 	kv->SetString( "model_player", m_szRelativePath );
 	kv->SetBool( "test_existing_item", false );
 	kv->SetInt( "attach_to_hands", (m_iItemType == TI_TYPE_WEAPON) );
-	
+
 	KeyValues *pKVModels = new KeyValues( "model_player_per_class" );
 	kv->AddSubKey( pKVModels );
 	const char *pFilename = V_UnqualifiedFileName( m_szRelativePath );
@@ -316,7 +316,7 @@ void CTestItemDialog::CloseAndUpdateItem( void )
 				}
 			}
 		}
-	}			
+	}
 
 	KeyValues *pkvVisuals = new KeyValues( g_TeamVisualSections[0] ),
 			  *pkvPlayerBodyGroups = new KeyValues( "player_bodygroups" );
@@ -397,12 +397,12 @@ void CTestItemDialog::CloseAndUpdateItem( void )
 
 	// Send it to the testing root panel
 	PostMessage( GetParent(), kv );
-	
+
 	Close();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemDialog::OnCommand( const char *command )
 {
@@ -431,7 +431,7 @@ void CTestItemDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemDialog::OpenSelectModelDialog( void )
 {
@@ -504,7 +504,7 @@ void CTestItemDialog::OpenSelectModelDialog( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct ComboBoxTestItem_t
 {
@@ -572,7 +572,7 @@ void CTestItemDialog::SetupItemComboBox( vgui::ComboBox *pComboBox )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemDialog::SetupPaintColorComboBox( void )
 {
@@ -616,7 +616,7 @@ void CTestItemDialog::SetupPaintColorComboBox( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemDialog::SetupUnusualEffectComboBox( void )
 {
@@ -642,7 +642,7 @@ void CTestItemDialog::SetupUnusualEffectComboBox( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemDialog::SetEntryStep( testitem_entrysteps_t iStep )
 {
@@ -703,12 +703,12 @@ void CTestItemDialog::SetEntryStep( testitem_entrysteps_t iStep )
 	case TI_STEP_FINISHED:
 		break;
 	}
-	
+
 	SetDialogVariable( "testtitle", g_pVGuiLocalize->Find( VarArgs("#IT_Title_%d",m_iItemType) ) );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemDialog::OnTextChanged( KeyValues *data )
 {
@@ -731,7 +731,7 @@ void CTestItemDialog::OnTextChanged( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTestItemDialog::OnFileSelected(const char *fullpath)
 {
@@ -751,4 +751,3 @@ void CTestItemDialog::OnFileSelected(const char *fullpath)
 	m_hImportModelDialog->MarkForDeletion();
 	m_hImportModelDialog = NULL;
 }
-

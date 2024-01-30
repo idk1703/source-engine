@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -35,9 +35,9 @@ public:
 	{
 		m_iWorkerCompleted = -1;
 	}
-	
+
 	int m_iWorkerCompleted;	// Which worker completed this work unit (-1 if not done yet).
-	
+
 	CUtlVector<CWorkUnitEvent> m_Events;
 };
 
@@ -93,7 +93,7 @@ public:
 		m_iState = 0;
 		memset( &m_Rect, 0, sizeof( m_Rect ) );
 	}
-	
+
 	RECT m_Rect;
 	int m_iState;				// 0 = not sent yet
 								// 1 = sent, 2 = sent recently
@@ -127,7 +127,7 @@ static LRESULT CALLBACK TrackerWindowProc( HWND hwnd, UINT uMsg, WPARAM wParam, 
 			LeaveCriticalSection( &g_CS );
 
 			PAINTSTRUCT ps;
-			HDC hDC = BeginPaint( hwnd, &ps );		
+			HDC hDC = BeginPaint( hwnd, &ps );
 			for ( int iState=0; iState < ARRAYSIZE( hStateColors ); iState++ )
 			{
 				HGDIOBJ hOldObj = SelectObject( hDC, hStateColors[iState] );
@@ -136,29 +136,29 @@ static LRESULT CALLBACK TrackerWindowProc( HWND hwnd, UINT uMsg, WPARAM wParam, 
 				{
 					if ( wuStatus[iWU].m_iState != iState )
 						continue;
-					
+
 					RECT &rc = wuStatus[iWU].m_Rect;
 					Rectangle( hDC, rc.left, rc.top, rc.right, rc.bottom );
 				}
-				
+
 				SelectObject( hDC, hOldObj );
 				DeleteObject( hStateColors[iState] );
 			}
 			EndPaint( hwnd, &ps );
 		}
 		break;
-		
+
 		case WM_SIZE:
 		{
 			int width = LOWORD( lParam );
 			int height = HIWORD( lParam );
-			
+
 			g_LastSizeX = width;
 			g_LastSizeY = height;
-			
+
 			// Figure out the rectangles for everything.
 			int nWorkUnits = g_WUStatus.Count();
-			
+
 			// What is the max width of the grid elements so they will fit in the width and height.
 			int testSize;
 			for ( testSize=20; testSize > 1; testSize-- )
@@ -170,7 +170,7 @@ static LRESULT CALLBACK TrackerWindowProc( HWND hwnd, UINT uMsg, WPARAM wParam, 
 			}
 			static int minTestSize = 3;
 			testSize = max( testSize, minTestSize );
-			
+
 			int xPos=0, yPos=0;
 			for ( int i=0; i < nWorkUnits; i++ )
 			{
@@ -178,7 +178,7 @@ static LRESULT CALLBACK TrackerWindowProc( HWND hwnd, UINT uMsg, WPARAM wParam, 
 				g_WUStatus[i].m_Rect.top = yPos;
 				g_WUStatus[i].m_Rect.right = xPos + testSize;
 				g_WUStatus[i].m_Rect.bottom = yPos + testSize;
-				
+
 				xPos += testSize;
 				if ( (xPos+testSize) > width )
 				{
@@ -189,7 +189,7 @@ static LRESULT CALLBACK TrackerWindowProc( HWND hwnd, UINT uMsg, WPARAM wParam, 
 		}
 		break;
 	}
-	
+
 	return DefWindowProc( hwnd, uMsg, wParam, lParam );
 }
 
@@ -203,7 +203,7 @@ static void CheckFlashTimers()
 	for ( int iWU=0; iWU < g_WUStatus.Count(); iWU++ )
 	{
 		CWUStatus &s = g_WUStatus[iWU];
-		
+
 		if ( s.m_iState == 2 || s.m_iState == 4 || s.m_iState == 6 )
 		{
 			if ( flCurTime > s.m_flTransitionTime )
@@ -237,9 +237,9 @@ static DWORD WINAPI ThreadProc( LPVOID lpParameter )
 	WndClsEx.hInstance     = (HINSTANCE)GetCurrentProcess();
 	WndClsEx.hIconSm       = NULL;
 	RegisterClassEx(&WndClsEx);
-	
+
 	// Create the window.
-	g_hWnd = CreateWindow( 
+	g_hWnd = CreateWindow(
 		pClassName,
 		"VMPI Tracker",
 		WS_OVERLAPPEDWINDOW,
@@ -249,10 +249,10 @@ static DWORD WINAPI ThreadProc( LPVOID lpParameter )
 		NULL );
 
 	ShowWindow( g_hWnd, SW_SHOW );
-	
+
 	// Tell the main thread we're ready.
 	SetEvent( g_hCreateEvent );
-	
+
 	// Run our main loop.
 	while ( WaitForSingleObject( g_hDestroyWindowEvent, 200 ) != WAIT_OBJECT_0 )
 	{
@@ -260,16 +260,16 @@ static DWORD WINAPI ThreadProc( LPVOID lpParameter )
 		while ( PeekMessage( &msg, g_hWnd, 0, 0, PM_REMOVE ) )
 		{
 			TranslateMessage(&msg);
-			DispatchMessage(&msg); 
+			DispatchMessage(&msg);
 		}
 
 		CheckFlashTimers();
-				
+
 		if ( g_nChanges != g_nLastDrawnChanges )
 			InvalidateRect( g_hWnd, NULL, FALSE );
 	}
-	
-	// Tell the main thread we're done.	
+
+	// Tell the main thread we're done.
 	SetEvent( g_hDestroyWindowCompletedEvent );
 	return 0;
 }
@@ -279,7 +279,7 @@ static void Graphical_Start()
 	g_bUseGraphics = VMPI_IsParamUsed( mpi_Graphics );
 	if ( !g_bUseGraphics )
 		return;
-	
+
 	// Setup an event so we'll wait until the window is ready.
 	if ( !g_hCreateEvent )
 	{
@@ -294,10 +294,10 @@ static void Graphical_Start()
 	g_WUStatus.SetSize( g_WorkUnits.Count() );
 	for ( int i=0; i < g_WUStatus.Count(); i++ )
 		g_WUStatus[i].m_iState = 0;
-	
+
 	// Setup our thread.
 	CreateThread( NULL, 0, ThreadProc, NULL, 0, NULL );
-	
+
 	// Wait until the event is signaled.
 	WaitForSingleObject( g_hCreateEvent, INFINITE );
 }
@@ -306,9 +306,9 @@ static void Graphical_WorkUnitSentToWorker( int iWorkUnit )
 {
 	if ( !g_bUseGraphics )
 		return;
-	
+
 	EnterCriticalSection( &g_CS );
-	
+
 	CWUStatus &s = g_WUStatus[iWorkUnit];
 	if ( s.m_iState != 3 && s.m_iState != 4 && s.m_iState != 5 && s.m_iState != 6 )
 	{
@@ -316,7 +316,7 @@ static void Graphical_WorkUnitSentToWorker( int iWorkUnit )
 		s.m_flTransitionTime = Plat_FloatTime() + 0.1f;
 		++g_nChanges;
 	}
-	
+
 	LeaveCriticalSection( &g_CS );
 }
 
@@ -324,16 +324,16 @@ static void Graphical_WorkUnitStarted( int iWorkUnit )
 {
 	if ( !g_bUseGraphics )
 		return;
-	
+
 	EnterCriticalSection( &g_CS );
-	
+
 	if ( g_WUStatus[iWorkUnit].m_iState != 3 && g_WUStatus[iWorkUnit].m_iState != 4 )
 	{
 		g_WUStatus[iWorkUnit].m_iState = 6;
 		g_WUStatus[iWorkUnit].m_flTransitionTime = Plat_FloatTime() + 0.1f;
 		++g_nChanges;
 	}
-	
+
 	LeaveCriticalSection( &g_CS );
 }
 
@@ -341,7 +341,7 @@ static void Graphical_WorkUnitCompleted( int iWorkUnit )
 {
 	if ( !g_bUseGraphics )
 		return;
-		
+
 	EnterCriticalSection( &g_CS );
 	g_WUStatus[iWorkUnit].m_iState = 4;
 	g_WUStatus[iWorkUnit].m_flTransitionTime = Plat_FloatTime() + 0.1f;
@@ -353,7 +353,7 @@ static void Graphical_End()
 {
 	if ( !g_bUseGraphics )
 		return;
-		
+
 	SetEvent( g_hDestroyWindowEvent );
 	WaitForSingleObject( g_hDestroyWindowCompletedEvent, INFINITE );
 }
@@ -438,22 +438,22 @@ bool VMPITracker_WriteDebugFile( const char *pFilename )
 	{
 		fprintf( fp, "# work units: %d\n", g_WorkUnits.Count() );
 		fprintf( fp, "# active work units: %d\n", CountActiveWorkUnits() );
-		
+
 		fprintf( fp, "\n" );
 		fprintf( fp, "--- Events ---" );
 		fprintf( fp, "\n" );
 		fprintf( fp, "\n" );
-		
+
 		for ( int i=0; i < g_WorkUnits.Count(); i++ )
 		{
 			CWorkUnit *wu = &g_WorkUnits[i];
-			
+
 			if ( wu->m_iWorkerCompleted != -1 )
 				continue;
 
 			fprintf( fp, "  work unit %d\n", i );
 			fprintf( fp, "\n" );
-						
+
 			if ( wu->m_Events.Count() == 0 )
 			{
 				fprintf( fp, "    *no events*\n" );
@@ -463,22 +463,22 @@ bool VMPITracker_WriteDebugFile( const char *pFilename )
 				for ( int iEvent=0; iEvent < wu->m_Events.Count(); iEvent++ )
 				{
 					CWorkUnitEvent *pEvent = &wu->m_Events[iEvent];
-					
+
 					if ( pEvent->m_iEventType == EVENT_TYPE_WU_STARTED )
 					{
-						fprintf( fp, "   started (by worker %s) %.1f seconds ago\n", 
+						fprintf( fp, "   started (by worker %s) %.1f seconds ago\n",
 							VMPI_GetMachineName( wu->m_Events[iEvent].m_iWorker ),
 							Plat_FloatTime() - wu->m_Events[iEvent].m_flTime );
 					}
 					else if ( pEvent->m_iEventType == EVENT_TYPE_SEND_WORK_UNIT )
 					{
-						fprintf( fp, "      sent (to worker %s) %.1f seconds ago\n", 
+						fprintf( fp, "      sent (to worker %s) %.1f seconds ago\n",
 							VMPI_GetMachineName( wu->m_Events[iEvent].m_iWorker ),
 							Plat_FloatTime() - wu->m_Events[iEvent].m_flTime );
 					}
 					else if ( pEvent->m_iEventType == EVENT_TYPE_WU_COMPLETED )
 					{
-						fprintf( fp, " completed (by worker %s) %.1f seconds ago\n", 
+						fprintf( fp, " completed (by worker %s) %.1f seconds ago\n",
 							VMPI_GetMachineName( wu->m_Events[iEvent].m_iWorker ),
 							Plat_FloatTime() - wu->m_Events[iEvent].m_flTime );
 					}
@@ -486,14 +486,14 @@ bool VMPITracker_WriteDebugFile( const char *pFilename )
 			}
 			fprintf( fp, "\n" );
 		}
-		
+
 		fclose( fp );
 		return true;
 	}
 	else
 	{
 		return false;
-	}	
+	}
 }
 
 
@@ -501,7 +501,7 @@ void VMPITracker_HandleDebugKeypresses()
 {
 	if ( !g_bTrackWorkUnitEvents )
 		return;
-	
+
 	if ( !kbhit() )
 		return;
 
@@ -530,7 +530,7 @@ void VMPITracker_HandleDebugKeypresses()
 		if ( key == '1' )
 		{
 			iState = 0;
-			
+
 			int nMaxTries = 128;
 			char filename[512];
 			int iFile = 1;
@@ -575,5 +575,3 @@ void VMPITracker_HandleDebugKeypresses()
 		}
 	}
 }
-
-

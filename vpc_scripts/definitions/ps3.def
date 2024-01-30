@@ -1,4 +1,4 @@
-// 
+//
 // PS3 Project Generator Definition
 //
 
@@ -11,7 +11,7 @@
 	//
 
 	"$General"
-	{	
+	{
 		"$ConfigurationType"
 		{
 			"ordinals"
@@ -21,47 +21,47 @@
 				"LIB"	"4"
 			}
 		}
-		
+
 		"$ExcludedFromBuild"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$OutputDirectory"
 		{
 			"type"	"string"
 		}
-		
+
 		"$IntermediateDirectory"
 		{
 			"type"	"string"
 		}
-		
+
 		"$ExtensionsToDeleteOnClean"
 		{
 			"type"	"string"
 		}
-		
+
 		"$BuildLogFile"
 		{
 			"type"	"string"
 		}
-		
+
 		"$SystemIncludeDependencies"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$SaveDebuggerPropertiesInProject"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$AdditionalProjectDependencies"
 		{
 			"type"	"ignore"
 		}
-		
+
 		"$AdditionalOutputFiles"
 		{
 			"type"	"ignore"
@@ -74,7 +74,7 @@
 
 	"$GCCCompiler"
 	{
-		"$AdditionalIncludeDirectories" 
+		"$AdditionalIncludeDirectories"
 		{
 			"type"	"string"
 		}
@@ -83,7 +83,7 @@
 		{
 			"type"	"string"
 		}
-		
+
 		"$ForceIncludes"
 		{
 			"type"	"string"
@@ -103,12 +103,12 @@
 				"Generate More Warnings (-Wall)"	"2"
 			}
 		}
-		
-		"$ExtraWarnings" 
+
+		"$ExtraWarnings"
 		{
 			"type"	"bool"
 		}
-	
+
 		"$WarnLoadHitStores"
 		{
 			"type"	"bool"
@@ -119,11 +119,11 @@
 			"type"	"bool"
 		}
 
-		"$TreatWarningsAsErrors" 
+		"$TreatWarningsAsErrors"
 		{
 			"type"	"bool"
 		}
-	
+
 		"$ObjectFileName"
 		{
 			"type"	"string"
@@ -145,11 +145,11 @@
 			}
 		}
 	}
-	
+
 	//
 	// GCC Compiler/Optimization
 	//
-	
+
 	"$GCCCompiler"
 	{
 		"$OptimizationLevel"
@@ -163,28 +163,28 @@
 				"Optimize for Size (-Os)"		"4"
 			}
 		}
-		
+
 		"$FastMath"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$NoStrictAliasing"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$UnrollLoops"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$InlineFunctionSizeLimit"
 		{
 			"type"	"integer"
 		}
 	}
-	
+
 	//
 	// GCC Compiler/Code Generation
 	//
@@ -208,7 +208,7 @@
 			"alias"	"$SaveRestoreFunctions"
 			"type"	"integer"
 		}
-		
+
 		"$GenerateMicrocodedInstructions"
 		{
 			"ordinals"
@@ -218,33 +218,33 @@
 				"Only when unavoidable (-mno-gen-microcode)"	"2"
 			}
 		}
-		
+
 		"$Position-IndependentCode"
 		{
 			"alias"	"$PositionIndependentCode"
 			"type"	"bool"
 		}
-		
+
 		"$FunctionSections"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$DataSections"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$StackCheck"
 		{
 			"type"	"bool"
 		}
 	}
-	
+
 	//
 	// GCC Compiler/Language
 	//
-		
+
 	"$GCCCompiler"
 	{
 		"$C++ExceptionsAndRTTIUsage"
@@ -267,17 +267,17 @@
 		{
 			"type"	"bool"
 		}
-		
+
 		"$Permissive"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$EnableMSExtensions"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$RelaxC++Compliance"
 		{
 			"alias"	"$RelaxCPPCompliance"
@@ -288,7 +288,7 @@
 	//
 	// GCC Compiler/Command Line
 	//
-	
+
 	"$GCCCompiler"
 	{
 		"$AdditionalOptions"
@@ -304,22 +304,22 @@
 		{
 			"type"	"string"
 		}
-		
+
 		"$AdditionalDependencies"
 		{
 			"type"	"string"
 		}
-		
+
 		"$AdditionalLibraryDirectories"
 		{
 			"type"	"string"
 		}
-		
+
 		"$ImportLibrary"
 		{
 			"type"	"string"
 		}
-		
+
 		"$SPURSUsage"
 		{
 			"ordinals"
@@ -330,33 +330,33 @@
 				"SPURS Task (-mspurs-task)"						"3"
 			}
 		}
-		
+
 		"$Position-IndependentCode"
 		{
 			"alias"	"$PositionIndependentCode"
 			"type"	"bool"
 		}
-		
+
 		"$EmitRelocations"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$GarbageCollection"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$GenerateMapFile"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$MapFileName"
 		{
 			"type"	"string"
 		}
-		
+
 		"$LinkLibraryDependencies"
 		{
 			"type"	"bool"
@@ -375,27 +375,27 @@
 
 	"$SNCCompiler"
 	{
-		
+
 		"$AdditionalIncludeDirectories"
 		{
 			"type"	"string"
 		}
-		
-		"$PreprocessorDefinitions"	
+
+		"$PreprocessorDefinitions"
 		{
 			"type"	"string"
 		}
-		
+
 		"$ForceIncludes"
 		{
 			"type"	"string"
 		}
-		
+
 		"$GenerateDebugInformation"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$Warnings"
 		{
 			"ordinals"
@@ -405,7 +405,7 @@
 				"Generate Warnings and Remarks (=2)"	"2"
 			}
 		}
-		
+
 		"$TreatMessagesAsErrors"
 		{
 			"ordinals"
@@ -415,27 +415,27 @@
 				"Warnings and Remarks as Errors (=2)"	"2"
 			}
 		}
-		
+
 		"$DisableSpecificWarnings"
 		{
 			"type"	"string"
 		}
-		
+
 		"$ObjectFileName"
 		{
 			"type"	"string"
 		}
-		
+
 		"$CallprofHierarchicalProfiling"
 		{
 			"type"	"bool"
 		}
 	}
-	
+
 	//
 	// SNC Compiler/Optimization
 	//
-	
+
 	"$SNCCompiler"
 	{
 		"$OptimizationLevel"
@@ -449,12 +449,12 @@
 				"Optimized Debuggable (-Od)"							"4"
 			}
 		}
-		
+
 		"$FastMath"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$RelaxAliasChecking"
 		{
 			"ordinals"
@@ -466,7 +466,7 @@
 				"Strictest Aliasing (=3)"		"3"
 			}
 		}
-		
+
 		"$BranchlessCompares"
 		{
 			"ordinals"
@@ -476,7 +476,7 @@
 				"Convert all Integer Comparisons (=2)"	"2"
 			}
 		}
-		
+
 		"$UnrollLoops"
 		{
 			"ordinals"
@@ -485,22 +485,22 @@
 				"Unroll Larger Loops (=30)"	"30"
 			}
 		}
-		
+
 		"$AssumeAlignedPointers"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$AssumeCorrectSign"
 		{
 			"type"	"bool"
 		}
 	}
-	
+
 	//
 	// SNC Compiler/Code Generation
 	//
-	
+
 	"$SNCCompiler"
 	{
 		"$TOCPointerPreservation"
@@ -512,7 +512,7 @@
 				"Assume Single TOC; No TOC Preservation (=2)"	"2"
 			}
 		}
-		
+
 		"$InitializedDataPlacement"
 		{
 			"ordinals"
@@ -522,17 +522,17 @@
 				"Uninitialized and Zero Initialized in .bss (=2)"	"2"
 			}
 		}
-		
+
 		"$PromoteFPConstantsToDoubles"
 		{
 			"type"	"bool"
 		}
 	}
-	
+
 	//
 	// SNC Compiler/Language
 	//
-	
+
 	"$SNCCompiler"
 	{
 		"$CC++Dialect"
@@ -548,7 +548,7 @@
 				"Kernighan & Ritchie C"			"5"
 			}
 		}
-		
+
 		"$C++ExceptionsAndRTTIUsage"
 		{
 			"alias"		"$CPPExceptionsAndRTTIUsage"
@@ -559,7 +559,7 @@
 				"Using Exceptions and RTTI"		"2"
 			}
 		}
-		
+
 		"$DefaultCharUnsigned"
 		{
 			"type"	"bool"
@@ -569,7 +569,7 @@
 		{
 			"type"	"bool"
 		}
-		
+
 		"$BuiltInDefinitionForWCHAR_TType"
 		{
 			"ordinals"
@@ -586,11 +586,11 @@
 			}
 		}
 	}
-	
+
 	//
 	// SNC Compiler/Precompiled Headers
 	//
-	
+
 	"$SNCCompiler"
 	{
 		"$Create/UsePrecompiledHeader"
@@ -605,17 +605,17 @@
 				"Use Precompiled Header (--use_pch)"				"3"
 			}
 		}
-		
+
 		"$PrecompiledHeaderFile"
 		{
 			"type"	"string"
 		}
 	}
-	
+
 	//
 	// SNC Compiler/Command Line
 	//
-	
+
 	"$SNCCompiler"
 	{
 		"$AdditionalOptions"
@@ -623,14 +623,14 @@
 			"type"	"string"
 		}
 	}
-	
+
 	"$SNCCompiler"
-	{	
+	{
 		"$EnableC++Exceptions"
 		{
 			"type"	"ignore"
 		}
-		
+
 		"$Create/UsePCHThroughFile"
 		{
 			"type"	"ignore"
@@ -644,9 +644,9 @@
 		{
 			"type"	"string"
 		}
-		
+
 		"$OutputFormat"
-		{	
+		{
 			"ordinals"
 			{
 				"ELF file"			"0"
@@ -656,42 +656,42 @@
 				"Fake Signed PRX"	"4"
 			}
 		}
-		
+
 		"$AdditionalDependencies"
 		{
 			"type"	"string"
 		}
-		
+
 		"$AdditionalLibraryDirectories"
 		{
 			"type"	"string"
 		}
-		
+
 		"$IgnoreAllDefaultLibraries"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$UsingExceptionHandling"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$TOCPointerElimination"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$ForceSymbolReferences"
 		{
 			"type"	"string"
 		}
-		
+
 		"$CallprofHierarchicalProfiling"
 		{
 			"type"	"bool"
 		}
-		
+
 		"$DebugInfoAndSymbolStripping"
 		{
 			"ordinals"
@@ -701,7 +701,7 @@
 				"Strip Symbols and Debug Information (-s)"	"2"
 			}
 		}
-		
+
 		"$UnusedFunctionAndDataStripping"
 		{
 			"ordinals"
@@ -711,12 +711,12 @@
 				"Strip Unused Functions and Data"	"2"
 			}
 		}
-		
+
 		"$ImportLibrary"
 		{
 			"type"	"string"
 		}
-		
+
 		"$GenerateMapFile"
 		{
 			"ordinals"
@@ -726,12 +726,12 @@
 				"Full Map File"			"2"
 			}
 		}
-		
+
 		"$MapFileName"
 		{
 			"type"	"string"
 		}
-		
+
 		"$LinkLibraryDependencies"
 		{
 			"type"	"bool"
@@ -746,7 +746,7 @@
 		{
 			"type"	"ignore"
 		}
-		
+
 		"$SystemFrameworks"
 		{
 			"type"	"ignore"
@@ -757,14 +757,14 @@
 			"type"	"ignore"
 		}
 	}
-	
+
 	"$Librarian"
 	{
 		"$OutputFile"
 		{
 			"type"	"string"
 		}
-		
+
 		"$AdditionalDependencies"
 		{
 			"type"	"string"
@@ -780,14 +780,14 @@
 			"type"	"bool"
 		}
 	}
-	
+
 	$CustomBuildStep
 	{
 		"$CommandLine"
 		{
 			"type"	"string"
 		}
-		
+
 		"$Description"
 		{
 			"type"	"string"
@@ -803,7 +803,7 @@
 			"type"	"string"
 		}
 	}
-	
+
 	$PreBuildEvent
 	{
 		"$CommandLine"
@@ -816,12 +816,12 @@
 			"type"	"string"
 		}
 
-		"$ExcludedFromBuild"	
+		"$ExcludedFromBuild"
 		{
 			"type"	"bool"
 		}
 	}
-	
+
 	$PreLinkEvent
 	{
 		"$CommandLine"
@@ -834,7 +834,7 @@
 			"type"	"string"
 		}
 
-		"$ExcludedFromBuild"	
+		"$ExcludedFromBuild"
 		{
 			"type"	"bool"
 		}
@@ -852,9 +852,9 @@
 			"type"	"string"
 		}
 
-		"$ExcludedFromBuild"	
+		"$ExcludedFromBuild"
 		{
 			"type"	"bool"
 		}
-	}	
+	}
 }

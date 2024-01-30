@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // Build Notes: In order for the coroutine system to work a few build options
 //				need to be set for coroutine.cpp itself.  These are the VPC
@@ -53,7 +53,7 @@ static CFmtStr g_fmtstr;
 #ifdef WIN32
 extern "C"	__declspec(dllimport) void __stdcall OutputDebugStringA( const char * );
 #else
-void OutputDebugStringA( const char *pchMsg ) { fprintf( stderr, pchMsg ); fflush( stderr ); } 
+void OutputDebugStringA( const char *pchMsg ) { fprintf( stderr, pchMsg ); fflush( stderr ); }
 #endif
 #define CoroutineDbgMsg( fmt, ... ) \
 { \
@@ -196,11 +196,11 @@ static const int k_iSetJmpDbgBreak	= 0x03;
 // distance up the stack that coroutine functions stacks' start
 #ifdef _PS3
 // PS3 has a small stack. Hopefully we dont need 64k of padding!
-static const int k_cubCoroutineStackGap = (3 * 1024);	
-static const int k_cubCoroutineStackGapSmall = 64;	
+static const int k_cubCoroutineStackGap = (3 * 1024);
+static const int k_cubCoroutineStackGapSmall = 64;
 #else
-static const int k_cubCoroutineStackGap = (64 * 1024);	
-static const int k_cubCoroutineStackGapSmall = 64;	
+static const int k_cubCoroutineStackGap = (64 * 1024);
+static const int k_cubCoroutineStackGapSmall = 64;
 #endif
 
 // Warning size for allocated stacks
@@ -218,9 +218,9 @@ extern "C" byte *GetStackPtr64();
 #define GetStackPtr( pStackPtr)		byte *pStackPtr = GetStackPtr64();
 #else
 #ifdef WIN32
-#define GetStackPtr( pStackPtr )	byte *pStackPtr;	__asm mov pStackPtr, esp	
+#define GetStackPtr( pStackPtr )	byte *pStackPtr;	__asm mov pStackPtr, esp
 #elif defined(GNUC)
-// Apple's version of gcc/g++ doesn't return the expected value using the intrinsic, so 
+// Apple's version of gcc/g++ doesn't return the expected value using the intrinsic, so
 // do it the old fashioned way - this will also use asm on linux (since we don't compile
 // with llvm/clang there) but that seems fine.
 #if defined(__llvm__) || defined(__clang__)
@@ -270,7 +270,7 @@ public:
 #endif
 #ifdef _M_X64
 		m_nAlignmentBytes = CalcAlignOffset( m_rgubRegisters );
-#endif	
+#endif
 #if defined( VPROF_ENABLED )
 		m_pVProfNodeScope = NULL;
 #endif
@@ -311,11 +311,11 @@ public:
 		{
 			Assert( m_pStackHigh );
 			Assert( m_pSavedStack );
-			
+
 #if defined( _PS3 ) && defined( _DEBUG )
 			// Our (and Sony's) memory tracking tools may try to walk the stack during a free() call
-			// if we do the free here at our normal point though the stack is invalid since it's in 
-			// the middle of swapping.  Instead move it to a temp buffer now and free  while the stack 
+			// if we do the free here at our normal point though the stack is invalid since it's in
+			// the middle of swapping.  Instead move it to a temp buffer now and free  while the stack
 			// frames in place are still ok.
 			Assert( m_cubSavedStack < Q_ARRAYSIZE( rgStackTempBuffer ) );
 			memcpy( &rgStackTempBuffer[0], m_pSavedStack, m_cubSavedStack );
@@ -338,7 +338,7 @@ public:
 			// new stack will be copied
 			CCoroutine *pThis = (CCoroutine*)stackalloc( sizeof( CCoroutine* ) );
 			pThis = this;
-			
+
 			RW_MEMORY_BARRIER;
 			memcpy( m_pStackLow, m_pSavedStack, m_cubSavedStack );
 
@@ -374,12 +374,12 @@ public:
 			{
 				FOR_EACH_VEC_BACK( pThis->m_vecProfNodeStack, i )
 				{
-					g_VProfCurrentProfile.EnterScope( 
-						pThis->m_vecProfNodeStack[i]->GetName(), 
-						0,  
-						g_VProfCurrentProfile.GetBudgetGroupName( pThis->m_vecProfNodeStack[i]->GetBudgetGroupID() ), 
-						false, 
-						g_VProfCurrentProfile.GetBudgetGroupFlags( pThis->m_vecProfNodeStack[i]->GetBudgetGroupID() ) 
+					g_VProfCurrentProfile.EnterScope(
+						pThis->m_vecProfNodeStack[i]->GetName(),
+						0,
+						g_VProfCurrentProfile.GetBudgetGroupName( pThis->m_vecProfNodeStack[i]->GetBudgetGroupID() ),
+						false,
+						g_VProfCurrentProfile.GetBudgetGroupFlags( pThis->m_vecProfNodeStack[i]->GetBudgetGroupID() )
 					);
 				}
 			}
@@ -399,7 +399,7 @@ public:
 
 
 		GetStackPtr( pLocal );
-    
+
 		m_pStackLow = pLocal;
 		m_cubSavedStack = (m_pStackHigh - m_pStackLow);
 		m_pSavedStack = (byte *)PvAlloc( m_cubSavedStack );
@@ -598,7 +598,7 @@ CCoroutineMgr &GCoroutineMgr()
 		g_ThreadLocalCoroutineMgr = new CCoroutineMgr();
 		g_VecPCoroutineMgr.AddToTail( g_ThreadLocalCoroutineMgr );
 	}
-	
+
 	return *g_ThreadLocalCoroutineMgr;
 }
 
@@ -637,7 +637,7 @@ HCoroutine Coroutine_Create( CoroutineFunc_t pFunc, void *pvParam )
 // Purpose: Continues a current coroutine
 // input:	hCoroutine -		the coroutine to continue
 //			pchDebugMsg -		if non-NULL, it will generate an assertion in
-//								that coroutine, then that coroutine will 
+//								that coroutine, then that coroutine will
 //								immediately yield back to this thread
 //-----------------------------------------------------------------------------
 static const char *k_pchDebugMsg_GenericBreak = (const char *)1;
@@ -701,7 +701,7 @@ bool Internal_Coroutine_Continue( HCoroutine hCoroutine, const char *pchDebugMsg
 				}
 				coroutinePrev.SaveStack();
 				CoroutineDbgMsg( g_fmtstr.sprintf( "SaveStack() %s#%x [%x - %x]\n", coroutinePrev.m_pchName, coroutinePrev.m_hCoroutine, coroutinePrev.m_pStackLow, coroutinePrev.m_pStackHigh ) );
-			}			
+			}
 
 			// If the coroutine's stack is close enough to where we are on the stack, we need to push ourselves
 			// down past it, so that the memcpy() doesn't screw up the RestoreStack->memcpy call chain.
@@ -721,7 +721,7 @@ bool Internal_Coroutine_Continue( HCoroutine hCoroutine, const char *pchDebugMsg
 			// This needs to go right here - after we've maybe padded the stack (so that iJumpCode does not
 			// get stepped on) and before the RestoreStack() call (because that might step on pchDebugMsg!).
 			if ( pchDebugMsg == NULL )
-			{					
+			{
 				coroutine.m_iJumpCode = k_iSetJmpContinue;
 				coroutine.m_pchDebugMsg = NULL;
 			}
@@ -739,7 +739,7 @@ bool Internal_Coroutine_Continue( HCoroutine hCoroutine, const char *pchDebugMsg
 			// restore the coroutine stack
 			CoroutineDbgMsg( g_fmtstr.sprintf( "RestoreStack() %s#%x [%x - %x] (current %x)\n", coroutine.m_pchName, coroutine.m_hCoroutine, coroutine.m_pStackLow, coroutine.m_pStackHigh, pStackSavePoint ) );
 			coroutine.RestoreStack();
-			
+
 			// the new stack is in place, so no code here can reference local stack vars
 			// move the program counter
 			RW_MEMORY_BARRIER;
@@ -791,7 +791,7 @@ bool Coroutine_Continue( HCoroutine hCoroutine, const char *pchName )
 //-----------------------------------------------------------------------------
 // Purpose: launches a coroutine way ahead on the stack
 //-----------------------------------------------------------------------------
-void NOINLINE Coroutine_Launch( CCoroutine &coroutine ) 
+void NOINLINE Coroutine_Launch( CCoroutine &coroutine )
 {
 #if defined( VPROF_ENABLED )
 	coroutine.m_pVProfNodeScope = g_VProfCurrentProfile.GetCurrentNode();
@@ -801,16 +801,16 @@ void NOINLINE Coroutine_Launch( CCoroutine &coroutine )
 #ifndef _PS3
 	GetStackPtr( pEsp );
 #else
-	// The stack pointer for the current stack frame points to the top of the stack which already includes space for the 
+	// The stack pointer for the current stack frame points to the top of the stack which already includes space for the
 	// ABI linkage area. We need to include this area as part of our coroutine stack, as the calling function will copy
 	// the link register (return address to this function) into this area after calling m_pFunc below. Failing to do so
 	// could result in the coroutine to return to garbage when complete
 	uint64 *pStackFrameTwoUp = (uint64*)__builtin_frame_address(2);
 
 	// Need to terminate the stack frame sequence so if someone tries to walk the stack in a co-routine they don't go forever.
-	*pStackFrameTwoUp = 0;	
+	*pStackFrameTwoUp = 0;
 
-	// Need to track where we we save up to on yield, add a few bytes so we save just the beginning linkage area of the stack frame 
+	// Need to track where we we save up to on yield, add a few bytes so we save just the beginning linkage area of the stack frame
 	// we added  the null termination to.
 	byte * pEsp = ((byte*)pStackFrameTwoUp)+32;
 
@@ -917,7 +917,7 @@ void Coroutine_YieldToMain()
 	if ( ( iResult == k_iSetJmpStateSaved ) || ( iResult == k_iSetJmpDbgBreak ) )
 	{
 
-		
+
 		// break / assert requested?
 		if ( iResult == k_iSetJmpDbgBreak )
 		{
@@ -1067,7 +1067,7 @@ bool Coroutine_Test()
 	Coroutine_Continue( hCoroutine, NULL );
 	Coroutine_Continue( hCoroutine, NULL );
 
-	// now test 
+	// now test
 	CUtlVector<HCoroutine> vecCoroutineL2;
 	hCoroutine = Coroutine_Create( &CoroutineTestL1, &vecCoroutineL2 );
 	Coroutine_Continue( hCoroutine, NULL );
@@ -1094,7 +1094,7 @@ bool Coroutine_Test()
 		Coroutine_Continue( hCoroutine, NULL );
 		volatile byte *pvAlloca = (byte*)stackalloc( k_cubCoroutineStackGapSmall );
 		pvAlloca[ k_cubCoroutineStackGapSmall-1 ] = 0xF;
-		
+
 		Coroutine_Continue( hCoroutine, NULL );
 	}
 
@@ -1124,7 +1124,7 @@ bool Coroutine_Test()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: returns approximate stack depth of current coroutine.  
+// Purpose: returns approximate stack depth of current coroutine.
 //-----------------------------------------------------------------------------
 size_t Coroutine_GetStackDepth()
 {

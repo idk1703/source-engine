@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -22,7 +22,7 @@
 #include "C_Shield.h"
 #include "c_obj_respawn_station.h"
 
-bool IsEntityVisibleToTactical( int iLocalTeamNumber, int iLocalTeamPlayers, 
+bool IsEntityVisibleToTactical( int iLocalTeamNumber, int iLocalTeamPlayers,
 	int iLocalTeamObjects, int iEntIndex, const char *pEntName, int pEntTeamNumber, const Vector &pEntOrigin );
 
 // All of the parsing occurs mapdata_parse.cpp
@@ -30,7 +30,7 @@ bool ParseMinimapData( const char *filename, MinimapData_t *pMinimap, CMapZones 
 
 
 //-----------------------------------------------------------------------------
-// Gets at the singleton map data 
+// Gets at the singleton map data
 //-----------------------------------------------------------------------------
 
 static CMapData g_MapData;
@@ -54,7 +54,7 @@ void CMapData::UserCmd_ForceMapReload( void )
 		LevelInit( m_szMap );
 		// Force other data to reinit itself
 		GetTechnologyTreeDoc().Init();
-		
+
 		// Force any needed viewport fixups
 		g_pClientMode->Disable();
 		g_pClientMode->Enable();
@@ -62,7 +62,7 @@ void CMapData::UserCmd_ForceMapReload( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapData::CMapData( void )
 {
@@ -141,7 +141,7 @@ void CMapData::Clear( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapData::~CMapData( void )
 {
@@ -216,7 +216,7 @@ void CMapData::GetMapOrigin(Vector &org)
 	VectorMultiply( org, 0.5, org );
 }
 
-void CMapData::GetMapSize(Vector &size) 
+void CMapData::GetMapSize(Vector &size)
 {
 	Vector mins, maxs;
 	GetMapBounds( mins, maxs );
@@ -289,14 +289,14 @@ void CMapData::LevelInit( const char *map )
 
 	// Clear leftover data
 	Clear();
-	
+
 	// The name of the background material for the map is well-defined
-	Q_snprintf( m_Minimap.m_szBackgroundMaterial, MINIMAP_MATERIAL_STRING_SIZE, 
+	Q_snprintf( m_Minimap.m_szBackgroundMaterial, MINIMAP_MATERIAL_STRING_SIZE,
 		"hud/minimap/%s/%s", map, map );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapData::LevelShutdown( void )
 {
@@ -307,7 +307,7 @@ void CMapData::LevelShutdown( void )
 //-----------------------------------------------------------------------------
 // Update fog of war
 //-----------------------------------------------------------------------------
-void CMapData::Update( void ) 
+void CMapData::Update( void )
 {
 }
 
@@ -351,7 +351,7 @@ bool CMapData::IsEntityVisibleToTactical( C_BaseEntity* pEnt ) const
 
 	// NOTE: The global IsEntityVisibleToTactical returns true in situations
 	// where the entity would otherwise not be visible
-	bool bRet = ::IsEntityVisibleToTactical( localteam, iNumberPlayers, 
+	bool bRet = ::IsEntityVisibleToTactical( localteam, iNumberPlayers,
 		iNumberObjects, pEnt->entindex(), pEnt->GetClassname(), pEnt->GetTeamNumber(), pEnt->GetAbsOrigin() );
 
 	if ( bRet )

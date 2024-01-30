@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -33,10 +33,10 @@ public:
 void C_TEFireBullets::PostDataUpdate( DataUpdateType_t updateType )
 {
 	// Create the effect.
-	
+
 	m_vecAngles.z = 0;
-	
-	FX_FireBullets( 
+
+	FX_FireBullets(
 		m_iPlayer+1,
 		m_vecOrigin,
 		m_vecAngles,
@@ -55,7 +55,7 @@ BEGIN_RECV_TABLE_NOBASE(C_TEFireBullets, DT_TEFireBullets)
 	RecvPropFloat( RECVINFO( m_vecAngles[0] ) ),
 	RecvPropFloat( RECVINFO( m_vecAngles[1] ) ),
 	RecvPropInt( RECVINFO( m_iWeaponID ) ),
-	RecvPropInt( RECVINFO( m_iMode ) ), 
+	RecvPropInt( RECVINFO( m_iMode ) ),
 	RecvPropInt( RECVINFO( m_iSeed ) ),
 	RecvPropInt( RECVINFO( m_iPlayer ) ),
 	RecvPropFloat( RECVINFO( m_flSpread ) ),

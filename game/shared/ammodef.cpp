@@ -193,7 +193,7 @@ float CAmmoDef::DamageForce(int nAmmoIndex)
 
 //-----------------------------------------------------------------------------
 // Purpose: Create an Ammo type with the name, decal, and tracer.
-// Does not increment m_nAmmoIndex because the functions below do so and 
+// Does not increment m_nAmmoIndex because the functions below do so and
 //  are the only entry point.
 //-----------------------------------------------------------------------------
 bool CAmmoDef::AddAmmoType(char const* name, int damageType, int tracerType, int nFlags, int minSplashSize, int maxSplashSize )
@@ -216,8 +216,8 @@ bool CAmmoDef::AddAmmoType(char const* name, int damageType, int tracerType, int
 //-----------------------------------------------------------------------------
 // Purpose: Add an ammo type with it's damage & carrying capability specified via cvars
 //-----------------------------------------------------------------------------
-void CAmmoDef::AddAmmoType(char const* name, int damageType, int tracerType, 
-	char const* plr_cvar, char const* npc_cvar, char const* carry_cvar, 
+void CAmmoDef::AddAmmoType(char const* name, int damageType, int tracerType,
+	char const* plr_cvar, char const* npc_cvar, char const* carry_cvar,
 	float physicsForceImpulse, int nFlags, int minSplashSize, int maxSplashSize)
 {
 	if ( AddAmmoType( name, damageType, tracerType, nFlags, minSplashSize, maxSplashSize ) == false )
@@ -257,8 +257,8 @@ void CAmmoDef::AddAmmoType(char const* name, int damageType, int tracerType,
 //-----------------------------------------------------------------------------
 // Purpose: Add an ammo type with it's damage & carrying capability specified via integers
 //-----------------------------------------------------------------------------
-void CAmmoDef::AddAmmoType(char const* name, int damageType, int tracerType, 
-	int plr_dmg, int npc_dmg, int carry, float physicsForceImpulse, 
+void CAmmoDef::AddAmmoType(char const* name, int damageType, int tracerType,
+	int plr_dmg, int npc_dmg, int carry, float physicsForceImpulse,
 	int nFlags, int minSplashSize, int maxSplashSize )
 {
 	if ( AddAmmoType( name, damageType, tracerType, nFlags, minSplashSize, maxSplashSize ) == false )
@@ -291,5 +291,3 @@ CAmmoDef::~CAmmoDef( void )
 		delete[] m_AmmoType[ i ].pName;
 	}
 }
-
-

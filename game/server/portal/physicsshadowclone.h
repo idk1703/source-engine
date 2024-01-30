@@ -41,7 +41,7 @@ private:
 	EHANDLE			m_hClonedEntity; //the entity we're supposed to be cloning the physics of
 	VMatrix			m_matrixShadowTransform; //all cloned coordinates and angles will be run through this matrix before being applied
 	VMatrix			m_matrixShadowTransform_Inverse;
-	
+
 	CUtlVector<PhysicsObjectCloneLink_t> m_CloneLinks; //keeps track of which of our physics objects are linked to the source's objects
 	bool			m_bShadowTransformIsIdentity; //the shadow transform doesn't update often, so we can cache this
 	bool			m_bImmovable; //cloning a track train or door, something that doesn't really work on a force-based level
@@ -56,7 +56,7 @@ private:
 public:
 	CPhysicsShadowClone( void );
 	virtual ~CPhysicsShadowClone( void );
-	
+
 	bool			m_bShouldUpSync;
 	DBG_CODE_NOSCOPE( const char *m_szDebugMarker; );
 

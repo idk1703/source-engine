@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -27,7 +27,7 @@ namespace vgui
 	class IScheme;
 }
 
-// 
+//
 struct MDLAnimEventState_t
 {
 	int		m_nEventSequence;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@ ConVar cl_starfield_diameter( "cl_starfield_diameter", "128.0", FCVAR_NONE );
 ConVar cl_starfield_distance( "cl_starfield_distance", "256.0", FCVAR_NONE );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_EnvStarfield : public C_BaseEntity
 {
@@ -29,7 +29,7 @@ public:
 
 	virtual void	OnDataChanged( DataUpdateType_t updateType );
 	virtual void	ClientThink( void );
-	
+
 private:
 	// Emitter
 	CSmartPtr<CTrailParticles> m_pEmitter;
@@ -57,22 +57,22 @@ C_EnvStarfield::C_EnvStarfield()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_EnvStarfield::OnDataChanged( DataUpdateType_t updateType )
-{		
+{
 	if ( updateType == DATA_UPDATE_CREATED )
 	{
 		m_pEmitter = CTrailParticles::Create( "EnvStarfield" );
 		Vector vecCenter = MainViewOrigin() + (MainViewForward() * cl_starfield_distance.GetFloat() );
-		m_pEmitter->Setup( (Vector &) vecCenter, 
-			NULL, 
-			0.0, 
-			0, 
-			64, 
-			0, 
-			0, 
+		m_pEmitter->Setup( (Vector &) vecCenter,
+			NULL,
+			0.0,
+			0,
+			64,
+			0,
+			0,
 			bitsPARTICLE_TRAIL_VELOCITY_DAMPEN | bitsPARTICLE_TRAIL_FADE | bitsPARTICLE_TRAIL_FADE_IN );
 
 		// Start thinking
@@ -83,11 +83,11 @@ void C_EnvStarfield::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EnvStarfield::ClientThink( void )
 {
-	if ( !m_bOn || !m_flDensity ) 
+	if ( !m_bOn || !m_flDensity )
 		return;
 
 	PMaterialHandle	hParticleMaterial = m_pEmitter->GetPMaterial( "effects/spark_noz" );
@@ -111,7 +111,7 @@ void C_EnvStarfield::ClientThink( void )
 		Vector vecDir = (vecEnd - vecStart);
 		float flDistance = VectorNormalize( vecDir );
 		float flTravelTime = 2.0;
-		
+
 		// Start a random amount along the path
 		vecStart += vecDir * ( RandomFloat(0.1,0.3) * flDistance );
 

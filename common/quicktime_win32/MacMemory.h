@@ -1,17 +1,17 @@
 /*
-     File:       MacMemory.h
- 
-     Contains:   Memory Manager Interfaces.
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1985-2001 by Apple Computer, Inc., all rights reserved
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       MacMemory.h
+
+		Contains:   Memory Manager Interfaces.
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1985-2001 by Apple Computer, Inc., all rights reserved
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __MACMEMORY__
 #define __MACMEMORY__
@@ -40,48 +40,48 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=mac68k
+		#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+		#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+		#pragma pack(2)
 #endif
 
 enum {
-  maxSize                       = 0x7FFFFFF0 /*the largest block possible*/
+	maxSize                       = 0x7FFFFFF0 /*the largest block possible*/
 };
 
 enum {
-  defaultPhysicalEntryCount     = 8
+	defaultPhysicalEntryCount     = 8
 };
 
 enum {
-                                        /* values returned from the GetPageState function */
-  kPageInMemory                 = 0,
-  kPageOnDisk                   = 1,
-  kNotPaged                     = 2
+																				/* values returned from the GetPageState function */
+	kPageInMemory                 = 0,
+	kPageOnDisk                   = 1,
+	kNotPaged                     = 2
 };
 
 enum {
-                                        /* masks for Zone->heapType field */
-  k32BitHeap                    = 1,    /* valid in all Memory Managers */
-  kNewStyleHeap                 = 2,    /* true if new Heap Manager is present */
-  kNewDebugHeap                 = 4     /* true if new Heap Manager is running in debug mode on this heap */
+																				/* masks for Zone->heapType field */
+	k32BitHeap                    = 1,    /* valid in all Memory Managers */
+	kNewStyleHeap                 = 2,    /* true if new Heap Manager is present */
+	kNewDebugHeap                 = 4     /* true if new Heap Manager is running in debug mode on this heap */
 };
 
 
 /* bits for use with HGetState/HSetState*/
 enum {
-  kHandleIsResourceBit          = 5,
-  kHandlePurgeableBit           = 6,
-  kHandleLockedBit              = 7
+	kHandleIsResourceBit          = 5,
+	kHandlePurgeableBit           = 6,
+	kHandleLockedBit              = 7
 };
 
 /* masks for use with HGetState/HSetState*/
 enum {
-  kHandleIsResourceMask         = 0x20,
-  kHandlePurgeableMask          = 0x40,
-  kHandleLockedMask             = 0x80
+	kHandleIsResourceMask         = 0x20,
+	kHandlePurgeableMask          = 0x40,
+	kHandleLockedMask             = 0x80
 };
 
 
@@ -92,59 +92,59 @@ typedef STACK_UPP_TYPE(GrowZoneProcPtr)                         GrowZoneUPP;
 typedef STACK_UPP_TYPE(PurgeProcPtr)                            PurgeUPP;
 typedef REGISTER_UPP_TYPE(UserFnProcPtr)                        UserFnUPP;
 struct Zone {
-  Ptr                 bkLim;
-  Ptr                 purgePtr;
-  Ptr                 hFstFree;
-  long                zcbFree;
-  GrowZoneUPP         gzProc;
-  short               moreMast;
-  short               flags;
-  short               cntRel;
-  short               maxRel;
-  short               cntNRel;
-  SInt8               heapType;               /* previously "maxNRel", now holds flags (e.g. k32BitHeap)*/
-  SInt8               unused;
-  short               cntEmpty;
-  short               cntHandles;
-  long                minCBFree;
-  PurgeUPP            purgeProc;
-  Ptr                 sparePtr;
-  Ptr                 allocPtr;
-  short               heapData;
+	Ptr                 bkLim;
+	Ptr                 purgePtr;
+	Ptr                 hFstFree;
+	long                zcbFree;
+	GrowZoneUPP         gzProc;
+	short               moreMast;
+	short               flags;
+	short               cntRel;
+	short               maxRel;
+	short               cntNRel;
+	SInt8               heapType;               /* previously "maxNRel", now holds flags (e.g. k32BitHeap)*/
+	SInt8               unused;
+	short               cntEmpty;
+	short               cntHandles;
+	long                minCBFree;
+	PurgeUPP            purgeProc;
+	Ptr                 sparePtr;
+	Ptr                 allocPtr;
+	short               heapData;
 };
 typedef struct Zone                     Zone;
 typedef Zone *                          THz;
 typedef THz *                           THzPtr;
 struct MemoryBlock {
-  void *              address;
-  unsigned long       count;
+	void *              address;
+	unsigned long       count;
 };
 typedef struct MemoryBlock              MemoryBlock;
 struct LogicalToPhysicalTable {
-  MemoryBlock         logical;
-  MemoryBlock         physical[8];
+	MemoryBlock         logical;
+	MemoryBlock         physical[8];
 };
 typedef struct LogicalToPhysicalTable   LogicalToPhysicalTable;
 
 typedef short                           PageState;
 typedef short                           StatusRegisterContents;
 enum {
-  kVolumeVirtualMemoryInfoVersion1 = 1  /* first version of VolumeVirtualMemoryInfo*/
+	kVolumeVirtualMemoryInfoVersion1 = 1  /* first version of VolumeVirtualMemoryInfo*/
 };
 
 struct VolumeVirtualMemoryInfo {
-  PBVersion           version;                /* Input: Version of the VolumeVirtualMemoryInfo structure*/
-  SInt16              volumeRefNum;           /* Input: volume reference number*/
-  Boolean             inUse;                  /* output: true if volume is currently used for file mapping*/
-  UInt8               _fill;
-  UInt32              vmOptions;              /* output: tells what volume can support (same as DriverGestaltVMOptionsResponse vmOptions bits in DriverGestalt)*/
-                                              /* end of kVolumeVirtualMemoryInfoVersion1 structure*/
+	PBVersion           version;                /* Input: Version of the VolumeVirtualMemoryInfo structure*/
+	SInt16              volumeRefNum;           /* Input: volume reference number*/
+	Boolean             inUse;                  /* output: true if volume is currently used for file mapping*/
+	UInt8               _fill;
+	UInt32              vmOptions;              /* output: tells what volume can support (same as DriverGestaltVMOptionsResponse vmOptions bits in DriverGestalt)*/
+																							/* end of kVolumeVirtualMemoryInfoVersion1 structure*/
 };
 typedef struct VolumeVirtualMemoryInfo  VolumeVirtualMemoryInfo;
 typedef VolumeVirtualMemoryInfo *       VolumeVirtualMemoryInfoPtr;
 /*
  *  NewGrowZoneUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -153,17 +153,17 @@ typedef VolumeVirtualMemoryInfo *       VolumeVirtualMemoryInfoPtr;
 EXTERN_API_C( GrowZoneUPP )
 NewGrowZoneUPP(GrowZoneProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppGrowZoneProcInfo = 0x000000F0 };  /* pascal 4_bytes Func(4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(GrowZoneUPP) NewGrowZoneUPP(GrowZoneProcPtr userRoutine) { return (GrowZoneUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppGrowZoneProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewGrowZoneUPP(userRoutine) (GrowZoneUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppGrowZoneProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppGrowZoneProcInfo = 0x000000F0 };  /* pascal 4_bytes Func(4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(GrowZoneUPP) NewGrowZoneUPP(GrowZoneProcPtr userRoutine) { return (GrowZoneUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppGrowZoneProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewGrowZoneUPP(userRoutine) (GrowZoneUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppGrowZoneProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewPurgeUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -172,17 +172,17 @@ NewGrowZoneUPP(GrowZoneProcPtr userRoutine);
 EXTERN_API_C( PurgeUPP )
 NewPurgeUPP(PurgeProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppPurgeProcInfo = 0x000000C0 };  /* pascal no_return_value Func(4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(PurgeUPP) NewPurgeUPP(PurgeProcPtr userRoutine) { return (PurgeUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppPurgeProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewPurgeUPP(userRoutine) (PurgeUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppPurgeProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppPurgeProcInfo = 0x000000C0 };  /* pascal no_return_value Func(4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(PurgeUPP) NewPurgeUPP(PurgeProcPtr userRoutine) { return (PurgeUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppPurgeProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewPurgeUPP(userRoutine) (PurgeUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppPurgeProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewUserFnUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -191,17 +191,17 @@ NewPurgeUPP(PurgeProcPtr userRoutine);
 EXTERN_API_C( UserFnUPP )
 NewUserFnUPP(UserFnProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppUserFnProcInfo = 0x00009802 };  /* register no_return_value Func(4_bytes:A0) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(UserFnUPP) NewUserFnUPP(UserFnProcPtr userRoutine) { return (UserFnUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppUserFnProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewUserFnUPP(userRoutine) (UserFnUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppUserFnProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppUserFnProcInfo = 0x00009802 };  /* register no_return_value Func(4_bytes:A0) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(UserFnUPP) NewUserFnUPP(UserFnProcPtr userRoutine) { return (UserFnUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppUserFnProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewUserFnUPP(userRoutine) (UserFnUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppUserFnProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  DisposeGrowZoneUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -210,16 +210,16 @@ NewUserFnUPP(UserFnProcPtr userRoutine);
 EXTERN_API_C( void )
 DisposeGrowZoneUPP(GrowZoneUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeGrowZoneUPP(GrowZoneUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeGrowZoneUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeGrowZoneUPP(GrowZoneUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeGrowZoneUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposePurgeUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -228,16 +228,16 @@ DisposeGrowZoneUPP(GrowZoneUPP userUPP);
 EXTERN_API_C( void )
 DisposePurgeUPP(PurgeUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposePurgeUPP(PurgeUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposePurgeUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposePurgeUPP(PurgeUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposePurgeUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeUserFnUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -246,16 +246,16 @@ DisposePurgeUPP(PurgeUPP userUPP);
 EXTERN_API_C( void )
 DisposeUserFnUPP(UserFnUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeUserFnUPP(UserFnUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeUserFnUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeUserFnUPP(UserFnUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeUserFnUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  InvokeGrowZoneUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -263,19 +263,19 @@ DisposeUserFnUPP(UserFnUPP userUPP);
  */
 EXTERN_API_C( long )
 InvokeGrowZoneUPP(
-  Size         cbNeeded,
-  GrowZoneUPP  userUPP);
+	Size         cbNeeded,
+	GrowZoneUPP  userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(long) InvokeGrowZoneUPP(Size cbNeeded, GrowZoneUPP userUPP) { return (long)CALL_ONE_PARAMETER_UPP(userUPP, uppGrowZoneProcInfo, cbNeeded); }
-  #else
-    #define InvokeGrowZoneUPP(cbNeeded, userUPP) (long)CALL_ONE_PARAMETER_UPP((userUPP), uppGrowZoneProcInfo, (cbNeeded))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(long) InvokeGrowZoneUPP(Size cbNeeded, GrowZoneUPP userUPP) { return (long)CALL_ONE_PARAMETER_UPP(userUPP, uppGrowZoneProcInfo, cbNeeded); }
+	#else
+		#define InvokeGrowZoneUPP(cbNeeded, userUPP) (long)CALL_ONE_PARAMETER_UPP((userUPP), uppGrowZoneProcInfo, (cbNeeded))
+	#endif
 #endif
 
 /*
  *  InvokePurgeUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -283,19 +283,19 @@ InvokeGrowZoneUPP(
  */
 EXTERN_API_C( void )
 InvokePurgeUPP(
-  Handle    blockToPurge,
-  PurgeUPP  userUPP);
+	Handle    blockToPurge,
+	PurgeUPP  userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokePurgeUPP(Handle blockToPurge, PurgeUPP userUPP) { CALL_ONE_PARAMETER_UPP(userUPP, uppPurgeProcInfo, blockToPurge); }
-  #else
-    #define InvokePurgeUPP(blockToPurge, userUPP) CALL_ONE_PARAMETER_UPP((userUPP), uppPurgeProcInfo, (blockToPurge))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokePurgeUPP(Handle blockToPurge, PurgeUPP userUPP) { CALL_ONE_PARAMETER_UPP(userUPP, uppPurgeProcInfo, blockToPurge); }
+	#else
+		#define InvokePurgeUPP(blockToPurge, userUPP) CALL_ONE_PARAMETER_UPP((userUPP), uppPurgeProcInfo, (blockToPurge))
+	#endif
 #endif
 
 /*
  *  InvokeUserFnUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -306,30 +306,30 @@ InvokePurgeUPP(
 #endif
 EXTERN_API_C( void )
 InvokeUserFnUPP(
-  void *     parameter,
-  UserFnUPP  userUPP)                                         ONEWORDINLINE(0x4E91);
+	void *     parameter,
+	UserFnUPP  userUPP)                                         ONEWORDINLINE(0x4E91);
 #if !OPAQUE_UPP_TYPES && (!TARGET_OS_MAC || !TARGET_CPU_68K || TARGET_RT_MAC_CFM)
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeUserFnUPP(void * parameter, UserFnUPP userUPP) { CALL_ONE_PARAMETER_UPP(userUPP, uppUserFnProcInfo, parameter); }
-  #else
-    #define InvokeUserFnUPP(parameter, userUPP) CALL_ONE_PARAMETER_UPP((userUPP), uppUserFnProcInfo, (parameter))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeUserFnUPP(void * parameter, UserFnUPP userUPP) { CALL_ONE_PARAMETER_UPP(userUPP, uppUserFnProcInfo, parameter); }
+	#else
+		#define InvokeUserFnUPP(parameter, userUPP) CALL_ONE_PARAMETER_UPP((userUPP), uppUserFnProcInfo, (parameter))
+	#endif
 #endif
 
 #if CALL_NOT_IN_CARBON || OLDROUTINENAMES
-    /* support for pre-Carbon UPP routines: New...Proc and Call...Proc */
-    #define NewGrowZoneProc(userRoutine)                        NewGrowZoneUPP(userRoutine)
-    #define NewPurgeProc(userRoutine)                           NewPurgeUPP(userRoutine)
-    #define NewUserFnProc(userRoutine)                          NewUserFnUPP(userRoutine)
-    #define CallGrowZoneProc(userRoutine, cbNeeded)             InvokeGrowZoneUPP(cbNeeded, userRoutine)
-    #define CallPurgeProc(userRoutine, blockToPurge)            InvokePurgeUPP(blockToPurge, userRoutine)
-    #define CallUserFnProc(userRoutine, parameter)              InvokeUserFnUPP(parameter, userRoutine)
+		/* support for pre-Carbon UPP routines: New...Proc and Call...Proc */
+		#define NewGrowZoneProc(userRoutine)                        NewGrowZoneUPP(userRoutine)
+		#define NewPurgeProc(userRoutine)                           NewPurgeUPP(userRoutine)
+		#define NewUserFnProc(userRoutine)                          NewUserFnUPP(userRoutine)
+		#define CallGrowZoneProc(userRoutine, cbNeeded)             InvokeGrowZoneUPP(cbNeeded, userRoutine)
+		#define CallPurgeProc(userRoutine, blockToPurge)            InvokePurgeUPP(blockToPurge, userRoutine)
+		#define CallUserFnProc(userRoutine, parameter)              InvokeUserFnUPP(parameter, userRoutine)
 #endif /* CALL_NOT_IN_CARBON */
 
 #if CALL_NOT_IN_CARBON
 /*
  *  GetApplLimit()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -341,7 +341,7 @@ GetApplLimit(void)                                            TWOWORDINLINE(0x2E
 
 /*
  *  SystemZone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -353,7 +353,7 @@ SystemZone(void)                                              TWOWORDINLINE(0x2E
 
 /*
  *  ApplicationZone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -367,7 +367,7 @@ ApplicationZone(void)                                         TWOWORDINLINE(0x2E
 
 /*
  *  GZSaveHnd()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -379,7 +379,7 @@ GZSaveHnd(void)                                               TWOWORDINLINE(0x2E
 
 /*
  *  TopMem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -391,7 +391,7 @@ TopMem(void)                                                  TWOWORDINLINE(0x2E
 
 /*
  *  MemError()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -405,7 +405,7 @@ MemError(void)                                                TWOWORDINLINE(0x3E
 #if CALL_NOT_IN_CARBON
 /*
  *  GetZone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -422,7 +422,7 @@ GetZone(void)                                                 ONEWORDINLINE(0xA1
 
 /*
  *  NewHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -438,7 +438,7 @@ NewHandle(Size byteCount)                                     ONEWORDINLINE(0xA1
 #if CALL_NOT_IN_CARBON
 /*
  *  NewHandleSys()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -455,7 +455,7 @@ NewHandleSys(Size byteCount)                                  ONEWORDINLINE(0xA5
 
 /*
  *  NewHandleClear()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -471,7 +471,7 @@ NewHandleClear(Size byteCount)                                ONEWORDINLINE(0xA3
 #if CALL_NOT_IN_CARBON
 /*
  *  NewHandleSysClear()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -486,7 +486,7 @@ NewHandleSysClear(Size byteCount)                             ONEWORDINLINE(0xA7
 
 /*
  *  HandleZone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -503,7 +503,7 @@ HandleZone(Handle h)                                          ONEWORDINLINE(0xA1
 
 /*
  *  RecoverHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -519,7 +519,7 @@ RecoverHandle(Ptr p)                                          ONEWORDINLINE(0xA1
 #if CALL_NOT_IN_CARBON
 /*
  *  RecoverHandleSys()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -536,7 +536,7 @@ RecoverHandleSys(Ptr p)                                       ONEWORDINLINE(0xA5
 
 /*
  *  NewPtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -552,7 +552,7 @@ NewPtr(Size byteCount)                                        ONEWORDINLINE(0xA1
 #if CALL_NOT_IN_CARBON
 /*
  *  NewPtrSys()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -569,7 +569,7 @@ NewPtrSys(Size byteCount)                                     ONEWORDINLINE(0xA5
 
 /*
  *  NewPtrClear()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -585,7 +585,7 @@ NewPtrClear(Size byteCount)                                   ONEWORDINLINE(0xA3
 #if CALL_NOT_IN_CARBON
 /*
  *  NewPtrSysClear()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -600,7 +600,7 @@ NewPtrSysClear(Size byteCount)                                ONEWORDINLINE(0xA7
 
 /*
  *  PtrZone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -617,7 +617,7 @@ PtrZone(Ptr p)                                                ONEWORDINLINE(0xA1
 
 /*
  *  MaxBlock()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -633,7 +633,7 @@ MaxBlock(void)                                                ONEWORDINLINE(0xA0
 #if CALL_NOT_IN_CARBON
 /*
  *  MaxBlockSys()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -650,7 +650,7 @@ MaxBlockSys(void)                                             ONEWORDINLINE(0xA4
 
 /*
  *  StackSpace()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -665,7 +665,7 @@ StackSpace(void)                                              ONEWORDINLINE(0xA0
 
 /*
  *  NewEmptyHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -681,7 +681,7 @@ NewEmptyHandle(void)                                          ONEWORDINLINE(0xA1
 #if CALL_NOT_IN_CARBON
 /*
  *  NewEmptyHandleSys()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -698,7 +698,7 @@ NewEmptyHandleSys(void)                                       ONEWORDINLINE(0xA5
 
 /*
  *  HLock()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -713,7 +713,7 @@ HLock(Handle h)                                               ONEWORDINLINE(0xA0
 
 /*
  *  HUnlock()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -728,7 +728,7 @@ HUnlock(Handle h)                                             ONEWORDINLINE(0xA0
 
 /*
  *  HPurge()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -743,7 +743,7 @@ HPurge(Handle h)                                              ONEWORDINLINE(0xA0
 
 /*
  *  HNoPurge()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -758,7 +758,7 @@ HNoPurge(Handle h)                                            ONEWORDINLINE(0xA0
 
 /*
  *  HLockHi()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -773,7 +773,7 @@ HLockHi(Handle h)                                             TWOWORDINLINE(0xA0
 
 /*
  *  TempNewHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -781,13 +781,13 @@ HLockHi(Handle h)                                             TWOWORDINLINE(0xA0
  */
 EXTERN_API( Handle )
 TempNewHandle(
-  Size     logicalSize,
-  OSErr *  resultCode)                                        THREEWORDINLINE(0x3F3C, 0x001D, 0xA88F);
+	Size     logicalSize,
+	OSErr *  resultCode)                                        THREEWORDINLINE(0x3F3C, 0x001D, 0xA88F);
 
 
 /*
  *  TempMaxMem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -799,7 +799,7 @@ TempMaxMem(Size * grow)                                       THREEWORDINLINE(0x
 
 /*
  *  TempFreeMem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -812,7 +812,7 @@ TempFreeMem(void)                                             THREEWORDINLINE(0x
 #if CALL_NOT_IN_CARBON
 /*
  *  InitZone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -820,10 +820,10 @@ TempFreeMem(void)                                             THREEWORDINLINE(0x
  */
 EXTERN_API( void )
 InitZone(
-  GrowZoneUPP   pgrowZone,
-  short         cmoreMasters,
-  void *        limitPtr,
-  void *        startPtr);
+	GrowZoneUPP   pgrowZone,
+	short         cmoreMasters,
+	void *        limitPtr,
+	void *        startPtr);
 
 
 #endif  /* CALL_NOT_IN_CARBON */
@@ -831,7 +831,7 @@ InitZone(
 #if CALL_NOT_IN_CARBON
 /*
  *  SetZone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -848,7 +848,7 @@ SetZone(THz hz)                                               ONEWORDINLINE(0xA0
 
 /*
  *  CompactMem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -864,7 +864,7 @@ CompactMem(Size cbNeeded)                                     ONEWORDINLINE(0xA0
 #if CALL_NOT_IN_CARBON
 /*
  *  CompactMemSys()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -881,7 +881,7 @@ CompactMemSys(Size cbNeeded)                                  ONEWORDINLINE(0xA4
 
 /*
  *  PurgeMem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -897,7 +897,7 @@ PurgeMem(Size cbNeeded)                                       ONEWORDINLINE(0xA0
 #if CALL_NOT_IN_CARBON
 /*
  *  PurgeMemSys()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -914,7 +914,7 @@ PurgeMemSys(Size cbNeeded)                                    ONEWORDINLINE(0xA4
 
 /*
  *  FreeMem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -930,7 +930,7 @@ FreeMem(void)                                                 ONEWORDINLINE(0xA0
 #if CALL_NOT_IN_CARBON
 /*
  *  FreeMemSys()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -947,7 +947,7 @@ FreeMemSys(void)                                              ONEWORDINLINE(0xA4
 
 /*
  *  ReserveMem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -963,7 +963,7 @@ ReserveMem(Size cbNeeded)                                     ONEWORDINLINE(0xA0
 #if CALL_NOT_IN_CARBON
 /*
  *  ReserveMemSys()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -980,7 +980,7 @@ ReserveMemSys(Size cbNeeded)                                  ONEWORDINLINE(0xA4
 
 /*
  *  MaxMem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -996,7 +996,7 @@ MaxMem(Size * grow)                                           TWOWORDINLINE(0xA1
 #if CALL_NOT_IN_CARBON
 /*
  *  MaxMemSys()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1013,7 +1013,7 @@ MaxMemSys(Size * grow)                                        TWOWORDINLINE(0xA5
 
 /*
  *  SetGrowZone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1028,7 +1028,7 @@ SetGrowZone(GrowZoneUPP growZone)                             ONEWORDINLINE(0xA0
 
 /*
  *  GetGrowZone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.1 and later
@@ -1040,7 +1040,7 @@ GetGrowZone(void);
 
 /*
  *  MoveHHi()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1055,7 +1055,7 @@ MoveHHi(Handle h)                                             ONEWORDINLINE(0xA0
 
 /*
  *  DisposePtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1070,7 +1070,7 @@ DisposePtr(Ptr p)                                             ONEWORDINLINE(0xA0
 
 /*
  *  GetPtrSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1082,7 +1082,7 @@ GetPtrSize(Ptr p);
 
 /*
  *  SetPtrSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1093,13 +1093,13 @@ GetPtrSize(Ptr p);
 #endif
 EXTERN_API( void )
 SetPtrSize(
-  Ptr    p,
-  Size   newSize)                                             ONEWORDINLINE(0xA020);
+	Ptr    p,
+	Size   newSize)                                             ONEWORDINLINE(0xA020);
 
 
 /*
  *  DisposeHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1114,7 +1114,7 @@ DisposeHandle(Handle h)                                       ONEWORDINLINE(0xA0
 
 /*
  *  SetHandleSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1125,20 +1125,20 @@ DisposeHandle(Handle h)                                       ONEWORDINLINE(0xA0
 #endif
 EXTERN_API( void )
 SetHandleSize(
-  Handle   h,
-  Size     newSize)                                           ONEWORDINLINE(0xA024);
+	Handle   h,
+	Size     newSize)                                           ONEWORDINLINE(0xA024);
 
 
-/* 
-    NOTE
-    
-    GetHandleSize and GetPtrSize are documented in Inside Mac as returning 0 
-    in case of an error, but the traps actually return an error code in D0.
-    The glue sets D0 to 0 if an error occurred.
+/*
+		NOTE
+
+		GetHandleSize and GetPtrSize are documented in Inside Mac as returning 0
+		in case of an error, but the traps actually return an error code in D0.
+		The glue sets D0 to 0 if an error occurred.
 */
 /*
  *  GetHandleSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1151,7 +1151,7 @@ GetHandleSize(Handle h);
 #if CALL_NOT_IN_CARBON
 /*
  *  InlineGetHandleSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1171,7 +1171,7 @@ InlineGetHandleSize(Handle h)                                 ONEWORDINLINE(0xA0
 #endif
 /*
  *  ReallocateHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1182,14 +1182,14 @@ InlineGetHandleSize(Handle h)                                 ONEWORDINLINE(0xA0
 #endif
 EXTERN_API( void )
 ReallocateHandle(
-  Handle   h,
-  Size     byteCount)                                         ONEWORDINLINE(0xA027);
+	Handle   h,
+	Size     byteCount)                                         ONEWORDINLINE(0xA027);
 
 
 #if CALL_NOT_IN_CARBON
 /*
  *  ReallocateHandleSys()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -1200,15 +1200,15 @@ ReallocateHandle(
 #endif
 EXTERN_API( void )
 ReallocateHandleSys(
-  Handle   h,
-  Size     byteCount)                                         ONEWORDINLINE(0xA427);
+	Handle   h,
+	Size     byteCount)                                         ONEWORDINLINE(0xA427);
 
 
 #endif  /* CALL_NOT_IN_CARBON */
 
 /*
  *  EmptyHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1223,7 +1223,7 @@ EmptyHandle(Handle h)                                         ONEWORDINLINE(0xA0
 
 /*
  *  HSetRBit()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1238,7 +1238,7 @@ HSetRBit(Handle h)                                            ONEWORDINLINE(0xA0
 
 /*
  *  HClrRBit()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1253,7 +1253,7 @@ HClrRBit(Handle h)                                            ONEWORDINLINE(0xA0
 
 /*
  *  HGetState()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1268,7 +1268,7 @@ HGetState(Handle h)                                           ONEWORDINLINE(0xA0
 
 /*
  *  HSetState()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1279,13 +1279,13 @@ HGetState(Handle h)                                           ONEWORDINLINE(0xA0
 #endif
 EXTERN_API( void )
 HSetState(
-  Handle   h,
-  SInt8    flags)                                             ONEWORDINLINE(0xA06A);
+	Handle   h,
+	SInt8    flags)                                             ONEWORDINLINE(0xA06A);
 
 
 /*
  *  PurgeSpace()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1293,19 +1293,19 @@ HSetState(
  */
 EXTERN_API( void )
 PurgeSpace(
-  long *  total,
-  long *  contig);
+	long *  total,
+	long *  contig);
 
 
 /*
-    PurgeSpaceTotal and PurgeSpaceContiguous are currently only implement
-    on classic 68K.  The are the same as PurgeSpace() but return just
-    one value (either total space purgable or contiguous space purgable).
-    Begining in Mac OS 8.5 they are available in InterfaceLib.
+		PurgeSpaceTotal and PurgeSpaceContiguous are currently only implement
+		on classic 68K.  The are the same as PurgeSpace() but return just
+		one value (either total space purgable or contiguous space purgable).
+		Begining in Mac OS 8.5 they are available in InterfaceLib.
 */
 /*
  *  PurgeSpaceTotal()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1320,7 +1320,7 @@ PurgeSpaceTotal(void)                                         ONEWORDINLINE(0xA0
 
 /*
  *  PurgeSpaceContiguous()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1336,7 +1336,7 @@ PurgeSpaceContiguous(void)                                    ONEWORDINLINE(0xA0
 #if CALL_NOT_IN_CARBON
 /*
  *  PurgeSpaceSysTotal()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -1351,7 +1351,7 @@ PurgeSpaceSysTotal(void)                                      ONEWORDINLINE(0xA5
 
 /*
  *  PurgeSpaceSysContiguous()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -1367,22 +1367,22 @@ PurgeSpaceSysContiguous(void)                                 ONEWORDINLINE(0xA5
 
 /*****************************************************************************
 
-    The routines: 
+		The routines:
 
-        BlockMoveUncached, BlockMoveDataUncached
-        BlockZero, BlockZeroUncached
-    
-    were first created for developers writing drivers. Originally they only
-    existed in DriverServicesLib.  Later they were added to InterfaceLib 
-    in PCI based PowerMacs.  MacOS 8.5 provides these routines in InterfaceLib
-    on all supported machines. 
-    
+				BlockMoveUncached, BlockMoveDataUncached
+				BlockZero, BlockZeroUncached
+
+		were first created for developers writing drivers. Originally they only
+		existed in DriverServicesLib.  Later they were added to InterfaceLib
+		in PCI based PowerMacs.  MacOS 8.5 provides these routines in InterfaceLib
+		on all supported machines.
+
 *****************************************************************************/
 #endif  /* CALL_NOT_IN_CARBON */
 
 /*
  *  BlockMove()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1393,14 +1393,14 @@ PurgeSpaceSysContiguous(void)                                 ONEWORDINLINE(0xA5
 #endif
 EXTERN_API( void )
 BlockMove(
-  const void *  srcPtr,
-  void *        destPtr,
-  Size          byteCount)                                    ONEWORDINLINE(0xA02E);
+	const void *  srcPtr,
+	void *        destPtr,
+	Size          byteCount)                                    ONEWORDINLINE(0xA02E);
 
 
 /*
  *  BlockMoveData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1411,14 +1411,14 @@ BlockMove(
 #endif
 EXTERN_API( void )
 BlockMoveData(
-  const void *  srcPtr,
-  void *        destPtr,
-  Size          byteCount)                                    ONEWORDINLINE(0xA22E);
+	const void *  srcPtr,
+	void *        destPtr,
+	Size          byteCount)                                    ONEWORDINLINE(0xA22E);
 
 
 /*
  *  BlockMoveUncached()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1426,14 +1426,14 @@ BlockMoveData(
  */
 EXTERN_API_C( void )
 BlockMoveUncached(
-  const void *  srcPtr,
-  void *        destPtr,
-  Size          byteCount);
+	const void *  srcPtr,
+	void *        destPtr,
+	Size          byteCount);
 
 
 /*
  *  BlockMoveDataUncached()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1441,14 +1441,14 @@ BlockMoveUncached(
  */
 EXTERN_API_C( void )
 BlockMoveDataUncached(
-  const void *  srcPtr,
-  void *        destPtr,
-  Size          byteCount);
+	const void *  srcPtr,
+	void *        destPtr,
+	Size          byteCount);
 
 
 /*
  *  BlockZero()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1456,13 +1456,13 @@ BlockMoveDataUncached(
  */
 EXTERN_API_C( void )
 BlockZero(
-  void *  destPtr,
-  Size    byteCount);
+	void *  destPtr,
+	Size    byteCount);
 
 
 /*
  *  BlockZeroUncached()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1470,15 +1470,15 @@ BlockZero(
  */
 EXTERN_API_C( void )
 BlockZeroUncached(
-  void *  destPtr,
-  Size    byteCount);
+	void *  destPtr,
+	Size    byteCount);
 
 
 
 #if CALL_NOT_IN_CARBON
 /*
  *  MaxApplZone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1490,7 +1490,7 @@ MaxApplZone(void)                                             ONEWORDINLINE(0xA0
 
 /*
  *  SetApplBase()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1507,7 +1507,7 @@ SetApplBase(void * startPtr)                                  ONEWORDINLINE(0xA0
 
 /*
  *  MoreMasters()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1519,7 +1519,7 @@ MoreMasters(void)                                             ONEWORDINLINE(0xA0
 
 /*
  *  MoreMasterPointers()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1532,7 +1532,7 @@ MoreMasterPointers(UInt32 inCount);
 #if CALL_NOT_IN_CARBON
 /*
  *  SetApplLimit()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1547,7 +1547,7 @@ SetApplLimit(void * zoneLimit)                                ONEWORDINLINE(0xA0
 
 /*
  *  InitApplZone()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1563,7 +1563,7 @@ InitApplZone(void)                                            ONEWORDINLINE(0xA0
 
 /*
  *  TempHLock()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1571,13 +1571,13 @@ InitApplZone(void)                                            ONEWORDINLINE(0xA0
  */
 EXTERN_API( void )
 TempHLock(
-  Handle   h,
-  OSErr *  resultCode)                                        THREEWORDINLINE(0x3F3C, 0x001E, 0xA88F);
+	Handle   h,
+	OSErr *  resultCode)                                        THREEWORDINLINE(0x3F3C, 0x001E, 0xA88F);
 
 
 /*
  *  TempHUnlock()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1585,13 +1585,13 @@ TempHLock(
  */
 EXTERN_API( void )
 TempHUnlock(
-  Handle   h,
-  OSErr *  resultCode)                                        THREEWORDINLINE(0x3F3C, 0x001F, 0xA88F);
+	Handle   h,
+	OSErr *  resultCode)                                        THREEWORDINLINE(0x3F3C, 0x001F, 0xA88F);
 
 
 /*
  *  TempDisposeHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1599,13 +1599,13 @@ TempHUnlock(
  */
 EXTERN_API( void )
 TempDisposeHandle(
-  Handle   h,
-  OSErr *  resultCode)                                        THREEWORDINLINE(0x3F3C, 0x0020, 0xA88F);
+	Handle   h,
+	OSErr *  resultCode)                                        THREEWORDINLINE(0x3F3C, 0x0020, 0xA88F);
 
 
 /*
  *  TempTopMem()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1617,7 +1617,7 @@ TempTopMem(void)                                              THREEWORDINLINE(0x
 
 /*
  *  HoldMemory()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.1 and later
@@ -1628,13 +1628,13 @@ TempTopMem(void)                                              THREEWORDINLINE(0x
 #endif
 EXTERN_API( OSErr )
 HoldMemory(
-  void *          address,
-  unsigned long   count)                                      TWOWORDINLINE(0x7000, 0xA05C);
+	void *          address,
+	unsigned long   count)                                      TWOWORDINLINE(0x7000, 0xA05C);
 
 
 /*
  *  UnholdMemory()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.1 and later
@@ -1645,14 +1645,14 @@ HoldMemory(
 #endif
 EXTERN_API( OSErr )
 UnholdMemory(
-  void *          address,
-  unsigned long   count)                                      TWOWORDINLINE(0x7001, 0xA05C);
+	void *          address,
+	unsigned long   count)                                      TWOWORDINLINE(0x7001, 0xA05C);
 
 
 #if CALL_NOT_IN_CARBON
 /*
  *  LockMemory()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1663,13 +1663,13 @@ UnholdMemory(
 #endif
 EXTERN_API( OSErr )
 LockMemory(
-  void *          address,
-  unsigned long   count)                                      TWOWORDINLINE(0x7002, 0xA05C);
+	void *          address,
+	unsigned long   count)                                      TWOWORDINLINE(0x7002, 0xA05C);
 
 
 /*
  *  LockMemoryForOutput()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        not available
@@ -1680,13 +1680,13 @@ LockMemory(
 #endif
 EXTERN_API( OSErr )
 LockMemoryForOutput(
-  void *          address,
-  unsigned long   count)                                      TWOWORDINLINE(0x700A, 0xA05C);
+	void *          address,
+	unsigned long   count)                                      TWOWORDINLINE(0x700A, 0xA05C);
 
 
 /*
  *  LockMemoryContiguous()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1697,13 +1697,13 @@ LockMemoryForOutput(
 #endif
 EXTERN_API( OSErr )
 LockMemoryContiguous(
-  void *          address,
-  unsigned long   count)                                      TWOWORDINLINE(0x7004, 0xA05C);
+	void *          address,
+	unsigned long   count)                                      TWOWORDINLINE(0x7004, 0xA05C);
 
 
 /*
  *  UnlockMemory()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1714,15 +1714,15 @@ LockMemoryContiguous(
 #endif
 EXTERN_API( OSErr )
 UnlockMemory(
-  void *          address,
-  unsigned long   count)                                      TWOWORDINLINE(0x7003, 0xA05C);
+	void *          address,
+	unsigned long   count)                                      TWOWORDINLINE(0x7003, 0xA05C);
 
 
 #endif  /* CALL_NOT_IN_CARBON */
 
 /*
  *  MakeMemoryResident()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -1733,13 +1733,13 @@ UnlockMemory(
 #endif
 EXTERN_API( OSErr )
 MakeMemoryResident(
-  void *          address,
-  unsigned long   count)                                      TWOWORDINLINE(0x700B, 0xA05C);
+	void *          address,
+	unsigned long   count)                                      TWOWORDINLINE(0x700B, 0xA05C);
 
 
 /*
  *  ReleaseMemoryData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -1750,13 +1750,13 @@ MakeMemoryResident(
 #endif
 EXTERN_API( OSErr )
 ReleaseMemoryData(
-  void *          address,
-  unsigned long   count)                                      TWOWORDINLINE(0x700C, 0xA05C);
+	void *          address,
+	unsigned long   count)                                      TWOWORDINLINE(0x700C, 0xA05C);
 
 
 /*
  *  MakeMemoryNonResident()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -1767,13 +1767,13 @@ ReleaseMemoryData(
 #endif
 EXTERN_API( OSErr )
 MakeMemoryNonResident(
-  void *          address,
-  unsigned long   count)                                      TWOWORDINLINE(0x700D, 0xA05C);
+	void *          address,
+	unsigned long   count)                                      TWOWORDINLINE(0x700D, 0xA05C);
 
 
 /*
  *  FlushMemory()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -1784,14 +1784,14 @@ MakeMemoryNonResident(
 #endif
 EXTERN_API( OSErr )
 FlushMemory(
-  void *          address,
-  unsigned long   count)                                      TWOWORDINLINE(0x700E, 0xA05C);
+	void *          address,
+	unsigned long   count)                                      TWOWORDINLINE(0x700E, 0xA05C);
 
 
 #if CALL_NOT_IN_CARBON
 /*
  *  GetPhysical()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1802,8 +1802,8 @@ FlushMemory(
 #endif
 EXTERN_API( OSErr )
 GetPhysical(
-  LogicalToPhysicalTable *  addresses,
-  unsigned long *           physicalEntryCount)               SIXWORDINLINE(0x2209, 0x2251, 0x7005, 0xA15C, 0x2241, 0x2288);
+	LogicalToPhysicalTable *  addresses,
+	unsigned long *           physicalEntryCount)               SIXWORDINLINE(0x2209, 0x2251, 0x7005, 0xA15C, 0x2241, 0x2288);
 
 
 #endif  /* CALL_NOT_IN_CARBON */
@@ -1811,7 +1811,7 @@ GetPhysical(
 #if CALL_NOT_IN_CARBON
 /*
  *  GetVolumeVirtualMemoryInfo()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 9.0 and later
  *    CarbonLib:        not available
@@ -1826,7 +1826,7 @@ GetVolumeVirtualMemoryInfo(VolumeVirtualMemoryInfoPtr volVMInfo) TWOWORDINLINE(0
 
 /*
  *  DeferUserFn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1837,13 +1837,13 @@ GetVolumeVirtualMemoryInfo(VolumeVirtualMemoryInfoPtr volVMInfo) TWOWORDINLINE(0
 #endif
 EXTERN_API( OSErr )
 DeferUserFn(
-  UserFnUPP   userFunction,
-  void *      argument)                                       ONEWORDINLINE(0xA08F);
+	UserFnUPP   userFunction,
+	void *      argument)                                       ONEWORDINLINE(0xA08F);
 
 
 /*
  *  DebuggerGetMax()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1858,7 +1858,7 @@ DebuggerGetMax(void)                                          TWOWORDINLINE(0x70
 
 /*
  *  DebuggerEnter()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1870,7 +1870,7 @@ DebuggerEnter(void)                                           TWOWORDINLINE(0x70
 
 /*
  *  DebuggerExit()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1882,7 +1882,7 @@ DebuggerExit(void)                                            TWOWORDINLINE(0x70
 
 /*
  *  DebuggerPoll()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1894,7 +1894,7 @@ DebuggerPoll(void)                                            TWOWORDINLINE(0x70
 
 /*
  *  GetPageState()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1909,7 +1909,7 @@ GetPageState(const void * address)                            TWOWORDINLINE(0x70
 
 /*
  *  PageFaultFatal()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1924,7 +1924,7 @@ PageFaultFatal(void)                                          TWOWORDINLINE(0x70
 
 /*
  *  DebuggerLockMemory()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1935,13 +1935,13 @@ PageFaultFatal(void)                                          TWOWORDINLINE(0x70
 #endif
 EXTERN_API( OSErr )
 DebuggerLockMemory(
-  void *          address,
-  unsigned long   count)                                      TWOWORDINLINE(0x7006, 0xA08D);
+	void *          address,
+	unsigned long   count)                                      TWOWORDINLINE(0x7006, 0xA08D);
 
 
 /*
  *  DebuggerUnlockMemory()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1952,13 +1952,13 @@ DebuggerLockMemory(
 #endif
 EXTERN_API( OSErr )
 DebuggerUnlockMemory(
-  void *          address,
-  unsigned long   count)                                      TWOWORDINLINE(0x7007, 0xA08D);
+	void *          address,
+	unsigned long   count)                                      TWOWORDINLINE(0x7007, 0xA08D);
 
 
 /*
  *  EnterSupervisorMode()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -1974,10 +1974,10 @@ EnterSupervisorMode(void)                                     TWOWORDINLINE(0x70
 
 /*
  *  StripAddress()
- *  
+ *
  *  Summary:
  *    A trap on classic 68K, and the identity function for pre-carbon
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        not available
@@ -1989,21 +1989,21 @@ EnterSupervisorMode(void)                                     TWOWORDINLINE(0x70
 EXTERN_API( Ptr )
 StripAddress(void * theAddress)                               ONEWORDINLINE(0xA055);
 #if !TARGET_OS_MAC || !TARGET_CPU_68K
-  #ifdef __cplusplus
-    inline DEFINE_API(Ptr ) StripAddress(void *theAddress) { return (Ptr)theAddress; }
-  #else
-    #define StripAddress(theAddress) ((Ptr)theAddress)
-  #endif
+	#ifdef __cplusplus
+		inline DEFINE_API(Ptr ) StripAddress(void *theAddress) { return (Ptr)theAddress; }
+	#else
+		#define StripAddress(theAddress) ((Ptr)theAddress)
+	#endif
 #endif
 
 
 
 /*
  *  Translate24To32()
- *  
+ *
  *  Summary:
  *    A trap on classic 68K, and the identity function for pre-carbon
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        not available
@@ -2015,11 +2015,11 @@ StripAddress(void * theAddress)                               ONEWORDINLINE(0xA0
 EXTERN_API( Ptr )
 Translate24To32(void * addr24)                                ONEWORDINLINE(0xA091);
 #if !TARGET_OS_MAC || !TARGET_CPU_68K
-  #ifdef __cplusplus
-    inline DEFINE_API(Ptr ) Translate24To32(void *addr24) { return (Ptr)addr24; }
-  #else
-    #define Translate24To32(addr24) ((Ptr)addr24)
-  #endif
+	#ifdef __cplusplus
+		inline DEFINE_API(Ptr ) Translate24To32(void *addr24) { return (Ptr)addr24; }
+	#else
+		#define Translate24To32(addr24) ((Ptr)addr24)
+	#endif
 #endif
 
 
@@ -2028,7 +2028,7 @@ Translate24To32(void * addr24)                                ONEWORDINLINE(0xA0
 
 /*
  *  HandToHand()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2040,7 +2040,7 @@ HandToHand(Handle * theHndl);
 
 /*
  *  PtrToXHand()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2051,14 +2051,14 @@ HandToHand(Handle * theHndl);
 #endif
 EXTERN_API( OSErr )
 PtrToXHand(
-  const void *  srcPtr,
-  Handle        dstHndl,
-  long          size)                                         ONEWORDINLINE(0xA9E2);
+	const void *  srcPtr,
+	Handle        dstHndl,
+	long          size)                                         ONEWORDINLINE(0xA9E2);
 
 
 /*
  *  PtrToHand()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2066,14 +2066,14 @@ PtrToXHand(
  */
 EXTERN_API( OSErr )
 PtrToHand(
-  const void *  srcPtr,
-  Handle *      dstHndl,
-  long          size);
+	const void *  srcPtr,
+	Handle *      dstHndl,
+	long          size);
 
 
 /*
  *  HandAndHand()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2084,13 +2084,13 @@ PtrToHand(
 #endif
 EXTERN_API( OSErr )
 HandAndHand(
-  Handle   hand1,
-  Handle   hand2)                                             ONEWORDINLINE(0xA9E4);
+	Handle   hand1,
+	Handle   hand2)                                             ONEWORDINLINE(0xA9E4);
 
 
 /*
  *  PtrAndHand()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2101,16 +2101,16 @@ HandAndHand(
 #endif
 EXTERN_API( OSErr )
 PtrAndHand(
-  const void *  ptr1,
-  Handle        hand2,
-  long          size)                                         ONEWORDINLINE(0xA9EF);
+	const void *  ptr1,
+	Handle        hand2,
+	long          size)                                         ONEWORDINLINE(0xA9EF);
 
 
 /* Carbon routines to aid in debugging. */
 /* Checks all applicable heaps for validity */
 /*
  *  CheckAllHeaps()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2123,7 +2123,7 @@ CheckAllHeaps(void);
 /* Checks the application heap for validity */
 /*
  *  IsHeapValid()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2136,7 +2136,7 @@ IsHeapValid(void);
 /* It is invalid to pass a NULL or an empty Handle to IsHandleValid */
 /*
  *  IsHandleValid()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2149,7 +2149,7 @@ IsHandleValid(Handle h);
 /* It is invalid to pass a NULL Pointer to IsPointerValid */
 /*
  *  IsPointerValid()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2177,11 +2177,11 @@ IsPointerValid(Ptr p);
 
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+		#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+		#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+		#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -2195,4 +2195,3 @@ IsPointerValid(Ptr p);
 #endif
 
 #endif /* __MACMEMORY__ */
-

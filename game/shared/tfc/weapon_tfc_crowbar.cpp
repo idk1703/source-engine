@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,7 +22,7 @@
 
 static ConVar tfc_crowbar_damage_first( "tfc_crowbar_damage_first", "25", 0, "First crowbar hit damage." );
 static ConVar tfc_crowbar_damage_next( "tfc_crowbar_damage_next", "12.5", 0, "Crowbar hit damage after first hit." );
-		
+
 
 static Vector head_hull_mins( -16, -16, -18 );
 static Vector head_hull_maxs( 16, 16, 18 );
@@ -204,13 +204,13 @@ void CTFCCrowbar::PrimaryAttack()
 	}
 
 	bool bPlayImpactEffect = false;
-	
+
 #ifndef CLIENT_DLL
 
 	if ( bDidHit )
 	{
 		CBaseEntity *pEntity = tr.m_pEnt;
-		
+
 		ClearMultiDamage();
 
 		float flDamage = 0;
@@ -221,7 +221,7 @@ void CTFCCrowbar::PrimaryAttack()
 			CTakeDamageInfo info( pPlayer, pPlayer, flDamage, DMG_CLUB | DMG_NEVERGIB );
 
 			CalculateMeleeDamageForce( &info, vForward, tr.endpos, 1.0f/flDamage );
-			pEntity->DispatchTraceAttack( info, vForward, &tr ); 
+			pEntity->DispatchTraceAttack( info, vForward, &tr );
 			ApplyMultiDamage();
 		}
 
@@ -252,9 +252,9 @@ void CTFCCrowbar::PrimaryAttack()
 	{
 		// delay the decal a bit
 		m_trHit = tr;
-		
+
 		// Store the ent in an EHANDLE, just in case it goes away by the time we get into our think function.
-		m_pTraceHitEnt = tr.m_pEnt; 
+		m_pTraceHitEnt = tr.m_pEnt;
 
 		SetThink( &CTFCCrowbar::Smack );
 		SetNextThink( gpGlobals->curtime + 0.2f );
@@ -266,7 +266,7 @@ void CTFCCrowbar::Smack()
 {
 	m_trHit.m_pEnt = m_pTraceHitEnt;
 	UTIL_ImpactTrace( &m_trHit, DMG_CLUB );
-	
+
 	surfacedata_t *psurf = physprops->GetSurfaceData( m_trHit.surface.surfaceProps );
 	if ( psurf->game.material != CHAR_TEX_FLESH && psurf->game.material != CHAR_TEX_BLOODYFLESH )
 		WeaponSound( MELEE_HIT_WORLD );
@@ -297,13 +297,13 @@ bool CTFCCrowbar::CanDrop()
 
 
 TFCWeaponID CTFCCrowbar::GetWeaponID( void ) const
-{ 
+{
 	return WEAPON_CROWBAR;
 }
 
 
 #ifdef CLIENT_DLL
-	
+
 	// ------------------------------------------------------------------------------------------------ //
 	// ------------------------------------------------------------------------------------------------ //
 	// CLIENT DLL SPECIFIC CODE

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -37,10 +37,10 @@ void CLogEvent::print(ostream& os)
 {
 	os << "(" <<m_EventTime<<") Event Type: "<<TypeNames[m_EventType]<<endl;
 	os << "Args: ";
-	
+
 	for(int i=0;i<m_args.size();i++)
-		cout<< "\t"<<m_args[i]->getStringValue()<<endl; 
-	
+		cout<< "\t"<<m_args[i]->getStringValue()<<endl;
+
 }
 
 void CLogEvent::readEvent(istream& is)
@@ -69,7 +69,7 @@ void CLogEvent::readEventMessage(istream& is)
 {
 	char temp[512]={0,0,0,0};
 	is.getline(temp,512,'\n');
-	
+
 	m_EventMessage=new char[strlen(temp)];
 	strcpy(m_EventMessage,temp);
 
@@ -95,7 +95,7 @@ void CLogEvent::readEventTime(istream& is)
 	is.ignore();	//':'
 	is >> second;
 	is.ignore();	//':'
-		
+
 
 
 	tm t;

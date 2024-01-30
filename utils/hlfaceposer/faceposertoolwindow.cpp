@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -68,8 +68,8 @@ void IFacePoserToolWindow::Think( float dt )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 void IFacePoserToolWindow::SetToolName( char const *name )
 {
@@ -77,7 +77,7 @@ void IFacePoserToolWindow::SetToolName( char const *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *IFacePoserToolWindow::GetToolName( void ) const
@@ -86,8 +86,8 @@ char const *IFacePoserToolWindow::GetToolName( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 void IFacePoserToolWindow::SetDisplayNameRoot( char const *name )
 {
@@ -96,7 +96,7 @@ void IFacePoserToolWindow::SetDisplayNameRoot( char const *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *IFacePoserToolWindow::GetDisplayNameRoot( void  ) const
@@ -105,8 +105,8 @@ char const *IFacePoserToolWindow::GetDisplayNameRoot( void  ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *suffix - 
+// Purpose:
+// Input  : *suffix -
 //-----------------------------------------------------------------------------
 void IFacePoserToolWindow::SetSuffix( char const *suffix )
 {
@@ -115,8 +115,8 @@ void IFacePoserToolWindow::SetSuffix( char const *suffix )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *prefix - 
+// Purpose:
+// Input  : *prefix -
 //-----------------------------------------------------------------------------
 void IFacePoserToolWindow::SetPrefix( char const *prefix )
 {
@@ -125,7 +125,7 @@ void IFacePoserToolWindow::SetPrefix( char const *prefix )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *IFacePoserToolWindow::GetWindowTitle( void ) const
@@ -134,8 +134,8 @@ char const *IFacePoserToolWindow::GetWindowTitle( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : use - 
+// Purpose:
+// Input  : use -
 //-----------------------------------------------------------------------------
 void IFacePoserToolWindow::SetUseForMainWindowTitle( bool use )
 {
@@ -147,7 +147,7 @@ void IFacePoserToolWindow::SetUseForMainWindowTitle( bool use )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void IFacePoserToolWindow::ComputeNewTitle( void )
 {
@@ -241,9 +241,9 @@ void IFacePoserToolWindow::LoadPosition( void )
 		y = s_nToolCount * 20;
 
 		bool translated = TranslateToolPos
-		( 
-			GetToolName(), 
-			g_MDLViewer->w2(), 
+		(
+			GetToolName(),
+			g_MDLViewer->w2(),
 			g_MDLViewer->h2(),
 			x,
 			y,
@@ -293,7 +293,7 @@ void IFacePoserToolWindow::SavePosition( void )
 
 	FacePoser_SaveWindowPositions( GetToolName(), visible, xpos, ypos, width, height, IsLocked(), false );
 }
-	
+
 int IFacePoserToolWindow::GetToolCount( void )
 {
 	return g_Tools.Count();
@@ -305,7 +305,7 @@ IFacePoserToolWindow *IFacePoserToolWindow::GetTool( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void IFacePoserToolWindow::InitTools( void )
 {
@@ -332,8 +332,8 @@ void IFacePoserToolWindow::ShutdownTools( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dt - 
+// Purpose:
+// Input  : dt -
 //-----------------------------------------------------------------------------
 void IFacePoserToolWindow::ToolThink( float dt )
 {
@@ -346,7 +346,7 @@ void IFacePoserToolWindow::ToolThink( float dt )
 	}
 
 	// Don't self animate, all animation driven by thinking of various tools now
-	
+
 	if ( !ShouldAutoProcess() )
 	{
 		c = models->Count();
@@ -385,7 +385,7 @@ void IFacePoserToolWindow::ToggleLockedState( void )
 	}
 	else
 	{
-		FacePoser_RemoveWindowStyle( w, WS_OVERLAPPEDWINDOW ); 
+		FacePoser_RemoveWindowStyle( w, WS_OVERLAPPEDWINDOW );
 		FacePoser_AddWindowExStyle( w, WS_EX_OVERLAPPEDWINDOW );
 	}
 
@@ -531,7 +531,7 @@ bool IFacePoserToolWindow::HandleToolEvent( mxEvent *event )
 	case mxEvent::NCMouseUp:
 		{
 			if ( event->buttons & mxEvent::MouseRightButton )
-			{	
+			{
 				ToggleLockedState();
 				handled = true;
 			}
@@ -616,8 +616,8 @@ int IFacePoserToolWindow::GetCaptionHeight( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : autoprocess - 
+// Purpose:
+// Input  : autoprocess -
 //-----------------------------------------------------------------------------
 void IFacePoserToolWindow::SetAutoProcess( bool autoprocess )
 {
@@ -625,7 +625,7 @@ void IFacePoserToolWindow::SetAutoProcess( bool autoprocess )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool IFacePoserToolWindow::GetAutoProcess( void ) const
@@ -634,7 +634,7 @@ bool IFacePoserToolWindow::GetAutoProcess( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool IFacePoserToolWindow::IsActiveTool( void )
@@ -645,7 +645,7 @@ bool IFacePoserToolWindow::IsActiveTool( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool IFacePoserToolWindow::IsAnyToolScrubbing( void )
@@ -663,7 +663,7 @@ bool IFacePoserToolWindow::IsAnyToolScrubbing( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool IFacePoserToolWindow::IsAnyToolProcessing( void )
@@ -681,7 +681,7 @@ bool IFacePoserToolWindow::IsAnyToolProcessing( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool IFacePoserToolWindow::ShouldAutoProcess( void )
@@ -742,5 +742,3 @@ void IFacePoserToolWindow::ModelChanged()
 		tool->OnModelChanged();
 	}
 }
-
-

@@ -142,7 +142,7 @@ CEconItemView* CRecipeComponentItemModelPanel::GetRecipeItem( int nPageNumber ) 
 	{
 		return m_vecRecipes[nPageNumber].m_pRecipeItem;
 	}
-		
+
 	return NULL;
 }
 
@@ -156,7 +156,7 @@ itemid_t CRecipeComponentItemModelPanel::GetRecipeIndex( int nPageNumber ) const
 	{
 		return m_vecRecipes[nPageNumber].m_nRecipeIndex;
 	}
-		
+
 	return INVALID_ITEM_ID;
 }
 
@@ -179,11 +179,11 @@ bool CDynamicRecipePanel::CRecipeComponentAttributeCounter::OnIterateAttributeVa
 	{
 		CEconItem* pItem = m_vecTempEconItems[m_vecTempEconItems.AddToTail( new CEconItem() )];
 		DecodeItemFromEncodedAttributeString( value, pItem );
-		
+
 		for( unsigned i=0; i < nCount; ++i )
 		{
 			CEconItemView& item = m_vecOutputItems[ m_vecOutputItems.AddToTail() ];
-			
+
 			item.SetItemDefIndex( pItem->GetDefinitionIndex() );
 			item.SetItemQuality( pItem->GetQuality() );
 			item.SetItemLevel( pItem->GetItemLevel() );
@@ -191,7 +191,7 @@ bool CDynamicRecipePanel::CRecipeComponentAttributeCounter::OnIterateAttributeVa
 			item.SetNonSOEconItem( pItem );	// Set the item into the econ item view.
 			item.SetInitialized( true );
 			item.SetItemOriginOverride( kEconItemOrigin_RecipeOutput ); // Spoof where we came from
-				
+
 			// Set the untradable flag if the attribute says so
 			if( value.component_flags() & DYNAMIC_RECIPE_FLAG_IS_UNTRADABLE )
 			{
@@ -240,8 +240,8 @@ CEconItemView* CDynamicRecipePanel::CRecipeComponentAttributeCounter::GetOutputI
 //-----------------------------------------------------------------------------
 // Purpose: Get the input item on a given page
 //-----------------------------------------------------------------------------
-CEconItemView* CDynamicRecipePanel::CRecipeComponentAttributeCounter::GetInputItem( int i ) 
-{ 
+CEconItemView* CDynamicRecipePanel::CRecipeComponentAttributeCounter::GetInputItem( int i )
+{
 	InputComponent_t* pInputComponent = GetInputComponent( i );
 	if( pInputComponent )
 	{
@@ -292,14 +292,14 @@ CDynamicRecipePanel::CRecipeComponentAttributeCounter::InputComponent_t* CDynami
 		nAccum += nCount;
 	}
 
-	return NULL;	
+	return NULL;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Reset all data in the iterator
 //-----------------------------------------------------------------------------
 void CDynamicRecipePanel::CRecipeComponentAttributeCounter::Reset()
-{ 
+{
 	m_vecInputItems.Purge();
 	m_vecOutputItems.Purge();
 	m_vecTempEconItems.PurgeAndDeleteElements();
@@ -386,7 +386,7 @@ bool CInputPanelItemModelPanel::MatchesAttribCriteria( itemid_t itemID, int nPag
 	if( m_pDynamicRecipeItem->FindAttribute<CAttribute_DynamicRecipeComponent >( pAttrDef, &attribValue ) )
 	{
 		return DefinedItemAttribMatch( attribValue, pItem );
-	}	
+	}
 
 	return false;
 }
@@ -410,7 +410,7 @@ void CInputPanelItemModelPanel::SetBlankState()
 	CEconItemView* pDefaultItem = NULL;
 	if( m_nPageNumber < m_vecDefaultItems.Count() )
 		pDefaultItem = m_vecDefaultItems[ m_nPageNumber ];
-		
+
 	// Grey out
 	SetGreyedOut( "" );
 
@@ -513,9 +513,9 @@ void CRecipeComponentItemModelPanel::SetPageNumber( int nPageNumber )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CDynamicRecipePanel::CDynamicRecipePanel( vgui::Panel *parent, const char *panelName, CEconItemView* pRecipeItem ) 
+CDynamicRecipePanel::CDynamicRecipePanel( vgui::Panel *parent, const char *panelName, CEconItemView* pRecipeItem )
 	: CBackpackPanel( parent, panelName )
 	, m_pDynamicRecipeItem( pRecipeItem )
 	, m_pRecipeCraftButton( NULL )
@@ -544,7 +544,7 @@ CDynamicRecipePanel::CDynamicRecipePanel( vgui::Panel *parent, const char *panel
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDynamicRecipePanel::~CDynamicRecipePanel( void )
 {
@@ -594,7 +594,7 @@ void CDynamicRecipePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 	if( m_pNextInputPageButton )
 		m_pNextInputPageButton->AddActionSignalTarget( this );
 
-	m_pPrevInputPageButton = dynamic_cast<CExButton*>( m_pRecipeContainer->FindChildByName( "PrevInputPageButton" ) ); 
+	m_pPrevInputPageButton = dynamic_cast<CExButton*>( m_pRecipeContainer->FindChildByName( "PrevInputPageButton" ) );
 	if( m_pPrevInputPageButton )
 		m_pPrevInputPageButton->AddActionSignalTarget( this );
 
@@ -608,7 +608,7 @@ void CDynamicRecipePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDynamicRecipePanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -618,7 +618,7 @@ void CDynamicRecipePanel::ApplySettings( KeyValues *inResourceData )
 //-----------------------------------------------------------------------------
 // Purpose: Update all the item panels and page buttons and labels
 //-----------------------------------------------------------------------------
-void CDynamicRecipePanel::PerformLayout( void ) 
+void CDynamicRecipePanel::PerformLayout( void )
 {
 	BaseClass::PerformLayout();
 
@@ -646,7 +646,7 @@ void CDynamicRecipePanel::PerformLayout( void )
 	// Some panels show and hide based on the number of matches
 	if( m_pNoMatchesLabel)
 		m_pNoMatchesLabel->SetVisible( bNoMatches );
-	if( m_pNextPageButton ) 
+	if( m_pNextPageButton )
 		m_pNextPageButton->SetVisible( bMultiplePagesOfMatches );
 	if( m_pPrevPageButton )
 		m_pPrevPageButton->SetVisible( bMultiplePagesOfMatches );
@@ -690,7 +690,7 @@ void CDynamicRecipePanel::OnCommand( const char *command )
 				Craft();
 			}
 		}
-	
+
 		return;
 	}
 	else if ( !Q_stricmp( command, "reloadscheme" ) )
@@ -751,12 +751,12 @@ void CDynamicRecipePanel::OnKeyCodePressed( vgui::KeyCode /*code*/ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDynamicRecipePanel::OnButtonChecked( KeyValues *pData )
 {
 	Panel *pPanel = reinterpret_cast<vgui::Panel *>( pData->GetPtr("panel") );
-	
+
 	if ( m_pShowUntradableItemsCheckbox == pPanel )
 	{
 		if ( m_bShowUntradable != m_pShowUntradableItemsCheckbox->IsSelected() )
@@ -769,7 +769,7 @@ void CDynamicRecipePanel::OnButtonChecked( KeyValues *pData )
 }
 
 
-int	CDynamicRecipePanel::GetNumItemPanels( void ) 
+int	CDynamicRecipePanel::GetNumItemPanels( void )
 {
 	return DYNAMIC_RECIPE_INPUT_COUNT + DYNAMIC_RECIPE_OUTPUT_COUNT + DYNAMIC_RECIPE_PACKPACK_COUNT_PER_PAGE;
 }
@@ -872,7 +872,7 @@ bool CDynamicRecipePanel::CheckForUntradableItems( void )
 									   m_pDynamicRecipeItem->GetItemName() ) );
 
 		CTFGenericConfirmDialog *pDialog = new CTFGenericConfirmDialog( "#Craft_Untradable_Title", wszWarning, "#GameUI_OK", "#Cancel", &ConfirmUntradableCraft, NULL );
-		
+
 		if ( pDialog )
 		{
 			pDialog->SetContext( this );
@@ -1056,7 +1056,7 @@ void CDynamicRecipePanel::AddNewItemPanel( int iPanelIndex )
 // Purpose: Is this index an input panel
 //-----------------------------------------------------------------------------
 bool CDynamicRecipePanel::IsInputPanel( int iPanelIndex ) const
-{ 
+{
 	return iPanelIndex < DYNAMIC_RECIPE_INPUT_COUNT;
 }
 
@@ -1064,15 +1064,15 @@ bool CDynamicRecipePanel::IsInputPanel( int iPanelIndex ) const
 // Purpose: Is this index an output panel
 //-----------------------------------------------------------------------------
 bool CDynamicRecipePanel::IsOutputPanel( int iPanelIndex) const
-{ 
-	return iPanelIndex < ( DYNAMIC_RECIPE_OUTPUT_COUNT + DYNAMIC_RECIPE_INPUT_COUNT ) && !IsInputPanel(iPanelIndex); 
+{
+	return iPanelIndex < ( DYNAMIC_RECIPE_OUTPUT_COUNT + DYNAMIC_RECIPE_INPUT_COUNT ) && !IsInputPanel(iPanelIndex);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Is this index a backpack panel
 //-----------------------------------------------------------------------------
 bool CDynamicRecipePanel::IsBackpackPanel( int iPanelIndex ) const
-{ 
+{
 	return ( iPanelIndex >= ( DYNAMIC_RECIPE_INPUT_COUNT + DYNAMIC_RECIPE_OUTPUT_COUNT )
 		&& !IsInputPanel( iPanelIndex )
 		&& !IsOutputPanel( iPanelIndex ) );
@@ -1198,7 +1198,7 @@ void CDynamicRecipePanel::InitItemPanels()
 	FOR_EACH_VEC( m_vecRecipeOutputModelPanels, i )
 	{
 		CItemModelPanel* pPanel = m_vecRecipeOutputModelPanels[i];
-		
+
 		// Set appropriate item for output panel
 		if( i < m_RecipeIterator.GetOutputCount() )
 		{
@@ -1343,7 +1343,7 @@ void CDynamicRecipePanel::UpdateModelPanels( void )
 	FOR_EACH_VEC( m_vecRecipeInputModelPanels, i )
 	{
 		CInputPanelItemModelPanel* pPanel = m_vecRecipeInputModelPanels[i];
-		
+
 		// Update the item we display.  Our inventory might have shifted around
 		pPanel->UpdateDisplayItem();
 
@@ -1488,7 +1488,7 @@ void CDynamicRecipePanel::OnItemPanelExited( vgui::Panel *panel )
 	{
 		SetBorderForItem( m_vecRecipeInputModelPanels[i], false );
 	}
-	
+
 	if ( pItemPanel && !pItemPanel->IsSelected() )
 	{
 		SetBorderForItem( pItemPanel, false );
@@ -1535,7 +1535,7 @@ void CDynamicRecipePanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bM
 			int iRarity = GetItemQualityForBorder( pItemPanel );
 
 			// We only want backpack panels and the drag panel to be highlight sources
-			bool bValidHighlightSourcePanel = pPanel == m_pMouseDragItemPanel 
+			bool bValidHighlightSourcePanel = pPanel == m_pMouseDragItemPanel
 			|| m_vecBackpackModelPanels.Find( static_cast<CRecipeComponentItemModelPanel*>(pPanel) ) != m_vecBackpackModelPanels.InvalidIndex();
 
 			// If this panel can accept whatever the source panel is, we want to highlight a bit
@@ -1561,7 +1561,7 @@ void CDynamicRecipePanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bM
 			pItemPanel->SetBorder( pScheme->GetBorder( pszBorder ) );
 			return;
 		}
-		
+
 	}
 	else if( IsOutputPanel( iIndex ) )
 	{
@@ -1611,7 +1611,7 @@ void CDynamicRecipePanel::SetRecipeComponentIntoPanel( itemid_t nSrcRecipeIndex,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Check if a given panel is allowed to be dragged.  
+// Purpose: Check if a given panel is allowed to be dragged.
 //-----------------------------------------------------------------------------
 bool CDynamicRecipePanel::AllowDragging( CItemModelPanel *pPanel )
 {
@@ -1628,7 +1628,7 @@ bool CDynamicRecipePanel::AllowDragging( CItemModelPanel *pPanel )
 
 	int nPageNumber = 0;
 	if( IsBackpackPanel( iIndex ) )
-	{ 
+	{
 		nPageNumber = GetCurrentPage();
 	}
 	else if ( IsInputPanel( iIndex ) )
@@ -1637,7 +1637,7 @@ bool CDynamicRecipePanel::AllowDragging( CItemModelPanel *pPanel )
 	}
 	// Get the recipe item out of this panel
 	CEconItemView* pRecipe = pRecipePanel->GetRecipeItem( nPageNumber );
-	
+
 	// If no recipe, abort
 	if( !pRecipe )
 		return false;
@@ -1698,19 +1698,19 @@ bool CDynamicRecipePanel::CanDragTo( CItemModelPanel *pItemPanel, int iPanelInde
 	if( IsInputPanel( iDraggedFromPos ) && IsBackpackPanel( iPanelIndex ) )
 		return true;
 
-	itemid_t itemID = m_pMouseDragItemPanel->GetItem() 
-		? m_pMouseDragItemPanel->GetItem()->GetItemID() 
+	itemid_t itemID = m_pMouseDragItemPanel->GetItem()
+		? m_pMouseDragItemPanel->GetItem()->GetItemID()
 		: 0;
 
 	// From backpack to input panel that can accept the item
-	if( IsBackpackPanel( iDraggedFromPos ) 
+	if( IsBackpackPanel( iDraggedFromPos )
 		&& IsInputPanel( iPanelIndex )
 		&& InputPanelCanAcceptItem( pItemPanel,itemID ) )
 		return true;
 
 	// From inoput to other input that can also accept the item
-	if( IsInputPanel( iDraggedFromPos ) 
-		&& IsInputPanel( iPanelIndex ) 
+	if( IsInputPanel( iDraggedFromPos )
+		&& IsInputPanel( iPanelIndex )
 		&& InputPanelCanAcceptItem( pItemPanel, itemID ) )
 		return true;
 
@@ -1760,7 +1760,7 @@ void CDynamicRecipePanel::HandleDragTo( CItemModelPanel * /*pItemPanel*/, int iP
 		// to its original backpack slot regardless of where they dragged it to
 		if( pSrcPanel && pDstPanel )
 		{
-			// They dragged from an input panel to inventory panel.  Check if there's something in 
+			// They dragged from an input panel to inventory panel.  Check if there's something in
 			// the inventory slot already.  If so, just move to the first open spot.
 			itemid_t pSrcRecipeIndex = pSrcPanel->GetRecipeIndex( pSrcPanel->GetPageNumber() );
 			itemid_t pDstRecipeIndex = pDstPanel->GetRecipeIndex( GetCurrentPage() );
@@ -1914,7 +1914,7 @@ void CDynamicRecipePanel::OnCraftResponse( itemid_t nNewToolID, EGCMsgResponse e
 		{
 			// Something was bad in the request.
 			OpenCraftingStatusDialog( this, "#Dynamic_Recipe_Response_Invalid", false, true, false );
-			
+
 			InitItemPanels();
 			UpdateModelPanels();
 		}

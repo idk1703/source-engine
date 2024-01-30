@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -176,7 +176,7 @@ void CHudRadar::MaintainRadarContacts()
 			CRadarContact *pContact = &m_radarContacts[ i ];
 			if( gpGlobals->curtime >= pContact->m_flTimeToRemove )
 			{
-				// Time for this guy to go. Easiest thing is just to copy the last element 
+				// Time for this guy to go. Easiest thing is just to copy the last element
 				// into this element's spot and then decrement the count of entities.
 				bKeepWorking = true;
 
@@ -185,7 +185,7 @@ void CHudRadar::MaintainRadarContacts()
 				break;
 			}
 		}
-	} 
+	}
 }
 
 //---------------------------------------------------------
@@ -197,7 +197,7 @@ void CHudRadar::SetVisible(bool state)
 	if( g_pMapOverview  &&  g_pMapOverview->GetMode() == CMapOverview::MAP_MODE_RADAR )
 	{
 		// We are the hud element still, but he is in charge of the new style now.
-		g_pMapOverview->SetVisible( state );		
+		g_pMapOverview->SetVisible( state );
 	}
 }
 
@@ -303,8 +303,8 @@ void CHudRadar::Paint()
 
 ConVar radar_range("radar_range", "3000" ); // 180 feet
 //---------------------------------------------------------
-// Scale maps the distance of the target from the radar 
-// source. 
+// Scale maps the distance of the target from the radar
+// source.
 //
 //		1.0 = target at or beyond radar range.
 //		0.5 = target at (radar_range * 0.5) units distance
@@ -330,7 +330,7 @@ bool CHudRadar::WorldToRadar( const Vector location, const Vector origin, const 
 
 	// This magic /2.15 makes the radar scale seem smaller than the VGUI panel so the icons clamp
 	// to the outer ring in the radar graphic, not the very edge of the panel itself.
-	float fScale = (iRadarRadius/2.15f) / fRange;					
+	float fScale = (iRadarRadius/2.15f) / fRange;
 
 	float flOffset = atan(y_diff/x_diff);
 	flOffset *= 180;
@@ -571,7 +571,7 @@ void CHudRadar::DrawRadarDot( int x, int y, float z_diff, int iBaseDotSize, int 
 		int iBar = (int)( z_diff / 400 ) + 2;
 
 		iBaseDotSize /= 2;
-		
+
 		// Draw a T shape to symbolize the dot is above the player.
 
 		//horiz
@@ -580,7 +580,7 @@ void CHudRadar::DrawRadarDot( int x, int y, float z_diff, int iBaseDotSize, int 
 		//vert
 		FillRect( x, y, iBaseDotSize, iBar*iBaseDotSize );
 	}
-	else 
+	else
 	{
 		FillRect( x, y, iBaseDotSize, iBaseDotSize );
 	}

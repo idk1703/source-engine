@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -45,18 +45,18 @@ C_PasstimeBall::~C_PasstimeBall()
 }
 
 //-----------------------------------------------------------------------------
-unsigned int C_PasstimeBall::PhysicsSolidMaskForEntity() const 
-{ 
+unsigned int C_PasstimeBall::PhysicsSolidMaskForEntity() const
+{
 	return MASK_PLAYERSOLID; // must match server
 }
- 
+
 
 //-----------------------------------------------------------------------------
 bool C_PasstimeBall::ShouldCollide( int collisionGroup, int contentsMask ) const
 {
 	// note: returning false for COLLISION_GROUP_PLAYER_MOVEMENT means the ball won't
 	// stop player movement. the only real visible effect when this function doesn't
-	// return false for COLLISION_GROUP_PLAYER_MOVEMENT is that the ball is unable 
+	// return false for COLLISION_GROUP_PLAYER_MOVEMENT is that the ball is unable
 	// to impart physics forces on the ball when the ball is blocked, since the player
 	// will set velocity to zero due to being "stuck" on the ball, even though the
 	// ball won't actually prevent the player from moving through it.
@@ -69,7 +69,7 @@ bool C_PasstimeBall::ShouldCollide( int collisionGroup, int contentsMask ) const
 void C_PasstimeBall::OnDataChanged( DataUpdateType_t updateType )
 {
 	BaseClass::OnDataChanged( updateType );
-	
+
 	if ( updateType == DATA_UPDATE_CREATED )
 	{
 		return;

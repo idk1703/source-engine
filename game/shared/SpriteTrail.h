@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -55,7 +55,7 @@ public:
 	void Precache( void );
 	void SetTransmit( bool bTransmit = true ) { m_bDrawForMoveParent = bTransmit; }
 
-#if defined( CLIENT_DLL ) 
+#if defined( CLIENT_DLL )
 	// Client only code
 	virtual int DrawModel( int flags );
 	virtual const Vector &GetRenderOrigin( void );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ public:
 	virtual VPANEL GetCurrentDefaultButton();			// panel which receives input when ENTER is hit
 	virtual Panel *FindPanelByHotkey(wchar_t key);		// finds the panel which is activated by the specified key
 	virtual bool RequestFocusPrev(VPANEL panel = NULL); // if panel is NULL, then the tab increment is based last known panel that had key focus
-	virtual bool RequestFocusNext(VPANEL panel = NULL);	
+	virtual bool RequestFocusNext(VPANEL panel = NULL);
 
 	virtual Panel *GetCurrentFocus();
 	virtual VPANEL SetCurrentFocus(VPANEL panel, VPANEL defaultPanel);  // returns the Default panel
@@ -44,7 +44,7 @@ public:
 	// focus change via KEY_TAB will only travel to children of this main panel
 	virtual void SetFocusTopLevel(bool state);
 
-    virtual void SetCurrentDefaultButton(VPANEL panel, bool sendCurrentDefaultButtonMessage = true);  
+	virtual void SetCurrentDefaultButton(VPANEL panel, bool sendCurrentDefaultButtonMessage = true);
 private:
 	bool CanButtonBeDefault(VPANEL panel);
 

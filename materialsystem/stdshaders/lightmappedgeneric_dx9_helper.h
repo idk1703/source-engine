@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -91,8 +91,8 @@ struct LightmappedGeneric_DX9_Vars_t
 
 void InitParamsLightmappedGeneric_DX9( CBaseVSShader *pShader, IMaterialVar** params, const char *pMaterialName, LightmappedGeneric_DX9_Vars_t &info );
 void InitLightmappedGeneric_DX9( CBaseVSShader *pShader, IMaterialVar** params, LightmappedGeneric_DX9_Vars_t &info );
-void DrawLightmappedGeneric_DX9( CBaseVSShader *pShader, IMaterialVar** params, 
-								 IShaderDynamicAPI *pShaderAPI, IShaderShadow* pShaderShadow, 
+void DrawLightmappedGeneric_DX9( CBaseVSShader *pShader, IMaterialVar** params,
+								 IShaderDynamicAPI *pShaderAPI, IShaderShadow* pShaderShadow,
 								 LightmappedGeneric_DX9_Vars_t &info, CBasePerMaterialContextData **pContextDataPtr	 );
 
 

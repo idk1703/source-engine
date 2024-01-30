@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -77,7 +77,7 @@ public:
 	virtual const char *GetToolName() { return "Game Events"; }
 	virtual const char *GetBindingsContextFile() { return "cfg/GameEvents.kb"; }
 	virtual bool	Init( );
-    virtual void	Shutdown();
+	virtual void	Shutdown();
 
 	// Inherited from IFileMenuCallbacks
 	virtual int		GetFileMenuItemsEnabled( );
@@ -201,8 +201,8 @@ void CGameEventTool::Shutdown()
 //-----------------------------------------------------------------------------
 // Derived classes can implement this to get a new scheme to be applied to this tool
 //-----------------------------------------------------------------------------
-vgui::HScheme CGameEventTool::GetToolScheme() 
-{ 
+vgui::HScheme CGameEventTool::GetToolScheme()
+{
 	return vgui::scheme()->LoadSchemeFromFile( "Resource/BoxRocket.res", "SampleTool" );
 }
 
@@ -210,7 +210,7 @@ vgui::HScheme CGameEventTool::GetToolScheme()
 //-----------------------------------------------------------------------------
 // Initializes the menu bar
 //-----------------------------------------------------------------------------
-vgui::MenuBar *CGameEventTool::CreateMenuBar( CBaseToolSystem *pParent ) 
+vgui::MenuBar *CGameEventTool::CreateMenuBar( CBaseToolSystem *pParent )
 {
 	m_pMenuBar = new CToolFileMenuBar( pParent, "Main Menu Bar" );
 
@@ -260,8 +260,8 @@ void CGameEventTool::AddRecentFilesToMenu( vgui::Menu *pMenu )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CGameEventTool::OnExit()
 {
@@ -489,15 +489,15 @@ void CGameEventTool::CreateTools( CGameEventEditDoc *doc )
 void CGameEventTool::InitTools()
 {
 	//ShowElementProperties();
-	
+
 	windowposmgr->RegisterPanel( "gameeventedit", m_hGameEventEditPanel, false );
 	windowposmgr->RegisterPanel( "Console", m_hConsole, false ); // No context menu
-	
+
 	if ( !windowposmgr->LoadPositions( "cfg/commedit.txt", this, &m_ToolWindowFactory, "CommEdit" ) )
 	{
 		OnDefaultLayout();
 	}
-	
+
 }
 
 void CGameEventTool::DestroyTools()
@@ -621,5 +621,3 @@ void CGameEventTool::OnDefaultLayout()
 	SetMiniViewportBounds( quarterScreen, y, 3*quarterScreen, useh - y );
 	pEditPanelWindow->SetBounds( 0, y, quarterScreen, useh - y );
 }
-
-

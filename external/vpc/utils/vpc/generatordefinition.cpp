@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2006, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ============//
 //
 //
 //=====================================================================================//
@@ -53,7 +53,7 @@ void CGeneratorDefinition::IterateAttributesKey( ToolProperty_t *pProperty, KeyV
 		{
 			pProperty->m_nType = PT_DEPRECATED;
 		}
-		else 
+		else
 		{
 			// unknown
 			g_pVPC->VPCError( "Unknown type '%s' in '%s'", pValue, pProperty->m_ParseString.Get() );
@@ -136,7 +136,7 @@ void CGeneratorDefinition::IteratePropertyKey( GeneratorTool_t *pTool, KeyValues
 		return;
 
 	for ( ;pKV; pKV = pKV->GetNextKey() )
-	{		
+	{
 		IterateAttributesKey( pProperty, pKV );
 	}
 }
@@ -168,7 +168,7 @@ void CGeneratorDefinition::IterateToolKey( KeyValues *pToolKV )
 		return;
 
 	for ( ;pKV; pKV = pKV->GetNextKey() )
-	{		
+	{
 		IteratePropertyKey( pTool, pKV );
 	}
 }
@@ -202,7 +202,7 @@ void CGeneratorDefinition::AssignIdentifiers()
 		{
 			pToolName++;
 		}
-		
+
 		for ( int j = 0; j < pTool->m_Properties.Count(); j++ )
 		{
 			ToolProperty_t *pProperty = &pTool->m_Properties[j];
@@ -262,7 +262,7 @@ void CGeneratorDefinition::LoadDefinition( const char *pDefnitionName, PropertyN
 
 	m_pPropertyNames = pPropertyNames;
 	g_pVPC->GetScript().PushScript( CFmtStr( "vpc_scripts\\definitions\\%s", pDefnitionName ) );
-	
+
 	// project definitions are KV format
 	KeyValues *pScriptKV = new KeyValues( g_pVPC->GetScript().GetName() );
 
@@ -332,22 +332,3 @@ ToolProperty_t *CGeneratorDefinition::GetProperty( configKeyword_e keyword, cons
 	// not found
 	return NULL;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	

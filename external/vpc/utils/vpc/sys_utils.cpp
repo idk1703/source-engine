@@ -76,7 +76,7 @@ void CXMLWriter::PushNode( const char *pName )
 
 	char *pNewName = strdup( pName );
 	m_Nodes.Push( pNewName );
-	
+
 	fprintf( m_fp, "<%s%s\n", pName, m_Nodes.Count() == 2 ? ">" : "" );
 }
 
@@ -86,12 +86,12 @@ void CXMLWriter::PushNode( const char *pName, const char *pString )
 
 	char *pNewName = strdup( pName );
 	m_Nodes.Push( pNewName );
-	
+
 	fprintf( m_fp, "<%s%s%s>\n", pName, pString ? " " : "", pString ? pString : "" );
 }
 
 void CXMLWriter::WriteLineNode( const char *pName, const char *pExtra, const char *pString )
-{	
+{
 	Indent();
 
 	fprintf( m_fp, "<%s%s>%s</%s>\n", pName, pExtra ?  pExtra : "", pString, pName );
@@ -130,7 +130,7 @@ CUtlString CXMLWriter::FixupXMLString( const char *pInput )
 	{
 		const char *m_pFrom;
 		const char *m_pTo;
-		bool		m_b2010Only;	
+		bool		m_b2010Only;
 	};
 
 	// these tokens are not allowed in xml vcproj and be be escaped per msdev docs
@@ -142,7 +142,7 @@ CUtlString CXMLWriter::FixupXMLString( const char *pInput )
 		{"\n",					"&#x0D;&#x0A;",				false},
 		{">",					"&gt;",						false},
 		{"<",					"&lt;",						false},
-		{"$(InputFileName)",	"%(Filename)%(Extension)",	true}, 
+		{"$(InputFileName)",	"%(Filename)%(Extension)",	true},
 		{"$(InputName)",		"%(Filename)",				true},
 		{"$(InputPath)",		"%(FullPath)",				true},
 		{"$(InputDir)",			"%(RootDir)%(Directory)",	true},
@@ -331,14 +331,14 @@ void Sys_StripPath( const char* inpath, char* outpath )
 //-----------------------------------------------------------------------------
 bool Sys_Exists( const char* filename )
 {
-   FILE*	test;
+	FILE*	test;
 
-   if ( ( test = fopen( filename, "rb" ) ) == NULL )
-      return ( false );
+	if ( ( test = fopen( filename, "rb" ) ) == NULL )
+		return ( false );
 
-   fclose( test );
+	fclose( test );
 
-   return ( true );
+	return ( true );
 }
 
 
@@ -349,14 +349,14 @@ bool Sys_Exists( const char* filename )
 //-----------------------------------------------------------------------------
 bool Sys_Touch( const char* filename )
 {
-   FILE*	test;
+	FILE*	test;
 
-   if ( ( test = fopen( filename, "wb" ) ) == NULL )
-      return ( false );
+	if ( ( test = fopen( filename, "wb" ) ) == NULL )
+		return ( false );
 
-   fclose( test );
+	fclose( test );
 
-   return ( true );
+	return ( true );
 }
 
 
@@ -380,21 +380,21 @@ bool Sys_FileInfo( const char *pFilename, int64 &nFileSize, int64 &nModifyTime )
 //-----------------------------------------------------------------------------
 bool Sys_StringToBool( const char *pString )
 {
-	if ( !V_strnicmp( pString, "no", 2 ) || 
-		!V_strnicmp( pString, "off", 3 ) || 
-		!V_strnicmp( pString, "false", 5 ) || 
-		!V_strnicmp( pString, "not set", 7 ) || 
-		!V_strnicmp( pString, "disabled", 8 ) || 
+	if ( !V_strnicmp( pString, "no", 2 ) ||
+		!V_strnicmp( pString, "off", 3 ) ||
+		!V_strnicmp( pString, "false", 5 ) ||
+		!V_strnicmp( pString, "not set", 7 ) ||
+		!V_strnicmp( pString, "disabled", 8 ) ||
 		!V_strnicmp( pString, "0", 1 ) )
 	{
 		// false
 		return false;
 	}
-	else if ( !V_strnicmp( pString, "yes", 3 ) || 
-			!V_strnicmp( pString, "on", 2 ) || 
-			!V_strnicmp( pString, "true", 4  ) || 
-			!V_strnicmp( pString, "set", 3 ) || 
-			!V_strnicmp( pString, "enabled", 7 ) || 
+	else if ( !V_strnicmp( pString, "yes", 3 ) ||
+			!V_strnicmp( pString, "on", 2 ) ||
+			!V_strnicmp( pString, "true", 4  ) ||
+			!V_strnicmp( pString, "set", 3 ) ||
+			!V_strnicmp( pString, "enabled", 7 ) ||
 			!V_strnicmp( pString, "1", 1 ) )
 	{
 		// true
@@ -480,7 +480,7 @@ bool Sys_EvaluateEnvironmentExpression( const char *pExpression, const char *pDe
 		// not an environment specification
 		return false;
 	}
-	
+
 	char *pLastChar = &pEnvVarName[ V_strlen( pEnvVarName ) - 1 ];
 	if ( !*pEnvVarName || *pLastChar != ')' )
 	{
@@ -501,7 +501,7 @@ bool Sys_EvaluateEnvironmentExpression( const char *pExpression, const char *pDe
 			// not defined, use default
 			pResolve = pDefault ? pDefault : "";
 		}
-	
+
 		V_strncpy( pOutBuff, pResolve, nOutBuffSize );
 	}
 
@@ -596,7 +596,7 @@ void Sys_CreatePath( const char *path )
 		ptr = pFullPath;
 	}
 	while ( ptr )
-	{             
+	{
 		ptr = strchr( ptr+1, '\\' );
 		if ( ptr )
 		{
@@ -636,7 +636,7 @@ bool Sys_GetActualFilenameCase( const char *pFilename, char *pOutputBuffer, int 
 	int i = 0;
 	while ( i < nFilenameLength )
 	{
-		// cannot resolve these, emit as-is		
+		// cannot resolve these, emit as-is
 		if ( !V_strnicmp( filenameBuffer + i, ".\\", 2 ) )
 		{
 			i += 2;
@@ -644,7 +644,7 @@ bool Sys_GetActualFilenameCase( const char *pFilename, char *pOutputBuffer, int 
 			continue;
 		}
 
-		// cannot resolve these, emit as-is		
+		// cannot resolve these, emit as-is
 		if ( !V_strnicmp( filenameBuffer + i, "..\\", 3 ) )
 		{
 			i += 3;
@@ -662,7 +662,7 @@ bool Sys_GetActualFilenameCase( const char *pFilename, char *pOutputBuffer, int 
 
 		// truncate at separator, windows resolves each component in pieces
 		filenameBuffer[i] = 0;
-				
+
 		SHFILEINFOA info = {0};
 		HRESULT hr = SHGetFileInfoA( filenameBuffer, 0, &info, sizeof( info ), SHGFI_DISPLAYNAME );
 		if ( SUCCEEDED( hr ) )

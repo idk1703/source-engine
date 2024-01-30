@@ -1,6 +1,6 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. =======
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -19,7 +19,7 @@ static const char* FixPerforceFilename( const char *filename )
 			filename[0],
 			&filename[3]
 			);
-	
+
 		return newFilename;
 	}
 	return filename;
@@ -73,7 +73,7 @@ static void GetChangelistFilenames( CUtlVector<int> &changelists, CUtlVector<CUt
 			const char *pFilename = p4->String( fileList[i].m_sLocalFile );
 
 			const char *pNewFilename = FixPerforceFilename( pFilename );
-						
+
 			changelistFilenames.AddToTail( pNewFilename );
 		}
 	}
@@ -89,7 +89,7 @@ static void AddAdditionalDependencies( CUtlVector<CDependency_Project*> &project
 		for ( int nDependency=0; nDependency < pCurProject->m_AdditionalProjectDependencies.Count(); nDependency++ )
 		{
 			const char *pLookingFor = pCurProject->m_AdditionalProjectDependencies[nDependency].String();
-			
+
 			// Search for a match in allProjects.
 			int nFound = CDependency_Project::FindByProjectName( allProjects, pLookingFor );
 			if ( nFound == -1 )
@@ -158,7 +158,7 @@ static void GetProjectsDependingOnFiles( CProjectDependencyGraph &dependencyGrap
 	{
 		// get all of the allowed projects by iterating the restrict-to-groups
 		for ( int i = 0; i < groupRestrictions.Count(); i++ )
-		{	
+		{
 			CUtlVector< projectIndex_t > projectIndices;
 			if ( !g_pVPC->GetProjectsInGroup( projectIndices, groupRestrictions[i].Get() ) )
 			{
@@ -174,7 +174,7 @@ static void GetProjectsDependingOnFiles( CProjectDependencyGraph &dependencyGrap
 	}
 
 	// Make sure that each of the dependent projects are members of the restricted groups, otherwise prevent their inclusion.
-	CUtlVector< int > doomedProjectIndices;		
+	CUtlVector< int > doomedProjectIndices;
 	if ( allowedProjectIndices.Count() )
 	{
 		for ( int j = 0; j < projects.Count(); j++ )
@@ -270,4 +270,3 @@ void GenerateSolutionForPerforceChangelist( CProjectDependencyGraph &dependencyG
 	// Write the solution file.
 	pGenerator->GenerateSolutionFile( pSolutionFilename, projects );
 }
-

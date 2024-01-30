@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -29,7 +29,7 @@ void CPlrPersist::generate(CPlayer& cp)
 	valid=true;
 	WONID=cp.WONID;
 	matches=1;
-	
+
 	lastplayed=cp.logofftime;
 
 	//do perteam stuff
@@ -57,7 +57,7 @@ void CPlrPersist::generate(CPlayer& cp)
 		string classname=plrClassNames[clsit->data];
 		classmap[classname]+=cp.allclassesplayed.howLong(clsit->data);
 	}
-	
+
 	CTimeIndexedList<string>::iterator nameiter;
 	for (nameiter=cp.aliases.begin();nameiter!=cp.aliases.end();++nameiter)
 	{
@@ -74,11 +74,11 @@ void CPlrPersist::generate(CPlayer& cp)
 //------------------------------------------------------------------------------------------------------
 // Function:	CPlrPersist::merge
 // Purpose:	 merges the stats of another CPlrPersist object into this one.
-//	This is the key operation of this class.  This is how player stats are kept up 
-//	to date over time.  If the two data files have playtimes that overlap, they 
+//	This is the key operation of this class.  This is how player stats are kept up
+//	to date over time.  If the two data files have playtimes that overlap, they
 //	are not merged (unless the mergeOverlaps flag is true)
 // Input:	other - the CPlrPersist object that we want to merge into this one
-//				mergeOverlaps - if true, overlapping playtimes are ignored. 
+//				mergeOverlaps - if true, overlapping playtimes are ignored.
 //------------------------------------------------------------------------------------------------------
 void CPlrPersist::merge(CPlrPersist& other,bool mergeOverlaps)
 {
@@ -87,7 +87,7 @@ void CPlrPersist::merge(CPlrPersist& other,bool mergeOverlaps)
 	if (WONID!=other.WONID)
 	{
 		g_pApp->warning("merging stats for two different WONIDs (%lu, %lu)",WONID,other.WONID);
-		
+
 	}
 	else
 	{
@@ -125,7 +125,7 @@ void CPlrPersist::merge(CPlrPersist& other,bool mergeOverlaps)
 		int time=it->second;
 		nickmap[name]+=time;
 	}
-	
+
 	//do weapons
 	it=other.weapmap.begin();
 	for (it;it!=other.weapmap.end();++it)
@@ -134,7 +134,7 @@ void CPlrPersist::merge(CPlrPersist& other,bool mergeOverlaps)
 		int kills=it->second;
 		weapmap[name]+=kills;
 	}
-	
+
 	//do classes
 	it=other.classmap.begin();
 	for (it;it!=other.classmap.end();++it)
@@ -171,7 +171,7 @@ void CPlrPersist::read(CTextFile& f)
 			return;
 		if (startpos==-1)
 			startpos=0;
-		
+
 		s.copy(buf,(endpos-startpos),startpos);
 		buf[endpos-startpos]=0;
 		WONID=strtoul(buf,NULL,10);
@@ -181,14 +181,14 @@ void CPlrPersist::read(CTextFile& f)
 			valid=false;
 			return;
 		}
-			
+
 
 	}
-	
-	
+
+
 
 	valid=false;
-	
+
 	if (!f.eof()) kills=f.readInt();	else return;
 	if (!f.eof()) deaths=f.readInt(); else return;
 	if (!f.eof()) timeon=f.readULong(); else return;
@@ -210,7 +210,7 @@ void CPlrPersist::read(CTextFile& f)
 		}
 		f.discard("endnames");
 	} else return;
-	
+
 	if (!f.eof())
 	{
 		f.discard("weapons");
@@ -255,7 +255,7 @@ void CPlrPersist::read(CTextFile& f)
 	} else return;
 
 	valid=true;
-	
+
 }
 
 //------------------------------------------------------------------------------------------------------
@@ -266,7 +266,7 @@ void CPlrPersist::read(CTextFile& f)
 //------------------------------------------------------------------------------------------------------
 void CPlrPersist::read(unsigned long WONID)
 {
-	
+
 	string file=g_pApp->playerDirectory;
 	char buf[100];
 	file+=g_pApp->os->ultoa(WONID,buf,10);
@@ -294,9 +294,9 @@ void CPlrPersist::write()
 	fprintf(fout,"%lu //timeon\n",timeon);
 	fprintf(fout,"%li //matches played\n",matches);
 	fprintf(fout,"%lu //last played\n",lastplayed);
-	
+
 	map<string,int>::iterator it;
-	
+
 	fprintf(fout,"names\n");
 	it=nickmap.begin();
 	for (it;it!=nickmap.end();++it)
@@ -335,10 +335,10 @@ void CPlrPersist::write()
 		time_t t1=it2->first;
 		time_t t2=it2->second;
 		bool doesOverlap;
-		
+
 		list<pair<time_t,time_t> >::iterator overlap=timesOverlap(it2->first,it2->second,false);
 		doesOverlap= overlap!=playtimes.end();
-			
+
 
 		fprintf(fout,"\t%lu %lu //played from %s.",it2->first,it2->second,Util::makeDurationString(it2->first,it2->second,buf," to "));
 		if (doesOverlap)

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,7 +13,7 @@
 #endif
 
 #include "weapon_dodbase.h"
- 
+
 
 #if defined( CLIENT_DLL )
 
@@ -28,9 +28,9 @@ class CDODBaseRocketWeapon : public CWeaponDODBase
 {
 public:
 	DECLARE_CLASS( CDODBaseRocketWeapon, CWeaponDODBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CDODBaseRocketWeapon();
 
 	virtual void Spawn();
@@ -61,7 +61,7 @@ public:
 
 	inline bool IsDeployed() { return m_bDeployed; }
 	inline void SetDeployed( bool bDeployed ) { m_bDeployed = bDeployed; }
-	
+
 	bool		ShouldPlayerBeSlow( void );
 
 	virtual bool ShouldAutoEjectBrass( void ) { return false; }
@@ -79,7 +79,7 @@ protected:
 
 private:
 	CDODBaseRocketWeapon( const CDODBaseRocketWeapon & );
-	
+
 #ifndef CLIENT_DLL
 	DECLARE_DATADESC();
 #endif

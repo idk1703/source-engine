@@ -1,9 +1,9 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
-//#define PROTECTED_THINGS_DISABLE 
+//#define PROTECTED_THINGS_DISABLE
 #undef PROTECT_FILEIO_FUNCTIONS
 #undef fopen
 #include "winlite.h"
@@ -274,7 +274,7 @@ CBugReporter::~CBugReporter()
 //-----------------------------------------------------------------------------
 bool CBugReporter::Init( CreateInterfaceFn engineFactory )
 {
-	// Load our bugreporter_text options file 
+	// Load our bugreporter_text options file
 	m_OptionsFile = new KeyValues( "OptionsFile" );
 
 #ifdef POSIX
@@ -288,7 +288,7 @@ bool CBugReporter::Init( CreateInterfaceFn engineFactory )
 			// make the mount dir if needed
 			mkdir( BUGSUB_MOUNT, S_IRWXU | S_IRWXG | S_IRWXO  );
 		}
-		
+
 		// now run the smbmount on it
 		system( BUGSUB_MOUNT_COMMAND );
 
@@ -307,13 +307,13 @@ bool CBugReporter::Init( CreateInterfaceFn engineFactory )
 
 		m_bMountedBugSub = true;
 	}
-	
+
 #elif defined(WIN32)
-	
+
 #else
 #error "need to get to \\bugbait somehow"
 #endif
-	
+
 	// open file old skool way to avoid steam filesystem restrictions
 	struct _stat cfg_info;
 	if (_stat(BUGSUB_CONFIG, &cfg_info)) {
@@ -348,13 +348,13 @@ bool CBugReporter::Init( CreateInterfaceFn engineFactory )
 #else
 #error
 #endif
-	
+
 	PopulateLists();
 
 #ifdef WIN32
 	m_UserName = m_BugStrings.AddString(getenv( "username" ));
 #elif POSIX
-	m_UserName = m_BugStrings.AddString(getenv( "USER" ));	
+	m_UserName = m_BugStrings.AddString(getenv( "USER" ));
 #else
 #error
 #endif
@@ -402,7 +402,7 @@ char const *CBugReporter::GetDisplayName( int index )
 	if ( index < 0 || index >= (int)m_SortedDisplayNames.Count() )
 		return "<<Invalid>>";
 
-	return m_BugStrings.String( m_SortedDisplayNames[ index ] ); 
+	return m_BugStrings.String( m_SortedDisplayNames[ index ] );
 }
 
 char const *CBugReporter::GetUserNameForIndex( int index )
@@ -410,7 +410,7 @@ char const *CBugReporter::GetUserNameForIndex( int index )
 	if ( index < 0 || index >= (int)m_SortedUserNames.Count() )
 		return "<<Invalid>>";
 
-	return m_BugStrings.String( m_SortedUserNames[ index ] ); 
+	return m_BugStrings.String( m_SortedUserNames[ index ] );
 }
 
 char const *CBugReporter::GetDisplayNameForUserName( char const *username )
@@ -588,7 +588,7 @@ void CBugReporter::StartNewBugReport()
 	{
 		VCRHook_LocalTime( &t );
 
-		Q_snprintf(m_CurrentBugDirectory, sizeof(m_CurrentBugDirectory), "%s%c%04i%02i%02i-%02i%02i%02i-%s", 
+		Q_snprintf(m_CurrentBugDirectory, sizeof(m_CurrentBugDirectory), "%s%c%04i%02i%02i-%02i%02i%02i-%s",
 				   m_BugRootDirectory,
 				   CORRECT_PATH_SEPARATOR,
 				   t.tm_year + 1900, t.tm_mon+1, t.tm_mday,
@@ -639,7 +639,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 //	OutputField( buf, "Type", m_pBug->reporttype );
 //	OutputField( buf, "Priority", m_pBug->priority );
 	OutputField( buf, "Area", m_pBug->area );
-	OutputField( buf, "Level", m_pBug->mapnumber );	
+	OutputField( buf, "Level", m_pBug->mapnumber );
 	OutputField( buf, "Description", m_pBug->desc );
 
 	//OutputField( buf, "Level", m_pBug->level );
@@ -670,12 +670,12 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 	char szBugFileName[1024];
 	Q_snprintf(szBugFileName, sizeof(szBugFileName), "%s%cbug.txt", m_CurrentBugDirectory, CORRECT_PATH_SEPARATOR );
 	FILE *fp = fopen(szBugFileName, "wb");
-	if (!fp) 
+	if (!fp)
 		return false;
 
 	fprintf(fp, "%s", (char *)buf.Base());
 	fclose(fp);
-	
+
 	// Clear the bug
 	m_pBug->Clear();
 
@@ -863,7 +863,7 @@ bool CBugReporter::PopulateLists()
 
 	pKV = m_OptionsFile->FindKey( "Area" );
 	pKV = pKV->GetFirstSubKey();
-	while(pKV) 
+	while(pKV)
 	{
 		char const *area = pKV->GetName();
 		char const *game = pKV->GetString();
@@ -878,7 +878,7 @@ bool CBugReporter::PopulateLists()
 
 	pKV = m_OptionsFile->FindKey( "Level" );
 	pKV = pKV->GetFirstSubKey();
-	while(pKV) 
+	while(pKV)
 	{
 		char const *level = pKV->GetName();
 		char const *area = pKV->GetString();
@@ -891,7 +891,7 @@ bool CBugReporter::PopulateLists()
 		{
 			area_sym = m_BugStrings.AddString(areamap);
 		}
-		
+
 		unsigned index = m_LevelMap.Find(area_sym);
 		CUtlVector<CUtlSymbol> *levels = 0;
 

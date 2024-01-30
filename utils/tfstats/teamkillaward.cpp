@@ -19,7 +19,7 @@
 void CTeamKillAward::getWinner()
 {
 	CEventListIterator it;
-	
+
 	for (it=g_pMatchInfo->eventList()->begin(); it != g_pMatchInfo->eventList()->end(); ++it)
 	{
 		if ((*it)->getType()==CLogEvent::TEAM_FRAG)
@@ -30,7 +30,7 @@ void CTeamKillAward::getWinner()
 			fNoWinner=false;
 		}
 	}
-	
+
 	map<PID,int>::iterator traitoriter;
 
 	for (traitoriter=numbetrayals.begin();traitoriter!=numbetrayals.end();++traitoriter)

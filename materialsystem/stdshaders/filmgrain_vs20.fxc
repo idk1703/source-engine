@@ -8,12 +8,12 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 projPos					: POSITION;	
+	float4 projPos					: POSITION;
 	float2 InputImageCoord			: TEXCOORD0;
 	float2 FilmGrainCoord			: TEXCOORD1;
 };
 
-// 
+//
 const float4 cFilmGrainOffset	:  register( SHADER_SPECIFIC_CONST_0 );  // should be SHADER_SPECIFIC_CONST_0
 
 

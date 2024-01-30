@@ -79,7 +79,7 @@ void CTFBotProxy::InputSetClass( inputdata_t &inputdata )
 	const char *className = inputdata.value.String();
 	if ( className && className[0] )
 	{
-		V_strcpy_safe( m_className, className );		
+		V_strcpy_safe( m_className, className );
 
 		// if m_bot exists, tell it to change class
 		if ( m_bot != NULL )
@@ -164,4 +164,3 @@ void CTFBotProxy::OnKilledEnemy( void )
 {
 	m_onKilledEnemy.FireOutput( this, this );
 }
-

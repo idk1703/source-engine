@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -29,14 +29,14 @@ class CTFCCrowbar : public CWeaponTFCBase
 {
 public:
 	DECLARE_CLASS( CTFCCrowbar, CWeaponTFCBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	#ifndef CLIENT_DLL
 		DECLARE_DATADESC();
 	#endif
 
-	
+
 	CTFCCrowbar();
 
 	// We say yes to this so the weapon system lets us switch to it.
@@ -63,9 +63,9 @@ public:
 
 #ifdef GAME_DLL
 	// This is called first to determine if the axe should apply damage to the entity.
-	virtual void AxeHit( 
-		CBaseEntity *pHit, 
-		bool bFirstSwing, 
+	virtual void AxeHit(
+		CBaseEntity *pHit,
+		bool bFirstSwing,
 		trace_t &tr,
 		float *flDamage,
 		bool *bDoEffects
@@ -74,7 +74,7 @@ public:
 
 
 public:
-	
+
 	trace_t m_trHit;
 	EHANDLE m_pTraceHitEnt;
 	float m_flStoredPrimaryAttack;

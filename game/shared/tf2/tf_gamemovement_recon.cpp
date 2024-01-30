@@ -8,7 +8,7 @@
 #include "tf_gamemovement_recon.h"
 #include "tf_movedata.h"
 #include "in_buttons.h"
-			   
+
 #define TIME_WALL_SUPPRESSION_JUMP	    100
 #define TIME_WALL_SUPPRESSION_IMPACT	400
 #define TIME_WALL_STICK					 50
@@ -132,7 +132,7 @@ void CTFGameMovementRecon::OnTryPlayerMoveCollision( trace_t &tr )
 {
 	if ( !m_bPerformingAirMove )
 		return;
-	
+
 	// Only keep track of world collisions
 	if ( tr.DidHitWorld() )
 	{
@@ -145,9 +145,9 @@ void CTFGameMovementRecon::OnTryPlayerMoveCollision( trace_t &tr )
 				// No walljumps off of mostly horizontal surfaces...
 				if ( fabs( tr.plane.normal.z ) > 0.9f )
 					return;
-			
+
 				// No walljumps off of the same plane as the last one...
-				if ( (pTFMove->ReconData().m_flImpactDist == tr.plane.dist) && 
+				if ( (pTFMove->ReconData().m_flImpactDist == tr.plane.dist) &&
 					(VectorsAreEqual(pTFMove->ReconData().m_vecImpactNormal, tr.plane.normal, 1e-2) ) )
 				{
 					return;
@@ -155,7 +155,7 @@ void CTFGameMovementRecon::OnTryPlayerMoveCollision( trace_t &tr )
 
 				// If you hit a wall, no double jumps for you
 				pTFMove->ReconData().m_nJumpCount = 2;
-				
+
 				// Play an impact sound
 				MoveHelper()->StartSound( pTFMove->m_vecAbsOrigin, "Recon.WallJump" );
 
@@ -205,13 +205,13 @@ bool CTFGameMovementRecon::CheckWaterJump()
 		player->m_flWaterJumpTime -= gpGlobals->frametime;
 		if (player->m_flWaterJumpTime < 0)
 			player->m_flWaterJumpTime = 0;
-		
+
 		return true;
 	}
 
 	// If we are in the water most of the way...
 	if ( player->GetWaterLevel() >= 2 )
-	{	
+	{
 		// swimming, not jumping
 		SetGroundEntity( NULL );
 
@@ -219,7 +219,7 @@ bool CTFGameMovementRecon::CheckWaterJump()
 			mv->m_vecVelocity[2] = 100;
 		else if (player->GetWaterType() == CONTENTS_SLIME)
 			mv->m_vecVelocity[2] = 80;
-		
+
 		// play swiming sound
 		if ( player->m_flSwimSoundTime <= 0 )
 		{
@@ -296,7 +296,7 @@ bool CTFGameMovementRecon::CheckWallJump( CTFMoveData *pTFMove )
 	}
 
 	pTFMove->ReconData().m_flStickTime = TIME_WALL_STICK;
-	pTFMove->ReconData().m_vecUnstickVelocity.Init( jumpDir.x, jumpDir.y, 
+	pTFMove->ReconData().m_vecUnstickVelocity.Init( jumpDir.x, jumpDir.y,
 		pTFMove->m_vecVelocity[2] + 1.5 * sqrt(2 * 800 * 45.0) );
 	if (pTFMove->ReconData().m_vecUnstickVelocity.GetZ() > MAX_VERTICAL_SPEED)
 		pTFMove->ReconData().m_vecUnstickVelocity.SetZ( MAX_VERTICAL_SPEED );
@@ -308,7 +308,7 @@ bool CTFGameMovementRecon::CheckWallJump( CTFMoveData *pTFMove )
 	if ( normalComponent < 0 )
 	{
 		Vector vUnstickVel;
-		VectorMA( pTFMove->ReconData().m_vecUnstickVelocity, -normalComponent, 
+		VectorMA( pTFMove->ReconData().m_vecUnstickVelocity, -normalComponent,
 			pTFMove->ReconData().m_vecImpactNormal, vUnstickVel );
 		pTFMove->ReconData().m_vecUnstickVelocity = vUnstickVel;
 	}
@@ -362,7 +362,7 @@ bool CTFGameMovementRecon::CheckBackJump( bool bWasInAir )
 
 	mv->m_vecVelocity[0] += flSideFactor * jumpDir.x;
 	mv->m_vecVelocity[1] += flSideFactor * jumpDir.y;
-	mv->m_vecVelocity[2] += flUpFactor * sqrt(2 * 800 * 45.0); 
+	mv->m_vecVelocity[2] += flUpFactor * sqrt(2 * 800 * 45.0);
 
 	mv->m_vecVelocity[0] = clamp( mv->m_vecVelocity[0], -200, 200 );
 	mv->m_vecVelocity[1] = clamp( mv->m_vecVelocity[1], -200, 200 );
@@ -467,7 +467,7 @@ bool CTFGameMovementRecon::CheckForwardJump( bool bWasInAir )
 			flGroundFactor = m_pSurfaceData->game.jumpFactor;
 		}
 
-		forward *= 400 * flGroundFactor;	  
+		forward *= 400 * flGroundFactor;
 
 		// Dampen current motion
 		mv->m_vecVelocity[0] *= 0.5f;
@@ -481,7 +481,7 @@ bool CTFGameMovementRecon::CheckForwardJump( bool bWasInAir )
 		mv->m_vecVelocity[2] += flUpFactor * MAX_VERTICAL_SPEED;
 
 		// Limit their velocity in X and Y. We don't want to just clamp because that will change the
-		// direction we're moving in.		
+		// direction we're moving in.
 		for ( int i=0; i < 2; i++ )
 		{
 			float flAbs = fabs( mv->m_vecVelocity[i] );
@@ -526,7 +526,7 @@ bool CTFGameMovementRecon::CheckJumpButton()
 	// Check for wall jump...
 	if ( !CheckWallJump( pTFMove ) )
 	{
-		// If we already did one air jump, can't do another 
+		// If we already did one air jump, can't do another
  		if ( (player->GetGroundEntity() == NULL ) && ( pTFMove->ReconData().m_nJumpCount > 1) )
 		{
 			mv->m_nOldButtons |= IN_JUMP;
@@ -540,7 +540,7 @@ bool CTFGameMovementRecon::CheckJumpButton()
 
 		// In the air now.
 		SetGroundEntity( NULL );
-		
+
 		PlayStepSound( m_pSurfaceData, 1.0, true );
 
 		if (!CheckBackJump(bWasInAir))
@@ -557,7 +557,7 @@ bool CTFGameMovementRecon::CheckJumpButton()
 		}
 	}
 
-	pTFMove->ReconData().m_flSuppressionJumpTime = TIME_WALL_SUPPRESSION_JUMP;	
+	pTFMove->ReconData().m_flSuppressionJumpTime = TIME_WALL_SUPPRESSION_JUMP;
 
 	FinishGravity();
 
@@ -575,9 +575,9 @@ bool CTFGameMovementRecon::CheckJumpButton()
 //-----------------------------------------------------------------------------
 const Vector &CTFGameMovementRecon::GetPlayerMins( bool bDucked ) const
 {
-	return bDucked ? m_vDuckMins : m_vStandMins; 
+	return bDucked ? m_vDuckMins : m_vStandMins;
 }
-	
+
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------

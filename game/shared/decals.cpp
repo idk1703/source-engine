@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -23,7 +23,7 @@
 #define TRANSLATION_DATA_SECTION "TranslationData"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDecalEmitterSystem : public IDecalEmitterSystem, public CAutoGameSystem
 {
@@ -102,8 +102,8 @@ static CDecalEmitterSystem g_DecalSystem( "CDecalEmitterSystem" );
 IDecalEmitterSystem *decalsystem = &g_DecalSystem;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *decalname - 
+// Purpose:
+// Input  : *decalname -
 // Output : int
 //-----------------------------------------------------------------------------
 int CDecalEmitterSystem::GetDecalIndexForName( char const *decalname )
@@ -129,7 +129,7 @@ int CDecalEmitterSystem::GetDecalIndexForName( char const *decalname )
 		idx = e->indices[ i ];
 		DecalListEntry *item = &m_AllDecals[ idx ];
 		Assert( item );
-		
+
 		if ( !totalweight )
 		{
 			slot = idx;
@@ -160,7 +160,7 @@ const char *CDecalEmitterSystem::GetDecalNameForIndex( int nIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDecalEmitterSystem::Init()
@@ -170,7 +170,7 @@ bool CDecalEmitterSystem::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDecalEmitterSystem::LevelInitPreEntity()
 {
@@ -188,8 +188,8 @@ void CDecalEmitterSystem::LevelInitPreEntity()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *filename - 
+// Purpose:
+// Input  : *filename -
 //-----------------------------------------------------------------------------
 void CDecalEmitterSystem::LoadDecalsFromScript( char const *filename )
 {
@@ -280,8 +280,8 @@ void CDecalEmitterSystem::LoadDecalsFromScript( char const *filename )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : gamematerial - 
+// Purpose:
+// Input  : gamematerial -
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CDecalEmitterSystem::ImpactDecalForGameMaterial( int gamematerial )
@@ -298,7 +298,7 @@ char const *CDecalEmitterSystem::ImpactDecalForGameMaterial( int gamematerial )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDecalEmitterSystem::Shutdown()
 {
@@ -306,7 +306,7 @@ void CDecalEmitterSystem::Shutdown()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDecalEmitterSystem::Clear()
 {
@@ -317,9 +317,9 @@ void CDecalEmitterSystem::Clear()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *decalName - 
-//			gamematerial - 
+// Purpose:
+// Input  : *decalName -
+//			gamematerial -
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CDecalEmitterSystem::TranslateDecalForGameMaterial( char const *decalName, unsigned char gamematerial )
@@ -341,5 +341,3 @@ char const *CDecalEmitterSystem::TranslateDecalForGameMaterial( char const *deca
 
 	return decalName;
 }
-
-

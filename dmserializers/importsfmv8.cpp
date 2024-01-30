@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -47,8 +47,8 @@ void InstallSFMV8Importer( IDataModel *pFactory )
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CImportSFMV8::CImportSFMV8( const char *formatName, const char *nextFormatName ) : 
-	BaseClass( formatName, nextFormatName )	
+CImportSFMV8::CImportSFMV8( const char *formatName, const char *nextFormatName ) :
+	BaseClass( formatName, nextFormatName )
 {
 }
 
@@ -65,7 +65,7 @@ void CImportSFMV8::FixupElement( CDmElement *pElement )
 
 	if ( !V_stricmp( pType, "DmeAnimationSet" ) )
 	{
-		// Remove 'midpoint' from all controls, and 
+		// Remove 'midpoint' from all controls, and
 		// Add 'defaultBalance' and 'defaultMultilevel' to all non-transform controls
 		CDmrElementArray<> srcControls( pElement, "controls" );
 		if ( srcControls.IsValid() )

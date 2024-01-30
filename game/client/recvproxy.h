@@ -26,26 +26,26 @@ void RecvProxy_IntToModelIndex16_BackCompatible( const CRecvProxyData *pData, vo
 void RecvProxy_IntToModelIndex32_BackCompatible( const CRecvProxyData *pData, void *pStruct, void *pOut );
 
 RecvProp RecvPropTime(
-	const char *pVarName, 
-	int offset, 
+	const char *pVarName,
+	int offset,
 	int sizeofVar=SIZEOF_IGNORE );
 
 #if !defined( NO_ENTITY_PREDICTION )
 RecvProp RecvPropPredictableId(
-	const char *pVarName, 
-	int offset, 
+	const char *pVarName,
+	int offset,
 	int sizeofVar=SIZEOF_IGNORE );
 #endif
 
 RecvProp RecvPropEHandle(
-	const char *pVarName, 
-	int offset, 
+	const char *pVarName,
+	int offset,
 	int sizeofVar=SIZEOF_IGNORE,
 	RecvVarProxyFn proxyFn=RecvProxy_IntToEHandle );
 
 RecvProp RecvPropBool(
-	const char *pVarName, 
-	int offset, 
+	const char *pVarName,
+	int offset,
 	int sizeofVar );
 
 RecvProp RecvPropBool(
@@ -56,10 +56,9 @@ RecvProp RecvPropBool(
 	RecvVarProxyFn varProxy );
 
 RecvProp RecvPropIntWithMinusOneFlag(
-	const char *pVarName, 
-	int offset, 
+	const char *pVarName,
+	int offset,
 	int sizeofVar=SIZEOF_IGNORE,
 	RecvVarProxyFn proxyFn=RecvProxy_IntSubOne );
 
 #endif // RECVPROXY_H
-

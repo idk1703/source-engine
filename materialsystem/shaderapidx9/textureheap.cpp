@@ -63,14 +63,14 @@ class CD3DTextureAllocator
 public:
 	static void *Alloc( int bytes )
 	{
-		DWORD attributes = MAKE_XALLOC_ATTRIBUTES( 
-								0, 
-								false, 
-								TRUE, 
-								FALSE, 
+		DWORD attributes = MAKE_XALLOC_ATTRIBUTES(
+								0,
+								false,
+								TRUE,
+								FALSE,
 								eXALLOCAllocatorId_D3D,
-								XALLOC_PHYSICAL_ALIGNMENT_4K, 
-								XALLOC_MEMPROTECT_WRITECOMBINE, 
+								XALLOC_PHYSICAL_ALIGNMENT_4K,
+								XALLOC_MEMPROTECT_WRITECOMBINE,
 								FALSE,
 								XALLOC_MEMTYPE_PHYSICAL );
 		m_nTotalAllocations++;
@@ -80,14 +80,14 @@ public:
 
 	static void Free( void *p )
 	{
-		DWORD attributes = MAKE_XALLOC_ATTRIBUTES( 
-								0, 
-								false, 
-								TRUE, 
-								FALSE, 
+		DWORD attributes = MAKE_XALLOC_ATTRIBUTES(
+								0,
+								false,
+								TRUE,
+								FALSE,
 								eXALLOCAllocatorId_D3D,
-								XALLOC_PHYSICAL_ALIGNMENT_4K, 
-								XALLOC_MEMPROTECT_WRITECOMBINE, 
+								XALLOC_PHYSICAL_ALIGNMENT_4K,
+								XALLOC_MEMPROTECT_WRITECOMBINE,
 								FALSE,
 								XALLOC_MEMTYPE_PHYSICAL );
 		m_nTotalAllocations--;
@@ -145,7 +145,7 @@ struct THFreeBlock_t
 class CXboxTexture : public IDirect3DTexture, public THInfo_t
 {
 public:
-	CXboxTexture() 
+	CXboxTexture()
 	  : bImmobile(false)
 	{
 	}
@@ -632,7 +632,7 @@ return NULL;
 		}
 		pFreeBlock->heapInfo.bFree = true;
 		pFreeBlock->heapInfo.nBytes = ( (byte *)pEnd - pNextBlock ) + pEnd->nBytes;
-		
+
 		AddToFreeList( pFreeBlock );
 
 #ifdef TH_PARANOID
@@ -666,7 +666,7 @@ return NULL;
 			{
 				unsigned sum = 0;
 				THInfo_t *pCurrent = pStart;
-				while( pCurrent != pEnd->pNext ) 
+				while( pCurrent != pEnd->pNext )
 				{
 					if ( pCurrent->bFree )
 					{
@@ -863,19 +863,19 @@ IDirect3DTexture *CTextureHeap::AllocTexture( int width, int height, int levels,
 	CXboxTexture* pD3DTexture = new CXboxTexture;
 
 	// create a texture with contiguous mips and packed tails
-	DWORD dwTextureSize = XGSetTextureHeaderEx( 
-		width, 
-		height, 
-		levels, 
-		usage, 
-		d3dFormat, 
-		0, 
-		0, 
-		0, 
-		XGHEADER_CONTIGUOUS_MIP_OFFSET, 
-		0, 
-		pD3DTexture, 
-		NULL, 
+	DWORD dwTextureSize = XGSetTextureHeaderEx(
+		width,
+		height,
+		levels,
+		usage,
+		d3dFormat,
+		0,
+		0,
+		0,
+		XGHEADER_CONTIGUOUS_MIP_OFFSET,
+		0,
+		pD3DTexture,
+		NULL,
 		NULL );
 
 	// based on "Xbox 360 Texture Storage"
@@ -886,12 +886,12 @@ IDirect3DTexture *CTextureHeap::AllocTexture( int width, int height, int levels,
 		int terminalWidth = width >> (levels - 1);
 		if ( d3dFormat == D3DFMT_DXT1 )
 		{
-			if ( terminalWidth <= 32 ) 
+			if ( terminalWidth <= 32 )
 			{
 				dwTextureSize -= 4*1024;
 			}
 		}
-		else if ( d3dFormat == D3DFMT_DXT5 ) 
+		else if ( d3dFormat == D3DFMT_DXT5 )
 		{
 			if ( terminalWidth == 32 )
 			{
@@ -962,17 +962,17 @@ IDirect3DCubeTexture *CTextureHeap::AllocCubeTexture( int width, int levels, DWO
 	CXboxCubeTexture* pD3DCubeTexture = new CXboxCubeTexture;
 
 	// create a cube texture with contiguous mips and packed tails
-	DWORD dwTextureSize = XGSetCubeTextureHeaderEx( 
-		width,  
-		levels, 
-		usage, 
-		d3dFormat, 
-		0, 
-		0, 
+	DWORD dwTextureSize = XGSetCubeTextureHeaderEx(
+		width,
+		levels,
+		usage,
+		d3dFormat,
 		0,
-		XGHEADER_CONTIGUOUS_MIP_OFFSET, 
-		pD3DCubeTexture, 
-		NULL, 
+		0,
+		0,
+		XGHEADER_CONTIGUOUS_MIP_OFFSET,
+		pD3DCubeTexture,
+		NULL,
 		NULL );
 	pD3DCubeTexture->m_TextureSize = dwTextureSize;
 
@@ -1017,23 +1017,23 @@ IDirect3DVolumeTexture *CTextureHeap::AllocVolumeTexture( int width, int height,
 	CXboxVolumeTexture *pD3DVolumeTexture = new CXboxVolumeTexture;
 
 	// create a cube texture with contiguous mips and packed tails
-	DWORD dwTextureSize = XGSetVolumeTextureHeaderEx( 
+	DWORD dwTextureSize = XGSetVolumeTextureHeaderEx(
 		width,
-		height, 
+		height,
 		depth,
-		levels, 
-		usage, 
-		d3dFormat, 
-		0, 
-		0, 
+		levels,
+		usage,
+		d3dFormat,
 		0,
-		XGHEADER_CONTIGUOUS_MIP_OFFSET, 
-		pD3DVolumeTexture, 
-		NULL, 
+		0,
+		0,
+		XGHEADER_CONTIGUOUS_MIP_OFFSET,
+		pD3DVolumeTexture,
+		NULL,
 		NULL );
 
 	void *pBits;
-	
+
 	MEM_ALLOC_CREDIT_( __FILE__ ": Volume standard D3D" );
 
 	pBits = CD3DTextureAllocator::Alloc( dwTextureSize );
@@ -1048,7 +1048,7 @@ IDirect3DVolumeTexture *CTextureHeap::AllocVolumeTexture( int width, int height,
 
 	XGOffsetResourceAddress( pD3DVolumeTexture, pBits );
 
-	return pD3DVolumeTexture; 
+	return pD3DVolumeTexture;
 }
 
 //-----------------------------------------------------------------------------
@@ -1073,7 +1073,7 @@ D3DMULTISAMPLE_TYPE CTextureHeap::GetBackBufferMultiSampleType()
 // Allocate an EDRAM surface
 //-----------------------------------------------------------------------------
 IDirect3DSurface *CTextureHeap::AllocRenderTargetSurface( int width, int height, D3DFORMAT d3dFormat, bool bMultiSample, int base )
-{	
+{
 	// render target surfaces don't need to exist simultaneously
 	// force their allocations to overlap at the end of back buffer and zbuffer
 	// this should leave 3MB (of 10) free assuming 1280x720 (and 5MB with 640x480@2xMSAA)
@@ -1097,14 +1097,14 @@ IDirect3DSurface *CTextureHeap::AllocRenderTargetSurface( int width, int height,
 		if ( ( surfParameters.HierarchicalZBase + XGHierarchicalZSize( width, height, multiSampleType ) ) > GPU_HIERARCHICAL_Z_TILES )
 		{
 			// overflow, can't hold the tiles so disable
-			surfParameters.HierarchicalZBase = 0xFFFFFFFF; 
+			surfParameters.HierarchicalZBase = 0xFFFFFFFF;
 		}
 	}
 	else
 	{
 		// not using
 		surfParameters.HierarchicalZBase = 0xFFFFFFFF;
-	}	
+	}
 
 	HRESULT hr;
 	IDirect3DSurface9 *pSurface = NULL;
@@ -1224,7 +1224,7 @@ int	CTextureHeap::GetSize( IDirect3DBaseTexture *pD3DTexture )
 		Assert( !FAILED( hr ) );
 		hr = hr; // Quiet "unused variable" warning in release
 
-		int size = ImageLoader::GetMemRequired( 
+		int size = ImageLoader::GetMemRequired(
 			surfaceDesc.Width,
 			surfaceDesc.Height,
 			0,

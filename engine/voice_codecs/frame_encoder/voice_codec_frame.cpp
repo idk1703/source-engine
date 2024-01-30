@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -36,13 +36,13 @@ public:
 						m_nRawBytes = m_nRawSamples = m_nEncodedBytes = 0;
 						m_pFrameEncoder = pEncoder;
 					}
-		
+
 	virtual			~VoiceCodec_Frame()
 	{
 		if(m_pFrameEncoder)
 			m_pFrameEncoder->Release();
 	}
-	
+
 	virtual bool	Init( int quality )
 	{
 		if(m_pFrameEncoder && m_pFrameEncoder->Init(quality, m_nRawBytes, m_nEncodedBytes))
@@ -83,7 +83,7 @@ public:
 			nSamples -= m_nRawSamples - m_nEncodeBufferSamples;
 			pUncompressed += m_nRawSamples - m_nEncodeBufferSamples;
 			m_nEncodeBufferSamples = 0;
-			
+
 			// Compress it.
 			m_pFrameEncoder->EncodeFrame((const char*)samples, &pCompressed[nCompressedBytes]);
 			nCompressedBytes += m_nEncodedBytes;
@@ -137,7 +137,7 @@ public:
 
 
 public:
-	// The codec encodes and decodes samples in fixed-size blocks, so we queue up uncompressed and decompressed data 
+	// The codec encodes and decodes samples in fixed-size blocks, so we queue up uncompressed and decompressed data
 	// until we have blocks large enough to give to the codec.
 	short				m_EncodeBuffer[MAX_FRAMEBUFFER_SAMPLES];
 	int					m_nEncodeBufferSamples;
@@ -152,4 +152,3 @@ IVoiceCodec* CreateVoiceCodec_Frame(IFrameEncoder *pEncoder)
 {
 	return new VoiceCodec_Frame(pEncoder);
 }
-

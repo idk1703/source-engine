@@ -28,7 +28,7 @@ using std::list;
 using std::vector;
 using std::string;
 //------------------------------------------------------------------------------------------------------
-// Purpose: CCustomAwardTrigger is the base class for both types of award 
+// Purpose: CCustomAwardTrigger is the base class for both types of award
 // triggers. An award trigger is an object that recognizes a certain type of event
 // in the log file, and if it matches that event, then it "triggers" and the custom
 // award which owns it increments the counter for the player who triggered the
@@ -40,9 +40,9 @@ public:
 	static CCustomAwardTrigger* readTrigger(CTextFile& f);
 	int plrValue;
 	int teamValue;
-	
-	map<string,string> extraProps;	
-	
+
+	map<string,string> extraProps;
+
 	virtual bool matches(const CLogEvent* le)=0;
 
 	virtual PID  plrIDFromEvent(const CLogEvent* ple){return -1;}
@@ -61,7 +61,7 @@ public:
 	vector<string> broadcastStrings;
 	virtual bool matches(const CLogEvent* le);
 	virtual PID  plrIDFromEvent(const CLogEvent* ple){return ple->getArgument(1)->asPlayerGetPID();}
-	
+
 	//this class doesn't need this function
 	//virtual string getTrackString(const CLogEvent* ple){return "";}
 };
@@ -77,7 +77,7 @@ public:
 	vector<string> goalNames;
 	virtual bool matches(const CLogEvent* le);
 	virtual PID  plrIDFromEvent(const CLogEvent* ple){return ple->getArgument(0)->asPlayerGetPID();}
-	
+
 	//this class doesn't need this function
 	//virtual string getTrackString(const CLogEvent* ple){return "";}
 };
@@ -92,13 +92,13 @@ public:
 	int regExpCompare(string exp,string cmp);
 
 	map<string,string> varexpressions;
-	
+
 	CFullSearchTrigger(int value, int teamValue, vector<string>& ks,map<string,string> extras);
-	
+
 	vector<string> keys;
-	
+
 	string winnerVar;
-	
+
 	bool compare(string str_msg,string str_key,map<string,string>& varmatches);
 	virtual bool matches(const CLogEvent* le);
 	virtual PID  plrIDFromEvent(const CLogEvent* ple);

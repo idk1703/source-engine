@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -23,7 +23,7 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CVMTPicker::CVMTPicker( vgui::Panel *pParent, bool bAllowMultiselect ) : 
+CVMTPicker::CVMTPicker( vgui::Panel *pParent, bool bAllowMultiselect ) :
 	BaseClass( pParent, "VMT Files", "vmt", "materials", "vmtName" )
 {
 	// Horizontal splitter for preview
@@ -66,13 +66,10 @@ void CVMTPicker::OnSelectedAssetPicked( const char *pAssetName )
 // Purpose: Modal picker frame
 //
 //-----------------------------------------------------------------------------
-CVMTPickerFrame::CVMTPickerFrame( vgui::Panel *pParent, const char *pTitle, bool bAllowMultiselect ) : 
+CVMTPickerFrame::CVMTPickerFrame( vgui::Panel *pParent, const char *pTitle, bool bAllowMultiselect ) :
 	BaseClass( pParent )
 {
 	SetAssetPicker( new CVMTPicker( this, bAllowMultiselect ) );
 	LoadControlSettingsAndUserConfig( "resource/vmtpickerframe.res" );
 	SetTitle( pTitle, false );
 }
-
-
-	

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -55,7 +55,7 @@ protected:
 	EditablePanel *m_pContainer;
 	CUtlVector< CQuestItemPanel* > m_vecQuestItemPanels;
 	CQuestItemPanel* m_spCompletingPanel;
-	const CQuestItemPanel* m_pCompletingPanel; 
+	const CQuestItemPanel* m_pCompletingPanel;
 
 	CUtlString m_pszNoQuests;
 	CUtlString m_pszNeedAPass;

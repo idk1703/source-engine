@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,4 +26,3 @@ float CAnimatedTextureProxy::GetAnimationStartTime( void* pBaseEntity )
 {
 	return 0;
 }
-

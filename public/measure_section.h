@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -61,14 +61,14 @@ public:
 	void				SortReset( void );
 	// Get static name of section
 	const char			*GetName( void );
-	
+
 	// Get accumulated time
 	CCycleCount const&	GetTotalTime( void );
 
 	CCycleCount const&	GetTime();
 
 	CCycleCount const&	GetMaxTime();
-	
+
 	// Add in some time
 	void				AddTime( CCycleCount const &rCount );
 
@@ -87,13 +87,13 @@ public:
 private:
 	// Accumulated time for section
 	CCycleCount			m_dAccumulatedTime;
-	
+
 	// Max time for section
 	CCycleCount			m_dMaxTime;
 
 	// Elapsed time for section
 	CCycleCount			m_dTotalTime;
-	
+
 	// Name of section
 	const char			*m_pszName;
 	// Next section in chain
@@ -105,7 +105,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: On construction marks time and on destruction adds time to 
+// Purpose: On construction marks time and on destruction adds time to
 //  parent CMeasureSection object
 //-----------------------------------------------------------------------------
 class CMeasureSectionInstance

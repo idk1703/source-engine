@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -35,7 +35,7 @@ public:
 		m_RunningTimeMS = 0;
 		m_ThreadWUs[0] = m_ThreadWUs[1] = m_ThreadWUs[2] = m_ThreadWUs[3] = -1;
 	}
-	
+
 	CString m_ComputerName;
 	int m_bConnected;
 	int m_nWorkUnitsDone;
@@ -91,7 +91,7 @@ protected:
 		QUERY_GRAPH,
 		QUERY_WORKER_STATS,
 		NUM_QUERIES
-	};	
+	};
 
 	void ProcessQueryResults_Graph( IMySQLRowSet *pSet );
 	void ProcessQueryResults_Text( IMySQLRowSet *pSet );

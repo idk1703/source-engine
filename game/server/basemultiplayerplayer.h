@@ -9,7 +9,7 @@
 #include "ai_speech.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBaseMultiplayerPlayer : public CAI_ExpresserHost<CBasePlayer>
 {

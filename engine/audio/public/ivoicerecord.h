@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,7 +10,7 @@
 #pragma once
 
 
-// This is the voice recording interface. It provides 16-bit signed mono data from 
+// This is the voice recording interface. It provides 16-bit signed mono data from
 // a mic at some sample rate.
 abstract_class IVoiceRecord
 {
@@ -20,7 +20,7 @@ protected:
 
 
 public:
-	
+
 	// Use this to delete the object.
 	virtual void		Release()=0;
 

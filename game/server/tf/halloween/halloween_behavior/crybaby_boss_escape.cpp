@@ -129,4 +129,3 @@ EventDesiredResult< CHeadlessHatman > CCryBabyBossEscape::OnMoveToSuccess( CHead
 
 	return TryDone( RESULT_CRITICAL, "Reached escape pit" );
 }
-

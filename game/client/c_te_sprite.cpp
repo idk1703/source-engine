@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -51,7 +51,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TESprite::C_TESprite( void )
 {
@@ -62,7 +62,7 @@ C_TESprite::C_TESprite( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TESprite::~C_TESprite( void )
 {
@@ -70,9 +70,9 @@ C_TESprite::~C_TESprite( void )
 
 
 //-----------------------------------------------------------------------------
-// Recording 
+// Recording
 //-----------------------------------------------------------------------------
-static inline void RecordSprite( const Vector& start, int nModelIndex, 
+static inline void RecordSprite( const Vector& start, int nModelIndex,
 								 float flScale, int nBrightness )
 {
 	if ( !ToolsEnabled() )
@@ -102,7 +102,7 @@ static inline void RecordSprite( const Vector& start, int nModelIndex,
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TESprite::PostDataUpdate( DataUpdateType_t updateType )
 {

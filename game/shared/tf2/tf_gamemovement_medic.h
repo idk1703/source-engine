@@ -38,7 +38,7 @@ public:
 
 protected:
 
-	PlayerClassMedicData_t	*m_pMedicData; 
+	PlayerClassMedicData_t	*m_pMedicData;
 	Vector					m_vStandMins;
 	Vector					m_vStandMaxs;
 	Vector					m_vStandViewOffset;

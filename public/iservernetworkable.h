@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -43,10 +43,10 @@ public:
 
 	CBitVec<MAX_EDICTS>	*m_pTransmitEdict;	// entity n is already marked for transmission
 	CBitVec<MAX_EDICTS>	*m_pTransmitAlways; // entity n is always sent even if not in PVS (HLTV and Replay only)
-	
-	int 	m_AreasNetworked; // number of networked areas 
+
+	int 	m_AreasNetworked; // number of networked areas
 	int		m_Areas[MAX_WORLD_AREAS]; // the areas
-	
+
 	// This is used to determine visibility, so if the previous state
 	// is the same as the current state (along with pvs and areas networked),
 	// then the parts of the map that the player can see haven't changed.
@@ -60,13 +60,13 @@ public:
 struct PVSInfo_t
 {
 	// headnode for the entity's bounding box
-	short		m_nHeadNode;			
+	short		m_nHeadNode;
 
 	// number of clusters or -1 if too many
-	short		m_nClusterCount;		
+	short		m_nClusterCount;
 
 	// cluster indices
-	unsigned short *m_pClusters;	
+	unsigned short *m_pClusters;
 
 	// For dynamic "area portals"
 	short		m_nAreaNum;
@@ -106,7 +106,7 @@ public:
 	virtual PVSInfo_t*		GetPVSInfo() = 0; // get current visibilty data
 
 protected:
-	// Should never call delete on this! 
+	// Should never call delete on this!
 	virtual					~IServerNetworkable() {}
 };
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -42,7 +42,7 @@ public:
 	COutputEvent	m_SpawnMedicAlly;
 	COutputEvent	m_OnZeroAllies;
 	COutputEvent	m_OnZeroMedicAllies;
-	
+
 
 	DECLARE_DATADESC();
 };
@@ -85,7 +85,7 @@ BEGIN_DATADESC( CAI_AllyManager )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_AllyManager::Spawn()
 {
@@ -100,15 +100,15 @@ void CAI_AllyManager::WatchCounts()
 	// Count the number of allies with the player right now.
 	int iCurrentAllies;
 	int iCurrentMedics;
-	
+
 	CountAllies( &iCurrentAllies, &iCurrentMedics );
 
 	if ( !iCurrentAllies && m_iAlliesLast )
 		m_OnZeroAllies.FireOutput( this, this, 0 );
-		
+
 	if ( !iCurrentMedics && m_iMedicsLast )
 		m_OnZeroMedicAllies.FireOutput( this, this, 0 );
-	
+
 	m_iAlliesLast = iCurrentAllies;
 	m_iMedicsLast = iCurrentMedics;
 
@@ -145,20 +145,20 @@ void CAI_AllyManager::CountAllies( int *pTotal, int *pMedics )
 			// They only count if I can use them.
 			if( ppAIs[i]->HasSpawnFlags(SF_CITIZEN_NOT_COMMANDABLE) )
 				continue;
-			
+
 			// They only count if I can use them.
 			if( ppAIs[i]->IRelationType( UTIL_GetLocalPlayer() ) != D_LI )
 				continue;
 
 			// Skip distant NPCs
-			if ( !ppAIs[i]->IsInPlayerSquad() && 
-				!UTIL_FindClientInPVS( ppAIs[i]->edict() ) && 
+			if ( !ppAIs[i]->IsInPlayerSquad() &&
+				!UTIL_FindClientInPVS( ppAIs[i]->edict() ) &&
 				( ( ppAIs[i]->GetAbsOrigin() - vPlayerPos ).LengthSqr() > 150*12 ||
 				  fabsf( ppAIs[i]->GetAbsOrigin().z - vPlayerPos.z ) > 192 ) )
 				continue;
 
-			if( FClassnameIs( ppAIs[i], "npc_citizen" ) ) 
-			{  
+			if( FClassnameIs( ppAIs[i], "npc_citizen" ) )
+			{
 				CNPC_Citizen *pCitizen = assert_cast<CNPC_Citizen *>(ppAIs[i]);
 				if ( !pCitizen->CanJoinPlayerSquad() )
 					continue;
@@ -176,8 +176,8 @@ void CAI_AllyManager::CountAllies( int *pTotal, int *pMedics )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAI_AllyManager::InputSetMaxAllies( inputdata_t &inputdata )
 {
@@ -192,15 +192,15 @@ void CAI_AllyManager::InputSetMaxMedics( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAI_AllyManager::InputReplenish( inputdata_t &inputdata )
 {
 	// Count the number of allies with the player right now.
 	int iCurrentAllies;
 	int iCurrentMedics;
-	
+
 	CountAllies( &iCurrentAllies, &iCurrentMedics );
 
 	// TOTAL number of allies to be replaced.
@@ -241,7 +241,7 @@ void CAI_AllyManager::InputReplenish( inputdata_t &inputdata )
 	}
 
 // Allies
-	if( iReplaceAllies < 1 ) 
+	if( iReplaceAllies < 1 )
 	{
 		return;
 	}

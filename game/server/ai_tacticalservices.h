@@ -34,7 +34,7 @@ public:
 	{
 		m_bAllowFindLateralLos = true;
 	}
-	
+
 	void Init( CAI_Network *pNetwork );
 
 	bool			FindLos( const Vector &threatPos, const Vector &threatEyePos, float minThreatDist, float maxThreatDist, float blockTime, Vector *pResult );
@@ -58,7 +58,7 @@ private:
 	int				FindCoverNode( const Vector &vThreatPos, const Vector &vThreatEyePos, float flMinDist, float flMaxDist );
 	int				FindCoverNode( const Vector &vNearPos, const Vector &vThreatPos, const Vector &vThreatEyePos, float flMinDist, float flMaxDist );
 	int				FindLosNode( const Vector &vThreatPos, const Vector &vThreatEyePos, float flMinThreatDist, float flMaxThreatDist, float flBlockTime, FlankType_t eFlankType, const Vector &vThreatFacing, float flFlankParam );
-	
+
 	Vector			GetNodePos( int );
 
 	CAI_Network *GetNetwork()				{ return m_pNetwork; }
@@ -66,11 +66,11 @@ private:
 
 	CAI_Pathfinder *GetPathfinder()				{ return m_pPathfinder; }
 	const CAI_Pathfinder *GetPathfinder() const	{ return m_pPathfinder; }
-	
+
 	CAI_Network *m_pNetwork;
 	CAI_Pathfinder *m_pPathfinder;
 
-	bool	m_bAllowFindLateralLos;	// Allows us to turn Lateral LOS checking on/off. 
+	bool	m_bAllowFindLateralLos;	// Allows us to turn Lateral LOS checking on/off.
 
 	DECLARE_SIMPLE_DATADESC();
 };

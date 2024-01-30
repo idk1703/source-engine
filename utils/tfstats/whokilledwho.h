@@ -20,7 +20,7 @@
 
 //------------------------------------------------------------------------------------------------------
 // Purpose: CWhoKilledWho is a report element that outputs a detailed scoreboard
-// showing, in a 2x2 matrix who killed who how many times. On the edges of the 
+// showing, in a 2x2 matrix who killed who how many times. On the edges of the
 // matrix, total kills and total deaths for each player are also tallied up
 //------------------------------------------------------------------------------------------------------
 class CWhoKilledWho  :public CReport

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -29,7 +29,7 @@ private:
 
 	CNetworkVar( int, m_iOverlayID );
 };
-							  
+
 
 // This table encodes the CBaseEntity data.
 IMPLEMENT_SERVERCLASS_ST_NOBASE(CInfoOverlayAccessor, DT_InfoOverlayAccessor)

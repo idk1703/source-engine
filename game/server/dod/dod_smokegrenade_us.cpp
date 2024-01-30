@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -12,11 +12,11 @@
 LINK_ENTITY_TO_CLASS( grenade_smoke_us, CDODSmokeGrenadeUS );
 PRECACHE_WEAPON_REGISTER( grenade_smoke_us );
 
-CDODSmokeGrenadeUS* CDODSmokeGrenadeUS::Create( 
-	const Vector &position, 
-	const QAngle &angles, 
-	const Vector &velocity, 
-	const AngularImpulse &angVelocity, 
+CDODSmokeGrenadeUS* CDODSmokeGrenadeUS::Create(
+	const Vector &position,
+	const QAngle &angles,
+	const Vector &velocity,
+	const AngularImpulse &angVelocity,
 	CBaseCombatCharacter *pOwner )
 {
 	CDODSmokeGrenadeUS *pGrenade = (CDODSmokeGrenadeUS*)CBaseEntity::Create( "grenade_smoke_us", position, angles, pOwner );
@@ -33,7 +33,7 @@ CDODSmokeGrenadeUS* CDODSmokeGrenadeUS::Create(
 	}
 
 	// Who threw this grenade
-	pGrenade->SetThrower( pOwner ); 
+	pGrenade->SetThrower( pOwner );
 
 	pGrenade->ChangeTeam( pOwner->GetTeamNumber() );
 

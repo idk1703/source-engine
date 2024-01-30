@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Weapon Base Gun 
+// Purpose: Weapon Base Gun
 //
 //=============================================================================
 
@@ -42,9 +42,9 @@ class CTFWeaponBaseGun : public CTFWeaponBase
 public:
 
 	DECLARE_CLASS( CTFWeaponBaseGun, CTFWeaponBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-#if !defined( CLIENT_DLL ) 
+#if !defined( CLIENT_DLL )
 	DECLARE_DATADESC();
 #endif
 

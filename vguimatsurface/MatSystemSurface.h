@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -81,7 +81,7 @@ public:
 
 	// implementation of vgui::ISurface
 	virtual vgui::VPANEL GetEmbeddedPanel();
-	
+
 	// drawing context
 	virtual void PushMakeCurrent(vgui::VPANEL panel,bool useInSets);
 	virtual void PopMakeCurrent(vgui::VPANEL panel);
@@ -89,7 +89,7 @@ public:
 	// rendering functions
 	virtual void DrawSetColor(int r,int g,int b,int a);
 	virtual void DrawSetColor(Color col);
-	
+
 	virtual void DrawLine( int x0, int y0, int x1, int y1 );
 	virtual void DrawTexturedLine( const vgui::Vertex_t &a, const vgui::Vertex_t &b );
 	virtual void DrawPolyLine(int *px, int *py, int numPoints);
@@ -262,8 +262,8 @@ public:
 	// Returns the length in pixels of the text
 	virtual int	DrawTextLen( vgui::HFont font, PRINTF_FORMAT_STRING const char *fmt, ... );
 
-	// Draws a panel in 3D space. 
-	virtual void DrawPanelIn3DSpace( vgui::VPANEL pRootPanel, const VMatrix &panelCenterToWorld, int pw, int ph, float sw, float sh ); 
+	// Draws a panel in 3D space.
+	virtual void DrawPanelIn3DSpace( vgui::VPANEL pRootPanel, const VMatrix &panelCenterToWorld, int pw, int ph, float sw, float sh );
 
 	// Only visible within vguimatsurface
 	void DrawSetTextureMaterial(int id, IMaterial *pMaterial);
@@ -287,7 +287,7 @@ public:
 	virtual void SurfaceSetCursorPos(int x, int y);
 	virtual void MovePopupToBack(VPANEL panel);
 
-	virtual bool IsInThink( VPANEL panel); 
+	virtual bool IsInThink( VPANEL panel);
 
 	virtual bool DrawGetUnicodeCharRenderInfo( wchar_t ch, CharRenderInfo& info );
 	virtual void DrawRenderCharFromInfo( const CharRenderInfo& info );
@@ -325,7 +325,7 @@ public:
 	virtual void OffsetAbsPos( int &x, int &y );
 
 	virtual void GetKernedCharWidth( HFont font, wchar_t ch, wchar_t chBefore, wchar_t chAfter, float &wide, float &flabcA );
-	
+
 
 	virtual const char *GetWebkitHTMLUserAgentString() { return "Valve Client"; }
 
@@ -375,7 +375,7 @@ private:
 		int	m_iScissorBottom;
 	};
 
-	// material Setting method 
+	// material Setting method
 	void InternalSetMaterial( IMaterial *material = NULL );
 
 	// Draws the fullscreen buffer into the panel
@@ -384,7 +384,7 @@ private:
 	// Helper method to initialize vertices (transforms them into screen space too)
 	void InitVertex( vgui::Vertex_t &vertex, int x, int y, float u, float v );
 
-	// Draws a quad + quad array 
+	// Draws a quad + quad array
 	void DrawQuad( const vgui::Vertex_t &ul, const vgui::Vertex_t &lr, unsigned char *pColor );
 	void DrawQuadArray( int numQuads, vgui::Vertex_t *pVerts, unsigned char *pColor, bool bShouldClip = true );
 
@@ -539,7 +539,7 @@ private:
 
 	struct ScreenOverride_t
 	{
-		ScreenOverride_t() : m_bActive( false ) 
+		ScreenOverride_t() : m_bActive( false )
 		{
 			m_nValue[ 0 ] = m_nValue[ 1 ] = 0;
 		}
@@ -573,7 +573,7 @@ private:
 class MatSurfFuncLogger	// rip off of GLMFuncLogger - figure out a way to reunify these soon
 {
 	public:
-	
+
 		// simple function log
 		MatSurfFuncLogger( char *funcName )
 		{
@@ -581,10 +581,10 @@ class MatSurfFuncLogger	// rip off of GLMFuncLogger - figure out a way to reunif
 
 			m_funcName = funcName;
 			m_earlyOut = false;
-			
+
 			prc->Printf( ">%s", m_funcName );
 		};
-		
+
 		// more advanced version lets you pass args (i.e. called parameters or anything else of interest)
 		// no macro for this one, since no easy way to pass through the args as well as the funcname
 		MatSurfFuncLogger( char *funcName, PRINTF_FORMAT_STRING const char *fmt, ... )
@@ -597,17 +597,17 @@ class MatSurfFuncLogger	// rip off of GLMFuncLogger - figure out a way to reunif
 			// this acts like GLMPrintf here
 			// all the indent policy is down in GLMPrintfVA
 			// which means we need to inject a ">" at the front of the format string to make this work... sigh.
-			
+
 			char modifiedFmt[2000];
 			modifiedFmt[0] = '>';
 			strcpy( modifiedFmt+1, fmt );
-			
+
 			va_list	vargs;
 			va_start(vargs, fmt);
 			prc->PrintfVA( modifiedFmt, vargs );
 			va_end( vargs );
 		}
-		
+
 		~MatSurfFuncLogger( )
 		{
 			CMatRenderContextPtr prc( g_pMaterialSystem );
@@ -620,13 +620,13 @@ class MatSurfFuncLogger	// rip off of GLMFuncLogger - figure out a way to reunif
 				prc->Printf( "<%s", m_funcName );
 			}
 		};
-	
+
 		void EarlyOut( void )
 		{
 			m_earlyOut = true;
 		};
 
-		
+
 		char *m_funcName;				// set at construction time
 		bool m_earlyOut;
 };

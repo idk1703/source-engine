@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -24,7 +24,7 @@ struct Portal_Gamestats_LevelStats_t //most of this is only tracked in verbose m
 {
 	static const unsigned short CHUNKID = 1;
 
-	//substructures 
+	//substructures
 	struct PlayerDeaths_t
 	{
 		static const unsigned short CHUNKID = 1; //subchunks start over with id's
@@ -49,7 +49,7 @@ struct Portal_Gamestats_LevelStats_t //most of this is only tracked in verbose m
 		static const unsigned short TRIMSIZE = 500; //trim logs if more than this many entries exist for a single map
 		Vector ptTraceStart;
 		Vector vTraceDelta;
-		char szUseEntityClassName[32]; 
+		char szUseEntityClassName[32];
 	};
 
 	struct StuckEvent_t

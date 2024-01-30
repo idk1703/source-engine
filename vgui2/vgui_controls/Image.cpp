@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ Image::~Image()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Set the position of the image, you need to reset this every time you 
+// Purpose: Set the position of the image, you need to reset this every time you
 // call Paint()
 //-----------------------------------------------------------------------------
 void Image::SetPos(int x,int y)
@@ -168,7 +168,7 @@ void Image::DrawSetTextColor(Color sc)
 void Image::DrawSetTextColor(int r,int g,int b,int a)
 {
 	surface()->DrawSetTextColor(r,g,b,a);
-}	
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: Set the text position
@@ -279,4 +279,3 @@ HTexture Image::GetID()
 {
 	return 0;
 }
-

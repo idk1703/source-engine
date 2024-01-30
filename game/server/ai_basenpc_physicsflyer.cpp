@@ -99,7 +99,7 @@ void CAI_BasePhysicsFlyingBot::TurnHeadToTarget(float flInterval, const Vector &
 		timeToUse -= 0.1;
 	}
 
-	while( m_fHeadYaw > 360 )  
+	while( m_fHeadYaw > 360 )
 	{
 		m_fHeadYaw -= 360.0f;
 	}
@@ -137,17 +137,17 @@ Vector CAI_BasePhysicsFlyingBot::VelocityToAvoidObstacles(float flInterval)
 	Vector endPos = GetAbsOrigin() + vTravelDir;
 	AI_TraceEntity( this, GetAbsOrigin(), endPos, MASK_NPCSOLID|CONTENTS_WATER, &tr);
 	if (tr.fraction != 1.0)
-	{	
-		// Bounce off in normal 
+	{
+		// Bounce off in normal
 		Vector vBounce = tr.plane.normal * 0.5 * m_vCurrentVelocity.Length();
 		return (vBounce);
 	}
-	
+
 	// --------------------------------
 	// Try to remain above the ground.
 	// --------------------------------
 	float flMinGroundDist = MinGroundDist();
-	AI_TraceLine(GetAbsOrigin(), GetAbsOrigin() + Vector(0, 0, -flMinGroundDist), 
+	AI_TraceLine(GetAbsOrigin(), GetAbsOrigin() + Vector(0, 0, -flMinGroundDist),
 		MASK_NPCSOLID_BRUSHONLY|CONTENTS_WATER, this, COLLISION_GROUP_NONE, &tr);
 	if (tr.fraction < 1)
 	{
@@ -170,7 +170,7 @@ Vector CAI_BasePhysicsFlyingBot::VelocityToAvoidObstacles(float flInterval)
 void CAI_BasePhysicsFlyingBot::StartTask( const Task_t *pTask )
 {
 	switch (pTask->iTask)
-	{	
+	{
 		// Skip as done via bone controller
 		case TASK_FACE_ENEMY:
 		{
@@ -192,7 +192,7 @@ void CAI_BasePhysicsFlyingBot::StartTask( const Task_t *pTask )
 			{
 				TaskFail(FAIL_NO_TARGET);
 			}
-			else 
+			else
 			{
 				if (!GetNavigator()->SetGoal( GOALTYPE_TARGETENT ) )
 				{
@@ -204,7 +204,7 @@ void CAI_BasePhysicsFlyingBot::StartTask( const Task_t *pTask )
 			break;
 		}
 		// Override to get more to get a directional path
-		case TASK_GET_PATH_TO_RANDOM_NODE:  
+		case TASK_GET_PATH_TO_RANDOM_NODE:
 		{
 			if ( GetNavigator()->SetRandomGoal( pTask->flTaskData, m_vLastPatrolDir ) )
 				TaskComplete();
@@ -228,11 +228,11 @@ void CAI_BasePhysicsFlyingBot::MoveToTarget(float flInterval, const Vector &Move
 
 //------------------------------------------------------------------------------
 
-AI_NavPathProgress_t CAI_BasePhysicsFlyingBot::ProgressFlyPath( 
+AI_NavPathProgress_t CAI_BasePhysicsFlyingBot::ProgressFlyPath(
 	float flInterval,
-	const CBaseEntity *pNewTarget, 
-	unsigned collisionMask, 
-	bool bNewTrySimplify, 
+	const CBaseEntity *pNewTarget,
+	unsigned collisionMask,
+	bool bNewTrySimplify,
 	float strictPointTolerance)
 {
   	AI_ProgressFlyPathParams_t params( collisionMask );
@@ -240,7 +240,7 @@ AI_NavPathProgress_t CAI_BasePhysicsFlyingBot::ProgressFlyPath(
 	params.SetCurrent( pNewTarget, bNewTrySimplify );
 
 	AI_NavPathProgress_t progress = GetNavigator()->ProgressFlyPath( params );
-	
+
 	switch ( progress )
 	{
 		case AINPP_NO_CHANGE:
@@ -249,13 +249,13 @@ AI_NavPathProgress_t CAI_BasePhysicsFlyingBot::ProgressFlyPath(
 			MoveToTarget(flInterval, GetNavigator()->GetCurWaypointPos());
 			break;
 		}
-		
+
 		case AINPP_COMPLETE:
 		{
 			TaskMovementComplete();
 			break;
 		}
-		
+
 		case AINPP_BLOCKED: // function is not supposed to test blocking, just simple path progression
 		default:
 		{
@@ -292,7 +292,7 @@ CAI_BasePhysicsFlyingBot::~CAI_BasePhysicsFlyingBot( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -307,9 +307,9 @@ bool CAI_BasePhysicsFlyingBot::CreateVPhysics( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTarget - 
-//			&chasePosition - 
+// Purpose:
+// Input  : *pTarget -
+//			&chasePosition -
 //-----------------------------------------------------------------------------
 void CAI_BasePhysicsFlyingBot::TranslateNavGoal( CBaseEntity *pTarget, Vector &chasePosition )
 {
@@ -326,12 +326,12 @@ void CAI_BasePhysicsFlyingBot::TranslateNavGoal( CBaseEntity *pTarget, Vector &c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pController - 
-//			*pObject - 
-//			deltaTime - 
-//			&linear - 
-//			&angular - 
+// Purpose:
+// Input  : *pController -
+//			*pObject -
+//			deltaTime -
+//			&linear -
+//			&angular -
 // Output : IMotionEvent::simresult_e
 //-----------------------------------------------------------------------------
 IMotionEvent::simresult_e CAI_BasePhysicsFlyingBot::Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular )
@@ -340,7 +340,7 @@ IMotionEvent::simresult_e CAI_BasePhysicsFlyingBot::Simulate( IPhysicsMotionCont
 
 	IPhysicsObject *pPhysicsObject = VPhysicsGetObject();
 	// Assert( pPhysicsObject );
-	if (!pPhysicsObject) 
+	if (!pPhysicsObject)
 		return SIM_NOTHING;
 
 	// move
@@ -351,15 +351,15 @@ IMotionEvent::simresult_e CAI_BasePhysicsFlyingBot::Simulate( IPhysicsMotionCont
 
 	/*
 	DevMsg("Sim %d : %5.1f %5.1f %5.1f\n", count++,
-		m_vCurrentVelocity.x - actualVelocity.x, 
-		m_vCurrentVelocity.y - actualVelocity.y, 
+		m_vCurrentVelocity.x - actualVelocity.x,
+		m_vCurrentVelocity.y - actualVelocity.y,
 		m_vCurrentVelocity.z - actualVelocity.z );
 	*/
 
 	// do angles.
 	Vector actualPosition;
 	QAngle actualAngles;
-	pPhysicsObject->GetPosition( &actualPosition, &actualAngles ); 
+	pPhysicsObject->GetPosition( &actualPosition, &actualAngles );
 
 	// FIXME: banking currently disabled, forces simple upright posture
 	angular.x = (UTIL_AngleDiff( m_vCurrentBanking.z, actualAngles.z ) - actualAngularVelocity.x) * (1 / deltaTime);
@@ -379,4 +379,3 @@ IMotionEvent::simresult_e CAI_BasePhysicsFlyingBot::Simulate( IPhysicsMotionCont
 
 	return SIM_GLOBAL_ACCELERATION; // on my local axis.   SIM_GLOBAL_ACCELERATION
 }
-

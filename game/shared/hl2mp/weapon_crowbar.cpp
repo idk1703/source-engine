@@ -47,7 +47,7 @@ PRECACHE_WEAPON_REGISTER( weapon_crowbar );
 
 #ifndef CLIENT_DLL
 
-acttable_t	CWeaponCrowbar::m_acttable[] = 
+acttable_t	CWeaponCrowbar::m_acttable[] =
 {
 	{ ACT_RANGE_ATTACK1,				ACT_RANGE_ATTACK_SLAM, true },
 	{ ACT_HL2MP_IDLE,					ACT_HL2MP_IDLE_MELEE,					false },
@@ -86,7 +86,7 @@ float CWeaponCrowbar::GetDamageForActivity( Activity hitActivity )
 void CWeaponCrowbar::AddViewKick( void )
 {
 	CBasePlayer *pPlayer  = ToBasePlayer( GetOwner() );
-	
+
 	if ( pPlayer == NULL )
 		return;
 
@@ -95,8 +95,8 @@ void CWeaponCrowbar::AddViewKick( void )
 	punchAng.x = SharedRandomFloat( "crowbarpax", 1.0f, 2.0f );
 	punchAng.y = SharedRandomFloat( "crowbarpay", -2.0f, -1.0f );
 	punchAng.z = 0.0f;
-	
-	pPlayer->ViewPunch( punchAng ); 
+
+	pPlayer->ViewPunch( punchAng );
 }
 
 
@@ -113,9 +113,9 @@ void CWeaponCrowbar::HandleAnimEventMeleeHit( animevent_t *pEvent, CBaseCombatCh
 
 	Vector vecEnd;
 	VectorMA( pOperator->Weapon_ShootPosition(), 50, vecDirection, vecEnd );
-	CBaseEntity *pHurt = pOperator->CheckTraceHullAttack( pOperator->Weapon_ShootPosition(), vecEnd, 
+	CBaseEntity *pHurt = pOperator->CheckTraceHullAttack( pOperator->Weapon_ShootPosition(), vecEnd,
 		Vector(-16,-16,-16), Vector(36,36,36), GetDamageForActivity( GetActivity() ), DMG_CLUB, 0.75 );
-	
+
 	// did I hit someone?
 	if ( pHurt )
 	{
@@ -206,7 +206,7 @@ int CWeaponCrowbar::WeaponMeleeAttack1Condition( float flDot, float flDist )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCrowbar::Drop( const Vector &vecVelocity )
 {
@@ -217,12 +217,10 @@ void CWeaponCrowbar::Drop( const Vector &vecVelocity )
 
 float CWeaponCrowbar::GetRange( void )
 {
-	return	CROWBAR_RANGE;	
+	return	CROWBAR_RANGE;
 }
 
 float CWeaponCrowbar::GetFireRate( void )
 {
-	return	CROWBAR_REFIRE;	
+	return	CROWBAR_REFIRE;
 }
-
-

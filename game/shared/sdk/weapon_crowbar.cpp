@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -24,10 +24,10 @@ class CWeaponCrowbar : public CWeaponSDKMelee
 {
 public:
 	DECLARE_CLASS( CWeaponCrowbar, CWeaponSDKMelee );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponCrowbar();
 
 	virtual SDKWeaponID GetWeaponID( void ) const		{	return SDK_WEAPON_CROWBAR; }
@@ -57,7 +57,7 @@ CWeaponCrowbar::CWeaponCrowbar()
 }
 
 //Tony; todo; add ACT_MP_PRONE* activities, so we have them.
-acttable_t CWeaponCrowbar::m_acttable[] = 
+acttable_t CWeaponCrowbar::m_acttable[] =
 {
 	{ ACT_MP_STAND_IDLE,					ACT_DOD_STAND_AIM_SPADE,				false },
 	{ ACT_MP_CROUCH_IDLE,					ACT_DOD_CROUCH_AIM_SPADE,				false },
@@ -75,4 +75,3 @@ acttable_t CWeaponCrowbar::m_acttable[] =
 };
 
 IMPLEMENT_ACTTABLE( CWeaponCrowbar );
-

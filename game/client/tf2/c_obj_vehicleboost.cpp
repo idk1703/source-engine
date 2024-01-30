@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,7 +10,7 @@
 #include "tf_obj_baseupgrade_shared.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectVehicleBoost : public C_BaseObjectUpgrade
 {
@@ -32,9 +32,8 @@ IMPLEMENT_CLIENTCLASS_DT( C_ObjectVehicleBoost, DT_ObjectVehicleBoost, CObjectVe
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectVehicleBoost::C_ObjectVehicleBoost()
 {
 }
-

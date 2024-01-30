@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
 #include "cbase.h"
-#include "hud.h"		
+#include "hud.h"
 #include <vgui_controls/Controls.h>
 #include <Color.h>
 #include "c_vehicle_crane.h"
@@ -18,7 +18,7 @@
 int ScreenTransform( const Vector& point, Vector& screen );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_PropCannon : public C_BaseAnimating, public IClientVehicle
 {
@@ -31,7 +31,7 @@ public:
 	DECLARE_DATADESC();
 
 	C_PropCannon();
-	
+
 	void PreDataUpdate( DataUpdateType_t updateType );
 
 public:
@@ -100,7 +100,7 @@ END_DATADESC()
 									// spline in between
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_PropCannon::C_PropCannon( void )
 {
@@ -109,8 +109,8 @@ C_PropCannon::C_PropCannon( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_PropCannon::PreDataUpdate( DataUpdateType_t updateType )
 {
@@ -120,7 +120,7 @@ void C_PropCannon::PreDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseCombatCharacter *C_PropCannon::GetPassenger( int nRole )
 {
@@ -146,11 +146,11 @@ int	C_PropCannon::GetPassengerRole( C_BaseCombatCharacter *pPassenger )
 //-----------------------------------------------------------------------------
 void C_PropCannon::GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, QAngle *pAbsAngles, float *pFOV /*=NULL*/ )
 {
-	SharedVehicleViewSmoothing( m_hPlayer, 
-								pAbsOrigin, pAbsAngles, 
-								m_bEnterAnimOn, m_bExitAnimOn, 
-								m_vecEyeExitEndpoint, 
-								&m_ViewSmoothingData, 
+	SharedVehicleViewSmoothing( m_hPlayer,
+								pAbsOrigin, pAbsAngles,
+								m_bEnterAnimOn, m_bExitAnimOn,
+								m_vecEyeExitEndpoint,
+								&m_ViewSmoothingData,
 								pFOV );
 }
 
@@ -164,7 +164,7 @@ void C_PropCannon::GetVehicleClipPlanes( float &flZNear, float &flZFar ) const
 	flZNear = 6;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Renders hud elements
 //-----------------------------------------------------------------------------
@@ -173,9 +173,9 @@ void C_PropCannon::DrawHudElements( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : theMins - 
-//			theMaxs - 
+// Purpose:
+// Input  : theMins -
+//			theMaxs -
 //-----------------------------------------------------------------------------
 void C_PropCannon::GetRenderBounds( Vector &theMins, Vector &theMaxs )
 {
@@ -184,4 +184,3 @@ void C_PropCannon::GetRenderBounds( Vector &theMins, Vector &theMaxs )
 	BaseClass::GetRenderBounds( theMins, theMaxs );
 	theMaxs.y += 660.0f;
 }
-

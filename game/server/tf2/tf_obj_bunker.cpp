@@ -32,7 +32,7 @@ PRECACHE_REGISTER( obj_bunker_ladder );
 ConVar	obj_bunker_health( "obj_bunker_health","100", FCVAR_NONE, "Bunker health" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectBunker::CObjectBunker( void )
 {
@@ -40,7 +40,7 @@ CObjectBunker::CObjectBunker( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBunker::Spawn( void )
 {
@@ -63,7 +63,7 @@ void CObjectBunker::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBunker::Precache( void )
 {
@@ -88,7 +88,7 @@ void CObjectBunker::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBunker::FinishedBuilding( void )
 {
@@ -111,7 +111,7 @@ void CObjectBunker::GetControlPanelInfo( int nPanelIndex, const char *&pPanelNam
 }
 
 //==============================================================================
-//	Bunker Ladder 
+//	Bunker Ladder
 //==============================================================================
 
 //------------------------------------------------------------------------------
@@ -122,7 +122,7 @@ CObjectBunkerLadder::CObjectBunkerLadder()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectBunkerLadder *CObjectBunkerLadder::Create( const Vector &vOrigin, const QAngle &vAngles, CBaseEntity *pParent )
 {
@@ -136,7 +136,7 @@ CObjectBunkerLadder *CObjectBunkerLadder::Create( const Vector &vOrigin, const Q
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBunkerLadder::Spawn()
 {
@@ -157,7 +157,7 @@ void CObjectBunkerLadder::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBunkerLadder::Precache()
 {

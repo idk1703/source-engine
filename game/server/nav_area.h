@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -123,8 +123,8 @@ class HidingSpot
 public:
 	virtual ~HidingSpot()	{ }
 
-	enum 
-	{ 
+	enum
+	{
 		IN_COVER			= 0x01,							// in a corner with good hard cover nearby
 		GOOD_SNIPER_SPOT	= 0x02,							// had at least one decent sniping corridor
 		IDEAL_SNIPER_SPOT	= 0x04,							// can see either very far, or a large area, or both
@@ -134,7 +134,7 @@ public:
 	bool HasGoodCover( void ) const			{ return (m_flags & IN_COVER) ? true : false; }	// return true if hiding spot in in cover
 	bool IsGoodSniperSpot( void ) const		{ return (m_flags & GOOD_SNIPER_SPOT) ? true : false; }
 	bool IsIdealSniperSpot( void ) const	{ return (m_flags & IDEAL_SNIPER_SPOT) ? true : false; }
-	bool IsExposed( void ) const			{ return (m_flags & EXPOSED) ? true : false; }	
+	bool IsExposed( void ) const			{ return (m_flags & EXPOSED) ? true : false; }
 
 	int GetFlags( void ) const		{ return m_flags; }
 
@@ -255,7 +255,7 @@ protected:
 
 	/* 128*/	CFuncElevator *m_elevator;									// if non-NULL, this area is in an elevator's path. The elevator can transport us vertically to another area.
 
-	// --- End critical data --- 
+	// --- End critical data ---
 };
 
 
@@ -266,12 +266,12 @@ public:
 
 	CNavArea( void );
 	virtual ~CNavArea();
-	
+
 	virtual void OnServerActivate( void );						// (EXTEND) invoked when map is initially loaded
 	virtual void OnRoundRestart( void );						// (EXTEND) invoked for each area when the round restarts
 	virtual void OnRoundRestartPreEntity( void ) { }			// invoked for each area when the round restarts, but before entities are deleted and recreated
-	virtual void OnEnter( CBaseCombatCharacter *who, CNavArea *areaJustLeft ) { }	// invoked when player enters this area 
-	virtual void OnExit( CBaseCombatCharacter *who, CNavArea *areaJustEntered ) { }	// invoked when player exits this area 
+	virtual void OnEnter( CBaseCombatCharacter *who, CNavArea *areaJustLeft ) { }	// invoked when player enters this area
+	virtual void OnExit( CBaseCombatCharacter *who, CNavArea *areaJustEntered ) { }	// invoked when player exits this area
 
 	virtual void OnDestroyNotify( CNavArea *dead );				// invoked when given area is going away
 	virtual void OnDestroyNotify( CNavLadder *dead );			// invoked when given ladder is going away
@@ -347,7 +347,7 @@ public:
 	inline float GetZ( const Vector &pos ) const;						// return Z of area at (x,y) of 'pos'
 	float GetZ( float x, float y ) const RESTRICT;				// return Z of area at (x,y) of 'pos'
 	bool Contains( const Vector &pos ) const;					// return true if given point is on or above this area, but no others
-	bool Contains( const CNavArea *area ) const;	
+	bool Contains( const CNavArea *area ) const;
 	bool IsCoplanar( const CNavArea *area ) const;				// return true if this area and given area are approximately co-planar
 	void GetClosestPointOnArea( const Vector * RESTRICT pPos, Vector *close ) const RESTRICT;	// return closest point to 'pos' on this area - returned point in 'close'
 	void GetClosestPointOnArea( const Vector &pos, Vector *close ) const { return GetClosestPointOnArea( &pos, close ); }
@@ -435,7 +435,7 @@ public:
 	static void MakeNewMarker( void )	{ ++m_masterMarker; if (m_masterMarker == 0) m_masterMarker = 1; }
 	void Mark( void )					{ m_marker = m_masterMarker; }
 	BOOL IsMarked( void ) const			{ return (m_marker == m_masterMarker) ? true : false; }
-	
+
 	void SetParent( CNavArea *parent, NavTraverseType how = NUM_TRAVERSE_TYPES )	{ m_parent = parent; m_parentHow = how; }
 	CNavArea *GetParent( void ) const	{ return m_parent; }
 	NavTraverseType GetParentHow( void ) const	{ return m_parentHow; }
@@ -446,7 +446,7 @@ public:
 	void UpdateOnOpenList( void );								// a smaller value has been found, update this area on the open list
 	void RemoveFromOpenList( void );
 	static bool IsOpenListEmpty( void );
-	static CNavArea *PopOpenList( void );						// remove and return the first element of the open list													
+	static CNavArea *PopOpenList( void );						// remove and return the first element of the open list
 
 	bool IsClosed( void ) const;								// true if on "closed list"
 	void AddToClosedList( void );								// add to the closed list
@@ -471,8 +471,8 @@ public:
 	void DrawConnectedAreas( void ) const;
 	void DrawHidingSpots( void ) const;
 	bool SplitEdit( bool splitAlongX, float splitEdge, CNavArea **outAlpha = NULL, CNavArea **outBeta = NULL );	// split this area into two areas at the given edge
-	bool MergeEdit( CNavArea *adj );							// merge this area and given adjacent area 
-	bool SpliceEdit( CNavArea *other );							// create a new area between this area and given area 
+	bool MergeEdit( CNavArea *adj );							// merge this area and given adjacent area
+	bool SpliceEdit( CNavArea *other );							// create a new area between this area and given area
 	void RaiseCorner( NavCornerType corner, int amount, bool raiseAdjacentCorners = true );	// raise/lower a corner (or all corners if corner == NUM_CORNERS)
 	void PlaceOnGround( NavCornerType corner, float inset = 0.0f );	// places a corner (or all corners if corner == NUM_CORNERS) on the ground
 	NavCornerType GetCornerUnderCursor( void ) const;
@@ -557,7 +557,7 @@ public:
 
 			if ( m_potentiallyVisibleAreas[i].attributes == NOT_VISIBLE )
 				continue;
-			
+
 			if ( func( area ) == false )
 				return false;
 		}
@@ -629,7 +629,7 @@ public:
 		{
 			if ( !inherited[i].area )
 				continue;
-			
+
 			// We may have visited this from m_potentiallyVisibleAreas
 			if ( inherited[i].area->m_nVisTestCounter == s_nCurrVisTestCounter )
 				continue;
@@ -849,7 +849,7 @@ inline CNavArea *CNavArea::PopOpenList( void )
 	if ( m_openList )
 	{
 		CNavArea *area = m_openList;
-	
+
 		// disconnect from list
 		area->RemoveFromOpenList();
 		area->m_prevOpen = NULL;
@@ -894,7 +894,7 @@ inline void CNavArea::SetClearedTimestamp( int teamID )
 
 //--------------------------------------------------------------------------------------------------------------
 inline float CNavArea::GetClearedTimestamp( int teamID ) const
-{ 
+{
 	return m_clearedTimestamp[ teamID % MAX_NAV_TEAMS ];
 }
 

@@ -35,7 +35,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDisguiseStatus : public CHudElement, public EditablePanel
 {
@@ -76,7 +76,7 @@ private:
 DECLARE_HUDELEMENT( CDisguiseStatus );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDisguiseStatus::CDisguiseStatus( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass( NULL, "DisguiseStatus" )
@@ -108,7 +108,7 @@ void CDisguiseStatus::Init( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDisguiseStatus::ApplySchemeSettings( vgui::IScheme *scheme )
 {
@@ -126,7 +126,7 @@ void CDisguiseStatus::ApplySchemeSettings( vgui::IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CDisguiseStatus::ShouldDraw( void )
 {
@@ -157,7 +157,7 @@ bool CDisguiseStatus::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDisguiseStatus::ShowAndUpdateStatus( void )
 {
@@ -201,7 +201,7 @@ void CDisguiseStatus::ShowAndUpdateStatus( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDisguiseStatus::HideStatus( void )
 {
@@ -234,7 +234,7 @@ void CDisguiseStatus::HideStatus( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDisguiseStatus::CheckName( void )
 {
@@ -260,7 +260,7 @@ void CDisguiseStatus::CheckName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDisguiseStatus::CheckWeapon( void )
 {
@@ -288,7 +288,7 @@ void CDisguiseStatus::CheckWeapon( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDisguiseStatus::CheckHealth( void )
 {
@@ -303,7 +303,7 @@ void CDisguiseStatus::CheckHealth( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDisguiseStatus::PerformLayout( void )
 {

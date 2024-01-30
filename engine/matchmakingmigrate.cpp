@@ -10,7 +10,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: Start a Matchmaking session as the host 
+// Purpose: Start a Matchmaking session as the host
 //-----------------------------------------------------------------------------
 CClientInfo *CMatchmaking::SelectNewHost()
 {
@@ -87,8 +87,8 @@ void CMatchmaking::TellClientsToMigrate()
 	MM_Migrate msg;
 	msg.m_MsgType = MM_Migrate::MESSAGE_HOSTING;
 	msg.m_Id = m_Local.m_id;
-	msg.m_sessionId = info.sessionID; 
-	msg.m_xnaddr = info.hostAddress;  
+	msg.m_sessionId = info.sessionID;
+	msg.m_xnaddr = info.hostAddress;
 	msg.m_key = info.keyExchangeKey;
 
 	for ( int i = 0; i < m_Remote.Count(); ++i )
@@ -232,7 +232,7 @@ void CMatchmaking::EndMigration()
 			Warning( "Unhandled post-migrate state transition" );
 		}
 
-		// Don't use SwitchToState() to set our new state because when changing 
+		// Don't use SwitchToState() to set our new state because when changing
 		// from a client to a host the state transition is usually invalid.
 		m_CurrentState = newState;
 	}

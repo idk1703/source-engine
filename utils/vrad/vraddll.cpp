@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -79,7 +79,7 @@ int CalcDatSize()
 {
 	int ret = 0;
 	int count = sizeof( g_Dats ) / sizeof( g_Dats[0] );
-	
+
 	int i;
 	for( i=1; i < count; i++ )
 	{
@@ -88,7 +88,7 @@ int CalcDatSize()
 			dat temp = g_Dats[i-1];
 			g_Dats[i-1] = g_Dats[i];
 			g_Dats[i] = temp;
-			
+
 			if( i > 1 )
 				i -= 2;
 			else
@@ -98,7 +98,7 @@ int CalcDatSize()
 
 	for( i=0; i < count; i++ )
 		ret += g_Dats[i].size;
-	
+
 	return ret;
 }
 
@@ -116,7 +116,7 @@ int CVRadDLL::main( int argc, char **argv )
 bool CVRadDLL::Init( char const *pFilename )
 {
 	VRAD_Init();
-	
+
 	// Set options and run vrad startup code.
 	do_fast = true;
 	g_bLowPriorityThreads = true;
@@ -140,7 +140,7 @@ void CVRadDLL::GetBSPInfo( CBSPInfo *pInfo )
 	pInfo->dfaces = dfaces;
 	pInfo->m_pFacesTouched = g_FacesTouched.Base();
 	pInfo->numfaces = numfaces;
-	
+
 	pInfo->dvertexes = dvertexes;
 	pInfo->numvertexes = numvertexes;
 
@@ -189,7 +189,7 @@ bool CVRadDLL::DoIncrementalLight( char const *pVMFFile )
 
 	// set up sky cameras
 	ProcessSkyCameras();
-		
+
 	g_bInterrupt = false;
 	if( RadWorld_Go() )
 	{
@@ -239,5 +239,3 @@ void CVRadDLL::Interrupt()
 {
 	g_bInterrupt = true;
 }
-
-

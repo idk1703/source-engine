@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Sql wrapper, encapsulates basic SQL functionality 
+// Purpose: Sql wrapper, encapsulates basic SQL functionality
 //
 // $NoKeywords: $
 //=============================================================================
@@ -68,7 +68,7 @@ public:
 
 //-----------------------------------------------------------------------------
 // encapsulates a result set, which is made up of a series of rows
-// You need to call PNextResult() NRow() times to get all the results 
+// You need to call PNextResult() NRow() times to get all the results
 // (there is no random access to the result set).
 //-----------------------------------------------------------------------------
 class IResultSet
@@ -80,7 +80,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// This interface encapsulates a database connection and lets you operate on it. 
+// This interface encapsulates a database connection and lets you operate on it.
 // Use the ISQLWrapperFactory factory to get access to the interface.
 // NOTE - you can only have one outstanding query at a time. When you are done with a query call FreeResult()
 //-----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ public:
 	// get a description of the tables associated with the db you connected to
 	virtual const ISQLTableSet *PSQLTableSetDescription() = 0;
 	// run a query against the db and then iterate the result set (you can only have 1 outstanding query at a time, and call FreeResults() when you are done)
-	virtual IResultSet *PResultSetQuery( const char *pchQueryString ) = 0; 
+	virtual IResultSet *PResultSetQuery( const char *pchQueryString ) = 0;
 	// you MUST call then after you finish with the IResultSet from the above query
 	virtual void FreeResult() = 0;
 };
@@ -113,4 +113,3 @@ public:
 #define INTERFACEVERSION_ISQLWRAPPER	"ISQLWRAPPER001"
 
 #endif // ISQLWRAPPER_H
-

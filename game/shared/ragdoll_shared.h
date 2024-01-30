@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -102,8 +102,8 @@ public:
 
 private:
 	typedef CHandle<CBaseAnimating> CRagdollHandle;
-	CUtlLinkedList< CRagdollHandle > m_LRU; 
-	CUtlLinkedList< CRagdollHandle > m_LRUImportantRagdolls; 
+	CUtlLinkedList< CRagdollHandle > m_LRU;
+	CUtlLinkedList< CRagdollHandle > m_LRUImportantRagdolls;
 
 	int m_iMaxRagdolls;
 	int m_iSimulatedRagdollCount;

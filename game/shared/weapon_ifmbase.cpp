@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -22,10 +22,10 @@
 //-----------------------------------------------------------------------------
 IMPLEMENT_NETWORKCLASS_ALIASED( WeaponIFMBase, DT_WeaponIFMBase )
 
-BEGIN_NETWORK_TABLE( CWeaponIFMBase, DT_WeaponIFMBase )	
+BEGIN_NETWORK_TABLE( CWeaponIFMBase, DT_WeaponIFMBase )
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CWeaponIFMBase ) 
+BEGIN_PREDICTION_DATA( CWeaponIFMBase )
 END_PREDICTION_DATA()
 
 LINK_ENTITY_TO_CLASS( weapon_ifm_base, CWeaponIFMBase );
@@ -40,7 +40,7 @@ END_DATADESC()
 #endif
 
 //-----------------------------------------------------------------------------
-// CWeaponIFMBase implementation. 
+// CWeaponIFMBase implementation.
 //-----------------------------------------------------------------------------
 CWeaponIFMBase::CWeaponIFMBase()
 {
@@ -49,12 +49,12 @@ CWeaponIFMBase::CWeaponIFMBase()
 }
 
 bool CWeaponIFMBase::IsPredicted() const
-{ 
+{
 	return true;
 }
 
 #ifdef CLIENT_DLL
-	
+
 void CWeaponIFMBase::OnDataChanged( DataUpdateType_t type )
 {
 	BaseClass::OnDataChanged( type );
@@ -75,7 +75,7 @@ bool CWeaponIFMBase::ShouldPredict()
 
 
 #else
-	
+
 void CWeaponIFMBase::Spawn()
 {
 	BaseClass::Spawn();
@@ -112,7 +112,7 @@ void CWeaponIFMBase::FallInit( void )
 	}
 
 	SetPickupTouch();
-	
+
 	SetThink( &CBaseCombatWeapon::FallThink );
 
 	SetNextThink( gpGlobals->curtime + 0.1f );

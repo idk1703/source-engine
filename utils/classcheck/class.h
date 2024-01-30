@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -39,7 +39,7 @@ public:
 		m_szType[ 0 ] = 0;
 
 		m_Type = TPUBLIC;
-		
+
 		m_bKnownType = false;
 		m_nTypeSize = 0;
 
@@ -51,7 +51,7 @@ public:
 		m_TypeSize = 0;
 	}
 
-	typedef enum 
+	typedef enum
 	{
 		TPUBLIC = 0,
 		TPROTECTED,
@@ -62,7 +62,7 @@ public:
 	char			m_szType[ 128 ];
 
 	VARTYPE			m_Type;
-	
+
 	bool			m_bKnownType;
 	int				m_nTypeSize;
 
@@ -77,7 +77,7 @@ public:
 class CClassMemberFunction
 {
 public:
-	typedef enum 
+	typedef enum
 	{
 		TPUBLIC = 0,
 		TPROTECTED,
@@ -113,7 +113,7 @@ public:
 
 					CClass( const char *name );
 					~CClass( void );
-	
+
 	char			*ParseClassDeclaration( char *input );
 
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,7 +26,7 @@ using namespace vgui;
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
-// Input  : *filename - image file to load 
+// Input  : *filename - image file to load
 //-----------------------------------------------------------------------------
 MemoryBitmap::MemoryBitmap(unsigned char *texture,int wide, int tall)
 {
@@ -62,7 +62,7 @@ void MemoryBitmap::GetSize(int &wide, int &tall)
 {
 	wide = 0;
 	tall = 0;
-	
+
 	if (!_valid)
 		return;
 
@@ -119,13 +119,13 @@ void MemoryBitmap::Paint()
 {
 	if (!_valid)
 		return;
-	
+
 	// if we have not uploaded yet, lets go ahead and do so
 	if (!_uploaded)
 	{
 		ForceUpload(_texture,_w,_h);
 	}
-	
+
 	//set the texture current, set the color, and draw the biatch
 	g_MatSystemSurface.DrawSetTexture(m_iTextureID);
 	g_MatSystemSurface.DrawSetColor(_color[0], _color[1], _color[2], _color[3]);
@@ -177,5 +177,3 @@ HTexture MemoryBitmap::GetID()
 {
 	return m_iTextureID;
 }
-
-

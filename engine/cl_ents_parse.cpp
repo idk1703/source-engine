@@ -68,7 +68,7 @@ static FileHandle_t OpenRecordingFile()
 		fp = g_pFileSystem->Open( "cltrace.txt", s_NeverOpened ? "wt" : "at" );
 		if (!fp)
 		{
-			s_CantOpenFile = true;			
+			s_CantOpenFile = true;
 		}
 		s_NeverOpened = false;
 	}
@@ -106,13 +106,13 @@ void SpewToFile( char const* pFmt, ... )
 #endif // DEBUG_NETWORKING
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 
 
 //-----------------------------------------------------------------------------
 // Purpose: Frees the client DLL's binding to the object.
-// Input  : iEnt - 
+// Input  : iEnt -
 //-----------------------------------------------------------------------------
 void CL_DeleteDLLEntity( int iEnt, const char *reason, bool bOnRecreatingAllEntities )
 {
@@ -136,8 +136,8 @@ void CL_DeleteDLLEntity( int iEnt, const char *reason, bool bOnRecreatingAllEnti
 
 //-----------------------------------------------------------------------------
 // Purpose: Has the client DLL allocate its data for the object.
-// Input  : iEnt - 
-//			iClass - 
+// Input  : iEnt -
+//			iClass -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 IClientNetworkable* CL_CreateDLLEntity( int iEnt, int iClass, int iSerialNum )
@@ -153,7 +153,7 @@ IClientNetworkable* CL_CreateDLLEntity( int iEnt, int iClass, int iSerialNum )
 		TRACE_DELTA( va( "Trace %i (%s): create\n", iEnt, pClientClass->m_pNetworkName ) );
 #ifndef _XBOX
 		CL_RecordAddEntity( iEnt );
-#endif		
+#endif
 
 		if ( !cl.IsActive() )
 		{
@@ -238,7 +238,7 @@ inline static void CL_AddPostDataUpdateCall( CEntityReadInfo &u, int iEnt, DataU
 
 //-----------------------------------------------------------------------------
 // Purpose: Get the receive table for the specified entity
-// Input  : *pEnt - 
+// Input  : *pEnt -
 // Output : RecvTable*
 //-----------------------------------------------------------------------------
 static inline RecvTable* GetEntRecvTable( int entnum )
@@ -251,8 +251,8 @@ static inline RecvTable* GetEntRecvTable( int entnum )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Returns true if the entity index corresponds to a player slot 
-// Input  : index - 
+// Purpose: Returns true if the entity index corresponds to a player slot
+// Input  : index -
 // Output : bool
 //-----------------------------------------------------------------------------
 static inline bool CL_IsPlayerIndex( int index )
@@ -274,7 +274,7 @@ void CL_FlushEntityPacket( CClientFrame *packet, char const *errorString, ... )
 	va_start(marker, errorString);
 	Q_vsnprintf(str, sizeof(str), errorString, marker);
 	va_end(marker);
-	
+
 	ConMsg("%s", str);
 
 	np.fixed_width_font = false;
@@ -294,7 +294,7 @@ void CL_FlushEntityPacket( CClientFrame *packet, char const *errorString, ... )
 // Regular handles for ReadPacketEntities.
 // ----------------------------------------------------------------------------- //
 
-void CL_CopyNewEntity( 
+void CL_CopyNewEntity(
 	CEntityReadInfo &u,
 	int iClass,
 	int iSerialNum
@@ -329,7 +329,7 @@ void CL_CopyNewEntity(
 	}
 
 	if ( !ent )
-	{	
+	{
 		// Ok, it doesn't exist yet, therefore this is not an "entered PVS" message.
 		ent = CL_CreateDLLEntity( u.m_nNewEntity, iClass, iSerialNum );
 		if( !ent )
@@ -365,7 +365,7 @@ void CL_CopyNewEntity(
 			cl.GetClassBaseline( iClass, &pFromData, &nFromBits ),
 			("CL_CopyNewEntity: GetClassBaseline(%d) failed.", iClass)
 		);
-		
+
 		nFromBits *= 8; // convert to bits
 	}
 
@@ -507,7 +507,7 @@ void CL_CopyExistingEntity( CEntityReadInfo &u )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CL_MarkEntitiesOutOfPVS( CBitVec<MAX_EDICTS> *pvs_flags )
 {
@@ -546,9 +546,9 @@ static void CL_CallPostDataUpdates( CEntityReadInfo &u )
 	{
 		MDLCACHE_CRITICAL_SECTION_(g_pMDLCache);
 		CPostDataUpdateCall *pCall = &u.m_PostDataUpdateCalls[i];
-	
+
 		IClientNetworkable *pEnt = entitylist->GetClientNetworkable( pCall->m_iEnt );
-		ErrorIfNot( pEnt, 
+		ErrorIfNot( pEnt,
 			("CL_CallPostDataUpdates: missing ent %d", pCall->m_iEnt) );
 
 		pEnt->PostDataUpdate( pCall->m_UpdateType );
@@ -563,8 +563,8 @@ static ConVar cl_debug_player_perf( "cl_debug_player_perf", "0", 0 );
 // Purpose: An svc_packetentities has just been parsed, deal with the
 //  rest of the data stream.  This can be a delta from the baseline or from a previous
 //  client frame for this client.
-// Input  : delta - 
-//			*playerbits - 
+// Input  : delta -
+//			*playerbits -
 // Output : void CL_ParsePacketEntities
 //-----------------------------------------------------------------------------
 bool CL_ProcessPacketEntities ( SVC_PacketEntities *entmsg )
@@ -579,7 +579,7 @@ bool CL_ProcessPacketEntities ( SVC_PacketEntities *entmsg )
 
 	// if cl_flushentitypacket is set to N, the next N entity updates will be flushed
 	if ( cl_flushentitypacket.GetInt() )
-	{	
+	{
 		// we can't use this, it is too old
 		CL_FlushEntityPacket( newFrame, "Forced by cvar\n" );
 		cl_flushentitypacket.SetValue( cl_flushentitypacket.GetInt() - 1 );	// Reduce the cvar.
@@ -646,7 +646,7 @@ bool CL_ProcessPacketEntities ( SVC_PacketEntities *entmsg )
 
 		// send new baseline acknowledgement(as reliable)
 		cl.m_NetChannel->SendNetMsg( CLC_BaselineAck( cl.GetServerTickCount(), entmsg->m_nBaseline ), true );
-		
+
 	}
 
 	CEntityReadInfo u;
@@ -657,7 +657,7 @@ bool CL_ProcessPacketEntities ( SVC_PacketEntities *entmsg )
 	u.m_nHeaderCount = entmsg->m_nUpdatedEntries;
 	u.m_nBaseline = entmsg->m_nBaseline;
 	u.m_bUpdateBaselines = entmsg->m_bUpdateBaseline;
-	
+
 	// update the entities
 	cl.ReadPacketEntities( u );
 
@@ -683,7 +683,7 @@ bool CL_ProcessPacketEntities ( SVC_PacketEntities *entmsg )
 	// TODO: We should enforce this somehow.
 	if ( MAX_CLIENT_FRAMES < cl.AddClientFrame( newFrame ) )
 	{
-		DevMsg( 1, "CL_ProcessPacketEntities: frame window too big (>%i)\n", MAX_CLIENT_FRAMES );	
+		DevMsg( 1, "CL_ProcessPacketEntities: frame window too big (>%i)\n", MAX_CLIENT_FRAMES );
 	}
 
 	// all update activities are finished
@@ -715,7 +715,7 @@ void CL_PreprocessEntities( void )
 	if ( bIsUsingMultiplayerNetworking ||
 		bLastOutgoingCommandEqualsLastAcknowledgedCommand )
 	{
-		//Msg( "%i/%i CL_ParseClientdata:  no latency server ack %i\n", 
+		//Msg( "%i/%i CL_ParseClientdata:  no latency server ack %i\n",
 		//	host_framecount, cl.tickcount,
 		//	command_ack );
 		CL_RunPrediction( PREDICTION_SIMULATION_RESULTS_ARRIVING_ON_SEND_FRAME );
@@ -747,8 +747,3 @@ void CL_PreprocessEntities( void )
 
 	CDebugOverlay::PurgeServerOverlays();
 }
-
-
-
-
-

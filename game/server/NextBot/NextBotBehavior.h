@@ -34,7 +34,7 @@ extern ConVar NextBotDebugHistory;
  * and so on deeper into the stack of suspended Actions.
  *
  * About events:
- * It is not possible to have event handlers instantaneously change 
+ * It is not possible to have event handlers instantaneously change
  * state upon return due to out-of-order and recurrence issues, not
  * to mention deleting the state out from under itself.  Therefore,
  * events return DESIRED results, and the highest priority result
@@ -55,7 +55,7 @@ template < typename Actor > class Action;
  * The possible consequences of an Action
  */
 enum ActionResultType
-{ 
+{
 	CONTINUE,			// continue executing this action next frame - nothing has changed
 	CHANGE_TO,			// change actions next frame
 	SUSPEND_FOR,		// put the current action on hold for the new action
@@ -176,7 +176,7 @@ public:
 		m_me = NULL;
 	}
 
-	virtual ~Behavior() 
+	virtual ~Behavior()
 	{
 		if ( m_me && m_action )
 		{
@@ -185,8 +185,8 @@ public:
 			m_me = NULL;
 		}
 
-		// dig down to the bottom of the action stack and delete 
-		// that, so we don't leak action memory since action 
+		// dig down to the bottom of the action stack and delete
+		// that, so we don't leak action memory since action
 		// destructors intentionally don't delete actions
 		// "buried" underneath them.
 		Action< Actor > *bottomAction;
@@ -266,7 +266,7 @@ public:
 
 	/**
 	 * If this Behavior has not been Update'd in a long time,
-	 * call Resume() to let the system know its internal state may 
+	 * call Resume() to let the system know its internal state may
 	 * be out of date.
 	 */
 	void Resume( Actor *me )
@@ -462,7 +462,7 @@ public:
 			}
 		}
 
-		return result;		
+		return result;
 	}
 
 
@@ -493,7 +493,7 @@ public:
 			}
 		}
 
-		return result;		
+		return result;
 	}
 
 
@@ -529,7 +529,7 @@ public:
 			}
 		}
 
-		return result;		
+		return result;
 	}
 
 
@@ -561,7 +561,7 @@ public:
 			}
 		}
 
-		return result;		
+		return result;
 	}
 
 
@@ -589,7 +589,7 @@ class Action : public INextBotEventResponder, public IContextualQuery
 {
 public:
 	DECLARE_CLASS( Action, INextBotEventResponder );
-	
+
 	Action( void );
 	virtual ~Action();
 
@@ -600,14 +600,14 @@ public:
 
 	//-----------------------------------------------------------------------------------------
 	/**
-	 * Try to start the Action. Result is immediately processed, 
+	 * Try to start the Action. Result is immediately processed,
 	 * which can cause an immediate transition, another OnStart(), etc.
 	 * An Action can count on each OnStart() being followed (eventually) with an OnEnd().
 	 */
 	virtual ActionResult< Actor >	OnStart( Actor *me, Action< Actor > *priorAction )							{ return Continue(); }
 
 	/**
-	 * Do the work of the Action. It is possible for Update to not be 
+	 * Do the work of the Action. It is possible for Update to not be
 	 * called between a given OnStart/OnEnd pair due to immediate transitions.
 	 */
 	virtual ActionResult< Actor >	Update( Actor *me, float interval )											{ return Continue(); }
@@ -621,13 +621,13 @@ public:
 	 * be considered as a CONTINUE.
 	 */
 	virtual ActionResult< Actor >	OnSuspend( Actor *me, Action< Actor > *interruptingAction )					{ return Continue(); }
-	
+
 	// When an Action is resumed after being suspended
 	virtual ActionResult< Actor >	OnResume( Actor *me, Action< Actor > *interruptingAction )					{ return Continue(); }
 
 	/**
 	 * To cause a state change, use these methods to create an ActionResult to
-	 * return from OnStart, Update, or OnResume. 
+	 * return from OnStart, Update, or OnResume.
 	 */
 	ActionResult< Actor > Continue( void ) const;
 	ActionResult< Actor > ChangeTo( Action< Actor > *action, const char *reason = NULL ) const;
@@ -641,7 +641,7 @@ public:
 	/**
 	 * Override the event handler methods below to respond to events that occur during this Action
 	 * NOTE: These are identical to the events in INextBotEventResponder with the addition
-	 * of an actor argument and a return result. Their translators are located in the private area 
+	 * of an actor argument and a return result. Their translators are located in the private area
 	 * below.
 	 */
 	virtual EventDesiredResult< Actor > OnLeaveGround( Actor *me, CBaseEntity *ground )							{ return TryContinue(); }
@@ -734,7 +734,7 @@ public:
 
 
 private:
-	
+
 	/**
 	 * These macros are used below to translate INextBotEventResponder event methods
 	 * into Action event handler methods
@@ -1030,10 +1030,10 @@ private:
 
 			under = under->GetActionBuriedUnderMe();
 		}
-		
+
 		return Continue();
 	}
-	
+
 	// given the result of this Action's work, apply the result to potentially cause a state transition
 	Action< Actor > *		ApplyResult( Actor *me, Behavior< Actor > *behavior, ActionResult< Actor > result );
 
@@ -1060,7 +1060,7 @@ private:
 		if ( result.m_priority >= m_eventResult.m_priority )
 		{
 			if ( m_eventResult.m_priority == RESULT_CRITICAL )
-			{				
+			{
 				if ( developer.GetBool() )
 				{
 					DevMsg( "%3.2f: WARNING: %s::%s() RESULT_CRITICAL collision\n", gpGlobals->curtime, GetName(), eventName );
@@ -1072,7 +1072,7 @@ private:
 			{
 				delete m_eventResult.m_action;
 			}
-			
+
 			// We keep the most recently processed event because this allows code to check history/state to
 			// do custom event collision handling. If we keep the first event at this priority and discard
 			// subsequent events (original behavior) there is no way to predict future collision resolutions (MSB).
@@ -1088,7 +1088,7 @@ private:
 			}
 		}
 	}
-	
+
 	char *BuildDecoratedName( char *name, const Action< Actor > *action ) const;	// recursive name outMsg for DebugString()
 
 	void PrintStateToConsole( void ) const;
@@ -1108,7 +1108,7 @@ Action< Actor >::Action( void )
 
 	m_isStarted = false;
 	m_isSuspended = false;
-	
+
 	m_eventResult = TryContinue( RESULT_NONE );
 
 #ifdef DEBUG_BEHAVIOR_MEMORY
@@ -1285,7 +1285,7 @@ ActionResult< Actor > Action< Actor >::InvokeOnStart( Actor *me, Behavior< Actor
 		me->DebugConColorMsg( NEXTBOT_BEHAVIOR, Color( 255, 255, 255, 255 ), "\n" );
 	}
 
-	// these value must be valid before invoking OnStart, in case an OnSuspend happens 
+	// these value must be valid before invoking OnStart, in case an OnSuspend happens
 	m_isStarted = true;
 	m_actor = me;
 	m_behavior = behavior;
@@ -1310,7 +1310,7 @@ ActionResult< Actor > Action< Actor >::InvokeOnStart( Actor *me, Behavior< Actor
 		buriedUnderMeAction->m_coveringMe = this;
 	}
 
-	// we are always on top of the stack. if our priorAction was buried, it cleared 
+	// we are always on top of the stack. if our priorAction was buried, it cleared
 	// everything covering it when it ended (which happens before we start)
 	m_coveringMe = NULL;
 
@@ -1349,7 +1349,7 @@ ActionResult< Actor > Action< Actor >::InvokeUpdate( Actor *me, Behavior< Actor 
 		return ChangeTo( this, "Starting Action" );
 	}
 
-	// honor any pending event results 
+	// honor any pending event results
 	ActionResult< Actor > eventResult = ProcessPendingEvents();
 	if ( !eventResult.IsContinue() )
 	{
@@ -1536,12 +1536,12 @@ Action< Actor > *Action< Actor >::ApplyResult( Actor *me, Behavior< Actor > *beh
 				AssertMsg( false, "Action: Attempted CHANGE_TO to a NULL Action" );
 				return this;
 			}
-	
+
 			// debug display
 			if ( me->IsDebugging( NEXTBOT_BEHAVIOR ) || NextBotDebugHistory.GetBool() )
 			{
 				me->DebugConColorMsg( NEXTBOT_BEHAVIOR, Color( 255, 255, 150, 255 ), "%3.2f: %s:%s: ", gpGlobals->curtime, me->GetDebugIdentifier(), behavior->GetName() );
-				
+
 				if ( this == newAction )
 				{
 					me->DebugConColorMsg( NEXTBOT_BEHAVIOR, Color( 255,   0,   0, 255 ), "START " );
@@ -1553,7 +1553,7 @@ Action< Actor > *Action< Actor >::ApplyResult( Actor *me, Behavior< Actor > *beh
 					me->DebugConColorMsg( NEXTBOT_BEHAVIOR, Color( 255,   0,   0, 255 ), " CHANGE_TO " );
 					me->DebugConColorMsg( NEXTBOT_BEHAVIOR, Color( 255, 255, 255, 255 ), newAction->GetName() );
 				}
-						
+
 				if ( result.m_reason )
 				{
 					me->DebugConColorMsg( NEXTBOT_BEHAVIOR, Color( 150, 255, 150, 255 ), "  (%s)\n", result.m_reason );
@@ -1585,7 +1585,7 @@ Action< Actor > *Action< Actor >::ApplyResult( Actor *me, Behavior< Actor > *beh
 			// apply result of starting the Action
 			return newAction->ApplyResult( me, behavior, startResult );
 		}
-		
+
 		//-----------------------------------------------------------------------------------------------------
 		// temporarily suspend ourselves for the newAction, covering it on the stack
 		case SUSPEND_FOR:
@@ -1617,8 +1617,8 @@ Action< Actor > *Action< Actor >::ApplyResult( Actor *me, Behavior< Actor > *beh
 					me->DebugConColorMsg( NEXTBOT_BEHAVIOR, Color( 255, 255, 255, 255 ), "\n" );
 				}
 			}
-			
-			// suspend the Action we just covered up				
+
+			// suspend the Action we just covered up
 			topAction = topAction->InvokeOnSuspend( me, behavior, newAction );
 
 			// begin the interrupting Action.
@@ -1629,7 +1629,7 @@ Action< Actor > *Action< Actor >::ApplyResult( Actor *me, Behavior< Actor > *beh
 			{
 				newAction->PrintStateToConsole();
 			}
-			
+
 			return newAction->ApplyResult( me, behavior, startResult );
 		}
 
@@ -1732,7 +1732,7 @@ const char *Action< Actor >::DebugString( void ) const
 	str[0] = '\000';
 
 	// find root
-	const Action< Actor > *root = this; 
+	const Action< Actor > *root = this;
 	while ( root->m_parent )
 	{
 		root = root->m_parent;
@@ -1747,27 +1747,27 @@ template < typename Actor >
 char *Action< Actor >::BuildDecoratedName( char *name, const Action< Actor > *action ) const
 {
 	const int fudge = 256;
-	
+
 	// add the name of the given action
 	Q_strcat( name, action->GetName(), fudge );
-	
+
 	// add any contained actions
 	const Action< Actor > *child = action->GetActiveChildAction();
 	if ( child )
 	{
 		Q_strcat( name, "( ", fudge );
 		BuildDecoratedName( name, child );
-		Q_strcat( name, " )", fudge );		
+		Q_strcat( name, " )", fudge );
 	}
-	
+
 	// append buried actions
 	const Action< Actor > *buried = action->GetActionBuriedUnderMe();
 	if ( buried )
 	{
-		Q_strcat( name, "<<", fudge );		
-		BuildDecoratedName( name, buried );		
+		Q_strcat( name, "<<", fudge );
+		BuildDecoratedName( name, buried );
 	}
-	
+
 	return name;
 }
 
@@ -1783,18 +1783,18 @@ const char *Action< Actor >::GetFullName( void ) const
 	static char str[ fudge ];
 
 	str[0] = '\000';
-	
+
 	const int maxStack = 64;
 	const char *nameStack[ maxStack ];
 	int stackIndex = 0;
 
-	for( const Action< Actor > *action = this; 
-		 stackIndex < maxStack && action; 
+	for( const Action< Actor > *action = this;
+		 stackIndex < maxStack && action;
 		 action = action->m_parent )
 	{
 		nameStack[ stackIndex++ ] = action->GetName();
 	}
-	
+
 	// assemble name
 	for( int i = stackIndex-1; i > 0; --i )
 	{
@@ -1803,11 +1803,11 @@ const char *Action< Actor >::GetFullName( void ) const
 	}
 
 	Q_strcat( str, nameStack[ 0 ], fudge );
-	
+
 	/*
 	for( int i = 0; i < stackIndex-1; ++i )
 	{
-		Q_strcat( str, " )", fudge );		
+		Q_strcat( str, " )", fudge );
 	}
 	*/
 
@@ -1824,7 +1824,7 @@ void Action< Actor >::PrintStateToConsole( void ) const
 
 	// build the state string
 	const char *msg = DebugString();
-	
+
 	const int colorCount = 6;
 	Color colorTable[ colorCount ];
 	colorTable[ 0 ].SetColor( 255, 150, 150, 255 );
@@ -1833,14 +1833,14 @@ void Action< Actor >::PrintStateToConsole( void ) const
 	colorTable[ 3 ].SetColor( 255, 255, 150, 255 );
 	colorTable[ 4 ].SetColor(  50, 255, 255, 255 );
 	colorTable[ 5 ].SetColor( 255, 150, 255, 255 );
-	
+
 	// output the color-coded state string
 	const int maxBufferSize = 256;
 	char buffer[ maxBufferSize ];
 
 	int colorIndex = 0;
 	int buriedLevel = 0;
-	
+
 	char *outMsg = buffer;
 	for( const char *c = msg; *c != '\000'; ++c )
 	{
@@ -1850,7 +1850,7 @@ void Action< Actor >::PrintStateToConsole( void ) const
 		if ( *c == '(' )
 		{
 			*outMsg = '\000';
-			
+
 			Color color = colorTable[ colorIndex ];
 
 			if ( buriedLevel )
@@ -1859,12 +1859,12 @@ void Action< Actor >::PrintStateToConsole( void ) const
 				color.SetColor( color.r() * 0.5, color.g() * 0.5, color.b() * 0.5, 255 );
 				++buriedLevel;
 			}
-			
+
 			//ConColorMsg( color, "%s", buffer );
 			DevMsg( "%s", buffer );
-			
+
 			colorIndex = ( colorIndex + 1 ) % colorCount;
-			
+
 			outMsg = buffer;
 		}
 		else if ( *c == ')' )
@@ -1882,7 +1882,7 @@ void Action< Actor >::PrintStateToConsole( void ) const
 
 				--buriedLevel;
 			}
-			
+
 			//ConColorMsg( color, "%s", buffer );
 			DevMsg( "%s", buffer );
 
@@ -1891,7 +1891,7 @@ void Action< Actor >::PrintStateToConsole( void ) const
 				colorIndex = colorCount-1;
 
 			outMsg = buffer;
-			
+
 			*outMsg = ')';
 			++outMsg;
 		}
@@ -1899,7 +1899,7 @@ void Action< Actor >::PrintStateToConsole( void ) const
 		{
 			// caught a "<<" stack push
 			++c;
-			
+
 			*outMsg = '<';
 			++outMsg;
 			*outMsg = '\000';
@@ -1909,7 +1909,7 @@ void Action< Actor >::PrintStateToConsole( void ) const
 			DevMsg( "%s", buffer );
 
 			outMsg = buffer;
-			
+
 			// from here until end of Action, use dim colors
 			buriedLevel = 1;
 		}
@@ -1929,8 +1929,3 @@ void Action< Actor >::PrintStateToConsole( void ) const
 
 
 #endif // _BEHAVIOR_ENGINE_H_
-
-
-
-
-

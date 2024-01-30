@@ -14,13 +14,13 @@
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeAttachment, CDmeAttachment );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeAttachment::OnConstruction()
 {
@@ -99,5 +99,3 @@ void CDmeAttachment::Draw( const matrix3x4_t &shapeToWorld, CDmeDrawSettings *pD
 	pRenderContext->MatrixMode( MATERIAL_MODEL );
 	pRenderContext->PopMatrix();
 }
-
-

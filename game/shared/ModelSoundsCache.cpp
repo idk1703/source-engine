@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -16,8 +16,8 @@ CStudioHdr *ModelSoundsCache_LoadModel( char const *filename );
 void ModelSoundsCache_PrecacheScriptSound( const char *soundname );
 void ModelSoundsCache_FinishModel( CStudioHdr *hdr );
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *hdr - 
+// Purpose:
+// Input  : *hdr -
 // Output : static void
 //-----------------------------------------------------------------------------
 
@@ -50,7 +50,7 @@ char const *CModelSoundsCache::GetSoundName( int index )
 void CModelSoundsCache::Save( CUtlBuffer& buf  )
 {
 	buf.PutShort( sounds.Count() );
-	
+
 	for ( int i = 0; i < sounds.Count(); ++i )
 	{
 		buf.PutString( GetSoundName( i ) );
@@ -106,8 +106,8 @@ void CModelSoundsCache::PrecacheSoundList()
 
 //-----------------------------------------------------------------------------
 // Purpose: Static method
-// Input  : sounds - 
-//			*soundname - 
+// Input  : sounds -
+//			*soundname -
 //-----------------------------------------------------------------------------
 void CModelSoundsCache::FindOrAddScriptSound( CUtlVector< unsigned short >& sounds, char const *soundname )
 {
@@ -125,13 +125,13 @@ void CModelSoundsCache::FindOrAddScriptSound( CUtlVector< unsigned short >& soun
 
 //-----------------------------------------------------------------------------
 // Purpose: Static method
-// Input  : *hdr - 
-//			sounds - 
+// Input  : *hdr -
+//			sounds -
 //-----------------------------------------------------------------------------
 void CModelSoundsCache::BuildAnimationEventSoundList( CStudioHdr *hdr, CUtlVector< unsigned short >& sounds )
 {
 	Assert( hdr );
-	
+
 	// force animation event resolution!!!
 	VerifySequenceIndex( hdr );
 
@@ -139,12 +139,12 @@ void CModelSoundsCache::BuildAnimationEventSoundList( CStudioHdr *hdr, CUtlVecto
 	for ( int iSeq=0; iSeq < hdr->GetNumSeq(); iSeq++ )
 	{
 		mstudioseqdesc_t *pSeq = &hdr->pSeqdesc( iSeq );
-		
+
 		// Now read out all the sound events with their timing
 		for ( int iEvent=0; iEvent < (int)pSeq->numevents; iEvent++ )
 		{
 			mstudioevent_t *pEvent = pSeq->pEvent( iEvent );
-			
+
 			switch ( pEvent->event )
 			{
 			default:
@@ -195,7 +195,7 @@ void CModelSoundsCache::BuildAnimationEventSoundList( CStudioHdr *hdr, CUtlVecto
 					}
 					else
 					{
-						Warning( "-- Error --:  empty soundname, .qc error on AE_CL_PLAYSOUND in model %s, sequence %s, animevent # %i\n", 
+						Warning( "-- Error --:  empty soundname, .qc error on AE_CL_PLAYSOUND in model %s, sequence %s, animevent # %i\n",
 							hdr->pszName(), pSeq->pszLabel(), iEvent+1 );
 					}
 				}

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,7 @@ class ButtonDemo2: public DemoPage
 		~ButtonDemo2();
 
 		void OnCommand(const char *command);
-	
+
 	private:
 		Button *m_pButton;
 };
@@ -76,5 +76,3 @@ Panel* ButtonDemo2_Create(Panel *parent)
 {
 	return new ButtonDemo2(parent, "ButtonDemo2");
 }
-
-

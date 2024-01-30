@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,9 +22,9 @@ transfer_t* BuildVisLeafs_Start();
 
 // If PatchCB is non-null, it is called after each row is generated (used by MPI).
 void BuildVisLeafs_Cluster(
-	int threadnum, 
+	int threadnum,
 	transfer_t *transfers,
-	int iCluster, 
+	int iCluster,
 	void (*PatchCB)(int iThread, int patchnum, CPatch *patch) );
 
 void BuildVisLeafs_End( transfer_t *transfers );

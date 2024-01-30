@@ -18,7 +18,7 @@
 #include "report.h"
 
 //------------------------------------------------------------------------------------------------------
-// Purpose: CCVarList is a report element that outputs a two column table with 
+// Purpose: CCVarList is a report element that outputs a two column table with
 // the cvars that were in effect while the match was running.  Cvars that contain
 // various passwords are omitted from the listing.
 //------------------------------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ private:
 	};
 public:
 	explicit CCVarList(){}
-	
+
 	void writeHTML(CHTMLFile& html);
 
 };

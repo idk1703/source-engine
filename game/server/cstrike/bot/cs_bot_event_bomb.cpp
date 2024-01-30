@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -153,6 +153,3 @@ void CCSBot::OnBombExploded( IGameEvent *event )
 {
 	m_gameState.OnBombExploded( event );
 }
-
-
-

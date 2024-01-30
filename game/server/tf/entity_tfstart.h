@@ -81,5 +81,3 @@ private:
 };
 
 #endif // ENTITY_TFSTART_H
-
-

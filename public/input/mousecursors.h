@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //=============================================================================//
 
 #ifndef INPUT_MOUSECURSORS_H
@@ -24,10 +24,10 @@ enum EMouseCursor
 	dc_sizese,
 	dc_sizene,
 	dc_sizesw,
-    dc_sizew,
-    dc_sizee,
-    dc_sizen,
-    dc_sizes,
+	dc_sizew,
+	dc_sizee,
+	dc_sizen,
+	dc_sizes,
 	dc_sizewe,
 	dc_sizens,
 	dc_sizeall,

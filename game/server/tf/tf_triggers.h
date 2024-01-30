@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,7 +25,7 @@ public:
 
 	DECLARE_CLASS( CTriggerStun, CBaseTrigger );
 
-	
+
 	void Spawn( void );
 	void StunThink( void );
 	void Touch( CBaseEntity *pOther );
@@ -46,7 +46,7 @@ public:
 
 	float	m_flLastStunTime;
 	CUtlVector<EHANDLE>	m_stunEntities;
-	
+
 };
 
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header:     $
 // $NoKeywords: $
@@ -48,24 +48,24 @@ public:
 	// be able to be looked up by name using FindOrLoadTexture.
 	// Also, you may not get a texture with the requested size or format;
 	// you'll get something close though.
-	virtual ITextureInternal *CreateProceduralTexture( 
-		const char			*pTextureName, 
+	virtual ITextureInternal *CreateProceduralTexture(
+		const char			*pTextureName,
 		const char			*pTextureGroupName,
 		int					w,
-		int					h, 
+		int					h,
 		int					d,
 		ImageFormat			fmt,
 		int					nFlags,
 		ITextureRegenerator *generator = NULL) = 0;
 
 	// Creates a texture which is a render target
-	virtual ITextureInternal *CreateRenderTargetTexture( 
+	virtual ITextureInternal *CreateRenderTargetTexture(
 		const char				*pRTName,	// NULL for auto-generated name
-		int						w, 
-		int						h, 
-		RenderTargetSizeMode_t	sizeMode, 
-		ImageFormat				fmt, 
-		RenderTargetType_t		type, 
+		int						w,
+		int						h,
+		RenderTargetSizeMode_t	sizeMode,
+		ImageFormat				fmt,
+		RenderTargetType_t		type,
 		unsigned int			textureFlags,
 		unsigned int			renderTargetFlags ) = 0;
 
@@ -140,14 +140,14 @@ public:
 	// Load a texture asynchronously and then call the provided callback.
 	virtual void AsyncFindOrLoadTexture( const char *pTextureName, const char *pTextureGroupName, IAsyncTextureOperationReceiver* pRecipient, void* pExtraArgs, bool bComplain, int nAdditionalCreationFlags ) = 0;
 
-	// Stream a render target back to system memory, perform format conversion to the specified destination format, 
+	// Stream a render target back to system memory, perform format conversion to the specified destination format,
 	virtual void AsyncCreateTextureFromRenderTarget( ITexture* pSrcRt, const char* pDstName, ImageFormat dstFmt, bool bGenMips, int nAdditionalCreationFlags, IAsyncTextureOperationReceiver* pRecipient, void* pExtraArgs ) = 0;
 
 	virtual void WarmTextureCache() = 0;
 	virtual void CoolTextureCache() = 0;
 
 	virtual void RequestAllMipmaps( ITextureInternal* pTex ) = 0;
-	
+
 	virtual void EvictAllTextures() = 0;
 
 	virtual void UpdatePostAsync() = 0;

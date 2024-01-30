@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -42,7 +42,7 @@ public:
 	virtual void SelectWeaponSlot( int iSlot );
 
 	virtual C_BaseCombatWeapon	*GetSelectedWeapon( void )
-	{ 
+	{
 		return m_hSelectedWeapon;
 	}
 
@@ -62,7 +62,7 @@ protected:
 	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
 	virtual bool IsWeaponSelectable()
-	{ 
+	{
 		if ( IsInSelectionMode() )
 		{
 			return true;
@@ -75,8 +75,8 @@ private:
 	C_BaseCombatWeapon *FindNextWeaponInWeaponSelection(int iCurrentSlot, int iCurrentPosition);
 	C_BaseCombatWeapon *FindPrevWeaponInWeaponSelection(int iCurrentSlot, int iCurrentPosition);
 
-	virtual	void SetSelectedWeapon( C_BaseCombatWeapon *pWeapon ) 
-	{ 
+	virtual	void SetSelectedWeapon( C_BaseCombatWeapon *pWeapon )
+	{
 		m_hSelectedWeapon = pWeapon;
 	}
 
@@ -161,7 +161,7 @@ void CHudWeaponSelection::VidInit(void)
 
 	Reset();
 }
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: sets up display for showing weapon pickup
 //-----------------------------------------------------------------------------
@@ -213,12 +213,12 @@ bool CHudWeaponSelection::ShouldDraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponSelection::LevelInit()
 {
 	CHudElement::LevelInit();
-	
+
 	m_iMaxSlots = clamp( m_iMaxSlots, 0, MAX_WEAPON_SLOTS );
 }
 
@@ -249,14 +249,14 @@ void CHudWeaponSelection::Paint(void)
 	int nType = 0;
 
 	Color bright( 255,255,255,255 );
-		
+
 	// iterate over all the weapon slots
 	for ( int iSlot = m_iMaxSlots - 1; iSlot >=0; iSlot-- )
 	{
 		for( int iPos = 0; iPos < MAX_WEAPON_POSITIONS; iPos++ )
 		{
 			C_BaseCombatWeapon *pWeapon = GetWeaponInSlot(iSlot, iPos);
-		
+
 			if ( !pWeapon )
 			{
 				continue;
@@ -305,7 +305,7 @@ void CHudWeaponSelection::Paint(void)
 				sprWidth = sprWidth * scale;
 				sprHeight = sprHeight * scale;
 
-                int wpnX = xpos + ( finalBoxWide - sprWidth ) / 2;
+	int wpnX = xpos + ( finalBoxWide - sprWidth ) / 2;
 				int wpnY = ypos + ( finalBoxTall - sprHeight ) / 2;
 
 				bool bHasAmmo = true;
@@ -327,7 +327,7 @@ void CHudWeaponSelection::Paint(void)
 
 				DrawBox( xpos, ypos, finalBoxWide, finalBoxTall, nType, iSlot + 1, ( pWeapon->CanDeploy() && bHasAmmo ) ) ;
 				pWpnSprite->DrawSelf( wpnX, wpnY, sprWidth, sprHeight, bright );
-		
+
 				ypos -= m_flBoxGap;
 			}
 		}
@@ -658,7 +658,7 @@ C_BaseCombatWeapon *CHudWeaponSelection::GetWeaponInSlot( int iSlot, int iSlotPo
 	for ( int i = 0; i < MAX_WEAPONS; i++ )
 	{
 		C_BaseCombatWeapon *pWeapon = player->GetWeapon( i );
-		
+
 		if ( pWeapon == NULL )
 		{
 			continue;
@@ -694,7 +694,7 @@ void CHudWeaponSelection::SelectWeaponSlot( int iSlot )
 	{
 		return;
 	}
-	
+
 	// Make sure the player's allowed to switch weapons
 	if ( pPlayer->IsAllowedToSwitchWeapons() == false )
 	{
@@ -716,7 +716,7 @@ void CHudWeaponSelection::SelectWeaponSlot( int iSlot )
 	{
 		pActiveWeapon = GetNextActivePos( iSlot, 0 );
 	}
-	
+
 	if ( pActiveWeapon != NULL )
 	{
 		// Mark the change
@@ -760,9 +760,9 @@ void CHudWeaponSelection::SelectWeapon( void )
 	if ( GetSelectedWeapon()->CanBeSelected() )
 	{
 		SetWeaponSelected();
-	
+
 		m_hSelectedWeapon = NULL;
-	
+
 		engine->ClientCmd( "cancelselect\n" );
 	}
 }
@@ -792,5 +792,3 @@ void CHudWeaponSelection::CancelWeaponSelection( void )
 		engine->ClientCmd("escape");
 	}
 }
-
-

@@ -12,7 +12,7 @@
 #include "MapDoc.h"
 #include "hammer.h"
 #include "OPTView3D.h"
-#include "Options.h"	
+#include "Options.h"
 
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -52,8 +52,8 @@ void PASCAL DDV_FOVRange(CDataExchange *pDX, int value)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pDX - 
+// Purpose:
+// Input  : pDX -
 //-----------------------------------------------------------------------------
 void COPTView3D::DoDataExchange(CDataExchange* pDX)
 {
@@ -95,7 +95,7 @@ void COPTView3D::DoDataExchange(CDataExchange* pDX)
 		Options.view3d.nModelDistance = m_ModelDistance.GetPos();
 		Options.view3d.nDetailDistance = m_DetailDistance.GetPos();
 		Options.view3d.nForwardSpeedMax = m_ForwardSpeedMax.GetPos();
-		Options.view3d.nTimeToMaxSpeed = m_TimeToMaxSpeed.GetPos();	
+		Options.view3d.nTimeToMaxSpeed = m_TimeToMaxSpeed.GetPos();
 	}
 	//
 	// Else going from data to controls.
@@ -142,7 +142,7 @@ void COPTView3D::DoDataExchange(CDataExchange* pDX)
 		m_TimeToMaxSpeed.SetPos(Options.view3d.nTimeToMaxSpeed);
 		int nTime = m_TimeToMaxSpeed.GetPos();
 		str.Format("%.2f sec", (float)nTime / 1000.0f);
-		m_TimeToMaxSpeedText.SetWindowText(str);	
+		m_TimeToMaxSpeedText.SetWindowText(str);
 	}
 }
 
@@ -180,7 +180,7 @@ BOOL COPTView3D::OnApply(void)
 // Purpose: Handles all the sliders in the property page.
 // Input  : Per MFC OnHScroll.
 //-----------------------------------------------------------------------------
-void COPTView3D::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar) 
+void COPTView3D::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar)
 {
 	//
 	// If it is the back plane scroll bar, update the back plane text.
@@ -265,5 +265,3 @@ void COPTView3D::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar)
 
 	CPropertyPage::OnHScroll(nSBCode, nPos, pScrollBar);
 }
-
-

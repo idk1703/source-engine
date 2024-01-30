@@ -32,7 +32,7 @@ END_DATADESC();
 
 //-------------------------------------
 
-CAI_LocalNavigator::CAI_LocalNavigator(CAI_BaseNPC *pOuter) : CAI_Component( pOuter ) 
+CAI_LocalNavigator::CAI_LocalNavigator(CAI_BaseNPC *pOuter) : CAI_Component( pOuter )
 {
 	m_pMoveProbe = NULL;
 	m_pPlaneSolver = new CAI_PlaneSolver( pOuter );
@@ -43,15 +43,15 @@ CAI_LocalNavigator::CAI_LocalNavigator(CAI_BaseNPC *pOuter) : CAI_Component( pOu
 
 //-------------------------------------
 
-CAI_LocalNavigator::~CAI_LocalNavigator() 
+CAI_LocalNavigator::~CAI_LocalNavigator()
 {
 	delete m_pPlaneSolver;
 }
 
 //-------------------------------------
 
-void CAI_LocalNavigator::Init( IAI_MovementSink *pMovementServices )	
-{ 
+void CAI_LocalNavigator::Init( IAI_MovementSink *pMovementServices )
+{
 	CAI_ProxyMovementSink::Init( pMovementServices );
 	m_pMoveProbe = GetOuter()->GetMoveProbe(); // @TODO (toml 03-30-03): this is a "bad" way to grab this pointer. Components should have an explcit "init" phase.
 }
@@ -85,7 +85,7 @@ bool CAI_LocalNavigator::MoveCalcDirect( AILocalMoveGoal_t *pMoveGoal, bool bOnl
 	AI_PROFILE_SCOPE(CAI_LocalNavigator_MoveCalcDirect);
 
 	bool bRetVal = false;
-	
+
 	if ( pMoveGoal->speed )
 	{
 		CAI_Motor *pMotor = GetOuter()->GetMotor();
@@ -111,8 +111,8 @@ bool CAI_LocalNavigator::MoveCalcDirect( AILocalMoveGoal_t *pMoveGoal, bool bOnl
 
 		if ( !m_FullDirectTimer.Expired() )
 		{
-			if ( !m_fLastWasClear || 
-				 ( !VectorsAreEqual(pMoveGoal->target, m_LastMoveGoal.target, 0.1) || 
+			if ( !m_fLastWasClear ||
+				 ( !VectorsAreEqual(pMoveGoal->target, m_LastMoveGoal.target, 0.1) ||
 				   !VectorsAreEqual(pMoveGoal->dir, m_LastMoveGoal.dir, 0.1) ) ||
 				 bExpectingArrival )
 			{
@@ -132,10 +132,10 @@ bool CAI_LocalNavigator::MoveCalcDirect( AILocalMoveGoal_t *pMoveGoal, bool bOnl
 		if ( !bExpectingArrival )
 		{
 			testPos = GetLocalOrigin() + pMoveGoal->dir * moveThisInterval;
-			bTraceClear = GetMoveProbe()->MoveLimit( pMoveGoal->navType, GetLocalOrigin(), testPos, 
-													 MASK_NPCSOLID, pMoveGoal->pMoveTarget, 
-													 100.0, 
-													 ( pMoveGoal->navType == NAV_GROUND ) ? AIMLF_2D : AIMLF_DEFAULT, 
+			bTraceClear = GetMoveProbe()->MoveLimit( pMoveGoal->navType, GetLocalOrigin(), testPos,
+													 MASK_NPCSOLID, pMoveGoal->pMoveTarget,
+													 100.0,
+													 ( pMoveGoal->navType == NAV_GROUND ) ? AIMLF_2D : AIMLF_DEFAULT,
 													 &pMoveGoal->directTrace );
 
 			if ( !bTraceClear )
@@ -173,11 +173,11 @@ bool CAI_LocalNavigator::MoveCalcDirect( AILocalMoveGoal_t *pMoveGoal, bool bOnl
 				float checkStepPct = (checkStepDist / checkDist) * 100.0;
 				if ( checkStepPct > 100.0 )
 					checkStepPct = 100.0;
-				
-				bTraceClear = GetMoveProbe()->MoveLimit( pMoveGoal->navType, GetLocalOrigin(), testPos, 
-														 MASK_NPCSOLID, pMoveGoal->pMoveTarget, 
-														 checkStepPct, 
-														 ( pMoveGoal->navType == NAV_GROUND ) ? AIMLF_2D : AIMLF_DEFAULT, 
+
+				bTraceClear = GetMoveProbe()->MoveLimit( pMoveGoal->navType, GetLocalOrigin(), testPos,
+														 MASK_NPCSOLID, pMoveGoal->pMoveTarget,
+														 checkStepPct,
+														 ( pMoveGoal->navType == NAV_GROUND ) ? AIMLF_2D : AIMLF_DEFAULT,
 														 &pMoveGoal->directTrace );
 				if ( bExpectingArrival )
 					pMoveGoal->thinkTrace = pMoveGoal->directTrace;
@@ -204,18 +204,18 @@ bool CAI_LocalNavigator::MoveCalcDirect( AILocalMoveGoal_t *pMoveGoal, bool bOnl
 		}
 
 		pMoveGoal->bHasTraced = true;
-	
+
 		float distClear = checkDist - pMoveGoal->directTrace.flDistObstructed;
 		if (distClear < 0.001)
 			distClear = 0;
-		
+
 		if ( bTraceClear )
 		{
 			*pResult = AIMR_OK;
 			bRetVal = true;
 			m_fLastWasClear = true;
 		}
-		else if ( ( pMoveGoal->flags & ( AILMG_TARGET_IS_TRANSITION | AILMG_TARGET_IS_GOAL ) ) && 
+		else if ( ( pMoveGoal->flags & ( AILMG_TARGET_IS_TRANSITION | AILMG_TARGET_IS_GOAL ) ) &&
 			 pMoveGoal->maxDist < distClear )
 		{
 			*pResult = AIMR_OK;
@@ -283,7 +283,7 @@ bool CAI_LocalNavigator::MoveCalcSteer( AILocalMoveGoal_t *pMoveGoal, float dist
 		*pResult = AIMR_OK;
 		return true;
 	}
-		
+
 	return false;
 }
 
@@ -322,11 +322,11 @@ bool CAI_LocalNavigator::MoveCalcStop( AILocalMoveGoal_t *pMoveGoal, float distC
 AIMoveResult_t CAI_LocalNavigator::MoveCalcRaw( AILocalMoveGoal_t *pMoveGoal, bool bOnlyCurThink )
 {
 	AI_PROFILE_SCOPE(CAI_Motor_MoveCalc);
-	
+
 	AIMoveResult_t result = AIMR_OK; // Assume success
 	AIMoveTrace_t  directTrace;
 	float	   	   distClear;
-	
+
 	// --------------------------------------------------
 
 	bool bDirectClear = MoveCalcDirect( pMoveGoal, bOnlyCurThink, &distClear, &result);
@@ -343,7 +343,7 @@ AIMoveResult_t CAI_LocalNavigator::MoveCalcRaw( AILocalMoveGoal_t *pMoveGoal, bo
 		SetSolveCookie();
 		return DbgResult( result );
 	}
-	
+
 	// --------------------------------------------------
 
 	if ( bShouldSteer )
@@ -360,7 +360,7 @@ AIMoveResult_t CAI_LocalNavigator::MoveCalcRaw( AILocalMoveGoal_t *pMoveGoal, bo
 		if ( MoveCalcSteer( pMoveGoal, distClear, &result ) )
 		{
 			SetSolveCookie();
-			return DbgResult( result );			
+			return DbgResult( result );
 		}
 	}
 
@@ -371,7 +371,7 @@ AIMoveResult_t CAI_LocalNavigator::MoveCalcRaw( AILocalMoveGoal_t *pMoveGoal, bo
 	}
 
 	// --------------------------------------------------
-	
+
 	if ( OnFailedLocalNavigation( pMoveGoal, distClear, &result ) )
 	{
 		SetSolveCookie();
@@ -442,7 +442,7 @@ AIMoveResult_t CAI_LocalNavigator::MoveCalc( AILocalMoveGoal_t *pMoveGoal, bool 
 			}
 		}
 	}
-	
+
 	return result;
 }
 //-----------------------------------------------------------------------------

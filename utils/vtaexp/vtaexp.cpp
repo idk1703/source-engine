@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -59,8 +59,8 @@ static int AssertFailedFunc(char *sz)
 //===================================================================
 // Required plug-in export functions
 //
-BOOL WINAPI DllMain( HINSTANCE hinstDLL, ULONG fdwReason, LPVOID lpvReserved) 
-{	
+BOOL WINAPI DllMain( HINSTANCE hinstDLL, ULONG fdwReason, LPVOID lpvReserved)
+{
 	static int fFirstTimeHere = TRUE;
 	if (fFirstTimeHere)
 	{
@@ -70,13 +70,13 @@ BOOL WINAPI DllMain( HINSTANCE hinstDLL, ULONG fdwReason, LPVOID lpvReserved)
 	return TRUE;
 }
 
-	
+
 EXPORT_THIS int LibNumberClasses(void)
 {
 	return 1;
 }
 
-	
+
 EXPORT_THIS ClassDesc *LibClassDesc(int iWhichClass)
 {
 	switch(iWhichClass)
@@ -86,13 +86,13 @@ EXPORT_THIS ClassDesc *LibClassDesc(int iWhichClass)
 	}
 }
 
-	
+
 EXPORT_THIS const TCHAR *LibDescription()
 {
 	return _T("Valve VTA Plug-in.");
 }
 
-	
+
 EXPORT_THIS ULONG LibVersion()
 {
 	return VERSION_3DSMAX;
@@ -116,11 +116,11 @@ DESTRUCTOR VtaExportClass::~VtaExportClass(void)
 }
 
 
-int VtaExportClass::DoExport(const TCHAR *name,ExpInterface *ei,Interface *i, BOOL suppressPrompts, DWORD options) 
+int VtaExportClass::DoExport(const TCHAR *name,ExpInterface *ei,Interface *i, BOOL suppressPrompts, DWORD options)
 {
 	ExpInterface	*pexpiface = ei;	// Hungarian
 	Interface		*piface = i;		// Hungarian
-	
+
 	// Reset the name-map property manager
 	g_inmMac = 0;
 
@@ -145,7 +145,7 @@ int VtaExportClass::DoExport(const TCHAR *name,ExpInterface *ei,Interface *i, BO
 	// Count nodes, label them, collect into array
 	if (!CollectNodes(pexpiface))
 		return 0;	/*fail*/
-	
+
 	// Output nodes
 	if (!DumpBones(pFile, pexpiface))
 	{
@@ -168,8 +168,8 @@ int VtaExportClass::DoExport(const TCHAR *name,ExpInterface *ei,Interface *i, BO
 
 	return 1/*success*/;
 }
-	
-	
+
+
 BOOL VtaExportClass::CollectNodes( ExpInterface *pexpiface)
 {
 	// Count total nodes in the model, so I can alloc array
@@ -188,7 +188,7 @@ BOOL VtaExportClass::CollectNodes( ExpInterface *pexpiface)
 	CollectNodesTEP procCollectNodes;
 	procCollectNodes.m_phec = this;
 	(void) pexpiface->theScene->EnumTree(&procCollectNodes);
-	
+
 	return TRUE;
 }
 
@@ -206,7 +206,7 @@ BOOL VtaExportClass::DumpBones(FILE *pFile, ExpInterface *pexpiface)
 	return TRUE;
 }
 
-	
+
 BOOL VtaExportClass::DumpRotations(FILE *pFile, ExpInterface *pexpiface)
 {
 	// Dump bone-rotation info, for each frame
@@ -226,8 +226,8 @@ BOOL VtaExportClass::DumpRotations(FILE *pFile, ExpInterface *pexpiface)
 
 	return TRUE;
 }
-	
-	
+
+
 BOOL VtaExportClass::DumpModel( FILE *pFile, ExpInterface *pexpiface)
 {
 	// Dump mesh info: vertices, normals, UV texture map coords, bone assignments
@@ -249,7 +249,7 @@ BOOL VtaExportClass::DumpModel( FILE *pFile, ExpInterface *pexpiface)
 	fprintf(pFile, "end\n" );
 
 	return TRUE;
-}	
+}
 
 
 
@@ -282,12 +282,12 @@ int CountNodesTEP::callback( INode *node)
 		::SetIndexOfINode(pnode, VtaExportClass::UNDESIRABLE_NODE_MARKER);
 		return TREE_CONTINUE;
 	}
-	
+
 	// Establish "node index"--just ascending ints
 	::SetIndexOfINode(pnode, m_cNodes);
 
 	m_cNodes++;
-	
+
 	return TREE_CONTINUE;
 }
 
@@ -307,7 +307,7 @@ int CollectNodesTEP::callback(INode *node)
 	// Get pre-stored "index"
 	int iNode = ::GetIndexOfINode(pnode);
 	ASSERT_MBOX(iNode >= 0 && iNode <= m_phec->m_imaxnodeMac-1, "Bogus iNode");
-	
+
 	// Get name, store name in array
 	TSTR strNodeName(pnode->GetName());
 	strcpy(m_phec->m_rgmaxnode[iNode].szNodeName, (char*)strNodeName);
@@ -340,11 +340,11 @@ int DumpNodesTEP::callback(INode *pnode)
 	// Get node's parent
 	INode *pnodeParent;
 	pnodeParent = pnode->GetParentNode();
-	
+
 	// The model's root is a child of the real "scene root"
 	TSTR strNodeName(pnode->GetName());
 	BOOL fNodeIsRoot = pnodeParent->IsRootNode( );
-	
+
 	int iNode = ::GetIndexOfINode(pnode);
 	int iNodeParent = ::GetIndexOfINode(pnodeParent, !fNodeIsRoot/*fAssertPropExists*/);
 
@@ -354,11 +354,11 @@ int DumpNodesTEP::callback(INode *pnode)
 	// Root node has no parent, thus no translation
 	if (fNodeIsRoot)
 		iNodeParent = -1;
-		
+
 	// Dump node description
-	fprintf(m_pfile, "%3d \"%s\" %3d\n", 
-		iNode, 
-		strNodeName, 
+	fprintf(m_pfile, "%3d \"%s\" %3d\n",
+		iNode,
+		strNodeName,
 		iNodeParent );
 
 	return TREE_CONTINUE;
@@ -408,10 +408,10 @@ int DumpFrameRotationsTEP::callback(INode *pnode)
 	xRot = ::FlReduceRotation(xRot);
 	yRot = ::FlReduceRotation(yRot);
 	zRot = ::FlReduceRotation(zRot);
-	
+
 	// Print rotations
-	//fprintf(m_pfile, "%3d %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f\n", 
-	fprintf(m_pfile, "%3d %f %f %f %f %f %f\n", 
+	//fprintf(m_pfile, "%3d %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f\n",
+	fprintf(m_pfile, "%3d %f %f %f %f %f %f\n",
 			// Node:%-15s Rotation (x,y,z)\n",
 			iNode, rowTrans.x, rowTrans.y, rowTrans.z, xRot, yRot, zRot);
 
@@ -468,13 +468,13 @@ int DumpModelTEP::callback(INode *pnode)
 
 	if (::FNodeMarkedToSkip(pnode))
 		return TREE_CONTINUE;
-	
+
 	if ( !pnode->Selected())
 		return TREE_CONTINUE;
 
 	int iNode = ::GetIndexOfINode(pnode);
 	TSTR strNodeName(pnode->GetName());
-	
+
 	// The Footsteps node apparently MUST have a dummy mesh attached!  Ignore it explicitly.
 	if (FStrEq((char*)strNodeName, "Bip01 Footsteps"))
 		return TREE_CONTINUE;
@@ -485,41 +485,41 @@ int DumpModelTEP::callback(INode *pnode)
 		return TREE_CONTINUE;
 
 
-   // Get the object's parameter block if it has one 
+	// Get the object's parameter block if it has one
 
-    IParamBlock *pb = NULL;
-    IParamArray *pa = pobj->GetParamBlock(); 
+	IParamBlock *pb = NULL;
+	IParamArray *pa = pobj->GetParamBlock();
 
-	if (!pa) 
+	if (!pa)
 	{
 		int i = pobj->NumRefs();
-		// Search the references looking for a parameter block 
-		for (i = 0; i < pobj->NumRefs(); i++) 
+		// Search the references looking for a parameter block
+		for (i = 0; i < pobj->NumRefs(); i++)
 		{
-			RefTargetHandle r = pobj->GetReference(i); 
+			RefTargetHandle r = pobj->GetReference(i);
 			if (r)
 			{
 				Class_ID x = r->ClassID();
 
-				if (r && r->ClassID() == Class_ID(PARAMETER_BLOCK_CLASS_ID,0)) 
+				if (r && r->ClassID() == Class_ID(PARAMETER_BLOCK_CLASS_ID,0))
 				{
 					pb = (IParamBlock *) r;
 				}
 			}
 		}
 	}
-	else 
+	else
 	{
 		// pb = pa->GetParamBlock2();
 	}
 
 	if (pb)
 	{
-	    // Find out how many _animatable_ parameters there are 
-        int count = pb->NumSubs();
+		// Find out how many _animatable_ parameters there are
+		int count = pb->NumSubs();
 
-        // Display data about each one
-        for (int i = 0; i < count; i++)
+		// Display data about each one
+		for (int i = 0; i < count; i++)
 		{
 			TSTR name = pb->SubAnimName(i);
 
@@ -527,13 +527,13 @@ int DumpModelTEP::callback(INode *pnode)
 
 			TSTR cname;
 
-			SClass_ID sc = pb->GetAnimParamControlType(i); 
+			SClass_ID sc = pb->GetAnimParamControlType(i);
 
-			if (sc == CTRL_FLOAT_CLASS_ID) 
+			if (sc == CTRL_FLOAT_CLASS_ID)
 
 			cname = TSTR(_T("Float"));
 
-			else if (sc == CTRL_POINT3_CLASS_ID) 
+			else if (sc == CTRL_POINT3_CLASS_ID)
 
 			cname = TSTR(_T("Point3"));
 		}
@@ -612,12 +612,12 @@ int DumpModelTEP::callback(INode *pnode)
 				Point3 pt3Vertex2 = pt3Vertex1;
 				pt3Vertex2.z = pt3Vertex2.z + 10.0;
 				pmesh->setVert( iVert, pt3Vertex2 );
-				
+
 				Point3 pt3Normal1 = pmesh->getNormal(iVert);
 				pt3Normal1 = VectorTransform( mat3ObjectNTM, pt3Normal1 );
 
 				fprintf(m_pfile, "%5d %8.4f %8.4f %8.4f  %9.6f %9.6f %9.6f\n",
-						iAdjVert, v1.x, v1.y, v1.z, 
+						iAdjVert, v1.x, v1.y, v1.z,
 						pt3Normal1.x, pt3Normal1.y, pt3Normal1.z );
 			}
 		}
@@ -643,7 +643,7 @@ Point3 DumpModelTEP::Pt3GetRVertexNormal(RVertex *prvertex, DWORD smGroupFace)
 
 	ASSERT_MBOX((cNormals == 1 && prvertex->ern == NULL) ||
 				(cNormals > 1 && prvertex->ern != NULL), "BOGUS RVERTEX");
-	
+
 	if (cNormals == 1)
 		return prvertex->rn.getNormal();
 	else
@@ -652,7 +652,7 @@ Point3 DumpModelTEP::Pt3GetRVertexNormal(RVertex *prvertex, DWORD smGroupFace)
 			if (prvertex->ern[irn].getSmGroup() & smGroupFace)
 				break;
 
-		if (irn >= cNormals) 
+		if (irn >= cNormals)
 		{
 			irn = 0;
 			// ASSERT_MBOX(irn < cNormals, "unknown smoothing group\n");
@@ -697,7 +697,7 @@ int GetIndexOfINode(INode *pnode, BOOL fAssertPropExists)
 	return -7777;
 }
 
-	
+
 void SetIndexOfINode(INode *pnode, int inode)
 {
 	TSTR strNodeName(pnode->GetName());
@@ -748,7 +748,7 @@ BOOL FNodeMarkedToSkip(INode *pnode)
 	return (::GetIndexOfINode(pnode) == VtaExportClass::UNDESIRABLE_NODE_MARKER);
 }
 
-	
+
 //=============================================================
 // Reduces a rotation to within the -2PI..2PI range.
 //

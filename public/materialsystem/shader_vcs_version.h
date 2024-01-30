@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -72,4 +72,3 @@ struct StaticComboAliasRecord_t								// for duplicate static combos
 
 
 #endif // SHADER_VCS_VERSION_H
-	

@@ -26,13 +26,13 @@ private:
 
 public:
 	StatCard(vgui::Panel *parent, const char *name);
-    ~StatCard();
-	
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );	
+	~StatCard();
+
+	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 	void UpdateInfo();
 
 protected:
-	
+
 
 	ImagePanel*			m_pAvatarDefault;
 	//ImagePanel*			m_pBackgroundArt;
@@ -41,7 +41,7 @@ protected:
 	Label* m_pName;
 	Label* m_pKillToDeathRatio;
 	Label* m_pStars;
-	
+
 
 private:
 };

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -29,7 +29,7 @@ public:
 	CBinaryResource(char* name, size_t bytes,unsigned char* data)
 	:filename(name),numBytes(bytes),pData(data)
 	{}
-	
+
 	bool writeOut()
 	{
 		FILE* f=fopen(filename.c_str(),"wb");
@@ -45,4 +45,3 @@ public:
 };
 
 #endif // BINARYRESOURCE_H
-

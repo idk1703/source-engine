@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -47,15 +47,15 @@ public:
 	~CRagdoll( void );
 
 	DECLARE_SIMPLE_DATADESC();
-	
-	void Init( 
-		C_BaseEntity *ent, 
-		CStudioHdr *pstudiohdr, 
-		const Vector &forceVector, 
-		int forceBone, 
-		const matrix3x4_t *pDeltaBones0, 
-		const matrix3x4_t *pDeltaBones1, 
-		const matrix3x4_t *pCurrentBonePosition, 
+
+	void Init(
+		C_BaseEntity *ent,
+		CStudioHdr *pstudiohdr,
+		const Vector &forceVector,
+		int forceBone,
+		const matrix3x4_t *pDeltaBones0,
+		const matrix3x4_t *pDeltaBones1,
+		const matrix3x4_t *pCurrentBonePosition,
 		float boneDt,
 		bool bFixedConstraints=false );
 
@@ -63,7 +63,7 @@ public:
 	virtual const Vector& GetRagdollOrigin( );
 	virtual void GetRagdollBounds( Vector &theMins, Vector &theMaxs );
 	void	BuildRagdollBounds( C_BaseEntity *ent );
-	
+
 	virtual IPhysicsObject *GetElement( int elementNum );
 	virtual IPhysicsConstraintGroup *GetConstraintGroup() { return m_ragdoll.pGroup; }
 	virtual void DrawWireframe();
@@ -73,13 +73,13 @@ public:
 	// HPE_BEGIN:
 	// [menglish] Transforms a vector from the given bone's space to world space
 	//=============================================================================
-	 
+
 	virtual bool TransformVectorToWorld(int iBoneIndex, const Vector *vTemp, Vector *vOut);
-	 
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
-	
+
 
 	void	SetInitialBonePosition( CStudioHdr *pstudiohdr, const CBoneAccessor &pDesiredBonePosition );
 
@@ -109,19 +109,19 @@ private:
 #endif
 
 public:
-	
+
 	ragdoll_t *GetRagdoll( void ){ return &m_ragdoll; }
 };
 
 
-CRagdoll *CreateRagdoll( 
-	C_BaseEntity *ent, 
-	CStudioHdr *pstudiohdr, 
-	const Vector &forceVector, 
-	int forceBone, 
-	const matrix3x4_t *pDeltaBones0, 
-	const matrix3x4_t *pDeltaBones1, 
-	const matrix3x4_t *pCurrentBonePosition, 
+CRagdoll *CreateRagdoll(
+	C_BaseEntity *ent,
+	CStudioHdr *pstudiohdr,
+	const Vector &forceVector,
+	int forceBone,
+	const matrix3x4_t *pDeltaBones0,
+	const matrix3x4_t *pDeltaBones1,
+	const matrix3x4_t *pCurrentBonePosition,
 	float boneDt,
 	bool bFixedConstraints=false );
 

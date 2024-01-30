@@ -56,7 +56,7 @@ protected:
 	float			m_flHolsterTime;	// When the weapon was holstered
 
 private:
-	
+
 	CBaseHL2MPCombatWeapon( const CBaseHL2MPCombatWeapon & );
 };
 

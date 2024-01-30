@@ -20,9 +20,9 @@ public:
 	virtual ActionResult< CTFBot >	OnResume( CTFBot *me, Action< CTFBot > *interruptingAction );
 
 	// Snipers choose their targets a bit differently
-	virtual const CKnownEntity *	SelectMoreDangerousThreat( const INextBot *me, 
+	virtual const CKnownEntity *	SelectMoreDangerousThreat( const INextBot *me,
 															   const CBaseCombatCharacter *subject,
-															   const CKnownEntity *threat1, 
+															   const CKnownEntity *threat1,
 															   const CKnownEntity *threat2 ) const;	// return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
 
 	virtual QueryResultType ShouldAttack( const INextBot *me, const CKnownEntity *them ) const;	// should we attack "them"?

@@ -55,7 +55,7 @@ private:
 	};
 
 	void			BuildHash( const unsigned char *pData );
-	lzss_list_t		*m_pHashTable;	
+	lzss_list_t		*m_pHashTable;
 	lzss_node_t		*m_pHashTarget;
 	int             m_nWindowSize;
 
@@ -66,4 +66,3 @@ FORCEINLINE CLZSS::CLZSS( int nWindowSize )
 	m_nWindowSize = nWindowSize;
 }
 #endif
-

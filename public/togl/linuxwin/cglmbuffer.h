@@ -46,7 +46,7 @@ enum EGLMBufferType
 	kGLMIndexBuffer,
 	kGLMUniformBuffer,	// for bindable uniform
 	kGLMPixelBuffer,	// for PBO
-	
+
 	kGLMNumBufferTypes
 };
 
@@ -57,8 +57,8 @@ struct GLMBuffLockParams
 {
 	uint m_nOffset;
 	uint m_nSize;
-	bool m_bNoOverwrite;		
-	bool m_bDiscard;			
+	bool m_bNoOverwrite;
+	bool m_bDiscard;
 };
 
 #define GL_STATIC_BUFFER_SIZE	( 2048 * 1024 )
@@ -98,7 +98,7 @@ private:
 	uint			m_nSize;
 
 	EGLMBufferType	m_type;
-	GLenum			m_buffGLTarget;			// GL_ARRAY_BUFFER_ARB / GL_ELEMENT_BUFFER_ARB	
+	GLenum			m_buffGLTarget;			// GL_ARRAY_BUFFER_ARB / GL_ELEMENT_BUFFER_ARB
 	GLuint			m_nHandle;				// handle of this program in the GL context
 
 	// Holds a pointer to the persistently mapped buffer
@@ -155,9 +155,9 @@ public:
 	};
 
 	ActiveSpan_t *AddSpan( uint nOffset, uint nMaxSize, uint nActualSize, bool bDiscard, bool bNoOverwrite );
-	
+
 	void DiscardAllSpans();
-		
+
 	bool IsValid( uint nOffset, uint nSize ) const;
 
 private:
@@ -189,62 +189,62 @@ public:
 	void Unlock( int nActualSize = -1, const void *pActualData = NULL );
 
 	GLuint GetHandle() const;
-		
+
 	friend class GLMContext;			// only GLMContext can make CGLMBuffer objects
-	friend class GLMTester;	
+	friend class GLMTester;
 	friend struct IDirect3D9;
 	friend struct IDirect3DDevice9;
-		
+
 	CGLMBuffer( GLMContext *pCtx, EGLMBufferType type, uint size, uint options );
 	~CGLMBuffer();
-	
+
 	void SetModes( bool bAsyncMap, bool bExplicitFlush, bool bForce = false );
 	void FlushRange( uint offset, uint size );
 
 #if GL_ENABLE_INDEX_VERIFICATION
 	bool IsSpanValid( uint nOffset, uint nSize ) const;
 #endif
-	
+
 	GLMContext				*m_pCtx;					// link back to parent context
 	EGLMBufferType			m_type;
 	uint					m_nSize;
 	uint					m_nActualSize;
-	
+
 	bool					m_bDynamic;
-	
-	GLenum					m_buffGLTarget;			// GL_ARRAY_BUFFER_ARB / GL_ELEMENT_BUFFER_ARB	
-	GLuint					m_nHandle;					// name of this program in the context	
+
+	GLenum					m_buffGLTarget;			// GL_ARRAY_BUFFER_ARB / GL_ELEMENT_BUFFER_ARB
+	GLuint					m_nHandle;					// name of this program in the context
 
 	uint					m_nRevision;				// bump anytime the size changes or buffer is orphaned
 
 	bool					m_bEnableAsyncMap;		// mirror of the buffer state
 	bool					m_bEnableExplicitFlush;	// mirror of the buffer state
-		
+
 	bool					m_bMapped;				// is it currently mapped
 
 	uint					m_dirtyMinOffset;		// when equal, range is empty
 	uint					m_dirtyMaxOffset;
-	
+
 	float					*m_pLastMappedAddress;
 
 	int						m_nPinnedMemoryOfs;
 
 	uint					m_nPersistentBufferStartOffset;
 	bool					m_bUsingPersistentBuffer;
-	
+
 	bool					m_bPseudo;				// true if the m_name is 0, and the backing is plain RAM
-			
+
 	// in pseudo mode, there is just one RAM buffer that acts as the backing.
 	// expectation is that this mode would only be used for dynamic indices.
 	// since indices have to be consumed (copied to command stream) prior to return from a drawing call,
 	// there's no need to do any fencing or multibuffering.  orphaning in particular becomes a no-op.
-	
+
 	char					*m_pActualPseudoBuf;			// storage for pseudo buffer
 	char					*m_pPseudoBuf;			// storage for pseudo buffer
 	char					*m_pStaticBuffer;
-	
+
 	GLMBuffLockParams		m_LockParams;
-											
+
 	static char				ALIGN16 m_StaticBuffers[ GL_MAX_STATIC_BUFFERS ][ GL_STATIC_BUFFER_SIZE ] ALIGN16_POST;
 	static bool				m_bStaticBufferUsed[ GL_MAX_STATIC_BUFFERS ];
 
@@ -256,7 +256,6 @@ public:
 	uint					m_nDirtyRangeStart;
 	uint					m_nDirtyRangeEnd;
 #endif
-};	
+};
 
 #endif // CGLMBUFFER_H
-

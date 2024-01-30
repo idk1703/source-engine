@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -91,7 +91,7 @@ CWin32Font::~CWin32Font()
 //			used to determine whether or not a font exists on the system
 //-----------------------------------------------------------------------------
 extern bool g_bFontFound = false;
-int CALLBACK FontEnumProc( 
+int CALLBACK FontEnumProc(
 	const LOGFONT *lpelfe,		// logical-font data
 	const TEXTMETRIC *lpntme,	// physical-font data
 	DWORD FontType,				// type of font
@@ -148,16 +148,16 @@ bool CWin32Font::Create(const char *windowsFontName, int tall, int weight, int b
 		return false;
 	}
 
-	m_hFont = ::CreateFontA(tall, 0, 0, 0, 
-								m_iWeight, 
-								flags & vgui::ISurface::FONTFLAG_ITALIC, 
-								flags & vgui::ISurface::FONTFLAG_UNDERLINE, 
-								flags & vgui::ISurface::FONTFLAG_STRIKEOUT, 
-								charset, 
-								OUT_DEFAULT_PRECIS, 
-								CLIP_DEFAULT_PRECIS, 
-								m_bAntiAliased ? ANTIALIASED_QUALITY : NONANTIALIASED_QUALITY, 
-								DEFAULT_PITCH | FF_DONTCARE, 
+	m_hFont = ::CreateFontA(tall, 0, 0, 0,
+								m_iWeight,
+								flags & vgui::ISurface::FONTFLAG_ITALIC,
+								flags & vgui::ISurface::FONTFLAG_UNDERLINE,
+								flags & vgui::ISurface::FONTFLAG_STRIKEOUT,
+								charset,
+								OUT_DEFAULT_PRECIS,
+								CLIP_DEFAULT_PRECIS,
+								m_bAntiAliased ? ANTIALIASED_QUALITY : NONANTIALIASED_QUALITY,
+								DEFAULT_PITCH | FF_DONTCARE,
 								windowsFontName);
 	if (!m_hFont)
 	{
@@ -209,7 +209,7 @@ bool CWin32Font::Create(const char *windowsFontName, int tall, int weight, int b
 	ABC abc[ABCWIDTHS_CACHE_SIZE];
 	Assert(ABCWIDTHS_CACHE_SIZE <= 256);
 	if (::GetCharABCWidthsW(m_hDC, 0, ABCWIDTHS_CACHE_SIZE - 1, &abc[0]) || ::GetCharABCWidthsA(m_hDC, 0, ABCWIDTHS_CACHE_SIZE - 1, &abc[0]))
-	{	
+	{
 		// copy out into our formated structure
 		for (int i = 0; i < ABCWIDTHS_CACHE_SIZE; i++)
 		{
@@ -271,7 +271,7 @@ void CWin32Font::GetCharRGBA(wchar_t ch, int rgbaWide, int rgbaTall, unsigned ch
 	int bytesNeeded = 0;
 
 	bool bShouldAntialias = m_bAntiAliased;
-	// filter out 
+	// filter out
 	if ( ch > 0x00FF && !(m_iFlags & vgui::ISurface::FONTFLAG_CUSTOM) )
 	{
 		bShouldAntialias = false;
@@ -380,7 +380,7 @@ void CWin32Font::GetCharRGBA(wchar_t ch, int rgbaWide, int rgbaTall, unsigned ch
 
 		// render the character
 		wchar_t wch = (wchar_t)ch;
-		
+
 		if (s_bSupportsUnicode)
 		{
 			// clear the background first
@@ -476,7 +476,7 @@ void CWin32Font::GetCharRGBA(wchar_t ch, int rgbaWide, int rgbaTall, unsigned ch
 //-----------------------------------------------------------------------------
 bool CWin32Font::IsEqualTo(const char *windowsFontName, int tall, int weight, int blur, int scanlines, int flags)
 {
-	if ( !stricmp(windowsFontName, m_szName.String() ) 
+	if ( !stricmp(windowsFontName, m_szName.String() )
 		&& m_iTall == tall
 		&& m_iWeight == weight
 		&& m_iBlur == blur
@@ -634,5 +634,3 @@ void CWin32Font::GetKernedCharWidth( wchar_t ch, wchar_t chBefore, wchar_t chAft
 	wide = ( a + b + c);
 	abcA = a;
 }
-
-

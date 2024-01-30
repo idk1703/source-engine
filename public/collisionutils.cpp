@@ -63,7 +63,7 @@ static float ComputeBoxOffset( const Ray_t& ray )
 //-----------------------------------------------------------------------------
 // Intersects a swept box against a triangle
 //-----------------------------------------------------------------------------
-float IntersectRayWithTriangle( const Ray_t& ray, 
+float IntersectRayWithTriangle( const Ray_t& ray,
 		const Vector& v1, const Vector& v2, const Vector& v3, bool oneSided )
 {
 	// This is cute: Use barycentric coordinates to represent the triangle
@@ -73,7 +73,7 @@ float IntersectRayWithTriangle( const Ray_t& ray,
 	//		E1x u + E2x v - Dx t = Pox - Vox
 	// There's a couple of other optimizations, Cramer's rule involves
 	// computing the determinant of a matrix which has been constructed
-	// by three vectors. It turns out that 
+	// by three vectors. It turns out that
 	// det | A B C | = -( A x C ) dot B or -(C x B) dot A
 	// which we'll use below..
 
@@ -123,7 +123,7 @@ float IntersectRayWithTriangle( const Ray_t& ray,
 	if ((v < 0.0f) || (v + u > 1.0f))
 		return -1.0f;
 
-	// Compute the distance along the ray direction that we need to fudge 
+	// Compute the distance along the ray direction that we need to fudge
 	// when using swept boxes
 	float boxt = ComputeBoxOffset( ray );
 	float t = DotProduct( orgCrossEdge1, edge2 ) * denom;
@@ -137,7 +137,7 @@ float IntersectRayWithTriangle( const Ray_t& ray,
 // computes the barycentric coordinates of an intersection
 //-----------------------------------------------------------------------------
 
-bool ComputeIntersectionBarycentricCoordinates( const Ray_t& ray, 
+bool ComputeIntersectionBarycentricCoordinates( const Ray_t& ray,
 		const Vector& v1, const Vector& v2, const Vector& v3, float& u, float& v,
 		float *t )
 {
@@ -170,7 +170,7 @@ bool ComputeIntersectionBarycentricCoordinates( const Ray_t& ray,
 	CrossProduct( org, edge1, orgCrossEdge1 );
 	v = DotProduct( orgCrossEdge1, ray.m_Delta ) * denom;
 
-	// Compute the distance along the ray direction that we need to fudge 
+	// Compute the distance along the ray direction that we need to fudge
 	// when using swept boxes
 	if( t )
 	{
@@ -226,7 +226,7 @@ int IntersectTriangleWithPlaneBarycentric( const Vector& org, const Vector& edge
 
 	if ( edgeVDotNormal != edgeUDotNormal )
 	{
-		pIntersection[ptIdx].x = - ( orgDotNormal - plane.w + edgeVDotNormal) / 
+		pIntersection[ptIdx].x = - ( orgDotNormal - plane.w + edgeVDotNormal) /
 			( edgeUDotNormal - edgeVDotNormal);
 		pIntersection[ptIdx].y = 1.0f - pIntersection[ptIdx].x;
 		if ((pIntersection[ptIdx].x >= 0.0f) && (pIntersection[ptIdx].x <= 1.0f) &&
@@ -242,7 +242,7 @@ int IntersectTriangleWithPlaneBarycentric( const Vector& org, const Vector& edge
 //-----------------------------------------------------------------------------
 // Returns true if a box intersects with a sphere
 //-----------------------------------------------------------------------------
-bool IsSphereIntersectingSphere( const Vector& center1, float radius1, 
+bool IsSphereIntersectingSphere( const Vector& center1, float radius1,
 								 const Vector& center2, float radius2 )
 {
 	Vector delta;
@@ -256,7 +256,7 @@ bool IsSphereIntersectingSphere( const Vector& center1, float radius1,
 //-----------------------------------------------------------------------------
 // Returns true if a box intersects with a sphere
 //-----------------------------------------------------------------------------
-bool IsBoxIntersectingSphere( const Vector& boxMin, const Vector& boxMax, 
+bool IsBoxIntersectingSphere( const Vector& boxMin, const Vector& boxMax,
 						const Vector& center, float radius )
 {
 	// See Graphics Gems, box-sphere intersection
@@ -300,7 +300,7 @@ bool IsBoxIntersectingSphere( const Vector& boxMin, const Vector& boxMax,
 	return dmin < radius * radius;
 }
 
-bool IsBoxIntersectingSphereExtents( const Vector& boxCenter, const Vector& boxHalfDiag, 
+bool IsBoxIntersectingSphereExtents( const Vector& boxCenter, const Vector& boxHalfDiag,
 						const Vector& center, float radius )
 {
 	// See Graphics Gems, box-sphere intersection
@@ -336,7 +336,7 @@ bool IsBoxIntersectingSphereExtents( const Vector& boxCenter, const Vector& boxH
 //-----------------------------------------------------------------------------
 // Returns true if a rectangle intersects with a circle
 //-----------------------------------------------------------------------------
-bool IsCircleIntersectingRectangle( const Vector2D& boxMin, const Vector2D& boxMax, 
+bool IsCircleIntersectingRectangle( const Vector2D& boxMin, const Vector2D& boxMax,
 						      const Vector2D& center, float radius )
 {
 	// See Graphics Gems, box-sphere intersection
@@ -372,7 +372,7 @@ bool IsCircleIntersectingRectangle( const Vector2D& boxMin, const Vector2D& boxM
 //-----------------------------------------------------------------------------
 // returns true if there's an intersection between ray and sphere
 //-----------------------------------------------------------------------------
-bool IsRayIntersectingSphere( const Vector &vecRayOrigin, const Vector &vecRayDelta, 
+bool IsRayIntersectingSphere( const Vector &vecRayOrigin, const Vector &vecRayDelta,
 		const Vector& vecCenter, float flRadius, float flTolerance )
 {
 	// For this algorithm, find a point on the ray  which is closest to the sphere origin
@@ -391,7 +391,7 @@ bool IsRayIntersectingSphere( const Vector &vecRayOrigin, const Vector &vecRayDe
 	Vector vecRayToSphere;
 	VectorSubtract( vecCenter, vecRayOrigin, vecRayToSphere );
 	float flNumerator = DotProduct( vecRayToSphere, vecRayDelta );
-	
+
 	float t;
 	if (flNumerator <= 0.0f)
 	{
@@ -405,7 +405,7 @@ bool IsRayIntersectingSphere( const Vector &vecRayOrigin, const Vector &vecRayDe
 		else
 			t = flNumerator / flDenominator;
 	}
-	
+
 	Vector vecClosestPoint;
 	VectorMA( vecRayOrigin, t, vecRayDelta, vecClosestPoint );
 	return ( vecClosestPoint.DistToSqr( vecCenter ) <= flRadius * flRadius );
@@ -428,7 +428,7 @@ bool IsRayIntersectingSphere( const Vector &vecRayOrigin, const Vector &vecRayDe
 	// b = 2 * DotProduct( vecRayOrigin - vecCenter, vecRayDelta )
 	// c = DotProduct(vecRayOrigin - vecCenter, vecRayOrigin - vecCenter) - flRadius * flRadius;
 	// Valid solutions are possible only if b^2 - 4ac >= 0
-	// Therefore, compute that value + see if we got it	
+	// Therefore, compute that value + see if we got it
 }
 
 
@@ -436,11 +436,11 @@ bool IsRayIntersectingSphere( const Vector &vecRayOrigin, const Vector &vecRayDe
 //
 // IntersectInfiniteRayWithSphere
 //
-// Returns whether or not there was an intersection. 
+// Returns whether or not there was an intersection.
 // Returns the two intersection points
 //
 //-----------------------------------------------------------------------------
-bool IntersectInfiniteRayWithSphere( const Vector &vecRayOrigin, const Vector &vecRayDelta, 
+bool IntersectInfiniteRayWithSphere( const Vector &vecRayOrigin, const Vector &vecRayDelta,
 	const Vector &vecSphereCenter, float flRadius, float *pT1, float *pT2 )
 {
 	// Solve using the ray equation + the sphere equation
@@ -488,11 +488,11 @@ bool IntersectInfiniteRayWithSphere( const Vector &vecRayOrigin, const Vector &v
 //
 // IntersectRayWithSphere
 //
-// Returns whether or not there was an intersection. 
+// Returns whether or not there was an intersection.
 // Returns the two intersection points, clamped to (0,1)
 //
 //-----------------------------------------------------------------------------
-bool IntersectRayWithSphere( const Vector &vecRayOrigin, const Vector &vecRayDelta, 
+bool IntersectRayWithSphere( const Vector &vecRayOrigin, const Vector &vecRayDelta,
 	const Vector &vecSphereCenter, float flRadius, float *pT1, float *pT2 )
 {
 	if ( !IntersectInfiniteRayWithSphere( vecRayOrigin, vecRayDelta, vecSphereCenter, flRadius, pT1, pT2 ) )
@@ -575,7 +575,7 @@ bool IsPointInCone( const Vector &pt, const Vector &origin, const Vector &axis, 
 //-----------------------------------------------------------------------------
 // returns true if there's an intersection between two boxes
 //-----------------------------------------------------------------------------
-bool IsBoxIntersectingBox( const Vector& boxMin1, const Vector& boxMax1, 
+bool IsBoxIntersectingBox( const Vector& boxMin1, const Vector& boxMax1,
 						const Vector& boxMin2, const Vector& boxMax2 )
 {
 	Assert( boxMin1[0] <= boxMax1[0] );
@@ -594,7 +594,7 @@ bool IsBoxIntersectingBox( const Vector& boxMin1, const Vector& boxMax1,
 	return true;
 }
 
-bool IsBoxIntersectingBoxExtents( const Vector& boxCenter1, const Vector& boxHalfDiagonal1, 
+bool IsBoxIntersectingBoxExtents( const Vector& boxCenter1, const Vector& boxHalfDiagonal1,
 						   const Vector& boxCenter2, const Vector& boxHalfDiagonal2 )
 {
 	Vector vecDelta, vecSize;
@@ -607,13 +607,13 @@ bool IsBoxIntersectingBoxExtents( const Vector& boxCenter1, const Vector& boxHal
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 // IsOBBIntersectingOBB
 //
 // returns true if there's an intersection between two OBBs
 //
 //-----------------------------------------------------------------------------
-bool IsOBBIntersectingOBB( const Vector &vecOrigin1, const QAngle &vecAngles1, const Vector& boxMin1, const Vector& boxMax1, 
+bool IsOBBIntersectingOBB( const Vector &vecOrigin1, const QAngle &vecAngles1, const Vector& boxMin1, const Vector& boxMax1,
 						   const Vector &vecOrigin2, const QAngle &vecAngles2, const Vector& boxMin2, const Vector& boxMax2, float flTolerance )
 {
 	// FIXME: Simple case AABB check doesn't work because the min and max extents are not oriented based on the angle
@@ -629,7 +629,7 @@ bool IsOBBIntersectingOBB( const Vector &vecOrigin1, const QAngle &vecAngles1, c
 
 	// OBB test...
 	cplane_t plane;
-	bool bFoundPlane = ComputeSeparatingPlane( vecOrigin1, vecAngles1, boxMin1, boxMax1, 
+	bool bFoundPlane = ComputeSeparatingPlane( vecOrigin1, vecAngles1, boxMin1, boxMax1,
 		vecOrigin2, vecAngles2, boxMin2, boxMax2, flTolerance, &plane );
 	return (bFoundPlane == false);
 }
@@ -639,10 +639,10 @@ bool IsOBBIntersectingOBB( const Vector &vecOrigin1, const QAngle &vecAngles1, c
 //-----------------------------------------------------------------------------
 // returns true if there's an intersection between box and ray
 //-----------------------------------------------------------------------------
-bool FASTCALL IsBoxIntersectingRay( const Vector& boxMin, const Vector& boxMax, 
+bool FASTCALL IsBoxIntersectingRay( const Vector& boxMin, const Vector& boxMax,
 									const Vector& origin, const Vector& vecDelta, float flTolerance )
 {
-	
+
 #if USE_SIMD_RAY_CHECKS
 	// Load the unaligned ray/box parameters into SIMD registers
 	fltx4 start = LoadUnaligned3SIMD(origin.Base());
@@ -695,11 +695,11 @@ bool FASTCALL IsBoxIntersectingRay( const Vector& boxMin, const Vector& boxMax,
 	return IsAllZeros(separation);
 #else
 	// On the x360, we force use of the SIMD functions.
-#if defined(_X360) 
+#if defined(_X360)
 	if (IsX360())
 	{
 		fltx4 delta = LoadUnaligned3SIMD(vecDelta.Base());
-		return IsBoxIntersectingRay( 
+		return IsBoxIntersectingRay(
 			LoadUnaligned3SIMD(boxMin.Base()), LoadUnaligned3SIMD(boxMax.Base()),
 			LoadUnaligned3SIMD(origin.Base()), delta, ReciprocalSIMD(delta), // ray parameters
 			ReplicateX4(flTolerance) ///< eg from ReplicateX4(flTolerance)
@@ -763,10 +763,10 @@ bool FASTCALL IsBoxIntersectingRay( const Vector& boxMin, const Vector& boxMax,
 //-----------------------------------------------------------------------------
 // returns true if there's an intersection between box and ray
 //-----------------------------------------------------------------------------
-bool FASTCALL IsBoxIntersectingRay( const Vector& boxMin, const Vector& boxMax, 
+bool FASTCALL IsBoxIntersectingRay( const Vector& boxMin, const Vector& boxMax,
 									const Vector& origin, const Vector& vecDelta,
 									const Vector& vecInvDelta, float flTolerance )
-{	
+{
 #if USE_SIMD_RAY_CHECKS
 	// Load the unaligned ray/box parameters into SIMD registers
 	fltx4 start = LoadUnaligned3SIMD(origin.Base());
@@ -823,7 +823,7 @@ bool FASTCALL IsBoxIntersectingRay( const Vector& boxMin, const Vector& boxMax,
 #if defined(_X360) && !defined(PARANOID_SIMD_ASSERTING)
 	if (IsX360())
 	{
-		return IsBoxIntersectingRay( 
+		return IsBoxIntersectingRay(
 			LoadUnaligned3SIMD(boxMin.Base()), LoadUnaligned3SIMD(boxMax.Base()),
 			LoadUnaligned3SIMD(origin.Base()), LoadUnaligned3SIMD(vecDelta.Base()), LoadUnaligned3SIMD(vecInvDelta.Base()), // ray parameters
 			ReplicateX4(flTolerance) ///< eg from ReplicateX4(flTolerance)
@@ -893,10 +893,10 @@ bool FASTCALL IsBoxIntersectingRay( const Vector& boxMin, const Vector& boxMax,
 bool FASTCALL IsBoxIntersectingRay( const Vector& vecBoxMin, const Vector& vecBoxMax, const Ray_t& ray, float flTolerance )
 {
 	// On the x360, we force use of the SIMD functions.
-#if defined(_X360) 
+#if defined(_X360)
 	if (IsX360())
 	{
-		return IsBoxIntersectingRay( 
+		return IsBoxIntersectingRay(
 			LoadUnaligned3SIMD(vecBoxMin.Base()), LoadUnaligned3SIMD(vecBoxMax.Base()),
 			ray, flTolerance);
 	}
@@ -928,12 +928,12 @@ bool FASTCALL IsBoxIntersectingRay( const Vector& vecBoxMin, const Vector& vecBo
 
 
 #ifdef _X360
-bool FASTCALL IsBoxIntersectingRay( fltx4 boxMin, fltx4 boxMax, 
+bool FASTCALL IsBoxIntersectingRay( fltx4 boxMin, fltx4 boxMax,
 								    fltx4 origin, fltx4 delta, fltx4 invDelta, // ray parameters
 									fltx4 vTolerance ///< eg from ReplicateX4(flTolerance)
 									)
 #else
-bool FASTCALL IsBoxIntersectingRay( const fltx4 &inBoxMin, const fltx4 & inBoxMax, 
+bool FASTCALL IsBoxIntersectingRay( const fltx4 &inBoxMin, const fltx4 & inBoxMax,
 								   const fltx4 & origin, const fltx4 & delta, const fltx4 & invDelta, // ray parameters
 								   const fltx4 & vTolerance ///< eg from ReplicateX4(flTolerance)
 								   )
@@ -983,7 +983,7 @@ bool FASTCALL IsBoxIntersectingRay( const fltx4 &inBoxMin, const fltx4 & inBoxMa
 }
 
 
-bool FASTCALL IsBoxIntersectingRay( const fltx4& boxMin, const fltx4& boxMax, 
+bool FASTCALL IsBoxIntersectingRay( const fltx4& boxMin, const fltx4& boxMax,
 								   const Ray_t& ray, float flTolerance )
 {
 	fltx4 vTolerance = ReplicateX4(flTolerance);
@@ -1039,7 +1039,7 @@ bool IntersectRayWithRay( const Ray_t &ray0, const Ray_t &ray1, float &t, float 
 	//  s = Det | (p1 - p0) , v0 , (v0 x v1) | / |v0 x v1|^2
 	//
 	//  Det | A B C | = -( A x C ) dot B or -( C x B ) dot A
-	// 
+	//
 	//  NOTE: if |v0 x v1|^2 = 0, then the lines are parallel
 	//
 	Vector v0( ray0.m_Delta );
@@ -1060,7 +1060,7 @@ bool IntersectRayWithRay( const Ray_t &ray0, const Ray_t &ray1, float &t, float 
 	Vector AxC = p1p0.Cross( v0xv1 );
 	AxC.Negate();
 	float detT = AxC.Dot( v1 );
-	
+
 	AxC = p1p0.Cross( v0xv1 );
 	AxC.Negate();
 	float detS = AxC.Dot( v0 );
@@ -1127,7 +1127,7 @@ float IntersectRayWithAAPlane( const Vector& vecStart, const Vector& vecEnd, int
 //-----------------------------------------------------------------------------
 // Intersects a ray against a box
 //-----------------------------------------------------------------------------
-bool IntersectRayWithBox( const Vector &vecRayStart, const Vector &vecRayDelta, 
+bool IntersectRayWithBox( const Vector &vecRayStart, const Vector &vecRayDelta,
 	const Vector &boxMins, const Vector &boxMaxs, float flTolerance, BoxTraceInfo_t *pTrace )
 {
 	int			i;
@@ -1188,7 +1188,7 @@ bool IntersectRayWithBox( const Vector &vecRayStart, const Vector &vecRayDelta,
 			}
 		}
 		else
-		{ 
+		{
 			// leave
 			f = (d1 + flTolerance) / (d1-d2);
 			if (f < pTrace->t2)
@@ -1205,7 +1205,7 @@ bool IntersectRayWithBox( const Vector &vecRayStart, const Vector &vecRayDelta,
 //-----------------------------------------------------------------------------
 // Intersects a ray against a box
 //-----------------------------------------------------------------------------
-bool IntersectRayWithBox( const Vector &vecRayStart, const Vector &vecRayDelta, 
+bool IntersectRayWithBox( const Vector &vecRayStart, const Vector &vecRayDelta,
 	const Vector &boxMins, const Vector &boxMaxs, float flTolerance, CBaseTrace *pTrace, float *pFractionLeftSolid )
 {
 	Collision_ClearTrace( vecRayStart, vecRayDelta, pTrace );
@@ -1262,7 +1262,7 @@ bool IntersectRayWithBox( const Vector &vecRayStart, const Vector &vecRayDelta,
 //-----------------------------------------------------------------------------
 // Intersects a ray against a box
 //-----------------------------------------------------------------------------
-bool IntersectRayWithBox( const Ray_t &ray, const Vector &boxMins, const Vector &boxMaxs, 
+bool IntersectRayWithBox( const Ray_t &ray, const Vector &boxMins, const Vector &boxMaxs,
 						 float flTolerance, CBaseTrace *pTrace, float *pFractionLeftSolid )
 {
 	if ( !ray.m_IsRay )
@@ -1281,8 +1281,8 @@ bool IntersectRayWithBox( const Ray_t &ray, const Vector &boxMins, const Vector 
 //-----------------------------------------------------------------------------
 // Intersects a ray against an OBB, returns t1 and t2
 //-----------------------------------------------------------------------------
-bool IntersectRayWithOBB( const Vector &vecRayStart, const Vector &vecRayDelta, 
-	const matrix3x4_t &matOBBToWorld, const Vector &vecOBBMins, const Vector &vecOBBMaxs, 
+bool IntersectRayWithOBB( const Vector &vecRayStart, const Vector &vecRayDelta,
+	const matrix3x4_t &matOBBToWorld, const Vector &vecOBBMins, const Vector &vecOBBMaxs,
 	float flTolerance, BoxTraceInfo_t *pTrace )
 {
 	// FIXME: Two transforms is pretty expensive. Should we optimize this?
@@ -1290,7 +1290,7 @@ bool IntersectRayWithOBB( const Vector &vecRayStart, const Vector &vecRayDelta,
 	VectorITransform( vecRayStart, matOBBToWorld, start );
 	VectorIRotate( vecRayDelta, matOBBToWorld, delta );
 
-	return IntersectRayWithBox( start, delta, vecOBBMins, vecOBBMaxs, flTolerance, pTrace ); 
+	return IntersectRayWithBox( start, delta, vecOBBMins, vecOBBMaxs, flTolerance, pTrace );
 }
 
 
@@ -1298,8 +1298,8 @@ bool IntersectRayWithOBB( const Vector &vecRayStart, const Vector &vecRayDelta,
 //-----------------------------------------------------------------------------
 // Intersects a ray against an OBB
 //-----------------------------------------------------------------------------
-bool IntersectRayWithOBB( const Vector &vecRayStart, const Vector &vecRayDelta, 
-	const matrix3x4_t &matOBBToWorld, const Vector &vecOBBMins, const Vector &vecOBBMaxs, 
+bool IntersectRayWithOBB( const Vector &vecRayStart, const Vector &vecRayDelta,
+	const matrix3x4_t &matOBBToWorld, const Vector &vecOBBMins, const Vector &vecOBBMaxs,
 	float flTolerance, CBaseTrace *pTrace )
 {
 	Collision_ClearTrace( vecRayStart, vecRayDelta, pTrace );
@@ -1309,7 +1309,7 @@ bool IntersectRayWithOBB( const Vector &vecRayStart, const Vector &vecRayDelta,
 
 	// OPTIMIZE: Store this in the box instead of computing it here
 	// compute center in local space
-	Vector vecBoxExtents = (vecOBBMins + vecOBBMaxs) * 0.5; 
+	Vector vecBoxExtents = (vecOBBMins + vecOBBMaxs) * 0.5;
 	Vector vecBoxCenter;
 
 	// transform to world space
@@ -1321,7 +1321,7 @@ bool IntersectRayWithOBB( const Vector &vecRayStart, const Vector &vecRayDelta,
 	// OPTIMIZE: This is optimized for world space.  If the transform is fast enough, it may make more
 	// sense to just xform and call UTIL_ClipToBox() instead.  MEASURE THIS.
 
-	// save the extents of the ray along 
+	// save the extents of the ray along
 	Vector extent, uextent;
 	Vector segmentCenter = vecRayStart + vecRayDelta - vecBoxCenter;
 
@@ -1397,7 +1397,7 @@ bool IntersectRayWithOBB( const Vector &vecRayStart, const Vector &vecRayDelta,
 //-----------------------------------------------------------------------------
 // Intersects a ray against an OBB
 //-----------------------------------------------------------------------------
-bool IntersectRayWithOBB( const Vector &vecRayOrigin, const Vector &vecRayDelta, 
+bool IntersectRayWithOBB( const Vector &vecRayOrigin, const Vector &vecRayDelta,
 	const Vector &vecBoxOrigin, const QAngle &angBoxRotation,
 	const Vector &vecOBBMins, const Vector &vecOBBMaxs, float flTolerance, CBaseTrace *pTrace )
 {
@@ -1406,7 +1406,7 @@ bool IntersectRayWithOBB( const Vector &vecRayOrigin, const Vector &vecRayDelta,
 		Vector vecAbsMins, vecAbsMaxs;
 		VectorAdd( vecBoxOrigin, vecOBBMins, vecAbsMins );
 		VectorAdd( vecBoxOrigin, vecOBBMaxs, vecAbsMaxs );
-		return IntersectRayWithBox( vecRayOrigin, vecRayDelta, vecAbsMins, vecAbsMaxs, flTolerance, pTrace ); 
+		return IntersectRayWithBox( vecRayOrigin, vecRayDelta, vecAbsMins, vecAbsMaxs, flTolerance, pTrace );
 	}
 
 	matrix3x4_t obbToWorld;
@@ -1418,7 +1418,7 @@ bool IntersectRayWithOBB( const Vector &vecRayOrigin, const Vector &vecRayDelta,
 //-----------------------------------------------------------------------------
 // Box support map
 //-----------------------------------------------------------------------------
-inline void ComputeSupportMap( const Vector &vecDirection, const Vector &vecBoxMins, 
+inline void ComputeSupportMap( const Vector &vecDirection, const Vector &vecBoxMins,
 				const Vector &vecBoxMaxs, float pDist[2] )
 {
 	int nIndex = (vecDirection.x > 0.0f);
@@ -1434,7 +1434,7 @@ inline void ComputeSupportMap( const Vector &vecDirection, const Vector &vecBoxM
 	pDist[1 - nIndex] += vecBoxMins.z * vecDirection.z;
 }
 
-inline void ComputeSupportMap( const Vector &vecDirection, int i1, int i2, 
+inline void ComputeSupportMap( const Vector &vecDirection, int i1, int i2,
 	const Vector &vecBoxMins, const Vector &vecBoxMaxs, float pDist[2] )
 {
 	int nIndex = (vecDirection[i1] > 0.0f);
@@ -1449,14 +1449,14 @@ inline void ComputeSupportMap( const Vector &vecDirection, int i1, int i2,
 //-----------------------------------------------------------------------------
 // Intersects a ray against an OBB
 //-----------------------------------------------------------------------------
-static int s_ExtIndices[3][2] = 
+static int s_ExtIndices[3][2] =
 {
 	{ 2, 1 },
 	{ 0, 2 },
 	{ 0, 1 },
 };
 
-static int s_MatIndices[3][2] = 
+static int s_MatIndices[3][2] =
 {
 	{ 1, 2 },
 	{ 2, 0 },
@@ -1468,7 +1468,7 @@ bool IntersectRayWithOBB( const Ray_t &ray, const matrix3x4_t &matOBBToWorld,
 {
 	if ( ray.m_IsRay )
 	{
-		return IntersectRayWithOBB( ray.m_Start, ray.m_Delta, matOBBToWorld, 
+		return IntersectRayWithOBB( ray.m_Start, ray.m_Delta, matOBBToWorld,
 			vecOBBMins, vecOBBMaxs, flTolerance, pTrace );
 	}
 
@@ -1499,7 +1499,7 @@ bool IntersectRayWithOBB( const Ray_t &ray, const matrix3x4_t &matOBBToWorld,
 	// We're going to create a number of planes through various vertices in the OBB
 	// which represent all of the separating planes. Then we're going to bloat the planes
 	// by the ray extents.
-	
+
 	// We're going to do all work in OBB-space because it's easier to do the
 	// support-map in this case
 
@@ -1515,30 +1515,30 @@ bool IntersectRayWithOBB( const Ray_t &ray, const matrix3x4_t &matOBBToWorld,
 	int i;
 	for ( i = 0; i < 3; ++i )
 	{
-		// Each plane needs to be bloated an amount = to the abs dot product of 
+		// Each plane needs to be bloated an amount = to the abs dot product of
 		// the ray extents with the plane normal
-		// For the OBB planes, do it in world space; 
+		// For the OBB planes, do it in world space;
 		// and use the direction of the OBB (the ith column of matOBBToWorld) in world space vs extents
 		pPlaneNormal[i].Init( );
 		pPlaneNormal[i][i] = 1.0f;
 
-		float flExtentDotNormal = 
+		float flExtentDotNormal =
 			FloatMakePositive( matOBBToWorld[0][i] * ray.m_Extents.x ) +
 			FloatMakePositive( matOBBToWorld[1][i] * ray.m_Extents.y ) +
 			FloatMakePositive( matOBBToWorld[2][i] * ray.m_Extents.z );
 
-		ppPlaneDist[i][0] = vecOBBMins[i] - flExtentDotNormal; 
+		ppPlaneDist[i][0] = vecOBBMins[i] - flExtentDotNormal;
 		ppPlaneDist[i][1] = vecOBBMaxs[i] + flExtentDotNormal;
 
 		// For the ray-extents planes, they are bloated by the extents
 		// Use the support map to determine which
-		VectorCopy( matOBBToWorld[i], pPlaneNormal[i+3].Base() ); 
+		VectorCopy( matOBBToWorld[i], pPlaneNormal[i+3].Base() );
 		ComputeSupportMap( pPlaneNormal[i+3], vecOBBMins, vecOBBMaxs, ppPlaneDist[i+3] );
 		ppPlaneDist[i+3][0] -= ray.m_Extents[i];
 		ppPlaneDist[i+3][1] += ray.m_Extents[i];
 
 		// Now the edge cases... (take the cross product of x,y,z axis w/ ray extent axes
-		// given by the rows of the obb to world matrix. 
+		// given by the rows of the obb to world matrix.
 		// Compute the ray extent bloat in world space because it's easier...
 
 		// These are necessary to compute the world-space versions of
@@ -1551,16 +1551,16 @@ bool IntersectRayWithOBB( const Ray_t &ray, const matrix3x4_t &matOBBToWorld,
 		// x axis of the OBB + world ith axis
 		pPlaneNormal[i+6].Init( 0.0f, -matOBBToWorld[i][2], matOBBToWorld[i][1] );
 		ComputeSupportMap( pPlaneNormal[i+6], 1, 2, vecOBBMins, vecOBBMaxs, ppPlaneDist[i+6] );
-		flExtentDotNormal = 
+		flExtentDotNormal =
 			FloatMakePositive( pMatRow0[0] ) * flRayExtent0 +
 			FloatMakePositive( pMatRow1[0] ) * flRayExtent1;
 		ppPlaneDist[i+6][0] -= flExtentDotNormal;
 		ppPlaneDist[i+6][1] += flExtentDotNormal;
-		
+
 		// y axis of the OBB + world ith axis
 		pPlaneNormal[i+9].Init( matOBBToWorld[i][2], 0.0f, -matOBBToWorld[i][0] );
 		ComputeSupportMap( pPlaneNormal[i+9], 0, 2, vecOBBMins, vecOBBMaxs, ppPlaneDist[i+9] );
-		flExtentDotNormal = 
+		flExtentDotNormal =
 			FloatMakePositive( pMatRow0[1] ) * flRayExtent0 +
 			FloatMakePositive( pMatRow1[1] ) * flRayExtent1;
 		ppPlaneDist[i+9][0] -= flExtentDotNormal;
@@ -1569,7 +1569,7 @@ bool IntersectRayWithOBB( const Ray_t &ray, const matrix3x4_t &matOBBToWorld,
 		// z axis of the OBB + world ith axis
 		pPlaneNormal[i+12].Init( -matOBBToWorld[i][1], matOBBToWorld[i][0], 0.0f );
 		ComputeSupportMap( pPlaneNormal[i+12], 0, 1, vecOBBMins, vecOBBMaxs, ppPlaneDist[i+12] );
-		flExtentDotNormal = 
+		flExtentDotNormal =
 			FloatMakePositive( pMatRow0[2] ) * flRayExtent0 +
 			FloatMakePositive( pMatRow1[2] ) * flRayExtent1;
 		ppPlaneDist[i+12][0] -= flExtentDotNormal;
@@ -1596,7 +1596,7 @@ bool IntersectRayWithOBB( const Ray_t &ray, const matrix3x4_t &matOBBToWorld,
 		float flStartDot = DotProduct( pPlaneNormal[i], vecLocalRayOrigin );
 		float flEndDot = DotProduct( pPlaneNormal[i], vecLocalRayEnd );
 
-		// NOTE: Negative here is because the plane normal + dist 
+		// NOTE: Negative here is because the plane normal + dist
 		// are defined in negative terms for the far plane (plane dist index 0)
 		d1[0] = -(flStartDot - ppPlaneDist[i][0]);
 		d2[0] = -(flEndDot - ppPlaneDist[i][0]);
@@ -1638,7 +1638,7 @@ bool IntersectRayWithOBB( const Ray_t &ray, const matrix3x4_t &matOBBToWorld,
 				}
 			}
 			else
-			{ 
+			{
 				// leave
 				f = (d1[j] + flTolerance) * flDenom;
 				if (f < leavefrac)
@@ -1710,7 +1710,7 @@ bool IntersectRayWithOBB( const Ray_t &ray, const Vector &vecBoxOrigin, const QA
 	return IntersectRayWithOBB( ray, matOBBToWorld, vecOBBMins, vecOBBMaxs, flTolerance, pTrace );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
@@ -1740,7 +1740,7 @@ void GetNonMajorAxes( const Vector &vNormal, Vector2D &axes )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-QuadBarycentricRetval_t QuadWithParallelEdges( const Vector &vecOrigin, 
+QuadBarycentricRetval_t QuadWithParallelEdges( const Vector &vecOrigin,
 	const Vector &vecU, float lengthU, const Vector &vecV, float lengthV,
 	const Vector &pt, Vector2D &vecUV )
 {
@@ -1773,7 +1773,7 @@ QuadBarycentricRetval_t QuadWithParallelEdges( const Vector &vecOrigin,
 	vecUV[1] = t / lengthV;
 
 	// inside of the quad??
-	if( ( vecUV[0] < 0.0f ) || ( vecUV[0] > 1.0f ) || 
+	if( ( vecUV[0] < 0.0f ) || ( vecUV[0] > 1.0f ) ||
 		( vecUV[1] < 0.0f ) || ( vecUV[1] > 1.0f ) )
 		return BARY_QUADRATIC_FALSE;
 
@@ -1783,7 +1783,7 @@ QuadBarycentricRetval_t QuadWithParallelEdges( const Vector &vecOrigin,
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void ResolveQuadratic( double tPlus, double tMinus, 
+void ResolveQuadratic( double tPlus, double tMinus,
 					   const Vector axisU0, const Vector axisU1,
 					   const Vector axisV0, const Vector axisV1,
 					   const Vector axisOrigin, const Vector pt,
@@ -1796,14 +1796,14 @@ void ResolveQuadratic( double tPlus, double tMinus,
 	double sPlus = UNINIT, sMinus = UNINIT;
 	if( FloatMakePositive( sDenomPlus ) >= 1e-5 )
 	{
-		sPlus = ( pt[projU] - axisOrigin[projU] - ( axisV0[projU] * tPlus ) ) / sDenomPlus; 
+		sPlus = ( pt[projU] - axisOrigin[projU] - ( axisV0[projU] * tPlus ) ) / sDenomPlus;
 	}
 
 	if( FloatMakePositive( sDenomMinus ) >= 1e-5 )
 	{
-		sMinus = ( pt[projU] - axisOrigin[projU] - ( axisV0[projU] * tMinus ) ) / sDenomMinus; 
+		sMinus = ( pt[projU] - axisOrigin[projU] - ( axisV0[projU] * tMinus ) ) / sDenomMinus;
 	}
-	
+
 	if( ( tPlus >= 0.0 ) && ( tPlus <= 1.0 ) && ( sPlus >= 0.0 ) && ( sPlus <= 1.0 ) )
 	{
 		s = sPlus;
@@ -1858,7 +1858,7 @@ void ResolveQuadratic( double tPlus, double tMinus,
 //
 //-----------------------------------------------------------------------------
 
-QuadBarycentricRetval_t PointInQuadToBarycentric( const Vector &v1, const Vector &v2, 
+QuadBarycentricRetval_t PointInQuadToBarycentric( const Vector &v1, const Vector &v2,
 	const Vector &v3, const Vector &v4, const Vector &point, Vector2D &uv )
 {
 #define PIQ_TEXTURE_EPSILON		0.001
@@ -1923,7 +1923,7 @@ QuadBarycentricRetval_t PointInQuadToBarycentric( const Vector &v1, const Vector
 	GetNonMajorAxes( vNormal, projAxes );
 
 	//
-	// NOTE: axisU[0][projAxes[0]] < axisU[0][projAxes[1]], 
+	// NOTE: axisU[0][projAxes[0]] < axisU[0][projAxes[1]],
 	//       this is done to decrease error when dividing later
 	//
 	if( FloatMakePositive( axisU[0][projAxes[0]] ) < FloatMakePositive( axisU[0][projAxes[1]] ) )
@@ -1945,7 +1945,7 @@ QuadBarycentricRetval_t PointInQuadToBarycentric( const Vector &v1, const Vector
 	//
 	// (1.1) V = V0 + s * (V1 - V0)
 	// (1.2) U = U0 + t * (U1 - U0)
-	// 
+	//
 	// Therefore (from 1.1 + 1.0):
 	// PT - P0 = U0 * s + (V0 + s * (V1-V0)) * t
 	// Group s's:
@@ -1957,20 +1957,20 @@ QuadBarycentricRetval_t PointInQuadToBarycentric( const Vector &v1, const Vector
 	double s = 0.0, t = 0.0;
 	double A, negB, C;
 
-	A = ( axisU[0][projAxes[1]] * axisV[0][projAxes[0]] ) - 
-		( axisU[0][projAxes[0]] * axisV[0][projAxes[1]] ) - 
-		( axisU[1][projAxes[1]] * axisV[0][projAxes[0]] ) + 
+	A = ( axisU[0][projAxes[1]] * axisV[0][projAxes[0]] ) -
+		( axisU[0][projAxes[0]] * axisV[0][projAxes[1]] ) -
+		( axisU[1][projAxes[1]] * axisV[0][projAxes[0]] ) +
 		( axisU[1][projAxes[0]] * axisV[0][projAxes[1]] );
-	C = ( v1[projAxes[1]] * axisU[0][projAxes[0]] ) - 
-		( point[projAxes[1]] * axisU[0][projAxes[0]] ) - 
-		( v1[projAxes[0]] * axisU[0][projAxes[1]] ) + 
+	C = ( v1[projAxes[1]] * axisU[0][projAxes[0]] ) -
+		( point[projAxes[1]] * axisU[0][projAxes[0]] ) -
+		( v1[projAxes[0]] * axisU[0][projAxes[1]] ) +
 		( point[projAxes[0]] * axisU[0][projAxes[1]] );
-	negB = C - 
-		  ( v1[projAxes[1]] * axisU[1][projAxes[0]] ) + 
-		  ( point[projAxes[1]] * axisU[1][projAxes[0]] ) + 
-		  ( v1[projAxes[0]] * axisU[1][projAxes[1]] ) - 
-		  ( point[projAxes[0]] * axisU[1][projAxes[1]] ) + 
-		  ( axisU[0][projAxes[1]] * axisV[0][projAxes[0]] ) - 
+	negB = C -
+		  ( v1[projAxes[1]] * axisU[1][projAxes[0]] ) +
+		  ( point[projAxes[1]] * axisU[1][projAxes[0]] ) +
+		  ( v1[projAxes[0]] * axisU[1][projAxes[1]] ) -
+		  ( point[projAxes[0]] * axisU[1][projAxes[1]] ) +
+		  ( axisU[0][projAxes[1]] * axisV[0][projAxes[0]] ) -
 		  ( axisU[0][projAxes[0]] * axisV[0][projAxes[1]] );
 
 	if( ( A > -PIQ_PLANE_EPSILON ) && ( A < PIQ_PLANE_EPSILON ) )
@@ -1981,7 +1981,7 @@ QuadBarycentricRetval_t PointInQuadToBarycentric( const Vector &v1, const Vector
 		Vector vecUAvg, vecVAvg;
 		vecUAvg = ( axisUNorm[0] + axisUNorm[1] ) * 0.5f;
 		vecVAvg = ( axisVNorm[0] + axisVNorm[1] ) * 0.5f;
-		
+
 		float fLengthUAvg = ( lengthU[0] + lengthU[1] ) * 0.5f;
 		float fLengthVAvg = ( lengthV[0] + lengthV[1] ) * 0.5f;
 
@@ -2034,7 +2034,7 @@ QuadBarycentricRetval_t PointInQuadToBarycentric( const Vector &v1, const Vector
 	// inside of the quad??
 	if( ( uv[0] < 0.0f ) || ( uv[0] > 1.0f ) || ( uv[1] < 0.0f ) || ( uv[1] > 1.0f ) )
 		return BARY_QUADRATIC_FALSE;
-	
+
 	return BARY_QUADRATIC_TRUE;
 
 #undef PIQ_TEXTURE_EPSILON
@@ -2054,7 +2054,7 @@ void PointInQuadFromBarycentric( const Vector &v1, const Vector &v2, const Vecto
 	Vector vPts[2];
 	VectorLerp( v1, v4, uv[1], vPts[0] );
 	VectorLerp( v2, v3, uv[1], vPts[1] );
-	VectorLerp( vPts[0], vPts[1], uv[0], point ); 
+	VectorLerp( vPts[0], vPts[1], uv[0], point );
 }
 
 
@@ -2070,7 +2070,7 @@ void TexCoordInQuadFromBarycentric( const Vector2D &v1, const Vector2D &v2, cons
 	Vector2D vCoords[2];
 	Vector2DLerp( v1, v4, uv[1], vCoords[0] );
 	Vector2DLerp( v2, v3, uv[1], vCoords[1] );
-	Vector2DLerp( vCoords[0], vCoords[1], uv[0], texCoord ); 
+	Vector2DLerp( vCoords[0], vCoords[1], uv[0], texCoord );
 }
 
 
@@ -2078,7 +2078,7 @@ void TexCoordInQuadFromBarycentric( const Vector2D &v1, const Vector2D &v2, cons
 // Compute point from barycentric specification
 // Edge u goes from v0 to v1, edge v goes from v0 to v2
 //-----------------------------------------------------------------------------
-void ComputePointFromBarycentric( const Vector& v0, const Vector& v1, const Vector& v2, 
+void ComputePointFromBarycentric( const Vector& v0, const Vector& v1, const Vector& v2,
 								 float u, float v, Vector& pt )
 {
 	Vector edgeU, edgeV;
@@ -2088,7 +2088,7 @@ void ComputePointFromBarycentric( const Vector& v0, const Vector& v1, const Vect
 	VectorMA( pt, v, edgeV, pt );
 }
 
-void ComputePointFromBarycentric( const Vector2D& v0, const Vector2D& v1, const Vector2D& v2, 
+void ComputePointFromBarycentric( const Vector2D& v0, const Vector2D& v1, const Vector2D& v2,
 								 float u, float v, Vector2D& pt )
 {
 	Vector2D edgeU, edgeV;
@@ -2103,7 +2103,7 @@ void ComputePointFromBarycentric( const Vector2D& v0, const Vector2D& v1, const 
 // Compute a matrix that has the correct orientation but which has an origin at
 // the center of the bounds
 //-----------------------------------------------------------------------------
-static void ComputeCenterMatrix( const Vector& origin, const QAngle& angles, 
+static void ComputeCenterMatrix( const Vector& origin, const QAngle& angles,
 	const Vector& mins, const Vector& maxs, matrix3x4_t& matrix )
 {
 	Vector centroid;
@@ -2117,7 +2117,7 @@ static void ComputeCenterMatrix( const Vector& origin, const QAngle& angles,
 	MatrixSetColumn( worldCentroid, 3, matrix );
 }
 
-static void ComputeCenterIMatrix( const Vector& origin, const QAngle& angles, 
+static void ComputeCenterIMatrix( const Vector& origin, const QAngle& angles,
 	const Vector& mins, const Vector& maxs, matrix3x4_t& matrix )
 {
 	Vector centroid;
@@ -2156,7 +2156,7 @@ static inline void ComputeAbsMatrix( const matrix3x4_t& in, matrix3x4_t& out )
 // Compute a separating plane between two boxes (expensive!)
 // Returns false if no separating plane exists
 //-----------------------------------------------------------------------------
-static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix3x4_t &box2ToWorld, 
+static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix3x4_t &box2ToWorld,
 	const Vector& box1Size, const Vector& box2Size, float tolerance, cplane_t* pPlane )
 {
 	// The various separating planes can be either
@@ -2182,7 +2182,7 @@ static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix
 
 	// NOTE: The algorithm here involves finding the projections of the two boxes
 	// onto a particular line. If the projections on the line do not overlap,
-	// that means that there's a plane perpendicular to the line which separates 
+	// that means that there's a plane perpendicular to the line which separates
 	// the two boxes; and we've therefore found a separating plane.
 
 	// The way we check for overlay is we find the projections of the two boxes
@@ -2192,7 +2192,7 @@ static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix
 	Vector tmp;
 	float boxProjectionSum;
 	float originProjection;
-	
+
 	// NOTE: For these guys, we're taking advantage of the fact that the ith
 	// row of the box2ToBox1 is the direction of the box1 (x,y,z)-axis
 	// transformed into the space of box2.
@@ -2205,7 +2205,7 @@ static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix
 		VectorCopy( worldToBox1[0], pPlane->normal.Base() );
 		return true;
 	}
-	
+
 	// Second side of box 1
 	boxProjectionSum = box1Size.y + MatrixRowDotProduct( absBox2ToBox1, 1, box2Size );
 	originProjection = FloatMakePositive( box2Origin.y ) + tolerance;
@@ -2214,7 +2214,7 @@ static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix
 		VectorCopy( worldToBox1[1], pPlane->normal.Base() );
 		return true;
 	}
-	
+
 	// Third side of box 1
 	boxProjectionSum = box1Size.z + MatrixRowDotProduct( absBox2ToBox1, 2, box2Size );
 	originProjection = FloatMakePositive( box2Origin.z ) + tolerance;
@@ -2223,7 +2223,7 @@ static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix
 		VectorCopy( worldToBox1[2], pPlane->normal.Base() );
 		return true;
 	}
-	
+
 	// The next three involve checking splitting planes parallel to the
 	// faces of the second box.
 
@@ -2232,38 +2232,38 @@ static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix
 	// transformed into the space of box1.
 	// Here, we're determining the distance of box2's center from box1's center
 	// by projecting it onto a line parallel to box2's axis
-	
+
 	// First side of box 2
 	boxProjectionSum = box2Size.x +	MatrixColumnDotProduct( absBox2ToBox1, 0, box1Size );
 	originProjection = FloatMakePositive( MatrixColumnDotProduct( box2ToBox1, 0, box2Origin ) ) + tolerance;
 	if ( FloatBits(originProjection) > FloatBits(boxProjectionSum) )
 	{
-		MatrixGetColumn( box2ToWorld, 0, pPlane->normal );	
+		MatrixGetColumn( box2ToWorld, 0, pPlane->normal );
 		return true;
 	}
-	
+
 	// Second side of box 2
 	boxProjectionSum = box2Size.y +	MatrixColumnDotProduct( absBox2ToBox1, 1, box1Size );
 	originProjection = FloatMakePositive( MatrixColumnDotProduct( box2ToBox1, 1, box2Origin ) ) + tolerance;
 	if ( FloatBits(originProjection) > FloatBits(boxProjectionSum) )
 	{
-		MatrixGetColumn( box2ToWorld, 1, pPlane->normal );	
+		MatrixGetColumn( box2ToWorld, 1, pPlane->normal );
 		return true;
 	}
-	
+
 	// Third side of box 2
 	boxProjectionSum = box2Size.z +	MatrixColumnDotProduct( absBox2ToBox1, 2, box1Size );
 	originProjection = FloatMakePositive( MatrixColumnDotProduct( box2ToBox1, 2, box2Origin ) ) + tolerance;
 	if ( FloatBits(originProjection) > FloatBits(boxProjectionSum) )
 	{
-		MatrixGetColumn( box2ToWorld, 2, pPlane->normal );	
+		MatrixGetColumn( box2ToWorld, 2, pPlane->normal );
 		return true;
 	}
-	
+
 	// Next check the splitting planes which are orthogonal to the pairs
 	// of edges, one from box1 and one from box2.  As only direction matters,
 	// there are 9 pairs since each box has 3 distinct edge directions.
-	
+
 	// Here, we take advantage of the fact that the edges from box 1 are all
 	// axis aligned; therefore the crossproducts are simplified. Let's walk through
 	// the example of b1e1 x b2e1:
@@ -2295,7 +2295,7 @@ static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix
 	// against the line, which =
 	// AbsDot( box2Size, l2 ) = abs( fz * box2.y ) + abs ( fy * box2.z )
 
-	// The projection of the relative origin position on this line is done in the 
+	// The projection of the relative origin position on this line is done in the
 	// space of box 1:
 	//
 	// originProjection = DotProduct( <-ez j + ey k>, box2Origin ) =
@@ -2303,7 +2303,7 @@ static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix
 
 	// NOTE: These checks can be bogus if both edges are parallel. The if
 	// checks at the beginning of each block are designed to catch that case
-	
+
 	// b1e1 x b2e1
 	if ( absBox2ToBox1[0][0] < 1.0f - 1e-3f )
 	{
@@ -2313,8 +2313,8 @@ static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix
 		originProjection = FloatMakePositive( -box2Origin.y * box2ToBox1[2][0] + box2Origin.z * box2ToBox1[1][0] ) + tolerance;
 		if ( FloatBits(originProjection) > FloatBits(boxProjectionSum) )
 		{
-			MatrixGetColumn( box2ToWorld, 0, tmp );	
-			CrossProduct( worldToBox1[0], tmp.Base(), pPlane->normal.Base() ); 
+			MatrixGetColumn( box2ToWorld, 0, tmp );
+			CrossProduct( worldToBox1[0], tmp.Base(), pPlane->normal.Base() );
 			return true;
 		}
 	}
@@ -2328,8 +2328,8 @@ static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix
 		originProjection = FloatMakePositive( -box2Origin.y * box2ToBox1[2][1] + box2Origin.z * box2ToBox1[1][1] ) + tolerance;
 		if ( FloatBits(originProjection) > FloatBits(boxProjectionSum) )
 		{
-			MatrixGetColumn( box2ToWorld, 1, tmp );	
-			CrossProduct( worldToBox1[0], tmp.Base(), pPlane->normal.Base() ); 
+			MatrixGetColumn( box2ToWorld, 1, tmp );
+			CrossProduct( worldToBox1[0], tmp.Base(), pPlane->normal.Base() );
 			return true;
 		}
 	}
@@ -2343,8 +2343,8 @@ static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix
 		originProjection = FloatMakePositive( -box2Origin.y * box2ToBox1[2][2] + box2Origin.z * box2ToBox1[1][2] ) + tolerance;
 		if ( FloatBits(originProjection) > FloatBits(boxProjectionSum) )
 		{
-			MatrixGetColumn( box2ToWorld, 2, tmp );	
-			CrossProduct( worldToBox1[0], tmp.Base(), pPlane->normal.Base() ); 
+			MatrixGetColumn( box2ToWorld, 2, tmp );
+			CrossProduct( worldToBox1[0], tmp.Base(), pPlane->normal.Base() );
 			return true;
 		}
 	}
@@ -2358,8 +2358,8 @@ static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix
 		originProjection = FloatMakePositive( box2Origin.x * box2ToBox1[2][0] - box2Origin.z * box2ToBox1[0][0] ) + tolerance;
 		if ( FloatBits(originProjection) > FloatBits(boxProjectionSum) )
 		{
-			MatrixGetColumn( box2ToWorld, 0, tmp );	
-			CrossProduct( worldToBox1[1], tmp.Base(), pPlane->normal.Base() ); 
+			MatrixGetColumn( box2ToWorld, 0, tmp );
+			CrossProduct( worldToBox1[1], tmp.Base(), pPlane->normal.Base() );
 			return true;
 		}
 	}
@@ -2373,8 +2373,8 @@ static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix
 		originProjection = FloatMakePositive( box2Origin.x * box2ToBox1[2][1] - box2Origin.z * box2ToBox1[0][1] ) + tolerance;
 		if ( FloatBits(originProjection) > FloatBits(boxProjectionSum) )
 		{
-			MatrixGetColumn( box2ToWorld, 1, tmp );	
-			CrossProduct( worldToBox1[1], tmp.Base(), pPlane->normal.Base() ); 
+			MatrixGetColumn( box2ToWorld, 1, tmp );
+			CrossProduct( worldToBox1[1], tmp.Base(), pPlane->normal.Base() );
 			return true;
 		}
 	}
@@ -2388,8 +2388,8 @@ static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix
 		originProjection = FloatMakePositive( box2Origin.x * box2ToBox1[2][2] - box2Origin.z * box2ToBox1[0][2] ) + tolerance;
 		if ( FloatBits(originProjection) > FloatBits(boxProjectionSum) )
 		{
-			MatrixGetColumn( box2ToWorld, 2, tmp );	
-			CrossProduct( worldToBox1[1], tmp.Base(), pPlane->normal.Base() ); 
+			MatrixGetColumn( box2ToWorld, 2, tmp );
+			CrossProduct( worldToBox1[1], tmp.Base(), pPlane->normal.Base() );
 			return true;
 		}
 	}
@@ -2403,8 +2403,8 @@ static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix
 		originProjection = FloatMakePositive( -box2Origin.x * box2ToBox1[1][0] + box2Origin.y * box2ToBox1[0][0] ) + tolerance;
 		if ( FloatBits(originProjection) > FloatBits(boxProjectionSum) )
 		{
-			MatrixGetColumn( box2ToWorld, 0, tmp );	
-			CrossProduct( worldToBox1[2], tmp.Base(), pPlane->normal.Base() ); 
+			MatrixGetColumn( box2ToWorld, 0, tmp );
+			CrossProduct( worldToBox1[2], tmp.Base(), pPlane->normal.Base() );
 			return true;
 		}
 	}
@@ -2418,8 +2418,8 @@ static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix
 		originProjection = FloatMakePositive( -box2Origin.x * box2ToBox1[1][1] + box2Origin.y * box2ToBox1[0][1] ) + tolerance;
 		if ( FloatBits(originProjection) > FloatBits(boxProjectionSum) )
 		{
-			MatrixGetColumn( box2ToWorld, 1, tmp );	
-			CrossProduct( worldToBox1[2], tmp.Base(), pPlane->normal.Base() ); 
+			MatrixGetColumn( box2ToWorld, 1, tmp );
+			CrossProduct( worldToBox1[2], tmp.Base(), pPlane->normal.Base() );
 			return true;
 		}
 	}
@@ -2433,8 +2433,8 @@ static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix
 		originProjection = FloatMakePositive( -box2Origin.x * box2ToBox1[1][2] + box2Origin.y * box2ToBox1[0][2] ) + tolerance;
 		if ( FloatBits(originProjection) > FloatBits(boxProjectionSum) )
 		{
-			MatrixGetColumn( box2ToWorld, 2, tmp );	
-			CrossProduct( worldToBox1[2], tmp.Base(), pPlane->normal.Base() ); 
+			MatrixGetColumn( box2ToWorld, 2, tmp );
+			CrossProduct( worldToBox1[2], tmp.Base(), pPlane->normal.Base() );
 			return true;
 		}
 	}
@@ -2446,8 +2446,8 @@ static bool ComputeSeparatingPlane( const matrix3x4_t &worldToBox1, const matrix
 // Compute a separating plane between two boxes (expensive!)
 // Returns false if no separating plane exists
 //-----------------------------------------------------------------------------
-bool ComputeSeparatingPlane( const Vector& org1, const QAngle& angles1, const Vector& min1, const Vector& max1, 
-	const Vector& org2, const QAngle& angles2, const Vector& min2, const Vector& max2, 
+bool ComputeSeparatingPlane( const Vector& org1, const QAngle& angles1, const Vector& min1, const Vector& max1,
+	const Vector& org2, const QAngle& angles2, const Vector& min2, const Vector& max2,
 	float tolerance, cplane_t* pPlane )
 {
 	matrix3x4_t	worldToBox1, box2ToWorld;
@@ -2468,7 +2468,7 @@ bool ComputeSeparatingPlane( const Vector& org1, const QAngle& angles1, const Ve
 //-----------------------------------------------------------------------------
 // Swept OBB test
 //-----------------------------------------------------------------------------
-bool IsRayIntersectingOBB( const Ray_t &ray, const Vector& org, const QAngle& angles, 
+bool IsRayIntersectingOBB( const Ray_t &ray, const Vector& org, const QAngle& angles,
 						  const Vector& mins, const Vector& maxs )
 {
 	if ( angles == vec3_angle )
@@ -2476,7 +2476,7 @@ bool IsRayIntersectingOBB( const Ray_t &ray, const Vector& org, const QAngle& an
 		Vector vecWorldMins, vecWorldMaxs;
 		VectorAdd( org, mins, vecWorldMins );
 		VectorAdd( org, maxs, vecWorldMaxs );
-		return IsBoxIntersectingRay( vecWorldMins, vecWorldMaxs, ray ); 
+		return IsBoxIntersectingRay( vecWorldMins, vecWorldMaxs, ray );
 	}
 
 	if ( ray.m_IsRay )
@@ -2492,7 +2492,7 @@ bool IsRayIntersectingOBB( const Ray_t &ray, const Vector& org, const QAngle& an
 		rotatedRay.m_IsRay = ray.m_IsRay;
 		rotatedRay.m_IsSwept = ray.m_IsSwept;
 
-		return IsBoxIntersectingRay( mins, maxs, rotatedRay ); 
+		return IsBoxIntersectingRay( mins, maxs, rotatedRay );
 	}
 
 	if ( !ray.m_IsSwept )
@@ -2565,7 +2565,7 @@ bool IsRayIntersectingOBB( const Ray_t &ray, const Vector& org, const QAngle& an
 	// AbsDot( vecBoxHalfDiagonal, l1 ) = abs( -dz * vecBoxHalfDiagonal.y ) + abs( dy * vecBoxHalfDiagonal.z )
 
 	// Because the plane contains the sweep direction, the sweep will produce
-	// no extra projection onto the line normal to the plane. 
+	// no extra projection onto the line normal to the plane.
 	// Therefore all we need to do is project the ray extents onto this line also:
 	// AbsDot( ray.m_Extents, l1 ) = abs( -dz * ray.m_Extents.y ) + abs( dy * ray.m_Extents.z )
 
@@ -2574,7 +2574,7 @@ bool IsRayIntersectingOBB( const Ray_t &ray, const Vector& org, const QAngle& an
 	// box x x ray delta
 	CrossProduct( vecRayDirection, Vector( box2ToWorld[0][0], box2ToWorld[1][0], box2ToWorld[2][0] ), vecPlaneNormal );
 	float flCenterDeltaProjection = FloatMakePositive( DotProduct( vecPlaneNormal, vecCenterDelta ) );
-	float flBoxProjectionSum = 
+	float flBoxProjectionSum =
 		vecAbsRayDirBox2.z * box2Size.y + vecAbsRayDirBox2.y * box2Size.z +
 		DotProductAbs( vecPlaneNormal, ray.m_Extents );
 	if ( FloatBits(flCenterDeltaProjection) > FloatBits(flBoxProjectionSum) )
@@ -2583,7 +2583,7 @@ bool IsRayIntersectingOBB( const Ray_t &ray, const Vector& org, const QAngle& an
 	// box y x ray delta
 	CrossProduct( vecRayDirection, Vector( box2ToWorld[0][1], box2ToWorld[1][1], box2ToWorld[2][1] ), vecPlaneNormal );
 	flCenterDeltaProjection = FloatMakePositive( DotProduct( vecPlaneNormal, vecCenterDelta ) );
-	flBoxProjectionSum = 
+	flBoxProjectionSum =
 		vecAbsRayDirBox2.z * box2Size.x + vecAbsRayDirBox2.x * box2Size.z +
 		DotProductAbs( vecPlaneNormal, ray.m_Extents );
 	if ( FloatBits(flCenterDeltaProjection) > FloatBits(flBoxProjectionSum) )
@@ -2592,12 +2592,12 @@ bool IsRayIntersectingOBB( const Ray_t &ray, const Vector& org, const QAngle& an
 	// box z x ray delta
 	CrossProduct( vecRayDirection, Vector( box2ToWorld[0][2], box2ToWorld[1][2], box2ToWorld[2][2] ), vecPlaneNormal );
 	flCenterDeltaProjection = FloatMakePositive( DotProduct( vecPlaneNormal, vecCenterDelta ) );
-	flBoxProjectionSum = 
+	flBoxProjectionSum =
 		vecAbsRayDirBox2.y * box2Size.x + vecAbsRayDirBox2.x * box2Size.y +
 		DotProductAbs( vecPlaneNormal, ray.m_Extents );
 	if ( FloatBits(flCenterDeltaProjection) > FloatBits(flBoxProjectionSum) )
 		return false;
-	
+
 	return true;
 }
 
@@ -2665,7 +2665,7 @@ inline bool AxisTestEdgeCrossX3( float flEdgeZ, float flEdgeY, float flAbsEdgeZ,
 								 const Vector &p1, const Vector &p2, const Vector &vecExtents,
 								 float flTolerance )
 {
-	// Cross Product( axialX(1,0,0) x edge ): x = 0.0f, y = edge.z, z = -edge.y 
+	// Cross Product( axialX(1,0,0) x edge ): x = 0.0f, y = edge.z, z = -edge.y
 	// Triangle Point Distances: dist(x) = normal.y * pt(x).y + normal.z * pt(x).z
 	float flDist1 = flEdgeZ * p1.y - flEdgeY * p1.z;
 	float flDist2 = flEdgeZ * p2.y - flEdgeY * p2.z;
@@ -2758,12 +2758,12 @@ inline bool AxisTestEdgeCrossZ1( float flEdgeY, float flEdgeX, float flAbsEdgeY,
 	float flDist3 = flEdgeY * p3.x - flEdgeX * p3.y;
 
 	// Extents are symmetric: dist = abs( normal.x ) * extents.x + abs( normal.y ) * extents.y
-	float flDistBox = flAbsEdgeY * vecExtents.x + flAbsEdgeX * vecExtents.y; 
+	float flDistBox = flAbsEdgeY * vecExtents.x + flAbsEdgeX * vecExtents.y;
 
 	// Either dist2, dist3 is the closest point to the box, determine which and test of overlap with box(AABB).
 	if ( flDist3 < flDist2 )
 	{
-		if ( ( flDist3 > ( flDistBox + flTolerance ) ) || ( flDist2 < -( flDistBox + flTolerance ) ) ) 
+		if ( ( flDist3 > ( flDistBox + flTolerance ) ) || ( flDist2 < -( flDistBox + flTolerance ) ) )
 			return false;
 	}
 	else
@@ -2787,12 +2787,12 @@ inline bool AxisTestEdgeCrossZ2( float flEdgeY, float flEdgeX, float flAbsEdgeY,
 	float flDist3 = flEdgeY * p3.x - flEdgeX * p3.y;
 
 	// Extents are symmetric: dist = abs( normal.x ) * extents.x + abs( normal.y ) * extents.y
-	float flDistBox = flAbsEdgeY * vecExtents.x + flAbsEdgeX * vecExtents.y; 
+	float flDistBox = flAbsEdgeY * vecExtents.x + flAbsEdgeX * vecExtents.y;
 
 	// Either dist1, dist3 is the closest point to the box, determine which and test of overlap with box(AABB).
 	if ( flDist1 < flDist3 )
 	{
-		if ( ( flDist1 > ( flDistBox + flTolerance ) ) || ( flDist3 < -( flDistBox + flTolerance ) ) ) 
+		if ( ( flDist1 > ( flDistBox + flTolerance ) ) || ( flDist3 < -( flDistBox + flTolerance ) ) )
 			return false;
 	}
 	else
@@ -2805,13 +2805,13 @@ inline bool AxisTestEdgeCrossZ2( float flEdgeY, float flEdgeX, float flAbsEdgeY,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Test for an intersection (overlap) between an axial-aligned bounding 
+// Purpose: Test for an intersection (overlap) between an axial-aligned bounding
 //          box (AABB) and a triangle.
 //
 // Using the "Separating-Axis Theorem" to test for intersections between
 // a triangle and an axial-aligned bounding box (AABB).
 // 1. 3 Axis Planes - x, y, z
-// 2. 9 Edge Planes Tests - the 3 edges of the triangle crossed with all 3 axial 
+// 2. 9 Edge Planes Tests - the 3 edges of the triangle crossed with all 3 axial
 //                          planes (x, y, z)
 // 3. 1 Face Plane - the triangle plane (cplane_t plane below)
 // Output: false = separating axis (no intersection)
@@ -2830,24 +2830,24 @@ bool IsBoxIntersectingTriangle( const Vector &vecBoxCenter, const Vector &vecBox
 	p2.x = v2.x - vecBoxCenter.x;
 	p3.x = v3.x - vecBoxCenter.x;
 	FindMinMax( p1.x, p2.x, p3.x, flMin, flMax );
-	if ( ( flMin > ( vecBoxExtents.x + flTolerance ) ) || ( flMax < -( vecBoxExtents.x + flTolerance ) ) ) 
-		return false; 
+	if ( ( flMin > ( vecBoxExtents.x + flTolerance ) ) || ( flMax < -( vecBoxExtents.x + flTolerance ) ) )
+		return false;
 
 	// y plane
 	p1.y = v1.y - vecBoxCenter.y;
 	p2.y = v2.y - vecBoxCenter.y;
 	p3.y = v3.y - vecBoxCenter.y;
 	FindMinMax( p1.y, p2.y, p3.y, flMin, flMax );
-	if ( ( flMin > ( vecBoxExtents.y + flTolerance ) ) || ( flMax < -( vecBoxExtents.y + flTolerance ) ) ) 
-		return false; 
+	if ( ( flMin > ( vecBoxExtents.y + flTolerance ) ) || ( flMax < -( vecBoxExtents.y + flTolerance ) ) )
+		return false;
 
 	// z plane
 	p1.z = v1.z - vecBoxCenter.z;
 	p2.z = v2.z - vecBoxCenter.z;
 	p3.z = v3.z - vecBoxCenter.z;
 	FindMinMax( p1.z, p2.z, p3.z, flMin, flMax );
-	if ( ( flMin > ( vecBoxExtents.z + flTolerance ) ) || ( flMax < -( vecBoxExtents.z + flTolerance ) ) ) 
-		return false; 
+	if ( ( flMin > ( vecBoxExtents.z + flTolerance ) ) || ( flMax < -( vecBoxExtents.z + flTolerance ) ) )
+		return false;
 
 	// Test the 9 edge cases.
 	Vector vecEdge, vecAbsEdge;
@@ -2856,50 +2856,50 @@ bool IsBoxIntersectingTriangle( const Vector &vecBoxCenter, const Vector &vecBox
 	vecEdge = p2 - p1;
 	vecAbsEdge.y = FloatMakePositive( vecEdge.y );
 	vecAbsEdge.z = FloatMakePositive( vecEdge.z );
-	if ( !AxisTestEdgeCrossX2( vecEdge.z, vecEdge.y, vecAbsEdge.z, vecAbsEdge.y, p1, p3, vecBoxExtents, flTolerance ) ) 
-		return false; 
+	if ( !AxisTestEdgeCrossX2( vecEdge.z, vecEdge.y, vecAbsEdge.z, vecAbsEdge.y, p1, p3, vecBoxExtents, flTolerance ) )
+		return false;
 
 	vecAbsEdge.x = FloatMakePositive( vecEdge.x );
-	if ( !AxisTestEdgeCrossY2( vecEdge.z, vecEdge.x, vecAbsEdge.z, vecAbsEdge.x, p1, p3, vecBoxExtents, flTolerance ) ) 
-		return false; 
+	if ( !AxisTestEdgeCrossY2( vecEdge.z, vecEdge.x, vecAbsEdge.z, vecAbsEdge.x, p1, p3, vecBoxExtents, flTolerance ) )
+		return false;
 
-	if ( !AxisTestEdgeCrossZ1( vecEdge.y, vecEdge.x, vecAbsEdge.y, vecAbsEdge.x, p2, p3, vecBoxExtents, flTolerance ) ) 
-		return false; 
+	if ( !AxisTestEdgeCrossZ1( vecEdge.y, vecEdge.x, vecAbsEdge.y, vecAbsEdge.x, p2, p3, vecBoxExtents, flTolerance ) )
+		return false;
 
 	// edge 1 (cross x,y,z)
 	vecEdge = p3 - p2;
 	vecAbsEdge.y = FloatMakePositive( vecEdge.y );
 	vecAbsEdge.z = FloatMakePositive( vecEdge.z );
-	if ( !AxisTestEdgeCrossX2( vecEdge.z, vecEdge.y, vecAbsEdge.z, vecAbsEdge.y, p1, p2, vecBoxExtents, flTolerance ) ) 
-		return false; 
+	if ( !AxisTestEdgeCrossX2( vecEdge.z, vecEdge.y, vecAbsEdge.z, vecAbsEdge.y, p1, p2, vecBoxExtents, flTolerance ) )
+		return false;
 
 	vecAbsEdge.x = FloatMakePositive( vecEdge.x );
-	if ( !AxisTestEdgeCrossY2( vecEdge.z, vecEdge.x, vecAbsEdge.z, vecAbsEdge.x, p1, p2, vecBoxExtents, flTolerance ) ) 
-		return false; 
+	if ( !AxisTestEdgeCrossY2( vecEdge.z, vecEdge.x, vecAbsEdge.z, vecAbsEdge.x, p1, p2, vecBoxExtents, flTolerance ) )
+		return false;
 
-	if ( !AxisTestEdgeCrossZ2( vecEdge.y, vecEdge.x, vecAbsEdge.y, vecAbsEdge.x, p1, p3, vecBoxExtents, flTolerance ) ) 
-		return false; 
+	if ( !AxisTestEdgeCrossZ2( vecEdge.y, vecEdge.x, vecAbsEdge.y, vecAbsEdge.x, p1, p3, vecBoxExtents, flTolerance ) )
+		return false;
 
 	// edge 2 (cross x,y,z)
 	vecEdge = p1 - p3;
 	vecAbsEdge.y = FloatMakePositive( vecEdge.y );
 	vecAbsEdge.z = FloatMakePositive( vecEdge.z );
-	if ( !AxisTestEdgeCrossX3( vecEdge.z, vecEdge.y, vecAbsEdge.z, vecAbsEdge.y, p1, p2, vecBoxExtents, flTolerance ) ) 
-		return false; 
+	if ( !AxisTestEdgeCrossX3( vecEdge.z, vecEdge.y, vecAbsEdge.z, vecAbsEdge.y, p1, p2, vecBoxExtents, flTolerance ) )
+		return false;
 
 	vecAbsEdge.x = FloatMakePositive( vecEdge.x );
-	if ( !AxisTestEdgeCrossY3( vecEdge.z, vecEdge.x, vecAbsEdge.z, vecAbsEdge.x, p1, p2, vecBoxExtents, flTolerance ) ) 
-		return false; 
+	if ( !AxisTestEdgeCrossY3( vecEdge.z, vecEdge.x, vecAbsEdge.z, vecAbsEdge.x, p1, p2, vecBoxExtents, flTolerance ) )
+		return false;
 
-	if ( !AxisTestEdgeCrossZ1( vecEdge.y, vecEdge.x, vecAbsEdge.y, vecAbsEdge.x, p2, p3, vecBoxExtents, flTolerance ) ) 
-		return false; 
+	if ( !AxisTestEdgeCrossZ1( vecEdge.y, vecEdge.x, vecAbsEdge.y, vecAbsEdge.x, p2, p3, vecBoxExtents, flTolerance ) )
+		return false;
 
 	// Test against the triangle face plane.
 	Vector vecMin, vecMax;
 	VectorSubtract( vecBoxCenter, vecBoxExtents, vecMin );
 	VectorAdd( vecBoxCenter, vecBoxExtents, vecMax );
-	if ( BoxOnPlaneSide( vecMin, vecMax, &plane ) != 3 ) 
-		return false; 
+	if ( BoxOnPlaneSide( vecMin, vecMax, &plane ) != 3 )
+		return false;
 
 	return true;
 }
@@ -2963,7 +2963,7 @@ Vector CalcClosestPointOnTriangle( const Vector &P, const Vector &v0, const Vect
 
 bool OBBHasFullyContainedIntersectionWithQuad( const Vector &vOBBExtent1_Scaled, const Vector &vOBBExtent2_Scaled, const Vector &vOBBExtent3_Scaled, const Vector &ptOBBCenter,
 											  const Vector &vQuadNormal, float fQuadPlaneDist, const Vector &ptQuadCenter,
-											  const Vector &vQuadExtent1_Normalized, float fQuadExtent1Length, 
+											  const Vector &vQuadExtent1_Normalized, float fQuadExtent1Length,
 											  const Vector &vQuadExtent2_Normalized, float fQuadExtent2Length )
 {
 	Vector ptOBB[8]; //this specific ordering helps us web out from a point to its 3 connecting points with some bit math (most importantly, no if's)
@@ -3057,11 +3057,11 @@ bool OBBHasFullyContainedIntersectionWithQuad( const Vector &vOBBExtent1_Scaled,
 //-----------------------------------------------------------------------------
 bool RayHasFullyContainedIntersectionWithQuad( const Ray_t &ray,
 											  const Vector &vQuadNormal, float fQuadPlaneDist, const Vector &ptQuadCenter,
-											  const Vector &vQuadExtent1_Normalized, float fQuadExtent1Length, 
+											  const Vector &vQuadExtent1_Normalized, float fQuadExtent1Length,
 											  const Vector &vQuadExtent2_Normalized, float fQuadExtent2Length )
 {
 	Vector ptPlaneIntersections[(12 + 12 + 8)]; //absolute max possible: 12 lines to connect the start box, 12 more to connect the end box, 8 to connect the boxes to eachother
-	
+
 	//8 points to make an AABB, 8 lines to connect each point from it's start to end point along the ray, 8 possible intersections
 	int iPlaneIntersectionsCount = 0;
 
@@ -3078,7 +3078,7 @@ bool RayHasFullyContainedIntersectionWithQuad( const Ray_t &ray,
 			float fDists[2];
 			for( i = 0; i != 2; ++i )
 				fDists[i] = vQuadNormal.Dot( ptEndPoints[i] ) - fQuadPlaneDist;
-	       
+
 			for( i = 0; i != 2; ++i )
 			{
 				if( fDists[i] <= 0.0f )
@@ -3087,11 +3087,11 @@ bool RayHasFullyContainedIntersectionWithQuad( const Ray_t &ray,
 					if( fDists[j] >= 0.0f )
 					{
 						float fInvTotalDist = 1.0f / (fDists[j] - fDists[i]); //fDists[i] <= 0, ray is swept so no chance that the denom was 0
-						ptPlaneIntersections[0] = (ptEndPoints[i] * (fDists[j] * fInvTotalDist)) - (ptEndPoints[j] * (fDists[i] * fInvTotalDist)); //fDists[i] <= 0 
+						ptPlaneIntersections[0] = (ptEndPoints[i] * (fDists[j] * fInvTotalDist)) - (ptEndPoints[j] * (fDists[i] * fInvTotalDist)); //fDists[i] <= 0
 						Assert( fabs( ptPlaneIntersections[iPlaneIntersectionsCount].Dot( vQuadNormal ) - fQuadPlaneDist ) < 0.1f ); //intersection point is on plane
 						iPlaneIntersectionsCount = 1;
 					}
-					else 
+					else
 					{
 						return false;
 					}
@@ -3204,7 +3204,7 @@ bool RayHasFullyContainedIntersectionWithQuad( const Ray_t &ray,
 					}
 				}
 			}
-		}		
+		}
 
 		if( ray.m_IsSwept )
 		{

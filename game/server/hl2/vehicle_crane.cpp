@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -154,7 +154,7 @@ void CPropCrane::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropCrane::Activate( void )
 {
@@ -218,7 +218,7 @@ void CPropCrane::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPropCrane::CreateVPhysics( void )
@@ -229,7 +229,7 @@ bool CPropCrane::CreateVPhysics( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropCrane::UpdateOnRemove( void )
 {
@@ -238,7 +238,7 @@ void CPropCrane::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropCrane::InitCraneSpeeds( void )
 {
@@ -251,7 +251,7 @@ void CPropCrane::InitCraneSpeeds( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropCrane::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator )
 {
@@ -265,7 +265,7 @@ void CPropCrane::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CPropCrane::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 {
@@ -291,7 +291,7 @@ int CPropCrane::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Vector CPropCrane::BodyTarget( const Vector &posSrc, bool bNoisy )
 {
@@ -313,7 +313,7 @@ Vector CPropCrane::BodyTarget( const Vector &posSrc, bool bNoisy )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropCrane::Think(void)
 {
@@ -322,7 +322,7 @@ void CPropCrane::Think(void)
 	if ( GetDriver() )
 	{
 		BaseClass::Think();
-		
+
 		if ( m_hNPCDriver )
 		{
 			GetServerVehicle()->NPC_DriveVehicle();
@@ -339,7 +339,7 @@ void CPropCrane::Think(void)
 				// Finished entering, display the hint for using the crane
 				UTIL_HudHintText( m_hPlayer, "#Valve_Hint_CraneKeys" );
 			}
-			
+
 			GetServerVehicle()->HandleEntryExitFinish( m_bExitAnimOn, true );
 		}
 	}
@@ -354,15 +354,15 @@ void CPropCrane::Think(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *player - 
+// Purpose:
+// Input  : *player -
 //-----------------------------------------------------------------------------
 void CPropCrane::ItemPostFrame( CBasePlayer *player )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropCrane::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
@@ -383,7 +383,7 @@ bool CPropCrane::CanEnterVehicle( CBaseEntity *pEntity )
 	// Prevent entering if the vehicle's being driven by an NPC
 	if ( GetDriver() && GetDriver() != pEntity )
 		return false;
-	
+
 	// Prevent entering if the vehicle's locked
 	return ( !m_bLocked );
 }
@@ -399,9 +399,9 @@ bool CPropCrane::CanExitVehicle( CBaseEntity *pEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Override base class to add display 
+// Purpose: Override base class to add display
 //-----------------------------------------------------------------------------
-void CPropCrane::DrawDebugGeometryOverlays(void) 
+void CPropCrane::DrawDebugGeometryOverlays(void)
 {
 	// Draw if BBOX is on
 	if ( m_debugOverlays & OVERLAY_BBOX_BIT )
@@ -420,7 +420,7 @@ void CPropCrane::DrawDebugGeometryOverlays(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropCrane::EnterVehicle( CBaseCombatCharacter *pPassenger )
 {
@@ -452,7 +452,7 @@ void CPropCrane::EnterVehicle( CBaseCombatCharacter *pPassenger )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropCrane::ExitVehicle( int nRole )
 {
@@ -469,7 +469,7 @@ void CPropCrane::ExitVehicle( int nRole )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropCrane::ResetUseKey( CBasePlayer *pPlayer )
 {
@@ -504,7 +504,7 @@ void CPropCrane::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pH
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Crane rotates around with +left and +right, and extends/retracts 
+// Purpose: Crane rotates around with +left and +right, and extends/retracts
 //			the cable with +forward and +back.
 //-----------------------------------------------------------------------------
 void CPropCrane::DriveCrane( int iDriverButtons, int iButtonsPressed, float flNPCSteering )
@@ -521,7 +521,7 @@ void CPropCrane::DriveCrane( int iDriverButtons, int iButtonsPressed, float flNP
 		}
 		else
 		{
-			// Try adding some randomness to make it feel shaky? 
+			// Try adding some randomness to make it feel shaky?
 			float flTurnAdd = m_flTurnAccel;
 			// If we're turning back on ourselves, use decel speed
 			if ( m_flTurn < 0 )
@@ -639,7 +639,7 @@ void CPropCrane::DriveCrane( int iDriverButtons, int iButtonsPressed, float flNP
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropCrane::RecalculateCraneTip( void )
 {
@@ -656,9 +656,9 @@ void CPropCrane::RecalculateCraneTip( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
-//			*pMoveData - 
+// Purpose:
+// Input  : *pPlayer -
+//			*pMoveData -
 //-----------------------------------------------------------------------------
 void CPropCrane::RunCraneMovement( float flTime )
 {
@@ -673,7 +673,7 @@ void CPropCrane::RunCraneMovement( float flTime )
 	// Drop the magnet until it hits the ground
 	if ( m_bDropping )
 	{
-		// Drop until the magnet hits something 
+		// Drop until the magnet hits something
 		if ( m_hCraneMagnet->HasHitSomething() )
 		{
 			// We hit the ground, stop dropping
@@ -750,7 +750,7 @@ void CPropCrane::RunCraneMovement( float flTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropCrane::TurnMagnetOn( void )
 {
@@ -765,7 +765,7 @@ void CPropCrane::TurnMagnetOn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropCrane::TurnMagnetOff( void )
 {
@@ -780,7 +780,7 @@ void CPropCrane::TurnMagnetOff( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const Vector &CPropCrane::GetCraneTipPosition( void )
 {
@@ -805,29 +805,29 @@ void CPropCrane::GetVectors(Vector* pForward, Vector* pRight, Vector* pUp) const
 
 	if (pForward != NULL)
 	{
-		MatrixGetColumn( entityToWorld, 1, *pForward ); 
+		MatrixGetColumn( entityToWorld, 1, *pForward );
 	}
 
 	if (pRight != NULL)
 	{
-		MatrixGetColumn( entityToWorld, 0, *pRight ); 
+		MatrixGetColumn( entityToWorld, 0, *pRight );
 	}
 
 	if (pUp != NULL)
 	{
-		MatrixGetColumn( entityToWorld, 2, *pUp ); 
+		MatrixGetColumn( entityToWorld, 2, *pUp );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CBaseEntity *CPropCrane::GetDriver( void ) 
-{ 
-	if ( m_hNPCDriver ) 
-		return m_hNPCDriver; 
+CBaseEntity *CPropCrane::GetDriver( void )
+{
+	if ( m_hNPCDriver )
+		return m_hNPCDriver;
 
-	return m_hPlayer; 
+	return m_hPlayer;
 }
 
 //-----------------------------------------------------------------------------
@@ -847,8 +847,8 @@ void CPropCrane::InputUnlock( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CPropCrane::InputForcePlayerIn( inputdata_t &inputdata )
 {
@@ -860,7 +860,7 @@ void CPropCrane::InputForcePlayerIn( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropCrane::SetNPCDriver( CNPC_VehicleDriver *pDriver )
 {
@@ -914,7 +914,7 @@ CPropCrane *CCraneServerVehicle::GetCrane( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraneServerVehicle::GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, QAngle *pAbsAngles, float *pFOV /*= NULL*/ )
 {
@@ -959,7 +959,7 @@ void CCraneServerVehicle::GetVehicleViewPosition( int nRole, Vector *pAbsOrigin,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraneServerVehicle::NPC_SetDriver( CNPC_VehicleDriver *pDriver )
 {
@@ -978,7 +978,7 @@ void CCraneServerVehicle::NPC_SetDriver( CNPC_VehicleDriver *pDriver )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraneServerVehicle::NPC_DriveVehicle( void )
 {
@@ -1040,14 +1040,14 @@ void CCraneTip::Spawn( void )
 
 	// Disable movement on this sucker, we're going to move him manually
 	SetMoveType( MOVETYPE_NONE );
-	
+
 	BaseClass::Spawn();
 
 	m_pSpring = NULL;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraneTip::Precache( void )
 {
@@ -1114,4 +1114,3 @@ CCraneTip *CCraneTip::Create( CBaseAnimating *pCraneMagnet, IPhysicsConstraintGr
 
 	return pCraneTip;
 }
-

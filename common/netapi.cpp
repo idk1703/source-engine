@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -50,9 +50,9 @@ static CNetAPI g_NetAPI;
 INetAPI *net = ( INetAPI * )&g_NetAPI;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *a - 
-//			*s - 
+// Purpose:
+// Input  : *a -
+//			*s -
 //-----------------------------------------------------------------------------
 void CNetAPI::NetAdrToSockAddr (netadr_t *a, struct sockaddr *s)
 {
@@ -73,9 +73,9 @@ void CNetAPI::NetAdrToSockAddr (netadr_t *a, struct sockaddr *s)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *s - 
-//			*a - 
+// Purpose:
+// Input  : *s -
+//			*a -
 //-----------------------------------------------------------------------------
 void CNetAPI::SockAddrToNetAdr( struct sockaddr *s, netadr_t *a )
 {
@@ -88,8 +88,8 @@ void CNetAPI::SockAddrToNetAdr( struct sockaddr *s, netadr_t *a )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *a - 
+// Purpose:
+// Input  : *a -
 // Output : char
 //-----------------------------------------------------------------------------
 char *CNetAPI::AdrToString( netadr_t *a )
@@ -113,9 +113,9 @@ char *CNetAPI::AdrToString( netadr_t *a )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *s - 
-//			*sadr - 
+// Purpose:
+// Input  : *s -
+//			*sadr -
 // Output : static bool
 //-----------------------------------------------------------------------------
 static bool StringToSockaddr( const char *s, struct sockaddr *sadr )
@@ -124,9 +124,9 @@ static bool StringToSockaddr( const char *s, struct sockaddr *sadr )
 	char	*colon;
 	char	copy[128];
 	struct sockaddr_in *p;
-	
+
 	memset (sadr, 0, sizeof(*sadr));
-	
+
 	p = ( struct sockaddr_in * )sadr;
 	p->sin_family = AF_INET;
 	p->sin_port = 0;
@@ -141,10 +141,10 @@ static bool StringToSockaddr( const char *s, struct sockaddr *sadr )
 			// terminate
 			*colon = 0;
 			// Start at next character
-			p->sin_port = htons( ( short )atoi( colon + 1 ) );	
+			p->sin_port = htons( ( short )atoi( colon + 1 ) );
 		}
 	}
-	
+
 	// Numeric IP, no DNS
 	if ( copy[0] >= '0' && copy[0] <= '9' && strstr( copy, "." ) )
 	{
@@ -160,20 +160,20 @@ static bool StringToSockaddr( const char *s, struct sockaddr *sadr )
 		// Use first result
 		*(int *)&p->sin_addr = *(int *)h->h_addr_list[0];
 	}
-	
+
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *s - 
-//			*a - 
+// Purpose:
+// Input  : *s -
+//			*a -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNetAPI::StringToAdr( const char *s, netadr_t *a )
 {
 	struct sockaddr sadr;
-	
+
 	if ( !strcmp ( s, "localhost" ) )
 	{
 		memset ( a, 0, sizeof( *a ) );
@@ -185,7 +185,7 @@ bool CNetAPI::StringToAdr( const char *s, netadr_t *a )
 	{
 		return false;
 	}
-	
+
 	SockAddrToNetAdr( &sadr, a );
 
 	return true;
@@ -193,8 +193,8 @@ bool CNetAPI::StringToAdr( const char *s, netadr_t *a )
 
 //-----------------------------------------------------------------------------
 // Purpose: Lookup the IP address for the specified IP socket
-// Input  : socket - 
-//			*a - 
+// Input  : socket -
+//			*a -
 //-----------------------------------------------------------------------------
 void CNetAPI::GetSocketAddress( int socket, netadr_t *a )
 {
@@ -209,7 +209,7 @@ void CNetAPI::GetSocketAddress( int socket, netadr_t *a )
 	buff[512-1] = 0;
 
 	StringToAdr(buff, a );
-		
+
 	namelen = sizeof(address);
 	if ( getsockname( socket, (struct sockaddr *)&address, (socklen_t *)&namelen) == 0 )
 	{
@@ -219,8 +219,8 @@ void CNetAPI::GetSocketAddress( int socket, netadr_t *a )
 
 //-----------------------------------------------------------------------------
 // Purpose: Full IP address compare
-// Input  : *a - 
-//			*b - 
+// Input  : *a -
+//			*b -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNetAPI::CompareAdr( netadr_t *a, netadr_t *b )
@@ -236,10 +236,10 @@ bool CNetAPI::CompareAdr( netadr_t *a, netadr_t *b )
 	}
 
 	if ( a->type == NA_IP &&
-		 a->ip[0] == b->ip[0] && 
-		 a->ip[1] == b->ip[1] && 
-		 a->ip[2] == b->ip[2] && 
-		 a->ip[3] == b->ip[3] && 
+		 a->ip[0] == b->ip[0] &&
+		 a->ip[1] == b->ip[1] &&
+		 a->ip[2] == b->ip[2] &&
+		 a->ip[3] == b->ip[3] &&
 		 a->port == b->port )
 	{
 		return true;
@@ -250,8 +250,8 @@ bool CNetAPI::CompareAdr( netadr_t *a, netadr_t *b )
 
 //-----------------------------------------------------------------------------
 // Purpose: Full IP address compare
-// Input  : *a - 
-//			*b - 
+// Input  : *a -
+//			*b -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 

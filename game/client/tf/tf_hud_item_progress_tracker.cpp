@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -60,7 +60,7 @@ EContractHUDVisibility GetContractHUDVisibility()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemAttributeProgressPanel::CItemAttributeProgressPanel( Panel* pParent, const char *pElementName, const CQuestObjectiveDefinition *pObjectiveDef, const char* pszResFileName  )
 	: EditablePanel( pParent, pElementName )
@@ -86,7 +86,7 @@ CItemAttributeProgressPanel::CItemAttributeProgressPanel( Panel* pParent, const 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemAttributeProgressPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -95,7 +95,7 @@ void CItemAttributeProgressPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemAttributeProgressPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -128,7 +128,7 @@ void CItemAttributeProgressPanel::ApplySettings( KeyValues *inResourceData )
 
 			loc_scpy_safe( loc_ItemDescription, CConstructLocalizedString( pszLocString, loc_IntermediateName ) );
 		}
-	
+
 		SetDialogVariable( "attr_desc", loc_ItemDescription );
 	}
 
@@ -160,7 +160,7 @@ int CItemAttributeProgressPanel::GetContentTall() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemAttributeProgressPanel::SetProgress( Color glowColor )
 {
@@ -173,7 +173,7 @@ void CItemAttributeProgressPanel::SetProgress( Color glowColor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemAttributeProgressPanel::OnThink()
 {
@@ -191,7 +191,7 @@ void CItemAttributeProgressPanel::OnThink()
 
 float CItemTrackerPanel::m_sflEventRecievedTime = 0.f;
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemTrackerPanel::CItemTrackerPanel( Panel* pParent, const char *pElementName, const CEconItem* pItem, const char* pszItemTrackerResFile )
 	: EditablePanel( pParent, pElementName )
@@ -232,13 +232,13 @@ CItemTrackerPanel::CItemTrackerPanel( Panel* pParent, const char *pElementName, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemTrackerPanel::~CItemTrackerPanel()
 {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemTrackerPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -259,7 +259,7 @@ void CItemTrackerPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemTrackerPanel::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -287,7 +287,7 @@ void CItemTrackerPanel::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int QuestSort_PointsAscending( CItemAttributeProgressPanel* const* p1, CItemAttributeProgressPanel* const* p2 )
 {
@@ -304,7 +304,7 @@ int QuestSort_PointsAscending( CItemAttributeProgressPanel* const* p1, CItemAttr
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemTrackerPanel::PerformLayout()
 {
@@ -322,13 +322,13 @@ void CItemTrackerPanel::PerformLayout()
 	}
 
 	const CQuestItemTracker* pItemTracker = QuestObjectiveManager()->GetTypedTracker< CQuestItemTracker* >( m_pItem->GetItemID() );
-	
+
 	if ( pItemTracker )
 	{
 		bool bStandardPointsCompleteAndBonusPossible = m_flStandardCurrentProgress == m_flStandardTargetProgress && m_flStandardTargetProgress == 1.f && m_nMaxBonusPoints > 0;
 		uint32 nCurrentPoints = bStandardPointsCompleteAndBonusPossible ? pItemTracker->GetEarnedBonusPoints() : pItemTracker->GetEarnedStandardPoints();
 		uint32 nTargetPoints = bStandardPointsCompleteAndBonusPossible ? m_nMaxBonusPoints : m_nMaxStandardPoints;
-			
+
 		locchar_t locValue[ MAX_ITEM_NAME_LENGTH ];
 		const locchar_t *pPointsToken = GLocalizationProvider()->Find( bStandardPointsCompleteAndBonusPossible ? m_strProgressBarAdvancedLocToken : m_strProgressBarStandardLocToken );
 		loc_scpy_safe( locValue, CConstructLocalizedString( pPointsToken, nCurrentPoints, nTargetPoints ) );
@@ -385,7 +385,7 @@ void CItemTrackerPanel::PerformLayout()
 				pszText = g_pVGuiLocalize->Find( pszTextKey );
 			}
 			if ( pszText )
-			{					
+			{
 				wchar_t wzFinal[512] = L"";
 				UTIL_ReplaceKeyBindings( pszText, 0, wzFinal, sizeof( wzFinal ), GAME_ACTION_SET_FPSCONTROLS );
 				pCompleted->SetText( wzFinal );
@@ -426,7 +426,7 @@ void CItemTrackerPanel::PerformLayout()
 			InvalidReasonsContainer_t invalidReasons;
 			if ( pItemTracker && pLocalPlayer )
 			{
-				// Fixup validity, which changes the color of the 
+				// Fixup validity, which changes the color of the
 				const CBaseQuestObjectiveTracker* pObjectiveTracker = pItemTracker->FindTrackerForDefIndex( pPanel->m_nDefIndex );
 				if ( pObjectiveTracker )
 				{
@@ -444,7 +444,7 @@ void CItemTrackerPanel::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CItemTrackerPanel::GetContentTall() const
 {
@@ -452,7 +452,7 @@ int CItemTrackerPanel::GetContentTall() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemTrackerPanel::OnThink()
 {
@@ -489,7 +489,7 @@ void CItemTrackerPanel::OnThink()
 
 			s_flLastSoundTime = Plat_FloatTime();
 			CLocalPlayerFilter filter;
-			
+
 			C_BaseEntity::EmitSound( filter, SOUND_FROM_LOCAL_PLAYER, pszSoundName );
 		}
 
@@ -536,7 +536,7 @@ void CItemTrackerPanel::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemTrackerPanel::FireGameEvent( IGameEvent *pEvent )
 {
@@ -610,8 +610,8 @@ void CItemTrackerPanel::FireGameEvent( IGameEvent *pEvent )
 			}
 		}
 	}
-	else if ( FStrEq( pEvent->GetName(), "player_spawn" ) 
-		   || FStrEq( pEvent->GetName(), "inventory_updated" ) 
+	else if ( FStrEq( pEvent->GetName(), "player_spawn" )
+		   || FStrEq( pEvent->GetName(), "inventory_updated" )
 		   || FStrEq( pEvent->GetName(), "localplayer_changeclass" ) )
 	{
 		InvalidateLayout();
@@ -628,7 +628,7 @@ void CItemTrackerPanel::FireGameEvent( IGameEvent *pEvent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemTrackerPanel::UpdateBars()
 {
@@ -646,7 +646,7 @@ void CItemTrackerPanel::UpdateBars()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemTrackerPanel::CaptureProgress()
 {
@@ -694,7 +694,7 @@ void CItemTrackerPanel::CaptureProgress()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CItemTrackerPanel::IsStandardCompleted() const
 {
@@ -708,7 +708,7 @@ bool CItemTrackerPanel::IsStandardCompleted() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CItemTrackerPanel::IsEverythingCompleted() const
 {
@@ -722,7 +722,7 @@ bool CItemTrackerPanel::IsEverythingCompleted() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemTrackerPanel::SetItem( const CEconItem* pItem )
 {
@@ -736,7 +736,7 @@ void CItemTrackerPanel::SetItem( const CEconItem* pItem )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemAttributeProgressPanel* CItemTrackerPanel::GetPanelForObjective( const CQuestObjectiveDefinition* pObjective )
 {
@@ -755,7 +755,7 @@ CItemAttributeProgressPanel* CItemTrackerPanel::GetPanelForObjective( const CQue
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CItemTrackerPanel::IsValidForLocalPlayer() const
 {
@@ -795,7 +795,7 @@ bool CItemTrackerPanel::IsValidForLocalPlayer() const
 DECLARE_HUDELEMENT( CHudItemAttributeTracker );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudItemAttributeTracker::CHudItemAttributeTracker( const char *pElementName )
 	: CHudElement( pElementName )
@@ -815,7 +815,7 @@ CHudItemAttributeTracker::CHudItemAttributeTracker( const char *pElementName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudItemAttributeTracker::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -830,7 +830,7 @@ void CHudItemAttributeTracker::ApplySchemeSettings( IScheme *pScheme )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudItemAttributeTracker::PerformLayout()
 {
@@ -866,7 +866,7 @@ void CHudItemAttributeTracker::PerformLayout()
 			}
 		}
 	}
-	
+
 	const char* pszHeaderString = NULL;
 	const char* pszCallToActionString = NULL;
 	int nNumToShow = 0;
@@ -904,7 +904,7 @@ void CHudItemAttributeTracker::PerformLayout()
 			loc_scpy_safe( locNumNewQuests,
 							CConstructLocalizedString( pLocalizedString, wszCounter ) );
 		}
-	
+
 		m_pStatusContainer->SetDialogVariable( "header", locNumNewQuests );
 
 		// Build the "Press [ F2 ] to view" string.
@@ -914,13 +914,13 @@ void CHudItemAttributeTracker::PerformLayout()
 			pszText = g_pVGuiLocalize->Find( pszCallToActionString );
 		}
 		if ( pszText )
-		{					
+		{
 			wchar_t wzFinal[512] = L"";
 			UTIL_ReplaceKeyBindings( pszText, 0, wzFinal, sizeof( wzFinal ), GAME_ACTION_SET_FPSCONTROLS );
 			m_pStatusContainer->SetDialogVariable( "call_to_action", wzFinal );
 		}
 	}
-	
+
 	int nY = 0;
 
 	if ( m_pStatusContainer )
@@ -933,9 +933,9 @@ void CHudItemAttributeTracker::PerformLayout()
 			nY += m_pStatusContainer->GetTall();
 			int nLabelWide, nLabelTall;
 			m_pStatusHeaderLabel->GetContentSize( nLabelWide, nLabelTall );
-			
+
 			m_pStatusContainer->SetWide( m_nStatusBufferWidth + nLabelWide );
-			
+
 			m_pStatusHeaderLabel->SetPos( m_pStatusContainer->GetWide() - m_pStatusHeaderLabel->GetWide(), m_pStatusHeaderLabel->GetYPos() );
 			m_pCallToActionLabel->SetPos( m_pStatusContainer->GetWide() - m_pCallToActionLabel->GetWide(), m_pCallToActionLabel->GetYPos() );
 			m_pStatusContainer->SetPos( m_pStatusContainer->GetParent()->GetWide() - m_pStatusContainer->GetWide(), m_pStatusContainer->GetYPos() );
@@ -963,7 +963,7 @@ void CHudItemAttributeTracker::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudItemAttributeTracker::OnThink()
 {
@@ -981,7 +981,7 @@ void CHudItemAttributeTracker::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudItemAttributeTracker::ShouldDraw( void )
 {
@@ -1011,13 +1011,13 @@ bool CHudItemAttributeTracker::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudItemAttributeTracker::FireGameEvent( IGameEvent *pEvent )
 {
-	if ( FStrEq( pEvent->GetName(), "player_spawn" ) 
-	  || FStrEq( pEvent->GetName(), "inventory_updated" ) 
-	  || FStrEq( pEvent->GetName(), "client_disconnect" ) 
+	if ( FStrEq( pEvent->GetName(), "player_spawn" )
+	  || FStrEq( pEvent->GetName(), "inventory_updated" )
+	  || FStrEq( pEvent->GetName(), "client_disconnect" )
 	  || FStrEq( pEvent->GetName(), "localplayer_changeclass" )
 	  || FStrEq( pEvent->GetName(), "quest_objective_completed" ) )
 	{
@@ -1026,7 +1026,7 @@ void CHudItemAttributeTracker::FireGameEvent( IGameEvent *pEvent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudItemAttributeTracker::HandleSOEvent( const CSteamID & steamIDOwner, const CSharedObject *pObject, ETrackerHandling_t eHandling )
 {
@@ -1070,7 +1070,7 @@ void CHudItemAttributeTracker::HandleSOEvent( const CSteamID & steamIDOwner, con
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudItemAttributeTracker::FindTrackerForItem( const CEconItem* pItem, CItemTrackerPanel** ppTracker, bool bCreateIfNotFound )
 {
@@ -1097,7 +1097,7 @@ bool CHudItemAttributeTracker::FindTrackerForItem( const CEconItem* pItem, CItem
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudItemAttributeTracker::LevelInit( void )
 {
@@ -1110,7 +1110,7 @@ void CHudItemAttributeTracker::LevelInit( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudItemAttributeTracker::LevelShutdown( void )
 {

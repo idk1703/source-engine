@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,10 +22,10 @@
 #ifndef CLIENT_DLL
 //-----------------------------------------------------------------------------
 // Purpose: Only send to local player if this weapon is the active weapon
-// Input  : *pStruct - 
-//			*pVarData - 
-//			*pRecipients - 
-//			objectID - 
+// Input  : *pStruct -
+//			*pVarData -
+//			*pRecipients -
+//			objectID -
 // Output : void*
 //-----------------------------------------------------------------------------
 void* SendProxy_SendActiveLocalBaseGunDataTable( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID )
@@ -116,7 +116,7 @@ void CWeaponDODBaseGun::DODBaseGunSpawn( void )
 	CDODWeaponInfo *pWeaponInfo = dynamic_cast< CDODWeaponInfo* >( GetFileWeaponInfoFromHandle( hWpnInfo ) );
 
 	Assert( pWeaponInfo && "Failed to get CDODWeaponInfo in weapon spawn" );
-		
+
 	m_pWeaponInfo = pWeaponInfo;
 
 	BaseClass::Spawn();
@@ -139,7 +139,7 @@ bool CWeaponDODBaseGun::DODBaseGunFire()
 	CDODPlayer *pPlayer = ToDODPlayer( GetPlayerOwner() );
 
 	Assert( pPlayer );
-	
+
 	// Out of ammo?
 	if ( m_iClip1 <= 0 )
 	{
@@ -158,7 +158,7 @@ bool CWeaponDODBaseGun::DODBaseGunFire()
 		m_flNextPrimaryAttack = gpGlobals->curtime + 1.0;
 		return false;
 	}
-	
+
 	/* decrement before calling PlayPrimaryAttackAnim, so we can play the empty anim if necessary */
 	m_iClip1--;
 
@@ -166,7 +166,7 @@ bool CWeaponDODBaseGun::DODBaseGunFire()
 
 	// player "shoot" animation
 	pPlayer->SetAnimation( PLAYER_ATTACK1 );
-	
+
 	FX_FireBullets(
 		pPlayer->entindex(),
 		pPlayer->Weapon_ShootPosition(),
@@ -210,7 +210,7 @@ float CWeaponDODBaseGun::GetFireDelay( void )
 void CWeaponDODBaseGun::DoFireEffects()
 {
 	CBasePlayer *pPlayer = GetPlayerOwner();
-	
+
 	if ( pPlayer )
 		 pPlayer->DoMuzzleFlash();
 }

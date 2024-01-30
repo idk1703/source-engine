@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -39,7 +39,7 @@ class IChoreoStringPool;
 //-----------------------------------------------------------------------------
 class CChoreoScene : public ICurveDataAccessor
 {
-	typedef enum 
+	typedef enum
 	{
 		PROCESSING_TYPE_IGNORE = 0,
 		PROCESSING_TYPE_START,
@@ -156,7 +156,7 @@ public:
 
 	int				GetNumActors( void );
 	CChoreoActor	*GetActor( int actor );
-	
+
 	int				GetNumChannels( void );
 	CChoreoChannel	*GetChannel( int channel );
 
@@ -239,9 +239,9 @@ public:
 	void IgnorePhonemes( bool bIgnore );
 	bool ShouldIgnorePhonemes() const;
 
-	// This is set by the engine to signify that we're not modifying the data and 
+	// This is set by the engine to signify that we're not modifying the data and
 	//  therefore we can precompute the end time
-	static	bool	s_bEditingDisabled; 
+	static	bool	s_bEditingDisabled;
 
 private:
 
@@ -257,8 +257,8 @@ private:
 
 	static bool EventLess( const CChoreoScene::ActiveList &al0, const CChoreoScene::ActiveList &al1 );
 
-	int				EventThink( CChoreoEvent *e, 
-						float frame_start_time, 
+	int				EventThink( CChoreoEvent *e,
+						float frame_start_time,
 						float frame_end_time,
 						bool playing_forward, PROCESSING_TYPE& disposition );
 
@@ -277,7 +277,7 @@ private:
 	CChoreoEvent	*ParseEvent( CChoreoActor *actor, CChoreoChannel *channel );
 	CChoreoChannel	*ParseChannel( CChoreoActor *actor );
 	CChoreoActor	*ParseActor( void );
-	   
+
 	void			ParseFPS( void );
 	void			ParseSnap( void );
 	void			ParseIgnorePhonemes( void );
@@ -394,12 +394,12 @@ abstract_class IChoreoStringPool
 {
 public:
 	virtual short	FindOrAddString( const char *pString ) = 0;
-	virtual bool	GetString( short stringId, char *buff, int buffSize ) = 0; 	
+	virtual bool	GetString( short stringId, char *buff, int buffSize ) = 0;
 };
 
-CChoreoScene *ChoreoLoadScene( 
+CChoreoScene *ChoreoLoadScene(
 	char const *filename,
-	IChoreoEventCallback *callback, 
+	IChoreoEventCallback *callback,
 	ISceneTokenProcessor *tokenizer,
 	void ( *pfn ) ( PRINTF_FORMAT_STRING const char *fmt, ... ) );
 

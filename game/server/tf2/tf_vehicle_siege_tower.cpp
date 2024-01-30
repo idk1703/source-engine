@@ -39,7 +39,7 @@ PRECACHE_REGISTER( obj_siege_platform );
 ConVar	vehicle_siege_tower_health( "vehicle_siege_tower_health","600", FCVAR_NONE, "Siege tower health" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CVehicleSiegeTower::CVehicleSiegeTower()
 {
@@ -48,7 +48,7 @@ CVehicleSiegeTower::CVehicleSiegeTower()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleSiegeTower::Precache()
 {
@@ -56,17 +56,17 @@ void CVehicleSiegeTower::Precache()
 
 	PrecacheVGuiScreen( "screen_vehicle_siege_tower" );
 	PrecacheVGuiScreen( "screen_vulnerable_point" );
-	
+
 	BaseClass::Precache();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleSiegeTower::Spawn()
 {
 	SetModel( SIEGE_TOWER_MODEL );
-	
+
 	// This size is used for placement only...
 	UTIL_SetSize( this, SIEGE_TOWER_MINS, SIEGE_TOWER_MAXS );
 	m_takedamage = DAMAGE_YES;
@@ -180,7 +180,7 @@ void CVehicleSiegeTower::Killed( void )
 
 //==============================================================================
 //
-//	Object Siege Ladder 
+//	Object Siege Ladder
 //
 
 //------------------------------------------------------------------------------
@@ -191,7 +191,7 @@ CObjectSiegeLadder::CObjectSiegeLadder()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectSiegeLadder *CObjectSiegeLadder::Create( const Vector &vOrigin, const QAngle &vAngles, CBaseEntity *pParent )
 {
@@ -205,7 +205,7 @@ CObjectSiegeLadder *CObjectSiegeLadder::Create( const Vector &vOrigin, const QAn
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSiegeLadder::Spawn()
 {
@@ -226,7 +226,7 @@ void CObjectSiegeLadder::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSiegeLadder::Precache()
 {
@@ -254,7 +254,7 @@ CObjectSiegePlatform::CObjectSiegePlatform()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectSiegePlatform *CObjectSiegePlatform::Create( const Vector &vOrigin, const QAngle &vAngles, CBaseEntity *pParent )
 {
@@ -268,7 +268,7 @@ CObjectSiegePlatform *CObjectSiegePlatform::Create( const Vector &vOrigin, const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSiegePlatform::Spawn()
 {
@@ -288,7 +288,7 @@ void CObjectSiegePlatform::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSiegePlatform::Precache()
 {

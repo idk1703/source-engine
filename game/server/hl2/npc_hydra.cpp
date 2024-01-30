@@ -62,9 +62,9 @@ enum
 	SCHED_HYDRA_RETRACT,
 	SCHED_HYDRA_IDLE,
 	SCHED_HYDRA_STAB,		// shoot out head and try to hit object
-	SCHED_HYDRA_PULLBACK,	// 
+	SCHED_HYDRA_PULLBACK,	//
 	SCHED_HYDRA_TIGHTEN_SLACK,	// snagged on something, tighten slack up to obstacle and try again from there
-	SCHED_HYDRA_RETREAT,		
+	SCHED_HYDRA_RETREAT,
 	SCHED_HYDRA_THROW,
 	SCHED_HYDRA_RANGE_ATTACK
 };
@@ -72,7 +72,7 @@ enum
 //=========================================================
 // Hydra tasks
 //=========================================================
-enum 
+enum
 {
 	TASK_HYDRA_RETRACT = LAST_SHARED_TASK,
 	TASK_HYDRA_DEPLOY,
@@ -141,7 +141,7 @@ BEGIN_DATADESC( CNPC_Hydra )
 	DEFINE_FIELD( m_vecHeadDir,			FIELD_VECTOR ),
 	DEFINE_FIELD( m_flRelaxedLength,		FIELD_FLOAT ),
 	DEFINE_FIELD( m_vecOutward,			FIELD_VECTOR ),
-	DEFINE_UTLVECTOR( m_body,					FIELD_EMBEDDED ), 
+	DEFINE_UTLVECTOR( m_body,					FIELD_EMBEDDED ),
 	DEFINE_FIELD( m_idealLength,			FIELD_FLOAT ),
 	DEFINE_FIELD( m_idealSegmentLength,	FIELD_FLOAT ),
 	DEFINE_FIELD( m_bExtendSoundActive,	FIELD_BOOLEAN ),
@@ -206,14 +206,14 @@ void CNPC_Hydra::Precache()
 
 	BaseClass::Precache();
 }
- 
+
 
 void CNPC_Hydra::Activate( void )
 {
 	CPASAttenuationFilter filter( this );
 	CSoundEnvelopeController &controller = CSoundEnvelopeController::GetController();
 	m_pExtendTentacleSound = controller.SoundCreate( filter, entindex(), "NPC_Hydra.ExtendTentacle" );
-	
+
 	controller.Play( m_pExtendTentacleSound, 1.0, 100 );
 
 	BaseClass::Activate();
@@ -225,7 +225,7 @@ void CNPC_Hydra::Activate( void )
 //-----------------------------------------------------------------------------
 Class_T	CNPC_Hydra::Classify( void )
 {
-	return CLASS_BARNACLE; 
+	return CLASS_BARNACLE;
 }
 
 //-------------------------------------
@@ -354,7 +354,7 @@ Vector CNPC_Hydra::TestPosition( float t )
 	tmp += 	GetAbsOrigin( ) + m_vecOutward * sv_hydraLength.GetFloat();
 	return tmp;
 #else
-	
+
 	Vector tmp;
 	tmp.Init;
 	CBaseEntity *pPlayer = (CBaseEntity *)UTIL_GetLocalPlayer();
@@ -363,7 +363,7 @@ Vector CNPC_Hydra::TestPosition( float t )
 		tmp = pPlayer->EyePosition( );
 
 		Vector delta = (tmp - GetAbsOrigin( ));
-		
+
 		if (delta.Length() > 200)
 		{
 			tmp = GetAbsOrigin( ) + Vector( 0, 0, 200 );
@@ -429,7 +429,7 @@ void CNPC_Hydra::CalcGoalForces( )
 			{
 				v0 = v0 * sv_hydraGoalDelta.GetFloat() / length;
 			}
-			m_body[i].vecDelta += v0 * flInfluence * sv_hydraGoalTension.GetFloat(); 
+			m_body[i].vecDelta += v0 * flInfluence * sv_hydraGoalTension.GetFloat();
 			// NDebugOverlay::Box(m_body[i].vecGoalPos, Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 255, 255, 0, flInfluence * 255, .1);
 		}
 	}
@@ -560,10 +560,10 @@ void CNPC_Hydra::MoveBody( )
 		trace_t tr;
 
 		// check direct movement
-		AI_TraceHull(m_body[i].vecPos, m_body[i].vecPos + m_body[i].vecDelta, 
-			Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 
+		AI_TraceHull(m_body[i].vecPos, m_body[i].vecPos + m_body[i].vecDelta,
+			Vector( -2, -2, -2 ), Vector( 2, 2, 2 ),
 			MASK_NPCSOLID, this, COLLISION_GROUP_NONE, &tr);
-	
+
 		Vector direct = tr.endpos;
 		Vector delta = Vector( 0, 0, 0 );
 
@@ -592,8 +592,8 @@ void CNPC_Hydra::MoveBody( )
 			slide = (slide - (slide * tr.plane.normal) * tr.plane.normal) * 0.8;
 
 			// try to move the remaining distance anyways
-			AI_TraceHull(direct, direct + slide * (1 - tr.fraction), 
-				Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 
+			AI_TraceHull(direct, direct + slide * (1 - tr.fraction),
+				Vector( -2, -2, -2 ), Vector( 2, 2, 2 ),
 				MASK_NPCSOLID, this, COLLISION_GROUP_NONE, &tr);
 
 			// NDebugOverlay::Line( m_body[i].vecPos, tr.endpos, 255, 255, 0, true, 1);
@@ -605,16 +605,16 @@ void CNPC_Hydra::MoveBody( )
 		}
 
 		// make sure the new segment doesn't intersect the world
-		AI_TraceHull(direct, m_body[i-1].vecPos, 
-			Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 
+		AI_TraceHull(direct, m_body[i-1].vecPos,
+			Vector( -2, -2, -2 ), Vector( 2, 2, 2 ),
 			MASK_NPCSOLID, this, COLLISION_GROUP_NONE, &tr);
 
 		if (tr.fraction == 1.0)
 		{
 			if (i+1 < iLast)
 			{
-				AI_TraceHull(direct, m_body[i+1].vecPos, 
-					Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 
+				AI_TraceHull(direct, m_body[i+1].vecPos,
+					Vector( -2, -2, -2 ), Vector( 2, 2, 2 ),
 					MASK_NPCSOLID, this, COLLISION_GROUP_NONE, &tr);
 			}
 
@@ -708,7 +708,7 @@ void CNPC_Hydra::Stab( CBaseEntity *pOther, const Vector &vecSpeed, trace_t &tr 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : vecContact = point in space where contact supposidly happened
 //			vecSpeed = in/sec of contact
 // Output :
@@ -720,7 +720,7 @@ void CNPC_Hydra::Kick( CBaseEntity *pHitEntity, const Vector &vecContact, const 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : vecContact = point in space where contact supposidly happened
 //			vecSpeed = in/sec of contact
 // Output :
@@ -735,7 +735,7 @@ void CNPC_Hydra::Splash( const Vector &vecSplashPos )
 
 //-----------------------------------------------------------------------------
 // Purpose: Calculate the actual hydra length
-// Input  : 
+// Input  :
 // Output :
 //-----------------------------------------------------------------------------
 
@@ -753,7 +753,7 @@ void CNPC_Hydra::CheckLength( )
 	for (i = 1; i < m_body.Count() - 1; i++)
 	{
 		float length = (m_body[i+1].vecPos - m_body[i].vecPos).Length();
-			
+
 		Assert( m_body[i+1].vecPos.IsValid( ) );
 		Assert( m_body[i].vecPos.IsValid( ) );
 
@@ -789,7 +789,7 @@ void CNPC_Hydra::CheckLength( )
 
 //-----------------------------------------------------------------------------
 // Purpose: Grow or shrink the hydra, as needed
-// Input  : 
+// Input  :
 // Output :
 //-----------------------------------------------------------------------------
 
@@ -843,7 +843,7 @@ void CNPC_Hydra::AdjustLength( )
 			{
 				bAdjustFailed = true;
 			}
-			
+
 			// SplitLongestSegment( );
 			/*
 			if (!ContractBetweenStuckSegments())
@@ -884,7 +884,7 @@ void CNPC_Hydra::AdjustLength( )
 
 //-----------------------------------------------------------------------------
 // Purpose: Remove nodes, starting at the end, regardless of length
-// Input  : 
+// Input  :
 // Output :
 //-----------------------------------------------------------------------------
 
@@ -900,7 +900,7 @@ bool CNPC_Hydra::ContractFromHead( )
 	if (m_body[iNode].bStuck && m_body[iNode-1].flActualLength > m_idealSegmentLength * 2.0)
 	{
 		AddNodeBefore( iNode );
-		iNode = m_body.Count() - 1;		
+		iNode = m_body.Count() - 1;
 	}
 
 	if (m_body.Count() <= 3)
@@ -919,9 +919,9 @@ bool CNPC_Hydra::ContractFromHead( )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Starting at the first stuck node back from the head, find a node to remove 
+// Purpose: Starting at the first stuck node back from the head, find a node to remove
 //			between it and the actual root who is part of a chain that isn't too long.
-// Input  : 
+// Input  :
 // Output :
 //-----------------------------------------------------------------------------
 
@@ -935,7 +935,7 @@ bool CNPC_Hydra::ContractBetweenStuckSegments( )
 	if (iStuckHead < 3)
 		return false;
 
-	// find a non stuck node with the shortest distance between its neighbors 
+	// find a non stuck node with the shortest distance between its neighbors
 	int iShortest = -1;
 	float dist = m_idealSegmentLength * 2;
 	int i;
@@ -969,7 +969,7 @@ bool CNPC_Hydra::ContractBetweenStuckSegments( )
 
 //-----------------------------------------------------------------------------
 // Purpose: Try to remove segment closest to root
-// Input  : 
+// Input  :
 // Output :
 //-----------------------------------------------------------------------------
 
@@ -996,7 +996,7 @@ bool CNPC_Hydra::ContractFromRoot( )
 
 //-----------------------------------------------------------------------------
 // Purpose: Find the first stuck node that's closest to the head
-// Input  : 
+// Input  :
 // Output :
 //-----------------------------------------------------------------------------
 
@@ -1017,7 +1017,7 @@ int CNPC_Hydra::VirtualRoot( )
 
 //-----------------------------------------------------------------------------
 // Purpose: Insert a node before the given node.
-// Input  : 
+// Input  :
 // Output :
 //-----------------------------------------------------------------------------
 
@@ -1025,7 +1025,7 @@ bool CNPC_Hydra::AddNodeBefore( int iNode )
 {
 	if (iNode < 1)
 		return false;
-	
+
 	HydraBone bone;
 
 	bone.vecPos = (m_body[iNode].vecPos + m_body[iNode-1].vecPos) * 0.5;
@@ -1082,7 +1082,7 @@ bool CNPC_Hydra::GrowFromMostStretched( )
 	{
 		if (m_body[iNode].flActualLength > dist)
 		{
-			iLongest = iNode; 
+			iLongest = iNode;
 			dist = m_body[iNode].flActualLength;
 		}
 	}
@@ -1105,8 +1105,8 @@ bool CNPC_Hydra::IsValidConnection( int iNode0, int iNode1 )
 {
 	trace_t tr;
 	// check to make sure new connection is valid
-	AI_TraceHull(m_body[iNode0].vecPos, m_body[iNode1].vecPos, 
-		Vector( -2, -2, -2 ), Vector( 2, 2, 2 ), 
+	AI_TraceHull(m_body[iNode0].vecPos, m_body[iNode1].vecPos,
+		Vector( -2, -2, -2 ), Vector( 2, 2, 2 ),
 		MASK_NPCSOLID, this, COLLISION_GROUP_NONE, &tr);
 
 	if (tr.fraction == 1.0)
@@ -1146,7 +1146,7 @@ float CNPC_Hydra::MaxYawSpeed()
 
 //-------------------------------------
 
-int CNPC_Hydra::TranslateSchedule( int scheduleType ) 
+int CNPC_Hydra::TranslateSchedule( int scheduleType )
 {
 	return BaseClass::TranslateSchedule( scheduleType );
 }
@@ -1167,7 +1167,7 @@ void CNPC_Hydra::PrescheduleThink()
 	{
 		UpdateStabbedEntity();
 	}
-}	
+}
 
 //-------------------------------------
 
@@ -1200,7 +1200,7 @@ int CNPC_Hydra::SelectSchedule ()
 			}
 			return SCHED_HYDRA_STAB;
 		}
-		break;	
+		break;
 	}
 
 	return BaseClass::SelectSchedule();
@@ -1354,9 +1354,9 @@ void CNPC_Hydra::RunTask( const Task_t *pTask )
 				float r = (distBackFromHead / 200) * 3.1415 * 2;
 
 				// spiral
-				Vector p0 = m_vecHeadGoal 
-							- m_vecHeadDir * distBackFromHead * 0.5 
-							+ cos( r ) * m_body[i].flActualLength * right 
+				Vector p0 = m_vecHeadGoal
+							- m_vecHeadDir * distBackFromHead * 0.5
+							+ cos( r ) * m_body[i].flActualLength * right
 							+ sin( r ) * m_body[i].flActualLength * up;
 
 				// base
@@ -1473,7 +1473,7 @@ void CNPC_Hydra::RunTask( const Task_t *pTask )
 #if 1
 			for (i = i - 1; i > 1 && distBackFromHead < distToTarget; i--)
 			{
-				Vector p0 = m_vecHeadGoal - m_vecHeadDir * distBackFromHead * 1.0; 
+				Vector p0 = m_vecHeadGoal - m_vecHeadDir * distBackFromHead * 1.0;
 
 				m_body[i].vecGoalPos = p0;
 
@@ -1526,7 +1526,7 @@ void CNPC_Hydra::RunTask( const Task_t *pTask )
 
 //-------------------------------------
 
-Vector CNPC_Hydra::EyePosition( ) 
+Vector CNPC_Hydra::EyePosition( )
 {
 	int i = m_body.Count() - 1;
 
@@ -1534,7 +1534,7 @@ Vector CNPC_Hydra::EyePosition( )
 	{
 		return m_body[i].vecPos;
 	}
-	return GetAbsOrigin(); 
+	return GetAbsOrigin();
 }
 
 const QAngle &CNPC_Hydra::EyeAngles()
@@ -1639,14 +1639,14 @@ void CHydraImpale::Spawn( void )
 
 	// Disable movement on this sucker, we're going to move him manually
 	SetMoveType( MOVETYPE_FLY );
-	
+
 	BaseClass::Spawn();
 
 	m_pConstraint = NULL;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHydraImpale::Precache( void )
 {
@@ -1685,7 +1685,7 @@ void CHydraImpale::ImpaleThink( void )
 IPhysicsConstraint *CHydraImpale::CreateConstraint( CNPC_Hydra *pHydra, IPhysicsObject *pTargetPhys, IPhysicsConstraintGroup *pGroup )
 {
 	m_hHydra = pHydra;
-	
+
 	IPhysicsObject *pImpalePhysObject = VPhysicsGetObject();
 	Assert( pImpalePhysObject );
 
@@ -1845,7 +1845,7 @@ AI_BEGIN_CUSTOM_NPC( npc_hydra, CNPC_Hydra )
 	//=========================================================
 	// > SCHED_HYDRA_STAND_LOOK
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_HYDRA_DEPLOY,
 
@@ -1860,7 +1860,7 @@ AI_BEGIN_CUSTOM_NPC( npc_hydra, CNPC_Hydra )
 	//=========================================================
 	// > SCHED_HYDRA_COWER
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_HYDRA_RETRACT,
 
@@ -1872,7 +1872,7 @@ AI_BEGIN_CUSTOM_NPC( npc_hydra, CNPC_Hydra )
 		"	Interrupts"
 	)
 
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_HYDRA_IDLE,
 
@@ -1884,7 +1884,7 @@ AI_BEGIN_CUSTOM_NPC( npc_hydra, CNPC_Hydra )
 		"		COND_NEW_ENEMY"
 	)
 
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_HYDRA_STAB,
 
@@ -1900,7 +1900,7 @@ AI_BEGIN_CUSTOM_NPC( npc_hydra, CNPC_Hydra )
 		"		COND_HYDRA_OVERSTRETCH"
 	)
 
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_HYDRA_PULLBACK,
 
@@ -1913,7 +1913,7 @@ AI_BEGIN_CUSTOM_NPC( npc_hydra, CNPC_Hydra )
 		"		COND_NEW_ENEMY"
 	)
 
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_HYDRA_THROW,
 
@@ -1948,5 +1948,3 @@ AI_BEGIN_CUSTOM_NPC( npc_hydra, CNPC_Hydra )
 	)
 
 AI_END_CUSTOM_NPC()
-
-

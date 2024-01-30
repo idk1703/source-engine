@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -53,7 +53,7 @@ LINK_ENTITY_TO_CLASS( weapon_limpetmine, CWeaponLimpetmine );
 PRECACHE_WEAPON_REGISTER(weapon_limpetmine);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponLimpetmine::CWeaponLimpetmine( void )
 {
@@ -65,7 +65,7 @@ CWeaponLimpetmine::CWeaponLimpetmine( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponLimpetmine::Precache( void )
 {
@@ -81,7 +81,7 @@ void CWeaponLimpetmine::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponLimpetmine::UpdateOnRemove( void )
 {
@@ -99,7 +99,7 @@ void CWeaponLimpetmine::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponLimpetmine::CleanupOnActStart( void )
 {
@@ -109,11 +109,11 @@ void CWeaponLimpetmine::CleanupOnActStart( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponLimpetmine::GetFireRate( void )
-{	
-	return 0.5; 
+{
+	return 0.5;
 }
 
 //-----------------------------------------------------------------------------
@@ -135,7 +135,7 @@ bool CWeaponLimpetmine::Holster( CBaseCombatWeapon *pSwitchingTo )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponLimpetmine::ItemPostFrame( void )
 {
@@ -147,7 +147,7 @@ void CWeaponLimpetmine::ItemPostFrame( void )
 	// If we don't have a laser designator yet, create one
 	if ( !m_hLaserDesignation )
 	{
-		m_hLaserDesignation = CEnvLaserDesignation::Create( pPlayer ); 
+		m_hLaserDesignation = CEnvLaserDesignation::Create( pPlayer );
 	}
 #endif
 
@@ -192,7 +192,7 @@ void CWeaponLimpetmine::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponLimpetmine::PrimaryAttack( void )
 {
@@ -240,7 +240,7 @@ void CWeaponLimpetmine::PrimaryAttack( void )
 
 #if !defined( CLIENT_DLL )
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponLimpetmine::ThrowLimpet( CBasePlayer *pPlayer, Vector vecSrc, Vector vecAiming )
 {
@@ -284,7 +284,7 @@ void CWeaponLimpetmine::RemoveDeployedLimpets( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponLimpetmine::ActivateBeam( void )
 {
@@ -321,7 +321,7 @@ void CWeaponLimpetmine::ActivateBeam( void )
 					pSentry->ToggleTurtle();
 					return;
 				}
-				else 
+				else
 				{
 					// If it's an enemy object, tell my sentryguns to attack it
 					if ( !pPlayer->InSameTeam( pEntity ) )
@@ -340,7 +340,7 @@ void CWeaponLimpetmine::ActivateBeam( void )
 			}
 
 		}
-	} 
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -357,7 +357,7 @@ bool CWeaponLimpetmine::ValidDesignationTarget( CBaseEntity *pEntity )
 
 	CBaseTFPlayer *pPlayer = ToBaseTFPlayer( GetOwner() );
 	Assert(pPlayer);
-	if(!pPlayer) 
+	if(!pPlayer)
 		return false;
 
 	// Ignore players on my team
@@ -421,7 +421,7 @@ void CWeaponLimpetmine::DesignateSentriesToAttack( CBaseEntity *pEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseEntity* CWeaponLimpetmine::GetDesignatedEntity( CBaseTFPlayer *pPlayer )
 {
@@ -447,7 +447,7 @@ CBaseEntity* CWeaponLimpetmine::GetDesignatedEntity( CBaseTFPlayer *pPlayer )
 				Vector vecNearestPoint = PointOnLineNearestPoint( vecSrc, vecEnd, pLimpet->GetAbsOrigin() );
 
 				float fDistSq = ( pLimpet->GetAbsOrigin() - vecNearestPoint ).LengthSqr();
-				
+
 				if (( fDistSq > fMaxDistSq ) || ( fDistSq >= fBestDistanceSq ))
 					continue;
 
@@ -474,7 +474,7 @@ CBaseEntity* CWeaponLimpetmine::GetDesignatedEntity( CBaseTFPlayer *pPlayer )
 		Vector vecNearestPoint = PointOnLineNearestPoint( vecSrc, vecEnd, vecObjCenter );
 
 		float fDistSq = ( vecObjCenter - vecNearestPoint ).LengthSqr();
-		
+
 		if (( fDistSq > fMaxDistSq ) || ( fDistSq >= fBestDistanceSq ))
 			continue;
 
@@ -492,7 +492,7 @@ CBaseEntity* CWeaponLimpetmine::GetDesignatedEntity( CBaseTFPlayer *pPlayer )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponLimpetmine::WeaponIdle( void )
 {
@@ -616,7 +616,7 @@ void CWeaponLimpetmine::UpdateBeamTarget()
 	{
 		// Get the designated entity, ignoring trace information:
 		pEntity = GetDesignatedEntity( pPlayer );
-		
+
 		if( !ValidDesignationTarget( pEntity ) )
 		{
 			m_hDesignatedEntity.Set( NULL );
@@ -630,7 +630,7 @@ void CWeaponLimpetmine::UpdateBeamTarget()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponLimpetmine::DecrementLimpets( void )
 {

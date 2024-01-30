@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -18,15 +18,15 @@
 
 class CEventLog : public CGameEventListener, public CBaseGameSystem
 {
-	
+
 public:
 	CEventLog();
 	virtual ~CEventLog();
 
 public: // IGameEventListener Interface
-	
+
 	virtual void FireGameEvent( IGameEvent * event );
-	
+
 public: // CBaseGameSystem overrides
 
 	virtual bool Init();

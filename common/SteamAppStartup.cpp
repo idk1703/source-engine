@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -81,7 +81,7 @@ void LaunchSelfViaSteam(const char *params)
 
 	// save out our details to the registry
 	HKEY hKey;
-	if (ERROR_SUCCESS == RegOpenKey(HKEY_CURRENT_USER, "Software\\Valve\\Steam", &hKey)) 
+	if (ERROR_SUCCESS == RegOpenKey(HKEY_CURRENT_USER, "Software\\Valve\\Steam", &hKey))
 	{
 		DWORD dwType = REG_SZ;
 		DWORD dwSize = static_cast<DWORD>( strlen(appPath) + 1 );
@@ -104,7 +104,7 @@ void LaunchSelfViaSteam(const char *params)
 	else
 	{
 		// couldn't find steam, find and launch it
-		
+
 		// first, search backwards through our current set of directories
 		char steamExe[MAX_PATH];
 		steamExe[0] = 0;
@@ -150,7 +150,7 @@ void LaunchSelfViaSteam(const char *params)
 		{
 			// still not found, use the one in the registry
 			HKEY hKey;
-			if (ERROR_SUCCESS == RegOpenKey(HKEY_CURRENT_USER, "Software\\Valve\\Steam", &hKey)) 
+			if (ERROR_SUCCESS == RegOpenKey(HKEY_CURRENT_USER, "Software\\Valve\\Steam", &hKey))
 			{
 				DWORD dwType;
 				DWORD dwSize = sizeof(steamExe);
@@ -158,7 +158,7 @@ void LaunchSelfViaSteam(const char *params)
 				RegCloseKey( hKey );
 			}
 		}
-		
+
 		if (!steamExe[0])
 		{
 			// still no path, error

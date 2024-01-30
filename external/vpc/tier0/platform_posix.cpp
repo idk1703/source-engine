@@ -1,6 +1,6 @@
 //========= Copyright 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -48,7 +48,7 @@ void InitTime()
 {
 	start_time = mach_absolute_time();
 	mach_timebase_info(&sTimebaseInfo);
-	conversion = 1e-9 * (double) sTimebaseInfo.numer / (double) sTimebaseInfo.denom;	
+	conversion = 1e-9 * (double) sTimebaseInfo.numer / (double) sTimebaseInfo.denom;
 }
 
 uint64 Plat_GetClockStart()
@@ -57,7 +57,7 @@ uint64 Plat_GetClockStart()
 	{
 		InitTime();
 	}
-	
+
 	return start_time * conversion;
 }
 
@@ -68,14 +68,14 @@ double Plat_FloatTime()
 		g_FakeBenchmarkTime += g_FakeBenchmarkTimeInc;
 		return g_FakeBenchmarkTime;
 	}
-	
+
 	if ( !start_time )
 	{
 		InitTime();
 	}
-	
+
 	uint64 now = mach_absolute_time();
-	
+
 	return ( now - start_time ) * conversion;
 }
 #else
@@ -95,7 +95,7 @@ uint64 Plat_GetClockStart()
 		gettimeofday( &tp, NULL );
 		InitTime( tp );
 	}
-	
+
 	return secbase;
 }
 
@@ -107,17 +107,17 @@ double Plat_FloatTime()
 		g_FakeBenchmarkTime += g_FakeBenchmarkTimeInc;
 		return g_FakeBenchmarkTime;
 	}
-	
+
 	struct timeval  tp;
-	
+
 	gettimeofday( &tp, NULL );
-	
+
 	if ( !secbase )
 	{
 		InitTime( tp );
 		return ( tp.tv_usec / 1000000.0 );
 	}
-	
+
 	return (( tp.tv_sec - secbase ) + tp.tv_usec / 1000000.0 );
 }
 #endif
@@ -133,26 +133,26 @@ uint32 Plat_MSTime()
 
 	struct timeval  tp;
 	static int      secbase = 0;
-	
+
 	gettimeofday( &tp, NULL );
-	
+
 	if ( !secbase )
 	{
 		secbase = tp.tv_sec;
 		return ( tp.tv_usec / 1000.0 );
 	}
-	
+
 	return (unsigned long)(( tp.tv_sec - secbase )*1000.0 + tp.tv_usec / 1000.0 );
 
 }
 
-// Wraps the thread-safe versions of asctime. buf must be at least 26 bytes 
+// Wraps the thread-safe versions of asctime. buf must be at least 26 bytes
 char *Plat_asctime( const struct tm *tm, char *buf, size_t bufsize )
 {
 	return asctime_r( tm, buf );
 }
 
-// Wraps the thread-safe versions of ctime. buf must be at least 26 bytes 
+// Wraps the thread-safe versions of ctime. buf must be at least 26 bytes
 char *Plat_ctime( const time_t *timep, char *buf, size_t bufsize )
 {
 	return ctime_r( timep, buf );
@@ -227,7 +227,7 @@ PLATFORM_INTERFACE void Plat_Free( void *ptr )
 	g_pMemAlloc->Free( ptr );
 #else
 	free( ptr );
-#endif   
+#endif
 }
 
 
@@ -250,7 +250,7 @@ PLATFORM_INTERFACE void Plat_SetCommandLineArgs( char **argv, int argc )
 	{
 		strncat( g_CmdLine, argv[i], sizeof(g_CmdLine) - strlen(g_CmdLine) );
 	}
-	
+
 	g_CmdLine[ sizeof(g_CmdLine) -1 ] = 0;
 }
 
@@ -300,7 +300,7 @@ bool Plat_IsInDebugSession()
 	char s[256];
 	snprintf(s, 256, "/proc/%d/cmdline", getppid());
 	FILE * fp = fopen(s, "r");
-	if (fp != NULL) 
+	if (fp != NULL)
 	{
 		fread(s, 256, 1, fp);
 		fclose(fp);
@@ -330,9 +330,9 @@ static void InitWatchDogTimer( void )
 #else
 		s_nWatchDogTimerTimeScale = 1;
 #endif
-		
+
 	}
-	
+
 }
 
 // watchdog timer support
@@ -362,7 +362,7 @@ void Plat_GetLocalTime( struct tm *pNow )
 	// We just provide a wrapper on this function so we can protect access to time() everywhere.
 	time_t ltime;
 	time( &ltime );
-	
+
 	Plat_ConvertToLocalTime( ltime, pNow );
 }
 
@@ -370,25 +370,25 @@ void Plat_ConvertToLocalTime( uint64 nTime, struct tm *pNow )
 {
 	// Since localtime() returns a global, we need to protect against multiple threads stomping it.
 	g_LocalTimeMutex.Lock();
-	
+
 	time_t ltime = (time_t)nTime;
 	tm *pTime = localtime( &ltime );
 	if ( pTime )
 		*pNow = *pTime;
 	else
 		memset( pNow, 0, sizeof( *pNow ) );
-	
+
 	g_LocalTimeMutex.Unlock();
 }
 
 void Plat_GetTimeString( struct tm *pTime, char *pOut, int nMaxBytes )
 {
 	g_LocalTimeMutex.Lock();
-	
+
 	char *pStr = asctime( pTime );
 	strncpy( pOut, pStr, nMaxBytes );
 	pOut[nMaxBytes-1] = 0;
-	
+
 	g_LocalTimeMutex.Unlock();
 }
 

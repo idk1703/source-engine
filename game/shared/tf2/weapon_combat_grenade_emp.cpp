@@ -41,7 +41,7 @@ public:
 
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -54,8 +54,8 @@ public:
 		return BaseClass::ShouldPredict();
 	}
 #endif
-private:														
-	CWeaponCombatGrenadeEMP( const CWeaponCombatGrenadeEMP & );						
+private:
+	CWeaponCombatGrenadeEMP( const CWeaponCombatGrenadeEMP & );
 
 };
 
@@ -76,7 +76,7 @@ CWeaponCombatGrenadeEMP::CWeaponCombatGrenadeEMP( void )
 	SetPredictionEligible( true );
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatGrenadeEMP::Precache( void )
 {

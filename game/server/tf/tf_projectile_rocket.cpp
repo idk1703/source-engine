@@ -85,10 +85,10 @@ CBasePlayer *CTFProjectile_Rocket::GetScorer( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int	CTFProjectile_Rocket::GetDamageType() 
-{ 
+int	CTFProjectile_Rocket::GetDamageType()
+{
 	int iDmgType = BaseClass::GetDamageType();
 	if ( m_bCritical )
 	{
@@ -99,7 +99,7 @@ int	CTFProjectile_Rocket::GetDamageType()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CTFProjectile_Rocket::GetDamageCustom()
 {
@@ -120,14 +120,14 @@ int	CTFProjectile_Rocket::GetDamageCustom()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFProjectile_Rocket::RocketTouch( CBaseEntity *pOther )
 {
 	BaseClass::RocketTouch( pOther );
-		
+
 	if (m_bCritical && pOther && pOther->IsPlayer())
-	{		
+	{
 		CTFPlayer *pHitPlayer = ToTFPlayer( pOther );
 		int iHitPlayerTeamNumber = pHitPlayer->GetTeamNumber();
 		int iRocketTeamNumber = BaseClass::GetTeamNumber();

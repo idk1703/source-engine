@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -25,7 +25,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CControlCatalog::CControlCatalog(): Frame(NULL, "PanelZoo")
 {
@@ -33,7 +33,7 @@ CControlCatalog::CControlCatalog(): Frame(NULL, "PanelZoo")
 	// calculate defaults
 	int x, y, wide, tall;
 	vgui::surface()->GetScreenSize(wide, tall);
-	
+
 	int dwide, dtall;
 	dwide = 535;
 	dtall = 405;
@@ -136,9 +136,9 @@ CControlCatalog::CControlCatalog(): Frame(NULL, "PanelZoo")
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
 CControlCatalog::~CControlCatalog()
-{ 
+{
 }
- 
+
 //-----------------------------------------------------------------------------
 // Purpose: Handles closing of the dialog - shuts down the whole app
 //-----------------------------------------------------------------------------
@@ -181,7 +181,3 @@ MessageMapItem_t CControlCatalog::m_MessageMap[] =
 };
 
 IMPLEMENT_PANELMAP(CControlCatalog, Frame);
-
-
-
-

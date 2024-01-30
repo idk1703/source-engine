@@ -33,7 +33,7 @@ enum EVortexState
 class CTeleportVortex : public CBaseAnimating
 {
 	DECLARE_DATADESC();
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_CLASS( CTeleportVortex, CBaseAnimating );
 
 public:
@@ -58,7 +58,7 @@ public:
 	virtual bool	KeyValue( const char *szKeyName, const char *szValue );
 	virtual int		UpdateTransmitState( void );
 	virtual void	StartTouch( CBaseEntity *pOther );
-	virtual void	Touch( CBaseEntity *pOther ); 
+	virtual void	Touch( CBaseEntity *pOther );
 
 	void			SetAdvantageTeam( inputdata_t &inputdata );
 #endif
@@ -71,7 +71,7 @@ protected:
 	CountdownTimer	m_lifeTimer;
 
 	CNetworkVar( int, m_iState );
-	
+
 #ifdef CLIENT_DLL
 	CNewParticleEffect	*m_pVortexEffect;
 	float			m_flScale;
@@ -93,5 +93,3 @@ void SendPlayerToTheUnderworld( CTFPlayer *teleportingPlayer, const char *where 
 
 
 #endif // TELEPORT_VORTEX_H
-
-

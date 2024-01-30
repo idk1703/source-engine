@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -22,7 +22,7 @@ struct challenge_s
 //-----------------------------------------------------------------------------
 class CDialogGameInfo : public vgui::Frame, public ISteamMatchmakingPlayersResponse, public ISteamMatchmakingPingResponse
 {
-	DECLARE_CLASS_SIMPLE( CDialogGameInfo, vgui::Frame ); 
+	DECLARE_CLASS_SIMPLE( CDialogGameInfo, vgui::Frame );
 
 public:
 	CDialogGameInfo(vgui::Panel *parent, int serverIP, int queryPort, unsigned short connectionPort, const char *pszConnectCode );

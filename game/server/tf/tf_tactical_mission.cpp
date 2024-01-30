@@ -209,7 +209,3 @@ void CTFTacticalMissionManager::OnRoundRestart( void )
 		}
 	}
 }
-
-
-
-

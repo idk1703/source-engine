@@ -60,7 +60,7 @@ void COcclusionQueryMgr::FlushQuery( OcclusionQueryObjectHandle_t hOcclusionQuer
 	if ( m_OcclusionQueryObjects[h].m_bHasBeenIssued[nIndex] )
 	{
 		ShaderAPIOcclusionQuery_t hQuery = m_OcclusionQueryObjects[h].m_QueryHandle[nIndex];
-		
+
 		while ( OCCLUSION_QUERY_RESULT_PENDING == g_pShaderAPI->OcclusionQuery_GetNumPixelsRendered( hQuery, true ) )
 			continue;
 	}
@@ -175,7 +175,7 @@ void COcclusionQueryMgr::BeginOcclusionQueryDrawing( OcclusionQueryObjectHandle_
 						DevWarning( "blocking issue in occlusion queries! Grab brian!\n" );
 					}
 				}
-				while( !OCCLUSION_QUERY_FINISHED( nPixels ) ) 
+				while( !OCCLUSION_QUERY_FINISHED( nPixels ) )
 				{
 					// We're going to reuse this query, so issue a flush to force the query results to come back.
 					nPixels = g_pShaderAPI->OcclusionQuery_GetNumPixelsRendered( hQuery, true );

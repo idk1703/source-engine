@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -56,7 +56,7 @@ void Linefile_Read_f( void )
 		ConMsg ("couldn't open %s\n", name);
 		return;
 	}
-	
+
 	ConMsg ("Reading %s...\n", name);
 	c = 0;
 
@@ -66,7 +66,7 @@ void Linefile_Read_f( void )
 		if (r != 3)
 			break;
 		c++;
-		
+
 		g_Points.AddToTail( org );
 	}
 

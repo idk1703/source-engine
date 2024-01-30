@@ -77,7 +77,7 @@
 #define MSPACES 1
 #include "dlmalloc/malloc-2.8.3.h"
 
-void *g_AllocRegions[] = 
+void *g_AllocRegions[] =
 {
 #ifndef MEMALLOC_REGIONS
 #ifdef MEMALLOC_SEGMENT_MIXED
@@ -133,7 +133,7 @@ inline size_t compact_internal()
 		mspace_trim( g_AllocRegions[i], 0 );
 		end += mspace_footprint( g_AllocRegions[i] );
 	}
-	
+
 	return ( start - end );
 }
 
@@ -279,7 +279,7 @@ inline T MemAlign( T val, unsigned alignment )
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 
 template <typename CAllocator>
@@ -481,7 +481,7 @@ void CSmallBlockPool<CAllocator>::Free( void *p )
 	ValidateFreelist( pSharedData );
 }
 
-// Count the free blocks.  
+// Count the free blocks.
 template <typename CAllocator>
 int CSmallBlockPool<CAllocator>::CountFreeBlocks()
 {
@@ -502,7 +502,7 @@ int CSmallBlockPool<CAllocator>::GetCommittedSize()
 // Return the total blocks memory is committed for in the heap
 template <typename CAllocator>
 int CSmallBlockPool<CAllocator>::CountCommittedBlocks()
-{		 
+{
 	return m_nCommittedPages * ( BYTES_PAGE / m_nBlockSize );
 }
 
@@ -518,7 +518,7 @@ int CSmallBlockPool<CAllocator>::CountAllocatedBlocks()
 }
 
 template <typename CAllocator>
-int CSmallBlockPool<CAllocator>::PageSort( const void *p1, const void *p2 ) 
+int CSmallBlockPool<CAllocator>::PageSort( const void *p1, const void *p2 )
 {
 	SharedData_t *pSharedData = GetSharedData();
 	return pSharedData->m_PageStatus[*((int *)p1)].m_SortList.Count() - pSharedData->m_PageStatus[*((int *)p2)].m_SortList.Count();
@@ -617,7 +617,7 @@ bool CSmallBlockPool<CAllocator>::RemovePagesFromFreeList( byte **pPages, int nP
 
 			pNode = pNext;
 		}
-	
+
 		if ( nSortPages > 1 )
 		{
 			qsort( sortPages, nSortPages, sizeof(int), &PageSort );
@@ -655,7 +655,7 @@ size_t CSmallBlockPool<CAllocator>::Compact( bool bIncremental )
 		PageStatus_t **pReleasedPagesPrevs = (PageStatus_t **)stackalloc( m_nCommittedPages * sizeof(PageStatus_t *) );
 		byte **pPageBases = (byte **)stackalloc( m_nCommittedPages * sizeof(byte *) );
 		int nPages = 0;
-		
+
 		// Gather the pages to return to the backing pool
 		PageStatus_t *pPage = m_pFirstPage;
 		PageStatus_t *pPagePrev = NULL;
@@ -735,7 +735,7 @@ size_t CSmallBlockPool<CAllocator>::Compact( bool bIncremental )
 
 				if ( nPages )
 				{
-					// Detach the list, push the decommitted page on, iterate up to previous 
+					// Detach the list, push the decommitted page on, iterate up to previous
 					// decommits, but them on, then push the committed pages on
 					TSLNodeBase_t *pNodes = pSharedData->m_FreePages.Detach();
 					for ( i = 0; i < nPages; i++ )
@@ -1089,7 +1089,7 @@ void *CSmallBlockHeap<CAllocator>::Realloc( void *p, size_t nBytes )
 	{
 		size_t nBytesCopy = MIN( nBytes, pOldPool->GetBlockSize() );
 		memcpy( pNewBlock, p, nBytesCopy );
-	} 
+	}
 	else if ( nBytes < pOldPool->GetBlockSize() )
 	{
 		return p;
@@ -1146,12 +1146,12 @@ void CSmallBlockHeap<CAllocator>::DumpStats( const char *pszTag, FILE *pFile )
 		for ( int i = 0; i < NUM_POOLS; i++ )
 		{
 			// output for vxconsole parsing
-			fprintf( pFile, "Pool %2i: (size: %4u) blocks: allocated:%5i free:%5i committed:%5i (committed size:%4u kb)\n", 
-				i, 
-				m_Pools[i].GetBlockSize(), 
-				m_Pools[i].CountAllocatedBlocks(), 
+			fprintf( pFile, "Pool %2i: (size: %4u) blocks: allocated:%5i free:%5i committed:%5i (committed size:%4u kb)\n",
+				i,
+				m_Pools[i].GetBlockSize(),
+				m_Pools[i].CountAllocatedBlocks(),
 				m_Pools[i].CountFreeBlocks(),
-				m_Pools[i].CountCommittedBlocks(), 
+				m_Pools[i].CountCommittedBlocks(),
 				m_Pools[i].GetCommittedSize() );
 		}
 		fprintf( pFile, "Totals (%s): Committed:%5u kb Allocated:%5u kb\n", pszTag, bytesCommitted / 1024, bytesAllocated / 1024 );
@@ -1251,7 +1251,7 @@ struct Sentinal_t
 	DWORD value[4];
 };
 
-Sentinal_t g_HeadSentinel = 
+Sentinal_t g_HeadSentinel =
 {
 	0xdeadbeef,
 	0xbaadf00d,
@@ -1259,7 +1259,7 @@ Sentinal_t g_HeadSentinel =
 	0xdeadbeef,
 };
 
-Sentinal_t g_TailSentinel = 
+Sentinal_t g_TailSentinel =
 {
 	0xbaadf00d,
 	0xbd122969,
@@ -1592,7 +1592,7 @@ INTERNAL_INLINE void *CStdMemAlloc::InternalAllocFromPools( size_t nSize )
 INTERNAL_INLINE void *CStdMemAlloc::InternalAlloc( int region, size_t nSize )
 {
 	PROFILE_ALLOC(Malloc);
-	
+
 	void *pMem;
 
 #if MEM_SBH_ENABLED
@@ -1634,7 +1634,7 @@ INTERNAL_INLINE void *CStdMemAlloc::InternalAlloc( int region, size_t nSize )
 INTERNAL_INLINE void *CStdMemAlloc::InternalAllocAligned( int region, size_t nSize, size_t align )
 {
 	PROFILE_ALLOC(MallocAligned);
-	
+
 	void *pMem;
 
 #if MEM_SBH_ENABLED
@@ -1900,7 +1900,7 @@ void *CStdMemAlloc::Expand_NoLongerSupported( void *pMem, size_t nSize, const ch
 //-----------------------------------------------------------------------------
 // Region support
 //-----------------------------------------------------------------------------
-void *CStdMemAlloc::RegionAlloc( int region, size_t nSize ) 
+void *CStdMemAlloc::RegionAlloc( int region, size_t nSize )
 {
 	size_t nAdjustedSize = LMDAdjustSize( nSize );
 	return LMDNoteAlloc( CStdMemAlloc::InternalAlloc( region, nAdjustedSize ), nSize );
@@ -2058,8 +2058,8 @@ int CStdMemAlloc::heapchk()
 #endif
 }
 
-void CStdMemAlloc::DumpStats() 
-{ 
+void CStdMemAlloc::DumpStats()
+{
 	DumpStatsFileBase( "memstats" );
 }
 
@@ -2418,12 +2418,12 @@ size_t CStdMemAlloc::DefaultFailHandler( size_t nBytes )
 {
 	if ( IsX360() )
 	{
-#ifdef _X360 
+#ifdef _X360
 		ExecuteOnce(
 		{
 			char buffer[256];
 			_snprintf( buffer, sizeof( buffer ), "***** Memory pool overflow, attempted allocation size: %u (not a critical error)\n", nBytes );
-			XBX_OutputDebugString( buffer ); 
+			XBX_OutputDebugString( buffer );
 		}
 		);
 #endif // _X360
@@ -2451,7 +2451,7 @@ void CStdMemAlloc::SetCRTAllocFailed( size_t nSize )
 	_snprintf( buffer, sizeof( buffer ), "***** OUT OF MEMORY! attempted allocation size: %u ****\n", nSize );
 #endif // COMPILER_GCC
 
-#ifdef _X360 
+#ifdef _X360
 	XBX_OutputDebugString( buffer );
 	if ( !Plat_IsInDebugSession() )
 	{

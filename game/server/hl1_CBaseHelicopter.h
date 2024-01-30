@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -43,7 +43,7 @@ public:
 
 	void Spawn( void );
 	void Precache( void );
-	
+
 	void Event_Killed( const CTakeDamageInfo &info );
 	void StopLoopingSounds();
 
@@ -76,7 +76,7 @@ public:
 
 	virtual bool IsCrashing( void ) { return m_lifeState != LIFE_ALIVE; }
 	virtual float GetAcceleration( void ) { return 5; }
-	virtual bool HasReachedTarget( void ); 
+	virtual bool HasReachedTarget( void );
 	virtual void OnReachedTarget( CBaseEntity *pTarget ) {};
 
 	virtual void ApplySidewaysDrag( const Vector &vecRight );

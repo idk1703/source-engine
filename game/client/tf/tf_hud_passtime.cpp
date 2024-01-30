@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -56,7 +56,7 @@ static const char *GetProgressBallImageForTeam( int iTeam )
 }
 static const char *GetProgressBallImageForTeam( C_BaseEntity *pEnt )
 {
-	if ( !pEnt ) 
+	if ( !pEnt )
 	{
 		return "../passtime/hud/passtime_ball";
 	}
@@ -102,7 +102,7 @@ static const char *GetPlayerProgressPortrait( C_TFPlayer *pPlayer )
 //-----------------------------------------------------------------------------
 static const char *GetProgressGoalImage( const C_FuncPasstimeGoal *pGoal )
 {
-	if ( !pGoal ) 
+	if ( !pGoal )
 	{
 		return "";
 	}
@@ -165,7 +165,7 @@ bool CTFHudPasstimePanel::IsVisible()
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-CTFHudTeamScore::CTFHudTeamScore( vgui::Panel *pParent ) 
+CTFHudTeamScore::CTFHudTeamScore( vgui::Panel *pParent )
 	: CTFHudPasstimePanel( pParent, "HudTeamScore" )
 	, m_pPlayingToCluster( 0 )
 {
@@ -214,7 +214,7 @@ void CTFHudTeamScore::OnTick()
 
 	if ( m_pPlayingToCluster )
 	{
-		m_pPlayingToCluster->SetDialogVariable( "rounds", 
+		m_pPlayingToCluster->SetDialogVariable( "rounds",
 			tf_passtime_scores_per_round.GetInt() );
 	}
 
@@ -226,7 +226,7 @@ void CTFHudTeamScore::OnTick()
 int CTFHudTeamScore::GetTeamScore( int iTeam )
 {
 	C_TFTeam *pTeam = GetGlobalTFTeam( iTeam );
-	return pTeam 
+	return pTeam
 		? pTeam->Get_Score()
 		: 0;
 }
@@ -236,7 +236,7 @@ int CTFHudTeamScore::GetTeamScore( int iTeam )
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-CTFHudPasstimePassNotify::CTFHudPasstimePassNotify( vgui::Panel *pParent ) 
+CTFHudPasstimePassNotify::CTFHudPasstimePassNotify( vgui::Panel *pParent )
 	: CTFHudPasstimePanel( pParent, "HudPasstimePassNotify" )
 {
 }
@@ -267,7 +267,7 @@ void CTFHudPasstimePassNotify::ApplySchemeSettings( vgui::IScheme *pScheme )
 void CTFHudPasstimePassNotify::OnTick()
 {
 	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( !pLocalPlayer || !g_pPasstimeLogic || !g_pPasstimeLogic->GetBall() ) 
+	if ( !pLocalPlayer || !g_pPasstimeLogic || !g_pPasstimeLogic->GetBall() )
 	{
 		// nothing can work
 		if ( m_pTextBox )
@@ -289,7 +289,7 @@ void CTFHudPasstimePassNotify::OnTick()
 
 	C_PasstimeBall *pBall = g_pPasstimeLogic->GetBall();
 	CTFPlayer *pBallCarrier = pBall ? pBall->GetCarrier() : NULL;
-	if ( !pBallCarrier ) 
+	if ( !pBallCarrier )
 	{
 		if ( pBall && pBall->GetHomingTarget() == pLocalPlayer )
 		{
@@ -311,10 +311,10 @@ void CTFHudPasstimePassNotify::OnTick()
 				m_pTextBox->SetVisible( true );
 			}
 
-			// this should really be GetThrower instead of PrevCarrier, 
+			// this should really be GetThrower instead of PrevCarrier,
 			// but it doesn't exist on the client and this will have the
 			// desired value anyway.
-			C_TFPlayer *pThrower = pBall->GetPrevCarrier(); 
+			C_TFPlayer *pThrower = pBall->GetPrevCarrier();
 			if ( pThrower )
 			{
 				if ( m_pTextPlayerName )
@@ -348,7 +348,7 @@ void CTFHudPasstimePassNotify::OnTick()
 			if ( m_pTextBox )
 			{
 				m_pTextBox->SetBorder( (pLocalPlayer->GetTeamNumber() == TF_TEAM_RED)
-					? m_pTextBoxBorderIncomingRed 
+					? m_pTextBoxBorderIncomingRed
 					: m_pTextBoxBorderIncomingBlu );
 			}
 
@@ -360,12 +360,12 @@ void CTFHudPasstimePassNotify::OnTick()
 	// Can't be an incoming pass at this point
 	//
 
-	if( !pBallCarrier 
-		|| pLocalPlayer->IsObserver() 
-		|| (pBallCarrier == pLocalPlayer) 
+	if( !pBallCarrier
+		|| pLocalPlayer->IsObserver()
+		|| (pBallCarrier == pLocalPlayer)
 		|| (pBallCarrier->GetTeamNumber() != pLocalPlayer->GetTeamNumber()) )
 	{
-		// 
+		//
 		// No carrier, or carrier is on enemy team, or carrier is local player
 		//
 
@@ -401,7 +401,7 @@ void CTFHudPasstimePassNotify::OnTick()
 		bTargetable = tr.fraction == 1;
 	}
 
-	if ( !bTargetable ) 
+	if ( !bTargetable )
 	{
 		if ( m_pTextBox )
 		{
@@ -437,7 +437,7 @@ void CTFHudPasstimePassNotify::OnTick()
 		m_pSpeechIndicator->SetVisible( pLocalPlayer->m_Shared.AskForBallTime() > gpGlobals->curtime );
 	}
 
-	if ( bTargeted ) 
+	if ( bTargeted )
 	{
 		if ( m_pPassLockIndicator )
 		{
@@ -496,7 +496,7 @@ void CTFHudPasstimePassNotify::OnTick()
 // CTFHudPasstimeEventText
 //-----------------------------------------------------------------------------
 
-namespace HudPasstimeEventText 
+namespace HudPasstimeEventText
 {
 	static const float flInSec = 0.1f;
 	static const float flOutSec = 0.25f;
@@ -553,9 +553,9 @@ void CTFHudPasstimeEventText::SetLabelText( vgui::Label *pLabel, const wchar_t *
 void CTFHudPasstimeEventText::EnterState( State state, float duration )
 {
 	m_state = state;
-	
+
 	// move things faster if the queue is backlogged, but State::Pause is always the same duration
-	if ( (state != State::Pause) && (m_queue.Count() >= HudPasstimeEventText::iQueueDepthPanic) ) 
+	if ( (state != State::Pause) && (m_queue.Count() >= HudPasstimeEventText::iQueueDepthPanic) )
 	{
 		duration /= 2.0f;
 	}
@@ -587,13 +587,13 @@ void CTFHudPasstimeEventText::SetAlpha( int ia )
 //-----------------------------------------------------------------------------
 void CTFHudPasstimeEventText::Tick()
 {
-	if ( !m_bValid ) 
+	if ( !m_bValid )
 		return;
 
 	switch( m_state )
 	{
 	case State::Idle:
-		if ( !m_queue.IsEmpty() ) 
+		if ( !m_queue.IsEmpty() )
 		{
 			SetAlpha( 1 );
 			auto msg = m_queue.RemoveAtHead();
@@ -698,7 +698,7 @@ void CTFHudPasstimeEventText::SetPlayerName( C_TFPlayer *pPlayer, const char *pK
 //-----------------------------------------------------------------------------
 void CTFHudPasstimeEventText::SetTeam( C_TFPlayer *pPlayer )
 {
-	if ( pPlayer ) 
+	if ( pPlayer )
 	{
 		C_TFTeam *pTeam = GetGlobalTFTeam( pPlayer->GetTeamNumber() );
 		m_localizeKeys->SetWString( "team", pTeam ? pTeam->Get_Localized_Name() : L"" );
@@ -713,7 +713,7 @@ void CTFHudPasstimeEventText::SetTeam( C_TFPlayer *pPlayer )
 template< int TArraySize >
 void CTFHudPasstimeEventText::ConstructNewString( const char *pLocTag, wchar_t (&out)[TArraySize] )
 {
-	// FIXME calling find is redundant 
+	// FIXME calling find is redundant
 	if ( pLocTag && pLocTag[0] && g_pVGuiLocalize->Find( pLocTag ) )
 	{
 		g_pVGuiLocalize->ConstructString_safe( out, pLocTag, m_localizeKeys );
@@ -737,7 +737,7 @@ void CTFHudPasstimeEventText::Enqueue( C_TFPlayer *pSource, C_TFPlayer *pSubject
 	auto *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 	auto bShowBonus = (pSubject == pLocalPlayer)
 		|| (pLocalPlayer->IsObserver() && pLocalPlayer->GetObserverTarget() == pLocalPlayer);
-	
+
 	QueueElement e;
 	ConstructNewString( pTitle, e.title );
 	ConstructNewString( pDetail, e.detail );
@@ -829,7 +829,7 @@ void CTFHudPasstimeBallStatus::ApplySchemeSettings( IScheme *pScheme )
 	m_pSelfPlayerIcon = FindControl<ImagePanel>( "ProgressSelfPlayerIcon" );
 
 	Panel *pBallPowerRoot = FindControl<Panel>( "BallPowerCluster" );
-	if ( !pBallPowerRoot ) 
+	if ( !pBallPowerRoot )
 	{
 		pBallPowerRoot = this;
 	}
@@ -838,8 +838,8 @@ void CTFHudPasstimeBallStatus::ApplySchemeSettings( IScheme *pScheme )
 	m_pBallPowerMeterFrame = pBallPowerRoot->FindControl<Panel>( "BallPowerMeterFrame", true );
 	m_pBallPowerMeterFinalSection = pBallPowerRoot->FindControl<Panel>( "BallPowerMeterFinalSectionContainer", true );
 
-	m_pEventText->SetControls( FindControl<Label>( "EventTitleLabel" ), 
-		FindControl<Label>( "EventDetailLabel" ), 
+	m_pEventText->SetControls( FindControl<Label>( "EventTitleLabel" ),
+		FindControl<Label>( "EventDetailLabel" ),
 		FindControl<Label>( "EventBonusLabel" ) );
 
 	m_bInitialized = m_pProgressBall
@@ -866,20 +866,20 @@ void CTFHudPasstimeBallStatus::ApplySchemeSettings( IScheme *pScheme )
 		m_pBallPowerMeterFinalSection->SetWide( iFinalSectionWidth );
 		m_pBallPowerMeterFinalSection->SetPos( m_pBallPowerMeterFinalSection->GetXPos() + (m_iBallPowerMeterFillWidth - iFinalSectionWidth), m_pBallPowerMeterFinalSection->GetYPos() );
 	}
-	m_iPrevBallPower = g_pPasstimeLogic 
-		? g_pPasstimeLogic->GetBallPower() 
+	m_iPrevBallPower = g_pPasstimeLogic
+		? g_pPasstimeLogic->GetBallPower()
 		: 0;
-	
+
 	// find the left/right markers in the res files
 	{
 		auto *pRedEnd = FindChildByName( "RedProgressEnd" );
 		auto *pBlueEnd = FindChildByName( "BlueProgressEnd" );
-		if ( pRedEnd && pBlueEnd ) 
+		if ( pRedEnd && pBlueEnd )
 		{
 			pRedEnd->GetPos( m_iXRedProgress, m_iYRedProgress );
 			pBlueEnd->GetPos( m_iXBlueProgress, m_iYBlueProgress );
 		}
-		else 
+		else
 		{
 			// no markers in the res file, just give it offscreen but valid coords
 			m_iXBlueProgress = -100.0f;
@@ -892,7 +892,7 @@ void CTFHudPasstimeBallStatus::ApplySchemeSettings( IScheme *pScheme )
 	// find all the goal icon image panels
 	{
 		char buf[16];
-		for ( auto i = 0; i < NumGoalIcons; ++i ) 
+		for ( auto i = 0; i < NumGoalIcons; ++i )
 		{
 			V_sprintf_safe( buf, "GoalRed%i", i );
 			m_pGoalIconsRed[i] = FindControl<vgui::ImagePanel>( buf );
@@ -912,7 +912,7 @@ void CTFHudPasstimeBallStatus::ApplySchemeSettings( IScheme *pScheme )
 	// find all the player icon image panels
 	{
 		char controlname[32];
-		for ( auto i = 0; i < MAX_PLAYERS; ++i ) 
+		for ( auto i = 0; i < MAX_PLAYERS; ++i )
 		{
 			V_sprintf_safe( controlname, "playericon%i", i ); // ugh
 			m_pPlayerIcons[i] = FindControl<vgui::ImagePanel>( controlname );
@@ -985,7 +985,7 @@ static float CalcBallProgressFrac()
 	Assert( g_pPasstimeLogic && g_pPasstimeLogic->GetBall() && (g_pPasstimeLogic->GetNumSections() > 0) );
 	CPasstimeBall *pBall = g_pPasstimeLogic->GetBall();
 	CTFPlayer *pCarrier = pBall->GetCarrier();
-	return CalcProgressFrac( pCarrier 
+	return CalcProgressFrac( pCarrier
 		? pCarrier->GetNetworkOrigin()
 		: pBall->GetNetworkOrigin() );
 }
@@ -995,7 +995,7 @@ void CTFHudPasstimeBallStatus::UpdateGoalIcon( vgui::ImagePanel *pIcon, C_FuncPa
 {
 	Assert( m_bInitialized );
 	// TODO: animations on enable/disable?
-	if ( !pIcon ) 
+	if ( !pIcon )
 	{
 		return;
 	}
@@ -1028,7 +1028,7 @@ void CTFHudPasstimeBallStatus::UpdateGoalIcon( vgui::ImagePanel *pIcon, C_FuncPa
 void CTFHudPasstimeBallStatus::OnTickHidden()
 {
 	m_bGoalsFound = false;
-	
+
 	if ( m_pProgressBall )
 	{
 		m_pProgressBall->SetVisible( false );
@@ -1059,8 +1059,8 @@ void CTFHudPasstimeBallStatus::OnTickHidden()
 		m_pPlayerIcons[i]->SetVisible( false );
 	}
 
-	m_iPrevBallPower = g_pPasstimeLogic 
-		? g_pPasstimeLogic->GetBallPower() 
+	m_iPrevBallPower = g_pPasstimeLogic
+		? g_pPasstimeLogic->GetBallPower()
 		: 0;
 
 	HideGoalIcons();
@@ -1127,7 +1127,7 @@ void CTFHudPasstimeBallStatus::OnTickVisible( C_TFPlayer *pLocalPlayer, C_Passti
 		bool bWasAboveThreshold = m_iPrevBallPower > iThreshold;
 		bool bIsAboveThreshold = iCurPower > iThreshold;
 		m_iPrevBallPower = iCurPower;
-		if ( bWasAboveThreshold && !bIsAboveThreshold ) 
+		if ( bWasAboveThreshold && !bIsAboveThreshold )
 		{
 			m_pEventText->Clear(); // push everything else out of the way
 			m_pEventText->EnqueueGeneric( "#Msg_PasstimeEventPowerDownTitle", "#Msg_PasstimeEventPowerDownDetail", "#Msg_PasstimeEventPowerDownBonus" );
@@ -1239,7 +1239,7 @@ void CTFHudPasstimeBallStatus::OnTickVisible( C_TFPlayer *pLocalPlayer, C_Passti
 	// Refresh goal icons if necessary
 	//
 	bool bReadyToFindGoals = (g_pPasstimeLogic->GetNumSections() > 0);
-	if ( !m_bGoalsFound && bReadyToFindGoals ) 
+	if ( !m_bGoalsFound && bReadyToFindGoals )
 	{
 		// release any existing handles to goals
 		for ( auto i = 0; i < NumGoalIcons; ++i )
@@ -1257,7 +1257,7 @@ void CTFHudPasstimeBallStatus::OnTickVisible( C_TFPlayer *pLocalPlayer, C_Passti
 			// sort goals by position in world, from blue to red (blue progress is always 0, red is always 1))
 			C_FuncPasstimeGoal* sortedgoals[iMaxSortedGoals];
 			std::copy( goals.begin(), goals.end(), sortedgoals );
-			std::sort( sortedgoals, sortedgoals + iNumGoals, []( C_FuncPasstimeGoal* a, C_FuncPasstimeGoal* b ) 
+			std::sort( sortedgoals, sortedgoals + iNumGoals, []( C_FuncPasstimeGoal* a, C_FuncPasstimeGoal* b )
 			{
 				// this is wasteful but it should only happen one frame per round
 				// The order of the icons in the hud res file determines which direction to sort these
@@ -1275,7 +1275,7 @@ void CTFHudPasstimeBallStatus::OnTickVisible( C_TFPlayer *pLocalPlayer, C_Passti
 			// first icon in array is leftmost blue goal on hud is first goal in sorted array
 			int iRedIcon = 0;
 			int iBlueIcon = 0;
-			for ( int iGoal = 0; iGoal < iNumGoals; ++iGoal ) 
+			for ( int iGoal = 0; iGoal < iNumGoals; ++iGoal )
 			{
 				// NOTE: goal's teams are backwards: the blue-colored goals on the blue side of the map are
 				// on team red because that's where red scores. doh.
@@ -1284,7 +1284,7 @@ void CTFHudPasstimeBallStatus::OnTickVisible( C_TFPlayer *pLocalPlayer, C_Passti
 				{
 					m_hGoalsBlue[iBlueIcon++] = pGoal;
 				}
-				
+
 				pGoal = sortedgoals[iNumGoals - iGoal - 1];
 				if ( pGoal && ( iRedIcon < NumGoalIcons ) && ( pGoal->GetTeamNumber() == TF_TEAM_BLUE ) )
 				{
@@ -1295,34 +1295,34 @@ void CTFHudPasstimeBallStatus::OnTickVisible( C_TFPlayer *pLocalPlayer, C_Passti
 			m_bGoalsFound = true;
 		}
 	}
-			
+
 	//
 	// Update goal icons
 	//
 	if ( m_bGoalsFound )
 	{
-		for ( auto i = 0; i < NumGoalIcons; ++i ) 
+		for ( auto i = 0; i < NumGoalIcons; ++i )
 		{
 			UpdateGoalIcon( m_pGoalIconsBlue[i], m_hGoalsBlue[i].Get() );
 			UpdateGoalIcon( m_pGoalIconsRed[i], m_hGoalsRed[i].Get() );
 		}
 	}
-	else 
+	else
 	{
 		HideGoalIcons();
 	}
 }
 
 //-----------------------------------------------------------------------------
-void CTFHudPasstimeBallStatus::HideGoalIcons() 
+void CTFHudPasstimeBallStatus::HideGoalIcons()
 {
 	for ( int i = 0; i < NumGoalIcons; ++i )
 	{
 		auto *pIcon = m_pGoalIconsBlue[i];
-		if ( pIcon ) 
+		if ( pIcon )
 			pIcon->SetVisible( false );
 		pIcon = m_pGoalIconsRed[i];
-		if ( pIcon ) 
+		if ( pIcon )
 			pIcon->SetVisible( false );
 	}
 }
@@ -1330,7 +1330,7 @@ void CTFHudPasstimeBallStatus::HideGoalIcons()
 //-----------------------------------------------------------------------------
 void CTFHudPasstimeBallStatus::OnTick()
 {
-	if ( !g_pPasstimeLogic || !m_bInitialized ) 
+	if ( !g_pPasstimeLogic || !m_bInitialized )
 	{
 		// happens randomly during map load
 		m_pEventText->Clear();
@@ -1341,7 +1341,7 @@ void CTFHudPasstimeBallStatus::OnTick()
 	if ( !pLocalPlayer )
 	{
 		// can happen during exit
-		return; 
+		return;
 	}
 
 	// Tick the event text regardless of the state of the rest of the hud so
@@ -1350,10 +1350,10 @@ void CTFHudPasstimeBallStatus::OnTick()
 
 	// I wish there were a reliable way to do this in an event-driven way instead of every frame
 	C_PasstimeBall *pBall = g_pPasstimeLogic->GetBall();
-	if ( !BShouldDraw() || !pBall ) 
+	if ( !BShouldDraw() || !pBall )
 	{
 		OnTickHidden();
-		
+
 		// this is the easiest way I could find to refresh the goals when switching maps
 		// todo this is dumb
 		m_bGoalsFound = false;
@@ -1372,7 +1372,7 @@ void CTFHudPasstimeBallStatus::OnTick()
 	{
 		m_pEventText->Clear();
 
-		// I don't *think* it's possible that this could accidentally end up 
+		// I don't *think* it's possible that this could accidentally end up
 		// running every frame.
 
 		// Order of operations here is important, see functions for details
@@ -1391,7 +1391,7 @@ bool CTFHudPasstimeBallStatus::TryForceBallGet()
 
 	// The HUD was reset during play, or possibly due to joining a game inprogroess,
 	// so try to get into a BallGet state if possible
-	if ( !g_TF_PR ) 
+	if ( !g_TF_PR )
 	{
 		// is this even possible?
 		return false;
@@ -1409,7 +1409,7 @@ bool CTFHudPasstimeBallStatus::TryForceBallGet()
 		{
 			continue;
 		}
-		
+
 		if ( g_TF_PR->IsLocalPlayer( iPlayer ) )
 		{
 			OnBallGetSelf( iPlayer );
@@ -1428,7 +1428,7 @@ bool CTFHudPasstimeBallStatus::TryForceBallGet()
 bool CTFHudPasstimeBallStatus::TryForceBallFree()
 {
 	Assert( m_bInitialized );
-	
+
 	// The HUD was reset during play, or possibly due to joining a game inprogroess,
 	// so try to get into a BallGet state if possible
 	if ( !g_pPasstimeLogic )
@@ -1437,7 +1437,7 @@ bool CTFHudPasstimeBallStatus::TryForceBallFree()
 	}
 
 	C_PasstimeBall *pBall = g_pPasstimeLogic->GetBall();
-	if ( !m_bInitialized || !pBall ) 
+	if ( !m_bInitialized || !pBall )
 	{
 		return false;
 	}
@@ -1467,7 +1467,7 @@ void CTFHudPasstimeBallStatus::OnBallGet( int getterIndex )
 //-----------------------------------------------------------------------------
 void CTFHudPasstimeBallStatus::FireGameEvent( IGameEvent *pEvent )
 {
-	if ( !m_bInitialized || !g_TF_PR || !g_PR ) 
+	if ( !m_bInitialized || !g_TF_PR || !g_PR )
 	{
 		return;
 	}
@@ -1505,10 +1505,10 @@ void CTFHudPasstimeBallStatus::FireGameEvent( IGameEvent *pEvent )
 	{
 		PasstimeGameEvents::PassCaught passCaughtEvent( pEvent );
 		OnBallGet( passCaughtEvent.catcherIndex );
-		
+
 		auto *pCatcher = ToTFPlayer( UTIL_PlayerByIndex( passCaughtEvent.catcherIndex ) );
 		auto *pThrower = ToTFPlayer( UTIL_PlayerByIndex( passCaughtEvent.passerIndex ) );
-		if ( pCatcher && pThrower ) 
+		if ( pCatcher && pThrower )
 		{
 			if ( pCatcher->GetTeamNumber() == pThrower->GetTeamNumber() )
 			{
@@ -1531,7 +1531,7 @@ void CTFHudPasstimeBallStatus::FireGameEvent( IGameEvent *pEvent )
 }
 
 //-----------------------------------------------------------------------------
-void CTFHudPasstimeBallStatus::Reset() 
+void CTFHudPasstimeBallStatus::Reset()
 {
 	m_bReset = true;
 
@@ -1541,10 +1541,10 @@ void CTFHudPasstimeBallStatus::Reset()
 }
 
 //-----------------------------------------------------------------------------
-void CTFHudPasstimeBallStatus::OnBallFreeOther( C_TFPlayer *pOwner, 
+void CTFHudPasstimeBallStatus::OnBallFreeOther( C_TFPlayer *pOwner,
 	C_TFPlayer *pAttacker )
 {
-	Assert( m_bInitialized );	
+	Assert( m_bInitialized );
 	if ( m_pProgressBallCarrierName )
 	{
 		m_pProgressBallCarrierName->SetVisible( false );
@@ -1552,10 +1552,10 @@ void CTFHudPasstimeBallStatus::OnBallFreeOther( C_TFPlayer *pOwner,
 }
 
 //-----------------------------------------------------------------------------
-void CTFHudPasstimeBallStatus::OnBallFreeSelf( C_TFPlayer *pOwner, 
+void CTFHudPasstimeBallStatus::OnBallFreeSelf( C_TFPlayer *pOwner,
 	C_TFPlayer *pAttacker )
 {
-	Assert( m_bInitialized );	
+	Assert( m_bInitialized );
 	if ( m_pProgressBallCarrierName )
 	{
 		m_pProgressBallCarrierName->SetVisible( false );
@@ -1565,7 +1565,7 @@ void CTFHudPasstimeBallStatus::OnBallFreeSelf( C_TFPlayer *pOwner,
 //-----------------------------------------------------------------------------
 void CTFHudPasstimeBallStatus::OnBallGetOther( int iPlayer )
 {
-	Assert( m_bInitialized );	
+	Assert( m_bInitialized );
 	Assert( g_PR );
 
 	wchar_t wszFinalText[128];
@@ -1588,7 +1588,7 @@ void CTFHudPasstimeBallStatus::OnBallGetOther( int iPlayer )
 //-----------------------------------------------------------------------------
 void CTFHudPasstimeBallStatus::OnBallGetSelf( int iPlayer )
 {
-	Assert( m_bInitialized );	
+	Assert( m_bInitialized );
 	Assert( g_PR );
 
 	wchar_t wszFinalText[128];
@@ -1611,7 +1611,7 @@ void CTFHudPasstimeBallStatus::OnBallGetSelf( int iPlayer )
 //-----------------------------------------------------------------------------
 void CTFHudPasstimeBallStatus::OnBallScore()
 {
-	Assert( m_bInitialized );	
+	Assert( m_bInitialized );
 	if ( m_pProgressBallCarrierName )
 	{
 		m_pProgressBallCarrierName->SetVisible( false );
@@ -1623,7 +1623,7 @@ void CTFHudPasstimeBallStatus::OnBallScore()
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-CTFHudPasstime::CTFHudPasstime( Panel *pParent ) 
+CTFHudPasstime::CTFHudPasstime( Panel *pParent )
 	: CTFHudPasstimePanel( pParent, "HudPasstime" )
 	, m_pBallStatus( new CTFHudPasstimeBallStatus( this ) )
 	, m_pTeamScore( new CTFHudTeamScore( this ) )
@@ -1652,7 +1652,7 @@ void CTFHudPasstime::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-void CTFHudPasstime::Reset() 
+void CTFHudPasstime::Reset()
 {
 	if ( m_pBallStatus )
 	{
@@ -1661,9 +1661,9 @@ void CTFHudPasstime::Reset()
 }
 
 //-----------------------------------------------------------------------------
-void CTFHudPasstime::OnTick() 
+void CTFHudPasstime::OnTick()
 {
-	if ( m_pTeamScore ) 
+	if ( m_pTeamScore )
 	{
 		m_pTeamScore->SetVisible( IsVisible() );
 	}

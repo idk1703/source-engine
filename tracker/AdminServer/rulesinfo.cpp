@@ -16,7 +16,7 @@
 extern void v_strncpy(char *dest, const char *src, int bufsize);
 
 CRulesInfo::CRulesInfo(IResponse *target,serveritem_t &server) {
-	
+
 	memcpy(&m_Server, &server,sizeof(serveritem_t));
 	m_pResponseTarget=target;
 
@@ -42,8 +42,8 @@ void CRulesInfo::Query()
 {
 	CMsgBuffer *buffer = m_pQuery->GetSendBuffer();
 	assert( buffer );
-	
-	if ( !buffer ) 
+
+	if ( !buffer )
 	{
 		return;
 	}
@@ -77,7 +77,7 @@ void CRulesInfo::Query()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRulesInfo::RunFrame()
 {
@@ -103,22 +103,22 @@ void CRulesInfo::UpdateServer(netadr_t *adr, CUtlVector<vgui::KeyValues *> *Rule
 
 }
 
-void CRulesInfo::Refresh() 
+void CRulesInfo::Refresh()
 {
 	Query();
 }
 
-bool CRulesInfo::IsRefreshing() 
+bool CRulesInfo::IsRefreshing()
 {
 	return m_bIsRefreshing;
 }
 
-serveritem_t &CRulesInfo::GetServer() 
+serveritem_t &CRulesInfo::GetServer()
 {
 	return m_Server;
 }
 
-bool CRulesInfo::Refreshed() 
+bool CRulesInfo::Refreshed()
 {
 	bool val = m_bRefreshed;
 	m_bRefreshed=false;
@@ -126,7 +126,7 @@ bool CRulesInfo::Refreshed()
 	return val;
 }
 
-CUtlVector<vgui::KeyValues *> *CRulesInfo::Rules() 
+CUtlVector<vgui::KeyValues *> *CRulesInfo::Rules()
 {
 	return m_vRules;
 }

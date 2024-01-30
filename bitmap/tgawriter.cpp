@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -62,7 +62,7 @@ static inline void myfwrite( void const *data, int size1, int size2, FileHandle_
 //-----------------------------------------------------------------------------
 // FIXME: assumes that we don't need to do gamma correction.
 //-----------------------------------------------------------------------------
-bool WriteToBuffer( unsigned char *pImageData, CUtlBuffer &buffer, int width, int height, 
+bool WriteToBuffer( unsigned char *pImageData, CUtlBuffer &buffer, int width, int height,
 					ImageFormat srcFormat, ImageFormat dstFormat )
 {
 	TGAHeader_t header;
@@ -179,15 +179,15 @@ bool WriteDummyFileNoAlloc( const char *fileName, int width, int height, enum Im
 		break;
 	}
 
-    memset( &tgaHeader, 0, sizeof(tgaHeader) );
-    tgaHeader.id_length  = 0;
-    tgaHeader.image_type = (unsigned char) nImageType;
-    tgaHeader.width      = (unsigned short) width;
-    tgaHeader.height     = (unsigned short) height;
-    tgaHeader.pixel_size = (unsigned char) nPixelSize;
-    tgaHeader.attributes = 0x20;
+	memset( &tgaHeader, 0, sizeof(tgaHeader) );
+	tgaHeader.id_length  = 0;
+	tgaHeader.image_type = (unsigned char) nImageType;
+	tgaHeader.width      = (unsigned short) width;
+	tgaHeader.height     = (unsigned short) height;
+	tgaHeader.pixel_size = (unsigned char) nPixelSize;
+	tgaHeader.attributes = 0x20;
 
-    // Write the Targa header
+	// Write the Targa header
 	fp.Write( &tgaHeader, sizeof(TGAHeader_t) );
 
 	// Write out width * height black pixels
@@ -210,7 +210,7 @@ bool WriteTGAFile( const char *fileName, int width, int height, enum ImageFormat
 
 	bool bMustConvert = false;
 	ImageFormat dstFormat = srcFormat;
- 
+
 	switch( srcFormat )
 	{
 	case IMAGE_FORMAT_BGR888:
@@ -243,15 +243,15 @@ bool WriteTGAFile( const char *fileName, int width, int height, enum ImageFormat
 		break;
 	}
 
-    memset( &tgaHeader, 0, sizeof(tgaHeader) );
-    tgaHeader.id_length  = 0;
-    tgaHeader.image_type = (unsigned char) nImageType;
-    tgaHeader.width      = (unsigned short) width;
-    tgaHeader.height     = (unsigned short) height;
-    tgaHeader.pixel_size = (unsigned char) nPixelSize;
-    tgaHeader.attributes = 0x20;
+	memset( &tgaHeader, 0, sizeof(tgaHeader) );
+	tgaHeader.id_length  = 0;
+	tgaHeader.image_type = (unsigned char) nImageType;
+	tgaHeader.width      = (unsigned short) width;
+	tgaHeader.height     = (unsigned short) height;
+	tgaHeader.pixel_size = (unsigned char) nPixelSize;
+	tgaHeader.attributes = 0x20;
 
-    // Write the Targa header
+	// Write the Targa header
 	fp.Write( &tgaHeader, sizeof(TGAHeader_t) );
 
 	// Write out image data
@@ -273,7 +273,7 @@ bool WriteTGAFile( const char *fileName, int width, int height, enum ImageFormat
 			fp.Write( srcData, nBytesPerPixel * width );
 			srcData += nStride;
 		}
-		
+
 	}
 	return true;
 }
@@ -350,4 +350,3 @@ bool WriteRectNoAlloc( unsigned char *pImageData, const char *fileName, int nXOr
 }
 
 } // end namespace TGAWriter
-

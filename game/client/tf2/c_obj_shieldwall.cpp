@@ -56,14 +56,14 @@ IMPLEMENT_CLIENTCLASS_DT(C_ObjectShieldWall, DT_ObjectShieldWall, CObjectShieldW
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectShieldWall::C_ObjectShieldWall( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectShieldWall::SetDormant( bool bDormant )
 {
@@ -72,7 +72,7 @@ void C_ObjectShieldWall::SetDormant( bool bDormant )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectShieldWall::RecalculateIDString( void )
 {
@@ -86,7 +86,7 @@ void C_ObjectShieldWall::RecalculateIDString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CShieldWallControlPanel : public CRotatingObjectControlPanel
 {
@@ -101,11 +101,9 @@ DECLARE_VGUI_SCREEN_FACTORY( CShieldWallControlPanel, "shieldwall_control_panel"
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CShieldWallControlPanel::CShieldWallControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CShieldWallControlPanel" ) 
+	: BaseClass( parent, "CShieldWallControlPanel" )
 {
 }
-
-

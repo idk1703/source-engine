@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@
 
 class C_PlayerClassSniper : public C_PlayerClass
 {
-	
+
 	DECLARE_CLASS( C_PlayerClassSniper, C_PlayerClass );
 
 public:
@@ -26,7 +26,7 @@ public:
 
 	DECLARE_PREDICTABLE();
 
-	PlayerClassSniperData_t *GetClassData( void ) { return &m_ClassData; } 
+	PlayerClassSniperData_t *GetClassData( void ) { return &m_ClassData; }
 
 protected:
 

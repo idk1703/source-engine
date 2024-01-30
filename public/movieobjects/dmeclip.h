@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -143,7 +143,7 @@ public:
 	void SetTimeOffset( DmeTime_t t );
 	void SetTimeScale ( float s );
 
-	// Given a root clip and a child (or grandchild) clip, builds the stack 
+	// Given a root clip and a child (or grandchild) clip, builds the stack
 	// from root on down to the destination clip. If shot is specified, then it
 	// must build a clip stack that passes through the shot
 	bool BuildClipStack( DmeClipStack_t* pStack, CDmeClip *pRoot, CDmeClip *pShot = NULL );
@@ -264,13 +264,13 @@ public:
 	virtual DmeClipType_t GetClipType() { return DMECLIP_CHANNEL; }
 
 	CDmeChannel *CreatePassThruConnection
-	( 
+	(
 		char const *passThruName,
-		CDmElement *pFrom, 
-		char const *pFromAttribute, 
-		CDmElement *pTo, 
+		CDmElement *pFrom,
+		char const *pFromAttribute,
+		CDmElement *pTo,
 		char const *pToAttribute,
-		int index = 0 
+		int index = 0
 	);
 
 	void RemoveChannel( CDmeChannel *pChannel );
@@ -321,7 +321,7 @@ template <class T>
 class CDmFXClipFactory : public CDmElementFactory<T>
 {
 public:
-	CDmFXClipFactory( const char *pLookupName, const char *pDescription ) : CDmElementFactory<T>( pLookupName ) 
+	CDmFXClipFactory( const char *pLookupName, const char *pDescription ) : CDmElementFactory<T>( pLookupName )
 	{
 		CDmeFXClip::InstallFXClipType( pLookupName, pDescription );
 	}
@@ -488,7 +488,7 @@ private:
 
 	CDmaVar< float >						m_Volume;
 
-	IVideoMaterial						   *m_pCachedVersion;	
+	IVideoMaterial						   *m_pCachedVersion;
 	bool m_bReloadCachedVersion;
 	CMaterialReference m_FadeMaterial;
 };

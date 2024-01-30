@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -27,7 +27,7 @@
 #include "basetypes.h"
 
 #ifdef _WIN32
-typedef int (*DedicatedMain_t)( HINSTANCE hInstance, HINSTANCE hPrevInstance, 
+typedef int (*DedicatedMain_t)( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 							  LPSTR lpCmdLine, int nCmdShow );
 #elif POSIX
 typedef int (*DedicatedMain_t)( int argc, char *argv[] );
@@ -199,7 +199,7 @@ int main( int argc, char *argv[] )
 
 	snprintf( szBuffer, sizeof( szBuffer ) - 1, "LD_LIBRARY_PATH=%s/bin:%s", cwd, pPath );
 	int ret = putenv( szBuffer );
-	if ( ret )	
+	if ( ret )
 	{
 		printf( "%s\n", strerror(errno) );
 	}

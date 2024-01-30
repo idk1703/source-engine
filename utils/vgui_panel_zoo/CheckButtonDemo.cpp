@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,7 +26,7 @@ class CheckButtonDemo: public DemoPage
 		void OnCheckButton1Checked();
 		void OnCheckButton2Checked();
 
-	
+
 	private:
 		CheckButton *m_pCheckButton1;
 		CheckButton *m_pCheckButton2;
@@ -60,7 +60,7 @@ CheckButtonDemo::CheckButtonDemo(Panel *parent, const char *name) : DemoPage(par
 	m_pCheckButton1->SetSelected(true);
 
 	// Check buttons are Buttons, and can send a command when clicked.
-    // Install a command to be sent when the box is checked or unchecked
+	// Install a command to be sent when the box is checked or unchecked
 	m_pCheckButton1->SetCommand(new KeyValues("Check1"));
 
 
@@ -77,7 +77,7 @@ CheckButtonDemo::CheckButtonDemo(Panel *parent, const char *name) : DemoPage(par
 	// Size the label so the message fits nicely.
 	m_pCheckButton2->SizeToContents();
 
-    // Install a command to be sent when the box is checked or unchecked
+	// Install a command to be sent when the box is checked or unchecked
 	m_pCheckButton2->SetCommand(new KeyValues("Check2"));
 
 }
@@ -96,11 +96,11 @@ void CheckButtonDemo::OnCheckButton1Checked()
 {
 	if (m_pCheckButton1->IsSelected())
 	{
-		ivgui()->DPrintf("Check box one is checked.\n"); 
+		ivgui()->DPrintf("Check box one is checked.\n");
 	}
 	else
 	{
-		ivgui()->DPrintf("Check box one is unchecked.\n"); 
+		ivgui()->DPrintf("Check box one is unchecked.\n");
 	}
 
 }
@@ -112,11 +112,11 @@ void CheckButtonDemo::OnCheckButton2Checked()
 {
 	if (m_pCheckButton2->IsSelected())
 	{
-		ivgui()->DPrintf("Check box two is checked.\n"); 
+		ivgui()->DPrintf("Check box two is checked.\n");
 	}
 	else
 	{
-		ivgui()->DPrintf("Check box two is unchecked.\n"); 
+		ivgui()->DPrintf("Check box two is unchecked.\n");
 	}
 }
 
@@ -137,5 +137,3 @@ Panel* CheckButtonDemo_Create(Panel *parent)
 {
 	return new CheckButtonDemo(parent, "CheckButtonDemo");
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -57,13 +57,13 @@ public:
 	IImage			*m_pIcon;
 };
 
-typedef int __cdecl SortFunc( 
-	ListPanel *pPanel, 
+typedef int __cdecl SortFunc(
+	ListPanel *pPanel,
 	const ListPanelItem &item1,
 	const ListPanelItem &item2 );
 
 //-----------------------------------------------------------------------------
-// Purpose: A spread-sheet type data view, similar to MFC's 
+// Purpose: A spread-sheet type data view, similar to MFC's
 //-----------------------------------------------------------------------------
 class ListPanel : public Panel
 {
@@ -86,7 +86,7 @@ public:
 	};
 
 	// adds a column header
-	virtual void AddColumnHeader(int index, const char *columnName, const char *columnText, int startingWidth, int minWidth, int maxWidth, int columnFlags = 0); 
+	virtual void AddColumnHeader(int index, const char *columnName, const char *columnText, int startingWidth, int minWidth, int maxWidth, int columnFlags = 0);
 	virtual void AddColumnHeader(int index, const char *columnName, const char *columnText, int width, int columnFlags = 0);
 
 	virtual void RemoveColumn(int column);	// removes a column
@@ -111,7 +111,7 @@ public:
 
 	// sets whether the user can add/remove columns (defaults to off)
 	virtual void SetAllowUserModificationOfColumns(bool allowed);
-	
+
 	// DATA HANDLING
 	// data->GetName() is used to uniquely identify an item
 	// data sub items are matched against column header name to be used in the table
@@ -156,7 +156,7 @@ public:
 	virtual void SetImageList(ImageList *imageList, bool deleteImageListWhenDone);
 
 	// SELECTION
-	
+
 	// returns the count of selected items
 	virtual int GetSelectedItemsCount();
 
@@ -228,7 +228,7 @@ protected:
 
 	// overrides
 	virtual void OnMouseWheeled(int delta);
-	virtual void OnSizeChanged(int wide, int tall); 
+	virtual void OnSizeChanged(int wide, int tall);
 	virtual void PerformLayout();
 	virtual void Paint();
 	virtual void PaintBackground();
@@ -269,13 +269,13 @@ private:
 	// adds the item into the column indexes
 	void IndexItem(int itemID);
 
-	// Purpose: 
+	// Purpose:
 	void UpdateSelection( vgui::MouseCode code, int x, int y, int row, int column );
 
-	// Handles multiselect 
+	// Handles multiselect
 	void HandleMultiSelection( int itemID, int row, int column );
 
-	// Handles addselect 
+	// Handles addselect
 	void HandleAddSelection( int itemID, int row, int column );
 
 	// pre-sorted columns
@@ -297,7 +297,7 @@ private:
 		bool m_bTypeIsText;
 		bool m_bHidden;
 		bool m_bUnhidable;
-		IndexRBTree_t m_SortedTree;		
+		IndexRBTree_t m_SortedTree;
 		int m_nContentAlignment;
 	};
 
@@ -343,7 +343,7 @@ private:
 
 	int				m_iHeaderHeight;
 	int 			m_iRowHeight;
-	
+
 	// selection data
 	CUtlVector<int> 	m_SelectedItems;		// array of selected rows
 	int					m_LastItemSelected;	// remember the last row selected for future shift clicks

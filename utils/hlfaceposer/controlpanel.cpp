@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "ControlPanel.h"
@@ -49,14 +49,14 @@ public:
 	  {
 		  FacePoser_AddWindowStyle( this, WS_CLIPSIBLINGS | WS_CLIPCHILDREN );
 	  };
-	  
+
 	  virtual bool PaintBackground( void )
 	  {
 		  CChoreoWidgetDrawHelper drawHelper( this );
-		  
+
 		  RECT rc;
 		  drawHelper.GetClientRect( rc );
-		  
+
 		  drawHelper.DrawFilledRect( GetSysColor( COLOR_BTNFACE ), rc );
 		  return false;
 	  }
@@ -100,7 +100,7 @@ ControlPanel::ControlPanel (mxWindow *parent)
 
 	CControlPanelTabWindow *wSequence = new CControlPanelTabWindow (this, 0, 0, 0, 0);
 	tab->add (wSequence, "Sequence");
-	cSequence = new mxChoice (wSequence, 5, 5, 200, 22, IDC_SEQUENCE);	
+	cSequence = new mxChoice (wSequence, 5, 5, 200, 22, IDC_SEQUENCE);
 	mxToolTip::add (cSequence, "Select Sequence");
 
 
@@ -117,7 +117,7 @@ ControlPanel::ControlPanel (mxWindow *parent)
 	mxToolTip::add (cBodypart, "Choose a bodypart");
 	cSubmodel = new mxChoice (wBody, 110, 5, 100, 22, IDC_SUBMODEL);
 	mxToolTip::add (cSubmodel, "Choose a submodel of current bodypart");
-	cController = new mxChoice (wBody, 5, 30, 100, 22, IDC_CONTROLLER);	
+	cController = new mxChoice (wBody, 5, 30, 100, 22, IDC_CONTROLLER);
 	mxToolTip::add (cController, "Choose a bone controller");
 	slController = new mxSlider (wBody, 105, 32, 100, 18, IDC_CONTROLLERVALUE);
 	slController->setRange (0, 45);
@@ -177,7 +177,7 @@ ControlPanel::handleEvent (mxEvent *event)
 	MDLCACHE_CRITICAL_SECTION_( g_pMDLCache );
 
 	int iret = 0;
-	
+
 	if ( HandleToolEvent( event ) )
 	{
 		return iret;
@@ -206,7 +206,7 @@ ControlPanel::handleEvent (mxEvent *event)
 					g_viewerSettings.showTexture = (tab->getSelectedIndex() == 3);
 				}
 				break;
-				
+
 			case IDC_RENDERMODE:
 				{
 					int index = cRenderMode->getSelectedIndex();
@@ -216,35 +216,35 @@ ControlPanel::handleEvent (mxEvent *event)
 					}
 				}
 				break;
-				
+
 			case IDC_GROUND:
 				setShowGround (((mxCheckBox *) event->widget)->isChecked());
 				break;
-				
+
 			case IDC_MOVEMENT:
 				setShowMovement (((mxCheckBox *) event->widget)->isChecked());
 				break;
-				
+
 			case IDC_BACKGROUND:
 				setShowBackground (((mxCheckBox *) event->widget)->isChecked());
 				break;
-				
+
 			case IDC_HITBOXES:
 				g_viewerSettings.showHitBoxes = ((mxCheckBox *) event->widget)->isChecked();
 				break;
-				
+
 			case IDC_PHYSICSMODEL:
 				g_viewerSettings.showPhysicsModel = ((mxCheckBox *) event->widget)->isChecked();
 				break;
-				
+
 			case IDC_BONES:
 				g_viewerSettings.showBones = ((mxCheckBox *) event->widget)->isChecked();
 				break;
-				
+
 			case IDC_ATTACHMENTS:
 				g_viewerSettings.showAttachments = ((mxCheckBox *) event->widget)->isChecked();
 				break;
-				
+
 			case IDC_SEQUENCE:
 				{
 					int index = cSequence->getSelectedIndex();
@@ -254,48 +254,48 @@ ControlPanel::handleEvent (mxEvent *event)
 					}
 				}
 				break;
-			
+
 			case IDC_SPEEDSCALE:
 				{
 					g_viewerSettings.speedScale = ((mxSlider *) event->widget)->getValue();
 					lSpeedScale->setLabel( va( "Speed scale %.2f", g_viewerSettings.speedScale ) );
 				}
 				break;
-				
+
 			case IDC_PRIMARYBLEND:
 				{
 					setBlend( 0, ((mxSlider *) event->widget)->getValue() );
 				}
 				break;
-				
+
 			case IDC_SECONDARYBLEND:
 				{
 					setBlend( 1, ((mxSlider *) event->widget)->getValue() );
 				}
 				break;
-				
+
 			case IDC_BODYPART:
 				{
 					int index = cBodypart->getSelectedIndex();
 					if (index >= 0)
 					{
 						setBodypart (index);
-						
+
 					}
 				}
 				break;
-				
+
 			case IDC_SUBMODEL:
 				{
 					int index = cSubmodel->getSelectedIndex();
 					if (index >= 0)
 					{
 						setSubmodel (index);
-						
+
 					}
 				}
 				break;
-				
+
 			case IDC_CONTROLLER:
 				{
 					int index = cController->getSelectedIndex();
@@ -303,7 +303,7 @@ ControlPanel::handleEvent (mxEvent *event)
 						setBoneController (index);
 				}
 				break;
-				
+
 			case IDC_CONTROLLERVALUE:
 				{
 					int index = cController->getSelectedIndex();
@@ -311,7 +311,7 @@ ControlPanel::handleEvent (mxEvent *event)
 						setBoneControllerValue (index, slController->getValue());
 				}
 				break;
-				
+
 			case IDC_SKINS:
 				{
 					int index = cSkin->getSelectedIndex();
@@ -360,12 +360,12 @@ void ControlPanel::ChangeModel( const char *filename )
 	mx_setcwd (mx_getpath (filename));
 
 	g_pFlexPanel->initFlexes();
-	
+
 	//	centerView();
 	//	CenterOnFace();
 
 	IFacePoserToolWindow::ModelChanged();
-	
+
 	CExpClass *cl = expressions->GetActiveClass();
 	if ( cl )
 	{
@@ -388,7 +388,7 @@ ControlPanel::setRenderMode (int mode)
 }
 
 
-void 
+void
 ControlPanel::setHighlightBone( int index )
 {
 	g_viewerSettings.highlightPhysicsBone = index;
@@ -506,7 +506,7 @@ ControlPanel::setBodypart (int index)
 		{
 			mstudiobodyparts_t *pbodyparts = hdr->pBodypart(0);
 			cSubmodel->removeAll();
-		
+
 			for (int i = 0; i < pbodyparts[index].nummodels; i++)
 			{
 				char str[64];
@@ -786,7 +786,7 @@ void ControlPanel::CenterOnFace( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float ControlPanel::GetModelGap( void )
@@ -835,7 +835,7 @@ bool ControlPanel::Close()
 
 }
 
-bool ControlPanel::Closeall() 
+bool ControlPanel::Closeall()
 {
 	bool retval = true;
 
@@ -854,7 +854,7 @@ bool ControlPanel::Closeall()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ControlPanel::Copy( void )
 {
@@ -862,7 +862,7 @@ void ControlPanel::Copy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ControlPanel::Paste( void )
 {
@@ -870,7 +870,7 @@ void ControlPanel::Paste( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ControlPanel::Undo( void )
 {
@@ -885,7 +885,7 @@ void ControlPanel::Undo( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ControlPanel::Redo( void )
 {
@@ -900,7 +900,7 @@ void ControlPanel::Redo( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ControlPanel::UndoExpression( int index )
 {
@@ -921,13 +921,13 @@ void ControlPanel::UndoExpression( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ControlPanel::RedoExpression( int index )
 {
 	if ( index == -1 )
 		return;
-	
+
 	CExpClass *active = expressions->GetActiveClass();
 	if ( !active )
 		return;
@@ -951,7 +951,7 @@ void ControlPanel::DeleteExpression( int index )
 	if ( exp )
 	{
 		Con_Printf( "Deleting expression %s : %s\n", exp->name, exp->description );
-			
+
 		g_pFlexPanel->DeleteExpression( index );
 
 		active->SelectExpression( max( 0, index - 1 ) );
@@ -959,15 +959,15 @@ void ControlPanel::DeleteExpression( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dt - 
+// Purpose:
+// Input  : dt -
 //-----------------------------------------------------------------------------
 void ControlPanel::Think( float dt )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool ControlPanel::AllToolsDriveSpeech( void )

@@ -55,7 +55,7 @@ public:
 	void SetGroup( class CTFRobotDestruction_RobotGroup* pGroup ) { m_hGroup.Set( pGroup ); }
 	// Inputs
 	void InputSpawnRobot( inputdata_t &inputdata );
-	
+
 #endif
 private:
 	CHandle< CTFRobotDestruction_Robot > m_hRobot;
@@ -212,7 +212,7 @@ public:
 	void	ManageGameState();
 	void	FlagCreated( int nTeam );
 	void	FlagDestroyed( int nTeam );
-	
+
 	void	DBG_SetMaxPoints( int nNewMax ) { m_nMaxPoints.Set( nNewMax ); }
 	void	InputRoundActivate( inputdata_t &inputdata );
 	virtual int GetHealDistance( void ) { return 64; }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -77,7 +77,7 @@ CDODHudHintDisplay::CDODHudHintDisplay( const char *pElementName ) : BaseClass(N
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODHudHintDisplay::Init()
 {
@@ -88,7 +88,7 @@ void CDODHudHintDisplay::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODHudHintDisplay::Reset()
 {
@@ -97,7 +97,7 @@ void CDODHudHintDisplay::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODHudHintDisplay::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -316,7 +316,7 @@ void CDODHudHintDisplay::MsgFunc_HintText( bf_read &msg )
 
 	if ( !pszBuf )
 	{
-		// use plain ASCII string 
+		// use plain ASCII string
 		g_pVGuiLocalize->ConvertANSIToUnicode( szString, szBuf, sizeof(szBuf) );
 		pszBuf = szBuf;
 	}
@@ -326,13 +326,13 @@ void CDODHudHintDisplay::MsgFunc_HintText( bf_read &msg )
 	{
 		SetVisible( true );
 		//SetAlpha( 255 );
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageShow" ); 
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageShow" );
 	}
 	else
 	{
 		// it's being cleared, hide the panel
 		//SetAlpha( 0 );
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageHide" ); 
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageHide" );
 	}
 }
 
@@ -366,7 +366,7 @@ void CDODHudHintDisplay::FireGameEvent( IGameEvent * event)
 	if ( !pszBuf )
 	{
 		// its not in titles.txt or dod_english.txt, just print the text of it
-		// use plain ASCII string 
+		// use plain ASCII string
 		g_pVGuiLocalize->ConvertANSIToUnicode( hintmessage, szBuf, sizeof(szBuf) );
 		pszBuf = szBuf;
 	}
@@ -375,12 +375,12 @@ void CDODHudHintDisplay::FireGameEvent( IGameEvent * event)
 	if ( SetHintText( pszBuf ) )
 	{
 		SetVisible( true );
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageShow" ); 
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageShow" );
 	}
 	else
 	{
 		// it's being cleared, hide the panel
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageHide" ); 
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageHide" );
 	}
 }
 
@@ -394,4 +394,3 @@ bool CDODHudHintDisplay::IsVisible( void )
 
 	return BaseClass::IsVisible();
 }
-

@@ -149,7 +149,7 @@ char *RestoreFilename( const char *pSourceName, char *pTargetName, int targetLen
 
 		return pTargetName;
 	}
-	
+
 	// source filename is as expected
 	return (char *)pSourceName;
 }
@@ -300,5 +300,3 @@ void CBaseFile::ReadFile( CUtlBuffer &fileData )
 	int nSize = Read( fileData.Base(), nFileSize );
 	fileData.SeekPut( CUtlBuffer::SEEK_HEAD, nSize );
 }
-
-

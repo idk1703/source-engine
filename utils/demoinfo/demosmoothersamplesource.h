@@ -32,7 +32,7 @@ class CFixEdgeButton;
 typedef float (*EASEFUNC)( float t );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDemoSmootherPanel : public vgui::Frame
 {

@@ -38,9 +38,9 @@ static void PromptAcceptRomevisionSharing()
 {
 	if ( tf_romevision_opt_in.GetBool() == false )
 	{
-		ShowConfirmOptOutDialog( "#TF_Prompt_Romevision_Title", "#TF_Prompt_Romevision_Message", 
-			"#TF_Prompt_Romevsion_OK", "#TF_Prompt_Romevsion_Cancel", 
-			"#TF_Prompt_Romevsion_Opt_Out", "tf_romevision_skip_prompt", 
+		ShowConfirmOptOutDialog( "#TF_Prompt_Romevision_Title", "#TF_Prompt_Romevision_Message",
+			"#TF_Prompt_Romevsion_OK", "#TF_Prompt_Romevsion_Cancel",
+			"#TF_Prompt_Romevsion_Opt_Out", "tf_romevision_skip_prompt",
 			PromptAcceptRomevisionSharingCallback, NULL );
 	}
 }
@@ -59,7 +59,7 @@ bool C_TFSharedContentManager::Init()
 void C_TFSharedContentManager::Update( float frametime )
 {
 	// check our shared vision queue
-	if ( m_SharedVisionQueue.Count() > 0 ) 
+	if ( m_SharedVisionQueue.Count() > 0 )
 	{
 		int iTeam = GetLocalPlayerTeam();
 		bool bPrompt = false;
@@ -76,7 +76,7 @@ void C_TFSharedContentManager::Update( float frametime )
 				bPrompt = true;
 			}
 		}
-	
+
 		if ( bPrompt )
 		{
 			OfferSharedVision_Internal( m_SharedVisionQueue[0].iFlag, m_SharedVisionQueue[0].unAccountID );
@@ -98,7 +98,7 @@ bool C_TFSharedContentManager::CanOfferVision( int iFlag )
 			bRetVal = true;
 		}
 		break;
-	default: 
+	default:
 		break;
 	}
 
@@ -149,10 +149,10 @@ void C_TFSharedContentManager::PrintChatText( int iFlag, uint32 unAccountID )
 			case TF_VISION_FILTER_ROME:
 				if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
 				{
-					pText = "#TF_Player_OptionalVision"; 
+					pText = "#TF_Player_OptionalVision";
 				}
 				break;
-			default: 
+			default:
 				break;
 			}
 

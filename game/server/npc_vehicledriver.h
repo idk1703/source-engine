@@ -34,7 +34,7 @@ enum
 //=========================================================
 // Custom tasks
 //=========================================================
-enum 
+enum
 {
 	TASK_VEHICLEDRIVER_GET_PATH = LAST_SHARED_TASK,
 
@@ -42,7 +42,7 @@ enum
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CVehicleWaypoint
 {
@@ -109,7 +109,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CNPC_VehicleDriver : public CAI_BaseNPC
 {
@@ -126,7 +126,7 @@ public:
 	virtual void	Activate( void );
 	virtual void	OnRestore();
 	virtual void	UpdateOnRemove( void );
-	
+
 	// AI
 	void			UpdateEfficiency( bool bInPVS )	{ SetEfficiency( ( GetSleepState() != AISS_AWAKE ) ? AIE_DORMANT : AIE_NORMAL ); SetMoveEfficiency( AIME_NORMAL ); }
 	virtual void	PrescheduleThink( void );
@@ -190,7 +190,7 @@ public:
 	// Speed
 	float				m_flMaxSpeed;		// Maximum speed this driver will go
 	float				m_flGoalSpeed;		// Desired speed
-	float				m_flInitialSpeed;	
+	float				m_flInitialSpeed;
 	float				m_flSteering;
 };
 

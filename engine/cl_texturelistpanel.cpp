@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -152,7 +152,7 @@ protected: // Overrides for contents
 protected:
 	// Handlers
 	virtual void OnMouseWheeled( int delta );
-	virtual void OnSizeChanged( int wide, int tall ); 
+	virtual void OnSizeChanged( int wide, int tall );
 	virtual void PerformLayout();
 	virtual void Paint();
 	virtual void ApplySchemeSettings( IScheme *pScheme );
@@ -270,7 +270,7 @@ void TileViewPanelEx::PerformLayout()
 
 	m_hbar->SetPos( wide - 2, 0 );
 	m_hbar->SetTall( tall );
-	
+
 	if ( !numTiles )
 		return;
 
@@ -609,7 +609,7 @@ CON_COMMAND_F( mat_texture_list_txlod, "Adjust LOD of the last viewed texture +1
 				return;
 			default:
 				break;
-				
+
 		}
 	}
 	Warning( "Usage: 'mat_texture_list_txlod +1' to inc lod | 'mat_texture_list_txlod -1' to dec lod\n" );
@@ -674,7 +674,7 @@ struct ViewParamsLast
 		ITexture *pTx;
 		CUtlSymbol name;
 	};
-	
+
 	struct VarMap : public CUtlMap< UtlSymId_t, TxInfo >
 	{
 		VarMap() : CUtlMap< UtlSymId_t, TxInfo >( DefLessFunc( UtlSymId_t ) ) {}
@@ -868,7 +868,7 @@ void CVmtTextEntry::OpenVmtSelected()
 	CUtlVector<char> buf;
 	buf.SetCount( x1 - x0 + 1 );
 	GetTextRange( buf.Base(), x0, x1 - x0 );
-	
+
 	for ( char *pchName = buf.Base(), *pchNext = NULL; pchName; pchName = pchNext )
 	{
 		if ( ( pchNext = strchr( pchName, '\n' ) ) != NULL )
@@ -977,7 +977,7 @@ CP4Requirement::CP4Requirement() :
 	// load the p4 lib
 	m_pP4Module = Sys_LoadModule( "p4lib" );
 	m_bLoadedModule = true;
-		
+
 	if ( m_pP4Module )
 	{
 		CreateInterfaceFn factory = Sys_GetFactory( m_pP4Module );
@@ -1182,7 +1182,7 @@ void CRenderTextureEditor::SetDispInfo( KeyValues *kv, int iHint )
 
 						char chName[ MAX_PATH ];
 						Q_strncpy( chName, pMat->GetName() + 5, sizeof( chName ) - 1 );
-						
+
 						if ( char *szMatName = strchr( chName, '/' ) )
 						{
 							++ szMatName;
@@ -1283,7 +1283,7 @@ void CRenderTextureEditor::PerformLayout()
 
 	SetSize( 4 * TILE_BORDER + TILE_SIZE,
 		iRenderedHeight + 90 + TILE_BORDER );
-	
+
 	m_pMaterials->SetPos( TILE_BORDER, iRenderedHeight + 2 );
 	m_pMaterials->SetSize( 2 * TILE_BORDER + TILE_SIZE, 90 );
 
@@ -1605,7 +1605,7 @@ void CRenderTextureEditor::OnCommand( const char *command )
 		OnCommand( "RebuildVTF" );
 #endif // #ifdef IS_WINDOWS_PC
 	}
-	
+
 	if ( !stricmp( command, "RebuildVTF" ) )
 	{
 #ifdef IS_WINDOWS_PC
@@ -1787,7 +1787,7 @@ void CRenderTextureEditor::Paint()
 		iTxWidth, iTxHeight,
 		szTxFormat
 		);
-	
+
 	if ( !m_bufInfoText.TellPut() )
 	{
 		m_bufInfoText.Printf(
@@ -1837,7 +1837,7 @@ void CRenderTextureEditor::Paint()
 				int mem = ImageLoader::GetMemRequired( max( min( wact, 4 ), wact / 2 ), max( min( hact, 4 ), hact / 2 ), max( 1, dact / 2 ), fmt, true );
 				mem = ( mem + 511 ) / 1024;
 				FmtCommaNumber( chbuf, mem );
-				
+
 				sprintf ( chLine2 + strlen( chLine2 ), "  %s Kb @ lower mip", chbuf );
 			}
 
@@ -2055,7 +2055,7 @@ void CRenderTexturesListViewPanel::OnMousePressed( vgui::MouseCode code )
 
 	// Display the tx editor
 	m_pRenderTxEditor->SetDispInfo( kv, itemId );
-	
+
 	if ( tileX + m_pRenderTxEditor->GetWide() > m_li_wide - 2 )
 		tileX -= tileX + m_pRenderTxEditor->GetWide() - ( m_li_wide - 2 );
 	if ( tileY + m_pRenderTxEditor->GetTall() > m_li_tall - 2 )
@@ -2067,7 +2067,7 @@ void CRenderTexturesListViewPanel::OnMousePressed( vgui::MouseCode code )
 		iTopLeftX = iTopLeftY = 0;
 		pPanel->LocalToScreen( iTopLeftX, iTopLeftY );
 	}
-	
+
 	LocalToScreen( tileX, tileY );
 	if ( tileX < iTopLeftX ) tileX = iTopLeftX;
 	if ( tileY < iTopLeftY ) tileY = iTopLeftY;
@@ -2219,7 +2219,7 @@ fmtlenreduce:
 	char const *szPrintFileName = ( iLenFile > 22 ) ? ( szTextureFile + iLenFile - 22 ) : szTextureFile;
 
 	char chSizeBuf[20] = {0};
-	if ( iTxSize >= 0 ) 
+	if ( iTxSize >= 0 )
 	{
 		FmtCommaNumber( chSizeBuf,  iTxSize );
 	}
@@ -2423,7 +2423,7 @@ private:
 	vgui::ToggleButton *m_pCollapse;
 	vgui::CheckButton *m_pAlpha;
 	vgui::CheckButton *m_pThumbWarnings;
-	
+
 	vgui::CheckButton *m_pHideMipped;
 	vgui::CheckButton *m_pFilteringChk;
 	vgui::TextEntry *m_pFilteringText;
@@ -2479,13 +2479,13 @@ protected:
 
 //-----------------------------------------------------------------------------
 // Purpose: Instances the entity report panel
-// Input  : *parent - 
+// Input  : *parent -
 //-----------------------------------------------------------------------------
 CTextureListPanel::CTextureListPanel( vgui::Panel *parent ) :
 	BaseClass( parent, "CTextureListPanel" ),
 	m_numDisplayedSizeKB( 0 )
 {
-	// Need parent here, before loading up textures, so getSurfaceBase 
+	// Need parent here, before loading up textures, so getSurfaceBase
 	//  will work on this panel ( it's null otherwise )
 	SetSize( videomode->GetModeStereoWidth() - 20, videomode->GetModeStereoHeight() - 20 );
 	SetPos( 10, 10 );
@@ -2501,7 +2501,7 @@ CTextureListPanel::CTextureListPanel( vgui::Panel *parent ) :
 	SetPaintBackgroundEnabled( true );
 
 	// Init the buttons.
-	m_pCVarListLabel = vgui::SETUP_PANEL( new vgui::Label( this, "m_pCVarListLabel", 
+	m_pCVarListLabel = vgui::SETUP_PANEL( new vgui::Label( this, "m_pCVarListLabel",
 		"cvars: mat_texture_limit, mat_texture_list, mat_picmip, mat_texture_list_txlod, mat_texture_list_txlod_sync" ) );
 	m_pCVarListLabel->SetVisible( false ); // m_pCVarListLabel->SetVisible( true );
 
@@ -2551,7 +2551,7 @@ CTextureListPanel::CTextureListPanel( vgui::Panel *parent ) :
 	m_pAlpha->SetCommand( "ShowAlpha" );
 	bool bDefaultTxAlphaOn = true;
 	m_pAlpha->SetSelected( bDefaultTxAlphaOn );
-	
+
 	m_pThumbWarnings = vgui::SETUP_PANEL( new vgui::CheckButton( this, "ThumbWarnings", "Warns" ) );
 	m_pThumbWarnings->AddActionSignalTarget( this );
 	m_pThumbWarnings->SetCommand( "ThumbWarnings" );
@@ -2594,7 +2594,7 @@ CTextureListPanel::CTextureListPanel( vgui::Panel *parent ) :
 	// Create the tree control itself.
 	m_pListPanel = vgui::SETUP_PANEL( new vgui::ListPanel( this, "List Panel" ) );
 	m_pListPanel->SetVisible( !mat_texture_list_view.GetBool() );
-	
+
 	int col = -1;
 	m_pListPanel->AddColumnHeader( ++ col, KEYNAME_NAME, "Texture Name", 200, 100, 700, vgui::ListPanel::COLUMN_RESIZEWITHWINDOW );
 	m_pListPanel->AddColumnHeader( ++ col, KEYNAME_PATH, "Path", 50, 50, 300, 0 );
@@ -2616,7 +2616,7 @@ CTextureListPanel::CTextureListPanel( vgui::Panel *parent ) :
 	m_pViewPanel = vgui::SETUP_PANEL( new CRenderTexturesListViewPanel( this, "View Panel" ) );
 	m_pViewPanel->SetVisible( mat_texture_list_view.GetBool() );
 	m_pViewPanel->SetBgColor( Color( 0, 0, 0, 255 ) );
-	
+
 	m_pViewPanel->SetDragEnabled( false );
 	m_pViewPanel->SetDropEnabled( false );
 	m_pViewPanel->SetPaintAlpha( bDefaultTxAlphaOn );
@@ -2625,7 +2625,7 @@ CTextureListPanel::CTextureListPanel( vgui::Panel *parent ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTextureListPanel::~CTextureListPanel( void )
 {
@@ -2643,7 +2643,7 @@ void CTextureListPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CTextureListPanel::ShouldDraw( void )
@@ -2653,7 +2653,7 @@ bool CTextureListPanel::ShouldDraw( void )
 	if ( s_eTxListPanelRequest == TXR_SHOW ||
 		 s_eTxListPanelRequest == TXR_RUNNING )
 		return true;
-	
+
 	return false;
 }
 
@@ -2706,7 +2706,7 @@ void CTextureListPanel::PerformLayout()
 		{
 			m_pViewTextures->SetWide( 170 );
 			int accumw = 170;
-			
+
 			m_pAlpha->SetPos( x + accumw + 5, yOffset - m_pViewTextures->GetTall() );
 			m_pAlpha->SetWide( (accumw += 85, 85) );
 
@@ -2756,7 +2756,7 @@ void CTextureListPanel::PerformLayout()
 			iWidth = min( w - xOffset - 30, iWidth );
 			layout[ k ].pPanel->SetWide( iWidth );
 			layout[ k ].pPanel->SetVisible( iWidth > 50 );
-			
+
 			if ( iWidth > 50 )
 				xOffset += iWidth + 5;
 		}
@@ -2766,7 +2766,7 @@ void CTextureListPanel::PerformLayout()
 
 	m_pAlpha->SetVisible( m_pViewTextures->IsSelected() );
 	m_pThumbWarnings->SetVisible( !bCollapsed && m_pViewTextures->IsSelected() );
-					  
+
 	m_pListPanel->SetBounds( x, yOffset, w, t - (yOffset - y) );
 	m_pViewPanel->SetBounds( x, yOffset, w, t - (yOffset - y) );
 
@@ -2790,7 +2790,7 @@ bool StripDirName( char *pFilename )
 			if ( !pTestSlash )
 				break;
 		}
-		
+
 		pTestSlash++;	// Skip past the slash.
 		pLastSlash = pTestSlash;
 	}
@@ -2825,7 +2825,7 @@ void KeepSpecialKeys( KeyValues *textureList, bool bServiceKeys )
 		pNext = pCur->GetNextKey();
 
 		bool bIsServiceKey = false;
-		
+
 		char const *szName = pCur->GetString( KEYNAME_NAME );
 		if ( StringHasPrefix( szName, "_" ) ||
 			 StringHasPrefix( szName, "[" ) ||
@@ -2856,7 +2856,7 @@ void KeepKeysMatchingFilter( KeyValues *textureList, char const *szFilter )
 		return;
 
 	char chFilter[MAX_PATH] = {0}, chName[MAX_PATH] = {0};
-	
+
 	Q_strncpy( chFilter, szFilter, sizeof( chFilter ) - 1 );
 	ToLowerInplace( chFilter );
 
@@ -2869,7 +2869,7 @@ void KeepKeysMatchingFilter( KeyValues *textureList, char const *szFilter )
 
 		Q_strncpy( chName, szName, sizeof( chName ) - 1 );
 		ToLowerInplace( chName );
-		
+
 		if ( !strstr( chName, chFilter ) )
 		{
 			textureList->RemoveSubKey( pCur );
@@ -3037,7 +3037,7 @@ int CTextureListPanel::AddListItem( KeyValues *kv )
 	{
 		// Set this so the GetItem() call above can use the key's name (as opposed to the value of its
 		// "Name" subkey) to find this texture again.
-		kv->SetName( kv->GetString( KEYNAME_NAME ) ); 
+		kv->SetName( kv->GetString( KEYNAME_NAME ) );
 
 		// Add this one.
 		iItem = m_pListPanel->AddItem( kv, 0, false, false );
@@ -3059,7 +3059,7 @@ int CTextureListPanel::AddListItem( KeyValues *kv )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 void CTextureListPanel::OnTurnedOn()
@@ -3087,7 +3087,7 @@ void CTextureListPanel::EndPaint()
 	UpdateTotalUsageLabel();
 }
 
-void CTextureListPanel::Paint() 
+void CTextureListPanel::Paint()
 {
 	VPROF( "CTextureListPanel::Paint" );
 
@@ -3138,7 +3138,7 @@ void CTextureListPanel::Paint()
 			else
 				kv = NULL;
 		}
-		
+
 		if ( 0 ) // if ( !kv )
 		{
 			pRte->Close();
@@ -3193,7 +3193,7 @@ void CTextureListPanel::Paint()
 
 	// Compute the total size of the displayed textures
 	int cbTotalDisplayedSizeInBytes = 0;
-	
+
 	for ( KeyValues *pCur = textureList.Get()->GetFirstSubKey(); pCur; pCur=pCur->GetNextKey() )
 	{
 		int sizeInBytes = pCur->GetInt( KEYNAME_SIZE );
@@ -3376,5 +3376,3 @@ void mat_texture_list_off_f()
 		g_nSaveQueueState = INT_MIN;
 	}
 }
-
-

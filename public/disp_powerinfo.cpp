@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -45,11 +45,11 @@ static CVertCorners g_SideVertCorners[4] =
 // 1 = upper-left
 // 2 = lower-left
 // 3 = lower-right
-static CVertIndex g_ChildNodeIndexMul[4] = 
-{ 
-	CVertIndex(1,1), 
-	CVertIndex(-1,1), 
-	CVertIndex(-1,-1), 
+static CVertIndex g_ChildNodeIndexMul[4] =
+{
+	CVertIndex(1,1),
+	CVertIndex(-1,1),
+	CVertIndex(-1,-1),
 	CVertIndex(1,-1)
 };
 
@@ -76,7 +76,7 @@ static int g_OrientationRotations[4][2][2] =
 
 	{{0, -1},		// CCW_270
 	{1, 0}}
-};	   
+};
 
 
 // ------------------------------------------------------------------------ //
@@ -90,11 +90,11 @@ static CVertIndex Transform2D(
 	CVertIndex const &centerPoint )
 {
 	CVertIndex translated = vert - centerPoint;
-	
+
 	CVertIndex transformed(
 		translated.x*mat[0][0] + translated.y*mat[0][1],
 		translated.x*mat[1][0] + translated.y*mat[1][1] );
-	
+
 	return transformed + centerPoint;
 }
 
@@ -131,7 +131,7 @@ static int VertIndex( CVertIndex const &vert, int iMaxPower )
 {
 	return vert.y * ((1 << iMaxPower) + 1) + vert.x;
 }
- 
+
 
 static CVertIndex WrapVertIndex( CVertIndex const &in, int sideLength )
 {
@@ -155,7 +155,7 @@ static int GetFreeDependency( CVertDependency *pDep, int nElements )
 {
 	for( int i=0; i < nElements; i++ )
 	{
-		if( !pDep[i].IsValid() ) 
+		if( !pDep[i].IsValid() )
 			return i;
 	}
 
@@ -164,8 +164,8 @@ static int GetFreeDependency( CVertDependency *pDep, int nElements )
 }
 
 
-static void AddDependency( 
-	CVertInfo *dependencies, 
+static void AddDependency(
+	CVertInfo *dependencies,
 	int sideLength,
 	CVertIndex const &nodeIndex,
 	CVertIndex const &dependency,
@@ -189,7 +189,7 @@ static void AddDependency(
 	}
 
 	// Edge verts automatically add a dependency for the neighbor.
-	// Internal verts wind up in here twice anyway so it doesn't need to 
+	// Internal verts wind up in here twice anyway so it doesn't need to
 	if( bCheckNeighborDependency )
 	{
 		int iConnection = GetEdgeIndexFromPoint( nodeIndex, iMaxPower );
@@ -199,7 +199,7 @@ static void AddDependency(
 
 			CVertIndex delta( nodeIndex.x - dependency.x, nodeIndex.y - dependency.y );
 			CVertIndex newIndex( nodeIndex.x + delta.x, nodeIndex.y + delta.y );
-			
+
 			int fullSideLength = (1 << iMaxPower) + 1;
 			pNode->m_Dependencies[1].m_iVert = WrapVertIndex( CVertIndex( newIndex.x, newIndex.y ), fullSideLength );
 			pNode->m_Dependencies[1].m_iNeighbor = iConnection;
@@ -233,7 +233,7 @@ CVertInfo::CVertInfo()
 		m_ReverseDependencies[i].m_iVert = CVertIndex( -1, -1 );
 		m_ReverseDependencies[i].m_iNeighbor = -1;
 	}
-	
+
 	m_iParent.x = m_iParent.y = -1;
 	m_iNodeLevel = -1;
 }
@@ -284,9 +284,9 @@ CTesselateWinding g_TWinding =
 #define POWERINFO_ENTRY( size )	\
 	(&g_PowerInfo_##size##x##size)
 
-DECLARE_TABLES( 5 );	
-DECLARE_TABLES( 9 );	
-DECLARE_TABLES( 17 );	
+DECLARE_TABLES( 5 );
+DECLARE_TABLES( 9 );
+DECLARE_TABLES( 17 );
 
 
 // Index by m_Power.
@@ -300,8 +300,8 @@ CPowerInfo *g_PowerInfos[NUM_POWERINFOS] =
 };
 
 
-CPowerInfo::CPowerInfo( 
-	CVertInfo *pVertInfo, 
+CPowerInfo::CPowerInfo(
+	CVertInfo *pVertInfo,
 	CFourVerts *pSideVerts,
 	CFourVerts *pChildVerts,
 	CFourVerts *pSideVertCorners,
@@ -316,7 +316,7 @@ CPowerInfo::CPowerInfo(
 	m_pTriInfos = pTriInfos;
 }
 
-static void InitPowerInfoTriInfos_R( 
+static void InitPowerInfoTriInfos_R(
 	CPowerInfo *pInfo,
 	CVertIndex const &nodeIndex,
 	CTriInfo* &pTriInfo,
@@ -341,7 +341,7 @@ static void InitPowerInfoTriInfos_R(
 	else
 	{
 		unsigned short indices[3];
-		
+
 		int vertInc = 1 << ((iMaxPower - iLevel) - 1);
 
 		// We're at a leaf, generate the tris.
@@ -353,7 +353,7 @@ static void InitPowerInfoTriInfos_R(
 		for( int iVert=0; iVert < pWinding->m_nVerts; iVert++ )
 		{
 			CVertIndex sideVert  = BuildOffsetVertIndex( nodeIndex, pWinding->m_Verts[iVert].m_Index, vertInc );
-			
+
 			if( iCurTriVert == 1 )
 			{
 				// Add this vert and finish the tri.
@@ -367,29 +367,29 @@ static void InitPowerInfoTriInfos_R(
 			iCurTriVert = 1;
 		}
 	}
-}	
+}
 
 
-static void InitPowerInfo_R( 
-	CPowerInfo *pPowerInfo, 
-	int iMaxPower, 
+static void InitPowerInfo_R(
+	CPowerInfo *pPowerInfo,
+	int iMaxPower,
 	CVertIndex const &nodeIndex,
 	CVertIndex const &dependency1,
 	CVertIndex const &dependency2,
-	CVertIndex const &nodeEdge1, 
-	CVertIndex const &nodeEdge2, 
+	CVertIndex const &nodeEdge1,
+	CVertIndex const &nodeEdge2,
 	CVertIndex const &iParent,
 	int iLevel )
 {
 	int sideLength = ((1 << iMaxPower) + 1);
 	int iNodeIndex = VertIndex( nodeIndex, iMaxPower );
-	
+
 	pPowerInfo->m_pVertInfo[iNodeIndex].m_iParent = iParent;
 	pPowerInfo->m_pVertInfo[iNodeIndex].m_iNodeLevel = iLevel + 1;
 
 	pPowerInfo->m_pErrorEdges[iNodeIndex].m_Values[0] = (unsigned short)(VertIndex( nodeEdge1, iMaxPower ));
 	pPowerInfo->m_pErrorEdges[iNodeIndex].m_Values[1] = (unsigned short)(VertIndex( nodeEdge2, iMaxPower ));
-	
+
 	// Add this node's dependencies.
 	AddDependency( pPowerInfo->m_pVertInfo, sideLength, nodeIndex, dependency1, iMaxPower, false, true );
 	AddDependency( pPowerInfo->m_pVertInfo, sideLength, nodeIndex, dependency2, iMaxPower, false, true );
@@ -406,7 +406,7 @@ static void InitPowerInfo_R(
 
 		pPowerInfo->m_pSideVerts[iNodeIndex].m_Verts[iSide] = sideVert;
 
-		// Store the side vert corners.		
+		// Store the side vert corners.
 		CVertIndex sideVertCorner0 = CVertIndex( nodeIndex.x + g_SideVertCorners[iSide].m_Corner1[0]*vertInc, nodeIndex.y + g_SideVertCorners[iSide].m_Corner1[1]*vertInc );
 		CVertIndex sideVertCorner1 = CVertIndex( nodeIndex.x + g_SideVertCorners[iSide].m_Corner2[0]*vertInc, nodeIndex.y + g_SideVertCorners[iSide].m_Corner2[1]*vertInc );
 
@@ -416,13 +416,13 @@ static void InitPowerInfo_R(
 		pPowerInfo->m_pErrorEdges[iSideVert].m_Values[0] = (unsigned short)VertIndex( sideVertCorner0, iMaxPower );
 		pPowerInfo->m_pErrorEdges[iSideVert].m_Values[1] = (unsigned short)VertIndex( sideVertCorner1, iMaxPower );
 
-		AddDependency( 
-			pPowerInfo->m_pVertInfo, 
-			sideLength, 
-			sideVert, 
-			nodeIndex, 
-			iMaxPower, 
-			true, 
+		AddDependency(
+			pPowerInfo->m_pVertInfo,
+			sideLength,
+			sideVert,
+			nodeIndex,
+			iMaxPower,
+			true,
 			true );
 	}
 
@@ -436,16 +436,16 @@ static void InitPowerInfo_R(
 
 			pPowerInfo->m_pChildVerts[iNodeIndex].m_Verts[iChild] = childVert;
 
-			InitPowerInfo_R( pPowerInfo, 
+			InitPowerInfo_R( pPowerInfo,
 				iMaxPower,
 				childVert,
-				
+
 				CVertIndex(nodeIndex.x + g_ChildNodeDependencies[iChild][0].x*vertInc, nodeIndex.y + g_ChildNodeDependencies[iChild][0].y*vertInc),
 				CVertIndex(nodeIndex.x + g_ChildNodeDependencies[iChild][1].x*vertInc, nodeIndex.y + g_ChildNodeDependencies[iChild][1].y*vertInc),
-				
+
 				nodeIndex,
 				CVertIndex( nodeIndex.x + g_ChildNodeIndexMul[iChild].x * vertInc, nodeIndex.y + g_ChildNodeIndexMul[iChild].y * vertInc ),
-				
+
 				nodeIndex,
 				iLevel + 1 );
 		}
@@ -472,23 +472,23 @@ void InitPowerInfo( CPowerInfo *pInfo, int iMaxPower )
 	pInfo->m_CornerPointIndices[CORNER_UPPER_LEFT].Init( 0, sideLength-1 );
 	pInfo->m_CornerPointIndices[CORNER_UPPER_RIGHT].Init( sideLength-1, sideLength-1 );
 	pInfo->m_CornerPointIndices[CORNER_LOWER_RIGHT].Init( sideLength-1, 0 );
-	
-	InitPowerInfo_R( 
-		pInfo, 
-		iMaxPower, 
-		pInfo->m_RootNode, 
-		
+
+	InitPowerInfo_R(
+		pInfo,
+		iMaxPower,
+		pInfo->m_RootNode,
+
 		nodeDependency1,							// dependencies
-		nodeDependency2, 
-		
+		nodeDependency2,
+
 		CVertIndex(0,0),							// error edge
-		CVertIndex(sideLength-1, sideLength-1),		
-		
+		CVertIndex(sideLength-1, sideLength-1),
+
 		CVertIndex(-1,-1),							// parent
 		0 );
 
 	pInfo->m_Power = iMaxPower;
-	
+
 	CTriInfo *pTriInfo = pInfo->m_pTriInfos;
 	InitPowerInfoTriInfos_R( pInfo, pInfo->m_RootNode, pTriInfo, iMaxPower, 0 );
 
@@ -509,15 +509,15 @@ void InitPowerInfo( CPowerInfo *pInfo, int iMaxPower )
 		// Rotate it for each orientation.
 		for( int orient=0; orient < 4; orient++ )
 		{
-			pInfo->m_NeighborStartVerts[iEdge][orient] = Transform2D( 
-				g_OrientationRotations[orient], 
-				nbStartVert, 
+			pInfo->m_NeighborStartVerts[iEdge][orient] = Transform2D(
+				g_OrientationRotations[orient],
+				nbStartVert,
 				CVertIndex( sideLength/2, sideLength/2 ) );
 
-			pInfo->m_NeighborIncrements[iEdge][orient] = Transform2D( 
+			pInfo->m_NeighborIncrements[iEdge][orient] = Transform2D(
 				g_OrientationRotations[orient],
 				nbDelta,
-				CVertIndex(0,0) );				 
+				CVertIndex(0,0) );
 		}
 	}
 
@@ -531,7 +531,7 @@ void InitPowerInfo( CPowerInfo *pInfo, int iMaxPower )
 
 		pInfo->m_NodeIndexIncrements[iMaxPower-i-2] = curTotal;
 
-		curPowerOf4 *= 4;		
+		curPowerOf4 *= 4;
 	}
 
 	// Store off the total node count
@@ -577,4 +577,3 @@ const CVertIndex& CPowerInfo::GetCornerPointIndex( int iCorner ) const
 	Assert( iCorner >= 0 && iCorner < 4 );
 	return m_CornerPointIndices[iCorner];
 }
-

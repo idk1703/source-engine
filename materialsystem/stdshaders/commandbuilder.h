@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 // Utility class for building command buffers into memory
@@ -31,7 +31,7 @@ public:
 #ifdef DBGFLAG_ASSERT
 	size_t m_nNumBytesRemaining;
 #endif
-	
+
 	FORCEINLINE CFixedCommandStorageBuffer( void )
 	{
 		m_pDataOut = m_Data;
@@ -224,7 +224,7 @@ public:
 			transformation[0].Init( 1.0f, 0.0f, 0.0f, 0.0f );
 			transformation[1].Init( 0.0f, 1.0f, 0.0f, 0.0f );
 		}
-		SetVertexShaderConstant( vertexReg, transformation[0].Base(), 2 ); 
+		SetVertexShaderConstant( vertexReg, transformation[0].Base(), 2 );
 	}
 
 
@@ -261,7 +261,7 @@ public:
 		transformation[1][1] *= scale[1];
 		transformation[0][3] *= scale[0];
 		transformation[1][3] *= scale[1];
-		SetVertexShaderConstant( vertexReg, transformation[0].Base(), 2 ); 
+		SetVertexShaderConstant( vertexReg, transformation[0].Base(), 2 );
 	}
 
 	FORCEINLINE void SetEnvMapTintPixelShaderDynamicState( int pixelReg, int tintVar )

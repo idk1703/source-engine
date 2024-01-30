@@ -18,7 +18,7 @@ public:
 	C_BossAlpha();
 	virtual ~C_BossAlpha();
 
-public:	
+public:
 	virtual void Spawn( void );
 	virtual bool IsNextBot() { return true; }
 

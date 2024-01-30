@@ -44,7 +44,7 @@ extern ConVar obj_child_range_factor;
 if ( object_verbose.GetInt() )									\
 {																\
 	Msg( "%s", str );					\
-}																
+}
 #else
 #define TRACE_OBJECT( string )
 #endif
@@ -102,18 +102,18 @@ public:
 
 	// Sort of a hack for walkers - vehicles are pre-rotated by 90 degrees and walkers need to undo this.
 	virtual void	AdjustInitialBuildAngles();
-	
+
 	// Exit points for mounted vehicles....
 	virtual void	GetExitPoint( CBaseEntity *pPlayer, int nBuildPoint, Vector *pExitPoint, QAngle *pAngles );
 
 	// I've finished building the specified object on the specified build point
 	virtual int		FindObjectOnBuildPoint( CBaseObject *pObject );
 
-	// This gives an object a chance to prevent itself from being built when the user clicks the 
-	// attack button during placement. Barbed wire uses this to change which object the barbed wire 
+	// This gives an object a chance to prevent itself from being built when the user clicks the
+	// attack button during placement. Barbed wire uses this to change which object the barbed wire
 	// is attached to.
 	virtual bool PreStartBuilding();
-	
+
 	virtual bool	StartBuilding( CBaseEntity *pPlayer );
 	void			BuildingThink( void );
 	void			SetControlPanelsActive( bool bState );
@@ -162,7 +162,7 @@ public:
 	virtual CBaseTFPlayer *GetBuilder( void );
 	virtual CBaseTFPlayer *GetOriginalBuilder( void );
 	CTFTeam			*GetTFTeam( void ) { return (CTFTeam*)GetTeam(); };
-	
+
 	// ID functions
 	virtual bool	IsAnUpgrade( void )			{ return false; }
 	virtual bool	IsAVehicle( void )			{ return false; }
@@ -255,7 +255,7 @@ public:
 	Activity		GetActivity( ) const;
 	void			SetActivity( Activity act );
 	void			SetObjectSequence( int sequence );
-	
+
 	virtual void	OnActivityChanged( Activity act );
 
 	// Object points
@@ -271,7 +271,7 @@ public:
 	// VulnerablePoints
 	void				CreateVulnerablePoints( void );
 	void				AddVulnerablePoint( const char* szHitboxName, float Multiplier );
-	float				FindVulnerablePointMultiplier( int nGroup, int nBox ); 		
+	float				FindVulnerablePointMultiplier( int nGroup, int nBox );
 
 	// Build points
 	CUtlVector<VulnerablePoint_t>	m_VulnerablePoints;
@@ -417,7 +417,7 @@ private:
 	CNetworkVar( bool, m_bPlacing );					// True while the object's being placed
 	CNetworkVar( bool, m_bBuilding );				// True while the object's still constructing itself
 	float	m_flConstructionTimeLeft;	// Current time left in construction
-	float	m_flTotalConstructionTime;	// Total construction time (the value of GetTotalTime() at the time construction 
+	float	m_flTotalConstructionTime;	// Total construction time (the value of GetTotalTime() at the time construction
 										// started, ie, incase you teleport out of a construction yard)
 
 	CNetworkVar( float, m_flPercentageConstructed );	// Used to send to client
@@ -467,23 +467,23 @@ private:
 };
 
 inline bool	CBaseObject::CanBeHookedToBuffStation( void )
-{ 
-	return false; 
+{
+	return false;
 }
 
 inline CObjectBuffStation *CBaseObject::GetBuffStation( void )
 {
-	return m_hBuffStation.Get(); 
+	return m_hBuffStation.Get();
 }
 
 inline void	CBaseObject::BuffStationActivate( void )
-{ 
-	m_bBuffActivated = true; 
+{
+	m_bBuffActivated = true;
 }
 
 inline void	CBaseObject::BuffStationDeactivate( void )
-{ 
-	m_bBuffActivated = false; 
+{
+	m_bBuffActivated = false;
 }
 
 extern short g_sModelIndexFireball;		// holds the index for the fireball

@@ -79,7 +79,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFStorePage2::CTFStorePage2(Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData, const char *pPreviewItemResFile )
 :	BaseClass( parent, pPageData, pPreviewItemResFile ),
@@ -145,7 +145,7 @@ CTFStorePage2::~CTFStorePage2()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage2::OnPostCreate()
 {
@@ -155,7 +155,7 @@ void CTFStorePage2::OnPostCreate()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFStorePage2::HasSubcategories() const
 {
@@ -163,7 +163,7 @@ bool CTFStorePage2::HasSubcategories() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage2::PerformLayout()
 {
@@ -181,7 +181,7 @@ void CTFStorePage2::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage2::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -238,7 +238,7 @@ void CTFStorePage2::ApplySchemeSettings( IScheme *pScheme )
 		// Move to "All items" selected
 		m_pSubcategoriesFilterCombo->ActivateItemByRow( 0 );
 
-		m_pSubcategoriesFilterCombo->GetComboButton()->SetFgColor( Color( 117,107,94,255 ) ); 
+		m_pSubcategoriesFilterCombo->GetComboButton()->SetFgColor( Color( 117,107,94,255 ) );
 		m_pSubcategoriesFilterCombo->GetComboButton()->SetDefaultColor( Color( 117,107,94,255), Color( 0,0,0,0) );
 		m_pSubcategoriesFilterCombo->GetComboButton()->SetArmedColor( Color( 117,107,94,255), Color( 0,0,0,0) );
 		m_pSubcategoriesFilterCombo->GetComboButton()->SetDepressedColor( Color( 117,107,94,255), Color( 0,0,0,0) );
@@ -269,13 +269,13 @@ void CTFStorePage2::ApplySchemeSettings( IScheme *pScheme )
 		if ( pTitleLabel && pHomePageTitle && pRedText )
 		{
 			const store_promotion_spend_for_free_item_t *pPromotion = EconUI()->GetStorePanel()->GetPriceSheet()->GetStorePromotion_SpendForFreeItem();
-		
+
 			ECurrency eCurrency = EconUI()->GetStorePanel()->GetCurrency();
 			AssertMsg( eCurrency >= k_ECurrencyUSD && eCurrency < k_ECurrencyMax, "Invalid currency!" );
 			int iPriceThreshold = pPromotion->m_rgusPriceThreshold[ eCurrency ];
 			wchar_t wszPriceThreshold[ kLocalizedPriceSizeInChararacters ];
 			MakeMoneyString( wszPriceThreshold, ARRAYSIZE( wszPriceThreshold ), iPriceThreshold, EconUI()->GetStorePanel()->GetCurrency() );
-		
+
 			static wchar_t wszText[512];
 			g_pVGuiLocalize->ConstructString_safe( wszText, pHomePageTitle, 2, pRedText, wszPriceThreshold );
 
@@ -295,10 +295,10 @@ void CTFStorePage2::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-const char *CTFStorePage2::GetPageResFile( void ) 
-{ 
+const char *CTFStorePage2::GetPageResFile( void )
+{
 	if ( IsHomePage() )
 	{
 		Assert( ShouldUseNewStore() );
@@ -310,7 +310,7 @@ const char *CTFStorePage2::GetPageResFile( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage2::OnPageShow( void )
 {
@@ -325,7 +325,7 @@ void CTFStorePage2::OnPageShow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage2::OnCommand( const char *command )
 {
@@ -333,7 +333,7 @@ void CTFStorePage2::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage2::OnItemDetails( vgui::Panel *panel )
 {
@@ -355,7 +355,7 @@ void CTFStorePage2::OnItemDefDetails( KeyValues *pData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage2::ShowPreviewWindow( item_definition_index_t usDefIndex )
 {
@@ -372,7 +372,7 @@ void CTFStorePage2::ShowPreviewWindow( item_definition_index_t usDefIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage2::OnNavButtonSelected( KeyValues *pData )
 {
@@ -527,7 +527,7 @@ bool CTFStorePage2::FindAndSelectEntry( const econ_store_entry_t *pEntry )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage2::ClearNameFilter( bool bUpdateModelPanels )
 {
@@ -549,7 +549,7 @@ void CTFStorePage2::ClearNameFilter( bool bUpdateModelPanels )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFStorePage2::GetAllSubcategoriesIndex() const
 {
@@ -557,7 +557,7 @@ int CTFStorePage2::GetAllSubcategoriesIndex() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage2::UpdateFilteredItems()
 {
@@ -664,7 +664,7 @@ void CTFStorePage2::UpdateFilteredItems()
 	{
 		// Let's find the class bundles
 		const CEconStorePriceSheet::StoreEntryMap_t &mapEntries = pStorePanel->GetPriceSheet()->GetEntries();
-		FOR_EACH_MAP_FAST( mapEntries, i )	
+		FOR_EACH_MAP_FAST( mapEntries, i )
 		{
 			const econ_store_entry_t *pCurEntry = &mapEntries[i];
 
@@ -712,7 +712,7 @@ void CTFStorePage2::UpdateFilteredItems()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFStorePage2::DoesEntryFilterPassSecondaryFilter( const econ_store_entry_t *pEntry )
 {
@@ -733,7 +733,7 @@ bool CTFStorePage2::DoesEntryFilterPassSecondaryFilter( const econ_store_entry_t
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFStorePage2::DoesEntryFilterPassSubcategoryFilter( const econ_store_entry_t *pEntry )
 {
@@ -760,7 +760,7 @@ bool CTFStorePage2::DoesEntryFilterPassSubcategoryFilter( const econ_store_entry
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage2::UpdateFilterComboBox( void )
 {
@@ -784,7 +784,7 @@ void CTFStorePage2::OnThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStorePreviewItemPanel *CTFStorePage2::CreatePreviewPanel( void )
 {
@@ -792,7 +792,7 @@ CStorePreviewItemPanel *CTFStorePage2::CreatePreviewPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStorePricePanel* CTFStorePage2::CreatePricePanel( int iIndex )
 {
@@ -809,12 +809,12 @@ CStorePricePanel* CTFStorePage2::CreatePricePanel( int iIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage2::OnAddItemToCart( KeyValues *pData )
 {
 	item_definition_index_t iItemDef = (item_definition_index_t)pData->GetInt( "item_def", INVALID_ITEM_DEF_INDEX );
-	
+
 	AddItemToCartHelper( GetPageName(), iItemDef, (ECartItemType)pData->GetInt( "cart_add_type", kCartItem_Purchase ) );
 	UpdateCart();
 
@@ -823,7 +823,7 @@ void CTFStorePage2::OnAddItemToCart( KeyValues *pData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage2::OnItemPanelMouseReleased( vgui::Panel *panel )
 {
@@ -841,7 +841,7 @@ void CTFStorePage2::OnItemPanelMouseReleased( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage2::OnItemPanelMouseDoublePressed( vgui::Panel *panel )
 {

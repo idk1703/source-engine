@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -36,7 +36,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_NPC_Puppet, DT_NPC_Puppet, CNPC_Puppet )
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_NPC_Puppet::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -72,7 +72,7 @@ void C_NPC_Puppet::BuildTransformations( CStudioHdr *pStudioHdr, Vector *pos, Qu
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_NPC_Puppet::ClientThink( void )
 {
@@ -96,13 +96,13 @@ void C_NPC_Puppet::ClientThink( void )
 		}
 
 		SetCycle( pTarget->GetCycle() );
-		SetPlaybackRate( pTarget->GetPlaybackRate() );	
+		SetPlaybackRate( pTarget->GetPlaybackRate() );
 	}
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_NPC_Puppet::AccumulateLayers( IBoneSetup &boneSetup, Vector pos[], Quaternion q[], float currentTime )
 {
@@ -164,4 +164,3 @@ void C_NPC_Puppet::AccumulateLayers( IBoneSetup &boneSetup, Vector pos[], Quater
 		}
 	}
 }
-

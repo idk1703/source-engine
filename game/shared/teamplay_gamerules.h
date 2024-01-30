@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -101,7 +101,7 @@ public:
 	virtual void HandleScrambleTeams( void ){ return; }
 
 	virtual bool PointsMayAlwaysBeBlocked(){ return false; }
-	
+
 protected:
 	bool m_DisableDeathMessages;
 

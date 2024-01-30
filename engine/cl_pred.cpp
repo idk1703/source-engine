@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -18,19 +18,19 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : world_start_state - 
-//			validframe - 
-//			start_command - 
-//			stop_command - 
+// Purpose:
+// Input  : world_start_state -
+//			validframe -
+//			start_command -
+//			stop_command -
 //-----------------------------------------------------------------------------
 void CL_Predict( int world_start_state, bool validframe, int start_command, int stop_command )
 {
 	// Allow client .dll to do prediction.
-	g_pClientSidePrediction->Update( 
-		world_start_state, 
-		validframe, 
-		start_command, 
+	g_pClientSidePrediction->Update(
+		world_start_state,
+		validframe,
+		start_command,
 		stop_command );
 }
 
@@ -45,7 +45,7 @@ void CL_RunPrediction( PREDICTION_REASON reason )
 	if ( !cl.IsActive() )
 		return;
 
-	if ( cl.m_nDeltaTick < 0 ) 
+	if ( cl.m_nDeltaTick < 0 )
 	{
 		// no valid snapshot received yet
 		return;
@@ -62,13 +62,13 @@ void CL_RunPrediction( PREDICTION_REASON reason )
 
 	bool valid = cl.m_nDeltaTick > 0; // cl.GetReceiveList( cl.delta_tick ) != NULL;
 
-	//Msg( "%i/%i CL_RunPrediction:  last ack %i most recent %i\n", 
+	//Msg( "%i/%i CL_RunPrediction:  last ack %i most recent %i\n",
 	//	host_framecount, cl.tickcount,
-	//	cl.last_command_ack, 
+	//	cl.last_command_ack,
 	//	cl.netchan->m_nOutSequenceNr - 1 );
 
-	CL_Predict( cl.m_nDeltaTick, 
-		valid,  
-		cl.last_command_ack, 
+	CL_Predict( cl.m_nDeltaTick,
+		valid,
+		cl.last_command_ack,
 		cl.lastoutgoingcommand + cl.chokedcommands );
 }

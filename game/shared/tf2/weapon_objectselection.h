@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,10 +16,10 @@
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: This is a 'weapon' that's used to put objects into the client's weapon selection 
+// Purpose: This is a 'weapon' that's used to put objects into the client's weapon selection
 //-----------------------------------------------------------------------------
 class CWeaponObjectSelection : public CBaseTFCombatWeapon
-{ 
+{
 	DECLARE_CLASS( CWeaponObjectSelection, CBaseTFCombatWeapon );
 public:
 	DECLARE_NETWORKCLASS();
@@ -62,8 +62,8 @@ protected:
 	vgui::HFont		m_hNumberFont;
 #endif
 
-private:														
-	CWeaponObjectSelection( const CWeaponObjectSelection & );						
+private:
+	CWeaponObjectSelection( const CWeaponObjectSelection & );
 };
 
 #endif // WEAPON_OBJECTSELECTION_H

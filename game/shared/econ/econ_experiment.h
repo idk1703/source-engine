@@ -14,7 +14,7 @@
 #include "gcsdk/schemasharedobject.h"
 
 //---------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //---------------------------------------------------------------------------------
 class CEconExperiment : public GCSDK::CSchemaSharedObject< CSchExperiment, k_EEconTypeExperiment >
 {

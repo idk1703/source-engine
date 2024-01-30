@@ -29,7 +29,7 @@ HANDLE g_hInputFile = NULL;
 
 #define BUFSIZE 4096
 
- 
+
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
@@ -56,8 +56,8 @@ bool CItemUpload::CreateDirectory( const char *pszDirectory )
 
 //-----------------------------------------------------------------------------
 // Read output from the child process's pipe for STDOUT
-// and write to the parent process's pipe for STDOUT. 
-// Stop when there is no more data. 
+// and write to the parent process's pipe for STDOUT.
+// Stop when there is no more data.
 //-----------------------------------------------------------------------------
 static void ReadFromPipe( CItemLog *pLog )
 {
@@ -65,7 +65,7 @@ static void ReadFromPipe( CItemLog *pLog )
 	char chBuf[BUFSIZE + 1];
 	BOOL bSuccess = FALSE;
 
-	// Close the write end of the pipe before reading from the 
+	// Close the write end of the pipe before reading from the
 	// read end of the pipe, to control child process execution.
 	// The pipe is assumed to have enough buffer space to hold the
 	// data the child process has already written to it.
@@ -75,7 +75,7 @@ static void ReadFromPipe( CItemLog *pLog )
 
 	// TODO: Prefix each line, print in color?
 
-	for (;;) 
+	for (;;)
 	{
 		// This can hang if the process is waiting for input, for example...
 		bSuccess = ReadFile( g_hChildStd_OUT_Rd, chBuf, BUFSIZE, &dwRead, NULL );
@@ -88,13 +88,13 @@ static void ReadFromPipe( CItemLog *pLog )
 		pLog->Warning( chBuf );
 	}
 }
- 
+
 
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
 bool CItemUpload::RunCommandLine( const char *pszCmdLine, const char *pszWorkingDir, CItemLog *pLog )
-{ 
+{
 	bool bOk = false;
 
 	Msg( "Launching: %s\n", pszCmdLine );
@@ -102,15 +102,15 @@ bool CItemUpload::RunCommandLine( const char *pszCmdLine, const char *pszWorking
 
 	if ( pLog )
 	{
-		SECURITY_ATTRIBUTES saAttr; 
+		SECURITY_ATTRIBUTES saAttr;
 
-		// Set the bInheritHandle flag so pipe handles are inherited. 
-		saAttr.nLength = sizeof(SECURITY_ATTRIBUTES); 
-		saAttr.bInheritHandle = TRUE; 
-		saAttr.lpSecurityDescriptor = NULL; 
+		// Set the bInheritHandle flag so pipe handles are inherited.
+		saAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
+		saAttr.bInheritHandle = TRUE;
+		saAttr.lpSecurityDescriptor = NULL;
 
-		// Create a pipe for the child process's STDOUT. 
-		if ( !CreatePipe( &g_hChildStd_OUT_Rd, &g_hChildStd_OUT_Wr, &saAttr, 0 ) ) 
+		// Create a pipe for the child process's STDOUT.
+		if ( !CreatePipe( &g_hChildStd_OUT_Rd, &g_hChildStd_OUT_Wr, &saAttr, 0 ) )
 			return false;
 
 		// Ensure the read handle to the pipe for STDOUT is not inherited.
@@ -118,17 +118,17 @@ bool CItemUpload::RunCommandLine( const char *pszCmdLine, const char *pszWorking
 			return false;
 	}
 
-	// Create the child process. 
-	PROCESS_INFORMATION piProcInfo; 
+	// Create the child process.
+	PROCESS_INFORMATION piProcInfo;
 	STARTUPINFO siStartInfo;
 
-	// Set up members of the PROCESS_INFORMATION structure. 
+	// Set up members of the PROCESS_INFORMATION structure.
 	V_memset( &piProcInfo, 0, sizeof( PROCESS_INFORMATION ) );
 
-	// Set up members of the STARTUPINFO structure. 
+	// Set up members of the STARTUPINFO structure.
 	// This structure specifies the STDIN and STDOUT handles for redirection.
 	V_memset( &siStartInfo, 0, sizeof( STARTUPINFO ) );
-	siStartInfo.cb = sizeof( STARTUPINFO ); 
+	siStartInfo.cb = sizeof( STARTUPINFO );
 
 	if ( pLog )
 	{
@@ -137,25 +137,25 @@ bool CItemUpload::RunCommandLine( const char *pszCmdLine, const char *pszWorking
 		siStartInfo.dwFlags |= STARTF_USESTDHANDLES;
 	}
 
-	// Create the child process. 
-	const BOOL bSuccess = CreateProcess(NULL, 
-		const_cast< char * >( pszCmdLine ),     // command line 
-		NULL,          // process security attributes 
-		NULL,          // primary thread security attributes 
-		TRUE,          // handles are inherited 
+	// Create the child process.
+	const BOOL bSuccess = CreateProcess(NULL,
+		const_cast< char * >( pszCmdLine ),     // command line
+		NULL,          // process security attributes
+		NULL,          // primary thread security attributes
+		TRUE,          // handles are inherited
 		CREATE_NO_WINDOW,	// creation flags
-		NULL,          // use parent's environment 
-		pszWorkingDir, // use parent's current directory 
-		&siStartInfo,  // STARTUPINFO pointer 
-		&piProcInfo ); // receives PROCESS_INFORMATION 
+		NULL,          // use parent's environment
+		pszWorkingDir, // use parent's current directory
+		&siStartInfo,  // STARTUPINFO pointer
+		&piProcInfo ); // receives PROCESS_INFORMATION
 
 	// If an error occurs, return
-	if ( !bSuccess ) 
+	if ( !bSuccess )
 		return false;
 
 	if ( pLog )
 	{
-		ReadFromPipe( pLog ); 
+		ReadFromPipe( pLog );
 
 		WaitForSingleObject( piProcInfo.hProcess, INFINITE );
 
@@ -188,8 +188,8 @@ bool CItemUpload::IsSameFile( const char *szPath1, const char *szPath2 )
 	if ( !szPath1 || !szPath2 )
 		return false;
 
-	HANDLE handle1 = ::CreateFile( szPath1, 0, FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL ); 
-	HANDLE handle2 = ::CreateFile( szPath2, 0, FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL ); 
+	HANDLE handle1 = ::CreateFile( szPath1, 0, FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+	HANDLE handle2 = ::CreateFile( szPath2, 0, FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 
 	bool bResult = false;
 

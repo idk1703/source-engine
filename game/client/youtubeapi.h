@@ -89,7 +89,7 @@ bool YouTube_GetProfileURL( CUtlString &strProfileURL );
 /**
  * Attempt to upload a movie file to YouTube
  * @param pFilePath full path to the file
- * @param pMimeType i.e. "video/mp4" 
+ * @param pMimeType i.e. "video/mp4"
  * @param pTitle (must be less than 60 characters)
  * @param pDescription
  * @param pCategory - usually "Games" (see category terms in http://gdata.youtube.com/schemas/2007/categories.cat)

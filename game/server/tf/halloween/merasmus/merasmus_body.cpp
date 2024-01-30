@@ -104,7 +104,7 @@ void CMerasmusBody::Update( void )
 		me->SetPlaybackRate( playbackRate );
 	}
 
-	// move the animation ahead in time	
+	// move the animation ahead in time
 	me->StudioFrameAdvance();
 	me->DispatchAnimEvents( me );
 }

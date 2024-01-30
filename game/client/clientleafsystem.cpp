@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Revision: $
 // $NoKeywords: $
@@ -90,7 +90,7 @@ public:
 
 // Methods of IClientLeafSystem
 public:
-	
+
 	virtual void AddRenderable( IClientRenderable* pRenderable, RenderGroup_t group );
 	virtual bool IsRenderableInPVS( IClientRenderable *pRenderable );
 	virtual void CreateRenderableHandle( IClientRenderable* pRenderable, bool bIsStaticProp );
@@ -189,33 +189,33 @@ private:
 	void RemoveShadowFromLeaves( ClientLeafShadowHandle_t handle );
 
 	// Methods associated with the various bi-directional sets
-	static unsigned int& FirstRenderableInLeaf( int leaf ) 
-	{ 
+	static unsigned int& FirstRenderableInLeaf( int leaf )
+	{
 		return s_ClientLeafSystem.m_Leaf[leaf].m_FirstElement;
 	}
 
-	static unsigned int& FirstLeafInRenderable( unsigned short renderable ) 
-	{ 
+	static unsigned int& FirstLeafInRenderable( unsigned short renderable )
+	{
 		return s_ClientLeafSystem.m_Renderables[renderable].m_LeafList;
 	}
 
-	static unsigned short& FirstShadowInLeaf( int leaf ) 
-	{ 
+	static unsigned short& FirstShadowInLeaf( int leaf )
+	{
 		return s_ClientLeafSystem.m_Leaf[leaf].m_FirstShadow;
 	}
 
-	static unsigned short& FirstLeafInShadow( ClientLeafShadowHandle_t shadow ) 
-	{ 
+	static unsigned short& FirstLeafInShadow( ClientLeafShadowHandle_t shadow )
+	{
 		return s_ClientLeafSystem.m_Shadows[shadow].m_FirstLeaf;
 	}
 
-	static unsigned short& FirstShadowOnRenderable( unsigned short renderable ) 
-	{ 
+	static unsigned short& FirstShadowOnRenderable( unsigned short renderable )
+	{
 		return s_ClientLeafSystem.m_Renderables[renderable].m_FirstShadow;
 	}
 
-	static unsigned short& FirstRenderableInShadow( ClientLeafShadowHandle_t shadow ) 
-	{ 
+	static unsigned short& FirstRenderableInShadow( ClientLeafShadowHandle_t shadow )
+	{
 		return s_ClientLeafSystem.m_Shadows[shadow].m_FirstRenderable;
 	}
 
@@ -304,7 +304,7 @@ private:
 	// Maintains the list of all renderables in a particular leaf
 	CBidirectionalSet< int, ClientRenderHandle_t, unsigned int, unsigned int >	m_RenderablesInLeaf;
 
-	// Maintains a list of all shadows in a particular leaf 
+	// Maintains a list of all shadows in a particular leaf
 	CBidirectionalSet< int, ClientLeafShadowHandle_t, unsigned short, unsigned int >	m_ShadowsInLeaf;
 
 	// Maintains a list of all shadows cast on a particular renderable
@@ -391,8 +391,8 @@ void DefaultRenderBoundsWorldspace( IClientRenderable *pRenderable, Vector &absM
 }
 
 // Figure out a world space bounding box that encloses the entity's local render bounds in world space.
-inline void CalcRenderableWorldSpaceAABB( 
-	IClientRenderable *pRenderable, 
+inline void CalcRenderableWorldSpaceAABB(
+	IClientRenderable *pRenderable,
 	Vector &absMins,
 	Vector &absMaxs )
 {
@@ -427,7 +427,7 @@ void CalcRenderableWorldSpaceAABB_Fast( IClientRenderable *pRenderable, Vector &
 	}
 	else
 	{
-		// Start out with our own render bounds. Since we don't have a parent, this won't incur any nasty 
+		// Start out with our own render bounds. Since we don't have a parent, this won't incur any nasty
 		CalcRenderableWorldSpaceAABB( pRenderable, absMin, absMax );
 	}
 }
@@ -440,7 +440,7 @@ CClientLeafSystem::CClientLeafSystem() : m_DrawStaticProps(true), m_DrawSmallObj
 {
 	// Set up the bi-directional lists...
 	m_RenderablesInLeaf.Init( FirstRenderableInLeaf, FirstLeafInRenderable );
-	m_ShadowsInLeaf.Init( FirstShadowInLeaf, FirstLeafInShadow ); 
+	m_ShadowsInLeaf.Init( FirstShadowInLeaf, FirstLeafInShadow );
 	m_ShadowsOnRenderable.Init( FirstShadowOnRenderable, FirstRenderableInShadow );
 }
 
@@ -697,7 +697,7 @@ void CClientLeafSystem::EnableAlternateSorting( ClientRenderHandle_t handle, boo
 	}
 	else
 	{
-		info.m_Flags &= ~RENDER_FLAGS_ALTERNATE_SORTING; 
+		info.m_Flags &= ~RENDER_FLAGS_ALTERNATE_SORTING;
 	}
 }
 
@@ -736,12 +736,12 @@ void CClientLeafSystem::RemoveRenderable( ClientRenderHandle_t handle )
 	if ( m_Renderables[handle].m_Flags & RENDER_FLAGS_HASCHANGED )
 	{
 		// NOTE: This isn't particularly fast (linear search),
-		// but I'm assuming it's an unusual case where we remove 
+		// but I'm assuming it's an unusual case where we remove
 		// renderables that are changing or that m_DirtyRenderables usually
 		// only has a couple entries
 		int i = m_DirtyRenderables.Find( handle );
 		Assert( i != m_DirtyRenderables.InvalidIndex() );
-		m_DirtyRenderables.FastRemove( i ); 
+		m_DirtyRenderables.FastRemove( i );
 	}
 
 	if ( IsViewModelRenderGroup( (RenderGroup_t)m_Renderables[handle].m_RenderGroup ) )
@@ -814,7 +814,7 @@ bool CClientLeafSystem::GetRenderableLeaf(ClientRenderHandle_t handle, int* pOut
 		{
 			*pOutIterator = iterNext;
 		}
-		
+
 		// set output value to the next leaf
 		*pOutLeaf = m_RenderablesInLeaf.Bucket( iterNext );
 
@@ -834,9 +834,9 @@ bool CClientLeafSystem::GetRenderableLeaf(ClientRenderHandle_t handle, int* pOut
 		{
 			*pOutIterator = iter;
 		}
-		
+
 	}
-	
+
 	return true;
 }
 
@@ -859,7 +859,7 @@ short CClientLeafSystem::GetRenderableArea( ClientRenderHandle_t handle )
 	if ( nLeaves == -1 )
 		return 0;
 
-	// Now ask the 
+	// Now ask the
 	return engine->GetLeavesArea( leaves, nLeaves );
 }
 
@@ -940,7 +940,7 @@ inline bool CClientLeafSystem::ShouldRenderableReceiveShadow( ClientRenderHandle
 //-----------------------------------------------------------------------------
 // Adds a shadow to a leaf/removes shadow from renderable
 //-----------------------------------------------------------------------------
-void CClientLeafSystem::AddShadowToRenderable( ClientRenderHandle_t renderHandle, 
+void CClientLeafSystem::AddShadowToRenderable( ClientRenderHandle_t renderHandle,
 										ClientLeafShadowHandle_t shadowHandle )
 {
 	// Check if this renderable receives the type of projected texture that shadowHandle refers to.
@@ -984,7 +984,7 @@ void CClientLeafSystem::RemoveShadowFromRenderables( ClientLeafShadowHandle_t ha
 //-----------------------------------------------------------------------------
 void CClientLeafSystem::AddShadowToLeaf( int leaf, ClientLeafShadowHandle_t shadow )
 {
-	m_ShadowsInLeaf.AddElementToBucket( leaf, shadow ); 
+	m_ShadowsInLeaf.AddElementToBucket( leaf, shadow );
 
 	// Add the shadow exactly once to all renderables in the leaf
 	unsigned int i = m_RenderablesInLeaf.FirstElement( leaf );
@@ -1041,7 +1041,7 @@ void CClientLeafSystem::ProjectFlashlight( ClientLeafShadowHandle_t handle, int 
 	RemoveShadowFromRenderables( handle );
 
 	Assert( ( m_Shadows[handle].m_Flags & SHADOW_FLAGS_PROJECTED_TEXTURE_TYPE_MASK ) == SHADOW_FLAGS_FLASHLIGHT );
-	
+
 	// This will help us to avoid adding the shadow multiple times to a renderable
 	++m_ShadowEnum;
 
@@ -1168,10 +1168,10 @@ void CClientLeafSystem::AddRenderableToLeaf( int leaf, ClientRenderHandle_t rend
 // Adds a renderable to a set of leaves
 //-----------------------------------------------------------------------------
 void CClientLeafSystem::AddRenderableToLeaves( ClientRenderHandle_t handle, int nLeafCount, unsigned short *pLeaves )
-{ 
+{
 	for (int j = 0; j < nLeafCount; ++j)
 	{
-		AddRenderableToLeaf( pLeaves[j], handle ); 
+		AddRenderableToLeaf( pLeaves[j], handle );
 	}
 	m_Renderables[handle].m_Area = GetRenderableArea( handle );
 }
@@ -1211,7 +1211,7 @@ void CClientLeafSystem::InsertIntoTree( ClientRenderHandle_t &handle )
 	// NOTE: The render bounds here are relative to the renderable's coordinate system
 	IClientRenderable* pRenderable = m_Renderables[handle].m_pRenderable;
 	Vector absMins, absMaxs;
-	
+
 	CalcRenderableWorldSpaceAABB_Fast( pRenderable, absMins, absMaxs );
 	Assert( absMins.IsValid() && absMaxs.IsValid() );
 
@@ -1237,12 +1237,12 @@ void CClientLeafSystem::RemoveFromTree( ClientRenderHandle_t handle )
 	// If the renderable is a brush model, then remove all shadows from it
 	if (m_Renderables[handle].m_Flags & RENDER_FLAGS_BRUSH_MODEL)
 	{
-		g_pClientShadowMgr->RemoveAllShadowsFromReceiver( 
+		g_pClientShadowMgr->RemoveAllShadowsFromReceiver(
 			m_Renderables[handle].m_pRenderable, SHADOW_RECEIVER_BRUSH_MODEL );
 	}
 	else if( m_Renderables[handle].m_Flags & RENDER_FLAGS_STUDIO_MODEL )
 	{
-		g_pClientShadowMgr->RemoveAllShadowsFromReceiver( 
+		g_pClientShadowMgr->RemoveAllShadowsFromReceiver(
 			m_Renderables[handle].m_pRenderable, SHADOW_RECEIVER_STUDIO_MODEL );
 	}
 }
@@ -1331,7 +1331,7 @@ void CClientLeafSystem::SetRenderGroup( ClientRenderHandle_t handle, RenderGroup
 		{
 			RemoveFromViewModelList( handle );
 		}
-		else 
+		else
 		{
 			AddToViewModelList( handle );
 		}
@@ -1343,7 +1343,7 @@ void CClientLeafSystem::SetRenderGroup( ClientRenderHandle_t handle, RenderGroup
 
 
 //-----------------------------------------------------------------------------
-// Detail system marks 
+// Detail system marks
 //-----------------------------------------------------------------------------
 void CClientLeafSystem::DrawDetailObjectsInLeaf( int leaf, int nFrameNumber, int& nFirstDetailObject, int& nDetailObjectCount )
 {
@@ -1397,7 +1397,7 @@ void CClientLeafSystem::ComputeTranslucentRenderLeaf( int count, const LeafIndex
 		{
 			RenderableInfo_t& info = m_Renderables[m_RenderablesInLeaf.Element(idx)];
 			if ( info.m_TranslucencyCalculated != globalFrameCount || info.m_TranslucencyCalculatedView != viewID )
-			{ 
+			{
 				// Compute translucency
 				if ( bThreaded )
 				{
@@ -1411,7 +1411,7 @@ void CClientLeafSystem::ComputeTranslucentRenderLeaf( int count, const LeafIndex
 				info.m_TranslucencyCalculatedView = viewID;
 			}
 			orderedList.AddToTail( &info );
-			idx = m_RenderablesInLeaf.NextElement(idx); 
+			idx = m_RenderablesInLeaf.NextElement(idx);
 		}
 	}
 
@@ -1427,7 +1427,7 @@ void CClientLeafSystem::ComputeTranslucentRenderLeaf( int count, const LeafIndex
 		if ( !IsLeafMarker( pInfo ) )
 		{
 			if( pInfo->m_RenderFrame != frameNumber )
-			{   
+			{
 				if( pInfo->m_RenderGroup == RENDER_GROUP_TRANSLUCENT_ENTITY )
 				{
 					pInfo->m_RenderLeaf = leaf;
@@ -1456,7 +1456,7 @@ void CClientLeafSystem::ComputeTranslucentRenderLeaf( int count, const LeafIndex
 //-----------------------------------------------------------------------------
 // Adds a renderable to the list of renderables to render this frame
 //-----------------------------------------------------------------------------
-inline void AddRenderableToRenderList( CClientRenderablesList &renderList, IClientRenderable *pRenderable, 
+inline void AddRenderableToRenderList( CClientRenderablesList &renderList, IClientRenderable *pRenderable,
 	int iLeaf, RenderGroup_t group,	ClientRenderHandle_t renderHandle, bool bTwoPass = false )
 {
 #ifdef _DEBUG
@@ -1468,7 +1468,7 @@ inline void AddRenderableToRenderList( CClientRenderablesList &renderList, IClie
 #endif
 
 	Assert( group >= 0 && group < RENDER_GROUP_COUNT );
-	
+
 	int &curCount = renderList.m_RenderGroupCounts[group];
 	if ( curCount < CClientRenderablesList::MAX_GROUP_ENTITIES )
 	{
@@ -1489,9 +1489,9 @@ inline void AddRenderableToRenderList( CClientRenderablesList &renderList, IClie
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : renderList - 
-//			renderGroup - 
+// Purpose:
+// Input  : renderList -
+//			renderGroup -
 //-----------------------------------------------------------------------------
 void CClientLeafSystem::CollateViewModelRenderables( CUtlVector< IClientRenderable * >& opaque, CUtlVector< IClientRenderable * >& translucent )
 {
@@ -1502,7 +1502,7 @@ void CClientLeafSystem::CollateViewModelRenderables( CUtlVector< IClientRenderab
 
 		// NOTE: In some cases, this removes the entity from the view model list
 		renderable.m_pRenderable->ComputeFxBlend();
-		
+
 		// That's why we need to test RENDER_GROUP_OPAQUE_ENTITY - it may have changed in ComputeFXBlend()
 		if ( renderable.m_RenderGroup == RENDER_GROUP_VIEW_MODEL_OPAQUE || renderable.m_RenderGroup == RENDER_GROUP_OPAQUE_ENTITY )
 		{
@@ -1547,14 +1547,14 @@ static RenderGroup_t DetectBucketedRenderGroup( RenderGroup_t group, float fDime
 	// Determine the new bucketed group
 	RenderGroup_t bucketedGroup = RenderGroup_t( group - ( ( RENDER_GROUP_CFG_NUM_OPAQUE_ENT_BUCKETS - 1 ) - bucketedGroupIndex ) * 2 );
 	Assert( bucketedGroup >= RENDER_GROUP_OPAQUE_STATIC_HUGE && bucketedGroup <= RENDER_GROUP_OPAQUE_ENTITY );
-	
+
 	return bucketedGroup;
 }
 
 void CClientLeafSystem::CollateRenderablesInLeaf( int leaf, int worldListLeafIndex,	const SetupRenderInfo_t &info )
 {
 	bool portalTestEnts = r_PortalTestEnts.GetBool() && !r_portalsopenall.GetBool();
-	
+
 	// Place a fake entity for static/opaque ents in this leaf
 	AddRenderableToRenderList( *info.m_pRenderList, NULL, worldListLeafIndex, RENDER_GROUP_OPAQUE_STATIC, NULL );
 	AddRenderableToRenderList( *info.m_pRenderList, NULL, worldListLeafIndex, RENDER_GROUP_OPAQUE_ENTITY, NULL );
@@ -1602,10 +1602,10 @@ void CClientLeafSystem::CollateRenderablesInLeaf( int leaf, int worldListLeafInd
 		}
 
 		unsigned char nAlpha = 255;
-		if ( info.m_bDrawTranslucentObjects ) 
+		if ( info.m_bDrawTranslucentObjects )
 		{
 			// Prevent culling if the renderable is invisible
-			// NOTE: OPAQUE objects can have alpha == 0. 
+			// NOTE: OPAQUE objects can have alpha == 0.
 			// They are made to be opaque because they don't have to be sorted.
 			nAlpha = renderable.m_pRenderable->GetFxBlend();
 			if ( nAlpha == 0 )
@@ -1669,11 +1669,11 @@ void CClientLeafSystem::CollateRenderablesInLeaf( int leaf, int worldListLeafInd
 
 				float const fDimension = MAX( MAX( fabs(dims.x), fabs(dims.y) ), fabs(dims.z) );
 				group = DetectBucketedRenderGroup( group, fDimension );
-				
+
 				Assert( group >= RENDER_GROUP_OPAQUE_STATIC_HUGE && group <= RENDER_GROUP_OPAQUE_ENTITY );
 			}
 
-			AddRenderableToRenderList( *info.m_pRenderList, renderable.m_pRenderable, 
+			AddRenderableToRenderList( *info.m_pRenderList, renderable.m_pRenderable,
 				worldListLeafIndex, group, handle);
 		}
 		else
@@ -1681,15 +1681,15 @@ void CClientLeafSystem::CollateRenderablesInLeaf( int leaf, int worldListLeafInd
 			bool bTwoPass = ((renderable.m_Flags & RENDER_FLAGS_TWOPASS) != 0) && ( nAlpha == 255 );	// Two pass?
 
 			// Add to appropriate list if drawing translucent objects (shadow depth mapping will skip this)
-			if ( info.m_bDrawTranslucentObjects ) 
+			if ( info.m_bDrawTranslucentObjects )
 			{
-				AddRenderableToRenderList( *info.m_pRenderList, renderable.m_pRenderable, 
+				AddRenderableToRenderList( *info.m_pRenderList, renderable.m_pRenderable,
 					worldListLeafIndex, (RenderGroup_t)renderable.m_RenderGroup, handle, bTwoPass );
 			}
-			
-			if ( bTwoPass )	// Also add to opaque list if it's a two-pass model... 
+
+			if ( bTwoPass )	// Also add to opaque list if it's a two-pass model...
 			{
-				AddRenderableToRenderList( *info.m_pRenderList, renderable.m_pRenderable, 
+				AddRenderableToRenderList( *info.m_pRenderList, renderable.m_pRenderable,
 					worldListLeafIndex, RENDER_GROUP_OPAQUE_ENTITY, handle, bTwoPass );
 			}
 		}
@@ -1715,14 +1715,14 @@ void CClientLeafSystem::CollateRenderablesInLeaf( int leaf, int worldListLeafInd
 						// Lots of the detail entities are invisible so avoid sorting them and all that.
 						if( pRenderable->GetFxBlend() > 0 )
 						{
-							AddRenderableToRenderList( *info.m_pRenderList, pRenderable, 
+							AddRenderableToRenderList( *info.m_pRenderList, pRenderable,
 								worldListLeafIndex, RENDER_GROUP_TRANSLUCENT_ENTITY, DETAIL_PROP_RENDER_HANDLE );
 						}
 					}
 				}
 				else
 				{
-					AddRenderableToRenderList( *info.m_pRenderList, pRenderable, 
+					AddRenderableToRenderList( *info.m_pRenderList, pRenderable,
 						worldListLeafIndex, RENDER_GROUP_OPAQUE_ENTITY, DETAIL_PROP_RENDER_HANDLE );
 				}
 			}

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,7 +25,7 @@ public:
 	char			*name;
 	int				id;
 	int				timesseen;
-	
+
 	HintEventFn		m_pEventFn;
 	int				m_ObjectType;	// If this is a hint about an object, this is the object type.
 };

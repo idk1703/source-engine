@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -20,9 +20,9 @@
 class CSmokeParticle : public CSimpleEmitter
 {
 public:
-	
+
 	CSmokeParticle( const char *pDebugName ) : CSimpleEmitter( pDebugName ) {}
-	
+
 	//Create
 	static CSmokeParticle *Create( const char *pDebugName )
 	{
@@ -56,7 +56,7 @@ public:
 	virtual	float UpdateRoll( SimpleParticle *pParticle, float timeDelta )
 	{
 		pParticle->m_flRoll += pParticle->m_flRollDelta * timeDelta;
-		
+
 		pParticle->m_flRollDelta += pParticle->m_flRollDelta * ( timeDelta * -8.0f );
 
 		//Cap the minimum roll
@@ -122,7 +122,7 @@ C_GrenadeTrail::~C_GrenadeTrail()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_GrenadeTrail::GetAimEntOrigin( IClientEntity *pAttachedTo, Vector *pAbsOrigin, QAngle *pAbsAngles )
 {
@@ -139,8 +139,8 @@ void C_GrenadeTrail::GetAimEntOrigin( IClientEntity *pAttachedTo, Vector *pAbsOr
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bEmit - 
+// Purpose:
+// Input  : bEmit -
 //-----------------------------------------------------------------------------
 void C_GrenadeTrail::SetEmit(bool bEmit)
 {
@@ -148,8 +148,8 @@ void C_GrenadeTrail::SetEmit(bool bEmit)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rate - 
+// Purpose:
+// Input  : rate -
 //-----------------------------------------------------------------------------
 void C_GrenadeTrail::SetSpawnRate(float rate)
 {
@@ -158,8 +158,8 @@ void C_GrenadeTrail::SetSpawnRate(float rate)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bnewentity - 
+// Purpose:
+// Input  : bnewentity -
 //-----------------------------------------------------------------------------
 void C_GrenadeTrail::OnDataChanged(DataUpdateType_t updateType)
 {
@@ -172,9 +172,9 @@ void C_GrenadeTrail::OnDataChanged(DataUpdateType_t updateType)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParticleMgr - 
-//			*pArgs - 
+// Purpose:
+// Input  : *pParticleMgr -
+//			*pArgs -
 //-----------------------------------------------------------------------------
 void C_GrenadeTrail::Start( CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs )
 {
@@ -183,7 +183,7 @@ void C_GrenadeTrail::Start( CParticleMgr *pParticleMgr, IPrototypeArgAccess *pAr
 
 	m_pParticleMgr	= pParticleMgr;
 	m_pSmokeEmitter = CSmokeParticle::Create("smokeTrail");
-	
+
 	if ( !m_pSmokeEmitter )
 	{
 		Assert( false );
@@ -195,13 +195,13 @@ void C_GrenadeTrail::Start( CParticleMgr *pParticleMgr, IPrototypeArgAccess *pAr
 
 	m_MaterialHandle[0] = g_Mat_DustPuff[0];
 	m_MaterialHandle[1] = g_Mat_DustPuff[1];
-	
+
 	m_ParticleSpawn.Init( m_SpawnRate );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fTimeDelta - 
+// Purpose:
+// Input  : fTimeDelta -
 //-----------------------------------------------------------------------------
 void C_GrenadeTrail::Update( float fTimeDelta )
 {
@@ -252,7 +252,7 @@ void C_GrenadeTrail::Update( float fTimeDelta )
 
 		pParticle->m_vecVelocity.Random( -1.0f, 1.0f );
 		pParticle->m_vecVelocity *= random->RandomFloat( m_MinSpeed, m_MaxSpeed );
-		
+
 		float flDirectedVel = random->RandomFloat( m_MinDirectedSpeed, m_MaxDirectedSpeed );
 		VectorMA( pParticle->m_vecVelocity, flDirectedVel, vecForward, pParticle->m_vecVelocity );
 
@@ -276,19 +276,19 @@ void C_GrenadeTrail::Update( float fTimeDelta )
 		pParticle->m_uchColor[0]	= offsetColor[0]*255.0f;
 		pParticle->m_uchColor[1]	= offsetColor[1]*255.0f;
 		pParticle->m_uchColor[2]	= offsetColor[2]*255.0f;
-		
+
 		pParticle->m_uchStartSize	= m_StartSize;
 		pParticle->m_uchEndSize		= m_EndSize;
-		
+
 		float alpha = random->RandomFloat( m_Opacity*0.75f, m_Opacity*1.25f );
 		alpha = clamp( alpha, 0.0f, 1.0f );
 
-		pParticle->m_uchStartAlpha	= alpha * 255; 
+		pParticle->m_uchStartAlpha	= alpha * 255;
 		pParticle->m_uchEndAlpha	= 0;
-			
+
 		pParticle->m_flRoll			= random->RandomInt( 0, 360 );
 		pParticle->m_flRollDelta	= random->RandomFloat( -1.0f, 1.0f );
-    }
+	}
 }
 
 void C_GrenadeTrail::RenderParticles( CParticleRenderIterator *pIterator )

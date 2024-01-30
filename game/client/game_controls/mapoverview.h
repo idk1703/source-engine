@@ -48,7 +48,7 @@ class CMapOverview : public CHudElement, public vgui::Panel, public IMapOverview
 {
 	DECLARE_CLASS_SIMPLE( CMapOverview, vgui::Panel );
 
-public:	
+public:
 
 	enum
 	{
@@ -76,7 +76,7 @@ protected:	// private structures & types
 	typedef struct {
 		int		xpos;
 		int		ypos;
-	} FootStep_t;	
+	} FootStep_t;
 
 	typedef struct MapPlayer_s {
 		int		index;		// player's index
@@ -148,7 +148,7 @@ public:
 	// Player settings:
 	virtual void ShowPlayerNames(bool state);
 	virtual void ShowPlayerHealth(bool state);
-	virtual void ShowPlayerTracks(float seconds); 
+	virtual void ShowPlayerTracks(float seconds);
 	virtual void SetPlayerPositions(int index, const Vector &position, const QAngle &angle);
 
 	// general settings:
@@ -158,7 +158,7 @@ public:
 	virtual bool SetTeamColor(int team, Color color);
 	virtual void SetFollowAngle(bool state);
 	virtual void SetFollowEntity(int entindex); // 0 = off
-	virtual void SetCenter( const Vector2D &mappos); 
+	virtual void SetCenter( const Vector2D &mappos);
 	virtual void SetAngle( float angle);
 	virtual Vector2D WorldToMap( const Vector &worldpos );
 
@@ -205,7 +205,7 @@ protected:
 	int				GetPixelOffset( float height );
 	void			UpdateFollowEntity();
 	virtual void	UpdatePlayers();
-	void			UpdateObjects(); // objects bound to entities 
+	void			UpdateObjects(); // objects bound to entities
 	MapObject_t*	FindObjectByID(int objectID);
 	virtual bool	IsRadarLocked() {return false;}
 
@@ -222,7 +222,7 @@ protected:
 								float status = -1,
 								Color *statusColor = NULL,
 								int objectType = OBJECT_TYPE_NORMAL );*/
-	
+
 	int				m_nMode;
 	Vector2D		m_vPosition;
 	Vector2D		m_vSize;
@@ -256,7 +256,7 @@ protected:
 
 	int		m_nFollowEntity;// entity number to follow, 0 = off
 	CPanelAnimationVar( float, m_fZoom, "zoom", "1.0" );	// current zoom n = overview panel shows 1/n^2 of whole map'
-	float	m_fFullZoom;	// best zoom factor for full map view (1.0 is map is a square) 
+	float	m_fFullZoom;	// best zoom factor for full map view (1.0 is map is a square)
 	Vector2D m_ViewOrigin;	// map coordinates that are in the center of the pverview panel
 	Vector2D m_MapCenter;	// map coordinates that are in the center of the pverview panel
 

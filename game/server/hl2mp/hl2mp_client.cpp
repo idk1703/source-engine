@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 
 ===== tf_client.cpp ========================================================
 
-  HL2 client/server game specific stuff
+	HL2 client/server game specific stuff
 
 */
 
@@ -46,7 +46,7 @@ void FinishClientPutInServer( CHL2MP_Player *pPlayer )
 
 	char sName[128];
 	Q_strncpy( sName, pPlayer->GetPlayerName(), sizeof( sName ) );
-	
+
 	// First parse the name and remove any %'s
 	for ( char *pApersand = sName; pApersand != NULL && *pApersand != 0; pApersand++ )
 	{
@@ -118,16 +118,16 @@ const char *GetGameDescription()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Given a player and optional name returns the entity of that 
+// Purpose: Given a player and optional name returns the entity of that
 //			classname that the player is nearest facing
-//			
+//
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
 CBaseEntity* FindEntity( edict_t *pEdict, char *classname)
 {
 	// If no name was given set bits based on the picked
-	if (FStrEq(classname,"")) 
+	if (FStrEq(classname,""))
 	{
 		return (FindPickerEntityClass( static_cast<CBasePlayer*>(GetContainingEntity(pEdict)), classname ));
 	}
@@ -151,7 +151,7 @@ void ClientGamePrecache( void )
 	CBaseEntity::PrecacheScriptSound( "Bullets.DefaultNearmiss" );
 	CBaseEntity::PrecacheScriptSound( "Bullets.GunshipNearmiss" );
 	CBaseEntity::PrecacheScriptSound( "Bullets.StriderNearmiss" );
-	
+
 	CBaseEntity::PrecacheScriptSound( "Geiger.BeepHigh" );
 	CBaseEntity::PrecacheScriptSound( "Geiger.BeepLow" );
 }
@@ -165,9 +165,9 @@ void respawn( CBaseEntity *pEdict, bool fCopyCorpse )
 	if ( pPlayer )
 	{
 		if ( gpGlobals->curtime > pPlayer->GetDeathTime() + DEATH_ANIMATION_TIME )
-		{		
+		{
 			// respawn player
-			pPlayer->Spawn();			
+			pPlayer->Spawn();
 		}
 		else
 		{
@@ -198,4 +198,3 @@ void InstallGameRules()
 	// vanilla deathmatch
 	CreateGameRulesObject( "CHL2MPRules" );
 }
-

@@ -158,9 +158,9 @@ static bool DetectSteamPath( char *pFileName, int nBufLen )
 //-----------------------------------------------------------------------------
 // Displays a windows error
 //-----------------------------------------------------------------------------
-static void DisplayWindowsError( const char *pMessage ) 
-{ 
-	DWORD dw = GetLastError(); 
+static void DisplayWindowsError( const char *pMessage )
+{
+	DWORD dw = GetLastError();
 	char pErrorMessage[2048];
 	FormatMessage( FORMAT_MESSAGE_FROM_SYSTEM, NULL, dw, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 		pErrorMessage, sizeof(pErrorMessage), NULL );
@@ -171,8 +171,8 @@ static void DisplayWindowsError( const char *pMessage )
 //-----------------------------------------------------------------------------
 // Deletes steam.cfg
 //-----------------------------------------------------------------------------
-static void DeleteCfgFile( const char *pFullPath ) 
-{ 
+static void DeleteCfgFile( const char *pFullPath )
+{
 	remove( pFullPath );
 }
 
@@ -241,7 +241,7 @@ static bool ShutdownExistingSteamProcess( const char *pSteamPath )
 {
 	DWORD nSteamPID = GetActiveSteamPID( );
 
-	// Ensure the process is actually running. 
+	// Ensure the process is actually running.
 	// The registry simply stores the last run steam process id
 	if ( !IsSteamProcessActive( nSteamPID ) )
 	{

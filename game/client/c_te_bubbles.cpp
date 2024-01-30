@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -38,7 +38,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBubbles::C_TEBubbles( void )
 {
@@ -51,7 +51,7 @@ C_TEBubbles::C_TEBubbles( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBubbles::~C_TEBubbles( void )
 {
@@ -64,8 +64,8 @@ void TE_Bubbles( IRecipientFilter& filter, float delay,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEBubbles::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -82,4 +82,3 @@ IMPLEMENT_CLIENTCLASS_EVENT_DT(C_TEBubbles, DT_TEBubbles, CTEBubbles)
 	RecvPropInt( RECVINFO(m_nCount)),
 	RecvPropFloat( RECVINFO(m_fSpeed )),
 END_RECV_TABLE()
-

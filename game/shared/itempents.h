@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -29,20 +29,20 @@ public:
 	virtual void ArmorRicochet( IRecipientFilter& filer, float delay,
 		const Vector* pos, const Vector* dir ) = 0;
 	virtual void BeamEntPoint( IRecipientFilter& filer, float delay,
-		int	nStartEntity, const Vector *start, int nEndEntity, const Vector* end, 
+		int	nStartEntity, const Vector *start, int nEndEntity, const Vector* end,
 		int modelindex, int haloindex, int startframe, int framerate,
-		float life, float width, float endWidth, int fadeLength, float amplitude, 
+		float life, float width, float endWidth, int fadeLength, float amplitude,
 		int r, int g, int b, int a, int speed ) = 0;
 	virtual void BeamEnts( IRecipientFilter& filer, float delay,
 		int	start, int end, int modelindex, int haloindex, int startframe, int framerate,
-		float life, float width, float endWidth, int fadeLength, float amplitude, 
+		float life, float width, float endWidth, int fadeLength, float amplitude,
 		int r, int g, int b, int a, int speed ) = 0;
 	virtual void BeamFollow( IRecipientFilter& filter, float delay,
-		int iEntIndex, int modelIndex, int haloIndex, float life, float width, float endWidth, 
+		int iEntIndex, int modelIndex, int haloIndex, float life, float width, float endWidth,
 		float fadeLength, float r, float g, float b, float a ) = 0;
 	virtual void BeamPoints( IRecipientFilter& filer, float delay,
 		const Vector* start, const Vector* end, int modelindex, int haloindex, int startframe, int framerate,
-		float life, float width, float endWidth, int fadeLength, float amplitude, 
+		float life, float width, float endWidth, int fadeLength, float amplitude,
 		int r, int g, int b, int a, int speed ) = 0;
 	virtual void BeamLaser( IRecipientFilter& filer, float delay,
 		int	start, int end, int modelindex, int haloindex, int startframe, int framerate,
@@ -60,7 +60,7 @@ public:
 	virtual void BloodSprite( IRecipientFilter& filer, float delay,
 		const Vector* org, const Vector *dir, int r, int g, int b, int a, int size ) = 0;
 	virtual void BreakModel( IRecipientFilter& filer, float delay,
-		const Vector& pos, const QAngle &angle, const Vector& size, const Vector& vel, 
+		const Vector& pos, const QAngle &angle, const Vector& size, const Vector& vel,
 		int modelindex, int randomization, int count, float time, int flags ) = 0;
 	virtual void BSPDecal( IRecipientFilter& filer, float delay,
 		const Vector* pos, int entity, int index ) = 0;
@@ -77,12 +77,12 @@ public:
 	virtual void Explosion( IRecipientFilter& filer, float delay,
 		const Vector* pos, int modelindex, float scale, int framerate, int flags, int radius, int magnitude, const Vector* normal = NULL, unsigned char materialType = 'C' ) = 0;
 	virtual void ShatterSurface( IRecipientFilter& filer, float delay,
-		const Vector* pos, const QAngle* angle, const Vector* vForce, const Vector* vForcePos, 
+		const Vector* pos, const QAngle* angle, const Vector* vForce, const Vector* vForcePos,
 		float width, float height, float shardsize, ShatterSurface_t surfacetype,
 		int front_r, int front_g, int front_b, int back_r, int back_g, int back_b) = 0;
 	virtual void GlowSprite( IRecipientFilter& filer, float delay,
 		const Vector* pos, int modelindex, float life, float size, int brightness ) = 0;
-	virtual void FootprintDecal( IRecipientFilter& filer, float delay, const Vector *origin, const Vector* right, 
+	virtual void FootprintDecal( IRecipientFilter& filer, float delay, const Vector *origin, const Vector* right,
 		int entity, int index, unsigned char materialType ) = 0;
 	virtual void Fizz( IRecipientFilter& filer, float delay,
 		const CBaseEntity *ed, int modelindex, int density, int current ) = 0;
@@ -116,7 +116,7 @@ public:
 				const Vector &pos, const Vector &dir, int type ) = 0;
 	virtual void DispatchEffect( IRecipientFilter& filter, float delay,
 				const Vector &pos, const char *pName, const CEffectData &data ) = 0;
-	virtual void PhysicsProp( IRecipientFilter& filter, float delay, int modelindex, int skin, 
+	virtual void PhysicsProp( IRecipientFilter& filter, float delay, int modelindex, int skin,
 		const Vector& pos, const QAngle &angles, const Vector& vel, int flags, int effects ) = 0;
 
 	// For playback from external tools

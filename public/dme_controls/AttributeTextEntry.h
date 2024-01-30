@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -69,7 +69,7 @@ private:
 		MAX_TEXT_LENGTH = 1024
 	};
 
-    template<class T> void ApplyMouseWheel( T newValue, T originalValue );
+	template<class T> void ApplyMouseWheel( T newValue, T originalValue );
 	void StoreInitialValue( bool bForce = false );
 	void WriteValueToAttribute();
 	void WriteInitialValueToAttribute();

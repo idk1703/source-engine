@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,7 +12,7 @@
 
 using namespace vgui;
 
-namespace vgui 
+namespace vgui
 {
 	class Panel;
 }
@@ -38,7 +38,7 @@ public:
 	void CreateDefaultPanels( void );
 
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-		
+
 	int GetDeathMessageStartHeight( void );
 
 	// Never show the background

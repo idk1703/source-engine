@@ -4,9 +4,9 @@
 // Desc: 		Manages client side stat storage, accumulation, and access
 // Author: 		Peter Freese <peter@hiddenpath.com>
 // Date: 		2009/09/11
-// Copyright:	© 2009 Hidden Path Entertainment
+// Copyright:	ï¿½ 2009 Hidden Path Entertainment
 //
-// Keywords: 	
+// Keywords:
 //-------------------------------------------------------------
 
 #include "cbase.h"
@@ -37,7 +37,7 @@ CCSClientGameStats::StatContainerList_t* CCSClientGameStats::s_StatLists = new C
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CCSClientGameStats::CCSClientGameStats() 
+CCSClientGameStats::CCSClientGameStats()
 {
 	m_bSteamStatsDownload = false;
 }
@@ -84,7 +84,7 @@ void CCSClientGameStats::Shutdown()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSClientGameStats::LevelShutdownPreClearSteamAPIContext( void )
 {
@@ -134,7 +134,7 @@ void CCSClientGameStats::FireGameEvent( IGameEvent *event )
 		m_RoundStatData.AddToTail( pRoundStatData );
 		UploadRoundData();
 		m_roundStats.Reset();
-	}	
+	}
 }
 
 void CCSClientGameStats::RetrieveSteamStats()
@@ -156,7 +156,7 @@ void CCSClientGameStats::RetrieveSteamStats()
 
 		int iData;
 		if ( steamapicontext->SteamUserStats()->GetStat( CSStatProperty_Table[i].szSteamName, &iData ) )
-		{	
+		{
 			m_lifetimeStats[CSStatProperty_Table[i].statId] = iData;
 		}
 		else
@@ -187,7 +187,7 @@ void CCSClientGameStats::UpdateSteamStats()
 {
 	// only upload if Steam is running
 	if ( !steamapicontext->SteamUserStats() )
-		return; 
+		return;
 
 	CAchievementMgr *pAchievementMgr = dynamic_cast<CAchievementMgr *>( engine->GetAchievementMgr() );
 	Assert(pAchievementMgr != NULL);
@@ -251,7 +251,7 @@ CON_COMMAND_F( stats_preload, "Load stats with data ripe for getting achievmenet
 		int				value;
 	};
 
-	DataSet statData[] = 
+	DataSet statData[] =
 	{
 		{ CSSTAT_KILLS, 9999},
 		{ CSSTAT_ROUNDS_WON, 4999},
@@ -343,7 +343,7 @@ CON_COMMAND_F( stats_corrupt, "Load stats with corrupt values", FCVAR_DEVELOPMEN
 		int				value;
 	};
 
-	DataSet badData[] = 
+	DataSet badData[] =
 	{
 		{ CSSTAT_SHOTS_HIT,						0x40000089	},
 		{ CSSTAT_SHOTS_FIRED,					0x400002BE	},
@@ -607,8 +607,8 @@ void CCSClientGameStats::MsgFunc_MatchStatsUpdate( bf_read &msg )
 
 void CCSClientGameStats::MsgFunc_PlayerStatsUpdate( bf_read &msg )
 {
-	// Note: if any check fails while decoding this message, bail out and disregard this data to avoid 
-	// potentially polluting player stats 
+	// Note: if any check fails while decoding this message, bail out and disregard this data to avoid
+	// potentially polluting player stats
 
 	StatsCollection_t deltaStats;
 

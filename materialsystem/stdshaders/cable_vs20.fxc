@@ -21,14 +21,14 @@ struct VS_OUTPUT
 	float4 vProjPos		: POSITION;
 	float2 vTexCoord0	: TEXCOORD0;
 	float2 vTexCoord1	: TEXCOORD1;
-	
+
 	float4 worldPos_projPosZ		: TEXCOORD7;		// Necessary for pixel fog
 
 	float4 directionalLightColor : COLOR0;
 
 	float4 fogFactorW	: COLOR1;
 
-#if !defined( _X360 )    
+#if !defined( _X360 )
 	float  fog		: FOG;
 #endif
 };
@@ -54,13 +54,13 @@ VS_OUTPUT main( const VS_INPUT v )
 	//------------------------------------------------------------------------------
 	// Setup the tangent space
 	//------------------------------------------------------------------------------
-	
+
 	// Get S crossed with T (call it R)
 	float3 r = cross( v.vTangentS, v.vTangentT );
-	
+
 	// Normalize S (into s)
 	float3 s = normalize( v.vTangentS );
-	
+
 	// Normalize R (into r)
 	r = normalize( r );
 

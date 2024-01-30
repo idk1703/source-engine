@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,9 +24,9 @@ class CWeaponTMP : public CWeaponCSBaseGun
 {
 public:
 	DECLARE_CLASS( CWeaponTMP, CWeaponCSBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponTMP();
 
 	virtual void PrimaryAttack();
@@ -66,7 +66,7 @@ float CWeaponTMP::GetInaccuracy() const
 		CCSPlayer *pPlayer = GetPlayerOwner();
 		if ( !pPlayer )
 			return 0.0f;
-	
+
 		if ( !FBitSet( pPlayer->GetFlags(), FL_ONGROUND ) )
 			return 0.25f * m_flAccuracy;
 		else

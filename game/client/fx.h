@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -30,7 +30,7 @@ enum
 	FX_ENERGYSPLASH_BIGSPARKSCOLLIDE = 0x10,
 	FX_ENERGYSPLASH_ENERGYBALLS		= 0x20,
 	FX_ENERGYSPLASH_DLIGHT			= 0x40,
-	
+
 	FX_ENERGYSPLASH_DEFAULT = ~FX_ENERGYSPLASH_EXPLOSIVE,
 	FX_ENERGYSPLASH_DEFAULT_EXPLOSIVE = ~0,
 };
@@ -58,7 +58,7 @@ void FX_CreateImpactDust( Vector &origin, Vector &normal );
 void FX_EnergySplash( const Vector &pos, const Vector &normal, int nFlags = FX_ENERGYSPLASH_DEFAULT );
 void FX_MicroExplosion( Vector &position, Vector &normal );
 void FX_Explosion( Vector& origin, Vector& normal, char materialType );
-void FX_ConcussiveExplosion( Vector& origin, Vector& normal ); 
+void FX_ConcussiveExplosion( Vector& origin, Vector& normal );
 void FX_DustImpact( const Vector &origin, trace_t *tr, int iScale );
 void FX_DustImpact( const Vector &origin, trace_t *tr, float flScale );
 void FX_MuzzleEffect( const Vector &origin, const QAngle &angles, float scale, ClientEntityHandle_t hEntity, unsigned char *pFlashColor = NULL, bool bOneFrame = false );

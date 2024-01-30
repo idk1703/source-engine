@@ -133,7 +133,7 @@ void CPhysicsShadowClone::Spawn( void )
 
 	FullSync( false );
 	m_bInAssumedSyncState = false;
-	
+
 	BaseClass::Spawn();
 
 	s_IsShadowClone[entindex()] = true;
@@ -176,7 +176,7 @@ void CPhysicsShadowClone::FullSync( bool bAllowAssumedSync )
 				IPhysicsObject *pSourcePhysics = pSourceObjects[i];
 				IPhysicsObject *pClonedPhysics = m_CloneLinks[i].pClone;
 
-				if( (pSourcePhysics != m_CloneLinks[i].pSource) || 
+				if( (pSourcePhysics != m_CloneLinks[i].pSource) ||
 					(pSourcePhysics->IsCollisionEnabled() != pClonedPhysics->IsCollisionEnabled()) )
 				{
 					bBigChanges = true;
@@ -197,7 +197,7 @@ void CPhysicsShadowClone::FullSync( bool bAllowAssumedSync )
 					bIsSynced = false;
 					break;
 				}
-				
+
 				//Vector vSourceVelocity, vCloneVelocity;
 
 
@@ -224,7 +224,7 @@ void CPhysicsShadowClone::FullSync( bool bAllowAssumedSync )
 				PartialSync( true );
 
 				//if we don't do this, objects just fall out of the world (it happens, I swear)
-				
+
 				for( int i = m_CloneLinks.Count(); --i >= 0; )
 				{
 					if( (m_CloneLinks[i].pSource->GetShadowController() == NULL) && m_CloneLinks[i].pClone->IsMotionEnabled() )
@@ -239,19 +239,19 @@ void CPhysicsShadowClone::FullSync( bool bAllowAssumedSync )
 
 				m_bInAssumedSyncState = true;
 			}
-			
+
 			if( sv_debug_physicsshadowclones.GetBool() )
 				DrawDebugOverlayForShadowClone( this );
 
 			return;
 		}
 	}
-	
+
 	m_bInAssumedSyncState = false;
-	
 
 
-	
+
+
 
 	//past this point, we're committed to a broad update
 
@@ -259,15 +259,15 @@ void CPhysicsShadowClone::FullSync( bool bAllowAssumedSync )
 	{
 		MoveType_t sourceMoveType = pClonedEntity->GetMoveType();
 
-			
+
 		IPhysicsObject *pPhysObject = pClonedEntity->VPhysicsGetObject();
-		if( (sourceMoveType == MOVETYPE_CUSTOM) || 
-			(sourceMoveType == MOVETYPE_STEP) || 
+		if( (sourceMoveType == MOVETYPE_CUSTOM) ||
+			(sourceMoveType == MOVETYPE_STEP) ||
 			(sourceMoveType == MOVETYPE_WALK) ||
-			(pPhysObject && 
-				( 
-					(pPhysObject->GetGameFlags() & FVPHYSICS_PLAYER_HELD) || 
-					(pPhysObject->GetShadowController() != NULL) 
+			(pPhysObject &&
+				(
+					(pPhysObject->GetGameFlags() & FVPHYSICS_PLAYER_HELD) ||
+					(pPhysObject->GetShadowController() != NULL)
 				)
 			)
 		  )
@@ -305,7 +305,7 @@ void CPhysicsShadowClone::FullSync( bool bAllowAssumedSync )
 		SetFriction( pClonedEntity->GetFriction() );
 
 
-		
+
 		int iSolidFlags = pClonedEntity->GetSolidFlags() | FSOLID_CUSTOMRAYTEST;
 		if( m_bShadowTransformIsIdentity )
 			iSolidFlags |= FSOLID_CUSTOMBOXTEST; //need this at least for the player or they get stuck in themselves
@@ -382,7 +382,7 @@ void CPhysicsShadowClone::SyncEntity( bool bPullChanges )
 	{
 		ptOrigin = (*pTransform) * ptOrigin;
 		qAngles = TransformAnglesToWorldSpace( qAngles, pTransform->As3x4() );
-		vVelocity = pTransform->ApplyRotation( vVelocity );	
+		vVelocity = pTransform->ApplyRotation( vVelocity );
 	}
 	//else
 	//{
@@ -393,7 +393,7 @@ void CPhysicsShadowClone::SyncEntity( bool bPullChanges )
 	{
 		pDest->Teleport( &ptOrigin, &qAngles, NULL );
 	}
-	
+
 	if( vVelocity != pDest->GetAbsVelocity() )
 	{
 		//pDest->IncrementInterpolationFrame();
@@ -443,7 +443,7 @@ static void FullSyncPhysicsObject( IPhysicsObject *pSource, IPhysicsObject *pDes
 		pDest->EnableGravity( pSource->IsGravityEnabled() );
 		pDest->EnableDrag( pSource->IsDragEnabled() );
 		pDest->EnableMotion( pSource->IsMotionEnabled() );
-	}	
+	}
 
 	//Damping
 	{
@@ -457,7 +457,7 @@ static void FullSyncPhysicsObject( IPhysicsObject *pSource, IPhysicsObject *pDes
 		{
 			pSource->GetDamping( &fSpeedDamp, &fRotDamp );
 			pDest->SetDamping( &fSpeedDamp, &fRotDamp );
-		}		
+		}
 	}
 
 	//stuff that we really care about
@@ -478,7 +478,7 @@ static void FullSyncPhysicsObject( IPhysicsObject *pSource, IPhysicsObject *pDes
 		{
 #if 0
 			pDest->SetPositionMatrix( pTransform->As3x4(), true ); //works like we think?
-#else		
+#else
 			ptOrigin = (*pTransform) * ptOrigin;
 			qAngles = TransformAnglesToWorldSpace( qAngles, pTransform->As3x4() );
 			vVelocity = pTransform->ApplyRotation( vVelocity );
@@ -487,7 +487,7 @@ static void FullSyncPhysicsObject( IPhysicsObject *pSource, IPhysicsObject *pDes
 		}
 
 		//avoid oversetting variables (I think that even setting them to the same value they already are disrupts the delicate physics balance)
-		if( vInertia != pDest->GetInertia() )		
+		if( vInertia != pDest->GetInertia() )
 			pDest->SetInertia( vInertia );
 
 		Vector ptDestOrigin, vDestVelocity, vDestAngularVelocity;
@@ -544,7 +544,7 @@ static void FullSyncPhysicsObject( IPhysicsObject *pSource, IPhysicsObject *pDes
 			pDestController->Update( ptTargetPosition, qTargetAngles, fTimeOffset );
 		}
 
-		
+
 	}
 
 	//pDest->RecheckContactPoints();
@@ -563,7 +563,7 @@ static void PartialSyncPhysicsObject( IPhysicsObject *pSource, IPhysicsObject *p
 	{
 #if 0
 		//pDest->SetPositionMatrix( matTransform.As3x4(), true ); //works like we think?
-#else	
+#else
 		ptOrigin = (*pTransform) * ptOrigin;
 		qAngles = TransformAnglesToWorldSpace( qAngles, pTransform->As3x4() );
 		vVelocity = pTransform->ApplyRotation( vVelocity );
@@ -620,7 +620,7 @@ void CPhysicsShadowClone::FullSyncClonedPhysicsObjects( bool bTeleport )
 				break;
 
 			if( pSourceObjects[i] != m_CloneLinks[i].pSource )
-				break;			
+				break;
 		}
 
 		if( i == iObjectCount ) //no changes
@@ -685,7 +685,7 @@ void CPhysicsShadowClone::FullSyncClonedPhysicsObjects( bool bTeleport )
 			pSource->SetGameFlags( iOldGameFlags );
 			cloneLink.pClone = m_pOwnerPhysEnvironment->UnserializeObjectFromBuffer( this, pBuffer, size, false ); //unserializer has to be in the target environment
 			assert( cloneLink.pClone ); //there should be absolutely no case where we can't clone a valid existing physics object
-	
+
 			stackfree(pBuffer);
 		}
 
@@ -734,7 +734,7 @@ void CPhysicsShadowClone::FullSyncClonedPhysicsObjects( bool bTeleport )
 void CPhysicsShadowClone::PartialSync( bool bPullChanges )
 {
 	VMatrix *pTransform;
-	
+
 	if( bPullChanges )
 	{
 		if( m_bShadowTransformIsIdentity )
@@ -764,7 +764,7 @@ void CPhysicsShadowClone::PartialSync( bool bPullChanges )
 int CPhysicsShadowClone::VPhysicsGetObjectList( IPhysicsObject **pList, int listMax )
 {
 	int iCountStop = m_CloneLinks.Count();
-	if( iCountStop > listMax ) 
+	if( iCountStop > listMax )
 		iCountStop = listMax;
 
 	for( int i = 0; i != iCountStop; ++i, ++pList )
@@ -777,7 +777,7 @@ int CPhysicsShadowClone::VPhysicsGetObjectList( IPhysicsObject **pList, int list
 void CPhysicsShadowClone::VPhysicsDestroyObject( void )
 {
 	VPhysicsSetObject( NULL );
-	
+
 	for( int i = m_CloneLinks.Count(); --i >= 0; )
 	{
 		Assert( m_CloneLinks[i].pClone != NULL );
@@ -851,7 +851,7 @@ void CPhysicsShadowClone::SetCloneTransformationMatrix( const matrix3x4_t &sourc
 void CPhysicsShadowClone::SetClonedEntity( EHANDLE hEntToClone )
 {
 	VPhysicsDestroyObject();
-	
+
 	m_hClonedEntity = hEntToClone;
 
 	//FullSyncClonedPhysicsObjects();
@@ -955,7 +955,7 @@ CPhysicsShadowClone *CPhysicsShadowClone::CreateShadowClone( IPhysicsEnvironment
 	/*if( FClassnameIs( pClonedEntity, "func_door" ) )
 	{
 		//only clone func_door's that are in front of the portal
-		
+
 		return NULL;
 	}*/
 
@@ -1086,6 +1086,3 @@ TraceType_t	CTraceFilterTranslateClones::GetTraceType() const
 {
 	return m_pActualFilter->GetTraceType();
 }
-
-
-

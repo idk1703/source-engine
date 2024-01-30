@@ -13,8 +13,8 @@
 #include "shake.h"
 #include "smoke_trail.h"
 #include "ar2_explosion.h"
-#include "mathlib/mathlib.h" 
-#include "game.h"			
+#include "mathlib/mathlib.h"
+#include "game.h"
 #include "ndebugoverlay.h"
 #include "hl2_shareddefs.h"
 #include "vstdlib/random.h"
@@ -55,7 +55,7 @@ BEGIN_DATADESC( CGrenadeHomer )
 	DEFINE_FIELD( m_flHomingStartTime,			FIELD_TIME ),
 	DEFINE_FIELD( m_flHomingEndTime,				FIELD_TIME ),
 	DEFINE_FIELD( m_flSpinOffset,					FIELD_FLOAT),
-	
+
 	DEFINE_FIELD( m_hTarget,						FIELD_EHANDLE),
 
 	// Function pointers
@@ -133,7 +133,7 @@ void CGrenadeHomer::Spawn( void )
 	m_flHomingDelay		= 0;
 	m_flHomingDuration	= 0;
 
-	SetCollisionGroup( HL2COLLISION_GROUP_HOMING_MISSILE ); 
+	SetCollisionGroup( HL2COLLISION_GROUP_HOMING_MISSILE );
 }
 
 //------------------------------------------------------------------------------
@@ -258,7 +258,7 @@ void CGrenadeHomer::UpdateRocketTrail(float fScale)
 		StartRocketTrail();
 	}
 
-	if (m_hRocketTrail[0]) 
+	if (m_hRocketTrail[0])
 	{
 		m_hRocketTrail[0]->m_ParticleLifetime = fScale*HOMER_TRAIL0_LIFE;
 	}
@@ -267,7 +267,7 @@ void CGrenadeHomer::UpdateRocketTrail(float fScale)
 		m_hRocketTrail[1]->m_ParticleLifetime = fScale*HOMER_TRAIL1_LIFE;
 	}
 
-	if (m_hRocketTrail[2]) 
+	if (m_hRocketTrail[2])
 	{
 		m_hRocketTrail[2]->m_ParticleLifetime = fScale*HOMER_TRAIL2_LIFE;
 	}
@@ -284,7 +284,7 @@ void CGrenadeHomer::StopRocketTrail()
 			UTIL_Remove( m_hRocketTrail[i] );
 			m_hRocketTrail[i] = NULL;
 		}
-	}	
+	}
 }
 
 //------------------------------------------------------------------------------
@@ -292,8 +292,8 @@ void CGrenadeHomer::StopRocketTrail()
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
-void CGrenadeHomer::Launch( CBaseEntity*		pOwner, 
-							CBaseEntity*		pTarget, 
+void CGrenadeHomer::Launch( CBaseEntity*		pOwner,
+							CBaseEntity*		pTarget,
 							const Vector&		vInitVelocity,
 							float				flHomingSpeed,
 							float				flGravity,
@@ -360,7 +360,7 @@ void CGrenadeHomer::GrenadeHomerTouch( CBaseEntity *pOther )
 	// If I hit the sky, don't explode
 	// ----------------------------------
 	trace_t tr;
-	UTIL_TraceLine( GetAbsOrigin(), GetAbsOrigin() + GetAbsVelocity(),  MASK_SOLID_BRUSHONLY, 
+	UTIL_TraceLine( GetAbsOrigin(), GetAbsOrigin() + GetAbsVelocity(),  MASK_SOLID_BRUSHONLY,
 		this, COLLISION_GROUP_NONE, &tr);
 
 	if (tr.surface.flags & SURF_SKY)
@@ -380,14 +380,14 @@ void CGrenadeHomer::Detonate(void)
 
 	StopSound(entindex(), CHAN_BODY, STRING(m_sFlySound));
 
-	m_takedamage	= DAMAGE_NO;	
+	m_takedamage	= DAMAGE_NO;
 
 	CPASFilter filter( GetAbsOrigin() );
 
 	te->Explosion( filter, 0.0,
-		&GetAbsOrigin(), 
+		&GetAbsOrigin(),
 		g_sModelIndexFireball,
-		2.0, 
+		2.0,
 		15,
 		TE_EXPLFLAG_NONE,
 		m_DmgRadius,
@@ -401,7 +401,7 @@ void CGrenadeHomer::Detonate(void)
 	{
 		// Add a shockring
 		CBroadcastRecipientFilter filter3;
-		te->BeamRingPoint( filter3, 0, 
+		te->BeamRingPoint( filter3, 0,
 			GetAbsOrigin(),	//origin
 			16,			//start radius
 			1000,		//end radius
@@ -423,7 +423,7 @@ void CGrenadeHomer::Detonate(void)
 
 		// Add a shockring
 		CBroadcastRecipientFilter filter4;
-		te->BeamRingPoint( filter4, 0, 
+		te->BeamRingPoint( filter4, 0,
 			GetAbsOrigin(),	//origin
 			16,			//start radius
 			500,		//end radius
@@ -487,12 +487,12 @@ void CGrenadeHomer::PlayFlySound(void)
 }
 
 //------------------------------------------------------------------------------
-// Purpose : Move toward targetmap 
+// Purpose : Move toward targetmap
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
 void CGrenadeHomer::AimThink( void )
-{ 
+{
 	// Blow up the missile if we have an explicit detonate time that
 	// has been reached
 	if (m_flDetonateTime != 0 &&
@@ -531,7 +531,7 @@ void CGrenadeHomer::AimThink( void )
 			UTIL_TraceLine( GetAbsOrigin(), GetAbsOrigin() + vTravelDir, MASK_SHOT, m_hTarget, COLLISION_GROUP_NONE, &tr );
 			if (tr.fraction != 1.0)
 			{
-				// Head off in normal 
+				// Head off in normal
 				float dotPr			=  DotProduct(vTravelDir,tr.plane.normal);
 				Vector vBounce		=  -dotPr * tr.plane.normal;
 				vBounce.z			=  0;
@@ -588,7 +588,7 @@ void CGrenadeHomer::AimThink( void )
 		//  Set Homing
 		// ---------------
 		if (flCurHomingStrength > 0)
-		{	
+		{
 			// -------------
 			// Smoke trail.
 			// -------------
@@ -615,9 +615,9 @@ void CGrenadeHomer::AimThink( void )
 			SetAbsVelocity( vecNewVelocity );
 		}
 	}
-	
+
 	// ----------------------------------------------------------------------------------------
-	// Add time-coherent noise to the current velocity 
+	// Add time-coherent noise to the current velocity
 	// ----------------------------------------------------------------------------------------
 	Vector vecImpulse( 0, 0, 0 );
 	if (m_flSpinMagnitude > 0)
@@ -668,7 +668,7 @@ void CGrenadeHomer::AimThink( void )
 }
 
 //------------------------------------------------------------------------------
-// Purpose : 
+// Purpose :
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------

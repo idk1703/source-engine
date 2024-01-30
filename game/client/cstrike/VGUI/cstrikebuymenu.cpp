@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -56,7 +56,7 @@ public:
 		{
 			if ( !m_available )
 			{
-                image->SetColor( Color( 128, 128, 128, 255 ) );
+	image->SetColor( Color( 128, 128, 128, 255 ) );
 			}
 		}
 		return BaseClass::AddImage( image, offset );
@@ -201,17 +201,17 @@ CCSBaseBuyMenu::CCSBaseBuyMenu(IViewPort *pViewPort, const char *subPanelName) :
 	{
 		m_pBuyPresetButtons[i] = new BuyPresetButton( m_pMainMenu, VarArgs( "BuyPresetButton%c", 'A' + i ), "" );
 	}
- 	m_pMoney = new Label( m_pMainMenu, "money", "" );
+	m_pMoney = new Label( m_pMainMenu, "money", "" );
 	//=============================================================================
 	// HPE_BEGIN:
 	// [pfreese] mainBackground was the little orange box outside that buy window
 	// that shouldn't have been there. Maybe this was left over from some
 	// copied code.
 	//=============================================================================
-	
+
 	m_pMainBackground = NULL;
 //	m_pMainBackground = new Panel( m_pMainMenu, "mainBackground" );
-	
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
@@ -224,14 +224,14 @@ CCSBaseBuyMenu::CCSBaseBuyMenu(IViewPort *pViewPort, const char *subPanelName) :
 	m_pMoney = NULL;
 	m_pMainBackground = NULL;
 #endif // USE_BUY_PRESETS
- 	m_lastMoney = -1;
+	m_lastMoney = -1;
 
 	m_pBlackMarket = new EditablePanel( m_pMainMenu, "BlackMarket_Bargains" );
 	m_pBlackMarket->LoadControlSettings( "Resource/UI/BlackMarket_Bargains.res" );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSBaseBuyMenu::SetVisible(bool state)
 {
@@ -461,7 +461,7 @@ int GetWeeklyBargain( void )
 			continue;
 
 		if ( info->m_iTeam == TEAM_UNASSIGNED || info->m_iTeam == pPlayer->m_iTeamNum )
-		{		
+		{
 			int iBargain = info->GetWeaponPrice() - info->GetPrevousPrice();
 
 			if ( iBargain < iBestBargain )
@@ -480,7 +480,7 @@ ConVar cs_testbargain( "cs_testbargain", "1" );
 #endif
 
 void CCSBaseBuyMenu::HandleBlackMarket( void )
-{	
+{
 	if ( CSGameRules() == NULL )
 		return;
 
@@ -518,10 +518,10 @@ void CCSBaseBuyMenu::HandleBlackMarket( void )
 			if ( pLabel )
 			{
 				const int BufLen = 2048;
-				
+
 				wchar_t wbuf[BufLen] = L"";
 				const wchar_t *formatStr = g_pVGuiLocalize->Find("#Cstrike_MarketHeadline");
-	
+
 				if ( !formatStr )
 					formatStr = L"%s1";
 
@@ -536,7 +536,7 @@ void CCSBaseBuyMenu::HandleBlackMarket( void )
 				const int BufLen = 2048;
 				wchar_t wbuf[BufLen] = L"";
 				const wchar_t *formatStr = g_pVGuiLocalize->Find("#Cstrike_MarketBargain");
-				
+
 				if ( !formatStr )
 					formatStr = L"%s1";
 
@@ -570,12 +570,12 @@ void CCSBaseBuyMenu::HandleBlackMarket( void )
 			}
 
 			pLabel = dynamic_cast< Label * >(m_pBlackMarket->FindChildByName( "MarketBargainIcon" ));
-			
+
 			if ( pLabel )
 			{
 				char wbuff[12];
 				Q_snprintf( wbuff, 12, "%c", info->iconActive->cCharacterInFont );
-				
+
 				pLabel->SetText( wbuff );
 			}
 
@@ -652,7 +652,7 @@ void CCSBaseBuyMenu::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSBaseBuyMenu::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -673,7 +673,7 @@ void CCSBaseBuyMenu::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static bool IsWeaponInvalid( CSWeaponID weaponID )
 {
@@ -684,7 +684,7 @@ static bool IsWeaponInvalid( CSWeaponID weaponID )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSBuySubMenu::OnThink()
 {
@@ -712,7 +712,7 @@ void CCSBuySubMenu::UpdateVestHelmPrice()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSBuySubMenu::OnCommand( const char *command )
 {
@@ -785,7 +785,7 @@ void CCSBuySubMenu::OnSizeChanged(int newWide, int newTall)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSBuySubMenu::PerformLayout()
 {
@@ -825,7 +825,7 @@ void CCSBuySubMenu::HandleBlackMarket( void )
 		BuyMouseOverPanelButton *pButton = dynamic_cast< BuyMouseOverPanelButton * > ( GetChild(i) );
 		if (!pButton)
 			continue;
-		
+
 		pButton->SetBargainButton( false );
 
 		const char *pWeaponName = Q_stristr( pButton->GetBuyCommand(), " " );
@@ -846,16 +846,16 @@ void CCSBuySubMenu::HandleBlackMarket( void )
 
 			if ( CSGameRules()->IsBlackMarket() == false )
 			{
-                //=============================================================================
-                // HPE_BEGIN:
-                // [dwenger] Removed to avoid clearing of default price when not in black market mode
-                //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [dwenger] Removed to avoid clearing of default price when not in black market mode
+	//=============================================================================
 
-                // pButton->SetCurrentPrice( info->GetDefaultPrice() );
+	// pButton->SetCurrentPrice( info->GetDefaultPrice() );
 
-                //=============================================================================
-                // HPE_END
-                //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 			}
 			else
 			{
@@ -878,6 +878,3 @@ void CCSBuySubMenu::HandleBlackMarket( void )
 		pButtonBargain->SetBargainButton( true );
 	}
 }
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_LimpetMine, DT_LimpetMine, CLimpetMine)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_LimpetMine::C_LimpetMine( void )
 {
@@ -44,7 +44,7 @@ C_LimpetMine::C_LimpetMine( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_LimpetMine::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -105,5 +105,3 @@ void C_LimpetMine::ClientThink( void )
 		pParticle->m_uchColor[2] = 50;
 	}
 }
-
-

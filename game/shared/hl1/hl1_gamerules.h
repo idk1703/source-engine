@@ -38,7 +38,7 @@ public:
 
 
 #ifndef CLIENT_DLL
-	
+
 	CHalfLife1();
 	virtual ~CHalfLife1() {}
 

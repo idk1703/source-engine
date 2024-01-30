@@ -174,7 +174,7 @@ bool CEconTool_GiftWrap::CanApplyTo( const IEconItemInterface *pTool, const IEco
 	const bool cbSubjectNeedsGiftWrap = pToolSubject->FindAttribute( pAttrDef_ToolNeedsGiftwrap );
 	const bool cbSubjectCanTrade = pToolSubject->IsTradable();
 	const bool cbSubjectCanProceed = cbSubjectNeedsGiftWrap || cbSubjectCanTrade;
- 
+
 	if ( !cbSubjectCanProceed )
 		return false;
 
@@ -185,7 +185,7 @@ bool CEconTool_GiftWrap::CanApplyTo( const IEconItemInterface *pTool, const IEco
 	return IEconTool::CanApplyTo( pTool, pToolSubject );
 }
 
-CEconTool_StrangeCountTransfer::CEconTool_StrangeCountTransfer( const char *pszTypeName, item_capabilities_t unCapabilities ) 
+CEconTool_StrangeCountTransfer::CEconTool_StrangeCountTransfer( const char *pszTypeName, item_capabilities_t unCapabilities )
 	: IEconTool( pszTypeName, NULL, NULL, unCapabilities )
 {
 #ifdef CLIENT_DLL
@@ -214,7 +214,7 @@ bool CEconTool_StrangeCountTransfer::AreItemsEligibleForStrangeCountTransfer( co
 	{
 		return false;
 	}
-	
+
 	// Item defs are compatabible, are there attributes? Check strange
 	// Check if they are both strange (have kill eater). Quality is less important
 	if ( !BIsItemStrange( pItem1) || !BIsItemStrange( pItem2 ) )
@@ -311,7 +311,7 @@ bool CEconTool_StrangePart::CanApplyTo( const IEconItemInterface *pTool, const I
 		if ( pSubjectItemDef->HasEconTag( m_RequiredMissingTags.GetTagsList()[i] ) )
 			return false;
 	}
-	
+
 	return IEconTool::CanApplyTo( pTool, pToolSubject );
 }
 
@@ -364,7 +364,7 @@ bool CEconTool_StrangePartRestriction::BFinishInitialization()
 		case kStrangeEventRestriction_VictimSteamAccount:
 			if ( m_pszRestrictionValue )
 				return false;
-			
+
 			m_unRestrictionValue = 0;
 			break;
 
@@ -434,7 +434,7 @@ bool CEconTool_StrangePartRestriction::CanApplyTo( const IEconItemInterface *pTo
 
 	if ( !pToolSubject->FindAttribute( GetKillEaterAttr_Score( 0 ) ) )
 		return false;
-	
+
 	// Look through all of the strange attributes on this item. We're looking for a slot that
 	// has a score that we're tracking where that score doesn't already have a restriction.
 	// If we find one, we can restrict that particular slot as long as doing so wouldn't generate
@@ -450,7 +450,7 @@ bool CEconTool_StrangePartRestriction::CanApplyTo( const IEconItemInterface *pTo
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEconTool_ItemDynamicRecipe::CEconTool_ItemDynamicRecipe( const char *pszTypeName, const char *pszUseString, item_capabilities_t unCapabilities, KeyValues *pUsageKV )
 	: IEconTool( pszTypeName, pszUseString, NULL, unCapabilities )
@@ -476,7 +476,7 @@ bool CEconTool_ItemDynamicRecipe::BFinishInitialization()
 
 	FOR_EACH_VEC( m_vecComponents, i )
 	{
-		m_vecComponents[i]->BFinishInitialization_Internal( &m_vecErrors, &attribVec );	
+		m_vecComponents[i]->BFinishInitialization_Internal( &m_vecErrors, &attribVec );
 	}
 
 	// Emit any errors we've accumulated during initialization
@@ -523,7 +523,7 @@ bool CEconTool_ItemDynamicRecipe::CanApplyTo( const IEconItemInterface *pTool, c
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CEconTool_ItemDynamicRecipe::CBaseRecipeComponent::CBaseRecipeComponent( bool bIsOutput, const CBaseRecipeComponent* pParent ) 
+CEconTool_ItemDynamicRecipe::CBaseRecipeComponent::CBaseRecipeComponent( bool bIsOutput, const CBaseRecipeComponent* pParent )
 	: m_bIsOutput( bIsOutput )
 	, m_flChanceOfApplying( 1.f )
 	, m_pParent( pParent )
@@ -683,7 +683,7 @@ bool CEconTool_ItemDynamicRecipe::CDynamicRecipeComponentDefinedItem::BFinishIni
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Parse out our item definition name and quality.  Return false if 
+// Purpose: Parse out our item definition name and quality.  Return false if
 //			either does not exist
 //-----------------------------------------------------------------------------
 bool CEconTool_ItemDynamicRecipe::CDynamicRecipeComponentDefinedItem::ParseKV( KeyValues *pKV, CUtlVector<CUtlString> *pVecErrors )
@@ -750,7 +750,7 @@ bool CEconTool_ItemDynamicRecipe::CDynamicRecipeComponentDefinedItem::AddRecipeC
 			// Adopt our parent's item name
 			pszItemDefName = pParentDefinedItemComponent->m_strName;
 		}
-	
+
 		// Make sure this item def exists
 		CEconItemDefinition* pItemDef = GetItemSchema()->GetItemDefinitionByName( pszItemDefName );
 		AssertMsg1( pItemDef, "No item def named %s found when applying defined item component", pszItemDefName );
@@ -788,7 +788,7 @@ bool CEconTool_ItemDynamicRecipe::CDynamicRecipeComponentDefinedItem::AddRecipeC
 		AssertMsg(0, "Created component without any data flags set!" );
 		return false;
 	}
-	
+
 	typedValue.set_component_flags( nFlags );
 	typedValue.set_num_required( RollCount() );
 	typedValue.set_num_fulfilled( 0 );
@@ -797,7 +797,7 @@ bool CEconTool_ItemDynamicRecipe::CDynamicRecipeComponentDefinedItem::AddRecipeC
 	CUtlString strAttribs;
 	FOR_EACH_VEC( m_vecDynamicAttributes, i )
 	{
-		if( i != 0 ) 
+		if( i != 0 )
 		{
 			strAttribs.Append( g_pszAttrEncodeSeparator );
 		}
@@ -837,7 +837,7 @@ bool CEconTool_ItemDynamicRecipe::CDynamicRecipeComponentDefinedItem::AddRecipeC
 			}
 		}
 	}
-	
+
 
 	pItem->SetDynamicAttributeValue( pAttribDef, typedValue );
 
@@ -1013,7 +1013,7 @@ public:
 
 		return true;
 	}
-	
+
 private:
 
 	CUtlVector< CEconTool_ItemDynamicRecipe::CDynamicRecipeComponentLootList::StringEncodedAttribute_t >& m_vecAdditionalAttribs;
@@ -1124,7 +1124,7 @@ bool CEconTool_ItemDynamicRecipe::BInitFromKV( KeyValues *pKVDef, CUtlVector<CUt
 	};
 
 	m_vecComponents.Sort( &RecipeComponentSorter::SortRecipeComponentVector );
-	
+
 #ifdef GC_DLL
 	int nFlags = 0;
 	FOR_EACH_VEC( m_vecComponents, i )
@@ -1254,7 +1254,7 @@ bool CEconTool_ItemDynamicRecipe::CBaseRecipeComponent::ParseKV( KeyValues *pKV,
 		FOR_EACH_SUBKEY( pKVAttribs, pKVAttribute )
 		{
 			static_attrib_t staticAttrib;
-			
+
 			SCHEMA_INIT_SUBSTEP( staticAttrib.BInitFromKV_SingleLine( "attributes", pKVAttribute, pVecErrors ) );
 
 			const CEconItemAttributeDefinition * pAttrDef = staticAttrib.GetAttributeDefinition();
@@ -1286,7 +1286,7 @@ bool CEconTool_ItemDynamicRecipe::CBaseRecipeComponent::ParseKV( KeyValues *pKV,
 			const char* pszCount = pKVEntry->GetName();
 			V_SplitString( pszCount, "-", vecCount );
 			SCHEMA_INIT_CHECK( vecCount.Count() == 1 || vecCount.Count() == 2, "Malformed count value: %s", pszCount );
-		
+
 			CountChance_t& countChance = m_vecCountChances[ m_vecCountChances.AddToTail() ];
 
 			// Add up the chances
@@ -1392,7 +1392,7 @@ bool CEconTool_Xifier::CanApplyTo( const IEconItemInterface *pTool, const IEconI
 				break;
 			}
 		}
-		
+
 		if ( bPassed == false )
 			return false;
 	}
@@ -1437,7 +1437,7 @@ bool CEconTool_Xifier::ItemDefMatch( const CEconItemDefinition* pTargetItemDef, 
 			return true;
 
 		// If these item defs have the same XifierRemapClass then they are allowed to match as well
-		if ( pTargetItemDef->GetXifierRemapClass() && *pTargetItemDef->GetXifierRemapClass() 
+		if ( pTargetItemDef->GetXifierRemapClass() && *pTargetItemDef->GetXifierRemapClass()
 			&& pSubjectItemDef->GetXifierRemapClass() && *pSubjectItemDef->GetXifierRemapClass() )
 		{
 			if (BStringsEqual(pSubjectItemDef->GetXifierRemapClass(), pTargetItemDef->GetXifierRemapClass()))
@@ -1739,7 +1739,7 @@ bool CEconTool_DuckToken::CanApplyTo( const IEconItemInterface *pTool, const IEc
 			}
 		}
 	}
-	
+
 	// Check for base applicability of this tool to this object.
 	if ( (unToolUsageCaps & pToolSubjectDef->GetCapabilities()) == 0 )
 		return false;

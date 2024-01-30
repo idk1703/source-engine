@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -49,7 +49,7 @@ int main( int argc, char **argv )
 	srcData.SeekPut( CUtlBuffer::SEEK_HEAD, nBytesRead );
 
 	IVTFTexture *pSrcTexture = CreateVTFTexture();
-	
+
 	pSrcTexture->Unserialize( srcData );
 	ImageFormat srcFormat = pSrcTexture->Format();
 	pSrcTexture->ConvertImageFormat( IMAGE_FORMAT_DEFAULT, false );

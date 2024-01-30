@@ -10,7 +10,7 @@
 //
 // Portable Power Generator Class (Buff Station)
 //
-class CObjectBuffStation : public CBaseObject  
+class CObjectBuffStation : public CBaseObject
 {
 
 DECLARE_CLASS( CObjectBuffStation, CBaseObject );
@@ -26,14 +26,14 @@ public:
 
 	void	Spawn();
 	void	Precache();
-	void	SetupTeamModel( void ); 
+	void	SetupTeamModel( void );
 	void	GetControlPanelInfo( int nPanelIndex, const char *&pPanelName );
 	void	DestroyObject( void );
 	void	OnGoInactive( void );
 	bool	CalculatePlacement( CBaseTFPlayer *pPlayer );
 	void	FinishedBuilding( void );
 
-	// Attach/Detach 
+	// Attach/Detach
 	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	bool	ClientCommand( CBaseTFPlayer *pPlayer, const CCommand &args );
 

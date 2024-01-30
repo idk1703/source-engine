@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Stateless light computation routines 
+// Purpose: Stateless light computation routines
 //
 //===========================================================================//
 

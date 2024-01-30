@@ -20,6 +20,6 @@ public:
 		Obj().m_unAccountID = unAccountID;
 	}
 
-	
+
 };
 #endif //#ifdef USE_GC_IN_PORTAL1

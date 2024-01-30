@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -35,7 +35,7 @@ CPlayerContextMenu::~CPlayerContextMenu()
 void CPlayerContextMenu::ShowMenu(Panel *target, unsigned int playerID)
 {
 	DeleteAllItems();
-		
+
 	AddMenuItem("Kick", "#Player_Menu_Kick", new KeyValues("Kick", "playerID", playerID), CPlayerContextMenu::parent);
 	AddMenuItem("Ban", "#Player_Menu_Ban", new KeyValues("Ban", "playerID", playerID), CPlayerContextMenu::parent);
 	//addMenuItem("Status", "&Player Status", new KeyValues("Status", "playerID", playerID), CPlayerContextMenu::parent);

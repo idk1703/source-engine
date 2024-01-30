@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,7 +32,7 @@ FocusNavGroup::FocusNavGroup(Panel *panel) : _mainPanel(panel)
 	_currentFocus = NULL;
 	_topLevelFocus = false;
 	_defaultButton = NULL;
-    _currentDefaultButton = NULL;
+	_currentDefaultButton = NULL;
 }
 
 //-----------------------------------------------------------------------------
@@ -133,12 +133,12 @@ bool FocusNavGroup::RequestFocusPrev(VPANEL panel)
 		best->RequestFocus(-1);
 		bFound = true;
 
-        if (!CanButtonBeDefault(best->GetVPanel()))
-        {
-            if (_defaultButton)
-            {
-                SetCurrentDefaultButton(_defaultButton);
-            }
+		if (!CanButtonBeDefault(best->GetVPanel()))
+		{
+			if (_defaultButton)
+			{
+				SetCurrentDefaultButton(_defaultButton);
+			}
 			else
 			{
 				SetCurrentDefaultButton(NULL);
@@ -149,11 +149,11 @@ bool FocusNavGroup::RequestFocusPrev(VPANEL panel)
 					ivgui()->PostMessage(_mainPanel->GetVParent(), new KeyValues("FindDefaultButton"), NULL);
 				}
 			}
-        }
-        else
-        {
-            SetCurrentDefaultButton(best->GetVPanel());
-        }
+		}
+		else
+		{
+			SetCurrentDefaultButton(best->GetVPanel());
+		}
 	}
 	return bFound;
 }
@@ -238,7 +238,7 @@ bool FocusNavGroup::RequestFocusNext(VPANEL panel)
 				}
 			}
 		}
-		
+
 		// loop back
 		newPosition = 0;
 		bRepeat = false;
@@ -250,11 +250,11 @@ bool FocusNavGroup::RequestFocusNext(VPANEL panel)
 		best->RequestFocus(1);
 		bFound = true;
 
-        if (!CanButtonBeDefault(best->GetVPanel()))
-        {
-            if (_defaultButton)
+		if (!CanButtonBeDefault(best->GetVPanel()))
+		{
+			if (_defaultButton)
 			{
-                SetCurrentDefaultButton(_defaultButton);
+				SetCurrentDefaultButton(_defaultButton);
 			}
 			else
 			{
@@ -266,11 +266,11 @@ bool FocusNavGroup::RequestFocusNext(VPANEL panel)
 					ivgui()->PostMessage(_mainPanel->GetVParent(), new KeyValues("FindDefaultButton"), NULL);
 				}
 			}
-        }
-        else
-        {
-            SetCurrentDefaultButton(best->GetVPanel());
-        }
+		}
+		else
+		{
+			SetCurrentDefaultButton(best->GetVPanel());
+		}
 	}
 
 	stack_depth--;
@@ -356,12 +356,12 @@ Panel *FocusNavGroup::FindPanelByHotkey(wchar_t key)
 			return hot;
 		}
 	}
-	
+
 	return NULL;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Panel *FocusNavGroup::GetDefaultPanel()
 {
@@ -381,7 +381,7 @@ Panel *FocusNavGroup::GetDefaultPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Panel *FocusNavGroup::GetCurrentFocus()
 {
@@ -395,22 +395,22 @@ VPANEL FocusNavGroup::SetCurrentFocus(VPANEL focus, VPANEL defaultPanel)
 {
 	_currentFocus = focus;
 
-    // if we haven't found a default panel yet, let's see if we know of one
-    if (defaultPanel == 0)
-    {
-        // can this focus itself by the default
-        if (CanButtonBeDefault(focus))
-        {
-            defaultPanel = focus;
-        }
-        else if (_defaultButton)        // do we know of a default button
-        {
-            defaultPanel = _defaultButton;
-        }
-    }
+	// if we haven't found a default panel yet, let's see if we know of one
+	if (defaultPanel == 0)
+	{
+		// can this focus itself by the default
+		if (CanButtonBeDefault(focus))
+		{
+			defaultPanel = focus;
+		}
+		else if (_defaultButton)        // do we know of a default button
+		{
+			defaultPanel = _defaultButton;
+		}
+	}
 
-    SetCurrentDefaultButton(defaultPanel);
-    return defaultPanel;
+	SetCurrentDefaultButton(defaultPanel);
+	return defaultPanel;
 }
 
 //-----------------------------------------------------------------------------

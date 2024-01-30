@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -85,10 +85,10 @@ protected:
 	bool		m_bActivateWhenAtRest;
 
 private:
-	
+
 	COutputEvent m_OnPlayerTouch;
 	COutputEvent m_OnCacheInteraction;
-	
+
 	Vector		m_vOriginalSpawnOrigin;
 	QAngle		m_vOriginalSpawnAngles;
 

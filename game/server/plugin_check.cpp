@@ -1,8 +1,8 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
-// This class allows the game dll to control what functions 3rd party plugins can 
+// This class allows the game dll to control what functions 3rd party plugins can
 //  call on clients.
 //
 //=============================================================================//
@@ -11,7 +11,7 @@
 #include "eiface.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: An implementation 
+// Purpose: An implementation
 //-----------------------------------------------------------------------------
 class CPluginHelpersCheck : public IPluginHelpersCheck
 {
@@ -27,4 +27,3 @@ bool CPluginHelpersCheck::CreateMessage( const char *plugin, edict_t *pEntity, D
 	// return false here to disallow a plugin from running this command on this client
 	return true;
 }
-

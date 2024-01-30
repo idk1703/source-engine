@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@
 bool CWindowAnchor::Init( CWnd *pParentWnd, CWnd *pChildWnd, int aLeft, int aTop, int aRight, int aBottom )
 {
 	m_pWnd = pChildWnd;
-	
+
 	m_aLeft = aLeft;
 	m_aTop = aTop;
 	m_aRight = aRight;
@@ -91,4 +91,3 @@ void CWindowAnchorMgr::UpdateAnchors( CWnd *pParentWnd )
 		m_Anchors[i].Update( pParentWnd );
 	}
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -18,7 +18,7 @@
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 // CDmeChannelRecordingMgr
 //
 //-----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ CDmeChannelRecordingMgr *g_pChannelRecordingMgr = &s_ChannelRecordingMgr;
 
 
 //-----------------------------------------------------------------------------
-// Constructor 
+// Constructor
 //-----------------------------------------------------------------------------
 CDmeChannelRecordingMgr::CDmeChannelRecordingMgr()
 {
@@ -316,13 +316,13 @@ const CUtlVector< KeyValues * > &CDmeChannelRecordingMgr::GetPasteTarget() const
 }
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeChannel, CDmeChannel );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeChannel::OnConstruction()
 {
@@ -740,7 +740,7 @@ void CDmeChannel::SetCurrentTime( DmeTime_t time )
 // choosing the time closest to (and after) a timeframe if multiple sets in a frame
 //-----------------------------------------------------------------------------
 void CDmeChannel::SetCurrentTime( DmeTime_t time, DmeTime_t start, DmeTime_t end )
-{ 
+{
 	m_tPreviousTime = m_tCurrentTime;
 
 	DmeTime_t dt( 0 );
@@ -1004,4 +1004,3 @@ CDmeClip* CDmeChannel::FindOwnerClipForChannel( CDmeClip *pRoot )
 		return stack[ stack.Count() - 1 ];
 	return NULL;
 }
-

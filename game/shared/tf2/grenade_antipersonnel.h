@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,7 +33,7 @@ public:
 //	virtual void	BounceSound( void );
 	virtual float	GetShakeRadius( void );
 
-	virtual void	Detonate( void );   
+	virtual void	Detonate( void );
 
 	// Damage type accessors
 	virtual int GetDamageType() const { return DMG_BLAST; }

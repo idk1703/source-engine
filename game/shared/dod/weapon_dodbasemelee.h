@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,9 +24,9 @@ class CWeaponDODBaseMelee : public CWeaponDODBase
 {
 public:
 	DECLARE_CLASS( CWeaponDODBaseMelee, CWeaponDODBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	#ifndef CLIENT_DLL
 		DECLARE_DATADESC();
 	#endif
@@ -46,7 +46,7 @@ public:
 
 	//virtual const char *GetSecondaryDeathNoticeName( void ) { return "stab"; }
 
-public:	
+public:
 	CDODWeaponInfo *m_pWeaponInfo;
 
 private:

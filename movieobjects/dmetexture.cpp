@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmetexture.h"
@@ -11,7 +11,7 @@
 #include "materialsystem/imaterialsystem.h"
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeBaseTexture, CDmeBaseTexture );
 
@@ -172,14 +172,14 @@ ImageFormat CDmeBaseTexture::ComputeDesiredImageFormat( ImageFormat srcFormat, i
 			return IMAGE_FORMAT_BGRA8888;
 		return IMAGE_FORMAT_BGR888;
 	}
-	
+
 	if( nFlags & TEXTUREFLAGS_HINT_DXT5 )
 		return IMAGE_FORMAT_DXT5;
 
 	// compressed with alpha blending
 	if ( nFlags & TEXTUREFLAGS_EIGHTBITALPHA )
 		return IMAGE_FORMAT_DXT5;
-	
+
 	if ( nFlags & TEXTUREFLAGS_ONEBITALPHA )
 		return IMAGE_FORMAT_DXT5; // IMAGE_FORMAT_DXT1_ONEBITALPHA
 
@@ -189,13 +189,13 @@ ImageFormat CDmeBaseTexture::ComputeDesiredImageFormat( ImageFormat srcFormat, i
 
 //-----------------------------------------------------------------------------
 //
-// Normal texture 
+// Normal texture
 //
 //-----------------------------------------------------------------------------
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeTexture, CDmeTexture );
 
@@ -214,7 +214,7 @@ void CDmeTexture::OnDestruction()
 
 
 //-----------------------------------------------------------------------------
-// Build a VTF representing the 
+// Build a VTF representing the
 //-----------------------------------------------------------------------------
 
 
@@ -262,12 +262,12 @@ void CDmeTexture::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *pVTFTe
 
 //-----------------------------------------------------------------------------
 //
-// Cube texture 
+// Cube texture
 //
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeCubeTexture, CDmeCubeTexture );
 

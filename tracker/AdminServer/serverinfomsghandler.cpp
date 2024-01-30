@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -15,9 +15,9 @@ extern void v_strncpy(char *dest, const char *src, int bufsize);
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CServerInfoMsgHandlerDetails::CServerInfoMsgHandlerDetails( CServerInfo *baseobject, HANDLERTYPE type, void *typeinfo /*= NULL*/ ) 
+CServerInfoMsgHandlerDetails::CServerInfoMsgHandlerDetails( CServerInfo *baseobject, HANDLERTYPE type, void *typeinfo /*= NULL*/ )
 	: CMsgHandler( type, typeinfo )
-{ 
+{
 	m_pServerInfo = baseobject;
 }
 
@@ -57,8 +57,8 @@ bool CServerInfoMsgHandlerDetails::Process( netadr_t *from, CMsgBuffer *msg )
 
 	m_pServerInfo->UpdateServer(from,	// index of server
 					(serverType == 'p'),
-					name,			
-					map,	
+					name,
+					map,
 					gamedir,
 					desc,
 					players,
@@ -66,9 +66,7 @@ bool CServerInfoMsgHandlerDetails::Process( netadr_t *from, CMsgBuffer *msg )
 					msg->GetTime(),		// receive time
 					password
 					);
-	
+
 
 	return true;
 }
-
-

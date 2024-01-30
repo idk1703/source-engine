@@ -1,6 +1,6 @@
 //====== Copyright 1996-2004, Valve Corporation, All rights reserved. =======
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -110,7 +110,3 @@ bool CUtlBinaryBlock::operator==( const CUtlBinaryBlock &src ) const
 
 	return !memcmp( src.Get(), Get(), Length() );
 }
-
-
-
-

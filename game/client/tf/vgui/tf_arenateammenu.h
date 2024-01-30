@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -23,7 +23,7 @@ class CTFArenaTeamMenu : public CTeamMenu
 {
 private:
 	DECLARE_CLASS_SIMPLE( CTFArenaTeamMenu, CTeamMenu );
-		
+
 public:
 	CTFArenaTeamMenu( IViewPort *pViewPort );
 	~CTFArenaTeamMenu();
@@ -49,7 +49,7 @@ protected:
 	virtual const char *GetName( void ) { return PANEL_ARENA_TEAM; }
 
 private:
-	
+
 	CTFTeamButton	*m_pAutoTeamButton;
 	CTFTeamButton	*m_pSpecTeamButton;
 	CExLabel		*m_pSpecLabel;

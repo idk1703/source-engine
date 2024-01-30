@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,7 +19,7 @@ class CLocalSpaceEmitter : public CSimpleEmitter
 public:
 
 	DECLARE_CLASS( CLocalSpaceEmitter, CParticleEffect );
-	
+
 	static CSmartPtr<CLocalSpaceEmitter> Create( const char *pDebugName, ClientEntityHandle_t hEntity, int nAttachment, int flags = 0 );
 
 	virtual void RenderParticles( CParticleRenderIterator *pIterator );
@@ -28,7 +28,7 @@ public:
 	virtual void SetupTransformMatrix( void );
 	virtual void Update( float flTimeDelta );
 
-	const matrix3x4_t& GetTransformMatrix() const;	
+	const matrix3x4_t& GetTransformMatrix() const;
 
 protected:
 

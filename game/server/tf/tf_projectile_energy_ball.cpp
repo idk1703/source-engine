@@ -97,8 +97,8 @@ void CTFProjectile_EnergyBall::InitEnergyBall( const Vector &vecOrigin, const QA
 	AngleVectors( vecAngles, &vecForward, &vecRight, &vecUp );
 
 	Vector vecVelocity = vecForward * fSpeed;
-	
-	SetAbsVelocity( vecVelocity );	
+
+	SetAbsVelocity( vecVelocity );
 	SetupInitialTransmittedGrenadeVelocity( vecVelocity );
 
 	// Setup the initial angles.
@@ -121,7 +121,7 @@ void CTFProjectile_EnergyBall::InitEnergyBall( const Vector &vecOrigin, const QA
 // Purpose:
 //-----------------------------------------------------------------------------
 void CTFProjectile_EnergyBall::Spawn()
-{	
+{
 	SetModel( ENERGY_BALL_MODEL );
 	BaseClass::Spawn();
 }
@@ -189,7 +189,7 @@ void CTFProjectile_EnergyBall::ImpactSound( const char *pszSoundName, bool bLoud
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFProjectile_EnergyBall::FadeOut( int iTime )
 {
@@ -203,7 +203,7 @@ void CTFProjectile_EnergyBall::FadeOut( int iTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFProjectile_EnergyBall::RemoveThink( void )
 {
@@ -254,7 +254,7 @@ void CTFProjectile_EnergyBall::Deflected( CBaseEntity *pDeflectedBy, Vector &vec
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFProjectile_EnergyBall::Explode( trace_t *pTrace, CBaseEntity *pOther )
 {
@@ -284,7 +284,7 @@ void CTFProjectile_EnergyBall::Explode( trace_t *pTrace, CBaseEntity *pOther )
 	QAngle angExplosion( 0.f, 0.f, 0.f );
 	VectorAngles( pTrace->plane.normal, angExplosion );
 	TE_TFParticleEffect( filter, 0.f, GetExplosionParticleName(), vecOrigin, pTrace->plane.normal, angExplosion, NULL );
-	
+
 	// Screenshake
 	if ( m_bChargedShot )
 	{
@@ -352,7 +352,7 @@ void CTFProjectile_EnergyBall::Explode( trace_t *pTrace, CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFProjectile_EnergyBall::GetExplosionParticleName( void )
 {
@@ -367,7 +367,7 @@ const char *CTFProjectile_EnergyBall::GetExplosionParticleName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFProjectile_EnergyBall::GetDamage()
 {
@@ -375,7 +375,7 @@ float CTFProjectile_EnergyBall::GetDamage()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CTFProjectile_EnergyBall::GetDamageType()
 {
@@ -393,10 +393,9 @@ int	CTFProjectile_EnergyBall::GetDamageType()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CTFProjectile_EnergyBall::GetDamageCustom()
 {
 	return m_bChargedShot ? TF_DMG_CUSTOM_PLASMA_CHARGED : TF_DMG_CUSTOM_PLASMA;
 }
-

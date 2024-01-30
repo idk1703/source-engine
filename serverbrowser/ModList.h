@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -22,7 +22,7 @@ public:
 	int GetIndex( const CGameID &iAppID ) const;
 	void AddVGUIListener( vgui::VPANEL panel );
 
-	// returns number of mods 
+	// returns number of mods
 	int ModCount();
 
 	// returns the full name of the mod, index valid in range [0, ModCount)

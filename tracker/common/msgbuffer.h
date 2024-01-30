@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -15,10 +15,10 @@
 //-----------------------------------------------------------------------------
 // Purpose: Generic byte level message buffer with read/write support
 //-----------------------------------------------------------------------------
-class CMsgBuffer  
+class CMsgBuffer
 {
 public:
-	enum 
+	enum
 	{
 		NET_MAXMESSAGE = 8192
 	};
@@ -29,7 +29,7 @@ public:
 
 	// Reset the buffer for writing
 	void			Clear( void );
-	// Get current # of bytes 
+	// Get current # of bytes
 	int				GetCurSize( void );
 	// Get max # of bytes
 	int				GetMaxSize( void );

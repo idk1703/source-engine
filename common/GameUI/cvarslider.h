@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,9 +37,9 @@ public:
 
 	void			ApplyChanges();
 	float			GetSliderValue();
-    void            SetSliderValue(float fValue);
-    void            Reset();
-    bool            HasBeenModified();
+	void            SetSliderValue(float fValue);
+	void            Reset();
+	bool            HasBeenModified();
 
 private:
 	MESSAGE_FUNC( OnSliderMoved, "SliderMoved" );
@@ -47,12 +47,12 @@ private:
 
 	CPanelAnimationVar( bool, m_bUseConVarMinMax, "use_convar_minmax", "0" );
 
-    bool        m_bAllowOutOfRange;
-    bool        m_bModifiedOnce;
-    float       m_fStartValue;
-    int         m_iStartValue;
-    int         m_iLastSliderValue;
-    float       m_fCurrentValue;
+	bool        m_bAllowOutOfRange;
+	bool        m_bModifiedOnce;
+	float       m_fStartValue;
+	int         m_iStartValue;
+	int         m_iLastSliderValue;
+	float       m_fCurrentValue;
 	char		m_szCvarName[ 64 ];
 
 	bool		m_bCreatedInCode;

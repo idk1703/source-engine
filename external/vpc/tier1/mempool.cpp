@@ -1,6 +1,6 @@
 //===== Copyright 1996-2005, Valve Corporation, All rights reserved. ======//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -101,7 +101,7 @@ void CUtlMemoryPool::Clear()
 
 
 //-----------------------------------------------------------------------------
-// Is an allocation within the pool? 
+// Is an allocation within the pool?
 //-----------------------------------------------------------------------------
 bool CUtlMemoryPool::IsAllocationWithinPool( void *pMem ) const
 {
@@ -122,7 +122,7 @@ bool CUtlMemoryPool::IsAllocationWithinPool( void *pMem ) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Reports memory leaks 
+// Purpose: Reports memory leaks
 //-----------------------------------------------------------------------------
 void CUtlMemoryPool::ReportLeaks()
 {
@@ -173,7 +173,7 @@ void CUtlMemoryPool::ReportLeaks()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CUtlMemoryPool::AddNewBlob()
 {
@@ -196,7 +196,7 @@ void CUtlMemoryPool::AddNewBlob()
 				return;
 			}
 		}
-		
+
 		// GROW_FAST and GROW_NONE use this.
 		sizeMultiplier = m_NumBlobs + 1;
 	}
@@ -206,7 +206,7 @@ void CUtlMemoryPool::AddNewBlob()
 	int blobSize = m_BlockSize * nElements;
 	CBlob *pBlob = (CBlob*)malloc( sizeof(CBlob) - 1 + blobSize + ( m_nAlignment - 1 ) );
 	Assert( pBlob );
-	
+
 	// Link it in at the end of the blob list.
 	pBlob->m_NumBytes = blobSize;
 	pBlob->m_pNext = &m_BlobHead;
@@ -243,8 +243,8 @@ void* CUtlMemoryPool::AllocZero()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Allocs a single block of memory from the pool.  
-// Input  : amount - 
+// Purpose: Allocs a single block of memory from the pool.
+// Input  : amount -
 //-----------------------------------------------------------------------------
 void *CUtlMemoryPool::Alloc( size_t amount )
 {
@@ -285,7 +285,7 @@ void *CUtlMemoryPool::Alloc( size_t amount )
 
 //-----------------------------------------------------------------------------
 // Purpose: Allocs a single block of memory from the pool, zeroes the memory before returning
-// Input  : amount - 
+// Input  : amount -
 //-----------------------------------------------------------------------------
 void *CUtlMemoryPool::AllocZero( size_t amount )
 {
@@ -319,7 +319,7 @@ void CUtlMemoryPool::Free( void *memBlock )
 	Assert (bOK);
 #endif // _DEBUG
 
-#ifdef _DEBUG	
+#ifdef _DEBUG
 	// invalidate the memory
 	memset( memBlock, 0xDD, m_BlockSize );
 #endif
@@ -332,5 +332,3 @@ void CUtlMemoryPool::Free( void *memBlock )
 	// the list head is now the new block
 	m_pHeadOfFreeList = memBlock;
 }
-
-

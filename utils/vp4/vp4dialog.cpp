@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -109,7 +109,7 @@ public:
 	}
 
 	// setup a context menu whenever a directory is clicked on
-	virtual void GenerateContextMenu( int itemIndex, int x, int y ) 
+	virtual void GenerateContextMenu( int itemIndex, int x, int y )
 	{
 		KeyValues *pkv = GetItemData(itemIndex);
 		const char *pFilePath = pkv->GetString("path", "");
@@ -338,7 +338,7 @@ void CVP4Dialog::RefreshChangesList()
 void CVP4Dialog::RefreshClientList()
 {
 	m_pClientCombo->RemoveAll();
-	
+
 	CUtlVector<P4Client_t> &clients = p4->GetClientList();
 	P4Client_t &activeClient = p4->GetActiveClient();
 
@@ -482,7 +482,7 @@ void CVP4Dialog::OnFileSelected()
 
 		char szShortDescription[256];
 		Q_strncpy(szShortDescription, pDesc, sizeof(szShortDescription));
-		
+
 		// truncate to last terminator
 		char *pTerm = szShortDescription;
 		while (*pTerm && !iscntrl(*pTerm))

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -83,7 +83,7 @@ private:
 	// this would make more sense as a vgui animation but I need more control than that can reliably give me
 	enum class State { Idle, In, Show, Out, Pause };
 
-	struct QueueElement 
+	struct QueueElement
 	{
 		static const size_t STRLEN_MAX = 128;
 		QueueElement();
@@ -128,7 +128,7 @@ public:
 	~CTFHudPasstimeBallStatus();
 
 	void Reset();
-	
+
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
 	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
 	virtual void OnTick() OVERRIDE;
@@ -195,4 +195,4 @@ private:
 	CTFHudPasstimePlayerOffscreenArrow *m_pPlayerArrows[MAX_PLAYERS];
 };
 
-#endif // TF_HUD_PASSTIME_H  
+#endif // TF_HUD_PASSTIME_H

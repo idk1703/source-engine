@@ -16,14 +16,14 @@ ConVar	weapon_pistols_damage( "weapon_pistols_damage","0", FCVAR_NONE, "Recon pi
 ConVar	weapon_pistols_range( "weapon_pistols_range","0", FCVAR_NONE, "Recon pistols maximum range" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CWeaponPistols : public CTFMachineGun
 {
 	DECLARE_CLASS( CWeaponPistols, CTFMachineGun );
 public:
 	virtual float			GetFireRate( void );
-	virtual const Vector&	GetBulletSpread( void ); 
+	virtual const Vector&	GetBulletSpread( void );
 	virtual bool			Deploy( void );
 	virtual void			PrimaryAttack( void );
 	virtual void			SecondaryAttack( void );
@@ -55,11 +55,11 @@ const Vector& CWeaponPistols::GetBulletSpread( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponPistols::GetFireRate( void )
-{	
-	return 0.5; 
+{
+	return 0.5;
 }
 
 //-----------------------------------------------------------------------------
@@ -114,7 +114,7 @@ void CWeaponPistols::SecondaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponPistols::ItemPostFrame( void )
 {
@@ -131,4 +131,3 @@ void CWeaponPistols::ItemPostFrame( void )
 
 	BaseClass::ItemPostFrame();
 }
-

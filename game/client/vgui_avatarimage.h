@@ -16,7 +16,7 @@
 #include "c_baseplayer.h"
 
 // size of the friend background frame (see texture ico_friend_indicator_avatar)
-#define FRIEND_ICON_SIZE_X	(55)	
+#define FRIEND_ICON_SIZE_X	(55)
 #define FRIEND_ICON_SIZE_Y	(34)
 
 // offset of avatar within the friend icon
@@ -40,10 +40,10 @@ struct AvatarImagePair_t
 	AvatarImagePair_t( CSteamID steamID, int av ) { m_SteamID = steamID; m_iAvatar = av; }
 	bool operator<( const AvatarImagePair_t &rhs ) const
 	{
-		return m_SteamID.ConvertToUint64() < rhs.m_SteamID.ConvertToUint64() || 
+		return m_SteamID.ConvertToUint64() < rhs.m_SteamID.ConvertToUint64() ||
 		( m_SteamID.ConvertToUint64() == rhs.m_SteamID.ConvertToUint64() && m_iAvatar < rhs.m_iAvatar );
-	}	
-					  
+	}
+
 	CSteamID m_SteamID;
 	int m_iAvatar;
 };

@@ -28,7 +28,7 @@ ConVar tf_use_card_tooltips( "tf_use_card_tooltips", "0", FCVAR_ARCHIVE );
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseLoadoutPanel::CBaseLoadoutPanel( vgui::Panel *parent, const char *panelName ) : EditablePanel(parent, panelName )
 {
@@ -63,7 +63,7 @@ CBaseLoadoutPanel::CBaseLoadoutPanel( vgui::Panel *parent, const char *panelName
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseLoadoutPanel::~CBaseLoadoutPanel()
 {
@@ -75,7 +75,7 @@ CBaseLoadoutPanel::~CBaseLoadoutPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLoadoutPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -96,7 +96,7 @@ void CBaseLoadoutPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLoadoutPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -118,7 +118,7 @@ extern const char *g_szItemBorders[AE_MAX_TYPES][5];
 extern ConVar cl_showbackpackrarities;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLoadoutPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOver )
 {
@@ -141,7 +141,7 @@ void CBaseLoadoutPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMou
 	else
 	{
 		int iRarity = 0;
-		if ( pItemPanel->HasItem() && cl_showbackpackrarities.GetBool() ) 
+		if ( pItemPanel->HasItem() && cl_showbackpackrarities.GetBool() )
 		{
 			iRarity = pItemPanel->GetItem()->GetItemQuality() ;
 
@@ -172,7 +172,7 @@ void CBaseLoadoutPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMou
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLoadoutPanel::ApplyKVsToItemPanels( void )
 {
@@ -188,9 +188,9 @@ void CBaseLoadoutPanel::ApplyKVsToItemPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLoadoutPanel::PerformLayout( void ) 
+void CBaseLoadoutPanel::PerformLayout( void )
 {
 	if ( m_bReapplyItemKVs )
 	{
@@ -226,7 +226,7 @@ void CBaseLoadoutPanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLoadoutPanel::AddNewItemPanel( int iPanelIndex )
 {
@@ -247,7 +247,7 @@ void CBaseLoadoutPanel::AddNewItemPanel( int iPanelIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLoadoutPanel::CreateItemPanels( void )
 {
@@ -262,7 +262,7 @@ void CBaseLoadoutPanel::CreateItemPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLoadoutPanel::ShowPanel( int iClass, bool bBackpack, bool bReturningFromArmory )
 {
@@ -303,7 +303,7 @@ void CBaseLoadoutPanel::ShowPanel( int iClass, bool bBackpack, bool bReturningFr
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLoadoutPanel::OnCommand( const char *command )
 {
@@ -313,7 +313,7 @@ void CBaseLoadoutPanel::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLoadoutPanel::FireGameEvent( IGameEvent *event )
 {
@@ -451,7 +451,7 @@ void CBaseLoadoutPanel::LinkModelPanelControllerNavigation( bool bForceRelink )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLoadoutPanel::OnItemPanelEntered( vgui::Panel *panel )
 {
@@ -473,7 +473,7 @@ void CBaseLoadoutPanel::OnItemPanelEntered( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLoadoutPanel::OnItemPanelExited( vgui::Panel *panel )
 {
@@ -489,7 +489,7 @@ void CBaseLoadoutPanel::OnItemPanelExited( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLoadoutPanel::HideMouseOverPanel( void )
 {
@@ -682,7 +682,7 @@ void CBaseLoadoutPanel::SelectAdjacentItem( int dx, int dy )
 					m_pMouseOverTooltip->HideTooltip();
 				}
 			}
-		
+
 		}
 	}
 
@@ -693,19 +693,19 @@ void CBaseLoadoutPanel::SelectAdjacentItem( int dx, int dy )
 //-----------------------------------------------------------------------------
 // Purpose: Processes up/down/left/right keys for selecting items in the panel
 //-----------------------------------------------------------------------------
-bool	CBaseLoadoutPanel::HandleItemSelectionKeyPressed( vgui::KeyCode code ) 
+bool	CBaseLoadoutPanel::HandleItemSelectionKeyPressed( vgui::KeyCode code )
 {
 	ButtonCode_t nButtonCode = GetBaseButtonCode( code );
 
-	if ( nButtonCode == KEY_XBUTTON_UP || 
+	if ( nButtonCode == KEY_XBUTTON_UP ||
 			  nButtonCode == KEY_XSTICK1_UP ||
-			  nButtonCode == KEY_XSTICK2_UP || 
+			  nButtonCode == KEY_XSTICK2_UP ||
 			  nButtonCode == KEY_UP )
 	{
 		SelectAdjacentItem( 0, -1 );
 		return true;
 	}
-	else if ( nButtonCode == KEY_XBUTTON_DOWN || 
+	else if ( nButtonCode == KEY_XBUTTON_DOWN ||
 			  nButtonCode == KEY_XSTICK1_DOWN ||
 			  nButtonCode == KEY_XSTICK2_DOWN ||
 			  nButtonCode == STEAMCONTROLLER_DPAD_DOWN ||
@@ -714,25 +714,25 @@ bool	CBaseLoadoutPanel::HandleItemSelectionKeyPressed( vgui::KeyCode code )
 		SelectAdjacentItem( 0, 1 );
 		return true;
 	}
-	else if ( nButtonCode == KEY_XBUTTON_RIGHT || 
+	else if ( nButtonCode == KEY_XBUTTON_RIGHT ||
 			  nButtonCode == KEY_XSTICK1_RIGHT ||
-			  nButtonCode == KEY_XSTICK2_RIGHT || 
+			  nButtonCode == KEY_XSTICK2_RIGHT ||
 			  nButtonCode == STEAMCONTROLLER_DPAD_RIGHT ||
 			  nButtonCode == KEY_RIGHT )
 	{
 		SelectAdjacentItem( 1, 0 );
 		return true;
 	}
-	else if ( nButtonCode == KEY_XBUTTON_LEFT || 
+	else if ( nButtonCode == KEY_XBUTTON_LEFT ||
 			  nButtonCode == KEY_XSTICK1_LEFT ||
-			  nButtonCode == KEY_XSTICK2_LEFT || 
+			  nButtonCode == KEY_XSTICK2_LEFT ||
 			  nButtonCode == STEAMCONTROLLER_DPAD_LEFT ||
 			  nButtonCode == KEY_LEFT )
 	{
 		SelectAdjacentItem( -1, 0 );
 		return true;
 	}
-	else if ( code == KEY_PAGEDOWN || 
+	else if ( code == KEY_PAGEDOWN ||
 			nButtonCode == KEY_XBUTTON_RIGHT_SHOULDER )
 	{
 		if( m_nCurrentPage < GetNumPages() - 1 )
@@ -742,7 +742,7 @@ bool	CBaseLoadoutPanel::HandleItemSelectionKeyPressed( vgui::KeyCode code )
 		}
 		return true;
 	}
-	else if ( code == KEY_PAGEUP || 
+	else if ( code == KEY_PAGEUP ||
 			nButtonCode == KEY_XBUTTON_LEFT_SHOULDER )
 	{
 		if( m_nCurrentPage > 0 )
@@ -773,7 +773,7 @@ bool	CBaseLoadoutPanel::HandleItemSelectionKeyPressed( vgui::KeyCode code )
 //-----------------------------------------------------------------------------
 // Purpose: Processes up/down/left/right keys for selecting items in the panel
 //-----------------------------------------------------------------------------
-bool	CBaseLoadoutPanel::HandleItemSelectionKeyReleased( vgui::KeyCode code ) 
+bool	CBaseLoadoutPanel::HandleItemSelectionKeyReleased( vgui::KeyCode code )
 {
 	ButtonCode_t nButtonCode = GetBaseButtonCode( code );
 	if( nButtonCode == KEY_XBUTTON_Y )
@@ -790,7 +790,7 @@ bool	CBaseLoadoutPanel::HandleItemSelectionKeyReleased( vgui::KeyCode code )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLoadoutPanel::SetCurrentPage( int nNewPage )
 {
@@ -799,5 +799,3 @@ void CBaseLoadoutPanel::SetCurrentPage( int nNewPage )
 
 	m_nCurrentPage = nNewPage;
 }
-
-

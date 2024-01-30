@@ -92,14 +92,14 @@ float4 main( PS_INPUT i ) : COLOR
 	HALF4 vRefractColor = tex2D( RefractSampler, vRefractTexCoord );
 	vReflectColor *= vReflectTint;
 	vRefractColor *= vRefractTint;
-	
+
 	half3 vEyeVect;
 	vEyeVect = normalize( i.vTangentEyeVect );
 
 	// Fresnel term
 	HALF fNdotV = saturate( dot( vEyeVect, vNormal ) );
 	HALF fFresnelScalar = g_FresnelConstants.x * pow( 1.0 - fNdotV, g_FresnelConstants.y ) + g_FresnelConstants.z;
-	HALF4 fFresnel = HALF4( fFresnelScalar, fFresnelScalar, fFresnelScalar, fFresnelScalar ); 
+	HALF4 fFresnel = HALF4( fFresnelScalar, fFresnelScalar, fFresnelScalar, fFresnelScalar );
 
 #if BASETEXTURE
 	float4 baseSample = tex2D( BaseTextureSampler, i.vBumpTexCoordXY_vTexCoordXY.zw );
@@ -108,7 +108,7 @@ float4 main( PS_INPUT i ) : COLOR
 	HALF2 bumpCoord3;
 	ComputeBumpedLightmapCoordinates( i.lightmapTexCoord1And2, i.lightmapTexCoord3.xy,
 		bumpCoord1, bumpCoord2, bumpCoord3 );
-	
+
 	HALF4 lightmapSample1 = tex2D( LightmapSampler, bumpCoord1 );
 	HALF3 lightmapColor1 = lightmapSample1.rgb;
 	HALF3 lightmapColor2 = tex2D( LightmapSampler, bumpCoord2 );
@@ -119,7 +119,7 @@ float4 main( PS_INPUT i ) : COLOR
 	dp.y = saturate( dot( vNormal, bumpBasis[1] ) );
 	dp.z = saturate( dot( vNormal, bumpBasis[2] ) );
 	dp *= dp;
-	
+
 	float3 diffuseLighting = dp.x * lightmapColor1 +
 						dp.y * lightmapColor2 +
 						dp.z * lightmapColor3;
@@ -134,7 +134,7 @@ float4 main( PS_INPUT i ) : COLOR
 #else
 	flMask = float4( 1.0f, 1.0f, 1.0f, 1.0f );
 #endif
-	
+
 	// NOTE: the BASETEXTURE path hasn't been tested (or really written for that matter, just copied from water)
 	// What I think should happen is that the alpha of base texture should be its 'translucency'
 	// which should indicate how much refraction to use.
@@ -177,14 +177,13 @@ float4 main( PS_INPUT i ) : COLOR
 		result = float4( 0.0f, 0.0f, 0.0f, 0.0f );
 #endif
 	}
-	
-		
+
+
 #if ( PIXELFOGTYPE == PIXEL_FOG_TYPE_RANGE )
 	float fogFactor = CalcRangeFog( i.vProjPos.z, g_PixelFogParams.x, g_PixelFogParams.z, g_PixelFogParams.w );
 #else
 	float fogFactor = 0;
 #endif
-	
+
 	return FinalOutput( float4( result.rgb, flAlpha ), fogFactor, PIXELFOGTYPE, TONEMAP_SCALE_NONE, (WRITE_DEPTH_TO_DESTALPHA != 0), i.vProjPos.z );
 }
-

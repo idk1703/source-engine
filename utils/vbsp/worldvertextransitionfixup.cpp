@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -27,7 +27,7 @@ static bool SideIsNotDispAndHasDispMaterial( int iSide )
 		return false;
 	}
 
-	pSide->texinfo;	
+	pSide->texinfo;
 
 	return true;
 }
@@ -46,7 +46,7 @@ static void BackSlashToForwardSlash( char *pname )
 //-----------------------------------------------------------------------------
 static void GeneratePatchedMaterialName( const char *pMaterialName, char *pBuffer, int nMaxLen )
 {
-	int nLen = Q_snprintf( pBuffer, nMaxLen, "maps/%s/%s_wvt_patch", mapbase, pMaterialName ); 
+	int nLen = Q_snprintf( pBuffer, nMaxLen, "maps/%s/%s_wvt_patch", mapbase, pMaterialName );
 
 	Assert( nLen < TEXTURE_NAME_LENGTH - 1 );
 	if ( nLen >= TEXTURE_NAME_LENGTH - 1 )
@@ -112,7 +112,7 @@ int CreateBrushVersionOfWorldVertexTransitionMaterial( int originalTexInfo )
 	char patchedMaterialName[1024];
 	GeneratePatchedMaterialName( pOriginalMaterialName, patchedMaterialName, 1024 );
 //	Warning( "GeneratePatchedMaterialName: %s %s\n", pMaterialName, patchedMaterialName );
-	
+
 	// Make sure the texdata doesn't already exist.
 	int nTexDataID = FindTexData( patchedMaterialName );
 	bool bHasTexData = (nTexDataID != -1);
@@ -201,7 +201,7 @@ void WorldVertexTransitionFixup( void )
 			continue;
 		}
 
-		while ( currentEntity < g_MainMap->num_entities-1 && 
+		while ( currentEntity < g_MainMap->num_entities-1 &&
 			iSide > sideList[currentEntity].firstBrushSide + sideList[currentEntity].brushSideCount )
 		{
 			currentEntity++;

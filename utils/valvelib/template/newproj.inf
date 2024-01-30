@@ -12,9 +12,7 @@ $$//	if name starts with / => create new subdir
 
 $$IF(PROJTYPE_DLL || PROJTYPE_LIB)
 /$$VALVE_SRC_RELATIVE_PATH$$common\$$root$$
-$$IF(VALVE_PUBLIC_PROJECT)		 
+$$IF(VALVE_PUBLIC_PROJECT)
 /$$VALVE_SRC_RELATIVE_PATH$$public\$$root$$
 $$ENDIF
 $$ENDIF
-
-

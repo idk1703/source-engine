@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -32,18 +32,18 @@ class IAchievement;
 
 class CCSAchivementInfoPanel : public vgui::EditablePanel
 {
-    DECLARE_CLASS_SIMPLE( CCSAchivementInfoPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE( CCSAchivementInfoPanel, vgui::EditablePanel );
 
 public:
-    CCSAchivementInfoPanel( vgui::Panel *parent, const char* name);
-    ~CCSAchivementInfoPanel();
-    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-    void SetAchievement(IAchievement* pAchievement);    
+	CCSAchivementInfoPanel( vgui::Panel *parent, const char* name);
+	~CCSAchivementInfoPanel();
+	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	void SetAchievement(IAchievement* pAchievement);
 
 private:
-    vgui::Label                     *m_pAchievementNameLabel;
-    vgui::Label                     *m_pAchievementDescLabel;
-    vgui::ScalableImagePanel        *m_pAchievementIcon;    
+	vgui::Label                     *m_pAchievementNameLabel;
+	vgui::Label                     *m_pAchievementDescLabel;
+	vgui::ScalableImagePanel        *m_pAchievementIcon;
 };
 
 
@@ -55,7 +55,7 @@ private:
 
 public:
 	CCSAchievementAnnouncePanel( const char *pElementName );
-    ~CCSAchievementAnnouncePanel();
+	~CCSAchievementAnnouncePanel();
 
 	virtual void Reset();
 	virtual void Init();
@@ -73,18 +73,18 @@ public:
 	int	HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
 
 protected:
-    bool GetGlowAlpha (float time, float& alpha);
-    bool GetAchievementPanelAlpha (float time, float& alpha);
+	bool GetGlowAlpha (float time, float& alpha);
+	bool GetAchievementPanelAlpha (float time, float& alpha);
 
 private:
-	
-    CUtlQueue<eCSAchievementType>   m_achievementQueue;
-    eCSAchievementType              m_currentDisplayedAchievement;  
-    float                           m_displayStartTime;
-	
-	
-    vgui::EditablePanel		*m_pGlowPanel;
-    CCSAchivementInfoPanel  *m_pAchievementInfoPanel;
+
+	CUtlQueue<eCSAchievementType>   m_achievementQueue;
+	eCSAchievementType              m_currentDisplayedAchievement;
+	float                           m_displayStartTime;
+
+
+	vgui::EditablePanel		*m_pGlowPanel;
+	CCSAchivementInfoPanel  *m_pAchievementInfoPanel;
 
 	bool					m_bShouldBeVisible;
 };

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,7 +30,7 @@ public:
 	virtual					~CBSPLighting();
 	virtual void			Release();
 
-	virtual bool			Load( char const *pFilename );	
+	virtual bool			Load( char const *pFilename );
 	virtual void			Term();
 	virtual bool			Serialize();
 	virtual void			StartLighting( char const *pVMFFileWithEnts );
@@ -88,7 +88,7 @@ private:
 
 		// Commands to draw everything in this material as fast as possible.
 		CUtlVector<CDrawCommand*>		m_DrawCommands;
-		
+
 		int		m_nVerts;
 		int		m_nIndices;
 
@@ -102,7 +102,7 @@ private:
 										~CFaceMaterial();
 
 		IMaterial						*m_pMaterial;
-	
+
 		// Faces using this material.
 		CUtlLinkedList<CStoredFace*, unsigned short>	m_Faces;
 
@@ -113,13 +113,13 @@ private:
 	class CFace
 	{
 	public:
-		
+
 		int		m_iDispInfo;
 		dface_t	*m_pDFace;	// used while loading..
 
 		CStoredFace	*m_pStoredFace;
 		int		m_LightmapSortID;
-		
+
 		float	m_LightmapVecs[2][4];
 		int		m_LightmapTextureMinsInLuxels[2];
 
@@ -154,7 +154,7 @@ private:
 	void					ReloadLightmaps();
 	bool					LoadVRADDLL( char const *pFilename );
 	void					CreateDisplacements( CBSPInfo &file, CUtlVector<CFace> &faces, CUtlVector<CDispInfoFaces> &dispInfos );
-	
+
 	// Fast material ID to CFaceMaterial lookups..
 	void					InitMaterialLUT( CBSPInfo &file );
 	CFaceMaterial*			FindOrAddMaterial( CBSPInfo &file, int stringTableID );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -162,7 +162,7 @@ void CBounceBomb::Spawn()
 
 	OpenHooks( true );
 
-	m_bHeldByPhysgun = false;	
+	m_bHeldByPhysgun = false;
 
 	m_iFlipAttempts = 0;
 
@@ -198,7 +198,7 @@ void CBounceBomb::Spawn()
 			{
 				if ( !Q_stricmp(dmap->dataDesc[i].externalName, "Skin") )
 				{
-					bFoundSkin = true; 
+					bFoundSkin = true;
 					break;
 				}
 			}
@@ -206,14 +206,14 @@ void CBounceBomb::Spawn()
 
 		if (!bFoundSkin)
 		{
-			// select a random skin for the mine. Actually, we'll cycle through the available skins 
+			// select a random skin for the mine. Actually, we'll cycle through the available skins
 			// using a static variable to provide better distribution. The static isn't saved but
 			// really it's only cosmetic.
 			static unsigned int nextSkin = MINE_CITIZEN_SKIN_MIN;
 			m_nSkin = nextSkin;
 			// increment the skin for next time
 			nextSkin = (nextSkin >= MINE_CITIZEN_SKIN_MAX) ? MINE_CITIZEN_SKIN_MIN : nextSkin + 1;
-		}	
+		}
 
 		// pretend like the player set me down.
 		m_bPlacedByPlayer = true;
@@ -235,13 +235,13 @@ void CBounceBomb::OnRestore()
 		VPhysicsGetObject()->Wake();
 	}
 }
-	
+
 //---------------------------------------------------------
 //---------------------------------------------------------
-int CBounceBomb::DrawDebugTextOverlays(void) 
+int CBounceBomb::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 		Q_snprintf(tempstr,sizeof(tempstr), "%s", pszMineStateNames[m_iMineState] );
@@ -338,7 +338,7 @@ void CBounceBomb::SetMineState( int iState )
 			VPhysicsGetObject()->ApplyTorqueCenter( AngularImpulse( x, y, 0 ) );
 
 			// Since we just nudged the mine, ignore collisions with the world until
-			// the mine is in the air. We only want to explode if the player tries to 
+			// the mine is in the air. We only want to explode if the player tries to
 			// run over the mine before it jumps up.
 			m_flIgnoreWorldTime = gpGlobals->curtime + 1.0;
 			UpdateLight( true, 255, 0, 0, 190 );
@@ -377,7 +377,7 @@ void CBounceBomb::SetMineState( int iState )
 
 //---------------------------------------------------------
 // Bouncbomb flips to try to right itself, try to get off
-// of and object that it's not allowed to clamp to, or 
+// of and object that it's not allowed to clamp to, or
 // to get away from a hint node that inhibits placement
 // of mines.
 //---------------------------------------------------------
@@ -399,7 +399,7 @@ void CBounceBomb::Flip( const Vector &vecForce, const AngularImpulse &torque )
 //---------------------------------------------------------
 //---------------------------------------------------------
 #define MINE_MIN_PROXIMITY_SQR	676 // 27 inches
-bool CBounceBomb::IsValidLocation() 
+bool CBounceBomb::IsValidLocation()
 {
 	CBaseEntity *pAvoidObject = NULL;
 	float flAvoidForce = 0.0f;
@@ -467,7 +467,7 @@ void CBounceBomb::BounceThink()
 	StudioFrameAdvance();
 
 	IPhysicsObject *pPhysicsObject = VPhysicsGetObject();
-	
+
 	if ( pPhysicsObject != NULL )
 	{
 		const float MINE_MAX_JUMP_HEIGHT = 200;
@@ -504,7 +504,7 @@ void CBounceBomb::BounceThink()
 		pPhysicsObject->ApplyForceCenter( up * force );
 
 		pPhysicsObject->ApplyTorqueCenter( AngularImpulse( random->RandomFloat( 5, 25 ), random->RandomFloat( 5, 25 ), 0 ) );
-		
+
 
 		if( m_hNearestNPC )
 		{
@@ -520,7 +520,7 @@ void CBounceBomb::BounceThink()
 
 
 //---------------------------------------------------------
-// A different bounce behavior for the citizen-modified mine. Detonates at the top of its apex, 
+// A different bounce behavior for the citizen-modified mine. Detonates at the top of its apex,
 // and does not attempt to track enemies.
 //---------------------------------------------------------
 void CBounceBomb::CavernBounceThink()
@@ -562,7 +562,7 @@ void CBounceBomb::CavernBounceThink()
 		Vector up;
 
 		GetVectors( NULL, NULL, &up );
-		
+
 		pPhysicsObject->Wake();
 		pPhysicsObject->ApplyForceCenter( up * force );
 		if( m_hNearestNPC )
@@ -573,7 +573,7 @@ void CBounceBomb::CavernBounceThink()
 		}
 
 		pPhysicsObject->ApplyTorqueCenter( AngularImpulse( random->RandomFloat( 15, 40 ), random->RandomFloat( 15, 40 ), random->RandomFloat( 30, 60 ) ) );
-		
+
 		EmitSound( "NPC_CombineMine.Hop" );
 
 		SetThink( &CBounceBomb::ExplodeThink );
@@ -733,7 +733,7 @@ void CBounceBomb::UpdateLight( bool bTurnOn, unsigned int r, unsigned int g, uns
 
 			if( m_hSprite )
 			{
-				pSprite->SetParent( this );		
+				pSprite->SetParent( this );
 				pSprite->SetTransparency( kRenderTransAdd, r, g, b, a, kRenderFxNone );
 				pSprite->SetScale( 0.35, 0.0 );
 			}
@@ -754,7 +754,7 @@ void CBounceBomb::UpdateLight( bool bTurnOn, unsigned int r, unsigned int g, uns
 			m_hSprite.Set( NULL );
 		}
 	}
-	
+
 	if ( !m_hSprite )
 	{
 		m_LastSpriteColor.SetRawColor( 0 );
@@ -772,7 +772,7 @@ void CBounceBomb::Wake( bool bAwake )
 	CSoundEnvelopeController &controller = CSoundEnvelopeController::GetController();
 
 	CReliableBroadcastRecipientFilter filter;
-	
+
 	if( !m_pWarnSound )
 	{
 		m_pWarnSound = controller.SoundCreate( filter, entindex(), "NPC_CombineMine.ActiveLoop" );
@@ -847,7 +847,7 @@ float CBounceBomb::FindNearestNPC()
 
 			// Disregard things that want to be disregarded
 			if( pNPC->Classify() == CLASS_NONE )
-				continue; 
+				continue;
 
 			// Disregard bullseyes
 			if( pNPC->Classify() == CLASS_BULLSEYE )
@@ -930,7 +930,7 @@ bool CBounceBomb::IsFriend( CBaseEntity *pEntity )
 		return false;
 	}
 
-  	if( classify == CLASS_METROPOLICE || 
+  	if( classify == CLASS_METROPOLICE ||
   		classify == CLASS_COMBINE ||
   		classify == CLASS_MILITARY ||
   		classify == CLASS_COMBINE_HUNTER ||
@@ -1109,7 +1109,7 @@ void CBounceBomb::OpenHooks( bool bSilent )
 
 	SetPoseParameter( m_iAllHooks, BOUNCEBOMB_HOOK_RANGE );
 
-#ifdef _XBOX 
+#ifdef _XBOX
 	RemoveEffects( EF_NOSHADOW );
 #endif
 
@@ -1140,7 +1140,7 @@ void CBounceBomb::CloseHooks()
 	// Once I lock down, forget how many tries it took.
 	m_iFlipAttempts = 0;
 
-#ifdef _XBOX 
+#ifdef _XBOX
 	AddEffects( EF_NOSHADOW );
 #endif
 }
@@ -1227,7 +1227,7 @@ void CBounceBomb::OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t re
 
 			VPhysicsGetObject()->EnableMotion( true );
 
-			// Try to scatter NPCs without panicking them. Make a move away sound up around their 
+			// Try to scatter NPCs without panicking them. Make a move away sound up around their
 			// ear level.
 			CSoundEnt::InsertSound( SOUND_MOVE_AWAY, GetAbsOrigin() + Vector( 0, 0, 60), 32.0f, 0.2f );
 			return;
@@ -1269,7 +1269,7 @@ void CBounceBomb::OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t re
 		SetNextThink( gpGlobals->curtime + 0.1);
 
 		// Since being punted causes the mine to flip, sometimes it 'catches an edge'
-		// and ends up touching the ground from whence it came, exploding instantly. 
+		// and ends up touching the ground from whence it came, exploding instantly.
 		// This little stunt prevents that by ignoring world collisions for a very short time.
 		m_flIgnoreWorldTime = gpGlobals->curtime + 0.1;
 	}

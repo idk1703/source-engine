@@ -61,11 +61,11 @@ $Project "Server (CStrike)"
 			$File	"$SRCDIR\game\shared\cstrike\cs_gamerules.cpp"
 			$File	"$SRCDIR\game\shared\cstrike\cs_gamerules.h"
 			$File	"cstrike\cs_gamestats.cpp"
-			$File	"cstrike\cs_gamestats.h"			
+			$File	"cstrike\cs_gamestats.h"
 			$File	"$SRCDIR\game\shared\cstrike\cs_gamestats_shared.cpp"
 			$File	"$SRCDIR\game\shared\cstrike\cs_gamestats_shared.h"
 			$File	"$SRCDIR\game\shared\steamworks_gamestats.cpp"
-			$File	"$SRCDIR\game\shared\steamworks_gamestats.h"			
+			$File	"$SRCDIR\game\shared\steamworks_gamestats.h"
 			$File	"cstrike\cs_hltvdirector.cpp"
 			$File	"cstrike\cs_player.cpp"
 			$File	"cstrike\cs_player.h"
@@ -113,7 +113,7 @@ $Project "Server (CStrike)"
 			$File	"cstrike\te_shotgun_shot.h"
 			$File	"cstrike\holiday_gift.cpp"
 			$File	"cstrike\holiday_gift.h"
-			
+
 			$File	"$SRCDIR\game\shared\cstrike\cs_urlretrieveprices.cpp"
 			{
 				$Configuration
@@ -126,7 +126,7 @@ $Project "Server (CStrike)"
 			}
 
 			$File	"$SRCDIR\game\shared\cstrike\cs_urlretrieveprices.h"
-			
+
 			$Folder	"Weapon"
 			{
 				$File	"$SRCDIR\game\shared\cstrike\weapon_ak47.cpp"
@@ -168,7 +168,7 @@ $Project "Server (CStrike)"
 				$File	"$SRCDIR\game\shared\cstrike\weapon_usp.cpp"
 				$File	"$SRCDIR\game\shared\cstrike\weapon_xm1014.cpp"
 			}
-			
+
 			$Folder	"Bot"
 			{
 				$File	"cstrike\bot\cs_bot.cpp"
@@ -234,7 +234,7 @@ $Project "Server (CStrike)"
 				$File	"cstrike\hostage\cs_simple_hostage.cpp"
 				$File	"cstrike\hostage\cs_simple_hostage.h"
 			}
-			
+
 			$Folder	"Navigation Mesh"
 			{
 				$File	"cstrike\cs_nav.h"
@@ -292,7 +292,7 @@ $Project "Server (CStrike)"
 				$File	"NextBot\Path\NextBotPathFollow.cpp"
 				$File	"NextBot\Path\NextBotPathFollow.h"
 			}
-			
+
 			$Folder "NextBotPlayer"
 			{
 				$File	"NextBot\Player\NextBotPlayerBody.cpp"

@@ -82,8 +82,8 @@ ActionResult< CTFBot > CTFBotSquadAttack::Update( CTFBot *me, float interval )
 	if ( m_victim )
 	{
 		const float engageRange = 500.0f;
-		if ( me->IsPlayerClass( TF_CLASS_PYRO ) || 
-			 me->IsRangeGreaterThan( m_victim->GetAbsOrigin(), engageRange ) || 
+		if ( me->IsPlayerClass( TF_CLASS_PYRO ) ||
+			 me->IsRangeGreaterThan( m_victim->GetAbsOrigin(), engageRange ) ||
 			 !me->GetVisionInterface()->IsAbleToSee( m_victim, IVision::DISREGARD_FOV ) )
 		{
 			if ( me->IsSelf( leader ) || me->IsRangeLessThan( leader, tf_squad_radius.GetFloat() ) )

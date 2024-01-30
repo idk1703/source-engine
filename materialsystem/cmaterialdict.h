@@ -59,7 +59,7 @@ public:
 
 	IMaterialInternal*	AddMaterial( const char* pName, const char *pTextureGroupName );
 	// pKeyValues and pPatchKeyValues should come from LoadVMTFile()
-	IMaterialInternal*  AddMaterialSubRect( const char* pName, const char *pTextureGroupName, KeyValues *pKeyValues, KeyValues *pPatchKeyValues ); 
+	IMaterialInternal*  AddMaterialSubRect( const char* pName, const char *pTextureGroupName, KeyValues *pKeyValues, KeyValues *pPatchKeyValues );
 
 	bool				NoteMissing( const char *pszName );
 
@@ -85,10 +85,10 @@ protected: /*private:*/
 		CUtlSymbol	m_Name;
 	};
 
-	static bool MaterialLessFunc( const MaterialLookup_t& src1, 
+	static bool MaterialLessFunc( const MaterialLookup_t& src1,
 		const MaterialLookup_t& src2 );
 
-	static bool MissingMaterialLessFunc( const MissingMaterial_t& src1, 
+	static bool MissingMaterialLessFunc( const MissingMaterial_t& src1,
 		const MissingMaterial_t& src2 );
 
 	CUtlRBTree< MaterialLookup_t, MaterialHandle_t > m_MaterialDict;
@@ -139,7 +139,7 @@ inline IMaterial* CMaterialDict::GetMaterial( MaterialHandle_t idx ) const
 inline IMaterialInternal* CMaterialDict::GetMaterialInternal( MaterialHandle_t idx ) const
 {
 	Assert( ThreadInMainThread() );
-	Assert( (m_MaterialDict[idx].m_pMaterial == NULL) || m_MaterialDict[idx].m_pMaterial->IsRealTimeVersion() );	
+	Assert( (m_MaterialDict[idx].m_pMaterial == NULL) || m_MaterialDict[idx].m_pMaterial->IsRealTimeVersion() );
 	return m_MaterialDict[idx].m_pMaterial;
 }
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,7 +21,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Tool3D::Tool3D(void)
 {
@@ -65,7 +65,7 @@ bool Tool3D::UpdateTranslation(CMapView *pView, const Vector2D &vPoint, UINT nFl
 
 bool Tool3D::UpdateTranslation(const Vector &vUpdate, UINT flags /* = 0 */)
 {
-    if ( m_vTranslation == vUpdate )
+	if ( m_vTranslation == vUpdate )
 		return false;
 
 	m_vTranslation = vUpdate;
@@ -76,8 +76,8 @@ bool Tool3D::UpdateTranslation(const Vector &vUpdate, UINT flags /* = 0 */)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bSave - 
+// Purpose:
+// Input  : bSave -
 //-----------------------------------------------------------------------------
 void Tool3D::FinishTranslation(bool bSave)
 {
@@ -156,7 +156,7 @@ unsigned int Tool3D::GetConstraints(unsigned int nKeyFlags)
 	unsigned int uConstraints = 0;
 
 	bool bDisableSnap = (GetKeyState(VK_MENU) & 0x8000)!=0;
-	
+
 	if ( !bDisableSnap )
 	{
 		uConstraints |= constrainSnap;
@@ -206,7 +206,7 @@ void Tool3D::ProjectOnTranslationPlane( const Vector &vWorld, Vector &vTransform
 				vOut.x = V_rint(vOut.x);
 				vOut.y = V_rint(vOut.y);
 			}
-			else 
+			else
 			{
 				// snap to user grid
 				float flGridSpacing = m_pDocument->GetGridSpacing();
@@ -215,7 +215,7 @@ void Tool3D::ProjectOnTranslationPlane( const Vector &vWorld, Vector &vTransform
 				{
 					flGridSpacing *= 0.5f;
 				}
-				
+
 				vOut.y = V_rint(vOut.y / flGridSpacing) * flGridSpacing;
 				vOut.x = V_rint(vOut.x / flGridSpacing) * flGridSpacing;
 			}
@@ -252,7 +252,7 @@ void Tool3D::ProjectTranslation( CMapView *pView, const Vector2D &vPoint, Vector
 
 	Vector v0 = vStart - m_vPlaneOrigin;
 	Vector vOut;
-	
+
 	if ( !SolveLinearEquation( v0, m_vPlaneHorz, m_vPlaneVert, -vLine, vOut) )
 	{
 		vTransform.Init();
@@ -277,7 +277,7 @@ void Tool3D::ProjectTranslation( CMapView *pView, const Vector2D &vPoint, Vector
 			vOut.x = V_rint(vOut.x);
 			vOut.y = V_rint(vOut.y);
 		}
-		else 
+		else
 		{
 			// snap to user grid
 			float flGridSpacing = m_pDocument->GetGridSpacing();
@@ -291,7 +291,7 @@ void Tool3D::ProjectTranslation( CMapView *pView, const Vector2D &vPoint, Vector
 			vOut.x = V_rint(vOut.x / flGridSpacing) * flGridSpacing;
 		}
 	}
-	
+
 	vTransform = m_vPlaneOrigin + vOut.x * m_vPlaneHorz + vOut.y * m_vPlaneVert;
 }
 
@@ -428,7 +428,7 @@ void Tool3D::RenderTranslationPlane(CRender *pRender)
 	pRender->SetDrawColor( Color(128,128,128) );
 
 	Vector viewPoint,vOffset;
-	
+
 	ProjectTranslation( pRender->GetView(), m_vMousePos, viewPoint, constrainSnap );
 
 	float fGrid = m_pDocument->GetGridSpacing();
@@ -447,6 +447,6 @@ void Tool3D::RenderTranslationPlane(CRender *pRender)
 		Vector pos = viewPoint + ( m_vPlaneVert * ( fGrid*v ) );
 		pRender->DrawLine( pos+vOffset, pos-vOffset );
 	}
-	
+
 	pRender->PopRenderMode();
 }

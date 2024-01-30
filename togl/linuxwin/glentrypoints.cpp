@@ -285,13 +285,13 @@ static bool CheckOpenGLExtension_internal(const char *ext, const int coremajor, 
 		if (!ptr)
 		{
 			static CDynamicFunctionOpenGL< true, const char *( APIENTRY *)( ), const char * > wglGetExtensionsStringEXT("wglGetExtensionsStringEXT");
-			if (wglGetExtensionsStringEXT) 
+			if (wglGetExtensionsStringEXT)
 			{
 				extensions = wglGetExtensionsStringEXT();
 				ptr = strstr(extensions, ext);
 			}
 
-			if (!ptr) 
+			if (!ptr)
 			{
 				return false;
 			}
@@ -301,7 +301,7 @@ static bool CheckOpenGLExtension_internal(const char *ext, const int coremajor, 
 		{
 			static CDynamicFunctionOpenGL< true, Display *( APIENTRY *)( ), Display* > glXGetCurrentDisplay("glXGetCurrentDisplay");
 			static CDynamicFunctionOpenGL< true, const char *( APIENTRY *)( Display*, int ), const char * > glXQueryExtensionsString("glXQueryExtensionsString");
-			if (glXQueryExtensionsString && glXGetCurrentDisplay) 
+			if (glXQueryExtensionsString && glXGetCurrentDisplay)
 			{
 				extensions = glXQueryExtensionsString(glXGetCurrentDisplay(), 0);
 				ptr = strstr(extensions, ext);
@@ -409,7 +409,7 @@ COpenGLEntryPoints::COpenGLEntryPoints()
 		glBlitFramebufferEXT.Force(glBlitFramebuffer.Pointer());
 		glRenderbufferStorageMultisampleEXT.Force(glRenderbufferStorageMultisample.Pointer());
 	}
-		
+
 #if DEBUG_ALL_GLCALLS
 	// push all GL calls through the debug wrappers.
 #define GL_EXT(x,glmajor,glminor)
@@ -505,6 +505,3 @@ void COpenGLEntryPoints::ClearEntryPoints()
 }
 // Turn off memdbg macros (turned on up top) since this is included like a header
 #include "tier0/memdbgoff.h"
-
-
-

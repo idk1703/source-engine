@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -43,14 +43,14 @@ public:
 
 	// Set the color to draw the border lines in.
 	virtual void SetBorderColor( Color clr );
-	
-	// Initialize the column headers.. This info includes the tree view on the left, so this 
+
+	// Initialize the column headers.. This info includes the tree view on the left, so this
 	virtual void SetNumColumns( int nColumns );
 	virtual int GetNumColumns() const;
 	// ciFlags is a combination of CI_ flags.
 	virtual void SetColumnInfo( int iColumn, const char *pTitle, int width, int ciFlags=0 );
 
-	// Use this to render your stuff. Iterate over the rows in the tree view and 
+	// Use this to render your stuff. Iterate over the rows in the tree view and
 	virtual int GetNumRows();
 	virtual int GetTreeItemAtRow( int iRow ); // You can use m_pTree->GetItemData to get at the data for the row.
 
@@ -70,8 +70,8 @@ public:
 
 	// This is where it recalculates the row infos.
 	virtual void PerformLayout();
-	
-	// Usually, you'll want to override paint. After calling the base, use GetNumRows() to 
+
+	// Usually, you'll want to override paint. After calling the base, use GetNumRows() to
 	// iterate over the data in the tree control and fill in the other columns.
 	virtual void Paint();
 	virtual void PostChildPaint();
@@ -87,7 +87,7 @@ public:
 		// By default, column header text is centered.
 		CI_HEADER_LEFTALIGN	=0x0001
 	};
-	
+
 
 protected:
 
@@ -114,7 +114,7 @@ private:
 		int m_ciFlags;	// Combination of CI_ flags.
 	};
 	CUtlVector<CColumnInfo> m_Columns;
-	
+
 	vgui::HFont m_TitleBarFont;
 	int m_TitleBarHeight;
 

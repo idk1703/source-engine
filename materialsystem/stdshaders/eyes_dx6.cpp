@@ -14,9 +14,9 @@
 
 DEFINE_FALLBACK_SHADER( Eyes, Eyes_dx6 )
 
-BEGIN_VS_SHADER( Eyes_dx6, 
+BEGIN_VS_SHADER( Eyes_dx6,
 			  "Help for Eyes" )
-			  
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( IRIS, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "iris texture" )
 		SHADER_PARAM( IRISFRAME, SHADER_PARAM_TYPE_INTEGER, "0", "frame for the iris texture" )
@@ -89,47 +89,47 @@ BEGIN_VS_SHADER( Eyes_dx6,
 			// Alpha blend
 			pShaderShadow->EnableBlending( true );
 			pShaderShadow->BlendFunc( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE_MINUS_SRC_ALPHA );
-			
+
 			pShaderShadow->EnableDepthWrites( false );
 			pShaderShadow->EnableAlphaWrites( false );
 
 			int flags = SHADER_DRAW_POSITION | SHADER_DRAW_COLOR | SHADER_DRAW_NORMAL;
 			pShaderShadow->DrawFlags( flags );
 			FogToBlack();
-			
+
 			pShaderShadow->EnableLighting( true );
-			
+
 			pShaderShadow->EnableCustomPixelPipe( true );
 			pShaderShadow->CustomTextureStages( 2 );
-			
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-				SHADER_TEXCHANNEL_COLOR, 
+
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+				SHADER_TEXCHANNEL_COLOR,
 				SHADER_TEXOP_MODULATE,
-				SHADER_TEXARG_TEXTURE, 
+				SHADER_TEXARG_TEXTURE,
 				SHADER_TEXARG_VERTEXCOLOR );
-			
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1, 
-				SHADER_TEXCHANNEL_COLOR, 
+
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
+				SHADER_TEXCHANNEL_COLOR,
 				SHADER_TEXOP_MODULATE,
 				SHADER_TEXARG_TEXTURE, SHADER_TEXARG_PREVIOUSSTAGE );
-			
+
 			// alpha stage 0
 			// get alpha from constant alpha
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-				SHADER_TEXCHANNEL_ALPHA, 
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+				SHADER_TEXCHANNEL_ALPHA,
 				SHADER_TEXOP_SELECTARG1,
 				SHADER_TEXARG_CONSTANTCOLOR, SHADER_TEXARG_NONE );
-			
+
 			// alpha stage 1
 			// get alpha from $basetexture
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1, 
-				SHADER_TEXCHANNEL_ALPHA, 
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
+				SHADER_TEXCHANNEL_ALPHA,
 				SHADER_TEXOP_MODULATE,
 				SHADER_TEXARG_TEXTURE, SHADER_TEXARG_PREVIOUSSTAGE );
-			
+
 			pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
 			pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );
-			
+
 			// Shove the view position into texcoord 0 before the texture matrix.
 			pShaderShadow->TexGen( SHADER_TEXTURE_STAGE0, SHADER_TEXGENPARAM_EYE_LINEAR );
 			pShaderShadow->EnableTexGen( SHADER_TEXTURE_STAGE0, true );
@@ -137,7 +137,7 @@ BEGIN_VS_SHADER( Eyes_dx6,
 			// iris transform
 			pShaderShadow->EnableTexGen( SHADER_TEXTURE_STAGE1, true );
 			pShaderShadow->TexGen( SHADER_TEXTURE_STAGE1, SHADER_TEXGENPARAM_EYE_LINEAR );
-		
+
 		}
 		DYNAMIC_STATE
 		{
@@ -148,7 +148,7 @@ BEGIN_VS_SHADER( Eyes_dx6,
 			// Specify that we have XYZ texcoords that need to be divided by W before the pixel shader.
 			// NOTE Tried to divide XY by Z, but doesn't work.
 			pShaderAPI->SetTextureTransformDimension( SHADER_TEXTURE_STAGE0, 3, true );
-			
+
 			BindTexture( SHADER_SAMPLER0, FLASHLIGHTTEXTURE, FLASHLIGHTTEXTUREFRAME );
 
 			BindTexture( SHADER_SAMPLER1, IRIS, IRISFRAME );
@@ -156,17 +156,17 @@ BEGIN_VS_SHADER( Eyes_dx6,
 		}
 		Draw();
 	}
-	
+
 	void DrawFlashlight( IMaterialVar** params, IShaderDynamicAPI *pShaderAPI, IShaderShadow* pShaderShadow )
 	{
 		// whites
-		DrawFlashlight_dx70( params, pShaderAPI, pShaderShadow, 
+		DrawFlashlight_dx70( params, pShaderAPI, pShaderShadow,
 							 FLASHLIGHTTEXTURE, FLASHLIGHTTEXTUREFRAME, true );
 
 		// iris
 		DrawFlashlight_Iris( params, pShaderAPI, pShaderShadow );
 	}
-	
+
 	void DrawUsingSoftwareLighting( IMaterialVar** params, IShaderDynamicAPI *pShaderAPI, IShaderShadow* pShaderShadow )
 	{
 		// whites
@@ -248,4 +248,3 @@ BEGIN_VS_SHADER( Eyes_dx6,
 
 	}
 END_SHADER
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -27,5 +27,3 @@ void mxLineEdit2::setText( const char *pText )
 {
 	setLabel( "%s", pText );
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -34,7 +34,7 @@ CBaseGamesPage::CBaseGamesPage(vgui::Panel *parent, const char *name) : Frame(pa
 	ivgui()->AddTickSignal(GetVPanel());
 
 	//SetSize(500, 500);
-	
+
 	//SetParent(parent); // doesn't have any effect....
 	m_pParent=parent;
 
@@ -82,7 +82,7 @@ CBaseGamesPage::CBaseGamesPage(vgui::Panel *parent, const char *name) : Frame(pa
 
 	// Sort by ping time by default
 	m_pGameList->SetSortColumn(5);
-	
+
 	m_pGameList->AddActionSignalTarget(this);
 
 //	LoadControlSettings("Admin\\DialogAdminServerPage.res");
@@ -96,7 +96,7 @@ CBaseGamesPage::~CBaseGamesPage()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseGamesPage::PerformLayout()
 {
@@ -112,7 +112,7 @@ void CBaseGamesPage::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseGamesPage::OnTick()
 {
@@ -120,7 +120,7 @@ void CBaseGamesPage::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseGamesPage::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
@@ -162,7 +162,7 @@ void CBaseGamesPage::SetRefreshing(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseGamesPage::OnCommand(const char *command)
 {
@@ -232,7 +232,7 @@ void CBaseGamesPage::OnManage()
 
 void CBaseGamesPage::OurListPanel::OnMouseDoublePressed( vgui::MouseCode code )
 {
-	PostMessage(m_pParent->GetVPanel(),  new KeyValues("Manage"));	
+	PostMessage(m_pParent->GetVPanel(),  new KeyValues("Manage"));
 }
 
 //-----------------------------------------------------------------------------

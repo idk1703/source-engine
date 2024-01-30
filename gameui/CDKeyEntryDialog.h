@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,7 +14,7 @@
 #include "vgui_controls/Frame.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CCDKeyEntryDialog : public vgui::Frame
 {
@@ -51,7 +51,7 @@ private:
 	bool m_bEnteredValidCDKey;
 
 	bool m_bInConnect;
-	int m_iErrCount; 
+	int m_iErrCount;
 };
 
 

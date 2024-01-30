@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -104,12 +104,12 @@ private:
 	void	SendNumPlayers( void );
 
 	void	SetOwner( int team );	//sets the owner of this point - useful for resetting all to -1
-	
+
 	void	InputRoundSpawn( inputdata_t &inputdata );
 	void	InputCaptureCurrentCP( inputdata_t &inputdata );
 	void	InputSetTeamCanCap( inputdata_t &inputdata );
 	void	InputSetControlPoint( inputdata_t &inputdata );
-	
+
 	void	SetCapTimeRemaining( float flTime );
 
 	void	HandleRespawnTimeAdjustments( int oldTeam, int newTeam );
@@ -169,7 +169,7 @@ private:
 	COutputEvent m_StartOutput;
 	COutputEvent m_BreakOutput;
 	COutputEvent m_CapOutput;
-	
+
 	COutputInt m_OnNumCappersChanged;
 	COutputInt m_OnNumCappersChanged2;
 

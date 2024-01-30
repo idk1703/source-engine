@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -53,7 +53,7 @@ bool CTFFlag::Deploy( void )
 	if ( BaseClass::Deploy() )
 	{
 #ifdef GAME_DLL
-        TFTeamMgr()->PlayerCenterPrint( ToTFPlayer( GetOwner() ), "#TF_Flag_AltFireToDrop" );
+	TFTeamMgr()->PlayerCenterPrint( ToTFPlayer( GetOwner() ), "#TF_Flag_AltFireToDrop" );
 #endif
 		return true;
 	}
@@ -62,7 +62,7 @@ bool CTFFlag::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFlag::SecondaryAttack( void )
 {
@@ -79,4 +79,3 @@ void CTFFlag::SecondaryAttack( void )
 #endif
 	pPlayer->SwitchToNextBestWeapon( this );
 }
-

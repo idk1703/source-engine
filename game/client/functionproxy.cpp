@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -39,7 +39,7 @@ bool CFloatInput::Init( IMaterial *pMaterial, KeyValues *pKeyValues, const char 
 			// Look for array specification...
 			char pTemp[256];
 			if (strchr(pVarName, '['))
-			{		 
+			{
 				// strip off the array...
 				Q_strncpy( pTemp, pVarName, 256 );
 				char *pArray = strchr( pTemp, '[' );
@@ -77,14 +77,14 @@ float CFloatInput::GetFloat() const
 {
 	if (!m_pFloatVar)
 		return m_flValue;
-	
+
 	if( m_FloatVecComp < 0 )
 		return m_pFloatVar->GetFloatValue();
 
 	int iVecSize = m_pFloatVar->VectorSize();
 	if ( m_FloatVecComp >= iVecSize )
 		return 0;
-	
+
 	float v[4];
 	m_pFloatVar->GetVecValue( v, iVecSize );
 	return v[m_FloatVecComp];
@@ -116,7 +116,7 @@ bool CResultProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 	// Look for array specification...
 	char pTemp[256];
 	if (strchr(pResult, '['))
-	{		 
+	{
 		// strip off the array...
 		Q_strncpy( pTemp, pResult, 256 );
 		char *pArray = strchr( pTemp, '[' );
@@ -148,7 +148,7 @@ bool CResultProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 void CResultProxy::SetFloatResult( float result )
 {
 	if (m_pResult->GetType() == MATERIAL_VAR_TYPE_VECTOR)
-	{		
+	{
 		if ( m_ResultVecComp >= 0 )
 		{
 			m_pResult->SetVecComponentValue( result, m_ResultVecComp );
@@ -162,7 +162,7 @@ void CResultProxy::SetFloatResult( float result )
 				v[i] = result;
 
 			m_pResult->SetVecValue( v, vecSize );
-		}		
+		}
 	}
 	else
 	{
@@ -256,4 +256,3 @@ void CFunctionProxy::ComputeResultType( MaterialVarType_t& resultType, int& vecS
 		}
 	}
 }
-

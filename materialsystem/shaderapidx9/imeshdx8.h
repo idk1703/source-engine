@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -64,7 +64,7 @@ public:
 	virtual void RenderPassWithVertexAndIndexBuffers( void ) = 0;
 
 	// Computes the vertex format
-	virtual VertexFormat_t ComputeVertexFormat( unsigned int flags, 
+	virtual VertexFormat_t ComputeVertexFormat( unsigned int flags,
 			int numTexCoords, int* pTexCoordDimensions, int numBoneWeights,
 			int userDataSize ) const = 0;
 
@@ -76,8 +76,8 @@ public:
 
 	// Returns the number of vertices + indices we can render using the dynamic mesh
 	// Passing true in the second parameter will return the max # of vertices + indices
-	// we can use before a flush is provoked and may return different values 
-	// if called multiple times in succession. 
+	// we can use before a flush is provoked and may return different values
+	// if called multiple times in succession.
 	// Passing false into the second parameter will return
 	// the maximum possible vertices + indices that can be rendered in a single batch
 	virtual void GetMaxToRender( IMesh *pMesh, bool bMaxUntilFlush, int *pMaxVerts, int *pMaxIndices ) = 0;

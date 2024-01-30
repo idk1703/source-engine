@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -49,7 +49,7 @@ public:
 	virtual bool IsAlwaysOrienting( ) { return false; }
 
 	// Used by the mobile shield.
-		
+
 		// Change the angular spring constant. This affects how fast the shield rotates to face the angles
 		// given in SetAngles. Higher numbers are more responsive, but if you go too high (around 40), it will
 		// jump past the specified angles and wiggle a little bit.
@@ -99,7 +99,7 @@ public:
 	static bool IsBlockedByShields( const Vector& src, const Vector& end );
 
 	virtual void SetOwnerEntity( CBaseEntity *pOwner );
-	
+
 	virtual void SetThetaPhi( float flTheta, float flPhi ) { }
 	virtual void SetAttachmentIndex( int nAttachmentIndex ) {}
 

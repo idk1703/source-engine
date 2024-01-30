@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -187,12 +187,12 @@ static TRKELookup g_Lookup[] =
 
 void CBugReporter::ReportError(TRK_UINT rc, char const *func, char const *msg )
 {
-    if ( rc != TRK_SUCCESS )
+	if ( rc != TRK_SUCCESS )
 	{
 		switch (rc)
 		{
 		case TRK_E_ITEM_NOT_FOUND:
-		    Msg( "%s %s was not found!\n", func,  msg );
+			Msg( "%s %s was not found!\n", func,  msg );
 			break;
 		case TRK_E_INVALID_FIELD:
 			Msg( "%s %s Invalid field!\n", func,  msg );
@@ -214,7 +214,7 @@ void CBugReporter::ReportError(TRK_UINT rc, char const *func, char const *msg )
 			}
 			break;
 		}
-    }
+	}
 }
 
 TRK_UINT CBugReporter::Login(TRK_HANDLE* pTrkHandle, char const *projectname )
@@ -260,7 +260,7 @@ TRK_UINT CBugReporter::Login(TRK_HANDLE* pTrkHandle, char const *projectname )
 	char projout[ 256 ];
 
 	TrkGetLoginProjectName(*pTrkHandle, sizeof( projout ), projout );
-	
+
 	Msg( "Project:  %s\n", projout );
 	Msg( "Server:  %s\n", dbms );
 
@@ -291,7 +291,7 @@ bool CBugReporter::Init( char const *projectname )
 	rc = TrkRecordHandleAlloc(trkHandle, &trkRecHandle);
 	if (rc != TRK_SUCCESS)
 	{
-		ReportError(rc, "TrkRecordHandleAlloc", 
+		ReportError(rc, "TrkRecordHandleAlloc",
 			"Failed to Allocate Tracker Record Handle!");
 		return false;
 	}
@@ -302,7 +302,7 @@ bool CBugReporter::Init( char const *projectname )
 void CBugReporter::Shutdown()
 {
 	TRK_UINT			rc;
-	
+
 	if ( trkRecHandle )
 	{
 		rc = TrkRecordHandleFree(&trkRecHandle);
@@ -314,14 +314,14 @@ void CBugReporter::Shutdown()
 
 	if ( trkHandle )
 	{
-		rc = TrkProjectLogout(trkHandle);		
+		rc = TrkProjectLogout(trkHandle);
 		if (rc != TRK_SUCCESS)
 		{
 			ReportError(rc, "TrkProjectLogout", "Failed to Logout of Project!");
 		}
 		else
 		{
-			rc = TrkHandleFree(&trkHandle);     
+			rc = TrkHandleFree(&trkHandle);
 			if (rc != TRK_SUCCESS)
 			{
 				ReportError(rc, "TrkHandleFree", "Failed to Free Tracker Handle!");
@@ -389,7 +389,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 	rc = TrkNewRecordBegin( trkRecHandle, SCR_TYPE );
 	if ( rc != TRK_SUCCESS )
 	{
-		ReportError(rc, "TrkNewRecordBegin", 
+		ReportError(rc, "TrkNewRecordBegin",
 			"Failed to TrkNewRecordBegin!");
 		return false;
 	}
@@ -405,14 +405,14 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 			// Populate fields
 			if ( !fld.isnumeric )
 			{
-				rc = TrkSetStringFieldValue( 
+				rc = TrkSetStringFieldValue(
 					trkRecHandle,
 					fld.trkfield,
 					fld.value );
 			}
 			else
 			{
-				rc = TrkSetNumericFieldValue( 
+				rc = TrkSetNumericFieldValue(
 					trkRecHandle,
 					fld.trkfield,
 					fld.numvalue );
@@ -438,7 +438,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 				0 );
 			if ( rc != TRK_SUCCESS )
 			{
-				ReportError(rc, "TrkSetDescriptionData", 
+				ReportError(rc, "TrkSetDescriptionData",
 					"Failed to set description data!");
 				return false;
 			}
@@ -450,7 +450,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 	rc = TrkNewRecordCommit( trkRecHandle, &id );
 	if ( rc != TRK_SUCCESS )
 	{
-		ReportError(rc, "TrkNewRecordCommit", 
+		ReportError(rc, "TrkNewRecordCommit",
 			"Failed to TrkNewRecordCommit!");
 		return false;
 	}
@@ -459,7 +459,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 	rc = TrkGetNumericFieldValue( trkRecHandle, "Id", &bugId );
 	if ( rc != TRK_SUCCESS )
 	{
-		ReportError(rc, "TrkGetNumericFieldValue", 
+		ReportError(rc, "TrkGetNumericFieldValue",
 			"Failed to TrkGetNumericFieldValue for bug Id #!");
 	}
 	else
@@ -501,7 +501,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 
 		if ( rc != TRK_SUCCESS )
 		{
-			ReportError(rc, "TrkSetDescriptionData(update)", 
+			ReportError(rc, "TrkSetDescriptionData(update)",
 				"Failed to set description data!");
 			return false;
 		}
@@ -509,7 +509,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 		rc = TrkUpdateRecordCommit( trkRecHandle, &id );
 		if ( rc != TRK_SUCCESS )
 		{
-			ReportError(rc, "TrkUpdateRecordCommit", 
+			ReportError(rc, "TrkUpdateRecordCommit",
 				"Failed to TrkUpdateRecordCommit for bug Id #!");
 			return false;
 		}
@@ -521,12 +521,12 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 }
 
 SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
-{	
+{
 	spewed = true;
 
 	printf( "%s", pMsg );
 	OutputDebugString( pMsg );
-	
+
 	if ( type == SPEW_ERROR )
 	{
 		printf( "\n" );
@@ -538,10 +538,10 @@ SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : depth - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : depth -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void vprint( int depth, const char *fmt, ... )
 {
@@ -588,7 +588,7 @@ void vprint( int depth, const char *fmt, ... )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void printusage( void )
 {
@@ -600,7 +600,7 @@ void printusage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CheckLogFile( void )
 {
@@ -643,16 +643,16 @@ bool GetBugZip( int bugnum, char const *admin )
 	if ( !CreateProcess( NULL, commandline, NULL, NULL, TRUE, 0, NULL, directory, &si, &pi ) )
 	{
 		LPVOID lpMsgBuf;
-		FormatMessage( 
-			FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-			FORMAT_MESSAGE_FROM_SYSTEM | 
+		FormatMessage(
+			FORMAT_MESSAGE_ALLOCATE_BUFFER |
+			FORMAT_MESSAGE_FROM_SYSTEM |
 			FORMAT_MESSAGE_IGNORE_INSERTS,
 			NULL,
 			GetLastError(),
 			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
 			(LPTSTR) &lpMsgBuf,
 			0,
-			NULL 
+			NULL
 		);
 		// Process any inserts in lpMsgBuf.
 		// ...
@@ -664,7 +664,7 @@ bool GetBugZip( int bugnum, char const *admin )
 	}
 
 	// Wait until child process exits.
-    WaitForSingleObject( pi.hProcess, INFINITE );
+	WaitForSingleObject( pi.hProcess, INFINITE );
 
 	DWORD exitCode = (DWORD)-1;
 	if ( GetExitCodeProcess( pi.hProcess, &exitCode ) )
@@ -674,10 +674,10 @@ bool GetBugZip( int bugnum, char const *admin )
 			retval = true;
 		}
 	}
-	
-    // Close process and thread handles. 
-    CloseHandle( pi.hProcess );
-    CloseHandle( pi.hThread );
+
+	// Close process and thread handles.
+	CloseHandle( pi.hProcess );
+	CloseHandle( pi.hThread );
 
 	return retval;
 }
@@ -686,7 +686,7 @@ void CreateDirHierarchy(const char *path)
 {
 	char temppath[512];
 	Q_strncpy( temppath, path, sizeof(temppath) );
-	
+
 	for (char *ofs = temppath+1 ; *ofs ; ofs++)
 	{
 		if (*ofs == '/' || *ofs == '\\')
@@ -786,7 +786,7 @@ void GetBugInfo( CBugReporter& bug, char const *host, char const *database, char
 								CColumnValue Important = rows->GetColumnValue( "Important" );
 
 								bug.StartNewBugReport();
-								
+
 								vprint( 1, "Processing bug %i\n", BugId.Int32() );
 
 								bug.AddField( "Owner", "PublicUser" );
@@ -829,7 +829,7 @@ void GetBugInfo( CBugReporter& bug, char const *host, char const *database, char
 								Q_FileBase( BugReportFilePath.String(), basepath, sizeof( basepath ) );
 
 								char desc[ 8192 ];
-								
+
 								if ( BugReportFilePath.String()[ 0 ] )
 								{
 									Q_snprintf( zipurl, sizeof( zipurl ), BUG_REPOSITORY_FMT, database, "BugId", basepath );
@@ -949,9 +949,9 @@ void GetBugInfo( CBugReporter& bug, char const *host, char const *database, char
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : argc - 
-//			argv[] - 
+// Purpose:
+// Input  : argc -
+//			argv[] -
 // Output : int
 //-----------------------------------------------------------------------------
 int main( int argc, char* argv[] )

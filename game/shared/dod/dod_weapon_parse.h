@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,12 +15,12 @@
 #include "networkvar.h"
 
 #define WPN_TYPE_MELEE			(1<<0)
-#define WPN_TYPE_GRENADE		(1<<1)			
+#define WPN_TYPE_GRENADE		(1<<1)
 //#define WPN_TYPE_GRENADE_LIVE	(1<<2)	//exploding grenades, unused
-#define WPN_TYPE_PISTOL			(1<<3)			
-#define WPN_TYPE_RIFLE			(1<<4)			
-#define WPN_TYPE_SNIPER			(1<<5)		
-#define WPN_TYPE_SUBMG			(1<<6)			
+#define WPN_TYPE_PISTOL			(1<<3)
+#define WPN_TYPE_RIFLE			(1<<4)
+#define WPN_TYPE_SNIPER			(1<<5)
+#define WPN_TYPE_SUBMG			(1<<6)
 #define WPN_TYPE_MG				(1<<7)	//mg42, 30cal
 #define WPN_TYPE_BAZOOKA		(1<<8)
 #define WPN_TYPE_BANDAGE		(1<<9)
@@ -37,9 +37,9 @@ class CDODWeaponInfo : public FileWeaponInfo_t
 {
 public:
 	DECLARE_CLASS_GAMEROOT( CDODWeaponInfo, FileWeaponInfo_t );
-	
+
 	CDODWeaponInfo();
-	
+
 	virtual void Parse( ::KeyValues *pKeyValuesData, const char *szWeaponName );
 
 	int		m_iDamage;

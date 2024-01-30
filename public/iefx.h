@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -31,17 +31,17 @@ public:
 	virtual	int				Draw_DecalIndexFromName	( char *name ) = 0;
 
 	// Apply decal
-	virtual	void			DecalShoot				( int textureIndex, int entity, 
-		const model_t *model, const Vector& model_origin, const QAngle& model_angles, 
+	virtual	void			DecalShoot				( int textureIndex, int entity,
+		const model_t *model, const Vector& model_origin, const QAngle& model_angles,
 		const Vector& position, const Vector *saxis, int flags ) = 0;
 
 	// Apply colored decal
-	virtual	void			DecalColorShoot				( int textureIndex, int entity, 
-		const model_t *model, const Vector& model_origin, const QAngle& model_angles, 
+	virtual	void			DecalColorShoot				( int textureIndex, int entity,
+		const model_t *model, const Vector& model_origin, const QAngle& model_angles,
 		const Vector& position, const Vector *saxis, int flags, const color32 &rgbaColor  ) = 0;
 
-	virtual void			PlayerDecalShoot( IMaterial *material, void *userdata, int entity, const model_t *model, 
-		const Vector& model_origin, const QAngle& model_angles, 
+	virtual void			PlayerDecalShoot( IMaterial *material, void *userdata, int entity, const model_t *model,
+		const Vector& model_origin, const QAngle& model_angles,
 		const Vector& position, const Vector *saxis, int flags, const color32 &rgbaColor ) = 0;
 
 	// Allocate a dynamic world light ( key is the entity to whom it is associated )

@@ -21,7 +21,7 @@
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTradingStartDialog::CTradingStartDialog( vgui::Panel *parent ) : vgui::EditablePanel( parent, "TradingStartDialog" )
 {
@@ -46,7 +46,7 @@ CTradingStartDialog::CTradingStartDialog( vgui::Panel *parent ) : vgui::Editable
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTradingStartDialog::~CTradingStartDialog( void )
 {
@@ -58,7 +58,7 @@ CTradingStartDialog::~CTradingStartDialog( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTradingStartDialog::Reset( void )
 {
@@ -68,7 +68,7 @@ void CTradingStartDialog::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTradingStartDialog::ApplySettings( KeyValues *inResourceData )
 {
@@ -89,7 +89,7 @@ void CTradingStartDialog::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTradingStartDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -129,9 +129,9 @@ void CTradingStartDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTradingStartDialog::PerformLayout( void ) 
+void CTradingStartDialog::PerformLayout( void )
 {
 	BaseClass::PerformLayout();
 
@@ -155,7 +155,7 @@ void CTradingStartDialog::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTradingStartDialog::FireGameEvent( IGameEvent *event )
 {
@@ -168,7 +168,7 @@ void CTradingStartDialog::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTradingStartDialog::Close( void )
 {
@@ -179,7 +179,7 @@ void CTradingStartDialog::Close( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTradingStartDialog::OnCommand( const char *command )
 {
@@ -250,7 +250,7 @@ void CTradingStartDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTradingStartDialog::SendGiftTo( CSteamID steamID )
 {
@@ -258,24 +258,24 @@ void CTradingStartDialog::SendGiftTo( CSteamID steamID )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTradingStartDialog::StartTradeWith( CSteamID steamID )
 {
 	m_iCurrentState = TDS_SELECTING_PLAYER;
 	OnCommand( "cancel" );
 
-	if ( !m_bGiftMode ) 
+	if ( !m_bGiftMode )
 	{
 		Trading_RequestTrade( steamID );
-		return;	
+		return;
 	}
 
 	Trading_SendGift( steamID, m_giftItem );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTradingStartDialog::ExtractSteamIDFromURL( char *inputURL )
 {
@@ -340,7 +340,7 @@ bool CTradingStartDialog::ExtractSteamIDFromURL( char *inputURL )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTradingStartDialog::OnLookupAccountResponse( uint64 iAccountID )
 {
@@ -369,7 +369,7 @@ void CTradingStartDialog::OnLookupAccountResponse( uint64 iAccountID )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Sets a gift for the dialog to hand out. If pGiftItem is NULL, which is 
+// Purpose: Sets a gift for the dialog to hand out. If pGiftItem is NULL, which is
 // fine, make sure to clear our our own existing gift.
 //-----------------------------------------------------------------------------
 void CTradingStartDialog::SetGift( CEconItemView* pGiftItem )
@@ -388,7 +388,7 @@ void CTradingStartDialog::SetGift( CEconItemView* pGiftItem )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTradingStartDialog::OnTextChanged( KeyValues *data )
 {
@@ -413,7 +413,7 @@ void CTradingStartDialog::OnTextChanged( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTradingStartDialog::UpdateState( void )
 {
@@ -458,7 +458,7 @@ void CTradingStartDialog::UpdateState( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTradingStartDialog::SetupSelectFriends( void )
 {
@@ -496,7 +496,7 @@ void CTradingStartDialog::SetupSelectFriends( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTradingStartDialog::SetupSelectServer( void )
 {
@@ -529,7 +529,7 @@ void CTradingStartDialog::SetupSelectServer( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTradingStartDialog::SetupSelectProfile( void )
 {
@@ -560,7 +560,7 @@ void CTradingStartDialog::SetupSelectProfile( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTradingStartDialog::UpdatePlayerList( void )
 {
@@ -611,14 +611,14 @@ void CTradingStartDialog::UpdatePlayerList( void )
 			{
 				m_pPlayerPanels[i]->ApplySettings( m_pButtonKV );
 				m_pPlayerPanels[i]->InvalidateLayout( true );
-			} 
+			}
 		}
 
 		m_pPlayerPanels[i]->SetInfo( m_PlayerInfoList[i].m_steamID, m_PlayerInfoList[i].m_name.Get() );
 	}
 
 	m_pPlayerListScroller->GetScrollbar()->SetAutohideButtons( true );
-	m_pPlayerListScroller->GetScrollbar()->SetValue( 0 );	
+	m_pPlayerListScroller->GetScrollbar()->SetValue( 0 );
 
 	// Remove any extra player panels
 	for ( int i = m_pPlayerPanels.Count()-1; i >= m_PlayerInfoList.Count(); i-- )
@@ -641,7 +641,7 @@ void CTradingStartDialog::UpdatePlayerList( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTradeTargetPanel::SetInfo( const CSteamID &steamID, const char *pszName )
 {
@@ -656,7 +656,7 @@ void CTradeTargetPanel::SetInfo( const CSteamID &steamID, const char *pszName )
 static vgui::DHANDLE<CTradingStartDialog> g_hTradingStartDialog;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTradingStartDialog *OpenTradingStartDialog( vgui::Panel *pParent, CEconItemView* pOptGiftItem )
 {

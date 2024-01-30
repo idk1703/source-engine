@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Weapon Base Melee 
+// Purpose: Weapon Base Melee
 //
 //=============================================================================
 
@@ -27,10 +27,10 @@ class CTFWeaponBaseMelee : public CTFWeaponBase
 public:
 
 	DECLARE_CLASS( CTFWeaponBaseMelee, CTFWeaponBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
-#if !defined( CLIENT_DLL ) 
+#if !defined( CLIENT_DLL )
 	DECLARE_DATADESC();
 #endif
 
@@ -77,7 +77,7 @@ public:
 
 	virtual char const		*GetShootSound( int iIndex ) const;
 
-public:	
+public:
 
 	CTFWeaponInfo	*m_pWeaponInfo;
 

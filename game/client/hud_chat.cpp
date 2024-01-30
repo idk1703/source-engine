@@ -26,7 +26,7 @@ DECLARE_HUD_MESSAGE( CHudChat, TextMsg );
 
 CHudChat::CHudChat( const char *pElementName ) : BaseClass( pElementName )
 {
-	
+
 }
 
 void CHudChat::Init( void )
@@ -76,10 +76,10 @@ void CHudChat::MsgFunc_SayText2( bf_read &msg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszName - 
-//			iSize - 
-//			*pbuf - 
+// Purpose:
+// Input  : *pszName -
+//			iSize -
+//			*pbuf -
 //-----------------------------------------------------------------------------
 void CHudChat::MsgFunc_SayText( bf_read &msg )
 {
@@ -95,7 +95,7 @@ void CHudChat::MsgFunc_SayText( bf_read &msg )
 // displays a string, looking them up from the titles.txt file, which can be localised
 // parameters:
 //   byte:   message direction  ( HUD_PRINTCONSOLE, HUD_PRINTNOTIFY, HUD_PRINTCENTER, HUD_PRINTTALK )
-//   string: message 
+//   string: message
 // optional parameters:
 //   string: message parameter 1
 //   string: message parameter 2
@@ -125,7 +125,7 @@ void CHudChat::MsgFunc_TextMsg( bf_read &msg )
 	char *sstr2 = hudtextmessage->LookupString( szString );
 	Q_strncpy( szBuf[2], sstr2, sizeof( szBuf[2] ) );
 	sstr2 = szBuf[2];
-	
+
 	StripEndNewlineFromString( sstr2 );
 	msg.ReadString( szString, sizeof(szString) );
 	char *sstr3 = hudtextmessage->LookupString( szString );
@@ -137,7 +137,7 @@ void CHudChat::MsgFunc_TextMsg( bf_read &msg )
 	char *sstr4 = hudtextmessage->LookupString( szString );
 	Q_strncpy( szBuf[4], sstr4, sizeof( szBuf[4] ) );
 	sstr4 = szBuf[4];
-	
+
 	StripEndNewlineFromString( sstr4 );
 	char *psz = szBuf[5];
 
@@ -168,4 +168,3 @@ void CHudChat::MsgFunc_TextMsg( bf_read &msg )
 		break;
 	}
 }
-

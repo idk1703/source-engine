@@ -55,7 +55,7 @@ const char* g_ItemModelPanelRenderTargetNames[] =
 };
 COMPILE_TIME_ASSERT( ITEM_MODEL_IMAGE_CACHE_SIZE == ARRAYSIZE( g_ItemModelPanelRenderTargetNames ) );
 
-CItemMaterialCustomizationIconPanel::CItemMaterialCustomizationIconPanel( vgui::Panel *pParent, const char *pName ) 
+CItemMaterialCustomizationIconPanel::CItemMaterialCustomizationIconPanel( vgui::Panel *pParent, const char *pName )
 	: BaseClass( pParent, pName )
 {
 	m_iPaintSplat = -1;
@@ -153,7 +153,7 @@ void CItemMaterialCustomizationIconPanel::DrawQuad( int iSubtileIndex, int iSubt
 	verts[2].Init( Vector2D( iWide * fXBR, iTall ), uv22 );
 	verts[3].Init( Vector2D( iWide * fXBL,	iTall ), uv12  );
 
-	vgui::surface()->DrawTexturedPolygon( 4, verts );	
+	vgui::surface()->DrawTexturedPolygon( 4, verts );
 }
 
 DECLARE_BUILD_FACTORY( CItemModelPanel );
@@ -163,7 +163,7 @@ DECLARE_BUILD_FACTORY( CItemMaterialCustomizationIconPanel );
 item_model_cache_t g_ItemModelImageCache[ITEM_MODEL_IMAGE_CACHE_SIZE];
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEmbeddedItemModelPanel::CEmbeddedItemModelPanel( vgui::Panel *pParent, const char *pName ) : BaseClass( pParent, pName )
 {
@@ -232,7 +232,7 @@ void CEmbeddedItemModelPanel::CleanUpCachedWeaponIcon()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEmbeddedItemModelPanel::UpdateCameraForIcon()
 {
@@ -260,13 +260,13 @@ void CEmbeddedItemModelPanel::UpdateCameraForIcon()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEmbeddedItemModelPanel::SetItem( CEconItemView *pItem ) 
-{ 
+void CEmbeddedItemModelPanel::SetItem( CEconItemView *pItem )
+{
 	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
 
-	m_iTextureID = -1; 
+	m_iTextureID = -1;
 	m_iToolTargetItemTextureID = -1;
 	m_iOverlayTextureIDs.Purge();
 	CleanUpCachedWeaponIcon();
@@ -313,7 +313,7 @@ void CEmbeddedItemModelPanel::SetItem( CEconItemView *pItem )
 	{
 		m_pszToolTargetItemImage = NULL;
 	}
-   
+
 #ifdef STAGING_ONLY
 	if ( tf_paint_kit_show_unique_icon.GetBool() )
 #endif // STAGING_ONLY
@@ -332,7 +332,7 @@ void CEmbeddedItemModelPanel::SetItem( CEconItemView *pItem )
 		else
 		{
 			m_bWeaponAllowInspect = false;
-			
+
 #ifdef STAGING_ONLY
 			m_flStartUpdateTime = 0.0;
 #endif // STAGING_ONLY
@@ -361,7 +361,7 @@ void CEmbeddedItemModelPanel::SetItem( CEconItemView *pItem )
 #ifndef PORTAL2 // DOTA COME BACK
 				if ( m_bUsePedestal )
 				{
-					MDLHandle_t hPedestalMDL = mdlcache->FindMDL( "models/weapons/pedestal/pedestal.mdl" ); 
+					MDLHandle_t hPedestalMDL = mdlcache->FindMDL( "models/weapons/pedestal/pedestal.mdl" );
 					SetMDL( hPedestalMDL, NULL );
 					mdlcache->Release( hPedestalMDL ); // counterbalance addref from within FindMDL
 
@@ -523,7 +523,7 @@ void CEmbeddedItemModelPanel::SetItem( CEconItemView *pItem )
 				{
 					iSkin = iOverrideSkin;
 				}
-					
+
 				SetSkin( iSkin );
 
 				if ( m_bUsePedestal )
@@ -581,7 +581,7 @@ bool CEmbeddedItemModelPanel::IsLoadingWeaponSkin( void ) const
 			return !m_pCachedWeaponIcon || !m_pCachedWeaponIcon->GetTexture();
 		}
 	}
-	
+
 	return false;
 }
 
@@ -601,7 +601,7 @@ bool CEmbeddedItemModelPanel::IsImageNotLoaded( void ) const
 IMaterial* GetMaterialForImage( CEmbeddedItemModelPanel::InventoryImageType_t eImageType, const char* pszBaseName )
 {
 	IMaterial *pMaterial = NULL;
-	
+
 	Assert( pszBaseName );
 	if ( !pszBaseName )
 		return NULL;
@@ -627,7 +627,7 @@ IMaterial* GetMaterialForImage( CEmbeddedItemModelPanel::InventoryImageType_t eI
 	default:
 		Assert(0);
 	}
-	
+
 	Assert( pMaterial && !IsErrorMaterial( pMaterial ) );
 
 	return pMaterial;
@@ -635,7 +635,7 @@ IMaterial* GetMaterialForImage( CEmbeddedItemModelPanel::InventoryImageType_t eI
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEmbeddedItemModelPanel::LoadInventoryImage()
 {
@@ -651,7 +651,7 @@ void CEmbeddedItemModelPanel::LoadInventoryImage()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEmbeddedItemModelPanel::PerformLayout( void )
 {
@@ -683,7 +683,7 @@ static double s_total_time = 0.f;
 #endif // STAGING_ONLY
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEmbeddedItemModelPanel::Paint( void )
 {
@@ -786,7 +786,7 @@ void CEmbeddedItemModelPanel::Paint( void )
 		{
 			// Look up the material (use the large one if we've been told to)
 			IMaterial *pMaterial = GetMaterialForImage( (CEmbeddedItemModelPanel::InventoryImageType_t)m_iInventoryImageType, pszInventoryImage );
-		
+
 			int iCenter[2];
 			iCenter[0] = x + (iWidth * 0.5);
 			iCenter[1] = y + (iHeight * 0.5);
@@ -795,7 +795,7 @@ void CEmbeddedItemModelPanel::Paint( void )
 			int iPosition[2] = {0,0};
 			int iSize[2] = {0,0};
 			m_pItem->GetInventoryImageData( iPosition, iSize );
-		
+
 			if ( m_bForceSquareImage )
 			{
 				iSize[0] = MAX( iSize[0], iSize[1] );
@@ -840,14 +840,14 @@ void CEmbeddedItemModelPanel::Paint( void )
 			}
 
 			// Reload our texture, if we need to
-			if ( m_iTextureID == -1 ) 
+			if ( m_iTextureID == -1 )
 			{
 				m_iTextureID = vgui::surface()->DrawGetTextureId( pMaterial->GetName() );
 
 				// If we didn't find it, create a new one
 				if ( m_iTextureID == -1 )
 				{
-					m_iTextureID = vgui::surface()->CreateNewTextureID();	
+					m_iTextureID = vgui::surface()->CreateNewTextureID();
 					g_pMatSystemSurface->DrawSetTextureMaterial( m_iTextureID, pMaterial );
 				}
 			}
@@ -862,7 +862,7 @@ void CEmbeddedItemModelPanel::Paint( void )
 		surface()->DrawSetTexture( iTexture );
 
 		if ( m_bGreyedOut )
-		{ 
+		{
 			surface()->DrawSetColor( 96, 96, 96, 255 );
 		}
 		else
@@ -889,7 +889,7 @@ void CEmbeddedItemModelPanel::Paint( void )
 				// If we didn't find it, create a new one
 				if ( iTextureID == -1 )
 				{
-					iTextureID = vgui::surface()->CreateNewTextureID();	
+					iTextureID = vgui::surface()->CreateNewTextureID();
 					g_pMatSystemSurface->DrawSetTextureMaterial( iTextureID, pOverlayMaterial );
 				}
 
@@ -914,15 +914,15 @@ void CEmbeddedItemModelPanel::Paint( void )
 		if ( m_pszToolTargetItemImage && m_pszToolTargetItemImage[0] )
 		{
 			IMaterial* pToolTargetItemMaterial = GetMaterialForImage( (CEmbeddedItemModelPanel::InventoryImageType_t)m_iInventoryImageType, m_pszToolTargetItemImage );
-			
-			if ( m_iToolTargetItemTextureID == -1 ) 
+
+			if ( m_iToolTargetItemTextureID == -1 )
 			{
 				m_iToolTargetItemTextureID = vgui::surface()->DrawGetTextureId( pToolTargetItemMaterial->GetName() );
 
 				// If we didn't find it, create a new one
 				if ( m_iToolTargetItemTextureID == -1 )
 				{
-					m_iToolTargetItemTextureID = vgui::surface()->CreateNewTextureID();	
+					m_iToolTargetItemTextureID = vgui::surface()->CreateNewTextureID();
 					g_pMatSystemSurface->DrawSetTextureMaterial( m_iToolTargetItemTextureID, pToolTargetItemMaterial );
 				}
 
@@ -935,7 +935,7 @@ void CEmbeddedItemModelPanel::Paint( void )
 			}
 
 			surface()->DrawSetTexture( m_iToolTargetItemTextureID );
-			
+
 			int iStrangeX = x + ( iWidth  * m_vecToolTargetItemImageOffset.x );
 			int iStrangeY = y + ( iHeight * m_vecToolTargetItemImageOffset.y );
 			float flScale = m_vecToolTargetItemImageOffset.z;
@@ -949,7 +949,7 @@ void CEmbeddedItemModelPanel::Paint( void )
 											flTexX + (flTexW ),
 											flTexY + (flTexH ) );
 		}
-		
+
 		return;
 	}
 
@@ -1036,7 +1036,7 @@ void CEmbeddedItemModelPanel::Paint( void )
 			if ( pRenderTarget )
 			{
 				pRenderContext->AsyncCreateTextureFromRenderTarget( pRenderTarget, buffer, IMAGE_FORMAT_RGBA8888, false, 0, m_pCachedWeaponIcon, NULL );
-			
+
 				pCacheRenderTarget->iItemID = m_pItem->GetItemID();
 				pCacheRenderTarget->iItemDefinitionIndex = m_pItem->GetItemDefIndex();
 				pCacheRenderTarget->iWidth = iWidth;
@@ -1062,8 +1062,8 @@ void CEmbeddedItemModelPanel::Paint( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-ITexture *CEmbeddedItemModelPanel::GetCachedGeneratedIcon() 
-{ 
+ITexture *CEmbeddedItemModelPanel::GetCachedGeneratedIcon()
+{
 	return m_pCachedWeaponIcon ? m_pCachedWeaponIcon->GetTexture() : NULL;
 }
 
@@ -1072,9 +1072,9 @@ ITexture *CEmbeddedItemModelPanel::GetCachedGeneratedIcon()
 // Purpose:
 //-----------------------------------------------------------------------------
 bool CEmbeddedItemModelPanel::UpdateParticle(
-	IMatRenderContext				*pRenderContext, 
-	CStudioHdr						*pStudioHdr, 
-	MDLHandle_t						mdlHandle, 
+	IMatRenderContext				*pRenderContext,
+	CStudioHdr						*pStudioHdr,
+	MDLHandle_t						mdlHandle,
 	matrix3x4_t						*pWorldMatrix
 	)
 {
@@ -1138,9 +1138,9 @@ bool CEmbeddedItemModelPanel::UpdateParticle(
 			iBone = Studio_BoneIndexByName( pStudioHdr, "prp_hat" );
 		}
 	}
-	
+
 	// default to root
-	if ( iBone < 0 ) 
+	if ( iBone < 0 )
 	{
 		iBone = 0;
 	}
@@ -1283,7 +1283,7 @@ void CEmbeddedItemModelPanel::RenderingRootModel( IMatRenderContext *pRenderCont
 	}
 
 	studiohdr_t *pItemStudioHdr = m_ItemModel.m_MDL.GetStudioHdr();
-	
+
 	if ( pItemStudioHdr != NULL )
 	{
 		matrix3x4_t matIdentity;
@@ -1335,7 +1335,7 @@ IMaterial *CEmbeddedItemModelPanel::GetOverrideMaterial( MDLHandle_t mdlHandle )
 	if ( !m_ItemModel.m_bDisabled && m_ItemModel.m_MDL.GetMDL() != mdlHandle )
 		return NULL;
 
-	if ( !m_pItem ) 
+	if ( !m_pItem )
 		return NULL;
 
 	int iTeam = GetLocalPlayerTeam();
@@ -1357,7 +1357,7 @@ int   CItemModelPanel::sm_nCurrentDecriptionUpdateFrame = 0;
 CItemModelPanel::eLoadingType_t CItemModelPanel::se_CurrentLoadingTask = LOADING_ICONS;
 int CItemModelPanel::sai_NumLoadingRequests[NUM_LOADING_TYPES] = {0,0,0};
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemModelPanel::CItemModelPanel( vgui::Panel *parent, const char *name ) : vgui::EditablePanel( parent, name )
 {
@@ -1416,7 +1416,7 @@ CItemModelPanel::CItemModelPanel( vgui::Panel *parent, const char *name ) : vgui
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemModelPanel::~CItemModelPanel( void )
 {
@@ -1424,7 +1424,7 @@ CItemModelPanel::~CItemModelPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemModelPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -1546,7 +1546,7 @@ void CItemModelPanel::LoadResFileForCurrentItem( bool bForceLoad )
 		m_bHideModel = m_bHideModelDefault;
 		m_nCollectionItemLoaded = LOADED_COLLECTION_NONE;
 	}
-	
+
 	m_pModelPanel = dynamic_cast<CEmbeddedItemModelPanel*>( FindChildByName( "itemmodelpanel", true ) );
 	SetModelIsHidden( m_bHideModel );
 	if ( m_bIsMouseOverPanel && m_pModelPanel )
@@ -1689,9 +1689,9 @@ void CItemModelPanel::LoadResFileForCurrentItem( bool bForceLoad )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CItemModelPanel::PerformLayout( void ) 
+void CItemModelPanel::PerformLayout( void )
 {
 	int w,h;
 	GetSize( w, h );
@@ -1739,7 +1739,7 @@ void CItemModelPanel::PerformLayout( void )
 			m_pItemCollectionNameLabel->InvalidateLayout( true );
 			m_pItemCollectionNameLabel->SizeToContents();
 		}
-			
+
 		if ( m_pItemCollectionListLabel )
 		{
 			m_pItemCollectionListLabel->InvalidateLayout( true );
@@ -1791,11 +1791,11 @@ void CItemModelPanel::PerformLayout( void )
 		// Force attrib layout to update now in its new size.
 		m_pItemAttribLabel->InvalidateLayout( true );
 		m_pItemAttribLabel->SizeToContents();
-		
+
 		// Reget sizes, wtf
 		iCollectionTall = m_pItemCollectionListLabel ? m_pItemCollectionListLabel->GetTall() : 0;
 		iAttribTall = ( m_pItemAttribLabel->GetWide() ? m_pItemAttribLabel->GetTall() : 0 );
-		// HACK: Now we resize it again. Sets our height properly. Ridiculous. 
+		// HACK: Now we resize it again. Sets our height properly. Ridiculous.
 		m_pItemAttribLabel->SetSize( iTextW, iAttribTall );
 		m_pItemNameLabel->SetSize( iTextW, iNameTall );
 
@@ -1916,7 +1916,7 @@ void CItemModelPanel::PerformLayout( void )
 		m_pIsLoanerImage->SetPos( xpos - m_pIsLoanerImage->GetWide(), ypos );
 		ypos += m_pIsLoanerImage->GetTall() * 0.9;
 	}
-	
+
 
 	if ( m_pItemNameLabel )
 	{
@@ -1952,19 +1952,19 @@ void CItemModelPanel::PerformLayout( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemModelPanel::PaintTraverse( bool forceRepaint, bool allowForce )
 {
 	if ( m_bFakeButton )
 		return;
-	
+
 	BaseClass::PaintTraverse( forceRepaint, allowForce );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemModelPanel::OnSizeChanged( int newWide, int newTall )
 {
@@ -1993,7 +1993,7 @@ void CItemModelPanel::OnSizeChanged( int newWide, int newTall )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemModelPanel::ResizeLabels( void )
 {
@@ -2099,7 +2099,7 @@ void CItemModelPanel::ResizeLabels( void )
 		{
 			m_pItemCollectionNameLabel->SetFont( m_pFontNameLarge );
 			m_pItemCollectionNameLabel->SetCenterWrap( false );
-			m_pItemCollectionNameLabel->SizeToContents();	
+			m_pItemCollectionNameLabel->SizeToContents();
 		}
 		if ( m_pItemCollectionListLabel )
 		{
@@ -2161,7 +2161,7 @@ void CItemModelPanel::ResizeLabels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemModelPanel::SetItem( const CEconItemView *pItem )
 {
@@ -2178,7 +2178,7 @@ void CItemModelPanel::SetItem( const CEconItemView *pItem )
 			if ( m_ItemData.GetItemID() != INVALID_ITEM_ID )
 			{
 				bool bUseIndexCompare = false;
-					
+
 #ifdef TF_CLIENT_DLL
 				if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
 				{
@@ -2189,7 +2189,7 @@ void CItemModelPanel::SetItem( const CEconItemView *pItem )
 					}
 				}
 #endif
-				 
+
 				if ( bUseIndexCompare )
 				{
 					bMatch = m_ItemData.GetItemDefIndex() == pItem->GetItemDefIndex();
@@ -2299,7 +2299,7 @@ void CItemModelPanel::SetItem( const CEconItemView *pItem )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemModelPanel::Dragged( bool bDragging )
 {
@@ -2314,7 +2314,7 @@ void CItemModelPanel::Dragged( bool bDragging )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemModelPanel::ShowContainedItemPanel( const CEconItemView *pItem )
 {
@@ -2356,7 +2356,7 @@ void CItemModelPanel::ShowContainedItemPanel( const CEconItemView *pItem )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemModelPanel::HideContainedItemPanel()
 {
@@ -2368,7 +2368,7 @@ void CItemModelPanel::HideContainedItemPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemModelPanel::SetEconItem( CEconItem* pItem )
 {
@@ -2393,21 +2393,21 @@ void CItemModelPanel::SetEconItem( CEconItem* pItem )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CItemModelPanel::SetNoItemText( const char *pszText ) 
+void CItemModelPanel::SetNoItemText( const char *pszText )
 {
 	m_pszNoItemText = pszText;
 	CleanupNoItemWChars();
 
-	if ( !HasItem() ) 
+	if ( !HasItem() )
 	{
-		UpdatePanels(); 
+		UpdatePanels();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemModelPanel::CleanupNoItemWChars( void )
 {
@@ -2424,7 +2424,7 @@ void CItemModelPanel::CleanupNoItemWChars( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CItemModelPanel::UpdateSeriesLabel()
 {
@@ -2441,7 +2441,7 @@ bool CItemModelPanel::UpdateSeriesLabel()
 			_snwprintf( wszSeries, ARRAYSIZE( wszSeries ), L"#%i", (int)fCrateSeries );
 			m_pSeriesLabel->SetVisible( true );
 			m_pSeriesLabel->SetText( wszSeries );
-			
+
 			return true;
 		}
 		else
@@ -2469,7 +2469,7 @@ bool CItemModelPanel::CheckRecipeMatches()
 	const IEconTool* pTool = m_ItemData.GetStaticData()->GetEconTool();
 
 	// If this isnt a dynamic recipe tool, dont show or do any of this
-	if( !pTool 
+	if( !pTool
 		|| V_stricmp( m_ItemData.GetStaticData()->GetEconTool()->GetTypeName() , "dynamic_recipe")
 		|| m_ItemData.GetStaticData()->GetDefaultLoadoutSlot() != INVALID_EQUIPPED_SLOT )
 	{
@@ -2538,7 +2538,7 @@ bool CItemModelPanel::CheckRecipeMatches()
 
 		bStillWorking = m_nRecipeMatchingIndex != pLocalInv->GetItemCount();
 		wchar_t wszMatches[16]=L"...";
-		
+
 		if( !bStillWorking )
 		{
 			CRecipeComponentMatchingIterator matchingIterator( &m_ItemData, NULL );
@@ -2556,7 +2556,7 @@ bool CItemModelPanel::CheckRecipeMatches()
 			// Fill out the actual number of matches
 			_snwprintf( wszMatches, ARRAYSIZE( wszMatches ), L"%i/%i", nMatchingAttribs, nTotalAttribs );
 		}
-	
+
 		m_pMatchesLabel->SetVisible( true );
 		m_pMatchesLabel->SetText( wszMatches );
 	}
@@ -2572,7 +2572,7 @@ void CItemModelPanel::UpdateDescription()
 	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
 
 	m_bDescriptionDirty = false;
-	
+
 	enum { kAttribBufferSize = 4 * 1024 };
 	wchar_t wszAttribBuffer[ kAttribBufferSize ] = L"";
 
@@ -2599,7 +2599,7 @@ void CItemModelPanel::UpdateDescription()
 					{
 						V_wcscat_safe( wszAttribBuffer, unWrittenLines++ == 0 ? L"" : L"\n" );					// add empty lines everywhere except before the first line
 						V_wcscat_safe( wszAttribBuffer, line.sText.Get() );
-					}	
+					}
 				}
 				else if ( ( line.unMetaType & kDescLineFlag_CollectionName ) != 0 )
 				{
@@ -2610,7 +2610,7 @@ void CItemModelPanel::UpdateDescription()
 					}
 				}
 				else if ( ( line.unMetaType & kDescLineFlag_Collection ) != 0 )
-				{		
+				{
 					V_wcscat_safe( wszCollectionListBuffer, unWrittenCollectionLines++ == 0 ? L"" : L"\n" );					// add empty lines everywhere except before the first line
 					V_wcscat_safe( wszCollectionListBuffer, line.sText.Get() );
 				}
@@ -2625,7 +2625,7 @@ void CItemModelPanel::UpdateDescription()
 			m_bDescriptionDirty |= pDescription->HasUnknownPlayer();
 		}
 	}
-		
+
 	if( m_pMainContentContainer )
 	{
 		m_pMainContentContainer->SetDialogVariable( "attriblist", wszAttribBuffer );
@@ -2643,7 +2643,7 @@ void CItemModelPanel::UpdateDescription()
 		{
 			m_pItemNameLabel->SetColorStr( GetItemSchema()->GetRarityColor( m_ItemData.GetItemDefinition()->GetRarity() ) );
 		}
-		else 
+		else
 		{
 			const char *pszQualityColorString = EconQuality_GetColorString( eQuality );
 			if ( m_ItemData.IsValid() && !m_bStandardTextColor && pszQualityColorString )
@@ -2759,7 +2759,7 @@ void CItemModelPanel::UpdateDescription()
 				}
 				iCollectionLineCount++;
 			}
-			else 
+			else
 			{
 				Color col = pScheme->GetColor( GetColorNameForAttribColor( line.eColor ), Color( 255, 255, 255, 255 ) );
 
@@ -2786,7 +2786,7 @@ void CItemModelPanel::UpdateDescription()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemModelPanel::DirtyDescription()
 {
@@ -2797,7 +2797,7 @@ void CItemModelPanel::DirtyDescription()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CItemModelPanel::UpdateMatchesLabel()
 {
@@ -2811,12 +2811,12 @@ bool CItemModelPanel::UpdateMatchesLabel()
 	m_nRecipeMatchingIndex = 0;
 	m_mapMatchingAttributes.Purge();
 	SetNeedsToLoad();
-	
+
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CItemModelPanel::UpdateQuantityLabel()
 {
@@ -2860,10 +2860,10 @@ inline wchar_t *CloneWString( const wchar_t *str )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemModelPanel::SetNoItemText( const wchar_t *pwszTitleOverride, const wchar_t *pwszAttribs, int iNegAttribsBegin )
-{ 
+{
 	static CSchemaColorDefHandle pColorDef_DescAttribPositive( "desc_attrib_positive" );
 	static CSchemaColorDefHandle pColorDef_DescAttribNegative( "ItemAttribNegative" );
 
@@ -2874,7 +2874,7 @@ void CItemModelPanel::SetNoItemText( const wchar_t *pwszTitleOverride, const wch
 
 	if ( pwszAttribs )
 	{
-		m_pwcNoItemAttrib = CloneWString( pwszAttribs ); 
+		m_pwcNoItemAttrib = CloneWString( pwszAttribs );
 
 		if ( m_pItemAttribLabel && m_pItemAttribLabel->GetTextImage() )
 		{
@@ -2899,14 +2899,14 @@ void CItemModelPanel::SetNoItemText( const wchar_t *pwszTitleOverride, const wch
 		}
 	}
 
-	if ( !HasItem() ) 
+	if ( !HasItem() )
 	{
-		UpdatePanels(); 
+		UpdatePanels();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemModelPanel::HideAllModifierIcons()
 {
@@ -2957,7 +2957,7 @@ void CItemModelPanel::HideAllModifierIcons()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemModelPanel::UpdatePanels( void )
 {
@@ -3020,7 +3020,7 @@ void CItemModelPanel::UpdatePanels( void )
 				const wchar_t *wcNOText = NULL;
 				if ( m_pszNoItemText && m_pszNoItemText[0] )
 				{
-					wcNOText = g_pVGuiLocalize->Find( m_pszNoItemText ); 
+					wcNOText = g_pVGuiLocalize->Find( m_pszNoItemText );
 				}
 				else if ( m_pwcNoItemText )
 				{
@@ -3064,7 +3064,7 @@ void CItemModelPanel::UpdatePanels( void )
 					m_pItemNameLabel->SetVisible( false );
 				}
 			}
-			
+
 			if ( !m_bNameOnly && m_pwcNoItemAttrib )
 			{
 				if ( m_pMainContentContainer )
@@ -3299,18 +3299,18 @@ void CItemModelPanel::UpdatePanels( void )
 				else
 				{
 					m_pIsStrangeImage->SetImage( "viewmode_strange" );
-				
+
 				}
 				m_pIsStrangeImage->SetVisible( true );
 			}
 		}
 	}
-	
+
 	// Unusual Icon
 	if ( m_pIsUnusualImage )
 	{
 		m_pIsUnusualImage->SetVisible( false );
-	
+
 		static CSchemaAttributeDefHandle pAttrDef_ParticleEffect( "attach particle effect" );
 		static CSchemaAttributeDefHandle pAttrDef_TauntParticle( "on taunt attach particle index" );
 		if ( pAttrDef_ParticleEffect && pAttrDef_TauntParticle && !m_bIsMouseOverPanel )
@@ -3338,7 +3338,7 @@ void CItemModelPanel::UpdatePanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CItemModelPanel::IsEquipped( void )
 {
@@ -3349,20 +3349,20 @@ bool CItemModelPanel::IsEquipped( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CItemModelPanel::SetGreyedOut( const char *pszGreyedOutReason ) 
-{ 
+void CItemModelPanel::SetGreyedOut( const char *pszGreyedOutReason )
+{
 	m_pszGreyedOutReason = pszGreyedOutReason;
 	if ( m_pModelPanel )
 	{
 		m_pModelPanel->SetGreyedOut( m_pszGreyedOutReason != NULL );
 	}
-	UpdateEquippedLabel(); 
+	UpdateEquippedLabel();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CItemModelPanel::HasItem( void )
 {
@@ -3370,7 +3370,7 @@ bool CItemModelPanel::HasItem( void )
 }
 
 void CItemModelPanel::SetModelIsHidden( bool bHideModel )
-{ 
+{
 	m_bHideModel = bHideModel;
 	if ( m_pModelPanel )
 	{
@@ -3448,7 +3448,7 @@ bool CItemModelPanel::LoadData()
 					m_pModelPanel->Paint();
 					g_pMatSystemSurface->EndSkinCompositionPainting();
 				}
-			
+
 				if ( bLoadingBackpackIcon )
 				{
 					m_pModelPanel->LoadInventoryImage();
@@ -3504,12 +3504,12 @@ void CItemModelPanel::LoadDataCompleted()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CItemModelPanel::SetActAsButton( bool bClickable, bool bMouseOver ) 
-{ 
-	m_bClickable = bClickable; 
-	m_bMouseOver = bMouseOver; 
+void CItemModelPanel::SetActAsButton( bool bClickable, bool bMouseOver )
+{
+	m_bClickable = bClickable;
+	m_bMouseOver = bMouseOver;
 
 	SetMouseInputEnabled( m_bClickable || m_bMouseOver );
 }
@@ -3530,7 +3530,7 @@ void CItemModelPanel::NavigateFrom()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemModelPanel::OnCursorEntered( void )
 {
@@ -3549,7 +3549,7 @@ void CItemModelPanel::OnCursorEntered( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemModelPanel::OnCursorExited( void )
 {
@@ -3568,7 +3568,7 @@ void CItemModelPanel::OnCursorExited( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 extern ISoundEmitterSystemBase *soundemitterbase;
 void CItemModelPanel::OnMousePressed(vgui::MouseCode code)
@@ -3603,7 +3603,7 @@ void CItemModelPanel::OnMousePressed(vgui::MouseCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemModelPanel::OnMouseReleased(vgui::MouseCode code)
 {
@@ -3621,7 +3621,7 @@ void CItemModelPanel::OnMouseReleased(vgui::MouseCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemModelPanel::OnMouseDoublePressed(vgui::MouseCode code)
 {
@@ -3728,7 +3728,7 @@ itempanel_tooltippos_t g_iTooltipStrategies[NUM_IPTTP_STRATEGIES][NUM_POSITIONS_
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CItemModelPanelToolTip::CItemModelPanelToolTip( vgui::Panel *parent, const char *text ) 
+CItemModelPanelToolTip::CItemModelPanelToolTip( vgui::Panel *parent, const char *text )
 : vgui::BaseTooltip( parent, text )
 , m_pMouseOverItemPanel( NULL )
 , m_iPositioningStrategy( IPTTP_BOTTOM_SIDE )
@@ -3748,7 +3748,7 @@ void CItemModelPanelToolTip::GetPosition( itempanel_tooltippos_t iTooltipPositio
 		*iXPos = (iItemX - m_pMouseOverItemPanel->GetWide() + XRES(18));
 		*iYPos = iItemY - YRES(7);
 		break;
-	case IPTTP_RIGHT: 
+	case IPTTP_RIGHT:
 		*iXPos = (iItemX + pItemPanel->GetWide() - XRES(20));
 		*iYPos = iItemY - YRES(7);
 		break;
@@ -3829,7 +3829,7 @@ bool CItemModelPanelToolTip::ValidatePosition( CItemModelPanel *pItemPanel, int 
 		vecItemMin.y = iItemY;
 		vecItemMax.x = vecItemMin.x + m_hCurrentPanel->GetWide();
 		vecItemMax.y = vecItemMin.y + m_hCurrentPanel->GetTall();
-		
+
 		bSucceeded = !( vecToolTipMin.x < vecItemMax.x && vecToolTipMax.x > vecItemMin.x &&	vecToolTipMin.y < vecItemMax.y && vecToolTipMax.y > vecItemMin.y );
 	}
 
@@ -3839,7 +3839,7 @@ bool CItemModelPanelToolTip::ValidatePosition( CItemModelPanel *pItemPanel, int 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CItemModelPanelToolTip::PerformLayout() 
+void CItemModelPanelToolTip::PerformLayout()
 {
 	BaseClass::PerformLayout();
 
@@ -3849,8 +3849,8 @@ void CItemModelPanelToolTip::PerformLayout()
 	_isDirty = false;
 
 	CItemModelPanel *pItemPanel = m_hCurrentPanel.Get();
-	if ( m_pMouseOverItemPanel && pItemPanel ) 
-	{		
+	if ( m_pMouseOverItemPanel && pItemPanel )
+	{
 		CEconItemView *pItem = pItemPanel->GetItem();
 		if ( pItem && pItemPanel->ShouldShowTooltip() /*&& !IsIgnoringItemPanelEnters()*/ )
 		{
@@ -3893,7 +3893,7 @@ void CItemModelPanelToolTip::PerformLayout()
 			}
 
 			m_pMouseOverItemPanel->SetPos( iXPos, iYPos );
-			m_pMouseOverItemPanel->SetVisible( true );			
+			m_pMouseOverItemPanel->SetVisible( true );
 		}
 	}
 }
@@ -3901,9 +3901,9 @@ void CItemModelPanelToolTip::PerformLayout()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CItemModelPanelToolTip::ShowTooltip( Panel *currentPanel ) 
-{ 
-	if ( m_pMouseOverItemPanel && currentPanel != m_hCurrentPanel.Get() ) 
+void CItemModelPanelToolTip::ShowTooltip( Panel *currentPanel )
+{
+	if ( m_pMouseOverItemPanel && currentPanel != m_hCurrentPanel.Get() )
 	{
 		CItemModelPanel *pItemPanel = assert_cast<CItemModelPanel *>(currentPanel);
 		m_hCurrentPanel.Set( pItemPanel );
@@ -3912,17 +3912,17 @@ void CItemModelPanelToolTip::ShowTooltip( Panel *currentPanel )
 
 		m_pMouseOverItemPanel->HideContainedItemPanel();
 	}
-	BaseClass::ShowTooltip( currentPanel );	
+	BaseClass::ShowTooltip( currentPanel );
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CItemModelPanelToolTip::HideTooltip() 
+void CItemModelPanelToolTip::HideTooltip()
 {
-	if ( m_pMouseOverItemPanel ) 
+	if ( m_pMouseOverItemPanel )
 	{
-		m_pMouseOverItemPanel->SetVisible( false ); 
+		m_pMouseOverItemPanel->SetVisible( false );
 	}
 
 	if ( m_hCurrentPanel )

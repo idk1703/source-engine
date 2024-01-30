@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -90,7 +90,7 @@ public:
 	float					m_flNext;
 
 	// is this event only client side?
-	bool					m_bClientSide; 
+	bool					m_bClientSide;
 
 	void					InitWeight( CBaseFlex *pActor );
 	float					UpdateWeight( CBaseFlex *pActor );

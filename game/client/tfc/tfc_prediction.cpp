@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,9 +24,9 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFCPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, 
+void CTFCPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper,
 	CMoveData *move )
 {
 	// Call the default SetupMove code.
@@ -34,7 +34,7 @@ void CTFCPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelpe
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFCPrediction::FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *move )
 {
@@ -50,4 +50,3 @@ static CTFCPrediction g_Prediction;
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CTFCPrediction, IPrediction, VCLIENT_PREDICTION_INTERFACE_VERSION, g_Prediction );
 
 CPrediction *prediction = &g_Prediction;
-

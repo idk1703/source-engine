@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -55,9 +55,9 @@ public:
 
 private:
 
-	void DrawColoredText( 
-		vgui::HFont font, 
-		int x, int y, 
+	void DrawColoredText(
+		vgui::HFont font,
+		int x, int y,
 		int r, int g, int b, int a,
 		PRINTF_FORMAT_STRING const char *pText,
 		... ) FMTFUNCTION( 9, 10 );

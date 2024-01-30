@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -10,9 +10,9 @@
 #include "tier0/dbg.h"
 
 #ifndef MAKEFOURCC
-    #define MAKEFOURCC(ch0, ch1, ch2, ch3)                              \
-                ((uint32)(BYTE)(ch0) | ((uint32)(BYTE)(ch1) << 8) |   \
-                ((uint32)(BYTE)(ch2) << 16) | ((uint32)(BYTE)(ch3) << 24 ))
+	#define MAKEFOURCC(ch0, ch1, ch2, ch3)                              \
+	((uint32)(BYTE)(ch0) | ((uint32)(BYTE)(ch1) << 8) |   \
+	((uint32)(BYTE)(ch2) << 16) | ((uint32)(BYTE)(ch3) << 24 ))
 #endif //defined(MAKEFOURCC)
 
 // XING Header offset: 1. index = lsf, 2. index = mono
@@ -28,7 +28,7 @@ uint32 CVBRHeader::m_dwXINGOffsets[2][2] =
 bool CVBRHeader::IsVBRHeaderAvailable( CMPAFile* pMPAFile, VBRHeaderType& HeaderType, uint32& dwOffset )
 {
 	Assert(pMPAFile);
-	
+
 	// where does VBR header begin (XING)
 	uint32 dwNewOffset = dwOffset + m_dwXINGOffsets[pMPAFile->m_pMPAHeader->IsLSF()][pMPAFile->m_pMPAHeader->IsMono()];
 
@@ -68,7 +68,7 @@ CVBRHeader::CVBRHeader( CMPAFile* pMPAFile, VBRHeaderType HeaderType, uint32 dwO
 				throw CMPAException( CMPAException::NoVBRHeader, pMPAFile->GetFilename(), NULL, false );
 			break;
 		case VBRIHeader:
-			if( !ExtractVBRIHeader( m_dwOffset ) ) 
+			if( !ExtractVBRIHeader( m_dwOffset ) )
 				throw CMPAException( CMPAException::NoVBRHeader, pMPAFile->GetFilename(), NULL, false );
 			break;
 	}
@@ -120,14 +120,14 @@ bool CVBRHeader::ExtractXINGHeader( uint32 dwOffset )
 {
 	/* XING VBR-Header
 
-	 size	description
-	 4		'Xing' or 'Info'
-	 4		flags (indicates which fields are used)
-	 4		frames (optional)
-	 4		bytes (optional)
-	 100	toc (optional)
-	 4		a VBR quality indicator: 0=best 100=worst (optional)
-	
+	size	description
+	4		'Xing' or 'Info'
+	4		flags (indicates which fields are used)
+	4		frames (optional)
+	4		bytes (optional)
+	100	toc (optional)
+	4		a VBR quality indicator: 0=best 100=worst (optional)
+
 	*/
 	if( !CheckXING( m_pMPAFile, dwOffset ) )
 		return false;
@@ -135,18 +135,18 @@ bool CVBRHeader::ExtractXINGHeader( uint32 dwOffset )
 	uint32 dwFlags;
 
 	// get flags (mandatory in XING header)
-	dwFlags = m_pMPAFile->ExtractBytes( dwOffset, 4 ); 
+	dwFlags = m_pMPAFile->ExtractBytes( dwOffset, 4 );
 
 	// extract total number of frames in file
 	if(dwFlags & FRAMES_FLAG)
 		m_dwFrames = m_pMPAFile->ExtractBytes(dwOffset,4);
 
 	// extract total number of bytes in file
-	if(dwFlags & BYTES_FLAG) 
+	if(dwFlags & BYTES_FLAG)
 		m_dwBytes = m_pMPAFile->ExtractBytes(dwOffset,4);
 
 	// extract TOC (for more accurate seeking)
-	if (dwFlags & TOC_FLAG) 
+	if (dwFlags & TOC_FLAG)
 	{
 		m_dwTableSize = 100;
 		m_pnToc = new int[m_dwTableSize];
@@ -161,7 +161,7 @@ bool CVBRHeader::ExtractXINGHeader( uint32 dwOffset )
 	m_dwQuality = (uint32)-1;
 	if(dwFlags & VBR_SCALE_FLAG )
 		m_dwQuality = m_pMPAFile->ExtractBytes(dwOffset, 4);
-		
+
 	return true;
 }
 
@@ -180,7 +180,7 @@ bool CVBRHeader::ExtractVBRIHeader( uint32 dwOffset )
 	2		table scale (for TOC)
 	2		size of table entry (max. size = 4 byte (must be stored in an integer))
 	2		frames per table entry
-	
+
 	??		dynamic table consisting out of frames with size 1-4
 			whole length in table size! (for TOC)
 
@@ -224,9 +224,9 @@ bool CVBRHeader::SeekPoint(float fPercent, uint32& dwSeekPoint)
 	if( !m_pnToc || m_dwBytes == 0 )
 		return false;
 
-	if( fPercent < 0.0f )   
+	if( fPercent < 0.0f )
 		fPercent = 0.0f;
-	if( fPercent > 100.0f ) 
+	if( fPercent > 100.0f )
 		fPercent = 100.0f;
 
 	switch( m_HeaderType )
@@ -250,19 +250,19 @@ uint32 CVBRHeader::SeekPointXING(float fPercent) const
 	a = (int)fPercent;
 	if( a > 99 ) a = 99;
 	fa = (float)m_pnToc[a];
-	
-	if( a < 99 ) 
+
+	if( a < 99 )
 	{
 		fb = (float)m_pnToc[a+1];
 	}
-	else 
+	else
 	{
 		fb = 256.0f;
 	}
 
 	fx = fa + (fb-fa)*(fPercent-a);
 
-	uint32 dwSeekpoint = (int)((1.0f/256.0f)*fx*m_dwBytes); 
+	uint32 dwSeekpoint = (int)((1.0f/256.0f)*fx*m_dwBytes);
 	return dwSeekpoint;
 }
 
@@ -279,26 +279,25 @@ uint32 CVBRHeader::SeekPointByTimeVBRI(float fEntryTimeMS) const
 	float fLengthMS;
 	float fLengthMSPerTOCEntry;
 	float fAccumulatedTimeMS = 0.0f ;
-	 
+
 	fLengthMS = (float)m_pMPAFile->m_pMPAHeader->GetLengthSecond( m_dwFrames ) * 1000.0f ;
 	fLengthMSPerTOCEntry = fLengthMS / (float)m_dwTableSize;
-	 
-	if ( fEntryTimeMS > fLengthMS ) 
-		fEntryTimeMS = fLengthMS; 
-	 
+
+	if ( fEntryTimeMS > fLengthMS )
+		fEntryTimeMS = fLengthMS;
+
 	while ( fAccumulatedTimeMS <= fEntryTimeMS )
 	{
 		dwSeekPoint += m_pnToc[i++];
 		fAccumulatedTimeMS += fLengthMSPerTOCEntry;
 	}
-	  
+
 	// Searched too far; correct result
-	fraction = ( (int)(((( fAccumulatedTimeMS - fEntryTimeMS ) / fLengthMSPerTOCEntry ) 
+	fraction = ( (int)(((( fAccumulatedTimeMS - fEntryTimeMS ) / fLengthMSPerTOCEntry )
 				+ (1.0f/(2.0f*(float)m_dwFramesPerEntry))) * (float)m_dwFramesPerEntry));
 
-	dwSeekPoint -= (uint32)((float)m_pnToc[i-1] * (float)(fraction) 
+	dwSeekPoint -= (uint32)((float)m_pnToc[i-1] * (float)(fraction)
 					/ (float)m_dwFramesPerEntry);
 
 	return dwSeekPoint;
 }
-

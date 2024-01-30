@@ -16,7 +16,7 @@
 //with the %l escape sequence
 class CDODLocation : public CBaseEntity
 {
-public: 
+public:
 	DECLARE_CLASS( CDODLocation, CBaseEntity );
 	CDODLocation()
 	{

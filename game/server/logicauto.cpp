@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Fires an output when the map spawns (or respawns if not set to 
+// Purpose: Fires an output when the map spawns (or respawns if not set to
 //			only fire once). It can be set to check a global state before firing.
 //
 // $NoKeywords: $
@@ -124,4 +124,3 @@ void CLogicAuto::Think(void)
 		}
 	}
 }
-

@@ -23,7 +23,7 @@ void RecvProxy_PlayerList(  const CRecvProxyData *pData, void *pStruct, void *pO
 void RecvProxyArrayLength_PlayerArray( void *pStruct, int objectID, int currentArrayLength )
 {
 	C_Team *pTeam = (C_Team*)pStruct;
-	
+
 	if ( pTeam->m_aPlayers.Size() != currentArrayLength )
 		pTeam->m_aPlayers.SetSize( currentArrayLength );
 }
@@ -34,12 +34,12 @@ IMPLEMENT_CLIENTCLASS_DT_NOBASE(C_Team, DT_Team, CTeam)
 	RecvPropInt( RECVINFO(m_iScore)),
 	RecvPropInt( RECVINFO(m_iRoundsWon) ),
 	RecvPropString( RECVINFO(m_szTeamname)),
-	
-	RecvPropArray2( 
+
+	RecvPropArray2(
 		RecvProxyArrayLength_PlayerArray,
-		RecvPropInt( "player_array_element", 0, SIZEOF_IGNORE, 0, RecvProxy_PlayerList ), 
-		MAX_PLAYERS, 
-		0, 
+		RecvPropInt( "player_array_element", 0, SIZEOF_IGNORE, 0, RecvProxy_PlayerList ),
+		MAX_PLAYERS,
+		0,
 		"player_array"
 		)
 END_RECV_TABLE()
@@ -61,7 +61,7 @@ CUtlVector< C_Team * > g_Teams;
 // C_Team functionality
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_Team::C_Team()
 {
@@ -78,7 +78,7 @@ C_Team::C_Team()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_Team::~C_Team()
 {
@@ -98,7 +98,7 @@ void C_Team::PreDataUpdate( DataUpdateType_t updateType )
 
 
 //-----------------------------------------------------------------------------
-// Gets the ith player on the team (may return NULL) 
+// Gets the ith player on the team (may return NULL)
 //-----------------------------------------------------------------------------
 C_BasePlayer* C_Team::GetPlayer( int idx )
 {
@@ -115,7 +115,7 @@ int C_Team::GetTeamNumber() const
 //=================================================================================================
 // TEAM HANDLING
 //=================================================================================================
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 char *C_Team::Get_Name( void )
 {
@@ -123,7 +123,7 @@ char *C_Team::Get_Name( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_Team::Get_Score( void )
 {
@@ -131,7 +131,7 @@ int C_Team::Get_Score( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_Team::Get_Deaths( void )
 {
@@ -139,7 +139,7 @@ int C_Team::Get_Deaths( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_Team::Get_Ping( void )
 {
@@ -185,7 +185,7 @@ C_Team *GetLocalTeam( void )
 
 	if ( !player )
 		return NULL;
-	
+
 	return GetPlayersTeam( player->index );
 }
 
@@ -208,7 +208,7 @@ C_Team *GetGlobalTeam( int iTeamNumber )
 //-----------------------------------------------------------------------------
 int GetNumTeams()
 {
-	return g_Teams.Count() + 1; 
+	return g_Teams.Count() + 1;
 }
 
 //-----------------------------------------------------------------------------

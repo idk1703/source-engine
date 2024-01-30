@@ -31,7 +31,7 @@ CHudTimer::CHudTimer( const char *pElementName ) : CHudNumeric( pElementName, "H
 {
 	SetDrawLabel( false );
 	SetDoPulses( false );
-	
+
 	SetHiddenBits( HIDEHUD_MISCSTATUS );
 }
 
@@ -294,5 +294,5 @@ int CHudTimer::MsgFunc_StartTimer( bf_read &msg )
 		StopTimer();
 	}
 
-	return 1;	
+	return 1;
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,7 @@ ConVar r_DrawPortals( "r_DrawPortals", "0", FCVAR_CHEAT );
 CUtlVector<CPortalRect> g_PortalRects;
 static bool				g_bViewerInSolidSpace = false;
 
-			  
+
 
 // ------------------------------------------------------------------------------------ //
 // Classes.
@@ -119,14 +119,14 @@ struct portalclip_t
 
 // Transforms and clips the portal's verts to the view frustum. Returns false
 // if the verts lie outside the frustum.
-static inline bool GetPortalScreenExtents( dareaportal_t *pPortal, 
+static inline bool GetPortalScreenExtents( dareaportal_t *pPortal,
 	portalclip_t * RESTRICT clip, CPortalRect &portalRect , float *pReflectionWaterHeight )
 {
 	portalRect.left = portalRect.bottom = 1e24;
 	portalRect.right = portalRect.top   = -1e24;
 	bool bValidExtents = false;
 	worldbrushdata_t *pBrushData = host_state.worldbrush;
-	
+
 	int nStartVerts = min( (int)pPortal->m_nClipPortalVerts, MAX_PORTAL_VERTS );
 
 	// NOTE: We need two passes to deal with reflection. We need to compute
@@ -246,7 +246,7 @@ inline bool GetRectIntersection( CPortalRect const *pRect1, CPortalRect const *p
 	return true;
 }
 
-static void R_FlowThroughArea( int area, const Vector &vecVisOrigin, const CPortalRect *pClipRect, 
+static void R_FlowThroughArea( int area, const Vector &vecVisOrigin, const CPortalRect *pClipRect,
 	const VisOverrideData_t* pVisData, float *pReflectionWaterHeight )
 {
 #ifndef SWDS
@@ -268,7 +268,7 @@ static void R_FlowThroughArea( int area, const Vector &vecVisOrigin, const CPort
 		pFrustumRect->top    = fpmax( pFrustumRect->top, pClipRect->top );
 		pFrustumRect->right  = fpmax( pFrustumRect->right, pClipRect->right );
 	}
-	
+
 	// Mark this area as visible.
 	R_SetBit( g_RenderAreaBits, area );
 
@@ -341,7 +341,7 @@ static void R_FlowThroughArea( int area, const Vector &vecVisOrigin, const CPort
 			}
 		}
 	}
-	
+
 	// Mark that we're leaving this area.
 	R_ClearBit( g_AreaStack, area );
 #endif
@@ -354,7 +354,7 @@ static void IncrementGlobalCounter()
 	{
 		for( int i=0; i < g_AreaCullInfo.Count(); i++ )
 			g_AreaCullInfo[i].m_GlobalCounter = 0;
-	
+
 		g_GlobalCounter = 1;
 	}
 	else
@@ -409,7 +409,7 @@ static void R_SetupGlobalFrustum()
 		g_viewSetup.m_bViewToProjectionOverride = false;
 
 		ComputeViewMatrices (
-			&matrixView, 
+			&matrixView,
 			&matrixProjection,
 			&matrixWorldToScreen,
 			g_viewSetup );
@@ -438,7 +438,7 @@ static void R_SetupVisibleAreaFrustums()
 		portalWindow.right   = RemapVal( pInfo->m_Rect.right,  -1, 1, g_viewWindow.left,   g_viewWindow.right );
 		portalWindow.top     = RemapVal( pInfo->m_Rect.top,    -1, 1, g_viewWindow.bottom, g_viewWindow.top );
 		portalWindow.bottom  = RemapVal( pInfo->m_Rect.bottom, -1, 1, g_viewWindow.bottom, g_viewWindow.top );
-		
+
 		if( g_viewSetup.m_bOrtho )
 		{
 			// Left and right planes...
@@ -492,7 +492,7 @@ static void R_SetupVisibleAreaFrustums()
 			pInfo->m_Frustum.SetPlane( FRUSTUM_BOTTOM, PLANE_ANYZ, normal, DotProduct(normal,CurrentViewOrigin()) );
 
 			// farz
-			pInfo->m_Frustum.SetPlane( FRUSTUM_FARZ, PLANE_ANYZ, -CurrentViewForward(), 
+			pInfo->m_Frustum.SetPlane( FRUSTUM_FARZ, PLANE_ANYZ, -CurrentViewForward(),
 				DotProduct(-CurrentViewForward(), CurrentViewOrigin() + CurrentViewForward()*g_viewSetup.zFar) );
 		}
 
@@ -503,9 +503,9 @@ static void R_SetupVisibleAreaFrustums()
 		{
 			if ( g_VisibleAreas[i] == r_snapportal.GetInt() )
 			{
-				pInfo->m_Frustum.SetPlane( FRUSTUM_NEARZ, PLANE_ANYZ, CurrentViewForward(), 
+				pInfo->m_Frustum.SetPlane( FRUSTUM_NEARZ, PLANE_ANYZ, CurrentViewForward(),
 					DotProduct(CurrentViewForward(), CurrentViewOrigin()) );
-				pInfo->m_Frustum.SetPlane( FRUSTUM_FARZ, PLANE_ANYZ, -CurrentViewForward(), 
+				pInfo->m_Frustum.SetPlane( FRUSTUM_FARZ, PLANE_ANYZ, -CurrentViewForward(),
 					DotProduct(-CurrentViewForward(), CurrentViewOrigin() + CurrentViewForward()*500) );
 				r_snapportal.SetValue( -1 );
 				CSGFrustum( pInfo->m_Frustum );
@@ -538,7 +538,7 @@ inline bool R_CullNodeInternal( mnode_t *pNode, int &nClipMask, const Frustum_t&
 		if (flCenterDotNormal + flHalfDiagDotAbsNormal < 0.0f)
 			return true;
 		if (flCenterDotNormal - flHalfDiagDotAbsNormal < 0.0f)
-			nOutClipMask |= FRUSTUM_CLIP_RIGHT;	
+			nOutClipMask |= FRUSTUM_CLIP_RIGHT;
 	}
 
 	if (nClipMask & FRUSTUM_CLIP_LEFT)
@@ -549,7 +549,7 @@ inline bool R_CullNodeInternal( mnode_t *pNode, int &nClipMask, const Frustum_t&
 		if (flCenterDotNormal + flHalfDiagDotAbsNormal < 0.0f)
 			return true;
 		if (flCenterDotNormal - flHalfDiagDotAbsNormal < 0.0f)
-			nOutClipMask |= FRUSTUM_CLIP_LEFT;	
+			nOutClipMask |= FRUSTUM_CLIP_LEFT;
 	}
 
 	if (nClipMask & FRUSTUM_CLIP_TOP)
@@ -560,7 +560,7 @@ inline bool R_CullNodeInternal( mnode_t *pNode, int &nClipMask, const Frustum_t&
 		if (flCenterDotNormal + flHalfDiagDotAbsNormal < 0.0f)
 			return true;
 		if (flCenterDotNormal - flHalfDiagDotAbsNormal < 0.0f)
-			nOutClipMask |= FRUSTUM_CLIP_TOP;	
+			nOutClipMask |= FRUSTUM_CLIP_TOP;
 	}
 
 	if (nClipMask & FRUSTUM_CLIP_BOTTOM)
@@ -571,7 +571,7 @@ inline bool R_CullNodeInternal( mnode_t *pNode, int &nClipMask, const Frustum_t&
 		if (flCenterDotNormal + flHalfDiagDotAbsNormal < 0.0f)
 			return true;
 		if (flCenterDotNormal - flHalfDiagDotAbsNormal < 0.0f)
-			nOutClipMask |= FRUSTUM_CLIP_BOTTOM;	
+			nOutClipMask |= FRUSTUM_CLIP_BOTTOM;
 	}
 
 	nClipMask = nOutClipMask;
@@ -633,7 +633,7 @@ void R_SetupAreaBits( int iForceViewLeaf /* = -1 */, const VisOverrideData_t* pV
 	// Flow through areas starting at the one we're in.
 	int leaf = iForceViewLeaf;
 	// If view point override wasn't specified, use the current view origin
-	if ( iForceViewLeaf == -1  ) 
+	if ( iForceViewLeaf == -1  )
 	{
 		leaf = CM_PointLeafnum( g_EngineRenderer->ViewOrigin() );
 	}
@@ -646,13 +646,13 @@ void R_SetupAreaBits( int iForceViewLeaf /* = -1 */, const VisOverrideData_t* pV
 			memset( g_RenderAreaBits, 0, sizeof( g_RenderAreaBits ) );
 			int area = host_state.worldbrush->leafs[leaf].area;
 			R_SetBit( g_RenderAreaBits, area );
-			
+
 			g_VisibleAreas[0] = area;
 			g_nVisibleAreas = 1;
 
 			g_AreaCullInfo[area].m_GlobalCounter = g_GlobalCounter;
 			g_AreaCullInfo[area].m_Rect = rect;
-			
+
 			R_SetupVisibleAreaFrustums();
 		}
 		else
@@ -680,11 +680,11 @@ void R_SetupAreaBits( int iForceViewLeaf /* = -1 */, const VisOverrideData_t* pV
 	else
 	{
 		int area = host_state.worldbrush->leafs[leaf].area;
-		
+
 		if ( r_ShowViewerArea.GetInt() )
 			Con_NPrintf( 3, "Viewer area: %d", area );
 
-		g_nVisibleAreas = 0;		
+		g_nVisibleAreas = 0;
 		Vector vecVisOrigin = (pVisData)?(pVisData->m_vecVisOrigin):(g_EngineRenderer->ViewOrigin());
 		R_SetupGlobalFrustum();
 		R_FlowThroughArea ( area, vecVisOrigin, &rect, pVisData, pWaterReflectionHeight );
@@ -700,6 +700,3 @@ const Frustum_t* GetAreaFrustum( int area )
 	else
 		return &g_Frustum;
 }
-
-
-

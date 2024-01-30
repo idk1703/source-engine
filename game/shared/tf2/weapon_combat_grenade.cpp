@@ -40,7 +40,7 @@ public:
 
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -53,8 +53,8 @@ public:
 		return BaseClass::ShouldPredict();
 	}
 #endif
-private:														
-	CWeaponCombatGrenade( const CWeaponCombatGrenade & );						
+private:
+	CWeaponCombatGrenade( const CWeaponCombatGrenade & );
 
 };
 
@@ -64,7 +64,7 @@ CWeaponCombatGrenade::CWeaponCombatGrenade( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatGrenade::Precache( void )
 {

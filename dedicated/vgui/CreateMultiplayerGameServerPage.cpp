@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -66,7 +66,7 @@ const char *GetLiblistFallbackDir( const char *pszGameDir )
 			szLine[0] = 0;
 			g_pFullFileSystem->ReadLine( szLine, sizeof(szLine) - 1, hFile );
 			szLine[sizeof(szLine) - 1] = 0;
-			
+
 			if ( !strnicmp( szLine, "fallback_dir", 12 ) )
 			{
 				// we got the line, get the value between the quotes
@@ -120,7 +120,7 @@ CCreateMultiplayerGameServerPage::CCreateMultiplayerGameServerPage(vgui::Panel *
 	SetMinimumSize(310, 350);
 	SetSize(310, 350);
 	SetSizeable(false);
-	
+
 
 	SetTitle("#Start_Server_Title",true);
 
@@ -140,12 +140,12 @@ CCreateMultiplayerGameServerPage::CCreateMultiplayerGameServerPage(vgui::Panel *
 	m_pNumPlayers = new ComboBox(this, "NumPlayers",10,false);
 	char num[3];
 	int i;
-	for( i = 1 ; i <= MAX_PLAYERS ; i++ ) 
+	for( i = 1 ; i <= MAX_PLAYERS ; i++ )
 	{
 		V_sprintf_safe(num, "%i", i);
 		m_pNumPlayers->AddItem(num, NULL);
 	}
-	m_pNumPlayers->ActivateItemByRow(23); // 24 players by default 
+	m_pNumPlayers->ActivateItemByRow(23); // 24 players by default
 
 	m_pGameCombo = new ComboBox(this,"MODCombo", 10, false);
 
@@ -217,7 +217,7 @@ CCreateMultiplayerGameServerPage::~CCreateMultiplayerGameServerPage()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCreateMultiplayerGameServerPage::OnResetData()
 {
@@ -284,7 +284,7 @@ void CCreateMultiplayerGameServerPage::LoadConfig()
 			const char *map = m_pSavedData->GetString("Map", "");
 			if (strlen(map) > 0)
 			{
-				SetControlString("MapList", map);			
+				SetControlString("MapList", map);
 			}
 		}
 
@@ -331,7 +331,7 @@ void CCreateMultiplayerGameServerPage::SetConfig(const char *serverName, const c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCreateMultiplayerGameServerPage::SaveConfig()
 {
@@ -395,8 +395,8 @@ void CCreateMultiplayerGameServerPage::OnCommand(const char *cmd)
 		{
 			CommandLine()->AppendParm("-insecure", "");
 		}
-		
-	
+
+
 	//	V_strcpy_safe(m_szPassword, GetControlString("RCONPasswordEdit", ""));
 		if (strlen(m_szPassword) < 3 || BadRconChars(m_szPassword))
 		{
@@ -480,31 +480,31 @@ bool CCreateMultiplayerGameServerPage::LaunchOldDedicatedServer( KeyValues *pGam
 				char steamDir[MAX_PATH];
 				if ( !system()->GetRegistryString( "HKEY_CURRENT_USER\\Software\\Valve\\Steam\\SteamPath", steamDir, sizeof( steamDir ) ) )
 					Error( "LaunchOldDedicatedServer: can't get SteamPath." );
-					
+
 				V_FixSlashes( steamDir );
 				V_AppendSlash( steamDir, sizeof( steamDir ) );
-				
+
 				char commandLine[1024 * 4];
 				commandLine[0] = 0;
 				V_snprintf( commandLine, sizeof( commandLine ), "\"%ssteam.exe\" -applaunch 205 -HiddenLaunch", steamDir );
-			
+
 				// Feed it all the parameters chosen in the UI so it doesn't redisplay the UI.
 				STARTUPINFO si;
 				memset( &si, 0, sizeof( si ) );
 				si.cb = sizeof( si );
-				
+
 				PROCESS_INFORMATION pi;
 				if ( !CreateProcess( NULL, commandLine, NULL, NULL, false, 0, NULL, steamDir, &si, &pi ) )
 				{
 					Error( "LaunchOldDedicatedServer: Unable to launch old srcds." );
 				}
-				
+
 				return true;
 			}
 		}
 	}
 #endif
-	
+
 	return false;
 }
 
@@ -521,7 +521,7 @@ void CCreateMultiplayerGameServerPage::LoadMODList()
 		const char *pSteamGamesFilename = "hlds_steamgames.vdf";
 
 		KeyValues *gamesFile = new KeyValues( pSteamGamesFilename );
-		
+
 		if ( gamesFile->LoadFromFile( g_pFullFileSystem, pSteamGamesFilename, NULL ) )
 		{
 			for ( KeyValues *kv = gamesFile->GetFirstSubKey(); kv != NULL; kv = kv->GetNextKey() )
@@ -562,7 +562,7 @@ void CCreateMultiplayerGameServerPage::LoadModListInDirectory( const char *pDire
 	while ( filename )
 	{
 		// add to the mod list
-		if (filename[0] != '.' && g_pFullFileSystem->FindIsDirectory(findHandle)) 
+		if (filename[0] != '.' && g_pFullFileSystem->FindIsDirectory(findHandle))
 		{
 			char fullFilename[MAX_PATH];
 			if ( Q_stricmp( pDirectoryName, "." ) == 0 )
@@ -580,7 +580,7 @@ void CCreateMultiplayerGameServerPage::LoadModListInDirectory( const char *pDire
 
 			LoadPossibleMod( fullFilename );
 		}
-		
+
 		filename = g_pFullFileSystem->FindNext(findHandle);
 	}
 	g_pFullFileSystem->FindClose(findHandle);
@@ -796,7 +796,7 @@ const char *CCreateMultiplayerGameServerPage::GetMapName()
 const char *CCreateMultiplayerGameServerPage::GetRconPassword()
 {
 	return m_szPassword;
-}	
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: updates "s" with the details of the chosen server to run
@@ -829,11 +829,11 @@ void CCreateMultiplayerGameServerPage::OnTextChanged(Panel *panel)
 		{
 			updateHostname = true;
 		}
-		
+
 		// update the game name
 		m_pGameCombo->GetText( m_szGameName, sizeof(m_szGameName) );
 
-		
+
 		// Copy the gamedir into m_szMod.
 		KeyValues *gameData = m_pGameCombo->GetActiveItemUserData();
 		if ( !gameData )
@@ -869,4 +869,3 @@ void CCreateMultiplayerGameServerPage::OnTextChanged(Panel *panel)
 }
 
 #endif // _WIN32
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -40,15 +40,15 @@ extern CNetworkStringTableContainer *networkStringTableContainerServer;
 static ConVar	sv_timeout( "sv_timeout", "65", 0, "After this many seconds without a message from a client, the client is dropped" );
 static ConVar	sv_maxrate( "sv_maxrate", "0", FCVAR_REPLICATED, "Max bandwidth rate allowed on server, 0 == unlimited" );
 static ConVar	sv_minrate( "sv_minrate", "3500", FCVAR_REPLICATED, "Min bandwidth rate allowed on server, 0 == unlimited" );
-       
-       ConVar	sv_maxupdaterate( "sv_maxupdaterate", "66", FCVAR_REPLICATED, "Maximum updates per second that the server will allow" );
-	   ConVar	sv_minupdaterate( "sv_minupdaterate", "10", FCVAR_REPLICATED, "Minimum updates per second that the server will allow" );
 
-	   ConVar	sv_stressbots("sv_stressbots", "0", FCVAR_DEVELOPMENTONLY, "If set to 1, the server calculates data and fills packets to bots. Used for perf testing.");
+		ConVar	sv_maxupdaterate( "sv_maxupdaterate", "66", FCVAR_REPLICATED, "Maximum updates per second that the server will allow" );
+		ConVar	sv_minupdaterate( "sv_minupdaterate", "10", FCVAR_REPLICATED, "Minimum updates per second that the server will allow" );
+
+		ConVar	sv_stressbots("sv_stressbots", "0", FCVAR_DEVELOPMENTONLY, "If set to 1, the server calculates data and fills packets to bots. Used for perf testing.");
 static ConVar	sv_allowdownload ("sv_allowdownload", "1", 0, "Allow clients to download files");
 static ConVar	sv_allowupload ("sv_allowupload", "1", 0, "Allow clients to upload customizations files");
-	   ConVar	sv_sendtables ( "sv_sendtables", "0", FCVAR_DEVELOPMENTONLY, "Force full sendtable sending path." );
-	   
+		ConVar	sv_sendtables ( "sv_sendtables", "0", FCVAR_DEVELOPMENTONLY, "Force full sendtable sending path." );
+
 
 extern ConVar sv_maxreplay;
 extern ConVar tv_snapshotrate;
@@ -58,7 +58,7 @@ extern ConVar sv_pure_trace;
 
 // static ConVar sv_failuretime( "sv_failuretime", "0.5", 0, "After this long without a packet from client, don't send any more until client starts sending again" );
 
-static const char * s_clcommands[] = 
+static const char * s_clcommands[] =
 {
 	"status",
 	"pause",
@@ -67,7 +67,7 @@ static const char * s_clcommands[] =
 	"ping",
 	"rpt_server_enable",
 	"rpt_client_enable",
-#ifndef SWDS 
+#ifndef SWDS
 	"rpt",
 	"rpt_connect",
 	"rpt_password",
@@ -152,15 +152,15 @@ bool CGameClient::ProcessMove(CLC_Move *msg)
 	// Don't process usercmds until the client is active. If we do, there can be weird behavior
 	// like the game trying to send reliable messages to the client and having those messages discarded.
 	if ( !IsActive() )
-		return true;	
+		return true;
 
-	if ( m_LastMovementTick == sv.m_nTickCount )  
+	if ( m_LastMovementTick == sv.m_nTickCount )
 	{
 		// Only one movement command per frame, someone is cheating.
 		return true;
 	}
 
-	m_LastMovementTick = sv.m_nTickCount; 
+	m_LastMovementTick = sv.m_nTickCount;
 
 
 	int totalcmds =msg->m_nBackupCommands + msg->m_nNewCommands;
@@ -180,14 +180,14 @@ bool CGameClient::ProcessMove(CLC_Move *msg)
 	g_ServerGlobalVariables.frametime = host_state.interval_per_tick;
 
 //	COM_Log( "sv.log", "  executing %i move commands from client starting with command %i(%i)\n",
-//		numcmds, 
+//		numcmds,
 //		m_Client->m_NetChan->incoming_sequence,
 //		m_Client->m_NetChan->incoming_sequence & SV_UPDATE_MASK );
-	
+
 	int startbit = msg->m_DataIn.GetNumBitsRead();
 
 	serverGameClients->ProcessUsercmds
-	( 
+	(
 		edict,					// Player edict
 		&msg->m_DataIn,
 		msg->m_nNewCommands,
@@ -248,7 +248,7 @@ bool CGameClient::ProcessRespondCvarValue( CLC_RespondCvarValue *msg )
 #endif
 		}
 	}
-	
+
 	return true;
 }
 
@@ -303,7 +303,7 @@ bool CGameClient::ProcessFileCRCCheck( CLC_FileCRCCheck *msg )
 			{
 				Msg( "[%s] %s\n", GetNetworkIDString(), warningStr );
 			}
-		}		
+		}
 	}
 	else
 	{
@@ -361,18 +361,18 @@ void CGameClient::Connect( const char * szName, int nUserID, INetChannel *pNetCh
 	CBaseClient::Connect( szName, nUserID, pNetChannel, bFakePlayer, clientChallenge );
 
 	edict = EDICT_NUM( m_nEntityIndex );
-	
+
 	// init PackInfo
 	m_PackInfo.m_pClientEnt = edict;
 	m_PackInfo.m_nPVSSize = sizeof( m_PackInfo.m_PVS );
-				
+
 	// fire global game event - server only
 	IGameEvent *event = g_GameEventManager.CreateEvent( "player_connect" );
 	{
 		event->SetInt( "userid", m_UserID );
 		event->SetInt( "index", m_nClientSlot );
 		event->SetString( "name", m_Name );
-		event->SetString("networkid", GetNetworkIDString() ); 	
+		event->SetString("networkid", GetNetworkIDString() );
 		event->SetString( "address", m_NetChannel?m_NetChannel->GetAddress():"none" );
 		event->SetInt( "bot", m_bFakePlayer?1:0 );
 		g_GameEventManager.FireEvent( event, true );
@@ -426,7 +426,7 @@ void CGameClient::SetupPackInfo( CFrameSnapshot *pSnapshot )
 		m_PackInfo.m_pTransmitAlways = NULL;
 	}
 
-	// Add frame to ClientFrame list 
+	// Add frame to ClientFrame list
 
 	int nMaxFrames = MAX_CLIENT_FRAMES;
 
@@ -435,13 +435,13 @@ void CGameClient::SetupPackInfo( CFrameSnapshot *pSnapshot )
 		// if the server has replay features enabled, allow a way bigger frame buffer
 		nMaxFrames = max ( (float)nMaxFrames, sv_maxreplay.GetFloat() / m_Server->GetTickInterval() );
 	}
-		
+
 	if ( nMaxFrames < AddClientFrame( m_pCurrentFrame ) )
 	{
 		// If the client has more than 64 frames, the server will start to eat too much memory.
-		RemoveOldestFrame(); 
+		RemoveOldestFrame();
 	}
-		
+
 	// Since area to area visibility is determined by each player's PVS, copy
 	//  the area network lookups into the ClientPackInfo_t
 	m_PackInfo.m_AreasNetworked = 0;
@@ -454,21 +454,21 @@ void CGameClient::SetupPackInfo( CFrameSnapshot *pSnapshot )
 		// Msg("CGameClient::SetupPackInfo: too much areas (%i)", areaCount );
 		Assert( m_PackInfo.m_AreasNetworked < MAX_WORLD_AREAS );
 	}
-	
+
 	CM_SetupAreaFloodNums( m_PackInfo.m_AreaFloodNums, &m_PackInfo.m_nMapAreas );
 }
 
 void CGameClient::SetupPrevPackInfo()
 {
 	memcpy( &m_PrevTransmitEdict, m_PackInfo.m_pTransmitEdict, sizeof( m_PrevTransmitEdict ) );
-	
+
 	// Copy the relevant fields into m_PrevPackInfo.
 	m_PrevPackInfo.m_AreasNetworked = m_PackInfo.m_AreasNetworked;
 	memcpy( m_PrevPackInfo.m_Areas, m_PackInfo.m_Areas, sizeof( m_PackInfo.m_Areas[0] ) * m_PackInfo.m_AreasNetworked );
 
 	m_PrevPackInfo.m_nPVSSize = m_PackInfo.m_nPVSSize;
 	memcpy( m_PrevPackInfo.m_PVS, m_PackInfo.m_PVS, m_PackInfo.m_nPVSSize );
-	
+
 	m_PrevPackInfo.m_nMapAreas = m_PackInfo.m_nMapAreas;
 	memcpy( m_PrevPackInfo.m_AreaFloodNums, m_PackInfo.m_AreaFloodNums, m_PackInfo.m_nMapAreas * sizeof( m_PackInfo.m_nMapAreas ) );
 }
@@ -527,8 +527,8 @@ void CGameClient::UpdateUserSettings()
 //-----------------------------------------------------------------------------
 // Purpose: A File has been received, if it's a logo, send it on to any other players who need it
 //  and return true, otherwise, return false
-// Input  : *cl - 
-//			*filename - 
+// Input  : *cl -
+//			*filename -
 // Output : Returns true on success, false on failure.
 /*-----------------------------------------------------------------------------
 bool CGameClient::ProcessIncomingLogo( const char *filename )
@@ -580,7 +580,7 @@ bool CGameClient::IsHearingClient( int index ) const
 
 	if ( index == GetPlayerSlot() )
 		return m_bVoiceLoopback;
-	
+
 	CGameClient *pClient = sv.Client( index );
 	return pClient->m_VoiceStreams.Get( GetPlayerSlot() ) != 0;
 }
@@ -599,7 +599,7 @@ void CGameClient::Inactivate( void )
 	}
 #ifndef _XBOX
 	if ( IsHLTV() )
-	{	
+	{
 		hltv->Changelevel();
 	}
 
@@ -627,13 +627,13 @@ bool CGameClient::UpdateAcknowledgedFramecount(int tick)
 	{
 		// delta tick changed, free all frames smaller than tick
 		int removeTick = tick;
-		
+
 		if ( sv_maxreplay.GetFloat() > 0 )
 			removeTick -= (sv_maxreplay.GetFloat() / m_Server->GetTickInterval() ); // keep a replay buffer
 
 		if ( removeTick > 0 )
 		{
-			DeleteClientFrames( removeTick );	
+			DeleteClientFrames( removeTick );
 		}
 	}
 
@@ -649,7 +649,7 @@ void CGameClient::Clear()
 	{
 		hltv->Shutdown();
 	}
-	
+
 #if defined( REPLAY_ENABLED )
 	if ( m_bIsReplay && replay )
 	{
@@ -705,7 +705,7 @@ void CGameClient::Disconnect( const char *fmt, ... )
 		event->SetInt("userid", GetUserID() );
 		event->SetString("reason", reason );
 		event->SetString("name", GetClientName() );
-		event->SetString("networkid", GetNetworkIDString() ); 
+		event->SetString("networkid", GetNetworkIDString() );
 		event->SetInt( "bot", m_bFakePlayer?1:0 );
 		g_GameEventManager.FireEvent( event );
 	}
@@ -784,7 +784,7 @@ void CGameClient::SendSound( SoundInfo_t &sound, bool isReliable )
 		sndmsg.m_DataOut.StartWriting(buffer, sizeof(buffer) );
 		sndmsg.m_nNumSounds = 1;
 		sndmsg.m_bReliableSound = true;
-				
+
 		SoundInfo_t	defaultSound; defaultSound.SetDefault();
 
 		sound.WriteDelta( &defaultSound, sndmsg.m_DataOut );
@@ -807,7 +807,7 @@ void CGameClient::WriteGameSounds( bf_write &buf )
 	char data[NET_MAX_PAYLOAD];
 	SVC_Sounds msg;
 	msg.m_DataOut.StartWriting( data, sizeof(data) );
-	
+
 	int nSoundCount = FillSoundsMessage( msg );
 	msg.WriteToBuffer( buf );
 
@@ -834,7 +834,7 @@ int	CGameClient::FillSoundsMessage(SVC_Sounds &msg)
 
 	SoundInfo_t defaultSound; defaultSound.SetDefault();
 	SoundInfo_t *pDeltaSound = &defaultSound;
-	
+
 	msg.m_nNumSounds = count;
 	msg.m_bReliableSound = false;
 	msg.SetReliable( false );
@@ -856,7 +856,7 @@ int	CGameClient::FillSoundsMessage(SVC_Sounds &msg)
 		DevMsg("Warning! Dropped %i unreliable sounds for client %s.\n" , remove, m_Name );
 		count+= remove;
 	}
-	
+
 	if ( count > 0 )
 	{
 		m_Sounds.RemoveMultiple( 0, count );
@@ -901,7 +901,7 @@ void CGameClient::ActivatePlayer( void )
 		g_pServerPluginHandler->ClientPutInServer( edict, m_Name );
 	}
 
-    COM_TimestampedLog( "g_pServerPluginHandler->ClientActive" );
+	COM_TimestampedLog( "g_pServerPluginHandler->ClientActive" );
 
 	g_pServerPluginHandler->ClientActive( edict, sv.m_bLoadgame );
 
@@ -913,7 +913,7 @@ void CGameClient::ActivatePlayer( void )
 
 	GetTestScriptMgr()->CheckPoint( "client_connected" );
 
-	// don't send signonstate to client, client will switch to FULL as soon 
+	// don't send signonstate to client, client will switch to FULL as soon
 	// as the first full entity update packets has been received
 
 	// fire a activate event
@@ -947,7 +947,7 @@ bool CGameClient::SendSignonData( void )
 	if ( sv_sendtables.GetInt() == 2 )
 	{
 		// force sending class tables, for debugging
-		bClientHasdifferentTables = true; 
+		bClientHasdifferentTables = true;
 	}
 #endif
 
@@ -996,7 +996,7 @@ void CGameClient::SpawnPlayer( void )
 		Assert( serverGameEnts );
 		serverGameEnts->FreeContainingEntity( edict );
 		InitializeEntityDLLFields( edict );
-		
+
 	}
 
 	// restore default client entity and turn off replay mdoe
@@ -1004,10 +1004,10 @@ void CGameClient::SpawnPlayer( void )
 	m_bIsInReplayMode = false;
 
 	// set view entity
-    SVC_SetView setView( m_nEntityIndex );
+	SVC_SetView setView( m_nEntityIndex );
 	SendNetMsg( setView );
 
-	
+
 
 	CBaseClient::SpawnPlayer();
 
@@ -1022,11 +1022,11 @@ CClientFrame *CGameClient::GetDeltaFrame( int nTick )
 #if defined( REPLAY_ENABLED )
 	Assert ( !IsReplay() );  // has no ClientFrames
 #endif
-#endif	
+#endif
 
 	if ( m_bIsInReplayMode )
 	{
-		int followEntity; 
+		int followEntity;
 
 		serverGameClients->GetReplayDelay( edict, followEntity );
 
@@ -1068,7 +1068,7 @@ void CGameClient::WriteViewAngleUpdate()
 			SVC_FixAngle fixAngle(false, pl->v_angle );
 			m_NetChannel->SendNetMsg( fixAngle );
 		}
-		
+
 		pl->fixangle = FIXANGLE_NONE;
 	}
 }
@@ -1118,7 +1118,7 @@ bool CGameClient::ExecuteStringCommand( const char *pCommandString )
 	// first let the baseclass handle it
 	if ( CBaseClient::ExecuteStringCommand( pCommandString ) )
 		return true;
-	
+
 	// Determine whether the command is appropriate
 	CCommand args;
 	if ( !args.Tokenize( pCommandString ) )
@@ -1132,7 +1132,7 @@ bool CGameClient::ExecuteStringCommand( const char *pCommandString )
 		Cmd_ExecuteCommand( args, src_client, m_nClientSlot );
 		return true;
 	}
-	
+
 	const ConCommandBase *pCommand = g_pCVar->FindCommandBase( args[ 0 ] );
 	if ( pCommand && pCommand->IsCommand() && pCommand->IsFlagSet( FCVAR_GAMEDLL ) )
 	{
@@ -1196,11 +1196,11 @@ void CGameClient::SendSnapshot( CClientFrame * pFrame )
 		hltv->AddNewFrame( pFrame );
 
 		// remember this snapshot
-		m_pLastSnapshot = pFrame->GetSnapshot(); 
+		m_pLastSnapshot = pFrame->GetSnapshot();
 
-		// fake acknowledgement, remove ClientFrame reference immediately 
+		// fake acknowledgement, remove ClientFrame reference immediately
 		UpdateAcknowledgedFramecount( pFrame->tick_count );
-		
+
 		return;
 	}
 
@@ -1230,9 +1230,9 @@ void CGameClient::SendSnapshot( CClientFrame * pFrame )
 		if ( replay->AddNewFrame( pFrame ) )
 		{
 			// remember this snapshot
-			m_pLastSnapshot = pFrame->GetSnapshot(); 
+			m_pLastSnapshot = pFrame->GetSnapshot();
 
-			// fake acknowledgement, remove ClientFrame reference immediately 
+			// fake acknowledgement, remove ClientFrame reference immediately
 			UpdateAcknowledgedFramecount( pFrame->tick_count );
 		}
 
@@ -1262,7 +1262,7 @@ bool CGameClient::ShouldSendMessages( void )
 		// I am the HLTV client, record every nSnapshotInterval tick
 		return ( sv.m_nTickCount >= (hltv->m_nLastTick + nSnapshotInterval) );
 	}
-	
+
 #if defined( REPLAY_ENABLED )
 	if ( m_bIsReplay )
 	{
@@ -1336,7 +1336,7 @@ void CGameClient::PacketStart(int incoming_sequence, int outgoing_acknowledged)
 	host_client = this;
 
 	// During connection, only respond if client sends a packet
-	m_bReceivedPacket = true; 
+	m_bReceivedPacket = true;
 }
 
 void CGameClient::PacketEnd()
@@ -1351,7 +1351,7 @@ void CGameClient::ConnectionClosing(const char *reason)
 	SV_RedirectEnd ();
 #endif
 	// Check for printf format tokens in this reason string. Crash exploit.
-	Disconnect ( (reason && !strchr( reason, '%' ) ) ? reason : "Connection closing" );	
+	Disconnect ( (reason && !strchr( reason, '%' ) ) ? reason : "Connection closing" );
 }
 
 void CGameClient::ConnectionCrashed(const char *reason)
@@ -1364,7 +1364,7 @@ void CGameClient::ConnectionCrashed(const char *reason)
 		SV_RedirectEnd ();
 #endif
 		// Check for printf format tokens in this reason string. Crash exploit.
-		Disconnect ( (reason && !strchr( reason, '%' ) ) ? reason : "Connection lost" );	
+		Disconnect ( (reason && !strchr( reason, '%' ) ) ? reason : "Connection lost" );
 	}
 }
 
@@ -1375,7 +1375,7 @@ CClientFrame *CGameClient::GetSendFrame()
 	// just return if replay is disabled
 	if ( sv_maxreplay.GetFloat() <= 0 )
 		return pFrame;
-			
+
 	int followEntity;
 
 	int delayTicks = serverGameClients->GetReplayDelay( edict, followEntity );
@@ -1385,7 +1385,7 @@ CClientFrame *CGameClient::GetSendFrame()
 	if ( isInReplayMode != m_bIsInReplayMode )
 	{
 		// force a full update when modes are switched
-		m_nDeltaTick = -1; 
+		m_nDeltaTick = -1;
 
 		m_bIsInReplayMode = isInReplayMode;
 
@@ -1436,7 +1436,7 @@ const CCheckTransmitInfo* CGameClient::GetPrevPackInfo()
 }
 
 // This code is useful for verifying that the networking of soundinfo_t stuff isn't borked.
-#if 0  
+#if 0
 
 #include "vstdlib/random.h"
 
@@ -1575,7 +1575,7 @@ void CTestSoundInfoNetworking::RunTest()
 		m_Received.AddToTail( sound );
 	}
 
-	
+
 	// Now validate them
 	for ( int i = 0 ; i < msg.m_nNumSounds; ++i )
 	{
@@ -1592,7 +1592,7 @@ void CTestSoundInfoNetworking::RunTest()
 void CTestSoundInfoNetworking::Compare( const SoundInfo_t &s1, const SoundInfo_t &s2 )
 {
 	bool bSndStop = s2.nFlags == SND_STOP;
-	
+
 	if ( !bSndStop && s1.nSequenceNumber != s2.nSequenceNumber )
 	{
 		Msg( "seq number mismatch %d %d\n", s1.nSequenceNumber, s2.nSequenceNumber );
@@ -1632,7 +1632,7 @@ void CTestSoundInfoNetworking::Compare( const SoundInfo_t &s1, const SoundInfo_t
 		Msg( "sndlvl mismatch %d %d\n", s1.Soundlevel, s2.Soundlevel );
 	}
 
-	// bLooping; 
+	// bLooping;
 
 	if ( s1.bIsSentence != s2.bIsSentence )
 	{

@@ -30,7 +30,7 @@ public:
 	void InputTurnOff(inputdata_t &inputdata);
 	void InputToggle(inputdata_t &inputdata);
 	void InputHurt(inputdata_t &inputdata);
-	
+
 	DECLARE_DATADESC();
 
 	int			m_nDamage;
@@ -48,7 +48,7 @@ BEGIN_DATADESC( CPointHurt )
 	DEFINE_KEYFIELD( m_flDelay, FIELD_FLOAT, "DamageDelay" ),
 	DEFINE_KEYFIELD( m_bitsDamageType, FIELD_INTEGER, "DamageType" ),
 	DEFINE_KEYFIELD( m_strTarget, FIELD_STRING, "DamageTarget" ),
-	
+
 	// Function Pointers
 	DEFINE_FUNCTION( HurtThink ),
 
@@ -65,13 +65,13 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( point_hurt, CPointHurt );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointHurt::Spawn(void)
 {
 	SetThink( NULL );
 	SetUse( NULL );
-		
+
 	m_pActivator = NULL;
 
 	if ( HasSpawnFlags( SF_PHURT_START_ON ) )
@@ -80,7 +80,7 @@ void CPointHurt::Spawn(void)
 	}
 
 	SetNextThink( gpGlobals->curtime + 0.1f );
-	
+
 	if ( m_flRadius <= 0.0f )
 	{
 		m_flRadius = 128.0f;
@@ -100,7 +100,7 @@ void CPointHurt::Spawn(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointHurt::Precache( void )
 {
@@ -108,14 +108,14 @@ void CPointHurt::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointHurt::HurtThink( void )
 {
 	if ( m_strTarget != NULL_STRING )
 	{
 		CBaseEntity	*pEnt = NULL;
-			
+
 		CTakeDamageInfo info( this, m_pActivator, m_nDamage, m_bitsDamageType );
 		while ( ( pEnt = gEntList.FindEntityByName( pEnt, m_strTarget, NULL, m_pActivator ) ) != NULL )
 		{
@@ -179,4 +179,3 @@ void CPointHurt::InputHurt( inputdata_t &data )
 
 	HurtThink();
 }
-

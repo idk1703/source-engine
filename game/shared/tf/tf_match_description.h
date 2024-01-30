@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:  
-//			
+// Purpose:
+//
 //=============================================================================
 
 #ifndef TF_MATCH_DESCRIPTION_H
@@ -64,7 +64,7 @@ class IProgressionDesc
 public:
 	IProgressionDesc( EMatchGroup eMatchGroup
 					, const char* pszBadgeName
-					, const char* pszProgressionResFile 
+					, const char* pszProgressionResFile
 					, const char* pszLevelToken );
 
 #ifdef CLIENT_DLL

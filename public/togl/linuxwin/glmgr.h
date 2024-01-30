@@ -98,23 +98,23 @@ class GLMDisplayParams
 	//int					m_modeIndex;			// index of mode in display - for FS
 
 	void				*m_focusWindow;			// (VD3DHWND aka WindowRef) - what window does this context display into
-	
+
 	bool				m_fsEnable;				// fullscreen on or not
 	bool				m_vsyncEnable;			// vsync on or not
 
 	// height and width have to match the display mode info if full screen.
-	
+
 	uint				m_backBufferWidth;		// pixel width (aka screen h-resolution if full screen)
 	uint				m_backBufferHeight;		// pixel height (aka screen v-resolution if full screen)
 	D3DFORMAT           m_backBufferFormat;		// pixel format
 	uint				m_multiSampleCount;		// 0 means no MSAA, 2 means 2x MSAA, etc
 		// uint				m_multiSampleQuality;	// no MSAA quality control yet
-		
+
 	bool				m_enableAutoDepthStencil;	// generally set to 'TRUE' per CShaderDeviceDx8::SetPresentParameters
 	D3DFORMAT			m_autoDepthStencilFormat;
-	
+
 	uint				m_fsRefreshHz;			// if full screen, this refresh rate (likely 0 for LCD's)
-	
+
 	//uint				m_rootRendererID;		// only used if m_rendererIndex is -1.
 	//uint				m_rootDisplayMask;		// only used if m_rendererIndex is -1.
 
@@ -126,7 +126,7 @@ class GLMDisplayParams
 class GLMgr
 {
 public:
-	
+
 	//===========================================================================
 	// class methods - singleton
 	static void		NewGLMgr( void );			// instantiate singleton..
@@ -141,17 +141,17 @@ public:
 						GLMDisplayDB	*GetDisplayDB( void );		// get a ptr to the one GLMgr keeps.  only valid til next refresh.
 
 							// eligible renderers will be ranked by desirability starting at index 0 within the db
-							// within each renderer, eligible displays will be ranked some kind of desirability (area? dist from menu bar?) 
+							// within each renderer, eligible displays will be ranked some kind of desirability (area? dist from menu bar?)
 							// within each display, eligible modes will be ranked by descending areas
-						
+
 							// calls supplying indices are implicitly making reference to the current DB
 						bool			CaptureDisplay( int rendIndex, int displayIndex, bool captureAll );		// capture one display or all displays
 						void			ReleaseDisplays( void );												// release all captures
-						
+
 						int				GetDisplayMode( int rendIndex, int displayIndex );						// retrieve current display res (returns modeIndex)
 						void			SetDisplayMode( GLMDisplayParams *params );								// set the display res (only useful for FS)
 					#endif
-	
+
 	GLMContext		*NewContext( IDirect3DDevice9 *pDevice, GLMDisplayParams *params );		// this will have to change
 	void			DelContext( GLMContext *context );
 
@@ -160,7 +160,7 @@ public:
 		// to the correct context
 	void		SetCurrentContext( GLMContext *context );	// make current in calling thread only
 	GLMContext	*GetCurrentContext( void );
-		
+
 protected:
 	friend class GLMContext;
 
@@ -244,28 +244,28 @@ enum EGLMStateBlockType
 {
 	kGLAlphaTestEnable,
 	kGLAlphaTestFunc,
-	
+
 	kGLCullFaceEnable,
 	kGLCullFrontFace,
 
 	kGLPolygonMode,
 
 	kGLDepthBias,
-	
+
 	kGLScissorEnable,
 	kGLScissorBox,
 
 	kGLViewportBox,
 	kGLViewportDepthRange,
-	
+
 	kGLClipPlaneEnable,
 	kGLClipPlaneEquation,
-	
+
 	kGLColorMaskSingle,
 	kGLColorMaskMultiple,
 
 	kGLBlendEnable,
-	kGLBlendFactor,	
+	kGLBlendFactor,
 	kGLBlendEquation,
 	kGLBlendColor,
 	kGLBlendEnableSRGB,
@@ -276,7 +276,7 @@ enum EGLMStateBlockType
 
 	kGLStencilTestEnable,
 	kGLStencilFunc,
-	kGLStencilOp,	
+	kGLStencilOp,
 	kGLStencilWriteMask,
 
 	kGLClearColor,
@@ -284,7 +284,7 @@ enum EGLMStateBlockType
 	kGLClearStencil,
 
 	kGLAlphaToCoverageEnable,
-	
+
 	kGLMStateBlockLimit
 };
 
@@ -319,7 +319,7 @@ FORCEINLINE void GLContextGet( GLAlphaTestEnable_t *dst )
 
 FORCEINLINE void GLContextGetDefault( GLAlphaTestEnable_t *dst )
 {
-	dst->enable = GL_FALSE;	
+	dst->enable = GL_FALSE;
 }
 
 //                                                                      --- GLAlphaTestFunc ---
@@ -353,7 +353,7 @@ FORCEINLINE void GLContextGet( GLAlphaToCoverageEnable_t *dst )
 
 FORCEINLINE void GLContextGetDefault( GLAlphaToCoverageEnable_t *dst )
 {
-	dst->enable = GL_FALSE;	
+	dst->enable = GL_FALSE;
 }
 
 //                                                                      --- GLCullFaceEnable ---
@@ -369,7 +369,7 @@ FORCEINLINE void GLContextGet( GLCullFaceEnable_t *dst )
 
 FORCEINLINE void GLContextGetDefault( GLCullFaceEnable_t *dst )
 {
-	dst->enable = GL_TRUE;	
+	dst->enable = GL_TRUE;
 }
 
 
@@ -481,7 +481,7 @@ FORCEINLINE void GLContextSet( GLViewportBox_t *src )
 
 FORCEINLINE void GLContextGet( GLViewportBox_t *dst )
 {
-	gGL->glGetIntegerv	( GL_VIEWPORT, &dst->x ); 
+	gGL->glGetIntegerv	( GL_VIEWPORT, &dst->x );
 	dst->widthheight = dst->width | ( dst->height << 16 );
 }
 
@@ -905,13 +905,13 @@ template<typename T> class GLState
 			memset( &data, 0, sizeof(data) );
 			Default();
 		}
-		
+
 		FORCEINLINE void Flush()
 		{
 			// immediately blast out the state - it makes no sense to delta it or do anything fancy because shaderapi, dxabstract, and OpenGL itself does this for us (and OpenGL calls with multithreaded drivers are very cheap)
 			GLContextSet( &data );
 		}
-				
+
 		// write: client src into cache
 		// common case is both false.  dirty is calculated, context write is deferred.
 		FORCEINLINE void Write( const T *src )
@@ -919,7 +919,7 @@ template<typename T> class GLState
 			data = *src;
 			Flush();
 		}
-						
+
 		// default: write default value to cache, optionally write through
 		inline void Default( bool noDefer=false )
 		{
@@ -935,7 +935,7 @@ template<typename T> class GLState
 			else
 				GLContextGet( dst );
 		}
-		
+
 		// check: verify that context equals cache, return true if mismatched or if illegal values seen
 		inline bool Check ( void )
 		{
@@ -948,7 +948,7 @@ template<typename T> class GLState
 		}
 
 		FORCEINLINE const T &GetData() const { return data; }
-		
+
 	protected:
 		T data;
 };
@@ -977,7 +977,7 @@ template<typename T, int COUNT> class GLStateArray
 			data[index] = *src;
 			FlushIndex( index );	// dirty becomes false
 		};
-						
+
 		// write all slots in the array
 		FORCEINLINE void Flush()
 		{
@@ -986,20 +986,20 @@ template<typename T, int COUNT> class GLStateArray
 				FlushIndex( i );
 			}
 		}
-		
+
 		// default: write default value to cache, optionally write through
 		inline void DefaultIndex( int index )
 		{
 			GLContextGetDefaultIndexed( &data[index], index );	// read default values directly to our cache copy
 			Flush();
 		};
-		
+
 		inline void Default( void )
 		{
 			for( int i=0; i<COUNT; i++)
 			{
 				DefaultIndex( i );
-			}			
+			}
 		}
 
 		// read: sel = 0 for cache, 1 for context
@@ -1010,7 +1010,7 @@ template<typename T, int COUNT> class GLStateArray
 			else
 				GLContextGetIndexed( dst, index );
 		};
-		
+
 		// check: verify that context equals cache, return true if mismatched or if illegal values seen
 		inline bool CheckIndex( int index )
 		{
@@ -1019,7 +1019,7 @@ template<typename T, int COUNT> class GLStateArray
 
 			GLContextGetIndexed( &temp, index );
 			result = !(temp == data[index]);
-			
+
 			return result;
 		};
 
@@ -1032,10 +1032,10 @@ template<typename T, int COUNT> class GLStateArray
 			{
 				result |= CheckIndex( i );
 			}
-			
+
 			return result;
 		};
-		
+
 	protected:
 		T		data[COUNT];
 };
@@ -1058,7 +1058,7 @@ struct	GLMTexSampler
 struct GLMVertexSetup
 {
 	uint m_attrMask;					// which attrs are enabled (1<<n) mask where n is a GLMVertexAttributeIndex.
-	
+
 	GLMVertexAttributeDesc m_attrs[ kGLMVertexAttributeIndexMax ];
 
 	// copied in from dxabstract, not strictly needed for operation, helps debugging
@@ -1082,7 +1082,7 @@ struct GLMVertexSetup
 				D3DDECLUSAGE_DEPTH			= 12,
 				D3DDECLUSAGE_SAMPLE			= 13,
 			} D3DDECLUSAGE;
-		
+
 			low nibble is usageindex (i.e. POSITION0, POSITION1, etc)
 			array position is attrib number.
 		*/
@@ -1102,7 +1102,7 @@ struct GLMVertexSetup
 struct GLMProgramParamsF
 {
 	float	m_values[kGLMProgramParamFloat4Limit][4];		// float4's 256 of them
-			
+
 	int	m_firstDirtySlotNonBone;
 	int	m_dirtySlotHighWaterNonBone;						// index of slot past highest dirty non-bone register (assume 0 for base of range)
 
@@ -1153,15 +1153,15 @@ struct GLMDebugHookInfo
 		// info from the caller to the debug hook
 	EGLMDebugCallSite	m_caller;
 
-	
-		// state the hook uses to keep track of progress within a single run of the caller		
+
+		// state the hook uses to keep track of progress within a single run of the caller
 	int					m_iteration;	// which call to the hook is this.  if it's zero, it precedes any action in the caller.
 
-	
+
 		// bools used to communicate between caller and hook
 	bool				m_loop;			// hook tells caller to loop around again (don't exit)
 	bool				m_holding;		// current mood of hook, are we holding on this batch (i.e. rerun)
-	
+
 		// specific info for a draw call
 	GLenum				m_drawMode;
 	GLuint				m_drawStart;
@@ -1177,9 +1177,9 @@ struct GLMDebugHookInfo
 class CFlushDrawStatesStats
 {
 public:
-	CFlushDrawStatesStats() 
-	{  
-		Clear(); 
+	CFlushDrawStatesStats()
+	{
+		Clear();
 	}
 
 	void Clear()
@@ -1220,8 +1220,8 @@ class CPinnedMemoryBuffer
 
 public:
 	CPinnedMemoryBuffer()
-	: 
-		m_pRawBuf( NULL ) 
+	:
+		m_pRawBuf( NULL )
 		, m_pBuf( NULL )
 		, m_nSize( 0 )
 		, m_nOfs( 0 )
@@ -1274,7 +1274,7 @@ public:
 		free( m_pRawBuf );
 		m_pRawBuf = NULL;
 		m_pBuf = NULL;
-	
+
 		m_nSize = 0;
 		m_nOfs = 0;
 	}
@@ -1305,7 +1305,7 @@ public:
 			gGL->glClientWaitSync( m_nSyncObj, GL_SYNC_FLUSH_COMMANDS_BIT, 3000000000000ULL );
 
 			gGL->glDeleteSync( m_nSyncObj );
-								
+
 			m_nSyncObj = 0;
 		}
 #endif
@@ -1344,11 +1344,11 @@ class GLMContext
 		// the inline NOP version.
 		// DO NOT change this to non-inlined. It's called all over the place from very hot codepaths.
 		FORCEINLINE void CheckCurrent( void ) { }
-		
+
 		void							PopulateCaps( void );	// fill out later portions of renderer info record which need context queries
 		void							DumpCaps( void );		// printf all the caps info (you can call this in release too)
 		const GLMRendererInfoFields&	Caps( void );			// peek at the caps record
-	
+
 		// state cache/mirror
 		void	SetDefaultStates( void );
 		void    ForceFlushStates();
@@ -1358,24 +1358,24 @@ class GLMContext
 		// textures
 		// Lock and Unlock reqs go directly to the tex object
 		CGLMTex	*NewTex( GLMTexLayoutKey *key, uint levels=1, const char *debugLabel=NULL );
-		void	DelTex( CGLMTex	*tex );	
+		void	DelTex( CGLMTex	*tex );
 
 			// options for Blit (replacement for ResolveTex and BlitTex)
-			// pass NULL for dstTex if you want to target GL_BACK with the blit.  You get y-flip with that, don't change the dstrect yourself.		
+			// pass NULL for dstTex if you want to target GL_BACK with the blit.  You get y-flip with that, don't change the dstrect yourself.
 		void	Blit2( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int srcMip, CGLMTex *dstTex, GLMRect *dstRect, int dstFace, int dstMip, uint filter );
 
 			// tex blit (via FBO blit)
 		void	BlitTex( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int srcMip, CGLMTex *dstTex, GLMRect *dstRect, int dstFace, int dstMip, uint filter, bool useBlitFB = true );
 
 			//	MSAA resolve - we do this in GLMContext because it has to do a bunch of FBO/blit gymnastics
-		void	ResolveTex( CGLMTex *tex, bool forceDirty=false );	
-		
+		void	ResolveTex( CGLMTex *tex, bool forceDirty=false );
+
 			// texture pre-load (residency forcing) - normally done one-time but you can force it
 		void	PreloadTex( CGLMTex *tex, bool force=false );
 
 		// samplers
 		FORCEINLINE void SetSamplerTex( int sampler, CGLMTex *tex );
-				
+
 		FORCEINLINE void SetSamplerDirty( int sampler );
 		FORCEINLINE void SetSamplerMinFilter( int sampler, GLenum Value );
 		FORCEINLINE void SetSamplerMagFilter( int sampler, GLenum Value );
@@ -1390,27 +1390,27 @@ class GLMContext
 		FORCEINLINE void SetSamplerMaxAnisotropy( int sampler, DWORD Value );
 		FORCEINLINE void SetSamplerSRGBTexture( int sampler, DWORD Value );
 		FORCEINLINE void SetShadowFilter( int sampler, DWORD Value );
-		
+
 		// render targets (FBO's)
 		CGLMFBO	*NewFBO( void );
-		void	DelFBO( CGLMFBO *fbo );		
+		void	DelFBO( CGLMFBO *fbo );
 
 		// programs
 		CGLMProgram	*NewProgram( EGLMProgramType type, char *progString, const char *pShaderName );
 		void	DelProgram( CGLMProgram *pProg );
 		void	NullProgram( void );											// de-ac all shader state
-		
-		FORCEINLINE void SetVertexProgram( CGLMProgram *pProg );	
+
+		FORCEINLINE void SetVertexProgram( CGLMProgram *pProg );
 		FORCEINLINE void SetFragmentProgram( CGLMProgram *pProg );
 		FORCEINLINE void SetProgram( EGLMProgramType nProgType, CGLMProgram *pProg ) { m_drawingProgram[nProgType] = pProg; m_bDirtyPrograms = true; }
-		
+
 		void	SetDrawingLang( EGLMProgramLang lang, bool immediate=false );	// choose ARB or GLSL.  immediate=false defers lang change to top of frame
-		
+
 		void	LinkShaderPair( CGLMProgram *vp, CGLMProgram *fp );			// ensure this combo has been linked and is in the GLSL pair cache
 		void	ValidateShaderPair( CGLMProgram *vp, CGLMProgram *fp );
 		void	ClearShaderPairCache( void );								// call this to shoot down all the linked pairs
 		void	QueryShaderPair( int index, GLMShaderPairInfo *infoOut );	// this lets you query the shader pair cache for saving its state
-		
+
 		// buffers
 		// Lock and Unlock reqs go directly to the buffer object
 		CGLMBuffer	*NewBuffer( EGLMBufferType type, uint size, uint options );
@@ -1434,11 +1434,11 @@ class GLMContext
 
 		// note, no API is exposed for setting a single attribute source.
 		// come prepared with a complete block of attributes to use.
-			
+
 		// Queries
 		CGLMQuery *NewQuery( GLMQueryParams *params );
 		void DelQuery( CGLMQuery *query );
-			
+
 		// "slot" means a vec4-sized thing
 		// these write into .env parameter space
 		FORCEINLINE void SetProgramParametersF( EGLMProgramType type, uint baseSlot, float *slotData, uint slotCount );
@@ -1449,7 +1449,7 @@ class GLMContext
 		// If lazyUnbinding is true, unbound samplers will not actually be unbound to the GL device.
 		FORCEINLINE void FlushDrawStates( uint nStartIndex, uint nEndIndex, uint nBaseVertex );				// pushes all drawing state - samplers, tex, programs, etc.
 		void FlushDrawStatesNoShaders();
-				
+
 		// drawing
 #ifndef OSX
 		FORCEINLINE void DrawRangeElements(	GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type, const GLvoid *indices, uint baseVertex, CGLMBuffer *pIndexBuf );
@@ -1459,23 +1459,23 @@ class GLMContext
 #endif
 
 		void	CheckNative( void );
-		
+
 		// clearing
 		void	Clear( bool color, unsigned long colorValue, bool depth, float depthValue, bool stencil, unsigned int stencilValue, GLScissorBox_t *rect = NULL );
-		
+
 		// display
 		//void	SetVSyncEnable( bool vsyncOn );
 		//void	SetFullScreen( bool fsOn, int screenIndex );		// will be latched for next BeginFrame
 		//void	ActivateFullScreen( bool fsOn, int screenIndex );	// will be called by BeginFrame
 		bool	SetDisplayParams( GLMDisplayParams *params );		// either the first time setup, or a change to new setup
-		
+
 		void	Present( CGLMTex *tex );		// somewhat hardwired for the time being
 
 		// Called when IDirect3DDevice9::Reset() is called.
-		void	Reset();							
+		void	Reset();
 
 		// writers for the state block inputs
-		
+
 		FORCEINLINE void	WriteAlphaTestEnable( GLAlphaTestEnable_t *src ) { m_AlphaTestEnable.Write( src ); }
 		FORCEINLINE void	WriteAlphaTestFunc( GLAlphaTestFunc_t *src ) { m_AlphaTestFunc.Write( src ); }
 		FORCEINLINE void	WriteAlphaToCoverageEnable( GLAlphaToCoverageEnable_t *src ) { m_AlphaToCoverageEnable.Write( src ); }
@@ -1496,7 +1496,7 @@ class GLMContext
 		FORCEINLINE void	WriteBlendEquation( GLBlendEquation_t *src ) { m_BlendEquation.Write( src ); }
 		FORCEINLINE void	WriteBlendColor( GLBlendColor_t *src ) { m_BlendColor.Write( src ); }
 
-		FORCEINLINE void	WriteBlendEnableSRGB( GLBlendEnableSRGB_t *src ) 
+		FORCEINLINE void	WriteBlendEnableSRGB( GLBlendEnableSRGB_t *src )
 		{
 			if (m_caps.m_hasGammaWrites)	// only if caps allow do we actually push it through to the extension
 			{
@@ -1505,7 +1505,7 @@ class GLMContext
 			else
 			{
 				m_FakeBlendEnableSRGB = src->enable != 0;
-			}	
+			}
 			// note however that we're still tracking what this mode should be, so FlushDrawStates can look at it and adjust the pixel shader
 			// if fake SRGB mode is in place (m_caps.m_hasGammaWrites is false)
 		}
@@ -1524,7 +1524,7 @@ class GLMContext
 		// debug stuff
 		void	BeginFrame( void );
 		void	EndFrame( void );
-		
+
 		// new interactive debug stuff
 #if GLMDEBUG
 		void	DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpMode );
@@ -1535,7 +1535,7 @@ class GLMContext
 
 		FORCEINLINE void SetMaxUsedVertexShaderConstantsHint( uint nMaxConstants );
 		FORCEINLINE DWORD GetCurrentOwnerThreadId() const { return m_nCurOwnerThreadId; }
-								
+
 	protected:
 		friend class GLMgr;				// only GLMgr can make GLMContext objects
 		friend class GLMRendererInfo;	// only GLMgr can make GLMContext objects
@@ -1547,13 +1547,13 @@ class GLMContext
 		friend class CGLMBuffer;
 		friend class CGLMBufferSpanManager;
 		friend class GLMTester;			// tester class needs access back into GLMContext
-		
+
 		friend struct IDirect3D9;
 		friend struct IDirect3DDevice9;
 		friend struct IDirect3DQuery9;
-		
+
 		// methods------------------------------------------
-		
+
 				// old GLMContext( GLint displayMask, GLint rendererID, PseudoNSGLContextPtr nsglShareCtx );
 		GLMContext( IDirect3DDevice9 *pDevice, GLMDisplayParams *params );
 		~GLMContext();
@@ -1570,7 +1570,7 @@ class GLMContext
 				m_nBoundGLBuffer[kGLMVertexBuffer] = nGLName;
 				gGL->glBindBufferARB( GL_ARRAY_BUFFER_ARB, nGLName );
 			}
-			else if ( ( curAttribs.m_pPtr == pBuf ) && 
+			else if ( ( curAttribs.m_pPtr == pBuf ) &&
 					  ( curAttribs.m_revision == nRevision ) &&
 				( curAttribs.m_stride == stride ) &&
 				( curAttribs.m_datatype == datatype ) &&
@@ -1586,7 +1586,7 @@ class GLMContext
 			curAttribs.m_stride = stride;
 			curAttribs.m_pPtr = pBuf;
 			curAttribs.m_revision = nRevision;
-			
+
 			gGL->glVertexAttribPointer( nIndex, nCompCount, datatype, normalized, stride, pBuf );
 		}
 
@@ -1599,18 +1599,18 @@ class GLMContext
 		};
 
 		CurAttribs_t m_CurAttribs;
-		
-		FORCEINLINE void ClearCurAttribs() 
-		{ 
+
+		FORCEINLINE void ClearCurAttribs()
+		{
 			m_CurAttribs.m_nTotalBufferRevision = 0;
 			m_CurAttribs.m_pVertDecl = NULL;
 			memset( m_CurAttribs.m_streams, 0, sizeof( m_CurAttribs.m_streams ) );
 			m_CurAttribs.m_vtxAttribMap[0] = 0xBBBBBBBBBBBBBBBBULL;
 			m_CurAttribs.m_vtxAttribMap[1] = 0xBBBBBBBBBBBBBBBBULL;
 		}
-		
+
 		FORCEINLINE void ReleasedShader() {	NullProgram(); }
-		
+
 		// textures
 		FORCEINLINE void SelectTMU( int tmu )
 		{
@@ -1622,15 +1622,15 @@ class GLMContext
 		}
 
 		void BindTexToTMU( CGLMTex *tex, int tmu );
-				
+
 		// render targets / FBO's
 		void BindFBOToCtx( CGLMFBO *fbo, GLenum bindPoint = GL_FRAMEBUFFER_EXT );				// you can also choose GL_READ_FRAMEBUFFER_EXT / GL_DRAW_FRAMEBUFFER_EXT
-		
+
 		// buffers
 		FORCEINLINE void BindGLBufferToCtx( GLenum nGLBufType, GLuint nGLName, bool bForce = false )
 		{
 			Assert( ( nGLBufType == GL_ARRAY_BUFFER_ARB ) || ( nGLBufType == GL_ELEMENT_ARRAY_BUFFER_ARB ) );
-						
+
 			const uint nIndex = ( nGLBufType == GL_ARRAY_BUFFER_ARB ) ? kGLMVertexBuffer : kGLMIndexBuffer;
 			if ( ( bForce ) || ( m_nBoundGLBuffer[nIndex] != nGLName ) )
 			{
@@ -1643,7 +1643,7 @@ class GLMContext
 
 		FORCEINLINE void BindIndexBufferToCtx( CGLMBuffer *buff );
 		FORCEINLINE void BindVertexBufferToCtx( CGLMBuffer *buff );
-		
+
 		GLuint CreateTex( GLenum texBind, GLenum internalFormat );
 		void CleanupTex( GLenum texBind, GLMTexLayout* pLayout, GLuint tex );
 		void DestroyTex( GLenum texBind, GLMTexLayout* pLayout, GLuint tex );
@@ -1661,7 +1661,7 @@ class GLMContext
 		CPersistentBuffer* GetCurPersistentBuffer( EGLMBufferType type ) { return &( m_persistentBuffer[m_nCurPersistentBuffer][type] ); }
 
 		// members------------------------------------------
-						
+
 		// context
 		DWORD							m_nCurOwnerThreadId;
 		uint							m_nThreadOwnershipReleaseCounter;
@@ -1671,10 +1671,10 @@ class GLMContext
 
 		IDirect3DDevice9				*m_pDevice;
 		GLMRendererInfoFields			m_caps;
-	
+
 		bool							m_displayParamsValid;		// is there a param block copied in yet
 		GLMDisplayParams				m_displayParams;			// last known display config, either via constructor, or by SetDisplayParams...
-		
+
 #if defined( USE_SDL )
 		int								m_pixelFormatAttribs[100];	// more than enough
 		PseudoNSGLContextPtr			m_nsctx;
@@ -1686,107 +1686,107 @@ class GLMContext
 		CGLMTexLayoutTable				*m_texLayoutTable;
 
 		// context state mirrors
-		
+
 		GLState<GLAlphaTestEnable_t>	m_AlphaTestEnable;
-		
+
 		GLState<GLAlphaTestFunc_t>		m_AlphaTestFunc;
-		
-		GLState<GLCullFaceEnable_t>		m_CullFaceEnable;			
-		GLState<GLCullFrontFace_t>		m_CullFrontFace;	
+
+		GLState<GLCullFaceEnable_t>		m_CullFaceEnable;
+		GLState<GLCullFrontFace_t>		m_CullFrontFace;
 		GLState<GLPolygonMode_t>		m_PolygonMode;
-		
-		GLState<GLDepthBias_t>			m_DepthBias;		
-		
+
+		GLState<GLDepthBias_t>			m_DepthBias;
+
 		GLStateArray<GLClipPlaneEnable_t,kGLMUserClipPlanes> m_ClipPlaneEnable;
 		GLStateArray<GLClipPlaneEquation_t,kGLMUserClipPlanes> m_ClipPlaneEquation;	// dxabstract puts them directly into param slot 253(0) and 254(1)
-		
-		GLState<GLScissorEnable_t>		m_ScissorEnable;	
+
+		GLState<GLScissorEnable_t>		m_ScissorEnable;
 		GLState<GLScissorBox_t>			m_ScissorBox;
 
-		GLState<GLAlphaToCoverageEnable_t> m_AlphaToCoverageEnable;	
-		
-		GLState<GLViewportBox_t>		m_ViewportBox;		
+		GLState<GLAlphaToCoverageEnable_t> m_AlphaToCoverageEnable;
+
+		GLState<GLViewportBox_t>		m_ViewportBox;
 		GLState<GLViewportDepthRange_t>	m_ViewportDepthRange;
-		
-		GLState<GLColorMaskSingle_t>	m_ColorMaskSingle;	
+
+		GLState<GLColorMaskSingle_t>	m_ColorMaskSingle;
 		GLStateArray<GLColorMaskMultiple_t,8>	m_ColorMaskMultiple;	// need an official constant for the color buffers limit
-		
-		GLState<GLBlendEnable_t>		m_BlendEnable;		
-		GLState<GLBlendFactor_t>		m_BlendFactor;		
-		GLState<GLBlendEquation_t> m_BlendEquation;	
-		GLState<GLBlendColor_t>	m_BlendColor;		
+
+		GLState<GLBlendEnable_t>		m_BlendEnable;
+		GLState<GLBlendFactor_t>		m_BlendFactor;
+		GLState<GLBlendEquation_t> m_BlendEquation;
+		GLState<GLBlendColor_t>	m_BlendColor;
 		GLState<GLBlendEnableSRGB_t>	m_BlendEnableSRGB;		// write to this one to transmit intent to write SRGB encoded pixels to drawing FB
 		bool							m_FakeBlendEnableSRGB;	// writes to above will be shunted here if fake SRGB is in effect.
-		
-		GLState<GLDepthTestEnable_t>	m_DepthTestEnable;	
-		GLState<GLDepthFunc_t>			m_DepthFunc;		
-		GLState<GLDepthMask_t>			m_DepthMask;		
-		
+
+		GLState<GLDepthTestEnable_t>	m_DepthTestEnable;
+		GLState<GLDepthFunc_t>			m_DepthFunc;
+		GLState<GLDepthMask_t>			m_DepthMask;
+
 		GLState<GLStencilTestEnable_t>	m_StencilTestEnable;	// global stencil test enable
 		GLState<GLStencilFunc_t>		m_StencilFunc;			// holds front and back stencil funcs
 		GLStateArray<GLStencilOp_t,2>	m_StencilOp;			// indexed: 0=front 1=back
-		GLState<GLStencilWriteMask_t>	m_StencilWriteMask;		
-		
-		GLState<GLClearColor_t>			m_ClearColor;		
-		GLState<GLClearDepth_t>			m_ClearDepth;		
-		GLState<GLClearStencil_t>		m_ClearStencil;		
-		
+		GLState<GLStencilWriteMask_t>	m_StencilWriteMask;
+
+		GLState<GLClearColor_t>			m_ClearColor;
+		GLState<GLClearDepth_t>			m_ClearDepth;
+		GLState<GLClearStencil_t>		m_ClearStencil;
+
 		// texture bindings and sampler setup
 		int								m_activeTexture;		// mirror for glActiveTexture
 		GLMTexSampler					m_samplers[GLM_SAMPLER_COUNT];
-		
+
 		uint8							m_nDirtySamplerFlags[GLM_SAMPLER_COUNT];	// 0 if the sampler is dirty, 1 if not
 		uint32							m_nNumDirtySamplers;						// # of unique dirty sampler indices in m_nDirtySamplers
 		uint8							m_nDirtySamplers[GLM_SAMPLER_COUNT + 1];	// dirty sampler indices
 
 		void MarkAllSamplersDirty();
-						
+
 		struct SamplerHashEntry
 		{
 			GLuint m_samplerObject;
 			GLMTexSamplingParams m_params;
 		};
 
-		enum 
-		{ 
-			cSamplerObjectHashBits = 9, cSamplerObjectHashSize = 1 << cSamplerObjectHashBits 
+		enum
+		{
+			cSamplerObjectHashBits = 9, cSamplerObjectHashSize = 1 << cSamplerObjectHashBits
 		};
 		SamplerHashEntry				m_samplerObjectHash[cSamplerObjectHashSize];
 		uint							m_nSamplerObjectHashNumEntries;
-					
+
 		// texture lock tracking - CGLMTex objects share usage of this
 		CUtlVector< GLMTexLockDesc >	m_texLocks;
-		
+
 		// render target binding - check before draw
 		// similar to tex sampler mechanism, we track "bound" from "chosen for drawing" separately,
 		// so binding for creation/setup need not disrupt any notion of what will be used at draw time
-		
+
 		CGLMFBO							*m_boundDrawFBO;		// FBO on GL_DRAW_FRAMEBUFFER bind point
 		CGLMFBO							*m_boundReadFBO;		// FBO on GL_READ_FRAMEBUFFER bind point
 																// ^ both are set if you bind to GL_FRAMEBUFFER_EXT
-		
+
 		CGLMFBO							*m_drawingFBO;			// what FBO should be bound at draw time (to both read/draw bp's).
 
 		CGLMFBO							*m_blitReadFBO;
 		CGLMFBO							*m_blitDrawFBO;			// scratch FBO's for framebuffer blit
-		
+
 		CGLMFBO							*m_scratchFBO[ kGLMScratchFBOCount ];	// general purpose FBO's for internal use
-		
+
 		CUtlVector< CGLMFBO* >			m_fboTable;				// each live FBO goes in the table
 
 		uint							m_fragDataMask;
-		
+
 		// program bindings
 		EGLMProgramLang					m_drawingLangAtFrameStart;	// selector for start of frame (spills into m_drawingLang)
 		EGLMProgramLang					m_drawingLang;				// selector for which language we desire to draw with on the next batch
 		CGLMProgram						*m_drawingProgram[ kGLMNumProgramTypes ];
 		bool							m_bDirtyPrograms;
-		
+
 		GLMProgramParamsF				m_programParamsF[ kGLMNumProgramTypes ];
 		GLMProgramParamsB				m_programParamsB[ kGLMNumProgramTypes ];
 		GLMProgramParamsI				m_programParamsI[ kGLMNumProgramTypes ];	// two banks, but only the vertex one is used
 		EGLMParamWriteMode				m_paramWriteMode;
-		
+
 		CGLMProgram						*m_pNullFragmentProgram;		// write opaque black.  Activate when caller asks for null FP
 
 		CGLMProgram						*m_preloadTexVertexProgram;			// programs to help preload textures (dummies)
@@ -1822,17 +1822,17 @@ class GLMContext
 		VertexAttribs_t					m_boundVertexAttribs[ kGLMVertexAttributeIndexMax ];	// tracked per attrib for dupe-set-absorb
 		uint							m_lastKnownVertexAttribMask;								// tracked for dupe-enable-absorb
 		int								m_nNumSetVertexAttributes;
-						
+
 		// FIXME: Remove this, it's no longer used
 		GLMVertexSetup					m_drawVertexSetup;
 
 		EGLMAttribWriteMode				m_attribWriteMode;
-		
+
 		bool							m_slowCheckEnable;		// turn this on or no native checking is done ("-glmassertslow" or "-glmsspewslow")
 		bool							m_slowAssertEnable;		// turn this on to assert on a non-native batch	"-glmassertslow"
 		bool							m_slowSpewEnable;	// turn this on to log non-native batches to stdout "-glmspewslow"
 		bool							m_checkglErrorsAfterEveryBatch;	// turn this on to check for GL errors after each batch (slow) ("-glcheckerrors")
-		
+
 		// debug font texture
 		CGLMTex							*m_debugFontTex;		// might be NULL unless you call GenDebugFontTex
 		CGLMBuffer						*m_debugFontIndices;	// up to 1024 indices (256 chars times 4)
@@ -1840,9 +1840,9 @@ class GLMContext
 
 		// batch/frame debugging support
 		int								m_debugFrameIndex;			// init to -1. Increment at BeginFrame
-												
+
 		int							    m_nMaxUsedVertexProgramConstantsHint;
-		
+
 		uint32							m_dwRenderThreadId;
 		volatile bool					m_bIsThreading;
 
@@ -1872,7 +1872,7 @@ class GLMContext
 		void SaveColorMaskAndSetToDefault();
 		void RestoreSavedColorMask();
 		GLColorMaskSingle_t				m_SavedColorMask;
-				
+
 #if GLMDEBUG
 		// interactive (DebugHook) debug support
 
@@ -1886,11 +1886,11 @@ class GLMContext
 
 		bool							m_debugDelayEnable;		// allow sleep delay
 		uint							m_debugDelay;			// sleep time per hook call in microseconds (for usleep())
-		
+
 		// pre-draw global toggles / options
 		bool							m_autoClearColor,m_autoClearDepth,m_autoClearStencil;
 		float							m_autoClearColorValues[4];
-		
+
 		// debug knobs
 		int								m_selKnobIndex;
 		float							m_selKnobMinValue,m_selKnobMaxValue,m_selKnobIncrement;
@@ -1903,7 +1903,7 @@ class GLMContext
 		uint m_nTotalVSUniformsBoneSet;
 		uint m_nTotalPSUniformCalls;
 		uint m_nTotalPSUniformsSet;
-		
+
 		CFlushDrawStatesStats m_FlushStats;
 #endif
 
@@ -1958,7 +1958,7 @@ FORCEINLINE void GLMContext::DrawRangeElements(	GLenum mode, GLuint start, GLuin
 	info.m_drawCount = count;
 	info.m_drawType = type;
 	info.m_drawIndices = indices;
-		
+
 	do
 	{
 		// obey global options re pre-draw clear
@@ -2144,7 +2144,7 @@ FORCEINLINE void GLMContext::SetProgramParametersB( EGLMProgramType type, uint b
 #endif
 
 	memcpy( &m_programParamsB[type].m_values[baseSlot], slotData, sizeof(int) * boolCount );
-	
+
 	if ( (baseSlot+boolCount) > m_programParamsB[type].m_dirtySlotCount)
 		m_programParamsB[type].m_dirtySlotCount = baseSlot+boolCount;
 }
@@ -2173,7 +2173,7 @@ FORCEINLINE void GLMContext::SetProgramParametersI( EGLMProgramType type, uint b
 #endif
 
 	memcpy( &m_programParamsI[type].m_values[baseSlot][0], slotData, (4*sizeof(int)) * slotCount );
-	
+
 	if ( (baseSlot + slotCount) > m_programParamsI[type].m_dirtySlotCount)
 	{
 		m_programParamsI[type].m_dirtySlotCount = baseSlot + slotCount;
@@ -2188,8 +2188,8 @@ FORCEINLINE void GLMContext::SetSamplerDirty( int sampler )
 	m_nDirtySamplerFlags[sampler] = 0;
 }
 
-FORCEINLINE void GLMContext::SetSamplerTex( int sampler, CGLMTex *tex ) 
-{ 
+FORCEINLINE void GLMContext::SetSamplerTex( int sampler, CGLMTex *tex )
+{
 	Assert( sampler < GLM_SAMPLER_COUNT );
 	m_samplers[sampler].m_pBoundTex = tex;
 	if ( tex )
@@ -2209,7 +2209,7 @@ FORCEINLINE void GLMContext::SetSamplerTex( int sampler, CGLMTex *tex )
 				gGL->glBindMultiTextureEXT( GL_TEXTURE0 + sampler, tex->m_texGLTarget, tex->m_texName );
 			}
 		}
-	
+
 	if ( !m_bUseSamplerObjects )
 	{
 		SetSamplerDirty( sampler );
@@ -2319,7 +2319,7 @@ FORCEINLINE void GLMContext::SetShadowFilter( int sampler, DWORD Value )
 FORCEINLINE void GLMContext::BindIndexBufferToCtx( CGLMBuffer *buff )
 {
 	GLMPRINTF(( "--- GLMContext::BindIndexBufferToCtx buff %p, GL name %d", buff, (buff) ? buff->m_nHandle : -1 ));
-		
+
 	Assert( !buff || ( buff->m_buffGLTarget == GL_ELEMENT_ARRAY_BUFFER_ARB ) );
 
 	GLuint nGLName = buff ? buff->GetHandle() : 0;
@@ -2359,28 +2359,28 @@ struct GLMTestParams
 {
 	GLMContext	*m_ctx;
 	int			*m_testList;			// -1 termed
-	
+
 	bool		m_glErrToDebugger;
 	bool		m_glErrToConsole;
-	
+
 	bool		m_intlErrToDebugger;
 	bool		m_intlErrToConsole;
-	
+
 	int			m_frameCount;			// how many frames to test.
 };
 
 class GLMTester
 {
 	public:
-	
+
 	GLMTester(GLMTestParams *params);
 	~GLMTester();
-	
+
 
 	// optionally callable by test routines to get basic drawables wired up
 	void	StdSetup( void );
 	void	StdCleanup( void );
-	
+
 	// callable by test routines to clear the frame or present it
 	void	Clear( void );
 	void	Present( int seed );
@@ -2388,7 +2388,7 @@ class GLMTester
 	// error reporting
 	void	CheckGLError( const char *comment );					// obey m_params setting for console / debugger response
 	void	InternalError( int errcode, char *comment );	// if errcode!=0, obey m_params setting for console / debugger response
-	
+
 	void	RunTests();
 
 	void	RunOneTest( int testindex );
@@ -2400,7 +2400,7 @@ class GLMTester
 	void	Test3();
 
 	GLMTestParams	m_params;		// copy of caller's params, do not mutate...
-	
+
 	// std-setup stuff
 	int				m_drawWidth, m_drawHeight;
 	CGLMFBO			*m_drawFBO;

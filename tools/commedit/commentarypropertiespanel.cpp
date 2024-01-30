@@ -277,7 +277,7 @@ void CCommentaryPropertiesPanel::SetObject( CDmeCommentaryNodeEntity *pEntity )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Called when text is changed
 //-----------------------------------------------------------------------------
@@ -319,7 +319,7 @@ void CCommentaryPropertiesPanel::PickSound()
 	pSoundPickerDialog->DoModal( CSoundPicker::PICK_NONE, NULL );
 }
 
-			
+
 //-----------------------------------------------------------------------------
 // Called when the string picker has picked something
 //-----------------------------------------------------------------------------
@@ -353,7 +353,7 @@ void CCommentaryPropertiesPanel::PickInfoTarget( vgui::TextEntry *pControl )
 
 		if ( !Q_stricmp( pNode->GetClassName(), "info_target" ) )
 		{
-			j = vec.AddToTail( ); 
+			j = vec.AddToTail( );
 			vec[j].m_pChoiceString = pTargetName;
 			vec[j].m_pChoiceValue = pTargetName;
 		}
@@ -387,7 +387,7 @@ void CCommentaryPropertiesPanel::OnFileSelected( KeyValues *pKeyValues )
 	if ( g_pFileSystem->FileExists( pFileName ) )
 	{
 		char pBuf[1024];
-		Q_snprintf( pBuf, sizeof(pBuf), "File %s already exists!\nRecording audio will not overwrite existing files.", pFileName ); 
+		Q_snprintf( pBuf, sizeof(pBuf), "File %s already exists!\nRecording audio will not overwrite existing files.", pFileName );
 		vgui::MessageBox *pMessageBox = new vgui::MessageBox( "File already Exists!\n", pBuf, g_pCommEditTool );
 		pMessageBox->DoModal( );
 		return;
@@ -454,5 +454,3 @@ void CCommentaryPropertiesPanel::OnCommand( const char *pCommand )
 
 	BaseClass::OnCommand( pCommand );
 }
-
-

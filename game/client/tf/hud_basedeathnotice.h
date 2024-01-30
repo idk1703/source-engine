@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,13 +20,13 @@ struct DeathNoticePlayer
 		iTeam = TEAM_UNASSIGNED;
 	}
 	char		szName[MAX_PLAYER_NAME_LENGTH*2];	// big enough for player name and additional information
-	int			iTeam;								// team #	
+	int			iTeam;								// team #
 };
 
 // Contents of each entry in our list of death notices
-struct DeathNoticeItem 
+struct DeathNoticeItem
 {
-	DeathNoticeItem() 
+	DeathNoticeItem()
 	{
 		szIcon[0]=0;
 		wzInfoText[0]=0;
@@ -83,7 +83,7 @@ struct DeathNoticeItem
 #define NUM_BACKGROUND_COORD NUM_CORNER_COORD*4
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudBaseDeathNotice : public CHudElement, public vgui::Panel
 {

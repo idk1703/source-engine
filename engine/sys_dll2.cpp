@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -154,12 +154,12 @@ void EXPORT F( IEngineAPI **api )
 #endif // SWDS
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ClearIOStates( void )
 {
 #ifndef SWDS
-	if ( g_ClientDLL ) 
+	if ( g_ClientDLL )
 	{
 		g_ClientDLL->IN_ClearStates();
 	}
@@ -194,7 +194,7 @@ const char *GetModDirFromPath( const char *pszPath )
 #endif
 
 //-----------------------------------------------------------------------------
-// Inner loop: initialize, shutdown main systems, load steam to 
+// Inner loop: initialize, shutdown main systems, load steam to
 //-----------------------------------------------------------------------------
 class CModAppSystemGroup : public CAppSystemGroup
 {
@@ -354,7 +354,7 @@ public:
 	{
 		va_list args;
 		va_start( args, fmt );
-		
+
 		size_t len = strlen( m_errorText );
 		vsnprintf( m_errorText + len, sizeof( m_errorText ) - len - 1, fmt, args );
 		m_errorText[ sizeof( m_errorText ) - 1 ] = 0;
@@ -428,14 +428,14 @@ public:
 			if ( Plat_GetPagedPoolInfo( &ppi_info ) != SYSCALL_UNSUPPORTED )
 			{
 				CommentPrintf( "\nPaged Pool\nprev PP PAGES: used: %lu, free %lu\nfinal PP PAGES: used: %lu, free %lu\n",
-				            g_pagedpoolinfo.numPagesUsed, g_pagedpoolinfo.numPagesFree, 
+				            g_pagedpoolinfo.numPagesUsed, g_pagedpoolinfo.numPagesFree,
 				            ppi_info.numPagesUsed, ppi_info.numPagesFree );
 			}
 
 			CommentPrintf( "memallocfail? = %u\nActive: %s\nSpawnCount %d MapLoad Count %d\nError count %d, end demo %d, abort count %d\n",
 			            MemAlloc_MemoryAllocFailed(),
-			            ( game && game->IsActiveApp() ) ? "active" : "inactive", 
-			            gHostSpawnCount, 
+			            ( game && game->IsActiveApp() ) ? "active" : "inactive",
+			            gHostSpawnCount,
 			            g_nMapLoadCount,
 			            g_HostErrorCount,
 			            g_HostEndDemo,
@@ -480,7 +480,7 @@ public:
 		{
 			// Oh oh
 		}
-		
+
 #ifdef IS_WINDOWS_PC
 		_set_se_translator( curfilter );
 #elif defined( POSIX )
@@ -1001,8 +1001,8 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CEngineAPI, IEngineAPI, VENGINE_LAUNCHER_API_
 //-----------------------------------------------------------------------------
 // Connect, disconnect
 //-----------------------------------------------------------------------------
-bool CEngineAPI::Connect( CreateInterfaceFn factory ) 
-{ 
+bool CEngineAPI::Connect( CreateInterfaceFn factory )
+{
 	// Store off the app system factory...
 	g_AppSystemFactory = factory;
 
@@ -1037,13 +1037,13 @@ bool CEngineAPI::Connect( CreateInterfaceFn factory )
 #if defined( USE_SDL )
 	g_pLauncherMgr = (ILauncherMgr *)factory( SDLMGR_INTERFACE_VERSION, NULL );
 #endif
-	
+
 	ConnectMDLCacheNotify();
 
-	return true; 
+	return true;
 }
 
-void CEngineAPI::Disconnect() 
+void CEngineAPI::Disconnect()
 {
 	DisconnectMDLCacheNotify();
 
@@ -1161,7 +1161,7 @@ void CEngineAPI::SetStartupInfo( StartupInfo_t &info )
 //-----------------------------------------------------------------------------
 // Init, shutdown
 //-----------------------------------------------------------------------------
-InitReturnVal_t CEngineAPI::Init() 
+InitReturnVal_t CEngineAPI::Init()
 {
 	if ( CommandLine()->FindParm( "-sv_benchmark" ) != 0 )
 	{
@@ -1198,10 +1198,10 @@ InitReturnVal_t CEngineAPI::Init()
 		return HandleSetModeError();
 	}
 
-	return INIT_OK; 
+	return INIT_OK;
 }
 
-void CEngineAPI::Shutdown() 
+void CEngineAPI::Shutdown()
 {
 	VideoMode_Destroy();
 	BaseClass::Shutdown();
@@ -1232,7 +1232,7 @@ void CEngineAPI::PostConsoleCommand( const char *pCommand )
 	Cbuf_AddText( pCommand );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Is the engine currently rinning?
 //-----------------------------------------------------------------------------
@@ -1339,7 +1339,7 @@ void CEngineAPI::PumpMessages()
 		XBX_ProcessEvents();
 	}
 
-	// NOTE: Under some implementations of Win9x, 
+	// NOTE: Under some implementations of Win9x,
 	// dispatching messages can cause the FPU control word to change
 	if ( IsPC() )
 	{
@@ -1403,7 +1403,7 @@ void CEngineAPI::PumpMessagesEditMode( bool &bIdle, long &lIdleCount )
 #endif
 
 
-	// NOTE: Under some implementations of Win9x, 
+	// NOTE: Under some implementations of Win9x,
 	// dispatching messages can cause the FPU control word to change
 	SetupFPUControlWord();
 
@@ -1580,7 +1580,7 @@ bool CEngineAPI::InitVR()
 		g_pSourceVR = (ISourceVirtualReality *)g_AppSystemFactory( SOURCE_VIRTUAL_REALITY_INTERFACE_VERSION, NULL );
 		if ( g_pSourceVR )
 		{
-			// make sure that the sourcevr DLL we loaded is secure. If not, don't 
+			// make sure that the sourcevr DLL we loaded is secure. If not, don't
 			// let this client connect to secure servers.
 			if ( !Host_AllowLoadModule( "sourcevr" DLL_EXT_STRING, "EXECUTABLE_PATH", false ) )
 			{
@@ -1604,13 +1604,13 @@ void CEngineAPI::ShutdownVR()
 //-----------------------------------------------------------------------------
 bool CEngineAPI::OnStartup( void *pInstance, const char *pStartupModName )
 {
-	// This fixes a bug on certain machines where the input will 
+	// This fixes a bug on certain machines where the input will
 	// stop coming in for about 1 second when someone hits a key.
 	// (true means to disable priority boost)
 #ifdef WIN32
 	if ( IsPC() )
 	{
-		SetThreadPriorityBoost( GetCurrentThread(), true ); 
+		SetThreadPriorityBoost( GetCurrentThread(), true );
 	}
 #endif
 
@@ -1694,7 +1694,7 @@ static bool IsValveMod( const char *pModName )
 	return ( Q_stricmp( GetCurrentMod(), "cstrike" ) == 0 ||
 		Q_stricmp( GetCurrentMod(), "dod" ) == 0 ||
 		Q_stricmp( GetCurrentMod(), "hl1mp" ) == 0 ||
-		Q_stricmp( GetCurrentMod(), "tf" ) == 0 || 
+		Q_stricmp( GetCurrentMod(), "tf" ) == 0 ||
 		Q_stricmp( GetCurrentMod(), "tf_beta" ) == 0 ||
 		Q_stricmp( GetCurrentMod(), "hl2mp" ) == 0 );
 }
@@ -1745,7 +1745,7 @@ void CEngineAPI::ModShutdown()
 {
 	COM_StringFree(host_parms.mod);
 	COM_StringFree(host_parms.game);
-	
+
 	// Stop accepting input from the window
 	game->InputDetachFromGameWindow();
 
@@ -1770,7 +1770,7 @@ InitReturnVal_t CEngineAPI::HandleSetModeError()
 		Sys_MessageBox( "Failed to set video mode.\n\nThis game has a minimum requirement of DirectX 7.0 compatible hardware.\n", "Video mode error", false );
 		return INIT_FAILED;
 	}
-	
+
 	if ( CommandLine()->FindParm( "-autoconfig" ) )
 	{
 		if ( Sys_MessageBox( "Failed to set video mode - falling back to safe mode settings.\n\nGame will now restart with the new video settings.", "Video - safe mode fallback", true ))
@@ -1797,7 +1797,7 @@ InitReturnVal_t CEngineAPI::HandleSetModeError()
 int CEngineAPI::RunListenServer()
 {
 	//
-	// NOTE: Systems set up here should depend on the mod 
+	// NOTE: Systems set up here should depend on the mod
 	// Systems which are mod-independent should be set up in the launcher or Init()
 	//
 
@@ -1865,11 +1865,11 @@ extern "C" void __cdecl WriteSteamMiniDumpWithComment( unsigned int uStructuredE
 	{
 	}
 #endif
-} 
+}
 
- 
+
 //-----------------------------------------------------------------------------
-// Purpose: Main 
+// Purpose: Main
 //-----------------------------------------------------------------------------
 int CEngineAPI::Run()
 {
@@ -1929,13 +1929,13 @@ bool CModAppSystemGroup::AddLegacySystems()
 {
 	g_bUsingLegacyAppSystems = true;
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "soundemittersystem", SOUNDEMITTERSYSTEM_INTERFACE_VERSION },
 		{ "", "" }					// Required to terminate the list
 	};
 
-	if ( !AddSystems( appSystems ) ) 
+	if ( !AddSystems( appSystems ) )
 		return false;
 
 #if !defined( DEDICATED )
@@ -1962,7 +1962,7 @@ bool CModAppSystemGroup::Create()
 		if ( !ClientDLL_Load() )
 	return false;
 }
-#endif 
+#endif
 
 	if ( !ServerDLL_Load( IsServerOnly() ) )
 		return false;
@@ -1984,7 +1984,7 @@ bool CModAppSystemGroup::Create()
 			Assert( !"Expected both game and client .dlls to have or not have shared app systems interfaces!!!" );
 			return AddLegacySystems();
 		}
-	
+
 	// Load game and client .dlls and build list then
 	CUtlVector< AppSystemInfo_t >	systems;
 
@@ -1994,11 +1994,11 @@ bool CModAppSystemGroup::Create()
 		{
 			const char *dllName = serverSharedSystems->GetDllName( i );
 			const char *interfaceName = serverSharedSystems->GetInterfaceName( i );
-	
+
 			AppSystemInfo_t info;
 			info.m_pModuleName = dllName;
 			info.m_pInterfaceName = interfaceName;
-	
+
 			systems.AddToTail( info );
 		}
 
@@ -2026,7 +2026,7 @@ bool CModAppSystemGroup::Create()
 	info.m_pInterfaceName = "";
 	systems.AddToTail( info );
 
-	if ( !AddSystems( systems.Base() ) ) 
+	if ( !AddSystems( systems.Base() ) )
 		return false;
 
 #if !defined( DEDICATED )
@@ -2044,8 +2044,8 @@ bool CModAppSystemGroup::Create()
 
 //-----------------------------------------------------------------------------
 // Purpose: Fixme, we might need to verify if the interface names differ for the client versus the server
-// Input  : list - 
-//			*moduleName - 
+// Input  : list -
+//			*moduleName -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CModAppSystemGroup::ModuleAlreadyInList( CUtlVector< AppSystemInfo_t >& list, const char *moduleName, const char *interfaceName )
@@ -2097,7 +2097,7 @@ int CModAppSystemGroup::Main()
 		// Start up the game engine
 		static const char engineLoadMessage[] = "Calling CEngine::Load";
 		int64 nStartTime = ETWBegin( engineLoadMessage );
-		if ( eng->Load( false, host_parms.basedir ) )					
+		if ( eng->Load( false, host_parms.basedir ) )
 		{
 #if !defined(SWDS)
 			ETWEnd( engineLoadMessage, nStartTime );
@@ -2116,7 +2116,7 @@ int CModAppSystemGroup::Main()
 			SV_ShutdownGameDLL();
 		}
 	}
-	
+
 	return nRunResult;
 }
 
@@ -2124,7 +2124,7 @@ void CModAppSystemGroup::PostShutdown()
 {
 }
 
-void CModAppSystemGroup::Destroy() 
+void CModAppSystemGroup::Destroy()
 {
 	// unload game and client .dlls
 	ServerDLL_Unload();
@@ -2279,8 +2279,8 @@ bool EnableLongTickWatcher()
 //-----------------------------------------------------------------------------
 // Dedicated server entrypoint
 //-----------------------------------------------------------------------------
-bool CDedicatedServerAPI::Connect( CreateInterfaceFn factory ) 
-{ 
+bool CDedicatedServerAPI::Connect( CreateInterfaceFn factory )
+{
 	if ( CommandLine()->FindParm( "-sv_benchmark" ) != 0 )
 	{
 		Plat_SetBenchmarkMode( true );
@@ -2323,10 +2323,10 @@ bool CDedicatedServerAPI::Connect( CreateInterfaceFn factory )
 	}
 
 	ConnectMDLCacheNotify();
-	return true; 
+	return true;
 }
 
-void CDedicatedServerAPI::Disconnect() 
+void CDedicatedServerAPI::Disconnect()
 {
 	DisconnectMDLCacheNotify();
 
@@ -2356,12 +2356,12 @@ void *CDedicatedServerAPI::QueryInterface( const char *pInterfaceName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : type - 0 == normal, 1 == dedicated server
-//			*instance - 
-//			*basedir - 
-//			*cmdline - 
-//			launcherFactory - 
+//			*instance -
+//			*basedir -
+//			*cmdline -
+//			launcherFactory -
 //-----------------------------------------------------------------------------
 bool CDedicatedServerAPI::ModInit( ModInfo_t &info )
 {
@@ -2568,4 +2568,3 @@ CON_COMMAND( dumplongticks, "Enables generating minidumps on long ticks." )
 		}
 	}
 }
-

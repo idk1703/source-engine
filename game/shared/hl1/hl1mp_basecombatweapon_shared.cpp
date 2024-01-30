@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -105,7 +105,7 @@ void CBaseHL1MPCombatWeapon::ApplyBoneMatrixTransform( matrix3x4_t& transform )
 
 
 bool CBaseHL1MPCombatWeapon::IsPredicted() const
-{ 
+{
 	return true;
 }
 
@@ -120,15 +120,15 @@ void CBaseHL1MPCombatWeapon::WeaponSound( WeaponSound_t sound_type, float soundt
 {
 #ifdef CLIENT_DLL
 	// If we have some sounds from the weapon classname.txt file, play a random one of them
-	const char *shootsound = GetWpnData().aShootSounds[ sound_type ]; 
+	const char *shootsound = GetWpnData().aShootSounds[ sound_type ];
 	if ( !shootsound || !shootsound[0] )
 		return;
 
 	CBroadcastRecipientFilter filter; // this is client side only
 	if ( !te->CanPredict() )
 		return;
-				
-	CBaseEntity::EmitSound( filter, GetPlayerOwner()->entindex(), shootsound, &GetPlayerOwner()->GetAbsOrigin() ); 
+
+	CBaseEntity::EmitSound( filter, GetPlayerOwner()->entindex(), shootsound, &GetPlayerOwner()->GetAbsOrigin() );
 #else
 	BaseClass::WeaponSound( sound_type, soundtime );
 #endif

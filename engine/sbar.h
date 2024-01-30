@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,4 +15,3 @@ void Sbar_Draw (void);
 // called every frame by screen
 
 #endif // SBAR_H
-

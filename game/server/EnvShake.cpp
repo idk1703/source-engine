@@ -83,7 +83,7 @@ public:
 	void InputFrequency( inputdata_t &inputdata );
 
 	// Causes the camera/physics shakes to happen:
-	void ApplyShake( ShakeCommand_t command ); 
+	void ApplyShake( ShakeCommand_t command );
 	void Think( void );
 };
 
@@ -147,12 +147,12 @@ void CEnvShake::Spawn( void )
 {
 	SetSolid( SOLID_NONE );
 	SetMoveType( MOVETYPE_NONE );
-	
+
 	if ( GetSpawnFlags() & SF_SHAKE_EVERYONE )
 	{
 		m_Radius = 0;
 	}
-	
+
 	if ( HasSpawnFlags( SF_SHAKE_NO_VIEW ) && !HasSpawnFlags( SF_SHAKE_PHYSICS ) && !HasSpawnFlags( SF_SHAKE_ROPES ) )
 	{
 		DevWarning( "env_shake %s with \"Don't shake view\" spawnflag set without \"Shake physics\" or \"Shake ropes\" spawnflags set.", GetDebugName() );
@@ -175,7 +175,7 @@ void CEnvShake::OnRestore( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvShake::ApplyShake( ShakeCommand_t command )
 {
@@ -184,7 +184,7 @@ void CEnvShake::ApplyShake( ShakeCommand_t command )
 		bool air = (GetSpawnFlags() & SF_SHAKE_INAIR) ? true : false;
 		UTIL_ScreenShake( GetAbsOrigin(), Amplitude(), Frequency(), Duration(), Radius(), command, air );
 	}
-		
+
 	if ( GetSpawnFlags() & SF_SHAKE_ROPES )
 	{
 		CRopeKeyframe::ShakeRopes( GetAbsOrigin(), Radius(false), Frequency() );
@@ -210,7 +210,7 @@ void CEnvShake::ApplyShake( ShakeCommand_t command )
 				m_currentAmp = Amplitude();
 				CBaseEntity *list[1024];
 				float radius = Radius(false);
-				
+
 				// probably checked "Shake Everywhere" do a big radius
 				if ( !radius )
 				{
@@ -376,11 +376,11 @@ void CC_Shake( void )
 // Purpose: Draw any debug text overlays
 // Returns current text offset from the top
 //-----------------------------------------------------------------------------
-int CEnvShake::DrawDebugTextOverlays( void ) 
+int CEnvShake::DrawDebugTextOverlays( void )
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 
@@ -409,5 +409,3 @@ int CEnvShake::DrawDebugTextOverlays( void )
 }
 
 static ConCommand shake("shake", CC_Shake, "Shake the screen.", FCVAR_CHEAT );
-
-

@@ -125,7 +125,7 @@ static SGameActionSet g_GameActionSets[] = {
 // Table that maps a physical steam controller origin to the corresponding character in our icon font.
 // If the EControllerActionOrigin enum or the font changes, this table must be changed to match.
 static const wchar_t* g_MapSteamControllerOriginToIconFont[] = {
-	L"",					// k_EControllerActionOrigin_None 
+	L"",					// k_EControllerActionOrigin_None
 	L"A",					// k_EControllerActionOrigin_A
 	L"B",					// k_EControllerActionOrigin_B
 	L"X",					// k_EControllerActionOrigin_X
@@ -142,7 +142,7 @@ static const wchar_t* g_MapSteamControllerOriginToIconFont[] = {
 	L"a",					// k_EControllerActionOrigin_LeftPad_DPadNorth
 	L"s",					// k_EControllerActionOrigin_LeftPad_DPadSouth
 	L"d",					// k_EControllerActionOrigin_LeftPad_DPadWest
-	L"f",					// k_EControllerActionOrigin_LeftPad_DPadEast					
+	L"f",					// k_EControllerActionOrigin_LeftPad_DPadEast
 	L"y",					// k_EControllerActionOrigin_RightPad_Touch
 	L"u",					// k_EControllerActionOrigin_RightPad_Swipe
 	L"i",					// k_EControllerActionOrigin_RightPad_Click
@@ -170,7 +170,7 @@ static const wchar_t* g_MapSteamControllerOriginToIconFont[] = {
 // if it's impractical to use the icon font).
 // If the EControllerActionOrigin enum changes, this table must be changed to match.
 static const wchar_t* g_MapSteamControllerOriginToDescription[] = {
-	L"",					// k_EControllerActionOrigin_None 
+	L"",					// k_EControllerActionOrigin_None
 	L"A",					// k_EControllerActionOrigin_A
 	L"B",					// k_EControllerActionOrigin_B
 	L"X",					// k_EControllerActionOrigin_X
@@ -187,7 +187,7 @@ static const wchar_t* g_MapSteamControllerOriginToDescription[] = {
 	L"LPUP",				// k_EControllerActionOrigin_LeftPad_DPadNorth
 	L"LPDOWN",				// k_EControllerActionOrigin_LeftPad_DPadSouth
 	L"LPLEFT",				// k_EControllerActionOrigin_LeftPad_DPadWest
-	L"LPRIGHT",				// k_EControllerActionOrigin_LeftPad_DPadEast					
+	L"LPRIGHT",				// k_EControllerActionOrigin_LeftPad_DPadEast
 	L"RPTOUCH",				// k_EControllerActionOrigin_RightPad_Touch
 	L"RPSWIPE",				// k_EControllerActionOrigin_RightPad_Swipe
 	L"RPCLICK",				// k_EControllerActionOrigin_RightPad_Click
@@ -227,7 +227,7 @@ bool CInputSystem::InitializeSteamControllerActionSets()
 		g_DigitalMenuActions[i].handle = psteamcontroller->GetDigitalActionHandle( g_DigitalMenuActions[i].strName );
 		bGotHandles = bGotHandles && ( g_DigitalMenuActions[i].handle != 0 );
 
-		// Init the button state array 
+		// Init the button state array
 		for( int j = 0; j < STEAM_CONTROLLER_MAX_COUNT; j++ )
 		{
 			g_DigitalMenuActions[i].bState[j] = false;
@@ -269,7 +269,7 @@ void CInputSystem::PollSteamControllers( void )
 		}
 
 		if ( m_bSteamControllerActionsInitialized )
-		{  
+		{
 			// If we successfully initialized all the actions, and we have a connected controller, then we're considered "active".
 			m_bSteamControllerActive = true;
 
@@ -356,7 +356,7 @@ bool CInputSystem::InitializeSteamControllers()
 		m_pRadialMenuStickVal[i][0] = 0.0f;
 		m_pRadialMenuStickVal[i][1] = 0.0f;
 	}
-	
+
 	// We have to account for other joysticks prior to adding steam controllers
 	// So we get the baseline number here when first initializing
 	m_nJoystickBaseline = m_nJoystickCount;
@@ -383,7 +383,7 @@ bool CInputSystem::InitializeSteamControllers()
 		return true;
 	}
 
-	return false;	
+	return false;
 }
 
 ControllerActionSetHandle_t CInputSystem::GetActionSetHandle( GameActionSet_t eActionSet )
@@ -458,11 +458,11 @@ void CInputSystem::ActivateSteamControllerActionSetForSlot( uint64 nSlot, GameAc
 
 const int CInputSystem::GetSteamPadDeadZone( ESteamPadAxis axis )
 {
-  int nDeadzone = s_nSteamPadDeadZoneTable[ axis ];
+	int nDeadzone = s_nSteamPadDeadZoneTable[ axis ];
 
-  // Do modifications if required here?
+	// Do modifications if required here?
 
-  return nDeadzone;
+	return nDeadzone;
 }
 
 //-----------------------------------------------------------------------------
@@ -515,7 +515,7 @@ void CInputSystem::PostKeyEvent( int iIndex, sKey_t sKey, int nSample )
 	float			value	= 0.f;
 	//int nMsgSlot = iIndex;
 	int nMsgSlot = m_Device[iIndex].m_nJoystickIndex;
-	int nSampleThreshold = 1; 
+	int nSampleThreshold = 1;
 
 	// Look for changes on the analog axes
 	switch( sKey )
@@ -527,7 +527,7 @@ void CInputSystem::PostKeyEvent( int iIndex, sKey_t sKey, int nSample )
 			value = ( sKey == SK_BUTTON_LPAD_LEFT ) ? -nSample : nSample;
 			// Kind of a hack to horizontal values for menu selection items in Portal 2
 			// The additional 5k helps accidental horizontals in menus.
-			nSampleThreshold = ( int )( STEAMPAD_DIGITAL_PAD_THRESHOLD ) + 5000;  
+			nSampleThreshold = ( int )( STEAMPAD_DIGITAL_PAD_THRESHOLD ) + 5000;
 		}
 		break;
 

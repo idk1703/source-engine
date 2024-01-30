@@ -26,7 +26,7 @@ static const char *s_pZapContext = "ZapContext";
 
 
 //-----------------------------------------------------------------------------
-// Save/load 
+// Save/load
 //-----------------------------------------------------------------------------
 BEGIN_DATADESC( CRagdollBoogie )
 
@@ -47,9 +47,9 @@ LINK_ENTITY_TO_CLASS( env_ragdoll_boogie, CRagdollBoogie );
 
 //-----------------------------------------------------------------------------
 // Purpose: Creates a flame and attaches it to a target entity.
-// Input  : pTarget - 
+// Input  : pTarget -
 //-----------------------------------------------------------------------------
-CRagdollBoogie *CRagdollBoogie::Create( CBaseEntity *pTarget, float flMagnitude, 
+CRagdollBoogie *CRagdollBoogie::Create( CBaseEntity *pTarget, float flMagnitude,
 	float flStartTime, float flLengthTime, int nSpawnFlags )
 {
 	CRagdollProp *pRagdoll = dynamic_cast< CRagdollProp* >( pTarget );
@@ -81,7 +81,7 @@ void CRagdollBoogie::Spawn()
 
 	if ( HasSpawnFlags( SF_RAGDOLL_BOOGIE_ELECTRICAL ) )
 	{
-		SetContextThink( &CRagdollBoogie::ZapThink, gpGlobals->curtime + random->RandomFloat( 0.1f, 0.3f ), s_pZapContext ); 
+		SetContextThink( &CRagdollBoogie::ZapThink, gpGlobals->curtime + random->RandomFloat( 0.1f, 0.3f ), s_pZapContext );
 	}
 }
 
@@ -111,19 +111,19 @@ void CRagdollBoogie::ZapThink()
 	if ( m_nSuppressionCount == 0 )
 	{
 		CEffectData	data;
-		
+
 		data.m_nEntIndex = GetMoveParent()->entindex();
 		data.m_flMagnitude = 4;
 		data.m_flScale = HasSpawnFlags(SF_RAGDOLL_BOOGIE_ELECTRICAL_NARROW_BEAM) ? 1.0f : 2.0f;
 
-		DispatchEffect( "TeslaHitboxes", data );	
+		DispatchEffect( "TeslaHitboxes", data );
 	}
 
 #ifdef HL2_EPISODIC
 	EmitSound( "RagdollBoogie.Zap" );
 #endif
 
-	SetContextThink( &CRagdollBoogie::ZapThink, gpGlobals->curtime + random->RandomFloat( 0.1f, 0.3f ), s_pZapContext ); 
+	SetContextThink( &CRagdollBoogie::ZapThink, gpGlobals->curtime + random->RandomFloat( 0.1f, 0.3f ), s_pZapContext );
 }
 
 
@@ -193,8 +193,8 @@ void CRagdollBoogie::AttachToEntity( CBaseEntity *pTarget )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : lifetime - 
+// Purpose:
+// Input  : lifetime -
 //-----------------------------------------------------------------------------
 void CRagdollBoogie::SetBoogieTime( float flStartTime, float flLengthTime )
 {
@@ -245,7 +245,7 @@ void CRagdollBoogie::BoogieThink( void )
 			return;
 		}
 
-		flMagnitude = SimpleSplineRemapVal( dt, 0.0f, m_flBoogieLength, m_flMagnitude, 0.0f ); 
+		flMagnitude = SimpleSplineRemapVal( dt, 0.0f, m_flBoogieLength, m_flMagnitude, 0.0f );
 	}
 
 #ifndef _XBOX
@@ -259,7 +259,7 @@ void CRagdollBoogie::BoogieThink( void )
 
 			Vector vecForce;
 			vecForce = RandomVector( -flForce, flForce );
-			pRagdollPhys->list[j].pObject->ApplyForceCenter( vecForce ); 
+			pRagdollPhys->list[j].pObject->ApplyForceCenter( vecForce );
 		}
 	}
 #endif // !_XBOX

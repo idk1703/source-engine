@@ -78,7 +78,7 @@ private:
 // Things that inherit from vgui::Panel, too, will have ambiguous new operators
 //  so this should disambiguate them
 #define DECLARE_MULTIPLY_INHERITED()							\
-    void *operator new( size_t stAllocateBlock )				\
+	void *operator new( size_t stAllocateBlock )				\
 	{															\
 		return CHudElement::operator new ( stAllocateBlock );	\
 	}															\

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,4 +34,3 @@ PLATFORM_INTERFACE ProgressReportHandler_t InstallProgressReportHandler( Progres
 	pReportHandlerFN = pfn;
 	return old;
 }
-

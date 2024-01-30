@@ -36,7 +36,7 @@
 //
 //	SendPropUtlVectorDataTable( m_StructArray, 11, DT_TestStruct )
 //
-//	SendPropUtlVector( 
+//	SendPropUtlVector(
 //		SENDINFO_UTLVECTOR( m_FloatArray ),
 //		16,	// max elements
 //		SendPropFloat( NULL, 0, 0, 0, SPROP_NOSCALE )

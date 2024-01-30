@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: An application framework 
+// Purpose: An application framework
 //
 // $Revision: $
 // $NoKeywords: $
@@ -36,7 +36,7 @@ enum InitReturnVal_t
 abstract_class IAppSystem
 {
 public:
-	// Here's where the app systems get to learn about each other 
+	// Here's where the app systems get to learn about each other
 	virtual bool Connect( CreateInterfaceFn factory ) = 0;
 	virtual void Disconnect() = 0;
 
@@ -53,11 +53,11 @@ public:
 //-----------------------------------------------------------------------------
 // Helper empty implementation of an IAppSystem
 //-----------------------------------------------------------------------------
-template< class IInterface > 
+template< class IInterface >
 class CBaseAppSystem : public IInterface
 {
 public:
-	// Here's where the app systems get to learn about each other 
+	// Here's where the app systems get to learn about each other
 	virtual bool Connect( CreateInterfaceFn factory ) { return true; }
 	virtual void Disconnect() {}
 
@@ -74,7 +74,7 @@ public:
 //-----------------------------------------------------------------------------
 // Helper implementation of an IAppSystem for tier0
 //-----------------------------------------------------------------------------
-template< class IInterface > 
+template< class IInterface >
 class CTier0AppSystem : public CBaseAppSystem< IInterface >
 {
 public:
@@ -105,7 +105,7 @@ private:
 abstract_class IAppSystemV0
 {
 public:
-	// Here's where the app systems get to learn about each other 
+	// Here's where the app systems get to learn about each other
 	virtual bool Connect( CreateInterfaceFn factory ) = 0;
 	virtual void Disconnect() = 0;
 
@@ -119,4 +119,3 @@ public:
 };
 
 #endif // IAPPSYSTEM_H
-

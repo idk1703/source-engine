@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@
 	#include "gasoline_blob.h"
 	#include "fire_damage_mgr.h"
 	#include "tf_gamerules.h"
-	
+
 	#define FLAMETHROWER_DAMAGE_INTERVAL	0.2
 
 #endif
@@ -63,7 +63,7 @@ BEGIN_NETWORK_TABLE( CWeaponFlameThrower, DT_WeaponFlameThrower )
 		SendPropInt( SENDINFO( m_bFiring ), 1, SPROP_UNSIGNED )
 	#endif
 END_NETWORK_TABLE()
-		  
+
 BEGIN_PREDICTION_DATA( CWeaponFlameThrower )
 
 	DEFINE_PRED_FIELD( m_bFiring, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
@@ -75,7 +75,7 @@ static inline void GenerateRandomFlameThrowerVelocity( Vector &vOut, const Vecto
 {
 	static float radians = DEG2RAD( 90 - FLAMETHROWER_SPREAD_ANGLE );
 	static float v = cos( radians ) / sin( radians );
-	
+
 	vOut = vForward + vRight * RandomFloat( -v, v ) + vUp * RandomFloat( -v, v );
 	VectorNormalize( vOut );
 }
@@ -118,13 +118,13 @@ void CWeaponFlameThrower::InternalConstructor( bool bCanister )
 {
 	m_bCanister = bCanister;
 
-	m_bFiring = false;							   	
+	m_bFiring = false;
 	m_flNextPrimaryAttack = -1;
 
 	#if defined( CLIENT_DLL )
 	{
 		m_hFlameEmitter = CSimpleEmitter::Create( "flamethrower" );
-		
+
 		m_hFireMaterial = INVALID_MATERIAL_HANDLE;
 		if ( IsGasCanister() )
 		{
@@ -134,7 +134,7 @@ void CWeaponFlameThrower::InternalConstructor( bool bCanister )
 		{
 			m_hFireMaterial = m_hFlameEmitter->GetPMaterial( "particle/fire" );
 		}
-	
+
 		m_FlameEvent.Init( FLAMETHROWER_PARTICLES_PER_SEC );
 
 		m_bSoundOn = false;
@@ -169,8 +169,8 @@ void CWeaponFlameThrower::ItemPostFrame()
 	if ( !pOwner )
 		return;
 
-	if ( pOwner->IsAlive() && 
-		(pOwner->m_nButtons & IN_ATTACK) && 
+	if ( pOwner->IsAlive() &&
+		(pOwner->m_nButtons & IN_ATTACK) &&
 		GetShieldState() == SS_DOWN &&
 		GetPrimaryAmmo() > 2 )
 	{
@@ -204,13 +204,13 @@ void CWeaponFlameThrower::ItemPostFrame()
 void CWeaponFlameThrower::PrimaryAttack()
 {
 	#if defined( CLIENT_DLL )
-	
+
 	#else
 
 		CBasePlayer *pOwner = ToBaseTFPlayer( GetOwner() );
 		if ( !pOwner )
 			return;
-		
+
 		// Ok.. find eligible entities in a cone in front of us.
 		Vector vOrigin = pOwner->Weapon_ShootPosition( );
 		Vector vForward, vRight, vUp;
@@ -222,8 +222,8 @@ void CWeaponFlameThrower::PrimaryAttack()
 
 		#define NUM_TEST_VECTORS	30
 		for ( int iTest=0; iTest < NUM_TEST_VECTORS; iTest++ )
-		{	
-			Vector vVel;  
+		{
+			Vector vVel;
 			GenerateRandomFlameThrowerVelocity( vVel, vForward, vRight, vUp );
 
 			trace_t tr;
@@ -242,7 +242,7 @@ void CWeaponFlameThrower::PrimaryAttack()
 								break;
 						}
 					}
-				}	
+				}
 			}
 		}
 
@@ -258,7 +258,7 @@ void CWeaponFlameThrower::PrimaryAttack()
 			float flDamage = flPercent * FLAMETHROWER_DAMAGE_PER_SEC;
 			GetFireDamageMgr()->AddDamage( pEnt, GetOwner(), flDamage, !IsGasolineBlob( pEnt ) );
 		}
-		
+
 
 		// Drop a new petrol blob.
 		if ( gpGlobals->curtime >= m_flNextPrimaryAttack )
@@ -313,7 +313,7 @@ void CWeaponFlameThrower::PrimaryAttack()
 		if ( state == SHOULDTRANSMIT_START )
 		{
 			SetNextClientThink( CLIENT_THINK_ALWAYS );
-		}		
+		}
 		else if ( state == SHOULDTRANSMIT_END )
 		{
 			SetNextClientThink( CLIENT_THINK_NEVER );
@@ -334,18 +334,18 @@ void CWeaponFlameThrower::PrimaryAttack()
 			}
 
 			StartSound();
-			
+
 			Vector vForward, vUp, vRight, vOrigin;
 			QAngle vAngles;
 			GetShootPosition( vOrigin, vAngles );
 			AngleVectors( vAngles, &vForward, &vRight, &vUp );
-			
+
 			// Spew out flame particles.
 			float dt = gpGlobals->frametime;
 			while ( m_FlameEvent.NextEvent( dt ) )
 			{
-				SimpleParticle *p = m_hFlameEmitter->AddSimpleParticle( 
-					m_hFireMaterial, 
+				SimpleParticle *p = m_hFlameEmitter->AddSimpleParticle(
+					m_hFireMaterial,
 					vOrigin + RandomVector( -3, 3 ),
 					FLAMETHROWER_FLAME_DISTANCE / FLAMETHROWER_FLAME_SPEED,	// lifetime,
 					9	// size
@@ -397,7 +397,7 @@ void CWeaponFlameThrower::PrimaryAttack()
 	bool CWeaponFlameThrower::Holster( CBaseCombatWeapon *pSwitchingTo )
 	{
 		m_bFiring = false;
-		
+
 		return BaseClass::Holster( pSwitchingTo );
 	}
 
@@ -430,5 +430,3 @@ void CWeaponFlameThrower::PrimaryAttack()
 	}
 
 #endif
-
-

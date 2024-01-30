@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -110,7 +110,7 @@ public: // CBaseServer interface:
 	int		GetChallengeType ( netadr_t &adr );
 	const char *GetName( void ) const;
 	const char *GetPassword() const;
-	IClient *ConnectClient ( netadr_t &adr, int protocol, int challenge, int clientChallenge, int authProtocol, 
+	IClient *ConnectClient ( netadr_t &adr, int protocol, int challenge, int clientChallenge, int authProtocol,
 		const char *name, const char *password, const char *hashedCDkey, int cdKeyLen );
 
 public:
@@ -121,7 +121,7 @@ public: // IHLTVServer interface:
 	IHLTVDirector *GetDirector( void );
 	int		GetHLTVSlot( void ); // return entity index-1 of HLTV in game
 	float	GetOnlineTime( void ); // seconds since broadcast started
-	void	GetLocalStats( int &proxies, int &slots, int &clients ); 
+	void	GetLocalStats( int &proxies, int &slots, int &clients );
 	void	GetGlobalStats( int &proxies, int &slots, int &clients );
 	void	GetRelayStats( int &proxies, int &slots, int &clients );
 
@@ -138,7 +138,7 @@ public: // IDemoPlayer interface
 	int		GetPlaybackStartTick( void );
 	int		GetPlaybackTick( void );
 	int		GetTotalTicks( void );
-	
+
 	bool	StartPlayback( const char *filename, bool bAsTimeDemo );
 
 	bool	IsPlayingBack( void ); // true if demo loaded and playing back
@@ -175,7 +175,7 @@ public:
 	void	RunFrame();
 	void	SetMaxClients( int number );
 	void	Changelevel( void );
-	
+
 	void	UserInfoChanged( int nClientIndex );
 	void	SendClientMessages ( bool bSendSnapshots );
 	CClientFrame *AddNewFrame( CClientFrame * pFrame ); // add new frame, returns HLTV's copy
@@ -187,13 +187,13 @@ public:
 	bool	DispatchToRelay( CHLTVClient *pClient);
 	bf_write *GetBuffer( int nBuffer);
 	CClientFrame *GetDeltaFrame( int nTick );
-		
+
 	inline  CHLTVClient* Client( int i ) { return static_cast<CHLTVClient*>(m_Clients[i]); }
 
 
 protected:
 	virtual bool ShouldUpdateMasterServer();
-	
+
 private:
 	CBaseClient *CreateNewClient( int slot );
 	void		UpdateTick( void );
@@ -209,17 +209,17 @@ private:
 #ifndef NO_STEAM
 	void		ReplyInfo( const netadr_t &adr );
 #endif
-		
+
 
 	// Vector		GetOriginFromPackedEntity(PackedEntity* pe);
 
 public:
 
-	CGameClient		*m_MasterClient;		// if != NULL, this is the master HLTV 
+	CGameClient		*m_MasterClient;		// if != NULL, this is the master HLTV
 	CHLTVClientState m_ClientState;
 	CHLTVDemoRecorder m_DemoRecorder;			// HLTV demo object for recording and playback
 	CGameServer		*m_Server;		// pointer to source server (sv.)
-	IHLTVDirector	*m_Director;	// HTLV director exported by game.dll	
+	IHLTVDirector	*m_Director;	// HTLV director exported by game.dll
 	int				m_nFirstTick;	// first known server tick;
 	int				m_nLastTick;	// last tick from AddFrame()
 	CHLTVFrame		*m_CurrentFrame; // current delayed HLTV frame
@@ -231,10 +231,10 @@ public:
 	float			m_flStartTime;
 	float			m_flFPS;		// FPS the proxy is running;
 	int				m_nGameServerMaxClients; // max clients on game server
-	float			m_fNextSendUpdateTime;	// time to send next HLTV status messages 
+	float			m_fNextSendUpdateTime;	// time to send next HLTV status messages
 	RecvTable		*m_pRecvTables[MAX_DATATABLES];
 	int				m_nRecvTables;
-	Vector			m_vPVSOrigin; 
+	Vector			m_vPVSOrigin;
 	bool			m_bMasterOnlyMode;
 
 	netadr_t		m_RootServer;		// HLTV root server

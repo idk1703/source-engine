@@ -78,7 +78,7 @@ struct DetailSpriteDictLump_t
 {
 	DECLARE_BYTESWAP_DATADESC();
 	// NOTE: All detail prop sprites must lie in the material detail/detailsprites
-	Vector2D	m_UL;		// Coordinate of upper left 
+	Vector2D	m_UL;		// Coordinate of upper left
 	Vector2D	m_LR;		// Coordinate of lower right
 	Vector2D	m_TexUL;	// Texcoords of upper left
 	Vector2D	m_TexLR;	// Texcoords of lower left
@@ -92,7 +92,7 @@ struct DetailObjectLump_t
 	unsigned short	m_DetailModel;		// either index into DetailObjectDictLump_t or DetailPropSpriteLump_t
 	unsigned short	m_Leaf;
 	ColorRGBExp32	m_Lighting;
-	unsigned int	m_LightStyles; 
+	unsigned int	m_LightStyles;
 	unsigned char	m_LightStyleCount;
 	unsigned char   m_SwayAmount;		// how much do the details sway
 	unsigned char	m_ShapeAngle;		// angle param for shaped sprites
@@ -134,7 +134,7 @@ enum
 
 	STATIC_PROP_NO_PER_VERTEX_LIGHTING = 0x40,				// in vrad, compute lighting at
 															// lighting origin, not for each vertex
-	
+
 	STATIC_PROP_NO_SELF_SHADOWING = 0x80,					// disable self shadowing in vrad
 
 	STATIC_PROP_NO_PER_TEXEL_LIGHTING = 0x100,				// whether we should do per-texel lightmaps in vrad.
@@ -248,7 +248,7 @@ struct StaticPropLump_t
 		m_nLightmapResolutionY	= 0;
 
 		// Older versions don't want this.
-		m_Flags					|= STATIC_PROP_NO_PER_TEXEL_LIGHTING;		
+		m_Flags					|= STATIC_PROP_NO_PER_TEXEL_LIGHTING;
 		return *this;
 	}
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -79,7 +79,7 @@ private:
 	vgui::Button *m_pSendEventButton;
 
 	CUtlSymbolTable	m_EventFiles;	// list of all loaded event files
-	CUtlVector<CUtlSymbol>	m_EventFileNames; 
+	CUtlVector<CUtlSymbol>	m_EventFileNames;
 
 	KeyValues *m_pEvents;
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -14,7 +14,7 @@
 
 class IFileSystem;				// include filesystem.h
 class IEngineSound;				// include engine/IEngineSound.h
-class IVEngineServer;			
+class IVEngineServer;
 class IVoiceServer;
 class IStaticPropMgrServer;
 class ISpatialPartition;

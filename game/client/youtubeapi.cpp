@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -227,7 +227,7 @@ protected:
 class CYouTubeRetrieveUserProfile : public CYouTubeJob
 {
 public:
-	CYouTubeRetrieveUserProfile( CYouTubeSystem *pSystem ) 
+	CYouTubeRetrieveUserProfile( CYouTubeSystem *pSystem )
 		: CYouTubeJob( pSystem )
 	{
 	}
@@ -268,7 +268,7 @@ private:
 class CYouTubeRetrieveInfoJob : public CYouTubeJob
 {
 public:
-	CYouTubeRetrieveInfoJob( CYouTubeSystem *pSystem, const char *pVideoURL, CYouTubeResponseHandler &responseHandler ) 
+	CYouTubeRetrieveInfoJob( CYouTubeSystem *pSystem, const char *pVideoURL, CYouTubeResponseHandler &responseHandler )
 		: CYouTubeJob( pSystem )
 		, m_strURL( pVideoURL )
 		, m_responseHandler( responseHandler )
@@ -313,7 +313,7 @@ private:
 class CYouTubeLoginJob : public CYouTubeJob
 {
 public:
-	CYouTubeLoginJob( CYouTubeSystem *pSystem, const char *pUserName, const char *pPassword, const char *pSource ) 
+	CYouTubeLoginJob( CYouTubeSystem *pSystem, const char *pUserName, const char *pPassword, const char *pSource )
 		: CYouTubeJob( pSystem )
 		, m_strUserName( pUserName )
 		, m_strPassword( pPassword )
@@ -322,13 +322,13 @@ public:
 	}
 
 private:
-	
+
 	void SetLoginResults( const char *pLoginResults )
 	{
 		const char *pStart = strstr( pLoginResults, "Auth=" );
 		if ( pStart != NULL )
 		{
-			pStart += strlen( "Auth=" );			
+			pStart += strlen( "Auth=" );
 			const char *pEnd = strstr( pStart, "\r\n" );
 			if ( pEnd == NULL )
 			{
@@ -342,7 +342,7 @@ private:
 			else
 			{
 				strAuthToken.SetDirect( pStart, strlen( pStart ) );
-			}	
+			}
 			gYouTube.SetAuthToken( strAuthToken.Get() );
 		}
 	}
@@ -521,7 +521,7 @@ private:
 
 			// BUGBUG: use SendHTTPRequestAndStreamResponse
 			DoRequest( hRequest, "http://uploads.gdata.youtube.com/feeds/api/users/default/uploads" );
-		}	
+		}
 
 		return JOB_OK;
 	}
@@ -566,7 +566,7 @@ private:
 					}
 					{
 						strURLToVideoStats = "";
-						// "<link rel='self' type='text/html' href='http://www.youtube.com/watch?v=7D4pb3irM_0&feature=youtube_gdata' /> ";				
+						// "<link rel='self' type='text/html' href='http://www.youtube.com/watch?v=7D4pb3irM_0&feature=youtube_gdata' /> ";
 						const char *kLinkStartTag = "<link rel='self' type='application/atom+xml' href='";
 						const char *kLinkTagEnd = "'/>";
 						const char *pStart = strstr( m_strResponse.Get(), kLinkStartTag );
@@ -592,7 +592,7 @@ private:
 		gYouTube.SetUploadFinished( (YouTubeUploadHandle_t)this, bSuccess, strURLToVideo.Get(), strURLToVideoStats.Get() );
 	}
 
-	// data 
+	// data
 	CUtlString m_strFilePath;
 	CUtlString m_strMimeType;
 	CUtlString m_strTitle;
@@ -798,15 +798,15 @@ void CYouTubeSystem::SetDeveloperSettings( const char *pDeveloperKey, const char
 }
 
 const char *CYouTubeSystem::GetDeveloperKey() const
-{ 
+{
 	AUTO_LOCK( m_Mutex );
-	return m_strDeveloperKey.Get(); 
+	return m_strDeveloperKey.Get();
 }
 
 const char *CYouTubeSystem::GetDeveloperTag() const
-{ 
+{
 	AUTO_LOCK( m_Mutex );
-	return m_strDeveloperTag.Get(); 
+	return m_strDeveloperTag.Get();
 }
 
 const char *CYouTubeSystem::GetLoginName() const
@@ -839,7 +839,7 @@ void CYouTubeSystem::SetLoginStatus( eYouTubeLoginStatus status )
 		m_pThreadPool->AddJob( pJob );
 		pJob->Release();
 	}
-}	
+}
 
 void CYouTubeSystem::SetAuthToken( const char *pAuthToken )
 {

@@ -19,13 +19,13 @@
 void CSentryRebuildAward::getWinner()
 {
 	CEventListIterator it;
-	
+
 	for (it=g_pMatchInfo->eventList()->begin(); it != g_pMatchInfo->eventList()->end(); ++it)
 	{
 		if ((*it)->getType()==CLogEvent::BUILD)
 		{
 			string built=(*it)->getArgument(1)->getStringValue();
-			
+
 			if (stricmp(built.c_str(),"sentry") == 0)
 			{
 				PID builder=(*it)->getArgument(0)->asPlayerGetPID();
@@ -35,7 +35,7 @@ void CSentryRebuildAward::getWinner()
 			}
 		}
 	}
-	
+
 	map<PID,int>::iterator builditer;
 
 	for (builditer=numbuilds.begin();builditer!=numbuilds.end();++builditer)
@@ -63,10 +63,9 @@ void CSentryRebuildAward::noWinner(CHTMLFile& html)
 //------------------------------------------------------------------------------------------------------
 void CSentryRebuildAward::extendedinfo(CHTMLFile& html)
 {
-	
+
 	if (numbuilds[winnerID] == 1)
 		html.write("No one had to rebuild a sentry gun in this match.!",winnerName.c_str());
 	else
 		html.write("%s had to build a sentry gun %li times!",winnerName.c_str(),numbuilds[winnerID]);
 }
-

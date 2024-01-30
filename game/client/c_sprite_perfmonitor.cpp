@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "cbase.h"
@@ -11,7 +11,7 @@ extern bool g_bDisplayParticlePerformance;
 void ResetParticlePerformanceCounters( void );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ParticlePerformanceMonitor : public C_BaseEntity
 {
@@ -36,7 +36,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_ParticlePerformanceMonitor, DT_ParticlePerformanceMo
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ParticlePerformanceMonitor::C_ParticlePerformanceMonitor( void )
 {
@@ -45,7 +45,7 @@ C_ParticlePerformanceMonitor::C_ParticlePerformanceMonitor( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ParticlePerformanceMonitor::~C_ParticlePerformanceMonitor( void )
 {
@@ -54,7 +54,7 @@ C_ParticlePerformanceMonitor::~C_ParticlePerformanceMonitor( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ParticlePerformanceMonitor::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -65,4 +65,3 @@ void C_ParticlePerformanceMonitor::OnDataChanged( DataUpdateType_t updateType )
 	g_bMeasureParticlePerformance = m_bMeasurePerf;
 	g_bDisplayParticlePerformance = m_bDisplayPerf;
 }
-

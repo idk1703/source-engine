@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -156,7 +156,7 @@ struct vehicle_axleparams_t
 	Vector						raytraceOffset;			// offset to raytrace for non-wheel (some wheeled) vehicles
 	vehicle_wheelparams_t		wheels;
 	vehicle_suspensionparams_t	suspension;
-	float						torqueFactor;		// normalized to 1 across all axles 
+	float						torqueFactor;		// normalized to 1 across all axles
 													// e.g. 0,1 for rear wheel drive - 0.5,0.5 for 4 wheel drive
 	float						brakeFactor;		// normalized to 1 across all axles
 };

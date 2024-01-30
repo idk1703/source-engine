@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 
 #include "vcollide_parse_private.h"
 
-#include "tier1/strtools.h" 
+#include "tier1/strtools.h"
 #include "vphysics/constraints.h"
 #include "vphysics/vehicles.h"
 #include "filesystem_helpers.h"
@@ -134,7 +134,7 @@ void CVPhysicsParse::ParseSolid( solid_t *pSolid, IVPhysicsKeyHandler *unknownKe
 	{
 		memset( pSolid, 0, sizeof(*pSolid) );
 	}
-	
+
 	// disable these until the ragdoll is created
 	pSolid->params.enableCollisions = false;
 
@@ -222,7 +222,7 @@ void CVPhysicsParse::ParseRagdollConstraint( constraint_ragdollparams_t *pConstr
 		pConstraint->parentIndex = -1;
 	}
 
-	// BUGBUG: xmin/xmax, ymin/ymax, zmin/zmax specify clockwise rotations.  
+	// BUGBUG: xmin/xmax, ymin/ymax, zmin/zmax specify clockwise rotations.
 	// BUGBUG: HL rotations are counter-clockwise, so reverse these limits at some point!!!
 	pConstraint->useClockwiseRotations = true;
 
@@ -457,7 +457,7 @@ void CVPhysicsParse::ParseVehicleWheel( vehicle_wheelparams_t &wheel )
 		m_pText = ParseKeyvalue( m_pText, key, value );
 		if ( key[0] == '}' )
 			return;
-		
+
 		if ( !Q_stricmp( key, "radius" ) )
 		{
 			wheel.radius = atof( value );
@@ -508,7 +508,7 @@ void CVPhysicsParse::ParseVehicleSuspension( vehicle_suspensionparams_t &suspens
 		m_pText = ParseKeyvalue( m_pText, key, value );
 		if ( key[0] == '}' )
 			return;
-		
+
 		if ( !Q_stricmp( key, "springconstant" ) )
 		{
 			suspension.springConstant = atof( value );
@@ -543,7 +543,7 @@ void CVPhysicsParse::ParseVehicleBody( vehicle_bodyparams_t &body )
 		m_pText = ParseKeyvalue( m_pText, key, value );
 		if ( key[0] == '}' )
 			return;
-		
+
 		if ( !Q_stricmp( key, "massCenterOverride" ) )
 		{
 			ReadVector( value, body.massCenterOverride );
@@ -931,7 +931,7 @@ const char *ParseKeyvalue( const char *pBuffer, char (&key)[MAX_KEYVALUE], char 
 	}
 
 	Q_strlower( key );
-	
+
 	pBuffer = ParseFile( pBuffer, value, NULL );
 
 	Q_strlower( value );

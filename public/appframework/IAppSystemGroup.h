@@ -56,7 +56,7 @@ public:
 	// Return false if there's any problems and the app will abort
 	virtual bool Create( ) = 0;
 
-	// Allow the application to do some work after AppSystems are connected but 
+	// Allow the application to do some work after AppSystems are connected but
 	// they are all Initialized.
 	// Return false if there's any problems and the app will abort
 	virtual bool PreInit() = 0;
@@ -130,7 +130,7 @@ protected:
 	AppModule_t LoadModule( const char *pDLLName );
 	AppModule_t LoadModule( CreateInterfaceFn factory );
 
-	// Method to add various global singleton systems 
+	// Method to add various global singleton systems
 	IAppSystem *AddSystem( AppModule_t module, const char *pInterfaceName );
 	void AddSystem( IAppSystem *pAppSystem, const char *pInterfaceName );
 
@@ -158,7 +158,7 @@ private:
 	// Method to initialize/shutdown all systems
 	InitReturnVal_t InitSystems();
 	void ShutdownSystems();
- 
+
 	// Gets at the parent appsystem group
 	CAppSystemGroup *GetParent();
 
@@ -214,7 +214,7 @@ private:
 //-----------------------------------------------------------------------------
 // Helper empty decorator implementation of an IAppSystemGroup
 //-----------------------------------------------------------------------------
-template< class CBaseClass > 
+template< class CBaseClass >
 class CDefaultAppSystemGroup : public CBaseClass
 {
 public:
@@ -261,5 +261,3 @@ SuggestGameInfoDirFn_t SetSuggestGameInfoDirFn( SuggestGameInfoDirFn_t pfnNewFn 
 
 
 #endif // APPSYSTEMGROUP_H
-
-

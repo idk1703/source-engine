@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,7 +13,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_VehicleMotorcycle : public C_BaseTFFourWheelVehicle
 {
@@ -34,7 +34,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_VehicleMotorcycle::C_VehicleMotorcycle()
 {
@@ -43,7 +43,7 @@ C_VehicleMotorcycle::C_VehicleMotorcycle()
 
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CVehicleMotorcycleControlPanel : public CObjectControlPanel
 {
@@ -69,16 +69,16 @@ DECLARE_VGUI_SCREEN_FACTORY( CVehicleMotorcycleControlPanel, "vehicle_wagon_cont
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CVehicleMotorcycleControlPanel::CVehicleMotorcycleControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CVehicleMotorcycleControlPanel" ) 
+	: BaseClass( parent, "CVehicleMotorcycleControlPanel" )
 {
 }
 
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CVehicleMotorcycleControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -127,7 +127,7 @@ void CVehicleMotorcycleControlPanel::OnTick()
 	m_pPassengerLabel->SetText( buf );
 
 	// Update the get in button
-	if ( pCycle->IsPlayerInVehicle( C_BaseTFPlayer::GetLocalPlayer() ) ) 
+	if ( pCycle->IsPlayerInVehicle( C_BaseTFPlayer::GetLocalPlayer() ) )
 	{
 		m_pOccupyButton->SetEnabled( false );
 		return;
@@ -181,4 +181,3 @@ void CVehicleMotorcycleControlPanel::OnCommand( const char *command )
 
 	BaseClass::OnCommand(command);
 }
-

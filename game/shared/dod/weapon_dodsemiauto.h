@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,8 +10,8 @@
 #pragma once
 #endif
 
-#include "cbase.h"  
-#include "shake.h" 
+#include "cbase.h"
+#include "shake.h"
 #include "weapon_dodbasegun.h"
 
 
@@ -23,7 +23,7 @@ class CDODSemiAutoWeapon : public CWeaponDODBaseGun
 {
 public:
 	DECLARE_CLASS( CDODSemiAutoWeapon, CWeaponDODBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CDODSemiAutoWeapon();

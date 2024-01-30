@@ -54,7 +54,7 @@ CTFPlayer *CTFArcherProxy::SelectTarget( void )
 		float rangeSq = ( playerVector[i]->GetAbsOrigin() - GetAbsOrigin() ).LengthSqr();
 		if ( rangeSq < victimRangeSq )
 		{
-			UTIL_TraceLine( GetAbsOrigin(), playerVector[i]->EyePosition(), MASK_SOLID, this, COLLISION_GROUP_DEBRIS, &result );			
+			UTIL_TraceLine( GetAbsOrigin(), playerVector[i]->EyePosition(), MASK_SOLID, this, COLLISION_GROUP_DEBRIS, &result );
 
 			if ( !result.DidHit() )
 			{

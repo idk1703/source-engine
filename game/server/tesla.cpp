@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -27,7 +27,7 @@ BEGIN_DATADESC( CTesla )
 	//DEFINE_ARRAY( m_flThickness, FIELD_FLOAT, 2 ),
 	DEFINE_KEYFIELD( m_flThickness[0],	FIELD_FLOAT,	"thick_min" ),
 	DEFINE_KEYFIELD( m_flThickness[1],	FIELD_FLOAT,	"thick_max" ),
-	
+
 	//DEFINE_ARRAY( m_flTimeVisible, FIELD_FLOAT, 2 ),
 	DEFINE_KEYFIELD( m_flTimeVisible[0],FIELD_FLOAT,	"lifetime_min" ),
 	DEFINE_KEYFIELD( m_flTimeVisible[1],FIELD_FLOAT,	"lifetime_max" ),
@@ -35,7 +35,7 @@ BEGIN_DATADESC( CTesla )
 	//DEFINE_ARRAY( m_flArcInterval, FIELD_FLOAT, 2 ),
 	DEFINE_KEYFIELD( m_flArcInterval[0],FIELD_FLOAT,	"interval_min" ),
 	DEFINE_KEYFIELD( m_flArcInterval[1],FIELD_FLOAT,	"interval_max" ),
-	
+
 	//DEFINE_ARRAY( m_NumBeams, FIELD_INTEGER, 2 ),
 	DEFINE_KEYFIELD( m_NumBeams[0],		FIELD_INTEGER,	"beamcount_min" ),
 	DEFINE_KEYFIELD( m_NumBeams[1],		FIELD_INTEGER,	"beamcount_max" ),
@@ -68,7 +68,7 @@ CTesla::CTesla()
 	m_flTimeVisible[0] = 0.3;
 	m_flTimeVisible[1] = 0.55;
 	m_flArcInterval[0] = m_flArcInterval[1] = 0.5;
-	
+
 	AddEFlags( EFL_FORCE_CHECK_TRANSMIT );
 }
 
@@ -127,7 +127,7 @@ CBaseEntity* CTesla::GetSourceEntity()
 	}
 
 	return this;
-}		
+}
 
 
 void CTesla::ShootArcThink()
@@ -143,7 +143,7 @@ void CTesla::DoSpark()
 	EntityMessageBegin( this );
 
 		CBaseEntity *pEnt = GetSourceEntity();
-		
+
 		WRITE_VEC3COORD( pEnt->GetAbsOrigin() );
 		WRITE_SHORT( pEnt->entindex() );
 		WRITE_FLOAT( m_flRadius );
@@ -177,4 +177,3 @@ void CTesla::InputTurnOff( inputdata_t &inputdata )
 	m_bOn = false;
 	SetupForNextArc();
 }
-

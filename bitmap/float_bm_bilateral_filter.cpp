@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -42,7 +42,7 @@ static unsigned TBFCalculationThreadFN( void *ctx1 )
 					for(int ix=-ctx->radius_in_pixels; ix <= ctx->radius_in_pixels; ix++)
 					{
 						float this_p=ctx->orig_bm->PixelWrapped(x+ix,y+iy,c);
-						
+
 						// caluclate the g() term. We use a gaussian
 						float exp1=(ix*ix+iy*iy)*(1.0/(2.0*ctx->radius_in_pixels*.033));
 						float g=exp(-exp1);
@@ -60,7 +60,7 @@ static unsigned TBFCalculationThreadFN( void *ctx1 )
 	return 0;
 }
 
-void FloatBitMap_t::TileableBilateralFilter( int radius_in_pixels, 
+void FloatBitMap_t::TileableBilateralFilter( int radius_in_pixels,
 											 float edge_threshold_value )
 {
 	FloatBitMap_t orig( this );								// need a copy for the source
@@ -92,4 +92,3 @@ void FloatBitMap_t::TileableBilateralFilter( int radius_in_pixels,
 		ThreadJoin( waithandles[t] );
 	}
 }
-

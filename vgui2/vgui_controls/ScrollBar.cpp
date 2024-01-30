@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -52,15 +52,15 @@ public:
 		// pass straight up to parent
 		CallParentFunction(new KeyValues("MouseFocusTicked"));
 	}
- 
+
 	virtual void ApplySchemeSettings(IScheme *pScheme)
 	{
 		Button::ApplySchemeSettings(pScheme);
 
 		SetFont(pScheme->GetFont("Marlett", IsProportional() ));
 		SetDefaultBorder(pScheme->GetBorder("ScrollBarButtonBorder"));
-        SetDepressedBorder(pScheme->GetBorder("ScrollBarButtonDepressedBorder"));
-		
+		SetDepressedBorder(pScheme->GetBorder("ScrollBarButtonDepressedBorder"));
+
 		SetDefaultColor(GetSchemeColor("ScrollBarButton.FgColor", pScheme), GetSchemeColor("ScrollBarButton.BgColor", pScheme));
 		SetArmedColor(GetSchemeColor("ScrollBarButton.ArmedFgColor", pScheme), GetSchemeColor("ScrollBarButton.ArmedBgColor", pScheme));
 		SetDepressedColor(GetSchemeColor("ScrollBarButton.DepressedFgColor", pScheme), GetSchemeColor("ScrollBarButton.DepressedBgColor", pScheme));
@@ -72,36 +72,36 @@ public:
 	{
 		if (!IsEnabled())
 			return;
-		
+
 		if (!IsMouseClickEnabled(code))
 			return;
-		
+
 		if (IsUseCaptureMouseEnabled())
 		{
 			{
 				SetSelected(true);
 				Repaint();
 			}
-			
+
 			// lock mouse input to going to this button
 			input()->SetMouseCapture(GetVPanel());
 		}
 	}
-    virtual void OnMouseReleased(MouseCode code)
-    {
+	virtual void OnMouseReleased(MouseCode code)
+	{
 		if (!IsEnabled())
 			return;
-		
+
 		if (!IsMouseClickEnabled(code))
 			return;
-		
+
 		if (IsUseCaptureMouseEnabled())
 		{
 			{
 				SetSelected(false);
 				Repaint();
 			}
-			
+
 			// lock mouse input to going to this button
 			input()->SetMouseCapture(NULL);
 		}
@@ -110,7 +110,7 @@ public:
 		{
 			SetArmed( true );
 		}
-    }
+	}
 
 };
 
@@ -224,7 +224,7 @@ void ScrollBar::SetPaintBorderEnabled(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ScrollBar::SetPaintBackgroundEnabled(bool state)
 {
@@ -235,7 +235,7 @@ void ScrollBar::SetPaintBackgroundEnabled(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ScrollBar::SetPaintEnabled(bool state)
 {
@@ -350,12 +350,12 @@ void ScrollBar::SetRange(int min,int max)
 //-----------------------------------------------------------------------------
 void ScrollBar::GetRange(int &min, int &max)
 {
-    _slider->GetRange(min, max);
+	_slider->GetRange(min, max);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Send a message when the slider is moved.
-// Input  : value - 
+// Input  : value -
 //-----------------------------------------------------------------------------
 void ScrollBar::SendSliderMoveMessage(int value)
 {
@@ -364,7 +364,7 @@ void ScrollBar::SendSliderMoveMessage(int value)
 
 //-----------------------------------------------------------------------------
 // Purpose: Called when the Slider is dragged by the user
-// Input  : value - 
+// Input  : value -
 //-----------------------------------------------------------------------------
 void ScrollBar::OnSliderMoved(int value)
 {
@@ -460,7 +460,7 @@ Button *ScrollBar::GetDepressedButton( int iIndex )
 void ScrollBar::OnMouseFocusTicked()
 {
 	int direction = 0;
-	
+
 	// top button is down
 	if ( GetDepressedButton(0)->IsDepressed() )
 	{
@@ -472,33 +472,33 @@ void ScrollBar::OnMouseFocusTicked()
 		direction = 1;
 	}
 
-	// a button is down 
-	if ( direction != 0 )  
+	// a button is down
+	if ( direction != 0 )
 	{
 		RespondToScrollArrow(direction);
 		if (_scrollDelay < system()->GetTimeMillis())
 		{
 			_scrollDelay = system()->GetTimeMillis() + SCROLL_BAR_SPEED;
-			_respond = true; 
+			_respond = true;
 		}
 		else
 		{
-			_respond = false; 
-		}		
+			_respond = false;
+		}
 	}
 	// a button is not down.
-	else 
+	else
 	{
 		// if neither button is down keep delay at max
 		_scrollDelay = system()->GetTimeMillis() + SCROLL_BAR_DELAY;
-		_respond = true; 
+		_respond = true;
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: move scroll bar in response to the first button
 // Input: button and direction to move scroll bar when that button is pressed
-//			direction can only by +/- 1 
+//			direction can only by +/- 1
 // Output: whether button is down or not
 //-----------------------------------------------------------------------------
 void ScrollBar::RespondToScrollArrow(int const direction)
@@ -531,8 +531,8 @@ void ScrollBar::SetButtonPressedScrollValue(int value)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Set the range of the rangewindow. This is how many 
-// lines are displayed at one time 
+// Purpose: Set the range of the rangewindow. This is how many
+// lines are displayed at one time
 // in the window the scroll bar is attached to.
 // This also controls the size of the slider, its size is proportional
 // to the number of lines displayed / total number of lines.
@@ -543,8 +543,8 @@ void ScrollBar::SetRangeWindow(int rangeWindow)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Get the range of the rangewindow. This is how many 
-// lines are displayed at one time 
+// Purpose: Get the range of the rangewindow. This is how many
+// lines are displayed at one time
 // in the window the scroll bar is attached to.
 // This also controls the size of the slider, its size is proportional
 // to the number of lines displayed / total number of lines.
@@ -570,7 +570,7 @@ void ScrollBar::Validate()
 				if( _button[i]->IsVisible() )
 				{
 					if( _slider->IsVertical() )
-					{					
+					{
 						buttonOffset += _button[i]->GetTall();
 					}
 					else

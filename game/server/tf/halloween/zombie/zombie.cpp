@@ -159,7 +159,7 @@ void CZombie::Spawn( void )
 	SetHealth( health );
 	SetMaxHealth( health );
 	AddFlag( FL_NPC );
-	
+
 	QAngle qAngle = vec3_angle;
 	qAngle[YAW] = RandomFloat( 0, 360 );
 	SetAbsAngles( qAngle );
@@ -275,7 +275,7 @@ void CZombie::Event_Killed( const CTakeDamageInfo &info )
 			}
 		}
 	}
-	
+
 	BaseClass::Event_Killed( info );
 }
 
@@ -408,7 +408,7 @@ void CZombie::AddHat( const char *pszModel )
 class CZombieBehavior : public Action< CZombie >
 {
 public:
-	virtual Action< CZombie > *InitialContainedAction( CZombie *me )	
+	virtual Action< CZombie > *InitialContainedAction( CZombie *me )
 	{
 		return new CZombieSpawn;
 	}
@@ -532,8 +532,8 @@ private:
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
 CZombieIntention::CZombieIntention( CZombie *me ) : IIntention( me )
-{ 
-	m_behavior = new Behavior< CZombie >( new CZombieBehavior ); 
+{
+	m_behavior = new Behavior< CZombie >( new CZombieBehavior );
 }
 
 CZombieIntention::~CZombieIntention()
@@ -542,14 +542,14 @@ CZombieIntention::~CZombieIntention()
 }
 
 void CZombieIntention::Reset( void )
-{ 
-	delete m_behavior; 
+{
+	delete m_behavior;
 	m_behavior = new Behavior< CZombie >( new CZombieBehavior );
 }
 
 void CZombieIntention::Update( void )
 {
-	m_behavior->Update( static_cast< CZombie * >( GetBot() ), GetUpdateInterval() ); 
+	m_behavior->Update( static_cast< CZombie * >( GetBot() ), GetUpdateInterval() );
 }
 
 // is this a place we can be?

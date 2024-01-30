@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -43,7 +43,7 @@ public:
 
 	// Call this before ever calling SetUpdateInterval().
 	void Init( CTimedEventMgr *pMgr, IEventRegisterCallback *pCallback );
-	
+
 	// Use these to start and stop getting updates.
 	void SetUpdateInterval( float interval );
 	void StopUpdates();
@@ -57,7 +57,7 @@ private:
 
 
 private:
-	
+
 	CTimedEventMgr *m_pEventMgr;
 	float m_flNextEventTime;
 	float m_flUpdateInterval;
@@ -81,10 +81,10 @@ private:
 
 	// Things used by CEventRegister.
 	void RegisterForNextEvent( CEventRegister *pEvent );
-	void RemoveEvent( CEventRegister *pEvent );	
-	
-private:	
-	
+	void RemoveEvent( CEventRegister *pEvent );
+
+private:
+
 	// Events, sorted by the time at which they will fire.
 	CUtlPriorityQueue<CEventRegister*> m_Events;
 };

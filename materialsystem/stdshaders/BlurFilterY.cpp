@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -14,7 +14,7 @@
 
 BEGIN_VS_SHADER_FLAGS( BlurFilterY, "Help for BlurFilterY", SHADER_NOT_EDITABLE )
 	BEGIN_SHADER_PARAMS
-        SHADER_PARAM( BLOOMAMOUNT, SHADER_PARAM_TYPE_FLOAT, "1.0", "" )
+	SHADER_PARAM( BLOOMAMOUNT, SHADER_PARAM_TYPE_FLOAT, "1.0", "" )
 		SHADER_PARAM( FRAMETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "_rt_SmallHDR0", "" )
 	END_SHADER_PARAMS
 
@@ -33,7 +33,7 @@ BEGIN_VS_SHADER_FLAGS( BlurFilterY, "Help for BlurFilterY", SHADER_NOT_EDITABLE 
 			LoadTexture( BASETEXTURE );
 		}
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		if ( g_pHardwareConfig->GetDXSupportLevel() < 90 )
@@ -60,7 +60,7 @@ BEGIN_VS_SHADER_FLAGS( BlurFilterY, "Help for BlurFilterY", SHADER_NOT_EDITABLE 
 			// Pre-cache shaders
 			DECLARE_STATIC_VERTEX_SHADER( blurfilter_vs20 );
 			SET_STATIC_VERTEX_SHADER( blurfilter_vs20 );
-			
+
 			if( g_pHardwareConfig->SupportsPixelShaders_2_b() || g_pHardwareConfig->ShouldAlwaysUseShaderModel2bShaders() )
 			{
 				DECLARE_STATIC_PIXEL_SHADER( blurfilter_ps20b );
@@ -114,7 +114,7 @@ BEGIN_VS_SHADER_FLAGS( BlurFilterY, "Help for BlurFilterY", SHADER_NOT_EDITABLE 
 			pShaderAPI->SetPixelShaderConstant( 2, v, 1 );
 
 			v[0]=v[1]=v[2]=params[BLOOMAMOUNT]->GetFloatValue();
-			
+
 			pShaderAPI->SetPixelShaderConstant( 3, v, 1 );
 
 			DECLARE_DYNAMIC_VERTEX_SHADER( blurfilter_ps20 );

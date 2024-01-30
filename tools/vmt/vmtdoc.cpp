@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -30,7 +30,7 @@ struct StandardParam_t
 };
 
 // NOTE: All entries in here must have all-lowercase param names!
-static StandardParam_t g_pStandardParams[] = 
+static StandardParam_t g_pStandardParams[] =
 {
 	{ "$surfaceprop", SHADER_PARAM_TYPE_STRING, "default", "surfacepropertypicker", "surfacePropertyName" },
 	{ "%detailtype", SHADER_PARAM_TYPE_STRING, "", "detailtypepicker", "detailTypeName" },
@@ -90,7 +90,7 @@ void CVMTDoc::NotifyDataChanged( const char *pReason, int nNotifySource, int nNo
 	OnDataChanged( pReason, nNotifySource, nNotifyFlags );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Gets the file name
 //-----------------------------------------------------------------------------
@@ -147,7 +147,7 @@ bool CVMTDoc::CreateRootElement()
 	// Add standard parameters
 	for ( int i = 0; g_pStandardParams[i].m_pParamName; ++i )
 	{
-		AddNewShaderParam( m_hRoot, g_pStandardParams[i].m_pParamName, g_pStandardParams[i].m_ParamType, 
+		AddNewShaderParam( m_hRoot, g_pStandardParams[i].m_pParamName, g_pStandardParams[i].m_ParamType,
 			g_pStandardParams[i].m_pDefaultValue );
 
 		if ( g_pStandardParams[i].m_pParamName[0] == '%' )
@@ -156,7 +156,7 @@ bool CVMTDoc::CreateRootElement()
 		}
 		else if ( g_pStandardParams[i].m_pWidgetType || g_pStandardParams[i].m_pTextType )
 		{
-			m_pCallback->RemoveShaderParameter( g_pStandardParams[i].m_pParamName ); 
+			m_pCallback->RemoveShaderParameter( g_pStandardParams[i].m_pParamName );
 			m_pCallback->AddShaderParameter( g_pStandardParams[i].m_pParamName, g_pStandardParams[i].m_pWidgetType, g_pStandardParams[i].m_pTextType );
 		}
 	}
@@ -367,7 +367,7 @@ bool CVMTDoc::LoadFromFile( const char *pFileName )
 // Prior to saving to disk, extract all shader parameters which == the default
 //-----------------------------------------------------------------------------
 CDmElement* CVMTDoc::ExtractDefaultParameters( )
-{					   
+{
 	CDmElement *pMaterial = m_hRoot->Copy( );
 
 	CDmAttribute* pAttribute = pMaterial->FirstAttribute();
@@ -424,7 +424,7 @@ CDmElement* CVMTDoc::ExtractDefaultParameters( )
 			continue;
 		}
 
-		// FIXME: We can't do this.. the defaults in the strings need to be changed to 
+		// FIXME: We can't do this.. the defaults in the strings need to be changed to
 		// make it so they actually match the true defaults
 		continue;
 
@@ -536,7 +536,7 @@ bool CVMTDoc::IsShaderParam( CDmAttribute* pAttribute )
 
 
 //-----------------------------------------------------------------------------
-// Remove all shader parameters 
+// Remove all shader parameters
 //-----------------------------------------------------------------------------
 void CVMTDoc::RemoveAllShaderParams( CDmElement *pMaterial )
 {
@@ -554,7 +554,7 @@ void CVMTDoc::RemoveAllShaderParams( CDmElement *pMaterial )
 		pMaterial->RemoveAttributeByPtr( pAttribute );
 	}
 }
-	
+
 
 //-----------------------------------------------------------------------------
 // Remove all shader parameters that don't exist in the new shader
@@ -989,7 +989,7 @@ void CVMTDoc::SetParamsToDefault()
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Sets the shader in the material
 //-----------------------------------------------------------------------------
@@ -1031,7 +1031,7 @@ IMaterial *CVMTDoc::GetPreviewMaterial()
 	return m_pPreviewMaterial;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Updates the preview material
 //-----------------------------------------------------------------------------
@@ -1057,7 +1057,7 @@ void CVMTDoc::UpdatePreviewMaterial()
 	pVMTKeyValues->deleteThis();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the root object
 //-----------------------------------------------------------------------------
@@ -1066,7 +1066,7 @@ CDmElement *CVMTDoc::GetRootObject()
 	return m_hRoot;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Called when data changes
 //-----------------------------------------------------------------------------

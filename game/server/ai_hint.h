@@ -141,7 +141,7 @@ public:
 
 	bool		HasIncludeZones( void )	const	{ return ( m_zoneInclude.Count() != 0 ); }
 	bool		HasExcludeZones( void )	const	{ return ( m_zoneExclude.Count() != 0 ); }
-	
+
 	void		AddIncludePosition( const Vector &position, float radius );
 	void		AddExcludePosition( const Vector &position, float radius );
 	void		SetHintType( int hintType );
@@ -173,7 +173,7 @@ private:
 	int			m_iFirstHintType;
 	int			m_iLastHintType;
 	string_t	m_strGroup;
-	
+
 	zoneList_t	m_zoneInclude;
 	zoneList_t	m_zoneExclude;
 };
@@ -231,7 +231,7 @@ public:
 	static int			FindAllHints( CAI_BaseNPC *pNPC, const CHintCriteria &hintCriteria, CUtlVector<CAI_Hint *> *pResult )		{ return FindAllHints( pNPC, pNPC->GetAbsOrigin(), hintCriteria, pResult ); }
 	static int			GetFlags( const char *token );
 
-	static CAI_Hint		*GetFirstHint( AIHintIter_t *pIter );					
+	static CAI_Hint		*GetFirstHint( AIHintIter_t *pIter );
 	static CAI_Hint		*GetNextHint( AIHintIter_t *pIter );
 
 	static void DumpHints();
@@ -254,7 +254,7 @@ private:
 	static bool			IsInFoundHintList( CAI_Hint *hint );
 
 	static int			gm_nFoundHintIndex;
-	static CAI_Hint		*gm_pLastFoundHints[ HINT_HISTORY ];			// Last used hint 
+	static CAI_Hint		*gm_pLastFoundHints[ HINT_HISTORY ];			// Last used hint
 	static CAIHintVector gm_AllHints;				// A linked list of all hints
 	static CUtlMap< int,  CAIHintVector >	gm_TypedHints;
 };

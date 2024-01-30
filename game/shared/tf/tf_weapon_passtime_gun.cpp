@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -185,7 +185,7 @@ void CPasstimeGun::UpdateAttachmentModels()
 		return;
 
 	auto iActiveIndex = pViewmodelBall->GetModelIndex();
-	if ( m_iHalloweenAttachmentIndex != -1 ) 
+	if ( m_iHalloweenAttachmentIndex != -1 )
 	{
 		if ( iActiveIndex != m_iHalloweenAttachmentIndex )
 		{
@@ -209,14 +209,14 @@ bool CPasstimeGun::CanCharge() // const
 }
 
 //-----------------------------------------------------------------------------
-float CPasstimeGun::GetChargeBeginTime() 
+float CPasstimeGun::GetChargeBeginTime()
 {
 	return m_fChargeBeginTime;
 }
 
 //-----------------------------------------------------------------------------
-float CPasstimeGun::GetChargeMaxTime() 
-{ 
+float CPasstimeGun::GetChargeMaxTime()
+{
 	return (tf_passtime_experiment_instapass.GetBool() && tf_passtime_experiment_instapass_charge.GetBool())
 		? 3.0f
 		: 0.0f;
@@ -224,7 +224,7 @@ float CPasstimeGun::GetChargeMaxTime()
 
 //-----------------------------------------------------------------------------
 float CPasstimeGun::GetCurrentCharge()
-{ 
+{
 	if ( (m_eThrowState == THROWSTATE_CHARGING) || (m_eThrowState == THROWSTATE_CHARGED) )
 		return clamp((gpGlobals->curtime - GetChargeBeginTime()) / GetChargeMaxTime(), 0.0f, 1.0f);
 	return 0;
@@ -243,21 +243,21 @@ void CPasstimeGun::UpdateOnRemove()
 }
 
 //-----------------------------------------------------------------------------
-bool CPasstimeGun::VisibleInWeaponSelection() 
+bool CPasstimeGun::VisibleInWeaponSelection()
 {
 	return false;
 }
 
-static acttable_t s_acttablePasstime[] = 
+static acttable_t s_acttablePasstime[] =
 {
 	{ ACT_MP_STAND_IDLE,		ACT_MP_STAND_PASSTIME,			false },
 	{ ACT_MP_RUN,				ACT_MP_RUN_PASSTIME,				false },
 	{ ACT_MP_CROUCHWALK,		ACT_MP_CROUCHWALK_PASSTIME,		false },
 
 	// the previous are the only actual unique ones
-	
+
 	// following is a copy from tf_weaponbase.cpp
-	//acttable_t s_acttableMeleeAllclass[] = 
+	//acttable_t s_acttableMeleeAllclass[] =
 	//{
 		//{ ACT_MP_STAND_IDLE,		ACT_MP_STAND_MELEE_ALLCLASS,				false },
 	{ ACT_MP_CROUCH_IDLE,		ACT_MP_CROUCH_MELEE_ALLCLASS,			false },
@@ -304,8 +304,8 @@ static acttable_t s_acttablePasstime[] =
 acttable_t* CPasstimeGun::ActivityList(int &iActivityCount)
 {
 	iActivityCount = ARRAYSIZE(s_acttablePasstime);
-	return GetTFPlayerOwner() 
-		? s_acttablePasstime 
+	return GetTFPlayerOwner()
+		? s_acttablePasstime
 		: BaseClass::ActivityList(iActivityCount);
 }
 
@@ -317,7 +317,7 @@ void CPasstimeGun::AttackInputState::Update( int held, int pressed, int released
 		return;
 	}
 
-	// this exists so i don't have to do lots of confusing "if button pressed and my 
+	// this exists so i don't have to do lots of confusing "if button pressed and my
 	// charge timer is < curtime and some other bullshit then do this thing unless some
 	// other variable says do something else".
 	// note: can go directly from RELEASED to PRESSED without visiting UP along the way
@@ -334,7 +334,7 @@ void CPasstimeGun::AttackInputState::Update( int held, int pressed, int released
 			eButtonState = BUTTONSTATE_UP;
 			return;
 		}
-		else 
+		else
 		{
 			bLatchedUp = false;
 		}
@@ -348,11 +348,11 @@ void CPasstimeGun::AttackInputState::Update( int held, int pressed, int released
 	{
 		eButtonState = BUTTONSTATE_RELEASED;
 	}
-	else if ( bHeld ) 
+	else if ( bHeld )
 	{
 		eButtonState = BUTTONSTATE_DOWN;
 	}
-	else 
+	else
 	{
 		eButtonState = BUTTONSTATE_UP;
 	}
@@ -378,7 +378,7 @@ bool CPasstimeGun::SendWeaponAnim( int actBase )
 {
 	switch ( actBase )
 	{
-	case ACT_VM_IDLE: 
+	case ACT_VM_IDLE:
 		actBase = ACT_BALL_VM_IDLE;
 		break;
 	}
@@ -456,7 +456,7 @@ void CPasstimeGun::ItemPostFrame()
 				// Check world distance
 				const auto &vTargetPos = pPlayer->WorldSpaceCenter();
 				auto flThisTargetDist = vTargetPos.DistToSqr(vecEyePos);
-				if ( flThisTargetDist > flMaxPassDistSqr ) 
+				if ( flThisTargetDist > flMaxPassDistSqr )
 					continue;
 
 				// Check viewspace distance from crosshair when not autopassing
@@ -473,10 +473,10 @@ void CPasstimeGun::ItemPostFrame()
 
 				// check if closer than best
 				if ( flThisTargetDist >= flBestTargetDist )
-					continue; // too far 
+					continue; // too far
 
 				// pretend that people who are asking for the ball are closer, so they get priority
-				// do this after the distance check 
+				// do this after the distance check
 				if ( pPlayer->m_Shared.AskForBallTime() > gpGlobals->curtime )
 					flThisTargetDist /= 50.0f;
 
@@ -498,7 +498,7 @@ void CPasstimeGun::ItemPostFrame()
 		if ( pNewTarget )
 		{
 			// Always bump the target reset time when the target is valid.
-			// When the target isn't under the cursor anymore, the reset time will try to 
+			// When the target isn't under the cursor anymore, the reset time will try to
 			// keep the lock for a short amount of time.
 			m_flTargetResetTime = gpGlobals->curtime + tf_passtime_mode_homing_lock_sec.GetFloat();
 
@@ -521,8 +521,8 @@ void CPasstimeGun::ItemPostFrame()
 		//
 		// See if the current pass target is still valid
 		//
-		else if ( pCurrentTarget 
-			&& (!BValidPassTarget( pOwner, pCurrentTarget ) 
+		else if ( pCurrentTarget
+			&& (!BValidPassTarget( pOwner, pCurrentTarget )
 				|| (bCanAttack2Cancel && m_attack2.Is( BUTTONSTATE_DOWN )) // right click prevents pass lock
 				|| ((m_flTargetResetTime > 0 ) && (m_flTargetResetTime < gpGlobals->curtime))
 				|| (pCurrentTarget->WorldSpaceCenter().DistToSqr( vecEyePos ) >= flMaxPassDistSqr) )
@@ -533,8 +533,8 @@ void CPasstimeGun::ItemPostFrame()
 		}
 
 		// autopass
-		if ( tf_passtime_experiment_autopass.GetBool() 
-			&& m_attack2.Is( EButtonState::BUTTONSTATE_DOWN ) 
+		if ( tf_passtime_experiment_autopass.GetBool()
+			&& m_attack2.Is( EButtonState::BUTTONSTATE_DOWN )
 			&& pOwner->m_Shared.GetPasstimePassTarget() )
 		{
 			// NOTE: change state after calling Throw
@@ -556,19 +556,19 @@ void CPasstimeGun::ItemPostFrame()
 
 	//
 	// Update throw state
-	// Client and server both run this code; client predicts everything ideally, but there are some 
+	// Client and server both run this code; client predicts everything ideally, but there are some
 	// sketchy bits in here that probably don't predict right.
 	//
 	if ( pOwner->m_Shared.HasPasstimeBall() )
 	{
 		if ( (m_eThrowState == THROWSTATE_DISABLED) || (m_flNextPrimaryAttack > gpGlobals->curtime) || !CanAttack() )
 		{
-			// disable the attack input so the state will be correct when 
+			// disable the attack input so the state will be correct when
 			// throwstate changes to not disabled
 			m_attack.Disable();
 			m_attack2.Disable();
 		}
-		else 
+		else
 		{
 			// update input
 			m_attack.Enable();
@@ -588,7 +588,7 @@ void CPasstimeGun::ItemPostFrame()
 					m_attack2.LatchUp();
 					m_attack.LatchUp();
 				}
-				else 
+				else
 				{
 					pOwner->DoClassSpecialSkill();
 				}
@@ -618,7 +618,7 @@ void CPasstimeGun::ItemPostFrame()
 				break;
 			}
 
-			case THROWSTATE_CHARGING: 
+			case THROWSTATE_CHARGING:
 			{
 				if ( m_attack.Is( BUTTONSTATE_RELEASED ) )
 				{
@@ -671,14 +671,14 @@ void CPasstimeGun::ItemPostFrame()
 				break;
 			}
 
-			case THROWSTATE_THROWN: 
+			case THROWSTATE_THROWN:
 			{
 				// This means you got the ball between throwing it and holstering the gun.
 				// Just do what Deploy does, roughly.
 				m_eThrowState = THROWSTATE_IDLE;
 				m_attack2.LatchUp();
 				m_attack.LatchUp();
-				break; 
+				break;
 			}
 
 			case THROWSTATE_DISABLED: // should never get here
@@ -696,10 +696,10 @@ void CPasstimeGun::ItemPostFrame()
 	if ( !pOwner->m_Shared.HasPasstimeBall()
 		&& ((m_eThrowState != THROWSTATE_THROWN) || (m_flNextPrimaryAttack <= gpGlobals->curtime)) )
 	{
-		// Setting m_eThrowState here fixes players getting stuck in the throw 
+		// Setting m_eThrowState here fixes players getting stuck in the throw
 		// anim when they lose the ball while charging to throw. See GetChargeBeginTime
 		// and CTFPlayerAnimState::CheckPasstimeThrowAnimation to see why.
-		m_eThrowState = THROWSTATE_IDLE; 
+		m_eThrowState = THROWSTATE_IDLE;
 
 		if ( !m_hStoredLastWpn || !pOwner->Weapon_Switch( m_hStoredLastWpn ) )
 		{
@@ -707,7 +707,7 @@ void CPasstimeGun::ItemPostFrame()
 		}
 	}
 
-	// this SetWeaponVisible should go away once we have real animations. if you remove this, 
+	// this SetWeaponVisible should go away once we have real animations. if you remove this,
 	// update the EF_NODRAW hack in CTFWeaponBase::OnDataChanged too
 	SetWeaponVisible( pOwner->m_Shared.HasPasstimeBall() );
 
@@ -727,15 +727,15 @@ static const char* IncomingSoundForClass( const CTFPlayerClass* pClass, char (&p
 	pszSound[0] = 0;
 	switch ( pClass->GetClassIndex() )
 	{
-	case TF_CLASS_SCOUT: 
+	case TF_CLASS_SCOUT:
 		V_sprintf_safe( pszSound, "Scout.Incoming0%i", RandomInt(1,3) );
 		return pszSound;
 
-    case TF_CLASS_SNIPER:
+	case TF_CLASS_SNIPER:
 		V_sprintf_safe( pszSound, "Sniper.Incoming0%i", RandomInt(1,4) );
 		return pszSound;
 
-    case TF_CLASS_SOLDIER:
+	case TF_CLASS_SOLDIER:
 		V_sprintf_safe( pszSound, "Soldier.Incoming01" );
 		return pszSound;
 
@@ -759,7 +759,7 @@ static const char* IncomingSoundForClass( const CTFPlayerClass* pClass, char (&p
 		V_sprintf_safe( pszSound, "Spy.Incoming0%i", RandomInt(1,3) );
 		return pszSound;
 
-	case TF_CLASS_ENGINEER:		
+	case TF_CLASS_ENGINEER:
 		V_sprintf_safe( pszSound, "Engineer.Incoming0%i", RandomInt(1,3) );
 		return pszSound;
 	};
@@ -782,7 +782,7 @@ void CPasstimeGun::Throw( CTFPlayer *pOwner )
 	m_flNextSecondaryAttack = m_flNextPrimaryAttack;
 
 #ifdef GAME_DLL
-	pOwner->NoteWeaponFired(); // not sure what this does, exactly, but it seems important 
+	pOwner->NoteWeaponFired(); // not sure what this does, exactly, but it seems important
 	CTFPlayer *pPassTarget = pOwner->m_Shared.GetPasstimePassTarget();
 	const LaunchParams& launch = CalcLaunch( pOwner, pPassTarget != 0 );
 	g_pPasstimeLogic->LaunchBall( pOwner, launch.startPos, launch.startVel );
@@ -856,7 +856,7 @@ bool CPasstimeGun::Deploy()
 	{
 		return false;
 	}
-	
+
 	m_eThrowState = THROWSTATE_IDLE;
 	m_attack2.UnlatchUp();
 	m_attack.UnlatchUp();
@@ -891,7 +891,7 @@ bool CPasstimeGun::BValidPassTarget( CTFPlayer *pSource, CTFPlayer *pTarget, Hud
 	if ( !bSameTeam && !bTargetableEnemySpy )
 	{
 		// can't pass to enemies
-		return false; 
+		return false;
 	}
 	else if ( bSameTeam && bTargetDisguised )
 	{
@@ -940,7 +940,7 @@ void CPasstimeGun::UpdateThrowArch()
 
 	const int iNumSuperSamples = 8;
 	const float flDt = 1.0f / 16.0f / iNumSuperSamples;
-	const Vector vecGravity_dt = flDt * Vector( 0, 0, -800 ); 
+	const Vector vecGravity_dt = flDt * Vector( 0, 0, -800 );
 	const float flDamping_dt = flDt * tf_passtime_ball_damping_scale.GetFloat();
 
 	Vector vecStart, vecEnd;
@@ -958,12 +958,12 @@ void CPasstimeGun::UpdateThrowArch()
 		}
 		vecEnd = vecPos;
 
-		UTIL_TraceHull( vecStart, vecEnd, 
-			-launchParams.traceHullSize, launchParams.traceHullSize, 
+		UTIL_TraceHull( vecStart, vecEnd,
+			-launchParams.traceHullSize, launchParams.traceHullSize,
 			MASK_PLAYERSOLID, &traceFilter, &tr );
 
 		if ( tr.DidHit() )
-		{	
+		{
 			m_pBounceReticle->Show( tr.endpos, tr.plane.normal );
 			break;
 
@@ -984,8 +984,8 @@ void CPasstimeGun::UpdateThrowArch()
 #endif
 
 //-----------------------------------------------------------------------------
-//static 
-CPasstimeGun::LaunchParams 
+//static
+CPasstimeGun::LaunchParams
 CPasstimeGun::LaunchParams::Default( CTFPlayer *pPlayer )
 {
 	LaunchParams p;
@@ -1034,12 +1034,12 @@ static void GetThrowParams( CTFPlayer *pPlayer, float *speed, float *arc )
 	if ( !pPlayer ) return;
 
 	auto iClass = pPlayer->GetPlayerClass()->GetClassIndex();
-	if ( iClass <= TF_CLASS_UNDEFINED || iClass >= TF_LAST_NORMAL_CLASS ) 
+	if ( iClass <= TF_CLASS_UNDEFINED || iClass >= TF_LAST_NORMAL_CLASS )
 	{
 		if ( speed ) *speed = 1000.0f;
 		if ( arc ) *arc = 0.3f;
 	}
-	else 
+	else
 	{
 		if ( speed ) *speed = s_pThrowSpeedConvars[iClass]->GetFloat();
 		if ( arc ) *arc = s_pThrowArcConvars[iClass]->GetFloat();
@@ -1071,7 +1071,7 @@ CPasstimeGun::LaunchParams CPasstimeGun::CalcLaunch( CTFPlayer *pPlayer, bool bH
 	}
 
 	// mix in some amount of forward velocity
-	auto fwdspeed = tf_passtime_throwspeed_velocity_scale.GetFloat() 
+	auto fwdspeed = tf_passtime_throwspeed_velocity_scale.GetFloat()
 		* params.viewFwd.Dot( pPlayer->GetAbsVelocity() );
 	VectorMAInline( params.startVel, fwdspeed, params.viewFwd, params.startVel );
 
@@ -1091,8 +1091,8 @@ void CPasstimeGun::ClientThink()
 		return;
 	}
 
-	// doing this in ItemPostFrame makes the position jittery for some reason, 
-	// and doing it in ClientThink works better. Not entirely sure why, but I 
+	// doing this in ItemPostFrame makes the position jittery for some reason,
+	// and doing it in ClientThink works better. Not entirely sure why, but I
 	// assume it's something to do with order of operations, or possibly prediction.
 	if ( !IsLocalPlayerSpectator() && ((m_eThrowState == THROWSTATE_CHARGING) || (m_eThrowState == THROWSTATE_CHARGED)) )
 	{

@@ -10,7 +10,7 @@
 
 class CAudioDeviceBase : public IAudioDevice
 {
-public:	
+public:
 	virtual bool		IsActive( void ) { return false; }
 	virtual bool		Init( void ) { return false; }
 	virtual void		Shutdown( void ) {}
@@ -39,7 +39,7 @@ public:
 
 	virtual void		ChannelReset( int entnum, int channelIndex, float distanceMod ) {}
 	virtual void		TransferSamples( int end ) {}
-	
+
 	virtual const char *DeviceName( void )			{ return NULL; }
 	virtual int			DeviceChannels( void )		{ return 0; }
 	virtual int			DeviceSampleBits( void )	{ return 0; }

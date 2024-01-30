@@ -21,7 +21,7 @@
 	#define MDEBUG(x)
 #endif
 
-		   
+
 #define	MAX_MVM_WAVE_STRING 256
 
 
@@ -54,7 +54,7 @@ extern color32 g_aTeamColors[TF_TEAM_COUNT];
 #define CONTENTS_REDTEAM	CONTENTS_TEAM1
 #define CONTENTS_BLUETEAM	CONTENTS_TEAM2
 
-enum 
+enum
 {
 	TF_ARENA_NOTIFICATION_CAREFUL = 0,
 	TF_ARENA_NOTIFICATION_SITOUT,
@@ -62,7 +62,7 @@ enum
 };
 
 // Team roles
-enum 
+enum
 {
 	TEAM_ROLE_NONE = 0,
 	TEAM_ROLE_DEFENDERS,
@@ -121,7 +121,7 @@ enum PowerupBottleType_t
 	POWERUP_BOTTLE_TOTAL
 };
 
-enum 
+enum
 {
 	MVM_EVENT_POPFILE_NONE = 0,
 	MVM_EVENT_POPFILE_HALLOWEEN,
@@ -203,14 +203,14 @@ enum
 	TF_CLASS_UNDEFINED = 0,
 
 	TF_CLASS_SCOUT,			// TF_FIRST_NORMAL_CLASS
-    TF_CLASS_SNIPER,
-    TF_CLASS_SOLDIER,
+	TF_CLASS_SNIPER,
+	TF_CLASS_SOLDIER,
 	TF_CLASS_DEMOMAN,
 	TF_CLASS_MEDIC,
 	TF_CLASS_HEAVYWEAPONS,
 	TF_CLASS_PYRO,
 	TF_CLASS_SPY,
-	TF_CLASS_ENGINEER,		
+	TF_CLASS_ENGINEER,
 
 	// Add any new classes after Engineer
 	TF_CLASS_CIVILIAN,		// TF_LAST_NORMAL_CLASS
@@ -405,7 +405,7 @@ enum ETFWeaponType
 	TF_WEAPON_NONE = 0,
 	TF_WEAPON_BAT,
 	TF_WEAPON_BAT_WOOD,
-	TF_WEAPON_BOTTLE, 
+	TF_WEAPON_BOTTLE,
 	TF_WEAPON_FIREAXE,
 	TF_WEAPON_CLUB,
 	TF_WEAPON_CROWBAR,
@@ -466,7 +466,7 @@ enum ETFWeaponType
 	TF_WEAPON_COMPOUND_BOW,
 	TF_WEAPON_BUFF_ITEM,
 	TF_WEAPON_PUMPKIN_BOMB,
-	TF_WEAPON_SWORD, 
+	TF_WEAPON_SWORD,
 	TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT,
 	TF_WEAPON_LIFELINE,
 	TF_WEAPON_LASER_POINTER,
@@ -628,7 +628,7 @@ enum death_calling_card_models
 	CALLING_CARD_MILKMAN = 1,	// Scout PolyCount Set
 	CALLING_CARD_CROC,			// Sniper PolyCount Set
 	CALLING_CARD_TANKBUSTER,	// Solider PolyCount Set
-	CALLING_CARD_GASJOCKEY,		// Pyro PolyCount Set 
+	CALLING_CARD_GASJOCKEY,		// Pyro PolyCount Set
 
 	TF_CALLING_CARD_MODEL_COUNT
 };
@@ -813,7 +813,7 @@ enum ETFCond
 	TF_COND_COMPETITIVE_WINNER,
 	TF_COND_COMPETITIVE_LOSER,
 	TF_COND_HEALING_DEBUFF,
-	TF_COND_PASSTIME_PENALTY_DEBUFF,		// when carrying the ball without any teammates nearby	
+	TF_COND_PASSTIME_PENALTY_DEBUFF,		// when carrying the ball without any teammates nearby
 	TF_COND_GRAPPLED_TO_PLAYER,
 	TF_COND_GRAPPLED_BY_PLAYER,
 	//
@@ -829,7 +829,7 @@ enum ETFCond
 //	TF_COND_SPACE_GRAVITY,
 //	TF_COND_SELF_CONC,
 	TF_COND_ROCKETPACK,
-	TF_COND_STEALTHED_PHASE,  	
+	TF_COND_STEALTHED_PHASE,
 	TF_COND_CLIP_OVERLOAD,
 	TF_COND_SPY_CLASS_STEAL,
 #endif // STAGING_ONLY
@@ -853,7 +853,7 @@ extern ETFCond g_aDebuffConditions[];
 //-----------------------------------------------------------------------------
 // TF Player State.
 //-----------------------------------------------------------------------------
-enum 
+enum
 {
 	TF_STATE_ACTIVE = 0,		// Happily running around in the game.
 	TF_STATE_WELCOME,			// First entering the server (shows level intro screen).
@@ -881,7 +881,7 @@ enum ETFFlagEventTypes
 	TF_FLAGEVENT_DROPPED,
 	TF_FLAGEVENT_RETURNED,
 
-	
+
 	//
 	// ADD NEW ITEMS HERE TO AVOID BREAKING DEMOS
 	//
@@ -901,7 +901,7 @@ enum RDScoreMethod_t
 	SCORE_CORES_COLLECTED,
 	SCORE_REACTOR_RETURNED,
 	SCORE_REACTOR_STEAL,
-		
+
 	NUM_SCORE_TYPES
 };
 
@@ -1109,32 +1109,32 @@ extern const char *g_pszHintMessages[];
 
 // items
 #define IT_SHOTGUN				(1<<0)
-#define IT_SUPER_SHOTGUN		(1<<1) 
-#define IT_NAILGUN				(1<<2) 
-#define IT_SUPER_NAILGUN		(1<<3) 
-#define IT_GRENADE_LAUNCHER		(1<<4) 
-#define IT_ROCKET_LAUNCHER		(1<<5) 
-#define IT_LIGHTNING			(1<<6) 
-#define IT_EXTRA_WEAPON			(1<<7) 
+#define IT_SUPER_SHOTGUN		(1<<1)
+#define IT_NAILGUN				(1<<2)
+#define IT_SUPER_NAILGUN		(1<<3)
+#define IT_GRENADE_LAUNCHER		(1<<4)
+#define IT_ROCKET_LAUNCHER		(1<<5)
+#define IT_LIGHTNING			(1<<6)
+#define IT_EXTRA_WEAPON			(1<<7)
 
-#define IT_SHELLS				(1<<8) 
-#define IT_BULLETS				(1<<9) 
-#define IT_ROCKETS				(1<<10) 
-#define IT_CELLS				(1<<11) 
-#define IT_AXE					(1<<12) 
+#define IT_SHELLS				(1<<8)
+#define IT_BULLETS				(1<<9)
+#define IT_ROCKETS				(1<<10)
+#define IT_CELLS				(1<<11)
+#define IT_AXE					(1<<12)
 
-#define IT_ARMOR1				(1<<13) 
-#define IT_ARMOR2				(1<<14) 
-#define IT_ARMOR3				(1<<15) 
-#define IT_SUPERHEALTH			(1<<16) 
+#define IT_ARMOR1				(1<<13)
+#define IT_ARMOR2				(1<<14)
+#define IT_ARMOR3				(1<<15)
+#define IT_SUPERHEALTH			(1<<16)
 
-#define IT_KEY1					(1<<17) 
-#define IT_KEY2					(1<<18) 
+#define IT_KEY1					(1<<17)
+#define IT_KEY2					(1<<18)
 
-#define IT_INVISIBILITY			(1<<19) 
-#define IT_INVULNERABILITY		(1<<20) 
+#define IT_INVISIBILITY			(1<<19)
+#define IT_INVULNERABILITY		(1<<20)
 #define IT_SUIT					(1<<21)
-#define IT_QUAD					(1<<22) 
+#define IT_QUAD					(1<<22)
 #define IT_HOOK					(1<<23)
 
 #define IT_KEY3					(1<<24)	// Stomp invisibility
@@ -1266,23 +1266,23 @@ inline bool IsTauntDmg( int iType )
 {
 	return (iType == TF_DMG_CUSTOM_TAUNTATK_HADOUKEN ||
 			iType == TF_DMG_CUSTOM_TAUNTATK_HIGH_NOON ||
-			iType == TF_DMG_CUSTOM_TAUNTATK_GRAND_SLAM || 
+			iType == TF_DMG_CUSTOM_TAUNTATK_GRAND_SLAM ||
 			iType == TF_DMG_CUSTOM_TAUNTATK_FENCING ||
 			iType == TF_DMG_CUSTOM_TAUNTATK_ARROW_STAB ||
 			iType == TF_DMG_CUSTOM_TAUNTATK_GRENADE ||
 			iType == TF_DMG_CUSTOM_TAUNTATK_BARBARIAN_SWING ||
 			iType == TF_DMG_CUSTOM_TAUNTATK_UBERSLICE ||
-			iType == TF_DMG_CUSTOM_TAUNTATK_ENGINEER_GUITAR_SMASH || 
+			iType == TF_DMG_CUSTOM_TAUNTATK_ENGINEER_GUITAR_SMASH ||
 			iType == TF_DMG_CUSTOM_TAUNTATK_ARMAGEDDON ||
-			iType == TF_DMG_CUSTOM_TAUNTATK_ALLCLASS_GUITAR_RIFF || 
+			iType == TF_DMG_CUSTOM_TAUNTATK_ALLCLASS_GUITAR_RIFF ||
 			iType == TF_DMG_CUSTOM_TAUNTATK_ENGINEER_ARM_KILL );
 }
 inline bool IsDOTDmg( int iType )
 {
 	if ( iType == TF_DMG_CUSTOM_BURNING ||
-		 iType == TF_DMG_CUSTOM_BURNING_FLARE ||
-		 iType == TF_DMG_CUSTOM_BURNING_ARROW ||
-		 iType == TF_DMG_CUSTOM_BLEEDING )
+		iType == TF_DMG_CUSTOM_BURNING_FLARE ||
+		iType == TF_DMG_CUSTOM_BURNING_ARROW ||
+		iType == TF_DMG_CUSTOM_BLEEDING )
 	{
 		return true;
 	}
@@ -1292,7 +1292,7 @@ inline bool IsDOTDmg( int iType )
 	}
 }
 
-inline bool IsHeadshot( int iType ) 
+inline bool IsHeadshot( int iType )
 {
 	return (iType == TF_DMG_CUSTOM_HEADSHOT || iType == TF_DMG_CUSTOM_HEADSHOT_DECAPITATION);
 }
@@ -1356,7 +1356,7 @@ enum ObjectType_t
 	// Attachment Objects
 	OBJ_ATTACHMENT_SAPPER,
 
-	// If you add a new object, you need to add it to the g_ObjectInfos array 
+	// If you add a new object, you need to add it to the g_ObjectInfos array
 	// in tf_shareddefs.cpp, and add it's data to the scripts/object.txt
 
 	//
@@ -1411,7 +1411,7 @@ typedef enum
 	BUILDING_HUD_ALERT_LOW_HEALTH,
 	BUILDING_HUD_ALERT_VERY_LOW_AMMO,
 	BUILDING_HUD_ALERT_VERY_LOW_HEALTH,
-	BUILDING_HUD_ALERT_SAPPER,	
+	BUILDING_HUD_ALERT_SAPPER,
 
 	//
 	// ADD NEW ITEMS HERE TO AVOID BREAKING DEMOS
@@ -1425,7 +1425,7 @@ typedef enum
 	BUILDING_DAMAGE_LEVEL_NONE = 0,		// 100%
 	BUILDING_DAMAGE_LEVEL_LIGHT,		// 75% - 99%
 	BUILDING_DAMAGE_LEVEL_MEDIUM,		// 50% - 76%
-	BUILDING_DAMAGE_LEVEL_HEAVY,		// 25% - 49%	
+	BUILDING_DAMAGE_LEVEL_HEAVY,		// 25% - 49%
 	BUILDING_DAMAGE_LEVEL_CRITICAL,		// 0% - 24%
 
 	//
@@ -1481,7 +1481,7 @@ enum
 	TELEPORTER_STATE_IDLE,						// Does not have a matching teleporter yet
 	TELEPORTER_STATE_READY,						// Found match, charged and ready
 	TELEPORTER_STATE_SENDING,					// Teleporting a player away
-	TELEPORTER_STATE_RECEIVING,					
+	TELEPORTER_STATE_RECEIVING,
 	TELEPORTER_STATE_RECEIVING_RELEASE,
 	TELEPORTER_STATE_RECHARGING,				// Waiting for recharge
 	TELEPORTER_STATE_UPGRADING,
@@ -1531,7 +1531,7 @@ enum
 //--------------------------------------------------------------------------
 // Builder "weapon" states
 //--------------------------------------------------------------------------
-enum 
+enum
 {
 	BS_IDLE = 0,
 	BS_SELECTING,
@@ -1636,7 +1636,7 @@ class CHudTexture;
 class CObjectInfo
 {
 public:
-	CObjectInfo( const char *pObjectName );	
+	CObjectInfo( const char *pObjectName );
 	~CObjectInfo();
 
 	// This is initialized by the code and matched with a section in objects.txt
@@ -1753,8 +1753,8 @@ enum HudNotification_t
 	HUD_NOTIFY_PASSTIME_NO_TELE,
 	HUD_NOTIFY_PASSTIME_NO_CARRY,
 	HUD_NOTIFY_PASSTIME_NO_INVULN,
-	HUD_NOTIFY_PASSTIME_NO_DISGUISE, 
-	HUD_NOTIFY_PASSTIME_NO_CLOAK, 
+	HUD_NOTIFY_PASSTIME_NO_DISGUISE,
+	HUD_NOTIFY_PASSTIME_NO_CLOAK,
 	HUD_NOTIFY_PASSTIME_NO_OOB, // out of bounds
 	HUD_NOTIFY_PASSTIME_NO_HOLSTER,
 	HUD_NOTIFY_PASSTIME_NO_TAUNT,
@@ -1843,7 +1843,7 @@ enum eEurekaTeleportTargets
 	EUREKA_TELEPORT_TELEPORTER_EXIT,
 
 	EUREKA_LAST_TARGET = EUREKA_TELEPORT_TELEPORTER_EXIT,
-		
+
 	EUREKA_NUM_TARGETS
 };
 
@@ -1878,7 +1878,7 @@ enum EAttackBonusEffects_t
 	kBonusEffect_WaterBalloonSploosh,
 
 	kBonusEffect_Count, // Must be 2nd to last
-	
+
 };
 
 
@@ -2377,7 +2377,7 @@ enum MedicCallerType
 #define ACHIEVEMENT_TF_ENGINEER_END_RANGE					1838
 
 #define ACHIEVEMENT_END_CLASS_SPECIFIC			1899
- 
+
 // Halloween Events
 #define ACHIEVEMENT_TF_HALLOWEEN_START_RANGE					1901
 #define ACHIEVEMENT_TF_HALLOWEEN_COLLECT_PUMPKINS				1901
@@ -2554,7 +2554,7 @@ const unsigned char *GetTFEncryptionKey( void );
 //-----------------------------------------------------------------------------
 enum
 {
-	TF_SAPEVENT_NONE = 0,	
+	TF_SAPEVENT_NONE = 0,
 	TF_SAPEVENT_PLACED,
 	TF_SAPEVENT_DONE,
 };
@@ -2604,7 +2604,7 @@ enum
 	HELLTOWER_VO_BLUE_NEAR_WIN,
 	HELLTOWER_VO_RED_NEAR_LOSE,
 	HELLTOWER_VO_BLUE_NEAR_LOSE,
-	
+
 	HELLTOWER_VO_COUNT,
 };
 
@@ -2627,7 +2627,7 @@ struct PlayerHistoryInfo_t
 	int nTeam;			// Last team they were on
 };
 
-// When adding new RuneTypes_t, make sure to add new condition codes to 
+// When adding new RuneTypes_t, make sure to add new condition codes to
 // ETFCond and also update GetConditionFromRuneType and GetRuneTypeFromCondition.
 enum RuneTypes_t
 {
@@ -2653,7 +2653,7 @@ enum RuneTypes_t
 inline ETFCond GetConditionFromRuneType( RuneTypes_t rt )
 {
 	switch ( rt )
-	{ 
+	{
 	case RUNE_NONE:			return TF_COND_INVALID;
 	case RUNE_STRENGTH:		return TF_COND_RUNE_STRENGTH;
 	case RUNE_HASTE:		return TF_COND_RUNE_HASTE;
@@ -2668,7 +2668,7 @@ inline ETFCond GetConditionFromRuneType( RuneTypes_t rt )
 	case RUNE_PLAGUE:		return TF_COND_RUNE_PLAGUE;
 	case RUNE_SUPERNOVA:	return TF_COND_RUNE_SUPERNOVA;
 	default:
-		AssertMsg( 0, "Unexpected rune_type rt (%d) in GetConditionFromRuneType", rt );	
+		AssertMsg( 0, "Unexpected rune_type rt (%d) in GetConditionFromRuneType", rt );
 	}
 
 	return TF_COND_INVALID;
@@ -2812,4 +2812,3 @@ enum MM_PlayerConnectionState_t
 };
 
 #endif // TF_SHAREDDEFS_H
-  

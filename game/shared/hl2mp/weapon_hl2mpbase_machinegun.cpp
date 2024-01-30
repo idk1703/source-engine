@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -38,7 +38,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHL2MPMachineGun::CHL2MPMachineGun( void )
 {
@@ -51,7 +51,7 @@ const Vector &CHL2MPMachineGun::GetBulletSpread( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ void CHL2MPMachineGun::PrimaryAttack( void )
 	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
 	if (!pPlayer)
 		return;
-	
+
 	// Abort here to handle burst and auto fire modes
 	if ( (UsesClipsForAmmo1() && m_iClip1 == 0) || ( !UsesClipsForAmmo1() && !pPlayer->GetAmmoCount(m_iPrimaryAmmoType) ) )
 		return;
@@ -70,7 +70,7 @@ void CHL2MPMachineGun::PrimaryAttack( void )
 
 	pPlayer->DoMuzzleFlash();
 
-	// To make the firing framerate independent, we may have to fire more than one bullet here on low-framerate systems, 
+	// To make the firing framerate independent, we may have to fire more than one bullet here on low-framerate systems,
 	// especially if the weapon we're firing has a really fast rate of fire.
 	int iBulletsToFire = 0;
 	float fireRate = GetFireRate();
@@ -106,11 +106,11 @@ void CHL2MPMachineGun::PrimaryAttack( void )
 
 	//Factor in the view kick
 	AddViewKick();
-	
+
 	if (!m_iClip1 && pPlayer->GetAmmoCount(m_iPrimaryAmmoType) <= 0)
 	{
 		// HEV suit - indicate out of ammo condition
-		pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0); 
+		pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0);
 	}
 
 	SendWeaponAnim( GetPrimaryAttackActivity() );
@@ -118,8 +118,8 @@ void CHL2MPMachineGun::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &info - 
+// Purpose:
+// Input  : &info -
 //-----------------------------------------------------------------------------
 void CHL2MPMachineGun::FireBullets( const FireBulletsInfo_t &info )
 {
@@ -130,7 +130,7 @@ void CHL2MPMachineGun::FireBullets( const FireBulletsInfo_t &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHL2MPMachineGun::DoMachineGunKick( CBasePlayer *pPlayer, float dampEasy, float maxVerticleKickAngle, float fireDurationTime, float slideLimitTime )
 {
@@ -140,7 +140,7 @@ void CHL2MPMachineGun::DoMachineGunKick( CBasePlayer *pPlayer, float dampEasy, f
 
 	QAngle vecScratch;
 	int iSeed = CBaseEntity::GetPredictionRandomSeed() & 255;
-	
+
 	//Find how far into our accuracy degradation we are
 	float duration	= ( fireDurationTime > slideLimitTime ) ? slideLimitTime : fireDurationTime;
 	float kickPerc = duration / slideLimitTime;
@@ -221,12 +221,12 @@ int CHL2MPMachineGun::WeaponSoundRealtime( WeaponSound_t shoot_type )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHL2MPMachineGun::ItemPostFrame( void )
 {
 	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-	
+
 	if ( pOwner == NULL )
 		return;
 
@@ -238,5 +238,3 @@ void CHL2MPMachineGun::ItemPostFrame( void )
 
 	BaseClass::ItemPostFrame();
 }
-
-

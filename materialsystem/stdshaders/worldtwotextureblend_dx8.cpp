@@ -1,13 +1,13 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
 //=============================================================================//
 
 #include "BaseVSShader.h"
-				   
+
 #include "lightmappedgeneric_vs11.inc"
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -16,15 +16,15 @@
 
 DEFINE_FALLBACK_SHADER( WorldTwoTextureBlend, WorldTwoTextureBlend_DX8 )
 
-BEGIN_VS_SHADER( WorldTwoTextureBlend_DX8, 
+BEGIN_VS_SHADER( WorldTwoTextureBlend_DX8,
 			  "Help for WorldTwoTextureBlend_DX8" )
-			  
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM_OVERRIDE( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "shadertest/WorldTwoTextureBlend", "iris texture", 0 )
 		SHADER_PARAM( SELFILLUMTINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "Self-illumination tint" )
 		SHADER_PARAM( DETAIL, SHADER_PARAM_TYPE_TEXTURE, "shadertest/WorldTwoTextureBlend_detail", "detail texture" )
 		SHADER_PARAM( DETAILSCALE, SHADER_PARAM_TYPE_FLOAT, "1.0", "scale of the detail texture" )
-		SHADER_PARAM( DETAIL_ALPHA_MASK_BASE_TEXTURE, SHADER_PARAM_TYPE_BOOL, "0", 
+		SHADER_PARAM( DETAIL_ALPHA_MASK_BASE_TEXTURE, SHADER_PARAM_TYPE_BOOL, "0",
 			"If this is 1, then when detail alpha=0, no base texture is blended and when "
 			"detail alpha=1, you get detail*base*lightmap" )
 	END_SHADER_PARAMS
@@ -64,7 +64,7 @@ BEGIN_VS_SHADER( WorldTwoTextureBlend_DX8,
 		{
 			params[DETAIL_ALPHA_MASK_BASE_TEXTURE]->SetIntValue( 0 );
 		}
-	
+
 		SET_FLAGS2( MATERIAL_VAR2_LIGHTING_LIGHTMAP );
 	}
 
@@ -78,15 +78,15 @@ BEGIN_VS_SHADER( WorldTwoTextureBlend_DX8,
 
 			return "LightmappedGeneric_DetailNoTexture";
 		}
-		
+
 		if ( !bHasDetailTexture )
 		{
 			if ( bSelfIllum )
 				return "LightmappedGeneric_SelfIlluminated";
-			
+
 			return "LightmappedGeneric";
 		}
-		
+
 		if ( !params[DETAIL_ALPHA_MASK_BASE_TEXTURE]->GetIntValue() )
 		{
 			if ( bSelfIllum )
@@ -104,7 +104,7 @@ BEGIN_VS_SHADER( WorldTwoTextureBlend_DX8,
 		bool hasFlashlight = UsingFlashlight( params );
 		if( hasFlashlight )
 		{
-			DrawFlashlight_dx80( params, pShaderAPI, pShaderShadow, false, -1, -1, -1, 
+			DrawFlashlight_dx80( params, pShaderAPI, pShaderShadow, false, -1, -1, -1,
 				FLASHLIGHTTEXTURE, FLASHLIGHTTEXTUREFRAME, true, false, 0, -1, -1 );
 			return;
 		}
@@ -139,7 +139,7 @@ BEGIN_VS_SHADER( WorldTwoTextureBlend_DX8,
 
 			const char *pPixelShaderName = GetPixelShaderName( params, bHasBaseTexture, bHasDetailTexture );
 			pShaderShadow->SetPixelShader( pPixelShaderName );
-			
+
 			FogToFogColor();
 		}
 		DYNAMIC_STATE
@@ -172,4 +172,3 @@ BEGIN_VS_SHADER( WorldTwoTextureBlend_DX8,
 	}
 
 END_SHADER
-

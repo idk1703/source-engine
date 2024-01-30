@@ -94,8 +94,8 @@ void CMapSideList::RebuildFaceList()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszValue - 
+// Purpose:
+// Input  : pszValue -
 //			pWorld - The world object that we are contained in.
 //-----------------------------------------------------------------------------
 void CMapSideList::BuildFaceListForValue(char const *pszValue, CMapWorld *pWorld)
@@ -144,7 +144,7 @@ void CMapSideList::BuildFaceListForValue(char const *pszValue, CMapWorld *pWorld
 
 //-----------------------------------------------------------------------------
 // Purpose: Calculates our bounds.
-// Input  : bFullUpdate - 
+// Input  : bFullUpdate -
 //-----------------------------------------------------------------------------
 void CMapSideList::CalcBounds(BOOL bFullUpdate)
 {
@@ -259,7 +259,7 @@ CMapFace *CMapSideList::FindFaceIDInList(int nFaceID, const CMapObjectList &List
 				{
 					return(pFace);
 				}
-			}	
+			}
 
 			pChild = pObject->GetNextDescendent(pos2);
 		}
@@ -281,9 +281,9 @@ size_t CMapSideList::GetSize(void)
 //-----------------------------------------------------------------------------
 // Purpose: Notification that we have just been cloned. Fix up our clone's
 //			face list based on the the objects that were cloned with it.
-// Input  : pClone - 
-//			OriginalList - 
-//			NewList - 
+// Input  : pClone -
+//			OriginalList -
+//			NewList -
 //-----------------------------------------------------------------------------
 void CMapSideList::OnClone(CMapClass *pCloneObject, CMapWorld *pWorld, const CMapObjectList &OriginalList, CMapObjectList &NewList)
 {
@@ -292,12 +292,12 @@ void CMapSideList::OnClone(CMapClass *pCloneObject, CMapWorld *pWorld, const CMa
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pCopy - 
-//			pSourceWorld - 
-//			pDestWorld - 
-//			OriginalList - 
-//			NewList - 
+// Purpose:
+// Input  : pCopy -
+//			pSourceWorld -
+//			pDestWorld -
+//			OriginalList -
+//			NewList -
 //-----------------------------------------------------------------------------
 void CMapSideList::OnPaste(CMapClass *pCopyObject, CMapWorld *pSourceWorld, CMapWorld *pDestWorld, const CMapObjectList &OriginalList, CMapObjectList &NewList)
 {
@@ -343,9 +343,9 @@ void CMapSideList::OnPaste(CMapClass *pCopyObject, CMapWorld *pSourceWorld, CMap
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pObject - 
-//			eNotifyType - 
+// Purpose:
+// Input  : pObject -
+//			eNotifyType -
 //-----------------------------------------------------------------------------
 void CMapSideList::OnNotifyDependent(CMapClass *pObject, Notify_Dependent_t eNotifyType)
 {
@@ -357,8 +357,8 @@ void CMapSideList::OnNotifyDependent(CMapClass *pObject, Notify_Dependent_t eNot
 	{
 		// Remove? Purge?
 		m_Faces.RemoveAll();
-		
-		// Rebuild the face list 
+
+		// Rebuild the face list
 		RebuildFaceList();
 	}
 
@@ -389,7 +389,7 @@ void CMapSideList::OnNotifyDependent(CMapClass *pObject, Notify_Dependent_t eNot
 					}
 				}
 			}
-		
+
 			//
 			// Submit the updated face list to our parent entity.
 			//
@@ -400,9 +400,9 @@ void CMapSideList::OnNotifyDependent(CMapClass *pObject, Notify_Dependent_t eNot
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : key - 
-//			value - 
+// Purpose:
+// Input  : key -
+//			value -
 //-----------------------------------------------------------------------------
 void CMapSideList::OnParentKeyChanged(char const *pszKey, char const *pszValue)
 {
@@ -439,14 +439,14 @@ void CMapSideList::OnRemoveFromWorld(CMapWorld *pWorld, bool bNotifyChildren)
 		CMapSolid *pSolid = (CMapSolid *)pFace->GetParent();
 		UpdateDependency(pSolid, NULL);
 	}
-	
+
 	m_Faces.RemoveAll();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : List - 
+// Purpose:
+// Input  : List -
 //-----------------------------------------------------------------------------
 void CMapSideList::RemoveFacesNotInList(const CMapObjectList &List)
 {
@@ -471,14 +471,14 @@ void CMapSideList::RemoveFacesNotInList(const CMapObjectList &List)
 // Purpose: Called from OnClone and OnPaste. Replaces references (in the
 //			cloned object) to faces in the original list of objects with references
 //			to corresponding faces in the new list of objects.
-// Input  : pClone - 
-//			OriginalList - 
-//			NewList - 
+// Input  : pClone -
+//			OriginalList -
+//			NewList -
 //-----------------------------------------------------------------------------
 void CMapSideList::ReplaceFacesInCopy(CMapSideList *pCopy, const CMapObjectList &OriginalList, CMapObjectList &NewList)
 {
 	Assert( OriginalList.Count() == NewList.Count() );
-	
+
 	FOR_EACH_OBJ( OriginalList, pos )
 	{
 		CMapClass *pOriginal = OriginalList.Element(pos);
@@ -531,7 +531,7 @@ void CMapSideList::ReplaceFacesInCopy(CMapSideList *pCopy, const CMapObjectList 
 			}
 		}
 	}
-	
+
 	//
 	// Update the keyvalue in the copy's parent entity.
 	//
@@ -540,7 +540,7 @@ void CMapSideList::ReplaceFacesInCopy(CMapSideList *pCopy, const CMapObjectList 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : pRender - Interface to use for rendering.
 //-----------------------------------------------------------------------------
 void CMapSideList::Render2D(CRender2D *pRender)
@@ -556,7 +556,7 @@ void CMapSideList::Render3D(CRender3D *pRender)
 {
 	if ( !m_pParent->IsSelected() )
 		return;
-	
+
 	//
 	// Draw lines from us to the center of all faces in the list.
 	//
@@ -576,7 +576,7 @@ void CMapSideList::Render3D(CRender3D *pRender)
 		pFace->GetCenter(Center);
 
 		unsigned char color[3];
-		color[0] = SELECT_EDGE_RED; 
+		color[0] = SELECT_EDGE_RED;
 		color[1] = SELECT_EDGE_GREEN;
 		color[2] = SELECT_EDGE_BLUE;
 
@@ -597,7 +597,7 @@ void CMapSideList::Render3D(CRender3D *pRender)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Called from OnClone and OnPaste, updates references to face IDs 
+// Purpose: Called from OnClone and OnPaste, updates references to face IDs
 //			in the one solid with references to corresponding face IDs in
 //			another solid.
 // Input  : pOrigSolid - Solid with faces to find.
@@ -631,7 +631,7 @@ bool CMapSideList::ReplaceSolidFaces(CMapSolid *pOrigSolid, CMapSolid *pNewSolid
 //-----------------------------------------------------------------------------
 // Purpose: Something happened in the world that requires us to refresh our
 //			dependencies. Try to reacquire face IDs in our deleted faces list.
-// Input  : pWorld - 
+// Input  : pWorld -
 //-----------------------------------------------------------------------------
 void CMapSideList::UpdateDependencies(CMapWorld *pWorld, CMapClass *pObject)
 {

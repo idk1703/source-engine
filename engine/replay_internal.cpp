@@ -33,7 +33,7 @@ IReplayMovieManager				*g_pReplayMovieManager = NULL;
 //----------------------------------------------------------------------------------------
 
 ConVar replay_debug( "replay_debug", "0", FCVAR_DONTRECORD );
-	
+
 //----------------------------------------------------------------------------------------
 
 // If you modify this list, you will also need to add the following line to the game's
@@ -64,7 +64,7 @@ void ReplaySystem_Init( bool bDedicated )
 	{
 		Error( "Could not load: %s\n", szDllName );
 	}
-	
+
 	// Get a ptr to the IReplay instance
 	g_pReplay = (IReplaySystem *)g_fnReplayFactory( REPLAY_INTERFACE_VERSION, NULL );
 	if ( !g_pReplay )

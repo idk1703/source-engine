@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -59,7 +59,7 @@ public:
 
 	virtual void	ApplySchemeSettings( vgui::IScheme *pScheme );
 	virtual int		AddItem( KeyValues *data, bool allowLabelEditing, int parentItemIndex, CUtlVector< vgui::Panel * >& columnPanels );
-	virtual void	RemoveItem( int nItemIndex ); 
+	virtual void	RemoveItem( int nItemIndex );
 	virtual void	PerformLayout();
 	virtual void	RemoveAll();
 	virtual vgui::HFont	GetFont( int size );
@@ -67,7 +67,7 @@ public:
 	virtual int		GetFontSize();
 	virtual void	SetFontSize( int size );
 	virtual void	PostChildPaint();
-    virtual void	ExpandItem( int itemIndex, bool bExpand );
+	virtual void	ExpandItem( int itemIndex, bool bExpand );
 	virtual bool	IsItemExpanded( int itemIndex );
 	virtual bool	IsItemSelected( int itemIndex );
 	virtual KeyValues *GetItemData( int itemIndex );
@@ -136,7 +136,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// CElementPropertiesTreeInternal 
+// CElementPropertiesTreeInternal
 //-----------------------------------------------------------------------------
 class CElementPropertiesTreeInternal : public vgui::EditablePanel
 {
@@ -150,7 +150,7 @@ public:
 		REFRESH_TREE_VIEW,		// Tree topology changed; some attributes may be added or removed
 	};
 
-	CElementPropertiesTreeInternal( vgui::Panel *parent, IDmNotify *pNotify, 
+	CElementPropertiesTreeInternal( vgui::Panel *parent, IDmNotify *pNotify,
 		CDmElement *pObject, bool autoApply = true, CDmeEditorTypeDictionary *pDict = NULL );
 	~CElementPropertiesTreeInternal();
 
@@ -229,7 +229,7 @@ protected:
 			m_nFlags( 0 )
 		{
 		}
-		
+
 		TreeItem_t	m_Item;	// points to the element referenced in an element array
 
 		int			m_nFlags;
@@ -417,7 +417,7 @@ protected:
 
 
 //-----------------------------------------------------------------------------
-// CElementPropertiesTree 
+// CElementPropertiesTree
 //-----------------------------------------------------------------------------
 class CElementPropertiesTree : public vgui::Frame
 {

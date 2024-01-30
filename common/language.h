@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: represent a canonical list of the languages we support, 
+// Purpose: represent a canonical list of the languages we support,
 //
 //=============================================================================
 

@@ -65,7 +65,7 @@ public:
 
 private:
 	// The makefile that built this source
-	CDmeHandle< CDmeMakefile > m_DependentMakefile;	
+	CDmeHandle< CDmeMakefile > m_DependentMakefile;
 };
 
 
@@ -81,7 +81,7 @@ inline void CDmeSource::SetRelativeFileName( const char *pName )
 
 
 //-----------------------------------------------------------------------------
-// Describes an asset: something that is compiled from sources 
+// Describes an asset: something that is compiled from sources
 //-----------------------------------------------------------------------------
 class CDmeMakefile : public CDmElement
 {

@@ -92,4 +92,3 @@ ActionResult< CTFBot >	CTFBotMvMEngineerTeleportSpawn::Update( CTFBot *me, float
 
 	return Continue();
 }
-

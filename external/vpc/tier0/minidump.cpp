@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -31,9 +31,9 @@
 // MiniDumpWriteDump() function declaration (so we can just get the function directly from windows)
 typedef BOOL (WINAPI *MINIDUMPWRITEDUMP)
 	(
-	HANDLE hProcess, 
-	DWORD dwPid, 
-	HANDLE hFile, 
+	HANDLE hProcess,
+	DWORD dwPid,
+	HANDLE hFile,
 	MINIDUMP_TYPE DumpType,
 	CONST PMINIDUMP_EXCEPTION_INFORMATION ExceptionParam,
 	CONST PMINIDUMP_USER_STREAM_INFORMATION UserStreamParam,
@@ -55,9 +55,9 @@ static int g_nMinidumpsWritten = 0;
 //										  of length at least _MAX_PATH to contain the name
 //										  of the written minidump file on return.
 //-----------------------------------------------------------------------------
-bool WriteMiniDumpUsingExceptionInfo( 
-	unsigned int uStructuredExceptionCode, 
-	ExceptionInfo_t * pExceptionInfo, 
+bool WriteMiniDumpUsingExceptionInfo(
+	unsigned int uStructuredExceptionCode,
+	ExceptionInfo_t * pExceptionInfo,
 	uint32 minidumpType,
 	tchar *ptchMinidumpFileNameBuffer /* = NULL */
 	)
@@ -106,7 +106,7 @@ bool WriteMiniDumpUsingExceptionInfo(
 			pch = _T("unknown");
 		}
 
-		
+
 		// can't use the normal string functions since we're in tier0
 		tchar rgchFileName[MAX_PATH];
 		_sntprintf( rgchFileName, sizeof(rgchFileName) / sizeof(tchar),
@@ -156,7 +156,7 @@ bool WriteMiniDumpUsingExceptionInfo(
 
 			// fall through to trying again
 		}
-		
+
 		// mark any failed minidump writes by renaming them
 		if ( !bMinidumpResult )
 		{
@@ -243,7 +243,7 @@ void WriteMiniDump()
 
 		// Never get here (non-continuable exception)
 	}
-	// Write the minidump from inside the filter (GetExceptionInformation() is only 
+	// Write the minidump from inside the filter (GetExceptionInformation() is only
 	// valid in the filter)
 	__except ( g_pfnWriteMiniDump( 0, (ExceptionInfo_t*)GetExceptionInformation() ), EXCEPTION_EXECUTE_HANDLER )
 	{
@@ -314,4 +314,4 @@ PLATFORM_INTERFACE void CatchAndWriteMiniDump( FnWMain pfn, int argc, tchar *arg
 	pfn( argc, argv );
 }
 
-#endif 
+#endif

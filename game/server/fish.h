@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -32,7 +32,7 @@ public:
 	virtual ~CFish();
 
 	void Initialize( CFishPool *pool, unsigned int id );
-	
+
 	virtual void Spawn( void );
 
 	virtual void Event_Killed( const CTakeDamageInfo &info );
@@ -76,7 +76,7 @@ private:
 
 	CountdownTimer m_turnTimer;							///< every so often our turn preference changes
 	bool m_turnClockwise;								///< if true this fish prefers to turn clockwise, else CCW
-	
+
 	CountdownTimer m_goTimer;							///< start the fish moving when timer elapses
 	CountdownTimer m_moveTimer;							///< dont decay speed while we are moving
 	CountdownTimer m_panicTimer;						///< if active, fish is panicked
@@ -137,4 +137,3 @@ inline float CFishPool::GetWaterLevel( void ) const
 
 
 #endif // _FISH_H_
-

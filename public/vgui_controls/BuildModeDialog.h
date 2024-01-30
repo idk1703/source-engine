@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -39,13 +39,13 @@ public:
 	// Store the current settings of all panels in the build group.
 	virtual KeyValues *StoreSettings();
 
-	// Store the current settings of the current panel 
+	// Store the current settings of the current panel
 	MESSAGE_FUNC( StoreUndoSettings, "StoreUndo" );
 
 	/* CUSTOM MESSAGE HANDLING
 		"SetActiveControl"
 			input:	"PanelPtr"	- panel to set active control to edit to
-	*/	
+	*/
 
 	MESSAGE_FUNC( OnShowNewControlMenu, "ShowNewControlMenu" );
 
@@ -58,7 +58,7 @@ protected:
 
 private:
 	void CreateControls();
-	
+
 	void OnKeyCodeTyped(KeyCode code);
 	MESSAGE_FUNC( ApplyDataToControls, "ApplyDataToControls" );
 	MESSAGE_FUNC_PTR( OnTextChanged, "TextChanged", panel );
@@ -133,4 +133,3 @@ private:
 
 
 #endif // BUILDMODEDIALOG_H
-

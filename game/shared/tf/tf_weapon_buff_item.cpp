@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -40,7 +40,7 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_buff_item );
 const char* BannerModels[] =
 {
 	"models/weapons/c_models/c_buffbanner/c_buffbanner.mdl",
-#ifdef STAGING_ONLY	
+#ifdef STAGING_ONLY
 	"models/workshop/weapons/c_models/c_battalion_buffbanner/c_battalion_buffbanner.mdl",
 	"models/workshop_partner/weapons/c_models/c_shogun_warbanner/c_shogun_warbanner.mdl",
 #else
@@ -100,7 +100,7 @@ void CTFBuffItem::Precache()
 	}
 
 	PrecacheModel( "models/weapons/c_models/c_buffpack/c_buffpack.mdl" );
-#ifdef STAGING_ONLY	
+#ifdef STAGING_ONLY
 	PrecacheModel( "models/workshop/weapons/c_models/c_battalion_buffpack/c_battalion_buffpack.mdl" );
 	PrecacheModel( "models/workshop_partner/weapons/c_models/c_shogun_warpack/c_shogun_warpack.mdl" );
 #else
@@ -182,7 +182,7 @@ void CTFBuffItem::Detach( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBuffItem::BlowHorn( void )
 {
@@ -239,7 +239,7 @@ void CTFBuffItem::BlowHorn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBuffItem::RaiseFlag( void )
 {
@@ -290,7 +290,7 @@ bool CTFBuffItem::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBuffItem::FireGameEvent( IGameEvent* event )
 {
@@ -388,7 +388,7 @@ void CTFBuffItem::ClientThink( void )
 #endif // CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBuffItem::WeaponReset( void )
 {
@@ -398,7 +398,7 @@ void CTFBuffItem::WeaponReset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFBuffItem::SendWeaponAnim( int iActivity )
 {

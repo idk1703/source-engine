@@ -59,7 +59,7 @@ void CTripmineGrenade::Spawn( void )
 	SetSolid( SOLID_BBOX );
 	SetModel( "models/Weapons/w_slam.mdl" );
 
-    IPhysicsObject *pObject = VPhysicsInitNormal( SOLID_BBOX, GetSolidFlags() | FSOLID_TRIGGER, true );
+	IPhysicsObject *pObject = VPhysicsInitNormal( SOLID_BBOX, GetSolidFlags() | FSOLID_TRIGGER, true );
 	pObject->EnableMotion( false );
 	SetCollisionGroup( COLLISION_GROUP_WEAPON );
 
@@ -70,11 +70,11 @@ void CTripmineGrenade::Spawn( void )
 
 	ResetSequenceInfo( );
 	m_flPlaybackRate	= 0;
-	
+
 	UTIL_SetSize(this, Vector( -4, -4, -2), Vector(4, 4, 2));
 
 	m_flPowerUp = gpGlobals->curtime + 2.0;
-	
+
 	SetThink( &CTripmineGrenade::PowerupThink );
 	SetNextThink( gpGlobals->curtime + 0.2 );
 
@@ -98,7 +98,7 @@ void CTripmineGrenade::Spawn( void )
 
 void CTripmineGrenade::Precache( void )
 {
-	PrecacheModel("models/Weapons/w_slam.mdl"); 
+	PrecacheModel("models/Weapons/w_slam.mdl");
 
 	PrecacheScriptSound( "TripmineGrenade.Place" );
 	PrecacheScriptSound( "TripmineGrenade.Activate" );
@@ -161,7 +161,7 @@ void CTripmineGrenade::MakeBeam( void )
 		UTIL_TraceLine( GetAbsOrigin(), m_vecEnd, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
 		m_flBeamLength = tr.fraction;
 		SetOwnerEntity( NULL );
-		
+
 	}
 
 	// set to follow laser spot
@@ -178,7 +178,7 @@ void CTripmineGrenade::MakeBeam( void )
 	m_pBeam->SetColor( 255, 55, 52 );
 	m_pBeam->SetScrollRate( 25.6 );
 	m_pBeam->SetBrightness( 64 );
-	
+
 	int beamAttach = LookupAttachment("beam_attach");
 	m_pBeam->SetEndAttachment( beamAttach );
 }
@@ -207,7 +207,7 @@ void CTripmineGrenade::BeamBreakThink( void  )
 
 	// ALERT( at_console, "%f : %f\n", tr.flFraction, m_flBeamLength );
 
-	// respawn detect. 
+	// respawn detect.
 	if ( !m_pBeam )
 	{
 		MakeBeam( );
@@ -268,9 +268,8 @@ void CTripmineGrenade::DelayDeathThink( void )
 	UTIL_TraceLine ( GetAbsOrigin() + m_vecDir * 8, GetAbsOrigin() - m_vecDir * 64,  MASK_SOLID, this, COLLISION_GROUP_NONE, & tr);
 	UTIL_ScreenShake( GetAbsOrigin(), 25.0, 150.0, 1.0, 750, SHAKE_START );
 
-	ExplosionCreate( GetAbsOrigin() + m_vecDir * 8, GetAbsAngles(), m_hOwner, GetDamage(), 200, 
+	ExplosionCreate( GetAbsOrigin() + m_vecDir * 8, GetAbsAngles(), m_hOwner, GetDamage(), 200,
 		SF_ENVEXPLOSION_NOSPARKS | SF_ENVEXPLOSION_NODLIGHTS | SF_ENVEXPLOSION_NOSMOKE, 0.0f, this);
 
 	UTIL_Remove( this );
 }
-

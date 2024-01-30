@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -50,7 +50,7 @@ void UTIL_PortalLinked_TraceRay( const CProp_Portal *pPortal, const Ray_t &ray, 
 bool UTIL_DidTraceTouchPortals ( const Ray_t& ray, const trace_t& trace, CProp_Portal** pOutLocal = NULL, CProp_Portal** pOutRemote = NULL );
 
 // Version of the TraceEntity functions which trace through portals
-void UTIL_Portal_TraceEntity( CBaseEntity *pEntity, const Vector &vecAbsStart, const Vector &vecAbsEnd, 
+void UTIL_Portal_TraceEntity( CBaseEntity *pEntity, const Vector &vecAbsStart, const Vector &vecAbsEnd,
 							 unsigned int mask, ITraceFilter *pFilter, trace_t *ptr );
 
 void UTIL_Portal_PointTransform( const VMatrix matThisToLinked, const Vector &ptSource, Vector &ptTransformed );
@@ -100,4 +100,3 @@ void UTIL_TransformInterpolatedPosition( CInterpolatedVar< Vector > &vInterped, 
 bool UTIL_Portal_EntityIsInPortalHole( const CProp_Portal *pPortal, CBaseEntity *pEntity );
 
 #endif //#ifndef PORTAL_UTIL_SHARED_H
-

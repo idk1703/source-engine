@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: VCR mode records a client's game and allows you to 
+// Purpose: VCR mode records a client's game and allows you to
 //			play it back and reproduce it exactly. When playing it back, nothing
 //			is simulated on the server, but all server packets are recorded.
 //
@@ -101,7 +101,7 @@ typedef struct VCR_s
 
 	// This can be used to block out areas of code that are unpredictable (like things triggered by WM_TIMER messages).
 	// Note: this enables/disables VCR mode usage on a PER-THREAD basis. The assumption is that you're marking out
-	// specific sections of code that you don't want to use VCR mode inside of, but you're not intending to 
+	// specific sections of code that you don't want to use VCR mode inside of, but you're not intending to
 	// stop all the other threads from using VCR mode.
 	void		(*SetEnabled)(int bEnabled);
 
@@ -114,17 +114,17 @@ typedef struct VCR_s
 	// Note: this makes no guarantees about msg.hwnd being the same on playback. If it needs to be, then we need to add
 	// an ID system for Windows and store the ID like in Goldsrc.
 	int			(*Hook_PeekMessage)(
-		struct tagMSG *msg, 
-		void *hWnd, 
-		unsigned int wMsgFilterMin, 
-		unsigned int wMsgFilterMax, 
+		struct tagMSG *msg,
+		void *hWnd,
+		unsigned int wMsgFilterMin,
+		unsigned int wMsgFilterMax,
 		unsigned int wRemoveMsg
 		);
 
 	// Call this to record game messages.
 	void		(*Hook_RecordGameMsg)( const InputEvent_t &event );
 	void		(*Hook_RecordEndGameMsg)();
-	
+
 	// Call this to playback game messages until it returns false.
 	bool		(*Hook_PlaybackGameMsg)( InputEvent_t *pEvent );
 
@@ -152,7 +152,7 @@ typedef struct VCR_s
 	// pRecs is an INPUT_RECORD pointer.
 	int			(*Hook_ReadConsoleInput)( void *hInput, void *pRecs, int nMaxRecs, unsigned long *pNumRead );
 
-	
+
 	// This calls time() then gives you localtime()'s result.
 	void		(*Hook_LocalTime)( struct tm *today );
 
@@ -163,10 +163,10 @@ typedef struct VCR_s
 	int			(*Hook_send)( int s, const char *buf, int len, int flags );
 
 	// These can be used to add events without having to modify VCR mode.
-	// pEventName is used for verification to make sure it's playing back correctly. 
+	// pEventName is used for verification to make sure it's playing back correctly.
 	// If pEventName is null, then verification is not performed.
 	void		(*GenericRecord)( const tchar *pEventName, const void *pData, int len );
-	
+
 
 	// Returns the number of bytes written in the generic event.
 	// If bForceLenSame is true, then it will error out unless the value in the VCR file is the same as maxLen.
@@ -184,14 +184,14 @@ typedef struct VCR_s
 
 	// If you use this, then any VCR stuff the thread does will work with VCR mode.
 	// This mirrors the Windows API CreateThread function and returns a HANDLE the same way.
-	void*		(*Hook_CreateThread)( 
+	void*		(*Hook_CreateThread)(
 		void *lpThreadAttributes,
 		unsigned long dwStackSize,
 		void *lpStartAddress,
 		void *lpParameter,
 		unsigned long dwCreationFlags,
 		unsigned long *lpThreadID );
-	
+
 	unsigned long (*Hook_WaitForSingleObject)(
 		void *handle,
 		unsigned long dwMilliseconds );
@@ -212,7 +212,7 @@ typedef struct VCR_s
 
 #ifndef NO_VCR
 
-// In the launcher, this is created by vcrmode.c. 
+// In the launcher, this is created by vcrmode.c.
 // In the engine, this is set when the launcher initializes its DLL.
 PLATFORM_INTERFACE VCR_t *g_pVCR;
 

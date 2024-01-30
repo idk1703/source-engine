@@ -1,19 +1,19 @@
 /* Copyright (C) 2000 MySQL AB & MySQL Finland AB & TCX DataKonsult AB
-   
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-   
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-   
-   You should have received a copy of the GNU Library General Public
-   License along with this library; if not, write to the Free
-   Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
-   MA 02111-1307, USA */
+
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Library General Public
+	License as published by the Free Software Foundation; either
+	version 2 of the License, or (at your option) any later version.
+
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Library General Public License for more details.
+
+	You should have received a copy of the GNU Library General Public
+	License along with this library; if not, write to the Free
+	Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+	MA 02111-1307, USA */
 
 /* Defines to make different thread packages compatible */
 
@@ -27,7 +27,7 @@
 
 #ifdef  __cplusplus
 extern "C" {
-#endif /* __cplusplus */ 
+#endif /* __cplusplus */
 
 #if defined(__WIN__) || defined(OS2)
 
@@ -44,9 +44,9 @@ typedef CRITICAL_SECTION pthread_mutex_t;
 #endif
 typedef HANDLE		 pthread_t;
 typedef struct thread_attr {
-    DWORD dwStackSize ;
-    DWORD dwCreatingFlag ;
-    int priority ;
+		DWORD dwStackSize ;
+		DWORD dwCreatingFlag ;
+		int priority ;
 } pthread_attr_t ;
 
 typedef struct { int dummy; } pthread_condattr_t;
@@ -54,24 +54,24 @@ typedef struct { int dummy; } pthread_condattr_t;
 /* Implementation of posix conditions */
 
 typedef struct st_pthread_link {
-  DWORD thread_id;
-  struct st_pthread_link *next;
+	DWORD thread_id;
+	struct st_pthread_link *next;
 } pthread_link;
 
 typedef struct {
-  uint32 waiting;
+	uint32 waiting;
 #ifdef OS2
-  HEV    semaphore;
+	HEV    semaphore;
 #else
-  HANDLE semaphore;
+	HANDLE semaphore;
 #endif
 } pthread_cond_t;
 
 
 #ifndef OS2
 struct timespec {		/* For pthread_cond_timedwait() */
-    time_t tv_sec;
-    long tv_nsec;
+		time_t tv_sec;
+		long tv_nsec;
 };
 #endif
 
@@ -91,7 +91,7 @@ int pthread_create(pthread_t *,pthread_attr_t *,pthread_handler,void *);
 int pthread_cond_init(pthread_cond_t *cond, const pthread_condattr_t *attr);
 int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex);
 int pthread_cond_timedwait(pthread_cond_t *cond, pthread_mutex_t *mutex,
-			   struct timespec *abstime);
+				struct timespec *abstime);
 int pthread_cond_signal(pthread_cond_t *cond);
 int pthread_cond_broadcast(pthread_cond_t *cond);
 int pthread_cond_destroy(pthread_cond_t *cond);
@@ -303,7 +303,7 @@ int my_sigwait(const sigset_t *set,int *sig);
 #ifndef SAFE_MUTEX
 #define pthread_mutex_init(a,b) my_pthread_mutex_init((a),(b))
 extern int my_pthread_mutex_init(pthread_mutex_t *mp,
-				 const pthread_mutexattr_t *attr);
+				const pthread_mutexattr_t *attr);
 #endif /* SAFE_MUTEX */
 #define pthread_cond_init(a,b) my_pthread_cond_init((a),(b))
 extern int my_pthread_cond_init(pthread_cond_t *mp,
@@ -319,12 +319,12 @@ int sigwait(sigset_t *setp, int *sigp);		/* Use our implemention */
 #endif
 #if !defined(HAVE_SIGSET) && !defined(HAVE_mit_thread) && !defined(sigset)
 #define sigset(A,B) do { struct sigaction s; sigset_t set;              \
-                         sigemptyset(&set);                             \
-                         s.sa_handler = (B);                            \
-                         s.sa_mask    = set;                            \
-                         s.sa_flags   = 0;                              \
-                         sigaction((A), &s, (struct sigaction *) NULL); \
-                       } while (0)
+												sigemptyset(&set);                             \
+												s.sa_handler = (B);                            \
+												s.sa_mask    = set;                            \
+												s.sa_flags   = 0;                              \
+												sigaction((A), &s, (struct sigaction *) NULL); \
+											} while (0)
 #endif
 
 #ifndef my_pthread_setprio
@@ -352,8 +352,8 @@ extern void my_pthread_attr_setprio(pthread_attr_t *attr, int priority);
 
 #if defined(HAVE_BROKEN_PTHREAD_COND_TIMEDWAIT) && !defined(SAFE_MUTEX)
 extern int my_pthread_cond_timedwait(pthread_cond_t *cond,
-				     pthread_mutex_t *mutex,
-				     struct timespec *abstime);
+						pthread_mutex_t *mutex,
+						struct timespec *abstime);
 #define pthread_cond_timedwait(A,B,C) my_pthread_cond_timedwait((A),(B),(C))
 #endif
 
@@ -411,8 +411,8 @@ struct tm *localtime_r(const time_t *clock, struct tm *res);
 /* This is set on AIX_3_2 and Siemens unix (and DEC OSF/1 3.2 too) */
 #define pthread_key_create(A,B) \
 		pthread_keycreate(A,(B) ?\
-				  (pthread_destructor_t) (B) :\
-				  (pthread_destructor_t) pthread_dummy)
+					(pthread_destructor_t) (B) :\
+					(pthread_destructor_t) pthread_dummy)
 #define pthread_attr_init(A) pthread_attr_create(A)
 #define pthread_attr_destroy(A) pthread_attr_delete(A)
 #define pthread_attr_setdetachstate(A,B) pthread_dummy(0)
@@ -433,7 +433,7 @@ struct tm *localtime_r(const time_t *clock, struct tm *res);
 #undef pthread_cond_timedwait
 #define pthread_cond_timedwait(a,b,c) my_pthread_cond_timedwait((a),(b),(c))
 int my_pthread_cond_timedwait(pthread_cond_t *cond, pthread_mutex_t *mutex,
-			      struct timespec *abstime);
+						struct timespec *abstime);
 #endif
 
 #if defined(HAVE_POSIX1003_4a_MUTEX) && !defined(DONT_REMAP_PTHREAD_FUNCTIONS)
@@ -446,10 +446,10 @@ int my_pthread_mutex_trylock(pthread_mutex_t *mutex);
 
 typedef struct st_safe_mutex_t
 {
-  pthread_mutex_t global,mutex;
-  char *file;
-  uint line,count;
-  pthread_t thread;
+	pthread_mutex_t global,mutex;
+	char *file;
+	uint line,count;
+	pthread_t thread;
 } safe_mutex_t;
 
 int safe_mutex_init(safe_mutex_t *mp, const pthread_mutexattr_t *attr);
@@ -457,7 +457,7 @@ int safe_mutex_lock(safe_mutex_t *mp,const char *file, uint line);
 int safe_mutex_unlock(safe_mutex_t *mp,const char *file, uint line);
 int safe_mutex_destroy(safe_mutex_t *mp,const char *file, uint line);
 int safe_cond_wait(pthread_cond_t *cond, safe_mutex_t *mp,const char *file,
-		   uint line);
+			uint line);
 int safe_cond_timedwait(pthread_cond_t *cond, safe_mutex_t *mp,
 			struct timespec *abstime, const char *file, uint line);
 
@@ -583,18 +583,18 @@ extern int pthread_dummy(int);
 
 struct st_my_thread_var
 {
-  int thr_errno;
-  pthread_cond_t suspend;
-  pthread_mutex_t mutex;
-  pthread_mutex_t * volatile current_mutex;
-  pthread_cond_t * volatile current_cond;
-  pthread_t pthread_self;
-  long id;
-  int cmp_length;
-  int volatile abort;
+	int thr_errno;
+	pthread_cond_t suspend;
+	pthread_mutex_t mutex;
+	pthread_mutex_t * volatile current_mutex;
+	pthread_cond_t * volatile current_cond;
+	pthread_t pthread_self;
+	long id;
+	int cmp_length;
+	int volatile abort;
 #ifndef DBUG_OFF
-  gptr dbug;
-  char name[THREAD_NAME_SIZE+1];
+	gptr dbug;
+	char name[THREAD_NAME_SIZE+1];
 #endif
 };
 

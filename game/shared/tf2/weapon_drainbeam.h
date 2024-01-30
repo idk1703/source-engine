@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -46,7 +46,7 @@ public:
 
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -92,7 +92,7 @@ public:
 #endif
 private:
 	double					m_flNextBuzzTime;
-	
+
 	CWeaponDrainBeam( const CWeaponDrainBeam & );
 };
 

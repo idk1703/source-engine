@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 
 ===== tf_client.cpp ========================================================
 
-  HL2 client/server game specific stuff
+	HL2 client/server game specific stuff
 
 */
 
@@ -50,7 +50,7 @@ void FinishClientPutInServer( CDODPlayer *pPlayer )
 		pPlayer->m_lifeState = LIFE_DEAD;
 		pPlayer->AddEffects( EF_NODRAW );
 		pPlayer->SetThink( NULL );
-		
+
 		if ( 1 )
 		{
 			pPlayer->ChangeTeam( TEAM_UNASSIGNED );
@@ -64,7 +64,7 @@ void FinishClientPutInServer( CDODPlayer *pPlayer )
 
 	char sName[128];
 	Q_strncpy( sName, pPlayer->GetPlayerName(), sizeof( sName ) );
-	
+
 	// First parse the name and remove any %'s
 	for ( char *pApersand = sName; pApersand != NULL && *pApersand != 0; pApersand++ )
 	{
@@ -222,7 +222,7 @@ void GameStartFrame( void )
 		return;
 
 	gpGlobals->teamplay = teamplay.GetInt() ? true : false;
-	
+
 	extern void Bot_RunAll();
 	Bot_RunAll();
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 static const DXGI_FORMAT s_pSizeLookup[] =
 {
-	DXGI_FORMAT_UNKNOWN,			// Should be unused... 
+	DXGI_FORMAT_UNKNOWN,			// Should be unused...
 	DXGI_FORMAT_R32_FLOAT,			// D3DDECLTYPE_FLOAT1
 	DXGI_FORMAT_R32G32_FLOAT,		// D3DDECLTYPE_FLOAT2,
 	DXGI_FORMAT_R32G32B32_FLOAT,	// D3DDECLTYPE_FLOAT3,
@@ -59,7 +59,7 @@ static FieldInfo_t s_pFieldInfo[] =
 	{ NULL, 0, 0 },
 };
 
-static D3D10_INPUT_ELEMENT_DESC s_pVertexDesc[] = 
+static D3D10_INPUT_ELEMENT_DESC s_pVertexDesc[] =
 {
 	{ "POSITION",		0,	DXGI_FORMAT_R32G32B32_FLOAT,	0,	0, D3D10_INPUT_PER_VERTEX_DATA,	0 },
 	{ "BLENDWEIGHT",	0,	DXGI_FORMAT_UNKNOWN,			0,  0, D3D10_INPUT_PER_VERTEX_DATA,	0 },
@@ -80,7 +80,7 @@ static D3D10_INPUT_ELEMENT_DESC s_pVertexDesc[] =
 	{ "USERDATA",		0,	DXGI_FORMAT_UNKNOWN,			0,  0, D3D10_INPUT_PER_VERTEX_DATA,	0 },
 };
 
-static D3D10_INPUT_ELEMENT_DESC s_pFallbackVertexDesc[] = 
+static D3D10_INPUT_ELEMENT_DESC s_pFallbackVertexDesc[] =
 {
 	{ "POSITION",		0,	DXGI_FORMAT_R32G32B32_FLOAT,	15,	  0, D3D10_INPUT_PER_INSTANCE_DATA,	UINT_MAX },
 	{ "BLENDWEIGHT",	0,	DXGI_FORMAT_R32G32_FLOAT,		15,  12, D3D10_INPUT_PER_INSTANCE_DATA,	UINT_MAX },
@@ -110,11 +110,11 @@ static void PrintInputDesc( int nCount, const D3D10_INPUT_ELEMENT_DESC *pDecl )
 	for ( int i = 0; i < nCount; i++ )
 	{
 		Msg( "%s (%d): Stream: %d, Offset: %d, Instanced? %c\n",
-			pDecl[i].SemanticName, 
-			pDecl[i].SemanticIndex, 
-			( int )pDecl[i].InputSlot, 
+			pDecl[i].SemanticName,
+			pDecl[i].SemanticIndex,
+			( int )pDecl[i].InputSlot,
 			( int )pDecl[i].AlignedByteOffset,
-			pDecl[i].InputSlotClass == D3D10_INPUT_PER_VERTEX_DATA ? 'n' : 'y' 
+			pDecl[i].InputSlotClass == D3D10_INPUT_PER_VERTEX_DATA ? 'n' : 'y'
 			);
 	}
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -51,7 +51,7 @@ CTFTeamButton::CTFTeamButton( vgui::Panel *parent, const char *panelName ) : CEx
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamButton::ApplySettings( KeyValues *inResourceData )
 {
@@ -63,7 +63,7 @@ void CTFTeamButton::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamButton::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -75,7 +75,7 @@ void CTFTeamButton::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamButton::SendAnimation( const char *pszAnimation )
 {
@@ -96,7 +96,7 @@ void CTFTeamButton::SendAnimation( const char *pszAnimation )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamButton::SetDefaultAnimation( const char *pszName )
 {
@@ -112,7 +112,7 @@ void CTFTeamButton::SetDefaultAnimation( const char *pszName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFTeamButton::IsTeamFull()
 {
@@ -134,7 +134,7 @@ bool CTFTeamButton::IsTeamFull()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamButton::OnCursorEntered()
 {
@@ -144,7 +144,7 @@ void CTFTeamButton::OnCursorEntered()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamButton::OnCursorExited()
 {
@@ -154,7 +154,7 @@ void CTFTeamButton::OnCursorExited()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamButton::SetMouseEnteredState( bool state )
 {
@@ -197,12 +197,12 @@ void CTFTeamButton::SetMouseEnteredState( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamButton::OnTick()
 {
 	if ( GetParent() && !GetParent()->IsVisible() )
-		return; 
+		return;
 
 	// check to see if our state has changed
 	bool bDisabled = IsTeamFull();
@@ -335,13 +335,13 @@ void CTFTeamMenu::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamMenu::ShowPanel( bool bShow )
 {
 	if ( BaseClass::IsVisible() == bShow )
 		return;
-	
+
 	if ( !gameuifuncs || !gViewPortInterface || !engine )
 		return;
 
@@ -362,11 +362,11 @@ void CTFTeamMenu::ShowPanel( bool bShow )
 
 		if ( ( TFGameRules()->State_Get() == GR_STATE_TEAM_WIN
 			   && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TFGameRules()->GetWinningTeam()
-			   && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_SPECTATOR 
+			   && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_SPECTATOR
 	  		   && C_TFPlayer::GetLocalTFPlayer()->GetTeamNumber() != TEAM_UNASSIGNED )
 			 || TFGameRules()->State_Get() == GR_STATE_GAME_OVER
 			 // [msmith] Don't allow the player to switch teams when in training.
-			 || TFGameRules()->IsInTraining() 
+			 || TFGameRules()->IsInTraining()
 			 // or if they are coaching
 			 || C_TFPlayer::GetLocalTFPlayer()->m_bIsCoaching
 			 || bDisallowChange
@@ -499,7 +499,7 @@ void CTFTeamMenu::Update( void )
 
 #ifdef _X360
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamMenu::Join_Team( const CCommand &args )
 {
@@ -521,12 +521,12 @@ void CTFTeamMenu::LoadMapPage( const char *mapName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamMenu::OnKeyCodePressed( KeyCode code )
 {
 	if ( ( m_iTeamMenuKey != BUTTON_CODE_INVALID && m_iTeamMenuKey == code ) ||
-		   code == KEY_XBUTTON_BACK || 
+		   code == KEY_XBUTTON_BACK ||
 		   code == KEY_XBUTTON_B ||
 		   code == STEAMCONTROLLER_B )
 	{
@@ -555,7 +555,7 @@ void CTFTeamMenu::OnKeyCodePressed( KeyCode code )
 	else if( code == KEY_XBUTTON_RIGHT || code == KEY_XSTICK1_RIGHT || code == STEAMCONTROLLER_DPAD_RIGHT )
 	{
 		CTFTeamButton *pButton;
-			
+
 		pButton = dynamic_cast< CTFTeamButton *> ( GetFocusNavGroup().GetCurrentFocus() );
 		if ( pButton )
 		{
@@ -808,10 +808,10 @@ void CTFTeamMenu::OnTick()
 	int iHeavyTeam, iLightTeam;
 
 	bool bUnbalanced = pRules->AreTeamsUnbalanced( iHeavyTeam, iLightTeam );
-	
+
 	int iCurrentTeam = pLocalPlayer->GetTeamNumber();
 
-	if ( ( bUnbalanced && iHeavyTeam == TF_TEAM_RED ) || 
+	if ( ( bUnbalanced && iHeavyTeam == TF_TEAM_RED ) ||
 		 ( pRules->WouldChangeUnbalanceTeams( TF_TEAM_RED, iCurrentTeam ) ) ||
 		 ( bHighlander && GetGlobalTeam( TF_TEAM_RED )->GetNumPlayers() >= TF_LAST_NORMAL_CLASS - 1 ) ||
 		 ( pRules->IsMannVsMachineMode() && ( GetGlobalTeam( TF_TEAM_RED )->GetNumPlayers() >= kMVM_DefendersTeamSize ) )	 )
@@ -819,7 +819,7 @@ void CTFTeamMenu::OnTick()
 		m_bRedDisabled = true;
 	}
 
-	if ( ( bUnbalanced && iHeavyTeam == TF_TEAM_BLUE ) || 
+	if ( ( bUnbalanced && iHeavyTeam == TF_TEAM_BLUE ) ||
 		 ( pRules->WouldChangeUnbalanceTeams( TF_TEAM_BLUE, iCurrentTeam ) ) ||
 		 ( bHighlander && GetGlobalTeam( TF_TEAM_BLUE )->GetNumPlayers() >= TF_LAST_NORMAL_CLASS - 1 ) ||
 		 ( pRules->IsMannVsMachineMode() ) )

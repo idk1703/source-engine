@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,8 +27,8 @@
 #define STREAM_FONT			"Tahoma"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
 CChoreoChannelWidget::CChoreoChannelWidget( CChoreoActorWidget *parent )
 : CChoreoWidget( parent )
@@ -39,9 +39,9 @@ CChoreoChannelWidget::CChoreoChannelWidget( CChoreoActorWidget *parent )
 	m_nBaseHeight = 0;
 	m_nSelectorEventIndex = -1;
 }
-	
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CChoreoChannelWidget::~CChoreoChannelWidget( void )
 {
@@ -73,14 +73,14 @@ void CChoreoChannelWidget::Create( void )
 		CChoreoEventWidget *eventWidget = new CChoreoEventWidget( this );
 		eventWidget->SetEvent( e );
 		eventWidget->Create();
-		
+
 		AddEvent( eventWidget );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
+// Purpose:
+// Input  : mx -
 // Output : float
 //-----------------------------------------------------------------------------
 float CChoreoChannelWidget::GetTimeForMousePosition( int mx )
@@ -228,7 +228,7 @@ int	CChoreoChannelWidget::GetItemHeight( void )
 	CheckHasAudio();
 
 	int h = stackCount * itemHeight;
-	
+
 	// Remember the base height
 	m_nBaseHeight = h;
 
@@ -258,8 +258,8 @@ bool CChoreoChannelWidget::CheckHasAudio()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rc - 
+// Purpose:
+// Input  : rc -
 //-----------------------------------------------------------------------------
 void CChoreoChannelWidget::Layout( RECT& rc )
 {
@@ -297,7 +297,7 @@ void CChoreoChannelWidget::Layout( RECT& rc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoChannelWidget::redraw( CChoreoWidgetDrawHelper& drawHelper )
 {
@@ -327,9 +327,9 @@ void CChoreoChannelWidget::redraw( CChoreoWidgetDrawHelper& drawHelper )
 	char n[ 512 ];
 	V_strcpy_safe( n, channel->GetName() );
 
-	drawHelper.DrawColoredText( "Arial", 
-		m_pView->GetFontSize() + 2, 
-		FW_HEAVY, 
+	drawHelper.DrawColoredText( "Arial",
+		m_pView->GetFontSize() + 2,
+		FW_HEAVY,
 		channel->GetActive() ? COLOR_CHOREO_CHANNELNAME : COLOR_CHOREO_ACTORNAME_INACTIVE,
 		rcName, n );
 
@@ -380,9 +380,9 @@ void CChoreoChannelWidget::redraw( CChoreoWidgetDrawHelper& drawHelper )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			rcEventArea - 
+// Purpose:
+// Input  : drawHelper -
+//			rcEventArea -
 //-----------------------------------------------------------------------------
 void CChoreoChannelWidget::RenderCloseCaptionInfo( CChoreoWidgetDrawHelper& drawHelper, RECT& rcEventArea )
 {
@@ -403,7 +403,7 @@ void CChoreoChannelWidget::RenderCloseCaptionInfo( CChoreoWidgetDrawHelper& draw
 	{
 		CChoreoEventWidget *event = GetEvent( j );
 		CChoreoEvent *e = event->GetEvent();
-		
+
 		if ( e->GetType() != CChoreoEvent::SPEAK )
 			continue;
 
@@ -451,7 +451,7 @@ void CChoreoChannelWidget::RenderCloseCaptionInfo( CChoreoWidgetDrawHelper& draw
 		rcEvent.top = rcEventArea.bottom - 3;
 		rcEvent.bottom = rcEventArea.bottom;
 
-		
+
 		drawHelper.DrawFilledRect( barColor, rcEvent );
 
 		RECT rcTriangle;
@@ -481,8 +481,8 @@ void CChoreoChannelWidget::RenderCloseCaptionInfo( CChoreoWidgetDrawHelper& draw
 
 			COLORREF symColor = stateValid ? RGB( 40, 100, 40 ) : RGB( 200, 40, 40 );
 
-			drawHelper.DrawColoredTextCharset( 
-				"Marlett", 
+			drawHelper.DrawColoredTextCharset(
+				"Marlett",
 				m_pView->GetFontSize() - 2,
 				500,
 				SYMBOL_CHARSET,
@@ -503,16 +503,16 @@ void CChoreoChannelWidget::RenderCloseCaptionInfo( CChoreoWidgetDrawHelper& draw
 			drawHelper.DrawColoredText( "Arial", m_pView->GetFontSize() - 2, 500,
 				RGB( 80, 80, 100 ), rcText, label );
 		}
-			
+
 
 
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			rcEventArea - 
+// Purpose:
+// Input  : drawHelper -
+//			rcEventArea -
 //-----------------------------------------------------------------------------
 void CChoreoChannelWidget::RenderCloseCaptions( CChoreoWidgetDrawHelper& drawHelper, RECT& rcEventArea )
 {
@@ -526,8 +526,8 @@ void CChoreoChannelWidget::RenderCloseCaptions( CChoreoWidgetDrawHelper& drawHel
 
 		// Previous
 		GetCloseCaptionLanguageRect( rcText, true );
-		drawHelper.DrawColoredTextCharset( 
-			"Marlett", 
+		drawHelper.DrawColoredTextCharset(
+			"Marlett",
 			m_pView->GetFontSize(),
 			500,
 			SYMBOL_CHARSET,
@@ -537,8 +537,8 @@ void CChoreoChannelWidget::RenderCloseCaptions( CChoreoWidgetDrawHelper& drawHel
 
 		// Next
 		GetCloseCaptionLanguageRect( rcText, false );
-		drawHelper.DrawColoredTextCharset( 
-			"Marlett", 
+		drawHelper.DrawColoredTextCharset(
+			"Marlett",
 			m_pView->GetFontSize(),
 			500,
 			SYMBOL_CHARSET,
@@ -552,7 +552,7 @@ void CChoreoChannelWidget::RenderCloseCaptions( CChoreoWidgetDrawHelper& drawHel
 	{
 		CChoreoEventWidget *event = GetEvent( j );
 		CChoreoEvent *e = event->GetEvent();
-		
+
 		if ( e->GetType() != CChoreoEvent::SPEAK )
 			continue;
 
@@ -590,7 +590,7 @@ void CChoreoChannelWidget::RenderCloseCaptions( CChoreoWidgetDrawHelper& drawHel
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CChoreoChannel
 //-----------------------------------------------------------------------------
 CChoreoChannel *CChoreoChannelWidget::GetChannel( void )
@@ -599,8 +599,8 @@ CChoreoChannel *CChoreoChannelWidget::GetChannel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *channel - 
+// Purpose:
+// Input  : *channel -
 //-----------------------------------------------------------------------------
 void CChoreoChannelWidget::SetChannel( CChoreoChannel *channel )
 {
@@ -608,8 +608,8 @@ void CChoreoChannelWidget::SetChannel( CChoreoChannel *channel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 //-----------------------------------------------------------------------------
 void CChoreoChannelWidget::AddEvent( CChoreoEventWidget *event )
 {
@@ -617,8 +617,8 @@ void CChoreoChannelWidget::AddEvent( CChoreoEventWidget *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 //-----------------------------------------------------------------------------
 void CChoreoChannelWidget::RemoveEvent( CChoreoEventWidget *event )
 {
@@ -626,8 +626,8 @@ void CChoreoChannelWidget::RemoveEvent( CChoreoEventWidget *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : num - 
+// Purpose:
+// Input  : num -
 // Output : CChoreoEventWidget
 //-----------------------------------------------------------------------------
 CChoreoEventWidget *CChoreoChannelWidget::GetEvent( int num )
@@ -636,7 +636,7 @@ CChoreoEventWidget *CChoreoChannelWidget::GetEvent( int num )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CChoreoChannelWidget::GetNumEvents( void )
@@ -645,8 +645,8 @@ int CChoreoChannelWidget::GetNumEvents( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 //-----------------------------------------------------------------------------
 void CChoreoChannelWidget::MoveEventToTail( CChoreoEventWidget *event )
 {
@@ -726,7 +726,7 @@ int CChoreoChannelWidget::GetChannelItemUnderMouse( int mx, int my )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoChannelWidget::HandleSelectorClicked()
 {
@@ -754,7 +754,7 @@ void CChoreoChannelWidget::SetUsingCombinedFieldByTokenName( char const *token, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CChoreoEvent
 //-----------------------------------------------------------------------------
 CChoreoEvent *CChoreoChannelWidget::GetCaptionClickedEvent()
@@ -798,11 +798,11 @@ void CChoreoChannelWidget::GetCloseCaptionLanguageRect( RECT& rc, bool previous 
 	if ( !previous )
 	{
 		int textlen = CChoreoWidgetDrawHelper::CalcTextWidth
-		( 
-			"Arial", 
-			m_pView->GetFontSize()-2, 
+		(
+			"Arial",
+			m_pView->GetFontSize()-2,
 			500,
-			CSentence::NameForLanguage( GetCloseCaptionLanguageId() ) 
+			CSentence::NameForLanguage( GetCloseCaptionLanguageId() )
 		);
 
 		OffsetRect( &rc, textlen + 10, 0 );
@@ -839,7 +839,7 @@ void CChoreoChannelWidget::RenderCloseCaptionSelectors( CChoreoWidgetDrawHelper&
 
 			if ( upArrow )
 			{
-				endpt.y = rc.top - 9;	
+				endpt.y = rc.top - 9;
 			}
 			else
 			{
@@ -849,19 +849,19 @@ void CChoreoChannelWidget::RenderCloseCaptionSelectors( CChoreoWidgetDrawHelper&
 			POINT startpt;
 			startpt.x = ( rc.left + rc.right ) * 0.5;
 			startpt.y = ( rc.top + rc.bottom ) * 0.5;
-		
-			drawHelper.DrawCircle( 
+
+			drawHelper.DrawCircle(
 				clr,
-				endpt.x, 
+				endpt.x,
 				endpt.y,
 				3	, true );
 
 			drawHelper.DrawColoredLine( clr, PS_SOLID, 1, startpt.x, startpt.y, endpt.x, endpt.y );
-			
 
-			drawHelper.DrawCircle( 
+
+			drawHelper.DrawCircle(
 				clr,
-				startpt.x, 
+				startpt.x,
 				startpt.y,
 				7, true );
 		}
@@ -877,7 +877,7 @@ void CChoreoChannelWidget::GetCloseCaptions( CUtlVector< CloseCaptionInfo >& sel
 	{
 		CChoreoEventWidget *event = GetEvent( j );
 		CChoreoEvent *e = event->GetEvent();
-		
+
 		if ( e->GetType() != CChoreoEvent::SPEAK )
 			continue;
 
@@ -929,8 +929,8 @@ void CChoreoChannelWidget::RenderCloseCaptionExpandCollapseRect( CChoreoWidgetDr
 
 	COLORREF symColor = RGB( 100, 100, 100 );
 
-	drawHelper.DrawColoredTextCharset( 
-		"Marlett", 
+	drawHelper.DrawColoredTextCharset(
+		"Marlett",
 		m_pView->GetFontSize(),
 		900,
 		SYMBOL_CHARSET,
@@ -959,9 +959,9 @@ void CChoreoChannelWidget::GetMasterAndSlaves( CChoreoEvent *master, CUtlVector<
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			rcBounds - 
+// Purpose:
+// Input  : drawHelper -
+//			rcBounds -
 //-----------------------------------------------------------------------------
 void CChoreoChannelWidget::redrawStatus( CChoreoWidgetDrawHelper& drawHelper, RECT& rcClient, int areaUnderMouse )
 {
@@ -1002,7 +1002,7 @@ void CChoreoChannelWidget::redrawStatus( CChoreoWidgetDrawHelper& drawHelper, RE
 			RECT rcFixed = rcEventLabel;
 			drawHelper.OffsetSubRect( rcFixed );
 			DrawBitmapToDC( dc, rcFixed.left, rcFixed.top, leftAdd, leftAdd,
-				*image );	
+				*image );
 		}
 	}
 
@@ -1013,14 +1013,14 @@ void CChoreoChannelWidget::redrawStatus( CChoreoWidgetDrawHelper& drawHelper, RE
 	rcEventLabel.bottom = rcEventLabel.top + fontsize + 2;
 	// OffsetRect( &rcEventLabel, 0, 2 );
 
-	int len = drawHelper.CalcTextWidth( "Arial", fontsize, FW_NORMAL, "%s event \"%s\"", 
+	int len = drawHelper.CalcTextWidth( "Arial", fontsize, FW_NORMAL, "%s event \"%s\"",
 		event->NameForType( event->GetType() ), event->GetName() );
-	drawHelper.DrawColoredText( "Arial", fontsize, FW_NORMAL, COLOR_INFO_TEXT, rcEventLabel, "%s event \"%s\"", 
+	drawHelper.DrawColoredText( "Arial", fontsize, FW_NORMAL, COLOR_INFO_TEXT, rcEventLabel, "%s event \"%s\"",
 		event->NameForType( event->GetType() ), event->GetName() );
 
 	OffsetRect( &rcEventLabel, 0, fontsize + 2 );
 
-	drawHelper.DrawColoredText( "Arial", fontsize, FW_NORMAL, COLOR_INFO_TEXT, 
+	drawHelper.DrawColoredText( "Arial", fontsize, FW_NORMAL, COLOR_INFO_TEXT,
 		rcEventLabel, "parameters \"%s\"", GetLabelText() );
 	*/
 
@@ -1074,8 +1074,8 @@ void CChoreoChannelWidget::redrawStatus( CChoreoWidgetDrawHelper& drawHelper, RE
 
 		COLORREF symColor = stateValid ? RGB( 40, 100, 40 ) : RGB( 200, 40, 40 );
 
-		drawHelper.DrawColoredTextCharset( 
-			"Marlett", 
+		drawHelper.DrawColoredTextCharset(
+			"Marlett",
 			fontsize+2,
 			500,
 			SYMBOL_CHARSET,
@@ -1101,7 +1101,7 @@ void CChoreoChannelWidget::redrawStatus( CChoreoWidgetDrawHelper& drawHelper, RE
 			bool combinedValid = m_pView->ValidateCombinedSoundCheckSum( e );
 
 			OffsetRect( &rcText, 0, fontsize + 3 );
-		
+
 			char cf[ 256 ];
 			Q_strncpy( cf, "(no file)", sizeof( cf ) );
 
@@ -1141,8 +1141,8 @@ void CChoreoChannelWidget::redrawStatus( CChoreoWidgetDrawHelper& drawHelper, RE
 			RECT rcPartial = rcText;
 
 			char sz[ 256 ];
-			Q_snprintf( sz, sizeof( sz ), 
-				"combined file active [ %s ] gender[ %s ] up-to-date[ ",  
+			Q_snprintf( sz, sizeof( sz ),
+				"combined file active [ %s ] gender[ %s ] up-to-date[ ",
 				e->IsUsingCombinedFile() ? "yes" : "no",
 				e->IsCombinedUsingGenderToken() ? "yes" : "no" );
 
@@ -1153,20 +1153,20 @@ void CChoreoChannelWidget::redrawStatus( CChoreoWidgetDrawHelper& drawHelper, RE
 
 			rcPartial.left += len;
 
-			Q_snprintf( sz, sizeof( sz ), 
-				"%s", 
+			Q_snprintf( sz, sizeof( sz ),
+				"%s",
 				combinedValid ? "yes" : "no" );
 
 			len = drawHelper.CalcTextWidth( "Arial", fontsize, 500, sz );
 
 			drawHelper.DrawColoredText( "Arial", fontsize, 500,
-				combinedValid ? RGB( 20, 150, 20 ) : RGB( 255, 0, 0 ), 
+				combinedValid ? RGB( 20, 150, 20 ) : RGB( 255, 0, 0 ),
 				rcPartial, sz  );
 
 			rcPartial.left += len;
 
-			Q_snprintf( sz, sizeof( sz ), 
-				" ]:  %s, %s ", 
+			Q_snprintf( sz, sizeof( sz ),
+				" ]:  %s, %s ",
 				cf,
 				gendermacro ? "files" : "file" );
 

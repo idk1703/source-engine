@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -46,7 +46,7 @@ public:
 	inline float GetSampleRadius2( void )								{ return m_flSampleRadius2; }
 	inline float GetPatchSampleRadius2( void )							{ return m_flPatchSampleRadius2; }
 
-	inline int GetParentIndex( void )									{ return m_iParent; }		
+	inline int GetParentIndex( void )									{ return m_iParent; }
 	inline void GetParentFaceNormal( Vector &vecNormal )				{ vecNormal = m_vecStabDir; }
 
 	inline void GetVert( int iVert, Vector &vecVert )					{ Assert( ( iVert >= 0 ) && ( iVert < GetSize() ) ); vecVert = m_aVerts[iVert]; }

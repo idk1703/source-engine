@@ -44,37 +44,37 @@ public:
 
 	CAI_MoveProbe( CAI_BaseNPC *pOuter );
 	~CAI_MoveProbe();
-	
+
 	// ----------------------------------------------------
 	// Queries & probes
 	// ----------------------------------------------------
 	bool				MoveLimit( Navigation_t navType, const Vector &vecStart, const Vector &vecEnd, unsigned int collisionMask, const CBaseEntity *pTarget, AIMoveTrace_t* pMove = NULL );
 	bool				MoveLimit( Navigation_t navType, const Vector &vecStart, const Vector &vecEnd, unsigned int collisionMask, const CBaseEntity *pTarget, float pctToCheckStandPositions, AIMoveTrace_t* pMove = NULL );
 	bool				MoveLimit( Navigation_t navType, const Vector &vecStart, const Vector &vecEnd, unsigned int collisionMask, const CBaseEntity *pTarget, float pctToCheckStandPositions, unsigned flags, AIMoveTrace_t* pMove = NULL );
-	
+
 	bool				CheckStandPosition( const Vector &vecStart, unsigned int collisionMask ) const;
 	bool				FloorPoint( const Vector &vecStart, unsigned int collisionMask, float flStartZ, float flEndZ, Vector *pVecResult ) const;
 
 	// --------------------------------
 	// Tracing tools
 	// --------------------------------
-	void				TraceLine( const Vector &vecStart, const Vector &vecEnd, unsigned int mask, 
+	void				TraceLine( const Vector &vecStart, const Vector &vecEnd, unsigned int mask,
 								   bool bUseCollisionGroup, trace_t *pResult ) const;
 
-	void 				TraceHull( const Vector &vecStart, const Vector &vecEnd, const Vector &hullMin, 
-								   const Vector &hullMax, unsigned int mask, 
+	void 				TraceHull( const Vector &vecStart, const Vector &vecEnd, const Vector &hullMin,
+								   const Vector &hullMax, unsigned int mask,
 								   trace_t *ptr ) const;
-	
-	void 				TraceHull( const Vector &vecStart, const Vector &vecEnd, unsigned int mask, 
+
+	void 				TraceHull( const Vector &vecStart, const Vector &vecEnd, unsigned int mask,
 								   trace_t *ptr ) const;
 
 	// --------------------------------
 	// Checks a ground-based movement
 	// --------------------------------
-	bool				TestGroundMove( const Vector &vecActualStart, const Vector &vecDesiredEnd, 
+	bool				TestGroundMove( const Vector &vecActualStart, const Vector &vecDesiredEnd,
 										unsigned int collisionMask, unsigned flags, AIMoveTrace_t *pMoveTrace ) const;
 
-	bool				TestGroundMove( const Vector &vecActualStart, const Vector &vecDesiredEnd, 
+	bool				TestGroundMove( const Vector &vecActualStart, const Vector &vecDesiredEnd,
 										unsigned int collisionMask, float pctToCheckStandPositions, unsigned flags, AIMoveTrace_t *pMoveTrace ) const;
 
 	bool				ShouldBrushBeIgnored( CBaseEntity *pEntity );
@@ -103,7 +103,7 @@ private:
 		CBaseEntity *	pBlocker;
 	};
 
-	
+
 	bool				CheckStep( const CheckStepArgs_t &args, CheckStepResult_t *pResult ) const;
 	void				SetupCheckStepTraceListData( const CheckStepArgs_t &args ) const;
 	void				ResetTraceListData() const	{ if ( m_pTraceListData ) const_cast<CAI_MoveProbe *>(this)->m_pTraceListData->Reset(); }

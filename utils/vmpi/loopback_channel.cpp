@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -45,7 +45,7 @@ public:
 		int chunkLengths[1] = { len };
 		return SendChunks( pChunks, chunkLengths, 1 );
 	}
-	
+
 	virtual bool	SendChunks( void const * const *pChunks, const int *pChunkLengths, int nChunks )
 	{
 		CChunkWalker walker( pChunks, pChunkLengths, nChunks );
@@ -56,7 +56,7 @@ public:
 		m_Messages.AddToTail( pMsg );
 		return true;
 	}
-	
+
 	virtual bool	Recv( CUtlVector<unsigned char> &data, double flTimeout )
 	{
 		int iNext = m_Messages.Head();
@@ -67,16 +67,16 @@ public:
 		else
 		{
 			LoopbackMsg_t *pMsg = m_Messages[iNext];
-			
+
 			data.CopyArray( pMsg->m_Data, pMsg->m_Len );
-			
+
 			free( pMsg );
 			m_Messages.Remove( iNext );
 
 			return true;
 		}
 	}
-	
+
 	virtual bool	IsConnected()
 	{
 		return true;
@@ -95,4 +95,3 @@ IChannel* CreateLoopbackChannel()
 {
 	return new CLoopbackChannel;
 }
-

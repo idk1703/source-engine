@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -34,7 +34,7 @@ public:
 	void Activate(const char *playerName, const char *question,const char *type);
 
 	/* message returned:
-		"KickPlayer" 
+		"KickPlayer"
 			"player"
 			"type"
 	*/

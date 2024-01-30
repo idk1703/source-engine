@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -63,4 +63,3 @@ private:
 };
 
 #endif // DOD_CORNERCUTPANEL_H
-

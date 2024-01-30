@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -62,7 +62,7 @@ public:
 	int m_iType;		// entry or exit
 	int m_iState;		// state of the teleporter (idle, ready, sending, etc.)
 	int m_iDestroyed;	// has this teleporter been destroyed
-	
+
 	int	m_iShardIndex;	// Metal shards
 
 	float m_flMyNextThink;	// used to control the pace at which the teleporters work

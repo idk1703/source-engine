@@ -15,12 +15,12 @@
 //	}
 //}
 //
-//Award 
+//Award
 //{
 //	name = "Pak Grabber";
 //	noWinnerMessage = "no one grabbed any paks!";
 //	extraInfo = "%winner grabbed %score paks!";
-//	
+//
 //	trigger
 //	{
 //		type= fullsearch;

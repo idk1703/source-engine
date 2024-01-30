@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -107,8 +107,8 @@ bool CEventLog::PrintPlayerEvent( IGameEvent *event )
 			const int oldTeam = event->GetInt( "oldteam" );
 			CTeam *team = GetGlobalTeam( newTeam );
 			CTeam *oldteam = GetGlobalTeam( oldTeam );
-			
-			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" joined team \"%s\"\n", 
+
+			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" joined team \"%s\"\n",
 			pPlayer->GetPlayerName(),
 			pPlayer->GetUserID(),
 			pPlayer->GetNetworkIDString(),
@@ -125,20 +125,20 @@ bool CEventLog::PrintPlayerEvent( IGameEvent *event )
 #ifdef HL2MP
 		const char *weapon = event->GetString( "weapon" );
 #endif
-		
+
 		CBasePlayer *pAttacker = UTIL_PlayerByUserId( attackerid );
 		CTeam *team = pPlayer->GetTeam();
 		CTeam *attackerTeam = NULL;
-		
+
 		if ( pAttacker )
 		{
 			attackerTeam = pAttacker->GetTeam();
 		}
-		if ( pPlayer == pAttacker && pPlayer )  
-		{  
+		if ( pPlayer == pAttacker && pPlayer )
+		{
 
 #ifdef HL2MP
-			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" committed suicide with \"%s\"\n",  
+			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" committed suicide with \"%s\"\n",
 							pPlayer->GetPlayerName(),
 							userid,
 							pPlayer->GetNetworkIDString(),
@@ -146,7 +146,7 @@ bool CEventLog::PrintPlayerEvent( IGameEvent *event )
 							weapon
 							);
 #else
-			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" committed suicide with \"%s\"\n",  
+			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" committed suicide with \"%s\"\n",
 							pPlayer->GetPlayerName(),
 							userid,
 							pPlayer->GetNetworkIDString(),
@@ -160,7 +160,7 @@ bool CEventLog::PrintPlayerEvent( IGameEvent *event )
 			CTeam *attackerTeam = pAttacker->GetTeam();
 
 #ifdef HL2MP
-			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" killed \"%s<%i><%s><%s>\" with \"%s\"\n",  
+			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" killed \"%s<%i><%s><%s>\" with \"%s\"\n",
 							pAttacker->GetPlayerName(),
 							attackerid,
 							pAttacker->GetNetworkIDString(),
@@ -172,7 +172,7 @@ bool CEventLog::PrintPlayerEvent( IGameEvent *event )
 							weapon
 							);
 #else
-			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" killed \"%s<%i><%s><%s>\"\n",  
+			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" killed \"%s<%i><%s><%s>\"\n",
 							pAttacker->GetPlayerName(),
 							attackerid,
 							pAttacker->GetNetworkIDString(),
@@ -181,11 +181,11 @@ bool CEventLog::PrintPlayerEvent( IGameEvent *event )
 							userid,
 							pPlayer->GetNetworkIDString(),
 							team ? team->GetName() : ""
-							);								
+							);
 #endif
 		}
 		else
-		{  
+		{
 			// killed by the world
 			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" committed suicide with \"world\"\n",
 							pPlayer->GetPlayerName(),
@@ -198,7 +198,7 @@ bool CEventLog::PrintPlayerEvent( IGameEvent *event )
 	}
 	else if ( !Q_strncmp( eventName, "player_activate", Q_strlen("player_activate") ) )
 	{
-		UTIL_LogPrintf( "\"%s<%i><%s><>\" entered the game\n",  
+		UTIL_LogPrintf( "\"%s<%i><%s><>\" entered the game\n",
 							pPlayer->GetPlayerName(),
 							userid,
 							pPlayer->GetNetworkIDString()
@@ -211,7 +211,7 @@ bool CEventLog::PrintPlayerEvent( IGameEvent *event )
 		const char *newName = event->GetString( "newname" );
 		const char *oldName = event->GetString( "oldname" );
 		CTeam *team = pPlayer->GetTeam();
-		UTIL_LogPrintf( "\"%s<%i><%s><%s>\" changed name to \"%s\"\n", 
+		UTIL_LogPrintf( "\"%s<%i><%s><%s>\" changed name to \"%s\"\n",
 					oldName,
 					userid,
 					pPlayer->GetNetworkIDString(),
@@ -220,7 +220,7 @@ bool CEventLog::PrintPlayerEvent( IGameEvent *event )
 					);
 		return true;
 	}
-				   
+
 // ignored events
 //player_hurt
 	return false;

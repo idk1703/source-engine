@@ -33,11 +33,11 @@ ConVar	sk_combine_s_kick( "sk_combine_s_kick","0");
 
 ConVar sk_combine_guard_health( "sk_combine_guard_health", "0");
 ConVar sk_combine_guard_kick( "sk_combine_guard_kick", "0");
- 
+
 // Whether or not the combine guard should spawn health on death
 ConVar combine_guard_spawn_health( "combine_guard_spawn_health", "1" );
 
-extern ConVar sk_plr_dmg_buckshot;	
+extern ConVar sk_plr_dmg_buckshot;
 extern ConVar sk_plr_num_shotgun_pellets;
 
 //Whether or not the combine should spawn health on death
@@ -52,7 +52,7 @@ extern Activity ACT_WALK_EASY;
 extern Activity ACT_WALK_MARCH;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineS::Spawn( void )
 {
@@ -126,7 +126,7 @@ void CNPC_CombineS::DeathSound( const CTakeDamageInfo &info )
 	if ( GetFlags() & FL_DISSOLVING )
 		return;
 
-	GetSentences()->Speak( "COMBINE_DIE", SENTENCE_PRIORITY_INVALID, SENTENCE_CRITERIA_ALWAYS ); 
+	GetSentences()->Speak( "COMBINE_DIE", SENTENCE_PRIORITY_INVALID, SENTENCE_CRITERIA_ALWAYS );
 }
 
 
@@ -134,7 +134,7 @@ void CNPC_CombineS::DeathSound( const CTakeDamageInfo &info )
 // Purpose: Soldiers use CAN_RANGE_ATTACK2 to indicate whether they can throw
 //			a grenade. Because they check only every half-second or so, this
 //			condition must persist until it is updated again by the code
-//			that determines whether a grenade can be thrown, so prevent the 
+//			that determines whether a grenade can be thrown, so prevent the
 //			base class from clearing it out. (sjb)
 //-----------------------------------------------------------------------------
 void CNPC_CombineS::ClearAttackConditions( )
@@ -274,8 +274,8 @@ void CNPC_CombineS::OnListened()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &info - 
+// Purpose:
+// Input  : &info -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 void CNPC_CombineS::Event_Killed( const CTakeDamageInfo &info )
@@ -347,7 +347,7 @@ void CNPC_CombineS::Event_Killed( const CTakeDamageInfo &info )
 			DropItem( "item_healthvial", WorldSpaceCenter()+RandomVector(-4,4), RandomAngle(0,360) );
 			pHL2GameRules->NPC_DroppedHealth();
 		}
-		
+
 		if ( HasSpawnFlags( SF_COMBINE_NO_GRENADEDROP ) == false )
 		{
 			// Attempt to drop a grenade
@@ -363,8 +363,8 @@ void CNPC_CombineS::Event_Killed( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &info - 
+// Purpose:
+// Input  : &info -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_CombineS::IsLightDamage( const CTakeDamageInfo &info )
@@ -373,8 +373,8 @@ bool CNPC_CombineS::IsLightDamage( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &info - 
+// Purpose:
+// Input  : &info -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_CombineS::IsHeavyDamage( const CTakeDamageInfo &info )

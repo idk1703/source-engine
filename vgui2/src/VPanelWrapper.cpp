@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -222,12 +222,12 @@ public:
 	{
 		return Client(vguiPanel)->IsProportional();
 	}
-	
+
 	virtual bool IsAutoDeleteSet(VPANEL vguiPanel)
 	{
 		return Client(vguiPanel)->IsAutoDeleteSet();
 	}
-	
+
 	virtual void DeletePanel(VPANEL vguiPanel)
 	{
 		Client(vguiPanel)->DeletePanel();
@@ -331,22 +331,22 @@ public:
 		return Client(vguiPanel)->GetModuleName();
 	}
 
-	virtual void SetKeyBoardInputEnabled( VPANEL vguiPanel, bool state ) 
+	virtual void SetKeyBoardInputEnabled( VPANEL vguiPanel, bool state )
 	{
 		((VPanel *)vguiPanel)->SetKeyBoardInputEnabled(state);
 	}
 
-	virtual void SetMouseInputEnabled( VPANEL vguiPanel, bool state ) 
+	virtual void SetMouseInputEnabled( VPANEL vguiPanel, bool state )
 	{
 		((VPanel *)vguiPanel)->SetMouseInputEnabled(state);
 	}
 
-	virtual bool IsMouseInputEnabled( VPANEL vguiPanel ) 
+	virtual bool IsMouseInputEnabled( VPANEL vguiPanel )
 	{
 		return ((VPanel *)vguiPanel)->IsMouseInputEnabled();
 	}
 
-	virtual bool IsKeyBoardInputEnabled( VPANEL vguiPanel ) 
+	virtual bool IsKeyBoardInputEnabled( VPANEL vguiPanel )
 	{
 		return ((VPanel *)vguiPanel)->IsKeyBoardInputEnabled();
 	}
@@ -359,4 +359,3 @@ public:
 };
 
 EXPOSE_SINGLE_INTERFACE(VPanelWrapper, IPanel, VGUI_PANEL_INTERFACE_VERSION);
-

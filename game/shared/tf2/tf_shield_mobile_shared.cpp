@@ -43,7 +43,7 @@ ConVar	shield_mobile_recharge_time( "shield_mobile_recharge_time","0.5", FCVAR_R
 
 
 //-----------------------------------------------------------------------------
-// Mobile version of the shield 
+// Mobile version of the shield
 //-----------------------------------------------------------------------------
 class CShieldMobile;
 class CShieldMobileActiveVertList : public IActiveVertList
@@ -63,7 +63,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Mobile version of the shield 
+// Mobile version of the shield
 //-----------------------------------------------------------------------------
 class CShieldMobile : public CShield, public IEntityEnumerator
 {
@@ -106,7 +106,7 @@ public:
 
 	// All predicted weapons need to implement and return true
 	virtual bool IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -129,7 +129,7 @@ public:
 
 public:
 	// Inherited from IEntityEnumerator
-	virtual bool EnumEntity( IHandleEntity *pHandleEntity ); 
+	virtual bool EnumEntity( IHandleEntity *pHandleEntity );
 
 private:
 	// Teleport!
@@ -232,9 +232,9 @@ BEGIN_NETWORK_TABLE(CShieldMobile, DT_ShieldMobile)
 
 #else
 	RecvPropInt( RECVINFO(m_ShieldState) ),
-	RecvPropArray( 
-		RecvPropInt( RECVINFO(m_pVertsActive[0])), 
-		m_pVertsActive 
+	RecvPropArray(
+		RecvPropInt( RECVINFO(m_pVertsActive[0])),
+		m_pVertsActive
 	),
 	RecvPropFloat( RECVINFO(m_flFrontDistance) ),
 	RecvPropFloat( RECVINFO(m_flShieldTheta) ),
@@ -268,7 +268,7 @@ BEGIN_PREDICTION_DATA( CShieldMobile )
 END_PREDICTION_DATA()
 
 
-	
+
 //-----------------------------------------------------------------------------
 // CShieldMobileActiveVertList functions
 //-----------------------------------------------------------------------------
@@ -286,7 +286,7 @@ int CShieldMobileActiveVertList::GetActiveVertState( int iVert )
 
 void CShieldMobileActiveVertList::SetActiveVertState( int iVert, int bOn )
 {
-	unsigned char val;	
+	unsigned char val;
 	if ( bOn )
 		val = m_pShield->m_pVertsActive[iVert>>3] | (1 << (iVert & 7));
 	else
@@ -305,7 +305,7 @@ CShieldMobile::CShieldMobile()
 	m_VertList.Init( this );
 	m_flFrontDistance = 0;
 	SetAngularSpringConstant( 2.0f );
-	SetThetaPhi( SHIELD_INITIAL_THETA, SHIELD_INITIAL_PHI ); 
+	SetThetaPhi( SHIELD_INITIAL_THETA, SHIELD_INITIAL_PHI );
 	m_nAttachmentIndex = 0;
 
 #ifdef CLIENT_DLL
@@ -326,7 +326,7 @@ void CShieldMobile::Precache( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CShieldMobile::Spawn( void )
 {
@@ -355,9 +355,9 @@ void CShieldMobile::Spawn( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CShieldMobile::SetAlwaysOrient( bool bOrient ) 
+void CShieldMobile::SetAlwaysOrient( bool bOrient )
 {
 	if (bOrient)
 	{
@@ -371,21 +371,21 @@ void CShieldMobile::SetAlwaysOrient( bool bOrient )
 }
 
 int CShieldMobile::Width()
-{ 
-	return SHIELD_NUM_HORIZONTAL_POINTS; 
+{
+	return SHIELD_NUM_HORIZONTAL_POINTS;
 }
 
 int CShieldMobile::Height()
-{ 
-	return SHIELD_NUM_VERTICAL_POINTS; 
+{
+	return SHIELD_NUM_VERTICAL_POINTS;
 }
 
 const Vector& CShieldMobile::GetPoint( int x, int y )
-{ 
-	return m_ShieldEffect.GetPoint( x, y ); 
+{
+	return m_ShieldEffect.GetPoint( x, y );
 }
 
-	
+
 void CShieldMobile::SetAttachmentIndex( int nAttachmentIndex )
 {
 	m_nAttachmentIndex = nAttachmentIndex;
@@ -402,7 +402,7 @@ void CShieldMobile::GetRenderBounds( Vector& mins, Vector& maxs )
 }
 
 //-----------------------------------------------------------------------------
-// Return true if the panel is active 
+// Return true if the panel is active
 //-----------------------------------------------------------------------------
 bool CShieldMobile::IsPanelActive( int x, int y )
 {
@@ -430,7 +430,7 @@ void CShieldMobile::SetCenterAngles( const QAngle& angles )
 {
 	// The tmp ang locked angles is simply there to prevent unnecessary network traffic
 	m_tmpAngLockedAngles = angles;
-	if ( ( m_ShieldState.Get() & SHIELD_ORIENT_TO_OWNER ) == 0 ) 
+	if ( ( m_ShieldState.Get() & SHIELD_ORIENT_TO_OWNER ) == 0 )
 	{
 		m_angLockedAngles.Set( angles );
 	}
@@ -453,11 +453,11 @@ void CShieldMobile::SetFrontDistance( float flDistance )
 }
 
 void CShieldMobile::SetThetaPhi( float flTheta, float flPhi )
-{ 
+{
 	// This sets the bounds of the shield; how tall + wide is it?
 	m_flShieldTheta = flTheta;
 	m_flShieldPhi = flPhi;
-	m_ShieldEffect.SetThetaPhi(flTheta, flPhi); 
+	m_ShieldEffect.SetThetaPhi(flTheta, flPhi);
 }
 
 
@@ -467,7 +467,7 @@ void CShieldMobile::SetThetaPhi( float flTheta, float flPhi )
 void CShieldMobile::ComputeBoundingBox( void )
 {
 	Vector mins, maxs;
-	m_ShieldEffect.ComputeBounds(mins, maxs); 
+	m_ShieldEffect.ComputeBounds(mins, maxs);
 	SetCollisionBounds( mins, maxs );
 }
 
@@ -484,7 +484,7 @@ void CShieldMobile::ComputeWorldSpaceSurroundingBox( Vector *pWorldMins, Vector 
 
 
 //-----------------------------------------------------------------------------
-// Determines shield obstructions 
+// Determines shield obstructions
 //-----------------------------------------------------------------------------
 void CShieldMobile::DetermineObstructions( )
 {
@@ -493,7 +493,7 @@ void CShieldMobile::DetermineObstructions( )
 
 
 //-----------------------------------------------------------------------------
-// Called by the enumerator call in ShieldThink 
+// Called by the enumerator call in ShieldThink
 //-----------------------------------------------------------------------------
 bool CShieldMobile::EnumEntity( IHandleEntity *pHandleEntity )
 {
@@ -513,7 +513,7 @@ bool CShieldMobile::EnumEntity( IHandleEntity *pHandleEntity )
 	// No model, blow it off
 	if ( !pOther->GetModelIndex() )
 		return true;
-	
+
 	// Blow off point-sized things....
 	if ( pOther->IsPointSized() )
 		return true;
@@ -553,7 +553,7 @@ bool CShieldMobile::EnumEntity( IHandleEntity *pHandleEntity )
 
 
 //-----------------------------------------------------------------------------
-// Update the shield position: 
+// Update the shield position:
 //-----------------------------------------------------------------------------
 void CShieldMobile::SimulateShield( void )
 {
@@ -561,7 +561,7 @@ void CShieldMobile::SimulateShield( void )
 	Vector origin;
 	if ( owner )
 	{
-		if ( m_ShieldState & SHIELD_ORIENT_TO_OWNER ) 
+		if ( m_ShieldState & SHIELD_ORIENT_TO_OWNER )
 		{
 			if ( owner->IsPlayer() )
 			{
@@ -612,7 +612,7 @@ void CShieldMobile::SimulateShield( void )
 	CollisionProp()->MarkSurroundingBoundsDirty();
 
 	Vector vecOldOrigin = m_ShieldEffect.GetCurrentPosition();
-	
+
 	Vector vecDelta;
 	VectorSubtract( origin, vecOldOrigin, vecDelta );
 
@@ -666,7 +666,7 @@ void CShieldMobile::SimulateShield( void )
 
 
 //-----------------------------------------------------------------------------
-// Update the shield position: 
+// Update the shield position:
 //-----------------------------------------------------------------------------
 void CShieldMobile::ShieldThink( void )
 {
@@ -847,4 +847,3 @@ CShield *CreateMobileShield( CBaseEntity *owner, float flFrontDistance )
 }
 
 #endif
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -28,7 +28,7 @@ class CItemEffectMeterManager;
 extern CItemEffectMeterManager g_ItemEffectMeterManager;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CItemEffectMeterManager : public CGameEventListener
 {
@@ -46,7 +46,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 DECLARE_AUTO_LIST( IHudItemEffectMeterAutoList );
 class CHudItemEffectMeter : public CHudElement, public EditablePanel, public IHudItemEffectMeterAutoList
@@ -70,15 +70,15 @@ public:
 	virtual const char*	GetLabelText( void );
 	virtual const char*	GetIconName( void )		{ return "../hud/ico_stickybomb_red"; }
 	virtual float		GetProgress( void );
-	virtual bool		ShouldBeep( void )		
-	{ 
+	virtual bool		ShouldBeep( void )
+	{
 		if ( m_pPlayer )
 		{
 			CTFWeaponInvis *pWpn = (CTFWeaponInvis *) m_pPlayer->Weapon_OwnsThisID( TF_WEAPON_INVIS );
 			if ( pWpn && pWpn->HasFeignDeath() )
 				return true;
 		}
-		
+
 		return false;
 	}
 	virtual const char *GetResFile( void )			{ return "resource/UI/HudItemEffectMeter.res"; }

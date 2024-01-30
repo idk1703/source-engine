@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -81,7 +81,7 @@ bool CToolSweptPlayerHull::OnLMouseUp2D(CMapView2D *pView, UINT nFlags, const Ve
 
 	CMapDoc *pDoc = pView->GetMapDoc();
 	pDoc->UpdateAllViews( MAPVIEW_UPDATE_TOOL );
-		
+
 	return true;
 }
 
@@ -116,7 +116,7 @@ bool CToolSweptPlayerHull::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const V
 
 	vecPos[m_nPointIndex][pView->axHorz] = vecWorld[pView->axHorz];
 	vecPos[m_nPointIndex][pView->axVert] = vecWorld[pView->axVert];
-	
+
 	m_pSweptHull->UpdateEndPoint(vecPos[m_nPointIndex], m_nPointIndex);
 
 	int nOtherIndex = (m_nPointIndex == 0);
@@ -145,5 +145,3 @@ void CToolSweptPlayerHull::RenderTool2D(CRender2D *pRender)
 	m_pSweptHull->Render2D(pRender);
 	m_pSweptHull->SetSelectionState(eState);
 }
-
-

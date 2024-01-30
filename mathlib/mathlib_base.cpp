@@ -53,7 +53,7 @@ const int nanmask = 255<<23;
 float _sqrtf(float _X)
 {
 	Assert( s_bMathlibInitialized );
-	return sqrtf(_X); 
+	return sqrtf(_X);
 }
 
 float _rsqrtf(float x)
@@ -73,11 +73,11 @@ float FASTCALL _VectorNormalize (Vector& vec)
 
 	// FLT_EPSILON is added to the radius to eliminate the possibility of divide by zero.
 	float iradius = 1.f / ( radius + FLT_EPSILON );
-	
+
 	vec.x *= iradius;
 	vec.y *= iradius;
 	vec.z *= iradius;
-	
+
 	return radius;
 }
 
@@ -89,11 +89,11 @@ void FASTCALL _VectorNormalizeFast (Vector& vec)
 
 	// FLT_EPSILON is added to the radius to eliminate the possibility of divide by zero.
 	float iradius = 1.f / ( sqrtf(vec.x*vec.x + vec.y*vec.y + vec.z*vec.z) + FLT_EPSILON );
-	
+
 	vec.x *= iradius;
 	vec.y *= iradius;
 	vec.z *= iradius;
-	
+
 }
 
 float _InvRSquared(const float* v)
@@ -128,8 +128,8 @@ qboolean VectorsEqual( const float *v1, const float *v2 )
 {
 	Assert( s_bMathlibInitialized );
 	return ( ( v1[0] == v2[0] ) &&
-		     ( v1[1] == v2[1] ) &&
-			 ( v1[2] == v2[2] ) );
+				( v1[1] == v2[1] ) &&
+			( v1[2] == v2[2] ) );
 }
 
 
@@ -154,15 +154,15 @@ void MatrixAngles( const matrix3x4_t &matrix, Quaternion &q, Vector &pos )
 #endif
 	float trace;
 	trace = matrix[0][0] + matrix[1][1] + matrix[2][2] + 1.0f;
-	if( trace > 1.0f + FLT_EPSILON ) 
+	if( trace > 1.0f + FLT_EPSILON )
 	{
 		// VPROF_INCREMENT_COUNTER("MatrixQuaternion A",1);
 		q.x = ( matrix[2][1] - matrix[1][2] );
 		q.y = ( matrix[0][2] - matrix[2][0] );
 		q.z = ( matrix[1][0] - matrix[0][1] );
 		q.w = trace;
-	} 
-	else if ( matrix[0][0] > matrix[1][1] && matrix[0][0] > matrix[2][2] ) 
+	}
+	else if ( matrix[0][0] > matrix[1][1] && matrix[0][0] > matrix[2][2] )
 	{
 		// VPROF_INCREMENT_COUNTER("MatrixQuaternion B",1);
 		trace = 1.0f + matrix[0][0] - matrix[1][1] - matrix[2][2];
@@ -170,7 +170,7 @@ void MatrixAngles( const matrix3x4_t &matrix, Quaternion &q, Vector &pos )
 		q.y = (matrix[1][0] + matrix[0][1] );
 		q.z = (matrix[0][2] + matrix[2][0] );
 		q.w = (matrix[2][1] - matrix[1][2] );
-	} 
+	}
 	else if (matrix[1][1] > matrix[2][2])
 	{
 		// VPROF_INCREMENT_COUNTER("MatrixQuaternion C",1);
@@ -206,7 +206,7 @@ void MatrixAngles( const matrix3x4_t &matrix, Quaternion &q, Vector &pos )
 }
 
 void MatrixAngles( const matrix3x4_t& matrix, float *angles )
-{ 
+{
 #ifdef _VPROF_MATHLIB
 	VPROF_BUDGET( "MatrixAngles", "Mathlib" );
 #endif
@@ -228,7 +228,7 @@ void MatrixAngles( const matrix3x4_t& matrix, float *angles )
 	up[2] = matrix[2][2];
 
 	float xyDist = sqrtf( forward[0] * forward[0] + forward[1] * forward[1] );
-	
+
 	// enough here to get angles?
 	if ( xyDist > 0.001f )
 	{
@@ -327,7 +327,7 @@ QAngle TransformAnglesToLocalSpace( const QAngle &angles, const matrix3x4_t &par
 	MatrixInvert( parentMatrix, worldToParent );
 	AngleMatrix( angles, angToWorld );
 	ConcatTransforms( worldToParent, angToWorld, localMatrix );
-	
+
 	QAngle out;
 	MatrixAngles( localMatrix, out );
 	return out;
@@ -459,11 +459,11 @@ int VectorCompare (const float *v1, const float *v2)
 {
 	Assert( s_bMathlibInitialized );
 	int		i;
-	
+
 	for (i=0 ; i<3 ; i++)
 		if (v1[i] != v2[i])
 			return 0;
-			
+
 	return 1;
 }
 
@@ -503,11 +503,11 @@ void VectorVectors( const Vector &forward, Vector &right, Vector &up )
 	if (forward[0] == 0 && forward[1] == 0)
 	{
 		// pitch 90 degrees up/down from identity
-		right[0] = 0;	
-		right[1] = -1; 
+		right[0] = 0;
+		right[1] = -1;
 		right[2] = 0;
-		up[0] = -forward[2]; 
-		up[1] = 0; 
+		up[0] = -forward[2];
+		up[1] = 0;
 		up[2] = 0;
 	}
 	else
@@ -536,7 +536,7 @@ void VectorAngles( const float *forward, float *angles )
 {
 	Assert( s_bMathlibInitialized );
 	float	tmp, yaw, pitch;
-	
+
 	if (forward[1] == 0 && forward[0] == 0)
 	{
 		yaw = 0;
@@ -556,7 +556,7 @@ void VectorAngles( const float *forward, float *angles )
 		if (pitch < 0)
 			pitch += 360;
 	}
-	
+
 	angles[0] = pitch;
 	angles[1] = yaw;
 	angles[2] = 0;
@@ -799,7 +799,7 @@ bool IsDenormal( const float &val )
 	const int x = *reinterpret_cast <const int *> (&val); // needs 32-bit int
 	const int abs_mantissa = x & 0x007FFFFF;
 	const int biased_exponent = x & 0x7F800000;
-	
+
 	return  ( biased_exponent == 0 && abs_mantissa != 0 );
 }
 
@@ -841,7 +841,7 @@ int __cdecl BoxOnPlaneSide (const float *emins, const float *emaxs, const cplane
 			return 2;
 		return 3;
 	}
-	
+
 	// general case
 	switch (p->signbits)
 	{
@@ -902,12 +902,12 @@ void AngleVectors (const QAngle &angles, Vector *forward)
 {
 	Assert( s_bMathlibInitialized );
 	Assert( forward );
-	
+
 	float	sp, sy, cp, cy;
-	
+
 	SinCos( DEG2RAD( angles[YAW] ), &sy, &cy );
 	SinCos( DEG2RAD( angles[PITCH] ), &sp, &cp );
-	
+
 	forward->x = cp*cy;
 	forward->y = cp*sy;
 	forward->z = -sp;
@@ -919,15 +919,15 @@ void AngleVectors (const QAngle &angles, Vector *forward)
 void AngleVectors( const QAngle &angles, Vector *forward, Vector *right, Vector *up )
 {
 	Assert( s_bMathlibInitialized );
-	
+
 	float sr, sp, sy, cr, cp, cy;
 
 #ifdef _X360
 	fltx4 radians, scale, sine, cosine;
 	radians = LoadUnaligned3SIMD( angles.Base() );
-	scale = ReplicateX4( M_PI_F / 180.f ); 
+	scale = ReplicateX4( M_PI_F / 180.f );
 	radians = MulSIMD( radians, scale );
-	SinCos3SIMD( sine, cosine, radians ); 	
+	SinCos3SIMD( sine, cosine, radians );
 	sp = SubFloat( sine, 0 );	sy = SubFloat( sine, 1 );	sr = SubFloat( sine, 2 );
 	cp = SubFloat( cosine, 0 );	cy = SubFloat( cosine, 1 );	cr = SubFloat( cosine, 2 );
 #else
@@ -966,7 +966,7 @@ void AngleVectorsTranspose (const QAngle &angles, Vector *forward, Vector *right
 {
 	Assert( s_bMathlibInitialized );
 	float sr, sp, sy, cr, cp, cy;
-	
+
 	SinCos( DEG2RAD( angles[YAW] ), &sy, &cy );
 	SinCos( DEG2RAD( angles[PITCH] ), &sp, &cp );
 	SinCos( DEG2RAD( angles[ROLL] ), &sr, &cr );
@@ -977,7 +977,7 @@ void AngleVectorsTranspose (const QAngle &angles, Vector *forward, Vector *right
 		forward->y	= (sr*sp*cy+cr*-sy);
 		forward->z	= (cr*sp*cy+-sr*-sy);
 	}
-	
+
 	if (right)
 	{
 		right->x	= cp*sy;
@@ -1001,7 +1001,7 @@ void VectorAngles( const Vector& forward, QAngle &angles )
 {
 	Assert( s_bMathlibInitialized );
 	float	tmp, yaw, pitch;
-	
+
 	if (forward[1] == 0 && forward[0] == 0)
 	{
 		yaw = 0;
@@ -1021,7 +1021,7 @@ void VectorAngles( const Vector& forward, QAngle &angles )
 		if (pitch < 0)
 			pitch += 360;
 	}
-	
+
 	angles[0] = pitch;
 	angles[1] = yaw;
 	angles[2] = 0;
@@ -1038,8 +1038,8 @@ void VectorAngles( const Vector &forward, const Vector &pseudoup, QAngle &angles
 	Vector left;
 
 	CrossProduct( pseudoup, forward, left );
-	VectorNormalizeFast( left );		
-	
+	VectorNormalizeFast( left );
+
 	float xyDist = sqrtf( forward[0] * forward[0] + forward[1] * forward[1] );
 
 	// enough here to get angles?
@@ -1070,7 +1070,7 @@ void VectorAngles( const Vector &forward, const Vector &pseudoup, QAngle &angles
 
 		// Assume no roll in this case as one degree of freedom has been lost (i.e. yaw == roll)
 		angles[2] = 0;
-	}	
+	}
 }
 
 void SetIdentityMatrix( matrix3x4_t& matrix )
@@ -1099,10 +1099,10 @@ void SetScaleMatrix( float x, float y, float z, matrix3x4_t &dst )
 //		   | ax2 + (1 - ax2)cosQ		axay(1 - cosQ) - azsinQ		azax(1 - cosQ) + aysinQ |
 // Ra(Q) = | axay(1 - cosQ) + azsinQ	ay2 + (1 - ay2)cosQ			ayaz(1 - cosQ) - axsinQ |
 //		   | azax(1 - cosQ) - aysinQ	ayaz(1 - cosQ) + axsinQ		az2 + (1 - az2)cosQ     |
-//          
-// Input  : mat - 
-//			vAxisOrRot - 
-//			angle - 
+//
+// Input  : mat -
+//			vAxisOrRot -
+//			angle -
 //-----------------------------------------------------------------------------
 void MatrixBuildRotationAboutAxis( const Vector &vAxisOfRot, float angleDegrees, matrix3x4_t &dst )
 {
@@ -1203,9 +1203,9 @@ void AngleMatrix( const QAngle &angles, matrix3x4_t& matrix )
 #ifdef _X360
 	fltx4 radians, scale, sine, cosine;
 	radians = LoadUnaligned3SIMD( angles.Base() );
-	scale = ReplicateX4( M_PI_F / 180.f ); 
+	scale = ReplicateX4( M_PI_F / 180.f );
 	radians = MulSIMD( radians, scale );
-	SinCos3SIMD( sine, cosine, radians ); 	
+	SinCos3SIMD( sine, cosine, radians );
 
 	sp = SubFloat( sine, 0 );	sy = SubFloat( sine, 1 );	sr = SubFloat( sine, 2 );
 	cp = SubFloat( cosine, 0 );	cy = SubFloat( cosine, 1 );	cr = SubFloat( cosine, 2 );
@@ -1248,7 +1248,7 @@ void AngleIMatrix (const QAngle& angles, matrix3x4_t& matrix )
 {
 	Assert( s_bMathlibInitialized );
 	float		sr, sp, sy, cr, cp, cy;
-	
+
 	SinCos( DEG2RAD( angles[YAW] ), &sy, &cy );
 	SinCos( DEG2RAD( angles[PITCH] ), &sp, &cp );
 	SinCos( DEG2RAD( angles[ROLL] ), &sr, &cr );
@@ -1354,17 +1354,17 @@ bool SolveInverseQuadratic( float x1, float y1, float x2, float y2, float x3, fl
 
 	b = (x3*x3*(y1 - y2) + x1*x1*(y2 - y3) + x2*x2*(-y1 + y3)) / det;
 
-    c = (x1*x3*(-x1 + x3)*y2 + x2*x2*(x3*y1 - x1*y3) + x2*(-(x3*x3*y1) + x1*x1*y3)) / det;
+	c = (x1*x3*(-x1 + x3)*y2 + x2*x2*(x3*y1 - x1*y3) + x2*(-(x3*x3*y1) + x1*x1*y3)) / det;
 
 	return true;
 }
 
-bool SolveInverseQuadraticMonotonic( float x1, float y1, float x2, float y2, float x3, float y3, 
-									 float &a, float &b, float &c )
+bool SolveInverseQuadraticMonotonic( float x1, float y1, float x2, float y2, float x3, float y3,
+									float &a, float &b, float &c )
 {
 	// use SolveInverseQuadratic, but if the sigm of the derivative at the start point is the wrong
 	// sign, displace the mid point
-	
+
 	// first, sort parameters
 	if (x1>x2)
 	{
@@ -1516,21 +1516,21 @@ void QuaternionAlign( const Quaternion &p, const Quaternion &q, Quaternion &qt )
 	// decide if one of the quaternions is backwards
 	float a = 0;
 	float b = 0;
-	for (i = 0; i < 4; i++) 
+	for (i = 0; i < 4; i++)
 	{
 		a += (p[i]-q[i])*(p[i]-q[i]);
 		b += (p[i]+q[i])*(p[i]+q[i]);
 	}
-	if (a > b) 
+	if (a > b)
 	{
-		for (i = 0; i < 4; i++) 
+		for (i = 0; i < 4; i++)
 		{
 			qt[i] = -q[i];
 		}
 	}
 	else if (&qt != &q)
 	{
-		for (i = 0; i < 4; i++) 
+		for (i = 0; i < 4; i++)
 		{
 			qt[i] = q[i];
 		}
@@ -1539,7 +1539,7 @@ void QuaternionAlign( const Quaternion &p, const Quaternion &q, Quaternion &qt )
 
 
 //-----------------------------------------------------------------------------
-// Do a piecewise addition of the quaternion elements. This actually makes little 
+// Do a piecewise addition of the quaternion elements. This actually makes little
 // mathematical sense, but it's a cheap way to simulate a slerp.
 //-----------------------------------------------------------------------------
 void QuaternionBlend( const Quaternion &p, const Quaternion &q, float t, Quaternion &qt )
@@ -1772,7 +1772,7 @@ void QuaternionScale( const Quaternion &p, float t, Quaternion &q )
 #else
 	float r;
 
-	// FIXME: nick, this isn't overly sensitive to accuracy, and it may be faster to 
+	// FIXME: nick, this isn't overly sensitive to accuracy, and it may be faster to
 	// use the cos part (w) of the quaternion (sin(omega)*N,cos(omega)) to figure the new scale.
 	float sinom = sqrt( DotProduct( &p.x, &p.x ) );
 	sinom = min( sinom, 1.f );
@@ -1786,7 +1786,7 @@ void QuaternionScale( const Quaternion &p, float t, Quaternion &q )
 	r = 1.0f - sinsom * sinsom;
 
 	// Assert( r >= 0 );
-	if (r < 0.0f) 
+	if (r < 0.0f)
 		r = 0.0f;
 	r = sqrt( r );
 
@@ -1904,35 +1904,35 @@ void QuaternionMatrix( const Quaternion &q, matrix3x4_t& matrix )
 	matrix[1][3] = 0.0f;
 	matrix[2][3] = 0.0f;
 #else
-   float wx, wy, wz, xx, yy, yz, xy, xz, zz, x2, y2, z2;
+	float wx, wy, wz, xx, yy, yz, xy, xz, zz, x2, y2, z2;
 
-    // precalculate common multiplitcations
-    x2 = q.x + q.x; 
-	y2 = q.y + q.y; 
-    z2 = q.z + q.z;
-    xx = q.x * x2;
+	// precalculate common multiplitcations
+	x2 = q.x + q.x;
+	y2 = q.y + q.y;
+	z2 = q.z + q.z;
+	xx = q.x * x2;
 	xy = q.x * y2;
 	xz = q.x * z2;
-    yy = q.y * y2;
+	yy = q.y * y2;
 	yz = q.y * z2;
 	zz = q.z * z2;
-    wx = q.w * x2;
+	wx = q.w * x2;
 	wy = q.w * y2;
 	wz = q.w * z2;
 
-    matrix[0][0] = 1.0 - (yy + zz);
-    matrix[0][1] = xy - wz;
+	matrix[0][0] = 1.0 - (yy + zz);
+	matrix[0][1] = xy - wz;
 	matrix[0][2] = xz + wy;
-    matrix[0][3] = 0.0f;
+	matrix[0][3] = 0.0f;
 
-    matrix[1][0] = xy + wz;
+	matrix[1][0] = xy + wz;
 	matrix[1][1] = 1.0 - (xx + zz);
-    matrix[1][2] = yz - wx;
+	matrix[1][2] = yz - wx;
 	matrix[1][3] = 0.0f;
 
-    matrix[2][0] = xz - wy;
+	matrix[2][0] = xz - wy;
 	matrix[2][1] = yz + wx;
-    matrix[2][2] = 1.0 - (xx + yy);
+	matrix[2][2] = 1.0 - (xx + yy);
 	matrix[2][3] = 0.0f;
 #endif
 }
@@ -1998,9 +1998,9 @@ void QuaternionAxisAngle( const Quaternion &q, Vector &axis, float &angle )
 void AxisAngleQuaternion( const Vector &axis, float angle, Quaternion &q )
 {
 	float sa, ca;
-	
+
 	SinCos( DEG2RAD(angle) * 0.5f, &sa, &ca );
-	
+
 	q.x = axis.x * sa;
 	q.y = axis.y * sa;
 	q.z = axis.z * sa;
@@ -2027,14 +2027,14 @@ void AngleQuaternion( const RadianEuler &angles, Quaternion &outQuat )
 #ifdef _X360
 	fltx4 radians, scale, sine, cosine;
 	radians = LoadUnaligned3SIMD( &angles.x );
-	scale = ReplicateX4( 0.5f ); 
+	scale = ReplicateX4( 0.5f );
 	radians = MulSIMD( radians, scale );
-	SinCos3SIMD( sine, cosine, radians ); 	
+	SinCos3SIMD( sine, cosine, radians );
 
 	// NOTE: The ordering here is *different* from the AngleQuaternion below
 	// because p, y, r are not in the same locations in QAngle + RadianEuler. Yay!
-	sr = SubFloat( sine, 0 );	sp = SubFloat( sine, 1 );	sy = SubFloat( sine, 2 );	
-	cr = SubFloat( cosine, 0 );	cp = SubFloat( cosine, 1 );	cy = SubFloat( cosine, 2 );	
+	sr = SubFloat( sine, 0 );	sp = SubFloat( sine, 1 );	sy = SubFloat( sine, 2 );
+	cr = SubFloat( cosine, 0 );	cp = SubFloat( cosine, 1 );	cy = SubFloat( cosine, 2 );
 #else
 	SinCos( angles.z * 0.5f, &sy, &cy );
 	SinCos( angles.y * 0.5f, &sp, &cp );
@@ -2071,14 +2071,14 @@ void AngleQuaternion( const QAngle &angles, Quaternion &outQuat )
 #ifdef _X360
 	fltx4 radians, scale, sine, cosine;
 	radians = LoadUnaligned3SIMD( angles.Base() );
-	scale = ReplicateX4( 0.5f * M_PI_F / 180.f ); 
+	scale = ReplicateX4( 0.5f * M_PI_F / 180.f );
 	radians = MulSIMD( radians, scale );
-	SinCos3SIMD( sine, cosine, radians ); 	
+	SinCos3SIMD( sine, cosine, radians );
 
 	// NOTE: The ordering here is *different* from the AngleQuaternion above
 	// because p, y, r are not in the same locations in QAngle + RadianEuler. Yay!
-	sp = SubFloat( sine, 0 );	sy = SubFloat( sine, 1 );	sr = SubFloat( sine, 2 );	
-	cp = SubFloat( cosine, 0 );	cy = SubFloat( cosine, 1 );	cr = SubFloat( cosine, 2 );	
+	sp = SubFloat( sine, 0 );	sy = SubFloat( sine, 1 );	sr = SubFloat( sine, 2 );
+	cp = SubFloat( cosine, 0 );	cy = SubFloat( cosine, 1 );	cr = SubFloat( cosine, 2 );
 #else
 	SinCos( DEG2RAD( angles.y ) * 0.5f, &sy, &cy );
 	SinCos( DEG2RAD( angles.x ) * 0.5f, &sp, &cp );
@@ -2202,13 +2202,13 @@ void QuaternionAngles( const Quaternion &q, RadianEuler &angles )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: A helper function to normalize p2.x->p1.x and p3.x->p4.x to 
+// Purpose: A helper function to normalize p2.x->p1.x and p3.x->p4.x to
 //  be the same length as p2.x->p3.x
-// Input  : &p2 - 
-//			&p4 - 
-//			p4n - 
+// Input  : &p2 -
+//			&p4 -
+//			p4n -
 //-----------------------------------------------------------------------------
-void Spline_Normalize( 
+void Spline_Normalize(
 	const Vector &p1,
 	const Vector &p2,
 	const Vector &p3,
@@ -2237,8 +2237,8 @@ void Spline_Normalize(
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
+// Purpose:
+// Input  :
 //-----------------------------------------------------------------------------
 
 void Catmull_Rom_Spline(
@@ -2246,7 +2246,7 @@ void Catmull_Rom_Spline(
 	const Vector &p2,
 	const Vector &p3,
 	const Vector &p4,
-	float t, 
+	float t,
 	Vector& output )
 {
 	Assert( s_bMathlibInitialized );
@@ -2301,7 +2301,7 @@ void Catmull_Rom_Spline_Tangent(
 	const Vector &p2,
 	const Vector &p3,
 	const Vector &p4,
-	float t, 
+	float t,
 	Vector& output )
 {
 	Assert( s_bMathlibInitialized );
@@ -2349,23 +2349,23 @@ void Catmull_Rom_Spline_Tangent(
 }
 
 // area under the curve [0..t]
-void Catmull_Rom_Spline_Integral( 
+void Catmull_Rom_Spline_Integral(
 	const Vector &p1,
 	const Vector &p2,
 	const Vector &p3,
 	const Vector &p4,
-	float t, 
+	float t,
 	Vector& output )
 {
 	output = p2*t
-			-0.25f*(p1 - p3)*t*t 
+			-0.25f*(p1 - p3)*t*t
 			+ (1.0f/6.0f)*(2.0f*p1 - 5.0f*p2 + 4.0f*p3 - p4)*t*t*t
 			- 0.125f*(p1 - 3.0f*p2 + 3.0f*p3 - p4)*t*t*t*t;
 }
 
 
 // area under the curve [0..1]
-void Catmull_Rom_Spline_Integral( 
+void Catmull_Rom_Spline_Integral(
 	const Vector &p1,
 	const Vector &p2,
 	const Vector &p3,
@@ -2381,7 +2381,7 @@ void Catmull_Rom_Spline_Normalize(
 	const Vector &p2,
 	const Vector &p3,
 	const Vector &p4,
-	float t, 
+	float t,
 	Vector& output )
 {
 	// Normalize p2->p1 and p3->p4 to be the same length as p2->p3
@@ -2396,7 +2396,7 @@ void Catmull_Rom_Spline_Normalize(
 
 	VectorMA( p2, dt, p1n, p1n );
 	VectorMA( p3, dt, p4n, p4n );
-	
+
 	Catmull_Rom_Spline( p1n, p2, p3, p4n, t, output );
 }
 
@@ -2406,7 +2406,7 @@ void Catmull_Rom_Spline_Integral_Normalize(
 	const Vector &p2,
 	const Vector &p3,
 	const Vector &p4,
-	float t, 
+	float t,
 	Vector& output )
 {
 	// Normalize p2->p1 and p3->p4 to be the same length as p2->p3
@@ -2421,7 +2421,7 @@ void Catmull_Rom_Spline_Integral_Normalize(
 
 	VectorMA( p2, dt, p1n, p1n );
 	VectorMA( p3, dt, p4n, p4n );
-	
+
 	Catmull_Rom_Spline_Integral( p1n, p2, p3, p4n, t, output );
 }
 
@@ -2431,7 +2431,7 @@ void Catmull_Rom_Spline_NormalizeX(
 	const Vector &p2,
 	const Vector &p3,
 	const Vector &p4,
-	float t, 
+	float t,
 	Vector& output )
 {
 	Vector p1n, p4n;
@@ -2441,9 +2441,9 @@ void Catmull_Rom_Spline_NormalizeX(
 
 
 //-----------------------------------------------------------------------------
-// Purpose: basic hermite spline.  t = 0 returns p1, t = 1 returns p2, 
+// Purpose: basic hermite spline.  t = 0 returns p1, t = 1 returns p2,
 //			d1 and d2 are used to entry and exit slope of curve
-// Input  : 
+// Input  :
 //-----------------------------------------------------------------------------
 
 void Hermite_Spline(
@@ -2451,7 +2451,7 @@ void Hermite_Spline(
 	const Vector &p2,
 	const Vector &d1,
 	const Vector &d2,
-	float t, 
+	float t,
 	Vector& output )
 {
 	Assert( s_bMathlibInitialized );
@@ -2512,11 +2512,11 @@ void Hermite_SplineBasis( float t, float basis[4] )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: simple three data point hermite spline.  
-//			t = 0 returns p1, t = 1 returns p2, 
+// Purpose: simple three data point hermite spline.
+//			t = 0 returns p1, t = 1 returns p2,
 //			slopes are generated from the p0->p1 and p1->p2 segments
 //			this is reasonable C1 method when there's no "p3" data yet.
-// Input  : 
+// Input  :
 //-----------------------------------------------------------------------------
 
 // BUG: the VectorSubtract()'s calls go away if the global optimizer is enabled
@@ -2556,7 +2556,7 @@ void Hermite_Spline( const Quaternion &q0, const Quaternion &q1, const Quaternio
 }
 
 // See http://en.wikipedia.org/wiki/Kochanek-Bartels_curves
-// 
+//
 // Tension:  -1 = Round -> 1 = Tight
 // Bias:     -1 = Pre-shoot (bias left) -> 1 = Post-shoot (bias right)
 // Continuity: -1 = Box corners -> 1 = Inverted corners
@@ -2564,19 +2564,19 @@ void Hermite_Spline( const Quaternion &q0, const Quaternion &q1, const Quaternio
 // If T=B=C=0 it's the same matrix as Catmull-Rom.
 // If T=1 & B=C=0 it's the same as Cubic.
 // If T=B=0 & C=-1 it's just linear interpolation
-// 
+//
 // See http://news.povray.org/povray.binaries.tutorials/attachment/%3CXns91B880592482seed7@povray.org%3E/Splines.bas.txt
 // for example code and descriptions of various spline types...
-// 
+//
 void Kochanek_Bartels_Spline(
-	float tension, 
-	float bias, 
+	float tension,
+	float bias,
 	float continuity,
 	const Vector &p1,
 	const Vector &p2,
 	const Vector &p3,
 	const Vector &p4,
-	float t, 
+	float t,
 	Vector& output )
 {
 	Assert( s_bMathlibInitialized );
@@ -2602,7 +2602,7 @@ void Kochanek_Bartels_Spline(
 	Vector a, b, c, d;
 
 	// matrix row 1
-	VectorScale( p1, tSqrSqr * -ffa, a );		
+	VectorScale( p1, tSqrSqr * -ffa, a );
 	VectorScale( p2, tSqrSqr * ( 4.0f + ffa - ffb - ffc ), b );
 	VectorScale( p3, tSqrSqr * ( -4.0f + ffb + ffc - ffd ), c );
 	VectorScale( p4, tSqrSqr * ffd, d );
@@ -2613,7 +2613,7 @@ void Kochanek_Bartels_Spline(
 	VectorAdd( d, output, output );
 
 	// matrix row 2
-	VectorScale( p1, tSqr* 2 * ffa,  a );		
+	VectorScale( p1, tSqr* 2 * ffa,  a );
 	VectorScale( p2, tSqr * ( -6 - 2 * ffa + 2 * ffb + ffc ), b );
 	VectorScale( p3, tSqr * ( 6 - 2 * ffb - ffc + ffd ),  c );
 	VectorScale( p4, tSqr * -ffd,    d );
@@ -2624,7 +2624,7 @@ void Kochanek_Bartels_Spline(
 	VectorAdd( d, output, output );
 
 	// matrix row 3
-	VectorScale( p1, t * -ffa,  a );		
+	VectorScale( p1, t * -ffa,  a );
 	VectorScale( p2, t * ( ffa - ffb ), b );
 	VectorScale( p3, t * ffb,  c );
 	// p4 unchanged
@@ -2641,14 +2641,14 @@ void Kochanek_Bartels_Spline(
 }
 
 void Kochanek_Bartels_Spline_NormalizeX(
-	float tension, 
-	float bias, 
+	float tension,
+	float bias,
 	float continuity,
 	const Vector &p1,
 	const Vector &p2,
 	const Vector &p3,
 	const Vector &p4,
-	float t, 
+	float t,
 	Vector& output )
 {
 	Vector p1n, p4n;
@@ -2661,7 +2661,7 @@ void Cubic_Spline(
 	const Vector &p2,
 	const Vector &p3,
 	const Vector &p4,
-	float t, 
+	float t,
 	Vector& output )
 {
 	Assert( s_bMathlibInitialized );
@@ -2706,7 +2706,7 @@ void Cubic_Spline_NormalizeX(
 	const Vector &p2,
 	const Vector &p3,
 	const Vector &p4,
-	float t, 
+	float t,
 	Vector& output )
 {
 	Vector p1n, p4n;
@@ -2719,7 +2719,7 @@ void BSpline(
 	const Vector &p2,
 	const Vector &p3,
 	const Vector &p4,
-	float t, 
+	float t,
 	Vector& output )
 {
 	Assert( s_bMathlibInitialized );
@@ -2740,7 +2740,7 @@ void BSpline(
 	Vector a, b, c, d;
 
 	// matrix row 1
-	VectorScale( p1, -tSqrSqr, a );		
+	VectorScale( p1, -tSqrSqr, a );
 	VectorScale( p2, tSqrSqr * 3.0f, b );
 	VectorScale( p3, tSqrSqr * -3.0f, c );
 	VectorScale( p4, tSqrSqr, d );
@@ -2751,7 +2751,7 @@ void BSpline(
 	VectorAdd( d, output, output );
 
 	// matrix row 2
-	VectorScale( p1, tSqr * 3.0f,  a );		
+	VectorScale( p1, tSqr * 3.0f,  a );
 	VectorScale( p2, tSqr * -6.0f, b );
 	VectorScale( p3, tSqr * 3.0f,  c );
 
@@ -2760,7 +2760,7 @@ void BSpline(
 	VectorAdd( c, output, output );
 
 	// matrix row 3
-	VectorScale( p1, t * -3.0f,  a );		
+	VectorScale( p1, t * -3.0f,  a );
 	VectorScale( p3, t * 3.0f,  c );
 	// p4 unchanged
 
@@ -2783,7 +2783,7 @@ void BSpline_NormalizeX(
 	const Vector &p2,
 	const Vector &p3,
 	const Vector &p4,
-	float t, 
+	float t,
 	Vector& output )
 {
 	Vector p1n, p4n;
@@ -2796,7 +2796,7 @@ void Parabolic_Spline(
 	const Vector &p2,
 	const Vector &p3,
 	const Vector &p4,
-	float t, 
+	float t,
 	Vector& output )
 {
 	Assert( s_bMathlibInitialized );
@@ -2817,7 +2817,7 @@ void Parabolic_Spline(
 	// no influence from t cubed
 
 	// matrix row 2
-	VectorScale( p1, tSqr,  a );		
+	VectorScale( p1, tSqr,  a );
 	VectorScale( p2, tSqr * -2.0f, b );
 	VectorScale( p3, tSqr,  c );
 
@@ -2826,7 +2826,7 @@ void Parabolic_Spline(
 	VectorAdd( c, output, output );
 
 	// matrix row 3
-	VectorScale( p1, t * -2.0f,  a );		
+	VectorScale( p1, t * -2.0f,  a );
 	VectorScale( p2, t * 2.0f,  b );
 	// p4 unchanged
 
@@ -2834,7 +2834,7 @@ void Parabolic_Spline(
 	VectorAdd( b, output, output );
 
 	// matrix row 4
-	VectorScale( p1, 0.5f,  a );		
+	VectorScale( p1, 0.5f,  a );
 	VectorScale( p2, 0.5f,  b );
 
 	VectorAdd( a, output, output );
@@ -2846,7 +2846,7 @@ void Parabolic_Spline_NormalizeX(
 	const Vector &p2,
 	const Vector &p3,
 	const Vector &p4,
-	float t, 
+	float t,
 	Vector& output )
 {
 	Vector p1n, p4n;
@@ -2855,7 +2855,7 @@ void Parabolic_Spline_NormalizeX(
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Compress the input values for a ranged result such that from 75% to 200% smoothly of the range maps 
+// Purpose: Compress the input values for a ranged result such that from 75% to 200% smoothly of the range maps
 //-----------------------------------------------------------------------------
 
 float RangeCompressor( float flValue, float flMin, float flMax, float flBase )
@@ -2945,14 +2945,14 @@ void ITransformAABB( const matrix3x4_t& transform, const Vector &vecMinsIn, cons
 	VectorITransform( worldCenter, transform, localCenter );
 
 	Vector localExtents;
-	localExtents.x =	FloatMakePositive( worldExtents.x * transform[0][0] ) + 
-						FloatMakePositive( worldExtents.y * transform[1][0] ) + 
+	localExtents.x =	FloatMakePositive( worldExtents.x * transform[0][0] ) +
+						FloatMakePositive( worldExtents.y * transform[1][0] ) +
 						FloatMakePositive( worldExtents.z * transform[2][0] );
-	localExtents.y =	FloatMakePositive( worldExtents.x * transform[0][1] ) + 
-						FloatMakePositive( worldExtents.y * transform[1][1] ) + 
+	localExtents.y =	FloatMakePositive( worldExtents.x * transform[0][1] ) +
+						FloatMakePositive( worldExtents.y * transform[1][1] ) +
 						FloatMakePositive( worldExtents.z * transform[2][1] );
-	localExtents.z =	FloatMakePositive( worldExtents.x * transform[0][2] ) + 
-						FloatMakePositive( worldExtents.y * transform[1][2] ) + 
+	localExtents.z =	FloatMakePositive( worldExtents.x * transform[0][2] ) +
+						FloatMakePositive( worldExtents.y * transform[1][2] ) +
 						FloatMakePositive( worldExtents.z * transform[2][2] );
 
 	VectorSubtract( localCenter, localExtents, vecMinsOut );
@@ -2961,7 +2961,7 @@ void ITransformAABB( const matrix3x4_t& transform, const Vector &vecMinsIn, cons
 
 
 //-----------------------------------------------------------------------------
-// Rotates a AABB into another space; which will inherently grow the box. 
+// Rotates a AABB into another space; which will inherently grow the box.
 // (same as TransformAABB, but doesn't take the translation into account)
 //-----------------------------------------------------------------------------
 void RotateAABB( const matrix3x4_t &transform, const Vector &vecMinsIn, const Vector &vecMaxsIn, Vector &vecMinsOut, Vector &vecMaxsOut )
@@ -3002,14 +3002,14 @@ void IRotateAABB( const matrix3x4_t &transform, const Vector &vecMinsIn, const V
 	VectorIRotate( oldCenter, transform, newCenter );
 
 	Vector newExtents;
-	newExtents.x =	FloatMakePositive( oldExtents.x * transform[0][0] ) + 
-					FloatMakePositive( oldExtents.y * transform[1][0] ) + 
+	newExtents.x =	FloatMakePositive( oldExtents.x * transform[0][0] ) +
+					FloatMakePositive( oldExtents.y * transform[1][0] ) +
 					FloatMakePositive( oldExtents.z * transform[2][0] );
-	newExtents.y =	FloatMakePositive( oldExtents.x * transform[0][1] ) + 
-					FloatMakePositive( oldExtents.y * transform[1][1] ) + 
+	newExtents.y =	FloatMakePositive( oldExtents.x * transform[0][1] ) +
+					FloatMakePositive( oldExtents.y * transform[1][1] ) +
 					FloatMakePositive( oldExtents.z * transform[2][1] );
-	newExtents.z =	FloatMakePositive( oldExtents.x * transform[0][2] ) + 
-					FloatMakePositive( oldExtents.y * transform[1][2] ) + 
+	newExtents.z =	FloatMakePositive( oldExtents.x * transform[0][2] ) +
+					FloatMakePositive( oldExtents.y * transform[1][2] ) +
 					FloatMakePositive( oldExtents.z * transform[2][2] );
 
 	VectorSubtract( newCenter, newExtents, vecMinsOut );
@@ -3140,7 +3140,7 @@ void CalcClosestPointOnLineSegment( const Vector &P, const Vector &vLineA, const
 	Vector vDir;
 	float t = CalcClosestPointToLineT( P, vLineA, vLineB, vDir );
 	t = clamp( t, 0.f, 1.f );
-	if ( outT ) 
+	if ( outT )
 	{
 		*outT = t;
 	}
@@ -3241,59 +3241,59 @@ float CalcDistanceSqrToLineSegment2D( const Vector2D &P, const Vector2D &vLineA,
 //-----------------------------------------------------------------------------
 // Purpose: Given lines p1->p2 and p3->p4, computes a line segment (pa->pb) and returns the parameters 0->1 multipliers
 //  along each segment for the returned points
-// Input  : p1 - 
-//			p2 - 
-//			p3 - 
-//			p4 - 
-//			*s1 - 
-//			*s2 - 
+// Input  : p1 -
+//			p2 -
+//			p3 -
+//			p4 -
+//			*s1 -
+//			*s2 -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CalcLineToLineIntersectionSegment(
-   const Vector& p1,const Vector& p2,const Vector& p3,const Vector& p4,Vector *s1,Vector *s2,
-   float *t1, float *t2)
+	const Vector& p1,const Vector& p2,const Vector& p3,const Vector& p4,Vector *s1,Vector *s2,
+	float *t1, float *t2)
 {
-   Vector p13,p43,p21;
-   float d1343,d4321,d1321,d4343,d2121;
-   float numer,denom;
+	Vector p13,p43,p21;
+	float d1343,d4321,d1321,d4343,d2121;
+	float numer,denom;
 
-   p13.x = p1.x - p3.x;
-   p13.y = p1.y - p3.y;
-   p13.z = p1.z - p3.z;
-   p43.x = p4.x - p3.x;
-   p43.y = p4.y - p3.y;
-   p43.z = p4.z - p3.z;
+	p13.x = p1.x - p3.x;
+	p13.y = p1.y - p3.y;
+	p13.z = p1.z - p3.z;
+	p43.x = p4.x - p3.x;
+	p43.y = p4.y - p3.y;
+	p43.z = p4.z - p3.z;
 
-   if (fabs(p43.x)  < LINE_EPS && fabs(p43.y)  < LINE_EPS && fabs(p43.z)  < LINE_EPS)
-      return false;
-   p21.x = p2.x - p1.x;
-   p21.y = p2.y - p1.y;
-   p21.z = p2.z - p1.z;
-   if (fabs(p21.x)  < LINE_EPS && fabs(p21.y)  < LINE_EPS && fabs(p21.z)  < LINE_EPS)
-      return false;
+	if (fabs(p43.x)  < LINE_EPS && fabs(p43.y)  < LINE_EPS && fabs(p43.z)  < LINE_EPS)
+		return false;
+	p21.x = p2.x - p1.x;
+	p21.y = p2.y - p1.y;
+	p21.z = p2.z - p1.z;
+	if (fabs(p21.x)  < LINE_EPS && fabs(p21.y)  < LINE_EPS && fabs(p21.z)  < LINE_EPS)
+		return false;
 
-   d1343 = p13.x * p43.x + p13.y * p43.y + p13.z * p43.z;
-   d4321 = p43.x * p21.x + p43.y * p21.y + p43.z * p21.z;
-   d1321 = p13.x * p21.x + p13.y * p21.y + p13.z * p21.z;
-   d4343 = p43.x * p43.x + p43.y * p43.y + p43.z * p43.z;
-   d2121 = p21.x * p21.x + p21.y * p21.y + p21.z * p21.z;
+	d1343 = p13.x * p43.x + p13.y * p43.y + p13.z * p43.z;
+	d4321 = p43.x * p21.x + p43.y * p21.y + p43.z * p21.z;
+	d1321 = p13.x * p21.x + p13.y * p21.y + p13.z * p21.z;
+	d4343 = p43.x * p43.x + p43.y * p43.y + p43.z * p43.z;
+	d2121 = p21.x * p21.x + p21.y * p21.y + p21.z * p21.z;
 
-   denom = d2121 * d4343 - d4321 * d4321;
-   if (fabs(denom) < LINE_EPS)
-      return false;
-   numer = d1343 * d4321 - d1321 * d4343;
+	denom = d2121 * d4343 - d4321 * d4321;
+	if (fabs(denom) < LINE_EPS)
+		return false;
+	numer = d1343 * d4321 - d1321 * d4343;
 
-   *t1 = numer / denom;
-   *t2 = (d1343 + d4321 * (*t1)) / d4343;
+	*t1 = numer / denom;
+	*t2 = (d1343 + d4321 * (*t1)) / d4343;
 
-   s1->x = p1.x + *t1 * p21.x;
-   s1->y = p1.y + *t1 * p21.y;
-   s1->z = p1.z + *t1 * p21.z;
-   s2->x = p3.x + *t2 * p43.x;
-   s2->y = p3.y + *t2 * p43.y;
-   s2->z = p3.z + *t2 * p43.z;
+	s1->x = p1.x + *t1 * p21.x;
+	s1->y = p1.y + *t1 * p21.y;
+	s1->z = p1.z + *t1 * p21.z;
+	s2->x = p3.x + *t2 * p43.x;
+	s2->y = p3.y + *t2 * p43.y;
+	s2->z = p3.z + *t2 * p43.z;
 
-   return true;
+	return true;
 }
 
 #pragma optimize( "", off )
@@ -3341,7 +3341,7 @@ void MathLib_Init( float gamma, float texGamma, float brightness, int overbright
 		s_bMMXEnabled = false;
 	}
 
-	// SSE Generally performs better than 3DNow when present, so this is placed 
+	// SSE Generally performs better than 3DNow when present, so this is placed
 	// first to allow SSE to override these settings.
 #if !defined( OSX ) && !defined( PLATFORM_WINDOWS_PC64 ) && !defined(LINUX)
 	if ( bAllow3DNow && pi.m_b3DNow )
@@ -3393,7 +3393,7 @@ void MathLib_Init( float gamma, float texGamma, float brightness, int overbright
 		pfFastSinCos = _SSE2_SinCos;
 		pfFastCos = _SSE2_cos;
 #endif
-	} 
+	}
 	else
 	{
 		s_bSSE2Enabled = false;
@@ -3438,7 +3438,7 @@ float Approach( float target, float value, float speed )
 		value += speed;
 	else if ( delta < -speed )
 		value -= speed;
-	else 
+	else
 		value = target;
 
 	return value;
@@ -3449,7 +3449,7 @@ float ApproachAngle( float target, float value, float speed )
 {
 	target = anglemod( target );
 	value = anglemod( value );
-	
+
 	float delta = target - value;
 
 	// Speed is assumed to be positive
@@ -3465,7 +3465,7 @@ float ApproachAngle( float target, float value, float speed )
 		value += speed;
 	else if ( delta < -speed )
 		value -= speed;
-	else 
+	else
 		value = target;
 
 	return value;
@@ -3508,7 +3508,7 @@ float AngleDistance( float next, float cur )
 float AngleNormalize( float angle )
 {
 	angle = fmodf(angle, 360.0f);
-	if (angle > 180) 
+	if (angle > 180)
 	{
 		angle -= 360;
 	}
@@ -3579,7 +3579,7 @@ void ComputeTrianglePlane( const Vector& v1, const Vector& v2, const Vector& v3,
 	VectorSubtract( v3, v1, e2 );
 	CrossProduct( e1, e2, normal );
 	VectorNormalize( normal );
-	intercept = DotProduct( normal, v1 ); 
+	intercept = DotProduct( normal, v1 );
 }
 
 //-----------------------------------------------------------------------------
@@ -3613,16 +3613,16 @@ int PolyFromPlane( Vector *outVerts, const Vector& normal, float dist, float fHa
 		return 0;
 
 	// Build a unit vector along something other than the major axis
-	VectorCopy (vec3_origin, vup);	
+	VectorCopy (vec3_origin, vup);
 	switch (x)
 	{
 	case 0:
 	case 1:
 		vup[2] = 1;
-		break;		
+		break;
 	case 2:
 		vup[0] = 1;
-		break;		
+		break;
 	}
 
 	// Remove the component of this vector along the normal
@@ -3869,7 +3869,7 @@ int ClipPolyToPlane_Precise( double *inVerts, int vertCount, double *outVerts, c
 int CeilPow2( int in )
 {
 	int retval;
-	
+
 	retval = 1;
 	while( retval < in )
 		retval <<= 1;
@@ -3879,7 +3879,7 @@ int CeilPow2( int in )
 int FloorPow2( int in )
 {
 	int retval;
-	
+
 	retval = 1;
 	while( retval < in )
 		retval <<= 1;
@@ -3920,8 +3920,8 @@ float CalcFovX( float flFovY, float flAspect )
 //-----------------------------------------------------------------------------
 // Generate a frustum based on perspective view parameters
 //-----------------------------------------------------------------------------
-void GeneratePerspectiveFrustum( const Vector& origin, const Vector &forward, 
-	const Vector &right, const Vector &up, float flZNear, float flZFar, 
+void GeneratePerspectiveFrustum( const Vector& origin, const Vector &forward,
+	const Vector &right, const Vector &up, float flZNear, float flZFar,
 	float flFovX, float flFovY, Frustum_t &frustum )
 {
 	float flIntercept = DotProduct( origin, forward );
@@ -3972,7 +3972,7 @@ void GeneratePerspectiveFrustum( const Vector& origin, const QAngle &angles, flo
 
 bool R_CullBox( const Vector& mins, const Vector& maxs, const Frustum_t &frustum )
 {
-	return (( BoxOnPlaneSide( mins, maxs, frustum.GetPlane(FRUSTUM_RIGHT) ) == 2 ) || 
+	return (( BoxOnPlaneSide( mins, maxs, frustum.GetPlane(FRUSTUM_RIGHT) ) == 2 ) ||
 			( BoxOnPlaneSide( mins, maxs, frustum.GetPlane(FRUSTUM_LEFT) ) == 2 ) ||
 			( BoxOnPlaneSide( mins, maxs, frustum.GetPlane(FRUSTUM_TOP) ) == 2 ) ||
 			( BoxOnPlaneSide( mins, maxs, frustum.GetPlane(FRUSTUM_BOTTOM) ) == 2 ) ||
@@ -3982,7 +3982,7 @@ bool R_CullBox( const Vector& mins, const Vector& maxs, const Frustum_t &frustum
 
 bool R_CullBoxSkipNear( const Vector& mins, const Vector& maxs, const Frustum_t &frustum )
 {
-	return (( BoxOnPlaneSide( mins, maxs, frustum.GetPlane(FRUSTUM_RIGHT) ) == 2 ) || 
+	return (( BoxOnPlaneSide( mins, maxs, frustum.GetPlane(FRUSTUM_RIGHT) ) == 2 ) ||
 			( BoxOnPlaneSide( mins, maxs, frustum.GetPlane(FRUSTUM_LEFT) ) == 2 ) ||
 			( BoxOnPlaneSide( mins, maxs, frustum.GetPlane(FRUSTUM_TOP) ) == 2 ) ||
 			( BoxOnPlaneSide( mins, maxs, frustum.GetPlane(FRUSTUM_BOTTOM) ) == 2 ) ||
@@ -3997,8 +3997,8 @@ bool R_CullBoxSkipNear( const Vector& mins, const Vector& maxs, const Frustum_t 
 #define SMALL_FLOAT 1e-12
 
 void CalcTriangleTangentSpace( const Vector &p0, const Vector &p1, const Vector &p2,
-							   const Vector2D &t0, const Vector2D &t1, const Vector2D& t2,
-							   Vector &sVect, Vector &tVect )
+								const Vector2D &t0, const Vector2D &t1, const Vector2D& t2,
+								Vector &sVect, Vector &tVect )
 {
 	/* Compute the partial derivatives of X, Y, and Z with respect to S and T. */
 	sVect.Init( 0.0f, 0.0f, 0.0f );
@@ -4075,20 +4075,20 @@ void RGBtoHSV( const Vector &rgb, Vector &hsv )
 	else
 	{
 		float32 d = flMax - flMin;
-		if (rgb.x == flMax)		
+		if (rgb.x == flMax)
 		{
 			hsv.x = (rgb.y - rgb.z) / d;
 		}
-		else if (rgb.y == flMax)	
+		else if (rgb.y == flMax)
 		{
 			hsv.x = 2.0F + (rgb.z - rgb.x) / d;
 		}
-		else				
+		else
 		{
 			hsv.x = 4.0F + (rgb.x - rgb.y) / d;
 		}
 		hsv.x *= 60.0F;
-		if ( hsv.x < 0.0F ) 
+		if ( hsv.x < 0.0F )
 		{
 			hsv.x += 360.0F;
 		}
@@ -4100,7 +4100,7 @@ void RGBtoHSV( const Vector &rgb, Vector &hsv )
 // Convert HSV to RGB
 //-----------------------------------------------------------------------------
 void HSVtoRGB( const Vector &hsv, Vector &rgb )
-{         
+{
 	if ( hsv.y == 0.0F )
 	{
 		rgb.Init( hsv.z, hsv.z, hsv.z );
@@ -4108,8 +4108,8 @@ void HSVtoRGB( const Vector &hsv, Vector &rgb )
 	}
 
 	float32 hue = hsv.x;
-	if (hue == 360.0F) 
-	{	
+	if (hue == 360.0F)
+	{
 		hue = 0.0F;
 	}
 	hue /= 60.0F;
@@ -4130,18 +4130,18 @@ void HSVtoRGB( const Vector &hsv, Vector &rgb )
 }
 
 
-void GetInterpolationData( float const *pKnotPositions, 
-						   float const *pKnotValues,
-						   int nNumValuesinList,
-						   int nInterpolationRange,
-						   float flPositionToInterpolateAt,
-						   bool bWrap,
-						   float *pValueA, 
-						   float *pValueB,
-						   float *pInterpolationValue)
+void GetInterpolationData( float const *pKnotPositions,
+							float const *pKnotValues,
+							int nNumValuesinList,
+							int nInterpolationRange,
+							float flPositionToInterpolateAt,
+							bool bWrap,
+							float *pValueA,
+							float *pValueB,
+							float *pInterpolationValue)
 {
 	// first, find the bracketting knots by looking for the first knot >= our index
-	
+
 	int idx;
 	for(idx = 0; idx < nNumValuesinList; idx++ )
 	{
@@ -4158,7 +4158,7 @@ void GetInterpolationData( float const *pKnotPositions,
 			nKnot2 = 0;
 			flSizeOfGap =
 				( pKnotPositions[nKnot2] + ( nInterpolationRange-pKnotPositions[nKnot1] ) );
-			flOffsetFromStartOfGap = 
+			flOffsetFromStartOfGap =
 				flPositionToInterpolateAt + ( nInterpolationRange-pKnotPositions[nKnot1] );
 		}
 		else
@@ -4174,8 +4174,8 @@ void GetInterpolationData( float const *pKnotPositions,
 		{
 			nKnot1 = nNumValuesinList -1;
 			nKnot2 = 0;
-			flSizeOfGap = ( pKnotPositions[nKnot2] + 
-						 ( nInterpolationRange-pKnotPositions[nKnot1] ) );
+			flSizeOfGap = ( pKnotPositions[nKnot2] +
+						( nInterpolationRange-pKnotPositions[nKnot1] ) );
 			flOffsetFromStartOfGap = flPositionToInterpolateAt - pKnotPositions[nKnot1];
 		}
 		else

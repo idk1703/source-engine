@@ -60,7 +60,7 @@ protected:
 	// Implement this if you want to know when the player collides during OnPlayerMove
 	virtual void			OnTryPlayerMoveCollision( trace_t &tr );
 
-	PlayerClassReconData_t	*m_pReconData; 
+	PlayerClassReconData_t	*m_pReconData;
 	Vector					m_vStandMins;
 	Vector					m_vStandMaxs;
 	Vector					m_vStandViewOffset;

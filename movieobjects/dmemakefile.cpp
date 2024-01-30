@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Describes an asset: something that is compiled from sources, 
+// Describes an asset: something that is compiled from sources,
 // in potentially multiple steps, to a compiled resource
 //
 //=============================================================================
@@ -24,7 +24,7 @@ IMPLEMENT_ELEMENT_FACTORY( DmeSource, CDmeSource );
 
 
 //-----------------------------------------------------------------------------
-// Construction/destruction 
+// Construction/destruction
 //-----------------------------------------------------------------------------
 void CDmeSource::OnConstruction()
 {
@@ -69,7 +69,7 @@ IMPLEMENT_ELEMENT_FACTORY( DmeMakefile, CDmeMakefile );
 
 
 //-----------------------------------------------------------------------------
-// Construction/destruction 
+// Construction/destruction
 //-----------------------------------------------------------------------------
 void CDmeMakefile::OnConstruction()
 {
@@ -85,7 +85,7 @@ void CDmeMakefile::OnDestruction()
 	m_hOutput = NULL;
 }
 
-						   
+
 //-----------------------------------------------------------------------------
 // Performs pre-compilation step
 //-----------------------------------------------------------------------------
@@ -470,7 +470,7 @@ bool CDmeMakefile::HasSourceOfType( const char *pSourceType )
 // Updates the source names to be relative to a particular path
 //-----------------------------------------------------------------------------
 bool CDmeMakefile::UpdateSourceNames( const char *pOldRootDir, const char *pNewRootDir, bool bApplyChanges )
-{ 
+{
 	char pOldSourcePath[ MAX_PATH ];
 	char pNewSourcePath[ MAX_PATH ];
 
@@ -625,4 +625,3 @@ CDmeSource *CDmeMakefile::FindAssociatedSource( CDmeMakefile *pChildMakefile )
 
 	return NULL;
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -40,7 +40,7 @@ bool IsValidFn_Heal( void *pUserData, int a )
 int SortFn_Heal( void *pUserData, int a, int b )
 {
 	CSortBase *p = (CSortBase*)pUserData;
-	
+
 	const Vector &vPlayer = p->m_pPlayer->GetAbsOrigin();
 	const Vector &va = p->m_pPlayer->GetTeam()->GetPlayer( a )->GetAbsOrigin();
 	const Vector &vb = p->m_pPlayer->GetTeam()->GetPlayer( b )->GetAbsOrigin();
@@ -57,7 +57,7 @@ bool COrderHeal::CreateOrder( CPlayerClass *pClass )
 	info.m_pPlayer = pClass->GetPlayer();
 
 	int sorted[MAX_PLAYERS];
-	int nSorted = BuildSortedActiveList( 
+	int nSorted = BuildSortedActiveList(
 		sorted,
 		MAX_PLAYERS,
 		SortFn_Heal,
@@ -69,11 +69,11 @@ bool COrderHeal::CreateOrder( CPlayerClass *pClass )
 	if ( nSorted )
 	{
 		COrderHeal *pOrder = new COrderHeal;
-		
-		pClass->GetTeam()->AddOrder( 
-			ORDER_HEAL, 
-			pTeam->GetPlayer( sorted[0] ), 
-			pClass->GetPlayer(), 
+
+		pClass->GetTeam()->AddOrder(
+			ORDER_HEAL,
+			pTeam->GetPlayer( sorted[0] ),
+			pClass->GetPlayer(),
 			1e24,
 			60,
 			pOrder );
@@ -93,7 +93,7 @@ bool COrderHeal::Update()
 	if ( !pTarget || pTarget->m_iHealth >= pTarget->m_iMaxHealth )
 		return true;
 
-	return false;	
+	return false;
 }
 
 
@@ -108,4 +108,3 @@ bool COrderHeal::UpdateOnEvent( COrderEvent_Base *pEvent )
 
 	return BaseClass::UpdateOnEvent( pEvent );
 }
-

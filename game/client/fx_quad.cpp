@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -36,8 +36,8 @@ CFXQuad::~CFXQuad( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frametime - 
+// Purpose:
+// Input  : frametime -
 //-----------------------------------------------------------------------------
 void CFXQuad::Draw( double frametime )
 {
@@ -78,7 +78,7 @@ void CFXQuad::Draw( double frametime )
 	{
 		return;
 	}
-	
+
 	CMatRenderContextPtr pRenderContext( materials );
 
 	//Bind the material
@@ -155,7 +155,7 @@ void CFXQuad::Draw( double frametime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CFXQuad::IsActive( void )
@@ -164,7 +164,7 @@ bool CFXQuad::IsActive( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFXQuad::Destroy( void )
 {
@@ -179,8 +179,8 @@ void CFXQuad::Destroy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frametime - 
+// Purpose:
+// Input  : frametime -
 //-----------------------------------------------------------------------------
 void CFXQuad::Update( double frametime )
 {

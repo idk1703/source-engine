@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -146,7 +146,7 @@ private:
 	bool	m_bMapStarting;
 	int		m_iBonusSelection;
 	bool	m_bScrollToFirstBonusMap;
-	
+
 	struct BonusMapDescription_t	*m_pBonusMapDescription;
 
 	vgui::CKeyRepeatHandler	m_KeyRepeat;

@@ -94,7 +94,7 @@ void CPortableThumper::ThumpThink( void )
 {
 	EmitSound( "PortableThumper.ThumpSound" );
 
-	UTIL_RotorWash( GetAbsOrigin() + Vector( 0, 0, 32 ), Vector( 0, 0, -1 ), 512 );	
+	UTIL_RotorWash( GetAbsOrigin() + Vector( 0, 0, 32 ), Vector( 0, 0, -1 ), 512 );
 
 	SetNextThink( gpGlobals->curtime + thumpFrequency.GetFloat() );
 
@@ -195,7 +195,7 @@ void CWeaponThumper::PrimaryAttack( void )
 void CWeaponThumper::DecrementAmmo( CBaseCombatCharacter *pOwner )
 {
 	pOwner->RemoveAmmo( 1, m_iPrimaryAmmoType );
-	
+
 	if (pOwner->GetAmmoCount(m_iPrimaryAmmoType) <= 0)
 	{
 		pOwner->Weapon_Drop( this );
@@ -232,7 +232,7 @@ END_SEND_TABLE()
 LINK_ENTITY_TO_CLASS( weapon_thumper, CWeaponThumper );
 PRECACHE_WEAPON_REGISTER(weapon_thumper);
 
-acttable_t	CWeaponThumper::m_acttable[] = 
+acttable_t	CWeaponThumper::m_acttable[] =
 {
 	{ ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK_AR1, true },
 };

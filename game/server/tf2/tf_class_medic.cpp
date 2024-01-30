@@ -41,7 +41,7 @@ END_SEND_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CPlayerClassMedic::GetClassModelString( int nTeam )
@@ -53,13 +53,13 @@ const char *CPlayerClassMedic::GetClassModelString( int nTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPlayerClassMedic::CPlayerClassMedic( CBaseTFPlayer *pPlayer, TFClass iClass ) : CPlayerClass( pPlayer, iClass )
 {
 	for (int i = 0; i < MAX_TF_TEAMS; ++i)
 	{
-		SetClassModel( MAKE_STRING(GetClassModelString(i)), i ); 
+		SetClassModel( MAKE_STRING(GetClassModelString(i)), i );
 	}
 }
 
@@ -71,18 +71,18 @@ void CPlayerClassMedic::SetupSizeData( void )
 	// Initially set the player to the base player class standing hull size.
 	m_pPlayer->SetCollisionBounds( MEDICCLASS_HULL_STAND_MIN, MEDICCLASS_HULL_STAND_MAX );
 	m_pPlayer->SetViewOffset( MEDICCLASS_VIEWOFFSET_STAND );
-	m_pPlayer->m_Local.m_flStepSize = MEDICCLASS_STEPSIZE;	
+	m_pPlayer->m_Local.m_flStepSize = MEDICCLASS_STEPSIZE;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPlayerClassMedic::~CPlayerClassMedic()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassMedic::ClassActivate( void )
 {
@@ -90,7 +90,7 @@ void CPlayerClassMedic::ClassActivate( void )
 
 	// Setup movement data.
 	SetupMoveData();
-	
+
 	m_hWpnShield = NULL;
 	m_hWpnPlasma = NULL;
 
@@ -102,7 +102,7 @@ void CPlayerClassMedic::ClassActivate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassMedic::ClassDeactivate( void )
 {
@@ -111,7 +111,7 @@ void CPlayerClassMedic::ClassDeactivate( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassMedic::CreateClass( void )
 {
@@ -133,7 +133,7 @@ void CPlayerClassMedic::CreateClass( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassMedic::RespawnClass( void )
 {
@@ -141,7 +141,7 @@ void CPlayerClassMedic::RespawnClass( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CPlayerClassMedic::ResupplyAmmo( float flFraction, ResupplyReason_t reason )
 {
@@ -241,7 +241,7 @@ void CPlayerClassMedic::CreatePersonalOrder( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassMedic::SetPlayerHull( void )
 {
@@ -256,7 +256,7 @@ void CPlayerClassMedic::SetPlayerHull( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassMedic::GetPlayerHull( bool bDucking, Vector &vecMin, Vector &vecMax )
 {
@@ -273,7 +273,7 @@ void CPlayerClassMedic::GetPlayerHull( bool bDucking, Vector &vecMin, Vector &ve
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassMedic::ResetViewOffset( void )
 {
@@ -295,7 +295,7 @@ float CPlayerClassMedic::OnTakeDamage( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassMedic::InitVCollision( void )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -65,7 +65,7 @@ public:
 
 	// Gets at the containing class...
 	virtual IClientUnknown*	GetIClientUnknown() = 0;
-	
+
 	// We can filter out collisions based on collision group
 	virtual int				GetCollisionGroup() const = 0;
 

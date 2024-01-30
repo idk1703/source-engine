@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -85,7 +85,7 @@ public:
 
 	virtual Vector			EyePosition();
 	Vector					EyeFootPosition( const QAngle &qEyeAngles );//interpolates between eyes and feet based on view angle roll
-	inline Vector			EyeFootPosition( void ) { return EyeFootPosition( EyeAngles() ); }; 
+	inline Vector			EyeFootPosition( void ) { return EyeFootPosition( EyeAngles() ); };
 	void					PlayerPortalled( C_Prop_Portal *pEnteredPortal );
 
 	virtual void	CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, float &zFar, float &fov );
@@ -97,8 +97,8 @@ public:
 
 	inline bool		IsCloseToPortal( void ) //it's usually a good idea to turn on draw hacks when this is true
 	{
-		return ((PortalEyeInterpolation.m_bEyePositionIsInterpolating) || (m_hPortalEnvironment.Get() != NULL));	
-	} 
+		return ((PortalEyeInterpolation.m_bEyePositionIsInterpolating) || (m_hPortalEnvironment.Get() != NULL));
+	}
 
 	bool	CanSprint( void );
 	void	StartSprinting( void );
@@ -124,7 +124,7 @@ private:
 	C_Portal_Player( const C_Portal_Player & );
 
 	void UpdatePortalEyeInterpolation( void );
-	
+
 	CPortalPlayerAnimState *m_PlayerAnimState;
 
 	QAngle	m_angEyeAngles;
@@ -192,7 +192,7 @@ private:
 	C_Prop_Portal *m_pPortalEnvironment_LastCalcView;
 
 	ClientCCHandle_t	m_CCDeathHandle;	// handle to death cc effect
-	float				m_flDeathCCWeight;	// for fading in cc effect	
+	float				m_flDeathCCWeight;	// for fading in cc effect
 
 	bool	m_bPortalledMessagePending; //Player portalled. It's easier to wait until we get a OnDataChanged() event or a CalcView() before we do anything about it. Otherwise bits and pieces can get undone
 	VMatrix m_PendingPortalMatrix;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,10 +22,10 @@ class CWeaponMG34 : public CDODBipodWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponMG34, CDODBipodWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponMG34()  {}
 
 	virtual DODWeaponID GetWeaponID( void ) const		{ return WEAPON_MG34; }
@@ -57,7 +57,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_mg34, CWeaponMG34 );
 PRECACHE_WEAPON_REGISTER( weapon_mg34 );
 
-acttable_t CWeaponMG34::m_acttable[] = 
+acttable_t CWeaponMG34::m_acttable[] =
 {
 	// Aim
 	{ ACT_IDLE,								ACT_DOD_STAND_AIM_MG,					false },
@@ -77,7 +77,7 @@ acttable_t CWeaponMG34::m_acttable[] =
 	{ ACT_DOD_PRIMARYATTACK_DEPLOYED,		ACT_DOD_PRIMARYATTACK_DEPLOYED_MG,		false },
 	{ ACT_DOD_PRIMARYATTACK_PRONE_DEPLOYED,	ACT_DOD_PRIMARYATTACK_PRONE_DEPLOYED_MG,false },
 
-	// Reload ( prone? deployed? )	
+	// Reload ( prone? deployed? )
 	{ ACT_DOD_RELOAD_DEPLOYED,				ACT_DOD_RELOAD_DEPLOYED_MG34,			false },
 	{ ACT_DOD_RELOAD_PRONE_DEPLOYED,		ACT_DOD_RELOAD_PRONE_DEPLOYED_MG34,		false },
 };
@@ -96,7 +96,7 @@ void CWeaponMG34::PrimaryAttack( void )
 
 	if( !IsDeployed() )
 	{
-#ifdef CLIENT_DLL 
+#ifdef CLIENT_DLL
 		pPlayer->HintMessage( HINT_MG_FIRE_UNDEPLOYED );
 #endif
 		pPlayer->m_Shared.SetSlowedTime( 0.2 );
@@ -130,7 +130,7 @@ Activity CWeaponMG34::GetDrawActivity( void )
 	Activity actDraw;
 
 	if( m_iClip1 <= 0 )
-		actDraw = ACT_VM_DRAW_EMPTY;	
+		actDraw = ACT_VM_DRAW_EMPTY;
 	else
 		actDraw = ACT_VM_DRAW;
 
@@ -142,7 +142,7 @@ Activity CWeaponMG34::GetDeployActivity( void )
 	Activity actDeploy;
 
 	if( m_iClip1 <= 0 )
-		actDeploy = ACT_VM_DEPLOY_EMPTY;	
+		actDeploy = ACT_VM_DEPLOY_EMPTY;
 	else
 		actDeploy = ACT_VM_DEPLOY;
 
@@ -154,7 +154,7 @@ Activity CWeaponMG34::GetUndeployActivity( void )
 	Activity actUndeploy;
 
 	if( m_iClip1 <= 0 )
-		actUndeploy = ACT_VM_UNDEPLOY_EMPTY;	
+		actUndeploy = ACT_VM_UNDEPLOY_EMPTY;
 	else
 		actUndeploy = ACT_VM_UNDEPLOY;
 
@@ -168,14 +168,14 @@ Activity CWeaponMG34::GetIdleActivity( void )
 	if( IsDeployed() )
 	{
 		if( m_iClip1 <= 0 )
-			actIdle = ACT_VM_IDLE_DEPLOYED_EMPTY;	
+			actIdle = ACT_VM_IDLE_DEPLOYED_EMPTY;
 		else
 			actIdle = ACT_VM_IDLE_DEPLOYED;
 	}
 	else
 	{
 		if( m_iClip1 <= 0 )
-			actIdle = ACT_VM_IDLE_EMPTY;	
+			actIdle = ACT_VM_IDLE_EMPTY;
 		else
 			actIdle = ACT_VM_IDLE;
 	}
@@ -190,18 +190,17 @@ Activity CWeaponMG34::GetPrimaryAttackActivity( void )
 	if( IsDeployed() )
 	{
 		if( m_iClip1 <= 0 )
-			actPrim = ACT_VM_PRIMARYATTACK_DEPLOYED_EMPTY;	
+			actPrim = ACT_VM_PRIMARYATTACK_DEPLOYED_EMPTY;
 		else
 			actPrim = ACT_VM_PRIMARYATTACK_DEPLOYED;
 	}
 	else
 	{
 		if( m_iClip1 <= 0 )
-			actPrim = ACT_VM_PRIMARYATTACK_EMPTY;	
+			actPrim = ACT_VM_PRIMARYATTACK_EMPTY;
 		else
 			actPrim = ACT_VM_PRIMARYATTACK;
 	}
 
 	return actPrim;
 }
-

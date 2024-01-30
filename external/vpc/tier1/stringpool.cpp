@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose:
 //
@@ -32,7 +32,7 @@ bool StrLessSensitive( const char * const &pszLeft, const char * const &pszRight
 //-----------------------------------------------------------------------------
 
 CStringPool::CStringPool( StringPoolCase_t caseSensitivity )
-  : m_Strings( 32, 256, caseSensitivity == StringPoolCaseInsensitive ? StrLessInsensitive : StrLessSensitive )
+	: m_Strings( 32, 256, caseSensitivity == StringPoolCaseInsensitive ? StrLessInsensitive : StrLessSensitive )
 {
 }
 
@@ -104,7 +104,7 @@ CCountedStringPool::CCountedStringPool( StringPoolCase_t caseSensitivity )
 
 	for( int i = 0; i < m_HashTable.Count(); i++ )
 	{
-		m_HashTable[i] = INVALID_ELEMENT;		
+		m_HashTable[i] = INVALID_ELEMENT;
 	}
 
 	m_FreeListStart = INVALID_ELEMENT;
@@ -128,7 +128,7 @@ void CCountedStringPool::FreeAll()
 	// Reset the hash table:
 	for( i = 0; i < m_HashTable.Count(); i++ )
 	{
-		m_HashTable[i] = INVALID_ELEMENT;		
+		m_HashTable[i] = INVALID_ELEMENT;
 	}
 
 	// Blow away the free list:
@@ -159,7 +159,7 @@ unsigned CCountedStringPool::Hash( const char *pszKey )
 	{
 		return HashStringCaseless( pszKey );
 	}
-	return HashString( pszKey ); 
+	return HashString( pszKey );
 }
 
 unsigned short CCountedStringPool::FindStringHandle( const char* pIntrinsic )
@@ -181,7 +181,7 @@ unsigned short CCountedStringPool::FindStringHandle( const char* pIntrinsic )
 			}
 		}
 	}
-	
+
 	return 0;
 
 }
@@ -238,8 +238,8 @@ unsigned short CCountedStringPool::ReferenceStringHandle( const char* pIntrinsic
 
 	m_Elements[nCurrentBucket].pString = new char[V_strlen( pIntrinsic ) + 1];
 	V_strcpy( m_Elements[nCurrentBucket].pString, pIntrinsic );
-	
-    return nCurrentBucket;
+
+		return nCurrentBucket;
 }
 
 
@@ -248,7 +248,7 @@ char* CCountedStringPool::ReferenceString( const char* pIntrinsic )
 	if(!pIntrinsic)
 		return NULL;
 
-	return m_Elements[ReferenceStringHandle( pIntrinsic)].pString; 
+	return m_Elements[ReferenceStringHandle( pIntrinsic)].pString;
 }
 
 void CCountedStringPool::DereferenceString( const char* pIntrinsic )

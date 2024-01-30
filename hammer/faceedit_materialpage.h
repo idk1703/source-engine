@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -31,7 +31,7 @@ class CMapSolid;
 
 class CFaceEditMaterialPage : public CPropertyPage
 {
-	
+
 	DECLARE_DYNAMIC( CFaceEditMaterialPage );
 
 public:
@@ -130,7 +130,7 @@ protected:
 
 	//=========================================================================
 	//
-	// Texture Browser/Update 
+	// Texture Browser/Update
 	//
 	void SelectTexture( LPCSTR pszTextureName );
 	void UpdateTexture( void );

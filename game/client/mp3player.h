@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -293,7 +293,7 @@ protected:
 
 	void					RestoreSongs( KeyValues *songs );
 	void					RestoreDirectories( KeyValues *dirs );
-	void					RestoreDirectory( KeyValues *dir, SoundDirectory_t *sd );	
+	void					RestoreDirectory( KeyValues *dir, SoundDirectory_t *sd );
 
 	void					LoadPlayList( char const *filename );
 	void					SavePlayList( char const *filename );

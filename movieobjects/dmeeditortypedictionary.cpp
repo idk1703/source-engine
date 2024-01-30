@@ -15,7 +15,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Expose DmeEditorAttributeInfo to the scene database 
+// Expose DmeEditorAttributeInfo to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeEditorAttributeInfo, CDmeEditorAttributeInfo );
 
@@ -50,7 +50,7 @@ const char *CDmeEditorAttributeInfo::GetAttributeName() const
 	return GetName();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the widget name
 //-----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ const char *CDmeEditorAttributeInfo::GetWidgetName() const
 	return m_Widget.Get();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the info for a entry in an attribute array, if this attribute is an array type
 //-----------------------------------------------------------------------------
@@ -77,7 +77,7 @@ void CDmeEditorAttributeInfo::SetArrayInfo( CDmeEditorAttributeInfo *pInfo )
 	m_ArrayEntries = pInfo;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 //
 // CDmeEditorChoicesInfo, Base class for configuration for choices
@@ -85,11 +85,11 @@ void CDmeEditorAttributeInfo::SetArrayInfo( CDmeEditorAttributeInfo *pInfo )
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Expose DmeEditorChoicesInfo to the scene database 
+// Expose DmeEditorChoicesInfo to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeEditorChoicesInfo, CDmeEditorChoicesInfo );
 
-    
+
 //-----------------------------------------------------------------------------
 // Constructor, destructor
 //-----------------------------------------------------------------------------
@@ -151,7 +151,7 @@ const char *CDmeEditorChoicesInfo::GetChoiceString( int nIndex ) const
 
 
 //-----------------------------------------------------------------------------
-// Expose DmeEditorType class to the scene database 
+// Expose DmeEditorType class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeEditorType, CDmeEditorType );
 
@@ -193,7 +193,7 @@ const char *CDmeEditorType::GetActualAttributeName( const char *pAttributeName )
 void CDmeEditorType::AddAttributeInfo( const char *pAttributeName, CDmeEditorAttributeInfo *pInfo )
 {
 	pAttributeName = GetActualAttributeName( pAttributeName );
-	SetValue( pAttributeName, pInfo ); 
+	SetValue( pAttributeName, pInfo );
 }
 
 
@@ -205,11 +205,11 @@ void CDmeEditorType::RemoveAttributeInfo( const char *pAttributeName )
 	pAttributeName = GetActualAttributeName( pAttributeName );
 	if ( HasAttribute( pAttributeName ) )
 	{
-		RemoveAttribute( pAttributeName ); 
+		RemoveAttribute( pAttributeName );
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the editor info associated with an editor type
 //-----------------------------------------------------------------------------
@@ -237,7 +237,7 @@ CDmeEditorAttributeInfo *CDmeEditorType::GetAttributeArrayInfo( const char *pAtt
 
 
 //-----------------------------------------------------------------------------
-// Expose DmeEditorTypeDictionary class to the scene database 
+// Expose DmeEditorTypeDictionary class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeEditorTypeDictionary, CDmeEditorTypeDictionary );
 

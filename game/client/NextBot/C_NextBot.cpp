@@ -109,7 +109,7 @@ void C_NextBotCombatCharacter::UpdateShadowLOD( void )
 
 
 //--------------------------------------------------------------------------------------------------------
-ShadowType_t C_NextBotCombatCharacter::ShadowCastType( void ) 
+ShadowType_t C_NextBotCombatCharacter::ShadowCastType( void )
 {
 	if ( !IsVisible() )
 		return SHADOWS_NONE;
@@ -137,7 +137,7 @@ bool C_NextBotCombatCharacter::GetForcedShadowCastType( ShadowType_t* pForcedSha
 //--------------------------------------------------------------------------------------------------------
 /**
  * Singleton accessor.
- * By returning a reference, we guarantee construction of the 
+ * By returning a reference, we guarantee construction of the
  * instance before its first use.
  */
 C_NextBotManager &TheClientNextBots( void )
@@ -219,7 +219,7 @@ bool C_NextBotManager::SetupInFrustumData( void )
 			Vector vecMin, vecMax;
 			pBot->CollisionProp()->WorldSpaceAABB( &vecMin, &vecMax );
 			bool bInFrustum = !FrustumCache()->m_Frustums[iSlot].CullBox( vecMin, vecMax );
-		
+
 			if ( bInFrustum )
 			{
 				Vector vecSegment;
@@ -228,7 +228,7 @@ bool C_NextBotManager::SetupInFrustumData( void )
 				if ( flDistance < pBot->GetInFrustumDistanceSqr() )
 				{
 					pBot->SetInFrustumDistanceSqr( flDistance );
-				}	
+				}
 
 				pBot->SetInFrustum( true );
 			}

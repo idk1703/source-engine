@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose: A collection of utility classes to simplify file I/O, and
-//			as much as possible contain portability problems. Here avoiding 
+//			as much as possible contain portability problems. Here avoiding
 //			including windows.h.
 //
 //=============================================================================

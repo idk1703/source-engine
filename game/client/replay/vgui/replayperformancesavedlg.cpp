@@ -236,7 +236,7 @@ void CReplayPerformanceSaveDlg::CloseWindow()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ReplayUI_ShowPerformanceSaveDlg( OnConfirmSaveCallback pfnCallback,
 									  void *pContext, CReplay *pReplay,

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,7 @@
 
 bool SurfHasBumpedLightmaps( int flags )
 {
-	return ( flags & SURF_BUMPLIGHT ) && 
+	return ( flags & SURF_BUMPLIGHT ) &&
 		( !( flags & SURF_NOLIGHT ) );
 }
 
@@ -131,7 +131,7 @@ bool CBSPLighting::Load( char const *pFilename )
 
 		// Was checking m_LightmapTextureSizeInLuxels[0] twice. Fixing but then
 		// commenting out the second check to avoid changing the behavior.
-		if( file.dfaces[iCountFace].m_LightmapTextureSizeInLuxels[0] != 0 /*|| 
+		if( file.dfaces[iCountFace].m_LightmapTextureSizeInLuxels[0] != 0 /*||
 			file.dfaces[iCountFace].m_LightmapTextureSizeInLuxels[1] != 0*/ )
 		{
 			texinfo_t *pTexInfo = &file.texinfo[ file.dfaces[iCountFace].texinfo ];
@@ -154,7 +154,7 @@ bool CBSPLighting::Load( char const *pFilename )
 
 	m_StoredFaces.SetSize( nFaces );
 
-	
+
 	InitMaterialLUT( file );
 
 
@@ -181,7 +181,7 @@ bool CBSPLighting::Load( char const *pFilename )
 			CStoredFace *pStoredFace = &m_StoredFaces[iOutFace];
 
 			++iOutFace;
-			
+
 			pStoredFace->m_iMapFace = iFace;
 			pStoredFace->m_pFace = pOut;
 
@@ -195,13 +195,13 @@ bool CBSPLighting::Load( char const *pFilename )
 			if( pStoredFace->m_pMaterial )
 				pStoredFace->m_pMaterial->m_Faces.AddToTail( pStoredFace );
 
-			// Setup its lightmap.		
+			// Setup its lightmap.
 			memcpy( pOut->m_LightmapVecs, file.texinfo[pIn->texinfo].lightmapVecsLuxelsPerWorldUnits, sizeof(pOut->m_LightmapVecs) );
 			memcpy( pOut->m_LightmapTextureMinsInLuxels, pIn->m_LightmapTextureMinsInLuxels, sizeof(pOut->m_LightmapTextureMinsInLuxels) );
 
 			pStoredFace->m_LightmapSize[0] = pIn->m_LightmapTextureSizeInLuxels[0]+1;
 			pStoredFace->m_LightmapSize[1] = pIn->m_LightmapTextureSizeInLuxels[1]+1;
-			
+
 			// Setup the verts.
 			pOut->m_iVertStart = iOutVert;
 			pOut->m_nVerts = pIn->numedges;
@@ -221,7 +221,7 @@ bool CBSPLighting::Load( char const *pFilename )
 
 	g_pFullFileSystem->RemoveSearchPath( pFilename, "GAME" );
 
-	
+
 	// Allocate lightmaps.. must be grouped by material.
 	pMatSys->ResetMaterialLightmapPageInfo();
 
@@ -236,11 +236,11 @@ bool CBSPLighting::Load( char const *pFilename )
 			{
 				CStoredFace *pStoredFace = pMat->m_Faces[iFace];
 				CFace *pOut = pStoredFace->m_pFace;
-			
+
 				int bumpedSize = pStoredFace->m_LightmapSize[0];
 				if( bNeedsBumpmap )
 					bumpedSize *= 4;
-				
+
 				pOut->m_LightmapSortID = pMatSys->AllocateLightmap(
 					bumpedSize,
 					pStoredFace->m_LightmapSize[1],
@@ -295,10 +295,10 @@ bool CBSPLighting::Load( char const *pFilename )
 				Assert( _finite(flVal) );
 				pVert->m_vLightCoords[iCoord] = flVal;
 
-				pVert->m_vTexCoords[iCoord] = 
-					DotProduct( vPos, *((Vector*)pTexInfo->textureVecsTexelsPerWorldUnits[iCoord]) ) + 
+				pVert->m_vTexCoords[iCoord] =
+					DotProduct( vPos, *((Vector*)pTexInfo->textureVecsTexelsPerWorldUnits[iCoord]) ) +
 					pTexInfo->textureVecsTexelsPerWorldUnits[iCoord][3];
-				
+
 				if( pStoredFace->m_pMaterial )
 				{
 					if( iCoord == 0 )
@@ -332,7 +332,7 @@ void CBSPLighting::Term()
 	}
 
 	m_nTotalTris = 0;
-	
+
 	if( m_hVRadDLL )
 	{
 		if( m_pVRadDLL )
@@ -470,7 +470,7 @@ void CBSPLighting::Draw()
 		return;
 
 	CMatRenderContextPtr pRenderContext( pMatSys );
-	
+
 	CheckForNewLightmaps();
 
 	pRenderContext->Flush();
@@ -486,12 +486,12 @@ void CBSPLighting::Draw()
 		pRenderContext->MatrixMode( MATERIAL_MODEL );
 		pRenderContext->PushMatrix();
 		pRenderContext->LoadIdentity();
-		
+
 		pRenderContext->MatrixMode( MATERIAL_PROJECTION );
 		pRenderContext->PushMatrix();
 		pRenderContext->LoadIdentity();
 		pRenderContext->Ortho( 0, 0, 300, 300, -99999, 99999 );
-		
+
 		static int iPageToDraw = 0;
 		DrawLightmapPage( MaterialSystemInterface(), iPageToDraw );
 
@@ -500,7 +500,7 @@ void CBSPLighting::Draw()
 
 		pRenderContext->MatrixMode( MATERIAL_MODEL );
 		pRenderContext->PopMatrix();
-		
+
 		pRenderContext->MatrixMode( MATERIAL_PROJECTION );
 		pRenderContext->PopMatrix();
 	}
@@ -510,7 +510,7 @@ void CBSPLighting::Draw()
 	FOR_EACH_LL( m_FaceMaterials, iMat )
 	{
 		CFaceMaterial *pMat = m_FaceMaterials[iMat];
-		
+
 		pRenderContext->Bind( pMat->m_pMaterial );
 
 		FOR_EACH_LL( pMat->m_MaterialBufs, iBuf )
@@ -538,7 +538,7 @@ void CBSPLighting::AssignFaceMaterialCounts(
 	FOR_EACH_LL( m_FaceMaterials, i )
 	{
 		CFaceMaterial *pMat = m_FaceMaterials[i];
-		
+
 		// Start off an initial CMaterialBuf to dump the faces in.
 		CMaterialBuf *pBuf = new CMaterialBuf;
 		pMat->m_MaterialBufs.AddToTail( pBuf );
@@ -553,19 +553,19 @@ void CBSPLighting::AssignFaceMaterialCounts(
 			if( pFace->m_iDispInfo == -1 )
 			{
 				pStoredFace->m_nIndices = (pFace->m_nVerts - 2) * 3;
-				
+
 				pBuf->m_nIndices += (pFace->m_nVerts - 2) * 3;
 				pBuf->m_nVerts += pFace->m_nVerts;
 			}
 			else
 			{
 				ddispinfo_t *pDisp = &file.g_dispinfo[pFace->m_iDispInfo];
-				
+
 				int nTris  = Square( 1 << pDisp->power ) * 2;
 				int nVerts = Square( (1 << pDisp->power) + 1 );
 
 				pStoredFace->m_nIndices = nTris * 3;
-				
+
 				pBuf->m_nIndices += nTris * 3;
 				pBuf->m_nVerts += nVerts;
 			}
@@ -648,14 +648,14 @@ void CBSPLighting::BuildLMGroups(
 						for( int iVert=0; iVert < pFace->m_nVerts; iVert++ )
 						{
 							mb.Position3fv( (float*)&pVerts[iVert].m_vPos );
-							
+
 							mb.TexCoord2fv( 0, pVerts[iVert].m_vTexCoords.Base() );
 							mb.TexCoord2fv( 1, pVerts[iVert].m_vLightCoords.Base() );
 							if( bNeedsBumpmap )
 								mb.TexCoord2f ( 2, pStoredFace->m_BumpSTexCoordOffset, 0 );
-							
+
 							mb.Color3f( 1,1,1 );
-							mb.AdvanceVertex();		  
+							mb.AdvanceVertex();
 						}
 
 						// Write the indices.
@@ -665,17 +665,17 @@ void CBSPLighting::BuildLMGroups(
 							mb.Index( iCurBaseVert+iTri+1 );	mb.AdvanceIndex();
 							mb.Index( iCurBaseVert+iTri+2 );	mb.AdvanceIndex();
 						}
-						
+
 						iCurBaseVert += pFace->m_nVerts;
 					}
 					else
 					{
 						// It's a displacement.
 						CDispInfoFaces *pDisp = &dispInfos[pFace->m_iDispInfo];
-			
+
 						// Generate the index list.
 						unsigned short indices[ (1<<MAX_MAP_DISP_POWER) * (1<<MAX_MAP_DISP_POWER) * 6 ];
-						
+
 						int nRequired = DispCommon_GetNumTriIndices( pDisp->m_Power );
 						Assert( nRequired <= sizeof(indices)/sizeof(indices[0]) );
 
@@ -693,17 +693,17 @@ void CBSPLighting::BuildLMGroups(
 							mb.Position3fv( (float*)&pDisp->m_Verts[iVert].m_vPos );
 							mb.TexCoord2fv( 0, (float*)&pDisp->m_Verts[iVert].m_vTexCoords );
 							mb.TexCoord2fv( 1, (float*)&pDisp->m_Verts[iVert].m_vLightCoords );
-							
+
 							if( bNeedsBumpmap )
 								mb.TexCoord2f ( 2, pStoredFace->m_BumpSTexCoordOffset, 0 );
-							
+
 							mb.AdvanceVertex();
 						}
 
 						iCurBaseVert += pDisp->m_Verts.Count();;
 					}
 				}
-		
+
 			mb.End();
 		}
 	}
@@ -738,7 +738,7 @@ void CBSPLighting::BuildDrawCommands()
 			FOR_EACH_LL( pBuf->m_Faces, iFace )
 			{
 				CStoredFace *pFace = pBuf->m_Faces[iFace];
-				
+
 				int index;
 				if( !FindDrawCommand( pBuf->m_DrawCommands, pFace->m_LightmapPageID, index ) )
 				{
@@ -788,7 +788,7 @@ void CBSPLighting::ReloadLightmaps()
 
 		texinfo_t *pTexInfo = &bspInfo.texinfo[ bspInfo.dfaces[pFace->m_iMapFace].texinfo ];
 		bool bHasBumpmap = SurfHasBumpedLightmaps( pTexInfo->flags );
-			
+
 		int nLightmaps = 1;
 		if( bNeedsBumpmap && bHasBumpmap )
 			nLightmaps = 4;
@@ -807,7 +807,7 @@ void CBSPLighting::ReloadLightmaps()
 			}
 		}
 
-		// If it needs bumpmaps but doesn't have them in the file, then just copy 
+		// If it needs bumpmaps but doesn't have them in the file, then just copy
 		// the lightmap data into the other lightmaps like the engine does.
 		if( bNeedsBumpmap && !bHasBumpmap )
 		{
@@ -853,7 +853,7 @@ bool CBSPLighting::LoadVRADDLL( char const *pFilename )
 	if( !m_pVRadDLL )
 		return false;
 
-	// Tell VRAD to load the BSP file.	
+	// Tell VRAD to load the BSP file.
 	if( !m_pVRadDLL->Init( pFilename ) )
 		return false;
 
@@ -886,7 +886,7 @@ void CBSPLighting::CreateDisplacements( CBSPInfo &file, CUtlVector<CFace> &faces
 
 		int lightmapPageSize[2];
 		pMatSys->GetLightmapPageSize( pFace->m_pStoredFace->m_LightmapPageID, &lightmapPageSize[0], &lightmapPageSize[1] );
-		
+
 		for( int iVert=0; iVert < pInDisp->m_LODs[0].m_nVerts; iVert++ )
 		{
 			ddisp_lod_vert_t *pInVert = &file.ddispverts[ pInDisp->m_LODs[0].m_iVertStart + iVert ];
@@ -904,7 +904,7 @@ void CBSPLighting::CreateDisplacements( CBSPInfo &file, CUtlVector<CFace> &faces
 				pOutVert->m_vLightCoords[iCoord] = flVal;
 
 				pOutVert->m_vTexCoords[iCoord] = pInVert->m_TexCoords[iCoord];
-				
+
 				if( iCoord == 0 )
 					pOutVert->m_vTexCoords[iCoord] /= pStoredFace->m_pMaterial->m_pMaterial->GetMappingWidth();
 				else

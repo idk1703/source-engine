@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -47,7 +47,7 @@ enum ColorChannel_t
 //-----------------------------------------------------------------------------
 static void RGB888ToVector( RGB888_t inColor, Vector *pOutVector )
 {
-	pOutVector->Init( inColor.r / 255.0f, inColor.g / 255.0f, inColor.b / 255.0f ); 
+	pOutVector->Init( inColor.r / 255.0f, inColor.g / 255.0f, inColor.b / 255.0f );
 }
 
 static void VectorToRGB888( const Vector &inVector, RGB888_t &outColor )
@@ -95,7 +95,7 @@ public:
 	CColorXYPreview( vgui::Panel *pParent, const char *pName );
 
 	virtual void RegenerateTextureBits( ITexture *pTexture, IVTFTexture *pVTFTexture, Rect_t *pRect );
- 	virtual void Paint( void );
+	virtual void Paint( void );
 	virtual void OnMousePressed( vgui::MouseCode code );
 	virtual void OnMouseReleased( vgui::MouseCode code );
 	virtual void OnCursorMoved( int x, int y );
@@ -104,7 +104,7 @@ public:
 	void SetColor( const RGB888_t &color, const Vector &hsvColor );
 
 private:
-	// Computes a color given a particular x,y value 
+	// Computes a color given a particular x,y value
 	void ComputeColorForPoint( int x, int y, RGB888_t &color );
 	void ComputeHSVColorForPoint( int x, int y, Vector &vscHSV );
 
@@ -130,7 +130,7 @@ ColorChannel_t CColorXYPreview::s_pHSVRemapX[3] =
 	CHANNEL_SATURATION, CHANNEL_HUE, CHANNEL_HUE
 };
 
-ColorChannel_t CColorXYPreview::s_pHSVRemapY[3] = 
+ColorChannel_t CColorXYPreview::s_pHSVRemapY[3] =
 {
 	CHANNEL_VALUE, CHANNEL_VALUE, CHANNEL_SATURATION
 };
@@ -140,12 +140,12 @@ ColorChannel_t CColorXYPreview::s_pRGBRemapX[3] =
 	CHANNEL_BLUE, CHANNEL_BLUE, CHANNEL_RED
 };
 
-ColorChannel_t CColorXYPreview::s_pRGBRemapY[3] = 
+ColorChannel_t CColorXYPreview::s_pRGBRemapY[3] =
 {
 	CHANNEL_GREEN, CHANNEL_RED, CHANNEL_GREEN
 };
 
-	
+
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
@@ -160,7 +160,7 @@ CColorXYPreview::CColorXYPreview( vgui::Panel *pParent, const char *pName ) : Ba
 	m_bDraggingMouse = false;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Sets the mode for the preview
 //-----------------------------------------------------------------------------
@@ -184,9 +184,9 @@ void CColorXYPreview::SetColor( const RGB888_t &color, const Vector &hsvColor )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
-// Computes a color given a particular x,y value 
+// Computes a color given a particular x,y value
 //-----------------------------------------------------------------------------
 void CColorXYPreview::ComputeColorForPoint( int x, int y, RGB888_t &color )
 {
@@ -216,7 +216,7 @@ void CColorXYPreview::ComputeHSVColorForPoint( int x, int y, Vector &vscHSV )
 
 
 //-----------------------------------------------------------------------------
-// Fills the texture w/ the image buffer 
+// Fills the texture w/ the image buffer
 //-----------------------------------------------------------------------------
 void CColorXYPreview::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *pVTFTexture, Rect_t *pRect )
 {
@@ -230,7 +230,7 @@ void CColorXYPreview::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *pV
 	Assert( nWidth == m_nWidth && nHeight == m_nHeight );
 
 	CPixelWriter pixelWriter;
-	pixelWriter.SetPixelMemory( pVTFTexture->Format(), 
+	pixelWriter.SetPixelMemory( pVTFTexture->Format(),
 		pVTFTexture->ImageData( 0, 0, 0 ), pVTFTexture->RowSizeInBytes( 0 ) );
 
 	for ( int y = 0; y < nHeight; ++y )
@@ -283,7 +283,7 @@ void CColorXYPreview::Paint( void )
 		x = ((unsigned char*)&m_CurrentColor)[ s_pRGBRemapX[m_Channel] ];
 		y = GetImageHeight() - 1 - ((unsigned char*)&m_CurrentColor)[ s_pRGBRemapY[m_Channel] ];
 	}
-			   
+
 	// Renormalize x, y to actual size
 	int w, h;
 	GetSize( w, h );
@@ -321,7 +321,7 @@ void CColorXYPreview::UpdateColorFromMouse( int x, int y )
 		pKeyValues->SetFloat( "saturation", vecHSV.y );
 		pKeyValues->SetFloat( "value", vecHSV.z );
 		PostActionSignal( pKeyValues );
-		
+
 		// This prevents a 1-frame lag in the current color position
 		RGB888_t color;
 		HSVtoRGB( vecHSV, color );
@@ -405,7 +405,7 @@ public:
 	CColorZPreview( vgui::Panel *pParent, const char *pName );
 
 	virtual void RegenerateTextureBits( ITexture *pTexture, IVTFTexture *pVTFTexture, Rect_t *pRect );
- 	virtual void PerformLayout();
+	virtual void PerformLayout();
 	virtual void Paint( void );
 	virtual void OnCursorMoved( int x,int y );
 	virtual void OnMousePressed( vgui::MouseCode code );
@@ -414,7 +414,7 @@ public:
 	void SetMode( ColorType_t type, ColorChannel_t channel );
 	void SetColor( const RGB888_t &color, const Vector &hsvColor );
 
-	// Computes a color given a particular x,y value 
+	// Computes a color given a particular x,y value
 	void ComputeColorForPoint( int y, RGB888_t &color );
 	void ComputeHSVColorForPoint( int y, bool bProceduralTexture, Vector &vecHSV );
 
@@ -443,13 +443,13 @@ CColorZPreview::CColorZPreview( vgui::Panel *pParent, const char *pName ) : Base
 	Vector vecRGB;
 	RGB888ToVector( m_CurrentColor, &vecRGB );
 	RGBtoHSV( vecRGB, m_CurrentHSVColor );
-    m_bDraggingMouse = false;
+	m_bDraggingMouse = false;
 
 	SetMouseInputEnabled( true );
 	SetMode( COLOR_TYPE_HSV, CHANNEL_HUE );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Sets the mode for the preview
 //-----------------------------------------------------------------------------
@@ -473,7 +473,7 @@ void CColorZPreview::SetColor( const RGB888_t &color, const Vector &hsvColor )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Lays out the panel
 //-----------------------------------------------------------------------------
@@ -492,9 +492,9 @@ void CColorZPreview::PerformLayout()
 	SetPaintRect( &r );
 }
 
-	
+
 //-----------------------------------------------------------------------------
-// Computes a color given a particular x,y value 
+// Computes a color given a particular x,y value
 //-----------------------------------------------------------------------------
 void CColorZPreview::ComputeColorForPoint( int y, RGB888_t &color )
 {
@@ -523,7 +523,7 @@ void CColorZPreview::ComputeHSVColorForPoint( int y, bool bProceduralTexture, Ve
 
 
 //-----------------------------------------------------------------------------
-// Fills the texture w/ the image buffer 
+// Fills the texture w/ the image buffer
 //-----------------------------------------------------------------------------
 void CColorZPreview::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *pVTFTexture, Rect_t *pRect )
 {
@@ -537,7 +537,7 @@ void CColorZPreview::RegenerateTextureBits( ITexture *pTexture, IVTFTexture *pVT
 	Assert( nWidth == m_nWidth && nHeight == m_nHeight );
 
 	CPixelWriter pixelWriter;
-	pixelWriter.SetPixelMemory( pVTFTexture->Format(), 
+	pixelWriter.SetPixelMemory( pVTFTexture->Format(),
 		pVTFTexture->ImageData( 0, 0, 0 ), pVTFTexture->RowSizeInBytes( 0 ) );
 
 	for ( int y = 0; y < nHeight; ++y )
@@ -587,7 +587,7 @@ void CColorZPreview::UpdateColorFromMouse( int x, int y )
 		pKeyValues->SetFloat( "saturation", vecHSV.y );
 		pKeyValues->SetFloat( "value", vecHSV.z );
 		PostActionSignal( pKeyValues );
-		
+
 		// This prevents a 1-frame lag in the current color position
 		RGB888_t color;
 		HSVtoRGB( vecHSV, color );
@@ -833,7 +833,7 @@ void CColorPickerPanel::UpdatePreviewColors()
 
 
 //-----------------------------------------------------------------------------
-// Used to make sure we win over the scheme settings 
+// Used to make sure we win over the scheme settings
 //-----------------------------------------------------------------------------
 void CColorPickerPanel::ApplySchemeSettings(IScheme *pScheme)
 {
@@ -957,7 +957,7 @@ void CColorPickerPanel::OnColorChanged( vgui::TextEntry *pChanged )
 	PostActionSignal( new KeyValues( "command", "command", "preview" ) );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Called when the color text entry panels change
 //-----------------------------------------------------------------------------
@@ -1033,7 +1033,7 @@ void CColorPickerPanel::OnTextChanged( KeyValues *data )
 // Purpose: Modal picker frame
 //
 //-----------------------------------------------------------------------------
-CColorPickerFrame::CColorPickerFrame( vgui::Panel *pParent, const char *pTitle ) : 
+CColorPickerFrame::CColorPickerFrame( vgui::Panel *pParent, const char *pTitle ) :
 	BaseClass( pParent, "ColorPickerFrame" )
 {
 	m_pContextKeys = NULL;

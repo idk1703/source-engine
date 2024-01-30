@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,7 +18,7 @@ class CNPC_Barnacle;
 
 
 #define BARNACLE_PULL_SPEED			80
-#define BARNACLE_KILL_VICTIM_DELAY	5 // how many seconds after pulling prey in to gib them. 
+#define BARNACLE_KILL_VICTIM_DELAY	5 // how many seconds after pulling prey in to gib them.
 
 // Tongue
 #define BARNACLE_TONGUE_POINTS	8
@@ -62,7 +62,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CNPC_Barnacle : public CAI_BaseNPC
 {
@@ -158,13 +158,13 @@ private:
 	CNetworkVar( float, m_flAltitude );
 	int				m_cGibs;				// barnacle loads up on gibs each time it kills something.
 	bool			m_bLiftingPrey;			// true when the prey's on the tongue and being lifted to the mouth
-	bool			m_bSwallowingPrey;		// if it's a human, true while the barnacle chews it and swallows it whole. 
+	bool			m_bSwallowingPrey;		// if it's a human, true while the barnacle chews it and swallows it whole.
 	float			m_flDigestFinish;		// time at which we've finished digesting something we chewed
 	float			m_flVictimHeight;
 	int				m_iGrabbedBoneIndex;
 	bool			m_bPlayedPullSound;
 	bool			m_bPlayerWasStanding;
-	
+
 	static const char	*m_szGibNames[NUM_BARNACLE_GIBS];
 
 	// Tongue spline points
@@ -199,7 +199,7 @@ private:
 #ifdef HL2_EPISODIC
 	bool						m_bSwallowingPoison;
 #endif
-	
+
 #if BARNACLE_USE_TONGUE_OFFSET
 	// Static because only one barnacle can be holding the player
 	// at a time, and because it's not really a big deal if it
@@ -226,7 +226,7 @@ inline bool CNPC_Barnacle::IsEnemyARagdoll()
 
 inline bool CNPC_Barnacle::IsEnemyAPhysicsObject()
 {
-	return !m_hRagdoll && GetEnemy() && !GetEnemy()->IsPlayer() && 
+	return !m_hRagdoll && GetEnemy() && !GetEnemy()->IsPlayer() &&
 		!GetEnemy()->MyNPCPointer() && (GetEnemy()->GetMoveType() == MOVETYPE_VPHYSICS);
 }
 

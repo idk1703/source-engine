@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -51,7 +51,7 @@ void DrawVortWarp_DX9( CBaseVSShader *pShader, IMaterialVar** params, IShaderDyn
 		( params[info.m_nSelfIllumEnvMapMask_Alpha]->GetFloatValue() != 0.0 ) ;
 	bool bHasFlowMap = ( info.m_nFlowMap != -1 ) && params[info.m_nFlowMap]->IsTexture();
 	bool bHasSelfIllumMap = ( info.m_nSelfIllumMap != -1 ) && params[info.m_nSelfIllumMap]->IsTexture();
-	
+
 	BlendType_t blendType;
 	if ( params[info.m_nBaseTexture]->IsTexture() )
 	{
@@ -62,13 +62,13 @@ void DrawVortWarp_DX9( CBaseVSShader *pShader, IMaterialVar** params, IShaderDyn
 		blendType = pShader->EvaluateBlendRequirements( info.m_nEnvmapMask, false );
 	}
 
-	
+
 	if( pShader->IsSnapshotting() )
 	{
 		// look at color and alphamod stuff.
 		// Unlit generic never uses the flashlight
 		bool hasEnvmap = !hasFlashlight && params[info.m_nEnvmap]->IsTexture();
-		bool hasEnvmapMask = (hasSelfIllumInEnvMapMask || !hasFlashlight) && 
+		bool hasEnvmapMask = (hasSelfIllumInEnvMapMask || !hasFlashlight) &&
 			params[info.m_nEnvmapMask]->IsTexture();
 		bool bHasNormal = bVertexLitGeneric || hasEnvmap;
 
@@ -98,7 +98,7 @@ void DrawVortWarp_DX9( CBaseVSShader *pShader, IMaterialVar** params, IShaderDyn
 			}
 			if( bIsAlphaTested )
 			{
-				// disable alpha test and use the zfunc zequals since alpha isn't guaranteed to 
+				// disable alpha test and use the zfunc zequals since alpha isn't guaranteed to
 				// be the same on both the regular pass and the flashlight pass.
 				pShaderShadow->EnableAlphaTest( false );
 				pShaderShadow->DepthFunc( SHADER_DEPTHFUNC_EQUAL );
@@ -117,7 +117,7 @@ void DrawVortWarp_DX9( CBaseVSShader *pShader, IMaterialVar** params, IShaderDyn
 				pShader->SetDefaultBlendingShadowState( info.m_nEnvmapMask, false );
 			}
 		}
-		
+
 		unsigned int flags = VERTEX_POSITION;
 		int nTexCoordCount = 1; // texcoord0 : base texcoord
 		int userDataSize = 0;
@@ -167,7 +167,7 @@ void DrawVortWarp_DX9( CBaseVSShader *pShader, IMaterialVar** params, IShaderDyn
 		}
 
 		pShaderShadow->EnableSRGBWrite( true );
-		
+
 		if( bHasSelfIllumMap )
 		{
 			pShaderShadow->EnableTexture( SHADER_SAMPLER6, true );
@@ -184,7 +184,7 @@ void DrawVortWarp_DX9( CBaseVSShader *pShader, IMaterialVar** params, IShaderDyn
 		pShaderShadow->VertexShaderVertexFormat( flags, nTexCoordCount, NULL, userDataSize );
 
 		Assert( hasBump );
-	
+
 #ifndef _X360
 		if ( !g_pHardwareConfig->HasFastVertexTextures() )
 #endif
@@ -195,7 +195,7 @@ void DrawVortWarp_DX9( CBaseVSShader *pShader, IMaterialVar** params, IShaderDyn
 			SET_STATIC_VERTEX_SHADER_COMBO( HALFLAMBERT, bHalfLambert);
 			SET_STATIC_VERTEX_SHADER_COMBO( USE_STATIC_CONTROL_FLOW, bUseStaticControlFlow );
 			SET_STATIC_VERTEX_SHADER( vortwarp_vs20 );
-			
+
 			if( g_pHardwareConfig->SupportsPixelShaders_2_b() )
 			{
 				DECLARE_STATIC_PIXEL_SHADER( vortwarp_ps20b );
@@ -406,7 +406,7 @@ void DrawVortWarp_DX9( CBaseVSShader *pShader, IMaterialVar** params, IShaderDyn
 		{
 			pShader->SetVertexShaderTextureTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_4, info.m_nEnvmapMaskTransform );
 		}
-		
+
 		if( hasEnvmap )
 		{
 			pShader->SetEnvMapTintPixelShaderDynamicState( 0, info.m_nEnvmapTint, -1, true );
@@ -429,8 +429,8 @@ void DrawVortWarp_DX9( CBaseVSShader *pShader, IMaterialVar** params, IShaderDyn
 		{
 			pShaderAPI->BindStandardTexture( SHADER_SAMPLER5, TEXTURE_NORMALIZATION_CUBEMAP_SIGNED );
 			pShaderAPI->SetPixelShaderStateAmbientLightCube( 5 );
-            pShaderAPI->CommitPixelShaderLighting( 13 );
-	
+	pShaderAPI->CommitPixelShaderLighting( 13 );
+
 		}
 
 		if( bHasSelfIllumMap )
@@ -485,13 +485,13 @@ void DrawVortWarp_DX9( CBaseVSShader *pShader, IMaterialVar** params, IShaderDyn
 			pShaderAPI->SetPixelShaderConstant( 23, pos, 1 );
 
 			pShaderAPI->SetPixelShaderConstant( 24, worldToTexture.Base(), 4 );
-		}		
+		}
 	}
 	pShader->Draw();
 }
 
 
-BEGIN_VS_SHADER( VortWarp_DX9, 
+BEGIN_VS_SHADER( VortWarp_DX9,
 				"Help for VortWarp_DX9" )
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( ALBEDO, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "albedo (Base texture with no baked lighting)" )
@@ -510,17 +510,17 @@ BEGIN_VS_SHADER( VortWarp_DX9,
 		SHADER_PARAM( BUMPTRANSFORM, SHADER_PARAM_TYPE_MATRIX, "center .5 .5 scale 1 1 rotate 0 translate 0 0", "$bumpmap texcoord transform" )
 		SHADER_PARAM( ENVMAPCONTRAST, SHADER_PARAM_TYPE_FLOAT, "0.0", "contrast 0 == normal 1 == color*color" )
 		SHADER_PARAM( ENVMAPSATURATION, SHADER_PARAM_TYPE_FLOAT, "1.0", "saturation 0 == greyscale 1 == normal" )
- 	    SHADER_PARAM( SELFILLUM_ENVMAPMASK_ALPHA, SHADER_PARAM_TYPE_FLOAT,"0.0","defines that self illum value comes from env map mask alpha" )
+	SHADER_PARAM( SELFILLUM_ENVMAPMASK_ALPHA, SHADER_PARAM_TYPE_FLOAT,"0.0","defines that self illum value comes from env map mask alpha" )
 
 		// Debugging term for visualizing ambient data on its own
 		SHADER_PARAM( AMBIENTONLY, SHADER_PARAM_TYPE_INTEGER, "0", "Control drawing of non-ambient light ()" )
-		
+
 
 		// hack hack hack
 
 
- 	    SHADER_PARAM( ENTITYORIGIN, SHADER_PARAM_TYPE_VEC3,"0.0","center if the model in world space" )
- 	    SHADER_PARAM( WARPPARAM, SHADER_PARAM_TYPE_FLOAT,"0.0","animation param between 0 and 1" )
+	SHADER_PARAM( ENTITYORIGIN, SHADER_PARAM_TYPE_VEC3,"0.0","center if the model in world space" )
+	SHADER_PARAM( WARPPARAM, SHADER_PARAM_TYPE_FLOAT,"0.0","animation param between 0 and 1" )
 
 		SHADER_PARAM( FLOWMAP, SHADER_PARAM_TYPE_TEXTURE, "", "flow map" )
 		SHADER_PARAM( SELFILLUMMAP, SHADER_PARAM_TYPE_TEXTURE, "", "self-illumination map" )
@@ -598,7 +598,7 @@ BEGIN_VS_SHADER( VortWarp_DX9,
 	}
 
 	SHADER_FALLBACK
-	{	
+	{
 		if (g_pHardwareConfig->GetDXSupportLevel() < 90)
 			return "vortwarp_DX8";
 

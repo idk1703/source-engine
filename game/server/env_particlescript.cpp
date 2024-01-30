@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@
 #define CL_EVENT_SPRITEGROUP_CREATE		6002
 
 //-----------------------------------------------------------------------------
-// An entity which emits other entities at points 
+// An entity which emits other entities at points
 //-----------------------------------------------------------------------------
 class CEnvParticleScript : public CBaseAnimating
 {
@@ -44,12 +44,12 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Save/load 
+// Save/load
 //-----------------------------------------------------------------------------
 BEGIN_DATADESC( CEnvParticleScript )
 
 	DEFINE_FIELD( m_flSequenceScale, FIELD_FLOAT ),
-	
+
 	// Inputs
 	DEFINE_INPUTFUNC( FIELD_STRING, "SetSequence", InputSetSequence ),
 
@@ -110,7 +110,7 @@ void CEnvParticleScript::Precache()
 {
 	BaseClass::Precache();
 	PrecacheModel( STRING( GetModelName() ) );
-	
+
 	// We need a model for its animation sequences even though we don't render it
 	SetModel( STRING( GetModelName() ) );
 

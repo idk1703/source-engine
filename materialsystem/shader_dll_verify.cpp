@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -59,7 +59,7 @@ CRC32_t CShaderDLLVerification::Function1( unsigned char *pData )
 	g_pLastInputData = (unsigned char*)pData;
 
 	void *pVerifyPtr1 = &g_Blah;
-	
+
 	CRC32_t testCRC;
 	CRC32_Init( &testCRC );
 	CRC32_ProcessBuffer( &testCRC, pData, SHADER_DLL_VERIFY_DATA_LEN1 );

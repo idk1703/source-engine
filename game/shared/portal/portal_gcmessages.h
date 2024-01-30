@@ -2,7 +2,7 @@
 //
 // Purpose: This file defines all of our over-the-wire net protocols for the
 //			Game Coordinator for Portal.  Note that we never use types
-//			with undefined length (like int).  Always use an explicit type 
+//			with undefined length (like int).  Always use an explicit type
 //			(like int32).
 //
 //=============================================================================

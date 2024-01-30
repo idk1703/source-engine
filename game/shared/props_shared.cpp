@@ -31,7 +31,7 @@ ConVar cl_burninggibs( "cl_burninggibs", "0", 0, "A burning player that gibs has
 #endif // GAME_DLL
 
 extern bool PropBreakableCapEdictsOnCreateAll(int modelindex, IPhysicsObject *pPhysics, const breakablepropparams_t &params, CBaseEntity *pEntity, int iPrecomputedBreakableCount = -1 );
-extern CBaseEntity *BreakModelCreateSingle( CBaseEntity *pOwner, breakmodel_t *pModel, const Vector &position, 
+extern CBaseEntity *BreakModelCreateSingle( CBaseEntity *pOwner, breakmodel_t *pModel, const Vector &position,
 	const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity, int nSkin, const breakablepropparams_t &params );
 
 static int nPropBreakablesPerFrameCount = 0;
@@ -42,7 +42,7 @@ static int nFrameNumber = 0;
 //=============================================================================================================
 //-----------------------------------------------------------------------------
 // Purpose: returns the axis index with the greatest size
-// Input  : &vec - 
+// Input  : &vec -
 // Output : static int
 //-----------------------------------------------------------------------------
 static int GreatestAxis( const Vector &vec )
@@ -60,7 +60,7 @@ static int GreatestAxis( const Vector &vec )
 
 //-----------------------------------------------------------------------------
 // Purpose: returns the axis index with the smallest size
-// Input  : &vec - 
+// Input  : &vec -
 // Output : static int
 //-----------------------------------------------------------------------------
 static int SmallestAxis( const Vector &vec )
@@ -78,9 +78,9 @@ static int SmallestAxis( const Vector &vec )
 
 //-----------------------------------------------------------------------------
 // Purpose: Rotates a matrix by 90 degrees in the plane of axis0/axis1
-// Input  : &matrix - 
-//			axis0 - 
-//			axis1 - 
+// Input  : &matrix -
+//			axis0 -
+//			axis1 -
 // Output : static void
 //-----------------------------------------------------------------------------
 static void MatrixRot90( matrix3x4_t &matrix, int axis0, int axis1 )
@@ -91,18 +91,18 @@ static void MatrixRot90( matrix3x4_t &matrix, int axis0, int axis1 )
 	MatrixSetColumn( col1, axis0, matrix );
 	MatrixSetColumn( -col0, axis1, matrix );
 }
- 
+
 //-----------------------------------------------------------------------------
 // Purpose: Given two symmetric boxes, rotate the coordinate frame by the necessary
 //			90 degree rotations to approximately align them
-// Input  : *pInOutMatrix - 
-//			&boxExtents1 - 
-//			&boxExtents2 - 
+// Input  : *pInOutMatrix -
+//			&boxExtents1 -
+//			&boxExtents2 -
 //-----------------------------------------------------------------------------
 static void AlignBoxes( matrix3x4_t *pInOutMatrix, const Vector &boxExtents1, const Vector &boxExtents2 )
 {
 	int rotCount = 0;
-	struct 
+	struct
 	{
 		int axis0;
 		int axis1;
@@ -162,7 +162,7 @@ propdata_interaction_s sPropdataInteractionSections[PROPINTER_NUM_INTERACTIONS] 
 	{ "physgun_interactions", "onlaunch", "spin_zaxis" },		// PROPINTER_PHYSGUN_LAUNCH_SPIN_Z,
 	{ "physgun_interactions", "onbreak", "explode_fire" },		// PROPINTER_PHYSGUN_BREAK_EXPLODE,
 	{ "physgun_interactions", "damage", "none" },				// PROPINTER_PHYSGUN_DAMAGE_NONE,
-	
+
 	{ "fire_interactions", "flammable", "yes" },				// PROPINTER_FIRE_FLAMMABLE,
 	{ "fire_interactions", "explosive_resist", "yes" },			// PROPINTER_FIRE_EXPLOSIVE_RESIST,
 	{ "fire_interactions", "ignite", "halfhealth" },			// PROPINTER_FIRE_IGNITE_HALFHEALTH,
@@ -180,7 +180,7 @@ extern propdata_interaction_s sPropdataInteractionSections[PROPINTER_NUM_INTERAC
 //-----------------------------------------------------------------------------
 // Constructor, destructor
 //-----------------------------------------------------------------------------
-CPropData::CPropData( void ) : 
+CPropData::CPropData( void ) :
 	CAutoGameSystem( "CPropData" )
 {
 	m_bPropDataLoaded = false;
@@ -197,7 +197,7 @@ void CPropData::LevelInitPreEntity( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropData::LevelShutdownPostEntity( void )
 {
@@ -250,14 +250,14 @@ void CPropData::ParsePropDataFile( void )
 			pChunkSection = pChunkSection->GetNextKey();
 		}
 	}
-}	
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: Parse a keyvalues section into the prop
 //
 //			pInteractionSection is a bit of jiggery-pokery to get around the unfortunate
 //			fact that the interaction KV sections ("physgun_interactions", "fire_interactions", etc)
-//			are OUTSIDE the "prop_data" KV section in the model, but may be contained WITHIN the 
+//			are OUTSIDE the "prop_data" KV section in the model, but may be contained WITHIN the
 //			specified Base's "prop_data" section (i.e. in propdata.txt)
 //-----------------------------------------------------------------------------
 int CPropData::ParsePropFromKV( CBaseEntity *pProp, KeyValues *pSection, KeyValues *pInteractionSection )
@@ -314,7 +314,7 @@ int CPropData::ParsePropFromKV( CBaseEntity *pProp, KeyValues *pSection, KeyValu
 	}
 
 	// Get multiplayer physics mode if not set by map
-	pBreakableInterface->SetPhysicsMode( pSection->GetInt( "physicsmode", 
+	pBreakableInterface->SetPhysicsMode( pSection->GetInt( "physicsmode",
 		pBreakableInterface->GetPhysicsMode() ) );
 
 	const char *multiplayer_break = pSection->GetString( "multiplayer_break", NULL );
@@ -427,7 +427,7 @@ int CPropData::ParsePropFromBase( CBaseEntity *pProp, const char *pszPropData )
 		return PARSE_FAILED_NO_DATA;
 
 	IBreakableWithPropData *pBreakableInterface = dynamic_cast<IBreakableWithPropData*>(pProp);
-	
+
 	if ( !pBreakableInterface )
 	{
 		return PARSE_FAILED_BAD_DATA;
@@ -437,7 +437,7 @@ int CPropData::ParsePropFromBase( CBaseEntity *pProp, const char *pszPropData )
 	{
 		return PARSE_FAILED_BAD_DATA;
 	}
-	
+
 	// Find the specified propdata
 	KeyValues *pSection = m_pKVPropData->FindKey( pszPropData );
 	if ( !pSection )
@@ -456,7 +456,7 @@ int CPropData::ParsePropFromBase( CBaseEntity *pProp, const char *pszPropData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CPropData::GetRandomChunkModel( const char *pszBreakableSection, int iMaxSize )
 {
@@ -523,7 +523,7 @@ static const char *FixupModelName( char *pOut, int sizeOut, const char *pModelNa
 class CBreakParser : public IVPhysicsKeyHandler
 {
 public:
-	CBreakParser( float defaultBurstScale, int defaultCollisionGroup ) 
+	CBreakParser( float defaultBurstScale, int defaultCollisionGroup )
 		: m_defaultBurstScale(defaultBurstScale), m_defaultCollisionGroup(defaultCollisionGroup) {}
 
 	void ParseModelName( breakmodel_t *pModel, const char *pValue )
@@ -605,7 +605,7 @@ public:
 			UTIL_StringToVector( pModel->velocity.Base(), pValue );
 		}
 	}
-	virtual void SetDefaults( void *pData ) 
+	virtual void SetDefaults( void *pData )
 	{
 		breakmodel_t *pModel = (breakmodel_t *)pData;
 		pModel->modelName[0] = 0;
@@ -641,7 +641,7 @@ void BuildPropList( const char *pszBlockName, CUtlVector<breakmodel_t> &list, in
 	while ( !pParse->Finished() )
 	{
 		CBreakParser breakParser( defBurstScale, defCollisionGroup );
-		
+
 		const char *pBlock = pParse->GetCurrentBlockName();
 		if ( !strcmpi( pBlock, pszBlockName ) )
 		{
@@ -761,7 +761,7 @@ private:
 	void InputSetMaxPiecesDX8( inputdata_t &inputdata );
 
 	typedef CHandle<CBaseAnimating> CGibHandle;
-	CUtlLinkedList< CGibHandle > m_LRU; 
+	CUtlLinkedList< CGibHandle > m_LRU;
 
 	bool		m_bAllowNewGibs;
 
@@ -880,7 +880,7 @@ void CGameGibManager::AddGibToLRU( CBaseAnimating *pEntity )
 		UTIL_Remove( m_LRU[i] );
 		m_LRU.Remove(i);
 	}
-	
+
 	m_LRU.AddToTail( pEntity );
 	m_iLastFrame = gpGlobals->framecount;
 }
@@ -905,21 +905,21 @@ CGameGibManager *GetGibManager( void )
 
 void PropBreakableCreateAll( int modelindex, IPhysicsObject *pPhysics, const breakablepropparams_t &params, CBaseEntity *pEntity, int iPrecomputedBreakableCount, bool bIgnoreGibLimit, bool defaultLocation )
 {
-        // Check for prop breakable count reset. 
-	int nPropCount = props_break_max_pieces_perframe.GetInt(); 
-	if ( nPropCount != -1 ) 
-	{ 
-		if ( nFrameNumber != gpGlobals->framecount ) 
-		{ 
-			nPropBreakablesPerFrameCount = 0; 
-			nFrameNumber = gpGlobals->framecount; 
-		} 
-      
-		// Check for max breakable count for the frame. 
-		if ( nPropBreakablesPerFrameCount >= nPropCount ) 
-			return; 
-	} 
-      
+		// Check for prop breakable count reset.
+	int nPropCount = props_break_max_pieces_perframe.GetInt();
+	if ( nPropCount != -1 )
+	{
+		if ( nFrameNumber != gpGlobals->framecount )
+		{
+			nPropBreakablesPerFrameCount = 0;
+			nFrameNumber = gpGlobals->framecount;
+		}
+
+		// Check for max breakable count for the frame.
+		if ( nPropBreakablesPerFrameCount >= nPropCount )
+			return;
+	}
+
 	int iMaxBreakCount = bIgnoreGibLimit ? -1 : props_break_max_pieces.GetInt();
 	if ( iMaxBreakCount != -1 )
 	{
@@ -941,7 +941,7 @@ void PropBreakableCreateAll( int modelindex, IPhysicsObject *pPhysics, const bre
 		return;
 	}
 #endif
-	
+
 	vcollide_t *pCollide = modelinfo->GetVCollide( modelindex );
 	if ( !pCollide )
 		return;
@@ -981,7 +981,7 @@ void PropBreakableCreateAll( int modelindex, IPhysicsObject *pPhysics, const bre
 	{
 		AngleMatrix( vec3_angle, localToWorld );
 	}
-	
+
 	CUtlVector<breakmodel_t> list;
 
 	BreakModelList( list, modelindex, params.defBurstScale, params.defCollisionGroup );
@@ -1080,7 +1080,7 @@ void PropBreakableCreateAll( int modelindex, IPhysicsObject *pPhysics, const bre
 				nActualSkin = 0;
 
 			CBaseEntity *pBreakable = NULL;
-			
+
 #ifdef GAME_DLL
 			if ( GetGibManager() == NULL || GetGibManager()->AllowedToSpawnGib() )
 #endif
@@ -1197,7 +1197,7 @@ void PropBreakableCreateAll( int modelindex, IPhysicsObject *pPhysics, const bre
 #endif
 					Vector vecBreakableObbSize = pBreakable->CollisionProp()->OBBSize();
 
-					// Try to align the gibs along the original axis 
+					// Try to align the gibs along the original axis
 					matrix3x4_t matrix;
 					AngleMatrix( vecAngles, matrix );
 					AlignBoxes( &matrix, vecObbSize, vecBreakableObbSize );
@@ -1233,8 +1233,8 @@ void PropBreakableCreateAll( int modelindex, IPhysicsObject *pPhysics, const Vec
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : modelindex - 
+// Purpose:
+// Input  : modelindex -
 //-----------------------------------------------------------------------------
 void PrecachePropsForModel( int iModel, const char *pszBlockName )
 {
@@ -1273,11 +1273,11 @@ void PrecacheGibsForModel( int iModel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &list - 
-//			modelindex - 
-//			defBurstScale - 
-//			defCollisionGroup - 
+// Purpose:
+// Input  : &list -
+//			modelindex -
+//			defBurstScale -
+//			defCollisionGroup -
 //-----------------------------------------------------------------------------
 void BuildGibList( CUtlVector<breakmodel_t> &list, int modelindex, float defBurstScale, int defCollisionGroup )
 {
@@ -1285,32 +1285,32 @@ void BuildGibList( CUtlVector<breakmodel_t> &list, int modelindex, float defBurs
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &list - 
-//			modelindex - 
-//			*pPhysics - 
-//			&params - 
-//			*pEntity - 
-//			iPrecomputedBreakableCount - 
-//			bIgnoreGibLImit - 
-//			defaultLocation - 
+// Purpose:
+// Input  : &list -
+//			modelindex -
+//			*pPhysics -
+//			&params -
+//			*pEntity -
+//			iPrecomputedBreakableCount -
+//			bIgnoreGibLImit -
+//			defaultLocation -
 //-----------------------------------------------------------------------------
 CBaseEntity *CreateGibsFromList( CUtlVector<breakmodel_t> &list, int modelindex, IPhysicsObject *pPhysics, const breakablepropparams_t &params, CBaseEntity *pEntity, int iPrecomputedBreakableCount, bool bIgnoreGibLimit, bool defaultLocation, CUtlVector<EHANDLE> *pGibList, bool bBurning )
 {
-    // Check for prop breakable count reset. 
-	int nPropCount = props_break_max_pieces_perframe.GetInt(); 
-	if ( nPropCount != -1 ) 
-	{ 
-		if ( nFrameNumber != gpGlobals->framecount ) 
-		{ 
-			nPropBreakablesPerFrameCount = 0; 
-			nFrameNumber = gpGlobals->framecount; 
-		} 
-      
-		// Check for max breakable count for the frame. 
-		if ( nPropBreakablesPerFrameCount >= nPropCount ) 
-			return NULL; 
-	} 
+	// Check for prop breakable count reset.
+	int nPropCount = props_break_max_pieces_perframe.GetInt();
+	if ( nPropCount != -1 )
+	{
+		if ( nFrameNumber != gpGlobals->framecount )
+		{
+			nPropBreakablesPerFrameCount = 0;
+			nFrameNumber = gpGlobals->framecount;
+		}
+
+		// Check for max breakable count for the frame.
+		if ( nPropBreakablesPerFrameCount >= nPropCount )
+			return NULL;
+	}
 
 	int iMaxBreakCount = bIgnoreGibLimit ? -1 : props_break_max_pieces.GetInt();
 	if ( iMaxBreakCount != -1 )
@@ -1333,7 +1333,7 @@ CBaseEntity *CreateGibsFromList( CUtlVector<breakmodel_t> &list, int modelindex,
 		return NULL;
 	}
 #endif
-	
+
 	vcollide_t *pCollide = modelinfo->GetVCollide( modelindex );
 	if ( !pCollide )
 		return NULL;
@@ -1373,7 +1373,7 @@ CBaseEntity *CreateGibsFromList( CUtlVector<breakmodel_t> &list, int modelindex,
 	{
 		AngleMatrix( vec3_angle, localToWorld );
 	}
-	
+
 //	CUtlVector<breakmodel_t> list;
 //	BreakModelList( list, modelindex, params.defBurstScale, params.defCollisionGroup );
 
@@ -1489,7 +1489,7 @@ CBaseEntity *CreateGibsFromList( CUtlVector<breakmodel_t> &list, int modelindex,
 				nActualSkin = 0;
 
 			CBaseEntity *pBreakable = NULL;
-			
+
 #ifdef GAME_DLL
 			if ( GetGibManager() == NULL || GetGibManager()->AllowedToSpawnGib() )
 #endif
@@ -1619,7 +1619,7 @@ CBaseEntity *CreateGibsFromList( CUtlVector<breakmodel_t> &list, int modelindex,
 #endif
 					Vector vecBreakableObbSize = pBreakable->CollisionProp()->OBBSize();
 
-					// Try to align the gibs along the original axis 
+					// Try to align the gibs along the original axis
 					matrix3x4_t matrix;
 					AngleMatrix( vecAngles, matrix );
 					AlignBoxes( &matrix, vecObbSize, vecBreakableObbSize );
@@ -1659,4 +1659,3 @@ CBaseEntity *CreateGibsFromList( CUtlVector<breakmodel_t> &list, int modelindex,
 
 	return pFirstBreakable;
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,9 +24,9 @@ class TextImageDemo: public DemoPage
 		~TextImageDemo();
 
 		void Paint();
-		
+
 	private:
-		TextImage *m_pTextImage;				
+		TextImage *m_pTextImage;
 };
 
 //-----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ TextImageDemo::~TextImageDemo()
 //-----------------------------------------------------------------------------
 void TextImageDemo::Paint()
 {
-   m_pTextImage->Paint();
+	m_pTextImage->Paint();
 }
 
 
@@ -65,4 +65,3 @@ Panel* TextImageDemo_Create(Panel *parent)
 {
 	return new TextImageDemo(parent, "TextImageDemo");
 }
-

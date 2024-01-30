@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -17,7 +17,7 @@ void GetRagdollCurSequenceWithDeathPose( C_BaseAnimating *entity, matrix3x4_t *c
 	Vector vPrevOrigin = entity->GetAbsOrigin();
 
 	entity->Interpolate( flTime );
-	
+
 	if ( activity != ACT_INVALID )
 	{
 		Vector vNewOrigin = entity->GetAbsOrigin();
@@ -101,14 +101,14 @@ Activity GetDeathPoseActivity( CBaseAnimating *entity, const CTakeDamageInfo &in
 	{
 		if ( bNegativeRight == true )
 			aActivity = ACT_DIE_LEFTSIDE;
-		else 
+		else
 			aActivity = ACT_DIE_RIGHTSIDE;
 	}
 	else
 	{
 		if ( bNegativeForward == true )
 			aActivity = ACT_DIE_BACKSIDE;
-		else 
+		else
 			aActivity = ACT_DIE_FRONTSIDE;
 	}
 
@@ -134,7 +134,7 @@ void SelectDeathPoseActivityAndFrame( CBaseAnimating *entity, const CTakeDamageI
 		{
 			return;
 		}
-			
+
 		case HITGROUP_HEAD:
 		{
 			frame = DEATH_FRAME_HEAD;
@@ -152,7 +152,7 @@ void SelectDeathPoseActivityAndFrame( CBaseAnimating *entity, const CTakeDamageI
 		case HITGROUP_STOMACH:
 			frame = DEATH_FRAME_STOMACH;
 			break;
-	
+
 		case HITGROUP_LEFTLEG:
 			frame = DEATH_FRAME_LEFTLEG;
 			break;

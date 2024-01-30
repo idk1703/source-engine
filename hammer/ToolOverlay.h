@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,12 +33,12 @@ public:
 	// CBaseTool virtual implementations
 	//
 	ToolID_t	GetToolID( void ) { return TOOL_OVERLAY; }
-	
-    void		OnActivate();
-    void		OnDeactivate();
+
+	void		OnActivate();
+	void		OnDeactivate();
 
 	bool		OnLMouseUp3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
-    bool		OnLMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
+	bool		OnLMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
 	bool		OnMouseMove3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
 	bool		OnContextMenu2D( CMapView2D *pView, UINT nFlags, const Vector2D &vPoint );
 
@@ -69,7 +69,7 @@ private:
 private:
 
 	bool			m_bDragging;		// Are we dragging overlay handles?
-	Shoreline_t		*m_pShoreline;		// 
+	Shoreline_t		*m_pShoreline;		//
 	CMapOverlay		*m_pActiveOverlay;	// The overlay currently being acted upon
 };
 

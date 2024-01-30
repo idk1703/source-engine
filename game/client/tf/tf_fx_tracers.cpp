@@ -27,14 +27,14 @@ CLIENTEFFECT_REGISTER_END()
 #define TRACER_TYPE_FAINT	4
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void FX_TFTracerSound( const Vector &start, const Vector &end, int iTracerType )
 {
 	// don't play on very short hits
 	if ( ( start - end ).Length() < 200 )
 		return;
-	
+
 	const char *pszSoundName = "Bullets.DefaultNearmiss";
 	float flWhizDist = 64;
 	Vector vecListenOrigin = MainViewOrigin();
@@ -83,7 +83,7 @@ void FX_TFTracerSound( const Vector &start, const Vector &end, int iTracerType )
 		VectorNormalize( shotDir );
 
 		CLocalPlayerFilter filter;
-		enginesound->EmitSound(	filter, SOUND_FROM_WORLD, CHAN_STATIC, params.soundname, 
+		enginesound->EmitSound(	filter, SOUND_FROM_WORLD, CHAN_STATIC, params.soundname,
 			params.volume, SNDLVL_TO_ATTN(params.soundlevel), 0, params.pitch, 0, &start, &shotDir, NULL);
 	}
 
@@ -92,7 +92,7 @@ void FX_TFTracerSound( const Vector &start, const Vector &end, int iTracerType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void FX_BrightTracer( Vector& start, Vector& end )
 {
@@ -107,11 +107,11 @@ void FX_BrightTracer( Vector& start, Vector& end )
 	// Don't make short tracers.
 	float length = random->RandomFloat( 64.0f, 128.0f );
 	float life = ( dist + length ) / velocity;	//NOTENOTE: We want the tail to finish its run as well
-		
+
 	//Add it
 	FX_AddDiscreetLine( start, dir, velocity, length, dist, random->RandomFloat( 1, 3 ), life, "effects/spark" );
 
-	FX_TFTracerSound( start, end, TRACER_TYPE_DEFAULT );	
+	FX_TFTracerSound( start, end, TRACER_TYPE_DEFAULT );
 }
 
 //-----------------------------------------------------------------------------

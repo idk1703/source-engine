@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -33,7 +33,7 @@ every surface must be divided into at least two patches each axis
 
 */
 
-CUtlVector<CPatch>		g_Patches;			
+CUtlVector<CPatch>		g_Patches;
 CUtlVector<int>			g_FacePatches;		// contains all patches, children first
 CUtlVector<int>			faceParents;		// contains only root patches, use next parent to iterate
 CUtlVector<int>			clusterChildren;
@@ -102,7 +102,7 @@ bool		debug_extra = false;
 qboolean	do_fast = false;
 qboolean	do_centersamples = false;
 int			extrapasses = 4;
-float		smoothing_threshold = 0.7071067; // cos(45.0*(M_PI/180)) 
+float		smoothing_threshold = 0.7071067; // cos(45.0*(M_PI/180))
 // Cosine of smoothing angle(in radians)
 float		coring = 1.0;	// Light threshold to force to blackness(minimizes lightmaps)
 qboolean	texscale = true;
@@ -165,7 +165,7 @@ void MakeParents (int nodenum, int parent)
 /*
 ===================================================================
 
-  TEXTURE LIGHT VALUES
+	TEXTURE LIGHT VALUES
 
 ===================================================================
 */
@@ -262,11 +262,11 @@ void ReadLightFile (char *filename)
 					if ( strcmp( texlights[j].filename, filename ) == 0 )
 					{
 						Msg( "ERROR\a: Duplication of '%s' in file '%s'!\n",
-							 texlights[j].name, texlights[j].filename );
+							texlights[j].name, texlights[j].filename );
 					}
 					else if ( texlights[j].value[0] != value[0]
-							  || texlights[j].value[1] != value[1]
-							  || texlights[j].value[2] != value[2] )
+							|| texlights[j].value[1] != value[1]
+							|| texlights[j].value[2] != value[2] )
 					{
 						Warning( "Warning: Overriding '%s' from '%s' with '%s'!\n",
 								texlights[j].name, texlights[j].filename, filename );
@@ -274,7 +274,7 @@ void ReadLightFile (char *filename)
 					else
 					{
 						Warning( "Warning: Redundant '%s' def in '%s' AND '%s'!\n",
-								 texlights[j].name, texlights[j].filename, filename );
+								texlights[j].name, texlights[j].filename, filename );
 					}
 					break;
 				}
@@ -283,7 +283,7 @@ void ReadLightFile (char *filename)
 			VectorCopy( value, texlights[j].value );
 			texlights[j].filename = filename;
 			file_texlights ++;
-			
+
 			num_texlights = max( num_texlights, j + 1 );
 		}
 	}
@@ -413,7 +413,7 @@ void BaseLightForFace( dface_t *f, Vector& light, float *parea, Vector& reflecti
 	*parea = texdata->height * texdata->width;
 
 	VectorScale( texdata->reflectivity, reflectivityScale, reflectivity );
-	
+
 	// always keep this less than 1 or the solution will not converge
 	for ( int i = 0; i < 3; i++ )
 	{
@@ -442,8 +442,8 @@ qboolean IsFog( dface_t *f )
 
 	tx = &texinfo[f->texinfo];
 
-    // % denotes a fog texture
-    if( tx->texture[0] == '%' )
+	// % denotes a fog texture
+	if( tx->texture[0] == '%' )
 		return true;
 
 	return false;
@@ -508,8 +508,8 @@ void MakePatchForFace (int fn, winding_t *w)
 	int			i, j;
 	texinfo_t	*tx;
 
-    // get texture info
-    tx = &texinfo[f->texinfo];
+	// get texture info
+	tx = &texinfo[f->texinfo];
 
 	// No patches at all for fog!
 #ifdef STATIC_FOG
@@ -553,33 +553,33 @@ void MakePatchForFace (int fn, winding_t *w)
 	// we want textures with higher resolution lighting to be chopped up more
 	float chopscale[2];
 	chopscale[0] = chopscale[1] = 16.0f;
-    if ( texscale )
-    {
-        // Compute the texture "scale" in s,t
-        for( i=0; i<2; i++ )
-        {
-            patch->scale[i] = 0.0f;
+	if ( texscale )
+	{
+		// Compute the texture "scale" in s,t
+		for( i=0; i<2; i++ )
+		{
+			patch->scale[i] = 0.0f;
 			chopscale[i] = 0.0f;
-            for( j=0; j<3; j++ )
+			for( j=0; j<3; j++ )
 			{
-                patch->scale[i] += 
-					tx->textureVecsTexelsPerWorldUnits[i][j] * 
+				patch->scale[i] +=
+					tx->textureVecsTexelsPerWorldUnits[i][j] *
 					tx->textureVecsTexelsPerWorldUnits[i][j];
-                chopscale[i] += 
-					tx->lightmapVecsLuxelsPerWorldUnits[i][j] * 
+				chopscale[i] +=
+					tx->lightmapVecsLuxelsPerWorldUnits[i][j] *
 					tx->lightmapVecsLuxelsPerWorldUnits[i][j];
 			}
-            patch->scale[i] = sqrt( patch->scale[i] );
+			patch->scale[i] = sqrt( patch->scale[i] );
 			chopscale[i] = sqrt( chopscale[i] );
-        }
+		}
 	}
-    else
+	else
 	{
 		patch->scale[0] = patch->scale[1] = 1.0f;
 	}
 
 	patch->area = area;
- 
+
 	patch->sky = IsSky( f );
 
 	// chop scaled up lightmaps coarser
@@ -588,7 +588,7 @@ void MakePatchForFace (int fn, winding_t *w)
 
 
 #ifdef STATIC_FOG
-    patch->fog = FALSE;
+	patch->fog = FALSE;
 #endif
 
 	patch->winding = w;
@@ -597,7 +597,7 @@ void MakePatchForFace (int fn, winding_t *w)
 
 	// make a new plane to adjust for origined bmodels
 	if (face_offset[fn][0] || face_offset[fn][1] || face_offset[fn][2] )
-	{	
+	{
 		dplane_t	*pl;
 
 		// origin offset faces must create new planes
@@ -617,7 +617,7 @@ void MakePatchForFace (int fn, winding_t *w)
 	WindingCenter (w, patch->origin);
 
 	// Save "center" for generating the face normals later.
-	VectorSubtract( patch->origin, face_offset[fn], face_centroids[fn] ); 
+	VectorSubtract( patch->origin, face_offset[fn], face_centroids[fn] );
 
 	VectorCopy( patch->plane->normal, patch->normal );
 
@@ -718,8 +718,8 @@ void MakePatches (void)
 			f = &g_pFaces[fn];
 			if( f->dispinfo == -1 )
 			{
-	            w = WindingFromFace (f, origin );
-		        MakePatchForFace( fn, w );
+				w = WindingFromFace (f, origin );
+				MakePatchForFace( fn, w );
 			}
 		}
 	}
@@ -817,7 +817,7 @@ int CreateChildPatch( int nParentIndex, winding_t *pWinding, float flArea, const
 		for ( int i=0; i<3; ++i )
 		{
 			if ( (child->face_maxs[i] == child->maxs[i] || child->face_mins[i] == child->mins[i] )
-			  && total[i] > minchop )
+			&& total[i] > minchop )
 			{
 				child->chop = max( minchop, child->chop / 2 );
 				break;
@@ -911,7 +911,7 @@ void SubdividePatch( int ndxPatch )
 	// FIXME: This could go into CreateChildPatch if child1, child2 were stored in the patch as child[0], child[1]
 	patch = &g_Patches.Element( ndxPatch );
 	patch->child1 = ndxChild1Patch;
-	patch->child2 = ndxChild2Patch;		
+	patch->child2 = ndxChild2Patch;
 
 	SubdividePatch( ndxChild1Patch );
 	SubdividePatch( ndxChild2Patch );
@@ -1051,8 +1051,8 @@ void SubdividePatches (void)
 =============
 MakeScales
 
-  This is the primary time sink.
-  It can be run multi threaded.
+	This is the primary time sink.
+	It can be run multi threaded.
 =============
 */
 int	total_transfer;
@@ -1235,7 +1235,7 @@ void MakeScales ( int ndxPatch, transfer_t *all_transfers )
 		// the total transfer should be PI, but we need to correct errors due to overlaping surfaces
 		if (total > M_PI)
 			total = 1.0f/total;
-		else	
+		else
 			total = 1.0f/M_PI;
 
 		t = patch->transfers;
@@ -1352,16 +1352,16 @@ void WriteWinding (FileHandle_t out, winding_t *w, Vector& color )
 }
 
 
-void WriteNormal( FileHandle_t out, Vector const &nPos, Vector const &nDir, 
-				  float length, Vector const &color )
+void WriteNormal( FileHandle_t out, Vector const &nPos, Vector const &nDir,
+				float length, Vector const &color )
 {
 	CmdLib_FPrintf( out, "2\n" );
-	CmdLib_FPrintf( out, "%5.2f %5.2f %5.2f %5.3f %5.3f %5.3f\n", 
+	CmdLib_FPrintf( out, "%5.2f %5.2f %5.2f %5.3f %5.3f %5.3f\n",
 		nPos.x, nPos.y, nPos.z,
 		color.x / 256, color.y / 256, color.z / 256 );
-	CmdLib_FPrintf( out, "%5.2f %5.2f %5.2f %5.3f %5.3f %5.3f\n", 
-		nPos.x + ( nDir.x * length ), 
-		nPos.y + ( nDir.y * length ), 
+	CmdLib_FPrintf( out, "%5.2f %5.2f %5.2f %5.3f %5.3f %5.3f\n",
+		nPos.x + ( nDir.x * length ),
+		nPos.y + ( nDir.y * length ),
 		nPos.z + ( nDir.z * length ),
 		color.x / 256, color.y / 256, color.z / 256 );
 }
@@ -1369,10 +1369,10 @@ void WriteNormal( FileHandle_t out, Vector const &nPos, Vector const &nDir,
 void WriteLine( FileHandle_t out, const Vector &vecPos1, const Vector &vecPos2, const Vector &color )
 {
 	CmdLib_FPrintf( out, "2\n" );
-	CmdLib_FPrintf( out, "%5.2f %5.2f %5.2f %5.3f %5.3f %5.3f\n", 
+	CmdLib_FPrintf( out, "%5.2f %5.2f %5.2f %5.3f %5.3f %5.3f\n",
 		vecPos1.x, vecPos1.y, vecPos1.z,
 		color.x / 256, color.y / 256, color.z / 256 );
-	CmdLib_FPrintf( out, "%5.2f %5.2f %5.2f %5.3f %5.3f %5.3f\n", 
+	CmdLib_FPrintf( out, "%5.2f %5.2f %5.2f %5.3f %5.3f %5.3f\n",
 		vecPos2.x, vecPos2.y, vecPos2.z,
 		color.x / 256, color.y / 256, color.z / 256 );
 }
@@ -1479,7 +1479,7 @@ void CollectLight( Vector& total )
 GatherLight
 
 Get light from other patches
-  Run multi-threaded
+	Run multi-threaded
 =============
 */
 
@@ -1487,8 +1487,8 @@ Get light from other patches
 #pragma warning (disable:4701)
 #endif
 
-extern void GetBumpNormals( const float* sVect, const float* tVect, const Vector& flatNormal, 
-					 const Vector& phongNormal, Vector bumpNormals[NUM_BUMP_VECTS] );
+extern void GetBumpNormals( const float* sVect, const float* tVect, const Vector& flatNormal,
+					const Vector& phongNormal, Vector bumpNormals[NUM_BUMP_VECTS] );
 
 
 void PreGetBumpNormalsForDisp( texinfo_t *pTexinfo, Vector &vecU, Vector &vecV, Vector &vecNormal )
@@ -1557,7 +1557,7 @@ void GatherLight (int threadnum, void *pUserData)
 			Vector normals[NUM_BUMP_VECTS+1];
 
 			// Disps
-			bool bDisp = ( g_pFaces[patch->faceNumber].dispinfo != -1 ); 
+			bool bDisp = ( g_pFaces[patch->faceNumber].dispinfo != -1 );
 			if ( bDisp )
 			{
 				normals[0] = patch->normal;
@@ -1566,7 +1566,7 @@ void GatherLight (int threadnum, void *pUserData)
 				PreGetBumpNormalsForDisp( pTexinfo, vecTexU, vecTexV, normals[0] );
 
 				// use facenormal along with the smooth normal to build the three bump map vectors
-				GetBumpNormals( vecTexU, vecTexV, normals[0], normals[0], &normals[1] ); 
+				GetBumpNormals( vecTexU, vecTexV, normals[0], normals[0], &normals[1] );
 			}
 			else
 			{
@@ -1574,8 +1574,8 @@ void GatherLight (int threadnum, void *pUserData)
 
 				texinfo_t *pTexinfo = &texinfo[g_pFaces[patch->faceNumber].texinfo];
 				// use facenormal along with the smooth normal to build the three bump map vectors
-				GetBumpNormals( pTexinfo->textureVecsTexelsPerWorldUnits[0], 
-					pTexinfo->textureVecsTexelsPerWorldUnits[1], patch->normal, 
+				GetBumpNormals( pTexinfo->textureVecsTexelsPerWorldUnits[0],
+					pTexinfo->textureVecsTexelsPerWorldUnits[1], patch->normal,
 					normals[0], &normals[1] );
 			}
 
@@ -1604,7 +1604,7 @@ void GatherLight (int threadnum, void *pUserData)
 				// remove normal already factored into transfer steradian
 				float scale = 1.0f / DotProduct (delta, patch->normal);
 				VectorScale( v, trans->transfer * scale, v );
-				
+
 				Vector bumpTransfer;
 				for ( i = 0; i < NUM_BUMP_VECTS+1; i++ )
 				{
@@ -1799,7 +1799,7 @@ void RadWorld_Start()
 				}
 			}
 		}
-		
+
 		UpdateAllFaceLightmapExtents();
 	}
 
@@ -1812,7 +1812,7 @@ void RadWorld_Start()
 	PairEdges ();
 
 	// store the vertex normals calculated in PairEdges
-	// so that the can be written to the bsp file for 
+	// so that the can be written to the bsp file for
 	// use in the engine
 	SaveVertexNormals();
 
@@ -1892,7 +1892,7 @@ void BuildFacesVisibleToLights( bool bAllVisible )
 					{
 						int index = dleafs[iLeaf].firstleafface + iFace;
 						index = dleaffaces[index];
-						
+
 						assert( index < numfaces );
 						g_FacesVisibleToLights[index >> 3] |= (1 << (index & 7));
 					}
@@ -1926,7 +1926,7 @@ void MakeAllScales (void)
 {
 	// determine visibility between patches
 	BuildVisMatrix ();
-	
+
 	// release visibility matrix
 	FreeVisMatrix ();
 
@@ -1960,7 +1960,7 @@ void MakeAllScales (void)
 					v = dedges[-se].v[1];
 				else
 					v = dedges[se].v[0];
-			
+
 				dvertex_t *dv = &dvertexes[v];
 				points.AddToTail( dv->point );
 			}
@@ -1984,12 +1984,12 @@ void MakeAllScales (void)
 			params.m_bOutline = true;
 			params.m_flLetterWidth = 2;
 			params.m_vColor.Init( 1, 0, 0 );
-			
+
 			VectorAngles( dplanes[f->planenum].normal, params.m_vAngles );
 			params.m_bTwoSided = true;
 
 			params.m_vPos = vCenter;
-			
+
 			pPad->DrawText( str, params );
 		}
 
@@ -2020,12 +2020,12 @@ bool RadWorld_Go()
 	}
 
 	// build initial facelights
-	if (g_bUseMPI) 
+	if (g_bUseMPI)
 	{
 		// RunThreadsOnIndividual (numfaces, true, BuildFacelights);
 		RunMPIBuildFacelights();
 	}
-	else 
+	else
 	{
 		RunThreadsOnIndividual (numfaces, true, BuildFacelights);
 	}
@@ -2036,7 +2036,7 @@ bool RadWorld_Go()
 
 	// Figure out the offset into lightmap data for each face.
 	PrecompLightmapOffsets();
-	
+
 	// If we're doing incremental lighting, stop here.
 	if( g_pIncremental )
 	{
@@ -2083,10 +2083,10 @@ bool RadWorld_Go()
 		VMPI_SetCurrentStage( "FinalLightFace" );
 		if ( !g_bUseMPI || g_bMPIMaster )
 			RunThreadsOnIndividual (numfaces, true, FinalLightFace);
-		
+
 		// Distribute the lighting data to workers.
 		VMPI_DistributeLightData();
-			
+
 		Msg("FinalLightFace Done\n"); fflush(stdout);
 	}
 
@@ -2158,8 +2158,8 @@ void VRAD_LoadBSP( char const *pFilename )
 	if ( !g_pFileSystem->FileExists( global_lights ) )
 	{
 		// Otherwise, try looking in the BIN directory from which we were run from
-		Msg( "Could not find lights.rad in %s.\nTrying VRAD BIN directory instead...\n", 
-			    global_lights );
+		Msg( "Could not find lights.rad in %s.\nTrying VRAD BIN directory instead...\n",
+				global_lights );
 		GetModuleFileName( NULL, global_lights, sizeof( global_lights ) );
 		Q_ExtractFilePath( global_lights, global_lights, sizeof( global_lights ) );
 		strcat( global_lights, "lights.rad" );
@@ -2169,8 +2169,8 @@ void VRAD_LoadBSP( char const *pFilename )
 	strcpy( level_lights, source );
 
 	Q_DefaultExtension( level_lights, ".rad", sizeof( level_lights ) );
-	if ( !g_pFileSystem->FileExists( level_lights ) ) 
-		*level_lights = 0;	
+	if ( !g_pFileSystem->FileExists( level_lights ) )
+		*level_lights = 0;
 
 	ReadLightFile(global_lights);							// Required
 	if ( *designer_lights ) ReadLightFile(designer_lights);	// Command-line
@@ -2314,7 +2314,7 @@ extern void CloseDispLuxels();
 
 void VRAD_Finish()
 {
-	Msg( "Ready to Finish\n" ); 
+	Msg( "Ready to Finish\n" );
 	fflush( stdout );
 
 	if ( verbose )
@@ -2342,7 +2342,7 @@ void VRAD_Finish()
 	StaticPropMgr()->Shutdown();
 
 	double end = Plat_FloatTime();
-	
+
 	char str[512];
 	GetHourMinuteSecondsString( (int)( end - g_flStartTime ), str, sizeof( str ) );
 	Msg( "%s elapsed\n", str );
@@ -2351,7 +2351,7 @@ void VRAD_Finish()
 }
 
 
-// Run startup code like initialize mathlib (called from main() and from the 
+// Run startup code like initialize mathlib (called from main() and from the
 // WorldCraft interface into vrad).
 void VRAD_Init()
 {
@@ -2700,9 +2700,9 @@ int ParseCommandLine( int argc, char **argv, bool *onlydetail )
 		{
 			if ( i+3 < argc )
 			{
- 				ambient[0] = (float)atof (argv[++i]) * 128;
- 				ambient[1] = (float)atof (argv[++i]) * 128;
- 				ambient[2] = (float)atof (argv[++i]) * 128;
+				ambient[0] = (float)atof (argv[++i]) * 128;
+				ambient[1] = (float)atof (argv[++i]) * 128;
+				ambient[2] = (float)atof (argv[++i]) * 128;
 			}
 			else
 			{
@@ -2751,14 +2751,14 @@ int ParseCommandLine( int argc, char **argv, bool *onlydetail )
 			}
 		}
 #endif
-		// NOTE: the -mpi checks must come last here because they allow the previous argument 
+		// NOTE: the -mpi checks must come last here because they allow the previous argument
 		// to be -mpi as well. If it game before something else like -game, then if the previous
 		// argument was -mpi and the current argument was something valid like -game, it would skip it.
 		else if ( !Q_strncasecmp( argv[i], "-mpi", 4 ) || !Q_strncasecmp( argv[i-1], "-mpi", 4 ) )
 		{
 			if ( stricmp( argv[i], "-mpi" ) == 0 )
 				g_bUseMPI = true;
-		
+
 			// Any other args that start with -mpi are ok too.
 			if ( i == argc - 1 && V_stricmp( argv[i], "-mpi_ListParams" ) != 0 )
 				break;
@@ -2792,7 +2792,7 @@ void PrintUsage( int argc, char **argv )
 {
 	PrintCommandLine( argc, argv );
 
-	Warning(	
+	Warning(
 		"usage  : vrad [options...] bspfile\n"
 		"example: vrad c:\\hl2\\hl2\\maps\\test\n"
 		"\n"
@@ -2847,9 +2847,9 @@ void PrintUsage( int argc, char **argv )
 		"  -LargeDispSampleRadius: This can be used if there are splotches of bounced light\n"
 		"                          on terrain. The compile will take longer, but it will gather\n"
 		"                          light across a wider area.\n"
-        "  -StaticPropLighting   : generate backed static prop vertex lighting\n"
-        "  -StaticPropPolys   : Perform shadow tests of static props at polygon precision\n"
-        "  -OnlyStaticProps   : Only perform direct static prop lighting (vrad debug option)\n"
+		"  -StaticPropLighting   : generate backed static prop vertex lighting\n"
+		"  -StaticPropPolys   : Perform shadow tests of static props at polygon precision\n"
+		"  -OnlyStaticProps   : Only perform direct static prop lighting (vrad debug option)\n"
 		"  -StaticPropNormals : when lighting static props, just show their normal vector\n"
 		"  -textureshadows : Allows texture alpha channels to block light - rays intersecting alpha surfaces will sample the texture\n"
 		"  -noskyboxrecurse : Turn off recursion into 3d skybox (skybox shadows on world)\n"
@@ -2874,7 +2874,7 @@ void PrintUsage( int argc, char **argv )
 			{
 				if ( (VMPI_GetParamFlags( (EVMPICmdLineParam)i ) & VMPI_PARAM_SDK_HIDDEN) && bIsSDKMode )
 					continue;
-					
+
 				Warning( "[%s]\n", VMPI_GetParamString( (EVMPICmdLineParam)i ) );
 				Warning( VMPI_GetParamHelpString( (EVMPICmdLineParam)i ) );
 				Warning( "\n\n" );
@@ -2950,11 +2950,6 @@ int VRAD_Main(int argc, char **argv)
 		LoadCmdLineFromFile( argc, argv, source, "vrad" ); // Don't do this if we're a VMPI worker..
 		SetupDefaultToolsMinidumpHandler();
 	}
-	
+
 	return RunVRAD( argc, argv );
 }
-
-
-
-
-

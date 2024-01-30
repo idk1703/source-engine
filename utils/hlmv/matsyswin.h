@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -37,7 +37,7 @@ public:
 	virtual int handleEvent( mxEvent *event );
 	virtual void draw( );
 
-    void			*m_hWnd;
+	void			*m_hWnd;
 	// void			*m_hDC;
 
 	CSysModule *m_hMaterialSystemInst;
@@ -64,20 +64,20 @@ extern IMaterial *g_materialShadow;
 
 typedef struct
 {
-    int   width;
-    int   height;
-    int   bpp;
-    int   flags;
-    int   frequency;
+	int   width;
+	int   height;
+	int   bpp;
+	int   flags;
+	int   frequency;
 } screen_res_t;
 
 
 
 typedef struct
 {
-    int  width;
-    int  height;
-    int  bpp;
+	int  width;
+	int  height;
+	int  bpp;
 } devinfo_t;
 
 
@@ -120,36 +120,36 @@ private:
 
 
 public:
-    IMaterialSystem	*m_pMaterialSystem;
+	IMaterialSystem	*m_pMaterialSystem;
 	void			*m_hMaterialSystemInst;
 
 	devinfo_t		m_DevInfo;
 
 	void			*m_hInstance;
-    int				m_iCmdShow;
-    void			*m_hWnd;
+	int				m_iCmdShow;
+	void			*m_hWnd;
 	void			*m_hDC;
-    bool			m_bActive;
-    bool             m_bFullScreen;
-    int              m_width;
-    int              m_height;
+	bool			m_bActive;
+	bool             m_bFullScreen;
+	int              m_width;
+	int              m_height;
 	int				 m_centerx;		// for mouse offset calculations
 	int				 m_centery;
-    int              m_bpp;
-    BOOL             m_bChangeBPP;
-    BOOL             m_bAllowSoft;
+	int              m_bpp;
+	BOOL             m_bChangeBPP;
+	BOOL             m_bAllowSoft;
 	BOOL			 m_bPaused;
-    int              m_glnWidth;
-    int              m_glnHeight;
-    float            m_gldAspect;
-    float            m_NearClip;
-    float            m_FarClip;
-    float            m_fov;
-    
-    screen_res_t    *m_pResolutions;
+	int              m_glnWidth;
+	int              m_glnHeight;
+	float            m_gldAspect;
+	float            m_NearClip;
+	float            m_FarClip;
+	float            m_fov;
+
+	screen_res_t    *m_pResolutions;
 	int              m_iResCount;
 
-    int              m_iVidMode;
+	int              m_iVidMode;
 };
 
 

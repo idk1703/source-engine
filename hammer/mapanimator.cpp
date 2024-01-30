@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ CMapClass *CMapAnimator::CreateMapAnimator(CHelperInfo *pHelperInfo, CMapEntity 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapAnimator::CMapAnimator()
 {
@@ -50,7 +50,7 @@ CMapAnimator::CMapAnimator()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapAnimator::~CMapAnimator()
 {
@@ -58,7 +58,7 @@ CMapAnimator::~CMapAnimator()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CMapClass *
 //-----------------------------------------------------------------------------
 CMapClass *CMapAnimator::Copy(bool bUpdateDependencies)
@@ -70,8 +70,8 @@ CMapClass *CMapAnimator::Copy(bool bUpdateDependencies)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObj - 
+// Purpose:
+// Input  : *pObj -
 // Output : CMapClass
 //-----------------------------------------------------------------------------
 CMapClass *CMapAnimator::CopyFrom(CMapClass *pObj, bool bUpdateDependencies)
@@ -93,7 +93,7 @@ CMapClass *CMapAnimator::CopyFrom(CMapClass *pObj, bool bUpdateDependencies)
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns a coordinate frame to render in, if the entity is animating
-// Input  : matrix - 
+// Input  : matrix -
 // Output : returns true if a new matrix is returned, false if it is invalid
 //-----------------------------------------------------------------------------
 bool CMapAnimator::GetTransformMatrix( VMatrix& matrix )
@@ -111,8 +111,8 @@ bool CMapAnimator::GetTransformMatrix( VMatrix& matrix )
 
 //-----------------------------------------------------------------------------
 // Purpose: Notifies that the entity this is attached to has had a key change
-// Input  : key - 
-//			value - 
+// Input  : key -
+//			value -
 //-----------------------------------------------------------------------------
 void CMapAnimator::OnParentKeyChanged( const char* key, const char* value )
 {
@@ -148,7 +148,7 @@ void CMapAnimator::OnParentKeyChanged( const char* key, const char* value )
 //-----------------------------------------------------------------------------
 float CMapAnimator::GetKeyFramesAtTime( float time, CMapKeyFrame *&pKeyFrame, CMapKeyFrame *&pPrevKeyFrame )
 {
-	pKeyFrame = this; 
+	pKeyFrame = this;
 	pPrevKeyFrame = this;
 
 	float outTime = time;
@@ -168,7 +168,7 @@ float CMapAnimator::GetKeyFramesAtTime( float time, CMapKeyFrame *&pKeyFrame, CM
 		}
 
 		outTime -= pKeyFrame->MoveTime();
-		
+
 		pPrevKeyFrame = pKeyFrame;
 		pKeyFrame = pKeyFrame->NextKeyFrame();
 	}
@@ -179,7 +179,7 @@ float CMapAnimator::GetKeyFramesAtTime( float time, CMapKeyFrame *&pKeyFrame, CM
 
 //-----------------------------------------------------------------------------
 // Purpose: creates a new keyframe at the specified time
-// Input  : time - 
+// Input  : time -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 CMapEntity *CMapAnimator::CreateNewKeyFrame( float time )
@@ -227,7 +227,7 @@ CMapEntity *CMapAnimator::CreateNewKeyFrame( float time )
 	{
 		pNewEntity->SetKeyValue( "NextKey", nextKeyName );
 	}
-		
+
 	// create a new unique name for this ent
 	char newName[128];
 	const char *oldName = pCurrentEnt->GetKeyValue( "targetname" );
@@ -252,14 +252,14 @@ CMapEntity *CMapAnimator::CreateNewKeyFrame( float time )
 		if ( keyValue )
 			pNewEntity->SetKeyValue( "MoveSpeed", keyValue );
 	}
-	
+
 	return(pNewEntity);
 }
 
 
 //-----------------------------------------------------------------------------
 // Purpose: stops CMapKeyframe from doing it's auto-connect behavior when cloning
-// Input  : pClone - 
+// Input  : pClone -
 //-----------------------------------------------------------------------------
 void CMapAnimator::OnClone( CMapClass *pClone, CMapWorld *pWorld, const CMapObjectList &OriginalList, CMapObjectList &NewList )
 {
@@ -269,9 +269,9 @@ void CMapAnimator::OnClone( CMapClass *pClone, CMapWorld *pWorld, const CMapObje
 //-----------------------------------------------------------------------------
 // Purpose: calculates the position of an animating object at a given time in
 //			it's animation sequence
-// Input  : animTime - 
-//			*newOrigin - 
-//			*newAngles - 
+// Input  : animTime -
+//			*newOrigin -
+//			*newAngles -
 //-----------------------------------------------------------------------------
 void CMapAnimator::GetAnimationAtTime( float animTime, Vector& newOrigin, Quaternion &newAngles )
 {
@@ -296,13 +296,13 @@ void CMapAnimator::GetAnimationAtTime( float animTime, Vector& newOrigin, Quater
 
 //-----------------------------------------------------------------------------
 // Purpose: calculates the position of the animating object between two keyframes
-// Input  : currentKey - 
-//			pPrevKey - 
-//			partialTime - 
-//			newOrigin - 
-//			newAngles - 
-//			posInterpolator - 
-//			rotInterpolator - 
+// Input  : currentKey -
+//			pPrevKey -
+//			partialTime -
+//			newOrigin -
+//			newAngles -
+//			posInterpolator -
+//			rotInterpolator -
 //-----------------------------------------------------------------------------
 void CMapAnimator::GetAnimationAtTime( CMapKeyFrame *currentKey, CMapKeyFrame *pPrevKey, float partialTime, Vector& newOrigin, Quaternion &newAngles, int posInterpolator, int rotInterpolator )
 {
@@ -388,12 +388,12 @@ void CMapAnimator::UpdateAnimation( float animTime )
 	{
 		m_CoordFrame[i][3] = -ourOrigin[i];
 	}
-	
+
 	// Apply interpolated Rotation
 	mat.Identity();
 	QuaternionMatrix( newAngles, const_cast< matrix3x4_t & > ( mat.As3x4() ) );
 	m_CoordFrame = m_CoordFrame * mat;
-	
+
 	// transform back to our new position
 	mat.Identity();
 	for ( int i = 0; i < 3; i++ )
@@ -402,7 +402,7 @@ void CMapAnimator::UpdateAnimation( float animTime )
 	}
 
 	m_CoordFrame = m_CoordFrame * mat;
-	
+
 }
 
 
@@ -415,7 +415,7 @@ void CMapAnimator::RebuildPath( void )
 	CMapWorld *pWorld = GetWorldObject( this );
 	if ( !pWorld )
 	{
-		// Sometimes the object isn't linked back into the world yet when RebuildPath() 
+		// Sometimes the object isn't linked back into the world yet when RebuildPath()
 		// is called... we will be get called again when needed, but may cause an incorrect
 		// (linear-only) path to get drawn temporarily.
 		return;
@@ -497,4 +497,3 @@ void CMapAnimator::RebuildPath( void )
 		}
 	}
 }
-

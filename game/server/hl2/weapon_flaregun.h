@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -73,7 +73,7 @@ public:
 	CNetworkVar( float, m_flScale );
 	float		m_flDuration;
 	float		m_flNextDamage;
-	
+
 	CSoundPatch	*m_pBurnSound;
 	bool		m_bFading;
 	CNetworkVar( bool, m_bLight );
@@ -103,4 +103,3 @@ public:
 };
 
 #endif // WEAPON_FLAREGUN_H
-

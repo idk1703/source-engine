@@ -10,11 +10,11 @@ struct PS_INPUT
 {
 	float2 baseTexCoord				: TEXCOORD0;
 };
-	   
+
 HALF4 main( PS_INPUT i ) : COLOR
 {
 	HALF4 result;
-	HALF4 baseColor; 
+	HALF4 baseColor;
 	HALF maxValue;
 
 	baseColor = tex2D( BaseTextureSampler, i.baseTexCoord );
@@ -24,4 +24,3 @@ HALF4 main( PS_INPUT i ) : COLOR
 	result.a = 1.0f;
 	return FinalOutput( result, 0, PIXEL_FOG_TYPE_NONE, TONEMAP_SCALE_NONE );
 }
-

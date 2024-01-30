@@ -16,7 +16,7 @@
 class CTFPlayer;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBaseTFIssue : public CBaseIssue
 {
@@ -28,13 +28,13 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CRestartGameIssue : public CBaseTFIssue
 {
 public:
 	CRestartGameIssue() : CBaseTFIssue( "RestartGame" ) { } // This string will have "Vote_" glued onto the front for localization (i.e. "#Vote_RestartGame")
-	
+
 	virtual void		ExecuteCommand( void ) OVERRIDE;
 	virtual bool		IsEnabled( void ) OVERRIDE;
 	virtual bool		CanCallVote( int iEntIndex, const char *pszDetails, vote_create_failed_t &nFailCode, int &nTime ) OVERRIDE;
@@ -44,13 +44,13 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CKickIssue : public CBaseTFIssue
 {
 public:
 	CKickIssue() : CBaseTFIssue( "Kick" ) { } // This string will have "Vote_" glued onto the front for localization (i.e. "#Vote_Kick")
-	
+
 	virtual void		ExecuteCommand( void ) OVERRIDE;
 	virtual bool		IsEnabled( void ) OVERRIDE;
 	virtual bool		CanCallVote( int iEntIndex, const char *pszDetails, vote_create_failed_t &nFailCode, int &nTime ) OVERRIDE;
@@ -76,13 +76,13 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CChangeLevelIssue : public CBaseTFIssue
 {
 public:
 	CChangeLevelIssue() : CBaseTFIssue( "ChangeLevel" ) { } // This string will have "Vote_" glued onto the front for localization (i.e. "#Vote_ChangeLevel")
-	
+
 	virtual void		ExecuteCommand( void ) OVERRIDE;
 	virtual bool		IsEnabled( void ) OVERRIDE;
 	virtual bool		CanTeamCallVote( int iTeam ) const OVERRIDE;
@@ -95,13 +95,13 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CNextLevelIssue : public CBaseTFIssue
 {
 public:
 	CNextLevelIssue() : CBaseTFIssue( "NextLevel" ) { } // This string will have "Vote_" glued onto the front for localization (i.e. "#Vote_NextLevel")
-	
+
 	virtual void		ExecuteCommand( void ) OVERRIDE;
 	virtual bool		IsEnabled( void ) OVERRIDE;
 	virtual bool		CanTeamCallVote( int iTeam ) const OVERRIDE;
@@ -120,7 +120,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CExtendLevelIssue : public CBaseTFIssue
 {
@@ -137,7 +137,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CScrambleTeams : public CBaseTFIssue
 {
@@ -153,13 +153,13 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CMannVsMachineChangeChallengeIssue : public CBaseTFIssue
 {
 public:
 	CMannVsMachineChangeChallengeIssue() : CBaseTFIssue( "ChangeMission" ) { } // This string will have "Vote_" glued onto the front for localization (i.e. "#Vote_ChangeMission")
-	
+
 	virtual void		ExecuteCommand( void ) OVERRIDE;
 	virtual bool		IsEnabled( void ) OVERRIDE;
 	virtual bool		CanTeamCallVote( int iTeam ) const OVERRIDE;
@@ -176,7 +176,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CEnableTemporaryHalloweenIssue : public CBaseTFIssue
 {
@@ -198,13 +198,13 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTeamAutoBalanceIssue : public CBaseTFIssue
 {
 public:
 	CTeamAutoBalanceIssue() : CBaseTFIssue( "TeamAutoBalance" ) { } // This string will have "Vote_" glued onto the front for localization (i.e. "#Vote_TeamAutoBalance")
-	
+
 	virtual const char	*GetTypeStringLocalized( void ) OVERRIDE;
 	virtual void		ExecuteCommand( void ) OVERRIDE;
 	virtual bool		IsEnabled( void ) OVERRIDE;
@@ -216,7 +216,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CClassLimitsIssue : public CBaseTFIssue
 {
@@ -236,7 +236,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CPauseGameIssue : public CBaseTFIssue
 {

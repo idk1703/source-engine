@@ -22,8 +22,8 @@
 //----------------------------------------------------------------
 // Spawn flags
 //----------------------------------------------------------------
-#define  SF_GAMEUI_FREEZE_PLAYER		32	
-#define  SF_GAMEUI_HIDE_WEAPON			64	
+#define  SF_GAMEUI_FREEZE_PLAYER		32
+#define  SF_GAMEUI_HIDE_WEAPON			64
 #define  SF_GAMEUI_USE_DEACTIVATES		128
 #define  SF_GAMEUI_JUMP_DEACTIVATES		256
 
@@ -54,7 +54,7 @@ public:
 	COutputEvent		m_pressedBack;
 	COutputEvent		m_pressedAttack;
 	COutputEvent		m_pressedAttack2;
-	
+
 	COutputEvent		m_unpressedMoveLeft;
 	COutputEvent		m_unpressedMoveRight;
 	COutputEvent		m_unpressedForward;
@@ -111,10 +111,10 @@ END_DATADESC()
 
 
 LINK_ENTITY_TO_CLASS( game_ui, CGameUI );
-	
+
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGameUI::InputDeactivate( inputdata_t &inputdata )
 {
@@ -123,7 +123,7 @@ void CGameUI::InputDeactivate( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGameUI::Deactivate( CBaseEntity *pActivator )
 {
@@ -172,7 +172,7 @@ void CGameUI::Deactivate( CBaseEntity *pActivator )
 	{
 		Warning("%s Deactivate(): I have no player when called by %s!\n", GetEntityName().ToCStr(), pActivator->GetEntityName().ToCStr());
 	}
-	
+
 	// Stop thinking
 	SetNextThink( TICK_NEVER_THINK );
 }

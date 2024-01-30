@@ -73,7 +73,7 @@ ConVar tf_bot_npc_block_dps_react( "tf_bot_npc_block_dps_react", "150" );
 ConVar tf_bot_npc_become_stunned_damage( "tf_bot_npc_become_stunned_damage", "500" );
 ConVar tf_bot_npc_stunned_injury_multiplier( "tf_bot_npc_stunned_injury_multiplier", "10" );
 ConVar tf_bot_npc_stunned_duration( "tf_bot_npc_stunned_duration", "5" );
-ConVar tf_bot_npc_head_radius( "tf_bot_npc_head_radius", "75" );	// 50 
+ConVar tf_bot_npc_head_radius( "tf_bot_npc_head_radius", "75" );	// 50
 
 ConVar tf_bot_npc_stun_rocket_reflect_count( "tf_bot_npc_stun_rocket_reflect_count", "2"/*, FCVAR_CHEAT */ );
 ConVar tf_bot_npc_stun_rocket_reflect_duration( "tf_bot_npc_stun_rocket_reflect_duration", "1"/*, FCVAR_CHEAT */ );
@@ -161,7 +161,7 @@ void CBotNPC::Precache()
 	PrecacheModel( "models/weapons/c_models/c_bigsword/c_bigsword.mdl" );
 	PrecacheModel( "models/weapons/c_models/c_bigshield/c_bigshield.mdl" );
 	PrecacheModel( "models/weapons/c_models/c_big_mean_mother_hubbard/c_big_mean.mdl" );
-	
+
 	PrecacheScriptSound( "Weapon_Sword.Swing" );
 	PrecacheScriptSound( "Weapon_Sword.HitFlesh" );
 	PrecacheScriptSound( "Weapon_Sword.HitWorld" );
@@ -267,7 +267,7 @@ void CBotNPC::InstallArmorParts( void )
 				part->FollowEntity( this, true );
 
 				m_armorPartVector.AddToTail( part );
-			}		
+			}
 		}
 	}
 }
@@ -402,7 +402,7 @@ int CBotNPC::OnTakeDamage_Alive( const CTakeDamageInfo &rawInfo )
 		}
 	}
 
-	
+
 	// weapon-specific damage modification
 	info.SetDamage( ModifyBossDamage( info ) );
 
@@ -933,10 +933,10 @@ void CBotNPC::Update( void )
 				{
 					// the taunter becomes our new attack target
 					SetAttackTarget( playerVector[i], tf_bot_npc_hate_taunt_cooldown.GetFloat() );
-				}	
+				}
 			}
 		}
-	}	
+	}
 }
 
 
@@ -1198,7 +1198,7 @@ void TossAmmoPack( CBotNPC *me )
 	{
 /*
 		Vector vel;
-		
+
 		vel.x = RandomFloat( -1.0f, 1.0f ) * tf_bot_npc_stun_ammo_velocity.GetFloat();
 		vel.y = RandomFloat( -1.0f, 1.0f ) * tf_bot_npc_stun_ammo_velocity.GetFloat();
 		vel.z = tf_bot_npc_stun_ammo_velocity.GetFloat();
@@ -1209,7 +1209,7 @@ void TossAmmoPack( CBotNPC *me )
 
 		// Give the ammo pack some health, so that trains can destroy it.
 		pAmmoPack->SetCollisionGroup( COLLISION_GROUP_DEBRIS );
-		pAmmoPack->m_takedamage = DAMAGE_YES;		
+		pAmmoPack->m_takedamage = DAMAGE_YES;
 		pAmmoPack->SetHealth( 900 );
 
 		pAmmoPack->SetBodygroup( 1, 1 );
@@ -2109,8 +2109,8 @@ void CBotNPCBlock::OnEnd( CBotNPC *me, Action< CBotNPC > *nextAction )
 
 //---------------------------------------------------------------------------------------------
 ActionResult< CBotNPC >	CBotNPCBlock::OnSuspend( CBotNPC *me, Action< CBotNPC > *interruptingAction )
-{ 
-	return Done(); 
+{
+	return Done();
 }
 
 
@@ -2165,8 +2165,8 @@ ActionResult< CBotNPC >	CBotNPCLaunchGrenades::OnStart( CBotNPC *me, Action< CBo
 //---------------------------------------------------------------------------------------------
 void CBotNPCLaunchGrenades::LaunchGrenade( CBotNPC *me, const Vector &launchVel, CTFWeaponInfo *weaponInfo )
 {
-	CTFGrenadePipebombProjectile *pProjectile = CTFGrenadePipebombProjectile::Create( me->WorldSpaceCenter(), vec3_angle, launchVel, 
-																					  AngularImpulse( 600, random->RandomInt( -1200, 1200 ), 0 ), 
+	CTFGrenadePipebombProjectile *pProjectile = CTFGrenadePipebombProjectile::Create( me->WorldSpaceCenter(), vec3_angle, launchVel,
+																					  AngularImpulse( 600, random->RandomInt( -1200, 1200 ), 0 ),
 																					  me, *weaponInfo, TF_PROJECTILE_PIPEBOMB_REMOTE, 1 );
 	if ( pProjectile )
 	{
@@ -2930,7 +2930,7 @@ ActionResult< CBotNPC >	CBotNPCAttack::Update( CBotNPC *me, float interval )
 		}
 
 		if ( me->GetReceivedDamagePerSecond() > tf_bot_npc_block_dps_react.GetFloat() &&
-			 target->IsPlayer() && 
+			 target->IsPlayer() &&
 			 ToTFPlayer( target )->GetTimeSinceWeaponFired() < 1.0f )
 		{
 			return SuspendFor( new CBotNPCBlock, "Blocking" );
@@ -3130,7 +3130,7 @@ public:
 
 			const float hardHit = 50.0f;
 			bool isPotentialStunHit = info.GetDamage() > hardHit || isDeflectedRocket;
-			
+
 			if ( m_headStunTimer.IsElapsed() && isPotentialStunHit )
 			{
 				Vector headPos;
@@ -3155,7 +3155,7 @@ public:
 								// successive rocket hit
 								if ( ++m_consecutiveRockets >= tf_bot_npc_stun_rocket_reflect_count.GetInt() )
 								{
-									return TrySuspendFor( new CBotNPCStunned( tf_bot_npc_stunned_duration.GetFloat() ), RESULT_CRITICAL, "My own rockets reflected into my head!" );								
+									return TrySuspendFor( new CBotNPCStunned( tf_bot_npc_stunned_duration.GetFloat() ), RESULT_CRITICAL, "My own rockets reflected into my head!" );
 								}
 							}
 
@@ -3317,7 +3317,7 @@ EventDesiredResult< CBotNPC > CBotNPCWaitForPlayers::OnContact( CBotNPC *me, CBa
 class CBotNPCTacticalMonitor : public Action< CBotNPC >
 {
 public:
-	virtual Action< CBotNPC > *InitialContainedAction( CBotNPC *me )	
+	virtual Action< CBotNPC > *InitialContainedAction( CBotNPC *me )
 	{
 		if ( TFGameRules()->IsBossBattleMode() )
 		{
@@ -3328,17 +3328,17 @@ public:
 	}
 
 	virtual ActionResult< CBotNPC > OnStart( CBotNPC *me, Action< CBotNPC > *priorAction )
-	{ 
+	{
 		m_getOffMeTimer.Invalidate();
 
-		return Continue(); 
+		return Continue();
 	}
 
 	virtual ActionResult< CBotNPC >	Update( CBotNPC *me, float interval )
 	{
 		// HACK: If we fell off the ledge, jump back
 /*
-		if ( me->GetLocomotionInterface()->IsOnGround() && 
+		if ( me->GetLocomotionInterface()->IsOnGround() &&
 			 me->GetAbsOrigin().z < me->GetHomePosition().z - 200.0f )
 		{
 			return SuspendFor( new CBotNPCBigJump( me->GetHomePosition(), new CBotNPCLaunchRockets ), "Jumping home" );
@@ -3389,7 +3389,7 @@ private:
 class CBotNPCBehavior : public Action< CBotNPC >
 {
 public:
-	virtual Action< CBotNPC > *InitialContainedAction( CBotNPC *me )	
+	virtual Action< CBotNPC > *InitialContainedAction( CBotNPC *me )
 	{
 		return new CBotNPCTacticalMonitor;
 	}
@@ -3487,8 +3487,8 @@ private:
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
 CBotNPCIntention::CBotNPCIntention( CBotNPC *me ) : IIntention( me )
-{ 
-	m_behavior = new Behavior< CBotNPC >( new CBotNPCBehavior ); 
+{
+	m_behavior = new Behavior< CBotNPC >( new CBotNPCBehavior );
 }
 
 CBotNPCIntention::~CBotNPCIntention()
@@ -3497,14 +3497,14 @@ CBotNPCIntention::~CBotNPCIntention()
 }
 
 void CBotNPCIntention::Reset( void )
-{ 
-	delete m_behavior; 
+{
+	delete m_behavior;
 	m_behavior = new Behavior< CBotNPC >( new CBotNPCBehavior );
 }
 
 void CBotNPCIntention::Update( void )
 {
-	m_behavior->Update( static_cast< CBotNPC * >( GetBot() ), GetUpdateInterval() ); 
+	m_behavior->Update( static_cast< CBotNPC * >( GetBot() ), GetUpdateInterval() );
 }
 
 // is the a place we can be?
@@ -3517,8 +3517,8 @@ QueryResultType CBotNPCIntention::IsPositionAllowed( const INextBot *meBot, cons
 
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
-CBotNPCLocomotion::CBotNPCLocomotion( INextBot *bot ) : NextBotGroundLocomotion( bot ) 
-{ 
+CBotNPCLocomotion::CBotNPCLocomotion( INextBot *bot ) : NextBotGroundLocomotion( bot )
+{
 	CBotNPC *me = (CBotNPC *)GetBot()->GetEntity();
 
 	m_runSpeed = me->GetMoveSpeed();
@@ -3588,7 +3588,7 @@ bool CBotNPCVision::IsIgnored( CBaseEntity *subject ) const
 		{
 			return false;
 		}
-		
+
 		if ( enemy->m_Shared.InCond( TF_COND_DISGUISED ) && enemy->m_Shared.GetDisguiseTeam() == GetBot()->GetEntity()->GetTeamNumber() )
 		{
 			// spy is disguised as a member of my team

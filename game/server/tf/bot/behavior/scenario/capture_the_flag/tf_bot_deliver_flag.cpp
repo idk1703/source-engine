@@ -64,7 +64,7 @@ ActionResult< CTFBot >	CTFBotDeliverFlag::OnStart( CTFBot *me, Action< CTFBot > 
 			TFObjectiveResource()->SetBaseMvMBombUpgradeTime( gpGlobals->curtime );
 			TFObjectiveResource()->SetNextMvMBombUpgradeTime( gpGlobals->curtime + m_upgradeTimer.GetRemainingTime() );
 		}
-		
+
 	}
 
 	return Continue();
@@ -115,7 +115,7 @@ bool CTFBotDeliverFlag::UpgradeOverTime( CTFBot *me )
 			if ( m_upgradeLevel < maxLevel )
 			{
 				++m_upgradeLevel;
-				
+
 				TFGameRules()->BroadcastSound( 255, "MVM.Warning" );
 
 				switch( m_upgradeLevel )
@@ -143,7 +143,7 @@ bool CTFBotDeliverFlag::UpgradeOverTime( CTFBot *me )
 					static CSchemaAttributeDefHandle pAttrDef_HealthRegen( "health regen" );
 
 					m_upgradeTimer.Start( tf_mvm_bot_flag_carrier_interval_to_3rd_upgrade.GetFloat() );
-					
+
 					if ( !pAttrDef_HealthRegen )
 					{
 						Warning( "TFBotSpawner: Invalid attribute 'health regen'\n" );

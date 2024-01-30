@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -71,7 +71,7 @@ public:
 public:
 	C_SunGlowOverlay	m_Overlay;
 	C_SunGlowOverlay	m_GlowOverlay;
-	
+
 	color32				m_clrOverlay;
 	int					m_nSize;
 	int					m_nOverlaySize;

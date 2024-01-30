@@ -34,7 +34,7 @@ EColumnType GetEColumnTypeFromESQLFieldType( ESQLFieldType eSQLFieldType )
 	case FIELD_TYPE_LONGLONG:
 		return SQL_UINT64;
 		break;
-	case FIELD_TYPE_NULL: 
+	case FIELD_TYPE_NULL:
 	case FIELD_TYPE_INT24:
 		return SQL_NONE;
 		break;
@@ -181,7 +181,7 @@ bool CSQLTableSet::Init( ISQLHelper *pSQLHelper )
 //-----------------------------------------------------------------------------
 // Purpose: returns a pointer to each table in the db
 //-----------------------------------------------------------------------------
-const ISQLTable *CSQLTableSet::PSQLTable( int iSQLTable ) const 
+const ISQLTable *CSQLTableSet::PSQLTable( int iSQLTable ) const
 {
 	return &m_VecSQLTable[iSQLTable];
 }
@@ -210,7 +210,7 @@ void CSQLTableSet::Validate( CValidator &validator, char *pchName )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: constructor 
+// Purpose: constructor
 //-----------------------------------------------------------------------------
 CSQLRow::CSQLRow( MYSQL_ROW *pMySQLRow, const ISQLTable *pSQLTableDescription, int cRowData )
 {
@@ -234,7 +234,7 @@ CSQLRow::CSQLRow( MYSQL_ROW *pMySQLRow, const ISQLTable *pSQLTableDescription, i
 			sqlRowData.data.flData = atof( ( *pMySQLRow ) [iRowData] );
 			break;
 
-		case FIELD_TYPE_NULL: 
+		case FIELD_TYPE_NULL:
 		case FIELD_TYPE_INT24:
 			memset( &sqlRowData.data, 0x0, sizeof( sqlRowData.data ) );
 			break;
@@ -268,7 +268,7 @@ CSQLRow::CSQLRow( MYSQL_ROW *pMySQLRow, const ISQLTable *pSQLTableDescription, i
 			if (*str == ':') str++;
 			num[0] = *str++; num[1] = *str++; num[2] = 0;
 			tm.tm_sec = strtol( num, 0, 10 );
-		
+
 			sqlRowData.data.ulTime = _mktime64( &tm );
 			}
 			break;
@@ -433,7 +433,7 @@ bool CResultSet::Query( const char *pchQuery, ISQLHelper *pSQLHelper )
 	m_pSQLRow = NULL;
 
 	bool bRet = pSQLHelper->BInternalQuery( pchQuery, &m_MySQLRes );
-	if ( !bRet || !m_MySQLRes ) 
+	if ( !bRet || !m_MySQLRes )
 	{
 		m_cSQLField = -1;
 		m_cSQLRow = -1;
@@ -540,4 +540,3 @@ void CResultSet::Validate( CValidator &validator, char *pchName )
 	validator.Pop();
 }
 #endif
-

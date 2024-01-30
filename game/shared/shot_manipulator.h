@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -21,7 +21,7 @@ extern ConVar ai_shot_bias_max;
 //---------------------------------------------------------
 // Caches off a shot direction and allows you to perform
 // various operations on it without having to recalculate
-// vecRight and vecUp each time. 
+// vecRight and vecUp each time.
 //---------------------------------------------------------
 class CShotManipulator
 {
@@ -52,8 +52,8 @@ private:
 };
 
 //---------------------------------------------------------
-// Take a vector (direction) and another vector (spread) 
-// and modify the direction to point somewhere within the 
+// Take a vector (direction) and another vector (spread)
+// and modify the direction to point somewhere within the
 // spread. This used to live inside FireBullets.
 //---------------------------------------------------------
 inline const Vector &CShotManipulator::ApplySpread( const Vector &vecSpread, float bias )

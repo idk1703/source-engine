@@ -147,7 +147,7 @@ C_MaterialModifyControl::C_MaterialModifyControl()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_MaterialModifyControl::OnPreDataChanged( DataUpdateType_t updateType )
 {
@@ -177,7 +177,7 @@ void C_MaterialModifyControl::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_MaterialModifyControl::GetAnimationCommands( materialanimcommands_t *pCommands )
 {
@@ -188,7 +188,7 @@ void C_MaterialModifyControl::GetAnimationCommands( materialanimcommands_t *pCom
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_MaterialModifyControl::GetFloatLerpCommands( materialfloatlerpcommands_t *pCommands )
 {
@@ -226,7 +226,7 @@ private:
 	void AnimationWrapped( void* pArg );
 
 	IMaterial	*m_pMaterial;
-	
+
 	// texture animation stuff
 	int			m_iFrameStart;
 	int			m_iFrameEnd;
@@ -282,7 +282,7 @@ void CMaterialModifyProxy::OnBind( void *pEntity )
 	if ( pRend )
 	{
 		C_BaseEntity *pBaseEntity = pRend->GetIClientUnknown()->GetBaseEntity();
-		
+
 		if ( pBaseEntity )
 		{
 			if( debug_materialmodifycontrol_client.GetBool() )
@@ -302,7 +302,7 @@ void CMaterialModifyProxy::OnBind( void *pEntity )
 				{
 //					DevMsg( 1, "pControl: 0x%p\n", pControl );
 				}
-				
+
 				switch( pControl->GetModifyMode() )
 				{
 				case MATERIAL_MODIFY_MODE_NONE:
@@ -368,13 +368,13 @@ void CMaterialModifyProxy::OnBindSetVar( C_MaterialModifyControl *pControl )
 //		const char *pMaterialName = m_pMaterial->GetName();
 //		const char *pMaterialVarName = pMaterialVar->GetName();
 //		const char *pMaterialVarValue = pControl->GetMaterialVariableValue();
-//		if( debug_materialmodifycontrol_client.GetBool() 
+//		if( debug_materialmodifycontrol_client.GetBool()
 //			&& Q_stristr( m_pMaterial->GetName(), "faceandhair" )
 //			&& Q_stristr( pMaterialVar->GetName(), "self" )
 //			)
 //		{
 //			static int count = 0;
-//			DevMsg( 1, "CMaterialModifyProxy::OnBindSetVar \"%s\" %s=%s %d pControl=0x%p\n", 
+//			DevMsg( 1, "CMaterialModifyProxy::OnBindSetVar \"%s\" %s=%s %d pControl=0x%p\n",
 //				m_pMaterial->GetName(), pMaterialVar->GetName(), pControl->GetMaterialVariableValue(), count++, pControl );
 //		}
 		pMaterialVar->SetValueAutodetectType( pControl->GetMaterialVariableValue() );
@@ -414,7 +414,7 @@ void CMaterialModifyProxy::OnBindAnimatedTexture( C_MaterialModifyControl *pCont
 		pControl->ClearAnimationCommands();
 	}
 
-	// Init all the vars based on whether we're using the base material settings, 
+	// Init all the vars based on whether we're using the base material settings,
 	// or the custom ones from the entity input.
 	int numFrames;
 	bool bWrapAnimation;
@@ -470,10 +470,10 @@ void CMaterialModifyProxy::OnBindAnimatedTexture( C_MaterialModifyControl *pCont
 	if (prevTime < 0.0f)
 		prevTime = 0.0f;
 
-	float frame = flFrameRate * deltaTime;	
+	float frame = flFrameRate * deltaTime;
 	float prevFrame = flFrameRate * prevTime;
 
-	int intFrame = ((int)frame) % numFrames; 
+	int intFrame = ((int)frame) % numFrames;
 	int intPrevFrame = ((int)prevFrame) % numFrames;
 
 	if ( m_iFrameStart != MATERIAL_MODIFY_ANIMATION_UNSET )
@@ -505,7 +505,7 @@ void CMaterialModifyProxy::OnBindAnimatedTexture( C_MaterialModifyControl *pCont
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CMaterialModifyProxy::GetAnimationStartTime( void* pArg )
 {
@@ -522,7 +522,7 @@ float CMaterialModifyProxy::GetAnimationStartTime( void* pArg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMaterialModifyProxy::AnimationWrapped( void* pArg )
 {
@@ -585,7 +585,7 @@ void CMaterialModifyProxy::OnBindFloatLerp( C_MaterialModifyControl *pControl )
 
 //=============================================================================
 //
-// MATERIALMODIFYANIMATED PROXY 
+// MATERIALMODIFYANIMATED PROXY
 //
 class CMaterialModifyAnimatedProxy : public CBaseAnimatedTextureProxy
 {
@@ -609,7 +609,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CMaterialModifyAnimatedProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 {
@@ -665,7 +665,7 @@ void CMaterialModifyAnimatedProxy::OnBind( void *pEntity )
 		}
 	}
 
-	// Init all the vars based on whether we're using the base material settings, 
+	// Init all the vars based on whether we're using the base material settings,
 	// or the custom ones from the entity input.
 	int numFrames;
 	bool bWrapAnimation;
@@ -721,10 +721,10 @@ void CMaterialModifyAnimatedProxy::OnBind( void *pEntity )
 	if (prevTime < 0.0f)
 		prevTime = 0.0f;
 
-	float frame = flFrameRate * deltaTime;	
+	float frame = flFrameRate * deltaTime;
 	float prevFrame = flFrameRate * prevTime;
 
-	int intFrame = ((int)frame) % numFrames; 
+	int intFrame = ((int)frame) % numFrames;
 	int intPrevFrame = ((int)prevFrame) % numFrames;
 
 	if ( m_iFrameStart != MATERIAL_MODIFY_ANIMATION_UNSET )
@@ -761,7 +761,7 @@ void CMaterialModifyAnimatedProxy::OnBind( void *pEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CMaterialModifyAnimatedProxy::GetAnimationStartTime( void* pArg )
 {
@@ -778,7 +778,7 @@ float CMaterialModifyAnimatedProxy::GetAnimationStartTime( void* pArg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMaterialModifyAnimatedProxy::AnimationWrapped( void* pArg )
 {

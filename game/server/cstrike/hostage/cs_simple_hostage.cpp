@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -56,7 +56,7 @@ ConVar sv_pushaway_hostage_force( "sv_pushaway_hostage_force", "20000", FCVAR_RE
 ConVar sv_pushaway_max_hostage_force( "sv_pushaway_max_hostage_force", "1000", FCVAR_REPLICATED | FCVAR_CHEAT, "Maximum of how hard the hostage is pushed away from physics objects." );
 
 const int NumHostageModels = 4;
-static const char *HostageModel[NumHostageModels] = 
+static const char *HostageModel[NumHostageModels] =
 {
 	"models/Characters/Hostage_01.mdl",
 	"models/Characters/Hostage_02.mdl",
@@ -75,7 +75,7 @@ BEGIN_DATADESC( CHostage )
 
 	DEFINE_INPUTFUNC( FIELD_VOID, "OnRescueZoneTouch", HostageRescueZoneTouch ),
 
-	DEFINE_USEFUNC( HostageUse ), 
+	DEFINE_USEFUNC( HostageUse ),
 	DEFINE_THINKFUNC( HostageThink ),
 
 END_DATADESC()
@@ -84,14 +84,14 @@ END_DATADESC()
 //-----------------------------------------------------------------------------------------------------
 IMPLEMENT_SERVERCLASS_ST( CHostage, DT_CHostage )
 	SendPropExclude( "DT_BaseAnimating", "m_flPoseParameter" ),
-	SendPropExclude( "DT_BaseAnimating", "m_flPlaybackRate" ),	
+	SendPropExclude( "DT_BaseAnimating", "m_flPlaybackRate" ),
 	SendPropExclude( "DT_BaseAnimating", "m_nSequence" ),
 	SendPropExclude( "DT_BaseAnimating", "m_nNewSequenceParity" ),
 	SendPropExclude( "DT_BaseAnimating", "m_nResetEventsParity" ),
 	SendPropExclude( "DT_BaseAnimatingOverlay", "overlay_vars" ),
-	
+
 	// cs_playeranimstate and clientside animation takes care of these on the client
-	SendPropExclude( "DT_ServerAnimationData" , "m_flCycle" ),	
+	SendPropExclude( "DT_ServerAnimationData" , "m_flCycle" ),
 	SendPropExclude( "DT_AnimTimeMustBeFirst" , "m_flAnimTime" ),
 
 	SendPropBool( SENDINFO(m_isRescued) ),
@@ -157,11 +157,11 @@ void CHostage::Spawn( void )
 
 	SetGravity( 1.0 );
 
-	m_iHealth = 100;	
+	m_iHealth = 100;
 	m_iMaxHealth = m_iHealth;
 	m_takedamage = DAMAGE_YES;
 
-	InitBoneControllers( ); 
+	InitBoneControllers( );
 
 	// we must set this, because its zero by default thus putting their eyes in their feet
 	SetViewOffset( Vector( 0, 0, 60 ) );
@@ -209,7 +209,7 @@ void CHostage::Spawn( void )
 	m_inhibitObstacleAvoidanceTimer.Invalidate();
 
 	m_isWaitingForLeader = false;
-	
+
 	m_isAdjusted = false;
 
 	m_lastLeaderID = 0;
@@ -245,17 +245,17 @@ int CHostage::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 
 	if (player)
 	{
-        //=============================================================================
-        // HPE_BEGIN
-        // [dwenger] Track which player injured the hostage
-        //=============================================================================
+		//=============================================================================
+		// HPE_BEGIN
+		// [dwenger] Track which player injured the hostage
+		//=============================================================================
 
-        player->SetInjuredAHostage(true);
+		player->SetInjuredAHostage(true);
 		CSGameRules()->HostageInjured();
 
-        //=============================================================================
-        // HPE_END
-        //=============================================================================
+		//=============================================================================
+		// HPE_END
+		//=============================================================================
 
 
 		if ( !( player->m_iDisplayHistoryBits & DHF_HOSTAGE_INJURED ) )
@@ -297,7 +297,7 @@ float CHostage::GetModifiedDamage( float flDamage, int nHitGroup )
 	case HITGROUP_LEFTLEG:	flDamage *=	0.6;	break;
 	case HITGROUP_RIGHTLEG:	flDamage *=	0.6;	break;
 	default:				flDamage *=	1.5;	break;
-	} 
+	}
 
 	return flDamage;
 }
@@ -375,7 +375,7 @@ void CHostage::Event_Killed( const CTakeDamageInfo &info )
 
 	m_lastLeaderID = 0;
 
-	SetUse( NULL );	
+	SetUse( NULL );
 	BaseClass::Event_Killed( info );
 
 	IGameEvent *event = gameeventmanager->CreateEvent("hostage_killed");
@@ -416,7 +416,7 @@ void CHostage::HostageRescueZoneTouch( inputdata_t &inputdata )
 			const int rescuerCashBonus = 1000;
 			player->AddAccount( rescuerCashBonus );
 		}
-		
+
 		Idle();
 
 		// tell the bots someone has rescued a hostage
@@ -433,33 +433,33 @@ void CHostage::HostageRescueZoneTouch( inputdata_t &inputdata )
 		// update game rules
 		CSGameRules()->m_iHostagesRescued++;
 
-        //=============================================================================
-        // HPE_BEGIN
-        // [dwenger] Hostage rescue achievement processing
-        //=============================================================================
+		//=============================================================================
+		// HPE_BEGIN
+		// [dwenger] Hostage rescue achievement processing
+		//=============================================================================
 
-        // Track last rescuer
-        if ( CSGameRules()->m_pLastRescuer == NULL )
-        {
-            // No rescuer yet, so assign one & set rescuer count to 1
-            CSGameRules()->m_pLastRescuer = player;
-            CSGameRules()->m_iNumRescuers = 1;
-        }
-        else
-        {
-            if ( CSGameRules()->m_pLastRescuer != player )
-            {
-                // Rescuer changed
-                CSGameRules()->m_pLastRescuer = player;
-                CSGameRules()->m_iNumRescuers++;
-            }
-        }
+		// Track last rescuer
+		if ( CSGameRules()->m_pLastRescuer == NULL )
+		{
+			// No rescuer yet, so assign one & set rescuer count to 1
+			CSGameRules()->m_pLastRescuer = player;
+			CSGameRules()->m_iNumRescuers = 1;
+		}
+		else
+		{
+			if ( CSGameRules()->m_pLastRescuer != player )
+			{
+				// Rescuer changed
+				CSGameRules()->m_pLastRescuer = player;
+				CSGameRules()->m_iNumRescuers++;
+			}
+		}
 
 		bool roundIsAlreadyOver = (CSGameRules()->m_iRoundWinStatus != WINNER_NONE);
 
-        //=============================================================================
-        // HPE_END
-        //=============================================================================
+		//=============================================================================
+		// HPE_END
+		//=============================================================================
 
 		if (CSGameRules()->CheckWinConditions() == false)
 		{
@@ -472,20 +472,20 @@ void CHostage::HostageRescueZoneTouch( inputdata_t &inputdata )
 			// avoid having the announcer talk over himself
 			announceTimer.Start( 2.0f );
 		}
-        //=============================================================================
-        // HPE_BEGIN
-        // [dwenger] Awarding of hostage rescue achievement
-        //=============================================================================
+		//=============================================================================
+		// HPE_BEGIN
+		// [dwenger] Awarding of hostage rescue achievement
+		//=============================================================================
 
-        else
-        {
-            //Check hostage rescue achievements
-            if ( CSGameRules()->m_iNumRescuers == 1 && !CSGameRules()->WasHostageKilled())
-            {
+		else
+		{
+			//Check hostage rescue achievements
+			if ( CSGameRules()->m_iNumRescuers == 1 && !CSGameRules()->WasHostageKilled())
+			{
 				//check for unrescued hostages
-				bool allHostagesRescued = true;				
+				bool allHostagesRescued = true;
 				CHostage* hostage = NULL;
-				int iNumHostages = g_Hostages.Count();				
+				int iNumHostages = g_Hostages.Count();
 
 				for ( int i = 0 ; i < iNumHostages; i++ )
 				{
@@ -502,7 +502,7 @@ void CHostage::HostageRescueZoneTouch( inputdata_t &inputdata )
 				{
 					player->AwardAchievement(CSRescueAllHostagesInARound);
 
-					//[tj] fast version                
+					//[tj] fast version
 					if (gpGlobals->curtime - CSGameRules()->GetRoundStartTime() < AchievementConsts::FastHostageRescue_Time)
 					{
 						if ( player )
@@ -511,30 +511,30 @@ void CHostage::HostageRescueZoneTouch( inputdata_t &inputdata )
 						}
 					}
 				}
-            }
+			}
 			//=============================================================================
 			// HPE_BEGIN:
 			// [menglish] If this rescue ended the round give an mvp to the rescuer
 			//=============================================================================
 
-            if ( player && !roundIsAlreadyOver)
-            {
-			    player->IncrementNumMVPs( CSMVP_HOSTAGERESCUE );
-            }
+			if ( player && !roundIsAlreadyOver)
+			{
+				player->IncrementNumMVPs( CSMVP_HOSTAGERESCUE );
+			}
 
 			//=============================================================================
 			// HPE_END
 			//=============================================================================
-        }
+		}
 
-        if ( player )
-        {
-            CCS_GameStats.Event_HostageRescued( player );
-        }
+		if ( player )
+		{
+			CCS_GameStats.Event_HostageRescued( player );
+		}
 
-        //=============================================================================
-        // HPE_END
-        //=============================================================================
+		//=============================================================================
+		// HPE_END
+		//=============================================================================
 	}
 }
 
@@ -554,7 +554,7 @@ void CHostage::Touch( CBaseEntity *other )
 		Vector to = GetAbsOrigin() - other->GetAbsOrigin();
 		to.z = 0.0f;
 		to.NormalizeInPlace();
-		
+
 		const float pushForce = 500.0f;
 		ApplyForce( pushForce * to );
 	}
@@ -568,7 +568,7 @@ void CHostage::Touch( CBaseEntity *other )
 
 
 //-----------------------------------------------------------------------------------------------------
-/** 
+/**
  * Hostage is stuck - attempt to wiggle out
  */
 void CHostage::Wiggle( void )
@@ -647,7 +647,7 @@ void CHostage::UpdateFollowing( float deltaT )
 		if (m_path.IsValid())
 		{
 			Vector pathError = leader->GetAbsOrigin() - m_path.GetEndpoint();
-			
+
 			const float repathRange = 100.0f;
 			if (pathError.IsLengthGreaterThan( repathRange ))
 			{
@@ -684,7 +684,7 @@ void CHostage::UpdateFollowing( float deltaT )
 			return;
 		}
 
-		
+
 		// don't crowd the leader
 		if (m_isWaitingForLeader)
 		{
@@ -969,20 +969,20 @@ void CHostage::Idle( void )
  */
 void CHostage::Follow( CCSPlayer *leader )
 {
-    //=============================================================================
-    // HPE_BEGIN
-    // [dwenger] Set variable to track whether player is currently rescuing hostages
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN
+	// [dwenger] Set variable to track whether player is currently rescuing hostages
+	//=============================================================================
 
-    if ( leader )
-    {
-        leader->IncrementNumFollowers();
-        leader->SetIsRescuing(true);
-    }
+	if ( leader )
+	{
+		leader->IncrementNumFollowers();
+		leader->SetIsRescuing(true);
+	}
 
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
 	m_leader = leader;
 	m_isWaitingForLeader = false;
@@ -1119,7 +1119,7 @@ void CHostage::FaceTowards( const Vector &target, float deltaT )
 
 	QAngle angles = GetAbsAngles();
 
-	const float turnSpeed = 250.0f;	
+	const float turnSpeed = 250.0f;
 	angles.y = ApproachAngle( desiredAngles.y, angles.y, turnSpeed * deltaT );
 
 	SetAbsAngles( angles );
@@ -1131,7 +1131,7 @@ void CHostage::FaceTowards( const Vector &target, float deltaT )
 const Vector &CHostage::GetCentroid( void ) const
 {
 	static Vector centroid;
-	
+
 	centroid = GetFeet();
 	centroid.z += HalfHumanHeight;
 
@@ -1145,7 +1145,7 @@ const Vector &CHostage::GetCentroid( void ) const
 const Vector &CHostage::GetFeet( void ) const
 {
 	static Vector feet;
-	
+
 	feet = GetAbsOrigin();
 
 	return feet;
@@ -1155,7 +1155,7 @@ const Vector &CHostage::GetFeet( void ) const
 const Vector &CHostage::GetEyes( void ) const
 {
 	static Vector eyes;
-	
+
 	eyes = EyePosition();
 
 	return eyes;
@@ -1342,4 +1342,3 @@ unsigned int CHostage::PhysicsSolidMaskForEntity() const
 {
 	return MASK_PLAYERSOLID;
 }
-

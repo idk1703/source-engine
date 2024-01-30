@@ -2,7 +2,7 @@
 //
 // Purpose: This file defines all of our over-the-wire net protocols for the
 //			Game Coordinator for the item system.  Note that we never use types
-//			with undefined length (like int).  Always use an explicit type 
+//			with undefined length (like int).  Always use an explicit type
 //			(like int32).
 //
 //=============================================================================
@@ -24,7 +24,7 @@ struct MsgGCEmpty_t
 
 };
 
-// k_EMsgGCSetItemPosition 
+// k_EMsgGCSetItemPosition
 struct MsgGCSetItemPosition_t
 {
 	uint64 m_unItemID;
@@ -318,7 +318,7 @@ struct MsgGC_RevolvingLootList_t
 };
 
 
-// k_EMsgGCLookupAccount 
+// k_EMsgGCLookupAccount
 struct MsgGCLookupAccount_t
 {
 	uint16	m_uiFindType;
@@ -327,7 +327,7 @@ struct MsgGCLookupAccount_t
 	// string containing Persona / URL / etc
 };
 
-// k_EMsgGCLookupAccountName 
+// k_EMsgGCLookupAccountName
 struct MsgGCLookupAccountName_t
 {
 	uint32 m_unAccountID;

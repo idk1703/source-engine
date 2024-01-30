@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -30,7 +30,7 @@ class CAudioMixerWaveADPCM : public CAudioMixerWave
 public:
 	CAudioMixerWaveADPCM( CWaveData *data );
 	~CAudioMixerWaveADPCM( void );
-	
+
 	virtual void Mix( IAudioDevice *pDevice, channel_t *pChannel, void *pData, int outputOffset, int inputOffset, fixedint fracRate, int outCount, int timecompress, bool forward = true );
 	virtual int	 GetOutputData( void **pData, int samplePosition, int sampleCount, bool forward = true );
 
@@ -62,7 +62,7 @@ private:
 };
 
 
-CAudioMixerWaveADPCM::CAudioMixerWaveADPCM( CWaveData *data ) : CAudioMixerWave( data ) 
+CAudioMixerWaveADPCM::CAudioMixerWaveADPCM( CWaveData *data ) : CAudioMixerWave( data )
 {
 	m_currentBlock = -1;
 	m_pSamples = NULL;
@@ -194,7 +194,7 @@ void CAudioMixerWaveADPCM::DecompressBlockMono( short *pOut, const char *pIn, in
 			predSample = 32767L;
 		else if ( predSample < -32768L )
 			predSample = -32768L;
-		
+
 		// output
 		*pOut++ = (short)predSample;
 		// move samples over
@@ -301,7 +301,7 @@ void CAudioMixerWaveADPCM::DecompressBlockStereo( short *pOut, const char *pIn, 
 				predSample = 32767L;
 			else if ( predSample < -32768L )
 				predSample = -32768L;
-			
+
 			// output
 			*pOut++ = (short)predSample;
 			// move samples over
@@ -370,8 +370,8 @@ bool CAudioMixerWaveADPCM::DecodeBlock( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : block - 
+// Purpose:
+// Input  : block -
 //-----------------------------------------------------------------------------
 void CAudioMixerWaveADPCM::SetCurrentBlock( int block )
 {
@@ -379,7 +379,7 @@ void CAudioMixerWaveADPCM::SetCurrentBlock( int block )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CAudioMixerWaveADPCM::GetCurrentBlock( void ) const
@@ -388,8 +388,8 @@ int CAudioMixerWaveADPCM::GetCurrentBlock( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : samplePosition - 
+// Purpose:
+// Input  : samplePosition -
 // Output : int
 //-----------------------------------------------------------------------------
 int CAudioMixerWaveADPCM::GetBlockNumberForSample( int samplePosition )
@@ -399,8 +399,8 @@ int CAudioMixerWaveADPCM::GetBlockNumberForSample( int samplePosition )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : samplePosition - 
+// Purpose:
+// Input  : samplePosition -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAudioMixerWaveADPCM::IsSampleInCurrentBlock( int samplePosition )
@@ -420,8 +420,8 @@ bool CAudioMixerWaveADPCM::IsSampleInCurrentBlock( int samplePosition )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : blocknum - 
+// Purpose:
+// Input  : blocknum -
 // Output : int
 //-----------------------------------------------------------------------------
 int CAudioMixerWaveADPCM::GetFirstSampleForBlock( int blocknum ) const
@@ -470,8 +470,8 @@ int CAudioMixerWaveADPCM::GetOutputData( void **pData, int samplePosition, int s
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : position - 
+// Purpose:
+// Input  : position -
 //-----------------------------------------------------------------------------
 bool CAudioMixerWaveADPCM::SetSamplePosition( int position, bool scrubbing )
 {
@@ -499,7 +499,7 @@ bool CAudioMixerWaveADPCM::SetSamplePosition( int position, bool scrubbing )
 			return false;
 		}
 	}
-	
+
 	m_samplePosition = currentSample;
 	return true;
 }
@@ -507,7 +507,7 @@ bool CAudioMixerWaveADPCM::SetSamplePosition( int position, bool scrubbing )
 //-----------------------------------------------------------------------------
 // Purpose: Abstract factory function for ADPCM mixers
 // Input  : *data - wave data access object
-//			channels - 
+//			channels -
 // Output : CAudioMixer
 //-----------------------------------------------------------------------------
 CAudioMixer *CreateADPCMMixer( CWaveData *data )

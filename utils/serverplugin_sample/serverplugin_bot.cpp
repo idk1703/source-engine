@@ -27,10 +27,10 @@
 //#include "../../game_shared/util_shared.h"
 #include "engine/IEngineTrace.h"
 
-extern IBotManager *botmanager; 
+extern IBotManager *botmanager;
 extern IUniformRandomStream *randomStr;
-extern IPlayerInfoManager *playerinfomanager; 
-extern IVEngineServer	*engine; 
+extern IPlayerInfoManager *playerinfomanager;
+extern IVEngineServer	*engine;
 extern IEngineTrace *enginetrace;
 extern IPlayerInfoManager *playerinfomanager; // game dll interface to interact with players
 extern IServerPluginHelpers *helpers; // special 3rd party plugin helpers from the engine
@@ -141,7 +141,7 @@ bool Bot_RunMimicCommand( CBotCmd& cmd )
 	if ( bot_mimic.GetInt() > gpGlobals->maxClients )
 		return false;
 
-	IPlayerInfo *playerInfo = playerinfomanager->GetPlayerInfo( engine->PEntityOfEntIndex( bot_mimic.GetInt() ) ); 
+	IPlayerInfo *playerInfo = playerinfomanager->GetPlayerInfo( engine->PEntityOfEntIndex( bot_mimic.GetInt() ) );
 	if ( !playerInfo )
 		return false;
 
@@ -200,7 +200,7 @@ void Bot_UpdateDirection( CPluginBot *pBot )
 	{
 		AngleVectors( angle, &forward );
 
-		vecSrc =  pBot->m_BotInterface->GetLocalOrigin() + Vector( 0, 0, 36 ); 
+		vecSrc =  pBot->m_BotInterface->GetLocalOrigin() + Vector( 0, 0, 36 );
 		vecEnd = vecSrc + forward * 10;
 
 		Ray_t ray;
@@ -229,7 +229,7 @@ void Bot_UpdateDirection( CPluginBot *pBot )
 		pBot->m_ForwardAngle = angle;
 		pBot->m_LastAngles = angle;
 	}
-	
+
 	pBot->m_BotInterface->SetLocalAngles( angle );
 }
 
@@ -344,7 +344,7 @@ void Bot_Think( CPluginBot *pBot )
 {
 	CBotCmd cmd;
 	Q_memset( &cmd, 0, sizeof( cmd ) );
-	
+
 	// Finally, override all this stuff if the bot is being forced to mimic a player.
 	if ( !Bot_RunMimicCommand( cmd ) )
 	{
@@ -379,5 +379,3 @@ void Bot_Think( CPluginBot *pBot )
 
 	pBot->m_BotInterface->RunPlayerMove( &cmd );
 }
-
-

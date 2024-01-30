@@ -28,7 +28,7 @@ class IReplayContext;
 
 // A recording session (e.g. round), including a list of blocks
 class CBaseRecordingSession : public CBaseReplaySerializeable,
-							  public IRecordingSession
+							public IRecordingSession
 {
 	typedef CBaseReplaySerializeable BaseClass;
 
@@ -57,7 +57,7 @@ public:
 	class CLessFunctor
 	{
 	public:
-        bool Less( const CBaseRecordingSessionBlock *pSrc1, const CBaseRecordingSessionBlock *pSrc2, void *pContext );
+	bool Less( const CBaseRecordingSessionBlock *pSrc1, const CBaseRecordingSessionBlock *pSrc2, void *pContext );
 	};
 
 	typedef CUtlSortVector< CBaseRecordingSessionBlock *, CLessFunctor > BlockContainer_t;

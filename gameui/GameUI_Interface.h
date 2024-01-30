@@ -17,7 +17,7 @@
 class IGameClientExports;
 
 //-----------------------------------------------------------------------------
-// Purpose: Implementation of GameUI's exposed interface 
+// Purpose: Implementation of GameUI's exposed interface
 //-----------------------------------------------------------------------------
 class CGameUI : public IGameUI
 {
@@ -140,7 +140,7 @@ private:
 	int m_iGameIP;
 	int m_iGameConnectionPort;
 	int m_iGameQueryPort;
-	
+
 	int m_iFriendsLoadPauseFrames;
 
 	char m_szPreviousStatusText[128];

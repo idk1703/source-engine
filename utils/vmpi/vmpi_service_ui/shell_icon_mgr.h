@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,12 +22,12 @@ public:
 class CShellIconMgr
 {
 public:
-	
+
 					CShellIconMgr();
 					~CShellIconMgr();
-	
-	bool			Init( 
-		IShellIconMgrHelper *pHelper, 
+
+	bool			Init(
+		IShellIconMgrHelper *pHelper,
 		const char *pToolTip,			// This must be allocated by the caller and must be valid as
 										// long as the CShellIconMgr exists.
 		int iCallbackMessage,
@@ -50,10 +50,10 @@ private:
 		  WPARAM wParam,  // first message parameter
 		  LPARAM lParam   // second message parameter
 		);
-	
+
 	HWND			m_hWnd;				// Invisible window to get timer and shell icon messages.
 	ATOM			m_hWndClass;
-	
+
 	UINT			m_uTaskbarRestart;	// This message is sent to us when the taskbar is created.
 	int				m_iCurIconResourceID;
 	int				m_iCallbackMessage;

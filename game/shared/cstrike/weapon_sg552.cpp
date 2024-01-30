@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,9 +24,9 @@ class CWeaponSG552 : public CWeaponCSBaseGun
 {
 public:
 	DECLARE_CLASS( CWeaponSG552, CWeaponCSBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponSG552();
 
 	virtual void SecondaryAttack();
@@ -85,7 +85,7 @@ void CWeaponSG552::SecondaryAttack()
 		pPlayer->SetFOV( pPlayer, 0, 0.15f );
 		m_weaponMode = Secondary_Mode;
 	}
-	else 
+	else
 	{
 		//FIXME: This seems wrong
 		pPlayer->SetFOV( pPlayer, pPlayer->GetDefaultFOV() );
@@ -102,7 +102,7 @@ float CWeaponSG552::GetInaccuracy() const
 		CCSPlayer *pPlayer = GetPlayerOwner();
 		if ( !pPlayer )
 			return 0.0f;
-	
+
 		if ( !FBitSet( pPlayer->GetFlags(), FL_ONGROUND ) )
 			return 0.035f + 0.45f * m_flAccuracy;
 		else if (pPlayer->GetAbsVelocity().Length2D() > 140)
@@ -154,7 +154,7 @@ float CWeaponSG552::GetMaxSpeed() const
 		return BaseClass::GetMaxSpeed();
 	else
 		return 200; // zoomed in.
-}	
+}
 
 
 bool CWeaponSG552::Reload()

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -38,7 +38,7 @@ void CDODHLTVDirector::CreateShotFromEvent( CHLTVGameEvent *event )
 	IGameEvent *shot = NULL;
 
 	if ( !Q_strcmp( "dod_point_captured", name ) ||
-		 !Q_strcmp( "dod_capture_blocked", name ) )
+		!Q_strcmp( "dod_capture_blocked", name ) )
 	{
 		// try to find a capper or blocker
 		const char *text = event->m_Event->GetString("blocker");
@@ -54,7 +54,7 @@ void CDODHLTVDirector::CreateShotFromEvent( CHLTVGameEvent *event )
 		// if we found one, show him
 		if ( playerIndex > 0 )
 		{
-            // shot player as primary, hostage as secondary target
+	// shot player as primary, hostage as secondary target
 			shot = gameeventmanager->CreateEvent( "hltv_chase", true );
 			shot->SetInt( "target1", playerIndex );
 			shot->SetInt( "target2", 0 );

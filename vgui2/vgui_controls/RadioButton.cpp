@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -130,7 +130,7 @@ void RadioButton::ApplySchemeSettings(IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Get the border style of the button, Radio buttons have no border			
+// Purpose: Get the border style of the button, Radio buttons have no border
 //-----------------------------------------------------------------------------
 IBorder *RadioButton::GetBorder(bool depressed, bool armed, bool selected, bool keyfocus)
 {
@@ -164,7 +164,7 @@ int RadioButton::GetRadioTabPosition()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Set the radio button checked. When a radio button is checked, a 
+// Purpose: Set the radio button checked. When a radio button is checked, a
 //			message is sent to all other radio buttons in the same group so
 //			they will become unchecked.
 //-----------------------------------------------------------------------------
@@ -191,7 +191,7 @@ void RadioButton::InternalSetSelected(bool state, bool bFireEvents)
 			msg->SetPtr("panel", this);
 			msg->SetInt("tabposition", _oldTabPosition);
 
-			// send a message to all other panels on the same level as heirarchy, 
+			// send a message to all other panels on the same level as heirarchy,
 			// so that other radio buttons know to shut off
 			VPANEL radioParent = GetVParent();
 			if (radioParent)
@@ -317,7 +317,7 @@ void RadioButton::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void RadioButton::DoClick()
 {
@@ -352,7 +352,7 @@ void RadioButton::OnKeyCodeTyped(KeyCode code)
 				if (bestRadio)
 				{
 					bestRadio->SetSelected(true);
-				}	
+				}
 			}
 			break;
 		case KEY_UP:
@@ -362,7 +362,7 @@ void RadioButton::OnKeyCodeTyped(KeyCode code)
 				if (bestRadio)
 				{
 					bestRadio->SetSelected(true);
-				}	
+				}
 			}
 			break;
 
@@ -374,7 +374,7 @@ void RadioButton::OnKeyCodeTyped(KeyCode code)
 
 //-----------------------------------------------------------------------------
 // Purpose: Find the correct radio button to move to.
-// Input  : direction - the direction we are moving, up or down. 
+// Input  : direction - the direction we are moving, up or down.
 //-----------------------------------------------------------------------------
 RadioButton *RadioButton::FindBestRadioButton(int direction)
 {
@@ -411,12 +411,12 @@ RadioButton *RadioButton::FindBestRadioButton(int direction)
 				}
 			}
 		}
-		
+
 		if (bestRadio)
 		{
 			bestRadio->RequestFocus();
 		}
-		
+
 		InvalidateLayout();
 		Repaint();
 	}

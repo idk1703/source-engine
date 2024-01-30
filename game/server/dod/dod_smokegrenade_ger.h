@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -25,11 +25,11 @@ public:
 
 	// Grenade stuff.
 public:
-	static CDODSmokeGrenadeGER* Create( 
-		const Vector &position, 
-		const QAngle &angles, 
-		const Vector &velocity, 
-		const AngularImpulse &angVelocity, 
+	static CDODSmokeGrenadeGER* Create(
+		const Vector &position,
+		const QAngle &angles,
+		const Vector &velocity,
+		const AngularImpulse &angVelocity,
 		CBaseCombatCharacter *pOwner );
 
 	virtual DODWeaponID GetEmitterWeaponID() { return WEAPON_SMOKE_GER; }

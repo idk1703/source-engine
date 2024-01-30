@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -40,7 +40,7 @@
 // Components of the texture axes are rounded to integers within this tolerance. This tolerance corresponds
 // to an angle of about 0.06 degrees.
 //
-#define TEXTURE_AXIS_ROUND_EPSILON		0.001		
+#define TEXTURE_AXIS_ROUND_EPSILON		0.001
 
 
 //
@@ -78,7 +78,7 @@ CMapFace::CMapFace(void)
 
 	m_pTexture = NULL;
 	m_pTangentAxes = NULL;
-    m_DispHandle = EDITDISPHANDLE_INVALID;
+	m_DispHandle = EDITDISPHANDLE_INVALID;
 
 	Points = NULL;
 	nPoints = 0;
@@ -95,7 +95,7 @@ CMapFace::CMapFace(void)
 	texture.scale[1] = g_pGameConfig->GetDefaultTextureScale();
 
 	SetTexture(GetNullTextureName());
-	
+
 	if (m_pLightmapGrid == NULL)
 	{
 		m_pLightmapGrid = g_Textures.FindActiveTexture("Debug/debugluxelsnoalpha");
@@ -203,11 +203,11 @@ void CMapFace::UpdateFaceFlags( void )
 		if ( strstr( tname, "blocklight" ) )
 		{
 			m_nFaceFlags |= FACE_FLAGS_NODRAW_IN_LPREVIEW;
-		}					 
+		}
 		if ( strstr( tname, "skybox") )
 		{
 			m_nFaceFlags |= FACE_FLAGS_NOSHADOW;
-		}					 
+		}
 		for(int i=0;i<NELEMS(InvisToolTextures); i++)
 			if (strstr( tname, InvisToolTextures[i] ) )
 			{
@@ -305,15 +305,15 @@ CMapFace *CMapFace::CopyFrom(const CMapFace *pObject, DWORD dwFlags, bool bUpdat
 			memset(&plane, 0, sizeof(plane));
 		}
 
-        //
-        // copy the displacement info.
+		//
+		// copy the displacement info.
 		//
 		// If we do have displacement, then we'll never be asked to become a copy of
 		// a face that does not have a displacement, because you cannot undo a Generate
 		// Displacement operation.
-        //
-        if( pFrom->HasDisp() )
-        {
+		//
+		if( pFrom->HasDisp() )
+		{
 			//
 			// Allocate a new displacement info if we don't already have one.
 			//
@@ -327,12 +327,12 @@ CMapFace *CMapFace::CopyFrom(const CMapFace *pObject, DWORD dwFlags, bool bUpdat
 
 			CMapDisp *pFromDisp = EditDispMgr()->GetDisp( pFrom->m_DispHandle );
 			pDisp->CopyFrom( pFromDisp, bUpdateDependencies );
-        }
+		}
 		else
 		{
 			SetDisp( EDITDISPHANDLE_INVALID );
 		}
-	
+
 		// Copy CMapAtom fields. dvs: this should be done in CMapAtom::CopyFrom!
 		r = pFrom->r;
 		g = pFrom->g;
@@ -413,14 +413,14 @@ void CMapFace::CreateFace(Vector *pPoints, int _nPoints, bool bIsCordonFace)
 	DetailObjects::BuildAnyDetailObjects(this);
 
 #if 0
-    //
-    // create the displacement map -- if need be
-    //
-    if( m_pMapDisp )
-    {
+	//
+	// create the displacement map -- if need be
+	//
+	if( m_pMapDisp )
+	{
 		m_pMapDisp->InitSurfData( this, false );
-        m_pMapDisp->Create();
-    }
+		m_pMapDisp->Create();
+	}
 #endif
 }
 
@@ -459,19 +459,19 @@ Vector RightVectors[6] =
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
-//			downVect - 
+// Purpose:
+// Input  : index -
+//			downVect -
 //-----------------------------------------------------------------------------
 void CMapFace::GetDownVector( int index, Vector& downVect )
 {
-    downVect = DownVectors[index];
+	downVect = DownVectors[index];
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : Center - 
+// Purpose:
+// Input  : Center -
 //-----------------------------------------------------------------------------
 void CMapFace::GetCenter(Vector& Center)
 {
@@ -536,9 +536,9 @@ FaceOrientation_t CMapFace::GetOrientation(void) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : eAlignment - 
-//			dwFlags - 
+// Purpose:
+// Input  : eAlignment -
+//			dwFlags -
 //-----------------------------------------------------------------------------
 void CMapFace::InitializeTextureAxes(TextureAlignment_t eAlignment, DWORD dwFlags)
 {
@@ -548,9 +548,9 @@ void CMapFace::InitializeTextureAxes(TextureAlignment_t eAlignment, DWORD dwFlag
 	// If the texture axis information has been initialized, don't reinitialize unless
 	// the FORCE flag is set.
 	//
-	if ((!(dwFlags & INIT_TEXTURE_FORCE)) && 
+	if ((!(dwFlags & INIT_TEXTURE_FORCE)) &&
 		((texture.UAxis[0] != 0) || (texture.UAxis[1] != 0) || (texture.UAxis[2] != 0) ||
-		 (texture.VAxis[0] != 0) || (texture.VAxis[1] != 0) || (texture.VAxis[2] != 0)))
+		(texture.VAxis[0] != 0) || (texture.VAxis[1] != 0) || (texture.VAxis[2] != 0)))
 	{
 		return;
 	}
@@ -617,7 +617,7 @@ void CMapFace::InitializeTextureAxes(TextureAlignment_t eAlignment, DWORD dwFlag
 		{
 			InitializeQuakeStyleTextureAxes(texture.UAxis, texture.VAxis);
 		}
-	
+
 		if (texture.rotate != 0)
 		{
 			RotateTextureAxes(texture.rotate);
@@ -734,8 +734,8 @@ void CMapFace::GetFaceBounds(Vector& pfMins, Vector& pfMaxs) const
 //-----------------------------------------------------------------------------
 // Purpose: Finds the top left and bottom right points on the face in texture space.
 //			These points are returned in texture space, not world space.
-// Input  : TopLeft - 
-//			BottomRight - 
+// Input  : TopLeft -
+//			BottomRight -
 //-----------------------------------------------------------------------------
 void CMapFace::GetFaceTextureExtents(Vector2D & TopLeft, Vector2D & BottomRight) const
 {
@@ -841,9 +841,9 @@ int CMapFace::GetTextureAlignment(void) const
 // Purpose: Finds the top left and bottom right points of the given world extents
 //			in texture space. These points are returned in texture space, not world space,
 //			so a simple rectangle will suffice.
-// Input  : Extents - 
-//			TopLeft - 
-//			BottomRight - 
+// Input  : Extents -
+//			TopLeft -
+//			BottomRight -
 //-----------------------------------------------------------------------------
 void CMapFace::GetTextureExtents(Extents_t Extents, Vector2D & TopLeft, Vector2D & BottomRight) const
 {
@@ -884,7 +884,7 @@ void CMapFace::GetTextureExtents(Extents_t Extents, Vector2D & TopLeft, Vector2D
 //-----------------------------------------------------------------------------
 // Purpose: Determines the world extents of the face. Different from a bounding
 //			box in that each point in the returned extents is actually on the face.
-// Input  : Extents - 
+// Input  : Extents -
 //-----------------------------------------------------------------------------
 void CMapFace::GetFaceExtents(Extents_t Extents) const
 {
@@ -928,9 +928,9 @@ void CMapFace::GetFaceExtents(Extents_t Extents) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : eJustification - 
-//			Extents - 
+// Purpose:
+// Input  : eJustification -
+//			Extents -
 //-----------------------------------------------------------------------------
 void CMapFace::JustifyTextureUsingExtents(TextureJustification_t eJustification, Extents_t Extents)
 {
@@ -1041,8 +1041,8 @@ void CMapFace::JustifyTextureUsingExtents(TextureJustification_t eJustification,
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : eJustification - 
+// Purpose:
+// Input  : eJustification -
 //-----------------------------------------------------------------------------
 void CMapFace::JustifyTexture(TextureJustification_t eJustification)
 {
@@ -1080,7 +1080,7 @@ void CMapFace::RotateTextureAxes(float fDegrees)
 	Vector TexNormalAxis;
 	Vector4D UAxis;
 	Vector4D VAxis;
-	
+
 	// Generate the texture normal axis, which may be different from the
 	// face normal, depending on texture alignment.
 	CrossProduct(texture.VAxis.AsVector3D(), texture.UAxis.AsVector3D(), TexNormalAxis);
@@ -1174,7 +1174,7 @@ void CMapFace::DebugPoints(void)
 //-----------------------------------------------------------------------------
 // Purpose: Create the face from a winding type.
 //	w - Winding from which to create the face.
-//	nFlags - 
+//	nFlags -
 //		CREATE_FACE_PRESERVE_PLANE:
 //		CREATE_FACE_CLIPPING: the new face is a clipped version of this face
 //-----------------------------------------------------------------------------
@@ -1194,23 +1194,23 @@ void CMapFace::CreateFace(winding_t *w, int nFlags)
 		CalcPlaneFromFacePoints();
 	}
 
-    //
-    // Create a new displacement surface if the clipped surfaces is a quad.
-    //
+	//
+	// Create a new displacement surface if the clipped surfaces is a quad.
+	//
 	// This assumes it is being called by the clipper!!! (Bad assumption).
 	//
-    if( HasDisp() && ( nFlags & CREATE_FACE_CLIPPING ) )
+	if( HasDisp() && ( nFlags & CREATE_FACE_CLIPPING ) )
 	{
 		if ( nPoints == 4 )
 		{
 			// Setup new displacement surface.
 			EditDispHandle_t hClipDisp = EditDispMgr()->Create();
 			CMapDisp *pClipDisp = EditDispMgr()->GetDisp( hClipDisp );
-			
+
 			// Get older displacement surface.
 			EditDispHandle_t hDisp = GetDisp();
 			CMapDisp *pDisp = EditDispMgr()->GetDisp( hDisp );
-			
+
 			// Init new displacement surface.
 			pClipDisp->SetParent( this );
 
@@ -1218,7 +1218,7 @@ void CMapFace::CreateFace(winding_t *w, int nFlags)
 			// around -- we need it for the split operation.
 			SetDisp( hClipDisp, false );
 			pClipDisp->InitData( pDisp->GetPower() );
-			
+
 			// Calculate texture coordinates before splitting because we
 			// need the texture coords during the split.
 			CalcTextureCoords();
@@ -1233,7 +1233,7 @@ void CMapFace::CreateFace(winding_t *w, int nFlags)
 		{
 			SetDisp( EDITDISPHANDLE_INVALID );
 		}
-    }
+	}
 	else
 	{
 		CalcTextureCoords();
@@ -1289,7 +1289,7 @@ size_t CMapFace::AllocatePoints(int _nPoints)
 	{
 		return(0);
 	}
-	
+
 	//
 	// Allocate the correct number of points, texture coords, and lightmap coords.
 	//
@@ -1307,8 +1307,8 @@ size_t CMapFace::AllocatePoints(int _nPoints)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTexture - 
+// Purpose:
+// Input  : *pTexture -
 //-----------------------------------------------------------------------------
 void CMapFace::SetTexture(IEditorTexture *pTexture, bool bRescaleTextureCoordinates)
 {
@@ -1339,14 +1339,14 @@ void CMapFace::SetTexture(IEditorTexture *pTexture, bool bRescaleTextureCoordina
 		m_pTexture->Load();
 
 		bTexValid = !(
-			m_pTexture->GetWidth() == 0 || 
+			m_pTexture->GetWidth() == 0 ||
 			m_pTexture->GetHeight() == 0 ||
 			m_pTexture->GetImageWidth() == 0 ||
-			m_pTexture->GetImageHeight() == 0 || 
+			m_pTexture->GetImageHeight() == 0 ||
 			!m_pTexture->HasData()
 		);
 	}
-	
+
 	if (bTexValid)
 	{
 		CalcTextureCoords();
@@ -1389,7 +1389,7 @@ void CMapFace::CalcTextureCoordAtPoint( const Vector& pt, Vector2D &texCoord )
 		texCoord[0] = s / ( float )m_pTexture->GetWidth();
 	else
 		texCoord[0] = 0.0;
-	
+
 	if (m_pTexture->GetHeight())
 		texCoord[1] = t / ( float )m_pTexture->GetHeight();
 	else
@@ -1450,7 +1450,7 @@ void CMapFace::CalcTextureCoords(void)
 
 		if (m_pTexture->GetHeight())
 			m_pTextureCoords[i][1] = t / (float)m_pTexture->GetHeight();
- 		else
+		else
 			m_pTextureCoords[i][1] = 0.0f;
 
 		//
@@ -1464,17 +1464,17 @@ void CMapFace::CalcTextureCoords(void)
 			m_pLightmapCoords[i][0] = DotProduct(texture.UAxis.AsVector3D(), Points[i]) / texture.nLightmapScale + texture.UAxis[3] * shiftScaleU + 0.5;
 			m_pLightmapCoords[i][1] = DotProduct(texture.VAxis.AsVector3D(), Points[i]) / texture.nLightmapScale + texture.VAxis[3] * shiftScaleV + 0.5;
 		}
- 	}
+	}
 
 	//
-    // update the displacement map with new texture coordinates and calculate lightmap coordinates
+	// update the displacement map with new texture coordinates and calculate lightmap coordinates
 	//
 	if( ( m_DispHandle != EDITDISPHANDLE_INVALID ) && nPoints == 4 )
-    {
+	{
 		CMapDisp *pDisp = EditDispMgr()->GetDisp( m_DispHandle );
 		pDisp->InitDispSurfaceData( this, false );
 		pDisp->Create();
-    }
+	}
 
 	// re-calculate the tangent space
 	CalcTangentSpaceAxes();
@@ -1491,7 +1491,7 @@ int CMapFace::MaxLightmapSize() const
 
 //-----------------------------------------------------------------------------
 // Purpose: Checks the validity of this face.
-// Input  : pInfo - 
+// Input  : pInfo -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CMapFace::CheckFace(CCheckFaceInfo *pInfo)
@@ -1517,7 +1517,7 @@ BOOL CMapFace::CheckFace(CCheckFaceInfo *pInfo)
 					{
 						strcpy(pInfo->szDescription, "face has duplicate plane points");
 					}
-					return(FALSE);		
+					return(FALSE);
 				}
 			}
 		}
@@ -1530,8 +1530,8 @@ BOOL CMapFace::CheckFace(CCheckFaceInfo *pInfo)
 //-----------------------------------------------------------------------------
 // Purpose: Included for loading old (quake-style) maps. This sets up the texture axes
 //			the same way QCSG and pre-2.2 Hammer did.
-// Input  : UAxis - 
-//			VAxis - 
+// Input  : UAxis -
+//			VAxis -
 //-----------------------------------------------------------------------------
 void CMapFace::InitializeQuakeStyleTextureAxes(Vector4D& UAxis, Vector4D& VAxis)
 {
@@ -1548,10 +1548,10 @@ void CMapFace::InitializeQuakeStyleTextureAxes(Vector4D& UAxis, Vector4D& VAxis)
 	int		bestaxis;
 	vec_t	dot,best;
 	int		i;
-	
+
 	best = 0;
 	bestaxis = 0;
-	
+
 	for (i=0 ; i<6 ; i++)
 	{
 		dot = DotProduct(plane.normal, baseaxis[i*3]);
@@ -1561,7 +1561,7 @@ void CMapFace::InitializeQuakeStyleTextureAxes(Vector4D& UAxis, Vector4D& VAxis)
 			bestaxis = i;
 		}
 	}
-	
+
 	UAxis.AsVector3D() = baseaxis[bestaxis * 3 + 1];
 	VAxis.AsVector3D() = baseaxis[bestaxis * 3 + 2];
 }
@@ -1590,11 +1590,11 @@ inline void Modulate( Color &pColor, float f )
 //-----------------------------------------------------------------------------
 
 void CMapFace::ComputeColor( CRender3D* pRender, bool bRenderAsSelected,
-							 SelectionState_t faceSelectionState,
-							 bool ignoreLighting, Color &pColor )
+							SelectionState_t faceSelectionState,
+							bool ignoreLighting, Color &pColor )
 {
 	EditorRenderMode_t eCurrentRenderMode = pRender->GetCurrentRenderMode();
-	
+
 	// White w/alpha by default
 	pColor[0] = pColor[1] = pColor[2] = 255;
 	pColor[3] = m_uchAlpha;
@@ -1650,7 +1650,7 @@ void CMapFace::ComputeColor( CRender3D* pRender, bool bRenderAsSelected,
 			SelectFaceColor( pColor );
 		else
 			pColor.SetColor( r,g,b,m_uchAlpha );
-								
+
 		Modulate( pColor, fShade );
 		break;
 
@@ -1659,7 +1659,7 @@ void CMapFace::ComputeColor( CRender3D* pRender, bool bRenderAsSelected,
 			SelectEdgeColor( pColor );
 		else
 			pColor.SetColor( r,g,b,m_uchAlpha );
-		
+
 		break;
 
 	case RENDER_MODE_SMOOTHING_GROUP:
@@ -1690,7 +1690,7 @@ static bool ModeUsesTextureCoords(EditorRenderMode_t mode)
 {
 	return (
 		(mode == RENDER_MODE_TEXTURED) ||
-		(mode == RENDER_MODE_LIGHTMAP_GRID) || 
+		(mode == RENDER_MODE_LIGHTMAP_GRID) ||
 		(mode == RENDER_MODE_TEXTURED_SHADED) ||
 		(mode == RENDER_MODE_LIGHT_PREVIEW2) ||
 		(mode == RENDER_MODE_LIGHT_PREVIEW_RAYTRACED)
@@ -1702,17 +1702,17 @@ static bool ModeUsesTextureCoords(EditorRenderMode_t mode)
 //-----------------------------------------------------------------------------
 void CMapFace::DrawFace( Color &pColor, EditorRenderMode_t mode )
 {
-	// retrieve the coordinate frame to render into 
+	// retrieve the coordinate frame to render into
 	// (most likely just the identity, unless we're animating)
 	VMatrix frame;
 	bool hasParent = GetTransformMatrix( frame );
 
 	// don't do this -- if you use the material system to rotate and/or translate
 	// this will cull the locally spaced object!! -- need to pass around a flag!
-#if 0 
+#if 0
 	// A little culling....
 	float fEyeDot = DotProduct(plane.normal, ViewPoint);
-	if ((fEyeDot < plane.dist) && (mode != RENDER_MODE_WIREFRAME) && !hasParent && 
+	if ((fEyeDot < plane.dist) && (mode != RENDER_MODE_WIREFRAME) && !hasParent &&
 		(m_uchAlpha == 255))
 	{
 		return;
@@ -1728,16 +1728,16 @@ void CMapFace::DrawFace( Color &pColor, EditorRenderMode_t mode )
 	}
 
 
-	MaterialPrimitiveType_t type = (mode == RENDER_MODE_WIREFRAME) ? 
-		MATERIAL_LINE_LOOP : MATERIAL_POLYGON; 
+	MaterialPrimitiveType_t type = (mode == RENDER_MODE_WIREFRAME) ?
+		MATERIAL_LINE_LOOP : MATERIAL_POLYGON;
 
 	CMeshBuilder meshBuilder;
 	CMatRenderContextPtr pRenderContext( MaterialSystemInterface() );
 	IMesh *pMesh = pRenderContext->GetDynamicMesh();
 	meshBuilder.Begin( pMesh, type, nPoints );
-    
-    for (int nPoint = 0; nPoint < nPoints; nPoint++)
-    {
+
+	for (int nPoint = 0; nPoint < nPoints; nPoint++)
+	{
 		if (ModeUsesTextureCoords(mode))
 		{
 			meshBuilder.TexCoord2f( 0, m_pTextureCoords[nPoint][0], m_pTextureCoords[nPoint][1] );
@@ -1746,17 +1746,17 @@ void CMapFace::DrawFace( Color &pColor, EditorRenderMode_t mode )
 
 		meshBuilder.Color4ubv( (byte*)&pColor );
 
-        // transform into absolute space
-        if ( hasParent )
-        {
-            Vector point;
-            VectorTransform( Points[nPoint], frame.As3x4(), point );
-            meshBuilder.Position3f(point[0], point[1], point[2]);
-        }
-        else
-        {
-            meshBuilder.Position3f(Points[nPoint][0], Points[nPoint][1], Points[nPoint][2]);
-        }
+		// transform into absolute space
+		if ( hasParent )
+		{
+			Vector point;
+			VectorTransform( Points[nPoint], frame.As3x4(), point );
+			meshBuilder.Position3f(point[0], point[1], point[2]);
+		}
+		else
+		{
+			meshBuilder.Position3f(Points[nPoint][0], Points[nPoint][1], Points[nPoint][2]);
+		}
 
 		// FIXME: no smoothing group information
 		meshBuilder.Normal3fv(plane.normal.Base());
@@ -1764,9 +1764,9 @@ void CMapFace::DrawFace( Color &pColor, EditorRenderMode_t mode )
 		meshBuilder.TangentT3fv( m_pTangentAxes[nPoint].binormal.Base() );
 
 		meshBuilder.AdvanceVertex();
-    }
-    
-    meshBuilder.End();
+	}
+
+	meshBuilder.End();
 	pMesh->Draw();
 }
 
@@ -1825,8 +1825,8 @@ void CMapFace::RenderTextureAxes( CRender3D* pRender, int nCount, CMapFace **ppF
 		meshBuilder.AdvanceVertex();
 
 		meshBuilder.Color3ub(255, 255, 0);
-		meshBuilder.Position3f(Center[0] + ppFaces[i]->texture.UAxis[0] * TEXTURE_AXIS_LENGTH, 
-			Center[1] + ppFaces[i]->texture.UAxis[1] * TEXTURE_AXIS_LENGTH, 
+		meshBuilder.Position3f(Center[0] + ppFaces[i]->texture.UAxis[0] * TEXTURE_AXIS_LENGTH,
+			Center[1] + ppFaces[i]->texture.UAxis[1] * TEXTURE_AXIS_LENGTH,
 			Center[2] + ppFaces[i]->texture.UAxis[2] * TEXTURE_AXIS_LENGTH);
 		meshBuilder.AdvanceVertex();
 
@@ -1835,12 +1835,12 @@ void CMapFace::RenderTextureAxes( CRender3D* pRender, int nCount, CMapFace **ppF
 		meshBuilder.AdvanceVertex();
 
 		meshBuilder.Color3ub(0, 255, 0);
-		meshBuilder.Position3f(Center[0] + ppFaces[i]->texture.VAxis[0] * TEXTURE_AXIS_LENGTH, 
-			Center[1] + ppFaces[i]->texture.VAxis[1] * TEXTURE_AXIS_LENGTH, 
+		meshBuilder.Position3f(Center[0] + ppFaces[i]->texture.VAxis[0] * TEXTURE_AXIS_LENGTH,
+			Center[1] + ppFaces[i]->texture.VAxis[1] * TEXTURE_AXIS_LENGTH,
 			Center[2] + ppFaces[i]->texture.VAxis[2] * TEXTURE_AXIS_LENGTH);
 		meshBuilder.AdvanceVertex();
 	}
-		
+
 	meshBuilder.End();
 	pMesh->Draw();
 
@@ -1866,7 +1866,7 @@ void CMapFace::Render3DGrids( CRender3D *pRender, int nCount, CMapFace **ppFaces
 //-----------------------------------------------------------------------------
 void CMapFace::RenderGridsIfCloseEnough( CRender3D* pRender, int nCount, CMapFace **ppFaces )
 {
-	// If the 3D grid is enabled and we aren't picking, 
+	// If the 3D grid is enabled and we aren't picking,
 	// render the grid on this face.
 	if ( (!pRender->IsEnabled(RENDER_GRID)) || pRender->IsPicking() )
 		return;
@@ -1999,9 +1999,9 @@ void CMapFace::RenderFacesBatch( CMeshBuilder &meshBuilder, IMesh* pMesh, CRende
 	{
 		meshBuilder.Begin( pMesh, MATERIAL_TRIANGLES, nVertexCount, nIndexCount );
 	}
-	
+
 	int nFirstVertex = 0;
-	
+
 	for ( int i = 0; i < nFaceCount; ++i )
 	{
 		CMapFace *pMapFace = ppFaces[i]->m_pMapFace;
@@ -2032,7 +2032,7 @@ void CMapFace::RenderFacesBatch( CMeshBuilder &meshBuilder, IMesh* pMesh, CRende
 
 		nFirstVertex += nPoints;
 	}
-	
+
 	meshBuilder.End();
 	pMesh->Draw();
 }
@@ -2074,14 +2074,14 @@ void CMapFace::RenderFaces( CRender3D* pRender, int nCount, MapFaceRender_t **pp
 		pRenderContext->GetMaxToRender( pMesh, false, &nMaxVerts, &nMaxIndices );
 	}
 
-	CMeshBuilder meshBuilder;	
+	CMeshBuilder meshBuilder;
 	for ( int nFace = 0; nFace < nCount; nFace++ )
 	{
 		Assert( ppFaces[nFace]->m_RenderMode == ppFaces[0]->m_RenderMode );
 		Assert( ppFaces[nFace]->m_pTexture == ppFaces[0]->m_pTexture );
 
 		int newIndices, newVertices = ppFaces[nFace]->m_pMapFace->GetPointCount();
-	
+
 		if( bWireframe )
 		{
 			newIndices = newVertices*2;
@@ -2090,14 +2090,14 @@ void CMapFace::RenderFaces( CRender3D* pRender, int nCount, MapFaceRender_t **pp
 		{
 			newIndices = (newVertices-2) * 3;
 		}
-		
+
 		if ( ( ( nVertexCount + newVertices ) > nMaxVerts ) || ( ( nIndexCount + newIndices )  > nMaxIndices ) )
 		{
 			// If we hit this assert, there's a single face that's too big for the meshbuilder to handle!
 			Assert( ( nFace - nBatchStart ) > 0 );
-		
+
 			// We have a full batch, render it.
-			
+
 			RenderFacesBatch( meshBuilder, pMesh, pRender, &ppFaces[nBatchStart], nFace - nBatchStart, nVertexCount, nIndexCount, bWireframe );
 
 			pRenderContext->GetMaxToRender( pMesh, false, &nMaxVerts, &nMaxIndices );
@@ -2113,7 +2113,7 @@ void CMapFace::RenderFaces( CRender3D* pRender, int nCount, MapFaceRender_t **pp
 
 	// Render whatever is left over.
 	RenderFacesBatch( meshBuilder, pMesh, pRender, &ppFaces[nBatchStart], nCount - nBatchStart, nVertexCount, nIndexCount, bWireframe );
-	
+
 	//render additional wireframe stuff
 	if ( bWireframe )
 	{
@@ -2140,7 +2140,7 @@ void CMapFace::RenderFace3D( CRender3D* pRender, EditorRenderMode_t renderMode, 
 	{
 		Color color;
 		ComputeColor( pRender, renderSelected, faceSelectionState, m_bIgnoreLighting, color );
-  		DrawFace( color, renderMode );
+		DrawFace( color, renderMode );
 	}
 
 	// Draw the texture axes
@@ -2151,7 +2151,7 @@ void CMapFace::RenderFace3D( CRender3D* pRender, EditorRenderMode_t renderMode, 
 
 		// Draw the grid
 		RenderGridIfCloseEnough( pRender );
-	} 
+	}
 	else if ( m_pDetailObjects && Options.general.bShowDetailObjects )
 	{
 
@@ -2164,8 +2164,8 @@ void CMapFace::RenderFace3D( CRender3D* pRender, EditorRenderMode_t renderMode, 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mode - 
+// Purpose:
+// Input  : mode -
 //-----------------------------------------------------------------------------
 static int SortVal(EditorRenderMode_t mode)
 {
@@ -2178,10 +2178,10 @@ static int SortVal(EditorRenderMode_t mode)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : s1 - 
-//			s2 - 
-// Output : 
+// Purpose:
+// Input  : s1 -
+//			s2 -
+// Output :
 //-----------------------------------------------------------------------------
 static bool OpaqueFacesLessFunc( const MapFaceRender_t &s1, const MapFaceRender_t &s2 )
 {
@@ -2223,7 +2223,7 @@ void CMapFace::AddFaceToQueue( CMapFace* pMapFace, IEditorTexture* pTexture, Edi
 
 
 //-----------------------------------------------------------------------------
-// Purpose: this function will add a new face queue to the top of the list and 
+// Purpose: this function will add a new face queue to the top of the list and
 //			make it active
 //-----------------------------------------------------------------------------
 void CMapFace::PushFaceQueue( void )
@@ -2293,18 +2293,18 @@ void CMapFace::RenderOpaqueFaces( CRender3D* pRender )
 		{
 			ppMapFaces[ nFaceCount++ ] = &mapFace;
 			nLastRenderMode = mapFace.m_RenderMode;
-		    pLastTexture = mapFace.m_pTexture;
+			pLastTexture = mapFace.m_pTexture;
 		}
 	}
 
-	RenderFaces( pRender, nFaceCount, ppMapFaces ); 
+	RenderFaces( pRender, nFaceCount, ppMapFaces );
 
 	g_CurrentOpaqueFaces->RemoveAll();
 }
 
 
 void CMapFace::Render2D(CRender2D *pRender)
-{	
+{
 	SelectionState_t eFaceSelectionState = GetSelectionState();
 	SelectionState_t eSolidSelectionState;
 	if (m_pParent != NULL)
@@ -2324,7 +2324,7 @@ void CMapFace::Render2D(CRender2D *pRender)
 
 	// if face is parallel to view axis, skip it
 	bool bIsParallel = ( fabs( vViewNormal.Dot( vNormal) ) < 0.0001f );
-		
+
 	if ( HasDisp() && ( bIsParallel || bRenderSelected ) )
 	{
 		Vector mins,maxs;
@@ -2347,7 +2347,7 @@ void CMapFace::Render2D(CRender2D *pRender)
 			return;
 		}
 	}
-	
+
 	if ( !bIsParallel )
 	{
 		pRender->DrawPolyLine( nPoints, Points );
@@ -2363,7 +2363,7 @@ void CMapFace::RenderVertices(CRender *pRender)
 
 //-----------------------------------------------------------------------------
 // Purpose: Renders this face using the given 3D renderer.
-// Input  : pRender - Renderer to draw with. 
+// Input  : pRender - Renderer to draw with.
 //-----------------------------------------------------------------------------
 void CMapFace::Render3D( CRender3D *pRender )
 {
@@ -2422,7 +2422,7 @@ void CMapFace::Render3D( CRender3D *pRender )
 		{
 			RenderFace3D( pRender, RENDER_MODE_SELECTION_OVERLAY, renderSelected, eFaceSelectionState );
 		}
-    }
+	}
 }
 
 
@@ -2501,7 +2501,7 @@ void CMapFace::Render3DGrid(CRender3D *pRender)
 						Point2 = Points[0];
 					}
 
-					// 
+					//
 					// If there is a projection of the normal vector along this edge.
 					//
 					if (Point2[nDim] != Point1[nDim])
@@ -2543,7 +2543,7 @@ void CMapFace::Render3DGrid(CRender3D *pRender)
 						}
 					}
 				}
-			
+
 				fGridPoint += fGridSpacing;
 			}
 		}
@@ -2554,9 +2554,9 @@ void CMapFace::Render3DGrid(CRender3D *pRender)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pLoadInfo - 
-//			pFace - 
+// Purpose:
+// Input  : pLoadInfo -
+//			pFace -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CMapFace::LoadDispInfoCallback(CChunkFile *pFile, CMapFace *pFace)
@@ -2564,7 +2564,7 @@ ChunkFileResult_t CMapFace::LoadDispInfoCallback(CChunkFile *pFile, CMapFace *pF
 	SignalUpdate( EVTYPE_FACE_CHANGED );
 	// allocate a displacement (for the face)
 	EditDispHandle_t dispHandle = EditDispMgr()->Create();
-	CMapDisp *pDisp = EditDispMgr()->GetDisp( dispHandle );	
+	CMapDisp *pDisp = EditDispMgr()->GetDisp( dispHandle );
 
 	//
 	// load the displacement info and set relationships
@@ -2611,7 +2611,7 @@ ChunkFileResult_t CMapFace::LoadKeyCallback(const char *szKey, const char *szVal
 	}
 	else if (!stricmp(szKey, "plane"))
 	{
-		int nRead = sscanf(szValue, "(%f %f %f) (%f %f %f) (%f %f %f)", 
+		int nRead = sscanf(szValue, "(%f %f %f) (%f %f %f) (%f %f %f)",
 			&pFace->plane.planepts[0][0], &pFace->plane.planepts[0][1], &pFace->plane.planepts[0][2],
 			&pFace->plane.planepts[1][0], &pFace->plane.planepts[1][1], &pFace->plane.planepts[1][2],
 			&pFace->plane.planepts[2][0], &pFace->plane.planepts[2][1], &pFace->plane.planepts[2][2]);
@@ -2745,8 +2745,8 @@ void CMapFace::OnRemoveFromWorld(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFile - 
+// Purpose:
+// Input  : *pFile -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CMapFace::SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo)
@@ -2853,10 +2853,10 @@ void CMapFace::SetShowSelection(bool bShowSelection)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nPoint - 
-//			u - 
-//			v - 
+// Purpose:
+// Input  : nPoint -
+//			u -
+//			v -
 //-----------------------------------------------------------------------------
 void CMapFace::SetTextureCoords(int nPoint, float u, float v)
 {
@@ -2874,9 +2874,9 @@ size_t CMapFace::GetDataSize( void )
 {
 	// get base map class size
 	size_t size = sizeof( CMapFace );
-	
+
 	//
-	// better approximate by added in verts, texture coordinates, 
+	// better approximate by added in verts, texture coordinates,
 	// and lightmap coordinates
 	//
 	size += ( sizeof( Vector ) * nPoints );
@@ -2896,8 +2896,8 @@ size_t CMapFace::GetDataSize( void )
 //-----------------------------------------------------------------------------
 // Purpose: Returns our bounds for 2D rendering. These bounds do not consider
 //			any displacement information.
-// Input  : boundMin - 
-//			boundMax - 
+// Input  : boundMin -
+//			boundMax -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMapFace::GetRender2DBox( Vector& boundMin, Vector& boundMax )
@@ -2929,8 +2929,8 @@ bool CMapFace::GetRender2DBox( Vector& boundMin, Vector& boundMax )
 //-----------------------------------------------------------------------------
 // Purpose: Returns our bounds for frustum culling, including the bounds of
 //			any displacement information.
-// Input  : boundMin - 
-//			boundMax - 
+// Input  : boundMin -
+//			boundMax -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMapFace::GetCullBox( Vector& boundMin, Vector& boundMax )
@@ -2954,7 +2954,7 @@ bool CMapFace::GetCullBox( Vector& boundMin, Vector& boundMax )
 			if( bbox[i][0] < boundMin[0] ) { boundMin[0] = bbox[i][0]; }
 			if( bbox[i][1] < boundMin[1] ) { boundMin[1] = bbox[i][1]; }
 			if( bbox[i][2] < boundMin[2] ) { boundMin[2] = bbox[i][2]; }
-			
+
 			if( bbox[i][0] > boundMax[0] ) { boundMax[0] = bbox[i][0]; }
 			if( bbox[i][1] > boundMax[1] ) { boundMax[1] = bbox[i][1]; }
 			if( bbox[i][2] > boundMax[2] ) { boundMax[2] = bbox[i][2]; }
@@ -2967,10 +2967,10 @@ bool CMapFace::GetCullBox( Vector& boundMin, Vector& boundMax )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : HitPos - 
-//			Start - 
-//			End - 
+// Purpose:
+// Input  : HitPos -
+//			Start -
+//			End -
 // Output : Returns true if the ray intersected the face, false if not.
 //-----------------------------------------------------------------------------
 bool CMapFace::TraceLine(Vector &HitPos, Vector &HitNormal, Vector const &Start, Vector const &End )
@@ -2986,7 +2986,7 @@ bool CMapFace::TraceLine(Vector &HitPos, Vector &HitNormal, Vector const &Start,
 	//
 	float t = Start.Dot(plane.normal) - plane.dist;
 	t = t / -(End - Start).Dot(plane.normal);
-	
+
 	HitPos = Start + (t * (End - Start));
 	HitNormal = plane.normal;
 	return(true);
@@ -2995,8 +2995,8 @@ bool CMapFace::TraceLine(Vector &HitPos, Vector &HitNormal, Vector const &Start,
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-bool CMapFace::TraceLineInside( Vector &HitPos, Vector &HitNormal, 
-							    Vector const &Start, Vector const &End, bool bNoDisp )
+bool CMapFace::TraceLineInside( Vector &HitPos, Vector &HitNormal,
+								Vector const &Start, Vector const &End, bool bNoDisp )
 {
 	// if the face is displaced -- collide with that
 	if( HasDisp() && !bNoDisp )
@@ -3011,7 +3011,7 @@ bool CMapFace::TraceLineInside( Vector &HitPos, Vector &HitNormal,
 	float t = Start.Dot( plane.normal ) - plane.dist;
 	if ( -( End - Start ).Dot( plane.normal ) != 0.0f )
 	{
-		t = t / -( End - Start ).Dot( plane.normal );	
+		t = t / -( End - Start ).Dot( plane.normal );
 	}
 	HitPos = Start + ( t * ( End - Start ) );
 
@@ -3037,7 +3037,7 @@ bool CMapFace::TraceLineInside( Vector &HitPos, Vector &HitNormal,
 			edgePlane.normal.Negate();
 			edgePlane.dist = -edgePlane.dist;
 		}
-		
+
 		// check to see if plane point lives behind the plane
 		dist = edgePlane.normal.Dot( HitPos ) - edgePlane.dist;
 		if( dist > 0.0f )
@@ -3050,7 +3050,7 @@ bool CMapFace::TraceLineInside( Vector &HitPos, Vector &HitNormal,
 
 //-----------------------------------------------------------------------------
 // NOTE: actually this could be calculated once for the face since only the
-//       face normal is being used (no smoothing groups, etc.), but that may 
+//       face normal is being used (no smoothing groups, etc.), but that may
 //       change????
 //-----------------------------------------------------------------------------
 void CMapFace::CalcTangentSpaceAxes( void )
@@ -3304,7 +3304,7 @@ void CMapFace::DoTransform(const VMatrix &matrix)
 	}
 
 	Vector oldPoint = Points[0];
-	
+
 	// Transform the face points.
 	for (int i = 0; i < nPoints; i++)
 	{
@@ -3353,13 +3353,13 @@ void CMapFace::DoTransform(const VMatrix &matrix)
 		if ( pDisp )
 		{
 			pDisp->UpdateSurfData( this );
-			
+
 			// Update the neighbors of displacements that intersect the old as well as the new bbox.
 			// Without this, there can be errors if you drag > 2 edges to interset each other, then
 			// move one of the intersectors (cloning can easily cause this case to happen).
 			Vector bbDispNew[2];
 			pDisp->GetBoundingBox( bbDispNew[0], bbDispNew[1] );
-			
+
 			CMapDisp::UpdateNeighborsOfDispsIntersectingBox( bbDispOld[0], bbDispOld[1], 1.0 );
 			CMapDisp::UpdateNeighborsOfDispsIntersectingBox( bbDispNew[0], bbDispNew[1], 1.0 );
 		}
@@ -3425,7 +3425,7 @@ void CMapFace::DoTransform(const VMatrix &matrix)
 				InitializeTextureAxes(Options.GetTextureAlignment(), INIT_TEXTURE_AXES | INIT_TEXTURE_FORCE);
 			}
 		}
-		else // we stretch/scale axes 
+		else // we stretch/scale axes
 		{
 			// operation changes scale of textures, check if we really want that:
 			bIsLocking = Options.IsScaleLockingTextures()!=0;
@@ -3436,7 +3436,7 @@ void CMapFace::DoTransform(const VMatrix &matrix)
 				texture.scale[1] *= fScaleV;
 			}
 		}
-		
+
 		if ( bIsMoving && bIsLocking )
 		{
 			// Offset texture coordinates if we're moving and texture locking.
@@ -3450,18 +3450,17 @@ void CMapFace::DoTransform(const VMatrix &matrix)
 	// rotate the displacement field data - if any!
 	if( pDisp )
 	{
- 		pDisp->DoTransform( mTrans );
+		pDisp->DoTransform( mTrans );
 
 		// Update the neighbors of displacements that intersect the old as well as the new bbox.
 		// Without this, there can be errors if you drag > 2 edges to interset each other, then
 		// move one of the intersectors (cloning can easily cause this case to happen).
 		Vector bbDispNew[2];
 		pDisp->GetBoundingBox( bbDispNew[0], bbDispNew[1] );
-		
+
 		CMapDisp::UpdateNeighborsOfDispsIntersectingBox( bbDispOld[0], bbDispOld[1], 1.0 );
 		CMapDisp::UpdateNeighborsOfDispsIntersectingBox( bbDispNew[0], bbDispNew[1], 1.0 );
 	}
 	// Create any detail objects if appropriate
 	DetailObjects::BuildAnyDetailObjects(this);
 }
-

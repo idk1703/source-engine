@@ -73,11 +73,11 @@ void CPlayerReport::writeHTML(CHTMLFile& html)
 	html.write("<font class=whitetext>rank:</font> <font class=awards2> %.2lf </font><br>\n",pPlayer->perteam[tid].rank());
 	html.write("<font class=whitetext>kills/deaths:</font> <font class=awards2>%li/%li </font><br>\n",pPlayer->perteam[tid].kills,pPlayer->perteam[tid].deaths);
 	html.write("<font class=whitetext>time:</font> <font class=awards2> %01li:%02li:%02li </font><br>\n",Util::time_t2hours(pPlayer->perteam[tid].timeOn()),Util::time_t2mins(pPlayer->perteam[tid].timeOn()),Util::time_t2secs(pPlayer->perteam[tid].timeOn()));
-	
+
 
 	int numClassesPlayed=pPlayer->perteam[tid].classesplayed.numDifferent();
 	player_class faveClass=pPlayer->perteam[tid].classesplayed.favourite();
-	
+
 	if (numClassesPlayed == 1)
 	{
 		if (faveClass!=PC_UNDEFINED)
@@ -96,14 +96,14 @@ void CPlayerReport::writeHTML(CHTMLFile& html)
 			{
 				if (printedone)
 					html.write(", ");
-				
+
 				html.write(plrClassNames[pc]);
 				printedone=true;
 			}
 		}
 		html.write(" </font><br>\n");
 	}
-	
+
 
 
 	const string weap=pPlayer->perteam[tid].faveWeapon();
@@ -115,10 +115,10 @@ void CPlayerReport::writeHTML(CHTMLFile& html)
 		html.write("<font class=whitetext>favorite weapon:</font> <font class=awards2> %s</font><br>\n",faveWeap.c_str());
 		html.write("<font class=whitetext>kills with %s:</font> <font class=awards2> %li</font><br>\n",lowerWeapName,pPlayer->perteam[tid].faveWeapKills());
 	}
-	
-	
+
+
 	int numTeamsPlayed=pPlayer->teams.numDifferent();
-	
+
 	if (numTeamsPlayed > 1)
 	{
 		if (iWhichTeam==ALL_TEAMS)
@@ -147,7 +147,7 @@ void CPlayerReport::writeHTML(CHTMLFile& html)
 	if (numTeamsPlayed > 1 && iWhichTeam != ALL_TEAMS)
 	{
 		html.write("<a class=whitetext href=\"%lu.html\"> <u> Combined stats for this match </u> </a> <br> \n",pPlayer->pid);
-		
+
 		if (!alreadyWroteCombStats[pPlayer->pid])
 		{
 			CPlayerReport cpr(pPlayer,ALL_TEAMS);
@@ -167,9 +167,9 @@ void CPlayerReport::writeHTML(CHTMLFile& html)
 		return;
 	if (alreadyPersisted[pPlayer->WONID] || reportingPersistedPlayer)
 		return;
-	
+
 	alreadyPersisted[pPlayer->WONID]=true;
-	
+
 	if (g_pApp->cmdLineSwitches["persistplayerstats"]=="yes")
 	{
 		CPlrPersist cpp;
@@ -179,7 +179,7 @@ void CPlayerReport::writeHTML(CHTMLFile& html)
 		cpp.merge(onDisk);
 		cpp.write();
 	}
-	
+
 }
 
 //------------------------------------------------------------------------------------------------------
@@ -196,7 +196,7 @@ void CPlayerReport::writePersistHTML(CHTMLFile& html)
 
 	map<string,bool> namePrinted;
 	namePrinted[pPersist->faveName()]=true;
-	
+
 	map<string,int>::iterator nmiter=pPersist->nickmap.begin();
 	bool printed1=false;
 	for (nmiter;nmiter!=pPersist->nickmap.end();++nmiter)
@@ -214,9 +214,9 @@ void CPlayerReport::writePersistHTML(CHTMLFile& html)
 	}
 	if (printed1)
 		html.write("</font><br>\n");
-	
 
-	
+
+
 	html.write("<font class=whitetext>rank:</font> <font class=awards2> %.2lf </font><br>\n",pPersist->rank());
 	html.write("<font class=whitetext>kills/deaths:</font> <font class=awards2>%li/%li </font><br>\n",pPersist->kills,pPersist->deaths);
 	html.write("<font class=whitetext>time:</font> <font class=awards2> %01li:%02li:%02li </font><br>\n",Util::time_t2hours(pPersist->timeon),Util::time_t2mins(pPersist->timeon),Util::time_t2secs(pPersist->timeon));
@@ -227,7 +227,7 @@ void CPlayerReport::writePersistHTML(CHTMLFile& html)
 	if (faveClass!="Undefined")
 		html.write("<font class=whitetext>favorite class:</font> <font class=awards2> %s </font><br>\n",faveClass.c_str());
 
-	
+
 	bool printedone=false;
 	map<string,int>::iterator classit=pPersist->classmap.begin();
 	map<string,bool> classPrinted;
@@ -244,8 +244,8 @@ void CPlayerReport::writePersistHTML(CHTMLFile& html)
 			classPrinted[classit->first]=true;
 			printedone=true;
 		}
-		
-		
+
+
 	}
 	if (printedone)
 		html.write(" </font><br>\n");

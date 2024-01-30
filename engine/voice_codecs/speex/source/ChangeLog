@@ -2,5 +2,5 @@
 Working encoder and decoder for both narrowband and wideband.
 
 2002/02/27 Jean-Marc Valin:
-Got the basic encoder working as a demo with quantization only on some 
+Got the basic encoder working as a demo with quantization only on some
 parameters.

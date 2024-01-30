@@ -31,7 +31,7 @@ class CHitEffectRamp
 {
 public:
 	float m_flDamageAmount;
-	
+
 	float m_flMinAlpha;
 	float m_flMaxAlpha;
 
@@ -43,7 +43,7 @@ public:
 };
 
 
-void InterpolateRamp( 
+void InterpolateRamp(
 	const CHitEffectRamp &a,
 	const CHitEffectRamp &b,
 	CHitEffectRamp &out,
@@ -65,7 +65,7 @@ void InterpolateRamp(
 
 
 void FX_HitEffectSmoke(
-	CSmartPtr<CBloodSprayEmitter> pEmitter, 
+	CSmartPtr<CBloodSprayEmitter> pEmitter,
 	int iDamage,
 	const Vector &vEntryPoint,
 	const Vector &vDirection,
@@ -77,19 +77,19 @@ void FX_HitEffectSmoke(
 	// These parameters create a ramp based on how much damage the shot did.
 	CHitEffectRamp ramps[2] =
 	{
-		{ 
-			0, 
+		{
+			0,
 			30,		// min/max alpha
-			70, 
+			70,
 			0.5,	// min/max size
 			1,
 			0,		// min/max velocity (not used here)
 			0
 		},
-		
-		{ 
-			50, 
-			30,		// min/max alpha 
+
+		{
+			50,
+			30,		// min/max alpha
 			70,
 			1,		// min/max size
 			2,
@@ -99,9 +99,9 @@ void FX_HitEffectSmoke(
 	};
 
 	CHitEffectRamp interpolatedRamp;
-	InterpolateRamp( 
-		ramps[0], 
-		ramps[1], 
+	InterpolateRamp(
+		ramps[0],
+		ramps[1],
 		interpolatedRamp,
 		iDamage );
 
@@ -112,13 +112,13 @@ void FX_HitEffectSmoke(
 		newParticle.m_flLifetime = 0.0f;
 		newParticle.m_flDieTime	= 3.0f;
 
-		newParticle.m_uchStartSize	= random->RandomInt( 
-			interpolatedRamp.m_flMinSize, 
+		newParticle.m_uchStartSize	= random->RandomInt(
+			interpolatedRamp.m_flMinSize,
 			interpolatedRamp.m_flMaxSize ) * flScale;
 		newParticle.m_uchEndSize	= newParticle.m_uchStartSize * 4;
-		
+
 		newParticle.m_vecVelocity = Vector( 0, 0, 5 ) + RandomVector( -2, 2 );
-		newParticle.m_uchStartAlpha	= random->RandomInt( 
+		newParticle.m_uchStartAlpha	= random->RandomInt(
 			interpolatedRamp.m_flMinSize,
 			interpolatedRamp.m_flMaxSize );
 		newParticle.m_uchEndAlpha	= 0;
@@ -133,14 +133,14 @@ void FX_HitEffectSmoke(
 		newParticle.m_uchColor[0] = MIN( 1.0f, colorRamp ) * 255.0f;
 		newParticle.m_uchColor[1] = MIN( 1.0f, colorRamp ) * 255.0f;
 		newParticle.m_uchColor[2] = MIN( 1.0f, colorRamp ) * 255.0f;
-	}	
+	}
 }
 
 
 void FX_HitEffectBloodSpray(
-	CSmartPtr<CBloodSprayEmitter> pEmitter, 
+	CSmartPtr<CBloodSprayEmitter> pEmitter,
 	int iDamage,
-	const Vector &vEntryPoint, 
+	const Vector &vEntryPoint,
 	const Vector &vSprayNormal,
 	const char *pMaterialName,
 	float flLODDistance,
@@ -160,19 +160,19 @@ void FX_HitEffectBloodSpray(
 	// These parameters create a ramp based on how much damage the shot did.
 	CHitEffectRamp ramps[2] =
 	{
-		{ 
-			0, 
+		{
+			0,
 			80,		// min/max alpha
-			128, 
+			128,
 			flScale/2,// min/max size
 			flScale,
 			10,		// min/max velocity
 			20
 		},
-		
-		{ 
-			50, 
-			80,		// min/max alpha 
+
+		{
+			50,
+			80,		// min/max alpha
 			128,
 			flScale/2,// min/max size
 			flScale,
@@ -182,9 +182,9 @@ void FX_HitEffectBloodSpray(
 	};
 
 	CHitEffectRamp interpolatedRamp;
-	InterpolateRamp( 
-		ramps[0], 
-		ramps[1], 
+	InterpolateRamp(
+		ramps[0],
+		ramps[1],
 		interpolatedRamp,
 		iDamage );
 
@@ -211,17 +211,17 @@ void FX_HitEffectBloodSpray(
 			pParticle->m_vecVelocity += vSprayNormal * random->RandomInt( interpolatedRamp.m_flMinVelocity, interpolatedRamp.m_flMaxVelocity ) * flSpeed * speedFactor;
 
 			float colorRamp = random->RandomFloat( 0.5f, 0.75f ) + flLODDistance;
-			
+
 			pParticle->m_uchColor[0]	= MIN( 1.0f, color[0] * colorRamp ) * 255.0f;
 			pParticle->m_uchColor[1]	= MIN( 1.0f, whiteness * colorRamp ) * 255.0f;
 			pParticle->m_uchColor[2]	= MIN( 1.0f, whiteness * colorRamp ) * 255.0f;
-			
+
 			pParticle->m_uchStartSize	= random->RandomFloat( interpolatedRamp.m_flMinSize, interpolatedRamp.m_flMaxSize ) * flDistanceScale;
 			pParticle->m_uchEndSize		= pParticle->m_uchStartSize * 4 * flDistanceScale;
-			
+
 			pParticle->m_uchStartAlpha	= random->RandomInt( interpolatedRamp.m_flMinAlpha, interpolatedRamp.m_flMaxAlpha );
 			pParticle->m_uchEndAlpha	= 0;
-			
+
 			pParticle->m_flRoll			= random->RandomInt( 0, 360 );
 			pParticle->m_flRollDelta	= random->RandomFloat( -4.0f, 4.0f );
 		}
@@ -230,9 +230,9 @@ void FX_HitEffectBloodSpray(
 
 
 void FX_HitEffectBloodSplatter(
-	CSmartPtr<CBloodSprayEmitter> pTrailEmitter, 
+	CSmartPtr<CBloodSprayEmitter> pTrailEmitter,
 	int iDamage,
-	const Vector &vExitPoint, 
+	const Vector &vExitPoint,
 	const Vector &vSplatterNormal,
 	float flLODDistance )
 {
@@ -248,19 +248,19 @@ void FX_HitEffectBloodSplatter(
 	// These parameters create a ramp based on how much damage the shot did.
 	CHitEffectRamp ramps[2] =
 	{
-		{ 
-			0, 
+		{
+			0,
 			0,		// min/max alpha
-			75, 
+			75,
 			1.5f,  // min/max size
 			2.0f,
 			25.0f * flScale,		// min/max velocity
 			35.0f * flScale
 		},
-		
-		{ 
-			50, 
-			0,		// min/max alpha 
+
+		{
+			50,
+			0,		// min/max alpha
 			140,
 			1.5f,// min/max size
 			2.0f,
@@ -270,9 +270,9 @@ void FX_HitEffectBloodSplatter(
 	};
 
 	CHitEffectRamp interpolatedRamp;
-	InterpolateRamp( 
-		ramps[0], 
-		ramps[1], 
+	InterpolateRamp(
+		ramps[0],
+		ramps[1],
 		interpolatedRamp,
 		iDamage );
 
@@ -284,8 +284,8 @@ void FX_HitEffectBloodSplatter(
 		offset += right * random->RandomFloat( -0.15f, 0.15f ) * flScale;
 		offset += up * random->RandomFloat( -0.15f, 0.15f ) * flScale;
 
-		SimpleParticle *tParticle = (SimpleParticle*)pTrailEmitter->AddSimpleParticle( 
-			hMaterial, 
+		SimpleParticle *tParticle = (SimpleParticle*)pTrailEmitter->AddSimpleParticle(
+			hMaterial,
 			vExitPoint,
 			random->RandomFloat( 0.225f, 0.35f ),
 			random->RandomFloat( interpolatedRamp.m_flMinSize, interpolatedRamp.m_flMaxSize )
@@ -310,10 +310,10 @@ void FX_HitEffectBloodSplatter(
 #include "fx_dod_blood.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : origin - 
-//			normal - 
-//			scale - 
+// Purpose:
+// Input  : origin -
+//			normal -
+//			scale -
 //-----------------------------------------------------------------------------
 void FX_DOD_BloodSpray( const Vector &origin, const Vector &normal, float flDamage )
 {
@@ -325,7 +325,7 @@ void FX_DOD_BloodSpray( const Vector &origin, const Vector &normal, float flDama
 		return;
 
 	Vector offset;
-	
+
 	float half_r = 32;
 	float half_g = 0;
 	float half_b = 2;
@@ -340,7 +340,7 @@ void FX_DOD_BloodSpray( const Vector &origin, const Vector &normal, float flDama
 	color.x = (float)( worldLight.x * half_r + half_r ) / 255.0f;
 	color.y = (float)( worldLight.y * half_g + half_g ) / 255.0f;
 	color.z = (float)( worldLight.z * half_b + half_b ) / 255.0f;
-	
+
 	float colorRamp;
 
 	Vector	offDir;
@@ -376,13 +376,13 @@ void FX_DOD_BloodSpray( const Vector &origin, const Vector &normal, float flDama
 		pParticle->m_uchColor[0]	= MIN( 1.0f, color[0] * colorRamp ) * 255.0f;
 		pParticle->m_uchColor[1]	= MIN( 1.0f, color[1] * colorRamp ) * 255.0f;
 		pParticle->m_uchColor[2]	= MIN( 1.0f, color[2] * colorRamp ) * 255.0f;
-		
+
 		pParticle->m_uchStartSize	= 8;
 		pParticle->m_uchEndSize		= 32;
-	
+
 		pParticle->m_uchStartAlpha	= 255;
 		pParticle->m_uchEndAlpha	= 0;
-		
+
 		pParticle->m_flRoll			= random->RandomInt( 0, 360 );
 		pParticle->m_flRollDelta	= 0;
 	}
@@ -408,13 +408,13 @@ void FX_DOD_BloodSpray( const Vector &origin, const Vector &normal, float flDama
 			pParticle->m_uchColor[0]	= MIN( 1.0f, color[0] * colorRamp ) * 255.0f;
 			pParticle->m_uchColor[1]	= MIN( 1.0f, color[1] * colorRamp ) * 255.0f;
 			pParticle->m_uchColor[2]	= MIN( 1.0f, color[2] * colorRamp ) * 255.0f;
-			
+
 			pParticle->m_uchStartSize	= scale * random->RandomInt( 4, 8 );
 			pParticle->m_uchEndSize		= pParticle->m_uchStartSize * 4;
-		
+
 			pParticle->m_uchStartAlpha	= 255;
 			pParticle->m_uchEndAlpha	= 0;
-			
+
 			pParticle->m_flRoll			= random->RandomInt( 0, 360 );
 			pParticle->m_flRollDelta	= 0;
 		}
@@ -432,8 +432,8 @@ void FX_DOD_BloodSpray( const Vector &origin, const Vector &normal, float flDama
 	pTrailEmitter->SetSortOrigin( origin );
 
 	// Partial gravity on blood drops
-	pTrailEmitter->SetGravity( 400.0 ); 
-	
+	pTrailEmitter->SetGravity( 400.0 );
+
 	// Enable simple collisions with nearby surfaces
 	pTrailEmitter->Setup(origin, &normal, 1, 10, 100, 400, 0.2, 0 );
 
@@ -504,7 +504,7 @@ void FX_DOD_BloodSpray( const Vector &origin, const Vector &normal, float flDama
 			pParticle->m_flRoll			= random->RandomInt( 0, 360 );
 			pParticle->m_flRollDelta	= random->RandomFloat( -8.0f, 8.0f );
 		}
-	}			
+	}
 }
 
 //-----------------------------------------------------------------------------

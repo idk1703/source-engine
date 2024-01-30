@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -28,14 +28,14 @@
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_KillSoldierGrind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 500 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -62,7 +62,7 @@ class CAchievementTFDemoman_DestroyBuildingsWithMedic : public CBaseTFAchievemen
 {
 	DECLARE_CLASS( CAchievementTFDemoman_DestroyBuildingsWithMedic, CBaseTFAchievement );
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -129,7 +129,7 @@ class CAchievementTFDemoman_DecapitateCloakedSpy : public CBaseTFAchievement
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		if ( !pTFVictim )
@@ -169,10 +169,10 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_KillWithDirectPipe, ACHIEVEMENT_TF_DE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_BounceAndKill : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_FILTER_ATTACKER_IS_PLAYER | ACH_SAVE_GLOBAL );
-		SetGoal( 1 );		
+		SetGoal( 1 );
 		SetDefLessFunc( m_BouncedPlayers );
 	}
 
@@ -221,14 +221,14 @@ class CAchievementTFDemoman_BounceAndKill : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pVictim == C_BasePlayer::GetLocalPlayer() )
 		{
 			m_BouncedPlayers.RemoveAll();
 			return;
 		}
-		
+
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
 			C_TFPlayer *pTFVictim = ToTFPlayer( pVictim );
@@ -260,7 +260,7 @@ class CAchievementTFDemoman_DecapitatePlayers : public CBaseTFAchievement
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pLocalPlayer = ToTFPlayer( C_TFPlayer::GetLocalPlayer() );
 		if ( !pLocalPlayer )
@@ -303,7 +303,7 @@ class CAchievementTFDemoman_DecapitatePlayersFast : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pLocalPlayer = ToTFPlayer( C_TFPlayer::GetLocalPlayer() );
 		if ( !pLocalPlayer )
@@ -341,7 +341,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_DecapitatePlayersFast, ACHIEVEMENT_TF
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSoldier_DuoDemomanKills : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 10 );
@@ -394,7 +394,7 @@ class CAchievementTFDemoman_KillTwoDuringStickyJump : public CBaseTFAchievement
 {
 	// While airborne after a sticky-jump, kill at least two enemy players
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_FILTER_ATTACKER_IS_PLAYER | ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -431,7 +431,7 @@ class CAchievementTFDemoman_KillTwoDuringStickyJump : public CBaseTFAchievement
 					m_bStickyJumping = false;
 				}
 			}
-			
+
 			return;
 		}
 		else if ( FStrEq( event->GetName(), "sticky_jump" ) )
@@ -452,7 +452,7 @@ class CAchievementTFDemoman_KillTwoDuringStickyJump : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -482,13 +482,13 @@ class CAchievementTFDemoman_KillPlayerAfterTeleport : public CBaseTFAchievement
 {
 	// Kill an enemy player within X seconds of them teleporting in
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_FILTER_ATTACKER_IS_PLAYER | ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pLocalPlayer = ToTFPlayer( C_TFPlayer::GetLocalPlayer() );
 		if ( !pLocalPlayer )
@@ -496,7 +496,7 @@ class CAchievementTFDemoman_KillPlayerAfterTeleport : public CBaseTFAchievement
 
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
-		
+
 		C_TFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		if ( event->GetInt( "weaponid" ) == TF_WEAPON_GRENADE_PIPEBOMB )
 		{
@@ -514,14 +514,14 @@ class CAchievementTFDemoman_DominateEngineerThreeTimes : public CBaseTFAchieveme
 {
 	// Dominate three Engineers
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_FILTER_ATTACKER_IS_PLAYER | ACH_SAVE_GLOBAL );
 		SetGoal( 3 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pLocalPlayer = ToTFPlayer( C_TFPlayer::GetLocalPlayer() );
 		if ( !pLocalPlayer )
@@ -536,7 +536,7 @@ class CAchievementTFDemoman_DominateEngineerThreeTimes : public CBaseTFAchieveme
 			CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 			if ( pTFVictim && pTFVictim->IsPlayerClass( TF_CLASS_ENGINEER ) )
 			{
-				IncrementCount(); 
+				IncrementCount();
 			}
 		}
 	}
@@ -563,7 +563,7 @@ class CAchievementTFDemoman_MeleeKillWhileJumping : public CBaseTFAchievement
 {
 	// Get a melee kill while in sticky jump
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -617,7 +617,7 @@ class CAchievementTFDemoman_MeleeKillWhileJumping : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -727,7 +727,7 @@ class CAchievementTFDemoman_KillEngiSentryDispenser : public CBaseTFAchievement
 		m_DispenserDestroyed.RemoveAll();
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( event->GetInt( "weaponid" ) == TF_WEAPON_GRENADE_PIPEBOMB )
 		{
@@ -767,7 +767,7 @@ class CAchievementTFDemoman_KillEngiSentryDispenser : public CBaseTFAchievement
 // 					if ( ( m_Engineers[numEngineers] == m_SentryDestroyed[iSentry] ) &&
 // 						( m_Engineers[numEngineers] == m_DispenserDestroyed[iDispenser] ) )
 					if ( ( gpGlobals->curtime < m_SentryDestroyed[iSentry] + 0.1f ) &&
-						( gpGlobals->curtime < m_DispenserDestroyed[iDispenser] + 0.1f ) && 
+						( gpGlobals->curtime < m_DispenserDestroyed[iDispenser] + 0.1f ) &&
 						( gpGlobals->curtime < m_Engineers[numEngineers] + 0.1f ) )
 					{
 						IncrementCount();
@@ -793,7 +793,7 @@ class CAchievementTFDemoman_DecapitateEqualizer : public CBaseTFAchievement
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		if ( !pTFVictim )
@@ -824,7 +824,7 @@ class CAchievementTFDemoman_DecapitateNemesis : public CBaseTFAchievement
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		if ( !pTFVictim )
@@ -845,7 +845,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_DecapitateNemesis, ACHIEVEMENT_TF_DEM
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_DamageGrind : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1000000 );
@@ -875,7 +875,7 @@ class CAchievementTFDemoman_KillXCapping : public CBaseTFAchievement
 {
 	// Kill "x" players that are capping or pushing the cart with one detonation, "y" times
 	// Server checks for this achievement - no code necessary
-	
+
 	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
@@ -891,7 +891,7 @@ class CAchievementTFDemoman_KillXDefending : public CBaseTFAchievement
 	// Kill "x" players that are defending
 	// Server checks for this achievement - no code necessary
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 25 );
@@ -905,7 +905,7 @@ class CAchievementTFDemoman_DestroyBuildings : public CBaseTFAchievement
 {
 	// Destroy "x" buildings
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 50 );
@@ -953,14 +953,14 @@ class CAchievementTFDemoman_KillXScoutsPyros : public CBaseTFAchievement
 {
 	// Kill 25 Scouts or Pyros with the grenade launcher
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_FILTER_ATTACKER_IS_PLAYER | ACH_SAVE_GLOBAL );
 		SetGoal( 25 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pLocalPlayer = ToTFPlayer( C_TFPlayer::GetLocalPlayer() );
 		if ( !pLocalPlayer )
@@ -984,13 +984,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_KillXScoutsPyros, ACHIEVEMENT_TF_DEMO
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_TauntKill : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_FILTER_ATTACKER_IS_PLAYER );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// was this a taunt kill?
 		if ( event->GetInt( "customkill" ) == TF_DMG_CUSTOM_TAUNTATK_BARBARIAN_SWING )
@@ -1004,13 +1004,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_TauntKill, ACHIEVEMENT_TF_DEMOMAN_TAU
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_ChargeKill : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_FILTER_ATTACKER_IS_PLAYER );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// was this a taunt kill?
 		if ( event->GetInt( "customkill" ) == TF_DMG_CUSTOM_CHARGE_IMPACT )
@@ -1024,14 +1024,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_ChargeKill, ACHIEVEMENT_TF_DEMOMAN_CH
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_CritSwordKill : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_FILTER_ATTACKER_IS_PLAYER );
 		SetGoal( 5 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// was this a charge kill with the sword?
 		int nDamageBits = event->GetInt( "damagebits" );
@@ -1046,14 +1046,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_CritSwordKill, ACHIEVEMENT_TF_DEMOMAN
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_AirBurstKills : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_FILTER_ATTACKER_IS_PLAYER );
 		SetGoal( 30 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// was this an air burst kill?
 		if ( event->GetInt( "customkill" ) == TF_DMG_CUSTOM_AIR_STICKY_BURST )
@@ -1067,7 +1067,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_AirBurstKills, ACHIEVEMENT_TF_DEMOMAN
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_StickyJumpCap : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_FILTER_ATTACKER_IS_PLAYER );
 		SetGoal( 1 );
@@ -1123,7 +1123,7 @@ class CAchievementTFDemoman_StickyJumpCap : public CBaseTFAchievement
 		// Only check CP maps
 		if ( TFGameRules() && TFGameRules()->GetGameType() != TF_GAMETYPE_CP && TFGameRules()->GetGameType() != TF_GAMETYPE_ARENA )
 			return;
-		
+
 		// Capture the time we land
 		if ( FStrEq( event->GetName(), "sticky_jump_landed" ) )
 		{
@@ -1166,10 +1166,10 @@ class CAchievementTFDemoman_StickyJumpCap : public CBaseTFAchievement
 			C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 			if ( !pLocalPlayer )
 				return;
-			
+
 			int iTeam = event->GetInt( "team" );
 			if ( iTeam == pLocalPlayer->GetTeamNumber() )
-			{			
+			{
 				const char *cappers = event->GetString( "cappers" );
 				for ( int i = 0; i < Q_strlen( cappers ); i++ )
 				{
@@ -1213,7 +1213,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_StickyJumpCap, ACHIEVEMENT_TF_DEMOMAN
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_FreezeTaunt : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1227,7 +1227,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_FreezeTaunt, ACHIEVEMENT_TF_DEMOMAN_F
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_FreezeTauntRump : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1242,13 +1242,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_FreezeTauntRump, ACHIEVEMENT_TF_DEMOM
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_EnvironmentalKill : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		if ( !pTFVictim )
@@ -1266,7 +1266,7 @@ class CAchievementTFDemoman_EnvironmentalKill : public CBaseTFAchievement
 				( pAttacker && pAttacker->IsBrushModel() ) || // They were smashed by the world! Gah!
 				( !pAttacker || (pAttacker == pVictim) ) || // He killed himself!
 				( custom == TF_DMG_CUSTOM_SUICIDE ) ||
-				( custom == TF_DMG_CUSTOM_TRIGGER_HURT ) ) // A trigger-hurt got him! 
+				( custom == TF_DMG_CUSTOM_TRIGGER_HURT ) ) // A trigger-hurt got him!
 			{
 				IncrementCount();
 			}
@@ -1280,7 +1280,7 @@ class CAchievementTFDemoman_DestroyStickyBombs : public CBaseTFAchievement
 {
 	// Destroy X stickybombs with the Scottish Defender
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 100 );
@@ -1294,7 +1294,7 @@ class CAchievementTFDemoman_StickyJumpDistance : public CBaseTFAchievement
 {
 	DECLARE_CLASS( CAchievementTFDemoman_StickyJumpDistance, CBaseTFAchievement );
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 1 );
@@ -1377,7 +1377,7 @@ class CAchievementTFDemoman_StickyJumpDistance : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -1404,7 +1404,7 @@ class CAchievementTFDemoman_Kill3WithDetonation : public CBaseTFAchievement
 {
 	// Destroy 3 players with a single pipebomb
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1415,7 +1415,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFDemoman_Kill3WithDetonation, ACHIEVEMENT_TF_D
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFDemoman_KillXSappingSpies : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 20 );
@@ -1446,7 +1446,7 @@ class CAchievementTFDemoman_KillXSappingSpies : public CBaseTFAchievement
 		return -1;
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -1497,7 +1497,7 @@ class CAchievementTFDemoman_Kill3WithPipeSetup : public CBaseTFAchievement
 {
 	// Kill 3 players in separate explosions without placing new sticky bombs
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_FILTER_ATTACKER_IS_PLAYER | ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1515,7 +1515,7 @@ class CAchievementTFDemoman_Kill3WithPipeSetup : public CBaseTFAchievement
 		m_iPipebombCount = 0;
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pLocalPlayer = ToTFPlayer( C_TFPlayer::GetLocalPlayer() );
 		if ( !pLocalPlayer )
@@ -1574,7 +1574,7 @@ class CAchievementTFDemoman_AchieveProgress1 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFDemoman_AchieveProgress1, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 5, ACHIEVEMENT_TF_DEMOMAN_START_RANGE, ACHIEVEMENT_TF_DEMOMAN_END_RANGE );
@@ -1587,7 +1587,7 @@ class CAchievementTFDemoman_AchieveProgress2 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFDemoman_AchieveProgress2, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 11, ACHIEVEMENT_TF_DEMOMAN_START_RANGE, ACHIEVEMENT_TF_DEMOMAN_END_RANGE );
@@ -1600,7 +1600,7 @@ class CAchievementTFDemoman_AchieveProgress3 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFDemoman_AchieveProgress3, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 17, ACHIEVEMENT_TF_DEMOMAN_START_RANGE, ACHIEVEMENT_TF_DEMOMAN_END_RANGE );
@@ -1656,7 +1656,7 @@ public:
 	{
 		if ( pVictim )
 		{
-			// Local player died	
+			// Local player died
 			if ( pVictim == C_BasePlayer::GetLocalPlayer() )
 			{
 				ResetTracking();
@@ -1756,7 +1756,7 @@ public:
 
 	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
-		// Local player died	
+		// Local player died
 		if ( pVictim == C_BasePlayer::GetLocalPlayer() )
 		{
 			ResetTracking();
@@ -1867,7 +1867,7 @@ public:
 	{
 		CTFPlayer *pTFAttacker = ToTFPlayer( pAttacker );
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
-		
+
 		if ( pTFAttacker && pTFVictim && ( pTFAttacker == C_TFPlayer::GetLocalTFPlayer() ) )
 		{
 			if ( pTFAttacker->m_Shared.InCond( TF_COND_SHIELD_CHARGE ) && pTFVictim->m_Shared.InCond( TF_COND_SHIELD_CHARGE ) )
@@ -1880,6 +1880,3 @@ public:
 DECLARE_ACHIEVEMENT( CAchievementTFDemoman_ChargeKillChargingDemo, ACHIEVEMENT_TF_DEMOMAN_CHARGE_KILL_CHARGING_DEMO, "TF_DEMOMAN_CHARGE_KILL_CHARGING_DEMO", 5 );
 
 #endif // CLIENT_DLL
-
-
-

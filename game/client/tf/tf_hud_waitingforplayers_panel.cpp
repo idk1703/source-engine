@@ -1,7 +1,7 @@
 
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFWaitingForPlayersPanel : public EditablePanel, public CHudElement
 {
@@ -56,7 +56,7 @@ CTFWaitingForPlayersPanel::CTFWaitingForPlayersPanel( const char *pElementName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWaitingForPlayersPanel::LevelInit()
 {
@@ -64,7 +64,7 @@ void CTFWaitingForPlayersPanel::LevelInit()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWaitingForPlayersPanel::Init()
 {
@@ -72,14 +72,14 @@ void CTFWaitingForPlayersPanel::Init()
 	ListenForGameEvent( "teamplay_waiting_begins" );
 	ListenForGameEvent( "teamplay_waiting_ends" );
 	ListenForGameEvent( "teamplay_waiting_abouttoend" );
-	
+
 	SetVisible( false );
 
 	CHudElement::Init();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWaitingForPlayersPanel::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -92,7 +92,7 @@ void CTFWaitingForPlayersPanel::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWaitingForPlayersPanel::FireGameEvent( IGameEvent * event )
 {
@@ -117,7 +117,7 @@ void CTFWaitingForPlayersPanel::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFWaitingForPlayersPanel::ShouldDraw( void )
 {

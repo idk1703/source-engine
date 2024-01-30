@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -137,7 +137,7 @@ void CSequencePicker::PerformLayout()
 	m_pPreviewSplitter->SetBounds( 0, 0, w, h );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: rebuilds the list of activities	+ sequences
 //-----------------------------------------------------------------------------
@@ -161,7 +161,7 @@ void CSequencePicker::RefreshActivitiesAndSequencesList()
 	studiohdr_t *hdr = vgui::MDLCache()->GetStudioHdr( m_hSelectedMDL );
 
 	CUtlDict<int, unsigned short> activityNames( true, 0, hdr->GetNumSeq() );
-	    
+
 	for (int j = 0; j < hdr->GetNumSeq(); j++)
 	{
 		if ( /*g_viewerSettings.showHidden ||*/ !(hdr->pSeqdesc(j).flags & STUDIO_HIDDEN))
@@ -235,13 +235,13 @@ int SelectWeightedSequence( studiohdr_t *pstudiohdr, int activity, int curSequen
 				break;
 			}
 			weighttotal += iabs(weight);
-			
+
 			int randomValue;
 			if ( IsInPrediction() )
 				randomValue = SharedRandomInt( "SelectWeightedSequence", 0, weighttotal - 1, i );
 			else
 				randomValue = RandomInt( 0, weighttotal - 1 );
-			
+
 			if (!weighttotal || randomValue < iabs(weight))
 				seq = i;
 		}
@@ -481,5 +481,3 @@ void CSequencePickerFrame::OnCommand( const char *pCommand )
 
 	BaseClass::OnCommand( pCommand );
 }
-
-	

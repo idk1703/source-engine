@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -34,7 +34,7 @@ IMPLEMENT_SERVERCLASS_ST(SmokeTrail, DT_SmokeTrail)
 	SendPropFloat(SENDINFO(m_EndSize), -1, SPROP_NOSCALE),
 	SendPropFloat(SENDINFO(m_SpawnRadius), -1, SPROP_NOSCALE),
 	SendPropBool(SENDINFO(m_bEmit) ),
-	SendPropInt(SENDINFO(m_nAttachment), 32 ),	
+	SendPropInt(SENDINFO(m_nAttachment), 32 ),
 	SendPropFloat(SENDINFO(m_Opacity), -1, SPROP_NOSCALE),
 END_SEND_TABLE()
 
@@ -62,8 +62,8 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 SmokeTrail::SmokeTrail()
 {
@@ -87,7 +87,7 @@ SmokeTrail::SmokeTrail()
 //-----------------------------------------------------------------------------
 // Parse data from a map file
 //-----------------------------------------------------------------------------
-bool SmokeTrail::KeyValue( const char *szKeyName, const char *szValue ) 
+bool SmokeTrail::KeyValue( const char *szKeyName, const char *szValue )
 {
 	if ( FStrEq( szKeyName, "startcolor" ) )
 	{
@@ -127,7 +127,7 @@ void SmokeTrail::SetEmit(bool bVal)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : SmokeTrail*
 //-----------------------------------------------------------------------------
 SmokeTrail* SmokeTrail::CreateSmokeTrail()
@@ -151,7 +151,7 @@ SmokeTrail* SmokeTrail::CreateSmokeTrail()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Attach the smoke trail to an entity or point 
+// Purpose: Attach the smoke trail to an entity or point
 // Input  : index - entity that has the attachment
 //			attachment - point to attach to
 //-----------------------------------------------------------------------------
@@ -188,7 +188,7 @@ IMPLEMENT_SERVERCLASS_ST(RocketTrail, DT_RocketTrail)
 	SendPropFloat(SENDINFO(m_EndSize), -1, SPROP_NOSCALE),
 	SendPropFloat(SENDINFO(m_SpawnRadius), -1, SPROP_NOSCALE),
 	SendPropBool(SENDINFO(m_bEmit)),
-	SendPropInt(SENDINFO(m_nAttachment), 32 ),	
+	SendPropInt(SENDINFO(m_nAttachment), 32 ),
 	SendPropFloat(SENDINFO(m_Opacity), -1, SPROP_NOSCALE),
 	SendPropInt	(SENDINFO(m_bDamaged), 1, SPROP_UNSIGNED),
 	SendPropFloat(SENDINFO(m_flFlareScale), -1, SPROP_NOSCALE),
@@ -217,8 +217,8 @@ BEGIN_DATADESC( RocketTrail )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 RocketTrail::RocketTrail()
 {
@@ -249,17 +249,17 @@ void RocketTrail::SetEmit(bool bVal)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : SmokeTrail*
 //-----------------------------------------------------------------------------
 RocketTrail* RocketTrail::CreateRocketTrail()
 {
 	CBaseEntity *pEnt = CreateEntityByName( "env_rockettrail" );
-	
+
 	if( pEnt != NULL )
 	{
 		RocketTrail *pTrail = dynamic_cast<RocketTrail*>(pEnt);
-		
+
 		if( pTrail != NULL )
 		{
 			pTrail->Activate();
@@ -275,7 +275,7 @@ RocketTrail* RocketTrail::CreateRocketTrail()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Attach the smoke trail to an entity or point 
+// Purpose: Attach the smoke trail to an entity or point
 // Input  : index - entity that has the attachment
 //			attachment - point to attach to
 //-----------------------------------------------------------------------------
@@ -335,17 +335,17 @@ SporeTrail::SporeTrail( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : SporeTrail*
 //-----------------------------------------------------------------------------
 SporeTrail* SporeTrail::CreateSporeTrail()
 {
 	CBaseEntity *pEnt = CreateEntityByName( SPORETRAIL_ENTITYNAME );
-	
+
 	if(pEnt)
 	{
 		SporeTrail *pSpore = dynamic_cast<SporeTrail*>(pEnt);
-		
+
 		if ( pSpore )
 		{
 			pSpore->Activate();
@@ -414,17 +414,17 @@ void SporeExplosion::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : SporeExplosion*
 //-----------------------------------------------------------------------------
 SporeExplosion *SporeExplosion::CreateSporeExplosion()
 {
 	CBaseEntity *pEnt = CreateEntityByName( SPOREEXPLOSION_ENTITYNAME );
-	
+
 	if ( pEnt )
 	{
 		SporeExplosion *pSpore = dynamic_cast<SporeExplosion*>(pEnt);
-		
+
 		if ( pSpore )
 		{
 			pSpore->Activate();
@@ -479,7 +479,7 @@ void CFireTrail::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Attach the smoke trail to an entity or point 
+// Purpose: Attach the smoke trail to an entity or point
 // Input  : index - entity that has the attachment
 //			attachment - point to attach to
 //-----------------------------------------------------------------------------
@@ -504,11 +504,11 @@ void CFireTrail::FollowEntity( CBaseEntity *pEntity, const char *pAttachmentName
 CFireTrail *CFireTrail::CreateFireTrail( void )
 {
 	CBaseEntity *pEnt = CreateEntityByName( "env_fire_trail" );
-	
+
 	if ( pEnt )
 	{
 		CFireTrail *pTrail = dynamic_cast<CFireTrail*>(pEnt);
-		
+
 		if ( pTrail )
 		{
 			pTrail->Activate();
@@ -520,7 +520,7 @@ CFireTrail *CFireTrail::CreateFireTrail( void )
 		}
 	}
 
-	return NULL;	
+	return NULL;
 }
 
 
@@ -566,8 +566,8 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 DustTrail::DustTrail()
 {
@@ -589,7 +589,7 @@ DustTrail::DustTrail()
 //-----------------------------------------------------------------------------
 // Parse data from a map file
 //-----------------------------------------------------------------------------
-bool DustTrail::KeyValue( const char *szKeyName, const char *szValue ) 
+bool DustTrail::KeyValue( const char *szKeyName, const char *szValue )
 {
 	if ( FStrEq( szKeyName, "color" ) )
 	{
@@ -621,7 +621,7 @@ void DustTrail::SetEmit(bool bVal)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : DustTrail*
 //-----------------------------------------------------------------------------
 DustTrail* DustTrail::CreateDustTrail()

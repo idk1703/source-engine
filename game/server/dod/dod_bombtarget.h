@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,7 +34,7 @@ public:
 };
 
 
-struct DefusingPlayer 
+struct DefusingPlayer
 {
 	CHandle<CDODPlayer> m_pPlayer;
 

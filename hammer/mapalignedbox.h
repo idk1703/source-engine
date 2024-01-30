@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -52,7 +52,7 @@ class CMapAlignedBox : public CMapHelper
 		int SerializeMAP(std::fstream &File, BOOL bRMF);
 
 		bool IsVisualElement(void) { return !m_bWireframe; }
-		
+
 		const char* GetDescription() { return("Aligned box"); }
 
 		virtual void OnParentKeyChanged( const char* key, const char* value );

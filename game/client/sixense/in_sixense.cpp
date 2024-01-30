@@ -68,7 +68,7 @@ using sixenseMath::Line;
 #include "tf_hud_menu_engy_build.h"
 #include "tf_hud_menu_engy_destroy.h"
 #include "tf_hud_menu_spy_disguise.h"
-#endif 
+#endif
 
 #ifdef PORTAL2
 #include "BasePanel.h"
@@ -218,7 +218,7 @@ CSysModule *g_pSixenseUtilsModule = NULL;
 
 // A bunch of our convars have their values pushed down into the sixense_utils lib, so install a handler on each
 // to let us know if there are any changes
-void SixenseInput::InstallConvarCallbacks() 
+void SixenseInput::InstallConvarCallbacks()
 {
 
 	sixense_mode.InstallChangeCallback( SixenseConvarChanged );
@@ -334,13 +334,13 @@ void SixenseInput::UpdateValuesFromConvars()
 	m_pFPSViewAngles->setParameter( sixenseUtils::IFPSViewAngles::AIM_1TO1_RATCHET_VERTICAL, sixense_aim_1to1_ratchet_vertical.GetFloat() );
 
 	// In metroid mode, we switch into mouselook when looking down scope, so configure mouselook differently.
-	if( sixense_mode.GetInt() == 1 ) 
+	if( sixense_mode.GetInt() == 1 )
 	{
 		m_pFPSViewAngles->setParameter( sixenseUtils::IFPSViewAngles::AIM_1TO1_HEADING_MULTIPLIER, sixense_aim_1to1_heading_multiplier.GetFloat() );
 		m_pFPSViewAngles->setParameter( sixenseUtils::IFPSViewAngles::AIM_1TO1_PITCH_MULTIPLIER, sixense_aim_1to1_pitch_multiplier.GetFloat() );
 		m_pFPSViewAngles->setParameter( sixenseUtils::IFPSViewAngles::SPRING_VIEW_ENABLED, sixense_spring_view_enabled.GetFloat() );
-	} 
-	else if( sixense_mode.GetInt() == 0 ) 
+	}
+	else if( sixense_mode.GetInt() == 0 )
 	{
 
 		// Use scope sensitivites in metroid mode, so when we look down the scope it's set correctly
@@ -369,11 +369,11 @@ void SixenseInput::UpdateValuesFromConvars()
 }
 
 // Try to load sixense.dll and sixense_utils.dll
-bool SixenseInput::LoadModules() 
+bool SixenseInput::LoadModules()
 {
 
 	// If the modules are already loaded return success
-	if( m_bModulesLoaded ) 
+	if( m_bModulesLoaded )
 		return true;
 
 	// Try to load the sixense DLLs
@@ -402,7 +402,7 @@ bool SixenseInput::LoadModules()
 	{
 		CreateInterfaceFn factory = Sys_GetFactory( g_pSixenseModule );
 
-		if( factory ) 
+		if( factory )
 		{
 			m_pSixenseAPI = reinterpret_cast< ISixenseAPI* >( factory( "SixenseAPI", NULL ) );
 
@@ -413,7 +413,7 @@ bool SixenseInput::LoadModules()
 		}
 	}
 
-	if( !found_objects ) 
+	if( !found_objects )
 	{
 		Msg("Failed to find factory in sixense.dll\n");
 		return false;
@@ -427,7 +427,7 @@ bool SixenseInput::LoadModules()
 	{
 		CreateInterfaceFn factory = Sys_GetFactory( g_pSixenseUtilsModule );
 
-		if( factory ) 
+		if( factory )
 		{
 
 			m_pFPSViewAngles = reinterpret_cast< sixenseUtils::IFPSViewAngles* >( factory( "FPSViewAngles0", NULL ) );
@@ -444,7 +444,7 @@ bool SixenseInput::LoadModules()
 
 			m_pControllerManager = reinterpret_cast< sixenseUtils::IControllerManager* >( factory( "ControllerManager", NULL ) );
 
-			if( m_pFPSViewAngles && m_pFPSPlayerMovement && m_pFPSEvents && m_pLaserPointer && m_pLeftDeriv && 
+			if( m_pFPSViewAngles && m_pFPSPlayerMovement && m_pFPSEvents && m_pLaserPointer && m_pLeftDeriv &&
 				m_pRightDeriv && m_pLeftButtonStates && m_pRightButtonStates && m_pControllerManager )
 			{
 				found_objects = true;
@@ -453,7 +453,7 @@ bool SixenseInput::LoadModules()
 
 	}
 
-	if( !found_objects ) 
+	if( !found_objects )
 	{
 		Msg("Failed to find factory in sixense_utils.dll\n");
 		return false;
@@ -471,13 +471,13 @@ bool SixenseInput::LoadModules()
 
 bool SixenseInput::UnloadModules()
 {
-	if( g_pSixenseModule ) 
+	if( g_pSixenseModule )
 	{
 		Sys_UnloadModule( g_pSixenseModule );
 		g_pSixenseModule = NULL;
 	}
 
-	if( g_pSixenseUtilsModule ) 
+	if( g_pSixenseUtilsModule )
 	{
 		Sys_UnloadModule( g_pSixenseUtilsModule );
 		g_pSixenseUtilsModule = NULL;
@@ -491,7 +491,7 @@ bool SixenseInput::UnloadModules()
 }
 
 #if 0
-static void update_controller_manager_visibility( sixenseAllControllerData *acd ) 
+static void update_controller_manager_visibility( sixenseAllControllerData *acd )
 {
 
 	if( !SixenseInput::m_SixenseFrame ) return;
@@ -502,7 +502,7 @@ static void update_controller_manager_visibility( sixenseAllControllerData *acd 
 	bool power_up_screens_showing = false;
 	// It's ok for there to be no device plugged in, don't show the controller manager in that case
 	std::string current_step = m_pControllerManager->getTextureFileName();
-	if( current_step == "1P2C/p1c2_power_up_0.tif" || current_step == "1P2C/p1c2_power_up_1.tif" ) 
+	if( current_step == "1P2C/p1c2_power_up_0.tif" || current_step == "1P2C/p1c2_power_up_1.tif" )
 	{
 		power_up_screens_showing = true;
 	}
@@ -510,12 +510,12 @@ static void update_controller_manager_visibility( sixenseAllControllerData *acd 
 	//Msg("current step %s\n", current_step.c_str() );
 
 	// if sixense is enabled, and the cm is trying to say something, and it's not trying to show the power up screens, and the controllers arent docked show the frame
-	if( g_pSixenseInput->IsEnabled() && 
+	if( g_pSixenseInput->IsEnabled() &&
 		m_pControllerManager->isMenuVisible() &&
-		!power_up_screens_showing && 
-		!controllers_docked ) 
+		!power_up_screens_showing &&
+		!controllers_docked )
 	{
-		if( !SixenseInput::m_SixenseFrame->IsVisible() ) 
+		if( !SixenseInput::m_SixenseFrame->IsVisible() )
 		{
 			SixenseInput::m_SixenseFrame->SetVisible( true );
 			SixenseInput::m_SixenseFrame->MoveToFront();
@@ -524,7 +524,7 @@ static void update_controller_manager_visibility( sixenseAllControllerData *acd 
 			engine->ClientCmd_Unrestricted( "setpause nomsg" );
 		}
 	}
-	else 
+	else
 	{
 		if( SixenseInput::m_SixenseFrame->IsVisible() ) 	// otherwise turn it off
 
@@ -609,10 +609,10 @@ static void SixenseAutosave( const CCommand &args )
 		char szFullSaveFileName[32];
 		char szComment[32];
 
-		engine->SaveGame( 
-			szSaveName, 
-			IsX360(), 
-			szFullSaveFileName, 
+		engine->SaveGame(
+			szSaveName,
+			IsX360(),
+			szFullSaveFileName,
 			sizeof( szFullSaveFileName ),
 			szComment,
 			sizeof( szComment ) );
@@ -631,7 +631,7 @@ static void sendMouseClick( int click, int release )
 {
 #ifdef WIN32
 	// Set up the input event struct
-	INPUT input_ev[1]; 
+	INPUT input_ev[1];
 
 	input_ev[0].type = INPUT_MOUSE;
 
@@ -642,17 +642,17 @@ static void sendMouseClick( int click, int release )
 	mouse_evp->dy = 0;
 	mouse_evp->time=0;
 
-	if( click ) 
+	if( click )
 	{
-		if( click == 1 ) 
+		if( click == 1 )
 		{
 			mouse_evp->dwFlags = MOUSEEVENTF_LEFTDOWN;
 		}
-		else if( click == 2 ) 
+		else if( click == 2 )
 		{
 			mouse_evp->dwFlags = MOUSEEVENTF_RIGHTDOWN;
 		}
-		else if( click == 3 ) 
+		else if( click == 3 )
 		{
 			mouse_evp->dwFlags = MOUSEEVENTF_MIDDLEDOWN;
 		}
@@ -660,17 +660,17 @@ static void sendMouseClick( int click, int release )
 		SendInput( 1, input_ev, sizeof( INPUT ) );
 	}
 
-	if( release ) 
+	if( release )
 	{
-		if( release == 1 ) 
+		if( release == 1 )
 		{
 			mouse_evp->dwFlags = MOUSEEVENTF_LEFTUP;
 		}
-		else if( release == 2 ) 
+		else if( release == 2 )
 		{
 			mouse_evp->dwFlags = MOUSEEVENTF_RIGHTUP;
 		}
-		else if( release == 3 ) 
+		else if( release == 3 )
 		{
 			mouse_evp->dwFlags = MOUSEEVENTF_MIDDLEUP;
 		}
@@ -715,7 +715,7 @@ static void sendKeyState( char key, int press, int release )
 #endif
 }
 
-static void sendAbsoluteMouseMove( float x, float y ) 
+static void sendAbsoluteMouseMove( float x, float y )
 {
 #ifdef WIN32
 	// Set up the input event struct
@@ -790,12 +790,12 @@ SixenseInput::SixenseInput()
 
 	m_pLeftDeriv = NULL;
 	m_pRightDeriv = NULL;
-	
+
 	m_pLeftButtonStates = NULL;
 	m_pRightButtonStates = NULL;
-	
+
 	m_bWasInMenuMode = false;
-	
+
 	m_pLaserPointer = NULL;
 
 	m_pControllerManager = NULL;
@@ -1099,7 +1099,7 @@ void SixenseInput::SetOneToOneMode( bool bOnOrOff )
 bool SixenseInput::IsHoldingObject()
 {
 
-	if( GetHeldObject() ) 
+	if( GetHeldObject() )
 	{
 		return true;
 	}
@@ -1186,7 +1186,7 @@ void SixenseInput::SetEnabled( bool bEnabled )
 		// Just turned on...
 
 		// Make sure the modules are either loaded or loaded previously
-		if( !LoadModules() ) 
+		if( !LoadModules() )
 		{
 			// Modules failed to load, disable
 			sixense_enabled.SetValue( 0 );
@@ -1257,7 +1257,7 @@ void SixenseInput::Init()
 #ifdef PORTAL2
 	m_pFPSViewAngles->setGame( "portal" );
 	m_pFPSEvents->setGame( "portal" );
-#else 
+#else
 	m_pFPSViewAngles->setGame( "cstrike15" );
 	m_pFPSEvents->setGame( "cstrike15" );
 #endif
@@ -1273,7 +1273,7 @@ void SixenseInput::PostInit()
 #endif
 	ListenForGameEvent( "player_spawn" );
 
-	if( sixense_sensitivity_level.GetInt() == -1 ) 
+	if( sixense_sensitivity_level.GetInt() == -1 )
 	{
 		LoadDefaultSettings( 2 );
 	}
@@ -1330,7 +1330,7 @@ void SixenseInput::Shutdown()
 		m_pGestureBindings = NULL;
 	}
 
-	if( m_pSixenseAPI ) 
+	if( m_pSixenseAPI )
 	{
 		m_pSixenseAPI->sixenseExit();
 	}
@@ -1370,7 +1370,7 @@ void SixenseInput::GetFOV( float *hfov, float *vfov )
 #endif
 
 	C_BasePlayer * pPlayer = C_BasePlayer::GetLocalPlayer();
-	if( pPlayer ) 
+	if( pPlayer )
 	{
 		*hfov = pPlayer->GetFOV();
 		*vfov = *hfov / engineAspectRatio;
@@ -1402,7 +1402,7 @@ void SixenseInput::SetMode( int nNewMode )
 	case 2:
 		mode = sixenseUtils::IFPSViewAngles::DUAL_ANALOG;
 		break;
-	} 
+	}
 
 	if ( m_pFPSViewAngles && (m_pFPSViewAngles->getMode() != mode) )
 	{
@@ -1425,52 +1425,52 @@ bool SixenseInput::InMenuMode()
 #if defined( CSTRIKE15 ) // csgo
 	const int num_panels = 16;
 	char *panel_names[] = {
-		PANEL_OVERVIEW,		
-		PANEL_CLASS,		
-		PANEL_TEAM,			
-		PANEL_SPECMENU,		
-		PANEL_INFO,		
-		PANEL_BUY,			
-		PANEL_BUY_CT,		
-		PANEL_BUY_TER,		
-		PANEL_BUY_EQUIP_CT,	
-		PANEL_BUY_EQUIP_TER,	
+		PANEL_OVERVIEW,
+		PANEL_CLASS,
+		PANEL_TEAM,
+		PANEL_SPECMENU,
+		PANEL_INFO,
+		PANEL_BUY,
+		PANEL_BUY_CT,
+		PANEL_BUY_TER,
+		PANEL_BUY_EQUIP_CT,
+		PANEL_BUY_EQUIP_TER,
 		PANEL_NAV_PROGRESS,
-		PANEL_BUYPRESET_MAIN,	
-		PANEL_BUYPRESET_EDIT,	
-		PANEL_INTRO,		
-		PANEL_COMMENTARY_MODELVIEWER,	
-		PANEL_SURVEY				
+		PANEL_BUYPRESET_MAIN,
+		PANEL_BUYPRESET_EDIT,
+		PANEL_INTRO,
+		PANEL_COMMENTARY_MODELVIEWER,
+		PANEL_SURVEY
 	};
 #else // css
 	const int num_panels = 15;
 	char *panel_names[] = {
-		PANEL_OVERVIEW,		
-		PANEL_CLASS,		
-		PANEL_TEAM,			
-		PANEL_SPECMENU,		
-		PANEL_INFO,		
-		PANEL_BUY,			
-		PANEL_BUY_CT,		
-		PANEL_BUY_TER,		
-		PANEL_BUY_EQUIP_CT,	
-		PANEL_BUY_EQUIP_TER,	
+		PANEL_OVERVIEW,
+		PANEL_CLASS,
+		PANEL_TEAM,
+		PANEL_SPECMENU,
+		PANEL_INFO,
+		PANEL_BUY,
+		PANEL_BUY_CT,
+		PANEL_BUY_TER,
+		PANEL_BUY_EQUIP_CT,
+		PANEL_BUY_EQUIP_TER,
 		PANEL_NAV_PROGRESS,
-		PANEL_BUYPRESET_MAIN,	
-		PANEL_BUYPRESET_EDIT,	
-		PANEL_INTRO,		
+		PANEL_BUYPRESET_MAIN,
+		PANEL_BUYPRESET_EDIT,
+		PANEL_INTRO,
 		PANEL_COMMENTARY_MODELVIEWER
 	};
 #endif
 
-	for( int i=0; i<num_panels; i++ ) 
+	for( int i=0; i<num_panels; i++ )
 	{
 #ifdef CSTRIKE15
 		IViewPortPanel *panel =  GetViewPortInterface()->FindPanelByName( panel_names[i] );
 #else
 		IViewPortPanel *panel =  gViewPortInterface->FindPanelByName( panel_names[i] );
 #endif
-		if( panel ) 
+		if( panel )
 		{
 			if( panel->IsVisible() )
 			{
@@ -1494,10 +1494,10 @@ bool SixenseInput::InMenuMode()
 
 
 
-	if( 
+	if(
 #ifdef PORTAL2
-		( pPlayer && pPlayer->IsTaunting() ) || 
-		( engine->IsLocalPlayerResolvable() && IsRadialMenuOpen() ) || 
+		( pPlayer && pPlayer->IsTaunting() ) ||
+		( engine->IsLocalPlayerResolvable() && IsRadialMenuOpen() ) ||
 #endif
 
 #if defined( CSTRIKE_DLL ) && !defined( TERROR )
@@ -1506,9 +1506,9 @@ bool SixenseInput::InMenuMode()
 #endif
 		cstrike_panel_visible ||
 #endif
-		(SixenseInput::m_SixenseFrame && SixenseInput::m_SixenseFrame->IsVisible() ) || 
-		engine->IsPaused() || 
-		( enginevgui && enginevgui->IsGameUIVisible() ) || 
+		(SixenseInput::m_SixenseFrame && SixenseInput::m_SixenseFrame->IsVisible() ) ||
+		engine->IsPaused() ||
+		( enginevgui && enginevgui->IsGameUIVisible() ) ||
 		vgui::surface()->IsCursorVisible() ||
 		( m_pControllerManager && m_pControllerManager->isMenuVisible() ) )
 	{
@@ -1566,7 +1566,7 @@ bool SixenseInput::SixenseFrame( float flFrametime, CUserCmd *pCmd )
 
 		UpdateValuesFromConvars();
 	}
-	
+
 	m_pSixenseAPI->sixenseGetAllNewestData( m_pACD );
 
 	if( m_pACD->controllers[0].enabled &&  m_pACD->controllers[1].enabled )
@@ -1620,7 +1620,7 @@ bool SixenseInput::SixenseFrame( float flFrametime, CUserCmd *pCmd )
 
 	m_pGestureBindings->UpdateBindings( m_pLeftButtonStates, m_pRightButtonStates, AreBindingsDisabled() );
 
-	SixenseUpdateKeys( flFrametime, pCmd ); 
+	SixenseUpdateKeys( flFrametime, pCmd );
 
 	SixenseUpdateMouseCursor();
 
@@ -1703,7 +1703,7 @@ bool SixenseInput::SixenseFrame( float flFrametime, CUserCmd *pCmd )
 		{
 			BlendView();
 			m_fTeleportWaitToBlendTime = 0.0f;
-		} 
+		}
 		else
 		{
 			float fBlendTime = clamp( freeAimSpinSpeed * 0.16f * sixense_aim_freeaim_switch_blend_time_enter.GetFloat(), 0.1f, 2.0f);
@@ -1868,10 +1868,10 @@ void SixenseInput::SwitchViewModes( CUserCmd *pCmd )
 
 
 #ifdef PORTAL2
-	if( sixense_large_objects_lock_one_to_one.GetInt() ) 
+	if( sixense_large_objects_lock_one_to_one.GetInt() )
 	{
 		C_BaseEntity *held = GetHeldObject();
-		if( held ) 
+		if( held )
 		{
 			C_PropWeightedCube *scaled_cube = UTIL_GetAsScaledCube( held );
 
@@ -1885,12 +1885,12 @@ void SixenseInput::SwitchViewModes( CUserCmd *pCmd )
 
 				const float scale_force_1to1 = sixense_large_objects_lock_one_to_one_size.GetFloat();
 
-				if( max_scale > scale_force_1to1 ) 
+				if( max_scale > scale_force_1to1 )
 				{
 					// Lock one to one mode on
 					m_bScalingLockedOneToOne = true;
 
-					if( !m_bIsIn1to1Mode ) 
+					if( !m_bIsIn1to1Mode )
 					{
 						SetOneToOneMode( true );
 					}
@@ -1946,7 +1946,7 @@ void SixenseInput::SwitchViewModes( CUserCmd *pCmd )
 	// Object was dropped while in 1-to-1, don't leave one-to-1 mode until the hand comes back a bit
 	if( m_bExitOneWhenAimingForwards ) {
 
-		if( IsAimingForwards() ) 
+		if( IsAimingForwards() )
 		{
 			m_bIs1to1ModeScaling = false;
 			m_bIs1to1ModeRatcheting = false;
@@ -1998,8 +1998,8 @@ bool SixenseInput::IsAimingForwards()
 
 	if( dot > sixense_exit_one_to_one_dot.GetFloat() ) {
 		return true;
-	} 
-	else 
+	}
+	else
 	{
 		return false;
 	}
@@ -2348,7 +2348,7 @@ void SixenseInput::SixenseUpdateControllerManager()
 
 void SixenseInput::SetFilter( float f )
 {
-	if( f < 0.25f ) 
+	if( f < 0.25f )
 	{
 		m_pSixenseAPI->sixenseSetFilterParams( 500.0f, 0.5f, 1600.0f, 0.75f );
 		Msg("SixenseInput::SetFilter: low\n");
@@ -2358,7 +2358,7 @@ void SixenseInput::SetFilter( float f )
 		m_pSixenseAPI->sixenseSetFilterParams( 500.0f, 0.85f, 1600.0f, 0.95f );
 		Msg("SixenseInput::SetFilter: med\n");
 	}
-	else 
+	else
 	{
 		m_pSixenseAPI->sixenseSetFilterParams( 500.0f, 0.96f, 1600.0f, 0.98f );
 		Msg("SixenseInput::SetFilter: high\n");
@@ -2436,7 +2436,7 @@ void SixenseInput::SetView( float flInputSampleFrametime, CUserCmd *pCmd )
 	bool charge_started=false, charge_stopped=false;
 
 	CTFPlayer *pPlayer = ToTFPlayer( C_BasePlayer::GetLocalPlayer() );
-	if ( pPlayer ) 
+	if ( pPlayer )
 	{
 		charging = pPlayer->m_Shared.InCond( TF_COND_SHIELD_CHARGE );
 		if ( charging )
@@ -2485,7 +2485,7 @@ void SixenseInput::SetView( float flInputSampleFrametime, CUserCmd *pCmd )
 	// Tell the view angle system about the total angle so GetViewAngleOffset can compute the player camera angle
 	m_pFPSViewAngles->setFeetAnglesMetroid( FixAngles( accumulated_spin_angles ) );
 
-	if( m_bJustSpawned ) 
+	if( m_bJustSpawned )
 	{
 		m_bJustSpawned = false;
 
@@ -2572,7 +2572,7 @@ void SixenseInput::SixenseUpdateKeys( float flFrametime, CUserCmd *pCmd )
 		}
 #endif
 
-		if( pCmd ) 
+		if( pCmd )
 		{
 			// Sometimes we get called but Sixense isn't ready to produce any new data yet. We want to preseve whatever we were doing before,
 			// ie walking, so keep track of the last state we used.
@@ -2741,7 +2741,7 @@ void SixenseInput::SixenseUpdateKeys( float flFrametime, CUserCmd *pCmd )
 
 #ifdef TF_CLIENT_DLL
 	CHudMenuSpyDisguise *pSpyMenu = ( CHudMenuSpyDisguise * )GET_HUDELEMENT( CHudMenuSpyDisguise );
-	if( pSpyMenu->IsVisible() ) 
+	if( pSpyMenu->IsVisible() )
 	{
 		if( m_pRightButtonStates->stickJustPressed( sixenseUtils::IButtonStates::DIR_LEFT ) )
 		{
@@ -3263,7 +3263,7 @@ void SixenseInput::SixenseUpdateMouseCursor()
 	const char *window_name = "Half-Life 2";
 #endif
 #ifdef TF_CLIENT_DLL
-	
+
 	const int str_len = 128;
 	static char window_name[str_len] = "\0";
 
@@ -3654,7 +3654,7 @@ void SixenseInput::LoadDefaultSettings( int level )
 		Msg( "Loading default settings for custom sensitivity\n" );
 
 		sixense_sensitivity_level.SetValue( 3 );
-	}		
+	}
 	else if ( level == 4 )
 	{
 		Msg( "Loading default settings for \"static xhair\" sensitivity\n" );
@@ -3893,23 +3893,23 @@ bool directionFromString( CUtlString dir_str, sixenseUtils::IButtonStates::Direc
 	if( dir_str == "up" ) {
 		*dir = sixenseUtils::IButtonStates::DIR_UP;
 	}
-	else if( dir_str == "down" ) 
+	else if( dir_str == "down" )
 	{
 		*dir = sixenseUtils::IButtonStates::DIR_DOWN;
 	}
-	else if( dir_str == "left" ) 
+	else if( dir_str == "left" )
 	{
 		*dir = sixenseUtils::IButtonStates::DIR_LEFT;
 	}
-	else if( dir_str == "right" ) 
+	else if( dir_str == "right" )
 	{
 		*dir = sixenseUtils::IButtonStates::DIR_RIGHT;
 	}
-	else if( dir_str == "cw" ) 
+	else if( dir_str == "cw" )
 	{
 		*dir = sixenseUtils::IButtonStates::DIR_CW;
 	}
-	else if( dir_str == "ccw" ) 
+	else if( dir_str == "ccw" )
 	{
 		*dir = sixenseUtils::IButtonStates::DIR_CCW;
 	}
@@ -4010,28 +4010,28 @@ bool handFromString( CUtlString hand_str, int *hand ) {
 	return true;
 }
 
-bool SixenseInput::AreBindingsDisabled() 
+bool SixenseInput::AreBindingsDisabled()
 {
-	if( InMenuMode() ) 
+	if( InMenuMode() )
 	{
 		return true;
 	}
 
 #ifdef TF_CLIENT_DLL
 	CHudMenuSpyDisguise *pSpyMenu = ( CHudMenuSpyDisguise * )GET_HUDELEMENT( CHudMenuSpyDisguise );
-	if( pSpyMenu->IsVisible() ) 
+	if( pSpyMenu->IsVisible() )
 	{
 		return true;
 	}
 
 	CHudMenuEngyBuild *pEngBuildMenu = ( CHudMenuEngyBuild * )GET_HUDELEMENT( CHudMenuEngyBuild );
-	if( pEngBuildMenu->IsVisible() ) 
+	if( pEngBuildMenu->IsVisible() )
 	{
 		return true;
 	}
 
 	CHudMenuEngyDestroy *pEngDestroyMenu = ( CHudMenuEngyDestroy * )GET_HUDELEMENT( CHudMenuEngyDestroy );
-	if( pEngDestroyMenu->IsVisible() ) 
+	if( pEngDestroyMenu->IsVisible() )
 	{
 		return true;
 	}
@@ -4056,8 +4056,8 @@ static void SixenseBind( const CCommand &args )
 		release_command = args[5];
 	}
 
-	
-	if( g_pSixenseInput->GetGestureBindings() ) 
+
+	if( g_pSixenseInput->GetGestureBindings() )
 	{
 		g_pSixenseInput->GetGestureBindings()->AddBinding( hand_str, action_str, argument_str, press_command, release_command );
 	}
@@ -4071,7 +4071,7 @@ static void SixenseListBindings( const CCommand &args )
 		return;
 	}
 
-	if( g_pSixenseInput->GetGestureBindings() ) 
+	if( g_pSixenseInput->GetGestureBindings() )
 	{
 		g_pSixenseInput->GetGestureBindings()->ListBindings();
 	}
@@ -4087,12 +4087,12 @@ static void SixenseWriteBindings( const CCommand &args )
 
 	CUtlString filename;
 
-	if( args.ArgC() == 2 ) 
+	if( args.ArgC() == 2 )
 	{
 		filename = args[1];
 	}
 
-	if( g_pSixenseInput->GetGestureBindings() ) 
+	if( g_pSixenseInput->GetGestureBindings() )
 	{
 		g_pSixenseInput->GetGestureBindings()->WriteBindings( filename );
 	}
@@ -4100,7 +4100,7 @@ static void SixenseWriteBindings( const CCommand &args )
 
 static void SixenseClearBindings( const CCommand &args )
 {
-	if( g_pSixenseInput->GetGestureBindings() ) 
+	if( g_pSixenseInput->GetGestureBindings() )
 	{
 		g_pSixenseInput->GetGestureBindings()->ClearBindings();
 	}
@@ -4108,7 +4108,7 @@ static void SixenseClearBindings( const CCommand &args )
 
 static void SixenseCreateDefaultBindings( const CCommand &args )
 {
-	if( g_pSixenseInput->GetGestureBindings() ) 
+	if( g_pSixenseInput->GetGestureBindings() )
 	{
 		g_pSixenseInput->GetGestureBindings()->CreateDefaultBindings();
 	}
@@ -4124,7 +4124,7 @@ static void SixenseDeleteBinding( const CCommand &args )
 
 	int num = atoi( args[1] );
 
-	if( g_pSixenseInput->GetGestureBindings() ) 
+	if( g_pSixenseInput->GetGestureBindings() )
 	{
 		g_pSixenseInput->GetGestureBindings()->DeleteBinding( num );
 	}
@@ -4143,7 +4143,7 @@ static ConCommand sixense_create_default_binding_cc( "sixense_create_default_bin
 
 //////
 
-void SelectMachinegun() 
+void SelectMachinegun()
 {
 
 	GetHudWeaponSelection()->SelectSlot(2);
@@ -4154,7 +4154,7 @@ ConCommand sixense_select_machinegun( "sixense_select_machinegun", SelectMachine
 //////
 
 
-void SixenseInput::StartRatchet() 
+void SixenseInput::StartRatchet()
 {
 	if( m_pFPSViewAngles )
 	{
@@ -4162,7 +4162,7 @@ void SixenseInput::StartRatchet()
 	}
 }
 
-void StartRatchet() 
+void StartRatchet()
 {
 		g_pSixenseInput->StartRatchet();
 	}
@@ -4179,7 +4179,7 @@ void SixenseInput::StopRatchet()
 	}
 }
 
-void StopRatchet() 
+void StopRatchet()
 {
 		g_pSixenseInput->StopRatchet();
 	}
@@ -4188,7 +4188,7 @@ ConCommand sixense_stop_ratchet( "-sixense_ratchet", StopRatchet );
 
 //////
 
-void SelectPistol() 
+void SelectPistol()
 {
 	GetHudWeaponSelection()->SelectSlot(1);
 }
@@ -4197,7 +4197,7 @@ ConCommand sixense_select_pistol( "sixense_select_pistol", SelectPistol );
 
 //////
 
-void SelectGrenade() 
+void SelectGrenade()
 {
 #ifdef CSTRIKE15
 	GetHudWeaponSelection()->CycleToNextGrenadeOrBomb();
@@ -4208,7 +4208,7 @@ ConCommand sixense_select_grenade( "sixense_select_grenade", SelectGrenade );
 
 //////
 
-void SelectMelee() 
+void SelectMelee()
 {
 	GetHudWeaponSelection()->SelectSlot(3);
 }
@@ -4217,7 +4217,7 @@ ConCommand sixense_select_melee( "sixense_select_melee", SelectMelee );
 
 //////
 
-void SixenseInput::LeftPointGesture( bool start ) 
+void SixenseInput::LeftPointGesture( bool start )
 {
 	if( start )
 		m_pLeftButtonStates->startPointGesture();
@@ -4239,7 +4239,7 @@ void SixenseInput::RightPointGesture( bool start )
 
 //////
 
-void StartLeftPointGesture() 
+void StartLeftPointGesture()
 {
 		g_pSixenseInput->LeftPointGesture( true );
 	}
@@ -4248,7 +4248,7 @@ ConCommand sixense_start_left_point_gesture( "+sixense_left_point_gesture", Star
 
 //////
 
-void StopLeftPointGesture() 
+void StopLeftPointGesture()
 {
 		g_pSixenseInput->LeftPointGesture( false );
 	}
@@ -4257,7 +4257,7 @@ ConCommand sixense_stop_left_point_gesture( "-sixense_left_point_gesture", StopL
 
 //////
 
-void StartRightPointGesture() 
+void StartRightPointGesture()
 {
 		g_pSixenseInput->RightPointGesture( true );
 	}
@@ -4266,7 +4266,7 @@ ConCommand sixense_start_right_point_gesture( "+sixense_right_point_gesture", St
 
 //////
 
-void StopRightPointGesture() 
+void StopRightPointGesture()
 {
 		g_pSixenseInput->RightPointGesture( false );
 	}

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -39,7 +39,7 @@ public:
 	// Are we sending this client a file right now?
 	bool m_bSendFileInProgress;
 
-	// Files that this client has requested but we aren't able to send yet.	
+	// Files that this client has requested but we aren't able to send yet.
 	CUtlVector<CPendingFile> m_PendingFiles;
 };
 
@@ -68,11 +68,11 @@ public:
 		}
 		return NULL;
 	}
-	
-	virtual void OnFinishedSending( 
-		INetChannel *pDest, 
-		const void *pUserData, 
-		int userDataLen, 
+
+	virtual void OnFinishedSending(
+		INetChannel *pDest,
+		const void *pUserData,
+		int userDataLen,
 		FileTransferID_t id )
 	{
 		// Start sending the next file to this guy.
@@ -88,11 +88,11 @@ public:
 		}
 	}
 
-	virtual void OnFileReceived( 
+	virtual void OnFileReceived(
 		INetChannel *pChan,
 		const void *pUserData,
 		int userDataLength,
-		const char *pFileData, 
+		const char *pFileData,
 		int fileLength )
 	{
 		// Ok, now the server has received a file the client sent. First, validate the VTF.
@@ -127,7 +127,7 @@ public:
 			CGameClient *pClient = sv.Client( i );
 			if ( !pClient || !pClient->m_pLogoInfo )
 				continue;
-		
+
 			for ( int i=0; i < pClient->m_pLogoInfo->m_PendingFiles.Count(); i++ )
 			{
 				CPendingFile *pFile = &pClient->m_pLogoInfo->m_PendingFiles[i];
@@ -141,7 +141,7 @@ public:
 	bool SaveCRCFileToCache( CRC32_t crcValue, const void *pFileData, int fileLength )
 	{
 		CLogoFilename logohex( crcValue, true );
-		
+
 		FileHandle_t hFile = g_pFileSystem->Open( logohex.m_Filename, "wb" );
 		if ( hFile == FILESYSTEM_INVALID_HANDLE )
 		{
@@ -177,7 +177,7 @@ public:
 			CGameClient *pClient = sv.Client( i );
 			if ( !pClient || !pClient->m_pLogoInfo )
 				continue;
-		
+
 			// Are we already sending the client a file?
 			if ( pClient->m_pLogoInfo->m_bSendFileInProgress )
 				continue;
@@ -195,7 +195,7 @@ public:
 				// Load the file, if we haven't already.
 				if ( fileData.Count() == 0 || lastCRC != pFile->m_nLogoFileCRC )
 				{
-					// Remember the last CRC so we don't have to reopen the file if 
+					// Remember the last CRC so we don't have to reopen the file if
 					// this one is going to a bunch of clients in a row.
 					lastCRC = pFile->m_nLogoFileCRC;
 					if ( !LogoFile_ReadFile( pFile->m_nLogoFileCRC, fileData ) )
@@ -208,7 +208,7 @@ public:
 					sizeof( lastCRC ),
 					fileData.Base(),
 					fileData.Count(),
-					sv_logo_rate.GetInt() 
+					sv_logo_rate.GetInt()
 					);
 
 				pClient->m_pLogoInfo->m_bSendFileInProgress = true;
@@ -244,7 +244,7 @@ PROCESS_MSG_SERVER( CLC_LogoFileRequest )
 
 	// Start sending it if it's time..
 	g_ServerFileTransferMgr.UpdatePendingFiles();
-	return true;	
+	return true;
 } };
 
 
@@ -318,7 +318,7 @@ void SV_LogoFile_OnConnect( CGameClient *pSenderClient, bool bValid, CRC32_t crc
 			CGameClient *pClient = sv.Client( i );
 			if ( !pClient || pClient == pSenderClient )
 				continue;
-			
+
 			bool bReliable = true;
 			if ( !pClient->SendNetMsg( logoNotify, bReliable ) )
 			{
@@ -346,4 +346,3 @@ void SV_LogoFile_OnConnect( CGameClient *pSenderClient, bool bValid, CRC32_t crc
 		}
 	}
 }
-

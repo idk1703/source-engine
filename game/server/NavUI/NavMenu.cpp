@@ -19,7 +19,7 @@ using namespace vgui;
 
 //--------------------------------------------------------------------------------------------------------
 NavMenu::NavMenu( Panel *parent, const char *panelName ) : Menu( parent, panelName )
-{ 
+{
 }
 
 

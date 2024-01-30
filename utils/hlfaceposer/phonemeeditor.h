@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -122,8 +122,8 @@ enum
 	COLOR_PHONEME_TAG_FILLER_NORMAL,
 	COLOR_PHONEME_TAG_SELECTED,
 	COLOR_PHONEME_TAG_TEXT,
-	COLOR_PHONEME_TAG_TEXT_SELECTED,	
-	COLOR_PHONEME_WAV_ENDPOINT,		
+	COLOR_PHONEME_TAG_TEXT_SELECTED,
+	COLOR_PHONEME_WAV_ENDPOINT,
 	COLOR_PHONEME_AB,
 	COLOR_PHONEME_AB_LINE,
 	COLOR_PHONEME_AB_TEXT,
@@ -213,7 +213,7 @@ private:
 	void				Emphasis_MouseDrag( int x, int y );
 	bool				Emphasis_IsValid( void );
 	void				Emphasis_SelectPoints( void );
-	
+
 	// Data
 	int					m_nNumSelected;
 

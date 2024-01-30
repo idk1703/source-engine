@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -69,8 +69,8 @@ float GetZoomOwnerDesiredFOV( CBaseEntity *pZoomOwner )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CEnvZoom::InputZoom( inputdata_t &inputdata )
 {
@@ -100,8 +100,8 @@ void CEnvZoom::InputZoom( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CEnvZoom::InputUnZoom( inputdata_t &inputdata )
 {
@@ -113,4 +113,3 @@ void CEnvZoom::InputUnZoom( inputdata_t &inputdata )
 		pPlayer->SetFOV( this, 0 );
 	}
 }
-

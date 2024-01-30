@@ -73,13 +73,13 @@ END_DATADESC()
 //------------------------------------------------------------------------------
 void CWindowPane::Spawn( void )
 {
-    Precache( );    
-  
+	Precache( );
+
 	SetSolid( SOLID_BBOX );
 	SetMoveType( MOVETYPE_FLYGRAVITY );
 	m_takedamage = DAMAGE_YES;
- 	
-	SetCollisionGroup( COLLISION_GROUP_BREAKABLE_GLASS ); 
+
+	SetCollisionGroup( COLLISION_GROUP_BREAKABLE_GLASS );
 
 	SetModel( "models/brokenglass_piece.mdl" );//set size and link into world.
 }
@@ -90,8 +90,8 @@ void CWindowPane::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pOther - 
+// Purpose:
+// Input  : pOther -
 //-----------------------------------------------------------------------------
 void CWindowPane::PaneTouch( CBaseEntity *pOther )
 {
@@ -111,10 +111,10 @@ void CWindowPane::Die( void )
 {
 	CPASFilter filter( GetAbsOrigin() );
 	te->ShatterSurface( filter, 0.0,
-					 &GetAbsOrigin(), &GetAbsAngles(), 
-					 &GetAbsVelocity(), &GetAbsOrigin(),
-					 WINDOW_PANEL_SIZE, WINDOW_PANEL_SIZE,WINDOW_SMALL_SHARD_SIZE,SHATTERSURFACE_GLASS,
-					 255,255,255,255,255,255);
+					&GetAbsOrigin(), &GetAbsAngles(),
+					&GetAbsVelocity(), &GetAbsOrigin(),
+					WINDOW_PANEL_SIZE, WINDOW_PANEL_SIZE,WINDOW_SMALL_SHARD_SIZE,SHATTERSURFACE_GLASS,
+					255,255,255,255,255,255);
 
 	UTIL_Remove(this);
 }
@@ -161,19 +161,19 @@ BEGIN_DATADESC( CBreakableSurface )
 	DEFINE_KEYFIELD( m_vURVertex,		FIELD_VECTOR,  "upperright" ),
 	DEFINE_KEYFIELD( m_nQuadError,		FIELD_INTEGER, "error" ),
 
-	DEFINE_FIELD( m_nNumWide,			FIELD_INTEGER),	
-	DEFINE_FIELD( m_nNumHigh,			FIELD_INTEGER),	
-	DEFINE_FIELD( m_flPanelWidth,		FIELD_FLOAT),	
-	DEFINE_FIELD( m_flPanelHeight,	FIELD_FLOAT),	
-	DEFINE_FIELD( m_vNormal,			FIELD_VECTOR),	
-	DEFINE_FIELD( m_vCorner,			FIELD_POSITION_VECTOR),	
-	DEFINE_FIELD( m_bIsBroken,		FIELD_BOOLEAN),	
-	DEFINE_FIELD( m_nNumBrokenPanes,	FIELD_INTEGER),	
-	
+	DEFINE_FIELD( m_nNumWide,			FIELD_INTEGER),
+	DEFINE_FIELD( m_nNumHigh,			FIELD_INTEGER),
+	DEFINE_FIELD( m_flPanelWidth,		FIELD_FLOAT),
+	DEFINE_FIELD( m_flPanelHeight,	FIELD_FLOAT),
+	DEFINE_FIELD( m_vNormal,			FIELD_VECTOR),
+	DEFINE_FIELD( m_vCorner,			FIELD_POSITION_VECTOR),
+	DEFINE_FIELD( m_bIsBroken,		FIELD_BOOLEAN),
+	DEFINE_FIELD( m_nNumBrokenPanes,	FIELD_INTEGER),
+
 	// UNDONE: How to load save this?  Need a way to update
 	//		   the client about the state of the window upon load...
 	//			We should use client-side save/load to fix this problem.
-	DEFINE_AUTO_ARRAY2D( m_flSupport,	FIELD_FLOAT),	
+	DEFINE_AUTO_ARRAY2D( m_flSupport,	FIELD_FLOAT),
 	DEFINE_ARRAY( m_RawPanelBitVec, FIELD_BOOLEAN, MAX_NUM_PANELS*MAX_NUM_PANELS ),
 
 	// Function Pointers
@@ -200,7 +200,7 @@ END_SEND_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBreakableSurface::Precache(void)
 {
@@ -347,7 +347,7 @@ int CBreakableSurface::OnTakeDamage( const CTakeDamageInfo &info )
 		Die( info.GetAttacker(), info.GetDamageForce() );
 		return 0;
 	}
-	
+
 
 	return 0;
 }
@@ -358,17 +358,17 @@ int CBreakableSurface::OnTakeDamage( const CTakeDamageInfo &info )
 //------------------------------------------------------------------------------
 void CBreakableSurface::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator )
 {
-    //=============================================================================
-    // HPE_BEGIN:
-    // [dwenger] Window break stat tracking
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [dwenger] Window break stat tracking
+	//=============================================================================
 
-    // Make sure this pane has not already been shattered
-    bool bWasBroken = m_bIsBroken;
+	// Make sure this pane has not already been shattered
+	bool bWasBroken = m_bIsBroken;
 
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
 	// Decrease health
 	m_iHealth -= info.GetDamage();
@@ -388,23 +388,23 @@ void CBreakableSurface::TraceAttack( const CTakeDamageInfo &info, const Vector &
 		PanePos(ptr->endpos,&flWidth,&flHeight);
 		int nWidth  = flWidth;
 		int nHeight = flHeight;
-		
+
 		if ( ShatterPane(nWidth, nHeight,vecDir*500,ptr->endpos) )
 		{
-            //=============================================================================
-            // HPE_BEGIN:
-            // [dwenger] Window break stat tracking
-            //=============================================================================
+			//=============================================================================
+			// HPE_BEGIN:
+			// [dwenger] Window break stat tracking
+			//=============================================================================
 
-            CBasePlayer* pAttacker = ToBasePlayer(info.GetAttacker());
-            if ( ( pAttacker ) && ( !bWasBroken ) )
-            {
-                gamestats->Event_WindowShattered( pAttacker );
-            }
+			CBasePlayer* pAttacker = ToBasePlayer(info.GetAttacker());
+			if ( ( pAttacker ) && ( !bWasBroken ) )
+			{
+				gamestats->Event_WindowShattered( pAttacker );
+			}
 
-            //=============================================================================
-            // HPE_END
-            //=============================================================================
+			//=============================================================================
+			// HPE_END
+			//=============================================================================
 
 			// Do an impact hit
 			CEffectData	data;
@@ -451,7 +451,7 @@ void CBreakableSurface::TraceAttack( const CTakeDamageInfo &info, const Vector &
 				if (random->RandomInt(0,1)==0)
 				{
 					ShatterPane(nWidth, nHeight+2,vecDir*1000,ptr->endpos);
-				}		
+				}
 			}
 		}
 	}
@@ -492,20 +492,20 @@ void CBreakableSurface::TraceAttack( const CTakeDamageInfo &info, const Vector &
 		// ----------------------------------------
 		else
 		{
-            //=============================================================================
-            // HPE_BEGIN:
-            // [pfreese] Window break stat tracking
-            //=============================================================================
+			//=============================================================================
+			// HPE_BEGIN:
+			// [pfreese] Window break stat tracking
+			//=============================================================================
 
-            CBasePlayer* pAttacker = ToBasePlayer(info.GetAttacker());
-            if ( ( pAttacker ) && ( !bWasBroken ) )
-            {
-                gamestats->Event_WindowShattered( pAttacker );
-            }
+			CBasePlayer* pAttacker = ToBasePlayer(info.GetAttacker());
+			if ( ( pAttacker ) && ( !bWasBroken ) )
+			{
+				gamestats->Event_WindowShattered( pAttacker );
+			}
 
-            //=============================================================================
-            // HPE_END
-            //=============================================================================
+			//=============================================================================
+			// HPE_END
+			//=============================================================================
 
 			float flDot = DotProduct(m_vNormal,vecDir);
 
@@ -531,7 +531,7 @@ void CBreakableSurface::TraceAttack( const CTakeDamageInfo &info, const Vector &
 				return;
 			}
 			// ---------------------------------------------------------------
-			// If less than 10% of my panels have been broken, blow me 
+			// If less than 10% of my panels have been broken, blow me
 			// up in one large glass shatter
 			// ---------------------------------------------------------------
 			else if ( m_nNumBrokenPanes < 0.1*(m_nNumWide*m_nNumHigh))
@@ -539,7 +539,7 @@ void CBreakableSurface::TraceAttack( const CTakeDamageInfo &info, const Vector &
 				QAngle vAngles;
 				VectorAngles(-1*m_vNormal,vAngles);
 
-				CreateShards(m_vCorner, vAngles,vBlastDir, ptr->endpos, 
+				CreateShards(m_vCorner, vAngles,vBlastDir, ptr->endpos,
 							m_nNumWide*m_flPanelWidth, m_nNumHigh*m_flPanelHeight, WINDOW_LARGE_SHARD_SIZE);
 			}
 			// ---------------------------------------------------------------
@@ -567,28 +567,28 @@ void CBreakableSurface::TraceAttack( const CTakeDamageInfo &info, const Vector &
 						// Shatter the strip and start counting again
 						else if (nHCount > 0)
 						{
-							Vector vBreakPos = m_vCorner + 
-													(width*vWidthDir*m_flPanelWidth) + 
+							Vector vBreakPos = m_vCorner +
+													(width*vWidthDir*m_flPanelWidth) +
 													((height-nHCount)*vHeightDir*m_flPanelHeight);
 
 							CreateShards(vBreakPos, vAngles,
-								 vBlastDir,	  ptr->endpos,
-								 m_flPanelWidth, nHCount*m_flPanelHeight,
-								 WINDOW_LARGE_SHARD_SIZE);
+								vBlastDir,	  ptr->endpos,
+								m_flPanelWidth, nHCount*m_flPanelHeight,
+								WINDOW_LARGE_SHARD_SIZE);
 
 							nHCount = 0;
 						}
 					}
 					if (nHCount)
 					{
-						Vector vBreakPos = m_vCorner + 
-												(width*vWidthDir*m_flPanelWidth) + 
+						Vector vBreakPos = m_vCorner +
+												(width*vWidthDir*m_flPanelWidth) +
 												((height-nHCount)*vHeightDir*m_flPanelHeight);
 
 						CreateShards(vBreakPos, vAngles,
-								 vBlastDir,	  ptr->endpos,
-								 m_flPanelWidth,nHCount*m_flPanelHeight,
-								 WINDOW_LARGE_SHARD_SIZE);
+								vBlastDir,	  ptr->endpos,
+								m_flPanelWidth,nHCount*m_flPanelHeight,
+								WINDOW_LARGE_SHARD_SIZE);
 					}
 				}
 			}
@@ -600,8 +600,8 @@ void CBreakableSurface::TraceAttack( const CTakeDamageInfo &info, const Vector &
 
 //------------------------------------------------------------------------------
 // Purpose: Break into panels
-// Input  : pBreaker - 
-//			vDir - 
+// Input  : pBreaker -
+//			vDir -
 //-----------------------------------------------------------------------------
 void CBreakableSurface::Die( CBaseEntity *pBreaker, const Vector &vAttackDir )
 {
@@ -640,8 +640,8 @@ void CBreakableSurface::Die( CBaseEntity *pBreaker, const Vector &vAttackDir )
 	}
 
 	// -------------------------------------------------------
-	// The surface has two sides, when we are killed pick 
-	// the side that the damage came from 
+	// The surface has two sides, when we are killed pick
+	// the side that the damage came from
 	// -------------------------------------------------------
 	Vector vWidth		= m_vLLVertex - m_vLRVertex;
 	Vector vHeight		= m_vLLVertex - m_vULVertex;
@@ -673,7 +673,7 @@ void CBreakableSurface::Die( CBaseEntity *pBreaker, const Vector &vAttackDir )
 	{
 		m_vCorner = bLower ? m_vLLVertex : m_vULVertex;
 	}
-	else 
+	else
 	{
 		m_vCorner = bLower ? m_vLRVertex : m_vURVertex;
 	}
@@ -692,17 +692,17 @@ void CBreakableSurface::Die( CBaseEntity *pBreaker, const Vector &vAttackDir )
 
 	m_flPanelWidth	= flWidth  / m_nNumWide;
 	m_flPanelHeight	= flHeight / m_nNumHigh;
-	
+
 	// Initialize panels
 	for (int w=0;w<MAX_NUM_PANELS;w++)
-	{ 
+	{
 		for (int h=0;h<MAX_NUM_PANELS;h++)
 		{
 			SetSupport( w, h, WINDOW_PANE_HEALTHY );
 		}
 	}
 
-	// Reset onground flags for any entity that may 
+	// Reset onground flags for any entity that may
 	// have been standing on me
 	ResetOnGroundFlags();
 
@@ -752,7 +752,7 @@ void CBreakableSurface::InputShatter( inputdata_t &inputdata )
 	AngleVectors(vAngles,NULL,&vWidthDir,&vHeightDir);
 
 	// Blow out a roughly circular of tile with some randomness
-	Vector2D vecActualCenter( flCenterX * m_flPanelWidth, flCenterY * m_flPanelHeight ); 
+	Vector2D vecActualCenter( flCenterX * m_flPanelWidth, flCenterY * m_flPanelHeight );
 	for (int width = nMinX; width < nMaxX; width++)
 	{
 		for (int height = nMinY; height < nMaxY; height++)
@@ -760,8 +760,8 @@ void CBreakableSurface::InputShatter( inputdata_t &inputdata )
 			Vector2D pt( (width + 0.5f) * m_flPanelWidth, (height + 0.5f) * m_flPanelWidth );
 			if ( pt.DistToSqr(vecActualCenter) <= vecShatterInfo.z * vecShatterInfo.z )
 			{
-				Vector vBreakPos	= m_vCorner + 
-									(width*vWidthDir*m_flPanelWidth) + 
+				Vector vBreakPos	= m_vCorner +
+									(width*vWidthDir*m_flPanelWidth) +
 									(height*vHeightDir*m_flPanelHeight);
 
 				ShatterPane( width, height, m_vNormal * 500, vBreakPos );
@@ -796,10 +796,10 @@ bool CBreakableSurface::IsBroken(int nWidth, int nHeight)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : w - 
-//			h - 
-//			support - 
+// Purpose:
+// Input  : w -
+//			h -
+//			support -
 //-----------------------------------------------------------------------------
 void CBreakableSurface::SetSupport( int w, int h, float support )
 {
@@ -856,7 +856,7 @@ float CBreakableSurface::RecalcSupport(int nWidth, int nHeight)
 	}
 	else
 	{
-		flSupport += GetSupport(nWidth,nHeight+1);	 
+		flSupport += GetSupport(nWidth,nHeight+1);
 	}
 
 	// ------------
@@ -868,7 +868,7 @@ float CBreakableSurface::RecalcSupport(int nWidth, int nHeight)
 	}
 	else
 	{
- 		flSupport += 1.25 * GetSupport(nWidth,nHeight-1);
+		flSupport += 1.25 * GetSupport(nWidth,nHeight-1);
 	}
 
 	// ------------
@@ -942,7 +942,7 @@ float CBreakableSurface::RecalcSupport(int nWidth, int nHeight)
 	{
 		flSupport += 0.25 * GetSupport(nWidth-1,nHeight+1);
 	}
-	
+
 	return flSupport;
 }
 
@@ -1085,11 +1085,11 @@ void CBreakableSurface::DropPane(int nWidth, int nHeight)
 
 		QAngle vAngles;
 		VectorAngles(-1*m_vNormal,vAngles);
-		
+
 		Vector vWidthDir,vHeightDir;
 		AngleVectors(vAngles,NULL,&vWidthDir,&vHeightDir);
-		Vector vBreakPos	= m_vCorner + 
-								(nWidth*vWidthDir*m_flPanelWidth) + 
+		Vector vBreakPos	= m_vCorner +
+								(nWidth*vWidthDir*m_flPanelWidth) +
 								(nHeight*vHeightDir*m_flPanelHeight);
 
 		CreateShards(vBreakPos, vAngles, vec3_origin, vec3_origin,
@@ -1107,9 +1107,9 @@ void CBreakableSurface::DropPane(int nWidth, int nHeight)
 }
 
 void CBreakableSurface::CreateShards(const Vector &vBreakPos, const QAngle &vAngles,
-									 const Vector &vForce,	  const Vector &vForcePos,
-									 float flWidth,			  float flHeight,
-									 int   nShardSize)
+									const Vector &vForce,	  const Vector &vForcePos,
+									float flWidth,			  float flHeight,
+									int   nShardSize)
 {
 	Vector	vAdjustedBreakPos = vBreakPos;
 	Vector	vAdjustedForce	 = vForce;
@@ -1121,9 +1121,9 @@ void CBreakableSurface::CreateShards(const Vector &vBreakPos, const QAngle &vAng
 	//         we'll automate this process or expose the colors in WC
 	if (m_nSurfaceType == SHATTERSURFACE_TILE)
 	{
-		// If tile shoot shards back from the shattered surface and offset slightly 
+		// If tile shoot shards back from the shattered surface and offset slightly
 		// from the surface.
-		vAdjustedBreakPos  -=  8*m_vNormal; 
+		vAdjustedBreakPos  -=  8*m_vNormal;
 		vAdjustedForce		= -0.75*vForce;
 		front_r				= 89;
 		front_g				= 120;
@@ -1141,11 +1141,11 @@ void CBreakableSurface::CreateShards(const Vector &vBreakPos, const QAngle &vAng
 		back_g				= 255;
 		back_b				= 255;
 	}
-	
+
 	CPASFilter filter( vAdjustedBreakPos );
 	te->ShatterSurface(filter, 0.0,
-		&vAdjustedBreakPos, &vAngles, 
-		&vAdjustedForce, &vForcePos, 
+		&vAdjustedBreakPos, &vAngles,
+		&vAdjustedForce, &vForcePos,
 		flWidth, flHeight,WINDOW_SMALL_SHARD_SIZE,m_nSurfaceType,
 		front_r,front_g,front_b,back_r,back_g,back_b);//4);
 }
@@ -1170,8 +1170,8 @@ bool CBreakableSurface::ShatterPane(int nWidth, int nHeight, const Vector &vForc
 	VectorAngles(-1*m_vNormal,vAngles);
 	Vector vWidthDir,vHeightDir;
 	AngleVectors(vAngles,NULL,&vWidthDir,&vHeightDir);
-	Vector vBreakPos	= m_vCorner + 
-						(nWidth*vWidthDir*m_flPanelWidth) + 
+	Vector vBreakPos	= m_vCorner +
+						(nWidth*vWidthDir*m_flPanelWidth) +
 						(nHeight*vHeightDir*m_flPanelHeight);
 
 	CreateShards(vBreakPos, vAngles,vForce,	vForcePos, m_flPanelWidth, m_flPanelHeight, WINDOW_SMALL_SHARD_SIZE);
@@ -1188,7 +1188,7 @@ bool CBreakableSurface::ShatterPane(int nWidth, int nHeight, const Vector &vForc
 void CBreakableSurface::Spawn(void)
 {
 	BaseClass::Spawn();
-	SetCollisionGroup( COLLISION_GROUP_BREAKABLE_GLASS ); 
+	SetCollisionGroup( COLLISION_GROUP_BREAKABLE_GLASS );
 	m_bIsBroken = false;
 
 	if (m_nQuadError == QUAD_ERR_MULT_FACES)
@@ -1223,7 +1223,7 @@ void CBreakableSurface::Spawn(void)
 
 	// Init the Panel bit vector to all true. ( no panes are broken )
 	int bitVecLength = MAX_NUM_PANELS * MAX_NUM_PANELS;
-	
+
 	for( int i=0;i<bitVecLength;i++ )
 	{
 		m_RawPanelBitVec.Set( i, true );
@@ -1292,4 +1292,3 @@ void CBreakableSurface::VPhysicsCollision( int index, gamevcollisionevent_t *pEv
 	}
 	BaseClass::VPhysicsCollision( index, pEvent );
 }
-

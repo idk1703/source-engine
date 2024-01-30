@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -19,7 +19,7 @@ class bf_read;
 class bf_write;
 
 typedef enum
-{ 
+{
 	NA_NULL = 0,
 	NA_LOOPBACK,
 	NA_BROADCAST,
@@ -41,7 +41,7 @@ public:
 	void	SetIP(uint unIP);									// Sets IP.  unIP is in host order (little-endian)
 	void    SetIPAndPort( uint unIP, unsigned short usPort ) { SetIP( unIP ); SetPort( usPort ); }
 	bool	SetFromString(const char *pch, bool bUseDNS = false ); // if bUseDNS is true then do a DNS lookup if needed
-	
+
 	bool	CompareAdr (const netadr_s &a, bool onlyBase = false) const;
 	bool	CompareClassBAdr (const netadr_s &a) const;
 	bool	CompareClassCAdr (const netadr_s &a) const;
@@ -69,7 +69,7 @@ public:
 	// Returns a number that depends on the platform.  In most cases, this probably should not be used.
 	unsigned int	GetIPNetworkByteOrder() const;
 
-	bool	IsLocalhost() const; // true, if this is the localhost IP 
+	bool	IsLocalhost() const; // true, if this is the localhost IP
 	bool	IsLoopback() const;	// true if engine loopback buffers are used
 	bool	IsReservedAdr() const; // true, if this is a private LAN IP
 	bool	IsValid() const;	// ip & port != 0
@@ -124,7 +124,7 @@ public:
 	}
 
 	const char * String() const
-	{ 
+	{
 		return m_rgchString;
 	}
 

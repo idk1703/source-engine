@@ -120,7 +120,7 @@ inline CCommEditDoc *CCommEditTool::GetDocument()
 	return m_pDoc;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Tool activation/deactivation
 //-----------------------------------------------------------------------------
@@ -147,13 +147,13 @@ void CCommEditTool::EnterNodeDropMode()
 	// Can only do it in editor mode
 	if ( IsGameInputEnabled() )
 		return;
-	 
+
 	m_bInNodeDropMode = true;
 	m_bDroppingCommentaryNodes = true;
 	SetMode( true, IsFullscreen() );
 	{
 		CDisableUndoScopeGuard guard;
-		m_hPreviewNode->DrawInEngine( true ); 
+		m_hPreviewNode->DrawInEngine( true );
 	}
 	SetMiniViewportText( "Left Click To Place Commentary\nRight Click To Toggle Modes\nESC to exit" );
 	enginetools->Command( "noclip\n" );
@@ -174,7 +174,7 @@ void CCommEditTool::LeaveNodeDropMode()
 	enginetools->Command( "noclip\n" );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Gets the position of the preview object
 //-----------------------------------------------------------------------------
@@ -215,7 +215,7 @@ void CCommEditTool::ClientPreRender()
 	m_hPreviewTarget->SetRenderAngles( angAngles );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Let tool override key events (ie ESC and ~)
 //-----------------------------------------------------------------------------
@@ -320,12 +320,12 @@ void CCommEditTool::ClientLevelShutdownPreEntity()
 	BaseClass::ClientLevelShutdownPreEntity();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Derived classes can implement this to get a new scheme to be applied to this tool
 //-----------------------------------------------------------------------------
-vgui::HScheme CCommEditTool::GetToolScheme() 
-{ 
+vgui::HScheme CCommEditTool::GetToolScheme()
+{
 	return vgui::scheme()->LoadSchemeFromFile( "Resource/BoxRocket.res", "BoxRocket" );
 }
 
@@ -382,7 +382,7 @@ void CCommEditViewMenuButton::OnShowMenu(vgui::Menu *menu)
 
 		id = m_Items.Find( "commentarynodebrowser" );
 		m_pMenu->SetItemEnabled( id, true );
-		
+
 		p = m_pTool->GetCommentaryNodeBrowser();
 		Assert( p );
 		m_pMenu->SetMenuItemChecked( id, ( p && p->GetParent() ) ? true : false );
@@ -447,7 +447,7 @@ void CCommEditToolMenuButton::OnShowMenu(vgui::Menu *menu)
 //-----------------------------------------------------------------------------
 // Initializes the menu bar
 //-----------------------------------------------------------------------------
-vgui::MenuBar *CCommEditTool::CreateMenuBar( CBaseToolSystem *pParent ) 
+vgui::MenuBar *CCommEditTool::CreateMenuBar( CBaseToolSystem *pParent )
 {
 	m_pMenuBar = new CToolFileMenuBar( pParent, "Main Menu Bar" );
 
@@ -551,7 +551,7 @@ void CCommEditTool::ShowEntityInEntityProperties( CDmeCommentaryNodeEntity *pEnt
 	m_hProperties->SetObject( m_hCurrentEntity );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Destroys all tool windows
 //-----------------------------------------------------------------------------
@@ -602,7 +602,7 @@ void CCommEditTool::OnDefaultLayout()
 void CCommEditTool::OnToggleProperties()
 {
 	if ( m_hProperties.Get() )
-	{ 
+	{
 		ToggleToolWindow( m_hProperties.Get(), "#CommEditProperties" );
 	}
 }
@@ -610,7 +610,7 @@ void CCommEditTool::OnToggleProperties()
 void CCommEditTool::OnToggleEntityReport()
 {
 	if ( m_hCommentaryNodeBrowser.Get() )
-	{ 
+	{
 		ToggleToolWindow( m_hCommentaryNodeBrowser.Get(), "#CommEditEntityReport" );
 	}
 }
@@ -813,8 +813,8 @@ bool CCommEditTool::GetPerforceFileName( char *pFileName, int nMaxLen )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CCommEditTool::OnExit()
 {
@@ -945,7 +945,7 @@ void CCommEditTool::SaveAndTest()
 {
 	if ( m_pDoc && m_pDoc->IsDirty() )
 	{
-		SaveFile( m_pDoc->GetTXTFileName(), "txt", FOSM_SHOW_PERFORCE_DIALOGS, 
+		SaveFile( m_pDoc->GetTXTFileName(), "txt", FOSM_SHOW_PERFORCE_DIALOGS,
 			new KeyValues( "RestartLevel" ) );
 	}
 	else
@@ -972,7 +972,7 @@ void CCommEditTool::OnClose()
 {
 	if ( m_pDoc && m_pDoc->IsDirty() )
 	{
-		SaveFile( m_pDoc->GetTXTFileName(), "txt", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY, 
+		SaveFile( m_pDoc->GetTXTFileName(), "txt", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY,
 			new KeyValues( "OnClose" ) );
 		return;
 	}
@@ -1160,7 +1160,7 @@ bool CCommEditTool::CanQuit()
 	if ( m_pDoc && m_pDoc->IsDirty() )
 	{
 		// Show Save changes Yes/No/Cancel and re-quit if hit yes/no
-		SaveFile( m_pDoc->GetTXTFileName(), "txt", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY, 
+		SaveFile( m_pDoc->GetTXTFileName(), "txt", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY,
 			new KeyValues( "OnQuit" ) );
 		return false;
 	}

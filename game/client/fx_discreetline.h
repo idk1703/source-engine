@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -26,7 +26,7 @@ class CFXDiscreetLine : public CClientSideEffect
 {
 public:
 
-	CFXDiscreetLine ( const char *name, const Vector& start, const Vector& direction, float velocity, 
+	CFXDiscreetLine ( const char *name, const Vector& start, const Vector& direction, float velocity,
 		float length, float clipLength, float scale, float life, const char *shader );
 	~CFXDiscreetLine ( void );
 

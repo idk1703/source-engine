@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -72,7 +72,7 @@ void CCSBuyEquipMenu_CT::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSBuyEquipMenu_CT::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -101,11 +101,10 @@ void CCSBuyEquipMenu_TER::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSBuyEquipMenu_TER::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
 	ApplyBackgroundSchemeSettings( this, pScheme );
 }
-

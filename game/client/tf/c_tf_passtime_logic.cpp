@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,9 +28,9 @@ void C_TFPasstimeLogic::PostDataUpdate( DataUpdateType_t updateType )
 		SetNextClientThink( CLIENT_THINK_ALWAYS );
 		m_pBallReticle = new C_PasstimeBallReticle();
 		m_pPassReticle = new C_PasstimePassReticle();
-		for( auto *pGoal : C_FuncPasstimeGoal::GetAutoList() ) 
+		for( auto *pGoal : C_FuncPasstimeGoal::GetAutoList() )
 		{
-			m_pGoalReticles.AddToTail( new C_PasstimeGoalReticle( 
+			m_pGoalReticles.AddToTail( new C_PasstimeGoalReticle(
 				static_cast<C_FuncPasstimeGoal*>( pGoal ) ) );
 		}
 	}
@@ -90,7 +90,7 @@ void C_TFPasstimeLogic::Spawn()
 void C_TFPasstimeLogic::ClientThink()
 {
 	BaseClass::ClientThink();
-	
+
 	SetNextClientThink( CLIENT_THINK_ALWAYS );
 	m_pBallReticle->OnClientThink();
 	for ( auto *pGoal : m_pGoalReticles )
@@ -224,10 +224,10 @@ bool C_TFPasstimeLogic::GetBallReticleTarget( C_BaseEntity **ppEnt, bool *bHomin
 	}
 
 	C_BaseEntity *pEnt = pCarrier ? pCarrier : (C_BaseEntity*)pBall;
-	if ( !pEnt 
-		|| (pEnt == pLocalPlayer) 
-		|| (pEnt->GetEffects() & EF_NODRAW) 
-		|| ((pEnt->GetTeamNumber() != TEAM_UNASSIGNED) 
+	if ( !pEnt
+		|| (pEnt == pLocalPlayer)
+		|| (pEnt->GetEffects() & EF_NODRAW)
+		|| ((pEnt->GetTeamNumber() != TEAM_UNASSIGNED)
 			&& (pEnt->GetTeamNumber() != pLocalPlayer->GetTeamNumber()))
 		|| (pLocalPlayer->IsObserver() && (GetSpectatorMode() != OBS_MODE_ROAMING) && (GetSpectatorTarget() == pEnt->index)) )
 	{
@@ -235,7 +235,7 @@ bool C_TFPasstimeLogic::GetBallReticleTarget( C_BaseEntity **ppEnt, bool *bHomin
 	}
 
 	*ppEnt = pEnt;
-	if ( bHomingActive ) 
+	if ( bHomingActive )
 	{
 		*bHomingActive = pHomingTarget != 0;
 	}
@@ -246,7 +246,7 @@ bool C_TFPasstimeLogic::GetBallReticleTarget( C_BaseEntity **ppEnt, bool *bHomin
 //-----------------------------------------------------------------------------
 bool C_TFPasstimeLogic::BCanPlayerPickUpBall( C_TFPlayer *pPlayer ) const
 {
-	return pPlayer 
+	return pPlayer
 		&& pPlayer->IsAllowedToPickUpFlag()
 		&& pPlayer->IsAlive() // NOTE: it's possible to be alive and dead at the same time
 		&& !pPlayer->m_Shared.InCond( TF_COND_INVULNERABLE )
@@ -260,4 +260,3 @@ bool C_TFPasstimeLogic::BCanPlayerPickUpBall( C_TFPlayer *pPlayer ) const
 		&& !pPlayer->m_Shared.IsStealthed()
 		&& !pPlayer->m_Shared.IsCarryingObject();
 }
-

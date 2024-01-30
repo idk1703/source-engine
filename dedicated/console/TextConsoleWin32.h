@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -73,7 +73,7 @@ private:
 	HANDLE	hinput;		// standard input handle
 	HANDLE	houtput;	// standard output handle
 	WORD	Attrib;		// attrib colours for status bar
-	
+
 	char	statusline[81];			// first line in console is status line
 };
 

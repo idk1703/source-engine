@@ -40,9 +40,9 @@ extern ConVar tv_enable;
 
 static void sv_setsteamblockingcheck_f( IConVar *pConVar, const char *pOldString, float flOldValue );
 
-ConVar  sv_steamblockingcheck( "sv_steamblockingcheck", "0", 0, 
-							  "Check each new player for Steam blocking compatibility, 1 = message only, 2 >= drop if any member of owning clan blocks,"
-							  "3 >= drop if any player has blocked, 4 >= drop if player has blocked anyone on server", sv_setsteamblockingcheck_f );
+ConVar  sv_steamblockingcheck( "sv_steamblockingcheck", "0", 0,
+							"Check each new player for Steam blocking compatibility, 1 = message only, 2 >= drop if any member of owning clan blocks,"
+							"3 >= drop if any player has blocked, 4 >= drop if player has blocked anyone on server", sv_setsteamblockingcheck_f );
 
 #if defined( _X360 )
 #include "xbox/xbox_win32stubs.h"
@@ -53,7 +53,7 @@ ConVar  sv_steamblockingcheck( "sv_steamblockingcheck", "0", 0,
 
 #pragma warning( disable: 4355 ) // disables ' 'this' : used in base member initializer list'
 
-ConVar sv_master_share_game_socket( "sv_master_share_game_socket", "1", 0, 
+ConVar sv_master_share_game_socket( "sv_master_share_game_socket", "1", 0,
 	"Use the game's socket to communicate to the master server. "
 	"If this is 0, then it will create a socket on -steamport + 1 "
 	"to communicate to the master server on." );
@@ -97,7 +97,7 @@ CSteam3Server  &Steam3Server()
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CSteam3Server::CSteam3Server() 
+CSteam3Server::CSteam3Server()
 #if !defined(NO_STEAM)
 :
 	m_CallbackLogonSuccess( this, &CSteam3Server::OnLogonSuccess ),
@@ -112,8 +112,8 @@ CSteam3Server::CSteam3Server()
 	m_bLogOnResult = false;
 	m_eServerMode = eServerModeInvalid;
 	m_eServerType = eServerTypeNormal;
-    m_bWantsSecure = false;		// default to insecure currently, this may change
-    m_bInitialized = false;
+	m_bWantsSecure = false;		// default to insecure currently, this may change
+	m_bInitialized = false;
 	m_bWantsPersistentAccountLogon = false;
 	m_bLogOnFinished = false;
 	m_bMasterServerUpdaterSharingGameSocket = false;
@@ -135,7 +135,7 @@ EServerMode CSteam3Server::GetCurrentServerMode()
 	{
 		return eServerModeAuthentication;
 	}
-	else 
+	else
 	{
 		return eServerModeAuthenticationAndSecure;
 	}
@@ -343,7 +343,7 @@ bool CSteam3Server::CompareUserID( const USERID_t & id1, const USERID_t & id2 )
 bool CSteam3Server::CheckForDuplicateSteamID( const CBaseClient *client )
 {
 	// in LAN mode we allow reuse of SteamIDs
-	if ( BLanOnly() ) 
+	if ( BLanOnly() )
 		return false;
 
 	// Compare connecting client's ID to other IDs on the server
@@ -403,7 +403,7 @@ void CSteam3Server::OnGSPolicyResponse( GSPolicyResponse_t *pPolicyResponse )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSteam3Server::OnLogonSuccess( SteamServersConnected_t *pLogonSuccess )
 {
@@ -456,7 +456,7 @@ void CSteam3Server::OnLogonSuccess( SteamServersConnected_t *pLogonSuccess )
 
 //-----------------------------------------------------------------------------
 // Purpose: callback on unable to connect to the steam3 backend
-// Input  : eResult - 
+// Input  : eResult -
 //-----------------------------------------------------------------------------
 void CSteam3Server::OnLogonFailure( SteamServerConnectFailure_t *pLogonFailure )
 {
@@ -502,8 +502,8 @@ void CSteam3Server::OnLogonFailure( SteamServerConnectFailure_t *pLogonFailure )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : eResult - 
+// Purpose:
+// Input  : eResult -
 //-----------------------------------------------------------------------------
 void CSteam3Server::OnLoggedOff( SteamServersDisconnected_t *pLoggedOff )
 {
@@ -527,7 +527,7 @@ void CSteam3Server::OnComputeNewPlayerCompatibilityResponse( ComputeNewPlayerCom
 				client->Disconnect( "Another player on this server ( member of owning clan ) does not want to play with this player." );
 				return;
 			}
-		}		
+		}
 		if ( sv_steamblockingcheck.GetInt() >= 3 )
 		{
 			if ( pCompatibilityResult->m_cPlayersThatDontLikeCandidate > 0 )
@@ -549,7 +549,7 @@ void CSteam3Server::OnComputeNewPlayerCompatibilityResponse( ComputeNewPlayerCom
 			pCompatibilityResult->m_cPlayersThatDontLikeCandidate > 0 ||
 			pCompatibilityResult->m_cPlayersThatCandidateDoesntLike > 0 )
 		{
-			MsgAndLog( "Player %s is blocked by %d players and %d clan members and has blocked %d players on server\n", client->GetClientName(), 
+			MsgAndLog( "Player %s is blocked by %d players and %d clan members and has blocked %d players on server\n", client->GetClientName(),
 					pCompatibilityResult->m_cPlayersThatDontLikeCandidate,
 					pCompatibilityResult->m_cClanPlayersThatDontLikeCandidate,
 					pCompatibilityResult->m_cPlayersThatCandidateDoesntLike	);
@@ -558,13 +558,13 @@ void CSteam3Server::OnComputeNewPlayerCompatibilityResponse( ComputeNewPlayerCom
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSteam3Server::OnValidateAuthTicketResponse( ValidateAuthTicketResponse_t *pValidateAuthTicketResponse )
 {
 	//Msg("Steam backend:Got approval for %x\n", pGSClientApprove->m_SteamID.ConvertToUint64() );
 	// We got the approval message from the back end.
-    // Note that if we dont get it, we default to approved anyway
+	// Note that if we dont get it, we default to approved anyway
 	// dont need to send anything back
 
 	if ( !BIsActive() )
@@ -587,7 +587,7 @@ void CSteam3Server::OnValidateAuthTicketResponse( ValidateAuthTicketResponse_t *
 	}
 	else if ( CheckForDuplicateSteamID( client ) )
 	{
-		client->Disconnect(  "STEAM UserID %s is already\nin use on this server", client->GetNetworkIDString() );					
+		client->Disconnect(  "STEAM UserID %s is already\nin use on this server", client->GetNetworkIDString() );
 	}
 	else
 	{
@@ -637,27 +637,27 @@ void CSteam3Server::OnValidateAuthTicketResponseHelper( CBaseClient *cl, EAuthSe
 	switch ( eAuthSessionResponse )
 	{
 		case k_EAuthSessionResponseUserNotConnectedToSteam:
-			if ( !BLanOnly() ) 
+			if ( !BLanOnly() )
 				cl->Disconnect( INVALID_STEAM_LOGON_NOT_CONNECTED );
 			break;
 		case k_EAuthSessionResponseLoggedInElseWhere:
-			if ( !BLanOnly() ) 
+			if ( !BLanOnly() )
 				cl->Disconnect( INVALID_STEAM_LOGGED_IN_ELSEWHERE );
 			break;
 		case k_EAuthSessionResponseNoLicenseOrExpired:
 			cl->Disconnect( "This Steam account does not own this game. \nPlease login to the correct Steam account" );
 			break;
 		case k_EAuthSessionResponseVACBanned:
-			if ( !BLanOnly() ) 
+			if ( !BLanOnly() )
 				cl->Disconnect( INVALID_STEAM_VACBANSTATE );
 			break;
 		case k_EAuthSessionResponseAuthTicketCanceled:
-			if ( !BLanOnly() ) 
+			if ( !BLanOnly() )
 				cl->Disconnect( INVALID_STEAM_LOGON_TICKET_CANCELED );
 			break;
 		case k_EAuthSessionResponseAuthTicketInvalidAlreadyUsed:
 		case k_EAuthSessionResponseAuthTicketInvalid:
-			if ( !BLanOnly() ) 
+			if ( !BLanOnly() )
 				cl->Disconnect( INVALID_STEAM_TICKET );
 			break;
 		case k_EAuthSessionResponseVACCheckTimedOut:
@@ -671,8 +671,8 @@ void CSteam3Server::OnValidateAuthTicketResponseHelper( CBaseClient *cl, EAuthSe
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : steamIDFind - 
+// Purpose:
+// Input  : steamIDFind -
 // Output : IClient
 //-----------------------------------------------------------------------------
 CBaseClient *CSteam3Server::ClientFindFromSteamID( CSteamID & steamIDFind )
@@ -703,7 +703,7 @@ CBaseClient *CSteam3Server::ClientFindFromSteamID( CSteamID & steamIDFind )
 //-----------------------------------------------------------------------------
 bool CSteam3Server::NotifyClientConnect( CBaseClient *client, uint32 unUserID, netadr_t & adr, const void *pvCookie, uint32 ucbCookie )
 {
-	if ( !BIsActive() ) 
+	if ( !BIsActive() )
 		return true;
 
 	if ( !client || client->IsFakeClient() )
@@ -779,7 +779,7 @@ bool CSteam3Server::NotifyLocalClientConnect( CBaseClient *client )
 	{
 		steamID = SteamGameServer()->CreateUnauthenticatedUserConnection();
 	}
-	
+
 	client->SetSteamID( steamID );
 
 	SendUpdatedServerDetails();
@@ -789,8 +789,8 @@ bool CSteam3Server::NotifyLocalClientConnect( CBaseClient *client )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *client - 
+// Purpose:
+// Input  : *client -
 //-----------------------------------------------------------------------------
 void CSteam3Server::NotifyClientDisconnect( CBaseClient *client )
 {
@@ -816,7 +816,7 @@ void CSteam3Server::NotifyClientDisconnect( CBaseClient *client )
 		USERID_t id = client->GetNetworkID();
 		if ( id.idtype != IDTYPE_STEAM )
 			return;
-	
+
 		// Msg("S3: Sending client disconnect for %x\n", steamIDClient.ConvertToUint64( ) );
 		SteamGameServer()->EndAuthSession( client->m_SteamID );
 	}
@@ -824,7 +824,7 @@ void CSteam3Server::NotifyClientDisconnect( CBaseClient *client )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSteam3Server::NotifyOfLevelChange()
 {
@@ -838,7 +838,7 @@ void CSteam3Server::NotifyOfLevelChange()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSteam3Server::NotifyOfServerNameChange()
 {
@@ -847,7 +847,7 @@ void CSteam3Server::NotifyOfServerNameChange()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSteam3Server::RunFrame()
 {
@@ -994,7 +994,7 @@ bool CSteam3Server::IsMasterServerUpdaterSharingGameSocket()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Heartbeat_f()
 {

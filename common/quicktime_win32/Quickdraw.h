@@ -1,17 +1,17 @@
 /*
-     File:       Quickdraw.h
- 
-     Contains:   Interface to Quickdraw Graphics
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1985-2003 by Apple Computer, Inc., all rights reserved
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       Quickdraw.h
+
+		Contains:   Interface to Quickdraw Graphics
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1985-2003 by Apple Computer, Inc., all rights reserved
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __QUICKDRAW__
 #define __QUICKDRAW__
@@ -51,164 +51,164 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=mac68k
+		#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+		#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+		#pragma pack(2)
 #endif
 
 enum {
-  invalColReq                   = -1    /*invalid color table request*/
+	invalColReq                   = -1    /*invalid color table request*/
 };
 
 enum {
-                                        /* transfer modes */
-  srcCopy                       = 0,    /*the 16 transfer modes*/
-  srcOr                         = 1,
-  srcXor                        = 2,
-  srcBic                        = 3,
-  notSrcCopy                    = 4,
-  notSrcOr                      = 5,
-  notSrcXor                     = 6,
-  notSrcBic                     = 7,
-  patCopy                       = 8,
-  patOr                         = 9,
-  patXor                        = 10,
-  patBic                        = 11,
-  notPatCopy                    = 12,
-  notPatOr                      = 13,
-  notPatXor                     = 14,
-  notPatBic                     = 15,   /* Special Text Transfer Mode */
-  grayishTextOr                 = 49,
-  hilitetransfermode            = 50,
-  hilite                        = 50,   /* Arithmetic transfer modes */
-  blend                         = 32,
-  addPin                        = 33,
-  addOver                       = 34,
-  subPin                        = 35,
-  addMax                        = 37,
-  adMax                         = 37,
-  subOver                       = 38,
-  adMin                         = 39,
-  ditherCopy                    = 64,   /* Transparent mode constant */
-  transparent                   = 36
+																				/* transfer modes */
+	srcCopy                       = 0,    /*the 16 transfer modes*/
+	srcOr                         = 1,
+	srcXor                        = 2,
+	srcBic                        = 3,
+	notSrcCopy                    = 4,
+	notSrcOr                      = 5,
+	notSrcXor                     = 6,
+	notSrcBic                     = 7,
+	patCopy                       = 8,
+	patOr                         = 9,
+	patXor                        = 10,
+	patBic                        = 11,
+	notPatCopy                    = 12,
+	notPatOr                      = 13,
+	notPatXor                     = 14,
+	notPatBic                     = 15,   /* Special Text Transfer Mode */
+	grayishTextOr                 = 49,
+	hilitetransfermode            = 50,
+	hilite                        = 50,   /* Arithmetic transfer modes */
+	blend                         = 32,
+	addPin                        = 33,
+	addOver                       = 34,
+	subPin                        = 35,
+	addMax                        = 37,
+	adMax                         = 37,
+	subOver                       = 38,
+	adMin                         = 39,
+	ditherCopy                    = 64,   /* Transparent mode constant */
+	transparent                   = 36
 };
 
 enum {
-  italicBit                     = 1,
-  ulineBit                      = 2,
-  outlineBit                    = 3,
-  shadowBit                     = 4,
-  condenseBit                   = 5,
-  extendBit                     = 6
+	italicBit                     = 1,
+	ulineBit                      = 2,
+	outlineBit                    = 3,
+	shadowBit                     = 4,
+	condenseBit                   = 5,
+	extendBit                     = 6
 };
 
 enum {
-                                        /* QuickDraw color separation constants */
-  normalBit                     = 0,    /*normal screen mapping*/
-  inverseBit                    = 1,    /*inverse screen mapping*/
-  redBit                        = 4,    /*RGB additive mapping*/
-  greenBit                      = 3,
-  blueBit                       = 2,
-  cyanBit                       = 8,    /*CMYBk subtractive mapping*/
-  magentaBit                    = 7,
-  yellowBit                     = 6,
-  blackBit                      = 5
+																				/* QuickDraw color separation constants */
+	normalBit                     = 0,    /*normal screen mapping*/
+	inverseBit                    = 1,    /*inverse screen mapping*/
+	redBit                        = 4,    /*RGB additive mapping*/
+	greenBit                      = 3,
+	blueBit                       = 2,
+	cyanBit                       = 8,    /*CMYBk subtractive mapping*/
+	magentaBit                    = 7,
+	yellowBit                     = 6,
+	blackBit                      = 5
 };
 
 enum {
-  blackColor                    = 33,   /*colors expressed in these mappings*/
-  whiteColor                    = 30,
-  redColor                      = 205,
-  greenColor                    = 341,
-  blueColor                     = 409,
-  cyanColor                     = 273,
-  magentaColor                  = 137,
-  yellowColor                   = 69
+	blackColor                    = 33,   /*colors expressed in these mappings*/
+	whiteColor                    = 30,
+	redColor                      = 205,
+	greenColor                    = 341,
+	blueColor                     = 409,
+	cyanColor                     = 273,
+	magentaColor                  = 137,
+	yellowColor                   = 69
 };
 
 enum {
-  picLParen                     = 0,    /*standard picture comments*/
-  picRParen                     = 1,
-  clutType                      = 0,    /*0 if lookup table*/
-  fixedType                     = 1,    /*1 if fixed table*/
-  directType                    = 2,    /*2 if direct values*/
-  gdDevType                     = 0     /*0 = monochrome 1 = color*/
+	picLParen                     = 0,    /*standard picture comments*/
+	picRParen                     = 1,
+	clutType                      = 0,    /*0 if lookup table*/
+	fixedType                     = 1,    /*1 if fixed table*/
+	directType                    = 2,    /*2 if direct values*/
+	gdDevType                     = 0     /*0 = monochrome 1 = color*/
 };
 
 enum {
-  interlacedDevice              = 2,    /* 1 if single pixel lines look bad */
-  hwMirroredDevice              = 4,    /* 1 if device is HW mirrored */
-  roundedDevice                 = 5,    /* 1 if device has been "rounded" into the GrayRgn */
-  hasAuxMenuBar                 = 6,    /* 1 if device has an aux menu bar on it */
-  burstDevice                   = 7,
-  ext32Device                   = 8,
-  ramInit                       = 10,   /*1 if initialized from 'scrn' resource*/
-  mainScreen                    = 11,   /* 1 if main screen */
-  allInit                       = 12,   /* 1 if all devices initialized */
-  screenDevice                  = 13,   /*1 if screen device [not used]*/
-  noDriver                      = 14,   /* 1 if no driver for this GDevice */
-  screenActive                  = 15,   /*1 if in use*/
-  hiliteBit                     = 7,    /*flag bit in LMGet/SetHiliteMode*/
-  pHiliteBit                    = 0,    /*flag bit in LMGet/SetHiliteMode when used with BitClr*/
-  defQDColors                   = 127,  /*resource ID of clut for default QDColors*/
-                                        /* pixel type */
-  RGBDirect                     = 16,   /* 16 & 32 bits/pixel pixelType value */
-                                        /* pmVersion values */
-  baseAddr32                    = 4     /*pixmap base address is 32-bit address*/
+	interlacedDevice              = 2,    /* 1 if single pixel lines look bad */
+	hwMirroredDevice              = 4,    /* 1 if device is HW mirrored */
+	roundedDevice                 = 5,    /* 1 if device has been "rounded" into the GrayRgn */
+	hasAuxMenuBar                 = 6,    /* 1 if device has an aux menu bar on it */
+	burstDevice                   = 7,
+	ext32Device                   = 8,
+	ramInit                       = 10,   /*1 if initialized from 'scrn' resource*/
+	mainScreen                    = 11,   /* 1 if main screen */
+	allInit                       = 12,   /* 1 if all devices initialized */
+	screenDevice                  = 13,   /*1 if screen device [not used]*/
+	noDriver                      = 14,   /* 1 if no driver for this GDevice */
+	screenActive                  = 15,   /*1 if in use*/
+	hiliteBit                     = 7,    /*flag bit in LMGet/SetHiliteMode*/
+	pHiliteBit                    = 0,    /*flag bit in LMGet/SetHiliteMode when used with BitClr*/
+	defQDColors                   = 127,  /*resource ID of clut for default QDColors*/
+																				/* pixel type */
+	RGBDirect                     = 16,   /* 16 & 32 bits/pixel pixelType value */
+																				/* pmVersion values */
+	baseAddr32                    = 4     /*pixmap base address is 32-bit address*/
 };
 
 
 enum {
-  sysPatListID                  = 0,
-  iBeamCursor                   = 1,
-  crossCursor                   = 2,
-  plusCursor                    = 3,
-  watchCursor                   = 4
+	sysPatListID                  = 0,
+	iBeamCursor                   = 1,
+	crossCursor                   = 2,
+	plusCursor                    = 3,
+	watchCursor                   = 4
 };
 
 enum {
-  kQDGrafVerbFrame              = 0,
-  kQDGrafVerbPaint              = 1,
-  kQDGrafVerbErase              = 2,
-  kQDGrafVerbInvert             = 3,
-  kQDGrafVerbFill               = 4
+	kQDGrafVerbFrame              = 0,
+	kQDGrafVerbPaint              = 1,
+	kQDGrafVerbErase              = 2,
+	kQDGrafVerbInvert             = 3,
+	kQDGrafVerbFill               = 4
 };
 
 #if OLDROUTINENAMES
 enum {
-  frame                         = kQDGrafVerbFrame,
-  paint                         = kQDGrafVerbPaint,
-  erase                         = kQDGrafVerbErase,
-  invert                        = kQDGrafVerbInvert,
-  fill                          = kQDGrafVerbFill
+	frame                         = kQDGrafVerbFrame,
+	paint                         = kQDGrafVerbPaint,
+	erase                         = kQDGrafVerbErase,
+	invert                        = kQDGrafVerbInvert,
+	fill                          = kQDGrafVerbFill
 };
 
 #endif  /* OLDROUTINENAMES */
 
 typedef SInt8                           GrafVerb;
 enum {
-  chunky                        = 0,
-  chunkyPlanar                  = 1,
-  planar                        = 2
+	chunky                        = 0,
+	chunkyPlanar                  = 1,
+	planar                        = 2
 };
 
 typedef SInt8                           PixelType;
 typedef short                           Bits16[16];
 
 /***************   IMPORTANT NOTE REGARDING Pattern  **************************************
-   Patterns were originally defined as:
-   
-        C:          typedef unsigned char Pattern[8];
-        Pascal:     Pattern = PACKED ARRAY [0..7] OF 0..255;
-        
-   The old array definition of Pattern would cause 68000 based CPU's to crash in certain circum-
-   stances. The new struct definition is safe, but may require source code changes to compile.
-    
+	Patterns were originally defined as:
+
+				C:          typedef unsigned char Pattern[8];
+				Pascal:     Pattern = PACKED ARRAY [0..7] OF 0..255;
+
+	The old array definition of Pattern would cause 68000 based CPU's to crash in certain circum-
+	stances. The new struct definition is safe, but may require source code changes to compile.
+
 *********************************************************************************************/
 struct Pattern {
-  UInt8               pat[8];
+	UInt8               pat[8];
 };
 typedef struct Pattern                  Pattern;
 /*
@@ -224,64 +224,64 @@ typedef QDByte *                        QDPtr;
 typedef QDPtr *                         QDHandle;
 typedef short                           QDErr;
 enum {
-  singleDevicesBit              = 0,
-  dontMatchSeedsBit             = 1,
-  allDevicesBit                 = 2
+	singleDevicesBit              = 0,
+	dontMatchSeedsBit             = 1,
+	allDevicesBit                 = 2
 };
 
 enum {
-  singleDevices                 = 1 << singleDevicesBit,
-  dontMatchSeeds                = 1 << dontMatchSeedsBit,
-  allDevices                    = 1 << allDevicesBit
+	singleDevices                 = 1 << singleDevicesBit,
+	dontMatchSeeds                = 1 << dontMatchSeedsBit,
+	allDevices                    = 1 << allDevicesBit
 };
 
 typedef unsigned long                   DeviceLoopFlags;
 /*
-    PrinterStatusOpcode.  For communication with downloading and printing services.
+		PrinterStatusOpcode.  For communication with downloading and printing services.
 */
 typedef SInt32                          PrinterStatusOpcode;
 enum {
-  kPrinterFontStatus            = 0,
-  kPrinterScalingStatus         = 1
+	kPrinterFontStatus            = 0,
+	kPrinterScalingStatus         = 1
 };
 
 struct PrinterFontStatus {
-  SInt32              oResult;
-  SInt16              iFondID;
-  Style               iStyle;
+	SInt32              oResult;
+	SInt16              iFondID;
+	Style               iStyle;
 };
 typedef struct PrinterFontStatus        PrinterFontStatus;
 struct PrinterScalingStatus {
-  Point               oScalingFactors;
+	Point               oScalingFactors;
 };
 typedef struct PrinterScalingStatus     PrinterScalingStatus;
 struct BitMap {
-  Ptr                 baseAddr;
-  short               rowBytes;
-  Rect                bounds;
+	Ptr                 baseAddr;
+	short               rowBytes;
+	Rect                bounds;
 };
 typedef struct BitMap                   BitMap;
 typedef BitMap *                        BitMapPtr;
 typedef BitMapPtr *                     BitMapHandle;
 struct Cursor {
-  Bits16              data;
-  Bits16              mask;
-  Point               hotSpot;
+	Bits16              data;
+	Bits16              mask;
+	Point               hotSpot;
 };
 typedef struct ::Cursor                 Cursor;
 typedef ::Cursor *                      CursPtr;
 typedef CursPtr *                       CursHandle;
 struct PenState {
-  Point               pnLoc;
-  Point               pnSize;
-  short               pnMode;
-  Pattern             pnPat;
+	Point               pnLoc;
+	Point               pnSize;
+	short               pnMode;
+	Pattern             pnPat;
 };
 typedef struct PenState                 PenState;
 #if !OPAQUE_TOOLBOX_STRUCTS
 struct MacRegion {
-  unsigned short      rgnSize;                /* size in bytes; don't rely on it */
-  Rect                rgnBBox;                /* enclosing rectangle; in Carbon use GetRegionBounds */
+	unsigned short      rgnSize;                /* size in bytes; don't rely on it */
+	Rect                rgnBBox;                /* enclosing rectangle; in Carbon use GetRegionBounds */
 };
 typedef struct MacRegion                MacRegion;
 typedef MacRegion *                     RgnPtr;
@@ -291,16 +291,16 @@ typedef struct OpaqueRgnHandle*         RgnHandle;
 #endif  /* !OPAQUE_TOOLBOX_STRUCTS */
 
 struct Picture {
-  short               picSize;
-  Rect                picFrame;
+	short               picSize;
+	Rect                picFrame;
 };
 typedef struct Picture                  Picture;
 typedef Picture *                       PicPtr;
 typedef PicPtr *                        PicHandle;
 struct MacPolygon {
-  short               polySize;
-  Rect                polyBBox;
-  Point               polyPoints[1];
+	short               polySize;
+	Rect                polyBBox;
+	Point               polyPoints[1];
 };
 typedef struct MacPolygon               MacPolygon;
 typedef MacPolygon *                    PolyPtr;
@@ -338,25 +338,25 @@ typedef STACK_UPP_TYPE(QDOpcodeProcPtr)                         QDOpcodeUPP;
 typedef STACK_UPP_TYPE(QDStdGlyphsProcPtr)                      QDStdGlyphsUPP;
 typedef STACK_UPP_TYPE(QDJShieldCursorProcPtr)                  QDJShieldCursorUPP;
 struct QDProcs {
-  QDTextUPP           textProc;
-  QDLineUPP           lineProc;
-  QDRectUPP           rectProc;
-  QDRRectUPP          rRectProc;
-  QDOvalUPP           ovalProc;
-  QDArcUPP            arcProc;
-  QDPolyUPP           polyProc;
-  QDRgnUPP            rgnProc;
-  QDBitsUPP           bitsProc;
-  QDCommentUPP        commentProc;
-  QDTxMeasUPP         txMeasProc;
-  QDGetPicUPP         getPicProc;
-  QDPutPicUPP         putPicProc;
+	QDTextUPP           textProc;
+	QDLineUPP           lineProc;
+	QDRectUPP           rectProc;
+	QDRRectUPP          rRectProc;
+	QDOvalUPP           ovalProc;
+	QDArcUPP            arcProc;
+	QDPolyUPP           polyProc;
+	QDRgnUPP            rgnProc;
+	QDBitsUPP           bitsProc;
+	QDCommentUPP        commentProc;
+	QDTxMeasUPP         txMeasProc;
+	QDGetPicUPP         getPicProc;
+	QDPutPicUPP         putPicProc;
 };
 typedef struct QDProcs                  QDProcs;
 typedef QDProcs *                       QDProcsPtr;
 /*
  *  NewQDTextUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -365,17 +365,17 @@ typedef QDProcs *                       QDProcsPtr;
 EXTERN_API_C( QDTextUPP )
 NewQDTextUPP(QDTextProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppQDTextProcInfo = 0x00003F80 };  /* pascal no_return_value Func(2_bytes, 4_bytes, 4_bytes, 4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(QDTextUPP) NewQDTextUPP(QDTextProcPtr userRoutine) { return (QDTextUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDTextProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewQDTextUPP(userRoutine) (QDTextUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDTextProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppQDTextProcInfo = 0x00003F80 };  /* pascal no_return_value Func(2_bytes, 4_bytes, 4_bytes, 4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(QDTextUPP) NewQDTextUPP(QDTextProcPtr userRoutine) { return (QDTextUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDTextProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewQDTextUPP(userRoutine) (QDTextUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDTextProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewQDLineUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -384,17 +384,17 @@ NewQDTextUPP(QDTextProcPtr userRoutine);
 EXTERN_API_C( QDLineUPP )
 NewQDLineUPP(QDLineProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppQDLineProcInfo = 0x000000C0 };  /* pascal no_return_value Func(4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(QDLineUPP) NewQDLineUPP(QDLineProcPtr userRoutine) { return (QDLineUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDLineProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewQDLineUPP(userRoutine) (QDLineUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDLineProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppQDLineProcInfo = 0x000000C0 };  /* pascal no_return_value Func(4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(QDLineUPP) NewQDLineUPP(QDLineProcPtr userRoutine) { return (QDLineUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDLineProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewQDLineUPP(userRoutine) (QDLineUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDLineProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewQDRectUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -403,17 +403,17 @@ NewQDLineUPP(QDLineProcPtr userRoutine);
 EXTERN_API_C( QDRectUPP )
 NewQDRectUPP(QDRectProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppQDRectProcInfo = 0x00000340 };  /* pascal no_return_value Func(1_byte, 4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(QDRectUPP) NewQDRectUPP(QDRectProcPtr userRoutine) { return (QDRectUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDRectProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewQDRectUPP(userRoutine) (QDRectUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDRectProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppQDRectProcInfo = 0x00000340 };  /* pascal no_return_value Func(1_byte, 4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(QDRectUPP) NewQDRectUPP(QDRectProcPtr userRoutine) { return (QDRectUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDRectProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewQDRectUPP(userRoutine) (QDRectUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDRectProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewQDRRectUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -422,17 +422,17 @@ NewQDRectUPP(QDRectProcPtr userRoutine);
 EXTERN_API_C( QDRRectUPP )
 NewQDRRectUPP(QDRRectProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppQDRRectProcInfo = 0x00002B40 };  /* pascal no_return_value Func(1_byte, 4_bytes, 2_bytes, 2_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(QDRRectUPP) NewQDRRectUPP(QDRRectProcPtr userRoutine) { return (QDRRectUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDRRectProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewQDRRectUPP(userRoutine) (QDRRectUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDRRectProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppQDRRectProcInfo = 0x00002B40 };  /* pascal no_return_value Func(1_byte, 4_bytes, 2_bytes, 2_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(QDRRectUPP) NewQDRRectUPP(QDRRectProcPtr userRoutine) { return (QDRRectUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDRRectProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewQDRRectUPP(userRoutine) (QDRRectUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDRRectProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewQDOvalUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -441,17 +441,17 @@ NewQDRRectUPP(QDRRectProcPtr userRoutine);
 EXTERN_API_C( QDOvalUPP )
 NewQDOvalUPP(QDOvalProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppQDOvalProcInfo = 0x00000340 };  /* pascal no_return_value Func(1_byte, 4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(QDOvalUPP) NewQDOvalUPP(QDOvalProcPtr userRoutine) { return (QDOvalUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDOvalProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewQDOvalUPP(userRoutine) (QDOvalUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDOvalProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppQDOvalProcInfo = 0x00000340 };  /* pascal no_return_value Func(1_byte, 4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(QDOvalUPP) NewQDOvalUPP(QDOvalProcPtr userRoutine) { return (QDOvalUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDOvalProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewQDOvalUPP(userRoutine) (QDOvalUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDOvalProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewQDArcUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -460,17 +460,17 @@ NewQDOvalUPP(QDOvalProcPtr userRoutine);
 EXTERN_API_C( QDArcUPP )
 NewQDArcUPP(QDArcProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppQDArcProcInfo = 0x00002B40 };  /* pascal no_return_value Func(1_byte, 4_bytes, 2_bytes, 2_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(QDArcUPP) NewQDArcUPP(QDArcProcPtr userRoutine) { return (QDArcUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDArcProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewQDArcUPP(userRoutine) (QDArcUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDArcProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppQDArcProcInfo = 0x00002B40 };  /* pascal no_return_value Func(1_byte, 4_bytes, 2_bytes, 2_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(QDArcUPP) NewQDArcUPP(QDArcProcPtr userRoutine) { return (QDArcUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDArcProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewQDArcUPP(userRoutine) (QDArcUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDArcProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewQDPolyUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -479,17 +479,17 @@ NewQDArcUPP(QDArcProcPtr userRoutine);
 EXTERN_API_C( QDPolyUPP )
 NewQDPolyUPP(QDPolyProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppQDPolyProcInfo = 0x00000340 };  /* pascal no_return_value Func(1_byte, 4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(QDPolyUPP) NewQDPolyUPP(QDPolyProcPtr userRoutine) { return (QDPolyUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDPolyProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewQDPolyUPP(userRoutine) (QDPolyUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDPolyProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppQDPolyProcInfo = 0x00000340 };  /* pascal no_return_value Func(1_byte, 4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(QDPolyUPP) NewQDPolyUPP(QDPolyProcPtr userRoutine) { return (QDPolyUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDPolyProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewQDPolyUPP(userRoutine) (QDPolyUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDPolyProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewQDRgnUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -498,17 +498,17 @@ NewQDPolyUPP(QDPolyProcPtr userRoutine);
 EXTERN_API_C( QDRgnUPP )
 NewQDRgnUPP(QDRgnProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppQDRgnProcInfo = 0x00000340 };  /* pascal no_return_value Func(1_byte, 4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(QDRgnUPP) NewQDRgnUPP(QDRgnProcPtr userRoutine) { return (QDRgnUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDRgnProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewQDRgnUPP(userRoutine) (QDRgnUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDRgnProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppQDRgnProcInfo = 0x00000340 };  /* pascal no_return_value Func(1_byte, 4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(QDRgnUPP) NewQDRgnUPP(QDRgnProcPtr userRoutine) { return (QDRgnUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDRgnProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewQDRgnUPP(userRoutine) (QDRgnUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDRgnProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewQDBitsUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -517,17 +517,17 @@ NewQDRgnUPP(QDRgnProcPtr userRoutine);
 EXTERN_API_C( QDBitsUPP )
 NewQDBitsUPP(QDBitsProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppQDBitsProcInfo = 0x0000EFC0 };  /* pascal no_return_value Func(4_bytes, 4_bytes, 4_bytes, 2_bytes, 4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(QDBitsUPP) NewQDBitsUPP(QDBitsProcPtr userRoutine) { return (QDBitsUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDBitsProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewQDBitsUPP(userRoutine) (QDBitsUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDBitsProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppQDBitsProcInfo = 0x0000EFC0 };  /* pascal no_return_value Func(4_bytes, 4_bytes, 4_bytes, 2_bytes, 4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(QDBitsUPP) NewQDBitsUPP(QDBitsProcPtr userRoutine) { return (QDBitsUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDBitsProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewQDBitsUPP(userRoutine) (QDBitsUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDBitsProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewQDCommentUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -536,17 +536,17 @@ NewQDBitsUPP(QDBitsProcPtr userRoutine);
 EXTERN_API_C( QDCommentUPP )
 NewQDCommentUPP(QDCommentProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppQDCommentProcInfo = 0x00000E80 };  /* pascal no_return_value Func(2_bytes, 2_bytes, 4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(QDCommentUPP) NewQDCommentUPP(QDCommentProcPtr userRoutine) { return (QDCommentUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDCommentProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewQDCommentUPP(userRoutine) (QDCommentUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDCommentProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppQDCommentProcInfo = 0x00000E80 };  /* pascal no_return_value Func(2_bytes, 2_bytes, 4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(QDCommentUPP) NewQDCommentUPP(QDCommentProcPtr userRoutine) { return (QDCommentUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDCommentProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewQDCommentUPP(userRoutine) (QDCommentUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDCommentProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewQDTxMeasUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -555,17 +555,17 @@ NewQDCommentUPP(QDCommentProcPtr userRoutine);
 EXTERN_API_C( QDTxMeasUPP )
 NewQDTxMeasUPP(QDTxMeasProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppQDTxMeasProcInfo = 0x0000FFA0 };  /* pascal 2_bytes Func(2_bytes, 4_bytes, 4_bytes, 4_bytes, 4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(QDTxMeasUPP) NewQDTxMeasUPP(QDTxMeasProcPtr userRoutine) { return (QDTxMeasUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDTxMeasProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewQDTxMeasUPP(userRoutine) (QDTxMeasUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDTxMeasProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppQDTxMeasProcInfo = 0x0000FFA0 };  /* pascal 2_bytes Func(2_bytes, 4_bytes, 4_bytes, 4_bytes, 4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(QDTxMeasUPP) NewQDTxMeasUPP(QDTxMeasProcPtr userRoutine) { return (QDTxMeasUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDTxMeasProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewQDTxMeasUPP(userRoutine) (QDTxMeasUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDTxMeasProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewQDGetPicUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -574,17 +574,17 @@ NewQDTxMeasUPP(QDTxMeasProcPtr userRoutine);
 EXTERN_API_C( QDGetPicUPP )
 NewQDGetPicUPP(QDGetPicProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppQDGetPicProcInfo = 0x000002C0 };  /* pascal no_return_value Func(4_bytes, 2_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(QDGetPicUPP) NewQDGetPicUPP(QDGetPicProcPtr userRoutine) { return (QDGetPicUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDGetPicProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewQDGetPicUPP(userRoutine) (QDGetPicUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDGetPicProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppQDGetPicProcInfo = 0x000002C0 };  /* pascal no_return_value Func(4_bytes, 2_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(QDGetPicUPP) NewQDGetPicUPP(QDGetPicProcPtr userRoutine) { return (QDGetPicUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDGetPicProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewQDGetPicUPP(userRoutine) (QDGetPicUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDGetPicProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewQDPutPicUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -593,17 +593,17 @@ NewQDGetPicUPP(QDGetPicProcPtr userRoutine);
 EXTERN_API_C( QDPutPicUPP )
 NewQDPutPicUPP(QDPutPicProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppQDPutPicProcInfo = 0x000002C0 };  /* pascal no_return_value Func(4_bytes, 2_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(QDPutPicUPP) NewQDPutPicUPP(QDPutPicProcPtr userRoutine) { return (QDPutPicUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDPutPicProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewQDPutPicUPP(userRoutine) (QDPutPicUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDPutPicProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppQDPutPicProcInfo = 0x000002C0 };  /* pascal no_return_value Func(4_bytes, 2_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(QDPutPicUPP) NewQDPutPicUPP(QDPutPicProcPtr userRoutine) { return (QDPutPicUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDPutPicProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewQDPutPicUPP(userRoutine) (QDPutPicUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDPutPicProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewQDOpcodeUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -612,17 +612,17 @@ NewQDPutPicUPP(QDPutPicProcPtr userRoutine);
 EXTERN_API_C( QDOpcodeUPP )
 NewQDOpcodeUPP(QDOpcodeProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppQDOpcodeProcInfo = 0x00002BC0 };  /* pascal no_return_value Func(4_bytes, 4_bytes, 2_bytes, 2_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(QDOpcodeUPP) NewQDOpcodeUPP(QDOpcodeProcPtr userRoutine) { return (QDOpcodeUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDOpcodeProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewQDOpcodeUPP(userRoutine) (QDOpcodeUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDOpcodeProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppQDOpcodeProcInfo = 0x00002BC0 };  /* pascal no_return_value Func(4_bytes, 4_bytes, 2_bytes, 2_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(QDOpcodeUPP) NewQDOpcodeUPP(QDOpcodeProcPtr userRoutine) { return (QDOpcodeUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDOpcodeProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewQDOpcodeUPP(userRoutine) (QDOpcodeUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDOpcodeProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewQDStdGlyphsUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -631,17 +631,17 @@ NewQDOpcodeUPP(QDOpcodeProcPtr userRoutine);
 EXTERN_API_C( QDStdGlyphsUPP )
 NewQDStdGlyphsUPP(QDStdGlyphsProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppQDStdGlyphsProcInfo = 0x000003F1 };  /* 4_bytes Func(4_bytes, 4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(QDStdGlyphsUPP) NewQDStdGlyphsUPP(QDStdGlyphsProcPtr userRoutine) { return (QDStdGlyphsUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDStdGlyphsProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewQDStdGlyphsUPP(userRoutine) (QDStdGlyphsUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDStdGlyphsProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppQDStdGlyphsProcInfo = 0x000003F1 };  /* 4_bytes Func(4_bytes, 4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(QDStdGlyphsUPP) NewQDStdGlyphsUPP(QDStdGlyphsProcPtr userRoutine) { return (QDStdGlyphsUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDStdGlyphsProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewQDStdGlyphsUPP(userRoutine) (QDStdGlyphsUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDStdGlyphsProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewQDJShieldCursorUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -650,17 +650,17 @@ NewQDStdGlyphsUPP(QDStdGlyphsProcPtr userRoutine);
 EXTERN_API_C( QDJShieldCursorUPP )
 NewQDJShieldCursorUPP(QDJShieldCursorProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppQDJShieldCursorProcInfo = 0x00002A80 };  /* pascal no_return_value Func(2_bytes, 2_bytes, 2_bytes, 2_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(QDJShieldCursorUPP) NewQDJShieldCursorUPP(QDJShieldCursorProcPtr userRoutine) { return (QDJShieldCursorUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDJShieldCursorProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewQDJShieldCursorUPP(userRoutine) (QDJShieldCursorUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDJShieldCursorProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppQDJShieldCursorProcInfo = 0x00002A80 };  /* pascal no_return_value Func(2_bytes, 2_bytes, 2_bytes, 2_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(QDJShieldCursorUPP) NewQDJShieldCursorUPP(QDJShieldCursorProcPtr userRoutine) { return (QDJShieldCursorUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDJShieldCursorProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewQDJShieldCursorUPP(userRoutine) (QDJShieldCursorUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDJShieldCursorProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  DisposeQDTextUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -669,16 +669,16 @@ NewQDJShieldCursorUPP(QDJShieldCursorProcPtr userRoutine);
 EXTERN_API_C( void )
 DisposeQDTextUPP(QDTextUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeQDTextUPP(QDTextUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeQDTextUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeQDTextUPP(QDTextUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeQDTextUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeQDLineUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -687,16 +687,16 @@ DisposeQDTextUPP(QDTextUPP userUPP);
 EXTERN_API_C( void )
 DisposeQDLineUPP(QDLineUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeQDLineUPP(QDLineUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeQDLineUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeQDLineUPP(QDLineUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeQDLineUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeQDRectUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -705,16 +705,16 @@ DisposeQDLineUPP(QDLineUPP userUPP);
 EXTERN_API_C( void )
 DisposeQDRectUPP(QDRectUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeQDRectUPP(QDRectUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeQDRectUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeQDRectUPP(QDRectUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeQDRectUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeQDRRectUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -723,16 +723,16 @@ DisposeQDRectUPP(QDRectUPP userUPP);
 EXTERN_API_C( void )
 DisposeQDRRectUPP(QDRRectUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeQDRRectUPP(QDRRectUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeQDRRectUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeQDRRectUPP(QDRRectUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeQDRRectUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeQDOvalUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -741,16 +741,16 @@ DisposeQDRRectUPP(QDRRectUPP userUPP);
 EXTERN_API_C( void )
 DisposeQDOvalUPP(QDOvalUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeQDOvalUPP(QDOvalUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeQDOvalUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeQDOvalUPP(QDOvalUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeQDOvalUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeQDArcUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -759,16 +759,16 @@ DisposeQDOvalUPP(QDOvalUPP userUPP);
 EXTERN_API_C( void )
 DisposeQDArcUPP(QDArcUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeQDArcUPP(QDArcUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeQDArcUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeQDArcUPP(QDArcUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeQDArcUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeQDPolyUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -777,16 +777,16 @@ DisposeQDArcUPP(QDArcUPP userUPP);
 EXTERN_API_C( void )
 DisposeQDPolyUPP(QDPolyUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeQDPolyUPP(QDPolyUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeQDPolyUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeQDPolyUPP(QDPolyUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeQDPolyUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeQDRgnUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -795,16 +795,16 @@ DisposeQDPolyUPP(QDPolyUPP userUPP);
 EXTERN_API_C( void )
 DisposeQDRgnUPP(QDRgnUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeQDRgnUPP(QDRgnUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeQDRgnUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeQDRgnUPP(QDRgnUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeQDRgnUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeQDBitsUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -813,16 +813,16 @@ DisposeQDRgnUPP(QDRgnUPP userUPP);
 EXTERN_API_C( void )
 DisposeQDBitsUPP(QDBitsUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeQDBitsUPP(QDBitsUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeQDBitsUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeQDBitsUPP(QDBitsUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeQDBitsUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeQDCommentUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -831,16 +831,16 @@ DisposeQDBitsUPP(QDBitsUPP userUPP);
 EXTERN_API_C( void )
 DisposeQDCommentUPP(QDCommentUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeQDCommentUPP(QDCommentUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeQDCommentUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeQDCommentUPP(QDCommentUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeQDCommentUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeQDTxMeasUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -849,16 +849,16 @@ DisposeQDCommentUPP(QDCommentUPP userUPP);
 EXTERN_API_C( void )
 DisposeQDTxMeasUPP(QDTxMeasUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeQDTxMeasUPP(QDTxMeasUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeQDTxMeasUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeQDTxMeasUPP(QDTxMeasUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeQDTxMeasUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeQDGetPicUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -867,16 +867,16 @@ DisposeQDTxMeasUPP(QDTxMeasUPP userUPP);
 EXTERN_API_C( void )
 DisposeQDGetPicUPP(QDGetPicUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeQDGetPicUPP(QDGetPicUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeQDGetPicUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeQDGetPicUPP(QDGetPicUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeQDGetPicUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeQDPutPicUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -885,16 +885,16 @@ DisposeQDGetPicUPP(QDGetPicUPP userUPP);
 EXTERN_API_C( void )
 DisposeQDPutPicUPP(QDPutPicUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeQDPutPicUPP(QDPutPicUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeQDPutPicUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeQDPutPicUPP(QDPutPicUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeQDPutPicUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeQDOpcodeUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -903,16 +903,16 @@ DisposeQDPutPicUPP(QDPutPicUPP userUPP);
 EXTERN_API_C( void )
 DisposeQDOpcodeUPP(QDOpcodeUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeQDOpcodeUPP(QDOpcodeUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeQDOpcodeUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeQDOpcodeUPP(QDOpcodeUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeQDOpcodeUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeQDStdGlyphsUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -921,16 +921,16 @@ DisposeQDOpcodeUPP(QDOpcodeUPP userUPP);
 EXTERN_API_C( void )
 DisposeQDStdGlyphsUPP(QDStdGlyphsUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeQDStdGlyphsUPP(QDStdGlyphsUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeQDStdGlyphsUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeQDStdGlyphsUPP(QDStdGlyphsUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeQDStdGlyphsUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeQDJShieldCursorUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -939,16 +939,16 @@ DisposeQDStdGlyphsUPP(QDStdGlyphsUPP userUPP);
 EXTERN_API_C( void )
 DisposeQDJShieldCursorUPP(QDJShieldCursorUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeQDJShieldCursorUPP(QDJShieldCursorUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeQDJShieldCursorUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeQDJShieldCursorUPP(QDJShieldCursorUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeQDJShieldCursorUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  InvokeQDTextUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -956,22 +956,22 @@ DisposeQDJShieldCursorUPP(QDJShieldCursorUPP userUPP);
  */
 EXTERN_API_C( void )
 InvokeQDTextUPP(
-  short         byteCount,
-  const void *  textBuf,
-  Point         numer,
-  Point         denom,
-  QDTextUPP     userUPP);
+	short         byteCount,
+	const void *  textBuf,
+	Point         numer,
+	Point         denom,
+	QDTextUPP     userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeQDTextUPP(short byteCount, const void * textBuf, Point numer, Point denom, QDTextUPP userUPP) { CALL_FOUR_PARAMETER_UPP(userUPP, uppQDTextProcInfo, byteCount, textBuf, numer, denom); }
-  #else
-    #define InvokeQDTextUPP(byteCount, textBuf, numer, denom, userUPP) CALL_FOUR_PARAMETER_UPP((userUPP), uppQDTextProcInfo, (byteCount), (textBuf), (numer), (denom))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeQDTextUPP(short byteCount, const void * textBuf, Point numer, Point denom, QDTextUPP userUPP) { CALL_FOUR_PARAMETER_UPP(userUPP, uppQDTextProcInfo, byteCount, textBuf, numer, denom); }
+	#else
+		#define InvokeQDTextUPP(byteCount, textBuf, numer, denom, userUPP) CALL_FOUR_PARAMETER_UPP((userUPP), uppQDTextProcInfo, (byteCount), (textBuf), (numer), (denom))
+	#endif
 #endif
 
 /*
  *  InvokeQDLineUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -979,19 +979,19 @@ InvokeQDTextUPP(
  */
 EXTERN_API_C( void )
 InvokeQDLineUPP(
-  Point      newPt,
-  QDLineUPP  userUPP);
+	Point      newPt,
+	QDLineUPP  userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeQDLineUPP(Point newPt, QDLineUPP userUPP) { CALL_ONE_PARAMETER_UPP(userUPP, uppQDLineProcInfo, newPt); }
-  #else
-    #define InvokeQDLineUPP(newPt, userUPP) CALL_ONE_PARAMETER_UPP((userUPP), uppQDLineProcInfo, (newPt))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeQDLineUPP(Point newPt, QDLineUPP userUPP) { CALL_ONE_PARAMETER_UPP(userUPP, uppQDLineProcInfo, newPt); }
+	#else
+		#define InvokeQDLineUPP(newPt, userUPP) CALL_ONE_PARAMETER_UPP((userUPP), uppQDLineProcInfo, (newPt))
+	#endif
 #endif
 
 /*
  *  InvokeQDRectUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -999,20 +999,20 @@ InvokeQDLineUPP(
  */
 EXTERN_API_C( void )
 InvokeQDRectUPP(
-  GrafVerb      verb,
-  const Rect *  r,
-  QDRectUPP     userUPP);
+	GrafVerb      verb,
+	const Rect *  r,
+	QDRectUPP     userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeQDRectUPP(GrafVerb verb, const Rect * r, QDRectUPP userUPP) { CALL_TWO_PARAMETER_UPP(userUPP, uppQDRectProcInfo, verb, r); }
-  #else
-    #define InvokeQDRectUPP(verb, r, userUPP) CALL_TWO_PARAMETER_UPP((userUPP), uppQDRectProcInfo, (verb), (r))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeQDRectUPP(GrafVerb verb, const Rect * r, QDRectUPP userUPP) { CALL_TWO_PARAMETER_UPP(userUPP, uppQDRectProcInfo, verb, r); }
+	#else
+		#define InvokeQDRectUPP(verb, r, userUPP) CALL_TWO_PARAMETER_UPP((userUPP), uppQDRectProcInfo, (verb), (r))
+	#endif
 #endif
 
 /*
  *  InvokeQDRRectUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1020,22 +1020,22 @@ InvokeQDRectUPP(
  */
 EXTERN_API_C( void )
 InvokeQDRRectUPP(
-  GrafVerb      verb,
-  const Rect *  r,
-  short         ovalWidth,
-  short         ovalHeight,
-  QDRRectUPP    userUPP);
+	GrafVerb      verb,
+	const Rect *  r,
+	short         ovalWidth,
+	short         ovalHeight,
+	QDRRectUPP    userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeQDRRectUPP(GrafVerb verb, const Rect * r, short ovalWidth, short ovalHeight, QDRRectUPP userUPP) { CALL_FOUR_PARAMETER_UPP(userUPP, uppQDRRectProcInfo, verb, r, ovalWidth, ovalHeight); }
-  #else
-    #define InvokeQDRRectUPP(verb, r, ovalWidth, ovalHeight, userUPP) CALL_FOUR_PARAMETER_UPP((userUPP), uppQDRRectProcInfo, (verb), (r), (ovalWidth), (ovalHeight))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeQDRRectUPP(GrafVerb verb, const Rect * r, short ovalWidth, short ovalHeight, QDRRectUPP userUPP) { CALL_FOUR_PARAMETER_UPP(userUPP, uppQDRRectProcInfo, verb, r, ovalWidth, ovalHeight); }
+	#else
+		#define InvokeQDRRectUPP(verb, r, ovalWidth, ovalHeight, userUPP) CALL_FOUR_PARAMETER_UPP((userUPP), uppQDRRectProcInfo, (verb), (r), (ovalWidth), (ovalHeight))
+	#endif
 #endif
 
 /*
  *  InvokeQDOvalUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1043,20 +1043,20 @@ InvokeQDRRectUPP(
  */
 EXTERN_API_C( void )
 InvokeQDOvalUPP(
-  GrafVerb      verb,
-  const Rect *  r,
-  QDOvalUPP     userUPP);
+	GrafVerb      verb,
+	const Rect *  r,
+	QDOvalUPP     userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeQDOvalUPP(GrafVerb verb, const Rect * r, QDOvalUPP userUPP) { CALL_TWO_PARAMETER_UPP(userUPP, uppQDOvalProcInfo, verb, r); }
-  #else
-    #define InvokeQDOvalUPP(verb, r, userUPP) CALL_TWO_PARAMETER_UPP((userUPP), uppQDOvalProcInfo, (verb), (r))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeQDOvalUPP(GrafVerb verb, const Rect * r, QDOvalUPP userUPP) { CALL_TWO_PARAMETER_UPP(userUPP, uppQDOvalProcInfo, verb, r); }
+	#else
+		#define InvokeQDOvalUPP(verb, r, userUPP) CALL_TWO_PARAMETER_UPP((userUPP), uppQDOvalProcInfo, (verb), (r))
+	#endif
 #endif
 
 /*
  *  InvokeQDArcUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1064,22 +1064,22 @@ InvokeQDOvalUPP(
  */
 EXTERN_API_C( void )
 InvokeQDArcUPP(
-  GrafVerb      verb,
-  const Rect *  r,
-  short         startAngle,
-  short         arcAngle,
-  QDArcUPP      userUPP);
+	GrafVerb      verb,
+	const Rect *  r,
+	short         startAngle,
+	short         arcAngle,
+	QDArcUPP      userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeQDArcUPP(GrafVerb verb, const Rect * r, short startAngle, short arcAngle, QDArcUPP userUPP) { CALL_FOUR_PARAMETER_UPP(userUPP, uppQDArcProcInfo, verb, r, startAngle, arcAngle); }
-  #else
-    #define InvokeQDArcUPP(verb, r, startAngle, arcAngle, userUPP) CALL_FOUR_PARAMETER_UPP((userUPP), uppQDArcProcInfo, (verb), (r), (startAngle), (arcAngle))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeQDArcUPP(GrafVerb verb, const Rect * r, short startAngle, short arcAngle, QDArcUPP userUPP) { CALL_FOUR_PARAMETER_UPP(userUPP, uppQDArcProcInfo, verb, r, startAngle, arcAngle); }
+	#else
+		#define InvokeQDArcUPP(verb, r, startAngle, arcAngle, userUPP) CALL_FOUR_PARAMETER_UPP((userUPP), uppQDArcProcInfo, (verb), (r), (startAngle), (arcAngle))
+	#endif
 #endif
 
 /*
  *  InvokeQDPolyUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1087,20 +1087,20 @@ InvokeQDArcUPP(
  */
 EXTERN_API_C( void )
 InvokeQDPolyUPP(
-  GrafVerb    verb,
-  PolyHandle  poly,
-  QDPolyUPP   userUPP);
+	GrafVerb    verb,
+	PolyHandle  poly,
+	QDPolyUPP   userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeQDPolyUPP(GrafVerb verb, PolyHandle poly, QDPolyUPP userUPP) { CALL_TWO_PARAMETER_UPP(userUPP, uppQDPolyProcInfo, verb, poly); }
-  #else
-    #define InvokeQDPolyUPP(verb, poly, userUPP) CALL_TWO_PARAMETER_UPP((userUPP), uppQDPolyProcInfo, (verb), (poly))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeQDPolyUPP(GrafVerb verb, PolyHandle poly, QDPolyUPP userUPP) { CALL_TWO_PARAMETER_UPP(userUPP, uppQDPolyProcInfo, verb, poly); }
+	#else
+		#define InvokeQDPolyUPP(verb, poly, userUPP) CALL_TWO_PARAMETER_UPP((userUPP), uppQDPolyProcInfo, (verb), (poly))
+	#endif
 #endif
 
 /*
  *  InvokeQDRgnUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1108,20 +1108,20 @@ InvokeQDPolyUPP(
  */
 EXTERN_API_C( void )
 InvokeQDRgnUPP(
-  GrafVerb   verb,
-  RgnHandle  rgn,
-  QDRgnUPP   userUPP);
+	GrafVerb   verb,
+	RgnHandle  rgn,
+	QDRgnUPP   userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeQDRgnUPP(GrafVerb verb, RgnHandle rgn, QDRgnUPP userUPP) { CALL_TWO_PARAMETER_UPP(userUPP, uppQDRgnProcInfo, verb, rgn); }
-  #else
-    #define InvokeQDRgnUPP(verb, rgn, userUPP) CALL_TWO_PARAMETER_UPP((userUPP), uppQDRgnProcInfo, (verb), (rgn))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeQDRgnUPP(GrafVerb verb, RgnHandle rgn, QDRgnUPP userUPP) { CALL_TWO_PARAMETER_UPP(userUPP, uppQDRgnProcInfo, verb, rgn); }
+	#else
+		#define InvokeQDRgnUPP(verb, rgn, userUPP) CALL_TWO_PARAMETER_UPP((userUPP), uppQDRgnProcInfo, (verb), (rgn))
+	#endif
 #endif
 
 /*
  *  InvokeQDBitsUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1129,23 +1129,23 @@ InvokeQDRgnUPP(
  */
 EXTERN_API_C( void )
 InvokeQDBitsUPP(
-  const BitMap *  srcBits,
-  const Rect *    srcRect,
-  const Rect *    dstRect,
-  short           mode,
-  RgnHandle       maskRgn,
-  QDBitsUPP       userUPP);
+	const BitMap *  srcBits,
+	const Rect *    srcRect,
+	const Rect *    dstRect,
+	short           mode,
+	RgnHandle       maskRgn,
+	QDBitsUPP       userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeQDBitsUPP(const BitMap * srcBits, const Rect * srcRect, const Rect * dstRect, short mode, RgnHandle maskRgn, QDBitsUPP userUPP) { CALL_FIVE_PARAMETER_UPP(userUPP, uppQDBitsProcInfo, srcBits, srcRect, dstRect, mode, maskRgn); }
-  #else
-    #define InvokeQDBitsUPP(srcBits, srcRect, dstRect, mode, maskRgn, userUPP) CALL_FIVE_PARAMETER_UPP((userUPP), uppQDBitsProcInfo, (srcBits), (srcRect), (dstRect), (mode), (maskRgn))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeQDBitsUPP(const BitMap * srcBits, const Rect * srcRect, const Rect * dstRect, short mode, RgnHandle maskRgn, QDBitsUPP userUPP) { CALL_FIVE_PARAMETER_UPP(userUPP, uppQDBitsProcInfo, srcBits, srcRect, dstRect, mode, maskRgn); }
+	#else
+		#define InvokeQDBitsUPP(srcBits, srcRect, dstRect, mode, maskRgn, userUPP) CALL_FIVE_PARAMETER_UPP((userUPP), uppQDBitsProcInfo, (srcBits), (srcRect), (dstRect), (mode), (maskRgn))
+	#endif
 #endif
 
 /*
  *  InvokeQDCommentUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1153,21 +1153,21 @@ InvokeQDBitsUPP(
  */
 EXTERN_API_C( void )
 InvokeQDCommentUPP(
-  short         kind,
-  short         dataSize,
-  Handle        dataHandle,
-  QDCommentUPP  userUPP);
+	short         kind,
+	short         dataSize,
+	Handle        dataHandle,
+	QDCommentUPP  userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeQDCommentUPP(short kind, short dataSize, Handle dataHandle, QDCommentUPP userUPP) { CALL_THREE_PARAMETER_UPP(userUPP, uppQDCommentProcInfo, kind, dataSize, dataHandle); }
-  #else
-    #define InvokeQDCommentUPP(kind, dataSize, dataHandle, userUPP) CALL_THREE_PARAMETER_UPP((userUPP), uppQDCommentProcInfo, (kind), (dataSize), (dataHandle))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeQDCommentUPP(short kind, short dataSize, Handle dataHandle, QDCommentUPP userUPP) { CALL_THREE_PARAMETER_UPP(userUPP, uppQDCommentProcInfo, kind, dataSize, dataHandle); }
+	#else
+		#define InvokeQDCommentUPP(kind, dataSize, dataHandle, userUPP) CALL_THREE_PARAMETER_UPP((userUPP), uppQDCommentProcInfo, (kind), (dataSize), (dataHandle))
+	#endif
 #endif
 
 /*
  *  InvokeQDTxMeasUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1175,23 +1175,23 @@ InvokeQDCommentUPP(
  */
 EXTERN_API_C( short )
 InvokeQDTxMeasUPP(
-  short         byteCount,
-  const void *  textAddr,
-  Point *       numer,
-  Point *       denom,
-  FontInfo *    info,
-  QDTxMeasUPP   userUPP);
+	short         byteCount,
+	const void *  textAddr,
+	Point *       numer,
+	Point *       denom,
+	FontInfo *    info,
+	QDTxMeasUPP   userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(short) InvokeQDTxMeasUPP(short byteCount, const void * textAddr, Point * numer, Point * denom, FontInfo * info, QDTxMeasUPP userUPP) { return (short)CALL_FIVE_PARAMETER_UPP(userUPP, uppQDTxMeasProcInfo, byteCount, textAddr, numer, denom, info); }
-  #else
-    #define InvokeQDTxMeasUPP(byteCount, textAddr, numer, denom, info, userUPP) (short)CALL_FIVE_PARAMETER_UPP((userUPP), uppQDTxMeasProcInfo, (byteCount), (textAddr), (numer), (denom), (info))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(short) InvokeQDTxMeasUPP(short byteCount, const void * textAddr, Point * numer, Point * denom, FontInfo * info, QDTxMeasUPP userUPP) { return (short)CALL_FIVE_PARAMETER_UPP(userUPP, uppQDTxMeasProcInfo, byteCount, textAddr, numer, denom, info); }
+	#else
+		#define InvokeQDTxMeasUPP(byteCount, textAddr, numer, denom, info, userUPP) (short)CALL_FIVE_PARAMETER_UPP((userUPP), uppQDTxMeasProcInfo, (byteCount), (textAddr), (numer), (denom), (info))
+	#endif
 #endif
 
 /*
  *  InvokeQDGetPicUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1199,20 +1199,20 @@ InvokeQDTxMeasUPP(
  */
 EXTERN_API_C( void )
 InvokeQDGetPicUPP(
-  void *       dataPtr,
-  short        byteCount,
-  QDGetPicUPP  userUPP);
+	void *       dataPtr,
+	short        byteCount,
+	QDGetPicUPP  userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeQDGetPicUPP(void * dataPtr, short byteCount, QDGetPicUPP userUPP) { CALL_TWO_PARAMETER_UPP(userUPP, uppQDGetPicProcInfo, dataPtr, byteCount); }
-  #else
-    #define InvokeQDGetPicUPP(dataPtr, byteCount, userUPP) CALL_TWO_PARAMETER_UPP((userUPP), uppQDGetPicProcInfo, (dataPtr), (byteCount))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeQDGetPicUPP(void * dataPtr, short byteCount, QDGetPicUPP userUPP) { CALL_TWO_PARAMETER_UPP(userUPP, uppQDGetPicProcInfo, dataPtr, byteCount); }
+	#else
+		#define InvokeQDGetPicUPP(dataPtr, byteCount, userUPP) CALL_TWO_PARAMETER_UPP((userUPP), uppQDGetPicProcInfo, (dataPtr), (byteCount))
+	#endif
 #endif
 
 /*
  *  InvokeQDPutPicUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1220,20 +1220,20 @@ InvokeQDGetPicUPP(
  */
 EXTERN_API_C( void )
 InvokeQDPutPicUPP(
-  const void *  dataPtr,
-  short         byteCount,
-  QDPutPicUPP   userUPP);
+	const void *  dataPtr,
+	short         byteCount,
+	QDPutPicUPP   userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeQDPutPicUPP(const void * dataPtr, short byteCount, QDPutPicUPP userUPP) { CALL_TWO_PARAMETER_UPP(userUPP, uppQDPutPicProcInfo, dataPtr, byteCount); }
-  #else
-    #define InvokeQDPutPicUPP(dataPtr, byteCount, userUPP) CALL_TWO_PARAMETER_UPP((userUPP), uppQDPutPicProcInfo, (dataPtr), (byteCount))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeQDPutPicUPP(const void * dataPtr, short byteCount, QDPutPicUPP userUPP) { CALL_TWO_PARAMETER_UPP(userUPP, uppQDPutPicProcInfo, dataPtr, byteCount); }
+	#else
+		#define InvokeQDPutPicUPP(dataPtr, byteCount, userUPP) CALL_TWO_PARAMETER_UPP((userUPP), uppQDPutPicProcInfo, (dataPtr), (byteCount))
+	#endif
 #endif
 
 /*
  *  InvokeQDOpcodeUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1241,22 +1241,22 @@ InvokeQDPutPicUPP(
  */
 EXTERN_API_C( void )
 InvokeQDOpcodeUPP(
-  const Rect *  fromRect,
-  const Rect *  toRect,
-  UInt16        opcode,
-  SInt16        version,
-  QDOpcodeUPP   userUPP);
+	const Rect *  fromRect,
+	const Rect *  toRect,
+	UInt16        opcode,
+	SInt16        version,
+	QDOpcodeUPP   userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeQDOpcodeUPP(const Rect * fromRect, const Rect * toRect, UInt16 opcode, SInt16 version, QDOpcodeUPP userUPP) { CALL_FOUR_PARAMETER_UPP(userUPP, uppQDOpcodeProcInfo, fromRect, toRect, opcode, version); }
-  #else
-    #define InvokeQDOpcodeUPP(fromRect, toRect, opcode, version, userUPP) CALL_FOUR_PARAMETER_UPP((userUPP), uppQDOpcodeProcInfo, (fromRect), (toRect), (opcode), (version))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeQDOpcodeUPP(const Rect * fromRect, const Rect * toRect, UInt16 opcode, SInt16 version, QDOpcodeUPP userUPP) { CALL_FOUR_PARAMETER_UPP(userUPP, uppQDOpcodeProcInfo, fromRect, toRect, opcode, version); }
+	#else
+		#define InvokeQDOpcodeUPP(fromRect, toRect, opcode, version, userUPP) CALL_FOUR_PARAMETER_UPP((userUPP), uppQDOpcodeProcInfo, (fromRect), (toRect), (opcode), (version))
+	#endif
 #endif
 
 /*
  *  InvokeQDStdGlyphsUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1264,20 +1264,20 @@ InvokeQDOpcodeUPP(
  */
 EXTERN_API_C( OSStatus )
 InvokeQDStdGlyphsUPP(
-  void *          dataStream,
-  ByteCount       size,
-  QDStdGlyphsUPP  userUPP);
+	void *          dataStream,
+	ByteCount       size,
+	QDStdGlyphsUPP  userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(OSStatus) InvokeQDStdGlyphsUPP(void * dataStream, ByteCount size, QDStdGlyphsUPP userUPP) { return (OSStatus)CALL_TWO_PARAMETER_UPP(userUPP, uppQDStdGlyphsProcInfo, dataStream, size); }
-  #else
-    #define InvokeQDStdGlyphsUPP(dataStream, size, userUPP) (OSStatus)CALL_TWO_PARAMETER_UPP((userUPP), uppQDStdGlyphsProcInfo, (dataStream), (size))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(OSStatus) InvokeQDStdGlyphsUPP(void * dataStream, ByteCount size, QDStdGlyphsUPP userUPP) { return (OSStatus)CALL_TWO_PARAMETER_UPP(userUPP, uppQDStdGlyphsProcInfo, dataStream, size); }
+	#else
+		#define InvokeQDStdGlyphsUPP(dataStream, size, userUPP) (OSStatus)CALL_TWO_PARAMETER_UPP((userUPP), uppQDStdGlyphsProcInfo, (dataStream), (size))
+	#endif
 #endif
 
 /*
  *  InvokeQDJShieldCursorUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1285,83 +1285,83 @@ InvokeQDStdGlyphsUPP(
  */
 EXTERN_API_C( void )
 InvokeQDJShieldCursorUPP(
-  short               left,
-  short               top,
-  short               right,
-  short               bottom,
-  QDJShieldCursorUPP  userUPP);
+	short               left,
+	short               top,
+	short               right,
+	short               bottom,
+	QDJShieldCursorUPP  userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeQDJShieldCursorUPP(short left, short top, short right, short bottom, QDJShieldCursorUPP userUPP) { CALL_FOUR_PARAMETER_UPP(userUPP, uppQDJShieldCursorProcInfo, left, top, right, bottom); }
-  #else
-    #define InvokeQDJShieldCursorUPP(left, top, right, bottom, userUPP) CALL_FOUR_PARAMETER_UPP((userUPP), uppQDJShieldCursorProcInfo, (left), (top), (right), (bottom))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeQDJShieldCursorUPP(short left, short top, short right, short bottom, QDJShieldCursorUPP userUPP) { CALL_FOUR_PARAMETER_UPP(userUPP, uppQDJShieldCursorProcInfo, left, top, right, bottom); }
+	#else
+		#define InvokeQDJShieldCursorUPP(left, top, right, bottom, userUPP) CALL_FOUR_PARAMETER_UPP((userUPP), uppQDJShieldCursorProcInfo, (left), (top), (right), (bottom))
+	#endif
 #endif
 
 #if CALL_NOT_IN_CARBON || OLDROUTINENAMES
-    /* support for pre-Carbon UPP routines: New...Proc and Call...Proc */
-    #define NewQDTextProc(userRoutine)                          NewQDTextUPP(userRoutine)
-    #define NewQDLineProc(userRoutine)                          NewQDLineUPP(userRoutine)
-    #define NewQDRectProc(userRoutine)                          NewQDRectUPP(userRoutine)
-    #define NewQDRRectProc(userRoutine)                         NewQDRRectUPP(userRoutine)
-    #define NewQDOvalProc(userRoutine)                          NewQDOvalUPP(userRoutine)
-    #define NewQDArcProc(userRoutine)                           NewQDArcUPP(userRoutine)
-    #define NewQDPolyProc(userRoutine)                          NewQDPolyUPP(userRoutine)
-    #define NewQDRgnProc(userRoutine)                           NewQDRgnUPP(userRoutine)
-    #define NewQDBitsProc(userRoutine)                          NewQDBitsUPP(userRoutine)
-    #define NewQDCommentProc(userRoutine)                       NewQDCommentUPP(userRoutine)
-    #define NewQDTxMeasProc(userRoutine)                        NewQDTxMeasUPP(userRoutine)
-    #define NewQDGetPicProc(userRoutine)                        NewQDGetPicUPP(userRoutine)
-    #define NewQDPutPicProc(userRoutine)                        NewQDPutPicUPP(userRoutine)
-    #define NewQDOpcodeProc(userRoutine)                        NewQDOpcodeUPP(userRoutine)
-    #define NewQDStdGlyphsProc(userRoutine)                     NewQDStdGlyphsUPP(userRoutine)
-    #define NewQDJShieldCursorProc(userRoutine)                 NewQDJShieldCursorUPP(userRoutine)
-    #define CallQDTextProc(userRoutine, byteCount, textBuf, numer, denom) InvokeQDTextUPP(byteCount, textBuf, numer, denom, userRoutine)
-    #define CallQDLineProc(userRoutine, newPt)                  InvokeQDLineUPP(newPt, userRoutine)
-    #define CallQDRectProc(userRoutine, verb, r)                InvokeQDRectUPP(verb, r, userRoutine)
-    #define CallQDRRectProc(userRoutine, verb, r, ovalWidth, ovalHeight) InvokeQDRRectUPP(verb, r, ovalWidth, ovalHeight, userRoutine)
-    #define CallQDOvalProc(userRoutine, verb, r)                InvokeQDOvalUPP(verb, r, userRoutine)
-    #define CallQDArcProc(userRoutine, verb, r, startAngle, arcAngle) InvokeQDArcUPP(verb, r, startAngle, arcAngle, userRoutine)
-    #define CallQDPolyProc(userRoutine, verb, poly)             InvokeQDPolyUPP(verb, poly, userRoutine)
-    #define CallQDRgnProc(userRoutine, verb, rgn)               InvokeQDRgnUPP(verb, rgn, userRoutine)
-    #define CallQDBitsProc(userRoutine, srcBits, srcRect, dstRect, mode, maskRgn) InvokeQDBitsUPP(srcBits, srcRect, dstRect, mode, maskRgn, userRoutine)
-    #define CallQDCommentProc(userRoutine, kind, dataSize, dataHandle) InvokeQDCommentUPP(kind, dataSize, dataHandle, userRoutine)
-    #define CallQDTxMeasProc(userRoutine, byteCount, textAddr, numer, denom, info) InvokeQDTxMeasUPP(byteCount, textAddr, numer, denom, info, userRoutine)
-    #define CallQDGetPicProc(userRoutine, dataPtr, byteCount)   InvokeQDGetPicUPP(dataPtr, byteCount, userRoutine)
-    #define CallQDPutPicProc(userRoutine, dataPtr, byteCount)   InvokeQDPutPicUPP(dataPtr, byteCount, userRoutine)
-    #define CallQDOpcodeProc(userRoutine, fromRect, toRect, opcode, version) InvokeQDOpcodeUPP(fromRect, toRect, opcode, version, userRoutine)
-    #define CallQDStdGlyphsProc(userRoutine, dataStream, size)  InvokeQDStdGlyphsUPP(dataStream, size, userRoutine)
-    #define CallQDJShieldCursorProc(userRoutine, left, top, right, bottom) InvokeQDJShieldCursorUPP(left, top, right, bottom, userRoutine)
+		/* support for pre-Carbon UPP routines: New...Proc and Call...Proc */
+		#define NewQDTextProc(userRoutine)                          NewQDTextUPP(userRoutine)
+		#define NewQDLineProc(userRoutine)                          NewQDLineUPP(userRoutine)
+		#define NewQDRectProc(userRoutine)                          NewQDRectUPP(userRoutine)
+		#define NewQDRRectProc(userRoutine)                         NewQDRRectUPP(userRoutine)
+		#define NewQDOvalProc(userRoutine)                          NewQDOvalUPP(userRoutine)
+		#define NewQDArcProc(userRoutine)                           NewQDArcUPP(userRoutine)
+		#define NewQDPolyProc(userRoutine)                          NewQDPolyUPP(userRoutine)
+		#define NewQDRgnProc(userRoutine)                           NewQDRgnUPP(userRoutine)
+		#define NewQDBitsProc(userRoutine)                          NewQDBitsUPP(userRoutine)
+		#define NewQDCommentProc(userRoutine)                       NewQDCommentUPP(userRoutine)
+		#define NewQDTxMeasProc(userRoutine)                        NewQDTxMeasUPP(userRoutine)
+		#define NewQDGetPicProc(userRoutine)                        NewQDGetPicUPP(userRoutine)
+		#define NewQDPutPicProc(userRoutine)                        NewQDPutPicUPP(userRoutine)
+		#define NewQDOpcodeProc(userRoutine)                        NewQDOpcodeUPP(userRoutine)
+		#define NewQDStdGlyphsProc(userRoutine)                     NewQDStdGlyphsUPP(userRoutine)
+		#define NewQDJShieldCursorProc(userRoutine)                 NewQDJShieldCursorUPP(userRoutine)
+		#define CallQDTextProc(userRoutine, byteCount, textBuf, numer, denom) InvokeQDTextUPP(byteCount, textBuf, numer, denom, userRoutine)
+		#define CallQDLineProc(userRoutine, newPt)                  InvokeQDLineUPP(newPt, userRoutine)
+		#define CallQDRectProc(userRoutine, verb, r)                InvokeQDRectUPP(verb, r, userRoutine)
+		#define CallQDRRectProc(userRoutine, verb, r, ovalWidth, ovalHeight) InvokeQDRRectUPP(verb, r, ovalWidth, ovalHeight, userRoutine)
+		#define CallQDOvalProc(userRoutine, verb, r)                InvokeQDOvalUPP(verb, r, userRoutine)
+		#define CallQDArcProc(userRoutine, verb, r, startAngle, arcAngle) InvokeQDArcUPP(verb, r, startAngle, arcAngle, userRoutine)
+		#define CallQDPolyProc(userRoutine, verb, poly)             InvokeQDPolyUPP(verb, poly, userRoutine)
+		#define CallQDRgnProc(userRoutine, verb, rgn)               InvokeQDRgnUPP(verb, rgn, userRoutine)
+		#define CallQDBitsProc(userRoutine, srcBits, srcRect, dstRect, mode, maskRgn) InvokeQDBitsUPP(srcBits, srcRect, dstRect, mode, maskRgn, userRoutine)
+		#define CallQDCommentProc(userRoutine, kind, dataSize, dataHandle) InvokeQDCommentUPP(kind, dataSize, dataHandle, userRoutine)
+		#define CallQDTxMeasProc(userRoutine, byteCount, textAddr, numer, denom, info) InvokeQDTxMeasUPP(byteCount, textAddr, numer, denom, info, userRoutine)
+		#define CallQDGetPicProc(userRoutine, dataPtr, byteCount)   InvokeQDGetPicUPP(dataPtr, byteCount, userRoutine)
+		#define CallQDPutPicProc(userRoutine, dataPtr, byteCount)   InvokeQDPutPicUPP(dataPtr, byteCount, userRoutine)
+		#define CallQDOpcodeProc(userRoutine, fromRect, toRect, opcode, version) InvokeQDOpcodeUPP(fromRect, toRect, opcode, version, userRoutine)
+		#define CallQDStdGlyphsProc(userRoutine, dataStream, size)  InvokeQDStdGlyphsUPP(dataStream, size, userRoutine)
+		#define CallQDJShieldCursorProc(userRoutine, left, top, right, bottom) InvokeQDJShieldCursorUPP(left, top, right, bottom, userRoutine)
 #endif /* CALL_NOT_IN_CARBON */
 
 #if !OPAQUE_TOOLBOX_STRUCTS
 struct GrafPort {
-  short               device;                 /* not available in Carbon*/
-  BitMap              portBits;               /* in Carbon use GetPortBitMapForCopyBits or IsPortColor*/
-  Rect                portRect;               /* in Carbon use Get/SetPortBounds*/
-  RgnHandle           visRgn;                 /* in Carbon use Get/SetPortVisibleRegion*/
-  RgnHandle           clipRgn;                /* in Carbon use Get/SetPortClipRegion*/
-  Pattern             bkPat;                  /* not available in Carbon all GrafPorts are CGrafPorts*/
-  Pattern             fillPat;                /* not available in Carbon all GrafPorts are CGrafPorts*/
-  Point               pnLoc;                  /* in Carbon use GetPortPenLocation or MoveTo*/
-  Point               pnSize;                 /* in Carbon use Get/SetPortPenSize*/
-  short               pnMode;                 /* in Carbon use Get/SetPortPenMode*/
-  Pattern             pnPat;                  /* not available in Carbon all GrafPorts are CGrafPorts*/
-  short               pnVis;                  /* in Carbon use GetPortPenVisibility or Show/HidePen*/
-  short               txFont;                 /* in Carbon use GetPortTextFont or TextFont*/
-  StyleField          txFace;                 /* in Carbon use GetPortTextFace or TextFace*/
-                                              /*StyleField occupies 16-bits, but only first 8-bits are used*/
-  short               txMode;                 /* in Carbon use GetPortTextMode or TextMode*/
-  short               txSize;                 /* in Carbon use GetPortTextSize or TextSize*/
-  Fixed               spExtra;                /* in Carbon use GetPortSpExtra or SpaceExtra*/
-  long                fgColor;                /* not available in Carbon */
-  long                bkColor;                /* not available in Carbon*/
-  short               colrBit;                /* not available in Carbon*/
-  short               patStretch;             /* not available in Carbon*/
-  Handle              picSave;                /* in Carbon use IsPortPictureBeingDefined*/
-  Handle              rgnSave;                /* not available in Carbon*/
-  Handle              polySave;               /* not available in Carbon*/
-  QDProcsPtr          grafProcs;              /* not available in Carbon all GrafPorts are CGrafPorts*/
+	short               device;                 /* not available in Carbon*/
+	BitMap              portBits;               /* in Carbon use GetPortBitMapForCopyBits or IsPortColor*/
+	Rect                portRect;               /* in Carbon use Get/SetPortBounds*/
+	RgnHandle           visRgn;                 /* in Carbon use Get/SetPortVisibleRegion*/
+	RgnHandle           clipRgn;                /* in Carbon use Get/SetPortClipRegion*/
+	Pattern             bkPat;                  /* not available in Carbon all GrafPorts are CGrafPorts*/
+	Pattern             fillPat;                /* not available in Carbon all GrafPorts are CGrafPorts*/
+	Point               pnLoc;                  /* in Carbon use GetPortPenLocation or MoveTo*/
+	Point               pnSize;                 /* in Carbon use Get/SetPortPenSize*/
+	short               pnMode;                 /* in Carbon use Get/SetPortPenMode*/
+	Pattern             pnPat;                  /* not available in Carbon all GrafPorts are CGrafPorts*/
+	short               pnVis;                  /* in Carbon use GetPortPenVisibility or Show/HidePen*/
+	short               txFont;                 /* in Carbon use GetPortTextFont or TextFont*/
+	StyleField          txFace;                 /* in Carbon use GetPortTextFace or TextFace*/
+																							/*StyleField occupies 16-bits, but only first 8-bits are used*/
+	short               txMode;                 /* in Carbon use GetPortTextMode or TextMode*/
+	short               txSize;                 /* in Carbon use GetPortTextSize or TextSize*/
+	Fixed               spExtra;                /* in Carbon use GetPortSpExtra or SpaceExtra*/
+	long                fgColor;                /* not available in Carbon */
+	long                bkColor;                /* not available in Carbon*/
+	short               colrBit;                /* not available in Carbon*/
+	short               patStretch;             /* not available in Carbon*/
+	Handle              picSave;                /* in Carbon use IsPortPictureBeingDefined*/
+	Handle              rgnSave;                /* not available in Carbon*/
+	Handle              polySave;               /* not available in Carbon*/
+	QDProcsPtr          grafProcs;              /* not available in Carbon all GrafPorts are CGrafPorts*/
 };
 typedef struct GrafPort                 GrafPort;
 typedef GrafPort *                      GrafPtr;
@@ -1383,9 +1383,9 @@ typedef WindowPtr                       WindowRef;
 /* DragConstraint constants to pass to DragGray,DragTheRgn, or ConstrainedDragRgn*/
 typedef UInt16                          DragConstraint;
 enum {
-  kNoConstraint                 = 0,
-  kVerticalConstraint           = 1,
-  kHorizontalConstraint         = 2
+	kNoConstraint                 = 0,
+	kVerticalConstraint           = 1,
+	kHorizontalConstraint         = 2
 };
 
 
@@ -1396,9 +1396,9 @@ typedef CALLBACK_API( void , DragGrayRgnProcPtr )(void);
 
 
 struct RGBColor {
-  unsigned short      red;                    /*magnitude of red component*/
-  unsigned short      green;                  /*magnitude of green component*/
-  unsigned short      blue;                   /*magnitude of blue component*/
+	unsigned short      red;                    /*magnitude of red component*/
+	unsigned short      green;                  /*magnitude of green component*/
+	unsigned short      blue;                   /*magnitude of blue component*/
 };
 typedef struct RGBColor                 RGBColor;
 typedef RGBColor *                      RGBColorPtr;
@@ -1410,7 +1410,7 @@ typedef STACK_UPP_TYPE(ColorSearchProcPtr)                      ColorSearchUPP;
 typedef STACK_UPP_TYPE(ColorComplementProcPtr)                  ColorComplementUPP;
 /*
  *  NewDragGrayRgnUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1419,17 +1419,17 @@ typedef STACK_UPP_TYPE(ColorComplementProcPtr)                  ColorComplementU
 EXTERN_API_C( DragGrayRgnUPP )
 NewDragGrayRgnUPP(DragGrayRgnProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppDragGrayRgnProcInfo = 0x00000000 };  /* pascal no_return_value Func() */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(DragGrayRgnUPP) NewDragGrayRgnUPP(DragGrayRgnProcPtr userRoutine) { return (DragGrayRgnUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppDragGrayRgnProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewDragGrayRgnUPP(userRoutine) (DragGrayRgnUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppDragGrayRgnProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppDragGrayRgnProcInfo = 0x00000000 };  /* pascal no_return_value Func() */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(DragGrayRgnUPP) NewDragGrayRgnUPP(DragGrayRgnProcPtr userRoutine) { return (DragGrayRgnUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppDragGrayRgnProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewDragGrayRgnUPP(userRoutine) (DragGrayRgnUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppDragGrayRgnProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewColorSearchUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1438,17 +1438,17 @@ NewDragGrayRgnUPP(DragGrayRgnProcPtr userRoutine);
 EXTERN_API_C( ColorSearchUPP )
 NewColorSearchUPP(ColorSearchProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppColorSearchProcInfo = 0x000003D0 };  /* pascal 1_byte Func(4_bytes, 4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(ColorSearchUPP) NewColorSearchUPP(ColorSearchProcPtr userRoutine) { return (ColorSearchUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppColorSearchProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewColorSearchUPP(userRoutine) (ColorSearchUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppColorSearchProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppColorSearchProcInfo = 0x000003D0 };  /* pascal 1_byte Func(4_bytes, 4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(ColorSearchUPP) NewColorSearchUPP(ColorSearchProcPtr userRoutine) { return (ColorSearchUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppColorSearchProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewColorSearchUPP(userRoutine) (ColorSearchUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppColorSearchProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewColorComplementUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1457,17 +1457,17 @@ NewColorSearchUPP(ColorSearchProcPtr userRoutine);
 EXTERN_API_C( ColorComplementUPP )
 NewColorComplementUPP(ColorComplementProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppColorComplementProcInfo = 0x000000D0 };  /* pascal 1_byte Func(4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(ColorComplementUPP) NewColorComplementUPP(ColorComplementProcPtr userRoutine) { return (ColorComplementUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppColorComplementProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewColorComplementUPP(userRoutine) (ColorComplementUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppColorComplementProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppColorComplementProcInfo = 0x000000D0 };  /* pascal 1_byte Func(4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(ColorComplementUPP) NewColorComplementUPP(ColorComplementProcPtr userRoutine) { return (ColorComplementUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppColorComplementProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewColorComplementUPP(userRoutine) (ColorComplementUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppColorComplementProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  DisposeDragGrayRgnUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1476,16 +1476,16 @@ NewColorComplementUPP(ColorComplementProcPtr userRoutine);
 EXTERN_API_C( void )
 DisposeDragGrayRgnUPP(DragGrayRgnUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeDragGrayRgnUPP(DragGrayRgnUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeDragGrayRgnUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeDragGrayRgnUPP(DragGrayRgnUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeDragGrayRgnUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeColorSearchUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1494,16 +1494,16 @@ DisposeDragGrayRgnUPP(DragGrayRgnUPP userUPP);
 EXTERN_API_C( void )
 DisposeColorSearchUPP(ColorSearchUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeColorSearchUPP(ColorSearchUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeColorSearchUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeColorSearchUPP(ColorSearchUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeColorSearchUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeColorComplementUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1512,16 +1512,16 @@ DisposeColorSearchUPP(ColorSearchUPP userUPP);
 EXTERN_API_C( void )
 DisposeColorComplementUPP(ColorComplementUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeColorComplementUPP(ColorComplementUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeColorComplementUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeColorComplementUPP(ColorComplementUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeColorComplementUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  InvokeDragGrayRgnUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1530,16 +1530,16 @@ DisposeColorComplementUPP(ColorComplementUPP userUPP);
 EXTERN_API_C( void )
 InvokeDragGrayRgnUPP(DragGrayRgnUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeDragGrayRgnUPP(DragGrayRgnUPP userUPP) { CALL_ZERO_PARAMETER_UPP(userUPP, uppDragGrayRgnProcInfo); }
-  #else
-    #define InvokeDragGrayRgnUPP(userUPP) CALL_ZERO_PARAMETER_UPP((userUPP), uppDragGrayRgnProcInfo)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeDragGrayRgnUPP(DragGrayRgnUPP userUPP) { CALL_ZERO_PARAMETER_UPP(userUPP, uppDragGrayRgnProcInfo); }
+	#else
+		#define InvokeDragGrayRgnUPP(userUPP) CALL_ZERO_PARAMETER_UPP((userUPP), uppDragGrayRgnProcInfo)
+	#endif
 #endif
 
 /*
  *  InvokeColorSearchUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1547,20 +1547,20 @@ InvokeDragGrayRgnUPP(DragGrayRgnUPP userUPP);
  */
 EXTERN_API_C( Boolean )
 InvokeColorSearchUPP(
-  RGBColor *      rgb,
-  long *          position,
-  ColorSearchUPP  userUPP);
+	RGBColor *      rgb,
+	long *          position,
+	ColorSearchUPP  userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(Boolean) InvokeColorSearchUPP(RGBColor * rgb, long * position, ColorSearchUPP userUPP) { return (Boolean)CALL_TWO_PARAMETER_UPP(userUPP, uppColorSearchProcInfo, rgb, position); }
-  #else
-    #define InvokeColorSearchUPP(rgb, position, userUPP) (Boolean)CALL_TWO_PARAMETER_UPP((userUPP), uppColorSearchProcInfo, (rgb), (position))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(Boolean) InvokeColorSearchUPP(RGBColor * rgb, long * position, ColorSearchUPP userUPP) { return (Boolean)CALL_TWO_PARAMETER_UPP(userUPP, uppColorSearchProcInfo, rgb, position); }
+	#else
+		#define InvokeColorSearchUPP(rgb, position, userUPP) (Boolean)CALL_TWO_PARAMETER_UPP((userUPP), uppColorSearchProcInfo, (rgb), (position))
+	#endif
 #endif
 
 /*
  *  InvokeColorComplementUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1568,64 +1568,64 @@ InvokeColorSearchUPP(
  */
 EXTERN_API_C( Boolean )
 InvokeColorComplementUPP(
-  RGBColor *          rgb,
-  ColorComplementUPP  userUPP);
+	RGBColor *          rgb,
+	ColorComplementUPP  userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(Boolean) InvokeColorComplementUPP(RGBColor * rgb, ColorComplementUPP userUPP) { return (Boolean)CALL_ONE_PARAMETER_UPP(userUPP, uppColorComplementProcInfo, rgb); }
-  #else
-    #define InvokeColorComplementUPP(rgb, userUPP) (Boolean)CALL_ONE_PARAMETER_UPP((userUPP), uppColorComplementProcInfo, (rgb))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(Boolean) InvokeColorComplementUPP(RGBColor * rgb, ColorComplementUPP userUPP) { return (Boolean)CALL_ONE_PARAMETER_UPP(userUPP, uppColorComplementProcInfo, rgb); }
+	#else
+		#define InvokeColorComplementUPP(rgb, userUPP) (Boolean)CALL_ONE_PARAMETER_UPP((userUPP), uppColorComplementProcInfo, (rgb))
+	#endif
 #endif
 
 #if CALL_NOT_IN_CARBON || OLDROUTINENAMES
-    /* support for pre-Carbon UPP routines: New...Proc and Call...Proc */
-    #define NewDragGrayRgnProc(userRoutine)                     NewDragGrayRgnUPP(userRoutine)
-    #define NewColorSearchProc(userRoutine)                     NewColorSearchUPP(userRoutine)
-    #define NewColorComplementProc(userRoutine)                 NewColorComplementUPP(userRoutine)
-    #define CallDragGrayRgnProc(userRoutine)                    InvokeDragGrayRgnUPP(userRoutine)
-    #define CallColorSearchProc(userRoutine, rgb, position)     InvokeColorSearchUPP(rgb, position, userRoutine)
-    #define CallColorComplementProc(userRoutine, rgb)           InvokeColorComplementUPP(rgb, userRoutine)
+		/* support for pre-Carbon UPP routines: New...Proc and Call...Proc */
+		#define NewDragGrayRgnProc(userRoutine)                     NewDragGrayRgnUPP(userRoutine)
+		#define NewColorSearchProc(userRoutine)                     NewColorSearchUPP(userRoutine)
+		#define NewColorComplementProc(userRoutine)                 NewColorComplementUPP(userRoutine)
+		#define CallDragGrayRgnProc(userRoutine)                    InvokeDragGrayRgnUPP(userRoutine)
+		#define CallColorSearchProc(userRoutine, rgb, position)     InvokeColorSearchUPP(rgb, position, userRoutine)
+		#define CallColorComplementProc(userRoutine, rgb)           InvokeColorComplementUPP(rgb, userRoutine)
 #endif /* CALL_NOT_IN_CARBON */
 
 struct ColorSpec {
-  short               value;                  /*index or other value*/
-  RGBColor            rgb;                    /*true color*/
+	short               value;                  /*index or other value*/
+	RGBColor            rgb;                    /*true color*/
 };
 typedef struct ColorSpec                ColorSpec;
 typedef ColorSpec *                     ColorSpecPtr;
 typedef ColorSpec                       CSpecArray[1];
 struct ColorTable {
-  long                ctSeed;                 /*unique identifier for table*/
-  short               ctFlags;                /*high bit: 0 = PixMap; 1 = device*/
-  short               ctSize;                 /*number of entries in CTTable*/
-  CSpecArray          ctTable;                /*array [0..0] of ColorSpec*/
+	long                ctSeed;                 /*unique identifier for table*/
+	short               ctFlags;                /*high bit: 0 = PixMap; 1 = device*/
+	short               ctSize;                 /*number of entries in CTTable*/
+	CSpecArray          ctTable;                /*array [0..0] of ColorSpec*/
 };
 typedef struct ColorTable               ColorTable;
 typedef ColorTable *                    CTabPtr;
 typedef CTabPtr *                       CTabHandle;
 struct xColorSpec {
-  short               value;                  /*index or other value*/
-  RGBColor            rgb;                    /*true color*/
-  short               xalpha;
+	short               value;                  /*index or other value*/
+	RGBColor            rgb;                    /*true color*/
+	short               xalpha;
 };
 typedef struct xColorSpec               xColorSpec;
 typedef xColorSpec *                    xColorSpecPtr;
 typedef xColorSpec                      xCSpecArray[1];
 struct MatchRec {
-  unsigned short      red;
-  unsigned short      green;
-  unsigned short      blue;
-  long                matchData;
+	unsigned short      red;
+	unsigned short      green;
+	unsigned short      blue;
+	long                matchData;
 };
 typedef struct MatchRec                 MatchRec;
 /*
-    QuickTime 3.0 makes PixMap data structure available on non-Mac OS's.
-    In order to implement PixMap in these alternate environments, the PixMap
-    had to be extended. The pmReserved field was changed to pmExt which is
-    a Handle to extra info.  The planeBytes field was changed to pixelFormat.
-    
-    In OS X, Quickdraw also uses the new PixMap data structure.
+		QuickTime 3.0 makes PixMap data structure available on non-Mac OS's.
+		In order to implement PixMap in these alternate environments, the PixMap
+		had to be extended. The pmReserved field was changed to pmExt which is
+		a Handle to extra info.  The planeBytes field was changed to pixelFormat.
+
+		In OS X, Quickdraw also uses the new PixMap data structure.
 */
 #ifndef OLDPIXMAPSTRUCT
 #if TARGET_OS_MAC && TARGET_API_MAC_OS8
@@ -1638,149 +1638,149 @@ typedef struct MatchRec                 MatchRec;
 
 
 #if OLDPIXMAPSTRUCT
-   #define GETPIXMAPPIXELFORMAT(pm)        ( (pm)->pixelSize )
+	#define GETPIXMAPPIXELFORMAT(pm)        ( (pm)->pixelSize )
 #else
-  #define GETPIXMAPPIXELFORMAT(pm)        ( ((pm)->pixelFormat != 0) ? (pm)->pixelFormat : (pm)->pixelSize )
+	#define GETPIXMAPPIXELFORMAT(pm)        ( ((pm)->pixelFormat != 0) ? (pm)->pixelFormat : (pm)->pixelSize )
 #endif
 
 /* You MUST remove the TARGET_API_MAC_OS8 because this must be 0 for OSX */
 
 #if TARGET_OS_MAC && !TARGET_RT_LITTLE_ENDIAN
-    #define NON_MAC_PIXEL_FORMATS   0
+		#define NON_MAC_PIXEL_FORMATS   0
 #else
-    #define NON_MAC_PIXEL_FORMATS   1
+		#define NON_MAC_PIXEL_FORMATS   1
 #endif
 
 /* pixel formats*/
 enum {
-  k1MonochromePixelFormat       = 0x00000001, /* 1 bit indexed*/
-  k2IndexedPixelFormat          = 0x00000002, /* 2 bit indexed*/
-  k4IndexedPixelFormat          = 0x00000004, /* 4 bit indexed*/
-  k8IndexedPixelFormat          = 0x00000008, /* 8 bit indexed*/
-  k16BE555PixelFormat           = 0x00000010, /* 16 bit BE rgb 555 (Mac)*/
-  k24RGBPixelFormat             = 0x00000018, /* 24 bit rgb */
-  k32ARGBPixelFormat            = 0x00000020, /* 32 bit argb    (Mac)*/
-  k1IndexedGrayPixelFormat      = 0x00000021, /* 1 bit indexed gray*/
-  k2IndexedGrayPixelFormat      = 0x00000022, /* 2 bit indexed gray*/
-  k4IndexedGrayPixelFormat      = 0x00000024, /* 4 bit indexed gray*/
-  k8IndexedGrayPixelFormat      = 0x00000028 /* 8 bit indexed gray*/
+	k1MonochromePixelFormat       = 0x00000001, /* 1 bit indexed*/
+	k2IndexedPixelFormat          = 0x00000002, /* 2 bit indexed*/
+	k4IndexedPixelFormat          = 0x00000004, /* 4 bit indexed*/
+	k8IndexedPixelFormat          = 0x00000008, /* 8 bit indexed*/
+	k16BE555PixelFormat           = 0x00000010, /* 16 bit BE rgb 555 (Mac)*/
+	k24RGBPixelFormat             = 0x00000018, /* 24 bit rgb */
+	k32ARGBPixelFormat            = 0x00000020, /* 32 bit argb    (Mac)*/
+	k1IndexedGrayPixelFormat      = 0x00000021, /* 1 bit indexed gray*/
+	k2IndexedGrayPixelFormat      = 0x00000022, /* 2 bit indexed gray*/
+	k4IndexedGrayPixelFormat      = 0x00000024, /* 4 bit indexed gray*/
+	k8IndexedGrayPixelFormat      = 0x00000028 /* 8 bit indexed gray*/
 };
 
 
 /* values for PixMap.pixelFormat*/
 enum {
-  k16LE555PixelFormat           = FOUR_CHAR_CODE('L555'), /* 16 bit LE rgb 555 (PC)*/
-  k16LE5551PixelFormat          = FOUR_CHAR_CODE('5551'), /* 16 bit LE rgb 5551*/
-  k16BE565PixelFormat           = FOUR_CHAR_CODE('B565'), /* 16 bit BE rgb 565*/
-  k16LE565PixelFormat           = FOUR_CHAR_CODE('L565'), /* 16 bit LE rgb 565*/
-  k24BGRPixelFormat             = FOUR_CHAR_CODE('24BG'), /* 24 bit bgr */
-  k32BGRAPixelFormat            = FOUR_CHAR_CODE('BGRA'), /* 32 bit bgra    (Matrox)*/
-  k32ABGRPixelFormat            = FOUR_CHAR_CODE('ABGR'), /* 32 bit abgr    */
-  k32RGBAPixelFormat            = FOUR_CHAR_CODE('RGBA'), /* 32 bit rgba    */
-  kYUVSPixelFormat              = FOUR_CHAR_CODE('yuvs'), /* YUV 4:2:2 byte ordering 16-unsigned = 'YUY2'*/
-  kYUVUPixelFormat              = FOUR_CHAR_CODE('yuvu'), /* YUV 4:2:2 byte ordering 16-signed*/
-  kYVU9PixelFormat              = FOUR_CHAR_CODE('YVU9'), /* YVU9 Planar    9*/
-  kYUV411PixelFormat            = FOUR_CHAR_CODE('Y411'), /* YUV 4:1:1 Interleaved  16*/
-  kYVYU422PixelFormat           = FOUR_CHAR_CODE('YVYU'), /* YVYU 4:2:2 byte ordering   16*/
-  kUYVY422PixelFormat           = FOUR_CHAR_CODE('UYVY'), /* UYVY 4:2:2 byte ordering   16*/
-  kYUV211PixelFormat            = FOUR_CHAR_CODE('Y211'), /* YUV 2:1:1 Packed   8*/
-  k2vuyPixelFormat              = FOUR_CHAR_CODE('2vuy') /* UYVY 4:2:2 byte ordering   16*/
+	k16LE555PixelFormat           = FOUR_CHAR_CODE('L555'), /* 16 bit LE rgb 555 (PC)*/
+	k16LE5551PixelFormat          = FOUR_CHAR_CODE('5551'), /* 16 bit LE rgb 5551*/
+	k16BE565PixelFormat           = FOUR_CHAR_CODE('B565'), /* 16 bit BE rgb 565*/
+	k16LE565PixelFormat           = FOUR_CHAR_CODE('L565'), /* 16 bit LE rgb 565*/
+	k24BGRPixelFormat             = FOUR_CHAR_CODE('24BG'), /* 24 bit bgr */
+	k32BGRAPixelFormat            = FOUR_CHAR_CODE('BGRA'), /* 32 bit bgra    (Matrox)*/
+	k32ABGRPixelFormat            = FOUR_CHAR_CODE('ABGR'), /* 32 bit abgr    */
+	k32RGBAPixelFormat            = FOUR_CHAR_CODE('RGBA'), /* 32 bit rgba    */
+	kYUVSPixelFormat              = FOUR_CHAR_CODE('yuvs'), /* YUV 4:2:2 byte ordering 16-unsigned = 'YUY2'*/
+	kYUVUPixelFormat              = FOUR_CHAR_CODE('yuvu'), /* YUV 4:2:2 byte ordering 16-signed*/
+	kYVU9PixelFormat              = FOUR_CHAR_CODE('YVU9'), /* YVU9 Planar    9*/
+	kYUV411PixelFormat            = FOUR_CHAR_CODE('Y411'), /* YUV 4:1:1 Interleaved  16*/
+	kYVYU422PixelFormat           = FOUR_CHAR_CODE('YVYU'), /* YVYU 4:2:2 byte ordering   16*/
+	kUYVY422PixelFormat           = FOUR_CHAR_CODE('UYVY'), /* UYVY 4:2:2 byte ordering   16*/
+	kYUV211PixelFormat            = FOUR_CHAR_CODE('Y211'), /* YUV 2:1:1 Packed   8*/
+	k2vuyPixelFormat              = FOUR_CHAR_CODE('2vuy') /* UYVY 4:2:2 byte ordering   16*/
 };
 
 
 struct PixMap {
-  Ptr                 baseAddr;               /*pointer to pixels*/
-  short               rowBytes;               /*offset to next line*/
-  Rect                bounds;                 /*encloses bitmap*/
-  short               pmVersion;              /*pixMap version number*/
-  short               packType;               /*defines packing format*/
-  long                packSize;               /*length of pixel data*/
-  Fixed               hRes;                   /*horiz. resolution (ppi)*/
-  Fixed               vRes;                   /*vert. resolution (ppi)*/
-  short               pixelType;              /*defines pixel type*/
-  short               pixelSize;              /*# bits in pixel*/
-  short               cmpCount;               /*# components in pixel*/
-  short               cmpSize;                /*# bits per component*/
+	Ptr                 baseAddr;               /*pointer to pixels*/
+	short               rowBytes;               /*offset to next line*/
+	Rect                bounds;                 /*encloses bitmap*/
+	short               pmVersion;              /*pixMap version number*/
+	short               packType;               /*defines packing format*/
+	long                packSize;               /*length of pixel data*/
+	Fixed               hRes;                   /*horiz. resolution (ppi)*/
+	Fixed               vRes;                   /*vert. resolution (ppi)*/
+	short               pixelType;              /*defines pixel type*/
+	short               pixelSize;              /*# bits in pixel*/
+	short               cmpCount;               /*# components in pixel*/
+	short               cmpSize;                /*# bits per component*/
 #if OLDPIXMAPSTRUCT
-  long                planeBytes;             /*offset to next plane*/
-  CTabHandle          pmTable;                /*color map for this pixMap*/
-  long                pmReserved;
+	long                planeBytes;             /*offset to next plane*/
+	CTabHandle          pmTable;                /*color map for this pixMap*/
+	long                pmReserved;
 #else
-  OSType                          pixelFormat;                /*fourCharCode representation*/
-    CTabHandle                      pmTable;                    /*color map for this pixMap*/
-  void*                           pmExt;                      /*Handle to pixMap extension*/
+	OSType                          pixelFormat;                /*fourCharCode representation*/
+		CTabHandle                      pmTable;                    /*color map for this pixMap*/
+	void*                           pmExt;                      /*Handle to pixMap extension*/
 #endif
 };
 typedef struct PixMap                   PixMap;
 typedef PixMap *                        PixMapPtr;
 typedef PixMapPtr *                     PixMapHandle;
 struct PixPat {
-  short               patType;                /*type of pattern*/
-  PixMapHandle        patMap;                 /*the pattern's pixMap*/
-  Handle              patData;                /*pixmap's data*/
-  Handle              patXData;               /*expanded Pattern data*/
-  short               patXValid;              /*flags whether expanded Pattern valid*/
-  Handle              patXMap;                /*Handle to expanded Pattern data*/
-  Pattern             pat1Data;               /*old-Style pattern/RGB color*/
+	short               patType;                /*type of pattern*/
+	PixMapHandle        patMap;                 /*the pattern's pixMap*/
+	Handle              patData;                /*pixmap's data*/
+	Handle              patXData;               /*expanded Pattern data*/
+	short               patXValid;              /*flags whether expanded Pattern valid*/
+	Handle              patXMap;                /*Handle to expanded Pattern data*/
+	Pattern             pat1Data;               /*old-Style pattern/RGB color*/
 };
 typedef struct PixPat                   PixPat;
 typedef PixPat *                        PixPatPtr;
 typedef PixPatPtr *                     PixPatHandle;
 struct CCrsr {
-  short               crsrType;               /*type of cursor*/
-  PixMapHandle        crsrMap;                /*the cursor's pixmap*/
-  Handle              crsrData;               /*cursor's data*/
-  Handle              crsrXData;              /*expanded cursor data*/
-  short               crsrXValid;             /*depth of expanded data (0 if none)*/
-  Handle              crsrXHandle;            /*future use*/
-  Bits16              crsr1Data;              /*one-bit cursor*/
-  Bits16              crsrMask;               /*cursor's mask*/
-  Point               crsrHotSpot;            /*cursor's hotspot*/
-  long                crsrXTable;             /*private*/
-  long                crsrID;                 /*private*/
+	short               crsrType;               /*type of cursor*/
+	PixMapHandle        crsrMap;                /*the cursor's pixmap*/
+	Handle              crsrData;               /*cursor's data*/
+	Handle              crsrXData;              /*expanded cursor data*/
+	short               crsrXValid;             /*depth of expanded data (0 if none)*/
+	Handle              crsrXHandle;            /*future use*/
+	Bits16              crsr1Data;              /*one-bit cursor*/
+	Bits16              crsrMask;               /*cursor's mask*/
+	Point               crsrHotSpot;            /*cursor's hotspot*/
+	long                crsrXTable;             /*private*/
+	long                crsrID;                 /*private*/
 };
 typedef struct CCrsr                    CCrsr;
 typedef CCrsr *                         CCrsrPtr;
 typedef CCrsrPtr *                      CCrsrHandle;
 struct GammaTbl {
-  short               gVersion;               /*gamma version number*/
-  short               gType;                  /*gamma data type*/
-  short               gFormulaSize;           /*Formula data size*/
-  short               gChanCnt;               /*number of channels of data*/
-  short               gDataCnt;               /*number of values/channel*/
-  short               gDataWidth;             /*bits/corrected value (data packed to next larger byte size)*/
-  short               gFormulaData[1];        /*data for formulas followed by gamma values*/
+	short               gVersion;               /*gamma version number*/
+	short               gType;                  /*gamma data type*/
+	short               gFormulaSize;           /*Formula data size*/
+	short               gChanCnt;               /*number of channels of data*/
+	short               gDataCnt;               /*number of values/channel*/
+	short               gDataWidth;             /*bits/corrected value (data packed to next larger byte size)*/
+	short               gFormulaData[1];        /*data for formulas followed by gamma values*/
 };
 typedef struct GammaTbl                 GammaTbl;
 typedef GammaTbl *                      GammaTblPtr;
 typedef GammaTblPtr *                   GammaTblHandle;
 struct ITab {
-  long                iTabSeed;               /*copy of CTSeed from source CTable*/
-  short               iTabRes;                /*bits/channel resolution of iTable*/
-  Byte                iTTable[1];             /*byte colortable index values*/
+	long                iTabSeed;               /*copy of CTSeed from source CTable*/
+	short               iTabRes;                /*bits/channel resolution of iTable*/
+	Byte                iTTable[1];             /*byte colortable index values*/
 };
 typedef struct ITab                     ITab;
 typedef ITab *                          ITabPtr;
 typedef ITabPtr *                       ITabHandle;
 struct SProcRec {
-  Handle              nxtSrch;                /*SProcHndl Handle to next SProcRec*/
-  ColorSearchUPP      srchProc;               /*search procedure proc ptr*/
+	Handle              nxtSrch;                /*SProcHndl Handle to next SProcRec*/
+	ColorSearchUPP      srchProc;               /*search procedure proc ptr*/
 };
 typedef struct SProcRec                 SProcRec;
 typedef SProcRec *                      SProcPtr;
 typedef SProcPtr *                      SProcHndl;
 struct CProcRec {
-  Handle              nxtComp;                /*CProcHndl Handle to next CProcRec*/
-  ColorComplementUPP  compProc;               /*complement procedure proc ptr*/
+	Handle              nxtComp;                /*CProcHndl Handle to next CProcRec*/
+	ColorComplementUPP  compProc;               /*complement procedure proc ptr*/
 };
 typedef struct CProcRec                 CProcRec;
 typedef CProcRec *                      CProcPtr;
 typedef CProcPtr *                      CProcHndl;
 /*
-    QuickTime 3.0 makes GDevice data structure available on non-Mac OS's.
-    In order to implement GDevice in these alternate environments, the GDevice
-    had to be extended. The gdReserved field was changed to gdExt which is
-    a Handle to extra info.  
+		QuickTime 3.0 makes GDevice data structure available on non-Mac OS's.
+		In order to implement GDevice in these alternate environments, the GDevice
+		had to be extended. The gdReserved field was changed to gdExt which is
+		a Handle to extra info.
 */
 #ifndef OLDGDEVICESTRUCT
 #if TARGET_OS_MAC && TARGET_API_MAC_OS8
@@ -1795,38 +1795,38 @@ typedef struct GDevice                  GDevice;
 typedef GDevice *                       GDPtr;
 typedef GDPtr *                         GDHandle;
 struct GDevice {
-  short               gdRefNum;               /*driver's unit number*/
-  short               gdID;                   /*client ID for search procs*/
-  short               gdType;                 /*fixed/CLUT/direct*/
-  ITabHandle          gdITable;               /*Handle to inverse lookup table*/
-  short               gdResPref;              /*preferred resolution of GDITable*/
-  SProcHndl           gdSearchProc;           /*search proc list head*/
-  CProcHndl           gdCompProc;             /*complement proc list*/
-  short               gdFlags;                /*grafDevice flags word*/
-  PixMapHandle        gdPMap;                 /*describing pixMap*/
-  long                gdRefCon;               /*reference value*/
-  GDHandle            gdNextGD;               /*GDHandle Handle of next gDevice*/
-  Rect                gdRect;                 /* device's bounds in global coordinates*/
-  long                gdMode;                 /*device's current mode*/
-  short               gdCCBytes;              /*depth of expanded cursor data*/
-  short               gdCCDepth;              /*depth of expanded cursor data*/
-  Handle              gdCCXData;              /*Handle to cursor's expanded data*/
-  Handle              gdCCXMask;              /*Handle to cursor's expanded mask*/
+	short               gdRefNum;               /*driver's unit number*/
+	short               gdID;                   /*client ID for search procs*/
+	short               gdType;                 /*fixed/CLUT/direct*/
+	ITabHandle          gdITable;               /*Handle to inverse lookup table*/
+	short               gdResPref;              /*preferred resolution of GDITable*/
+	SProcHndl           gdSearchProc;           /*search proc list head*/
+	CProcHndl           gdCompProc;             /*complement proc list*/
+	short               gdFlags;                /*grafDevice flags word*/
+	PixMapHandle        gdPMap;                 /*describing pixMap*/
+	long                gdRefCon;               /*reference value*/
+	GDHandle            gdNextGD;               /*GDHandle Handle of next gDevice*/
+	Rect                gdRect;                 /* device's bounds in global coordinates*/
+	long                gdMode;                 /*device's current mode*/
+	short               gdCCBytes;              /*depth of expanded cursor data*/
+	short               gdCCDepth;              /*depth of expanded cursor data*/
+	Handle              gdCCXData;              /*Handle to cursor's expanded data*/
+	Handle              gdCCXMask;              /*Handle to cursor's expanded mask*/
 #if OLDGDEVICESTRUCT
-  long                gdReserved;             /*future use. MUST BE 0*/
+	long                gdReserved;             /*future use. MUST BE 0*/
 #else
-  Handle                          gdExt;                      /*QuickTime 3.0 private info*/
+	Handle                          gdExt;                      /*QuickTime 3.0 private info*/
 #endif
 };
 
 struct GrafVars {
-  RGBColor            rgbOpColor;             /*color for addPin  subPin and average*/
-  RGBColor            rgbHiliteColor;         /*color for hiliting*/
-  Handle              pmFgColor;              /*palette Handle for foreground color*/
-  short               pmFgIndex;              /*index value for foreground*/
-  Handle              pmBkColor;              /*palette Handle for background color*/
-  short               pmBkIndex;              /*index value for background*/
-  short               pmFlags;                /*flags for Palette Manager*/
+	RGBColor            rgbOpColor;             /*color for addPin  subPin and average*/
+	RGBColor            rgbHiliteColor;         /*color for hiliting*/
+	Handle              pmFgColor;              /*palette Handle for foreground color*/
+	short               pmFgIndex;              /*index value for foreground*/
+	Handle              pmBkColor;              /*palette Handle for background color*/
+	short               pmBkIndex;              /*index value for background*/
+	short               pmFlags;                /*flags for Palette Manager*/
 };
 typedef struct GrafVars                 GrafVars;
 typedef GrafVars *                      GVarPtr;
@@ -1843,63 +1843,63 @@ typedef CALLBACK_API_C( OSStatus , QDPrinterStatusProcPtr )(PrinterStatusOpcode 
 typedef STACK_UPP_TYPE(QDPrinterStatusProcPtr)                  QDPrinterStatusUPP;
 
 struct CQDProcs {
-  QDTextUPP           textProc;
-  QDLineUPP           lineProc;
-  QDRectUPP           rectProc;
-  QDRRectUPP          rRectProc;
-  QDOvalUPP           ovalProc;
-  QDArcUPP            arcProc;
-  QDPolyUPP           polyProc;
-  QDRgnUPP            rgnProc;
-  QDBitsUPP           bitsProc;
-  QDCommentUPP        commentProc;
-  QDTxMeasUPP         txMeasProc;
-  QDGetPicUPP         getPicProc;
-  QDPutPicUPP         putPicProc;
-  QDOpcodeUPP         opcodeProc;
-  UniversalProcPtr    newProc1;               /* this is the StdPix bottleneck -- see ImageCompression.h */
-  QDStdGlyphsUPP      glyphsProc;             /* was newProc2; now used in Unicode text drawing */
-  QDPrinterStatusUPP  printerStatusProc;      /* was newProc3;  now used to communicate status between Printing code and System imaging code */
-  UniversalProcPtr    newProc4;
-  UniversalProcPtr    newProc5;
-  UniversalProcPtr    newProc6;
+	QDTextUPP           textProc;
+	QDLineUPP           lineProc;
+	QDRectUPP           rectProc;
+	QDRRectUPP          rRectProc;
+	QDOvalUPP           ovalProc;
+	QDArcUPP            arcProc;
+	QDPolyUPP           polyProc;
+	QDRgnUPP            rgnProc;
+	QDBitsUPP           bitsProc;
+	QDCommentUPP        commentProc;
+	QDTxMeasUPP         txMeasProc;
+	QDGetPicUPP         getPicProc;
+	QDPutPicUPP         putPicProc;
+	QDOpcodeUPP         opcodeProc;
+	UniversalProcPtr    newProc1;               /* this is the StdPix bottleneck -- see ImageCompression.h */
+	QDStdGlyphsUPP      glyphsProc;             /* was newProc2; now used in Unicode text drawing */
+	QDPrinterStatusUPP  printerStatusProc;      /* was newProc3;  now used to communicate status between Printing code and System imaging code */
+	UniversalProcPtr    newProc4;
+	UniversalProcPtr    newProc5;
+	UniversalProcPtr    newProc6;
 };
 typedef struct CQDProcs                 CQDProcs;
 typedef CQDProcs *                      CQDProcsPtr;
 #if !OPAQUE_TOOLBOX_STRUCTS
 struct CGrafPort {
-  short               device;                 /* not available in Carbon*/
-  PixMapHandle        portPixMap;             /* in Carbon use GetPortPixMap*/
-  short               portVersion;            /* in Carbon use IsPortColor*/
-  Handle              grafVars;               /* not available in Carbon*/
-  short               chExtra;                /* in Carbon use GetPortChExtra*/
-  short               pnLocHFrac;             /* in Carbon use Get/SetPortFracHPenLocation*/
-  Rect                portRect;               /* in Carbon use Get/SetPortBounds*/
-  RgnHandle           visRgn;                 /* in Carbon use Get/SetPortVisibleRegion*/
-  RgnHandle           clipRgn;                /* in Carbon use Get/SetPortClipRegion*/
-  PixPatHandle        bkPixPat;               /* in Carbon use GetPortBackPixPat or BackPixPat*/
-  RGBColor            rgbFgColor;             /* in Carbon use GetPortForeColor or RGBForeColor*/
-  RGBColor            rgbBkColor;             /* in Carbon use GetPortBackColor or RGBBackColor*/
-  Point               pnLoc;                  /* in Carbon use GetPortPenLocation or MoveTo*/
-  Point               pnSize;                 /* in Carbon use Get/SetPortPenSize*/
-  short               pnMode;                 /* in Carbon use Get/SetPortPenMode*/
-  PixPatHandle        pnPixPat;               /* in Carbon use Get/SetPortPenPixPat*/
-  PixPatHandle        fillPixPat;             /* in Carbon use GetPortFillPixPat*/
-  short               pnVis;                  /* in Carbon use GetPortPenVisibility or Show/HidePen*/
-  short               txFont;                 /* in Carbon use GetPortTextFont or TextFont*/
-  StyleField          txFace;                 /* in Carbon use GetPortTextFace or TextFace*/
-                                              /*StyleField occupies 16-bits, but only first 8-bits are used*/
-  short               txMode;                 /* in Carbon use GetPortTextMode or TextMode*/
-  short               txSize;                 /* in Carbon use GetPortTextSize or TextSize*/
-  Fixed               spExtra;                /* in Carbon use GetPortSpExtra or SpaceExtra*/
-  long                fgColor;                /* not available in Carbon*/
-  long                bkColor;                /* not available in Carbon*/
-  short               colrBit;                /* not available in Carbon*/
-  short               patStretch;             /* not available in Carbon*/
-  Handle              picSave;                /* in Carbon use IsPortPictureBeingDefined*/
-  Handle              rgnSave;                /* in Carbon use IsPortRegionBeingDefined*/
-  Handle              polySave;               /* in Carbon use IsPortPolyBeingDefined*/
-  CQDProcsPtr         grafProcs;              /* in Carbon use Get/SetPortGrafProcs*/
+	short               device;                 /* not available in Carbon*/
+	PixMapHandle        portPixMap;             /* in Carbon use GetPortPixMap*/
+	short               portVersion;            /* in Carbon use IsPortColor*/
+	Handle              grafVars;               /* not available in Carbon*/
+	short               chExtra;                /* in Carbon use GetPortChExtra*/
+	short               pnLocHFrac;             /* in Carbon use Get/SetPortFracHPenLocation*/
+	Rect                portRect;               /* in Carbon use Get/SetPortBounds*/
+	RgnHandle           visRgn;                 /* in Carbon use Get/SetPortVisibleRegion*/
+	RgnHandle           clipRgn;                /* in Carbon use Get/SetPortClipRegion*/
+	PixPatHandle        bkPixPat;               /* in Carbon use GetPortBackPixPat or BackPixPat*/
+	RGBColor            rgbFgColor;             /* in Carbon use GetPortForeColor or RGBForeColor*/
+	RGBColor            rgbBkColor;             /* in Carbon use GetPortBackColor or RGBBackColor*/
+	Point               pnLoc;                  /* in Carbon use GetPortPenLocation or MoveTo*/
+	Point               pnSize;                 /* in Carbon use Get/SetPortPenSize*/
+	short               pnMode;                 /* in Carbon use Get/SetPortPenMode*/
+	PixPatHandle        pnPixPat;               /* in Carbon use Get/SetPortPenPixPat*/
+	PixPatHandle        fillPixPat;             /* in Carbon use GetPortFillPixPat*/
+	short               pnVis;                  /* in Carbon use GetPortPenVisibility or Show/HidePen*/
+	short               txFont;                 /* in Carbon use GetPortTextFont or TextFont*/
+	StyleField          txFace;                 /* in Carbon use GetPortTextFace or TextFace*/
+																							/*StyleField occupies 16-bits, but only first 8-bits are used*/
+	short               txMode;                 /* in Carbon use GetPortTextMode or TextMode*/
+	short               txSize;                 /* in Carbon use GetPortTextSize or TextSize*/
+	Fixed               spExtra;                /* in Carbon use GetPortSpExtra or SpaceExtra*/
+	long                fgColor;                /* not available in Carbon*/
+	long                bkColor;                /* not available in Carbon*/
+	short               colrBit;                /* not available in Carbon*/
+	short               patStretch;             /* not available in Carbon*/
+	Handle              picSave;                /* in Carbon use IsPortPictureBeingDefined*/
+	Handle              rgnSave;                /* in Carbon use IsPortRegionBeingDefined*/
+	Handle              polySave;               /* in Carbon use IsPortPolyBeingDefined*/
+	CQDProcsPtr         grafProcs;              /* in Carbon use Get/SetPortGrafProcs*/
 };
 
 #endif  /* !OPAQUE_TOOLBOX_STRUCTS */
@@ -1911,29 +1911,29 @@ typedef CGrafPtr                        CWindowPtr;
 #endif  /* OPAQUE_TOOLBOX_STRUCTS */
 
 struct ReqListRec {
-  short               reqLSize;               /*request list size*/
-  short               reqLData[1];            /*request list data*/
+	short               reqLSize;               /*request list size*/
+	short               reqLData[1];            /*request list data*/
 };
 typedef struct ReqListRec               ReqListRec;
 struct OpenCPicParams {
-  Rect                srcRect;
-  Fixed               hRes;
-  Fixed               vRes;
-  short               version;
-  short               reserved1;
-  long                reserved2;
+	Rect                srcRect;
+	Fixed               hRes;
+	Fixed               vRes;
+	short               version;
+	short               reserved1;
+	long                reserved2;
 };
 typedef struct OpenCPicParams           OpenCPicParams;
 enum {
-  kCursorImageMajorVersion      = 0x0001,
-  kCursorImageMinorVersion      = 0x0000
+	kCursorImageMajorVersion      = 0x0001,
+	kCursorImageMinorVersion      = 0x0000
 };
 
 struct CursorImageRec {
-  UInt16              majorVersion;
-  UInt16              minorVersion;
-  PixMapHandle        cursorPixMap;
-  BitMapHandle        cursorBitMask;
+	UInt16              majorVersion;
+	UInt16              minorVersion;
+	PixMapHandle        cursorPixMap;
+	BitMapHandle        cursorBitMask;
 };
 typedef struct CursorImageRec           CursorImageRec;
 typedef CursorImageRec *                CursorImagePtr;
@@ -1942,7 +1942,7 @@ typedef STACK_UPP_TYPE(DeviceLoopDrawingProcPtr)                DeviceLoopDrawin
 #if CALL_NOT_IN_CARBON
 /*
  *  NewQDPrinterStatusUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        not available
@@ -1951,19 +1951,19 @@ typedef STACK_UPP_TYPE(DeviceLoopDrawingProcPtr)                DeviceLoopDrawin
 EXTERN_API_C( QDPrinterStatusUPP )
 NewQDPrinterStatusUPP(QDPrinterStatusProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppQDPrinterStatusProcInfo = 0x00000FF1 };  /* 4_bytes Func(4_bytes, 4_bytes, 4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(QDPrinterStatusUPP) NewQDPrinterStatusUPP(QDPrinterStatusProcPtr userRoutine) { return (QDPrinterStatusUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDPrinterStatusProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewQDPrinterStatusUPP(userRoutine) (QDPrinterStatusUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDPrinterStatusProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppQDPrinterStatusProcInfo = 0x00000FF1 };  /* 4_bytes Func(4_bytes, 4_bytes, 4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(QDPrinterStatusUPP) NewQDPrinterStatusUPP(QDPrinterStatusProcPtr userRoutine) { return (QDPrinterStatusUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDPrinterStatusProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewQDPrinterStatusUPP(userRoutine) (QDPrinterStatusUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppQDPrinterStatusProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 #endif  /* CALL_NOT_IN_CARBON */
 
 /*
  *  NewDeviceLoopDrawingUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1972,18 +1972,18 @@ NewQDPrinterStatusUPP(QDPrinterStatusProcPtr userRoutine);
 EXTERN_API_C( DeviceLoopDrawingUPP )
 NewDeviceLoopDrawingUPP(DeviceLoopDrawingProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppDeviceLoopDrawingProcInfo = 0x00003E80 };  /* pascal no_return_value Func(2_bytes, 2_bytes, 4_bytes, 4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(DeviceLoopDrawingUPP) NewDeviceLoopDrawingUPP(DeviceLoopDrawingProcPtr userRoutine) { return (DeviceLoopDrawingUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppDeviceLoopDrawingProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewDeviceLoopDrawingUPP(userRoutine) (DeviceLoopDrawingUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppDeviceLoopDrawingProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppDeviceLoopDrawingProcInfo = 0x00003E80 };  /* pascal no_return_value Func(2_bytes, 2_bytes, 4_bytes, 4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(DeviceLoopDrawingUPP) NewDeviceLoopDrawingUPP(DeviceLoopDrawingProcPtr userRoutine) { return (DeviceLoopDrawingUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppDeviceLoopDrawingProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewDeviceLoopDrawingUPP(userRoutine) (DeviceLoopDrawingUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppDeviceLoopDrawingProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 #if CALL_NOT_IN_CARBON
 /*
  *  DisposeQDPrinterStatusUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        not available
@@ -1992,18 +1992,18 @@ NewDeviceLoopDrawingUPP(DeviceLoopDrawingProcPtr userRoutine);
 EXTERN_API_C( void )
 DisposeQDPrinterStatusUPP(QDPrinterStatusUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeQDPrinterStatusUPP(QDPrinterStatusUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeQDPrinterStatusUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeQDPrinterStatusUPP(QDPrinterStatusUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeQDPrinterStatusUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 #endif  /* CALL_NOT_IN_CARBON */
 
 /*
  *  DisposeDeviceLoopDrawingUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2012,17 +2012,17 @@ DisposeQDPrinterStatusUPP(QDPrinterStatusUPP userUPP);
 EXTERN_API_C( void )
 DisposeDeviceLoopDrawingUPP(DeviceLoopDrawingUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeDeviceLoopDrawingUPP(DeviceLoopDrawingUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeDeviceLoopDrawingUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeDeviceLoopDrawingUPP(DeviceLoopDrawingUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeDeviceLoopDrawingUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 #if CALL_NOT_IN_CARBON
 /*
  *  InvokeQDPrinterStatusUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        not available
@@ -2030,23 +2030,23 @@ DisposeDeviceLoopDrawingUPP(DeviceLoopDrawingUPP userUPP);
  */
 EXTERN_API_C( OSStatus )
 InvokeQDPrinterStatusUPP(
-  PrinterStatusOpcode  opcode,
-  CGrafPtr             currentPort,
-  void *               printerStatus,
-  QDPrinterStatusUPP   userUPP);
+	PrinterStatusOpcode  opcode,
+	CGrafPtr             currentPort,
+	void *               printerStatus,
+	QDPrinterStatusUPP   userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(OSStatus) InvokeQDPrinterStatusUPP(PrinterStatusOpcode opcode, CGrafPtr currentPort, void * printerStatus, QDPrinterStatusUPP userUPP) { return (OSStatus)CALL_THREE_PARAMETER_UPP(userUPP, uppQDPrinterStatusProcInfo, opcode, currentPort, printerStatus); }
-  #else
-    #define InvokeQDPrinterStatusUPP(opcode, currentPort, printerStatus, userUPP) (OSStatus)CALL_THREE_PARAMETER_UPP((userUPP), uppQDPrinterStatusProcInfo, (opcode), (currentPort), (printerStatus))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(OSStatus) InvokeQDPrinterStatusUPP(PrinterStatusOpcode opcode, CGrafPtr currentPort, void * printerStatus, QDPrinterStatusUPP userUPP) { return (OSStatus)CALL_THREE_PARAMETER_UPP(userUPP, uppQDPrinterStatusProcInfo, opcode, currentPort, printerStatus); }
+	#else
+		#define InvokeQDPrinterStatusUPP(opcode, currentPort, printerStatus, userUPP) (OSStatus)CALL_THREE_PARAMETER_UPP((userUPP), uppQDPrinterStatusProcInfo, (opcode), (currentPort), (printerStatus))
+	#endif
 #endif
 
 #endif  /* CALL_NOT_IN_CARBON */
 
 /*
  *  InvokeDeviceLoopDrawingUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2054,39 +2054,39 @@ InvokeQDPrinterStatusUPP(
  */
 EXTERN_API_C( void )
 InvokeDeviceLoopDrawingUPP(
-  short                 depth,
-  short                 deviceFlags,
-  GDHandle              targetDevice,
-  long                  userData,
-  DeviceLoopDrawingUPP  userUPP);
+	short                 depth,
+	short                 deviceFlags,
+	GDHandle              targetDevice,
+	long                  userData,
+	DeviceLoopDrawingUPP  userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) InvokeDeviceLoopDrawingUPP(short depth, short deviceFlags, GDHandle targetDevice, long userData, DeviceLoopDrawingUPP userUPP) { CALL_FOUR_PARAMETER_UPP(userUPP, uppDeviceLoopDrawingProcInfo, depth, deviceFlags, targetDevice, userData); }
-  #else
-    #define InvokeDeviceLoopDrawingUPP(depth, deviceFlags, targetDevice, userData, userUPP) CALL_FOUR_PARAMETER_UPP((userUPP), uppDeviceLoopDrawingProcInfo, (depth), (deviceFlags), (targetDevice), (userData))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) InvokeDeviceLoopDrawingUPP(short depth, short deviceFlags, GDHandle targetDevice, long userData, DeviceLoopDrawingUPP userUPP) { CALL_FOUR_PARAMETER_UPP(userUPP, uppDeviceLoopDrawingProcInfo, depth, deviceFlags, targetDevice, userData); }
+	#else
+		#define InvokeDeviceLoopDrawingUPP(depth, deviceFlags, targetDevice, userData, userUPP) CALL_FOUR_PARAMETER_UPP((userUPP), uppDeviceLoopDrawingProcInfo, (depth), (deviceFlags), (targetDevice), (userData))
+	#endif
 #endif
 
 #if CALL_NOT_IN_CARBON || OLDROUTINENAMES
-    /* support for pre-Carbon UPP routines: New...Proc and Call...Proc */
-    #define NewQDPrinterStatusProc(userRoutine)                 NewQDPrinterStatusUPP(userRoutine)
-    #define NewDeviceLoopDrawingProc(userRoutine)               NewDeviceLoopDrawingUPP(userRoutine)
-    #define CallQDPrinterStatusProc(userRoutine, opcode, currentPort, printerStatus) InvokeQDPrinterStatusUPP(opcode, currentPort, printerStatus, userRoutine)
-    #define CallDeviceLoopDrawingProc(userRoutine, depth, deviceFlags, targetDevice, userData) InvokeDeviceLoopDrawingUPP(depth, deviceFlags, targetDevice, userData, userRoutine)
+		/* support for pre-Carbon UPP routines: New...Proc and Call...Proc */
+		#define NewQDPrinterStatusProc(userRoutine)                 NewQDPrinterStatusUPP(userRoutine)
+		#define NewDeviceLoopDrawingProc(userRoutine)               NewDeviceLoopDrawingUPP(userRoutine)
+		#define CallQDPrinterStatusProc(userRoutine, opcode, currentPort, printerStatus) InvokeQDPrinterStatusUPP(opcode, currentPort, printerStatus, userRoutine)
+		#define CallDeviceLoopDrawingProc(userRoutine, depth, deviceFlags, targetDevice, userData) InvokeDeviceLoopDrawingUPP(depth, deviceFlags, targetDevice, userData, userRoutine)
 #endif /* CALL_NOT_IN_CARBON */
 
 #if !OPAQUE_TOOLBOX_STRUCTS || !TARGET_API_MAC_CARBON
 struct QDGlobals {
-  char                privates[76];
-  long                randSeed;               /* in Carbon use GetQDGlobalsRandomSeed*/
-  BitMap              screenBits;             /* in Carbon use GetQDGlobalsScreenBits*/
-  ::Cursor            arrow;                  /* in Carbon use GetQDGlobalsArrow*/
-  Pattern             dkGray;                 /* in Carbon use GetQDGlobalsDarkGray*/
-  Pattern             ltGray;                 /* in Carbon use GetQDGlobalsLightGray*/
-  Pattern             gray;                   /* in Carbon use GetQDGlobalsGray*/
-  Pattern             black;                  /* in Carbon use GetQDGlobalsBlack*/
-  Pattern             white;                  /* in Carbon use GetQDGlobalsWhite*/
-  GrafPtr             thePort;                /* in Carbon use GetQDGlobalsThePort*/
+	char                privates[76];
+	long                randSeed;               /* in Carbon use GetQDGlobalsRandomSeed*/
+	BitMap              screenBits;             /* in Carbon use GetQDGlobalsScreenBits*/
+	::Cursor            arrow;                  /* in Carbon use GetQDGlobalsArrow*/
+	Pattern             dkGray;                 /* in Carbon use GetQDGlobalsDarkGray*/
+	Pattern             ltGray;                 /* in Carbon use GetQDGlobalsLightGray*/
+	Pattern             gray;                   /* in Carbon use GetQDGlobalsGray*/
+	Pattern             black;                  /* in Carbon use GetQDGlobalsBlack*/
+	Pattern             white;                  /* in Carbon use GetQDGlobalsWhite*/
+	GrafPtr             thePort;                /* in Carbon use GetQDGlobalsThePort*/
 };
 typedef struct QDGlobals                QDGlobals;
 typedef QDGlobals *                     QDGlobalsPtr;
@@ -2098,7 +2098,7 @@ extern QDGlobals qd;
 #if CALL_NOT_IN_CARBON
 /*
  *  InitGraf()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2110,7 +2110,7 @@ InitGraf(void * globalPtr)                                    ONEWORDINLINE(0xA8
 
 /*
  *  OpenPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2122,7 +2122,7 @@ OpenPort(GrafPtr port)                                        ONEWORDINLINE(0xA8
 
 /*
  *  InitPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2134,7 +2134,7 @@ InitPort(GrafPtr port)                                        ONEWORDINLINE(0xA8
 
 /*
  *  ClosePort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -2145,14 +2145,14 @@ ClosePort(GrafPtr port)                                       ONEWORDINLINE(0xA8
 
 
 /*
-   These are Carbon only routines. They do nothing at all on
-   Mac OS 8, but work flawlessly on Mac OS X.
+	These are Carbon only routines. They do nothing at all on
+	Mac OS 8, but work flawlessly on Mac OS X.
 */
 #endif  /* CALL_NOT_IN_CARBON */
 
 /*
  *  LockPortBits()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2164,7 +2164,7 @@ LockPortBits(GrafPtr port);
 
 /*
  *  UnlockPortBits()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2177,26 +2177,26 @@ UnlockPortBits(GrafPtr port);
 /* Break a region up into rectangles.*/
 
 enum {
-  kQDParseRegionFromTop         = (1 << 0),
-  kQDParseRegionFromBottom      = (1 << 1),
-  kQDParseRegionFromLeft        = (1 << 2),
-  kQDParseRegionFromRight       = (1 << 3),
-  kQDParseRegionFromTopLeft     = kQDParseRegionFromTop | kQDParseRegionFromLeft,
-  kQDParseRegionFromBottomRight = kQDParseRegionFromBottom | kQDParseRegionFromRight
+	kQDParseRegionFromTop         = (1 << 0),
+	kQDParseRegionFromBottom      = (1 << 1),
+	kQDParseRegionFromLeft        = (1 << 2),
+	kQDParseRegionFromRight       = (1 << 3),
+	kQDParseRegionFromTopLeft     = kQDParseRegionFromTop | kQDParseRegionFromLeft,
+	kQDParseRegionFromBottomRight = kQDParseRegionFromBottom | kQDParseRegionFromRight
 };
 
 typedef SInt32                          QDRegionParseDirection;
 enum {
-  kQDRegionToRectsMsgInit       = 1,
-  kQDRegionToRectsMsgParse      = 2,
-  kQDRegionToRectsMsgTerminate  = 3
+	kQDRegionToRectsMsgInit       = 1,
+	kQDRegionToRectsMsgParse      = 2,
+	kQDRegionToRectsMsgTerminate  = 3
 };
 
 typedef CALLBACK_API_C( OSStatus , RegionToRectsProcPtr )(UInt16 message, RgnHandle rgn, const Rect *rect, void *refCon);
 typedef STACK_UPP_TYPE(RegionToRectsProcPtr)                    RegionToRectsUPP;
 /*
  *  NewRegionToRectsUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2205,17 +2205,17 @@ typedef STACK_UPP_TYPE(RegionToRectsProcPtr)                    RegionToRectsUPP
 EXTERN_API_C( RegionToRectsUPP )
 NewRegionToRectsUPP(RegionToRectsProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppRegionToRectsProcInfo = 0x00003FB1 };  /* 4_bytes Func(2_bytes, 4_bytes, 4_bytes, 4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(RegionToRectsUPP) NewRegionToRectsUPP(RegionToRectsProcPtr userRoutine) { return (RegionToRectsUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppRegionToRectsProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewRegionToRectsUPP(userRoutine) (RegionToRectsUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppRegionToRectsProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppRegionToRectsProcInfo = 0x00003FB1 };  /* 4_bytes Func(2_bytes, 4_bytes, 4_bytes, 4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(RegionToRectsUPP) NewRegionToRectsUPP(RegionToRectsProcPtr userRoutine) { return (RegionToRectsUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppRegionToRectsProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewRegionToRectsUPP(userRoutine) (RegionToRectsUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppRegionToRectsProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  DisposeRegionToRectsUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2224,16 +2224,16 @@ NewRegionToRectsUPP(RegionToRectsProcPtr userRoutine);
 EXTERN_API_C( void )
 DisposeRegionToRectsUPP(RegionToRectsUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeRegionToRectsUPP(RegionToRectsUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeRegionToRectsUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeRegionToRectsUPP(RegionToRectsUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeRegionToRectsUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  InvokeRegionToRectsUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2241,28 +2241,28 @@ DisposeRegionToRectsUPP(RegionToRectsUPP userUPP);
  */
 EXTERN_API_C( OSStatus )
 InvokeRegionToRectsUPP(
-  UInt16            message,
-  RgnHandle         rgn,
-  const Rect *      rect,
-  void *            refCon,
-  RegionToRectsUPP  userUPP);
+	UInt16            message,
+	RgnHandle         rgn,
+	const Rect *      rect,
+	void *            refCon,
+	RegionToRectsUPP  userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(OSStatus) InvokeRegionToRectsUPP(UInt16 message, RgnHandle rgn, const Rect * rect, void * refCon, RegionToRectsUPP userUPP) { return (OSStatus)CALL_FOUR_PARAMETER_UPP(userUPP, uppRegionToRectsProcInfo, message, rgn, rect, refCon); }
-  #else
-    #define InvokeRegionToRectsUPP(message, rgn, rect, refCon, userUPP) (OSStatus)CALL_FOUR_PARAMETER_UPP((userUPP), uppRegionToRectsProcInfo, (message), (rgn), (rect), (refCon))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(OSStatus) InvokeRegionToRectsUPP(UInt16 message, RgnHandle rgn, const Rect * rect, void * refCon, RegionToRectsUPP userUPP) { return (OSStatus)CALL_FOUR_PARAMETER_UPP(userUPP, uppRegionToRectsProcInfo, message, rgn, rect, refCon); }
+	#else
+		#define InvokeRegionToRectsUPP(message, rgn, rect, refCon, userUPP) (OSStatus)CALL_FOUR_PARAMETER_UPP((userUPP), uppRegionToRectsProcInfo, (message), (rgn), (rect), (refCon))
+	#endif
 #endif
 
 #if CALL_NOT_IN_CARBON || OLDROUTINENAMES
-    /* support for pre-Carbon UPP routines: New...Proc and Call...Proc */
-    #define NewRegionToRectsProc(userRoutine)                   NewRegionToRectsUPP(userRoutine)
-    #define CallRegionToRectsProc(userRoutine, message, rgn, rect, refCon) InvokeRegionToRectsUPP(message, rgn, rect, refCon, userRoutine)
+		/* support for pre-Carbon UPP routines: New...Proc and Call...Proc */
+		#define NewRegionToRectsProc(userRoutine)                   NewRegionToRectsUPP(userRoutine)
+		#define CallRegionToRectsProc(userRoutine, message, rgn, rect, refCon) InvokeRegionToRectsUPP(message, rgn, rect, refCon, userRoutine)
 #endif /* CALL_NOT_IN_CARBON */
 
 /*
  *  QDRegionToRects()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2270,17 +2270,17 @@ InvokeRegionToRectsUPP(
  */
 EXTERN_API_C( OSStatus )
 QDRegionToRects(
-  RgnHandle                rgn,
-  QDRegionParseDirection   dir,
-  RegionToRectsUPP         proc,
-  void *                   userData);
+	RgnHandle                rgn,
+	QDRegionParseDirection   dir,
+	RegionToRectsUPP         proc,
+	void *                   userData);
 
 
 #if !TARGET_OS_MAC
 #if CALL_NOT_IN_CARBON
 /*
  *  UpdatePort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2292,7 +2292,7 @@ UpdatePort(GrafPtr port);
 
 /*
  *  GetPortNativeWindow()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2304,7 +2304,7 @@ GetPortNativeWindow(GrafPtr macPort);
 
 /*
  *  GetNativeWindowPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2316,7 +2316,7 @@ GetNativeWindowPort(void * nativeWindow);
 
 /*
  *  MacRegionToNativeRegion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2328,7 +2328,7 @@ MacRegionToNativeRegion(RgnHandle macRegion);
 
 /*
  *  NativeRegionToMacRegion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2346,7 +2346,7 @@ NativeRegionToMacRegion(void * nativeRegion);
 #if CALL_NOT_IN_CARBON
 /*
  *  GetPortHWND()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2358,7 +2358,7 @@ GetPortHWND(GrafPtr port);
 
 /*
  *  GetHWNDPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2372,7 +2372,7 @@ GetHWNDPort(void * theHWND);
 #define GetHWNDPort(theHWND) GetNativeWindowPort(theHWND)
 /*
  *  GetPortHDC()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2384,7 +2384,7 @@ GetPortHDC(GrafPtr port);
 
 /*
  *  GetPortHBITMAP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2396,7 +2396,7 @@ GetPortHBITMAP(GrafPtr port);
 
 /*
  *  GetPortHPALETTE()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2408,7 +2408,7 @@ GetPortHPALETTE(GrafPtr port);
 
 /*
  *  GetPortHFONT()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2420,7 +2420,7 @@ GetPortHFONT(GrafPtr port);
 
 /*
  *  GetDIBFromPICT()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2432,7 +2432,7 @@ GetDIBFromPICT(PicHandle hPict);
 
 /*
  *  GetPICTFromDIB()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2444,7 +2444,7 @@ GetPICTFromDIB(void * h);
 
 /*
  *  QTMLFlushDirtyPorts()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2456,7 +2456,7 @@ QTMLFlushDirtyPorts(void);
 
 /*
  *  QTMLFlushPortDirtyRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2468,7 +2468,7 @@ QTMLFlushPortDirtyRgn(GrafPtr port);
 
 /*
  *  QTMLAddRgnToDirtyRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2476,13 +2476,13 @@ QTMLFlushPortDirtyRgn(GrafPtr port);
  */
 EXTERN_API( OSErr )
 QTMLAddRgnToDirtyRgn(
-  GrafPtr     port,
-  RgnHandle   dirtyRgn);
+	GrafPtr     port,
+	RgnHandle   dirtyRgn);
 
 
 /*
  *  QTMLGetBackbufferHDC()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2490,13 +2490,13 @@ QTMLAddRgnToDirtyRgn(
  */
 EXTERN_API( OSErr )
 QTMLGetBackbufferHDC(
-  GrafPtr   port,
-  void *    backbufferHDC);
+	GrafPtr   port,
+	void *    backbufferHDC);
 
 
 /*
  *  QTMLReleaseBackbufferHDC()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2504,13 +2504,13 @@ QTMLGetBackbufferHDC(
  */
 EXTERN_API( OSErr )
 QTMLReleaseBackbufferHDC(
-  GrafPtr   port,
-  void *    backbufferHDC);
+	GrafPtr   port,
+	void *    backbufferHDC);
 
 
 /*
  *  QTMLAddRectToDirtyRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2518,13 +2518,13 @@ QTMLReleaseBackbufferHDC(
  */
 EXTERN_API( OSErr )
 QTMLAddRectToDirtyRgn(
-  GrafPtr   port,
-  Rect *    dirtyRect);
+	GrafPtr   port,
+	Rect *    dirtyRect);
 
 
 /*
  *  QTMLAddNativeRgnToDirtyRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -2532,8 +2532,8 @@ QTMLAddRectToDirtyRgn(
  */
 EXTERN_API( OSErr )
 QTMLAddNativeRgnToDirtyRgn(
-  GrafPtr   port,
-  void *    dirtyHRGN);
+	GrafPtr   port,
+	void *    dirtyHRGN);
 
 
 #endif  /* CALL_NOT_IN_CARBON */
@@ -2542,14 +2542,14 @@ QTMLAddNativeRgnToDirtyRgn(
 
 /*
  *  [Mac]SetPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacSetPort SetPort
+		#define MacSetPort SetPort
 #endif
 EXTERN_API( void )
 MacSetPort(GrafPtr port)                                      ONEWORDINLINE(0xA873);
@@ -2557,7 +2557,7 @@ MacSetPort(GrafPtr port)                                      ONEWORDINLINE(0xA8
 
 /*
  *  GetPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2569,10 +2569,10 @@ GetPort(GrafPtr * port)                                       ONEWORDINLINE(0xA8
 
 /*
  *  QDSwapPort()
- *  
+ *
  *  Summary:
  *    Combines a GetPort(&savePort); SetPort(newPort) sequence.
- *  
+ *
  *  Discussion:
  *    On X, the GetPort/SetPort calls act on per-thread globals, and
  *    cost more processor cycles than in the past, where they were
@@ -2581,19 +2581,19 @@ GetPort(GrafPtr * port)                                       ONEWORDINLINE(0xA8
  *    actually did change. Typical usage: portChanged =
  *    QDSwapPort(newPort, &savePort); // some drawing into newPort if
  *    (portChanged) QDSwapPort(savePort, NULL);
- *  
+ *
  *  Parameters:
- *    
+ *
  *    inNewPort:
  *      The new port to be set.
- *    
+ *
  *    outOldPort:
  *      Receives the previous port. Can be NULL.
- *  
+ *
  *  Result:
  *    A Boolean indicating whether the port was changed, i.e.
  *    (inNewPort != *outOldPort)
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.5 and later
@@ -2601,13 +2601,13 @@ GetPort(GrafPtr * port)                                       ONEWORDINLINE(0xA8
  */
 EXTERN_API( Boolean )
 QDSwapPort(
-  CGrafPtr    inNewPort,
-  CGrafPtr *  outOldPort);
+	CGrafPtr    inNewPort,
+	CGrafPtr *  outOldPort);
 
 
 /*
  *  GrafDevice()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2619,7 +2619,7 @@ GrafDevice(short device)                                      ONEWORDINLINE(0xA8
 
 /*
  *  SetPortBits()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2631,7 +2631,7 @@ SetPortBits(const BitMap * bm)                                ONEWORDINLINE(0xA8
 
 /*
  *  PortSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2639,13 +2639,13 @@ SetPortBits(const BitMap * bm)                                ONEWORDINLINE(0xA8
  */
 EXTERN_API( void )
 PortSize(
-  short   width,
-  short   height)                                             ONEWORDINLINE(0xA876);
+	short   width,
+	short   height)                                             ONEWORDINLINE(0xA876);
 
 
 /*
  *  MovePortTo()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2653,13 +2653,13 @@ PortSize(
  */
 EXTERN_API( void )
 MovePortTo(
-  short   leftGlobal,
-  short   topGlobal)                                          ONEWORDINLINE(0xA877);
+	short   leftGlobal,
+	short   topGlobal)                                          ONEWORDINLINE(0xA877);
 
 
 /*
  *  SetOrigin()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2667,13 +2667,13 @@ MovePortTo(
  */
 EXTERN_API( void )
 SetOrigin(
-  short   h,
-  short   v)                                                  ONEWORDINLINE(0xA878);
+	short   h,
+	short   v)                                                  ONEWORDINLINE(0xA878);
 
 
 /*
  *  SetClip()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2685,7 +2685,7 @@ SetClip(RgnHandle rgn)                                        ONEWORDINLINE(0xA8
 
 /*
  *  GetClip()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2697,7 +2697,7 @@ GetClip(RgnHandle rgn)                                        ONEWORDINLINE(0xA8
 
 /*
  *  ClipRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2709,7 +2709,7 @@ ClipRect(const Rect * r)                                      ONEWORDINLINE(0xA8
 
 /*
  *  BackPat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2721,7 +2721,7 @@ BackPat(const Pattern * pat)                                  ONEWORDINLINE(0xA8
 
 /*
  *  InitCursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2733,14 +2733,14 @@ InitCursor(void)                                              ONEWORDINLINE(0xA8
 
 /*
  *  [Mac]SetCursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacSetCursor SetCursor
+		#define MacSetCursor SetCursor
 #endif
 EXTERN_API( void )
 MacSetCursor(const ::Cursor * crsr)                             ONEWORDINLINE(0xA851);
@@ -2748,7 +2748,7 @@ MacSetCursor(const ::Cursor * crsr)                             ONEWORDINLINE(0x
 
 /*
  *  HideCursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2760,14 +2760,14 @@ HideCursor(void)                                              ONEWORDINLINE(0xA8
 
 /*
  *  [Mac]ShowCursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacShowCursor ShowCursor
+		#define MacShowCursor ShowCursor
 #endif
 EXTERN_API( void )
 MacShowCursor(void)                                           ONEWORDINLINE(0xA853);
@@ -2775,7 +2775,7 @@ MacShowCursor(void)                                           ONEWORDINLINE(0xA8
 
 /*
  *  ObscureCursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2787,7 +2787,7 @@ ObscureCursor(void)                                           ONEWORDINLINE(0xA8
 
 /*
  *  HidePen()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2799,7 +2799,7 @@ HidePen(void)                                                 ONEWORDINLINE(0xA8
 
 /*
  *  ShowPen()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2811,7 +2811,7 @@ ShowPen(void)                                                 ONEWORDINLINE(0xA8
 
 /*
  *  GetPen()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2823,7 +2823,7 @@ GetPen(Point * pt)                                            ONEWORDINLINE(0xA8
 
 /*
  *  GetPenState()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2835,7 +2835,7 @@ GetPenState(PenState * pnState)                               ONEWORDINLINE(0xA8
 
 /*
  *  SetPenState()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2847,7 +2847,7 @@ SetPenState(const PenState * pnState)                         ONEWORDINLINE(0xA8
 
 /*
  *  PenSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2855,13 +2855,13 @@ SetPenState(const PenState * pnState)                         ONEWORDINLINE(0xA8
  */
 EXTERN_API( void )
 PenSize(
-  short   width,
-  short   height)                                             ONEWORDINLINE(0xA89B);
+	short   width,
+	short   height)                                             ONEWORDINLINE(0xA89B);
 
 
 /*
  *  PenMode()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2873,7 +2873,7 @@ PenMode(short mode)                                           ONEWORDINLINE(0xA8
 
 /*
  *  PenPat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2885,7 +2885,7 @@ PenPat(const Pattern * pat)                                   ONEWORDINLINE(0xA8
 
 /*
  *  PenNormal()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2897,7 +2897,7 @@ PenNormal(void)                                               ONEWORDINLINE(0xA8
 
 /*
  *  MoveTo()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2905,13 +2905,13 @@ PenNormal(void)                                               ONEWORDINLINE(0xA8
  */
 EXTERN_API( void )
 MoveTo(
-  short   h,
-  short   v)                                                  ONEWORDINLINE(0xA893);
+	short   h,
+	short   v)                                                  ONEWORDINLINE(0xA893);
 
 
 /*
  *  Move()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2919,30 +2919,30 @@ MoveTo(
  */
 EXTERN_API( void )
 Move(
-  short   dh,
-  short   dv)                                                 ONEWORDINLINE(0xA894);
+	short   dh,
+	short   dv)                                                 ONEWORDINLINE(0xA894);
 
 
 /*
  *  [Mac]LineTo()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacLineTo LineTo
+		#define MacLineTo LineTo
 #endif
 EXTERN_API( void )
 MacLineTo(
-  short   h,
-  short   v)                                                  ONEWORDINLINE(0xA891);
+	short   h,
+	short   v)                                                  ONEWORDINLINE(0xA891);
 
 
 /*
  *  Line()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2950,13 +2950,13 @@ MacLineTo(
  */
 EXTERN_API( void )
 Line(
-  short   dh,
-  short   dv)                                                 ONEWORDINLINE(0xA892);
+	short   dh,
+	short   dv)                                                 ONEWORDINLINE(0xA892);
 
 
 /*
  *  ForeColor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2968,7 +2968,7 @@ ForeColor(long color)                                         ONEWORDINLINE(0xA8
 
 /*
  *  BackColor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2980,7 +2980,7 @@ BackColor(long color)                                         ONEWORDINLINE(0xA8
 
 /*
  *  ColorBit()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -2992,63 +2992,63 @@ ColorBit(short whichBit)                                      ONEWORDINLINE(0xA8
 
 /*
  *  [Mac]SetRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacSetRect SetRect
+		#define MacSetRect SetRect
 #endif
 EXTERN_API( void )
 MacSetRect(
-  Rect *  r,
-  short   left,
-  short   top,
-  short   right,
-  short   bottom)                                             ONEWORDINLINE(0xA8A7);
+	Rect *  r,
+	short   left,
+	short   top,
+	short   right,
+	short   bottom)                                             ONEWORDINLINE(0xA8A7);
 
 
 /*
  *  [Mac]OffsetRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacOffsetRect OffsetRect
+		#define MacOffsetRect OffsetRect
 #endif
 EXTERN_API( void )
 MacOffsetRect(
-  Rect *  r,
-  short   dh,
-  short   dv)                                                 ONEWORDINLINE(0xA8A8);
+	Rect *  r,
+	short   dh,
+	short   dv)                                                 ONEWORDINLINE(0xA8A8);
 
 
 /*
  *  [Mac]InsetRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacInsetRect InsetRect
+		#define MacInsetRect InsetRect
 #endif
 EXTERN_API( void )
 MacInsetRect(
-  Rect *  r,
-  short   dh,
-  short   dv)                                                 ONEWORDINLINE(0xA8A9);
+	Rect *  r,
+	short   dh,
+	short   dv)                                                 ONEWORDINLINE(0xA8A9);
 
 
 /*
  *  SectRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3056,49 +3056,49 @@ MacInsetRect(
  */
 EXTERN_API( Boolean )
 SectRect(
-  const Rect *  src1,
-  const Rect *  src2,
-  Rect *        dstRect)                                      ONEWORDINLINE(0xA8AA);
+	const Rect *  src1,
+	const Rect *  src2,
+	Rect *        dstRect)                                      ONEWORDINLINE(0xA8AA);
 
 
 /*
  *  [Mac]UnionRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacUnionRect UnionRect
+		#define MacUnionRect UnionRect
 #endif
 EXTERN_API( void )
 MacUnionRect(
-  const Rect *  src1,
-  const Rect *  src2,
-  Rect *        dstRect)                                      ONEWORDINLINE(0xA8AB);
+	const Rect *  src1,
+	const Rect *  src2,
+	Rect *        dstRect)                                      ONEWORDINLINE(0xA8AB);
 
 
 /*
  *  [Mac]EqualRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacEqualRect EqualRect
+		#define MacEqualRect EqualRect
 #endif
 EXTERN_API( Boolean )
 MacEqualRect(
-  const Rect *  rect1,
-  const Rect *  rect2)                                        ONEWORDINLINE(0xA8A6);
+	const Rect *  rect1,
+	const Rect *  rect2)                                        ONEWORDINLINE(0xA8A6);
 
 
 /*
  *  EmptyRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3110,14 +3110,14 @@ EmptyRect(const Rect * r)                                     ONEWORDINLINE(0xA8
 
 /*
  *  [Mac]FrameRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacFrameRect FrameRect
+		#define MacFrameRect FrameRect
 #endif
 EXTERN_API( void )
 MacFrameRect(const Rect * r)                                  ONEWORDINLINE(0xA8A1);
@@ -3125,7 +3125,7 @@ MacFrameRect(const Rect * r)                                  ONEWORDINLINE(0xA8
 
 /*
  *  PaintRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3137,7 +3137,7 @@ PaintRect(const Rect * r)                                     ONEWORDINLINE(0xA8
 
 /*
  *  EraseRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3149,14 +3149,14 @@ EraseRect(const Rect * r)                                     ONEWORDINLINE(0xA8
 
 /*
  *  [Mac]InvertRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacInvertRect InvertRect
+		#define MacInvertRect InvertRect
 #endif
 EXTERN_API( void )
 MacInvertRect(const Rect * r)                                 ONEWORDINLINE(0xA8A4);
@@ -3164,24 +3164,24 @@ MacInvertRect(const Rect * r)                                 ONEWORDINLINE(0xA8
 
 /*
  *  [Mac]FillRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacFillRect FillRect
+		#define MacFillRect FillRect
 #endif
 EXTERN_API( void )
 MacFillRect(
-  const Rect *     r,
-  const Pattern *  pat)                                       ONEWORDINLINE(0xA8A5);
+	const Rect *     r,
+	const Pattern *  pat)                                       ONEWORDINLINE(0xA8A5);
 
 
 /*
  *  FrameOval()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3193,7 +3193,7 @@ FrameOval(const Rect * r)                                     ONEWORDINLINE(0xA8
 
 /*
  *  PaintOval()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3205,7 +3205,7 @@ PaintOval(const Rect * r)                                     ONEWORDINLINE(0xA8
 
 /*
  *  EraseOval()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3217,7 +3217,7 @@ EraseOval(const Rect * r)                                     ONEWORDINLINE(0xA8
 
 /*
  *  InvertOval()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3229,7 +3229,7 @@ InvertOval(const Rect * r)                                    ONEWORDINLINE(0xA8
 
 /*
  *  FillOval()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3237,13 +3237,13 @@ InvertOval(const Rect * r)                                    ONEWORDINLINE(0xA8
  */
 EXTERN_API( void )
 FillOval(
-  const Rect *     r,
-  const Pattern *  pat)                                       ONEWORDINLINE(0xA8BB);
+	const Rect *     r,
+	const Pattern *  pat)                                       ONEWORDINLINE(0xA8BB);
 
 
 /*
  *  FrameRoundRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3251,14 +3251,14 @@ FillOval(
  */
 EXTERN_API( void )
 FrameRoundRect(
-  const Rect *  r,
-  short         ovalWidth,
-  short         ovalHeight)                                   ONEWORDINLINE(0xA8B0);
+	const Rect *  r,
+	short         ovalWidth,
+	short         ovalHeight)                                   ONEWORDINLINE(0xA8B0);
 
 
 /*
  *  PaintRoundRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3266,14 +3266,14 @@ FrameRoundRect(
  */
 EXTERN_API( void )
 PaintRoundRect(
-  const Rect *  r,
-  short         ovalWidth,
-  short         ovalHeight)                                   ONEWORDINLINE(0xA8B1);
+	const Rect *  r,
+	short         ovalWidth,
+	short         ovalHeight)                                   ONEWORDINLINE(0xA8B1);
 
 
 /*
  *  EraseRoundRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3281,14 +3281,14 @@ PaintRoundRect(
  */
 EXTERN_API( void )
 EraseRoundRect(
-  const Rect *  r,
-  short         ovalWidth,
-  short         ovalHeight)                                   ONEWORDINLINE(0xA8B2);
+	const Rect *  r,
+	short         ovalWidth,
+	short         ovalHeight)                                   ONEWORDINLINE(0xA8B2);
 
 
 /*
  *  InvertRoundRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3296,14 +3296,14 @@ EraseRoundRect(
  */
 EXTERN_API( void )
 InvertRoundRect(
-  const Rect *  r,
-  short         ovalWidth,
-  short         ovalHeight)                                   ONEWORDINLINE(0xA8B3);
+	const Rect *  r,
+	short         ovalWidth,
+	short         ovalHeight)                                   ONEWORDINLINE(0xA8B3);
 
 
 /*
  *  FillRoundRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3311,15 +3311,15 @@ InvertRoundRect(
  */
 EXTERN_API( void )
 FillRoundRect(
-  const Rect *     r,
-  short            ovalWidth,
-  short            ovalHeight,
-  const Pattern *  pat)                                       ONEWORDINLINE(0xA8B4);
+	const Rect *     r,
+	short            ovalWidth,
+	short            ovalHeight,
+	const Pattern *  pat)                                       ONEWORDINLINE(0xA8B4);
 
 
 /*
  *  FrameArc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3327,14 +3327,14 @@ FillRoundRect(
  */
 EXTERN_API( void )
 FrameArc(
-  const Rect *  r,
-  short         startAngle,
-  short         arcAngle)                                     ONEWORDINLINE(0xA8BE);
+	const Rect *  r,
+	short         startAngle,
+	short         arcAngle)                                     ONEWORDINLINE(0xA8BE);
 
 
 /*
  *  PaintArc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3342,14 +3342,14 @@ FrameArc(
  */
 EXTERN_API( void )
 PaintArc(
-  const Rect *  r,
-  short         startAngle,
-  short         arcAngle)                                     ONEWORDINLINE(0xA8BF);
+	const Rect *  r,
+	short         startAngle,
+	short         arcAngle)                                     ONEWORDINLINE(0xA8BF);
 
 
 /*
  *  EraseArc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3357,14 +3357,14 @@ PaintArc(
  */
 EXTERN_API( void )
 EraseArc(
-  const Rect *  r,
-  short         startAngle,
-  short         arcAngle)                                     ONEWORDINLINE(0xA8C0);
+	const Rect *  r,
+	short         startAngle,
+	short         arcAngle)                                     ONEWORDINLINE(0xA8C0);
 
 
 /*
  *  InvertArc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3372,14 +3372,14 @@ EraseArc(
  */
 EXTERN_API( void )
 InvertArc(
-  const Rect *  r,
-  short         startAngle,
-  short         arcAngle)                                     ONEWORDINLINE(0xA8C1);
+	const Rect *  r,
+	short         startAngle,
+	short         arcAngle)                                     ONEWORDINLINE(0xA8C1);
 
 
 /*
  *  FillArc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3387,15 +3387,15 @@ InvertArc(
  */
 EXTERN_API( void )
 FillArc(
-  const Rect *     r,
-  short            startAngle,
-  short            arcAngle,
-  const Pattern *  pat)                                       ONEWORDINLINE(0xA8C2);
+	const Rect *     r,
+	short            startAngle,
+	short            arcAngle,
+	const Pattern *  pat)                                       ONEWORDINLINE(0xA8C2);
 
 
 /*
  *  NewRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3407,7 +3407,7 @@ NewRgn(void)                                                  ONEWORDINLINE(0xA8
 
 /*
  *  OpenRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3419,7 +3419,7 @@ OpenRgn(void)                                                 ONEWORDINLINE(0xA8
 
 /*
  *  CloseRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3431,7 +3431,7 @@ CloseRgn(RgnHandle dstRgn)                                    ONEWORDINLINE(0xA8
 
 /*
  *  BitMapToRegion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3439,13 +3439,13 @@ CloseRgn(RgnHandle dstRgn)                                    ONEWORDINLINE(0xA8
  */
 EXTERN_API( OSErr )
 BitMapToRegion(
-  RgnHandle       region,
-  const BitMap *  bMap)                                       ONEWORDINLINE(0xA8D7);
+	RgnHandle       region,
+	const BitMap *  bMap)                                       ONEWORDINLINE(0xA8D7);
 
 
 /*
  *  HandleToRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.1 and later
@@ -3453,13 +3453,13 @@ BitMapToRegion(
  */
 EXTERN_API( void )
 HandleToRgn(
-  Handle      oldRegion,
-  RgnHandle   region);
+	Handle      oldRegion,
+	RgnHandle   region);
 
 
 /*
  *  RgnToHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.3 and later
@@ -3467,13 +3467,13 @@ HandleToRgn(
  */
 EXTERN_API( void )
 RgnToHandle(
-  RgnHandle   region,
-  Handle      flattenedRgnDataHdl);
+	RgnHandle   region,
+	Handle      flattenedRgnDataHdl);
 
 
 /*
  *  DisposeRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3485,24 +3485,24 @@ DisposeRgn(RgnHandle rgn)                                     ONEWORDINLINE(0xA8
 
 /*
  *  [Mac]CopyRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacCopyRgn CopyRgn
+		#define MacCopyRgn CopyRgn
 #endif
 EXTERN_API( void )
 MacCopyRgn(
-  RgnHandle   srcRgn,
-  RgnHandle   dstRgn)                                         ONEWORDINLINE(0xA8DC);
+	RgnHandle   srcRgn,
+	RgnHandle   dstRgn)                                         ONEWORDINLINE(0xA8DC);
 
 
 /*
  *  SetEmptyRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3514,27 +3514,27 @@ SetEmptyRgn(RgnHandle rgn)                                    ONEWORDINLINE(0xA8
 
 /*
  *  [Mac]SetRectRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacSetRectRgn SetRectRgn
+		#define MacSetRectRgn SetRectRgn
 #endif
 EXTERN_API( void )
 MacSetRectRgn(
-  RgnHandle   rgn,
-  short       left,
-  short       top,
-  short       right,
-  short       bottom)                                         ONEWORDINLINE(0xA8DE);
+	RgnHandle   rgn,
+	short       left,
+	short       top,
+	short       right,
+	short       bottom)                                         ONEWORDINLINE(0xA8DE);
 
 
 /*
  *  RectRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3542,31 +3542,31 @@ MacSetRectRgn(
  */
 EXTERN_API( void )
 RectRgn(
-  RgnHandle     rgn,
-  const Rect *  r)                                            ONEWORDINLINE(0xA8DF);
+	RgnHandle     rgn,
+	const Rect *  r)                                            ONEWORDINLINE(0xA8DF);
 
 
 /*
  *  [Mac]OffsetRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacOffsetRgn OffsetRgn
+		#define MacOffsetRgn OffsetRgn
 #endif
 EXTERN_API( void )
 MacOffsetRgn(
-  RgnHandle   rgn,
-  short       dh,
-  short       dv)                                             ONEWORDINLINE(0xA8E0);
+	RgnHandle   rgn,
+	short       dh,
+	short       dv)                                             ONEWORDINLINE(0xA8E0);
 
 
 /*
  *  InsetRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3574,14 +3574,14 @@ MacOffsetRgn(
  */
 EXTERN_API( void )
 InsetRgn(
-  RgnHandle   rgn,
-  short       dh,
-  short       dv)                                             ONEWORDINLINE(0xA8E1);
+	RgnHandle   rgn,
+	short       dh,
+	short       dv)                                             ONEWORDINLINE(0xA8E1);
 
 
 /*
  *  SectRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3589,32 +3589,32 @@ InsetRgn(
  */
 EXTERN_API( void )
 SectRgn(
-  RgnHandle   srcRgnA,
-  RgnHandle   srcRgnB,
-  RgnHandle   dstRgn)                                         ONEWORDINLINE(0xA8E4);
+	RgnHandle   srcRgnA,
+	RgnHandle   srcRgnB,
+	RgnHandle   dstRgn)                                         ONEWORDINLINE(0xA8E4);
 
 
 /*
  *  [Mac]UnionRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacUnionRgn UnionRgn
+		#define MacUnionRgn UnionRgn
 #endif
 EXTERN_API( void )
 MacUnionRgn(
-  RgnHandle   srcRgnA,
-  RgnHandle   srcRgnB,
-  RgnHandle   dstRgn)                                         ONEWORDINLINE(0xA8E5);
+	RgnHandle   srcRgnA,
+	RgnHandle   srcRgnB,
+	RgnHandle   dstRgn)                                         ONEWORDINLINE(0xA8E5);
 
 
 /*
  *  DiffRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3622,32 +3622,32 @@ MacUnionRgn(
  */
 EXTERN_API( void )
 DiffRgn(
-  RgnHandle   srcRgnA,
-  RgnHandle   srcRgnB,
-  RgnHandle   dstRgn)                                         ONEWORDINLINE(0xA8E6);
+	RgnHandle   srcRgnA,
+	RgnHandle   srcRgnB,
+	RgnHandle   dstRgn)                                         ONEWORDINLINE(0xA8E6);
 
 
 /*
  *  [Mac]XorRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacXorRgn XorRgn
+		#define MacXorRgn XorRgn
 #endif
 EXTERN_API( void )
 MacXorRgn(
-  RgnHandle   srcRgnA,
-  RgnHandle   srcRgnB,
-  RgnHandle   dstRgn)                                         ONEWORDINLINE(0xA8E7);
+	RgnHandle   srcRgnA,
+	RgnHandle   srcRgnB,
+	RgnHandle   dstRgn)                                         ONEWORDINLINE(0xA8E7);
 
 
 /*
  *  RectInRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3655,30 +3655,30 @@ MacXorRgn(
  */
 EXTERN_API( Boolean )
 RectInRgn(
-  const Rect *  r,
-  RgnHandle     rgn)                                          ONEWORDINLINE(0xA8E9);
+	const Rect *  r,
+	RgnHandle     rgn)                                          ONEWORDINLINE(0xA8E9);
 
 
 /*
  *  [Mac]EqualRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacEqualRgn EqualRgn
+		#define MacEqualRgn EqualRgn
 #endif
 EXTERN_API( Boolean )
 MacEqualRgn(
-  RgnHandle   rgnA,
-  RgnHandle   rgnB)                                           ONEWORDINLINE(0xA8E3);
+	RgnHandle   rgnA,
+	RgnHandle   rgnB)                                           ONEWORDINLINE(0xA8E3);
 
 
 /*
  *  EmptyRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3690,14 +3690,14 @@ EmptyRgn(RgnHandle rgn)                                       ONEWORDINLINE(0xA8
 
 /*
  *  [Mac]FrameRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacFrameRgn FrameRgn
+		#define MacFrameRgn FrameRgn
 #endif
 EXTERN_API( void )
 MacFrameRgn(RgnHandle rgn)                                    ONEWORDINLINE(0xA8D2);
@@ -3705,14 +3705,14 @@ MacFrameRgn(RgnHandle rgn)                                    ONEWORDINLINE(0xA8
 
 /*
  *  [Mac]PaintRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacPaintRgn PaintRgn
+		#define MacPaintRgn PaintRgn
 #endif
 EXTERN_API( void )
 MacPaintRgn(RgnHandle rgn)                                    ONEWORDINLINE(0xA8D3);
@@ -3720,7 +3720,7 @@ MacPaintRgn(RgnHandle rgn)                                    ONEWORDINLINE(0xA8
 
 /*
  *  EraseRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3732,14 +3732,14 @@ EraseRgn(RgnHandle rgn)                                       ONEWORDINLINE(0xA8
 
 /*
  *  [Mac]InvertRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacInvertRgn InvertRgn
+		#define MacInvertRgn InvertRgn
 #endif
 EXTERN_API( void )
 MacInvertRgn(RgnHandle rgn)                                   ONEWORDINLINE(0xA8D5);
@@ -3747,24 +3747,24 @@ MacInvertRgn(RgnHandle rgn)                                   ONEWORDINLINE(0xA8
 
 /*
  *  [Mac]FillRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacFillRgn FillRgn
+		#define MacFillRgn FillRgn
 #endif
 EXTERN_API( void )
 MacFillRgn(
-  RgnHandle        rgn,
-  const Pattern *  pat)                                       ONEWORDINLINE(0xA8D6);
+	RgnHandle        rgn,
+	const Pattern *  pat)                                       ONEWORDINLINE(0xA8D6);
 
 
 /*
  *  ScrollRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3772,15 +3772,15 @@ MacFillRgn(
  */
 EXTERN_API( void )
 ScrollRect(
-  const Rect *  r,
-  short         dh,
-  short         dv,
-  RgnHandle     updateRgn)                                    ONEWORDINLINE(0xA8EF);
+	const Rect *  r,
+	short         dh,
+	short         dv,
+	RgnHandle     updateRgn)                                    ONEWORDINLINE(0xA8EF);
 
 
 /*
  *  CopyBits()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3788,17 +3788,17 @@ ScrollRect(
  */
 EXTERN_API( void )
 CopyBits(
-  const BitMap *  srcBits,
-  const BitMap *  dstBits,
-  const Rect *    srcRect,
-  const Rect *    dstRect,
-  short           mode,
-  RgnHandle       maskRgn)       /* can be NULL */            ONEWORDINLINE(0xA8EC);
+	const BitMap *  srcBits,
+	const BitMap *  dstBits,
+	const Rect *    srcRect,
+	const Rect *    dstRect,
+	short           mode,
+	RgnHandle       maskRgn)       /* can be NULL */            ONEWORDINLINE(0xA8EC);
 
 
 /*
  *  SeedFill()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3806,19 +3806,19 @@ CopyBits(
  */
 EXTERN_API( void )
 SeedFill(
-  const void *  srcPtr,
-  void *        dstPtr,
-  short         srcRow,
-  short         dstRow,
-  short         height,
-  short         words,
-  short         seedH,
-  short         seedV)                                        ONEWORDINLINE(0xA839);
+	const void *  srcPtr,
+	void *        dstPtr,
+	short         srcRow,
+	short         dstRow,
+	short         height,
+	short         words,
+	short         seedH,
+	short         seedV)                                        ONEWORDINLINE(0xA839);
 
 
 /*
  *  CalcMask()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3826,17 +3826,17 @@ SeedFill(
  */
 EXTERN_API( void )
 CalcMask(
-  const void *  srcPtr,
-  void *        dstPtr,
-  short         srcRow,
-  short         dstRow,
-  short         height,
-  short         words)                                        ONEWORDINLINE(0xA838);
+	const void *  srcPtr,
+	void *        dstPtr,
+	short         srcRow,
+	short         dstRow,
+	short         height,
+	short         words)                                        ONEWORDINLINE(0xA838);
 
 
 /*
  *  CopyMask()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3844,17 +3844,17 @@ CalcMask(
  */
 EXTERN_API( void )
 CopyMask(
-  const BitMap *  srcBits,
-  const BitMap *  maskBits,
-  const BitMap *  dstBits,
-  const Rect *    srcRect,
-  const Rect *    maskRect,
-  const Rect *    dstRect)                                    ONEWORDINLINE(0xA817);
+	const BitMap *  srcBits,
+	const BitMap *  maskBits,
+	const BitMap *  dstBits,
+	const Rect *    srcRect,
+	const Rect *    maskRect,
+	const Rect *    dstRect)                                    ONEWORDINLINE(0xA817);
 
 
 /*
  *  OpenPicture()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3866,7 +3866,7 @@ OpenPicture(const Rect * picFrame)                            ONEWORDINLINE(0xA8
 
 /*
  *  PicComment()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3874,14 +3874,14 @@ OpenPicture(const Rect * picFrame)                            ONEWORDINLINE(0xA8
  */
 EXTERN_API( void )
 PicComment(
-  short    kind,
-  short    dataSize,
-  Handle   dataHandle)                                        ONEWORDINLINE(0xA8F2);
+	short    kind,
+	short    dataSize,
+	Handle   dataHandle)                                        ONEWORDINLINE(0xA8F2);
 
 
 /*
  *  ClosePicture()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3893,7 +3893,7 @@ ClosePicture(void)                                            ONEWORDINLINE(0xA8
 
 /*
  *  DrawPicture()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3901,13 +3901,13 @@ ClosePicture(void)                                            ONEWORDINLINE(0xA8
  */
 EXTERN_API( void )
 DrawPicture(
-  PicHandle     myPicture,
-  const Rect *  dstRect)                                      ONEWORDINLINE(0xA8F6);
+	PicHandle     myPicture,
+	const Rect *  dstRect)                                      ONEWORDINLINE(0xA8F6);
 
 
 /*
  *  KillPicture()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3919,7 +3919,7 @@ KillPicture(PicHandle myPicture)                              ONEWORDINLINE(0xA8
 
 /*
  *  OpenPoly()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3931,7 +3931,7 @@ OpenPoly(void)                                                ONEWORDINLINE(0xA8
 
 /*
  *  ClosePoly()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3943,7 +3943,7 @@ ClosePoly(void)                                               ONEWORDINLINE(0xA8
 
 /*
  *  KillPoly()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3955,7 +3955,7 @@ KillPoly(PolyHandle poly)                                     ONEWORDINLINE(0xA8
 
 /*
  *  OffsetPoly()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3963,14 +3963,14 @@ KillPoly(PolyHandle poly)                                     ONEWORDINLINE(0xA8
  */
 EXTERN_API( void )
 OffsetPoly(
-  PolyHandle   poly,
-  short        dh,
-  short        dv)                                            ONEWORDINLINE(0xA8CE);
+	PolyHandle   poly,
+	short        dh,
+	short        dv)                                            ONEWORDINLINE(0xA8CE);
 
 
 /*
  *  FramePoly()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3982,7 +3982,7 @@ FramePoly(PolyHandle poly)                                    ONEWORDINLINE(0xA8
 
 /*
  *  PaintPoly()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -3994,7 +3994,7 @@ PaintPoly(PolyHandle poly)                                    ONEWORDINLINE(0xA8
 
 /*
  *  ErasePoly()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4006,7 +4006,7 @@ ErasePoly(PolyHandle poly)                                    ONEWORDINLINE(0xA8
 
 /*
  *  InvertPoly()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4018,7 +4018,7 @@ InvertPoly(PolyHandle poly)                                   ONEWORDINLINE(0xA8
 
 /*
  *  FillPoly()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4026,13 +4026,13 @@ InvertPoly(PolyHandle poly)                                   ONEWORDINLINE(0xA8
  */
 EXTERN_API( void )
 FillPoly(
-  PolyHandle       poly,
-  const Pattern *  pat)                                       ONEWORDINLINE(0xA8CA);
+	PolyHandle       poly,
+	const Pattern *  pat)                                       ONEWORDINLINE(0xA8CA);
 
 
 /*
  *  SetPt()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4040,14 +4040,14 @@ FillPoly(
  */
 EXTERN_API( void )
 SetPt(
-  Point *  pt,
-  short    h,
-  short    v)                                                 ONEWORDINLINE(0xA880);
+	Point *  pt,
+	short    h,
+	short    v)                                                 ONEWORDINLINE(0xA880);
 
 
 /*
  *  LocalToGlobal()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4059,7 +4059,7 @@ LocalToGlobal(Point * pt)                                     ONEWORDINLINE(0xA8
 
 /*
  *  GlobalToLocal()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4071,7 +4071,7 @@ GlobalToLocal(Point * pt)                                     ONEWORDINLINE(0xA8
 
 /*
  *  Random()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4083,7 +4083,7 @@ Random(void)                                                  ONEWORDINLINE(0xA8
 
 /*
  *  StuffHex()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4091,30 +4091,30 @@ Random(void)                                                  ONEWORDINLINE(0xA8
  */
 EXTERN_API( void )
 StuffHex(
-  void *             thingPtr,
-  ConstStr255Param   s)                                       ONEWORDINLINE(0xA866);
+	void *             thingPtr,
+	ConstStr255Param   s)                                       ONEWORDINLINE(0xA866);
 
 
 /*
  *  [Mac]GetPixel()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacGetPixel GetPixel
+		#define MacGetPixel GetPixel
 #endif
 EXTERN_API( Boolean )
 MacGetPixel(
-  short   h,
-  short   v)                                                  ONEWORDINLINE(0xA865);
+	short   h,
+	short   v)                                                  ONEWORDINLINE(0xA865);
 
 
 /*
  *  ScalePt()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4122,14 +4122,14 @@ MacGetPixel(
  */
 EXTERN_API( void )
 ScalePt(
-  Point *       pt,
-  const Rect *  srcRect,
-  const Rect *  dstRect)                                      ONEWORDINLINE(0xA8F8);
+	Point *       pt,
+	const Rect *  srcRect,
+	const Rect *  dstRect)                                      ONEWORDINLINE(0xA8F8);
 
 
 /*
  *  MapPt()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4137,14 +4137,14 @@ ScalePt(
  */
 EXTERN_API( void )
 MapPt(
-  Point *       pt,
-  const Rect *  srcRect,
-  const Rect *  dstRect)                                      ONEWORDINLINE(0xA8F9);
+	Point *       pt,
+	const Rect *  srcRect,
+	const Rect *  dstRect)                                      ONEWORDINLINE(0xA8F9);
 
 
 /*
  *  MapRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4152,14 +4152,14 @@ MapPt(
  */
 EXTERN_API( void )
 MapRect(
-  Rect *        r,
-  const Rect *  srcRect,
-  const Rect *  dstRect)                                      ONEWORDINLINE(0xA8FA);
+	Rect *        r,
+	const Rect *  srcRect,
+	const Rect *  dstRect)                                      ONEWORDINLINE(0xA8FA);
 
 
 /*
  *  MapRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4167,14 +4167,14 @@ MapRect(
  */
 EXTERN_API( void )
 MapRgn(
-  RgnHandle     rgn,
-  const Rect *  srcRect,
-  const Rect *  dstRect)                                      ONEWORDINLINE(0xA8FB);
+	RgnHandle     rgn,
+	const Rect *  srcRect,
+	const Rect *  dstRect)                                      ONEWORDINLINE(0xA8FB);
 
 
 /*
  *  MapPoly()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4182,14 +4182,14 @@ MapRgn(
  */
 EXTERN_API( void )
 MapPoly(
-  PolyHandle    poly,
-  const Rect *  srcRect,
-  const Rect *  dstRect)                                      ONEWORDINLINE(0xA8FC);
+	PolyHandle    poly,
+	const Rect *  srcRect,
+	const Rect *  dstRect)                                      ONEWORDINLINE(0xA8FC);
 
 
 /*
  *  SetStdProcs()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4201,7 +4201,7 @@ SetStdProcs(QDProcs * procs)                                  ONEWORDINLINE(0xA8
 
 /*
  *  StdRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4209,13 +4209,13 @@ SetStdProcs(QDProcs * procs)                                  ONEWORDINLINE(0xA8
  */
 EXTERN_API( void )
 StdRect(
-  GrafVerb      verb,
-  const Rect *  r)                                            ONEWORDINLINE(0xA8A0);
+	GrafVerb      verb,
+	const Rect *  r)                                            ONEWORDINLINE(0xA8A0);
 
 
 /*
  *  StdRRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4223,15 +4223,15 @@ StdRect(
  */
 EXTERN_API( void )
 StdRRect(
-  GrafVerb      verb,
-  const Rect *  r,
-  short         ovalWidth,
-  short         ovalHeight)                                   ONEWORDINLINE(0xA8AF);
+	GrafVerb      verb,
+	const Rect *  r,
+	short         ovalWidth,
+	short         ovalHeight)                                   ONEWORDINLINE(0xA8AF);
 
 
 /*
  *  StdOval()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4239,13 +4239,13 @@ StdRRect(
  */
 EXTERN_API( void )
 StdOval(
-  GrafVerb      verb,
-  const Rect *  r)                                            ONEWORDINLINE(0xA8B6);
+	GrafVerb      verb,
+	const Rect *  r)                                            ONEWORDINLINE(0xA8B6);
 
 
 /*
  *  StdArc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4253,15 +4253,15 @@ StdOval(
  */
 EXTERN_API( void )
 StdArc(
-  GrafVerb      verb,
-  const Rect *  r,
-  short         startAngle,
-  short         arcAngle)                                     ONEWORDINLINE(0xA8BD);
+	GrafVerb      verb,
+	const Rect *  r,
+	short         startAngle,
+	short         arcAngle)                                     ONEWORDINLINE(0xA8BD);
 
 
 /*
  *  StdPoly()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4269,13 +4269,13 @@ StdArc(
  */
 EXTERN_API( void )
 StdPoly(
-  GrafVerb     verb,
-  PolyHandle   poly)                                          ONEWORDINLINE(0xA8C5);
+	GrafVerb     verb,
+	PolyHandle   poly)                                          ONEWORDINLINE(0xA8C5);
 
 
 /*
  *  StdRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4283,13 +4283,13 @@ StdPoly(
  */
 EXTERN_API( void )
 StdRgn(
-  GrafVerb    verb,
-  RgnHandle   rgn)                                            ONEWORDINLINE(0xA8D1);
+	GrafVerb    verb,
+	RgnHandle   rgn)                                            ONEWORDINLINE(0xA8D1);
 
 
 /*
  *  StdBits()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4297,16 +4297,16 @@ StdRgn(
  */
 EXTERN_API( void )
 StdBits(
-  const BitMap *  srcBits,
-  const Rect *    srcRect,
-  const Rect *    dstRect,
-  short           mode,
-  RgnHandle       maskRgn)                                    ONEWORDINLINE(0xA8EB);
+	const BitMap *  srcBits,
+	const Rect *    srcRect,
+	const Rect *    dstRect,
+	short           mode,
+	RgnHandle       maskRgn)                                    ONEWORDINLINE(0xA8EB);
 
 
 /*
  *  StdComment()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4314,14 +4314,14 @@ StdBits(
  */
 EXTERN_API( void )
 StdComment(
-  short    kind,
-  short    dataSize,
-  Handle   dataHandle)                                        ONEWORDINLINE(0xA8F1);
+	short    kind,
+	short    dataSize,
+	Handle   dataHandle)                                        ONEWORDINLINE(0xA8F1);
 
 
 /*
  *  StdGetPic()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4329,13 +4329,13 @@ StdComment(
  */
 EXTERN_API( void )
 StdGetPic(
-  void *  dataPtr,
-  short   byteCount)                                          ONEWORDINLINE(0xA8EE);
+	void *  dataPtr,
+	short   byteCount)                                          ONEWORDINLINE(0xA8EE);
 
 
 /*
  *  StdPutPic()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4343,13 +4343,13 @@ StdGetPic(
  */
 EXTERN_API( void )
 StdPutPic(
-  const void *  dataPtr,
-  short         byteCount)                                    ONEWORDINLINE(0xA8F0);
+	const void *  dataPtr,
+	short         byteCount)                                    ONEWORDINLINE(0xA8F0);
 
 
 /*
  *  StdOpcode()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4357,15 +4357,15 @@ StdPutPic(
  */
 EXTERN_API( void )
 StdOpcode(
-  const Rect *  fromRect,
-  const Rect *  toRect,
-  UInt16        opcode,
-  SInt16        version)                                      ONEWORDINLINE(0xABF8);
+	const Rect *  fromRect,
+	const Rect *  toRect,
+	UInt16        opcode,
+	SInt16        version)                                      ONEWORDINLINE(0xABF8);
 
 
 /*
  *  AddPt()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4373,13 +4373,13 @@ StdOpcode(
  */
 EXTERN_API( void )
 AddPt(
-  Point    src,
-  Point *  dst)                                               ONEWORDINLINE(0xA87E);
+	Point    src,
+	Point *  dst)                                               ONEWORDINLINE(0xA87E);
 
 
 /*
  *  EqualPt()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4387,30 +4387,30 @@ AddPt(
  */
 EXTERN_API( Boolean )
 EqualPt(
-  Point   pt1,
-  Point   pt2)                                                ONEWORDINLINE(0xA881);
+	Point   pt1,
+	Point   pt2)                                                ONEWORDINLINE(0xA881);
 
 
 /*
  *  [Mac]PtInRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacPtInRect PtInRect
+		#define MacPtInRect PtInRect
 #endif
 EXTERN_API( Boolean )
 MacPtInRect(
-  Point         pt,
-  const Rect *  r)                                            ONEWORDINLINE(0xA8AD);
+	Point         pt,
+	const Rect *  r)                                            ONEWORDINLINE(0xA8AD);
 
 
 /*
  *  Pt2Rect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4418,14 +4418,14 @@ MacPtInRect(
  */
 EXTERN_API( void )
 Pt2Rect(
-  Point   pt1,
-  Point   pt2,
-  Rect *  dstRect)                                            ONEWORDINLINE(0xA8AC);
+	Point   pt1,
+	Point   pt2,
+	Rect *  dstRect)                                            ONEWORDINLINE(0xA8AC);
 
 
 /*
  *  PtToAngle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4433,14 +4433,14 @@ Pt2Rect(
  */
 EXTERN_API( void )
 PtToAngle(
-  const Rect *  r,
-  Point         pt,
-  short *       angle)                                        ONEWORDINLINE(0xA8C3);
+	const Rect *  r,
+	Point         pt,
+	short *       angle)                                        ONEWORDINLINE(0xA8C3);
 
 
 /*
  *  SubPt()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4448,13 +4448,13 @@ PtToAngle(
  */
 EXTERN_API( void )
 SubPt(
-  Point    src,
-  Point *  dst)                                               ONEWORDINLINE(0xA87F);
+	Point    src,
+	Point *  dst)                                               ONEWORDINLINE(0xA87F);
 
 
 /*
  *  PtInRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4462,13 +4462,13 @@ SubPt(
  */
 EXTERN_API( Boolean )
 PtInRgn(
-  Point       pt,
-  RgnHandle   rgn)                                            ONEWORDINLINE(0xA8E8);
+	Point       pt,
+	RgnHandle   rgn)                                            ONEWORDINLINE(0xA8E8);
 
 
 /*
  *  StdLine()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4481,7 +4481,7 @@ StdLine(Point newPt)                                          ONEWORDINLINE(0xA8
 #if CALL_NOT_IN_CARBON
 /*
  *  OpenCPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -4493,7 +4493,7 @@ OpenCPort(CGrafPtr port)                                      ONEWORDINLINE(0xAA
 
 /*
  *  InitCPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -4505,7 +4505,7 @@ InitCPort(CGrafPtr port)                                      ONEWORDINLINE(0xAA
 
 /*
  *  CloseCPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -4519,7 +4519,7 @@ CloseCPort(CGrafPtr port)                                     ONEWORDINLINE(0xAA
 
 /*
  *  NewPixMap()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4531,7 +4531,7 @@ NewPixMap(void)                                               ONEWORDINLINE(0xAA
 
 /*
  *  DisposePixMap()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4543,7 +4543,7 @@ DisposePixMap(PixMapHandle pm)                                ONEWORDINLINE(0xAA
 
 /*
  *  CopyPixMap()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4551,13 +4551,13 @@ DisposePixMap(PixMapHandle pm)                                ONEWORDINLINE(0xAA
  */
 EXTERN_API( void )
 CopyPixMap(
-  PixMapHandle   srcPM,
-  PixMapHandle   dstPM)                                       ONEWORDINLINE(0xAA05);
+	PixMapHandle   srcPM,
+	PixMapHandle   dstPM)                                       ONEWORDINLINE(0xAA05);
 
 
 /*
  *  NewPixPat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4569,7 +4569,7 @@ NewPixPat(void)                                               ONEWORDINLINE(0xAA
 
 /*
  *  DisposePixPat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4581,7 +4581,7 @@ DisposePixPat(PixPatHandle pp)                                ONEWORDINLINE(0xAA
 
 /*
  *  CopyPixPat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4589,13 +4589,13 @@ DisposePixPat(PixPatHandle pp)                                ONEWORDINLINE(0xAA
  */
 EXTERN_API( void )
 CopyPixPat(
-  PixPatHandle   srcPP,
-  PixPatHandle   dstPP)                                       ONEWORDINLINE(0xAA09);
+	PixPatHandle   srcPP,
+	PixPatHandle   dstPP)                                       ONEWORDINLINE(0xAA09);
 
 
 /*
  *  PenPixPat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4607,7 +4607,7 @@ PenPixPat(PixPatHandle pp)                                    ONEWORDINLINE(0xAA
 
 /*
  *  BackPixPat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4619,7 +4619,7 @@ BackPixPat(PixPatHandle pp)                                   ONEWORDINLINE(0xAA
 
 /*
  *  GetPixPat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4631,7 +4631,7 @@ GetPixPat(short patID)                                        ONEWORDINLINE(0xAA
 
 /*
  *  MakeRGBPat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4639,13 +4639,13 @@ GetPixPat(short patID)                                        ONEWORDINLINE(0xAA
  */
 EXTERN_API( void )
 MakeRGBPat(
-  PixPatHandle      pp,
-  const RGBColor *  myColor)                                  ONEWORDINLINE(0xAA0D);
+	PixPatHandle      pp,
+	const RGBColor *  myColor)                                  ONEWORDINLINE(0xAA0D);
 
 
 /*
  *  FillCRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4653,13 +4653,13 @@ MakeRGBPat(
  */
 EXTERN_API( void )
 FillCRect(
-  const Rect *   r,
-  PixPatHandle   pp)                                          ONEWORDINLINE(0xAA0E);
+	const Rect *   r,
+	PixPatHandle   pp)                                          ONEWORDINLINE(0xAA0E);
 
 
 /*
  *  FillCOval()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4667,13 +4667,13 @@ FillCRect(
  */
 EXTERN_API( void )
 FillCOval(
-  const Rect *   r,
-  PixPatHandle   pp)                                          ONEWORDINLINE(0xAA0F);
+	const Rect *   r,
+	PixPatHandle   pp)                                          ONEWORDINLINE(0xAA0F);
 
 
 /*
  *  FillCRoundRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4681,15 +4681,15 @@ FillCOval(
  */
 EXTERN_API( void )
 FillCRoundRect(
-  const Rect *   r,
-  short          ovalWidth,
-  short          ovalHeight,
-  PixPatHandle   pp)                                          ONEWORDINLINE(0xAA10);
+	const Rect *   r,
+	short          ovalWidth,
+	short          ovalHeight,
+	PixPatHandle   pp)                                          ONEWORDINLINE(0xAA10);
 
 
 /*
  *  FillCArc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4697,15 +4697,15 @@ FillCRoundRect(
  */
 EXTERN_API( void )
 FillCArc(
-  const Rect *   r,
-  short          startAngle,
-  short          arcAngle,
-  PixPatHandle   pp)                                          ONEWORDINLINE(0xAA11);
+	const Rect *   r,
+	short          startAngle,
+	short          arcAngle,
+	PixPatHandle   pp)                                          ONEWORDINLINE(0xAA11);
 
 
 /*
  *  FillCRgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4713,13 +4713,13 @@ FillCArc(
  */
 EXTERN_API( void )
 FillCRgn(
-  RgnHandle      rgn,
-  PixPatHandle   pp)                                          ONEWORDINLINE(0xAA12);
+	RgnHandle      rgn,
+	PixPatHandle   pp)                                          ONEWORDINLINE(0xAA12);
 
 
 /*
  *  FillCPoly()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4727,13 +4727,13 @@ FillCRgn(
  */
 EXTERN_API( void )
 FillCPoly(
-  PolyHandle     poly,
-  PixPatHandle   pp)                                          ONEWORDINLINE(0xAA13);
+	PolyHandle     poly,
+	PixPatHandle   pp)                                          ONEWORDINLINE(0xAA13);
 
 
 /*
  *  RGBForeColor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4745,7 +4745,7 @@ RGBForeColor(const RGBColor * color)                          ONEWORDINLINE(0xAA
 
 /*
  *  RGBBackColor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4757,7 +4757,7 @@ RGBBackColor(const RGBColor * color)                          ONEWORDINLINE(0xAA
 
 /*
  *  SetCPixel()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4765,14 +4765,14 @@ RGBBackColor(const RGBColor * color)                          ONEWORDINLINE(0xAA
  */
 EXTERN_API( void )
 SetCPixel(
-  short             h,
-  short             v,
-  const RGBColor *  cPix)                                     ONEWORDINLINE(0xAA16);
+	short             h,
+	short             v,
+	const RGBColor *  cPix)                                     ONEWORDINLINE(0xAA16);
 
 
 /*
  *  SetPortPix()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4784,7 +4784,7 @@ SetPortPix(PixMapHandle pm)                                   ONEWORDINLINE(0xAA
 
 /*
  *  GetCPixel()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4792,14 +4792,14 @@ SetPortPix(PixMapHandle pm)                                   ONEWORDINLINE(0xAA
  */
 EXTERN_API( void )
 GetCPixel(
-  short       h,
-  short       v,
-  RGBColor *  cPix)                                           ONEWORDINLINE(0xAA17);
+	short       h,
+	short       v,
+	RGBColor *  cPix)                                           ONEWORDINLINE(0xAA17);
 
 
 /*
  *  GetForeColor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4811,7 +4811,7 @@ GetForeColor(RGBColor * color)                                ONEWORDINLINE(0xAA
 
 /*
  *  GetBackColor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4823,7 +4823,7 @@ GetBackColor(RGBColor * color)                                ONEWORDINLINE(0xAA
 
 /*
  *  SeedCFill()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4831,19 +4831,19 @@ GetBackColor(RGBColor * color)                                ONEWORDINLINE(0xAA
  */
 EXTERN_API( void )
 SeedCFill(
-  const BitMap *   srcBits,
-  const BitMap *   dstBits,
-  const Rect *     srcRect,
-  const Rect *     dstRect,
-  short            seedH,
-  short            seedV,
-  ColorSearchUPP   matchProc,
-  long             matchData)                                 ONEWORDINLINE(0xAA50);
+	const BitMap *   srcBits,
+	const BitMap *   dstBits,
+	const Rect *     srcRect,
+	const Rect *     dstRect,
+	short            seedH,
+	short            seedV,
+	ColorSearchUPP   matchProc,
+	long             matchData)                                 ONEWORDINLINE(0xAA50);
 
 
 /*
  *  CalcCMask()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4851,18 +4851,18 @@ SeedCFill(
  */
 EXTERN_API( void )
 CalcCMask(
-  const BitMap *    srcBits,
-  const BitMap *    dstBits,
-  const Rect *      srcRect,
-  const Rect *      dstRect,
-  const RGBColor *  seedRGB,
-  ColorSearchUPP    matchProc,
-  long              matchData)                                ONEWORDINLINE(0xAA4F);
+	const BitMap *    srcBits,
+	const BitMap *    dstBits,
+	const Rect *      srcRect,
+	const Rect *      dstRect,
+	const RGBColor *  seedRGB,
+	ColorSearchUPP    matchProc,
+	long              matchData)                                ONEWORDINLINE(0xAA4F);
 
 
 /*
  *  OpenCPicture()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4874,7 +4874,7 @@ OpenCPicture(const OpenCPicParams * newHeader)                ONEWORDINLINE(0xAA
 
 /*
  *  OpColor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4886,7 +4886,7 @@ OpColor(const RGBColor * color)                               ONEWORDINLINE(0xAA
 
 /*
  *  HiliteColor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4898,7 +4898,7 @@ HiliteColor(const RGBColor * color)                           ONEWORDINLINE(0xAA
 
 /*
  *  DisposeCTable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4910,7 +4910,7 @@ DisposeCTable(CTabHandle cTable)                              ONEWORDINLINE(0xAA
 
 /*
  *  GetCTable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4922,7 +4922,7 @@ GetCTable(short ctID)                                         ONEWORDINLINE(0xAA
 
 /*
  *  GetCCursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4934,7 +4934,7 @@ GetCCursor(short crsrID)                                      ONEWORDINLINE(0xAA
 
 /*
  *  SetCCursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4946,7 +4946,7 @@ SetCCursor(CCrsrHandle cCrsr)                                 ONEWORDINLINE(0xAA
 
 /*
  *  AllocCursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4958,7 +4958,7 @@ AllocCursor(void)                                             ONEWORDINLINE(0xAA
 
 /*
  *  DisposeCCursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4972,7 +4972,7 @@ DisposeCCursor(CCrsrHandle cCrsr)                             ONEWORDINLINE(0xAA
 
 /*
  *  SetStdCProcs()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4984,7 +4984,7 @@ SetStdCProcs(CQDProcs * procs)                                ONEWORDINLINE(0xAA
 
 /*
  *  GetMaxDevice()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -4996,7 +4996,7 @@ GetMaxDevice(const Rect * globalRect)                         ONEWORDINLINE(0xAA
 
 /*
  *  GetCTSeed()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5008,7 +5008,7 @@ GetCTSeed(void)                                               ONEWORDINLINE(0xAA
 
 /*
  *  GetDeviceList()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5020,7 +5020,7 @@ GetDeviceList(void)                                           ONEWORDINLINE(0xAA
 
 /*
  *  GetMainDevice()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5032,7 +5032,7 @@ GetMainDevice(void)                                           ONEWORDINLINE(0xAA
 
 /*
  *  GetNextDevice()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5044,7 +5044,7 @@ GetNextDevice(GDHandle curDevice)                             ONEWORDINLINE(0xAA
 
 /*
  *  TestDeviceAttribute()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5052,13 +5052,13 @@ GetNextDevice(GDHandle curDevice)                             ONEWORDINLINE(0xAA
  */
 EXTERN_API( Boolean )
 TestDeviceAttribute(
-  GDHandle   gdh,
-  short      attribute)                                       ONEWORDINLINE(0xAA2C);
+	GDHandle   gdh,
+	short      attribute)                                       ONEWORDINLINE(0xAA2C);
 
 
 /*
  *  SetDeviceAttribute()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5066,14 +5066,14 @@ TestDeviceAttribute(
  */
 EXTERN_API( void )
 SetDeviceAttribute(
-  GDHandle   gdh,
-  short      attribute,
-  Boolean    value)                                           ONEWORDINLINE(0xAA2D);
+	GDHandle   gdh,
+	short      attribute,
+	Boolean    value)                                           ONEWORDINLINE(0xAA2D);
 
 
 /*
  *  InitGDevice()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5081,14 +5081,14 @@ SetDeviceAttribute(
  */
 EXTERN_API( void )
 InitGDevice(
-  short      qdRefNum,
-  long       mode,
-  GDHandle   gdh)                                             ONEWORDINLINE(0xAA2E);
+	short      qdRefNum,
+	long       mode,
+	GDHandle   gdh)                                             ONEWORDINLINE(0xAA2E);
 
 
 /*
  *  NewGDevice()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5096,13 +5096,13 @@ InitGDevice(
  */
 EXTERN_API( GDHandle )
 NewGDevice(
-  short   refNum,
-  long    mode)                                               ONEWORDINLINE(0xAA2F);
+	short   refNum,
+	long    mode)                                               ONEWORDINLINE(0xAA2F);
 
 
 /*
  *  DisposeGDevice()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5114,7 +5114,7 @@ DisposeGDevice(GDHandle gdh)                                  ONEWORDINLINE(0xAA
 
 /*
  *  SetGDevice()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5126,7 +5126,7 @@ SetGDevice(GDHandle gd)                                       ONEWORDINLINE(0xAA
 
 /*
  *  GetGDevice()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5138,7 +5138,7 @@ GetGDevice(void)                                              ONEWORDINLINE(0xAA
 
 /*
  *  Color2Index()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5150,7 +5150,7 @@ Color2Index(const RGBColor * myColor)                         ONEWORDINLINE(0xAA
 
 /*
  *  Index2Color()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5158,13 +5158,13 @@ Color2Index(const RGBColor * myColor)                         ONEWORDINLINE(0xAA
  */
 EXTERN_API( void )
 Index2Color(
-  long        index,
-  RGBColor *  aColor)                                         ONEWORDINLINE(0xAA34);
+	long        index,
+	RGBColor *  aColor)                                         ONEWORDINLINE(0xAA34);
 
 
 /*
  *  InvertColor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5176,7 +5176,7 @@ InvertColor(RGBColor * myColor)                               ONEWORDINLINE(0xAA
 
 /*
  *  RealColor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5188,7 +5188,7 @@ RealColor(const RGBColor * color)                             ONEWORDINLINE(0xAA
 
 /*
  *  GetSubTable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5196,14 +5196,14 @@ RealColor(const RGBColor * color)                             ONEWORDINLINE(0xAA
  */
 EXTERN_API( void )
 GetSubTable(
-  CTabHandle   myColors,
-  short        iTabRes,
-  CTabHandle   targetTbl)                                     ONEWORDINLINE(0xAA37);
+	CTabHandle   myColors,
+	short        iTabRes,
+	CTabHandle   targetTbl)                                     ONEWORDINLINE(0xAA37);
 
 
 /*
  *  MakeITable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5211,14 +5211,14 @@ GetSubTable(
  */
 EXTERN_API( void )
 MakeITable(
-  CTabHandle   cTabH,
-  ITabHandle   iTabH,
-  short        res)                                           ONEWORDINLINE(0xAA39);
+	CTabHandle   cTabH,
+	ITabHandle   iTabH,
+	short        res)                                           ONEWORDINLINE(0xAA39);
 
 
 /*
  *  AddSearch()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5230,7 +5230,7 @@ AddSearch(ColorSearchUPP searchProc)                          ONEWORDINLINE(0xAA
 
 /*
  *  AddComp()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5242,7 +5242,7 @@ AddComp(ColorComplementUPP compProc)                          ONEWORDINLINE(0xAA
 
 /*
  *  DelSearch()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5254,7 +5254,7 @@ DelSearch(ColorSearchUPP searchProc)                          ONEWORDINLINE(0xAA
 
 /*
  *  DelComp()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5266,7 +5266,7 @@ DelComp(ColorComplementUPP compProc)                          ONEWORDINLINE(0xAA
 
 /*
  *  SetClientID()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5278,7 +5278,7 @@ SetClientID(short id)                                         ONEWORDINLINE(0xAA
 
 /*
  *  ProtectEntry()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5286,13 +5286,13 @@ SetClientID(short id)                                         ONEWORDINLINE(0xAA
  */
 EXTERN_API( void )
 ProtectEntry(
-  short     index,
-  Boolean   protect)                                          ONEWORDINLINE(0xAA3D);
+	short     index,
+	Boolean   protect)                                          ONEWORDINLINE(0xAA3D);
 
 
 /*
  *  ReserveEntry()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5300,13 +5300,13 @@ ProtectEntry(
  */
 EXTERN_API( void )
 ReserveEntry(
-  short     index,
-  Boolean   reserve)                                          ONEWORDINLINE(0xAA3E);
+	short     index,
+	Boolean   reserve)                                          ONEWORDINLINE(0xAA3E);
 
 
 /*
  *  SetEntries()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5314,14 +5314,14 @@ ReserveEntry(
  */
 EXTERN_API( void )
 SetEntries(
-  short        start,
-  short        count,
-  CSpecArray   aTable)                                        ONEWORDINLINE(0xAA3F);
+	short        start,
+	short        count,
+	CSpecArray   aTable)                                        ONEWORDINLINE(0xAA3F);
 
 
 /*
  *  SaveEntries()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5329,14 +5329,14 @@ SetEntries(
  */
 EXTERN_API( void )
 SaveEntries(
-  CTabHandle    srcTable,
-  CTabHandle    resultTable,
-  ReqListRec *  selection)                                    ONEWORDINLINE(0xAA49);
+	CTabHandle    srcTable,
+	CTabHandle    resultTable,
+	ReqListRec *  selection)                                    ONEWORDINLINE(0xAA49);
 
 
 /*
  *  RestoreEntries()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5344,14 +5344,14 @@ SaveEntries(
  */
 EXTERN_API( void )
 RestoreEntries(
-  CTabHandle    srcTable,
-  CTabHandle    dstTable,
-  ReqListRec *  selection)                                    ONEWORDINLINE(0xAA4A);
+	CTabHandle    srcTable,
+	CTabHandle    dstTable,
+	ReqListRec *  selection)                                    ONEWORDINLINE(0xAA4A);
 
 
 /*
  *  QDError()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5363,7 +5363,7 @@ QDError(void)                                                 ONEWORDINLINE(0xAA
 
 /*
  *  CopyDeepMask()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5371,19 +5371,19 @@ QDError(void)                                                 ONEWORDINLINE(0xAA
  */
 EXTERN_API( void )
 CopyDeepMask(
-  const BitMap *  srcBits,
-  const BitMap *  maskBits,
-  const BitMap *  dstBits,
-  const Rect *    srcRect,
-  const Rect *    maskRect,
-  const Rect *    dstRect,
-  short           mode,
-  RgnHandle       maskRgn)        /* can be NULL */           ONEWORDINLINE(0xAA51);
+	const BitMap *  srcBits,
+	const BitMap *  maskBits,
+	const BitMap *  dstBits,
+	const Rect *    srcRect,
+	const Rect *    maskRect,
+	const Rect *    dstRect,
+	short           mode,
+	RgnHandle       maskRgn)        /* can be NULL */           ONEWORDINLINE(0xAA51);
 
 
 /*
  *  DeviceLoop()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5391,17 +5391,17 @@ CopyDeepMask(
  */
 EXTERN_API( void )
 DeviceLoop(
-  RgnHandle              drawingRgn,
-  DeviceLoopDrawingUPP   drawingProc,
-  long                   userData,
-  DeviceLoopFlags        flags)                               ONEWORDINLINE(0xABCA);
+	RgnHandle              drawingRgn,
+	DeviceLoopDrawingUPP   drawingProc,
+	long                   userData,
+	DeviceLoopFlags        flags)                               ONEWORDINLINE(0xABCA);
 
 
 
 
 /*
  *  GetMaskTable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5417,7 +5417,7 @@ GetMaskTable(void)                                            ONEWORDINLINE(0xA8
 
 /*
  *  GetPattern()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5429,14 +5429,14 @@ GetPattern(short patternID)                                   ONEWORDINLINE(0xA9
 
 /*
  *  [Mac]GetCursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
  *    Mac OS X:         in version 10.0 and later
  */
 #if TARGET_OS_MAC
-    #define MacGetCursor GetCursor
+		#define MacGetCursor GetCursor
 #endif
 EXTERN_API( CursHandle )
 MacGetCursor(short cursorID)                                  ONEWORDINLINE(0xA9B9);
@@ -5444,7 +5444,7 @@ MacGetCursor(short cursorID)                                  ONEWORDINLINE(0xA9
 
 /*
  *  GetPicture()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5456,7 +5456,7 @@ GetPicture(short pictureID)                                   ONEWORDINLINE(0xA9
 
 /*
  *  DeltaPoint()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5464,13 +5464,13 @@ GetPicture(short pictureID)                                   ONEWORDINLINE(0xA9
  */
 EXTERN_API( long )
 DeltaPoint(
-  Point   ptA,
-  Point   ptB)                                                ONEWORDINLINE(0xA94F);
+	Point   ptA,
+	Point   ptB)                                                ONEWORDINLINE(0xA94F);
 
 
 /*
  *  ShieldCursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5478,13 +5478,13 @@ DeltaPoint(
  */
 EXTERN_API( void )
 ShieldCursor(
-  const Rect *  shieldRect,
-  Point         offsetPt)                                     ONEWORDINLINE(0xA855);
+	const Rect *  shieldRect,
+	Point         offsetPt)                                     ONEWORDINLINE(0xA855);
 
 
 /*
  *  ScreenRes()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5492,13 +5492,13 @@ ShieldCursor(
  */
 EXTERN_API( void )
 ScreenRes(
-  short *  scrnHRes,
-  short *  scrnVRes)                                          SIXWORDINLINE(0x225F, 0x32B8, 0x0102, 0x225F, 0x32B8, 0x0104);
+	short *  scrnHRes,
+	short *  scrnVRes)                                          SIXWORDINLINE(0x225F, 0x32B8, 0x0102, 0x225F, 0x32B8, 0x0104);
 
 
 /*
  *  GetIndPattern()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5506,15 +5506,15 @@ ScreenRes(
  */
 EXTERN_API( void )
 GetIndPattern(
-  Pattern *  thePat,
-  short      patternListID,
-  short      index);
+	Pattern *  thePat,
+	short      patternListID,
+	short      index);
 
 
 #if CALL_NOT_IN_CARBON
 /*
  *  ptinrect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -5522,13 +5522,13 @@ GetIndPattern(
  */
 EXTERN_API_C( Boolean )
 ptinrect(
-  const Point *  pt,
-  const Rect *   r);
+	const Point *  pt,
+	const Rect *   r);
 
 
 /*
  *  pt2rect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -5536,14 +5536,14 @@ ptinrect(
  */
 EXTERN_API_C( void )
 pt2rect(
-  const Point *  pt1,
-  const Point *  pt2,
-  Rect *         destRect);
+	const Point *  pt1,
+	const Point *  pt2,
+	Rect *         destRect);
 
 
 /*
  *  pttoangle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -5551,14 +5551,14 @@ pt2rect(
  */
 EXTERN_API_C( void )
 pttoangle(
-  const Rect *   r,
-  const Point *  pt,
-  short *        angle);
+	const Rect *   r,
+	const Point *  pt,
+	short *        angle);
 
 
 /*
  *  ptinrgn()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -5566,13 +5566,13 @@ pttoangle(
  */
 EXTERN_API_C( Boolean )
 ptinrgn(
-  const Point *  pt,
-  RgnHandle      rgn);
+	const Point *  pt,
+	RgnHandle      rgn);
 
 
 /*
  *  addpt()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -5580,13 +5580,13 @@ ptinrgn(
  */
 EXTERN_API_C( void )
 addpt(
-  const Point *  src,
-  Point *        dst);
+	const Point *  src,
+	Point *        dst);
 
 
 /*
  *  subpt()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -5594,13 +5594,13 @@ addpt(
  */
 EXTERN_API_C( void )
 subpt(
-  const Point *  src,
-  Point *        dst);
+	const Point *  src,
+	Point *        dst);
 
 
 /*
  *  equalpt()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -5608,13 +5608,13 @@ subpt(
  */
 EXTERN_API_C( Boolean )
 equalpt(
-  const Point *  pt1,
-  const Point *  pt2);
+	const Point *  pt1,
+	const Point *  pt2);
 
 
 /*
  *  stuffhex()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -5622,13 +5622,13 @@ equalpt(
  */
 EXTERN_API_C( void )
 stuffhex(
-  void *        thingPtr,
-  const char *  s);
+	void *        thingPtr,
+	const char *  s);
 
 
 /*
  *  stdline()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -5640,7 +5640,7 @@ stdline(const Point * newPt);
 
 /*
  *  shieldcursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -5648,15 +5648,15 @@ stdline(const Point * newPt);
  */
 EXTERN_API_C( void )
 shieldcursor(
-  const Rect *  shieldRect,
-  Point *       offsetPt);
+	const Rect *  shieldRect,
+	Point *       offsetPt);
 
 
 #endif  /* CALL_NOT_IN_CARBON */
 
 /*
  *  deltapoint()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5664,8 +5664,8 @@ shieldcursor(
  */
 EXTERN_API_C( long )
 deltapoint(
-  Point *  ptA,
-  Point *  ptB);
+	Point *  ptA,
+	Point *  ptB);
 
 
 #if OLDROUTINENAMES
@@ -5677,11 +5677,11 @@ deltapoint(
 #endif  /* OLDROUTINENAMES */
 
 /*
-    From ToolUtils.i
+		From ToolUtils.i
 */
 /*
  *  PackBits()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5689,14 +5689,14 @@ deltapoint(
  */
 EXTERN_API( void )
 PackBits(
-  Ptr *   srcPtr,
-  Ptr *   dstPtr,
-  short   srcBytes)                                           ONEWORDINLINE(0xA8CF);
+	Ptr *   srcPtr,
+	Ptr *   dstPtr,
+	short   srcBytes)                                           ONEWORDINLINE(0xA8CF);
 
 
 /*
  *  UnpackBits()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5704,14 +5704,14 @@ PackBits(
  */
 EXTERN_API( void )
 UnpackBits(
-  Ptr *   srcPtr,
-  Ptr *   dstPtr,
-  short   dstBytes)                                           ONEWORDINLINE(0xA8D0);
+	Ptr *   srcPtr,
+	Ptr *   dstPtr,
+	short   dstBytes)                                           ONEWORDINLINE(0xA8D0);
 
 
 /*
  *  SlopeFromAngle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5723,7 +5723,7 @@ SlopeFromAngle(short angle)                                   ONEWORDINLINE(0xA8
 
 /*
  *  AngleFromSlope()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5735,34 +5735,34 @@ AngleFromSlope(Fixed slope)                                   ONEWORDINLINE(0xA8
 
 /* New transfer modes */
 enum {
-  colorXorXFer                  = 52,
-  noiseXFer                     = 53,
-  customXFer                    = 54
+	colorXorXFer                  = 52,
+	noiseXFer                     = 53,
+	customXFer                    = 54
 };
 
 /* Custom XFer flags */
 enum {
-  kXFer1PixelAtATime            = 0x00000001, /* 1 pixel passed to custom XFer proc*/
-  kXFerConvertPixelToRGB32      = 0x00000002 /* All color depths converted to 32 bit RGB*/
+	kXFer1PixelAtATime            = 0x00000001, /* 1 pixel passed to custom XFer proc*/
+	kXFerConvertPixelToRGB32      = 0x00000002 /* All color depths converted to 32 bit RGB*/
 };
 
 struct CustomXFerRec {
-  UInt32              version;
-  void *              srcPixels;
-  void *              destPixels;
-  void *              resultPixels;
-  UInt32              refCon;
-  UInt32              pixelSize;
-  UInt32              pixelCount;
-  Point               firstPixelHV;
-  Rect                destBounds;
+	UInt32              version;
+	void *              srcPixels;
+	void *              destPixels;
+	void *              resultPixels;
+	UInt32              refCon;
+	UInt32              pixelSize;
+	UInt32              pixelCount;
+	Point               firstPixelHV;
+	Rect                destBounds;
 };
 typedef struct CustomXFerRec            CustomXFerRec;
 typedef CustomXFerRec *                 CustomXFerRecPtr;
 typedef CALLBACK_API( void , CustomXFerProcPtr )(CustomXFerRecPtr info);
 /*
  *  GetPortCustomXFerProc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 9.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5770,15 +5770,15 @@ typedef CALLBACK_API( void , CustomXFerProcPtr )(CustomXFerRecPtr info);
  */
 EXTERN_API( OSErr )
 GetPortCustomXFerProc(
-  CGrafPtr             port,
-  CustomXFerProcPtr *  proc,
-  UInt32 *             flags,
-  UInt32 *             refCon)                                FOURWORDINLINE(0x203C, 0x0010, 0x0019, 0xAB1D);
+	CGrafPtr             port,
+	CustomXFerProcPtr *  proc,
+	UInt32 *             flags,
+	UInt32 *             refCon)                                FOURWORDINLINE(0x203C, 0x0010, 0x0019, 0xAB1D);
 
 
 /*
  *  SetPortCustomXFerProc()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 9.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5786,62 +5786,62 @@ GetPortCustomXFerProc(
  */
 EXTERN_API( OSErr )
 SetPortCustomXFerProc(
-  CGrafPtr            port,
-  CustomXFerProcPtr   proc,
-  UInt32              flags,
-  UInt32              refCon)                                 FOURWORDINLINE(0x203C, 0x0010, 0x001A, 0xAB1D);
+	CGrafPtr            port,
+	CustomXFerProcPtr   proc,
+	UInt32              flags,
+	UInt32              refCon)                                 FOURWORDINLINE(0x203C, 0x0010, 0x001A, 0xAB1D);
 
 
 
 enum {
-  kCursorComponentsVersion      = 0x00010001
+	kCursorComponentsVersion      = 0x00010001
 };
 
 enum {
-  kCursorComponentType          = FOUR_CHAR_CODE('curs')
+	kCursorComponentType          = FOUR_CHAR_CODE('curs')
 };
 
 /* Cursor Component capabilities flags */
 enum {
-  cursorDoesAnimate             = 1L << 0,
-  cursorDoesHardware            = 1L << 1,
-  cursorDoesUnreadableScreenBits = 1L << 2
+	cursorDoesAnimate             = 1L << 0,
+	cursorDoesHardware            = 1L << 1,
+	cursorDoesUnreadableScreenBits = 1L << 2
 };
 
 /* Cursor Component output mode flags */
 enum {
-  kRenderCursorInHardware       = 1L << 0,
-  kRenderCursorInSoftware       = 1L << 1
+	kRenderCursorInHardware       = 1L << 0,
+	kRenderCursorInSoftware       = 1L << 1
 };
 
 /* Cursor Component Info */
 struct CursorInfo {
-  long                version;                /* use kCursorComponentsVersion */
-  long                capabilities;
-  long                animateDuration;        /* approximate time between animate tickles */
-  Rect                bounds;
-  Point               hotspot;
-  long                reserved;               /* must set to zero */
+	long                version;                /* use kCursorComponentsVersion */
+	long                capabilities;
+	long                animateDuration;        /* approximate time between animate tickles */
+	Rect                bounds;
+	Point               hotspot;
+	long                reserved;               /* must set to zero */
 
 };
 typedef struct CursorInfo               CursorInfo;
 /* Cursor Component Selectors */
 enum {
-  kCursorComponentInit          = 0x0001,
-  kCursorComponentGetInfo       = 0x0002,
-  kCursorComponentSetOutputMode = 0x0003,
-  kCursorComponentSetData       = 0x0004,
-  kCursorComponentReconfigure   = 0x0005,
-  kCursorComponentDraw          = 0x0006,
-  kCursorComponentErase         = 0x0007,
-  kCursorComponentMove          = 0x0008,
-  kCursorComponentAnimate       = 0x0009,
-  kCursorComponentLastReserved  = 0x0050
+	kCursorComponentInit          = 0x0001,
+	kCursorComponentGetInfo       = 0x0002,
+	kCursorComponentSetOutputMode = 0x0003,
+	kCursorComponentSetData       = 0x0004,
+	kCursorComponentReconfigure   = 0x0005,
+	kCursorComponentDraw          = 0x0006,
+	kCursorComponentErase         = 0x0007,
+	kCursorComponentMove          = 0x0008,
+	kCursorComponentAnimate       = 0x0009,
+	kCursorComponentLastReserved  = 0x0050
 };
 
 /*
  *  OpenCursorComponent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 9.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5849,13 +5849,13 @@ enum {
  */
 EXTERN_API( OSErr )
 OpenCursorComponent(
-  Component            c,
-  ComponentInstance *  ci)                                    FOURWORDINLINE(0x203C, 0x0008, 0x000B, 0xABE0);
+	Component            c,
+	ComponentInstance *  ci)                                    FOURWORDINLINE(0x203C, 0x0008, 0x000B, 0xABE0);
 
 
 /*
  *  CloseCursorComponent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 9.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5867,7 +5867,7 @@ CloseCursorComponent(ComponentInstance ci)                    FOURWORDINLINE(0x2
 
 /*
  *  SetCursorComponent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 9.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5879,7 +5879,7 @@ SetCursorComponent(ComponentInstance ci)                      FOURWORDINLINE(0x2
 
 /*
  *  CursorComponentChanged()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 9.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5891,7 +5891,7 @@ CursorComponentChanged(ComponentInstance ci)                  FOURWORDINLINE(0x2
 
 /*
  *  CursorComponentSetData()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 9.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5899,15 +5899,15 @@ CursorComponentChanged(ComponentInstance ci)                  FOURWORDINLINE(0x2
  */
 EXTERN_API( OSErr )
 CursorComponentSetData(
-  ComponentInstance   ci,
-  long                data)                                   FOURWORDINLINE(0x203C, 0x0008, 0x000F, 0xABE0);
+	ComponentInstance   ci,
+	long                data)                                   FOURWORDINLINE(0x203C, 0x0008, 0x000F, 0xABE0);
 
 
 /* Quickdraw-specific ColorSync matching */
 /* Available in CarbonLib... */
 /*
  *  IsValidPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.1 and later
@@ -5923,7 +5923,7 @@ IsValidPort(CGrafPtr port);
 /* Getters */
 /*
  *  GetPortPixMap()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5935,7 +5935,7 @@ GetPortPixMap(CGrafPtr port);
 
 /*
  *  GetPortBitMapForCopyBits()
- *  
+ *
  *  Discussion:
  *    GetPortBitMapForCopyBits is provided for the specific purpose of
  *    using the return value as a parameter to CopyBits. The return
@@ -5946,7 +5946,7 @@ GetPortPixMap(CGrafPtr port);
  *    in the CGrafPort structure. You should not dereference the
  *    BitMapPtr or otherwise depend on its contents unless you've
  *    confirmed that this port is a non-color port.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0.2 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -5958,7 +5958,7 @@ GetPortBitMapForCopyBits(CGrafPtr port);
 
 /*
  *  GetPortBounds()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5966,13 +5966,13 @@ GetPortBitMapForCopyBits(CGrafPtr port);
  */
 EXTERN_API( Rect * )
 GetPortBounds(
-  CGrafPtr   port,
-  Rect *     rect);
+	CGrafPtr   port,
+	Rect *     rect);
 
 
 /*
  *  GetPortForeColor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5980,13 +5980,13 @@ GetPortBounds(
  */
 EXTERN_API( RGBColor * )
 GetPortForeColor(
-  CGrafPtr    port,
-  RGBColor *  foreColor);
+	CGrafPtr    port,
+	RGBColor *  foreColor);
 
 
 /*
  *  GetPortBackColor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -5994,13 +5994,13 @@ GetPortForeColor(
  */
 EXTERN_API( RGBColor * )
 GetPortBackColor(
-  CGrafPtr    port,
-  RGBColor *  backColor);
+	CGrafPtr    port,
+	RGBColor *  backColor);
 
 
 /*
  *  GetPortOpColor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6008,13 +6008,13 @@ GetPortBackColor(
  */
 EXTERN_API( RGBColor * )
 GetPortOpColor(
-  CGrafPtr    port,
-  RGBColor *  opColor);
+	CGrafPtr    port,
+	RGBColor *  opColor);
 
 
 /*
  *  GetPortHiliteColor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6022,13 +6022,13 @@ GetPortOpColor(
  */
 EXTERN_API( RGBColor * )
 GetPortHiliteColor(
-  CGrafPtr    port,
-  RGBColor *  hiliteColor);
+	CGrafPtr    port,
+	RGBColor *  hiliteColor);
 
 
 /*
  *  GetPortGrafProcs()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6040,7 +6040,7 @@ GetPortGrafProcs(CGrafPtr port);
 
 /*
  *  GetPortTextFont()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6052,7 +6052,7 @@ GetPortTextFont(CGrafPtr port);
 
 /*
  *  GetPortTextFace()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6064,7 +6064,7 @@ GetPortTextFace(CGrafPtr port);
 
 /*
  *  GetPortTextMode()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6076,7 +6076,7 @@ GetPortTextMode(CGrafPtr port);
 
 /*
  *  GetPortTextSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6088,7 +6088,7 @@ GetPortTextSize(CGrafPtr port);
 
 /*
  *  GetPortChExtra()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6100,7 +6100,7 @@ GetPortChExtra(CGrafPtr port);
 
 /*
  *  GetPortFracHPenLocation()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6112,7 +6112,7 @@ GetPortFracHPenLocation(CGrafPtr port);
 
 /*
  *  GetPortSpExtra()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6124,7 +6124,7 @@ GetPortSpExtra(CGrafPtr port);
 
 /*
  *  GetPortPenVisibility()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6136,7 +6136,7 @@ GetPortPenVisibility(CGrafPtr port);
 
 /*
  *  GetPortVisibleRegion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6144,13 +6144,13 @@ GetPortPenVisibility(CGrafPtr port);
  */
 EXTERN_API( RgnHandle )
 GetPortVisibleRegion(
-  CGrafPtr    port,
-  RgnHandle   visRgn);
+	CGrafPtr    port,
+	RgnHandle   visRgn);
 
 
 /*
  *  GetPortClipRegion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6158,13 +6158,13 @@ GetPortVisibleRegion(
  */
 EXTERN_API( RgnHandle )
 GetPortClipRegion(
-  CGrafPtr    port,
-  RgnHandle   clipRgn);
+	CGrafPtr    port,
+	RgnHandle   clipRgn);
 
 
 /*
  *  GetPortBackPixPat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6172,13 +6172,13 @@ GetPortClipRegion(
  */
 EXTERN_API( PixPatHandle )
 GetPortBackPixPat(
-  CGrafPtr       port,
-  PixPatHandle   backPattern);
+	CGrafPtr       port,
+	PixPatHandle   backPattern);
 
 
 /*
  *  GetPortPenPixPat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6186,13 +6186,13 @@ GetPortBackPixPat(
  */
 EXTERN_API( PixPatHandle )
 GetPortPenPixPat(
-  CGrafPtr       port,
-  PixPatHandle   penPattern);
+	CGrafPtr       port,
+	PixPatHandle   penPattern);
 
 
 /*
  *  GetPortFillPixPat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6200,13 +6200,13 @@ GetPortPenPixPat(
  */
 EXTERN_API( PixPatHandle )
 GetPortFillPixPat(
-  CGrafPtr       port,
-  PixPatHandle   fillPattern);
+	CGrafPtr       port,
+	PixPatHandle   fillPattern);
 
 
 /*
  *  GetPortPenSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6214,13 +6214,13 @@ GetPortFillPixPat(
  */
 EXTERN_API( Point * )
 GetPortPenSize(
-  CGrafPtr   port,
-  Point *    penSize);
+	CGrafPtr   port,
+	Point *    penSize);
 
 
 /*
  *  GetPortPenMode()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6232,7 +6232,7 @@ GetPortPenMode(CGrafPtr port);
 
 /*
  *  GetPortPenLocation()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6240,13 +6240,13 @@ GetPortPenMode(CGrafPtr port);
  */
 EXTERN_API( Point * )
 GetPortPenLocation(
-  CGrafPtr   port,
-  Point *    penLocation);
+	CGrafPtr   port,
+	Point *    penLocation);
 
 
 /*
  *  IsPortRegionBeingDefined()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6258,7 +6258,7 @@ IsPortRegionBeingDefined(CGrafPtr port);
 
 /*
  *  IsPortPictureBeingDefined()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6270,7 +6270,7 @@ IsPortPictureBeingDefined(CGrafPtr port);
 
 /*
  *  IsPortPolyBeingDefined()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.3 and later
  *    CarbonLib:        in CarbonLib 1.3 and later
@@ -6282,7 +6282,7 @@ IsPortPolyBeingDefined(CGrafPtr port);
 
 /*
  *  IsPortOffscreen()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6294,7 +6294,7 @@ IsPortOffscreen(CGrafPtr port);
 
 /*
  *  IsPortColor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0.2 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -6306,7 +6306,7 @@ IsPortColor(CGrafPtr port);
 
 /*
  *  IsPortVisibleRegionEmpty()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.3 and later
@@ -6318,7 +6318,7 @@ IsPortVisibleRegionEmpty(CGrafPtr port);
 
 /*
  *  IsPortClipRegionEmpty()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.3 and later
@@ -6330,7 +6330,7 @@ IsPortClipRegionEmpty(CGrafPtr port);
 
 /*
  *  SectRegionWithPortClipRegion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.3 and later
@@ -6338,13 +6338,13 @@ IsPortClipRegionEmpty(CGrafPtr port);
  */
 EXTERN_API( void )
 SectRegionWithPortClipRegion(
-  CGrafPtr    port,
-  RgnHandle   ioRegion);
+	CGrafPtr    port,
+	RgnHandle   ioRegion);
 
 
 /*
  *  SectRegionWithPortVisibleRegion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.3 and later
@@ -6352,36 +6352,36 @@ SectRegionWithPortClipRegion(
  */
 EXTERN_API( void )
 SectRegionWithPortVisibleRegion(
-  CGrafPtr    port,
-  RgnHandle   ioRegion);
+	CGrafPtr    port,
+	RgnHandle   ioRegion);
 
 
 
 /* Swappers */
 /*
  *  SwapPortPicSaveHandle()
- *  
+ *
  *  Summary:
  *    Sets the port's picSave Handle, and returns the previous picSave
- *  
+ *
  *  Discussion:
  *    Historically, the picSave field in a GrafPort is != NULL if a
  *    Picture is being defined; and it has been documented that picture
  *    definition can be temporarily suspended by saving the current
  *    picSave Handle and setting picSave to NULL. Restoring the saved
  *    picSave Handle resumes picture definition.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    port:
  *      The port whose picSave field is being swapped.
- *    
+ *
  *    inPicSaveHdl:
  *      The picSave Handle to be set.
- *  
+ *
  *  Result:
  *    The previous picSave Handle in the port.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.5 and later
@@ -6389,14 +6389,14 @@ SectRegionWithPortVisibleRegion(
  */
 EXTERN_API( Handle )
 SwapPortPicSaveHandle(
-  CGrafPtr   port,
-  Handle     inPicSaveHdl);
+	CGrafPtr   port,
+	Handle     inPicSaveHdl);
 
 
 /* Similarly: */
 /*
  *  SwapPortPolySaveHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.6 and later
@@ -6404,13 +6404,13 @@ SwapPortPicSaveHandle(
  */
 EXTERN_API( Handle )
 SwapPortPolySaveHandle(
-  CGrafPtr   port,
-  Handle     inPolySaveHdl);
+	CGrafPtr   port,
+	Handle     inPolySaveHdl);
 
 
 /*
  *  SwapPortRegionSaveHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.6 and later
@@ -6418,15 +6418,15 @@ SwapPortPolySaveHandle(
  */
 EXTERN_API( Handle )
 SwapPortRegionSaveHandle(
-  CGrafPtr   port,
-  Handle     inRegionSaveHdl);
+	CGrafPtr   port,
+	Handle     inRegionSaveHdl);
 
 
 
 /* Setters */
 /*
  *  SetPortBounds()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6434,13 +6434,13 @@ SwapPortRegionSaveHandle(
  */
 EXTERN_API( void )
 SetPortBounds(
-  CGrafPtr      port,
-  const Rect *  rect);
+	CGrafPtr      port,
+	const Rect *  rect);
 
 
 /*
  *  SetPortOpColor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6448,13 +6448,13 @@ SetPortBounds(
  */
 EXTERN_API( void )
 SetPortOpColor(
-  CGrafPtr          port,
-  const RGBColor *  opColor);
+	CGrafPtr          port,
+	const RGBColor *  opColor);
 
 
 /*
  *  SetPortGrafProcs()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6462,13 +6462,13 @@ SetPortOpColor(
  */
 EXTERN_API( void )
 SetPortGrafProcs(
-  CGrafPtr      port,
-  CQDProcsPtr   procs);
+	CGrafPtr      port,
+	CQDProcsPtr   procs);
 
 
 /*
  *  SetPortTextFont()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.5 and later
@@ -6476,13 +6476,13 @@ SetPortGrafProcs(
  */
 EXTERN_API( void )
 SetPortTextFont(
-  CGrafPtr   port,
-  short      txFont);
+	CGrafPtr   port,
+	short      txFont);
 
 
 /*
  *  SetPortTextSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.5 and later
@@ -6490,13 +6490,13 @@ SetPortTextFont(
  */
 EXTERN_API( void )
 SetPortTextSize(
-  CGrafPtr   port,
-  short      txSize);
+	CGrafPtr   port,
+	short      txSize);
 
 
 /*
  *  SetPortTextFace()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.5 and later
@@ -6504,13 +6504,13 @@ SetPortTextSize(
  */
 EXTERN_API( void )
 SetPortTextFace(
-  CGrafPtr         port,
-  StyleParameter   face);
+	CGrafPtr         port,
+	StyleParameter   face);
 
 
 /*
  *  SetPortTextMode()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.5 and later
@@ -6518,13 +6518,13 @@ SetPortTextFace(
  */
 EXTERN_API( void )
 SetPortTextMode(
-  CGrafPtr   port,
-  short      mode);
+	CGrafPtr   port,
+	short      mode);
 
 
 /*
  *  SetPortVisibleRegion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6532,13 +6532,13 @@ SetPortTextMode(
  */
 EXTERN_API( void )
 SetPortVisibleRegion(
-  CGrafPtr    port,
-  RgnHandle   visRgn);
+	CGrafPtr    port,
+	RgnHandle   visRgn);
 
 
 /*
  *  SetPortClipRegion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6546,13 +6546,13 @@ SetPortVisibleRegion(
  */
 EXTERN_API( void )
 SetPortClipRegion(
-  CGrafPtr    port,
-  RgnHandle   clipRgn);
+	CGrafPtr    port,
+	RgnHandle   clipRgn);
 
 
 /*
  *  SetPortPenPixPat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6560,13 +6560,13 @@ SetPortClipRegion(
  */
 EXTERN_API( void )
 SetPortPenPixPat(
-  CGrafPtr       port,
-  PixPatHandle   penPattern);
+	CGrafPtr       port,
+	PixPatHandle   penPattern);
 
 
 /*
  *  SetPortFillPixPat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.2 and later
  *    CarbonLib:        in CarbonLib 1.2 and later
@@ -6574,13 +6574,13 @@ SetPortPenPixPat(
  */
 EXTERN_API( void )
 SetPortFillPixPat(
-  CGrafPtr       port,
-  PixPatHandle   penPattern);
+	CGrafPtr       port,
+	PixPatHandle   penPattern);
 
 
 /*
  *  SetPortBackPixPat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6588,13 +6588,13 @@ SetPortFillPixPat(
  */
 EXTERN_API( void )
 SetPortBackPixPat(
-  CGrafPtr       port,
-  PixPatHandle   backPattern);
+	CGrafPtr       port,
+	PixPatHandle   backPattern);
 
 
 /*
  *  SetPortPenSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6602,13 +6602,13 @@ SetPortBackPixPat(
  */
 EXTERN_API( void )
 SetPortPenSize(
-  CGrafPtr   port,
-  Point      penSize);
+	CGrafPtr   port,
+	Point      penSize);
 
 
 /*
  *  SetPortPenMode()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6616,13 +6616,13 @@ SetPortPenSize(
  */
 EXTERN_API( void )
 SetPortPenMode(
-  CGrafPtr   port,
-  SInt32     penMode);
+	CGrafPtr   port,
+	SInt32     penMode);
 
 
 /*
  *  SetPortFracHPenLocation()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6630,14 +6630,14 @@ SetPortPenMode(
  */
 EXTERN_API( void )
 SetPortFracHPenLocation(
-  CGrafPtr   port,
-  short      pnLocHFrac);
+	CGrafPtr   port,
+	short      pnLocHFrac);
 
 
 /* PixMap */
 /*
  *  GetPixBounds()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6645,13 +6645,13 @@ SetPortFracHPenLocation(
  */
 EXTERN_API( Rect * )
 GetPixBounds(
-  PixMapHandle   pixMap,
-  Rect *         bounds);
+	PixMapHandle   pixMap,
+	Rect *         bounds);
 
 
 /*
  *  GetPixDepth()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6665,7 +6665,7 @@ GetPixDepth(PixMapHandle pixMap);
 /* Getters */
 /*
  *  GetQDGlobalsRandomSeed()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6677,7 +6677,7 @@ GetQDGlobalsRandomSeed(void);
 
 /*
  *  GetQDGlobalsScreenBits()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6689,7 +6689,7 @@ GetQDGlobalsScreenBits(BitMap * screenBits);
 
 /*
  *  GetQDGlobalsArrow()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6701,7 +6701,7 @@ GetQDGlobalsArrow(Cursor * arrow);
 
 /*
  *  GetQDGlobalsDarkGray()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6713,7 +6713,7 @@ GetQDGlobalsDarkGray(Pattern * dkGray);
 
 /*
  *  GetQDGlobalsLightGray()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6725,7 +6725,7 @@ GetQDGlobalsLightGray(Pattern * ltGray);
 
 /*
  *  GetQDGlobalsGray()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6737,7 +6737,7 @@ GetQDGlobalsGray(Pattern * gray);
 
 /*
  *  GetQDGlobalsBlack()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6749,7 +6749,7 @@ GetQDGlobalsBlack(Pattern * black);
 
 /*
  *  GetQDGlobalsWhite()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6761,7 +6761,7 @@ GetQDGlobalsWhite(Pattern * white);
 
 /*
  *  GetQDGlobalsThePort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6774,7 +6774,7 @@ GetQDGlobalsThePort(void);
 /* Setters */
 /*
  *  SetQDGlobalsRandomSeed()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6786,7 +6786,7 @@ SetQDGlobalsRandomSeed(long randomSeed);
 
 /*
  *  SetQDGlobalsArrow()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6799,7 +6799,7 @@ SetQDGlobalsArrow(const Cursor * arrow);
 /* Regions */
 /*
  *  GetRegionBounds()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6807,13 +6807,13 @@ SetQDGlobalsArrow(const Cursor * arrow);
  */
 EXTERN_API( Rect * )
 GetRegionBounds(
-  RgnHandle   region,
-  Rect *      bounds);
+	RgnHandle   region,
+	Rect *      bounds);
 
 
 /*
  *  IsRegionRectangular()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6829,7 +6829,7 @@ IsRegionRectangular(RgnHandle region);
 /* NewPtr/OpenCPort doesn't work with opaque structures */
 /*
  *  CreateNewPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6841,7 +6841,7 @@ CreateNewPort(void);
 
 /*
  *  DisposePort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6854,7 +6854,7 @@ DisposePort(CGrafPtr port);
 
 /*
  *  SetQDError()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in CarbonAccessors.o 1.0.2 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -6870,7 +6870,7 @@ SetQDError(OSErr err);
 
 /*
  *  QDLocalToGlobalPoint()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6878,13 +6878,13 @@ SetQDError(OSErr err);
  */
 EXTERN_API( Point * )
 QDLocalToGlobalPoint(
-  CGrafPtr   port,
-  Point *    point);
+	CGrafPtr   port,
+	Point *    point);
 
 
 /*
  *  QDGlobalToLocalPoint()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6892,13 +6892,13 @@ QDLocalToGlobalPoint(
  */
 EXTERN_API( Point * )
 QDGlobalToLocalPoint(
-  CGrafPtr   port,
-  Point *    point);
+	CGrafPtr   port,
+	Point *    point);
 
 
 /*
  *  QDLocalToGlobalRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6906,13 +6906,13 @@ QDGlobalToLocalPoint(
  */
 EXTERN_API( Rect * )
 QDLocalToGlobalRect(
-  CGrafPtr   port,
-  Rect *     bounds);
+	CGrafPtr   port,
+	Rect *     bounds);
 
 
 /*
  *  QDGlobalToLocalRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6920,13 +6920,13 @@ QDLocalToGlobalRect(
  */
 EXTERN_API( Rect * )
 QDGlobalToLocalRect(
-  CGrafPtr   port,
-  Rect *     bounds);
+	CGrafPtr   port,
+	Rect *     bounds);
 
 
 /*
  *  QDLocalToGlobalRegion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6934,13 +6934,13 @@ QDGlobalToLocalRect(
  */
 EXTERN_API( RgnHandle )
 QDLocalToGlobalRegion(
-  CGrafPtr    port,
-  RgnHandle   region);
+	CGrafPtr    port,
+	RgnHandle   region);
 
 
 /*
  *  QDGlobalToLocalRegion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -6948,19 +6948,19 @@ QDLocalToGlobalRegion(
  */
 EXTERN_API( RgnHandle )
 QDGlobalToLocalRegion(
-  CGrafPtr    port,
-  RgnHandle   region);
+	CGrafPtr    port,
+	RgnHandle   region);
 
 
 
 /*
-   Routines available on Mac OS X to flush buffered window ports...
-   These calls do nothing on Mac OS 8/9. QDIsPortBuffered will always return false there.
+	Routines available on Mac OS X to flush buffered window ports...
+	These calls do nothing on Mac OS 8/9. QDIsPortBuffered will always return false there.
 */
 
 /*
  *  QDIsPortBuffered()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -6972,7 +6972,7 @@ QDIsPortBuffered(CGrafPtr port);
 
 /*
  *  QDIsPortBufferDirty()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -6984,7 +6984,7 @@ QDIsPortBufferDirty(CGrafPtr port);
 
 /*
  *  QDFlushPortBuffer()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -6992,13 +6992,13 @@ QDIsPortBufferDirty(CGrafPtr port);
  */
 EXTERN_API( void )
 QDFlushPortBuffer(
-  CGrafPtr    port,
-  RgnHandle   region);      /* can be NULL */
+	CGrafPtr    port,
+	RgnHandle   region);      /* can be NULL */
 
 
 /*
  *  QDGetDirtyRegion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.1 and later
@@ -7006,13 +7006,13 @@ QDFlushPortBuffer(
  */
 EXTERN_API( OSStatus )
 QDGetDirtyRegion(
-  CGrafPtr    port,
-  RgnHandle   rgn);
+	CGrafPtr    port,
+	RgnHandle   rgn);
 
 
 /*
  *  QDSetDirtyRegion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.1 and later
@@ -7020,13 +7020,13 @@ QDGetDirtyRegion(
  */
 EXTERN_API( OSStatus )
 QDSetDirtyRegion(
-  CGrafPtr    port,
-  RgnHandle   rgn);
+	CGrafPtr    port,
+	RgnHandle   rgn);
 
 
 /*
  *  QDAddRectToDirtyRegion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.5 and later
@@ -7034,13 +7034,13 @@ QDSetDirtyRegion(
  */
 EXTERN_API_C( OSStatus )
 QDAddRectToDirtyRegion(
-  CGrafPtr      inPort,
-  const Rect *  inBounds);
+	CGrafPtr      inPort,
+	const Rect *  inBounds);
 
 
 /*
  *  QDAddRegionToDirtyRegion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.5 and later
@@ -7048,14 +7048,14 @@ QDAddRectToDirtyRegion(
  */
 EXTERN_API_C( OSStatus )
 QDAddRegionToDirtyRegion(
-  CGrafPtr    inPort,
-  RgnHandle   inRegion);
+	CGrafPtr    inPort,
+	RgnHandle   inRegion);
 
 
 
 /*
  *  CreateCGContextForPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.0 and later
@@ -7063,13 +7063,13 @@ QDAddRegionToDirtyRegion(
  */
 EXTERN_API_C( OSStatus )
 CreateCGContextForPort(
-  CGrafPtr        inPort,
-  CGContextRef *  outContext);
+	CGrafPtr        inPort,
+	CGContextRef *  outContext);
 
 
 /*
  *  ClipCGContextToRegion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.0 and later
@@ -7077,14 +7077,14 @@ CreateCGContextForPort(
  */
 EXTERN_API_C( OSStatus )
 ClipCGContextToRegion(
-  CGContextRef   gc,
-  const Rect *   portRect,
-  RgnHandle      region);
+	CGContextRef   gc,
+	const Rect *   portRect,
+	RgnHandle      region);
 
 
 /*
  *  SyncCGContextOriginWithPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.0 and later
@@ -7092,16 +7092,16 @@ ClipCGContextToRegion(
  */
 EXTERN_API_C( OSStatus )
 SyncCGContextOriginWithPort(
-  CGContextRef   inContext,
-  CGrafPtr       port);
+	CGContextRef   inContext,
+	CGrafPtr       port);
 
 
 /*
  *  QDBeginCGContext()
- *  
+ *
  *  Summary:
  *    Allow CoreGraphics drawing in a CGrafPort
- *  
+ *
  *  Discussion:
  *    So far, CreateCGContextForPort() was used to create a CGContext
  *    for CG drawing from a CGrafPort. However, if the current port is
@@ -7116,15 +7116,15 @@ SyncCGContextOriginWithPort(
  *    - QDBeginCGContext/QDEndCGContext calls can not be nested
  *    - QDEndCGContext releases the CGContext returned from
  *    QDBeginCGContext and sets it to NULL.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    inPort:
  *      The current port
- *    
+ *
  *    outContext:
  *      The CGContextRef to be used for CG drawing
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.1 and later
@@ -7132,13 +7132,13 @@ SyncCGContextOriginWithPort(
  */
 EXTERN_API_C( OSStatus )
 QDBeginCGContext(
-  CGrafPtr        inPort,
-  CGContextRef *  outContext);
+	CGrafPtr        inPort,
+	CGContextRef *  outContext);
 
 
 /*
  *  QDEndCGContext()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.1 and later
@@ -7146,21 +7146,21 @@ QDBeginCGContext(
  */
 EXTERN_API_C( OSStatus )
 QDEndCGContext(
-  CGrafPtr        inPort,
-  CGContextRef *  inoutContext);
+	CGrafPtr        inPort,
+	CGContextRef *  inoutContext);
 
 
 /*
-    The following routines are implemented in CarbonLib, and on Mac OS X in QD proper.
-    They save the pixel data of a region in a packed format for quick save/restore 
-    without using a lot of memory to do a large, hollow region, such as the region
-    used when drag hiliting (which is where this is used).
+		The following routines are implemented in CarbonLib, and on Mac OS X in QD proper.
+		They save the pixel data of a region in a packed format for quick save/restore
+		without using a lot of memory to do a large, hollow region, such as the region
+		used when drag hiliting (which is where this is used).
 */
 
 typedef struct OpaqueQDRegionBitsRef*   QDRegionBitsRef;
 /*
  *  QDSaveRegionBits()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7172,7 +7172,7 @@ QDSaveRegionBits(RgnHandle region);
 
 /*
  *  QDRestoreRegionBits()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7180,13 +7180,13 @@ QDSaveRegionBits(RgnHandle region);
  */
 EXTERN_API( OSStatus )
 QDRestoreRegionBits(
-  RgnHandle         region,
-  QDRegionBitsRef   regionBits);
+	RgnHandle         region,
+	QDRegionBitsRef   regionBits);
 
 
 /*
  *  QDDisposeRegionBits()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7197,15 +7197,15 @@ QDDisposeRegionBits(QDRegionBitsRef regionBits);
 
 
 /*
-   Developers need a way to go from a CGDirectDisplay environment to Quickdraw.
-   The following is equivalent to CreateNewPort(), but instead of taking the
-   portPixMap from the current GDevice, it uses the GDevice corresponding to
-   the CGSDisplayID passed in. If the CGSDisplayID is invalid, the mainDevice
-   is used instead.
+	Developers need a way to go from a CGDirectDisplay environment to Quickdraw.
+	The following is equivalent to CreateNewPort(), but instead of taking the
+	portPixMap from the current GDevice, it uses the GDevice corresponding to
+	the CGSDisplayID passed in. If the CGSDisplayID is invalid, the mainDevice
+	is used instead.
 */
 /*
  *  CreateNewPortForCGDisplayID()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.0 and later
@@ -7216,14 +7216,14 @@ CreateNewPortForCGDisplayID(UInt32 inCGDisplayID);
 
 
 /*
-   In Mac OS X, developers should be able to turn the WaitCursor (spinning wheel)
-   on and off. QDDisplayWaitCursor() keeps track of nested calls.
-   Passing FALSE will resume automatic wait cursor operation.
-   Call this function only from an application in the foreground.
+	In Mac OS X, developers should be able to turn the WaitCursor (spinning wheel)
+	on and off. QDDisplayWaitCursor() keeps track of nested calls.
+	Passing FALSE will resume automatic wait cursor operation.
+	Call this function only from an application in the foreground.
 */
 /*
  *  QDDisplayWaitCursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.0 and later
@@ -7235,10 +7235,10 @@ QDDisplayWaitCursor(Boolean forceWaitCursor);
 
 /*
  *  QDSetPatternOrigin()
- *  
+ *
  *  Summary:
  *    Sets the pattern origin for the current port.
- *  
+ *
  *  Discussion:
  *    When a QuickDraw drawing operation uses a pattern (either a
  *    black&white pattern or a PixPat), the pattern's image is aligned
@@ -7256,12 +7256,12 @@ QDDisplayWaitCursor(Boolean forceWaitCursor);
  *    for example, after changing the port's origin to (10,10), an
  *    application might change the port's pattern origin to (-10, -10)
  *    so that patterns are still aligned with the window's content area.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    origin:
  *      The new pattern origin of the port.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in NQD 8.5 and later
  *    CarbonLib:        in CarbonLib 1.3 and later
@@ -7273,15 +7273,15 @@ QDSetPatternOrigin(Point origin);
 
 /*
  *  QDGetPatternOrigin()
- *  
+ *
  *  Summary:
  *    Returns the pattern origin of the current port.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    origin:
  *      On exit, contains the current port's pattern origin.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in NQD 8.5 and later
  *    CarbonLib:        in CarbonLib 1.3 and later
@@ -7294,22 +7294,22 @@ QDGetPatternOrigin(Point * origin);
 
 /*
  *  QDIsNamedPixMapCursorRegistered()
- *  
+ *
  *  Summary:
  *    Returns whether a named cursor has already been registered.
- *  
+ *
  *  Discussion:
  *    The CoreGraphics Scalable Cursor Registry provides support for
  *    cursors based on PixMaps for crsrData and crsrMask, with sizes up
  *    to 64x64 pixels. Such cursors need to be registered via
  *    QDRegisterNamedPixMapCursor, and can then be set by
  *    QDSetNamedPixMapCursor.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    name:
  *      (see below at QDRegisterNamedPixMapCursor)
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.2 and later
@@ -7322,30 +7322,30 @@ QDIsNamedPixMapCursorRegistered(const char name[128]);
 
 /*
  *  QDRegisterNamedPixMapCursor()
- *  
+ *
  *  Summary:
  *    Register a new cursor by name
- *  
+ *
  *  Discussion:
  *    In order to set a PixMapCursor, it needs to be registered first
  *    by name.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    crsrData:
  *      (description forthcoming)
- *    
+ *
  *    crsrMask:
  *      (description forthcoming)
- *    
+ *
  *    hotSpot:
  *      (description forthcoming)
- *    
+ *
  *    name:
  *      A naming convention involving the name of your application and
  *      descriptive cursor names or resource IDs is suggested. Cursor
  *      names are 0-terminated C-strings up to a length of 127.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.2 and later
@@ -7353,15 +7353,15 @@ QDIsNamedPixMapCursorRegistered(const char name[128]);
  */
 EXTERN_API_C( OSStatus )
 QDRegisterNamedPixMapCursor(
-  PixMapHandle   crsrData,
-  PixMapHandle   crsrMask,
-  Point          hotSpot,
-  const char     name[128]);
+	PixMapHandle   crsrData,
+	PixMapHandle   crsrMask,
+	Point          hotSpot,
+	const char     name[128]);
 
 
 /*
  *  QDUnregisterNamedPixMapCursur()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.2 and later
@@ -7373,7 +7373,7 @@ QDUnregisterNamedPixMapCursur(const char name[128]);
 
 /*
  *  QDSetNamedPixMapCursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.2 and later
@@ -7385,7 +7385,7 @@ QDSetNamedPixMapCursor(const char name[128]);
 
 /*
  *  QDSetCursorScale()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.2 and later
@@ -7398,36 +7398,36 @@ QDSetCursorScale(float scale);
 
 
 enum {
-  kQDUseDefaultTextRendering    = 0,    /* Sets whatever is specified in system defaults.*/
-                                        /* Currently sets kQDUseTrueTypeScalerGlyphs if nothing is specified.*/
-  kQDUseTrueTypeScalerGlyphs    = (1 << 0), /* bit 0*/
-  kQDUseCGTextRendering         = (1 << 1), /* bit 1*/
-  kQDUseCGTextMetrics           = (1 << 2), /* bit 2*/
-  kQDSupportedFlags             = kQDUseTrueTypeScalerGlyphs | kQDUseCGTextRendering | kQDUseCGTextMetrics,
-  kQDDontChangeFlags            = (long)0xFFFFFFFF /* to request the current state, without changing anything*/
+	kQDUseDefaultTextRendering    = 0,    /* Sets whatever is specified in system defaults.*/
+																				/* Currently sets kQDUseTrueTypeScalerGlyphs if nothing is specified.*/
+	kQDUseTrueTypeScalerGlyphs    = (1 << 0), /* bit 0*/
+	kQDUseCGTextRendering         = (1 << 1), /* bit 1*/
+	kQDUseCGTextMetrics           = (1 << 2), /* bit 2*/
+	kQDSupportedFlags             = kQDUseTrueTypeScalerGlyphs | kQDUseCGTextRendering | kQDUseCGTextMetrics,
+	kQDDontChangeFlags            = (long)0xFFFFFFFF /* to request the current state, without changing anything*/
 };
 
 
 
 /*
  *  QDSwapTextFlags()
- *  
+ *
  *  Summary:
  *    Returns current flags and optionally sets new flags.
- *  
+ *
  *  Discussion:
  *    Currently, only the flag bits in the enum above are supported.
  *    The typical usage is UInt32 savedFlags =
  *    QDSwapTextFlags(newFlags); // ... draw text under the conditions
  *    of "newFlags" ... (void)QDSwapTextFlags(savedFlags);  // restore
  *    previous setting
- *  
+ *
  *  Parameters:
- *    
+ *
  *    newFlags:
  *      Use the enums above; example "kQDUseCGTextRendering |
  *      kQDUseCGTextMetrics".
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.2 and later
@@ -7439,19 +7439,19 @@ QDSwapTextFlags(UInt32 newFlags);
 
 /*
  *  QDSwapPortTextFlags()
- *  
+ *
  *  Summary:
  *    Same as QDSwapTextFlags, but per GrafPort.
- *  
+ *
  *  Parameters:
- *    
+ *
  *    port:
  *      Settings per port override any global settings. If port ==
  *      NULL, the current port is used.
- *    
+ *
  *    newFlags:
  *      As in QDSwapTextFlags, above.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.2 and later
@@ -7459,18 +7459,18 @@ QDSwapTextFlags(UInt32 newFlags);
  */
 EXTERN_API_C( UInt32 )
 QDSwapPortTextFlags(
-  CGrafPtr   port,
-  UInt32     newFlags);
+	CGrafPtr   port,
+	UInt32     newFlags);
 
 
 
 
-/* 
-    LowMem accessor functions previously in LowMem.h
+/*
+		LowMem accessor functions previously in LowMem.h
 */
 /*
  *  LMGetScrVRes()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7482,7 +7482,7 @@ LMGetScrVRes(void)                                            TWOWORDINLINE(0x3E
 
 /*
  *  LMSetScrVRes()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7494,7 +7494,7 @@ LMSetScrVRes(SInt16 value)                                    TWOWORDINLINE(0x31
 
 /*
  *  LMGetScrHRes()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7506,7 +7506,7 @@ LMGetScrHRes(void)                                            TWOWORDINLINE(0x3E
 
 /*
  *  LMSetScrHRes()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7518,7 +7518,7 @@ LMSetScrHRes(SInt16 value)                                    TWOWORDINLINE(0x31
 
 /*
  *  LMGetMainDevice()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7530,7 +7530,7 @@ LMGetMainDevice(void)                                         TWOWORDINLINE(0x2E
 
 /*
  *  LMSetMainDevice()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7542,7 +7542,7 @@ LMSetMainDevice(GDHandle value)                               TWOWORDINLINE(0x21
 
 /*
  *  LMGetDeviceList()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7554,7 +7554,7 @@ LMGetDeviceList(void)                                         TWOWORDINLINE(0x2E
 
 /*
  *  LMSetDeviceList()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7566,7 +7566,7 @@ LMSetDeviceList(GDHandle value)                               TWOWORDINLINE(0x21
 
 /*
  *  LMGetQDColors()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7578,7 +7578,7 @@ LMGetQDColors(void)                                           TWOWORDINLINE(0x2E
 
 /*
  *  LMSetQDColors()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7590,7 +7590,7 @@ LMSetQDColors(Handle value)                                   TWOWORDINLINE(0x21
 
 /*
  *  LMGetWidthListHand()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7602,7 +7602,7 @@ LMGetWidthListHand(void)                                      TWOWORDINLINE(0x2E
 
 /*
  *  LMSetWidthListHand()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7614,7 +7614,7 @@ LMSetWidthListHand(Handle value)                              TWOWORDINLINE(0x21
 
 /*
  *  LMGetHiliteMode()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7626,7 +7626,7 @@ LMGetHiliteMode(void)                                         TWOWORDINLINE(0x1E
 
 /*
  *  LMSetHiliteMode()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7638,7 +7638,7 @@ LMSetHiliteMode(UInt8 value)                                  TWOWORDINLINE(0x11
 
 /*
  *  LMGetWidthPtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7650,7 +7650,7 @@ LMGetWidthPtr(void)                                           TWOWORDINLINE(0x2E
 
 /*
  *  LMSetWidthPtr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7662,7 +7662,7 @@ LMSetWidthPtr(Ptr value)                                      TWOWORDINLINE(0x21
 
 /*
  *  LMGetWidthTabHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7674,7 +7674,7 @@ LMGetWidthTabHandle(void)                                     TWOWORDINLINE(0x2E
 
 /*
  *  LMSetWidthTabHandle()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7686,7 +7686,7 @@ LMSetWidthTabHandle(Handle value)                             TWOWORDINLINE(0x21
 
 /*
  *  LMGetLastSPExtra()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7698,7 +7698,7 @@ LMGetLastSPExtra(void)                                        TWOWORDINLINE(0x2E
 
 /*
  *  LMSetLastSPExtra()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7710,7 +7710,7 @@ LMSetLastSPExtra(SInt32 value)                                TWOWORDINLINE(0x21
 
 /*
  *  LMGetLastFOND()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7722,7 +7722,7 @@ LMGetLastFOND(void)                                           TWOWORDINLINE(0x2E
 
 /*
  *  LMSetLastFOND()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7734,7 +7734,7 @@ LMSetLastFOND(Handle value)                                   TWOWORDINLINE(0x21
 
 /*
  *  LMGetFractEnable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7746,7 +7746,7 @@ LMGetFractEnable(void)                                        TWOWORDINLINE(0x1E
 
 /*
  *  LMSetFractEnable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7758,7 +7758,7 @@ LMSetFractEnable(UInt8 value)                                 TWOWORDINLINE(0x11
 
 /*
  *  LMGetTheGDevice()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7770,7 +7770,7 @@ LMGetTheGDevice(void)                                         TWOWORDINLINE(0x2E
 
 /*
  *  LMSetTheGDevice()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7787,7 +7787,7 @@ LMSetTheGDevice(GDHandle value)                               TWOWORDINLINE(0x21
 #else
 /*
  *  LMGetHiliteRGB()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7799,7 +7799,7 @@ LMGetHiliteRGB(RGBColor * hiliteRGBValue);
 
 /*
  *  LMSetHiliteRGB()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7813,7 +7813,7 @@ LMSetHiliteRGB(const RGBColor * hiliteRGBValue);
 
 /*
  *  LMGetCursorNew()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7825,7 +7825,7 @@ LMGetCursorNew(void)                                          TWOWORDINLINE(0x1E
 
 /*
  *  LMSetCursorNew()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -7853,11 +7853,11 @@ LMSetCursorNew(Boolean value)                                 TWOWORDINLINE(0x11
 
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+		#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+		#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+		#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -7871,4 +7871,3 @@ LMSetCursorNew(Boolean value)                                 TWOWORDINLINE(0x11
 #endif
 
 #endif /* __QUICKDRAW__ */
-

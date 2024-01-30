@@ -44,7 +44,7 @@ public:
 	virtual void			ClientEarPosition( edict_t *pEntity, Vector *pEarOrigin ) OVERRIDE;
 
 	virtual void			GetPlayerLimits( int& minplayers, int& maxplayers, int &defaultMaxPlayers ) const OVERRIDE;
-	
+
 	// returns number of delay ticks if player is in Replay mode (0 = no delay)
 	virtual int				GetReplayDelay( edict_t *player, int& entity ) OVERRIDE;
 	// Anything this game .dll wants to add to the bug reporter text (e.g., the entity/model under the picker crosshair)
@@ -63,7 +63,7 @@ public:
 class CServerGameDLL : public IServerGameDLL
 {
 public:
-	virtual bool			DLLInit(CreateInterfaceFn engineFactory, CreateInterfaceFn physicsFactory, 
+	virtual bool			DLLInit(CreateInterfaceFn engineFactory, CreateInterfaceFn physicsFactory,
 										CreateInterfaceFn fileSystemFactory, CGlobalVars *pGlobals) OVERRIDE;
 	virtual void			DLLShutdown( void ) OVERRIDE;
 	// Get the simulation interval (must be compiled with identical values into both client and game .dll for MOD!!!)
@@ -80,7 +80,7 @@ public:
 	virtual ServerClass*	GetAllServerClasses( void ) OVERRIDE;
 	virtual const char     *GetGameDescription( void ) OVERRIDE;
 	virtual void			CreateNetworkStringTables( void ) OVERRIDE;
-	
+
 	// Save/restore system hooks
 	virtual CSaveRestoreData  *SaveInit( int size ) OVERRIDE;
 	virtual void			SaveWriteFields( CSaveRestoreData *, char const* , void *, datamap_t *, typedescription_t *, int ) OVERRIDE;
@@ -183,7 +183,7 @@ public:
 extern CUtlLinkedList<CMapEntityRef, unsigned short> g_MapEntityRefs;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CMapLoadEntityFilter : public IMapEntityFilter
 {
@@ -225,4 +225,3 @@ public:
 EXPOSE_SINGLE_INTERFACE( CServerGameTags, IServerGameTags, INTERFACEVERSION_SERVERGAMETAGS );
 
 #endif // GAMEINTERFACE_H
-

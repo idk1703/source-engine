@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -95,7 +95,7 @@ CLoadingDialog::CLoadingDialog( vgui::Panel *parent ) : Frame(parent, "LoadingDi
 	else
 	{
 		m_pInfoLabel->SetBounds(20, 32, 392, 24);
-		m_pProgress->SetBounds(20, 64, 300, 24); 
+		m_pProgress->SetBounds(20, 64, 300, 24);
 		m_pCancelButton->SetBounds(330, 64, 72, 24);
 		m_pProgress2->SetVisible(false);
 	}
@@ -140,7 +140,7 @@ void CLoadingDialog::PaintBackground()
 
 		m_pLoadingBackground->SetPaintBackgroundEnabled( true );
 	}
-	
+
 	if ( ModInfo().IsSinglePlayerOnly() )
 	{
 		DrawBox( x, y, barWide, barTall, Color( 0, 0, 0, 255 ), 1.0f );
@@ -206,7 +206,7 @@ void CLoadingDialog::Open()
 			m_pInfoLabel->SetVisible( true );
 		}
 		m_pInfoLabel->SetText("");
-		
+
 		m_pCancelButton->SetText("#GameUI_Cancel");
 		m_pCancelButton->SetCommand("Cancel");
 	}
@@ -230,7 +230,7 @@ void CLoadingDialog::SetupControlSettingsForErrorDisplay( const char *settingsFi
 	HideOtherDialogs( true );
 
 	BaseClass::Activate();
-	
+
 	m_pProgress->SetVisible(false);
 
 	m_pInfoLabel->SetVisible(true);
@@ -287,11 +287,11 @@ void CLoadingDialog::DisplayGenericError(const char *failureReason, const char *
 
 	// In certain race conditions, DisplayGenericError can get called AFTER OnClose() has been called.
 	// If that happens and we don't call Activate(), then it'll continue closing when we don't want it to.
-	Activate(); 
-	
+	Activate();
+
 	SetupControlSettingsForErrorDisplay("Resource/LoadingDialogError.res");
 
-	if ( extendedReason && strlen( extendedReason ) > 0 ) 
+	if ( extendedReason && strlen( extendedReason ) > 0 )
 	{
 		wchar_t compositeReason[256], finalMsg[512], formatStr[256];
 		if ( extendedReason[0] == '#' )
@@ -350,7 +350,7 @@ void CLoadingDialog::DisplayVACBannedError()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: explain to the user they can't connect to public servers due to 
+// Purpose: explain to the user they can't connect to public servers due to
 //			not having a valid connection to Steam
 //			this should only happen if they are a pirate
 //-----------------------------------------------------------------------------
@@ -366,8 +366,8 @@ void CLoadingDialog::DisplayNoSteamConnectionError()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: explain to the user they got kicked from a server due to that same account 
-//			logging in from another location. This also triggers the refresh login dialog on OK 
+// Purpose: explain to the user they got kicked from a server due to that same account
+//			logging in from another location. This also triggers the refresh login dialog on OK
 //			being pressed.
 //-----------------------------------------------------------------------------
 void CLoadingDialog::DisplayLoggedInElsewhereError()
@@ -444,7 +444,7 @@ void CLoadingDialog::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadingDialog::PerformLayout()
 {
@@ -500,9 +500,9 @@ void CLoadingDialog::PerformLayout()
 
 		SetPos( x, y );
 	}
-	
+
 	BaseClass::PerformLayout();
-	
+
 	vgui::ipanel()->MoveToFront( GetVPanel() );
 }
 
@@ -578,7 +578,7 @@ void CLoadingDialog::SetSecondaryProgress( float progress )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadingDialog::SetSecondaryProgressText(const char *statusText)
 {
@@ -591,7 +591,7 @@ void CLoadingDialog::SetSecondaryProgressText(const char *statusText)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadingDialog::OnClose()
 {

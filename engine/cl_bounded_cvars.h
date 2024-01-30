@@ -20,4 +20,3 @@ extern ConVar_ServerBounded *cl_updaterate;
 
 
 #endif // CL_BOUNDED_CVARS_H
-

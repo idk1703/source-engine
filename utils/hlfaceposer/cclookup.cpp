@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -96,18 +96,18 @@ static void PopulateCloseCaptionTokenList( HWND wnd, CCloseCaptionLookupParams *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
-static BOOL CALLBACK CloseCaptionLookupDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )  
+static BOOL CALLBACK CloseCaptionLookupDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	switch(uMsg)
 	{
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		// Insert code here to put the string (to find and replace with)
 		// into the edit controls.
 		// ...
@@ -127,9 +127,9 @@ static BOOL CALLBACK CloseCaptionLookupDialogProc( HWND hwndDlg, UINT uMsg, WPAR
 
 			SetFocus( GetDlgItem( hwndDlg, IDC_CCTOKENLIST ) );
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -148,7 +148,7 @@ static BOOL CALLBACK CloseCaptionLookupDialogProc( HWND hwndDlg, UINT uMsg, WPAR
 				EndDialog( hwndDlg, 1 );
 			}
 			break;
-        case IDCANCEL:
+		case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		}
@@ -201,9 +201,9 @@ static BOOL CALLBACK CloseCaptionLookupDialogProc( HWND hwndDlg, UINT uMsg, WPAR
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int CloseCaptionLookup( CCloseCaptionLookupParams *params )
@@ -211,22 +211,22 @@ int CloseCaptionLookup( CCloseCaptionLookupParams *params )
 	g_Params = *params;
 
 	g_UnicodeFont = CreateFont(
-		 -10, 
-		 0,
-		 0,
-		 0,
-		 FW_NORMAL,
-		 FALSE,
-		 FALSE,
-		 FALSE,
-		 ANSI_CHARSET,
-		 OUT_TT_PRECIS,
-		 CLIP_DEFAULT_PRECIS,
-		 ANTIALIASED_QUALITY,
-		 DEFAULT_PITCH,
-		 "Tahoma" );
+		-10,
+		0,
+		0,
+		0,
+		FW_NORMAL,
+		FALSE,
+		FALSE,
+		FALSE,
+		ANSI_CHARSET,
+		OUT_TT_PRECIS,
+		CLIP_DEFAULT_PRECIS,
+		ANTIALIASED_QUALITY,
+		DEFAULT_PITCH,
+		"Tahoma" );
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_CCLOOKUP ),
 		(HWND)g_MDLViewer->getHandle(),
 		(DLGPROC)CloseCaptionLookupDialogProc );

@@ -13,7 +13,7 @@
 
 
 struct Language_t
-{	
+{
 	const char *m_pchName;
 	const char *m_pchShortName;
 	const char *m_pchVGUILocalizationName;
@@ -28,7 +28,7 @@ struct Language_t
 // zh_CN - validate that SC date formats come through
 // bt_BR - assume we should use Brazilian rather than Iberian portguese
 
-static const Language_t s_LanguageNames[] = 
+static const Language_t s_LanguageNames[] =
 {
 	{	"None",					"none",			"None",									"none",		k_Lang_None,		0 },
 	{	"English",				"english",		"#GameUI_Language_English",				"en_US",	k_Lang_English,		1033 },
@@ -57,7 +57,7 @@ static const Language_t s_LanguageNames[] =
 	{	"Bulgarian",			"bulgarian",	"#GameUI_Language_Bulgarian",			"bg_BG",	k_Lang_Bulgarian,	1026 } ,
 	{	"Greek",				"greek",		"#GameUI_Language_Greek",				"el_GR",	k_Lang_Greek,		1032 },
 	{	"Ukrainian",			"ukrainian",	"#GameUI_Language_Ukrainian",			"uk_UA",	k_Lang_Ukrainian,	1058 },
-};	
+};
 
 //-----------------------------------------------------------------------------
 // Purpose: translate language enum into closests windows language code ID
@@ -215,4 +215,3 @@ const char *GetLanguageVGUILocalization( ELanguage eLang )
 	Assert( !"enum ELanguage order mismatched from Language_t s_LanguageNames, fix it!" );
 	return s_LanguageNames[0].m_pchVGUILocalizationName;
 }
-

@@ -20,7 +20,7 @@ CBaseRecordingSessionBlock *CServerRecordingSessionBlockManager::Create()
 {
 	return new CServerRecordingSessionBlock( m_pContext );
 }
-	
+
 IReplayContext *CServerRecordingSessionBlockManager::GetReplayContext() const
 {
 	extern CServerReplayContext *g_pServerReplayContext;

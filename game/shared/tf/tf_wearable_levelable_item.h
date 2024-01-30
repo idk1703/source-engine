@@ -24,10 +24,10 @@
 #endif
 
 #define LEVELABLE_ITEM_BODYGROUP_NAME	"level"
-							   
+
 //=============================================================================
 //
-// 
+//
 //
 class CTFWearableLevelableItem : public CTFWearable
 {

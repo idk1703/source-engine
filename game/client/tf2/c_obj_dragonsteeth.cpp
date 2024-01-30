@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,7 +13,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectDragonsTeeth : public C_BaseObject
 {
@@ -37,7 +37,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_ObjectDragonsTeeth, DT_ObjectDragonsTeeth, CObjectDra
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectDragonsTeeth::C_ObjectDragonsTeeth()
 {

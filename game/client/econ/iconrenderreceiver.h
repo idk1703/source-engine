@@ -20,12 +20,12 @@ protected:
 	virtual ~CIconRenderReceiver() { SafeRelease( &m_pTex ); }
 
 public:
-	virtual int AddRef() OVERRIDE 
+	virtual int AddRef() OVERRIDE
 	{
 		return ++m_nReferenceCount;
 	}
 
-	virtual int Release() OVERRIDE 
+	virtual int Release() OVERRIDE
 	{
 		int retVal = --m_nReferenceCount;
 		if ( retVal == 0 )
@@ -33,7 +33,7 @@ public:
 		return retVal;
 	}
 
-	virtual void OnAsyncCreateComplete( ITexture* pTex, void *pRtSrc ) OVERRIDE 
+	virtual void OnAsyncCreateComplete( ITexture* pTex, void *pRtSrc ) OVERRIDE
 	{
 		SafeAssign( &m_pTex, pTex );
 	}
@@ -42,12 +42,12 @@ public:
 	virtual void OnAsyncMapComplete( ITexture* pTex, void* pExtraArgs, void* pMemory, int pPitch ) OVERRIDE { Assert( !"Should never be called." ); }
 	virtual void OnAsyncReadbackBegin( ITexture* pDst, ITexture* pSrc, void* pExtraArgs ) OVERRIDE { Assert( !"Should never be called." ); }
 
-	virtual int GetRefCount() const OVERRIDE { return m_nReferenceCount; } 
+	virtual int GetRefCount() const OVERRIDE { return m_nReferenceCount; }
 
 	ITexture* GetTexture() const { return m_pTex; }
 
 private:
-	CInterlockedInt m_nReferenceCount; 
+	CInterlockedInt m_nReferenceCount;
 	ITexture* m_pTex;
 };
 

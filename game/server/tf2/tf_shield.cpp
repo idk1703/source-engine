@@ -60,7 +60,7 @@ CShield::CShield()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CShield::~CShield()
 {
@@ -128,7 +128,7 @@ float CShield::ProtectionAmount( int damageType ) const
 	// As a test, we're trying to make shields impervious to everything
 	return 1.0f;
 }
-		   
+
 
 //-----------------------------------------------------------------------------
 // Activates/deactivates a shield for collision purposes
@@ -146,7 +146,7 @@ void CShield::ActivateCollisions( bool activate )
 }
 
 //-----------------------------------------------------------------------------
-// Activates all shields 
+// Activates all shields
 //-----------------------------------------------------------------------------
 void CShield::ActivateShields( bool activate, int team )
 {
@@ -177,7 +177,7 @@ bool CShield::IsBlockedByShields( const Vector& src, const Vector& end )
 
 		// Coarse bbox test first
 		Vector vecAbsMins, vecAbsMaxs;
-		s_Shields[i]->CollisionProp()->WorldSpaceAABB( &vecAbsMins, &vecAbsMaxs ); 
+		s_Shields[i]->CollisionProp()->WorldSpaceAABB( &vecAbsMins, &vecAbsMaxs );
 		if (!IsBoxIntersectingRay( vecAbsMins, vecAbsMaxs, ray.m_Start, ray.m_Delta ))
 			continue;
 
@@ -257,7 +257,7 @@ void CShield::RegisterPassThru(const Vector& vecDir, int bitsDamageType, trace_t
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CShield::SetPower( float flPower )
 {
@@ -273,8 +273,8 @@ void CShield::SetPower( float flPower )
 // Purpose: Setup shield recharging parameters
 //-----------------------------------------------------------------------------
 void CShield::SetupRecharge( float flPower, float flDelay, float flAmount, float flTickTime )
-{ 
-	m_flMaxPower = flPower; 
+{
+	m_flMaxPower = flPower;
 	SetPower( flPower );
 	m_flPowerLevel = 1.0;
 	m_flRechargeDelay = flDelay;
@@ -353,7 +353,7 @@ bool CShield::TestCollision( const Ray_t& ray, unsigned int mask, trace_t& trace
 
 			// NOTE: Structure order of points so that our barycentric
 			// axes for each triangle are along the (u,v) directions of the mesh
-			// The barycentric coords we'll need below 
+			// The barycentric coords we'll need below
 
 			// Two triangles per quad...
 			t = IntersectRayWithTriangle( ray,
@@ -369,7 +369,7 @@ bool CShield::TestCollision( const Ray_t& ray, unsigned int mask, trace_t& trace
 				ihit = i; jhit = j;
 				firstTri = true;
 			}
-			
+
 			t = IntersectRayWithTriangle( ray,
 				GetPoint( j + 1, i ),
 				GetPoint( j, i ),
@@ -389,7 +389,7 @@ bool CShield::TestCollision( const Ray_t& ray, unsigned int mask, trace_t& trace
 	if (mint == FLT_MAX)
 		return false;
 
-	// Stuff the barycentric coordinates of the triangle hit into the hit group 
+	// Stuff the barycentric coordinates of the triangle hit into the hit group
 	// For the first triangle, the first edge goes along u, the second edge goes
 	// along -v. For the second triangle, the first edge goes along -u,
 	// the second edge goes along v.
@@ -397,7 +397,7 @@ bool CShield::TestCollision( const Ray_t& ray, unsigned int mask, trace_t& trace
 	const Vector& v2vec = GetPoint(v2[0], v2[1]);
 	const Vector& v3vec = GetPoint(v3[0], v3[1]);
 	float u, v;
-	bool ok = ComputeIntersectionBarycentricCoordinates( ray, 
+	bool ok = ComputeIntersectionBarycentricCoordinates( ray,
 		v1vec, v2vec, v3vec, u, v );
 	Assert( ok );
 	if ( !ok )
@@ -418,7 +418,7 @@ bool CShield::TestCollision( const Ray_t& ray, unsigned int mask, trace_t& trace
 
 	Vector normal;
 	float intercept;
-	ComputeTrianglePlane( v1vec, v2vec, v3vec, normal, intercept ); 
+	ComputeTrianglePlane( v1vec, v2vec, v3vec, normal, intercept );
 
 	UTIL_SetTrace( trace, ray, edict(), mint, hitgroup, CONTENTS_SOLID, normal, intercept );
 	VectorAdd( trace.startpos, ray.m_StartOffset, trace.startpos );
@@ -428,5 +428,3 @@ bool CShield::TestCollision( const Ray_t& ray, unsigned int mask, trace_t& trace
 }
 
 #pragma warning ( default : 4701 )
-
-

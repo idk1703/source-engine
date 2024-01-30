@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-class CEntityReadInfo;		
+class CEntityReadInfo;
 
 void CL_DeleteDLLEntity( int iEnt, const char *reason, bool bOnRecreatingAllEntities = false );
 void CL_CopyExistingEntity( CEntityReadInfo &u );

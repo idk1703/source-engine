@@ -51,7 +51,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectShieldWallBase::CObjectShieldWallBase()
 {
@@ -60,7 +60,7 @@ CObjectShieldWallBase::CObjectShieldWallBase()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectShieldWallBase::UpdateOnRemove( void )
 {
@@ -75,7 +75,7 @@ void CObjectShieldWallBase::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectShieldWallBase::Spawn()
 {
@@ -183,7 +183,7 @@ CObjectShieldWall::CObjectShieldWall()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectShieldWall::Spawn()
 {
@@ -200,7 +200,7 @@ void CObjectShieldWall::Spawn()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectShieldWall::Precache()
 {
@@ -219,7 +219,7 @@ void CObjectShieldWall::GetControlPanelInfo( int nPanelIndex, const char *&pPane
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectShieldWall::FinishedBuilding( void )
 {
@@ -264,7 +264,3 @@ void CObjectShieldWall::ObjectMoved( )
 	}
 	BaseClass::ObjectMoved();
 }
-
-
-
-

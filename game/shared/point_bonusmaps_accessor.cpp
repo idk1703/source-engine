@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,14 +15,14 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-// See interface.h/.cpp for specifics:  basically this ensures that we actually Sys_UnloadModule the dll and that we don't call Sys_LoadModule 
+// See interface.h/.cpp for specifics:  basically this ensures that we actually Sys_UnloadModule the dll and that we don't call Sys_LoadModule
 //  over and over again.
 static CDllDemandLoader g_GameUI( "GameUI" );
 
 #ifndef CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CPointBonusMapsAccessor : public CPointEntity
 {
@@ -67,7 +67,7 @@ void CPointBonusMapsAccessor::Activate( void )
 void CPointBonusMapsAccessor::InputUnlock( inputdata_t& inputdata )
 {
 	if ( m_pGameUI )
-		m_pGameUI->BonusMapUnlock( m_String_tFileName.ToCStr(), m_String_tMapName.ToCStr() );	
+		m_pGameUI->BonusMapUnlock( m_String_tFileName.ToCStr(), m_String_tMapName.ToCStr() );
 }
 
 void CPointBonusMapsAccessor::InputComplete( inputdata_t& inputdata )
@@ -116,7 +116,7 @@ void BonusMapChallengeUpdate( const char *pchFileName, const char *pchMapName, c
 				event->SetInt( "numgold", piNumMedals[ 2 ] );
 				gameeventmanager->FireEvent( event );
 			}
-		}	
+		}
 	}
 }
 
@@ -129,7 +129,7 @@ void BonusMapChallengeNames( char *pchFileName, char *pchMapName, char *pchChall
 		if ( pGameUI )
 		{
 			pGameUI->BonusMapChallengeNames( pchFileName, pchMapName, pchChallengeName );
-		}	
+		}
 	}
 }
 

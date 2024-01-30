@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -103,7 +103,7 @@ bool CPlayerGroupManager::BYldAddMemberToGroup( PlayerGroupID_t nPlayerGroupID, 
 	{
 		EmitInfo( SPEW_GC, 4, LOG_ALWAYS, "BYldAddMemberToGroup not adding member: %s to player group: %016llx as he's already in the group\n", steamIDNewMember.Render(), nPlayerGroupID );
 		UnlockGroupID( nPlayerGroupID );
-		return false;	
+		return false;
 	}
 
 	// Lock the user's cache so we can add the group to it
@@ -418,7 +418,7 @@ void CPlayerGroupManager::YieldingSessionStartPlaying( CGCUserSession *pSession 
 		if ( mIndex == sm_mapPlayersMemcacheJobCount.InvalidIndex() )
 		{
 			sm_mapPlayersMemcacheJobCount.Insert( pSession->GetSteamID(), 1 );
-		}	
+		}
 		else
 		{
 			sm_mapPlayersMemcacheJobCount.Element( mIndex )++;
@@ -536,7 +536,7 @@ void CPlayerGroupManager::YldFindGroupFromMemcached( const CSteamID &memberSteam
 		{
 			sm_mapPlayersMemcacheJobCount.RemoveAt( mIndex );
 		}
-	}	
+	}
 }
 
 bool CGCJobDestroyGroup::BYieldingRunGCJob()
@@ -572,7 +572,7 @@ bool CGCJobFindGroupFromMemcached::BYieldingRunGCJob()
 
 void CPlayerGroupManager::YldInviteToGroup( const CSteamID &steamIDLeader, const CSteamID &steamIDNewMember )
 {
-	if ( !steamIDLeader.IsValid() || ! steamIDLeader.BIndividualAccount() 
+	if ( !steamIDLeader.IsValid() || ! steamIDLeader.BIndividualAccount()
 		|| !steamIDNewMember.IsValid() || ! steamIDNewMember.BIndividualAccount() )
 		return;
 
@@ -605,7 +605,7 @@ void CPlayerGroupManager::YldInviteToGroup( const CSteamID &steamIDLeader, const
 	{
 		pPlayerGroup->AddPendingInvite( steamIDNewMember );
 	}
-	
+
 	if ( !YldHasGroupInvite( steamIDNewMember, pPlayerGroup->GetGroupID() ) )
 	{
 		CGCSharedObjectCache *pCache = GGCBase()->YieldingGetLockedSOCache( steamIDNewMember );
@@ -614,7 +614,7 @@ void CPlayerGroupManager::YldInviteToGroup( const CSteamID &steamIDLeader, const
 			// Send invite to the new member
 			IPlayerGroupInvite *pInvite = CreateInvite();
 			pInvite->YldInitFromPlayerGroup( pPlayerGroup );
-	
+
 			pCache->AddObject( pInvite->GetSharedObject() );
 		}
 		GGCBase()->UnlockSteamID( steamIDNewMember );
@@ -712,7 +712,7 @@ void CPlayerGroupManager::YldGroupInviteResponse( const CSteamID &steamID, const
 
 void CPlayerGroupManager::YldRequestKickFromGroup( const CSteamID &steamIDLeader, const CSteamID &steamIDVictim )
 {
-	if ( !steamIDLeader.IsValid() || ! steamIDLeader.BIndividualAccount() 
+	if ( !steamIDLeader.IsValid() || ! steamIDLeader.BIndividualAccount()
 		|| !steamIDVictim.IsValid() || ! steamIDVictim.BIndividualAccount() )
 		return;
 
@@ -846,4 +846,3 @@ bool CPlayerGroupManager::IsPlayerWaitingForMemcache( const CSteamID &steamID ) 
 
 	return false;
 }
-

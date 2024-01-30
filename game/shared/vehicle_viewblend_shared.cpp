@@ -173,9 +173,9 @@ float ApplyViewLocking( float flAngleRaw, float flAngleClamped, ViewLockData_t &
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pData - 
-//			vehicleEyeAngles - 
+// Purpose:
+// Input  : pData -
+//			vehicleEyeAngles -
 //-----------------------------------------------------------------------------
 void RemapViewAngles( ViewSmoothingData_t *pData, QAngle &vehicleEyeAngles )
 {
@@ -208,11 +208,11 @@ void RemapViewAngles( ViewSmoothingData_t *pData, QAngle &vehicleEyeAngles )
 //-----------------------------------------------------------------------------
 // Purpose: Vehicle dampening shared between server and client
 //-----------------------------------------------------------------------------
-void SharedVehicleViewSmoothing(CBasePlayer *pPlayer, 
-								Vector *pAbsOrigin, QAngle *pAbsAngles, 
-								bool bEnterAnimOn, bool bExitAnimOn, 
-								const Vector &vecEyeExitEndpoint, 
-								ViewSmoothingData_t *pData, 
+void SharedVehicleViewSmoothing(CBasePlayer *pPlayer,
+								Vector *pAbsOrigin, QAngle *pAbsAngles,
+								bool bEnterAnimOn, bool bExitAnimOn,
+								const Vector &vecEyeExitEndpoint,
+								ViewSmoothingData_t *pData,
 								float *pFOV )
 {
 	int eyeAttachmentIndex = pData->pVehicle->LookupAttachment( "vehicle_driver_eyes" );
@@ -277,7 +277,7 @@ void SharedVehicleViewSmoothing(CBasePlayer *pPlayer,
 			//vehicleEyeOrigin = PrevMainViewOrigin() + (vecToView * SimpleSpline(frac));
 			//debugoverlay->AddBoxOverlay( vehicleEyeOrigin, -Vector(1,1,1), Vector(1,1,1), vec3_angle, 0,255,255, 64, 10 );
 		}
-		else 
+		else
 		{
 			pData->bRunningEnterExit = false;
 
@@ -337,10 +337,10 @@ void SharedVehicleViewSmoothing(CBasePlayer *pPlayer,
 		float flSplineFrac = clamp( SimpleSpline( frac ), 0.f, 1.f );
 
 		// Blend out the error between the player's initial eye angles and the animation's initial
-		// eye angles over the duration of the animation. 
+		// eye angles over the duration of the animation.
 		QAngle vecAngleDiffBlend = ( ( 1 - flSplineFrac ) * pData->vecAngleDiffSaved );
 
-		// If our current error is less than the error amount that we're blending 
+		// If our current error is less than the error amount that we're blending
 		// out, use that. This lets the angles converge as quickly as possible.
 		QAngle vecAngleDiffCur;
 		vecAngleDiffCur.x = AngleDiff( vehicleEyeAngles.x, pData->vecAnglesSaved.x );
@@ -382,7 +382,7 @@ void SharedVehicleViewSmoothing(CBasePlayer *pPlayer,
 
 			// Blend to the exit position
 			*pAbsOrigin = Lerp( flSplineFrac, vecAbsOrigin, vecEyeExitEndpoint );
-			
+
 			if ( pFOV != NULL )
 			{
 				if ( pData->flFOV > flDefaultFOV )
@@ -395,7 +395,7 @@ void SharedVehicleViewSmoothing(CBasePlayer *pPlayer,
 		{
 			// Blend from our starting position to the desired origin
 			*pAbsOrigin = Lerp( flSplineFrac, pData->vecOriginSaved, vecAbsOrigin );
-			
+
 			if ( pFOV != NULL )
 			{
 				if ( pData->flFOV > flDefaultFOV )

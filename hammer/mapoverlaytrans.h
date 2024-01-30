@@ -56,10 +56,10 @@ public:
 	virtual void OnRemoveFromWorld(CMapWorld *pWorld, bool bNotifyChildren);
 
 	void DoTransform( const VMatrix& matrix );
-	
-	void OnPaste( CMapClass *pCopy, CMapWorld *pSourceWorld, CMapWorld *pDestWorld, 
+
+	void OnPaste( CMapClass *pCopy, CMapWorld *pSourceWorld, CMapWorld *pDestWorld,
 				  const CMapObjectList &OriginalList, CMapObjectList &NewList);
-	void OnClone( CMapClass *pClone, CMapWorld *pWorld, 
+	void OnClone( CMapClass *pClone, CMapWorld *pWorld,
 				  const CMapObjectList &OriginalList, CMapObjectList &NewList );
 	void OnUndoRedo( void );
 

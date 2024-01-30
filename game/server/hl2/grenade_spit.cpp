@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -26,7 +26,7 @@
 
 ConVar    sk_antlion_worker_spit_grenade_dmg		  ( "sk_antlion_worker_spit_grenade_dmg", "20", FCVAR_NONE, "Total damage done by an individual antlion worker loogie.");
 ConVar	  sk_antlion_worker_spit_grenade_radius		  ( "sk_antlion_worker_spit_grenade_radius","40", FCVAR_NONE, "Radius of effect for an antlion worker spit grenade.");
-ConVar	  sk_antlion_worker_spit_grenade_poison_ratio ( "sk_antlion_worker_spit_grenade_poison_ratio","0.3", FCVAR_NONE, "Percentage of an antlion worker's spit damage done as poison (which regenerates)"); 
+ConVar	  sk_antlion_worker_spit_grenade_poison_ratio ( "sk_antlion_worker_spit_grenade_poison_ratio","0.3", FCVAR_NONE, "Percentage of an antlion worker's spit damage done as poison (which regenerates)");
 
 LINK_ENTITY_TO_CLASS( grenade_spit, CGrenadeSpit );
 
@@ -44,7 +44,7 @@ CGrenadeSpit::CGrenadeSpit( void ) : m_bPlaySound( true ), m_pHissSound( NULL )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeSpit::Spawn( void )
 {
@@ -182,7 +182,7 @@ void CGrenadeSpit::GrenadeSpitTouch( CBaseEntity *pOther )
 
 	QAngle vecAngles;
 	VectorAngles( tracePlaneNormal, vecAngles );
-	
+
 	if ( pOther->IsPlayer() || bHitWater )
 	{
 		// Do a lighter-weight effect if we just hit a player
@@ -200,7 +200,7 @@ void CGrenadeSpit::Detonate(void)
 {
 	m_takedamage = DAMAGE_NO;
 
-	EmitSound( "GrenadeSpit.Hit" );	
+	EmitSound( "GrenadeSpit.Hit" );
 
 	// Stop our hissing sound
 	if ( m_pHissSound != NULL )
@@ -236,7 +236,7 @@ void CGrenadeSpit::Think( void )
 	InitHissSound();
 	if ( m_pHissSound == NULL )
 		return;
-	
+
 	// Add a doppler effect to the balls as they travel
 	CBaseEntity *pPlayer = AI_GetSinglePlayer();
 	if ( pPlayer != NULL )
@@ -247,7 +247,7 @@ void CGrenadeSpit::Think( void )
 
 		float velReceiver = DotProduct( pPlayer->GetAbsVelocity(), dir );
 		float velTransmitter = -DotProduct( GetAbsVelocity(), dir );
-		
+
 		// speed of sound == 13049in/s
 		int iPitch = 100 * ((1 - velReceiver / 13049) / (1 + velTransmitter / 13049));
 
@@ -273,9 +273,9 @@ void CGrenadeSpit::Precache( void )
 {
 	// m_nSquidSpitSprite = PrecacheModel("sprites/greenglow1.vmt");// client side spittle.
 
-	PrecacheModel( "models/spitball_large.mdl" ); 
-	PrecacheModel("models/spitball_medium.mdl"); 
-	PrecacheModel("models/spitball_small.mdl"); 
+	PrecacheModel( "models/spitball_large.mdl" );
+	PrecacheModel("models/spitball_medium.mdl");
+	PrecacheModel("models/spitball_small.mdl");
 
 	PrecacheScriptSound( "GrenadeSpit.Hit" );
 

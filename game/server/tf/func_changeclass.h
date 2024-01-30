@@ -41,15 +41,3 @@ private:
 };
 
 #endif // FUNC_CHANGECLASS_ZONE_H
-
-
-
-
-
-
-
-
-
-
-
-

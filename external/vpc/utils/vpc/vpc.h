@@ -100,10 +100,10 @@ struct macro_t
 
 	CUtlString	name;
 	CUtlString	value;
-	
+
 	// If set to true, then VPC will add this as a -Dname=value parameter to the compiler's command line.
 	bool		m_bSetupDefineInProjectFile;
-	
+
 	// VPC created this macro itself rather than the macro being created from a script file.
 	bool		m_bInternalCreatedMacro;
 };
@@ -459,7 +459,7 @@ extern char					*g_IncludeSeparators[2];
 extern 	void				VPC_ParseGroupScript( const char *pScriptName );
 
 extern groupTagIndex_t		VPC_Group_FindOrCreateGroupTag( const char *pName, bool bCreate );
-																		
+
 extern void					VPC_Keyword_Configuration();
 extern void					VPC_Keyword_FileConfiguration();
 

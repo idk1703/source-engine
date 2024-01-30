@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,11 +14,11 @@
 class IGameEvent;
 namespace PasstimeGameEvents
 {
-	// TODO: this was done following valve's style of having different events 
-	// for everything, but these particular events have a lot of overlap and 
-	// might be better implemented as a single "ball event" that has an enum 
-	// specifying what kind it is. It would cut down on the number of strcmp 
-	// calls in the event handling functions. Or maybe we could just not use 
+	// TODO: this was done following valve's style of having different events
+	// for everything, but these particular events have a lot of overlap and
+	// might be better implemented as a single "ball event" that has an enum
+	// specifying what kind it is. It would cut down on the number of strcmp
+	// calls in the event handling functions. Or maybe we could just not use
 	// 1000s of strcmps for each event dispatch and use a lookup table of some kind.
 
 	//-----------------------------------------------------------------------------
@@ -27,12 +27,12 @@ namespace PasstimeGameEvents
 		BallGet( IGameEvent *pEvent );
 		BallGet( int ownerIndex );
 		void Fire();
-		
+
 		static const char *const s_eventName;
 		static const char *const s_keyOwnerIndex;
 		int ownerIndex;
 	};
-	
+
 	//-----------------------------------------------------------------------------
 	struct Score
 	{
@@ -40,7 +40,7 @@ namespace PasstimeGameEvents
 		Score( int scorerIndex, int assisterIndex, int numPoints );
 		Score( int scorerIndex_, int numPoints_ );
 		void Fire();
-		
+
 		static const char *const s_eventName;
 		static const char *const s_keyScorerIndex;
 		static const char *const s_keyAssisterIndex;
@@ -116,4 +116,4 @@ namespace PasstimeGameEvents
 	};
 }
 
-#endif // PASSTIME_GAME_EVENTS_H  
+#endif // PASSTIME_GAME_EVENTS_H

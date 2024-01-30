@@ -17,7 +17,7 @@
 
 
 //---------------------------------------------------------------------------------------------
-Action< CEyeballBoss > *CEyeballBossBehavior::InitialContainedAction( CEyeballBoss *me )	
+Action< CEyeballBoss > *CEyeballBossBehavior::InitialContainedAction( CEyeballBoss *me )
 {
 	return new CEyeballBossEmerge;
 }
@@ -26,7 +26,7 @@ Action< CEyeballBoss > *CEyeballBossBehavior::InitialContainedAction( CEyeballBo
 //---------------------------------------------------------------------------------------------
 ActionResult< CEyeballBoss > CEyeballBossBehavior::OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction )
 {
-	return Continue(); 
+	return Continue();
 }
 
 
@@ -37,14 +37,14 @@ ActionResult< CEyeballBoss > CEyeballBossBehavior::Update( CEyeballBoss *me, flo
 	{
 		DevMsg( "%3.2f: DPS = %3.2f\n", gpGlobals->curtime, me->GetInjuryRate() );
 	}
-	
+
 	return Continue();
 }
 
 
 //---------------------------------------------------------------------------------------------
 EventDesiredResult< CEyeballBoss > CEyeballBossBehavior::OnInjured( CEyeballBoss *me, const CTakeDamageInfo &info )
-{ 
+{
 	CTFPlayer *attacker = ToTFPlayer( info.GetAttacker() );
 	if ( attacker )
 	{
@@ -78,19 +78,19 @@ EventDesiredResult< CEyeballBoss > CEyeballBossBehavior::OnInjured( CEyeballBoss
 		}
 	}
 
-	return TryContinue(); 
+	return TryContinue();
 }
 
 
 //---------------------------------------------------------------------------------------------
 EventDesiredResult< CEyeballBoss > CEyeballBossBehavior::OnKilled( CEyeballBoss *me, const CTakeDamageInfo &info )
-{ 
+{
 	// award achievement to everyone who injured me within the last few seconds
 	const float deathTime = 5.0f;
 	const CUtlVector< CEyeballBoss::AttackerInfo > &attackerVector = me->GetAttackerVector();
 	for( int i=0; i<attackerVector.Count(); ++i )
 	{
-		if ( attackerVector[i].m_attacker != NULL && 
+		if ( attackerVector[i].m_attacker != NULL &&
 			gpGlobals->curtime - attackerVector[i].m_timestamp < deathTime )
 		{
 			if ( !me->IsSpell() )

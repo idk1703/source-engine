@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -25,7 +25,7 @@ class CTFBoomerang : public CTFWeaponBaseMelee
 public:
 
 	DECLARE_CLASS( CTFBoomerang, CTFWeaponBaseMelee );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFBoomerang();

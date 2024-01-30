@@ -22,7 +22,7 @@ struct VS_INPUT
 
 #if VERTEXCOLOR
 	float4 vColor		: COLOR0;
-#endif	
+#endif
 
 	float4 vTexCoord0	: TEXCOORD0;
 };
@@ -38,7 +38,7 @@ struct VS_OUTPUT
 	float4 vColor		: COLOR0;
 	float4 fogFactorW	: COLOR1;
 
-#if !defined( _X360 )    
+#if !defined( _X360 )
 	float  fog		: FOG;
 #endif
 
@@ -78,14 +78,11 @@ VS_OUTPUT main( const VS_INPUT v )
 	o.vTexCoord3 = mul( v.vTexCoord0, (float2x4)cDetailTextureTransform );
 
 	o.vColor = cModulationColor;
-	
-#if VERTEXCOLOR	
+
+#if VERTEXCOLOR
 	// 0 or 1 for g_vVertexColor.x, eliminating a bool
 	o.vColor = lerp( o.vColor, o.vColor * v.vColor, g_vVertexColor.x );
-#endif	
+#endif
 
 	return o;
 }
-
-
-

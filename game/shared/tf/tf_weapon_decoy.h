@@ -24,7 +24,7 @@ class CTFDecoy : public CTFJar
 {
 public:
 	DECLARE_CLASS( CTFDecoy, CTFJar );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 
 /*
 // Server specific.

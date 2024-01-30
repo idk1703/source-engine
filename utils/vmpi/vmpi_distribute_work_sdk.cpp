@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -46,7 +46,7 @@ public:
 	{
 		m_nWorkUnits = 0;
 	}
-	
+
 	// This is all that's needed for it to start assigning work units.
 	void Init( WUIndexType matrixWidth, WUIndexType matrixHeight, WUIndexType nWorkUnits )
 	{
@@ -54,7 +54,7 @@ public:
 		m_MatrixWidth = matrixWidth;
 		m_MatrixHeight = matrixHeight;
 		Assert( m_MatrixWidth * m_MatrixHeight >= nWorkUnits );
-		
+
 		m_WorkerInfos.RemoveAll();
 		m_WorkerInfos.EnsureCount( m_MatrixHeight );
 		for ( int i=0; i < m_MatrixHeight; i++ )
@@ -77,7 +77,7 @@ public:
 		CWorkerInfo *pWorker = &m_WorkerInfos[iWorker];
 		if ( pWorker->m_iWorkUnitOffset >= m_nWorkUnits )
 			return false;
-		
+
 		// If we've gone past the end of our work unit list, then we start at the BACK of the other rows of work units
 		// in the hopes that we won't collide with the guy working there. We also should tell the master to reshuffle.
 		WUIndexType iWorkUnitOffset = pWorker->m_iWorkUnitOffset;
@@ -107,7 +107,7 @@ private:
 		WUIndexType m_iStartWorkUnit;
 		WUIndexType m_iWorkUnitOffset;	// Which work unit in my list of work units am I working on?
 	};
-	
+
 	WUIndexType m_nWorkUnits;
 	WUIndexType m_MatrixWidth;
 	WUIndexType m_MatrixHeight;
@@ -124,7 +124,7 @@ public:
 
 // This is updated every time the master decides to reshuffle.
 // In-between shuffles, you can call NoteWorkUnitCompleted when a work unit is completed
-// and it'll avoid returning that work unit from GetNextWorkUnit again, but it WON'T 
+// and it'll avoid returning that work unit from GetNextWorkUnit again, but it WON'T
 class CShuffledWorkUnitWalker
 {
 public:
@@ -134,13 +134,13 @@ public:
 		m_iCurShuffle = 1;
 		m_flLastShuffleTime = Plat_FloatTime();
 		m_pShuffleRequester = pRequester;
-		
+
 		int nBytes = PAD_NUMBER( nWorkUnits, 8 ) / 8;
 		m_CompletedWUBits.SetSize( nBytes );
 		m_LocalCompletedWUBits.SetSize( nBytes );
 		for ( WUIndexType i=0; i < m_CompletedWUBits.Count(); i++ )
-			m_LocalCompletedWUBits[i] = m_CompletedWUBits[i] = 0;		
-	
+			m_LocalCompletedWUBits[i] = m_CompletedWUBits[i] = 0;
+
 		// Setup our list of work units remaining.
 		for ( WUIndexType iWU=0; iWU < nWorkUnits; iWU++ )
 		{
@@ -153,7 +153,7 @@ public:
 			}
 		}
 	}
-	
+
 	void Shuffle( int nWorkers )
 	{
 		if ( nWorkers == 0 )
@@ -161,17 +161,17 @@ public:
 
 		++m_iCurShuffle;
 		m_flLastShuffleTime = Plat_FloatTime();
-		
+
 		CCriticalSectionLock csLock( &m_CS );
 		csLock.Lock();
-		
+
 		m_WorkUnitsMap.RemoveAll();
 		m_WorkUnitsMap.EnsureCount( m_WorkUnitsRemaining.Count() );
-		
+
 		// Here's the shuffle. The CWorkUnitWalker is going to walk each worker through its own group from 0-W,
-		// and our job is to interleave it so when worker 0 goes [0,1,2] and worker 1 goes [100,101,102], they're actually 
+		// and our job is to interleave it so when worker 0 goes [0,1,2] and worker 1 goes [100,101,102], they're actually
 		// doing [0,N,2N] and [1,N+1,2N+1] where N=# of workers.
-		
+
 		// The grid is RxW long, and R*W is >= nWorkUnits.
 		// R = # units per worker = width of the matrix
 		// W = # workers          = height of the matrix
@@ -181,7 +181,7 @@ public:
 			++matrixWidth;
 
 		Assert( matrixWidth * matrixHeight >= m_WorkUnitsRemaining.Count() );
-		
+
 		WUIndexType iWorkUnit = 0;
 		FOR_EACH_LL( m_WorkUnitsRemaining, i )
 		{
@@ -189,57 +189,57 @@ public:
 			WUIndexType yCoord = iWorkUnit % matrixHeight;
 			Assert( xCoord < matrixWidth );
 			Assert( yCoord < matrixHeight );
-			
+
 			m_WorkUnitsMap[yCoord*matrixWidth+xCoord] = m_WorkUnitsRemaining[i];
 			++iWorkUnit;
 		}
 
 		m_Walker.Init( matrixWidth, matrixHeight, m_WorkUnitsRemaining.Count() );
-	}	
-	
+	}
+
 	// Threadsafe.
 	bool Thread_IsWorkUnitCompleted( WUIndexType iWU )
 	{
 		CCriticalSectionLock csLock( &m_CS );
 		csLock.Lock();
-		
+
 		byte val = m_CompletedWUBits[iWU >> 3] & (1 << (iWU & 7));
 		return (val != 0);
 	}
-	
+
 	WUIndexType Thread_NumWorkUnitsRemaining()
 	{
 		CCriticalSectionLock csLock( &m_CS );
 		csLock.Lock();
-		
+
 		return m_WorkUnitsRemaining.Count();
 	}
-	
+
 	bool Thread_GetNextWorkUnit( int iWorker, WUIndexType *pWUIndex )
 	{
 		CCriticalSectionLock csLock( &m_CS );
 		csLock.Lock();
-		
+
 		while ( 1 )
 		{
 			WUIndexType iUnmappedWorkUnit;
 			bool bWorkerFinishedHisColumn;
 			if ( !m_Walker.GetNextWorkUnit( iWorker, &iUnmappedWorkUnit, &bWorkerFinishedHisColumn ) )
 				return false;
-				
+
 			// If we've done all the work units assigned to us in the last shuffle, then request a reshuffle.
 			if ( bWorkerFinishedHisColumn )
 				HandleWorkerFinishedColumn();
-			
+
 			// Check the pending list.
 			*pWUIndex = m_WorkUnitsMap[iUnmappedWorkUnit];
 			byte bIsCompleted = m_CompletedWUBits[*pWUIndex >> 3] & (1 << (*pWUIndex & 7));
 			byte bIsCompletedLocally = m_LocalCompletedWUBits[*pWUIndex >> 3] & (1 << (*pWUIndex & 7));
 			if ( !bIsCompleted && !bIsCompletedLocally )
 				return true;
-		}			
+		}
 	}
-	
+
 	void HandleWorkerFinishedColumn()
 	{
 		if ( m_iLastShuffleRequest != m_iCurShuffle )
@@ -252,7 +252,7 @@ public:
 			}
 		}
 	}
-	
+
 	void Thread_NoteWorkUnitCompleted( WUIndexType iWU )
 	{
 		CCriticalSectionLock csLock( &m_CS );
@@ -265,14 +265,14 @@ public:
 			m_CompletedWUBits[iWU >> 3] |= (1 << (iWU & 7));
 		}
 	}
-	
+
 	void Thread_NoteLocalWorkUnitCompleted( WUIndexType iWU )
 	{
 		CCriticalSectionLock csLock( &m_CS );
 		csLock.Lock();
 		m_LocalCompletedWUBits[iWU >> 3] |= (1 << (iWU & 7));
 	}
-	
+
 	CRC32_t GetShuffleCRC()
 	{
 #ifdef _DEBUG
@@ -287,19 +287,19 @@ public:
 
 			CRC32_t ret;
 			CRC32_Init( &ret );
-			
+
 			FOR_EACH_LL( m_WorkUnitsRemaining, i )
 			{
 				WUIndexType iWorkUnit = m_WorkUnitsRemaining[i];
 				CRC32_ProcessBuffer( &ret, &iWorkUnit, sizeof( iWorkUnit ) );
 			}
-			
+
 			for ( int i=0; i < m_WorkUnitsMap.Count(); i++ )
 			{
 				WUIndexType iWorkUnit = m_WorkUnitsMap[i];
 				CRC32_ProcessBuffer( &ret, &iWorkUnit, sizeof( iWorkUnit ) );
 			}
-			
+
 			CRC32_Final( &ret );
 			return ret;
 		}
@@ -325,7 +325,7 @@ private:
 	unsigned int m_iLastShuffleRequest;	// The index of the shuffle we last requested a reshuffle on (don't request a reshuffle on the same one).
 	double m_flLastShuffleTime;
 	IShuffleRequester *m_pShuffleRequester;
-	
+
 	CWorkUnitWalker m_Walker;
 	CCriticalSection m_CS;
 };
@@ -344,7 +344,7 @@ public:
 	{
 		((CDistributor_SDKMaster*)pUserData)->Master_WorkerThread( iThread );
 	}
-	
+
 	void Master_WorkerThread( int iThread )
 	{
 		while ( m_WorkUnitWalker.Thread_NumWorkUnitsRemaining() > 0 && !g_bVMPIEarlyExit )
@@ -356,7 +356,7 @@ public:
 				VMPI_Sleep( 10 );
 				continue;
 			}
-			
+
 			// Do this work unit.
 			m_WorkUnitWalker.Thread_NoteLocalWorkUnitCompleted( iWU );	// We do this before it's completed because otherwise if a Shuffle() occurs,
 																		// the other thread might happen to pickup this work unit and we don't want that.
@@ -371,7 +371,7 @@ public:
 		m_bForceShuffle = false;
 		m_bShuffleRequested = false;
 		m_flLastShuffleRequestServiceTime = Plat_FloatTime();
-		
+
 		// Spawn idle-priority worker threads right here.
 		m_bUsingMasterLocalThreads = (pInfo->m_WorkerInfo.m_pProcessFn != 0);
 		if ( VMPI_IsParamUsed( mpi_NoMasterWorkerThreads ) )
@@ -390,7 +390,7 @@ public:
 		{
 			VMPI_DispatchNextMessage( 200 );
 			CheckLocalMasterCompletedWorkUnits();
-			
+
 			VMPITracker_HandleDebugKeypresses();
 			if ( g_pDistributeWorkCallbacks && g_pDistributeWorkCallbacks->Update() )
 				break;
@@ -398,12 +398,12 @@ public:
 			// Reshuffle the work units optimally every certain interval.
 			if ( m_bForceShuffle || CheckShuffleRequest() )
 			{
-				Shuffle();				
+				Shuffle();
 				lastShuffleTime = Plat_MSTime();
 				m_bForceShuffle = false;
 			}
 		}
-		
+
 		RunThreads_End();
 	}
 
@@ -411,7 +411,7 @@ public:
 	{
 		m_bShuffleRequested = true;
 	}
-	
+
 	bool CheckShuffleRequest()
 	{
 		if ( m_bShuffleRequested )
@@ -424,10 +424,10 @@ public:
 				return true;
 			}
 		}
-		
-		return false;		
+
+		return false;
 	}
-	
+
 	void Shuffle()
 	{
 		// Build a list of who's working.
@@ -437,7 +437,7 @@ public:
 			whosWorking.AddToTail( VMPI_MASTER_ID );
 			Assert( VMPI_MASTER_ID == 0 );
 		}
-		
+
 		{
 			CWorkersReady *pWorkersReady = m_WorkersReadyCS.Lock();
 			for ( int i=0; i < pWorkersReady->m_WorkersReady.Count(); i++ )
@@ -451,7 +451,7 @@ public:
 
 		// Before sending the shuffle command, tell any of these active workers about the pending WUs completed.
 		CWUsCompleted *pWUsCompleted = m_WUsCompletedCS.Lock();
-			
+
 			m_WUSCompletedMessageBuffer.setLen( 0 );
 			if ( BuildWUsCompletedMessage( pWUsCompleted->m_Pending, m_WUSCompletedMessageBuffer ) > 0 )
 			{
@@ -462,9 +462,9 @@ public:
 			}
 			pWUsCompleted->m_Completed.AddMultipleToTail( pWUsCompleted->m_Pending.Count(), pWUsCompleted->m_Pending.Base() ); // Add the pending ones to the full list now.
 			pWUsCompleted->m_Pending.RemoveAll();
-		
+
 		m_WUsCompletedCS.Unlock();
-		
+
 		// Shuffle ourselves.
 		m_WorkUnitWalker.Shuffle( whosWorking.Count() );
 
@@ -478,7 +478,7 @@ public:
 		CRC32_t shuffleCRC = m_WorkUnitWalker.GetShuffleCRC();
 		mb.write( &shuffleCRC, sizeof( shuffleCRC ) );
 
-		// Now for each worker, assign him an index in the shuffle and send the shuffle command.		
+		// Now for each worker, assign him an index in the shuffle and send the shuffle command.
 		int workerIDPos = mb.getLen();
 		unsigned short id = 0;
 		mb.write( &id, sizeof( id ) );
@@ -507,7 +507,7 @@ public:
 		if ( pWorkersReady->m_WorkersReady.Find( iSource ) == -1 )
 		{
 			pWorkersReady->m_WorkersReady.AddToTail( iSource );
-			
+
 			// Get this guy up to speed on which WUs are done.
 			{
 				CWUsCompleted *pWUsCompleted = m_WUsCompletedCS.Lock();
@@ -515,7 +515,7 @@ public:
 				BuildWUsCompletedMessage( pWUsCompleted->m_Completed, m_WUSCompletedMessageBuffer );
 				m_WUsCompletedCS.Unlock();
 			}
-			
+
 			VMPI_SendData( m_WUSCompletedMessageBuffer.data, m_WUSCompletedMessageBuffer.getLen(), iSource );
 			m_bForceShuffle = true;
 		}
@@ -526,7 +526,7 @@ public:
 	{
 		return Thread_HandleWorkUnitResults( iWorkUnit );
 	}
-	
+
 	bool Thread_HandleWorkUnitResults( WUIndexType iWorkUnit )
 	{
 		if ( m_WorkUnitWalker.Thread_IsWorkUnitCompleted( iWorkUnit ) )
@@ -536,7 +536,7 @@ public:
 		else
 		{
 			m_WorkUnitWalker.Thread_NoteWorkUnitCompleted( iWorkUnit );
-			
+
 			// We need the lock on here because our own worker threads can call into here.
 			CWUsCompleted *pWUsCompleted = m_WUsCompletedCS.Lock();
 			pWUsCompleted->m_Pending.AddToTail( iWorkUnit );
@@ -551,7 +551,7 @@ public:
 		{
 			if ( bIgnoreContents )
 				return true;
-		
+
 			m_bShuffleRequested = true;
 		}
 		return false;
@@ -560,16 +560,16 @@ public:
 	virtual void DisconnectHandler( int workerID )
 	{
 		CWorkersReady *pWorkersReady = m_WorkersReadyCS.Lock();
-		
+
 		if ( pWorkersReady->m_WorkersReady.Find( workerID ) != -1 )
 			m_bForceShuffle = true;
-			
+
 		m_WorkersReadyCS.Unlock();
 	}
 
 public:
 	CDSInfo *m_pInfo;
-	
+
 	class CWorkersReady
 	{
 	public:
@@ -586,11 +586,11 @@ public:
 	CCriticalSectionData<CWUsCompleted> m_WUsCompletedCS;
 	MessageBuffer						m_WUSCompletedMessageBuffer;	// Used to send lists of completed WUs.
 	int m_bUsingMasterLocalThreads;
-	
+
 	bool m_bForceShuffle;
 	bool m_bShuffleRequested;
 	double m_flLastShuffleRequestServiceTime;
-	
+
 	CShuffledWorkUnitWalker m_WorkUnitWalker;
 };
 
@@ -604,12 +604,12 @@ public:
 		m_pInfo = pInfo;
 		m_WorkUnitWalker.Init( pInfo->m_nWorkUnits, this );
 	}
-	
+
 	virtual void Release()
 	{
 		delete this;
 	}
-	
+
 	virtual bool GetNextWorkUnit( WUIndexType *pWUIndex )
 	{
 		// If we don't have an ID yet, we haven't received a Shuffle() command, so we're waiting for that before working.
@@ -617,15 +617,15 @@ public:
 		//       and they're duplicates.
 		if ( m_iMyWorkUnitWalkerID == -1 )
 			return false;
-			
+
 		// Look in our current shuffled list of work units for the next one.
 		return m_WorkUnitWalker.Thread_GetNextWorkUnit( m_iMyWorkUnitWalkerID, pWUIndex );
 	}
-	
+
 	virtual void NoteLocalWorkUnitCompleted( WUIndexType iWU )
 	{
 		m_WorkUnitWalker.Thread_NoteLocalWorkUnitCompleted( iWU );
-	}	
+	}
 
 	virtual bool HandlePacket( MessageBuffer *pBuf, int iSource, bool bIgnoreContents )
 	{
@@ -634,14 +634,14 @@ public:
 		{
 			if ( bIgnoreContents )
 				return true;
-			
+
 			unsigned short nWorkers, myID;
 			CRC32_t shuffleCRC;
 			pBuf->read( &nWorkers, sizeof( nWorkers ) );
 			pBuf->read( &shuffleCRC, sizeof( shuffleCRC ) );
 			pBuf->read( &myID, sizeof( myID ) );
 			m_iMyWorkUnitWalkerID = myID;
-		
+
 			m_WorkUnitWalker.Shuffle( nWorkers );
 			if ( m_WorkUnitWalker.GetShuffleCRC() != shuffleCRC )
 			{
@@ -655,7 +655,7 @@ public:
 		{
 			if ( bIgnoreContents )
 				return true;
-			
+
 			WUIndexType nCompleted;
  			m_pInfo->ReadWUIndex( &nCompleted, pBuf );
 			for ( WUIndexType i=0; i < nCompleted; i++ )
@@ -664,10 +664,10 @@ public:
 				m_pInfo->ReadWUIndex( &iWU, pBuf );
 				m_WorkUnitWalker.Thread_NoteWorkUnitCompleted( iWU );
 			}
-			
+
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -678,7 +678,7 @@ public:
 		PrepareDistributeWorkHeader( &mb, DW_SUBPACKETID_REQUEST_SHUFFLE );
 		VMPI_SendData( mb.data, mb.getLen(), VMPI_MASTER_ID );
 	}
-	
+
 private:
 	CDSInfo *m_pInfo;
 	CShuffledWorkUnitWalker m_WorkUnitWalker;
@@ -696,4 +696,3 @@ IWorkUnitDistributorWorker* CreateWUDistributor_SDKWorker()
 {
 	return new CDistributor_SDKWorker;
 }
-

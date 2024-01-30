@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -27,7 +27,7 @@
 #include "inputsystem/iinputsystem.h"
 
 #ifdef _WIN32
-#include <windows.h> 
+#include <windows.h>
 #include <direct.h>
 #include "KeyValues.h"
 #else
@@ -122,7 +122,7 @@ static bool HandleVCRHook()
 
 	if ( IsPC() )
 	{
-		// NOTE: Under some implementations of Win9x, 
+		// NOTE: Under some implementations of Win9x,
 		// dispatching messages can cause the FPU control word to change
 		SetupFPUControlWord();
 	}
@@ -201,7 +201,7 @@ static bool ConsoleStartup( )
 	{
 		if ( !console.Init() )
 		{
-			return false;	 
+			return false;
 		}
 	}
 #endif // _WIN32
@@ -218,7 +218,7 @@ bool CDedicatedAppSystemGroup::Create( )
 #ifndef _WIN32
 	if ( !console.Init() )
 		return false;
-#endif		
+#endif
 
 	// Hook the debug output stuff (override the spew func in the appframework)
 	SpewOutputFunc( DedicatedSpewOutputFunc );
@@ -392,7 +392,7 @@ void UTIL_ComputeBaseDir( char *pBaseDir, int nMaxLen )
 		j = strlen( pBaseDir );
 		if (j > 0)
 		{
-			if ( ( pBaseDir[ j-1 ] == '\\' ) || 
+			if ( ( pBaseDir[ j-1 ] == '\\' ) ||
 				 ( pBaseDir[ j-1 ] == '/' ) )
 			{
 				pBaseDir[ j-1 ] = 0;

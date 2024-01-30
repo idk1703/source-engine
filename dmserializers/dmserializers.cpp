@@ -71,7 +71,7 @@ class CDmSerializers : public CBaseAppSystem< IDmSerializers >
 	typedef CBaseAppSystem< IDmSerializers > BaseClass;
 
 public:
-	// Inherited from IAppSystem 
+	// Inherited from IAppSystem
 	virtual bool Connect( CreateInterfaceFn factory );
 	virtual void *QueryInterface( const char *pInterfaceName );
 	virtual InitReturnVal_t Init();
@@ -79,16 +79,16 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Singleton interface 
+// Singleton interface
 //-----------------------------------------------------------------------------
 static CDmSerializers g_DmSerializers;
 IDmSerializers *g_pDmSerializers = &g_DmSerializers;
 
 
 //-----------------------------------------------------------------------------
-// Here's where the app systems get to learn about each other 
+// Here's where the app systems get to learn about each other
 //-----------------------------------------------------------------------------
-bool CDmSerializers::Connect( CreateInterfaceFn factory ) 
+bool CDmSerializers::Connect( CreateInterfaceFn factory )
 {
 	if ( !BaseClass::Connect( factory ) )
 		return false;
@@ -100,7 +100,7 @@ bool CDmSerializers::Connect( CreateInterfaceFn factory )
 	}
 
 	// Here's the main point where all DM element classes get installed
-	// Necessary to do it here so all type symbols for all DME classes are set 
+	// Necessary to do it here so all type symbols for all DME classes are set
 	// up prior to install
 	InstallDmElementFactories( );
 
@@ -123,8 +123,8 @@ void *CDmSerializers::QueryInterface( const char *pInterfaceName )
 //-----------------------------------------------------------------------------
 // Init, shutdown
 //-----------------------------------------------------------------------------
-InitReturnVal_t CDmSerializers::Init() 
-{ 
+InitReturnVal_t CDmSerializers::Init()
+{
 	InitReturnVal_t nRetVal = BaseClass::Init();
 	if ( nRetVal != INIT_OK )
 		return nRetVal;
@@ -158,6 +158,5 @@ InitReturnVal_t CDmSerializers::Init()
 //	INSTALL_FORMAT_UPDATER( animation );
 //	INSTALL_FORMAT_UPDATER( dcc_makefile );
 
-	return INIT_OK; 
+	return INIT_OK;
 }
-

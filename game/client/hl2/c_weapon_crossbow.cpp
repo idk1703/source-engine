@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,7 +24,7 @@ class C_CrossbowBolt : public C_BaseCombatCharacter
 	DECLARE_CLASS( C_CrossbowBolt, C_BaseCombatCharacter );
 	DECLARE_CLIENTCLASS();
 public:
-	
+
 	C_CrossbowBolt( void );
 
 	virtual RenderGroup_t GetRenderGroup( void )
@@ -50,15 +50,15 @@ IMPLEMENT_CLIENTCLASS_DT( C_CrossbowBolt, DT_CrossbowBolt, CCrossbowBolt )
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_CrossbowBolt::C_CrossbowBolt( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_CrossbowBolt::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -73,8 +73,8 @@ void C_CrossbowBolt::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flags - 
+// Purpose:
+// Input  : flags -
 // Output : int
 //-----------------------------------------------------------------------------
 int C_CrossbowBolt::DrawModel( int flags )
@@ -87,9 +87,9 @@ int C_CrossbowBolt::DrawModel( int flags )
 
 		Vector	vecDir = GetAbsOrigin() - m_vecLastOrigin;
 		float	speed = VectorNormalize( vecDir );
-		
+
 		speed = clamp( speed, 0, 32 );
-		
+
 		if ( speed > 0 )
 		{
 			float	stepSize = MIN( ( speed * 0.5f ), 4.0f );
@@ -129,7 +129,7 @@ int C_CrossbowBolt::DrawModel( int flags )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_CrossbowBolt::ClientThink( void )
 {
@@ -137,15 +137,15 @@ void C_CrossbowBolt::ClientThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &data - 
+// Purpose:
+// Input  : &data -
 //-----------------------------------------------------------------------------
 void CrosshairLoadCallback( const CEffectData &data )
 {
 	IClientRenderable *pRenderable = data.GetRenderable( );
 	if ( !pRenderable )
 		return;
-	
+
 	Vector	position;
 	QAngle	angles;
 

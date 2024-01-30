@@ -1,6 +1,6 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. =======
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -13,9 +13,9 @@
 
 //
 // Usage:
-// 
+//
 //	StartProject
-//		StartConfigurationBlock	
+//		StartConfigurationBlock
 //			StartPropertySection
 //				HandleProperty...
 //			EndPropertySection
@@ -57,7 +57,7 @@ public:
 	// Files go in folders. The generator should maintain a stack of folders as they're added.
 	virtual void StartFolder( const char *pFolderName ) = 0;
 	virtual void EndFolder() = 0;
-	
+
 	// Add files. Any config blocks/properties between StartFile/EndFile apply to this file only.
 	// It will only ever have one active file.
 	virtual bool StartFile( const char *pFilename, bool bWarnIfAlreadyExists ) = 0;

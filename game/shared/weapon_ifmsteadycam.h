@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -20,7 +20,7 @@ class CWeaponIFMSteadyCam : public CWeaponIFMBaseCamera
 {
 public:
 	DECLARE_CLASS( CWeaponIFMSteadyCam, CWeaponIFMBaseCamera );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 #ifdef GAME_DLL
@@ -56,7 +56,7 @@ private:
 	void UpdateRelativeOrientation();
 	void UpdateLockedRelativeOrientation();
 	void UpdateDirectRelativeOrientation();
-	
+
 	// Computes a matrix given a forward direction
 	void MatrixFromForwardDirection( const Vector &vecForward, matrix3x4_t &mat );
 
@@ -97,7 +97,7 @@ public:
 
 private:
 	EHANDLE m_hLockTarget;
-	
+
 private:
 	CWeaponIFMSteadyCam( const CWeaponIFMSteadyCam & );
 };

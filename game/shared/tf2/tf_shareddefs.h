@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -172,7 +172,7 @@ enum
 	OBJ_DRAGONSTEETH,
 	// ADD DEFENSIVE-ONLY BUILDINGS HERE
 
-	// If you add a new object, you need to add it to the g_ObjectInfos array 
+	// If you add a new object, you need to add it to the g_ObjectInfos array
 	// in tf_shareddefs.cpp, and add it's data to the scripts/object.txt
 
 	OBJ_LAST,
@@ -190,7 +190,7 @@ class CHudTexture;
 class CObjectInfo
 {
 public:
-	CObjectInfo( char *pObjectName );	
+	CObjectInfo( char *pObjectName );
 	~CObjectInfo();
 
 	// This is initialized by the code and matched with a section in objects.txt
@@ -257,7 +257,7 @@ enum
 //--------------------------------------------------------------------------
 // Builder "weapon" states
 //--------------------------------------------------------------------------
-enum 
+enum
 {
 	BS_IDLE = 0,
 	BS_SELECTING,
@@ -399,7 +399,7 @@ enum
 //--------------------------------------------------------------------------
 // THERMAL VISION
 //--------------------------------------------------------------------------
-// Thermal vision radius 
+// Thermal vision radius
 // Players outside of this radius will not be sent to the local player
 // Player's inside start to fade at the startfade distance and are alpha'd out completely
 //  at the full radius
@@ -524,7 +524,7 @@ enum
 
 #define RALLYFLAG_MINS				Vector(-20, -20, 0)
 #define RALLYFLAG_MAXS				Vector( 20,  20, 90)
-#define RALLYFLAG_RADIUS			512			
+#define RALLYFLAG_RADIUS			512
 #define RALLYFLAG_LIFETIME			30
 #define RALLYFLAG_RATE				2			// Rate at which it looks for friendlies to rally
 #define RALLYFLAG_ADRENALIN_TIME	5			// Time an adrenalin rush lasts
@@ -595,7 +595,7 @@ class CTFClassInfo
 {
 public:
 	char		*m_pClassName;
-	
+
 	// Objects that each class can build
 	// OBJ_X, OBJ_Y ... terminated with OBJ_LAST.
 	int			*m_pClassObjects;
@@ -617,7 +617,7 @@ const CTFClassInfo* GetTFClassInfo( int i );
 	#define CAllPlayerClasses	C_AllPlayerClasses
 	#define PLAYER_CLASS_TYPE	C_PlayerClass
 	#define PLAYER_TYPE			C_BaseTFPlayer
-	
+
 	EXTERN_RECV_TABLE( DT_AllPlayerClasses );
 
 #else
@@ -660,4 +660,3 @@ extern const char *ImpactHurtGibs_Wood_Small[ NUM_WOOD_GIBS_SMALL ];
 #define PLAYER_MSG_PERSONAL_SHIELD	2
 
 #endif // TF_SHAREDDEFS_H
-

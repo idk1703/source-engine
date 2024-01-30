@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_VehicleTeleportStation::C_VehicleTeleportStation()
 {
@@ -27,7 +27,7 @@ C_VehicleTeleportStation::C_VehicleTeleportStation()
 
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CVehicleTeleportStationControlPanel : public CObjectControlPanel
 {
@@ -53,16 +53,16 @@ DECLARE_VGUI_SCREEN_FACTORY( CVehicleTeleportStationControlPanel, "vehicle_telep
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CVehicleTeleportStationControlPanel::CVehicleTeleportStationControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CVehicleTeleportStationControlPanel" ) 
+	: BaseClass( parent, "CVehicleTeleportStationControlPanel" )
 {
 }
 
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CVehicleTeleportStationControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -111,7 +111,7 @@ void CVehicleTeleportStationControlPanel::OnTick()
 	m_pPassengerLabel->SetText( buf );
 
 	// Update the get in button
-	if ( pVehicle->IsPlayerInVehicle( C_BaseTFPlayer::GetLocalPlayer() ) ) 
+	if ( pVehicle->IsPlayerInVehicle( C_BaseTFPlayer::GetLocalPlayer() ) )
 	{
 		m_pOccupyButton->SetEnabled( false );
 		return;
@@ -165,4 +165,3 @@ void CVehicleTeleportStationControlPanel::OnCommand( const char *command )
 
 	BaseClass::OnCommand(command);
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -83,7 +83,7 @@ void CTFShotgun::PrimaryAttack()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFShotgun::UpdatePunchAngles( CTFPlayer *pPlayer )
 {
@@ -95,7 +95,7 @@ void CTFShotgun::UpdatePunchAngles( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFShotgun::PlayWeaponShootSound( void )
 {
@@ -127,7 +127,7 @@ void CTFShotgun_Revenge::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFShotgun_Revenge::PrimaryAttack()
 {
@@ -192,7 +192,7 @@ bool CTFShotgun_Revenge::Deploy( void )
 #endif
 
 	return BaseClass::Deploy();
-}												
+}
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -264,7 +264,7 @@ int CTFShotgun_Revenge::GetWorldModelIndex( void )
 {
 	// Engineer guitar support.
 	CTFPlayer *pPlayer = ToTFPlayer( GetOwner() );
-	if ( pPlayer && pPlayer->GetPlayerClass() && ( pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_ENGINEER ) && 
+	if ( pPlayer && pPlayer->GetPlayerClass() && ( pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_ENGINEER ) &&
 			( pPlayer->m_Shared.InCond( TF_COND_TAUNTING ) ) && ( pPlayer->m_Shared.GetTauntIndex() == TAUNT_BASE_WEAPON ) )
 	{
 		// While we are taunting, replace our normal world model with the guitar.
@@ -394,11 +394,11 @@ void CTFScatterGun::ApplyPostHitEffects( const CTakeDamageInfo &inputInfo, CTFPl
 	// Immune to pushback/knockback
 	if ( pTarget->m_Shared.InCond( TF_COND_MEGAHEAL ) )
 		return;
-	
+
 	VectorNormalize( vecDir );
 
 	float flKnockbackMult = 3.0f;
-	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( this, flKnockbackMult, scattergun_knockback_mult );	
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( this, flKnockbackMult, scattergun_knockback_mult );
 
 	float flForce = AirBurstDamageForce( pTarget->WorldAlignSize(), flDam, flKnockbackMult );
 	Vector vecForce = vecDir * -flForce;
@@ -423,7 +423,7 @@ void CTFScatterGun::FinishReload( void )
 
 	if ( UsesClipsForAmmo1() && !m_bReloadsSingly )
 	{
-		int primary	= MIN( GetMaxClip1() - m_iClip1, pOwner->GetAmmoCount(m_iPrimaryAmmoType));	
+		int primary	= MIN( GetMaxClip1() - m_iClip1, pOwner->GetAmmoCount(m_iPrimaryAmmoType));
 		m_iClip1 += primary;
 
 		// Takes a whole clip worth of ammo to reload, causing us to lose whatever was chambered.

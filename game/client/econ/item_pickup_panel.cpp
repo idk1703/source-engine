@@ -27,7 +27,7 @@
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemPickupPanel::CItemPickupPanel( Panel *parent ) : Frame( parent, "item_pickup" )
 {
@@ -44,8 +44,8 @@ CItemPickupPanel::CItemPickupPanel( Panel *parent ) : Frame( parent, "item_picku
 	SetScheme(scheme);
 	SetProportional( true );
 
-	m_pNextButton = new vgui::Button( this, "NextButton", "#Next" );	
-	m_pPrevButton = new vgui::Button( this, "PrevButton", "#Prev" );	
+	m_pNextButton = new vgui::Button( this, "NextButton", "#Next" );
+	m_pPrevButton = new vgui::Button( this, "PrevButton", "#Prev" );
 	m_pDiscardButton = NULL;
 	m_pDiscardedLabel = NULL;
 	m_pOpenLoadoutButton = NULL;
@@ -68,7 +68,7 @@ CItemPickupPanel::CItemPickupPanel( Panel *parent ) : Frame( parent, "item_picku
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemPickupPanel::~CItemPickupPanel()
 {
@@ -80,7 +80,7 @@ CItemPickupPanel::~CItemPickupPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemPickupPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -108,7 +108,7 @@ void CItemPickupPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemPickupPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -132,9 +132,9 @@ void CItemPickupPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CItemPickupPanel::PerformLayout( void ) 
+void CItemPickupPanel::PerformLayout( void )
 {
 	if ( GetVParent() )
 	{
@@ -156,7 +156,7 @@ void CItemPickupPanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemPickupPanel::ShowPanel(bool bShow)
 {
@@ -205,7 +205,7 @@ void CItemPickupPanel::ShowPanel(bool bShow)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemPickupPanel::FireGameEvent( IGameEvent *event )
 {
@@ -221,7 +221,7 @@ void CItemPickupPanel::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemPickupPanel::OnCommand( const char *command )
 {
@@ -266,7 +266,7 @@ void CItemPickupPanel::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemPickupPanel::UpdateModelPanels( void )
 {
@@ -407,7 +407,7 @@ void CItemPickupPanel::UpdateModelPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-void CItemPickupPanel::AcknowledgeItems( void ) 
+void CItemPickupPanel::AcknowledgeItems( void )
 {
 	// On command, AckKnowledge all these items
 	for ( int i = 0; i < m_aItems.Count(); i++ )
@@ -434,7 +434,7 @@ void CItemPickupPanel::AcknowledgeItems( void )
 		{
 			engine->ClientCmd_Unrestricted( "gameui_hide" );
 		}
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -457,7 +457,7 @@ void	CItemPickupPanel::OnKeyCodeTyped( vgui::KeyCode code )
 // Purpose: Handles button press code for controllers and enter
 //-----------------------------------------------------------------------------
 void	CItemPickupPanel::OnKeyCodePressed( vgui::KeyCode code )
-{	
+{
 	ButtonCode_t nButtonCode = GetBaseButtonCode( code );
 
 	if( code == KEY_ENTER || nButtonCode == KEY_XBUTTON_A || nButtonCode == KEY_XBUTTON_B || nButtonCode == STEAMCONTROLLER_A || nButtonCode == STEAMCONTROLLER_B )
@@ -468,17 +468,17 @@ void	CItemPickupPanel::OnKeyCodePressed( vgui::KeyCode code )
 	{
 		OnCommand( "changeloadout" );
 	}
-	
-	else if ( nButtonCode == KEY_XBUTTON_RIGHT || 
+
+	else if ( nButtonCode == KEY_XBUTTON_RIGHT ||
 			  nButtonCode == KEY_XSTICK1_RIGHT ||
-			  nButtonCode == KEY_XSTICK2_RIGHT || 
+			  nButtonCode == KEY_XSTICK2_RIGHT ||
 			  nButtonCode == KEY_RIGHT )
 	{
 		OnCommand( "nextitem" );
 	}
-	else if ( nButtonCode == KEY_XBUTTON_LEFT || 
+	else if ( nButtonCode == KEY_XBUTTON_LEFT ||
 			  nButtonCode == KEY_XSTICK1_LEFT ||
-			  nButtonCode == KEY_XSTICK2_LEFT || 
+			  nButtonCode == KEY_XSTICK2_LEFT ||
 			  nButtonCode == KEY_LEFT )
 	{
 		OnCommand( "previtem" );
@@ -491,7 +491,7 @@ void	CItemPickupPanel::OnKeyCodePressed( vgui::KeyCode code )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemPickupPanel::AddItem( CEconItemView *pItem )
 {
@@ -514,7 +514,7 @@ void CItemPickupPanel::AddItem( CEconItemView *pItem )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemPickupPanel::OnConfirmDelete( KeyValues *data )
 {
@@ -565,7 +565,7 @@ void CItemPickupPanel::OnConfirmDelete( KeyValues *data )
 static vgui::DHANDLE<CItemPickupPanel> g_ItemPickupPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemPickupPanel *OpenItemPickupPanel( void )
 {
@@ -582,7 +582,7 @@ CItemPickupPanel *OpenItemPickupPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemPickupPanel *GetItemPickupPanel( void )
 {
@@ -593,7 +593,7 @@ CItemPickupPanel *GetItemPickupPanel( void )
 // ITEM DISCARD PANEL
 //=======================================================================================================================================================
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemDiscardPanel::CItemDiscardPanel( Panel *parent ) : Frame( parent, "item_discard" )
 {
@@ -632,7 +632,7 @@ CItemDiscardPanel::CItemDiscardPanel( Panel *parent ) : Frame( parent, "item_dis
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemDiscardPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -655,9 +655,9 @@ void CItemDiscardPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CItemDiscardPanel::PerformLayout( void ) 
+void CItemDiscardPanel::PerformLayout( void )
 {
 	if ( GetVParent() )
 	{
@@ -680,7 +680,7 @@ void CItemDiscardPanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemDiscardPanel::ShowPanel(bool bShow)
 {
@@ -713,7 +713,7 @@ void CItemDiscardPanel::ShowPanel(bool bShow)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemDiscardPanel::FireGameEvent( IGameEvent *event )
 {
@@ -737,7 +737,7 @@ void CItemDiscardPanel::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemDiscardPanel::OnCommand( const char *command )
 {
@@ -775,7 +775,7 @@ void CItemDiscardPanel::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemDiscardPanel::SetItem( CEconItemView *pItem )
 {
@@ -794,7 +794,7 @@ void CItemDiscardPanel::SetItem( CEconItemView *pItem )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemDiscardPanel::OnConfirmDelete( KeyValues *data )
 {
@@ -844,7 +844,7 @@ void	CItemDiscardPanel::OnKeyCodeTyped( vgui::KeyCode code )
 // Purpose: Handles button press code for controllers and enter
 //-----------------------------------------------------------------------------
 void	CItemDiscardPanel::OnKeyCodePressed( vgui::KeyCode code )
-{	
+{
 	ButtonCode_t nButtonCode = GetBaseButtonCode( code );
 
 	if( nButtonCode == KEY_XBUTTON_B )
@@ -862,7 +862,7 @@ void	CItemDiscardPanel::OnKeyCodePressed( vgui::KeyCode code )
 static vgui::DHANDLE<CItemDiscardPanel> g_ItemDiscardPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemDiscardPanel *OpenItemDiscardPanel( void )
 {
@@ -879,11 +879,9 @@ CItemDiscardPanel *OpenItemDiscardPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemDiscardPanel *GetItemDiscardPanel( void )
 {
 	return g_ItemDiscardPanel.Get();
 }
-
-

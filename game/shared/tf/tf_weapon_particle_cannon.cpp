@@ -52,7 +52,7 @@ END_DATADESC()
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFParticleCannon::CTFParticleCannon() : CTFRocketLauncher()
 {
@@ -63,7 +63,7 @@ CTFParticleCannon::CTFParticleCannon() : CTFRocketLauncher()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFParticleCannon::GetProjectileSpeed( void )
 {
@@ -71,7 +71,7 @@ float CTFParticleCannon::GetProjectileSpeed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFParticleCannon::GetProjectileGravity( void )
 {
@@ -79,7 +79,7 @@ float CTFParticleCannon::GetProjectileGravity( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFParticleCannon::IsViewModelFlipped( void )
 {
@@ -124,7 +124,7 @@ bool CTFParticleCannon::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFParticleCannon::WeaponReset( void )
 {
@@ -134,7 +134,7 @@ void CTFParticleCannon::WeaponReset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFParticleCannon::ItemPostFrame( void )
 {
@@ -165,7 +165,7 @@ void CTFParticleCannon::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFParticleCannon::PrimaryAttack( void )
 {
@@ -180,7 +180,7 @@ void CTFParticleCannon::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFParticleCannon::SecondaryAttack( void )
 {
@@ -229,7 +229,7 @@ void CTFParticleCannon::SecondaryAttack( void )
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFParticleCannon::CreateChargeEffect()
 {
@@ -242,7 +242,7 @@ void CTFParticleCannon::CreateChargeEffect()
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFParticleCannon::FireChargedShot()
 {
@@ -280,7 +280,7 @@ void CTFParticleCannon::FireChargedShot()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFParticleCannon::ModifyProjectile( CBaseEntity* pProj )
 {
@@ -305,7 +305,7 @@ void CTFParticleCannon::ModifyProjectile( CBaseEntity* pProj )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFParticleCannon::GetProgress( void )
 {
@@ -313,7 +313,7 @@ float CTFParticleCannon::GetProgress( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFParticleCannon::GetMuzzleFlashParticleEffect( void )
 {
@@ -329,7 +329,7 @@ const char *CTFParticleCannon::GetMuzzleFlashParticleEffect( void )
 
 #ifndef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFParticleCannon::Precache()
 {
@@ -351,7 +351,7 @@ void CTFParticleCannon::Precache()
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFParticleCannon::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -368,7 +368,7 @@ void CTFParticleCannon::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFParticleCannon::ClientEffectsThink( void )
 {
@@ -411,7 +411,7 @@ void CTFParticleCannon::ClientEffectsThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFParticleCannon::DispatchMuzzleFlash( const char* effectName, C_BaseEntity* pAttachEnt )
 {
@@ -419,7 +419,7 @@ void CTFParticleCannon::DispatchMuzzleFlash( const char* effectName, C_BaseEntit
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFParticleCannon::CreateMuzzleFlashEffects( C_BaseEntity *pAttachEnt, int nIndex )
 {
@@ -452,7 +452,7 @@ Vector GetParticleColorForTeam( int iTeam, int iColor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFParticleCannon::PlayWeaponShootSound( void )
 {
@@ -467,7 +467,7 @@ void CTFParticleCannon::PlayWeaponShootSound( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 char const *CTFParticleCannon::GetShootSound( int iIndex ) const
 {
@@ -484,7 +484,7 @@ char const *CTFParticleCannon::GetShootSound( int iIndex ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFParticleCannon::OwnerCanTaunt( void )
 {

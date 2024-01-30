@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -63,8 +63,8 @@ class HorizontalGauge : public vgui::Panel
 public:
 	DECLARE_CLASS_SIMPLE( HorizontalGauge, vgui::Panel );
 
-	HorizontalGauge( Panel *parent, const char *name ) : 
-		vgui::Panel( parent, name ), 
+	HorizontalGauge( Panel *parent, const char *name ) :
+		vgui::Panel( parent, name ),
 		m_fPercent(0.0f)
 	{
 	}
@@ -103,7 +103,7 @@ public:
 		surface()->DrawSetColor( LerpColors(lowHealth, highHealth, m_fPercent) );
 		surface()->DrawFilledRect(1, 1, (int)((wide - 1) * m_fPercent), tall - 1);
 	}
-		
+
 	void SetPercent( float fPercent ) { m_fPercent = fPercent; }
 
 private:
@@ -117,7 +117,7 @@ DECLARE_BUILD_FACTORY( HorizontalGauge );
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
 CCSFreezePanel::CCSFreezePanel( const char *pElementName ) :
-	EditablePanel( NULL, "FreezePanel" ), 
+	EditablePanel( NULL, "FreezePanel" ),
 	CHudElement( pElementName ),
 	m_pBackgroundPanel(NULL),
 	m_pKillerHealth(NULL),
@@ -132,7 +132,7 @@ CCSFreezePanel::CCSFreezePanel( const char *pElementName ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSFreezePanel::Reset()
 {
@@ -140,7 +140,7 @@ void CCSFreezePanel::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSFreezePanel::Init()
 {
@@ -181,7 +181,7 @@ void CCSFreezePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSFreezePanel::FireGameEvent( IGameEvent * event )
 {
@@ -283,7 +283,7 @@ void CCSFreezePanel::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CCSFreezePanel::ShouldDraw( void )
 {
@@ -331,7 +331,7 @@ void CCSFreezePanel::SetActive( bool bActive )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSFreezePanel::Show()
 {
@@ -339,7 +339,7 @@ void CCSFreezePanel::Show()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSFreezePanel::Hide()
 {

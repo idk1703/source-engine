@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -18,7 +18,7 @@
 // one, but not both, of these may be -1 which will indicate to preserve aspect ratio
 // and size that dimension to match the aspect ratio adjustment applied to the other
 // dimension which must then be specified explicitly.  nNewWidth and nNewHeight may
-// be modified by the function and will specify the final width/height after the 
+// be modified by the function and will specify the final width/height after the
 // function returns succesfully.  If both nNewWidth and nNewHeight are specified
 // the content will be scaled without changing the aspect ratio and black letterboxing
 // will be added if appropriate

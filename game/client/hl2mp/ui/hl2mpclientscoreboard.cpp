@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -173,7 +173,7 @@ void CHL2MPClientScoreBoardDialog::PaintBackground()
 	y1 = 0;
 	y2 = tall;
 	surface()->DrawFilledRect( x1, y1, x2, y2 );
-	
+
 	// paint between top right and bottom right -------------------------------
 	x1 = wide - coord[NumSegments];
 	x2 = wide;
@@ -356,7 +356,7 @@ void CHL2MPClientScoreBoardDialog::UpdateTeamInfo()
 	int iNumPlayersInGame = 0;
 
 	for ( int j = 1; j <= gpGlobals->maxClients; j++ )
-	{	
+	{
 		if ( g_PR->IsConnected( j ) )
 		{
 			iNumPlayersInGame++;
@@ -373,7 +373,7 @@ void CHL2MPClientScoreBoardDialog::UpdateTeamInfo()
 		if ( team )
 		{
 			sectionID = GetSectionFromTeamNumber( i );
-	
+
 			// update team name
 			wchar_t name[64];
 			wchar_t string1[1024];
@@ -387,7 +387,7 @@ void CHL2MPClientScoreBoardDialog::UpdateTeamInfo()
 #else
 				_snwprintf( name, ARRAYSIZE(name), L"%S", g_pVGuiLocalize->Find("#ScoreBoard_Deathmatch") );
 #endif
-				
+
 				teamName = name;
 
 				if ( iNumPlayersInGame == 1)
@@ -433,7 +433,7 @@ void CHL2MPClientScoreBoardDialog::UpdateTeamInfo()
 				}
 
 			}
-		
+
 			m_pPlayerList->ModifyColumn(sectionID, "name", string1);
 		}
 	}
@@ -520,7 +520,7 @@ bool CHL2MPClientScoreBoardDialog::GetPlayerScoreInfo(int playerIndex, KeyValues
 	kv->SetInt("deaths", g_PR->GetDeaths( playerIndex ));
 	kv->SetInt("frags", g_PR->GetPlayerScore( playerIndex ));
 	kv->SetString("class", "");
-	
+
 	if (g_PR->GetPing( playerIndex ) < 1)
 	{
 		if ( g_PR->IsFakePlayer( playerIndex ) )
@@ -536,7 +536,7 @@ bool CHL2MPClientScoreBoardDialog::GetPlayerScoreInfo(int playerIndex, KeyValues
 	{
 		kv->SetInt("ping", g_PR->GetPing( playerIndex ));
 	}
-	
+
 	return true;
 }
 
@@ -587,7 +587,7 @@ int PlayerScoreInfoSort( const PlayerScoreInfo *p1, const PlayerScoreInfo *p2 )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHL2MPClientScoreBoardDialog::UpdatePlayerInfo()
 {
@@ -611,7 +611,7 @@ void CHL2MPClientScoreBoardDialog::UpdatePlayerInfo()
 			GetPlayerScoreInfo( i, playerData );
 			int itemID = FindItemIDForPlayerIndex( i );
   			int sectionID = GetSectionFromTeamNumber( g_PR->GetTeam( i ) );
-						
+
 			if (itemID == -1)
 			{
 				// add a new row
@@ -649,5 +649,5 @@ void CHL2MPClientScoreBoardDialog::UpdatePlayerInfo()
 		m_pPlayerList->SetSelectedItem(selectedRow);
 	}
 
-	
+
 }

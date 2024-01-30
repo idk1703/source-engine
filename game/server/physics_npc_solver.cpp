@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -288,7 +288,7 @@ void CPhysicsNPCSolver::Think()
 	ResetCancelTime();
 }
 
-IMotionEvent::simresult_e CPhysicsNPCSolver::Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, 
+IMotionEvent::simresult_e CPhysicsNPCSolver::Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject,
 													  float deltaTime, Vector &linear, AngularImpulse &angular )
 {
 	if ( IsIntersecting() )
@@ -307,7 +307,7 @@ IMotionEvent::simresult_e CPhysicsNPCSolver::Simulate( IPhysicsMotionController 
 		ResetCancelTime();
 		angular.Init();
 		linear.Init();
-		
+
 		// Don't push on vehicles because they won't move
 		if ( pObject->GetGameFlags() & FVPHYSICS_MULTIOBJECT_ENTITY )
 		{
@@ -324,7 +324,7 @@ IMotionEvent::simresult_e CPhysicsNPCSolver::Simulate( IPhysicsMotionController 
 		AngularImpulse angVel;
 		angVel.Init();
 
-		// NOTE: Iterate this object's contact points 
+		// NOTE: Iterate this object's contact points
 		// if it can't move in this direction, try sliding along the plane/crease
 		Vector pushImpulse;
 		PhysComputeSlideDirection( pObject, dir * PUSH_SPEED, angVel, &pushImpulse, NULL, 0 );
@@ -465,4 +465,3 @@ CBaseEntity *EntityPhysics_CreateSolver( CBaseEntity *pMovingEntity, CBaseEntity
 
 	return CPhysicsEntitySolver::Create( pMovingEntity, pPhysicsObject, separationDuration );
 }
-

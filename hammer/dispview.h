@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -25,9 +25,9 @@
 
 enum
 {
-    FORWARD = 0,
-    STRAFE,
-    VERTICAL
+	FORWARD = 0,
+	STRAFE,
+	VERTICAL
 };
 
 //=============================================================================
@@ -38,21 +38,21 @@ class CDispView : public CMapView
 
 public:
 
-    enum DispViewType_t
-    {
-        DISPVIEW_IMAGE = 0,
-        DISPVIEW_OUTLINED_IMAGE,
-    };
+	enum DispViewType_t
+	{
+		DISPVIEW_IMAGE = 0,
+		DISPVIEW_OUTLINED_IMAGE,
+	};
 
 	virtual ~CDispView();
 
-    void Render( void );
+	void Render( void );
 
-    CMapDoc* GetDocument( void );
+	CMapDoc* GetDocument( void );
 	void Activate( BOOL bActivate );
 
-    void ToggleCameraMode( void );
-    void ProcessInput( void );
+	void ToggleCameraMode( void );
+	void ProcessInput( void );
 
 	//{{AFX_VIRTUAL( CDispView )
 	public:
@@ -66,35 +66,35 @@ protected:
 
 	CDispView();
 
-    CRender3D       *m_pRender;	            // view renderer
-    CCamera         *m_pCamera;		        // view camera
-    DispViewType_t  m_eDispViewType;        // type of displacement view
+	CRender3D       *m_pRender;	            // view renderer
+	CCamera         *m_pCamera;		        // view camera
+	DispViewType_t  m_eDispViewType;        // type of displacement view
 
-    bool            m_bCameraEnable;        // view in camera mode
+	bool            m_bCameraEnable;        // view in camera mode
 
 	CKeyboard		m_Keyboard;				// handles binding of keys and mouse buttons to logical functions
-    DWORD           m_TimeLastInputSample;	// used for framerate-independent input processing.
-    float           m_Speed[3];             // speed in world units/sec = forward, side-to-side, and up-down
-    float           m_SpeedMax[3];          // max speed in world units/sec
-    float           m_Accel[3];             // accel in world units/sec
-    bool            m_bLMBDown;             // is the left mouse button down?
+	DWORD           m_TimeLastInputSample;	// used for framerate-independent input processing.
+	float           m_Speed[3];             // speed in world units/sec = forward, side-to-side, and up-down
+	float           m_SpeedMax[3];          // max speed in world units/sec
+	float           m_Accel[3];             // accel in world units/sec
+	bool            m_bLMBDown;             // is the left mouse button down?
 	bool			m_bRMBDown;				// is the right mouse button down?
 
 	void InitializeKeyMap( void );
 	void ProcessKeys( float elapsedTime );
 	void ProcessMovementKeys( float elapsedTime );
-    float Accelerate( float vel, float accel, float accelScale, float timeScale, float velMax);
-    void LockCursorInCenter( bool bLock );
+	float Accelerate( float vel, float accel, float accelScale, float timeScale, float velMax);
+	void LockCursorInCenter( bool bLock );
 
-    void ApplyDispTool( UINT nFlags, CPoint point, bool bLMBDown );
-    bool OnSelection( UINT nFlags, CPoint point );
+	void ApplyDispTool( UINT nFlags, CPoint point, bool bLMBDown );
+	bool OnSelection( UINT nFlags, CPoint point );
 
-    bool InitRenderer( void );
-    bool InitCamera( void );
-    bool AllocRenderer( void );
-    void FreeRenderer( void );
-    bool AllocCamera( void );
-    void FreeCamera( void );
+	bool InitRenderer( void );
+	bool InitCamera( void );
+	bool AllocRenderer( void );
+	void FreeRenderer( void );
+	bool AllocCamera( void );
+	void FreeCamera( void );
 
 #ifdef _DEBUG
 	virtual void AssertValid() const;

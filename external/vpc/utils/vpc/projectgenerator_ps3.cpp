@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2006, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: VPC
 //
@@ -44,7 +44,7 @@ bool CProjectGenerator_PS3::WriteFile( CProjectFile *pFile )
 	}
 
 	m_XMLWriter.PopNode( true );
-	
+
 	return true;
 }
 
@@ -67,7 +67,7 @@ bool CProjectGenerator_PS3::WriteFolder( CProjectFolder *pFolder )
 	}
 
 	m_XMLWriter.PopNode( true );
-	
+
 	return true;
 }
 
@@ -104,7 +104,7 @@ bool CProjectGenerator_PS3::WritePreBuildEventTool( CPreBuildEventTool *pPreBuil
 	m_XMLWriter.PopNode( false );
 
 	return true;
-}	
+}
 
 bool CProjectGenerator_PS3::WriteCustomBuildTool( CCustomBuildTool *pCustomBuildTool )
 {
@@ -143,7 +143,7 @@ bool CProjectGenerator_PS3::WriteCustomBuildTool( CCustomBuildTool *pCustomBuild
 	m_XMLWriter.PopNode( false );
 
 	return true;
-}	
+}
 
 bool CProjectGenerator_PS3::WriteSNCCompilerTool( CCompilerTool *pCompilerTool )
 {
@@ -354,7 +354,7 @@ bool CProjectGenerator_PS3::WriteSNCCompilerTool( CCompilerTool *pCompilerTool )
 			break;
 
 		case PS3_SNCCOMPILER_BuiltInDefinitionForWCHAR_TType:
-			if ( nOrdinalValue == 0 )	
+			if ( nOrdinalValue == 0 )
 			{
 				additionalOptions += "-Xwchart=uint ";
 			}
@@ -429,7 +429,7 @@ bool CProjectGenerator_PS3::WriteSNCCompilerTool( CCompilerTool *pCompilerTool )
 	m_XMLWriter.PopNode( false );
 
 	return true;
-}	
+}
 
 bool CProjectGenerator_PS3::WriteGCCCompilerTool( CCompilerTool *pCompilerTool )
 {
@@ -472,7 +472,7 @@ bool CProjectGenerator_PS3::WriteGCCCompilerTool( CCompilerTool *pCompilerTool )
 			break;
 
 		case PS3_GCCCOMPILER_Warnings:
-			if ( nOrdinalValue == 0 )	
+			if ( nOrdinalValue == 0 )
 			{
 				additionalOptions += "-w ";
 			}
@@ -510,7 +510,7 @@ bool CProjectGenerator_PS3::WriteGCCCompilerTool( CCompilerTool *pCompilerTool )
 			break;
 
 		case PS3_GCCCOMPILER_SPURSUsage:
-			if ( nOrdinalValue == 1 )	
+			if ( nOrdinalValue == 1 )
 			{
 				additionalOptions += "-mspurs-job-initialize ";
 			}
@@ -525,11 +525,11 @@ bool CProjectGenerator_PS3::WriteGCCCompilerTool( CCompilerTool *pCompilerTool )
 			break;
 
 		case PS3_GCCCOMPILER_OptimizationLevel:
-			if ( nOrdinalValue == 0 )	
+			if ( nOrdinalValue == 0 )
 			{
 				additionalOptions += "-O0 ";
 			}
-			else if ( nOrdinalValue == 1 )	
+			else if ( nOrdinalValue == 1 )
 			{
 				additionalOptions += "-O1 ";
 			}
@@ -861,7 +861,7 @@ bool CProjectGenerator_PS3::WriteGCCLinkerTool( CLinkerTool *pLinkerTool )
 		// not an error, some tools n/a for a config
 		return true;
 	}
-	
+
 	m_XMLWriter.PushNode( "Tool" );
 
 	m_XMLWriter.Write( "Name=\"VCLinkerTool\"" );
@@ -892,7 +892,7 @@ bool CProjectGenerator_PS3::WriteGCCLinkerTool( CLinkerTool *pLinkerTool )
 			break;
 
 		case PS3_GCCLINKER_SPURSUsage:
-			if ( nOrdinalValue == 1 )	
+			if ( nOrdinalValue == 1 )
 			{
 				additionalOptions += "-mspurs-job-initialize ";
 			}
@@ -907,21 +907,21 @@ bool CProjectGenerator_PS3::WriteGCCLinkerTool( CLinkerTool *pLinkerTool )
 			break;
 
 		case PS3_GCCLINKER_PositionIndependentCode:
-			if ( nOrdinalValue )	
+			if ( nOrdinalValue )
 			{
 				additionalOptions += "-fpic ";
 			}
 			break;
 
 		case PS3_GCCLINKER_EmitRelocations:
-			if ( nOrdinalValue )	
+			if ( nOrdinalValue )
 			{
 				additionalOptions += "-Wl,-q ";
 			}
 			break;
 
 		case PS3_GCCLINKER_GarbageCollection:
-			if ( nOrdinalValue )	
+			if ( nOrdinalValue )
 			{
 				additionalOptions += "-Wl,--gc-sections ";
 			}
@@ -941,7 +941,7 @@ bool CProjectGenerator_PS3::WriteGCCLinkerTool( CLinkerTool *pLinkerTool )
 		case PS3_GCCLINKER_LinkLibraryDependencies:
 			m_XMLWriter.Write( CFmtStrMax( "LinkLibraryDependencies=\"%s\"", BoolStringToTrueFalseString( pLinkerTool->m_PropertyStates.m_Properties[i].m_StringValue.Get() ) ) );
 			break;
-		
+
 		case PS3_SNCLINKER_AdditionalOptions:
 			if ( !pLinkerTool->m_PropertyStates.m_Properties[i].m_StringValue.IsEmpty() )
 			{
@@ -996,7 +996,7 @@ bool CProjectGenerator_PS3::WriteLibrarianTool( CLibrarianTool *pLibrarianTool )
 	m_XMLWriter.PopNode( false );
 
 	return true;
-}	
+}
 
 bool CProjectGenerator_PS3::WritePostBuildEventTool( CPostBuildEventTool *pPostBuildEventTool )
 {
@@ -1029,9 +1029,9 @@ bool CProjectGenerator_PS3::WritePostBuildEventTool( CPostBuildEventTool *pPostB
 	}
 
 	m_XMLWriter.PopNode( false );
-	
+
 	return true;
-}	
+}
 
 const char *CProjectGenerator_PS3::BoolStringToTrueFalseString( const char *pValue )
 {
@@ -1117,7 +1117,7 @@ bool CProjectGenerator_PS3::WriteConfiguration( CProjectConfiguration *pConfig )
 			break;
 		}
 	}
-	
+
 	m_XMLWriter.Write( ">" );
 
 	if ( !WritePreBuildEventTool( pConfig->GetPreBuildEventTool() ) )
@@ -1156,7 +1156,7 @@ bool CProjectGenerator_PS3::WriteConfiguration( CProjectConfiguration *pConfig )
 
 	if ( !WritePostBuildEventTool( pConfig->GetPostBuildEventTool() ) )
 		return false;
-	
+
 	m_XMLWriter.PopNode( true );
 
 	return true;
@@ -1184,7 +1184,7 @@ bool CProjectGenerator_PS3::WriteToXML()
 	m_XMLWriter.PopNode( true );
 
 	CUtlVector< CUtlString > configurationNames;
-	m_pVCProjGenerator->GetAllConfigurationNames( configurationNames ); 
+	m_pVCProjGenerator->GetAllConfigurationNames( configurationNames );
 
 	// write the root configurations
 	m_XMLWriter.PushNode( "Configurations" );
@@ -1252,6 +1252,3 @@ bool CProjectGenerator_PS3::Save( const char *pOutputFilename )
 
 	return bValid;
 }
-
-
-

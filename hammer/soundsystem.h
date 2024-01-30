@@ -50,7 +50,7 @@ public:
 	// Plays a sound
 	bool Play( SoundType_t type, int nIndex );
 	bool PlayScene( const char *pFileName );	// Play the first sound in the specified scene.
-	
+
 	// Stops any playing sound.
 	void StopSound();
 
@@ -113,14 +113,14 @@ private:
 	// Gamesounds may have macros embedded in them
 	void AddGameSoundToList( const char *pGameSound, char const *pFileName, const char *pSourceFile );
 
-	// Load all game sounds from a particular file 
+	// Load all game sounds from a particular file
 	void AddGameSoundsFromFile( const char *pFileName );
 
 	// Populate the list of game sounds
 	bool BuildGameSoundList();
 
 private:
-	SoundList_t m_SoundList[SOUND_TYPE_COUNT];	
+	SoundList_t m_SoundList[SOUND_TYPE_COUNT];
 };
 
 

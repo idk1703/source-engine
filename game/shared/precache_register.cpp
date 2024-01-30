@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,5 +35,3 @@ void CPrecacheRegister::PrecacheFn_Other(void *pUser)
 {
 	UTIL_PrecacheOther((const char*)pUser);
 }
-
-

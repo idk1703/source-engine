@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -63,14 +63,14 @@ CSpectatorGUI *g_pSpectatorGUI = NULL;
 // NB disconnect between localization text and observer mode enums
 static const char *s_SpectatorModes[] =
 {
-	"#Spec_Mode0",	// 	OBS_MODE_NONE = 0,	
-	"#Spec_Mode1",	// 	OBS_MODE_DEATHCAM,	
-	"",				// 	OBS_MODE_FREEZECAM,	
-	"#Spec_Mode2",	// 	OBS_MODE_FIXED,		
-	"#Spec_Mode3",	// 	OBS_MODE_IN_EYE,	
-	"#Spec_Mode4",	// 	OBS_MODE_CHASE,		
+	"#Spec_Mode0",	// 	OBS_MODE_NONE = 0,
+	"#Spec_Mode1",	// 	OBS_MODE_DEATHCAM,
+	"",				// 	OBS_MODE_FREEZECAM,
+	"#Spec_Mode2",	// 	OBS_MODE_FIXED,
+	"#Spec_Mode3",	// 	OBS_MODE_IN_EYE,
+	"#Spec_Mode4",	// 	OBS_MODE_CHASE,
 	"#Spec_Mode_POI",	// 	OBS_MODE_POI, PASSTIME
-	"#Spec_Mode5",	// 	OBS_MODE_ROAMING,	
+	"#Spec_Mode5",	// 	OBS_MODE_ROAMING,
 };
 
 using namespace vgui;
@@ -105,7 +105,7 @@ private:
 CSpectatorMenu::CSpectatorMenu( IViewPort *pViewPort ) : Frame( NULL, PANEL_SPECMENU )
 {
 	m_iDuckKey = BUTTON_CODE_INVALID;
-		
+
 	m_pViewPort = pViewPort;
 
 	SetMouseInputEnabled( true );
@@ -125,7 +125,7 @@ CSpectatorMenu::CSpectatorMenu( IViewPort *pViewPort ) : Frame( NULL, PANEL_SPEC
 	}
 
 	m_pViewOptions = new ComboBox(this, "viewcombo", 10 , false );
-	m_pConfigSettings = new ComboBox(this, "settingscombo", 10 , false );	
+	m_pConfigSettings = new ComboBox(this, "settingscombo", 10 , false );
 
 	m_pLeftButton = new CSpecButton( this, "specprev");
 	m_pLeftButton->SetText("3");
@@ -299,13 +299,13 @@ void CSpectatorMenu::ShowPanel(bool bShow)
 	}
 
 	bool bIsEnabled = true;
-	
+
 	if ( engine->IsHLTV() && HLTVCamera()->IsPVSLocked() )
 	{
 		 // when watching HLTV or Replay with a locked PVS, some elements are disabled
 		 bIsEnabled = false;
 	}
-	
+
 	m_pLeftButton->SetVisible( bIsEnabled );
 	m_pRightButton->SetVisible( bIsEnabled );
 	m_pPlayerList->SetVisible( bIsEnabled );
@@ -346,11 +346,11 @@ void CSpectatorMenu::Update( void )
 		g_pVGuiLocalize->ConvertANSIToUnicode( UTIL_SafeName( gr->GetPlayerName(iPlayerIndex) ), playerName, sizeof( playerName ) );
 		const char * teamname = gr->GetTeamName( gr->GetTeam(iPlayerIndex) );
 		if ( teamname )
-		{	
+		{
 			Q_snprintf( localizeTeamName, sizeof( localizeTeamName ), "#%s", teamname );
 			team=g_pVGuiLocalize->Find( localizeTeamName );
 
-			if ( !team ) 
+			if ( !team )
 			{
 				g_pVGuiLocalize->ConvertANSIToUnicode( teamname , teamText, sizeof( teamText ) );
 				team = teamText;
@@ -385,13 +385,13 @@ void CSpectatorMenu::Update( void )
 
 	//=============================================================================
 	// HPE_BEGIN:
-	// [pfreese] make sure the view mode combo box is up to date - the spectator 
+	// [pfreese] make sure the view mode combo box is up to date - the spectator
 	// mode can be changed multiple ways
 	//=============================================================================
-	
+
 	int specmode = GetSpectatorMode();
 	m_pViewOptions->SetText(s_SpectatorModes[specmode]);
-	
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
@@ -502,7 +502,7 @@ void CSpectatorGUI::PerformLayout()
 {
 	int w,h,x,y;
 	GetHudSize(w, h);
-	
+
 	// fill the screen
 	SetBounds(0,0,w,h);
 
@@ -632,10 +632,10 @@ void CSpectatorGUI::Update()
 		VPANEL p = overview->GetVPanel();
 		vgui::ipanel()->GetPos( p, mx, my );
 		vgui::ipanel()->GetSize( p, mwide, mtall );
-				
+
 		if ( my < btall )
 		{
-			// reduce to bar 
+			// reduce to bar
 			m_pTopBar->SetSize( wide - (mx + mwide), btall );
 			m_pTopBar->SetPos( (mx + mwide), 0 );
 		}
@@ -662,7 +662,7 @@ void CSpectatorGUI::Update()
 		Color c = gr->GetTeamColor( gr->GetTeam(playernum) ); // Player's team color
 
 		m_pPlayerLabel->SetFgColor( c );
-		
+
 		wchar_t playerText[ 80 ], playerName[ 64 ], health[ 10 ];
 		V_wcsncpy( playerText, L"Unable to find #Spec_PlayerItem*", sizeof( playerText ) );
 		memset( playerName, 0x0, sizeof( playerName ) );
@@ -696,7 +696,7 @@ void CSpectatorGUI::Update()
 		// set spectator number and HLTV title
 		Q_snprintf(tempstr,sizeof(tempstr),"Spectators : %d", HLTVCamera()->GetNumSpectators() );
 		g_pVGuiLocalize->ConvertANSIToUnicode(tempstr,szEtxraInfo,sizeof(szEtxraInfo));
-		
+
 		Q_strncpy( tempstr, HLTVCamera()->GetTitleText(), sizeof(tempstr) );
 		g_pVGuiLocalize->ConvertANSIToUnicode(tempstr,szTitleLabel,sizeof(szTitleLabel));
 	}
@@ -833,7 +833,7 @@ CON_COMMAND_F( spec_mode, "Set spectator mode", FCVAR_CLIENTCMD_CAN_EXECUTE )
 			}
 			else
 			{
-				// set next mode 
+				// set next mode
 				mode = HLTVCamera()->GetMode()+1;
 
 				if ( mode > LAST_PLAYER_OBSERVERMODE )
@@ -841,7 +841,7 @@ CON_COMMAND_F( spec_mode, "Set spectator mode", FCVAR_CLIENTCMD_CAN_EXECUTE )
 				else if ( mode == OBS_MODE_POI ) // PASSTIME skip POI mode since hltv doesn't have the entity data required to make it work
 					mode = OBS_MODE_ROAMING;
 			}
-			
+
 			// handle the command clientside
 			HLTVCamera()->SetMode( mode );
 		}
@@ -882,6 +882,3 @@ CON_COMMAND_F( spec_player, "Spectate player by partial name, steamid, or userid
 		ForwardSpecCmdToServer( args );
 	}
 }
-
-
-

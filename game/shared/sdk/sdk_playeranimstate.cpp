@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -70,10 +70,10 @@ public:
 	virtual void DebugShowAnimState( int iStartLine );
 	virtual void ComputeSequences( CStudioHdr *pStudioHdr );
 	virtual void ClearAnimationLayers();
-	
+
 
 	void InitSDK( CBaseAnimatingOverlay *pPlayer, ISDKPlayerAnimStateHelpers *pHelpers, LegAnimType_t legAnimType, bool bUseAimSequences );
-	
+
 protected:
 
 	int CalcFireLayerSequence(PlayerAnimEvent_t event);
@@ -104,7 +104,7 @@ private:
 	bool m_bReloading;
 	float m_flReloadCycle;
 	int m_iReloadSequence;
-	
+
 	// This is set to true if ANY animation is being played in the fire layer.
 	bool m_bFiring;						// If this is on, then it'll continue the fire animation in the fire layer
 										// until it completes.
@@ -117,7 +117,7 @@ private:
 	float m_flGrenadeCycle;
 	int m_iGrenadeSequence;
 	int m_iLastThrowGrenadeCounter;	// used to detect when the guy threw the grenade.
-	
+
 	ISDKPlayerAnimStateHelpers *m_pHelpers;
 };
 
@@ -160,7 +160,7 @@ void CSDKPlayerAnimState::ClearAnimationState()
 	m_bReloading = false;
 	m_bThrowingGrenade = m_bPrimingGrenade = false;
 	m_iLastThrowGrenadeCounter = GetOuterGrenadeThrowCounter();
-	
+
 	BaseClass::ClearAnimationState();
 }
 
@@ -169,7 +169,7 @@ void CSDKPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event, int nData )
 {
 	Assert( event != PLAYERANIMEVENT_THROW_GRENADE );
 
-	if ( event == PLAYERANIMEVENT_FIRE_GUN_PRIMARY || 
+	if ( event == PLAYERANIMEVENT_FIRE_GUN_PRIMARY ||
 		 event == PLAYERANIMEVENT_FIRE_GUN_SECONDARY )
 	{
 		// Regardless of what we're doing in the fire layer, restart it.
@@ -244,7 +244,7 @@ int CSDKPlayerAnimState::CalcReloadLayerSequence()
 			return iReloadSequence;
 	}
 	*/
-			
+
 	// Fall back to reload_m4.
 	iReloadSequence = CalcSequenceIndex( "reload_m4" );
 	if ( iReloadSequence > 0 )
@@ -329,13 +329,13 @@ void CSDKPlayerAnimState::ComputeGrenadeSequence( CStudioHdr *pStudioHdr )
 					m_flGrenadeCycle = 1;
 				else
 					m_flGrenadeCycle = 0;
-					
+
 				m_iGrenadeSequence = CalcGrenadePrimeSequence();
 			}
 
 			m_bPrimingGrenade = true;
 			UpdateLayerSequenceGeneric( pStudioHdr, GRENADESEQUENCE_LAYER, m_bPrimingGrenade, m_flGrenadeCycle, m_iGrenadeSequence, true );
-			
+
 			// If we're waiting to throw and we're done playing the prime animation...
 			if ( bThrowPending && m_flGrenadeCycle == 1 )
 			{
@@ -345,7 +345,7 @@ void CSDKPlayerAnimState::ComputeGrenadeSequence( CStudioHdr *pStudioHdr )
 				m_iGrenadeSequence = CalcGrenadeThrowSequence();
 				if ( m_iGrenadeSequence != -1 )
 				{
-					// Configure to start playing 
+					// Configure to start playing
 					m_bThrowingGrenade = true;
 					m_bPrimingGrenade = false;
 					m_flGrenadeCycle = 0;
@@ -459,12 +459,12 @@ int CSDKPlayerAnimState::CalcFireLayerSequence(PlayerAnimEvent_t event)
 	const char *pSuffix = GetWeaponSuffix();
 	if ( !pSuffix )
 		return 0;
-		
-	// Don't rely on their weapon here because the player has usually switched to their 
+
+	// Don't rely on their weapon here because the player has usually switched to their
 	// pistol or rifle by the time the PLAYERANIMEVENT_THROW_GRENADE message gets to the client.
 	if ( event == PLAYERANIMEVENT_THROW_GRENADE )
 	{
-		pSuffix = "Gren"; 
+		pSuffix = "Gren";
 	}
 
 	switch ( GetCurrentMainSequenceActivity() )

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,7 +21,7 @@
 void ToolFramework_RecordMaterialParams( IMaterial *pMaterial );
 
 //-----------------------------------------------------------------------------
-// Constructor, destructor: 
+// Constructor, destructor:
 //-----------------------------------------------------------------------------
 
 CBaseAnimatedTextureProxy::CBaseAnimatedTextureProxy()
@@ -111,10 +111,10 @@ void CBaseAnimatedTextureProxy::OnBind( void *pEntity )
 	if (prevTime < 0.0f)
 		prevTime = 0.0f;
 
-	float frame = m_FrameRate * deltaTime;	
+	float frame = m_FrameRate * deltaTime;
 	float prevFrame = m_FrameRate * prevTime;
 
-	int intFrame = ((int)frame) % numFrames; 
+	int intFrame = ((int)frame) % numFrames;
 	int intPrevFrame = ((int)prevFrame) % numFrames;
 
 	// Report wrap situation...

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,7 @@ public:
 
 	CHudBaseAccount( const char *name );
 
-	virtual bool ShouldDraw();	
+	virtual bool ShouldDraw();
 	virtual void Paint();
 	virtual void LevelInit( void );
 	virtual void Reset( void );
@@ -72,6 +72,3 @@ private:
 
 
 #endif	// HUD_BASE_ACCOUNT_H
-
-
-

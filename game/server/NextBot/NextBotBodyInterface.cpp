@@ -43,7 +43,7 @@ const Vector &IBody::GetEyePosition( void ) const
 const Vector &IBody::GetViewVector( void ) const
 {
 	static Vector view;
-	
+
 	AngleVectors( GetBot()->GetEntity()->EyeAngles(), &view );
 
 	return view;

@@ -56,7 +56,7 @@ $Project "Dedicated"
 				}
 			}
 		}
-		
+
 		$Folder	"Console"
 		{
 			$File	"console\conproc.cpp"

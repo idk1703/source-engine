@@ -562,7 +562,7 @@ void RemoveAllGrenades( CMerasmus *me )
 		if ( pObjects[i]->IsPlayer() )
 			continue;
 
-		// Remove the enemy pipe 
+		// Remove the enemy pipe
 		pObjects[i]->SetThink( &CBaseEntity::SUB_Remove );
 		pObjects[i]->SetNextThink( gpGlobals->curtime );
 		pObjects[i]->SetTouch( NULL );
@@ -769,11 +769,11 @@ void CMerasmus::AddStun( CTFPlayer* pPlayer )
 		CPVSFilter filter( WorldSpaceCenter() );
 		if (RandomInt( 1, 10) == 9 )
 		{
-			PlayLowPrioritySound( filter, "Halloween.MerasmusHitByBombRare" ); 
+			PlayLowPrioritySound( filter, "Halloween.MerasmusHitByBombRare" );
 		}
 		else
 		{
-			PlayLowPrioritySound( filter, "Halloween.MerasmusHitByBomb" ); 
+			PlayLowPrioritySound( filter, "Halloween.MerasmusHitByBomb" );
 		}
 	}
 
@@ -786,7 +786,7 @@ void CMerasmus::AddStun( CTFPlayer* pPlayer )
 	pPlayer->m_Shared.RemoveCond( TF_COND_STUNNED );
 	pPlayer->m_Shared.RemoveCond( TF_COND_HALLOWEEN_BOMB_HEAD );
 	pPlayer->MerasmusPlayerBombExplode( false );
-			 
+
 	PushPlayer( pPlayer, 300.f );
 	DispatchParticleEffect( "merasmus_dazed_explosion", WorldSpaceCenter(), GetAbsAngles() );
 
@@ -862,7 +862,7 @@ void BombHeadForTeam( int nTeam, int nBombHeadPlayers )
 		{
 			CTFPlayer *pPlayer = playerVector[i];
 
-			if ( pPlayer->GetTimeSinceWasBombHead() > oldestTimeStamp && 
+			if ( pPlayer->GetTimeSinceWasBombHead() > oldestTimeStamp &&
 				 !pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_BOMB_HEAD ) &&
 				 pPlayer->GetLastKnownArea() &&
 				 pPlayer->GetLastKnownArea()->HasFuncNavPrefer() )
@@ -1021,7 +1021,7 @@ void CMerasmus::RecordDisguiseTime( )
 	m_flStartDisguiseTime = 0;
 }
 
-void CMerasmus::StartRespawnTimer() const 
+void CMerasmus::StartRespawnTimer() const
 {
 	if( TFGameRules() )
 	{
@@ -1043,7 +1043,7 @@ void CMerasmus::SW_ReportMerasmusStats( void )
 		return;
 
 	static uint8 unEventCounter = 0;
-	
+
 	GCSDK::CProtoBufMsg<CMsgHalloween_Merasmus2012> msg( k_EMsgGC_Halloween_Merasmus2012 );
 	msg.Body().set_time_submitted( CRTime::RTime32TimeCur() );
 	msg.Body().set_is_valve_server( false );
@@ -1058,19 +1058,19 @@ void CMerasmus::SW_ReportMerasmusStats( void )
 	msg.Body().set_prophunt_time2( m_bossStats.m_flPropHuntTime2 );
 
 	msg.Body().set_dmg_scout( m_bossStats.m_arrClassDamage[ TF_CLASS_SCOUT ] );			// Amount of damage done by each class
-	msg.Body().set_dmg_sniper( m_bossStats.m_arrClassDamage[ TF_CLASS_SNIPER] );	
-	msg.Body().set_dmg_soldier( m_bossStats.m_arrClassDamage[ TF_CLASS_SOLDIER] );	
-	msg.Body().set_dmg_demo( m_bossStats.m_arrClassDamage[ TF_CLASS_DEMOMAN] );	
-	msg.Body().set_dmg_medic( m_bossStats.m_arrClassDamage[ TF_CLASS_MEDIC ] );	
-	msg.Body().set_dmg_heavy( m_bossStats.m_arrClassDamage[ TF_CLASS_HEAVYWEAPONS ] );	
-	msg.Body().set_dmg_pyro( m_bossStats.m_arrClassDamage[ TF_CLASS_PYRO ] );	
-	msg.Body().set_dmg_spy( m_bossStats.m_arrClassDamage[ TF_CLASS_SPY ] );	
-	msg.Body().set_dmg_engineer( m_bossStats.m_arrClassDamage[ TF_CLASS_ENGINEER ] );	
+	msg.Body().set_dmg_sniper( m_bossStats.m_arrClassDamage[ TF_CLASS_SNIPER] );
+	msg.Body().set_dmg_soldier( m_bossStats.m_arrClassDamage[ TF_CLASS_SOLDIER] );
+	msg.Body().set_dmg_demo( m_bossStats.m_arrClassDamage[ TF_CLASS_DEMOMAN] );
+	msg.Body().set_dmg_medic( m_bossStats.m_arrClassDamage[ TF_CLASS_MEDIC ] );
+	msg.Body().set_dmg_heavy( m_bossStats.m_arrClassDamage[ TF_CLASS_HEAVYWEAPONS ] );
+	msg.Body().set_dmg_pyro( m_bossStats.m_arrClassDamage[ TF_CLASS_PYRO ] );
+	msg.Body().set_dmg_spy( m_bossStats.m_arrClassDamage[ TF_CLASS_SPY ] );
+	msg.Body().set_dmg_engineer( m_bossStats.m_arrClassDamage[ TF_CLASS_ENGINEER ] );
 
 	// Class counts
 	CUtlVector< CTFPlayer * > playerVector;
-	CollectPlayers( &playerVector ); 
-	
+	CollectPlayers( &playerVector );
+
 	int nClassCounts[ TF_LAST_NORMAL_CLASS ];
 	V_memset( nClassCounts, 0, sizeof( nClassCounts ) );
 	FOR_EACH_VEC( playerVector, index )
@@ -1093,9 +1093,9 @@ void CMerasmus::SW_ReportMerasmusStats( void )
 	msg.Body().set_engineer_count( nClassCounts[TF_CLASS_ENGINEER] );
 
 	GCClientSystem()->BSendMessage( msg );
-	
 
-// OGS Version 
+
+// OGS Version
 //
 //#if !defined(NO_STEAM)
 //	KeyValues* pKVData = new KeyValues( "TF2Halloween2012MerasmusBossStats" );
@@ -1114,7 +1114,7 @@ void CMerasmus::SW_ReportMerasmusStats( void )
 //	pKVData->SetInt( "BombKills", m_bossStats.m_nBombKills );					// Kills from Bombs
 //	pKVData->SetInt( "StaffKills", m_bossStats.m_nStaffKills );					// kills from staff account
 //	pKVData->SetInt( "PvPKills", m_bossStats.m_nPvpKills );						// Number of kills from players while Boss is out (Jerk factor)
-//	pKVData->SetInt( "PropHuntTime1", m_bossStats.m_flPropHuntTime1 );		
+//	pKVData->SetInt( "PropHuntTime1", m_bossStats.m_flPropHuntTime1 );
 //	pKVData->SetInt( "PropHuntTime2", m_bossStats.m_flPropHuntTime2 );
 //
 //	// Class Damage
@@ -1130,7 +1130,7 @@ void CMerasmus::SW_ReportMerasmusStats( void )
 //
 //	// Class counts
 //	CUtlVector< CTFPlayer * > playerVector;
-//	CollectPlayers( &playerVector ); 
+//	CollectPlayers( &playerVector );
 //
 //	int nClassCounts[ TF_LAST_NORMAL_CLASS ];
 //	V_memset( nClassCounts, 0, sizeof( nClassCounts ) );
@@ -1262,7 +1262,7 @@ void CastSpell( CBaseCombatCharacter* pCaster, const char* pszCastingAttachmentN
 class CMerasmusBehavior : public Action< CMerasmus >
 {
 public:
-	virtual Action< CMerasmus > *InitialContainedAction( CMerasmus *me )	
+	virtual Action< CMerasmus > *InitialContainedAction( CMerasmus *me )
 	{
 		return new CMerasmusReveal;
 	}
@@ -1283,7 +1283,7 @@ public:
 				const CUtlVector< CMerasmus::AttackerInfo > &attackerVector = me->GetAttackerVector();
 				for( int i=0; i<attackerVector.Count(); ++i )
 				{
-					if ( attackerVector[i].m_attacker != NULL && 
+					if ( attackerVector[i].m_attacker != NULL &&
 						gpGlobals->curtime - attackerVector[i].m_timestamp < deathTime )
 					{
 						CReliableBroadcastRecipientFilter filter;
@@ -1317,7 +1317,7 @@ public:
 								CMsgUpdateHalloweenMerasmusLootLevel_Player *pMsgPlayer = msg.Body().add_players();
 								pMsgPlayer->set_steam_id( steamID.ConvertToUint64() );
 							}
-							
+
 						}
 					}
 					GCClientSystem()->BSendMessage( msg );
@@ -1345,7 +1345,7 @@ public:
 
 	virtual EventDesiredResult< CMerasmus > OnInjured( CMerasmus *me, const CTakeDamageInfo &info )
 	{
-		if ( me->ShouldDisguise() && me->IsRevealed() && !me->IsStunned() && !me->IsFlying() ) 
+		if ( me->ShouldDisguise() && me->IsRevealed() && !me->IsStunned() && !me->IsFlying() )
 		{
 			return TrySuspendFor( new CMerasmusDisguise, RESULT_IMPORTANT, "Disguise" );
 		}
@@ -1357,15 +1357,15 @@ public:
 
 private:
 
-	
+
 };
 
 
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
 CMerasmusIntention::CMerasmusIntention( CMerasmus *me ) : IIntention( me )
-{ 
-	m_behavior = new Behavior< CMerasmus >( new CMerasmusBehavior ); 
+{
+	m_behavior = new Behavior< CMerasmus >( new CMerasmusBehavior );
 }
 
 CMerasmusIntention::~CMerasmusIntention()
@@ -1374,14 +1374,14 @@ CMerasmusIntention::~CMerasmusIntention()
 }
 
 void CMerasmusIntention::Reset( void )
-{ 
-	delete m_behavior; 
+{
+	delete m_behavior;
 	m_behavior = new Behavior< CMerasmus >( new CMerasmusBehavior );
 }
 
 void CMerasmusIntention::Update( void )
 {
-	m_behavior->Update( static_cast< CMerasmus * >( GetBot() ), GetUpdateInterval() ); 
+	m_behavior->Update( static_cast< CMerasmus * >( GetBot() ), GetUpdateInterval() );
 }
 
 // is this a place we can be?
@@ -1604,6 +1604,3 @@ void CMerasmusFlyingLocomotion::FaceTowards( const Vector &target )
 
 	me->SetLocalAngles( angles );
 }
-
-
-

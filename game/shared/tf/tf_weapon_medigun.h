@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -197,7 +197,7 @@ protected:
 	bool					m_bAttack3Down;
 	bool					m_bReloadDown;
 	float					m_flEndResistCharge;
-	
+
 	struct targetdetachtimes_t
 	{
 		float	flTime;
@@ -240,7 +240,7 @@ protected:
 	float				m_flAutoCallerCheckTime;
 #endif
 
-private:														
+private:
 	CWeaponMedigun( const CWeaponMedigun & );
 };
 

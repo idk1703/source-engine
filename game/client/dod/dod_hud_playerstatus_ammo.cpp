@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -116,7 +116,7 @@ CDoDHudAmmo::CDoDHudAmmo( vgui::Panel *parent, const char *name ) : vgui::Panel(
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudAmmo::Init( void )
 {
@@ -125,7 +125,7 @@ void CDoDHudAmmo::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudAmmo::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -146,7 +146,7 @@ void CDoDHudAmmo::OnThink()
 	hudlcd->SetGlobalStat( "(weapon_print_name)", wpn ? wpn->GetPrintName() : " " );
 	hudlcd->SetGlobalStat( "(weapon_name)", wpn ? wpn->GetName() : " " );
 
-    if ( !wpn || !player || !wpn->UsesPrimaryAmmo() )
+	if ( !wpn || !player || !wpn->UsesPrimaryAmmo() )
 	{
 		hudlcd->SetGlobalStat( "(ammo_primary)", "n/a" );
 		hudlcd->SetGlobalStat( "(ammo_secondary)", "n/a" );
@@ -220,7 +220,7 @@ void CDoDHudAmmo::SetAmmo2( int ammo2, bool playAnimation )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudAmmo::DrawAmmoCount( int count )
 {
@@ -233,7 +233,7 @@ void CDoDHudAmmo::DrawAmmoCount( int count )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudAmmo::PaintGrenadeAmmo( CWeaponDODBase *pWpn )
 {
@@ -276,7 +276,7 @@ void CDoDHudAmmo::PaintGrenadeAmmo( CWeaponDODBase *pWpn )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudAmmo::PaintRifleGrenadeAmmo( CWeaponDODBase *pWpn )
 {
@@ -321,10 +321,10 @@ void CDoDHudAmmo::PaintRifleGrenadeAmmo( CWeaponDODBase *pWpn )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudAmmo::PaintBazookaAmmo( CWeaponDODBase *pWpn )
-{	
+{
 	int panelX, panelY, panelW, panelT;
 	GetBounds( panelX, panelY, panelW, panelT );
 
@@ -411,7 +411,7 @@ void CDoDHudAmmo::PaintBazookaAmmo( CWeaponDODBase *pWpn )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudAmmo::PaintMGAmmo( CWeaponDODBase *pWpn )
 {
@@ -499,7 +499,7 @@ void CDoDHudAmmo::PaintMGAmmo( CWeaponDODBase *pWpn )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudAmmo::PaintGunAmmo( CWeaponDODBase *pWpn )
 {
@@ -518,7 +518,7 @@ void CDoDHudAmmo::PaintGunAmmo( CWeaponDODBase *pWpn )
 	int xpos = 0, ypos = 0;
 	int nIconWidth = 0, nIconHeight = 0;
 	float scale = 1.0f;
-	
+
 	if ( pFullClip && pEmptyClip )
 	{
 		nIconWidth = pFullClip->Width();
@@ -545,7 +545,7 @@ void CDoDHudAmmo::PaintGunAmmo( CWeaponDODBase *pWpn )
 		pFullClip->DrawSelf( xpos, ypos, nIconWidth, nIconHeight, m_clrIcon );
 
 		// base percent is how much of the bullet clip to always draw.
-		// total cropped height of the bullet sprite will be 
+		// total cropped height of the bullet sprite will be
 		// base percent + bullet height * bullets
 		float flBasePercent			= (float)pWpn->GetDODWpnData().m_iHudClipBaseHeight / (float)pWpn->GetDODWpnData().m_iHudClipHeight;
 		float flBulletHeightPercent = (float)pWpn->GetDODWpnData().m_iHudClipBulletHeight / (float)pWpn->GetDODWpnData().m_iHudClipHeight;
@@ -595,14 +595,14 @@ void CDoDHudAmmo::PaintGunAmmo( CWeaponDODBase *pWpn )
 		{
 			ypos = extra_clip_ypos + extra_clip_height / 2.0 - nIconHeight / 2.0;
 		}
-	
+
 		pExtraClip->DrawSelf( xpos, ypos, pExtraClip->Width() * scale, pExtraClip->Height() * scale, m_clrIcon );
 		DrawAmmoCount( clips );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudAmmo::Paint( void )
 {
@@ -615,7 +615,7 @@ void CDoDHudAmmo::Paint( void )
 
 	if( !pWpn )
 		return;
-	
+
 	switch( pWpn->GetDODWpnData().m_WeaponType )
 	{
 	case WPN_TYPE_GRENADE:
@@ -638,13 +638,13 @@ void CDoDHudAmmo::Paint( void )
 		break;
 
 	default:
-		PaintGunAmmo( pWpn );					
+		PaintGunAmmo( pWpn );
 		break;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudAmmo::DrawText( char *text, int x, int y, Color clrText )
 {
@@ -659,7 +659,7 @@ void CDoDHudAmmo::DrawText( char *text, int x, int y, Color clrText )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudAmmo::DrawNumbers( int num, int x, int y )
 {
@@ -697,4 +697,3 @@ void CDoDHudAmmo::DrawNumbers( int num, int x, int y )
 	m_pMGNumbers[num_working]->DrawSelf( xpos, ypos, m_clrIcon );
 	xpos += iconWidth;
 }
-

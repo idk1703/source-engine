@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -75,8 +75,8 @@ static CKeyValues2ErrorStack g_KeyValues2ErrorStack;
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CKeyValues2ErrorStack::CKeyValues2ErrorStack() : 
-	m_pFilename("NULL"), m_errorIndex(0), m_maxErrorIndex(0), m_nFileLine(1) 
+CKeyValues2ErrorStack::CKeyValues2ErrorStack() :
+	m_pFilename("NULL"), m_errorIndex(0), m_maxErrorIndex(0), m_nFileLine(1)
 {
 }
 
@@ -538,7 +538,7 @@ void CDmSerializerKeyValues2::EatWhitespacesAndComments( CUtlBuffer &buf )
 	// eating white spaces and remarks loop
 	int nMaxPut = buf.TellMaxPut() - buf.TellGet();
 	int nOffset = 0;
-	while ( nOffset < nMaxPut )	
+	while ( nOffset < nMaxPut )
 	{
 		// Eat whitespaces, keep track of line count
 		const char *pPeek = NULL;
@@ -869,7 +869,7 @@ bool CDmSerializerKeyValues2::UnserializeArrayAttribute( CUtlBuffer &buf, DmElem
 	CDmAttribute *pAttribute = pElement->AddAttribute( pAttributeName, nAttrType );
 	if ( !pAttribute )
 	{
-		g_KeyValues2ErrorStack.ReportError("Attempted to read an attribute (\"%s\") of an inappropriate type %s!\n", 
+		g_KeyValues2ErrorStack.ReportError("Attempted to read an attribute (\"%s\") of an inappropriate type %s!\n",
 			pAttributeName, g_pDataModel->GetAttributeNameForType( nAttrType ) );
 		return false;
 	}
@@ -937,7 +937,7 @@ bool CDmSerializerKeyValues2::UnserializeArrayAttribute( CUtlBuffer &buf, DmElem
 //-----------------------------------------------------------------------------
 // Reads an attribute for an element
 //-----------------------------------------------------------------------------
-bool CDmSerializerKeyValues2::UnserializeAttribute( CUtlBuffer &buf, 
+bool CDmSerializerKeyValues2::UnserializeAttribute( CUtlBuffer &buf,
 	DmElementDictHandle_t hElement, const char *pAttributeName, DmAttributeType_t nAttrType )
 {
 	// Read the attribute value
@@ -972,11 +972,11 @@ bool CDmSerializerKeyValues2::UnserializeAttribute( CUtlBuffer &buf,
 	CDmAttribute *pAttribute = pElement->AddAttribute( pAttributeName, nAttrType );
 	if ( !pAttribute )
 	{
-		g_KeyValues2ErrorStack.ReportError("Attempted to read an attribute (\"%s\") of an inappropriate type %s!\n", 
+		g_KeyValues2ErrorStack.ReportError("Attempted to read an attribute (\"%s\") of an inappropriate type %s!\n",
 			pAttributeName, g_pDataModel->GetAttributeNameForType( nAttrType ) );
 		return false;
 	}
-	 
+
 	switch( nAttrType )
 	{
 	case AT_ELEMENT:
@@ -1014,8 +1014,8 @@ bool CDmSerializerKeyValues2::UnserializeAttribute( CUtlBuffer &buf,
 
 /*
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : includedKeys - 
+// Purpose:
+// Input  : includedKeys -
 //-----------------------------------------------------------------------------
 void KeyValues::AppendIncludedKeys( CUtlVector< KeyValues * >& includedKeys )
 {
@@ -1037,13 +1037,13 @@ void KeyValues::AppendIncludedKeys( CUtlVector< KeyValues * >& includedKeys )
 	}
 }
 
-void KeyValues::ParseIncludedKeys( char const *resourceName, const char *filetoinclude, 
+void KeyValues::ParseIncludedKeys( char const *resourceName, const char *filetoinclude,
 		IBaseFileSystem* pFileSystem, const char *pPathID, CUtlVector< KeyValues * >& includedKeys )
 {
 	Assert( resourceName );
 	Assert( filetoinclude );
 	Assert( pFileSystem );
-	
+
 	// Load it...
 	if ( !pFileSystem )
 	{
@@ -1063,8 +1063,8 @@ void KeyValues::ParseIncludedKeys( char const *resourceName, const char *filetoi
 		{
 			break;
 		}
-		
-		if ( fullpath[ len - 1 ] == '\\' || 
+
+		if ( fullpath[ len - 1 ] == '\\' ||
 			 fullpath[ len - 1 ] == '/' )
 		{
 			break;
@@ -1108,12 +1108,12 @@ bool KeyValues::LoadFromBuffer( char const *resourceName, const char *pBuffer, I
 	KeyValues *pCurrentKey = this;
 	CUtlVector< KeyValues * > includedKeys;
 	bool wasQuoted;
-	g_KeyValues2ErrorStack.SetFilename( resourceName );	
-	do 
+	g_KeyValues2ErrorStack.SetFilename( resourceName );
+	do
 	{
 		// the first thing must be a key
 		const char *s = ReadToken( &pfile, wasQuoted );
-		
+
 		if ( !pfile || !s || *s == 0 )
 			break;
 
@@ -1170,7 +1170,7 @@ bool KeyValues::LoadFromBuffer( char const *resourceName, const char *pBuffer, I
 
 	AppendIncludedKeys( includedKeys );
 
-	g_KeyValues2ErrorStack.SetFilename( "" );	
+	g_KeyValues2ErrorStack.SetFilename( "" );
 
 	return true;
 }
@@ -1277,7 +1277,7 @@ bool CDmSerializerKeyValues2::UnserializeElement( CUtlBuffer &buf, const char *p
 	return true;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Unserializes a single element
 //-----------------------------------------------------------------------------
@@ -1292,7 +1292,7 @@ bool CDmSerializerKeyValues2::UnserializeElement( CUtlBuffer &buf, DmElementDict
 	TokenType_t token = ReadToken( buf, tokenBuf );
 	if ( token == TOKEN_INVALID )
 		return false;
-	
+
 	if ( token == TOKEN_EOF )
 		return true;
 
@@ -1311,7 +1311,7 @@ bool CDmSerializerKeyValues2::UnserializeElement( CUtlBuffer &buf, DmElementDict
 	return UnserializeElement( buf, pTypeName, pHandle );
 }
 
-			   
+
 //-----------------------------------------------------------------------------
 // Main entry point for the unserialization
 //-----------------------------------------------------------------------------

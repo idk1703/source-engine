@@ -130,7 +130,7 @@ void CTFRobotDestruction_RobotSpawn::Activate()
 		AssertMsg( false, "%s", pszMsg );
 		Warning( "%s", pszMsg );
 	}
-	
+
 	if ( pGroup )
 	{
 		// Make sure there's not two with the same name
@@ -157,7 +157,7 @@ void CTFRobotDestruction_RobotSpawn::Activate()
 		Warning( "%s", pszMsg );
 	}
 	else if ( pEnt == NULL )
-	{ 
+	{
 		const char *pszMsg = CFmtStr( "%s specified '%s' as its first path, but %s doesn't exist"
 									, STRING( GetEntityName() )
 									, m_spawnData.m_pszPathName
@@ -187,7 +187,7 @@ void CTFRobotDestruction_RobotSpawn::SpawnRobot()
 		m_hRobot->ChangeTeam( m_hGroup->GetTeamNumber() );
 		m_hRobot->SetHealth( m_spawnData.m_nRobotHealth );
 		m_hRobot->SetMaxHealth( m_spawnData.m_nRobotHealth );
-		m_hRobot->SetGroup( m_hGroup.Get() );	
+		m_hRobot->SetGroup( m_hGroup.Get() );
 		m_hRobot->SetSpawn( this );
 		m_hRobot->SetRobotSpawnData( m_spawnData );
 		m_hRobot->SetName( AllocPooledString(CFmtStr( "%s_robot", STRING(GetEntityName())) ) );
@@ -322,7 +322,7 @@ void CTFRobotDestruction_RobotGroup::Activate()
 void CTFRobotDestruction_RobotGroup::AddToGroup( CTFRobotDestruction_RobotSpawn * pSpawn )
 {
 	Assert( m_vecSpawns.Find( pSpawn ) == m_vecSpawns.InvalidIndex() );
-	
+
 	pSpawn->SetGroup( this );
 	m_vecSpawns.AddToTail( pSpawn );
 }
@@ -578,7 +578,7 @@ static CTFRobotDestruction_RobotGroup * GetHighestDead( const CUtlVector < CTFRo
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFRobotDestructionLogic::CTFRobotDestructionLogic()
 {
@@ -654,13 +654,13 @@ void CTFRobotDestructionLogic::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFRobotDestructionLogic::GetRespawnScaleForTeam( int nTeam ) const
 {
 	if ( nTeam == TF_TEAM_RED )
 	{
-		return m_flRedTeamRespawnScale; 
+		return m_flRedTeamRespawnScale;
 	}
 	else
 	{
@@ -734,7 +734,7 @@ int CTFRobotDestructionLogic::ApproachTeamTargetScore( int nTeam, int nApproachS
 		// Figure out which events we need
 		COutputEvent& eventHitZeroPoints = nTeam == TF_TEAM_RED ? m_OnRedHitZeroPoints : m_OnBlueHitZeroPoints;
 		COutputEvent& eventHasPoints = nTeam == TF_TEAM_RED ? m_OnRedHasPoints : m_OnBlueHasPoints;
-	
+
 		// Approach by 1 per interval
 		int nDelta = clamp( nApproachScore - nCurrentScore, -tf_rd_points_per_approach.GetInt(), tf_rd_points_per_approach.GetInt() );
 		int nNewScore = nCurrentScore + nDelta;
@@ -855,12 +855,12 @@ void CTFRobotDestructionLogic::ScorePoints( int nTeam, int nPoints, RDScoreMetho
 	{
 		nTargetScore = m_nBlueTargetPoints = clamp ( m_nBlueTargetPoints + nPoints, 0, m_nMaxPoints.Get() );
 	}
-		
+
 	if ( GetNextThink( APPROACH_POINTS_THINK ) == TICK_NEVER_THINK )
 	{
 		SetContextThink( &CTFRobotDestructionLogic::ApproachTargetScoresThink, gpGlobals->curtime + tf_rd_points_approach_interval.GetFloat(), APPROACH_POINTS_THINK );
 	}
-	
+
 	int nOldScore = nTeam == TF_TEAM_RED ? m_nRedScore.Get() : m_nBlueScore.Get();
 
 	// Can't do anything if we're already at max and adding points
@@ -928,7 +928,7 @@ void CTFRobotDestructionLogic::ScorePoints( int nTeam, int nPoints, RDScoreMetho
 				pScoreEvent->SetInt( "player", pPlayer->GetUserID() );
 				pScoreEvent->SetInt( "method", (int)eMethod );
 				pScoreEvent->SetInt( "amount", nDelta );
-		
+
 				gameeventmanager->FireEvent( pScoreEvent );
 			}
 		}
@@ -936,7 +936,7 @@ void CTFRobotDestructionLogic::ScorePoints( int nTeam, int nPoints, RDScoreMetho
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRobotDestructionLogic::InputRoundActivate( inputdata_t &/*inputdata*/ )
 {
@@ -957,7 +957,7 @@ CTFRobotDestructionLogic* CTFRobotDestructionLogic::GetRobotDestructionLogic()
 
 CTFRobotDestructionLogic* CTFRobotDestructionLogic::m_sCTFRobotDestructionLogic = NULL;
 
-							   
+
 void CTFRobotDestructionLogic::PlaySoundInfoForScoreEvent( CTFPlayer* pPlayer, bool bPositive, int nNewScore, int nTeam, RDScoreMethod_t eMethod )
 {
 	if ( !pPlayer )
@@ -980,7 +980,7 @@ void CTFRobotDestructionLogic::PlaySoundInfoForScoreEvent( CTFPlayer* pPlayer, b
 			params.m_nFlags |= SND_CHANGE_PITCH;
 			params.m_flVolume = 0.25f;
 			params.m_nFlags |= SND_CHANGE_VOL;
-			
+
 			break;
 		}
 		case SCORE_REACTOR_CAPTURED:
@@ -1156,7 +1156,7 @@ void CTFRobotDestructionLogic::AddRobotGroup( CTFRobotDestruction_RobotGroup* pG
 	Assert( m_vecSpawnGroups.Find( pGroup ) == m_vecSpawnGroups.InvalidIndex() );
 	FOR_EACH_VEC( m_vecSpawnGroups, i )
 	{
-		Assert( m_vecSpawnGroups[i]->GetGroupNumber() != pGroup->GetGroupNumber() 
+		Assert( m_vecSpawnGroups[i]->GetGroupNumber() != pGroup->GetGroupNumber()
 			 || m_vecSpawnGroups[i]->GetTeamNumber() != pGroup->GetTeamNumber() );
 	}
 
@@ -1201,7 +1201,7 @@ void CTFRobotDestructionLogic::ManageGameState()
 
 		CTFRobotDestruction_RobotGroup *pLowest = pLowestAlive[ nTeam ];
 		CTFRobotDestruction_RobotGroup *pHighest = pHighestDead[ nTeam ];
-	
+
 		bool bHighestAlreadyRespawning = false;
 		// The highest dead group is the master respawning group
 		if ( pHighest )
@@ -1227,7 +1227,7 @@ void CTFRobotDestructionLogic::ManageGameState()
 		FOR_EACH_VEC( vecTeamGroups[ nTeam ], i )
 		{
 			CTFRobotDestruction_RobotGroup *pGroup = vecTeamGroups[ nTeam ][ i ];
-			
+
 			bAllDead &= pGroup->GetNumAliveBots() == 0;
 
 			// The non-lowest alive groups are ubered
@@ -1254,7 +1254,7 @@ void CTFRobotDestructionLogic::PlaySoundInPlayersEars( CTFPlayer* pPlayer, const
 	if ( nIndex != m_mapRateLimitedSounds.InvalidIndex() )
 	{
 		RateLimitedSound_t* pSound = m_mapRateLimitedSounds[ nIndex ];
-		
+
 		int nPlayerIndex = pSound->m_mapNextAllowedTime.Find( pPlayer );
 		if ( nPlayerIndex == pSound->m_mapNextAllowedTime.InvalidIndex() )
 		{
@@ -1285,7 +1285,7 @@ void CTFRobotDestructionLogic::PlaySoundInPlayersEars( CTFPlayer* pPlayer, const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRobotDestructionLogic::RedTeamWin()
 {
@@ -1293,7 +1293,7 @@ void CTFRobotDestructionLogic::RedTeamWin()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRobotDestructionLogic::BlueTeamWin()
 {
@@ -1301,20 +1301,20 @@ void CTFRobotDestructionLogic::BlueTeamWin()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRobotDestructionLogic::TeamWin( int nTeam )
 {
 	RDScoreMethod_t eMethod = (RDScoreMethod_t)m_eWinningMethod.Get( nTeam );
-		
+
 	if ( TFGameRules() )
-	{	
+	{
 		TFGameRules()->SetWinningTeam( nTeam, ( eMethod == SCORE_REACTOR_CAPTURED ) ? WINREASON_RD_REACTOR_CAPTURED : ( ( eMethod == SCORE_CORES_COLLECTED ) ? WINREASON_RD_CORES_COLLECTED : WINREASON_RD_REACTOR_RETURNED ) );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRobotDestructionLogic::FlagCreated( int nTeam )
 {
@@ -1334,12 +1334,12 @@ void CTFRobotDestructionLogic::FlagCreated( int nTeam )
 			m_OnBlueFirstFlagStolen.FireOutput( this, this );
 		}
 	}
-	
+
 	++m_nNumFlagsOut[ nTeam ];
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFRobotDestructionLogic::FlagDestroyed( int nTeam )
 {
@@ -1539,7 +1539,7 @@ void CRobotDestructionVaultTrigger::EndTouch(CBaseEntity *pOther)
 
 				// TODO: Play negative sound in player's ears
 			}
-			
+
 			if ( m_bIsStealing )
 			{
 				// If the flag carrier is leaving us, we're done stealing

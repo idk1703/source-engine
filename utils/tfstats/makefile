@@ -36,9 +36,9 @@ STDCPP_LIB=	#/usr/local/lib/gcc-lib/H-libstdc++/lib
 BASE_CFLAGS=-Dstricmp=strcasecmp -Dstrnicmp=strncasecmp -Iregexp/include
 
 RELEASE_CFLAGS=$(BASE_CFLAGS) -m486 -O1
-RELEASE_NOOP_CFLAGS=$(BASE_CFLAGS) -m486  
+RELEASE_NOOP_CFLAGS=$(BASE_CFLAGS) -m486
 
-DEBUG_CFLAGS=$(BASE_CFLAGS) -g -D_DEBUG -DDEBUG -Wall 
+DEBUG_CFLAGS=$(BASE_CFLAGS) -g -D_DEBUG -DDEBUG -Wall
 
 LDFLAGS= -static /momma/tfstats/regexp/lib/libregex++.a -ldl -lm \
 -lstdc++
@@ -122,11 +122,11 @@ TFSTATS_OBJS = \
 	$(BUILDDIR)/plrpersist.o \
 	$(BUILDDIR)/tfstatsosinterface.o \
 	$(BUILDDIR)/allplayersstats.o \
-	$(BUILDDIR)/playerreport.o 
+	$(BUILDDIR)/playerreport.o
 
 
 
-$(BUILDDIR)/tfstats_l : $(TFSTATS_OBJS) 
+$(BUILDDIR)/tfstats_l : $(TFSTATS_OBJS)
 	$(CC) $(CFLAGS) -L/usr/local/lib -o $@ $(TFSTATS_OBJS) $(LDFLAGS)
 
 $(BUILDDIR)/buildnum.o :   $(TFSTATS_DIR)/buildnum.cpp
@@ -248,4 +248,3 @@ $(BUILDDIR)/tfstatsosinterface.o : $(TFSTATS_DIR)/tfstatsosinterface.cpp
 
 $(BUILDDIR)/allplayersstats.o : $(TFSTATS_DIR)/allplayersstats.cpp
 	$(DO_CC)
-

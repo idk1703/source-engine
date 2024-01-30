@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -82,7 +82,7 @@ void CCSBot::Walk( void )
 bool CCSBot::Jump( bool mustJump )
 {
 	// prevent jumping if we're crouched, unless we're in a crouchjump area - jump wins
-	bool inCrouchJumpArea = (m_lastKnownArea && 
+	bool inCrouchJumpArea = (m_lastKnownArea &&
 		(m_lastKnownArea->GetAttributes() & NAV_MESH_CROUCH) &&
 		(m_lastKnownArea->GetAttributes() & NAV_MESH_JUMP));
 
@@ -112,7 +112,7 @@ int CCSBot::OnTakeDamage( const CTakeDamageInfo &info )
 	if (attacker->IsPlayer())
 	{
 		CCSPlayer *player = static_cast<CCSPlayer *>( attacker );
-		
+
 		if (InSameTeam( player ) && !player->IsBot())
 			GetChatter()->FriendlyFire();
 	}
@@ -163,7 +163,7 @@ int CCSBot::OnTakeDamage( const CTakeDamageInfo &info )
  * Invoked when killed
  */
 void CCSBot::Event_Killed( const CTakeDamageInfo &info )
-{ 
+{
 //	PrintIfWatched( "Killed( attacker = %s )\n", STRING(pevAttacker->netname) );
 
 	GetChatter()->OnDeath();
@@ -307,9 +307,9 @@ void CCSBot::Touch( CBaseEntity *other )
  */
 bool CCSBot::IsBusy( void ) const
 {
-	if (IsAttacking() || 
+	if (IsAttacking() ||
 		IsBuying() ||
-		IsDefusingBomb() || 
+		IsDefusingBomb() ||
 		GetTask() == PLANT_BOMB ||
 		GetTask() == RESCUE_HOSTAGES ||
 		IsSniping())
@@ -344,7 +344,7 @@ void CCSBot::SetBotEnemy( CCSPlayer *enemy )
 {
 	if (m_enemy != enemy)
 	{
-		m_enemy = enemy; 
+		m_enemy = enemy;
 		m_currentEnemyAcquireTimestamp = gpGlobals->curtime;
 
 		PrintIfWatched( "SetBotEnemy: %s\n", (enemy) ? enemy->GetPlayerName() : "(NULL)" );
@@ -396,7 +396,7 @@ bool CCSBot::StayOnNavMesh( void )
 		// do stuck movements last, so they override normal movement
 		if (m_isStuck)
 			Wiggle();
-				
+
 		return false;
 	}
 
@@ -467,7 +467,7 @@ bool CCSBot::CanSeeLooseBomb( void ) const
 
 //--------------------------------------------------------------------------------------------------------------
 /**
- * Return true if can see the planted bomb 
+ * Return true if can see the planted bomb
  */
 bool CCSBot::CanSeePlantedBomb( void ) const
 {
@@ -605,7 +605,7 @@ void CCSBot::UpdateHostageEscortCount( void )
  */
 bool CCSBot::IsOutnumbered( void ) const
 {
-	return (GetNearbyFriendCount() < GetNearbyEnemyCount()-1) ? true : false;		
+	return (GetNearbyFriendCount() < GetNearbyEnemyCount()-1) ? true : false;
 }
 
 //--------------------------------------------------------------------------------------------------------------
@@ -682,8 +682,8 @@ CCSPlayer *CCSBot::GetImportantEnemy( bool checkVisibility ) const
 /**
  * Sets our current disposition
  */
-void CCSBot::SetDisposition( DispositionType disposition ) 
-{ 
+void CCSBot::SetDisposition( DispositionType disposition )
+{
 	m_disposition = disposition;
 
 	if (m_disposition != IGNORE_ENEMIES)
@@ -699,7 +699,7 @@ CCSBot::DispositionType CCSBot::GetDisposition( void ) const
 {
 	if (!m_ignoreEnemiesTimer.IsElapsed())
 		return IGNORE_ENEMIES;
-	
+
 	return m_disposition;
 }
 
@@ -739,7 +739,7 @@ void CCSBot::DecreaseMorale( void )
  * @todo Account for morale
  */
 bool CCSBot::IsRogue( void ) const
-{ 
+{
 	CCSBotManager *ctrl = static_cast<CCSBotManager *>( TheCSBots() );
 	if (!ctrl->AllowRogues())
 		return false;
@@ -755,13 +755,13 @@ bool CCSBot::IsRogue( void ) const
 		m_isRogue = (RandomFloat( 0, 100 ) < rogueChance);
 	}
 
-	return m_isRogue; 
+	return m_isRogue;
 }
 
 
 //--------------------------------------------------------------------------------------------------------------
 /**
- * Return true if we are in a hurry 
+ * Return true if we are in a hurry
  */
 bool CCSBot::IsHurrying( void ) const
 {
@@ -773,10 +773,10 @@ bool CCSBot::IsHurrying( void ) const
 	// if the bomb has been planted, we are in a hurry, CT or T (they could be defusing it!)
 	if (ctrl->GetScenario() == CCSBotManager::SCENARIO_DEFUSE_BOMB && ctrl->IsBombPlanted())
 		return true;
-	
+
 	// if we are a T and hostages are being rescued, we are in a hurry
-	if (ctrl->GetScenario() == CCSBotManager::SCENARIO_RESCUE_HOSTAGES && 
-		GetTeamNumber() == TEAM_TERRORIST && 
+	if (ctrl->GetScenario() == CCSBotManager::SCENARIO_RESCUE_HOSTAGES &&
+		GetTeamNumber() == TEAM_TERRORIST &&
 		GetGameState()->AreAllHostagesBeingRescued())
 		return true;
 
@@ -1017,7 +1017,7 @@ float CCSBot::GetRangeToFarthestEscortedHostage( void ) const
  */
 const char *CCSBot::GetTaskName( void ) const
 {
-	static const char *name[ NUM_TASKS ] = 
+	static const char *name[ NUM_TASKS ] =
 	{
 		"SEEK_AND_DESTROY",
 		"PLANT_BOMB",
@@ -1053,7 +1053,7 @@ const char *CCSBot::GetTaskName( void ) const
  */
 const char *CCSBot::GetDispositionName( void ) const
 {
-	static const char *name[ NUM_DISPOSITIONS ] = 
+	static const char *name[ NUM_DISPOSITIONS ] =
 	{
 		"ENGAGE_AND_INVESTIGATE",
 		"OPPORTUNITY_FIRE",
@@ -1072,7 +1072,7 @@ const char *CCSBot::GetDispositionName( void ) const
  */
 const char *CCSBot::GetMoraleName( void ) const
 {
-	static const char *name[ EXCELLENT - TERRIBLE + 1 ] = 
+	static const char *name[ EXCELLENT - TERRIBLE + 1 ] =
 	{
 		"TERRIBLE",
 		"BAD",

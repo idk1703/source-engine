@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@
 
 
 //==================================================
-// CParticleLight. These are tied to 
+// CParticleLight. These are tied to
 //==================================================
 
 #define PARTICLELIGHT_ENTNAME	"env_particlelight"

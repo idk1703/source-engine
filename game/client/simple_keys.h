@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -21,14 +21,14 @@ enum simplekeyinterp_t
 class CSimpleKeyInterp : public Vector
 {
 public:
-	CSimpleKeyInterp( float t, simplekeyinterp_t interp, float x, float y = 0, float z = 0 ) : Vector( x, y, z ) 
+	CSimpleKeyInterp( float t, simplekeyinterp_t interp, float x, float y = 0, float z = 0 ) : Vector( x, y, z )
 	{
 		m_interp = interp;
 		m_keyTime = t;
 	}
-	
+
 	float GetTime() const { return m_keyTime; }
-	
+
 	// out = t*start + (1-t) * end (may be splinear or linear)
 	static void Interp( Vector &out, float t, const CSimpleKeyInterp &start, const CSimpleKeyInterp &end );
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 // This is what all shaders inherit from.
@@ -9,7 +9,7 @@
 #ifndef BASESHADER_H
 #define BASESHADER_H
 
-#ifdef _WIN32		   
+#ifdef _WIN32
 #pragma once
 #endif
 
@@ -69,13 +69,13 @@ enum BlendType_t
 	BT_BLEND,
 
 
-	
+
 	// src * one + dst * one
 	// one pass for HDR
 	BT_ADD,
 
 
-	
+
 	// Why do we ever use this instead of using premultiplied alpha?
 	// src * srcAlpha + dst * one
 	// two passes for HDR
@@ -127,7 +127,7 @@ public:
 
 	// Sets the default shadow state
 	void SetInitialShadowState( );
- 
+
 	// Draws a snapshot
 	void Draw( bool bMakeActualDrawCall = true );
 
@@ -158,7 +158,7 @@ public:
 	// Loads a cubemap
 	void LoadCubeMap( int nTextureVar, int nAdditionalCreationFlags = 0  );
 
-	// get the shaderapi handle for a texture. BE CAREFUL WITH THIS. 
+	// get the shaderapi handle for a texture. BE CAREFUL WITH THIS.
 	ShaderAPITextureHandle_t GetShaderAPITextureBindHandle( int nTextureVar, int nFrameVar, int nTextureChannel = 0 );
 
 
@@ -187,7 +187,7 @@ public:
 	void FogToFogColor( void );
 	void DisableFog( void );
 	void DefaultFog( void );
-	
+
 	// Helpers for alpha blending
 	void EnableAlphaBlending( ShaderBlendFactor_t src, ShaderBlendFactor_t dst );
 	void DisableAlphaBlending();
@@ -226,43 +226,43 @@ public:
 	void CleanupDynamicStateFixedFunction( );
 
 	// Fixed function Base * detail pass
-	void FixedFunctionBaseTimesDetailPass( int baseTextureVar, int frameVar, 
+	void FixedFunctionBaseTimesDetailPass( int baseTextureVar, int frameVar,
 		int baseTextureTransformVar, int detailVar, int detailScaleVar );
 
 	// Fixed function Self illumination pass
-	void FixedFunctionSelfIlluminationPass( Sampler_t sampler, 
+	void FixedFunctionSelfIlluminationPass( Sampler_t sampler,
 		int baseTextureVar, int frameVar, int baseTextureTransformVar, int selfIllumTintVar );
 
 	// Masked environment map
-	void FixedFunctionMaskedEnvmapPass( int envMapVar, int envMapMaskVar, 
-		int baseTextureVar, int envMapFrameVar, int envMapMaskFrameVar, 
+	void FixedFunctionMaskedEnvmapPass( int envMapVar, int envMapMaskVar,
+		int baseTextureVar, int envMapFrameVar, int envMapMaskFrameVar,
 		int frameVar, int maskOffsetVar, int maskScaleVar, int tintVar = -1 );
 
 	// Additive masked environment map
-	void FixedFunctionAdditiveMaskedEnvmapPass( int envMapVar, int envMapMaskVar, 
-		int baseTextureVar, int envMapFrameVar, int envMapMaskFrameVar, 
+	void FixedFunctionAdditiveMaskedEnvmapPass( int envMapVar, int envMapMaskVar,
+		int baseTextureVar, int envMapFrameVar, int envMapMaskFrameVar,
 		int frameVar, int maskOffsetVar, int maskScaleVar, int tintVar = -1 );
 
 	// Modulate by detail texture pass
-	void FixedFunctionMultiplyByDetailPass( int baseTextureVar, int frameVar, 
+	void FixedFunctionMultiplyByDetailPass( int baseTextureVar, int frameVar,
 		int textureOffsetVar, int detailVar, int detailScaleVar );
 
 	// Multiply by lightmap pass
-	void FixedFunctionMultiplyByLightmapPass( int baseTextureVar, int frameVar, 
+	void FixedFunctionMultiplyByLightmapPass( int baseTextureVar, int frameVar,
 		int baseTextureTransformVar, float alphaOverride = -1 );
 
  	// Helper methods for environment mapping
 	int SetShadowEnvMappingState( int envMapMaskVar, int tintVar = -1 );
-	void SetDynamicEnvMappingState( int envMapVar, int envMapMaskVar, 
-		int baseTextureVar, int envMapFrameVar, int envMapMaskFrameVar, 
+	void SetDynamicEnvMappingState( int envMapVar, int envMapMaskVar,
+		int baseTextureVar, int envMapFrameVar, int envMapMaskFrameVar,
 		int frameVar, int maskOffsetVar, int maskScaleVar, int tintVar = -1 );
 
 	bool UsingFlashlight( IMaterialVar **params ) const;
 	bool UsingEditor( IMaterialVar **params ) const;
 
-	void DrawFlashlight_dx70( IMaterialVar** params, IShaderDynamicAPI *pShaderAPI, 
-							  IShaderShadow* pShaderShadow, 
-							  int flashlightTextureVar, int flashlightTextureFrameVar, 
+	void DrawFlashlight_dx70( IMaterialVar** params, IShaderDynamicAPI *pShaderAPI,
+							  IShaderShadow* pShaderShadow,
+							  int flashlightTextureVar, int flashlightTextureFrameVar,
 							  bool suppress_lighting = false );
 
 	void SetFlashlightFixedFunctionTextureTransform( MaterialMatrixMode_t matrix );

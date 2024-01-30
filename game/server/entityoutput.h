@@ -21,8 +21,8 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: A COutputEvent consists of an array of these CEventActions. 
-//			Each CEventAction holds the information to fire a single input in 
+// Purpose: A COutputEvent consists of an array of these CEventActions.
+//			Each CEventAction holds the information to fire a single input in
 //			a target entity, after a specific delay.
 //-----------------------------------------------------------------------------
 class CEventAction
@@ -40,7 +40,7 @@ public:
 
 	static int s_iNextIDStamp;
 
-	CEventAction *m_pNext; 
+	CEventAction *m_pNext;
 
 	// allocates memory from engine.MPool/g_EntityListPool
 	static void *operator new( size_t stAllocateBlock );
@@ -75,7 +75,7 @@ public:
 
 	void FireOutput( variant_t Value, CBaseEntity *pActivator, CBaseEntity *pCaller, float fDelay = 0 );
 
-	/// Delete every single action in the action list. 
+	/// Delete every single action in the action list.
 	void DeleteAllElements( void ) ;
 
 protected:
@@ -100,7 +100,7 @@ public:
 	//
 	// Sets an initial value without firing the output.
 	//
-	void Init( Type value ) 
+	void Init( Type value )
 	{
 		m_Value.Set( fieldType, &value );
 	}
@@ -108,7 +108,7 @@ public:
 	//
 	// Sets a value and fires the output.
 	//
-	void Set( Type value, CBaseEntity *pActivator, CBaseEntity *pCaller ) 
+	void Set( Type value, CBaseEntity *pActivator, CBaseEntity *pCaller )
 	{
 		m_Value.Set( fieldType, &value );
 		FireOutput( m_Value, pActivator, pCaller );

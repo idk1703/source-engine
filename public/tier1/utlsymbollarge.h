@@ -23,8 +23,8 @@
 // CUtlSymbolTableLarge:
 // description:
 //    This class defines a symbol table, which allows us to perform mappings
-//    of strings to symbols and back. 
-// 
+//    of strings to symbols and back.
+//
 //    This class stores the strings in a series of string pools. The returned CUtlSymbolLarge is just a pointer
 //     to the string data, the hash precedes it in memory and is used to speed up searching, etc.
 //-----------------------------------------------------------------------------
@@ -37,7 +37,7 @@ class CUtlSymbolLarge
 {
 public:
 	// constructor, destructor
-	CUtlSymbolLarge() 
+	CUtlSymbolLarge()
 	{
 		u.m_Id = UTL_INVAL_SYMBOL_LARGE;
 	}
@@ -48,44 +48,44 @@ public:
 	}
 	CUtlSymbolLarge( CUtlSymbolLarge const& sym )
 	{
-		u.m_Id = sym.u.m_Id; 
+		u.m_Id = sym.u.m_Id;
 	}
 
 	// operator=
-	CUtlSymbolLarge& operator=( CUtlSymbolLarge const& src ) 
-	{ 
-		u.m_Id = src.u.m_Id; 
-		return *this; 
+	CUtlSymbolLarge& operator=( CUtlSymbolLarge const& src )
+	{
+		u.m_Id = src.u.m_Id;
+		return *this;
 	}
 
 	// operator==
-	bool operator==( CUtlSymbolLarge const& src ) const 
-	{ 
-		return u.m_Id == src.u.m_Id; 
+	bool operator==( CUtlSymbolLarge const& src ) const
+	{
+		return u.m_Id == src.u.m_Id;
 	}
 
 	// operator==
-	bool operator==( UtlSymLargeId_t const& src ) const 
-	{ 
-		return u.m_Id == src; 
+	bool operator==( UtlSymLargeId_t const& src ) const
+	{
+		return u.m_Id == src;
 	}
 
 	// operator==
-	bool operator!=( CUtlSymbolLarge const& src ) const 
-	{ 
-		return u.m_Id != src.u.m_Id; 
+	bool operator!=( CUtlSymbolLarge const& src ) const
+	{
+		return u.m_Id != src.u.m_Id;
 	}
 
 	// operator==
-	bool operator!=( UtlSymLargeId_t const& src ) const 
-	{ 
-		return u.m_Id != src; 
+	bool operator!=( UtlSymLargeId_t const& src ) const
+	{
+		return u.m_Id != src;
 	}
 
 	// Gets at the symbol
-	operator UtlSymLargeId_t const() const 
-	{ 
-		return u.m_Id; 
+	operator UtlSymLargeId_t const() const
+	{
+		return u.m_Id;
 	}
 
 	// Gets the string associated with the symbol
@@ -117,10 +117,10 @@ private:
 
 inline uint32 CUtlSymbolLarge_Hash( bool CASEINSENSITIVE, const char *pString, int len )
 {
-	return ( CASEINSENSITIVE ? HashStringCaseless( pString ) : HashString( pString ) ); 
+	return ( CASEINSENSITIVE ? HashStringCaseless( pString ) : HashString( pString ) );
 }
 
-typedef uint32 LargeSymbolTableHashDecoration_t; 
+typedef uint32 LargeSymbolTableHashDecoration_t;
 
 // The structure consists of the hash immediately followed by the string data
 struct CUtlSymbolTableLargeBaseTreeEntry_t
@@ -143,13 +143,13 @@ struct CUtlSymbolTableLargeBaseTreeEntry_t
 	{
 		return reinterpret_cast< UtlSymLargeId_t >( String() );
 	}
-	
+
 	LargeSymbolTableHashDecoration_t HashValue() const
 	{
 		return m_Hash;
 	}
 };
-	
+
 template< class TreeType, bool CASEINSENSITIVE >
 class CTreeEntryLess
 {
@@ -173,7 +173,7 @@ public:
 		}
 	}
 };
-	
+
 // For non-threaded versions, simply index into CUtlRBTree
 template< bool CASEINSENSITIVE >
 class CNonThreadsafeTree : public CUtlRBTree<CUtlSymbolTableLargeBaseTreeEntry_t *, intp, CTreeEntryLess< CNonThreadsafeTree< CASEINSENSITIVE >, CASEINSENSITIVE > >
@@ -181,11 +181,11 @@ class CNonThreadsafeTree : public CUtlRBTree<CUtlSymbolTableLargeBaseTreeEntry_t
 public:
 	typedef CUtlRBTree<CUtlSymbolTableLargeBaseTreeEntry_t *, intp, CTreeEntryLess< CNonThreadsafeTree, CASEINSENSITIVE > > CNonThreadsafeTreeType;
 
-	CNonThreadsafeTree() : 
-		CNonThreadsafeTreeType( 0, 16 ) 
+	CNonThreadsafeTree() :
+		CNonThreadsafeTreeType( 0, 16 )
 	{
 	}
-	inline void Commit() 
+	inline void Commit()
 	{
 		// Nothing, only matters for thread-safe tables
 	}
@@ -214,7 +214,7 @@ public:
 	}
 };
 
-// Since CUtlSymbolTableLargeBaseTreeEntry_t already has the hash 
+// Since CUtlSymbolTableLargeBaseTreeEntry_t already has the hash
 //  contained inside of it, don't need to recompute a hash here
 template < int BUCKET_COUNT, class KEYTYPE, bool CASEINSENSITIVE >
 class CCThreadsafeTreeHashMethod
@@ -240,27 +240,27 @@ public:
 };
 
 /*
-  NOTE:  So the only crappy thing about using a CUtlTSHash here is that the KEYTYPE is a CUtlSymbolTableLargeBaseTreeEntry_t ptr which has both the 
-   hash and the string since with strings there is a good chance of hash collision after you have a fair number of strings so we have to implement
-   a Compare method (above) which falls back to strcmp/stricmp if the hashes are equal.  This means that all of the data is in the KEYTYPE of the hash and the 
-   payload doesn't matter.  So I made the payload also be a pointer to a CUtlSymbolTableLargeBaseTreeEntry_t since that makes using the API more convenient
+	NOTE:  So the only crappy thing about using a CUtlTSHash here is that the KEYTYPE is a CUtlSymbolTableLargeBaseTreeEntry_t ptr which has both the
+	hash and the string since with strings there is a good chance of hash collision after you have a fair number of strings so we have to implement
+	a Compare method (above) which falls back to strcmp/stricmp if the hashes are equal.  This means that all of the data is in the KEYTYPE of the hash and the
+	payload doesn't matter.  So I made the payload also be a pointer to a CUtlSymbolTableLargeBaseTreeEntry_t since that makes using the API more convenient
 
-  TODO:  If we have a CUtlTSHash that was all about the existence of the KEYTYPE and didn't require a payload (or template on 'void') then we could eliminate
-   50% of the pointer overhead used for this data structure.
+	TODO:  If we have a CUtlTSHash that was all about the existence of the KEYTYPE and didn't require a payload (or template on 'void') then we could eliminate
+	50% of the pointer overhead used for this data structure.
 */
 
-// Thread safe version is based on the 
+// Thread safe version is based on the
 template < bool CASEINSENSITIVE >
 class CThreadsafeTree : public CUtlTSHash< CUtlSymbolTableLargeBaseTreeEntry_t *, 2048, CUtlSymbolTableLargeBaseTreeEntry_t *, CCThreadsafeTreeHashMethod< 2048, CUtlSymbolTableLargeBaseTreeEntry_t *, CASEINSENSITIVE > >
 {
 public:
 	typedef CUtlTSHash< CUtlSymbolTableLargeBaseTreeEntry_t *, 2048, CUtlSymbolTableLargeBaseTreeEntry_t *, CCThreadsafeTreeHashMethod< 2048, CUtlSymbolTableLargeBaseTreeEntry_t *, CASEINSENSITIVE > > CThreadsafeTreeType;
 
-	CThreadsafeTree() : 
-		CThreadsafeTreeType( 32 ) 
+	CThreadsafeTree() :
+		CThreadsafeTreeType( 32 )
 	{
 	}
-	inline void Commit() 
+	inline void Commit()
 	{
 		CThreadsafeTreeType::Commit();
 	}
@@ -285,7 +285,7 @@ public:
 		{
 			pElements[ i ] = CThreadsafeTreeType::Element( list[ i ] )->ToSymbol();
 		}
-		
+
 		return c;
 	}
 };
@@ -298,13 +298,13 @@ public:
 	// constructor, destructor
 	CUtlSymbolTableLargeBase();
 	~CUtlSymbolTableLargeBase();
-	
+
 	// Finds and/or creates a symbol based on the string
 	CUtlSymbolLarge AddString( const char* pString );
 
 	// Finds the symbol for pString
 	CUtlSymbolLarge Find( const char* pString ) const;
-	
+
 	// Remove all symbols in the table.
 	void  RemoveAll();
 
@@ -341,8 +341,8 @@ public:
 protected:
 
 	struct StringPool_t
-	{	
-		int m_TotalLen;		// How large is 
+	{
+		int m_TotalLen;		// How large is
 		int m_SpaceUsed;
 		char m_Data[1];
 	};
@@ -360,7 +360,7 @@ private:
 // constructor, destructor
 //-----------------------------------------------------------------------------
 template < class TreeType, bool CASEINSENSITIVE, size_t POOL_SIZE >
-inline CUtlSymbolTableLargeBase<TreeType, CASEINSENSITIVE, POOL_SIZE >::CUtlSymbolTableLargeBase() : 
+inline CUtlSymbolTableLargeBase<TreeType, CASEINSENSITIVE, POOL_SIZE >::CUtlSymbolTableLargeBase() :
 	m_StringPools( 8 )
 {
 }
@@ -374,7 +374,7 @@ inline CUtlSymbolTableLargeBase<TreeType, CASEINSENSITIVE, POOL_SIZE>::~CUtlSymb
 
 template < class TreeType, bool CASEINSENSITIVE, size_t POOL_SIZE >
 inline CUtlSymbolLarge CUtlSymbolTableLargeBase<TreeType, CASEINSENSITIVE, POOL_SIZE>::Find( const char* pString ) const
-{	
+{
 	VPROF( "CUtlSymbolLarge::Find" );
 	if (!pString)
 		return CUtlSymbolLarge();
@@ -419,7 +419,7 @@ template < class TreeType, bool CASEINSENSITIVE, size_t POOL_SIZE >
 inline CUtlSymbolLarge CUtlSymbolTableLargeBase<TreeType, CASEINSENSITIVE, POOL_SIZE>::AddString( const char* pString )
 {
 	VPROF("CUtlSymbolLarge::AddString");
-	if (!pString) 
+	if (!pString)
 		return UTL_INVAL_SYMBOL_LARGE;
 
 	CUtlSymbolLarge id = Find( pString );
@@ -455,9 +455,9 @@ inline CUtlSymbolLarge CUtlSymbolTableLargeBase<TreeType, CASEINSENSITIVE, POOL_
 	// Assert( pPool->m_SpaceUsed < 0xFFFF );	// Pool could be bigger than 2k
 	// This should never happen, because if we had a string > 64k, it
 	// would have been given its entire own pool.
-	
+
 	CUtlSymbolTableLargeBaseTreeEntry_t *entry = ( CUtlSymbolTableLargeBaseTreeEntry_t * )&pPool->m_Data[ pPool->m_SpaceUsed ];
-	
+
 	pPool->m_SpaceUsed += lenDecorated;
 
 	entry->m_Hash = hash;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,11 +24,11 @@ public:
 
 	void SetAmmo( int ammo, bool playAnimation );
 	void SetAmmo2( int ammo2, bool playAnimation );
-		
+
 	virtual void OnThink();
 	virtual void Paint( void );
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	
+
 private:
 	void DrawAmmoCount( int count );
 	void DrawText( char *text, int x, int y, Color clrText );

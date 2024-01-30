@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -8,7 +8,7 @@
 //
 // Author: Michael S. Booth (mike@turtlerockstudios.com), 2003
 //
-// NOTE: The CS Bot code uses Doxygen-style comments. If you run Doxygen over this code, it will 
+// NOTE: The CS Bot code uses Doxygen-style comments. If you run Doxygen over this code, it will
 // auto-generate documentation.  Visit www.doxygen.org to download the system for free.
 //
 
@@ -82,12 +82,12 @@ template < class T > T * CreateBot( const BotProfile *profile, int team )
 	char botName[64];
 	UTIL_ConstructBotNetName( botName, 64, profile );
 
-	// This is a backdoor we use so when the engine calls ClientPutInServer (from CreateFakeClient), 
+	// This is a backdoor we use so when the engine calls ClientPutInServer (from CreateFakeClient),
 	// expecting the game to make an entity for the fake client, we can make our special bot class
 	// instead of a CCSPlayer.
 	g_nClientPutInServerOverrides = 0;
 	ClientPutInServerOverride( ClientPutInServerOverride_Bot );
-	
+
 	// get an edict for the bot
 	// NOTE: This will ultimately invoke CBot::Spawn(), so set the profile now
 	g_botInitProfile = profile;
@@ -125,7 +125,7 @@ template < class T > T * CreateBot( const BotProfile *profile, int team )
 //----------------------------------------------------------------------------------------------------------------
 /**
  * The base bot class from which bots for specific games are derived
- * A template is needed here because the CBot class must be derived from CBasePlayer, 
+ * A template is needed here because the CBot class must be derived from CBasePlayer,
  * but also may need to be derived from a more specific player class, such as CCSPlayer
  */
 template < class PlayerType >
@@ -140,7 +140,7 @@ public:
 
 	unsigned int GetID( void ) const		{ return m_id; }	///< return bot's unique ID
 
-	virtual bool IsBot( void ) const { return true; }	
+	virtual bool IsBot( void ) const { return true; }
 	virtual bool IsNetClient( void ) const { return false; }	// Bots should return FALSE for this, they can't receive NET messages
 
 	virtual void Spawn( void );									///< (EXTEND) spawn the bot into the game
@@ -152,7 +152,7 @@ public:
 	virtual void Run( void );
 	virtual void Walk( void );
 	virtual bool IsRunning( void ) const		{ return m_isRunning; }
-	
+
 	virtual void Crouch( void );
 	virtual void StandUp( void );
 	bool IsCrouching( void ) const	{ return m_isCrouching; }
@@ -204,7 +204,7 @@ public:
 
 	/// invoked when killed (EXTEND)
 	virtual void Event_Killed( const CTakeDamageInfo &info )
-	{ 
+	{
 		PlayerType::Event_Killed( info );
 	}
 
@@ -484,8 +484,8 @@ template < class PlayerType >
 inline void CBot< PlayerType >::BotThink( void )
 {
 float g_flBotFullThinkInterval	= 1.0 / 15.0;	// full AI at lower frequency (was 10 in GoldSrc)
-	
-	
+
+
 	Upkeep();
 
 	if (gpGlobals->curtime >= m_flNextFullBotThink)
@@ -837,7 +837,7 @@ inline bool CBot< PlayerType >::ClientCommand( const CCommand &args )
 		{
 			cmd++;
 		}
-		
+
 		if (*cmd == '\n')
 		{	// a newline seperates commands in the buffer
 			cmd++;
@@ -846,7 +846,7 @@ inline bool CBot< PlayerType >::ClientCommand( const CCommand &args )
 
 		if (!*cmd)
 			break;
-	
+
 		cmd = SharedParse (cmd);
 		if (!cmd)
 			break;
@@ -896,7 +896,7 @@ inline bool CBot< PlayerType >::IsEnemy( CBaseEntity *ent ) const
 
 	// corpses are no threat
 	if (!ent->IsAlive())
-		return false;	
+		return false;
 
 	CBasePlayer *player = static_cast<CBasePlayer *>( ent );
 

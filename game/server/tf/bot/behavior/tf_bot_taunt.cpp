@@ -36,18 +36,17 @@ ActionResult< CTFBot > CTFBotTaunt::Update( CTFBot *me, float interval )
 			if ( me->m_Shared.InCond( TF_COND_TAUNTING ) == false )
 			{
 				return Done( "Taunt finished" );
-			}			
+			}
 		}
 		else
 		{
 			me->HandleTauntCommand();
 			// Start a timer to end our taunt in case we're still going after awhile
-			m_tauntEndTimer.Start( RandomFloat( 3.f, 5.f ) );	
-			
+			m_tauntEndTimer.Start( RandomFloat( 3.f, 5.f ) );
+
 			m_didTaunt = true;
 		}
 	}
 
 	return Continue();
 }
-

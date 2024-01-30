@@ -303,7 +303,7 @@ bool CSculptTool::DoPaint( CMapView3D *pView, const Vector2D &vPoint )
 		{
 			CMapDisp	*OrigDisp = NULL;
 			int			index = m_OrigMapDisp.Find( pDisp->GetEditHandle() );
-			
+
 			if ( index != m_OrigMapDisp.InvalidIndex() )
 			{
 				OrigDisp = m_OrigMapDisp[ index ];
@@ -417,8 +417,8 @@ void CSculptTool::AddToUndo( CMapDisp **pDisp )
 
 #if 0
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
+// Purpose:
+// Input  :
 // Output :
 //-----------------------------------------------------------------------------
 void CSculptTool::DoPaintEqual( SpatialPaintData_t &spatialData, CMapDisp *pDisp )
@@ -533,7 +533,7 @@ float CSculptTool::CalcSmoothRadius2( const Vector &vPoint )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: smooths all displacements 
+// Purpose: smooths all displacements
 // Input  : vNewCenter - calculate the smoothing center
 // Output : returns true if successful
 //			vPaintPos - the new smoothing position
@@ -1036,7 +1036,7 @@ IMPLEMENT_DYNAMIC(CSculptPushOptions, CDialog)
 //-----------------------------------------------------------------------------
 // Purpose: constructor
 //-----------------------------------------------------------------------------
-CSculptPushOptions::CSculptPushOptions(CWnd* pParent /*=NULL*/) : 
+CSculptPushOptions::CSculptPushOptions(CWnd* pParent /*=NULL*/) :
 	CDialog(CSculptPushOptions::IDD, pParent),
 	CSculptPainter()
 {
@@ -1077,7 +1077,7 @@ BOOL CSculptPushOptions::OnInitDialog( void )
 	m_OffsetModeControl.SetCurSel( m_OffsetMode );
 
 	m_OffsetDistanceControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ABSOLUTE ) );
-	m_OffsetAmountControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ADAPTIVE ) ); 
+	m_OffsetAmountControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ADAPTIVE ) );
 
 	sprintf( temp, "%g", m_OffsetDistance );
 	m_OffsetDistanceControl.SetWindowText( temp );
@@ -1174,7 +1174,7 @@ void CSculptPushOptions::OnCbnSelchangeSculptPushOptionOffsetMode()
 	m_OffsetMode = ( OffsetMode )m_OffsetModeControl.GetCurSel();
 
 	m_OffsetDistanceControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ABSOLUTE ) );
-	m_OffsetAmountControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ADAPTIVE ) ); 
+	m_OffsetAmountControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ADAPTIVE ) );
 }
 
 
@@ -2263,7 +2263,7 @@ IMPLEMENT_DYNAMIC(CSculptCarveOptions, CDialog)
 //-----------------------------------------------------------------------------
 // Purpose: constructor
 //-----------------------------------------------------------------------------
-CSculptCarveOptions::CSculptCarveOptions(CWnd* pParent /*=NULL*/) : 
+CSculptCarveOptions::CSculptCarveOptions(CWnd* pParent /*=NULL*/) :
 	CDialog(CSculptCarveOptions::IDD, pParent),
 	CSculptPainter()
 {
@@ -2309,7 +2309,7 @@ BOOL CSculptCarveOptions::OnInitDialog( )
 	m_OffsetModeControl.SetCurSel( m_OffsetMode );
 
 	m_OffsetDistanceControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ABSOLUTE ) );
-	m_OffsetAmountControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ADAPTIVE ) ); 
+	m_OffsetAmountControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ADAPTIVE ) );
 
 	sprintf( temp, "%g", m_OffsetDistance );
 	m_OffsetDistanceControl.SetWindowText( temp );
@@ -2402,7 +2402,7 @@ void CSculptCarveOptions::OnCbnSelchangeSculptPushOptionOffsetMode()
 	m_OffsetMode = ( OffsetMode )m_OffsetModeControl.GetCurSel();
 
 	m_OffsetDistanceControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ABSOLUTE ) );
-	m_OffsetAmountControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ADAPTIVE ) ); 
+	m_OffsetAmountControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ADAPTIVE ) );
 }
 
 
@@ -2656,7 +2656,7 @@ void CSculptCarveOptions::RenderTool3D( CRender3D *pRender )
 					for( int i = 2; i < m_DrawPoints.Count(); i++ )
 					{
 						float distance;
-						
+
 						float tolerance = DotProduct2D( m_DrawNormal[ i ], m_DrawNormal[ i - 1 ] );
 						if ( tolerance <= 0.5f )
 						{
@@ -3127,7 +3127,7 @@ void CSculptCarveOptions::DoPaintOperation( CMapView3D *pView, const Vector2D &v
 
 			Vector2D	vRight( -m_DrawNormal[ nTestPoint ].y, m_DrawNormal[ nTestPoint ].x );
 			float		fLineDistance = DotProduct2D( vRight, m_DrawPoints[ nTestPoint ] ) - DotProduct2D( vRight, vViewVert );
-			
+
 			fLineDistance = ( fLineDistance + m_BrushSize ) / ( m_BrushSize * 2.0f );
 			int index = ( int )( fLineDistance * MAX_SCULPT_SIZE );
 
@@ -3449,8 +3449,8 @@ class CSculptRegenerator : public ITextureRegenerator
 {
 public:
 	CSculptRegenerator( unsigned char *ImageData, int Width, int Height, enum ImageFormat Format ) :
-	  m_ImageData( ImageData ), 
-		  m_Width( Width ), 
+	  m_ImageData( ImageData ),
+		  m_Width( Width ),
 		  m_Height( Height ),
 		  m_Format( Format )
 	  {
@@ -3513,7 +3513,7 @@ private:
 
 IMPLEMENT_DYNAMIC(CSculptProjectOptions, CDialog)
 
-CSculptProjectOptions::CSculptProjectOptions(CWnd* pParent /*=NULL*/) : 
+CSculptProjectOptions::CSculptProjectOptions(CWnd* pParent /*=NULL*/) :
 	CDialog(CSculptProjectOptions::IDD, pParent),
 	CSculptTool()
 {
@@ -3790,7 +3790,7 @@ void CSculptProjectOptions::DoPaintOperation( CMapView3D *pView, const Vector2D 
 
 			float sCoord = ( ViewVert.x - m_ProjectLocation.x ) / m_ProjectSize.x;
 			float tCoord = ( ViewVert.y - m_ProjectLocation.y ) / m_ProjectSize.y;
-			
+
 			sCoord *= m_TileWidth;
 			tCoord *= m_TileHeight;
 
@@ -3849,7 +3849,7 @@ bool CSculptProjectOptions::ReadImage( CString &FileName )
 	buf.SeekGet( CUtlBuffer::SEEK_HEAD, 0 );
 	TGALoader::Load( m_ImagePixels, buf, m_Width, m_Height, imageFormat, sourceGamma, false );
 
-	m_pTexture = dynamic_cast< ITextureInternal * >( g_pMaterialSystem->CreateProceduralTexture( "SculptProject", TEXTURE_GROUP_OTHER, m_Width, m_Height, imageFormat, 
+	m_pTexture = dynamic_cast< ITextureInternal * >( g_pMaterialSystem->CreateProceduralTexture( "SculptProject", TEXTURE_GROUP_OTHER, m_Width, m_Height, imageFormat,
 		TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_PROCEDURAL ) );
 
 	ITextureRegenerator *pRegen = new CSculptRegenerator( m_ImagePixels, m_Width, m_Height, imageFormat );
@@ -3920,7 +3920,7 @@ BOOL CSculptProjectOptions::OnInitDialog()
 	m_ProjectSizeControl.SetPageSize( 4 );
 	m_ProjectSizeControl.SetLineSize( 4 );
 
-	return TRUE;  
+	return TRUE;
 }
 
 #endif

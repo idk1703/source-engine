@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,14 +37,14 @@ bool LoadBitmapFromFile( const char *relative, mxbitmapdata_t& bitmap )
 	if ( bm )
 	{
 		oldbm = (HBITMAP)SelectObject( dc, bm );
-		
+
 		HDC memdc = CreateCompatibleDC( dc );
 		if ( memdc )
 		{
 			char filename[ 512 ];
 			filesystem->RelativePathToFullPath( relative, "MOD", filename, sizeof( filename ) );
 
-			bmNewImage = (HBITMAP)LoadImage( 
+			bmNewImage = (HBITMAP)LoadImage(
 				(HINSTANCE) GetModuleHandle(0), filename,
 				IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_DEFAULTSIZE );
 
@@ -52,39 +52,39 @@ bool LoadBitmapFromFile( const char *relative, mxbitmapdata_t& bitmap )
 			{
 				filesystem->RelativePathToFullPath( relative, "GAME", filename, sizeof( filename ) );
 
-				bmNewImage = (HBITMAP)LoadImage( 
+				bmNewImage = (HBITMAP)LoadImage(
 					(HINSTANCE) GetModuleHandle(0), filename,
 					IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_DEFAULTSIZE );
 			}
-			
+
 			if ( bmNewImage )
 			{
 				HBITMAP oldmembm = (HBITMAP)SelectObject( memdc, bmNewImage );
-				
+
 				BITMAPINFO bmi;
 				memset( &bmi, 0, sizeof( bmi ) );
 				bmi.bmiHeader.biSize = sizeof( BITMAPINFOHEADER );
-				
+
 				if ( GetDIBits( memdc, bmNewImage, 0, 0, NULL, &bmi, DIB_RGB_COLORS ) )
 				{
 					bitmap.width = bmi.bmiHeader.biWidth;
 					bitmap.height = bmi.bmiHeader.biHeight;
 				}
-				
+
 				SelectObject( memdc, oldmembm );
 			}
-			
+
 			DeleteDC( memdc );
 		}
-		
+
 		SelectObject( dc, oldbm );
 		DeleteObject( bm );
 	}
-	
+
 	ReleaseDC( NULL, dc );
 
-	if ( bmNewImage && 
-		bitmap.width != -1 && 
+	if ( bmNewImage &&
+		bitmap.width != -1 &&
 		bitmap.height != -1 )
 	{
 		bitmap.image = bmNewImage;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -177,7 +177,7 @@ public:
 
 	float				GetLastDamageTime( void ) const;
 	float				GetLastGainHealthTime( void ) const;
-	
+
 	// Powerups
 	virtual void		PowerupStart( int iPowerup, bool bInitial );
 	virtual void		PowerupEnd( int iPowerup );
@@ -215,7 +215,7 @@ public:
 	// Vehicles
 	void				SetVehicleRole( int nRole );
 	bool				CanGetInVehicle( void );
-	
+
 	// Returns true if we're in a vehicle and it's mounted on another vehicle
 	// (ie: are we in a manned gun that's mounted on a tank).
 	bool IsVehicleMounted() const;
@@ -278,7 +278,7 @@ private:
 
 	// Spawn location...
 	EHANDLE				m_hSpawnPoint;
-	
+
 	// Orders
 	CHandle< C_Order >	m_hSelectedOrder;
 	CHandle< C_Order >	m_hPersonalOrder;
@@ -356,7 +356,7 @@ private:
 
 	// Personal shield effects.
 	CUtlLinkedList<CPersonalShieldEffect*, int>	m_PersonalShieldEffects;
-		
+
 	CHandle< C_WeaponCombatShield > m_hWeaponCombatShield;
 
 	// No one should call this

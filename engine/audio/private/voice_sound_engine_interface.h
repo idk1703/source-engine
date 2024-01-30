@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
-//          
+// Purpose:
+//
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,17 +20,17 @@ GoldSrc and Src each have a different implementation of this.
 
 
 //! Max number of receiving voice channels.
-#define VOICE_NUM_CHANNELS			5	
+#define VOICE_NUM_CHANNELS			5
 
 // ----------------------------------------------------------------------------- //
 // Functions for voice.cpp.
 // ----------------------------------------------------------------------------- //
 
 //! Initialize the sound engine interface.
-bool VoiceSE_Init();	
+bool VoiceSE_Init();
 
 //! Shutdown the sound engine interface.
-void VoiceSE_Term();	
+void VoiceSE_Term();
 
 //! Called each frame.
 void VoiceSE_Idle(float frametime);
@@ -71,15 +71,15 @@ void VoiceSE_MoveMouth(int entnum, short *pSamples, int nSamples);
 //! \return Number of samples actually gotten.
 int Voice_GetOutputData(
 	//! The voice channel it wants samples from.
-	const int iChannel,			
+	const int iChannel,
 	//! The buffer to copy the samples into.
-	char *copyBuf,				
+	char *copyBuf,
 	//! Maximum size of copyBuf.
-	const int copyBufSize,		
+	const int copyBufSize,
 	//! Which sample to start at.
-	const int samplePosition,	
+	const int samplePosition,
 	//! How many samples to get.
-	const int sampleCount		
+	const int sampleCount
 	);
 
 // This is called when an audio source is deleted by the sound engine. The voice could

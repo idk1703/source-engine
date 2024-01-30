@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -28,7 +28,7 @@ public:
 private:
 	void	Spin( void );
 };
-							  
+
 
 // This table encodes the CBaseEntity data.
 IMPLEMENT_SERVERCLASS_ST_NOBASE(CTestTraceline, DT_TestTraceline)
@@ -69,7 +69,7 @@ void	CTestTraceline::Spin( void )
 
 		angles[0] = 180.0 * 0.5 * (s * s * s + 1.0f) + 90;
 		angles[1] = gpGlobals->curtime * 10;
-		   
+
 		SetLocalAngles( angles );
 
 	}

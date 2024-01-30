@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -143,7 +143,7 @@ void CTriggerWeaponDissolve::AddWeapon( CBaseCombatWeapon *pWeapon )
 
 //-----------------------------------------------------------------------------
 // Purpose: Collect any weapons inside our volume
-// Input  : *pOther - 
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void CTriggerWeaponDissolve::StartTouch( CBaseEntity *pOther )
 {
@@ -173,7 +173,7 @@ void CTriggerWeaponDissolve::CreateBeam( const Vector &vecSource, CBaseEntity *p
 	te->BeamEntPoint( filter, 0.0,
 		0,
 		&vecSource,
-		pDest->entindex(), 
+		pDest->entindex(),
 		&(pDest->WorldSpaceCenter()),
 		m_spriteTexture,
 		0,				// No halo
@@ -229,7 +229,7 @@ void CTriggerWeaponDissolve::DissolveThink( void )
 	{
 		CBaseCombatWeapon *pWeapon = m_pWeapons[i];
 		Vector vecConduit = GetConduitPoint( pWeapon );
-		
+
 		// The physcannon upgrades when this happens
 		if ( FClassnameIs( pWeapon, "weapon_physcannon" ) )
 		{
@@ -266,7 +266,7 @@ void CTriggerWeaponDissolve::DissolveThink( void )
 
 		CPASAttenuationFilter filter( pWeapon );
 		EmitSound( filter, pWeapon->entindex(), "WeaponDissolve.Dissolve" );
-		
+
 		// Beam looping sound
 		EmitSound( "WeaponDissolve.Beam" );
 
@@ -279,8 +279,8 @@ void CTriggerWeaponDissolve::DissolveThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CTriggerWeaponDissolve::InputStopSound( inputdata_t &inputdata )
 {
@@ -326,7 +326,7 @@ void CTriggerWeaponStrip::StartTouch(CBaseEntity *pOther)
 		return;
 
 	CBaseCombatCharacter *pCharacter = pOther->MyCombatCharacterPointer();
-	
+
 	if ( m_bKillWeapons )
 	{
 		for ( int i = 0 ; i < pCharacter->WeaponCount(); ++i )
@@ -469,7 +469,7 @@ void CTriggerPhysicsTrap::Touch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 class CWateryDeathLeech : public CBaseAnimating
@@ -513,7 +513,7 @@ void CWateryDeathLeech::Spawn( void )
 
 	SetMoveType( MOVETYPE_NONE );
 	AddEffects( EF_NOSHADOW );
-	
+
 	SetModel( "models/leech.mdl" );
 
 	SetThink( &CWateryDeathLeech::LeechThink );
@@ -593,7 +593,7 @@ public:
 	void Precache( void );
 	void Touch( CBaseEntity *pOther );
 	void SpawnLeeches( CBaseEntity *pOther );
-	
+
 	// Ignore non-living entities
 	virtual bool PassesTriggerFilters(CBaseEntity *pOther)
 	{
@@ -649,7 +649,7 @@ void CTriggerWateryDeath::Precache( void )
 	//Ugh this is temporary until Jakob finishes the animations and doesn't need the command anymore.
 	BaseClass::Precache();
 	PrecacheModel( "models/leech.mdl" );
-	
+
 	PrecacheScriptSound( "coast.leech_bites_loop" );
 	PrecacheScriptSound( "coast.leech_water_churn_loop" );
 }
@@ -663,7 +663,7 @@ void CTriggerWateryDeath::SpawnLeeches( CBaseEntity *pOther )
 		 return;
 
 	int iMaxLeeches = 12;
-	
+
 	for ( int i = 0; i < iMaxLeeches; i++ )
 	{
 		CWateryDeathLeech *pLeech = (CWateryDeathLeech*)CreateEntityByName( "ent_watery_leech" );
@@ -678,7 +678,7 @@ void CTriggerWateryDeath::SpawnLeeches( CBaseEntity *pOther )
 
 			if ( i <= 8 )
 				 pLeech->SetSequence( i % 4 );
-			else 
+			else
 				 pLeech->SetSequence( ( i % 4 ) + 4 ) ;
 			pLeech->ResetSequenceInfo();
 		}
@@ -686,10 +686,10 @@ void CTriggerWateryDeath::SpawnLeeches( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerWateryDeath::Touch( CBaseEntity *pOther )
-{	
+{
 	if (!PassesTriggerFilters(pOther))
 		return;
 
@@ -701,7 +701,7 @@ void CTriggerWateryDeath::Touch( CBaseEntity *pOther )
 		return;
 
 	float flKillTime = m_flEntityKillTimes[iIndex];
-	
+
 	// Time to kill it?
 	if ( gpGlobals->curtime > flKillTime )
 	{
@@ -767,7 +767,7 @@ void CTriggerWateryDeath::StartTouch(CBaseEntity *pOther)
 		}
 	}
 #endif
-	
+
 }
 
 
@@ -842,7 +842,7 @@ public:
 LINK_ENTITY_TO_CLASS( trigger_rpgfire, CTriggerRPGFire );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTriggerRPGFire::~CTriggerRPGFire( void )
 {

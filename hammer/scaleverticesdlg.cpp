@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -50,7 +50,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CScaleVerticesDlg message handlers
 
-void CScaleVerticesDlg::OnChangeScale() 
+void CScaleVerticesDlg::OnChangeScale()
 {
 	CString str;
 	m_cScale.GetWindowText(str);
@@ -65,7 +65,7 @@ void CScaleVerticesDlg::OnChangeScale()
 	CMapDoc::GetActiveMapDoc()->OnCmdMsg(ID_VSCALE_CHANGED, CN_COMMAND, NULL, NULL);
 }
 
-void CScaleVerticesDlg::OnDeltaposScalespin(NMHDR* pNMHDR, LRESULT* pResult) 
+void CScaleVerticesDlg::OnDeltaposScalespin(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_UPDOWN* pNMUpDown = (NM_UPDOWN*)pNMHDR;
 
@@ -81,7 +81,7 @@ void CScaleVerticesDlg::OnDeltaposScalespin(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-BOOL CScaleVerticesDlg::OnInitDialog() 
+BOOL CScaleVerticesDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
@@ -91,7 +91,7 @@ BOOL CScaleVerticesDlg::OnInitDialog()
 	return TRUE;
 }
 
-void CScaleVerticesDlg::OnClose() 
+void CScaleVerticesDlg::OnClose()
 {
 	CDialog::OnClose();
 }

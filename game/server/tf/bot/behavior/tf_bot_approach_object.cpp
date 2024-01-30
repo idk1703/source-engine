@@ -65,5 +65,3 @@ ActionResult< CTFBot >	CTFBotApproachObject::Update( CTFBot *me, float interval 
 
 	return Continue();
 }
-
-

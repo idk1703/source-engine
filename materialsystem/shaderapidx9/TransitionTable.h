@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -52,21 +52,21 @@ enum RenderStateFunc_t
 	RENDER_STATE_DiffuseMaterialSource,
 	RENDER_STATE_DisableFogGammaCorrection,
 	RENDER_STATE_EnableAlphaToCoverage,
-	
+
 	RENDER_STATE_COUNT,
 };
 
 
 // Any function that requires a texture stage
 // NOTE: If you change this, change the function table s_pTextureFunctionTable[] below!!
-enum TextureStateFunc_t	
+enum TextureStateFunc_t
 {
 	TEXTURE_STATE_TexCoordIndex = 0,
 	TEXTURE_STATE_SRGBReadEnable,
 	TEXTURE_STATE_Fetch4Enable,
 #ifdef DX_TO_GL_ABSTRACTION
 	TEXTURE_STATE_ShadowFilterEnable,
-#endif	
+#endif
 	// Fixed function states
 	TEXTURE_STATE_ColorTextureStage,
 	TEXTURE_STATE_AlphaTextureStage,
@@ -296,7 +296,7 @@ private:
 	StateSnapshot_t FindStateSnapshot( ShadowStateId_t id, const ShadowShaderState_t& currentState ) const;
 
 	// Finds identical transition lists
-	unsigned int FindIdenticalTransitionList( unsigned int firstElem, 
+	unsigned int FindIdenticalTransitionList( unsigned int firstElem,
 		unsigned short numOps, unsigned int nFirstTest ) const;
 
 	// Adds a transition
@@ -333,7 +333,7 @@ private:
 	StateSnapshot_t m_DefaultStateSnapshot;
 	TransitionList_t m_DefaultTransition;
 	ShadowState_t m_DefaultShadowState;
-	
+
 	// The current snapshot id
 	ShadowStateId_t m_CurrentShadowId;
 	StateSnapshot_t m_CurrentSnapshotId;

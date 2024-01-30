@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -51,7 +51,7 @@ C_PlayerClassCommando::~C_PlayerClassCommando()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PlayerClassCommando::ClassThink( void )
 {
@@ -59,28 +59,28 @@ void C_PlayerClassCommando::ClassThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PlayerClassCommando::PostClassThink( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PlayerClassCommando::ClassPreDataUpdate( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PlayerClassCommando::ClassOnDataChanged( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PlayerClassCommando::CreateMove( float flInputSampleTime, CUserCmd *pCmd )
 {
@@ -89,11 +89,11 @@ void C_PlayerClassCommando::CreateMove( float flInputSampleTime, CUserCmd *pCmd 
 		pCmd->viewangles = m_ClassData.m_vecBullRushViewDir;
 		QAngle angles = m_ClassData.m_vecBullRushViewDir;
 		engine->SetViewAngles( angles );
-	} 
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_PlayerClassCommando::CanGetInVehicle( void )
 {
@@ -104,7 +104,7 @@ bool C_PlayerClassCommando::CanGetInVehicle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PlayerClassCommando::CheckBullRushState( void )
 {
@@ -129,7 +129,7 @@ void C_PlayerClassCommando::InterpolateBullRushViewAngles( void )
 	float flFraction = 1.0f - ( ( m_ClassData.m_flBullRushTime - COMMANDO_BULLRUSH_VIEWDELTA_TEST ) / COMMANDO_BULLRUSH_VIEWDELTA_TIME );
 
 	QAngle angCurrent;
-	InterpolateAngles( m_ClassData.m_vecBullRushViewDir, m_ClassData.m_vecBullRushViewGoalDir, angCurrent, flFraction ); 
+	InterpolateAngles( m_ClassData.m_vecBullRushViewDir, m_ClassData.m_vecBullRushViewGoalDir, angCurrent, flFraction );
 
 	NormalizeAngles( angCurrent );
 	m_ClassData.m_vecBullRushViewDir = angCurrent;

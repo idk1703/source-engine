@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "cbase.h"
@@ -112,7 +112,7 @@ CTFMinigun::~CTFMinigun()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMinigun::WeaponReset( void )
 {
@@ -170,7 +170,7 @@ int CTFMinigun::UpdateTransmitState( void )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMinigun::Precache( void )
 {
@@ -186,7 +186,7 @@ void CTFMinigun::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMinigun::ItemPostFrame( void )
 {
@@ -221,7 +221,7 @@ void CTFMinigun::PrimaryAttack()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMinigun::SharedAttack()
 {
@@ -342,7 +342,7 @@ void CTFMinigun::SharedAttack()
 
 #ifdef CLIENT_DLL
 				int nAmmo = 0;
-				if ( prediction->IsFirstTimePredicted() && 
+				if ( prediction->IsFirstTimePredicted() &&
 					 C_BasePlayer::GetLocalPlayer() == pPlayer )
 				{
 					nAmmo = pPlayer->GetAmmoCount( m_iPrimaryAmmoType );
@@ -351,9 +351,9 @@ void CTFMinigun::SharedAttack()
 
 				// Only fire if we're actually shooting
 				BaseClass::PrimaryAttack();		// fire and do timers
-				
+
 #ifdef CLIENT_DLL
-				if ( prediction->IsFirstTimePredicted() && 
+				if ( prediction->IsFirstTimePredicted() &&
 					 C_BasePlayer::GetLocalPlayer() == pPlayer &&
 					 nAmmo != pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) ) // did PrimaryAttack() fire a shot? (checking our ammo to find out)
 				{
@@ -478,7 +478,7 @@ void CTFMinigun::SetWeaponState( MinigunState_t nState )
 			m_flLastAmmoDrainTime = gpGlobals->curtime;
 			m_flNextRingOfFireAttackTime = gpGlobals->curtime + 0.5f;
 		}
-		
+
 		m_iWeaponState = nState;
 	}
 }
@@ -609,7 +609,7 @@ void CTFMinigun::AttackEnemyProjectiles( void )
 
 			if ( ( pObjects[i]->GetFlags() & FL_ONGROUND ) )
 				continue;
-				
+
 			if ( !pObjects[i]->IsDeflectable() )
 				continue;
 
@@ -749,7 +749,7 @@ void CTFMinigun::WindUp( void )
 	pPlayer->StopRandomExpressions();
 #endif
 
-#ifdef CLIENT_DLL 
+#ifdef CLIENT_DLL
 	WeaponSoundUpdate();
 #endif
 
@@ -763,7 +763,7 @@ void CTFMinigun::WindUp( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFMinigun::CanHolster( void ) const
 {
@@ -820,7 +820,7 @@ bool CTFMinigun::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFMinigun::Lower( void )
 {
@@ -956,7 +956,7 @@ bool CTFMinigun::SendWeaponAnim( int iActivity )
 			return true;
 
 		// Otherwise, play the start it
-		return BaseClass::SendWeaponAnim( ACT_VM_PRIMARYATTACK );		
+		return BaseClass::SendWeaponAnim( ACT_VM_PRIMARYATTACK );
 	}
 
 	return BaseClass::SendWeaponAnim( iActivity );
@@ -981,7 +981,7 @@ void CTFMinigun::HandleFireOnEmpty( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFMinigun::GetProjectileDamage( void )
 {
@@ -993,12 +993,12 @@ float CTFMinigun::GetProjectileDamage( void )
 		flMod = RemapValClamped( GetFiringDuration(), 0.2f, TF_MINIGUN_PENALTY_PERIOD, 0.5f, 1.f );
 		flDamage *= flMod;
 	}
-	
+
 	return flDamage;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFMinigun::GetWeaponSpread( void )
 {
@@ -1018,14 +1018,14 @@ float CTFMinigun::GetWeaponSpread( void )
 
 		flSpread *= flMod;
 	}
-	
+
 	return flSpread;
 }
 
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStudioHdr *CTFMinigun::OnNewModel( void )
 {
@@ -1048,7 +1048,7 @@ CStudioHdr *CTFMinigun::OnNewModel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMinigun::StandardBlendingRules( CStudioHdr *hdr, Vector pos[], Quaternion q[], float currentTime, int boneMask )
 {
@@ -1088,7 +1088,7 @@ void CTFMinigun::UpdateBarrelMovement()
 		m_flBarrelCurrentVelocity = Approach( m_flBarrelTargetVelocity, m_flBarrelCurrentVelocity, flBarrelAcceleration );
 
 		if ( 0 == m_flBarrelCurrentVelocity )
-		{	
+		{
 			// if we've stopped rotating, turn off the wind-down sound
 			WeaponSoundUpdate();
 		}
@@ -1099,7 +1099,7 @@ void CTFMinigun::UpdateBarrelMovement()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMinigun::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -1110,9 +1110,9 @@ void CTFMinigun::OnDataChanged( DataUpdateType_t updateType )
 	BaseClass::OnDataChanged( updateType );
 
 	WeaponSoundUpdate();
-	
+
 	// Turn off the firing sound here for the Tomislav
-	if( m_iPrevMinigunState == AC_STATE_FIRING && 
+	if( m_iPrevMinigunState == AC_STATE_FIRING &&
 		( m_iWeaponState == AC_STATE_SPINNING || m_iWeaponState == AC_STATE_IDLE ) )
 	{
 		if ( !HasSpinSounds() )
@@ -1125,7 +1125,7 @@ void CTFMinigun::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMinigun::UpdateOnRemove( void )
 {
@@ -1143,7 +1143,7 @@ void CTFMinigun::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMinigun::SetDormant( bool bDormant )
 {
@@ -1170,7 +1170,7 @@ void CTFMinigun::SetDormant( bool bDormant )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // won't be called for w_ version of the model, so this isn't getting updated twice
 //-----------------------------------------------------------------------------
 void CTFMinigun::ItemPreFrame( void )
@@ -1181,7 +1181,7 @@ void CTFMinigun::ItemPreFrame( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMinigun::StartBrassEffect()
 {
@@ -1213,7 +1213,7 @@ void CTFMinigun::StartBrassEffect()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMinigun::StartMuzzleEffect()
 {
@@ -1245,7 +1245,7 @@ void CTFMinigun::StartMuzzleEffect()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMinigun::StopBrassEffect()
 {
@@ -1262,7 +1262,7 @@ void CTFMinigun::StopBrassEffect()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMinigun::StopMuzzleEffect()
 {
@@ -1279,7 +1279,7 @@ void CTFMinigun::StopMuzzleEffect()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMinigun::HandleBrassEffect()
 {
@@ -1294,7 +1294,7 @@ void CTFMinigun::HandleBrassEffect()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMinigun::HandleMuzzleEffect()
 {
@@ -1309,7 +1309,7 @@ void CTFMinigun::HandleMuzzleEffect()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: View model barrel rotation angle. Calculated here, implemented in 
+// Purpose: View model barrel rotation angle. Calculated here, implemented in
 // tf_viewmodel.cpp
 //-----------------------------------------------------------------------------
 float CTFMinigun::GetBarrelRotation( void )
@@ -1318,7 +1318,7 @@ float CTFMinigun::GetBarrelRotation( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMinigun::ViewModelAttachmentBlending( CStudioHdr *hdr, Vector pos[], Quaternion q[], float currentTime, int boneMask )
 {
@@ -1355,7 +1355,7 @@ void CTFMinigun::CreateMove( float flInputSampleTime, CUserCmd *pCmd, const QAng
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Ensures the correct sound (including silence) is playing for 
+// Purpose: Ensures the correct sound (including silence) is playing for
 //			current weapon state.
 //-----------------------------------------------------------------------------
 void CTFMinigun::WeaponSoundUpdate()
@@ -1390,7 +1390,7 @@ void CTFMinigun::WeaponSoundUpdate()
 		break;
 	case AC_STATE_FIRING:
 		{
-			if ( m_bCritShot == true ) 
+			if ( m_bCritShot == true )
 			{
 				iSound = BURST;	// Crit sound
 			}

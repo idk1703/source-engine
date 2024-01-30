@@ -61,8 +61,8 @@ ActionResult< CTFBot >	CTFBotAttack::Update( CTFBot *me, float interval )
 
 
 	// pursue the threat. if not visible, go to the last known position
-	if ( !threat->IsVisibleRecently() || 
-		 me->IsRangeGreaterThan( threat->GetEntity()->GetAbsOrigin(), me->GetDesiredAttackRange() ) || 
+	if ( !threat->IsVisibleRecently() ||
+		 me->IsRangeGreaterThan( threat->GetEntity()->GetAbsOrigin(), me->GetDesiredAttackRange() ) ||
 		 !me->IsLineOfFireClear( threat->GetEntity()->EyePosition() ) )
 	{
 		if ( threat->IsVisibleRecently() )
@@ -154,4 +154,3 @@ QueryResultType CTFBotAttack::ShouldHurry( const INextBot *me ) const
 {
 	return ANSWER_UNDEFINED;
 }
-

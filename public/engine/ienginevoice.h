@@ -27,7 +27,7 @@ public:
 	virtual void RemovePlayerFromVoiceList( XUID xPlayer, int iController ) = 0;
 
 	virtual void GetRemoteTalkers( int *pNumTalkers, XUID *pRemoteTalkers ) = 0;
-	
+
 	virtual bool VoiceUpdateData( int iController ) = 0;
 	virtual void GetVoiceData( int iController, const byte **ppvVoiceDataBuffer, unsigned int *pnumVoiceDataBytes ) = 0;
 	virtual void VoiceResetLocalData( int iController ) = 0;

@@ -47,7 +47,7 @@ void CObjectVehicleBoost::Spawn( void )
 	m_iHealth = obj_vehicle_boost_health.GetInt();
 
 	SetType( OBJ_VEHICLE_BOOST );
-	m_fObjectFlags |= OF_SUPPRESS_NOTIFY_UNDER_ATTACK | OF_SUPPRESS_TECH_ANALYZER | 
+	m_fObjectFlags |= OF_SUPPRESS_NOTIFY_UNDER_ATTACK | OF_SUPPRESS_TECH_ANALYZER |
 		              OF_DONT_AUTO_REPAIR | OF_MUST_BE_BUILT_ON_ATTACHMENT;
 
 	BaseClass::Spawn();

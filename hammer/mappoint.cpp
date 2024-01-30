@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -43,11 +43,10 @@ void CMapPoint::SetOrigin(Vector &Origin)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pTransBox - 
+// Purpose:
+// Input  : pTransBox -
 //-----------------------------------------------------------------------------
 void CMapPoint::DoTransform(const VMatrix &matrix)
 {
 	TransformPoint( matrix, m_Origin );
 }
-

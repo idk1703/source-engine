@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -127,7 +127,7 @@ void *ShaderDeviceFactory( const char *pName, int *pReturnCode )
 	{
 		*pReturnCode = IFACE_FAILED;
 	}
-	return NULL;	
+	return NULL;
 }
 
 //-----------------------------------------------------------------------------
@@ -331,7 +331,7 @@ KeyValues *CShaderDeviceMgrBase::FindCPUSpecificConfig( KeyValues *pKeyValues, i
 		if ( !pName )
 			continue;
 
-		if ( ( bAMD && Q_stristr( pName, "AMD" ) ) || 
+		if ( ( bAMD && Q_stristr( pName, "AMD" ) ) ||
 			( !bAMD && Q_stristr( pName, "Intel" ) ) )
 		{
 			int nMinMegahertz = pGroup->GetInt( "min megahertz", -1 );
@@ -404,7 +404,7 @@ KeyValues *CShaderDeviceMgrBase::FindMemorySpecificConfig( KeyValues *pKeyValues
 // Finds if we have a texture mem size specific config
 //-----------------------------------------------------------------------------
 KeyValues *CShaderDeviceMgrBase::FindVidMemSpecificConfig( KeyValues *pKeyValues, int nVideoRamMB )
-{	
+{
 	if ( IsX360() )
 	{
 		// 360 unique dxlevel implies hw config, vidmem variance not applicable
@@ -455,7 +455,7 @@ static void OverrideValues_R( KeyValues *pDest, KeyValues *pSrc )
 		}
 	}
 }
-									   
+
 static KeyValues * FindMatchingGroup( KeyValues *pSrc, KeyValues *pMatch )
 {
 	KeyValues *pMatchSubKey = pMatch->FindKey( "name" );
@@ -619,7 +619,7 @@ void CShaderDeviceMgrBase::LoadHardwareCaps( KeyValues *pGroup, HardwareCaps_t &
 
 	// don't just blanket kill clip planes on POSIX, only shoot them down if we're running ARB, or asked for nouserclipplanes.
 	//FIXME need to take into account the caps bit that GLM can now provide, so NV can use normal clipping and ATI can fall back to fastclip.
-	
+
 	if ( CommandLine()->FindParm("-arbmode") || CommandLine()->CheckParm( "-nouserclip" ) )
 	{
 		caps.m_UseFastClipping = true;
@@ -651,7 +651,7 @@ void CShaderDeviceMgrBase::ReadHardwareCaps( HardwareCaps_t &caps, int nDxLevel 
 	// Finally, override the hardware caps based on the specific card
 	KeyValues *pCardKeyValues = FindCardSpecificConfig( pCfg, caps.m_VendorID, caps.m_DeviceID );
 
-	// Apply 
+	// Apply
 	if( pCardKeyValues && ReadHexValue( pCardKeyValues, "MinDeviceID" ) == 0 && ReadHexValue( pCardKeyValues, "MaxDeviceID" ) == 0xffff )
 	{
 		// The card specific case is a catch all for device ids, so run it before running the dxlevel and card specific stuff.
@@ -698,7 +698,7 @@ static unsigned long GetRam()
 {
 	MEMORYSTATUS stat;
 	GlobalMemoryStatus( &stat );
-	
+
 	char buf[256];
 	V_snprintf( buf, sizeof( buf ), "GlobalMemoryStatus: %llu\n", (uint64)(stat.dwTotalPhys) );
 	Plat_DebugString( buf );
@@ -710,13 +710,13 @@ static unsigned long GetRam()
 //-----------------------------------------------------------------------------
 // Gets the recommended configuration associated with a particular dx level
 //-----------------------------------------------------------------------------
-bool CShaderDeviceMgrBase::GetRecommendedConfigurationInfo( int nAdapter, int nDXLevel, int nVendorID, int nDeviceID, KeyValues *pConfiguration ) 
+bool CShaderDeviceMgrBase::GetRecommendedConfigurationInfo( int nAdapter, int nDXLevel, int nVendorID, int nDeviceID, KeyValues *pConfiguration )
 {
 	LOCK_SHADERAPI();
 
 	const HardwareCaps_t& caps = GetHardwareCaps( nAdapter );
 	if ( nDXLevel == 0 )
-	{ 
+	{
 		nDXLevel = caps.m_nDXSupportLevel;
 	}
 	nDXLevel = GetClosestActualDXLevel( nDXLevel );
@@ -734,7 +734,7 @@ bool CShaderDeviceMgrBase::GetRecommendedConfigurationInfo( int nAdapter, int nD
 	// Next, override with device-specific overrides
 	KeyValues *pCardKeyValues = FindCardSpecificConfig( pCfg, nVendorID, nDeviceID );
 
-	// Apply 
+	// Apply
 	if ( pCardKeyValues && ReadHexValue( pCardKeyValues, "MinDeviceID" ) == 0 && ReadHexValue( pCardKeyValues, "MaxDeviceID" ) == 0xffff )
 	{
 		// The card specific case is a catch all for device ids, so run it before running the dxlevel and card specific stuff.
@@ -754,9 +754,9 @@ bool CShaderDeviceMgrBase::GetRecommendedConfigurationInfo( int nAdapter, int nD
 	// Next, override with cpu-speed based overrides
 	const CPUInformation& pi = *GetCPUInformation();
 	int nCPUSpeedMhz = (int)(pi.m_Speed / 1000000.0f);
-		
+
 	bool bAMD = Q_stristr( pi.m_szProcessorID, "amd" ) != NULL;
-	
+
 	char buf[256];
 	V_snprintf( buf, sizeof( buf ), "CShaderDeviceMgrBase::GetRecommendedConfigurationInfo: CPU speed: %d MHz, Processor: %s\n", nCPUSpeedMhz, pi.m_szProcessorID );
 	Plat_DebugString( buf );
@@ -825,7 +825,7 @@ bool CShaderDeviceMgrBase::GetRecommendedConfigurationInfo( int nAdapter, int nD
 //-----------------------------------------------------------------------------
 int CShaderDeviceMgrBase::GetClosestActualDXLevel( int nDxLevel ) const
 {
-	if ( nDxLevel < ABSOLUTE_MINIMUM_DXLEVEL ) 
+	if ( nDxLevel < ABSOLUTE_MINIMUM_DXLEVEL )
 		return ABSOLUTE_MINIMUM_DXLEVEL;
 
 	if ( nDxLevel == 80 )
@@ -1041,11 +1041,11 @@ static LRESULT CALLBACK ShaderDX8WndProc(VD3DHWND hWnd, UINT msg, WPARAM wParam,
 			{
 				g_pShaderDevice->OtherAppInitializing(true);
 			}
-			else if ( pData->dwData == CShaderDeviceBase::REACQUIRE_MESSAGE )  
+			else if ( pData->dwData == CShaderDeviceBase::REACQUIRE_MESSAGE )
 			{
 				g_pShaderDevice->OtherAppInitializing(false);
 			}
-			else if ( pData->dwData == CShaderDeviceBase::EVICT_MESSAGE )  
+			else if ( pData->dwData == CShaderDeviceBase::EVICT_MESSAGE )
 			{
 				g_pShaderDevice->EvictManagedResourcesInternal( );
 			}
@@ -1085,7 +1085,7 @@ void CShaderDeviceBase::InstallWindowHook( void* hWnd )
 	RegisterClass( &wc );
 
 	// Create the window
-	m_hWndCookie = CreateWindow( "shaderdx8", "shaderdx8", WS_CHILD, 
+	m_hWndCookie = CreateWindow( "shaderdx8", "shaderdx8", WS_CHILD,
 		0, 0, 0, 0, hParent, NULL, hInst, NULL );
 
 	// Marks it as a material system window
@@ -1100,7 +1100,7 @@ void CShaderDeviceBase::RemoveWindowHook( void* hWnd )
 #if !defined( _X360 )
 	if ( m_hWndCookie )
 	{
-		DestroyWindow( (VD3DHWND)m_hWndCookie ); 
+		DestroyWindow( (VD3DHWND)m_hWndCookie );
 		m_hWndCookie = 0;
 	}
 
@@ -1227,7 +1227,7 @@ void CShaderDeviceBase::GetWindowSize( int& nWidth, int& nHeight ) const
 
 #else
 
-	// If the window was minimized last time swap buffers happened, or if it's iconic now, 
+	// If the window was minimized last time swap buffers happened, or if it's iconic now,
 	// return 0 size
 #ifdef _WIN32
 	if ( !m_bIsMinimized && !IsIconic( ( HWND )m_hWnd ) )
@@ -1235,7 +1235,7 @@ void CShaderDeviceBase::GetWindowSize( int& nWidth, int& nHeight ) const
 	if ( !m_bIsMinimized && !IsIconic( (VD3DHWND)m_hWnd ) )
 #endif
 	{
-		// NOTE: Use the 'current view' (which may be the same as the main window) 
+		// NOTE: Use the 'current view' (which may be the same as the main window)
 		RECT rect;
 #ifdef _WIN32
 		GetClientRect( ( HWND )m_ViewHWnd, &rect );
@@ -1252,5 +1252,3 @@ void CShaderDeviceBase::GetWindowSize( int& nWidth, int& nHeight ) const
 
 #endif
 }
-
-

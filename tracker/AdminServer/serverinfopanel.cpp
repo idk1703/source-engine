@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -282,4 +282,3 @@ void CServerInfoPanel::ParseIntoMapList(const char *maplist, CUtlVector<CUtlSymb
 		}
 	}
 }
-

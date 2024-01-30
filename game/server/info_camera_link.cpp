@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -71,7 +71,7 @@ LINK_ENTITY_TO_CLASS( info_camera_link, CInfoCameraLink );
 // Constructor, destructor
 //-----------------------------------------------------------------------------
 CInfoCameraLink::CInfoCameraLink()
-{		
+{
 	g_InfoCameraLinkList.AddToTail( this );
 }
 
@@ -116,7 +116,7 @@ void CInfoCameraLink::SetCameraByName(const char *szName)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoCameraLink::InputSetCamera(inputdata_t &inputdata)
 {
@@ -125,7 +125,7 @@ void CInfoCameraLink::InputSetCamera(inputdata_t &inputdata)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseEntity *CreateInfoCameraLink( CBaseEntity *pTarget, CPointCamera *pCamera )
 {
@@ -141,7 +141,7 @@ CBaseEntity *CreateInfoCameraLink( CBaseEntity *pTarget, CPointCamera *pCamera )
 
 
 //-----------------------------------------------------------------------------
-// Sets up visibility 
+// Sets up visibility
 //-----------------------------------------------------------------------------
 void PointCameraSetupVisibility( CBaseEntity *pPlayer, int area, unsigned char *pvs, int pvssize )
 {
@@ -149,7 +149,7 @@ void PointCameraSetupVisibility( CBaseEntity *pPlayer, int area, unsigned char *
 	{
 		pCameraEnt->SetActive( false );
 	}
-	
+
 	int nNext;
 	for ( int i = g_InfoCameraLinkList.Head(); i != g_InfoCameraLinkList.InvalidIndex(); i = nNext )
 	{
@@ -180,4 +180,3 @@ void PointCameraSetupVisibility( CBaseEntity *pPlayer, int area, unsigned char *
 		}
 	}
 }
-

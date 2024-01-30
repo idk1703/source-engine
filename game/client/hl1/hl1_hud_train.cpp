@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -48,7 +48,7 @@ DECLARE_HUDELEMENT( CHudTrain );
 DECLARE_HUD_MESSAGE( CHudTrain, Train )
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTrain::CHudTrain( const char *pElementName ) : CHudElement( pElementName ), BaseClass(NULL, "HudTrain")
 {
@@ -56,8 +56,8 @@ CHudTrain::CHudTrain( const char *pElementName ) : CHudElement( pElementName ), 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *scheme - 
+// Purpose:
+// Input  : *scheme -
 //-----------------------------------------------------------------------------
 void CHudTrain::ApplySchemeSettings( IScheme *scheme )
 {
@@ -67,7 +67,7 @@ void CHudTrain::ApplySchemeSettings( IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTrain::Init(void)
 {
@@ -79,12 +79,12 @@ void CHudTrain::Init(void)
 void CHudTrain::VidInit(void)
 {
 	BaseClass::VidInit();
-	
+
 	m_iPos = 0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudTrain::ShouldDraw( void )
 {
@@ -92,7 +92,7 @@ bool CHudTrain::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTrain::Paint()
 {
@@ -135,7 +135,7 @@ void CHudTrain::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTrain::MsgFunc_Train( bf_read &msg )
 {

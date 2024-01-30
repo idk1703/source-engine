@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -20,7 +20,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudFilmDemo : public CHudElement, public vgui::Panel
 {
@@ -61,7 +61,7 @@ private:
 DECLARE_HUDELEMENT( CHudFilmDemo );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudFilmDemo::CHudFilmDemo( const char *name ) : vgui::Panel( NULL, "HudHDRDemo" ), CHudElement( name )
 {
@@ -75,7 +75,7 @@ CHudFilmDemo::CHudFilmDemo( const char *name ) : vgui::Panel( NULL, "HudHDRDemo"
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudFilmDemo::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -84,7 +84,7 @@ void CHudFilmDemo::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudFilmDemo::Paint()
 {
@@ -98,12 +98,12 @@ void CHudFilmDemo::Paint()
   	vgui::surface()->DrawFilledRect( m_iBorderLeft, 0, wide-m_iBorderRight, m_iBorderTop );			// Top
 	vgui::surface()->DrawFilledRect( m_iBorderLeft, tall-m_iBorderBottom, wide-m_iBorderRight, tall ); // Bottom
 	vgui::surface()->DrawFilledRect( ((wide-m_iBorderCenter)/2), m_iBorderTop, ((wide+m_iBorderCenter)/2), tall-m_iBorderBottom ); // Center
- 
+
 	// Get our scheme and font information
 	vgui::HScheme scheme = vgui::scheme()->GetScheme( "ClientScheme" );
 	vgui::HFont hFont = vgui::scheme()->GetIScheme(scheme)->GetFont( "MenuTitle" );
 	vgui::surface()->DrawSetTextFont( hFont );
-	vgui::surface()->DrawSetTextColor( m_TextColor ); 
+	vgui::surface()->DrawSetTextColor( m_TextColor );
 
  	wchar_t *tempString = g_pVGuiLocalize->Find( m_pLeftStringID );
 	if( tempString )
@@ -131,7 +131,7 @@ void CHudFilmDemo::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudFilmDemo::ShouldDraw()
 {
@@ -139,11 +139,11 @@ bool CHudFilmDemo::ShouldDraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bActive - 
+// Purpose:
+// Input  : bActive -
 //-----------------------------------------------------------------------------
-void CHudFilmDemo::SetFilmDemoActive( bool bActive ) 
-{ 
+void CHudFilmDemo::SetFilmDemoActive( bool bActive )
+{
 	if ( bActive && !m_bFilmDemoActive )
 	{
 		ConVarRef hideHud( "hidehud" );
@@ -155,7 +155,7 @@ void CHudFilmDemo::SetFilmDemoActive( bool bActive )
 		hideHud.SetValue( 0 );
 	}
 
-	m_bFilmDemoActive = bActive; 
+	m_bFilmDemoActive = bActive;
 }
 
 void CHudFilmDemo::SetLeftStringID( const char *id )
@@ -186,5 +186,3 @@ void EnableHUDFilmDemo( bool bEnable, const char *left_string_id, const char *ri
 		pHudDemo->SetFilmDemoActive( bEnable );
 	}
 }
-
-

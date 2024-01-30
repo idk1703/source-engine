@@ -80,9 +80,9 @@ public:
 protected:
 	void CommonInit( const char *pTitle, const char *pConfirmBtnText, const char *pCancelBtnText,
 		GenericConfirmDialogCallback callback, vgui::Panel *pParent );
-		
+
 	const char *m_pTitle;
-	const char *m_pTextKey;	
+	const char *m_pTextKey;
 	const char *m_pConfirmBtnText;
 	const char *m_pCancelBtnText;
 
@@ -97,7 +97,7 @@ class CTFMessageBoxDialog : public CTFGenericConfirmDialog
 {
 	DECLARE_CLASS_SIMPLE( CTFMessageBoxDialog, CTFGenericConfirmDialog );
 public:
-	CTFMessageBoxDialog( const char *pTitle, const char *pText, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent ) 
+	CTFMessageBoxDialog( const char *pTitle, const char *pText, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent )
 		:  CTFGenericConfirmDialog( pTitle, pText, pConfirmBtnText, NULL, callback, parent ) {}
 
 	CTFMessageBoxDialog( const char *pTitle, const wchar_t *pText, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent )
@@ -126,7 +126,7 @@ class CTFUpgradeBoxDialog : public CTFMessageBoxDialog
 {
 	DECLARE_CLASS_SIMPLE( CTFUpgradeBoxDialog, CTFMessageBoxDialog );
 public:
-	CTFUpgradeBoxDialog( const char *pTitle, const char *pText, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent ) 
+	CTFUpgradeBoxDialog( const char *pTitle, const char *pText, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent )
 		:  CTFMessageBoxDialog( pTitle, pText, pConfirmBtnText, callback, parent ) {}
 
 	CTFUpgradeBoxDialog( const char *pTitle, const wchar_t *pText, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent )
@@ -181,7 +181,7 @@ public:
 };
 
 CTFReviveDialog *ShowRevivePrompt( CBaseEntity *pOwner,
-								   const char *pTitle = "#TF_Prompt_Revive_Title", 
+								   const char *pTitle = "#TF_Prompt_Revive_Title",
 								   const char *pText = "#TF_Prompt_Revive_Message",
 								   const char *pConfirmBtnText = "#TF_Prompt_Revive_Cancel",
 								   GenericConfirmDialogCallback callback = NULL,

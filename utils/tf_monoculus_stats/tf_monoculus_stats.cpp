@@ -429,7 +429,7 @@ bool ProcessData( const char *filename )
 
 					strcpy( info.m_weaponName, token );
 
-					// eat (attacker_position 
+					// eat (attacker_position
 					token = strtok( NULL, " " );
 
 					token = strtok( NULL, "\" " );
@@ -464,7 +464,7 @@ bool ProcessData( const char *filename )
 
 					strcpy( info.m_weaponName, token );
 
-					// eat (attacker_position 
+					// eat (attacker_position
 					token = strtok( NULL, " " );
 
 					token = strtok( NULL, "\" " );

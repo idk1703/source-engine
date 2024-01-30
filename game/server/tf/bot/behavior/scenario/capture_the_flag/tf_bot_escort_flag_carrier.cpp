@@ -17,7 +17,7 @@ ConVar tf_bot_flag_escort_max_count( "tf_bot_flag_escort_max_count", "4", FCVAR_
 
 
 //---------------------------------------------------------------------------------------------
-// 
+//
 // Count the number of TFBots currently engaged in the "EscortFlagCarrier" behavior
 //
 int GetBotEscortCount( int team )

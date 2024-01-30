@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -45,7 +45,7 @@ static ConVar hud_low_ammo_warning_max_pos_adjust( "hud_lowammowarning_maxposadj
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CTFHudWeaponAmmo::CTFHudWeaponAmmo( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudWeaponAmmo" ) 
+CTFHudWeaponAmmo::CTFHudWeaponAmmo( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudWeaponAmmo" )
 {
 	Panel *pParent = g_pClientMode->GetViewport();
 	SetParent( pParent );
@@ -73,7 +73,7 @@ CTFHudWeaponAmmo::CTFHudWeaponAmmo( const char *pElementName ) : CHudElement( pE
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudWeaponAmmo::Reset()
 {
@@ -81,7 +81,7 @@ void CTFHudWeaponAmmo::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudWeaponAmmo::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -115,7 +115,7 @@ void CTFHudWeaponAmmo::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFHudWeaponAmmo::ShouldDraw( void )
 {
@@ -163,7 +163,7 @@ bool CTFHudWeaponAmmo::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudWeaponAmmo::UpdateAmmoLabels( bool bPrimary, bool bReserve, bool bNoClip )
 {
@@ -196,7 +196,7 @@ void CTFHudWeaponAmmo::UpdateAmmoLabels( bool bPrimary, bool bReserve, bool bNoC
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudWeaponAmmo::ShowLowAmmoIndicator( void )
 {
@@ -210,7 +210,7 @@ void CTFHudWeaponAmmo::ShowLowAmmoIndicator( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudWeaponAmmo::SizeLowAmmoIndicator( float flCurrentAmount, float flMaxAmount )
 {
@@ -221,16 +221,16 @@ void CTFHudWeaponAmmo::SizeLowAmmoIndicator( float flCurrentAmount, float flMaxA
 
 		int nPosAdj = RoundFloatToInt( flPercent * nLowAmmoPosAdj );
 		int nSizeAdj = 2 * nPosAdj;
-		
-		m_pLowAmmoImage->SetBounds( m_nLowAmmoImageOrigX - nPosAdj, 
-									m_nLowAmmoImageOrigY - nPosAdj, 
+
+		m_pLowAmmoImage->SetBounds( m_nLowAmmoImageOrigX - nPosAdj,
+									m_nLowAmmoImageOrigY - nPosAdj,
 									m_nLowAmmoImageOrigW + nSizeAdj,
 									m_nLowAmmoImageOrigH + nSizeAdj );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudWeaponAmmo::HideLowAmmoIndicator( void )
 {
@@ -285,7 +285,7 @@ void CTFHudWeaponAmmo::OnThink()
 			{
 				nAmmo2 = pPlayer->GetAmmoCount( pWeapon->GetPrimaryAmmoType() );
 			}
-			
+
 			hudlcd->SetGlobalStat( "(ammo_primary)", VarArgs( "%d", nAmmo1 ) );
 			hudlcd->SetGlobalStat( "(ammo_secondary)", VarArgs( "%d", nAmmo2 ) );
 

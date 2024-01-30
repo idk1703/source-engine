@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -28,12 +28,12 @@ public:
 	// Grenade stuff.
 public:
 
-	static CDODRifleGrenadeUS* Create( 
-		const Vector &position, 
-		const QAngle &angles, 
-		const Vector &velocity, 
-		const AngularImpulse &angVelocity, 
-		CBaseCombatCharacter *pOwner, 
+	static CDODRifleGrenadeUS* Create(
+		const Vector &position,
+		const QAngle &angles,
+		const Vector &velocity,
+		const AngularImpulse &angVelocity,
+		CBaseCombatCharacter *pOwner,
 		float timer,
 		DODWeaponID weaponID );
 

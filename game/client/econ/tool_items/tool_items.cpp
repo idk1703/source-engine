@@ -120,7 +120,7 @@ void CBaseToolUsageDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 	{
 		pSubjectIcon->SetMouseInputEnabled( false );
 		pSubjectIcon->SetKeyBoardInputEnabled( false );
-	}	
+	}
 
 	// @note Tom Bui: because the children have already applied their scheme settings and/or performed their layout before
 	// this dialog has had a chance to load its res file, we need to manually invalidate the layout of these children
@@ -217,22 +217,22 @@ void	CBaseToolUsageDialog::OnKeyCodePressed( vgui::KeyCode code )
 {
 	ButtonCode_t nButtonCode = GetBaseButtonCode( code );
 
-	if (nButtonCode == KEY_XBUTTON_LEFT || 
+	if (nButtonCode == KEY_XBUTTON_LEFT ||
 		nButtonCode == KEY_XSTICK1_LEFT ||
 		nButtonCode == KEY_XSTICK2_LEFT ||
 		nButtonCode == STEAMCONTROLLER_DPAD_LEFT ||
 		code == KEY_LEFT ||
-		nButtonCode == KEY_XBUTTON_RIGHT || 
+		nButtonCode == KEY_XBUTTON_RIGHT ||
 		nButtonCode == KEY_XSTICK1_RIGHT ||
 		nButtonCode == KEY_XSTICK2_RIGHT ||
 		nButtonCode == STEAMCONTROLLER_DPAD_RIGHT ||
 		code == KEY_RIGHT ||
-		nButtonCode == KEY_XBUTTON_UP || 
+		nButtonCode == KEY_XBUTTON_UP ||
 		nButtonCode == KEY_XSTICK1_UP ||
 		nButtonCode == KEY_XSTICK2_UP ||
 		nButtonCode == STEAMCONTROLLER_DPAD_UP ||
 		code == KEY_UP ||
-		nButtonCode == KEY_XBUTTON_DOWN || 
+		nButtonCode == KEY_XBUTTON_DOWN ||
 		nButtonCode == KEY_XSTICK1_DOWN ||
 		nButtonCode == KEY_XSTICK2_DOWN ||
 		nButtonCode == STEAMCONTROLLER_DPAD_DOWN ||
@@ -375,7 +375,7 @@ private:
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconTool_StrangeCountTransfer::OnClientApplyTool( CEconItemView *pTool, CEconItemView *pSubject, vgui::Panel *pParent ) const
 {
@@ -401,7 +401,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CConfirmStrangePartApplicationDialog::CConfirmStrangePartApplicationDialog( vgui::Panel *pParent, CEconItemView *pTool, CEconItemView *pToolSubject )
 	: CBaseToolUsageDialog( pParent, "ConfirmApplyStrangePartApplicationDialog", pTool, pToolSubject )
@@ -409,7 +409,7 @@ CConfirmStrangePartApplicationDialog::CConfirmStrangePartApplicationDialog( vgui
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmStrangePartApplicationDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -434,7 +434,7 @@ void CConfirmStrangePartApplicationDialog::ApplySchemeSettings( vgui::IScheme *p
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmStrangePartApplicationDialog::Apply()
 {
@@ -449,7 +449,7 @@ void CConfirmStrangePartApplicationDialog::Apply()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconTool_StrangePart::OnClientApplyTool( CEconItemView *pTool, CEconItemView *pSubject, vgui::Panel *pParent ) const
 {
@@ -476,7 +476,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CConfirmStrangeRestrictionApplicationDialog::CConfirmStrangeRestrictionApplicationDialog( vgui::Panel *pParent, CEconItemView *pTool, CEconItemView *pToolSubject, int iStrangeSlot, const char *pszStatLocalizationToken )
 	: CBaseToolUsageDialog( pParent, "ConfirmApplyStrangeRestrictionApplicationDialog", pTool, pToolSubject )
@@ -486,7 +486,7 @@ CConfirmStrangeRestrictionApplicationDialog::CConfirmStrangeRestrictionApplicati
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmStrangeRestrictionApplicationDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -498,7 +498,7 @@ void CConfirmStrangeRestrictionApplicationDialog::ApplySchemeSettings( vgui::ISc
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmStrangeRestrictionApplicationDialog::Apply()
 {
@@ -514,7 +514,7 @@ void CConfirmStrangeRestrictionApplicationDialog::Apply()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CSelectStrangePartToRestrictDialog : public CComboBoxBackpackOverlayDialogBase
 {
@@ -567,7 +567,7 @@ private:
 		int iIndex = pKVActiveUserData ? pKVActiveUserData->GetInt( "data", -1 ) : -1;
 		if ( iIndex < 0 )
 			return;
-		
+
 		// FIXME: CConfirmStrangePartApplicationDialog is wrong class
 		CConfirmStrangeRestrictionApplicationDialog *pDialog = vgui::SETUP_PANEL( new CConfirmStrangeRestrictionApplicationDialog( GetParent(), &m_ToolItem, &m_SubjectItem, iIndex, pKVActiveUserData ? pKVActiveUserData->GetString( "token", NULL ) : NULL ) );
 		MakeModalAndBringToFront( pDialog );
@@ -582,7 +582,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconTool_StrangePartRestriction::OnClientApplyTool( CEconItemView *pTool, CEconItemView *pSubject, vgui::Panel *pParent ) const
 {
@@ -698,7 +698,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconTool_Strangifier::OnClientApplyTool( CEconItemView *pTool, CEconItemView *pSubject, vgui::Panel *pParent ) const
 {
@@ -733,8 +733,8 @@ public:
 	CConfirmUseItemEaterRechargerDialog( vgui::Panel *pParent, CEconItemView *pTool, CEconItemView *pToolSubject )
 		: CBaseToolUsageDialog( pParent, "ConfirmUseItemEaterRechargerDialog", pTool, pToolSubject )
 	{
-		
-	} 
+
+	}
 
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
 	{
@@ -764,7 +764,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconTool_ItemEaterRecharger::OnClientApplyTool( CEconItemView *pTool, CEconItemView *pSubject, vgui::Panel *pParent ) const
 {
@@ -818,7 +818,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconTool_UpgradeCard::OnClientApplyTool( CEconItemView *pTool, CEconItemView *pSubject, vgui::Panel *pParent ) const
 {
@@ -855,7 +855,7 @@ public:
 				SetDialogVariable( "output_class", GLocalizationProvider()->Find( g_aPlayerClassNames[ iOutputClass ] ) );
 			}
 		}
-		
+
 		BaseClass::ApplySchemeSettings( pScheme );
 	}
 
@@ -873,7 +873,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconTool_ClassTransmogrifier::OnClientApplyTool( CEconItemView *pTool, CEconItemView *pSubject, vgui::Panel *pParent ) const
 {
@@ -917,7 +917,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconTool_TFSpellbookPage::OnClientApplyTool( CEconItemView *pTool, CEconItemView *pSubject, vgui::Panel *pParent ) const
 {
@@ -958,7 +958,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconTool_DuckToken::OnClientApplyTool( CEconItemView *pTool, CEconItemView *pSubject, vgui::Panel *pParent ) const
 {

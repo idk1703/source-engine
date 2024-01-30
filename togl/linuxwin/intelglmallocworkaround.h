@@ -23,11 +23,11 @@
 //  THE SOFTWARE.
 //
 // intelglmallocworkaround.h
-//  class responsible for setting up a malloc override that zeroes allocated 
+//  class responsible for setting up a malloc override that zeroes allocated
 //  memory of less than 96 bytes. this is to work around a bug
 //  in the Intel GLSL compiler on Mac OS X 10.8 due to uninitialized memory.
-//  
-//  96 was chosen due to this quote from Apple: 
+//
+//  96 was chosen due to this quote from Apple:
 //    "I verified that the size of the structure is exactly 64 bytes on 10.8.3, 10.8.4 and will be on 10.8.5."
 //
 //  certain GLSL shaders would (intermittently) cause a crash the first time they

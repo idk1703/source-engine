@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,8 +11,8 @@
 
 // #define COLOR_BACKGROUND RGB( 120, 120, 150 )
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *widget - 
+// Purpose:
+// Input  : *widget -
 //-----------------------------------------------------------------------------
 CDrawHelper::CDrawHelper( mxWindow *widget )
 {
@@ -20,8 +20,8 @@ CDrawHelper::CDrawHelper( mxWindow *widget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *widget - 
+// Purpose:
+// Input  : *widget -
 //-----------------------------------------------------------------------------
 CDrawHelper::CDrawHelper( mxWindow *widget, COLORREF bgColor )
 {
@@ -29,9 +29,9 @@ CDrawHelper::CDrawHelper( mxWindow *widget, COLORREF bgColor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *widget - 
-//			bounds - 
+// Purpose:
+// Input  : *widget -
+//			bounds -
 //-----------------------------------------------------------------------------
 CDrawHelper::CDrawHelper( mxWindow *widget, RECT& bounds )
 {
@@ -39,12 +39,12 @@ CDrawHelper::CDrawHelper( mxWindow *widget, RECT& bounds )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *widget - 
-//			x - 
-//			y - 
-//			w - 
-//			h - 
+// Purpose:
+// Input  : *widget -
+//			x -
+//			y -
+//			w -
+//			h -
 //-----------------------------------------------------------------------------
 CDrawHelper::CDrawHelper( mxWindow *widget, int x, int y, int w, int h, COLORREF bgColor )
 {
@@ -52,10 +52,10 @@ CDrawHelper::CDrawHelper( mxWindow *widget, int x, int y, int w, int h, COLORREF
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *widget - 
-//			bounds - 
-//			bgColor - 
+// Purpose:
+// Input  : *widget -
+//			bounds -
+//			bgColor -
 //-----------------------------------------------------------------------------
 CDrawHelper::CDrawHelper( mxWindow *widget, RECT& bounds, COLORREF bgColor )
 {
@@ -63,12 +63,12 @@ CDrawHelper::CDrawHelper( mxWindow *widget, RECT& bounds, COLORREF bgColor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *widget - 
-//			x - 
-//			y - 
-//			w - 
-//			h - 
+// Purpose:
+// Input  : *widget -
+//			x -
+//			y -
+//			w -
+//			h -
 //-----------------------------------------------------------------------------
 void CDrawHelper::Init( mxWindow *widget, int x, int y, int w, int h, COLORREF bgColor )
 {
@@ -130,7 +130,7 @@ CDrawHelper::~CDrawHelper( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CDrawHelper::GetWidth( void )
@@ -139,7 +139,7 @@ int CDrawHelper::GetWidth( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CDrawHelper::GetHeight( void )
@@ -148,8 +148,8 @@ int CDrawHelper::GetHeight( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rc - 
+// Purpose:
+// Input  : rc -
 //-----------------------------------------------------------------------------
 void CDrawHelper::GetClientRect( RECT& rc )
 {
@@ -159,7 +159,7 @@ void CDrawHelper::GetClientRect( RECT& rc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : HDC
 //-----------------------------------------------------------------------------
 HDC CDrawHelper::GrabDC( void )
@@ -168,14 +168,14 @@ HDC CDrawHelper::GrabDC( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *font - 
-//			pointsize - 
-//			weight - 
-//			maxwidth - 
-//			rcText - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : *font -
+//			pointsize -
+//			weight -
+//			maxwidth -
+//			rcText -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CDrawHelper::CalcTextRect( const char *font, int pointsize, int weight, int maxwidth, RECT& rcText, const char *fmt, ... )
 {
@@ -187,7 +187,7 @@ void CDrawHelper::CalcTextRect( const char *font, int pointsize, int weight, int
 	vsprintf( output, fmt, args );
 
 	HFONT fnt = CreateFont(
-		 -pointsize, 
+		 -pointsize,
 		 0,
 		 0,
 		 0,
@@ -211,12 +211,12 @@ void CDrawHelper::CalcTextRect( const char *font, int pointsize, int weight, int
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *font - 
-//			pointsize - 
-//			weight - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : *font -
+//			pointsize -
+//			weight -
+//			*fmt -
+//			... -
 // Output : int
 //-----------------------------------------------------------------------------
 int CDrawHelper::CalcTextWidth( const char *font, int pointsize, int weight, const char *fmt, ... )
@@ -229,7 +229,7 @@ int CDrawHelper::CalcTextWidth( const char *font, int pointsize, int weight, con
 	vsprintf( output, fmt, args );
 
 	HFONT fnt = CreateFont(
-		 -pointsize, 
+		 -pointsize,
 		 0,
 		 0,
 		 0,
@@ -264,12 +264,12 @@ int CDrawHelper::CalcTextWidth( const char *font, int pointsize, int weight, con
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *font - 
-//			pointsize - 
-//			weight - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : *font -
+//			pointsize -
+//			weight -
+//			*fmt -
+//			... -
 // Output : int
 //-----------------------------------------------------------------------------
 int CDrawHelper::CalcTextWidthW( const char *font, int pointsize, int weight, const wchar_t *fmt, ... )
@@ -282,7 +282,7 @@ int CDrawHelper::CalcTextWidthW( const char *font, int pointsize, int weight, co
 	vswprintf( output, fmt, args );
 
 	HFONT fnt = CreateFont(
-		 -pointsize, 
+		 -pointsize,
 		 0,
 		 0,
 		 0,
@@ -312,10 +312,10 @@ int CDrawHelper::CalcTextWidthW( const char *font, int pointsize, int weight, co
 	return rcText.right;
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fnt - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : fnt -
+//			*fmt -
+//			... -
 // Output : int
 //-----------------------------------------------------------------------------
 int CDrawHelper::CalcTextWidth( HFONT fnt, const char *fmt, ... )
@@ -368,14 +368,14 @@ int CDrawHelper::CalcTextWidthW( HFONT fnt, const wchar_t *fmt, ... )
 	return rcText.right;
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *font - 
-//			pointsize - 
-//			weight - 
-//			clr - 
-//			rcText - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : *font -
+//			pointsize -
+//			weight -
+//			clr -
+//			rcText -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CDrawHelper::DrawColoredText( const char *font, int pointsize, int weight, COLORREF clr, RECT& rcText, const char *fmt, ... )
 {
@@ -385,19 +385,19 @@ void CDrawHelper::DrawColoredText( const char *font, int pointsize, int weight, 
 	va_start( args, fmt );
 	vsprintf( output, fmt, args );
 	va_end( args  );
-	
+
 	DrawColoredTextCharset( font, pointsize, weight, ANSI_CHARSET, clr, rcText, output );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *font - 
-//			pointsize - 
-//			weight - 
-//			clr - 
-//			rcText - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : *font -
+//			pointsize -
+//			weight -
+//			clr -
+//			rcText -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CDrawHelper::DrawColoredTextW( const char *font, int pointsize, int weight, COLORREF clr, RECT& rcText, const wchar_t *fmt, ... )
 {
@@ -407,18 +407,18 @@ void CDrawHelper::DrawColoredTextW( const char *font, int pointsize, int weight,
 	va_start( args, fmt );
 	vswprintf( output, fmt, args );
 	va_end( args  );
-	
+
 	DrawColoredTextCharsetW( font, pointsize, weight, ANSI_CHARSET, clr, rcText, output );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : font - 
-//			clr - 
-//			rcText - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : font -
+//			clr -
+//			rcText -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CDrawHelper::DrawColoredText( HFONT font, COLORREF clr, RECT& rcText, const char *fmt, ... )
 {
@@ -428,7 +428,7 @@ void CDrawHelper::DrawColoredText( HFONT font, COLORREF clr, RECT& rcText, const
 	va_start( args, fmt );
 	vsprintf( output, fmt, args );
 	va_end( args  );
-	
+
 	HFONT oldFont = (HFONT)SelectObject( m_dcMemory, font );
 	COLORREF oldColor = SetTextColor( m_dcMemory, clr );
 	int oldMode = SetBkMode( m_dcMemory, TRANSPARENT );
@@ -446,12 +446,12 @@ void CDrawHelper::DrawColoredText( HFONT font, COLORREF clr, RECT& rcText, const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : font - 
-//			clr - 
-//			rcText - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : font -
+//			clr -
+//			rcText -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CDrawHelper::DrawColoredTextW( HFONT font, COLORREF clr, RECT& rcText, const wchar_t *fmt, ... )
 {
@@ -461,7 +461,7 @@ void CDrawHelper::DrawColoredTextW( HFONT font, COLORREF clr, RECT& rcText, cons
 	va_start( args, fmt );
 	vswprintf( output, fmt, args );
 	va_end( args  );
-	
+
 	HFONT oldFont = (HFONT)SelectObject( m_dcMemory, font );
 	COLORREF oldColor = SetTextColor( m_dcMemory, clr );
 	int oldMode = SetBkMode( m_dcMemory, TRANSPARENT );
@@ -478,14 +478,14 @@ void CDrawHelper::DrawColoredTextW( HFONT font, COLORREF clr, RECT& rcText, cons
 	SelectObject( m_dcMemory, oldFont );
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *font - 
-//			pointsize - 
-//			weight - 
-//			clr - 
-//			rcText - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : *font -
+//			pointsize -
+//			weight -
+//			clr -
+//			rcText -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CDrawHelper::DrawColoredTextCharset( const char *font, int pointsize, int weight, DWORD charset, COLORREF clr, RECT& rcText, const char *fmt, ... )
 {
@@ -495,10 +495,10 @@ void CDrawHelper::DrawColoredTextCharset( const char *font, int pointsize, int w
 	va_start( args, fmt );
 	vsprintf( output, fmt, args );
 	va_end( args  );
-	
+
 
 	HFONT fnt = CreateFont(
-		 -pointsize, 
+		 -pointsize,
 		 0,
 		 0,
 		 0,
@@ -538,10 +538,10 @@ void CDrawHelper::DrawColoredTextCharsetW( const char *font, int pointsize, int 
 	va_start( args, fmt );
 	vswprintf( output, fmt, args );
 	va_end( args  );
-	
+
 
 	HFONT fnt = CreateFont(
-		 -pointsize, 
+		 -pointsize,
 		 0,
 		 0,
 		 0,
@@ -574,14 +574,14 @@ void CDrawHelper::DrawColoredTextCharsetW( const char *font, int pointsize, int 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *font - 
-//			pointsize - 
-//			weight - 
-//			clr - 
-//			rcText - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : *font -
+//			pointsize -
+//			weight -
+//			clr -
+//			rcText -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CDrawHelper::DrawColoredTextMultiline( const char *font, int pointsize, int weight, COLORREF clr, RECT& rcText, const char *fmt, ... )
 {
@@ -593,7 +593,7 @@ void CDrawHelper::DrawColoredTextMultiline( const char *font, int pointsize, int
 	vsprintf( output, fmt, args );
 
 	HFONT fnt = CreateFont(
-		 -pointsize, 
+		 -pointsize,
 		 0,
 		 0,
 		 0,
@@ -625,16 +625,16 @@ void CDrawHelper::DrawColoredTextMultiline( const char *font, int pointsize, int
 	DeleteObject( fnt );
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : r - 
-//			g - 
-//			b - 
-//			style - 
-//			width - 
-//			x1 - 
-//			y1 - 
-//			x2 - 
-//			y2 - 
+// Purpose:
+// Input  : r -
+//			g -
+//			b -
+//			style -
+//			width -
+//			x1 -
+//			y1 -
+//			x2 -
+//			y2 -
 //-----------------------------------------------------------------------------
 void CDrawHelper::DrawColoredLine( COLORREF clr, int style, int width, int x1, int y1, int x2, int y2 )
 {
@@ -647,12 +647,12 @@ void CDrawHelper::DrawColoredLine( COLORREF clr, int style, int width, int x1, i
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : clr - 
-//			style - 
-//			width - 
-//			count - 
-//			*pts - 
+// Purpose:
+// Input  : clr -
+//			style -
+//			width -
+//			count -
+//			*pts -
 //-----------------------------------------------------------------------------
 void CDrawHelper::DrawColoredPolyLine( COLORREF clr, int style, int width, CUtlVector< POINT >& points )
 {
@@ -673,7 +673,7 @@ void CDrawHelper::DrawColoredPolyLine( COLORREF clr, int style, int width, CUtlV
 		temp[ i ].x = pt->x - m_x;
 		temp[ i ].y = pt->y - m_y;
 	}
-	
+
 	Polyline( m_dcMemory, temp, c );
 
 	SelectObject( m_dcMemory, oldPen );
@@ -681,16 +681,16 @@ void CDrawHelper::DrawColoredPolyLine( COLORREF clr, int style, int width, CUtlV
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : r - 
-//			g - 
-//			b - 
-//			style - 
-//			width - 
-//			x1 - 
-//			y1 - 
-//			x2 - 
-//			y2 - 
+// Purpose:
+// Input  : r -
+//			g -
+//			b -
+//			style -
+//			width -
+//			x1 -
+//			y1 -
+//			x2 -
+//			y2 -
 //-----------------------------------------------------------------------------
 POINTL CDrawHelper::DrawColoredRamp( COLORREF clr, int style, int width, int x1, int y1, int x2, int y2, float rate, float sustain )
 {
@@ -718,11 +718,11 @@ POINTL CDrawHelper::DrawColoredRamp( COLORREF clr, int style, int width, int x1,
 
 //-----------------------------------------------------------------------------
 // Purpose: Draw a filled rect
-// Input  : clr - 
-//			x1 - 
-//			y1 - 
-//			x2 - 
-//			y2 - 
+// Input  : clr -
+//			x1 -
+//			y1 -
+//			x2 -
+//			y2 -
 //-----------------------------------------------------------------------------
 void CDrawHelper::DrawFilledRect( COLORREF clr, RECT& rc )
 {
@@ -736,11 +736,11 @@ void CDrawHelper::DrawFilledRect( COLORREF clr, RECT& rc )
 
 //-----------------------------------------------------------------------------
 // Purpose: Draw a filled rect
-// Input  : clr - 
-//			x1 - 
-//			y1 - 
-//			x2 - 
-//			y2 - 
+// Input  : clr -
+//			x1 -
+//			y1 -
+//			x2 -
+//			y2 -
 //-----------------------------------------------------------------------------
 void CDrawHelper::DrawFilledRect( COLORREF clr, int x1, int y1, int x2, int y2 )
 {
@@ -756,11 +756,11 @@ void CDrawHelper::DrawFilledRect( COLORREF clr, int x1, int y1, int x2, int y2 )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : clr - 
-//			style - 
-//			width - 
-//			rc - 
+// Purpose:
+// Input  : clr -
+//			style -
+//			width -
+//			rc -
 //-----------------------------------------------------------------------------
 void CDrawHelper::DrawOutlinedRect( COLORREF clr, int style, int width, RECT& rc )
 {
@@ -769,13 +769,13 @@ void CDrawHelper::DrawOutlinedRect( COLORREF clr, int style, int width, RECT& rc
 
 //-----------------------------------------------------------------------------
 // Purpose: Draw an outlined rect
-// Input  : clr - 
-//			style - 
-//			width - 
-//			x1 - 
-//			y1 - 
-//			x2 - 
-//			y2 - 
+// Input  : clr -
+//			style -
+//			width -
+//			x1 -
+//			y1 -
+//			x2 -
+//			y2 -
 //-----------------------------------------------------------------------------
 void CDrawHelper::DrawOutlinedRect( COLORREF clr, int style, int width, int x1, int y1, int x2, int y2 )
 {
@@ -804,13 +804,13 @@ void CDrawHelper::DrawOutlinedRect( COLORREF clr, int style, int width, int x1, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x1 - 
-//			y1 - 
-//			x2 - 
-//			y2 - 
-//			clr - 
-//			thickness - 
+// Purpose:
+// Input  : x1 -
+//			y1 -
+//			x2 -
+//			y2 -
+//			clr -
+//			thickness -
 //-----------------------------------------------------------------------------
 void CDrawHelper::DrawLine( int x1, int y1, int x2, int y2, COLORREF clr, int thickness )
 {
@@ -838,11 +838,11 @@ void CDrawHelper::DrawLine( int x1, int y1, int x2, int y2, COLORREF clr, int th
 	DeleteObject( pen );
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rc - 
-//			fillr - 
-//			fillg - 
-//			fillb - 
+// Purpose:
+// Input  : rc -
+//			fillr -
+//			fillg -
+//			fillb -
 //-----------------------------------------------------------------------------
 void CDrawHelper::DrawTriangleMarker( RECT& rc, COLORREF fill, bool inverted /*= false*/ )
 {
@@ -875,13 +875,13 @@ void CDrawHelper::DrawTriangleMarker( RECT& rc, COLORREF fill, bool inverted /*=
 	HRGN rgn = CreatePolygonRgn( region, cPoints, ALTERNATE );
 
 	int oldPF = SetPolyFillMode( m_dcMemory, ALTERNATE );
-	
+
 	HBRUSH brFace = CreateSolidBrush( fill );
 
 	FillRgn( m_dcMemory, rgn, brFace );
 
 	DeleteObject( brFace );
-	
+
 	SetPolyFillMode( m_dcMemory, oldPF );
 
 	DeleteObject( rgn );
@@ -929,7 +929,7 @@ void CDrawHelper::ClipToRects( void )
 			HRGN result = CreateRectRgn( 0, 0, 100, 100 );
 
 			CombineRgn( result, m_ClipRegion, addIn, RGN_AND );
-			
+
 			DeleteObject( m_ClipRegion );
 			DeleteObject( addIn );
 
@@ -941,8 +941,8 @@ void CDrawHelper::ClipToRects( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rc - 
+// Purpose:
+// Input  : rc -
 //-----------------------------------------------------------------------------
 void CDrawHelper::OffsetSubRect( RECT& rc )
 {
@@ -950,9 +950,9 @@ void CDrawHelper::OffsetSubRect( RECT& rc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : br - 
-//			rc - 
+// Purpose:
+// Input  : br -
+//			rc -
 //-----------------------------------------------------------------------------
 void CDrawHelper::DrawFilledRect( HBRUSH br, RECT& rc )
 {
@@ -986,7 +986,7 @@ void CDrawHelper::DrawCircle( COLORREF clr, int x, int y, int radius, bool fille
 		Arc( m_dcMemory, rc.left, rc.top, rc.right, rc.bottom,
 			rc.left, rc.top, rc.left, rc.top );
 	}
-	
+
 	SelectObject( m_dcMemory, oldPen );
 	SelectObject( m_dcMemory, oldBr );
 
@@ -995,11 +995,11 @@ void CDrawHelper::DrawCircle( COLORREF clr, int x, int y, int radius, bool fille
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rc - 
-//			clr1 - 
-//			clr2 - 
-//			vertical - 
+// Purpose:
+// Input  : rc -
+//			clr1 -
+//			clr2 -
+//			vertical -
 //-----------------------------------------------------------------------------
 void CDrawHelper::DrawGradientFilledRect( RECT& rc, COLORREF clr1, COLORREF clr2, bool vertical )
 {
@@ -1014,9 +1014,9 @@ void CDrawHelper::DrawGradientFilledRect( RECT& rc, COLORREF clr1, COLORREF clr2
 	vert[0].Green  = GetGValue( clr1 ) << 8;
 	vert[0].Blue   = GetBValue( clr1 ) << 8;
 	vert[0].Alpha  = 0x0000;
-	
+
 	vert[1].x      = rcDraw.right;
-	vert[1].y      = rcDraw.bottom; 
+	vert[1].y      = rcDraw.bottom;
 	vert[1].Red    = GetRValue( clr2 ) << 8;
 	vert[1].Green  = GetGValue( clr2 ) << 8;
 	vert[1].Blue   = GetBValue( clr2 ) << 8;

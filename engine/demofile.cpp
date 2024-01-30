@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -74,7 +74,7 @@ void CDemoFile::WriteSequenceInfo(int nSeqNrIn, int nSeqNrOut)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoFile::ReadSequenceInfo(int &nSeqNrIn, int &nSeqNrOut)
 {
@@ -124,7 +124,7 @@ void CDemoFile::WriteCmdInfo( democmdinfo_t& info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoFile::ReadCmdInfo( democmdinfo_t& info )
 {
@@ -136,9 +136,9 @@ void CDemoFile::ReadCmdInfo( democmdinfo_t& info )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : cmd - 
-//			*fp - 
+// Purpose:
+// Input  : cmd -
+//			*fp -
 //-----------------------------------------------------------------------------
 void CDemoFile::WriteCmdHeader( unsigned char cmd, int tick )
 {
@@ -149,7 +149,7 @@ void CDemoFile::WriteCmdHeader( unsigned char cmd, int tick )
 	m_pBuffer->PutUnsignedChar( cmd );
 	m_pBuffer->PutInt( tick );
 
-	static const char *cmdname[] = 
+	static const char *cmdname[] =
 	{
 		"dem_unknown",
 		"dem_signon",
@@ -167,10 +167,10 @@ void CDemoFile::WriteCmdHeader( unsigned char cmd, int tick )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : cmd - 
-//			dt - 
-//			frame - 
+// Purpose:
+// Input  : cmd -
+//			dt -
+//			frame -
 //-----------------------------------------------------------------------------
 void CDemoFile::ReadCmdHeader( unsigned char& cmd, int& tick )
 {
@@ -217,7 +217,7 @@ void CDemoFile::WriteConsoleCommand( const char *cmdstring, int tick )
 const char *CDemoFile::ReadConsoleCommand()
 {
 	static char cmdstring[1024];
-	
+
 	ReadRawData( cmdstring, sizeof(cmdstring) );
 
 	return cmdstring;
@@ -233,8 +233,8 @@ unsigned int CDemoFile::GetCurPos( bool bRead )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : buf - 
+// Purpose:
+// Input  : buf -
 //-----------------------------------------------------------------------------
 void CDemoFile::WriteNetworkDataTables( bf_write *buf, int tick  )
 {
@@ -254,9 +254,9 @@ void CDemoFile::WriteNetworkDataTables( bf_write *buf, int tick  )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : expected_length - 
-//			&demofile - 
+// Purpose:
+// Input  : expected_length -
+//			&demofile -
 //-----------------------------------------------------------------------------
 int CDemoFile::ReadNetworkDataTables( bf_read *buf )
 {
@@ -289,8 +289,8 @@ int CDemoFile::ReadStringTables( bf_read *buf )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : cmdnumber - 
+// Purpose:
+// Input  : cmdnumber -
 //-----------------------------------------------------------------------------
 void CDemoFile::WriteUserCmd( int cmdnumber, const char *buffer, unsigned char bytes, int tick )
 {
@@ -306,13 +306,13 @@ void CDemoFile::WriteUserCmd( int cmdnumber, const char *buffer, unsigned char b
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : discard - 
+// Purpose:
+// Input  : discard -
 //-----------------------------------------------------------------------------
 int CDemoFile::ReadUserCmd( char *buffer, int &size )
 {
 	int outgoing_sequence;
-	
+
 	Assert( m_pBuffer && m_pBuffer->IsValid() );
 	outgoing_sequence = m_pBuffer->GetInt();
 
@@ -337,13 +337,13 @@ void CDemoFile::SeekTo( int position, bool bRead )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 int CDemoFile::ReadRawData( char *buffer, int length )
 {
 	int size;
-	
+
 	Assert( m_pBuffer && m_pBuffer->IsValid() );
 	if ( !m_pBuffer || !m_pBuffer->IsValid() )
 	{
@@ -403,7 +403,7 @@ void CDemoFile::WriteDemoHeader()
 		DevMsg( "     mapname: %s\n", m_DemoHeader.mapname );
 		DevMsg( "     gamedirectory: %s\n", m_DemoHeader.gamedirectory );
 		DevMsg( "     playback_time: %f\n", m_DemoHeader.playback_time );
-		DevMsg( "     playback_ticks: %i\n", m_DemoHeader.playback_ticks );	
+		DevMsg( "     playback_ticks: %i\n", m_DemoHeader.playback_ticks );
 		DevMsg( "     playback_frames: %i\n", m_DemoHeader.playback_frames );
 		DevMsg( "     signonlength: %i\n", m_DemoHeader.signonlength );
 		DevMsg( "\n" );
@@ -442,13 +442,13 @@ demoheader_t *CDemoFile::ReadDemoHeader()
 		return NULL;
 	}
 
-	if ( m_DemoHeader.networkprotocol != PROTOCOL_VERSION 
+	if ( m_DemoHeader.networkprotocol != PROTOCOL_VERSION
 #if defined( DEMO_BACKWARDCOMPATABILITY )
-		&&  m_DemoHeader.networkprotocol < PROTOCOL_VERSION_12 
+		&&  m_DemoHeader.networkprotocol < PROTOCOL_VERSION_12
 #endif
 		)
 	{
-		ConMsg ("ERROR: demo network protocol %i outdated, engine version is %i \n", 
+		ConMsg ("ERROR: demo network protocol %i outdated, engine version is %i \n",
 			m_DemoHeader.networkprotocol, PROTOCOL_VERSION );
 
 		return NULL;
@@ -457,7 +457,7 @@ demoheader_t *CDemoFile::ReadDemoHeader()
 	if ( ( m_DemoHeader.demoprotocol > DEMO_PROTOCOL) ||
 		 ( m_DemoHeader.demoprotocol < 2 ) )
 	{
-		ConMsg ("ERROR: demo file protocol %i outdated, engine vnoteersion is %i \n", 
+		ConMsg ("ERROR: demo file protocol %i outdated, engine vnoteersion is %i \n",
 			m_DemoHeader.demoprotocol, DEMO_PROTOCOL );
 
 		return NULL;
@@ -481,7 +481,7 @@ void CDemoFile::WriteFileBytes( FileHandle_t fh, int length )
 
 	g_pFileSystem->Read ( copybuf, copysize, fh );
 	m_pBuffer->Put( copybuf, copysize );
-	
+
 	g_pFileSystem->Flush ( fh );
 }
 
@@ -517,7 +517,7 @@ bool CDemoFile::Open(const char *name, bool bReadOnly, bool bMemoryBuffer, int n
 
 	if ( !m_pBuffer || !m_pBuffer->IsValid() )
 	{
-		ConMsg ("CDemoFile::Open: couldn't open file %s for %s.\n", 
+		ConMsg ("CDemoFile::Open: couldn't open file %s for %s.\n",
 			name, bReadOnly?"reading":"writing" );
 		Close();
 		return false;

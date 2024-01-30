@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -17,10 +17,10 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : eModelType - 
-//			pszModelData - 
-// Output : 
+// Purpose:
+// Input  : eModelType -
+//			pszModelData -
+// Output :
 //-----------------------------------------------------------------------------
 CMapClass *CModelFactory::CreateModel(ModelType_t eModelType, const char *pszModelData)
 {

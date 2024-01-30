@@ -63,7 +63,7 @@ void CTFBotSquad::Leave( CTFBot *bot )
 			bot->SetFlagTarget( pFlag );
 		}
 	}
-	
+
 	if ( GetMemberCount() == 0 )
 	{
 		DisbandAndDeleteSquad();
@@ -177,7 +177,7 @@ float CTFBotSquad::GetSlowestMemberSpeed( bool includeLeader ) const
 
 
 //----------------------------------------------------------------------
-// Return the speed of the slowest member of the squad, 
+// Return the speed of the slowest member of the squad,
 // considering their ideal class speed.
 float CTFBotSquad::GetSlowestMemberIdealSpeed( bool includeLeader ) const
 {
@@ -234,8 +234,8 @@ bool CTFBotSquad::ShouldSquadLeaderWaitForFormation( void ) const
 		// the squad leader should wait if any member is out of position, but not yet broken ranks
 		if ( m_roster[i].Get() != NULL && m_roster[i]->IsAlive() )
 		{
-			if ( m_roster[i]->GetSquadFormationError() >= 1.0f && 
-				 !m_roster[i]->HasBrokenFormation() && 
+			if ( m_roster[i]->GetSquadFormationError() >= 1.0f &&
+				 !m_roster[i]->HasBrokenFormation() &&
 				 !m_roster[i]->GetLocomotionInterface()->IsStuck() &&
 				 !m_roster[i]->IsPlayerClass( TF_CLASS_MEDIC ) )		// Medics do their own thing
 			{

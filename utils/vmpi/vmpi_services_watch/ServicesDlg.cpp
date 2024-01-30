@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -41,7 +41,7 @@ int V_AfxMessageBox( int mbType, const char *pFormat, ... )
 	va_start( marker, pFormat );
 	_vsnprintf( msg, sizeof( msg ), pFormat, marker );
 	va_end( marker );
-	
+
 	return AfxMessageBox( msg, mbType );
 }
 
@@ -78,26 +78,26 @@ void AppendStr( char *dest, int destSize, const char *pFormat, ... )
 	_vsnprintf( str, sizeof( str ), pFormat, marker );
 	va_end( marker );
 	str[sizeof( str ) - 1] = 0;
-	
+
 	V_strncat( dest, str, destSize );
-}	
+}
 
 
 char* GetLastErrorString()
 {
 	static char err[2048];
-	
+
 	LPVOID lpMsgBuf;
-	FormatMessage( 
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-		FORMAT_MESSAGE_FROM_SYSTEM | 
+	FormatMessage(
+		FORMAT_MESSAGE_ALLOCATE_BUFFER |
+		FORMAT_MESSAGE_FROM_SYSTEM |
 		FORMAT_MESSAGE_IGNORE_INSERTS,
 		NULL,
 		GetLastError(),
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
 		(LPTSTR) &lpMsgBuf,
 		0,
-		NULL 
+		NULL
 	);
 
 	strncpy( err, (char*)lpMsgBuf, sizeof( err ) );
@@ -234,11 +234,11 @@ static int CALLBACK SortByCPUPercentage( LPARAM iItem1, LPARAM iItem2, LPARAM lp
 	if ( pInfo2->m_CPUPercentage > pInfo1->m_CPUPercentage )
 		return 1;
 	else if ( pInfo2->m_CPUPercentage < pInfo1->m_CPUPercentage )
-		return -1;														   
+		return -1;
 	else
 		return 0;
 }
-				
+
 static int CALLBACK SortByMemUsage( LPARAM iItem1, LPARAM iItem2, LPARAM lpParam )
 {
 	CServiceInfo *pInfo1 = (CServiceInfo*)iItem1;
@@ -247,11 +247,11 @@ static int CALLBACK SortByMemUsage( LPARAM iItem1, LPARAM iItem2, LPARAM lpParam
 	if ( pInfo2->m_MemUsageMB > pInfo1->m_MemUsageMB )
 		return 1;
 	else if ( pInfo2->m_MemUsageMB < pInfo1->m_MemUsageMB )
-		return -1;														   
+		return -1;
 	else
 		return 0;
 }
-				
+
 // --------------------------------------------------------------------------------------------------------- //
 // Column information.
 // --------------------------------------------------------------------------------------------------------- //
@@ -282,7 +282,7 @@ struct
 #define COLUMN_WORKER_APP_RUNNING_TIME		3
 #define COLUMN_MASTER_NAME					4
 #define COLUMN_PASSWORD						5
-#define COLUMN_PROTOCOL_VERSION				6						 
+#define COLUMN_PROTOCOL_VERSION				6
 #define COLUMN_SERVICE_VERSION				7
 #define COLUMN_CPU_PERCENTAGE				8
 #define COLUMN_MEM_USAGE					9
@@ -290,10 +290,10 @@ struct
 #define COLUMN_MAP_NAME						11
 
 
-// Used to sort all the columns. 
+// Used to sort all the columns.
 // When they click on a column, we add that index to entry 0 in here.
 // Then when sorting, if 2 columns are equal, we move to the next sort function.
-CUtlVector<int> g_SortColumns;	
+CUtlVector<int> g_SortColumns;
 
 static void PushSortColumn( int iColumn )
 {
@@ -301,10 +301,10 @@ static void PushSortColumn( int iColumn )
 	int iPrev = g_SortColumns.Find( iColumn );
 	if ( iPrev != g_SortColumns.InvalidIndex() )
 		g_SortColumns.Remove( iPrev );
-	
+
 	// Now add this one.
 	g_SortColumns.AddToTail( iColumn );
-}	
+}
 
 static int CALLBACK MainSortFn( LPARAM iItem1, LPARAM iItem2, LPARAM lpParam )
 {
@@ -317,7 +317,7 @@ static int CALLBACK MainSortFn( LPARAM iItem1, LPARAM iItem2, LPARAM lpParam )
 	}
 	return curStatus;
 }
-																		 
+
 
 /////////////////////////////////////////////////////////////////////////////
 // CServicesDlg dialog
@@ -364,7 +364,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CServicesDlg message handlers
 
-BOOL CServicesDlg::OnInitDialog() 
+BOOL CServicesDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
@@ -375,13 +375,13 @@ BOOL CServicesDlg::OnInitDialog()
 	SetIcon( hIcon, true );
 
 	m_ServicesList.SetExtendedStyle( LVS_EX_FULLROWSELECT );
-	
+
 	// Setup the headers.
 	for ( int i=0; i < ARRAYSIZE( g_ColumnInfos ); i++ )
 	{
 		m_ServicesList.InsertColumn( i, g_ColumnInfos[i].pText, LVCFMT_LEFT, g_ColumnInfos[i].width, i );
 	}
-	
+
 	m_pServicesPingSocket = CreateIPSocket();
 	if ( m_pServicesPingSocket )
 	{
@@ -430,7 +430,7 @@ BOOL CServicesDlg::OnInitDialog()
 	m_NetViewThread.Init();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+				// EXCEPTION: OCX Property Pages should return FALSE
 }
 
 
@@ -438,7 +438,7 @@ void CServicesDlg::BuildVMPIPingPacket( CUtlVector<char> &out, char cPacketID, u
 {
 	out.Purge();
 	out.AddToTail( protocolVersion );
-	
+
 	const char *pPassword = m_Password;
 	if ( pPassword[0] == 0 || bIgnorePassword )
 	{
@@ -450,7 +450,7 @@ void CServicesDlg::BuildVMPIPingPacket( CUtlVector<char> &out, char cPacketID, u
 	{
 		out.AddMultipleToTail( strlen( pPassword ) + 1, pPassword );	// password.
 	}
-	
+
 	out.AddToTail( cPacketID );
 }
 
@@ -503,7 +503,7 @@ void CServicesDlg::UpdateServicesFromNetMessages()
 				int cpuPercentage = -1;
 				if ( buf.GetNumBytesLeft() >= 1 )
 					cpuPercentage = buf.ReadByte();
-				
+
 				char exeName[512];
 				if ( buf.GetNumBytesLeft() >= 1 )
 					buf.ReadString( exeName, sizeof( exeName ) );
@@ -519,8 +519,8 @@ void CServicesDlg::UpdateServicesFromNetMessages()
 					buf.ReadString( mapName, sizeof( mapName ) );
 				else
 					V_strncpy( mapName, "-", sizeof( mapName ) );
-										
-	
+
+
 				CServiceInfo *pInfo = FindServiceByComputerName( computerName );
 				if ( !pInfo )
 				{
@@ -529,7 +529,7 @@ void CServicesDlg::UpdateServicesFromNetMessages()
 					pInfo->m_ComputerName = computerName;
 
 					pInfo->m_pLastStatusText = NULL;
-					
+
 					pInfo->m_Addr.port = iPort;
 					pInfo->m_LastPingTimeMS = Plat_MSTime();
 					pInfo->m_MasterName = "?";
@@ -540,7 +540,7 @@ void CServicesDlg::UpdateServicesFromNetMessages()
 					// Update the display of # of services.
 					UpdateServiceCountDisplay();
 				}
-				
+
 				pInfo->m_ProtocolVersion = protocolVersion;
 				V_strncpy( pInfo->m_ServiceVersion, serviceVersion, sizeof( pInfo->m_ServiceVersion ) );
 				pInfo->m_Addr = ipFrom;
@@ -564,7 +564,7 @@ void CServicesDlg::UpdateServicesFromNetMessages()
 
 void CServicesDlg::UpdateServicesFromNetView()
 {
-    CUtlVector<char*> computerNames;
+	CUtlVector<char*> computerNames;
 	m_NetViewThread.GetComputerNames( computerNames );
 
 	for ( int i=0; i < computerNames.Count(); i++ )
@@ -589,7 +589,7 @@ void CServicesDlg::UpdateServicesFromNetView()
 
 			// Update the display of # of services.
 			UpdateServiceCountDisplay();
-		
+
 			UpdateServiceInListbox( pInfo );
 		}
 	}
@@ -609,7 +609,7 @@ void CServicesDlg::OnIdle()
 	if ( curTime - m_dwLastServicesPing >= SERVICES_PING_INTERVAL )
 	{
 		m_dwLastServicesPing = curTime;
-	
+
 		for ( int i=VMPI_SERVICE_PORT; i <= VMPI_LAST_SERVICE_PORT; i++ )
 		{
 			CUtlVector<char> data;
@@ -625,7 +625,7 @@ void CServicesDlg::OnIdle()
 	}
 
 	m_ServicesList.SetRedraw( false );
-	
+
 	// Check for messages from services.
 	UpdateServicesFromNetMessages();
 
@@ -695,7 +695,7 @@ void CServicesDlg::UpdateServiceInListbox( CServiceInfo *pInfo )
 	if ( iItem != -1 )
 	{
 		UpdateItemText( m_ServicesList, iItem, COLUMN_COMPUTER_NAME, pInfo->m_ComputerName );
-		
+
 		const char *pText = GetStatusString( pInfo );
 		UpdateItemText( m_ServicesList, iItem, COLUMN_STATUS, pText );
 
@@ -707,7 +707,7 @@ void CServicesDlg::UpdateServiceInListbox( CServiceInfo *pInfo )
 		UpdateItemText( m_ServicesList, iItem, COLUMN_WORKER_APP_RUNNING_TIME, timeStr );
 
 		UpdateItemText( m_ServicesList, iItem, COLUMN_MASTER_NAME, pInfo->m_MasterName );
-		
+
 		char str[512];
 		V_snprintf( str, sizeof( str ), "%d", pInfo->m_ProtocolVersion );
 		UpdateItemText( m_ServicesList, iItem, COLUMN_PROTOCOL_VERSION, str );
@@ -744,7 +744,7 @@ void CServicesDlg::UpdateServiceInListbox( CServiceInfo *pInfo )
 			if ( pPrevItem && MainSortFn( (LPARAM)pPrevItem, (LPARAM)pInfo, NULL ) > 0 )
 				m_bListChanged = true;
 		}
-			
+
 		if ( !m_bListChanged && (iItem+1) < m_ServicesList.GetItemCount() )
 		{
 			CServiceInfo *pNextItem = (CServiceInfo*)m_ServicesList.GetItemData( iItem+1 );
@@ -804,26 +804,26 @@ void CServicesDlg::UpdateServiceCountDisplay()
 
 
 // This monstrosity is here because of the way they bundle string resources into groups in an exe file.
-// See http://support.microsoft.com/kb/q196774/. 
+// See http://support.microsoft.com/kb/q196774/.
 bool FindStringResourceEx( HINSTANCE hinst, UINT uId, UINT langId, char *pStr, int outLen )
 {
 	// Convert the string ID into a bundle number
 	bool bRet = false;
 	HRSRC hrsrc = FindResourceEx(hinst, RT_STRING, MAKEINTRESOURCE(uId / 16 + 1), langId);
-	if (hrsrc) 
+	if (hrsrc)
 	{
 		HGLOBAL hglob = LoadResource(hinst, hrsrc);
-		if (hglob) 
+		if (hglob)
 		{
 			LPCWSTR pwsz = reinterpret_cast<LPCWSTR>( LockResource(hglob) );
-			if (pwsz) 
+			if (pwsz)
 			{
 				// okay now walk the string table
-				for (UINT i = 0; i < (uId & 15); i++) 
+				for (UINT i = 0; i < (uId & 15); i++)
 				{
 					pwsz += 1 + (UINT)*pwsz;
 				}
-				
+
 				// First word in the resource is the length and the rest is the data.
 				int nChars = min( (int)pwsz[0], outLen-1 );
 				++pwsz;
@@ -842,7 +842,7 @@ int CheckServiceVersion( const char *pPatchDir, char *pServiceVersion, int maxSe
 {
 	char filename[MAX_PATH];
 	V_ComposeFileName( pPatchDir, "vmpi_service.exe", filename, sizeof( filename ) );
-	
+
 	int ret = IDCANCEL;
 	HINSTANCE hInst = LoadLibrary( filename );
 	if ( hInst )
@@ -856,18 +856,18 @@ int CheckServiceVersion( const char *pPatchDir, char *pServiceVersion, int maxSe
 		{
 			V_AfxMessageBox( MB_OK, "Can't get IDS_VERSION_STRING resource from %s.", filename );
 		}
-		
+
 		FreeLibrary( hInst );
 	}
 	else
 	{
 		V_AfxMessageBox( MB_OK, "Can't load %s to get service version.", filename );
 	}
-	
+
 	return ret;
 }
 
-void CServicesDlg::OnPatchServices() 
+void CServicesDlg::OnPatchServices()
 {
 	// Inquire about the timeout.
 	CPatchTimeout dlg;
@@ -881,7 +881,7 @@ TryAgain:;
 	{
 		// Launch the transfer app.
 		char commandLine[32 * 1024] = {0};
-		
+
 		char transferExe[MAX_PATH];
 		V_ComposeFileName( dlg.m_VMPITransferDirectory, "vmpi_transfer.exe", transferExe, sizeof( transferExe ) );
 		if ( _access( transferExe, 0 ) != 0 )
@@ -900,10 +900,10 @@ TryAgain:;
 		AppendStr( commandLine, sizeof( commandLine ), "\"%s\" -PatchHost", transferExe );
 		AppendStr( commandLine, sizeof( commandLine ), " -mpi_PatchVersion %s", strServiceVersion );
 		AppendStr( commandLine, sizeof( commandLine ), " -mpi_PatchDirectory \"%s\"", (const char*)dlg.m_PatchDirectory );
-													
+
 		if ( dlg.m_bForcePatch )
 			AppendStr( commandLine, sizeof( commandLine ), " -mpi_ForcePatch" );
-		
+
 		// Collect the list of addresses.
 		CUtlVector<CIPAddr> addrs;
 		POSITION pos = m_ServicesList.GetFirstSelectedItemPosition();
@@ -920,7 +920,7 @@ TryAgain:;
 			AfxMessageBox( "No workers selected, or they all are off." );
 			return;
 		}
-		
+
 		AppendStr( commandLine, sizeof( commandLine ), " -mpi_PatchWorkers %d", addrs.Count() );
 		for ( int i=0; i < addrs.Count(); i++ )
 		{
@@ -930,12 +930,12 @@ TryAgain:;
 		STARTUPINFO si;
 		memset( &si, 0, sizeof( si ) );
 		si.cb = sizeof( si );
-		
+
 		PROCESS_INFORMATION pi;
 		memset( &pi, 0, sizeof( pi ) );
 
-		if ( CreateProcess( NULL, commandLine, 
-			NULL, NULL, false, 
+		if ( CreateProcess( NULL, commandLine,
+			NULL, NULL, false,
 			0,
 			NULL,
 			(const char *)dlg.m_PatchDirectory,
@@ -950,12 +950,12 @@ TryAgain:;
 		else
 		{
 			V_AfxMessageBox( MB_OK, "Error starting patch master: %s", GetLastErrorString() );
-		}		 		
+		}
 	}
 }
 
 
-void CServicesDlg::OnStopServices() 
+void CServicesDlg::OnStopServices()
 {
 	if ( MessageBox( "Warning: if you stop these services, you won't be able to control them from this application, and must restart them manually. Contine?", "Warning", MB_YESNO ) == IDYES )
 	{
@@ -965,7 +965,7 @@ void CServicesDlg::OnStopServices()
 	}
 }
 
-void CServicesDlg::OnStopJobs() 
+void CServicesDlg::OnStopJobs()
 {
 	CUtlVector<char> data;
 	BuildVMPIPingPacket( data, VMPI_KILL_PROCESS );
@@ -973,7 +973,7 @@ void CServicesDlg::OnStopJobs()
 }
 
 
-void CServicesDlg::OnFilterByPassword() 
+void CServicesDlg::OnFilterByPassword()
 {
 	CSetPasswordDlg dlg( IDD_SET_PASSWORD );
 	dlg.m_Password = m_Password;
@@ -990,11 +990,11 @@ void CServicesDlg::OnFilterByPassword()
 
 		// Re-ping everyone immediately.
 		m_dwLastServicesPing = GetTickCount() - SERVICES_PING_INTERVAL;
-	}	
+	}
 }
 
 // This sets a new password on the selected services.
-void CServicesDlg::OnForcePassword() 
+void CServicesDlg::OnForcePassword()
 {
 	CSetPasswordDlg dlg( IDD_FORCE_PASSWORD );
 	dlg.m_Password = "password";
@@ -1011,7 +1011,7 @@ void CServicesDlg::OnForcePassword()
 	}
 }
 
-void CServicesDlg::OnDblclkServicesList(NMHDR* pNMHDR, LRESULT* pResult) 
+void CServicesDlg::OnDblclkServicesList(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	POSITION pos = m_ServicesList.GetFirstSelectedItemPosition();
 	if ( pos )
@@ -1033,9 +1033,9 @@ void CServicesDlg::OnDblclkServicesList(NMHDR* pNMHDR, LRESULT* pResult)
 				PROCESS_INFORMATION pi;
 				memset( &pi, 0, sizeof( pi ) );
 
-				if ( !CreateProcess( 
-					NULL, 
-					(char*)(const char*)cmdLine, 
+				if ( !CreateProcess(
+					NULL,
+					(char*)(const char*)cmdLine,
 					NULL,							// security
 					NULL,
 					TRUE,
@@ -1049,22 +1049,22 @@ void CServicesDlg::OnDblclkServicesList(NMHDR* pNMHDR, LRESULT* pResult)
 					Q_snprintf( err, sizeof( err ), "Can't run '%s'", (LPCTSTR)cmdLine );
 					MessageBox( err, "Error", MB_OK );
 				}
-			}			
+			}
 		}
 	}
-	
+
 	*pResult = 0;
 }
 
-void CServicesDlg::OnSize(UINT nType, int cx, int cy) 
+void CServicesDlg::OnSize(UINT nType, int cx, int cy)
 {
 	CIdleDialog::OnSize(nType, cx, cy);
-	
-	m_AnchorMgr.UpdateAnchors( this );	
+
+	m_AnchorMgr.UpdateAnchors( this );
 }
 
 
-BOOL CServicesDlg::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult) 
+BOOL CServicesDlg::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 {
 	NMHDR *pHdr = (NMHDR*)lParam;
 	if ( pHdr->idFrom == IDC_SERVICES_LIST )

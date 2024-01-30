@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -31,7 +31,7 @@ CClipViewPanel::CClipViewPanel( vgui::Panel *pParent, const char *pName ) :
 	SetMaximizeButtonVisible( false );
 	SetMinimizeToSysTrayButtonVisible( false );
 	SetCloseButtonVisible( false );
-								 
+
 	SetTitle( "3d View", true );
 
 //	LoadControlSettings( "resource/SceneViewer_ClipView.res" );

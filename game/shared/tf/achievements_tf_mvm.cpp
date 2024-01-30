@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -23,7 +23,7 @@
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_CompletePopFile : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -66,7 +66,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_CompletePopFile, ACHIEVEMENT_TF_MVM_COMP
 class CAchievementTF_MvM_EarnMoneyBonus : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -106,7 +106,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_EarnMoneyBonus, ACHIEVEMENT_TF_MVM_EARN_
 class CAchievementTF_MvM_AdvancedEarnAllBonuses : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -149,7 +149,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_AdvancedEarnAllBonuses, ACHIEVEMENT_TF_M
 class CAchievementTF_MvM_PickupMoneyAboutToExpire : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -192,7 +192,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_CollectMoneyGrind, ACHIEVEMENT_TF_MVM_CO
 class CAchievementTF_MvM_PlayGameFriends : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -220,7 +220,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_PlayGameFriends, ACHIEVEMENT_TF_MVM_PLAY
 class CAchievementTF_MvM_PlayEachClass : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_HAS_COMPONENTS );
 		SetGoal( ( TF_LAST_NORMAL_CLASS - 1 ) - TF_FIRST_NORMAL_CLASS + 1 ); //( TF_LAST_NORMAL_CLASS - 1 ) to exclude the new civilian class
@@ -266,7 +266,7 @@ public:
 						// yes, the achievement is satisfied for this class, set the corresponding bit
 						int iBitNumber =( iClass - TF_FIRST_NORMAL_CLASS );
 						EnsureComponentBitSetAndEvaluate( iBitNumber );
-					}							
+					}
 				}
 			}
 		}
@@ -281,7 +281,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_PlayEachClass, ACHIEVEMENT_TF_MVM_PLAY_E
 class CAchievementTF_MvM_DestroyTwoTanks : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -325,7 +325,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_DestroyTwoTanks, ACHIEVEMENT_TF_MVM_DEST
 class CAchievementTF_MvM_DestroyTankWhileDeploying : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -339,7 +339,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_DestroyTankWhileDeploying, ACHIEVEMENT_T
 class CAchievementTF_MvM_DestroyTankQuickly : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -353,7 +353,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_DestroyTankQuickly, ACHIEVEMENT_TF_MVM_D
 class CAchievementTF_MvM_DefendCap : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -397,7 +397,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_DefendCap, ACHIEVEMENT_TF_MVM_DEFEND_CAP
 class CAchievementTF_MvM_KillBombCarriers : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -451,7 +451,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_KillBombCarriers, ACHIEVEMENT_TF_MVM_KIL
 class CAchievementTF_MvM_CompleteWaveWithoutDying : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 1 );
@@ -485,7 +485,7 @@ public:
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pVictim && ( pVictim == C_BasePlayer::GetLocalPlayer() ) )
 		{
@@ -497,19 +497,19 @@ private:
 	bool bSurvivedEntireWave;
 };
 DECLARE_ACHIEVEMENT( CAchievementTF_MvM_CompleteWaveWithoutDying, ACHIEVEMENT_TF_MVM_COMPLETE_WAVE_WITHOUT_DYING, "TF_MVM_COMPLETE_WAVE_WITHOUT_DYING", 5 );
- 
+
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_CompleteTour : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_HAS_COMPONENTS );
 
 		static const char *szComponents[] =
 		{
 			"scripts/population/mvm_decoy.pop", "scripts/population/mvm_coaltown.pop", "scripts/population/mvm_mannworks.pop"
-		};		
+		};
 		m_pszComponentNames = szComponents;
 		m_iNumComponents = ARRAYSIZE( szComponents );
 		SetGoal( m_iNumComponents );
@@ -547,12 +547,12 @@ private:
 	bool m_bPlayedEntireMission;
 };
 DECLARE_ACHIEVEMENT( CAchievementTF_MvM_CompleteTour, ACHIEVEMENT_TF_MVM_COMPLETE_TOUR, "TF_MVM_COMPLETE_TOUR", 5 );
- 
+
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_UseTeleportBottle : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -605,7 +605,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_UseTeleportBottle, ACHIEVEMENT_TF_MVM_US
 class CAchievementTF_MvM_UseCritBottle : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -638,7 +638,7 @@ public:
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( gpGlobals->curtime < m_flAchievementEndTime )
 		{
@@ -659,7 +659,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_UseCritBottle, ACHIEVEMENT_TF_MVM_USE_CR
 class CAchievementTF_MvM_UseUberBottle : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -690,7 +690,7 @@ public:
  		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( gpGlobals->curtime < m_flAchievementEndTime )
 		{
@@ -712,7 +712,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_UseUberBottle, ACHIEVEMENT_TF_MVM_USE_UB
 class CAchievementTF_MvM_UseBuildBottle : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -766,7 +766,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_UseBuildBottle, ACHIEVEMENT_TF_MVM_USE_B
 class CAchievementTF_MvM_UseAmmoBottle : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -775,12 +775,12 @@ public:
 	// server awards this achievement, no other code within achievement necessary
 };
 DECLARE_ACHIEVEMENT( CAchievementTF_MvM_UseAmmoBottle, ACHIEVEMENT_TF_MVM_USE_AMMO_BOTTLE, "TF_MVM_USE_AMMO_BOTTLE", 5 );
- 
+
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_MaxPrimaryUpgrades : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -789,12 +789,12 @@ public:
 	// server awards this achievement, no other code within achievement necessary
 };
 DECLARE_ACHIEVEMENT( CAchievementTF_MvM_MaxPrimaryUpgrades, ACHIEVEMENT_TF_MVM_MAX_PRIMARY_UPGRADES, "TF_MVM_MAX_PRIMARY_UPGRADES", 5 );
- 
+
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_MaxPlayerResistances : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -808,14 +808,14 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_MaxPlayerResistances, ACHIEVEMENT_TF_MVM
 class CAchievementTF_MvM_NoAlarmsInFinalWave : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
 
 		m_bAlarmTriggered = true;
 	}
- 
+
 	virtual void ListenForEvents()
 	{
 		ListenForGameEvent( "mvm_begin_wave" );
@@ -863,7 +863,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_NoAlarmsInFinalWave, ACHIEVEMENT_TF_MVM_
 class CAchievementTF_MvM_KillMedicsCharged : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -884,7 +884,7 @@ public:
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_TFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		if ( pTFVictim && pTFVictim->IsPlayerClass( TF_CLASS_MEDIC ) && ( pTFVictim->MedicGetChargeLevel() >= 1.0 ) )
@@ -907,14 +907,14 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_KillMedicsCharged, ACHIEVEMENT_TF_MVM_KI
 class CAchievementTF_MvM_KillRobotGrind : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 100000 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		IncrementCount();
 	}
@@ -925,17 +925,17 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_KillRobotGrind, ACHIEVEMENT_TF_MVM_KILL_
 class CAchievementTF_MvM_KillRobotMegaGrind : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1000000 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		IncrementCount();
-	}	
+	}
 };
 DECLARE_ACHIEVEMENT( CAchievementTF_MvM_KillRobotMegaGrind, ACHIEVEMENT_TF_MVM_KILL_ROBOT_MEGA_GRIND, "TF_MVM_KILL_ROBOT_MEGA_GRIND", 5 );
 
@@ -943,7 +943,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_KillRobotMegaGrind, ACHIEVEMENT_TF_MVM_K
 class CAchievementTF_MvM_KillSentryBuster : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -957,7 +957,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_KillSentryBuster, ACHIEVEMENT_TF_MVM_KIL
 class CAchievementTF_MvM_SpySapRobots : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -971,7 +971,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_SpySapRobots, ACHIEVEMENT_TF_MVM_SPY_SAP
 class CAchievementTF_MvM_SoldierBuffTeam : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -985,7 +985,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_SoldierBuffTeam, ACHIEVEMENT_TF_MVM_SOLD
 class CAchievementTF_MvM_HeavyRagePushDeployingRobot : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1026,7 +1026,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_HeavyRagePushDeployingRobot, ACHIEVEMENT
 class CAchievementTF_MvM_MedicShareBottles : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1071,7 +1071,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_MedicShareBottles, ACHIEVEMENT_TF_MVM_ME
 class CAchievementTF_MvM_DemoGroupKill : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1083,7 +1083,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_DemoGroupKill, ACHIEVEMENT_TF_MVM_DEMO_G
 class CAchievementTF_MvM_ScoutMarkForDeath : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1128,7 +1128,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_ScoutMarkForDeath, ACHIEVEMENT_TF_MVM_SC
 class CAchievementTF_MvM_SniperKillGroup : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1142,7 +1142,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_SniperKillGroup, ACHIEVEMENT_TF_MVM_SNIP
 class CAchievementTF_MvM_PyroBombReset : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1183,7 +1183,7 @@ public:
 				AwardAchievement();
 			}
 		}
-		else if ( FStrEq( pszEventName, "mvm_wave_complete" ) || 
+		else if ( FStrEq( pszEventName, "mvm_wave_complete" ) ||
 				  FStrEq( pszEventName, "teamplay_round_active" ) )
 		{
 			m_iResetCountInWave = 0;
@@ -1201,7 +1201,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_PyroBombReset, ACHIEVEMENT_TF_MVM_PYRO_B
 class CAchievementTF_MvM_EngineerEscapeSentryBuster : public CBaseTFAchievementSimple
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1236,7 +1236,7 @@ public:
 			y = event->GetFloat( "det_y" );
 			z = event->GetFloat( "det_z" );
 
-			// If we're not the target, but within a reasonable range of the sentry buster, 
+			// If we're not the target, but within a reasonable range of the sentry buster,
 			// also give credit, otherwise we give the target credit for still being alive.
 			if ( GetLocalPlayerIndex() != iTargetIdx )
 			{
@@ -1254,7 +1254,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_EngineerEscapeSentryBuster, ACHIEVEMENT_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_Maps_Rottenburg_Tank : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1267,7 +1267,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_Maps_Rottenburg_Tank, ACHIEVEMENT_TF_MVM
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_Maps_Rottenburg_Bomb : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1314,7 +1314,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_Maps_Rottenburg_Bomb, ACHIEVEMENT_TF_MVM
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_Maps_Rottenburg_PitGrind : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 100 );
@@ -1328,7 +1328,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_Maps_Rottenburg_PitGrind, ACHIEVEMENT_TF
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_Maps_Manhattan_Pit : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1368,7 +1368,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_Maps_Manhattan_Pit, ACHIEVEMENT_TF_MVM_M
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_Maps_Manhattan_Mystery : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1381,7 +1381,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_Maps_Manhattan_Mystery, ACHIEVEMENT_TF_M
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_Maps_Manhattan_NoGates : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1440,7 +1440,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_Maps_Manhattan_NoGates, ACHIEVEMENT_TF_M
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_Maps_Manhattan_KillStunRadiowave : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1465,7 +1465,7 @@ class CAchievementTF_MvM_Maps_Manhattan_KillStunRadiowave : public CBaseTFAchiev
 		}
 	}
 
-private: 
+private:
 	int m_nRobotsKilled;
 };
 DECLARE_ACHIEVEMENT( CAchievementTF_MvM_Maps_Manhattan_KillStunRadiowave, ACHIEVEMENT_TF_MVM_MAPS_MANNHATTAN_STUN_RADIOWAVE, "TF_MVM_MAPS_MANNHATTAN_STUN_RADIOWAVE", 5 );
@@ -1473,7 +1473,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_Maps_Manhattan_KillStunRadiowave, ACHIEV
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_Maps_Manhattan_BombBotGrind : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 500 );
@@ -1487,7 +1487,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_Maps_Manhattan_BombBotGrind, ACHIEVEMENT
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_SentryBusterFriendlyFire : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 1 );
@@ -1515,7 +1515,7 @@ class CAchievementTF_MvM_SentryBusterFriendlyFire : public CBaseTFAchievementSim
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker && pVictim )
 		{
@@ -1561,7 +1561,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_SentryBusterFriendlyFire, ACHIEVEMENT_TF
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_Sniper_CollectHeadshotMoney : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1593,7 +1593,7 @@ class CAchievementTF_MvM_Sniper_CollectHeadshotMoney : public CBaseTFAchievement
 		}
 	}
 
-private: 
+private:
 	int m_nCurrencyCollected;
 };
 DECLARE_ACHIEVEMENT( CAchievementTF_MvM_Sniper_CollectHeadshotMoney, ACHIEVEMENT_TF_MVM_SNIPER_COLLECT_HEADSHOT_MONEY, "TF_MVM_SNIPER_COLLECT_HEADSHOT_MONEY", 5 );
@@ -1601,7 +1601,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_Sniper_CollectHeadshotMoney, ACHIEVEMENT
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_Medic_ShieldBlockDamage : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1650,7 +1650,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_Medic_ShieldBlockDamage, ACHIEVEMENT_TF_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_Medic_ReviveTeammates : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1702,7 +1702,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_Medic_ReviveTeammates, ACHIEVEMENT_TF_MV
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_RocketSpecialistKillGrind : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
 		SetGoal( 1 );
@@ -1735,7 +1735,7 @@ class CAchievementTF_MvM_RocketSpecialistKillGrind : public CBaseTFAchievementSi
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( gpGlobals->curtime <= m_flLastDirectTime + 0.25f )
 		{
@@ -1781,7 +1781,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MvM_RocketSpecialistKillGrind, ACHIEVEMENT_T
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_MvM_RocketSpecialistStunGrind : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 50 );
@@ -1793,6 +1793,3 @@ class CAchievementTF_MvM_RocketSpecialistStunGrind : public CBaseTFAchievementSi
 DECLARE_ACHIEVEMENT( CAchievementTF_MvM_RocketSpecialistStunGrind, ACHIEVEMENT_TF_MVM_ROCKET_SPECIALIST_STUN_GRIND, "TF_MVM_ROCKET_SPECIALIST_STUN_GRIND", 5 );
 
 #endif // CLIENT_DLL
-
-
-

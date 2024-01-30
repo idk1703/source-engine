@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -32,7 +32,7 @@ class C_BaseEntity;
 #define INPVS_THISFRAME		0x0002		// Accumulated as different views are rendered during the frame and used to notify the entity if
 										// it is not in the PVS anymore (at the end of the frame).
 #define INPVS_NEEDSNOTIFY	0x0004		// The entity thinks it's in the PVS.
-							   
+
 class IClientEntityListener;
 
 abstract_class C_BaseEntityClassList
@@ -88,7 +88,7 @@ public:
 //
 // 2. It provides a place to store IClientUnknowns and gives out ClientEntityHandle_t's
 //    so they can be indexed and retreived. For example, this is how static props are referenced
-//    by the spatial partition manager - it doesn't know what is being inserted, so it's 
+//    by the spatial partition manager - it doesn't know what is being inserted, so it's
 //	  given ClientEntityHandle_t's, and the handlers for spatial partition callbacks can
 //    use the client entity list to look them up and check for supported interfaces.
 //
@@ -135,7 +135,7 @@ public:
 
 	// All methods of accessing specialized IClientUnknown's go through here.
 	IClientUnknown*			GetListedEntity( int entnum );
-	
+
 	// Simple wrappers for convenience..
 	C_BaseEntity*			GetBaseEntity( int entnum );
 	ICollideable*			GetCollideable( int entnum );
@@ -214,7 +214,7 @@ private:
 
 	void AddPVSNotifier( IClientUnknown *pUnknown );
 	void RemovePVSNotifier( IClientUnknown *pUnknown );
-	
+
 	// These entities want to know when they enter and leave the PVS (server entities
 	// already can get the equivalent notification with NotifyShouldTransmit, but client
 	// entities have to get it this way).
@@ -280,7 +280,7 @@ inline ClientEntityHandle_t CClientEntityList::EntIndexToHandle( int entnum )
 	if ( entnum < -1 )
 		return INVALID_EHANDLE_INDEX;
 	IClientUnknown *pUnk = GetListedEntity( entnum );
-	return pUnk ? pUnk->GetRefEHandle() : INVALID_EHANDLE_INDEX; 
+	return pUnk ? pUnk->GetRefEHandle() : INVALID_EHANDLE_INDEX;
 }
 
 
@@ -305,4 +305,3 @@ public:
 
 
 #endif // CLIENTENTITYLIST_H
-

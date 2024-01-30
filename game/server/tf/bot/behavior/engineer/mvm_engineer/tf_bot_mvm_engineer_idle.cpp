@@ -297,7 +297,7 @@ ActionResult< CTFBot >	CTFBotMvMEngineerIdle::Update( CTFBot *me, float interval
 			// check if there's a stale object on the hint
 			if ( m_sentryHint->GetOwnerEntity() && m_sentryHint->GetOwnerEntity()->IsBaseObject() )
 			{
-				mySentry = assert_cast< CObjectSentrygun* >( m_sentryHint->GetOwnerEntity() );		
+				mySentry = assert_cast< CObjectSentrygun* >( m_sentryHint->GetOwnerEntity() );
 				me->AddObject( mySentry );
 				mySentry->SetOwnerEntity( me );
 			}
@@ -322,7 +322,7 @@ ActionResult< CTFBot >	CTFBotMvMEngineerIdle::Update( CTFBot *me, float interval
 		m_sentryInjuredTimer.Start( 3.0f );
 	}
 
-	
+
 	CObjectTeleporter *myTeleporter = NULL;
 	if ( m_teleporterHint && m_sentryInjuredTimer.IsElapsed() )
 	{
@@ -586,7 +586,7 @@ bool CTFBotMvMEngineerHintFinder::FindHint( bool bShouldCheckForBlockingObjects,
 CON_COMMAND_F( tf_bot_mvm_show_engineer_hint_region, "Show the nav areas MvM engineer bots will consider when selecting sentry and teleporter hints", FCVAR_CHEAT )
 {
 	if ( !UTIL_IsCommandIssuedByServerAdmin() )
-		return; 
+		return;
 
 	CBasePlayer *pPlayer = UTIL_GetCommandClient();
 

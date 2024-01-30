@@ -158,9 +158,9 @@ void CPointAngleSensor::Activate(void)
 
 //-----------------------------------------------------------------------------
 // Purpose: Determines if one entity is facing within a given tolerance of another
-// Input  : pEntity - 
-//			pTarget - 
-//			flTolerance - 
+// Input  : pEntity -
+//			pTarget -
+//			flTolerance -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPointAngleSensor::IsFacingWithinTolerance(CBaseEntity *pEntity, CBaseEntity *pTarget, float flTolerance, float *pflDot)
@@ -169,7 +169,7 @@ bool CPointAngleSensor::IsFacingWithinTolerance(CBaseEntity *pEntity, CBaseEntit
 	{
 		*pflDot = 0;
 	}
-	
+
 	if ((pEntity == NULL) || (pTarget == NULL))
 	{
 		return(false);
@@ -189,7 +189,7 @@ bool CPointAngleSensor::IsFacingWithinTolerance(CBaseEntity *pEntity, CBaseEntit
 		dir = pTarget->GetAbsOrigin() - pEntity->GetAbsOrigin();
 		VectorNormalize(dir);
 	}
-		
+
 	//
 	// Larger dot product corresponds to a smaller angle.
 	//
@@ -200,7 +200,7 @@ bool CPointAngleSensor::IsFacingWithinTolerance(CBaseEntity *pEntity, CBaseEntit
 	}
 
 	if (flDot >= m_flDotTolerance)
-	{	
+	{
 		return(true);
 	}
 
@@ -242,7 +242,7 @@ void CPointAngleSensor::Think(void)
 					}
 				}
 			}
-			else 
+			else
 			{
 				// Reset the fired state
 				if ( m_bFired )
@@ -253,7 +253,7 @@ void CPointAngleSensor::Think(void)
 				// Always reset the time when we've lost our facing
 				m_flFacingTime = 0;
 			}
-			
+
 			// Output the angle range we're in
 			float flPerc = RemapValClamped( flDot, 1.0f, m_flDotTolerance, 1.0f, 0.0f );
 			m_FacingPercentage.Set( flPerc, this, this );
@@ -281,7 +281,7 @@ void CPointAngleSensor::InputTest(inputdata_t &inputdata)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointAngleSensor::InputSetTargetEntity(inputdata_t &inputdata)
 {
@@ -304,7 +304,7 @@ void CPointAngleSensor::InputSetTargetEntity(inputdata_t &inputdata)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointAngleSensor::InputEnable(inputdata_t &inputdata)
 {
@@ -313,7 +313,7 @@ void CPointAngleSensor::InputEnable(inputdata_t &inputdata)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointAngleSensor::InputDisable(inputdata_t &inputdata)
 {
@@ -338,7 +338,7 @@ void CPointAngleSensor::InputToggle(inputdata_t &inputdata)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointAngleSensor::Enable()
 {
@@ -351,7 +351,7 @@ void CPointAngleSensor::Enable()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointAngleSensor::Disable()
 {
@@ -361,13 +361,13 @@ void CPointAngleSensor::Disable()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CPointAngleSensor::DrawDebugTextOverlays(void)
 {
 	int nOffset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		float flDot;
 		bool bFacing = IsFacingWithinTolerance(m_hTargetEntity, m_hLookAtEntity, m_flDotTolerance, &flDot);
@@ -463,7 +463,7 @@ void CPointProximitySensor::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointProximitySensor::InputSetTargetEntity(inputdata_t &inputdata)
 {
@@ -485,7 +485,7 @@ void CPointProximitySensor::InputSetTargetEntity(inputdata_t &inputdata)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointProximitySensor::InputEnable( inputdata_t &inputdata )
 {
@@ -493,7 +493,7 @@ void CPointProximitySensor::InputEnable( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointProximitySensor::InputDisable( inputdata_t &inputdata )
 {
@@ -516,7 +516,7 @@ void CPointProximitySensor::InputToggle( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointProximitySensor::Enable( void )
 {
@@ -528,7 +528,7 @@ void CPointProximitySensor::Enable( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPointProximitySensor::Disable( void )
 {

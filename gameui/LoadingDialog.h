@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 class CLoadingDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CLoadingDialog, vgui::Frame ); 
+	DECLARE_CLASS_SIMPLE( CLoadingDialog, vgui::Frame );
 public:
 	CLoadingDialog( vgui::Panel *parent );
 	~CLoadingDialog();
@@ -44,7 +44,7 @@ protected:
 	virtual void OnKeyCodeTyped(vgui::KeyCode code);
 	virtual void OnKeyCodePressed(vgui::KeyCode code);
 	virtual void PaintBackground( void );
-	
+
 private:
 	void SetupControlSettings( bool bForceShowProgressText );
 	void SetupControlSettingsForErrorDisplay( const char *settingsFile );
@@ -64,7 +64,7 @@ private:
 	bool	m_bShowingVACInfo;
 	bool	m_bCenter;
 	bool	m_bConsoleStyle;
-	float	m_flProgressFraction;	
+	float	m_flProgressFraction;
 
 	CPanelAnimationVar( int, m_iAdditionalIndentX, "AdditionalIndentX", "0" );
 	CPanelAnimationVar( int, m_iAdditionalIndentY, "AdditionalIndentY", "0" );

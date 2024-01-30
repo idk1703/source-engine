@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -23,7 +23,7 @@ DECLARE_HUDELEMENT( CDoDHudCapturePanel );
 ConVar hud_capturepanel( "hud_capturepanel", "1", FCVAR_CLIENTDLL | FCVAR_ARCHIVE, "Set to 0 to not draw the HUD capture panel" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDoDCapturePanelProgressBar::CDoDCapturePanelProgressBar( vgui::Panel *parent, const char *name ) : vgui::ImagePanel( parent, name )
 {
@@ -32,14 +32,14 @@ CDoDCapturePanelProgressBar::CDoDCapturePanelProgressBar( vgui::Panel *parent, c
 	m_iTexture = vgui::surface()->DrawGetTextureId( "vgui/progress_bar" );
 	if ( m_iTexture == -1 ) // we didn't find it, so create a new one
 	{
-		m_iTexture = vgui::surface()->CreateNewTextureID();	
+		m_iTexture = vgui::surface()->CreateNewTextureID();
 	}
 
 	vgui::surface()->DrawSetTextureFile( m_iTexture, "vgui/progress_bar", true, false );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDCapturePanelProgressBar::Paint()
 {
@@ -52,7 +52,7 @@ void CDoDCapturePanelProgressBar::Paint()
 	Vector2D uv22( uv2, uv2 );
 	Vector2D uv12( uv1, uv2 );
 
-	vgui::Vertex_t verts[4];	
+	vgui::Vertex_t verts[4];
 	verts[0].Init( Vector2D( 0, 0 ), uv11 );
 	verts[1].Init( Vector2D( wide, 0 ), uv21 );
 	verts[2].Init( Vector2D( wide, tall ), uv22 );
@@ -83,10 +83,10 @@ void CDoDCapturePanelProgressBar::Paint()
 
 	float flCompleteCircle = ( 2.0f * M_PI );
 	float fl90degrees = flCompleteCircle / 4.0f;
-	
+
 	float flEndAngle = flCompleteCircle * ( 1.0f - m_flPercent ); // count DOWN (counter-clockwise)
 	//	float flEndAngle = flCompleteCircle * m_flPercent; // count UP (clockwise)
-	
+
 	float flHalfWide = (float)wide / 2.0f;
 	float flHalfTall = (float)tall / 2.0f;
 
@@ -97,7 +97,7 @@ void CDoDCapturePanelProgressBar::Paint()
 		uv21.Init( 1.0f, 0.0f );
 		uv22.Init( 1.0f, 1.0f );
 		uv12.Init( 0.5, 1.0f );
-		
+
 		verts[0].Init( Vector2D( flHalfWide, 0.0f ), uv11 );
 		verts[1].Init( Vector2D( wide, 0.0f ), uv21 );
 		verts[2].Init( Vector2D( wide, tall ), uv22 );
@@ -200,7 +200,7 @@ void CDoDCapturePanelProgressBar::Paint()
 		uv21.Init( 1.0f, 0.0f );
 		uv22.Init( 1.0f, 0.5f );
 		uv12.Init( 0.5f, 0.5f );
-	
+
 		verts[0].Init( Vector2D( flHalfWide, 0.0f ), uv11 );
 		verts[1].Init( Vector2D( wide, 0.0f ), uv21 );
 		verts[2].Init( Vector2D( wide, flHalfTall ), uv22 );
@@ -272,7 +272,7 @@ void CDoDCapturePanelProgressBar::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDoDCapturePanelIcon::CDoDCapturePanelIcon( vgui::Panel *parent, const char *name ) : vgui::ImagePanel( parent, name )
 {
@@ -281,14 +281,14 @@ CDoDCapturePanelIcon::CDoDCapturePanelIcon( vgui::Panel *parent, const char *nam
 	m_iTexture = vgui::surface()->DrawGetTextureId( "vgui/capture_icon" );
 	if ( m_iTexture == -1 ) // we didn't find it, so create a new one
 	{
-		m_iTexture = vgui::surface()->CreateNewTextureID();	
+		m_iTexture = vgui::surface()->CreateNewTextureID();
 	}
 
 	vgui::surface()->DrawSetTextureFile( m_iTexture, "vgui/capture_icon", true, false );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDCapturePanelIcon::Paint()
 {
@@ -301,7 +301,7 @@ void CDoDCapturePanelIcon::Paint()
 	Vector2D uv21( uv2, uv1 );
 	Vector2D uv22( uv2, uv2 );
 
-	vgui::Vertex_t verts[4];	
+	vgui::Vertex_t verts[4];
 	verts[0].Init( Vector2D( 0, 0 ), uv11 );
 	verts[1].Init( Vector2D( wide, 0 ), uv21 );
 	verts[2].Init( Vector2D( wide, tall ), uv22 );
@@ -316,7 +316,7 @@ void CDoDCapturePanelIcon::Paint()
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CDoDHudCapturePanel::CDoDHudCapturePanel( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudCapturePanel" ) 
+CDoDHudCapturePanel::CDoDHudCapturePanel( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudCapturePanel" )
 {
 	SetParent( g_pClientMode->GetViewport() );
 
@@ -345,7 +345,7 @@ CDoDHudCapturePanel::CDoDHudCapturePanel( const char *pElementName ) : CHudEleme
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudCapturePanel::OnScreenSizeChanged( int iOldWide, int iOldTall )
 {
@@ -353,7 +353,7 @@ void CDoDHudCapturePanel::OnScreenSizeChanged( int iOldWide, int iOldTall )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudCapturePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -369,7 +369,7 @@ void CDoDHudCapturePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudCapturePanel::OnThink()
 {
@@ -451,7 +451,7 @@ void CDoDHudCapturePanel::OnThink()
 		int nRequiredEnemies = g_pObjectiveResource->GetRequiredCappers( iCPIndex, nPlayerTeam == TEAM_ALLIES ? TEAM_AXIS : TEAM_ALLIES );
 
 		int iCappingTeam = g_pObjectiveResource->GetCappingTeam( iCPIndex );
-		
+
 		// if we already own this capture point and there are no enemies in the area
 		if ( nOwningTeam == nPlayerTeam && nNumEnemies < nRequiredEnemies )
 		{
@@ -460,7 +460,7 @@ void CDoDHudCapturePanel::OnThink()
 			{
 				SetVisible( false );
 			}
-			return;		
+			return;
 		}
 
 		// okay, turn on the capture point panel
@@ -539,15 +539,15 @@ void CDoDHudCapturePanel::OnThink()
 		vgui::ImagePanel *pPanel = m_PlayerIcons[0];
 		if ( pPanel )
 			pPanel->GetSize( iconWide, iconTall );
-		
-        int width = ( nRequiredTeammates * iconWide ) + ( ( nRequiredTeammates - 1 ) * m_nSpaceBetweenIcons );
+
+	int width = ( nRequiredTeammates * iconWide ) + ( ( nRequiredTeammates - 1 ) * m_nSpaceBetweenIcons );
 		int xpos = wide / 2.0 - width / 2.0;
 
 		// rearrange the player icon panels
 		for ( i = 0 ; i < nRequiredTeammates ; i++ )
 		{
 			CDoDCapturePanelIcon *pPanel = m_PlayerIcons[i];
- 
+
 			if ( pPanel )
 			{
 				int x, y, w, t;
@@ -589,7 +589,7 @@ void CDoDHudCapturePanel::OnThink()
 				{
 					m_pMessage->SetText( "#Dod_Waiting_for_teammate" );
 				}
-		
+
 				if ( m_pBackground )
 				{
 					// do we need to resize our background?
@@ -625,5 +625,3 @@ void CDoDHudCapturePanel::OnThink()
 		}
 	}
 }
-
-

@@ -37,7 +37,7 @@ CQuestNotification::CQuestNotification( CEconItem *pItem )
 {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CQuestNotification::Present( CQuestNotificationPanel* pNotificationPanel )
 {
@@ -47,7 +47,7 @@ float CQuestNotification::Present( CQuestNotificationPanel* pNotificationPanel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CQuestNotification_Speaking::CQuestNotification_Speaking( CEconItem *pItem )
 	: CQuestNotification( pItem )
@@ -56,7 +56,7 @@ CQuestNotification_Speaking::CQuestNotification_Speaking( CEconItem *pItem )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CQuestNotification_Speaking::Present( CQuestNotificationPanel* pNotificationPanel )
 {
@@ -94,7 +94,7 @@ float CQuestNotification_Speaking::Present( CQuestNotificationPanel* pNotificati
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestNotification_Speaking::Update( CQuestNotificationPanel* pNotificationPanel )
 {
@@ -111,7 +111,7 @@ void CQuestNotification_Speaking::Update( CQuestNotificationPanel* pNotification
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CQuestNotification_Speaking::IsDone() const
 {
@@ -120,7 +120,7 @@ bool CQuestNotification_Speaking::IsDone() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CQuestNotification_NewQuest::GetSoundEntry( const CQuestThemeDefinition* pTheme, int nClassIndex )
 {
@@ -161,7 +161,7 @@ CQuestNotification_CompletedQuest::CQuestNotification_CompletedQuest( CEconItem 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CQuestNotification_CompletedQuest::GetSoundEntry( const CQuestThemeDefinition* pTheme, int nClassIndex )
 {
@@ -169,7 +169,7 @@ const char *CQuestNotification_CompletedQuest::GetSoundEntry( const CQuestThemeD
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CQuestNotification_CompletedQuest::ShouldPresent() const
 {
@@ -177,7 +177,7 @@ bool CQuestNotification_CompletedQuest::ShouldPresent() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CQuestNotification_FullyCompletedQuest::GetSoundEntry( const CQuestThemeDefinition* pTheme, int nClassIndex )
 {
@@ -185,7 +185,7 @@ const char *CQuestNotification_FullyCompletedQuest::GetSoundEntry( const CQuestT
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CQuestNotificationPanel::CQuestNotificationPanel( const char *pszElementName )
 	: CHudElement( pszElementName )
@@ -207,7 +207,7 @@ CQuestNotificationPanel::CQuestNotificationPanel( const char *pszElementName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CQuestNotificationPanel::~CQuestNotificationPanel()
 {}
@@ -226,7 +226,7 @@ void CQuestNotificationPanel::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestNotificationPanel::PerformLayout()
 {
@@ -242,7 +242,7 @@ void CQuestNotificationPanel::PerformLayout()
 			pszText = g_pVGuiLocalize->Find( pszTextKey );
 		}
 		if ( pszText )
-		{					
+		{
 			wchar_t wzFinal[512] = L"";
 			UTIL_ReplaceKeyBindings( pszText, 0, wzFinal, sizeof( wzFinal ) );
 			pNewQuestLabel->SetText( wzFinal );
@@ -252,7 +252,7 @@ void CQuestNotificationPanel::PerformLayout()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestNotificationPanel::FireGameEvent( IGameEvent * event )
 {
@@ -277,7 +277,7 @@ void CQuestNotificationPanel::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestNotificationPanel::Reset()
 {
@@ -285,7 +285,7 @@ void CQuestNotificationPanel::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestNotificationPanel::CheckForNotificationOpportunities()
 {
@@ -312,7 +312,7 @@ void CQuestNotificationPanel::CheckForNotificationOpportunities()
 			CEconItemView *pItem = pInv->GetItem( i );
 
 			// Check if this is a quest at all
-			if ( pItem->GetItemDefinition()->GetQuestDef() == NULL ) 
+			if ( pItem->GetItemDefinition()->GetQuestDef() == NULL )
 				continue;
 
 			CQuestNotification* pNotification = NULL;
@@ -353,7 +353,7 @@ void CQuestNotificationPanel::CheckForNotificationOpportunities()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CQuestNotificationPanel::AddNotificationForItem( const CEconItemView *pItem, CQuestNotification* pNotification )
 {
@@ -404,7 +404,7 @@ bool CQuestNotificationPanel::AddNotificationForItem( const CEconItemView *pItem
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CQuestNotificationPanel::ShouldDraw()
 {
@@ -430,7 +430,7 @@ bool CQuestNotificationPanel::ShouldDraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestNotificationPanel::OnThink()
 {
@@ -442,7 +442,7 @@ void CQuestNotificationPanel::OnThink()
 	const float flTransitionTime = 0.5f;
 
 	Update();
-	
+
 	if ( bHasStarted )
 	{
 		// Transitions
@@ -455,7 +455,7 @@ void CQuestNotificationPanel::OnThink()
 			flShowProgress = Bias( Max( 0.0f, m_animTimer.GetRemainingTime() + 1.f ) / flTransitionTime, 0.25f );
 		}
 	}
-	
+
 	// Move the main container around
 	if ( m_pMainContainer )
 	{
@@ -468,7 +468,7 @@ void CQuestNotificationPanel::OnThink()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CQuestNotificationPanel::ShouldPresent()
 {
@@ -487,7 +487,7 @@ bool CQuestNotificationPanel::ShouldPresent()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestNotificationPanel::Update()
 {

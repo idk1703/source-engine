@@ -86,7 +86,7 @@ void CQC_EyesDlg::AddText( const char *pFormat, ... )
 		delete [] m_Buf;
 		m_Buf = newbuf;
 	}
-	
+
 	strcat( m_Buf, tempMsg );
 }
 
@@ -160,7 +160,7 @@ BOOL CQC_EyesDlg::OnInitDialog()
 	//  when the application's main window is not a dialog
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
-	
+
 	// TODO: Add extra initialization here
 	GetDlgItem( IDC_REFERENCE_FILENAME )->SetWindowText( "filename_reference" );
 	GetDlgItem( IDC_EXPRESSIONS_FILENAME )->SetWindowText( "filename_expressions" );
@@ -177,7 +177,7 @@ BOOL CQC_EyesDlg::OnInitDialog()
 
 	m_PictureControl.SetBitmap( GetCachedBitmap( IDB_EYE_DEFAULT ) );
 	OnDefaultControls(); // Hide the advanced controls.
-	
+
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -185,7 +185,7 @@ BOOL CQC_EyesDlg::OnInitDialog()
 //  to draw the icon.  For MFC applications using the document/view model,
 //  this is automatically done for you by the framework.
 
-void CQC_EyesDlg::OnPaint() 
+void CQC_EyesDlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -314,8 +314,8 @@ void CQC_EyesDlg::GenerateQCText()
 {
 	CDialogParams p;
 	GetDialogParams( p );
-	
-	
+
+
 	m_BufSize = 16 * 1024;
 	m_Buf = new char[m_BufSize];
 	m_Buf[0] = 0;
@@ -324,56 +324,56 @@ void CQC_EyesDlg::GenerateQCText()
 	AddText( "$eyeposition 0 0 70\n\n" );
 
 	AddText( "//head controllers\n" );
-	AddText( "$attachment \"eyes\" \"ValveBiped.Bip01_Head1\" %.2f %.2f %.2f absolute\n", 
-		p.m_flLeftEye[0] - ((fabs( p.m_flRightEye[0] ) + p.m_flLeftEye[0]) * 0.5), 
-		(p.m_flLeftEye[1] + p.m_flRightEye[1]) * 0.5, 
+	AddText( "$attachment \"eyes\" \"ValveBiped.Bip01_Head1\" %.2f %.2f %.2f absolute\n",
+		p.m_flLeftEye[0] - ((fabs( p.m_flRightEye[0] ) + p.m_flLeftEye[0]) * 0.5),
+		(p.m_flLeftEye[1] + p.m_flRightEye[1]) * 0.5,
 		(p.m_flLeftEye[2] + p.m_flRightEye[2]) * 0.5 );
-	
+
 	AddText( "$attachment \"mouth\" \"ValveBiped.Bip01_Head1\" 0.80 -5.80 -0.15 rotate 0 -80 -90\n\n" );
 
-	AddText( "$model %s \"%s.smd\" {\n", 
+	AddText( "$model %s \"%s.smd\" {\n",
 		p.m_ModelFilename, p.m_ReferenceFilename );
-	
+
 	AddText( "\teyeball righteye \"ValveBiped.Bip01_Head1\" %.2f %.2f %.2f \"%s_r\" %.2f 4 \"%s_r\" %.2f\n",
-		p.m_flRightEye[0], 
-		p.m_flRightEye[1], 
-		p.m_flRightEye[2], 
-		p.m_EyeballPrefix, 
+		p.m_flRightEye[0],
+		p.m_flRightEye[1],
+		p.m_flRightEye[2],
+		p.m_EyeballPrefix,
 		p.m_flEyeballSize,
-		p.m_PupilPrefix, 
+		p.m_PupilPrefix,
 		p.m_flIrisSize );
-	
+
 	AddText( "\teyeball lefteye \"ValveBiped.Bip01_Head1\" %.2f %.2f %.2f \"%s_l\" %.2f -4 \"%s_l\" %.2f\n\n",
-		p.m_flLeftEye[0], 
-		p.m_flLeftEye[1], 
-		p.m_flLeftEye[2], 
-		p.m_EyeballPrefix, 
+		p.m_flLeftEye[0],
+		p.m_flLeftEye[1],
+		p.m_flLeftEye[2],
+		p.m_EyeballPrefix,
 		p.m_flEyeballSize,
-		p.m_PupilPrefix, 
+		p.m_PupilPrefix,
 		p.m_flIrisSize );
 
 	AddText( "\teyelid  upper_right \"%s\" lowerer 1 %.2f neutral 0 %.2f raiser 2 %.2f split 0.1 eyeball righteye\n",
-		p.m_ExpressionsFilename, 
-		p.m_flRightUpperLidLowered - p.m_flRightEye[2], 
-		p.m_flRightUpperLidNeutral - p.m_flRightEye[2], 
+		p.m_ExpressionsFilename,
+		p.m_flRightUpperLidLowered - p.m_flRightEye[2],
+		p.m_flRightUpperLidNeutral - p.m_flRightEye[2],
 		p.m_flRightUpperLidRaised - p.m_flRightEye[2] );
 
 	AddText( "\teyelid  lower_right \"%s\" lowerer 3 %.2f neutral 0 %.2f raiser 4 %.2f split 0.1 eyeball righteye\n",
-		p.m_ExpressionsFilename, 
-		p.m_flRightLowerLidLowered - p.m_flRightEye[2], 
-		p.m_flRightLowerLidNeutral - p.m_flRightEye[2], 
+		p.m_ExpressionsFilename,
+		p.m_flRightLowerLidLowered - p.m_flRightEye[2],
+		p.m_flRightLowerLidNeutral - p.m_flRightEye[2],
 		p.m_flRightLowerLidRaised - p.m_flRightEye[2] );
 
 	AddText( "\teyelid  upper_left \"%s\" lowerer 1 %.2f neutral 0 %.2f raiser 2 %.2f split -0.1 eyeball lefteye\n",
-		p.m_ExpressionsFilename, 
-		p.m_flLeftUpperLidLowered - p.m_flLeftEye[2], 
-		p.m_flLeftUpperLidNeutral - p.m_flLeftEye[2], 
+		p.m_ExpressionsFilename,
+		p.m_flLeftUpperLidLowered - p.m_flLeftEye[2],
+		p.m_flLeftUpperLidNeutral - p.m_flLeftEye[2],
 		p.m_flLeftUpperLidRaised - p.m_flLeftEye[2] );
 
 	AddText( "\teyelid  lower_left \"%s\" lowerer 3 %.2f neutral 0 %.2f raiser 4 %.2f split -0.1 eyeball lefteye\n\n",
-		p.m_ExpressionsFilename, 
-		p.m_flLeftLowerLidLowered - p.m_flLeftEye[2], 
-		p.m_flLeftLowerLidNeutral - p.m_flLeftEye[2], 
+		p.m_ExpressionsFilename,
+		p.m_flLeftLowerLidLowered - p.m_flLeftEye[2],
+		p.m_flLeftLowerLidNeutral - p.m_flLeftEye[2],
 		p.m_flLeftLowerLidRaised - p.m_flLeftEye[2] );
 
 	AddText( "\tmouth 0 \"mouth\" \"ValveBiped.Bip01_Head1\" 0 1 0     // mouth illumination\n" );
@@ -393,13 +393,13 @@ bool CQC_EyesDlg::CheckNumericInputs()
 	{
 		const char *pControlName;
 		UINT controlID;
-	} 
+	}
 	controls[] =
 	{
 		{"Right Eye X", IDC_RIGHT_EYE_X},
 		{"Right Eye Y", IDC_RIGHT_EYE_Y},
 		{"Right Eye Z", IDC_RIGHT_EYE_Z},
-		
+
 		{"Left Eye X", IDC_LEFT_EYE_X},
 		{"Left Eye Y", IDC_LEFT_EYE_Y},
 		{"Left Eye Z", IDC_LEFT_EYE_Z},
@@ -448,11 +448,11 @@ bool CQC_EyesDlg::CheckNumericInputs()
 }
 
 
-void CQC_EyesDlg::OnCreateQcText() 
+void CQC_EyesDlg::OnCreateQcText()
 {
 	if ( !CheckNumericInputs() )
 		return;
-	
+
 	GenerateQCText();
 
 	// Clear the edit control.
@@ -465,7 +465,7 @@ void CQC_EyesDlg::OnCreateQcText()
 	delete [] m_Buf;
 }
 
-void CQC_EyesDlg::OnIrisColorBrown() 
+void CQC_EyesDlg::OnIrisColorBrown()
 {
 	::SendMessage( ::GetDlgItem( m_hWnd, IDC_IRIS_COLOR_BROWN ), BM_SETCHECK, BST_CHECKED, 0 );
 	::SendMessage( ::GetDlgItem( m_hWnd, IDC_IRIS_COLOR_GREEN ), BM_SETCHECK, BST_UNCHECKED, 0 );
@@ -473,7 +473,7 @@ void CQC_EyesDlg::OnIrisColorBrown()
 	SetupBitmapLabel( IDB_EYE_DEFAULT, "" );
 }
 
-void CQC_EyesDlg::OnIrisColorGreen() 
+void CQC_EyesDlg::OnIrisColorGreen()
 {
 	::SendMessage( ::GetDlgItem( m_hWnd, IDC_IRIS_COLOR_BROWN ), BM_SETCHECK, BST_UNCHECKED, 0 );
 	::SendMessage( ::GetDlgItem( m_hWnd, IDC_IRIS_COLOR_GREEN ), BM_SETCHECK, BST_CHECKED, 0 );
@@ -481,7 +481,7 @@ void CQC_EyesDlg::OnIrisColorGreen()
 	SetupBitmapLabel( IDB_EYE_DEFAULT, "" );
 }
 
-void CQC_EyesDlg::OnIrisColorBlue() 
+void CQC_EyesDlg::OnIrisColorBlue()
 {
 	::SendMessage( ::GetDlgItem( m_hWnd, IDC_IRIS_COLOR_BROWN ), BM_SETCHECK, BST_UNCHECKED, 0 );
 	::SendMessage( ::GetDlgItem( m_hWnd, IDC_IRIS_COLOR_GREEN ), BM_SETCHECK, BST_UNCHECKED, 0 );
@@ -489,14 +489,14 @@ void CQC_EyesDlg::OnIrisColorBlue()
 	SetupBitmapLabel( IDB_EYE_DEFAULT, "" );
 }
 
-void CQC_EyesDlg::OnEyeColorDark() 
+void CQC_EyesDlg::OnEyeColorDark()
 {
 	::SendMessage( ::GetDlgItem( m_hWnd, IDC_EYE_COLOR_LIGHT ), BM_SETCHECK, BST_UNCHECKED, 0 );
 	::SendMessage( ::GetDlgItem( m_hWnd, IDC_EYE_COLOR_DARK ), BM_SETCHECK, BST_CHECKED, 0 );
 	SetupBitmapLabel( IDB_EYE_DEFAULT, "" );
 }
 
-void CQC_EyesDlg::OnEyeColorLight() 
+void CQC_EyesDlg::OnEyeColorLight()
 {
 	::SendMessage( ::GetDlgItem( m_hWnd, IDC_EYE_COLOR_LIGHT ), BM_SETCHECK, BST_CHECKED, 0 );
 	::SendMessage( ::GetDlgItem( m_hWnd, IDC_EYE_COLOR_DARK ), BM_SETCHECK, BST_UNCHECKED, 0 );
@@ -516,74 +516,74 @@ void CQC_EyesDlg::SetupBitmapLabel( UINT iBitmapResourceID, const char *pString,
 	GetDlgItem( IDC_PICTURE_LABEL )->SetWindowText( msg );
 }
 
-void CQC_EyesDlg::OnSetfocusRightEyeX() 
+void CQC_EyesDlg::OnSetfocusRightEyeX()
 {
 	SetupBitmapLabel( IDB_EYE_XY_R, "Enter the X position of the center vertex of the right eye" );
 }
 
-void CQC_EyesDlg::OnSetfocusRightEyeY() 
+void CQC_EyesDlg::OnSetfocusRightEyeY()
 {
 	SetupBitmapLabel( IsOptionChecked( IDC_Y_AXIS_UP ) ? IDB_EYE_XY_R : IDB_EYE_Z_R, "Enter the Y position of the center vertex of the right eye" );
 }
 
-void CQC_EyesDlg::OnSetfocusRightEyeZ() 
+void CQC_EyesDlg::OnSetfocusRightEyeZ()
 {
 	SetupBitmapLabel( IsOptionChecked( IDC_Y_AXIS_UP ) ? IDB_EYE_Z_R : IDB_EYE_XY_R, "Enter the Z position of the center vertex of the right eye" );
 }
 
-void CQC_EyesDlg::OnSetfocusLeftEyeX() 
+void CQC_EyesDlg::OnSetfocusLeftEyeX()
 {
 	SetupBitmapLabel( IDB_EYE_XY_L, "Enter the X position of the center vertex of the right eye" );
 }
 
-void CQC_EyesDlg::OnSetfocusLeftEyeY() 
+void CQC_EyesDlg::OnSetfocusLeftEyeY()
 {
 	SetupBitmapLabel( IsOptionChecked( IDC_Y_AXIS_UP ) ? IDB_EYE_XY_L : IDB_EYE_Z_L, "Enter the Y position of the center vertex of the right eye" );
 }
 
-void CQC_EyesDlg::OnSetfocusLeftEyeZ() 
+void CQC_EyesDlg::OnSetfocusLeftEyeZ()
 {
 	SetupBitmapLabel( IsOptionChecked( IDC_Y_AXIS_UP ) ? IDB_EYE_Z_L : IDB_EYE_XY_L, "Enter the Z position of the center vertex of the right eye" );
 }
 
-void CQC_EyesDlg::OnSetfocusUpperLidLowered() 
+void CQC_EyesDlg::OnSetfocusUpperLidLowered()
 {
 	const char *pCoord = IsOptionChecked( IDC_Y_AXIS_UP ) ? "Y" : "Z";
 	SetupBitmapLabel( IDB_EYE_UPPER_LO, "At Frame 1, enter the %s position of the center vertex of the right upper eye lid", pCoord );
 }
 
-void CQC_EyesDlg::OnSetfocusUpperLidNeutral() 
+void CQC_EyesDlg::OnSetfocusUpperLidNeutral()
 {
 	const char *pCoord = IsOptionChecked( IDC_Y_AXIS_UP ) ? "Y" : "Z";
 	SetupBitmapLabel( IDB_EYE_UPPER_MID, "At Frame 0, enter the %s position of the center vertex of the right upper eye lid", pCoord );
 }
 
-void CQC_EyesDlg::OnSetfocusUpperLidRaised() 
+void CQC_EyesDlg::OnSetfocusUpperLidRaised()
 {
 	const char *pCoord = IsOptionChecked( IDC_Y_AXIS_UP ) ? "Y" : "Z";
 	SetupBitmapLabel( IDB_EYE_UPPER_HI, "At Frame 2, enter the %s position of the center vertex of the right upper eye lid", pCoord );
 }
 
 
-void CQC_EyesDlg::OnSetfocusLowerLidLowered() 
+void CQC_EyesDlg::OnSetfocusLowerLidLowered()
 {
 	const char *pCoord = IsOptionChecked( IDC_Y_AXIS_UP ) ? "Y" : "Z";
 	SetupBitmapLabel( IDB_EYE_LOWER_LO, "At Frame 3, enter the %s position of the center vertex of the right lower eye lid", pCoord );
 }
 
-void CQC_EyesDlg::OnSetfocusLowerLidNeutral() 
+void CQC_EyesDlg::OnSetfocusLowerLidNeutral()
 {
 	const char *pCoord = IsOptionChecked( IDC_Y_AXIS_UP ) ? "Y" : "Z";
 	SetupBitmapLabel( IDB_EYE_LOWER_MID, "At Frame 0, enter the %s position of the center vertex of the right lower eye lid", pCoord );
 }
 
-void CQC_EyesDlg::OnSetfocusLowerLidRaised() 
+void CQC_EyesDlg::OnSetfocusLowerLidRaised()
 {
 	const char *pCoord = IsOptionChecked( IDC_Y_AXIS_UP ) ? "Y" : "Z";
 	SetupBitmapLabel( IDB_EYE_LOWER_HI, "At Frame 4, enter the %s position of the center vertex of the right lower eye lid", pCoord );
 }
 
-void CQC_EyesDlg::OnCopyTextToClipboard() 
+void CQC_EyesDlg::OnCopyTextToClipboard()
 {
 	if ( !CheckNumericInputs() )
 		return;
@@ -592,7 +592,7 @@ void CQC_EyesDlg::OnCopyTextToClipboard()
 
 	if ( !OpenClipboard() )
 		return;
-	
+
 	size_t textLen = strlen( m_Buf );
 	HANDLE hmem = GlobalAlloc( GMEM_MOVEABLE | GMEM_DDESHARE, textLen + 1 );
 	if ( hmem )
@@ -606,7 +606,7 @@ void CQC_EyesDlg::OnCopyTextToClipboard()
 			SetClipboardData( CF_TEXT, hmem );
 		}
 	}
-	
+
 	CloseClipboard();
 
 	delete [] m_Buf;
@@ -644,7 +644,7 @@ int g_LeftLidPositionControls[] =
 #define NUM_LEFT_LID_POSITION_CONTROLS	( sizeof( g_LeftLidPositionControls ) / sizeof( g_LeftLidPositionControls[0] ) )
 
 
-void CQC_EyesDlg::OnDefaultControls() 
+void CQC_EyesDlg::OnDefaultControls()
 {
 	GetDlgItem( IDC_PICTURES )->ShowWindow( SW_SHOW );
 
@@ -658,10 +658,10 @@ void CQC_EyesDlg::OnDefaultControls()
 	{
 		GetDlgItem( g_LeftLidPositionControls[i] )->ShowWindow( SW_HIDE );
 	}
-	
+
 }
 
-void CQC_EyesDlg::OnAdvancedControls() 
+void CQC_EyesDlg::OnAdvancedControls()
 {
 	GetDlgItem( IDC_PICTURES )->ShowWindow( SW_HIDE );
 
@@ -684,7 +684,7 @@ bool CQC_EyesDlg::IsIndependentLeftLidControlEnabled()
 	return m_IndependentLeftLidControl.GetCheck() == 1;
 }
 
-void CQC_EyesDlg::OnLeftLidControl() 
+void CQC_EyesDlg::OnLeftLidControl()
 {
 	if ( IsIndependentLeftLidControlEnabled() )
 	{
@@ -701,5 +701,5 @@ void CQC_EyesDlg::OnLeftLidControl()
 			GetDlgItem( g_LeftLidPositionControls[i] )->ShowWindow( SW_HIDE );
 			GetDlgItem( g_LeftLidPositionControls[i] )->InvalidateRect( NULL );
 		}
-	}	
+	}
 }

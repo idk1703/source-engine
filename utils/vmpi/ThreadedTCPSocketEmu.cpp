@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,7 +22,7 @@
 class CThreadedTCPSocketEmu : public ITCPSocket, public ITCPSocketHandler, public IHandlerCreator
 {
 public:
-	
+
 	CThreadedTCPSocketEmu()
 	{
 		m_pSocket = NULL;
@@ -49,7 +49,7 @@ public:
 			m_pSocket->Release();
 			m_pSocket = NULL;
 		}
-		
+
 		if ( m_pConnectSocket )
 		{
 			m_pConnectSocket->Release();
@@ -84,7 +84,7 @@ private:
 
 // IHandlerCreator implementation.
 public:
-	
+
 	// This is used for connecting.
 	virtual ITCPSocketHandler* CreateNewHandler()
 	{
@@ -110,16 +110,16 @@ public:
 	{
 		// They should have "bound" to a port before trying to connect.
 		Assert( m_LocalPort != 0xFFFF );
-		
+
 		if ( m_pConnectSocket )
 			m_pConnectSocket->Release();
 
-		m_pConnectSocket = ThreadedTCP_CreateConnector( 
+		m_pConnectSocket = ThreadedTCP_CreateConnector(
 			addr,
 			CIPAddr( 0, 0, 0, 0, m_LocalPort ),
 			this );
 
-		return m_pConnectSocket != 0;			
+		return m_pConnectSocket != 0;
 	}
 
 	virtual bool UpdateConnect()
@@ -200,17 +200,17 @@ public:
 			// Ok, there's a packet.
 			CCriticalSectionLock csLock( &m_RecvPacketsCS );
 			csLock.Lock();
-		
+
 			Assert( m_RecvPackets.Count() > 0 );
-			
+
 			int iHead = m_RecvPackets.Head();
 			CTCPPacket *pPacket = m_RecvPackets[ iHead ];
-			
+
 			data.CopyArray( (const unsigned char*)pPacket->GetData(), pPacket->GetLen() );
-			
+
 			pPacket->Release();
 			m_RecvPackets.Remove( iHead );
-				
+
 			// Re-set the event if there are more packets left to receive.
 			if ( m_RecvPackets.Count() > 0 )
 			{
@@ -227,9 +227,9 @@ public:
 
 
 private:
-	
+
 	IThreadedTCPSocket *m_pSocket;
-	
+
 	unsigned short m_LocalPort;	// The port we bind to when we want to connect.
 	ITCPConnectSocket *m_pConnectSocket;
 
@@ -272,7 +272,7 @@ public:
 
 	bool StartListening( const unsigned short port, int nQueueLength )
 	{
-		m_pListener = ThreadedTCP_CreateListener( 
+		m_pListener = ThreadedTCP_CreateListener(
 			this,
 			port,
 			nQueueLength );
@@ -298,7 +298,7 @@ private:
 		if ( m_pListener->Update( &pSocket ) && pSocket )
 		{
 			*pAddr = pSocket->GetRemoteAddr();
-			
+
 			// This is pretty hacky, but this stuff is just around for test code.
 			CThreadedTCPSocketEmu *pLast = m_pLastCreatedSocket;
 			pLast->Init( pSocket );
@@ -339,6 +339,5 @@ ITCPListenSocket* CreateTCPListenSocketEmu( const unsigned short port, int nQueu
 	{
 		delete pSocket;
 		return NULL;
-	}	
+	}
 }
-

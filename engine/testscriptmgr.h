@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -36,7 +36,7 @@ class CTestScriptMgr
 public:
 				CTestScriptMgr();
 	virtual		~CTestScriptMgr();
-	
+
 	bool		StartTestScript( const char *pFilename );
 	void		Term();
 	bool		IsInitted() const;

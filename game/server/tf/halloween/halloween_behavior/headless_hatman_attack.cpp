@@ -284,7 +284,7 @@ void CHeadlessHatmanAttack::UpdateAxeSwing( CHeadlessHatman *me )
 				DispatchParticleEffect( "hammer_impact_button", me->GetAbsOrigin(), me->GetAbsAngles() );
 
 				me->EmitSound( "Halloween.HammerImpact" );
-				
+
 				// after HHH punt off a kart target, pick a new target right away
 				TFGameRules()->SetIT( NULL );
 			}
@@ -374,7 +374,7 @@ ActionResult< CHeadlessHatman >	CHeadlessHatmanAttack::Update( CHeadlessHatman *
 		if ( chaseVictim && m_warnITTimer.IsElapsed() && !TFGameRules()->IsHalloweenScenario( CTFGameRules::HALLOWEEN_SCENARIO_DOOMSDAY ) )
 		{
 			m_warnITTimer.Start( 7.0f );
-			ClientPrint( chaseVictim, HUD_PRINTCENTER, "#TF_HALLOWEEN_BOSS_WARN_VICTIM", chaseVictim->GetPlayerName() );		
+			ClientPrint( chaseVictim, HUD_PRINTCENTER, "#TF_HALLOWEEN_BOSS_WARN_VICTIM", chaseVictim->GetPlayerName() );
 		}
 
 		if ( me->IsRangeGreaterThan( chaseVictim, standAndSwingRange ) || !me->IsLineOfSightClear( chaseVictim ) )
@@ -412,7 +412,7 @@ ActionResult< CHeadlessHatman >	CHeadlessHatmanAttack::Update( CHeadlessHatman *
 					{
 						me->AddGesture( ACT_MP_ATTACK_STAND_ITEM1 );
 					}
-					
+
 					m_axeSwingTimer.Start( 0.58f );
 					me->EmitSound( "Halloween.HeadlessBossAttack" );
 
@@ -539,5 +539,3 @@ void CHeadlessHatmanAttack::RecomputeHomePosition( void )
 		m_homePos = contestedPoint->GetAbsOrigin();
 	}
 }
-
-

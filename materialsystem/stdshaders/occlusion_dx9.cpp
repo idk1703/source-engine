@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -88,4 +88,3 @@ BEGIN_VS_SHADER_FLAGS( Occlusion_DX9, "Help for Occlusion", SHADER_NOT_EDITABLE 
 		Draw();
 	}
 END_SHADER
-

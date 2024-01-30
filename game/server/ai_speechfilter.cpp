@@ -29,7 +29,7 @@ BEGIN_DATADESC( CAI_SpeechFilter )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_SpeechFilter::Spawn( void )
 {
@@ -170,8 +170,8 @@ void CAI_SpeechFilter::PopulateSubjectList( bool purge )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
+// Purpose:
+// Input  : *pEntity -
 //-----------------------------------------------------------------------------
 void CAI_SpeechFilter::OnEntityCreated( CBaseEntity *pEntity )
 {
@@ -192,8 +192,8 @@ void CAI_SpeechFilter::OnEntityCreated( CBaseEntity *pEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
+// Purpose:
+// Input  : *pEntity -
 //-----------------------------------------------------------------------------
 void CAI_SpeechFilter::OnEntityDeleted( CBaseEntity *pEntity )
 {

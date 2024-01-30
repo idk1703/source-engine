@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -57,7 +57,7 @@ public:
 
 	virtual void		ReleaseModels( void );
 	virtual void		RestoreModels( void );
-	
+
 	//virtual void		RefreshModels( void );
 
 	virtual void		CheckResetFlexes( void );

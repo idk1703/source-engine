@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -48,7 +48,7 @@ static const char *pPodFollowerBoneNames[] =
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CPrisonerPodServerVehicle : public CBaseServerVehicle
 {
@@ -69,7 +69,7 @@ protected:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CPropVehiclePrisonerPod : public CPhysicsProp, public IDrivableVehicle
 {
@@ -128,12 +128,12 @@ public:
 // IDrivableVehicle
 public:
 
-	virtual bool PassengerShouldReceiveDamage( CTakeDamageInfo &info ) 
-	{ 
+	virtual bool PassengerShouldReceiveDamage( CTakeDamageInfo &info )
+	{
 		if ( info.GetDamageType() & DMG_VEHICLE )
 			return true;
 
-		return (info.GetDamageType() & (DMG_RADIATION|DMG_BLAST) ) == 0; 
+		return (info.GetDamageType() & (DMG_RADIATION|DMG_BLAST) ) == 0;
 	}
 
 	virtual CBaseEntity *GetDriver( void );
@@ -153,7 +153,7 @@ public:
 	virtual void ItemPostFrame( CBasePlayer *pPlayer ) {}
 	virtual void SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move ) {}
 	virtual string_t GetVehicleScriptName() { return m_vehicleScript; }
-	
+
 	// If this is a vehicle, returns the vehicle interface
 	virtual IServerVehicle *GetServerVehicle() { return &m_ServerVehicle; }
 
@@ -253,7 +253,7 @@ void CPropVehiclePrisonerPod::Spawn( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehiclePrisonerPod::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator )
 {
@@ -268,7 +268,7 @@ void CPropVehiclePrisonerPod::TraceAttack( const CTakeDamageInfo &info, const Ve
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CPropVehiclePrisonerPod::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 {
@@ -295,7 +295,7 @@ int CPropVehiclePrisonerPod::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Vector CPropVehiclePrisonerPod::BodyTarget( const Vector &posSrc, bool bNoisy )
 {
@@ -318,7 +318,7 @@ Vector CPropVehiclePrisonerPod::BodyTarget( const Vector &posSrc, bool bNoisy )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehiclePrisonerPod::Think(void)
 {
@@ -327,7 +327,7 @@ void CPropVehiclePrisonerPod::Think(void)
 	if ( GetDriver() )
 	{
 		BaseClass::Think();
-		
+
 		// If the enter or exit animation has finished, tell the server vehicle
 		if ( IsSequenceFinished() && (m_bExitAnimOn || m_bEnterAnimOn) )
 		{
@@ -395,7 +395,7 @@ void CPropVehiclePrisonerPod::InputClose( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehiclePrisonerPod::HandleAnimEvent( animevent_t *pEvent )
 {
@@ -413,7 +413,7 @@ void CPropVehiclePrisonerPod::HandleAnimEvent( animevent_t *pEvent )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehiclePrisonerPod::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
@@ -452,9 +452,9 @@ bool CPropVehiclePrisonerPod::CanExitVehicle( CBaseEntity *pEntity )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Override base class to add display 
+// Purpose: Override base class to add display
 //-----------------------------------------------------------------------------
-void CPropVehiclePrisonerPod::DrawDebugGeometryOverlays(void) 
+void CPropVehiclePrisonerPod::DrawDebugGeometryOverlays(void)
 {
 	// Draw if BBOX is on
 	if ( m_debugOverlays & OVERLAY_BBOX_BIT )
@@ -466,7 +466,7 @@ void CPropVehiclePrisonerPod::DrawDebugGeometryOverlays(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehiclePrisonerPod::EnterVehicle( CBaseCombatCharacter *pPassenger )
 {
@@ -496,7 +496,7 @@ void CPropVehiclePrisonerPod::EnterVehicle( CBaseCombatCharacter *pPassenger )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehiclePrisonerPod::SetVehicleEntryAnim( bool bOn )
 {
@@ -505,7 +505,7 @@ void CPropVehiclePrisonerPod::SetVehicleEntryAnim( bool bOn )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehiclePrisonerPod::ExitVehicle( int nRole )
 {
@@ -524,7 +524,7 @@ void CPropVehiclePrisonerPod::ExitVehicle( int nRole )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPropVehiclePrisonerPod::ResetUseKey( CBasePlayer *pPlayer )
 {
@@ -542,27 +542,27 @@ void CPropVehiclePrisonerPod::GetVectors(Vector* pForward, Vector* pRight, Vecto
 
 	if (pForward != NULL)
 	{
-		MatrixGetColumn( entityToWorld, 1, *pForward ); 
+		MatrixGetColumn( entityToWorld, 1, *pForward );
 	}
 
 	if (pRight != NULL)
 	{
-		MatrixGetColumn( entityToWorld, 0, *pRight ); 
+		MatrixGetColumn( entityToWorld, 0, *pRight );
 	}
 
 	if (pUp != NULL)
 	{
-		MatrixGetColumn( entityToWorld, 2, *pUp ); 
+		MatrixGetColumn( entityToWorld, 2, *pUp );
 	}
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CBaseEntity *CPropVehiclePrisonerPod::GetDriver( void ) 
-{ 
-	return m_hPlayer; 
+CBaseEntity *CPropVehiclePrisonerPod::GetDriver( void )
+{
+	return m_hPlayer;
 }
 
 //-----------------------------------------------------------------------------
@@ -610,8 +610,8 @@ void CPropVehiclePrisonerPod::InputEnterVehicle( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CPropVehiclePrisonerPod::InputEnterVehicleImmediate( inputdata_t &inputdata )
 {
@@ -636,7 +636,7 @@ void CPropVehiclePrisonerPod::InputEnterVehicleImmediate( inputdata_t &inputdata
 			// Force the player out of whatever vehicle they are in.
 			pPlayer->LeaveVehicle();
 		}
-		
+
 		pPlayer->GetInVehicle( GetServerVehicle(), VEHICLE_ROLE_DRIVER );
 	}
 	else
@@ -665,8 +665,8 @@ CPropVehiclePrisonerPod *CPrisonerPodServerVehicle::GetPod( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pPlayer - 
+// Purpose:
+// Input  : pPlayer -
 //-----------------------------------------------------------------------------
 void CPrisonerPodServerVehicle::ItemPostFrame( CBasePlayer *player )
 {
@@ -690,7 +690,7 @@ void CPrisonerPodServerVehicle::ItemPostFrame( CBasePlayer *player )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPrisonerPodServerVehicle::GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, QAngle *pAbsAngles, float *pFOV /*= NULL*/ )
 {

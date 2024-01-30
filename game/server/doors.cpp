@@ -35,7 +35,7 @@ BEGIN_DATADESC( CBaseDoor )
 	DEFINE_KEYFIELD( m_vecMoveDir, FIELD_VECTOR, "movedir" ),
 
 	DEFINE_FIELD( m_bLockedSentence, FIELD_CHARACTER ),
-	DEFINE_FIELD( m_bUnlockedSentence, FIELD_CHARACTER ),	
+	DEFINE_FIELD( m_bUnlockedSentence, FIELD_CHARACTER ),
 	DEFINE_KEYFIELD( m_NoiseMoving, FIELD_SOUNDNAME, "noise1" ),
 	DEFINE_KEYFIELD( m_NoiseArrived, FIELD_SOUNDNAME, "noise2" ),
 	DEFINE_KEYFIELD( m_NoiseMovingClosed, FIELD_SOUNDNAME, "startclosesound" ),
@@ -111,13 +111,13 @@ END_SEND_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: play door or button locked or unlocked sounds. 
+// Purpose: play door or button locked or unlocked sounds.
 //			NOTE: this routine is shared by doors and buttons
-// Input  : pEdict - 
-//			pls - 
+// Input  : pEdict -
+//			pls -
 //			flocked - if true, play 'door is locked' sound, otherwise play 'door
 //				is unlocked' sound.
-//			fbutton - 
+//			fbutton -
 //-----------------------------------------------------------------------------
 void PlayLockSounds(CBaseEntity *pEdict, locksound_t *pls, int flocked, int fbutton)
 {
@@ -154,20 +154,20 @@ void PlayLockSounds(CBaseEntity *pEdict, locksound_t *pls, int flocked, int fbut
 		{
 			// play next 'door locked' sentence in group
 			int iprev = pls->iLockedSentence;
-			
-			pls->iLockedSentence = SENTENCEG_PlaySequentialSz(	pEdict->edict(), 
-																STRING(pls->sLockedSentence), 
-																0.85f, 
-																SNDLVL_NORM, 
-																0, 
-																100, 
-																pls->iLockedSentence, 
+
+			pls->iLockedSentence = SENTENCEG_PlaySequentialSz(	pEdict->edict(),
+																STRING(pls->sLockedSentence),
+																0.85f,
+																SNDLVL_NORM,
+																0,
+																100,
+																pls->iLockedSentence,
 																FALSE);
 			pls->iUnlockedSentence = 0;
 
 			// make sure we don't keep calling last sentence in list
 			pls->bEOFLocked = (iprev == pls->iLockedSentence);
-		
+
 			pls->flwaitSentence = gpGlobals->curtime + DOOR_SENTENCEWAIT;
 		}
 	}
@@ -201,8 +201,8 @@ void PlayLockSounds(CBaseEntity *pEdict, locksound_t *pls, int flocked, int fbut
 		if (fplaysentence)
 		{
 			int iprev = pls->iUnlockedSentence;
-			
-			pls->iUnlockedSentence = SENTENCEG_PlaySequentialSz(pEdict->edict(), STRING(pls->sUnlockedSentence), 
+
+			pls->iUnlockedSentence = SENTENCEG_PlaySequentialSz(pEdict->edict(), STRING(pls->sUnlockedSentence),
 					  0.85, SNDLVL_NORM, 0, 100, pls->iUnlockedSentence, FALSE);
 			pls->iLockedSentence = 0;
 
@@ -216,8 +216,8 @@ void PlayLockSounds(CBaseEntity *pEdict, locksound_t *pls, int flocked, int fbut
 
 //-----------------------------------------------------------------------------
 // Purpose: Cache user-entity-field values until spawn is called.
-// Input  : szKeyName - 
-//			szValue - 
+// Input  : szKeyName -
+//			szValue -
 // Output : Returns true.
 //-----------------------------------------------------------------------------
 bool CBaseDoor::KeyValue( const char *szKeyName, const char *szValue )
@@ -238,7 +238,7 @@ bool CBaseDoor::KeyValue( const char *szKeyName, const char *szValue )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseDoor::Spawn()
 {
@@ -288,12 +288,12 @@ void CBaseDoor::Spawn()
 	}
 
 	SetMoveType( MOVETYPE_PUSH );
-	
+
 	if (m_flSpeed == 0)
 	{
 		m_flSpeed = 100;
 	}
-	
+
 	SetTouch( &CBaseDoor::DoorTouch );
 
 	if ( !FClassnameIs( this, "func_water" ) )
@@ -316,7 +316,7 @@ void CBaseDoor::Spawn()
 		}
 		if ( m_bIgnoreDebris )
 		{
-			// both of these flags want to set the collision group and 
+			// both of these flags want to set the collision group and
 			// there isn't a combo group
 			Assert( !HasSpawnFlags( SF_DOOR_NONSOLID_TO_PLAYER ) );
 			if ( HasSpawnFlags( SF_DOOR_NONSOLID_TO_PLAYER ) )
@@ -408,7 +408,7 @@ void CBaseDoor::StopMovingSound(void)
 	}
 	StopSound( entindex(), CHAN_STATIC, pSoundName );
 }
- 
+
 
 bool CBaseDoor::ShouldSavePhysics()
 {
@@ -433,7 +433,7 @@ bool CBaseDoor::CreateVPhysics( )
 
 		IPhysicsObject *pPhysics = VPhysicsInitShadow( false, false );
 		fluidparams_t fluid;
-		
+
 		Assert( CollisionProp()->GetCollisionAngles() == vec3_angle );
 		fluid.damping = 0.01f;
 		fluid.surfacePlane[0] = 0;
@@ -444,17 +444,17 @@ bool CBaseDoor::CreateVPhysics( )
 		fluid.torqueFactor = 0.1f;
 		fluid.viscosityFactor = 0.01f;
 		fluid.pGameData = static_cast<void *>(this);
-		
+
 		//FIXME: Currently there's no way to specify that you want slime
 		fluid.contents = CONTENTS_WATER;
-		
+
 		physenv->CreateFluidController( pPhysics, &fluid );
 	}
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseDoor::Activate( void )
 {
@@ -474,7 +474,7 @@ void CBaseDoor::Activate( void )
 			{
 				error = ( pDoorList[i]->GetLocalAngles() != GetLocalAngles() ) ? true : false;
 			}
-			else 
+			else
 			{
 				error = ( pDoorList[i]->GetLocalOrigin() != GetLocalOrigin() ) ? true : false;
 			}
@@ -489,7 +489,7 @@ void CBaseDoor::Activate( void )
 			}
 		}
 	}
-	
+
 	switch ( m_toggle_state )
 	{
 	case TS_AT_TOP:
@@ -511,8 +511,8 @@ void CBaseDoor::Activate( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : state - 
+// Purpose:
+// Input  : state -
 //-----------------------------------------------------------------------------
 // This is ONLY used by the node graph to test movement through a door
 void CBaseDoor::InputSetToggleState( inputdata_t &inputdata )
@@ -530,7 +530,7 @@ void CBaseDoor::SetToggleState( int state )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseDoor::Precache( void )
 {
@@ -546,7 +546,7 @@ void CBaseDoor::Precache( void )
 	{
 		UTIL_ValidateSoundName( m_NoiseMoving,		"DoorSound.DefaultMove" );
 		UTIL_ValidateSoundName( m_NoiseArrived,		"DoorSound.DefaultArrive" );
-#ifndef HL1_DLL		
+#ifndef HL1_DLL
 		UTIL_ValidateSoundName( m_ls.sLockedSound,	"DoorSound.DefaultLocked" );
 #endif
 		UTIL_ValidateSoundName( m_ls.sUnlockedSound,"DoorSound.Null" );
@@ -582,7 +582,7 @@ void CBaseDoor::Precache( void )
 		case 7: m_ls.sLockedSentence = AllocPooledString("NCON"); break; // gen containment
 		case 8: m_ls.sLockedSentence = AllocPooledString("NH"); break; // maintenance door
 		case 9: m_ls.sLockedSentence = AllocPooledString("NG"); break; // broken door
-		
+
 		default: m_ls.sLockedSentence = NULL_STRING; break;
 	}
 
@@ -596,7 +596,7 @@ void CBaseDoor::Precache( void )
 		case 6: m_ls.sUnlockedSentence = AllocPooledString("ERAD"); break; // radiation door
 		case 7: m_ls.sUnlockedSentence = AllocPooledString("ECON"); break; // gen containment
 		case 8: m_ls.sUnlockedSentence = AllocPooledString("EH"); break; // maintenance door
-		
+
 		default: m_ls.sUnlockedSentence = NULL_STRING; break;
 	}
 }
@@ -605,7 +605,7 @@ void CBaseDoor::Precache( void )
 //-----------------------------------------------------------------------------
 // Purpose: Doors not tied to anything (e.g. button, another door) can be touched,
 //			to make them activate.
-// Input  : *pOther - 
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void CBaseDoor::DoorTouch( CBaseEntity *pOther )
 {
@@ -634,10 +634,10 @@ void CBaseDoor::DoorTouch( CBaseEntity *pOther )
 		}
 #endif//HL1_DLL
 
-		return; 
+		return;
 	}
-	
-	// If door has master, and it's not ready to trigger, 
+
+	// If door has master, and it's not ready to trigger,
 	// play 'locked' sound.
 	if (m_sMaster != NULL_STRING && !UTIL_IsMasterTriggered(m_sMaster, pOther))
 	{
@@ -648,9 +648,9 @@ void CBaseDoor::DoorTouch( CBaseEntity *pOther )
 	{
 		m_OnLockedUse.FireOutput( pOther, pOther );
 		PlayLockSounds(this, &m_ls, TRUE, FALSE);
-		return; 
+		return;
 	}
-	
+
 	// Remember who activated the door.
 	m_hActivator = pOther;
 
@@ -681,8 +681,8 @@ void CBaseDoor::CloseAreaPortalsThink( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : isOpen - 
+// Purpose:
+// Input  : isOpen -
 //-----------------------------------------------------------------------------
 void CBaseDoor::UpdateAreaPortals( bool isOpen )
 {
@@ -695,7 +695,7 @@ void CBaseDoor::UpdateAreaPortals( bool isOpen )
 	string_t name = GetEntityName();
 	if ( !name )
 		return;
-	
+
 	CBaseEntity *pPortal = NULL;
 	while ( ( pPortal = gEntList.FindEntityByClassname( pPortal, "func_areaportal" ) ) != NULL )
 	{
@@ -710,10 +710,10 @@ void CBaseDoor::UpdateAreaPortals( bool isOpen )
 
 //-----------------------------------------------------------------------------
 // Purpose: Called when the player uses the door.
-// Input  : pActivator - 
-//			pCaller - 
-//			useType - 
-//			value - 
+// Input  : pActivator -
+//			pCaller -
+//			useType -
+//			value -
 //-----------------------------------------------------------------------------
 void CBaseDoor::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
@@ -818,7 +818,7 @@ void CBaseDoor::ChainTouch( CBaseEntity *pOther )
 void CBaseDoor::InputClose( inputdata_t &inputdata )
 {
 	if ( m_toggle_state != TS_AT_BOTTOM )
-	{	
+	{
 		DoorGoDown();
 	}
 }
@@ -839,10 +839,10 @@ void CBaseDoor::InputLock( inputdata_t &inputdata )
 void CBaseDoor::InputOpen( inputdata_t &inputdata )
 {
 	if (m_toggle_state != TS_AT_TOP && m_toggle_state != TS_GOING_UP )
-	{	
+	{
 		// I'm locked, can't open
 		if (m_bLocked)
-			return; 
+			return;
 
 		// Play door unlock sounds.
 		PlayLockSounds(this, &m_ls, false, false);
@@ -858,10 +858,10 @@ void CBaseDoor::InputToggle( inputdata_t &inputdata )
 {
 	// I'm locked, can't open
 	if (m_bLocked)
-		return; 
+		return;
 
 	if (m_toggle_state == TS_AT_BOTTOM)
-	{	
+	{
 		DoorGoUp();
 	}
 	else if (m_toggle_state == TS_AT_TOP)
@@ -880,7 +880,7 @@ void CBaseDoor::InputUnlock( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseDoor::InputSetSpeed( inputdata_t &inputdata )
 {
@@ -958,7 +958,7 @@ void CBaseDoor::DoorGoUp( void )
 	}
 
 	m_toggle_state = TS_GOING_UP;
-	
+
 	SetMoveDone( &CBaseDoor::DoorHitTop );
 	if ( IsRotatingDoor() )		// !!! BUGBUG Triggered doors don't work with this yet
 	{
@@ -967,7 +967,7 @@ void CBaseDoor::DoorGoUp( void )
 		if ( m_hActivator != NULL )
 		{
 			pevActivator = m_hActivator->edict();
-			
+
 			if ( !HasSpawnFlags( SF_DOOR_ONEWAY ) && m_vecMoveAng.y ) 		// Y axis rotation, move away from the player
 			{
 				// Positive is CCW, negative is CW, so make 'sign' 1 or -1 based on which way we want to open.
@@ -988,7 +988,7 @@ void CBaseDoor::DoorGoUp( void )
 
 				if( cross.z > 0.0f )
 				{
-					sign = -1.0f;	
+					sign = -1.0f;
 				}
 			}
 		}
@@ -1027,7 +1027,7 @@ void CBaseDoor::DoorHitTop( void )
 
 	ASSERT(m_toggle_state == TS_GOING_UP);
 	m_toggle_state = TS_AT_TOP;
-	
+
 	// toggle-doors don't come down automatically, they wait for refire.
 	if (HasSpawnFlags( SF_DOOR_NO_AUTO_RETURN))
 	{
@@ -1070,7 +1070,7 @@ void CBaseDoor::DoorGoDown( void )
 			StartMovingSound();
 		}
 	}
-	
+
 #ifdef DOOR_ASSERT
 	ASSERT(m_toggle_state == TS_AT_TOP);
 #endif // DOOR_ASSERT
@@ -1192,11 +1192,11 @@ void CBaseDoor::Blocked( CBaseEntity *pOther )
 	// Hurt the blocker a little.
 	if ( m_flBlockDamage )
 	{
-		// if the door is marked "force closed" or it has a negative wait, then there's nothing to do but 
+		// if the door is marked "force closed" or it has a negative wait, then there's nothing to do but
 		// push/damage the object.
 		// If block damage is set, but this object is a physics prop that can't be damaged, just
 		// give up and disable collisions
-		if ( (m_bForceClosed || m_flWait < 0) && pOther->GetMoveType() == MOVETYPE_VPHYSICS && 
+		if ( (m_bForceClosed || m_flWait < 0) && pOther->GetMoveType() == MOVETYPE_VPHYSICS &&
 		   (pOther->m_takedamage == DAMAGE_NO || pOther->m_takedamage == DAMAGE_EVENTS_ONLY) )
 		{
 			EntityPhysics_CreateSolver( this, pOther, true, 4.0f );
@@ -1259,7 +1259,7 @@ void CBaseDoor::Blocked( CBaseEntity *pOther )
 						pDoor->SetLocalAngularVelocity( vec3_angle );
 					}
 				}
-			
+
 				if ( pDoor->m_toggle_state == TS_GOING_DOWN)
 					pDoor->DoorGoUp();
 				else
@@ -1291,17 +1291,17 @@ void CBaseDoor::EndBlocked( void )
 
 /*func_door_rotating
 
-TOGGLE causes the door to wait in both the start and end states for  
+TOGGLE causes the door to wait in both the start and end states for
 a trigger event.
 
-START_OPEN causes the door to move to its destination when spawned,  
-and operate in reverse.  It is used to temporarily or permanently  
-close off an area when triggered (not usefull for touch or  
+START_OPEN causes the door to move to its destination when spawned,
+and operate in reverse.  It is used to temporarily or permanently
+close off an area when triggered (not usefull for touch or
 takedamage doors).
 
-You need to have an origin brush as part of this entity.  The  
+You need to have an origin brush as part of this entity.  The
 center of that brush will be
-the point around which it is rotated. It will rotate around the Z  
+the point around which it is rotated. It will rotate around the Z
 axis by default.  You can
 check either the X_AXIS or Y_AXIS box to change that.
 
@@ -1311,7 +1311,7 @@ check either the X_AXIS or Y_AXIS box to change that.
 REVERSE will cause the door to rotate in the opposite direction.
 
 "angle"		determines the opening direction
-"targetname" if set, no touch field will be spawned and a remote  
+"targetname" if set, no touch field will be spawned and a remote
 button or trigger field activates the door.
 "health"	if set, door must be shot open
 "speed"		movement speed (100 default)
@@ -1320,7 +1320,7 @@ button or trigger field activates the door.
 */
 
 //==================================================
-// CRotDoor 
+// CRotDoor
 //==================================================
 
 class CRotDoor : public CBaseDoor
@@ -1346,7 +1346,7 @@ BEGIN_DATADESC( CRotDoor )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRotDoor::Spawn( void )
 {
@@ -1358,7 +1358,7 @@ void CRotDoor::Spawn( void )
 	// check for clockwise rotation
 	if ( HasSpawnFlags(SF_DOOR_ROTATE_BACKWARDS) )
 		m_vecMoveAng = m_vecMoveAng * -1;
-	
+
 	//m_flWait			= 2; who the hell did this? (sjb)
 	m_vecAngle1	= GetLocalAngles();
 	m_vecAngle2	= GetLocalAngles() + m_vecMoveAng * m_flMoveDistance;
@@ -1371,7 +1371,7 @@ void CRotDoor::Spawn( void )
 	// SF_DOOR_START_OPEN_OBSOLETE is an old broken way of spawning open that has
 	// been deprecated.
 	if ( HasSpawnFlags(SF_DOOR_START_OPEN_OBSOLETE) )
-	{	
+	{
 		// swap pos1 and pos2, put door at pos2, invert movement direction
 		QAngle vecNewAngles = m_vecAngle2;
 		m_vecAngle2 = m_vecAngle1;
@@ -1385,7 +1385,7 @@ void CRotDoor::Spawn( void )
 		m_toggle_state = TS_AT_BOTTOM;
 	}
 	else if ( m_eSpawnPosition == FUNC_DOOR_SPAWN_OPEN )
-	{	
+	{
 		// We've already had our physics setup in BaseClass::Spawn, so teleport to our
 		// current position. If we don't do this, our vphysics shadow will not update.
 		Teleport( NULL, &m_vecAngle2, NULL );
@@ -1399,7 +1399,7 @@ void CRotDoor::Spawn( void )
 #ifdef HL1_DLL
 	SetSolid( SOLID_VPHYSICS );
 #endif
-		
+
 	// Slam the object back to solid - if we really want it to be solid.
 	if ( m_bSolidBsp )
 	{
@@ -1420,8 +1420,8 @@ bool CRotDoor::CreateVPhysics()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : state - 
+// Purpose:
+// Input  : state -
 //-----------------------------------------------------------------------------
 // This is ONLY used by the node graph to test movement through a door
 void CRotDoor::SetToggleState( int state )

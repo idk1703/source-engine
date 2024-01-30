@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -25,7 +25,7 @@ public:
 	DECLARE_CLASS( CWeaponM4A1, CWeaponCSBaseGun );
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponM4A1();
 
 	virtual void Spawn();
@@ -296,7 +296,7 @@ bool CWeaponM4A1::Reload()
 		return false;
 
 	int iResult = 0;
-	
+
 	if ( m_bSilencerOn )
 		 iResult = DefaultReload( GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD_SILENCED );
 	else

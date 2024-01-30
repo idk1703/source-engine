@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -21,7 +21,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Forward declarations 
+// Forward declarations
 //-----------------------------------------------------------------------------
 class IVMTDocCallback;
 class IShader;
@@ -31,7 +31,7 @@ class IShader;
 
 
 //-----------------------------------------------------------------------------
-// Contains all editable state 
+// Contains all editable state
 //-----------------------------------------------------------------------------
 class CVMTDoc : public IDmNotify
 {
@@ -91,7 +91,7 @@ private:
 	// Remove all shader parameters that don't exist in the new shader
 	void RemoveUnusedShaderParams( CDmElement *pMaterial, IShader *pShader, IShader *pOldShader );
 
-	// Remove all shader parameters 
+	// Remove all shader parameters
 	void RemoveAllShaderParams( CDmElement *pMaterial );
 
 	// Finds a shader

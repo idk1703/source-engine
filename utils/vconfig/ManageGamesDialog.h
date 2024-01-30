@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -32,15 +32,15 @@ public:
 	void	SetGameName( const char *szDir );
 
 protected:
-	
+
 	virtual void OnCommand( const char *command );
-	
+
 	bool	IsGameNameUnique( const char *name );
 
 private:
 
 	int					m_nConfigID;
-	
+
 	vgui::TextEntry		*m_pGameNameEntry;
 	vgui::TextEntry		*m_pGameDirEntry;
 

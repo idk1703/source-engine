@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,9 +24,9 @@ class CWeaponFiveSeven : public CWeaponCSBase
 {
 public:
 	DECLARE_CLASS( CWeaponFiveSeven, CWeaponCSBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponFiveSeven();
 
 	virtual void Spawn();
@@ -44,9 +44,9 @@ public:
 	virtual CSWeaponID GetWeaponID( void ) const		{ return WEAPON_FIVESEVEN; }
 
 private:
-	
+
 	CWeaponFiveSeven( const CWeaponFiveSeven & );
-	
+
 	float m_flLastFire;
 };
 
@@ -144,7 +144,7 @@ void CWeaponFiveSeven::PrimaryAttack()
 	// player "shoot" animation
 	pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
-	
+
 	FX_FireBullets(
 		pPlayer->entindex(),
 		pPlayer->Weapon_ShootPosition(),
@@ -153,7 +153,7 @@ void CWeaponFiveSeven::PrimaryAttack()
 		Primary_Mode,
 		CBaseEntity::GetPredictionRandomSeed() & 255,
 		GetInaccuracy(),
-		GetSpread()); 
+		GetSpread());
 
 	m_flNextPrimaryAttack = m_flNextSecondaryAttack = gpGlobals->curtime + GetCSWpnData().m_flCycleTime;
 
@@ -174,7 +174,7 @@ void CWeaponFiveSeven::PrimaryAttack()
 }
 
 
-void CWeaponFiveSeven::SecondaryAttack() 
+void CWeaponFiveSeven::SecondaryAttack()
 {
 }
 
@@ -195,7 +195,7 @@ void CWeaponFiveSeven::WeaponIdle()
 
 	// only idle if the slid isn't back
 	if (m_iClip1 != 0)
-	{	
+	{
 		SetWeaponIdleTime( gpGlobals->curtime + 4 );
 		SendWeaponAnim( ACT_VM_IDLE );
 	}

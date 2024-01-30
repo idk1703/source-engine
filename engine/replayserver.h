@@ -107,7 +107,7 @@ public: // CBaseServer interface:
 	virtual int		GetChallengeType ( netadr_t &adr );
 	virtual const char *GetName() const;
 	virtual const char *GetPassword() const;
-	IClient *ConnectClient ( netadr_t &adr, int protocol, int challenge, int clientChallenge, int authProtocol, 
+	IClient *ConnectClient ( netadr_t &adr, int protocol, int challenge, int clientChallenge, int authProtocol,
 		const char *name, const char *password, const char *hashedCDkey, int cdKeyLen );
 
 	void ReplyChallenge(netadr_t &adr, int clientChallenge );
@@ -146,7 +146,7 @@ public:
 
 protected:
 	virtual bool ShouldUpdateMasterServer();
-	
+
 private:
 	void		UpdateTick();
 	void		InstallStringTables();
@@ -155,9 +155,9 @@ private:
 	void		InitClientRecvTables();
 	void		FreeClientRecvTables();
 	void		ResyncDemoClock();
-		
+
 public:
-	CGameClient		*m_MasterClient;		// if != NULL, this is the master Replay 
+	CGameClient		*m_MasterClient;		// if != NULL, this is the master Replay
 	CReplayDemoRecorder m_DemoRecorder;			// Replay demo object for recording and playback
 	CGameServer		*m_Server;		// pointer to source server (sv.)
 	int				m_nFirstTick;	// first known server tick;
@@ -171,10 +171,10 @@ public:
 	float			m_flStartTime;
 	float			m_flFPS;		// FPS the proxy is running;
 	int				m_nGameServerMaxClients; // max clients on game server
-	float			m_fNextSendUpdateTime;	// time to send next Replay status messages 
+	float			m_fNextSendUpdateTime;	// time to send next Replay status messages
 	RecvTable		*m_pRecvTables[MAX_DATATABLES];
 	int				m_nRecvTables;
-	Vector			m_vPVSOrigin; 
+	Vector			m_vPVSOrigin;
 	bool			m_bMasterOnlyMode;
 
 	netadr_t		m_RootServer;		// Replay root server

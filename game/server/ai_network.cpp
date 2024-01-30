@@ -29,7 +29,7 @@ extern float MOVE_HEIGHT_EPSILON;
 //-----------------------------------------------------------------------------
 // For now we just have one AINetwork called "BigNet".  At some
 // later point we will probabaly have multiple AINetworkds per level
-CAI_Network*		g_pBigAINet;			
+CAI_Network*		g_pBigAINet;
 
 //-----------------------------------------------------------------------------
 
@@ -47,13 +47,13 @@ public:
 class CNodeFilter : public INodeListFilter
 {
 public:
-	CNodeFilter( CAI_BaseNPC *pNPC, const Vector &pos ) : m_pNPC(pNPC), m_pos(pos) 
+	CNodeFilter( CAI_BaseNPC *pNPC, const Vector &pos ) : m_pNPC(pNPC), m_pos(pos)
 	{
 		if ( m_pNPC )
 			m_capabilities = m_pNPC->CapabilitiesGet();
 	}
 
-	CNodeFilter( const Vector &pos ) : m_pNPC(NULL), m_pos(pos) 
+	CNodeFilter( const Vector &pos ) : m_pNPC(NULL), m_pos(pos)
 	{
 	}
 
@@ -72,7 +72,7 @@ public:
 		if ((node.GetType() == NODE_AIR    && !(m_capabilities & bits_CAP_MOVE_FLY))		||
 			(node.GetType() == NODE_GROUND && !(m_capabilities & bits_CAP_MOVE_GROUND))	)
 			return false;
-			
+
 		if ( m_pNPC->IsUnusableNode( node.GetId(), node.GetHint() ) )
 			return false;
 
@@ -171,17 +171,17 @@ CAI_Network::~CAI_Network()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Given an bitString and float array of size array_size, return the 
+// Purpose: Given an bitString and float array of size array_size, return the
 //			index of the smallest number in the array whose it is set
 //-----------------------------------------------------------------------------
 
-int	CAI_Network::FindBSSmallest(CVarBitVec *bitString, float *float_array, int array_size) 
+int	CAI_Network::FindBSSmallest(CVarBitVec *bitString, float *float_array, int array_size)
 {
 	int	  winIndex = -1;
 	float winSize  = FLT_MAX;
-	for (int i=0;i<array_size;i++) 
+	for (int i=0;i<array_size;i++)
 	{
-		if (bitString->IsBitSet(i) && (float_array[i]<winSize)) 
+		if (bitString->IsBitSet(i) && (float_array[i]<winSize))
 		{
 			winIndex = i;
 			winSize  = float_array[i];
@@ -192,18 +192,18 @@ int	CAI_Network::FindBSSmallest(CVarBitVec *bitString, float *float_array, int a
 
 //-----------------------------------------------------------------------------
 // Purpose: Build a list of nearby nodes sorted by distance
-// Input  : &list - 
-//			maxListCount - 
-//			*pFilter - 
+// Input  : &list -
+//			maxListCount -
+//			*pFilter -
 // Output : int - count of list
 //-----------------------------------------------------------------------------
 
 int CAI_Network::ListNodesInBox( CNodeList &list, int maxListCount, const Vector &mins, const Vector &maxs, INodeListFilter *pFilter )
 {
 	CNodeList result;
-	
+
 	result.SetLessFunc( CNodeList::RevIsLowerPriority );
-	
+
 	// NOTE: maxListCount must be > 0 or this will crash
 	bool full = false;
 	float flClosest = 1000000.0 * 1000000;
@@ -237,11 +237,11 @@ int CAI_Network::ListNodesInBox( CNodeList &list, int maxListCount, const Vector
 				result.RemoveAtHead();
 
 			result.Insert( AI_NearNode_t(node, flDist) );
-	
+
 			full = (result.Count() == maxListCount);
 		}
 	}
-	
+
 	list.RemoveAll();
 	while ( result.Count() )
 	{
@@ -261,7 +261,7 @@ int CAI_Network::ListNodesInBox( CNodeList &list, int maxListCount, const Vector
 int	CAI_Network::NearestNodeToPoint( CAI_BaseNPC *pNPC, const Vector &vecOrigin, bool bCheckVisibility, INearestNodeFilter *pFilter )
 {
 	AI_PROFILE_SCOPE( CAI_Network_NearestNodeToNPCAtPoint );
-	
+
 	// --------------------------------
 	//  Check if network has no nodes
 	// --------------------------------
@@ -279,8 +279,8 @@ int	CAI_Network::NearestNodeToPoint( CAI_BaseNPC *pNPC, const Vector &vecOrigin,
 		{
 			trace_t tr;
 
-			Vector vTestLoc = ( pNPC ) ? 
-								m_pAInode[cachedNode]->GetPosition(pNPC->GetHullType()) + pNPC->GetViewOffset() : 
+			Vector vTestLoc = ( pNPC ) ?
+								m_pAInode[cachedNode]->GetPosition(pNPC->GetHullType()) + pNPC->GetViewOffset() :
 								m_pAInode[cachedNode]->GetOrigin();
 
 			CTraceFilterNav traceFilter( pNPC, true, pNPC, COLLISION_GROUP_NONE );
@@ -298,7 +298,7 @@ int	CAI_Network::NearestNodeToPoint( CAI_BaseNPC *pNPC, const Vector &vecOrigin,
 	}
 
 	// ---------------------------------------------------------------
-	// First get nodes distances and eliminate those that are beyond 
+	// First get nodes distances and eliminate those that are beyond
 	// the maximum allowed distance for local movements
 	// ---------------------------------------------------------------
 	CNodeFilter filter( pNPC, vecOrigin );
@@ -341,8 +341,8 @@ int	CAI_Network::NearestNodeToPoint( CAI_BaseNPC *pNPC, const Vector &vecOrigin,
 		{
 			trace_t tr;
 
-			Vector vTestLoc = ( pNPC ) ? 
-								m_pAInode[smallest]->GetPosition(pNPC->GetHullType()) + pNPC->GetNodeViewOffset() : 
+			Vector vTestLoc = ( pNPC ) ?
+								m_pAInode[smallest]->GetPosition(pNPC->GetHullType()) + pNPC->GetNodeViewOffset() :
 								m_pAInode[smallest]->GetOrigin();
 
 			Vector vecVisOrigin = vecOrigin + Vector(0,0,1);
@@ -385,7 +385,7 @@ int	CAI_Network::NearestNodeToPoint(const Vector &vPosition, bool bCheckVisibili
 {
 	return NearestNodeToPoint( NULL, vPosition, bCheckVisibility );
 }
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Check nearest node cache for checkPos and return cached nearest
 //			node if it exists in the cache.  Doesn't care about reachability,
@@ -467,7 +467,7 @@ Vector CAI_Network::GetNodePosition( Hull_t hull, int nodeID )
 		Assert( 0 );
 		return vec3_origin;
 	}
-	
+
 	if ( ( nodeID < 0 ) || ( nodeID > m_iNumNodes ) )
 	{
 		Assert( 0 );
@@ -499,7 +499,7 @@ float CAI_Network::GetNodeYaw( int nodeID )
 		Assert( 0 );
 		return 0.0f;
 	}
-	
+
 	if ( ( nodeID < 0 ) || ( nodeID > m_iNumNodes ) )
 	{
 		Assert( 0 );
@@ -516,7 +516,7 @@ float CAI_Network::GetNodeYaw( int nodeID )
 CAI_Node *CAI_Network::AddNode( const Vector &origin, float yaw )
 {
 	// ---------------------------------------------------------------------
-	// When loaded from a file will know the number of nodes from 
+	// When loaded from a file will know the number of nodes from
 	// the start.  Otherwise init MAX_NODES of them if not initialized
 	// ---------------------------------------------------------------------
 	if (!m_pAInode || !m_pAInode[0])
@@ -577,7 +577,7 @@ CAI_Link *CAI_Network::CreateLink( int srcID, int destID, CAI_DynamicLink *pDyna
 		DevMsg( "Node %d has too many links\n", srcID );
 		return NULL;
 	}
-		
+
 	if ( pDestNode->NumLinks() == AI_MAX_NODE_LINKS )
 	{
 		DevMsg( "Node %d has too many links\n", destID );
@@ -607,16 +607,16 @@ bool CAI_Network::IsConnected(int srcID, int destID)
 		DevMsg("IsConnected called with invalid node IDs!\n");
 		return false;
 	}
-	
+
 	if ( srcID == destID )
 		return true;
-	
+
 	int srcZone = m_pAInode[srcID]->GetZone();
 	int destZone = m_pAInode[destID]->GetZone();
-	
+
 	if ( srcZone == AI_NODE_ZONE_SOLO || destZone == AI_NODE_ZONE_SOLO )
 		return false;
-		
+
 	if ( srcZone == AI_NODE_ZONE_UNIVERSAL || destZone == AI_NODE_ZONE_UNIVERSAL ) // only happens in WC edit case
 		return true;
 
@@ -627,7 +627,7 @@ bool CAI_Network::IsConnected(int srcID, int destID)
 		return true;
 	}
 #endif
-		
+
 	return ( srcZone == destZone );
 }
 

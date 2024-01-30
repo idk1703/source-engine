@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -28,9 +28,9 @@ class CWeaponScout : public CWeaponCSBaseGun
 {
 public:
 	DECLARE_CLASS( CWeaponScout, CWeaponCSBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponScout();
 
 	virtual void PrimaryAttack();
@@ -45,7 +45,7 @@ public:
 
 
 private:
-	
+
 	CWeaponScout( const CWeaponScout & );
 };
 
@@ -94,14 +94,14 @@ void CWeaponScout::SecondaryAttack()
 		m_weaponMode = Primary_Mode;
 	}
 
-	m_flNextSecondaryAttack = gpGlobals->curtime + 0.3f;   
-	m_zoomFullyActiveTime = gpGlobals->curtime + 0.15; // The worst zoom time from above.  
+	m_flNextSecondaryAttack = gpGlobals->curtime + 0.3f;
+	m_zoomFullyActiveTime = gpGlobals->curtime + 0.15; // The worst zoom time from above.
 
 #ifndef CLIENT_DLL
 	// If this isn't guarded, the sound will be emitted twice, once by the server and once by the client.
 	// Let the server play it since if only the client plays it, it's liable to get played twice cause of
-	// a prediction error. joy.	
-	
+	// a prediction error. joy.
+
 	//=============================================================================
 	// HPE_BEGIN:
 	// [tj] Playing this from the player so that we don't try to play the sound outside the level.
@@ -130,9 +130,9 @@ float CWeaponScout::GetInaccuracy() const
 		CCSPlayer *pPlayer = GetPlayerOwner();
 		if (pPlayer == NULL)
 			return 0.0f;
-	
+
 		float fSpread = 0.0f;
-	
+
 		if ( !FBitSet( pPlayer->GetFlags(), FL_ONGROUND ) )
 			fSpread = 0.2f;
 		else if (pPlayer->GetAbsVelocity().Length2D() > 170)
@@ -141,13 +141,13 @@ float CWeaponScout::GetInaccuracy() const
 			fSpread = 0.0f;
 		else
 			fSpread = 0.007f;
-	
+
 		// If we are not zoomed in, or we have very recently zoomed and are still transitioning, the bullet diverts more.
 		if (pPlayer->GetFOV() == pPlayer->GetDefaultFOV() || (gpGlobals->curtime < m_zoomFullyActiveTime))
 		{
 			fSpread += 0.025;
 		}
-	
+
 		return fSpread;
 	}
 	else
@@ -164,7 +164,7 @@ void CWeaponScout::PrimaryAttack( void )
 		return;
 
 	if ( m_weaponMode == Secondary_Mode )
-	{	
+	{
 		float	midFOVdistance = fabs( pPlayer->GetFOV() - (float)cScoutMidZoomFOV );
 		float	farFOVdistance = fabs( pPlayer->GetFOV() - (float)cScoutMaxZoomFOV );
 
@@ -176,7 +176,7 @@ void CWeaponScout::PrimaryAttack( void )
 		{
 			pPlayer->m_iLastZoom = cScoutMaxZoomFOV;
 		}
-		
+
 // 		#ifndef CLIENT_DLL
 			pPlayer->m_bResumeZoom = true;
 			pPlayer->SetFOV( pPlayer, pPlayer->GetDefaultFOV(), 0.05f );

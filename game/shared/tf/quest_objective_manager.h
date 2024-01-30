@@ -110,7 +110,7 @@ private:
 	uint32 m_nBonusPoints;
 
 	const CEconItem* m_pItem;
-	
+
 	CUtlVector< const CBaseQuestObjectiveTracker* > m_vecObjectiveTrackers;
 };
 

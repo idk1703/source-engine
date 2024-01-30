@@ -39,7 +39,7 @@ public:
 		ConnectTier1Libraries( &factory, 1 );
 		ConVar_Register( 0 );
 		ConnectTier2Libraries( &factory, 1 );
-		return true;			
+		return true;
 	}
 
 	virtual void PostShutdown()

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,7 +21,7 @@ extern vgui::Button *g_lastButton;
 
 //-----------------------------------------------------------------------------
 // Purpose: Triggers a new panel when the mouse goes over the button
-//    
+//
 // the new panel has the same dimensions as the passed templatePanel and is of
 // the same class.
 //
@@ -32,7 +32,7 @@ class MouseOverButton : public vgui::Button
 {
 private:
 	DECLARE_CLASS_SIMPLE( MouseOverButton, vgui::Button );
-	
+
 public:
 	MouseOverButton(vgui::Panel *parent, const char *panelName, T *templatePanel ) :
 					Button( parent, panelName, "MouseOverButton")
@@ -67,7 +67,7 @@ public:
 			g_lastPanel = m_pPanel;
 		}
 	}
-	
+
 	virtual void HidePage()
 	{
 		if ( m_pPanel )
@@ -105,14 +105,14 @@ public:
 
 #endif
 
-	virtual void ApplySettings( KeyValues *resourceData ) 
+	virtual void ApplySettings( KeyValues *resourceData )
 	{
 		BaseClass::ApplySettings( resourceData );
 
 		// name, position etc of button is set, now load matching
 		// resource file for associated info panel:
 		m_pPanel->LoadControlSettings( GetClassPage( GetName() ) );
-	}		
+	}
 
 	T *GetClassPanel( void ) { return m_pPanel; }
 
@@ -124,7 +124,7 @@ public:
 		}
 	}
 
-	virtual void OnCursorEntered() 
+	virtual void OnCursorEntered()
 	{
 		BaseClass::OnCursorEntered();
 

@@ -74,10 +74,10 @@ ConVar  object_deterioration_time( "object_deterioration_time", "30", 0, "Time i
 #define OBJ_LOSTPOWER_THINK_CONTEXT			"LostPowerThink"
 
 BEGIN_DATADESC( CBaseObject )
-	// keys 
+	// keys
 	DEFINE_KEYFIELD_NOT_SAVED( m_bInvulnerable,		FIELD_BOOLEAN, "Invulnerable" ),
 	DEFINE_KEYFIELD_NOT_SAVED( m_flRepairMultiplier,	FIELD_FLOAT, "RepairMult" ),
-	DEFINE_KEYFIELD_NOT_SAVED( m_iszUnderAttackSound,	FIELD_STRING, "AttackNotify" ), 
+	DEFINE_KEYFIELD_NOT_SAVED( m_iszUnderAttackSound,	FIELD_STRING, "AttackNotify" ),
 	DEFINE_KEYFIELD_NOT_SAVED( m_flMinDisableHealth,	FIELD_FLOAT, "MinDisabledHealth" ),
 	DEFINE_KEYFIELD_NOT_SAVED( m_SolidToPlayers,		FIELD_INTEGER, "SolidToPlayer" ),
 	DEFINE_KEYFIELD_NOT_SAVED( m_iszDisabledModel,		FIELD_STRING, "DisabledModel" ),
@@ -125,7 +125,7 @@ public:
 	CObjectRopeTransmitProxy( CBaseEntity *pRope ) : CBaseTransmitProxy( pRope )
 	{
 	}
-	
+
 	virtual int ShouldTransmit( const CCheckTransmitInfo *pInfo, int nPrevShouldTransmitResult )
 	{
 		// Don't transmit the rope if it's not even visible.
@@ -144,10 +144,10 @@ public:
 		// Give control to whichever object is being placed.
 		if ( m_hObj1 && m_hObj1->IsPlacing() )
 			return m_hObj1->ShouldTransmit( pInfo );
-		
+
 		else if ( m_hObj2 && m_hObj2->IsPlacing() )
 			return m_hObj2->ShouldTransmit( pInfo );
-		
+
 		else
 			return FL_EDICT_ALWAYS;
 	}
@@ -159,7 +159,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseObject::CBaseObject()
 {
@@ -188,7 +188,7 @@ CBaseObject::CBaseObject()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::UpdateOnRemove( void )
 {
@@ -202,7 +202,7 @@ void CBaseObject::UpdateOnRemove( void )
 	}
 
 	DestroyObject();
-	
+
 	if ( GetTeam() )
 	{
 		((CTFTeam*)GetTeam())->RemoveObject( this );
@@ -217,7 +217,7 @@ void CBaseObject::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseObject::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 {
@@ -253,7 +253,7 @@ void CBaseObject::SetTransmit( CCheckTransmitInfo *pInfo, bool bAlways )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::Precache()
 {
@@ -273,7 +273,7 @@ void CBaseObject::Precache()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::Spawn( void )
 {
@@ -435,7 +435,7 @@ void CBaseObject::DismantleCommand( CBaseTFPlayer *pSender )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::YawCommand( CBaseTFPlayer *pSender, float flYaw )
 {
@@ -453,7 +453,7 @@ void CBaseObject::YawCommand( CBaseTFPlayer *pSender, float flYaw )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::TakeControlCommand( CBaseTFPlayer *pSender )
 {
@@ -475,7 +475,7 @@ void CBaseObject::TakeControlCommand( CBaseTFPlayer *pSender )
 }
 
 //-----------------------------------------------------------------------------
-// Handle commands sent from vgui panels on the client 
+// Handle commands sent from vgui panels on the client
 //-----------------------------------------------------------------------------
 bool CBaseObject::ClientCommand( CBaseTFPlayer *pSender, const char *pCmd, ICommandArguments *pArg )
 {
@@ -505,7 +505,7 @@ bool CBaseObject::ClientCommand( CBaseTFPlayer *pSender, const char *pCmd, IComm
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::BaseObjectThink( void )
 {
@@ -574,11 +574,11 @@ void CBaseObject::BaseObjectThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseTFPlayer *CBaseObject::GetOwner()
-{ 
-	return m_hBuilder; 
+{
+	return m_hBuilder;
 }
 
 
@@ -591,7 +591,7 @@ bool CBaseObject::MustBeBuiltInResourceZone( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseObject::MustBeBuiltInConstructionYard( ) const
 {
@@ -599,7 +599,7 @@ bool CBaseObject::MustBeBuiltInConstructionYard( ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseObject::MustNotBeBuiltInConstructionYard( void ) const
 {
@@ -648,7 +648,7 @@ void CBaseObject::InitializeMapPlacedObject( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::Activate( void )
 {
@@ -660,12 +660,12 @@ void CBaseObject::Activate( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::SetBuilder( CBaseTFPlayer *pBuilder, bool moveobjects )
 {
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseObject::SetBuilder builder %s, moveobjects == %s\n", gpGlobals->curtime, 
-		pBuilder ? pBuilder->GetPlayerName() : "NULL", 
+	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseObject::SetBuilder builder %s, moveobjects == %s\n", gpGlobals->curtime,
+		pBuilder ? pBuilder->GetPlayerName() : "NULL",
 		moveobjects ? "true" : "false" ) );
 
 	ChangeBuilder( pBuilder, moveobjects );
@@ -680,7 +680,7 @@ void CBaseObject::ObjectMoved( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CBaseObject::ObjectType( ) const
 {
@@ -749,7 +749,7 @@ void CBaseObject::StartDeteriorating( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::StopDeteriorating( void )
 {
@@ -810,7 +810,7 @@ void CBaseObject::StartPlacement( CBaseTFPlayer *pPlayer )
 	}
 
 	// Make it semi-transparent
-	m_nRenderMode = kRenderTransAlpha; 
+	m_nRenderMode = kRenderTransAlpha;
 	SetRenderColorA( 128 );
 
 	// Set my build size
@@ -978,7 +978,7 @@ bool CBaseObject::CalculatePlacement( CBaseTFPlayer *pPlayer )
 		return CheckBuildOrigin( pPlayer, vecNearestBuildPoint, true );
 	}
 
-	// Clear out previous parent 
+	// Clear out previous parent
 	if ( m_hBuiltOnEntity.Get() )
 	{
 		m_hBuiltOnEntity = NULL;
@@ -996,13 +996,13 @@ bool CBaseObject::CalculatePlacement( CBaseTFPlayer *pPlayer )
 bool CBaseObject::VerifyCorner( const Vector &vBottomCenter, float xOffset, float yOffset )
 {
 	Vector vStart( vBottomCenter.x + xOffset, vBottomCenter.y + yOffset, vBottomCenter.z );
-	
+
 	trace_t tr;
-	UTIL_TraceLine( 
-		vStart, 
-		vStart - Vector( 0, 0, tf_obj_ground_clearance.GetFloat() ), 
+	UTIL_TraceLine(
+		vStart,
+		vStart - Vector( 0, 0, tf_obj_ground_clearance.GetFloat() ),
 		MASK_SOLID, this, COLLISION_GROUP_PLAYER_MOVEMENT, &tr );
-	
+
 	return !tr.startsolid && tr.fraction < 1;
 }
 
@@ -1032,7 +1032,7 @@ bool CBaseObject::CheckBuildPoint( Vector vecPoint, Vector &vecTrace, Vector *ve
 		{
 			bClear = false;
 		}
-	} 
+	}
 	else
 	{
 		// If the point's solid, trace up until we find empty air
@@ -1061,7 +1061,7 @@ bool CBaseObject::CheckBuildPoint( Vector vecPoint, Vector &vecTrace, Vector *ve
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 bool CBaseObject::CheckBuildOrigin( CBaseTFPlayer *pPlayer, const Vector &vecInitialBuildOrigin, bool bSnappedToPoint )
@@ -1089,7 +1089,7 @@ bool CBaseObject::CheckBuildOrigin( CBaseTFPlayer *pPlayer, const Vector &vecIni
 		Vector vHalfPlayerDims = (pPlayer->WorldAlignMaxs() - pPlayer->WorldAlignMins()) * 0.5f;
 		float flBoxTopZ = pPlayer->WorldSpaceCenter().z + vHalfPlayerDims.z + vBuildDims.z;
 		float flBoxBottomZ = pPlayer->WorldSpaceCenter().z - vHalfPlayerDims.z - vBuildDims.z;
-		
+
 		// First, find the ground (ie: where the bottom of the box goes).
 		trace_t tr;
 		float bottomZ = 0;
@@ -1098,9 +1098,9 @@ bool CBaseObject::CheckBuildOrigin( CBaseTFPlayer *pPlayer, const Vector &vecIni
 		float topZInc = (flBoxBottomZ - flBoxTopZ) / (nIterations-1);
 		for ( int iIteration = 0; iIteration < nIterations; iIteration++ )
 		{
-			UTIL_TraceHull( 
-				Vector( m_vecBuildOrigin.x, m_vecBuildOrigin.y, topZ ), 
-				Vector( m_vecBuildOrigin.x, m_vecBuildOrigin.y, flBoxBottomZ ), 
+			UTIL_TraceHull(
+				Vector( m_vecBuildOrigin.x, m_vecBuildOrigin.y, topZ ),
+				Vector( m_vecBuildOrigin.x, m_vecBuildOrigin.y, flBoxBottomZ ),
 				-vHalfBuildDimsXY, vHalfBuildDimsXY, MASK_SOLID, this, COLLISION_GROUP_PLAYER_MOVEMENT, &tr );
 			bottomZ = tr.endpos.z;
 
@@ -1119,7 +1119,7 @@ bool CBaseObject::CheckBuildOrigin( CBaseTFPlayer *pPlayer, const Vector &vecIni
 
 			topZ += topZInc;
 		}
-		
+
 		if ( iIteration == nIterations )
 		{
 			m_vecBuildOrigin = vErrorOrigin;
@@ -1197,7 +1197,7 @@ bool CBaseObject::CheckBuildOrigin( CBaseTFPlayer *pPlayer, const Vector &vecIni
 					// Ignore map placed objects
 					if ( pEntity->GetTeamNumber() == 0 )
 						continue;
-				
+
 					//NDebugOverlay::EntityBounds( pEntity, 0,255,0,8, 0.1 );
 					return false;
 				}
@@ -1365,7 +1365,7 @@ bool CBaseObject::UpdatePlacement( CBaseTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseObject::PreStartBuilding()
 {
@@ -1392,7 +1392,7 @@ bool CBaseObject::StartBuilding( CBaseEntity *pBuilder )
 			return false;
 		}
 	}
-	
+
 	// Add this object to the team's list (because we couldn't add it during
 	// placement mode)
 	if ( pTFTeam && !pTFTeam->IsObjectOnTeam( this ) )
@@ -1408,7 +1408,7 @@ bool CBaseObject::StartBuilding( CBaseEntity *pBuilder )
 	// Compute a good fitting AABB since we know where this thing belongs
 	if ( VPhysicsGetObject() && !IsBuiltOnAttachment() )
 	{
-		Vector absmins, absmaxs;		
+		Vector absmins, absmaxs;
 		physcollision->CollideGetAABB( &absmins, &absmaxs, VPhysicsGetObject()->GetCollide(), GetAbsOrigin(), GetAbsAngles() );
 
 		// This is required to get the client + server looking the same
@@ -1416,7 +1416,7 @@ bool CBaseObject::StartBuilding( CBaseEntity *pBuilder )
 		SetCollisionBounds( absmins - GetAbsOrigin(), absmaxs - GetAbsOrigin() );
 	}
 
-	m_nRenderMode = kRenderNormal; 
+	m_nRenderMode = kRenderNormal;
 	RemoveSolidFlags( FSOLID_NOT_SOLID );
 
 	// NOTE: We must spawn the control panels now, instead of during
@@ -1458,7 +1458,7 @@ void CBaseObject::BuildingThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::AttemptToActivateBuffStation( void )
 {
@@ -1476,7 +1476,7 @@ void CBaseObject::AttemptToActivateBuffStation( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::SetControlPanelsActive( bool bState )
 {
@@ -1491,7 +1491,7 @@ void CBaseObject::SetControlPanelsActive( bool bState )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::FinishedBuilding( void )
 {
@@ -1656,7 +1656,7 @@ void CBaseObject::TraceAttack( const CTakeDamageInfo &inputInfo, const Vector &v
 			return;
 	}
 
-	float fVulnerableMultiplier = FindVulnerablePointMultiplier( ptr->hitgroup, ptr->hitbox ); 
+	float fVulnerableMultiplier = FindVulnerablePointMultiplier( ptr->hitgroup, ptr->hitbox );
 
 	CTakeDamageInfo info = inputInfo;
 	info.ScaleDamage( fVulnerableMultiplier );
@@ -1674,7 +1674,7 @@ ConVar object_capture_damage( "obj_capture_damage", "0", 0, "Captures all damage
 CUtlDict<int,int> g_DamageMap;
 
 void Cmd_DamageDump_f(void)
-{	
+{
 	CUtlDict<bool,int> g_UniqueColumns;
 
 	// Build the unique columns:
@@ -1684,7 +1684,7 @@ void Cmd_DamageDump_f(void)
 
 		int ColumnIdx = g_UniqueColumns.Find( szColumnName );
 
-		if( ColumnIdx == g_UniqueColumns.InvalidIndex() ) 
+		if( ColumnIdx == g_UniqueColumns.InvalidIndex() )
 		{
 			g_UniqueColumns.Insert( szColumnName, false );
 		}
@@ -1700,7 +1700,7 @@ void Cmd_DamageDump_f(void)
 
 	filesystem->FPrintf(f,"\n");
 
- 
+
 	CUtlDict<bool,int> g_CompletedRows;
 
 	// Dump each row:
@@ -1733,7 +1733,7 @@ void Cmd_DamageDump_f(void)
 				for( int ColumnIdx = g_UniqueColumns.First(); ColumnIdx != g_UniqueColumns.InvalidIndex(); ColumnIdx = g_UniqueColumns.Next( ColumnIdx ) )
 				{
 					char szRowNameCommaColumn[256];
-					Q_strncpy( szRowNameCommaColumn, szRowNameComma, sizeof( szRowNameCommaColumn ) );					
+					Q_strncpy( szRowNameCommaColumn, szRowNameComma, sizeof( szRowNameCommaColumn ) );
 					Q_strncat( szRowNameCommaColumn, g_UniqueColumns.GetElementName( ColumnIdx ), sizeof( szRowNameCommaColumn ), COPY_ALL_CHARACTERS );
 
 					int nDamageAmount = 0;
@@ -1766,7 +1766,7 @@ void Cmd_DamageDump_f(void)
 static ConCommand obj_dump_damage( "obj_dump_damage", Cmd_DamageDump_f );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ReportDamage( const char* szInflictor, const char* szVictim, float fAmount, int nCurrent, int nMax )
 {
@@ -1847,7 +1847,7 @@ bool CBaseObject::PassDamageOntoChildren( const CTakeDamageInfo &info, float *fl
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseObject::OnTakeDamage( const CTakeDamageInfo &info )
 {
@@ -1939,7 +1939,7 @@ int CBaseObject::OnTakeDamage( const CTakeDamageInfo &info )
 		flDamage = flDamage - m_flHealth;
 		SetHealth( 1 );
 
-		// Pass leftover damage 
+		// Pass leftover damage
 		if ( flDamage )
 		{
 			if ( PassDamageOntoChildren( info, &flDamage ) )
@@ -2098,9 +2098,9 @@ void CBaseObject::Killed( void )
 
 	// Do an explosion.
 	CPASFilter filter( GetAbsOrigin() );
-	te->Explosion( 
-		filter, 
-		0.0,				
+	te->Explosion(
+		filter,
+		0.0,
 		&GetAbsOrigin(),
 		g_sModelIndexFireball,
 		5.4,		// radius
@@ -2216,8 +2216,8 @@ bool CBaseObject::ShouldAutoRemove( void )
 //-----------------------------------------------------------------------------
 // Purpose: If the object's still being built, it's not usable
 //-----------------------------------------------------------------------------
-int	CBaseObject::ObjectCaps( void ) 
-{ 
+int	CBaseObject::ObjectCaps( void )
+{
 	if ( IsPlacing() )
 		return 0;
 
@@ -2225,7 +2225,7 @@ int	CBaseObject::ObjectCaps( void )
 	if ( IsBuilding() && !HasSapper() && !IsPlasmaDisabled() )
 		return 0;
 
-	return FCAP_ONOFF_USE; 
+	return FCAP_ONOFF_USE;
 };
 
 //-----------------------------------------------------------------------------
@@ -2285,7 +2285,7 @@ void CBaseObject::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
 			CBaseTFPlayer *pPlayer = (CBaseTFPlayer *)pActivator;
 
 			// If we're already planting a sapper, abort
-			if ( useType == USE_OFF || pPlayer->IsAttachingSapper() ) 
+			if ( useType == USE_OFF || pPlayer->IsAttachingSapper() )
 			{
 				// Don't abort if we just started placing it. This is to catch people who'd like to +use toggle instead of hold down
 				if ( pPlayer->GetSapperAttachmentTime() > 0.2 && pPlayer->IsAttachingSapper() )
@@ -2350,7 +2350,7 @@ bool CBaseObject::CanBeRemovedBy( CBaseTFPlayer *pPlayer )
 	// If I have an owner, only he can remove me
 	if ( GetBuilder() != pPlayer )
 		return false;
-	
+
 	return true;
 }
 
@@ -2367,21 +2367,21 @@ bool CBaseObject::CanBeRotatedBy( CBaseTFPlayer *pPlayer )
 	// If I have an owner, only he can remove me
 	if ( GetBuilder() != pPlayer )
 		return false;
-	
+
 	return true;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : iTeamNum - 
+// Purpose:
+// Input  : iTeamNum -
 //-----------------------------------------------------------------------------
 void CBaseObject::ChangeTeam( int iTeamNum )
 {
 	CTFTeam *pTeam = ( CTFTeam * )GetGlobalTeam( iTeamNum );
 	CTFTeam *pExisting = ( CTFTeam * )GetTeam();
 
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseObject::ChangeTeam old %s new %s\n", gpGlobals->curtime, 
+	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseObject::ChangeTeam old %s new %s\n", gpGlobals->curtime,
 		pExisting ? pExisting->GetName() : "NULL",
 		pTeam ? pTeam->GetName() : "NULL" ) );
 
@@ -2394,10 +2394,10 @@ void CBaseObject::ChangeTeam( int iTeamNum )
 		// Remove it from current team ( if it's in one ) and give it to new team
 		pExisting->RemoveObject( this );
 	}
-		
+
 	// Change to new team
 	BaseClass::ChangeTeam( iTeamNum );
-	
+
 	// Add this object to the team's list
 	// But only if we're not placing it
 	if ( pTeam && (!m_bPlacing) )
@@ -2420,7 +2420,7 @@ void CBaseObject::ChangeTeam( int iTeamNum )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CBaseObject::GetWeaponClassnameForObject( void )
@@ -2429,8 +2429,8 @@ const char *CBaseObject::GetWeaponClassnameForObject( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pNewOwner - 
+// Purpose:
+// Input  : *pNewOwner -
 //-----------------------------------------------------------------------------
 void CBaseObject::AddItemsNeededForObject( CBaseTFPlayer *pNewOwner )
 {
@@ -2439,13 +2439,13 @@ void CBaseObject::AddItemsNeededForObject( CBaseTFPlayer *pNewOwner )
 //-----------------------------------------------------------------------------
 // Purpose: Derived classes might want to give the new builder the appropriate
 //  items needed to own this object and move the objects owned over as well
-// Input  : *pNewOwner - 
+// Input  : *pNewOwner -
 //-----------------------------------------------------------------------------
 void CBaseObject::ChangeBuilder( CBaseTFPlayer *pNewBuilder, bool moveobjects )
 {
 	CBaseTFPlayer *oldBuilder = GetOwner();
 
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseObject::ChangeBuilder old %s, new %s, moveobjects %s\n", gpGlobals->curtime, 
+	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseObject::ChangeBuilder old %s, new %s, moveobjects %s\n", gpGlobals->curtime,
 		oldBuilder ? oldBuilder->GetPlayerName() : "NULL",
 		pNewBuilder ? pNewBuilder->GetPlayerName() : "NULL",
 		moveobjects ? "true" : "false" ) );
@@ -2474,10 +2474,10 @@ void CBaseObject::ChangeBuilder( CBaseTFPlayer *pNewBuilder, bool moveobjects )
 	if ( !classname )
 		return;
 
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseObject::ChangeBuilder moving associated objects %s\n", gpGlobals->curtime, 
+	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseObject::ChangeBuilder moving associated objects %s\n", gpGlobals->curtime,
 		classname ) );
 
-	// Find the old player who owned a weapon that owned this object type and remove it 
+	// Find the old player who owned a weapon that owned this object type and remove it
 	// Then add to current player under the approrpriate weapon ( same classname ) which
 	//  should have been added in ChangeBuilder
 	for ( int i = 1; i <= gpGlobals->maxClients; i++ )
@@ -2549,7 +2549,7 @@ void CBaseObject::AddSapper( CGrenadeObjectSapper *pSapper )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Tell all sappers on this object to remove themselves 
+// Purpose: Tell all sappers on this object to remove themselves
 //-----------------------------------------------------------------------------
 void CBaseObject::RemoveAllSappers( CBaseEntity *pRemovingEntity )
 {
@@ -2582,9 +2582,9 @@ void CBaseObject::GainedNewTechnology( CBaseTechnology *pTechnology )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pRecipient - 
-//			*techname - 
+// Purpose:
+// Input  : *pRecipient -
+//			*techname -
 //-----------------------------------------------------------------------------
 void CBaseObject::GiveNamedTechnology( CBaseTFPlayer *pRecipient, const char *techname )
 {
@@ -2647,7 +2647,7 @@ CRopeKeyframe *CBaseObject::ConnectCableTo( CBaseObject *pObject, int iLocalAtta
 	m_aRopes.AddToTail( hHandle );
 	pObject->m_aRopes.AddToTail( hHandle );
 
-	// During placement, the rules for whether the rope is transmitted or not are 
+	// During placement, the rules for whether the rope is transmitted or not are
 	// tricky, so we make a proxy here to control it.
 	if ( IsPlacing() || pObject->IsPlacing() )
 	{
@@ -2688,7 +2688,7 @@ int CBaseObject::GetCableAttachment( void )
 	// If I already have a rope attached, try and use a different attachment point
 	if ( m_aRopes.Size() )
 	{
-		// First, check to see if we've lost any ropes (this can happen because 
+		// First, check to see if we've lost any ropes (this can happen because
 		// the other object it was attached to has been destroyed.
 		int iSize = m_aRopes.Size();
 		for (int i = iSize-1; i >= 0; i--)
@@ -2709,7 +2709,7 @@ int CBaseObject::GetCableAttachment( void )
 		Q_snprintf( sAttachment,sizeof(sAttachment), "cablepoint%d", m_aRopes.Size() + 1 );
 		int iPoint = LookupAttachment( sAttachment );
 		if ( iPoint > 0 )
-			return iPoint;											
+			return iPoint;
 	}
 
 
@@ -2721,7 +2721,7 @@ int CBaseObject::GetCableAttachment( void )
 // POWER PACKS
 //====================================================================================================================
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::SetPowerPack( CObjectPowerPack *pPack )
 {
@@ -2804,8 +2804,8 @@ void CBaseObject::InputRemoveHealth( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CBaseObject::InputSetMinDisabledHealth( inputdata_t &inputdata )
 {
@@ -2836,8 +2836,8 @@ void CBaseObject::InputSetMinDisabledHealth( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CBaseObject::InputSetSolidToPlayer( inputdata_t &inputdata )
 {
@@ -2848,7 +2848,7 @@ void CBaseObject::InputSetSolidToPlayer( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::PlayStartupAnimation( void )
 {
@@ -2856,7 +2856,7 @@ void CBaseObject::PlayStartupAnimation( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::DetermineAnimation( void )
 {
@@ -2974,7 +2974,7 @@ void CBaseObject::SpawnEntityOnBuildPoint( const char *pEntityName, int iAttachm
 	pEntity->SetAbsOrigin( vecOrigin );
 	pEntity->SetAbsAngles( vecAngles );
 	pEntity->Spawn();
-	
+
 	// If it's an object, finish setting it up
 	CBaseObject *pObject = dynamic_cast<CBaseObject*>(pEntity);
 	if ( !pObject )
@@ -3048,7 +3048,7 @@ void CBaseObject::SpawnObjectPoints( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObject::CreateVulnerablePoints()
 {
@@ -3101,7 +3101,7 @@ void CBaseObject::AddVulnerablePoint( const char* szName, float fMultiplier )
 }
 
 
-float CBaseObject::FindVulnerablePointMultiplier( int nGroup, int nBox ) 		
+float CBaseObject::FindVulnerablePointMultiplier( int nGroup, int nBox )
 {
 	for( int i=0; i < m_VulnerablePoints.Count(); i++ )
 	{
@@ -3125,7 +3125,7 @@ float CBaseObject::FindVulnerablePointMultiplier( int nGroup, int nBox )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 QAngle CBaseObject::ConvertAbsAnglesToLocal( QAngle vecLocalAngles )
 {
@@ -3138,7 +3138,7 @@ QAngle CBaseObject::ConvertAbsAnglesToLocal( QAngle vecLocalAngles )
 	// Calculate the build point angles in vehicle space
 	VMatrix attachmentToWorld;
 	MatrixFromAngles( vecLocalAngles, attachmentToWorld );
-	
+
 	VMatrix worldToVehicle = vehicleToWorld.Transpose();
 	VMatrix attachmentToVehicle;
 	MatrixMultiply( worldToVehicle, attachmentToWorld, attachmentToVehicle );
@@ -3178,19 +3178,19 @@ void CBaseObject::SetSolidToPlayers( OBJSOLIDTYPE stp, bool force )
 
 	if ( changed || force )
 	{
-		SetCollisionGroup( 
-			IsSolidToPlayers() ? 
-				TFCOLLISION_GROUP_OBJECT_SOLIDTOPLAYERMOVEMENT : 
+		SetCollisionGroup(
+			IsSolidToPlayers() ?
+				TFCOLLISION_GROUP_OBJECT_SOLIDTOPLAYERMOVEMENT :
 				TFCOLLISION_GROUP_OBJECT );
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Hooks to support swapping out model if the object is damaged
-// Input  : bDisabled - 
+// Input  : bDisabled -
 //-----------------------------------------------------------------------------
 void CBaseObject::SetDisabled( bool bDisabled )
-{ 
+{
 	bool changed = m_bDisabled != bDisabled;
 	m_bDisabled = bDisabled;
 
@@ -3205,8 +3205,8 @@ void CBaseObject::SetDisabled( bool bDisabled )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseObject::SetBuffStation( CObjectBuffStation *pBuffStation, bool bPlacing )	
-{ 
+void CBaseObject::SetBuffStation( CObjectBuffStation *pBuffStation, bool bPlacing )
+{
 	// Activate
 	if ( pBuffStation && !GetBuffStation() && !bPlacing && !IsBuilding() && IsPowered() )
 	{
@@ -3224,14 +3224,14 @@ void CBaseObject::SetBuffStation( CObjectBuffStation *pBuffStation, bool bPlacin
 		BuffStationDeactivate();
 	}
 
-	m_hBuffStation = pBuffStation; 
+	m_hBuffStation = pBuffStation;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CBaseObject::IsHookedAndBuffed( void )												
-{ 
+bool CBaseObject::IsHookedAndBuffed( void )
+{
 	if ( GetBuffStation() && HasPowerup( POWERUP_BOOST ) )
 	{
 		if ( GetBuffStation()->IsPowered() && !GetBuffStation()->IsPlacing() &&

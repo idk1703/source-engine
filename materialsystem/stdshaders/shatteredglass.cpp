@@ -13,7 +13,7 @@
 #include "ShatteredGlass_vs20.inc"
 
 BEGIN_VS_SHADER( ShatteredGlass,
-			  "Help for ShatteredGlass" )
+			"Help for ShatteredGlass" )
 
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM_OVERRIDE( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "Glass/glasswindowbreak070b", "unused", SHADER_PARAM_NOT_EDITABLE )
@@ -41,10 +41,10 @@ BEGIN_VS_SHADER( ShatteredGlass,
 
 		if( !params[ENVMAPCONTRAST]->IsDefined() )
 			params[ENVMAPCONTRAST]->SetFloatValue( 0.0f );
-		
+
 		if( !params[ENVMAPSATURATION]->IsDefined() )
 			params[ENVMAPSATURATION]->SetFloatValue( 1.0f );
-		
+
 		if( !params[UNLITFACTOR]->IsDefined() )
 			params[UNLITFACTOR]->SetFloatValue( 0.3f );
 
@@ -53,7 +53,7 @@ BEGIN_VS_SHADER( ShatteredGlass,
 
 		if( !params[ENVMAPMASKFRAME]->IsDefined() )
 			params[ENVMAPMASKFRAME]->SetIntValue( 0 );
-		
+
 		if( !params[ENVMAPFRAME]->IsDefined() )
 			params[ENVMAPFRAME]->SetIntValue( 0 );
 
@@ -72,8 +72,8 @@ BEGIN_VS_SHADER( ShatteredGlass,
 
 	SHADER_FALLBACK
 	{
-        // MMW Shattered Glass runs as a DX9 effect for 8.2 hardware
-        bool isDX9 = (g_pHardwareConfig->GetDXSupportLevel() >= 82);
+	// MMW Shattered Glass runs as a DX9 effect for 8.2 hardware
+	bool isDX9 = (g_pHardwareConfig->GetDXSupportLevel() >= 82);
 		if( !isDX9 )
 		{
 			return "ShatteredGlass_DX8";
@@ -95,14 +95,14 @@ BEGIN_VS_SHADER( ShatteredGlass,
 		}
 
 		if ( params[DETAIL]->IsDefined() )
-		{					 
+		{
 			LoadTexture( DETAIL, TEXTUREFLAGS_SRGB );
 		}
 
 		// Don't alpha test if the alpha channel is used for other purposes
 		if ( IS_FLAG_SET(MATERIAL_VAR_BASEALPHAENVMAPMASK) )
 			CLEAR_FLAGS( MATERIAL_VAR_ALPHATEST );
-			
+
 		if (params[ENVMAP]->IsDefined())
 		{
 			LoadCubeMap( ENVMAP );
@@ -127,12 +127,12 @@ BEGIN_VS_SHADER( ShatteredGlass,
 		}
 		bool bHasVertexColor = IS_FLAG_SET(MATERIAL_VAR_VERTEXCOLOR);
 		bool bHasBaseAlphaEnvmapMask = IS_FLAG_SET(MATERIAL_VAR_BASEALPHAENVMAPMASK);
-	
+
 		// Base
 		SHADOW_STATE
 		{
 			// alpha test
- 			pShaderShadow->EnableAlphaTest( IS_FLAG_SET(MATERIAL_VAR_ALPHATEST) );
+			pShaderShadow->EnableAlphaTest( IS_FLAG_SET(MATERIAL_VAR_ALPHATEST) );
 
 			// Alpha blending, enable alpha blending if the detail texture is translucent
 			bool detailIsTranslucent = TextureIsTranslucent( DETAIL, false );
@@ -179,7 +179,7 @@ BEGIN_VS_SHADER( ShatteredGlass,
 				{
 					pShaderShadow->EnableSRGBRead( SHADER_SAMPLER2, true );
 				}
-			
+
 				if( bHasEnvmapMask )
 				{
 					pShaderShadow->EnableTexture( SHADER_SAMPLER5, true );

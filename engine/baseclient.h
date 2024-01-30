@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -34,7 +34,7 @@ class CEventInfo;
 struct Spike_t
 {
 public:
-	Spike_t() : 
+	Spike_t() :
 		m_nBits( 0 )
 	{
 		m_szDesc[ 0 ] = 0;
@@ -46,7 +46,7 @@ public:
 class CNetworkStatTrace
 {
 public:
-	CNetworkStatTrace() : 
+	CNetworkStatTrace() :
 		m_nMinWarningBytes( 0 ), m_nStartBit( 0 ), m_nCurBit( 0 ), m_StartSendTime(0.0)
 	{
 	}
@@ -95,7 +95,7 @@ public:
 
 	virtual	void	SetRate( int nRate, bool bForce );
 	virtual	int		GetRate( void ) const;
-	
+
 	virtual void	SetUpdateRate( int nUpdateRate, bool bForce );
 	virtual int		GetUpdateRate( void ) const;
 
@@ -106,11 +106,11 @@ public:
 
 	virtual bool	ExecuteStringCommand( const char *s );
 	virtual bool	SendNetMsg(INetMessage &msg, bool bForceReliable = false);
-	
+
 	virtual void	ClientPrintf (PRINTF_FORMAT_STRING const char *fmt, ...);
 
-	virtual	bool	IsConnected( void ) const { return m_nSignonState >= SIGNONSTATE_CONNECTED; };	
-	virtual	bool	IsSpawned( void ) const { return m_nSignonState >= SIGNONSTATE_NEW; };	
+	virtual	bool	IsConnected( void ) const { return m_nSignonState >= SIGNONSTATE_CONNECTED; };
+	virtual	bool	IsSpawned( void ) const { return m_nSignonState >= SIGNONSTATE_NEW; };
 	virtual	bool	IsActive( void ) const { return m_nSignonState == SIGNONSTATE_FULL; };
 	virtual	bool	IsFakeClient( void ) const { return m_bFakePlayer; };
 
@@ -129,17 +129,17 @@ public:
 	virtual bool	IsSplitScreenUser( void ) const { return false; } // !KLUDGE! We don't have splitscreen support, but this makes merges easier
 
 public: // IClientMessageHandlers
-	
+
 	PROCESS_NET_MESSAGE( Tick );
 	PROCESS_NET_MESSAGE( StringCmd );
 	PROCESS_NET_MESSAGE( SetConVar );
 	PROCESS_NET_MESSAGE( SignonState );
-	
+
 	PROCESS_CLC_MESSAGE( ClientInfo );
 	PROCESS_CLC_MESSAGE( BaselineAck );
 	PROCESS_CLC_MESSAGE( ListenEvents );
 	PROCESS_CLC_MESSAGE( CmdKeyValues );
-	
+
 	virtual void	ConnectionStart(INetChannel *chan);
 
 public: // IGameEventListener
@@ -151,12 +151,12 @@ public:
 	virtual bool	ShouldSendMessages( void );
 	virtual void	UpdateSendState( void );
 			void	ForceFullUpdate( void ) { UpdateAcknowledgedFramecount(-1); }
-	
+
 	virtual bool	FillUserInfo( player_info_s &userInfo );
 	virtual void	UpdateUserSettings();
 	virtual bool	SetSignonState(int state, int spawncount);
 	virtual void	WriteGameSounds(bf_write &buf);
-	
+
 	virtual CClientFrame *GetDeltaFrame( int nTick );
 	virtual void	SendSnapshot( CClientFrame *pFrame );
 	virtual bool	SendServerInfo( void );
@@ -167,7 +167,7 @@ public:
 	virtual void	SetUserCVar( const char *cvar, const char *value);
 	virtual void	FreeBaselines();
 	virtual bool	IgnoreTempEntity( CEventInfo *event );
-	
+
 	void			SetSteamID( const CSteamID &steamID );
 
 	void			ClientRequestNameChange( const char *pszName );
@@ -185,7 +185,7 @@ public:
 	void			SetPlayerNameLocked( bool bValue ) { m_bPlayerNameLocked = bValue; }
 	bool			IsPlayerNameLocked( void ) { return m_bPlayerNameLocked; }
 
-private:	
+private:
 
 	void			OnRequestFullUpdate();
 
@@ -193,16 +193,16 @@ private:
 public:
 
 	// Array index in svs.clients:
-	int				m_nClientSlot;	
+	int				m_nClientSlot;
 	// entity index of this client (different from clientSlot+1 in HLTV and Replay mode):
-	int				m_nEntityIndex;	
-	
+	int				m_nEntityIndex;
+
 	int				m_UserID;			// identifying number on server
 	char			m_Name[MAX_PLAYER_NAME_LENGTH];			// for printing to other people
 	char			m_GUID[SIGNED_GUID_LEN + 1]; // the clients CD key
 
 	CSteamID		m_SteamID;			// This is valid when the client is authenticated
-	
+
 	uint32			m_nFriendsID;		// client's friends' ID
 	char			m_FriendsName[MAX_PLAYER_NAME_LENGTH];
 
@@ -216,7 +216,7 @@ public:
 	bool			m_bIsReplay;		// if this is a Replay proxy ?
 #endif
 	int				m_clientChallenge;	// client's challenge he sent us, we use to auth replies
-	
+
 	// Client sends this during connection, so we can see if
 	//  we need to send sendtable info or if the .dll matches
 	CRC32_t			m_nSendtableCRC;
@@ -238,9 +238,9 @@ public:
 	int				m_nBaselineUpdateTick;	// last tick we send client a update baseline signal or -1
 	CBitVec<MAX_EDICTS>	m_BaselinesSent;	// baselines sent with last update
 	int				m_nBaselineUsed;		// 0/1 toggling flag, singaling client what baseline to use
-	
-		
-	// This is used when we send out a nodelta packet to put the client in a state where we wait 
+
+
+	// This is used when we send out a nodelta packet to put the client in a state where we wait
 	// until we get an ack from them on this packet.
 	// This is for 3 reasons:
 	// 1. A client requesting a nodelta packet means they're screwed so no point in deluging them with data.
@@ -249,9 +249,9 @@ public:
 	// 3. It can eat up a lot of CPU on the server to keep building nodelta packets while waiting for
 	//    a client to get back on its feet.
 	int				m_nForceWaitForTick;
-	
+
 	bool			m_bFakePlayer;		// JAC: This client is a fake player controlled by the game DLL
-	bool			m_bReportFakeClient; // Should this fake client be reported 
+	bool			m_bReportFakeClient; // Should this fake client be reported
 	bool		   m_bReceivedPacket;	// true, if client received a packet after the last send packet
 
 	bool			m_bFullyAuthenticated;
@@ -268,9 +268,9 @@ public:
 	// when it is sent out to the client.  overflow is tolerated.
 
 	// Time when we should send next world state update ( datagram )
-	double         m_fNextMessageTime;   
+	double         m_fNextMessageTime;
 	// Default time to wait for next message
-	float          m_fSnapshotInterval;  
+	float          m_fSnapshotInterval;
 
 	enum
 	{

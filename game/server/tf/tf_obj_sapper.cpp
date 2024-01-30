@@ -46,7 +46,7 @@ ConVar	obj_sapper_amount( "obj_sapper_amount", "25", FCVAR_NONE, "Amount of heal
 #define SAPPER_REMOVE_DISABLE_TIME			0.5f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectSapper::CObjectSapper()
 {
@@ -63,7 +63,7 @@ CObjectSapper::CObjectSapper()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSapper::UpdateOnRemove()
 {
@@ -79,13 +79,13 @@ void CObjectSapper::UpdateOnRemove()
 	{
 		GetBuilder()->OnSapperFinished( m_flSapperStartTime );
 	}
-	
+
 
 	BaseClass::UpdateOnRemove();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSapper::Spawn()
 {
@@ -105,7 +105,7 @@ void CObjectSapper::Spawn()
 	int nFlags = m_fObjectFlags | OF_ALLOW_REPEAT_PLACEMENT;
 
 	// Don't allow repeat placement as a human spy in MvM
-	if ( TFGameRules() && TFGameRules()->GameModeUsesMiniBosses() && 
+	if ( TFGameRules() && TFGameRules()->GameModeUsesMiniBosses() &&
 		 GetBuilder() && !GetBuilder()->IsBot() )
 	{
 		nFlags &= ~( OF_ALLOW_REPEAT_PLACEMENT );
@@ -115,18 +115,18 @@ void CObjectSapper::Spawn()
 
 	SetSolid( SOLID_NONE );
 
-#ifdef STAGING_ONLY	
+#ifdef STAGING_ONLY
 	m_bIsRinging = false;
 #endif
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSapper::Precache()
 {
 	Precache( "c_sapper.mdl" );			// Precache the placed and placement models for the sappers
-#ifdef STAGING_ONLY	
+#ifdef STAGING_ONLY
 	Precache( "c_sd_sapper.mdl" );
 #else
 	Precache( "w_sd_sapper.mdl" );
@@ -139,7 +139,7 @@ void CObjectSapper::Precache()
 	PrecacheScriptSound( "Weapon_Sapper.Timer" );
 	PrecacheScriptSound( "Weapon_sd_sapper.Timer" );
 	PrecacheScriptSound( "Weapon_p2rec.Timer" );
-#ifdef STAGING_ONLY	
+#ifdef STAGING_ONLY
 	PrecacheScriptSound( "WeaponDynamiteSapper.TickTock" );
 	PrecacheScriptSound( "WeaponDynamiteSapper.BellRing" );
 #endif
@@ -192,7 +192,7 @@ void CObjectSapper::Precache( const char *pchBaseModel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSapper::FinishedBuilding( void )
 {
@@ -262,7 +262,7 @@ void CObjectSapper::SetupAttachedVersion( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSapper::OnGoActive( void )
 {
@@ -278,7 +278,7 @@ void CObjectSapper::OnGoActive( void )
 	if ( pEntity )
 	{
 		SetModel( GetSapperModelName( SAPPER_MODEL_PLACED ) );
-		
+
 		if ( pEntity->IsPlayer() )	// Sapped bot in MvM mode, or player in bountymode
 		{
 			float flTime = 4.f;
@@ -290,7 +290,7 @@ void CObjectSapper::OnGoActive( void )
 
 				CTFPlayer *pTFParent = ToTFPlayer( GetParentEntity() );
 				if ( pTFParent && pTFParent->IsAlive() )
-				{	
+				{
 					int nRadius = 200;
 
 					switch( iRoboSapper )
@@ -320,7 +320,7 @@ void CObjectSapper::OnGoActive( void )
 			m_flSelfDestructTime = gpGlobals->curtime + flTime;
 		}
 
-#ifdef STAGING_ONLY			
+#ifdef STAGING_ONLY
 		//if ( pBuilder )
 		//{
 		//	float flExplodeOnTimer = 0;
@@ -345,7 +345,7 @@ void CObjectSapper::OnGoActive( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CObjectSapper::IsParentValid( void )
 {
@@ -360,7 +360,7 @@ bool CObjectSapper::IsParentValid( void )
 		}
 		else
 		{
-			CBaseObject *pObject = dynamic_cast<CBaseObject *>( pEntity ); 
+			CBaseObject *pObject = dynamic_cast<CBaseObject *>( pEntity );
 			if ( pObject )
 			{
 				bValid = true;
@@ -377,7 +377,7 @@ bool CObjectSapper::IsParentValid( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSapper::DetachObjectFromObject( void )
 {
@@ -399,7 +399,7 @@ void CObjectSapper::DetachObjectFromObject( void )
 				float flDamage = pParent->GetMaxHealth() * 1.5;
 				Vector vecOrigin = GetAbsOrigin();
 
-				// Use the building as the det position			
+				// Use the building as the det position
 				CTakeDamageInfo detInfo;
 				detInfo.SetDamage( flDamage );
 				detInfo.SetAttacker( this );
@@ -451,7 +451,7 @@ const char* CObjectSapper::GetSapperModelName( SapperModel_t nModel, const char 
 		V_FileBase( pchModelName, szModelName, sizeof( szModelName ) );
 		pchModelName = szModelName + 2;
 
-#ifdef STAGING_ONLY	
+#ifdef STAGING_ONLY
 		if (!V_strcmp(pchModelName, "sd_sapper"))
 		{
 			V_snprintf(m_szPlacementModel, sizeof(m_szPlacementModel), "models/workshop_partner/buildables/%s%s", pchModelName, "_placement.mdl");
@@ -534,11 +534,11 @@ void CObjectSapper::SapperThink( void )
 			CTFPlayer *pTFOwner = ToTFPlayer( m_hBuiltOnEntity.Get() );
 			CTFPlayer *pBuilder = GetBuilder();
 			if ( !pBuilder || !pTFOwner || ( pTFOwner && !pTFOwner->IsAlive() ) )
-			{		
+			{
 				bDestroy = true;
 			}
 
-#ifdef STAGING_ONLY 
+#ifdef STAGING_ONLY
 			/*if ( gpGlobals->curtime >= m_flSelfDestructTime )
 			{
 				bDestroy = true;
@@ -550,7 +550,7 @@ void CObjectSapper::SapperThink( void )
 				bDestroy = true;
 				Explode();
 			}
-#endif			
+#endif
 
 			if ( bDestroy )
 			{
@@ -590,8 +590,8 @@ void CObjectSapper::SapperThink( void )
 			// sapper building damage added to health of Vampire Powerup carrier
 			if ( TFGameRules() && TFGameRules()->IsPowerupMode() )
 			{
-				CTFPlayer *pTFOwner = ToTFPlayer( GetOwner() ); 
-			
+				CTFPlayer *pTFOwner = ToTFPlayer( GetOwner() );
+
 				if ( pTFOwner && pTFOwner->m_Shared.GetCarryingRuneType() == RUNE_VAMPIRE )
 				{
 					pTFOwner->TakeHealth( flDamageToGive, DMG_GENERIC );
@@ -642,7 +642,7 @@ void CObjectSapper::SapperThink( void )
 					m_bIsRinging = true;
 				}
 			}
-			
+
 			//float flExplodeOnTimer = 0;
 			//CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pBuilder, flExplodeOnTimer, sapper_explodes_on_det );
 
@@ -655,7 +655,7 @@ void CObjectSapper::SapperThink( void )
 
 			//	Vector vecOrigin = GetAbsOrigin();
 
-			//	// Use the building as the det position			
+			//	// Use the building as the det position
 			//	CTakeDamageInfo detInfo;
 			//	detInfo.SetDamage( flDamage );
 			//	detInfo.SetAttacker( this );
@@ -672,7 +672,7 @@ void CObjectSapper::SapperThink( void )
 
 			//	DispatchParticleEffect( "explosionTrail_seeds_mvm", vecOrigin, GetAbsAngles() );
 			//}
-#endif			
+#endif
 		}
 	}
 
@@ -685,7 +685,7 @@ void CObjectSapper::SapperThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CObjectSapper::OnTakeDamage( const CTakeDamageInfo &info )
 {
@@ -739,7 +739,7 @@ int CObjectSapper::OnTakeDamage( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSapper::Killed( const CTakeDamageInfo &info )
 {

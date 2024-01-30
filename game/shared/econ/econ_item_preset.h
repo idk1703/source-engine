@@ -34,7 +34,7 @@ struct PresetSlotItem_t
 };
 
 // --------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------------
 class CEconItemPerClassPresetData : public GCSDK::CSharedObject
 {

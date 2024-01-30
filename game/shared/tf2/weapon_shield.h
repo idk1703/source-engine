@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@
 class CShield;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CWeaponShield : public CBaseTFCombatWeapon
 {
@@ -35,7 +35,7 @@ public:
 	DECLARE_PREDICTABLE();
 
 	CWeaponShield();
-	
+
 	virtual void UpdateOnRemove( void );
 
 	// Firing
@@ -50,7 +50,7 @@ public:
 
 	// All predicted weapons need to implement and return true
 	virtual bool IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 

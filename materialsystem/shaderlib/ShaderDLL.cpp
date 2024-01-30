@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -149,7 +149,7 @@ int CShaderDLL::ShaderCount() const
 	return m_ShaderList.Count();
 }
 
-IShader *CShaderDLL::GetShader( int nShader ) 
+IShader *CShaderDLL::GetShader( int nShader )
 {
 	if ( ( nShader < 0 ) || ( nShader >= m_ShaderList.Count() ) )
 		return NULL;
@@ -166,4 +166,3 @@ void CShaderDLL::InsertShader( IShader *pShader )
 	Assert( pShader );
 	m_ShaderList.AddToTail( pShader );
 }
-

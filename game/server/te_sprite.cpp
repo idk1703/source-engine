@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -41,8 +41,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTESprite::CTESprite( const char *name ) :
 	CBaseTempEntity( name )
@@ -54,14 +54,14 @@ CTESprite::CTESprite( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTESprite::~CTESprite( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTESprite::Precache( void )
 {
@@ -69,9 +69,9 @@ void CTESprite::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTESprite::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -80,7 +80,7 @@ void CTESprite::Test( const Vector& current_origin, const QAngle& current_angles
 	m_fScale = 0.8;
 	m_nBrightness = 200;
 	m_vecOrigin = current_origin;
-	
+
 	Vector forward, right;
 
 	m_vecOrigin.GetForModify()[2] += 24;
@@ -112,7 +112,7 @@ void TE_Sprite( IRecipientFilter& filter, float delay,
 	const Vector *pos, int modelindex, float size, int brightness )
 {
 	g_TESprite.m_vecOrigin		= *pos;
-	g_TESprite.m_nModelIndex	= modelindex;	
+	g_TESprite.m_nModelIndex	= modelindex;
 	g_TESprite.m_fScale			= size;
 	g_TESprite.m_nBrightness	= brightness;
 

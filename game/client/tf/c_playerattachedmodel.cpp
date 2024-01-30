@@ -16,7 +16,7 @@
 #define PAM_SPIN_SPEED			360
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_PlayerAttachedModel *C_PlayerAttachedModel::Create( const char *pszModelName, C_BaseEntity *pParent, int iAttachment, Vector vecOffset, float flLifetime, int iFlags )
 {
@@ -31,7 +31,7 @@ C_PlayerAttachedModel *C_PlayerAttachedModel::Create( const char *pszModelName, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_PlayerAttachedModel::Initialize( const char *pszModelName, C_BaseEntity *pParent, int iAttachment, Vector vecOffset, float flLifetime, int iFlags )
 {
@@ -42,7 +42,7 @@ bool C_PlayerAttachedModel::Initialize( const char *pszModelName, C_BaseEntity *
 		return false;
 	}
 
-	SetParent( pParent, iAttachment ); 
+	SetParent( pParent, iAttachment );
 	SetLocalOrigin( vecOffset );
 	SetLocalAngles( vec3_angle );
 
@@ -69,7 +69,7 @@ bool C_PlayerAttachedModel::Initialize( const char *pszModelName, C_BaseEntity *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PlayerAttachedModel::SetLifetime( float flLifetime )
 {
@@ -85,7 +85,7 @@ void C_PlayerAttachedModel::SetLifetime( float flLifetime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PlayerAttachedModel::ClientThink( void )
 {
@@ -122,7 +122,7 @@ void C_PlayerAttachedModel::ClientThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PlayerAttachedModel::ApplyBoneMatrixTransform( matrix3x4_t& transform )
 {

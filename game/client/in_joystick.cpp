@@ -44,9 +44,9 @@
 #include "tier0/memdbgon.h"
 
 // Control like a joystick
-#define JOY_ABSOLUTE_AXIS	0x00000000		
+#define JOY_ABSOLUTE_AXIS	0x00000000
 // Control like a mouse, spinner, trackball
-#define JOY_RELATIVE_AXIS	0x00000010		
+#define JOY_RELATIVE_AXIS	0x00000010
 
 // Axis mapping
 static ConVar joy_name( "joy_name", "joystick", FCVAR_ARCHIVE );
@@ -169,7 +169,7 @@ static float ResponseCurve( int curve, float x, int axis, float sensitivity )
 			sensitivity = clamp( fabs( sensitivity ), 1.0e-8f, 1000.0f );
 
 			float oneOverSens = 1.0f / sensitivity;
-		
+
 			if ( x < 0.0f )
 			{
 				flScale = -flScale;
@@ -196,8 +196,8 @@ static float ResponseCurve( int curve, float x, int axis, float sensitivity )
 		{
 			if( axis == YAW )
 			{
-				// This code only wants to affect YAW axis (the left and right axis), which 
-				// is used for turning in the car. We fall-through and use a linear curve on 
+				// This code only wants to affect YAW axis (the left and right axis), which
+				// is used for turning in the car. We fall-through and use a linear curve on
 				// the PITCH axis, which is the vehicle's throttle. REALLY, these are the 'forward'
 				// and 'side' axes, but we don't have constants for those, so we re-use the same
 				// axis convention as the look stick. (sjb)
@@ -226,7 +226,7 @@ static float ResponseCurve( int curve, float x, int axis, float sensitivity )
 
 
 //-----------------------------------------------
-// If we have a valid autoaim target, dampen the 
+// If we have a valid autoaim target, dampen the
 // player's stick input if it is moving away from
 // the target.
 //
@@ -262,7 +262,7 @@ float AutoAimDampening( float x, int axis, float dist )
 // to make decisions about how to modulate analog
 // stick input.
 //-----------------------------------------------
-typedef struct 
+typedef struct
 {
 	float	envelopeScale[2];
 	bool	peggedAxis[2];
@@ -272,10 +272,10 @@ typedef struct
 envelope_t	controlEnvelope;
 
 //-----------------------------------------------
-// Response curve function specifically for the 
+// Response curve function specifically for the
 // 'look' analog stick.
 //
-// when AXIS == YAW, otherAxisValue contains the 
+// when AXIS == YAW, otherAxisValue contains the
 // value for the pitch of the control stick, and
 // vice-versa.
 //-----------------------------------------------
@@ -303,10 +303,10 @@ static float ResponseCurveLookDefault( float x, int axis, float otherAxis, float
 			controlEnvelope.peggedAxis[axis] = true;
 			controlEnvelope.axisPeggedDir[axis] = negative;
 		}
-		
+
 		if( controlEnvelope.peggedAxis[axis] == true )
 		{
-			// User doesn't have the stick pegged on this axis, but they used to. 
+			// User doesn't have the stick pegged on this axis, but they used to.
 			// If the stick is physically pegged, pretend this axis is still pegged.
 			if( bStickIsPhysicallyPegged && negative == controlEnvelope.axisPeggedDir[axis] )
 			{
@@ -388,9 +388,9 @@ static float ResponseCurveLookAccelerated( float x, int axis, float otherAxis, f
 
 	if( bIsPegged && x > joy_accel_filter.GetFloat() )
 	{
-		// Accelerate this axis, since the stick is pegged and 
+		// Accelerate this axis, since the stick is pegged and
 		// this axis is pressed farther than the acceleration filter
-		// Take the lowmap value, or the input, whichever is higher, since 
+		// Take the lowmap value, or the input, whichever is higher, since
 		// we don't necesarily know whether this is the axis which is pegged
 		x = MAX( joy_lowmap.GetFloat(), x );
 		bDoAcceleration = true;
@@ -551,8 +551,8 @@ void CInput::Joystick_Advanced(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CInput::DescribeAxis( int index )
@@ -577,9 +577,9 @@ char const *CInput::DescribeAxis( int index )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *axis - 
-//			*mapping - 
+// Purpose:
+// Input  : *axis -
+//			*mapping -
 //-----------------------------------------------------------------------------
 void CInput::DescribeJoystickAxis( char const *axis, joy_axis_t *mapping )
 {
@@ -590,7 +590,7 @@ void CInput::DescribeJoystickAxis( char const *axis, joy_axis_t *mapping )
 	else
 	{
 		Msg( "%s:  mapped to %s (%s)\n",
-			axis, 
+			axis,
 			DescribeAxis( mapping->AxisMap ),
 			mapping->ControlMap != 0 ? "relative" : "absolute" );
 	}
@@ -663,8 +663,8 @@ float CInput::Joystick_GetYaw( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Apply joystick to CUserCmd creation
-// Input  : frametime - 
-//			*cmd - 
+// Input  : frametime -
+//			*cmd -
 //-----------------------------------------------------------------------------
 void CInput::JoyStickMove( float frametime, CUserCmd *cmd )
 {
@@ -689,7 +689,7 @@ void CInput::JoyStickMove( float frametime, CUserCmd *cmd )
 
 	// Verify that a joystick is available
 	if ( !haveJoysticks )
-		return; 
+		return;
 
 	if ( m_flRemainingJoystickSampleTime <= 0 )
 		return;
@@ -815,7 +815,7 @@ void CInput::JoyStickMove( float frametime, CUserCmd *cmd )
 
 	// apply forward and side control
 	C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
-	
+
 	int iResponseCurve = 0;
 	if ( pLocalPlayer && pLocalPlayer->IsInAVehicle() )
 	{
@@ -824,8 +824,8 @@ void CInput::JoyStickMove( float frametime, CUserCmd *cmd )
 	else
 	{
 		iResponseCurve = joy_response_move.GetInt();
-	}	
-	
+	}
+
 	float val = ResponseCurve( iResponseCurve, m_flPreviousJoystickForward, PITCH, joy_forwardsensitivity.GetFloat() );
 	joyForwardMove	+= val * cl_forwardspeed.GetFloat();
 	val = ResponseCurve( iResponseCurve, m_flPreviousJoystickSide, YAW, joy_sidesensitivity.GetFloat() );

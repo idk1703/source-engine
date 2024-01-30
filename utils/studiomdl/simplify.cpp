@@ -45,9 +45,9 @@ static Vector g_PropCenterOffset(0,0,0);
 // underlay:
 // studiomdl : delta = new_anim * ( -1 * base_anim )
 // engine : result = (w * delta) * base_anim
-// 
+//
 // overlay
-// 
+//
 // studiomdl : delta = (-1 * base_anim ) * new_anim
 // engine : result = base_anim * (w * delta)
 //
@@ -116,7 +116,7 @@ void ClearModel (void)
 
 
 void processAnimations()
-{ 
+{
 	int i, j;
 
 	// find global root bone.
@@ -187,13 +187,13 @@ void processAnimations()
 				break;
 			case CMD_MOTION:
 				{
-					extractLinearMotion( 
-						panim, 
-						pcmd->u.motion.motiontype, 
-						startframe, 
-						pcmd->u.motion.iEndFrame, 
-						pcmd->u.motion.iEndFrame, 
-						panim, 
+					extractLinearMotion(
+						panim,
+						pcmd->u.motion.motiontype,
+						startframe,
+						pcmd->u.motion.iEndFrame,
+						pcmd->u.motion.iEndFrame,
+						panim,
 						startframe );
 					startframe = pcmd->u.motion.iEndFrame;
 				}
@@ -201,12 +201,12 @@ void processAnimations()
 			case CMD_REFMOTION:
 				{
 					extractLinearMotion(
-						panim, 
-						pcmd->u.motion.motiontype, 
-						startframe, 
-						pcmd->u.motion.iEndFrame, 
-						pcmd->u.motion.iSrcFrame, 
-						pcmd->u.motion.pRefAnim, 
+						panim,
+						pcmd->u.motion.motiontype,
+						startframe,
+						pcmd->u.motion.iEndFrame,
+						pcmd->u.motion.iSrcFrame,
+						pcmd->u.motion.pRefAnim,
 						pcmd->u.motion.iRefFrame );
 					startframe = pcmd->u.motion.iEndFrame;
 				}
@@ -214,7 +214,7 @@ void processAnimations()
 			case CMD_DERIVATIVE:
 				{
 					createDerivative(
-						panim, 
+						panim,
 						pcmd->u.derivative.scale );
 				}
 				break;
@@ -354,7 +354,7 @@ void lookupLinearMotion( s_animation_t *panim, int motiontype, int startframe, i
 	// 0.5 * v1 + 0.5 * v2 - d3
 	// -4 * (0.375 * v2 - d3 + d2) + 0.5 * v2 - d3 = 0
 	// -1.5 * v2 + 4 * d3 - 4 * d2 + 0.5 * v2 - d3 = 0
-	// v2 = 4 * d3 - 4 * d2 - d3 
+	// v2 = 4 * d3 - 4 * d2 - d3
 	// v2 = 3 * d3 - 4 * d2
 
 	// 0.5 * v1 + 0.5 * (3 * d3 - 4 * d2) - d3 = 0
@@ -379,7 +379,7 @@ void ConvertToAnimLocal( s_animation_t *panim, Vector &pos, QAngle &angles )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: find the linear movement/rotation between two frames, subtract that 
+// Purpose: find the linear movement/rotation between two frames, subtract that
 //			out of the animation and add it back on as a "piecewise movement" command
 // panim		- current animation
 // motiontype	- what to extract
@@ -465,7 +465,7 @@ void extractLinearMotion( s_animation_t *panim, int motiontype, int iStartFrame,
 			QuaternionNormalize( q4 );
 			QuaternionAngles( q4, a3 );
 
-			// check for possible rotations >180 degrees by looking at the 
+			// check for possible rotations >180 degrees by looking at the
 			// halfway point and seeing if it's rotating a different direction
 			// than the shortest path to the end point
 			Quaternion q5;
@@ -506,7 +506,7 @@ void extractLinearMotion( s_animation_t *panim, int motiontype, int iStartFrame,
 	if (!(motiontype & STUDIO_LX)) { p2.x = 0; p1.x = 0; };
 	if (!(motiontype & STUDIO_LY)) { p2.y = 0; p1.y = 0; };
 	if (!(motiontype & STUDIO_LZ)) { p2.z = 0; p1.z = 0; };
-	
+
 	// printf("%s  %.1f %.1f %.1f\n", g_bonetable[g_rootIndex].name, p2.x, p2.y, p2.z );
 
 	float d1 = p1.Length();
@@ -565,7 +565,7 @@ void extractLinearMotion( s_animation_t *panim, int motiontype, int iStartFrame,
 	RadianEuler	adjangle;
 	matrix3x4_t bonematrix;
 	for (j = 0; j < numframes; j++)
-	{	
+	{
 		float t = (j / n);
 
 		if (motiontype & STUDIO_QUADRATIC_MOTION)
@@ -639,7 +639,7 @@ void extractLinearMotion( s_animation_t *panim, int motiontype, int iStartFrame,
 	}
 	VectorNormalize( pmove->vector );
 
-	// printf("%d : %.1f %.1f %.1f\n", iEndFrame, pmove[0].pos.x, pmove[0].pos.y, RAD2DEG( pmove[0].rot.z ) ); 
+	// printf("%d : %.1f %.1f %.1f\n", iEndFrame, pmove[0].pos.x, pmove[0].pos.y, RAD2DEG( pmove[0].rot.z ) );
 
 	pmove->v0 = v0;
 	pmove->v1 = v1;
@@ -655,7 +655,7 @@ void extractLinearMotion( s_animation_t *panim, int motiontype, int iStartFrame,
 Vector calcPosition( s_animation_t *panim, int iFrame )
 {
 	Vector vecPos;
-	
+
 	vecPos.Init();
 
 	if (panim->numpiecewisekeys == 0)
@@ -687,7 +687,7 @@ Vector calcPosition( s_animation_t *panim, int iFrame )
 			if (iLoops != 0)
 			{
 				s_linearmove_t *pmove = &panim->piecewisemove[panim->numpiecewisekeys - 1];
-				vecPos = vecPos + iLoops * pmove->pos; 
+				vecPos = vecPos + iLoops * pmove->pos;
 			}
 			return vecPos;
 		}
@@ -725,7 +725,7 @@ Vector calcMovement( s_animation_t *panim, int iFrom, int iTo )
 		pos = pos + panim->piecewisemove[0].pos * (iFrame) / (panim->numframes - 1.0f);
 #endif
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: try to calculate a "missing" frame of animation, i.e the overlapping frame
 //-----------------------------------------------------------------------------
@@ -758,7 +758,7 @@ void fixupMissingFrame( s_animation_t *panim )
 //-----------------------------------------------------------------------------
 
 void realignLooping( s_animation_t *panim )
-{	
+{
 	int j, k;
 
 	// realign looping animations
@@ -778,7 +778,7 @@ void realignLooping( s_animation_t *panim )
 
 			// printf("%f %f %f\n", motion[0], motion[1], motion[2] );
 			for (j = 0; j < panim->numframes - 1; j++)
-			{	
+			{
 				n = (j + panim->looprestart) % (panim->numframes - 1);
 				VectorCopy( panim->sanim[n][k].pos, shiftpos[j] );
 				VectorCopy( panim->sanim[n][k].rot, shiftrot[j] );
@@ -790,7 +790,7 @@ void realignLooping( s_animation_t *panim )
 			VectorCopy( panim->sanim[n][k].rot, shiftrot[j] );
 
 			for (j = 0; j < panim->numframes; j++)
-			{	
+			{
 				VectorCopy( shiftpos[j], panim->sanim[j][k].pos );
 				VectorCopy( shiftrot[j], panim->sanim[j][k].rot );
 			}
@@ -817,7 +817,7 @@ void extractUnusedMotion( s_animation_t *panim )
 			motion[5] = panim->sanim[0][k].rot[2];
 
 			for (j = 0; j < panim->numframes; j++)
-			{	
+			{
 				if (type & STUDIO_X)
 					panim->sanim[j][k].pos[0] = motion[0];
 				if (type & STUDIO_Y)
@@ -866,13 +866,13 @@ void processMatch( s_animation_t *psrc, s_animation_t *pdest, int flags )
 					VectorAdd( pdest->sanim[j][k].pos, delta_pos[k], pdest->sanim[j][k].pos );
 				QuaternionMAAngles( pdest->sanim[j][k].rot, 1.0, delta_q[k], pdest->sanim[j][k].rot );
 			}
-		}	
+		}
 	}
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: blend the psrc animation overtop the pdest animation, but blend the 
+// Purpose: blend the psrc animation overtop the pdest animation, but blend the
 //			quaternions in world space instead of parent bone space.
 //			Also, blend bone lengths, but only for non root animations.
 //-----------------------------------------------------------------------------
@@ -951,8 +951,8 @@ void worldspaceBlend( s_animation_t *psrc, s_animation_t *pdest, int srcframe, i
 			{
 				MatrixAngles( destBoneToWorld[k], pdest->sanim[j][k].rot, tmp );
 
-				// FIXME: it's not clear if this should blend position or not....it'd be 
-				// better if weight lists could do quat and pos independently. 
+				// FIXME: it's not clear if this should blend position or not....it'd be
+				// better if weight lists could do quat and pos independently.
 			}
 			else
 			{
@@ -976,7 +976,7 @@ void worldspaceBlend( s_animation_t *psrc, s_animation_t *pdest, int srcframe, i
 //-----------------------------------------------------------------------------
 
 void processAutoorigin( s_animation_t *psrc, s_animation_t *pdest, int motiontype, int srcframe, int destframe, int bone )
-{	
+{
 	int j, k;
 	matrix3x4_t adjmatrix;
 
@@ -1068,7 +1068,7 @@ void processAutoorigin( s_animation_t *psrc, s_animation_t *pdest, int motiontyp
 				MatrixAngles( bonematrix, pdest->sanim[j][k].rot, pdest->sanim[j][k].pos );
 			}
 		}
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1096,24 +1096,24 @@ void subtractBaseAnimations( s_animation_t *psrc, s_animation_t *pdest, int srcf
 	for (k = 0; k < g_numbones; k++)
 	{
 		for (j = 0; j < pdest->numframes; j++)
-		{	
+		{
 			if (pdest->weight[k] > 0)
 			{
 				/*
-				printf("%2d : %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f\n", 
+				printf("%2d : %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f\n",
 					k,
-					src[k].pos[0], src[k].pos[1], src[k].pos[2], 
-					src[k].rot[0], src[k].rot[1], src[k].rot[2] ); 
+					src[k].pos[0], src[k].pos[1], src[k].pos[2],
+					src[k].rot[0], src[k].rot[1], src[k].rot[2] );
 
-				printf("     %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f\n", 
-					RAD2DEG(pdest->sanim[j][k].pos[0]), RAD2DEG(pdest->sanim[j][k].pos[1]), RAD2DEG(pdest->sanim[j][k].pos[2]), 
-					RAD2DEG(pdest->sanim[j][k].rot[0]), RAD2DEG(pdest->sanim[j][k].rot[1]), RAD2DEG(pdest->sanim[j][k].rot[2]) ); 
+				printf("     %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f\n",
+					RAD2DEG(pdest->sanim[j][k].pos[0]), RAD2DEG(pdest->sanim[j][k].pos[1]), RAD2DEG(pdest->sanim[j][k].pos[2]),
+					RAD2DEG(pdest->sanim[j][k].rot[0]), RAD2DEG(pdest->sanim[j][k].rot[1]), RAD2DEG(pdest->sanim[j][k].rot[2]) );
 				*/
 
 				// calc differences between two rotations
 				if (flags & STUDIO_POST)
 				{
-					// find pdest in src's reference frame  
+					// find pdest in src's reference frame
 					QuaternionSMAngles( -1, src[k].rot, pdest->sanim[j][k].rot, pdest->sanim[j][k].rot );
 					VectorSubtract( pdest->sanim[j][k].pos, src[k].pos, pdest->sanim[j][k].pos );
 				}
@@ -1125,9 +1125,9 @@ void subtractBaseAnimations( s_animation_t *psrc, s_animation_t *pdest, int srcf
 				}
 
 				/*
-				printf("     %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f\n", 
-					pdest->sanim[j][k].pos[0], pdest->sanim[j][k].pos[1], pdest->sanim[j][k].pos[2], 
-					RAD2DEG(pdest->sanim[j][k].rot[0]), RAD2DEG(pdest->sanim[j][k].rot[1]), RAD2DEG(pdest->sanim[j][k].rot[2]) ); 
+				printf("     %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f\n",
+					pdest->sanim[j][k].pos[0], pdest->sanim[j][k].pos[1], pdest->sanim[j][k].pos[2],
+					RAD2DEG(pdest->sanim[j][k].rot[0]), RAD2DEG(pdest->sanim[j][k].rot[1]), RAD2DEG(pdest->sanim[j][k].rot[2]) );
 				*/
 			}
 		}
@@ -1145,12 +1145,12 @@ void subtractBaseAnimations( s_animation_t *psrc, s_animation_t *pdest, int srcf
 		if (g_weightlist[panim->weightlist].weight[k] > 0.0)
 		{
 			for (j = 0; j < panim->numframes; j++)
-			{	
-				if (fabs(panim->sanim[j][k].pos[0]) > 0.001 || 
-					fabs(panim->sanim[j][k].pos[1]) > 0.001 || 
-					fabs(panim->sanim[j][k].pos[2]) > 0.001 || 
-					fabs(panim->sanim[j][k].rot[0]) > 0.001 || 
-					fabs(panim->sanim[j][k].rot[1]) > 0.001 || 
+			{
+				if (fabs(panim->sanim[j][k].pos[0]) > 0.001 ||
+					fabs(panim->sanim[j][k].pos[1]) > 0.001 ||
+					fabs(panim->sanim[j][k].pos[2]) > 0.001 ||
+					fabs(panim->sanim[j][k].rot[0]) > 0.001 ||
+					fabs(panim->sanim[j][k].rot[1]) > 0.001 ||
 					fabs(panim->sanim[j][k].rot[2]) > 0.001)
 				{
 					panim->weight[k] = g_weightlist[panim->weightlist].weight[k];
@@ -1164,7 +1164,7 @@ void subtractBaseAnimations( s_animation_t *psrc, s_animation_t *pdest, int srcf
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 void QuaternionSlerp( const RadianEuler &r0, const RadianEuler &r1, float t, RadianEuler &r2 )
@@ -1205,7 +1205,7 @@ void linearDelta( s_animation_t *psrc, s_animation_t *pdest, int srcframe, int f
 	for (k = 0; k < g_numbones; k++)
 	{
 		for (j = 0; j < pdest->numframes; j++)
-		{	
+		{
 			float s = 1;
 			if (pdest->numframes > 1)
 			{
@@ -1221,14 +1221,14 @@ void linearDelta( s_animation_t *psrc, s_animation_t *pdest, int srcframe, int f
 			if (pdest->weight[k] > 0)
 			{
 				/*
-				printf("%2d : %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f\n", 
+				printf("%2d : %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f\n",
 					k,
-					src[k].pos[0], src[k].pos[1], src[k].pos[2], 
-					src[k].rot[0], src[k].rot[1], src[k].rot[2] ); 
+					src[k].pos[0], src[k].pos[1], src[k].pos[2],
+					src[k].rot[0], src[k].rot[1], src[k].rot[2] );
 
-				printf("     %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f\n", 
-					RAD2DEG(pdest->sanim[j][k].pos[0]), RAD2DEG(pdest->sanim[j][k].pos[1]), RAD2DEG(pdest->sanim[j][k].pos[2]), 
-					RAD2DEG(pdest->sanim[j][k].rot[0]), RAD2DEG(pdest->sanim[j][k].rot[1]), RAD2DEG(pdest->sanim[j][k].rot[2]) ); 
+				printf("     %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f\n",
+					RAD2DEG(pdest->sanim[j][k].pos[0]), RAD2DEG(pdest->sanim[j][k].pos[1]), RAD2DEG(pdest->sanim[j][k].pos[2]),
+					RAD2DEG(pdest->sanim[j][k].rot[0]), RAD2DEG(pdest->sanim[j][k].rot[1]), RAD2DEG(pdest->sanim[j][k].rot[2]) );
 				*/
 
 				s_bone_t src;
@@ -1239,7 +1239,7 @@ void linearDelta( s_animation_t *psrc, s_animation_t *pdest, int srcframe, int f
 				// calc differences between two rotations
 				if (flags & STUDIO_AL_POST)
 				{
-					// find pdest in src's reference frame  
+					// find pdest in src's reference frame
 					QuaternionSMAngles( -1, src.rot, pdest->sanim[j][k].rot, pdest->sanim[j][k].rot );
 					VectorSubtract( pdest->sanim[j][k].pos, src.pos, pdest->sanim[j][k].pos );
 				}
@@ -1251,9 +1251,9 @@ void linearDelta( s_animation_t *psrc, s_animation_t *pdest, int srcframe, int f
 				}
 
 				/*
-				printf("     %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f\n", 
-					pdest->sanim[j][k].pos[0], pdest->sanim[j][k].pos[1], pdest->sanim[j][k].pos[2], 
-					RAD2DEG(pdest->sanim[j][k].rot[0]), RAD2DEG(pdest->sanim[j][k].rot[1]), RAD2DEG(pdest->sanim[j][k].rot[2]) ); 
+				printf("     %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f\n",
+					pdest->sanim[j][k].pos[0], pdest->sanim[j][k].pos[1], pdest->sanim[j][k].pos[2],
+					RAD2DEG(pdest->sanim[j][k].rot[0]), RAD2DEG(pdest->sanim[j][k].rot[1]), RAD2DEG(pdest->sanim[j][k].rot[2]) );
 				*/
 			}
 		}
@@ -1271,7 +1271,7 @@ void reencodeAnimation( s_animation_t *panim, int frameskip )
 
 	n = 1;
 	for (j = frameskip; j < panim->numframes; j += frameskip)
-	{	
+	{
 		for (k = 0; k < g_numbones; k++)
 		{
 			panim->sanim[n][k] = panim->sanim[j][k];
@@ -1296,7 +1296,7 @@ void forceNumframes( s_animation_t *panim, int numframes )
 
 	// copy
 	for (j = panim->numframes; j < numframes; j++)
-	{	
+	{
 		panim->sanim[j] = (s_bone_t *)kalloc( 1, size );
 		memcpy( panim->sanim[j], panim->sanim[panim->numframes-1], size );
 	}
@@ -1328,7 +1328,7 @@ void createDerivative( s_animation_t *panim, float scale )
 	}
 
 	for (j = panim->numframes - 1; j >= 0; j--)
-	{	
+	{
 		s_bone_t *psrc;
 		s_bone_t *pdest;
 
@@ -1348,18 +1348,18 @@ void createDerivative( s_animation_t *panim, float scale )
 			{
 				/*
 				{
-					printf("%2d : %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f\n", 
+					printf("%2d : %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f\n",
 						k,
-						psrc[k].pos[0], psrc[k].pos[1], psrc[k].pos[2], 
+						psrc[k].pos[0], psrc[k].pos[1], psrc[k].pos[2],
 						RAD2DEG(psrc[k].rot[0]), RAD2DEG(psrc[k].rot[1]), RAD2DEG(psrc[k].rot[2]) );
 
-					printf("     %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f\n", 
-						pdest[k].pos[0], pdest[k].pos[1], pdest[k].pos[2], 
+					printf("     %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f\n",
+						pdest[k].pos[0], pdest[k].pos[1], pdest[k].pos[2],
 						RAD2DEG(pdest[k].rot[0]), RAD2DEG(pdest[k].rot[1]), RAD2DEG(pdest[k].rot[2]) );
 				}
 				*/
 
-				// find pdest in src's reference frame  
+				// find pdest in src's reference frame
 				QuaternionSMAngles( -1, psrc[k].rot, pdest[k].rot, pdest[k].rot );
 				VectorSubtract( pdest[k].pos, psrc[k].pos, pdest[k].pos );
 
@@ -1375,9 +1375,9 @@ void createDerivative( s_animation_t *panim, float scale )
 
 				/*
 				{
-					printf("     %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f\n", 
-						pdest[k].pos[0], pdest[k].pos[1], pdest[k].pos[2], 
-						RAD2DEG(pdest[k].rot[0]), RAD2DEG(pdest[k].rot[1]), RAD2DEG(pdest[k].rot[2]) ); 
+					printf("     %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f\n",
+						pdest[k].pos[0], pdest[k].pos[1], pdest[k].pos[2],
+						RAD2DEG(pdest[k].rot[0]), RAD2DEG(pdest[k].rot[1]), RAD2DEG(pdest[k].rot[2]) );
 				}
 				*/
 			}
@@ -1394,11 +1394,11 @@ void clearAnimations( s_animation_t *panim )
 {
 	panim->flags |= STUDIO_DELTA;
 	panim->flags |= STUDIO_ALLZEROS;
-	
+
 	panim->numframes = 1;
 	panim->startframe = 0;
 	panim->endframe = 1;
-	
+
 	int k;
 
 	for (k = 0; k < g_numbones; k++)
@@ -1441,7 +1441,7 @@ void counterRotateBone( s_animation_t *panim, int iBone, QAngle target )
 //-----------------------------------------------------------------------------
 // Purpose: build transforms in source space, assuming source bones
 //-----------------------------------------------------------------------------
-void BuildRawTransforms( const s_source_t *psource, const char *pAnimationName, 
+void BuildRawTransforms( const s_source_t *psource, const char *pAnimationName,
 	int frame, float scale, Vector const &shift, RadianEuler const &rotate, int flags, matrix3x4_t* boneToWorld )
 {
 	int k;
@@ -1449,7 +1449,7 @@ void BuildRawTransforms( const s_source_t *psource, const char *pAnimationName,
 	Vector pos;
 	RadianEuler rot;
 	matrix3x4_t bonematrix;
-	
+
 	matrix3x4_t rootxform;
 
 	AngleMatrix( rotate, rootxform );
@@ -1597,7 +1597,7 @@ void ConvertAnimation( const s_source_t *psource, const char *pAnimationName, in
 		}
 
 		MatrixAngles( bonematrix, dest[k].rot, dest[k].pos );
-		
+
 		clip_rotations( dest[k].rot );
 	}
 }
@@ -1786,9 +1786,9 @@ void fixupLoopingDiscontinuities( s_animation_t *panim, int start, int end )
 	// FIXME: figure out S
 	float s = 0;
 	float nf = end - start;
-	
+
 	for (j = start + 1; j <= 0; j++)
-	{	
+	{
 		n = j - start;
 		s = (n / nf);
 		s = 3 * s * s - 2 * s * s * s;
@@ -1797,7 +1797,7 @@ void fixupLoopingDiscontinuities( s_animation_t *panim, int start, int end )
 	}
 
 	for (j = 0; j < end; j++)
-	{	
+	{
 		n = end - j;
 		s = (n / nf);
 		s = 3 * s * s - 2 * s * s * s;
@@ -1857,7 +1857,7 @@ void matchBlend( s_animation_t *pDestAnim, s_animation_t *pSrcAnimation, int iSr
 	float s = 0;
 
 	for (j = iPre; j <= iPost; j++)
-	{	
+	{
 		if (j < 0)
 		{
 			s = j / (float)(iPre-1);
@@ -2046,9 +2046,9 @@ void localHierarchy( s_animation_t *panim, char *pBonename, char *pParentname, i
 		/*
 		QAngle ang;
 		QuaternionAngles( pRule->errorData.pError[k].q, ang );
-		printf("%d  %.1f %.1f %.1f : %.1f %.1f %.1f\n", 
+		printf("%d  %.1f %.1f %.1f : %.1f %.1f %.1f\n",
 			k,
-			pRule->errorData.pError[k].pos.x, pRule->errorData.pError[k].pos.y, pRule->errorData.pError[k].pos.z, 
+			pRule->errorData.pError[k].pos.x, pRule->errorData.pError[k].pos.y, pRule->errorData.pError[k].pos.z,
 			ang.x, ang.y, ang.z );
 		*/
 	}
@@ -2123,7 +2123,7 @@ void makeAngle( s_animation_t *panim, float angle )
 // Purpose: convert pBoneToWorld back into rot/pos data
 //-----------------------------------------------------------------------------
 
-void solveBone( 
+void solveBone(
 	s_animation_t *panim,
 	int iFrame,
 	int	iBone,
@@ -2218,7 +2218,7 @@ void fixupIKErrors( s_animation_t *panim, s_ikrule_t *pRule )
 		return;
 
 	pRule->errorData.numerror = pRule->end - pRule->start + 1;
-	
+
 	switch( pRule->type )
 	{
 	case IK_SELF:
@@ -2282,9 +2282,9 @@ void fixupIKErrors( s_animation_t *panim, s_ikrule_t *pRule )
 				// FIXME: this isn't taking into account the IK may have failed
 				ConcatTransforms( boneToWorld[pRule->bone], local, boneToWorld[g_ikchain[pRule->chain].link[2].bone] );
 
-				solveBone( panim, k + pRule->start, g_ikchain[pRule->chain].link[0].bone, boneToWorld );  
-				solveBone( panim, k + pRule->start, g_ikchain[pRule->chain].link[1].bone, boneToWorld );  
-				solveBone( panim, k + pRule->start, g_ikchain[pRule->chain].link[2].bone, boneToWorld );  
+				solveBone( panim, k + pRule->start, g_ikchain[pRule->chain].link[0].bone, boneToWorld );
+				solveBone( panim, k + pRule->start, g_ikchain[pRule->chain].link[1].bone, boneToWorld );
+				solveBone( panim, k + pRule->start, g_ikchain[pRule->chain].link[2].bone, boneToWorld );
 			}
 		}
 #endif
@@ -2324,11 +2324,11 @@ void fixupIKErrors( s_animation_t *panim, s_ikrule_t *pRule )
 					pos,
 					boneToWorld );
 
-				solveBone( panim, k + pRule->start, g_ikchain[pRule->chain].link[0].bone, boneToWorld );  
-				solveBone( panim, k + pRule->start, g_ikchain[pRule->chain].link[1].bone, boneToWorld );  
-				solveBone( panim, k + pRule->start, g_ikchain[pRule->chain].link[2].bone, boneToWorld );  
+				solveBone( panim, k + pRule->start, g_ikchain[pRule->chain].link[0].bone, boneToWorld );
+				solveBone( panim, k + pRule->start, g_ikchain[pRule->chain].link[1].bone, boneToWorld );
+				solveBone( panim, k + pRule->start, g_ikchain[pRule->chain].link[2].bone, boneToWorld );
 			}
-		}	
+		}
 	}
 	forceAnimationLoop( panim ); // !!!
 }
@@ -2344,15 +2344,15 @@ static void ComputeSideAndScale( const s_flexkey_t &flexKey, s_vertanim_t *pVAni
 
 	if ( flexKey.split > 0.0f )
 	{
-		if ( pVAnim->pos.x > flexKey.split ) 
+		if ( pVAnim->pos.x > flexKey.split )
 		{
 			*pScale = 0.0f;
 		}
-		else if ( pVAnim->pos.x < -flexKey.split ) 
+		else if ( pVAnim->pos.x < -flexKey.split )
 		{
 			*pScale = 1.0f;
 		}
-		else 
+		else
 		{
 			float t = ( flexKey.split - pVAnim->pos.x ) / (2.0 * flexKey.split);
 			*pScale = 3.0f * t * t - 2.0f * t * t * t;
@@ -2361,15 +2361,15 @@ static void ComputeSideAndScale( const s_flexkey_t &flexKey, s_vertanim_t *pVAni
 	}
 	else if ( flexKey.split < 0.0f )
 	{
-		if ( pVAnim->pos.x < flexKey.split) 
+		if ( pVAnim->pos.x < flexKey.split)
 		{
 			*pScale = 0.0f;
 		}
-		else if ( pVAnim->pos.x > -flexKey.split) 
+		else if ( pVAnim->pos.x > -flexKey.split)
 		{
 			*pScale = 1.0f;
 		}
-		else 
+		else
 		{
 			float t = ( flexKey.split - pVAnim->pos.x ) / ( 2.0f * flexKey.split );
 			*pScale = 3.0f * t * t - 2.0f * t * t * t;
@@ -2412,7 +2412,7 @@ static void ComputeVertexAnimationSpeed( s_flexkey_t& flexKey )
 		flScale = 0.01f;
 	}
 
-	// set 
+	// set
 	for ( int m = 0; m < flexKey.numvanims; m++ )
 	{
 		if ( flexKey.decay == 0.0f )
@@ -2658,7 +2658,7 @@ void RemapVertexAnimations(void)
 	static int			model_to_vanim_vert_imap[MAXSTUDIOVERTS];		// model vert to vanim vert mapping
 
 	// for all the sources of flexes, find a mapping of vertex animations to base model.
-	// There can be multiple "vertices" in the base model for each animated vertex since vertices 
+	// There can be multiple "vertices" in the base model for each animated vertex since vertices
 	// are duplicated along material boundaries.
 	for ( i = 0; i < g_numflexkeys; i++ )
 	{
@@ -2800,11 +2800,11 @@ void RemapVertexAnimations(void)
 				}
 
 				/*
-				printf("%4d  %6.2f %6.2f %6.2f : %4d  %5.2f %5.2f %5.2f\n", 
-				pdestanim->vertex, 
+				printf("%4d  %6.2f %6.2f %6.2f : %4d  %5.2f %5.2f %5.2f\n",
+				pdestanim->vertex,
 				// pmsource->vertex[pdestanim->vertex][0], pmsource->vertex[pdestanim->vertex][1], pmsource->vertex[pdestanim->vertex][2],
 				modelpos[pdestanim->vertex][0], modelpos[pdestanim->vertex][1], modelpos[pdestanim->vertex][2],
-				psrcanim->vertex,					
+				psrcanim->vertex,
 				pdestanim->pos[0], pdestanim->pos[1], pdestanim->pos[2] );
 				*/
 				g_flexkey[i].numvanims++;
@@ -2829,7 +2829,7 @@ void RemapVertexAnimations(void)
 //-----------------------------------------------------------------------------
 // Purpose: map the vertex animations to their equivalent vertex in the base animations
 //-----------------------------------------------------------------------------
-static int FlexKeysSortFunc( const void *pv1, const void *pv2 ) 
+static int FlexKeysSortFunc( const void *pv1, const void *pv2 )
 {
 	const s_flexkey_t *pKey1 = (const s_flexkey_t*)pv1;
 	const s_flexkey_t *pKey2 = (const s_flexkey_t*)pv2;
@@ -2874,7 +2874,7 @@ static void RemapVertexAnimationsNewVersion(void)
 		return;
 
 	// for all the sources of flexes, find a mapping of vertex animations to base model.
-	// There can be multiple "vertices" in the base model for each animated vertex since vertices 
+	// There can be multiple "vertices" in the base model for each animated vertex since vertices
 	// are duplicated along material boundaries.
 	s_source_t *pVLastSource = NULL;
 	for ( int i = 0; i < nSortedFlexKeyCount; i++ )
@@ -2904,7 +2904,7 @@ static void RemapVertexAnimationsNewVersion(void)
 		int j;
 		for ( j = i+1; j < nSortedFlexKeyCount; ++j )
 		{
-			if ( ( ppSortedFlexKeys[j]->source != pVSource ) || 
+			if ( ( ppSortedFlexKeys[j]->source != pVSource ) ||
 				  Q_stricmp( ppSortedFlexKeys[j]->animationname, pFlexKey->animationname ) )
 				break;
 		}
@@ -3005,7 +3005,7 @@ int findGlobalBone( const char *name )
 		if ( !Q_stricmp( g_bonetable[k].name, name ) )
 			return k;
 	}
-	
+
 	return -1;
 }
 
@@ -3031,7 +3031,7 @@ bool IsGlobalBoneXSI( const char *name, const char *bonename )
 			}
 		}
 	}
-	
+
 	return false;
 }
 
@@ -3050,12 +3050,12 @@ int findGlobalBoneXSI( const char *name )
 			return k;
 		}
 	}
-	
+
 	return -1;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Acculumate quaternions and try to find the swept area of rotation 
+// Purpose: Acculumate quaternions and try to find the swept area of rotation
 //			so that a "midpoint" of the rotation area can be found
 //-----------------------------------------------------------------------------
 
@@ -3068,7 +3068,7 @@ void findAnimQuaternionAlignment( int k, int i, Quaternion &qBase, Quaternion &q
 	float dMin = 1.0;
 	qMax = qBase;
 	float dMax = 1.0;
-	
+
 	for (j = 1; j < g_panimation[i]->numframes; j++)
 	{
 		Quaternion q;
@@ -3081,7 +3081,7 @@ void findAnimQuaternionAlignment( int k, int i, Quaternion &qBase, Quaternion &q
 		float d2 = QuaternionDotProduct( q, qMax );
 
 		/*
-		if (i != 0) 
+		if (i != 0)
 			printf("%f %f %f : %f\n", d0, d1, d2, QuaternionDotProduct( qMin, qMax ) );
 		*/
 		if (d1 >= d0)
@@ -3107,7 +3107,7 @@ void findAnimQuaternionAlignment( int k, int i, Quaternion &qBase, Quaternion &q
 		}
 
 		/*
-		if (i != 0) 
+		if (i != 0)
 			printf("%f ", QuaternionDotProduct( qMin, qMax ) );
 		*/
 
@@ -3133,16 +3133,16 @@ void findAnimQuaternionAlignment( int k, int i, Quaternion &qBase, Quaternion &q
 
 	// printf("%s (%s): %.3f :%.3f\n", g_bonetable[k].name, g_panimation[i]->name, QuaternionDotProduct( qMin, qMax ), QuaternionDotProduct( qMin, qBase ) );
 	/*
-	if (i != 0) 
+	if (i != 0)
 		exit(0);
 	*/
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: For specific bones, try to find the total valid area of rotation so 
+// Purpose: For specific bones, try to find the total valid area of rotation so
 //			that their mid point of rotation can be used at run time to "pre-align"
-//			the quaternions so that rotations > 180 degrees don't get blended the 
+//			the quaternions so that rotations > 180 degrees don't get blended the
 //			"short way round".
 //-----------------------------------------------------------------------------
 
@@ -3202,9 +3202,9 @@ void limitBoneRotations( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: For specific bones, try to find the total valid area of rotation so 
+// Purpose: For specific bones, try to find the total valid area of rotation so
 //			that their mid point of rotation can be used at run time to "pre-align"
-//			the quaternions so that rotations > 180 degrees don't get blended the 
+//			the quaternions so that rotations > 180 degrees don't get blended the
 //			"short way round".
 //-----------------------------------------------------------------------------
 
@@ -3315,9 +3315,9 @@ void limitIKChainLength( void )
 				// run it through the normal IK solver, this should move the foot positions to someplace legal
 				Studio_SolveIK( g_ikchain[k].link[0].bone, g_ikchain[k].link[1].bone, g_ikchain[k].link[2].bone, worldFoot, targetKneeDir, boneToWorld );
 
-				solveBone( panim, j, g_ikchain[k].link[0].bone, boneToWorld );  
-				solveBone( panim, j, g_ikchain[k].link[1].bone, boneToWorld );  
-				solveBone( panim, j, g_ikchain[k].link[2].bone, boneToWorld );  
+				solveBone( panim, j, g_ikchain[k].link[0].bone, boneToWorld );
+				solveBone( panim, j, g_ikchain[k].link[1].bone, boneToWorld );
+				solveBone( panim, j, g_ikchain[k].link[2].bone, boneToWorld );
 			}
 		}
 #endif
@@ -3326,7 +3326,7 @@ void limitIKChainLength( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: build "next node" table that links every transition "node" to 
+// Purpose: build "next node" table that links every transition "node" to
 //			every other transition "node", if possible
 //-----------------------------------------------------------------------------
 void MakeTransitions( )
@@ -3347,7 +3347,7 @@ void MakeTransitions( )
 		}
 	}
 
-	// calculate multi-stage transitions 
+	// calculate multi-stage transitions
 	while (iHit)
 	{
 		iHit = false;
@@ -3417,25 +3417,25 @@ void MakeTransitions( )
 int VectorCompareEpsilon(const Vector& v1, const Vector& v2, float epsilon)
 {
 	int		i;
-	
+
 	for (i=0 ; i<3 ; i++)
 		if (fabs(v1[i] - v2[i]) > epsilon)
 			return 0;
-			
+
 	return 1;
 }
 
 int RadianEulerCompareEpsilon(const RadianEuler& v1, const RadianEuler& v2, float epsilon)
 {
 	int		i;
-	
+
 	for (i=0 ; i<3 ; i++)
 	{
 		// clamp to 2pi
 		float a1 = fmod(v1[i],(float) (2*M_PI));
 		float a2 = fmod(v2[i],(float) (2*M_PI));
 		float delta =  fabs(a1-a2);
-		
+
 		// use the smaller angle (359 == 1 degree off)
 		if ( delta > M_PI )
 		{
@@ -3445,7 +3445,7 @@ int RadianEulerCompareEpsilon(const RadianEuler& v1, const RadianEuler& v2, floa
 		if (delta > epsilon)
 			return 0;
 	}
-			
+
 	return 1;
 }
 
@@ -3566,7 +3566,7 @@ bool BoneIsIK( char const *pname )
 {
 	int k;
 
-	// tag bones used by ikchains 
+	// tag bones used by ikchains
 	for (k = 0; k < g_numikchains; k++)
 	{
 		if ( !stricmp( g_ikchain[k].bonename, pname ) )
@@ -3630,7 +3630,7 @@ void CollapseBones( void )
 			if (g_bonetable[j].parent == k)
 			{
 				g_bonetable[j].parent = m;
-			} 
+			}
 			else if (g_bonetable[j].parent >= k)
 			{
 				g_bonetable[j].parent = g_bonetable[j].parent - 1;
@@ -3743,10 +3743,10 @@ void MakeStaticProp()
 		s_sourceanim_t *pSourceAnim = FindSourceAnim( psource, "BindPose" );
 		pSourceAnim->rawanim[0][0].pos = Vector( 0, 0, 0 );
 		pSourceAnim->rawanim[0][0].rot = RadianEuler( 0, 0, 0 );
-	
+
 		// make an identity boneToPose transform
 		AngleMatrix( QAngle( 0, 0, 0 ), psource->boneToPose[0] );
-		
+
 		// make it all a single frame animation
 		pSourceAnim->numframes = 1;
 		pSourceAnim->startframe = 0;
@@ -3771,7 +3771,7 @@ void MakeStaticProp()
 	{
 		if( g_centerstaticprop && ( i == g_numattachments - 1 ) )
 			continue;
-		
+
 		ConcatTransforms( rotated, g_attachment[i].local, g_attachment[i].local );
 
 		Q_strncpy( g_attachment[i].bonename, "static_prop", sizeof(g_attachment[i].name) );
@@ -3889,7 +3889,7 @@ void MapFlexDriveBonesToGlobalBoneTable()
 //-----------------------------------------------------------------------------
 // Purpose: Tag bones in the specified source that are used as a bone flex driver
 //          Also cleans up any empty bone flex driver elements
-//			Also tags the DmeBoneFlexDriverControl with 
+//			Also tags the DmeBoneFlexDriverControl with
 //-----------------------------------------------------------------------------
 void TagFlexDriverBones( s_source_t *pSource )
 {
@@ -4050,7 +4050,7 @@ void TagUsedBones( )
 		}
 
 		// Tag all bones marked as being used by bonemerge
-		int nBoneMergeCount = g_BoneMerge.Count(); 
+		int nBoneMergeCount = g_BoneMerge.Count();
 		for ( k = 0; k < nBoneMergeCount; ++k )
 		{
 			for ( j = 0; j < psource->numbones; j++ )
@@ -4131,7 +4131,7 @@ void TagUsedImportedBones()
 	int k, j;
 
 	// Tag all bones marked as being used by bonemerge
-	int nBoneMergeCount = g_BoneMerge.Count(); 
+	int nBoneMergeCount = g_BoneMerge.Count();
 	for ( k = 0; k < nBoneMergeCount; ++k )
 	{
 		for ( j = 0; j < g_numbones; j++ )
@@ -4259,12 +4259,12 @@ int BuildGlobalBonetable( )
 				g_numbones++;
 				continue;
 			}
-				
+
 			if (g_bOverridePreDefinedBones && g_bonetable[k].bPreDefined)
 			{
 				g_bonetable[k].flags			|= psource->boneflags[j];
 
-				ConcatTransforms( srcBoneToWorld[j], g_bonetable[k].srcRealign, g_bonetable[k].boneToPose ); 
+				ConcatTransforms( srcBoneToWorld[j], g_bonetable[k].srcRealign, g_bonetable[k].boneToPose );
 
 				if (g_bonetable[k].parent == -1)
 				{
@@ -4274,7 +4274,7 @@ int BuildGlobalBonetable( )
 				{
 					matrix3x4_t tmp;
 					MatrixInvert( g_bonetable[g_bonetable[k].parent].boneToPose, tmp );
-					ConcatTransforms( tmp, g_bonetable[k].boneToPose, g_bonetable[k].rawLocal ); 
+					ConcatTransforms( tmp, g_bonetable[k].boneToPose, g_bonetable[k].rawLocal );
 				}
 				continue;
 			}
@@ -4371,7 +4371,7 @@ void EnforceHierarchy( )
 		{
 			MdlError( "unknown bone: \"%s\" in forced hierarchy\n", g_forcedhierarchy[i].childname );
 		}
-		
+
 		/*
 		if (j > k)
 		{
@@ -4435,7 +4435,7 @@ void EnforceHierarchy( )
 	bool bSort = true;
 	int count = 0;
 
-	while (bSort) 
+	while (bSort)
 	{
 		count++;
 		bSort = false;
@@ -4456,7 +4456,7 @@ void EnforceHierarchy( )
 					if (g_bonetable[k].parent == i)
 					{
 						g_bonetable[k].parent = j;
-					} 
+					}
 					else if (g_bonetable[k].parent == j)
 					{
 						g_bonetable[k].parent = i;
@@ -4490,7 +4490,7 @@ void TagProceduralBones( )
 		g_axisinterpbones[j].bone = findGlobalBone( g_axisinterpbones[j].bonename );
 		g_axisinterpbones[j].control = findGlobalBone( g_axisinterpbones[j].controlname );
 
-		if (g_axisinterpbones[j].bone == -1) 
+		if (g_axisinterpbones[j].bone == -1)
 		{
 			if (!g_quiet)
 			{
@@ -4516,7 +4516,7 @@ void TagProceduralBones( )
 		g_quatinterpbones[j].bone = findGlobalBoneXSI( g_quatinterpbones[j].bonename );
 		g_quatinterpbones[j].control = findGlobalBoneXSI( g_quatinterpbones[j].controlname );
 
-		if (g_quatinterpbones[j].bone == -1) 
+		if (g_quatinterpbones[j].bone == -1)
 		{
 			if (!g_quiet && !g_bCreateMakefile )
 			{
@@ -4540,7 +4540,7 @@ void TagProceduralBones( )
 	{
 		g_aimatbones[j].bone =		findGlobalBoneXSI( g_aimatbones[j].bonename );
 
-		if (g_aimatbones[j].bone == -1) 
+		if (g_aimatbones[j].bone == -1)
 		{
 			if (!g_quiet && !g_bCreateMakefile )
 			{
@@ -4590,7 +4590,7 @@ void TagProceduralBones( )
 	{
 		g_jigglebones[j].bone = findGlobalBone( g_jigglebones[j].bonename );
 
-		if (g_jigglebones[j].bone == -1) 
+		if (g_jigglebones[j].bone == -1)
 		{
 			if (!g_quiet)
 			{
@@ -4640,7 +4640,7 @@ void RemapProceduralBones( )
 		if ( g_bonetable[pInterp->control].parent != origControlParent)
 		{
 			MdlError( "procedural bone \"%s\", parent remapping error, control parent was \"%s\", is now \"%s\"\n",
-				pInterp->bonename, 
+				pInterp->bonename,
 				pInterp->controlparentname,
 				g_bonetable[g_bonetable[pInterp->control].parent].name );
 		}
@@ -4776,7 +4776,7 @@ void MarkProceduralBoneChain()
 	for (j = 0; j < g_numquatinterpbones; j++)
 	{
 		s_quatinterpbone_t *pInterp = &g_quatinterpbones[g_quatinterpbonemap[j]];
-	
+
 		fBoneFlags = g_bonetable[pInterp->bone].flags & BONE_USED_MASK;
 
 		// propogate the procedural bone usage up its hierarchy
@@ -4869,7 +4869,7 @@ void RealignBones( )
 		}
 		else
 		{
-			MdlError("Trying to realign bone \"%s\" with two children \"%s\", \"%s\"\n", 
+			MdlError("Trying to realign bone \"%s\" with two children \"%s\", \"%s\"\n",
 				g_bonetable[k].name, g_bonetable[childbone[k]].name, g_bonetable[g_ikchain[i].link[1].bone].name );
 		}
 
@@ -4880,7 +4880,7 @@ void RealignBones( )
 		}
 		else
 		{
-			MdlError("Trying to realign bone \"%s\" with two children \"%s\", \"%s\"\n", 
+			MdlError("Trying to realign bone \"%s\" with two children \"%s\", \"%s\"\n",
 				g_bonetable[k].name, g_bonetable[childbone[k]].name, g_bonetable[g_ikchain[i].link[2].bone].name );
 		}
 	}
@@ -4942,7 +4942,7 @@ void RealignBones( )
 				forward = v2 - v3;
 				VectorNormalize( forward );
 
-				// try to align to existing bone/boundingbox by finding most perpendicular 
+				// try to align to existing bone/boundingbox by finding most perpendicular
 				// existing axis and aligning the new Z axis to it.
 				Vector forward2, left2, up2;
 				MatrixGetColumn( boneToPose[k], 0, forward2 );
@@ -4974,8 +4974,8 @@ void RealignBones( )
 				MatrixSetColumn( up, 2, boneToPose[k] );
 
 				// check orthonormality of matrix
-				d =   fabs( DotProduct( forward, left ) ) 
-					+ fabs( DotProduct( left, up ) ) 
+				d =   fabs( DotProduct( forward, left ) )
+					+ fabs( DotProduct( left, up ) )
 					+ fabs( DotProduct( up, forward ) )
 					+ fabs( DotProduct( boneToPose[k][0], boneToPose[k][1] ) )
 					+ fabs( DotProduct( boneToPose[k][1], boneToPose[k][2] ) )
@@ -5102,7 +5102,7 @@ void CenterBonesOnVerts( void )
 		{
 			pSourceAnim = &pSource->m_Animations[0];
 		}
-		
+
 		pSource->m_GlobalVertices.AddMultipleToTail( pSource->numvertices );
 
 		Vector	p;
@@ -5140,7 +5140,7 @@ void CenterBonesOnVerts( void )
 		if (bmin[k].x <= bmax[k].x)
 		{
 			Vector center = (bmin[k] + bmax[k]) * 0.5;
-	
+
 			// printf("%d %.1f %.1f %.1f\n", k, center.x, center.y, center.z );
 			matrix3x4_t updateCenter;
 			MatrixCopy( g_bonetable[k].boneToPose, updateCenter );
@@ -5153,7 +5153,7 @@ void CenterBonesOnVerts( void )
 			MatrixCopy( updateCenter, g_bonetable[k].boneToPose );
 		}
 	}
-	
+
 	// rebuild default angles, position, etc.
 	for (k = 0; k < g_numbones; k++)
 	{
@@ -5365,7 +5365,7 @@ void CalcBoneTransformsCycle( s_animation_t *panimation, s_animation_t *pbaseani
 
 			AngleMatrix( q3, p3, bonematrix );
 		}
-		/* 
+		/*
 		else
 		{
 			Vector p3;
@@ -5401,12 +5401,12 @@ void CalcBoneTransformsCycle( s_animation_t *panimation, s_animation_t *pbaseani
 //-----------------------------------------------------------------------------
 
 
-void SlerpBones( 
-	Quaternion q1[MAXSTUDIOBONES], 
-	Vector pos1[MAXSTUDIOBONES], 
-	int sequence, 
-	const Quaternion q2[MAXSTUDIOBONES], 
-	const Vector pos2[MAXSTUDIOBONES], 
+void SlerpBones(
+	Quaternion q1[MAXSTUDIOBONES],
+	Vector pos1[MAXSTUDIOBONES],
+	int sequence,
+	const Quaternion q2[MAXSTUDIOBONES],
+	const Vector pos2[MAXSTUDIOBONES],
 	float s )
 {
 	int			i;
@@ -5415,13 +5415,13 @@ void SlerpBones(
 
 	s_sequence_t *pseqdesc = &g_sequence[sequence];
 
-	if (s <= 0.0f) 
+	if (s <= 0.0f)
 	{
 		return;
 	}
 	else if (s > 1.0f)
 	{
-		s = 1.0f;		
+		s = 1.0f;
 	}
 
 	if (pseqdesc->flags & STUDIO_DELTA)
@@ -5643,7 +5643,7 @@ void CalcSeqTransforms( int sequence, int frame, matrix3x4_t* pBoneToWorld )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 void CalcBonePos( s_animation_t *panimation, int frame, int bone, Vector &pos )
@@ -5664,7 +5664,7 @@ void CalcBonePos( s_animation_t *panimation, int frame, int bone, Vector &pos )
 // Creates basis vectors, based on a vertex and index list.
 // See the NVidia white paper 'GDC2K PerPixel Lighting' for a description
 // of how this computation works
-static void CalcTriangleTangentSpace( s_source_t *pSrc, int v1, int v2, int v3, 
+static void CalcTriangleTangentSpace( s_source_t *pSrc, int v1, int v2, int v3,
 									  Vector &sVect, Vector &tVect )
 {
 /*
@@ -5676,7 +5676,7 @@ static void CalcTriangleTangentSpace( s_source_t *pSrc, int v1, int v2, int v3,
 		fp = fopen( "crap.out", "w" );
 	}
 */
-    
+
 	Vector2D t0( pSrc->vertex[v1].texcoord[0], pSrc->vertex[v1].texcoord[1] );
 	Vector2D t1( pSrc->vertex[v2].texcoord[0], pSrc->vertex[v2].texcoord[1] );
 	Vector2D t2( pSrc->vertex[v3].texcoord[0], pSrc->vertex[v3].texcoord[1] );
@@ -5692,7 +5692,7 @@ static void CalcTriangleTangentSpace( s_source_t *pSrc, int v1, int v2, int v3,
 	edge02 = p2 - p0;
 	CrossProduct( edge02, edge01, flatNormal );
 	VectorNormalize( flatNormal );
-	
+
 	// Get the average position
 	Vector avgPos = ( p0 + p1 + p2 ) / 3.0f;
 
@@ -5701,19 +5701,19 @@ static void CalcTriangleTangentSpace( s_source_t *pSrc, int v1, int v2, int v3,
 	fprintf( fp, "2\n" );
 	fprintf( fp, "%f %f %f 1.0 0.0 0.0\n", endS[0], endS[1], endS[2] );
 	fprintf( fp, "%f %f %f 1.0 0.0 0.0\n", avgPos[0], avgPos[1], avgPos[2] );
-	
+
 	// Draw the tvect
 	Vector endT = avgPos + tVect * .2f;
 	fprintf( fp, "2\n" );
 	fprintf( fp, "%f %f %f 0.0 1.0 0.0\n", endT[0], endT[1], endT[2] );
 	fprintf( fp, "%f %f %f 0.0 1.0 0.0\n", avgPos[0], avgPos[1], avgPos[2] );
-	
+
 	// Draw the normal
 	Vector endN = avgPos + flatNormal * .2f;
 	fprintf( fp, "2\n" );
 	fprintf( fp, "%f %f %f 0.0 0.0 1.0\n", endN[0], endN[1], endN[2] );
 	fprintf( fp, "%f %f %f 0.0 0.0 1.0\n", avgPos[0], avgPos[1], avgPos[2] );
-	
+
 	// Draw the wireframe of the triangle in white.
 	fprintf( fp, "2\n" );
 	fprintf( fp, "%f %f %f 1.0 1.0 1.0\n", p0[0], p0[1], p0[2] );
@@ -5733,7 +5733,7 @@ static void CalcTriangleTangentSpace( s_source_t *pSrc, int v1, int v2, int v3,
 	fprintf( fp, "%f %f %f 0.1 0.1 0.1\n", tmp0[0], tmp0[1], tmp0[2] );
 	fprintf( fp, "%f %f %f 0.1 0.1 0.1\n", tmp1[0], tmp1[1], tmp1[2] );
 	fprintf( fp, "%f %f %f 0.1 0.1 0.1\n", tmp2[0], tmp2[1], tmp2[2] );
-		
+
 	fflush( fp );
 */
 }
@@ -5766,12 +5766,12 @@ void CalcModelTangentSpaces( s_source_t *pSrc )
 		for( triID = 0; triID < pMesh->numfaces; triID++ )
 		{
 			s_face_t *pFace = &pSrc->face[triID + pMesh->faceoffset];
-			CalcTriangleTangentSpace( pSrc, 
-				pMesh->vertexoffset + pFace->a, 
-				pMesh->vertexoffset + pFace->b, 
-				pMesh->vertexoffset + pFace->c, 
+			CalcTriangleTangentSpace( pSrc,
+				pMesh->vertexoffset + pFace->a,
+				pMesh->vertexoffset + pFace->b,
+				pMesh->vertexoffset + pFace->c,
 				triSVect[triID], triTVect[triID] );
-		}	
+		}
 
 		// calculate an average tangent space for each vertex.
 		int vertID;
@@ -5874,7 +5874,7 @@ static void InitRemappedVertex( s_source_t *pSource, matrix3x4_t *pDestBoneToWor
 		}
 
 		// If the global bone is already in the list, then this vertex
-		// contains influences from multiple local bones which have been collapsed 
+		// contains influences from multiple local bones which have been collapsed
 		// into a single global bone
 		int m;
 		for ( m = 0; m < dstVertex.boneweight.numbones; m++ )
@@ -5942,7 +5942,7 @@ void RemapVerticesToGlobalBones( )
 		}
 		BuildRawTransforms( pSource, pSourceAnim->animationname, 0, srcBoneToWorld );
 		TranslateAnimations( pSource, srcBoneToWorld, destBoneToWorld );
-		
+
 		pSource->m_GlobalVertices.AddMultipleToTail( pSource->numvertices );
 
 		for ( int j = 0; j < pSource->numvertices; j++ )
@@ -6069,7 +6069,7 @@ static void LinkAttachments()
 						}
 						if (k == -1)
 						{
-							MdlError( "unable to find valid bone for attachment %s:%s\n", 
+							MdlError( "unable to find valid bone for attachment %s:%s\n",
 								g_attachment[i].name,
 								g_attachment[i].bonename );
 						}
@@ -6507,8 +6507,8 @@ static void LockBoneLengths()
 						worldPos,
 						boneToWorld );
 
-					solveBone( panim, j, g_ikchain[n].link[0].bone, boneToWorld );  
-					solveBone( panim, j, g_ikchain[n].link[1].bone, boneToWorld );  
+					solveBone( panim, j, g_ikchain[n].link[0].bone, boneToWorld );
+					solveBone( panim, j, g_ikchain[n].link[1].bone, boneToWorld );
 					solveBone( panim, j, g_ikchain[n].link[2].bone, boneToWorld );
 				}
 			}
@@ -6518,7 +6518,7 @@ static void LockBoneLengths()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: go through all the IK rules and calculate the animated path the IK'd 
+// Purpose: go through all the IK rules and calculate the animated path the IK'd
 //			end point moves relative to its IK target.
 //-----------------------------------------------------------------------------
 static void ProcessIKRules( )
@@ -6722,7 +6722,7 @@ static void ProcessIKRules( )
 							BuildRawTransforms( panim->source, pAnimationName, k + pRule->start + panim->startframe - pSourceAnim->startframe, panim->scale, panim->adjust, panim->rotation, panim->flags, srcBoneToWorld );
 							TranslateAnimations( panim->source, srcBoneToWorld, boneToWorld );
 						}
-						else 
+						else
 						{
 							CalcBoneTransforms( panim, k + pRule->start, boneToWorld );
 						}
@@ -6743,9 +6743,9 @@ static void ProcessIKRules( )
 						/*
 						QAngle ang;
 						QuaternionAngles( pRule->errorData.pError[k].q, ang );
-						printf("%d  %.1f %.1f %.1f : %.1f %.1f %.1f\n", 
+						printf("%d  %.1f %.1f %.1f : %.1f %.1f %.1f\n",
 							k,
-							pRule->errorData.pError[k].pos.x, pRule->errorData.pError[k].pos.y, pRule->errorData.pError[k].pos.z, 
+							pRule->errorData.pError[k].pos.x, pRule->errorData.pError[k].pos.y, pRule->errorData.pError[k].pos.z,
 							ang.x, ang.y, ang.z );
 						*/
 					}
@@ -6790,7 +6790,7 @@ static void ProcessIKRules( )
 					}
 
 #if 0
-					printf("%d  %.1f %.1f %.1f\n", 
+					printf("%d  %.1f %.1f %.1f\n",
 						pRule->peak,
 						pRule->pos.x, pRule->pos.y, pRule->pos.z );
 #endif
@@ -6809,7 +6809,7 @@ static void ProcessIKRules( )
 							BuildRawTransforms( panim->source, pAnimationName, t + panim->startframe - pSourceAnim->startframe, srcBoneToWorld );
 							TranslateAnimations( panim->source, srcBoneToWorld, boneToWorld );
 						}
-						else 
+						else
 						{
 							CalcBoneTransforms( panim, t, boneToWorld );
 						}
@@ -6829,9 +6829,9 @@ static void ProcessIKRules( )
 #if 0
 						QAngle ang;
 						QuaternionAngles( pRule->errorData.pError[k].q, ang );
-						printf("%d  %.1f %.1f %.1f : %.1f %.1f %.1f\n", 
+						printf("%d  %.1f %.1f %.1f : %.1f %.1f %.1f\n",
 							k + pRule->start,
-							pRule->errorData.pError[k].pos.x, pRule->errorData.pError[k].pos.y, pRule->errorData.pError[k].pos.z, 
+							pRule->errorData.pError[k].pos.x, pRule->errorData.pError[k].pos.y, pRule->errorData.pError[k].pos.z,
 							ang.x, ang.y, ang.z );
 #endif
 					}
@@ -6855,7 +6855,7 @@ static void ProcessIKRules( )
 						BuildRawTransforms( panim->source, pAnimationName, pRule->contact + panim->startframe - pSourceAnim->startframe, panim->scale, panim->adjust, panim->rotation, panim->flags, srcBoneToWorld );
 						TranslateAnimations( panim->source, srcBoneToWorld, boneToWorld );
 					}
-					else 
+					else
 					{
 						CalcBoneTransforms( panim, pRule->contact, boneToWorld );
 					}
@@ -6871,9 +6871,9 @@ static void ProcessIKRules( )
 
 					pRule->pos = footfall;
 					pRule->q = RadianEuler( 0, 0, 0 );
-					
+
 #if 0
-					printf("%d  %.1f %.1f %.1f\n", 
+					printf("%d  %.1f %.1f %.1f\n",
 						pRule->peak,
 						pRule->pos.x, pRule->pos.y, pRule->pos.z );
 #endif
@@ -6899,7 +6899,7 @@ static void ProcessIKRules( )
 							BuildRawTransforms( panim->source, pAnimationName, pRule->contact + panim->startframe - pSourceAnim->startframe, panim->scale, panim->adjust, panim->rotation, panim->flags, srcBoneToWorld );
 							TranslateAnimations( panim->source, srcBoneToWorld, boneToWorld );
 						}
-						else 
+						else
 						{
 							CalcBoneTransforms( panim, t, boneToWorld );
 						}
@@ -6946,9 +6946,9 @@ static void ProcessIKRules( )
 #if 0
 						QAngle ang;
 						QuaternionAngles( pRule->errorData.pError[k].q, ang );
-						printf("%d  %.1f %.1f %.1f : %.1f %.1f %.1f\n", 
+						printf("%d  %.1f %.1f %.1f : %.1f %.1f %.1f\n",
 							k + pRule->start,
-							pRule->errorData.pError[k].pos.x, pRule->errorData.pError[k].pos.y, pRule->errorData.pError[k].pos.z, 
+							pRule->errorData.pError[k].pos.x, pRule->errorData.pError[k].pos.y, pRule->errorData.pError[k].pos.z,
 							ang.x, ang.y, ang.z );
 #endif
 					}
@@ -7015,7 +7015,7 @@ static void ProcessIKRules( )
 				s_animation_t *panim2 = g_sequence[i].panim[j][k];
 				if (panim1->numikrules != panim2->numikrules)
 				{
-					MdlError( "%s - mismatched number of IK rules: \"%s\" \"%s\"\n", 
+					MdlError( "%s - mismatched number of IK rules: \"%s\" \"%s\"\n",
 						g_sequence[i].name, panim1->name, panim2->name );
 				}
 				for (int n = 0; n < panim1->numikrules; n++)
@@ -7024,8 +7024,8 @@ static void ProcessIKRules( )
 						(panim1->ikrule[n].chain != panim2->ikrule[n].chain) ||
 						(panim1->ikrule[n].slot != panim2->ikrule[n].slot))
 					{
-						MdlError( "%s - mismatched IK rule %d: \n\"%s\" : %d %d %d\n\"%s\" : %d %d %d\n", 
-							g_sequence[i].name, n, 
+						MdlError( "%s - mismatched IK rule %d: \n\"%s\" : %d %d %d\n\"%s\" : %d %d %d\n",
+							g_sequence[i].name, n,
 							panim1->name, panim1->ikrule[n].type, panim1->ikrule[n].chain, panim1->ikrule[n].slot,
 							panim2->name, panim2->ikrule[n].type, panim2->ikrule[n].chain, panim2->ikrule[n].slot );
 					}
@@ -7065,7 +7065,7 @@ static void CompressAnimations( )
 			float minv, maxv, scale;
 			float total_minv, total_maxv;
 
-			if (k < 3) 
+			if (k < 3)
 			{
 				minv = -128.0;
 				maxv = 128.0;
@@ -7085,16 +7085,16 @@ static void CompressAnimations( )
 					float v = 0.0f;
 					switch(k)
 					{
-					case 0: 
-					case 1: 
-					case 2: 
+					case 0:
+					case 1:
+					case 2:
 						if (g_panimation[i]->flags & STUDIO_DELTA)
 						{
-							v = g_panimation[i]->sanim[n][j].pos[k]; 
+							v = g_panimation[i]->sanim[n][j].pos[k];
 						}
 						else
 						{
-							v = ( g_panimation[i]->sanim[n][j].pos[k] - g_bonetable[j].pos[k] ); 
+							v = ( g_panimation[i]->sanim[n][j].pos[k] - g_bonetable[j].pos[k] );
 
 							if (g_panimation[i]->sanim[n][j].pos[k] < total_minv)
 								total_minv = g_panimation[i]->sanim[n][j].pos[k];
@@ -7107,11 +7107,11 @@ static void CompressAnimations( )
 					case 5:
 						if (g_panimation[i]->flags & STUDIO_DELTA)
 						{
-							v = g_panimation[i]->sanim[n][j].rot[k-3]; 
+							v = g_panimation[i]->sanim[n][j].rot[k-3];
 						}
 						else
 						{
-							v = ( g_panimation[i]->sanim[n][j].rot[k-3] - g_bonetable[j].rot[k-3] ); 
+							v = ( g_panimation[i]->sanim[n][j].rot[k-3] - g_bonetable[j].rot[k-3] );
 						}
 						while (v >= M_PI)
 							v -= M_PI * 2;
@@ -7142,9 +7142,9 @@ static void CompressAnimations( )
 			}
 			switch(k)
 			{
-			case 0: 
-			case 1: 
-			case 2: 
+			case 0:
+			case 1:
+			case 2:
 				g_bonetable[j].posscale[k] = scale;
 				g_bonetable[j].posrange[k] = total_maxv - total_minv;
 				break;
@@ -7170,7 +7170,7 @@ static void CompressAnimations( )
 
 		if (g_bCheckLengths)
 		{
-			printf("%s\n", panim->name ); 
+			printf("%s\n", panim->name );
 		}
 
 		// setup animation interior sections
@@ -7241,14 +7241,14 @@ static void CompressAnimations( )
 						case 2: /* Z Position */
 							if (panim->flags & STUDIO_DELTA)
 							{
-								value[n] = psrcdata->pos[k] / g_bonetable[j].posscale[k]; 
+								value[n] = psrcdata->pos[k] / g_bonetable[j].posscale[k];
 								// pre-scale pos delta since format only has room for "overall" weight
 								float r = panim->posweight[j] / panim->weight[j];
 								value[n] *= r;
 							}
 							else
 							{
-								value[n] = ( psrcdata->pos[k] - g_bonetable[j].pos[k] ) / g_bonetable[j].posscale[k]; 
+								value[n] = ( psrcdata->pos[k] - g_bonetable[j].pos[k] ) / g_bonetable[j].posscale[k];
 							}
 
 							checkmin[k] = min( value[n] * g_bonetable[j].posscale[k], checkmin[k] );
@@ -7259,11 +7259,11 @@ static void CompressAnimations( )
 						case 5: /* Z Rotation */
 							if (panim->flags & STUDIO_DELTA)
 							{
-								v = psrcdata->rot[k-3]; 
+								v = psrcdata->rot[k-3];
 							}
 							else
 							{
-								v = ( psrcdata->rot[k-3] - g_bonetable[j].rot[k-3] ); 
+								v = ( psrcdata->rot[k-3] - g_bonetable[j].rot[k-3] );
 							}
 
 							while (v >= M_PI)
@@ -7273,7 +7273,7 @@ static void CompressAnimations( )
 
 							checkmin[k] = min( v, checkmin[k] );
 							checkmax[k] = max( v, checkmax[k] );
-							value[n] = v / g_bonetable[j].rotscale[k-3]; 
+							value[n] = v / g_bonetable[j].rotscale[k-3];
 							break;
 						}
 					}
@@ -7283,8 +7283,8 @@ static void CompressAnimations( )
 					// FIXME: this compression algorithm needs work
 
 					// initialize animation RLE block
-					memset( data, 0, sizeof( data ) ); 
-					pcount = data; 
+					memset( data, 0, sizeof( data ) );
+					pcount = data;
 					pvalue = pcount + 1;
 
 					pcount->num.valid = 1;
@@ -7303,15 +7303,15 @@ static void CompressAnimations( )
 							pcount->num.valid++;
 							pvalue->value = value[m];
 							pvalue++;
-						} 
-						// insert value if they're not equal, 
+						}
+						// insert value if they're not equal,
 						// or if we're not on a run and the run is less than 3 units
-						else if ((value[m] != value[m-1]) 
+						else if ((value[m] != value[m-1])
 							|| ((pcount->num.total == pcount->num.valid) && ((m < n - 1) && value[m] != value[m+1])))
 						{
 							if (pcount->num.total != pcount->num.valid)
 							{
-								//if (j == 0) printf("%d:%d   ", pcount->num.valid, pcount->num.total ); 
+								//if (j == 0) printf("%d:%d   ", pcount->num.valid, pcount->num.total );
 								pcount = pvalue;
 								pvalue = pcount + 1;
 							}
@@ -7321,7 +7321,7 @@ static void CompressAnimations( )
 						}
 						pcount->num.total++;
 					}
-					//if (j == 0) printf("%d:%d\n", pcount->num.valid, pcount->num.total ); 
+					//if (j == 0) printf("%d:%d\n", pcount->num.valid, pcount->num.total );
 
 					panim->anim[w][j].num[k] = pvalue - data;
 					if (panim->anim[w][j].num[k] == 2 && value[0] == 0)
@@ -7346,7 +7346,7 @@ static void CompressAnimations( )
 						{
 							if (n == 0)
 								printf("%s :", g_bonetable[j].name );
-						
+
 							printf("%s(%.1f: %.1f %.1f) ", tmp[k], g_bonetable[j].pos[k], checkmin[k], checkmax[k] );
 							n = 1;
 						}
@@ -7381,7 +7381,7 @@ static void CompressSingle( s_animationstream_t *pStream )
 		float minv, maxv, scale;
 		RadianEuler ang;
 
-		if (k < 3) 
+		if (k < 3)
 		{
 			minv = -128.0;
 			maxv = 128.0;
@@ -7397,9 +7397,9 @@ static void CompressSingle( s_animationstream_t *pStream )
 			float v = 0.0f;
 			switch(k)
 			{
-			case 0: 
-			case 1: 
-			case 2: 
+			case 0:
+			case 1:
+			case 2:
 				v = pStream->pError[n].pos[k];
 				break;
 			case 3:
@@ -7436,7 +7436,7 @@ static void CompressSingle( s_animationstream_t *pStream )
 		}
 
 		pStream->scale[k] = scale;
-		
+
 		mstudioanimvalue_t	*pcount, *pvalue;
 		float v;
 		short value[MAXSTUDIOANIMFRAMES];
@@ -7450,7 +7450,7 @@ static void CompressSingle( s_animationstream_t *pStream )
 			case 0: /* X Position */
 			case 1: /* Y Position */
 			case 2: /* Z Position */
-				value[n] = pStream->pError[n].pos[k] / pStream->scale[k]; 
+				value[n] = pStream->pError[n].pos[k] / pStream->scale[k];
 				break;
 			case 3: /* X Rotation */
 			case 4: /* Y Rotation */
@@ -7469,8 +7469,8 @@ static void CompressSingle( s_animationstream_t *pStream )
 		// initialize animation RLE block
 		pStream->numanim[k] = 0;
 
-		memset( data, 0, sizeof( data ) ); 
-		pcount = data; 
+		memset( data, 0, sizeof( data ) );
+		pcount = data;
 		pvalue = pcount + 1;
 
 		pcount->num.valid = 1;
@@ -7489,15 +7489,15 @@ static void CompressSingle( s_animationstream_t *pStream )
 				pcount->num.valid++;
 				pvalue->value = value[m];
 				pvalue++;
-			} 
-			// insert value if they're not equal, 
+			}
+			// insert value if they're not equal,
 			// or if we're not on a run and the run is less than 3 units
-			else if ((value[m] != value[m-1]) 
+			else if ((value[m] != value[m-1])
 				|| ((pcount->num.total == pcount->num.valid) && ((m < n - 1) && value[m] != value[m+1])))
 			{
 				if (pcount->num.total != pcount->num.valid)
 				{
-					//if (j == 0) printf("%d:%d   ", pcount->num.valid, pcount->num.total ); 
+					//if (j == 0) printf("%d:%d   ", pcount->num.valid, pcount->num.total );
 					pcount = pvalue;
 					pvalue = pcount + 1;
 				}
@@ -7507,7 +7507,7 @@ static void CompressSingle( s_animationstream_t *pStream )
 			}
 			pcount->num.total++;
 		}
-		//if (j == 0) printf("%d:%d\n", pcount->num.valid, pcount->num.total ); 
+		//if (j == 0) printf("%d:%d\n", pcount->num.valid, pcount->num.total );
 
 		pStream->numanim[k] = pvalue - data;
 		pStream->anim[k] = (mstudioanimvalue_t *)kalloc( pvalue - data, sizeof( mstudioanimvalue_t ) );
@@ -7566,7 +7566,7 @@ static void CompressLocalHierarchy( )
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 struct BonePriority_s
 {
@@ -7581,7 +7581,7 @@ struct BonePriority_s
 int compareBonePriority( const void *a, const void *b )
 {
 	return
-		reinterpret_cast< const BonePriority_s * >( a )->m_nGlobalBoneWeight < reinterpret_cast< const BonePriority_s * >( b )->m_nGlobalBoneWeight ? -1 : 
+		reinterpret_cast< const BonePriority_s * >( a )->m_nGlobalBoneWeight < reinterpret_cast< const BonePriority_s * >( b )->m_nGlobalBoneWeight ? -1 :
 		reinterpret_cast< const BonePriority_s * >( a )->m_nGlobalBoneWeight > reinterpret_cast< const BonePriority_s * >( b )->m_nGlobalBoneWeight ?  1 : 0;
 };
 
@@ -7885,7 +7885,7 @@ void SetupHitBoxes()
 				{
 					printf("$hbox %d \"%s\" %.2f %.2f %.2f  %.2f %.2f %.2f\n",
 						set->hitbox[set->numhitboxes].group,
-						g_bonetable[set->hitbox[set->numhitboxes].bone].name, 
+						g_bonetable[set->hitbox[set->numhitboxes].bone].name,
 						set->hitbox[set->numhitboxes].bmin[0], set->hitbox[set->numhitboxes].bmin[1], set->hitbox[set->numhitboxes].bmin[2],
 						set->hitbox[set->numhitboxes].bmax[0], set->hitbox[set->numhitboxes].bmax[1], set->hitbox[set->numhitboxes].bmax[2] );
 
@@ -7953,7 +7953,7 @@ void SetupFullBoneRenderBounds( CUtlVector<CBoneRenderBounds> &boneRenderBounds 
 	for ( int i=0; i < g_hitboxsets.Count(); i++ )
 	{
 		const s_hitboxset *pSet = &g_hitboxsets[i];
-		
+
 		for ( int k=0; k < pSet->numhitboxes; k++ )
 		{
 			const s_bbox_t *pIn = &pSet->hitbox[k];
@@ -7984,7 +7984,7 @@ void CalcSequenceBoundingBoxes()
 	for (i = 0; i < g_numani; i++)
 	{
 		Vector bmin, bmax;
-		
+
 		// find intersection box volume for each bone
 		for (j = 0; j < 3; j++)
 		{
@@ -8043,8 +8043,8 @@ void CalcSequenceBoundingBoxes()
 
 		if (bmin.x < g_vecMinWorldspace.x || bmin.y < g_vecMinWorldspace.y || bmin.z < g_vecMinWorldspace.z || bmax.x > g_vecMaxWorldspace.x || bmax.y > g_vecMaxWorldspace.y || bmax.z > g_vecMaxWorldspace.z)
 		{
-			MdlWarning("%s : bounding box out of range : %.0f %.0f %.0f : %.0f %.0f %.0f\n", 
-				g_panimation[i]->name, 
+			MdlWarning("%s : bounding box out of range : %.0f %.0f %.0f : %.0f %.0f %.0f\n",
+				g_panimation[i]->name,
 				bmin.x, bmin.y, bmin.z, bmax.z, bmax.y, bmax.z );
 
 			VectorMax( bmin, g_vecMinWorldspace, bmin );
@@ -8055,7 +8055,7 @@ void CalcSequenceBoundingBoxes()
 		VectorCopy( bmax, g_panimation[i]->bmax );
 
 		/*
-		printf("%s : %.0f %.0f %.0f %.0f %.0f %.0f\n", 
+		printf("%s : %.0f %.0f %.0f %.0f %.0f %.0f\n",
 			g_panimation[i]->name, bmin[0], bmax[0], bmin[1], bmax[1], bmin[2], bmax[2] );
 		*/
 
@@ -8065,7 +8065,7 @@ void CalcSequenceBoundingBoxes()
 	for (i = 0; i < g_sequence.Count(); i++)
 	{
 		Vector bmin, bmax;
-		
+
 		// find intersection box volume for each bone
 		for (j = 0; j < 3; j++)
 		{
@@ -8145,7 +8145,7 @@ void SimplifyModel()
 	// replacebone "bone0" "bone3"
 	// replacebone "bone1" "bone3"
 	// replacebone "bone2" "bone3"
-	FixupReplacedBones();  
+	FixupReplacedBones();
 
 	RemapVerticesToGlobalBones();
 
@@ -8153,11 +8153,11 @@ void SimplifyModel()
 	{
 		CenterBonesOnVerts();
 	}
-	
+
 	// remap lods to root, building aggregate final pools
 	// mark bones used by an lod
 	UnifyLODs();
-	
+
 	if ( g_bPrintBones )
 	{
 		printf( "Hardware bone usage:\n" );
@@ -8231,8 +8231,3 @@ void SimplifyModel()
 		gflags |= STUDIOHDR_FLAGS_BUILT_IN_PREVIEW_MODE;
 	}
 }
-
-
-
-
-

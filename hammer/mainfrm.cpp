@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -80,7 +80,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_UPDATE_COMMAND_UI(ID_MAP_UNITS_FEET_INCHES, OnUpdateUnits)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_OPAQUE_MATERIALS, OnUpdateOpaqueMaterials)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_2DXZ, OnUpdateView2d)
-	ON_UPDATE_COMMAND_UI(ID_VIEW_2DYZ, OnUpdateView2d) 
+	ON_UPDATE_COMMAND_UI(ID_VIEW_2DYZ, OnUpdateView2d)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_2DXY, OnUpdateView2d)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_3DWIREFRAME, OnUpdateView3d)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_3DPOLYGON, OnUpdateView3d)
@@ -132,7 +132,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_COMMAND_EX(ID_MODE_APPLICATOR, OnApplicator)
 	ON_COMMAND_EX(ID_TOOLS_SOUND_BROWSER, OnSoundBrowser)
 	ON_COMMAND_EX(ID_FILE_RELOAD_SOUNDS, OnReloadSounds)
-    ON_UPDATE_COMMAND_UI(ID_MODE_APPLICATOR, OnUpdateApplicatorUI)
+	ON_UPDATE_COMMAND_UI(ID_MODE_APPLICATOR, OnUpdateApplicatorUI)
 	ON_COMMAND(ID_HELP_FINDER, CMDIFrameWnd::OnHelpFinder)
 	ON_COMMAND(ID_HELP, CMDIFrameWnd::OnHelp)
 	ON_COMMAND(ID_CONTEXT_HELP, CMDIFrameWnd::OnContextHelp)
@@ -173,7 +173,7 @@ struct
 	UINT nID;
 	UINT nStyle;
 	int cxWidth;
-} paneinfo[NUMSTATUSPANES] = 
+} paneinfo[NUMSTATUSPANES] =
 {
 	{ SBI_PROMPT,		ID_SEPARATOR,				SBPS_STRETCH | SBPS_NOBORDERS, 0 },
 	{ SBI_SELECTION,	ID_INDICATOR_SELECTION,		SBPS_NORMAL, 300 },
@@ -292,9 +292,9 @@ void CMainFrame::OnEnterMenuLoop( BOOL bIsTrackPopupMenu )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : lpCreateStruct - 
-// Output : 
+// Purpose:
+// Input  : lpCreateStruct -
+// Output :
 //-----------------------------------------------------------------------------
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
@@ -304,11 +304,11 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CMDIFrameWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-    if(!wndMDIClient.SubclassWindow(m_hWndMDIClient)) 
-	{ 
+	if(!wndMDIClient.SubclassWindow(m_hWndMDIClient))
+	{
 		TRACE ("Failed to subclass MDI client window\n");
-		return (-1);                                        
-    }                                                       
+		return (-1);
+	}
 
 	//
 	// Map view toolbar.
@@ -318,7 +318,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("Failed to create toolbar\n");
 		return -1;      // fail to create
 	}
-	m_wndMapToolBar.ModifyStyle(0, TBSTYLE_FLAT); 
+	m_wndMapToolBar.ModifyStyle(0, TBSTYLE_FLAT);
 
 	//
 	// Undo redo toolbar.
@@ -328,16 +328,16 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("Failed to create toolbar\n");
 		return -1;      // fail to create
 	}
-	m_wndUndoRedoToolBar.ModifyStyle(0, TBSTYLE_FLAT); 
+	m_wndUndoRedoToolBar.ModifyStyle(0, TBSTYLE_FLAT);
 
 	//
 	// Map editing toolbar.
 	//
 	m_wndMapEditToolBar.Create(this, dwDefStyles, IDCB_MAPTOOLSBAR);
-	m_wndMapEditToolBar.ModifyStyle(0, TBSTYLE_FLAT); 
+	m_wndMapEditToolBar.ModifyStyle(0, TBSTYLE_FLAT);
 	m_wndMapEditToolBar.LoadToolBar(IDR_MAPEDITTOOLS_VALVE);
-    m_bmMapEditTools256.LoadBitmap(IDB_MAPEDITTOOLS_256);
-    m_wndMapEditToolBar.SetBitmap((HBITMAP)m_bmMapEditTools256);
+	m_bmMapEditTools256.LoadBitmap(IDB_MAPEDITTOOLS_256);
+	m_wndMapEditToolBar.SetBitmap((HBITMAP)m_bmMapEditTools256);
 
 	//
 	// Map operations toolbar.
@@ -347,7 +347,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("Failed to create toolbar\n");
 		return -1;      // fail to create
 	}
-	m_wndMapOps.ModifyStyle(0, TBSTYLE_FLAT); 
+	m_wndMapOps.ModifyStyle(0, TBSTYLE_FLAT);
 
 	//
 	// Status bar.
@@ -387,30 +387,30 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// rightside control bars
 	m_ObjectBar.Create(this);
-	m_ObjectBar.SetBarStyle(m_ObjectBar.GetBarStyle() | 
+	m_ObjectBar.SetBarStyle(m_ObjectBar.GetBarStyle() |
 		CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_FIXED);
 	m_ObjectBar.EnableDocking(CBRS_ALIGN_LEFT | CBRS_ALIGN_RIGHT);
 	DockControlBar(&m_ObjectBar, AFX_IDW_DOCKBAR_RIGHT);
 
 	m_FilterControl.Create(this);
-	m_FilterControl.SetBarStyle(m_FilterControl.GetBarStyle() | 
+	m_FilterControl.SetBarStyle(m_FilterControl.GetBarStyle() |
 		CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_FIXED);
 	m_FilterControl.EnableDocking(CBRS_ALIGN_LEFT | CBRS_ALIGN_RIGHT);
 	DockControlBarLeftOf(&m_FilterControl, &m_ObjectBar);
 
 	m_TextureBar.Create(this);
-	m_TextureBar.SetBarStyle(m_TextureBar.GetBarStyle() | 
+	m_TextureBar.SetBarStyle(m_TextureBar.GetBarStyle() |
 		CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_FIXED);
 	m_TextureBar.EnableDocking(CBRS_ALIGN_LEFT | CBRS_ALIGN_RIGHT);
 	DockControlBarLeftOf(&m_TextureBar, &m_FilterControl);
 
 	m_ManifestFilterControl.Create(this);
-	m_ManifestFilterControl.SetBarStyle(m_ManifestFilterControl.GetBarStyle() | 
+	m_ManifestFilterControl.SetBarStyle(m_ManifestFilterControl.GetBarStyle() |
 		CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_FIXED);
 	m_ManifestFilterControl.EnableDocking(CBRS_ALIGN_LEFT | CBRS_ALIGN_RIGHT);
 	DockControlBar(&m_ManifestFilterControl, AFX_IDW_DOCKBAR_RIGHT);
-	
-	
+
+
 
 
 	m_pFaceEditSheet = new CFaceEditSheet( "Face Edit Sheet", this );
@@ -436,7 +436,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_SelectModeDlg.SetBarStyle(m_TextureBar.GetBarStyle() | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_FIXED);
 	m_SelectModeDlg.EnableDocking(CBRS_ALIGN_LEFT | CBRS_ALIGN_RIGHT);
 	DockControlBarLeftOf(&m_SelectModeDlg, &m_TextureBar);
-	
+
 	//
 	// Create object properties sheet - not visible yet.
 	//
@@ -461,7 +461,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CPrefabLibrary::LoadAllLibraries();
 
 	ToolManager()->SetTool(TOOL_POINTER);
-	
+
 	pTextureBrowser = new CTextureBrowser(this);
 
 	// HACK: Spackle up the maximized window position to (0, 0) to fix an intermittent bug. =(
@@ -593,9 +593,9 @@ void CMainFrame::OnUpdateToolUI(CCmdUI *pUI)
 		bool	bIsEditable = ( pDoc ? pDoc->IsSelectionEditable() : false );
 
 		if ( pUI->m_nID == ID_TOOLS_APPLYDECALS ||
-			 pUI->m_nID == ID_TOOLS_OVERLAY ||
-			 pUI->m_nID == ID_TOOLS_CLIPPER ||
-			 pUI->m_nID == ID_TOOLS_MORPH )
+			pUI->m_nID == ID_TOOLS_OVERLAY ||
+			pUI->m_nID == ID_TOOLS_CLIPPER ||
+			pUI->m_nID == ID_TOOLS_MORPH )
 		{
 
 		}
@@ -623,7 +623,7 @@ void CMainFrame::OnUpdateToolUI(CCmdUI *pUI)
 #endif
 		{
 			pUI->Enable( bIsEditable );
-		}		
+		}
 
 		ToolID_t eToolID = _ToolMsgToEnum(pUI->m_nID);
 		pUI->Enable( bIsEditable );
@@ -660,7 +660,7 @@ BOOL CMainFrame::OnChangeTool(UINT nMessageID)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Brings up the 
+// Purpose: Brings up the
 //-----------------------------------------------------------------------------
 void CMainFrame::OnViewMessages(void)
 {
@@ -671,7 +671,7 @@ void CMainFrame::OnViewMessages(void)
 //-----------------------------------------------------------------------------
 // Purpose: Manages the state of the view messages menu item.
 //-----------------------------------------------------------------------------
-void CMainFrame::OnUpdateViewMessages(CCmdUI *pCmdUI) 
+void CMainFrame::OnUpdateViewMessages(CCmdUI *pCmdUI)
 {
 	pCmdUI->SetCheck( g_pwndMessage->IsVisible() );
 }
@@ -738,9 +738,9 @@ void CMainFrame::OnActivateApp(BOOL bActive, DWORD hTask)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nID - 
-//			lParam - 
+// Purpose:
+// Input  : nID -
+//			lParam -
 //-----------------------------------------------------------------------------
 void CMainFrame::OnSysCommand(UINT nID, LPARAM lParam)
 {
@@ -770,11 +770,11 @@ void CMainFrame::OnDeleteActiveDocument(void)
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles resize messages. Resizes any children that depend on our size.
-// Input  : nType - 
-//			cx - 
-//			cy - 
+// Input  : nType -
+//			cx -
+//			cy -
 //-----------------------------------------------------------------------------
-void CMainFrame::OnSize(UINT nType, int cx, int cy) 
+void CMainFrame::OnSize(UINT nType, int cx, int cy)
 {
 	CMDIFrameWnd::OnSize(nType, cx, cy);
 
@@ -801,9 +801,9 @@ CMainFrame *GetMainWnd(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nIndex - 
-//			pszText - 
+// Purpose:
+// Input  : nIndex -
+//			pszText -
 //-----------------------------------------------------------------------------
 void SetStatusText(int nIndex, LPCTSTR pszText)
 {
@@ -838,7 +838,7 @@ void CMainFrame::OnToolsOptions(void)
 // Purpose: Called when the main frame is closing. Cleans up the dialog bars
 //			and saves the options to the registry.
 //-----------------------------------------------------------------------------
-void CMainFrame::OnClose() 
+void CMainFrame::OnClose()
 {
 	// Copied from CFrameWnd::OnClose. We can't call APP()->BeginClosing if they
 	// hit cancel in the Save Modified dialog, and CFrameWnd::OnClose doesn't have
@@ -851,7 +851,7 @@ void CMainFrame::OnClose()
 		// document can't close right now -- don't close it
 		return;
 	}
-	
+
 	//
 	// Save the splitter configuration of the first child window in our list.
 	//
@@ -860,7 +860,7 @@ void CMainFrame::OnClose()
 	{
 		pChild->SaveOptions();
 	}
-	
+
 	CWinApp *pApp = AfxGetApp();
 	if (pApp != NULL && pApp->m_pMainWnd == this)
 	{
@@ -874,12 +874,12 @@ void CMainFrame::OnClose()
 		pApp->CloseAllDocuments( FALSE );
 	}
 	// End of copied stuff.
-	
+
 	APP()->BeginClosing();
 
 	// want to save the faceeditor as hidden
 	ShowFaceEditSheetOrTextureBar( false );
-	
+
 	SaveBarState("Barstate");
 	//AfxGetApp()->WriteProfileInt("General", "NewBars", TRUE);
 
@@ -923,9 +923,9 @@ void CMainFrame::OnPaint(void)
 //-----------------------------------------------------------------------------
 // Purpose: This is called ONCE when the splash wnd is to be destroyed. OnPaint()
 //			sets the timer.  This is now also called for the autosave timer.
-// Input  : nIDEvent - 
+// Input  : nIDEvent -
 //-----------------------------------------------------------------------------
-void CMainFrame::OnTimer(UINT nIDEvent) 
+void CMainFrame::OnTimer(UINT nIDEvent)
 {
 	if (!::IsWindow(m_hWnd))
 	{
@@ -939,11 +939,11 @@ void CMainFrame::OnTimer(UINT nIDEvent)
 	{
 		// only want it once
 		KillTimer(nIDEvent);
-		
+
 		// Don't continue if Hammer isn't configured yet!
 		if (Options.configs.nConfigs == 0)
 			return;
-		
+
 		Options.SetClosedCorrectly( FALSE );
 
 		SetBrightness(Options.textures.fBrightness);
@@ -951,11 +951,11 @@ void CMainFrame::OnTimer(UINT nIDEvent)
 		// repaint texture window
 		m_TextureBar.Invalidate();
 
-		//when hammer is ready, start the autosave timer.		
+		//when hammer is ready, start the autosave timer.
 		if ( Options.general.iMaxAutosavesPerMap != 0 )
 		{
-			SetTimer( AUTOSAVE_TIMER, Options.general.iTimeBetweenSaves * 60 * 1000, NULL );  			  
-		}		  
+			SetTimer( AUTOSAVE_TIMER, Options.general.iTimeBetweenSaves * 60 * 1000, NULL );
+		}
 	}
 }
 
@@ -969,7 +969,7 @@ void CMainFrame::ResetAutosaveTimer( void )
 	{
 		SetTimer( AUTOSAVE_TIMER, Options.general.iTimeBetweenSaves * 60 * 1000, NULL );
 	}
-	else 
+	else
 	{
 		KillTimer( AUTOSAVE_TIMER );
 	}
@@ -977,8 +977,8 @@ void CMainFrame::ResetAutosaveTimer( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fBrightness - 
+// Purpose:
+// Input  : fBrightness -
 //-----------------------------------------------------------------------------
 void CMainFrame::SetBrightness(float fBrightness)
 {
@@ -1011,15 +1011,15 @@ void CMainFrame::SetBrightness(float fBrightness)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nID - 
+// Purpose:
+// Input  : nID -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
-BOOL CMainFrame::OnView3dChangeBrightness(UINT nID) 
+BOOL CMainFrame::OnView3dChangeBrightness(UINT nID)
 {
 	float fBrightness = Options.textures.fBrightness;
 	float fModify = (nID == ID_VIEW3D_BRIGHTER) ? 0.2f : -0.2f;
-	
+
 	SetBrightness(fBrightness + fModify);
 
 	return TRUE;
@@ -1141,7 +1141,7 @@ void CMainFrame::OnToolsPrefabfactory(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMainFrame::OnHelpFinder(void)
 {
@@ -1150,8 +1150,8 @@ void CMainFrame::OnHelpFinder(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pHelpInfo - 
+// Purpose:
+// Input  : pHelpInfo -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CMainFrame::OnHelpInfo(HELPINFO *pHelpInfo)
@@ -1204,14 +1204,14 @@ void CMainFrame::SetUndoActive(BOOL bActive)
 //-----------------------------------------------------------------------------
 void CMainFrame::OnEditUndoredoactive(void)
 {
-	SetUndoActive(!m_bUndoActive);	
+	SetUndoActive(!m_bUndoActive);
 }
 
 
 //-----------------------------------------------------------------------------
 // Purpose: Manages the state of the Enable/Disable Undo/Redo menu item.
 //-----------------------------------------------------------------------------
-void CMainFrame::OnUpdateEditUndoredoactive(CCmdUI *pCmdUI) 
+void CMainFrame::OnUpdateEditUndoredoactive(CCmdUI *pCmdUI)
 {
 	pCmdUI->Enable(IsShellSessionActive() ? FALSE : TRUE);
 	pCmdUI->SetText(m_bUndoActive ? "Disable Undo/Redo" : "Enable Undo/Redo");
@@ -1219,8 +1219,8 @@ void CMainFrame::OnUpdateEditUndoredoactive(CCmdUI *pCmdUI)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nCode - 
+// Purpose:
+// Input  : nCode -
 //-----------------------------------------------------------------------------
 void CMainFrame::GlobalNotify(int nCode)
 {
@@ -1229,7 +1229,7 @@ void CMainFrame::GlobalNotify(int nCode)
 	switch (nCode)
 	{
 		//
-		// Active document changed. Update visgroup lists. 
+		// Active document changed. Update visgroup lists.
 		//
 		case WM_MAPDOC_CHANGED:
 		{
@@ -1237,7 +1237,7 @@ void CMainFrame::GlobalNotify(int nCode)
 			// Update the visgroups.
 			//
 			m_FilterControl.UpdateGroupList();
-		
+
 			//
 			// If the Object Properties dialog has a Groups tab, update
 			// the groups tab.
@@ -1256,7 +1256,7 @@ void CMainFrame::GlobalNotify(int nCode)
 			m_ManifestFilterControl.UpdateManifestList();
 			break;
 		}
-		
+
 		//
 		// Game configuration changed. Update texture and entity lists.
 		//
@@ -1284,8 +1284,8 @@ void CMainFrame::GlobalNotify(int nCode)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : UINT - 
+// Purpose:
+// Input  : UINT -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CMainFrame::OnFileNew(UINT)
@@ -1305,14 +1305,14 @@ BOOL CMainFrame::OnFileNew(UINT)
 //-----------------------------------------------------------------------------
 // Purpose: Saves the position and types of all 2D and 3D views in the active document.
 // dvs: This really needs to be a text file instead of a binary file!
-// Input  : *pFile - 
+// Input  : *pFile -
 //-----------------------------------------------------------------------------
 void CMainFrame::SaveWindowStates(std::fstream *pFile)
 {
 	char szRootDir[MAX_PATH];
 	char szFullPath[MAX_PATH];
 	APP()->GetDirectory(DIR_PROGRAM, szRootDir);
-	Q_MakeAbsolutePath( szFullPath, MAX_PATH, "winstate.wc", szRootDir ); 
+	Q_MakeAbsolutePath( szFullPath, MAX_PATH, "winstate.wc", szRootDir );
 
 	std::fstream file(szFullPath, std::ios::out | std::ios::binary);
 
@@ -1333,7 +1333,7 @@ void CMainFrame::SaveWindowStates(std::fstream *pFile)
 	while (p != NULL)
 	{
 		CView *pView = pDoc->GetNextView(p);
-		
+
 		//
 		// Determine what type of view it is.
 		//
@@ -1374,7 +1374,7 @@ void CMainFrame::SaveWindowStates(std::fstream *pFile)
 		CPoint pt1 = rectView.TopLeft(), pt2 = rectView.BottomRight();
 		::ScreenToClient(m_hWndMDIClient, &pt1);
 		::ScreenToClient(m_hWndMDIClient, &pt2);
-	
+
 		double left, top, right, bottom;
 		left =		double(pt1.x) / double(rectClient.right);
 		top =		double(pt1.y) / double(rectClient.bottom);
@@ -1392,15 +1392,15 @@ void CMainFrame::SaveWindowStates(std::fstream *pFile)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pFile - 
+// Purpose:
+// Input  : pFile -
 //-----------------------------------------------------------------------------
 void CMainFrame::LoadWindowStates(std::fstream *pFile)
 {
 	char szRootDir[MAX_PATH];
 	char szFullPath[MAX_PATH];
 	APP()->GetDirectory(DIR_PROGRAM, szRootDir);
-	Q_MakeAbsolutePath( szFullPath, MAX_PATH, "winstate.wc", szRootDir ); 
+	Q_MakeAbsolutePath( szFullPath, MAX_PATH, "winstate.wc", szRootDir );
 
 	std::fstream file( szFullPath, std::ios::in | std::ios::binary );
 
@@ -1432,7 +1432,7 @@ void CMainFrame::LoadWindowStates(std::fstream *pFile)
 
 	// keep list of views we've already modified, so if there
 	//  are other views, we have to create them. this prevents
-	//  us from having to delete all views and start over, 
+	//  us from having to delete all views and start over,
 	//  which is a slower process than simply moving existing
 	//	views.
 	CTypedPtrList<CPtrList, CView*> UsedViews;
@@ -1491,7 +1491,7 @@ void CMainFrame::LoadWindowStates(std::fstream *pFile)
 			pFrame = (CChildFrame*) pTemplate->CreateNewFrame(pDoc, pActiveChild);
 			pFrame->SetRedraw(FALSE);
 			pTemplate->InitialUpdateFrame(pFrame, pDoc, FALSE);
-			
+
 			// find view in new frame
 			pView = pFrame->GetActiveView();
 
@@ -1530,7 +1530,7 @@ void CMainFrame::LoadWindowStates(std::fstream *pFile)
 		{
 			pFrame->SetViewType( (DrawType_t)iDrawType );
 		}
-		
+
 		// read positioning info
 		double left, top, right, bottom;
 		file.read((char*) &left, sizeof left);
@@ -1574,7 +1574,7 @@ void CMainFrame::OnHDR( void )
 	CMenu *pMenu= GetMenu();
 
 	UINT state = pMenu->GetMenuState(ID_HDR, MF_BYCOMMAND);
-	
+
 	if (state & MF_CHECKED)
 	{
 		pMenu->CheckMenuItem(ID_HDR, MF_UNCHECKED | MF_BYCOMMAND);
@@ -1590,7 +1590,7 @@ void CMainFrame::OnHDR( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMainFrame::OnSavewindowstate(void)
 {
@@ -1599,7 +1599,7 @@ void CMainFrame::OnSavewindowstate(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMainFrame::OnLoadwindowstate(void)
 {
@@ -1643,7 +1643,7 @@ BOOL CMainFrame::OnUnits(UINT nID)
 //-----------------------------------------------------------------------------
 // Purpose: Manages the state of decal application toolbar button.
 //-----------------------------------------------------------------------------
-void CMainFrame::OnUpdateUnits(CCmdUI *pCmdUI) 
+void CMainFrame::OnUpdateUnits(CCmdUI *pCmdUI)
 {
 	pCmdUI->Enable(!IsShellSessionActive());
 
@@ -1663,14 +1663,14 @@ void CMainFrame::OnUpdateUnits(CCmdUI *pCmdUI)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pMsg - 
+// Purpose:
+// Input  : pMsg -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
-BOOL CMainFrame::PreTranslateMessage(MSG* pMsg) 
+BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 {
 	//
-	// See if the message is a keydown and the current focus window is the 
+	// See if the message is a keydown and the current focus window is the
 	// ComboBox in the ObjectBar!
 	//
 	/*
@@ -1695,11 +1695,11 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 CChildFrame *CMainFrame::GetNextMDIChildWnd(CChildFrame *pCurChild)
 {
 	return GetNextMDIChildWndRecursive(pCurChild);
-} 
+}
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CChildFrame *CMainFrame::GetNextMDIChildWndRecursive(CWnd *pCurChild)
 {
@@ -1724,9 +1724,9 @@ CChildFrame *CMainFrame::GetNextMDIChildWndRecursive(CWnd *pCurChild)
 	}
 
 	// Check the kind of window
-    if (!pNextChild->GetWindow(GW_OWNER))
+	if (!pNextChild->GetWindow(GW_OWNER))
 	{
-        if (pNextChild->IsKindOf(RUNTIME_CLASS(CChildFrame)))
+		if (pNextChild->IsKindOf(RUNTIME_CLASS(CChildFrame)))
 		{
 			return (CChildFrame *)pNextChild;
 		}
@@ -1750,7 +1750,7 @@ bool CMainFrame::IsShellSessionActive(void)
 //-----------------------------------------------------------------------------
 // Purpose: Manages the state of all Edit menu items and toolbar buttons.
 //-----------------------------------------------------------------------------
-void CMainFrame::OnUpdateEditFunction(CCmdUI *pCmdUI) 
+void CMainFrame::OnUpdateEditFunction(CCmdUI *pCmdUI)
 {
 	pCmdUI->Enable(!IsShellSessionActive());
 }
@@ -1769,7 +1769,7 @@ void CMainFrame::ShowFaceEditSheetOrTextureBar( bool bShowFaceEditSheet )
 	{
 		m_pFaceEditSheet->SetVisibility( false );
 		m_pFaceEditSheet->CloseAllPageDialogs();
-		ShowControlBar( &m_TextureBar, TRUE, TRUE );	
+		ShowControlBar( &m_TextureBar, TRUE, TRUE );
 	}
 }
 
@@ -1804,55 +1804,55 @@ void CMainFrame::ShowSearchReplaceDialog(void)
 //-----------------------------------------------------------------------------
 bool CMainFrame::VerifyBarState(void)
 {
-    CDockState state;
-    state.LoadState("BarState");
+	CDockState state;
+	state.LoadState("BarState");
 
-    for (int i = 0; i < state.m_arrBarInfo.GetSize(); i++)
-    {
-        CControlBarInfo* pInfo = (CControlBarInfo*)state.m_arrBarInfo[i];
+	for (int i = 0; i < state.m_arrBarInfo.GetSize(); i++)
+	{
+		CControlBarInfo* pInfo = (CControlBarInfo*)state.m_arrBarInfo[i];
 
-        Assert(pInfo != NULL);
+		Assert(pInfo != NULL);
 
-        int nDockedCount = pInfo->m_arrBarID.GetSize();
-        if (nDockedCount > 0)
-        {
-            for (int j = 0; j < nDockedCount; j++)
-            {
-                UINT nID = (UINT) pInfo->m_arrBarID[j];
-                if (nID == 0)
+		int nDockedCount = pInfo->m_arrBarID.GetSize();
+		if (nDockedCount > 0)
+		{
+			for (int j = 0; j < nDockedCount; j++)
+			{
+				UINT nID = (UINT) pInfo->m_arrBarID[j];
+				if (nID == 0)
 				{
 					continue; // row separator
 				}
 
-                if (nID > 0xFFFF)
+				if (nID > 0xFFFF)
 				{
-                    nID &= 0xFFFF; // placeholder - get the ID
+					nID &= 0xFFFF; // placeholder - get the ID
 				}
 
-                if (GetControlBar(nID) == NULL)
+				if (GetControlBar(nID) == NULL)
 				{
-                    return false;
+					return false;
 				}
-            }
-        }
-        
-        if (!pInfo->m_bFloating) // floating dockbars can be created later
-		{
-            if (GetControlBar(pInfo->m_nBarID) == NULL)
-			{
-                return false; // invalid bar ID
 			}
 		}
-    }
 
-    return true;
+		if (!pInfo->m_bFloating) // floating dockbars can be created later
+		{
+			if (GetControlBar(pInfo->m_nBarID) == NULL)
+			{
+				return false; // invalid bar ID
+			}
+		}
+	}
+
+	return true;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwData - 
-//			nCmd - 
+// Purpose:
+// Input  : dwData -
+//			nCmd -
 //-----------------------------------------------------------------------------
 void CMainFrame::WinHelp(DWORD dwData, UINT nCmd)
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -30,7 +30,7 @@ public:
 	virtual			~CTESmoke( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 	DECLARE_SERVERCLASS();
 
 public:
@@ -41,8 +41,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTESmoke::CTESmoke( const char *name ) :
 	CBaseTempEntity( name )
@@ -54,16 +54,16 @@ CTESmoke::CTESmoke( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTESmoke::~CTESmoke( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTESmoke::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -72,7 +72,7 @@ void CTESmoke::Test( const Vector& current_origin, const QAngle& current_angles 
 	m_fScale = 5.0;
 	m_nFrameRate = 12;
 	m_vecOrigin = current_origin;
-	
+
 	Vector forward, right;
 
 	m_vecOrigin.GetForModify()[2] += 24;
@@ -103,7 +103,7 @@ void TE_Smoke( IRecipientFilter& filter, float delay,
 	const Vector* pos, int modelindex, float scale, int framerate )
 {
 	g_TESmoke.m_vecOrigin	= *pos;
-	g_TESmoke.m_nModelIndex = modelindex;	
+	g_TESmoke.m_nModelIndex = modelindex;
 	g_TESmoke.m_fScale		= scale;
 	g_TESmoke.m_nFrameRate	= framerate;
 

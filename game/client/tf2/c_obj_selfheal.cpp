@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,7 +10,7 @@
 #include "tf_obj_baseupgrade_shared.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectSelfHeal : public C_BaseObjectUpgrade
 {
@@ -28,9 +28,8 @@ IMPLEMENT_CLIENTCLASS_DT(C_ObjectSelfHeal, DT_ObjectSelfHeal, CObjectSelfHeal)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectSelfHeal::C_ObjectSelfHeal()
 {
 }
-

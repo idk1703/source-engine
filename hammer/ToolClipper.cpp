@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,7 +37,7 @@
 //
 
 //-----------------------------------------------------------------------------
-// Purpose: This function creates a new clip group with the given solid as 
+// Purpose: This function creates a new clip group with the given solid as
 //          the original solid.
 //   Input: pSolid - the original solid to put in the clip list
 //          pClipper - the clipper tool
@@ -45,14 +45,14 @@
 //-----------------------------------------------------------------------------
 BOOL AddToClipList( CMapSolid *pSolid, Clipper3D *pClipper )
 {
-    CClipGroup *pClipGroup = new CClipGroup;
-    if( !pClipGroup )
-        return false;
+	CClipGroup *pClipGroup = new CClipGroup;
+	if( !pClipGroup )
+		return false;
 
-    pClipGroup->SetOrigSolid( pSolid );
-    pClipper->m_ClipResults.AddToTail( pClipGroup );
+	pClipGroup->SetOrigSolid( pSolid );
+	pClipper->m_ClipResults.AddToTail( pClipGroup );
 
-    return true;
+	return true;
 }
 
 
@@ -78,13 +78,13 @@ Clipper3D::Clipper3D(void)
 {
 	m_Mode = FRONT;
 
-    m_ClipPlane.normal.Init();
-    m_ClipPlane.dist = 0.0f;
-    m_ClipPoints[0].Init();
-    m_ClipPoints[1].Init();
-    m_ClipPointHit = -1;
+	m_ClipPlane.normal.Init();
+	m_ClipPlane.dist = 0.0f;
+	m_ClipPoints[0].Init();
+	m_ClipPoints[1].Init();
+	m_ClipPointHit = -1;
 
-    m_pOrigObjects = NULL;
+	m_pOrigObjects = NULL;
 
 	m_bDrawMeasurements = false;
 	SetEmpty();
@@ -110,7 +110,7 @@ void Clipper3D::OnActivate()
 		//
 		// Already the active tool - toggle the mode.
 		//
-        IterateClipMode();
+		IterateClipMode();
 	}
 }
 
@@ -138,57 +138,57 @@ void Clipper3D::OnDeactivate()
 //-----------------------------------------------------------------------------
 bool Clipper3D::UpdateTranslation( const Vector &vUpdate, UINT uFlags )
 {
-    // sanity check
-    if( IsEmpty() )
-        return false;
+	// sanity check
+	if( IsEmpty() )
+		return false;
 
 	Vector vNewPos = m_vOrgPos + vUpdate;
 
-    // snap point if need be
+	// snap point if need be
 	if ( uFlags & constrainSnap )
 		m_pDocument->Snap( vNewPos, uFlags );
 
-    //
-    // update clipping point positions
-    //
+	//
+	// update clipping point positions
+	//
 	if ( m_ClipPoints[m_ClipPointHit] == vNewPos )
 		return false;
 
-    
-    if( uFlags & constrainMoveAll )
-    {
+
+	if( uFlags & constrainMoveAll )
+	{
 		//
 		// calculate the point and delta - to move both clip points simultaneously
 		//
-		
+
 		Vector delta = vNewPos - m_ClipPoints[m_ClipPointHit];
 		m_ClipPoints[(m_ClipPointHit+1)%2] += delta;
-    }
+	}
 
 	m_ClipPoints[m_ClipPointHit] = vNewPos;
 
-    // build the new clip plane and update clip results
-    BuildClipPlane();
+	// build the new clip plane and update clip results
+	BuildClipPlane();
 
-    GetClipResults();
+	GetClipResults();
 
 	m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_TOOL );
 
-    return true;
+	return true;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: (virtual imp) This function defines all finishing functionality 
+// Purpose: (virtual imp) This function defines all finishing functionality
 //          necessary at the end of a clipping action.  Nothing really!!!
 // Input  : bSave - passed along the the Tool finish translation call
 //-----------------------------------------------------------------------------
 void Clipper3D::FinishTranslation( bool bSave )
 {
-    // get the clip results -- in case the update is a click and not a drag
-    GetClipResults();
+	// get the clip results -- in case the update is a click and not a drag
+	GetClipResults();
 
-    Tool3D::FinishTranslation( bSave );
+	Tool3D::FinishTranslation( bSave );
 }
 
 
@@ -198,18 +198,18 @@ void Clipper3D::FinishTranslation( bool bSave )
 //-----------------------------------------------------------------------------
 void Clipper3D::IterateClipMode( void )
 {
-    //
-    // increment the clipping mode (wrap when necessary)
-    //
-    m_Mode++;
+	//
+	// increment the clipping mode (wrap when necessary)
+	//
+	m_Mode++;
 
-    if( m_Mode > BOTH )
-    {
-        m_Mode = FRONT;
-    }
+	if( m_Mode > BOTH )
+	{
+		m_Mode = FRONT;
+	}
 
-    // update the clipped objects based on the mode
-    GetClipResults();
+	// update the clipped objects based on the mode
+	GetClipResults();
 }
 
 
@@ -219,11 +219,11 @@ void Clipper3D::IterateClipMode( void )
 //-----------------------------------------------------------------------------
 void Clipper3D::GetClipResults( void )
 {
-    // reset the clip list to the original solid lsit
-    SetClipObjects( m_pOrigObjects );
+	// reset the clip list to the original solid lsit
+	SetClipObjects( m_pOrigObjects );
 
-    // calculate the clipped objects based on the current "clip plane"
-    CalcClipResults();
+	// calculate the clipped objects based on the current "clip plane"
+	CalcClipResults();
 }
 
 
@@ -234,11 +234,11 @@ void Clipper3D::GetClipResults( void )
 //-----------------------------------------------------------------------------
 void Clipper3D::SetClipPlane( PLANE *pPlane )
 {
-    //
-    // copy the clipping plane info
-    //
-    m_ClipPlane.normal = pPlane->normal;
-    m_ClipPlane.dist = pPlane->dist;
+	//
+	// copy the clipping plane info
+	//
+	m_ClipPlane.normal = pPlane->normal;
+	m_ClipPlane.dist = pPlane->dist;
 }
 
 
@@ -249,63 +249,63 @@ void Clipper3D::SetClipPlane( PLANE *pPlane )
 void Clipper3D::BuildClipPlane( void )
 {
 	// calculate the up vector
-    Vector upVect = m_vPlaneNormal;
-    
+	Vector upVect = m_vPlaneNormal;
+
 	// calculate the right vector
-    Vector rightVect;
-    VectorSubtract( m_ClipPoints[1], m_ClipPoints[0], rightVect );
-    
-    // calculate the forward (normal) vector
-    Vector forwardVect;
-    CrossProduct( upVect, rightVect, forwardVect );
-    VectorNormalize( forwardVect );
-    
-    //
-    // save the clip plane info
-    //
-    m_ClipPlane.normal = forwardVect;
-    m_ClipPlane.dist = DotProduct( m_ClipPoints[0], forwardVect );
+	Vector rightVect;
+	VectorSubtract( m_ClipPoints[1], m_ClipPoints[0], rightVect );
+
+	// calculate the forward (normal) vector
+	Vector forwardVect;
+	CrossProduct( upVect, rightVect, forwardVect );
+	VectorNormalize( forwardVect );
+
+	//
+	// save the clip plane info
+	//
+	m_ClipPlane.normal = forwardVect;
+	m_ClipPlane.dist = DotProduct( m_ClipPoints[0], forwardVect );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: This functions sets up the list of objects to be clipped.  
-//          Initially the list is passed in (typically a Selection set).  On 
-//          subsequent "translation" updates the list is refreshed from the 
+// Purpose: This functions sets up the list of objects to be clipped.
+//          Initially the list is passed in (typically a Selection set).  On
+//          subsequent "translation" updates the list is refreshed from the
 //          m_pOrigObjects list.
 //   Input: pList - the list of objects (solids) to be clipped
 //-----------------------------------------------------------------------------
 void Clipper3D::SetClipObjects( const CMapObjectList *pList )
 {
-    // check for an empty list
-    if( !pList )
-        return;
+	// check for an empty list
+	if( !pList )
+		return;
 
-    // save the original list
-    m_pOrigObjects = pList;
+	// save the original list
+	m_pOrigObjects = pList;
 
-    // clear the clip results list
-    ResetClipResults();
+	// clear the clip results list
+	ResetClipResults();
 
-    //
-    // copy solids into the clip list
-    //
-    FOR_EACH_OBJ( *m_pOrigObjects, pos )
-    {
-        CMapClass *pObject = m_pOrigObjects->Element( pos );
-        if( !pObject )
-            continue;
+	//
+	// copy solids into the clip list
+	//
+	FOR_EACH_OBJ( *m_pOrigObjects, pos )
+	{
+		CMapClass *pObject = m_pOrigObjects->Element( pos );
+		if( !pObject )
+			continue;
 
-        if( pObject->IsMapClass( MAPCLASS_TYPE( CMapSolid ) ) )
-        {
-            AddToClipList( ( CMapSolid* )pObject, this );
-        }
+		if( pObject->IsMapClass( MAPCLASS_TYPE( CMapSolid ) ) )
+		{
+			AddToClipList( ( CMapSolid* )pObject, this );
+		}
 
-        pObject->EnumChildren( ENUMMAPCHILDRENPROC( AddToClipList ), DWORD( this ), MAPCLASS_TYPE( CMapSolid ) );
-    }
+		pObject->EnumChildren( ENUMMAPCHILDRENPROC( AddToClipList ), DWORD( this ), MAPCLASS_TYPE( CMapSolid ) );
+	}
 
-    // the clipping list is not empty anymore
-    m_bEmpty = false;
+	// the clipping list is not empty anymore
+	m_bEmpty = false;
 }
 
 
@@ -315,50 +315,50 @@ void Clipper3D::SetClipObjects( const CMapObjectList *pList )
 //-----------------------------------------------------------------------------
 void Clipper3D::CalcClipResults( void )
 {
-    // sanity check
-    if( IsEmpty() )
-        return;
+	// sanity check
+	if( IsEmpty() )
+		return;
 
-    //
-    // iterate through and clip all of the solids in the clip list
-    //
-    FOR_EACH_OBJ( m_ClipResults, pos )
-    {
-        CClipGroup *pClipGroup = m_ClipResults.Element( pos );
-        CMapSolid *pOrigSolid = pClipGroup->GetOrigSolid();
-        if( !pOrigSolid )
-            continue;
+	//
+	// iterate through and clip all of the solids in the clip list
+	//
+	FOR_EACH_OBJ( m_ClipResults, pos )
+	{
+		CClipGroup *pClipGroup = m_ClipResults.Element( pos );
+		CMapSolid *pOrigSolid = pClipGroup->GetOrigSolid();
+		if( !pOrigSolid )
+			continue;
 
-        //
-        // check the modes for which solids to generate
-        //
-        CMapSolid *pFront = NULL;
-        CMapSolid *pBack = NULL;
-        if( m_Mode == FRONT )
-        {
-            pOrigSolid->Split( &m_ClipPlane, &pFront, NULL );
-        }
-        else if( m_Mode == BACK )
-        {
-            pOrigSolid->Split( &m_ClipPlane, NULL, &pBack );
-        }
-        else if( m_Mode == BOTH )
-        {
-            pOrigSolid->Split( &m_ClipPlane, &pFront, &pBack );
-        }
+		//
+		// check the modes for which solids to generate
+		//
+		CMapSolid *pFront = NULL;
+		CMapSolid *pBack = NULL;
+		if( m_Mode == FRONT )
+		{
+			pOrigSolid->Split( &m_ClipPlane, &pFront, NULL );
+		}
+		else if( m_Mode == BACK )
+		{
+			pOrigSolid->Split( &m_ClipPlane, NULL, &pBack );
+		}
+		else if( m_Mode == BOTH )
+		{
+			pOrigSolid->Split( &m_ClipPlane, &pFront, &pBack );
+		}
 
-        if( pFront )
-        {
+		if( pFront )
+		{
 			pFront->SetTemporary(true);
-            pClipGroup->SetClipSolid( pFront, FRONT );
-        }
+			pClipGroup->SetClipSolid( pFront, FRONT );
+		}
 
-        if( pBack )
-        {
+		if( pBack )
+		{
 			pBack->SetTemporary(true);
-            pClipGroup->SetClipSolid( pBack, BACK );
-        }
-    }
+			pClipGroup->SetClipSolid( pBack, BACK );
+		}
+	}
 }
 
 
@@ -372,22 +372,22 @@ void Clipper3D::RemoveOrigSolid( CMapSolid *pOrigSolid )
 {
 	m_pDocument->DeleteObject(pOrigSolid);
 
-    //
-    // remove the solid from the selection set if in the seleciton set and
-    // its parent is the world, or set the selection state to none parent is group
-    // or entity in the selection set
-    //    
+	//
+	// remove the solid from the selection set if in the seleciton set and
+	// its parent is the world, or set the selection state to none parent is group
+	// or entity in the selection set
+	//
 
 	CSelection *pSelection = m_pDocument->GetSelection();
 
-    if ( pSelection->IsSelected( pOrigSolid ) )
-    {
-        pSelection->SelectObject( pOrigSolid, scUnselect );
-    }
-    else
-    {
-        pOrigSolid->SetSelectionState( SELECT_NONE );
-    }
+	if ( pSelection->IsSelected( pOrigSolid ) )
+	{
+		pSelection->SelectObject( pOrigSolid, scUnselect );
+	}
+	else
+	{
+		pOrigSolid->SetSelectionState( SELECT_NONE );
+	}
 }
 
 
@@ -400,30 +400,30 @@ void Clipper3D::RemoveOrigSolid( CMapSolid *pOrigSolid )
 //-----------------------------------------------------------------------------
 void Clipper3D::SaveClipSolid( CMapSolid *pSolid, CMapSolid *pOrigSolid )
 {
-    //
-    // no longer a temporary solid
-    //
-    pSolid->SetTemporary( FALSE );
+	//
+	// no longer a temporary solid
+	//
+	pSolid->SetTemporary( FALSE );
 
-    //
-    // Add the new solid to the original solid's parent (group, entity, world, etc.).
-    //
+	//
+	// Add the new solid to the original solid's parent (group, entity, world, etc.).
+	//
 	m_pDocument->AddObjectToWorld(pSolid, pOrigSolid->GetParent());
-    
-    //
-    // handle linking solid into selection -- via selection set when parent is the world
-    // and selected, or set the selection state if parent is group or entity in selection set
-    //
-    if( m_pDocument->GetSelection()->IsSelected( pOrigSolid ) )
-    {
-        m_pDocument->SelectObject( pSolid, scSelect );
-    }
-    else
-    {
-        pSolid->SetSelectionState( SELECT_NORMAL );
-    }
 
-    GetHistory()->KeepNew( pSolid );
+	//
+	// handle linking solid into selection -- via selection set when parent is the world
+	// and selected, or set the selection state if parent is group or entity in selection set
+	//
+	if( m_pDocument->GetSelection()->IsSelected( pOrigSolid ) )
+	{
+		m_pDocument->SelectObject( pSolid, scSelect );
+	}
+	else
+	{
+		pSolid->SetSelectionState( SELECT_NORMAL );
+	}
+
+	GetHistory()->KeepNew( pSolid );
 }
 
 
@@ -434,71 +434,71 @@ void Clipper3D::SaveClipSolid( CMapSolid *pSolid, CMapSolid *pOrigSolid )
 //-----------------------------------------------------------------------------
 void Clipper3D::SaveClipResults( void )
 {
-    // sanity check!
-    if( IsEmpty() )
-        return;
+	// sanity check!
+	if( IsEmpty() )
+		return;
 
 	// mark this place in the history
-    GetHistory()->MarkUndoPosition( NULL, "Clip Objects" );
+	GetHistory()->MarkUndoPosition( NULL, "Clip Objects" );
 
-    //
-    // save all new objects into the selection list
-    //
-    FOR_EACH_OBJ( m_ClipResults, pos )
-    {
-        CClipGroup *pClipGroup = m_ClipResults.Element( pos );
-        if( !pClipGroup )
-            continue;
+	//
+	// save all new objects into the selection list
+	//
+	FOR_EACH_OBJ( m_ClipResults, pos )
+	{
+		CClipGroup *pClipGroup = m_ClipResults.Element( pos );
+		if( !pClipGroup )
+			continue;
 
-        CMapSolid *pOrigSolid = pClipGroup->GetOrigSolid();
-        CMapSolid *pBackSolid = pClipGroup->GetClipSolid( CClipGroup::BACK );
-        CMapSolid *pFrontSolid = pClipGroup->GetClipSolid( CClipGroup::FRONT );
+		CMapSolid *pOrigSolid = pClipGroup->GetOrigSolid();
+		CMapSolid *pBackSolid = pClipGroup->GetClipSolid( CClipGroup::BACK );
+		CMapSolid *pFrontSolid = pClipGroup->GetClipSolid( CClipGroup::FRONT );
 
-        //
-        // save the front clip solid and clear the clip results list of itself
-        //
-        if( pFrontSolid )
-        {
-            SaveClipSolid( pFrontSolid, pOrigSolid );
-            pClipGroup->SetClipSolid( NULL, CClipGroup::FRONT );
-        }
+		//
+		// save the front clip solid and clear the clip results list of itself
+		//
+		if( pFrontSolid )
+		{
+			SaveClipSolid( pFrontSolid, pOrigSolid );
+			pClipGroup->SetClipSolid( NULL, CClipGroup::FRONT );
+		}
 
-        //
-        // save the front clip solid and clear the clip results list of itself
-        //
-        if( pBackSolid )
-        {
-            SaveClipSolid( pBackSolid, pOrigSolid );
-            pClipGroup->SetClipSolid( NULL, CClipGroup::BACK );
-        }
-     
+		//
+		// save the front clip solid and clear the clip results list of itself
+		//
+		if( pBackSolid )
+		{
+			SaveClipSolid( pBackSolid, pOrigSolid );
+			pClipGroup->SetClipSolid( NULL, CClipGroup::BACK );
+		}
+
 		// Send the notification that this solid as been clipped.
 		pOrigSolid->PostUpdate( Notify_Clipped );
 
-        // remove the original solid
-        RemoveOrigSolid( pOrigSolid );
-    }
+		// remove the original solid
+		RemoveOrigSolid( pOrigSolid );
+	}
 
-    // set the the clipping results list as empty
-    ResetClipResults();
+	// set the the clipping results list as empty
+	ResetClipResults();
 
 	// update world and views
-	
-    m_pDocument->SetModifiedFlag();
+
+	m_pDocument->SetModifiedFlag();
 }
 
 
 //-----------------------------------------------------------------------------
 // Purpose: Draws the measurements of a brush in the 2D view.
-// Input  : pRender - 
-//			pSolid - 
-//			nFlags - 
+// Input  : pRender -
+//			pSolid -
+//			nFlags -
 //-----------------------------------------------------------------------------
 void Clipper3D::DrawBrushExtents( CRender2D *pRender, CMapSolid *pSolid, int nFlags )
 {
-    //
-    // get the bounds of the solid
-    //
+	//
+	// get the bounds of the solid
+	//
 	Vector Mins, Maxs;
 	pSolid->GetRender2DBox( Mins, Maxs );
 
@@ -506,121 +506,121 @@ void Clipper3D::DrawBrushExtents( CRender2D *pRender, CMapSolid *pSolid, int nFl
 	// Determine which side of the clipping plane this solid is on in screen
 	// space. This tells us where to draw the extents.
 	//
-    if( ( m_ClipPlane.normal[0] == 0 ) && ( m_ClipPlane.normal[1] == 0 ) && ( m_ClipPlane.normal[2] == 0 ) )
-        return;
+	if( ( m_ClipPlane.normal[0] == 0 ) && ( m_ClipPlane.normal[1] == 0 ) && ( m_ClipPlane.normal[2] == 0 ) )
+		return;
 
-    Vector normal = m_ClipPlane.normal;
+	Vector normal = m_ClipPlane.normal;
 
-    if( nFlags & DBT_BACK )
-    {
-       VectorNegate( normal );
-    }
+	if( nFlags & DBT_BACK )
+	{
+		VectorNegate( normal );
+	}
 
 	Vector2D planeNormal;
 
-    pRender->TransformNormal( planeNormal, normal );
+	pRender->TransformNormal( planeNormal, normal );
 
 	if( planeNormal.x <= 0 )
-    {
-        nFlags &= ~DBT_RIGHT;
-        nFlags |= DBT_LEFT;
-    }
-    else if( planeNormal.x > 0 )
-    {
-        nFlags &= ~DBT_LEFT;
-        nFlags |= DBT_RIGHT;
-    }
+	{
+		nFlags &= ~DBT_RIGHT;
+		nFlags |= DBT_LEFT;
+	}
+	else if( planeNormal.x > 0 )
+	{
+		nFlags &= ~DBT_LEFT;
+		nFlags |= DBT_RIGHT;
+	}
 
-    if( planeNormal.y <= 0 )
-    {
-        nFlags &= ~DBT_BOTTOM;
-        nFlags |= DBT_TOP;
-    }
-    else if( planeNormal.y > 0 )
-    {
-        nFlags &= ~DBT_TOP;
-        nFlags |= DBT_BOTTOM;
-    }
+	if( planeNormal.y <= 0 )
+	{
+		nFlags &= ~DBT_BOTTOM;
+		nFlags |= DBT_TOP;
+	}
+	else if( planeNormal.y > 0 )
+	{
+		nFlags &= ~DBT_TOP;
+		nFlags |= DBT_BOTTOM;
+	}
 
 	DrawBoundsText(pRender, Mins, Maxs, nFlags);
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pRender - 
+// Purpose:
+// Input  : *pRender -
 //-----------------------------------------------------------------------------
 void Clipper3D::RenderTool2D(CRender2D *pRender)
 {
 	if ( IsEmpty() )
 		return;
 
-    // check flag for rendering vertices
-    bool bDrawVerts = ( bool )( Options.view2d.bDrawVertices == TRUE );
+	// check flag for rendering vertices
+	bool bDrawVerts = ( bool )( Options.view2d.bDrawVertices == TRUE );
 
-    // setup the line to use
+	// setup the line to use
 
 	pRender->SetDrawColor( 255, 255, 255 );
 
-    //
-    // render the clipped solids
-    //
-    FOR_EACH_OBJ( m_ClipResults, pos )
-    {
-        CClipGroup *pClipGroup = m_ClipResults.Element( pos );
-        CMapSolid *pClipBack = pClipGroup->GetClipSolid( CClipGroup::BACK );
-        CMapSolid *pClipFront = pClipGroup->GetClipSolid( CClipGroup::FRONT );
-        if( !pClipBack && !pClipFront )
-            continue;
+	//
+	// render the clipped solids
+	//
+	FOR_EACH_OBJ( m_ClipResults, pos )
+	{
+		CClipGroup *pClipGroup = m_ClipResults.Element( pos );
+		CMapSolid *pClipBack = pClipGroup->GetClipSolid( CClipGroup::BACK );
+		CMapSolid *pClipFront = pClipGroup->GetClipSolid( CClipGroup::FRONT );
+		if( !pClipBack && !pClipFront )
+			continue;
 
-        //
-        // draw clip solids with the extents
-        //
-        if( pClipBack )
-        {
-            int faceCount = pClipBack->GetFaceCount();
-            for( int i = 0; i < faceCount; i++ )
-            {
-                CMapFace *pFace = pClipBack->GetFace( i );
+		//
+		// draw clip solids with the extents
+		//
+		if( pClipBack )
+		{
+			int faceCount = pClipBack->GetFaceCount();
+			for( int i = 0; i < faceCount; i++ )
+			{
+				CMapFace *pFace = pClipBack->GetFace( i );
 
 				// size 4
-                pRender->DrawPolyLine( pFace->nPoints, pFace->Points );
+				pRender->DrawPolyLine( pFace->nPoints, pFace->Points );
 
 				if ( bDrawVerts )
 				{
 					pRender->DrawHandles( pFace->nPoints, pFace->Points );
 				}
 
-                if( m_bDrawMeasurements )
-                {
-                    DrawBrushExtents( pRender, pClipBack, DBT_TOP | DBT_LEFT | DBT_BACK );
-                }
-            }
-        }
+				if( m_bDrawMeasurements )
+				{
+					DrawBrushExtents( pRender, pClipBack, DBT_TOP | DBT_LEFT | DBT_BACK );
+				}
+			}
+		}
 
-        if( pClipFront )
-        {
-            int faceCount = pClipFront->GetFaceCount();
-            for( int i = 0; i < faceCount; i++ )
-            {
-                CMapFace *pFace = pClipFront->GetFace( i );
+		if( pClipFront )
+		{
+			int faceCount = pClipFront->GetFaceCount();
+			for( int i = 0; i < faceCount; i++ )
+			{
+				CMapFace *pFace = pClipFront->GetFace( i );
 
-                pRender->DrawPolyLine( pFace->nPoints, pFace->Points );
+				pRender->DrawPolyLine( pFace->nPoints, pFace->Points );
 
 				if ( bDrawVerts )
 				{
 					pRender->DrawHandles( pFace->nPoints, pFace->Points );
 				}
 
-                if( m_bDrawMeasurements )
-                {
-                    DrawBrushExtents( pRender, pClipFront, DBT_BOTTOM | DBT_RIGHT );
-                }
-            }
-        }
+				if( m_bDrawMeasurements )
+				{
+					DrawBrushExtents( pRender, pClipFront, DBT_BOTTOM | DBT_RIGHT );
+				}
+			}
+		}
 	}
 
-    //
+	//
 	// draw the clip-plane
 	//
 	pRender->SetDrawColor( 0, 255, 255 );
@@ -633,8 +633,8 @@ void Clipper3D::RenderTool2D(CRender2D *pRender)
 	pRender->SetHandleStyle( HANDLE_RADIUS, CRender::HANDLE_SQUARE );
 	pRender->SetHandleColor( 255, 255, 255 );
 
-    pRender->DrawHandle( m_ClipPoints[0] );
-    pRender->DrawHandle( m_ClipPoints[1] );
+	pRender->DrawHandle( m_ClipPoints[0] );
+	pRender->DrawHandle( m_ClipPoints[1] );
 }
 
 
@@ -645,52 +645,52 @@ void Clipper3D::RenderTool2D(CRender2D *pRender)
 //-----------------------------------------------------------------------------
 void Clipper3D::RenderTool3D( CRender3D *pRender )
 {
-    // is there anything to render?
-    if( m_bEmpty )
-        return;
+	// is there anything to render?
+	if( m_bEmpty )
+		return;
 
-    //
-    // setup the renderer
-    //
-    pRender->PushRenderMode( RENDER_MODE_WIREFRAME );
-    
-    FOR_EACH_OBJ( m_ClipResults, pos )
-    {
-        CClipGroup *pClipGroup = m_ClipResults.Element( pos );
+	//
+	// setup the renderer
+	//
+	pRender->PushRenderMode( RENDER_MODE_WIREFRAME );
 
-        CMapSolid *pFrontSolid = pClipGroup->GetClipSolid( CClipGroup::FRONT );
-        if( pFrontSolid )
-        {
+	FOR_EACH_OBJ( m_ClipResults, pos )
+	{
+		CClipGroup *pClipGroup = m_ClipResults.Element( pos );
+
+		CMapSolid *pFrontSolid = pClipGroup->GetClipSolid( CClipGroup::FRONT );
+		if( pFrontSolid )
+		{
 			color32 rgbColor = pFrontSolid->GetRenderColor();
-            pFrontSolid->SetRenderColor(255, 255, 255);
-            pFrontSolid->Render3D(pRender);
-            pFrontSolid->SetRenderColor(rgbColor);
-        }
+			pFrontSolid->SetRenderColor(255, 255, 255);
+			pFrontSolid->Render3D(pRender);
+			pFrontSolid->SetRenderColor(rgbColor);
+		}
 
-        CMapSolid *pBackSolid = pClipGroup->GetClipSolid( CClipGroup::BACK );
-        if( pBackSolid )
-        {
+		CMapSolid *pBackSolid = pClipGroup->GetClipSolid( CClipGroup::BACK );
+		if( pBackSolid )
+		{
 			color32 rgbColor = pBackSolid->GetRenderColor();
-            pBackSolid->SetRenderColor(255, 255, 255);
-            pBackSolid->Render3D(pRender);
-            pBackSolid->SetRenderColor(rgbColor);
-        }
-    }
+			pBackSolid->SetRenderColor(255, 255, 255);
+			pBackSolid->Render3D(pRender);
+			pBackSolid->SetRenderColor(rgbColor);
+		}
+	}
 
-    pRender->PopRenderMode();
+	pRender->PopRenderMode();
 }
 
 
 //-----------------------------------------------------------------------------
 // Purpose: (virtual imp)
-// Input  : pt - 
-//			BOOL - 
+// Input  : pt -
+//			BOOL -
 // Output : int
 //-----------------------------------------------------------------------------
 int Clipper3D::HitTest(CMapView *pView, const Vector2D &ptClient, bool bTestHandles)
 {
-    // check points
-    
+	// check points
+
 	for ( int i=0; i<2;i++ )
 	{
 		if ( HitRect(pView, ptClient, m_ClipPoints[i], HANDLE_RADIUS) )
@@ -698,9 +698,9 @@ int Clipper3D::HitTest(CMapView *pView, const Vector2D &ptClient, bool bTestHand
 			return i+1; // return clip point index + 1
 		}
 	}
-    
-    // neither point hit
-    return 0;
+
+	// neither point hit
+	return 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -708,34 +708,34 @@ int Clipper3D::HitTest(CMapView *pView, const Vector2D &ptClient, bool bTestHand
 //-----------------------------------------------------------------------------
 void Clipper3D::ResetClipResults( void )
 {
-    //
-    // delete the clip solids held in the list -- originals are just pointers
-    // to pre-existing objects
-    //
-    FOR_EACH_OBJ( m_ClipResults, pos )
-    {
-        CClipGroup *pClipGroup = m_ClipResults.Element(pos);
+	//
+	// delete the clip solids held in the list -- originals are just pointers
+	// to pre-existing objects
+	//
+	FOR_EACH_OBJ( m_ClipResults, pos )
+	{
+		CClipGroup *pClipGroup = m_ClipResults.Element(pos);
 
-        if( pClipGroup )
-        {
-            delete pClipGroup;
-        }
-    }
+		if( pClipGroup )
+		{
+			delete pClipGroup;
+		}
+	}
 
 	m_ClipResults.RemoveAll();
 
-    // the clipping list is empty
-    SetEmpty();
+	// the clipping list is empty
+	SetEmpty();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nChar - 
-//			nRepCnt - 
-//			nFlags - 
+// Purpose:
+// Input  : nChar -
+//			nRepCnt -
+//			nFlags -
 //-----------------------------------------------------------------------------
-bool Clipper3D::OnKeyDown2D(CMapView2D *pView, UINT nChar, UINT nRepCnt, UINT nFlags) 
+bool Clipper3D::OnKeyDown2D(CMapView2D *pView, UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	switch (nChar)
 	{
@@ -767,7 +767,7 @@ bool Clipper3D::OnKeyDown2D(CMapView2D *pView, UINT nChar, UINT nRepCnt, UINT nF
 		}
 	}
 
-	return false;	
+	return false;
 }
 
 
@@ -795,8 +795,8 @@ bool Clipper3D::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &v
 	// snap starting position to grid
 	if ( uConstraints & constrainSnap )
 		m_pDocument->Snap(vecWorld, uConstraints);
-	
-	
+
+
 	bool bStarting = false;
 
 	// if the tool is not empty, and shift is not held down (to
@@ -845,7 +845,7 @@ bool Clipper3D::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &v
 
 		// set the initial clip points
 		m_ClipPointHit = 0;
-		m_ClipPoints[0] = vecWorld; 
+		m_ClipPoints[0] = vecWorld;
 		m_ClipPoints[1] = vecWorld;
 		m_vOrgPos = vecWorld;
 	}
@@ -869,7 +869,7 @@ bool Clipper3D::OnLMouseUp2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPo
 	}
 
 	m_pDocument->UpdateStatusbar();
-	
+
 	return true;
 }
 
@@ -897,13 +897,13 @@ bool Clipper3D::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &vP
 	unsigned int uConstraints = GetConstraints( nFlags );
 
 	Tool3D::OnMouseMove2D(pView, nFlags, vPoint);
-					    
+
 	//
 	// Convert to world coords.
 	//
 	Vector vecWorld;
 	pView->ClientToWorld(vecWorld, vPoint);
-	
+
 	//
 	// Update status bar position display.
 	//
@@ -914,7 +914,7 @@ bool Clipper3D::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &vP
 
 	sprintf(szBuf, " @%.0f, %.0f ", vecWorld[pView->axHorz], vecWorld[pView->axVert]);
 	SetStatusText(SBI_COORDS, szBuf);
-	
+
 	if (IsTranslating())
 	{
 		// cursor is cross here
@@ -984,4 +984,3 @@ void Clipper3D::OnEscape(void)
 		m_pDocument->GetTools()->SetTool(TOOL_POINTER);
 	}
 }
-

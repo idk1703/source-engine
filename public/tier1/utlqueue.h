@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,7 +18,7 @@
 enum QueueIter_t { QUEUE_ITERATOR_INVALID = 0xffffffff };
 
 // T is the type stored in the queue
-template< class T, class M = CUtlMemory< T > > 
+template< class T, class M = CUtlMemory< T > >
 class CUtlQueue
 {
 public:
@@ -102,7 +102,7 @@ inline CUtlQueue<T, M>::CUtlQueue( int growSize, int initSize ) :
 }
 
 template< class T, class M >
-inline CUtlQueue<T, M>::CUtlQueue( T *pMemory, int numElements ) : 
+inline CUtlQueue<T, M>::CUtlQueue( T *pMemory, int numElements ) :
 	m_memory( pMemory, numElements ), m_head( QUEUE_ITERATOR_INVALID ), m_tail( QUEUE_ITERATOR_INVALID )
 {
 }

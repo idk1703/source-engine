@@ -57,7 +57,7 @@ ConVar	vehicle_tank_health( "vehicle_tank_health","800", FCVAR_NONE, "Tank healt
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CVehicleTank::CVehicleTank()
 {
@@ -79,7 +79,7 @@ CVehicleTank::~CVehicleTank()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleTank::Precache()
 {
@@ -94,12 +94,12 @@ void CVehicleTank::Precache()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleTank::Spawn()
 {
 	SetModel( TANK_MODEL );
-	
+
 	// This size is used for placement only...
 	SetSize( TANK_MINS, TANK_MAXS );
 	m_takedamage = DAMAGE_YES;
@@ -128,7 +128,7 @@ void CVehicleTank::GetControlPanelInfo( int nPanelIndex, const char *&pPanelName
 float MoveAngleTowards( float flAngle, float flTowards, float flRate )
 {
 	// Translate so flTowards is 0, then interpolate towards 0 or 360.
-	flAngle -= flTowards; 
+	flAngle -= flTowards;
 
 	// Move yaw to the client yaw using the shortest path.
 	flAngle = anglemod( flAngle );
@@ -196,7 +196,7 @@ void CVehicleTank::OnItemPostFrame( CBaseTFPlayer *pDriver )
 
 void CVehicleTank::Fire()
 {
-	// NOTE: this code reverses the steps taken in C_VehicleTank::ClientThink to 
+	// NOTE: this code reverses the steps taken in C_VehicleTank::ClientThink to
 	// reconstruct the fire direction.
 
 	// Build local angles.
@@ -218,7 +218,7 @@ void CVehicleTank::Fire()
 	Vector vFireOrigin;
 	QAngle dummy;
 	GetAttachment( LookupAttachment( "muzzle" ), vFireOrigin, dummy );
-	
+
 	// Create the rocket.
 	CWeaponGrenadeRocket *pRocket = CWeaponGrenadeRocket::Create( vFireOrigin, vForward, vehicle_tank_range.GetFloat(), this );
 	if ( pRocket )
@@ -242,7 +242,7 @@ void CVehicleTank::Fire()
 bool CVehicleTank::ClientCommand( CBaseTFPlayer *pPlayer, const char *pCmd, ICommandArguments *pArg )
 {
 	ResetDeteriorationTime();
-	
+
 	if ( FStrEq( pCmd, "TurretAngles" ) )
 	{
 		m_flClientYaw = atof( pArg->Argv(1) );
@@ -258,5 +258,3 @@ bool CVehicleTank::IsPassengerUsingStandardWeapons( int nRole )
 {
 	return ( nRole != VEHICLE_ROLE_DRIVER );
 }
-
-

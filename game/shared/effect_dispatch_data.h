@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -61,7 +61,7 @@ public:
 	int		m_nMaterial;
 	int		m_nDamageType;
 	int		m_nHitBox;
-	
+
 	unsigned char	m_nColor;
 
 	// Color customizability

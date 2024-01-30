@@ -67,7 +67,7 @@ ConVar sc_look_sensitivity_scale( "sc_look_sensitivity_scale", "0.125", FCVAR_NO
 void CInput::ApplySteamControllerCameraMove( QAngle& viewangles, CUserCmd *cmd, Vector2D vecPosition )
 {
 	//roll the view angles so roll is 0 (the HL2 assumed state) and mouse adjustments are relative to the screen.
-	//Assuming roll is unchanging, we want mouse left to translate to screen left at all times (same for right, up, and down)	
+	//Assuming roll is unchanging, we want mouse left to translate to screen left at all times (same for right, up, and down)
 
 	ConVarRef cl_pitchdown ( "cl_pitchdown" );
 	ConVarRef cl_pitchup ( "cl_pitchup" );
@@ -110,7 +110,7 @@ void CInput::ApplySteamControllerCameraMove( QAngle& viewangles, CUserCmd *cmd, 
 
 		// Check pitch bounds
 		viewangles[PITCH] = clamp ( viewangles[PITCH], -cl_pitchdown.GetFloat(), cl_pitchup.GetFloat() );
-	}		
+	}
 
 	// Finally, add mouse state to usercmd.
 	// NOTE:  Does rounding to int cause any issues?  ywb 1/17/04
@@ -121,7 +121,7 @@ void CInput::ApplySteamControllerCameraMove( QAngle& viewangles, CUserCmd *cmd, 
 #define CONTROLLER_ACTION_FLAGS_NONE 0
 #define CONTROLLER_ACTION_FLAGS_STOPS_TAUNT ( 1 << 0 )
 #define CONTROLLER_ACTION_FLAGS_NEEDS_DEBOUNCE ( 1 << 1 )
-		
+
 struct ControllerDigitalActionToCommand
 {
 	const char* action;
@@ -212,7 +212,7 @@ bool CInput::InitializeSteamControllerGameActionSets()
 
 //-----------------------------------------------------------------------------
 // Purpose: SteamControllerMove -- main entry point for applying Steam Controller Movements
-// Input  : *cmd - 
+// Input  : *cmd -
 //-----------------------------------------------------------------------------
 void CInput::SteamControllerMove( float flFrametime, CUserCmd *cmd )
 {
@@ -242,7 +242,7 @@ void CInput::SteamControllerMove( float flFrametime, CUserCmd *cmd )
 		}
 	}
 
-	g_pInputSystem->ActivateSteamControllerActionSet( m_PreferredGameActionSet );														  
+	g_pInputSystem->ActivateSteamControllerActionSet( m_PreferredGameActionSet );
 
 	QAngle	viewangles;
 	engine->GetViewAngles( viewangles );
@@ -397,7 +397,7 @@ CON_COMMAND( sc_show_binding_panel, "Launches the Steam Controller binding panel
 			{
 				Warning( "No Steam Controllers connected.\n" );
 			}
-		}																									
+		}
 		else
 		{
 			Warning( "Steam Controller interface not initialized.\n" );

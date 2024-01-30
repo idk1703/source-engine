@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -166,7 +166,7 @@ void CMapCycleEditDialog::OnCommand(const char *command)
 	}
 	else if (!stricmp(command, "ArrowRight"))
 	{
-		// move map from available list to mapcycle 
+		// move map from available list to mapcycle
 		while (m_pAvailableMapList->GetSelectedItemsCount() > 0)
 		{
 			int itemID = m_pAvailableMapList->GetSelectedItem(0);

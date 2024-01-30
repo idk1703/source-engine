@@ -186,5 +186,3 @@ EventDesiredResult< CTFBot > CTFBotEngineerBuildTeleportExit::OnStuck( CTFBot *m
 
 	return TryContinue();
 }
-
-

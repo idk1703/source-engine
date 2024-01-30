@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose:  Dota specific GC based party
-//			
+//
 //=============================================================================
 
 #ifndef DOTA_PARTY_H
@@ -125,7 +125,7 @@ public:
 	virtual void RemovePendingInvite( const CSteamID &steamID );
 
 	void SetStartedMatchmakingTime( RTime32 time );
-	
+
 	void AssociatePartyWithLobby( CTFLobby* pLobby );
 	void DissociatePartyFromLobby( CTFLobby* pLobby );
 	CTFLobby* GetAssociatedLobby() const;
@@ -149,7 +149,7 @@ protected:
 #ifdef CLIENT_DLL
 	// We mark a party as offline when we dont get any response from the GC regarding
 	// changes to the party while messing with the MM UI.  If we get an update for an
-	// offline party and we no longer want to be in MM, then we leave matchmaking to 
+	// offline party and we no longer want to be in MM, then we leave matchmaking to
 	// match the user's intent.  If it comes back and we're still in the MM UI, it'll
 	// just update like normal.
 	void SetOffline( bool bOffLine ) { m_bOffLine = bOffLine; }

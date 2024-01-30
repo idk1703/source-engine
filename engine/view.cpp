@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -93,7 +93,7 @@ bool V_CheckGamma( void )
 
 	static int lastLightmap = -1;
 	extern void GL_RebuildLightmaps( void );
-	
+
 	// Refresh all lightmaps if r_avglightmap changes
 	if ( r_avglightmap.GetInt() != lastLightmap )
 	{
@@ -114,7 +114,7 @@ void V_Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void V_Shutdown( void )
 {
@@ -123,8 +123,8 @@ void V_Shutdown( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void V_RenderVGuiOnly_NoSwap()
 {
@@ -141,7 +141,7 @@ void V_RenderVGuiOnly_NoSwap()
 	else
 	{
 		CMatRenderContextPtr pRenderContext( materials );
-		   
+
 		pRenderContext->ClearBuffers( true, true );
 
 
@@ -226,7 +226,7 @@ void V_RenderView( void )
 	bCanRenderWorld = bCanRenderWorld && toolframework->ShouldGameRenderView();
 
 	if ( IsPC() && bCanRenderWorld && g_bTextMode )
-	{	
+	{
 		tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "SysSleep()" );
 
 		// Sleep to let the other textmode clients get some cycles.
@@ -236,7 +236,7 @@ void V_RenderView( void )
 
 	if ( !bCanRenderWorld )
 	{
-		// Because we now do a lot of downloading before spawning map, don't render anything world related 
+		// Because we now do a lot of downloading before spawning map, don't render anything world related
 		// until we are an active client.
 		V_RenderVGuiOnly_NoSwap();
 	}
@@ -266,7 +266,7 @@ public:
 	void TouchLight( dlight_t *light )
 	{
 		int i;
-		
+
 		i = light - cl_dlights;
 		if (i >= 0 && i < MAX_DLIGHTS)
 		{
@@ -274,11 +274,11 @@ public:
 		}
 	}
 
-	void DrawBrushModel( 
-		IClientEntity *baseentity, 
-		model_t *model, 
-		const Vector& origin, 
-		const QAngle& angles, 
+	void DrawBrushModel(
+		IClientEntity *baseentity,
+		model_t *model,
+		const Vector& origin,
+		const QAngle& angles,
 		bool bUnused )
 	{
 		R_DrawBrushModel( baseentity, model, origin, angles, DEPTH_MODE_NORMAL, true, true );
@@ -326,7 +326,7 @@ public:
 
 	FORCEINLINE void CheckBlend( void )
 	{
-		g_bIsBlendingOrModulating = ( r_blend != 1.0 ) || 
+		g_bIsBlendingOrModulating = ( r_blend != 1.0 ) ||
 			( r_colormod[0] != 1.0 ) || ( r_colormod[1] != 1.0 ) || ( r_colormod[2] != 1.0 );
 
 	}
@@ -361,12 +361,12 @@ public:
 	{
 		g_EngineRenderer->DrawSceneEnd();
 	}
-	 
+
 	void GetVisibleFogVolume( const Vector& vEyePoint, VisibleFogVolumeInfo_t *pInfo )
 	{
 		R_GetVisibleFogVolume( vEyePoint, pInfo );
 	}
-	
+
 	IWorldRenderList * CreateWorldList()
 	{
 		return g_EngineRenderer->CreateWorldList();
@@ -496,7 +496,7 @@ public:
 		return cl.GetAreaBits_BackwardCompatibility();
 	}
 
-	virtual void SetAreaState( 
+	virtual void SetAreaState(
 			unsigned char chAreaBits[MAX_AREA_STATE_BYTES],
 			unsigned char chAreaPortalBits[MAX_AREA_PORTAL_STATE_BYTES] )
 	{
@@ -522,7 +522,7 @@ public:
 		bool m_bFoundWaterLeaf;
 		int m_nLeafWaterDataID;
 	};
-	
+
 	bool EnumerateLeaf( int leaf, int context )
 	{
 		BoxIntersectWaterContext_t *pSearchContext = ( BoxIntersectWaterContext_t * )context;
@@ -571,11 +571,11 @@ public:
 		g_EngineRenderer->OverrideViewFrustum( custom );
 	}
 
-	void DrawBrushModelShadowDepth( 
-		IClientEntity *baseentity, 
-		model_t *model, 
-		const Vector& origin, 
-		const QAngle& angles, 
+	void DrawBrushModelShadowDepth(
+		IClientEntity *baseentity,
+		model_t *model,
+		const Vector& origin,
+		const QAngle& angles,
 		ERenderDepthMode DepthMode )
 	{
 		R_DrawBrushModel( baseentity, model, origin, angles, DepthMode, true, true );
@@ -585,7 +585,7 @@ public:
 	{
 		g_EngineRenderer->UpdateBrushModelLightmap( model, pRenderable );
 	}
-	
+
 	void BeginUpdateLightmaps( void )
 	{
 		g_EngineRenderer->BeginUpdateLightmaps();
@@ -610,6 +610,3 @@ public:
 
 static CVRenderView s_RenderView;
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CVRenderView, IVRenderView, VENGINE_RENDERVIEW_INTERFACE_VERSION, s_RenderView );
-
-
-

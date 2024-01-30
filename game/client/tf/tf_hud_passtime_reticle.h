@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -113,4 +113,4 @@ private:
 	CHandle<C_TFPlayer> m_hPlayer;
 };
 
-#endif // TF_HUD_PASSTIME_RETICLE_H  
+#endif // TF_HUD_PASSTIME_RETICLE_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,12 +35,12 @@ CLIENTEFFECT_REGISTER_END()
 CSmartPtr<CGasolineEmitter> CGasolineEmitter::Create( C_GasolineBlob *pBlob )
 {
 	CGasolineEmitter *pEmitter = new CGasolineEmitter;
-	
+
 	pEmitter->m_pBlob = pBlob;
 
 	pEmitter->m_hFireMaterial = pEmitter->GetPMaterial( "particle/fire" );
 	pEmitter->m_hUnlitMaterial = pEmitter->GetPMaterial( "sprites/env_particles" );
-	
+
 	pEmitter->m_Timer.Init( 40 );
 
 	return pEmitter;
@@ -68,7 +68,7 @@ void CGasolineEmitter::UpdateFire( float frametime )
 	if ( !m_pBlob->IsStopped() )
 		return;
 
-	// Make a coordinate system in which to spawn the particles. It 
+	// Make a coordinate system in which to spawn the particles. It
 	Vector vUp, vRight;
 	vUp.Init();
 	vRight.Init();
@@ -78,7 +78,7 @@ void CGasolineEmitter::UpdateFire( float frametime )
 		VectorAngles( m_pBlob->GetSurfaceNormal(), angles );
 		AngleVectors( angles, NULL, &vRight, &vUp );
 	}
-	
+
 	PMaterialHandle hMaterial = m_hFireMaterial;
 	float flParticleLifetime = 1;
 	float flRadius = 7;
@@ -105,7 +105,7 @@ void CGasolineEmitter::UpdateFire( float frametime )
 		{
 			vPos += RandomVector( -GASOLINE_BLOB_RADIUS, GASOLINE_BLOB_RADIUS );
 		}
-		
+
 		SimpleParticle *pParticle = AddSimpleParticle( hMaterial, vPos, flParticleLifetime, flRadius );
 		if ( pParticle )
 		{
@@ -195,7 +195,7 @@ float C_GasolineBlob::GetLitStartTime() const
 void C_GasolineBlob::OnDataChanged( DataUpdateType_t type )
 {
 	BaseClass::OnDataChanged( type );
-	
+
 	if ( type == DATA_UPDATE_CREATED )
 	{
 		SetNextClientThink( CLIENT_THINK_ALWAYS );
@@ -244,7 +244,7 @@ int C_GasolineBlob::DrawModel( int flags )
 	Vector vRight, vUp;
 	AngleVectors( angles, NULL, &vRight, &vUp );
 
-	
+
 	float flAlpha = m_flPuddleFade * RemapVal( m_flPuddleSize, PUDDLE_START_SIZE, PUDDLE_END_SIZE, 0, 1 );
 	if ( flAlpha <= 0 )
 		return 0;
@@ -255,9 +255,9 @@ int C_GasolineBlob::DrawModel( int flags )
 	IMesh *pMesh = materials->GetDynamicMesh( true, NULL, NULL, pMat );
 	CMeshBuilder mb;
 	mb.Begin( pMesh, MATERIAL_QUADS, 1 );
-		
+
 		Vector v;
-		
+
 		v = GetAbsOrigin() + m_vSurfaceNormal + vRight*m_flPuddleSize - vUp*m_flPuddleSize;
 		mb.Position3f( v.x, v.y, v.z );
 		mb.Color4f( 1, 1, 1, flAlpha );
@@ -286,7 +286,7 @@ int C_GasolineBlob::DrawModel( int flags )
 		mb.TexCoord2f( 0, 0, 0 );
 		mb.AdvanceVertex();
 
-	mb.End( false, true );		
+	mb.End( false, true );
 
 	return 0;
 }
@@ -314,16 +314,16 @@ void C_GasolineBlob::CheckStartSound()
 	FOR_EACH_LL( g_GasolineBlobs, i )
 	{
 		C_GasolineBlob *pBlob = g_GasolineBlobs[i];
-		
+
 		if ( pBlob != this && pBlob->IsSoundRelatedTo( this ) )
 		{
 			// If it's already playing a sound, then don't start our sound.
 			if ( pBlob->IsPlayingBurningSound() )
 				return;
 		}
-	}		
+	}
 
-	
+
 	StartSound();
 }
 
@@ -347,4 +347,3 @@ void C_GasolineBlob::StopSound()
 		m_bSoundOn = false;
 	}
 }
-

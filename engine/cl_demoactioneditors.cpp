@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,13 +17,13 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
-//			*action - 
-//			newaction - 
+// Purpose:
+// Input  : *parent -
+//			*action -
+//			newaction -
 //-----------------------------------------------------------------------------
 CBaseActionEditDialog::CBaseActionEditDialog( CDemoEditorPanel *parent, CBaseDemoAction *action, bool newaction )
-: vgui::Frame( parent, CBaseDemoAction::NameForType( action->GetType() ) ), 
+: vgui::Frame( parent, CBaseDemoAction::NameForType( action->GetType() ) ),
 	m_pEditor( parent ),
 	m_pAction( action ),
 	m_bNewAction( newaction )
@@ -52,11 +52,11 @@ CBaseActionEditDialog::CBaseActionEditDialog( CDemoEditorPanel *parent, CBaseDem
 	SetSizeable( false );
 	SetMoveable( true );
 }
-	
+
 static bool g_BaseActionEditSaveChained = false;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseActionEditDialog::Init( void )
 {
@@ -86,7 +86,7 @@ void CBaseActionEditDialog::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseActionEditDialog::OnSaveChanges( void )
@@ -149,7 +149,7 @@ bool CBaseActionEditDialog::OnSaveChanges( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseActionEditDialog::OnClose()
 {
@@ -170,7 +170,7 @@ void CBaseActionEditDialog::OnClose()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseActionEditDialog::OnCancel()
 {
@@ -184,8 +184,8 @@ void CBaseActionEditDialog::OnCancel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *commands - 
+// Purpose:
+// Input  : *commands -
 //-----------------------------------------------------------------------------
 void CBaseActionEditDialog::OnCommand( char const *commands )
 {
@@ -204,10 +204,10 @@ void CBaseActionEditDialog::OnCommand( char const *commands )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
-//			*action - 
-//			newaction - 
+// Purpose:
+// Input  : *parent -
+//			*action -
+//			newaction -
 //-----------------------------------------------------------------------------
 CBaseActionWithTargetDialog::CBaseActionWithTargetDialog( CDemoEditorPanel *parent, CBaseDemoAction *action, bool newaction )
 : CBaseActionEditDialog( parent, action, newaction )
@@ -226,7 +226,7 @@ void CBaseActionWithTargetDialog::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseActionWithTargetDialog::OnSaveChanges( void )
@@ -246,7 +246,7 @@ bool CBaseActionWithTargetDialog::OnSaveChanges( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBaseActionSkipAheadDialog : public CBaseActionEditDialog
 {
@@ -279,7 +279,7 @@ CBaseActionSkipAheadDialog::CBaseActionSkipAheadDialog( CDemoEditorPanel *parent
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseActionSkipAheadDialog::Init( void )
 {
@@ -300,7 +300,7 @@ void CBaseActionSkipAheadDialog::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true if changes were effected
 //-----------------------------------------------------------------------------
 bool CBaseActionSkipAheadDialog::OnSaveChanges( void )
@@ -341,7 +341,7 @@ bool CBaseActionSkipAheadDialog::OnSaveChanges( void )
 DECLARE_DEMOACTIONEDIT( DEMO_ACTION_SKIPAHEAD, CBaseActionSkipAheadDialog );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBaseActionStopPlaybackDialog : public CBaseActionEditDialog
 {
@@ -412,7 +412,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseActionScreenFadeStartDialog::Init( void )
 {
@@ -446,7 +446,7 @@ void CBaseActionScreenFadeStartDialog::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseActionScreenFadeStartDialog::OnSaveChanges( void )
@@ -521,15 +521,15 @@ bool CBaseActionScreenFadeStartDialog::OnSaveChanges( void )
 	{
 		bret = true;
 	}
-	
+
 	return bret;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *check - 
-//			oldval - 
-//			flag - 
+// Purpose:
+// Input  : *check -
+//			oldval -
+//			flag -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseActionScreenFadeStartDialog::CheckFlagDifference( vgui::CheckButton *check, bool oldval, int flag )
@@ -661,7 +661,7 @@ char const *CBaseActionTextMessageStartDialog::NameForEffectType( int type )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseActionTextMessageStartDialog::Init( void )
 {
@@ -709,8 +709,8 @@ void CBaseActionTextMessageStartDialog::FillInFonts()
 	if ( schemeFile->LoadFromFile( g_pFileSystem, "resource/SourceScheme.res" ) )
 	{
 		// Iterate fonts
-		for (	KeyValues *kv = schemeFile->FindKey("Fonts", true)->GetFirstSubKey(); 
-				kv != NULL; 
+		for (	KeyValues *kv = schemeFile->FindKey("Fonts", true)->GetFirstSubKey();
+				kv != NULL;
 				kv = kv->GetNextKey() )
 		{
 			m_pFontName->AddItem( kv->GetName(), NULL );
@@ -722,9 +722,9 @@ void CBaseActionTextMessageStartDialog::FillInFonts()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *control - 
-//			*curval - 
+// Purpose:
+// Input  : *control -
+//			*curval -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseActionTextMessageStartDialog::SaveDifferingFloat( vgui::TextEntry *control, float *curval )
@@ -747,9 +747,9 @@ bool CBaseActionTextMessageStartDialog::SaveDifferingFloat( vgui::TextEntry *con
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *control - 
-//			*curval - 
+// Purpose:
+// Input  : *control -
+//			*curval -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseActionTextMessageStartDialog::SaveDifferingInt( vgui::TextEntry *control, int *curval )
@@ -810,7 +810,7 @@ bool CBaseActionTextMessageStartDialog::SaveDifferingColor( vgui::TextEntry *con
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseActionTextMessageStartDialog::OnSaveChanges( void )
@@ -858,7 +858,7 @@ bool CBaseActionTextMessageStartDialog::OnSaveChanges( void )
 DECLARE_DEMOACTIONEDIT( DEMO_ACTION_TEXTMESSAGE_START, CBaseActionTextMessageStartDialog );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBaseActionPlayCommandsDialog : public CBaseActionEditDialog
 {
@@ -884,7 +884,7 @@ CBaseActionPlayCommandsDialog::CBaseActionPlayCommandsDialog( CDemoEditorPanel *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseActionPlayCommandsDialog::Init( void )
 {
@@ -896,7 +896,7 @@ void CBaseActionPlayCommandsDialog::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true if changes were effected
 //-----------------------------------------------------------------------------
 bool CBaseActionPlayCommandsDialog::OnSaveChanges( void )
@@ -918,7 +918,7 @@ bool CBaseActionPlayCommandsDialog::OnSaveChanges( void )
 DECLARE_DEMOACTIONEDIT( DEMO_ACTION_PLAYCOMMANDS, CBaseActionPlayCommandsDialog );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBaseActionCDTrackStartDialog : public CBaseActionEditDialog
 {
@@ -944,7 +944,7 @@ CBaseActionCDTrackStartDialog::CBaseActionCDTrackStartDialog( CDemoEditorPanel *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseActionCDTrackStartDialog::Init( void )
 {
@@ -956,7 +956,7 @@ void CBaseActionCDTrackStartDialog::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true if changes were effected
 //-----------------------------------------------------------------------------
 bool CBaseActionCDTrackStartDialog::OnSaveChanges( void )
@@ -979,7 +979,7 @@ bool CBaseActionCDTrackStartDialog::OnSaveChanges( void )
 DECLARE_DEMOACTIONEDIT( DEMO_ACTION_PLAYCDTRACK_START, CBaseActionCDTrackStartDialog );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBaseActionPlaySoundStartDialog : public CBaseActionEditDialog
 {
@@ -1014,7 +1014,7 @@ CBaseActionPlaySoundStartDialog::CBaseActionPlaySoundStartDialog( CDemoEditorPan
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseActionPlaySoundStartDialog::Init( void )
 {
@@ -1026,7 +1026,7 @@ void CBaseActionPlaySoundStartDialog::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true if changes were effected
 //-----------------------------------------------------------------------------
 bool CBaseActionPlaySoundStartDialog::OnSaveChanges( void )
@@ -1087,7 +1087,7 @@ void CBaseActionPlaySoundStartDialog::OnCommand( char const *command )
 		}
 		return;
 	}
-	
+
 	BaseClass::OnCommand( command );
 }
 
@@ -1123,7 +1123,7 @@ CBaseActionWithStopTimeDialog::CBaseActionWithStopTimeDialog( CDemoEditorPanel *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseActionWithStopTimeDialog::Init( void )
 {
@@ -1142,7 +1142,7 @@ void CBaseActionWithStopTimeDialog::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true if changes were effected
 //-----------------------------------------------------------------------------
 bool CBaseActionWithStopTimeDialog::OnSaveChanges( void )
@@ -1181,7 +1181,7 @@ bool CBaseActionWithStopTimeDialog::OnSaveChanges( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBaseActionChangePlaybackRateDialog : public CBaseActionWithStopTimeDialog
 {
@@ -1207,7 +1207,7 @@ CBaseActionChangePlaybackRateDialog::CBaseActionChangePlaybackRateDialog( CDemoE
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseActionChangePlaybackRateDialog::Init( void )
 {
@@ -1220,7 +1220,7 @@ void CBaseActionChangePlaybackRateDialog::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true if changes were effected
 //-----------------------------------------------------------------------------
 bool CBaseActionChangePlaybackRateDialog::OnSaveChanges( void )
@@ -1244,7 +1244,7 @@ bool CBaseActionChangePlaybackRateDialog::OnSaveChanges( void )
 DECLARE_DEMOACTIONEDIT( DEMO_ACTION_CHANGEPLAYBACKRATE, CBaseActionChangePlaybackRateDialog );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBaseActionPauseDialog : public CBaseActionEditDialog
 {
@@ -1270,7 +1270,7 @@ CBaseActionPauseDialog::CBaseActionPauseDialog( CDemoEditorPanel *parent, CBaseD
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseActionPauseDialog::Init( void )
 {
@@ -1283,7 +1283,7 @@ void CBaseActionPauseDialog::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true if changes were effected
 //-----------------------------------------------------------------------------
 bool CBaseActionPauseDialog::OnSaveChanges( void )
@@ -1324,7 +1324,7 @@ DECLARE_DEMOACTIONEDIT( DEMO_ACTION_PAUSE, CBaseActionPauseDialog );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBaseActionZoomDialog : public CBaseActionEditDialog
 {
@@ -1362,7 +1362,7 @@ CBaseActionZoomDialog::CBaseActionZoomDialog( CDemoEditorPanel *parent, CBaseDem
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseActionZoomDialog::Init( void )
 {
@@ -1380,7 +1380,7 @@ void CBaseActionZoomDialog::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true if changes were effected
 //-----------------------------------------------------------------------------
 bool CBaseActionZoomDialog::OnSaveChanges( void )

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -29,5 +29,3 @@ void CServerGameDLL::LevelInit_ParseAllEntities( const char *pMapEntities )
 {
 	MapEntity_ParseAllEntities( pMapEntities, NULL );
 }
-
-

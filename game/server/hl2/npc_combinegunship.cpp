@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -63,7 +63,7 @@ int g_iGunshipEffectIndex = -1;
 #define GUNSHIP_ACCEL_RATE 500
 
 // Spawnflags
-#define SF_GUNSHIP_NO_GROUND_ATTACK		( 1 << 12 )	
+#define SF_GUNSHIP_NO_GROUND_ATTACK		( 1 << 12 )
 #define SF_GUNSHIP_USE_CHOPPER_MODEL	( 1 << 13 )
 
 ConVar sk_gunship_burst_size("sk_gunship_burst_size", "15" );
@@ -77,8 +77,8 @@ ConVar	sk_gunship_health_increments( "sk_gunship_health_increments", "0" );
 
 Wedge's notes:
 
-  Gunship should move its head according to flight model when the target is behind the gunship,
-  or when the target is too far away to shoot at. Otherwise, the head should aim at the target.
+	Gunship should move its head according to flight model when the target is behind the gunship,
+	or when the target is too far away to shoot at. Otherwise, the head should aim at the target.
 
 	Negative angvelocity.y is a RIGHT turn.
 	Negative angvelocity.x is UP
@@ -163,13 +163,13 @@ BEGIN_SIMPLE_DATADESC( CGunshipRagdollMotion )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTargetGunshipCrash : public CPointEntity
 {
 	DECLARE_CLASS( CTargetGunshipCrash, CPointEntity );
 public:
-	DECLARE_DATADESC();	
+	DECLARE_DATADESC();
 
 	void	InputEnable( inputdata_t &inputdata )
 	{
@@ -263,7 +263,7 @@ public:
 	void	SelfDestruct( void );			// I'm now fully dead, so remove myself.
 	void	CreateSmokeTrail( void );
 	bool	FindNearestGunshipCrash( void );
-	
+
 	int		BloodColor( void ) { return DONT_BLEED; }
 	void	GibMonster( void );
 
@@ -284,7 +284,7 @@ public:
 
 	bool	FireGun( void );
 	bool	IsTargettingMissile( void );
-	
+
 	Class_T Classify( void ) { return CLASS_COMBINE_GUNSHIP; } // for now
 	float	GetAutoAimRadius() { return 144.0f; }
 
@@ -300,7 +300,7 @@ public:
 	void	InputEnableGroundAttack( inputdata_t &inputdata );
 	void	InputDisableGroundAttack( inputdata_t &inputdata );
 	void	InputDoGroundAttack( inputdata_t &inputdata );
-	
+
 	//NOTENOTE: I'm rather queasy about adding these, as they can lead to nasty bugs...
 	void	InputBecomeInvulnerable( inputdata_t &inputdata );
 	void	InputBecomeVulnerable( inputdata_t &inputdata );
@@ -346,9 +346,9 @@ private:
 	COutputEvent	m_OnFourthDamage;
 	// Keep track of which damage outputs we've fired. This is necessary
 	// to ensure that the game doesn't break if a mapmaker has outputs that
-	// must be fired on gunships, and the player switches skill levels 
+	// must be fired on gunships, and the player switches skill levels
 	// midway through a gunship battle.
-	bool			m_bDamageOutputsFired[GUNSHIP_NUM_DAMAGE_OUTPUTS];	
+	bool			m_bDamageOutputsFired[GUNSHIP_NUM_DAMAGE_OUTPUTS];
 
 	float	m_flNextGroundAttack;	// Time to wait before the next ground attack
 	bool	m_bIsGroundAttacking;	// Denotes that we are ground attacking
@@ -370,7 +370,7 @@ private:
 	int				m_iDoSmokePuff;
 	int				m_iAmmoType;
 	int				m_iBurstSize;
-	
+
 	bool			m_fBlindfire;
 	bool			m_fOmniscient;
 	bool			m_bIsFiring;
@@ -379,7 +379,7 @@ private:
 	bool			m_bInvulnerable;
 
 	float			m_flTimeNextPing;
-	float			m_flPenetrationDepth; 
+	float			m_flPenetrationDepth;
 	float			m_flDeltaT;
 	float			m_flTimeNextAttack;
 	float			m_flNextSeeEnemySound;
@@ -487,10 +487,10 @@ END_DATADESC()
 // Constructor
 //-----------------------------------------------------------------------------
 CNPC_CombineGunship::CNPC_CombineGunship( void )
-{ 
+{
 	m_hGroundAttackTarget = NULL;
 	m_pSmokeTrail	= NULL;
-	m_iAmmoType		= -1; 
+	m_iAmmoType		= -1;
 	m_pCrashingController = NULL;
 	m_hRagdoll = NULL;
 	m_hCrashTarget = NULL;
@@ -538,8 +538,8 @@ void CNPC_CombineGunship::Spawn( void )
 	{
 		SetModel( "models/gunship.mdl" );
 	}
-	
-	ExtractBbox( SelectHeaviestSequence( ACT_GUNSHIP_PATROL ), m_cullBoxMins, m_cullBoxMaxs ); 
+
+	ExtractBbox( SelectHeaviestSequence( ACT_GUNSHIP_PATROL ), m_cullBoxMins, m_cullBoxMaxs );
 	BaseClass::Spawn();
 
 	InitPathingData( GUNSHIP_ARRIVE_DIST, GUNSHIP_MIN_CHASE_DIST_DIFF, sk_gunship_burst_min.GetFloat() );
@@ -579,7 +579,7 @@ void CNPC_CombineGunship::Spawn( void )
 	{
 		// Since there's no weapon to index the ammo type,
 		// do it manually here.
-		m_iAmmoType = GetAmmoDef()->Index("CombineCannon"); 
+		m_iAmmoType = GetAmmoDef()->Index("CombineCannon");
 	}
 
 	//!!!HACKHACK
@@ -600,7 +600,7 @@ void CNPC_CombineGunship::Spawn( void )
 	m_bIsFiring			= false;
 	m_bPreFire			= false;
 	m_bInvulnerable		= false;
-	
+
 	// See if we should start being able to attack
 	m_bCanGroundAttack	= ( m_spawnflags & SF_GUNSHIP_NO_GROUND_ATTACK ) ? false : true;
 
@@ -663,7 +663,7 @@ void CNPC_CombineGunship::Precache( void )
 
 	PrecacheMaterial( "effects/ar2ground2" );
 	PrecacheMaterial( "effects/blueblackflash" );
-	
+
 	PrecacheScriptSound( "NPC_CombineGunship.SearchPing" );
 	PrecacheScriptSound( "NPC_CombineGunship.PatrolPing" );
 	PrecacheScriptSound( "NPC_Strider.Charge" );
@@ -695,13 +695,13 @@ void CNPC_CombineGunship::Precache( void )
 // Purpose: Cache whatever pose parameters we intend to use
 //-----------------------------------------------------------------------------
 bool CNPC_CombineGunship::m_sbStaticPoseParamsLoaded = false;
-int CNPC_CombineGunship::m_poseFlex_Horz = 0; 
-int CNPC_CombineGunship::m_poseFlex_Vert = 0; 
-int CNPC_CombineGunship::m_posePitch = 0; 
-int CNPC_CombineGunship::m_poseYaw = 0; 
-int CNPC_CombineGunship::m_poseFin_Accel = 0; 
-int CNPC_CombineGunship::m_poseFin_Sway = 0; 
-int CNPC_CombineGunship::m_poseWeapon_Pitch = 0; 
+int CNPC_CombineGunship::m_poseFlex_Horz = 0;
+int CNPC_CombineGunship::m_poseFlex_Vert = 0;
+int CNPC_CombineGunship::m_posePitch = 0;
+int CNPC_CombineGunship::m_poseYaw = 0;
+int CNPC_CombineGunship::m_poseFin_Accel = 0;
+int CNPC_CombineGunship::m_poseFin_Sway = 0;
+int CNPC_CombineGunship::m_poseWeapon_Pitch = 0;
 int CNPC_CombineGunship::m_poseWeapon_Yaw = 0;
 void	CNPC_CombineGunship::PopulatePoseParameters( void )
 {
@@ -725,7 +725,7 @@ void	CNPC_CombineGunship::PopulatePoseParameters( void )
 
 
 //------------------------------------------------------------------------------
-// Purpose : 
+// Purpose :
 //------------------------------------------------------------------------------
 CNPC_CombineGunship::~CNPC_CombineGunship(void)
 {
@@ -739,7 +739,7 @@ CNPC_CombineGunship::~CNPC_CombineGunship(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::Ping( void )
 {
@@ -765,8 +765,8 @@ void CNPC_CombineGunship::Ping( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &pos - 
+// Purpose:
+// Input  : &pos -
 // Output : float
 //-----------------------------------------------------------------------------
 float CNPC_CombineGunship::GroundDistToPosition( const Vector &pos )
@@ -781,7 +781,7 @@ float CNPC_CombineGunship::GroundDistToPosition( const Vector &pos )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::PlayPatrolLoop( void )
 {
@@ -794,7 +794,7 @@ void CNPC_CombineGunship::PlayPatrolLoop( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::PlayAngryLoop( void )
 {
@@ -828,7 +828,7 @@ void CNPC_CombineGunship::HelicopterPostThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Vector
 //-----------------------------------------------------------------------------
 Vector CNPC_CombineGunship::GetGroundAttackHitPosition( void )
@@ -844,11 +844,11 @@ Vector CNPC_CombineGunship::GetGroundAttackHitPosition( void )
 	{
 		return Vector( tr.endpos.x, tr.endpos.y, m_hGroundAttackTarget->WorldSpaceCenter().z );
 	}
-	return tr.endpos;	
+	return tr.endpos;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_CombineGunship::CheckGroundAttack( void )
@@ -868,7 +868,7 @@ bool CNPC_CombineGunship::CheckGroundAttack( void )
 		return false;
 
 	Vector	predPos, predDest;
-	
+
 	// Find where the enemy is most likely to be in two seconds
 	UTIL_PredictedPosition( GetEnemy(), 1.0f, &predPos );
 	UTIL_PredictedPosition( this, 1.0f, &predDest );
@@ -898,7 +898,7 @@ bool CNPC_CombineGunship::CheckGroundAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::StartGroundAttack( void )
 {
@@ -920,7 +920,7 @@ void CNPC_CombineGunship::StartGroundAttack( void )
 	EmitSound( filter2, entindex(), "NPC_Strider.Charge" );
 
 	Vector	endpos = GetGroundAttackHitPosition();
-	
+
 	CSoundEnt::InsertSound ( SOUND_DANGER, endpos, 1024, 0.5f );
 
 	if ( hl2_episodic.GetBool() == true )
@@ -939,7 +939,7 @@ void CNPC_CombineGunship::StartGroundAttack( void )
 #define BELLY_BLAST_MAX_PUNCH 5
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::ManageWarningBeam( void )
 {
@@ -1011,7 +1011,7 @@ void CNPC_CombineGunship::ManageWarningBeam( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::DoBellyBlastDamage( trace_t &tr, Vector vMins, Vector vMaxs )
 {
@@ -1081,7 +1081,7 @@ void CNPC_CombineGunship::DoBellyBlastDamage( trace_t &tr, Vector vMins, Vector 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::DoGroundAttackExplosion( void )
 {
@@ -1108,7 +1108,7 @@ void CNPC_CombineGunship::DoGroundAttackExplosion( void )
 		g_pEffects->EnergySplash( tr.endpos, tr.plane.normal );
 
 		CBroadcastRecipientFilter filter;
-		te->BeamRingPoint( filter, 0.0, 
+		te->BeamRingPoint( filter, 0.0,
 			tr.endpos,							//origin
 			0,									//start radius
 			GUNSHIP_BELLY_BLAST_RADIUS,			//end radius
@@ -1138,7 +1138,7 @@ void CNPC_CombineGunship::DoGroundAttackExplosion( void )
 		data.m_flRadius = GUNSHIP_BELLY_BLAST_RADIUS;
 		data.m_vNormal	= tr.plane.normal;
 		data.m_vOrigin	= tr.endpos;
-		
+
 		DispatchEffect( "AR2Explosion", data );
 	}
 
@@ -1156,7 +1156,7 @@ void CNPC_CombineGunship::DoGroundAttackExplosion( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::StopGroundAttack( bool bDoAttack )
 {
@@ -1311,7 +1311,7 @@ void CNPC_CombineGunship::DoCombat( void )
 		{
 			// We're done firing
 			StopCannonBurst();
-			
+
 			if ( IsTargettingMissile() )
 			{
 				m_flTimeNextAttack = gpGlobals->curtime + 0.5f;
@@ -1373,12 +1373,12 @@ void CNPC_CombineGunship::DoCombat( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_CombineGunship::ChooseEnemy( void )
 {
-	// If we're firing, don't switch enemies. This stops the gunship occasionally 
+	// If we're firing, don't switch enemies. This stops the gunship occasionally
 	// stopping a burst before he's really fired at all, which makes him look indecisive.
 	if ( m_bIsFiring )
 		return true;
@@ -1387,7 +1387,7 @@ bool CNPC_CombineGunship::ChooseEnemy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: There's a lot of code in here now. We should consider moving 
+// Purpose: There's a lot of code in here now. We should consider moving
 //			helicopters and such to scheduled AI. (sjb)
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::MoveHead( void )
@@ -1418,7 +1418,7 @@ void CNPC_CombineGunship::MoveHead( void )
 
 			VectorSubtract( vTargetPos, vGunPosition, vecToEnemy );
 			VectorNormalize( vecToEnemy );
-			
+
 			// get angles relative to body position
 			AngleVectors( GetAbsAngles(), &vecAimDir );
 			flDot = DotProduct( vecAimDir, vecToEnemy );
@@ -1430,20 +1430,20 @@ void CNPC_CombineGunship::MoveHead( void )
 
 				float flDesiredYaw = VecToYaw(vTargetPos - vGunPosition);
 				flDiff = UTIL_AngleDiff( flDesiredYaw, vGunAngles.y ) * 0.90;
-				flYaw = UTIL_Approach( flYaw + flDiff, flYaw, 5.0 );	
+				flYaw = UTIL_Approach( flYaw + flDiff, flYaw, 5.0 );
 
 				float flDesiredPitch = UTIL_VecToPitch(vTargetPos - vGunPosition);
 				flDiff = UTIL_AngleDiff( flDesiredPitch, vGunAngles.x ) * 0.90;
-				flPitch = UTIL_Approach( flPitch + flDiff, flPitch, 5.0 );	
+				flPitch = UTIL_Approach( flPitch + flDiff, flPitch, 5.0 );
 
 				break;
 			}
 		}
- 
+
 		// Look where going!
 #if 1 // old way- look according to rotational velocity
-		flYaw = UTIL_Approach( GetLocalAngularVelocity().y, flYaw, 2.0 * 10 * m_flDeltaT );	
-		flPitch = UTIL_Approach( GetLocalAngularVelocity().x, flPitch, 2.0 * 10 * m_flDeltaT );	
+		flYaw = UTIL_Approach( GetLocalAngularVelocity().y, flYaw, 2.0 * 10 * m_flDeltaT );
+		flPitch = UTIL_Approach( GetLocalAngularVelocity().x, flPitch, 2.0 * 10 * m_flDeltaT );
 #else // new way- look towards the next waypoint?
 		// !!!UNDONE
 #endif
@@ -1457,7 +1457,7 @@ void CNPC_CombineGunship::MoveHead( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: There's a lot of code in here now. We should consider moving 
+// Purpose: There's a lot of code in here now. We should consider moving
 //			helicopters and such to scheduled AI. (sjb)
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::PrescheduleThink( void )
@@ -1492,7 +1492,7 @@ void CNPC_CombineGunship::PrescheduleThink( void )
 		{
 			bCreateExplosion = (random->RandomInt( 0, 3 ) == 0);
 		}
-		else 
+		else
 		{
 			bCreateExplosion = (random->RandomInt( 0, 2 ) == 0);
 		}
@@ -1551,7 +1551,7 @@ void CNPC_CombineGunship::PrescheduleThink( void )
 
 	BaseClass::PrescheduleThink();
 
-#ifdef JACOBS_GUNSHIP	
+#ifdef JACOBS_GUNSHIP
 	SetPoseParameter( m_posePitch, random->RandomFloat( GUNSHIP_HEAD_MAX_LEFT, GUNSHIP_HEAD_MAX_RIGHT ) );
 	SetPoseParameter( m_poseYaw, random->RandomFloat( GUNSHIP_HEAD_MAX_UP, GUNSHIP_HEAD_MAX_DOWN ) );
 #endif
@@ -1559,10 +1559,10 @@ void CNPC_CombineGunship::PrescheduleThink( void )
 }
 
 //------------------------------------------------------------------------------
-// Purpose :	If the enemy is in front of the gun, load up a burst. 
+// Purpose :	If the enemy is in front of the gun, load up a burst.
 //				Actual gunfire is handled in PrescheduleThink
-// Input   : 
-// Output  : 
+// Input   :
+// Output  :
 //------------------------------------------------------------------------------
 bool CNPC_CombineGunship::FireGun( void )
 {
@@ -1585,7 +1585,7 @@ bool CNPC_CombineGunship::FireGun( void )
 		{
 			m_bPreFire = true;
 			m_flTimeNextAttack = gpGlobals->curtime + 0.5f;
-			
+
 			EmitSound( "NPC_CombineGunship.CannonStartSound" );
 			return false;
 		}
@@ -1639,14 +1639,14 @@ void CNPC_CombineGunship::FireCannonRound( void )
 
 	GetAttachment( "muzzle", vecMuzzle, &vecAimDir );
 	vecEnemyTarget = GetEnemyTarget();
-	
+
 	// Aim with the muzzle's attachment point.
 	VectorSubtract( vecEnemyTarget, vecMuzzle, vecToEnemy );
 	VectorNormalize( vecToEnemy );
 
 	// If the gun is wildly off target, stop firing!
-	// FIXME  - this should use a vector pointing 
-	// to the enemy's location PLUS the stitching 
+	// FIXME  - this should use a vector pointing
+	// to the enemy's location PLUS the stitching
 	// error! (sjb) !!!BUGBUG
 
 	if ( g_debug_gunship.GetInt() == GUNSHIP_DEBUG_STITCHING )
@@ -1747,12 +1747,12 @@ void CNPC_CombineGunship::FireCannonRound( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::DoMuzzleFlash( void )
 {
 	BaseClass::DoMuzzleFlash();
-	
+
 	CEffectData data;
 
 	data.m_nAttachmentIndex = LookupAttachment( "muzzle" );
@@ -1761,7 +1761,7 @@ void CNPC_CombineGunship::DoMuzzleFlash( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_CombineGunship::FVisible( CBaseEntity *pEntity, int traceMask, CBaseEntity **ppBlocker )
@@ -1772,8 +1772,8 @@ bool CNPC_CombineGunship::FVisible( CBaseEntity *pEntity, int traceMask, CBaseEn
 	{
 		if( !fReturn )
 		{
-			// Set this condition so that we can check it later and know that the 
-			// enemy truly is occluded, but the gunship regards it as visible due 
+			// Set this condition so that we can check it later and know that the
+			// enemy truly is occluded, but the gunship regards it as visible due
 			// to omniscience.
 			SetCondition( COND_ENEMY_OCCLUDED );
 		}
@@ -1818,7 +1818,7 @@ void CNPC_CombineGunship::InputOmniscientOn( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Returns the gunship to its default requirement that it see the 
+// Purpose: Returns the gunship to its default requirement that it see the
 //			enemy to know its current position
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::InputOmniscientOff( inputdata_t &inputdata )
@@ -1829,7 +1829,7 @@ void CNPC_CombineGunship::InputOmniscientOff( inputdata_t &inputdata )
 
 //-----------------------------------------------------------------------------
 // Purpose: Allows the gunship to fire at an unseen enemy. The gunship is relying
-//			on hitting the target with bullets that will punch through the 
+//			on hitting the target with bullets that will punch through the
 //			cover that the enemy is hiding behind. (Such as the Depot lighthouse)
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::InputBlindfireOn( inputdata_t &inputdata )
@@ -1874,7 +1874,7 @@ void CNPC_CombineGunship::Event_Killed( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::BeginCrash( void )
 {
@@ -1900,14 +1900,14 @@ void CNPC_CombineGunship::BeginCrash( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNPC_CombineGunship::FindNearestGunshipCrash( void )
 {
 	// Find the nearest crash point. If we find one, we'll try to fly to it and die.
 	// If we can't find one, we'll die right here.
 	bool bFoundAnyCrashTargets = false;
- 	float flNearest = MAX_TRACE_LENGTH * MAX_TRACE_LENGTH;
+	float flNearest = MAX_TRACE_LENGTH * MAX_TRACE_LENGTH;
 	CTargetGunshipCrash *pNearest = NULL;
 	CBaseEntity *pEnt = NULL;
 	while( (pEnt = gEntList.FindEntityByClassname(pEnt, "info_target_gunshipcrash")) != NULL )
@@ -1950,7 +1950,7 @@ bool CNPC_CombineGunship::FindNearestGunshipCrash( void )
 	}
 
 	// Fly to the crash point and destruct there
-  	m_hCrashTarget = pNearest;
+		m_hCrashTarget = pNearest;
 	m_flNextGunshipCrashFind = gpGlobals->curtime + 0.5;
 	m_flEndDestructTime = 0;
 
@@ -1973,7 +1973,7 @@ void CNPC_CombineGunship::BeginDestruct( void )
 	// Clamp velocity
 	if( hl2_episodic.GetBool() && GetAbsVelocity().Length() > 700.0f )
 	{
-		Vector vecVelocity = GetAbsVelocity(); 
+		Vector vecVelocity = GetAbsVelocity();
 		VectorNormalize( vecVelocity );
 		SetAbsVelocity( vecVelocity * 700.0f );
 	}
@@ -2016,13 +2016,13 @@ void CNPC_CombineGunship::BeginDestruct( void )
 		// Force the smoke trail to stay on, and tell it to follow the ragdoll
 		m_pSmokeTrail->SetLifetime( -1 );
 		m_pSmokeTrail->FollowEntity( m_hRagdoll );
-		
+
 		m_pSmokeTrail->m_StartSize = 64;
 		m_pSmokeTrail->m_EndSize = 128;
 		m_pSmokeTrail->m_Opacity = 0.5f;
 	}
 
-	/* 
+	/*
 	// ROBIN: Disabled this for now.
 	//
 	// Create the crashing controller and attach it to the ragdoll physics objects
@@ -2049,15 +2049,15 @@ void CNPC_CombineGunship::CreateSmokeTrail( void )
 		return;
 
 	m_pSmokeTrail = SmokeTrail::CreateSmokeTrail();
-	
+
 	if ( m_pSmokeTrail )
 	{
 		m_pSmokeTrail->m_SpawnRate			= 48;
 		m_pSmokeTrail->m_ParticleLifetime	= 2.5f;
-		
+
 		m_pSmokeTrail->m_StartColor.Init( 0.25f, 0.25f, 0.25f );
 		m_pSmokeTrail->m_EndColor.Init( 0.0, 0.0, 0.0 );
-		
+
 		m_pSmokeTrail->m_StartSize		= 24;
 		m_pSmokeTrail->m_EndSize		= 128;
 		m_pSmokeTrail->m_SpawnRadius	= 4;
@@ -2070,12 +2070,12 @@ void CNPC_CombineGunship::CreateSmokeTrail( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::ApplyGeneralDrag( void )
 {
 	Vector vecNewVelocity = GetAbsVelocity();
-	
+
 	// See if we need to stop more quickly
 	if ( m_bIsGroundAttacking )
 	{
@@ -2090,7 +2090,7 @@ void CNPC_CombineGunship::ApplyGeneralDrag( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:	
+// Purpose:
 //-----------------------------------------------------------------------------
 
 void CNPC_CombineGunship::Flight( void )
@@ -2111,7 +2111,7 @@ void CNPC_CombineGunship::Flight( void )
 
 	Vector	accel;
 	float	accelRate = GUNSHIP_ACCEL_RATE;
-	float	maxSpeed = GetMaxSpeed(); 
+	float	maxSpeed = GetMaxSpeed();
 
 	if ( m_lifeState == LIFE_DYING && m_hCrashTarget != NULL )
 	{
@@ -2140,7 +2140,7 @@ void CNPC_CombineGunship::Flight( void )
 	accel.x = 2.0 * (deltaPos.x - GetAbsVelocity().x * dt) / (dt * dt);
 	accel.y = 2.0 * (deltaPos.y - GetAbsVelocity().y * dt) / (dt * dt);
 	accel.z = 2.0 * (deltaPos.z - GetAbsVelocity().z * dt + 0.5 * 384 * dt * dt) / (dt * dt);
-	
+
 	float flDistFromPath = 0.0f;
 	Vector vecPoint, vecDelta;
 	if ( m_lifeState != LIFE_DYING && IsOnPathTrack() )
@@ -2148,7 +2148,7 @@ void CNPC_CombineGunship::Flight( void )
 		// Also, add in a little force to get us closer to our current line segment if we can
 		ClosestPointToCurrentPath( &vecPoint );
 		VectorSubtract( vecPoint, GetAbsOrigin(), vecDelta );
- 		flDistFromPath = VectorNormalize( vecDelta );
+		flDistFromPath = VectorNormalize( vecDelta );
 		if ( flDistFromPath > GUNSHIP_OUTER_NAV_DIST )
 		{
 			// Strongly constrain to an n unit pipe around the current path
@@ -2164,7 +2164,7 @@ void CNPC_CombineGunship::Flight( void )
 	accel += vecAvoidForce;
 	CAvoidBox::ComputeAvoidanceForces( this, 350.0f, 2.0f, &vecAvoidForce );
 	accel += vecAvoidForce;
-	
+
 	if ( m_lifeState != LIFE_DYING || m_hCrashTarget == NULL )
 	{
 		// don't fall faster than 0.2G or climb faster than 2G
@@ -2218,7 +2218,7 @@ void CNPC_CombineGunship::Flight( void )
 
 	ApplySidewaysDrag( right );
 	ApplyGeneralDrag();
-	
+
 	QAngle angVel = GetLocalAngularVelocity();
 	angVel += m_vecAngAcceleration * 0.1;
 
@@ -2231,7 +2231,7 @@ void CNPC_CombineGunship::Flight( void )
 	m_flForce = m_flForce * 0.8 + (accel.z + fabs( accel.x ) * 0.1 + fabs( accel.y ) * 0.1) * 0.1 * 0.2;
 
 	Vector vecImpulse = m_flForce * up;
-	
+
 	if ( !m_hCrashTarget && m_lifeState == LIFE_DYING && !hl2_episodic.GetBool() )
 	{
 		// Force gunship to the ground if it doesn't have a specific place to crash.
@@ -2240,9 +2240,9 @@ void CNPC_CombineGunship::Flight( void )
 	}
 	else
 	{
-		vecImpulse.z -= 38.4;  // 32ft/sec	
+		vecImpulse.z -= 38.4;  // 32ft/sec
 	}
-	
+
 	// Find our current velocity
 	Vector vecVelDir = GetAbsVelocity();
 	VectorNormalize( vecVelDir );
@@ -2264,7 +2264,7 @@ void CNPC_CombineGunship::Flight( void )
 			VectorMA( vecImpulse, -flDot * 0.1f, vecDelta, vecImpulse );
 		}
 	}
-	
+
 	// Find our acceleration direction
 	Vector	vecAccelDir = vecImpulse;
 	VectorNormalize( vecAccelDir );
@@ -2281,7 +2281,7 @@ void CNPC_CombineGunship::Flight( void )
 	// Apply the acceleration blend to the fins
 	float finAccelBlend = SimpleSplineRemapVal( speed, -60, 60, -1, 1 );
 	float curFinAccel = GetPoseParameter( m_poseFin_Accel );
-	
+
 	curFinAccel = UTIL_Approach( finAccelBlend, curFinAccel, 0.5f );
 	SetPoseParameter( m_poseFin_Accel, curFinAccel );
 
@@ -2333,7 +2333,7 @@ void CNPC_CombineGunship::UpdateFacingDirection( void )
 			GetVectors( &m_vecDesiredFaceDir, NULL, NULL );
 		}
 	}
-	VectorNormalize( m_vecDesiredFaceDir ); 
+	VectorNormalize( m_vecDesiredFaceDir );
 }
 
 //------------------------------------------------------------------------------
@@ -2344,14 +2344,14 @@ void CNPC_CombineGunship::UpdateFacingDirection( void )
 void CNPC_CombineGunship::InitializeRotorSound( void )
 {
 	CSoundEnvelopeController &controller = CSoundEnvelopeController::GetController();
-	
+
 	CPASAttenuationFilter filter( this );
 
 	m_pCannonSound		= controller.SoundCreate( filter, entindex(), "NPC_CombineGunship.CannonSound" );
 	m_pRotorSound		= controller.SoundCreate( filter, entindex(), "NPC_CombineGunship.RotorSound" );
 	m_pAirExhaustSound	= controller.SoundCreate( filter, entindex(), "NPC_CombineGunship.ExhaustSound" );
 	m_pAirBlastSound	= controller.SoundCreate( filter, entindex(), "NPC_CombineGunship.RotorBlastSound" );
-	
+
 	controller.Play( m_pCannonSound, 0.0, 100 );
 	controller.Play( m_pAirExhaustSound, 0.0, 100 );
 	controller.Play( m_pAirBlastSound, 0.0, 100 );
@@ -2369,7 +2369,7 @@ void CNPC_CombineGunship::UpdateRotorSoundPitch( int iPitch )
 {
 	CSoundEnvelopeController &controller = CSoundEnvelopeController::GetController();
 
-	// Apply the pitch to both sounds. 
+	// Apply the pitch to both sounds.
 	controller.SoundChangePitch( m_pAirExhaustSound, iPitch, 0.1 );
 
 	// FIXME: Doesn't work in multiplayer
@@ -2395,9 +2395,9 @@ void CNPC_CombineGunship::UpdateRotorSoundPitch( int iPitch )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  :
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::ApplySidewaysDrag( const Vector &vecRight )
 {
@@ -2424,7 +2424,7 @@ void CNPC_CombineGunship::SelfDestruct( void )
 {
 	SetThink( NULL );
 	m_lifeState = LIFE_DEAD;
-	
+
 	StopLoopingSounds();
 	StopCannonBurst();
 
@@ -2471,10 +2471,10 @@ void CNPC_CombineGunship::SelfDestruct( void )
 
 		// Throw out some small chunks too
 		CPVSFilter filter( GetAbsOrigin() );
-	 	for ( int i = 0; i < 20; i++ )
+		for ( int i = 0; i < 20; i++ )
 		{
 			Vector gibVelocity = RandomVector(-100,100) * 10;
-			int iModelIndex = modelinfo->GetModelIndex( g_PropDataSystem.GetRandomChunkModel( "MetalChunks" ) );	
+			int iModelIndex = modelinfo->GetModelIndex( g_PropDataSystem.GetRandomChunkModel( "MetalChunks" ) );
 			te->BreakModel( filter, 0.0, GetAbsOrigin(), vec3_angle, Vector(40,40,40), gibVelocity, iModelIndex, 400, 1, 2.5, BREAK_METAL );
 		}
 
@@ -2545,7 +2545,7 @@ void CNPC_CombineGunship::InputSetNormalBBox( inputdata_t &inputdata )
 {
 	Vector vecBBMin, vecBBMax;
 
-	ExtractBbox( SelectHeaviestSequence( ACT_GUNSHIP_PATROL ), vecBBMin, vecBBMax ); 
+	ExtractBbox( SelectHeaviestSequence( ACT_GUNSHIP_PATROL ), vecBBMin, vecBBMax );
 
 	// Trim the bounding box a bit. It's huge.
 #define GUNSHIP_TRIM_BOX 38
@@ -2558,8 +2558,8 @@ void CNPC_CombineGunship::InputSetNormalBBox( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::InputEnableGroundAttack( inputdata_t &inputdata )
 {
@@ -2567,8 +2567,8 @@ void CNPC_CombineGunship::InputEnableGroundAttack( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::InputDisableGroundAttack( inputdata_t &inputdata )
 {
@@ -2576,8 +2576,8 @@ void CNPC_CombineGunship::InputDisableGroundAttack( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::InputDoGroundAttack( inputdata_t &inputdata )
 {
@@ -2595,8 +2595,8 @@ void CNPC_CombineGunship::InputDoGroundAttack( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &vGunPosition - 
+// Purpose:
+// Input  : &vGunPosition -
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::UpdateEnemyTarget( void )
 {
@@ -2607,7 +2607,7 @@ void CNPC_CombineGunship::UpdateEnemyTarget( void )
 	// Follow mode
 	Vector	enemyPos;
 	bool	bTargettingPlayer;
-	
+
 	if ( GetEnemy() != NULL )
 	{
 		CBaseCombatCharacter *pCCEnemy = GetEnemy()->MyCombatCharacterPointer();
@@ -2616,7 +2616,7 @@ void CNPC_CombineGunship::UpdateEnemyTarget( void )
 			// Update against a driving target
 			enemyPos = GetEnemy()->WorldSpaceCenter();
 		}
-		else 
+		else
 		{
 			enemyPos = GetEnemy()->EyePosition();
 		}
@@ -2659,7 +2659,7 @@ void CNPC_CombineGunship::UpdateEnemyTarget( void )
 	else
 	{
 		maxYaw = 30;
-	}	
+	}
 
 	yawDiff = clamp( yawDiff, -maxYaw, maxYaw );
 
@@ -2741,7 +2741,7 @@ bool CNPC_CombineGunship::PoseGunTowardTargetDirection( const Vector &vTargetDir
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Vector
 //-----------------------------------------------------------------------------
 Vector CNPC_CombineGunship::GetMissileTarget( void )
@@ -2772,15 +2772,15 @@ Vector CNPC_CombineGunship::GetEnemyTarget( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &tr - 
+// Purpose:
+// Input  : &tr -
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::DoImpactEffect( trace_t &tr, int nDamageType )
 {
 	UTIL_ImpactTrace( &tr, nDamageType, "ImpactGunship" );
 
 	// These glow effects don't sort properly, so they're cut for E3 2003 (sjb)
-#if 0 
+#if 0
 	CEffectData data;
 
 	data.m_vOrigin = tr.endpos;
@@ -2793,9 +2793,9 @@ void CNPC_CombineGunship::DoImpactEffect( trace_t &tr, int nDamageType )
 
 //-----------------------------------------------------------------------------
 // Purpose: Make the gunship's signature blue tracer!
-// Input  : &vecTracerSrc - 
-//			&tr - 
-//			iTracerType - 
+// Input  : &vecTracerSrc -
+//			&tr -
+//			iTracerType -
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::MakeTracer( const Vector &vecTracerSrc, const trace_t &tr, int iTracerType )
 {
@@ -2822,10 +2822,10 @@ void CNPC_CombineGunship::MakeTracer( const Vector &vecTracerSrc, const trace_t 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &info - 
-//			&vecDir - 
-//			*ptr - 
+// Purpose:
+// Input  : &info -
+//			&vecDir -
+//			*ptr -
 // Output : int
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator )
@@ -2868,9 +2868,9 @@ void CNPC_CombineGunship::TraceAttack( const CTakeDamageInfo &info, const Vector
 
 //-----------------------------------------------------------------------------
 // Purpose: This is necessary to ensure that the game doesn't break if a mapmaker has outputs that
-//			must be fired on gunships, and the player switches skill levels 
+//			must be fired on gunships, and the player switches skill levels
 //			midway through a gunship battle.
-// Input  : iDamageNumber - 
+// Input  : iDamageNumber -
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::FireDamageOutputsUpto( int iDamageNumber )
 {
@@ -2886,17 +2886,17 @@ void CNPC_CombineGunship::FireDamageOutputsUpto( int iDamageNumber )
 				//Msg("Fired first\n");
 				m_OnFirstDamage.FireOutput( this, this );
 				break;
-			
+
 			case 1:
 				//Msg("Fired second\n");
 				m_OnSecondDamage.FireOutput( this, this );
 				break;
-			
+
 			case 2:
 				//Msg("Fired third\n");
 				m_OnThirdDamage.FireOutput( this, this );
 				break;
-			
+
 			case 3:
 				//Msg("Fired fourth\n");
 				m_OnFourthDamage.FireOutput( this, this );
@@ -2940,7 +2940,7 @@ int	CNPC_CombineGunship::OnTakeDamage_Alive( const CTakeDamageInfo &inputInfo )
 	{
 		ApplyAbsVelocityImpulse( damageDir * 200.0f );
 	}
-	
+
 	if ( m_bInvulnerable == false )
 	{
 		// Take a percentage of our health away
@@ -2955,14 +2955,14 @@ int	CNPC_CombineGunship::OnTakeDamage_Alive( const CTakeDamageInfo &inputInfo )
 			iHealthIncrements = floor( iHealthIncrements * 1.5 );
 		}
 		info.SetDamage( ( GetMaxHealth() / (float)iHealthIncrements ) + 1 );
-		
+
 		// Find out which "stage" we're at in our health
 		int healthIncrement = iHealthIncrements - ( GetHealth() / (float)(( GetMaxHealth() / (float)iHealthIncrements )) );
 		switch ( healthIncrement )
 		{
 		case 1:
 			// If we're on Easy, we're half dead now, so fire the rest of our outputs too
-			// This is done in case the mapmaker's connected those inputs to something important 
+			// This is done in case the mapmaker's connected those inputs to something important
 			// that has to happen before the gunship dies.
 			if ( g_pGameRules->IsSkillLevel( SKILL_EASY ) )
 			{
@@ -2997,9 +2997,9 @@ int	CNPC_CombineGunship::OnTakeDamage_Alive( const CTakeDamageInfo &inputInfo )
 
 		// Dump out metal gibs
 		CPVSFilter filter( GetAbsOrigin() );
-	 	for ( int i = 0; i < 10; i++ )
+		for ( int i = 0; i < 10; i++ )
 		{
-			int iModelIndex = modelinfo->GetModelIndex( g_PropDataSystem.GetRandomChunkModel( "MetalChunks" ) );	
+			int iModelIndex = modelinfo->GetModelIndex( g_PropDataSystem.GetRandomChunkModel( "MetalChunks" ) );
 			te->BreakModel( filter, 0.0, GetAbsOrigin(), vec3_angle, Vector(40,40,40), gibVelocity, iModelIndex, 400, 1, 2.5, BREAK_METAL );
 		}
 	}
@@ -3072,7 +3072,7 @@ void CNPC_CombineGunship::StartCannonBurst( int iBurstSize )
 
 
 //------------------------------------------------------------------------------
-// Purpose : The proper way to cease the gunship cannon firing. 
+// Purpose : The proper way to cease the gunship cannon firing.
 //------------------------------------------------------------------------------
 void CNPC_CombineGunship::StopCannonBurst( void )
 {
@@ -3102,7 +3102,7 @@ void CNPC_CombineGunship::StopCannonBurst( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::StopLoopingSounds( void )
 {
@@ -3137,8 +3137,8 @@ void CNPC_CombineGunship::StopLoopingSounds( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEnemy - 
+// Purpose:
+// Input  : *pEnemy -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_CombineGunship::IsValidEnemy( CBaseEntity *pEnemy )
@@ -3187,7 +3187,7 @@ bool CNPC_CombineGunship::IsTargettingMissile( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::InputBecomeInvulnerable( inputdata_t &input )
 {
@@ -3195,7 +3195,7 @@ void CNPC_CombineGunship::InputBecomeInvulnerable( inputdata_t &input )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_CombineGunship::InputBecomeVulnerable( inputdata_t &input )
 {
@@ -3225,4 +3225,3 @@ AI_BEGIN_CUSTOM_NPC( npc_combinegunship, CNPC_CombineGunship )
 
 
 AI_END_CUSTOM_NPC()
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectTunnel : public C_ObjectMapDefined
 {
@@ -41,7 +41,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_ObjectTunnel, DT_ObjectTunnel, CObjectTunnel)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectTunnel::C_ObjectTunnel()
 {
@@ -49,14 +49,14 @@ C_ObjectTunnel::C_ObjectTunnel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CMinimapObjectTunnelPanel : public CMinimapTraceTeamBitmapPanel
 {
 	DECLARE_CLASS( CMinimapObjectTunnelPanel, CMinimapTraceTeamBitmapPanel );
 
 public:
-	CMinimapObjectTunnelPanel( vgui::Panel *parent, const char *panelName ) 
+	CMinimapObjectTunnelPanel( vgui::Panel *parent, const char *panelName )
 	 : BaseClass( parent, "CMinimapObjectTunnelPanel" )
 	{
 	}
@@ -84,9 +84,9 @@ private:
 DECLARE_MINIMAP_FACTORY( CMinimapObjectTunnelPanel, "minimap_obj_tunnel_panel" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pKeyValues - 
-//			pInitData - 
+// Purpose:
+// Input  : pKeyValues -
+//			pInitData -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMinimapObjectTunnelPanel::Init( KeyValues* pKeyValues, MinimapInitData_t* pInitData )
@@ -113,7 +113,7 @@ bool CMinimapObjectTunnelPanel::Init( KeyValues* pKeyValues, MinimapInitData_t* 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMinimapObjectTunnelPanel::Paint()
 {

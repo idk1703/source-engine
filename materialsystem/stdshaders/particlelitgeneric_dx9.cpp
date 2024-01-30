@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -9,7 +9,7 @@
 #include "BaseVSShader.h"
 #include "particlelitgeneric_dx9_helper.h"
 
-BEGIN_VS_SHADER( ParticleLitGeneric_DX9, 
+BEGIN_VS_SHADER( ParticleLitGeneric_DX9,
 				"Help for ParticleLitGeneric_DX9" )
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( BUMPMAP, SHADER_PARAM_TYPE_TEXTURE, "models/shadertest/shader1_normal", "bump map" )
@@ -38,7 +38,7 @@ BEGIN_VS_SHADER( ParticleLitGeneric_DX9,
 	}
 
 	SHADER_FALLBACK
-	{	
+	{
 		if (g_pHardwareConfig->GetDXSupportLevel() < 70)
 			return "ParticleLitGeneric_DX6";
 

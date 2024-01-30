@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -62,7 +62,7 @@ BEGIN_DATADESC( CFuncNoBuild )
 	DEFINE_KEYFIELD( m_bAllowSentry, FIELD_BOOLEAN, "AllowSentry" ),
 	DEFINE_KEYFIELD( m_bAllowDispenser, FIELD_BOOLEAN, "AllowDispenser" ),
 	DEFINE_KEYFIELD( m_bAllowTeleporters, FIELD_BOOLEAN, "AllowTeleporters" ),
-	
+
 END_DATADESC()
 
 
@@ -71,7 +71,7 @@ PRECACHE_REGISTER( func_nobuild );
 IMPLEMENT_AUTO_LIST( IFuncNoBuildAutoList );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFuncNoBuild::CFuncNoBuild()
 	: m_bAllowSentry( false )
@@ -92,14 +92,14 @@ void CFuncNoBuild::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncNoBuild::Precache( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncNoBuild::Activate( void )
 {
@@ -109,7 +109,7 @@ void CFuncNoBuild::Activate( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncNoBuild::InputSetActive( inputdata_t &inputdata )
 {
@@ -117,7 +117,7 @@ void CFuncNoBuild::InputSetActive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncNoBuild::InputSetInactive( inputdata_t &inputdata )
 {
@@ -125,7 +125,7 @@ void CFuncNoBuild::InputSetInactive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncNoBuild::InputToggleActive( inputdata_t &inputdata )
 {
@@ -140,7 +140,7 @@ void CFuncNoBuild::InputToggleActive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncNoBuild::SetActive( bool bActive )
 {
@@ -148,7 +148,7 @@ void CFuncNoBuild::SetActive( bool bActive )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CFuncNoBuild::GetActive() const
 {

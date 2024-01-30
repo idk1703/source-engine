@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -59,7 +59,7 @@ int main( int argc, char **argv )
 	}
 
 	memset( g_NumBonesInLOD, 0, sizeof( int ) * MAX_NUM_LODS );
-	
+
 	FILE *fp;
 	fp = fopen( argv[1], "rb" );
 	if( !fp )
@@ -89,7 +89,7 @@ int main( int argc, char **argv )
 			PrintBoneGraphRecursive( pStudioHdr, i, 0 );
 		}
 	}
-	
+
 	fclose( fp );
 
 	for( i = 0; i < MAX_NUM_LODS; i++ )

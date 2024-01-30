@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -25,9 +25,9 @@ class CWeaponMP5 : public CWeaponSDKBase
 {
 public:
 	DECLARE_CLASS( CWeaponMP5, CWeaponSDKBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponMP5();
 
 	virtual void PrimaryAttack();
@@ -109,7 +109,7 @@ void CWeaponMP5::PrimaryAttack( void )
 	// more spread when jumping
 	if ( !FBitSet( pPlayer->GetFlags(), FL_ONGROUND ) )
 		flSpread = 0.05f;
-	
+
 	pPlayer->m_iShotsFired++;
 
 	// Out of ammo?
@@ -139,7 +139,7 @@ void CWeaponMP5::PrimaryAttack( void )
 		flSpread );
 
 	pPlayer->DoMuzzleFlash();
-	
+
 	m_flNextPrimaryAttack = m_flNextSecondaryAttack = gpGlobals->curtime + flCycleTime;
 
 	if (!m_iClip1 && pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) <= 0)
@@ -164,5 +164,3 @@ void CWeaponMP5::WeaponIdle()
 		SendWeaponAnim( ACT_VM_IDLE );
 	}
 }
-
-

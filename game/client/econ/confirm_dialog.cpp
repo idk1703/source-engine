@@ -31,7 +31,7 @@ static const wchar_t* GetSCGlyph( const char* action )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CConfirmDialog::CConfirmDialog( vgui::Panel *parent )
 :	BaseClass( parent, "ConfirmDialog" ),
@@ -42,7 +42,7 @@ CConfirmDialog::CConfirmDialog( vgui::Panel *parent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -78,7 +78,7 @@ void CConfirmDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmDialog::Show( bool bMakePopup )
 {
@@ -115,7 +115,7 @@ void CConfirmDialog::Show( bool bMakePopup )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmDialog::SetIconImage( const char *pszIcon )
 {
@@ -128,7 +128,7 @@ void CConfirmDialog::SetIconImage( const char *pszIcon )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmDialog::OnCommand( const char *command )
 {
@@ -151,7 +151,7 @@ void CConfirmDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmDialog::OnKeyCodeTyped( vgui::KeyCode code )
 {
@@ -166,7 +166,7 @@ void CConfirmDialog::OnKeyCodeTyped( vgui::KeyCode code )
 }
 
 ///-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmDialog::OnKeyCodePressed( vgui::KeyCode code )
 {
@@ -189,7 +189,7 @@ void CConfirmDialog::OnKeyCodePressed( vgui::KeyCode code )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CConfirmDialog::GetResFile()
 {
@@ -214,7 +214,7 @@ void CConfirmDialog::FinishUp()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmDialog::OnSizeChanged( int nNewWide, int nNewTall )
 {
@@ -235,11 +235,11 @@ void CConfirmDialog::OnSizeChanged( int nNewWide, int nNewTall )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFGenericConfirmDialog::CTFGenericConfirmDialog( const char *pTitle, const char *pTextKey,
-												  const char *pConfirmBtnText, const char *pCancelBtnText,
-												  GenericConfirmDialogCallback callback, vgui::Panel *pParent ) 
+													const char *pConfirmBtnText, const char *pCancelBtnText,
+													GenericConfirmDialogCallback callback, vgui::Panel *pParent )
 :	BaseClass( pParent ),
 	m_pTextKey( pTextKey )
 {
@@ -247,11 +247,11 @@ CTFGenericConfirmDialog::CTFGenericConfirmDialog( const char *pTitle, const char
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFGenericConfirmDialog::CTFGenericConfirmDialog( const char *pTitle, const wchar_t *pText,
-												  const char *pConfirmBtnText, const char *pCancelBtnText,
-												  GenericConfirmDialogCallback callback, vgui::Panel *pParent )
+													const char *pConfirmBtnText, const char *pCancelBtnText,
+													GenericConfirmDialogCallback callback, vgui::Panel *pParent )
 :	BaseClass( pParent ),
 	m_pTextKey( NULL )
 {
@@ -261,10 +261,10 @@ CTFGenericConfirmDialog::CTFGenericConfirmDialog( const char *pTitle, const wcha
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGenericConfirmDialog::CommonInit( const char *pTitle, const char *pConfirmBtnText, const char *pCancelBtnText,
-				 GenericConfirmDialogCallback callback, vgui::Panel *pParent )
+				GenericConfirmDialogCallback callback, vgui::Panel *pParent )
 {
 	if ( pParent == NULL )
 	{
@@ -282,7 +282,7 @@ void CTFGenericConfirmDialog::CommonInit( const char *pTitle, const char *pConfi
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFGenericConfirmDialog::~CTFGenericConfirmDialog()
 {
@@ -293,7 +293,7 @@ CTFGenericConfirmDialog::~CTFGenericConfirmDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const wchar_t *CTFGenericConfirmDialog::GetText()
 {
@@ -307,7 +307,7 @@ const wchar_t *CTFGenericConfirmDialog::GetText()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGenericConfirmDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -334,7 +334,7 @@ void CTFGenericConfirmDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGenericConfirmDialog::PerformLayout()
 {
@@ -346,7 +346,7 @@ void CTFGenericConfirmDialog::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGenericConfirmDialog::OnCommand( const char *command )
 {
@@ -378,7 +378,7 @@ void CTFGenericConfirmDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGenericConfirmDialog::SetStringTokens( KeyValues *pKeyValues )
 {
@@ -390,7 +390,7 @@ void CTFGenericConfirmDialog::SetStringTokens( KeyValues *pKeyValues )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGenericConfirmDialog::AddStringToken( const char* pToken, const wchar_t* pValue )
 {
@@ -403,7 +403,7 @@ void CTFGenericConfirmDialog::AddStringToken( const char* pToken, const wchar_t*
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGenericConfirmDialog::SetContext( void *pContext )
 {
@@ -412,17 +412,17 @@ void CTFGenericConfirmDialog::SetContext( void *pContext )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTFGenericConfirmOptOutDialog::CTFGenericConfirmOptOutDialog( const char *pTitle, 
-															  const char *pText, 
-															  const char *pConfirmBtnText, 
-															  const char *pCancelBtnText,
-															  const char *pOptOutText,
-															  const char *pOptOutConVarName, 
-															  GenericConfirmDialogCallback callback, 
-															  vgui::Panel *parent ) : 
-															  CTFGenericConfirmDialog( pTitle, pText, pConfirmBtnText, pCancelBtnText, callback, parent )
+CTFGenericConfirmOptOutDialog::CTFGenericConfirmOptOutDialog( const char *pTitle,
+																const char *pText,
+																const char *pConfirmBtnText,
+																const char *pCancelBtnText,
+																const char *pOptOutText,
+																const char *pOptOutConVarName,
+																GenericConfirmDialogCallback callback,
+																vgui::Panel *parent ) :
+																CTFGenericConfirmDialog( pTitle, pText, pConfirmBtnText, pCancelBtnText, callback, parent )
 {
 	m_optOutText = pOptOutText;
 	m_optOutCheckbox = NULL;
@@ -431,7 +431,7 @@ CTFGenericConfirmOptOutDialog::CTFGenericConfirmOptOutDialog( const char *pTitle
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGenericConfirmOptOutDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -466,16 +466,16 @@ void CTFGenericConfirmOptOutDialog::ApplySchemeSettings( vgui::IScheme *pScheme 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFGenericConfirmOptOutDialog::GetResFile()
 {
-  return "Resource/UI/econ/ConfirmDialogOptOut.res";
+	return "Resource/UI/econ/ConfirmDialogOptOut.res";
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFGenericConfirmOptOutDialog::OnButtonChecked( KeyValues *pData )
 {
@@ -490,7 +490,7 @@ void CTFGenericConfirmOptOutDialog::OnButtonChecked( KeyValues *pData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFUpgradeBoxDialog::OnCommand( const char *command )
 {
@@ -510,10 +510,10 @@ void CTFUpgradeBoxDialog::OnCommand( const char *command )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFGenericConfirmDialog *ShowConfirmDialog( const char *pTitle, const char *pText, const char *pConfirmBtnText, const char *pCancelBtnText, GenericConfirmDialogCallback callback,
-										    vgui::Panel *parent/*=NULL*/, void *pContext/*=NULL*/, const char *pSound/*=NULL*/ )
+												vgui::Panel *parent/*=NULL*/, void *pContext/*=NULL*/, const char *pSound/*=NULL*/ )
 {
 	CTFGenericConfirmDialog *pDialog = vgui::SETUP_PANEL(
 		new CTFGenericConfirmDialog(
@@ -543,7 +543,7 @@ CTFGenericConfirmDialog *ShowConfirmDialog( const char *pTitle, const char *pTex
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFMessageBoxDialog *ShowMessageBox( const char *pTitle, const char *pText, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent, void *pContext )
 {
@@ -551,7 +551,7 @@ CTFMessageBoxDialog *ShowMessageBox( const char *pTitle, const char *pText, cons
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFMessageBoxDialog *ShowMessageBox( const char *pTitle, const wchar_t *pText, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent , void *pContext)
 {
@@ -577,7 +577,7 @@ CTFMessageBoxDialog *ShowMessageBox( const char *pTitle, const wchar_t *pText, c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFMessageBoxDialog *ShowMessageBox( const char *pTitle, const char *pText, KeyValues *pKeyValues, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent , void *pContext)
 {
@@ -610,9 +610,9 @@ CTFMessageBoxDialog *ShowMessageBox( const char *pTitle, const char *pText, KeyV
 CTFGenericConfirmOptOutDialog *ShowConfirmOptOutDialog( const char *pTitle, const char *pText, const char *pConfirmBtnText, const char *pCancelBtnText, const char *pOptOutText, const char *pOptOutConVarName, GenericConfirmDialogCallback callback, vgui::Panel *parent)
 {
 	CTFGenericConfirmOptOutDialog *pDialog = vgui::SETUP_PANEL( new CTFGenericConfirmOptOutDialog( pTitle, pText,
-																								   pConfirmBtnText, pCancelBtnText,
-																								   pOptOutText, pOptOutConVarName,
-																								   callback, parent ) );
+																									pConfirmBtnText, pCancelBtnText,
+																									pOptOutText, pOptOutConVarName,
+																									callback, parent ) );
 	if ( pDialog )
 	{
 		pDialog->Show();
@@ -623,12 +623,12 @@ CTFGenericConfirmOptOutDialog *ShowConfirmOptOutDialog( const char *pTitle, cons
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFMessageBoxDialog *ShowUpgradeMessageBox( const char *pTitle, const char *pText,
-										   const char *pConfirmBtnText, 
-										   GenericConfirmDialogCallback callback,
-										   vgui::Panel *parent, void *pContext )
+											const char *pConfirmBtnText,
+											GenericConfirmDialogCallback callback,
+											vgui::Panel *parent, void *pContext )
 {
 	CTFMessageBoxDialog *pDialog = vgui::SETUP_PANEL(
 		new CTFUpgradeBoxDialog(
@@ -655,7 +655,7 @@ CTFMessageBoxDialog *ShowUpgradeMessageBox( const char *pTitle, const char *pTex
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFMessageBoxDialogWithSound *ShowMessageBoxWithSound( const char *pTitle, const char *pText, const char *pszSound, float flDelay, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent, void *pContext )
 {
@@ -663,7 +663,7 @@ CTFMessageBoxDialogWithSound *ShowMessageBoxWithSound( const char *pTitle, const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFMessageBoxDialogWithSound *ShowMessageBoxWithSound( const char *pTitle, const wchar_t *pText, const char *pszSound, float flDelay, const char *pConfirmBtnText , GenericConfirmDialogCallback callback, vgui::Panel *parent, void *pContext )
 {
@@ -683,7 +683,7 @@ CTFMessageBoxDialogWithSound *ShowMessageBoxWithSound( const char *pTitle, const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFMessageBoxDialogWithSound *ShowMessageBoxWithSound( const char *pTitle, const char *pText, KeyValues *pKeyValues, const char *pszSound, float flDelay, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent, void *pContext )
 {
@@ -709,9 +709,9 @@ CTFMessageBoxDialogWithSound *ShowMessageBoxWithSound( const char *pTitle, const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTFMessageBoxDialogWithSound::CTFMessageBoxDialogWithSound( const char *pTitle, const char *pText, const char *pszSound, float flDelay, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent ) 
+CTFMessageBoxDialogWithSound::CTFMessageBoxDialogWithSound( const char *pTitle, const char *pText, const char *pszSound, float flDelay, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent )
 	: CTFMessageBoxDialog( pTitle, pText, pConfirmBtnText, callback, parent )
 {
 	m_szSound[0] = 0;
@@ -728,9 +728,9 @@ CTFMessageBoxDialogWithSound::CTFMessageBoxDialogWithSound( const char *pTitle, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTFMessageBoxDialogWithSound::CTFMessageBoxDialogWithSound( const char *pTitle, const wchar_t *pText, const char *pszSound, float flDelay, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent ) 
+CTFMessageBoxDialogWithSound::CTFMessageBoxDialogWithSound( const char *pTitle, const wchar_t *pText, const char *pszSound, float flDelay, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent )
 	: CTFMessageBoxDialog( pTitle, pText, pConfirmBtnText, callback, parent )
 {
 	m_szSound[0] = 0;
@@ -747,7 +747,7 @@ CTFMessageBoxDialogWithSound::CTFMessageBoxDialogWithSound( const char *pTitle, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMessageBoxDialogWithSound::OnTick()
 {
@@ -770,7 +770,7 @@ void CTFMessageBoxDialogWithSound::OnTick()
 
 #ifdef TF_CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFReviveDialog::CTFReviveDialog( const char *pTitle, const char *pText, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent )
 : CTFMessageBoxDialog( pTitle, pText, pConfirmBtnText, callback, parent )
@@ -778,13 +778,13 @@ CTFReviveDialog::CTFReviveDialog( const char *pTitle, const char *pText, const c
 	m_pTargetHealth = new CTFSpectatorGUIHealth( this, "SpectatorGUIHealth" );
 	m_pTargetHealth->SetAllowAnimations( false );
 	m_pTargetHealth->HideHealthBonusImage();
-	
+
 	vgui::ivgui()->AddTickSignal( GetVPanel(), 50 );
 	OnTick();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFReviveDialog::PerformLayout()
 {
@@ -792,7 +792,7 @@ void CTFReviveDialog::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFReviveDialog::OnTick()
 {
@@ -828,11 +828,11 @@ void CTFReviveDialog::SetOwner( CBaseEntity *pEntity )
 // Purpose: In-game dialog that avoids the crosshair area and is much smaller
 //-----------------------------------------------------------------------------
 CTFReviveDialog *ShowRevivePrompt( CBaseEntity *pOwner,
-								   const char *pTitle, 
-								   const char *pText,
-								   const char *pConfirmBtnText, 
-								   GenericConfirmDialogCallback callback,
-								   vgui::Panel *parent, void *pContext )
+									const char *pTitle,
+									const char *pText,
+									const char *pConfirmBtnText,
+									GenericConfirmDialogCallback callback,
+									vgui::Panel *parent, void *pContext )
 {
 	CTFReviveDialog *pDialog = vgui::SETUP_PANEL( new CTFReviveDialog( pTitle, pText, pConfirmBtnText, callback, parent ) );
 	if ( pDialog )
@@ -850,7 +850,7 @@ CTFReviveDialog *ShowRevivePrompt( CBaseEntity *pOwner,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEconRequirementDialog::CEconRequirementDialog( const char *pTitle, const char *pTextKey, const char *pItemDefName )
 	: CTFGenericConfirmDialog( pTitle, pTextKey, NULL, NULL, NULL, NULL )
@@ -859,7 +859,7 @@ CEconRequirementDialog::CEconRequirementDialog( const char *pTitle, const char *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CEconRequirementDialog::GetResFile()
 {
@@ -867,7 +867,7 @@ const char *CEconRequirementDialog::GetResFile()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconRequirementDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -882,7 +882,7 @@ void CEconRequirementDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconRequirementDialog::OnCommand( const char *command )
 {
@@ -901,7 +901,7 @@ void CEconRequirementDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ShowEconRequirementDialog( const char *pTitle, const char *pText, const char *pItemDefName )
 {

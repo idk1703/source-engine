@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,7 +29,7 @@
 #define ROPE_SIMULATE			(1<<3)		// Is the rope valid?
 #define ROPE_BREAKABLE			(1<<4)		// Can the endpoints detach?
 #define ROPE_NO_WIND			(1<<5)		// No wind simulation on this rope.
-#define ROPE_INITIAL_HANG		(1<<6)		// By default, ropes will simulate for a bit internally when they 
+#define ROPE_INITIAL_HANG		(1<<6)		// By default, ropes will simulate for a bit internally when they
 											// are created so they sag, but dynamically created ropes for things
 											// like harpoons don't want this.
 #define ROPE_PLAYER_WPN_ATTACH	(1<<7)		// If this flag is set, then the second attachment must be a player.
@@ -40,7 +40,7 @@
 #define ROPE_NUMFLAGS			9
 
 
-// This is added to all rope slacks so when a level designer enters a 
+// This is added to all rope slacks so when a level designer enters a
 // slack of zero in the entity, it doesn't dangle so low.
 #define ROPESLACK_FUDGEFACTOR	-100
 

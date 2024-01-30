@@ -116,7 +116,7 @@ protected:
 
 #if BUILD_ITEM_NAME_AND_DESC
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class IAccountPersonaLocalizer
 {
@@ -125,7 +125,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CEconItemDescription : public IEconItemDescription, public IAccountPersonaLocalizer
 {
@@ -246,7 +246,7 @@ public:
 #else // if defined( CLIENT_DLL )
 	bool HasUnknownPlayer( ) const
 	{
-		return m_bUnknownPlayer;	
+		return m_bUnknownPlayer;
 	}
 #endif
 
@@ -258,7 +258,7 @@ private:
 private:
 	// Internal.
 	virtual void AddAttributeDescription( const CLocalizationProvider *pLocalizationProvider, const CEconItemAttributeDefinition *pAttribDef, attrib_value_t value, attrib_colors_t eOverrideDisplayColor = NUM_ATTRIB_COLORS );
-	
+
 	virtual void Generate_ItemName( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem );
 	virtual void Generate_ItemLevelDesc( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem );
 #if defined( STAGING_ONLY ) && defined( CLIENT_DLL )
@@ -294,7 +294,7 @@ private:
 	virtual void Generate_MarketInformation( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem );
 	virtual void Generate_FlagsAttributes( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem );
 	virtual void Generate_DropPeriodDesc( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem );
-	
+
 	virtual void Generate_VisibleAttributes( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem );
 	virtual void Generate_DirectX8Warning( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem );
 
@@ -344,7 +344,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CEconAttributeDescription
 {
@@ -400,7 +400,7 @@ enum EGenerateLocalizedFullItemNameFlag_t
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CEconItemLocalizedFullNameGenerator
 {
@@ -414,7 +414,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CEconItemLocalizedMarketNameGenerator
 {
@@ -428,7 +428,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CSteamAccountIDAttributeCollector : public CEconItemSpecificAttributeIterator
 {

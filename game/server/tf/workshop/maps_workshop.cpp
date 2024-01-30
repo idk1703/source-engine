@@ -98,10 +98,10 @@ static ISteamUGC *GetWorkshopUGC()
 
 CTFWorkshopMap::CTFWorkshopMap( PublishedFileId_t fileID )
 	: m_nFileID( fileID ),
-	  m_rtimeUpdated( 0 ),
-	  m_nFileSize( 0 ),
-	  m_eState( eState_Refreshing ),
-	  m_bHighPriority( false )
+	m_rtimeUpdated( 0 ),
+	m_nFileSize( 0 ),
+	m_eState( eState_Refreshing ),
+	m_bHighPriority( false )
 {
 	TFWorkshopDebug( "Created TFWorkshopMap for [ %llu ]\n", (uint64)fileID );
 
@@ -218,7 +218,7 @@ void CTFWorkshopMap::Steam_OnQueryUGCDetails( SteamUGCQueryCompleted_t *pResult,
 
 	uint32 state = steamUGC->GetItemState( m_nFileID );
 	if (( state & k_EItemStateNeedsUpdate ) ||
-	    !( state & ( k_EItemStateDownloading | k_EItemStateDownloadPending | k_EItemStateInstalled ) ) )
+	!( state & ( k_EItemStateDownloading | k_EItemStateDownloadPending | k_EItemStateInstalled ) ) )
 	{
 		// Either out of date or not installed, downloading, or queued to download, ask UGC to do so. The latter happens
 		// for maps added not from subscriptions that have no reason for UGC to initiate downloads on its own.
@@ -232,9 +232,9 @@ void CTFWorkshopMap::Steam_OnQueryUGCDetails( SteamUGCQueryCompleted_t *pResult,
 		m_eState = eState_Downloading;
 	}
 	else if ( engine->IsDedicatedServer() &&
-	          ( state & k_EItemStateInstalled ) &&
-	          !( state & k_EItemStateDownloading ) &&
-	          steamUGC->DownloadItem( m_nFileID, m_bHighPriority ) )
+	( state & k_EItemStateInstalled ) &&
+	!( state & k_EItemStateDownloading ) &&
+	steamUGC->DownloadItem( m_nFileID, m_bHighPriority ) )
 	{
 		// TODO This is working around a ISteamUGC bug, wherein it sends us the result of the query for a newer revision
 		//      of the file, but GetItemState() does not see an update available yet. This only seems to occur using the
@@ -280,9 +280,9 @@ bool CTFWorkshopMap::Downloaded( float *flProgress )
 {
 	uint32 state = GetWorkshopUGC()->GetItemState( m_nFileID );
 	if (( state & k_EItemStateInstalled ) &&
-	    !( state & ( k_EItemStateNeedsUpdate |
-	                 k_EItemStateDownloadPending |
-	                 k_EItemStateDownloading )))
+	!( state & ( k_EItemStateNeedsUpdate |
+	k_EItemStateDownloadPending |
+	k_EItemStateDownloading )))
 	{
 		if ( flProgress )
 		{
@@ -526,8 +526,8 @@ bool CTFMapsWorkshop::IsSubscribed( PublishedFileId_t nFileID )
 //-----------------------------------------------------------------------------
 IServerGameDLL::ePrepareLevelResourcesResult
 CTFMapsWorkshop::AsyncPrepareLevelResources( /* in/out */ char *pMapName, size_t nMaxMapNameLen,
-                                             /* in/out */ char *pMapFileToUse, size_t nMaxMapFileLen,
-                                             float *flProgress /* = NULL */ )
+	/* in/out */ char *pMapFileToUse, size_t nMaxMapFileLen,
+	float *flProgress /* = NULL */ )
 {
 	// Files from this hook start with maps/
 	PublishedFileId_t nMapID = k_PublishedFileIdInvalid;
@@ -602,7 +602,7 @@ CTFMapsWorkshop::AsyncPrepareLevelResources( /* in/out */ char *pMapName, size_t
 		}
 		else
 		{
-		    // Tell engine we're done so it can go on and fail. It should be using maps/workshop/foo.ugc1234.bsp as a fallback...
+		// Tell engine we're done so it can go on and fail. It should be using maps/workshop/foo.ugc1234.bsp as a fallback...
 			TFWorkshopWarning( "Map synced, but failed to resolve local file [ %s ]\n", pMap->CanonicalName() ? pMap->CanonicalName() : "" );
 		}
 	}
@@ -628,7 +628,7 @@ CTFMapsWorkshop::AsyncPrepareLevelResources( /* in/out */ char *pMapName, size_t
 // Purpose: Hook from ServerGameDLL to allow us to catch and prepare a workshop map load
 //-----------------------------------------------------------------------------
 void CTFMapsWorkshop::PrepareLevelResources( /* in/out */ char *pszMapName, size_t nMapNameSize,
-                                             /* in/out */ char *pszMapFile, size_t nMapFileSize )
+	/* in/out */ char *pszMapFile, size_t nMapFileSize )
 {
 	// Prepare the map if necessary
 	PublishedFileId_t nWorkshopID = MapIDFromName( pszMapName );
@@ -661,7 +661,7 @@ void CTFMapsWorkshop::PrepareLevelResources( /* in/out */ char *pszMapName, size
 	TFWorkshopMsg( "Preparing map ID %llu\n", nWorkshopID );
 
 	while ( AsyncPrepareLevelResources( pszMapName, nMapNameSize, pszMapFile, nMapFileSize ) == \
-	        IServerGameDLL::ePrepareLevelResources_InProgress )
+	IServerGameDLL::ePrepareLevelResources_InProgress )
 	{
 		ThreadSleep( 10 );
 		if ( engine->IsDedicatedServer() )
@@ -891,11 +891,11 @@ PublishedFileId_t CTFMapsWorkshop::MapIDFromName( CUtlString localMapName )
 		// since IDs can update their display name at arbitrary points, but "workshop/\n\n\x1.ugc5" should not parse as
 		// a valid alias for workshop/5
 		CUtlString baseMapName = localMapName.Slice( sizeof( szWorkshopPrefix ) - 1,
-		                                             (int32)((intptr_t)pszUGCSuffix - (intptr_t)localMapName.Get()) );
+			(int32)((intptr_t)pszUGCSuffix - (intptr_t)localMapName.Get()) );
 		if ( !IsValidDisplayNameForMap( baseMapName ) )
 		{
 			TFWorkshopDebug( "Map '%s' looks like a workshop map, but '%s' is not a legal workshop map name\n",
-			                 localMapName.Get(), baseMapName.Get() );
+			localMapName.Get(), baseMapName.Get() );
 			return k_PublishedFileIdInvalid;
 		}
 	}

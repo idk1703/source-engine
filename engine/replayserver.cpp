@@ -97,7 +97,7 @@ void CReplayDeltaEntityCache::SetTick( int nTick, int nMaxEntities )
 unsigned char* CReplayDeltaEntityCache::FindDeltaBits( int nEntityIndex, int nDeltaTick, int &nBits )
 {
 	nBits = -1;
-	
+
 	if ( nEntityIndex < 0 || nEntityIndex >= m_nMaxEntities )
 		return NULL;
 
@@ -108,7 +108,7 @@ unsigned char* CReplayDeltaEntityCache::FindDeltaBits( int nEntityIndex, int nDe
 		if ( pEntry->nDeltaTick == nDeltaTick )
 		{
 			nBits = pEntry->nBits;
-			return (unsigned char*)(pEntry) + sizeof(DeltaEntityEntry_s);		
+			return (unsigned char*)(pEntry) + sizeof(DeltaEntityEntry_s);
 		}
 		else
 		{
@@ -116,7 +116,7 @@ unsigned char* CReplayDeltaEntityCache::FindDeltaBits( int nEntityIndex, int nDe
 			pEntry = pEntry->pNext;
 		}
 	}
-	
+
 	return NULL;
 }
 
@@ -159,17 +159,17 @@ void CReplayDeltaEntityCache::AddDeltaBits( int nEntityIndex, int nDeltaTick, in
 	pEntry->pNext = NULL; // link to next
 	pEntry->nDeltaTick = nDeltaTick;
 	pEntry->nBits = nBits;
-	
+
 	if ( nBits > 0 )
 	{
-		bf_read  inBuffer; 
+		bf_read  inBuffer;
 		inBuffer.StartReading( pBuffer->GetData(), pBuffer->m_nDataBytes, pBuffer->GetNumBitsWritten() );
 		bf_write outBuffer( (char*)(pEntry) + sizeof(DeltaEntityEntry_s), nBufferSize );
 		outBuffer.WriteBitsFromBuffer( &inBuffer, nBits );
 	}
 }
 
-						  
+
 static RecvTable* FindRecvTable( const char *pName, RecvTable **pRecvTables, int nRecvTables )
 {
 	for ( int i=0; i< nRecvTables; i++ )
@@ -201,7 +201,7 @@ static RecvTable* AddRecvTableR( SendTable *sendt, RecvTable **pRecvTables, int 
 
 			rp->m_pVarName	= sp->m_pVarName;
 			rp->m_RecvType	= sp->m_Type;
-			
+
 			if ( sp->IsExcludeProp() )
 			{
 				// if prop is excluded, give different name
@@ -213,12 +213,12 @@ static RecvTable* AddRecvTableR( SendTable *sendt, RecvTable **pRecvTables, int 
 				rp->SetInsideArray();
 				rp->m_pVarName = "InsideArrayProp"; // give different name
 			}
-			
+
 			if ( sp->GetType() == DPT_Array )
 			{
 				Assert ( sp->GetArrayProp() == sendt->GetProp( i-1 ) );
 				Assert( receiveProps[i-1].IsInsideArray() );
-				
+
 				rp->SetArrayProp( &receiveProps[i-1] );
 				rp->InitArray( sp->m_nElements, sp->m_ElementStride );
 			}
@@ -261,7 +261,7 @@ void CReplayServer::FreeClientRecvTables()
 
 		// delete the table itself
 		delete rt;
-		
+
 	}
 
 	Q_memset( m_pRecvTables, 0, sizeof( m_pRecvTables ) );
@@ -272,7 +272,7 @@ void CReplayServer::FreeClientRecvTables()
 void CReplayServer::InitClientRecvTables()
 {
 	ServerClass* pCur = NULL;
-	
+
 	if ( ClientDLL_GetAllClasses() != NULL )
 		return; //already initialized
 
@@ -282,17 +282,17 @@ void CReplayServer::InitClientRecvTables()
 		// create receive table from send table.
 		AddRecvTableR( pCur->m_pTable, m_pRecvTables, m_nRecvTables );
 
-		ErrorIfNot( 
-			m_nRecvTables < ARRAYSIZE( m_pRecvTables ), 
+		ErrorIfNot(
+			m_nRecvTables < ARRAYSIZE( m_pRecvTables ),
 			("AddRecvTableR: overflowed MAX_DATATABLES")
 			);
 	}
 
-	// now register client classes 
+	// now register client classes
 	for ( pCur = serverGameDLL->GetAllServerClasses(); pCur; pCur=pCur->m_pNext )
 	{
-		ErrorIfNot( 
-			m_nRecvTables < ARRAYSIZE( m_pRecvTables ), 
+		ErrorIfNot(
+			m_nRecvTables < ARRAYSIZE( m_pRecvTables ),
 			("ClientDLL_InitRecvTableMgr: overflowed MAX_DATATABLES")
 			);
 
@@ -300,7 +300,7 @@ void CReplayServer::InitClientRecvTables()
 		RecvTable * recvt = FindRecvTable( pCur->m_pTable->GetName(), m_pRecvTables, m_nRecvTables );
 
 		Assert ( recvt );
-		
+
 		// register class, constructor addes clientClass to g_pClientClassHead list
 		ClientClass * clientclass = new ClientClass( pCur->m_pNetworkName, NULL, NULL, recvt );
 
@@ -318,7 +318,7 @@ void CReplayServer::InitClientRecvTables()
 
 CReplayFrame::CReplayFrame()
 {
-	
+
 }
 
 CReplayFrame::~CReplayFrame()
@@ -362,16 +362,16 @@ void CReplayFrame::CopyReplayData( CReplayFrame &frame )
 	bits += frame.m_Messages[REPLAY_BUFFER_TEMPENTS].GetNumBitsWritten();
 	bits += frame.m_Messages[REPLAY_BUFFER_SOUNDS].GetNumBitsWritten();
 	bits += frame.m_Messages[REPLAY_BUFFER_VOICE].GetNumBitsWritten();
-	
+
 	if ( bits > 0 )
 	{
 		// collapse all unreliable buffers in one
 		int bytes = PAD_NUMBER( Bits2Bytes(bits), 4 );
 		m_Messages[REPLAY_BUFFER_UNRELIABLE].StartWriting( new char[ bytes ], bytes );
-		m_Messages[REPLAY_BUFFER_UNRELIABLE].WriteBits( frame.m_Messages[REPLAY_BUFFER_UNRELIABLE].GetData(), frame.m_Messages[REPLAY_BUFFER_UNRELIABLE].GetNumBitsWritten() ); 
-		m_Messages[REPLAY_BUFFER_UNRELIABLE].WriteBits( frame.m_Messages[REPLAY_BUFFER_TEMPENTS].GetData(), frame.m_Messages[REPLAY_BUFFER_TEMPENTS].GetNumBitsWritten() ); 
-		m_Messages[REPLAY_BUFFER_UNRELIABLE].WriteBits( frame.m_Messages[REPLAY_BUFFER_SOUNDS].GetData(), frame.m_Messages[REPLAY_BUFFER_SOUNDS].GetNumBitsWritten() ); 
-		m_Messages[REPLAY_BUFFER_UNRELIABLE].WriteBits( frame.m_Messages[REPLAY_BUFFER_VOICE].GetData(), frame.m_Messages[REPLAY_BUFFER_VOICE].GetNumBitsWritten() ); 
+		m_Messages[REPLAY_BUFFER_UNRELIABLE].WriteBits( frame.m_Messages[REPLAY_BUFFER_UNRELIABLE].GetData(), frame.m_Messages[REPLAY_BUFFER_UNRELIABLE].GetNumBitsWritten() );
+		m_Messages[REPLAY_BUFFER_UNRELIABLE].WriteBits( frame.m_Messages[REPLAY_BUFFER_TEMPENTS].GetData(), frame.m_Messages[REPLAY_BUFFER_TEMPENTS].GetNumBitsWritten() );
+		m_Messages[REPLAY_BUFFER_UNRELIABLE].WriteBits( frame.m_Messages[REPLAY_BUFFER_SOUNDS].GetData(), frame.m_Messages[REPLAY_BUFFER_SOUNDS].GetNumBitsWritten() );
+		m_Messages[REPLAY_BUFFER_UNRELIABLE].WriteBits( frame.m_Messages[REPLAY_BUFFER_VOICE].GetData(), frame.m_Messages[REPLAY_BUFFER_VOICE].GetNumBitsWritten() );
 	}
 }
 
@@ -489,11 +489,11 @@ void CReplayServer::StartMaster(CGameClient *client)
 
 	// allocate buffers for input frame
 	m_ReplayFrame.AllocBuffers();
-			
+
 	InstallStringTables();
 
 	// copy signon buffers
-	m_Signon.StartWriting( m_Server->m_Signon.GetBasePointer(), m_Server->m_Signon.m_nDataBytes, 
+	m_Signon.StartWriting( m_Server->m_Signon.GetBasePointer(), m_Server->m_Signon.m_nDataBytes,
 		m_Server->m_Signon.GetNumBitsWritten() );
 
 	Q_strncpy( m_szMapname, m_Server->m_szMapname, sizeof(m_szMapname) );
@@ -504,7 +504,7 @@ void CReplayServer::StartMaster(CGameClient *client)
 	m_MasterClient->UpdateUserSettings(); // make sure UserInfo is correct
 
 	// hack reduce signontick by one to catch changes made in the current tick
-	m_MasterClient->m_nSignonTick--;	
+	m_MasterClient->m_nSignonTick--;
 
 	SetMaxClients( 0 );
 
@@ -576,27 +576,27 @@ void CReplayServer::InstallStringTables( void )
 	Assert( m_StringTables->GetNumTables() == 0); // must be empty
 
 	m_StringTables->AllowCreation( true );
-	
+
 	// master replay needs to keep a list of changes for all table items
 	m_StringTables->EnableRollback( true );
 
 	for ( int i =0; i<numTables; i++)
 	{
 		// iterate through server tables
-		CNetworkStringTable *serverTable = 
+		CNetworkStringTable *serverTable =
 			(CNetworkStringTable*)m_Server->m_StringTables->GetTable( i );
 
 		if ( !serverTable )
 			continue;
 
 		// get matching client table
-		CNetworkStringTable *replayTable = 
+		CNetworkStringTable *replayTable =
 			(CNetworkStringTable*)m_StringTables->CreateStringTableEx(
 				serverTable->GetTableName(),
 				serverTable->GetMaxStrings(),
 				serverTable->GetUserDataSize(),
 				serverTable->GetUserDataSizeBits(),
-				serverTable->HasFileNameStrings() 
+				serverTable->HasFileNameStrings()
 				);
 
 		if ( !replayTable )
@@ -606,7 +606,7 @@ void CReplayServer::InstallStringTables( void )
 		}
 
 		// make replay table an exact copy of server table
-		replayTable->CopyStringTable( serverTable ); 
+		replayTable->CopyStringTable( serverTable );
 
 		// link replay table to server table
 		serverTable->SetMirrorTable( replayTable );
@@ -639,14 +639,14 @@ void CReplayServer::UserInfoChanged( int nClientIndex )
 }
 
 void CReplayServer::LinkInstanceBaselines( void )
-{	
+{
 	// Forces to update m_pInstanceBaselineTable.
 	AUTO_LOCK( g_svInstanceBaselineMutex );
-	GetInstanceBaselineTable(); 
+	GetInstanceBaselineTable();
 
 	Assert( m_pInstanceBaselineTable );
-		
-	// update all found server classes 
+
+	// update all found server classes
 	for ( ServerClass *pClass = serverGameDLL->GetAllServerClasses(); pClass; pClass=pClass->m_pNext )
 	{
 		char idString[32];
@@ -654,7 +654,7 @@ void CReplayServer::LinkInstanceBaselines( void )
 
 		// Ok, make a new instance baseline so they can reference it.
 		int index  = m_pInstanceBaselineTable->FindStringIndex( idString );
-			
+
 		if ( index != -1 )
 		{
 			pClass->m_InstanceBaselineIndex = index;
@@ -690,7 +690,7 @@ Vector CReplayServer::GetOriginFromPackedEntity(PackedEntity* pe)
 		if ( Q_strcmp( pProp->GetName(), "m_vecOrigin" ) == 0 )
 		{
 			Assert( pProp->GetType() == DPT_Vector );
-		
+
 			bf_read buf( pe->LockData(), Bits2Bytes(pe->GetNumBits()), pProp->GetOffset() );
 
 			origin[0] = DecodeFloat(pProp, &buf);
@@ -712,7 +712,7 @@ CReplayEntityData *FindReplayDataInSnapshot( CFrameSnapshot * pSnapshot, int iEn
 	if ( iEntIndex < pSnapshot->m_pValidEntities[a] ||
 		 iEntIndex > pSnapshot->m_pValidEntities[z] )
 		 return NULL;
-	
+
 	while ( a < z )
 	{
 		int m = (a+z)/2;
@@ -721,7 +721,7 @@ CReplayEntityData *FindReplayDataInSnapshot( CFrameSnapshot * pSnapshot, int iEn
 
 		if ( index == iEntIndex )
 			return &pSnapshot->m_pReplayEntityData[m];
-		
+
 		if ( iEntIndex > index )
 		{
 			if ( pSnapshot->m_pValidEntities[z] == iEntIndex )
@@ -755,7 +755,7 @@ void CReplayServer::EntityPVSCheck( CClientFrame *pFrame )
 	// setup engine PVS
 	SV_ResetPVS( PVS, nPVSSize );
 
-	CFrameSnapshot * pSnapshot = pFrame->GetSnapshot();	
+	CFrameSnapshot * pSnapshot = pFrame->GetSnapshot();
 
 	Assert ( pSnapshot->m_pReplayEntityData != NULL );
 
@@ -772,7 +772,7 @@ void CReplayServer::EntityPVSCheck( CClientFrame *pFrame )
 
 		if ( entindex < 0 )
 			break;
-			
+
 		// is transmit_always is set ->  no PVS check
 		if ( pFrame->transmit_always->Get(entindex) )
 		{
@@ -824,7 +824,7 @@ CClientFrame *CReplayServer::AddNewFrame( CClientFrame *clientFrame )
 	m_nLastTick = clientFrame->tick_count;
 
 	m_ReplayFrame.SetSnapshot( clientFrame->GetSnapshot() );
-	m_ReplayFrame.tick_count = clientFrame->tick_count;	
+	m_ReplayFrame.tick_count = clientFrame->tick_count;
 	m_ReplayFrame.last_entity = clientFrame->last_entity;
 	m_ReplayFrame.transmit_entity = clientFrame->transmit_entity;
 
@@ -834,7 +834,7 @@ CClientFrame *CReplayServer::AddNewFrame( CClientFrame *clientFrame )
 		m_nFirstTick = clientFrame->tick_count;
 		m_nTickCount = m_nFirstTick;
 	}
-	
+
 	CReplayFrame *replayFrame = new CReplayFrame;
 
 	// copy tickcount & entities from client frame
@@ -842,7 +842,7 @@ CClientFrame *CReplayServer::AddNewFrame( CClientFrame *clientFrame )
 
 	//copy rest (messages, tempents) from current Replay frame
 	replayFrame->CopyReplayData( m_ReplayFrame );
-	
+
 	// add frame to Replay server
 	AddClientFrame( replayFrame );
 
@@ -936,14 +936,14 @@ void CReplayServer::RunFrame()
 		m_flFPS = m_flFPS * 0.99f + 0.01f/host_frametime;
 	}
 
-	// get current tick time for director module and restore 
+	// get current tick time for director module and restore
 	// world (stringtables, framebuffers) as they were at this time
 	UpdateTick();
 
 	// Update the Steam server if we're running a relay.
 	if ( !sv.IsActive() )
 		Steam3Server().RunFrame();
-	
+
 	UpdateMasterServer();
 
 	SendPendingEvents();
@@ -968,13 +968,13 @@ void CReplayServer::UpdateTick( void )
 
 	if ( newFrame == NULL )
 		return; // we dont have a new frame
-	
+
 	if ( m_CurrentFrame == newFrame )
 		return;	// current frame didn't change
 
 	m_CurrentFrame = newFrame;
 	m_nTickCount = m_CurrentFrame->tick_count;
-	
+
 	// restore string tables for this time
 	RestoreTick( m_nTickCount );
 
@@ -997,7 +997,7 @@ const char *CReplayServer::GetName( void ) const
 void CReplayServer::FillServerInfo(SVC_ServerInfo &serverinfo)
 {
 	CBaseServer::FillServerInfo( serverinfo );
-	
+
 	serverinfo.m_nPlayerSlot = m_nPlayerSlot; // all spectators think they're the Replay client
 	serverinfo.m_nMaxClients = m_nGameServerMaxClients;
 }
@@ -1019,7 +1019,7 @@ void CReplayServer::Clear( void )
 	m_fNextSendUpdateTime = 0.0f;
 	m_ReplayFrame.FreeBuffers();
 	m_vPVSOrigin.Init();
-		
+
 	DeleteClientFrames( -1 );
 
 	m_DeltaCache.Flush();
@@ -1079,7 +1079,7 @@ const char *CReplayServer::GetPassword() const
 	return NULL;
 }
 
-IClient *CReplayServer::ConnectClient ( netadr_t &adr, int protocol, int challenge, int clientChallenge, int authProtocol, 
+IClient *CReplayServer::ConnectClient ( netadr_t &adr, int protocol, int challenge, int clientChallenge, int authProtocol,
 									 const char *name, const char *password, const char *hashedCDkey, int cdKeyLen )
 {
 	// Don't let anyone connect to the replay server

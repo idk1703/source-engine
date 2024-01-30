@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,10 +15,10 @@
 extern bool uselogfile;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : depth - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : depth -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void vprint( int depth, const char *fmt, ... )
 {
@@ -67,10 +67,10 @@ void vprint( int depth, const char *fmt, ... )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : depth - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : depth -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 CUtlVector< char * > printQueue;
 
@@ -131,7 +131,7 @@ char	com_token[1024];
 int linesprocessed = 0;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CC_UngetToken( void )
 {
@@ -139,8 +139,8 @@ void CC_UngetToken( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : ch - 
+// Purpose:
+// Input  : ch -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CC_IsBreakChar( char ch )
@@ -162,7 +162,7 @@ bool CC_IsBreakChar( char ch )
 	case '>':
 		brk = true;
 		break;
-		
+
 	case ':':
 		if ( !com_ignorecolons )
 			brk = true;
@@ -174,15 +174,15 @@ bool CC_IsBreakChar( char ch )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *data - 
+// Purpose:
+// Input  : *data -
 // Output : char
 //-----------------------------------------------------------------------------
 char *CC_ParseToken(char *data)
 {
 	int             c;
 	int             len;
-	
+
 	if ( s_com_token_unget )
 	{
 		s_com_token_unget = false;
@@ -191,10 +191,10 @@ char *CC_ParseToken(char *data)
 
 	len = 0;
 	com_token[0] = 0;
-	
+
 	if (!data)
 		return NULL;
-		
+
 // skip whitespace
 skipwhite:
 	while ( (c = *data) <= ' ')
@@ -207,7 +207,7 @@ skipwhite:
 		}
 		data++;
 	}
-	
+
 // skip // comments
 	if ( !com_ignoreinlinecomment )
 	{
@@ -218,7 +218,7 @@ skipwhite:
 			goto skipwhite;
 		}
 	}
-	
+
 	if ( c == '/' && data[1] == '*' )
 	{
 		while (data[0] && data[1] && !( data[0] == '*' && data[1] == '/' ) )
@@ -288,15 +288,15 @@ skipwhite:
 		if ( CC_IsBreakChar( (char)c ) )
 			break;
 	} while (c>32 && len < sizeof( com_token ) - 1);
-	
+
 	com_token[len] = 0;
 	return data;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
-//			*len - 
+// Purpose:
+// Input  : *name -
+//			*len -
 // Output : unsigned char
 //-----------------------------------------------------------------------------
 unsigned char *COM_LoadFile( const char *name, int *len)
@@ -312,7 +312,7 @@ unsigned char *COM_LoadFile( const char *name, int *len)
 	fseek( fp, 0, SEEK_END );
 	*len = ftell( fp );
 	fseek( fp, 0, SEEK_SET );
-	
+
 	unsigned char *buffer = new unsigned char[ *len + 1 ];
 	fread( buffer, *len, 1, fp );
 	fclose( fp );
@@ -322,8 +322,8 @@ unsigned char *COM_LoadFile( const char *name, int *len)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *buffer - 
+// Purpose:
+// Input  : *buffer -
 //-----------------------------------------------------------------------------
 void COM_FreeFile( unsigned char *buffer )
 {
@@ -331,8 +331,8 @@ void COM_FreeFile( unsigned char *buffer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *dir - 
+// Purpose:
+// Input  : *dir -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool COM_DirectoryExists( const char *dir )
@@ -344,8 +344,8 @@ bool COM_DirectoryExists( const char *dir )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *input - 
+// Purpose:
+// Input  : *input -
 // Output : char
 //-----------------------------------------------------------------------------
 char *CC_ParseUntilEndOfLine( char *input )
@@ -357,10 +357,10 @@ char *CC_ParseUntilEndOfLine( char *input )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *input - 
-//			*ch - 
-//			*breakchar - 
+// Purpose:
+// Input  : *input -
+//			*ch -
+//			*breakchar -
 // Output : char
 //-----------------------------------------------------------------------------
 char *CC_RawParseChar( char *input, const char *ch, char *breakchar )
@@ -392,9 +392,9 @@ char *CC_RawParseChar( char *input, const char *ch, char *breakchar )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *input - 
-//			*pairing - 
+// Purpose:
+// Input  : *input -
+//			*pairing -
 // Output : char
 //-----------------------------------------------------------------------------
 char *CC_DiscardUntilMatchingCharIncludingNesting( char *input, const char *pairing )

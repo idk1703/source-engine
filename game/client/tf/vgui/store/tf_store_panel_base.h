@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@ class CArmoryPanel;
 class CStorePage;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFBaseStorePanel : public CStorePanel
 {
@@ -39,7 +39,7 @@ public:
 	void		ShowStorePanel( void );
 	void		InitiateCheckout( void );
 	void		CheckoutCancel( void );
-	
+
 	virtual void SetTransactionID( uint64 inID ) OVERRIDE;
 
 	// Armory management
@@ -47,7 +47,7 @@ public:
 	MESSAGE_FUNC( OnArmoryClosed, "ArmoryClosed" );
 
 private:
-	CArmoryPanel	*m_pArmoryPanel;			
+	CArmoryPanel	*m_pArmoryPanel;
 	vgui::Panel		*m_pNotificationsPresentPanel;
 };
 

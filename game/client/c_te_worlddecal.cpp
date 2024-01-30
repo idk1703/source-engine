@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -39,7 +39,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Networking 
+// Networking
 //-----------------------------------------------------------------------------
 IMPLEMENT_CLIENTCLASS_EVENT_DT(C_TEWorldDecal, DT_TEWorldDecal, CTEWorldDecal)
 	RecvPropVector( RECVINFO(m_vecOrigin)),
@@ -62,7 +62,7 @@ C_TEWorldDecal::~C_TEWorldDecal( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEWorldDecal::Precache( void )
 {
@@ -96,7 +96,7 @@ static inline void RecordWorldDecal( const Vector *pos, int index )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEWorldDecal::PostDataUpdate( DataUpdateType_t updateType )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,9 +17,9 @@ class EditablePanel2Demo: public DemoPage
 	public:
 		EditablePanel2Demo(Panel *parent, const char *name);
 		~EditablePanel2Demo();
-	
+
 	private:
-		ComboBox *m_pInternetSpeed;	
+		ComboBox *m_pInternetSpeed;
 };
 
 //-----------------------------------------------------------------------------
@@ -75,12 +75,12 @@ EditablePanel2Demo::EditablePanel2Demo(Panel *parent, const char *name) : DemoPa
 	}
 	*/
 
-	// VGUI control panel resource values are grouped by a panel name, here 
+	// VGUI control panel resource values are grouped by a panel name, here
 	// we have 2 panels, one called "SpeedLabel" and one called
 	// "Internet Speed".
 	// Each control has a set of keyValues that describe attributes of
 	// the panel. SpeedLabel's control name is Label, this is a vgui Label class.
-	// Its 'xpos' and 'ypos' tell is position in the parent window. 
+	// Its 'xpos' and 'ypos' tell is position in the parent window.
 	// Its 'wide' and 'tall' tell its size.
 	// 'AutoResize' is false meaning this panel will not grow or shrink in size
 	// response to panel resizing.
@@ -92,11 +92,11 @@ EditablePanel2Demo::EditablePanel2Demo(Panel *parent, const char *name) : DemoPa
 	// gain focus when the hotkey is hit. The associated control is called
 	// "InternetSpeed" and this panel name happens to be the very next panel in the list.
 	// Its 'ControlName' tells us it is a ComboBox. Hitting the 'S' hotkey will trigger
-	// the combo box to gain focus. Note that the combo box does not currently 
+	// the combo box to gain focus. Note that the combo box does not currently
 	// have any items within it.
 
 
-	// This will be the menu items of our combo box menu.	
+	// This will be the menu items of our combo box menu.
 	// List of all the different internet speeds
 	char *g_Speeds[] =
 	{
@@ -106,7 +106,7 @@ EditablePanel2Demo::EditablePanel2Demo(Panel *parent, const char *name) : DemoPa
 		{ "Modem - 56k"},
 		{ "ISDN - 112k"},
 		{ "DSL > 256k"},
-		{ "LAN/T1 > 1M"},		
+		{ "LAN/T1 > 1M"},
 	};
 
 	// Create a combo box with the name "InternetSpeed"
@@ -123,7 +123,7 @@ EditablePanel2Demo::EditablePanel2Demo(Panel *parent, const char *name) : DemoPa
 	// Load the resource file settings into our panel.
 	LoadControlSettings("Demo/EditablePanelDemo.res");
 
-	// When the settings are applied (in applySettings()) our panels gain the 
+	// When the settings are applied (in applySettings()) our panels gain the
 	// additional layout specified by the resource keyValues.
 
 	// There, we are done, we have created one control from "thin air" (the Label)
@@ -146,5 +146,3 @@ Panel* EditablePanel2Demo_Create(Panel *parent)
 {
 	return new EditablePanel2Demo(parent, "EditablePanel2Demo");
 }
-
-

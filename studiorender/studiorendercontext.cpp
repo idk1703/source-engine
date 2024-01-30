@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -52,7 +52,7 @@ static float s_pZeroFlexWeights[MAXSTUDIOFLEXDESC];
 //-----------------------------------------------------------------------------
 IStudioDataCache *g_pStudioDataCache = NULL;
 static CStudioRenderContext s_StudioRenderContext;
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CStudioRenderContext, IStudioRender, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CStudioRenderContext, IStudioRender,
 						STUDIO_RENDER_INTERFACE_VERSION, s_StudioRenderContext );
 
 
@@ -204,10 +204,10 @@ static bool UsesMouthShader( IMaterial *pMaterial )
 //-----------------------------------------------------------------------------
 // Returns the actual texture name to use on the model
 //-----------------------------------------------------------------------------
-static const char *GetTextureName( studiohdr_t *phdr, OptimizedModel::FileHeader_t *pVtxHeader, 
+static const char *GetTextureName( studiohdr_t *phdr, OptimizedModel::FileHeader_t *pVtxHeader,
 								  int lodID, int inMaterialID )
 {
-	OptimizedModel::MaterialReplacementListHeader_t *materialReplacementList = 
+	OptimizedModel::MaterialReplacementListHeader_t *materialReplacementList =
 		pVtxHeader->pMaterialReplacementList( lodID );
 	int i;
 	for( i = 0; i < materialReplacementList->numReplacements; i++ )
@@ -227,7 +227,7 @@ static const char *GetTextureName( studiohdr_t *phdr, OptimizedModel::FileHeader
 //-----------------------------------------------------------------------------
 // Loads materials associated with a particular LOD of a model
 //-----------------------------------------------------------------------------
-void CStudioRenderContext::LoadMaterials( studiohdr_t *phdr, 
+void CStudioRenderContext::LoadMaterials( studiohdr_t *phdr,
 	OptimizedModel::FileHeader_t *pVtxHeader, studioloddata_t &lodData, int lodID )
 {
 	typedef IMaterial *IMaterialPtr;
@@ -484,7 +484,7 @@ void CStudioRenderContext::DetermineHWMorphing( mstudiomodel_t *pModel, Optimize
 	s_pVertexCount = pVertexCount;
 	qsort( pSortedVertexIndices, nCount, sizeof(int), SortVertCount );
 
-	bool *pSuppressHWMorph = (bool*)_alloca( nFlexedStripGroup * sizeof(bool) ); 
+	bool *pSuppressHWMorph = (bool*)_alloca( nFlexedStripGroup * sizeof(bool) );
 	memset(	pSuppressHWMorph, 1, nFlexedStripGroup * sizeof(bool) );
 	for ( int i = 0; i < nMaxHWMorphBatchCount; ++i )
 	{
@@ -516,7 +516,7 @@ void CStudioRenderContext::DetermineHWMorphing( mstudiomodel_t *pModel, Optimize
 //-----------------------------------------------------------------------------
 // Adds a vertex to the meshbuilder.  Returns false if boneweights did not sum to 1.0
 //-----------------------------------------------------------------------------
-template <VertexCompressionType_t T> bool CStudioRenderContext::R_AddVertexToMesh( const char *pModelName, bool bNeedsTangentSpace, CMeshBuilder& meshBuilder, 
+template <VertexCompressionType_t T> bool CStudioRenderContext::R_AddVertexToMesh( const char *pModelName, bool bNeedsTangentSpace, CMeshBuilder& meshBuilder,
 	OptimizedModel::Vertex_t* pVertex, mstudiomesh_t* pMesh, const mstudio_meshvertexdata_t *vertData, bool hwSkin )
 {
 	bool bOK = true;
@@ -536,8 +536,8 @@ template <VertexCompressionType_t T> bool CStudioRenderContext::R_AddVertexToMes
 	{
 	errorMessages[pModelName] = true;
 	Warning( "MODELBUG %s: bad normal\n", pModelName );
-	Warning( "\tnormal %0.1f %0.1f %0.1f pos: %0.1f %0.1f %0.1f\n", 
-	vert.m_vecNormal.x, vert.m_vecNormal.y, vert.m_vecNormal.z, 
+	Warning( "\tnormal %0.1f %0.1f %0.1f pos: %0.1f %0.1f %0.1f\n",
+	vert.m_vecNormal.x, vert.m_vecNormal.y, vert.m_vecNormal.z,
 	vert.m_vecPosition.x, vert.m_vecPosition.y, vert.m_vecPosition.z );
 	}
 	}
@@ -558,7 +558,7 @@ template <VertexCompressionType_t T> bool CStudioRenderContext::R_AddVertexToMes
 		{
 		errorMessages[pModelName] = true;
 		Warning( "MODELBUG %s: bad tangent sign\n", pModelName );
-		Warning( "\tsign %0.1f at position %0.1f %0.1f %0.1f\n", 
+		Warning( "\tsign %0.1f at position %0.1f %0.1f %0.1f\n",
 		w, vert.m_vecPosition.x, vert.m_vecPosition.y, vert.m_vecPosition.z );
 		}
 		}
@@ -571,9 +571,9 @@ template <VertexCompressionType_t T> bool CStudioRenderContext::R_AddVertexToMes
 		{
 		errorMessages[pModelName] = true;
 		Warning( "MODELBUG %s: bad tangent vector\n", pModelName );
-		Warning( "\ttangent: %0.1f %0.1f %0.1f with length %0.1f at position %0.1f %0.1f %0.1f\n", 
-		tangentS.x, tangentS.y, tangentS.z, 
-		len, 
+		Warning( "\ttangent: %0.1f %0.1f %0.1f with length %0.1f at position %0.1f %0.1f %0.1f\n",
+		tangentS.x, tangentS.y, tangentS.z,
+		len,
 		vert.m_vecPosition.x, vert.m_vecPosition.y, vert.m_vecPosition.z );
 		}
 		}
@@ -587,7 +587,7 @@ template <VertexCompressionType_t T> bool CStudioRenderContext::R_AddVertexToMes
 		{
 		errorMessages[pModelName] = true;
 		// this is crashing for some reason. .need to investigate.
-		Warning( "MODELBUG %s: nearly colinear tangentS (%f %f %f) and normal (%f %f %f) at position %f %f %f Probably have 2 or more texcoords that are the same on a triangle.\n", 
+		Warning( "MODELBUG %s: nearly colinear tangentS (%f %f %f) and normal (%f %f %f) at position %f %f %f Probably have 2 or more texcoords that are the same on a triangle.\n",
 		pModelName, tangentS.x, tangentS.y, tangentS.y, vert.m_vecNormal.x, vert.m_vecNormal.y, vert.m_vecNormal.z, vert.m_vecPosition.x, vert.m_vecPosition.y, vert.m_vecPosition.z );
 		}
 		}
@@ -725,7 +725,7 @@ void CStudioRenderContext::R_StudioBuildMeshGroup( const char *pModelName, bool 
 	// This mesh could have tristrips or trilists in it
 	CMeshBuilder meshBuilder;
 	meshBuilder.SetCompressionType( compressionType );
-	meshBuilder.Begin( pMeshGroup->m_pMesh, MATERIAL_HETEROGENOUS, 
+	meshBuilder.Begin( pMeshGroup->m_pMesh, MATERIAL_HETEROGENOUS,
 		hwSkin ? pStripGroup->numVerts : 0, pStripGroup->numIndices );
 
 	int i;
@@ -771,7 +771,7 @@ void CStudioRenderContext::R_StudioBuildMeshGroup( const char *pModelName, bool 
 
 	// Copy over the strip indices. We need access to the indices for decals
 	pMeshGroup->m_pIndices = new unsigned short[ pStripGroup->numIndices ];
-	memcpy( pMeshGroup->m_pIndices, pStripGroup->pIndex(0), 
+	memcpy( pMeshGroup->m_pIndices, pStripGroup->pIndex(0),
 		pStripGroup->numIndices * sizeof(unsigned short) );
 
 	// Compute the number of non-degenerate trianges in each strip group
@@ -780,7 +780,7 @@ void CStudioRenderContext::R_StudioBuildMeshGroup( const char *pModelName, bool 
 	for (i = 0; i < pStripGroup->numStrips; ++i )
 	{
 		int numUnique = 0;
-		if (pStripGroup->pStrip(i)->flags & OptimizedModel::STRIP_IS_TRISTRIP) 
+		if (pStripGroup->pStrip(i)->flags & OptimizedModel::STRIP_IS_TRISTRIP)
 		{
 			int last[2] = {-1, -1};
 			int curr = pStripGroup->pStrip(i)->indexOffset;
@@ -806,11 +806,11 @@ void CStudioRenderContext::R_StudioBuildMeshGroup( const char *pModelName, bool 
 //-----------------------------------------------------------------------------
 // Builds the group
 //-----------------------------------------------------------------------------
-void CStudioRenderContext::R_StudioBuildMorph( studiohdr_t *pStudioHdr, 
-	studiomeshgroup_t* pMeshGroup, mstudiomesh_t* pMesh, 
+void CStudioRenderContext::R_StudioBuildMorph( studiohdr_t *pStudioHdr,
+	studiomeshgroup_t* pMeshGroup, mstudiomesh_t* pMesh,
 	OptimizedModel::StripGroupHeader_t *pStripGroup )
 {
-	if ( !g_pMaterialSystemHardwareConfig->HasFastVertexTextures() || 
+	if ( !g_pMaterialSystemHardwareConfig->HasFastVertexTextures() ||
 		( ( pMeshGroup->m_Flags & MESHGROUP_IS_DELTA_FLEXED ) == 0 ) ||
 		( ( pStripGroup->flags & OptimizedModel::STRIPGROUP_SUPPRESS_HW_MORPH ) != 0 ) )
 	{
@@ -828,7 +828,7 @@ void CStudioRenderContext::R_StudioBuildMorph( studiohdr_t *pStudioHdr,
 	}
 
 	CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
-	MorphFormat_t morphType = MORPH_POSITION | MORPH_NORMAL | MORPH_SPEED | MORPH_SIDE; 
+	MorphFormat_t morphType = MORPH_POSITION | MORPH_NORMAL | MORPH_SPEED | MORPH_SIDE;
 	for ( int i = 0; i < pMesh->numflexes; ++i )
 	{
 		if ( pMesh->pFlex( i )->vertanimtype == STUDIO_VERT_ANIM_WRINKLE )
@@ -845,7 +845,7 @@ void CStudioRenderContext::R_StudioBuildMorph( studiohdr_t *pStudioHdr,
 	const float flVertAnimFixedPointScale = pStudioHdr->VertAnimFixedPointScale();
 
 	CMorphBuilder morphBuilder;
-	morphBuilder.Begin( pMeshGroup->m_pMorph, 1.0f / flVertAnimFixedPointScale ); 
+	morphBuilder.Begin( pMeshGroup->m_pMorph, 1.0f / flVertAnimFixedPointScale );
 
 	for ( int i = 0; i < pMesh->numflexes; ++i )
 	{
@@ -862,18 +862,18 @@ void CStudioRenderContext::R_StudioBuildMorph( studiohdr_t *pStudioHdr,
 			if ( nGroupVert == 0xFFFF )
 				continue;
 
-			morphBuilder.PositionDelta3( pAnim->GetDeltaFixed( flVertAnimFixedPointScale ) ); 
-			morphBuilder.NormalDelta3( pAnim->GetNDeltaFixed( flVertAnimFixedPointScale ) ); 
+			morphBuilder.PositionDelta3( pAnim->GetDeltaFixed( flVertAnimFixedPointScale ) );
+			morphBuilder.NormalDelta3( pAnim->GetNDeltaFixed( flVertAnimFixedPointScale ) );
 			morphBuilder.Speed1f( pAnim->speed / 255.0f );
 			morphBuilder.Side1f( pAnim->side / 255.0f );
 			if ( pFlex->vertanimtype == STUDIO_VERT_ANIM_WRINKLE )
 			{
 				mstudiovertanim_wrinkle_t *pWrinkleAnim = static_cast<mstudiovertanim_wrinkle_t*>( pAnim );
-				morphBuilder.WrinkleDelta1f( pWrinkleAnim->GetWrinkleDeltaFixed( flVertAnimFixedPointScale ) ); 
+				morphBuilder.WrinkleDelta1f( pWrinkleAnim->GetWrinkleDeltaFixed( flVertAnimFixedPointScale ) );
 			}
 			else
 			{
-				morphBuilder.WrinkleDelta1f( 0.0f ); 
+				morphBuilder.WrinkleDelta1f( 0.0f );
 			}
 
 			morphBuilder.AdvanceMorph( nGroupVert, i );
@@ -915,7 +915,7 @@ void CStudioRenderContext::R_StudioBuildMeshStrips( studiomeshgroup_t* pMeshGrou
 			i * sizeof(OptimizedModel::StripHeader_t);
 
 		// copy over bone state changes
-		int boneWeightSize = pMeshGroup->m_pStripData[i].numBoneStateChanges * 
+		int boneWeightSize = pMeshGroup->m_pStripData[i].numBoneStateChanges *
 			sizeof(OptimizedModel::BoneStateChangeHeader_t);
 
 		if (boneWeightSize != 0)
@@ -1005,7 +1005,7 @@ VertexFormat_t CStudioRenderContext::CalculateVertexFormat( const studiohdr_t *p
 
 			// aggregate single bit settings
 			newVertexFormat |= vertexFormat & ( ( 1 << VERTEX_LAST_BIT ) - 1 );
-			
+
 			int nUserDataSize = UserDataSize( vertexFormat );
 			if ( nUserDataSize > UserDataSize( newVertexFormat ) )
 			{
@@ -1109,7 +1109,7 @@ bool CStudioRenderContext::MeshNeedsTangentSpace( studiohdr_t *pStudioHdr, studi
 // Creates a single mesh
 //-----------------------------------------------------------------------------
 void CStudioRenderContext::R_StudioCreateSingleMesh( studiohdr_t *pStudioHdr, studioloddata_t *pStudioLodData,
-											 mstudiomesh_t* pMesh, OptimizedModel::MeshHeader_t* pVtxMesh, int numBones, 
+											 mstudiomesh_t* pMesh, OptimizedModel::MeshHeader_t* pVtxMesh, int numBones,
 											 studiomeshdata_t* pMeshData, int *pColorMeshID )
 {
 	// Here are the cases where we don't use any meshes at all...
@@ -1185,7 +1185,7 @@ void CStudioRenderContext::R_StudioCreateSingleMesh( studiohdr_t *pStudioHdr, st
 //-----------------------------------------------------------------------------
 // Creates static meshes
 //-----------------------------------------------------------------------------
-void CStudioRenderContext::R_StudioCreateStaticMeshes( studiohdr_t *pStudioHdr, 
+void CStudioRenderContext::R_StudioCreateStaticMeshes( studiohdr_t *pStudioHdr,
 	OptimizedModel::FileHeader_t *pVtxHdr, studiohwdata_t *pStudioHWData, int nLodID, int *pColorMeshID )
 {
 	int i, j, k;
@@ -1240,7 +1240,7 @@ void CStudioRenderContext::R_StudioCreateStaticMeshes( studiohdr_t *pStudioHdr,
 
 				Assert( pMesh->meshid < pStudioHWData->m_NumStudioMeshes );
 				R_StudioCreateSingleMesh( pStudioHdr, &pStudioHWData->m_pLODs[nLodID],
-					pMesh, pVtxMesh, pVtxHdr->maxBonesPerVert, 
+					pMesh, pVtxMesh, pVtxHdr->maxBonesPerVert,
 					&pStudioHWData->m_pLODs[nLodID].m_pMeshData[pMesh->meshid], pColorMeshID );
 			}
 
@@ -1422,7 +1422,7 @@ void CStudioRenderContext::ComputeHWMorphDecalBoneRemap( studiohdr_t *pStudioHdr
 		}
 
 		pStudioLOD->m_pHWMorphDecalBoneRemap = new int[ pStudioHdr->numbones ];
-		memcpy( pStudioLOD->m_pHWMorphDecalBoneRemap, pBoneRemap, nBufSize ); 
+		memcpy( pStudioLOD->m_pHWMorphDecalBoneRemap, pBoneRemap, nBufSize );
 		pStudioLOD->m_nDecalBoneCount = nMaxBoneCount;
 	}
 }
@@ -1454,10 +1454,10 @@ bool CStudioRenderContext::LoadModel( studiohdr_t *pStudioHdr, void *pVtxBuffer,
 		return false;
 
 	// NOTE: This must be called *after* Mod_LoadStudioModel
-	OptimizedModel::FileHeader_t* pVertexHdr = (OptimizedModel::FileHeader_t*)pVtxBuffer; 
+	OptimizedModel::FileHeader_t* pVertexHdr = (OptimizedModel::FileHeader_t*)pVtxBuffer;
 
 	if ( pVertexHdr->checkSum != pStudioHdr->checksum )
-	{								  
+	{
 		ConDMsg("Error! Model %s .vtx file out of synch with .mdl\n", pStudioHdr->pszName() );
 		return false;
 	}
@@ -1567,14 +1567,14 @@ void CStudioRenderContext::SetEyeViewTarget( const studiohdr_t *pStudioHdr, int 
 //-----------------------------------------------------------------------------
 // Returns information about the ambient light samples
 //-----------------------------------------------------------------------------
-static TableVector s_pAmbientLightDir[6] = 
+static TableVector s_pAmbientLightDir[6] =
 {
-	{  1,  0,  0 }, 
+	{  1,  0,  0 },
 	{ -1,  0,  0 },
-	{  0,  1,  0 }, 
-	{  0, -1,  0 }, 
-	{  0,  0,  1 }, 
-	{  0,  0, -1 }, 
+	{  0,  1,  0 },
+	{  0, -1,  0 },
+	{  0,  0,  1 },
+	{  0,  0, -1 },
 };
 
 int CStudioRenderContext::GetNumAmbientLightSamples()
@@ -1706,7 +1706,7 @@ int CStudioRenderContext::GetMaterialListFromBodyAndSkin( MDLHandle_t studio, in
 
 		short *pSkinRef	= pStudioHdr->pSkinref( nSkin * pStudioHdr->numskinref );
 
-		for (int i=0 ; i < pStudioHdr->numbodyparts ; i++) 
+		for (int i=0 ; i < pStudioHdr->numbodyparts ; i++)
 		{
 			mstudiomodel_t *pModel = NULL;
 			R_StudioSetupModel( i, nBody, &pModel, pStudioHdr );
@@ -1780,7 +1780,7 @@ void CStudioRenderContext::GetPerfStats( DrawModelResults_t *pResults, const Dra
 
 	pResults->m_NumBatches = 0;
 
-	for (i=0 ; i < info.m_pStudioHdr->numbodyparts ; i++) 
+	for (i=0 ; i < info.m_pStudioHdr->numbodyparts ; i++)
 	{
 		mstudiomodel_t *pModel = NULL;
 		R_StudioSetupModel( i, info.m_Body, &pModel, info.m_pStudioHdr );
@@ -1963,7 +1963,7 @@ void CStudioRenderContext::GetMaterialOverride( IMaterial** ppOutForcedMaterial,
 //-----------------------------------------------------------------------------
 // Sets the view state
 //-----------------------------------------------------------------------------
-void CStudioRenderContext::SetViewState( const Vector& viewOrigin, 
+void CStudioRenderContext::SetViewState( const Vector& viewOrigin,
 	const Vector& viewRight, const Vector& viewUp, const Vector& viewPlaneNormal )
 {
 	VectorCopy( viewOrigin, m_RC.m_ViewOrigin );
@@ -2074,7 +2074,7 @@ void CStudioRenderContext::LockFlexWeights( int nWeightCount, float **ppFlexWeig
 	CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
 	CMatRenderData<float> rdFlex( pRenderContext );
 	CMatRenderData<float> rdFlexDelayed( pRenderContext );
-	float *pFlexOut = rdFlex.Lock( nWeightCount ); 
+	float *pFlexOut = rdFlex.Lock( nWeightCount );
 	for ( int i = 0; i < nWeightCount; i++ )
 	{
 		pFlexOut[i] = 0.0f;
@@ -2150,7 +2150,7 @@ void CStudioRenderContext::GenerateRandomFlexWeights( int nWeightCount, float* p
 //-----------------------------------------------------------------------------
 // Computes LOD
 //-----------------------------------------------------------------------------
-int CStudioRenderContext::ComputeRenderLOD( IMatRenderContext *pRenderContext, 
+int CStudioRenderContext::ComputeRenderLOD( IMatRenderContext *pRenderContext,
 	const DrawModelInfo_t& info, const Vector &origin, float *pMetric )
 {
 	int lod = info.m_Lod;
@@ -2163,12 +2163,12 @@ int CStudioRenderContext::ComputeRenderLOD( IMatRenderContext *pRenderContext,
 
 	if ( lod == USESHADOWLOD )
 		return lastlod;
-	
+
 	if ( lod != -1 )
 		return clamp( lod, info.m_pHardwareData->m_RootLOD, lastlod );
 
 	float screenSize = pRenderContext->ComputePixelWidthOfSphere( origin, 0.5f );
-	lod = ComputeModelLODAndMetric( info.m_pHardwareData, screenSize, pMetric ); 
+	lod = ComputeModelLODAndMetric( info.m_pHardwareData, screenSize, pMetric );
 
 	// make sure we have a valid lod
 	if ( info.m_pStudioHdr->flags & STUDIOHDR_FLAGS_HASSHADOWLOD )
@@ -2212,7 +2212,7 @@ void CStudioRenderContext::InvokeBindProxies( const DrawModelInfo_t &info )
 
 	IMaterial **ppMaterials = info.m_pHardwareData->m_pLODs[ info.m_Lod ].ppMaterials;
 	mstudiomodel_t *pModel;
-	for ( int i=0 ; i < info.m_pStudioHdr->numbodyparts; ++i ) 
+	for ( int i=0 ; i < info.m_pStudioHdr->numbodyparts; ++i )
 	{
 		R_StudioSetupModel( i, info.m_Body, &pModel, info.m_pStudioHdr );
 		for ( int somethingOtherThanI = 0; somethingOtherThanI < pModel->nummeshes; ++somethingOtherThanI)
@@ -2222,7 +2222,7 @@ void CStudioRenderContext::InvokeBindProxies( const DrawModelInfo_t &info )
 			if ( pProxyCalled[ nMaterialIndex ] )
 				continue;
 			pProxyCalled[ nMaterialIndex ] = true;
-			IMaterial* pMaterial = ppMaterials[ nMaterialIndex ]; 
+			IMaterial* pMaterial = ppMaterials[ nMaterialIndex ];
 			if ( pMaterial && pMaterial->HasProxy() )
 			{
 				pMaterial->CallBindProxy( info.m_pClientEntity );
@@ -2235,7 +2235,7 @@ void CStudioRenderContext::InvokeBindProxies( const DrawModelInfo_t &info )
 //-----------------------------------------------------------------------------
 // Draws a model
 //-----------------------------------------------------------------------------
-void CStudioRenderContext::DrawModel( DrawModelResults_t *pResults, const DrawModelInfo_t& info, 
+void CStudioRenderContext::DrawModel( DrawModelResults_t *pResults, const DrawModelInfo_t& info,
 	matrix3x4_t *pBoneToWorld, float *pFlexWeights, float *pFlexDelayedWeights, const Vector &origin, int flags )
 {
 	// Set to zero in case we don't render anything.
@@ -2244,11 +2244,11 @@ void CStudioRenderContext::DrawModel( DrawModelResults_t *pResults, const DrawMo
 		pResults->m_ActualTriCount = pResults->m_TextureMemoryBytes = 0;
 	}
 
-	if( !info.m_pStudioHdr || !info.m_pHardwareData || 
+	if( !info.m_pStudioHdr || !info.m_pHardwareData ||
 		!info.m_pHardwareData->m_NumLODs || !info.m_pHardwareData->m_pLODs )
 	{
 		return;
-	} 
+	}
 
 	// Replace the flex weight data with random data for testing
 	GenerateRandomFlexWeights( info.m_pStudioHdr->numflexdesc, pFlexWeights, pFlexDelayedWeights );
@@ -2375,7 +2375,7 @@ void CStudioRenderContext::DrawStaticPropShadows( const DrawModelInfo_t &info, c
 //-----------------------------------------------------------------------------
 // Methods related to shadows
 //-----------------------------------------------------------------------------
-void CStudioRenderContext::AddShadow( IMaterial* pMaterial, void* pProxyData, 
+void CStudioRenderContext::AddShadow( IMaterial* pMaterial, void* pProxyData,
 	FlashlightState_t *pFlashlightState, VMatrix *pWorldToTexture, ITexture *pFlashlightDepthTexture )
 {
 	CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
@@ -2398,7 +2398,7 @@ void CStudioRenderContext::AddShadow( IMaterial* pMaterial, void* pProxyData,
 
 		CMatRenderData< FlashlightState_t > rdFlashlight( pRenderContext, 1, pFlashlightState );
 		CMatRenderData< VMatrix > rdMatrix( pRenderContext, 1, pWorldToTexture );
-		pCallQueue->QueueCall( g_pStudioRenderImp, &CStudioRender::AddShadow, pMaterial, 
+		pCallQueue->QueueCall( g_pStudioRenderImp, &CStudioRender::AddShadow, pMaterial,
 			(void*)NULL, rdFlashlight.Base(), rdMatrix.Base(), pFlashlightDepthTexture );
 	}
 }
@@ -2417,8 +2417,8 @@ void CStudioRenderContext::DestroyDecalList( StudioDecalHandle_t handle )
 	QUEUE_STUDIORENDER_CALL( DestroyDecalList, CStudioRender, g_pStudioRenderImp, handle );
 }
 
-void CStudioRenderContext::AddDecal( StudioDecalHandle_t handle, studiohdr_t *pStudioHdr, 
-	matrix3x4_t *pBoneToWorld, const Ray_t& ray, const Vector& decalUp, 
+void CStudioRenderContext::AddDecal( StudioDecalHandle_t handle, studiohdr_t *pStudioHdr,
+	matrix3x4_t *pBoneToWorld, const Ray_t& ray, const Vector& decalUp,
 	IMaterial* pDecalMaterial, float radius, int body, bool noPokethru, int maxLODToDecal )
 {
 	// This substition always has to be done in the main thread, so do it here.
@@ -2426,8 +2426,8 @@ void CStudioRenderContext::AddDecal( StudioDecalHandle_t handle, studiohdr_t *pS
 
 	CMatRenderContextPtr pRenderContext( g_pMaterialSystem );
 	Assert( pRenderContext->IsRenderData( pBoneToWorld ) );
-	QUEUE_STUDIORENDER_CALL_RC( AddDecal, CStudioRender, g_pStudioRenderImp, pRenderContext, 
-		handle, m_RC, pBoneToWorld, pStudioHdr, ray, decalUp, pDecalMaterial, radius, 
+	QUEUE_STUDIORENDER_CALL_RC( AddDecal, CStudioRender, g_pStudioRenderImp, pRenderContext,
+		handle, m_RC, pBoneToWorld, pStudioHdr, ray, decalUp, pDecalMaterial, radius,
 		body, noPokethru, maxLODToDecal );
 }
 
@@ -2435,7 +2435,7 @@ void CStudioRenderContext::AddDecal( StudioDecalHandle_t handle, studiohdr_t *pS
 IMaterial* GetModelSpecificDecalMaterial( IMaterial* pDecalMaterial )
 {
 	Assert( ThreadInMainThread() );
-	// Since we're adding this to a studio model, check the decal to see if 
+	// Since we're adding this to a studio model, check the decal to see if
 	// there's an alternate form used for static props...
 	bool found;
 	IMaterialVar* pModelMaterialVar = pDecalMaterial->FindVar( "$modelmaterial", &found, false );
@@ -2450,5 +2450,3 @@ IMaterial* GetModelSpecificDecalMaterial( IMaterial* pDecalMaterial )
 
 	return pDecalMaterial;
 }
-
-

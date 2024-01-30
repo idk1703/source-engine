@@ -14,7 +14,7 @@
 
 class CSessionBrowserDialog : public CBaseDialog
 {
-	DECLARE_CLASS_SIMPLE( CSessionBrowserDialog, CBaseDialog ); 
+	DECLARE_CLASS_SIMPLE( CSessionBrowserDialog, CBaseDialog );
 
 public:
 	CSessionBrowserDialog( vgui::Panel *parent, KeyValues *pDialogKeys );

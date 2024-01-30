@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose: Dr. Eli Vance, earths last great hope, single-handedly fighting
-//			off both an evil alien invasion, as well as trying to stop 
+//			off both an evil alien invasion, as well as trying to stop
 //			that idiot lab assistant from putting the moves on his daughter.
 //=============================================================================//
 
@@ -23,7 +23,7 @@
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CNPC_Eli : public CAI_BaseActor
 {
@@ -42,7 +42,7 @@ public:
 LINK_ENTITY_TO_CLASS( npc_eli, CNPC_Eli );
 
 //-----------------------------------------------------------------------------
-// Classify - indicates this NPC's place in the 
+// Classify - indicates this NPC's place in the
 // relationship table.
 //-----------------------------------------------------------------------------
 Class_T	CNPC_Eli::Classify ( void )
@@ -128,10 +128,10 @@ void CNPC_Eli::Precache()
 {
 	PrecacheModel( STRING( GetModelName() ) );
 	BaseClass::Precache();
-}	
+}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Eli::SetupWithoutParent( void )
 {
@@ -144,7 +144,7 @@ void CNPC_Eli::SetupWithoutParent( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Eli::PrescheduleThink( void )
 {

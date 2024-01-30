@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -85,7 +85,7 @@ inline float C_AnimationLayer::GetFadeout( float flCurTime )
 {
 	float s;
 
-    if (m_flLayerFadeOuttime <= 0.0f)
+	if (m_flLayerFadeOuttime <= 0.0f)
 	{
 		s = 0;
 	}

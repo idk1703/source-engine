@@ -43,7 +43,7 @@ void TF_ThrowCigaretteCallback( const CEffectData &data )
 
 	int flags = FTENT_FADEOUT | FTENT_GRAVITY | FTENT_COLLIDEALL | FTENT_ROTATE;
 
-	Assert( pModel );	
+	Assert( pModel );
 
 	C_LocalTempEntity *pTemp = tempents->SpawnTempModel( pModel, data.m_vOrigin, vecShellAngles, vecVelocity, flLifeTime, FTENT_NEVERDIE );
 	if ( pTemp == NULL )

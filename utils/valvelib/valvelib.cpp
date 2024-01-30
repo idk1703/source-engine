@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -26,7 +26,7 @@ DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 	if (dwReason == DLL_PROCESS_ATTACH)
 	{
 		TRACE0("VALVELIB.AWX Initializing!\n");
-		
+
 		// Extension DLL one-time initialization
 		AfxInitExtensionModule(ValvelibDLL, hInstance);
 

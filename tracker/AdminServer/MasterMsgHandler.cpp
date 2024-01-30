@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CMasterMsgHandler::CMasterMsgHandler( IGameList *baseobject, HANDLERTYPE type, void *typeinfo /*= NULL*/ ) 
+CMasterMsgHandler::CMasterMsgHandler( IGameList *baseobject, HANDLERTYPE type, void *typeinfo /*= NULL*/ )
 	: CMsgHandler( type, typeinfo )
 {
 	m_pGameList = baseobject;
@@ -73,4 +73,3 @@ bool CMasterMsgHandler::Process( netadr_t *from, CMsgBuffer *msg )
 
 	return true;
 }
-

@@ -29,7 +29,7 @@ public:
 	/**
 	 * Move the bot to a new position.
 	 * If the body is not currently movable or if it
-	 * is in a motion-controlled animation activity 
+	 * is in a motion-controlled animation activity
 	 * the position will not be changed and false will be returned.
 	 */
 	virtual bool SetPosition( const Vector &pos );
@@ -45,13 +45,13 @@ public:
 		CRITICAL,					// an active threat to our safety
 		MANDATORY					// nothing can interrupt this look at - two simultaneous look ats with this priority is an error
 	};
-	virtual void AimHeadTowards( const Vector &lookAtPos, 
-								 LookAtPriorityType priority = BORING, 
+	virtual void AimHeadTowards( const Vector &lookAtPos,
+								 LookAtPriorityType priority = BORING,
 								 float duration = 0.0f,
 								 INextBotReply *replyWhenAimed = NULL,
 								 const char *reason = NULL );		// aim the bot's head towards the given goal
 	virtual void AimHeadTowards( CBaseEntity *subject,
-								 LookAtPriorityType priority = BORING, 
+								 LookAtPriorityType priority = BORING,
 								 float duration = 0.0f,
 								 INextBotReply *replyWhenAimed = NULL,
 								 const char *reason = NULL );		// continually aim the bot's head towards the given subject
@@ -65,8 +65,8 @@ public:
 
 	virtual float GetMaxHeadAngularVelocity( void ) const;			// return max turn rate of head in degrees/second
 
-	enum ActivityType 
-	{ 
+	enum ActivityType
+	{
 		MOTION_CONTROLLED_XY	= 0x0001,	// XY position and orientation of the bot is driven by the animation.
 		MOTION_CONTROLLED_Z		= 0x0002,	// Z position of the bot is driven by the animation.
 		ACTIVITY_UNINTERRUPTIBLE= 0x0004,	// activity can't be changed until animation finishes
@@ -102,8 +102,8 @@ public:
 
 	virtual bool IsPostureMobile( void ) const;							// return true if body's current posture allows it to move around the world
 	virtual bool IsPostureChanging( void ) const;						// return true if body's posture is in the process of changing to new posture
-	
-	
+
+
 	/**
 	 * "Arousal" is the level of excitedness/arousal/anxiety of the body.
 	 * Is changes instantaneously to avoid complex interactions with posture transitions.

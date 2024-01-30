@@ -1,13 +1,13 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
-#include "cbase.h" 
-#include "decals.h" 
-#include "cbase.h" 
-#include "shake.h" 
+#include "cbase.h"
+#include "decals.h"
+#include "cbase.h"
+#include "shake.h"
 #include "weapon_csbase.h"
 #include "fx_cs_shared.h"
 
@@ -33,7 +33,7 @@ enum deagle_e {
 	DEAGLE_SHOOT1,
 	DEAGLE_SHOOT2,
 	DEAGLE_SHOOT_EMPTY,
-	DEAGLE_RELOAD,	
+	DEAGLE_RELOAD,
 	DEAGLE_DRAW,
 };
 
@@ -43,7 +43,7 @@ class CDEagle : public CWeaponCSBase
 {
 public:
 	DECLARE_CLASS( CDEagle, CWeaponCSBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CDEagle();
@@ -135,7 +135,7 @@ void CDEagle::PrimaryAttack()
 	CCSPlayer *pPlayer = GetPlayerOwner();
 	if ( !pPlayer )
 		return;
-		
+
 	// Mark the time of this shot and determine the accuracy modifier based on the last shot fired...
 	m_flAccuracy -= (0.35)*(0.4 - ( gpGlobals->curtime - m_flLastFire ) );
 
@@ -170,7 +170,7 @@ void CDEagle::PrimaryAttack()
 		SendWeaponAnim( ACT_VM_DRYFIRE );
 
 	//SetPlayerShieldAnim();
-	
+
 	// player "shoot" animation
 	pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
@@ -232,4 +232,3 @@ void CDEagle::WeaponIdle()
 	//if ( FBitSet(m_iWeaponState, WPNSTATE_SHIELD_DRAWN) )
 	//	 SendWeaponAnim( SHIELDGUN_DRAWN_IDLE, UseDecrement() ? 1:0 );
 }
-

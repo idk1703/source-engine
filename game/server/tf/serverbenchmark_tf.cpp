@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -70,7 +70,7 @@ public:
 			{
 				if ( j == i )
 					continue;
-			
+
 				Vector vTo = spawns[j]->GetAbsOrigin() - spawns[i]->GetAbsOrigin();
 				VectorNormalize( vTo );
 
@@ -95,7 +95,7 @@ public:
 		}
 
 		RandomSeed( 0 );
-	
+
 		// Put the player at a blue spawn point.
 		if ( !engine->IsDedicatedServer() )
 		{
@@ -114,19 +114,19 @@ public:
 					CBaseEntity *pBestSpawn = GetBlueSpawnPoint( true );
 					if ( !pBestSpawn )
 						Error( "Can't find spawn position for local player." );
-				
+
 					m_vLocalPlayerOrigin = pBestSpawn->GetLocalOrigin() + Vector(0,0,80);
 					m_vLocalPlayerEyeAngles = pBestSpawn->GetLocalAngles();
 				}
 
 				((CBasePlayer*)pLocalPlayer)->SetObserverMode( OBS_MODE_ROAMING );
-				
+
 				// Lock the player in place for a little bit, then let them go free when we have some bots.
 				if ( !sv_benchmark_freeroam.GetBool() || m_nBotsCreated < 2 )
 				{
 					pLocalPlayer->Teleport( &m_vLocalPlayerOrigin, &m_vLocalPlayerEyeAngles, NULL );
 					pLocalPlayer->SetObserverTarget( NULL );
-					
+
 					if ( !sv_benchmark_freeroam.GetBool() )
 						pLocalPlayer->AddFlag( FL_FROZEN );
 				}
@@ -153,7 +153,7 @@ public:
 	void AddSentries()
 	{
 		const char *pSentryClassName = "obj_sentrygun";
-		
+
 		for ( int iTeamIteration=0; iTeamIteration < 2; iTeamIteration++ )
 		{
 			int iTeam = (iTeamIteration == 0) ? TF_TEAM_BLUE : TF_TEAM_RED;
@@ -219,7 +219,7 @@ public:
 		CBasePlayer *pPlayer = BotPutInServer( false, false, iTeam, iClass, NULL );
 		if ( !pPlayer )
 			Error( "Server benchmark: Can't create bot." );
- 		
+
 		++m_nBotsCreated;
 		return pPlayer;
 	}
@@ -227,7 +227,7 @@ public:
 private:
 	int m_nBotsCreated;
 	bool m_bSetupLocalPlayer;
-	
+
 	Vector m_vLocalPlayerOrigin;
 	QAngle m_vLocalPlayerEyeAngles;
 };

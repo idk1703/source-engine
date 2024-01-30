@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,10 +26,10 @@
 class CGameTrace;
 typedef CGameTrace trace_t;
 //struct trace_t;
-typedef void (*TraceLineFunc_t)(const Vector &vecStart, const Vector &vecEnd, 
+typedef void (*TraceLineFunc_t)(const Vector &vecStart, const Vector &vecEnd,
 								unsigned int mask, int collisionGroup, trace_t *ptr);
-typedef void (*TraceHullFunc_t)(const Vector &vecStart, const Vector &vecEnd, 
-								const Vector &hullMin, const Vector &hullMax, 
+typedef void (*TraceHullFunc_t)(const Vector &vecStart, const Vector &vecEnd,
+								const Vector &hullMin, const Vector &hullMax,
 								unsigned int mask, int collisionGroup, trace_t *ptr);
 
 
@@ -113,7 +113,7 @@ protected:
 
 	inline int NumParticles() const
 	{
-		return m_HorizontalCount * m_VerticalCount; 
+		return m_HorizontalCount * m_VerticalCount;
 	}
 
 	// simulator
@@ -140,7 +140,7 @@ protected:
 	int	m_FixedPointCount;
 	Vector* m_pFixedPoint;
 	Vector* m_ControlPoints;
-	
+
 	CUtlVector<Spring_t>	m_Springs;
 	CUtlVector<int>			m_Gravity;
 
@@ -197,7 +197,7 @@ public:
 private:
 	CIterativeSheetSimulator( const CIterativeSheetSimulator & ); // not defined, not accessible
 
-	// Iterative collision detection 
+	// Iterative collision detection
 	void DetectCollisions( void );
 
 	float	m_TimeStep;

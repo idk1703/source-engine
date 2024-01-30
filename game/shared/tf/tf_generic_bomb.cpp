@@ -79,9 +79,9 @@ void CTFGenericBomb::Precache()
 	{
 		PrecacheScriptSound( STRING( m_strExplodeSoundName ) );
 	}
-	
+
 	CBaseEntity::SetAllowPrecache( bAllowPrecache );
-	
+
 	m_bPrecached = true;
 }
 
@@ -98,11 +98,11 @@ void CTFGenericBomb::Spawn()
 #endif
 	SetMoveType( MOVETYPE_VPHYSICS );
 	SetSolid( SOLID_VPHYSICS );
-	
+
 	SetHealth( m_nHealth );
 
 	BaseClass::Spawn();
-	
+
 	m_takedamage = DAMAGE_YES;
 	m_bDead = false;
 
@@ -180,7 +180,7 @@ void CTFGenericBomb::Event_Killed( const CTakeDamageInfo &info )
 		return;
 
 	m_bDead = true;
-	
+
 	trace_t tr;
 	Vector vecSpot = GetAbsOrigin() + Vector ( 0 , 0 , 8 );
 	UTIL_TraceLine( vecSpot, vecSpot + Vector ( 0, 0, -32 ), MASK_SHOT_HULL, this, COLLISION_GROUP_NONE, &tr );
@@ -244,7 +244,7 @@ void CTFGenericBomb::Event_Killed( const CTakeDamageInfo &info )
 	MessageEnd();
 
 	m_OnDetonate.FireOutput( this, this );
-	
+
 	BaseClass::Event_Killed( info );
 }
 

@@ -13,7 +13,7 @@ static BOOL Sys_SplitRegistryKey( const CHAR *key, CHAR *key0, int key0Len, CHAR
 {
 	if ( !key )
 		return false;
-	
+
 	int len = (int)strlen( key );
 	if ( !len )
 		return false;
@@ -29,7 +29,7 @@ static BOOL Sys_SplitRegistryKey( const CHAR *key, CHAR *key0, int key0Len, CHAR
 
 	if ( Start == -1 )
 		return false;
-	
+
 	_snprintf( key0, Start, key );
 	key0[Start] = '\0';
 
@@ -111,7 +111,7 @@ BOOL Sys_GetRegistryString( const CHAR *key, CHAR *value, const CHAR* defValue, 
 
 	unsigned long len=valueLen;
 	if ( RegQueryValueEx( hKey,key1,NULL,NULL,( UCHAR* )value,&len )!=ERROR_SUCCESS )
-	{		
+	{
 		RegCloseKey( hKey );
 		return false;
 	}
@@ -148,7 +148,7 @@ BOOL Sys_SetRegistryInteger( const CHAR *key, int value )
 
 	if ( RegCreateKeyEx( hSlot, key0, NULL, NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE, NULL, &hKey, NULL )!=ERROR_SUCCESS )
 		return false;
-		
+
 	if ( RegSetValueEx( hKey, key1, NULL, REG_DWORD, ( UCHAR* )&value, 4 )!=ERROR_SUCCESS )
 	{
 		RegCloseKey( hKey );
@@ -192,7 +192,7 @@ BOOL Sys_GetRegistryInteger( const CHAR *key, int defValue, int &value )
 
 	unsigned long len=4;
 	if ( RegQueryValueEx( hKey, key1, NULL, NULL, ( UCHAR* )&value, &len ) != ERROR_SUCCESS )
-	{		
+	{
 		RegCloseKey( hKey );
 		return false;
 	}
@@ -222,13 +222,13 @@ void Sys_NormalizePath( CHAR* path, bool forceToLower )
 //	Sys_SkipWhitespace
 //
 //-----------------------------------------------------------------------------
-CHAR* Sys_SkipWhitespace( CHAR *data, BOOL *hasNewLines, int* pNumLines ) 
+CHAR* Sys_SkipWhitespace( CHAR *data, BOOL *hasNewLines, int* pNumLines )
 {
 	int c;
 
-	while( ( c = *data ) <= ' ' ) 
+	while( ( c = *data ) <= ' ' )
 	{
-		if ( c == '\n' ) 
+		if ( c == '\n' )
 		{
 			if ( pNumLines )
 				(*pNumLines)++;
@@ -294,7 +294,7 @@ CHAR* Sys_GetToken( CHAR** dataptr, BOOL allowLineBreaks, int* pNumLines )
 			*dataptr = NULL;
 			return ( token );
 		}
-		
+
 		if ( hasNewLines && !allowLineBreaks )
 		{
 			*dataptr = data;
@@ -316,7 +316,7 @@ CHAR* Sys_GetToken( CHAR** dataptr, BOOL allowLineBreaks, int* pNumLines )
 					(*pNumLines)++;
 			}
 		}
-		else if ( c =='/' && data[1] == '*' ) 
+		else if ( c =='/' && data[1] == '*' )
 		{
 			// skip /* */ comments
 			data += 2;
@@ -327,7 +327,7 @@ CHAR* Sys_GetToken( CHAR** dataptr, BOOL allowLineBreaks, int* pNumLines )
 				data++;
 			}
 
-			if ( *data ) 
+			if ( *data )
 				data += 2;
 		}
 		else
@@ -360,15 +360,15 @@ CHAR* Sys_GetToken( CHAR** dataptr, BOOL allowLineBreaks, int* pNumLines )
 
 		data++;
 		c = *data;
-	} 
+	}
 	while ( c > ' ' );
 
-	if ( len >= MAX_SYSTOKENCHARS ) 
+	if ( len >= MAX_SYSTOKENCHARS )
 		len = 0;
 
 	token[len] = '\0';
 	*dataptr   = (CHAR*)data;
-	
+
 	return token;
 }
 
@@ -379,16 +379,16 @@ CHAR* Sys_GetToken( CHAR** dataptr, BOOL allowLineBreaks, int* pNumLines )
 //	Skips until a matching close brace is found.
 //	Internal brace depths are properly skipped.
 //-----------------------------------------------------------------------------
-void Sys_SkipBracedSection( CHAR** dataptr, int* numlines ) 
+void Sys_SkipBracedSection( CHAR** dataptr, int* numlines )
 {
 	CHAR*	token;
 	int	depth;
 
 	depth = 0;
-	do 
+	do
 	{
 		token = Sys_GetToken( dataptr, true, numlines );
-		if ( token[1] == '\0' ) 
+		if ( token[1] == '\0' )
 		{
 			if ( token[0] == '{' )
 				depth++;
@@ -403,15 +403,15 @@ void Sys_SkipBracedSection( CHAR** dataptr, int* numlines )
 //	Sys_SkipRestOfLine
 //
 //-----------------------------------------------------------------------------
-void Sys_SkipRestOfLine( CHAR** dataptr, int* numlines ) 
+void Sys_SkipRestOfLine( CHAR** dataptr, int* numlines )
 {
 	CHAR*	p;
 	int	c;
 
 	p = *dataptr;
-	while ( ( c = *p++ ) != '\0' ) 
+	while ( ( c = *p++ ) != '\0' )
 	{
-		if ( c == '\n' ) 
+		if ( c == '\n' )
 		{
 			if ( numlines )
 				( *numlines )++;
@@ -432,5 +432,3 @@ void Sys_StripQuotesFromToken( CHAR *pToken )
 		pToken[len-2] = '\0';
 	}
 }
-
-

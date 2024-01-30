@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,7 +10,7 @@
 #pragma once
 
 
-enum 
+enum
 {
 	CUSTOMMESSAGESSTART = WM_USER + 1,
 

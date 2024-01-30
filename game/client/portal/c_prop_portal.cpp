@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -78,7 +78,7 @@ void __MsgFunc_EntityPortalled(bf_read &msg)
 	iEncodedEHandle = msg.ReadLong();
 
 	if( iEncodedEHandle == INVALID_NETWORKED_EHANDLE_VALUE )
-		return;	
+		return;
 
 	iEntity = iEncodedEHandle & ((1 << MAX_EDICT_BITS) - 1);
 	iSerialNum = iEncodedEHandle >> MAX_EDICT_BITS;
@@ -221,7 +221,7 @@ void C_Prop_Portal::ClientThink( void )
 	if( m_fStaticAmount > 0.0f )
 	{
 		m_fStaticAmount -= gpGlobals->absoluteframetime;
-		if( m_fStaticAmount < 0.0f ) 
+		if( m_fStaticAmount < 0.0f )
 			m_fStaticAmount = 0.0f;
 
 		bDidAnything = true;
@@ -229,7 +229,7 @@ void C_Prop_Portal::ClientThink( void )
 	if( m_fSecondaryStaticAmount > 0.0f )
 	{
 		m_fSecondaryStaticAmount -= gpGlobals->absoluteframetime;
-		if( m_fSecondaryStaticAmount < 0.0f ) 
+		if( m_fSecondaryStaticAmount < 0.0f )
 			m_fSecondaryStaticAmount = 0.0f;
 
 		bDidAnything = true;
@@ -238,7 +238,7 @@ void C_Prop_Portal::ClientThink( void )
 	if( m_fOpenAmount < 1.0f )
 	{
 		m_fOpenAmount += gpGlobals->absoluteframetime * 2.0f;
-		if( m_fOpenAmount > 1.0f ) 
+		if( m_fOpenAmount > 1.0f )
 			m_fOpenAmount = 1.0f;
 
 		bDidAnything = true;
@@ -272,7 +272,7 @@ void C_Prop_Portal::Simulate()
 		{
 			delete m_GhostRenderables[i];
 		}
-		
+
 		m_GhostRenderables.RemoveAll();
 
 		return;
@@ -333,7 +333,7 @@ void C_Prop_Portal::Simulate()
 			if ( pWeapon )
 			{
 				C_Portal_Player *pPortalPlayer = ToPortalPlayer( pWeapon->GetOwner() );
-				if ( pPortalPlayer ) 
+				if ( pPortalPlayer )
 				{
 					if ( pPortalPlayer->GetActiveWeapon() != pWeapon )
 						continue; // don't ghost player owned non selected weapons
@@ -354,7 +354,7 @@ void C_Prop_Portal::Simulate()
 
 			if ( bActivePlayerWeapon )
 			{
-				if( !m_PortalSimulator.EntityHitBoxExtentIsInPortalHole( pWeapon->GetOwner() ) && 
+				if( !m_PortalSimulator.EntityHitBoxExtentIsInPortalHole( pWeapon->GetOwner() ) &&
 					!m_PortalSimulator.EntityHitBoxExtentIsInPortalHole( pWeapon ) )
 					continue;
 			}
@@ -396,7 +396,7 @@ void C_Prop_Portal::Simulate()
 					break;
 				}
 			}
-			
+
 			if ( j >= 0 )
 				continue;
 
@@ -409,9 +409,9 @@ void C_Prop_Portal::Simulate()
 				bIsHeldWeapon = true;
 
 			C_PortalGhostRenderable *pNewGhost = new C_PortalGhostRenderable( this,
-																				pRenderable, 
-																				pEntity->GetRenderGroup(), 
-																				m_matrixThisToLinked, 
+																				pRenderable,
+																				pEntity->GetRenderGroup(),
+																				m_matrixThisToLinked,
 																				m_fGhostRenderablesClip,
 																				(pEntity == pLocalPlayer || bIsHeldWeapon) );
 			Assert( pNewGhost );
@@ -551,7 +551,7 @@ void C_Prop_Portal::OnDataChanged( DataUpdateType_t updateType )
 	m_ptOrigin = GetNetworkOrigin();
 
 	bool bPortalMoved = ( (PreDataChanged.m_vOrigin != m_ptOrigin ) ||
-						(PreDataChanged.m_qAngles != GetNetworkAngles()) || 
+						(PreDataChanged.m_qAngles != GetNetworkAngles()) ||
 						(PreDataChanged.m_bActivated == false) ||
 						(PreDataChanged.m_bIsPortal2 != m_bIsPortal2) );
 
@@ -569,9 +569,9 @@ void C_Prop_Portal::OnDataChanged( DataUpdateType_t updateType )
 			ptRemoteOrigin = pRemote->GetNetworkOrigin();
 		}
 		g_pPortalRender->AddPortal( this ); //will know if we're already added and avoid adding twice
-		 
+
 		if( bPortalMoved )
-		{			
+		{
 			Vector ptForwardOrigin = m_ptOrigin + m_vForward;// * 3.0f;
 			Vector vScaledRight = m_vRight * (PORTAL_HALF_WIDTH * 0.95f);
 			Vector vScaledUp = m_vUp * (PORTAL_HALF_HEIGHT  * 0.95f);
@@ -616,7 +616,7 @@ void C_Prop_Portal::OnDataChanged( DataUpdateType_t updateType )
 				TransformedLighting.m_LightShadowHandle = CLIENTSHADOW_INVALID_HANDLE;
 			}
 
-			
+
 
 
 			if( pFakeLight != NULL )
@@ -649,9 +649,9 @@ void C_Prop_Portal::OnDataChanged( DataUpdateType_t updateType )
 				//if( vLightDiff.Length() > 0.6f ) //a significant difference in lighting, remember that the light vectors are NOT normalized in length
 				{
 					//time to fake some light coming through the greater intensity portal to the lower intensity
-					
+
 					//are we transferring light from the local portal to the remote?
-					bool bLocalToRemote = (vLightAtLocalPortal.Length() > vLightAtRemotePortal.Length());					
+					bool bLocalToRemote = (vLightAtLocalPortal.Length() > vLightAtRemotePortal.Length());
 
 					Vector ptLightOrigin, vLightForward, vColor, vClampedColor;
 					float fColorScale;
@@ -680,20 +680,20 @@ void C_Prop_Portal::OnDataChanged( DataUpdateType_t updateType )
 							vClampedColor = vColor * (1.0f / fColorScale);
 						else
 							vClampedColor = vColor;
-						
-						/*if( vColor.x < 0.0f ) 
+
+						/*if( vColor.x < 0.0f )
 							vColor.x = 0.0f;
-						if( vColor.x > 1.0f ) 
+						if( vColor.x > 1.0f )
 							vColor.x = 1.0f;
 
-						if( vColor.y < 0.0f ) 
+						if( vColor.y < 0.0f )
 							vColor.y = 0.0f;
-						if( vColor.y > 1.0f ) 
+						if( vColor.y > 1.0f )
 							vColor.y = 1.0f;
 
-						if( vColor.z < 0.0f ) 
+						if( vColor.z < 0.0f )
 							vColor.z = 0.0f;
-						if( vColor.z > 1.0f ) 
+						if( vColor.z > 1.0f )
 							vColor.z = 1.0f;*/
 					}
 
@@ -707,13 +707,13 @@ void C_Prop_Portal::OnDataChanged( DataUpdateType_t updateType )
 						{
 							//local light is greater, fake at remote portal
 							pRemote->TransformedLighting.m_pEntityLight = pFakeLight;
-							pFakeLight->key = pRemote->index;							
+							pFakeLight->key = pRemote->index;
 						}
 						else
 						{
 							//remote light is greater, fake at local portal
 							TransformedLighting.m_pEntityLight = pFakeLight;
-							pFakeLight->key = index;					
+							pFakeLight->key = index;
 						}
 
 						pFakeLight->die = gpGlobals->curtime + 1e10;
@@ -723,7 +723,7 @@ void C_Prop_Portal::OnDataChanged( DataUpdateType_t updateType )
 						pFakeLight->m_InnerAngle = 0.0f; //r_portal_light_innerangle.GetFloat();
 						pFakeLight->m_OuterAngle = 120.0f; //r_portal_light_outerangle.GetFloat();
 						pFakeLight->style = 0;
-						
+
 						pFakeLight->origin = ptLightOrigin;
 						pFakeLight->m_Direction = vLightForward;
 
@@ -745,7 +745,7 @@ void C_Prop_Portal::OnDataChanged( DataUpdateType_t updateType )
 						state.m_pSpotlightTexture = PortalDrawingMaterials::PortalLightTransfer_ShadowTexture;
 						state.m_fConstantAtten = 0.0f;
 						state.m_fLinearAtten = 500.0f;
-						state.m_fQuadraticAtten = 0.0f;			
+						state.m_fQuadraticAtten = 0.0f;
 						state.m_fHorizontalFOVDegrees = 120.0f;
 						state.m_fVerticalFOVDegrees = 120.0f;
 
@@ -784,9 +784,9 @@ void C_Prop_Portal::OnDataChanged( DataUpdateType_t updateType )
 
 
 					if( bLocalToRemote )
-						pRemote->TransformedLighting.m_LightShadowHandle = ShadowHandle;				
+						pRemote->TransformedLighting.m_LightShadowHandle = ShadowHandle;
 					else
-						TransformedLighting.m_LightShadowHandle = ShadowHandle;					
+						TransformedLighting.m_LightShadowHandle = ShadowHandle;
 				}
 #endif
 			}
@@ -813,10 +813,10 @@ void C_Prop_Portal::OnDataChanged( DataUpdateType_t updateType )
 
 	if( (PreDataChanged.m_hLinkedTo.Get() != m_hLinkedPortal.Get()) && m_hLinkedPortal.Get() )
 		m_PortalSimulator.AttachTo( &m_hLinkedPortal.Get()->m_PortalSimulator );
-	
+
 
 	BaseClass::OnDataChanged( updateType );
-	
+
 	if( bNewLinkage || bPortalMoved )
 	{
 		PortalMoved(); //updates link matrix and internals

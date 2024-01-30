@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -49,7 +49,7 @@ void CTFBuffBanner::NotifyBoneAttached( C_BaseAnimating* attachTarget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBuffBanner::ClientThink( void )
 {
@@ -74,7 +74,7 @@ void CTFBuffBanner::ClientThink( void )
 
 	// Normal Banners
 	if ( m_pAttachedTo )
-	{	
+	{
 		if ( gpGlobals->curtime > m_flDetachTime || !m_hBuffItem )
 		{
 			// Destroy us automatically after a period of time.

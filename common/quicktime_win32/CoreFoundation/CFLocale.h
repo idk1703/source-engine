@@ -24,4 +24,3 @@ typedef const struct __CFLocale *CFLocaleRef;
 #endif
 
 #endif /* ! __COREFOUNDATION_CFLOCALE__ */
-

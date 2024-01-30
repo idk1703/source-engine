@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,24 +12,24 @@
 static CExpressionParams g_Params;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK ExpressionPropertiesDialogProc
 //-----------------------------------------------------------------------------
-static BOOL CALLBACK ExpressionPropertiesDialogProc ( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam ) 
+static BOOL CALLBACK ExpressionPropertiesDialogProc ( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	switch(uMsg)
 	{
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		{
 		// Insert code here to put the string (to find and replace with)
 		// into the edit controls.
 		// ...
 			g_Params.PositionSelf( hwndDlg );
-			
+
 			SetDlgItemText( hwndDlg, IDC_EXPRESSIONNAME, g_Params.m_szName );
 			SetDlgItemText( hwndDlg, IDC_EXPRESSIONDESC, g_Params.m_szDescription );
 
@@ -37,9 +37,9 @@ static BOOL CALLBACK ExpressionPropertiesDialogProc ( HWND hwndDlg, UINT uMsg, W
 
 			SetFocus( GetDlgItem( hwndDlg, IDC_EXPRESSIONNAME ) );
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -48,7 +48,7 @@ static BOOL CALLBACK ExpressionPropertiesDialogProc ( HWND hwndDlg, UINT uMsg, W
 			GetDlgItemText( hwndDlg, IDC_EXPRESSIONDESC, g_Params.m_szDescription, 256 );
 			EndDialog( hwndDlg, 1 );
 			break;
-        case IDCANCEL:
+		case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		}
@@ -58,16 +58,16 @@ static BOOL CALLBACK ExpressionPropertiesDialogProc ( HWND hwndDlg, UINT uMsg, W
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int ExpressionProperties( CExpressionParams *params )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_EXPRESSIONPROPERTIES ),
 		(HWND)g_MDLViewer->getHandle(),
 		(DLGPROC)ExpressionPropertiesDialogProc );

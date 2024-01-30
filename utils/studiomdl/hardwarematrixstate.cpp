@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -113,7 +113,7 @@ bool CHardwareMatrixState::IsMatrixAllocated( int globalMatrixID ) const
 
 	for( i = 0; i < m_NumMatrices; i++ )
 	{
-		if( m_matrixState[i].globalMatrixID == globalMatrixID && 
+		if( m_matrixState[i].globalMatrixID == globalMatrixID &&
 			m_matrixState[i].allocated )
 		{
 			return true;
@@ -196,14 +196,14 @@ void CHardwareMatrixState::DumpState( void )
 //#ifndef _DEBUG
 	return;
 //#endif
-	
+
 	OutputDebugString( "DumpState\n:" );
 	for( i = 0; i < m_NumMatrices; i++ )
 	{
 		if( m_matrixState[i].allocated )
 		{
 			sprintf( buf, "%d: allocated: %s lastUsageID: %d globalMatrixID: %d\n",
-				i, 
+				i,
 				m_matrixState[i].allocated ? "true " : "false",
 				m_matrixState[i].lastUsageID,
 				m_matrixState[i].globalMatrixID );
@@ -229,4 +229,3 @@ int CHardwareMatrixState::FindHardwareMatrix( int globalMatrixID )
 
 	return 0;
 }
-

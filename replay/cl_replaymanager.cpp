@@ -197,7 +197,7 @@ void CReplayManager::FreeLifeIfNotSaved( CReplay *&pReplay )
 	{
 		if ( !pReplay->m_bSaved && !IsDirty( pReplay ) )
 		{
-			CleanupReplay( pReplay );		
+			CleanupReplay( pReplay );
 		}
 		else
 		{
@@ -280,7 +280,7 @@ void CReplayManager::CompletePendingReplay()
 
 	// Get session associated w/ the replay
 	CBaseRecordingSession *pSession = CL_GetRecordingSessionManager()->FindSession( m_pPendingReplay->m_hSession );
-	
+
 	// Sometimes the session isn't valid here, like when we're first joining a server
 	if ( !pSession )
 		return;
@@ -541,7 +541,7 @@ void CReplayManager::DebugThink()
 				pCurReplay->m_bRequestedByUser ? "YES" : "NO",
 				pCurReplay->m_iMaxSessionBlockRequired
 			);
-		
+
 			// Screenshot handle
 			int nCurLine = 5;
 			g_pEngineClient->Con_NPrintf( nCurLine, "Screenshot replay: handle=%i", CL_GetScreenshotManager()->GetScreenshotReplay() );
@@ -623,7 +623,7 @@ const char *CReplayManager::GetReplaysDir() const
 {
 	return GetIndexPath();
 }
-	
+
 float CReplayManager::GetDownloadProgress( const CReplay *pReplay )
 {
 	// Give each downloadable session block equal weight since we won't know the size of blocks that

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -58,11 +58,11 @@ public:
 	bool FindClosestPointOnPath( const Vector *worldPos, int startIndex, int endIndex, Vector *close ) const;
 
 	void Optimize( void );
-	
+
 	/**
 	 * Compute shortest path from 'start' to 'goal' via A* algorithm.
 	 * If returns true, path was build to the goal position.
-	 * If returns false, path may either be invalid (use IsValid() to check), or valid but 
+	 * If returns false, path may either be invalid (use IsValid() to check), or valid but
 	 * doesn't reach all the way to the goal.
 	 */
 	template< typename CostFunctor >
@@ -163,7 +163,7 @@ private:
 	PathSegment m_path[ MAX_PATH_SEGMENTS ];
 	int m_segmentCount;
 
-	bool ComputePathPositions( void );									///< determine actual path positions 
+	bool ComputePathPositions( void );									///< determine actual path positions
 	bool BuildTrivialPath( const Vector &start, const Vector &goal );	///< utility function for when start and goal are in the same area
 
 	int FindNextOccludedNode( int anchor );								///< used by Optimize()
@@ -215,7 +215,7 @@ public:
 	void Update( float deltaT, bool avoidObstacles = true );		///< move improv along path
 	void Debug( bool status )		{ m_isDebug = status; }			///< turn debugging on/off
 
-	bool IsStuck( void ) const		{ return m_stuckMonitor.IsStuck(); }	///< return true if improv is stuck 
+	bool IsStuck( void ) const		{ return m_stuckMonitor.IsStuck(); }	///< return true if improv is stuck
 	void ResetStuck( void )			{ m_stuckMonitor.Reset(); }
 	float GetStuckDuration( void ) const	{ return m_stuckMonitor.GetDuration(); }	///< return how long we've been stuck
 
@@ -243,4 +243,3 @@ private:
 
 
 #endif	// _NAV_PATH_H_
-

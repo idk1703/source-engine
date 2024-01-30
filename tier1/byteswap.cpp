@@ -51,8 +51,8 @@ void CByteswap::SwapFieldToTargetEndian( void* pOutputBuffer, void *pData, typed
 			typedescription_t *pEmbed = pField->td->dataDesc;
 			for ( int i = 0; i < pField->fieldSize; ++i )
 			{
-				SwapFieldsToTargetEndian( (byte*)pOutputBuffer + pEmbed->fieldOffset[ TD_OFFSET_NORMAL ], 
-										(byte*)pData + pEmbed->fieldOffset[ TD_OFFSET_NORMAL ],  
+				SwapFieldsToTargetEndian( (byte*)pOutputBuffer + pEmbed->fieldOffset[ TD_OFFSET_NORMAL ],
+										(byte*)pData + pEmbed->fieldOffset[ TD_OFFSET_NORMAL ],
 										pField->td );
 
 				pOutputBuffer = (byte*)pOutputBuffer + pField->fieldSizeInBytes;
@@ -60,17 +60,17 @@ void CByteswap::SwapFieldToTargetEndian( void* pOutputBuffer, void *pData, typed
 			}
 		}
 		break;
-		
+
 	default:
-		assert(0); 
+		assert(0);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Write a block of fields. Works a bit like the saverestore code.  
+// Write a block of fields. Works a bit like the saverestore code.
 //-----------------------------------------------------------------------------
 void CByteswap::SwapFieldsToTargetEndian( void *pOutputBuffer, void *pBaseData, datamap_t *pDataMap )
-{	
+{
 	// deal with base class first
 	if ( pDataMap->baseMap )
 	{
@@ -82,9 +82,8 @@ void CByteswap::SwapFieldsToTargetEndian( void *pOutputBuffer, void *pBaseData, 
 	for ( int i = 0; i < fieldCount; ++i )
 	{
 		typedescription_t *pField = &pFields[i];
-		SwapFieldToTargetEndian( (BYTE*)pOutputBuffer + pField->fieldOffset[ TD_OFFSET_NORMAL ],  
-								 (BYTE*)pBaseData + pField->fieldOffset[ TD_OFFSET_NORMAL ], 
+		SwapFieldToTargetEndian( (BYTE*)pOutputBuffer + pField->fieldOffset[ TD_OFFSET_NORMAL ],
+								 (BYTE*)pBaseData + pField->fieldOffset[ TD_OFFSET_NORMAL ],
 								  pField );
 	}
 }
-

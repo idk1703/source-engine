@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -40,7 +40,7 @@ CHudProgressBar::CHudProgressBar( const char *name ) :
 
 	SetPaintBorderEnabled( false );
 	SetPaintBackgroundEnabled( false );
-	
+
 	SetHiddenBits( HIDEHUD_PLAYERDEAD | HIDEHUD_WEAPONSELECTION );
 }
 
@@ -68,12 +68,12 @@ void CHudProgressBar::Paint()
 
 	int x, y, wide, tall;
 	GetBounds( x, y, wide, tall );
-	
+
 	tall = 10;
 
 	int xOffset=0;
 	int yOffset=0;
-	
+
 	Color clr = m_clrProgress;
 
 	clr[3] = 160;
@@ -85,7 +85,7 @@ void CHudProgressBar::Paint()
 		// ProgressBarStartTime is now with respect to m_flSimulationTime rather than local time
 		float percent = (pPlayer->m_flSimulationTime - pPlayer->m_flProgressBarStartTime) / (float)pPlayer->m_iProgressBarDuration;
 		percent = clamp( percent, 0, 1 );
-		
+
 		clr[3] = 240;
 		vgui::surface()->DrawSetColor( clr );
 		vgui::surface()->DrawFilledRect( xOffset+2, yOffset+2, xOffset+(int)(percent*wide)-2, yOffset+tall-2 );
@@ -119,6 +119,3 @@ bool CHudProgressBar::ShouldDraw()
 
 	return cl_c4progressbar.GetBool();
 }
-
-
-

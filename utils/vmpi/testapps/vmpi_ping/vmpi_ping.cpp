@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -47,11 +47,11 @@ int main(int argc, char* argv[])
 	printf( "    -dns               ..  enable DNS lookups (slows the listing down)\n" );
 	printf( "    -ShowConsole       ..  show the console window\n" );
 	printf( "    -HideConsole       ..  hide the console window\n" );
-	
+
 	//Scary to show these to users...
 	//printf( "    -ShowCache         ..  show the cache directory and its capacity\n" );
 	//printf( "    -FlushCache        ..  flush the cache of ALL VMPI services\n" );
-	
+
 	printf( "\n" );
 
 
@@ -64,14 +64,14 @@ int main(int argc, char* argv[])
 
 	const char *pPassword = FindArg( argc, argv, "-mpi_pw" );
 
-	
+
 	// Figure out which action they want to take.
 	int timeout = 0;
 	char cRequest = VMPI_PING_REQUEST;
 	if ( FindArg( argc, argv, "-Stop" ) )
 	{
 		cRequest = VMPI_STOP_SERVICE;
-	}		
+	}
 	else if ( FindArg( argc, argv, "-Kill" ) )
 	{
 		cRequest = VMPI_KILL_PROCESS;
@@ -140,9 +140,9 @@ int main(int argc, char* argv[])
 			if ( len == -1 )
 				break;
 
-			if ( len >= 2 && 
-				in[0] == VMPI_PROTOCOL_VERSION && 
-				in[1] == VMPI_PING_RESPONSE && 
+			if ( len >= 2 &&
+				in[0] == VMPI_PROTOCOL_VERSION &&
+				in[1] == VMPI_PING_RESPONSE &&
 				addrs.Find( ipFrom ) == -1 )
 			{
 				char *pStateString = "(unknown)";
@@ -159,13 +159,13 @@ int main(int argc, char* argv[])
 
 				if ( FindArg( argc, argv, "-dns" ) && ConvertIPAddrToString( &ipFrom, nameStr, sizeof( nameStr ) ) )
 				{
-					printf( "%02d. %s - %s:%d (%d.%d.%d.%d)", 
+					printf( "%02d. %s - %s:%d (%d.%d.%d.%d)",
 						nMachines, pStateString, nameStr, ipFrom.port,
 						ipFrom.ip[0], ipFrom.ip[1], ipFrom.ip[2], ipFrom.ip[3] );
 				}
 				else
 				{
-					printf( "%02d. %s - %d.%d.%d.%d:%d", 
+					printf( "%02d. %s - %d.%d.%d.%d:%d",
 						nMachines, pStateString, ipFrom.ip[0], ipFrom.ip[1], ipFrom.ip[2], ipFrom.ip[3], ipFrom.port );
 				}
 
@@ -193,4 +193,3 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
-

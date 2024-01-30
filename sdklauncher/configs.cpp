@@ -64,7 +64,7 @@ bool AddConfig( const char *pModName, const char *pModDirectory, ModType_t modTy
 
 	// Mod name
 	Q_strncpy( newInfo.gameName, pModName, sizeof( newInfo.gameName ) );
-	
+
 	// Basic FGD
 	if ( modType == ModType_HL2 )
 	{
@@ -94,7 +94,7 @@ bool AddConfig( const char *pModName, const char *pModDirectory, ModType_t modTy
 
 	char fullDir[MAX_PATH];
 	g_ConfigManager.GetRootGameDirectory( fullDir, sizeof( fullDir ), g_ConfigManager.GetRootDirectory() );
-	
+
 	// Add the config into our file
 	g_ConfigManager.AddDefaultConfig( newInfo, gameBlock, szPath, fullDir );
 
@@ -107,4 +107,3 @@ bool AddConfig( const char *pModName, const char *pModDirectory, ModType_t modTy
 
 	return true;
 }
-

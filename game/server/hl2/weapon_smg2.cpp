@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -43,7 +43,7 @@ END_SEND_TABLE()
 LINK_ENTITY_TO_CLASS( weapon_smg2, CWeaponSMG2 );
 PRECACHE_WEAPON_REGISTER(weapon_smg2);
 
-acttable_t	CWeaponSMG2::m_acttable[] = 
+acttable_t	CWeaponSMG2::m_acttable[] =
 {
 	{ ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK_SMG2, true },
 };
@@ -65,7 +65,7 @@ void CWeaponSMG2::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const Vector
 //-----------------------------------------------------------------------------
 const Vector &CWeaponSMG2::GetBulletSpread( void )
@@ -75,9 +75,9 @@ const Vector &CWeaponSMG2::GetBulletSpread( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEvent - 
-//			*pOperator - 
+// Purpose:
+// Input  : *pEvent -
+//			*pOperator -
 //-----------------------------------------------------------------------------
 void CWeaponSMG2::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator )
 {
@@ -105,14 +105,14 @@ void CWeaponSMG2::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatChar
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponSMG2::AddViewKick( void )
 {
 	#define	EASY_DAMPEN			0.5f
 	#define	MAX_VERTICAL_KICK	2.0f	//Degrees
 	#define	SLIDE_LIMIT			1.0f	//Seconds
-	
+
 	//Get the view kick
 	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
 

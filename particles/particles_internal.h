@@ -47,6 +47,4 @@ struct CWorldCollideContextData
 						  Vector const *pCpOffset = NULL, float flMovementTolerance = 0.  );
 };
 
-#endif // PARTICLES_INTERNAL_H	
-
-
+#endif // PARTICLES_INTERNAL_H

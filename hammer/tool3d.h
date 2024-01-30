@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -46,9 +46,9 @@ public:
 			void ProjectOnTranslationPlane( const Vector &vWorld, Vector &vTransform, int nFlags = 0 );
 			void SetTransformationPlane(const Vector &vOrigin, const Vector &vHorz, const Vector &vVert, const Vector &vNormal);
 			bool UpdateTranslation(CMapView *pView, const Vector2D &vPoint, UINT nFlags);
-	
+
 			bool IsTranslating(void) { return m_bIsTranslating; }
-	virtual bool UpdateTranslation(const Vector &vUpdate, UINT flags);	
+	virtual bool UpdateTranslation(const Vector &vUpdate, UINT flags);
 	virtual void TranslatePoint(Vector& vPos);
 	virtual void FinishTranslation(bool bSave);
 

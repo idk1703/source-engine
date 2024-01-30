@@ -60,7 +60,7 @@ public:
 #endif
 
 	CTFMiniGame();
-	
+
 #ifdef GAME_DLL
 	virtual void Spawn() OVERRIDE;
 	virtual void Precache() OVERRIDE;
@@ -108,7 +108,7 @@ protected:
 	string_t m_iszYourTeamScoreSound;
 	string_t m_iszEnemyTeamScoreSound;
 	float m_flSuddenDeathTime; // -1: No sudden death, 0: In sudden death, >0: Sudden death time.
-	int m_iAdvantagedTeam; 
+	int m_iAdvantagedTeam;
 #endif
 
 	CNetworkString( m_pszHudResFile, MAX_PATH );
@@ -123,7 +123,7 @@ class CTFHalloweenMinigame : public CTFMiniGame
 	DECLARE_CLASS( CTFHalloweenMinigame, CTFMiniGame )
 	DECLARE_NETWORKCLASS();
 public:
-	
+
 #ifdef GAME_DLL
 	CTFHalloweenMinigame();
 
@@ -140,7 +140,7 @@ public:
 	void InputKartWinAnimationBlue( inputdata_t &inputdata );
 	void InputKartLoseAnimationRed( inputdata_t &inputdata );
 	void InputKartLoseAnimationBlue( inputdata_t &inputdata );
-	
+
 	void InputEnableSpawnBoss( inputdata_t &inputdata );
 	void InputDisableSpawnBoss( inputdata_t &inputdata );
 
@@ -227,7 +227,7 @@ class CTFHalloweenFortuneTeller : public CBaseAnimating
 	enum ETellerType
 	{
 		TELLER_TYPE_EVERYBODY = 0,
-		TELLER_TYPE_PERSONAL, 
+		TELLER_TYPE_PERSONAL,
 
 		NUM_TELLER_TYPES
 	};

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -45,12 +45,12 @@ Vector CTriggerCatapult::CalculateLaunchVector( CBaseEntity *pVictim, CBaseEntit
 	// If victim is player, adjust target position so player's center will hit the target
 	if ( pVictim->IsPlayer() )
 	{
-		vecTargetPos.z -= 32.0f;  
+		vecTargetPos.z -= 32.0f;
 	}
 
 	float flSpeed = (pVictim->IsPlayer()) ? (float)m_flPlayerVelocity : (float)m_flPhysicsVelocity;	// u/sec
 	float flGravity = GetCurrentGravity();
-	
+
 	Vector vecVelocity = (vecTargetPos - vecSourcePos);
 
 	// throw at a constant time
@@ -81,7 +81,7 @@ Vector CTriggerCatapult::CalculateLaunchVectorPreserve( Vector vecInitialVelocit
 	// If victim is player, adjust target position so player's center will hit the target
 	if ( pVictim->IsPlayer() || bForcePlayer )
 	{
-		vecTargetPos.z -= 32.0f;  
+		vecTargetPos.z -= 32.0f;
 	}
 
 	Vector vecDiff = (vecTargetPos - vecSourcePos);
@@ -146,7 +146,7 @@ Vector CTriggerCatapult::CalculateLaunchVectorPreserve( Vector vecInitialVelocit
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerCatapult::LaunchByTarget( CBaseEntity *pVictim, CBaseEntity *pTarget  )
 {
@@ -209,7 +209,7 @@ void CTriggerCatapult::LaunchByTarget( CBaseEntity *pVictim, CBaseEntity *pTarge
 				AngularImpulse angImpulse = m_bApplyAngularImpulse ? RandomAngularImpulse( -150.0f, 150.0f ) : vec3_origin;
 				pPhysObject->SetVelocityInstantaneous( &vecVelocity, &angImpulse );
 
-				// UNDONE: don't mess with physics properties 
+				// UNDONE: don't mess with physics properties
 
 #if defined( GAME_DLL )
 				CPhysicsProp *pProp = dynamic_cast<CPhysicsProp *>(pVictim);
@@ -226,7 +226,7 @@ void CTriggerCatapult::LaunchByTarget( CBaseEntity *pVictim, CBaseEntity *pTarge
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerCatapult::LaunchByDirection( CBaseEntity *pVictim  )
 {
@@ -314,7 +314,7 @@ void CTriggerCatapult::LaunchByDirection( CBaseEntity *pVictim  )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerCatapult::OnLaunchedVictim( CBaseEntity *pVictim )
 {
@@ -351,7 +351,7 @@ void CTriggerCatapult::OnLaunchedVictim( CBaseEntity *pVictim )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerCatapult::StartTouch( CBaseEntity *pOther )
 {
@@ -446,7 +446,7 @@ void CTriggerCatapult::StartTouch( CBaseEntity *pOther )
 
 			float flVictimSpeed = vecVictim.Length();
 
-			// get the speed needed to hit the target			
+			// get the speed needed to hit the target
 			Vector vecVelocity;
 			if( m_bUseExactVelocity )
 			{

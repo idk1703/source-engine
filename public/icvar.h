@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -79,7 +79,7 @@ public:
 	virtual ConCommandBase	*GetCommands( void ) = 0;
 	virtual const ConCommandBase *GetCommands( void ) const = 0;
 
-	// Install a global change callback (to be called when any convar changes) 
+	// Install a global change callback (to be called when any convar changes)
 	virtual void			InstallGlobalChangeCallback( FnChangeCallback_t callback ) = 0;
 	virtual void			RemoveGlobalChangeCallback( FnChangeCallback_t callback ) = 0;
 	virtual void			CallGlobalChangeCallbacks( ConVar *var, const char *pOldString, float flOldValue ) = 0;
@@ -111,20 +111,20 @@ public:
 
 protected:	class ICVarIteratorInternal;
 public:
-	/// Iteration over all cvars. 
+	/// Iteration over all cvars.
 	/// (THIS IS A SLOW OPERATION AND YOU SHOULD AVOID IT.)
-	/// usage: 
-	/// { ICvar::Iterator iter(g_pCVar); 
+	/// usage:
+	/// { ICvar::Iterator iter(g_pCVar);
 	///   for ( iter.SetFirst() ; iter.IsValid() ; iter.Next() )
-	///   {  
+	///   {
 	///       ConCommandBase *cmd = iter.Get();
-	///   } 
+	///   }
 	/// }
 	/// The Iterator class actually wraps the internal factory methods
 	/// so you don't need to worry about new/delete -- scope takes care
 	//  of it.
-	/// We need an iterator like this because we can't simply return a 
-	/// pointer to the internal data type that contains the cvars -- 
+	/// We need an iterator like this because we can't simply return a
+	/// pointer to the internal data type that contains the cvars --
 	/// it's a custom, protected class with unusual semantics and is
 	/// prone to change.
 	class Iterator

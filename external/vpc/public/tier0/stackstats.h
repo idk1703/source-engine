@@ -63,7 +63,7 @@ public:
 	{
 		pFunctionTable->pfn_PopSubTree( pGatherer );
 	}
-	
+
 	void *pGatherer;
 	const CCallStackStatsGatherer_FunctionTable_t *pFunctionTable;
 };
@@ -122,7 +122,7 @@ protected:
 //STATSTRUCT - The structure you'll use to track whatever it is you're tracking.
 //CAPTUREDCALLSTACKLENGTH - The maximum length of your stack trace that we'll use to distinguish entries
 //STACKACQUISITIONFUNCTION - The function to use to gather the current call stack. GetCallStack() is safe, GetCallStack_Fast() is faster, but has special requirements
-//STATMUTEXHANDLER - If you want automatic mutex management for your individual entries, supply a handler here. 
+//STATMUTEXHANDLER - If you want automatic mutex management for your individual entries, supply a handler here.
 //						You'll need to not only call GetEntry(), but lock/unlock the entry while accessing it.
 //TEMPLATIZEDMEMORYALLOCATOR - We'll need to allocate memory, supply an allocator if you want to manage that
 template <class STATSTRUCT, size_t CAPTUREDCALLSTACKLENGTH, FN_GetCallStack STACKACQUISITIONFUNCTION = GetCallStack, typename STATMUTEXHANDLER = CCallStackStatsGatherer_StatMutexPool<4>, template <typename T> class TEMPLATIZEDMEMORYALLOCATOR = CDefaultStatsGathererAllocator>
@@ -146,7 +146,7 @@ public:
 	uint32 GetEntryIndex( void * const CallStack[CAPTUREDCALLSTACKLENGTH], uint32 iValidEntries ); //index is unchanging, safe to keep and use later (designed for exactly that purpose)
 	uint32 GetEntryIndex( const CCallStackStorage &PushStack = CCallStackStorage( STACKACQUISITIONFUNCTION ) );
 
-	
+
 
 	typedef void *(&StackReference)[CAPTUREDCALLSTACKLENGTH];
 	StackReference GetCallStackForIndex( uint32 iEntryIndex )
@@ -178,7 +178,7 @@ public:
 	static void LockEntry( void *pParent, uint32 iEntryIndex, bool bLock );
 
 	void Reset( void );
-	
+
 
 	CCallStackStatsGatherer_Standardized_t Standardized( void );
 	operator CCallStackStatsGatherer_Standardized_t( void );
@@ -197,7 +197,7 @@ private:
 #pragma pack(pop)
 
 	typedef CCallStackStatsGatherer<STATSTRUCT, CAPTUREDCALLSTACKLENGTH, STACKACQUISITIONFUNCTION, STATMUTEXHANDLER, TEMPLATIZEDMEMORYALLOCATOR> ThisCast;
-	
+
 
 #if defined( ENABLE_STACK_STATS_GATHERING )
 
@@ -241,7 +241,7 @@ private:
 		for( StoredSubTreeVector_t::iterator treeIter = m_StoredSubTrees.begin(); treeIter != m_StoredSubTrees.end(); ++treeIter )
 		{
 			if( SubTree.pGatherer == treeIter->pGatherer )
-				return;			
+				return;
 		}
 
 		//Warning( "Storing subtree\n" );
@@ -280,7 +280,7 @@ private:
 		}
 
 		//char szTemp[4096];
-		//TranslateStackInfo( CallStackIn, CAPTUREDCALLSTACKLENGTH, szTemp, sizeof( szTemp ), "\n\t" );		
+		//TranslateStackInfo( CallStackIn, CAPTUREDCALLSTACKLENGTH, szTemp, sizeof( szTemp ), "\n\t" );
 
 		//Warning( "Attempting to link trees:\n=======================ONE=======================\n\t%s\n", szTemp );
 		//TranslateStackInfo( treeIter->Stack, CAPTUREDCALLSTACKLENGTH, szTemp, sizeof( szTemp ), "\n\t" );
@@ -294,7 +294,7 @@ private:
 			if( CallStackIn[i] == pMatchAddress )
 			{
 				//TranslateStackInfo( CallStackIn, i, szTemp, sizeof( szTemp ), "\n\t" );
-				//Warning( "======================MATCH======================\n\t%s\n", szTemp );				
+				//Warning( "======================MATCH======================\n\t%s\n", szTemp );
 
 				CallStackOut[i] = treeIter->tree.pGatherer; //tag this entry as leading into the sub-tree
 				KeepSubTree( treeIter->tree ); //store the sub-tree forever
@@ -343,7 +343,7 @@ private:
 	//You're on your own for making sure two threads don't access the same index simultaneously
 	CThreadRWLock m_StatEntryLock;
 
-#else //#if defined( ENABLE_STACK_STATS_GATHERING )	
+#else //#if defined( ENABLE_STACK_STATS_GATHERING )
 
 	STATSTRUCT m_SingleEntry; //the class is disabled, we'll always return this same struct
 	void *m_SingleCallStack[CAPTUREDCALLSTACKLENGTH];
@@ -563,7 +563,7 @@ bool CCallStackStatsGatherer<STATSTRUCT, CAPTUREDCALLSTACKLENGTH, STACKACQUISITI
 template <class STATSTRUCT, size_t CAPTUREDCALLSTACKLENGTH, FN_GetCallStack STACKACQUISITIONFUNCTION, typename STATMUTEXHANDLER, template <typename T> class TEMPLATIZEDMEMORYALLOCATOR>
 const CCallStackStatsGatherer_FunctionTable_t &CCallStackStatsGatherer<STATSTRUCT, CAPTUREDCALLSTACKLENGTH, STACKACQUISITIONFUNCTION, STATMUTEXHANDLER, TEMPLATIZEDMEMORYALLOCATOR>::GetFunctionTable( void )
 {
-	static CCallStackStatsGatherer_FunctionTable_t retVal = 
+	static CCallStackStatsGatherer_FunctionTable_t retVal =
 	{	GetDumpInfo,
 		PushSubTree,
 		PopSubTree,
@@ -641,7 +641,7 @@ void CCallStackStatsGatherer<STATSTRUCT, CAPTUREDCALLSTACKLENGTH, STACKACQUISITI
 	ThisCast *pParentCast = (ThisCast *)pParent;
 	pParentCast->m_SubTreeMutex.Lock();
 	unsigned long iThreadID = ThreadGetCurrentId();
-	
+
 	for( PushedSubTreeVector_t::reverse_iterator treeIter = pParentCast->m_PushedSubTrees.rbegin(); treeIter != pParentCast->m_PushedSubTrees.rend(); ++treeIter )
 	{
 		if( treeIter->iThreadID == iThreadID )
@@ -689,7 +689,7 @@ template <class STATSTRUCT, size_t CAPTUREDCALLSTACKLENGTH, FN_GetCallStack STAC
 void *CCallStackStatsGatherer<STATSTRUCT, CAPTUREDCALLSTACKLENGTH, STACKACQUISITIONFUNCTION, STATMUTEXHANDLER, TEMPLATIZEDMEMORYALLOCATOR>::GetEntry( void *pParent, uint32 iEntryIndex )
 {
 	ThisCast *pParentCast = (ThisCast *)pParent;
-#if defined( ENABLE_STACK_STATS_GATHERING )	
+#if defined( ENABLE_STACK_STATS_GATHERING )
 	return &pParentCast->m_StatEntries[iEntryIndex].m_Stats;
 #else
 	return &pParentCast->m_SingleEntry;
@@ -698,7 +698,7 @@ void *CCallStackStatsGatherer<STATSTRUCT, CAPTUREDCALLSTACKLENGTH, STACKACQUISIT
 
 template <class STATSTRUCT, size_t CAPTUREDCALLSTACKLENGTH, FN_GetCallStack STACKACQUISITIONFUNCTION, typename STATMUTEXHANDLER, template <typename T> class TEMPLATIZEDMEMORYALLOCATOR>
 void CCallStackStatsGatherer<STATSTRUCT, CAPTUREDCALLSTACKLENGTH, STACKACQUISITIONFUNCTION, STATMUTEXHANDLER, TEMPLATIZEDMEMORYALLOCATOR>::ApplyTreeAccessLock( void *pParent, bool bLock )
-{	
+{
 #if defined( ENABLE_STACK_STATS_GATHERING )
 	ThisCast *pParentCast = (ThisCast *)pParent;
 	if( bLock )
@@ -714,7 +714,7 @@ void CCallStackStatsGatherer<STATSTRUCT, CAPTUREDCALLSTACKLENGTH, STACKACQUISITI
 
 template <class STATSTRUCT, size_t CAPTUREDCALLSTACKLENGTH, FN_GetCallStack STACKACQUISITIONFUNCTION, typename STATMUTEXHANDLER, template <typename T> class TEMPLATIZEDMEMORYALLOCATOR>
 void CCallStackStatsGatherer<STATSTRUCT, CAPTUREDCALLSTACKLENGTH, STACKACQUISITIONFUNCTION, STATMUTEXHANDLER, TEMPLATIZEDMEMORYALLOCATOR>::LockEntry( void *pParent, uint32 iEntryIndex, bool bLock )
-{	
+{
 #if defined( ENABLE_STACK_STATS_GATHERING )
 	ThisCast *pParentCast = (ThisCast *)pParent;
 	pParentCast->STATMUTEXHANDLER::LockEntry( iEntryIndex, bLock );
@@ -861,7 +861,7 @@ public:
 #endif
 
 	BasicStatStructFieldTypes_t m_Type;
-	BasicStatStructFieldCombineMethods_t m_Combine;	
+	BasicStatStructFieldCombineMethods_t m_Combine;
 };
 
 

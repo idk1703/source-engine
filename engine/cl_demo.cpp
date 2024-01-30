@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -83,14 +83,14 @@ float scr_demo_override_fov = 0.0f;
 //  probably were not the result of network traffic.
 // At the start of a connection to a map/server, all of the signon, etc. network packets
 //  are buffered.  This allows us to actually decide to start recording the demo at a later
-//  time.  Once we actually issue the recording command, we don't actually start recording 
+//  time.  Once we actually issue the recording command, we don't actually start recording
 //  network traffic, but instead we ask the server for an "uncompressed" packet (otherwise
 //  we wouldn't be able to deal with the incoming packets during playback because we'd be missing the
-//  data to delta from ) and go into a waiting state.  Once an uncompressed packet is received, 
+//  data to delta from ) and go into a waiting state.  Once an uncompressed packet is received,
 //  we unset the waiting state and start recording network packets from that point forward.
 // Demo's record the elapsed time based on the current client clock minus the time the demo was started
 // During playback, the elapsed time for playback ( based on the host_time, which is subject to the
-//  host_frametime cvar ) is compared with the elapsed time on the message from the demo file.  
+//  host_frametime cvar ) is compared with the elapsed time on the message from the demo file.
 // If it's not quite time for the message yet, the demo input stream is rewound
 // The demo system sits at the point where the client is checking to see if any network messages
 //  have arrived from the server.  If the message isn't ready for processing, the demo system
@@ -109,7 +109,7 @@ float scr_demo_override_fov = 0.0f;
 //  play the demo.  The demo system will think that the engine is running at 50 fps and will pull
 //  messages accordingly, even though movie recording kills the actually framerate.
 // It will also render frames with render origin/angles interpolated in-between the previous and next origins
-//  even if the recording framerate was not 50 fps or greater.  The interpolation provides a smooth visual playback 
+//  even if the recording framerate was not 50 fps or greater.  The interpolation provides a smooth visual playback
 //  of the demo information to the client without actually adding latency to the view position (because we are
 //  looking into the future for the position, not buffering the past data ).
 //-----------------------------------------------------------------------------
@@ -214,7 +214,7 @@ void DemoOverlay::DrawOverlay( float fSetting )
 		xprn.time_to_live = -1;
 		Con_NXPrintf( &xprn, "" );
 	}
-	
+
 	if ( OVR_PLAY & maskDrawnOverlay )
 	{
 		con_nprint_s xprn;
@@ -227,7 +227,7 @@ void DemoOverlay::DrawOverlay( float fSetting )
 		xprn.time_to_live = ( fSetting > 0.f ) ? fSetting : 1.f;
 		Con_NXPrintf( &xprn, "  PLAY   " );
 	}
-	
+
 	if ( OVR_REC & maskDrawnOverlay )
 	{
 		con_nprint_s xprn;
@@ -243,11 +243,11 @@ void DemoOverlay::DrawOverlay( float fSetting )
 
 	m_maskDrawnOverlay = maskDrawnOverlay;
 }
-			
+
 
 //-----------------------------------------------------------------------------
 // Purpose: Mark whether we are waiting for the first uncompressed update packet
-// Input  : waiting - 
+// Input  : waiting -
 //-----------------------------------------------------------------------------
 void CDemoRecorder::SetSignonState(int state)
 {
@@ -262,7 +262,7 @@ void CDemoRecorder::SetSignonState(int state)
 			CloseDemoFile();
 
 			// prepare for recording next demo
-			m_nDemoNumber++; 
+			m_nDemoNumber++;
 		}
 
 		StartupDemoHeader();
@@ -306,8 +306,8 @@ void CDemoRecorder::ResyncDemoClock()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : info - 
+// Purpose:
+// Input  : info -
 //-----------------------------------------------------------------------------
 void CDemoRecorder::GetClientCmdInfo( democmdinfo_t& info )
 {
@@ -334,7 +334,7 @@ void CDemoRecorder::GetClientCmdInfo( democmdinfo_t& info )
 void CDemoRecorder::WriteBSPDecals()
 {
 	decallist_t	*decalList = (decallist_t*)malloc( sizeof(decallist_t) * Draw_DecalMax() );
-	
+
 	int decalcount = DecalListCreate( decalList );
 
 	char		data[NET_MAX_PAYLOAD];
@@ -356,7 +356,7 @@ void CDemoRecorder::WriteBSPDecals()
 		if ( !clientEntity )
 			continue;
 
-		
+
 		const model_t * pModel = clientEntity->GetModel();
 
 		decal.m_Pos = entry->position;
@@ -373,7 +373,7 @@ void CDemoRecorder::WriteBSPDecals()
 	}
 
 	WriteMessages( msg );
-	
+
 	free( decalList );
 }
 
@@ -467,7 +467,7 @@ void CDemoRecorder::ResetDemoInterpolation( void )
 void CDemoRecorder::WriteDemoCvars()
 {
 	const ConCommandBase *var;
-	
+
 	for ( var= g_pCVar->GetCommands() ; var ; var=var->GetNext() )
 	{
 		if ( var->IsCommand() )
@@ -490,8 +490,8 @@ void CDemoRecorder::WriteDemoCvars()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *cmdname - 
+// Purpose:
+// Input  : *cmdname -
 //-----------------------------------------------------------------------------
 void CDemoRecorder::RecordCommand( const char *cmdstring )
 {
@@ -508,7 +508,7 @@ void CDemoRecorder::RecordCommand( const char *cmdstring )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoRecorder::StartupDemoHeader( void )
 {
@@ -531,7 +531,7 @@ void CDemoRecorder::StartupDemoHeader( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoRecorder::StartupDemoFile( void )
 {
@@ -599,27 +599,27 @@ void CDemoRecorder::StartupDemoFile( void )
 	Q_strncpy( dh->servername, cl.m_szRetryAddress, sizeof( dh->servername ) );
 	Q_strncpy( dh->clientname, cl_name.GetString(), sizeof( dh->clientname ) );
 
-	
+
 	// get size	signon data size
 	dh->signonlength = g_pFileSystem->Size(hDemoHeader);
-	
+
 	// write demo file header info
 	m_DemoFile.WriteDemoHeader();
-	
+
 	// copy signon data from header file to demo file
 	m_DemoFile.WriteFileBytes( hDemoHeader, dh->signonlength );
 
 	// close but keep header file, we might need it for a second record
 	g_pFileSystem->Close( hDemoHeader );
-	
+
 	m_nFrameCount = 0;
 	m_bIsDemoHeader = false;
-		
+
 	ResyncDemoClock(); // reset demo clock
-		
-	// tell client to sync demo clock too 
+
+	// tell client to sync demo clock too
 	m_DemoFile.WriteCmdHeader( dem_synctick, 0 );
-	
+
 	RecordStringTables();
 
 	// Demo playback should read this as an incoming message.
@@ -643,7 +643,7 @@ CDemoRecorder::CDemoRecorder()
 
 CDemoRecorder::~CDemoRecorder()
 {
-	CloseDemoFile();	
+	CloseDemoFile();
 }
 
 CDemoFile *CDemoRecorder::GetDemoFile()
@@ -679,7 +679,7 @@ void CDemoRecorder::CloseDemoFile()
 			// go back to header and write demoHeader with correct time and #frame again
 			m_DemoFile.WriteDemoHeader();
 
-			ConMsg ("Completed demo, recording time %.1f, game frames %i.\n", 
+			ConMsg ("Completed demo, recording time %.1f, game frames %i.\n",
 				m_DemoFile.m_DemoHeader.playback_time, m_DemoFile.m_DemoHeader.playback_frames );
 		}
 
@@ -719,7 +719,7 @@ void CDemoRecorder::RecordPacket()
 	WriteMessages( m_MessageData );
 
 	m_MessageData.Reset(); // clear message buffer
-	
+
 	if ( m_bCloseDemoFile )
 	{
 		CloseDemoFile();
@@ -752,20 +752,20 @@ void CDemoRecorder::WriteMessages( bf_write &message )
 	}
 
 	// write command & time
-	m_DemoFile.WriteCmdHeader( cmd, GetRecordingTick() ); 
-	
+	m_DemoFile.WriteCmdHeader( cmd, GetRecordingTick() );
+
 	democmdinfo_t info;
 	// Snag current info
 	GetClientCmdInfo( info );
-		
+
 	// Store it
 	m_DemoFile.WriteCmdInfo( info );
-		
+
 	// write network channel sequencing infos
 	int nOutSequenceNr, nInSequenceNr, nOutSequenceNrAck;
 	cl.m_NetChannel->GetSequenceData( nOutSequenceNr, nInSequenceNr, nOutSequenceNrAck );
 	m_DemoFile.WriteSequenceInfo( nInSequenceNr, nOutSequenceNrAck );
-	
+
 	// Output the messge buffer.
 	m_DemoFile.WriteRawData( (char*) message.GetBasePointer(), len );
 
@@ -792,7 +792,7 @@ void CDemoRecorder::StopRecording( void )
 	}
 
 	CloseDemoFile();
-	
+
 	m_bRecording = false;
 	m_nDemoNumber = 0;
 
@@ -800,14 +800,14 @@ void CDemoRecorder::StopRecording( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
-//			track - 
+// Purpose:
+// Input  : *name -
+//			track -
 //-----------------------------------------------------------------------------
 void CDemoRecorder::StartRecording( const char *name, bool bContinuously )
 {
 	Q_strncpy( m_szDemoBaseName, name, sizeof(m_szDemoBaseName));
-	
+
 	m_bRecording		 = true;
 	m_nDemoNumber		 = 1;
 	m_bResetInterpolation = false;
@@ -815,12 +815,12 @@ void CDemoRecorder::StartRecording( const char *name, bool bContinuously )
 
 	g_DemoOverlay.Tick();
 
-	// request a full game update from server 
+	// request a full game update from server
 	cl.ForceFullUpdate();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoRecorder::IsRecording( void )
@@ -874,7 +874,7 @@ void CDemoPlayer::StopPlayback( void )
 		}
 
 	}
-	
+
 	m_flPlaybackRateModifier = 1.0f;
 
 	delete[] m_DemoPacket.data;
@@ -915,7 +915,7 @@ bool CDemoPlayer::IsLoading( void )
 
 int CDemoPlayer::GetTotalTicks(void)
 {
-	return m_DemoFile.m_DemoHeader.playback_ticks;	
+	return m_DemoFile.m_DemoHeader.playback_ticks;
 }
 
 void CDemoPlayer::SkipToTick( int tick, bool bRelative, bool bPause )
@@ -961,7 +961,7 @@ void CDemoPlayer::SetEndTick( int tick )
 
 //-----------------------------------------------------------------------------
 // Purpose: Read in next demo message and send to local client over network channel, if it's time.
-// Output : bool 
+// Output : bool
 //-----------------------------------------------------------------------------
 bool CDemoPlayer::ParseAheadForInterval( int curtick, int intervalticks )
 {
@@ -987,7 +987,7 @@ bool CDemoPlayer::ParseAheadForInterval( int curtick, int intervalticks )
 		 m_DestCmdInfo.Remove( 0 );
 	}
 
-	if ( m_bTimeDemo ) 
+	if ( m_bTimeDemo )
 		return false;
 
 	while ( true )
@@ -1041,7 +1041,7 @@ bool CDemoPlayer::ParseAheadForInterval( int curtick, int intervalticks )
 
 		// we read now a dem_packet
 		m_DemoFile.ReadCmdInfo( nextinfo );
-		m_DemoFile.ReadSequenceInfo( dummy, dummy ); 
+		m_DemoFile.ReadSequenceInfo( dummy, dummy );
 		m_DemoFile.ReadRawData( NULL, 0 );
 
 		DemoCommandQueue entry;
@@ -1127,14 +1127,14 @@ netpacket_t *CDemoPlayer::ReadPacket( void )
 		return NULL;
 
 	bool bStopReading = false;
-	
+
 	while ( !bStopReading )
 	{
 		curpos = m_DemoFile.GetCurPos( true );
 
 		m_DemoFile.ReadCmdHeader( cmd, tick );
 
-		// always read control commands 
+		// always read control commands
 		if ( !IsControlCommand( cmd ) )
 		{
 			int playbacktick = GetPlaybackTick();
@@ -1166,7 +1166,7 @@ netpacket_t *CDemoPlayer::ReadPacket( void )
 			{
 				if ( m_nTimeDemoCurrentFrame == host_framecount )
 				{
-					// If we are playing back a timedemo, and we've already passed on a 
+					// If we are playing back a timedemo, and we've already passed on a
 					//  frame update for this host_frame tag, then we'll just skip this mess
 					bStopReading = true;
 				}
@@ -1289,7 +1289,7 @@ netpacket_t *CDemoPlayer::ReadPacket( void )
 				int  length = sizeof(buffer);
 				int outgoing_sequence = m_DemoFile.ReadUserCmd( buffer, length );
 
-				// put it into a bitbuffer 
+				// put it into a bitbuffer
 				bf_read msg( "CDemo::ReadUserCmd", buffer, length );
 
 				g_ClientDLL->DecodeUserCmdFromBuffer( msg, outgoing_sequence );
@@ -1297,7 +1297,7 @@ netpacket_t *CDemoPlayer::ReadPacket( void )
 				// Note, we need to have the current outgoing sequence correct so we can do prediction
 				//  correctly during playback
 				cl.lastoutgoingcommand = outgoing_sequence;
-				
+
 			}
 			break;
 		default:
@@ -1319,7 +1319,7 @@ netpacket_t *CDemoPlayer::ReadPacket( void )
 		// remember last frame we read a dem_packet update
 		m_nTimeDemoCurrentFrame = host_framecount;
 	}
-	
+
 	int inseq, outseqack, outseq = 0;
 
 	m_DemoFile.ReadCmdInfo( m_LastCmdInfo );
@@ -1340,7 +1340,7 @@ netpacket_t *CDemoPlayer::ReadPacket( void )
 		m_DemoPacket.received = realtime;
 		m_DemoPacket.size = length;
 		m_DemoPacket.message.StartReading( m_DemoPacket.data,  m_DemoPacket.size );
-	
+
 		if ( demo_debug.GetInt() >= 1 )
 		{
 			Msg( "Demo message, tick %i, %i bytes\n", GetPlaybackTick(), length );
@@ -1395,7 +1395,7 @@ void CDemoPlayer::InterpolateDemoCommand( int targettick, DemoCommandQueue& prev
 	if ( c < 2 )
 	{
 		// we need at least two entries to interpolate
-		return; 
+		return;
 	}
 
 	int i = 0;
@@ -1439,7 +1439,7 @@ void CDemoPlayer::InterpolateDemoCommand( int targettick, DemoCommandQueue& prev
 		i++;
 		entry1 = &list[ i ];
 		entry2 = &list[ i+1 ];
-	}	
+	}
 
 	Assert( 0 );
 }
@@ -1447,7 +1447,7 @@ void CDemoPlayer::InterpolateDemoCommand( int targettick, DemoCommandQueue& prev
 static ConVar demo_legacy_rollback( "demo_legacy_rollback", "1", 0, "Use legacy view interpolation rollback amount in demo playback." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDemoPlayer::InterpolateViewpoint( void )
 {
@@ -1479,7 +1479,7 @@ void CDemoPlayer::InterpolateViewpoint( void )
 	}
 
 	float vel = 0.0f;
-	float angVel = 0.0f; 
+	float angVel = 0.0f;
 	if ( m_bInterpolateView && demo_interpolateview.GetBool() && bHasValidData )
 	{
 		DemoCommandQueue prev, next;
@@ -1491,7 +1491,7 @@ void CDemoPlayer::InterpolateViewpoint( void )
 		next.tick = -1;
 
 		// Determine current time slice
-		
+
 		InterpolateDemoCommand( nTargetTick, prev, next );
 
 		float dt = TICKS_TO_TIME(next.tick-prev.tick);
@@ -1510,7 +1510,7 @@ void CDemoPlayer::InterpolateViewpoint( void )
 		// we need to check from the last actually ran command to see if there was a teleport
 		VectorSubtract( destorigin, m_LastCmdInfo.GetViewOrigin(), delta );
 		float distmoved = delta.Length();
-		
+
 		if ( dt > 0.0f )
 		{
 			vel = distmoved / dt;
@@ -1520,7 +1520,7 @@ void CDemoPlayer::InterpolateViewpoint( void )
 		{
 			QAngle startang = prev.info.GetLocalViewAngles();
 			QAngle destang = next.info.GetLocalViewAngles();
-	
+
 			for ( int i = 0; i < 3; ++i )
 			{
 				float dAng = AngleNormalizePositive( destang[ i ] ) - AngleNormalizePositive( startang[ i ] );
@@ -1534,7 +1534,7 @@ void CDemoPlayer::InterpolateViewpoint( void )
 		}
 
 		// FIXME: This should be velocity based maybe?
-		if ( (vel > demo_interplimit.GetFloat()) || 
+		if ( (vel > demo_interplimit.GetFloat()) ||
 			 (angVel > demo_avellimit.GetFloat() ) ||
 			m_bResetInterpolation )
 		{
@@ -1590,11 +1590,11 @@ void CDemoPlayer::InterpolateViewpoint( void )
 	VectorCopy( outinfo.viewAngles, cl.viewangles );
 #endif
 
-	
+
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoPlayer::IsPlayingTimeDemo( void )
@@ -1603,7 +1603,7 @@ bool CDemoPlayer::IsPlayingTimeDemo( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CDemoPlayer::IsPlayingBack( void )
@@ -1615,11 +1615,11 @@ CDemoPlayer::CDemoPlayer()
 {
 	m_flAutoResumeTime = 0.0f;
 	m_flPlaybackRateModifier = 1.0f;
-	m_bTimeDemo = false;	
-	m_nTimeDemoStartFrame = -1;	
-	m_flTimeDemoStartTime = 0.0f;	
+	m_bTimeDemo = false;
+	m_nTimeDemoStartFrame = -1;
+	m_flTimeDemoStartTime = 0.0f;
 	m_flTotalFPSVariability = 0.0f;
-	m_nTimeDemoCurrentFrame = -1; 
+	m_nTimeDemoCurrentFrame = -1;
 	m_bPlayingBack = false;
 	m_bLoading = false;
 	m_bPlaybackPaused = false;
@@ -1643,7 +1643,7 @@ CDemoPlayer::~CDemoPlayer()
 
 //-----------------------------------------------------------------------------
 // Purpose: Start's demo playback
-// Input  : *name - 
+// Input  : *name -
 //-----------------------------------------------------------------------------
 bool CDemoPlayer::StartPlayback( const char *filename, bool bAsTimeDemo )
 {
@@ -1673,14 +1673,14 @@ bool CDemoPlayer::StartPlayback( const char *filename, bool bAsTimeDemo )
 		cl.demonum = -1;
 		return false;
 	}
-	
+
 	ConMsg ("Playing demo from %s.\n", filename);
 
 	// Now read in the directory structure.
 	m_bPlayingBack = true;
 	cl.m_nSignonState= SIGNONSTATE_CONNECTED;
 
-	ResyncDemoClock(); 
+	ResyncDemoClock();
 
 	// create a fake channel with a NULL address
 	cl.m_NetChannel = NET_CreateNetChannel( NS_CLIENT, NULL, "DEMO", &cl, false, dh->networkprotocol );
@@ -1692,15 +1692,15 @@ bool CDemoPlayer::StartPlayback( const char *filename, bool bAsTimeDemo )
 		cl.demonum = -1;		// stop demo loop
 		Host_Disconnect(true);
 	}
-	
+
 	cl.m_NetChannel->SetTimeout( -1.0f );	// never timeout
-	
+
 	Q_memset( &m_DemoPacket, 0, sizeof(m_DemoPacket) );
 
 	// setup demo packet data buffer
 	m_DemoPacket.data = new unsigned char[NET_MAX_PAYLOAD];
 	m_DemoPacket.from.SetType( NA_LOOPBACK);
-		
+
 	cl.chokedcommands = 0;
 	cl.lastoutgoingcommand = -1;
  	cl.m_flNextCmdTime = net_time;
@@ -1728,8 +1728,8 @@ bool CDemoPlayer::StartPlayback( const char *filename, bool bAsTimeDemo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flCurTime - 
+// Purpose:
+// Input  : flCurTime -
 //-----------------------------------------------------------------------------
 void CDemoPlayer::MarkFrame( float flFPSVariability )
 {
@@ -1837,7 +1837,7 @@ void CDemoPlayer::WriteTimeDemoResults( void )
 void CDemoPlayer::PausePlayback( float seconds  )
 {
 	m_bPlaybackPaused = true;
-	
+
 	if ( seconds > 0.0f )
 	{
 		// Use true clock since everything else is frozen
@@ -1868,7 +1868,7 @@ bool CDemoPlayer::CheckPausedPlayback()
 			Msg( "Demo paused at server tick %i\n", cl.GetServerTickCount() );
 		}
 	}
-	
+
 	if ( IsSkipping() )
 	{
 		if ( ( m_nSkipToTick > GetPlaybackTick() ) ||
@@ -1913,7 +1913,7 @@ bool CDemoPlayer::IsPlaybackPaused()
 	// If skipping then do not pretend paused
 	if ( IsSkipping() )
 		return false;
-	
+
 	return m_bPlaybackPaused;
 }
 
@@ -1956,11 +1956,11 @@ void CDemoPlayer::SetBenchframe( int tick, const char *filename )
 static bool ComputeNextIncrementalDemoFilename( char *name, int namesize )
 {
 	FileHandle_t test;
-	
+
 	test = g_pFileSystem->Open( name, "rb" );
 	if ( FILESYSTEM_INVALID_HANDLE == test )
 	{
-		// file doesn't exist, so we can use that 
+		// file doesn't exist, so we can use that
 		return true;
 	}
 	g_pFileSystem->Close( test );
@@ -2001,7 +2001,7 @@ void CL_ListDemo_f( const CCommand &args )
 	char name[MAX_OSPATH];
 
 	Q_snprintf (name, sizeof(name), "%s", args[1]);
-	
+
 	Q_DefaultExtension( name, ".dem", sizeof( name ) );
 
 	ConMsg ("Demo contents for %s:\n", name);
@@ -2024,7 +2024,7 @@ void CL_ListDemo_f( const CCommand &args )
 		demofile.Close();
 		return;
 	}
-	
+
 	if ( Q_strcmp ( header->demofilestamp, DEMO_HEADER_ID ) )
 	{
 		ConMsg( "%s is not a valid demo file\n", name);
@@ -2044,7 +2044,7 @@ void CL_ListDemo_f( const CCommand &args )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND( stop, "Finish recording demo." )
 {
@@ -2061,7 +2061,7 @@ CON_COMMAND( stop, "Finish recording demo." )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND_F( record, "Record a demo.", FCVAR_DONTRECORD )
 {
@@ -2069,7 +2069,7 @@ CON_COMMAND_F( record, "Record a demo.", FCVAR_DONTRECORD )
 	{
 		ConMsg ("Can't record on dedicated server.\n");
 		return;
-	}	
+	}
 
 	if ( args.ArgC() != 2 && args.ArgC() != 3 )
 	{
@@ -2085,7 +2085,7 @@ CON_COMMAND_F( record, "Record a demo.", FCVAR_DONTRECORD )
 			incremental = true;
 		}
 	}
-	
+
 	if ( demorecorder->IsRecording() )
 	{
 		ConMsg ("Already recording.\n");
@@ -2115,7 +2115,7 @@ CON_COMMAND_F( record, "Record a demo.", FCVAR_DONTRECORD )
 
 	// remove .dem extension if user added it
 	Q_StripExtension( args[1], name, sizeof( name ) );
-	
+
 	if ( incremental )
 	{
 		// If file exists, construct a better name
@@ -2129,7 +2129,7 @@ CON_COMMAND_F( record, "Record a demo.", FCVAR_DONTRECORD )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CL_PlayDemo_f( const CCommand &args )
 {
@@ -2167,7 +2167,7 @@ void CL_PlayDemo_f( const CCommand &args )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CL_TimeDemo_f( const CCommand &args )
 {
@@ -2191,7 +2191,7 @@ void CL_TimeDemo_f( const CCommand &args )
 
 	// set current demo player to client demo player
 	demoplayer = g_pClientDemoPlayer;
-	
+
 	// open the demo file
 	char name[ MAX_OSPATH ];
 	Q_strncpy (name, args[1], sizeof( name ) );
@@ -2225,10 +2225,10 @@ void CL_BenchFrame_f( const CCommand &args )
 	s_bBenchframe = true;
 
 	mat_norendering.SetValue( 1 );
-	
+
 	// set current demo player to client demo player
 	demoplayer = g_pClientDemoPlayer;
-	
+
 	// open the demo file
 	char name[ MAX_OSPATH ];
 	Q_strncpy (name, args[1], sizeof( name ) );
@@ -2241,7 +2241,7 @@ void CL_BenchFrame_f( const CCommand &args )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND( vtune, "Controls VTune's sampling." )
 {
@@ -2250,7 +2250,7 @@ CON_COMMAND( vtune, "Controls VTune's sampling." )
 		ConMsg ("vtune \"pause\" | \"resume\" : Suspend or resume VTune's sampling.\n");
 		return;
 	}
-	
+
 	if( !Q_strcasecmp( args[1], "pause" ) )
 	{
 		if(!vtune(false))
@@ -2269,7 +2269,7 @@ CON_COMMAND( vtune, "Controls VTune's sampling." )
 			ConMsg("Failed to find \"VTResume()\" in \"vtuneapi.dll\".\n");
 			return;
 		}
-		
+
 		ConMsg("VTune sampling resumed.\n");
 	}
 
@@ -2309,7 +2309,7 @@ CON_COMMAND( demo_togglepause, "Toggles demo playback." )
 {
 	if ( !demoplayer->IsPlayingBack() )
 		return;
-	
+
 	if ( demoplayer->IsPlaybackPaused() )
 	{
 		demoplayer->ResumePlayback();
@@ -2330,9 +2330,9 @@ CON_COMMAND( demo_gototick, "Skips to a tick in demo." )
 		Msg("Syntax: demo_gototick <tick> [relative] [pause]\n");
 		return;
 	}
-	
+
 	int nTick = atoi( args[1] );
-	
+
 	if ( args.ArgC() >= 3 )
 	{
 		bRelative = Q_atoi( args[2] ) != 0;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -21,7 +21,7 @@
 #define	SF_TANK_DAMAGE_KICK					0x0040	// Kick when take damage
 #define	SF_TANK_AIM_AT_POS					0x0080	// Aim at a particular position
 #define SF_TANK_AIM_ASSISTANCE				0x0100
-#define SF_TANK_NPC							0x0200		
+#define SF_TANK_NPC							0x0200
 #define SF_TANK_NPC_CONTROLLABLE			0x0400		// 1024
 #define SF_TANK_NPC_SET_CONTROLLER			0x0800		// 2048
 #define SF_TANK_ALLOW_PLAYER_HITS			0x1000		// 4096		Allow friendly NPCs to fire upon enemies near the player
@@ -36,7 +36,7 @@
 #define FUNCTANK_NPC_ROUTE_TIME				5.0f
 
 // Effect handling
-// If the func_tank has a chosen method of handling effects, use that 
+// If the func_tank has a chosen method of handling effects, use that
 // instead of the individual effect settings. (muzzleflash, sound, tracer, etc)
 enum FUNCTANK_EFFECT_HANDLING
 {
@@ -80,13 +80,13 @@ public:
 	void	SetYawRate( float flYawRate ) { m_yawRate = flYawRate; }
 	void	SetPitchRate( float flPitchRate ) { m_pitchRate = flPitchRate; }
 
-	int	ObjectCaps( void ) 
-	{ 
-		return ( BaseClass::ObjectCaps() | FCAP_IMPULSE_USE | FCAP_USE_IN_RADIUS ); 
+	int	ObjectCaps( void )
+	{
+		return ( BaseClass::ObjectCaps() | FCAP_IMPULSE_USE | FCAP_USE_IN_RADIUS );
 	}
 
 	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	
+
 	virtual	void FuncTankPreThink() { return; }
 	void	Think( void );
 	virtual	void FuncTankPostThink() { return; }
@@ -204,7 +204,7 @@ private:
 	bool		NPC_InRoute( void )							{ return m_bNPCInRoute; }
 	bool		NPC_InterruptController( void );
 
-	// Aim the tank at the player crosshair 
+	// Aim the tank at the player crosshair
 	void AimBarrelAtPlayerCrosshair( QAngle *pAngles );
 
 	// Aim the tank at the NPC's enemy
@@ -213,13 +213,13 @@ private:
 	// Aim the tank at the func_tank's enemy
 	void AimFuncTankAtTarget( void );
 
-	// Returns true if the desired angles are out of range 
+	// Returns true if the desired angles are out of range
 	bool RotateTankToAngles( const QAngle &angles, float *pDistX = NULL, float *pDistY = NULL );
 
-	// We lost our target! 
+	// We lost our target!
 	void LostTarget( void );
 
-	// Purpose: 
+	// Purpose:
 	void ComputeLeadingPosition( const Vector &vecShootPosition, CBaseEntity *pTarget, Vector *pLeadPosition );
 
 protected:
@@ -258,12 +258,12 @@ protected:
 private:
 
 	// This is either the player manning the func_tank, or an NPC. The NPC is either manning the tank, or running
-	// to the man point. If he's en-route, m_bNPCInRoute will be true. 
+	// to the man point. If he's en-route, m_bNPCInRoute will be true.
 	CHandle<CBaseCombatCharacter> m_hController;
 
 	float					m_flNextAttack;
 	Vector					m_vecControllerUsePos;
-	
+
 	float					m_yawCenter;	// "Center" yaw
 	float					m_yawCenterWorld;	// "Center" yaw in world space
 	float					m_yawRate;		// Max turn rate to track targets
@@ -286,7 +286,7 @@ private:
 	float					m_maxRange;		// Max range to aim/track
 	float					m_flMinRange2;
 	float					m_flMaxRange2;
-	int						m_iAmmoCount;	// ammo 
+	int						m_iAmmoCount;	// ammo
 
 	Vector					m_barrelPos;	// Length of the freakin barrel
 	float					m_spriteScale;	// Scale of any sprites we shoot
@@ -343,7 +343,7 @@ private:
 	float					m_flNextControllerSearch;
 	bool					m_bShouldFindNPCs;
 	bool					m_bNPCInRoute;
-	string_t				m_iszNPCManPoint; 
+	string_t				m_iszNPCManPoint;
 
 	bool					m_bReadyToFire;
 

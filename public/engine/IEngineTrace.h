@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -103,8 +103,8 @@ class CTraceFilterHitAll : public CTraceFilter
 {
 public:
 	virtual bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
-	{ 
-		return true; 
+	{
+		return true;
 	}
 };
 
@@ -116,7 +116,7 @@ abstract_class IEntityEnumerator
 {
 public:
 	// This gets called with each handle
-	virtual bool EnumEntity( IHandleEntity *pHandleEntity ) = 0; 
+	virtual bool EnumEntity( IHandleEntity *pHandleEntity ) = 0;
 };
 
 
@@ -130,7 +130,7 @@ abstract_class IEngineTrace
 public:
 	// Returns the contents mask + entity at a particular world-space position
 	virtual int		GetPointContents( const Vector &vecAbsPosition, IHandleEntity** ppEntity = NULL ) = 0;
-	
+
 	// Get the point contents, but only test the specific entity. This works
 	// on static props and brush models.
 	//
@@ -155,7 +155,7 @@ public:
 	// A version that sweeps a collideable through the world
 	// abs start + abs end represents the collision origins you want to sweep the collideable through
 	// vecAngles represents the collision angles of the collideable during the sweep
-	virtual void	SweepCollideable( ICollideable *pCollide, const Vector &vecAbsStart, const Vector &vecAbsEnd, 
+	virtual void	SweepCollideable( ICollideable *pCollide, const Vector &vecAbsStart, const Vector &vecAbsEnd,
 		const QAngle &vecAngles, unsigned int fMask, ITraceFilter *pTraceFilter, trace_t *pTrace ) = 0;
 
 	// Enumerates over all entities along a ray

@@ -56,7 +56,7 @@ LINK_ENTITY_TO_CLASS( tf_glow, CTFGlow );
 void CTFGlow::Spawn()
 {
 	CBaseEntity *pEnt = gEntList.FindEntityByName( nullptr, m_target );
-	if ( !pEnt ) 
+	if ( !pEnt )
 	{
 		Warning( "tf_glow: failed to find target %s\n", m_target.ToCStr() );
 		UTIL_Remove( this );

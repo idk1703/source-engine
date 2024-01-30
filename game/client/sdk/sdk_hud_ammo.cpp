@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -63,7 +63,7 @@ CHudAmmo::CHudAmmo( const char *pElementName ) : BaseClass(NULL, "HudAmmo"), CHu
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAmmo::Init( void )
 {
@@ -82,7 +82,7 @@ void CHudAmmo::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudAmmo::VidInit( void )
 {
@@ -251,7 +251,7 @@ void CHudAmmo::OnThink()
 void CHudAmmo::UpdateAmmoDisplays()
 {
 	C_BasePlayer *player = C_BasePlayer::GetLocalPlayer();
-	
+
 	UpdatePlayerAmmo( player );
 }
 
@@ -408,7 +408,7 @@ protected:
 				// we've changed to a weapon that uses secondary ammo
 				g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("WeaponUsesSecondaryAmmo");
 			}
-			else 
+			else
 			{
 				// we've changed away from a weapon that uses secondary ammo
 				g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("WeaponDoesNotUseSecondaryAmmo");
@@ -423,4 +423,3 @@ private:
 };
 
 DECLARE_HUDELEMENT( CHudSecondaryAmmo );
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,7 +22,7 @@
 class CNetworkStringTableContainer;
 class PackedEntity;
 class ServerClass;
-class INetworkStringTable;	
+class INetworkStringTable;
 
 enum server_state_t
 {
@@ -38,9 +38,9 @@ bool AllowDebugDedicatedServerOutsideSteam();
 // time a challenge nonce is valid for, in seconds
 #define CHALLENGE_NONCE_LIFETIME 6.0f
 
-// MAX_DELTA_TICKS defines the maximum delta difference allowed 
+// MAX_DELTA_TICKS defines the maximum delta difference allowed
 // for delta compression, if clients request on older tick as
-// delta baseline, send a full update. 
+// delta baseline, send a full update.
 #define MAX_DELTA_TICKS	192		// this is about 3 seconds
 
 typedef struct
@@ -66,7 +66,7 @@ public: // IServer implementation
 	virtual int		GetNumFakeClients() const; // returns number of fake clients/bots
 	virtual int		GetMaxClients( void ) const { return m_nMaxclients; } // returns current client limit
 	virtual int		GetUDPPort( void ) const { return NET_GetUDPPort( m_Socket );	}
-	virtual IClient	*GetClient( int index ) { return m_Clients[index]; } // returns interface to client 
+	virtual IClient	*GetClient( int index ) { return m_Clients[index]; } // returns interface to client
 	virtual int		GetClientCount() const { return m_Clients.Count(); } // for iteration;
 	virtual float	GetTime( void ) const;
 	virtual int		GetTick( void ) const { return m_nTickCount; }
@@ -80,8 +80,8 @@ public: // IServer implementation
 	virtual int		GetNumPlayers();
 	virtual	bool	GetPlayerInfo( int nClientIndex, player_info_t *pinfo );
 	virtual float	GetCPUUsage( void ) { return m_fCPUPercent; }
-		
-	virtual bool	IsActive( void ) const { return m_State >= ss_active; }	
+
+	virtual bool	IsActive( void ) const { return m_State >= ss_active; }
 	virtual bool	IsLoading( void ) const { return m_State == ss_loading; }
 	virtual bool	IsDedicated( void ) const { return m_bIsDedicated; }
 	virtual bool	IsPaused( void ) const { return m_State == ss_paused; }
@@ -101,10 +101,10 @@ public: // IServer implementation
 	virtual void	SetPassword(const char *password);
 
 	virtual void	DisconnectClient(IClient *client, const char *reason );
-	
+
 	virtual void	WriteDeltaEntities( CBaseClient *client, CClientFrame *to, CClientFrame *from,	bf_write &pBuf );
 	virtual void	WriteTempEntities( CBaseClient *client, CFrameSnapshot *to, CFrameSnapshot *from, bf_write &pBuf, int nMaxEnts );
-	
+
 public: // IConnectionlessPacketHandler implementation
 
 	virtual bool	ProcessConnectionlessPacket( netpacket_t * packet );
@@ -154,16 +154,16 @@ public: // IConnectionlessPacketHandler implementation
 
 protected:
 
-	virtual IClient *ConnectClient ( netadr_t &adr, int protocol, int challenge, int clientChallenge, int authProtocol, 
+	virtual IClient *ConnectClient ( netadr_t &adr, int protocol, int challenge, int clientChallenge, int authProtocol,
 					    const char *name, const char *password, const char *hashedCDkey, int cdKeyLen );
-	
+
 	virtual CBaseClient *GetFreeClient( netadr_t &adr );
 
 	virtual CBaseClient *CreateNewClient( int slot ) { AssertMsg( 0, "CBaseServer::CreateNewClient() being called - must be implemented in derived class!" ); return NULL; }; // must be derived
 
-	
+
 	virtual bool	FinishCertificateCheck( netadr_t &adr, int nAuthProtocol, const char *szRawCertificate, int clientChallenge ) { return true; };
-	
+
 	virtual int		GetChallengeNr ( netadr_t &adr );
 	virtual int		GetChallengeType ( netadr_t &adr );
 
@@ -180,7 +180,7 @@ protected:
 
 	// Keep the master server data updated.
 	virtual bool	ShouldUpdateMasterServer();
-	
+
 	void			CheckMasterServerRequestRestart();
 	void			UpdateMasterServer();
 	void			UpdateMasterServerRules();
@@ -197,7 +197,7 @@ protected:
 public:
 
 	server_state_t	m_State;		// some actions are only valid during load
-	int				m_Socket;		// network socket 
+	int				m_Socket;		// network socket
 	int				m_nTickCount;	// current server tick
 	bool			m_bSimulatingTicks;		// whether or not the server is currently simulating ticks
 	char			m_szMapname[64];		// map name
@@ -206,10 +206,10 @@ public:
 	char			m_Password[32];		// server password
 
 	MD5Value_t		worldmapMD5;		// For detecting that client has a hacked local copy of map, the client will be dropped if this occurs.
-	
+
 	CNetworkStringTableContainer *m_StringTables;	// newtork string table container
 
-	INetworkStringTable *m_pInstanceBaselineTable; 
+	INetworkStringTable *m_pInstanceBaselineTable;
 	INetworkStringTable *m_pLightStyleTable;
 	INetworkStringTable *m_pUserInfoTable;
 	INetworkStringTable *m_pServerStartupTable;
@@ -240,7 +240,7 @@ protected:
 
 
 	CUtlVector<CBaseClient*>	m_Clients;		// array of up to [maxclients] client slots.
-	
+
 	bool		m_bIsDedicated;
 
 	uint32		m_CurrentRandomNonce;
@@ -252,7 +252,7 @@ protected:
 
 	// This is only used for Steam's master server updater to refer to this server uniquely.
 	bool		m_bRestartOnLevelChange;
-	
+
 	bool		m_bMasterServerRulesDirty;
 	double		m_flLastMasterServerUpdateTime;
 

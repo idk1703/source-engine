@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -21,7 +21,7 @@ CUtlSymbolTableMT CDmxAttribute::s_AttributeNameSymbols;
 //-----------------------------------------------------------------------------
 // Attribute size
 //-----------------------------------------------------------------------------
-static size_t s_pAttributeSize[AT_TYPE_COUNT] = 
+static size_t s_pAttributeSize[AT_TYPE_COUNT] =
 {
 	0,							// AT_UNKNOWN,
 	sizeof(CDmxElement*),		// AT_ELEMENT,
@@ -84,7 +84,7 @@ static CSizeTest g_sizeTest;
 //-----------------------------------------------------------------------------
 // Returns attribute name for type
 //-----------------------------------------------------------------------------
-const char *g_pAttributeTypeName[AT_TYPE_COUNT] = 
+const char *g_pAttributeTypeName[AT_TYPE_COUNT] =
 {
 	"unknown", // AT_UNKNOWN
 	CDmAttributeInfo<DmElementHandle_t>::AttributeTypeName(), // AT_ELEMENT,
@@ -119,7 +119,7 @@ const char *g_pAttributeTypeName[AT_TYPE_COUNT] =
 
 
 //-----------------------------------------------------------------------------
-// Constructor, destructor 
+// Constructor, destructor
 //-----------------------------------------------------------------------------
 CDmxAttribute::CDmxAttribute( const char *pAttributeName )
 {
@@ -473,7 +473,7 @@ bool CDmxAttribute::Unserialize( DmAttributeType_t type, CUtlBuffer &buf )
 			GetArrayForEdit< _dataType >().AddToTail( temp );	\
 		}														\
 		return bReadElement;									\
-	}															
+	}
 
 bool CDmxAttribute::UnserializeElement( DmAttributeType_t type, CUtlBuffer &buf )
 {
@@ -544,7 +544,7 @@ void CDmxAttribute::SetValue( DmAttributeType_t type, const void *pSrc, int nLen
 	{
 		AllocateDataMemory( type );
 	}
-	Assert( nLen == CDmxAttribute::AttributeDataSize( type ) ); 
+	Assert( nLen == CDmxAttribute::AttributeDataSize( type ) );
 	if ( nLen > CDmxAttribute::AttributeDataSize( type ) )
 	{
 		nLen = CDmxAttribute::AttributeDataSize( type );

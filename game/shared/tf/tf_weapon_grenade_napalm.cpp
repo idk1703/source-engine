@@ -49,10 +49,10 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj *CTFGrenadeNapalm::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, 
+CTFWeaponBaseGrenadeProj *CTFGrenadeNapalm::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel,
 							        AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
 {
-	return CTFGrenadeNapalmProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse, 
+	return CTFGrenadeNapalmProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse,
 		                                pPlayer, GetTFWpnData(), flTime );
 }
 
@@ -72,14 +72,14 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_grenade_napalm_projectile );
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGrenadeNapalmProjectile* CTFGrenadeNapalmProjectile::Create( const Vector &position, const QAngle &angles, 
-																const Vector &velocity, const AngularImpulse &angVelocity, 
+CTFGrenadeNapalmProjectile* CTFGrenadeNapalmProjectile::Create( const Vector &position, const QAngle &angles,
+																const Vector &velocity, const AngularImpulse &angVelocity,
 																CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags )
 {
 	CTFGrenadeNapalmProjectile *pGrenade = static_cast<CTFGrenadeNapalmProjectile*>( CTFWeaponBaseGrenadeProj::Create( "tf_weapon_grenade_napalm_projectile", position, angles, velocity, angVelocity, pOwner, weaponInfo, timer, iFlags ) );
 	if ( pGrenade )
 	{
-		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );	
+		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );
 	}
 
 	return pGrenade;

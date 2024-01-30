@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -36,7 +36,7 @@ END_SEND_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Precache: 
+// Precache:
 //-----------------------------------------------------------------------------
 void CEnv_Lightrail_Endpoint::Precache()
 {
@@ -46,7 +46,7 @@ void CEnv_Lightrail_Endpoint::Precache()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnv_Lightrail_Endpoint::Spawn( void )
 {
@@ -66,8 +66,8 @@ void CEnv_Lightrail_Endpoint::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flWarmUpTime - 
+// Purpose:
+// Input  : flWarmUpTime -
 //-----------------------------------------------------------------------------
 void CEnv_Lightrail_Endpoint::StartCharge( float flWarmUpTime )
 {
@@ -77,7 +77,7 @@ void CEnv_Lightrail_Endpoint::StartCharge( float flWarmUpTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnv_Lightrail_Endpoint::StartLargeFX( void )
 {
@@ -86,7 +86,7 @@ void CEnv_Lightrail_Endpoint::StartLargeFX( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnv_Lightrail_Endpoint::StartSmallFX( void )
 {
@@ -95,8 +95,8 @@ void CEnv_Lightrail_Endpoint::StartSmallFX( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flCoolDownTime - 
+// Purpose:
+// Input  : flCoolDownTime -
 //-----------------------------------------------------------------------------
 void CEnv_Lightrail_Endpoint::StopLargeFX( float flCoolDownTime )
 {
@@ -106,8 +106,8 @@ void CEnv_Lightrail_Endpoint::StopLargeFX( float flCoolDownTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flCoolDownTime - 
+// Purpose:
+// Input  : flCoolDownTime -
 //-----------------------------------------------------------------------------
 void CEnv_Lightrail_Endpoint::StopSmallFX( float flCoolDownTime )
 {
@@ -117,8 +117,8 @@ void CEnv_Lightrail_Endpoint::StopSmallFX( float flCoolDownTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CEnv_Lightrail_Endpoint::InputStartCharge( inputdata_t &inputdata )
 {
@@ -126,8 +126,8 @@ void CEnv_Lightrail_Endpoint::InputStartCharge( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CEnv_Lightrail_Endpoint::InputStartLargeFX( inputdata_t &inputdata )
 {
@@ -135,8 +135,8 @@ void CEnv_Lightrail_Endpoint::InputStartLargeFX( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CEnv_Lightrail_Endpoint::InputStartSmallFX( inputdata_t &inputdata )
 {
@@ -144,8 +144,8 @@ void CEnv_Lightrail_Endpoint::InputStartSmallFX( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CEnv_Lightrail_Endpoint::InputStop( inputdata_t &inputdata )
 {

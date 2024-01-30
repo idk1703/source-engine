@@ -53,7 +53,7 @@ void CDODTeam::AddPlayerClass( const char *szClassName )
 	{
 		Assert( !"missing playerclass script file" );
 		Msg( "Missing playerclass script file for class: %s\n", szClassName );
-	}	
+	}
 }
 
 const CDODPlayerClassInfo &CDODTeam::GetPlayerClassInfo( int iPlayerClass ) const
@@ -83,7 +83,7 @@ bool CDODTeam::IsClassOnTeam( const char *pszClassName, int &iClassNum ) const
 		iClassNum = PLAYERCLASS_RANDOM;
 		return true;
 	}
-	
+
 	for( int i=0;i<m_hPlayerClassInfoHandles.Count(); i++ )
 	{
 		FilePlayerClassInfo_t *pPlayerClassInfo = GetFilePlayerClassInfoFromHandle( m_hPlayerClassInfoHandles[i] );
@@ -126,7 +126,7 @@ DECLARE_SERVERCLASS();
 		{
 			AddPlayerClass( pszTeamAlliesClasses[i] );
 			i++;
-		}	
+		}
 	}
 
 	virtual const char *GetTeamName( void ) { return "#Teamname_Allies"; }
@@ -156,7 +156,7 @@ DECLARE_SERVERCLASS();
 		{
 			AddPlayerClass( pszTeamAxisClasses[i] );
 			i++;
-		}	
+		}
 	}
 
 	virtual const char *GetTeamName( void ) { return "#Teamname_Allies"; }

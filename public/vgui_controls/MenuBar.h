@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@ namespace vgui
 {
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class MenuBar : public Panel
 {
@@ -51,4 +51,3 @@ private:
 } // namespace vgui
 
 #endif // MENUBAR_H
-

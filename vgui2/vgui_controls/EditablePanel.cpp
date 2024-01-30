@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -111,7 +111,7 @@ void EditablePanel::OnChildAdded(VPANEL child)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void EditablePanel::OnKeyCodePressed( KeyCode code )
 {
@@ -150,7 +150,7 @@ void EditablePanel::OnKeyCodePressed( KeyCode code )
 				vgui_nav_lock_default_button.SetValue( 1 );
 				PostMessage( panel, new KeyValues( "KeyCodePressed", "code", code ) );
 				return;
-			
+
 			case KEY_XBUTTON_A:
 			case STEAMCONTROLLER_A:
 			case KEY_ENTER:
@@ -200,7 +200,7 @@ void EditablePanel::OnSizeChanged(int wide, int tall)
 		int ex;
 		int ey;
 
-		AutoResize_e resize = child->GetAutoResize(); 
+		AutoResize_e resize = child->GetAutoResize();
 		bool bResizeHoriz = ( resize == AUTORESIZE_RIGHT || resize == AUTORESIZE_DOWNANDRIGHT );
 		bool bResizeVert = ( resize == AUTORESIZE_DOWN || resize == AUTORESIZE_DOWNANDRIGHT );
 
@@ -255,7 +255,7 @@ void EditablePanel::OnSizeChanged(int wide, int tall)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void EditablePanel::OnCurrentDefaultButtonSet( VPANEL defaultButton )
 {
@@ -271,7 +271,7 @@ void EditablePanel::OnCurrentDefaultButtonSet( VPANEL defaultButton )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void EditablePanel::OnDefaultButtonSet( VPANEL defaultButton )
 {
@@ -281,21 +281,21 @@ void EditablePanel::OnDefaultButtonSet( VPANEL defaultButton )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void EditablePanel::OnFindDefaultButton()
 {
-    if (m_NavGroup.GetDefaultButton())
-    {
-        m_NavGroup.SetCurrentDefaultButton(m_NavGroup.GetDefaultButton());
-    }
-    else
-    {
-        if (GetVParent())
-        {
-            PostMessage(GetVParent(), new KeyValues("FindDefaultButton"));
-        }
-    }
+	if (m_NavGroup.GetDefaultButton())
+	{
+		m_NavGroup.SetCurrentDefaultButton(m_NavGroup.GetDefaultButton());
+	}
+	else
+	{
+		if (GetVParent())
+		{
+			PostMessage(GetVParent(), new KeyValues("FindDefaultButton"));
+		}
+	}
 }
 
 struct leaf_t
@@ -708,7 +708,7 @@ bool EditablePanel::RequestInfo(KeyValues *data)
 
 //-----------------------------------------------------------------------------
 // Purpose: Return the buildgroup that this panel is part of.
-// Input  : 
+// Input  :
 // Output : BuildGroup
 //-----------------------------------------------------------------------------
 BuildGroup *EditablePanel::GetBuildGroup()
@@ -726,7 +726,7 @@ FocusNavGroup &EditablePanel::GetFocusNavGroup()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool EditablePanel::RequestFocusNext(VPANEL panel)
 {
@@ -739,7 +739,7 @@ bool EditablePanel::RequestFocusNext(VPANEL panel)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool EditablePanel::RequestFocusPrev(VPANEL panel)
 {
@@ -798,7 +798,7 @@ void EditablePanel::OnSetFocus()
 
 //-----------------------------------------------------------------------------
 // Purpose: Called when the resource file is loaded to set up the panel state
-// Input  : *inResourceData - 
+// Input  : *inResourceData -
 //-----------------------------------------------------------------------------
 void EditablePanel::ApplySettings(KeyValues *inResourceData)
 {
@@ -816,9 +816,9 @@ void EditablePanel::ApplySettings(KeyValues *inResourceData)
 void EditablePanel::OnRequestFocus(VPANEL subFocus, VPANEL defaultPanel)
 {
 	if (!ipanel()->IsPopup(subFocus))
-    {
+	{
 		defaultPanel = m_NavGroup.SetCurrentFocus(subFocus, defaultPanel);
-    }
+	}
 	BaseClass::OnRequestFocus(GetVPanel(), defaultPanel);
 }
 
@@ -852,7 +852,7 @@ VPANEL EditablePanel::GetCurrentKeyFocus()
 //-----------------------------------------------------------------------------
 Panel *EditablePanel::HasHotkey(wchar_t key)
 {
-	if( !IsVisible() || !IsEnabled()) // not visible, so can't respond to a hot key 
+	if( !IsVisible() || !IsEnabled()) // not visible, so can't respond to a hot key
 	{
 		return NULL;
 	}
@@ -865,9 +865,9 @@ Panel *EditablePanel::HasHotkey(wchar_t key)
 			return hot;
 		}
 	}
-	
+
 	return NULL;
-	
+
 }
 
 //-----------------------------------------------------------------------------
@@ -893,7 +893,7 @@ void EditablePanel::SetControlVisible(const char *controlName, bool visible, boo
 		control->SetVisible(visible);
 	}
 }
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Shortcut function to set data in child controls
 //-----------------------------------------------------------------------------
@@ -1050,7 +1050,7 @@ void EditablePanel::ForceSubPanelsToUpdateWithNewDialogVariables()
 //-----------------------------------------------------------------------------
 KeyValues *EditablePanel::GetDialogVariables()
 {
-	if (m_pDialogVariables) 
+	if (m_pDialogVariables)
 		return m_pDialogVariables;
 
 	m_pDialogVariables = new KeyValues("DialogVariables");

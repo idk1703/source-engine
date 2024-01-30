@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -125,7 +125,7 @@ BEGIN_VS_SHADER( Compositor, "Help for Compositor" )
 	{
 
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		// Requires DX9 + above
@@ -166,7 +166,7 @@ static void DrawCompositorStage_common( CBaseVSShader *pShader, IMaterialVar **p
 
 		// In 2.0b shaders, we use the skin shader and alpha carries specular mask information--
 		// so we need to write it
-		// But with 2.0 shaders used by at least one customer in 2015, we fall back to 
+		// But with 2.0 shaders used by at least one customer in 2015, we fall back to
 		// vertexlitgeneric and it doesn't do the same transforms as skin to the alpha shader
 		// Since it won't be used anyways and it breaks the item model panel icons to write alpha
 		// DON'T when we're running with 2.0 shaders.
@@ -246,7 +246,7 @@ static void DrawCompositorStage_ps20_muladdblend( CBaseVSShader *pShader, IMater
 		}
 		pShader->Draw();
 
-		// We can blend on top for second and subsequent writes. 
+		// We can blend on top for second and subsequent writes.
 		pShaderShadow->EnableBlending( true );
 		if ( nCombineMode == ECO_Multiply )
 			pShaderShadow->BlendFunc( SHADER_BLEND_DST_COLOR, SHADER_BLEND_ZERO );
@@ -260,7 +260,7 @@ static void DrawCompositorStage_ps20_muladdblend( CBaseVSShader *pShader, IMater
 	{
 		int textureCount = GetIntParam( info.m_nTextureInputCount, params );
 		int textureCountThisPass = Min( textureCount, info.m_nTexturesPerPass );
-		Assert( textureCount > 0 ); // Valid, but would be really weird. 
+		Assert( textureCount > 0 ); // Valid, but would be really weird.
 		Assert( textureCountThisPass > 0 ); // That's bogus
 
 		if ( textureCountThisPass > 0 ) pShader->SetPixelShaderConstantGammaToLinear( 2, info.m_nTexAdjustLevels[ 0 ] );
@@ -423,10 +423,10 @@ static void DrawCompositorStage_ps20b( CBaseVSShader *pShader, IMaterialVar **pa
 	{
 		int textureCount = GetIntParam( info.m_nTextureInputCount, params );
 		int textureCountThisPass = Min( textureCount, info.m_nTexturesPerPass );
-		Assert( textureCount > 0 ); // Valid, but would be really weird. 
+		Assert( textureCount > 0 ); // Valid, but would be really weird.
 		Assert( textureCountThisPass > 0 ); // That's bogus
 
-		// Slot 0 is mostly already handled by common 
+		// Slot 0 is mostly already handled by common
 		if ( textureCountThisPass > 0 ) pShader->SetPixelShaderConstant( 2, info.m_nTexAdjustLevels[ 0 ] );
 
 		if ( textureCountThisPass > 1 ) pShader->BindTexture( SHADER_SAMPLER1,   info.m_nSrcTexture[ 1 ]  );
@@ -440,7 +440,7 @@ static void DrawCompositorStage_ps20b( CBaseVSShader *pShader, IMaterialVar **pa
 		if ( textureCountThisPass > 3 ) pShader->BindTexture( SHADER_SAMPLER3,   info.m_nSrcTexture[ 3 ] );
 		if ( textureCountThisPass > 3 ) pShader->SetVertexShaderMatrix2x4( 8,  info.m_nTexTransform[ 3 ] );
 		if ( textureCountThisPass > 3 ) pShader->SetPixelShaderConstant( 5, info.m_nTexAdjustLevels[ 3 ] );
-			
+
 		DECLARE_DYNAMIC_PIXEL_SHADER( compositor_ps20b );
 		#ifdef STAGING_ONLY
 			SET_DYNAMIC_PIXEL_SHADER_COMBO( DEBUG_MODE, r_texcomp_debug_stickers.GetBool() ? 1 : 0 );
@@ -452,4 +452,3 @@ static void DrawCompositorStage_ps20b( CBaseVSShader *pShader, IMaterialVar **pa
 		pShader->Draw();
 	}
 }
-

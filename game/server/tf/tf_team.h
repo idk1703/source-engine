@@ -69,7 +69,7 @@ public:
 	CBasePlayer		*GetTeamLeader( void );
 
 private:
-	
+
 	color32						m_TeamColor;
 	CUtlVector< CHandle<CBaseObject> >	m_aObjects;			// List of team objects.
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -89,7 +89,7 @@ struct DamageAnimation_t
 	int bitsDamage;
 	float angleMinimum;
 	float angleMaximum;
-	int damage; 
+	int damage;
 };
 
 //-----------------------------------------------------------------------------
@@ -106,7 +106,7 @@ static DamageAnimation_t g_DamageAnimations[] =
 	{ "HudTakeDamageHighLeft",	DMG_ANY,	45.0f,		135.0f,		DAMAGE_HIGH },
 	{ "HudTakeDamageHighRight",	DMG_ANY,	225.0f,		315.0f,		DAMAGE_HIGH },
 	{ "HudTakeDamageHigh",		DMG_ANY,	ANGLE_ANY,	ANGLE_ANY,	DAMAGE_HIGH },
-	
+
 	{ "HudTakeDamageLeft",		DMG_ANY,	45.0f,		135.0f,		DAMAGE_ANY },
 	{ "HudTakeDamageRight",		DMG_ANY,	225.0f,		315.0f,		DAMAGE_ANY },
 	{ "HudTakeDamageBehind",	DMG_ANY,	135.0f,		225.0f,		DAMAGE_ANY },
@@ -125,13 +125,13 @@ CHudDamageIndicator::CHudDamageIndicator( const char *pElementName ) : CHudEleme
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
 	SetParent( pParent );
 
-	m_WhiteAdditiveMaterial.Init( "vgui/white_additive", TEXTURE_GROUP_VGUI ); 
-	
+	m_WhiteAdditiveMaterial.Init( "vgui/white_additive", TEXTURE_GROUP_VGUI );
+
 	SetHiddenBits( HIDEHUD_HEALTH );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDamageIndicator::Reset( void )
 {
@@ -149,14 +149,14 @@ void CHudDamageIndicator::Init( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Save CPU cycles by letting the HUD system early cull
-// costly traversal.  Called per frame, return true if thinking and 
+// costly traversal.  Called per frame, return true if thinking and
 // painting need to occur.
 //-----------------------------------------------------------------------------
 bool CHudDamageIndicator::ShouldDraw( void )
 {
-	bool bNeedsDraw = m_DmgColorLeft[3] || 
-						m_DmgColorRight[3] || 
-						m_DmgHighColorLeft[3] || 
+	bool bNeedsDraw = m_DmgColorLeft[3] ||
+						m_DmgColorRight[3] ||
+						m_DmgHighColorLeft[3] ||
 						m_DmgHighColorRight[3] ||
 						m_DmgFullscreenColor[3];
 
@@ -349,7 +349,7 @@ void CHudDamageIndicator::MsgFunc_Damage( bf_read &msg )
 	}
 
 	// ignore damage without direction
-	// this should never happen, unless it's drowning damage, 
+	// this should never happen, unless it's drowning damage,
 	// or the player is forcibly killed, handled above
 	if ( vecFrom == vec3_origin && !(bitsDamage & DMG_DROWN))
 		return;
@@ -430,7 +430,7 @@ void CHudDamageIndicator::GetDamagePosition( const Vector &vecDelta, float *flRo
 	float yawRadians = -(*flRotation) * M_PI / 180.0f;
 	float ca = cos( yawRadians );
 	float sa = sin( yawRadians );
-				 
+
 	// Rotate it around the circle
 	xpos = (int)((GetWide() / 2) + (flRadius * sa));
 	ypos = (int)((GetTall() / 2) - (flRadius * ca));

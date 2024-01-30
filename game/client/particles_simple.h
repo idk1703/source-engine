@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -38,7 +38,7 @@ public:
 	void				SetSortOrigin( const Vector &vSortOrigin );
 
 	PMaterialHandle		GetPMaterial(const char *name);
-	
+
 	Particle*			AddParticle( unsigned int particleSize, PMaterialHandle material, const Vector &origin );
 
 	CParticleEffectBinding&	GetBinding()	{ return m_ParticleEffect; }
@@ -80,7 +80,7 @@ protected:
 
 	// Returns nonzero if Release() has been called.
 	int							IsReleased();
-	
+
 	enum
 	{
 		FLAG_ALLOCATED = (1<<1),	// Most of the CParticleEffects are dynamically allocated but
@@ -93,7 +93,7 @@ protected:
 
 	CParticleEffectBinding		m_ParticleEffect;
 	Vector						m_vSortOrigin;
-	
+
 	int							m_Flags;		// Combination of CParticleEffect::FLAG_
 
 	bool						m_bSimulate;
@@ -103,7 +103,7 @@ private:
 	// Update the reference count.
 	void						AddRef();
 	void						Release();
-	
+
 	int							m_RefCount;		// When this goes to zero and the effect has no more active
 												// particles, (and it's dynamically allocated), it will delete itself.
 
@@ -177,7 +177,7 @@ public:
 	void			SetDrawBeforeViewModel( bool state = true );
 
 	SimpleParticle*	AddSimpleParticle( PMaterialHandle hMaterial, const Vector &vOrigin, float flDieTime=3, unsigned char uchSize=10 );
-	
+
 // Overridables for variants like CEmberEffect.
 protected:
 					CSimpleEmitter( const char *pDebugName = NULL );
@@ -244,7 +244,7 @@ class CFireParticle : public CSimpleEmitter
 public:
 							CFireParticle( const char *pDebugName );
 	static CSmartPtr<CFireParticle>	Create( const char *pDebugName );
-	
+
 	virtual Vector UpdateColor( const SimpleParticle *pParticle );
 
 private:

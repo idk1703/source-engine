@@ -5,13 +5,13 @@
  *  Copyright (c) 2004 Apple Computer, Inc. All rights reserved.
  *
  */
- 
+
  /*! @header CVImageBuffer.h
 	@copyright 2004 Apple Computer, Inc. All rights reserved.
 	@availability Mac OS X 10.4 or later
-    @discussion CVImageBufferRef types are abstract and define various attachments and convenience
+	@discussion CVImageBufferRef types are abstract and define various attachments and convenience
 		calls for retreiving image related bits of data.
-		   
+
 */
 
 #if !defined(__COREVIDEO_CVIMAGEBUFFER_H__)
@@ -102,51 +102,51 @@ CV_EXPORT const CFStringRef	kCVImageBufferYCbCrMatrix_SMPTE_240M_1995 AVAILABLE_
 #pragma mark CVImageBufferRef
 
 /*!
-    @typedef	CVImageBufferRef
-    @abstract   Base type for all CoreVideo image buffers
+	@typedef	CVImageBufferRef
+	@abstract   Base type for all CoreVideo image buffers
 
 */
 typedef CVBufferRef CVImageBufferRef;
 
 /*!
-    @function   CVImageBufferGetEncodedSize
-    @abstract   Returns the full encoded dimensions of a CVImageBuffer.  For example, for an NTSC DV frame this would be 720x480
-    @discussion Note: When creating a CIImage from a CVImageBuffer, this is the call you should use for retrieving the image size.
-    @param      imageBuffer A CVImageBuffer that you wish to retrieve the encoded size from.
-    @result     A CGSize returning the full encoded size of the buffer
+	@function   CVImageBufferGetEncodedSize
+	@abstract   Returns the full encoded dimensions of a CVImageBuffer.  For example, for an NTSC DV frame this would be 720x480
+	@discussion Note: When creating a CIImage from a CVImageBuffer, this is the call you should use for retrieving the image size.
+	@param      imageBuffer A CVImageBuffer that you wish to retrieve the encoded size from.
+	@result     A CGSize returning the full encoded size of the buffer
 		Returns zero size if called with a non-CVImageBufferRef type or NULL.
 */
 CV_EXPORT CGSize CVImageBufferGetEncodedSize(CVImageBufferRef imageBuffer) AVAILABLE_MAC_OS_X_VERSION_10_4_AND_LATER;
 
 /*!
-    @function   CVImageBufferGetDisplaySize
-    @abstract   Returns the nominal output display size (in square pixels) of a CVImageBuffer.  
-                For example, for an NTSC DV frame this would be 640x480
-    @param      imageBuffer A CVImageBuffer that you wish to retrieve the display size from.
-    @result     A CGSize returning the nominal display size of the buffer
+	@function   CVImageBufferGetDisplaySize
+	@abstract   Returns the nominal output display size (in square pixels) of a CVImageBuffer.
+				For example, for an NTSC DV frame this would be 640x480
+	@param      imageBuffer A CVImageBuffer that you wish to retrieve the display size from.
+	@result     A CGSize returning the nominal display size of the buffer
 		Returns zero size if called with a non-CVImageBufferRef type or NULL.
 */
 CV_EXPORT CGSize CVImageBufferGetDisplaySize(CVImageBufferRef imageBuffer) AVAILABLE_MAC_OS_X_VERSION_10_4_AND_LATER;
 
 /*!
-    @function   CVImageBufferGetCleanRect
-    @abstract   Returns the source rectangle of a CVImageBuffer that represents the clean aperture
+	@function   CVImageBufferGetCleanRect
+	@abstract   Returns the source rectangle of a CVImageBuffer that represents the clean aperture
 		of the buffer in encoded pixels.    For example, an NTSC DV frame would return a CGRect with an
-		origin of 8,0 and a size of 704,480.		
+		origin of 8,0 and a size of 704,480.
 		Note that the origin of this rect always the lower left	corner.   This is the same coordinate system as
 		used by CoreImage.
-    @param      imageBuffer A CVImageBuffer that you wish to retrieve the display size from.
-    @result     A CGSize returning the nominal display size of the buffer
+	@param      imageBuffer A CVImageBuffer that you wish to retrieve the display size from.
+	@result     A CGSize returning the nominal display size of the buffer
 		Returns zero rect if called with a non-CVImageBufferRef type or NULL.
 */
 CV_EXPORT CGRect CVImageBufferGetCleanRect(CVImageBufferRef imageBuffer) AVAILABLE_MAC_OS_X_VERSION_10_4_AND_LATER;
 
 #if TARGET_OS_MAC
 /*!
-    @function   CVImageBufferGetColorSpace
-    @abstract   Returns the color space of a CVImageBuffer.
-    @param      imageBuffer A CVImageBuffer that you wish to retrieve the color space from.
-    @result     A CGColorSpaceRef representing the color space of the buffer.
+	@function   CVImageBufferGetColorSpace
+	@abstract   Returns the color space of a CVImageBuffer.
+	@param      imageBuffer A CVImageBuffer that you wish to retrieve the color space from.
+	@result     A CGColorSpaceRef representing the color space of the buffer.
 		Returns NULL if called with a non-CVImageBufferRef type or NULL.
 */
 CV_EXPORT CGColorSpaceRef CVImageBufferGetColorSpace(CVImageBufferRef imageBuffer) AVAILABLE_MAC_OS_X_VERSION_10_4_AND_LATER;

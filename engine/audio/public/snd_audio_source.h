@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -49,11 +49,11 @@ public:
 	virtual bool ShouldContinueMixing( void ) = 0;
 
 	virtual CAudioSource *GetSource( void ) = 0;
-	
+
 	// get the current position (next sample to be mixed)
 	virtual int GetSamplePosition( void ) = 0;
 
-	// Allow the mixer to modulate pitch and volume. 
+	// Allow the mixer to modulate pitch and volume.
 	// returns a floating point modulator
 	virtual float ModifyPitch( float pitch ) = 0;
 	virtual float GetVolumeScale( void ) = 0;
@@ -62,7 +62,7 @@ public:
 	// It is currently optimal to call them before any playback starts, but some audio sources may not
 	// guarantee this.  Also, some mixers may choose to ignore these calls for internal reasons (none do currently).
 
-	// Move the current position to newPosition 
+	// Move the current position to newPosition
 	// BUGBUG: THIS CALL DOES NOT SUPPORT MOVING BACKWARD, ONLY FORWARD!!!
 	virtual void SetSampleStart( int newPosition ) = 0;
 
@@ -78,14 +78,14 @@ public:
 	// Certain async loaded sounds lazilly load into memory in the background, use this to determine
 	//  if the sound is ready for mixing
 	virtual bool IsReadyToMix() = 0;
-	
+
 	// NOTE: The "saved" position can be different than the "sample" position
 	// NOTE: Allows mixer to save file offsets, loop info, etc
 	virtual int GetPositionForSave() = 0;
 	virtual void SetPositionFromSaved( int savedPosition ) = 0;
 };
 
-inline int CalcSampleSize( int bitsPerSample, int _channels ) 
+inline int CalcSampleSize( int bitsPerSample, int _channels )
 {
 	return (bitsPerSample >> 3) * _channels;
 }
@@ -319,7 +319,7 @@ FORWARD_DECLARE_HANDLE( memhandle_t );
 typedef int StreamHandle_t;
 enum
 {
-	INVALID_STREAM_HANDLE = (StreamHandle_t)~0 
+	INVALID_STREAM_HANDLE = (StreamHandle_t)~0
 };
 
 typedef int BufferHandle_t;
@@ -456,14 +456,14 @@ public:
 	// Provide samples for the mixer. You can point pData at your own data, or if you prefer to copy the data,
 	// you can copy it into copyBuf and set pData to copyBuf.
 	virtual int					GetOutputData( void **pData, int samplePosition, int sampleCount, char copyBuf[AUDIOSOURCE_COPYBUF_SIZE] ) = 0;
-	
+
 	virtual int					SampleRate( void ) = 0;
 
 	// Returns true if the source is a voice source.
 	// This affects the voice_overdrive behavior (all sounds get quieter when
 	// someone is speaking).
 	virtual bool				IsVoiceSource() = 0;
-	
+
 	// Sample size is in bytes.  It will not be accurate for compressed audio.  This is a best estimate.
 	// The compressed audio mixers understand this, but in general do not assume that SampleSize() * SampleCount() = filesize
 	// or even that SampleSize() is 100% accurate due to compression.
@@ -489,7 +489,7 @@ public:
 	// If not implementing these, simply return sample
 	virtual int					ZeroCrossingBefore( int sample ) = 0;
 	virtual int					ZeroCrossingAfter( int sample ) = 0;
-	
+
 	// mixer's references
 	virtual void				ReferenceAdd( CAudioMixer *pMixer ) = 0;
 	virtual void				ReferenceRemove( CAudioMixer *pMixer ) = 0;

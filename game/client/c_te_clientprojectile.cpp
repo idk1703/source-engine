@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "cbase.h"
@@ -34,7 +34,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEClientProjectile::C_TEClientProjectile( void )
 {
@@ -46,7 +46,7 @@ C_TEClientProjectile::C_TEClientProjectile( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEClientProjectile::~C_TEClientProjectile( void )
 {
@@ -59,8 +59,8 @@ void TE_ClientProjectile( IRecipientFilter& filter, float delay,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEClientProjectile::PostDataUpdate( DataUpdateType_t updateType )
 {

@@ -22,7 +22,7 @@ public:
 	C_Merasmus();
 	virtual ~C_Merasmus();
 
-public:	
+public:
 	virtual void Spawn( void );
 	virtual bool IsNextBot() { return true; }
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -72,12 +72,12 @@ void CVkeyeditView::OnDraw(CDC* pDC)
 //DEL void CVkeyeditView::OnInitialUpdate()
 //DEL {
 //DEL 	CTreeView::OnInitialUpdate();
-//DEL 
+//DEL
 //DEL 	CTreeCtrl &tree = GetTreeCtrl();
-//DEL 
+//DEL
 //DEL //	tree.InsertItem( _T("Test") );
-//DEL 
-//DEL 
+//DEL
+//DEL
 //DEL 	// TODO: You may populate your TreeView with items by directly accessing
 //DEL 	//  its tree control through a call to GetTreeCtrl().
 //DEL }
@@ -125,20 +125,20 @@ CVkeyeditDoc* CVkeyeditView::GetDocument() // non-debug version is inline
 /////////////////////////////////////////////////////////////////////////////
 // CVkeyeditView message handlers
 
-void CVkeyeditView::CalcWindowRect(LPRECT lpClientRect, UINT nAdjustType) 
+void CVkeyeditView::CalcWindowRect(LPRECT lpClientRect, UINT nAdjustType)
 {
 	// TODO: Add your specialized code here and/or call the base class
-	
+
 	CTreeView::CalcWindowRect(lpClientRect, nAdjustType);
 }
 
 // Sort the item in reverse alphabetical order.
 static int CALLBACK MyCompareProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 {
-   return strcmp( ((KeyValues*)(lParam1))->GetName(), ((KeyValues*)(lParam2))->GetName()  );
+	return strcmp( ((KeyValues*)(lParam1))->GetName(), ((KeyValues*)(lParam2))->GetName()  );
 }
 
-void CVkeyeditView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
+void CVkeyeditView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 {
 	// TODO: Add your specialized code here and/or call the base class
 	CTreeCtrl &theTree = GetTreeCtrl();
@@ -157,15 +157,15 @@ void CVkeyeditView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		kv = kv->GetNextKey();
 	}
 
-   // The pointer to my tree control.
-   TVSORTCB tvs;
-   // Sort the tree control's items using my
-   // callback procedure.
-   tvs.hParent = TVI_ROOT;
-   tvs.lpfnCompare = MyCompareProc;
-   tvs.lParam = (LPARAM) &theTree;
+	// The pointer to my tree control.
+	TVSORTCB tvs;
+	// Sort the tree control's items using my
+	// callback procedure.
+	tvs.hParent = TVI_ROOT;
+	tvs.lpfnCompare = MyCompareProc;
+	tvs.lParam = (LPARAM) &theTree;
 
-   theTree.SortChildrenCB(&tvs);
+	theTree.SortChildrenCB(&tvs);
 
 }
 
@@ -192,30 +192,30 @@ bool CVkeyeditView::InsertKeyValues(KeyValues *kv, HTREEITEM hParent)
 		subkey = subkey->GetNextKey();
 	}
 
-	 // The pointer to my tree control.
-   TVSORTCB tvs;
-   // Sort the tree control's items using my
-   // callback procedure.
-   tvs.hParent = hParent;
-   tvs.lpfnCompare = MyCompareProc;
-   tvs.lParam = (LPARAM) &theTree;
+	// The pointer to my tree control.
+	TVSORTCB tvs;
+	// Sort the tree control's items using my
+	// callback procedure.
+	tvs.hParent = hParent;
+	tvs.lpfnCompare = MyCompareProc;
+	tvs.lParam = (LPARAM) &theTree;
 
-   theTree.SortChildrenCB(&tvs);
+	theTree.SortChildrenCB(&tvs);
 
 	return true;
 }
 
-void CVkeyeditView::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult) 
+void CVkeyeditView::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_TREEVIEW *pNMTreeView = (NM_TREEVIEW*) pNMHDR;
-    CTreeCtrl   &tTree = this->GetTreeCtrl ();
-	
-	 CTreeCtrl &theTree = this->GetTreeCtrl ();
+	CTreeCtrl   &tTree = this->GetTreeCtrl ();
 
-	 HTREEITEM hItem = pNMTreeView->itemNew.hItem;
+	CTreeCtrl &theTree = this->GetTreeCtrl ();
+
+	HTREEITEM hItem = pNMTreeView->itemNew.hItem;
 
 	GetDocument()->UpdateAllViews ( this, 2, (CObject*)theTree.GetItemData(hItem) );
 
-    *pResult = 0;
+	*pResult = 0;
 
 }

@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose: Defines an interface for circular buffers. Data can be written to
-//			and read from these buffers as though from a file. When it is 
+//			and read from these buffers as though from a file. When it is
 //			write-overflowed (you write more data in than the buffer can hold),
 //			the read pointer is advanced to allow the new data to be written.
 //			This means old data will be discarded if you write too much data
@@ -58,13 +58,13 @@ public:
 	void				Flush();
 	int					GetSize();					// Get the size of the buffer (how much can you write without reading
 													// before losing data.
-	
+
 	int					GetWriteAvailable();		// Get the amount available to write without overflowing.
 													// Note: you can write however much you want, but it may overflow,
 													// in which case the newest data is kept and the oldest is discarded.
-	
+
 	int					GetReadAvailable();			// Get the amount available to read.
-	
+
 	int					GetMaxUsed();
 	int					Peek(char *pchDest, int nCount);
 	int					Advance(int nCount);
@@ -73,10 +73,10 @@ public:
 
 public:
 	int		m_nCount;			// Space between the read and write pointers (how much data we can read).
-	
+
 	int		m_nRead;			// Read index into circular buffer
 	int		m_nWrite;			// Write index into circular buffer
-	
+
 	int		m_nSize;			// Size of circular buffer in bytes (how much data it can hold).
 	char	m_chData[1];		// Circular buffer holding data
 };

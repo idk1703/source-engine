@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -20,7 +20,7 @@
 //-----------------------------------------------------------------------------
 class CMapCycleEditDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CMapCycleEditDialog, vgui::Frame ); 
+	DECLARE_CLASS_SIMPLE( CMapCycleEditDialog, vgui::Frame );
 public:
 	CMapCycleEditDialog(vgui::Panel *parent, const char *name);
 	~CMapCycleEditDialog();

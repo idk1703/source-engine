@@ -76,9 +76,9 @@ public:
 };
 
 //###########################################################
-// >> CAI_TestHull 
+// >> CAI_TestHull
 //
-// a modelless clip hull that verifies reachable nodes by 
+// a modelless clip hull that verifies reachable nodes by
 // walking from every node to each of it's connections//
 //###########################################################
 class CAI_TestHull : public CAI_BaseNPC

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,7 +22,7 @@
 #include "clientmode_dod.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDoDHudTNT::CDoDHudTNT( vgui::Panel *parent, const char *name ) : CDoDCutEditablePanel( parent, name )
 {
@@ -39,7 +39,7 @@ CDoDHudTNT::CDoDHudTNT( vgui::Panel *parent, const char *name ) : CDoDCutEditabl
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudTNT::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -49,7 +49,7 @@ void CDoDHudTNT::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudTNT::ApplySettings( KeyValues *inResourceData )
 {
@@ -64,14 +64,14 @@ void CDoDHudTNT::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudTNT::SetVisible( bool state )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudTNT::OnThink()
 {
@@ -123,11 +123,11 @@ void CDoDHudTNT::OnThink()
 
 				m_pIconTNT->SetVisible( false );
 				m_pIconTNT_Missing->SetVisible( true );
-			}			
+			}
 		}
 	}
 	else
 	{
 		SetAlpha( 0 );
-	}	
+	}
 }

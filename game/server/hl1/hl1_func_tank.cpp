@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -109,7 +109,7 @@ public:
 	QAngle		AimBarrelAt( const Vector &parentTarget );
 
 	bool	ShouldSavePhysics()	{ return false; }
-	
+
 	DECLARE_DATADESC();
 
 	bool OnControls( CBaseEntity *pTest );
@@ -123,7 +123,7 @@ protected:
 	CBasePlayer*	m_pController;
 	float			m_flNextAttack;
 	Vector			m_vecControllerUsePos;
-	
+
 	float			m_yawCenter;	// "Center" yaw
 	float			m_yawRate;		// Max turn rate to track targets
 	float			m_yawRange;		// Range of turning motion (one-sided: 30 is +/- 30 degress from center)
@@ -150,7 +150,7 @@ protected:
 	string_t		m_iszSpriteFlash;
 	TANKBULLET		m_bulletType;	// Bullet type
 	int				m_iBulletDamage; // 0 means use Bullet type's default damage
-	
+
 	Vector			m_sightOrigin;	// Last sight of target
 	int				m_spread;		// firing spread
 	string_t		m_iszMaster;	// Master entity (game_team_master or multisource)
@@ -201,7 +201,7 @@ BEGIN_DATADESC( CFuncTank )
 	DEFINE_KEYFIELD( m_soundStopRotate, FIELD_SOUNDNAME, "rotatestopsound" ),
 	DEFINE_KEYFIELD( m_soundLoopRotate, FIELD_SOUNDNAME, "rotatesound" ),
 	DEFINE_KEYFIELD( m_iszControlVolume, FIELD_STRING, "control_volume" ),
-	
+
 	DEFINE_FIELD( m_yawCenter, FIELD_FLOAT ),
 	DEFINE_FIELD( m_pitchCenter, FIELD_FLOAT ),
 	DEFINE_FIELD( m_fireLast, FIELD_TIME ),
@@ -219,7 +219,7 @@ BEGIN_DATADESC( CFuncTank )
 	DEFINE_FIELD( m_hControlVolume, FIELD_EHANDLE ),
 
 
-	// Do not save these. 
+	// Do not save these.
 	//DEFINE_FIELD( m_iSmallAmmoType, FIELD_INTEGER ),
 	//DEFINE_FIELD( m_iMediumAmmoType, FIELD_INTEGER ),
 	//DEFINE_FIELD( m_iLargeAmmoType, FIELD_INTEGER ),
@@ -242,7 +242,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFuncTank::~CFuncTank( void )
 {
@@ -253,8 +253,8 @@ CFuncTank::~CFuncTank( void )
 }
 
 
-int	CFuncTank::ObjectCaps( void ) 
-{ 
+int	CFuncTank::ObjectCaps( void )
+{
 	int iCaps = BaseClass::ObjectCaps();
 
 	if ( m_spawnflags & SF_TANK_CANCONTROL )
@@ -270,7 +270,7 @@ int	CFuncTank::ObjectCaps( void )
 // Purpose:
 //------------------------------------------------------------------------------
 inline bool CFuncTank::CanFire( void )
-{ 
+{
 	float flTimeDelay = gpGlobals->curtime - m_lastSightTime;
 	// Fire when can't see enemy if time is less that persistence time
 	if ( flTimeDelay <= m_persist)
@@ -299,18 +299,18 @@ inline bool CFuncTank::CanFire( void )
 // Purpose: Input handler for activating the tank.
 //------------------------------------------------------------------------------
 void CFuncTank::InputActivate( inputdata_t &inputdata )
-{	
+{
 	TankActivate();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncTank::TankActivate(void)
 {
-	m_spawnflags	|= SF_TANK_ACTIVE; 
-	SetNextThink( gpGlobals->curtime + 0.1f ); 
+	m_spawnflags	|= SF_TANK_ACTIVE;
+	SetNextThink( gpGlobals->curtime + 0.1f );
 	m_fireLast		= 0;
 }
 
@@ -325,12 +325,12 @@ void CFuncTank::InputDeactivate( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncTank::TankDeactivate(void)
 {
-	m_spawnflags	&= ~SF_TANK_ACTIVE; 
-	m_fireLast		= 0; 
+	m_spawnflags	&= ~SF_TANK_ACTIVE;
+	m_fireLast		= 0;
 	StopRotSound();
 }
 
@@ -344,7 +344,7 @@ void CFuncTank::InputSetTargetEntityName( inputdata_t &inputdata )
 	m_hTarget = FindTarget( m_targetEntityName, inputdata.pActivator );
 
 	// No longer aim at target position if have one
-	m_spawnflags		&= ~SF_TANK_AIM_AT_POS; 
+	m_spawnflags		&= ~SF_TANK_AIM_AT_POS;
 }
 
 
@@ -364,7 +364,7 @@ void CFuncTank::InputSetTargetEntity( inputdata_t &inputdata )
 	m_hTarget = inputdata.value.Entity();
 
 	// No longer aim at target position if have one
-	m_spawnflags		&= ~SF_TANK_AIM_AT_POS; 
+	m_spawnflags		&= ~SF_TANK_AIM_AT_POS;
 }
 
 
@@ -382,7 +382,7 @@ void CFuncTank::InputSetFireRate( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 void CFuncTank::InputSetTargetPosition( inputdata_t &inputdata )
 {
-	m_spawnflags		|= SF_TANK_AIM_AT_POS; 
+	m_spawnflags		|= SF_TANK_AIM_AT_POS;
 	m_hTarget			= NULL;
 
 	inputdata.value.Vector3D(m_vTargetPosition);
@@ -393,27 +393,27 @@ void CFuncTank::InputSetTargetPosition( inputdata_t &inputdata )
 // Purpose: Draw any debug text overlays
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CFuncTank::DrawDebugTextOverlays(void) 
+int CFuncTank::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		// --------------
 		// State
 		// --------------
 		char tempstr[255];
-		if (IsActive()) 
+		if (IsActive())
 		{
 			Q_strncpy(tempstr,"State: Active",sizeof(tempstr));
 		}
-		else 
+		else
 		{
 			Q_strncpy(tempstr,"State: Inactive",sizeof(tempstr));
 		}
 		EntityText(text_offset,tempstr,0);
 		text_offset++;
-		
+
 		// -------------------
 		// Print Firing Speed
 		// --------------------
@@ -421,11 +421,11 @@ int CFuncTank::DrawDebugTextOverlays(void)
 
 		EntityText(text_offset,tempstr,0);
 		text_offset++;
-		
+
 		// --------------
 		// Print Target
 		// --------------
-		if (m_hTarget!=NULL) 
+		if (m_hTarget!=NULL)
 		{
 			Q_snprintf(tempstr,sizeof(tempstr),"Target: %s",m_hTarget->GetDebugName());
 		}
@@ -439,7 +439,7 @@ int CFuncTank::DrawDebugTextOverlays(void)
 		// --------------
 		// Target Pos
 		// --------------
-		if (m_spawnflags & SF_TANK_AIM_AT_POS) 
+		if (m_spawnflags & SF_TANK_AIM_AT_POS)
 		{
 			Q_snprintf(tempstr,sizeof(tempstr),"Aim Pos: %3.0f %3.0f %3.0f",m_vTargetPosition.x,m_vTargetPosition.y,m_vTargetPosition.z);
 		}
@@ -456,12 +456,12 @@ int CFuncTank::DrawDebugTextOverlays(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pAttacker - 
-//			flDamage - 
-//			vecDir - 
-//			ptr - 
-//			bitsDamageType - 
+// Purpose:
+// Input  : pAttacker -
+//			flDamage -
+//			vecDir -
+//			ptr -
+//			bitsDamageType -
 //-----------------------------------------------------------------------------
 void CFuncTank::TraceAttack( CBaseEntity *pAttacker, float flDamage, const Vector &vecDir, trace_t *ptr, int bitsDamageType)
 {
@@ -511,11 +511,11 @@ void CFuncTank::TraceAttack( CBaseEntity *pAttacker, float flDamage, const Vecto
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : targetName - 
-//			pActivator - 
+// Purpose:
+// Input  : targetName -
+//			pActivator -
 //-----------------------------------------------------------------------------
-CBaseEntity *CFuncTank::FindTarget( string_t targetName, CBaseEntity *pActivator ) 
+CBaseEntity *CFuncTank::FindTarget( string_t targetName, CBaseEntity *pActivator )
 {
 	return gEntList.FindEntityGenericNearest( STRING( targetName ), GetAbsOrigin(), 0, this, pActivator );
 }
@@ -523,9 +523,9 @@ CBaseEntity *CFuncTank::FindTarget( string_t targetName, CBaseEntity *pActivator
 
 //-----------------------------------------------------------------------------
 // Purpose: Caches entity key values until spawn is called.
-// Input  : szKeyName - 
-//			szValue - 
-// Output : 
+// Input  : szKeyName -
+//			szValue -
+// Output :
 //-----------------------------------------------------------------------------
 bool CFuncTank::KeyValue( const char *szKeyName, const char *szValue )
 {
@@ -584,7 +584,7 @@ void CFuncTank::Spawn( void )
 	}
 
 	// No longer aim at target position if have one
-	m_spawnflags		&= ~SF_TANK_AIM_AT_POS; 
+	m_spawnflags		&= ~SF_TANK_AIM_AT_POS;
 
 	if (m_spawnflags & SF_TANK_DAMAGE_KICK)
 	{
@@ -597,7 +597,7 @@ void CFuncTank::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncTank::Activate( void )
 {
@@ -682,9 +682,9 @@ bool CFuncTank::StartControl( CBasePlayer *pController )
 
 	m_pController->m_Local.m_iHideHUD |= HIDEHUD_WEAPONSELECTION;
 	m_vecControllerUsePos = m_pController->GetLocalOrigin();
-	
+
 	SetNextThink( gpGlobals->curtime + 0.1f );
-	
+
 	return TRUE;
 }
 
@@ -722,7 +722,7 @@ void CFuncTank::ControllerPostFrame( void )
 		int bulletCount = (gpGlobals->curtime - m_fireLast) * m_fireRate;
 
 		Fire( bulletCount, WorldBarrelPosition(), forward, m_pController );
-		
+
 		// HACKHACK -- make some noise (that the AI can hear)
 		CSoundEnt::InsertSound( SOUND_COMBAT, WorldSpaceCenter(), FUNCTANK_FIREVOLUME, 0.2 );
 
@@ -734,7 +734,7 @@ void CFuncTank::ControllerPostFrame( void )
 void CFuncTank::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
 	if ( m_spawnflags & SF_TANK_CANCONTROL )
-	{  
+	{
 		// player controlled turret
 		CBasePlayer *pPlayer = ToBasePlayer( pActivator );
 		if ( !pPlayer )
@@ -821,11 +821,11 @@ QAngle CFuncTank::AimBarrelAt( const Vector &parentTarget )
 	else
 	{
 		// We're trying to aim the offset barrel at an arbitrary point.
-		// To calculate this, I think of the target as being on a sphere with 
+		// To calculate this, I think of the target as being on a sphere with
 		// it's center at the origin of the gun.
-		// The rotation we need is the opposite of the rotation that moves the target 
+		// The rotation we need is the opposite of the rotation that moves the target
 		// along the surface of that sphere to intersect with the gun's shooting direction
-		// To calculate that rotation, we simply calculate the intersection of the ray 
+		// To calculate that rotation, we simply calculate the intersection of the ray
 		// coming out of the barrel with the target sphere (that's the new target position)
 		// and use atan2() to get angles
 
@@ -835,7 +835,7 @@ QAngle CFuncTank::AimBarrelAt( const Vector &parentTarget )
 
 		float targetToCenterPitch = atan2( target.z, sqrt( quadTargetXY ) );
 		float centerToGunPitch = atan2( -m_barrelPos.z, sqrt( quadTarget - (m_barrelPos.z*m_barrelPos.z) ) );
-		return QAngle( -RAD2DEG(targetToCenterPitch+centerToGunPitch), RAD2DEG( targetToCenterYaw - centerToGunYaw ), 0 );		
+		return QAngle( -RAD2DEG(targetToCenterPitch+centerToGunPitch), RAD2DEG( targetToCenterYaw - centerToGunYaw ), 0 );
 	}
 }
 
@@ -918,7 +918,7 @@ void CFuncTank::TrackTarget( void )
 		}
 
 		float range = (worldTargetPosition - barrelEnd).Length();
-		
+
 		if ( !InRange( range ) )
 		{
 			m_fireLast = 0;
@@ -964,7 +964,7 @@ void CFuncTank::TrackTarget( void )
 	// Limit against range in y
 
 	// MDB - don't check pitch! If two func_tanks are meant to align,
-	// and one can pitch and the other cannot, this can lead to them getting 
+	// and one can pitch and the other cannot, this can lead to them getting
 	// different values for angles.y. Nothing is lost by not updating yaw
 	// because the target is not in pitch range.
 
@@ -1045,7 +1045,7 @@ void CFuncTank::TrackTarget( void )
 			}
 			FiringSequence( barrelEnd, forward, this );
 		}
-		else 
+		else
 		{
 			if (m_fireLast !=0)
 			{
@@ -1054,7 +1054,7 @@ void CFuncTank::TrackTarget( void )
 			m_fireLast = 0;
 		}
 	}
-	else 
+	else
 	{
 		if (m_fireLast !=0)
 		{
@@ -1067,16 +1067,16 @@ void CFuncTank::TrackTarget( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Start of firing sequence.  By default, just fire now.
-// Input  : &barrelEnd - 
-//			&forward - 
-//			*pAttacker - 
+// Input  : &barrelEnd -
+//			&forward -
+//			*pAttacker -
 //-----------------------------------------------------------------------------
 void CFuncTank::FiringSequence( const Vector &barrelEnd, const Vector &forward, CBaseEntity *pAttacker )
 {
 	if ( m_fireLast != 0 )
 	{
 		int bulletCount = (gpGlobals->curtime - m_fireLast) * m_fireRate;
-		
+
 		if ( bulletCount > 0 )
 		{
 			Fire( bulletCount, barrelEnd, forward, pAttacker );
@@ -1092,10 +1092,10 @@ void CFuncTank::FiringSequence( const Vector &barrelEnd, const Vector &forward, 
 
 //-----------------------------------------------------------------------------
 // Purpose: Fire targets and spawn sprites.
-// Input  : bulletCount - 
-//			barrelEnd - 
-//			forward - 
-//			pAttacker - 
+// Input  : bulletCount -
+//			barrelEnd -
+//			forward -
+//			pAttacker -
 //-----------------------------------------------------------------------------
 void CFuncTank::Fire( int bulletCount, const Vector &barrelEnd, const Vector &forward, CBaseEntity *pAttacker )
 {
@@ -1105,7 +1105,7 @@ void CFuncTank::Fire( int bulletCount, const Vector &barrelEnd, const Vector &fo
 		pSprite->AnimateAndDie( random->RandomFloat( 15.0, 20.0 ) );
 		pSprite->SetTransparency( kRenderTransAlpha, m_clrRender->r, m_clrRender->g, m_clrRender->b, 255, kRenderFxNone );
 
-		Vector vecVelocity( 0, 0, random->RandomFloat(40, 80) ); 
+		Vector vecVelocity( 0, 0, random->RandomFloat(40, 80) );
 		pSprite->SetAbsVelocity( vecVelocity );
 		pSprite->SetScale( m_spriteScale );
 	}
@@ -1137,18 +1137,18 @@ void CFuncTank::TankTrace( const Vector &vecStart, const Vector &vecForward, con
 		x * vecSpread.x * right +
 		y * vecSpread.y * up;
 	Vector vecEnd;
-	
+
 	vecEnd = vecStart + vecDir * MAX_TRACE_LENGTH;
 	UTIL_TraceLine( vecStart, vecEnd, MASK_SOLID, this, COLLISION_GROUP_NONE, &tr );
 }
 
-	
+
 void CFuncTank::StartRotSound( void )
 {
 	if ( m_spawnflags & SF_TANK_SOUNDON )
 		return;
 	m_spawnflags |= SF_TANK_SOUNDON;
-	
+
 	if ( m_soundLoopRotate != NULL_STRING )
 	{
 		CPASAttenuationFilter filter( this );
@@ -1162,7 +1162,7 @@ void CFuncTank::StartRotSound( void )
 
 		EmitSound( filter, entindex(), ep );
 	}
-	
+
 	if ( m_soundStartRotate != NULL_STRING )
 	{
 		CPASAttenuationFilter filter( this );
@@ -1300,8 +1300,8 @@ void CFuncTankPulseLaser::Fire( int bulletCount, const Vector &barrelEnd, const 
 	// --------------------------------------------------
 	Vector vecUp = Vector(0,0,1);
 	Vector vecRight;
-	CrossProduct ( vecForward,  vecUp,		vecRight );	
-	CrossProduct ( vecForward, -vecRight,   vecUp  );	
+	CrossProduct ( vecForward,  vecUp,		vecRight );
+	CrossProduct ( vecForward, -vecRight,   vecUp  );
 
 	for ( int i = 0; i < bulletCount; i++ )
 	{
@@ -1437,7 +1437,7 @@ void CFuncTankLaser::Fire( int bulletCount, const Vector &barrelEnd, const Vecto
 		{
 			m_pLaser->SetLocalOrigin( barrelEnd );
 			TankTrace( barrelEnd, forward, gTankSpread[m_spread], tr );
-			
+
 			m_laserTime = gpGlobals->curtime;
 			m_pLaser->TurnOn();
 			m_pLaser->SetFireTime( gpGlobals->curtime - 1.0 );
@@ -1488,7 +1488,7 @@ public:
 	void FiringSequence( const Vector &barrelEnd, const Vector &forward, CBaseEntity *pAttacker );
 	void Fire( int bulletCount, const Vector &barrelEnd, const Vector &vecForward, CBaseEntity *pAttacker );
 	void ShootGun(void);
-	
+
 	// Input handlers.
 	void InputShootGun( inputdata_t &inputdata );
 
@@ -1541,7 +1541,7 @@ void CFuncTankMortar::InputShootGun( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncTankMortar::ShootGun( void )
 {
@@ -1551,7 +1551,7 @@ void CFuncTankMortar::ShootGun( void )
 	forward = m_parentMatrix.ApplyRotation( forward );
 
 	// use cached firing state
-	Fire( 1, WorldBarrelPosition(), forward, m_pAttacker ); 
+	Fire( 1, WorldBarrelPosition(), forward, m_pAttacker );
 }
 
 
@@ -1592,14 +1592,14 @@ void CFuncTankMortar::FiringSequence( const Vector &barrelEnd, const Vector &for
 	{
 		m_fireLast = gpGlobals->curtime;
 	}
-}	
+}
 
 void CFuncTankMortar::Fire( int bulletCount, const Vector &barrelEnd, const Vector &vecForward, CBaseEntity *pAttacker )
 {
 	if ( m_fireEndSound != NULL_STRING )
 	{
 		CPASAttenuationFilter filter( this );
-		
+
 		EmitSound_t ep;
 		ep.m_nChannel = CHAN_WEAPON;
 		ep.m_pSoundName = STRING(m_fireEndSound);
@@ -1658,7 +1658,7 @@ BEGIN_DATADESC( CFuncTankPhysCannister )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncTankPhysCannister::Activate( void )
 {
@@ -1680,7 +1680,7 @@ void CFuncTankPhysCannister::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncTankPhysCannister::Fire( int bulletCount, const Vector &barrelEnd, const Vector &forward, CBaseEntity *pAttacker )
 {
@@ -1697,4 +1697,3 @@ void CFuncTankPhysCannister::Fire( int bulletCount, const Vector &barrelEnd, con
 	// Fire the cannister!
 	pCannister->CannisterFire( pAttacker );
 }
-

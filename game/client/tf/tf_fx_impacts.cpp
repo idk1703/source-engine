@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -35,7 +35,7 @@ void ImpactCallback( const CEffectData &data )
 	bool bImpact = ( data.m_nDamageType != pEntity->GetTeamNumber() || pEntity->GetTeamNumber() < FIRST_GAME_TEAM );
 
 	if ( data.m_nDamageType != pEntity->GetTeamNumber() && pEntity->IsPlayer() )
-	{	
+	{
 		C_TFPlayer *pPlayer = ToTFPlayer( pEntity );
 
 		// Don't impact spies disguised as the same team as this syringe/projectile
@@ -51,7 +51,7 @@ void ImpactCallback( const CEffectData &data )
 	if ( bImpact )
 	{
 		// We create lots of impact sounds, especially from Heavy's firing miniguns. To cut down on the number
-		// of active sounds, we precull impact sounds that are too far from the current viewpoint. 
+		// of active sounds, we precull impact sounds that are too far from the current viewpoint.
 		bool bIsMVM = TFGameRules() && TFGameRules()->IsMannVsMachineMode();
 
 		int nApparentTeam = pEntity->GetTeamNumber();
@@ -64,7 +64,7 @@ void ImpactCallback( const CEffectData &data )
 
 		bool bPlaySound = true;
 		bool bIsRobotImpact = false;
-		
+
 		if ( bIsMVM && pPlayer && nApparentTeam == TF_TEAM_PVE_INVADERS )
 		{
 			bPlaySound = true;
@@ -139,7 +139,7 @@ DECLARE_CLIENT_EFFECT( "Impact", ImpactCallback );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TFSplashCallbackHelper( const CEffectData &data, const char *pszEffectName )
 {
@@ -169,7 +169,7 @@ void TFSplashCallbackMinigun( const CEffectData &data )
 DECLARE_CLIENT_EFFECT( "tf_gunshotsplash_minigun", TFSplashCallbackMinigun );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TFPaintBombSplashCallback( const CEffectData &data )
 {
@@ -224,7 +224,7 @@ DECLARE_CLIENT_EFFECT( "tf_paint_bomb", TFPaintBombSplashCallback );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TFEnergyShieldImpactCallback( const CEffectData &data )
 {
@@ -237,7 +237,7 @@ void TFEnergyShieldImpactCallback( const CEffectData &data )
 	Vector vecPos = data.m_vOrigin;
 	Vector vecNormal = data.m_vNormal;
 	Vector vecOffset = vecPos + ( vecNormal * 2.f );
-	
+
 	float flMagnitude = data.m_flMagnitude;
 	float flFlashAlpha = 0.25f * flMagnitude;
 	float flLingerAlpha = 0.2f * flMagnitude;
@@ -306,7 +306,7 @@ void TFEnergyShieldImpactCallback( const CEffectData &data )
 		sParticle->m_flDieTime	= random->RandomFloat( 0.2f, 0.4f );
 		sParticle->m_flLifetime	= 0.f;
 		sParticle->m_flRoll	= random->RandomInt( 0, 360 );
-		
+
 		float flAlpha = 255.f;
 		sParticle->m_flRollDelta = random->RandomFloat( -16.f, 16.f );
 		sParticle->m_uchColor[0] = random->RandomInt( 120, 150 );

@@ -93,7 +93,7 @@ void CHudChat::CreateChatLines( void )
 {
 #ifndef _XBOX
 	m_ChatLine = new CHudChatLine( this, "ChatLine1" );
-	m_ChatLine->SetVisible( false );		
+	m_ChatLine->SetVisible( false );
 
 #endif
 }
@@ -207,7 +207,7 @@ void CHudChat::MsgFunc_SayText2( bf_read &msg )
 	}
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CHudChat::GetChatInputOffset( void )
 {
@@ -278,7 +278,7 @@ Color CHudChat::GetClientColor( int clientIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Color CHudChat::GetTextColorForClient( TextColor colorNum, int clientIndex )
 {
@@ -293,30 +293,30 @@ Color CHudChat::GetTextColorForClient( TextColor colorNum, int clientIndex )
 		c = g_ColorDarkGreen;
 		break;
 
-    //=============================================================================
-    // HPE_BEGIN:
-    // [tj] Adding support for achievement coloring. 
-    //      Just doing what all the other games do
-    //=============================================================================
-     
-    case COLOR_ACHIEVEMENT:
-        {
-            vgui::IScheme *pSourceScheme = vgui::scheme()->GetIScheme( vgui::scheme()->GetScheme( "SourceScheme" ) ); 
-            if ( pSourceScheme )
-            {
-                c = pSourceScheme->GetColor( "SteamLightGreen", GetBgColor() );
-            }
-            else
-            {
-                c = GetDefaultTextColor();
-            }
-        }
-        break;
-     
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
-    
+	//=============================================================================
+	// HPE_BEGIN:
+	// [tj] Adding support for achievement coloring.
+	//      Just doing what all the other games do
+	//=============================================================================
+
+	case COLOR_ACHIEVEMENT:
+		{
+			vgui::IScheme *pSourceScheme = vgui::scheme()->GetIScheme( vgui::scheme()->GetScheme( "SourceScheme" ) );
+			if ( pSourceScheme )
+			{
+				c = pSourceScheme->GetColor( "SteamLightGreen", GetBgColor() );
+			}
+			else
+			{
+				c = GetDefaultTextColor();
+			}
+		}
+		break;
+
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
+
 
 	default:
 		c = g_ColorYellow;
@@ -331,7 +331,7 @@ int CHudChat::GetFilterForString( const char *pString )
 
 	if ( iFilter == CHAT_FILTER_NONE )
 	{
-		if ( !Q_stricmp( pString, "#CStrike_Name_Change" ) ) 
+		if ( !Q_stricmp( pString, "#CStrike_Name_Change" ) )
 		{
 			return CHAT_FILTER_NAMECHANGE;
 		}

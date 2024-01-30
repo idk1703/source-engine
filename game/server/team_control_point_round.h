@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -23,17 +23,17 @@ class CTeamControlPointRound : public CBaseEntity
 	DECLARE_CLASS( CTeamControlPointRound, CBaseEntity );
 
 public:
-	virtual void Spawn( void );	
-	virtual void Activate( void );	
+	virtual void Spawn( void );
+	virtual void Activate( void );
 
 	bool IsDisabled( void ){ return m_bDisabled; }
 
-	int GetPointOwner( int point ); 
+	int GetPointOwner( int point );
 //	int CountAdvantageFlags( int team );
 	bool WouldNewCPOwnerWinGame( CTeamControlPoint *pPoint, int iNewOwner );
 
 	void FireTeamWinOutput( int iWinningTeam );
-	
+
 	void SelectedToPlay( void );
 
 	int CheckWinConditions( void ); // returns the team number of the team that's won, or returns -1 if no winner

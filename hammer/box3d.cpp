@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,7 +37,7 @@ WorldUnits_t Box3D::m_eWorldUnits = Units_None;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Box3D::Box3D(void)
 {
@@ -62,11 +62,11 @@ void Box3D::SetEmpty()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pView - 
+// Purpose:
+// Input  : pView -
 //			pt - Point in client coordinates.
-//			bValidOnly - 
-// Output : 
+//			bValidOnly -
+// Output :
 //-----------------------------------------------------------------------------
 int Box3D::HitTest(CMapView *pView, const Vector2D &ptClient, bool bTestHandles)
 {
@@ -102,8 +102,8 @@ int Box3D::HitTest(CMapView *pView, const Vector2D &ptClient, bool bTestHandles)
 	{
 		vOffset.Init();
 	}
-		
-	
+
+
 	Vector vCenter = (bmins+bmaxs)/2;
 	Vector vDelta = (bmaxs + vOffset) - vCenter;
 
@@ -134,13 +134,13 @@ unsigned long Box3D::UpdateCursor(CMapView *pView, const Vector &vHandleHit, Tra
 {
 	if ( eTransformMode == modeMove || vHandleHit.IsZero() )
 		return vgui::dc_sizeall;
-	
+
 	if ( eTransformMode == modeNone )
 		return vgui::dc_arrow;
-		
+
 	if (eTransformMode == modeRotate)
 		return  g_pMatSystemSurface->CreateCursorFromFile("Resource/rotate.cur");
-	
+
 	// cursor icon depends on handle and map view :
 
 	Vector2D ptOrigin; pView->WorldToClient( ptOrigin, Vector(0,0,0) );
@@ -166,9 +166,9 @@ unsigned long Box3D::UpdateCursor(CMapView *pView, const Vector &vHandleHit, Tra
 				return vgui::dc_sizenwse;
 			else
 				return vgui::dc_sizewe;
-				
+
 		}
-		else // pt.x == 0 
+		else // pt.x == 0
 		{
 			if ( pt.y != 0 )
 				return vgui::dc_sizens;
@@ -183,14 +183,14 @@ unsigned long Box3D::UpdateCursor(CMapView *pView, const Vector &vHandleHit, Tra
 		else
 			return vgui::dc_sizens;
 	}
-	
+
 	return vgui::dc_none;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bEnable - 
+// Purpose:
+// Input  : bEnable -
 //-----------------------------------------------------------------------------
 void Box3D::EnableHandles(bool bEnable)
 {
@@ -209,7 +209,7 @@ const Vector Box3D::NearestCorner( const Vector2D &vPoint, CMapView *pView, cons
 	Vector	vBestCorner(0,0,0);
 	int		nFace = -1;
 	Vector	start,end,pos;
-	
+
 	pView->BuildRay( vPoint, start,end );
 	float dist = IntersectionLineAABBox( bmins, bmaxs, start, end, nFace );
 
@@ -219,10 +219,10 @@ const Vector Box3D::NearestCorner( const Vector2D &vPoint, CMapView *pView, cons
 	// get point where we hit the bbox
 	pos = end-start; VectorNormalize( pos );
 	pos = start + pos*dist;
-	
+
 	// mode rotate has only corner handles
 	int nNumHandles = GetVisibleHandles( vHandles, pView, modeRotate );
-	
+
 	for ( int i=0; i<nNumHandles; i++ )
 	{
 		Vector vecCorner;
@@ -237,21 +237,21 @@ const Vector Box3D::NearestCorner( const Vector2D &vPoint, CMapView *pView, cons
 			vBestCorner = vecCorner;
 		}
 	}
-	 	
+
 	return vBestCorner;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pt - 
-//			ptForceMoveRef - 
+// Purpose:
+// Input  : pt -
+//			ptForceMoveRef -
 // Output : Returns TRUE if pt hits a handle or is in box area, FALSE otherwise.
 //-----------------------------------------------------------------------------
-void Box3D::StartTranslation( 
-	CMapView *pView, 
-	const Vector2D &vPoint, 
-	const Vector &vHandleOrigin, 
+void Box3D::StartTranslation(
+	CMapView *pView,
+	const Vector2D &vPoint,
+	const Vector &vHandleOrigin,
 	const Vector *pRefPoint,
 	const Vector *pCustomHandleBox )
 {
@@ -264,7 +264,7 @@ void Box3D::StartTranslation(
 
 	m_TranslateHandle = vHandleOrigin;
 	m_bPreventOverlap = true;
-	
+
 	if ( pRefPoint )
 	{
 		// transformation reference point was given
@@ -280,7 +280,7 @@ void Box3D::StartTranslation(
 		}
 		else if (m_TranslateMode == modeMove)
 		{
-			// chose nearest corner to  
+			// chose nearest corner to
 			m_vTranslationFixPoint = NearestCorner( vPoint, pView, pCustomHandleBox );
 		}
 		else
@@ -293,11 +293,11 @@ void Box3D::StartTranslation(
 
 				if ( handle > 0 )
 				{
-					m_vTranslationFixPoint[i] = bmins[i]; 
+					m_vTranslationFixPoint[i] = bmins[i];
 				}
 				else if ( handle < 0 )
 				{
-					m_vTranslationFixPoint[i] = bmaxs[i]; 
+					m_vTranslationFixPoint[i] = bmaxs[i];
 				}
 			}
 		}
@@ -311,7 +311,7 @@ void Box3D::StartTranslation(
 	{
 		int nFace;
 		pView->BuildRay( vPoint, v1, v2 );
-					
+
 		IntersectionLineAABBox( bmins, bmaxs, v1, v2, nFace );
 
 		if ( nFace >= 0 )
@@ -332,7 +332,7 @@ void Box3D::StartTranslation(
 		HandleToWorld( vOrigin, m_TranslateHandle );
 	}
 
-	// set temp transformation plane 
+	// set temp transformation plane
 	SetTransformationPlane(vOrigin, v1, v2, v3 );
 
 	// align translation plane to world origin
@@ -347,8 +347,8 @@ void Box3D::StartTranslation(
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszBuf - 
+// Purpose:
+// Input  : pszBuf -
 //-----------------------------------------------------------------------------
 void Box3D::GetStatusString(char *pszBuf)
 {
@@ -387,7 +387,7 @@ void Box3D::GetStatusString(char *pszBuf)
 			{
 				case Units_None:
 				{
-					sprintf(pszBuf, " %dw %dl %dh @(%.0f %.0f %.0f)", 
+					sprintf(pszBuf, " %dw %dl %dh @(%.0f %.0f %.0f)",
 						(int)fabs(size.x), (int)fabs(size.y), (int)fabs(size.z),
 						center.x,center.y,center.z );
 					break;
@@ -437,12 +437,12 @@ void Box3D::GetStatusString(char *pszBuf)
 	{
 		Assert( 0 );
 	}
-	
+
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Box3D::UpdateStatusBar()
 {
@@ -458,18 +458,18 @@ int Box3D::GetVisibleHandles( Vector *handles, CMapView *pView, int nMode )
 
 	Vector vViewAxis = pView->GetViewAxis();
 	Vector vViewPoint; pView->GetCamera()->GetViewPoint( vViewPoint );
-	
+
 	if ( bIs2D )
 	{
 		bCorners = false;
 		bEdges	= nMode == modeRotate || nMode == modeScale;
-		bFaces = nMode == modeShear || nMode == modeScale;  
+		bFaces = nMode == modeShear || nMode == modeScale;
 	}
 	else
 	{
 		bCorners = nMode == modeRotate || nMode == modeScale;
 		bEdges	= nMode == modeScale;
-		bFaces = nMode == modeShear; 
+		bFaces = nMode == modeShear;
 	}
 
 	if ( !bCorners && !bEdges && !bFaces )
@@ -488,7 +488,7 @@ int Box3D::GetVisibleHandles( Vector *handles, CMapView *pView, int nMode )
 				continue;
 
 			for ( int z = -1; z<2; z++)
- 			{
+			{
 				if ( bIs2D && (z != 0) && (fabs(vViewAxis.z) == 1) )
 					continue;
 
@@ -518,21 +518,21 @@ int Box3D::GetVisibleHandles( Vector *handles, CMapView *pView, int nMode )
 				if ( !bIs2D  )
 				{
 					Vector vHandle; HandleToWorld( vHandle, Vector(x,y,z) );
-					Vector vDelta = vHandle - vViewPoint; 
+					Vector vDelta = vHandle - vViewPoint;
 					float fDistance = VectorLength( vDelta );
 					int nFace;
 
 					vDelta /= fDistance; // normalize
 
 					if ( DotProduct(vDelta,vViewAxis) < 0 )
-						continue; 
+						continue;
 
 					float fIntersection = IntersectionLineAABBox( bmins, bmaxs, vViewPoint, vViewPoint+vDelta*99999, nFace );
 
- 					if ( fIntersection >= 0 && fIntersection*1.01 < fDistance )
+					if ( fIntersection >= 0 && fIntersection*1.01 < fDistance )
 						continue;
 				}
-				
+
 				// add handle as visible
 				handles[count] = Vector(x,y,z);
 				count++;
@@ -545,11 +545,11 @@ int Box3D::GetVisibleHandles( Vector *handles, CMapView *pView, int nMode )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : ptWorld - point to update with in world coordinates
-//			uConstraints - 
-//			dragSize - 
-// Output : 
+//			uConstraints -
+//			dragSize -
+// Output :
 //-----------------------------------------------------------------------------
 bool Box3D::UpdateTranslation(const Vector &vUpdate, UINT uConstraints)
 {
@@ -560,7 +560,7 @@ bool Box3D::UpdateTranslation(const Vector &vUpdate, UINT uConstraints)
 
 	else if ( m_TranslateMode == modeRotate )
 	{
- 		Vector vCenter; ProjectOnTranslationPlane( m_vTranslationFixPoint, vCenter );
+		Vector vCenter; ProjectOnTranslationPlane( m_vTranslationFixPoint, vCenter );
 		Vector vStart; HandleToWorld( vStart, m_TranslateHandle );
 		Vector v1 = vStart-vCenter; VectorNormalize( v1 );
 		Vector v2 = (vStart+vUpdate)-vCenter; VectorNormalize( v2 );
@@ -578,7 +578,7 @@ bool Box3D::UpdateTranslation(const Vector &vUpdate, UINT uConstraints)
 			angle -= fmod(double(angle), double(.5));
 		}
 
-        if ( volume < 0 )
+		if ( volume < 0 )
 			angle = -angle;
 
 		if ( fabs(m_vPlaneNormal.x) == 1 )
@@ -588,7 +588,7 @@ bool Box3D::UpdateTranslation(const Vector &vUpdate, UINT uConstraints)
 		else if ( fabs(m_vPlaneNormal.z) == 1 )
 			m_vTranslation.y = (m_vPlaneNormal.z>0)?angle:-angle;
 	}
-	else 
+	else
 	{
 		if ( vUpdate == m_vTranslation )
 			return false; // no change
@@ -600,8 +600,8 @@ bool Box3D::UpdateTranslation(const Vector &vUpdate, UINT uConstraints)
 		if ( uConstraints )
 		{
 			// project back on projection plane
-			Vector pos; 
-			
+			Vector pos;
+
 			if ( m_TranslateMode == modeMove )
 			{
 				// when moving opbject make sure reference point is on grid
@@ -623,7 +623,7 @@ bool Box3D::UpdateTranslation(const Vector &vUpdate, UINT uConstraints)
 			{
 				float handle = m_TranslateHandle[i];
 
- 				if ( handle > 0 )
+				if ( handle > 0 )
 				{
 					float newMaxs = bmaxs[i] + m_vTranslation[i];
 
@@ -654,9 +654,9 @@ bool Box3D::UpdateTranslation(const Vector &vUpdate, UINT uConstraints)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwHandleColor - 
-//			dwBoxColor - 
+// Purpose:
+// Input  : dwHandleColor -
+//			dwBoxColor -
 //-----------------------------------------------------------------------------
 void Box3D::SetDrawColors(COLORREF dwHandleColor, COLORREF dwBoxColor)
 {
@@ -673,8 +673,8 @@ void Box3D::SetDrawColors(COLORREF dwHandleColor, COLORREF dwBoxColor)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pt - 
+// Purpose:
+// Input  : *pt -
 //-----------------------------------------------------------------------------
 void Box3D::TranslatePoint(Vector& pt)
 {
@@ -720,7 +720,7 @@ void Box3D::UpdateTransformMatrix()
 			else if ( handle < 0 )
 			{
 				vScale[i] = (-m_vTranslation[i]+vSize[i]) / vSize[i];
- 				vMove[i] = m_vTranslation[i] / 2;
+				vMove[i] = m_vTranslation[i] / 2;
 			}
 		}
 
@@ -734,10 +734,10 @@ void Box3D::UpdateTransformMatrix()
 		int axisS = -1; // shear axis that wont change
 		int axisA = -1; // first shear axis
 		int axisB = -1; // second shear axis
-		
+
 		for ( int i=0; i<3; i++ )
 		{
- 			float handle = m_TranslateHandle[i];
+			float handle = m_TranslateHandle[i];
 
 			if ( handle > 0 )
 			{
@@ -760,14 +760,14 @@ void Box3D::UpdateTransformMatrix()
 		}
 
 		Assert( (axisA!=-1) && (axisB!=-1) && (axisS!=-1) );
-		
- 		m_TransformMatrix.m[axisA][axisS] = (m_vTranslation[axisA])/(vSize[axisS]);
- 		m_TransformMatrix.m[axisB][axisS] = (m_vTranslation[axisB])/(vSize[axisS]);
+
+		m_TransformMatrix.m[axisA][axisS] = (m_vTranslation[axisA])/(vSize[axisS]);
+		m_TransformMatrix.m[axisB][axisS] = (m_vTranslation[axisB])/(vSize[axisS]);
 	}
 	else if ( m_TranslateMode == modeRotate )
 	{
 		QAngle angle = *(QAngle*)&m_vTranslation; // buuuhhh
- 		m_TransformMatrix.SetupMatrixOrgAngles( vec3_origin, angle );
+		m_TransformMatrix.SetupMatrixOrgAngles( vec3_origin, angle );
 	}
 
 	// apply m_vTranslationFixPoint offset
@@ -827,8 +827,8 @@ void Box3D::TranslateBox(Vector& mins, Vector& maxs)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bSave - 
+// Purpose:
+// Input  : bSave -
 //-----------------------------------------------------------------------------
 void Box3D::FinishTranslation(bool bSave)
 {
@@ -838,7 +838,7 @@ void Box3D::FinishTranslation(bool bSave)
 		Vector newMaxs = bmaxs;
 
 		TranslateBox( newMins, newMaxs );
-		LimitBox( newMins, newMaxs, g_MAX_MAP_COORD ); 
+		LimitBox( newMins, newMaxs, g_MAX_MAP_COORD );
 
 		SetBounds( newMins, newMaxs );
 
@@ -857,7 +857,7 @@ void Box3D::FinishTranslation(bool bSave)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Box3D::ToggleTranslateMode(void)
 {
@@ -880,8 +880,8 @@ void Box3D::ToggleTranslateMode(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwFlags - 
+// Purpose:
+// Input  : dwFlags -
 //-----------------------------------------------------------------------------
 void Box3D::SetDrawFlags(DWORD dwFlags)
 {
@@ -902,20 +902,20 @@ void Box3D::RenderHandles2D(CRender2D *pRender, const Vector &mins, const Vector
 	if ( m_TranslateMode == modeRotate )
 	{
 		pRender->SetHandleStyle( HANDLE_RADIUS, CRender::HANDLE_CIRCLE );
-		
+
 	}
 	else
 	{
 		pRender->SetHandleStyle( HANDLE_RADIUS, CRender::HANDLE_SQUARE );
 	}
-	
-	
+
+
 	Vector vCenter = (mins+maxs)/2;
 	Vector vDelta = maxs - vCenter;
-	Vector2D vOffset; 
+	Vector2D vOffset;
 
 	bool bPopMode = pRender->BeginClientSpace();
-	
+
 	for ( int i=0; i<numHandles; i++)
 	{
 		pRender->TransformNormal( vOffset, handles[i] );
@@ -955,7 +955,7 @@ void Box3D::RenderHandles3D(CRender3D *pRender, const Vector &mins, const Vector
 
 	pRender->SetHandleColor( GetRValue(m_clrHandle), GetGValue(m_clrHandle), GetBValue(m_clrHandle) );
 	pRender->PushRenderMode( RENDER_MODE_FLAT_NOZ );
-	
+
 	bool bPopMode = pRender->BeginClientSpace();
 
 	for ( int i=0; i<numHandles; i++)
@@ -984,14 +984,14 @@ void Box3D::HandleToWorld( Vector &vWorld, const Vector &vHandle, const Vector *
 		vCenter = (bmins+bmaxs)/2;
 		vDelta = bmaxs - vCenter;
 	}
-	
+
 	vWorld = vCenter + (vDelta * vHandle);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pDC - 
-//			bounds - 
+// Purpose:
+// Input  : *pDC -
+//			bounds -
 //-----------------------------------------------------------------------------
 void Box3D::RenderTool2D(CRender2D *pRender)
 {
@@ -1018,7 +1018,7 @@ void Box3D::RenderTool2D(CRender2D *pRender)
 
 	if ( IsTranslating() )
 	{
-	    pRender->PushRenderMode( RENDER_MODE_DOTTED );
+		pRender->PushRenderMode( RENDER_MODE_DOTTED );
 		pRender->SetDrawColor( GetRValue(Options.colors.clrToolDrag), GetGValue(Options.colors.clrToolDrag), GetBValue(Options.colors.clrToolDrag) );
 	}
 	else if (!(m_dwDrawFlags & thicklines))
@@ -1043,7 +1043,7 @@ void Box3D::RenderTool2D(CRender2D *pRender)
 		// during rotation or shearing, draw transformed bounding box
 
 		Vector v[4];
-		
+
 		// init all points to center
 		v[0] = v[1] = v[2] = v[3] = (bmins+bmaxs) / 2;
 
@@ -1061,7 +1061,7 @@ void Box3D::RenderTool2D(CRender2D *pRender)
 		{
 			TranslatePoint( v[i] );
 		}
-		
+
 		pRender->DrawLine( v[0], v[1] );
 		pRender->DrawLine( v[1], v[2] );
 		pRender->DrawLine( v[2], v[3] );
@@ -1078,7 +1078,7 @@ void Box3D::RenderTool2D(CRender2D *pRender)
 			Vector vec = m_vTranslationFixPoint;
 
 			if ( m_TranslateMode == modeMove  )
- 			{
+			{
 				TranslatePoint( vec );
 			}
 
@@ -1086,7 +1086,7 @@ void Box3D::RenderTool2D(CRender2D *pRender)
 			pRender->SetHandleStyle( 7, CRender::HANDLE_CROSS );
 			pRender->SetHandleColor( GetRValue(Options.colors.clrToolDrag), GetGValue(Options.colors.clrToolDrag), GetBValue(Options.colors.clrToolDrag) );
 			pRender->DrawHandle( vec );
-			
+
 		}
 	}
 	else if ( m_bEnableHandles )
@@ -1102,7 +1102,7 @@ void Box3D::RenderTool2D(CRender2D *pRender)
 //-----------------------------------------------------------------------------
 void Box3D::RenderTool3D(CRender3D *pRender)
 {
-    if ( IsTranslating() )
+	if ( IsTranslating() )
 	{
 		VMatrix matrix = GetTransformMatrix();
 		pRender->BeginLocalTransfrom( matrix );
@@ -1144,16 +1144,16 @@ void Box3D::RenderTool3D(CRender3D *pRender)
 		RenderHandles3D( pRender, bmins, bmaxs );
 	};
 
-	
 
-	
+
+
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *vecStart - 
-//			*mins - 
-//			*maxs - 
+// Purpose:
+// Input  : *vecStart -
+//			*mins -
+//			*maxs -
 //-----------------------------------------------------------------------------
 void Box3D::StartNew( CMapView *pView, const Vector2D &vPoint, const Vector &vecStart, const Vector &vecSize )
 {
@@ -1169,7 +1169,3 @@ void Box3D::StartNew( CMapView *pView, const Vector2D &vPoint, const Vector &vec
 	m_bPreventOverlap = false;
 	m_bEmpty = false;
 }
-
-
-
-

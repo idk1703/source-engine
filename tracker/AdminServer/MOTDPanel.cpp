@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -42,7 +42,7 @@ CMOTDPanel::CMOTDPanel(vgui::Panel *parent, const char *name) : PropertyPage(par
 	m_pMOTDPanel->SetRichEdit(false);
 	m_pMOTDPanel->SetCatchEnterKey(true);
 	m_pMOTDPanel->setMaximumCharCount(1024);
-	
+
 	m_pSendMOTDButton = new Button(this, "SendMOTD", "&Send");
 	m_pSendMOTDButton->SetCommand(new KeyValues("SendMOTD"));
 }
@@ -86,7 +86,7 @@ void CMOTDPanel::PerformLayout()
 //-----------------------------------------------------------------------------
 // Purpose: inserts a new string into the main chat panel
 //-----------------------------------------------------------------------------
-void CMOTDPanel::DoInsertString(const char *str) 
+void CMOTDPanel::DoInsertString(const char *str)
 {
 	m_pMOTDPanel->SetText("");
 	if(strlen(str)>1024)
@@ -100,7 +100,7 @@ void CMOTDPanel::DoInsertString(const char *str)
 //-----------------------------------------------------------------------------
 // Purpose: passes the rcon class to use
 //-----------------------------------------------------------------------------
-void CMOTDPanel::SetRcon(CRcon *rcon) 
+void CMOTDPanel::SetRcon(CRcon *rcon)
 {
 	m_pRcon=rcon;
 }
@@ -129,9 +129,9 @@ void CMOTDPanel::OnSendMOTD()
 					{
 						chat_text[k+1]=chat_text[k];
 					}
-					
+
 					// replace the newline with the string "\n"
-					chat_text[i]='\\'; 
+					chat_text[i]='\\';
 					chat_text[i+1]='n';
 
 					i++; // skip this insert

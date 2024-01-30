@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -235,4 +235,3 @@ void HL1GaussWallImpact2( const CEffectData &data )
 	tempents->Sprite_Trail( vecStart, vecForward, m_nGlowIndex, 8, 0.6, random->RandomFloat( 0.1, 0.2 ), 100, 255, 200 );
 }
 DECLARE_CLIENT_EFFECT( "HL1GaussWallImpact2", HL1GaussWallImpact2 );
-

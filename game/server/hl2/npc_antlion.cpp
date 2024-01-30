@@ -66,7 +66,7 @@ ConVar  sk_antlion_worker_burst_radius( "sk_antlion_worker_burst_radius", "160",
 ConVar  g_test_new_antlion_jump( "g_test_new_antlion_jump", "1", FCVAR_ARCHIVE );
 ConVar	antlion_easycrush( "antlion_easycrush", "1" );
 ConVar g_antlion_cascade_push( "g_antlion_cascade_push", "1", FCVAR_ARCHIVE );
- 
+
 ConVar g_debug_antlion_worker( "g_debug_antlion_worker", "0" );
 
 extern ConVar bugbait_radius;
@@ -124,7 +124,7 @@ int g_interactionAntlionFiredAtTarget = 0;
 //==================================================
 
 enum
-{	
+{
 	SQUAD_SLOT_ANTLION_JUMP = LAST_SHARED_SQUADSLOT,
 	SQUAD_SLOT_ANTLION_WORKER_FIRE,
 };
@@ -168,7 +168,7 @@ CNPC_Antlion::CNPC_Antlion( void )
 	m_bStartBurrowed	= false;
 	m_bAgitatedSound	= false;
 	m_bWingsOpen		= false;
-	
+
 	m_flIgnoreSoundTime	= 0.0f;
 	m_bHasHeardSound	= false;
 
@@ -232,11 +232,11 @@ BEGIN_DATADESC( CNPC_Antlion )
 	DEFINE_FIELD( m_flZapDuration,			FIELD_TIME ),
 #if HL2_EPISODIC
 	DEFINE_FIELD( m_bHasDoneAirAttack,		FIELD_BOOLEAN ),
-#endif	
+#endif
 	// DEFINE_FIELD( m_bLoopingStarted, FIELD_BOOLEAN ),
 	//			  m_FollowBehavior
 	//			  m_AssaultBehavior
-	
+
 	DEFINE_INPUTFUNC( FIELD_VOID,	"Unburrow", InputUnburrow ),
 	DEFINE_INPUTFUNC( FIELD_VOID,	"Burrow",	InputBurrow ),
 	DEFINE_INPUTFUNC( FIELD_VOID,	"BurrowAway",	InputBurrowAway ),
@@ -260,7 +260,7 @@ BEGIN_DATADESC( CNPC_Antlion )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::Spawn( void )
 {
@@ -291,7 +291,7 @@ void CNPC_Antlion::Spawn( void )
 	SetHullType(HULL_MEDIUM);
 	SetHullSizeNormal();
 	SetDefaultEyeOffset();
-	
+
 	SetNavType( NAV_GROUND );
 
 	m_NPCState	= NPC_STATE_NONE;
@@ -305,7 +305,7 @@ void CNPC_Antlion::Spawn( void )
 	SetSolid( SOLID_BBOX );
 	AddSolidFlags( FSOLID_NOT_STANDABLE );
 
-	
+
 	SetMoveType( MOVETYPE_STEP );
 
 	//Only do this if a squadname appears in the entity
@@ -317,7 +317,7 @@ void CNPC_Antlion::Spawn( void )
 	SetCollisionGroup( HL2COLLISION_GROUP_ANTLION );
 
 	CapabilitiesAdd( bits_CAP_MOVE_GROUND | bits_CAP_MOVE_JUMP | bits_CAP_INNATE_MELEE_ATTACK1 | bits_CAP_INNATE_MELEE_ATTACK2 );
-	
+
 	// Workers shoot projectiles
 	if ( IsWorker() )
 	{
@@ -364,7 +364,7 @@ void CNPC_Antlion::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::Activate( void )
 {
@@ -420,7 +420,7 @@ const char *pszAntlionGibs_Small[NUM_ANTLION_GIBS_SMALL] = {
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::Precache( void )
 {
@@ -488,7 +488,7 @@ void CNPC_Antlion::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 inline CBaseEntity *CNPC_Antlion::EntityToWatch( void )
@@ -509,7 +509,7 @@ void	CNPC_Antlion::PopulatePoseParameters( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::UpdateHead( void )
 {
@@ -522,12 +522,12 @@ void CNPC_Antlion::UpdateHead( void )
 	{
 		Vector	enemyDir = pTarget->WorldSpaceCenter() - WorldSpaceCenter();
 		VectorNormalize( enemyDir );
-		
+
 		if ( DotProduct( enemyDir, BodyDirection3D() ) < 0.0f )
 		{
 			SetPoseParameter( m_poseHead_Yaw,	UTIL_Approach( 0, yaw, 10 ) );
 			SetPoseParameter( m_poseHead_Pitch, UTIL_Approach( 0, pitch, 10 ) );
-			
+
 			return;
 		}
 
@@ -552,8 +552,8 @@ void CNPC_Antlion::UpdateHead( void )
 #define	ANTLION_VIEW_FIELD_NARROW	0.85f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
+// Purpose:
+// Input  : *pEntity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::FInViewCone( CBaseEntity *pEntity )
@@ -564,8 +564,8 @@ bool CNPC_Antlion::FInViewCone( CBaseEntity *pEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &vecSpot - 
+// Purpose:
+// Input  : &vecSpot -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::FInViewCone( const Vector &vecSpot )
@@ -589,14 +589,14 @@ bool CNPC_Antlion::CanBecomeRagdoll()
 		// interaction ragdoll us.
 		return ( m_NPCState == NPC_STATE_SCRIPT || m_bDontExplode );
 	}
-#endif	
+#endif
 	return BaseClass::CanBecomeRagdoll();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pVictim - 
+// Purpose:
+// Input  : *pVictim -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::Event_Killed( const CTakeDamageInfo &info )
 {
@@ -696,9 +696,9 @@ void CNPC_Antlion::MeleeAttack( float distance, float damage, QAngle &viewPunch,
 #define NUM_CHASE_POSITION_ATTEMPTS		3
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &targetPos - 
-//			&result - 
+// Purpose:
+// Input  : &targetPos -
+//			&result -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::FindChasePosition( const Vector &targetPos, Vector &result )
@@ -711,7 +711,7 @@ bool CNPC_Antlion::FindChasePosition( const Vector &targetPos, Vector &result )
 
 	Vector runDir = ( targetPos - GetAbsOrigin() );
 	VectorNormalize( runDir );
-	
+
 	Vector	vRight, vUp;
 	VectorVectors( runDir, vRight, vUp );
 
@@ -720,13 +720,13 @@ bool CNPC_Antlion::FindChasePosition( const Vector &targetPos, Vector &result )
 		result	= targetPos;
 		result += -runDir * random->RandomInt( 64, 128 );
 		result += vRight * random->RandomInt( -128, 128 );
-		
+
 		//FIXME: We need to do a more robust search here
 		// Find a ground position and try to get there
 		if ( GetGroundPosition( result, result ) )
 			return true;
 	}
-	
+
 	//TODO: If we're making multiple inquiries to this, make sure it's evenly spread
 
 	if ( g_debug_antlion.GetInt() == 1 )
@@ -738,8 +738,8 @@ bool CNPC_Antlion::FindChasePosition( const Vector &targetPos, Vector &result )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &testPos - 
+// Purpose:
+// Input  : &testPos -
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::GetGroundPosition( const Vector &testPos, Vector &result )
 {
@@ -808,8 +808,8 @@ void CNPC_Antlion::ManageFleeCapabilities( bool bEnable )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : soundType - 
+// Purpose:
+// Input  : soundType -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::GetPathToSoundFleePoint( int soundType )
@@ -912,7 +912,7 @@ bool CNPC_Antlion::InnateWeaponLOSCondition( const Vector &ownerPos, const Vecto
 	{
 		Vector vSpitPos;
 		GetAttachment( "mouth", vSpitPos );
-		
+
 		return GetSpitVector( vSpitPos, targetPos, &m_vecSaveSpitVelocity );
 	}
 
@@ -979,7 +979,7 @@ Vector VecCheckThrowTolerance( CBaseEntity *pEdict, const Vector &vecSpot1, Vect
 				bFail = false;
 			}
 		}
-		
+
 		if ( bFail )
 		{
 			if ( g_debug_antlion_worker.GetBool() )
@@ -1034,8 +1034,8 @@ bool CNPC_Antlion::GetSpitVector( const Vector &vecStartPos, const Vector &vecTa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flDuration - 
+// Purpose:
+// Input  : flDuration -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::DelaySquadAttack( float flDuration )
 {
@@ -1048,8 +1048,8 @@ void CNPC_Antlion::DelaySquadAttack( float flDuration )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEvent - 
+// Purpose:
+// Input  : *pEvent -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::HandleAnimEvent( animevent_t *pEvent )
 {
@@ -1063,11 +1063,11 @@ void CNPC_Antlion::HandleAnimEvent( animevent_t *pEvent )
 				GetAttachment( "mouth", vSpitPos );
 
 				Vector	vTarget;
-				
+
 				// If our enemy is looking at us and far enough away, lead him
 				if ( HasCondition( COND_ENEMY_FACING_ME ) && UTIL_DistApprox( GetAbsOrigin(), GetEnemy()->GetAbsOrigin() ) > (40*12) )
 				{
-					UTIL_PredictedPosition( GetEnemy(), 0.5f, &vTarget ); 
+					UTIL_PredictedPosition( GetEnemy(), 0.5f, &vTarget );
 					vTarget.z = GetEnemy()->GetAbsOrigin().z;
 				}
 				else
@@ -1075,11 +1075,11 @@ void CNPC_Antlion::HandleAnimEvent( animevent_t *pEvent )
 					// Otherwise he can't see us and he won't be able to dodge
 					vTarget = GetEnemy()->BodyTarget( vSpitPos, true );
 				}
-				
+
 				vTarget[2] += random->RandomFloat( 0.0f, 32.0f );
-				
+
 				// Try and spit at our target
-				Vector	vecToss;				
+				Vector	vecToss;
 				if ( GetSpitVector( vSpitPos, vTarget, &vecToss ) == false )
 				{
 					// Now try where they were
@@ -1115,7 +1115,7 @@ void CNPC_Antlion::HandleAnimEvent( animevent_t *pEvent )
 					DispatchSpawn( pGrenade );
 					pGrenade->SetThrower( this );
 					pGrenade->SetOwnerEntity( this );
-										
+
 					if ( i == 0 )
 					{
 						pGrenade->SetSpitSize( SPIT_LARGE );
@@ -1182,7 +1182,7 @@ void CNPC_Antlion::HandleAnimEvent( animevent_t *pEvent )
 		MeleeAttack( ANTLION_MELEE2_RANGE, sk_antlion_swipe_damage.GetFloat(), qa, vec );
 		return;
 	}
-		
+
 	if ( pEvent->event == AE_ANTLION_OPEN_WINGS )
 	{
 		SetWings( true );
@@ -1251,14 +1251,14 @@ void CNPC_Antlion::HandleAnimEvent( animevent_t *pEvent )
 		EmitSound( "NPC_Antlion.FootstepHeavy", pEvent->eventtime );
 		return;
 	}
-	
-	
+
+
 	if ( pEvent->event == AE_ANTLION_MELEE1_SOUND )
 	{
 		EmitSound( "NPC_Antlion.MeleeAttackSingle" );
 		return;
 	}
-	
+
 	if ( pEvent->event == AE_ANTLION_MELEE2_SOUND )
 	{
 		EmitSound( "NPC_Antlion.MeleeAttackDouble" );
@@ -1299,7 +1299,7 @@ void CNPC_Antlion::HandleAnimEvent( animevent_t *pEvent )
 		return;
 	}
 #endif
-	
+
 	BaseClass::HandleAnimEvent( pEvent );
 }
 
@@ -1325,7 +1325,7 @@ void CNPC_Antlion::LockJumpNode( void )
 {
 	if ( HasSpawnFlags( SF_ANTLION_USE_GROUNDCHECKS ) == false )
 		 return;
-	
+
 	if ( GetNavigator()->GetPath() == NULL )
 		 return;
 
@@ -1407,33 +1407,33 @@ public:
 
 		if ( m_pIgnore == pEntity )
 			 return false;
-		
+
 		if ( pEntity->IsNPC() == false )
 			 return false;
-		
+
 		if ( NPC_Antlion_IsAntlion( pEntity ) )
 			 return true;
-		
+
 		return false;
 	}
 private:
-	
+
 	const CBaseEntity		*m_pIgnore;
 };
 
 
 //-----------------------------------------------------------------------------
-// Purpose:  
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::StartTask( const Task_t *pTask )
 {
-	switch ( pTask->iTask ) 
+	switch ( pTask->iTask )
 	{
 	case TASK_ANTLION_FIND_COVER_FROM_SAVEPOSITION:
 		{
 			Vector coverPos;
 
-			if ( GetTacticalServices()->FindCoverPos( m_vSavePosition, EyePosition(), 0, CoverRadius(), &coverPos ) ) 
+			if ( GetTacticalServices()->FindCoverPos( m_vSavePosition, EyePosition(), 0, CoverRadius(), &coverPos ) )
 			{
 				AI_NavGoal_t goal(coverPos, ACT_RUN, AIN_HULL_TOLERANCE);
 				GetNavigator()->SetGoal( goal );
@@ -1477,7 +1477,7 @@ void CNPC_Antlion::StartTask( const Task_t *pTask )
 	case TASK_ANTLION_DISMOUNT_NPC:
 		{
 			CBaseEntity *pGroundEnt = GetGroundEntity();
-			
+
 			if( pGroundEnt != NULL )
 			{
 				trace_t trace;
@@ -1492,15 +1492,15 @@ void CNPC_Antlion::StartTask( const Task_t *pTask )
 				}
 
 				// Jump behind the other NPC so I don't block their path.
-				Vector vecJumpDir; 
+				Vector vecJumpDir;
 
 				pGroundEnt->GetVectors( &vecJumpDir, NULL, NULL );
 
 				SetGroundEntity( NULL );
-				
+
 				// Bump up
 				UTIL_SetOrigin( this, GetAbsOrigin() + Vector( 0, 0 , 1 ) );
-				
+
 				SetAbsVelocity( vecJumpDir * -200 + Vector( 0, 0, 100 ) );
 
 				// Doing ACT_RESET first assures they play the animation, even when in transition
@@ -1517,7 +1517,7 @@ void CNPC_Antlion::StartTask( const Task_t *pTask )
 		break;
 
 	case TASK_ANTLION_FACE_BUGBAIT:
-			
+
 		//Must have a saved sound
 		//FIXME: This isn't assured to be still pointing to the right place, need to protect this
 		if ( !m_bHasHeardSound )
@@ -1530,7 +1530,7 @@ void CNPC_Antlion::StartTask( const Task_t *pTask )
 		SetTurnActivity();
 
 		break;
-	
+
 	case TASK_ANTLION_GET_PATH_TO_BUGBAIT:
 		{
 			//Must have a saved sound
@@ -1540,14 +1540,14 @@ void CNPC_Antlion::StartTask( const Task_t *pTask )
 				TaskFail( "No remembered bug bait sound to run to!" );
 				return;
 			}
-			
+
 			Vector	goalPos;
 
 			// Find the position to chase to
 			if ( FindChasePosition( m_vecHeardSound, goalPos ) )
 			{
 				AI_NavGoal_t goal( goalPos, (Activity) ACT_ANTLION_RUN_AGITATED, ANTLION_BUGBAIT_NAV_TOLERANCE );
-				
+
 				//Try to run directly there
 				if ( GetNavigator()->SetGoal( goal, AIN_DISCARD_IF_FAIL ) == false )
 				{
@@ -1587,7 +1587,7 @@ void CNPC_Antlion::StartTask( const Task_t *pTask )
 		break;
 
 	case TASK_ANTLION_JUMP:
-		
+
 		if ( CheckLanding() )
 		{
 			TaskComplete();
@@ -1596,7 +1596,7 @@ void CNPC_Antlion::StartTask( const Task_t *pTask )
 		break;
 
 	case TASK_ANTLION_CHECK_FOR_UNBORROW:
-		
+
 		m_iUnBurrowAttempts = 0;
 
 		if ( ValidBurrowPoint( GetAbsOrigin() ) )
@@ -1609,7 +1609,7 @@ void CNPC_Antlion::StartTask( const Task_t *pTask )
 		break;
 
 	case TASK_ANTLION_BURROW_WAIT:
-		
+
 		if ( pTask->flTaskData == 1.0f )
 		{
 			//Set our next burrow time
@@ -1619,7 +1619,7 @@ void CNPC_Antlion::StartTask( const Task_t *pTask )
 		break;
 
 	case TASK_ANTLION_FIND_BURROW_IN_POINT:
-		
+
 		if ( FindBurrow( GetAbsOrigin(), pTask->flTaskData, ANTLION_BURROW_IN ) == false )
 		{
 			TaskFail( "TASK_ANTLION_FIND_BURROW_IN_POINT: Unable to find burrow in position\n" );
@@ -1632,7 +1632,7 @@ void CNPC_Antlion::StartTask( const Task_t *pTask )
 		break;
 
 	case TASK_ANTLION_FIND_BURROW_OUT_POINT:
-		
+
 		if ( FindBurrow( GetAbsOrigin(), pTask->flTaskData, ANTLION_BURROW_OUT ) == false )
 		{
 			TaskFail( "TASK_ANTLION_FIND_BURROW_OUT_POINT: Unable to find burrow out position\n" );
@@ -1660,12 +1660,12 @@ void CNPC_Antlion::StartTask( const Task_t *pTask )
 		AddEffects( EF_NODRAW );
 		AddFlag( FL_NOTARGET );
 		m_spawnflags |= SF_NPC_GAG;
-		
+
 		// If the task parameter is non-zero, remove us when we vanish
 		if ( pTask->flTaskData )
 		{
 			CBaseEntity *pOwner = GetOwnerEntity();
-			
+
 			if( pOwner != NULL )
 			{
 				pOwner->DeathNotice( this );
@@ -1684,7 +1684,7 @@ void CNPC_Antlion::StartTask( const Task_t *pTask )
 
 	case TASK_ANTLION_GET_THUMPER_ESCAPE_PATH:
 		{
-			if ( GetPathToSoundFleePoint( SOUND_THUMPER ) )			
+			if ( GetPathToSoundFleePoint( SOUND_THUMPER ) )
 			{
 				TaskComplete();
 			}
@@ -1693,7 +1693,7 @@ void CNPC_Antlion::StartTask( const Task_t *pTask )
 				TaskFail( FAIL_NO_REACHABLE_NODE );
 			}
 		}
-		
+
 		break;
 
 	case TASK_ANTLION_GET_PHYSICS_DANGER_ESCAPE_PATH:
@@ -1707,7 +1707,7 @@ void CNPC_Antlion::StartTask( const Task_t *pTask )
 				TaskFail( FAIL_NO_REACHABLE_NODE );
 			}
 		}
-		
+
 		break;
 
 
@@ -1718,8 +1718,8 @@ void CNPC_Antlion::StartTask( const Task_t *pTask )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::RunTask( const Task_t *pTask )
 {
@@ -1737,13 +1737,13 @@ void CNPC_Antlion::RunTask( const Task_t *pTask )
 		{
 			Vector	jumpDir = m_vecSavedJump;
 			VectorNormalize( jumpDir );
-			
+
 			QAngle	jumpAngles;
 			VectorAngles( jumpDir, jumpAngles );
 
 			GetMotor()->SetIdealYawAndUpdate( jumpAngles[YAW], AI_KEEP_YAW_SPEED );
 			SetTurnActivity();
-			
+
 			if ( GetMotor()->DeltaIdealYaw() < 2 )
 			{
 				TaskComplete();
@@ -1766,10 +1766,10 @@ void CNPC_Antlion::RunTask( const Task_t *pTask )
 			data.m_flScale = random->RandomFloat( 12.0, 16.0 );
 
 			DispatchEffect( "watersplash", data );
-			
+
 			m_flTimeDrownSplash = gpGlobals->curtime + random->RandomFloat( 0.5, 2.5 );
 		}
-	
+
 		if ( gpGlobals->curtime > m_flTimeDrown )
 		{
 			m_bDontExplode = true;
@@ -1783,7 +1783,7 @@ void CNPC_Antlion::RunTask( const Task_t *pTask )
 		break;
 
 	case TASK_ANTLION_DISMOUNT_NPC:
-		
+
 		if ( GetFlags() & FL_ONGROUND )
 		{
 			CBaseEntity *pGroundEnt = GetGroundEntity();
@@ -1791,15 +1791,15 @@ void CNPC_Antlion::RunTask( const Task_t *pTask )
 			if ( ( pGroundEnt != NULL ) && ( ( pGroundEnt->MyNPCPointer() != NULL ) || pGroundEnt->GetSolidFlags() & FSOLID_NOT_STANDABLE ) )
 			{
 				// Jump behind the other NPC so I don't block their path.
-				Vector vecJumpDir; 
+				Vector vecJumpDir;
 
 				pGroundEnt->GetVectors( &vecJumpDir, NULL, NULL );
 
-				SetGroundEntity( NULL );	
-				
+				SetGroundEntity( NULL );
+
 				// Bump up
 				UTIL_SetOrigin( this, GetAbsOrigin() + Vector( 0, 0 , 1 ) );
-				
+
 				Vector vecRandom = RandomVector( -250.0f, 250.0f );
 				vecRandom[2] = random->RandomFloat( 100.0f, 200.0f );
 				SetAbsVelocity( vecRandom );
@@ -1813,11 +1813,11 @@ void CNPC_Antlion::RunTask( const Task_t *pTask )
 				TaskComplete();
 			}
 		}
-		
+
 		break;
 
 	case TASK_ANTLION_FACE_BUGBAIT:
-			
+
 		//Must have a saved sound
 		//FIXME: This isn't assured to be still pointing to the right place, need to protect this
 		if ( !m_bHasHeardSound )
@@ -1836,7 +1836,7 @@ void CNPC_Antlion::RunTask( const Task_t *pTask )
 		break;
 
 	case TASK_ANTLION_WAIT_FOR_TRIGGER:
-		
+
 		if ( ( m_flIdleDelay > gpGlobals->curtime ) || GetEntityName() != NULL_STRING )
 			return;
 
@@ -1854,7 +1854,7 @@ void CNPC_Antlion::RunTask( const Task_t *pTask )
 		break;
 
 	case TASK_ANTLION_CHECK_FOR_UNBORROW:
-		
+
 		//Must wait for our next check time
 		if ( m_flBurrowTime > gpGlobals->curtime )
 			return;
@@ -1875,7 +1875,7 @@ void CNPC_Antlion::RunTask( const Task_t *pTask )
 
 		// Robin: If we fail 10 times, kill ourself.
 		// This deals with issues where the game relies out antlion spawners
-		// firing their OnBlocked output, but the spawner isn't attempting to 
+		// firing their OnBlocked output, but the spawner isn't attempting to
 		// spawn because it has multiple live children lying around stuck under
 		// physics props unable to unburrow.
 		if ( m_iUnBurrowAttempts >= 10 )
@@ -1888,13 +1888,13 @@ void CNPC_Antlion::RunTask( const Task_t *pTask )
 		break;
 
 	case TASK_ANTLION_BURROW_WAIT:
-		
+
 		//See if enough time has passed
 		if ( m_flBurrowTime < gpGlobals->curtime )
 		{
 			TaskComplete();
 		}
-		
+
 		break;
 
 	default:
@@ -1905,8 +1905,8 @@ void CNPC_Antlion::RunTask( const Task_t *pTask )
 
 bool CNPC_Antlion::AllowedToBePushed( void )
 {
-	if ( IsCurSchedule( SCHED_ANTLION_BURROW_WAIT ) || 
-		IsCurSchedule(SCHED_ANTLION_BURROW_IN) || 
+	if ( IsCurSchedule( SCHED_ANTLION_BURROW_WAIT ) ||
+		IsCurSchedule(SCHED_ANTLION_BURROW_IN) ||
 		IsCurSchedule(SCHED_ANTLION_BURROW_OUT) ||
 		IsCurSchedule(SCHED_ANTLION_BURROW_AWAY ) ||
 		IsCurSchedule( SCHED_ANTLION_RUN_TO_FIGHT_GOAL ) )
@@ -1938,16 +1938,16 @@ bool CNPC_Antlion::IsJumpLegal( const Vector &startPos, const Vector &apex, cons
 
 	if ( CAntlionRepellant::IsPositionRepellantFree( endPos ) == false )
 		 return false;
-	
+
 	//Adrian: Don't try to jump if my destination is right next to me.
-	if ( ( endPos - GetAbsOrigin()).Length() < MIN_JUMP_DISTANCE ) 
+	if ( ( endPos - GetAbsOrigin()).Length() < MIN_JUMP_DISTANCE )
 		 return false;
 
 	if ( HasSpawnFlags( SF_ANTLION_USE_GROUNDCHECKS ) && g_test_new_antlion_jump.GetBool() == true )
 	{
 		trace_t	tr;
 		AI_TraceHull( endPos, endPos, GetHullMins(), GetHullMaxs(), MASK_NPCSOLID, this, COLLISION_GROUP_NONE, &tr );
-		
+
 		if ( tr.m_pEnt )
 		{
 			CAI_BaseNPC *pBlocker = tr.m_pEnt->MyNPCPointer();
@@ -1983,14 +1983,14 @@ bool CNPC_Antlion::IsFirmlyOnGround( void )
 	trace_t tr;
 
 	float flHeight =  fabs( GetHullMaxs().z - GetHullMins().z );
-	
+
 	Vector vOrigin = GetAbsOrigin() + Vector( GetHullMins().x, GetHullMins().y, 0 );
 //	NDebugOverlay::Line( vOrigin, vOrigin - Vector( 0, 0, flHeight * 0.5  ), 255, 0, 0, true, 5 );
 	UTIL_TraceLine( vOrigin, vOrigin - Vector( 0, 0, flHeight * 0.5  ), MASK_NPCSOLID, this, GetCollisionGroup(), &tr );
 
 	if ( tr.fraction != 1.0f )
 		 return true;
-	
+
 	vOrigin = GetAbsOrigin() - Vector( GetHullMins().x, GetHullMins().y, 0 );
 //	NDebugOverlay::Line( vOrigin, vOrigin - Vector( 0, 0, flHeight * 0.5  ), 255, 0, 0, true, 5 );
 	UTIL_TraceLine( vOrigin, vOrigin - Vector( 0, 0, flHeight * 0.5  ), MASK_NPCSOLID, this, GetCollisionGroup(), &tr );
@@ -2011,12 +2011,12 @@ bool CNPC_Antlion::IsFirmlyOnGround( void )
 
 	if ( tr.fraction != 1.0f )
 		 return true;
-	
+
 	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CNPC_Antlion::SelectFailSchedule( int failedSchedule, int failedTask, AI_TaskFailureCode_t taskFailCode )
 {
@@ -2024,25 +2024,25 @@ int CNPC_Antlion::SelectFailSchedule( int failedSchedule, int failedTask, AI_Tas
 	{
 		if( IsFirmlyOnGround() == false )
 		{
-			Vector vecJumpDir; 
-				
+			Vector vecJumpDir;
+
 			vecJumpDir.z = 0;
 			vecJumpDir.x = 0;
 			vecJumpDir.y = 0;
-			
+
 			while( vecJumpDir.x == 0 && vecJumpDir.y == 0 )
 			{
-				vecJumpDir.x = random->RandomInt( -1, 1 ); 
+				vecJumpDir.x = random->RandomInt( -1, 1 );
 				vecJumpDir.y = random->RandomInt( -1, 1 );
 			}
 
 			vecJumpDir.NormalizeInPlace();
 
 			SetGroundEntity( NULL );
-	
+
 			m_vecSavedJump = vecJumpDir * 512 + Vector( 0, 0, 256 );
 			m_bForcedStuckJump = true;
-	
+
 			return SCHED_ANTLION_JUMP;
 		}
 	}
@@ -2055,7 +2055,7 @@ int CNPC_Antlion::SelectFailSchedule( int failedSchedule, int failedTask, AI_Tas
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::ShouldJump( void )
@@ -2098,7 +2098,7 @@ bool CNPC_Antlion::ShouldJump( void )
 	//FIXME: Check your own distance from last attempt as well
 	if ( ( ( m_vecLastJumpAttempt - vecPredictedPos ).LengthSqr() ) < (128*128) )
 	{
-		m_flJumpTime = gpGlobals->curtime + random->RandomFloat( 1.0f, 2.0f );		
+		m_flJumpTime = gpGlobals->curtime + random->RandomFloat( 1.0f, 2.0f );
 		return false;
 	}
 
@@ -2172,7 +2172,7 @@ Activity CNPC_Antlion::NPC_TranslateActivity( Activity baseAct )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CNPC_Antlion::ChooseMoveSchedule( void )
@@ -2242,7 +2242,7 @@ int CNPC_Antlion::ChooseMoveSchedule( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::ZapThink( void )
 {
@@ -2252,7 +2252,7 @@ void CNPC_Antlion::ZapThink( void )
 	data.m_flScale = random->RandomFloat( 0.25f, 1.0f );
 
 	DispatchEffect( "TeslaHitboxes", data );
-	
+
 	if ( m_flZapDuration > gpGlobals->curtime )
 	{
 		SetContextThink( &CNPC_Antlion::ZapThink, gpGlobals->curtime + random->RandomFloat( 0.05f, 0.25f ), "ZapThink" );
@@ -2264,7 +2264,7 @@ void CNPC_Antlion::ZapThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CNPC_Antlion::SelectSchedule( void )
@@ -2287,7 +2287,7 @@ int CNPC_Antlion::SelectSchedule( void )
 	if ( HasCondition( COND_ANTLION_FLIPPED ) )
 	{
 		ClearCondition( COND_ANTLION_FLIPPED );
-		
+
 		// See if it's a forced, electrical flip
 		if ( m_flZapDuration > gpGlobals->curtime )
 		{
@@ -2314,7 +2314,7 @@ int CNPC_Antlion::SelectSchedule( void )
 	{
 		// Ignore thumpers that aren't visible
 		CSound *pSound = GetLoudestSoundOfType( SOUND_THUMPER );
-		
+
 		if ( pSound )
 		{
 			CTakeDamageInfo info;
@@ -2357,12 +2357,12 @@ int CNPC_Antlion::SelectSchedule( void )
 			EmitSound( "NPC_Antlion.Distracted" );
 			m_flNextAcknowledgeTime = gpGlobals->curtime + 1.0f;
 		}
-		
+
 		m_flIdleDelay = gpGlobals->curtime + 4.0f;
 
 		//If the sound is valid, act upon it
 		if ( m_bHasHeardSound )
-		{		
+		{
 			//Mark anything in the area as more interesting
 			CBaseEntity *pTarget = NULL;
 			CBaseEntity *pNewEnemy = NULL;
@@ -2383,7 +2383,7 @@ int CNPC_Antlion::SelectSchedule( void )
 				if ( ( IRelationType( pNPC ) == D_HT ) && ( pNPC->IsPlayer() == false ) )
 				{
 					AddEntityRelationship( pNPC, D_HT, 99 );
-					
+
 					//Try to spread out the enemy distribution
 					if ( ( pNewEnemy == NULL ) || ( random->RandomInt( 0, 1 ) ) )
 					{
@@ -2392,14 +2392,14 @@ int CNPC_Antlion::SelectSchedule( void )
 					}
 				}
 			}
-			
+
 			// If we have a new enemy, take it
 			if ( pNewEnemy != NULL )
 			{
 				//Setup our ignore info
 				SetEnemy( pNewEnemy );
 			}
-			
+
 			ClearCondition( COND_HEAR_BUGBAIT );
 
 			return SCHED_ANTLION_CHASE_BUGBAIT;
@@ -2414,7 +2414,7 @@ int CNPC_Antlion::SelectSchedule( void )
 
 	//Otherwise do basic state schedule selection
 	switch ( m_NPCState )
-	{	
+	{
 	case NPC_STATE_COMBAT:
 		{
 			// Worker-only AI
@@ -2465,7 +2465,7 @@ int CNPC_Antlion::SelectSchedule( void )
 						return SCHED_ANTLION_WORKER_RANGE_ATTACK1;
 					}
 				}
-				
+
 				// Back up, we're too near an enemy or can't see them
 				if ( HasCondition( COND_TOO_CLOSE_TO_ATTACK ) || HasCondition( COND_ENEMY_OCCLUDED ) )
 					return SCHED_ESTABLISH_LINE_OF_FIRE;
@@ -2523,7 +2523,7 @@ int CNPC_Antlion::SelectSchedule( void )
 					// Don't have an enemy, so face the direction the last attack came from (don't face north)
 					vecEnemyLKP = WorldSpaceCenter() + ( g_vecAttackDir * 128 );
 				}
-				
+
 				// If we're already facing the attack direction, then take cover from it
 				if ( FInViewCone( vecEnemyLKP ) )
 				{
@@ -2531,7 +2531,7 @@ int CNPC_Antlion::SelectSchedule( void )
 					m_vSavePosition = vecEnemyLKP;
 					return SCHED_ANTLION_TAKE_COVER_FROM_SAVEPOSITION;
 				}
-				
+
 				// By default, we'll turn to face the attack
 			}
 		}
@@ -2645,16 +2645,16 @@ void CNPC_Antlion::CascadePush( const Vector &vecForce )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-inline bool CNPC_Antlion::IsFlipped( void ) 
+inline bool CNPC_Antlion::IsFlipped( void )
 {
 	return ( GetActivity() == ACT_ANTLION_FLIP || GetActivity() == ACT_ANTLION_ZAP_FLIP );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator )
 {
@@ -2679,14 +2679,14 @@ void CNPC_Antlion::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDi
 		//More vulnerable when flipped
 		newInfo.ScaleDamage( 4.0f );
 	}
-	else if ( newInfo.GetDamageType() & (DMG_PHYSGUN) || 
+	else if ( newInfo.GetDamageType() & (DMG_PHYSGUN) ||
 			( newInfo.GetDamageType() & (DMG_BLAST|DMG_CRUSH) && newInfo.GetDamage() >= 25.0f ) )
 	{
 		// Don't do this if we're in an interaction
 		if ( !IsRunningDynamicInteraction() )
  		{
 			//Grenades, physcannons, and physics impacts make us fuh-lip!
-			
+
 			if( hl2_episodic.GetBool() )
 			{
 				PainSound( newInfo );
@@ -2738,7 +2738,7 @@ void CNPC_Antlion::StopLoopingSounds( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::IdleSound( void )
 {
@@ -2747,7 +2747,7 @@ void CNPC_Antlion::IdleSound( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::PainSound( const CTakeDamageInfo &info )
 {
@@ -2755,8 +2755,8 @@ void CNPC_Antlion::PainSound( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 float CNPC_Antlion::GetIdealAccel( void ) const
 {
@@ -2764,21 +2764,21 @@ float CNPC_Antlion::GetIdealAccel( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CNPC_Antlion::MaxYawSpeed( void )
 {
 	switch ( GetActivity() )
 	{
-	case ACT_IDLE:		
+	case ACT_IDLE:
 		return 32.0f;
 		break;
-	
+
 	case ACT_WALK:
 		return 16.0f;
 		break;
-	
+
 	default:
 	case ACT_RUN:
 		return 32.0f;
@@ -2789,7 +2789,7 @@ float CNPC_Antlion::MaxYawSpeed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::ShouldPlayIdleSound( void )
@@ -2814,8 +2814,8 @@ bool CNPC_Antlion::ShouldPlayIdleSound( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFriend - 
+// Purpose:
+// Input  : *pFriend -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::NotifyDeadFriend( CBaseEntity *pFriend )
 {
@@ -2840,7 +2840,7 @@ bool CNPC_Antlion::FCanCheckAttacks( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CNPC_Antlion::RangeAttack1Conditions( float flDot, float flDist )
 {
@@ -2849,7 +2849,7 @@ int CNPC_Antlion::RangeAttack1Conditions( float flDot, float flDist )
 
 	if ( flDot < DOT_10DEGREE )
 		return COND_NOT_FACING_ATTACK;
-	
+
 	if ( flDist > (150*12) )
 		return COND_TOO_FAR_TO_ATTACK;
 
@@ -2860,7 +2860,7 @@ int CNPC_Antlion::RangeAttack1Conditions( float flDot, float flDist )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CNPC_Antlion::MeleeAttack1Conditions( float flDot, float flDist )
 {
@@ -2878,7 +2878,7 @@ int CNPC_Antlion::MeleeAttack1Conditions( float flDot, float flDist )
 	// Compare our target direction to our body facing
 	Vector2D vec2DPrDir	= ( vecPrPos - GetAbsOrigin() ).AsVector2D();
 	Vector2D vec2DBodyDir = BodyDirection2D().AsVector2D();
-	
+
 	float flPrDot = DotProduct2D ( vec2DPrDir, vec2DBodyDir );
 	if ( flPrDot < 0.5f )
 		return COND_NOT_FACING_ATTACK;
@@ -2922,9 +2922,9 @@ int CNPC_Antlion::MeleeAttack1Conditions( float flDot, float flDist )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flDot - 
-//			flDist - 
+// Purpose:
+// Input  : flDot -
+//			flDist -
 // Output : int
 //-----------------------------------------------------------------------------
 int CNPC_Antlion::MeleeAttack2Conditions( float flDot, float flDist )
@@ -2947,7 +2947,7 @@ int CNPC_Antlion::MeleeAttack2Conditions( float flDot, float flDist )
 	Vector vecBodyDir = BodyDirection2D();
 
 	Vector2D vec2DBodyDir = vecBodyDir.AsVector2D();
-	
+
 	flPrDot	= DotProduct2D ( vec2DPrDir, vec2DBodyDir );
 
 	if ( ( flPrDist > ANTLION_MELEE2_RANGE_MAX ) )
@@ -2976,10 +2976,10 @@ int CNPC_Antlion::MeleeAttack2Conditions( float flDot, float flDist )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : interactionType - 
-//			*data - 
-//			*sender - 
+// Purpose:
+// Input  : interactionType -
+//			*data -
+//			*sender -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::HandleInteraction( int interactionType, void *data, CBaseCombatCharacter *sender )
@@ -2988,7 +2988,7 @@ bool CNPC_Antlion::HandleInteraction( int interactionType, void *data, CBaseComb
 	if ( interactionType == g_interactionAntlionFoundTarget )
 	{
 		CBaseEntity	*pOther = (CBaseEntity *) data;
-		
+
 		//Randomly delay
 		m_flBurrowTime = gpGlobals->curtime + random->RandomFloat( 0.5f, 1.0f );
 		BurrowUse( pOther, pOther, USE_ON, 0.0f );
@@ -2999,7 +2999,7 @@ bool CNPC_Antlion::HandleInteraction( int interactionType, void *data, CBaseComb
 	// fixed for episodic: allow interactions to fall through in the base class. ifdefed away
 	// for mainline in case anything depends on this bug.
 #ifdef HL2_EPISODIC
-	
+
 	if ( interactionType == g_interactionAntlionFiredAtTarget )
 	{
 		// Bump out our attack time
@@ -3017,7 +3017,7 @@ bool CNPC_Antlion::HandleInteraction( int interactionType, void *data, CBaseComb
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::Alone( void )
@@ -3032,7 +3032,7 @@ bool CNPC_Antlion::Alone( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::StartJump( void )
 {
@@ -3062,9 +3062,9 @@ void CNPC_Antlion::StartJump( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : sHint - 
-//			nNodeNum - 
+// Purpose:
+// Input  : sHint -
+//			nNodeNum -
 // Output : bool CAI_BaseNPC::FValidateHintType
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::FValidateHintType( CAI_Hint *pHint )
@@ -3072,7 +3072,7 @@ bool CNPC_Antlion::FValidateHintType( CAI_Hint *pHint )
 	switch ( m_iContext )
 	{
 	case ANTLION_BURROW_OUT:
-		{			
+		{
 			//See if this is a valid point
 			Vector vHintPos;
 			pHint->GetPosition(this,&vHintPos);
@@ -3087,8 +3087,8 @@ bool CNPC_Antlion::FValidateHintType( CAI_Hint *pHint )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &origin - 
+// Purpose:
+// Input  : &origin -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::ClearBurrowPoint( const Vector &origin )
 {
@@ -3125,7 +3125,7 @@ void CNPC_Antlion::ClearBurrowPoint( const Vector &origin )
 			}
 		}
 	}
-	
+
 	if ( bPlayerInSphere == false )
 	{
 		//Cause a ruckus
@@ -3176,7 +3176,7 @@ bool CNPC_Antlion::ValidBurrowPoint( const Vector &point )
 	trace_t	tr;
 
 	CTraceFilterSimpleNPCExclude filter( this, COLLISION_GROUP_NONE );
-	AI_TraceHull( point, point+Vector(0,0,1), GetHullMins(), GetHullMaxs(), 
+	AI_TraceHull( point, point+Vector(0,0,1), GetHullMins(), GetHullMaxs(),
 		MASK_NPCSOLID, &filter, &tr );
 
 	//See if we were able to get there
@@ -3213,7 +3213,7 @@ bool CNPC_Antlion::FindBurrow( const Vector &origin, float distance, int type, b
 		hintCriteria.SetFlag( bits_HINT_NODE_NEAREST );
 
 		hintCriteria.AddIncludePosition( origin, distance );
-		
+
 		if ( excludeNear )
 		{
 			hintCriteria.AddExcludePosition( origin, 128 );
@@ -3285,17 +3285,17 @@ bool CNPC_Antlion::FindBurrow( const Vector &origin, float distance, int type, b
 
 //-----------------------------------------------------------------------------
 // Purpose:	Cause the antlion to unborrow
-// Input  : *pActivator - 
-//			*pCaller - 
-//			useType - 
-//			value - 
+// Input  : *pActivator -
+//			*pCaller -
+//			useType -
+//			value -
 //-----------------------------------------------------------------------------
 
 void CNPC_Antlion::BurrowUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
 	//Don't allow us to do this again
 	SetUse( NULL );
-	
+
 	//Allow idle sounds again
 	m_spawnflags &= ~SF_NPC_GAG;
 
@@ -3328,8 +3328,8 @@ bool CNPC_Antlion::CheckLanding( void )
 	{
 		NDebugOverlay::Line( GetAbsOrigin(), testPos, 255, 0, 0, 0, 0.5f );
 		NDebugOverlay::Cross3D( m_vecSavedJump, -Vector(2,2,2), Vector(2,2,2), 0, 255, 0, true, 0.5f );
-	} 
-	
+	}
+
 	// Look below
 	AI_TraceHull( GetAbsOrigin(), testPos, NAI_Hull::Mins( GetHullType() ), NAI_Hull::Maxs( GetHullType() ), MASK_NPCSOLID, this, COLLISION_GROUP_NONE, &tr );
 
@@ -3372,8 +3372,8 @@ bool CNPC_Antlion::CheckLanding( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
+// Purpose:
+// Input  : *pEntity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::QuerySeeEntity( CBaseEntity *pEntity, bool bOnlyHateOrFearIfNPC )
@@ -3413,7 +3413,7 @@ void CNPC_Antlion::SetWings( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::Burrow( void )
 {
@@ -3424,7 +3424,7 @@ void CNPC_Antlion::Burrow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::Unburrow( void )
 {
@@ -3454,8 +3454,8 @@ void CNPC_Antlion::Unburrow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::InputUnburrow( inputdata_t &inputdata )
 {
@@ -3466,8 +3466,8 @@ void CNPC_Antlion::InputUnburrow( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::InputBurrow( inputdata_t &inputdata )
 {
@@ -3478,8 +3478,8 @@ void CNPC_Antlion::InputBurrow( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::InputBurrowAway( inputdata_t &inputdata )
 {
@@ -3490,7 +3490,7 @@ void CNPC_Antlion::InputBurrowAway( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::CreateDust( bool placeDecal )
 {
@@ -3501,15 +3501,15 @@ void CNPC_Antlion::CreateDust( bool placeDecal )
 	{
 		const surfacedata_t *pdata = physprops->GetSurfaceData( tr.surface.surfaceProps );
 
-		if ( hl2_episodic.GetBool() == true || ( pdata->game.material == CHAR_TEX_CONCRETE ) || 
+		if ( hl2_episodic.GetBool() == true || ( pdata->game.material == CHAR_TEX_CONCRETE ) ||
 			 ( pdata->game.material == CHAR_TEX_DIRT ) ||
-			 ( pdata->game.material == CHAR_TEX_SAND ) ) 
+			 ( pdata->game.material == CHAR_TEX_SAND ) )
 		{
 
 			if ( !m_bSuppressUnburrowEffects )
 			{
 				UTIL_CreateAntlionDust( tr.endpos + Vector(0,0,24), GetAbsAngles() );
-				
+
 				if ( placeDecal )
 				{
 					UTIL_DecalTrace( &tr, "Antlion.Unburrow" );
@@ -3520,14 +3520,14 @@ void CNPC_Antlion::CreateDust( bool placeDecal )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pSound - 
+// Purpose:
+// Input  : *pSound -
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::QueryHearSound( CSound *pSound )
 {
 	if ( !BaseClass::QueryHearSound( pSound ) )
 		return false;
-		
+
 	if ( pSound->m_iType == SOUND_BUGBAIT )
 	{
 		//Must be more recent than the current
@@ -3589,12 +3589,12 @@ void CNPC_Antlion::BuildScheduleTestBits( void )
 		ClearCustomInterruptCondition( COND_NEW_ENEMY );
 	}
 	*/
-	
+
 	//Interrupt any schedule unless already fleeing, burrowing, burrowed, or unburrowing.
-	if( !IsCurSchedule(SCHED_ANTLION_FLEE_THUMPER)			&& 		
-		!IsCurSchedule(SCHED_ANTLION_FLEE_PHYSICS_DANGER)	&& 		
-		!IsCurSchedule(SCHED_ANTLION_BURROW_IN)				&& 		
-		!IsCurSchedule(SCHED_ANTLION_WAIT_UNBORROW)			&& 		
+	if( !IsCurSchedule(SCHED_ANTLION_FLEE_THUMPER)			&&
+		!IsCurSchedule(SCHED_ANTLION_FLEE_PHYSICS_DANGER)	&&
+		!IsCurSchedule(SCHED_ANTLION_BURROW_IN)				&&
+		!IsCurSchedule(SCHED_ANTLION_WAIT_UNBORROW)			&&
 		!IsCurSchedule(SCHED_ANTLION_BURROW_OUT)			&&
 		!IsCurSchedule(SCHED_ANTLION_BURROW_WAIT)			&&
 		!IsCurSchedule(SCHED_ANTLION_WAIT_FOR_UNBORROW_TRIGGER)&&
@@ -3602,7 +3602,7 @@ void CNPC_Antlion::BuildScheduleTestBits( void )
 		!IsCurSchedule(SCHED_ANTLION_WAIT_UNBORROW)			&&
 		!IsCurSchedule(SCHED_ANTLION_JUMP)					&&
 		!IsCurSchedule(SCHED_ANTLION_FLIP)					&&
-		!IsCurSchedule(SCHED_ANTLION_DISMOUNT_NPC)			&& 
+		!IsCurSchedule(SCHED_ANTLION_DISMOUNT_NPC)			&&
 		( GetFlags() & FL_ONGROUND ) )
 	{
 		// Only do these if not jumping as well
@@ -3612,7 +3612,7 @@ void CNPC_Antlion::BuildScheduleTestBits( void )
 			{
 				SetCustomInterruptCondition( COND_HEAR_PHYSICS_DANGER );
 			}
-			
+
 			SetCustomInterruptCondition( COND_HEAR_THUMPER );
 			SetCustomInterruptCondition( COND_HEAR_BUGBAIT );
 			SetCustomInterruptCondition( COND_ANTLION_FLIPPED );
@@ -3627,8 +3627,8 @@ void CNPC_Antlion::BuildScheduleTestBits( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEnemy - 
+// Purpose:
+// Input  : *pEnemy -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::IsValidEnemy( CBaseEntity *pEnemy )
@@ -3661,7 +3661,7 @@ bool CNPC_Antlion::IsValidEnemy( CBaseEntity *pEnemy )
 		}
 		else
 		{
-			// Otherwise don't follow if the target is far 
+			// Otherwise don't follow if the target is far
 			if ( enemyDist > (2000*2000) )
 				return false;
 		}
@@ -3671,7 +3671,7 @@ bool CNPC_Antlion::IsValidEnemy( CBaseEntity *pEnemy )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::GatherConditions( void )
 {
@@ -3679,7 +3679,7 @@ void CNPC_Antlion::GatherConditions( void )
 
 	// See if I've landed on an NPC!
 	CBaseEntity *pGroundEnt = GetGroundEntity();
-	
+
 	if ( ( ( pGroundEnt != NULL ) && ( pGroundEnt->GetSolidFlags() & FSOLID_NOT_STANDABLE ) ) && ( GetFlags() & FL_ONGROUND ) && ( !IsEffectActive( EF_NODRAW ) && !pGroundEnt->IsEffectActive( EF_NODRAW ) ) )
 	{
 		SetCondition( COND_ANTLION_ON_NPC );
@@ -3704,9 +3704,9 @@ void CNPC_Antlion::GatherConditions( void )
 		}
 	}*/
 
-	if ( IsCurSchedule( SCHED_ANTLION_BURROW_WAIT ) == false && 
-		 IsCurSchedule(SCHED_ANTLION_BURROW_IN) == false && 
-		 IsCurSchedule(SCHED_ANTLION_BURROW_OUT) == false && 
+	if ( IsCurSchedule( SCHED_ANTLION_BURROW_WAIT ) == false &&
+		 IsCurSchedule(SCHED_ANTLION_BURROW_IN) == false &&
+		 IsCurSchedule(SCHED_ANTLION_BURROW_OUT) == false &&
 		 IsCurSchedule(SCHED_FALL_TO_GROUND ) == false &&
 		 IsEffectActive( EF_NODRAW ) == false )
 	{
@@ -3723,7 +3723,7 @@ void CNPC_Antlion::GatherConditions( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::PrescheduleThink( void )
 {
@@ -3750,10 +3750,10 @@ void CNPC_Antlion::PrescheduleThink( void )
 
 	//See if our wings got interrupted from being turned off
 	if (    ( m_bWingsOpen ) &&
-			( eActivity != ACT_ANTLION_JUMP_START ) && 
-			( eActivity != ACT_JUMP ) && 
-			( eActivity != ACT_GLIDE ) && 
-			( eActivity != ACT_ANTLION_LAND ) && 
+			( eActivity != ACT_ANTLION_JUMP_START ) &&
+			( eActivity != ACT_JUMP ) &&
+			( eActivity != ACT_GLIDE ) &&
+			( eActivity != ACT_ANTLION_LAND ) &&
 			( eActivity != ACT_ANTLION_DISTRACT ))
 	{
 		SetWings( false );
@@ -3794,9 +3794,9 @@ void CNPC_Antlion::PrescheduleThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flDamage - 
-//			bitsDamageType - 
+// Purpose:
+// Input  : flDamage -
+//			bitsDamageType -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::IsLightDamage( const CTakeDamageInfo &info )
@@ -3808,7 +3808,7 @@ bool CNPC_Antlion::IsLightDamage( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::IsAllied( void )
@@ -3817,7 +3817,7 @@ bool CNPC_Antlion::IsAllied( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::ShouldResumeFollow( void )
@@ -3838,12 +3838,12 @@ bool CNPC_Antlion::ShouldResumeFollow( void )
 	}
 
 	//TODO: See if the follow target has wandered off too far from where we last followed them to
-	
+
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::ShouldAbandonFollow( void )
@@ -3873,8 +3873,8 @@ bool CNPC_Antlion::ShouldAbandonFollow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTarget - 
+// Purpose:
+// Input  : *pTarget -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::SetFightTarget( CBaseEntity *pTarget )
 {
@@ -3884,8 +3884,8 @@ void CNPC_Antlion::SetFightTarget( CBaseEntity *pTarget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::InputFightToPosition( inputdata_t &inputdata )
 {
@@ -3902,8 +3902,8 @@ void CNPC_Antlion::InputFightToPosition( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::InputStopFightToPosition( inputdata_t &inputdata )
 {
@@ -3911,8 +3911,8 @@ void CNPC_Antlion::InputStopFightToPosition( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEnemy - 
+// Purpose:
+// Input  : *pEnemy -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::GatherEnemyConditions( CBaseEntity *pEnemy )
 {
@@ -3953,8 +3953,8 @@ void CNPC_Antlion::GatherEnemyConditions( CBaseEntity *pEnemy )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &info - 
+// Purpose:
+// Input  : &info -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::ShouldGib( const CTakeDamageInfo &info )
@@ -3981,12 +3981,12 @@ bool CNPC_Antlion::ShouldGib( const CTakeDamageInfo &info )
 
 	if ( m_iHealth < -20 )
 		return true;
-	
+
 	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::CorpseGib( const CTakeDamageInfo &info )
@@ -4026,14 +4026,14 @@ bool CNPC_Antlion::CorpseGib( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOther - 
+// Purpose:
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::Touch( CBaseEntity *pOther )
 {
 	//See if the touching entity is a vehicle
 	CBasePlayer *pPlayer = ToBasePlayer( AI_GetSinglePlayer() );
-	
+
 	// FIXME: Technically we'll want to check to see if a vehicle has touched us with the player OR NPC driver
 
 	if ( pPlayer && pPlayer->IsInAVehicle() )
@@ -4050,7 +4050,7 @@ void CNPC_Antlion::Touch( CBaseEntity *pOther )
 				//Get tossed!
 				Vector	vecShoveDir = pOther->GetAbsVelocity();
 				Vector	vecTargetDir = GetAbsOrigin() - pOther->GetAbsOrigin();
-				
+
 				VectorNormalize( vecShoveDir );
 				VectorNormalize( vecTargetDir );
 
@@ -4064,9 +4064,9 @@ void CNPC_Antlion::Touch( CBaseEntity *pOther )
 
 						if ( random->RandomInt( 0, 10 ) > 4 )
 							 flDamage += 25;
-									
+
 						CTakeDamageInfo	dmgInfo( pVehicleEnt, pPlayer, flDamage, DMG_VEHICLE );
-					
+
 						CalculateMeleeDamageForce( &dmgInfo, vecShoveDir, pOther->GetAbsOrigin() );
 						TakeDamage( dmgInfo );
 					}
@@ -4094,7 +4094,7 @@ void CNPC_Antlion::Touch( CBaseEntity *pOther )
 
 	// in episodic, an antlion colliding with the player in midair does him damage.
 	// pursuant bugs 58590, 56960, this happens only once per glide.
-#ifdef HL2_EPISODIC 
+#ifdef HL2_EPISODIC
 	if ( GetActivity() == ACT_GLIDE && IsValidEnemy( pOther ) && !m_bHasDoneAirAttack )
 	{
 		CTakeDamageInfo	dmgInfo( this, this, sk_antlion_air_attack_dmg.GetInt(), DMG_SLASH );
@@ -4127,7 +4127,7 @@ void CNPC_Antlion::Touch( CBaseEntity *pOther )
 		// Ignore if pissed at player
 		if ( m_afMemory & bits_MEMORY_PROVOKED )
 			return;
-	
+
 		if ( !IsCurSchedule( SCHED_MOVE_AWAY ) && !IsCurSchedule( SCHED_ANTLION_BURROW_OUT ) )
 			 TestPlayerPushing( pOther );
 	}
@@ -4139,7 +4139,7 @@ void CNPC_Antlion::Touch( CBaseEntity *pOther )
 		if ( pOther->Classify() == CLASS_COMBINE_GUNSHIP )
 		{
 			float flDamage = m_iHealth + 25;
-						
+
 			CTakeDamageInfo	dmgInfo( pOther, pOther, flDamage, DMG_GENERIC );
 			GuessDamageForce( &dmgInfo, (pOther->GetAbsOrigin() - GetAbsOrigin()), pOther->GetAbsOrigin() );
 			TakeDamage( dmgInfo );
@@ -4187,7 +4187,7 @@ bool CNPC_Antlion::OverrideMoveFacing( const AILocalMoveGoal_t &move, float flIn
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::InputDisableJump( inputdata_t &inputdata )
 {
@@ -4196,7 +4196,7 @@ void CNPC_Antlion::InputDisableJump( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::InputEnableJump( inputdata_t &inputdata )
 {
@@ -4205,8 +4205,8 @@ void CNPC_Antlion::InputEnableJump( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTarget - 
+// Purpose:
+// Input  : *pTarget -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::SetFollowTarget( CBaseEntity *pTarget )
 {
@@ -4225,7 +4225,7 @@ void CNPC_Antlion::SetFollowTarget( CBaseEntity *pTarget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::CreateBehaviors( void )
@@ -4237,8 +4237,8 @@ bool CNPC_Antlion::CreateBehaviors( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::InputIgnoreBugbait( inputdata_t &inputdata )
 {
@@ -4246,8 +4246,8 @@ void CNPC_Antlion::InputIgnoreBugbait( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::InputHearBugbait( inputdata_t &inputdata )
 {
@@ -4255,8 +4255,8 @@ void CNPC_Antlion::InputHearBugbait( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : state - 
+// Purpose:
+// Input  : state -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::SetMoveState( AntlionMoveState_e state )
 {
@@ -4267,14 +4267,14 @@ void CNPC_Antlion::SetMoveState( AntlionMoveState_e state )
 	case ANTLION_MOVE_FOLLOW:
 
 		m_FollowBehavior.SetFollowTarget( m_hFollowTarget );
-		
+
 		// Clear any previous state
 		m_flSuppressFollowTime = 0;
-		
+
 		break;
-	
+
 	case ANTLION_MOVE_FIGHT_TO_GOAL:
-		
+
 		m_FollowBehavior.SetFollowTarget( NULL );
 
 		// Keep the time we started this
@@ -4290,7 +4290,7 @@ void CNPC_Antlion::SetMoveState( AntlionMoveState_e state )
 // Purpose: Special version helps other NPCs hit overturned antlion
 //-----------------------------------------------------------------------------
 Vector CNPC_Antlion::BodyTarget( const Vector &posSrc, bool bNoisy /*= true*/ )
-{ 
+{
 	// Cache the bone away to avoid future lookups
 	if ( m_nBodyBone == -1 )
 	{
@@ -4302,7 +4302,7 @@ Vector CNPC_Antlion::BodyTarget( const Vector &posSrc, bool bNoisy /*= true*/ )
 	Vector vecResult;
 	QAngle vecAngle;
 	GetBonePosition( m_nBodyBone, vecResult, vecAngle );
-	
+
 	if ( bNoisy )
 		return vecResult + RandomVector( -8, 8 );
 
@@ -4319,14 +4319,14 @@ void CNPC_Antlion::Flip( bool bZapped /*= false*/ )
 		return;
 
 	// Must be on the ground
-	if ( ( GetFlags() & FL_ONGROUND ) == false ) 
+	if ( ( GetFlags() & FL_ONGROUND ) == false )
 		return;
 
 	// Can't be in a dynamic interation
 	if ( IsRunningDynamicInteraction() )
 		return;
 
-	SetCondition( COND_ANTLION_FLIPPED ); 
+	SetCondition( COND_ANTLION_FLIPPED );
 
 	if ( bZapped )
 	{
@@ -4338,8 +4338,8 @@ void CNPC_Antlion::Flip( bool bZapped /*= false*/ )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CNPC_Antlion::InputJumpAtTarget( inputdata_t &inputdata )
 {
@@ -4373,7 +4373,7 @@ void CNPC_Antlion::InputJumpAtTarget( inputdata_t &inputdata )
 
 	m_vecSavedJump = rawJumpVel;
 
-#else	
+#else
 
 	// Get the direction and speed to our target
 	Vector vecJumpDir = ( pJumpTarget->GetAbsOrigin() - GetAbsOrigin() );
@@ -4417,7 +4417,7 @@ void CNPC_Antlion::DoPoisonBurst()
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::IsHeavyDamage( const CTakeDamageInfo &info )
 {
@@ -4426,13 +4426,13 @@ bool CNPC_Antlion::IsHeavyDamage( const CTakeDamageInfo &info )
 		if ( m_nSustainedDamage + info.GetDamage() > 6 )
 			return true;
 	}
-	
+
 	return BaseClass::IsHeavyDamage( info );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bForced - 
+// Purpose:
+// Input  : bForced -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CNPC_Antlion::CanRunAScriptedNPCInteraction( bool bForced /*= false*/ )
@@ -4548,7 +4548,7 @@ AI_BEGIN_CUSTOM_NPC( npc_antlion, CNPC_Antlion )
 	DECLARE_CONDITION( COND_ANTLION_IN_WATER )
 	DECLARE_CONDITION( COND_ANTLION_CAN_JUMP_AT_TARGET )
 	DECLARE_CONDITION( COND_ANTLION_SQUADMATE_KILLED )
-		
+
 	//Squad slots
 	DECLARE_SQUADSLOT( SQUAD_SLOT_ANTLION_JUMP )
 	DECLARE_SQUADSLOT( SQUAD_SLOT_ANTLION_WORKER_FIRE )
@@ -4763,7 +4763,7 @@ AI_BEGIN_CUSTOM_NPC( npc_antlion, CNPC_Antlion )
 	DEFINE_SCHEDULE
 	(
 		SCHED_ANTLION_FLEE_THUMPER,
-		
+
 		"	Tasks"
 		"		TASK_SET_FAIL_SCHEDULE					SCHEDULE:SCHED_IDLE_STAND"
 		"		TASK_ANTLION_GET_THUMPER_ESCAPE_PATH	0"
@@ -4800,7 +4800,7 @@ AI_BEGIN_CUSTOM_NPC( npc_antlion, CNPC_Antlion )
 	)
 
 	//==================================================
-	// SCHED_ANTLION_ZAP_FLIP 
+	// SCHED_ANTLION_ZAP_FLIP
 	//==================================================
 	DEFINE_SCHEDULE
 	(
@@ -4814,7 +4814,7 @@ AI_BEGIN_CUSTOM_NPC( npc_antlion, CNPC_Antlion )
 		"	Interrupts"
 		"		COND_TASK_FAILED"
 	)
-	
+
 	//==================================================
 	// SCHED_ANTLION_FLIP
 	//==================================================
@@ -4922,7 +4922,7 @@ AI_BEGIN_CUSTOM_NPC( npc_antlion, CNPC_Antlion )
 	DEFINE_SCHEDULE
 	(
 		SCHED_ANTLION_FLEE_PHYSICS_DANGER,
-		
+
 		"	Tasks"
 		"		TASK_SET_FAIL_SCHEDULE						SCHEDULE:SCHED_CHASE_ENEMY"
 		"		TASK_ANTLION_GET_PHYSICS_DANGER_ESCAPE_PATH	1024"
@@ -5074,8 +5074,8 @@ AI_END_CUSTOM_NPC()
 bool IsAntlionWorker( CBaseEntity *pEntity )
 {
 	// Must at least be valid and an antlion
-	return ( pEntity != NULL && 
-			 pEntity->Classify() == CLASS_ANTLION && 
+	return ( pEntity != NULL &&
+			 pEntity->Classify() == CLASS_ANTLION &&
 			 pEntity->HasSpawnFlags( SF_ANTLION_WORKER ) &&
 			 dynamic_cast<CNPC_Antlion *>(pEntity) != NULL );	// Save this as the last step
 }
@@ -5087,8 +5087,8 @@ bool IsAntlionWorker( CBaseEntity *pEntity )
 bool IsAntlion( CBaseEntity *pEntity )
 {
 	// Must at least be valid and an antlion
-	return ( pEntity != NULL && 
-			 pEntity->Classify() == CLASS_ANTLION && 
+	return ( pEntity != NULL &&
+			 pEntity->Classify() == CLASS_ANTLION &&
 			 dynamic_cast<CNPC_Antlion *>(pEntity) != NULL );	// Save this as the last step
 }
 

@@ -59,7 +59,7 @@ BEGIN_DATADESC( CBaseDMStart )
 END_DATADESC()
 
 
-// These are the new entry points to entities. 
+// These are the new entry points to entities.
 LINK_ENTITY_TO_CLASS(info_player_deathmatch,CBaseDMStart);
 LINK_ENTITY_TO_CLASS(info_player_start,CPointEntity);
 LINK_ENTITY_TO_CLASS(info_landmark,CPointEntity);
@@ -95,10 +95,10 @@ void CBaseEntity::SUB_DoNothing( void )
 // Purpose: Finds all active entities with the given targetname and calls their
 //			'Use' function.
 // Input  : targetName - Target name to search for.
-//			pActivator - 
-//			pCaller - 
-//			useType - 
-//			value - 
+//			pActivator -
+//			pCaller -
+//			useType -
+//			value -
 //-----------------------------------------------------------------------------
 void FireTargets( const char *targetName, CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
@@ -193,13 +193,13 @@ bool CBaseToggle::KeyValue( const char *szKeyName, const char *szValue )
 //-----------------------------------------------------------------------------
 // Purpose: Calculate m_vecVelocity and m_flNextThink to reach vecDest from
 //			GetOrigin() traveling at flSpeed.
-// Input  : Vector	vecDest - 
-//			flSpeed - 
+// Input  : Vector	vecDest -
+//			flSpeed -
 //-----------------------------------------------------------------------------
 void CBaseToggle::LinearMove( const Vector &vecDest, float flSpeed )
 {
 	ASSERTSZ(flSpeed != 0, "LinearMove:  no speed is defined!");
-	
+
 	m_vecFinalDest = vecDest;
 
 	m_movementType = MOVE_TOGGLE_LINEAR;
@@ -209,10 +209,10 @@ void CBaseToggle::LinearMove( const Vector &vecDest, float flSpeed )
 		MoveDone();
 		return;
 	}
-		
+
 	// set destdelta to the vector needed to move
 	Vector vecDestDelta = vecDest - GetLocalOrigin();
-	
+
 	// divide vector length by speed to get time to reach dest
 	float flTravelTime = vecDestDelta.Length() / flSpeed;
 
@@ -262,13 +262,13 @@ bool CBaseToggle::IsLockedByMaster( void )
 //-----------------------------------------------------------------------------
 // Purpose: Calculate m_vecVelocity and m_flNextThink to reach vecDest from
 //			GetLocalOrigin() traveling at flSpeed. Just like LinearMove, but rotational.
-// Input  : vecDestAngle - 
-//			flSpeed - 
+// Input  : vecDestAngle -
+//			flSpeed -
 //-----------------------------------------------------------------------------
 void CBaseToggle::AngularMove( const QAngle &vecDestAngle, float flSpeed )
 {
 	ASSERTSZ(flSpeed != 0, "AngularMove:  no speed is defined!");
-	
+
 	m_vecFinalAngle = vecDestAngle;
 
 	m_movementType = MOVE_TOGGLE_ANGULAR;
@@ -278,10 +278,10 @@ void CBaseToggle::AngularMove( const QAngle &vecDestAngle, float flSpeed )
 		MoveDone();
 		return;
 	}
-	
+
 	// set destdelta to the vector needed to move
 	QAngle vecDestDelta = vecDestAngle - GetLocalAngles();
-	
+
 	// divide by speed to get time to reach dest
 	float flTravelTime = vecDestDelta.Length() / flSpeed;
 
@@ -339,11 +339,9 @@ float CBaseToggle::AxisDelta( int flags, const QAngle &angle1, const QAngle &ang
 	// UNDONE: Use AngleDistance() here?
 	if ( FBitSet (flags, SF_DOOR_ROTATE_ROLL) )
 		return angle1.z - angle2.z;
-	
+
 	if ( FBitSet (flags, SF_DOOR_ROTATE_PITCH) )
 		return angle1.x - angle2.x;
 
 	return angle1.y - angle2.y;
 }
-
-

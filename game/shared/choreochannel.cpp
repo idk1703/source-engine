@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -19,7 +19,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CChoreoChannel::CChoreoChannel( void )
 {
@@ -27,8 +27,8 @@ CChoreoChannel::CChoreoChannel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CChoreoChannel::CChoreoChannel(const char *name )
 {
@@ -37,9 +37,9 @@ CChoreoChannel::CChoreoChannel(const char *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Assignment
-// Input  : src - 
+// Input  : src -
 //-----------------------------------------------------------------------------
 CChoreoChannel&	CChoreoChannel::operator=( const CChoreoChannel& src )
 {
@@ -59,8 +59,8 @@ CChoreoChannel&	CChoreoChannel::operator=( const CChoreoChannel& src )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 void CChoreoChannel::SetName( const char *name )
 {
@@ -69,7 +69,7 @@ void CChoreoChannel::SetName( const char *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CChoreoChannel::GetName( void )
@@ -78,7 +78,7 @@ const char *CChoreoChannel::GetName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CChoreoChannel::GetNumEvents( void )
@@ -87,8 +87,8 @@ int CChoreoChannel::GetNumEvents( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : event - 
+// Purpose:
+// Input  : event -
 // Output : CChoreoEvent
 //-----------------------------------------------------------------------------
 CChoreoEvent *CChoreoChannel::GetEvent( int event )
@@ -102,8 +102,8 @@ CChoreoEvent *CChoreoChannel::GetEvent( int event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 //-----------------------------------------------------------------------------
 void CChoreoChannel::AddEvent( CChoreoEvent *event )
 {
@@ -111,8 +111,8 @@ void CChoreoChannel::AddEvent( CChoreoEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 //-----------------------------------------------------------------------------
 void CChoreoChannel::RemoveEvent( CChoreoEvent *event )
 {
@@ -124,7 +124,7 @@ void CChoreoChannel::RemoveEvent( CChoreoEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoChannel::RemoveAllEvents()
 {
@@ -132,8 +132,8 @@ void CChoreoChannel::RemoveAllEvents()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 // Output : int
 //-----------------------------------------------------------------------------
 int CChoreoChannel::FindEventIndex( CChoreoEvent *event )
@@ -149,7 +149,7 @@ int CChoreoChannel::FindEventIndex( CChoreoEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoChannel::Init( void )
 {
@@ -159,7 +159,7 @@ void CChoreoChannel::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CChoreoActor
 //-----------------------------------------------------------------------------
 CChoreoActor *CChoreoChannel::GetActor( void )
@@ -168,8 +168,8 @@ CChoreoActor *CChoreoChannel::GetActor( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *actor - 
+// Purpose:
+// Input  : *actor -
 //-----------------------------------------------------------------------------
 void CChoreoChannel::SetActor( CChoreoActor *actor )
 {
@@ -177,8 +177,8 @@ void CChoreoChannel::SetActor( CChoreoActor *actor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : active - 
+// Purpose:
+// Input  : active -
 //-----------------------------------------------------------------------------
 void CChoreoChannel::SetActive( bool active )
 {
@@ -186,7 +186,7 @@ void CChoreoChannel::SetActive( bool active )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CChoreoChannel::GetActive( void ) const
@@ -265,7 +265,7 @@ void CChoreoChannel::ReconcileGestureTimes()
 			// I think this fixes the issue with abutting past NULL gestures on paste:
 			// Here's the bug report:
 			// -------------------------
-			// When copying and pasteing posture and gesture clips in face poser the beginings of the clips stretch 
+			// When copying and pasteing posture and gesture clips in face poser the beginings of the clips stretch
 			//  to the begining of the scene even if there is a null gesture in place at the begining.
 			// -------------------------
 			/*
@@ -316,7 +316,7 @@ void CChoreoChannel::ReconcileGestureTimes()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoChannel::MarkForSaveAll( bool mark )
 {
@@ -373,7 +373,7 @@ struct EventGroup
 
 // Compute master/slave, count, endtime info for close captioning data
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoChannel::ReconcileCloseCaption()
 {
@@ -416,7 +416,7 @@ void CChoreoChannel::ReconcileCloseCaption()
 			}
 			continue;
 		}
-	
+
 		int idx = validSpeakEventsGroupedByName.Find( name );
 		if ( idx == validSpeakEventsGroupedByName.InvalidIndex() )
 		{

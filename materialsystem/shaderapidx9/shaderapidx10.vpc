@@ -49,7 +49,7 @@ $Project "shaderapidx10"
 		$File	"shaderdevicebase.cpp"
 		$File	"shaderapibase.cpp"
 		$File	"meshbase.cpp"
-		
+
 		// DX10 related files
 		$File	"ShaderDeviceDx10.cpp"		\
 				"ShaderAPIDx10.cpp"			\
@@ -66,7 +66,7 @@ $Project "shaderapidx10"
 			}
 		}
 
-		// DX9 related files	
+		// DX9 related files
 		$File	"ColorFormatDX8.cpp"
 		$File	"d3d_async.cpp"
 		$File	"$SRCDIR\public\filesystem_helpers.cpp"
@@ -123,7 +123,7 @@ $Project "shaderapidx10"
 		$File	"shaderapidx10_global.h"
 		$File	"inputlayoutdx10.h"
 
-		// DX9 related files		
+		// DX9 related files
 		$File	"TransitionTable.h"
 		$File	"vertexdecl.h"
 		$File	"ColorFormatDX8.h"
@@ -138,7 +138,7 @@ $Project "shaderapidx10"
 		$File	"ShaderShadowDX8.h"
 		$File	"stubd3ddevice.h"
 		$File	"TextureDX8.h"
-		$File	"VertexShaderDX8.h"					
+		$File	"VertexShaderDX8.h"
 		$File	"wmi.h"
 	}
 
@@ -148,11 +148,11 @@ $Project "shaderapidx10"
 		$DynamicFile	"$SRCDIR\lib\public\bitmap.lib"
 		$DynamicFile	"$SRCDIR\lib\public\mathlib.lib"
 		$DynamicFile	"$SRCDIR\lib\common\vc7\bzip2.lib"
-		
-		$File	"$SRCDIR\dx10sdk\lib\x86\d3d9.lib" 
-		$File	"$SRCDIR\dx10sdk\lib\x86\d3d10.lib" 
-		$File	"$SRCDIR\dx10sdk\lib\x86\dxgi.lib" 
-		
+
+		$File	"$SRCDIR\dx10sdk\lib\x86\d3d9.lib"
+		$File	"$SRCDIR\dx10sdk\lib\x86\d3d10.lib"
+		$File	"$SRCDIR\dx10sdk\lib\x86\dxgi.lib"
+
 		$File	"$SRCDIR\dx10sdk\lib\x86\d3dx10.lib"	\
 				"$SRCDIR\dx10sdk\lib\x86\d3dx9.lib"
 		{
@@ -161,7 +161,7 @@ $Project "shaderapidx10"
 				$ExcludedFromBuild	"Yes"
 			}
 		}
-		
+
 		$File	"$SRCDIR\dx10sdk\lib\x86\d3dx10d.lib"	\
 				"$SRCDIR\dx10sdk\lib\x86\d3dx9d.lib"
 		{

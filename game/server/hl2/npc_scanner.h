@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -24,7 +24,7 @@ class SmokeTrail;
 class CSpotlightEnd;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CNPC_CScanner : public CNPC_BaseScanner
 {
@@ -170,7 +170,7 @@ private:
 	enum
 	{
 		COND_CSCANNER_HAVE_INSPECT_TARGET = BaseClass::NEXT_CONDITION,
-		COND_CSCANNER_INSPECT_DONE,							
+		COND_CSCANNER_INSPECT_DONE,
 		COND_CSCANNER_CAN_PHOTOGRAPH,
 		COND_CSCANNER_SPOT_ON_TARGET,
 

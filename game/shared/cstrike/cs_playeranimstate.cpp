@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -76,7 +76,7 @@ public:
 	virtual int SelectWeightedSequence( Activity activity );
 
 	void InitCS( CBaseAnimatingOverlay *pPlayer, ICSPlayerAnimStateHelpers *pHelpers, LegAnimType_t legAnimType, bool bUseAimSequences );
-	
+
 protected:
 
 	int CalcFireLayerSequence(PlayerAnimEvent_t event);
@@ -367,7 +367,7 @@ int CCSPlayerAnimState::CalcSequenceIndex( const char *pBaseName, ... )
 	int realSequence = GetOuter()->LookupSequence( szFullName );
 	Assert( realSequence == iSequence );
 #endif
-	
+
 	// Show warnings if we can't find anything here.
 	if ( iSequence == -1 )
 	{
@@ -393,7 +393,7 @@ void CCSPlayerAnimState::ClearAnimationState()
 	m_flReloadHoldEndTime = 0.0f;
 	m_bThrowingGrenade = m_bPrimingGrenade = false;
 	m_iLastThrowGrenadeCounter = GetOuterGrenadeThrowCounter();
-	
+
 	BaseClass::ClearAnimationState();
 }
 
@@ -604,7 +604,7 @@ int CCSPlayerAnimState::CalcReloadLayerSequence( PlayerAnimEvent_t event )
 		if ( iReloadSequence != -1 )
 			return iReloadSequence;
 	}
-			
+
 	// Fall back to reload_m4.
 	iReloadSequence = CalcSequenceIndex( "reload_m4" );
 	if ( iReloadSequence > 0 )
@@ -645,7 +645,7 @@ int CCSPlayerAnimState::CalcReloadLayerSequence( PlayerAnimEvent_t event )
 	pLayer->m_flWeight = 1.0f;
 	pLayer->m_nOrder = iLayer;
 #ifndef CLIENT_DLL
-	pLayer->m_fFlags |= ANIM_LAYER_ACTIVE; 
+	pLayer->m_fFlags |= ANIM_LAYER_ACTIVE;
 #endif
 }
 
@@ -704,13 +704,13 @@ void CCSPlayerAnimState::ComputeGrenadeSequence( CStudioHdr *pStudioHdr )
 				{
 					m_flGrenadeCycle = 0;
 				}
-					
+
 				m_iGrenadeSequence = CalcGrenadePrimeSequence();
 				m_bPrimingGrenade = true;
 			}
 
 			UpdateLayerSequenceGeneric( pStudioHdr, GRENADESEQUENCE_LAYER, m_bPrimingGrenade, m_flGrenadeCycle, m_iGrenadeSequence, true );
-			
+
 			// If we're waiting to throw and we're done playing the prime animation...
 			if ( bThrowPending && m_flGrenadeCycle == 1 )
 			{
@@ -720,7 +720,7 @@ void CCSPlayerAnimState::ComputeGrenadeSequence( CStudioHdr *pStudioHdr )
 				m_iGrenadeSequence = CalcGrenadeThrowSequence();
 				if ( m_iGrenadeSequence != -1 )
 				{
-					// Configure to start playing 
+					// Configure to start playing
 					m_bThrowingGrenade = true;
 					m_bPrimingGrenade = false;
 					m_flGrenadeCycle = 0;
@@ -830,7 +830,7 @@ const char* CCSPlayerAnimState::GetWeaponSuffix()
 	{
 		if ( m_pOuter->IsShieldDrawn() == true )
 			pSuffix = "shield";
-		else 
+		else
 			pSuffix = "shield_undeployed";
 	}
 #endif
@@ -934,16 +934,16 @@ bool CCSPlayerAnimState::HandleJumping()
 		{
 
 #if !defined(CLIENT_DLL)
-            //=============================================================================
-            // HPE_BEGIN:
-            // [dwenger] Needed for fun-fact implementation
-            //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [dwenger] Needed for fun-fact implementation
+	//=============================================================================
 
 			CCS_GameStats.IncrementStat(m_pPlayer, CSSTAT_TOTAL_JUMPS, 1);
 
-            //=============================================================================
-            // HPE_END
-            //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 #endif
 
 			m_bFirstJumpFrame = false;

@@ -80,7 +80,7 @@ void CTFMerasmusTrickOrTreatProp::Event_Killed( const CTakeDamageInfo &info )
 				CPVSFilter filter( pMerasmus->WorldSpaceCenter() );
 				if (RandomInt(1,3) == 1)
 				{
-					pMerasmus->PlayLowPrioritySound( filter, "Halloween.MerasmusTauntFakeProp" ); 
+					pMerasmus->PlayLowPrioritySound( filter, "Halloween.MerasmusTauntFakeProp" );
 				}
 			}
 		}
@@ -169,10 +169,10 @@ void CTFMerasmusTrickOrTreatProp::SpawnTrickOrTreatItem()
 
 			// Give the ammo pack some health, so that trains can destroy it.
 			pAmmoPack->SetCollisionGroup( COLLISION_GROUP_DEBRIS );
-			pAmmoPack->m_takedamage = DAMAGE_YES;	
+			pAmmoPack->m_takedamage = DAMAGE_YES;
 			pAmmoPack->SetHealth( 900 );
 
-			pAmmoPack->SetBodygroup( 1, 1 );	
+			pAmmoPack->SetBodygroup( 1, 1 );
 		}
 	}
 }

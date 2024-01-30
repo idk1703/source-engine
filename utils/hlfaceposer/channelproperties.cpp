@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,18 +15,18 @@
 static CChannelParams g_Params;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK ChannelPropertiesDialogProc
 //-----------------------------------------------------------------------------
-static BOOL CALLBACK ChannelPropertiesDialogProc ( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam ) 
+static BOOL CALLBACK ChannelPropertiesDialogProc ( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	switch(uMsg)
 	{
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		// Insert code here to put the string (to find and replace with)
 		// into the edit controls.
 		// ...
@@ -52,7 +52,7 @@ static BOOL CALLBACK ChannelPropertiesDialogProc ( HWND hwndDlg, UINT uMsg, WPAR
 			}
 			else
 			{
-				SendMessage( control, CB_RESETCONTENT, 0, 0 ); 
+				SendMessage( control, CB_RESETCONTENT, 0, 0 );
 
 				if ( g_Params.m_pScene )
 				{
@@ -62,11 +62,11 @@ static BOOL CALLBACK ChannelPropertiesDialogProc ( HWND hwndDlg, UINT uMsg, WPAR
 						if ( actor )
 						{
 							// add text to combo box
-							SendMessage( control, CB_ADDSTRING, 0, (LPARAM)actor->GetName() ); 
+							SendMessage( control, CB_ADDSTRING, 0, (LPARAM)actor->GetName() );
 						}
 					}
 				}
-				
+
 				SendMessage( control, CB_SETCURSEL, (WPARAM)0, (LPARAM)0 );
 			}
 
@@ -74,9 +74,9 @@ static BOOL CALLBACK ChannelPropertiesDialogProc ( HWND hwndDlg, UINT uMsg, WPAR
 
 			SetFocus( GetDlgItem( hwndDlg, IDC_CHANNELNAME ) );
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -94,7 +94,7 @@ static BOOL CALLBACK ChannelPropertiesDialogProc ( HWND hwndDlg, UINT uMsg, WPAR
 
 			EndDialog( hwndDlg, 1 );
 			break;
-        case IDCANCEL:
+		case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		}
@@ -104,16 +104,16 @@ static BOOL CALLBACK ChannelPropertiesDialogProc ( HWND hwndDlg, UINT uMsg, WPAR
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int ChannelProperties( CChannelParams *params )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_CHANNELPROPERTIES ),
 		(HWND)g_MDLViewer->getHandle(),
 		(DLGPROC)ChannelPropertiesDialogProc );

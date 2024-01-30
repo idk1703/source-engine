@@ -66,7 +66,7 @@ class IConVar;
 //-----------------------------------------------------------------------------
 
 // Engine player info, no game related infos here
-// If you change this, change the two byteswap defintions: 
+// If you change this, change the two byteswap defintions:
 // cdll_client_int.cpp and cdll_engine_int.cpp
 typedef struct player_info_s
 {
@@ -144,7 +144,7 @@ enum ClientFrameStage_t
 		// Data has been received and we've called PostDataUpdate on all data recipients
 		FRAME_NET_UPDATE_POSTDATAUPDATE_END,
 	// We've received all packets, we can now do interpolation, prediction, etc..
-	FRAME_NET_UPDATE_END,		
+	FRAME_NET_UPDATE_END,
 
 	// We're about to start rendering the scene
 	FRAME_RENDER_START,
@@ -198,18 +198,18 @@ public:
 	// Returns the number of surfaces filled in.
 	virtual int					GetIntersectingSurfaces(
 									const model_t *model,
-									const Vector &vCenter, 
+									const Vector &vCenter,
 									const float radius,
 									const bool bOnlyVisibleSurfaces,	// Only return surfaces visible to vCenter.
-									SurfInfo *pInfos, 
+									SurfInfo *pInfos,
 									const int nMaxInfos) = 0;
-	
+
 	// Get the lighting intensivty for a specified point
 	// If bClamp is specified, the resulting Vector is restricted to the 0.0 to 1.0 for each element
 	virtual Vector				GetLightForPoint(const Vector &pos, bool bClamp) = 0;
 
 	// Traces the line and reports the material impacted as well as the lighting information for the impact point
-	virtual IMaterial			*TraceLineMaterialAndLighting( const Vector &start, const Vector &end, 
+	virtual IMaterial			*TraceLineMaterialAndLighting( const Vector &start, const Vector &end,
 									Vector &diffuseLightColor, Vector& baseColor ) = 0;
 
 	// Given an input text buffer data pointer, parses a single token into the variable token and returns the new
@@ -246,10 +246,10 @@ public:
 	virtual const model_t		*LoadModel( const char *pName, bool bProp = false ) = 0;
 
 	// Get accurate, sub-frame clock ( profiling use )
-	virtual float				Time( void ) = 0; 
+	virtual float				Time( void ) = 0;
 
 	// Get the exact server timesstamp ( server time ) from the last message received from the server
-	virtual float				GetLastTimeStamp( void ) = 0; 
+	virtual float				GetLastTimeStamp( void ) = 0;
 
 	// Given a CAudioSource (opaque pointer), retrieve the underlying CSentence object ( stores the words, phonemes, and close
 	//  captioning data )
@@ -263,11 +263,11 @@ public:
 	virtual void				GetViewAngles( QAngle& va ) = 0;
 	// Set current view orientation from va
 	virtual void				SetViewAngles( QAngle& va ) = 0;
-	
+
 	// Retrieve the current game's maxclients setting
 	virtual int					GetMaxClients( void ) = 0;
 
-	// Given the string pBinding which may be bound to a key, 
+	// Given the string pBinding which may be bound to a key,
 	//  returns the string name of the key to which this string is bound. Returns NULL if no such binding exists
 	virtual	const char			*Key_LookupBinding( const char *pBinding ) = 0;
 
@@ -296,7 +296,7 @@ public:
 
 	// Is the specified world-space boudning box in the same PVS cluster as the view origin?
 	virtual int					IsBoxInViewCluster( const Vector& mins, const Vector& maxs ) = 0;
-	
+
 	// Returns true if the specified box is outside of the view frustum and should be culled
 	virtual bool				CullBox( const Vector& mins, const Vector& maxs ) = 0;
 
@@ -308,7 +308,7 @@ public:
 
 	// Get access to the world to screen transformation matrix
 	virtual const VMatrix& 		WorldToScreenMatrix() = 0;
-	
+
 	// Get the matrix to move a point from world space into view space
 	// (translate and rotate so the camera is at the origin looking down X).
 	virtual const VMatrix& 		WorldToViewMatrix() = 0;
@@ -325,10 +325,10 @@ public:
 
 	// Returns the number of leaves in the level
 	virtual int					LevelLeafCount() const = 0;
-	
+
 	// Gets a way to perform spatial queries on the BSP tree
 	virtual ISpatialQuery*		GetBSPTreeQuery() = 0;
-	
+
 	// Convert texlight to gamma...
 	virtual void		LinearToGamma( float* linear, float* gamma ) = 0;
 
@@ -362,8 +362,8 @@ public:
 	// Tell engine stats gathering system that the rendering frame is beginning/ending
 	virtual void		EngineStats_BeginFrame( void ) = 0;
 	virtual void		EngineStats_EndFrame( void ) = 0;
-	
-	// This tells the engine to fire any events (temp entity messages) that it has queued up this frame. 
+
+	// This tells the engine to fire any events (temp entity messages) that it has queued up this frame.
 	// It should only be called once per frame.
 	virtual void		FireEvents() = 0;
 
@@ -373,7 +373,7 @@ public:
 	// Returns true if the box touches the specified area's frustum.
 	virtual bool		DoesBoxTouchAreaFrustum( const Vector &mins, const Vector &maxs, int iArea ) = 0;
 
-	// Sets the hearing origin (i.e., the origin and orientation of the listener so that the sound system can spatialize 
+	// Sets the hearing origin (i.e., the origin and orientation of the listener so that the sound system can spatialize
 	//  sound appropriately ).
 	virtual void		SetAudioState( const AudioState_t& state ) = 0;
 
@@ -395,7 +395,7 @@ public:
 	virtual void		ActivateOccluder( int nOccluderIndex, bool bActive ) = 0;
 	virtual bool		IsOccluded( const Vector &vecAbsMins, const Vector &vecAbsMaxs ) = 0;
 
-	// The save restore system allocates memory from a shared memory pool, use this allocator to allocate/free saverestore 
+	// The save restore system allocates memory from a shared memory pool, use this allocator to allocate/free saverestore
 	//  memory.
 	virtual void		*SaveAllocMemory( size_t num, size_t size ) = 0;
 	virtual void		SaveFreeMemory( void *pSaveMem ) = 0;
@@ -482,13 +482,13 @@ public:
 
 	// This version does NOT check against FCVAR_CLIENTCMD_CAN_EXECUTE.
 	virtual void			ClientCmd_Unrestricted( const char *szCmdString ) = 0;
-	
+
 	// This used to be accessible through the cl_restrict_server_commands cvar.
 	// By default, Valve games restrict the server to only being able to execute commands marked with FCVAR_SERVER_CAN_EXECUTE.
 	// By default, mods are allowed to execute any server commands, and they can restrict the server's ability to execute client
 	// commands with this function.
 	virtual void			SetRestrictServerCommands( bool bRestrict ) = 0;
-	
+
 	// If set to true (defaults to true for Valve games and false for others), then IVEngineClient::ClientCmd
 	// can only execute things marked with FCVAR_CLIENTCMD_CAN_EXECUTE.
 	virtual void			SetRestrictClientCommands( bool bRestrict ) = 0;
@@ -502,14 +502,14 @@ public:
 	virtual void			ChangeTeam( const char *pTeamName ) = 0;
 
 	// Causes the engine to read in the user's configuration on disk
-	virtual void			ReadConfiguration( const bool readDefault = false ) = 0; 
+	virtual void			ReadConfiguration( const bool readDefault = false ) = 0;
 
 	virtual void SetAchievementMgr( IAchievementMgr *pAchievementMgr ) = 0;
 	virtual IAchievementMgr *GetAchievementMgr() = 0;
 
 	virtual bool			MapLoadFailed( void ) = 0;
 	virtual void			SetMapLoadFailed( bool bState ) = 0;
-	
+
 	virtual bool			IsLowViolence() = 0;
 	virtual const char		*GetMostRecentSaveGame( void ) = 0;
 	virtual void			SetMostRecentSaveGame( const char *lpszFilename ) = 0;
@@ -544,11 +544,11 @@ public:
 	// to a client recording a demo while connected to a remote server.
 	virtual bool			IsPlayingDemoALocallyRecordedDemo() = 0;
 
-	// Given the string pBinding which may be bound to a key, 
+	// Given the string pBinding which may be bound to a key,
 	//  returns the string name of the key to which this string is bound. Returns NULL if no such binding exists
 	// Unlike Key_LookupBinding, leading '+' characters are not stripped from bindings.
 	virtual	const char		*Key_LookupBindingExact( const char *pBinding ) = 0;
-	
+
 	virtual void			AddPhonemeFile( const char *pszPhonemeFile ) = 0;
 	virtual float			GetPausedExpireTime( void ) = 0;
 
@@ -569,7 +569,7 @@ public:
 	// Client version from the steam.inf, this will be compared to the GC version
 	virtual int GetClientVersion() const = 0; // engines build
 
-	// Is App Active 
+	// Is App Active
 	virtual bool IsActiveApp() = 0;
 
 	virtual void DisconnectInternal() = 0;
@@ -585,7 +585,7 @@ abstract_class IBaseClientDLL
 {
 public:
 	// Called once when the client DLL is loaded
-	virtual int				Init( CreateInterfaceFn appSystemFactory, 
+	virtual int				Init( CreateInterfaceFn appSystemFactory,
 									CreateInterfaceFn physicsFactory,
 									CGlobalVarsBase *pGlobals ) = 0;
 
@@ -593,7 +593,7 @@ public:
 
 	// Called once when the client DLL is being unloaded
 	virtual void			Shutdown( void ) = 0;
-	
+
 	// Called once the client is initialized to setup client-side replay interface pointers
 	virtual bool			ReplayInit( CreateInterfaceFn replayFactory ) = 0;
 	virtual bool			ReplayPostInit() = 0;
@@ -625,7 +625,7 @@ public:
 	// Deactivates the mouse (shows the cursor and unlocks it)
 	virtual void			IN_DeactivateMouse( void ) = 0;
 	// This is only called during extra sound updates and just accumulates mouse x, y offets and recenters the mouse.
-	//  This call is used to try to prevent the mouse from appearing out of the side of a windowed version of the engine if 
+	//  This call is used to try to prevent the mouse from appearing out of the side of a windowed version of the engine if
 	//  rendering or other processing is taking too long
 	virtual void			IN_Accumulate (void) = 0;
 	// Reset all key and mouse states to their initial, unpressed state
@@ -641,11 +641,11 @@ public:
 	// This function is called once per tick to create the player CUserCmd (used for prediction/physics simulation of the player)
 	// Because the mouse can be sampled at greater than the tick interval, there is a separate input_sample_frametime, which
 	//  specifies how much additional mouse / keyboard simulation to perform.
-	virtual void			CreateMove ( 
+	virtual void			CreateMove (
 								int sequence_number,			// sequence_number of this cmd
 								float input_sample_frametime,	// Frametime for mouse input sampling
 								bool active ) = 0;				// True if the player is active (not paused)
-								 		
+
 	// If the game is running faster than the tick_interval framerate, then we do extra mouse sampling to avoid jittery input
 	//  This code path is much like the normal move creation code, except no move is created
 	virtual void			ExtraMouseSample( float frametime, bool active ) = 0;
@@ -679,12 +679,12 @@ public:
 	virtual int				GetSpriteSize( void ) const = 0;
 
 	// Called when a player starts or stops talking.
-	// entindex is -1 to represent the local client talking (before the data comes back from the server). 
+	// entindex is -1 to represent the local client talking (before the data comes back from the server).
 	// entindex is -2 to represent the local client's voice being acked by the server.
 	// entindex is GetPlayer() when the server acknowledges that the local client is talking.
 	virtual void			VoiceStatus( int entindex, qboolean bTalking ) = 0;
 
-	// Networked string table definitions have arrived, allow client .dll to 
+	// Networked string table definitions have arrived, allow client .dll to
 	//  hook string changes with a callback function ( see INetworkStringTableClient.h )
 	virtual void			InstallStringTableCallback( char const *tableName ) = 0;
 
@@ -751,7 +751,7 @@ public:
 #ifdef WIN32
 	virtual void			StartStatsReporting( HANDLE handle, bool bArbitrated ) = 0;
 #endif
-	
+
 	virtual void			InvalidateMdlCache() = 0;
 
 	virtual void			IN_SetSampleTime( float frametime ) = 0;
@@ -778,7 +778,7 @@ public:
 
 	// Notify the client that a file has been received from the game server
 	virtual void			FileReceived( const char * fileName, unsigned int transferID ) = 0;
-	
+
 	virtual const char* TranslateEffectForVisionFilter( const char *pchEffectType, const char *pchEffectName ) = 0;
 
 	// Give the client a chance to modify sound settings however they want before the sound plays. This is used for

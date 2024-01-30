@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,10 +18,10 @@ class CWeaponColt : public CDODSemiAutoWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponColt, CDODSemiAutoWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponColt()  {}
 
 	virtual DODWeaponID GetWeaponID( void ) const		{ return WEAPON_COLT; }
@@ -48,7 +48,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_colt, CWeaponColt );
 PRECACHE_WEAPON_REGISTER( weapon_colt );
 
-acttable_t CWeaponColt::m_acttable[] = 
+acttable_t CWeaponColt::m_acttable[] =
 {
 	{ ACT_DOD_STAND_AIM,					ACT_DOD_STAND_AIM_PISTOL,				false },
 	{ ACT_DOD_CROUCH_AIM,					ACT_DOD_CROUCH_AIM_PISTOL,				false },
@@ -84,7 +84,7 @@ Activity CWeaponColt::GetIdleActivity( void )
 	Activity actIdle;
 
 	if( m_iClip1 <= 0 )
-		actIdle = ACT_VM_IDLE_EMPTY;	
+		actIdle = ACT_VM_IDLE_EMPTY;
 	else
 		actIdle = ACT_VM_IDLE;
 
@@ -96,7 +96,7 @@ Activity CWeaponColt::GetPrimaryAttackActivity( void )
 	Activity actPrim;
 
 	if( m_iClip1 <= 0 )
-		actPrim = ACT_VM_PRIMARYATTACK_EMPTY;	
+		actPrim = ACT_VM_PRIMARYATTACK_EMPTY;
 	else
 		actPrim = ACT_VM_PRIMARYATTACK;
 
@@ -108,7 +108,7 @@ Activity CWeaponColt::GetDrawActivity( void )
 	Activity actDraw;
 
 	if( m_iClip1 <= 0 )
-		actDraw = ACT_VM_DRAW_EMPTY;	
+		actDraw = ACT_VM_DRAW_EMPTY;
 	else
 		actDraw = ACT_VM_DRAW;
 
@@ -120,9 +120,9 @@ Activity CWeaponColt::GetReloadActivity( void )
 	Activity actReload;
 
 	if( m_iClip1 <= 0 )
-		actReload = ACT_VM_RELOAD_EMPTY;	
+		actReload = ACT_VM_RELOAD_EMPTY;
 	else
-        actReload = ACT_VM_RELOAD;
+	actReload = ACT_VM_RELOAD;
 
 	return actReload;
 }

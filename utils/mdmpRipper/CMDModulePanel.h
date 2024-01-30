@@ -50,7 +50,7 @@ private:
 	void ReleaseDebugEngine( void );
 	void AnalyzeDumpFile( const char *pszDumpFile );
 	DWORD AnalyzeThread( void );
-	
+
 	vgui::ListPanel *m_pTokenList;
 	vgui::RichText  *m_pAnalyzeText;
 	CUtlVector<CMiniDumpObject *> m_MiniDumpList;

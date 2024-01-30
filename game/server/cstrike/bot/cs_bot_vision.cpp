@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -192,7 +192,7 @@ void CCSBot::UpdateLookAngles( void )
 	float usePitch = m_lookPitch;
 
 	//
-	// Ladders require precise movement, therefore we need to look at the 
+	// Ladders require precise movement, therefore we need to look at the
 	// ladder as we approach and ascend/descend it.
 	// If we are on a ladder, we need to look up or down to traverse it - override pitch in this case.
 	//
@@ -476,7 +476,7 @@ void CCSBot::ComputePartPositions( CCSPlayer *player )
 
 			// gut
 			box = set->pHitbox( gutBox );
-			player->GetBonePosition( box->bone, info->m_gutPos, angles );	
+			player->GetBonePosition( box->bone, info->m_gutPos, angles );
 
 			// head
 			box = set->pHitbox( headBox );
@@ -496,11 +496,11 @@ void CCSBot::ComputePartPositions( CCSPlayer *player )
 
 			// left side
 			box = set->pHitbox( leftElbowBox );
-			player->GetBonePosition( box->bone, info->m_leftSidePos, angles );	
+			player->GetBonePosition( box->bone, info->m_leftSidePos, angles );
 
 			// right side
 			box = set->pHitbox( rightElbowBox );
-			player->GetBonePosition( box->bone, info->m_rightSidePos, angles );	
+			player->GetBonePosition( box->bone, info->m_rightSidePos, angles );
 
 			return;
 		}
@@ -549,13 +549,13 @@ const Vector &CCSBot::GetPartPosition( CCSPlayer *player, VisiblePartType part )
 
 		case HEAD:
 			return info->m_headPos;
-			
+
 		case FEET:
 			return info->m_feetPos;
 
 		case LEFT_SIDE:
 			return info->m_leftSidePos;
-			
+
 		case RIGHT_SIDE:
 			return info->m_rightSidePos;
 	}
@@ -604,7 +604,7 @@ void CCSBot::SetLookAt( const char *desc, const Vector &pos, PriorityType pri, f
 	else
 	{
 		// look at new spot
-		m_lookAtSpot = pos; 
+		m_lookAtSpot = pos;
 		m_lookAtSpotState = LOOK_TOWARDS_SPOT;
 		m_lookAtSpotDuration = duration;
 		m_lookAtSpotPriority = pri;
@@ -896,7 +896,7 @@ void CCSBot::UpdateLookAround( bool updateNow )
 				// pick one of the spots at random
 				int which = RandomInt( 0, dangerSpotCount-1 );
 
-				// glance at the spot for minimum time 
+				// glance at the spot for minimum time
 				SetLookAt( "Encounter Spot", dangerSpot[which]->GetPosition() + Vector( 0, 0, HalfHumanHeight ), PRIORITY_LOW, 0.2f, true, 10.0f );
 
 				// immediately mark it as "checked", so we don't check it again
@@ -909,7 +909,7 @@ void CCSBot::UpdateLookAround( bool updateNow )
 
 //--------------------------------------------------------------------------------------------------------------
 /**
- * "Bend" our line of sight around corners until we can "see" the point. 
+ * "Bend" our line of sight around corners until we can "see" the point.
  */
 bool CCSBot::BendLineOfSight( const Vector &eye, const Vector &target, Vector *bend, float angleLimit ) const
 {
@@ -960,7 +960,7 @@ bool CCSBot::BendLineOfSight( const Vector &eye, const Vector &target, Vector *b
 	// are incremental, using the direct length should be close enough.
 	float priorVisibleLength[2] = { 0.0f, 0.0f };
 
-	float angleInc = 5.0f; 
+	float angleInc = 5.0f;
 	for( float angle = angleInc; angle <= angleLimit; angle += angleInc )
 	{
 		// check both sides at this angle offset
@@ -993,7 +993,7 @@ bool CCSBot::BendLineOfSight( const Vector &eye, const Vector &target, Vector *b
 			}
 
 			// step along ray, checking if point is visible from ray point
-			const float bendStepSize = 50.0f; 
+			const float bendStepSize = 50.0f;
 
 			// start from point that prior rays couldn't see
 			float startLength = priorVisibleLength[ side ];
@@ -1021,7 +1021,7 @@ bool CCSBot::BendLineOfSight( const Vector &eye, const Vector &target, Vector *b
 					*bend = bendPoint;
 
 					return true;
-				}	
+				}
 			}
 
 			priorVisibleLength[ side ] = visibleLength;
@@ -1203,7 +1203,7 @@ CCSPlayer *CCSBot::FindMostDangerousThreat( void )
 		return NULL;
 	}
 
-	enum { MAX_THREATS = 16 };		// maximum number of simulataneously attendable threats	
+	enum { MAX_THREATS = 16 };		// maximum number of simulataneously attendable threats
 	struct CloseInfo
 	{
 		CCSPlayer *enemy;
@@ -1269,7 +1269,7 @@ CCSPlayer *CCSBot::FindMostDangerousThreat( void )
 					m_watchInfo[idx].timestamp = gpGlobals->curtime;
 					m_watchInfo[idx].isEnemy = false;
 
-					// keep track of our closest friend 
+					// keep track of our closest friend
 					Vector to = GetAbsOrigin() - player->GetAbsOrigin();
 					float rangeSq = to.LengthSqr();
 					if (rangeSq < closeFriendRange)
@@ -1278,7 +1278,7 @@ CCSPlayer *CCSBot::FindMostDangerousThreat( void )
 						closeFriendRange = rangeSq;
 					}
 
-					// keep track of our closest human friend 
+					// keep track of our closest human friend
 					if (!player->IsBot() && rangeSq < closeHumanFriendRange)
 					{
 						m_closestVisibleHumanFriend = player;
@@ -1537,7 +1537,7 @@ CCSPlayer *CCSBot::FindMostDangerousThreat( void )
 			return currentThreat;
 		}
 
-		// if we are a sniper and we see a sniper threat, attack it unless 
+		// if we are a sniper and we see a sniper threat, attack it unless
 		// there are other close enemies facing me
 		if (IsSniper() && sniperThreat)
 		{
@@ -1553,7 +1553,7 @@ CCSPlayer *CCSBot::FindMostDangerousThreat( void )
 
 			return sniperThreat;
 		}
-		
+
 		// otherwise, find the closest threat that is looking at me
 		for( t=0; t<threatCount; ++t )
 		{
@@ -1608,7 +1608,7 @@ void CCSBot::UpdateReactionQueue( void )
 	++m_enemyQueueIndex;
 	if (m_enemyQueueIndex >= MAX_ENEMY_QUEUE)
 		m_enemyQueueIndex = 0;
-	
+
 	if (m_enemyQueueCount < MAX_ENEMY_QUEUE)
 		++m_enemyQueueCount;
 
@@ -1739,7 +1739,7 @@ void CCSBot::Blind( float holdTime, float fadeTime, float startingAlpha )
 		EyeVectors( &forward );
 		SetLookAt( "Blind", EyePosition() + 10000.0f * forward, PRIORITY_UNINTERRUPTABLE, holdTime + 0.5f * fadeTime );
 	}
-	
+
 	StopWaiting();
 	BecomeAlert();
 
@@ -1767,7 +1767,7 @@ public:
 
 		if (!m_me->IsPlayerLookingAtMe( player ))
 			return true;
-			
+
 		if (m_me->IsVisible( (CCSPlayer *)player ))
 			return false;
 

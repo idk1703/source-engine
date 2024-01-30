@@ -72,7 +72,7 @@ static bool ShouldChecksumPackets()
 
 bool CNetChan::IsLoopback() const
 {
-	return remote_address.IsLoopback();		
+	return remote_address.IsLoopback();
 }
 
 bool CNetChan::IsNull() const
@@ -95,7 +95,7 @@ void CNetChan::Clear()
 	for ( i=0; i<MAX_STREAMS; i++ )
 	{
 		while ( m_WaitingList[i].Count() )
-			RemoveHeadInWaitingList( i );	
+			RemoveHeadInWaitingList( i );
 
 		if ( m_ReceiveList[i].buffer )
 		{
@@ -109,10 +109,10 @@ void CNetChan::Clear()
 		if ( m_SubChannels[i].state == SUBCHANNEL_TOSEND )
 		{
 			int bit = 1<<i; // flip bit back since data was send yet
-			
+
 			FLIPBIT(m_nOutReliableState, bit);
 
-			m_SubChannels[i].Free(); 
+			m_SubChannels[i].Free();
 		}
 		else if ( m_SubChannels[i].state == SUBCHANNEL_WAITING )
 		{
@@ -133,7 +133,7 @@ void CNetChan::Clear()
 
 void CNetChan::CompressFragments()
 {
-	// We don't want this to go in the VCR file, because the compressed size can be different. The reason is 
+	// We don't want this to go in the VCR file, because the compressed size can be different. The reason is
 	// that the bf_writes that contributed to this message may have uninitialized bits at the end of the buffer
 	// (for example if it uses only the first couple bits of the last byte in the message). If the
 	// last few bits are different, it can produce a different compressed size.
@@ -164,7 +164,7 @@ void CNetChan::CompressFragments()
 
 		//ok, compress it.
 
-		if ( data->buffer )	
+		if ( data->buffer )
 		{
 			CFastTimer compressTimer;
 			compressTimer.Start();
@@ -176,7 +176,7 @@ void CNetChan::CompressFragments()
 			if ( COM_BufferToBufferCompress_Snappy( compressedData, &compressedSize, data->buffer, data->bytes ) &&
 				( compressedSize < data->bytes ) )
 			{
-				compressTimer.End(); 
+				compressTimer.End();
 				DevMsg("Compressing fragments (%d -> %d bytes): %.2fms\n",
 						data->bytes, compressedSize, compressTimer.GetDuration().GetMillisecondsF() );
 
@@ -186,7 +186,7 @@ void CNetChan::CompressFragments()
 				data->nUncompressedSize = data->bytes;
 				data->bytes = compressedSize;
 				data->numFragments = BYTES2FRAGMENTS(data->bytes);
-				data->isCompressed = true;				
+				data->isCompressed = true;
 			}
 
 			delete [] compressedData; // free temp buffer
@@ -202,7 +202,7 @@ void CNetChan::CompressFragments()
 			// check to see if there is a compressed version of the file
 			Q_snprintf( compressedfilename, sizeof(compressedfilename), "%s.ztmp", data->filename);
 
-			// check the timestamps 
+			// check the timestamps
 			int compressedFileTime = g_pFileSystem->GetFileTime( compressedfilename );
 			int fileTime = g_pFileSystem->GetFileTime( data->filename );
 
@@ -224,7 +224,7 @@ void CNetChan::CompressFragments()
 				unsigned int compressedSize = COM_GetIdealDestinationCompressionBufferSize_Snappy( uncompressedSize );
 				char *uncompressed = new char[uncompressedSize];
 				char *compressed = new char[compressedSize];
-					
+
 				// read in source file
 				g_pFileSystem->Read( uncompressed, data->bytes, data->file );
 
@@ -250,7 +250,7 @@ void CNetChan::CompressFragments()
 						}
 					}
 				}
-				
+
 				delete [] uncompressed;
 				delete [] compressed;
 			}
@@ -428,8 +428,8 @@ CNetChan::CNetChan()
 	last_received = 0;
 	connect_time = 0;
 	m_nProtocolVersion = -1;	// invalid
-	
-	Q_strncpy( m_Name, "", sizeof(m_Name) ); 
+
+	Q_strncpy( m_Name, "", sizeof(m_Name) );
 
 	m_MessageHandler = NULL;
 	m_DemoRecorder = NULL;
@@ -442,7 +442,7 @@ CNetChan::CNetChan()
 
 	// Prevent the first message from getting dropped after connection is set up.
 
-	m_nOutSequenceNr = 1;	// otherwise it looks like a 	
+	m_nOutSequenceNr = 1;	// otherwise it looks like a
 	m_nInSequenceNr = 0;
 	m_nOutSequenceNrAck = 0;
 	m_nOutReliableState = 0; // our current reliable state
@@ -484,7 +484,7 @@ called to open a channel to a remote system
 void CNetChan::Setup(int sock, netadr_t *adr, const char * name, INetChannelHandler * handler,
 					 int nProtocolVersion )
 {
-	Assert( name ); 
+	Assert( name );
 	Assert ( handler );
 
 	m_Socket = sock;
@@ -505,11 +505,11 @@ void CNetChan::Setup(int sock, netadr_t *adr, const char * name, INetChannelHand
 		remote_address.Clear();	// it's a demo fake channel
 		remote_address.SetType( NA_NULL );
 	}
-	
+
 	last_received		= net_time;
 	connect_time		= net_time;
-	
-	Q_strncpy( m_Name, name, sizeof(m_Name) ); 
+
+	Q_strncpy( m_Name, name, sizeof(m_Name) );
 
 	m_MessageHandler = handler;
 	m_nProtocolVersion = nProtocolVersion;
@@ -529,14 +529,14 @@ void CNetChan::Setup(int sock, netadr_t *adr, const char * name, INetChannelHand
 
 	// Prevent the first message from getting dropped after connection is set up.
 
-	m_nOutSequenceNr = 1;	// otherwise it looks like a 	
+	m_nOutSequenceNr = 1;	// otherwise it looks like a
 	m_nInSequenceNr = 0;
 	m_nOutSequenceNrAck = 0;
 	m_nOutReliableState = 0; // our current reliable state
 	m_nInReliableState = 0;	// last remote reliable state
 	m_nChokedPackets = 0;
 	m_fClearTime = 0.0;
-	
+
 	m_ChallengeNr = 0;
 
 	m_StreamSocket = 0;
@@ -551,7 +551,7 @@ void CNetChan::Setup(int sock, netadr_t *adr, const char * name, INetChannelHand
 		m_SubChannels[i].index = i; // set index once
 		m_SubChannels[i].Free();
 	}
-	
+
 	ResetStreaming();
 
 	if ( NET_IsMultiplayer() )
@@ -572,10 +572,10 @@ void CNetChan::Setup(int sock, netadr_t *adr, const char * name, INetChannelHand
 void CNetChan::ResetStreaming( void )
 {
 	m_SteamType = STREAM_CMD_NONE;
-	m_StreamLength = 0;	
+	m_StreamLength = 0;
 	m_StreamReceived = 0;
 	m_StreamSeqNr = 0;
-	m_SteamFile[0] = 0;	
+	m_SteamFile[0] = 0;
 }
 
 bool CNetChan::StartStreaming( unsigned int challengeNr )
@@ -584,7 +584,7 @@ bool CNetChan::StartStreaming( unsigned int challengeNr )
 	ResetStreaming();
 
 	m_ChallengeNr = challengeNr;
-	
+
 	if ( !NET_IsMultiplayer() )
 	{
 		m_StreamSocket = 0;
@@ -642,7 +642,7 @@ void CNetChan::SetTimeout(float seconds)
 	if ( m_Timeout > 3600.0f )
 	{
 		m_Timeout = 3600.0f; // 1 hour maximum
-	} 
+	}
 	else if ( m_Timeout <= 0.0f )
 	{
 		m_Timeout = -1.0f;	// never time out (demo files)
@@ -706,7 +706,7 @@ void CNetChan::SetMaxBufferSize(bool bReliable, int nBytes, bool bVoice )
 	}
 
 	stream->StartWriting( buffer->Base(), nBytes, copybits );
-	
+
 }
 
 void CNetChan::SetFileTransmissionMode( bool bBackgroundMode )
@@ -781,7 +781,7 @@ void CNetChan::FlowReset( void )
 void CNetChan::FlowNewPacket(int flow, int seqnr, int acknr, int nChoked, int nDropped, int nSize )
 {
 	netflow_t * pflow = &m_DataFlow[ flow ];
-	
+
 	// if frame_number != ( current + 1 ) mark frames between as invalid
 
 	netframe_t *pframe = NULL;
@@ -849,19 +849,19 @@ void CNetChan::FlowNewPacket(int flow, int seqnr, int acknr, int nChoked, int nD
 
 	if ( acknr <= (m_DataFlow[aflow].currentindex - NET_FRAMES_BACKUP) )
 		return;	// acknowledged packet isn't in backup buffer anymore
-	
+
 	netframe_t * aframe = &m_DataFlow[aflow].frames[ acknr & NET_FRAMES_MASK ];
 
 	if ( aframe->valid && aframe->latency == -1.0f )
 	{
 		// update ping for acknowledged packet, if not already acknowledged before
-		
+
 		aframe->latency = net_time - aframe->time;
 
 		if ( aframe->latency < 0.0f )
 			aframe->latency = 0.0f;
 	}
-	
+
 }
 
 void CNetChan::FlowUpdate(int flow, int addbytes)
@@ -898,14 +898,14 @@ void CNetChan::FlowUpdate(int flow, int addbytes)
 
 			if ( pcurr->time > endtime )
 				endtime = pcurr->time;
-		
+
 			totalvalid++;
 			totalchoked += pcurr->choked;
 			totalbytes += pcurr->size;
 
 			if ( pcurr->latency > -1.0f  )
 			{
-				totallatency += pcurr->latency; 
+				totallatency += pcurr->latency;
 				totallatencycount++;
 			}
 		}
@@ -913,7 +913,7 @@ void CNetChan::FlowUpdate(int flow, int addbytes)
 		{
 			totalinvalid++;
 		}
-		
+
 		pprev = pcurr;
 	}
 
@@ -929,7 +929,7 @@ void CNetChan::FlowUpdate(int flow, int addbytes)
 	}
 
 	int totalPackets = totalvalid + totalinvalid;
-			
+
 	if ( totalPackets > 0 )
 	{
 		pflow->avgloss *= FLOW_AVG;
@@ -937,11 +937,11 @@ void CNetChan::FlowUpdate(int flow, int addbytes)
 
 		if ( pflow->avgloss < 0 )
 			pflow->avgloss = 0;
-		
+
 		pflow->avgchoke *= FLOW_AVG;
 		pflow->avgchoke += ( 1.0f - FLOW_AVG ) * ((float)totalchoked/totalPackets);
 	}
-	
+
 	if ( totallatencycount>0 )
 	{
 		float newping = totallatency / totallatencycount ;
@@ -974,7 +974,7 @@ bool CNetChan::IsFileInWaitingList( const char *filename )
 	{
 		for ( int i = 0; i < m_WaitingList[stream].Count(); i++ )
 		{
-			dataFragments_t * data = m_WaitingList[stream][i]; 
+			dataFragments_t * data = m_WaitingList[stream][i];
 
 			if ( !Q_strcmp( data->filename, filename ) )
 				return true; // alread in list
@@ -1014,7 +1014,7 @@ bool CNetChan::CreateFragmentsFromBuffer( bf_write *buffer, int stream )
 	bf_write bfwrite;
 	dataFragments_t *data = NULL;
 
-	// if we have more than one item in the waiting list, try to add the 
+	// if we have more than one item in the waiting list, try to add the
 	// reliable data to the last item. that doesn't work with the first item
 	// since it may have been already send and is waiting for acknowledge
 
@@ -1063,7 +1063,7 @@ bool CNetChan::CreateFragmentsFromBuffer( bf_write *buffer, int stream )
 		data->nUncompressedSize = 0;
 		data->file = FILESYSTEM_INVALID_HANDLE;
 		data->filename[0] = 0;
-		
+
 		bfwrite.StartWriting( data->buffer, totalBytes );
 
 		m_WaitingList[stream].AddToTail( data );	// that's it for now
@@ -1082,7 +1082,7 @@ bool CNetChan::CreateFragmentsFromBuffer( bf_write *buffer, int stream )
 	// update bit length
 	data->bits += buffer->GetNumBitsWritten();
 	data->bytes = Bits2Bytes(data->bits);
-	
+
 	// check if send as stream or with snapshot
 	data->asTCP = m_StreamActive && ( data->bytes > m_MaxReliablePayloadSize );
 
@@ -1098,7 +1098,7 @@ bool CNetChan::CreateFragmentsFromFile( const char *filename, int stream, unsign
 {
 	if ( IsFileInWaitingList( filename ) )
 		return true; // already scheduled for upload
-	
+
 	const char *pPathID = "GAME";
 
 	if ( !g_pFileSystem->FileExists( filename, pPathID ) )
@@ -1114,7 +1114,7 @@ bool CNetChan::CreateFragmentsFromFile( const char *filename, int stream, unsign
 		ConMsg( "CreateFragmentsFromFile: '%s' size exceeds net_maxfilesize limit (%i MB).\n", filename, net_maxfilesize.GetInt() );
 		return false;
 	}
-	
+
 	if ( totalBytes >= MAX_FILE_SIZE )
 	{
 		ConMsg( "CreateFragmentsFromFile: '%s' too big (max %i bytes).\n", filename, MAX_FILE_SIZE );
@@ -1226,7 +1226,7 @@ bool CNetChan::SendSubChannelData( bf_write &buf )
 							 ( data->file == FILESYSTEM_INVALID_HANDLE );
 
 		if ( bSingleBlock )
-		{	
+		{
 			Assert( length == data->bytes );
 			Assert( length < NET_MAX_PAYLOAD );
 			Assert( offset == 0 );
@@ -1241,7 +1241,7 @@ bool CNetChan::SendSubChannelData( bf_write &buf )
 			}
 			else
 			{
-				buf.WriteOneBit( 0 ); 
+				buf.WriteOneBit( 0 );
 			}
 
 			buf.WriteVarInt32( data->bytes );
@@ -1249,13 +1249,13 @@ bool CNetChan::SendSubChannelData( bf_write &buf )
 		else
 		{
 			buf.WriteOneBit( 1 ); // uses fragments with start fragment offset byte
-			buf.WriteUBitLong( subChan->startFraggment[i], (MAX_FILE_SIZE_BITS-FRAGMENT_BITS) ); 
-			buf.WriteUBitLong( subChan->numFragments[i], 3 ); 
-		
+			buf.WriteUBitLong( subChan->startFraggment[i], (MAX_FILE_SIZE_BITS-FRAGMENT_BITS) );
+			buf.WriteUBitLong( subChan->numFragments[i], 3 );
+
 			if ( offset == 0 )
 			{
 				// this is the first fragment, write header info
-				
+
 				if ( data->file != FILESYSTEM_INVALID_HANDLE )
 				{
 					buf.WriteOneBit( 1 ); // file transmission net message stream
@@ -1275,7 +1275,7 @@ bool CNetChan::SendSubChannelData( bf_write &buf )
 				}
 				else
 				{
-					buf.WriteOneBit( 0 ); 
+					buf.WriteOneBit( 0 );
 				}
 
 				buf.WriteUBitLong( data->bytes, MAX_FILE_SIZE_BITS ); // 4MB max for files
@@ -1319,7 +1319,7 @@ bool CNetChan::ReadSubChannelData( bf_read &buf, int stream  )
 	int numFragments = 0;
 	unsigned int offset = 0;
 	unsigned int length = 0;
-	
+
 	bool bSingleBlock = buf.ReadOneBit() == 0; // is single block ?
 
 	if ( !bSingleBlock )
@@ -1353,7 +1353,7 @@ bool CNetChan::ReadSubChannelData( bf_read &buf, int stream  )
 		}
 		else
 		{
-		
+
 			if ( buf.ReadOneBit() ) // is it a file ?
 			{
 				data->transferID = buf.ReadUBitLong( 32 );
@@ -1370,7 +1370,7 @@ bool CNetChan::ReadSubChannelData( bf_read &buf, int stream  )
 			{
 				data->isCompressed = false;
 			}
-				
+
 			data->bytes = buf.ReadUBitLong( MAX_FILE_SIZE_BITS );
 		}
 
@@ -1414,7 +1414,7 @@ bool CNetChan::ReadSubChannelData( bf_read &buf, int stream  )
 			return false;
 		}
 	}
-	
+
 	if ( (startFragment+numFragments) == data->numFragments )
 	{
 		// we are receiving the last fragment, adjust length
@@ -1492,7 +1492,7 @@ void CNetChan::UpdateSubChannels()
 
 		freeSubChan->startFraggment[i] = nSentFragments;
 		freeSubChan->numFragments[i] = numFragments;
-		
+
 		data->pendingFragments += numFragments;
 
 		bSendData = true;
@@ -1505,7 +1505,7 @@ void CNetChan::UpdateSubChannels()
 
 	if ( bSendData )
 	{
-		// flip channel bit 
+		// flip channel bit
 		int bit = 1<<freeSubChan->index;
 
 		FLIPBIT(m_nOutReliableState, bit);
@@ -1583,7 +1583,7 @@ int CNetChan::SendDatagram(bf_write *datagram)
 	if ( vcr_verbose.GetInt() && datagram && datagram->GetNumBytesWritten() > 0 )
 		VCRGenericValueVerify( "datagram", datagram->GetBasePointer(), datagram->GetNumBytesWritten()-1 );
 #endif
-	
+
 	// Make sure for the client that the max routable payload size is up to date
 	if ( m_Socket == NS_CLIENT )
 	{
@@ -1594,9 +1594,9 @@ int CNetChan::SendDatagram(bf_write *datagram)
 	}
 
 	// first increase out sequence number
-	
+
 	// check, if fake client, then fake send also
-	if ( remote_address.GetType() == NA_NULL )	
+	if ( remote_address.GetType() == NA_NULL )
 	{
 		// this is a demo channel, fake sending all data
 		m_fClearTime = 0.0;		// no bandwidth delay
@@ -1663,7 +1663,7 @@ int CNetChan::SendDatagram(bf_write *datagram)
 		flags |= PACKET_FLAG_RELIABLE;
 	}
 
-	// Is there room for given datagram data. the datagram data 
+	// Is there room for given datagram data. the datagram data
 	// is somewhat more important than the normal unreliable data
 	// this is done to allow some kind of snapshot behavior
 	// weather all data in datagram is transmitted or none.
@@ -1692,7 +1692,7 @@ int CNetChan::SendDatagram(bf_write *datagram)
 	m_StreamUnreliable.Reset();	// clear unreliable data buffer
 
 	// On the PC the voice data is in the main packet
-	if ( !IsX360() && 
+	if ( !IsX360() &&
 		m_StreamVoice.GetNumBitsWritten() > 0 && m_StreamVoice.GetNumBitsWritten() < send.GetNumBitsLeft() )
 	{
 		send.WriteBits(m_StreamVoice.GetData(), m_StreamVoice.GetNumBitsWritten() );
@@ -1709,13 +1709,13 @@ int CNetChan::SendDatagram(bf_write *datagram)
 #endif
 
 	// Deal with packets that are too small for some networks
-	while ( send.GetNumBytesWritten() < nMinRoutablePayload )		
+	while ( send.GetNumBytesWritten() < nMinRoutablePayload )
 	{
 		// Go ahead and pad some bits as long as needed
 		send.WriteUBitLong( net_NOP, NETMSG_TYPE_BITS );
 	}
 
-	// Make sure we have enough bits to read a final net_NOP opcode before compressing 
+	// Make sure we have enough bits to read a final net_NOP opcode before compressing
 	int nRemainingBits = send.GetNumBitsWritten() % 8;
 	if ( nRemainingBits > 0 &&  nRemainingBits <= (8-NETMSG_TYPE_BITS) )
 	{
@@ -1731,7 +1731,7 @@ int CNetChan::SendDatagram(bf_write *datagram)
 			int nPadBits = 8 - nRemainingBits;
 
 			flags |= ENCODE_PAD_BITS( nPadBits );
-	
+
 			// Pad with ones
 			if ( nPadBits > 0 )
 			{
@@ -1744,7 +1744,7 @@ int CNetChan::SendDatagram(bf_write *datagram)
 
 	// FIXME:  This isn't actually correct since compression might make the main payload usage a bit smaller
 	bool bSendVoice = IsX360() && ( m_StreamVoice.GetNumBitsWritten() > 0 &&  m_StreamVoice.GetNumBitsWritten() < send.GetNumBitsLeft() );
-		
+
 	bool bCompress = false;
 	if ( net_compresspackets.GetBool() )
 	{
@@ -1755,7 +1755,7 @@ int CNetChan::SendDatagram(bf_write *datagram)
 	}
 
 	// write correct flags value and the checksum
-	flagsPos.WriteByte( flags ); 
+	flagsPos.WriteByte( flags );
 
 	// Compute checksum (must be aligned to a byte boundary!!)
 	if ( ShouldChecksumPackets() )
@@ -1779,13 +1779,13 @@ int CNetChan::SendDatagram(bf_write *datagram)
 	{
 		int mask = 63;
 		char comp[ 64 ] = { 0 };
-		if ( net_compresspackets.GetBool() && 
-			bytesSent && 
+		if ( net_compresspackets.GetBool() &&
+			bytesSent &&
 			( bytesSent < send.GetNumBytesWritten() ) )
 		{
 			Q_snprintf( comp, sizeof( comp ), " compression=%5u [%5.2f %%]", bytesSent, 100.0f * float( bytesSent ) / float( send.GetNumBytesWritten() ) );
 		}
-	
+
 		ConMsg ("UDP -> %12.12s: sz=%5i seq=%5i ack=%5i rel=%1i ch=%1i tm=%f rt=%f%s\n"
 			, GetName()
 			, send.GetNumBytesWritten()
@@ -1805,7 +1805,7 @@ int CNetChan::SendDatagram(bf_write *datagram)
 	FlowNewPacket( FLOW_OUTGOING, m_nOutSequenceNr, m_nInSequenceNr, m_nChokedPackets, 0, nTotalSize );
 
 	FlowUpdate( FLOW_OUTGOING, nTotalSize );
-	
+
 	if ( m_fClearTime < net_time )
 	{
 		m_fClearTime = net_time;
@@ -1825,7 +1825,7 @@ int CNetChan::SendDatagram(bf_write *datagram)
 			m_fClearTime = m_flLatestClearTime;
 		}
 	}
-	
+
 	m_nChokedPackets = 0;
 	m_nOutSequenceNr++;
 
@@ -1840,14 +1840,14 @@ bool CNetChan::ProcessControlMessage( int cmd, bf_read &buf)
 	{
 		return true;
 	}
-	
+
 	if ( cmd == net_Disconnect )
 	{
 		buf.ReadString( string, sizeof(string) );
 		m_MessageHandler->ConnectionClosing( string );
 		return false;
 	}
-	
+
 	if ( cmd == net_File )
 	{
 		unsigned int transferID = buf.ReadUBitLong( 32 );
@@ -1863,10 +1863,10 @@ bool CNetChan::ProcessControlMessage( int cmd, bf_read &buf)
 		}
 		return true;
 	}
-	
+
 	ConMsg( "Netchannel: received bad control cmd %i from %s.\n", cmd, remote_address.ToString() );
 	return false;
-	
+
 }
 
 bool CNetChan::ProcessMessages( bf_read &buf  )
@@ -1892,7 +1892,7 @@ bool CNetChan::ProcessMessages( bf_read &buf  )
 	}
 
 	bf_read democopy = buf; // create a copy of reading buffer state for demo recording
-	
+
 	int startbit = buf.GetNumBitsRead();
 
 	while ( true )
@@ -1923,12 +1923,12 @@ bool CNetChan::ProcessMessages( bf_read &buf  )
 
 		// see if we have a registered message object for this type
 		INetMessage	* netmsg = FindMessage( cmd );
-		
+
 		if ( netmsg )
 		{
 			// let message parse itself from buffe
 			const char *msgname = netmsg->GetName();
-			
+
 			int nMsgStartBit = buf.GetNumBitsRead();
 
 			if ( !netmsg->ReadFromBuffer( buf ) )
@@ -1956,7 +1956,7 @@ bool CNetChan::ProcessMessages( bf_read &buf  )
 					continue;
 				}
 			}
-			
+
 			// netmessage calls the Process function that was registered by it's MessageHandler
 			m_bProcessingMessages = true;
 			bool bRet = netmsg->Process();
@@ -2020,7 +2020,7 @@ void CNetChan::ProcessPlayback( void )
 		last_received = net_time;
 
 		m_MessageHandler->PacketStart( m_nInSequenceNr, m_nOutSequenceNrAck );
-		
+
 		if ( ProcessMessages( packet->message ) )
 		{
 			m_MessageHandler->PacketEnd();
@@ -2121,8 +2121,8 @@ bool CNetChan::HandleUpload( dataFragments_t *data, INetChannelHandler *MessageH
 	}
 	else
 	{
-		// Make sure that this file is not being written to a location above the current directory, isn't in 
-		// writing to any locations we don't want, isn't an unsupported 
+		// Make sure that this file is not being written to a location above the current directory, isn't in
+		// writing to any locations we don't want, isn't an unsupported
 		if ( !CNetChan::IsValidFileForTransfer( data->filename ) )
 		{
 			szErrorStr = "has invalid path or extension!";
@@ -2184,7 +2184,7 @@ bool CNetChan::HandleUpload( dataFragments_t *data, INetChannelHandler *MessageH
 bool CNetChan::CheckReceivingList(int nList)
 {
 	dataFragments_t * data = &m_ReceiveList[nList]; // get list
-	
+
 	if ( data->buffer == NULL )
 		return true;
 
@@ -2224,7 +2224,7 @@ bool CNetChan::CheckReceivingList(int nList)
 	// clear receiveList
 	if ( data->buffer )
 	{
-		delete [] data->buffer; 
+		delete [] data->buffer;
 		data->buffer = NULL;
 	}
 
@@ -2234,7 +2234,7 @@ bool CNetChan::CheckReceivingList(int nList)
 
 int CNetChan::ProcessPacketHeader( netpacket_t * packet )
 {
-	// get sequence numbers		
+	// get sequence numbers
 	int sequence	= packet->message.ReadLong();
 	int sequence_ack= packet->message.ReadLong();
 	int flags		= packet->message.ReadByte();
@@ -2247,10 +2247,10 @@ int CNetChan::ProcessPacketHeader( netpacket_t * packet )
 		Assert( !( packet->message.GetNumBitsRead() % 8 ) );
 		int nOffset = packet->message.GetNumBitsRead() >> 3;
 		int nCheckSumBytes = packet->message.TotalBytesAvailable() - nOffset;
-	
+
 		const void *pvData = packet->message.GetBasePointer() + nOffset;
 		unsigned short usDataCheckSum = BufferToShortChecksum( pvData, nCheckSumBytes );
-	
+
 		if ( usDataCheckSum != usCheckSum )
 		{
 			ConMsg ("%s:corrupted packet %i at %i\n"
@@ -2266,7 +2266,7 @@ int CNetChan::ProcessPacketHeader( netpacket_t * packet )
 	int i,j;
 
 	if ( flags & PACKET_FLAG_CHOKED )
-		nChoked = packet->message.ReadByte(); 
+		nChoked = packet->message.ReadByte();
 
 	if ( flags & PACKET_FLAG_CHALLENGE )
 	{
@@ -2299,7 +2299,7 @@ int CNetChan::ProcessPacketHeader( netpacket_t * packet )
 					, m_nInSequenceNr);
 			}
 		}
-		
+
 		return -1;
 	}
 
@@ -2358,11 +2358,11 @@ int CNetChan::ProcessPacketHeader( netpacket_t * packet )
 						continue;
 
 					Assert( m_WaitingList[j].Count() > 0 );
-					
+
 					dataFragments_t * data = m_WaitingList[j][0];
 
 					// tell waiting list, that we received the acknowledge
-					data->ackedFragments += subchan->numFragments[j]; 
+					data->ackedFragments += subchan->numFragments[j];
 					data->pendingFragments -= subchan->numFragments[j];
 				}
 
@@ -2378,7 +2378,7 @@ int CNetChan::ProcessPacketHeader( netpacket_t * packet )
 				if ( subchan->state == SUBCHANNEL_WAITING )
 				{
 					if ( net_showfragments.GetBool() )
-					{	
+					{
 						ConMsg("Resending subchan %i: start %i, num %i\n", subchan->index, subchan->startFraggment[0], subchan->numFragments[0] );
 					}
 
@@ -2388,10 +2388,10 @@ int CNetChan::ProcessPacketHeader( netpacket_t * packet )
 				{
 					// remote host lost dirty channel data, flip bit back
 					int bit = 1<<subchan->index; // flip bit back since data was send yet
-			
+
 					FLIPBIT(m_nOutReliableState, bit);
 
-					subchan->Free(); 
+					subchan->Free();
 				}
 			}
 		}
@@ -2402,9 +2402,9 @@ int CNetChan::ProcessPacketHeader( netpacket_t * packet )
 	ETWReadPacket( packet->from.ToString(), packet->wiresize, m_nInSequenceNr, m_nOutSequenceNr );
 
 // Update waiting list status
-	
+
 	for( i=0; i<MAX_STREAMS;i++)
-		CheckWaitingList( i ); 
+		CheckWaitingList( i );
 
 // Update data flow stats (use wiresize (compressed))
 	FlowNewPacket( FLOW_INCOMING, m_nInSequenceNr, m_nOutSequenceNrAck, nChoked, m_PacketDrop, packet->wiresize + UDP_HEADER_SIZE );
@@ -2417,7 +2417,7 @@ int CNetChan::ProcessPacketHeader( netpacket_t * packet )
 CNetChan::ProcessPacket
 
 called when a new packet has arrived for this netchannel
-sequence numbers are extracted, fragments/file streams stripped 
+sequence numbers are extracted, fragments/file streams stripped
 and then the netmessages processed
 =================
 */
@@ -2453,14 +2453,14 @@ void CNetChan::ProcessPacket( netpacket_t * packet, bool bHasHeader )
 			, GetName()
 			, packet->size
 			, m_nInSequenceNr & 63
-			, m_nOutSequenceNrAck & 63 
+			, m_nOutSequenceNrAck & 63
 			, flags & PACKET_FLAG_RELIABLE ? 1 : 0
 			, flags & PACKET_FLAG_CHALLENGE ? 1 : 0
 			, net_time
 			, (float)Plat_FloatTime()
 			, packet->wiresize );
 	}
-	
+
 	last_received = net_time;
 
 // tell message handler that a new packet has arrived
@@ -2481,24 +2481,24 @@ void CNetChan::ProcessPacket( netpacket_t * packet, bool bHasHeader )
 
 		// flip subChannel bit to signal successful receiving
 		FLIPBIT(m_nInReliableState, bit);
-		
+
 		for ( i=0; i<MAX_STREAMS; i++ )
 		{
 			if ( !CheckReceivingList( i ) )
-				return; // error while processing 
+				return; // error while processing
 		}
 	}
 
 // Is there anything left to process?
 	if ( msg.GetNumBitsLeft() > 0 )
 	{
-		// parse and handle all messeges 
+		// parse and handle all messeges
 		if ( !ProcessMessages( msg ) )
 		{
 			return;	// disconnect or error
 		}
 	}
-	
+
 // tell message handler that packet is completely parsed
 	m_MessageHandler->PacketEnd();
 
@@ -2527,7 +2527,7 @@ bool CNetChan::SendNetMsg( INetMessage &msg, bool bForceReliable, bool bVoice )
 		return true;
 
 	bf_write *pStream = &m_StreamUnreliable;
-	
+
 	if ( msg.IsReliable() || bForceReliable )
 	{
 		pStream = &m_StreamReliable;
@@ -2623,19 +2623,19 @@ bool CNetChan::SendReliableViaStream( dataFragments_t *data)
 	ALIGN4 char		headerBuf[32] ALIGN4_POST;
 	bf_write	header( "outDataHeader", headerBuf, sizeof(headerBuf) );
 
-	
+
 	data->transferID = m_nOutSequenceNr; // used for acknowledging
 	data->pendingFragments = data->numFragments; // send, but not ACKed yet
 
 	header.WriteByte( STREAM_CMD_DATA );
 	header.WriteWord( data->bytes );			// bytes
-	header.WriteLong( data->transferID );	
+	header.WriteLong( data->transferID );
 
 	if ( net_showtcp.GetInt() )
 	{
 		ConMsg ("TCP -> %s: sz=%i seq=%i\n", remote_address.ToString(), data->bytes, m_nOutSequenceNr );
 	}
-	
+
 	NET_SendStream( m_StreamSocket, (char*)header.GetData(), header.GetNumBytesWritten(), 0	);
 
 	return NET_SendStream( m_StreamSocket, data->buffer, data->bytes, 0 ) != -1;
@@ -2663,7 +2663,7 @@ bool CNetChan::ProcessStream( void )
 {
 	char		cmd;
 	ALIGN4 char	headerBuf[512] ALIGN4_POST;
-	
+
 	if ( !m_StreamSocket )
 		return true;
 
@@ -2682,7 +2682,7 @@ bool CNetChan::ProcessStream( void )
 			// something failed with the TCP connection
 			return false;
 		}
-		
+
 		ResetStreaming();	// clear all state values
 
 		m_SteamType = cmd;
@@ -2697,7 +2697,7 @@ bool CNetChan::ProcessStream( void )
 	{
 		// server accpeted connection, send challenge nr
 		m_StreamActive = true;
-		
+
 		ResetStreaming();
 
 		return SendReliableAcknowledge( m_ChallengeNr );
@@ -2706,7 +2706,7 @@ bool CNetChan::ProcessStream( void )
 	if ( (m_SteamType==STREAM_CMD_DATA) && (m_StreamLength==0) )
 	{
 		int ret = NET_ReceiveStream( m_StreamSocket, (char*)&headerBuf, 6, 0 ) ;
-		
+
 		if ( ret == 0)
 		{
 			// nothing received, but ok
@@ -2738,7 +2738,7 @@ bool CNetChan::ProcessStream( void )
 	if ( (m_SteamType==STREAM_CMD_ACKN) && (m_StreamSeqNr==0) )
 	{
 		int ret = NET_ReceiveStream( m_StreamSocket, (char*)&headerBuf, 4, 0 );
-		
+
 		if ( ret == 0)
 		{
 			// nothing received, but ok
@@ -2752,7 +2752,7 @@ bool CNetChan::ProcessStream( void )
 
 		m_StreamSeqNr = header.ReadLong();
 
-		dataFragments_t * data = m_WaitingList[FRAG_NORMAL_STREAM][0]; 
+		dataFragments_t * data = m_WaitingList[FRAG_NORMAL_STREAM][0];
 
 		if ( data->transferID == (unsigned)m_StreamSeqNr )
 		{
@@ -2773,15 +2773,15 @@ bool CNetChan::ProcessStream( void )
 		ResetStreaming();
 		return true;
 	}
-	
+
 
 	if ( m_StreamReceived < m_StreamLength )
 	{
 		// read in 4kB chuncks
-		int bytesLeft = ( m_StreamLength - m_StreamReceived );	
+		int bytesLeft = ( m_StreamLength - m_StreamReceived );
 
 		int bytesRecv = NET_ReceiveStream( m_StreamSocket, (char*)m_StreamData.Base() + m_StreamReceived, bytesLeft, 0 );
-		
+
 		if ( bytesRecv == 0 )
 		{
 			return true;
@@ -2824,7 +2824,7 @@ int CNetChan::GetDataRate() const
 
 bool CNetChan::HasPendingReliableData( void )
 {
-	return (m_StreamReliable.GetNumBitsWritten() > 0) || 
+	return (m_StreamReliable.GetNumBitsWritten() > 0) ||
 		   (m_WaitingList[FRAG_NORMAL_STREAM].Count() > 0) ||
 		   (m_WaitingList[FRAG_FILE_STREAM].Count() > 0);
 }
@@ -2904,8 +2904,8 @@ float CNetChan::GetAvgPackets( int flow ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *chan - 
+// Purpose:
+// Input  : *chan -
 //-----------------------------------------------------------------------------
 int CNetChan::GetTotalData(int flow ) const
 {
@@ -2922,7 +2922,7 @@ int	CNetChan::GetSequenceNr( int flow ) const
 	{
 		return m_nInSequenceNr;
 	}
-	
+
 	return 0;
 }
 
@@ -2931,7 +2931,7 @@ int	CNetChan::GetBufferSize( void ) const
 	return NET_FRAMES_BACKUP;
 }
 
-bool CNetChan::IsValidPacket( int flow, int frame_number ) const 
+bool CNetChan::IsValidPacket( int flow, int frame_number ) const
 {
 	return m_DataFlow[flow].frames[ frame_number & NET_FRAMES_MASK ].valid;
 }
@@ -2950,7 +2950,7 @@ void CNetChan::GetPacketResponseLatency( int flow, int frame_number, int *pnLate
 		{
 			*pnLatencyMsecs = 9999;
 		}
-		else 
+		else
 		{
 			*pnLatencyMsecs = (int)( 1000.0f * nf.avg_latency );
 		}
@@ -2986,7 +2986,7 @@ float CNetChan::GetAvgChoke( int flow ) const
 
 float CNetChan::GetAvgLatency( int flow ) const
 {
-	return m_DataFlow[flow].avglatency;	
+	return m_DataFlow[flow].avglatency;
 }
 
 float CNetChan::GetAvgLoss( int flow ) const
@@ -3003,7 +3003,7 @@ bool CNetChan::GetStreamProgress( int flow, int *received, int *total ) const
 {
 	(*total) = 0;
 	(*received) = 0;
-	
+
 	if ( flow == FLOW_INCOMING )
 	{
 		for ( int i = 0; i<MAX_STREAMS; i++ )
@@ -3031,7 +3031,7 @@ bool CNetChan::GetStreamProgress( int flow, int *received, int *total ) const
 
 		return ((*total)>0);
 	}
-	
+
 	return false; // TODO TCP progress
 }
 
@@ -3063,7 +3063,7 @@ void CNetChan::UpdateMessageStats( int msggroup, int bits)
 
 	if ( pframe )
 		pframe->msggroups[msggroup] +=bits;
-		
+
 }
 
 void CNetChan::IncrementQueuedPackets()
@@ -3229,4 +3229,3 @@ bool CNetChan::IsValidFileForTransfer( const char *pszFilename )
 
 	return true;
 }
-

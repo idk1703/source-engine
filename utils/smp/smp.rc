@@ -27,21 +27,21 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
-    "resource.h\0"
+	"resource.h\0"
 END
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE
 BEGIN
-    "#include ""afxres.h""\r\n"
-    "\0"
+	"#include ""afxres.h""\r\n"
+	"\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
-    "\r\n"
-    "\0"
+	"\r\n"
+	"\0"
 END
 
 #endif    // APSTUDIO_INVOKED
@@ -65,24 +65,24 @@ VS_VERSION_INFO VERSIONINFO
  FILETYPE 0x1L
  FILESUBTYPE 0x0L
 BEGIN
-    BLOCK "StringFileInfo"
-    BEGIN
-        BLOCK "040904B0"
-        BEGIN
-            VALUE "CompanyName", "Valve"
-            VALUE "FileDescription", "Steam Media Player"
-            VALUE "FileVersion", "1, 0, 0, 1"
-            VALUE "InternalName", "Steam Media Player"
-            VALUE "LegalCopyright", "Copyright 2005"
-            VALUE "OriginalFilename", "smp.exe"
-            VALUE "ProductName", "Steam Media Player"
-            VALUE "ProductVersion", "1, 0, 0, 1"
-        END
-    END
-    BLOCK "VarFileInfo"
-    BEGIN
-        VALUE "Translation", 0x409, 1200
-    END
+	BLOCK "StringFileInfo"
+	BEGIN
+		BLOCK "040904B0"
+		BEGIN
+			VALUE "CompanyName", "Valve"
+			VALUE "FileDescription", "Steam Media Player"
+			VALUE "FileVersion", "1, 0, 0, 1"
+			VALUE "InternalName", "Steam Media Player"
+			VALUE "LegalCopyright", "Copyright 2005"
+			VALUE "OriginalFilename", "smp.exe"
+			VALUE "ProductName", "Steam Media Player"
+			VALUE "ProductVersion", "1, 0, 0, 1"
+		END
+	END
+	BLOCK "VarFileInfo"
+	BEGIN
+		VALUE "Translation", 0x409, 1200
+	END
 END
 
 
@@ -91,46 +91,46 @@ END
 // Menu
 //
 
-IDR_MENU1 MENU 
+IDR_MENU1 MENU
 BEGIN
-    POPUP "&File"
-    BEGIN
-        MENUITEM "&Open URL",                   ID_FILE_OPEN
-        MENUITEM "E&xit",                       ID_APP_EXIT
-    END
-    POPUP "Interfaces"
-    BEGIN
-        MENUITEM "IWMPCore",                    ID_WMPCORE, INACTIVE
-        MENUITEM "    close",                   ID_WMPCORE_CLOSE
-        MENUITEM "    URL",                     ID_WMPCORE_URL
-        MENUITEM "    openState",               ID_WMPCORE_OPENSTATE
-        MENUITEM "    playState",               ID_WMPCORE_PLAYSTATE
-        MENUITEM "    controls",                ID_WMPCORE_CONTROLS
-        MENUITEM "    settings",                ID_WMPCORE_SETTINGS
-        MENUITEM "    currentMedia",            ID_WMPCORE_CURRENTMEDIA
-        MENUITEM "    mediaCollection",         ID_WMPCORE_MEDIACOLLECTION
-        MENUITEM "    playlistCollection",      ID_WMPCORE_PLAYLISTCOLLECTION
+	POPUP "&File"
+	BEGIN
+		MENUITEM "&Open URL",                   ID_FILE_OPEN
+		MENUITEM "E&xit",                       ID_APP_EXIT
+	END
+	POPUP "Interfaces"
+	BEGIN
+		MENUITEM "IWMPCore",                    ID_WMPCORE, INACTIVE
+		MENUITEM "    close",                   ID_WMPCORE_CLOSE
+		MENUITEM "    URL",                     ID_WMPCORE_URL
+		MENUITEM "    openState",               ID_WMPCORE_OPENSTATE
+		MENUITEM "    playState",               ID_WMPCORE_PLAYSTATE
+		MENUITEM "    controls",                ID_WMPCORE_CONTROLS
+		MENUITEM "    settings",                ID_WMPCORE_SETTINGS
+		MENUITEM "    currentMedia",            ID_WMPCORE_CURRENTMEDIA
+		MENUITEM "    mediaCollection",         ID_WMPCORE_MEDIACOLLECTION
+		MENUITEM "    playlistCollection",      ID_WMPCORE_PLAYLISTCOLLECTION
 
-        MENUITEM "    versionInfo",             ID_WMPCORE_VERSIONINFO
-        MENUITEM "    launchURL",               ID_WMPCORE_LAUNCHURL
-        MENUITEM "    network",                 ID_WMPCORE_NETWORK
-        MENUITEM "    currentPlaylist",         ID_WMPCORE_CURRENTPLAYLIST
-        MENUITEM "    cdromCollection",         ID_WMPCORE_CDROMCOLLECTION
-        MENUITEM "    closedCaption",           ID_WMPCORE_CLOSEDCAPTION
-        MENUITEM "    isOnline",                ID_WMPCORE_ISONLINE
-        MENUITEM "    error",                   ID_WMPCORE_ERROR
-        MENUITEM "    status",                  ID_WMPCORE_STATUS
-        MENUITEM "IWMPCore2",                   ID_WMPCORE2, INACTIVE
-        MENUITEM "    dvd",                     ID_WMPCORE2_DVD
-        MENUITEM "IWMPlayer",                   ID_WMPPLAYER, INACTIVE
-        MENUITEM "    enabled",                 ID_WMPPLAYER_ENABLED
-        MENUITEM "    fullScreen",              ID_WMPPLAYER_FULLSCREEN
-        MENUITEM "    enableContextMenu",       ID_WMPPLAYER_ENABLECONTEXTMENU
+		MENUITEM "    versionInfo",             ID_WMPCORE_VERSIONINFO
+		MENUITEM "    launchURL",               ID_WMPCORE_LAUNCHURL
+		MENUITEM "    network",                 ID_WMPCORE_NETWORK
+		MENUITEM "    currentPlaylist",         ID_WMPCORE_CURRENTPLAYLIST
+		MENUITEM "    cdromCollection",         ID_WMPCORE_CDROMCOLLECTION
+		MENUITEM "    closedCaption",           ID_WMPCORE_CLOSEDCAPTION
+		MENUITEM "    isOnline",                ID_WMPCORE_ISONLINE
+		MENUITEM "    error",                   ID_WMPCORE_ERROR
+		MENUITEM "    status",                  ID_WMPCORE_STATUS
+		MENUITEM "IWMPCore2",                   ID_WMPCORE2, INACTIVE
+		MENUITEM "    dvd",                     ID_WMPCORE2_DVD
+		MENUITEM "IWMPlayer",                   ID_WMPPLAYER, INACTIVE
+		MENUITEM "    enabled",                 ID_WMPPLAYER_ENABLED
+		MENUITEM "    fullScreen",              ID_WMPPLAYER_FULLSCREEN
+		MENUITEM "    enableContextMenu",       ID_WMPPLAYER_ENABLECONTEXTMENU
 
-        MENUITEM "    uiMode",                  ID_WMPPLAYER_UIMODE
-        MENUITEM "IWMPlayer2",                  ID_WMPPLAYER2, INACTIVE
-        MENUITEM "    stretchToFit",            ID_WMPPLAYER2_STRETCHTOFIT
-    END
+		MENUITEM "    uiMode",                  ID_WMPPLAYER_UIMODE
+		MENUITEM "IWMPlayer2",                  ID_WMPPLAYER2, INACTIVE
+		MENUITEM "    stretchToFit",            ID_WMPPLAYER2_STRETCHTOFIT
+	END
 END
 
 
@@ -144,12 +144,12 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Open URL"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-    EDITTEXT        IDC_FILEOPEN_EDIT,7,25,235,14,ES_AUTOHSCROLL | WS_GROUP
-    PUSHBUTTON      "...",IDC_FILEOPEN_BROWSE,246,26,21,14,0,
-                    WS_EX_CLIENTEDGE
-    DEFPUSHBUTTON   "OK",IDOK,160,53,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,217,53,50,14
-    LTEXT           "Enter URL to play:",IDC_STATIC,7,7,59,8
+	EDITTEXT        IDC_FILEOPEN_EDIT,7,25,235,14,ES_AUTOHSCROLL | WS_GROUP
+	PUSHBUTTON      "...",IDC_FILEOPEN_BROWSE,246,26,21,14,0,
+					WS_EX_CLIENTEDGE
+	DEFPUSHBUTTON   "OK",IDOK,160,53,50,14
+	PUSHBUTTON      "Cancel",IDCANCEL,217,53,50,14
+	LTEXT           "Enter URL to play:",IDC_STATIC,7,7,59,8
 END
 
 IDD_STRING_DIALOG DIALOG  0, 0, 244, 50
@@ -157,9 +157,9 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Property"
 FONT 8, "MS Shell Dlg"
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,123,29,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,183,29,50,14
-    EDITTEXT        IDC_STRING_EDIT,7,7,226,13,ES_AUTOHSCROLL
+	DEFPUSHBUTTON   "OK",IDOK,123,29,50,14
+	PUSHBUTTON      "Cancel",IDCANCEL,183,29,50,14
+	EDITTEXT        IDC_STRING_EDIT,7,7,226,13,ES_AUTOHSCROLL
 END
 
 IDD_BOOLEAN_DIALOG DIALOG  0, 0, 125, 58
@@ -167,12 +167,12 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Boolean"
 FONT 8, "MS Shell Dlg"
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,7,37,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,68,37,50,14
-    CONTROL         "VARIANT_TRUE",IDC_BOOLEAN_TRUE,"Button",
-                    BS_AUTORADIOBUTTON,7,7,85,10
-    CONTROL         "VARIANT_FALSE",IDC_BOOLEAN_FALSE,"Button",
-                    BS_AUTORADIOBUTTON,7,21,85,10
+	DEFPUSHBUTTON   "OK",IDOK,7,37,50,14
+	PUSHBUTTON      "Cancel",IDCANCEL,68,37,50,14
+	CONTROL         "VARIANT_TRUE",IDC_BOOLEAN_TRUE,"Button",
+					BS_AUTORADIOBUTTON,7,7,85,10
+	CONTROL         "VARIANT_FALSE",IDC_BOOLEAN_FALSE,"Button",
+					BS_AUTORADIOBUTTON,7,21,85,10
 END
 
 
@@ -182,23 +182,23 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
-    IDD_STRING_DIALOG, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 237
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 43
-    END
+	IDD_STRING_DIALOG, DIALOG
+	BEGIN
+		LEFTMARGIN, 7
+		RIGHTMARGIN, 237
+		TOPMARGIN, 7
+		BOTTOMMARGIN, 43
+	END
 
-    IDD_BOOLEAN_DIALOG, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 118
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 51
-    END
+	IDD_BOOLEAN_DIALOG, DIALOG
+	BEGIN
+		LEFTMARGIN, 7
+		RIGHTMARGIN, 118
+		TOPMARGIN, 7
+		BOTTOMMARGIN, 51
+	END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -225,4 +225,3 @@ IDI_ICON                ICON                    "smp.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

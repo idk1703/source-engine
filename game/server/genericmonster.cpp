@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -22,7 +22,7 @@
 #include "tier0/memdbgon.h"
 
 // For holograms, make them not solid so the player can walk through them
-#define	SF_GENERICNPC_NOTSOLID					(1 << 16) 
+#define	SF_GENERICNPC_NOTSOLID					(1 << 16)
 
 //=========================================================
 // NPC's Anim Events Go Here
@@ -46,7 +46,7 @@ public:
 LINK_ENTITY_TO_CLASS( monster_generic, CGenericNPC );
 
 //=========================================================
-// Classify - indicates this NPC's place in the 
+// Classify - indicates this NPC's place in the
 // relationship table.
 //=========================================================
 Class_T	CGenericNPC::Classify ( void )
@@ -89,7 +89,7 @@ void CGenericNPC::TempGunEffect( void )
 	//UTIL_Sparks( vecMuzzle );
 
 	bool fSound = false;
-	
+
 	if( random->RandomInt( 0, 3 ) == 0 )
 	{
 		fSound = true;
@@ -158,7 +158,7 @@ void CGenericNPC::Spawn()
 	m_iHealth			= 8;
 	m_flFieldOfView		= 0.5;// indicates the width of this NPC's forward view cone ( as a dotproduct result )
 	m_NPCState			= NPC_STATE_NONE;
-	
+
 	CapabilitiesAdd( bits_CAP_MOVE_GROUND | bits_CAP_OPEN_DOORS );
 
 	NPCInit();
@@ -191,7 +191,7 @@ void CGenericNPC::Precache()
 	PrecacheModel( STRING( GetModelName() ) );
 
 	PrecacheScriptSound( "GenericNPC.GunSound" );
-}	
+}
 
 // a really large health is set to make sure these never die.
 const int TOO_MUCH_HEALTH_TO_DIE = 1000;
@@ -246,17 +246,17 @@ BEGIN_DATADESC( CNPC_Furniture )
 	DEFINE_EMBEDDED( m_BoneFollowerManager ),
 	DEFINE_INPUTFUNC( FIELD_VOID,	"DisablePlayerCollision", InputDisablePlayerCollision ),
 	DEFINE_INPUTFUNC( FIELD_VOID,	"EnablePlayerCollision", InputEnablePlayerCollision ),
-	
+
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: This used to have something to do with bees flying, but 
+// Purpose: This used to have something to do with bees flying, but
 //			now it only initializes moving furniture in scripted sequences
 //-----------------------------------------------------------------------------
 void CNPC_Furniture::Spawn( )
 {
 	Precache();
-	
+
 	SetModel( STRING(GetModelName()) );
 
 	SetMoveType( MOVETYPE_STEP );
@@ -292,7 +292,7 @@ void CNPC_Furniture::Spawn( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Furniture::Precache( void )
 {
@@ -300,15 +300,15 @@ void CNPC_Furniture::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int	CNPC_Furniture::ObjectCaps( void ) 
-{ 
+int	CNPC_Furniture::ObjectCaps( void )
+{
 	// HL2 furniture transitions
 #ifdef HL2_DLL
-	return CAI_BaseNPC::ObjectCaps(); 
+	return CAI_BaseNPC::ObjectCaps();
 #else
-	return (CAI_BaseNPC::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); 
+	return (CAI_BaseNPC::ObjectCaps() & ~FCAP_ACROSS_TRANSITION);
 #endif
 }
 
@@ -403,18 +403,18 @@ void CNPC_Furniture::SetPlayerAvoidState( void )
 
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Furniture::NPCThink( void )
 {
 	BaseClass::NPCThink();
-	
+
 	// Update follower bones
 	m_BoneFollowerManager.UpdateBoneFollowers(this);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Furniture::UpdateOnRemove( void )
 {
@@ -424,7 +424,7 @@ void CNPC_Furniture::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CNPC_Furniture::SelectSchedule( void )
@@ -451,7 +451,7 @@ int CNPC_Furniture::SelectSchedule( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Furniture::OnRestore( void )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -99,10 +99,10 @@ bool IsReflectiveGlassInView( const CViewSetup& view, cplane_t &plane )
 
 			MatrixTransformPlane( mat, localPlane, plane );			// Transform to world space
 			VectorTransform( vecOrigin, mat, vecWorld );
-					 
+
 			if ( view.origin.Dot( plane.normal ) <= plane.dist )	// Check for view behind plane
 				continue;
-			
+
 			VectorSubtract( vecWorld, view.origin, vecDelta );		// Backface cull
 			if ( vecDelta.Dot( plane.normal ) >= 0 )
 				continue;
@@ -113,6 +113,3 @@ bool IsReflectiveGlassInView( const CViewSetup& view, cplane_t &plane )
 
 	return false;
 }
-
-
-

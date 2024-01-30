@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,7 +26,7 @@ public:
 	~CTFHudPasstimeOffscreenArrow();
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
 	virtual void PaintBackground() OVERRIDE;
-	
+
 protected:
 	virtual C_BaseEntity *PreparePaint( vgui::ImagePanel *pImage, C_TFPlayer *pLocalPlayer ) = 0;
 
@@ -57,4 +57,4 @@ private:
 	int m_iPlayerIndex;
 };
 
-#endif // TF_HUD_PASSTIME_BALL_OFFSCREEN_ARROW_H  
+#endif // TF_HUD_PASSTIME_BALL_OFFSCREEN_ARROW_H

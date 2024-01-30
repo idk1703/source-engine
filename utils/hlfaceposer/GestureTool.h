@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -87,7 +87,7 @@ private:
 	void				GetWorkspaceLeftRight( int& left, int& right );
 	void				SetClickedPos( int x, int y );
 	float				GetTimeForClickedPos( void );
-	
+
 	void				ApplyBounds( int& mx, int& my );
 	void				CalcBounds( int movetype );
 	void				OnUndo( void );

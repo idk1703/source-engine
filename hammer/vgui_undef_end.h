@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
 
-// define windows function macros again 
+// define windows function macros again
 #ifdef UNICODE
 	#define PostMessage  PostMessageW
 	#define GetClassName GetClassNameW
@@ -15,4 +15,3 @@
 	#define GetClassName GetClassNameA
 	#define SendMessage  SendMessageA
 #endif // !UNICODE
-

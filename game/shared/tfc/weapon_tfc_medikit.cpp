@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -55,13 +55,13 @@ void CTFCMedikit::Precache()
 
 
 TFCWeaponID CTFCMedikit::GetWeaponID( void ) const
-{ 
+{
 	return WEAPON_MEDIKIT;
 }
 
 
 #ifdef CLIENT_DLL
-	
+
 	// ------------------------------------------------------------------------------------------------ //
 	// ------------------------------------------------------------------------------------------------ //
 	// CLIENT DLL SPECIFIC CODE
@@ -76,9 +76,9 @@ TFCWeaponID CTFCMedikit::GetWeaponID( void ) const
 	// GAME DLL SPECIFIC CODE
 	// ------------------------------------------------------------------------------------------------ //
 	// ------------------------------------------------------------------------------------------------ //
-	
+
 	void CTFCMedikit::AxeHit( CBaseEntity *pHit, bool bFirstSwing, trace_t &tr, float *flDamage, bool *bDoEffects )
-	{	
+	{
 		*flDamage = 0;
 		*bDoEffects = false;
 
@@ -94,7 +94,7 @@ TFCWeaponID CTFCMedikit::GetWeaponID( void ) const
 		// If other player is dead ( just changed teams? ) don't hit
 		if ( !pTarget->IsAlive() )
 			return;
-	
+
 		Vector vAttackDir = tr.endpos - tr.startpos;
 		VectorNormalize( vAttackDir );
 
@@ -120,7 +120,7 @@ TFCWeaponID CTFCMedikit::GetWeaponID( void ) const
 			{
 				pTimer = Timer_FindTimer( pTarget, TF_TIMER_HALLUCINATION );
 				ASSERT(pTimer != NULL);
-				
+
 				// Tell everyone
 				UTIL_ClientPrintAll( HUD_PRINTNOTIFY, "#Medic_curehalluc", pPlayer->GetPlayerName(), pTarget->GetPlayerName() );
 
@@ -218,12 +218,12 @@ TFCWeaponID CTFCMedikit::GetWeaponID( void ) const
 
 			// Damage Target
 			ClearMultiDamage();
-			pTarget->TraceAttack( CTakeDamageInfo( pPlayer, pPlayer, 10, DMG_CLUB ), vecDir, &tr ); 
+			pTarget->TraceAttack( CTakeDamageInfo( pPlayer, pPlayer, 10, DMG_CLUB ), vecDir, &tr );
 			ApplyMultiDamage();
 
 			// Don't infect if the player's already infected, a medic, or we're still in prematch
-			if ( (pTarget->m_Shared.GetStateFlags() & TFSTATE_INFECTED) || 
-				(pTarget->m_Shared.GetPlayerClass() == PC_MEDIC) || 
+			if ( (pTarget->m_Shared.GetStateFlags() & TFSTATE_INFECTED) ||
+				(pTarget->m_Shared.GetPlayerClass() == PC_MEDIC) ||
 				TFCGameRules()->IsInPreMatch() )
 			{
 				return;

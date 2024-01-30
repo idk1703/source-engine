@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -101,7 +101,7 @@ void PrintShaderHelp( int dllID )
 		int j;
 		for( j = 0; j < nParams; j++ )
 		{
-			printf( "<dt>%s\n<dd>%s\n", 
+			printf( "<dt>%s\n<dd>%s\n",
 				pShader->GetParamName( j ),
 				pShader->GetParamHelp( j )
 				);

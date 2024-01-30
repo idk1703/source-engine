@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -55,7 +55,7 @@ static void DrawFlashlightPass( CBaseShader *pShader, IMaterialVar** params, ISh
 		{
 			pShader->EnableAlphaBlending( SHADER_BLEND_ONE_MINUS_SRC_ALPHA, SHADER_BLEND_ONE );
 		}
-		
+
 		int flags = SHADER_DRAW_POSITION | SHADER_DRAW_TEXCOORD1 | SHADER_DRAW_COLOR | SHADER_DRAW_NORMAL;
 		pShaderShadow->DrawFlags( flags );
 		pShader->FogToBlack();
@@ -64,36 +64,36 @@ static void DrawFlashlightPass( CBaseShader *pShader, IMaterialVar** params, ISh
 
 		pShaderShadow->EnableCustomPixelPipe( true );
 		pShaderShadow->CustomTextureStages( 2 );
-		
+
 		// color stage 0
 		// projected texture * vertex color (lighting)
-		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-			SHADER_TEXCHANNEL_COLOR, 
+		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+			SHADER_TEXCHANNEL_COLOR,
 			SHADER_TEXOP_MODULATE,
-			SHADER_TEXARG_TEXTURE, 
+			SHADER_TEXARG_TEXTURE,
 			SHADER_TEXARG_VERTEXCOLOR );
-		
+
 		// color stage 1
 		// * base texture
-		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1, 
-			SHADER_TEXCHANNEL_COLOR, 
+		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
+			SHADER_TEXCHANNEL_COLOR,
 			SHADER_TEXOP_MODULATE,
 			SHADER_TEXARG_TEXTURE, SHADER_TEXARG_PREVIOUSSTAGE );
-		
+
 		// alpha stage 0
 		// get alpha from constant alpha * vertex color
-		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-			SHADER_TEXCHANNEL_ALPHA, 
+		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+			SHADER_TEXCHANNEL_ALPHA,
 			SHADER_TEXOP_MODULATE,
 			SHADER_TEXARG_CONSTANTCOLOR, SHADER_TEXARG_VERTEXCOLOR );
-		
+
 		// alpha stage 1
 		// get alpha from $basetexture
-		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1, 
-			SHADER_TEXCHANNEL_ALPHA, 
+		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
+			SHADER_TEXCHANNEL_ALPHA,
 			SHADER_TEXOP_MODULATE,
 			SHADER_TEXARG_TEXTURE, SHADER_TEXARG_PREVIOUSSTAGE );
-		
+
 		pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
 		pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );
 
@@ -110,7 +110,7 @@ static void DrawFlashlightPass( CBaseShader *pShader, IMaterialVar** params, ISh
 		// Specify that we have XYZ texcoords that need to be divided by W before the pixel shader.
 		// NOTE Tried to divide XY by Z, but doesn't work.
 		pShaderAPI->SetTextureTransformDimension( SHADER_TEXTURE_STAGE0, 3, true );
-		
+
 		pShader->BindTexture( SHADER_SAMPLER0, FLASHLIGHTTEXTURE, FLASHLIGHTTEXTUREFRAME );
 		if( nPass == 0 )
 		{
@@ -163,31 +163,31 @@ void DrawWorldVertexTransition_DX6( CBaseShader *pShader, IMaterialVar** params,
 
 		pShaderShadow->EnableCustomPixelPipe( true );
 		pShaderShadow->CustomTextureStages( 2 );
-		
+
 		// alpha and color stage 0
-		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-			SHADER_TEXCHANNEL_ALPHA, 
+		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+			SHADER_TEXCHANNEL_ALPHA,
 			SHADER_TEXOP_SELECTARG1,
-			SHADER_TEXARG_TEXTURE, 
+			SHADER_TEXARG_TEXTURE,
 			SHADER_TEXARG_TEXTURE );
 
-		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-			SHADER_TEXCHANNEL_COLOR, 
+		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+			SHADER_TEXCHANNEL_COLOR,
 			SHADER_TEXOP_SELECTARG1,
-			SHADER_TEXARG_TEXTURE, 
+			SHADER_TEXARG_TEXTURE,
 			SHADER_TEXARG_TEXTURE );
-		
+
 		// alpha and color stage 1
-		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1, 
-			SHADER_TEXCHANNEL_ALPHA, 
+		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
+			SHADER_TEXCHANNEL_ALPHA,
 			SHADER_TEXOP_MODULATE,
-			SHADER_TEXARG_TEXTURE, 
+			SHADER_TEXARG_TEXTURE,
 			SHADER_TEXARG_VERTEXCOLOR );
 
-		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1, 
-			SHADER_TEXCHANNEL_COLOR, 
+		pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
+			SHADER_TEXCHANNEL_COLOR,
 			SHADER_TEXOP_MODULATE2X,
-			SHADER_TEXARG_PREVIOUSSTAGE, 
+			SHADER_TEXARG_PREVIOUSSTAGE,
 			SHADER_TEXARG_TEXTURE );
 
 		// Looks backwards, but this is done so that lightmap alpha = 1 when only

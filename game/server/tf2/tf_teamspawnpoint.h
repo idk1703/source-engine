@@ -27,7 +27,7 @@ public:
 
 	COutputEvent m_OnPlayerSpawn;
 
-protected:	
+protected:
 	int		m_iDisabled;
 
 	void	EnableSpawn( void );

@@ -19,7 +19,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 vProjPos					: POSITION;	
+	float4 vProjPos					: POSITION;
 	float  vFog						: FOG;
 
 	float4 oT0						: TEXCOORD0;
@@ -30,7 +30,7 @@ struct VS_OUTPUT
 	float4 fogFactorW				: COLOR1;
 };
 
-float LengthThroughSphere( float3 vecRayOrigin, float3 vecRayDelta, 
+float LengthThroughSphere( float3 vecRayOrigin, float3 vecRayDelta,
 	float3 vecSphereCenter, float flRadius, out float alpha )
 {
 	// Solve using the ray equation + the sphere equation
@@ -90,18 +90,18 @@ VS_OUTPUT main( const VS_INPUT v )
 	float4 projPos;
 	float3 worldNormal, worldPos, worldTangentS, worldTangentT;
 
-	SkinPositionNormalAndTangentSpace( 
-			g_bSkinning, 
+	SkinPositionNormalAndTangentSpace(
+			g_bSkinning,
 			v.vPos, v.vNormal, v.vUserData,
 			v.vBoneWeights, v.vBoneIndices,
 			worldPos, worldNormal, worldTangentS, worldTangentT );
 
 	// Projected position
 	o.vProjPos = projPos = mul( float4( worldPos, 1 ), cViewProj );
-	
+
 	// calculate fog
 	o.fogFactorW = o.vFog = CalcFog( worldPos, projPos, FOGTYPE_RANGE );
-	
+
 	// Eye vector
 	float3 vWorldEyeVect = cEyePos - worldPos;
 
@@ -114,10 +114,10 @@ VS_OUTPUT main( const VS_INPUT v )
 	float2 bumpTexCoord;
 	bumpTexCoord.x = dot( v.vBaseTexCoord, cBumpTexCoordTransform[0] );
 	bumpTexCoord.y = dot( v.vBaseTexCoord, cBumpTexCoordTransform[1] );
-	
+
 	// dudv map
 	o.oT0.xy = bumpTexCoord;
-	
+
 	// flip Y by multiplying by -1
 	projPos.y *= -1.0f;
 
@@ -141,7 +141,7 @@ VS_OUTPUT main( const VS_INPUT v )
 	float g_SphereRadius = g_SphereDiameter * 0.5f;
 
 	float dummyAlpha;
-	float lengthThroughSphere = LengthThroughSphere( cEyePos, normalize( vWorldEyeVect ), 
+	float lengthThroughSphere = LengthThroughSphere( cEyePos, normalize( vWorldEyeVect ),
 					g_SphereCenter, g_SphereRadius, dummyAlpha );
 
 	float normalizedLengthThroughSphere = saturate( lengthThroughSphere / g_SphereDiameter );
@@ -152,5 +152,3 @@ VS_OUTPUT main( const VS_INPUT v )
 
 	return o;
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -52,10 +52,10 @@ class CAntlionTemplateMaker : public CTemplateNPCMaker
 	void	InputChangeDestinationGroup( inputdata_t &inputdata );
 
 	void	Activate( void );
-	
+
 	// Do not transition
 	int		ObjectCaps( void ) { return (BaseClass::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
-	
+
 	bool	CanMakeNPC( bool bIgnoreSolidEntities = false );
 	bool	ShouldAlwaysThink( void ) { return true; }
 
@@ -71,7 +71,7 @@ class CAntlionTemplateMaker : public CTemplateNPCMaker
 	void	SetFightTarget( string_t strTarget, CBaseEntity *pActivator = NULL, CBaseEntity *pCaller = NULL );
 	void	SetFightTarget( CBaseEntity *pEntity );
 	void	SetFightTarget( const Vector &position );
-	
+
 	void	SetFollowTarget( string_t strTarget, CBaseEntity *pActivator = NULL, CBaseEntity *pCaller = NULL );
 	void	SetFollowTarget( CBaseEntity *pEntity );
 
@@ -122,12 +122,12 @@ protected:
 	string_t	m_strSpawnTarget;	// name of target to spawn near
 	float		m_flSpawnRadius;	// radius around target to attempt to spawn in
 	float		m_flWorkerSpawnRate;	// Percentage chance of spawning a worker when we spawn an antlion [0..1].
-	
+
 	string_t	m_strFightTarget;	// target entity name that all children will be told to fight to
 	string_t	m_strFollowTarget;	// entity name that all children will follow
 
 	bool		m_bIgnoreBugbait;		// Whether or not to ignore bugbait
-	
+
 	AntlionMoveState_e	m_nChildMoveState;
 
 	EHANDLE		m_hFightTarget;		// A normal entity pointer for fight position
@@ -144,7 +144,7 @@ protected:
 	float		m_flPoolRegenTime;
 
 	float		m_flVehicleSpawnDistance;
-	
+
 	int			m_iSkinCount;
 
 	float		m_flBlockedBumpTime;
@@ -153,7 +153,7 @@ protected:
 	COutputEvent m_OnAllBlocked;
 
 	bool		m_bCreateSpores;
-		
+
 	DECLARE_DATADESC();
 };
 
@@ -175,7 +175,7 @@ public:
 	void	BroadcastFollowGoal( CBaseEntity *pFollowGoal );
 
 protected:
-	
+
 	void	GatherMakers( void );
 
 	CUtlVector< CHandle< CAntlionTemplateMaker > >	m_Makers;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -28,7 +28,7 @@ protected:
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CNPC_Antlion *pAntlion = dynamic_cast<CNPC_Antlion *>( pVictim );
 		if ( pAntlion && pAntlion->IsWorker()  )
@@ -57,7 +57,7 @@ class CAchievementEp2KillEnemiesWithCar : public CBaseAchievement
 {
 protected:
 
-	virtual void Init() 
+	virtual void Init()
 	{
 		SetFlags( ACH_LISTEN_KILL_ENEMY_EVENTS | ACH_SAVE_WITH_GAME );
 		SetInflictorFilter( "prop_vehicle_jeep" );
@@ -65,7 +65,7 @@ protected:
 		SetGoal( 20 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// count this if the object is a driveable vehicle and local player is driving
 		CBasePlayer *pLocalPlayer = UTIL_GetLocalPlayer();
@@ -81,7 +81,7 @@ DECLARE_ACHIEVEMENT( CAchievementEp2KillEnemiesWithCar, ACHIEVEMENT_EP2_KILL_ENE
 class CAchievementEp2KillHunterWithFlechette : public CBaseAchievement
 {
 protected:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_KILL_EVENTS | ACH_SAVE_WITH_GAME );
 		SetVictimFilter( "npc_hunter" );
@@ -100,7 +100,7 @@ class CAchievementEp2FindAllWebCaches : public CBaseAchievement
 		{
 			"EP2_WEBCACHE_01", "EP2_WEBCACHE_02", "EP2_WEBCACHE_03", "EP2_WEBCACHE_04",
 			"EP2_WEBCACHE_05", "EP2_WEBCACHE_06", "EP2_WEBCACHE_07", "EP2_WEBCACHE_08", "EP2_WEBCACHE_09"
-		};		
+		};
 		SetFlags( ACH_HAS_COMPONENTS | ACH_LISTEN_COMPONENT_EVENTS | ACH_SAVE_GLOBAL );
 		m_pszComponentNames = szComponents;
 		m_iNumComponents = ARRAYSIZE( szComponents );
@@ -118,7 +118,7 @@ class CAchievementEp2KillChopperNoMisses: public CFailableAchievement
 {
 protected:
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_MAP_EVENTS | ACH_SAVE_WITH_GAME );
 		SetGameDirFilter( "ep2" );
@@ -152,7 +152,7 @@ class CAchievementEp2FindAllRadarCaches : public CBaseAchievement
 		static const char *szComponents[] =
 		{
 			"EP2_RADARCACHE_VAN", "EP2_RADARCACHE_SHACK", "EP2_RADARCACHE_RPG", "EP2_RADARCACHE_CAVE", "EP2_RADARCACHE_HANGING"
-		};		
+		};
 		SetFlags( ACH_HAS_COMPONENTS | ACH_LISTEN_COMPONENT_EVENTS | ACH_SAVE_GLOBAL );
 		m_pszComponentNames = szComponents;
 		m_iNumComponents = ARRAYSIZE( szComponents );

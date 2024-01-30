@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -20,7 +20,7 @@
 extern char		qdir[1024];
 
 // This is the base engine + mod-specific game dir (e.g. "d:\tf2\mytfmod\")
-extern char		gamedir[1024];	
+extern char		gamedir[1024];
 
 
 // ---------------------------------------------------------------------------------------- //

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -44,10 +44,10 @@ CON_COMMAND( showinfo, "Shows a info panel: <type> <title> <message> [<command n
 {
 	if ( !gViewPortInterface )
 		return;
-	
+
 	if ( args.ArgC() < 4 )
 		return;
-		
+
 	IViewPortPanel * panel = gViewPortInterface->FindPanelByName( PANEL_INFO );
 
 	 if ( panel )
@@ -91,7 +91,7 @@ CTextWindow::CTextWindow(IViewPort *pViewPort) : Frame(NULL, PANEL_INFO	)
 	m_nExitCommand = TEXTWINDOW_CMD_NONE;
 	m_bShownURL = false;
 	m_bUnloadOnDismissal = false;
-	
+
 	// load the new scheme early!!
 	SetScheme("ClientScheme");
 	SetMoveable(false);
@@ -112,7 +112,7 @@ CTextWindow::CTextWindow(IViewPort *pViewPort) : Frame(NULL, PANEL_INFO	)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTextWindow::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -186,7 +186,7 @@ void CTextWindow::ShowURL( const char *URL, bool bAllowUserToDisable )
 			}
 		}
 		return;
-	} 
+	}
 
 	m_pHTMLMessage->SetVisible( true );
 	m_pHTMLMessage->OpenURL( URL, NULL );
@@ -202,7 +202,7 @@ void CTextWindow::ShowIndex( const char *entry )
 		return;
 
 	int index = g_pStringTableInfoPanel->FindStringIndex( m_szMessage );
-		
+
 	if ( index != ::INVALID_STRING_INDEX )
 		data = (const char *)g_pStringTableInfoPanel->GetStringUserData( index, &length );
 
@@ -245,7 +245,7 @@ void CTextWindow::ShowFile( const char *filename )
 		// it's a local HTML file
 		char localURL[ _MAX_PATH + 7 ];
 		Q_strncpy( localURL, "file://", sizeof( localURL ) );
-		
+
 		char pPathData[ _MAX_PATH ];
 		g_pFullFileSystem->GetLocalPath( filename, pPathData, sizeof(pPathData) );
 		Q_strncat( localURL, pPathData, sizeof( localURL ), COPY_ALL_CHARACTERS );
@@ -261,7 +261,7 @@ void CTextWindow::ShowFile( const char *filename )
 			return;
 
 		char buffer[2048];
-			
+
 		int size = MIN( g_pFullFileSystem->Size( f ), sizeof(buffer)-1 ); // just allow 2KB
 
 		g_pFullFileSystem->Read( buffer, size, f );
@@ -365,7 +365,7 @@ void CTextWindow::OnCommand( const char *command )
 		//=============================================================================
 		// HPE_END
 		//=============================================================================
-		
+
 		m_pViewPort->ShowPanel( this, false );
 	}
 

@@ -18,7 +18,7 @@ $Project "particles"
 		$File   "addbuiltin_ops.cpp"
 		$File	"builtin_particle_ops.cpp"
 		$File	"builtin_particle_render_ops.cpp"
-		$File	"particle_sort.cpp"		
+		$File	"particle_sort.cpp"
 		$File	"particles.cpp"
 		$File	"psheet.cpp"
 	}

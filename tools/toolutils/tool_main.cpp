@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -42,7 +42,7 @@ void DisconnectTools( );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VGUI_CreateToolRootPanel( void )
 {
@@ -51,7 +51,7 @@ void VGUI_CreateToolRootPanel( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VGUI_DestroyToolRootPanel( void )
 {
@@ -105,7 +105,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Singleton interface for tools 
+// Singleton interface for tools
 //-----------------------------------------------------------------------------
 static CToolDictionary g_ToolDictionary;
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CToolDictionary, IToolDictionary, VTOOLDICTIONARY_INTERFACE_VERSION, g_ToolDictionary );
@@ -223,11 +223,9 @@ void CToolDictionary::RegisterTool( IToolSystem *tool )
 
 
 //-----------------------------------------------------------------------------
-// Allows tools to install themselves into the dictionary 
+// Allows tools to install themselves into the dictionary
 //-----------------------------------------------------------------------------
 void RegisterTool( IToolSystem *tool )
 {
 	g_ToolDictionary.RegisterTool( tool );
 }
-
-

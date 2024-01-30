@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -27,7 +27,7 @@ extern ConVar tf_autobalance_xp_bonus;
 ConVar tf_autobalance_detected_delay( "tf_autobalance_detected_delay", "30", FCVAR_NONE );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFAutobalance::CTFAutobalance()
 {
@@ -35,14 +35,14 @@ CTFAutobalance::CTFAutobalance()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFAutobalance::~CTFAutobalance()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAutobalance::Reset()
 {
@@ -70,7 +70,7 @@ void CTFAutobalance::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAutobalance::Shutdown()
 {
@@ -78,7 +78,7 @@ void CTFAutobalance::Shutdown()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAutobalance::LevelShutdownPostEntity()
 {
@@ -86,7 +86,7 @@ void CTFAutobalance::LevelShutdownPostEntity()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFAutobalance::ShouldBeActive() const
 {
@@ -121,7 +121,7 @@ bool CTFAutobalance::ShouldBeActive() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFAutobalance::AreTeamsUnbalanced()
 {
@@ -179,7 +179,7 @@ bool CTFAutobalance::AreTeamsUnbalanced()
 		nDiffBetweenTeams = ( iMostPlayers - iLeastPlayers );
 	}
 
-	if ( nDiffBetweenTeams > mp_teams_unbalance_limit.GetInt() ) 
+	if ( nDiffBetweenTeams > mp_teams_unbalance_limit.GetInt() )
 	{
 		m_nNeeded = ( nDiffBetweenTeams / 2 );
 		return true;
@@ -189,7 +189,7 @@ bool CTFAutobalance::AreTeamsUnbalanced()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAutobalance::MonitorTeams()
 {
@@ -197,7 +197,7 @@ void CTFAutobalance::MonitorTeams()
 	{
 		if ( m_flBalanceTeamsTime < 0.f )
 		{
-			// trigger a small waiting period to see if the GC sends us someone before we need to balance the teams 
+			// trigger a small waiting period to see if the GC sends us someone before we need to balance the teams
 			m_flBalanceTeamsTime = gpGlobals->curtime + tf_autobalance_detected_delay.GetInt();
 		}
 		else if ( m_flBalanceTeamsTime < gpGlobals->curtime )
@@ -216,7 +216,7 @@ void CTFAutobalance::MonitorTeams()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFAutobalance::HaveAlreadyAskedPlayer( CTFPlayer *pTFPlayer ) const
 {
@@ -230,7 +230,7 @@ bool CTFAutobalance::HaveAlreadyAskedPlayer( CTFPlayer *pTFPlayer ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFAutobalance::GetTeamAutoBalanceScore( int nTeam ) const
 {
@@ -262,7 +262,7 @@ int CTFAutobalance::GetTeamAutoBalanceScore( int nTeam ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFAutobalance::GetPlayerAutoBalanceScore( CTFPlayer *pTFPlayer ) const
 {
@@ -298,7 +298,7 @@ int CTFAutobalance::GetPlayerAutoBalanceScore( CTFPlayer *pTFPlayer ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFPlayer *CTFAutobalance::FindPlayerToAsk()
 {
@@ -346,7 +346,7 @@ CTFPlayer *CTFAutobalance::FindPlayerToAsk()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAutobalance::FindVolunteers()
 {
@@ -430,7 +430,7 @@ void CTFAutobalance::FindVolunteers()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAutobalance::FrameUpdatePostEntityThink()
 {
@@ -459,18 +459,18 @@ void CTFAutobalance::FrameUpdatePostEntityThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFAutobalance::IsOkayToBalancePlayers()
 {
-	if ( GTFGCClientSystem()->GetLiveMatch() && !GTFGCClientSystem()->CanChangeMatchPlayerTeams() ) 
+	if ( GTFGCClientSystem()->GetLiveMatch() && !GTFGCClientSystem()->CanChangeMatchPlayerTeams() )
 		return false;
 
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAutobalance::ReplyReceived( CTFPlayer *pTFPlayer, bool bResponse )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -225,4 +225,3 @@ void CCreateMultiplayerGameBotPage::OnApplyChanges()
 	m_prefixEntry->GetText( entryBuffer, BUF_LENGTH );
 	UpdateValue( m_pSavedData, "bot_prefix", entryBuffer );
 }
-

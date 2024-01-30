@@ -443,8 +443,8 @@ void CTeamTrainWatcher::FireGameEvent( IGameEvent *event )
 
 			if ( bHandleEvent )
 			{
-				// If we're receding and we've hit a node but the next node (going backwards) is disabled 
-				// the train is going to stop (like at the base of a downhill section) when we start forward 
+				// If we're receding and we've hit a node but the next node (going backwards) is disabled
+				// the train is going to stop (like at the base of a downhill section) when we start forward
 				// again we won't pass this node again so don't change our hill state based on this node.
 				if ( m_bReceding )
 				{
@@ -677,7 +677,7 @@ void CTeamTrainWatcher::InternalSetNumTrainCappers( int iNumCappers, CBaseEntity
 
 			m_flRecedeStartTime = gpGlobals->curtime;
 			m_flRecedeTime = m_flRecedeStartTime + m_flRecedeTotalTime;
-		}		
+		}
 	}
 	else
 	{
@@ -782,7 +782,7 @@ void CTeamTrainWatcher::FindGlowEntity( void )
 				pGlowEnt = gEntList.FindEntityByName( NULL, STRING( iszName1 ) );
 				break;
 			}
-			
+
 			pPhysConstraint = dynamic_cast<CPhysFixed*>( gEntList.FindEntityByClassname( pPhysConstraint, "phys_constraint" ) );
 		}
 
@@ -822,7 +822,7 @@ void CTeamTrainWatcher::FindGlowEntity( void )
 // calculate the distance between each
 // ==========================================================
 void CTeamTrainWatcher::WatcherActivate( void )
-{		
+{
 	m_flRecedeTime = 0;
 	m_bWaitingToRecede = false;
 	m_bCapBlocked = false;
@@ -949,7 +949,7 @@ void CTeamTrainWatcher::WatcherActivate( void )
 						flDistance = m_flTotalPathDistance; // we had a single node marked as a hill, so we'll use the current distance as the next marker
 					}
 
-					hillData.AddToTail( flDistance ); 
+					hillData.AddToTail( flDistance );
 
 					// is our current node the start of another hill?
 					if ( pNode->GetHillType() != HILL_TYPE_NONE )
@@ -1018,13 +1018,13 @@ void CTeamTrainWatcher::WatcherActivate( void )
 			}
 		}
 	}
- 
+
 	// We have total distance and increments in our links array
 	for ( i=0;i<m_iNumCPLinks;i++ )
 	{
 		int iCPIndex = m_CPLinks[i].hCP.Get()->GetPointIndex();
 // This can be pulled once DoD includes team_objectiveresource.* and c_team_objectiveresource.*
-#ifndef DOD_DLL 
+#ifndef DOD_DLL
 		ObjectiveResource()->SetTrainPathDistance( iCPIndex, m_CPLinks[i].flDistanceFromStart / m_flTotalPathDistance );
 #endif
 	}
@@ -1157,7 +1157,7 @@ void CTeamTrainWatcher::WatcherThink( void )
 				}
 			}
 
-			// play any concepts that we might need to play		
+			// play any concepts that we might need to play
 			if ( TeamplayRoundBasedRules() )
 			{
 				if ( m_iTrainSpeedLevel == 0 && iOldTrainSpeedLevel != 0 )
@@ -1248,11 +1248,11 @@ void CTeamTrainWatcher::WatcherThink( void )
 			{
 				// Accumulate distance traveled
 				m_flTrainDistanceAccumulator += m_flTrainDistanceFromStart - flLastDistanceFromStart;
-		
+
 				// If we're travelling forward and made enough progress to warrant firing an event
 				if ( m_iTrainSpeedLevel > 0 && m_flTrainDistanceAccumulator >= nMinProgressToReport )
 				{
-					
+
 					m_flTrainDistanceAccumulator -= nMinProgressToReport;
 
 					// Fire an event for all the touching players
@@ -1303,8 +1303,8 @@ void CTeamTrainWatcher::WatcherThink( void )
 						CTeamControlPointMaster *pMaster = g_hControlPointMasters.Count() ? g_hControlPointMasters[0] : NULL;
 						if ( pMaster )
 						{
-							// if we're not playing mini-rounds 
-							if ( !pMaster->PlayingMiniRounds() )  
+							// if we're not playing mini-rounds
+							if ( !pMaster->PlayingMiniRounds() )
 							{
 								for ( int i = FIRST_GAME_TEAM ; i < MAX_CONTROL_POINT_TEAMS ; i++ )
 								{
@@ -1317,7 +1317,7 @@ void CTeamTrainWatcher::WatcherThink( void )
 									}
 								}
 							}
-							else 
+							else
 							{
 								// or this is the last round
 								if ( pMaster->NumPlayableControlPointRounds() == 1 )
@@ -1606,10 +1606,8 @@ void CTeamTrainWatcher::DumpStats( void )
 		flLastPosition = m_CPLinks[i].flDistanceFromStart;
 	}
 
-	V_sprintf_safe( szTemp, "\tTotal Distance: %0.2f\n\n", flTotalDistance ); 
+	V_sprintf_safe( szTemp, "\tTotal Distance: %0.2f\n\n", flTotalDistance );
 	V_strcat_safe( szOutput, szTemp );
 	Msg( "%s", szOutput );
 }
 #endif // STAGING_ONLY && TF_DLL
-
-

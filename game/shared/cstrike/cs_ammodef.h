@@ -52,4 +52,3 @@ CCSAmmoDef* GetCSAmmoDef();
 
 
 #endif // CS_AMMODEF_H
- 

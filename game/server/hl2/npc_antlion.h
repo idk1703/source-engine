@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,15 +37,15 @@ public:
 	}
 
 	bool FarFromFollowTarget( void )
-	{ 
-		return ( GetFollowTarget() && (GetAbsOrigin() - GetFollowTarget()->GetAbsOrigin()).LengthSqr() > ANTLION_FOLLOW_DISTANCE_SQR ); 
+	{
+		return ( GetFollowTarget() && (GetAbsOrigin() - GetFollowTarget()->GetAbsOrigin()).LengthSqr() > ANTLION_FOLLOW_DISTANCE_SQR );
 	}
 
 	bool ShouldFollow( void )
 	{
 		if ( GetFollowTarget() == NULL )
 			return false;
-		
+
 		if ( GetEnemy() != NULL )
 			return false;
 
@@ -87,7 +87,7 @@ public:
 	float		MaxYawSpeed( void );
 	bool		FInViewCone( CBaseEntity *pEntity );
 	bool		FInViewCone( const Vector &vecSpot );
-				
+
 	void		Activate( void );
 	void		HandleAnimEvent( animevent_t *pEvent );
 	void		StartTask( const Task_t *pTask );
@@ -104,7 +104,7 @@ public:
 	void		ZapThink( void );
 	void		BurrowUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	bool		CreateVPhysics();
-				
+
 	bool		IsJumpLegal( const Vector &startPos, const Vector &apex, const Vector &endPos ) const;
 	bool		HandleInteraction( int interactionType, void *data, CBaseCombatCharacter *sender = NULL );
 	bool		QuerySeeEntity( CBaseEntity *pEntity, bool bOnlyHateOrFearIfNPC = false );
@@ -126,11 +126,11 @@ public:
 	virtual	bool	IsHeavyDamage( const CTakeDamageInfo &info );
 
 	Class_T		Classify( void ) { return CLASS_ANTLION; }
-	
+
 	void		Event_Killed( const CTakeDamageInfo &info );
 	bool		FValidateHintType ( CAI_Hint *pHint );
 	void		GatherEnemyConditions( CBaseEntity *pEnemy );
-	
+
 	bool		IsAllied( void );
 	bool		ShouldGib( const CTakeDamageInfo &info );
 	bool		CorpseGib( const CTakeDamageInfo &info );
@@ -187,7 +187,7 @@ private:
 
 	void	Burrow( void );
 	void	Unburrow( void );
-	
+
 	void	InputUnburrow( inputdata_t &inputdata );
 	void	InputBurrow( inputdata_t &inputdata );
 	void	InputBurrowAway( inputdata_t &inputdata );
@@ -213,9 +213,9 @@ private:
 	bool	IsUnusableNode(int iNodeID, CAI_Hint *pHint);
 
 	bool	OnObstructionPreSteer( AILocalMoveGoal_t *pMoveGoal, float distClear, AIMoveResult_t *pResult );
-	
+
 	void	ManageFleeCapabilities( bool bEnable );
-	
+
 	int		SelectFailSchedule( int failedSchedule, int failedTask, AI_TaskFailureCode_t taskFailCode );
 	bool	IsFirmlyOnGround( void );
 	void	CascadePush( const Vector &vecForce );
@@ -226,7 +226,7 @@ private:
 	virtual bool GetSpitVector( const Vector &vecStartPos, const Vector &vecTarget, Vector *vecOut );
 	virtual bool InnateWeaponLOSCondition( const Vector &ownerPos, const Vector &targetPos, bool bSetConditions );
 	virtual bool FCanCheckAttacks( void );
-	
+
 	bool SeenEnemyWithinTime( float flTime );
 	void DelaySquadAttack( float flDuration );
 
@@ -252,7 +252,7 @@ private:
 
 	COutputEvent	m_OnReachFightGoal;	//Reached our scripted destination to fight to
 	COutputEvent	m_OnUnBurrowed;	//Unburrowed
-	
+
 	Vector		m_vecSavedJump;
 	Vector		m_vecLastJumpAttempt;
 

@@ -84,7 +84,7 @@ END_DATADESC()
 static ConVar birds_debug( "birds_debug", "0" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Crow::Spawn( void )
 {
@@ -122,7 +122,7 @@ void CNPC_Crow::Spawn( void )
 	m_NPCState = NPC_STATE_NONE;
 
 	m_nMorale = random->RandomInt( 0, 12 );
-	
+
 	SetCollisionGroup( HL2COLLISION_GROUP_CROW );
 
 	CapabilitiesClear();
@@ -155,12 +155,12 @@ void CNPC_Crow::Spawn( void )
 //-----------------------------------------------------------------------------
 Class_T	CNPC_Crow::Classify( void )
 {
-	return( CLASS_EARTH_FAUNA ); 
+	return( CLASS_EARTH_FAUNA );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pEnemy - 
+// Purpose:
+// Input  : pEnemy -
 //-----------------------------------------------------------------------------
 void CNPC_Crow::GatherEnemyConditions( CBaseEntity *pEnemy )
 {
@@ -181,12 +181,12 @@ void CNPC_Crow::GatherEnemyConditions( CBaseEntity *pEnemy )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : posSrc - 
+// Purpose:
+// Input  : posSrc -
 // Output : Vector
 //-----------------------------------------------------------------------------
-Vector CNPC_Crow::BodyTarget( const Vector &posSrc, bool bNoisy ) 
-{ 
+Vector CNPC_Crow::BodyTarget( const Vector &posSrc, bool bNoisy )
+{
 	Vector vecResult;
 	vecResult = GetAbsOrigin();
 	vecResult.z += 6;
@@ -195,7 +195,7 @@ Vector CNPC_Crow::BodyTarget( const Vector &posSrc, bool bNoisy )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Crow::StopLoopingSounds( void )
 {
@@ -213,7 +213,7 @@ void CNPC_Crow::StopLoopingSounds( void )
 //-----------------------------------------------------------------------------
 // Purpose: Catches the monster-specific messages that occur when tagged
 //			animation frames are played.
-// Input  : pEvent - 
+// Input  : pEvent -
 //-----------------------------------------------------------------------------
 void CNPC_Crow::HandleAnimEvent( animevent_t *pEvent )
 {
@@ -299,8 +299,8 @@ void CNPC_Crow::HandleAnimEvent( animevent_t *pEvent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : eNewActivity - 
+// Purpose:
+// Input  : eNewActivity -
 //-----------------------------------------------------------------------------
 void CNPC_Crow::OnChangeActivity( Activity eNewActivity )
 {
@@ -354,12 +354,12 @@ void CNPC_Crow::InputFlyAway( inputdata_t &inputdata )
 
 }
 
-void CNPC_Crow::UpdateEfficiency( bool bInPVS )	
+void CNPC_Crow::UpdateEfficiency( bool bInPVS )
 {
 	if ( IsFlying() )
 	{
-		SetEfficiency( ( GetSleepState() != AISS_AWAKE ) ? AIE_DORMANT : AIE_NORMAL ); 
-		SetMoveEfficiency( AIME_NORMAL ); 
+		SetEfficiency( ( GetSleepState() != AISS_AWAKE ) ? AIE_DORMANT : AIE_NORMAL );
+		SetMoveEfficiency( AIME_NORMAL );
 		return;
 	}
 
@@ -400,7 +400,7 @@ bool CNPC_Crow::OverrideMove( float flInterval )
 					if ( GetAbsVelocity() == vec3_origin )
 					{
 						float flDamage = m_iHealth;
-						
+
 						CTakeDamageInfo	dmgInfo( this, this, flDamage, DMG_GENERIC );
 						GuessDamageForce( &dmgInfo, vec3_origin - Vector( 0, 0, 0.1 ), GetAbsOrigin() );
 						TakeDamage( dmgInfo );
@@ -416,7 +416,7 @@ bool CNPC_Crow::OverrideMove( float flInterval )
 				{
 					m_vLastStoredOrigin = GetAbsOrigin();
 				}
-				
+
 				m_flLastStuckCheck = gpGlobals->curtime + 1.0f;
 			}
 
@@ -441,7 +441,7 @@ bool CNPC_Crow::OverrideMove( float flInterval )
 		}
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -489,7 +489,7 @@ void CNPC_Crow::MoveCrowFly( float flInterval )
 {
 	//
 	// Bound interval so we don't get ludicrous motion when debugging
-	// or when framerate drops catastrophically.  
+	// or when framerate drops catastrophically.
 	//
 	if (flInterval > 1.0)
 	{
@@ -532,7 +532,7 @@ void CNPC_Crow::MoveCrowFly( float flInterval )
 	Vector vecMoveDir = ( vecMoveGoal - GetAbsOrigin() );
 	Vector vForward;
 	AngleVectors( GetAbsAngles(), &vForward );
-	
+
 	//
 	// Fly towards the movement goal.
 	//
@@ -586,7 +586,7 @@ void CNPC_Crow::MoveCrowFly( float flInterval )
 		{
 			Vector vNodePos = vecMoveGoal;
 			GetHintNode()->GetPosition(this, &vNodePos);
-			
+
 			GetNavigator()->SetGoal( vNodePos );
 		}
 	}
@@ -613,7 +613,7 @@ void CNPC_Crow::MoveCrowFly( float flInterval )
 	//Bank and set angles.
 	Vector vRight;
 	QAngle vRollAngle;
-	
+
 	VectorAngles( vForward, vRollAngle );
 	vRollAngle.z = 0;
 
@@ -629,9 +629,9 @@ void CNPC_Crow::MoveCrowFly( float flInterval )
 //-----------------------------------------------------------------------------
 // Purpose: Looks ahead to see if we are going to hit something. If we are, a
 //			recommended avoidance path is returned.
-// Input  : vecMoveDir - 
-//			flSpeed - 
-//			vecDeflect - 
+// Input  : vecMoveDir -
+//			flSpeed -
+//			vecDeflect -
 // Output : Returns true if we hit something and need to deflect our course,
 //			false if all is well.
 //-----------------------------------------------------------------------------
@@ -725,7 +725,7 @@ void CNPC_Crow::Takeoff( const Vector &vGoal )
 		//
 		Vector vecMoveDir = vGoal - GetAbsOrigin();
 		VectorNormalize( vecMoveDir );
-		
+
 		// FIXME: pitch over time
 
 		SetFlyingState( FlyState_Flying );
@@ -769,8 +769,8 @@ void CNPC_Crow::StartTargetHandling( CBaseEntity *pTargetEnt )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pTask - 
+// Purpose:
+// Input  : pTask -
 //-----------------------------------------------------------------------------
 void CNPC_Crow::StartTask( const Task_t *pTask )
 {
@@ -868,7 +868,7 @@ void CNPC_Crow::StartTask( const Task_t *pTask )
 			{
 				SetFlyingState( FlyState_Flying );
 				StartTargetHandling( GetGoalEnt() );
-			
+
 				m_bReachedMoveGoal = false;
 				TaskComplete();
 				SetHintNode( NULL );
@@ -879,7 +879,7 @@ void CNPC_Crow::StartTask( const Task_t *pTask )
 			{
 				Vector vHintPos;
 				GetHintNode()->GetPosition(this, &vHintPos);
-		
+
 				SetNavType( NAV_FLY );
 				CapabilitiesAdd( bits_CAP_MOVE_FLY );
 				// @HACKHACK: Force allow triangulation. Too many HL2 maps were relying on this feature WRT fly nodes (toml 8/1/2007)
@@ -954,8 +954,8 @@ void CNPC_Crow::StartTask( const Task_t *pTask )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pTask - 
+// Purpose:
+// Input  : pTask -
 //-----------------------------------------------------------------------------
 void CNPC_Crow::RunTask( const Task_t *pTask )
 {
@@ -978,7 +978,7 @@ void CNPC_Crow::RunTask( const Task_t *pTask )
 				m_bSoar = false;
 				m_flSoarTime = gpGlobals->curtime + random->RandomFloat( 2, 5 );
 			}
-			
+
 			break;
 		}
 
@@ -1079,7 +1079,7 @@ bool CNPC_Crow::CorpseGib( const CTakeDamageInfo &info )
 bool CNPC_Crow::BecomeRagdollOnClient( const Vector &force )
 {
 	Vector newForce = force;
-	
+
 	if( VPhysicsGetObject() )
 	{
 		float flMass = VPhysicsGetObject()->GetMass();
@@ -1092,7 +1092,7 @@ bool CNPC_Crow::BecomeRagdollOnClient( const Vector &force )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CNPC_Crow::FValidateHintType( CAI_Hint *pHint )
 {
@@ -1102,7 +1102,7 @@ bool CNPC_Crow::FValidateHintType( CAI_Hint *pHint )
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the activity for the given hint type.
-// Input  : sHintType - 
+// Input  : sHintType -
 //-----------------------------------------------------------------------------
 Activity CNPC_Crow::GetHintActivity( short sHintType, Activity HintsActivity )
 {
@@ -1116,11 +1116,11 @@ Activity CNPC_Crow::GetHintActivity( short sHintType, Activity HintsActivity )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pevInflictor - 
-//			pevAttacker - 
-//			flDamage - 
-//			bitsDamageType - 
+// Purpose:
+// Input  : pevInflictor -
+//			pevAttacker -
+//			flDamage -
+//			bitsDamageType -
 //-----------------------------------------------------------------------------
 int CNPC_Crow::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 {
@@ -1251,12 +1251,12 @@ int CNPC_Crow::SelectSchedule( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Crow::Precache( void )
 {
 	BaseClass::Precache();
-	
+
 	PrecacheModel( "models/crow.mdl" );
 	PrecacheModel( "models/pigeon.mdl" );
 	PrecacheModel( "models/seagull.mdl" );
@@ -1365,13 +1365,13 @@ bool CNPC_Crow::HandleInteraction( int interactionType, void *data, CBaseCombatC
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CNPC_Crow::DrawDebugTextOverlays( void )
 {
 	int nOffset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 		Q_snprintf( tempstr, sizeof( tempstr ), "morale: %d", m_nMorale );
@@ -1427,7 +1427,7 @@ AI_BEGIN_CUSTOM_NPC( npc_crow, CNPC_Crow )
 	DECLARE_ANIMEVENT( AE_CROW_HOP )
 	DECLARE_ANIMEVENT( AE_CROW_FLY )
 	DECLARE_ANIMEVENT( AE_CROW_TAKEOFF )
-	
+
 
 	DECLARE_CONDITION( COND_CROW_ENEMY_TOO_CLOSE )
 	DECLARE_CONDITION( COND_CROW_ENEMY_WAY_TOO_CLOSE )
@@ -1438,7 +1438,7 @@ AI_BEGIN_CUSTOM_NPC( npc_crow, CNPC_Crow )
 	DEFINE_SCHEDULE
 	(
 		SCHED_CROW_IDLE_WALK,
-		
+
 		"	Tasks"
 		"		TASK_SET_FAIL_SCHEDULE			SCHEDULE:SCHED_IDLE_STAND"
 		"		TASK_CROW_PICK_RANDOM_GOAL		0"
@@ -1463,7 +1463,7 @@ AI_BEGIN_CUSTOM_NPC( npc_crow, CNPC_Crow )
 	DEFINE_SCHEDULE
 	(
 		SCHED_CROW_WALK_AWAY,
-		
+
 		"	Tasks"
 		"		TASK_SET_FAIL_SCHEDULE			SCHEDULE:SCHED_CROW_FLY_AWAY"
 		"		TASK_CROW_PICK_EVADE_GOAL		0"
@@ -1486,7 +1486,7 @@ AI_BEGIN_CUSTOM_NPC( npc_crow, CNPC_Crow )
 	DEFINE_SCHEDULE
 	(
 		SCHED_CROW_RUN_AWAY,
-		
+
 		"	Tasks"
 		"		TASK_SET_FAIL_SCHEDULE			SCHEDULE:SCHED_CROW_FLY_AWAY"
 		"		TASK_CROW_PICK_EVADE_GOAL		0"
@@ -1530,7 +1530,7 @@ AI_BEGIN_CUSTOM_NPC( npc_crow, CNPC_Crow )
 	DEFINE_SCHEDULE
 	(
 		SCHED_CROW_IDLE_FLY,
-		
+
 		"	Tasks"
 		"		TASK_FIND_HINTNODE				0"
 		"		TASK_GET_PATH_TO_HINTNODE		0"

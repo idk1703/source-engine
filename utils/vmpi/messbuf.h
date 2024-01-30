@@ -1,13 +1,13 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
 //
 // MessageBuffer - handy for packing and upacking
-// structures to be sent as messages  
+// structures to be sent as messages
 //
 #ifndef _MESSAGEBUFFER
 #define _MESSAGEBUFFER
@@ -28,7 +28,7 @@ class MessageBuffer {
 		int		setLen(int len);
 		int		getOffset();
 		int		setOffset(int offset);
-		
+
 		int		write(void const * p, int bytes);
 		int		update(int loc, void const * p, int bytes);
 		int		extract(int loc, void * p, int bytes);
@@ -40,7 +40,7 @@ class MessageBuffer {
 		void	clear();
 		void	clear(int minsize);
 		void	reset(int minsize);
-		void	print(FILE * ofile, int num);	
+		void	print(FILE * ofile, int num);
 
 	private:
 		void	resize(int minsize);

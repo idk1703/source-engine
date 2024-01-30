@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -52,8 +52,8 @@ public:
 
 	// Allows us to convert image formats
 	virtual bool ConvertImageFormat( unsigned char *src, enum ImageFormat srcImageFormat,
-									 unsigned char *dst, enum ImageFormat dstImageFormat, 
-									 int width, int height, int srcStride = 0, int dstStride = 0 ) = 0;
+									unsigned char *dst, enum ImageFormat dstImageFormat,
+									int width, int height, int srcStride = 0, int dstStride = 0 ) = 0;
 
 	// Figures out the amount of memory needed by a bitmap
 	virtual int GetMemRequired( int width, int height, int depth, ImageFormat format, bool mipmap ) = 0;
@@ -61,7 +61,7 @@ public:
 	// Gets image format info
 	virtual const ImageFormatInfo_t& ImageFormatInfo( ImageFormat fmt ) const = 0;
 
-    // Bind standard textures
+	// Bind standard textures
 	virtual void BindStandardTexture( Sampler_t sampler, StandardTextureId_t id ) = 0;
 
 	// What are the lightmap dimensions?

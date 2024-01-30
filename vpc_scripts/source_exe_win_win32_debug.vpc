@@ -20,7 +20,7 @@ $Macro						"_SUBDIRSUFFIX"		"$INTERMEDIATESUBDIR$_STATICSUBDIR$GAMENAME$PLATSUB
 
 $Configuration "Debug"
 {
-	$General	
+	$General
 	{
 		// General
 		$OutputDirectory					".\Debug$_SUBDIRSUFFIX"
@@ -59,7 +59,7 @@ $Configuration "Debug"
 		$Resolve#UsingReferences
 		$DebugInformationFormat					"Program Database for Edit & Continue (/ZI)" [$WIN32]
 		$DebugInformationFormat					"Program Database (/Zi)" [$WIN64]
-		$SuppressStartupBanner		
+		$SuppressStartupBanner
 		$WarningLevel							"Level 4 (/W4)"
 		$TreatWarningsAsErrors					"No"
 		$UseUNICODEResponseFiles				"No"
@@ -221,7 +221,7 @@ $Configuration "Debug"
 		$DelayLoadedDLL
 		$ImportLibrary
 		$MergeSections
-		$TargetMachine						
+		$TargetMachine
 		$Profile
 		$CLRThreadAttribute
 		$CLRImageType
@@ -234,7 +234,7 @@ $Configuration "Debug"
 		$ImageHasSafeExceptionHandlers		"false"
 
 		// Command Line
-		$AdditionalOptions						
+		$AdditionalOptions
 	}
 
 	$ManifestTool
@@ -266,7 +266,7 @@ $Configuration "Debug"
 		$UpdateFileHashesSearchPath
 
 		// Command Line
-		$AdditionalOptions						
+		$AdditionalOptions
 	}
 
 	$XMLDocumentGenerator
@@ -282,7 +282,7 @@ $Configuration "Debug"
 
 	$BrowseInformation
 	{
-		$SuppressStartupBanner				"Yes (/nologo)"	
+		$SuppressStartupBanner				"Yes (/nologo)"
 		$OutputFile							"$(OutDir)/$OUTBINNAME.bsc"
 		$AdditionalOptions
 	}
@@ -298,7 +298,7 @@ $Configuration "Debug"
 		$ResourceFileName
 
 		// Command Line
-		$AdditionalOptions						
+		$AdditionalOptions
 	}
 
 	$PreBuildEvent

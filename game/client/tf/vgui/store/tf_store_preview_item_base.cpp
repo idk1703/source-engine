@@ -26,16 +26,16 @@
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFStorePreviewItemPanelBase::CTFStorePreviewItemPanelBase( vgui::Panel *pParent, const char *pResFile, const char *pPanelName, CStorePage *pOwner )
 :	CStorePreviewItemPanel( pParent, pResFile, "storepreviewitem", pOwner )
-{								   
+{
 	ResetHandles();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::ResetHandles( void )
 {
@@ -62,7 +62,7 @@ void CTFStorePreviewItemPanelBase::ResetHandles( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::SetCycleLabelText( vgui::Label *pTargetLabel, const char *pCycleText )
 {
@@ -73,7 +73,7 @@ void CTFStorePreviewItemPanelBase::SetCycleLabelText( vgui::Label *pTargetLabel,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -100,7 +100,7 @@ void CTFStorePreviewItemPanelBase::ApplySchemeSettings( vgui::IScheme *pScheme )
 	// Find all the class images
 	CStorePreviewClassIcon *pClassImage = NULL;
 	int iIcon = 1;
-	do 
+	do
 	{
 		pClassImage = dynamic_cast<CStorePreviewClassIcon*>( FindChildByName( VarArgs("ClassUsageImage%d",iIcon)) );
 		if ( pClassImage )
@@ -128,7 +128,7 @@ void CTFStorePreviewItemPanelBase::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 		// ignore everything that is not a paint can tool
 		const IEconTool *pEconTool = pItemDef->GetEconTool();
-		if ( pEconTool && !V_strcmp( pEconTool->GetTypeName(), "paint_can" ) ) 
+		if ( pEconTool && !V_strcmp( pEconTool->GetTypeName(), "paint_can" ) )
 		{
 			m_vecPaintCans.AddToTail( pItemDef->GetDefinitionIndex() );
 		}
@@ -136,13 +136,13 @@ void CTFStorePreviewItemPanelBase::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::PerformLayout( void )
 {
 	BaseClass::PerformLayout();
 
-	// center the icons (we need to redo some of the work of CStorePreviewItemPanel, because we 
+	// center the icons (we need to redo some of the work of CStorePreviewItemPanel, because we
 	// center the base item icons along with our TF specific class ones)
 	int iNumItemIcons = 0;
 	FOR_EACH_VEC( m_pItemIcons, i )
@@ -196,7 +196,7 @@ void CTFStorePreviewItemPanelBase::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static bool IsAnythingPaintable( const CUtlVector<CEconItemView*>& vecItems )
 {
@@ -210,7 +210,7 @@ static bool IsAnythingPaintable( const CUtlVector<CEconItemView*>& vecItems )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static void UpdatePaintColorsForTeam( CTFPlayerModelPanel *pPlayerModelPanel, uint32 unRGB0, uint32 unRGB1 )
 {
@@ -224,7 +224,7 @@ static void UpdatePaintColorsForTeam( CTFPlayerModelPanel *pPlayerModelPanel, ui
 	const CUtlVector<CEconItemView*> &items = pPlayerModelPanel->GetCarriedItems();
 	if ( !IsAnythingPaintable( items ) )
 		return;
-	
+
 	for ( int i=0; i<items.Count(); ++i )
 	{
 		if ( items[i]->GetStaticData()->GetCapabilities() & ITEM_CAP_PAINTABLE )
@@ -236,7 +236,7 @@ static void UpdatePaintColorsForTeam( CTFPlayerModelPanel *pPlayerModelPanel, ui
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::OnCommand( const char *command )
 {
@@ -286,11 +286,11 @@ void CTFStorePreviewItemPanelBase::OnCommand( const char *command )
 		{
 			const CUtlVector<CEconItemView*> &items = m_pPlayerModelPanel->GetCarriedItems();
 			int iLastItem = m_iCurrentHeldItem;
-			do 
+			do
 			{
 				m_iCurrentHeldItem = ( m_iCurrentHeldItem + 1 ) % items.Count();
-			} while ( m_iCurrentHeldItem != iLastItem  && m_pPlayerModelPanel->HoldItem( m_iCurrentHeldItem ) == false );		
-		}		
+			} while ( m_iCurrentHeldItem != iLastItem  && m_pPlayerModelPanel->HoldItem( m_iCurrentHeldItem ) == false );
+		}
 		m_pPlayerModelPanel->SetTeam( m_pPlayerModelPanel->GetTeam() );
 		return;
 	}
@@ -325,7 +325,7 @@ void CTFStorePreviewItemPanelBase::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::OnClassIconSelected( KeyValues *data )
 {
@@ -343,7 +343,7 @@ void CTFStorePreviewItemPanelBase::OnClassIconSelected( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::SetPlayerModelVisible( bool bVisible )
 {
@@ -363,7 +363,7 @@ void CTFStorePreviewItemPanelBase::SetPlayerModelVisible( bool bVisible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::PreviewItem( int iClass, CEconItemView *pItem, const econ_store_entry_t* pEntry )
 {
@@ -375,7 +375,7 @@ void CTFStorePreviewItemPanelBase::PreviewItem( int iClass, CEconItemView *pItem
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::SetState( preview_state_t iState )
 {
@@ -384,7 +384,7 @@ void CTFStorePreviewItemPanelBase::SetState( preview_state_t iState )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFStorePreviewItemPanelBase::GetPreviewTeam() const
 {
@@ -394,11 +394,11 @@ int CTFStorePreviewItemPanelBase::GetPreviewTeam() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::UpdateIcons( void )
 {
-	// Don't bother calling back to the base class UpdateIcons, because 
+	// Don't bother calling back to the base class UpdateIcons, because
 	// we'd need to redo it all with the class icons factored in.
 
 	bool bAdditionalIcons = false;
@@ -408,7 +408,7 @@ void CTFStorePreviewItemPanelBase::UpdateIcons( void )
 	{
 		// Show as many of the items in the bundle as possible
 		const CEconItemDefinition *pItemData = m_item.GetItemDefinition();
-		if ( pItemData ) 
+		if ( pItemData )
 		{
 			const bundleinfo_t *pBundleInfo = pItemData->GetBundleInfo();
 			if ( pBundleInfo )
@@ -422,7 +422,7 @@ void CTFStorePreviewItemPanelBase::UpdateIcons( void )
 						continue;
 					}
 
-					int iItemPos = (i - 1 + m_iCurrentIconPosition); 
+					int iItemPos = (i - 1 + m_iCurrentIconPosition);
 					if ( pBundleInfo->vecItemDefs.Count() > iItemPos && pBundleInfo->vecItemDefs[iItemPos] )
 					{
 						m_pItemIcons[i]->SetItem( i, pBundleInfo->vecItemDefs[iItemPos]->GetDefinitionIndex() );
@@ -519,7 +519,7 @@ void CTFStorePreviewItemPanelBase::UpdateIcons( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::OnTick( void )
 {
@@ -538,7 +538,7 @@ void CTFStorePreviewItemPanelBase::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::UpdateModelPanel()
 {
@@ -548,7 +548,7 @@ void CTFStorePreviewItemPanelBase::UpdateModelPanel()
 		m_pPlayerModelPanel->SetToPlayerClass( m_iCurrentClass, false );
 		m_pPlayerModelPanel->ClearCarriedItems();
 
-		
+
 		if ( m_item.IsValid() )
 		{
 			CTFItemDefinition *pItemDef = m_item.GetStaticData();
@@ -565,7 +565,7 @@ void CTFStorePreviewItemPanelBase::UpdateModelPanel()
 						bundleItemData.SetClientItemFlags( kEconItemFlagClient_Preview );
 						int iItemIdx = m_pPlayerModelPanel->AddCarriedItem( &bundleItemData );
 						// try to hold it
-						if ( m_pPlayerModelPanel->HoldItem( iItemIdx ) ) 
+						if ( m_pPlayerModelPanel->HoldItem( iItemIdx ) )
 						{
 							m_iCurrentHeldItem = iItemIdx;
 						}
@@ -592,7 +592,7 @@ void CTFStorePreviewItemPanelBase::UpdateModelPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::UpdatePlayerModelButtons()
 {
@@ -603,7 +603,7 @@ void CTFStorePreviewItemPanelBase::UpdatePlayerModelButtons()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::UpdateCustomizeMenu( void )
 {
@@ -685,7 +685,7 @@ void CTFStorePreviewItemPanelBase::UpdateCustomizeMenu( void )
 			pCustomPanel->m_colPaintColors.AddToTail( Color( clamp( (unPaintRGB1 & 0xFF0000) >> 16, 0, 255 ), clamp( (unPaintRGB1 & 0xFF00) >> 8, 0, 255 ), clamp( (unPaintRGB1 & 0xFF), 0, 255 ), 255 ) );
 		}
 	}
-	
+
 	// Add style
 	{
 		Menu *pStyleSubMenu = NULL;
@@ -707,7 +707,7 @@ void CTFStorePreviewItemPanelBase::UpdateCustomizeMenu( void )
 					pStyleSubMenu->SetFont( scheme()->GetIScheme( GetScheme() )->GetFont( pszContextMenuFont ) );
 					contextMenuBuilder.AddCascadingMenuItem( "#Context_Style", pStyleSubMenu, "customization" );
 				}
-				
+
 				int nIndex = pStyleSubMenu->AddMenuItem( "", new KeyValues( "Command", "command", CFmtStr( "SetStyle%d", unStyle ) ), this );
 				vgui::MenuItem *pMenuItem = pStyleSubMenu->GetMenuItem( nIndex );
 				pMenuItem->SetText( pStyle->GetName() );
@@ -744,13 +744,13 @@ void CTFStorePreviewItemPanelBase::UpdateCustomizeMenu( void )
 	int nX, nY;
 	g_pVGuiInput->GetCursorPosition( nX, nY );
 	m_pCustomizeMenu->SetPos( nX - 1, nY - 1 );
-	
+
 	m_pCustomizeMenu->SetVisible(true);
 	m_pCustomizeMenu->AddActionSignalTarget(this);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::UpdateOptionsButton( void )
 {
@@ -791,7 +791,7 @@ void CTFStorePreviewItemPanelBase::UpdateOptionsButton( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::UpdateZoomButton( void )
 {
@@ -802,7 +802,7 @@ void CTFStorePreviewItemPanelBase::UpdateZoomButton( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::UpdateTeamButton( void )
 {
@@ -813,7 +813,7 @@ void CTFStorePreviewItemPanelBase::UpdateTeamButton( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::UpdateNextWeaponButton( void )
 {
@@ -837,15 +837,15 @@ void CTFStorePreviewItemPanelBase::UpdateNextWeaponButton( void )
 		if ( iLoadoutSlot >= 0 && iLoadoutSlot < CLASS_LOADOUT_POSITION_COUNT )
 		{
 			++iNumItemsArray[iLoadoutSlot];
-		}			
+		}
 	}
 	bShowNextWeaponsButton |= iNumItemsArray[LOADOUT_POSITION_PRIMARY] + iNumItemsArray[LOADOUT_POSITION_SECONDARY] + iNumItemsArray[LOADOUT_POSITION_MELEE] > 1;
-																						 
+
 	m_pNextWeaponButton->SetVisible( bShowNextWeaponsButton );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::OnHideClassIconMouseover( void )
 {
@@ -856,7 +856,7 @@ void CTFStorePreviewItemPanelBase::OnHideClassIconMouseover( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::OnShowClassIconMouseover( KeyValues *data )
 {
@@ -885,7 +885,7 @@ void CTFStorePreviewItemPanelBase::OnShowClassIconMouseover( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::CycleStyle( void )
 {
@@ -941,7 +941,7 @@ void CTFStorePreviewItemPanelBase::CycleStyle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::SetPaint( item_definition_index_t iItemDef )
 {
@@ -1013,7 +1013,7 @@ void CTFStorePreviewItemPanelBase::SetPaint( item_definition_index_t iItemDef )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::SetStyle( style_index_t unStyle )
 {
@@ -1056,7 +1056,7 @@ void CTFStorePreviewItemPanelBase::SetStyle( style_index_t unStyle )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::SetUnusual( uint32 iUnusualIndex )
 {
@@ -1110,7 +1110,7 @@ const CUtlVector< int >	*CTFStorePreviewItemPanelBase::GetUnusualList() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePreviewItemPanelBase::CyclePaint( bool bActuallyCycle )
 {
@@ -1119,16 +1119,16 @@ void CTFStorePreviewItemPanelBase::CyclePaint( bool bActuallyCycle )
 
 	if ( !IsAnythingPaintable( m_pPlayerModelPanel->GetCarriedItems() ) )
 		return;
-	
+
 	static CSchemaAttributeDefHandle pAttribDef_Paint( "set item tint RGB" );
 	static CSchemaAttributeDefHandle pAttribDef_Paint2( "set item tint RGB 2" );
 
 	// Find the next paint color.
 	const CEconItemSchema::SortedItemDefinitionMap_t &mapDefs = GetItemSchema()->GetSortedItemDefinitionMap();
-	
+
 	m_unPaintRGB0 = 0;
 	m_unPaintRGB1 = 0;
-	
+
 	if ( bActuallyCycle || m_unPaintDef > 0 )
 	{
 		int iteratorName = mapDefs.FirstInorder();

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -31,7 +31,7 @@ public:
 	bool Init( KeyValues* pInitData );
 
 	void SetName( const char *name );
-	
+
 	virtual void	ApplySchemeSettings( vgui::IScheme *pScheme );
 	virtual void	Paint();
 

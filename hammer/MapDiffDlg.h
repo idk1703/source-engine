@@ -22,7 +22,7 @@ private:
 
 	BOOL	m_bCheckSimilar;
 	CEdit	m_mapName;
-	
+
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
@@ -30,7 +30,7 @@ protected:
 	virtual void OnOK();
 	afx_msg void OnDestroy();
 
-	
+
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedSimilarcheck();

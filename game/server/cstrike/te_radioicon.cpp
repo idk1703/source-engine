@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -25,7 +25,7 @@ public:
 	virtual			~CTERadioIcon( void );
 
 	void Precache( void );
-	
+
 	DECLARE_SERVERCLASS();
 
 public:
@@ -34,8 +34,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTERadioIcon::CTERadioIcon( const char *name ) :
 	CBaseTempEntity( name )
@@ -43,7 +43,7 @@ CTERadioIcon::CTERadioIcon( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTERadioIcon::~CTERadioIcon( void )
 {
@@ -63,15 +63,15 @@ END_SEND_TABLE()
 static CTERadioIcon g_TERadioIcon( "RadioIcon" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : filter - 
-//			delay - 
-//			pPlayer - 
+// Purpose:
+// Input  : filter -
+//			delay -
+//			pPlayer -
 //-----------------------------------------------------------------------------
 void TE_RadioIcon( IRecipientFilter& filter, float delay, CBaseEntity *pPlayer )
 {
 	g_TERadioIcon.m_iAttachToClient = pPlayer->entindex();
-	
+
 	// Send it over the wire
 	g_TERadioIcon.Create( filter, delay );
 }

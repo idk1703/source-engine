@@ -5,7 +5,7 @@
 // Valve, L.L.C., or in accordance with the terms and conditions stipulated in
 // the agreement/contract under which the contents have been supplied.
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -63,7 +63,7 @@ class CGamePanelInfo;
 class CDialogGameInfo;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class VInternetDlg : public vgui::Frame
 {
@@ -88,7 +88,7 @@ public:
 	virtual void		UpdateStatusText(PRINTF_FORMAT_STRING const char *format, ...);
 
 	// context menu access
-	virtual CServerContextMenu *GetContextMenu();		
+	virtual CServerContextMenu *GetContextMenu();
 
 	// returns a pointer to a static instance of this dialog
 	// valid for use only in sort functions
@@ -107,7 +107,7 @@ public:
 	// opens a game info dialog by a specified IP, not attached to any game list
 	virtual CDialogGameInfo *OpenGameInfoDialog(int serverIP, int serverPort, const char *titleName);
 
-	virtual vgui::PropertySheet *GetTabPanel(); 
+	virtual vgui::PropertySheet *GetTabPanel();
 
 	// called by the config panel to setup some global config values
 	virtual void SetConfig(bool autorefresh,bool savercon,int refreshtime,bool graphs,int graphrefreshtime,bool getlogs);
@@ -134,7 +134,7 @@ private:
 	void OnOpenContextMenu();
 	// current game list change
 	//virtual void		OnGameListChanged();
-	
+
 
 	// password entry dialog for new servers
 	void OnPlayerDialog(vgui::KeyValues *data);

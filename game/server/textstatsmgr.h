@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -68,15 +68,15 @@ private:
 
 	// The global list of CTextStats.
 	static CTextStat*	GetTextStatsList();
-	
+
 	static void	RemoveFn( void *pUserData );
-	
+
 	// Link it into the global list.
 	CTextStat	*m_pPrev;
 	CTextStat	*m_pNext;
-	
+
 	CTextStatsMgr	*m_pMgr;
-	
+
 	TextStatPrintFn	m_PrintFn;
 	void			*m_pUserData;
 };
@@ -103,10 +103,10 @@ public:
 private:
 
 	static void	PrintFn( IFileSystem *pFileSys, FileHandle_t hFile, void *pUserData );
-	
+
 
 private:
-	
+
 	const char		*m_pName;
 	int				m_Value;
 

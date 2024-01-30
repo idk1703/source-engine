@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -8,7 +8,7 @@
 
 #include "cbase.h"
 
-#include "game.h"			
+#include "game.h"
 #include "ndebugoverlay.h"
 
 #include "ai_basenpc.h"
@@ -27,18 +27,18 @@
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Purpose: Static debug function to force all selected npcs to go to the 
+// Purpose: Static debug function to force all selected npcs to go to the
 //			given node
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-void CAI_BaseNPC::ForceSelectedGo(CBaseEntity *pPlayer, const Vector &targetPos, const Vector &traceDir, bool bRun) 
+void CAI_BaseNPC::ForceSelectedGo(CBaseEntity *pPlayer, const Vector &targetPos, const Vector &traceDir, bool bRun)
 {
 	CAI_BaseNPC *npc = gEntList.NextEntByClass( (CAI_BaseNPC *)NULL );
 
 	while (npc)
 	{
-		if (npc->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT) 
+		if (npc->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT)
 		{
 			Vector chasePosition = targetPos;
 			npc->TranslateNavGoal( pPlayer, chasePosition );
@@ -47,11 +47,11 @@ void CAI_BaseNPC::ForceSelectedGo(CBaseEntity *pPlayer, const Vector &targetPos,
 			vUpBit.z += 1;
 
 			trace_t tr;
-			AI_TraceHull( chasePosition, vUpBit, npc->GetHullMins(), 
+			AI_TraceHull( chasePosition, vUpBit, npc->GetHullMins(),
 				npc->GetHullMaxs(), MASK_NPCSOLID, npc, COLLISION_GROUP_NONE, &tr );
 			if (tr.startsolid || tr.fraction != 1.0 )
 			{
-				NDebugOverlay::BoxAngles(chasePosition, npc->GetHullMins(), 
+				NDebugOverlay::BoxAngles(chasePosition, npc->GetHullMins(),
 					npc->GetHullMaxs(), npc->GetAbsAngles(), 255,0,0,20,0.5);
 			}
 
@@ -77,13 +77,13 @@ void CAI_BaseNPC::ForceSelectedGo(CBaseEntity *pPlayer, const Vector &targetPos,
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-void CAI_BaseNPC::ForceSelectedGoRandom(void) 
+void CAI_BaseNPC::ForceSelectedGoRandom(void)
 {
 	CAI_BaseNPC *npc = gEntList.NextEntByClass( (CAI_BaseNPC *)NULL );
 
 	while (npc)
 	{
-		if (npc->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT) 
+		if (npc->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT)
 		{
 			npc->SetSchedule( SCHED_RUN_RANDOM );
 			npc->GetNavigator()->SetMovementActivity(ACT_RUN);
@@ -107,12 +107,12 @@ bool CAI_BaseNPC::ScheduledMoveToGoalEntity( int scheduleType, CBaseEntity *pGoa
 	SetGoalEnt( pGoalEntity );
 
 	// HACKHACK: Call through TranslateNavGoal to fixup this goal position
-	// UNDONE: Remove this and have NPCs that need this functionality fix up paths in the 
+	// UNDONE: Remove this and have NPCs that need this functionality fix up paths in the
 	// movement system instead of when they are specified.
 	AI_NavGoal_t goal(pGoalEntity->GetAbsOrigin(), movementActivity, AIN_DEF_TOLERANCE, AIN_YAW_TO_DEST);
 
 	TranslateNavGoal( pGoalEntity, goal.dest );
-	
+
 	return GetNavigator()->SetGoal( goal );
 }
 
@@ -143,9 +143,9 @@ bool CAI_BaseNPC::ScheduledFollowPath( int scheduleType, CBaseEntity *pPathStart
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-bool CAI_BaseNPC::IsMoving( void ) 
-{ 
-	return GetNavigator()->IsGoalSet(); 
+bool CAI_BaseNPC::IsMoving( void )
+{
+	return GetNavigator()->IsGoalSet();
 }
 
 
@@ -285,7 +285,7 @@ bool CAI_BaseNPC::CanStandOn( CBaseEntity *pSurface ) const
 
 	CAI_Navigator *pNavigator = const_cast<CAI_Navigator *>(GetNavigator());
 
-	if ( pNavigator->IsGoalActive() && 
+	if ( pNavigator->IsGoalActive() &&
 		 pSurface == pNavigator->GetGoalTarget() )
 		return false;
 
@@ -294,19 +294,19 @@ bool CAI_BaseNPC::CanStandOn( CBaseEntity *pSurface ) const
 
 //-----------------------------------------------------------------------------
 
-bool CAI_BaseNPC::IsJumpLegal( const Vector &startPos, const Vector &apex, const Vector &endPos, 
+bool CAI_BaseNPC::IsJumpLegal( const Vector &startPos, const Vector &apex, const Vector &endPos,
 							   float maxUp, float maxDown, float maxDist ) const
 {
-	if ((endPos.z - startPos.z) > maxUp + 0.1) 
+	if ((endPos.z - startPos.z) > maxUp + 0.1)
 		return false;
-	if ((startPos.z - endPos.z) > maxDown + 0.1) 
+	if ((startPos.z - endPos.z) > maxDown + 0.1)
 		return false;
 
-	if ((apex.z - startPos.z) > maxUp * 1.25 ) 
+	if ((apex.z - startPos.z) > maxUp * 1.25 )
 		return false;
 
 	float dist = (startPos - endPos).Length();
-	if ( dist > maxDist + 0.1) 
+	if ( dist > maxDist + 0.1)
 		return false;
 	return true;
 }
@@ -330,7 +330,7 @@ bool CAI_BaseNPC::IsJumpLegal( const Vector &startPos, const Vector &apex, const
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-Vector CAI_BaseNPC::CalcThrowVelocity(const Vector &startPos, const Vector &endPos, float fGravity, float fArcSize) 
+Vector CAI_BaseNPC::CalcThrowVelocity(const Vector &startPos, const Vector &endPos, float fGravity, float fArcSize)
 {
 	// Get the height I have to throw to get to the target
 	float stepHeight = endPos.z - startPos.z;
@@ -346,11 +346,11 @@ Vector CAI_BaseNPC::CalcThrowVelocity(const Vector &startPos, const Vector &endP
 	float distance = VectorNormalize(targetDir2D);
 
 
-	// If jumping up we want to throw a bit higher than the height diff	
-	if (stepHeight > 0) 
+	// If jumping up we want to throw a bit higher than the height diff
+	if (stepHeight > 0)
 	{
-		throwHeight = stepHeight + fArcSize;	
-	}	
+		throwHeight = stepHeight + fArcSize;
+	}
 	else
 	{
 		throwHeight = fArcSize;
@@ -402,10 +402,10 @@ bool CAI_BaseNPC::AutoMovement( CBaseEntity *pTarget, AIMoveTrace_t *pTraceResul
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flInterval - 
-//			 - 
-//			*pTraceResult - 
+// Purpose:
+// Input  : flInterval -
+//			 -
+//			*pTraceResult -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_BaseNPC::AutoMovement( float flInterval, CBaseEntity *pTarget, AIMoveTrace_t *pTraceResult )
@@ -422,7 +422,7 @@ bool CAI_BaseNPC::AutoMovement( float flInterval, CBaseEntity *pTarget, AIMoveTr
 	if (GetIntervalMovement( flInterval, ignored, newPos, newAngles ))
 	{
 		// DevMsg( "%.2f : (%.1f) %.1f %.1f %.1f\n", gpGlobals->curtime, (newPos - GetLocalOrigin()).Length(), newPos.x, newPos.y, newAngles.y );
-	
+
 		if ( m_hCine )
 		{
 			m_hCine->ModifyScriptedAutoMovement( &newPos );

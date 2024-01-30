@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -32,7 +32,7 @@ public:
 	virtual			~CTEBeamEntPoint( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 
 public:
 	CNetworkVar( int, m_nStartEntity );
@@ -42,8 +42,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEBeamEntPoint::CTEBeamEntPoint( const char *name ) :
 	CTEBaseBeam( name )
@@ -55,16 +55,16 @@ CTEBeamEntPoint::CTEBeamEntPoint( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEBeamEntPoint::~CTEBeamEntPoint( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEBeamEntPoint::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -83,7 +83,7 @@ void CTEBeamEntPoint::Test( const Vector& current_origin, const QAngle& current_
 	m_nSpeed		= 1;
 
 	m_vecEndPoint = current_origin;
-	
+
 	Vector forward, right;
 
 	m_vecEndPoint += Vector( 0, 0, 24 );
@@ -110,23 +110,23 @@ END_SEND_TABLE()
 static CTEBeamEntPoint g_TEBeamEntPoint( "BeamEntPoint" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//				int	start - 
-//			*end - 
-//			modelindex - 
-//			startframe - 
-//			framerate - 
-//			msg_dest - 
-//			delay - 
-//			origin - 
-//			recipient - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//				int	start -
+//			*end -
+//			modelindex -
+//			startframe -
+//			framerate -
+//			msg_dest -
+//			delay -
+//			origin -
+//			recipient -
 //-----------------------------------------------------------------------------
 void TE_BeamEntPoint( IRecipientFilter& filter, float delay,
-	int	nStartEntity, const Vector *start, int nEndEntity, const Vector* end, 
+	int	nStartEntity, const Vector *start, int nEndEntity, const Vector* end,
 	int modelindex, int haloindex, int startframe, int framerate,
 	float life, float width, float endWidth, int fadeLength, float amplitude, int r, int g, int b, int a, int speed )
 {

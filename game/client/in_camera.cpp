@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -97,8 +97,8 @@ CAM_ToFirstPerson
 
 ==============================
 */
-void CAM_ToFirstPerson(void) 
-{ 
+void CAM_ToFirstPerson(void)
+{
 	C_BasePlayer *localPlayer = C_BasePlayer::GetLocalPlayer();
 	if ( localPlayer && !localPlayer->CanUseFirstPersonCommand() )
 		return;
@@ -123,8 +123,8 @@ CAM_ToOrthographic
 
 ==============================
 */
-void CAM_ToOrthographic(void) 
-{ 
+void CAM_ToOrthographic(void)
+{
 	input->CAM_ToOrthographic();
 }
 
@@ -179,7 +179,7 @@ CAM_ToggleSnapto
 ==============================
 */
 void CAM_ToggleSnapto( void )
-{ 
+{
 	cam_snapto.SetValue( !cam_snapto.GetInt() );
 }
 
@@ -247,17 +247,17 @@ void CInput::CAM_Think( void )
 	Vector camOffset;
 	float flSensitivity;
 	QAngle viewangles;
-	
+
 	switch( cam_command.GetInt() )
 	{
 	case CAM_COMMAND_TOTHIRDPERSON:
 		CAM_ToThirdPerson();
 		break;
-		
+
 	case CAM_COMMAND_TOFIRSTPERSON:
 		CAM_ToFirstPerson();
 		break;
-		
+
 	case CAM_COMMAND_NONE:
 	default:
 		break;
@@ -310,7 +310,7 @@ void CInput::CAM_Think( void )
 		}
 #endif
 	}
-	
+
 	idealAngles[ PITCH ] = cam_idealpitch.GetFloat();
 	idealAngles[ YAW ]   = cam_idealyaw.GetFloat();
 	idealAngles[ DIST ]  = cam_idealdist.GetFloat();
@@ -321,26 +321,26 @@ void CInput::CAM_Think( void )
 	if ( m_fCameraMovingWithMouse )
 	{
 		int cpx, cpy;
-#ifndef _XBOX		
+#ifndef _XBOX
 		//get windows cursor position
 		GetMousePos (cpx, cpy);
 #else
 		//xboxfixme
 		cpx = cpy = 0;
 #endif
-		
+
 		m_nCameraX = cpx;
 		m_nCameraY = cpy;
-		
+
 		//check for X delta values and adjust accordingly
 		//eventually adjust YAW based on amount of movement
-		//don't do any movement of the cam using YAW/PITCH if we are zooming in/out the camera	
+		//don't do any movement of the cam using YAW/PITCH if we are zooming in/out the camera
 		if (!m_fCameraDistanceMove)
 		{
 			int x, y;
 			GetWindowCenter( x,  y );
-			
-			//keep the camera within certain limits around the player (ie avoid certain bad viewing angles)  
+
+			//keep the camera within certain limits around the player (ie avoid certain bad viewing angles)
 			if (m_nCameraX>x)
 			{
 				//if ((idealAngles[YAW]>=225.0)||(idealAngles[YAW]<135.0))
@@ -350,7 +350,7 @@ void CInput::CAM_Think( void )
 				}
 				if (idealAngles[YAW]>c_maxyaw.GetFloat())
 				{
-					
+
 					idealAngles[YAW]=c_maxyaw.GetFloat();
 				}
 			}
@@ -360,15 +360,15 @@ void CInput::CAM_Think( void )
 				if (idealAngles[YAW]>c_minyaw.GetFloat())
 				{
 					idealAngles[ YAW ] -= (CAM_ANGLE_MOVE)* ((x-m_nCameraX)/2);
-					
+
 				}
 				if (idealAngles[YAW]<c_minyaw.GetFloat())
 				{
 					idealAngles[YAW]=c_minyaw.GetFloat();
-					
+
 				}
 			}
-			
+
 			//check for y delta values and adjust accordingly
 			//eventually adjust PITCH based on amount of movement
 			//also make sure camera is within bounds
@@ -394,10 +394,10 @@ void CInput::CAM_Think( void )
 					idealAngles[PITCH]=c_minpitch.GetFloat();
 				}
 			}
-			
+
 			//set old mouse coordinates to current mouse coordinates
 			//since we are done with the mouse
-			
+
 			if ( ( flSensitivity = gHUD.GetSensitivity() ) != 0 )
 			{
 				m_nCameraOldX=m_nCameraX*flSensitivity;
@@ -413,18 +413,18 @@ void CInput::CAM_Think( void )
 #endif
 		}
 	}
-	
+
 	//Nathan code here
 	if( input->KeyState( &cam_pitchup ) )
 		idealAngles[ PITCH ] += cam_idealdelta.GetFloat();
 	else if( input->KeyState( &cam_pitchdown ) )
 		idealAngles[ PITCH ] -= cam_idealdelta.GetFloat();
-	
+
 	if( input->KeyState( &cam_yawleft ) )
 		idealAngles[ YAW ] -= cam_idealdelta.GetFloat();
 	else if( input->KeyState( &cam_yawright ) )
 		idealAngles[ YAW ] += cam_idealdelta.GetFloat();
-	
+
 	if( input->KeyState( &cam_in ) )
 	{
 		idealAngles[ DIST ] -= 2*cam_idealdelta.GetFloat();
@@ -435,11 +435,11 @@ void CInput::CAM_Think( void )
 			idealAngles[ YAW ] = 0;
 			idealAngles[ DIST ] = CAM_MIN_DIST;
 		}
-		
+
 	}
 	else if( input->KeyState( &cam_out ) )
 		idealAngles[ DIST ] += 2*cam_idealdelta.GetFloat();
-	
+
 	if (m_fCameraDistanceMove)
 	{
 		int x, y;
@@ -515,11 +515,11 @@ void CInput::CAM_Think( void )
 	cam_idealpitch.SetValue( idealAngles[ PITCH ] );
 	cam_idealyaw.SetValue( idealAngles[ YAW ] );
 	cam_idealdist.SetValue( idealAngles[ DIST ] );
-	
+
 	// Move the CameraOffset "towards" the idealAngles
 	// Note: CameraOffset = viewangle + idealAngle
 	VectorCopy( g_ThirdPersonManager.GetCameraOffsetAngles(), camOffset );
-	
+
 	if( cam_snapto.GetInt() )
 	{
 		camOffset[ YAW ] = cam_idealyaw.GetFloat() + viewangles[ YAW ];
@@ -532,10 +532,10 @@ void CInput::CAM_Think( void )
 
 		if( camOffset[ YAW ] - viewangles[ YAW ] != cam_idealyaw.GetFloat() )
 			camOffset[ YAW ] = MoveToward( camOffset[ YAW ], cam_idealyaw.GetFloat() + viewangles[ YAW ], lag );
-		
+
 		if( camOffset[ PITCH ] - viewangles[ PITCH ] != cam_idealpitch.GetFloat() )
 			camOffset[ PITCH ] = MoveToward( camOffset[ PITCH ], cam_idealpitch.GetFloat() + viewangles[ PITCH ], lag );
-		
+
 		if( abs( camOffset[ DIST ] - cam_idealdist.GetFloat() ) < 2.0 )
 			camOffset[ DIST ] = cam_idealdist.GetFloat();
 		else
@@ -553,7 +553,7 @@ void CInput::CAM_Think( void )
 		}
 
 		g_ThirdPersonManager.PositionCamera( C_BasePlayer::GetLocalPlayer(), desiredCamAngles );
-    }
+	}
 
 	if ( cam_showangles.GetInt() )
 	{
@@ -642,9 +642,9 @@ void CInput::CAM_CameraThirdThink( void )
 	if ( pLocalPlayer )
 	{
 		QAngle desiredCamAngles = QAngle( vecCamOffset[ PITCH ], vecCamOffset[ YAW ], vecCamOffset[DIST] );
-	
+
 		g_ThirdPersonManager.PositionCamera( C_BasePlayer::GetLocalPlayer(), desiredCamAngles );
-		
+
 	//	vecCamOffset = g_ThirdPersonManager.GetCameraOffsetAngles();
 	}
 
@@ -674,15 +674,15 @@ CAM_ToThirdPerson
 ==============================
 */
 void CInput::CAM_ToThirdPerson(void)
-{ 
+{
 	QAngle viewangles;
 
 	engine->GetViewAngles( viewangles );
 
 	if( !m_fCameraInThirdPerson )
 	{
-		m_fCameraInThirdPerson = true; 
-	
+		m_fCameraInThirdPerson = true;
+
 		g_ThirdPersonManager.SetCameraOffsetAngles( Vector( viewangles[ YAW ], viewangles[ PITCH ], CAM_MIN_DIST ) );
 	}
 
@@ -756,7 +756,7 @@ CAM_StartMouseMove
 void CInput::CAM_StartMouseMove(void)
 {
 	float flSensitivity;
-		
+
 	//only move the cam with mouse if we are in third person.
 	if ( m_fCameraInThirdPerson )
 	{
@@ -768,7 +768,7 @@ void CInput::CAM_StartMouseMove(void)
 
 			m_fCameraMovingWithMouse=true;
 			m_fCameraInterceptingMouse=true;
-#ifndef _XBOX			
+#ifndef _XBOX
 			GetMousePos(cpx, cpy);
 #else
 			// xboxfixme
@@ -791,7 +791,7 @@ void CInput::CAM_StartMouseMove(void)
 	}
 	//we are not in 3rd person view..therefore do not allow camera movement
 	else
-	{   
+	{
 		m_fCameraMovingWithMouse=false;
 		m_fCameraInterceptingMouse=false;
 	}
@@ -807,15 +807,15 @@ tell the engine that mouse camera movement is off
 */
 void CInput::CAM_EndMouseMove(void)
 {
-   m_fCameraMovingWithMouse=false;
-   m_fCameraInterceptingMouse=false;
+	m_fCameraMovingWithMouse=false;
+	m_fCameraInterceptingMouse=false;
 }
 
 /*
 ==============================
 CAM_StartDistance
 
-routines to start the process of moving the cam in or out 
+routines to start the process of moving the cam in or out
 using the mouse
 ==============================
 */
@@ -824,32 +824,32 @@ void CInput::CAM_StartDistance(void)
 	//only move the cam with mouse if we are in third person.
 	if ( m_fCameraInThirdPerson )
 	{
-	  //set appropriate flags and initialize the old mouse position
-	  //variables for mouse camera movement
-	  if (!m_fCameraDistanceMove)
-	  {
-		  int cpx, cpy;
+		//set appropriate flags and initialize the old mouse position
+		//variables for mouse camera movement
+		if (!m_fCameraDistanceMove)
+		{
+			int cpx, cpy;
 
-		  m_fCameraDistanceMove=true;
-		  m_fCameraMovingWithMouse=true;
-		  m_fCameraInterceptingMouse=true;
+			m_fCameraDistanceMove=true;
+			m_fCameraMovingWithMouse=true;
+			m_fCameraInterceptingMouse=true;
 #ifndef _XBOX
-		  GetMousePos(cpx, cpy);
+			GetMousePos(cpx, cpy);
 #else
-		  // xboxfixme
-		  cpx = cpy = 0;
+			// xboxfixme
+			cpx = cpy = 0;
 #endif
 
-		  m_nCameraX = cpx;
-		  m_nCameraY = cpy;
+			m_nCameraX = cpx;
+			m_nCameraY = cpy;
 
-		  m_nCameraOldX=m_nCameraX*gHUD.GetSensitivity();
-		  m_nCameraOldY=m_nCameraY*gHUD.GetSensitivity();
-	  }
+			m_nCameraOldX=m_nCameraX*gHUD.GetSensitivity();
+			m_nCameraOldY=m_nCameraY*gHUD.GetSensitivity();
+		}
 	}
 	//we are not in 3rd person view..therefore do not allow camera movement
 	else
-	{   
+	{
 		m_fCameraDistanceMove=false;
 		m_fCameraMovingWithMouse=false;
 		m_fCameraInterceptingMouse=false;
@@ -866,9 +866,9 @@ tell the engine that mouse camera movement is off
 */
 void CInput::CAM_EndDistance(void)
 {
-   m_fCameraDistanceMove=false;
-   m_fCameraMovingWithMouse=false;
-   m_fCameraInterceptingMouse=false;
+	m_fCameraDistanceMove=false;
+	m_fCameraMovingWithMouse=false;
+	m_fCameraInterceptingMouse=false;
 }
 
 /*

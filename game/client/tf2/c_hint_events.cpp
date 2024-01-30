@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,10 +29,10 @@ void HintEventFn_BuildObject( CHintData *pData, C_HintEvent_Base *pEvent )
 	if ( pEvent->GetType() == HINTEVENT_OBJECT_BUILT_BY_LOCAL_PLAYER )
 	{
 		C_BaseObject *pObj = ((C_HintEvent_ObjectBuiltByLocalPlayer*)pEvent)->m_pObject;
-		
+
 		if ( pObj->GetType() == pData->m_ObjectType )
 		{
-			// Ok, they just built the object that any hints of this type are referring to, so disable 
+			// Ok, they just built the object that any hints of this type are referring to, so disable
 			// all further hints of this type.
 			KeyValues *pkvStats = GetHintDisplayStats();
 			if ( pkvStats )
@@ -46,4 +46,3 @@ void HintEventFn_BuildObject( CHintData *pData, C_HintEvent_Base *pEvent )
 		}
 	}
 }
-

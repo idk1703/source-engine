@@ -38,7 +38,7 @@ DECLARE_BUILD_FACTORY( CStorePreviewClassIcon );
 ConVar tf_explanations_store( "tf_explanations_store", "0", FCVAR_ARCHIVE, "Whether the user has seen explanations for this panel." );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFStorePageBase::CTFStorePageBase(Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData, const char *pPreviewItemResFile ) : CStorePage(parent, pPageData, pPreviewItemResFile)
 {
@@ -52,7 +52,7 @@ CTFStorePageBase::CTFStorePageBase(Panel *parent, const CEconStoreCategoryManage
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePageBase::OnPageShow( void )
 {
@@ -67,7 +67,7 @@ void CTFStorePageBase::OnPageShow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePageBase::OnCommand( const char *command )
 {
@@ -87,7 +87,7 @@ void CTFStorePageBase::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePageBase::GetFiltersForDef( GameItemDefinition_t *pDef, CUtlVector<int> *pVecFilters )
 {
@@ -128,7 +128,7 @@ void CTFStorePageBase::GetFiltersForDef( GameItemDefinition_t *pDef, CUtlVector<
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePageBase::OnItemDetails( vgui::Panel *panel )
 {
@@ -140,12 +140,12 @@ void CTFStorePageBase::OnItemDetails( vgui::Panel *panel )
 		{
 			SelectItemPanel( pControlsPanel->GetItemModelPanel() );
 			PostMessage( EconUI()->GetStorePanel(), new KeyValues("ArmoryOpened", "itemdef", pEntry->GetItemDefinitionIndex() ) );
-		}	
+		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePageBase::ShowPreview( int iClass, const econ_store_entry_t* pEntry )
 {
@@ -158,7 +158,7 @@ void CTFStorePageBase::ShowPreview( int iClass, const econ_store_entry_t* pEntry
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePageBase::UpdateFilterComboBox( void )
 {
@@ -275,4 +275,3 @@ void CTFStorePageBase::OnTick( void )
 		vgui::ivgui()->RemoveTickSignal( GetVPanel() );
 	}
 }
-

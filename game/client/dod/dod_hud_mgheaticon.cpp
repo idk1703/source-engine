@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,7 +20,7 @@ public:
 	DECLARE_CLASS_SIMPLE( CHudMGHeatIcon, vgui::Panel );
 
 	CHudMGHeatIcon( const char *name );
-	
+
 	virtual void Paint();
 	virtual void Init();
 	virtual bool ShouldDraw();
@@ -42,7 +42,7 @@ CHudMGHeatIcon::CHudMGHeatIcon( const char *pName ) :
 	SetParent( g_pClientMode->GetViewport() );
 
 	m_clrIcon = Color(255,255,255,255);
-	
+
 	SetHiddenBits( HIDEHUD_PLAYERDEAD );
 }
 
@@ -101,7 +101,7 @@ void CHudMGHeatIcon::Paint()
 
 	CWeaponDODBase *pWeapon = pPlayer->GetActiveDODWeapon();
 	if( pWeapon && pWeapon->IsA( WEAPON_MG42 ) )
-	{	
+	{
 		CWeaponMG42 *pMG42 = (CWeaponMG42 *)pWeapon;
 
 		if( pMG42 )
@@ -109,7 +109,7 @@ void CHudMGHeatIcon::Paint()
 			flPercentHotness = (float)pMG42->GetWeaponHeat() / 100.0;
 		}
 	}
-	
+
 	int nOffset = m_pHotBarrel->Height() * ( 1.0 - flPercentHotness );
 	if ( nOffset < m_pHotBarrel->Height() )
 	{
@@ -118,4 +118,3 @@ void CHudMGHeatIcon::Paint()
 
 
 }
-

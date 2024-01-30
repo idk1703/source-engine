@@ -13,14 +13,14 @@ public:
 	CDbgOutput();
 	~CDbgOutput();
 
-    // IUnknown.
-    STDMETHOD( QueryInterface )( THIS_ IN REFIID InterfaceId,
-								 OUT PVOID* Interface );
-    STDMETHOD_( ULONG, AddRef )( THIS );
-    STDMETHOD_( ULONG, Release )( THIS );
+	// IUnknown.
+	STDMETHOD( QueryInterface )( THIS_ IN REFIID InterfaceId,
+								OUT PVOID* Interface );
+	STDMETHOD_( ULONG, AddRef )( THIS );
+	STDMETHOD_( ULONG, Release )( THIS );
 
-    // IDebugOutputCallbacks.
-    STDMETHOD( Output )( THIS_ IN ULONG Mask, IN PCSTR Text );
+	// IDebugOutputCallbacks.
+	STDMETHOD( Output )( THIS_ IN ULONG Mask, IN PCSTR Text );
 
 	void SetOutputPanel( vgui::VPANEL Target );
 

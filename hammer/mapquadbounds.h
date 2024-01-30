@@ -7,7 +7,7 @@
 //				upperleft
 //				lowerright
 //				upperright
-//			
+//
 //			ASSUMPTIONS:
 //
 //			1. Only one solid sibling.
@@ -53,7 +53,7 @@ class CMapQuadBounds : public CMapHelper
 		int SerializeMAP(std::fstream &File, BOOL bRMF) { return(0); }
 
 		bool IsVisualElement(void) { return(false); } // Only visible when the parent entity is selected.
-		
+
 		const char* GetDescription() { return("Quad bounds helper"); }
 
 	protected:

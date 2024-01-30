@@ -38,11 +38,11 @@ static float s_fOneUnitLength = 1;
 CRender::CRender(void)
 {
 	m_pView = NULL;
-	
+
 	// returns a handle to the default (first loaded) scheme
 	vgui::IScheme * pScheme = vgui::scheme()->GetIScheme( vgui::scheme()->GetDefaultScheme() );
 	if ( pScheme )
-	{	
+	{
 		m_DefaultFont = pScheme->GetFont( "Default" );
 	}
 	else
@@ -56,7 +56,7 @@ CRender::CRender(void)
 			MessageBox( NULL, "Failed to load the default scheme file. The map views may be missing some visual elements.", "Error", MB_OK | MB_ICONEXCLAMATION );
 		}
 	}
-	
+
 	for (int i = 0; i < 2; ++i)
 	{
 		m_pFlat[i] = NULL;
@@ -73,7 +73,7 @@ CRender::CRender(void)
 	m_pBoundMaterial = NULL;
 
 	m_nDecalMode = 0;
-	
+
 	m_bIsRendering = false;
 	m_bIsClientSpace = false;
 	m_bIsLocalTransform = false;
@@ -130,7 +130,7 @@ void CRender::PushInstanceData( CMapInstance *pInstanceClass, Vector &InstanceOr
 	{	// first push is just a default state
 		m_bInstanceRendering = true;
 		BeginLocalTransfrom( InstanceState.m_InstanceMatrix, true );
-		if ( m_CurrentInstanceState.m_pTopInstanceClass == NULL ) 
+		if ( m_CurrentInstanceState.m_pTopInstanceClass == NULL )
 		{
 			if ( pInstanceClass->IsEditable() == false )
 			{
@@ -451,7 +451,7 @@ void CRender::DrawText( const char *text, const Vector2D &vPos, int nOffsetX, in
 	DrawText( text, (int)pt.x + nOffsetX, (int)pt.y + nOffsetY, nFlags );
 }
 
-			
+
 //-----------------------------------------------------------------------------
 // Purpose: set the text and background (behind text) colors
 //   Input: tR, tG, tB - text red, green, and blue values : [0...255]
@@ -511,7 +511,7 @@ void CRender::StartRenderFrame()
 	}
 
 	int width, height;
-	VMatrix matrix;	
+	VMatrix matrix;
 	CCamera *pCamera = GetCamera();
 
 	CMatRenderContextPtr pRenderContext( MaterialSystemInterface() );
@@ -523,7 +523,7 @@ void CRender::StartRenderFrame()
 	pRenderContext->Scale( 1, -1, 1 );
 	pRenderContext->Ortho(0, 0, width, height, -99999, 99999 );
 	pRenderContext->GetMatrix( MATERIAL_PROJECTION, &m_OrthoMatrix );
-	
+
 	// setup world camera
 	pCamera->GetProjMatrix(matrix);
 	pRenderContext->MatrixMode( MATERIAL_PROJECTION );
@@ -559,7 +559,7 @@ void CRender::StartRenderFrame()
 	m_TextColor.SetColor( 255,255,255,255 );
 	m_HandleColor.SetColor( 255,255,255,255 );
 
-    s_fOneUnitLength = 1/pCamera->GetZoom();
+	s_fOneUnitLength = 1/pCamera->GetZoom();
 
 	// tell studiorender that we've updated the camera.
 	if( g_pStudioRender )
@@ -574,7 +574,7 @@ void CRender::StartRenderFrame()
 
 		g_pStudioRender->SetViewState( viewOrigin, viewRight, viewUp, viewForward );
 
-		static Vector white[6] = 
+		static Vector white[6] =
 		{
 			Vector( 1.0, 1.0, 1.0 ),
 			Vector( 1.0, 1.0, 1.0 ),
@@ -615,9 +615,9 @@ void CRender::DrawLine( const Vector &vStart, const Vector &vEnd )
 {
 	float scale = VectorLength( vEnd-vStart ) / ( s_fOneUnitLength * 16 );
 
- 	meshBuilder.Begin(m_pMesh, MATERIAL_LINES, 1);
+	meshBuilder.Begin(m_pMesh, MATERIAL_LINES, 1);
 
-    meshBuilder.Position3fv(vStart.Base());
+	meshBuilder.Position3fv(vStart.Base());
 	meshBuilder.Color4ubv( (byte*)&m_DrawColor );
 	meshBuilder.TexCoord2f(0, 0, 0);
 	meshBuilder.AdvanceVertex();
@@ -661,7 +661,7 @@ void CRender::EndLocalTransfrom()
 	Assert( !m_bIsClientSpace );
 
 	CMatRenderContextPtr pRenderContext( MaterialSystemInterface() );
-	
+
 	pRenderContext->MatrixMode(MATERIAL_MODEL);
 	pRenderContext->PopMatrix();
 
@@ -696,7 +696,7 @@ bool CRender::BeginClientSpace(void)
 		return false;
 
 	CMatRenderContextPtr pRenderContext( MaterialSystemInterface() );
-	
+
 	pRenderContext->MatrixMode( MATERIAL_PROJECTION );
 	pRenderContext->PushMatrix();
 	pRenderContext->LoadMatrix( m_OrthoMatrix );
@@ -722,7 +722,7 @@ void CRender::EndClientSpace(void)
 	Assert( m_bIsClientSpace );
 
 	CMatRenderContextPtr pRenderContext( MaterialSystemInterface() );
-	
+
 	pRenderContext->MatrixMode(MATERIAL_VIEW);
 	pRenderContext->PopMatrix();
 
@@ -739,7 +739,7 @@ void CRender::EndClientSpace(void)
 }
 
 void CRender::TransformPoint( Vector2D &vClient, const Vector& vWorld )
-{ 
+{
 	Vector vecActualPos;
 
 	if ( !m_bIsLocalTransform )
@@ -807,7 +807,7 @@ void CRender::DrawCircle( Vector2D &vCenter, float fRadius, int nSegments, unsig
 		// Rotate it around the circle
 		float x = vCenter.x + (fRadius * ca);
 		float y = vCenter.y + (fRadius * sa);
-		
+
 		meshBuilder.Color4ubv( pColor );
 		meshBuilder.Position3f( x, y, 0 );
 		meshBuilder.AdvanceVertex();
@@ -845,7 +845,7 @@ void CRender::DrawCross( Vector2D& ul, Vector2D& lr, unsigned char *pColor )
 void CRender::DrawRect( Vector2D& ul, Vector2D& lr, unsigned char *pColor )
 {
 	Vector2D vScale = (lr-ul)/16;
-				
+
 	meshBuilder.Begin( m_pMesh, MATERIAL_LINE_LOOP, 4 );
 
 	Vector2D tex(0,0);
@@ -856,7 +856,7 @@ void CRender::DrawRect( Vector2D& ul, Vector2D& lr, unsigned char *pColor )
 	meshBuilder.AdvanceVertex();
 
 	tex.x += vScale.x;
- 	tex.y += vScale.x;
+	tex.y += vScale.x;
 
 	meshBuilder.Color4ubv( pColor );
 	meshBuilder.Position3f( lr.x, ul.y, 0 );
@@ -922,7 +922,7 @@ void CRender::DrawFilledRect( Vector2D& ul, Vector2D& lr, unsigned char *pColor,
 
 	if ( bBorder )
 	{
- 		meshBuilder.Color4ubv( (byte*)&black );
+		meshBuilder.Color4ubv( (byte*)&black );
 		meshBuilder.Position3f( ul.x, ul.y, 0 );
 		meshBuilder.AdvanceVertex();
 
@@ -1039,19 +1039,19 @@ bool CRender::SetView( CMapView * pView )
 	m_pWireframe[1] = m_pWireframe[0];
 	m_pDotted[1] = m_pDotted[0];
 	m_pSelectionOverlay[1] = m_pSelectionOverlay[0];
-	
+
 	return true;
-	
+
 }
 
 bool CRender::IsActiveView()
-{ 
+{
 	return m_pView->IsActive();
 }
 
 void CRender::SetDrawColor( const Color &color )
 {
-  	m_DrawColor = color;
+	m_DrawColor = color;
 	if ( m_bIsRenderingIntoVGUI )
 	{
 		g_pMatSystemSurface->DrawSetColor( m_DrawColor );
@@ -1106,7 +1106,7 @@ void CRender::DrawDisplacement( CCoreDispInfo *pMapDisp )
 	int numVerts = pMapDisp->GetSize();
 	int numIndices = pMapDisp->GetRenderIndexCount();
 	bool bWireFrame = m_eCurrentRenderMode == RENDER_MODE_WIREFRAME;
-		
+
 	meshBuilder.Begin( m_pMesh, MATERIAL_TRIANGLES, numVerts,	numIndices );
 
 	Color color = m_DrawColor;
@@ -1149,7 +1149,7 @@ void CRender::DrawDisplacement( CCoreDispInfo *pMapDisp )
 void CRender::DrawModel( DrawModelInfo_t* pInfo, matrix3x4_t *pBoneToWorld, const Vector &vOrigin, float fAlpha, bool bWireFrame )
 {
 	UpdateStudioRenderConfig( true, bWireFrame );
-		
+
 	g_pStudioRender->SetAlphaModulation( fAlpha );
 
 	Vector viewOrigin;
@@ -1176,9 +1176,9 @@ void CRender::DrawCollisionModel( MDLHandle_t mdlHandle, const VMatrix &mViewMat
 	int vertCount = g_pPhysicsCollision->CreateDebugMesh( pCollide->solids[0], &outVerts );
 
 	if ( vertCount )
-	{	
+	{
 		PushRenderMode( RENDER_MODE_WIREFRAME );
-	
+
 		meshBuilder.Begin( m_pMesh, MATERIAL_TRIANGLES, vertCount/3 );
 
 		for ( int j = 0; j < vertCount; j++ )
@@ -1278,7 +1278,7 @@ void CRender::DrawBox( const Vector &vMins, const Vector &vMaxs, bool bFill)
 		m_pMesh->Draw();
 
 		// Draw the three missing edges.
-		
+
 		meshBuilder.Begin( m_pMesh, MATERIAL_LINES, 3 );
 
 		meshBuilder.Position3fv( &points[4].x );
@@ -1303,7 +1303,7 @@ void CRender::DrawBox( const Vector &vMins, const Vector &vMaxs, bool bFill)
 
 		meshBuilder.Position3fv( &points[7].x );
 		meshBuilder.Color4ubv( (byte*)&m_DrawColor );
-		meshBuilder.AdvanceVertex(); 
+		meshBuilder.AdvanceVertex();
 
 		meshBuilder.End();
 		m_pMesh->Draw();
@@ -1316,14 +1316,14 @@ void CRender::DrawPoint( const Vector &vPoint )
 
 	meshBuilder.Begin( m_pMesh, MATERIAL_LINES, 1 );
 
- 	meshBuilder.Position3f( vPoint.x, vPoint.y, vPoint.z );
+	meshBuilder.Position3f( vPoint.x, vPoint.y, vPoint.z );
 	meshBuilder.Color4ubv( (byte*)&m_DrawColor );
 	meshBuilder.AdvanceVertex();
 
 	meshBuilder.Position3f( vPoint.x+1, vPoint.y+1, vPoint.z );
 	meshBuilder.Color4ubv( (byte*)&m_DrawColor );
 	meshBuilder.AdvanceVertex();
-	
+
 	meshBuilder.End();
 	m_pMesh->Draw();
 }
@@ -1335,7 +1335,7 @@ void CRender::DrawPoint( const Vector &vPoint )
 // Input  : pTexture - Pointer to the texture object being bound.
 //-----------------------------------------------------------------------------
 void CRender::BindTexture(IEditorTexture *pTexture)
-{ 
+{
 	// These textures must be CMaterials....
 	BindMaterial( pTexture->GetMaterial() );
 }
@@ -1377,8 +1377,8 @@ bool CRender::GetRequiredMaterial( const char *pName, IMaterial* &pMaterial )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : eRenderMode - 
+// Purpose:
+// Input  : eRenderMode -
 //-----------------------------------------------------------------------------
 void CRender::SetRenderMode(EditorRenderMode_t eRenderMode, bool bForce)
 {
@@ -1472,7 +1472,7 @@ void CRender::SetRenderMode(EditorRenderMode_t eRenderMode, bool bForce)
 		pRenderContext->SetIntRenderingParameter(INT_RENDERPARM_ENABLE_FIXED_LIGHTING,1);
 
 	if (
-		(eRenderMode==RENDER_MODE_LIGHT_PREVIEW2) || 
+		(eRenderMode==RENDER_MODE_LIGHT_PREVIEW2) ||
 		(eRenderMode==RENDER_MODE_LIGHT_PREVIEW_RAYTRACED)
 		)
 		pRenderContext->SetIntRenderingParameter(INT_RENDERPARM_ENABLE_FIXED_LIGHTING,2);
@@ -1480,13 +1480,13 @@ void CRender::SetRenderMode(EditorRenderMode_t eRenderMode, bool bForce)
 	m_pMesh = pRenderContext->GetDynamicMesh( true, NULL, NULL, m_pCurrentMaterial );
 
 	Assert( m_pMesh );
-	
+
 	m_eCurrentRenderMode = eRenderMode;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : eRenderMode - 
+// Purpose:
+// Input  : eRenderMode -
 //-----------------------------------------------------------------------------
 void CRender::SetDefaultRenderMode(EditorRenderMode_t eRenderMode)
 {

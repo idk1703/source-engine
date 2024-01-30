@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,9 +24,9 @@ class CWeaponMAC10 : public CWeaponCSBaseGun
 {
 public:
 	DECLARE_CLASS( CWeaponMAC10, CWeaponCSBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponMAC10();
 
 	virtual void Spawn();
@@ -72,7 +72,7 @@ void CWeaponMAC10::Spawn( )
 bool CWeaponMAC10::Deploy()
 {
 	bool ret = BaseClass::Deploy();
-	
+
 	m_flAccuracy = 0.15;
 
 	return ret;
@@ -81,7 +81,7 @@ bool CWeaponMAC10::Deploy()
 bool CWeaponMAC10::Reload()
 {
 	bool ret = BaseClass::Reload();
-	
+
 	m_flAccuracy = 0.15;
 
 	return ret;

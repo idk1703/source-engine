@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -109,10 +109,10 @@ void CQueuedPacketSender::Shutdown()
 {
 	if ( !IsAlive() )
 		return;
-		
+
 	m_bThreadShouldExit = true;
 	m_hThreadEvent.Set();
-	
+
 	Join(); // Wait for the thread to exit.
 
 	while ( m_QueuedPackets.Count() > 0 )
@@ -196,7 +196,7 @@ int CQueuedPacketSender::Run()
 	{
 		if ( m_hThreadEvent.Wait( waitInterval ) )
 		{
-			// Someone signaled the thread. Either we're being told to exit or 
+			// Someone signaled the thread. Either we're being told to exit or
 			// we're being told that a packet was just queued.
 			if ( m_bThreadShouldExit )
 				return 0;
@@ -208,7 +208,7 @@ int CQueuedPacketSender::Run()
 		// OK, now send a packet.
 		{
 			AUTO_LOCK( m_QueuedPacketsCS );
-		
+
 			// We'll pull all packets we should have sent by now and send them out right away
 			uint32 msNow = Plat_MSTime();
 
@@ -238,30 +238,29 @@ int CQueuedPacketSender::Run()
 			#ifdef _WIN32
 				if ( pInternetAddr->sin_addr.S_un.S_addr != 0
 			#else
-				if ( pInternetAddr->sin_addr.s_addr != 0 
+				if ( pInternetAddr->sin_addr.s_addr != 0
 			#endif
 					&& pInternetAddr->sin_port != 0 )
-				{		
+				{
 					if ( bTrace )
 					{
 						Warning( "SQ:  sending %d bytes at %f\n", pPacket->buf.Count(), Plat_FloatTime() );
 					}
 
 					NET_SendToImpl
-					( 
-						pPacket->m_Socket, 
-						pPacket->buf.Base(), 
-						pPacket->buf.Count(), 
+					(
+						pPacket->m_Socket,
+						pPacket->buf.Base(),
+						pPacket->buf.Count(),
 						(sockaddr*)pPacket->to.Base(),
-						pPacket->to.Count(), 
-						-1 
+						pPacket->to.Count(),
+						-1
 					);
-				}	
-				
+				}
+
 				delete pPacket;
 				m_QueuedPackets.RemoveAtHead();
 			}
 		}
 	}
 }
-

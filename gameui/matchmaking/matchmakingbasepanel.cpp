@@ -158,24 +158,24 @@ void CMatchmakingBasePanel::OnCommand( const char *pCommand )
 	{
 		OnOpenRankedMatchDialog();
 	}
-    else if ( !Q_stricmp( "OpenAchievementsDialog", pCommand ) )
-    {
-        OnOpenAchievementsDialog();
-    }
+	else if ( !Q_stricmp( "OpenAchievementsDialog", pCommand ) )
+	{
+		OnOpenAchievementsDialog();
+	}
 
-    //=============================================================================
-    // HPE_BEGIN:
-    // [dwenger] Specific code for CS Achievements Display
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [dwenger] Specific code for CS Achievements Display
+	//=============================================================================
 
-    else if ( !Q_stricmp( "OpenCSAchievementsDialog", pCommand ) )
-    {
-        OnOpenCSAchievementsDialog();
-    }
+	else if ( !Q_stricmp( "OpenCSAchievementsDialog", pCommand ) )
+	{
+		OnOpenCSAchievementsDialog();
+	}
 
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
 	else if ( !Q_stricmp( "LevelLoadingStarted", pCommand ) )
 	{
@@ -293,26 +293,26 @@ void CMatchmakingBasePanel::OnCommand( const char *pCommand )
 	{
 		PopDialog();
 	}
-    else if ( !Q_stricmp( pCommand, "show_achievements_dialog" ) )
-    {
-        OnOpenAchievementsDialog();
-    }
+	else if ( !Q_stricmp( pCommand, "show_achievements_dialog" ) )
+	{
+		OnOpenAchievementsDialog();
+	}
 
-    //=============================================================================
-    // HPE_BEGIN:
-    // [dwenger] Specific code for CS Achievements Display
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [dwenger] Specific code for CS Achievements Display
+	//=============================================================================
 
-    else if ( !Q_stricmp( pCommand, "show_csachievements_dialog" ) )
-    {
-        OnOpenCSAchievementsDialog();
-    }
+	else if ( !Q_stricmp( pCommand, "show_csachievements_dialog" ) )
+	{
+		OnOpenCSAchievementsDialog();
+	}
 
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
-    else if ( !Q_stricmp( pCommand, "ShowSessionOptionsDialog" ) )
+	else if ( !Q_stricmp( pCommand, "ShowSessionOptionsDialog" ) )
 	{
 		// Need to close the client options dialog and open the host options equivalent
 		PopDialog();
@@ -354,7 +354,7 @@ void CMatchmakingBasePanel::OnCommand( const char *pCommand )
 		{
 			CloseAllDialogs();
 		}
- 
+
 		CallParentFunction( new KeyValues( "Command", "command", pCommand ) );
 	}
 
@@ -594,7 +594,7 @@ bool CMatchmakingBasePanel::ValidateSigninAndStorage( bool bOnlineRequired, cons
 					BOOL bPrivCheck = false;
 					DWORD dwPrivCheck = XUserCheckPrivilege( userIdx, XPRIVILEGE_MULTIPLAYER_SESSIONS, &bPrivCheck );
 					if ( ERROR_SUCCESS != dwPrivCheck ||
-						 !bPrivCheck )
+						!bPrivCheck )
 					{
 						bOnlineEnabled = false;
 					}
@@ -606,13 +606,13 @@ bool CMatchmakingBasePanel::ValidateSigninAndStorage( bool bOnlineRequired, cons
 
 	if ( bOnlineRequired && !bOnlineEnabled )
 	{
-		// Player must sign in an online account 
+		// Player must sign in an online account
 		GameUI().ShowMessageDialog( MD_NOT_ONLINE_ENABLED );
 		return false;
 	}
 	else if ( bOnlineRequired && !bOnlineSignedIn )
 	{
-		// Player's live account isn't signed in to live 
+		// Player's live account isn't signed in to live
 		GameUI().ShowMessageDialog( MD_NOT_ONLINE_SIGNEDIN );
 		return false;
 	}
@@ -746,7 +746,7 @@ void CMatchmakingBasePanel::CloseAllDialogs( bool bActivateNext )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMatchmakingBasePanel::CloseBaseDialogs( void )
 {
@@ -765,7 +765,7 @@ void CMatchmakingBasePanel::LoadSessionProperties()
 	m_pSessionKeys = BasePanel()->GetConsoleControlSettings()->FindKey( "PropertyDisplayKeys" );
 	if ( m_pSessionKeys )
 	{
-		m_pSessionKeys->ChainKeyValue( matchmaking->GetSessionProperties() );	
+		m_pSessionKeys->ChainKeyValue( matchmaking->GetSessionProperties() );
 	}
 
 	// Cache off the map name
@@ -779,10 +779,10 @@ void CMatchmakingBasePanel::LoadSessionProperties()
 			pDiskName = pName->GetString( pScenario->GetString( "displaystring" ), NULL );
 		}
 	}
-	
+
 	if ( pDiskName )
 	{
-		Q_strncpy( m_szMapLoadName, pDiskName, sizeof( m_szMapLoadName ) ); 
+		Q_strncpy( m_szMapLoadName, pDiskName, sizeof( m_szMapLoadName ) );
 		Msg( "Storing mapname %s\n", m_szMapLoadName );
 		if ( Q_strlen( m_szMapLoadName ) < 5 )
 		{
@@ -888,14 +888,14 @@ void CMatchmakingBasePanel::OnOpenAchievementsDialog()
 
 void CMatchmakingBasePanel::OnOpenCSAchievementsDialog()
 {
-    if ( !ValidateSigninAndStorage( false, "OpenCSAchievementsDialog" ) )
-        return;
+	if ( !ValidateSigninAndStorage( false, "OpenCSAchievementsDialog" ) )
+		return;
 
-    if ( !m_hAchievementsDialog.Get() )
-    {
-        // $TODO(HPE):  m_hAchievementsDialog = new CAchievementsDialog_XBox( this );
-    }
-    PushDialog( m_hAchievementsDialog );
+	if ( !m_hAchievementsDialog.Get() )
+	{
+		// $TODO(HPE):  m_hAchievementsDialog = new CAchievementsDialog_XBox( this );
+	}
+	PushDialog( m_hAchievementsDialog );
 }
 
 //=============================================================================
@@ -934,7 +934,7 @@ void CMatchmakingBasePanel::OnOpenSessionOptionsDialog( const char *pResourceNam
 void CMatchmakingBasePanel::OnOpenSessionLobbyDialog( const char *pResourceName )
 {
 	if ( !m_hSessionLobbyDialog.Get() )
-	{	
+	{
 		m_hSessionLobbyDialog = new CSessionLobbyDialog( this );
 	}
 	CSessionLobbyDialog *pDlg = (CSessionLobbyDialog*)m_hSessionLobbyDialog.Get();

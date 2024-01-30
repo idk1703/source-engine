@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -86,7 +86,7 @@ protected:
 		CSteamID m_steamID;
 		CUtlString m_name;
 	};
-	
+
 	static int SortPartnerInfoFunc( const partner_info_t *pA, const partner_info_t *pB );
 
 	vgui::EditablePanel				*m_pStatePanels[SPDS_NUM_STATES];

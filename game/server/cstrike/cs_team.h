@@ -30,7 +30,7 @@ public:
 
 	// Initialization
 	virtual void Init( const char *pName, int iNumber );
-	
+
 	virtual void Precache( void );
 	virtual void Think( void );
 

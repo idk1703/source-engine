@@ -127,7 +127,7 @@ CTFStreakNotice::CTFStreakNotice( const char *pName ) : CHudElement( pName ), vg
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFStreakNotice::ShouldDraw( void )
 {
@@ -217,7 +217,7 @@ void CTFStreakNotice::StreakEnded( CTFPlayerShared::ETFStreak eStreakType, int i
 	// Temp override all messages
 	// Add New message
 	m_flLastMessageTime = gpGlobals->realtime;
-	
+
 	// Generate the String
 	const wchar_t *wzMsg = NULL;
 	bool bSelfKill = false;
@@ -230,7 +230,7 @@ void CTFStreakNotice::StreakEnded( CTFPlayerShared::ETFStreak eStreakType, int i
 	{
 		wzMsg = g_pVGuiLocalize->Find( ( eStreakType == CTFPlayerShared::kTFStreak_Ducks ) ? "#Msg_DuckStreakEnd" : "#Msg_KillStreakEnd" );
 	}
-	
+
 	if ( !wzMsg )
 		return;
 
@@ -257,7 +257,7 @@ void CTFStreakNotice::StreakEnded( CTFPlayerShared::ETFStreak eStreakType, int i
 	{
 		g_pVGuiLocalize->ConstructString_safe( wTemp, wzMsg, 3, wszKillerName, wszVictimName, wzCount );
 	}
-	
+
 	HFont hFont = GetStreakFont();
 	if ( m_pLabel->GetFont() != hFont )
 	{
@@ -487,7 +487,7 @@ void CTFStreakNotice::StreakUpdated( CTFPlayerShared::ETFStreak eStreakType, int
 	{
 		cTeamColor = COLOR_BLUE;
 	}
-	
+
 	// Generate the String
 	// Count
 	wchar_t wzCount[10];
@@ -499,7 +499,7 @@ void CTFStreakNotice::StreakUpdated( CTFPlayerShared::ETFStreak eStreakType, int
 
 	wchar_t	wTemp[256];
 	g_pVGuiLocalize->ConstructString_safe( wTemp, wzMsg, 2, wszPlayerName, wzCount );
-	
+
 	HFont hFont = GetStreakFont();
 	if ( m_pLabel->GetFont() != hFont )
 	{
@@ -609,7 +609,7 @@ public:
 	void PlayRivalrySounds( int iKillerIndex, int iVictimIndex, int iType  );
 	virtual bool ShouldShowDeathNotice( IGameEvent *event );
 
-protected:	
+protected:
 	virtual void OnGameEvent( IGameEvent *event, int iDeathNoticeMsg );
 	virtual Color GetTeamColor( int iTeamNumber, bool bLocalPlayerInvolved = false );
 	virtual Color GetInfoTextColor( int iDeathNoticeMsg );
@@ -668,7 +668,7 @@ void CTFHudDeathNotice::ApplySchemeSettings( vgui::IScheme *scheme )
 	BaseClass::ApplySchemeSettings( scheme );
 
 	m_iconDomination = gHUD.GetIcon( "leaderboard_dominated" );
-	
+
 	m_iconKillStreak = gHUD.GetIcon( "leaderboard_streak" );
 	m_iconKillStreakDNeg = gHUD.GetIcon( "leaderboard_streak_dneg" );
 	m_iconDuckStreak = gHUD.GetIcon( "eotl_duck" );
@@ -690,7 +690,7 @@ bool CTFHudDeathNotice::ShouldDraw( void )
 }
 
 bool CTFHudDeathNotice::ShouldShowDeathNotice( IGameEvent *event )
-{ 
+{
 	if ( event->GetBool( "silent_kill" ) )
 	{
 		// Don't show a kill event for the team of the silent kill victim.
@@ -706,7 +706,7 @@ bool CTFHudDeathNotice::ShouldShowDeathNotice( IGameEvent *event )
 	{
 		int iLocalPlayerIndex = GetLocalPlayerIndex();
 
-		if ( iLocalPlayerIndex != engine->GetPlayerForUserID( event->GetInt( "attacker" ) ) && 
+		if ( iLocalPlayerIndex != engine->GetPlayerForUserID( event->GetInt( "attacker" ) ) &&
 			 iLocalPlayerIndex != engine->GetPlayerForUserID( event->GetInt( "assister" ) ) )
 		{
 			C_TFPlayer* pVictim = ToTFPlayer( UTIL_PlayerByIndex( engine->GetPlayerForUserID( event->GetInt( "userid" ) ) ) );
@@ -779,7 +779,7 @@ bool CTFHudDeathNotice::EventIsPlayerDeath( const char* eventName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Called when a game event happens and a death notice is about to be 
+// Purpose: Called when a game event happens and a death notice is about to be
 //			displayed.  This method can examine the event and death notice and
 //			make game-specific tweaks to it before it is displayed
 //-----------------------------------------------------------------------------
@@ -794,7 +794,7 @@ void CTFHudDeathNotice::OnGameEvent( IGameEvent *event, int iDeathNoticeMsg )
 		bool bIsObjectDestroyed = FStrEq( pszEventName, "object_destroyed" );
 		int iCustomDamage = event->GetInt( "customkill" );
 		int iLocalPlayerIndex = GetLocalPlayerIndex();
-		
+
 		const int iKillerID = engine->GetPlayerForUserID( event->GetInt( "attacker" ) );
 		const int iVictimID = engine->GetPlayerForUserID( event->GetInt( "userid" ) );
 		// if there was an assister, put both the killer's and assister's names in the death message
@@ -803,7 +803,7 @@ void CTFHudDeathNotice::OnGameEvent( IGameEvent *event, int iDeathNoticeMsg )
 		EHorriblePyroVisionHack ePyroVisionHack = kHorriblePyroVisionHack_KillAssisterType_Default;
 		CUtlConstString sAssisterNameScratch;
 		const char *assister_name = ( iAssisterID > 0 ? g_PR->GetPlayerName( iAssisterID ) : NULL );
-		
+
 		// If we don't have a real assister (would have been passed in to us as a player index) and
 		// we're in crazy pyrovision mode and we got a dummy assister, than fall back and display
 		// that just for giggles. We use this so the Balloonicorn and friends can get the assist
@@ -902,7 +902,7 @@ void CTFHudDeathNotice::OnGameEvent( IGameEvent *event, int iDeathNoticeMsg )
 		{
 			// if this death involved a player dominating another player or getting revenge on another player, add an additional message
 			// mentioning that
-			
+
 			// WARNING: AddAdditionalMsg will grow and potentially realloc the m_DeathNotices array. So be careful
 			//	using pointers to m_DeathNotices elements...
 
@@ -916,12 +916,12 @@ void CTFHudDeathNotice::OnGameEvent( IGameEvent *event, int iDeathNoticeMsg )
 				AddAdditionalMsg( iAssisterID, iVictimID, bIsSillyPyroVision ? "#Msg_Dominating_What" : "#Msg_Dominating" );
 				PlayRivalrySounds( iAssisterID, iVictimID, TF_DEATH_DOMINATION );
 			}
-			if ( deathFlags & TF_DEATH_REVENGE ) 
+			if ( deathFlags & TF_DEATH_REVENGE )
 			{
 				AddAdditionalMsg( iKillerID, iVictimID, bIsSillyPyroVision ? "#Msg_Revenge_What" : "#Msg_Revenge" );
 				PlayRivalrySounds( iKillerID, iVictimID, TF_DEATH_REVENGE );
 			}
-			if ( deathFlags & TF_DEATH_ASSISTER_REVENGE && ( iAssisterID > 0 ) ) 
+			if ( deathFlags & TF_DEATH_ASSISTER_REVENGE && ( iAssisterID > 0 ) )
 			{
 				AddAdditionalMsg( iAssisterID, iVictimID, bIsSillyPyroVision ? "#Msg_Revenge_What" : "#Msg_Revenge" );
 				PlayRivalrySounds( iAssisterID, iVictimID, TF_DEATH_REVENGE );
@@ -959,7 +959,7 @@ void CTFHudDeathNotice::OnGameEvent( IGameEvent *event, int iDeathNoticeMsg )
 				{
 					Q_strncpy( msg.Victim.szName, szLocalizedObjectName, ARRAYSIZE( msg.Victim.szName ) );
 				}
-				
+
 			}
 			else
 			{
@@ -1006,7 +1006,7 @@ void CTFHudDeathNotice::OnGameEvent( IGameEvent *event, int iDeathNoticeMsg )
 						Q_strncpy( msg.szIcon, "d_headshot", ARRAYSIZE( msg.szIcon ) );
 					}
 				}
-				
+
 				break;
 			}
 		case TF_DMG_CUSTOM_BURNING:
@@ -1017,7 +1017,7 @@ void CTFHudDeathNotice::OnGameEvent( IGameEvent *event, int iDeathNoticeMsg )
 				msg.wzInfoText[0] = 0;
 			}
 			break;
-			
+
 		case TF_DMG_CUSTOM_BURNING_ARROW:
 			// special-case if the player is killed from a burning arrow after it has already landed
 			Q_strncpy( msg.szIcon, "d_huntsman_burning", ARRAYSIZE( msg.szIcon ) );
@@ -1044,7 +1044,7 @@ void CTFHudDeathNotice::OnGameEvent( IGameEvent *event, int iDeathNoticeMsg )
 				if ( pMsg )
 				{
 					V_wcsncpy( msg.wzInfoText, pMsg, sizeof( msg.wzInfoText ) );
-				}			
+				}
 				break;
 			}
 		case TF_DMG_CUSTOM_EYEBALL_ROCKET:
@@ -1215,9 +1215,9 @@ void CTFHudDeathNotice::OnGameEvent( IGameEvent *event, int iDeathNoticeMsg )
 		//	m_bShowItemOnKill = true;
 		//}
 #endif
-	} 
+	}
 	else if ( FStrEq( "teamplay_point_captured", pszEventName ) ||
-			  FStrEq( "teamplay_capture_blocked", pszEventName ) || 
+			  FStrEq( "teamplay_capture_blocked", pszEventName ) ||
 			  FStrEq( "teamplay_flag_event", pszEventName ) )
 	{
 		bool bDefense = ( FStrEq( "teamplay_capture_blocked", pszEventName ) || ( FStrEq( "teamplay_flag_event", pszEventName ) &&
@@ -1226,7 +1226,7 @@ void CTFHudDeathNotice::OnGameEvent( IGameEvent *event, int iDeathNoticeMsg )
 		DeathNoticeItem &msg = m_DeathNotices[ iDeathNoticeMsg ];
 		const char *szCaptureIcons[] = { "d_redcapture", "d_bluecapture" };
 		const char *szDefenseIcons[] = { "d_reddefend", "d_bluedefend" };
-		
+
 		int iTeam = msg.Killer.iTeam;
 		Assert( iTeam >= FIRST_GAME_TEAM );
 		Assert( iTeam < FIRST_GAME_TEAM + TF_TEAM_COUNT );
@@ -1375,7 +1375,7 @@ void CTFHudDeathNotice::OnGameEvent( IGameEvent *event, int iDeathNoticeMsg )
 		{
 			V_wcsncpy( msg.wzInfoText, g_pVGuiLocalize->Find("#Msg_PasstimeScore"), sizeof( msg.wzInfoText ) );
 		}
-		
+
 		// killer
 		const char *szPlayerName = g_PR->GetPlayerName( ev.scorerIndex );
 		Q_strncpy( msg.Killer.szName, szPlayerName, ARRAYSIZE( msg.Killer.szName ) );
@@ -1525,7 +1525,7 @@ void CTFHudDeathNotice::AddStreakEndedMsg( CTFPlayerShared::ETFStreak eStreakTyp
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: returns the color to draw text in for this team.  
+// Purpose: returns the color to draw text in for this team.
 //-----------------------------------------------------------------------------
 Color CTFHudDeathNotice::GetTeamColor( int iTeamNumber, bool bLocalPlayerInvolved /* = false */ )
 {
@@ -1561,10 +1561,10 @@ Color CTFHudDeathNotice::GetTeamColor( int iTeamNumber, bool bLocalPlayerInvolve
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Color CTFHudDeathNotice::GetInfoTextColor( int iDeathNoticeMsg )
-{ 
+{
 	DeathNoticeItem &msg = m_DeathNotices[ iDeathNoticeMsg ];
 
 	if ( msg.bLocalPlayerInvolved )
@@ -1575,14 +1575,14 @@ Color CTFHudDeathNotice::GetInfoTextColor( int iDeathNoticeMsg )
 
 //-----------------------------------------------------------------------------
 Color CTFHudDeathNotice::GetBackgroundColor ( int iDeathNoticeMsg )
-{ 
+{
 	DeathNoticeItem &msg = m_DeathNotices[ iDeathNoticeMsg ];
 
-	return msg.bLocalPlayerInvolved ? m_clrLocalBGColor : m_clrBaseBGColor; 
+	return msg.bLocalPlayerInvolved ? m_clrLocalBGColor : m_clrBaseBGColor;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFHudDeathNotice::UseExistingNotice( IGameEvent *event )
 {
@@ -1626,7 +1626,7 @@ CHudTexture* CTFHudDeathNotice::GetMannPowerIcon( RuneTypes_t tRuneType, bool bI
 	case RUNE_PRECISION:				return bIsRedTeam ? gHUD.GetIcon( "d_mannpower_precision" ) : gHUD.GetIcon( "dneg_mannpower_precision" );
 	case RUNE_AGILITY:					return bIsRedTeam ? gHUD.GetIcon( "d_mannpower_agility" ) : gHUD.GetIcon( "dneg_mannpower_agility" );
 	case RUNE_KNOCKOUT:					return bIsRedTeam ? gHUD.GetIcon( "d_mannpower_fist" ) : gHUD.GetIcon( "dneg_mannpower_fist" );
-	case RUNE_KING:						return bIsRedTeam ? gHUD.GetIcon( "d_mannpower_king" ) : gHUD.GetIcon( "dneg_mannpower_king" ); 
+	case RUNE_KING:						return bIsRedTeam ? gHUD.GetIcon( "d_mannpower_king" ) : gHUD.GetIcon( "dneg_mannpower_king" );
 	case RUNE_PLAGUE:					return bIsRedTeam ? gHUD.GetIcon( "d_mannpower_plague" ) : gHUD.GetIcon( "dneg_mannpower_plague" );
 	case RUNE_SUPERNOVA:				return bIsRedTeam ? gHUD.GetIcon( "d_mannpower_supernova" ) : gHUD.GetIcon( "dneg_mannpower_supernova" );
 	default:							return NULL;

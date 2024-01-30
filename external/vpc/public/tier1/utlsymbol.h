@@ -43,20 +43,20 @@ public:
 	CUtlSymbol( UtlSymId_t id ) : m_Id(id) {}
 	CUtlSymbol( const char* pStr );
 	CUtlSymbol( CUtlSymbol const& sym ) : m_Id(sym.m_Id) {}
-	
+
 	// operator=
 	CUtlSymbol& operator=( CUtlSymbol const& src ) { m_Id = src.m_Id; return *this; }
-	
+
 	// operator==
 	bool operator==( CUtlSymbol const& src ) const { return m_Id == src.m_Id; }
 	bool operator==( const char* pStr ) const;
-	
+
 	// Is valid?
 	bool IsValid() const { return m_Id != UTL_INVAL_SYMBOL; }
-	
+
 	// Gets at the symbol
 	operator UtlSymId_t () const { return m_Id; }
-	
+
 	// Gets the string associated with the symbol
 	const char* String( ) const;
 
@@ -70,15 +70,15 @@ public:
 
 protected:
 	UtlSymId_t   m_Id;
-		
+
 	// Initializes the symbol table
 	static void Initialize();
-	
+
 	// returns the current symbol table
 	static CUtlSymbolTableMT* CurrTable();
-		
+
 	// The standard global symbol table
-	static CUtlSymbolTableMT* s_pSymbolTable; 
+	static CUtlSymbolTableMT* s_pSymbolTable;
 
 	static bool s_bAllowStaticSymbolTable;
 
@@ -93,7 +93,7 @@ protected:
 //    of strings to symbols and back. The symbol class itself contains
 //    a static version of this class for creating global strings, but this
 //    class can also be instanced to create local symbol tables.
-// 
+//
 //    This class stores the strings in a series of string pools. The first
 //    two bytes of each string are decorated with a hash to speed up
 //	  comparisons.
@@ -105,16 +105,16 @@ public:
 	// constructor, destructor
 	CUtlSymbolTable( int growSize = 0, int initSize = 16, bool caseInsensitive = false );
 	~CUtlSymbolTable();
-	
+
 	// Finds and/or creates a symbol based on the string
 	CUtlSymbol AddString( const char* pString );
 
 	// Finds the symbol for pString
 	CUtlSymbol Find( const char* pString ) const;
-	
+
 	// Look up the string associated with a particular symbol
 	const char* String( CUtlSymbol id ) const;
-	
+
 	// Remove all symbols in the table.
 	void  RemoveAll();
 
@@ -125,7 +125,7 @@ public:
 
 	// We store one of these at the beginning of every string to speed
 	// up comparisons.
-	typedef unsigned short hashDecoration_t; 
+	typedef unsigned short hashDecoration_t;
 
 protected:
 	class CStringPoolIndex
@@ -165,8 +165,8 @@ protected:
 	};
 
 	struct StringPool_t
-	{	
-		int m_TotalLen;		// How large is 
+	{
+		int m_TotalLen;		// How large is
 		int m_SpaceUsed;
 		char m_Data[1];
 	};
@@ -252,7 +252,7 @@ private:
 // description:
 //    This class defines a symbol table of individual filenames, stored more
 //	  efficiently than a standard symbol table.  Internally filenames are broken
-//	  up into file and path entries, and a file handle class allows convenient 
+//	  up into file and path entries, and a file handle class allows convenient
 //	  access to these.
 //-----------------------------------------------------------------------------
 
@@ -299,7 +299,7 @@ private:
 // This creates a simple class that includes the underlying CUtlSymbol
 //  as a private member and then instances a private symbol table to
 //  manage those symbols.  Avoids the possibility of the code polluting the
-//  'global'/default symbol table, while letting the code look like 
+//  'global'/default symbol table, while letting the code look like
 //  it's just using = and .String() to look at CUtlSymbol type objects
 //
 // NOTE:  You can't pass these objects between .dlls in an interface (also true of CUtlSymbol of course)
@@ -315,7 +315,7 @@ private:
 		const char* String( ) const;					\
 	private:											\
 		CUtlSymbol m_SymbolId;							\
-	};	
+	};
 
 // Put this in the .cpp file that uses the above typename
 #define IMPLEMENT_PRIVATE_SYMBOLTYPE( typename )					\

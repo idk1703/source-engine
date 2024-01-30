@@ -47,12 +47,12 @@ void C_VoteController::RecvProxy_VoteType( const CRecvProxyData *pData, void *pS
 void C_VoteController::RecvProxy_VoteOption( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
 	int index = pData->m_pRecvProp->GetOffset() / sizeof(int);
-	
+
 	size_t offset = offsetof( C_VoteController, m_nVoteOptionCount );
 	C_VoteController *pMe = (C_VoteController *)((byte *)pStruct - offset );
 	if( pMe->m_nVoteOptionCount[index] == pData->m_Value.m_Int )
 		return;
-	
+
 	pMe->m_nVoteOptionCount[index] = pData->m_Value.m_Int;
 	pMe->m_bVotesDirty = true;
 	pMe->SetNextClientThink( gpGlobals->curtime + 0.001 );
@@ -113,7 +113,7 @@ void C_VoteController::ClientThink()
 		m_bTypeDirty = false;
 		m_bVotesDirty = true;
 	}
-	
+
 	if( m_bVotesDirty )
 	{
 		if ( m_nPotentialVotes > 0 )
@@ -128,7 +128,7 @@ void C_VoteController::ClientThink()
 			if ( event )
 			{
 				for ( int i = 0; i < MAX_VOTE_OPTIONS; i++ )
-				{	
+				{
 					char szOption[2];
 					Q_snprintf( szOption, sizeof( szOption ), "%i", i + 1 );
 

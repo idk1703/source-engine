@@ -1,7 +1,7 @@
 
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -48,9 +48,9 @@ extern "C"
 						uint *			pReceiveUniqueSerialNumber
 					);
 
-	// This returns data ready to send to the validation server.  
-	// If you want to store a CDKey in the registry, consider passing the 
-	// output of this function through one of the functions below, 
+	// This returns data ready to send to the validation server.
+	// If you want to store a CDKey in the registry, consider passing the
+	// output of this function through one of the functions below,
 	// to make life harder for registry-harvesting trojans.
 	//
 	// This also does a WeakVerify.
@@ -58,33 +58,33 @@ extern "C"
 					(
 						const char *	pszCDKeyFormattedForCDLabel,
 						unsigned int	ClientLocalIPAddr,
-						const void *	pEncryptionKeyReceivedFromAppServer, 
-						unsigned int	uEncryptionKeyLength, 
-						void *			pOutputBuffer, 
-						unsigned int	uSizeOfOutputBuffer, 
+						const void *	pEncryptionKeyReceivedFromAppServer,
+						unsigned int	uEncryptionKeyLength,
+						void *			pOutputBuffer,
+						unsigned int	uSizeOfOutputBuffer,
 						unsigned int *	pReceiveSizeOfEncryptedNewValveCDKey
 					);
 
 
-	// This pair of functions encrypt and decrypt data using a key based on unique 
-	// properties of this machine.  The resulting encrypted data can only be (easily) 
+	// This pair of functions encrypt and decrypt data using a key based on unique
+	// properties of this machine.  The resulting encrypted data can only be (easily)
 	// decrypted on the same machine.  Note: it is NOT impossible to decrypt the data
 	// elsewhere, just inconvenient.
 	ESteamError	SteamEncryptDataForThisMachine
 					(
-						const char *	pDataToEncrypt, 
-						unsigned int	uSizeOfDataToEncrypt, 
-						void *			pOutputBuffer, 
-						unsigned int	uSizeOfOutputBuffer, 
+						const char *	pDataToEncrypt,
+						unsigned int	uSizeOfDataToEncrypt,
+						void *			pOutputBuffer,
+						unsigned int	uSizeOfOutputBuffer,
 						unsigned int *	pReceiveSizeOfEncryptedData
 					);
 
 	ESteamError	SteamDecryptDataForThisMachine
 					(
-						const char *	pDataToDecrypt, 
-						unsigned int	uSizeOfDataToDecrypt, 
-						void *			pOutputBuffer, 
-						unsigned int	uSizeOfOutputBuffer, 
+						const char *	pDataToDecrypt,
+						unsigned int	uSizeOfDataToDecrypt,
+						void *			pOutputBuffer,
+						unsigned int	uSizeOfOutputBuffer,
 						unsigned int *	pReceiveSizeOfDecryptedData
 					);
 

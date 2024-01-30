@@ -221,7 +221,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 class CStdMemAlloc : public IMemAlloc
 {
@@ -246,13 +246,13 @@ public:
 	virtual void *Alloc( size_t nSize );
 	virtual void *Realloc( void *pMem, size_t nSize );
 	virtual void  Free( void *pMem );
-    virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize );
+	virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize );
 
 	// Debug versions
-    virtual void *Alloc( size_t nSize, const char *pFileName, int nLine );
-    virtual void *Realloc( void *pMem, size_t nSize, const char *pFileName, int nLine );
-    virtual void  Free( void *pMem, const char *pFileName, int nLine );
-    virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize, const char *pFileName, int nLine );
+	virtual void *Alloc( size_t nSize, const char *pFileName, int nLine );
+	virtual void *Realloc( void *pMem, size_t nSize, const char *pFileName, int nLine );
+	virtual void  Free( void *pMem, const char *pFileName, int nLine );
+	virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize, const char *pFileName, int nLine );
 
 #ifdef MEMALLOC_SUPPORTS_ALIGNED_ALLOCATIONS
 	virtual void *AllocAlign( size_t nSize, size_t align );
@@ -267,9 +267,9 @@ public:
 	// Returns size of a particular allocation
 	virtual size_t GetSize( void *pMem );
 
-    // Force file + line information for an allocation
-    virtual void PushAllocDbgInfo( const char *pFileName, int nLine );
-    virtual void PopAllocDbgInfo();
+	// Force file + line information for an allocation
+	virtual void PushAllocDbgInfo( const char *pFileName, int nLine );
+	virtual void PopAllocDbgInfo();
 
 	virtual int32 CrtSetBreakAlloc( int32 lNewBreakAlloc );
 	virtual	int CrtSetReportMode( int nReportType, int nReportMode );
@@ -304,14 +304,14 @@ public:
 	virtual int GetGenericMemoryStats( GenericMemoryStat_t **ppMemoryStats );
 
 	virtual void CompactHeap();
-	virtual void CompactIncremental(); 
+	virtual void CompactIncremental();
 
 	virtual MemAllocFailHandler_t SetAllocFailHandler( MemAllocFailHandler_t pfnMemAllocFailHandler );
 	size_t CallAllocFailHandler( size_t nBytes ) { return (*m_pfnFailHandler)( nBytes); }
 
 	virtual uint32 GetDebugInfoSize() { return 0; }
 	virtual void SaveDebugInfo( void *pvDebugInfo ) { }
-	virtual void RestoreDebugInfo( const void *pvDebugInfo ) {}	
+	virtual void RestoreDebugInfo( const void *pvDebugInfo ) {}
 	virtual void InitDebugInfo( void *pvDebugInfo, const char *pchRootFileName, int nLine ) {}
 
 	static size_t DefaultFailHandler( size_t );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -33,7 +33,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBeamEnts::C_TEBeamEnts( void )
 {
@@ -42,7 +42,7 @@ C_TEBeamEnts::C_TEBeamEnts( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBeamEnts::~C_TEBeamEnts( void )
 {
@@ -50,22 +50,22 @@ C_TEBeamEnts::~C_TEBeamEnts( void )
 
 void TE_BeamEnts( IRecipientFilter& filter, float delay,
 	int	start, int end, int modelindex, int haloindex, int startframe, int framerate,
-	float life, float width, float endWidth, int fadeLength, float amplitude, 
+	float life, float width, float endWidth, int fadeLength, float amplitude,
 	int r, int g, int b, int a, int speed )
 {
-	beams->CreateBeamEnts( start, end, modelindex, haloindex, 0.0f, 
-		life, width, endWidth, fadeLength, amplitude, a, 0.1 * (float)speed, 
+	beams->CreateBeamEnts( start, end, modelindex, haloindex, 0.0f,
+		life, width, endWidth, fadeLength, amplitude, a, 0.1 * (float)speed,
 		startframe, 0.1 * (float)framerate, r, g, b );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEBeamEnts::PostDataUpdate( DataUpdateType_t updateType )
 {
-	beams->CreateBeamEnts( m_nStartEntity, m_nEndEntity, m_nModelIndex, m_nHaloIndex, 0.0f, 
-		m_fLife, m_fWidth,  m_fEndWidth, m_nFadeLength, m_fAmplitude, a, 0.1 * m_nSpeed, 
+	beams->CreateBeamEnts( m_nStartEntity, m_nEndEntity, m_nModelIndex, m_nHaloIndex, 0.0f,
+		m_fLife, m_fWidth,  m_fEndWidth, m_nFadeLength, m_fAmplitude, a, 0.1 * m_nSpeed,
 		m_nStartFrame, 0.1 * m_nFrameRate, r, g, b );
 }
 
@@ -76,4 +76,3 @@ BEGIN_RECV_TABLE(C_TEBeamEnts, DT_TEBeamEnts)
 	RecvPropInt( RECVINFO(m_nStartEntity)),
 	RecvPropInt( RECVINFO(m_nEndEntity)),
 END_RECV_TABLE()
-

@@ -28,7 +28,7 @@
 
 ConVar tf_item_selection_panel_sort_type( "tf_item_selection_panel_sort_type", 0, FCVAR_NONE, "0 - Sort is off, 1 - Sort is Alphabet (Pub)" );
 
-const char *g_szEquipSlotHeader[] = 
+const char *g_szEquipSlotHeader[] =
 {
 	"#ItemSel_PRIMARY",		// LOADOUT_POSITION_PRIMARY = 0,
 	"#ItemSel_SECONDARY",	// LOADOUT_POSITION_SECONDARY,
@@ -49,7 +49,7 @@ const char *g_szEquipSlotHeader[] =
 	"#ItemSel_TAUNT",		// LOADOUT_POSITION_TAUNT6
 	"#ItemSel_TAUNT",		// LOADOUT_POSITION_TAUNT7
 	"#ItemSel_TAUNT",		// LOADOUT_POSITION_TAUNT8
-#ifdef STAGING_ONLY	
+#ifdef STAGING_ONLY
 	"#ItemSel_PDA_ADDON1",		// LOADOUT_POSITION_PDA_ADDON1
 	"#ItemSel_PDA_ADDON2",		// LOADOUT_POSITION_PDA_ADDON2
 	"",						// LOADOUT_POSITION_PDA3,
@@ -70,7 +70,7 @@ static bool ShouldItemNotStack( CEconItemView *pItemData )
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemSelectionPanel::CItemSelectionPanel(Panel *parent) : CBaseLoadoutPanel(parent, "ItemSelectionPanel")
 {
@@ -96,7 +96,7 @@ CItemSelectionPanel::CItemSelectionPanel(Panel *parent) : CBaseLoadoutPanel(pare
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemSelectionPanel::~CItemSelectionPanel()
 {
@@ -113,7 +113,7 @@ CItemSelectionPanel::~CItemSelectionPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSelectionPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -146,7 +146,7 @@ void CItemSelectionPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 		}
 	}
 
-	
+
 	m_pNameFilterTextEntry = FindControl<vgui::TextEntry>( "NameFilterTextEntry" );
 	if ( m_pNameFilterTextEntry )
 	{
@@ -157,7 +157,7 @@ void CItemSelectionPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSelectionPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -187,7 +187,7 @@ void CItemSelectionPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSelectionPanel::ApplyKVsToItemPanels( void )
 {
@@ -219,9 +219,9 @@ void CItemSelectionPanel::ApplyKVsToItemPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CItemSelectionPanel::PerformLayout( void ) 
+void CItemSelectionPanel::PerformLayout( void )
 {
 	BaseClass::PerformLayout();
 
@@ -283,7 +283,7 @@ void CItemSelectionPanel::OnThink( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSelectionPanel::OnCommand( const char *command )
 {
@@ -333,7 +333,7 @@ void CItemSelectionPanel::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSelectionPanel::OnButtonChecked( KeyValues *pData )
 {
@@ -349,7 +349,7 @@ void CItemSelectionPanel::OnKeyCodeTyped(vgui::KeyCode code)
 	if ( code == KEY_ESCAPE )
 	{
 		// 0 implies do nothing, INVALID_ITEM_ID means stock and we dont want to equip stock
-		PostMessageSelectionReturned( 0 );	
+		PostMessageSelectionReturned( 0 );
 		OnClose();
 	}
 	else
@@ -403,7 +403,7 @@ void CItemSelectionPanel::OnKeyCodeReleased( vgui::KeyCode code )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSelectionPanel::OnClose( void )
 {
@@ -417,7 +417,7 @@ void CItemSelectionPanel::OnClose( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSelectionPanel::SetVisible( bool bState )
 {
@@ -434,7 +434,7 @@ void CItemSelectionPanel::SetVisible( bool bState )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSelectionPanel::OnItemPanelMousePressed( vgui::Panel *panel )
 {
@@ -443,7 +443,7 @@ void CItemSelectionPanel::OnItemPanelMousePressed( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSelectionPanel::OnItemPanelMouseReleased( vgui::Panel *panel )
 {
@@ -484,7 +484,7 @@ void CItemSelectionPanel::NotifySelectionReturned( CItemModelPanel *pItemPanel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSelectionPanel::UpdateModelPanels( void )
 {
@@ -520,7 +520,7 @@ void CItemSelectionPanel::UpdateModelPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSelectionPanel::UpdateDuplicateCounts( void )
 {
@@ -581,7 +581,7 @@ void CItemSelectionPanel::UpdateDuplicateCounts( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSelectionPanel::CreateItemPanels( void )
 {
@@ -597,7 +597,7 @@ void CItemSelectionPanel::CreateItemPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CItemSelectionPanel::GetNumPages( void )
 {
@@ -616,7 +616,7 @@ int CItemSelectionPanel::GetNumPages( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemSelectionPanel::SetCurrentPage( int nNewPage )
 {
@@ -662,7 +662,7 @@ void CItemSelectionPanel::PostMessageSelectionReturned( itemid_t ulItemID )
 // EQUIP SLOT ITEM SELECTION PANEL
 //=====================================================================================================================
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEquipSlotItemSelectionPanel::CEquipSlotItemSelectionPanel(Panel *parent, int iClass, int iSlot) : CItemSelectionPanel( parent )
 {
@@ -677,7 +677,7 @@ CEquipSlotItemSelectionPanel::CEquipSlotItemSelectionPanel(Panel *parent, int iC
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEquipSlotItemSelectionPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -695,20 +695,20 @@ void CEquipSlotItemSelectionPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEquipSlotItemSelectionPanel::PerformLayout( void ) 
+void CEquipSlotItemSelectionPanel::PerformLayout( void )
 {
 	BaseClass::PerformLayout();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEquipSlotItemSelectionPanel::ShouldItemPanelBeVisible( CItemModelPanel *pPanel, int iPanelIndex )
 {
 	// If we don't have an item, but we're the first model panel on a slot
-	// that has no base item, we still want to be visible because we're the 
+	// that has no base item, we still want to be visible because we're the
 	// panel that allows players to select "Empty" for the slot.
 	return ( pPanel->HasItem() || (iPanelIndex == 0 && !TFInventoryManager()->SlotContainsBaseItems( GEconItemSchema().GetEquipTypeFromClassIndex( m_iClass ), m_iSlot )) );
 }
@@ -748,7 +748,7 @@ struct RarityEconIdKey
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static int SortRarityEconIdKeysBackpack ( CEconItemView *const *a, CEconItemView *const *b )
 {
@@ -765,7 +765,7 @@ static int SortRarityEconIdKeysBackpack ( CEconItemView *const *a, CEconItemView
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static int SortRarityEconIdKeysAlphabetical_Views ( CEconItemView *const *a, CEconItemView *const *b )
 {
@@ -801,7 +801,7 @@ static int SortRarityEconIdKeysAlphabetical_Views ( CEconItemView *const *a, CEc
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static int SortRarityEconIdKeysAlphabetical ( const CEquippableItemsForSlotGenerator::CEquippableResult *a, const CEquippableItemsForSlotGenerator::CEquippableResult *b )
 {
@@ -848,8 +848,8 @@ CEquippableItemsForSlotGenerator::CEquippableItemsForSlotGenerator( int iClass, 
 			iSearchSlot = LOADOUT_POSITION_TAUNT;
 		}
 	}
-	
-	
+
+
 
 	// To start with, generate a list of all potentially-useable items that we want to consider for
 	// the UI. We'll strip this down based on duplicates/gameplay restrictions and sort it at the end.
@@ -857,7 +857,7 @@ CEquippableItemsForSlotGenerator::CEquippableItemsForSlotGenerator( int iClass, 
 	int iNumItems = TFInventoryManager()->GetAllUsableItemsForSlot( iClass, iSearchSlot, &vecItems );
 
 	CEconItemView *pEquippedItem = NULL;
-	
+
 	typedef CUtlMap<RarityEconIdKey, CEquippableItemsForSlotGenerator::CEquippableResult> HighestLevelMap_t;
 	HighestLevelMap_t mapHighestLevel;
 	SetDefLessFunc( mapHighestLevel );
@@ -983,7 +983,7 @@ CEquippableItemsForSlotGenerator::CEquippableItemsForSlotGenerator( int iClass, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 equip_region_mask_t GenerateEquipRegionConflictMask( int iClass, int iUpToSlot, int iIgnoreSlot )
 {
@@ -1006,7 +1006,7 @@ equip_region_mask_t GenerateEquipRegionConflictMask( int iClass, int iUpToSlot, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEquipSlotItemSelectionPanel::UpdateModelPanelsForSelection( void )
 {
@@ -1069,7 +1069,7 @@ void CEquipSlotItemSelectionPanel::UpdateModelPanelsForSelection( void )
 		m_iCurrentItemID =  pEquippedItem->GetItemID();
 	}
 
-	// If the loadout slot is one that players can have empty, put a "nothing" entry at the end of the list. 
+	// If the loadout slot is one that players can have empty, put a "nothing" entry at the end of the list.
 	if ( !TFInventoryManager()->SlotContainsBaseItems( GEconItemSchema().GetEquipTypeFromClassIndex( m_iClass ), m_iSlot ) )
 	{
 		vecDisplayItems.AddToHead( NULL );
@@ -1128,7 +1128,7 @@ void CEquipSlotItemSelectionPanel::UpdateModelPanelsForSelection( void )
 			{
 				bShowEquipped |= vecDisplayItems[iItemIndex].m_pEconItemView->IsEquippedForClass( m_iClass );
 			}
-			
+
 			// Check if this item is the currently equipped item
 			if ( pEquippedItem )
 			{
@@ -1149,7 +1149,7 @@ void CEquipSlotItemSelectionPanel::UpdateModelPanelsForSelection( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CEquipSlotItemSelectionPanel::GetItemNotSelectableReason( const CEconItemView *pItem ) const
 {
@@ -1175,7 +1175,7 @@ const char *CEquipSlotItemSelectionPanel::GetItemNotSelectableReason( const CEco
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEquipSlotItemSelectionPanel::OnBackPressed()
 {
@@ -1214,7 +1214,7 @@ void CItemSelectionPanel::OnTextChanged( KeyValues *data )
 // ITEM CRITERIA BASED SELECTION PANEL
 //=====================================================================================================================
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemCriteriaSelectionPanel::CItemCriteriaSelectionPanel(Panel *parent, const CItemSelectionCriteria *pCriteria, itemid_t pExceptions[], int iNumExceptions ) : CItemSelectionPanel( parent )
 {
@@ -1224,7 +1224,7 @@ CItemCriteriaSelectionPanel::CItemCriteriaSelectionPanel(Panel *parent, const CI
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemCriteriaSelectionPanel::UpdateExceptions( itemid_t pExceptions[], int iNumExceptions )
 {
@@ -1237,7 +1237,7 @@ void CItemCriteriaSelectionPanel::UpdateExceptions( itemid_t pExceptions[], int 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemCriteriaSelectionPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -1252,7 +1252,7 @@ void CItemCriteriaSelectionPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CItemCriteriaSelectionPanel::ShouldItemPanelBeVisible( CItemModelPanel *pPanel, int iPanelIndex )
 {
@@ -1261,7 +1261,7 @@ bool CItemCriteriaSelectionPanel::ShouldItemPanelBeVisible( CItemModelPanel *pPa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemCriteriaSelectionPanel::UpdateModelPanelsForSelection( void )
 {
@@ -1270,7 +1270,7 @@ void CItemCriteriaSelectionPanel::UpdateModelPanelsForSelection( void )
 	CUtlVector<item_stack_type_t> vecDefsFound;
 
 	const wchar_t* wscFilter = m_wNameFilter.Count() ? m_wNameFilter.Base() : NULL;
-	
+
 	int iNumItems = TFInventoryManager()->GetLocalTFInventory()->GetMaxItemCount();
 	for ( int i = 1; i <= iNumItems; i++ )
 	{
@@ -1371,7 +1371,7 @@ void CItemCriteriaSelectionPanel::UpdateModelPanelsForSelection( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CItemCriteriaSelectionPanel::GetItemNotSelectableReason( const CEconItemView *pItem ) const
 {
@@ -1394,15 +1394,15 @@ const char *CItemCriteriaSelectionPanel::GetItemNotSelectableReason( const CEcon
 // CRAFTING SELECTION PANEL
 //=====================================================================================================================
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CCraftingItemSelectionPanel::CCraftingItemSelectionPanel(Panel *parent ) 
+CCraftingItemSelectionPanel::CCraftingItemSelectionPanel(Panel *parent )
 	: CItemCriteriaSelectionPanel( parent, NULL, NULL, 0 )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCraftingItemSelectionPanel::UpdateOnShow( const CItemSelectionCriteria *pCriteria, bool bForceBackpack, itemid_t pExceptions[], int iNumExceptions )
 {
@@ -1426,7 +1426,7 @@ void CCraftingItemSelectionPanel::UpdateOnShow( const CItemSelectionCriteria *pC
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CCraftingItemSelectionPanel::GetItemNotSelectableReason( const CEconItemView *pItem ) const
 {
@@ -1449,15 +1449,15 @@ const char *CCraftingItemSelectionPanel::GetItemNotSelectableReason( const CEcon
 // ACCOUNT SLOT ITEM SELECTION PANEL
 //=====================================================================================================================
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CAccountSlotItemSelectionPanel::CAccountSlotItemSelectionPanel( Panel *pParent, int iSlot, const char *pszTitleToken ) 
+CAccountSlotItemSelectionPanel::CAccountSlotItemSelectionPanel( Panel *pParent, int iSlot, const char *pszTitleToken )
 	: CEquipSlotItemSelectionPanel( pParent, GEconItemSchema().GetAccountIndex(), iSlot )
 	, m_pszTitleToken( pszTitleToken )
 {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAccountSlotItemSelectionPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -1473,7 +1473,7 @@ void CAccountSlotItemSelectionPanel::ApplySchemeSettings( vgui::IScheme *pScheme
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CAccountSlotItemSelectionPanel::GetItemNotSelectableReason( const CEconItemView *pItem ) const
 {
@@ -1482,7 +1482,7 @@ const char *CAccountSlotItemSelectionPanel::GetItemNotSelectableReason( const CE
 
 	CTFItemDefinition *pItemData = pItem->GetStaticData();
 
-	if ( pItemData->GetEquipType() != EEquipType_t::EQUIP_TYPE_ACCOUNT ) 
+	if ( pItemData->GetEquipType() != EEquipType_t::EQUIP_TYPE_ACCOUNT )
 		return "#Econ_GreyOutReason_CannotBeUsedByThisClass";
 
 	extern bool AreSlotsConsideredIdentical( EEquipType_t eEquipType, int iBaseSlot, int iTestSlot );

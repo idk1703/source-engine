@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -54,8 +54,8 @@ bool VRAD_DispatchFn( MessageBuffer *pBuf, int iSource, int iPacketID )
 			g_LightResultsFilename.CopyArray( pFilename, strlen( pFilename ) + 1 );
 			return true;
 		}
-		
-		default:		
+
+		default:
 			return false;
 	}
 }
@@ -87,10 +87,10 @@ void VRAD_SetupMPI( int &argc, char **&argv )
 	//  Extract mpi specific arguments
 	//
 	Msg( "Initializing VMPI...\n" );
-	if ( !VMPI_Init( 
-		argc, 
-		argv, 
-		"dependency_info_vrad.txt", 
+	if ( !VMPI_Init(
+		argc,
+		argv,
+		"dependency_info_vrad.txt",
 		HandleMPIDisconnect,
 		mode
 		) )
@@ -138,7 +138,7 @@ void SerializeFace( MessageBuffer * pmb, int facenum )
 
 	//
 	// Write the light information
-	// 
+	//
 	for (i=0; i<MAXLIGHTMAPS; ++i) {
 		for (n=0; n<NUM_BUMP_VECTS+1; ++n) {
 			if (fl->light[i][n])
@@ -150,8 +150,8 @@ void SerializeFace( MessageBuffer * pmb, int facenum )
 
 	if (fl->luxel)
 		WriteValues( pmb, fl->luxel, fl->numluxels);
-	
-	if (fl->luxelNormals) 
+
+	if (fl->luxelNormals)
 		WriteValues( pmb, fl->luxelNormals, fl->numluxels);
 }
 
@@ -165,19 +165,19 @@ void UnSerializeFace( MessageBuffer * pmb, int facenum, int iSource )
 	dface_t     * f  = &g_pFaces[facenum];
 	facelight_t * fl = &facelight[facenum];
 
-	if (pmb->read(f, sizeof(dface_t)) < 0) 
+	if (pmb->read(f, sizeof(dface_t)) < 0)
 		Error("UnSerializeFace - invalid dface_t from %s (mb len: %d, offset: %d)", VMPI_GetMachineName( iSource ), pmb->getLen(), pmb->getOffset() );
 
-	if (pmb->read(fl, sizeof(facelight_t)) < 0) 
+	if (pmb->read(fl, sizeof(facelight_t)) < 0)
 		Error("UnSerializeFace - invalid facelight_t from %s (mb len: %d, offset: %d)", VMPI_GetMachineName( iSource ), pmb->getLen(), pmb->getOffset() );
 
 	fl->sample = (sample_t *) calloc(fl->numsamples, sizeof(sample_t));
-	if (pmb->read(fl->sample, sizeof(sample_t) * fl->numsamples) < 0) 
+	if (pmb->read(fl->sample, sizeof(sample_t) * fl->numsamples) < 0)
 		Error("UnSerializeFace - invalid sample_t from %s (mb len: %d, offset: %d, fl->numsamples: %d)", VMPI_GetMachineName( iSource ), pmb->getLen(), pmb->getOffset(), fl->numsamples );
 
 	//
 	// Read the light information
-	// 
+	//
 	for (i=0; i<MAXLIGHTMAPS; ++i) {
 		for (n=0; n<NUM_BUMP_VECTS+1; ++n) {
 			if (fl->light[i][n])
@@ -229,17 +229,17 @@ void RunMPIBuildFacelights()
 {
 	g_CPUTime.Init();
 
-    Msg( "%-20s ", "BuildFaceLights:" );
+	Msg( "%-20s ", "BuildFaceLights:" );
 	if ( g_bMPIMaster )
 	{
 		StartPacifier("");
 	}
 
 	VMPI_SetCurrentStage( "RunMPIBuildFaceLights" );
-	double elapsed = DistributeWork( 
-		numfaces, 
+	double elapsed = DistributeWork(
+		numfaces,
 		VMPI_DISTRIBUTEWORK_PACKETID,
-		MPI_ProcessFaces, 
+		MPI_ProcessFaces,
 		MPI_ReceiveFaceResults );
 
 	if ( g_bMPIMaster )
@@ -280,32 +280,32 @@ void RunMPIBuildFacelights()
 void MPI_ReceiveVisLeafsResults( uint64 iWorkUnit, MessageBuffer *pBuf, int iWorker )
 {
 	int patchesInCluster = 0;
-	
+
 	pBuf->read(&patchesInCluster, sizeof(patchesInCluster));
-	
+
 	for ( int k=0; k < patchesInCluster; ++k )
 	{
 		int patchnum = 0;
 		pBuf->read(&patchnum, sizeof(patchnum));
-		
+
 		CPatch * patch = &g_Patches[patchnum];
 		int numtransfers;
 		pBuf->read( &numtransfers, sizeof(numtransfers) );
 		patch->numtransfers = numtransfers;
-		if (numtransfers) 
+		if (numtransfers)
 		{
 			patch->transfers = new transfer_t[numtransfers];
 			pBuf->read(patch->transfers, numtransfers * sizeof(transfer_t));
 		}
-		
+
 		total_transfer += numtransfers;
-		if (max_transfer < numtransfers) 
+		if (max_transfer < numtransfers)
 			max_transfer = numtransfers;
 	}
 }
 
 
-// Temporary variables used during callbacks. If we're going to be threadsafe, these 
+// Temporary variables used during callbacks. If we're going to be threadsafe, these
 // should go in a structure and get passed around.
 class CVMPIVisLeafsData
 {
@@ -335,7 +335,7 @@ void MPI_AddPatchData( int iThread, int patchnum, CPatch *patch )
 }
 
 
-// This handles a work unit sent by the master. Each work unit here is a 
+// This handles a work unit sent by the master. Each work unit here is a
 // list of clusters.
 void MPI_ProcessVisLeafs( int iThread, uint64 iWorkUnit, MessageBuffer *pBuf )
 {
@@ -370,9 +370,9 @@ void MPI_ProcessVisLeafs( int iThread, uint64 iWorkUnit, MessageBuffer *pBuf )
 
 void RunMPIBuildVisLeafs()
 {
-    g_CPUTime.Init();
-    
-    Msg( "%-20s ", "BuildVisLeafs  :" );
+	g_CPUTime.Init();
+
+	Msg( "%-20s ", "BuildVisLeafs  :" );
 	if ( g_bMPIMaster )
 	{
 		StartPacifier("");
@@ -393,11 +393,11 @@ void RunMPIBuildVisLeafs()
 	// Results are returned in BuildVisRow()
 	//
 	VMPI_SetCurrentStage( "RunMPIBuildVisLeafs" );
-	
-	double elapsed = DistributeWork( 
-		dvis->numclusters, 
+
+	double elapsed = DistributeWork(
+		dvis->numclusters,
 		VMPI_DISTRIBUTEWORK_PACKETID,
-		MPI_ProcessVisLeafs, 
+		MPI_ProcessVisLeafs,
 		MPI_ReceiveVisLeafsResults );
 
 	// Free the transfers from each thread.
@@ -427,7 +427,7 @@ void VMPI_DistributeLightData()
 	if ( g_bMPIMaster )
 	{
 		const char *pVirtualFilename = "--plightdata--";
-		
+
 		CUtlBuffer lightFaceData;
 
 		// write out the light data
@@ -459,7 +459,7 @@ void VMPI_DistributeLightData()
 			VMPI_DispatchNextMessage();
 		}
 
-		// Open 
+		// Open
 		FileHandle_t fp = g_pFileSystem->Open( g_LightResultsFilename.Base(), "rb", VMPI_VIRTUAL_FILES_PATH_ID );
 		if ( !fp )
 			Error( "Can't open '%s' to read lighting info.", g_LightResultsFilename.Base() );
@@ -492,5 +492,3 @@ void VMPI_DistributeLightData()
 		}
 	}
 }
-
-

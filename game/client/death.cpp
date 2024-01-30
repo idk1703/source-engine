@@ -21,7 +21,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudDeathNotice : public CHudElement, public vgui::Panel
 {
@@ -53,7 +53,7 @@ using namespace vgui;
 DECLARE_HUDELEMENT( CHudDeathNotice );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudDeathNotice::CHudDeathNotice( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass( NULL, "HudDeathNotice" )
@@ -96,7 +96,7 @@ DeathNoticeItem rgDeathNoticeList[ MAX_DEATHNOTICES + 1 ];
 static ConVar hud_deathnotice_time( "hud_deathnotice_time", "6", 0 );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::Init( void )
 {
@@ -104,7 +104,7 @@ void CHudDeathNotice::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::VidInit( void )
 {
@@ -120,7 +120,7 @@ bool CHudDeathNotice::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::Paint()
 {
@@ -133,15 +133,15 @@ void CHudDeathNotice::Paint()
 	{
 		// we've gone through them all
 		if ( rgDeathNoticeList[i].iconDeath == NULL )
-			break;  
+			break;
 
 		// display time has expired
 		// remove the current item from the list
 		if ( rgDeathNoticeList[i].flDisplayTime < gpGlobals->curtime )
-		{ 
+		{
 			Q_memmove( &rgDeathNoticeList[i], &rgDeathNoticeList[i+1], sizeof(DeathNoticeItem) * (MAX_DEATHNOTICES - i) );
 			// continue on the next item;  stop the counter getting incremented
-			i--;  
+			i--;
 			continue;
 		}
 
@@ -205,7 +205,7 @@ void CHudDeathNotice::FireGameEvent( KeyValues * event)
 	if ( !g_PR )
 		return;
 
-	int killer = engine->GetPlayerForUserID( event->GetInt("killer") ); 
+	int killer = engine->GetPlayerForUserID( event->GetInt("killer") );
 	int victim = engine->GetPlayerForUserID( event->GetInt("victim") );
 
 	char killedwith[32];
@@ -294,7 +294,3 @@ void CHudDeathNotice::FireGameEvent( KeyValues * event)
 
 	Msg( "\n" );
 }
-
-
-
-

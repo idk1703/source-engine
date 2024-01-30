@@ -104,7 +104,7 @@ public:
 
 	bool	HandleInteraction(int interactionType, void *data, CBaseCombatCharacter* sourceEnt);
 	virtual bool SpeakIfAllowed( AIConcept_t concept, const char *modifiers = NULL, bool bRespondingToPlayer = false, char *pszOutResponseChosen = NULL, size_t bufsize = 0 );
-	
+
 	void	HolsterPistol();
 	void	DrawPistol();
 	void	Weapon_Drop( CBaseCombatWeapon *pWeapon, const Vector *pvecTarget = NULL, const Vector *pVelocity = NULL );
@@ -116,7 +116,7 @@ public:
 	virtual bool	IsAllowedToAim();
 
 	virtual void	PainSound( const CTakeDamageInfo &info );
-    virtual void	DeathSound( const CTakeDamageInfo &info );
+	virtual void	DeathSound( const CTakeDamageInfo &info );
 
 	// Hacking and object interaction
 	void	SearchForInteractTargets();
@@ -268,9 +268,9 @@ private:
 		SCHED_ALYX_FALL_TO_GROUND,
 	};
 
-	enum 
+	enum
 	{
-		
+
 		TASK_ALYX_BEGIN_INTERACTION = BaseClass::NEXT_TASK,
 		TASK_ALYX_COMPLETE_INTERACTION,
 		TASK_ALYX_ANNOUNCE_HACK,

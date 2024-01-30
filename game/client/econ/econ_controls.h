@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -64,7 +64,7 @@ bool SetXToRed( vgui::Label *pPanel );
 // Purpose: Simple panel tooltip. Just calls setvisible on the other panel.
 //			Ignores all other input.
 //-----------------------------------------------------------------------------
-class CSimplePanelToolTip : public vgui::BaseTooltip 
+class CSimplePanelToolTip : public vgui::BaseTooltip
 {
 	DECLARE_CLASS_SIMPLE( CSimplePanelToolTip, vgui::BaseTooltip );
 public:
@@ -104,8 +104,8 @@ public:
 	virtual void OnMouseFocusTicked() OVERRIDE;
 	virtual void OnCursorEntered() OVERRIDE;
 	virtual void OnCursorExited() OVERRIDE;
-	void		PassMouseTicksTo( vgui::Panel *pPanel, bool bCursorEnterExitEvent = false ) 
-	{ 
+	void		PassMouseTicksTo( vgui::Panel *pPanel, bool bCursorEnterExitEvent = false )
+	{
 		m_hMouseTickTarget.Set( pPanel ? pPanel->GetVPanel() : NULL );
 		m_bbCursorEnterExitEvent = bCursorEnterExitEvent;
 	}
@@ -225,7 +225,7 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: Rich text control that knows how to fill itself with information 
+// Purpose: Rich text control that knows how to fill itself with information
 //			that describes a specific item definition.
 //-----------------------------------------------------------------------------
 class CRichTextWithScrollbarBorders : public CExRichText
@@ -240,7 +240,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: Rich text control that knows how to fill itself with information 
+// Purpose: Rich text control that knows how to fill itself with information
 //			that describes a specific item definition.
 //-----------------------------------------------------------------------------
 class CEconItemDetailsRichText : public CRichTextWithScrollbarBorders
@@ -391,7 +391,7 @@ private:
 	void PopModal( int iIdx );
 
 private:
-	CUtlVector<vgui::VPanelHandle> m_pDialogs;	
+	CUtlVector<vgui::VPanelHandle> m_pDialogs;
 };
 
 CPanelModalStack *TFModalStack( void );

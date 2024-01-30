@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -49,7 +49,7 @@ public:
 	void	Equip( CBaseCombatCharacter *pOwner );
 
 protected:
-	
+
 	void	StartJet( void );
 	void	StopJet( void );
 
@@ -78,7 +78,7 @@ CWeaponExtinguisher::CWeaponExtinguisher( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponExtinguisher::Precache( void )
 {
@@ -90,7 +90,7 @@ void CWeaponExtinguisher::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponExtinguisher::Spawn( void )
 {
@@ -101,8 +101,8 @@ void CWeaponExtinguisher::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOwner - 
+// Purpose:
+// Input  : *pOwner -
 //-----------------------------------------------------------------------------
 void CWeaponExtinguisher::Equip( CBaseCombatCharacter *pOwner )
 {
@@ -112,11 +112,11 @@ void CWeaponExtinguisher::Equip( CBaseCombatCharacter *pOwner )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pInflictor - 
-//			*pAttacker - 
-//			flDamage - 
-//			bitsDamageType - 
+// Purpose:
+// Input  : *pInflictor -
+//			*pAttacker -
+//			flDamage -
+//			bitsDamageType -
 //-----------------------------------------------------------------------------
 void CWeaponExtinguisher::Event_Killed( const CTakeDamageInfo &info )
 {
@@ -124,15 +124,15 @@ void CWeaponExtinguisher::Event_Killed( const CTakeDamageInfo &info )
 	if ( AR2Explosion *pExplosion = AR2Explosion::CreateAR2Explosion( GetAbsOrigin() ) )
 	{
 		pExplosion->SetLifetime( 10 );
-	}		
+	}
 
 	//TODO: Use a real effect
 	CPASFilter filter( GetAbsOrigin() );
 
 	te->Explosion( filter, 0.0,
-		&GetAbsOrigin(), 
+		&GetAbsOrigin(),
 		g_sModelIndexFireball,
-		2.0, 
+		2.0,
 		15,
 		TE_EXPLFLAG_NONE,
 		250,
@@ -191,10 +191,10 @@ void CWeaponExtinguisher::StopJet( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponExtinguisher::ItemPostFrame( void )
-{	
+{
 	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
 
 	if ( pOwner == NULL )
@@ -206,7 +206,7 @@ void CWeaponExtinguisher::ItemPostFrame( void )
 		StopJet();
 		return;
 	}
-	
+
 	//See if we should try and extinguish fires
 	if ( pOwner->m_nButtons & IN_ATTACK )
 	{
@@ -231,9 +231,9 @@ void CWeaponExtinguisher::ItemPostFrame( void )
 		Vector	vForward, vRight, vUp;
 
 		pOwner->EyeVectors( &vForward, &vRight, &vUp );
-		
+
 		vMuzzlePos	= pOwner->Weapon_ShootPosition( );
-		
+
 		//FIXME: Need to get the exact same muzzle point!
 
 		//FIXME: This needs to be adjusted so the server collision matches the visuals on the client
@@ -260,7 +260,7 @@ void CWeaponExtinguisher::ItemPostFrame( void )
 			int	radius = fire_extinguisher_radius.GetInt();
 
 			NDebugOverlay::Line( vMuzzlePos, tr.endpos, 0, 0, 128, false, 0.0f );
-			
+
 			NDebugOverlay::Box( vMuzzlePos, Vector(-1, -1, -1), Vector(1, 1, 1), 0, 0, 128, false, 0.0f );
 			NDebugOverlay::Box( tr.endpos, Vector(-2, -2, -2), Vector(2, 2, 2), 0, 0, 128, false, 0.0f );
 			NDebugOverlay::Box( tr.endpos, Vector(-radius, -radius, -radius), Vector(radius, radius, radius), 0, 0, 255, false, 0.0f );
@@ -284,7 +284,7 @@ public:
 	virtual int	ObjectCaps( void ) { return (BaseClass::ObjectCaps() | FCAP_CONTINUOUS_USE) & ~FCAP_ACROSS_TRANSITION; }
 
 protected:
-	float	m_flNextCharge; 
+	float	m_flNextCharge;
 	bool	m_bSoundOn;
 
 	void	TurnOff( void );
@@ -330,18 +330,18 @@ bool CExtinguisherCharger::CreateVPhysics()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pActivator - 
-//			*pCaller - 
-//			useType - 
-//			value - 
+// Purpose:
+// Input  : *pActivator -
+//			*pCaller -
+//			useType -
+//			value -
 //-----------------------------------------------------------------------------
 void CExtinguisherCharger::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
 	// Make sure that we have a caller
 	if ( pActivator == NULL )
 		return;
-	
+
 	// If it's not a player, ignore
 	if ( pActivator->IsPlayer() == false )
 		return;
@@ -354,7 +354,7 @@ void CExtinguisherCharger::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, U
 	}
 
 	SetNextThink( gpGlobals->curtime + 0.25 );
-	
+
 	SetThink( TurnOff );
 
 	CBasePlayer	*pPlayer = ToBasePlayer( pActivator );
@@ -367,7 +367,7 @@ void CExtinguisherCharger::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, U
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExtinguisherCharger::TurnOff( void )
 {

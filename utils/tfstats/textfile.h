@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:  Interface of CTextFile. 
+// Purpose:  Interface of CTextFile.
 //
 // $Workfile:     $
 // $Date:         $
@@ -22,7 +22,7 @@
 #define BUF_SIZE 5000
 
 //------------------------------------------------------------------------------------------------------
-// Purpose:  CTextFile represents a configuration file.  The default delimiters 
+// Purpose:  CTextFile represents a configuration file.  The default delimiters
 // are { } = \n \r \t ; " and space. Also C++ style comments are ignored by default.
 // CTextFile only supports reading, a 5000 character word /line buffer
 // and only supports one pushback
@@ -44,14 +44,14 @@ private:
 
 	char getNextNonWSChar();
 	bool isDelim(char c);
-	
+
 	const char* getToken(char* outputBuf);
-public: 
+public:
 	explicit CTextFile(const char* filename,bool eliminateComments=true){init(filename,eliminateComments);}
 	explicit CTextFile(const string& filename,bool eliminateComments=true){init(filename.c_str(),eliminateComments);}
 	void init(const char* filename,bool eliminateComments=true);
 	std::string& fileName(){return filename;}
-	
+
 	void discardBlock();
 	const char* readString();
 	const char* readString(char* buf);
@@ -68,7 +68,7 @@ public:
 	void reset();
 	bool discard(char* test);
 	void discard(){getToken();}
-	
+
 	~CTextFile();
 };
 

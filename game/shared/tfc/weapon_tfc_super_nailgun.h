@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -29,14 +29,14 @@ class CTFCSuperNailgun : public CTFCNailgun
 {
 public:
 	DECLARE_CLASS( CTFCSuperNailgun, CTFCNailgun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	#ifndef CLIENT_DLL
 		DECLARE_DATADESC();
 	#endif
 
-	
+
 	CTFCSuperNailgun();
 
 	virtual TFCWeaponID GetWeaponID( void ) const;
@@ -47,7 +47,7 @@ public:
 public:
 
 private:
-	
+
 	CTFCSuperNailgun( const CTFCSuperNailgun & ) {}
 
 };

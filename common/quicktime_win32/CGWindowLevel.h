@@ -1,17 +1,17 @@
 /*
-     File:       CGWindowLevel.h
- 
-     Contains:   CoreGraphics window levels
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       CGWindowLevel.h
+
+		Contains:   CoreGraphics window levels
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 
 #ifndef CGWINDOWLEVEL_H_
@@ -37,18 +37,18 @@ extern "C" {
 #endif
 
 #if PRAGMA_ENUM_ALWAYSINT
-    #if defined(__fourbyteints__) && !__fourbyteints__ 
-        #define __CGWINDOWLEVEL__RESTORE_TWOBYTEINTS
-        #pragma fourbyteints on
-    #endif
-    #pragma enumsalwaysint on
+		#if defined(__fourbyteints__) && !__fourbyteints__
+				#define __CGWINDOWLEVEL__RESTORE_TWOBYTEINTS
+				#pragma fourbyteints on
+		#endif
+		#pragma enumsalwaysint on
 #elif PRAGMA_ENUM_OPTIONS
-    #pragma option enum=int
+		#pragma option enum=int
 #elif PRAGMA_ENUM_PACK
-    #if __option(pack_enums)
-        #define __CGWINDOWLEVEL__RESTORE_PACKED_ENUMS
-        #pragma options(!pack_enums)
-    #endif
+		#if __option(pack_enums)
+				#define __CGWINDOWLEVEL__RESTORE_PACKED_ENUMS
+				#pragma options(!pack_enums)
+		#endif
 #endif
 
 /*
@@ -65,32 +65,32 @@ extern "C" {
 typedef int32_t                         CGWindowLevel;
 typedef int32_t                         CGWindowLevelKey;
 enum _CGCommonWindowLevelKey {
-  kCGBaseWindowLevelKey         = 0,
-  kCGMinimumWindowLevelKey      = 1,
-  kCGDesktopWindowLevelKey      = 2,
-  kCGBackstopMenuLevelKey       = 3,
-  kCGNormalWindowLevelKey       = 4,
-  kCGFloatingWindowLevelKey     = 5,
-  kCGTornOffMenuWindowLevelKey  = 6,
-  kCGDockWindowLevelKey         = 7,
-  kCGMainMenuWindowLevelKey     = 8,
-  kCGStatusWindowLevelKey       = 9,
-  kCGModalPanelWindowLevelKey   = 10,
-  kCGPopUpMenuWindowLevelKey    = 11,
-  kCGDraggingWindowLevelKey     = 12,
-  kCGScreenSaverWindowLevelKey  = 13,
-  kCGMaximumWindowLevelKey      = 14,
-  kCGOverlayWindowLevelKey      = 15,
-  kCGHelpWindowLevelKey         = 16,
-  kCGUtilityWindowLevelKey      = 17,
-  kCGDesktopIconWindowLevelKey  = 18,
-  kCGNumberOfWindowLevelKeys    = 19    /* Internal bookkeeping; must be last */
+	kCGBaseWindowLevelKey         = 0,
+	kCGMinimumWindowLevelKey      = 1,
+	kCGDesktopWindowLevelKey      = 2,
+	kCGBackstopMenuLevelKey       = 3,
+	kCGNormalWindowLevelKey       = 4,
+	kCGFloatingWindowLevelKey     = 5,
+	kCGTornOffMenuWindowLevelKey  = 6,
+	kCGDockWindowLevelKey         = 7,
+	kCGMainMenuWindowLevelKey     = 8,
+	kCGStatusWindowLevelKey       = 9,
+	kCGModalPanelWindowLevelKey   = 10,
+	kCGPopUpMenuWindowLevelKey    = 11,
+	kCGDraggingWindowLevelKey     = 12,
+	kCGScreenSaverWindowLevelKey  = 13,
+	kCGMaximumWindowLevelKey      = 14,
+	kCGOverlayWindowLevelKey      = 15,
+	kCGHelpWindowLevelKey         = 16,
+	kCGUtilityWindowLevelKey      = 17,
+	kCGDesktopIconWindowLevelKey  = 18,
+	kCGNumberOfWindowLevelKeys    = 19    /* Internal bookkeeping; must be last */
 };
 typedef enum _CGCommonWindowLevelKey _CGCommonWindowLevelKey;
 
 /*
  *  CGWindowLevelForKey()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -102,7 +102,7 @@ CGWindowLevelForKey(CGWindowLevelKey key);
 
 /* number of levels above kCGMaximumWindowLevel reserved for internal use */
 enum {
-  kCGNumReservedWindowLevels    = 16
+	kCGNumReservedWindowLevels    = 16
 };
 
 /* Definitions of older constant values as calls */
@@ -127,14 +127,14 @@ enum {
 #define kCGMaximumWindowLevel       CGWindowLevelForKey(kCGMaximumWindowLevelKey)   /* LONG_MAX - kCGNumReservedWindowLevels */
 
 #if PRAGMA_ENUM_ALWAYSINT
-    #pragma enumsalwaysint reset
-    #ifdef __CGWINDOWLEVEL__RESTORE_TWOBYTEINTS
-        #pragma fourbyteints off
-    #endif
+		#pragma enumsalwaysint reset
+		#ifdef __CGWINDOWLEVEL__RESTORE_TWOBYTEINTS
+				#pragma fourbyteints off
+		#endif
 #elif PRAGMA_ENUM_OPTIONS
-    #pragma option enum=reset
+		#pragma option enum=reset
 #elif defined(__CGWINDOWLEVEL__RESTORE_PACKED_ENUMS)
-    #pragma options(pack_enums)
+		#pragma options(pack_enums)
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -148,4 +148,3 @@ enum {
 #endif
 
 #endif /* CGWINDOWLEVEL_H_ */
-

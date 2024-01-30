@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,7 +25,7 @@ public:
 
 private:
 	CHudChatLine( const CHudChatLine & ); // not defined, not accessible
-	
+
 };
 
 //-----------------------------------------------------------------------------
@@ -34,7 +34,7 @@ private:
 class CHudChatInputLine : public CBaseHudChatInputLine
 {
 	DECLARE_CLASS_SIMPLE( CHudChatInputLine, CBaseHudChatInputLine );
-	
+
 public:
 	CHudChatInputLine( CBaseHudChat *parent, char const *panelName ) : CBaseHudChatInputLine( parent, panelName ) {}
 

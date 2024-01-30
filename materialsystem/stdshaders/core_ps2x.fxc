@@ -1,6 +1,6 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. =======
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -45,7 +45,7 @@ const float g_CoreColorTexCoordOffset : register( c9 );
 const float3 g_EyePos			: register( c8 );
 const float4 g_FogParams		: register( c11 );
 
-float LengthThroughSphere( float3 vecRayOrigin, float3 vecRayDelta, 
+float LengthThroughSphere( float3 vecRayOrigin, float3 vecRayDelta,
 						  float3 vecSphereCenter, float flRadius, out float alpha )
 {
 	// Solve using the ray equation + the sphere equation
@@ -83,7 +83,7 @@ float LengthThroughSphere( float3 vecRayOrigin, float3 vecRayDelta,
 	float hack = flDiscrim;
 	flDiscrim = sqrt( flDiscrim );
 	float oo2a = 0.5f / a;
-	
+
 
 	//if( hack < 0.0f )
 	//{
@@ -95,7 +95,7 @@ float LengthThroughSphere( float3 vecRayOrigin, float3 vecRayDelta,
 	//	alpha = 1.0f;
 	//	return abs( flDiscrim ) * 2 * oo2a;
 	//}
-	
+
 	//replacing the if's above because if's in hlsl are bad.....
 	float fHackGreaterThanZero = step( 0.0f, hack );
 	alpha = fHackGreaterThanZero;
@@ -113,7 +113,7 @@ struct PS_INPUT
 	float2 vBumpTexCoord			: TEXCOORD0; // dudvMapAndNormalMapTexCoord
 	HALF3 vWorldVertToEyeVector		: TEXCOORD1;
 	HALF3x3 tangentSpaceTranspose	: TEXCOORD2;
-	float3 vRefractXYW				: TEXCOORD5; 
+	float3 vRefractXYW				: TEXCOORD5;
 	float3 projNormal				: TEXCOORD6;
 	float4 worldPos_projPosZ		: TEXCOORD7;
 };
@@ -215,4 +215,3 @@ float4 main( PS_INPUT i ) : COLOR
 	float fogFactor = CalcPixelFogFactor( PIXELFOGTYPE, g_FogParams, g_EyePos.z, i.worldPos_projPosZ.z, i.worldPos_projPosZ.w );
 	return FinalOutput( rgba, fogFactor, PIXELFOGTYPE, TONEMAP_SCALE_NONE );
 }
-

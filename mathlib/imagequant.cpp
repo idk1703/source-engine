@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -18,7 +18,7 @@ static int ExtraValueXForms[3*N_EXTRAVALUES]={
 	76,151,28,
 };
 
-  
+
 
 #define MAX_QUANTIZE_IMAGE_WIDTH 4096
 
@@ -93,4 +93,3 @@ void ColorQuantize(uint8 const *Image,
 	}
 	if (q) FreeQuantization(q);
 }
-

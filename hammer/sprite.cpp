@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -137,7 +137,7 @@ void CSpriteCache::AddRef(CSpriteModel *pSprite)
 			m_Cache[i].nRefCount++;
 			return;
 		}
-	}	
+	}
 }
 
 
@@ -180,14 +180,14 @@ void CSpriteCache::Release(CSpriteModel *pSprite)
 
 			break;
 		}
-	}	
+	}
 }
 
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
 //-----------------------------------------------------------------------------
-CSpriteModel::CSpriteModel(void) : 
+CSpriteModel::CSpriteModel(void) :
 	m_pMaterial(0), m_NumFrames(-1), m_fScale(1.0), m_Origin(0,0,0), m_UL(0,0), m_LR(0,0), m_TexUL(0,1), m_TexLR(1,0), m_bInvert(false)
 {
 }
@@ -217,12 +217,12 @@ void CSpriteModel::SetRenderMode( const int mode )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pEntity - 
-//			type - 
-//			forward - 
-//			right - 
-//			up - 
+// Purpose:
+// Input  : pEntity -
+//			type -
+//			forward -
+//			right -
+//			up -
 //-----------------------------------------------------------------------------
 void CSpriteModel::GetSpriteAxes(QAngle& Angles, int type, Vector& forward, Vector& right, Vector& up, Vector& ViewUp, Vector& ViewRight, Vector& ViewForward)
 {
@@ -284,7 +284,7 @@ void CSpriteModel::GetSpriteAxes(QAngle& Angles, int type, Vector& forward, Vect
 			}
 			break;
 		}
-	
+
 		case SPR_VP_PARALLEL_UPRIGHT:
 		{
 			// generate the sprite's axes, with vup straight up in worldspace, and
@@ -297,11 +297,11 @@ void CSpriteModel::GetSpriteAxes(QAngle& Angles, int type, Vector& forward, Vect
 									//  r_spritedesc.vup is 0, 0, 1
 			if ((dot > 0.999848) || (dot < -0.999848))	// cos(1 degree) = 0.999848
 				return;
-			
+
 			up[0] = 0;
 			up[1] = 0;
 			up[2] = 1;
-			
+
 			right[0] = ViewForward[1];
 			right[1] = -ViewForward[0];
 			right[2] = 0;
@@ -312,7 +312,7 @@ void CSpriteModel::GetSpriteAxes(QAngle& Angles, int type, Vector& forward, Vect
 			forward[2] = 0;
 			break;
 		}
-	
+
 		case SPR_ORIENTED:
 		{
 			// generate the sprite's axes, according to the sprite's world orientation
@@ -487,7 +487,7 @@ CSpriteDataCache* LookupSpriteDataCache( const char *pSpritePath )
 	char filename[MAX_PATH];
 	V_strncpy( filename, pSpritePath, sizeof( filename ) );
 	V_FixSlashes( filename );
-	
+
 	CSpriteDataCache *pData;
 	int i = g_SpriteDataCache.Find( filename );
 	if ( i == g_SpriteDataCache.InvalidIndex() )
@@ -512,7 +512,7 @@ CSpriteDataCache* LookupSpriteDataCache( const char *pSpritePath )
 	{
 		pData = g_SpriteDataCache[i];
 	}
-	
+
 	return pData;
 }
 
@@ -521,14 +521,14 @@ CSpriteDataCache* LookupSpriteDataCache( const char *pSpritePath )
 
 //-----------------------------------------------------------------------------
 // Purpose: Loads a sprite material.
-// Input  : pszSpritePath - 
+// Input  : pszSpritePath -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 
 bool CSpriteModel::LoadSprite(const char *pszSpritePath)
 {
 	CSpriteDataCache *pCache = LookupSpriteDataCache( pszSpritePath );
-	
+
 	m_pMaterial = pCache->m_pMaterial;
 	if( m_pMaterial && m_pMaterial->GetMaterial() )
 	{
@@ -569,7 +569,7 @@ bool CSpriteModel::LoadSprite(const char *pszSpritePath)
 		m_LR.y = origin[1] - m_Height;
 		m_UL.x = origin[0];
 		m_LR.x = m_Width + origin[0];
-	
+
 		return true;
 	}
 	else

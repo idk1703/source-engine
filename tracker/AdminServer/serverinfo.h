@@ -18,7 +18,7 @@ class CSocket;
 class IResponse;
 
 
-class CServerInfo 
+class CServerInfo
 {
 
 public:
@@ -36,8 +36,8 @@ public:
 	void RunFrame();
 	bool Refreshed();
 
-	void UpdateServer(netadr_t *adr, bool proxy, const char *serverName, const char *map, 
-						 const char *gamedir, const char *gameDescription, int players, 
+	void UpdateServer(netadr_t *adr, bool proxy, const char *serverName, const char *map,
+						 const char *gamedir, const char *gameDescription, int players,
 						 int maxPlayers, float recvTime, bool password);
 
 	int serverID;
@@ -47,7 +47,7 @@ private:
 
 	serveritem_t m_Server;
 	CSocket	*m_pQuery;	// Game server query socket
-	
+
 	IResponse *m_pResponseTarget;
 
 	bool m_bIsRefreshing;

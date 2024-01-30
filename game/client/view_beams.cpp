@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -34,8 +34,8 @@ ConVar r_DrawBeams( "r_DrawBeams", "1", FCVAR_CHEAT, "0=Off, 1=Normal, 2=Wirefra
 bool g_BeamCreationAllowed = false;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : state - 
+// Purpose:
+// Input  : state -
 //-----------------------------------------------------------------------------
 void SetBeamCreationAllowed( bool state )
 {
@@ -43,7 +43,7 @@ void SetBeamCreationAllowed( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool BeamCreationAllowed( void )
@@ -85,33 +85,33 @@ public:
 	virtual Beam_t		*CreateBeamCirclePoints( BeamInfo_t &beamInfo );
 	virtual Beam_t		*CreateBeamFollow( BeamInfo_t &beamInfo );
 
-	virtual	void		CreateBeamEnts( int startEnt, int endEnt, int modelIndex, int haloIndex, float haloScale, 
-							float life, float width, float endWidth, float fadeLength, float amplitude, 
-							float brightness, float speed, int startFrame, 
+	virtual	void		CreateBeamEnts( int startEnt, int endEnt, int modelIndex, int haloIndex, float haloScale,
+							float life, float width, float endWidth, float fadeLength, float amplitude,
+							float brightness, float speed, int startFrame,
 							float framerate, float r, float g, float b, int type = -1 );
 	virtual	void		CreateBeamEntPoint( int	nStartEntity, const Vector *pStart, int nEndEntity, const Vector* pEnd,
-							int modelIndex, int haloIndex, float haloScale, 
-							float life, float width, float endWidth, float fadeLength, float amplitude, 
-							float brightness, float speed, int startFrame, 
+							int modelIndex, int haloIndex, float haloScale,
+							float life, float width, float endWidth, float fadeLength, float amplitude,
+							float brightness, float speed, int startFrame,
 							float framerate, float r, float g, float b );
-	virtual	void		CreateBeamPoints( Vector& start, Vector& end, int modelIndex, int haloIndex, float haloScale,   
-							float life, float width, float endWidth, float fadeLength, float amplitude, 
-							float brightness, float speed, int startFrame, 
+	virtual	void		CreateBeamPoints( Vector& start, Vector& end, int modelIndex, int haloIndex, float haloScale,
+							float life, float width, float endWidth, float fadeLength, float amplitude,
+							float brightness, float speed, int startFrame,
 							float framerate, float r, float g, float b );
-	virtual	void		CreateBeamRing( int startEnt, int endEnt, int modelIndex, int haloIndex, float haloScale,   
-							float life, float width, float endWidth, float fadeLength, float amplitude, 
-							float brightness, float speed, int startFrame, 
+	virtual	void		CreateBeamRing( int startEnt, int endEnt, int modelIndex, int haloIndex, float haloScale,
+							float life, float width, float endWidth, float fadeLength, float amplitude,
+							float brightness, float speed, int startFrame,
 							float framerate, float r, float g, float b, int flags );
-	virtual void		CreateBeamRingPoint( const Vector& center, float start_radius, float end_radius, int modelIndex, int haloIndex, float haloScale,   
-							float life, float width, float m_nEndWidth, float m_nFadeLength, float amplitude, 
-							float brightness, float speed, int startFrame, 
+	virtual void		CreateBeamRingPoint( const Vector& center, float start_radius, float end_radius, int modelIndex, int haloIndex, float haloScale,
+							float life, float width, float m_nEndWidth, float m_nFadeLength, float amplitude,
+							float brightness, float speed, int startFrame,
 							float framerate, float r, float g, float b, int flags );
-	virtual	void		CreateBeamCirclePoints( int type, Vector& start, Vector& end, 
-							int modelIndex,  int haloIndex,  float haloScale, float life, float width, 
-							float endWidth, float fadeLength, float amplitude, float brightness, float speed, 
+	virtual	void		CreateBeamCirclePoints( int type, Vector& start, Vector& end,
+							int modelIndex,  int haloIndex,  float haloScale, float life, float width,
+							float endWidth, float fadeLength, float amplitude, float brightness, float speed,
 							int startFrame, float framerate, float r, float g, float b );
-	virtual	void		CreateBeamFollow( int startEnt, int modelIndex, int haloIndex, float haloScale,   
-							float life, float width, float endWidth, float fadeLength, float r, float g, float b, 
+	virtual	void		CreateBeamFollow( int startEnt, int modelIndex, int haloIndex, float haloScale,
+							float life, float width, float endWidth, float fadeLength, float r, float g, float b,
 							float brightness );
 
 	virtual void		FreeBeam( Beam_t *pBeam ) { BeamFree( pBeam ); }
@@ -133,7 +133,7 @@ private:
 	Beam_t					*CreateGenericBeam( BeamInfo_t &beamInfo );
 	void					SetupBeam( Beam_t *pBeam, const BeamInfo_t &beamInfo );
 	void					SetBeamAttributes( Beam_t *pBeam, const BeamInfo_t &beamInfo );
-	
+
 	// Memory Alloc/Free
 	Beam_t*					BeamAlloc( bool bRenderable );
 	void					BeamFree( Beam_t* pBeam );
@@ -151,7 +151,7 @@ private:
 #endif
 
 		// no fewer than this no matter what's on the command line
-		MIN_PARTICLES		= 512,	
+		MIN_PARTICLES		= 512,
 
 #ifndef _XBOX
 		// Maximum length of the free list.
@@ -186,7 +186,7 @@ CUniformRandomStream beamRandom;
 static void Noise( float *noise, int divs, float scale )
 {
 	int div2;
-	
+
 	div2 = divs >> 1;
 
 	if ( divs < 2 )
@@ -441,14 +441,14 @@ extern ConVar r_drawviewmodel;
 int Beam_t::DrawModel( int ignored )
 {
 #ifdef PORTAL
-	if ( ( !g_pPortalRender->IsRenderingPortal() && !m_bDrawInMainRender ) || 
+	if ( ( !g_pPortalRender->IsRenderingPortal() && !m_bDrawInMainRender ) ||
 		( g_pPortalRender->IsRenderingPortal() && !m_bDrawInPortalRender ) )
 	{
 		return 0;
 	}
 #endif //#ifdef PORTAL
 
-	// Tracker 16432:  If rendering a savegame screenshot don't draw beams 
+	// Tracker 16432:  If rendering a savegame screenshot don't draw beams
 	//   who have viewmodels as their attached entity
 	if ( g_bRenderingScreenshot || !r_drawviewmodel.GetBool() )
 	{
@@ -475,7 +475,7 @@ int Beam_t::DrawModel( int ignored )
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Constructor, destructor: 
+// Constructor, destructor:
 //-----------------------------------------------------------------------------
 
 CViewRenderBeams::CViewRenderBeams( void ) : m_pBeamTrails(0)
@@ -505,7 +505,7 @@ void CViewRenderBeams::InitBeams( void )
 	{
 		m_nNumBeamTrails = DEFAULT_PARTICLES;
 	}
-	
+
 	m_pBeamTrails = (BeamTrail_t *)new BeamTrail_t[ m_nNumBeamTrails ];
 	Assert( m_pBeamTrails );
 
@@ -570,7 +570,7 @@ void CViewRenderBeams::ShutdownBeams( void )
 //-----------------------------------------------------------------------------
 Beam_t *CViewRenderBeams::BeamAlloc( bool bRenderable )
 {
-	Beam_t*	pBeam = NULL; 
+	Beam_t*	pBeam = NULL;
 
 	if ( m_pFreeBeams )
 	{
@@ -634,7 +634,7 @@ void CViewRenderBeams::BeamFree( Beam_t* pBeam )
 
 //-----------------------------------------------------------------------------
 // Purpose: Iterates through active list and kills beams associated with deadEntity
-// Input  : deadEntity - 
+// Input  : deadEntity -
 //-----------------------------------------------------------------------------
 void CViewRenderBeams::KillDeadBeams( C_BaseEntity *pDeadEntity )
 {
@@ -645,7 +645,7 @@ void CViewRenderBeams::KillDeadBeams( C_BaseEntity *pDeadEntity )
 
 	pbeam    = m_pActiveBeams;  // Old list.
 	pnewlist = NULL;           // New list.
-	
+
 	while (pbeam)
 	{
 		pnext = pbeam->next;
@@ -662,7 +662,7 @@ void CViewRenderBeams::KillDeadBeams( C_BaseEntity *pDeadEntity )
 		if ( pbeam->type != TE_BEAMFOLLOW )
 		{
 			// Die Die Die!
-			pbeam->die = gpGlobals->curtime - 0.1;  
+			pbeam->die = gpGlobals->curtime - 0.1;
 
 			// Kill off particles
 			pHead = pbeam->trail;
@@ -757,9 +757,9 @@ void CViewRenderBeams::SetBeamAttributes( Beam_t *pBeam, const BeamInfo_t &beamI
 
 //-----------------------------------------------------------------------------
 // Purpose: Cull beam by bbox
-// Input  : *start - 
-//			*end - 
-//			pvsOnly - 
+// Input  : *start -
+//			*end -
+//			pvsOnly -
 // Output : int
 //-----------------------------------------------------------------------------
 
@@ -780,7 +780,7 @@ int CViewRenderBeams::CullBeam( const Vector &start, const Vector &end, int pvsO
 			mins[i] = end[i];
 			maxs[i] = start[i];
 		}
-		
+
 		// Don't let it be zero sized
 		if ( mins[i] == maxs[i] )
 		{
@@ -794,7 +794,7 @@ int CViewRenderBeams::CullBeam( const Vector &start, const Vector &end, int pvsO
 		if ( pvsOnly || !engine->CullBox( mins, maxs ) )
 		{
 			// Beam is visible
-			return 1;	
+			return 1;
 		}
 	}
 
@@ -836,27 +836,27 @@ Beam_t *CViewRenderBeams::CreateGenericBeam( BeamInfo_t &beamInfo )
 	// Set it up
 	SetupBeam( pBeam, beamInfo );
 
-	return pBeam;	
+	return pBeam;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Create a beam between two ents
-// Input  : startEnt - 
-//			endEnt - 
-//			modelIndex - 
-//			life - 
-//			width - 
-//			amplitude - 
-//			brightness - 
-//			speed - 
-//			startFrame - 
-//			framerate - 
-//			BEAMENT_ENTITY(startEnt - 
+// Input  : startEnt -
+//			endEnt -
+//			modelIndex -
+//			life -
+//			width -
+//			amplitude -
+//			brightness -
+//			speed -
+//			startFrame -
+//			framerate -
+//			BEAMENT_ENTITY(startEnt -
 // Output : Beam_t
 //-----------------------------------------------------------------------------
-void CViewRenderBeams::CreateBeamEnts( int startEnt, int endEnt, int modelIndex, 
-	int haloIndex, float haloScale, float life, float width, float endWidth, 
-	float fadeLength, float amplitude, float brightness, float speed, 
+void CViewRenderBeams::CreateBeamEnts( int startEnt, int endEnt, int modelIndex,
+	int haloIndex, float haloScale, float life, float width, float endWidth,
+	float fadeLength, float amplitude, float brightness, float speed,
 	int startFrame, float framerate, float r, float g, float b, int type )
 {
 	BeamInfo_t beamInfo;
@@ -891,8 +891,8 @@ void CViewRenderBeams::CreateBeamEnts( int startEnt, int endEnt, int modelIndex,
 Beam_t *CViewRenderBeams::CreateBeamEnts( BeamInfo_t &beamInfo )
 {
 	// Don't start temporary beams out of the PVS
-	if ( beamInfo.m_flLife != 0 && 
-		 ( !beamInfo.m_pStartEnt || beamInfo.m_pStartEnt->GetModel() == NULL || 
+	if ( beamInfo.m_flLife != 0 &&
+		 ( !beamInfo.m_pStartEnt || beamInfo.m_pStartEnt->GetModel() == NULL ||
 		   !beamInfo.m_pEndEnt || beamInfo.m_pEndEnt->GetModel() == NULL) )
 	{
 		return NULL;
@@ -927,24 +927,24 @@ Beam_t *CViewRenderBeams::CreateBeamEnts( BeamInfo_t &beamInfo )
 
 //-----------------------------------------------------------------------------
 // Purpose: Creates a beam between an entity and a point
-// Input  : startEnt - 
-//			*end - 
-//			modelIndex - 
-//			life - 
-//			width - 
-//			amplitude - 
-//			brightness - 
-//			speed - 
-//			startFrame - 
-//			framerate - 
-//			r - 
-//			g - 
-//			b - 
+// Input  : startEnt -
+//			*end -
+//			modelIndex -
+//			life -
+//			width -
+//			amplitude -
+//			brightness -
+//			speed -
+//			startFrame -
+//			framerate -
+//			r -
+//			g -
+//			b -
 // Output : Beam_t
 //-----------------------------------------------------------------------------
 void CViewRenderBeams::CreateBeamEntPoint( int nStartEntity, const Vector *pStart, int nEndEntity, const Vector* pEnd,
-										   int modelIndex, int haloIndex, float haloScale, float life,  float width, 
-										   float endWidth, float fadeLength, float amplitude, float brightness, float speed, int startFrame, 
+										   int modelIndex, int haloIndex, float haloScale, float life,  float width,
+										   float endWidth, float fadeLength, float amplitude, float brightness, float speed, int startFrame,
 										   float framerate, float r, float g, float b )
 {
 	BeamInfo_t beamInfo;
@@ -1057,27 +1057,27 @@ Beam_t *CViewRenderBeams::CreateBeamEntPoint( BeamInfo_t &beamInfo )
 
 //-----------------------------------------------------------------------------
 // Purpose: Creates a beam between two points
-// Input  : *start - 
-//			*end - 
-//			modelIndex - 
-//			life - 
-//			width - 
-//			amplitude - 
-//			brightness - 
-//			speed - 
-//			startFrame - 
-//			framerate - 
-//			r - 
-//			g - 
-//			b - 
+// Input  : *start -
+//			*end -
+//			modelIndex -
+//			life -
+//			width -
+//			amplitude -
+//			brightness -
+//			speed -
+//			startFrame -
+//			framerate -
+//			r -
+//			g -
+//			b -
 // Output : Beam_t
 //-----------------------------------------------------------------------------
-void CViewRenderBeams::CreateBeamPoints( Vector& start, Vector& end, int modelIndex, int haloIndex, float haloScale, float life,  float width, 
-										 float endWidth, float fadeLength,float amplitude, float brightness, float speed, int startFrame, 
+void CViewRenderBeams::CreateBeamPoints( Vector& start, Vector& end, int modelIndex, int haloIndex, float haloScale, float life,  float width,
+										 float endWidth, float fadeLength,float amplitude, float brightness, float speed, int startFrame,
 										 float framerate, float r, float g, float b )
 {
 	BeamInfo_t beamInfo;
-	
+
 	beamInfo.m_vecStart = start;
 	beamInfo.m_vecEnd = end;
 	beamInfo.m_nModelIndex = modelIndex;
@@ -1136,28 +1136,28 @@ Beam_t *CViewRenderBeams::CreateBeamPoints( BeamInfo_t &beamInfo )
 
 //-----------------------------------------------------------------------------
 // Purpose: Creates a circular beam between two points
-// Input  : type - 
-//			*start - 
-//			*end - 
-//			modelIndex - 
-//			life - 
-//			width - 
-//			amplitude - 
-//			brightness - 
-//			speed - 
-//			startFrame - 
-//			framerate - 
-//			r - 
-//			g - 
-//			b - 
+// Input  : type -
+//			*start -
+//			*end -
+//			modelIndex -
+//			life -
+//			width -
+//			amplitude -
+//			brightness -
+//			speed -
+//			startFrame -
+//			framerate -
+//			r -
+//			g -
+//			b -
 // Output : Beam_t
 //-----------------------------------------------------------------------------
-void CViewRenderBeams::CreateBeamCirclePoints( int type, Vector& start, Vector& end, int modelIndex, int haloIndex, float haloScale, float life, float width, 
-											   float endWidth, float fadeLength,float amplitude, float brightness, float speed, int startFrame, 
+void CViewRenderBeams::CreateBeamCirclePoints( int type, Vector& start, Vector& end, int modelIndex, int haloIndex, float haloScale, float life, float width,
+											   float endWidth, float fadeLength,float amplitude, float brightness, float speed, int startFrame,
 											   float framerate, float r, float g, float b )
 {
 	BeamInfo_t beamInfo;
-	
+
 	beamInfo.m_nType = type;
 	beamInfo.m_vecStart = start;
 	beamInfo.m_vecEnd = end;
@@ -1202,17 +1202,17 @@ Beam_t *CViewRenderBeams::CreateBeamCirclePoints( BeamInfo_t &beamInfo )
 
 //-----------------------------------------------------------------------------
 // Purpose: Create a beam which follows an entity
-// Input  : startEnt - 
-//			modelIndex - 
-//			life - 
-//			width - 
-//			r - 
-//			g - 
-//			b - 
-//			brightness - 
+// Input  : startEnt -
+//			modelIndex -
+//			life -
+//			width -
+//			r -
+//			g -
+//			b -
+//			brightness -
 // Output : Beam_t
 //-----------------------------------------------------------------------------
-void CViewRenderBeams::CreateBeamFollow( int startEnt, int modelIndex, int haloIndex, float haloScale, float life, float width, float endWidth, 
+void CViewRenderBeams::CreateBeamFollow( int startEnt, int modelIndex, int haloIndex, float haloScale, float life, float width, float endWidth,
 										 float fadeLength, float r, float g, float b, float brightness )
 {
 	BeamInfo_t beamInfo;
@@ -1264,26 +1264,26 @@ Beam_t *CViewRenderBeams::CreateBeamFollow( BeamInfo_t &beamInfo )
 
 //-----------------------------------------------------------------------------
 // Purpose: Create a beam ring between two entities
-// Input  : startEnt - 
-//			endEnt - 
-//			modelIndex - 
-//			life - 
-//			width - 
-//			amplitude - 
-//			brightness - 
-//			speed - 
-//			startFrame - 
-//			framerate - 
-//			startEnt - 
+// Input  : startEnt -
+//			endEnt -
+//			modelIndex -
+//			life -
+//			width -
+//			amplitude -
+//			brightness -
+//			speed -
+//			startFrame -
+//			framerate -
+//			startEnt -
 // Output : Beam_t
 //-----------------------------------------------------------------------------
-void CViewRenderBeams::CreateBeamRingPoint( const Vector& center, float start_radius, float end_radius, 
-					   int modelIndex, int haloIndex, float haloScale, float life, float width, float endWidth, 
-					   float fadeLength, float amplitude, float brightness, float speed, int startFrame, float framerate, 
+void CViewRenderBeams::CreateBeamRingPoint( const Vector& center, float start_radius, float end_radius,
+					   int modelIndex, int haloIndex, float haloScale, float life, float width, float endWidth,
+					   float fadeLength, float amplitude, float brightness, float speed, int startFrame, float framerate,
 					   float r, float g, float b, int nFlags )
 {
 	BeamInfo_t beamInfo;
-	
+
 	beamInfo.m_nModelIndex = modelIndex;
 	beamInfo.m_nHaloIndex = haloIndex;
 	beamInfo.m_flHaloScale = haloScale;
@@ -1339,21 +1339,21 @@ Beam_t *CViewRenderBeams::CreateBeamRingPoint( BeamInfo_t &beamInfo )
 
 //-----------------------------------------------------------------------------
 // Purpose: Create a beam ring between two entities
-// Input  : startEnt - 
-//			endEnt - 
-//			modelIndex - 
-//			life - 
-//			width - 
-//			amplitude - 
-//			brightness - 
-//			speed - 
-//			startFrame - 
-//			framerate - 
-//			startEnt - 
+// Input  : startEnt -
+//			endEnt -
+//			modelIndex -
+//			life -
+//			width -
+//			amplitude -
+//			brightness -
+//			speed -
+//			startFrame -
+//			framerate -
+//			startEnt -
 // Output : Beam_t
 //-----------------------------------------------------------------------------
-void CViewRenderBeams::CreateBeamRing( int startEnt, int endEnt, int modelIndex, int haloIndex, float haloScale, float life, float width, float endWidth, float fadeLength, 
-					   float amplitude, float brightness, float speed, int startFrame, float framerate, 
+void CViewRenderBeams::CreateBeamRing( int startEnt, int endEnt, int modelIndex, int haloIndex, float haloScale, float life, float width, float endWidth, float fadeLength,
+					   float amplitude, float brightness, float speed, int startFrame, float framerate,
 					   float r, float g, float b, int flags )
 {
 	BeamInfo_t beamInfo;
@@ -1389,8 +1389,8 @@ void CViewRenderBeams::CreateBeamRing( int startEnt, int endEnt, int modelIndex,
 Beam_t *CViewRenderBeams::CreateBeamRing( BeamInfo_t &beamInfo )
 {
 	// Don't start temporary beams out of the PVS
-	if ( beamInfo.m_flLife != 0 && 
-		 ( !beamInfo.m_pStartEnt || beamInfo.m_pStartEnt->GetModel() == NULL || 
+	if ( beamInfo.m_flLife != 0 &&
+		 ( !beamInfo.m_pStartEnt || beamInfo.m_pStartEnt->GetModel() == NULL ||
 		   !beamInfo.m_pEndEnt || beamInfo.m_pEndEnt->GetModel() == NULL ) )
 	{
 		return NULL;
@@ -1422,7 +1422,7 @@ Beam_t *CViewRenderBeams::CreateBeamRing( BeamInfo_t &beamInfo )
 
 //-----------------------------------------------------------------------------
 // Purpose: Free dead trails associated with beam
-// Input  : **ppparticles - 
+// Input  : **ppparticles -
 //-----------------------------------------------------------------------------
 void CViewRenderBeams::FreeDeadTrails( BeamTrail_t **trail )
 {
@@ -1430,7 +1430,7 @@ void CViewRenderBeams::FreeDeadTrails( BeamTrail_t **trail )
 	BeamTrail_t *p;
 
 	// kill all the ones hanging direcly off the base pointer
-	for ( ;; ) 
+	for ( ;; )
 	{
 		kill = *trail;
 		if (kill && kill->die < gpGlobals->curtime)
@@ -1537,7 +1537,7 @@ void CViewRenderBeams::UpdateBeam( Beam_t *pbeam, float frametime )
 			{
 				if (!ComputeBeamEntPosition( pbeam->entity[i], pbeam->attachmentIndex[i], (pbeam->flags & FBEAM_USE_HITBOXES) != 0, pbeam->attachment[i] ))
 				{
-					// This should never happen, but if for some reason the attachment doesn't exist, 
+					// This should never happen, but if for some reason the attachment doesn't exist,
 					// as a safety measure copy in the location of the previous attachment point (rather than bailing)
 					VectorCopy( pbeam->attachment[i-1], pbeam->attachment[i] );
 				}
@@ -1547,7 +1547,7 @@ void CViewRenderBeams::UpdateBeam( Beam_t *pbeam, float frametime )
 
 	case TE_BEAMRINGPOINT:
 		{
-			// 
+			//
 			float dr = pbeam->end_radius - pbeam->start_radius;
 			if ( dr != 0.0f )
 			{
@@ -1635,7 +1635,7 @@ void CViewRenderBeams::UpdateTempEntBeams( void )
 		pNext = pBeam->next;
 
 		// Retire old beams
-		if ( !(pBeam->flags & FBEAM_FOREVER) && 
+		if ( !(pBeam->flags & FBEAM_FOREVER) &&
 			pBeam->die <= gpGlobals->curtime )
 		{
 			// Reset links
@@ -1674,18 +1674,18 @@ void CViewRenderBeams::UpdateTempEntBeams( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Draw helper for beam follow beams
-// Input  : *pbeam - 
-//			frametime - 
-//			*color - 
+// Input  : *pbeam -
+//			frametime -
+//			*color -
 //-----------------------------------------------------------------------------
-void CViewRenderBeams::DrawBeamFollow( const model_t* pSprite, Beam_t *pbeam, 
+void CViewRenderBeams::DrawBeamFollow( const model_t* pSprite, Beam_t *pbeam,
 	int frame, int rendermode, float frametime, const float* color, float flHDRColorScale )
 {
 	BeamTrail_t		*particles;
 	BeamTrail_t		*pnew;
 	float			div;
 	Vector			delta;
-	
+
 	Vector			screenLast;
 	Vector			screen;
 
@@ -1756,10 +1756,10 @@ void CViewRenderBeams::DrawBeamFollow( const model_t* pSprite, Beam_t *pbeam,
 	}
 
 	// Draw it
-	::DrawBeamFollow( pSprite, pbeam->trail, frame, rendermode, delta, screen, screenLast, 
-		pbeam->die, pbeam->attachment[0], pbeam->flags, pbeam->width, 
+	::DrawBeamFollow( pSprite, pbeam->trail, frame, rendermode, delta, screen, screenLast,
+		pbeam->die, pbeam->attachment[0], pbeam->flags, pbeam->width,
 		pbeam->amplitude, pbeam->freq, (float*)color );
-	
+
 	// Drift popcorn trail if there is a velocity
 	particles = pbeam->trail;
 	while (particles)
@@ -1774,7 +1774,7 @@ void CViewRenderBeams::DrawBeamFollow( const model_t* pSprite, Beam_t *pbeam,
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
-void CViewRenderBeams::DrawBeamWithHalo(	Beam_t*			pbeam, 
+void CViewRenderBeams::DrawBeamWithHalo(	Beam_t*			pbeam,
 											int				frame,
 											int				rendermode,
 											float*			color,
@@ -1785,10 +1785,10 @@ void CViewRenderBeams::DrawBeamWithHalo(	Beam_t*			pbeam,
 {
 	Vector beamDir = pbeam->attachment[1] - pbeam->attachment[0];
 	VectorNormalize( beamDir );
-	
+
 	Vector localDir = CurrentViewOrigin() - pbeam->attachment[0];
 	VectorNormalize( localDir );
-	
+
 	float dotpr = DotProduct( beamDir, localDir );
 	float fade;
 
@@ -1811,7 +1811,7 @@ void CViewRenderBeams::DrawBeamWithHalo(	Beam_t*			pbeam,
 
 	float scaleColor[4];
 	float dotScale = 1.0f;
-	
+
 	// Use beam width
 	float distThreshold = pbeam->width * 4.0f;
 
@@ -1835,8 +1835,8 @@ void CViewRenderBeams::DrawBeamWithHalo(	Beam_t*			pbeam,
 	else
 	{
 		// Draw primary beam just shy of its end so it doesn't clip
-		DrawSegs( NOISE_DIVISIONS, pbeam->rgNoise, sprite, frame, rendermode, pbeam->attachment[0], 
-			pbeam->delta, pbeam->width, pbeam->width, pbeam->amplitude, pbeam->freq, pbeam->speed, 
+		DrawSegs( NOISE_DIVISIONS, pbeam->rgNoise, sprite, frame, rendermode, pbeam->attachment[0],
+			pbeam->delta, pbeam->width, pbeam->width, pbeam->amplitude, pbeam->freq, pbeam->speed,
 			2, pbeam->flags, scaleColor, pbeam->fadeLength, flHDRColorScale );
 	}
 
@@ -1854,7 +1854,7 @@ void CViewRenderBeams::DrawBeamWithHalo(	Beam_t*			pbeam,
 		haloScale = clamp( haloScale, 1.0f, 2.0f );
 
 		haloScale *= pbeam->haloScale;
-		
+
 		float colorFade = fade*fade;
 		colorFade = clamp( colorFade, 0.f, 1.f );
 
@@ -1931,8 +1931,8 @@ void CViewRenderBeams::DrawTesla( Beam_t *pbeam, int frame, int rendermode, floa
 
 //-----------------------------------------------------------------------------
 // Purpose: Draw all beam entities
-// Input  : *pbeam - 
-//			frametime - 
+// Input  : *pbeam -
+//			frametime -
 //-----------------------------------------------------------------------------
 void CViewRenderBeams::DrawBeam( Beam_t *pbeam )
 {
@@ -1955,13 +1955,13 @@ void CViewRenderBeams::DrawBeam( Beam_t *pbeam )
 		pbeam->die = gpGlobals->curtime;
 		return;
 	}
-	
+
 	sprite = modelinfo->GetModel( pbeam->modelIndex );
 	if ( !sprite )
 	{
 		return;
 	}
-	
+
 	halosprite = modelinfo->GetModel( pbeam->haloIndex );
 
 	int frame = ( ( int )( pbeam->frame + gpGlobals->curtime * pbeam->frameRate) % pbeam->frameCount );
@@ -1994,27 +1994,27 @@ void CViewRenderBeams::DrawBeam( Beam_t *pbeam )
 	switch( pbeam->type )
 	{
 	case TE_BEAMDISK:
-		DrawDisk( NOISE_DIVISIONS, pbeam->rgNoise, sprite, frame, rendermode, 
-			pbeam->attachment[0], pbeam->delta, pbeam->width, pbeam->amplitude, 
+		DrawDisk( NOISE_DIVISIONS, pbeam->rgNoise, sprite, frame, rendermode,
+			pbeam->attachment[0], pbeam->delta, pbeam->width, pbeam->amplitude,
 			pbeam->freq, pbeam->speed, pbeam->segments, color, pbeam->m_flHDRColorScale );
 		break;
 
 	case TE_BEAMCYLINDER:
-		DrawCylinder( NOISE_DIVISIONS, pbeam->rgNoise, sprite, frame, rendermode, 
-			pbeam->attachment[0], pbeam->delta, pbeam->width, pbeam->amplitude, 
+		DrawCylinder( NOISE_DIVISIONS, pbeam->rgNoise, sprite, frame, rendermode,
+			pbeam->attachment[0], pbeam->delta, pbeam->width, pbeam->amplitude,
 			pbeam->freq, pbeam->speed, pbeam->segments, color, pbeam->m_flHDRColorScale );
 		break;
 
 	case TE_BEAMPOINTS:
 		if (halosprite)
-		{	
+		{
 			DrawBeamWithHalo( pbeam, frame, rendermode, color, srcColor, sprite, halosprite, pbeam->m_flHDRColorScale );
 		}
 		else
 		{
-			DrawSegs( NOISE_DIVISIONS, pbeam->rgNoise, sprite, frame, rendermode, 
-				pbeam->attachment[0], pbeam->delta, pbeam->width, pbeam->endWidth, 
-				pbeam->amplitude, pbeam->freq, pbeam->speed, pbeam->segments, 
+			DrawSegs( NOISE_DIVISIONS, pbeam->rgNoise, sprite, frame, rendermode,
+				pbeam->attachment[0], pbeam->delta, pbeam->width, pbeam->endWidth,
+				pbeam->amplitude, pbeam->freq, pbeam->speed, pbeam->segments,
 				pbeam->flags, color, pbeam->fadeLength, pbeam->m_flHDRColorScale );
 		}
 		break;
@@ -2025,8 +2025,8 @@ void CViewRenderBeams::DrawBeam( Beam_t *pbeam )
 
 	case TE_BEAMRING:
 	case TE_BEAMRINGPOINT:
-		DrawRing( NOISE_DIVISIONS, pbeam->rgNoise, Noise, sprite, frame, rendermode, 
-			pbeam->attachment[0], pbeam->delta, pbeam->width, pbeam->amplitude, 
+		DrawRing( NOISE_DIVISIONS, pbeam->rgNoise, Noise, sprite, frame, rendermode,
+			pbeam->attachment[0], pbeam->delta, pbeam->width, pbeam->amplitude,
 			pbeam->freq, pbeam->speed, pbeam->segments, color, pbeam->m_flHDRColorScale );
 		break;
 
@@ -2052,7 +2052,7 @@ void CViewRenderBeams::DrawBeam( Beam_t *pbeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Update the beam 
+// Purpose: Update the beam
 //-----------------------------------------------------------------------------
 void CViewRenderBeams::UpdateBeamInfo( Beam_t *pBeam, BeamInfo_t &beamInfo )
 {

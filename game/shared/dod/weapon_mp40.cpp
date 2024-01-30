@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,10 +19,10 @@ class CWeaponMP40 : public CDODFullAutoPunchWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponMP40, CDODFullAutoPunchWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponMP40()  {}
 
 	virtual DODWeaponID GetWeaponID( void ) const		{ return WEAPON_MP40; }
@@ -47,7 +47,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_mp40, CWeaponMP40 );
 PRECACHE_WEAPON_REGISTER( weapon_mp40 );
 
-acttable_t CWeaponMP40::m_acttable[] = 
+acttable_t CWeaponMP40::m_acttable[] =
 {
 	{ ACT_DOD_STAND_AIM,					ACT_DOD_STAND_AIM_MP40,					false },
 	{ ACT_DOD_CROUCH_AIM,					ACT_DOD_CROUCH_AIM_MP40,				false },
@@ -86,7 +86,7 @@ Activity CWeaponMP40::GetIdleActivity( void )
 	Activity actIdle;
 
 	if( m_iClip1 < GetMaxClip1() )
-		actIdle = ACT_VM_IDLE_EMPTY;	
+		actIdle = ACT_VM_IDLE_EMPTY;
 	else
 		actIdle = ACT_VM_IDLE;
 

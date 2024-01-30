@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #ifndef TF_GAMESTATS_H
@@ -98,7 +98,7 @@ public:
 	void AccumulateGameData();
 	void AccumulateVoteData( void );
 	bool GetVoteData( const char *szIssueName, int nNumOptions, CUtlVector <const char*> &vecNames );
-	
+
 	void ClearCurrentGameData();
 
 	// SteamWorks GameStats
@@ -128,7 +128,7 @@ public:
 	void						ResetPlayerStats( CTFPlayer *pPlayer );
 	void						ResetKillHistory( CTFPlayer *pPlayer );
 	void						ResetRoundStats();
-protected:	
+protected:
 	void						IncrementStat( CTFPlayer *pPlayer, TFStatType_t statType, int iValue );
 	void						SendStatsToPlayer( CTFPlayer *pPlayer, bool bIsAlive );
 	void						AccumulateAndResetPerLifeStats( CTFPlayer *pPlayer );

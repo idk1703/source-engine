@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,8 +23,8 @@ mxbitmapdata_t CChoreoEventWidget::m_Bitmaps[ FP_NUM_BITMAPS ];
 mxbitmapdata_t CChoreoEventWidget::m_ResumeConditionBitmap;
 mxbitmapdata_t CChoreoEventWidget::m_LockBodyFacingBitmap;
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
 CChoreoEventWidget::CChoreoEventWidget( CChoreoWidget *parent )
  : CChoreoWidget( parent )
@@ -36,7 +36,7 @@ CChoreoEventWidget::CChoreoEventWidget( CChoreoWidget *parent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CChoreoEventWidget::~CChoreoEventWidget( void )
 {
@@ -45,14 +45,14 @@ CChoreoEventWidget::~CChoreoEventWidget( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoEventWidget::Create( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CChoreoEventWidget::GetLabelText( void )
@@ -71,7 +71,7 @@ const char *CChoreoEventWidget::GetLabelText( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CChoreoEventWidget::GetDurationRightEdge( void )
 {
@@ -79,8 +79,8 @@ int	CChoreoEventWidget::GetDurationRightEdge( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rc - 
+// Purpose:
+// Input  : rc -
 //-----------------------------------------------------------------------------
 void CChoreoEventWidget::Layout( RECT& rc )
 {
@@ -92,9 +92,9 @@ void CChoreoEventWidget::Layout( RECT& rc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			&rcWAV - 
+// Purpose:
+// Input  : drawHelper -
+//			&rcWAV -
 //-----------------------------------------------------------------------------
 void CChoreoEventWidget::DrawRelativeTags( CChoreoWidgetDrawHelper& drawHelper, RECT &rcWAV, float length, CChoreoEvent *event )
 {
@@ -104,7 +104,7 @@ void CChoreoEventWidget::DrawRelativeTags( CChoreoWidgetDrawHelper& drawHelper, 
 		if ( !tag )
 			continue;
 
-		// 
+		//
 		int left = rcWAV.left + (int)( tag->GetPercentage() * ( float )( rcWAV.right - rcWAV.left ) + 0.5f );
 
 		RECT rcMark;
@@ -119,7 +119,7 @@ void CChoreoEventWidget::DrawRelativeTags( CChoreoWidgetDrawHelper& drawHelper, 
 		RECT rcText;
 		rcText = rcMark;
 		rcText.top -= 12;
-		
+
 		int len = drawHelper.CalcTextWidth( "Arial", 9, FW_NORMAL, tag->GetName() );
 		rcText.left = left - len / 2;
 		rcText.right = rcText.left + len + 2;
@@ -132,9 +132,9 @@ void CChoreoEventWidget::DrawRelativeTags( CChoreoWidgetDrawHelper& drawHelper, 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			&rcWAV - 
+// Purpose:
+// Input  : drawHelper -
+//			&rcWAV -
 //-----------------------------------------------------------------------------
 void CChoreoEventWidget::DrawAbsoluteTags( CChoreoWidgetDrawHelper& drawHelper, RECT &rcWAV, float length, CChoreoEvent *event )
 {
@@ -144,7 +144,7 @@ void CChoreoEventWidget::DrawAbsoluteTags( CChoreoWidgetDrawHelper& drawHelper, 
 		if ( !tag )
 			continue;
 
-		// 
+		//
 		int left = rcWAV.left + (int)( tag->GetPercentage() * ( float )( rcWAV.right - rcWAV.left ) + 0.5f );
 
 		RECT rcMark;
@@ -159,7 +159,7 @@ void CChoreoEventWidget::DrawAbsoluteTags( CChoreoWidgetDrawHelper& drawHelper, 
 		RECT rcText;
 		rcText = rcMark;
 		rcText.top -= 12;
-		
+
 		int len = drawHelper.CalcTextWidth( "Arial", 9, FW_NORMAL, tag->GetName() );
 		rcText.left = left - len / 2;
 		rcText.right = rcText.left + len + 2;
@@ -171,9 +171,9 @@ void CChoreoEventWidget::DrawAbsoluteTags( CChoreoWidgetDrawHelper& drawHelper, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			rcBounds - 
+// Purpose:
+// Input  : drawHelper -
+//			rcBounds -
 //-----------------------------------------------------------------------------
 void CChoreoEventWidget::redrawStatus( CChoreoWidgetDrawHelper& drawHelper, RECT& rcClient )
 {
@@ -210,7 +210,7 @@ void CChoreoEventWidget::redrawStatus( CChoreoWidgetDrawHelper& drawHelper, RECT
 			RECT rcFixed = rcEventLabel;
 			drawHelper.OffsetSubRect( rcFixed );
 			DrawBitmapToDC( dc, rcFixed.left, rcFixed.top, leftAdd, leftAdd,
-				*image );	
+				*image );
 		}
 	}
 
@@ -225,7 +225,7 @@ void CChoreoEventWidget::redrawStatus( CChoreoWidgetDrawHelper& drawHelper, RECT
 
 		RECT rcFixed = rc;
 		drawHelper.OffsetSubRect( rcFixed );
-		DrawBitmapToDC( dc, rcFixed.left, rcFixed.top, 
+		DrawBitmapToDC( dc, rcFixed.left, rcFixed.top,
 			rcFixed.right - rcFixed.left, rcFixed.bottom - rcFixed.top,
 			*CChoreoEventWidget::GetPauseImage() );
 	}
@@ -239,7 +239,7 @@ void CChoreoEventWidget::redrawStatus( CChoreoWidgetDrawHelper& drawHelper, RECT
 
 		RECT rcFixed = rc;
 		drawHelper.OffsetSubRect( rcFixed );
-		DrawBitmapToDC( dc, rcFixed.left, rcFixed.top, 
+		DrawBitmapToDC( dc, rcFixed.left, rcFixed.top,
 			rcFixed.right - rcFixed.left, rcFixed.bottom - rcFixed.top,
 			*CChoreoEventWidget::GetLockImage() );
 	}
@@ -311,7 +311,7 @@ void CChoreoEventWidget::DrawSpeakEvent(  CChoreoWidgetDrawHelper& drawHelper, R
 		rcEventLine.left, rcEventLine.top, rcEventLine.left, rcEventLine.bottom );
 	drawHelper.DrawColoredLine( GrayOutColor( COLOR_CHOREO_EVENT ), PS_SOLID, 3,
 		rcEventLine.right, rcEventLine.top, rcEventLine.right, rcEventLine.bottom );
-	
+
 	DeleteObject( brBackground );
 	DeleteObject( brEvent );
 
@@ -392,17 +392,17 @@ void CChoreoEventWidget::DrawGestureEvent(  CChoreoWidgetDrawHelper& drawHelper,
 
 	if ( !nullevent )
 	{
-		drawHelper.DrawColoredRamp( clrEvent, PS_SOLID, 1, 
-			rampstart, 
+		drawHelper.DrawColoredRamp( clrEvent, PS_SOLID, 1,
+			rampstart,
 			rcEventLine2.bottom,
-			rcEventLine2.left, 
+			rcEventLine2.left,
 			rcEventLine2.top,
 			0.0f,
 			1.0f );
-		drawHelper.DrawColoredRamp( clrEvent, PS_SOLID, 1, 
-			rcEventLine2.right, 
+		drawHelper.DrawColoredRamp( clrEvent, PS_SOLID, 1,
+			rcEventLine2.right,
 			rcEventLine2.top,
-			rampend, 
+			rampend,
 			rcEventLine2.bottom,
 			0.0f,
 			1.0f );
@@ -520,7 +520,7 @@ void CChoreoEventWidget::redraw( CChoreoWidgetDrawHelper& drawHelper )
 		rcClient.right -= 1;
 		//rcClient.bottom += 1;
 		InflateRect( &rcClient, -3, -1 );
-	}	
+	}
 
 	RECT rcEvent;
 	rcEvent = rcClient;
@@ -532,7 +532,7 @@ void CChoreoEventWidget::redraw( CChoreoWidgetDrawHelper& drawHelper )
 	if ( event->GetType() == CChoreoEvent::SPEAK && m_pWaveFile && !event->HasEndTime() )
 	{
 		event->SetEndTime( event->GetStartTime() + m_pWaveFile->GetRunningLength() );
-		rcEvent.right = ( int )( m_pWaveFile->GetRunningLength() * m_pView->GetPixelsPerSecond() );  
+		rcEvent.right = ( int )( m_pWaveFile->GetRunningLength() * m_pView->GetPixelsPerSecond() );
 	}
 
 	if ( event->HasEndTime() )
@@ -579,7 +579,7 @@ void CChoreoEventWidget::redraw( CChoreoWidgetDrawHelper& drawHelper )
 		rcTagName.left = rcTagName.right - length - 4;
 		rcTagName.top += 3;
 		rcTagName.bottom = rcTagName.top + 10;
-		
+
 		drawHelper.DrawColoredText( "Arial", 9, FW_NORMAL, GrayOutColor( RGB( 0, 100, 200 ) ), rcTagName, event->GetRelativeTagName() );
 
 		drawHelper.DrawFilledRect( GrayOutColor( RGB( 0, 100, 250 ) ), rcTagName.right-1, rcTagName.top-2,
@@ -607,7 +607,7 @@ void CChoreoEventWidget::redraw( CChoreoWidgetDrawHelper& drawHelper )
 		if ( image )
 		{
 			DrawBitmapToDC( dc, rcEventLabel.left, rcEventLabel.top, leftAdd, leftAdd,
-				*image );	
+				*image );
 		}
 	}
 
@@ -633,22 +633,22 @@ void CChoreoEventWidget::redraw( CChoreoWidgetDrawHelper& drawHelper )
 
 		RECT rcFixed = rc;
 		drawHelper.OffsetSubRect( rcFixed );
-		DrawBitmapToDC( dc, rcFixed.left, rcFixed.top, 
+		DrawBitmapToDC( dc, rcFixed.left, rcFixed.top,
 			rcFixed.right - rcFixed.left, rcFixed.bottom - rcFixed.top,
 			*CChoreoEventWidget::GetLockImage() );
 	}
 
 	OffsetRect( &rcEventLabel, 2, 1 );
-	
+
 	int len = drawHelper.CalcTextWidth( "Arial", fontsize, FW_NORMAL, event->GetName() );
 
 	rcEventLabel.right = rcEventLabel.left + len + 2;
-	drawHelper.DrawColoredText( "Arial", fontsize, FW_NORMAL, GrayOutColor( RGB( 0, 0, 120 ) ), 
+	drawHelper.DrawColoredText( "Arial", fontsize, FW_NORMAL, GrayOutColor( RGB( 0, 0, 120 ) ),
 		rcEventLabel, event->GetName() );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CChoreoEvent
 //-----------------------------------------------------------------------------
 CChoreoEvent *CChoreoEventWidget::GetEvent( void )
@@ -657,8 +657,8 @@ CChoreoEvent *CChoreoEventWidget::GetEvent( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 //-----------------------------------------------------------------------------
 void CChoreoEventWidget::SetEvent( CChoreoEvent *event )
 {
@@ -677,7 +677,7 @@ void CChoreoEventWidget::SetEvent( CChoreoEvent *event )
 
 //-----------------------------------------------------------------------------
 // Purpose: If the user changes the association of .mdls to actors, then the gender could change and we could need to access a different .wav file
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CChoreoEventWidget::RecomputeWave()
 {
@@ -689,7 +689,7 @@ void CChoreoEventWidget::RecomputeWave()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoEventWidget::LoadImages( void )
 {
@@ -725,7 +725,7 @@ void CChoreoEventWidget::LoadImages( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoEventWidget::DestroyImages( void )
 {
@@ -756,8 +756,8 @@ void CChoreoEventWidget::DestroyImages( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : type - 
+// Purpose:
+// Input  : type -
 // Output : mxbitmapdata_t
 //-----------------------------------------------------------------------------
 mxbitmapdata_t *CChoreoEventWidget::GetImage( int type )
@@ -766,7 +766,7 @@ mxbitmapdata_t *CChoreoEventWidget::GetImage( int type )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : mxbitmapdata_t
 //-----------------------------------------------------------------------------
 mxbitmapdata_t *CChoreoEventWidget::GetPauseImage( void )
@@ -775,7 +775,7 @@ mxbitmapdata_t *CChoreoEventWidget::GetPauseImage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : mxbitmapdata_t
 //-----------------------------------------------------------------------------
 mxbitmapdata_t *CChoreoEventWidget::GetLockImage( void )

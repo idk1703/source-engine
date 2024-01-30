@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Loads mesh data from dmx files 
+// Purpose: Loads mesh data from dmx files
 //
 // $NoKeywords: $
 //
@@ -24,7 +24,7 @@ void UnifyIndices( s_source_t *psource );
 //-----------------------------------------------------------------------------
 // Mapping of bone transforms
 //-----------------------------------------------------------------------------
-struct BoneTransformMap_t 
+struct BoneTransformMap_t
 {
 	// Number of bones
 	int m_nBoneCount;
@@ -169,10 +169,10 @@ static bool DefineUniqueVertices( CDmeVertexData *pBindState, int nStartingUniqu
 	for ( int i = 0; i < nPositionCount; ++i )
 	{
 		VertIndices_t vert;
-		vert.v = g_numverts + positionIndices[i]; 
-		vert.n = ( nNormalCount > 0 ) ? g_numnormals + normalIndices[i] : -1; 
-		vert.t = ( nTexcoordCount > 0 ) ? g_numtexcoords + texcoordIndices[i] : -1; 
-		vert.balance = s_Balance.Count() + ( ( nBalanceCount > 0 ) ? balanceIndices[i] : 0 ); 
+		vert.v = g_numverts + positionIndices[i];
+		vert.n = ( nNormalCount > 0 ) ? g_numnormals + normalIndices[i] : -1;
+		vert.t = ( nTexcoordCount > 0 ) ? g_numtexcoords + texcoordIndices[i] : -1;
+		vert.balance = s_Balance.Count() + ( ( nBalanceCount > 0 ) ? balanceIndices[i] : 0 );
 		vert.speed = s_Speed.Count() + ( ( nSpeedCount > 0 ) ? speedIndices[i] : 0 );
 
 		bool unique( true );
@@ -392,7 +392,7 @@ static bool LoadDeltaState(
 
 		int nPositionIndex = pDeltaStateData->m_PositionDeltas.AddToTail( vecDelta );
 
-		// Indices 
+		// Indices
 		const CUtlVector< int > &baseVerts = pBindState->FindVertexIndicesFromDataIndex( CDmeVertexData::FIELD_POSITION, positionIndices[i] );
 		int nBaseVertCount = baseVerts.Count();
 		for ( int k = 0; k < nBaseVertCount; ++k )
@@ -412,7 +412,7 @@ static bool LoadDeltaState(
 		VectorRotate( normals[i], normalMat, vecDelta );
 		int nNormalIndex = pDeltaStateData->m_NormalDeltas.AddToTail( vecDelta );
 
-		// Indices 
+		// Indices
 		const CUtlVector< int > &baseVerts = pBindState->FindVertexIndicesFromDataIndex( CDmeVertexData::FIELD_NORMAL, normalIndices[i] );
 		int nBaseVertCount = baseVerts.Count();
 		for ( int k = 0; k < nBaseVertCount; ++k )
@@ -430,7 +430,7 @@ static bool LoadDeltaState(
 	{
 		int nWrinkleIndex = pDeltaStateData->m_WrinkleDeltas.AddToTail( wrinkle[i] );
 
-		// Indices 
+		// Indices
 		const CUtlVector< int > &baseVerts = pBindState->FindVertexIndicesFromDataIndex( CDmeVertexData::FIELD_WRINKLE, wrinkleIndices[i] );
 		int nBaseVertCount = baseVerts.Count();
 		for ( int k = 0; k < nBaseVertCount; ++k )
@@ -477,7 +477,7 @@ static void ParseFaceData( CDmeVertexData *pVertexData, int material, int v1, in
 //-----------------------------------------------------------------------------
 // Reads the mesh data from the DMX data
 //-----------------------------------------------------------------------------
-static bool LoadMesh( CDmeMesh *pMesh, CDmeVertexData *pBindState, const matrix3x4_t& mat, float flScale, 
+static bool LoadMesh( CDmeMesh *pMesh, CDmeVertexData *pBindState, const matrix3x4_t& mat, float flScale,
 	int nBoneAssign, int *pBoneRemap, s_source_t *pSource )
 {
 	pMesh->CollapseRedundantNormals( normal_blend );
@@ -515,15 +515,15 @@ static bool LoadMesh( CDmeMesh *pMesh, CDmeVertexData *pBindState, const matrix3
 		// Get the material name
 		Q_strncpy( pTextureName, pMaterial->GetMaterialName(), sizeof(pTextureName) );
 
-		// funky texture overrides (specified with the -t command-line argument) 
-		for ( int j = 0; j < numrep; j++ )  
+		// funky texture overrides (specified with the -t command-line argument)
+		for ( int j = 0; j < numrep; j++ )
 		{
-			if ( sourcetexture[j][0] == '\0' ) 
+			if ( sourcetexture[j][0] == '\0' )
 			{
 				Q_strncpy( pTextureName, defaulttexture[j], sizeof(pTextureName) );
 				break;
 			}
-			if ( Q_stricmp( pTextureName, sourcetexture[j]) == 0 ) 
+			if ( Q_stricmp( pTextureName, sourcetexture[j]) == 0 )
 			{
 				Q_strncpy( pTextureName, defaulttexture[j], sizeof(pTextureName) );
 				break;
@@ -678,7 +678,7 @@ static bool LoadMeshes( CDmeModel *pModel, float flScale, int *pBoneRemap, s_sou
 
 
 //-----------------------------------------------------------------------------
-// Builds s_vertanim_ts 
+// Builds s_vertanim_ts
 //-----------------------------------------------------------------------------
 static void BuildVertexAnimations( s_source_t *pSource )
 {
@@ -717,7 +717,7 @@ static void BuildVertexAnimations( s_source_t *pSource )
 			{
 				if ( pList->n != uniqueVert.n || pList->t != uniqueVert.t )
 					continue;
-				
+
 				s_vertanim_t& vertanim = pVertAnim[nVertAnimCount++];
 				vertanim.vertex = pList - v_listdata;
 				vertanim.speed = s_Speed[ s_UniqueVertices[j].speed ];
@@ -755,7 +755,7 @@ static void BuildVertexAnimations( s_source_t *pSource )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Loads the skeletal hierarchy from the game model, returns bone count
 //-----------------------------------------------------------------------------
@@ -769,7 +769,7 @@ static bool AddDagJoint( CDmeModel *pModel, CDmeDag *pDag, s_node_t *pNodes, int
 		MdlWarning( "DMX Model has too many bones [%d, max can be %d]!\n", boneMap.m_nBoneCount, MAXSTUDIOSRCBONES );
 		return false;
 	}
-	
+
 	boneMap.m_ppTransforms[ nJointIndex ] = pDmeTransform;
 	int nFoundIndex = 0;
 	if ( pModel )
@@ -918,8 +918,8 @@ static void LoadBindPose( CDmeModel *pModel, float flScale, int *pBoneRemap, s_s
 	{
 		pSourceAnim->rawanim[0][i].pos.Init();
 		pSourceAnim->rawanim[0][i].rot.Init();
-	}							 
-	 
+	}
+
 	// Override those bones in the bind pose with the real values
 	// NOTE: This means that bones that are not in the bind pose are set to identity!
 	// Is this correct? I think it shouldn't matter, but we may need to fix this.
@@ -932,7 +932,7 @@ static void LoadBindPose( CDmeModel *pModel, float flScale, int *pBoneRemap, s_s
 		matrix3x4_t jointTransform;
 		pTransform->GetTransform( jointTransform );
 
-		int nActualBoneIndex = pBoneRemap[i]; 
+		int nActualBoneIndex = pBoneRemap[i];
 		s_bone_t &bone = pSourceAnim->rawanim[0][nActualBoneIndex];
 		MatrixAngles( jointTransform, bone.rot, bone.pos );
 		bone.pos *= flScale;
@@ -945,7 +945,7 @@ static void LoadBindPose( CDmeModel *pModel, float flScale, int *pBoneRemap, s_s
 //-----------------------------------------------------------------------------
 // Main entry point for loading DMX files
 //-----------------------------------------------------------------------------
-static void PrepareChannels( CDmeChannelsClip *pAnimation ) 
+static void PrepareChannels( CDmeChannelsClip *pAnimation )
 {
 	int nChannelsCount = pAnimation->m_Channels.Count();
 	for ( int i = 0; i < nChannelsCount; ++i )
@@ -958,7 +958,7 @@ static void PrepareChannels( CDmeChannelsClip *pAnimation )
 //-----------------------------------------------------------------------------
 // Update channels so they are in position for the next frame
 //-----------------------------------------------------------------------------
-static void UpdateChannels( CDmeChannelsClip *pAnimation, DmeTime_t clipTime ) 
+static void UpdateChannels( CDmeChannelsClip *pAnimation, DmeTime_t clipTime )
 {
 	int nChannelsCount = pAnimation->m_Channels.Count();
 	DmeTime_t channelTime = pAnimation->ToChildMediaTime( clipTime );
@@ -982,7 +982,7 @@ static void UpdateChannels( CDmeChannelsClip *pAnimation, DmeTime_t clipTime )
 //-----------------------------------------------------------------------------
 // Initialize the pose for this frame
 //-----------------------------------------------------------------------------
-static void ComputeFramePose( s_sourceanim_t *pSourceAnim, int nFrame, float flScale, BoneTransformMap_t& boneMap ) 
+static void ComputeFramePose( s_sourceanim_t *pSourceAnim, int nFrame, float flScale, BoneTransformMap_t& boneMap )
 {
 	pSourceAnim->rawanim[nFrame] = (s_bone_t *)kalloc( boneMap.m_nBoneCount, sizeof( s_bone_t ) );
 
@@ -1190,24 +1190,3 @@ dmxError:
 	g_pDataModel->RemoveFileId( fileId );
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,12 +28,12 @@
 class CIdleDialog : public CDialog
 {
 public:
-					
+
 					CIdleDialog( int id, CWnd *pParent );
-	
+
 	// Call this to start the idle processing.
 	void			StartIdleProcessing( DWORD msInterval );
-	
+
 	virtual void	OnIdle() = 0;
 
 

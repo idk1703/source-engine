@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -239,7 +239,7 @@ bool CGrid::GetEntryBox(
 
 	y = m_RowOffsets[row];
 	h = m_Heights[row];
-	return true;	
+	return true;
 }
 
 
@@ -268,9 +268,9 @@ void CGrid::RepositionContents()
 				continue;
 
 			pPanel->SetBounds(
-				m_ColOffsets[x], 
+				m_ColOffsets[x],
 				m_RowOffsets[y],
-				m_Widths[x], 
+				m_Widths[x],
 				m_Heights[y]);
 		}
 	}
@@ -403,8 +403,6 @@ bool CGrid::GetCellAtPoint(int worldX, int worldY, int &row, int &col)
 			}
 		}
 	}
-		
+
 	return false;
 }
-
-

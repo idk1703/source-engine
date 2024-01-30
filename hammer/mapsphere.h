@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -60,7 +60,7 @@ class CMapSphere : public CMapHelper
 		virtual bool IsCulledByCordon(const Vector &vecMins, const Vector &vecMaxs) { return false; } // We don't hide unless our parent hides.
 
 		virtual CBaseTool *GetToolObject(int nHitData, bool bAttachObject );
-		
+
 		virtual bool HitTest2D(CMapView2D *pView, const Vector2D &point, HitInfo_t &HitData);
 
 		virtual const char* GetDescription() { return "Sphere helper"; }

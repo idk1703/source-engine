@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -51,16 +51,16 @@ data_t data[] =
 
 #define NUM_DEF_TESTS 3
 
-static data_t values1[] = 
+static data_t values1[] =
 {
 	{ -1,			0.0f, 0 },
 };
-static data_t values2[] = 
+static data_t values2[] =
 {
 	{ 5000,			0.5f, CURVE_DEFAULT },
 	{ -1,			0.0f, 0 },
 };
-static data_t values3[] = 
+static data_t values3[] =
 {
 	{ 2500,			0.25f, CURVE_DEFAULT },
 	{ 7500,			0.75f, CURVE_DEFAULT },
@@ -125,7 +125,7 @@ void ResetLog( CDmeFloatLog *log, bool useCurveTypes, int startIndex = 0, int en
 	c = ARRAYSIZE( data );
 	for ( i = startIndex; i < c; ++i )
 	{
-		log->SetKey( DmeTime_t( data[ i ].tms ), data[ i ].value, useCurveTypes ? data[ i ].curvetype : CURVE_DEFAULT ); 
+		log->SetKey( DmeTime_t( data[ i ].tms ), data[ i ].value, useCurveTypes ? data[ i ].curvetype : CURVE_DEFAULT );
 
 		if ( endIndex != -1 && i >= endIndex )
 			break;
@@ -201,7 +201,7 @@ void RunDmeFloatLogTests( CDmeFloatLog *log )
 {
 	Msg( "  Testing general log data...\n" );
 
-	ResetLog( log, false );	
+	ResetLog( log, false );
 
 	CompareFloats( 0.5f, log->GetValue( DmeTime_t( 2.0f ) ), 0.000001f, "log->GetValue( 2.0 ) expected to be 0.5f\n" );
 	CompareFloats( 0.5f, log->GetValue( DmeTime_t( 2.5f ) ), 0.000001f, "log->GetValue( 2.5 ) expected to be 0.5f\n" );

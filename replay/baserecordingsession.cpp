@@ -45,7 +45,7 @@ bool CBaseRecordingSession::Read( KeyValues *pIn )
 		return false;
 
 	m_strName = pIn->GetString( "name" );
-	
+
 	if ( m_strName.IsEmpty() )
 	{
 		CUtlBuffer buf;
@@ -100,7 +100,7 @@ void CBaseRecordingSession::LoadBlocksForSession()
 	while ( pFilename )
 	{
 		// Load the block - this will add the block to this session
-		pBlockManager->LoadBlockFromFileName( pFilename, this );	
+		pBlockManager->LoadBlockFromFileName( pFilename, this );
 
 		// Get next file
 		pFilename = g_pFullFileSystem->FindNext( hFind );

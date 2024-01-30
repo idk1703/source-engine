@@ -15,13 +15,13 @@
 
 struct hl_constraint_info_t
 {
-	hl_constraint_info_t() 
-	{ 
+	hl_constraint_info_t()
+	{
 		pObjects[0] = pObjects[1] = NULL;
 		pGroup = NULL;
 		anchorPosition[0].Init();
 		anchorPosition[1].Init();
-		swapped = false; 
+		swapped = false;
 		massScale[0] = massScale[1] = 1.0f;
 	}
 	Vector			anchorPosition[2];
@@ -69,7 +69,7 @@ public:
 	void NotifySystemEvent( CBaseEntity *pNotify, notify_system_event_t eventType, const notify_system_event_params_t &params );
 
 	// gets called at setup time on first init and restore
-	virtual void OnConstraintSetup( hl_constraint_info_t &info ); 
+	virtual void OnConstraintSetup( hl_constraint_info_t &info );
 
 	// return the internal constraint object (used by sound gadgets)
 	inline IPhysicsConstraint *GetPhysConstraint() { return m_pConstraint; }
@@ -77,7 +77,7 @@ public:
 	string_t GetNameAttach1( void ){ return m_nameAttach1; }
 	string_t GetNameAttach2( void ){ return m_nameAttach2; }
 
-protected:	
+protected:
 	void GetConstraintObjects( hl_constraint_info_t &info );
 	void SetupTeleportationHandling( hl_constraint_info_t &info );
 	bool ActivateConstraint( void );
@@ -143,4 +143,3 @@ public:
 };
 
 #endif // PHYSCONSTRAINT_H
-

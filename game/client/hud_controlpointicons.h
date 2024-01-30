@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -44,7 +44,7 @@ extern ConVar mp_blockstyle;
 class CControlPointIcon;
 
 // Options for how the cap progress teardrop positions itself around the cap point icon
-enum 
+enum
 {
 	CP_DIR_N,
 	CP_DIR_NW,
@@ -52,7 +52,7 @@ enum
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CControlPointCountdown : public vgui::EditablePanel
 {
@@ -81,7 +81,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CControlPointProgressBar : public vgui::EditablePanel
 {
@@ -110,7 +110,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CControlPointIconSwoop : public vgui::ImagePanel, public CGameEventListener
 {
@@ -168,7 +168,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CControlPointIconCapArrow : public vgui::Panel
 {
@@ -191,7 +191,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CControlPointIconCapturePulse : public vgui::ImagePanel
 {
@@ -292,10 +292,10 @@ private:
 class CControlPointIcon : public vgui::EditablePanel, public CHudElement
 {
 	DECLARE_CLASS_SIMPLE( CControlPointIcon, vgui::EditablePanel );
-public:	
+public:
 	CControlPointIcon( Panel *parent, const char *pName, int iIndex );
 	~CControlPointIcon( void );
-	
+
 	virtual void ApplySchemeSettings( IScheme *scheme );
 	virtual void PerformLayout( void );
 
@@ -354,7 +354,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudControlPointIcons : public CHudElement, public vgui::Panel
 {
@@ -385,8 +385,8 @@ public:
 	void DrawBackgroundBox( int xpos, int ypos, int nBoxWidth, int nBoxHeight, bool bCutCorner );
 	bool PaintTeamBaseIcon( int index, float flXPos, float flYPos, float flIconSize );
 
-	bool IsFakingCapture( int index = -1, bool *bMult = NULL, float *flFakeTime = NULL ) 
-	{ 
+	bool IsFakingCapture( int index = -1, bool *bMult = NULL, float *flFakeTime = NULL )
+	{
 		if ( m_bFakingCapture && m_flFakeCaptureTime < gpGlobals->curtime )
 		{
 			m_iCurrentCP = -1;
@@ -394,9 +394,9 @@ public:
 			m_bFakingCaptureMult = false;
 		}
 
-		if ( bMult) *bMult = m_bFakingCaptureMult; 
-		if ( flFakeTime ) *flFakeTime = m_flFakeCaptureTime; 
-		return (m_bFakingCapture && (index == -1 || index == m_iCurrentCP)); 
+		if ( bMult) *bMult = m_bFakingCaptureMult;
+		if ( flFakeTime ) *flFakeTime = m_flFakeCaptureTime;
+		return (m_bFakingCapture && (index == -1 || index == m_iCurrentCP));
 	}
 
 private:

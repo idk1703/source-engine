@@ -1,7 +1,7 @@
 
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -102,7 +102,7 @@ CDODWinPanel::CDODWinPanel( const char *pElementName, int iTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODWinPanel::Reset()
 {
@@ -173,7 +173,7 @@ void CDODWinPanel::FireGameEvent( IGameEvent * event )
 		if ( event->GetInt( "team" ) == m_iTeam )
 		{
 			Show();
-		}		
+		}
 	}
 	else if ( Q_strcmp( "dod_round_start", pEventName ) == 0 )
 	{
@@ -221,7 +221,7 @@ void CDODWinPanel::FireGameEvent( IGameEvent * event )
 			}
 
 			Q_strncat( szCappers, pPlayerName, sizeof(szCappers), COPY_ALL_CHARACTERS );
-		}	
+		}
 
 		if ( event->GetBool( "bomb" ) )
 		{
@@ -246,7 +246,7 @@ void CDODWinPanel::FireGameEvent( IGameEvent * event )
 		"final_event"		"byte"		// 0 - no event, 1 - bomb exploded, 2 - flag capped, 3 - timer expired
 
 		"category_left"		"byte"		// 0-4: none, bombers, cappers, defenders, killers
-		"left_1"			"byte"		// player index if first 
+		"left_1"			"byte"		// player index if first
 		"left_score_1"		"byte"
 		"left_2"			"byte"
 		"left_score_2"		"byte"
@@ -294,7 +294,7 @@ void CDODWinPanel::FireGameEvent( IGameEvent * event )
 		else if ( m_bShowTimerAttack )
 		{
 			// attackers win, show time elapsed
-			//		"Time Elapsed: 4:12"  
+			//		"Time Elapsed: 4:12"
 
 			wchar_t time[8];
 			_snwprintf( time, ARRAYSIZE( time ), L"%d:%02d", minutes, seconds );
@@ -475,7 +475,7 @@ void CDODWinPanel::Paint( void )
 
 				x = x + w + XRES(2);
 				y = y + ( h - m_iIconSize ) * 0.5;
-				
+
 				// too many, do a "(icon) 8"
 				pIcon->DrawSelf( x, y, m_iIconSize, m_iIconSize, c );
 				x += m_iIconSize;

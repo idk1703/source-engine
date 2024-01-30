@@ -1,13 +1,13 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
 #include "cbase.h"
 
 #ifdef CLIENT_DLL
-	
+
 	#include "c_sdk_player.h"
 
 #else
@@ -35,7 +35,7 @@ bool CSDKPlayer::SDKAnim_CanMove()
 	return true;
 }
 
-void CSDKPlayer::FireBullet( 
+void CSDKPlayer::FireBullet(
 						   Vector vecSrc,	// shooting postion
 						   const QAngle &shootAngles,  //shooting angle
 						   float vecSpread, // spread vector
@@ -56,7 +56,7 @@ void CSDKPlayer::FireBullet(
 	if ( !pevAttacker )
 		pevAttacker = this;  // the default attacker is ourselves
 
-	// add the spray 
+	// add the spray
 	Vector vecDir = vecDirShooting +
 		x * vecSpread * vecRight +
 		y * vecSpread * vecUp;
@@ -109,7 +109,7 @@ void CSDKPlayer::FireBullet(
 		{
 			// See if the bullet ended up underwater + started out of the water
 			if ( enginetrace->GetPointContents( tr.endpos ) & (CONTENTS_WATER|CONTENTS_SLIME) )
-			{	
+			{
 				trace_t waterTrace;
 				UTIL_TraceLine( vecSrc, tr.endpos, (MASK_SHOT|CONTENTS_WATER|CONTENTS_SLIME), this, COLLISION_GROUP_NONE, &waterTrace );
 

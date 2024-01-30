@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -47,9 +47,9 @@ public:
 protected:
 
 	SC_HANDLE m_hSCManager;
-	
+
 	void VerifyInstallFiles();
-	
+
 	bool DoStartExisting();
 	bool NukeDirectory( const char *pDir, char errorFile[MAX_PATH] );
 	bool DoUninstall( bool bShowMessage );

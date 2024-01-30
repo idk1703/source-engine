@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -60,7 +60,7 @@ void BaseInputDialog::CleanUpContextKeyValues()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void BaseInputDialog::DoModal( KeyValues *pContextKeyValues )
 {
@@ -145,13 +145,13 @@ void InputMessageBox::PerformLayout( int x, int y, int w, int h )
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-InputDialog::InputDialog(vgui::Panel *parent, const char *title, char const *prompt, char const *defaultValue /*=""*/ ) : 
+InputDialog::InputDialog(vgui::Panel *parent, const char *title, char const *prompt, char const *defaultValue /*=""*/ ) :
 	BaseClass(parent, title)
 {
 	SetSize( 320, 120 );
 
 	m_pPrompt = new Label( this, "Prompt", prompt );
-	
+
 	m_pInput = new TextEntry( this, "Text" );
 	m_pInput->SetText( defaultValue );
 	m_pInput->SelectAllText( true );
@@ -173,7 +173,7 @@ void InputDialog::SetMultiline( bool state )
 	m_pInput->SetCatchEnterKey( state );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Allow numeric input only
 //-----------------------------------------------------------------------------

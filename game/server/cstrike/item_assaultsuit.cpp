@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -14,16 +14,16 @@
 class CItemAssaultSuit : public CItem
 {
 	void Spawn( void )
-	{ 
+	{
 		Precache( );
 		CItem::Spawn( );
 	}
-	
+
 	void Precache( void )
 	{
 		PrecacheScriptSound( "BaseCombatCharacter.ItemPickup2" );
 	}
-	
+
 	bool MyTouch( CBasePlayer *pBasePlayer )
 	{
 		CCSPlayer *pPlayer = dynamic_cast< CCSPlayer* >( pBasePlayer );
@@ -47,10 +47,8 @@ class CItemAssaultSuit : public CItem
 			MessageEnd();
 		}
 
-		return true;		
+		return true;
 	}
 };
 
 LINK_ENTITY_TO_CLASS( item_assaultsuit, CItemAssaultSuit );
-
-

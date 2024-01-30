@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -40,9 +40,9 @@ public:
 	CMDRipperMain(Panel *parent, const char *name);
 	virtual ~CMDRipperMain();
 	ISQLWrapper *GetSqlWrapper() { return sqlWrapper; }
-	
+
 protected:
-	
+
 	virtual void OnClose();
 	virtual void OnCommand( const char *command );
 	virtual bool RequestInfo( KeyValues *outputData );
@@ -62,15 +62,15 @@ private:
 	MESSAGE_FUNC( OnOpen, "Open" );
 	MESSAGE_FUNC( OnError, "Error" );
 	MESSAGE_FUNC( OnRefresh, "refresh" );
-	MESSAGE_FUNC_PARAMS( OnDetail, "detail", data );	
-	MESSAGE_FUNC_CHARPTR( OnFileSelected, "FileSelected", fullpath );	
+	MESSAGE_FUNC_PARAMS( OnDetail, "detail", data );
+	MESSAGE_FUNC_CHARPTR( OnFileSelected, "FileSelected", fullpath );
 	MESSAGE_FUNC_PARAMS( OnLookUp, "ModuleLookUp", url );
 	MESSAGE_FUNC_PARAMS( OnDragDrop, "DragDrop", pData );
 
 	CSysModule	*hSQLWrapper;
 	ISQLWrapperFactory	*sqlWrapperFactory;
 	ISQLWrapper *sqlWrapper;
-		
+
 
 //	MESSAGE_FUNC( OnManageSelect,	"ManageSelect" );
 //	MESSAGE_FUNC( OnAddSelect,		"AddSelect" );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -21,7 +21,7 @@ CGameRulesRegister::CGameRulesRegister( const char *pClassName, CreateGameRulesF
 {
 	m_pClassName = pClassName;
 	m_pFn = fn;
-	
+
 	m_pNext = s_pHead;	// Add us to the global list.
 	s_pHead = this;
 }
@@ -113,7 +113,7 @@ CGameRulesRegister* CGameRulesRegister::FindByName( const char *pName )
 		CGameRulesRegister *pReg = CGameRulesRegister::FindByName( pClassName );
 		if ( !pReg )
 			Error( "InitGameRules: missing gamerules class '%s' on the server", pClassName );
-	
+
 		pReg->CreateGameRules();
 		if ( !g_pGameRules )
 		{
@@ -128,7 +128,6 @@ CGameRulesRegister* CGameRulesRegister::FindByName( const char *pName )
 		{
 			g_pGameRules->CreateCustomNetworkStringTables();
 		}
-	}			
+	}
 
 #endif
-	

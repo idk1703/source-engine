@@ -43,7 +43,7 @@ static int __cdecl FileBrowserSortFunc( vgui::ListPanel *pPanel, const vgui::Lis
 	return Q_stricmp( string1, string2 );
 }
 
-			 
+
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
@@ -70,13 +70,13 @@ COperationFileListFrame::COperationFileListFrame( vgui::Panel *pParent, const ch
 
 	// FIXME: Might be nice to have checkboxes per row
 	m_pFileBrowser = new vgui::ListPanel( pBrowserParent, "Browser" );
- 	m_pFileBrowser->AddColumnHeader( 0, "operation", "Operation", 52, 0 );
+	m_pFileBrowser->AddColumnHeader( 0, "operation", "Operation", 52, 0 );
 	m_pFileBrowser->AddColumnHeader( 1, "filename", pColumnHeader, 128, vgui::ListPanel::COLUMN_RESIZEWITHWINDOW );
-    m_pFileBrowser->SetSelectIndividualCells( false );
+	m_pFileBrowser->SetSelectIndividualCells( false );
 	m_pFileBrowser->SetMultiselectEnabled( false );
 	m_pFileBrowser->SetEmptyListText( "No Perforce Operations" );
- 	m_pFileBrowser->SetDragEnabled( true );
- 	m_pFileBrowser->AddActionSignalTarget( this );
+	m_pFileBrowser->SetDragEnabled( true );
+	m_pFileBrowser->AddActionSignalTarget( this );
 	m_pFileBrowser->SetSortFunc( 0, OperationSortFunc );
 	m_pFileBrowser->SetSortFunc( 1, FileBrowserSortFunc );
 	m_pFileBrowser->SetSortColumn( 0 );
@@ -154,7 +154,7 @@ void COperationFileListFrame::PerformLayout()
 //-----------------------------------------------------------------------------
 void COperationFileListFrame::ClearAllOperations()
 {
-	m_pFileBrowser->RemoveAll();	
+	m_pFileBrowser->RemoveAll();
 }
 
 
@@ -240,16 +240,16 @@ const char *COperationFileListFrame::GetOperation( int i )
 //-----------------------------------------------------------------------------
 const char *COperationFileListFrame::GetDescription()
 {
-	return m_pText; 
+	return m_pText;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the message name
 //-----------------------------------------------------------------------------
-const char *COperationFileListFrame::CompletionMessage() 
-{ 
-	return m_MessageName; 
+const char *COperationFileListFrame::CompletionMessage()
+{
+	return m_MessageName;
 }
 
 
@@ -266,7 +266,7 @@ void COperationFileListFrame::OnCommand( const char *pCommand )
 			m_pText = new char[ nLen ];
 			m_pDescription->GetText( m_pText, nLen );
 		}
-		
+
 		KeyValues *pActionKeys;
 		if ( PerformOperation() )
 		{
@@ -310,7 +310,7 @@ void COperationFileListFrame::OnCommand( const char *pCommand )
 //
 //-----------------------------------------------------------------------------
 CPerforceFileListFrame::CPerforceFileListFrame( vgui::Panel *pParent, const char *pTitle, const char *pColumnHeader, PerforceAction_t action ) :
-	BaseClass( pParent, pTitle, pColumnHeader, (action == PERFORCE_ACTION_FILE_SUBMIT), false, OPERATION_DIALOG_ID_PERFORCE ) 
+	BaseClass( pParent, pTitle, pColumnHeader, (action == PERFORCE_ACTION_FILE_SUBMIT), false, OPERATION_DIALOG_ID_PERFORCE )
 {
 	m_Action = action;
 }
@@ -328,7 +328,7 @@ void CPerforceFileListFrame::DoModal( KeyValues *pContextKeys, const char *pMess
 	BaseClass::DoModal( pContextKeys, pMessage ? pMessage : "PerforceActionConfirmed" );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Adds a file for open
 //-----------------------------------------------------------------------------
@@ -468,9 +468,9 @@ void CPerforceFileListFrame::AddFile( const char *pRelativePath, const char *pPa
 		m_LastOpenedFilePathId = pPathId;
 	}
 
-	// If the file doesn't exist, it was opened for delete. 
-	// Using the client spec of the path, we need to piece together 
-	// the full path; the full path unfortunately is usually ambiguous: 
+	// If the file doesn't exist, it was opened for delete.
+	// Using the client spec of the path, we need to piece together
+	// the full path; the full path unfortunately is usually ambiguous:
 	// you can never exactly know which mod it came from.
 	char pTemp[MAX_PATH];
 	char pSearchString[MAX_PATH];
@@ -537,7 +537,7 @@ bool CPerforceFileListFrame::PerformOperation( )
 		break;
 
 	case PERFORCE_ACTION_FILE_SUBMIT:
-		{ 
+		{
 			// Ensure a description was added
 			const char *pDescription = GetDescription();
 			if ( !pDescription[0] || !Q_stricmp( pDescription, "<enter description here>" ) )

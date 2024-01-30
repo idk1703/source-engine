@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -27,4 +27,3 @@ void CServerGameClients::GetPlayerLimits( int& minplayers, int& maxplayers, int 
 void CServerGameDLL::LevelInit_ParseAllEntities( const char *pMapEntities )
 {
 }
-

@@ -104,16 +104,3 @@ void C_ColorCorrectionVolume::ClientThink()
 	Vector entityPosition = GetAbsOrigin();
 	g_pColorCorrectionMgr->SetColorCorrectionWeight( m_CCHandle, m_Weight );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

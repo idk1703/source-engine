@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -50,8 +50,8 @@ public:
 private:
 	MESSAGE_FUNC_PARAMS( OnTextNewLine, "TextNewLine", kv );
 	MESSAGE_FUNC_PARAMS( OnInputCompleted, "InputCompleted", kv );
-	MESSAGE_FUNC_PARAMS( OnItemSelected, "ItemSelected", kv );	
-	MESSAGE_FUNC_PARAMS( OnItemDeselected, "ItemDeselected", kv );	
+	MESSAGE_FUNC_PARAMS( OnItemSelected, "ItemSelected", kv );
+	MESSAGE_FUNC_PARAMS( OnItemDeselected, "ItemDeselected", kv );
 
 	// Shows the DCC object browser (once we have one)
 	void ShowDCCObjectBrowser( const char *pTitle, const char *pPrompt, KeyValues *pDialogKeys );

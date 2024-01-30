@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -47,8 +47,8 @@ IClientMode *ClientModeCommander()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *commander - 
+// Purpose:
+// Input  : *commander -
 //-----------------------------------------------------------------------------
 void CCommanderViewportPanel::SetCommanderView( CClientModeCommander *commander )
 {
@@ -61,7 +61,7 @@ void CCommanderViewportPanel::SetCommanderView( CClientModeCommander *commander 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CCommanderOverlayPanel
 //-----------------------------------------------------------------------------
 CCommanderOverlayPanel *CCommanderViewportPanel::GetCommanderOverlayPanel( void )
@@ -70,7 +70,7 @@ CCommanderOverlayPanel *CCommanderViewportPanel::GetCommanderOverlayPanel( void 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCommanderViewportPanel::CCommanderViewportPanel( void ) :
 	m_CursorCommander( vgui::dc_arrow ),
@@ -87,7 +87,7 @@ CCommanderViewportPanel::CCommanderViewportPanel( void ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCommanderViewportPanel::~CCommanderViewportPanel( void )
 {
@@ -124,7 +124,7 @@ void CCommanderViewportPanel::Enable()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommanderViewportPanel::Disable()
 {
@@ -150,7 +150,7 @@ void CCommanderViewportPanel::MinimapClicked( const Vector& clickWorldPos )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CClientModeCommander::CClientModeCommander() : BaseClass()
 {
@@ -164,7 +164,7 @@ CClientModeCommander::CClientModeCommander() : BaseClass()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CClientModeCommander::~CClientModeCommander()
 {
@@ -187,7 +187,7 @@ void CClientModeCommander::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : vgui::Panel
 //-----------------------------------------------------------------------------
 vgui::Panel *CClientModeCommander::GetMinimapParent( void )
@@ -207,7 +207,7 @@ void CClientModeCommander::MinimapClicked( const Vector& clickWorldPos )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCommanderOverlayPanel	*CClientModeCommander::GetCommanderOverlayPanel( void )
 {
@@ -219,7 +219,7 @@ CCommanderOverlayPanel	*CClientModeCommander::GetCommanderOverlayPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 void CClientModeCommander::Enable()
@@ -234,19 +234,19 @@ void CClientModeCommander::Enable()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClientModeCommander::Disable()
 {
 	BaseClass::Disable();
 
 	::input->ResetMouse();
-	
+
 	HudCommanderOverlayMgr()->Enable( false );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 void CClientModeCommander::Update()
@@ -268,7 +268,7 @@ void CClientModeCommander::Update()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClientModeCommander::Layout()
 {
@@ -290,15 +290,15 @@ bool CClientModeCommander::ShouldDrawFog( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Checks map bounds and determines ideal height for tactical view
-// Input  : fov - 
-//			zoom - 
+// Input  : fov -
+//			zoom -
 // Output : float
 //-----------------------------------------------------------------------------
 float CClientModeCommander::GetHeightForMap( float zoom )
 {
 	Vector mins, maxs;
 	MapData().GetMapBounds( mins, maxs );
-	return maxs.z + TACTICAL_ZOFFSET; 
+	return maxs.z + TACTICAL_ZOFFSET;
 }
 
 
@@ -319,8 +319,8 @@ bool CClientModeCommander::GetOrthoParameters(CViewSetup *pSetup)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *angles - 
+// Purpose:
+// Input  : *angles -
 //-----------------------------------------------------------------------------
 void CClientModeCommander::OverrideView( CViewSetup *pSetup )
 {
@@ -341,7 +341,7 @@ float CClientModeCommander::GetScaledSlueSpeed( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Convert move to scaled move
-// Input  : in - 
+// Input  : in -
 // Output : float
 //-----------------------------------------------------------------------------
 float CClientModeCommander::Commander_ResampleMove( float in )
@@ -353,7 +353,7 @@ float CClientModeCommander::Commander_ResampleMove( float in )
 		return 0.0;
 
 	sign = in > 0.0 ? 1.0 : -1.0;
-	
+
 	move = GetScaledSlueSpeed();
 
 	return move * sign;
@@ -361,7 +361,7 @@ float CClientModeCommander::Commander_ResampleMove( float in )
 
 //-----------------------------------------------------------------------------
 // Purpose: Zero out any movement in the command
-// Input  : *cmd - 
+// Input  : *cmd -
 //-----------------------------------------------------------------------------
 void CClientModeCommander::ResetCommand( CUserCmd *cmd )
 {
@@ -370,7 +370,7 @@ void CClientModeCommander::ResetCommand( CUserCmd *cmd )
 	cmd->sidemove = 0;
 	cmd->upmove = 0;
 	cmd->viewangles.Init();
-}	
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: TF2 commander mode movement logic
@@ -383,19 +383,19 @@ void CClientModeCommander::IsometricMove( CUserCmd *cmd )
 	Vector forward, right, up;
 
 	AngleVectors ( cmd->viewangles, &forward, &right, &up);  // Determine movement angles
-	
+
 	// Copy movement amounts
 	fmove = cmd->forwardmove;
 	smove = cmd->sidemove;
-	
+
 	// No up / down movement
 	forward.Init(1, 0, 0);
 	right.Init(0, -1, 0);
 
 	wishvel.Init();
-	
+
 	// Determine x and y parts of velocity
-	for (i=0; i < 3; i++)       
+	for (i=0; i < 3; i++)
 	{
 		wishvel[i] = forward[i]*fmove + right[i]*smove;
 	}
@@ -406,9 +406,9 @@ void CClientModeCommander::IsometricMove( CUserCmd *cmd )
 
 #define WINDOWED_KEEPMOVING_PIXELS 300
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frametime - 
-//			*cmd - 
+// Purpose:
+// Input  : frametime -
+//			*cmd -
 //-----------------------------------------------------------------------------
 void CClientModeCommander::CreateMove( float flInputSampleTime, CUserCmd *cmd )
 {
@@ -460,7 +460,7 @@ void CClientModeCommander::CreateMove( float flInputSampleTime, CUserCmd *cmd )
 	/*
 	else if ( input->IsFullscreenMouse() )
 	{
-		if ( abs( realx - mx ) < WINDOWED_KEEPMOVING_PIXELS && 
+		if ( abs( realx - mx ) < WINDOWED_KEEPMOVING_PIXELS &&
 			 abs( realy - my ) < WINDOWED_KEEPMOVING_PIXELS )
 		{
 			sidex = 2;
@@ -475,7 +475,7 @@ void CClientModeCommander::CreateMove( float flInputSampleTime, CUserCmd *cmd )
 			{
 				cmd->forwardmove = GetScaledSlueSpeed();
 			}
-			
+
 			if ( my < sidey )
 			{
 				cmd->sidemove = -GetScaledSlueSpeed();
@@ -537,8 +537,8 @@ void CClientModeCommander::MoveMouse( Vector& worldPos )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *newmap - 
+// Purpose:
+// Input  : *newmap -
 //-----------------------------------------------------------------------------
 void CClientModeCommander::LevelInit( const char *newmap )
 {
@@ -553,7 +553,7 @@ void CClientModeCommander::LevelInit( const char *newmap )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClientModeCommander::LevelShutdown( void )
 {
@@ -578,7 +578,7 @@ vgui::Panel *CClientModeCommander::GetViewport()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CClientModeCommander::ShouldDrawEntity(C_BaseEntity *pEnt)
 {
@@ -599,7 +599,7 @@ bool CClientModeCommander::ShouldDrawLocalPlayer( C_BasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CClientModeCommander::ShouldDrawViewModel( void )
@@ -618,10 +618,10 @@ bool CClientModeCommander::ShouldDrawCrosshair( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Adjust engine rendering viewport rectangle if needed
-// Input  : x - 
-//			y - 
-//			width - 
-//			height - 
+// Input  : x -
+//			y -
+//			width -
+//			height -
 //-----------------------------------------------------------------------------
 void CClientModeCommander::AdjustEngineViewport( int& x, int& y, int& width, int& height )
 {
@@ -704,9 +704,9 @@ void CClientModeCommander::PostRender( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Swallow mouse wheel when in this view
-// Input  : down - 
-//			keynum - 
-//			*pszCurrentBinding - 
+// Input  : down -
+//			keynum -
+//			*pszCurrentBinding -
 // Output : int
 //-----------------------------------------------------------------------------
 int CClientModeCommander::KeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
@@ -722,4 +722,3 @@ int CClientModeCommander::KeyInput( int down, ButtonCode_t keynum, const char *p
 	// Allow engine to process
 	return BaseClass::KeyInput( down, keynum, pszCurrentBinding );
 }
-

@@ -62,9 +62,9 @@ inline ChasePath::ChasePath( SubjectChaseType chaseHow )
 	m_chaseHow = chaseHow;
 }
 
-inline float ChasePath::GetLeadRadius( void ) const 
-{ 
-	return 500.0f; // 1000.0f; 
+inline float ChasePath::GetLeadRadius( void ) const
+{
+	return 500.0f; // 1000.0f;
 }
 
 inline float ChasePath::GetMaxPathLength( void ) const
@@ -86,7 +86,7 @@ inline void ChasePath::Invalidate( void )
 	m_lifetimeTimer.Invalidate();
 
 	// extend
-	PathFollower::Invalidate();	
+	PathFollower::Invalidate();
 }
 
 
@@ -197,7 +197,7 @@ inline void ChasePath::RefreshPath( INextBot *bot, CBaseEntity *subject, const I
 		// this path's lifetime has elapsed
 		Invalidate();
 	}
-	
+
 	if ( !IsValid() || IsRepathNeeded( bot, subject ) )
 	{
 		// the situation has changed - try a new path
@@ -222,7 +222,7 @@ inline void ChasePath::RefreshPath( INextBot *bot, CBaseEntity *subject, const I
 		{
 			if ( bot->IsDebugging( NEXTBOT_PATH ) )
 			{
-				//const float size = 20.0f;			
+				//const float size = 20.0f;
 				//NDebugOverlay::VertArrow( bot->GetPosition() + Vector( 0, 0, size ), bot->GetPosition(), size, 255, RandomInt( 0, 200 ), 255, 255, true, 30.0f );
 
 				DevMsg( "%3.2f: bot(#%d) REPATH\n", gpGlobals->curtime, bot->GetEntity()->entindex() );
@@ -248,14 +248,14 @@ inline void ChasePath::RefreshPath( INextBot *bot, CBaseEntity *subject, const I
 		{
 			// can't reach subject - throttle retry based on range to subject
 			m_failTimer.Start( 0.005f * ( bot->GetRangeTo( subject ) ) );
-			
+
 			// allow bot to react to path failure
 			bot->OnMoveToFailure( this, FAIL_NO_PATH_EXISTS );
 
 			if ( bot->IsDebugging( NEXTBOT_PATH ) )
 			{
-				//const float size = 20.0f;	
-				const float dT = 90.0f;		
+				//const float size = 20.0f;
+				const float dT = 90.0f;
 				int c = RandomInt( 0, 100 );
 				//NDebugOverlay::VertArrow( bot->GetPosition() + Vector( 0, 0, size ), bot->GetPosition(), size, 255, c, c, 255, true, dT );
 				NDebugOverlay::HorzArrow( bot->GetPosition(), pathTarget, 5.0f, 255, c, c, 255, true, dT );

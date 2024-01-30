@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@ class IConsoleWnd
 {
 public:
 	virtual void	Release() = 0;
-	
+
 	// Print a message to the console.
 	virtual void	PrintToConsole( const char *pMsg ) = 0;
 
@@ -27,7 +27,7 @@ public:
 	virtual void	SetVisible( bool bVisible ) = 0;
 	virtual bool	IsVisible() const = 0;
 
-	// Normally, the window just hides itself when closed. You can use this to make the window 
+	// Normally, the window just hides itself when closed. You can use this to make the window
 	// automatically go away when they close it.
 	virtual void	SetDeleteOnClose( bool bDelete ) = 0;
 };

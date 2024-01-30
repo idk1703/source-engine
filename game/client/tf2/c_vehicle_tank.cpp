@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -23,7 +23,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_VehicleTank : public C_BaseTFFourWheelVehicle
 {
@@ -61,7 +61,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 C_VehicleTank::C_VehicleTank()
@@ -79,8 +79,8 @@ void C_VehicleTank::ClientThink()
 	{
 		// Cast a ray out of the view to see where the player is looking.
 		trace_t trace;
-		UTIL_TraceLine( 
-			MainViewOrigin(), 
+		UTIL_TraceLine(
+			MainViewOrigin(),
 			MainViewOrigin() + MainViewForward() * 100000,
 			MASK_OPAQUE, NULL,
 			COLLISION_GROUP_NONE,
@@ -100,7 +100,7 @@ void C_VehicleTank::ClientThink()
 			// Transform it into the tank's local space.
 			matrix3x4_t tankToWorld;
 			AngleMatrix( GetAbsAngles(), tankToWorld );
-			
+
 			Vector vLocalTo;
 			VectorITransform( vTo, tankToWorld, vLocalTo );
 
@@ -147,4 +147,3 @@ void C_VehicleTank::OnItemPostFrame( CBaseTFPlayer *pDriver )
 		BaseClass::OnItemPostFrame( pDriver );
 	}
 }
-

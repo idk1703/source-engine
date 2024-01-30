@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -27,13 +27,10 @@ public:
 					C_PhysBox();
 	virtual			~C_PhysBox();
 	virtual ShadowType_t ShadowCastType();
-	
+
 public:
 	float			m_mass;	// TEST..
 };
 
 
 #endif
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -90,7 +90,7 @@ void CCurveEditorPanel::OnCursorMoved( int x, int y )
 {
 	BaseClass::OnCursorMoved( x, y );
 
-    float flIn, flOut;
+	float flIn, flOut;
 	ScreenToValue( x, y, &flIn, &flOut );
 
 	int w, h;
@@ -118,7 +118,7 @@ void CCurveEditorPanel::OnKeyCodePressed( vgui::KeyCode code )
 	}
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // This paints the grid behind the curves
 //-----------------------------------------------------------------------------
@@ -166,7 +166,7 @@ void CCurveEditorPanel::Paint( void )
 		int x = i;
 		int y = (h-1) - (int)(flOut * (h-1) + 0.5f);
 		y = clamp( y, 0, h-1 );
-		
+
 		if ( i != 0 )
 		{
 			vgui::surface()->DrawLine( x0, y0, x, y );

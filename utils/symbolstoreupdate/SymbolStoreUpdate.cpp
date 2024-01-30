@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -55,7 +55,7 @@ public:
 public:
 
 	FileType_t m_FileType;	// Where does this file come from?
-	
+
 	char m_P4Client[256];	// If nonzero length, then this is a perforce binary we need to get.
 	char m_BinaryName[256];	// Name of the dll or exe file.
 
@@ -96,7 +96,7 @@ char* GetTimeString()
 
 	static char tempStr[512];
 	Q_strncpy( tempStr, pStr, sizeof( tempStr ) );
-	
+
 	char *pEnd = strchr( tempStr, '\n' );
 	if ( pEnd )
 		*pEnd = 0;
@@ -150,7 +150,7 @@ void ParseConfigFile()
 		{
 			CFileInfo *pInfo = new CFileInfo;
 			strncpy( pInfo->m_BinaryName, pKey->GetString(), sizeof( pInfo->m_BinaryName ) );
-			
+
 			if ( bLocalBinary )
 				pInfo->m_FileType = FILETYPE_LOCAL;
 			else if ( bVSSBinary )
@@ -227,7 +227,7 @@ int RunCommandGetOutput( const char *cmdLine, CUtlVector<char> &output )
 			output.AddToTail( 0 );
 			return ret;
 		}
-			
+
 		// Add a null-terminator.
 		output.AddToTail( 0 );
 	}
@@ -353,7 +353,7 @@ void StoreP4Revision( CFileInfo *pInfo, const char *pFilenameBase )
 {
 	if ( pInfo->m_FileType != FILETYPE_VSS && pInfo->m_FileType != FILETYPE_PERFORCE )
 		return;
-	
+
 	char cmdLine[512];
 	char syncCommand[512];
 	if ( GetMostRecentP4Revision( pInfo, syncCommand ) )
@@ -411,12 +411,12 @@ bool GetFileCRC( const char *pFilename, CRC32_t *pCRC )
 
 	fread( data.Base(), 1, data.Count(), fp );
 	fclose( fp );
-	
+
 
 	CRC32_Init( pCRC );
 	CRC32_ProcessBuffer( pCRC, data.Base(), data.Count() );
 	CRC32_Final( pCRC );
-	
+
 	return true;
 }
 
@@ -492,7 +492,7 @@ int main( int argc, char **argv )
 
 	// Initialize stuff.
 	InitFileSystem( pchExeDir );
-	ParseConfigFile();	
+	ParseConfigFile();
 
 
 	// Clear out the temp files directory.
@@ -502,10 +502,10 @@ int main( int argc, char **argv )
 		system( "md SymbolStoreUpdateTempFiles" );
 	}
 
-	
+
 	unsigned long nextUpdateTime = GetTickCount();
 	int nPasses = 0;
-	
+
 	Msg( "\nUpdating files\n" );
 	Msg( "- press F to force a refresh\n" );
 	Msg( "- press ESC or Q to exit\n" );
@@ -556,8 +556,8 @@ int main( int argc, char **argv )
 				Msg( "\rUpdated %d of %d - %d CRC matches...      ", iCount, g_FileInfos.Count(), nCRCMatches );
 				if ( kbhit() )
 					break;
-			}			
-			
+			}
+
 			// Wait for 2 minutes.
 			nextUpdateTime = GetTickCount() + g_nUpdateIntervalSeconds * 1000;
 			Msg( "\n\n%s\n"
@@ -572,10 +572,8 @@ int main( int argc, char **argv )
 			Sleep( 300 );
 		}
 	}
-	
+
 	Msg( "\n\nKey pressed, exiting.\n" );
 
 	return 0;
 }
-
-

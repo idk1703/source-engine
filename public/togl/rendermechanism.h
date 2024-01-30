@@ -65,7 +65,7 @@
 		typedef HWND VD3DHWND;
 	#endif
 
-	#define	GLMPRINTF(args)	
+	#define	GLMPRINTF(args)
 	#define	GLMPRINTSTR(args)
 	#define	GLMPRINTTEXT(args)
 #endif // defined(DX_TO_GL_ABSTRACTION)

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,7 +13,7 @@
 
 
 #ifdef CLIENT_DLL
-	
+
 #else
 
 	#include "cs_player.h"
@@ -62,6 +62,5 @@ PRECACHE_WEAPON_REGISTER( weapon_hegrenade );
 		//=============================================================================
 		CHEGrenadeProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse, pPlayer, GRENADE_TIMER );
 	}
-	
-#endif
 
+#endif

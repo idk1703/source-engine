@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,8 +32,8 @@ IMPLEMENT_DYNCREATE(CObjectPage, CPropertyPage)
 //			pData - unused
 //			bCanEdit - the edit state
 //-----------------------------------------------------------------------------
-void CObjectPage::UpdateData( int Mode, PVOID pData, bool bCanEdit ) 
-{ 
+void CObjectPage::UpdateData( int Mode, PVOID pData, bool bCanEdit )
+{
 	m_bCanEdit = bCanEdit;
 }
 
@@ -51,7 +51,7 @@ BOOL CObjectPage::OnSetActive(void)
 	}
 
 	CObjectProperties *pParent = (CObjectProperties *)GetParent();
-	
+
 	pParent->UpdateAnchors( this );
 
 	if (m_bFirstTimeActive)
@@ -65,12 +65,10 @@ BOOL CObjectPage::OnSetActive(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 PVOID CObjectPage::GetEditObject()
-{ 
+{
 	//VPROF_BUDGET( "CObjectPage::GetEditObject", "Object Properties" );
 	return ((CObjectProperties*) GetParent())->GetEditObject(GetEditObjectRuntimeClass());
 }
-
-

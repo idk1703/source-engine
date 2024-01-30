@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -9,13 +9,13 @@
 #include "dod_playerstats.h"
 #include "hud_macros.h"
 
-const char *g_pszShortTeamNames[2] = 
+const char *g_pszShortTeamNames[2] =
 {
 	"US",
 	"Ger"
 };
 
-const char *g_pszClassNames[NUM_DOD_PLAYERCLASSES] = 
+const char *g_pszClassNames[NUM_DOD_PLAYERCLASSES] =
 {
 	"Rifleman",
 	"Assault",
@@ -25,7 +25,7 @@ const char *g_pszClassNames[NUM_DOD_PLAYERCLASSES] =
 	"Rocket"
 };
 
-const char *g_pszStatNames[DODSTAT_MAX] = 
+const char *g_pszStatNames[DODSTAT_MAX] =
 {
 	"iPlayTime",
 	"iRoundsWon",
@@ -47,8 +47,8 @@ int iValidWeaponStatBitMask = ( (1<<DODSTAT_KILLS ) | (1<<DODSTAT_SHOTS_HIT) | (
 int iValidPlayerStatBitMask = 0xFFFF & ~( (1<<DODSTAT_SHOTS_HIT) | (1<<DODSTAT_SHOTS_FIRED) | (1<<DODSTAT_HEADSHOTS) );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &msg - 
+// Purpose:
+// Input  : &msg -
 //-----------------------------------------------------------------------------
 void __MsgFunc_DODPlayerStatsUpdate( bf_read &msg )
 {
@@ -58,7 +58,7 @@ void __MsgFunc_DODPlayerStatsUpdate( bf_read &msg )
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CDODPlayerStats::CDODPlayerStats() 
+CDODPlayerStats::CDODPlayerStats()
 {
 	m_flTimeNextForceUpload = 0;
 }
@@ -99,7 +99,7 @@ void CDODPlayerStats::FireGameEvent( IGameEvent *event )
 
 		Assert( steamapicontext->SteamUserStats() );
 		if ( !steamapicontext->SteamUserStats() )
-			return; 
+			return;
 
 		CGameID gameID( engine->GetAppID() );
 
@@ -125,11 +125,11 @@ void CDODPlayerStats::FireGameEvent( IGameEvent *event )
 						{
 							// use Steam's value
 							m_PlayerStats[iTeam][iClass].m_iStat[iStat] = iData;
-						}	
-					}					
+						}
+					}
 				}
 			}
-		}		
+		}
 
 		// read weapon stats
 		for ( int iWeapon=WEAPON_NONE+1;iWeapon<WEAPON_MAX;iWeapon++ )
@@ -147,8 +147,8 @@ void CDODPlayerStats::FireGameEvent( IGameEvent *event )
 					{
 						// use Steam's value
 						m_WeaponStats[iWeapon].m_iStat[iStat] = iData;
-					}	
-				}					
+					}
+				}
 			}
 		}
 
@@ -236,7 +236,7 @@ void CDODPlayerStats::UploadStats()
 {
 	// only upload if Steam is running
 	if ( !steamapicontext->SteamUserStats() )
-		return; 
+		return;
 
 	CGameID gameID( engine->GetAppID() );
 	char szStatName[256];
@@ -247,7 +247,7 @@ void CDODPlayerStats::UploadStats()
 		for ( int iClass=0;iClass<NUM_DOD_PLAYERCLASSES;iClass++ )
 		{
 			for ( int iStat=0;iStat<DODSTAT_MAX;iStat++ )
-			{	
+			{
 				if ( iValidPlayerStatBitMask & (1<<iStat) )
 				{
 					if ( m_PlayerStats[iTeam][iClass].m_bDirty[iStat] )
@@ -256,10 +256,10 @@ void CDODPlayerStats::UploadStats()
 
 						steamapicontext->SteamUserStats()->SetStat( szStatName, m_PlayerStats[iTeam][iClass].m_iStat[iStat] );
 					}
-				}				
-			}		
+				}
+			}
 		}
-	}		
+	}
 
 	// write weapon stats
 	for ( int iWeapon=WEAPON_NONE+1;iWeapon<WEAPON_MAX;iWeapon++ )
@@ -273,9 +273,9 @@ void CDODPlayerStats::UploadStats()
 					Q_snprintf( szStatName, ARRAYSIZE( szStatName ), "%s.%s", s_WeaponAliasInfo[iWeapon], g_pszStatNames[iStat] );
 
 					steamapicontext->SteamUserStats()->SetStat( szStatName, m_WeaponStats[iWeapon].m_iStat[iStat] );
-				}	
-			}								
-		}	
+				}
+			}
+		}
 	}
 
 	SetNextForceUploadTime();
@@ -303,7 +303,7 @@ void CDODPlayerStats::UpdateStats( int iPlayerClass, int iTeam, dod_stat_accumul
 				m_PlayerStats[iTeamIndex][iPlayerClass].m_bDirty[iStat] = true;
 			}
 		}
-	}		
+	}
 
 	int iWeaponStatCount = vecWeaponStats->Count();
 
@@ -321,11 +321,11 @@ void CDODPlayerStats::UpdateStats( int iPlayerClass, int iTeam, dod_stat_accumul
 					m_WeaponStats[iWeaponID].m_iStat[iStat] += iValue;
 					m_WeaponStats[iWeaponID].m_bDirty[iStat] = true;
 				}
-			}					
+			}
 		}
 	}
 
-	// if we haven't uploaded stats in a long time, upload them 
+	// if we haven't uploaded stats in a long time, upload them
 	if ( ( gpGlobals->curtime >= m_flTimeNextForceUpload ) )
 	{
 		UploadStats();

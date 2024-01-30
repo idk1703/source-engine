@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -146,15 +146,15 @@ IMPLEMENT_RENDERSTATE_FUNC( CommitSetPixelShader, m_pPixelShader, PSSetShader )
 static void CommitSetInputLayout( ID3D10Device *pDevice, const ShaderStateDx10_t &desiredState, ShaderStateDx10_t &currentState, bool bForce )
 {
 	const ShaderInputLayoutStateDx10_t& newState = desiredState.m_InputLayout;
-	if ( bForce || memcmp( &newState, &currentState.m_InputLayout, sizeof(ShaderInputLayoutStateDx10_t) ) )	
+	if ( bForce || memcmp( &newState, &currentState.m_InputLayout, sizeof(ShaderInputLayoutStateDx10_t) ) )
 	{
 		// FIXME: Deal with multiple streams
-		ID3D10InputLayout *pInputLayout = g_pShaderDeviceDx10->GetInputLayout( 
+		ID3D10InputLayout *pInputLayout = g_pShaderDeviceDx10->GetInputLayout(
 			newState.m_hVertexShader, newState.m_pVertexDecl[0] );
-		pDevice->IASetInputLayout( pInputLayout );						
+		pDevice->IASetInputLayout( pInputLayout );
 
 		currentState.m_InputLayout = newState;
-	}																		
+	}
 }
 
 static void CommitSetViewports( ID3D10Device *pDevice, const ShaderStateDx10_t &desiredState, ShaderStateDx10_t &currentState, bool bForce )
@@ -162,7 +162,7 @@ static void CommitSetViewports( ID3D10Device *pDevice, const ShaderStateDx10_t &
 	bool bChanged = bForce || ( desiredState.m_nViewportCount != currentState.m_nViewportCount );
 	if ( !bChanged && desiredState.m_nViewportCount > 0 )
 	{
-		bChanged = memcmp( desiredState.m_pViewports, currentState.m_pViewports, 
+		bChanged = memcmp( desiredState.m_pViewports, currentState.m_pViewports,
 			desiredState.m_nViewportCount * sizeof( D3D10_VIEWPORT ) ) != 0;
 	}
 
@@ -176,7 +176,7 @@ static void CommitSetViewports( ID3D10Device *pDevice, const ShaderStateDx10_t &
 	memset( currentState.m_pViewports, 0xDD, sizeof( currentState.m_pViewports ) );
 #endif
 
-	memcpy( currentState.m_pViewports, desiredState.m_pViewports, 
+	memcpy( currentState.m_pViewports, desiredState.m_pViewports,
 		desiredState.m_nViewportCount * sizeof( D3D10_VIEWPORT ) );
 }
 
@@ -226,7 +226,7 @@ static void CommitSetVertexBuffer( ID3D10Device *pDevice, const ShaderStateDx10_
 		if ( bMatch )
 		{
 			bInMatch = true;
-			pDevice->IASetVertexBuffers( nFirstBuffer, nBufferCount, 
+			pDevice->IASetVertexBuffers( nFirstBuffer, nBufferCount,
 				&ppVertexBuffers[nFirstBuffer], &pStrides[nFirstBuffer], &pOffsets[nFirstBuffer] );
 			nBufferCount = 0;
 		}
@@ -234,7 +234,7 @@ static void CommitSetVertexBuffer( ID3D10Device *pDevice, const ShaderStateDx10_
 
 	if ( !bInMatch )
 	{
-		pDevice->IASetVertexBuffers( nFirstBuffer, nBufferCount, 
+		pDevice->IASetVertexBuffers( nFirstBuffer, nBufferCount,
 			&ppVertexBuffers[nFirstBuffer], &pStrides[nFirstBuffer], &pOffsets[nFirstBuffer] );
 	}
 }
@@ -242,7 +242,7 @@ static void CommitSetVertexBuffer( ID3D10Device *pDevice, const ShaderStateDx10_
 static void GenerateRasterizerDesc( D3D10_RASTERIZER_DESC* pDesc, const ShaderRasterState_t& state )
 {
 	pDesc->FillMode = ( state.m_FillMode == SHADER_FILL_WIREFRAME ) ? D3D10_FILL_WIREFRAME : D3D10_FILL_SOLID;
-	
+
 	// Cull state
 	if ( state.m_bCullEnable )
 	{
@@ -275,7 +275,7 @@ static void GenerateRasterizerDesc( D3D10_RASTERIZER_DESC* pDesc, const ShaderRa
 static void CommitSetRasterState( ID3D10Device *pDevice, const ShaderStateDx10_t &desiredState, ShaderStateDx10_t &currentState, bool bForce )
 {
 	const ShaderRasterState_t& newState = desiredState.m_RasterState;
-	if ( bForce || memcmp( &newState, &currentState.m_RasterState, sizeof(ShaderRasterState_t) ) )	
+	if ( bForce || memcmp( &newState, &currentState.m_RasterState, sizeof(ShaderRasterState_t) ) )
 	{
 		// Clear out the existing state
 		if ( currentState.m_pRasterState )
@@ -294,11 +294,11 @@ static void CommitSetRasterState( ID3D10Device *pDevice, const ShaderStateDx10_t
 			Warning( "Unable to create rasterizer state object!\n" );
 		}
 
-		pDevice->RSSetState( pState );						
+		pDevice->RSSetState( pState );
 
 		currentState.m_pRasterState = pState;
 		memcpy( &currentState.m_RasterState, &newState, sizeof( ShaderRasterState_t ) );
-	}																		
+	}
 }
 
 
@@ -314,17 +314,17 @@ static void CommitSetRasterState( ID3D10Device *pDevice, const ShaderStateDx10_t
 static CShaderAPIDx10 s_ShaderAPIDx10;
 CShaderAPIDx10* g_pShaderAPIDx10 = &s_ShaderAPIDx10;
 
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderAPIDx10, IShaderAPI, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderAPIDx10, IShaderAPI,
 								  SHADERAPI_INTERFACE_VERSION, s_ShaderAPIDx10 )
 
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderAPIDx10, IDebugTextureInfo, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderAPIDx10, IDebugTextureInfo,
 								  DEBUG_TEXTURE_INFO_VERSION, s_ShaderAPIDx10 )
 
-								  
+
 //-----------------------------------------------------------------------------
 // Constructor, destructor
 //-----------------------------------------------------------------------------
-CShaderAPIDx10::CShaderAPIDx10() 
+CShaderAPIDx10::CShaderAPIDx10()
 {
 	m_bResettingRenderState = false;
 	m_Commit.Init( COMMIT_FUNC_COUNT );
@@ -355,10 +355,10 @@ void CShaderAPIDx10::ResetRenderState( bool bFullReset )
 	memset( &rDesc, 0, sizeof(rDesc) );
 	rDesc.FillMode = D3D10_FILL_SOLID;
 	rDesc.CullMode = D3D10_CULL_NONE;
-	rDesc.FrontCounterClockwise = TRUE;	// right-hand rule 
+	rDesc.FrontCounterClockwise = TRUE;	// right-hand rule
 
 	ID3D10RasterizerState *pRasterizerState;
-	HRESULT hr = D3D10Device()->CreateRasterizerState( &rDesc, &pRasterizerState ); 
+	HRESULT hr = D3D10Device()->CreateRasterizerState( &rDesc, &pRasterizerState );
 	Assert( !FAILED(hr) );
 	D3D10Device()->RSSetState( pRasterizerState );
 
@@ -407,9 +407,9 @@ void CShaderAPIDx10::CommitStateChanges( bool bForce )
 void CShaderAPIDx10::GetBackBufferDimensions( int& nWidth, int& nHeight ) const
 {
 	g_pShaderDeviceDx10->GetBackBufferDimensions( nWidth, nHeight );
-} 
+}
 
-	
+
 //-----------------------------------------------------------------------------
 // Viewport-related methods
 //-----------------------------------------------------------------------------
@@ -486,7 +486,7 @@ void CShaderAPIDx10::ClearBuffers( bool bClearColor, bool bClearDepth, bool bCle
 	// FIXME: This implementation is totally bust0red [doesn't guarantee exact color specified]
 	if ( bClearColor )
 	{
-		D3D10Device()->ClearRenderTargetView( D3D10RenderTargetView(), m_DesiredState.m_ClearColor ); 
+		D3D10Device()->ClearRenderTargetView( D3D10RenderTargetView(), m_DesiredState.m_ClearColor );
 	}
 }
 
@@ -527,12 +527,12 @@ void CShaderAPIDx10::BindVertexBuffer( int nStreamID, IVertexBuffer *pVertexBuff
 	if ( pVertexBufferDx10 )
 	{
 		state.m_pBuffer = pVertexBufferDx10->GetDx10Buffer();
-		state.m_nStride = pVertexBufferDx10->VertexSize(); 
+		state.m_nStride = pVertexBufferDx10->VertexSize();
 	}
 	else
 	{
 		state.m_pBuffer = NULL;
-		state.m_nStride = 0; 
+		state.m_nStride = 0;
 	}
 	state.m_nOffset = nOffsetInBytes;
 
@@ -557,7 +557,7 @@ void CShaderAPIDx10::BindIndexBuffer( IIndexBuffer *pIndexBuffer, int nOffsetInB
 	if ( pIndexBufferDx10 )
 	{
 		state.m_pBuffer = pIndexBufferDx10->GetDx10Buffer();
-		state.m_Format = ( pIndexBufferDx10->GetIndexFormat() == MATERIAL_INDEX_FORMAT_16BIT ) ? 
+		state.m_Format = ( pIndexBufferDx10->GetIndexFormat() == MATERIAL_INDEX_FORMAT_16BIT ) ?
 			DXGI_FORMAT_R16_UINT : DXGI_FORMAT_R32_UINT;
 	}
 	else
@@ -753,22 +753,22 @@ StateSnapshot_t	 CShaderAPIDx10::TakeSnapshot( )
 // Returns true if the state snapshot is transparent
 bool CShaderAPIDx10::IsTranslucent( StateSnapshot_t id ) const
 {
-	return (id & TRANSLUCENT) != 0; 
+	return (id & TRANSLUCENT) != 0;
 }
 
 bool CShaderAPIDx10::IsAlphaTested( StateSnapshot_t id ) const
 {
-	return (id & ALPHATESTED) != 0; 
+	return (id & ALPHATESTED) != 0;
 }
 
 bool CShaderAPIDx10::IsDepthWriteEnabled( StateSnapshot_t id ) const
 {
-	return (id & DEPTHWRITE) != 0; 
+	return (id & DEPTHWRITE) != 0;
 }
 
 bool CShaderAPIDx10::UsesVertexAndPixelShaders( StateSnapshot_t id ) const
 {
-	return (id & VERTEX_AND_PIXEL_SHADERS) != 0; 
+	return (id & VERTEX_AND_PIXEL_SHADERS) != 0;
 }
 
 // Gets the vertex format for a set of snapshot ids
@@ -1195,7 +1195,7 @@ void CShaderAPIDx10::ModifyTexture( ShaderAPITextureHandle_t textureHandle )
 }
 
 // Texture management methods
-void CShaderAPIDx10::TexImage2D( int level, int cubeFace, ImageFormat dstFormat, int zOffset, int width, int height, 
+void CShaderAPIDx10::TexImage2D( int level, int cubeFace, ImageFormat dstFormat, int zOffset, int width, int height,
 								 ImageFormat srcFormat, bool bSrcIsTiled, void *imageData )
 {
 }
@@ -1209,7 +1209,7 @@ void CShaderAPIDx10::TexImageFromVTF( IVTFTexture *pVTF, int iVTFFrame )
 {
 }
 
-bool CShaderAPIDx10::TexLock( int level, int cubeFaceID, int xOffset, int yOffset, 
+bool CShaderAPIDx10::TexLock( int level, int cubeFaceID, int xOffset, int yOffset,
 							  int width, int height, CPixelWriter& writer )
 {
 	return false;
@@ -1237,14 +1237,14 @@ void CShaderAPIDx10::TexSetPriority( int priority )
 {
 }
 
-ShaderAPITextureHandle_t CShaderAPIDx10::CreateTexture( 
-	int width, 
+ShaderAPITextureHandle_t CShaderAPIDx10::CreateTexture(
+	int width,
 	int height,
 	int depth,
-	ImageFormat dstImageFormat, 
-	int numMipLevels, 
-	int numCopies, 
-	int flags, 
+	ImageFormat dstImageFormat,
+	int numMipLevels,
+	int numCopies,
+	int flags,
 	const char *pDebugName,
 	const char *pTextureGroupName )
 {
@@ -1253,16 +1253,16 @@ ShaderAPITextureHandle_t CShaderAPIDx10::CreateTexture(
 	return handle;
 }
 
-void CShaderAPIDx10::CreateTextures( 
+void CShaderAPIDx10::CreateTextures(
 					ShaderAPITextureHandle_t *pHandles,
 					int count,
-					int width, 
+					int width,
 					int height,
 					int depth,
-					ImageFormat dstImageFormat, 
-					int numMipLevels, 
-					int numCopies, 
-					int flags, 
+					ImageFormat dstImageFormat,
+					int numMipLevels,
+					int numCopies,
+					int flags,
 					const char *pDebugName,
 					const char *pTextureGroupName )
 {

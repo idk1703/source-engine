@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -80,16 +80,16 @@ class CDODClassMenu_Allies : public CDODClassMenu
 {
 private:
 	DECLARE_CLASS_SIMPLE( CDODClassMenu_Allies, CDODClassMenu );
-	
+
 public:
 	CDODClassMenu_Allies(IViewPort *pViewPort) : BaseClass(pViewPort)
 	{
 		LoadControlSettings( "Resource/UI/ClassMenu_Allies.res" );
 	}
-	
+
 	virtual const char *GetName( void )
-	{ 
-		return PANEL_CLASS_ALLIES; 
+	{
+		return PANEL_CLASS_ALLIES;
 	}
 
 	virtual int GetTeamNumber( void )
@@ -108,7 +108,7 @@ class CDODClassMenu_Axis : public CDODClassMenu
 {
 private:
 	DECLARE_CLASS_SIMPLE( CDODClassMenu_Axis, CDODClassMenu );
-	
+
 public:
 	CDODClassMenu_Axis(IViewPort *pViewPort) : BaseClass(pViewPort)
 	{
@@ -116,7 +116,7 @@ public:
 	}
 
 	virtual const char *GetName( void )
-	{ 
+	{
 		return PANEL_CLASS_AXIS;
 	}
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -30,7 +30,7 @@ public:
 	virtual			~CTEBubbles( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 	DECLARE_SERVERCLASS();
 
 public:
@@ -43,8 +43,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEBubbles::CTEBubbles( const char *name ) :
 	CBaseTempEntity( name )
@@ -58,22 +58,22 @@ CTEBubbles::CTEBubbles( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEBubbles::~CTEBubbles( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEBubbles::Test( const Vector& current_origin, const QAngle& current_angles )
 {
 	// Fill in data
 	m_vecMins = current_origin;
-	
+
 	Vector forward;
 
 	m_vecMins.GetForModify()[2] += 24;
@@ -110,17 +110,17 @@ END_SEND_TABLE()
 static CTEBubbles g_TEBubbles( "Bubbles" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//			*mins - 
-//			*maxs - 
-//			height - 
-//			modelindex - 
-//			count - 
-//			speed - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//			*mins -
+//			*maxs -
+//			height -
+//			modelindex -
+//			count -
+//			speed -
 //-----------------------------------------------------------------------------
 void TE_Bubbles( IRecipientFilter& filter, float delay,
 	const Vector* mins, const Vector* maxs, float height, int modelindex, int count, float speed )

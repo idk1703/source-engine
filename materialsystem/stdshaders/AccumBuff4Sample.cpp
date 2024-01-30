@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -33,7 +33,7 @@ BEGIN_VS_SHADER_FLAGS( accumbuff4sample, "Help for AccumBuff4Sample", SHADER_NOT
 		LoadTexture( TEXTURE2 );
 		LoadTexture( TEXTURE3 );
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		// Requires DX9 + above
@@ -73,7 +73,7 @@ BEGIN_VS_SHADER_FLAGS( accumbuff4sample, "Help for AccumBuff4Sample", SHADER_NOT
 
 			DECLARE_STATIC_VERTEX_SHADER( screenspaceeffect_vs20 );
 			SET_STATIC_VERTEX_SHADER( screenspaceeffect_vs20 );
-			
+
 			if( g_pHardwareConfig->SupportsPixelShaders_2_b() )
 			{
 				DECLARE_STATIC_PIXEL_SHADER( accumbuff4sample_ps20b );

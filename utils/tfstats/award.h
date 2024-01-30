@@ -38,16 +38,16 @@ protected:
 	bool fNoWinner;
 
 	CAward(char* name);
-	
-	
+
+
 	virtual void extendedinfo(CHTMLFile& html){};
 	virtual void noWinner(CHTMLFile& html){};
 
-	
+
 public:
 	virtual void getWinner(){}
 	virtual void writeHTML(CHTMLFile& html);
-	
+
 	virtual ~CAward();
 
 };

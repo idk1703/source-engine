@@ -34,7 +34,7 @@ struct PS_INPUT
 
 float Lerp5(float f1, float f2, float i1, float i2, float x)
 {
-  return f1+(f2-f1)*(x-i1)/(i2-i1);
+	return f1+(f2-f1)*(x-i1)/(i2-i1);
 }
 
 float4 main( PS_INPUT i ) : COLOR
@@ -51,8 +51,8 @@ float4 main( PS_INPUT i ) : COLOR
 	float spot_dot=dot(ldir,-Light_dir);
 	float3 ret=Light_color*0.09*albedo.xyz;         // ambient
 	float dist_falloff=(SCALE_FACTOR/(QUADRATIC_ATTN*dist*dist+LINEAR_ATTN*dist+CONSTANT_ATTN));
- 	if (spot_dot>OUTER_COS)
- 	{
+	if (spot_dot>OUTER_COS)
+	{
 		float falloff=1;
 		if (spot_dot<INNER_COS)
 		{

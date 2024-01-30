@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -57,7 +57,7 @@ const EngyConstructBuilding_t g_kEngyBuildings[ NUM_ENGY_BUILDINGS ] =
 							 "dispenser_active.res",
 							 "dispenser_inactive.res",
 							 "dispenser_inactive.res" ),
-	
+
 	// Teleporter entrance
 	EngyConstructBuilding_t( true,
 							 OBJ_TELEPORTER,
@@ -147,9 +147,9 @@ const EngyBuildingReplacement_t s_alternateEngineerBuildings[] =
 DECLARE_HUDELEMENT_DEPTH( CHudMenuEngyBuild, 40 );	// in front of engy building status
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CHudMenuEngyBuild::CHudMenuEngyBuild( const char *pElementName ) 
+CHudMenuEngyBuild::CHudMenuEngyBuild( const char *pElementName )
 	: CHudBaseBuildMenu( pElementName, "HudMenuEngyBuild" )
 {
 	Panel *pParent = g_pClientMode->GetViewport();
@@ -193,7 +193,7 @@ CHudMenuEngyBuild::CHudMenuEngyBuild( const char *pElementName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuEngyBuild::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -227,7 +227,7 @@ void CHudMenuEngyBuild::ApplySchemeSettings( IScheme *pScheme )
 		m_pUnavailableObjects[0]->LoadControlSettings( "resource/UI/build_menu/sentry_unavailable.res" );
 		m_pUnavailableObjects[1]->LoadControlSettings( "resource/UI/build_menu/dispenser_unavailable.res" );
 		m_pUnavailableObjects[2]->LoadControlSettings( "resource/UI/build_menu/tele_entrance_unavailable.res" );
-		m_pUnavailableObjects[3]->LoadControlSettings( "resource/UI/build_menu/tele_exit_unavailable.res" );	
+		m_pUnavailableObjects[3]->LoadControlSettings( "resource/UI/build_menu/tele_exit_unavailable.res" );
 
 		m_pActiveSelection = dynamic_cast< CIconPanel * >( FindChildByName( "active_selection_bg" ) );
 
@@ -321,7 +321,7 @@ void CHudMenuEngyBuild::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuEngyBuild::GetBuildingIDAndModeFromSlot( int iSlot, int &iBuilding, int &iMode, const EngyConstructBuilding_t (&buildings)[ NUM_ENGY_BUILDINGS ] )
 {
@@ -442,7 +442,7 @@ int	CHudMenuEngyBuild::HudElementKeyInput( int down, ButtonCode_t keynum, const 
 				return 0;
 			}
 
-			// allow slot1 - slot4 
+			// allow slot1 - slot4
 			if ( iSlot < 1 || iSlot > NUM_ENGY_BUILDINGS )
 				return 1;
 		}
@@ -481,7 +481,7 @@ int	CHudMenuEngyBuild::HudElementKeyInput( int down, ButtonCode_t keynum, const 
 			default:
 				return 1;	// key not handled
 			}
-		}		
+		}
 
 		if ( iSlot > 0 )
 		{
@@ -523,7 +523,7 @@ void CHudMenuEngyBuild::SendBuildMessage( int iSlot )
 		char szCmd[128];
 		Q_snprintf( szCmd, sizeof(szCmd), "build %d %d", iBuilding, iMode );
 		engine->ClientCmd( szCmd );
-		
+
 		// NVNT send the build command
 		if ( haptics )
 			haptics->ProcessHapticEvent(2, "Game", szCmd);
@@ -557,7 +557,7 @@ bool CHudMenuEngyBuild::SendDestroyMessage( int iSlot )
 		// NVNT send the destroy command
 		if ( haptics )
 			haptics->ProcessHapticEvent(2, "Game", szCmd);
-		bSuccess = true; 
+		bSuccess = true;
 	}
 	else
 	{
@@ -732,7 +732,7 @@ void CHudMenuEngyBuild::SetSelectedItem( int iSlot )
 
 			m_pActiveSelection->SetPos( x, y );
 
-			UpdateHintLabels();			
+			UpdateHintLabels();
 		}
 	}
 }
@@ -780,7 +780,7 @@ void CHudMenuEngyBuild::UpdateHintLabels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 buildmenulayouts_t CHudMenuEngyBuild::CalcCustomBuildMenuLayout( void )
 {
@@ -794,7 +794,7 @@ buildmenulayouts_t CHudMenuEngyBuild::CalcCustomBuildMenuLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuEngyBuild::InitBuildings()
 {
@@ -804,7 +804,7 @@ void CHudMenuEngyBuild::InitBuildings()
 	}
 
 	ReplaceBuildings( m_Buildings );
-	
+
 	InvalidateLayout( true, true );
 }
 
@@ -825,7 +825,7 @@ void CHudMenuEngyBuild::ReplaceBuildings( EngyConstructBuilding_t (&targetBuildi
 	{
 		vecReplacements.AddToTail( &s_alternateEngineerBuildings[iOverrideType] );
 	}
-	
+
 	iOverrideType = -1;
 	CALL_ATTRIB_HOOK_INT_ON_OTHER( pLocalPlayer, iOverrideType, override_engineer_object_type_2 );
 	if ( iOverrideType >= 0 && iOverrideType < ARRAYSIZE( s_alternateEngineerBuildings ) )
@@ -863,7 +863,7 @@ void CHudMenuEngyBuild::ReplaceBuildings( EngyConstructBuilding_t (&targetBuildi
 			AssertMsg( 0, "Trying to replace a disabled slot" );
 			continue;
 		}
-		
+
 		// no conflict, replace the building
 		for ( int j=0; j<ARRAYSIZE( flagSlots ); ++j )
 		{
@@ -906,7 +906,7 @@ bool CHudMenuEngyBuild::CanBuild( int iSlot )
 		{
 			ConVarRef training_can_build_sentry( "training_can_build_sentry");
 			bCanBuild = training_can_build_sentry.GetInt() != 0;
-		}			
+		}
 		break;
 	case 2:
 		{

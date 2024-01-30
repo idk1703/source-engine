@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -25,9 +25,9 @@ class CWeaponFamas : public CWeaponCSBaseGun
 {
 public:
 	DECLARE_CLASS( CWeaponFamas, CWeaponCSBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponFamas();
 
 	virtual void PrimaryAttack();
@@ -40,14 +40,14 @@ public:
 
 	void FamasFire( float flSpread, bool bFireBurst );
 	void FireRemaining();
-	
+
 	virtual CSWeaponID GetWeaponID( void ) const		{ return WEAPON_FAMAS; }
 
 private:
-	
+
 	CWeaponFamas( const CWeaponFamas & );
 	CNetworkVar( bool, m_bBurstMode );
-	CNetworkVar( int, m_iBurstShotsRemaining );	
+	CNetworkVar( int, m_iBurstShotsRemaining );
 	float	m_fNextBurstShot;			// time to shoot the next bullet in burst fire mode
 };
 
@@ -95,7 +95,7 @@ bool CWeaponFamas::Deploy( )
 
 // Secondary attack could be three-round burst mode
 void CWeaponFamas::SecondaryAttack()
-{	
+{
 	CCSPlayer *pPlayer = GetPlayerOwner();
 	if ( !pPlayer )
 		return;
@@ -124,10 +124,10 @@ float CWeaponFamas::GetInaccuracy() const
 		CCSPlayer *pPlayer = GetPlayerOwner();
 		if ( !pPlayer )
 			return 0.0f;
-	
+
 		if ( !FBitSet( pPlayer->GetFlags(), FL_ONGROUND ) )	// if player is in air
 			return 0.03f + 0.3f * m_flAccuracy + fAutoPenalty;
-	
+
 		else if ( pPlayer->GetAbsVelocity().Length2D() > 140 )	// if player is moving
 			return 0.03f + 0.07f * m_flAccuracy + fAutoPenalty;
 		/* new code */
@@ -177,7 +177,7 @@ void CWeaponFamas::FireRemaining()
 		GetInaccuracy(),
 		GetSpread(),
 		m_fNextBurstShot);
-	
+
 	SendWeaponAnim( ACT_VM_PRIMARYATTACK );
 
 	pPlayer->DoMuzzleFlash();
@@ -226,18 +226,16 @@ void CWeaponFamas::PrimaryAttack()
 
 	if ( !CSBaseGunFire( flCycleTime, m_weaponMode ) )
 		return;
-	
+
 	if ( pPlayer->GetAbsVelocity().Length2D() > 5 )
 		pPlayer->KickBack ( 1, 0.45, 0.275, 0.05, 4, 2.5, 7 );
-	
+
 	else if ( !FBitSet( pPlayer->GetFlags(), FL_ONGROUND ) )
 		pPlayer->KickBack ( 1.25, 0.45, 0.22, 0.18, 5.5, 4, 5 );
-	
+
 	else if ( FBitSet( pPlayer->GetFlags(), FL_DUCKING ) )
 		pPlayer->KickBack ( 0.575, 0.325, 0.2, 0.011, 3.25, 2, 8 );
-	
+
 	else
 		pPlayer->KickBack ( 0.625, 0.375, 0.25, 0.0125, 3.5, 2.25, 8 );
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -63,19 +63,19 @@ public:
 	PVOID GetEditObject(CRuntimeClass *pType);
 	PVOID GetEditObjectFromMapObject(CMapClass *pobj, CRuntimeClass *pType);
 	void CopyDataToEditObjects(CMapClass *pobj);
-	
+
 	void SetPageToOutput(CEntityConnection *pConnection);
 	void SetPageToInput(CEntityConnection *pConnection);
 
 	BOOL SetupPages(void);
 	void CreatePages(void);
 	void SaveData(void);
-		
+
 	void LoadDataForPages(int iPage = -1);
 
 	void SetObjectList(const CMapObjectList *pObjectList);
 	void MarkDataDirty();
-	
+
 
 	void SetOutputButtonState(int nState);
 	void SetInputButtonState(int nState);
@@ -101,7 +101,7 @@ protected:
 
 	void SaveActivePage(void);
 	void RestoreActivePage(void);
-	
+
 	void UpdateAnchors( CWnd *pPage );
 
 	CAnchorMgr m_AnchorMgr;
@@ -132,8 +132,8 @@ protected:
 	HICON m_hIconInputGood;
 	HICON m_hIconInputBad;
 
-	CPropertyPage *m_pDummy;		// 
-	bool m_bDummy;					// 
+	CPropertyPage *m_pDummy;		//
+	bool m_bDummy;					//
 
 	CMapObjectList			m_DstObjects;	// list of objects we work on
 	const CMapObjectList	*m_pOrgObjects;	// list of input object we will work on
@@ -167,7 +167,7 @@ friend CObjectPage;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 inline void CObjectProperties::UpdateGrouplist(void)
 {

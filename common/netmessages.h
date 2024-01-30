@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -48,22 +48,22 @@ class IClientMessageHandler;
 		const char		*ToString() const;					\
 		int				GetType() const { return msgtype; } \
 		const char		*GetName() const { return #msgtype;}\
-			
+
 #define DECLARE_NET_MESSAGE( name )			\
 	DECLARE_BASE_MESSAGE( net_##name );		\
 	INetMessageHandler *m_pMessageHandler;	\
 	bool Process() { return m_pMessageHandler->Process##name( this ); }\
-	
+
 #define DECLARE_SVC_MESSAGE( name )		\
 	DECLARE_BASE_MESSAGE( svc_##name );	\
 	IServerMessageHandler *m_pMessageHandler;\
 	bool Process() { return m_pMessageHandler->Process##name( this ); }\
-	
+
 #define DECLARE_CLC_MESSAGE( name )		\
 	DECLARE_BASE_MESSAGE( clc_##name );	\
 	IClientMessageHandler *m_pMessageHandler;\
 	bool Process() { return m_pMessageHandler->Process##name( this ); }\
-		
+
 #define DECLARE_MM_MESSAGE( name )		\
 	DECLARE_BASE_MESSAGE( mm_##name );	\
 	IMatchmakingMessageHandler *m_pMessageHandler;\
@@ -79,10 +79,10 @@ public:
 
 	virtual int		GetGroup() const { return INetChannelInfo::GENERIC; }
 	INetChannel		*GetNetChannel() const { return m_NetChannel; }
-		
+
 	virtual void	SetReliable( bool state) {m_bReliable = state;};
 	virtual bool	IsReliable() const { return m_bReliable; };
-	virtual void    SetNetChannel(INetChannel * netchan) { m_NetChannel = netchan; }	
+	virtual void    SetNetChannel(INetChannel * netchan) { m_NetChannel = netchan; }
 	virtual bool	Process() { Assert( 0 ); return false; };	// no handler set
 
 protected:
@@ -108,11 +108,11 @@ class NET_SetConVar : public CNetMessage
 		cvar_t localCvar;
 		Q_strncpy( localCvar.name, name, MAX_OSPATH );
 		Q_strncpy( localCvar.value, value, MAX_OSPATH );
-		m_ConVars.AddToTail( localCvar );	
+		m_ConVars.AddToTail( localCvar );
 	}
 
-public:	
-	
+public:
+
 	typedef struct cvar_s
 	{
 		char	name[MAX_OSPATH];
@@ -131,31 +131,31 @@ class NET_StringCmd : public CNetMessage
 	NET_StringCmd() { m_szCommand = NULL; };
 	NET_StringCmd(const char *cmd) { m_szCommand = cmd; };
 
-public:	
+public:
 	const char	*m_szCommand;	// execute this command
-	
+
 private:
 	char		m_szCommandBuffer[1024];	// buffer for received messages
-	
+
 };
 
 class NET_Tick : public CNetMessage
 {
 	DECLARE_NET_MESSAGE( Tick );
 
-	NET_Tick() 
-	{ 
-		m_bReliable = false; 
+	NET_Tick()
+	{
+		m_bReliable = false;
 #if PROTOCOL_VERSION > 10
 		m_flHostFrameTime				= 0;
 		m_flHostFrameTimeStdDeviation	= 0;
 #endif
 	};
 
-	NET_Tick( int tick, float hostFrametime, float hostFrametime_stddeviation ) 
-	{ 
-		m_bReliable = false; 
-		m_nTick = tick; 
+	NET_Tick( int tick, float hostFrametime, float hostFrametime_stddeviation )
+	{
+		m_bReliable = false;
+		m_nTick = tick;
 #if PROTOCOL_VERSION > 10
 		m_flHostFrameTime			= hostFrametime;
 		m_flHostFrameTimeStdDeviation	= hostFrametime_stddeviation;
@@ -164,9 +164,9 @@ class NET_Tick : public CNetMessage
 		NOTE_UNUSED( hostFrametime_stddeviation );
 #endif
 	};
-	
+
 public:
-	int			m_nTick; 
+	int			m_nTick;
 #if PROTOCOL_VERSION > 10
 	float		m_flHostFrameTime;
 	float		m_flHostFrameTimeStdDeviation;
@@ -252,7 +252,7 @@ class CLC_BaselineAck : public CNetMessage
 
 public:
 	int		m_nBaselineTick;	// sequence number of baseline
-	int		m_nBaselineNr;		// 0 or 1 		
+	int		m_nBaselineNr;		// 0 or 1
 };
 
 class CLC_ListenEvents : public CNetMessage
@@ -284,7 +284,7 @@ public:
 	DECLARE_CLC_MESSAGE( RespondCvarValue );
 
 	QueryCvarCookie_t		m_iCookie;
-	
+
 	const char				*m_szCvarName;
 	const char				*m_szCvarValue;	// The sender sets this, and it automatically points it at m_szCvarNameBuffer when receiving.
 
@@ -370,9 +370,9 @@ class SVC_Print : public CNetMessage
 
 	SVC_Print(const char * text) { m_bReliable = false; m_szText = text; };
 
-public:	
+public:
 	const char	*m_szText;	// show this text
-	
+
 private:
 	char		m_szTextBuffer[2048];	// buffer for received messages
 };
@@ -386,7 +386,7 @@ class SVC_ServerInfo : public CNetMessage
 public:	// member vars are public for faster handling
 	int			m_nProtocol;	// protocol version
 	int			m_nServerCount;	// number of changelevels since server start
-	bool		m_bIsDedicated;  // dedicated server ?	
+	bool		m_bIsDedicated;  // dedicated server ?
 	bool		m_bIsHLTV;		// HLTV server ?
 #if defined( REPLAY_ENABLED )
 	bool		m_bIsReplay;	// Replay server ?
@@ -399,15 +399,15 @@ public:	// member vars are public for faster handling
 	int			m_nPlayerSlot;	// our client slot number
 	float		m_fTickInterval;// server tick interval
 	const char	*m_szGameDir;	// game directory eg "tf2"
-	const char	*m_szMapName;	// name of current map 
-	const char	*m_szSkyName;	// name of current skybox 
+	const char	*m_szMapName;	// name of current map
+	const char	*m_szSkyName;	// name of current skybox
 	const char	*m_szHostName;	// server name
 
 private:
 	char		m_szGameDirBuffer[MAX_OSPATH];// game directory eg "tf2"
-	char		m_szMapNameBuffer[MAX_OSPATH];// name of current map 
-	char		m_szSkyNameBuffer[MAX_OSPATH];// name of current skybox 
-	char		m_szHostNameBuffer[MAX_OSPATH];// name of current skybox 
+	char		m_szMapNameBuffer[MAX_OSPATH];// name of current map
+	char		m_szSkyNameBuffer[MAX_OSPATH];// name of current skybox
+	char		m_szHostNameBuffer[MAX_OSPATH];// name of current skybox
 };
 
 class SVC_SendTable : public CNetMessage
@@ -415,7 +415,7 @@ class SVC_SendTable : public CNetMessage
 	DECLARE_SVC_MESSAGE( SendTable );
 
 	int	GetGroup() const { return INetChannelInfo::SIGNON; }
-		
+
 public:
 	bool			m_bNeedsDecoder;
 	int				m_nLength;
@@ -430,12 +430,12 @@ class SVC_ClassInfo : public CNetMessage
 	int	GetGroup() const { return INetChannelInfo::SIGNON; }
 
 	SVC_ClassInfo() {};
-	SVC_ClassInfo( bool createFromSendTables, int numClasses ) 
-		{ m_bCreateOnClient = createFromSendTables; 
+	SVC_ClassInfo( bool createFromSendTables, int numClasses )
+		{ m_bCreateOnClient = createFromSendTables;
 		  m_nNumServerClasses = numClasses; };
 
 public:
-		
+
 	typedef struct class_s
 	{
 		int		classID;
@@ -444,18 +444,18 @@ public:
 	} class_t;
 
 	bool					m_bCreateOnClient;	// if true, client creates own SendTables & classinfos from game.dll
-	CUtlVector<class_t>		m_Classes;			
+	CUtlVector<class_t>		m_Classes;
 	int						m_nNumServerClasses;
 };
-	
+
 
 class SVC_SetPause : public CNetMessage
 {
 	DECLARE_SVC_MESSAGE( SetPause );
-	
+
 	SVC_SetPause() {}
 	SVC_SetPause( bool state, float end = -1.f ) { m_bPaused = state; }
-	
+
 public:
 	bool		m_bPaused;		// true or false, what else
 };
@@ -485,8 +485,8 @@ public:
 
 	SVC_CreateStringTable();
 
-public:	
-	
+public:
+
 	const char	*m_szTableName;
 	int			m_nMaxEntries;
 	int			m_nNumEntries;
@@ -575,7 +575,7 @@ class SVC_VoiceData : public CNetMessage
 
 	SVC_VoiceData() { m_bReliable = false; }
 
-public:	
+public:
 	int				m_nFromClient;	// client who has spoken
 	bool			m_bProximity;
 	int				m_nLength;		// data length in bits
@@ -591,7 +591,7 @@ class SVC_Sounds : public CNetMessage
 
 	int	GetGroup() const { return INetChannelInfo::SOUNDS; }
 
-public:	
+public:
 
 	bool		m_bReliableSound;
 	int			m_nNumSounds;
@@ -611,7 +611,7 @@ class SVC_Prefetch : public CNetMessage
 		SOUND = 0,
 	};
 
-public:	
+public:
 
 	unsigned short	m_fType;
 	unsigned short	m_nSoundIndex;
@@ -624,9 +624,9 @@ class SVC_SetView : public CNetMessage
 	SVC_SetView() {}
 	SVC_SetView( int entity ) { m_nEntityIndex = entity; }
 
-public:	
+public:
 	int				m_nEntityIndex;
-		
+
 };
 
 class SVC_FixAngle: public CNetMessage
@@ -634,11 +634,11 @@ class SVC_FixAngle: public CNetMessage
 	DECLARE_SVC_MESSAGE( FixAngle );
 
 	SVC_FixAngle() { m_bReliable = false; };
-	SVC_FixAngle( bool bRelative, QAngle angle ) 
+	SVC_FixAngle( bool bRelative, QAngle angle )
 		{ m_bReliable = false; m_bRelative = bRelative; m_Angle = angle; }
 
-public:	
-	bool			m_bRelative; 
+public:
+	bool			m_bRelative;
 	QAngle			m_Angle;
 };
 
@@ -648,7 +648,7 @@ class SVC_CrosshairAngle : public CNetMessage
 
 	SVC_CrosshairAngle() {}
 	SVC_CrosshairAngle( QAngle angle ) { m_Angle = angle; }
-	
+
 public:
 	QAngle			m_Angle;
 };
@@ -656,7 +656,7 @@ public:
 class SVC_BSPDecal : public CNetMessage
 {
 	DECLARE_SVC_MESSAGE( BSPDecal );
-	
+
 public:
 	Vector		m_Pos;
 	int			m_nDecalTextureIndex;
@@ -670,7 +670,7 @@ class SVC_GameEvent : public CNetMessage
 	DECLARE_SVC_MESSAGE( GameEvent );
 
 	int	GetGroup() const { return INetChannelInfo::EVENTS; }
-	
+
 public:
 	int			m_nLength;	// data length in bits
 	bf_read		m_DataIn;
@@ -684,7 +684,7 @@ class SVC_UserMessage: public CNetMessage
 	SVC_UserMessage() { m_bReliable = false; }
 
 	int	GetGroup() const { return INetChannelInfo::USERMESSAGES; }
-	
+
 public:
 	int			m_nMsgType;
 	int			m_nLength;	// data length in bits
@@ -713,27 +713,27 @@ public:
 	DECLARE_SVC_MESSAGE( SpawnBaseline );
 
 	int	GetGroup() const { return INetChannelInfo::SIGNON; }
-	
+
 public:
 	int			m_nEntityIndex;
 	int			m_nClassID;
 	int			m_nLength;
 	bf_read		m_DataIn;
 	bf_write	m_DataOut;
-	
+
 }; */
 
 class SVC_PacketEntities: public CNetMessage
 {
 	DECLARE_SVC_MESSAGE( PacketEntities );
-	
+
 	int	GetGroup() const { return INetChannelInfo::ENTITIES	; }
-	
+
 public:
 
 	int			m_nMaxEntries;
 	int			m_nUpdatedEntries;
-	bool		m_bIsDelta;	
+	bool		m_bIsDelta;
 	bool		m_bUpdateBaseline;
 	int			m_nBaseline;
 	int			m_nDeltaFrom;
@@ -762,7 +762,7 @@ public:
 	DECLARE_SVC_MESSAGE( Menu );
 
 	SVC_Menu() { m_bReliable = true; m_Type = DIALOG_MENU; m_MenuKeyValues = NULL; };
-	SVC_Menu( DIALOG_TYPE type, KeyValues *data ); 
+	SVC_Menu( DIALOG_TYPE type, KeyValues *data );
 	~SVC_Menu();
 
 	KeyValues	*m_MenuKeyValues;
@@ -897,8 +897,8 @@ public:
 
 	byte	m_MsgType;
 	uint64	m_Id;
-	XNKID	m_sessionId; 
-	XNADDR	m_xnaddr;  
+	XNKID	m_sessionId;
+	XNADDR	m_xnaddr;
 	XNKEY	m_key;
 };
 

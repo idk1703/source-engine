@@ -16,7 +16,7 @@ const float kWeightRarity			= 1.0f;
 //-----------------------------------------------------------------------------
 // Purpose: constructor
 //-----------------------------------------------------------------------------
-CCSFunFactMgr::CCSFunFactMgr() : 
+CCSFunFactMgr::CCSFunFactMgr() :
 	CAutoGameSystemPerFrame( "CCSFunFactMgr" ),
 	m_funFactDatabase(0, 100, DefLessFunc(int) )
 {
@@ -154,7 +154,7 @@ bool CCSFunFactMgr::GetRoundEndFunFact( int iWinningTeam, int iRoundResult, FunF
 
 	if (iFunFactIndex < 0)
 		return false;
-	
+
 	funfact = validFunFacts[iFunFactIndex];
 
 	// decay player cooldowns
@@ -191,7 +191,7 @@ float CCSFunFactMgr::ScoreFunFact( const FunFact& funfact )
 
 	// subtract the cooldown for the funfact
 	fScore -= kWeightFunFactCooldown * dbEntry.fCooldown;
-	
+
 	// subtract the cooldown for the player
 	if ( funfact.iPlayer ) {
 		fScore -= kWeightPlayerCooldown * m_playerCooldown[funfact.iPlayer - 1];

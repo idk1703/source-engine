@@ -32,7 +32,7 @@ typedef struct wrect_s
 } wrect_t;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudTexture
 {
@@ -89,7 +89,7 @@ class CHudRenderGroup;
 //-----------------------------------------------------------------------------
 // Purpose: Main hud manager
 //-----------------------------------------------------------------------------
-class CHud 
+class CHud
 {
 public:
 	//For progress bar orientations
@@ -111,7 +111,7 @@ public:
 	void						LevelInit( void );
 	// LevelShutdown's called whenever a level is finishing
 	void						LevelShutdown( void );
-	
+
 	void						ResetHUD( void );
 
 	// A saved game has just been loaded
@@ -129,7 +129,7 @@ public:
 	void						RemoveHudElement( CHudElement *pHudElement );
 	// Search list for "name" and return the hud element if it exists
 	CHudElement					*FindElement( const char *pName );
-	
+
 	bool						IsHidden( int iHudFlags );
 
 	float						GetSensitivity();

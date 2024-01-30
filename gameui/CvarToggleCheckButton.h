@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,7 +18,7 @@ class CCvarToggleCheckButton : public vgui::CheckButton
 	DECLARE_CLASS_SIMPLE( CCvarToggleCheckButton, vgui::CheckButton );
 
 public:
-	CCvarToggleCheckButton( vgui::Panel *parent, const char *panelName, const char *text, 
+	CCvarToggleCheckButton( vgui::Panel *parent, const char *panelName, const char *text,
 		char const *cvarname );
 	~CCvarToggleCheckButton();
 

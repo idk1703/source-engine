@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -61,4 +61,3 @@ protected:
 
 
 #endif // TEXTUREBOX_H
-

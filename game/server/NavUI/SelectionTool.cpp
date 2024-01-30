@@ -81,7 +81,7 @@ void SelectionToolPanel::OnCursorMoved( int x, int y )
 			TheNavUI()->PlaySound( "EDIT_END_AREA.Creating" );
 		}
 	}
-	
+
 	BaseClass::OnCursorMoved( x, y );
 }
 

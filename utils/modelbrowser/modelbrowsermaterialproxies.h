@@ -49,7 +49,7 @@ bool CFloatInput::Init( IMaterial *pMaterial, KeyValues *pKeyValues, const char 
 			// Look for array specification...
 			char pTemp[256];
 			if (strchr(pVarName, '['))
-			{		 
+			{
 				// strip off the array...
 				Q_strncpy( pTemp, pVarName, 256 );
 				char *pArray = strchr( pTemp, '[' );
@@ -142,7 +142,7 @@ bool CResultProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 	// Look for array specification...
 	char pTemp[256];
 	if (strchr(pResult, '['))
-	{		 
+	{
 		// strip off the array...
 		Q_strncpy( pTemp, pResult, 256 );
 		char *pArray = strchr( pTemp, '[' );
@@ -174,7 +174,7 @@ bool CResultProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 void CResultProxy::SetFloatResult( float result )
 {
 	if (m_pResult->GetType() == MATERIAL_VAR_TYPE_VECTOR)
-	{		
+	{
 		if ( m_ResultVecComp >= 0 )
 		{
 			m_pResult->SetVecComponentValue( result, m_ResultVecComp );
@@ -188,7 +188,7 @@ void CResultProxy::SetFloatResult( float result )
 				v[i] = result;
 
 			m_pResult->SetVecValue( v, vecSize );
-		}		
+		}
 	}
 	else
 	{
@@ -347,8 +347,8 @@ void CSelectFirstIfNonZeroProxy::OnBind( void *pC_BaseEntity )
 	case MATERIAL_VAR_TYPE_VECTOR:
 		{
 			Vector a, b;
-			m_pSrc1->GetVecValue( a.Base(), vecSize ); 
-			m_pSrc2->GetVecValue( b.Base(), vecSize ); 
+			m_pSrc1->GetVecValue( a.Base(), vecSize );
+			m_pSrc2->GetVecValue( b.Base(), vecSize );
 
 			if ( !a.IsZero() )
 			{
@@ -403,7 +403,7 @@ public:
 	}
 
 	virtual void DeleteProxy( IMaterialProxy *pProxy )
-	{ 
+	{
 		if ( pProxy )
 		{
 			pProxy->Release();

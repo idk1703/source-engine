@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -26,15 +26,15 @@ BEGIN_DATADESC( CSmokeGrenadeProjectile )
 END_DATADESC()
 
 
-CSmokeGrenadeProjectile* CSmokeGrenadeProjectile::Create( 
-	const Vector &position, 
-	const QAngle &angles, 
-	const Vector &velocity, 
-	const AngularImpulse &angVelocity, 
+CSmokeGrenadeProjectile* CSmokeGrenadeProjectile::Create(
+	const Vector &position,
+	const QAngle &angles,
+	const Vector &velocity,
+	const AngularImpulse &angVelocity,
 	CBaseCombatCharacter *pOwner )
 {
 	CSmokeGrenadeProjectile *pGrenade = (CSmokeGrenadeProjectile*)CBaseEntity::Create( "smokegrenade_projectile", position, angles, pOwner );
-	
+
 	// Set the timer for 1 second less than requested. We're going to issue a SOUND_DANGER
 	// one second before detonation.
 	pGrenade->SetTimer( 1.5 );
@@ -45,7 +45,7 @@ CSmokeGrenadeProjectile* CSmokeGrenadeProjectile::Create(
 	pGrenade->SetFriction( 0.7 );
 	pGrenade->m_flDamage = 100;
 	pGrenade->ChangeTeam( pOwner->GetTeamNumber() );
-	pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );	
+	pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );
 	pGrenade->SetTouch( &CBaseGrenade::BounceTouch );
 
 	pGrenade->SetGravity( BaseClass::GetGrenadeGravity() );

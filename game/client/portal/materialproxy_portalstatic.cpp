@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -71,7 +71,7 @@ void CPortalStaticProxy::OnBind( void *pBind )
 {
 	if ( pBind == NULL )
 		return;
-	
+
 	float flStaticAmount;
 	IClientRenderable *pRenderable = (IClientRenderable*)pBind;
 	CPortalRenderable *pRecordedPortal = g_pPortalRender->FindRecordedPortal( pRenderable );
@@ -143,5 +143,3 @@ void CPortalOpenAmountProxy::OnBind( void *pBind )
 }
 
 EXPOSE_INTERFACE( CPortalOpenAmountProxy, IMaterialProxy, "PortalOpenAmount" IMATERIAL_PROXY_INTERFACE_VERSION );
-
-

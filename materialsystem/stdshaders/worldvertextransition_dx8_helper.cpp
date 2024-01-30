@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -48,7 +48,7 @@ void DrawWorldVertexTransitionEditor_DX8( CBaseVSShader *pShader, IMaterialVar**
 		worldvertextransition_Static_Index vshIndex;
 		pShaderShadow->SetVertexShader( "WorldVertexTransition", vshIndex.GetIndex() );
 		pShaderShadow->SetPixelShader( "WorldVertexTransition_Editor" );
-	
+
 		pShader->FogToFogColor();
 	}
 	DYNAMIC_STATE
@@ -58,9 +58,9 @@ void DrawWorldVertexTransitionEditor_DX8( CBaseVSShader *pShader, IMaterialVar**
 
 		// Texture 3 = lightmap
 		pShaderAPI->BindStandardTexture( SHADER_SAMPLER2, TEXTURE_LIGHTMAP );
-		
+
 		pShader->EnablePixelShaderOverbright( 0, true, true );
-		
+
 		// JasonM - Gnarly hack since we're calling this legacy shader from DX9
 		int nTextureTransformConst  = VERTEX_SHADER_SHADER_SPECIFIC_CONST_0;
 		int nTextureTransformConst2 = VERTEX_SHADER_SHADER_SPECIFIC_CONST_2;

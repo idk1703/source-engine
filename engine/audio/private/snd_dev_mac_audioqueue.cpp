@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -64,7 +64,7 @@ public:
 
 	void BufferCompleted() { m_buffersCompleted++; }
 	void SetRunning( bool bState ) { m_bRunning = bState; }
-	
+
 private:
 	void	OpenWaveOut( void );
 	void	CloseWaveOut( void );
@@ -74,22 +74,22 @@ private:
 	AudioStreamBasicDescription m_DataFormat;
 	AudioQueueRef               m_Queue;
 	AudioQueueBufferRef         m_Buffers[NUM_BUFFERS_SOURCES];
-	
+
 	int		m_SndBufSize;
-	
+
 	void *m_sndBuffers;
-	
+
 	CInterlockedInt	m_deviceSampleCount;
 
 	int			m_buffersSent;
 	int			m_buffersCompleted;
 	int			m_pauseCount;
 	bool		m_bSoundsShutdown;
-	
+
 	bool m_bFailed;
 	bool m_bRunning;
-	
-	
+
+
 };
 
 CAudioDeviceAudioQueue *wave = NULL;
@@ -107,10 +107,10 @@ IAudioDevice *Audio_CreateMacAudioQueueDevice( void )
 	wave = new CAudioDeviceAudioQueue;
 	if ( wave->Init() )
 		return wave;
-	
+
 	delete wave;
 	wave = NULL;
-	
+
 	return NULL;
 }
 
@@ -136,9 +136,9 @@ bool CAudioDeviceAudioQueue::Init( void )
 	m_bSoundsShutdown = false;
 	m_bFailed = false;
 	m_bRunning = false;
-	
+
 	m_Queue = NULL;
-	
+
 	static bool first = true;
 	if ( first )
 	{
@@ -147,7 +147,7 @@ bool CAudioDeviceAudioQueue::Init( void )
 		snd_legacy_surround.InstallChangeCallback( &OnSndSurroundLegacyChanged2 );
 		first = false;
 	}
-	
+
 	OpenWaveOut();
 
 	if ( snd_firsttime )
@@ -166,9 +166,9 @@ void CAudioDeviceAudioQueue::Shutdown( void )
 //-----------------------------------------------------------------------------
 // WAV out device
 //-----------------------------------------------------------------------------
-inline bool CAudioDeviceAudioQueue::ValidWaveOut( void ) const 
-{ 
-	return m_sndBuffers != 0 && m_Queue; 
+inline bool CAudioDeviceAudioQueue::ValidWaveOut( void ) const
+{
+	return m_sndBuffers != 0 && m_Queue;
 }
 
 
@@ -177,8 +177,8 @@ inline bool CAudioDeviceAudioQueue::ValidWaveOut( void ) const
 //-----------------------------------------------------------------------------
 void AudioQueueIsRunningCallback( void* inClientData, AudioQueueRef inAQ, AudioQueuePropertyID inID)
 {
-    CAudioDeviceAudioQueue* audioqueue = (CAudioDeviceAudioQueue*)inClientData;
-	
+	CAudioDeviceAudioQueue* audioqueue = (CAudioDeviceAudioQueue*)inClientData;
+
 	UInt32 running = 0;
 	UInt32 size;
 	OSStatus err = AudioQueueGetProperty(inAQ, kAudioQueueProperty_IsRunning, &running, &size);
@@ -194,66 +194,66 @@ void AudioQueueIsRunningCallback( void* inClientData, AudioQueueRef inAQ, AudioQ
 //-----------------------------------------------------------------------------
 void CAudioDeviceAudioQueue::OpenWaveOut( void )
 {
-	if ( m_Queue ) 
+	if ( m_Queue )
 		return;
-		
+
 	m_buffersSent = 0;
 	m_buffersCompleted = 0;
-		
-    m_DataFormat.mSampleRate       = 44100;
-    m_DataFormat.mFormatID         = kAudioFormatLinearPCM;
-    m_DataFormat.mFormatFlags      = kAudioFormatFlagIsSignedInteger|kAudioFormatFlagIsPacked;
-    m_DataFormat.mBytesPerPacket   = 4; // 16-bit samples * 2 channels
-    m_DataFormat.mFramesPerPacket  = 1;
-    m_DataFormat.mBytesPerFrame    = 4; // 16-bit samples * 2 channels
-    m_DataFormat.mChannelsPerFrame = 2;
-    m_DataFormat.mBitsPerChannel   = 16;
-    m_DataFormat.mReserved         = 0;
-	
-    // Create the audio queue that will be used to manage the array of audio
-    // buffers used to queue samples.
-    OSStatus err = AudioQueueNewOutput(&m_DataFormat, AudioCallback, this, NULL, NULL, 0, &m_Queue);	
-	if ( err != noErr) 
+
+	m_DataFormat.mSampleRate       = 44100;
+	m_DataFormat.mFormatID         = kAudioFormatLinearPCM;
+	m_DataFormat.mFormatFlags      = kAudioFormatFlagIsSignedInteger|kAudioFormatFlagIsPacked;
+	m_DataFormat.mBytesPerPacket   = 4; // 16-bit samples * 2 channels
+	m_DataFormat.mFramesPerPacket  = 1;
+	m_DataFormat.mBytesPerFrame    = 4; // 16-bit samples * 2 channels
+	m_DataFormat.mChannelsPerFrame = 2;
+	m_DataFormat.mBitsPerChannel   = 16;
+	m_DataFormat.mReserved         = 0;
+
+	// Create the audio queue that will be used to manage the array of audio
+	// buffers used to queue samples.
+	OSStatus err = AudioQueueNewOutput(&m_DataFormat, AudioCallback, this, NULL, NULL, 0, &m_Queue);
+	if ( err != noErr)
 	{
 		DevMsg( "Failed to create AudioQueue output %d\n", (int)err );
 		m_bFailed = true;
 		return;
 	}
-		
-    for ( int i = 0; i < NUM_BUFFERS_SOURCES; ++i) 
+
+	for ( int i = 0; i < NUM_BUFFERS_SOURCES; ++i)
 	{
-        err = AudioQueueAllocateBuffer( m_Queue, BUFFER_SIZE,&(m_Buffers[i]));
-		if ( err != noErr) 
+		err = AudioQueueAllocateBuffer( m_Queue, BUFFER_SIZE,&(m_Buffers[i]));
+		if ( err != noErr)
 		{
 			DevMsg( "Failed to AudioQueueAllocateBuffer output %d (%i)\n",(int)err,i );
 			m_bFailed = true;
 		}
-		
-        m_Buffers[i]->mAudioDataByteSize = BUFFER_SIZE;        
-        Q_memset( m_Buffers[i]->mAudioData, 0, BUFFER_SIZE );
-    }
-	
-    err = AudioQueuePrime( m_Queue, 0, NULL);
-	if ( err != noErr) 
+
+		m_Buffers[i]->mAudioDataByteSize = BUFFER_SIZE;
+		Q_memset( m_Buffers[i]->mAudioData, 0, BUFFER_SIZE );
+	}
+
+	err = AudioQueuePrime( m_Queue, 0, NULL);
+	if ( err != noErr)
 	{
 		DevMsg( "Failed to create AudioQueue output %d\n", (int)err );
 		m_bFailed = true;
 		return;
 	}
-	
+
 	AudioQueueSetParameter( m_Queue, kAudioQueueParam_Volume, 1.0);
-	
+
 	err = AudioQueueAddPropertyListener( m_Queue, kAudioQueueProperty_IsRunning, AudioQueueIsRunningCallback, this );
-	if ( err != noErr) 
+	if ( err != noErr)
 	{
 		DevMsg( "Failed to create AudioQueue output %d\n", (int)err );
 		m_bFailed = true;
 		return;
 	}
-	
+
 	m_SndBufSize = NUM_BUFFERS_SOURCES*BUFFER_SIZE;
 	m_deviceSampleCount = m_SndBufSize / DeviceSampleBytes();
-	
+
 	if ( !m_sndBuffers )
 	{
 		m_sndBuffers = malloc( m_SndBufSize );
@@ -265,23 +265,23 @@ void CAudioDeviceAudioQueue::OpenWaveOut( void )
 //-----------------------------------------------------------------------------
 // Closes the windows wave out device
 //-----------------------------------------------------------------------------
-void CAudioDeviceAudioQueue::CloseWaveOut( void ) 
-{ 
+void CAudioDeviceAudioQueue::CloseWaveOut( void )
+{
 	if ( ValidWaveOut() )
 	{
 		AudioQueueStop(m_Queue, true);
 		m_bRunning = false;
-		
+
 		AudioQueueRemovePropertyListener( m_Queue, kAudioQueueProperty_IsRunning, AudioQueueIsRunningCallback, this );
-		
+
 		for ( int i = 0; i < NUM_BUFFERS_SOURCES; i++ )
 			AudioQueueFreeBuffer( m_Queue, m_Buffers[i]);
 
 		AudioQueueDispose( m_Queue, true);
-		
+
 		m_Queue = NULL;
 	}
-	
+
 	if ( m_sndBuffers )
 	{
 		free( m_sndBuffers );
@@ -301,7 +301,7 @@ int CAudioDeviceAudioQueue::PaintBegin( float mixAheadTime, int soundtime, int p
 	//  endtime - target for samples in mixahead buffer at speed
 
 	unsigned int endtime = soundtime + mixAheadTime * DeviceDmaSpeed();
-	
+
 	int samps = DeviceSampleCount() >> (DeviceChannels()-1);
 
 	if ((int)(endtime - soundtime) > samps)
@@ -309,7 +309,7 @@ int CAudioDeviceAudioQueue::PaintBegin( float mixAheadTime, int soundtime, int p
 
 	if ((endtime - paintedtime) & 0x3)
 	{
-		// The difference between endtime and painted time should align on 
+		// The difference between endtime and painted time should align on
 		// boundaries of 4 samples.  This is important when upsampling from 11khz -> 44khz.
 		endtime -= (endtime - paintedtime) & 0x3;
 	}
@@ -323,7 +323,7 @@ int CAudioDeviceAudioQueue::PaintBegin( float mixAheadTime, int soundtime, int p
 //-----------------------------------------------------------------------------
 void CAudioDeviceAudioQueue::PaintEnd( void )
 {
-	int	cblocks = 4 << 1; 
+	int	cblocks = 4 << 1;
 
 	if ( m_bRunning && m_buffersSent == m_buffersCompleted )
 	{
@@ -337,23 +337,23 @@ void CAudioDeviceAudioQueue::PaintEnd( void )
 	//
 	// 44K sound support
 	while (((m_buffersSent - m_buffersCompleted) >> SAMPLE_16BIT_SHIFT) < cblocks)
-	{	
-		int iBuf = m_buffersSent&BUFF_MASK; 
-		
+	{
+		int iBuf = m_buffersSent&BUFF_MASK;
+
 		m_Buffers[iBuf]->mAudioDataByteSize = BUFFER_SIZE;
 		Q_memcpy( m_Buffers[iBuf]->mAudioData, (char *)m_sndBuffers + iBuf*BUFFER_SIZE, BUFFER_SIZE);
-		
+
 		// Queue the buffer for playback.
 		OSStatus err = AudioQueueEnqueueBuffer( m_Queue, m_Buffers[iBuf], 0, NULL);
-		if ( err != noErr) 
+		if ( err != noErr)
 		{
 			DevMsg( "Failed to AudioQueueEnqueueBuffer output %d\n", (int)err );
 		}
-		
+
 		m_buffersSent++;
 	}
 
-	
+
 	if ( !m_bRunning )
 	{
 		DevMsg( "Restarting sound playback\n" );
@@ -395,9 +395,9 @@ void CAudioDeviceAudioQueue::UnPause( void )
 	{
 		m_pauseCount--;
 	}
-	
+
 	if ( m_pauseCount == 0 )
-	{ 
+	{
 		m_bRunning = true;
 		AudioQueueStart( m_Queue, NULL);
 	}
@@ -435,10 +435,10 @@ void CAudioDeviceAudioQueue::UpdateListener( const Vector& position, const Vecto
 
 bool CAudioDeviceAudioQueue::BIsPlaying()
 {
-	UInt32 isRunning;  
-	UInt32 propSize = sizeof(isRunning);  
-  
-    OSStatus result = AudioQueueGetProperty( m_Queue, kAudioQueueProperty_IsRunning, &isRunning, &propSize);  
+	UInt32 isRunning;
+	UInt32 propSize = sizeof(isRunning);
+
+	OSStatus result = AudioQueueGetProperty( m_Queue, kAudioQueueProperty_IsRunning, &isRunning, &propSize);
 	return isRunning != 0;
 }
 
@@ -453,7 +453,7 @@ void CAudioDeviceAudioQueue::MixUpsample( int sampleCount, int filtertype )
 {
 	paintbuffer_t *ppaint = MIX_GetCurrentPaintbufferPtr();
 	int ifilter = ppaint->ifilter;
-	
+
 	Assert (ifilter < CPAINTFILTERS);
 
 	S_MixBufferUpsample2x( sampleCount, ppaint->pbuf, &(ppaint->fltmem[ifilter][0]), CPAINTFILTERMEM, filtertype );
@@ -518,7 +518,7 @@ void CAudioDeviceAudioQueue::TransferSamples( int end )
 {
 	int		lpaintedtime = g_paintedtime;
 	int		endtime = end;
-	
+
 	// resumes playback...
 
 	if ( m_sndBuffers )
@@ -569,25 +569,25 @@ void OnSndSurroundCvarChanged2( IConVar *pVar, const char *pOldString, float flO
 	// no need to reset the device
 	if ( flOldValue == -1 )
 		return;
-	
+
 	// get the user's previous speaker config
 	uint32 speaker_config = GetOSXSpeakerConfig();
-	
+
 	// get the new config
 	uint32 newSpeakerConfig = 0;
 	const char *speakerConfigDesc = "";
-	
+
 	ConVarRef var( pVar );
 	newSpeakerConfig = GetSpeakerConfigForSurroundMode( var.GetInt(), &speakerConfigDesc );
 	// make sure the config has changed
 	if (newSpeakerConfig == speaker_config)
 		return;
-	
+
 	// set new configuration
 	//SetWindowsSpeakerConfig(newSpeakerConfig);
-	
+
 	Msg("Speaker configuration has been changed to %s.\n", speakerConfigDesc);
-	
+
 	// restart sound system so it takes effect
 	//g_pSoundServices->RestartSoundSystem();
 }
@@ -595,5 +595,3 @@ void OnSndSurroundCvarChanged2( IConVar *pVar, const char *pOldString, float flO
 void OnSndSurroundLegacyChanged2( IConVar *pVar, const char *pOldString, float flOldValue )
 {
 }
-
-

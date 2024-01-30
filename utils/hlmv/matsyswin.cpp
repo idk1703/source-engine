@@ -1,14 +1,14 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
 /*
 
-  glapp.c - Simple OpenGL shell
-  
+	glapp.c - Simple OpenGL shell
+
 	There are several options allowed on the command line.  They are:
 	-height : what window/screen height do you want to use?
 	-width  : what window/screen width do you want to use?
@@ -185,7 +185,7 @@ MatSysWindow::MatSysWindow (mxWindow *parent, int x, int y, int w, int h, const 
 	{
 		config.dxSupportLevel = g_dxlevel;
 	}
-	
+
 //	config.m_VideoMode.m_Width = config.m_VideoMode.m_Height = 0;
 	config.SetFlag( MATSYS_VIDCFG_FLAGS_WINDOWED, true );
 	config.SetFlag( MATSYS_VIDCFG_FLAGS_RESIZING, true );
@@ -194,7 +194,7 @@ MatSysWindow::MatSysWindow (mxWindow *parent, int x, int y, int w, int h, const 
 	{
 		return;
 	}
-	
+
 	g_pMaterialSystem->OverrideConfig( config, false );
 
 	g_pMaterialSystem->AddReleaseFunc( ReleaseMaterialSystemObjects );
@@ -544,7 +544,7 @@ void DrawBackground()
 
 		float dist=-15000.0f;
 		float tMin=0, tMax=1;
-		
+
 		meshBuilder.Position3f(-dist, dist, dist);
 		meshBuilder.TexCoord2f( 0, tMin,tMax );
 		meshBuilder.Color4ub( 255, 255, 255, 255 );
@@ -630,11 +630,11 @@ void DrawGroundPlane()
 	pRenderContext->Rotate( -90,  1, 0, 0 );	    // put Z going up
 	pRenderContext->Rotate( -90,  0, 0, 1 );
 
-    pRenderContext->Translate( -g_pStudioModel->m_origin[0],  -g_pStudioModel->m_origin[1],  -g_pStudioModel->m_origin[2] );
+	pRenderContext->Translate( -g_pStudioModel->m_origin[0],  -g_pStudioModel->m_origin[1],  -g_pStudioModel->m_origin[2] );
 
 	pRenderContext->Rotate( g_pStudioModel->m_angles[1],  0, 0, 1 );
-    pRenderContext->Rotate( g_pStudioModel->m_angles[0],  0, 1, 0 );
-    pRenderContext->Rotate( g_pStudioModel->m_angles[2],  1, 0, 0 );
+	pRenderContext->Rotate( g_pStudioModel->m_angles[0],  0, 1, 0 );
+	pRenderContext->Rotate( g_pStudioModel->m_angles[2],  1, 0, 0 );
 
 	static Vector tMap( 0, 0, 0 );
 	static Vector dxMap( 1, 0, 0 );
@@ -654,7 +654,7 @@ void DrawGroundPlane()
 
 	float dpdd = scale / dist;
 
-	tMap.x = tMap.x + dxMap.x * deltaPos.x * dpdd + dxMap.y * deltaPos.y * dpdd;	
+	tMap.x = tMap.x + dxMap.x * deltaPos.x * dpdd + dxMap.y * deltaPos.y * dpdd;
 	tMap.y = tMap.y + dyMap.x * deltaPos.x * dpdd + dyMap.y * deltaPos.y * dpdd;
 
 	while (tMap.x < 0.0) tMap.x +=  1.0;
@@ -707,8 +707,8 @@ void DrawGroundPlane()
 	meshBuilder.Color4ub( 128, 128, 128, 128 );
 	meshBuilder.AdvanceVertex();
 
-	
-	
+
+
 	meshBuilder.End();
 	pMesh->Draw();
 
@@ -741,11 +741,11 @@ void DrawMovementBoxes()
 	pRenderContext->Rotate( -90,  1, 0, 0 );	    // put Z going up
 	pRenderContext->Rotate( -90,  0, 0, 1 );
 
-    pRenderContext->Translate( -g_pStudioModel->m_origin[0],  -g_pStudioModel->m_origin[1],  -g_pStudioModel->m_origin[2] );
+	pRenderContext->Translate( -g_pStudioModel->m_origin[0],  -g_pStudioModel->m_origin[1],  -g_pStudioModel->m_origin[2] );
 
 	pRenderContext->Rotate( g_pStudioModel->m_angles[1],  0, 0, 1 );
-    pRenderContext->Rotate( g_pStudioModel->m_angles[0],  0, 1, 0 );
-    pRenderContext->Rotate( g_pStudioModel->m_angles[2],  1, 0, 0 );
+	pRenderContext->Rotate( g_pStudioModel->m_angles[0],  0, 1, 0 );
+	pRenderContext->Rotate( g_pStudioModel->m_angles[2],  1, 0, 0 );
 
 	static matrix3x4_t mStart( 1, 0, 0, 0 ,  0, 1, 0, 0 ,  0, 0, 1, 0 );
 	matrix3x4_t mTemp;
@@ -813,7 +813,7 @@ void PlaySound( const char *pSoundName, StudioModel *pStudioModel )
 	// Play Sound
 	if (!g_viewerSettings.playSounds)
 		return;
-	
+
 	if ( pSoundName == NULL || pSoundName[ 0 ] == '\0' )
 		return;
 
@@ -943,7 +943,7 @@ void PlaySounds( StudioModel *pStudioModel )
 			}
 			else
 			{
-				Warning( "-- Error --:  empty soundname, .qc error on AE_CL_PLAYSOUND in model %s, sequence %s, animevent # %i\n", 
+				Warning( "-- Error --:  empty soundname, .qc error on AE_CL_PLAYSOUND in model %s, sequence %s, animevent # %i\n",
 					pStudioHdr->name(), seqdesc.pszLabel(), i + 1 );
 			}
 			break;
@@ -984,7 +984,7 @@ MatSysWindow::draw ()
 	pRenderContext->MatrixMode( MATERIAL_PROJECTION );
 	pRenderContext->LoadIdentity( );
 	pRenderContext->PerspectiveX(g_viewerSettings.fov, (float)w() / (float)h(), 1.0f, 20000.0f);
-	
+
 	DrawBackground();
 	DrawGroundPlane();
 	DrawMovementBoxes();
@@ -1049,7 +1049,7 @@ MatSysWindow::draw ()
 	g_ControlPanel->setTransparent( g_pStudioModel->m_bIsTransparent );
 
 	g_ControlPanel->updatePoseParameters( );
-	
+
 	// draw what ever else is loaded
 	int i;
 	for (i = 0; i < HLMV_MAX_MERGED_MODELS; i++)
@@ -1067,8 +1067,8 @@ MatSysWindow::draw ()
 	PlaySounds( g_pStudioModel );
 	UpdateSounds(); // need to call this multiple times per frame to avoid audio stuttering
 
-    g_pMaterialSystem->SwapBuffers();
-	
+	g_pMaterialSystem->SwapBuffers();
+
 	g_pMaterialSystem->EndFrame();
 
 	bInDraw = false;
@@ -1179,4 +1179,3 @@ MatSysWindow::dumpViewport (const char *filename)
 		delete image;
 	}
 }
-

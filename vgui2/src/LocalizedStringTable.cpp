@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -42,7 +42,7 @@ using namespace vgui;
 #define MAX_LOCALIZED_CHARS	4096
 
 //-----------------------------------------------------------------------------
-// 
+//
 // Internal implementation
 //
 //-----------------------------------------------------------------------------
@@ -70,7 +70,7 @@ public:
 
 	// finds the index of a token by token name
 	StringIndex_t FindIndex(const char *pName);
-	
+
 	// Remove all strings in the table.
 	void RemoveAll();
 
@@ -104,7 +104,7 @@ public:
 private:
 	// for development only, reloads localization files
 	virtual void ReloadLocalizationFiles( );
-	
+
 	bool AddAllLanguageFiles( const char *baseFileName );
 
 	void BuildFastValueLookup();
@@ -129,7 +129,7 @@ private:
 
 	// Stores the symbol lookup
 	CUtlRBTree<localizedstring_t, StringIndex_t> m_Lookup;
-	
+
 	// stores the string data
 	CUtlVector<char> m_Names;
 	CUtlVector<wchar_t> m_Values;
@@ -183,7 +183,7 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR_WITH_NAMESPACE(CLocalizedStringTable, vgui::, 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CLocalizedStringTable::CLocalizedStringTable() : 
+CLocalizedStringTable::CLocalizedStringTable() :
 	m_Lookup( 0, 0, SymLess ), m_Names( 1024 ), m_Values( 2048 ), m_FastValueLookup( 0, 0, FastValueLessFunc )
 {
 	m_bUseOnlyLongestLanguageString = false;
@@ -201,7 +201,7 @@ CLocalizedStringTable::~CLocalizedStringTable()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Adds the contents of a file 
+// Purpose: Adds the contents of a file
 //-----------------------------------------------------------------------------
 bool CLocalizedStringTable::AddFile( const char *szFileName, const char *pPathID, bool bIncludeFallbackSearchPaths )
 {
@@ -380,7 +380,7 @@ bool CLocalizedStringTable::AddFile( const char *szFileName, const char *pPathID
 
 		// this is an optimization so that the filename string doesn't have to get converted to a symbol for each key/value
 		m_CurrentFile = fullpath;
-		
+
 		// read into a memory block
 		int fileSize = g_pFullFileSystem->Size(file);
 		int bufferSize = g_pFullFileSystem->GetOptimalReadSize( file, fileSize + sizeof(ucs2) );
@@ -463,7 +463,7 @@ bool CLocalizedStringTable::AddFile( const char *szFileName, const char *pPathID
 			data = ReadUnicodeToken(data, valuetoken, MAX_LOCALIZED_CHARS, bQuoted);
 			if (!valuetoken[0] && !bQuoted)
 				break;	// we've hit the null terminator
-			
+
 			if (state == STATE_BASE)
 			{
 				if (!stricmp(key, "Language"))
@@ -506,7 +506,7 @@ bool CLocalizedStringTable::AddFile( const char *szFileName, const char *pPathID
 							V_UCS2ToUTF8(conditional, cond, sizeof(cond));
 							bAccepted = EvaluateConditional( cond );
 
-							// Robin: HACK: Cheesy support for language-based filtering. Main has much better 
+							// Robin: HACK: Cheesy support for language-based filtering. Main has much better
 							// support for this, in all KV files, so this will be obsoleted in post-TF2 products.
 							char *pszKey = &cond[2];
 							bool bNot = false;
@@ -559,7 +559,7 @@ bool CLocalizedStringTable::AddFile( const char *szFileName, const char *pPathID
 							for ( i = 0; i < MAX_LOCALIZED_CHARS && valuetoken[i] != 0; i++ )
 								fullString[i] = valuetoken[i]; // explode the ucs2 into a wchar_t wide buffer
 							fullString[i] = 0;
-							
+
 							// add the string to the table
 							AddString(key, fullString, NULL);
 						}
@@ -658,10 +658,10 @@ bool CLocalizedStringTable::SaveToFile( const char *szFileName )
 	g_pFullFileSystem->Write(unicodeString, wcslen( unicodeString ) * sizeof(wchar_t), file);
 
 	// convert our spacing characters to unicode
-//	wchar_t unicodeSpace = L' '; 
-	wchar_t unicodeQuote = L'\"'; 
-	wchar_t unicodeCR = L'\r'; 
-	wchar_t unicodeNewline = L'\n'; 
+//	wchar_t unicodeSpace = L' ';
+	wchar_t unicodeQuote = L'\"';
+	wchar_t unicodeCR = L'\r';
+	wchar_t unicodeNewline = L'\n';
 	wchar_t unicodeTab = L'\t';
 
 	// write out all the key/value pairs
@@ -714,9 +714,9 @@ void CLocalizedStringTable::ReloadLocalizationFiles( )
 		LocalizationFileInfo_t& entry = m_LocalizationFiles[ i ];
 		AddFile
 		(
-			entry.symName.String(), 
+			entry.symName.String(),
 			entry.symPathID.String()[0] ? entry.symPathID.String() : NULL,
-			entry.bIncludeFallbacks 
+			entry.bIncludeFallbacks
 		);
 	}
 }
@@ -730,7 +730,7 @@ bool CLocalizedStringTable::SymLess(localizedstring_t const &i1, localizedstring
 											&g_StringTable.m_Names[i1.nameIndex];
 	const char *str2 = (i2.nameIndex == INVALID_LOCALIZE_STRING_INDEX) ? i2.pszValueString :
 											&g_StringTable.m_Names[i2.nameIndex];
-	
+
 	return stricmp(str1, str2) < 0;
 }
 
@@ -739,7 +739,7 @@ bool CLocalizedStringTable::SymLess(localizedstring_t const &i1, localizedstring
 // Purpose: Finds a string in the table
 //-----------------------------------------------------------------------------
 wchar_t *CLocalizedStringTable::Find(const char *pName)
-{	
+{
 	StringIndex_t idx = FindIndex(pName);
 	if (idx == INVALID_LOCALIZE_STRING_INDEX)
 		return NULL;
@@ -775,7 +775,7 @@ StringIndex_t CLocalizedStringTable::FindIndex(const char *pName)
 	{
 		pName++;
 	}
-	
+
 	// Passing this special invalid symbol makes the comparison function
 	// use the string passed in the context
 	localizedstring_t invalidItem;
@@ -789,7 +789,7 @@ StringIndex_t CLocalizedStringTable::FindIndex(const char *pName)
 //-----------------------------------------------------------------------------
 void CLocalizedStringTable::AddString(const char *pString, wchar_t *pValue, const char *fileName)
 {
-	if (!pString) 
+	if (!pString)
 		return;
 
 	MEM_ALLOC_CREDIT();
@@ -824,7 +824,7 @@ void CLocalizedStringTable::AddString(const char *pString, wchar_t *pValue, cons
 	else
 	{
 		// it's already in the table
-		
+
 		if ( m_bUseOnlyLongestLanguageString )
 		{
 			// check which string is longer
@@ -835,7 +835,7 @@ void CLocalizedStringTable::AddString(const char *pString, wchar_t *pValue, cons
 			int newWide, oldWide, tall;
 			vgui::g_pSurface->GetTextSize( 1, newValue, newWide, tall );
 			vgui::g_pSurface->GetTextSize( 1, oldValue, oldWide, tall );
-			
+
 			// if the new one is shorter, don't let it be added
 			if (newWide < oldWide)
 				return;
@@ -937,7 +937,7 @@ void CLocalizedStringTable::DiscardFastValueLookup()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CLocalizedStringTable::FindExistingValueIndex( const wchar_t *value )
 {
@@ -987,7 +987,7 @@ void CLocalizedStringTable::SetValueByIndex(StringIndex_t index, wchar_t *newVal
 	else
 	{
 		// copy the string into the old position
-		wcscpy(wstr, newValue);		
+		wcscpy(wstr, newValue);
 	}
 }
 

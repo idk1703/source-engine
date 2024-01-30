@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -55,7 +55,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CLogSelectProps message handlers
 
-void CLogSelectProps::OnSelect() 
+void CLogSelectProps::OnSelect()
 {
 	char* fileNameBuf= new char[10000];
 	memset(fileNameBuf,0,10000);
@@ -63,7 +63,7 @@ void CLogSelectProps::OnSelect()
 	cfd.m_ofn.Flags|=OFN_ALLOWMULTISELECT;
 	cfd.m_ofn.lpstrFile=fileNameBuf;
 	cfd.m_ofn.nMaxFile=10000;
-	
+
 	if (m_persistLastDirectory.toString()!="")
 		cfd.m_ofn.lpstrInitialDir=m_persistLastDirectory.toString().c_str();
 
@@ -73,7 +73,7 @@ void CLogSelectProps::OnSelect()
 		while(pos)
 		{
 			CUIApp::CTFStatsExec* pc=new CUIApp::CTFStatsExec;
-			
+
 			CString wow=cfd.GetNextPathName(pos);
 			//void _splitpath( const char *path, char *drive, char *dir, char *fname, char *ext );
 			pc->fullpath=wow;
@@ -89,20 +89,20 @@ void CLogSelectProps::OnSelect()
 			pc->outputsubdir=namebuf;
 			pc->inputfile=fname;
 			pc->logdirectory=inpdir;
-			
+
 			m_persistLastDirectory=inpdir;
 
 			int idx=m_Logs2Do.AddString(pc->fullpath.c_str());
 			m_Logs2Do.SetItemDataPtr(idx,pc);
 
-			
+
 		}
 	}
 
 	delete [] fileNameBuf;
-	
+
 }
-	
+
 list<CUIApp::CTFStatsExec>* CLogSelectProps::getList()
 {
 	list<CUIApp::CTFStatsExec>* pRetList=new list<CUIApp::CTFStatsExec>;
@@ -116,7 +116,7 @@ list<CUIApp::CTFStatsExec>* CLogSelectProps::getList()
 	return pRetList;
 }
 
-void CLogSelectProps::OnSelchangeLogs2do() 
+void CLogSelectProps::OnSelchangeLogs2do()
 {
 	if (m_Logs2Do.GetSelCount() > 0)
 		m_RemoveButton.EnableWindow(TRUE);
@@ -124,7 +124,7 @@ void CLogSelectProps::OnSelchangeLogs2do()
 		m_RemoveButton.EnableWindow(FALSE);
 }
 
-void CLogSelectProps::OnRemovelog() 
+void CLogSelectProps::OnRemovelog()
 {
 	int* selitems=new int[500];
 	int numselected=m_Logs2Do.GetSelItems(500,selitems);
@@ -139,7 +139,7 @@ void CLogSelectProps::OnRemovelog()
 		m_Logs2Do.DeleteString(selitems[i]);
 	}
 	delete [] selitems;
-	
+
 
 	m_Logs2Do.SetSel(-1,FALSE);
 }
@@ -159,7 +159,7 @@ BOOL CLogSelectProps::OnSetActive()
 		m_persistLastDirectory=basedir;
 	}
 
-	
+
 	return bRes;
 }
 

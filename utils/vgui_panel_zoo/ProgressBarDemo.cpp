@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@ using namespace vgui;
 static const int TIMEOUT = 5000; // 5 second timeout
 
 //-----------------------------------------------------------------------------
-// Progress bars are used to illustrate a waiting period (such as 
+// Progress bars are used to illustrate a waiting period (such as
 // connecting to a server.
 // Here we create a progress bar that fills up every 5 seconds.
 //-----------------------------------------------------------------------------
@@ -29,7 +29,7 @@ class ProgressBarDemo: public DemoPage
 
 		void OnTick();
 		void SetVisible(bool status);
-		
+
 	private:
 		ProgressBar *m_pProgressBar;
 		int m_iTimeoutTime;
@@ -44,12 +44,12 @@ ProgressBarDemo::ProgressBarDemo(Panel *parent, const char *name) : DemoPage(par
 	m_pProgressBar->SetPos(100, 100);
 	m_pProgressBar->SetWide(300);
 
-	// This makes panel receive a 'Tick' message every frame 
+	// This makes panel receive a 'Tick' message every frame
 	// (~50ms, depending on sleep times/framerate)
 	// Panel is automatically removed from tick signal list when it's deleted
 	ivgui()->AddTickSignal(this->GetVPanel());
 
-	m_iTimeoutTime = 0;	 
+	m_iTimeoutTime = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -77,7 +77,7 @@ void ProgressBarDemo::SetVisible(bool status)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Advances the status bar to the end, then starts over 
+// Purpose: Advances the status bar to the end, then starts over
 //-----------------------------------------------------------------------------
 void ProgressBarDemo::OnTick()
 {
@@ -105,5 +105,3 @@ Panel* ProgressBarDemo_Create(Panel *parent)
 {
 	return new ProgressBarDemo(parent, "ProgressBarDemo");
 }
-
-

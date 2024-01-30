@@ -4,7 +4,7 @@
 //
 // $NoKeywords: $
 //=============================================================================//
- 
+
 #include "cbase.h"
 #include "stat_card.h"
 #include "vgui_controls/AnimationController.h"
@@ -34,7 +34,7 @@ StatCard::StatCard(vgui::Panel *parent, const char *name) : BaseClass(parent, "C
 	m_pAvatar->SetShouldScaleImage(true);
 	m_pAvatar->SetShouldDrawFriendIcon(false);
 	m_pAvatar->SetSize(64,64);
-	
+
 	m_pName= new Label(this, "Name", "Name");
 	m_pKillToDeathRatio = new Label(this, "KillToDeath", "KillToDeath");
 	m_pStars = new Label(this, "Stars", "Stars");
@@ -54,7 +54,7 @@ void StatCard::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 	//m_pBackgroundArt->SetShouldScaleImage(true);
 	//m_pBackgroundArt->SetImage("../VGUI/achievements/achievement-btn-up");
-	
+
 	SetBgColor(Color(0,0,0,0));
 
 	UpdateInfo();
@@ -72,10 +72,10 @@ void StatCard::UpdateInfo()
 	if (deaths > 0)
 	{
 		float killToDeath = kills / deaths;
-		
+
 		_snwprintf( numBuf, ARRAYSIZE( numBuf ), L"%.2f", killToDeath);
 		g_pVGuiLocalize->ConstructString( buf, sizeof(buf),
-			g_pVGuiLocalize->Find( "#GameUI_Stats_LastMatch_KDRatio" ), 1, numBuf );		
+			g_pVGuiLocalize->Find( "#GameUI_Stats_LastMatch_KDRatio" ), 1, numBuf );
 		m_pKillToDeathRatio->SetText( buf );
 	}
 	else
@@ -85,7 +85,7 @@ void StatCard::UpdateInfo()
 
 	_snwprintf( numBuf, ARRAYSIZE( numBuf ), L"%i", stars);
 	g_pVGuiLocalize->ConstructString( buf, sizeof(buf),
-		g_pVGuiLocalize->Find( "#GameUI_Stats_LastMatch_MVPS" ), 1, numBuf );		
+		g_pVGuiLocalize->Find( "#GameUI_Stats_LastMatch_MVPS" ), 1, numBuf );
 	m_pStars->SetText( buf );
 
 	if (steamapicontext)
@@ -100,7 +100,7 @@ void StatCard::UpdateInfo()
 	// Display the player avatar
 	if (m_pAvatar && steamapicontext && steamapicontext->SteamUser())
 	{
-		m_pAvatar->SetPlayer( steamapicontext->SteamUser()->GetSteamID(), k_EAvatarSize64x64 );	
+		m_pAvatar->SetPlayer( steamapicontext->SteamUser()->GetSteamID(), k_EAvatarSize64x64 );
 		m_pAvatar->SetVisible( true );
 	}
 }

@@ -57,7 +57,7 @@ public:
 	CTFPlayer *SelectPreferred( CTFPlayer *current, CTFPlayer *contender )
 	{
 		// in order of preference
-		static int preferredClass[] = 
+		static int preferredClass[] =
 		{
 			TF_CLASS_HEAVYWEAPONS,
 			TF_CLASS_SOLDIER,
@@ -65,7 +65,7 @@ public:
 			TF_CLASS_DEMOMAN,
 
 //			TF_CLASS_SCOUT,
-// 			TF_CLASS_ENGINEER,		
+// 			TF_CLASS_ENGINEER,
 // 			TF_CLASS_SNIPER,
 // 			TF_CLASS_SPY,
 // 			TF_CLASS_MEDIC,
@@ -132,7 +132,7 @@ public:
 		CTFPlayer *currentCaller = NULL;
 		CTFPlayer *contenderCaller = NULL;
 		CTFBotPathCost cost( m_me, FASTEST_ROUTE );
-		
+
 		if ( !current->IsBot() && current->IsCallingForMedic() && m_me->IsRangeLessThan( current, tf_bot_medic_max_call_response_range.GetFloat() ) )
 		{
 			// check actual travel range
@@ -399,8 +399,8 @@ public:
 bool CTFBotMedicHeal::CanDeployUber( CTFBot *me, const CWeaponMedigun* pMedigun ) const
 {
 #ifdef STAGING_ONLY
-	if ( TFGameRules()->IsMannVsMachineMode() && 
-			me && me->HasAttribute( CTFBot::PROJECTILE_SHIELD ) && 
+	if ( TFGameRules()->IsMannVsMachineMode() &&
+			me && me->HasAttribute( CTFBot::PROJECTILE_SHIELD ) &&
 			pMedigun && ( pMedigun->GetMedigunShield() != NULL ) && pMedigun->HasPermanentShield() && ( ( pMedigun->GetMedigunType() == MEDIGUN_STANDARD ) || ( pMedigun->GetMedigunType() == MEDIGUN_UBER ) ) )
 	{
 		return false;
@@ -424,10 +424,10 @@ bool CTFBotMedicHeal::IsReadyToDeployUber( const CWeaponMedigun* pMedigun ) cons
 
 	if ( pMedigun->GetChargeLevel() < pMedigun->GetMinChargeAmount() )
 		return false;
-	
+
 	if ( TFGameRules()->InSetup() )
 		return false;
-	
+
 	return true;
 }
 
@@ -683,7 +683,7 @@ ActionResult< CTFBot >	CTFBotMedicHeal::Update( CTFBot *me, float interval )
 				// special case for bots in mvm spawn zones
 				if ( TFGameRules()->IsMannVsMachineMode() )
 				{
-					if ( m_patient->m_Shared.InCond( TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED ) && 
+					if ( m_patient->m_Shared.InCond( TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED ) &&
 						 me->m_Shared.InCond( TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED ) )
 					{
 						useUber = false;
@@ -697,7 +697,7 @@ ActionResult< CTFBot >	CTFBotMedicHeal::Update( CTFBot *me, float interval )
 				{
 					m_delayUberTimer.Start( me->GetUberDeployDelayDuration() );
 				}
-				
+
 				if ( m_delayUberTimer.IsElapsed() )
 				{
 					m_delayUberTimer.Invalidate();
@@ -707,7 +707,7 @@ ActionResult< CTFBot >	CTFBotMedicHeal::Update( CTFBot *me, float interval )
 				}
 			}
 		}
-		
+
 #ifdef STAGING_ONLY
 		// try to activate shield when I'm not using uber so I don't waste it
 		if ( TFGameRules()->IsMannVsMachineMode() && me->HasAttribute( CTFBot::PROJECTILE_SHIELD ) && medigun->GetMedigunShield() == NULL )
@@ -755,7 +755,7 @@ ActionResult< CTFBot >	CTFBotMedicHeal::Update( CTFBot *me, float interval )
 	bool isThreatened = false;
 	if ( knownThreat && knownThreat->IsVisibleRecently() && knownThreat->GetEntity() )
 	{
-		if ( actualHealTarget ) 
+		if ( actualHealTarget )
 		{
 			float patientRangeSq = me->GetRangeSquaredTo( actualHealTarget );
 			float threatRangeSq = me->GetRangeSquaredTo( knownThreat->GetEntity() );
@@ -855,7 +855,7 @@ EventDesiredResult< CTFBot > CTFBotMedicHeal::OnActorEmoted( CTFBot *me, CBaseCo
 {
 	if ( !emoter->IsPlayer() )
 		return TryContinue();
-	
+
 	CTFPlayer *emotingPlayer = ToTFPlayer( emoter );
 
 	switch( emote )
@@ -1011,7 +1011,7 @@ void CTFBotMedicHeal::ComputeFollowPosition( CTFBot *me )
 		maxRadius = tf_bot_medic_start_follow_range.GetFloat();
 	}
 
-	for( radius = tf_bot_medic_stop_follow_range.GetFloat() + RandomFloat( 0.0f, radiusInc ); 
+	for( radius = tf_bot_medic_stop_follow_range.GetFloat() + RandomFloat( 0.0f, radiusInc );
 		 radius <= maxRadius;
 		 radius += radiusInc )
 	{

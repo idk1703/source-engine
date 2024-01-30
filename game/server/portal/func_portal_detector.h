@@ -21,7 +21,7 @@ public:
 
 	// Overloads from base entity
 	virtual void	Spawn( void );
-	
+
 	void OnActivate( void );
 
 	// Inputs to flip functionality on and off
@@ -43,7 +43,7 @@ public:
 private:
 	bool	m_bActive;			// are we currently detecting portals
 	int		m_iLinkageGroupID;	// what set of portals are we testing for?
-	
+
 };
 
 #endif

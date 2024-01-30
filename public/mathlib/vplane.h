@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -149,7 +149,7 @@ inline SideType VPlane::GetPointSideExact(const Vector &vPoint) const
 inline SideType VPlane::BoxOnPlaneSide(const Vector &vMin, const Vector &vMax) const
 {
 	int i, firstSide, side;
-	TableVector vPoints[8] = 
+	TableVector vPoints[8] =
 	{
 		{ vMin.x, vMin.y, vMin.z },
 		{ vMin.x, vMin.y, vMax.z },

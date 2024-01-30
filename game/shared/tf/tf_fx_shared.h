@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-//  
+//
 //
 //=============================================================================
 #ifndef TF_FX_SHARED_H

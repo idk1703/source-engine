@@ -24,7 +24,7 @@ class CAI_TestHull;
 // CAI_NetworkManager
 //
 // Purpose: The entity in the level responsible for building the network if it
-//			isn't there, saving & loading of the network, and holding the 
+//			isn't there, saving & loading of the network, and holding the
 //			CAI_Network instance.
 //
 //-----------------------------------------------------------------------------
@@ -41,7 +41,7 @@ public:
 public:
 	CAI_NetworkManager(void);
 	virtual ~CAI_NetworkManager(void);
-	
+
 	void			Spawn ();
 	virtual	int		ObjectCaps( void ) { return BaseClass::ObjectCaps() | FCAP_DONT_SAVE; }
 	void			RebuildNetworkGraph();			// Used in WC edit mode
@@ -61,17 +61,17 @@ public:
 public:
 	CAI_NetworkEditTools *	GetEditOps() { return m_pEditOps; }
 	CAI_Network *			GetNetwork() { return m_pNetwork; }
-	
+
 private:
-	
+
 	void			DelayedInit();
 	void			RebuildThink();
-	void			SaveNetworkGraph( void) ;	
-	static bool		IsAIFileCurrent( const char *szMapName );		
-	
+	void			SaveNetworkGraph( void) ;
+	static bool		IsAIFileCurrent( const char *szMapName );
+
 	static bool				gm_fNetworksLoaded;							// Have AINetworks been loaded
-	
-	bool					m_bNeedGraphRebuild;					
+
+	bool					m_bNeedGraphRebuild;
 	CAI_NetworkEditTools *	m_pEditOps;
 	CAI_Network *			m_pNetwork;
 
@@ -109,11 +109,11 @@ private:
 	void			InitGroundNodePosition( CAI_Network *pNetwork, CAI_Node *pNode );
 	void			InitLinks( CAI_Network *pNetwork, CAI_Node *pNode );
 	void			ForceDynamicLinkNeighbors();
-	
+
 	void			FloodFillZone( CAI_Node **ppNodes, CAI_Node *pNode, int zone );
 
 	int				ComputeConnection( CAI_Node *pSrcNode, CAI_Node *pDestNode, Hull_t hull );
-	
+
 	void 			BeginBuild();
 	void			EndBuild();
 
@@ -152,10 +152,10 @@ public:
 	static void			SetDebugBits(const char *ainet_name,int debug_bit);
 
 	static CAI_Node *	FindAINodeNearestFacing( const Vector &origin, const Vector &facing, float threshold, int nNodeType);
-	static CAI_Link *	FindAILinkNearestFacing( const Vector &origin, const Vector &facing, float threshold);						
+	static CAI_Link *	FindAILinkNearestFacing( const Vector &origin, const Vector &facing, float threshold);
 
 	//---------------
-	// WC Editing 
+	// WC Editing
 	//---------------
 	int					m_nNextWCIndex;				// Next unused index used by WC
 	Vector *			m_pWCPosition;				// Array of vectors only used in wc edit mode
@@ -175,11 +175,11 @@ public:
 	int					GetWCIdFromNodeId( int nNodeId );
 	int *				m_pNodeIndexTable;						// Table of WC Id's to Engine Id's
 
-	void				ClearRebuildFlags();					
-	void				SetRebuildFlags();					
+	void				ClearRebuildFlags();
+	void				SetRebuildFlags();
 	void				DrawEditInfoOverlay();
 
-#ifdef AI_PERF_MON	
+#ifdef AI_PERF_MON
 	//----------------------
 	// Performance stats
 	//----------------------

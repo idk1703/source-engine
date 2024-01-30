@@ -12,7 +12,7 @@
 #include "tier0/memdbgon.h"
 
 DEFINE_FALLBACK_SHADER( LightmappedGeneric, LightmappedGeneric_DX6 )
- 
+
 BEGIN_SHADER( LightmappedGeneric_DX6,
 			  "Help for LightmappedGeneric_DX6" )
 
@@ -109,7 +109,7 @@ BEGIN_SHADER( LightmappedGeneric_DX6,
 		// Don't alpha test if the alpha channel is used for other purposes
 		if (IS_FLAG_SET(MATERIAL_VAR_SELFILLUM) || IS_FLAG_SET(MATERIAL_VAR_BASEALPHAENVMAPMASK) )
 			CLEAR_FLAGS( MATERIAL_VAR_ALPHATEST );
-			
+
 		if (params[ENVMAP]->IsDefined())
 		{
 			if( !IS_FLAG_SET(MATERIAL_VAR_ENVMAPSPHERE) )
@@ -183,7 +183,7 @@ BEGIN_SHADER( LightmappedGeneric_DX6,
 			pShaderShadow->EnableAlphaPipe( true );
 
 			// color channel
-			
+
 			// base
 			pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
 
@@ -205,7 +205,7 @@ BEGIN_SHADER( LightmappedGeneric_DX6,
 			{
 				if ( (! IsColorModulating()) && ( ! IsAlphaModulating()))
 					flags |= SHADER_DRAW_COLOR;
-			
+
 			}
 			if (params[BASETEXTURE]->IsTexture())
 			{
@@ -242,7 +242,7 @@ BEGIN_SHADER( LightmappedGeneric_DX6,
 			// Draw the selfillum pass
 			if ( IS_FLAG_SET(MATERIAL_VAR_SELFILLUM) )
 			{
-				FixedFunctionSelfIlluminationPass( 
+				FixedFunctionSelfIlluminationPass(
 					SHADER_SAMPLER0, BASETEXTURE, FRAME, BASETEXTURETRANSFORM, SELFILLUMTINT );
 			}
 		}
@@ -256,9 +256,9 @@ BEGIN_SHADER( LightmappedGeneric_DX6,
 		// Pass 2 : Masked environment map
 		if (params[ENVMAP]->IsTexture())
 		{
-			FixedFunctionAdditiveMaskedEnvmapPass( 
+			FixedFunctionAdditiveMaskedEnvmapPass(
 				ENVMAP, ENVMAPMASK, BASETEXTURE,
-				ENVMAPFRAME, ENVMAPMASKFRAME, FRAME, 
+				ENVMAPFRAME, ENVMAPMASKFRAME, FRAME,
 				BASETEXTURETRANSFORM, ENVMAPMASKSCALE, ENVMAPTINT );
 		}
 	}
@@ -285,4 +285,3 @@ END_SHADER
 //-----------------------------------------------------------------------------
 BEGIN_INHERITED_SHADER( Water_DX60, LightmappedGeneric_DX6, "Help for Water_DX60" )
 END_INHERITED_SHADER
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,18 +41,18 @@ public:
 	virtual bool IsSoundPrecached( const char *pSample );
 	virtual void PrefetchSound( const char *pSample );
 
-	virtual float GetSoundDuration( const char *pSample );  
+	virtual float GetSoundDuration( const char *pSample );
 
-	virtual void EmitSound( IRecipientFilter& filter, int iEntIndex, int iChannel, const char *pSample, 
-		float flVolume, float flAttenuation, int iFlags, int iPitch, int iSpecialDSP, 
+	virtual void EmitSound( IRecipientFilter& filter, int iEntIndex, int iChannel, const char *pSample,
+		float flVolume, float flAttenuation, int iFlags, int iPitch, int iSpecialDSP,
 		const Vector *pOrigin, const Vector *pDirection, CUtlVector< Vector >* pUtlVecOrigins, bool bUpdatePositions, float soundtime = 0.0f, int speakerentity = -1 );
 
-	virtual void EmitSound( IRecipientFilter& filter, int iEntIndex, int iChannel, const char *pSample, 
-		float flVolume, soundlevel_t iSoundLevel, int iFlags, int iPitch, int iSpecialDSP, 
+	virtual void EmitSound( IRecipientFilter& filter, int iEntIndex, int iChannel, const char *pSample,
+		float flVolume, soundlevel_t iSoundLevel, int iFlags, int iPitch, int iSpecialDSP,
 		const Vector *pOrigin, const Vector *pDirection, CUtlVector< Vector >* pUtlVecOrigins, bool bUpdatePositions, float soundtime = 0.0f, int speakerentity = -1 );
 
-	virtual void EmitSentenceByIndex( IRecipientFilter& filter, int iEntIndex, int iChannel, int iSentenceIndex, 
-		float flVolume, soundlevel_t iSoundLevel, int iFlags, int iPitch, int iSpecialDSP, 
+	virtual void EmitSentenceByIndex( IRecipientFilter& filter, int iEntIndex, int iChannel, int iSentenceIndex,
+		float flVolume, soundlevel_t iSoundLevel, int iFlags, int iPitch, int iSpecialDSP,
 		const Vector *pOrigin, const Vector *pDirection, CUtlVector< Vector >* pUtlVecOrigins, bool bUpdatePositions, float soundtime = 0.0f, int speakerentity = -1 );
 
 	virtual void StopSound( int iEntIndex, int iChannel, const char *pSample );
@@ -62,7 +62,7 @@ public:
 	virtual void SetRoomType( IRecipientFilter& filter, int roomType );
 	virtual void SetPlayerDSP( IRecipientFilter& filter, int dspType, bool fastReset );
 
-	virtual void EmitAmbientSound( const char *pSample, float flVolume, 
+	virtual void EmitAmbientSound( const char *pSample, float flVolume,
 		int iPitch, int flags, float soundtime = 0.0f );
 
 	virtual float GetDistGainFromSoundLevel( soundlevel_t soundlevel, float dist );
@@ -82,7 +82,7 @@ public:
 	virtual void	NotifyEndMoviePlayback();
 
 private:
-	void EmitSoundInternal( IRecipientFilter& filter, int iEntIndex, int iChannel, const char *pSample, 
+	void EmitSoundInternal( IRecipientFilter& filter, int iEntIndex, int iChannel, const char *pSample,
 		float flVolume, soundlevel_t iSoundLevel, int iFlags, int iPitch, int iSpecialDSP,
 		const Vector *pOrigin, const Vector *pDirection, CUtlVector< Vector >* pUtlVecOrigins, bool bUpdatePositions, float soundtime = 0.0f, int speakerentity = -1 );
 
@@ -93,7 +93,7 @@ private:
 // Client-server neutral sound interface accessor
 //-----------------------------------------------------------------------------
 static CEngineSoundClient s_EngineSoundClient;
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CEngineSoundClient, IEngineSound, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CEngineSoundClient, IEngineSound,
 	IENGINESOUND_CLIENT_INTERFACE_VERSION, s_EngineSoundClient );
 
 IEngineSound *EngineSoundClient()
@@ -133,8 +133,8 @@ bool CEngineSoundClient::PrecacheSound( const char *pSample, bool bPreload, bool
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pSample - 
+// Purpose:
+// Input  : *pSample -
 //-----------------------------------------------------------------------------
 void CEngineSoundClient::PrefetchSound( const char *pSample )
 {
@@ -142,8 +142,8 @@ void CEngineSoundClient::PrefetchSound( const char *pSample )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pSample - 
+// Purpose:
+// Input  : *pSample -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CEngineSoundClient::IsSoundPrecached( const char *pSample )
@@ -162,8 +162,8 @@ bool CEngineSoundClient::IsSoundPrecached( const char *pSample )
 //-----------------------------------------------------------------------------
 // Actually does the work of emitting a sound
 //-----------------------------------------------------------------------------
-void CEngineSoundClient::EmitSoundInternal( IRecipientFilter& filter, int iEntIndex, int iChannel, const char *pSample, 
-	float flVolume, soundlevel_t iSoundLevel, int iFlags, int iPitch, int iSpecialDSP,  
+void CEngineSoundClient::EmitSoundInternal( IRecipientFilter& filter, int iEntIndex, int iChannel, const char *pSample,
+	float flVolume, soundlevel_t iSoundLevel, int iFlags, int iPitch, int iSpecialDSP,
 	const Vector *pOrigin, const Vector *pDirection, CUtlVector< Vector >* pUtlVecOrigins, bool bUpdatePositions, float soundtime /*= 0.0f*/, int speakerentity /*= -1*/ )
 {
 	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
@@ -306,15 +306,15 @@ void CEngineSoundClient::EmitSoundInternal( IRecipientFilter& filter, int iEntIn
 //-----------------------------------------------------------------------------
 // Plays a sentence
 //-----------------------------------------------------------------------------
-void CEngineSoundClient::EmitSentenceByIndex( IRecipientFilter& filter, int iEntIndex, int iChannel, 
-	int iSentenceIndex, float flVolume, soundlevel_t iSoundLevel, int iFlags, int iPitch, int iSpecialDSP, 
+void CEngineSoundClient::EmitSentenceByIndex( IRecipientFilter& filter, int iEntIndex, int iChannel,
+	int iSentenceIndex, float flVolume, soundlevel_t iSoundLevel, int iFlags, int iPitch, int iSpecialDSP,
 	const Vector *pOrigin, const Vector *pDirection, CUtlVector< Vector >* pUtlVecOrigins, bool bUpdatePosition, float soundtime /*= 0.0f*/, int speakerentity /*= -1*/ )
 {
 	if ( iSentenceIndex >= 0 )
 	{
 		char pName[8];
 		Q_snprintf( pName, sizeof(pName), "!%d", iSentenceIndex );
-		EmitSoundInternal( filter, iEntIndex, iChannel, pName, flVolume, iSoundLevel, 
+		EmitSoundInternal( filter, iEntIndex, iChannel, pName, flVolume, iSoundLevel,
 			iFlags, iPitch, iSpecialDSP, pOrigin, pDirection, pUtlVecOrigins, bUpdatePosition, soundtime, speakerentity );
 	}
 }
@@ -323,19 +323,19 @@ void CEngineSoundClient::EmitSentenceByIndex( IRecipientFilter& filter, int iEnt
 //-----------------------------------------------------------------------------
 // Emits a sound
 //-----------------------------------------------------------------------------
-void CEngineSoundClient::EmitSound( IRecipientFilter& filter, int iEntIndex, int iChannel, const char *pSample, 
-	float flVolume, float flAttenuation, int iFlags, int iPitch, int iSpecialDSP, 
+void CEngineSoundClient::EmitSound( IRecipientFilter& filter, int iEntIndex, int iChannel, const char *pSample,
+	float flVolume, float flAttenuation, int iFlags, int iPitch, int iSpecialDSP,
 	const Vector *pOrigin, const Vector *pDirection, CUtlVector< Vector >* pUtlVecOrigins, bool bUpdatePositions, float soundtime /*= 0.0f*/, int speakerentity /*= -1*/ )
 {
 	VPROF( "CEngineSoundClient::EmitSound" );
-	EmitSound( filter, iEntIndex, iChannel, pSample, flVolume, ATTN_TO_SNDLVL( flAttenuation ), iFlags, 
+	EmitSound( filter, iEntIndex, iChannel, pSample, flVolume, ATTN_TO_SNDLVL( flAttenuation ), iFlags,
 		iPitch, iSpecialDSP, pOrigin, pDirection, pUtlVecOrigins, bUpdatePositions, soundtime, speakerentity );
 
 }
 
 
-void CEngineSoundClient::EmitSound( IRecipientFilter& filter, int iEntIndex, int iChannel, const char *pSample, 
-	float flVolume, soundlevel_t iSoundLevel, int iFlags, int iPitch, int iSpecialDSP, 
+void CEngineSoundClient::EmitSound( IRecipientFilter& filter, int iEntIndex, int iChannel, const char *pSample,
+	float flVolume, soundlevel_t iSoundLevel, int iFlags, int iPitch, int iSpecialDSP,
 	const Vector *pOrigin, const Vector *pDirection, CUtlVector< Vector >* pUtlVecOrigins, bool bUpdatePositions, float soundtime /*= 0.0f*/, int speakerentity /*= -1*/ )
 {
 	VPROF( "CEngineSoundClient::EmitSound" );
@@ -367,7 +367,7 @@ void CEngineSoundClient::EmitSound( IRecipientFilter& filter, int iEntIndex, int
 void CEngineSoundClient::StopSound( int iEntIndex, int iChannel, const char *pSample )
 {
 	CEngineSingleUserFilter filter( cl.m_nPlayerSlot + 1 );
-	EmitSound( filter, iEntIndex, iChannel, pSample, 0, SNDLVL_NONE, SND_STOP, PITCH_NORM, 0, 
+	EmitSound( filter, iEntIndex, iChannel, pSample, 0, SNDLVL_NONE, SND_STOP, PITCH_NORM, 0,
 		NULL, NULL, NULL, true );
 }
 
@@ -389,7 +389,7 @@ void CEngineSoundClient::SetPlayerDSP( IRecipientFilter& filter, int dspType, bo
 }
 
 
-void CEngineSoundClient::EmitAmbientSound( const char *pSample, float flVolume, 
+void CEngineSoundClient::EmitAmbientSound( const char *pSample, float flVolume,
 										  int iPitch, int flags, float soundtime /*= 0.0f*/ )
 {
 	float delay = 0.0f;
@@ -428,8 +428,8 @@ float CEngineSoundClient::GetDistGainFromSoundLevel( soundlevel_t soundlevel, fl
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pSample - 
+// Purpose:
+// Input  : *pSample -
 // Output : float
 //-----------------------------------------------------------------------------
 float CEngineSoundClient::GetSoundDuration( const char *pSample )
@@ -439,9 +439,9 @@ float CEngineSoundClient::GetSoundDuration( const char *pSample )
 
 // Client .dll only functions
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
-// Output : int	
+// Purpose:
+// Input  :  -
+// Output : int
 //-----------------------------------------------------------------------------
 int CEngineSoundClient::GetGuidForLastSoundEmitted()
 {
@@ -449,8 +449,8 @@ int CEngineSoundClient::GetGuidForLastSoundEmitted()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : guid - 
+// Purpose:
+// Input  : guid -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CEngineSoundClient::IsSoundStillPlaying( int guid )
@@ -459,8 +459,8 @@ bool CEngineSoundClient::IsSoundStillPlaying( int guid )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : guid - 
+// Purpose:
+// Input  : guid -
 //-----------------------------------------------------------------------------
 void CEngineSoundClient::StopSoundByGuid( int guid )
 {
@@ -469,7 +469,7 @@ void CEngineSoundClient::StopSoundByGuid( int guid )
 
 //-----------------------------------------------------------------------------
 // Purpose: Retrieves list of all active sounds
-// Input  : sndlist - 
+// Input  : sndlist -
 //-----------------------------------------------------------------------------
 void CEngineSoundClient::GetActiveSounds( CUtlVector< SndInfo_t >& sndlist )
 {
@@ -478,8 +478,8 @@ void CEngineSoundClient::GetActiveSounds( CUtlVector< SndInfo_t >& sndlist )
 
 //-----------------------------------------------------------------------------
 // Purpose: Set's master volume (0.0->1.0)
-// Input  : guid - 
-//			fvol - 
+// Input  : guid -
+//			fvol -
 //-----------------------------------------------------------------------------
 void CEngineSoundClient::SetVolumeByGuid( int guid, float fvol )
 {
@@ -507,4 +507,3 @@ void CEngineSoundClient::NotifyEndMoviePlayback()
 	XMPRestoreBackgroundMusic();
 #endif
 }
-

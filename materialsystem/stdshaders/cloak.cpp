@@ -72,8 +72,8 @@ BEGIN_VS_SHADER( Cloak_DX90, "Help for Cloak" )
 		info.m_nRimMask = RIMMASK;
 	}
 
-	bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const 
-	{ 
+	bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const
+	{
 		if ( bCheckSpecificToThisFrame == false ) // For setting model flag at load time
 			return true;
 		else if ( ( params[CLOAKFACTOR]->GetFloatValue() > 0.0f ) && ( params[CLOAKFACTOR]->GetFloatValue() < 1.0f ) ) // Per-frame check
@@ -119,4 +119,3 @@ BEGIN_VS_SHADER( Cloak_DX90, "Help for Cloak" )
 		DrawCloak_DX9( this, params, pShaderAPI, pShaderShadow, info, vertexCompression );
 	}
 END_SHADER
-

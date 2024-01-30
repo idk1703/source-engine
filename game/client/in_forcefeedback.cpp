@@ -395,9 +395,9 @@ struct LoadEffectContext_t
 static BOOL CALLBACK EnumEffectsInFileProc(LPCDIFILEEFFECT lpdife, LPVOID pvRef)
 
 {
- 	LoadEffectContext_t *ctx = ( LoadEffectContext_t * )pvRef;
+	LoadEffectContext_t *ctx = ( LoadEffectContext_t * )pvRef;
 
-    EffectMap_t *map = ctx->map;
+	EffectMap_t *map = ctx->map;
 
 
 	vecEffectPtr_t *vecPtr = map->pVecEffectPtr;
@@ -405,28 +405,28 @@ static BOOL CALLBACK EnumEffectsInFileProc(LPCDIFILEEFFECT lpdife, LPVOID pvRef)
 
 	int idx = vecPtr->AddToTail( NULL );
 
-    HRESULT     hr;
+	HRESULT     hr;
 	hr = ctx->device->CreateEffect
 		(
-			lpdife->GuidEffect, 
-            lpdife->lpDiEffect,
-            &(*vecPtr)[ idx ], 
-            NULL
+			lpdife->GuidEffect,
+			lpdife->lpDiEffect,
+			&(*vecPtr)[ idx ],
+			NULL
 		);
 
-    if ( FAILED ( hr ) )
-    {
-        // Error handling
+	if ( FAILED ( hr ) )
+	{
+		// Error handling
 		Msg( "EnumEffectsInFileProc during effect loading for %s\n", map->effectfile );
-    }
+	}
 
 	return DIENUM_CONTINUE;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : device - 
-//			&map - 
+// Purpose:
+// Input  : device -
+//			&map -
 // Output : static void
 //-----------------------------------------------------------------------------
 static void LoadEffectFile( LPDIRECTINPUTDEVICE8 device, EffectMap_t &map )
@@ -442,10 +442,10 @@ static void LoadEffectFile( LPDIRECTINPUTDEVICE8 device, EffectMap_t &map )
 	filesystem->GetLocalPath( map.effectfile, fullpath, sizeof( fullpath ) );
 
 	HRESULT hr = device->EnumEffectsInFile
-		( fullpath, 
-          EnumEffectsInFileProc,
-          (LPVOID)&context, 
-          DIFEF_MODIFYIFNEEDED );
+		( fullpath,
+		EnumEffectsInFileProc,
+		(LPVOID)&context,
+		DIFEF_MODIFYIFNEEDED );
 
 	if ( FAILED( hr ) )
 	{
@@ -455,8 +455,8 @@ static void LoadEffectFile( LPDIRECTINPUTDEVICE8 device, EffectMap_t &map )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : device - 
+// Purpose:
+// Input  : device -
 // Output : static void
 //-----------------------------------------------------------------------------
 static void LoadEffectFiles( LPDIRECTINPUTDEVICE8 device )
@@ -471,24 +471,24 @@ static void LoadEffectFiles( LPDIRECTINPUTDEVICE8 device )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Init_ForceFeedback 
+// Purpose: Init_ForceFeedback
 //-----------------------------------------------------------------------------
-void CInput::Init_ForceFeedback() 
-{ 
+void CInput::Init_ForceFeedback()
+{
 	// abort startup if user requests no joystick
-	if ( CommandLine()->FindParm("-noff" ) ) 
+	if ( CommandLine()->FindParm("-noff" ) )
 	{
-		return; 
+		return;
 	}
- 
+
 	Assert( !m_pFF );
 
 	m_pFF = new ForceFeedbackParams_t;
 	Assert( m_pFF );
 	Q_memset( m_pFF, 0, sizeof( *m_pFF ) );
 
-	HRESULT hr = DirectInput8Create(GetModuleHandle(0), DIRECTINPUT_VERSION, 
-        IID_IDirectInput8, (void**)&m_pFF->m_pIInput, NULL ); 
+	HRESULT hr = DirectInput8Create(GetModuleHandle(0), DIRECTINPUT_VERSION,
+		IID_IDirectInput8, (void**)&m_pFF->m_pIInput, NULL );
 
 	if ( FAILED( hr ) )
 	{
@@ -507,7 +507,7 @@ void CInput::Init_ForceFeedback()
 	{
 		return;
 	}
-	
+
 	HWND mainWnd = (HWND)g_pEngineWindow->GetWindowHandle();
 
 	hr = m_pFF->m_pIJoystick->SetCooperativeLevel( mainWnd, DISCL_BACKGROUND | DISCL_EXCLUSIVE );
@@ -534,12 +534,12 @@ void CInput::Init_ForceFeedback()
 		}
 	}
 
-    // Acquire the device
+	// Acquire the device
 	hr = m_pFF->m_pIJoystick->Acquire();
 
-    if( FAILED( hr ) )
+	if( FAILED( hr ) )
 	{
-        return;
+		return;
 	}
 
 	DIDEVCAPS diDevCaps;
@@ -571,18 +571,18 @@ void CInput::Init_ForceFeedback()
 		return;
 	}
 
-	DevMsg( "Forcefeedback device found:\n" ); 
+	DevMsg( "Forcefeedback device found:\n" );
 
 	//DevMsg( "  device '%s'\n", diDI.tszInstanceName );
 	DevMsg( "  product '%s'\n", diDI.tszProductName );
 
 	DescribeFFDevice( diDevCaps );
-	
+
 	InitEffectMap();
 
 	LoadEffectFiles( m_pFF->m_pIJoystick );
 
-	m_pFF->m_bForceFeedbackAvailable = true; 
+	m_pFF->m_bForceFeedbackAvailable = true;
 }
 
 //-----------------------------------------------------------------------------
@@ -636,7 +636,7 @@ void CInput::Shutdown_ForceFeedback()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInput::ForceFeedback_Reaquire()
 {
@@ -662,7 +662,7 @@ void CInput::ForceFeedback_Think()
 	if ( FAILED( hr ) )
 	{
 		if ( hr == DIERR_INPUTLOST ||
-			 hr == DIERR_NOTACQUIRED )
+			hr == DIERR_NOTACQUIRED )
 		{
 			ForceFeedback_Reaquire();
 		}
@@ -671,7 +671,7 @@ void CInput::ForceFeedback_Think()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInput::ForceFeedback_StopAll()
 {
@@ -686,7 +686,7 @@ void CInput::ForceFeedback_StopAll()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInput::ForceFeedback_Pause()
 {
@@ -702,7 +702,7 @@ void CInput::ForceFeedback_Pause()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInput::ForceFeedback_Resume()
 {
@@ -721,9 +721,9 @@ void CInput::ForceFeedback_Resume()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : effectnum - 
-//			params - 
+// Purpose:
+// Input  : effectnum -
+//			params -
 //-----------------------------------------------------------------------------
 void CInput::ForceFeedback_Start( int effectnum, const FFBaseParams_t& params )
 {
@@ -802,8 +802,8 @@ void CInput::ForceFeedback_Start( int effectnum, const FFBaseParams_t& params )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : effectnum - 
+// Purpose:
+// Input  : effectnum -
 //-----------------------------------------------------------------------------
 void CInput::ForceFeedback_Stop( int effectnum )
 {

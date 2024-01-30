@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -99,7 +99,7 @@ void main(int argc,char **argv)
 
 		Vector AmbientColor(0,0,0);
 		float sumweights_amb=0;
-		
+
 		for(int f=0;f<6;f++)
 			for(int y=0;y<conv.face_maps[f].Height;y++)
 				for(int x=0;x<conv.face_maps[f].Width;x++)
@@ -132,16 +132,16 @@ void main(int argc,char **argv)
 					sumweights_amb+=weight;
 					for(int comp=0;comp<3;comp++)
 					{
-						conv.face_maps[f].Pixel(x,y,comp)=sumlight[comp]; 
+						conv.face_maps[f].Pixel(x,y,comp)=sumlight[comp];
 						AmbientColor[comp]+=weight*(sumlight[comp]-dot*AverageHue[comp]);
 					}
 
 				}
 		AmbientColor*=1.0/sumweights_amb;
-		
+
 		conv.WritePFMs("ambient_cube_");
-		
-		
+
+
 //		printf("Ambient color=%f %f %f\n",AmbientColor.x,AmbientColor.y,AmbientColor.z);
 		// convert to gamma space. . .
 		printf("Ambient color=%d %d %d 255\n",
@@ -166,4 +166,3 @@ void main(int argc,char **argv)
 
 
 }
-

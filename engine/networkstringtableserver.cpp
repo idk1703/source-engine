@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,7 +33,7 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CNetworkStringTableContainerServer, INetworkSt
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SV_CreateNetworkStringTables( void )
 {
@@ -53,10 +53,9 @@ void SV_CreateNetworkStringTables( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SV_PrintStringTables( void )
 {
 	s_NetworkStringTableServer.Dump();
 }
-

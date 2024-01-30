@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -125,7 +125,7 @@ void CTreeViewListControl::GetGridElementBounds( int iColumn, int iRow, int &lef
 {
 	left = m_Columns[iColumn].m_Left;
 	right = m_Columns[iColumn].m_Right;
-	
+
 	// vgui doesn't seem to be drawing things exactly right. Like it you draw a line at (0,0) to (100,0),
 	// then a rectangle from (1,1) to (100,100), it'll overwrite the line at the top.
 	int treeTopBorder = 0;
@@ -192,7 +192,7 @@ void CTreeViewListControl::RecalculateRows_R( int index )
 	m_Rows.AddToTail( index );
 	if ( !m_pTree->IsItemExpanded( index ) )
 		return;
-	
+
 	int nChildren = m_pTree->GetNumChildren( index );
 	for ( int i=0; i < nChildren; i++ )
 	{
@@ -234,7 +234,7 @@ void CTreeViewListControl::PostChildPaint()
 
 	if ( m_Columns.Count() <= 0 )
 		return;
-	
+
 	// Draw the horizontal lines.
 	int endX = 0;
 	endX = m_Columns[m_Columns.Count()-1].m_Right + 1;
@@ -288,7 +288,7 @@ void CTreeViewListControl::DrawTitleBars()
 
 		wchar_t unicodeString[1024];
 		g_pVGuiLocalize->ConvertANSIToUnicode( pTitleString, unicodeString, sizeof(unicodeString) );
-	
+
 		int wide, tall;
 		surface()->GetTextSize( m_TitleBarFont, unicodeString, wide, tall );
 
@@ -308,8 +308,7 @@ void CTreeViewListControl::DrawTitleBars()
 
 			surface()->DrawSetTextPos( midx - wide/2, midy - tall/2 );
 		}
-		
+
 		surface()->DrawPrintText( unicodeString, strlen( pTitleString ) );
 	}
 }
-

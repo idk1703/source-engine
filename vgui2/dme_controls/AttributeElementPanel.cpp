@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -56,7 +56,7 @@ void CAttributeElementPanel::OnCreateDragData( KeyValues *msg )
 			element = GetElement<CDmElement>( GetAttributeValue<DmElementHandle_t>( ) );
 			msg->SetInt( "dmeelement", element->GetHandle() );
 		}
-		
+
 	}
 }
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -22,7 +22,7 @@
 // Initialize shader parameters
 //-----------------------------------------------------------------------------
 void InitParamsParticleLitGeneric_DX9( CBaseVSShader *pShader, IMaterialVar** params, const char *pMaterialName, ParticleLitGeneric_DX9_Vars_t &info )
-{	
+{
 	// FLASHLIGHTFIXME: Do ShaderAPI::BindFlashlightTexture
 	Assert( info.m_nFlashlightTexture >= 0 );
 
@@ -39,7 +39,7 @@ void InitParamsParticleLitGeneric_DX9( CBaseVSShader *pShader, IMaterialVar** pa
 	SET_FLAGS2( MATERIAL_VAR2_LIGHTING_VERTEX_LIT );
 	CLEAR_FLAGS( MATERIAL_VAR_SELFILLUM );
 	CLEAR_FLAGS( MATERIAL_VAR_BASEALPHAENVMAPMASK );
-	
+
 	if( (info.m_nBumpFrame != -1) && !params[info.m_nBumpFrame]->IsDefined() )
 	{
 		params[info.m_nBumpFrame]->SetIntValue( 0 );
@@ -63,12 +63,12 @@ void InitParticleLitGeneric_DX9( CBaseVSShader *pShader, IMaterialVar** params, 
 {
 	Assert( info.m_nFlashlightTexture >= 0 );
 	pShader->LoadTexture( info.m_nFlashlightTexture, TEXTUREFLAGS_SRGB );
-	
+
 	bool bIsBaseTextureTranslucent = false;
 	if ( params[info.m_nBaseTexture]->IsDefined() )
 	{
 		pShader->LoadTexture( info.m_nBaseTexture, TEXTUREFLAGS_SRGB );
-		
+
 		if ( params[info.m_nBaseTexture]->GetTextureValue()->IsTranslucent() )
 		{
 			bIsBaseTextureTranslucent = true;
@@ -101,7 +101,7 @@ void InitParticleLitGeneric_DX9( CBaseVSShader *pShader, IMaterialVar** params, 
 //-----------------------------------------------------------------------------
 // Draws the shader
 //-----------------------------------------------------------------------------
-void DrawParticleLitGeneric_DX9( CBaseVSShader *pShader, IMaterialVar** params, 
+void DrawParticleLitGeneric_DX9( CBaseVSShader *pShader, IMaterialVar** params,
 	IShaderDynamicAPI *pShaderAPI, IShaderShadow* pShaderShadow, ParticleLitGeneric_DX9_Vars_t &info )
 {
 	bool hasBaseTexture = params[info.m_nBaseTexture]->IsTexture();
@@ -113,7 +113,7 @@ void DrawParticleLitGeneric_DX9( CBaseVSShader *pShader, IMaterialVar** params,
 
 	HDRType_t hdrType = g_pHardwareConfig->GetHDRType();
 
-	BlendType_t blendType = pShader->EvaluateBlendRequirements( info.m_nBaseTexture, true );	
+	BlendType_t blendType = pShader->EvaluateBlendRequirements( info.m_nBaseTexture, true );
 	if( pShader->IsSnapshotting() )
 	{
 		// look at color and alphamod stuff.
@@ -134,7 +134,7 @@ void DrawParticleLitGeneric_DX9( CBaseVSShader *pShader, IMaterialVar** params,
 			pShader->SetAdditiveBlendingShadowState( info.m_nBaseTexture, true );
 			if( bIsAlphaTested )
 			{
-				// disable alpha test and use the zfunc zequals since alpha isn't guaranteed to 
+				// disable alpha test and use the zfunc zequals since alpha isn't guaranteed to
 				// be the same on both the regular pass and the flashlight pass.
 				pShaderShadow->EnableAlphaTest( false );
 				pShaderShadow->DepthFunc( SHADER_DEPTHFUNC_EQUAL );
@@ -146,7 +146,7 @@ void DrawParticleLitGeneric_DX9( CBaseVSShader *pShader, IMaterialVar** params,
 		{
 			pShader->SetDefaultBlendingShadowState( info.m_nBaseTexture, true );
 		}
-		
+
 		unsigned int flags = VERTEX_POSITION;
 
 		int userDataSize = 0;
@@ -174,16 +174,16 @@ void DrawParticleLitGeneric_DX9( CBaseVSShader *pShader, IMaterialVar** params,
 		}
 
 		pShaderShadow->EnableSRGBWrite( true );
-		
+
 		// texcoord0 : base texcoord
 		int pTexCoordCount[2] = { 2, 3 };
-		pShaderShadow->VertexShaderVertexFormat( 
+		pShaderShadow->VertexShaderVertexFormat(
 			flags, 2, pTexCoordCount, 0, userDataSize );
 
 		DECLARE_STATIC_VERTEX_SHADER( particlelit_generic_vs30 );
 		SET_STATIC_VERTEX_SHADER_COMBO( HALFLAMBERT,  bHalfLambert);
 		SET_STATIC_VERTEX_SHADER( particlelit_generic_vs30 );
-		
+
 		DECLARE_STATIC_PIXEL_SHADER( particlelit_generic_ps30 );
 		SET_STATIC_PIXEL_SHADER_COMBO( HALFLAMBERT,  bHalfLambert);
 //		SET_STATIC_PIXEL_SHADER_COMBO( FLASHLIGHT,  hasFlashlight );
@@ -294,7 +294,7 @@ void DrawParticleLitGeneric_DX9( CBaseVSShader *pShader, IMaterialVar** params,
 			pShaderAPI->SetPixelShaderConstant( 23, pos, 1 );
 
 			pShaderAPI->SetPixelShaderConstant( 24, worldToTexture.Base(), 4 );
-		}		
+		}
 	}
 	pShader->Draw();
 }

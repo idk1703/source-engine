@@ -46,7 +46,7 @@ IQueuedLoader *g_pQueuedLoader = 0;
 void ConnectTier2Libraries( CreateInterfaceFn *pFactoryList, int nFactoryCount )
 {
 	// Don't connect twice..
-	Assert( !g_pFullFileSystem && !materials && !g_pInputSystem && !g_pNetworkSystem && 
+	Assert( !g_pFullFileSystem && !materials && !g_pInputSystem && !g_pNetworkSystem &&
 		!p4 && !mdllib && !g_pMaterialSystemDebugTextureInfo && !g_VBAllocTracker &&
 		!g_pMaterialSystemHardwareConfig && !g_pQueuedLoader );
 
@@ -113,5 +113,3 @@ void DisconnectTier2Libraries()
 	mdllib = 0;
 	g_pQueuedLoader = 0;
 }
-
-

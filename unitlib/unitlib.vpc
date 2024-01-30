@@ -21,7 +21,7 @@ $Configuration
 	}
 
 	$PreLinkEvent [$WIN32]
-	{	
+	{
 		$CommandLine	"call $SRCDIR\vpc_scripts\valve_p4_edit.cmd $SRCDIR\lib\public\$(TargetName).lib $SRCDIR" "\n" \
 						"call $SRCDIR\vpc_scripts\valve_p4_edit.cmd $SRCDIR\lib\public\$(TargetName).exp $SRCDIR" "\n" \
 						"$BASE"

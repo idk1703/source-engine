@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -32,7 +32,7 @@ class IVertexBuffer;
 class IIndexBuffer;
 struct MeshDesc_t;
 enum MaterialCullMode_t;
-class IDataCache;   
+class IDataCache;
 struct MorphWeight_t;
 class IVTFTexture;
 
@@ -79,7 +79,7 @@ enum CreateTextureFlags_t
 	TEXTURE_CREATE_DEPTHBUFFER	       = 0x0008,
 	TEXTURE_CREATE_DYNAMIC		       = 0x0010,
 	TEXTURE_CREATE_AUTOMIPMAP          = 0x0020,
-	TEXTURE_CREATE_VERTEXTEXTURE       = 0x0040,	// for internal use only	
+	TEXTURE_CREATE_VERTEXTEXTURE       = 0x0040,	// for internal use only
 	TEXTURE_CREATE_FALLBACK            = 0x0080,	// 360 only
 	TEXTURE_CREATE_NOD3DMEMORY         = 0x0100,	// 360 only
 	TEXTURE_CREATE_SYSMEM              = 0x0200,	// This texture should be alloc'd in the sysmem pool
@@ -188,7 +188,7 @@ public:
 	// call DestroyStaticMesh on the mesh returned by this call.
 	virtual IMesh* GetDynamicMesh( IMaterial* pMaterial, int nHWSkinBoneCount, bool bBuffered = true,
 		IMesh* pVertexOverride = 0, IMesh* pIndexOverride = 0) = 0;
-	virtual IMesh* GetDynamicMeshEx( IMaterial* pMaterial, VertexFormat_t vertexFormat, int nHWSkinBoneCount, 
+	virtual IMesh* GetDynamicMeshEx( IMaterial* pMaterial, VertexFormat_t vertexFormat, int nHWSkinBoneCount,
 		bool bBuffered = true, IMesh* pVertexOverride = 0, IMesh* pIndexOverride = 0 ) = 0;
 
 	// Methods to ask about particular state snapshots
@@ -234,12 +234,12 @@ public:
 	// Forces Z buffering to be on or off
 	virtual void OverrideDepthEnable( bool bEnable, bool bDepthEnable ) = 0;
 
-	virtual void SetHeightClipZ( float z ) = 0; 
-	virtual void SetHeightClipMode( enum MaterialHeightClipMode_t heightClipMode ) = 0; 
+	virtual void SetHeightClipZ( float z ) = 0;
+	virtual void SetHeightClipMode( enum MaterialHeightClipMode_t heightClipMode ) = 0;
 
 	virtual void SetClipPlane( int index, const float *pPlane ) = 0;
 	virtual void EnableClipPlane( int index, bool bEnable ) = 0;
-	
+
 	// Put all the model matrices into vertex shader constants.
 	virtual void SetSkinningMatrices() = 0;
 
@@ -253,23 +253,23 @@ public:
 
 	// Texture management methods
 	// For CreateTexture also see CreateTextures below
-	virtual ShaderAPITextureHandle_t CreateTexture( 
-		int width, 
+	virtual ShaderAPITextureHandle_t CreateTexture(
+		int width,
 		int height,
 		int depth,
-		ImageFormat dstImageFormat, 
-		int numMipLevels, 
-		int numCopies, 
-		int flags, 
+		ImageFormat dstImageFormat,
+		int numMipLevels,
+		int numCopies,
+		int flags,
 		const char *pDebugName,
 		const char *pTextureGroupName ) = 0;
 
 	virtual void DeleteTexture( ShaderAPITextureHandle_t textureHandle ) = 0;
 
-	virtual ShaderAPITextureHandle_t CreateDepthTexture( 
-		ImageFormat renderTargetFormat, 
-		int width, 
-		int height, 
+	virtual ShaderAPITextureHandle_t CreateDepthTexture(
+		ImageFormat renderTargetFormat,
+		int width,
+		int height,
 		const char *pDebugName,
 		bool bTexture ) = 0;
 
@@ -288,30 +288,30 @@ public:
 		int zOffset,
 		int width,
 		int height,
-		ImageFormat srcFormat, 
+		ImageFormat srcFormat,
 		bool bSrcIsTiled,		// NOTE: for X360 only
 		void *imageData ) = 0;
 
-	virtual void TexSubImage2D( 
-		int level, 
-		int cubeFaceID, 
-		int xOffset, 
-		int yOffset, 
-		int zOffset, 
-		int width, 
+	virtual void TexSubImage2D(
+		int level,
+		int cubeFaceID,
+		int xOffset,
+		int yOffset,
+		int zOffset,
+		int width,
 		int height,
-		ImageFormat srcFormat, 
-		int srcStride, 
+		ImageFormat srcFormat,
+		int srcStride,
 		bool bSrcIsTiled,		// NOTE: for X360 only
 		void *imageData ) = 0;
-	
+
 	virtual void TexImageFromVTF( IVTFTexture* pVTF, int iVTFFrame ) = 0;
 
 	// An alternate (and faster) way of writing image data
 	// (locks the current Modify Texture). Use the pixel writer to write the data
 	// after Lock is called
-	// Doesn't work for compressed textures 
-	virtual bool TexLock( int level, int cubeFaceID, int xOffset, int yOffset, 
+	// Doesn't work for compressed textures
+	virtual bool TexLock( int level, int cubeFaceID, int xOffset, int yOffset,
 		int width, int height, CPixelWriter& writer ) = 0;
 	virtual void TexUnlock( ) = 0;
 
@@ -324,9 +324,9 @@ public:
 	// Set the render target to a texID.
 	// Set to SHADER_RENDERTARGET_BACKBUFFER if you want to use the regular framebuffer.
 	// Set to SHADER_RENDERTARGET_DEPTHBUFFER if you want to use the regular z buffer.
-	virtual void SetRenderTarget( ShaderAPITextureHandle_t colorTextureHandle = SHADER_RENDERTARGET_BACKBUFFER, 
+	virtual void SetRenderTarget( ShaderAPITextureHandle_t colorTextureHandle = SHADER_RENDERTARGET_BACKBUFFER,
 		ShaderAPITextureHandle_t depthTextureHandle = SHADER_RENDERTARGET_DEPTHBUFFER ) = 0;
-	
+
 	// stuff that isn't to be used from within a shader
 	virtual void ClearBuffersObeyStencil( bool bClearColor, bool bClearDepth ) = 0;
 	virtual void ReadPixels( int x, int y, int width, int height, unsigned char *data, ImageFormat dstFormat ) = 0;
@@ -354,7 +354,7 @@ public:
 
 	virtual void FogStart( float fStart ) = 0;
 	virtual void FogEnd( float fEnd ) = 0;
-	virtual void SetFogZ( float fogZ ) = 0;	
+	virtual void SetFogZ( float fogZ ) = 0;
 	// Scene fog state.
 	virtual void SceneFogColor3ub( unsigned char r, unsigned char g, unsigned char b ) = 0;
 	virtual void GetSceneFogColor( unsigned char *rgb ) = 0;
@@ -385,7 +385,7 @@ public:
 	//
 	// Occlusion query support
 	//
-	
+
 	// Allocate and delete query objects.
 	virtual ShaderAPIOcclusionQuery_t CreateOcclusionQueryObject( void ) = 0;
 	virtual void DestroyOcclusionQueryObject( ShaderAPIOcclusionQuery_t ) = 0;
@@ -430,8 +430,8 @@ public:
 	// Set the render target to a texID.
 	// Set to SHADER_RENDERTARGET_BACKBUFFER if you want to use the regular framebuffer.
 	// Set to SHADER_RENDERTARGET_DEPTHBUFFER if you want to use the regular z buffer.
-	virtual void SetRenderTargetEx( int nRenderTargetID, 
-		ShaderAPITextureHandle_t colorTextureHandle = SHADER_RENDERTARGET_BACKBUFFER, 
+	virtual void SetRenderTargetEx( int nRenderTargetID,
+		ShaderAPITextureHandle_t colorTextureHandle = SHADER_RENDERTARGET_BACKBUFFER,
 		ShaderAPITextureHandle_t depthTextureHandle = SHADER_RENDERTARGET_DEPTHBUFFER ) = 0;
 
 	virtual void CopyRenderTargetToTextureEx( ShaderAPITextureHandle_t textureHandle, int nRenderTargetID, Rect_t *pSrcRect = NULL, Rect_t *pDstRect = NULL ) = 0;
@@ -442,7 +442,7 @@ public:
 
 	virtual void EnableLinearColorSpaceFrameBuffer( bool bEnable ) = 0;
 
-	// Lets the shader know about the full-screen texture so it can 
+	// Lets the shader know about the full-screen texture so it can
 	virtual void SetFullScreenTextureHandle( ShaderAPITextureHandle_t h ) = 0;
 
 	// Rendering parameters control special drawing modes withing the material system, shader
@@ -460,8 +460,8 @@ public:
 
 	// Returns the number of vertices + indices we can render using the dynamic mesh
 	// Passing true in the second parameter will return the max # of vertices + indices
-	// we can use before a flush is provoked and may return different values 
-	// if called multiple times in succession. 
+	// we can use before a flush is provoked and may return different values
+	// if called multiple times in succession.
 	// Passing false into the second parameter will return
 	// the maximum possible vertices + indices that can be rendered in a single batch
 	virtual void GetMaxToRender( IMesh *pMesh, bool bMaxUntilFlush, int *pMaxVerts, int *pMaxIndices ) = 0;
@@ -509,7 +509,7 @@ public:
 
 	virtual void EnableVSync_360( bool bEnable ) = 0; //360 allows us to bypass vsync blocking up to 60 fps without creating a new device
 #endif
-	
+
 	virtual bool OwnGPUResources( bool bEnable ) = 0;
 
 	//get fog distances entered with FogStart(), FogEnd(), and SetFogZ()
@@ -524,7 +524,7 @@ public:
 	virtual void EnableAlphaToCoverage() = 0;
 	virtual void DisableAlphaToCoverage() = 0;
 
-	// Computes the vertex buffer pointers 
+	// Computes the vertex buffer pointers
 	virtual void ComputeVertexDescription( unsigned char* pBuffer, VertexFormat_t vertexFormat, MeshDesc_t& desc ) const = 0;
 
 	virtual bool SupportsShadowDepthTextures( void ) = 0;
@@ -555,7 +555,7 @@ public:
 	virtual bool SupportsCSAAMode( int nNumSamples, int nQualityLevel ) = 0;
 
 	//Notifies the shaderapi to invalidate the current set of delayed constants because we just finished a draw pass. Either actual or not.
-	virtual void InvalidateDelayedShaderConstants( void ) = 0; 
+	virtual void InvalidateDelayedShaderConstants( void ) = 0;
 
 	// Gamma<->Linear conversions according to the video hardware we're running on
 	virtual float GammaToLinear_HardwareSpecific( float fGamma ) const =0;
@@ -577,16 +577,16 @@ public:
 	virtual void FogMaxDensity( float flMaxDensity ) = 0;
 
 	// Create a multi-frame texture (equivalent to calling "CreateTexture" multiple times, but more efficient)
-	virtual void CreateTextures( 
+	virtual void CreateTextures(
 		ShaderAPITextureHandle_t *pHandles,
 		int count,
-		int width, 
+		int width,
 		int height,
 		int depth,
-		ImageFormat dstImageFormat, 
-		int numMipLevels, 
-		int numCopies, 
-		int flags, 
+		ImageFormat dstImageFormat,
+		int numMipLevels,
+		int numCopies,
+		int flags,
 		const char *pDebugName,
 		const char *pTextureGroupName ) = 0;
 
@@ -619,14 +619,14 @@ public:
 	virtual void LockRect( void** pOutBits, int* pOutPitch, ShaderAPITextureHandle_t texHandle, int mipmap, int x, int y, int w, int h, bool bWrite, bool bRead ) = 0;
 	virtual void UnlockRect( ShaderAPITextureHandle_t texHandle, int mipmap ) = 0;
 
-	// Set the finest mipmap that can be used for the texture which is currently being modified. 
+	// Set the finest mipmap that can be used for the texture which is currently being modified.
 	virtual void TexLodClamp( int finest ) = 0;
 
-	// Set the Lod Bias for the texture which is currently being modified. 
+	// Set the Lod Bias for the texture which is currently being modified.
 	virtual void TexLodBias( float bias ) = 0;
-	
+
 	virtual void CopyTextureToTexture( ShaderAPITextureHandle_t srcTex, ShaderAPITextureHandle_t dstTex ) = 0;
-	
+
 };
 
 

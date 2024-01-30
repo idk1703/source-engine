@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,7 +24,7 @@ void DestroyBuilding(CTFCPlayer *eng, char *bld)
 			// some metal back
 			int pos = UTIL_PointContents(pEnt->GetAbsOrigin());
 #ifdef TFCTODO // CONTENTS_SKY doesn't exist in the new engine
-			if (pos == CONTENT_SOLID || pos == CONTENT_SKY) 
+			if (pos == CONTENT_SOLID || pos == CONTENT_SKY)
 #else
 			if (pos == CONTENTS_SOLID)
 #endif
@@ -56,7 +56,7 @@ void DestroyTeleporter(CTFCPlayer *eng, int type)
 			// some metal back
 			int pos = UTIL_PointContents(pEnt->GetAbsOrigin());
 #ifdef TFCTODO // CONTENTS_SKY doesn't exist in the new engine
-			if (pos == CONTENT_SOLID || pos == CONTENT_SKY) 
+			if (pos == CONTENT_SOLID || pos == CONTENT_SKY)
 #else
 			if (pos == CONTENTS_SOLID)
 #endif

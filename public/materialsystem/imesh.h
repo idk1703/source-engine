@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -60,7 +60,7 @@ enum
 	DYNAMIC_VERTEX_BUFFER_MEMORY_SMALL = 384 * 1024, // Only allocate this much during map transitions
 };
 
-// Vertex fields must be written in well-defined order to achieve write combining, 
+// Vertex fields must be written in well-defined order to achieve write combining,
 // which is a perf booster
 enum WriteCombineOrdering_t
 {
@@ -137,7 +137,7 @@ struct VertexDesc_t
 	// The first vertex index (used for buffered vertex buffers, or cards that don't support stream offset)
 	int	m_nFirstVertex;
 
-	// The offset in bytes of the memory we're writing into 
+	// The offset in bytes of the memory we're writing into
 	// from the start of the D3D buffer (will be 0 for static meshes)
 	unsigned int	m_nOffset;
 
@@ -152,7 +152,7 @@ struct IndexDesc_t
 	// Pointers to the index data
 	unsigned short	*m_pIndices;
 
-	// The offset in bytes of the memory we're writing into 
+	// The offset in bytes of the memory we're writing into
 	// from the start of the D3D buffer (will be 0 for static meshes)
 	unsigned int	m_nOffset;
 
@@ -199,14 +199,14 @@ struct ModelVertexDX8_t	: public ModelVertexDX7_t
 inline float *OffsetFloatPointer( float *pBufferPointer, int nVertexCount, int vertexSize )
 {
 	return reinterpret_cast<float *>(
-		reinterpret_cast<unsigned char *>(pBufferPointer) + 
+		reinterpret_cast<unsigned char *>(pBufferPointer) +
 		nVertexCount * vertexSize);
 }
 
 inline const float *OffsetFloatPointer( const float *pBufferPointer, int nVertexCount, int vertexSize )
 {
 	return reinterpret_cast<const float*>(
-		reinterpret_cast<unsigned char const*>(pBufferPointer) + 
+		reinterpret_cast<unsigned char const*>(pBufferPointer) +
 		nVertexCount * vertexSize);
 }
 
@@ -337,11 +337,11 @@ public:
 	virtual void Draw( CPrimList *pLists, int nLists ) = 0;
 
 	// Copy verts and/or indices to a mesh builder. This only works for temp meshes!
-	virtual void CopyToMeshBuilder( 
+	virtual void CopyToMeshBuilder(
 		int iStartVert,		// Which vertices to copy.
-		int nVerts, 
+		int nVerts,
 		int iStartIndex,	// Which indices to copy.
-		int nIndices, 
+		int nIndices,
 		int indexOffset,	// This is added to each index.
 		CMeshBuilder &builder ) = 0;
 
@@ -447,7 +447,7 @@ public:
 	// Returns the base vertex memory pointer
 	void* BaseVertexData();
 
-	// Selects the nth Vertex and Index 
+	// Selects the nth Vertex and Index
 	void SelectVertex( int idx );
 
 	// Advances the current vertex and index by one
@@ -531,7 +531,7 @@ public:
 	void TexCoordSubRect2f( int stage, float s, float t, float offsetS, float offsetT, float scaleS, float scaleT );
 	void TexCoordSubRect2fv( int stage, const float *st, const float *offset, const float *scale );
 
-	// tangent space 
+	// tangent space
 	void TangentS3f( float sx, float sy, float sz );
 	void TangentS3fv( const float* s );
 
@@ -554,14 +554,14 @@ public:
 	// Generic per-vertex data (templatized for code which needs to support compressed vertices)
 	template <VertexCompressionType_t T> void CompressedUserData( const float* pData );
 
-	// Fast Vertex! No need to call advance vertex, and no random access allowed. 
+	// Fast Vertex! No need to call advance vertex, and no random access allowed.
 	// WARNING - these are low level functions that are intended only for use
 	// in the software vertex skinner.
 	void FastVertex( const ModelVertexDX7_t &vertex );
 	void FastVertexSSE( const ModelVertexDX7_t &vertex );
 
 	// store 4 dx7 vertices fast. for special sse dx7 pipeline
-	void Fast4VerticesSSE( 
+	void Fast4VerticesSSE(
 		ModelVertexDX7_t const *vtx_a,
 		ModelVertexDX7_t const *vtx_b,
 		ModelVertexDX7_t const *vtx_c,
@@ -571,7 +571,7 @@ public:
 	void FastVertexSSE( const ModelVertexDX8_t &vertex );
 
 	// Add number of verts and current vert since FastVertex routines do not update.
-	void FastAdvanceNVertices( int n );	
+	void FastAdvanceNVertices( int n );
 
 #if defined( _X360 )
 	void VertexDX8ToX360( const ModelVertexDX8_t &vertex );
@@ -1025,7 +1025,7 @@ inline int CVertexBuilder::TotalVertexCount() const
 inline void* CVertexBuilder::BaseVertexData()
 {
 	// FIXME: If there's no position specified, we need to find
-	// the base address 
+	// the base address
 	Assert( m_pPosition );
 	return m_pPosition;
 }
@@ -1036,7 +1036,7 @@ inline void* CVertexBuilder::BaseVertexData()
 //-----------------------------------------------------------------------------
 inline void CVertexBuilder::SelectVertex( int nIndex )
 {
-	// NOTE: This index is expected to be relative 
+	// NOTE: This index is expected to be relative
 	Assert( (nIndex >= 0) && (nIndex < m_nMaxVertexCount) );
 	m_nCurrentVertex = nIndex;
 
@@ -1258,7 +1258,7 @@ inline void CVertexBuilder::FastVertexSSE( const ModelVertexDX7_t &vertex )
 #endif
 }
 
-inline void CVertexBuilder::Fast4VerticesSSE( 
+inline void CVertexBuilder::Fast4VerticesSSE(
 	ModelVertexDX7_t const *vtx_a,
 	ModelVertexDX7_t const *vtx_b,
 	ModelVertexDX7_t const *vtx_c,
@@ -1422,7 +1422,7 @@ inline void CVertexBuilder::FastVertexSSE( const ModelVertexDX8_t &vertex )
 						  "movntps %%xmm0, (%1)\n"
 						  "movntps %%xmm1, 16(%1)\n"
 						  "movntps %%xmm2, 32(%1)\n"
-						  "movntps %%xmm3, 48(%1)\n"						  
+						  "movntps %%xmm3, 48(%1)\n"
 						  :: "r" (pRead), "r" (pCurrPos) : "memory");
 #else
 	Error( "Implement CMeshBuilder::FastVertexSSE((dx8)" );
@@ -1799,7 +1799,7 @@ inline void	CVertexBuilder::Color3fv( const float *rgb )
 	Assert( (rgb[0] >= 0.0) && (rgb[1] >= 0.0) && (rgb[2] >= 0.0) );
 	Assert( (rgb[0] <= 1.0) && (rgb[1] <= 1.0) && (rgb[2] <= 1.0) );
 
-#ifdef OPENGL_SWAP_COLORS	
+#ifdef OPENGL_SWAP_COLORS
 	int col = (FastFToC(rgb[0])) | (FastFToC(rgb[1]) << 8) | (FastFToC(rgb[2]) << 16) | 0xFF000000;
 #else
 	int col = (FastFToC(rgb[2])) | (FastFToC(rgb[1]) << 8) | (FastFToC(rgb[0]) << 16) | 0xFF000000;
@@ -1853,7 +1853,7 @@ inline void CVertexBuilder::Color3ub( unsigned char r, unsigned char g, unsigned
 	#else
 		int col = b | (g << 8) | (r << 16) | 0xFF000000;
 	#endif
-	
+
 	*(int*)m_pCurrColor = col;
 }
 
@@ -1970,7 +1970,7 @@ inline void CVertexBuilder::Specular3ub( unsigned char r, unsigned char g, unsig
 	#else
 		int col = b | (g << 8) | (r << 16) | 0xFF000000;
 	#endif
-	
+
 	*(int*)pSpecular = col;
 }
 
@@ -1984,7 +1984,7 @@ inline void CVertexBuilder::Specular3ubv( unsigned char const *c )
 	#else
 		int col = c[2] | (c[1] << 8) | (c[0] << 16) | 0xFF000000;
 	#endif
-	
+
 	*(int*)pSpecular = col;
 }
 
@@ -2012,7 +2012,7 @@ inline void CVertexBuilder::Specular4ubv( unsigned char const *c )
 	#else
 		int col = c[2] | (c[1] << 8) | (c[0] << 16) | (c[3] << 24);
 	#endif
-	
+
 	*(int*)pSpecular = col;
 }
 
@@ -2221,7 +2221,7 @@ inline void CVertexBuilder::BoneMatrix( int idx, int matrixIdx )
 #ifdef OPENGL_SWAP_COLORS
 	idx = sg_IndexSwap[idx];
 #endif
-	
+
 #ifndef NEW_SKINNING
 	unsigned char* pBoneMatrix = &m_pBoneMatrixIndex[m_nCurrentVertex * m_VertexSize_BoneMatrixIndex];
 	if ( IsX360() )
@@ -2341,7 +2341,7 @@ template <VertexCompressionType_t T> inline void CVertexBuilder::CompressedUserD
 #if		( COMPRESSED_NORMALS_TYPE == COMPRESSED_NORMALS_SEPARATETANGENTS_SHORT2 )
 		float *pUserData = OffsetFloatPointer( m_pUserData, m_nCurrentVertex, m_VertexSize_UserData );
 		PackNormal_SHORT2( pData, (unsigned int *)pUserData, binormalSign );
-#else //( COMPRESSED_NORMALS_TYPE == COMPRESSED_NORMALS_COMBINEDTANGENTS_UBYTE4 ) 
+#else //( COMPRESSED_NORMALS_TYPE == COMPRESSED_NORMALS_COMBINEDTANGENTS_UBYTE4 )
 		// FIXME: add a combined CompressedNormalAndTangent() accessor, to avoid reading back from write-combined memory here
 		// The normal should have already been written into the lower 16
 		// bits - here, we OR in the tangent into the upper 16 bits
@@ -2418,7 +2418,7 @@ public:
 	// Resets the mesh builder so it points to the start of everything again
 	void Reset();
 
-	// Selects the nth Index 
+	// Selects the nth Index
 	void SelectIndex( int nBufferIndex );
 
 	// Advances the current index by one
@@ -2492,7 +2492,7 @@ private:
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-inline CIndexBuilder::CIndexBuilder() : m_pIndexBuffer(0), m_nIndexCount(0), 
+inline CIndexBuilder::CIndexBuilder() : m_pIndexBuffer(0), m_nIndexCount(0),
 	m_nCurrentIndex(0),	m_nMaxIndexCount(0)
 {
 	m_nTotalIndexCount = 0;
@@ -2806,7 +2806,7 @@ inline void CIndexBuilder::AdvanceIndex()
 	m_nCurrentIndex += m_nIndexSize;
 	if ( m_nCurrentIndex > m_nIndexCount )
 	{
-		m_nIndexCount = m_nCurrentIndex; 
+		m_nIndexCount = m_nCurrentIndex;
 	}
 }
 
@@ -2815,7 +2815,7 @@ inline void CIndexBuilder::AdvanceIndices( int nIndices )
 	m_nCurrentIndex += nIndices * m_nIndexSize;
 	if ( m_nCurrentIndex > m_nIndexCount )
 	{
-		m_nIndexCount = m_nCurrentIndex; 
+		m_nIndexCount = m_nCurrentIndex;
 	}
 }
 
@@ -2858,7 +2858,7 @@ inline void CIndexBuilder::FastIndex( unsigned short nIndex )
 	Assert( m_nCurrentIndex < m_nMaxIndexCount );
 	m_pIndices[m_nCurrentIndex] = (unsigned short)( m_nIndexOffset + nIndex );
 	m_nCurrentIndex += m_nIndexSize;
-	m_nIndexCount = m_nCurrentIndex;	
+	m_nIndexCount = m_nCurrentIndex;
 }
 
 inline void CIndexBuilder::FastTriangle( int startVert )
@@ -2970,7 +2970,7 @@ inline void CIndexBuilder::FastIndex2( unsigned short nIndex1, unsigned short nI
 
 	*(int*)( &m_pIndices[m_nCurrentIndex] ) = nIndices;
 	m_nCurrentIndex += m_nIndexSize + m_nIndexSize;
-	m_nIndexCount = m_nCurrentIndex;	
+	m_nIndexCount = m_nCurrentIndex;
 }
 
 
@@ -3063,7 +3063,7 @@ public:
 	void EndModify( bool bSpewData = false );
 
 	// A helper method since this seems to be done a whole bunch.
-	void DrawQuad( IMesh* pMesh, const float *v1, const float *v2, 
+	void DrawQuad( IMesh* pMesh, const float *v1, const float *v2,
 		const float *v3, const float *v4, unsigned char const *pColor, bool wireframe = false );
 
 	// returns the number of indices and vertices
@@ -3082,7 +3082,7 @@ public:
 	// Returns the base vertex memory pointer
 	void* BaseVertexData();
 
-	// Selects the nth Vertex and Index 
+	// Selects the nth Vertex and Index
 	void SelectVertex( int idx );
 	void SelectIndex( int idx );
 
@@ -3122,7 +3122,7 @@ public:
 #else
 	float *BoneMatrix() const;
 #endif
-	unsigned short const *Index() const; 
+	unsigned short const *Index() const;
 
 	// position setting
 	void Position3f( float x, float y, float z );
@@ -3174,7 +3174,7 @@ public:
 	void TexCoordSubRect2f( int stage, float s, float t, float offsetS, float offsetT, float scaleS, float scaleT );
 	void TexCoordSubRect2fv( int stage, const float *st, const float *offset, const float *scale );
 
-	// tangent space 
+	// tangent space
 	void TangentS3f( float sx, float sy, float sz );
 	void TangentS3fv( const float *s );
 
@@ -3207,14 +3207,14 @@ public:
 	// Fast Index! No need to call advance index, and no random access allowed
 	void FastIndex( unsigned short index );
 
-	// Fast Vertex! No need to call advance vertex, and no random access allowed. 
+	// Fast Vertex! No need to call advance vertex, and no random access allowed.
 	// WARNING - these are low level functions that are intended only for use
 	// in the software vertex skinner.
 	void FastVertex( const ModelVertexDX7_t &vertex );
 	void FastVertexSSE( const ModelVertexDX7_t &vertex );
 
 	// store 4 dx7 vertices fast. for special sse dx7 pipeline
-	void Fast4VerticesSSE( 
+	void Fast4VerticesSSE(
 		ModelVertexDX7_t const *vtx_a,
 		ModelVertexDX7_t const *vtx_b,
 		ModelVertexDX7_t const *vtx_c,
@@ -3224,17 +3224,17 @@ public:
 	void FastVertexSSE( const ModelVertexDX8_t &vertex );
 
 	// Add number of verts and current vert since FastVertexxx routines do not update.
-	void FastAdvanceNVertices(int n);	
+	void FastAdvanceNVertices(int n);
 
 #if defined( _X360 )
 	void VertexDX8ToX360( const ModelVertexDX8_t &vertex );
 #endif
 
 private:
-	// Computes number of verts and indices 
-	void ComputeNumVertsAndIndices( int *pMaxVertices, int *pMaxIndices, 
+	// Computes number of verts and indices
+	void ComputeNumVertsAndIndices( int *pMaxVertices, int *pMaxIndices,
 		MaterialPrimitiveType_t type, int nPrimitiveCount );
-	int IndicesFromVertices( MaterialPrimitiveType_t type, int nVertexCount ); 
+	int IndicesFromVertices( MaterialPrimitiveType_t type, int nVertexCount );
 
 	// The mesh we're modifying
 	IMesh *m_pMesh;
@@ -3282,7 +3282,7 @@ inline CMeshBuilder::CMeshBuilder()	: m_pMesh(0), m_bGenerateIndices(false)
 //-----------------------------------------------------------------------------
 // Computes the number of verts and indices based on primitive type and count
 //-----------------------------------------------------------------------------
-inline void CMeshBuilder::ComputeNumVertsAndIndices( int *pMaxVertices, int *pMaxIndices, 
+inline void CMeshBuilder::ComputeNumVertsAndIndices( int *pMaxVertices, int *pMaxIndices,
 													MaterialPrimitiveType_t type, int nPrimitiveCount )
 {
 	switch(type)
@@ -3434,7 +3434,7 @@ inline void CMeshBuilder::Begin( IMesh* pMesh, MaterialPrimitiveType_t type, int
 	Assert( pMesh && (!m_pMesh) );
 
 	// NOTE: We can't specify the indices when we use quads, polygons, or
-	// linestrips; they aren't actually directly supported by 
+	// linestrips; they aren't actually directly supported by
 	// the material system
 	Assert( (type != MATERIAL_QUADS) && (type != MATERIAL_INSTANCED_QUADS) && (type != MATERIAL_POLYGON) &&
 		(type != MATERIAL_LINE_STRIP) && (type != MATERIAL_LINE_LOOP));
@@ -3561,7 +3561,7 @@ inline void CMeshBuilder::Reset()
 
 
 //-----------------------------------------------------------------------------
-// Selects the current Vertex and Index 
+// Selects the current Vertex and Index
 //-----------------------------------------------------------------------------
 FORCEINLINE void CMeshBuilder::SelectVertex( int nIndex )
 {
@@ -3570,7 +3570,7 @@ FORCEINLINE void CMeshBuilder::SelectVertex( int nIndex )
 
 inline void CMeshBuilder::SelectVertexFromIndex( int idx )
 {
-	// NOTE: This index is expected to be relative 
+	// NOTE: This index is expected to be relative
 	int vertIdx = idx - m_nFirstVertex;
 	SelectVertex( vertIdx );
 }
@@ -3622,7 +3622,7 @@ FORCEINLINE int CMeshBuilder::GetCurrentIndex()
 //-----------------------------------------------------------------------------
 // A helper method since this seems to be done a whole bunch.
 //-----------------------------------------------------------------------------
-inline void CMeshBuilder::DrawQuad( IMesh* pMesh, const float* v1, const float* v2, 
+inline void CMeshBuilder::DrawQuad( IMesh* pMesh, const float* v1, const float* v2,
 								   const float* v3, const float* v4, unsigned char const* pColor, bool wireframe )
 {
 	if (!wireframe)
@@ -3797,7 +3797,7 @@ FORCEINLINE void CMeshBuilder::FastVertexSSE( const ModelVertexDX7_t &vertex )
 	m_VertexBuilder.FastVertexSSE( vertex );
 }
 
-FORCEINLINE void CMeshBuilder::Fast4VerticesSSE( 
+FORCEINLINE void CMeshBuilder::Fast4VerticesSSE(
 	const ModelVertexDX7_t *vtx_a, const ModelVertexDX7_t *vtx_b,
 	const ModelVertexDX7_t *vtx_c, const ModelVertexDX7_t *vtx_d )
 {

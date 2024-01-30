@@ -74,7 +74,7 @@ bool CControlPointMaster::KeyValue( const char *szKeyName, const char *szValue )
 	else
 	{
 		return CBaseEntity::KeyValue( szKeyName, szValue );
-	}	
+	}
 
 	return true;
 }
@@ -90,7 +90,7 @@ bool CControlPointMaster::FindControlPoints( void )
 	CBaseEntity *pEnt = gEntList.FindEntityByClassname( NULL, "dod_control_point" );
 
 	int numFound = 0;
-	
+
 	while( pEnt )
 	{
 		CControlPoint *pPoint = (CControlPoint *)pEnt;
@@ -156,11 +156,11 @@ bool CControlPointMaster::FindControlPoints( void )
 		m_ControlPoints[lowestIndex]->SetPointIndex( newIndex );
 		newIndex++;
 	}
-	
-	if( m_ControlPoints.Count() == 0 ) 
+
+	if( m_ControlPoints.Count() == 0 )
 	{
 		Warning( "Error! No control points found in map!\n");
-		return false;	
+		return false;
 	}
 
 	g_pObjectiveResource->SetNumControlPoints( m_ControlPoints.Count() );
@@ -175,7 +175,7 @@ bool CControlPointMaster::FindControlPoints( void )
 		g_pObjectiveResource->SetOwningTeam( iPointIndex, pPoint->GetOwner() );
 		g_pObjectiveResource->SetCPVisible( iPointIndex, pPoint->PointIsVisible() );
 		g_pObjectiveResource->SetCPPosition( iPointIndex, pPoint->GetAbsOrigin() );
-	
+
 		g_pObjectiveResource->SetBombsRequired( iPointIndex, pPoint->GetBombsRequired() );
 		g_pObjectiveResource->SetBombsRemaining( iPointIndex, pPoint->GetBombsRemaining() );
 
@@ -186,7 +186,7 @@ bool CControlPointMaster::FindControlPoints( void )
 			pPoint->GetTimerCapHudIcon(),
 			pPoint->GetBombedHudIcon() );
 	}
-	
+
 	return true;
 }
 
@@ -196,7 +196,7 @@ bool CControlPointMaster::FindControlPoints( void )
 // if one team owns them all, it gives points and resets
 // Think also gives the time based points at the specified time intervals
 //
-// I moved the search for spawn points to the initial think - sometimes the points spawned 
+// I moved the search for spawn points to the initial think - sometimes the points spawned
 // after the master and it wasnt finding them.
 
 void CControlPointMaster::CPMThink( void )
@@ -224,16 +224,16 @@ void CControlPointMaster::CPMThink( void )
 	//Note! Only one cpm should ever be active at the same time
 	//funny things may happen if there are two of em!
 	//if we are recently mastered on or off, touch the cps
-					
+
 	//---------------------------------------------------------------------------
-	//below here we shouldn't execute unless we are an active control point master 
-	
+	//below here we shouldn't execute unless we are an active control point master
+
 	//if the round has been decided, don't do any more thinking
 	//if this cpm is not active, dont' do any thinking
 
 	int iRoundState = DODGameRules()->State_Get();
 
-	// No points or triggering new wins if we are not active 
+	// No points or triggering new wins if we are not active
 	if( m_bDisabled || iRoundState != STATE_RND_RUNNING )
 	{
 		SetContextThink( &CControlPointMaster::CPMThink, gpGlobals->curtime + 0.2, FLAGS_CONTEXT );
@@ -247,7 +247,7 @@ void CControlPointMaster::CPMThink( void )
 		int AxisPoints = 0;
 
 		//give points based on who owns what
-		unsigned int i;	
+		unsigned int i;
 		for( i=0;i<m_ControlPoints.Count();i++ )
 		{
 			switch( m_ControlPoints[i]->GetOwner() )
@@ -272,9 +272,9 @@ void CControlPointMaster::CPMThink( void )
 		bool bFoundAxis = ( GetGlobalTeam(TEAM_AXIS)->GetNumPlayers() > 0 );
 
 		bool bReportScore = true;
-		
+
 		// don't give team points to a team with no-one on it!
-		if( AlliesPoints > 0 && bFoundAllies && DODGameRules()->State_Get() == STATE_RND_RUNNING  ) 
+		if( AlliesPoints > 0 && bFoundAllies && DODGameRules()->State_Get() == STATE_RND_RUNNING  )
 		{
 			if( bReportScore )
 			{
@@ -302,7 +302,7 @@ void CControlPointMaster::CPMThink( void )
 			}
 		}
 
-		if( AxisPoints > 0 && bFoundAxis && DODGameRules()->State_Get() == STATE_RND_RUNNING ) 
+		if( AxisPoints > 0 && bFoundAxis && DODGameRules()->State_Get() == STATE_RND_RUNNING )
 		{
 			if( bReportScore )
 			{
@@ -321,7 +321,7 @@ void CControlPointMaster::CPMThink( void )
 
 			if ( event )
 			{
-                event->SetInt( "team", TEAM_AXIS );
+	event->SetInt( "team", TEAM_AXIS );
 				event->SetInt( "score", AxisPoints );
 				event->SetInt( "totalscore", GetGlobalTeam(TEAM_AXIS)->GetScore() );
 				gameeventmanager->FireEvent( event );
@@ -332,7 +332,7 @@ void CControlPointMaster::CPMThink( void )
 		m_fGivePointsTime = gpGlobals->curtime + mp_tickpointinterval.GetInt();
 	}
 
-	// If we call this from dod_control_point, this function should never 
+	// If we call this from dod_control_point, this function should never
 	// trigger a win. but we'll leave it here just incase.
 	CheckWinConditions();
 
@@ -349,10 +349,10 @@ void CControlPointMaster::CheckWinConditions( void )
 	// ============
 	switch( TeamOwnsAllPoints() )
 	{
-	case TEAM_ALLIES:	//allies own all		
+	case TEAM_ALLIES:	//allies own all
 		{
 			TeamWins( TEAM_ALLIES );
-		}			
+		}
 		break;
 	case TEAM_AXIS:	//axis owns all
 		{
@@ -379,7 +379,7 @@ void CControlPointMaster::InputRoundInit( inputdata_t &input )
 
 	//init the ClientAreas
 	int index = 0;
-	
+
 	CBaseEntity *pEnt = gEntList.FindEntityByClassname( NULL, "dod_capture_area" );
 	while( pEnt )
 	{
@@ -390,7 +390,7 @@ void CControlPointMaster::InputRoundInit( inputdata_t &input )
 
 		pEnt = gEntList.FindEntityByClassname( pEnt, "dod_capture_area" );
 	}
-	
+
 	g_pObjectiveResource->ResetControlPoints();
 }
 
@@ -447,10 +447,10 @@ int CControlPointMaster::GetPointOwner( int point )
 // TeamOwnsAllPoints
 // =================
 // This function returns the team that owns all
-// the cap points. if its not the case that one 
+// the cap points. if its not the case that one
 // team owns them all, it returns 0
 
-// New - cps are now broken into groups. 
+// New - cps are now broken into groups.
 // A team can win by owning all flags within a single group.
 
 // Can be passed an overriding team. If this is not null, the passed team
@@ -469,7 +469,7 @@ int CControlPointMaster::TeamOwnsAllPoints( CControlPoint *pOverridePoint /* = N
 	}
 
 	// if TEAM_INVALID, haven't found a flag for this group yet
-	// if TEAM_UNASSIGNED, the group is still being contested 
+	// if TEAM_UNASSIGNED, the group is still being contested
 
 	// for each control point
 	for( i=0;i<m_ControlPoints.Count();i++ )
@@ -496,7 +496,7 @@ int CControlPointMaster::TeamOwnsAllPoints( CControlPoint *pOverridePoint /* = N
 		else if ( owner != iWinningTeam[group] )
 		{
 			iWinningTeam[group] = TEAM_UNASSIGNED;
-		}		
+		}
 	}
 
 	// report the first win we find as the winner
@@ -528,7 +528,7 @@ int CControlPointMaster::CountAdvantageFlags( int team )
 				// we own a flag we didn't initially
 				numFlags++;
 			}
-			else // 
+			else //
 			{
 				// the enemy owns one of our flags
 				numFlags--;

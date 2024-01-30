@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -40,7 +40,7 @@ int	SendTable_GetNumFlatProps( SendTable *pTable );
 
 // compares properties and writes delta properties
 int SendTable_WriteAllDeltaProps(
-	const SendTable *pTable,					
+	const SendTable *pTable,
 	const void *pFromData,
 	const int	nFromDataBits,
 	const void *pToData,
@@ -65,7 +65,7 @@ void SendTable_WritePropList(
 //
 int	SendTable_CalcDelta(
 	const SendTable *pTable,
-	
+
 	const void *pFromState,
 	const int nFromBits,
 
@@ -84,20 +84,20 @@ int	SendTable_CalcDelta(
 //
 // If pOldStateProxies is non-null, this function adds new properties into the output list
 // if a proxy has turned on from the previous state.
-int SendTable_CullPropsFromProxies( 
+int SendTable_CullPropsFromProxies(
 	const SendTable *pTable,
-	
+
 	const int *pStartProps,
 	int nStartProps,
 
 	const int iClient,
-	
+
 	const CSendProxyRecipients *pOldStateProxies,
-	const int nOldStateProxies, 
-	
+	const int nOldStateProxies,
+
 	const CSendProxyRecipients *pNewStateProxies,
 	const int nNewStateProxies,
-	
+
 	int *pOutProps,
 	int nMaxOutProps
 	);
@@ -107,8 +107,8 @@ int SendTable_CullPropsFromProxies(
 // If pDeltaBits is NULL, then all the properties are encoded.
 bool SendTable_Encode(
 	const SendTable *pTable,
-	const void *pStruct, 
-	bf_write *pOut, 
+	const void *pStruct,
+	bf_write *pOut,
 	int objectID = -1,
 	CUtlMemory<CSendProxyRecipients> *pRecipients = NULL,	// If non-null, this is an array of CSendProxyRecipients.
 															// The array must have room for pTable->GetNumDataTableProxies().

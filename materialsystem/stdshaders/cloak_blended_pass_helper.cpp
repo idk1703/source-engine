@@ -7,7 +7,7 @@
 			"$cloakPassEnabled" "1"
 
 		#include "cloak_blended_pass_helper.h"
- 
+
 		In BEGIN_SHADER_PARAMS:
 			// Cloak Pass
 			SHADER_PARAM( CLOAKPASSENABLED, SHADER_PARAM_TYPE_BOOL, "0", "Enables cloak render in a second pass" )
@@ -34,8 +34,8 @@
  				info.m_nBumpTransform = BUMPTRANSFORM;
 			}
 
-			bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const 
-			{ 
+			bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const
+			{
 				if ( params[CLOAKPASSENABLED]->GetIntValue() ) // If material supports cloaking
 				{
 					if ( bCheckSpecificToThisFrame == false ) // For setting model flag at load time
@@ -46,7 +46,7 @@
 				}
 
 				// Check flag2 if not drawing cloak pass
-				return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE ); 
+				return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE );
 			}
 
 			bool IsTranslucent( IMaterialVar **params ) const
@@ -59,7 +59,7 @@
 				}
 
 				// Check flag if not drawing cloak pass
-				return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT ); 
+				return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT );
 			}
 
 		In SHADER_INIT_PARAMS()
@@ -264,7 +264,7 @@ void DrawCloakBlendedPass( CBaseVSShader *pShader, IMaterialVar** params, IShade
 		// Reset render state manually since we're drawing from two materials
 		pShaderAPI->SetDefaultState();
 
-		// Set Vertex Shader Constants 
+		// Set Vertex Shader Constants
 		if ( ( bBumpMapping ) && ( info.m_nBumpTransform != -1 ) )
 		{
 			pShader->SetVertexShaderTextureTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, info.m_nBumpTransform );
@@ -317,7 +317,7 @@ void DrawCloakBlendedPass( CBaseVSShader *pShader, IMaterialVar** params, IShade
 			pShader->BindTexture( SHADER_SAMPLER1, info.m_nBumpmap, info.m_nBumpFrame );
 		}
 
-		// Set Pixel Shader Constants 
+		// Set Pixel Shader Constants
 		float vEyePos[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 		pShaderAPI->GetWorldSpaceCameraPosition( vEyePos );
 		pShaderAPI->SetPixelShaderConstant( 5, vEyePos, 1 );

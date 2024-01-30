@@ -13,7 +13,7 @@
 
 	/* Structure of a single round subkey */
 class IceSubkey {
-    public:
+	public:
 	unsigned long	val[3];
 };
 
@@ -69,13 +69,13 @@ gf_mult (
 	register unsigned int	res = 0;
 
 	while (b) {
-	    if (b & 1)
+		if (b & 1)
 		res ^= a;
 
-	    a <<= 1;
-	    b >>= 1;
+		a <<= 1;
+		b >>= 1;
 
-	    if (a >= 256)
+		if (a >= 256)
 		a ^= m;
 	}
 
@@ -96,7 +96,7 @@ gf_exp7 (
 	register unsigned int	x;
 
 	if (b == 0)
-	    return (0);
+		return (0);
 
 	x = gf_mult (b, b, m);
 	x = gf_mult (b, x, m);
@@ -117,10 +117,10 @@ ice_perm32 (
 	register const unsigned long	*pbox = ice_pbox;
 
 	while (x) {
-	    if (x & 1)
+		if (x & 1)
 		res |= *pbox;
-	    pbox++;
-	    x >>= 1;
+		pbox++;
+		x >>= 1;
 	}
 
 	return (res);
@@ -138,21 +138,21 @@ ice_sboxes_init (void)
 	register int	i;
 
 	for (i=0; i<1024; i++) {
-	    int			col = (i >> 1) & 0xff;
-	    int			row = (i & 0x1) | ((i & 0x200) >> 8);
-	    unsigned long	x;
+		int			col = (i >> 1) & 0xff;
+		int			row = (i & 0x1) | ((i & 0x200) >> 8);
+		unsigned long	x;
 
-	    x = gf_exp7 (col ^ ice_sxor[0][row], ice_smod[0][row]) << 24;
-	    ice_sbox[0][i] = ice_perm32 (x);
+		x = gf_exp7 (col ^ ice_sxor[0][row], ice_smod[0][row]) << 24;
+		ice_sbox[0][i] = ice_perm32 (x);
 
-	    x = gf_exp7 (col ^ ice_sxor[1][row], ice_smod[1][row]) << 16;
-	    ice_sbox[1][i] = ice_perm32 (x);
+		x = gf_exp7 (col ^ ice_sxor[1][row], ice_smod[1][row]) << 16;
+		ice_sbox[1][i] = ice_perm32 (x);
 
-	    x = gf_exp7 (col ^ ice_sxor[2][row], ice_smod[2][row]) << 8;
-	    ice_sbox[2][i] = ice_perm32 (x);
+		x = gf_exp7 (col ^ ice_sxor[2][row], ice_smod[2][row]) << 8;
+		ice_sbox[2][i] = ice_perm32 (x);
 
-	    x = gf_exp7 (col ^ ice_sxor[3][row], ice_smod[3][row]);
-	    ice_sbox[3][i] = ice_perm32 (x);
+		x = gf_exp7 (col ^ ice_sxor[3][row], ice_smod[3][row]);
+		ice_sbox[3][i] = ice_perm32 (x);
 	}
 }
 
@@ -164,16 +164,16 @@ ice_sboxes_init (void)
 IceKey::IceKey (int n)
 {
 	if (!ice_sboxes_initialised) {
-	    ice_sboxes_init ();
-	    ice_sboxes_initialised = 1;
+		ice_sboxes_init ();
+		ice_sboxes_initialised = 1;
 	}
 
 	if (n < 1) {
-	    _size = 1;
-	    _rounds = 8;
+		_size = 1;
+		_rounds = 8;
 	} else {
-	    _size = n;
-	    _rounds = n * 16;
+		_size = n;
+		_rounds = n * 16;
 	}
 
 	_keysched = new IceSubkey[_rounds];
@@ -189,7 +189,7 @@ IceKey::~IceKey ()
 	int	i, j;
 
 	for (i=0; i<_rounds; i++)
-	    for (j=0; j<3; j++)
+		for (j=0; j<3; j++)
 		_keysched[i].val[j] = 0;
 
 	_rounds = _size = 0;
@@ -253,16 +253,16 @@ IceKey::encrypt (
 				| (((unsigned long) ptext[6]) << 8) | ptext[7];
 
 	for (i = 0; i < _rounds; i += 2) {
-	    l ^= ice_f (r, &_keysched[i]);
-	    r ^= ice_f (l, &_keysched[i + 1]);
+		l ^= ice_f (r, &_keysched[i]);
+		r ^= ice_f (l, &_keysched[i + 1]);
 	}
 
 	for (i = 0; i < 4; i++) {
-	    ctext[3 - i] = r & 0xff;
-	    ctext[7 - i] = l & 0xff;
+		ctext[3 - i] = r & 0xff;
+		ctext[7 - i] = l & 0xff;
 
-	    r >>= 8;
-	    l >>= 8;
+		r >>= 8;
+		l >>= 8;
 	}
 }
 
@@ -288,16 +288,16 @@ IceKey::decrypt (
 				| (((unsigned long) ctext[6]) << 8) | ctext[7];
 
 	for (i = _rounds - 1; i > 0; i -= 2) {
-	    l ^= ice_f (r, &_keysched[i]);
-	    r ^= ice_f (l, &_keysched[i - 1]);
+		l ^= ice_f (r, &_keysched[i]);
+		r ^= ice_f (l, &_keysched[i - 1]);
 	}
 
 	for (i = 0; i < 4; i++) {
-	    ptext[3 - i] = r & 0xff;
-	    ptext[7 - i] = l & 0xff;
+		ptext[3 - i] = r & 0xff;
+		ptext[7 - i] = l & 0xff;
 
-	    r >>= 8;
-	    l >>= 8;
+		r >>= 8;
+		l >>= 8;
 	}
 }
 
@@ -315,25 +315,25 @@ IceKey::scheduleBuild (
 	int		i;
 
 	for (i=0; i<8; i++) {
-	    register int	j;
-	    register int	kr = keyrot[i];
-	    IceSubkey		*isk = &_keysched[n + i];
+		register int	j;
+		register int	kr = keyrot[i];
+		IceSubkey		*isk = &_keysched[n + i];
 
-	    for (j=0; j<3; j++)
+		for (j=0; j<3; j++)
 		isk->val[j] = 0;
 
-	    for (j=0; j<15; j++) {
+		for (j=0; j<15; j++) {
 		register int	k;
 		unsigned long	*curr_sk = &isk->val[j % 3];
 
 		for (k=0; k<4; k++) {
-		    unsigned short	*curr_kb = &kb[(kr + k) & 3];
-		    register int	bit = *curr_kb & 1;
+			unsigned short	*curr_kb = &kb[(kr + k) & 3];
+			register int	bit = *curr_kb & 1;
 
-		    *curr_sk = (*curr_sk << 1) | bit;
-		    *curr_kb = (*curr_kb >> 1) | ((bit ^ 1) << 15);
+			*curr_sk = (*curr_sk << 1) | bit;
+			*curr_kb = (*curr_kb >> 1) | ((bit ^ 1) << 15);
 		}
-	    }
+		}
 	}
 }
 
@@ -349,24 +349,24 @@ IceKey::set (
 	int		i;
 
 	if (_rounds == 8) {
-	    unsigned short	kb[4];
+		unsigned short	kb[4];
 
-	    for (i=0; i<4; i++)
+		for (i=0; i<4; i++)
 		kb[3 - i] = (key[i*2] << 8) | key[i*2 + 1];
 
-	    scheduleBuild (kb, 0, ice_keyrot);
-	    return;
+		scheduleBuild (kb, 0, ice_keyrot);
+		return;
 	}
 
 	for (i=0; i<_size; i++) {
-	    int			j;
-	    unsigned short	kb[4];
+		int			j;
+		unsigned short	kb[4];
 
-	    for (j=0; j<4; j++)
+		for (j=0; j<4; j++)
 		kb[3 - j] = (key[i*8 + j*2] << 8) | key[i*8 + j*2 + 1];
 
-	    scheduleBuild (kb, i*8, ice_keyrot);
-	    scheduleBuild (kb, _rounds - 8 - i*8, &ice_keyrot[8]);
+		scheduleBuild (kb, i*8, ice_keyrot);
+		scheduleBuild (kb, _rounds - 8 - i*8, &ice_keyrot[8]);
 	}
 }
 

@@ -25,7 +25,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-enum 
+enum
 {
 	CRATETYPE_NORMAL = 0,
 	CRATETYPE_ROBO = 1,
@@ -52,14 +52,14 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CConfirmDecodeDialog::CConfirmDecodeDialog( vgui::Panel *parent, CEconItemView *pTool, CEconItemView *pToolSubject ) : CBaseToolUsageDialog( parent, "ConfirmApplyDecodeDialog", pTool, pToolSubject )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmDecodeDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -95,14 +95,14 @@ void CConfirmDecodeDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 	{
 		loc_Append = LOCCHAR( "" );
 	}
-	
+
 	SetDialogVariable( "optional_append", loc_Append );
 
 	BaseClass::ApplySchemeSettings( pScheme );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmDecodeDialog::OnCommand( const char *command )
 {
@@ -115,7 +115,7 @@ void CConfirmDecodeDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CConfirmDecodeDialog::Apply( void )
 {
@@ -176,7 +176,7 @@ protected:
 		{
 			vgui::surface()->PlaySound( "misc/achievement_earned.wav" );
 		}
-		
+
 
 		// Show them their loot!
 		InventoryManager()->ShowItemsPickedUp( true );

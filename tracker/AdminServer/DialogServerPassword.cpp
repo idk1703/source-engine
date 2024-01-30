@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -62,8 +62,8 @@ void CDialogServerPassword::Activate(const char *serverName, unsigned int server
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *command - 
+// Purpose:
+// Input  : *command -
 //-----------------------------------------------------------------------------
 void CDialogServerPassword::OnCommand(const char *command)
 {
@@ -98,7 +98,7 @@ void CDialogServerPassword::OnCommand(const char *command)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDialogServerPassword::PerformLayout()
 {
@@ -113,7 +113,3 @@ void CDialogServerPassword::OnClose()
 	BaseClass::OnClose();
 	MarkForDeletion();
 }
-
-
-
-

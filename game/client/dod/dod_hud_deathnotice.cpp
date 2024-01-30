@@ -34,7 +34,7 @@ ConVar cl_deathicon_height( "cl_deathicon_height", "18" );
 
 #define MAX_DEATHNOTICE_NAME_LENGTH		128	// to hold multiple player cappers
 
-// a very useful function for getting the ideal scale factor of a sprite that's to be 
+// a very useful function for getting the ideal scale factor of a sprite that's to be
 // scaled into a space
 float GetScale( int nIconWidth, int nIconHeight, int nWidth, int nHeight );
 
@@ -46,7 +46,7 @@ struct DeathNoticePlayer
 };
 
 // Contents of each entry in our list of death notices
-struct DeathNoticeItem 
+struct DeathNoticeItem
 {
 	DeathNoticeItem()
 	{
@@ -84,7 +84,7 @@ struct DeathNoticeItem
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudDeathNotice : public CHudElement, public vgui::Panel
 {
@@ -100,7 +100,7 @@ public:
 
 	void SetColorForNoticePlayer( int iTeamNumber );
 	void RetireExpiredDeathNotices( void );
-	
+
 	void FireGameEvent( IGameEvent * event);
 
 	void DrawBackgroundBox( int x, int y, int w, int h, bool bLocalPlayerInvolved );
@@ -141,7 +141,7 @@ using namespace vgui;
 DECLARE_HUDELEMENT( CHudDeathNotice );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudDeathNotice::CHudDeathNotice( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass( NULL, "HudDeathNotice" )
@@ -156,7 +156,7 @@ CHudDeathNotice::CHudDeathNotice( const char *pElementName ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::ApplySchemeSettings( IScheme *scheme )
 {
@@ -165,7 +165,7 @@ void CHudDeathNotice::ApplySchemeSettings( IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::Init( void )
 {
@@ -177,7 +177,7 @@ void CHudDeathNotice::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::VidInit( void )
 {
@@ -208,7 +208,7 @@ bool CHudDeathNotice::IsVisible( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::SetColorForNoticePlayer( int iTeamNumber )
 {
@@ -217,7 +217,7 @@ void CHudDeathNotice::SetColorForNoticePlayer( int iTeamNumber )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudDeathNotice::Paint()
 {
@@ -234,7 +234,7 @@ void CHudDeathNotice::Paint()
 		if ( m_DeathNotices[i].bDefense )
 			y += DrawDefenseItem( &m_DeathNotices[i], x, y );
 		else
-            y += DrawDeathNoticeItem( &m_DeathNotices[i], x, y );
+	y += DrawDeathNoticeItem( &m_DeathNotices[i], x, y );
 	}
 
 	// Now retire any death notices that have expired
@@ -246,7 +246,7 @@ int CHudDeathNotice::DrawDefenseItem( DeathNoticeItem *pItem, int xRight, int y 
 	// Get the team numbers for the players involved
 	int iKillerTeam = pItem->Killer.iEntIndex;
 	int iVictimTeam = TEAM_UNASSIGNED;
-	
+
 	wchar_t victim[ 256 ];
 	wchar_t killer[ 256 ];
 
@@ -263,7 +263,7 @@ int CHudDeathNotice::DrawDefenseItem( DeathNoticeItem *pItem, int xRight, int y 
 	iconWide = iconTall = (int)( scale * 16.0 );
 
 	int iconDefSize = (int)( scale * 32.0 );
-	
+
 	int spacerX = XRES(5);
 
 	int x = xRight - len - spacerX - iconWide - XRES(10);
@@ -278,7 +278,7 @@ int CHudDeathNotice::DrawDefenseItem( DeathNoticeItem *pItem, int xRight, int y 
 
 	boxWidth += iconDefSize;
 
-	int boxHeight = m_flLineHeight;	
+	int boxHeight = m_flLineHeight;
 	int boxBorder = XRES(2);
 
 	// Draw Defender's name
@@ -291,7 +291,7 @@ int CHudDeathNotice::DrawDefenseItem( DeathNoticeItem *pItem, int xRight, int y 
 
 	SetColorForNoticePlayer( iKillerTeam );
 
-	// Draw killer's name			
+	// Draw killer's name
 	surface()->DrawSetTextPos( x, yText );
 	surface()->DrawUnicodeString( killer );
 	surface()->DrawGetTextPos( x, yText );
@@ -352,7 +352,7 @@ int CHudDeathNotice::DrawDeathNoticeItem( DeathNoticeItem *pItem, int xRight, in
 			iKillerTeam = g_PR->GetTeam( pItem->Killer.iEntIndex );
 			iVictimTeam = g_PR->GetTeam( pItem->Victim.iEntIndex );
 		}
-	}		
+	}
 
 	wchar_t victim[ 256 ];
 	wchar_t killer[ 256 ];
@@ -391,7 +391,7 @@ int CHudDeathNotice::DrawDeathNoticeItem( DeathNoticeItem *pItem, int xRight, in
 			iconWide = (int)( scale * (float)icon->Width() );
 			iconTall = (int)( scale * (float)icon->Height() );
 		}
-	}		
+	}
 
 	int spacerX = XRES(5);
 
@@ -411,7 +411,7 @@ int CHudDeathNotice::DrawDeathNoticeItem( DeathNoticeItem *pItem, int xRight, in
 		boxWidth += iconWide;	//m_iDefendedIconSize;
 	}
 
-	int boxHeight = m_flLineHeight;	//MIN( iconTall, m_flLineHeight );	
+	int boxHeight = m_flLineHeight;	//MIN( iconTall, m_flLineHeight );
 	int boxBorder = XRES(2);
 
 	int yText = y + ( m_flLineHeight - iFontTall ) / 2;
@@ -429,7 +429,7 @@ int CHudDeathNotice::DrawDeathNoticeItem( DeathNoticeItem *pItem, int xRight, in
 
 		SetColorForNoticePlayer( iKillerTeam );
 
-		// Draw killer's name			
+		// Draw killer's name
 		surface()->DrawSetTextPos( x, yText );
 		const wchar_t *p = killer;
 		while ( *p )
@@ -490,7 +490,7 @@ int CHudDeathNotice::DrawDominationNoticeItem( DeathNoticeItem *pItem, int xRigh
 	{
 		iKillerTeam = g_PR->GetTeam( pItem->Killer.iEntIndex );
 		iVictimTeam = g_PR->GetTeam( pItem->Victim.iEntIndex );
-	}	
+	}
 
 	wchar_t victim[ 256 ];
 	wchar_t killer[ 256 ];
@@ -521,7 +521,7 @@ int CHudDeathNotice::DrawDominationNoticeItem( DeathNoticeItem *pItem, int xRigh
 		float scale = GetScale( icon->Width(), icon->Height(), XRES(cl_deathicon_width.GetInt()), YRES(cl_deathicon_height.GetInt()) );
 		iconWide = (int)( scale * (float)icon->Width() );
 		iconTall = (int)( scale * (float)icon->Height() );
-	}	
+	}
 
 	int spacerX = XRES(5);
 
@@ -535,7 +535,7 @@ int CHudDeathNotice::DrawDominationNoticeItem( DeathNoticeItem *pItem, int xRigh
 	x -= iDominatingLen;
 	boxWidth += iDominatingLen;
 
-	int boxHeight = m_flLineHeight;	//MIN( iconTall, m_flLineHeight );	
+	int boxHeight = m_flLineHeight;	//MIN( iconTall, m_flLineHeight );
 	int boxBorder = XRES(2);
 
 	int yText = y + ( m_flLineHeight - iFontTall ) / 2;
@@ -550,7 +550,7 @@ int CHudDeathNotice::DrawDominationNoticeItem( DeathNoticeItem *pItem, int xRigh
 
 	SetColorForNoticePlayer( iKillerTeam );
 
-	// Draw killer's name			
+	// Draw killer's name
 	surface()->DrawSetTextPos( x, yText );
 	const wchar_t *p = killer;
 	while ( *p )
@@ -664,7 +664,7 @@ void CHudDeathNotice::FireGameEvent( IGameEvent * event)
 
 		char szCappers[256];
 		szCappers[0] = '\0';
-		
+
 		int len = Q_strlen(cappers);
 		for( int i=0;i<len;i++ )
 		{
@@ -694,7 +694,7 @@ void CHudDeathNotice::FireGameEvent( IGameEvent * event)
 			}
 
 			Q_strncat( szCappers, pPlayerName, sizeof(szCappers), COPY_ALL_CHARACTERS );
-		}		
+		}
 
 		Q_strncpy( capMsg.Killer.szName, szCappers, sizeof(capMsg.Killer.szName) );
 
@@ -754,7 +754,7 @@ void CHudDeathNotice::FireGameEvent( IGameEvent * event)
 		if ( iBlocker == iLocalPlayerIndex )
 			capMsg.bLocalPlayerInvolved = true;
 
-		Q_strncpy( capMsg.Killer.szName, g_PR->GetPlayerName( iBlocker ), sizeof(capMsg.Killer.szName) );	
+		Q_strncpy( capMsg.Killer.szName, g_PR->GetPlayerName( iBlocker ), sizeof(capMsg.Killer.szName) );
 
 		char buf[128];
 
@@ -777,7 +777,7 @@ void CHudDeathNotice::FireGameEvent( IGameEvent * event)
 		m_DeathNotices.AddToTail( capMsg );
 	}
 	else if ( Q_strcmp( "player_death", pEventName ) == 0 )
-	{		
+	{
 		int killer = engine->GetPlayerForUserID( event->GetInt("attacker") );
 		int victim = engine->GetPlayerForUserID( event->GetInt("userid") );
 		const char *killedwith = event->GetString( "weapon" );
@@ -839,7 +839,7 @@ void CHudDeathNotice::FireGameEvent( IGameEvent * event)
 			AddAdditionalMsg( killer, victim, "#Msg_Dominating" );
 			PlayRivalrySounds( killer, victim, DOD_DEATHFLAG_DOMINATION );
 		}
-		if ( event->GetInt( "revenge" ) > 0 ) 
+		if ( event->GetInt( "revenge" ) > 0 )
 		{
 			AddAdditionalMsg( killer, victim, "#Msg_Revenge" );
 			PlayRivalrySounds( killer, victim, DOD_DEATHFLAG_REVENGE );
@@ -870,7 +870,7 @@ void CHudDeathNotice::FireGameEvent( IGameEvent * event)
 		}
 
 		Msg( "%s",sDeathMsg );
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------

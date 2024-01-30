@@ -30,7 +30,7 @@
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 bool CDmMeshUtils::RemoveLargeAxisAlignedPlanarFaces( CDmeMesh *pMesh )
 {
@@ -90,7 +90,7 @@ bool CDmMeshUtils::RemoveLargeAxisAlignedPlanarFaces( CDmeMesh *pMesh )
 
 		removeStart.RemoveAll();
 		removeCount.RemoveAll();
-		
+
 		p = posData[ posIndices[ faceCurrentIndex ] ];
 
 		for ( int j = 1; j < nFaceIndices; ++j )
@@ -243,7 +243,7 @@ bool CDmMeshUtils::RemoveFacesWithMoreThanNVerts( CDmeMesh *pMesh, const int nVe
 
 		removeStart.RemoveAll();
 		removeCount.RemoveAll();
-		
+
 		for ( int j = 1; j < nFaceIndices; ++j )
 		{
 			faceCurrentIndex = pFaceSet->GetIndex( j );
@@ -639,7 +639,7 @@ bool CDmMeshUtils::PurgeUnusedData( CDmeMesh *pMesh )
 	CUtlVector< int > vertexIndexMap;
 	ComputeVertexIndexMap( pMesh, nMaxVertexCount, vertexIndexMap );
 
-	// Remove the redundant vertices from all base states 
+	// Remove the redundant vertices from all base states
 	for ( int i = pMesh->BaseStateCount() - 1; i >= 0; --i )
 	{
 		RemoveUnusedVerticesFromBaseState( pMesh, pMesh->GetBaseState( i ), vertexIndexMap );
@@ -841,7 +841,7 @@ const int *CDmMeshUtils::BuildDataMirrorMap( CDmeVertexData *pBase, int axis, CD
 //-----------------------------------------------------------------------------
 // y = mirrorMap[ x ] means that if y < 0 then original position x is not
 // mirrored.  Otherwise y is the index into the vertex indices of the mirrored
-// version of vertex 
+// version of vertex
 //-----------------------------------------------------------------------------
 bool CDmMeshUtils::MirrorVertices( CDmeMesh *pMesh, CDmeVertexData *pBase, int axis, CUtlVector< int > &mirrorMap )
 {
@@ -2302,7 +2302,7 @@ DmFileId_t CreateUniqueFileId()
 	UniqueId_t uniqueId;
 	char fileIdBuf[ MAX_PATH ];
 
-	do 
+	do
 	{
 		CreateUniqueId( &uniqueId );
 		UniqueIdToString( uniqueId, fileIdBuf, sizeof( fileIdBuf ) );
@@ -3210,7 +3210,7 @@ void CDmMeshUtils::PurgeUnreferencedDeltas( CDmeMesh *pMesh, CUtlStringMap< CDme
 {
 	// Loop because deleting changes indexing
 	bool bDeleted = false;
-	do 
+	do
 	{
 		bDeleted = false;
 		for ( int i = 0; i < pMesh->DeltaStateCount(); ++i )
@@ -3257,7 +3257,7 @@ void CDmMeshUtils::PurgeUnreferencedDeltas( CDmeMesh *pMesh, CUtlStringMap< CDme
 	} while( bDeleted );
 
 	// Loop because deleting changes indexing
-	do 
+	do
 	{
 		bDeleted = false;
 		for ( int i = 0; i < pComboOp->GetControlCount(); ++i )

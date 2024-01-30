@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -28,11 +28,11 @@ FilePlayerClassInfo_t* CreatePlayerClassInfo()
 CSDKPlayerClassInfo::CSDKPlayerClassInfo()
 {
 	m_iTeam= TEAM_UNASSIGNED;
-	
+
 	m_iPrimaryWeapon= WEAPON_NONE;
 	m_iSecondaryWeapon= WEAPON_NONE;
 	m_iMeleeWeapon= WEAPON_NONE;
-	
+
 	m_iNumGrensType1 = 0;
 	m_iGrenType1 = WEAPON_NONE;
 
@@ -88,10 +88,10 @@ void CSDKPlayerClassInfo::Parse( KeyValues *pKeyValuesData, const char *szWeapon
 
 	if ( pszSecondaryWeapon )
 	{
-        m_iSecondaryWeapon = AliasToWeaponID( pszSecondaryWeapon );
+	m_iSecondaryWeapon = AliasToWeaponID( pszSecondaryWeapon );
 //		Assert( m_iSecondaryWeapon != WEAPON_NONE );
 	}
-	else 
+	else
 		m_iSecondaryWeapon = WEAPON_NONE;
 
 	const char *pszMeleeWeapon = pKeyValuesData->GetString( "meleeweapon", NULL );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,9 +10,9 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &center - 
-//			"attractor" - 
+// Purpose:
+// Input  : &center -
+//			"attractor" -
 // Output : CParticleAttractor
 //-----------------------------------------------------------------------------
 CParticleAttractor *CParticleAttractor::Create( const Vector &center, const char *pDebugName )
@@ -25,9 +25,9 @@ CParticleAttractor *CParticleAttractor::Create( const Vector &center, const char
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParticle - 
-//			timeDelta - 
+// Purpose:
+// Input  : *pParticle -
+//			timeDelta -
 //-----------------------------------------------------------------------------
 void CParticleAttractor::UpdateVelocity( SimpleParticle *pParticle, float timeDelta )
 {
@@ -36,15 +36,15 @@ void CParticleAttractor::UpdateVelocity( SimpleParticle *pParticle, float timeDe
 
 	Vector dir = ( m_vecAttractorOrigin - pParticle->m_Pos );
 	VectorNormalize( dir );
-	
+
 	speed = clamp( (speed+speed*0.2f), 0.f, 1024.f );
 	pParticle->m_vecVelocity += dir * speed;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParticle - 
-//			timeDelta - 
+// Purpose:
+// Input  : *pParticle -
+//			timeDelta -
 // Output : float
 //-----------------------------------------------------------------------------
 float CParticleAttractor::UpdateScale( const SimpleParticle *pParticle )
@@ -53,9 +53,9 @@ float CParticleAttractor::UpdateScale( const SimpleParticle *pParticle )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParticle - 
-//			timeDelta - 
+// Purpose:
+// Input  : *pParticle -
+//			timeDelta -
 // Output : float
 //-----------------------------------------------------------------------------
 float CParticleAttractor::UpdateAlpha( const SimpleParticle *pParticle )
@@ -64,8 +64,8 @@ float CParticleAttractor::UpdateAlpha( const SimpleParticle *pParticle )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &origin - 
+// Purpose:
+// Input  : &origin -
 //-----------------------------------------------------------------------------
 void CParticleAttractor::SetAttractorOrigin( const Vector &origin )
 {

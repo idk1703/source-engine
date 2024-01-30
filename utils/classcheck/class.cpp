@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -325,7 +325,7 @@ void CClass::ReportTypeMismatches( CClassVariable *var, CTypeDescriptionField *t
 	char const *t = TranslateSimpleType( var );
 	if ( !t[0] )
 		return;
-	
+
 	// Special cases
 	if ( td->m_bCommentedOut )
 		return;
@@ -432,7 +432,7 @@ bool CClass::CheckForMissingTypeDescriptionFields( int& missingcount, bool creat
 		char const *t = TranslateSimpleType( var );
 
 		vprint( 0, "//\tClass %s:\n", m_szName );
-		if ( var->m_bIsArray && 
+		if ( var->m_bIsArray &&
 			(
 				stricmp( var->m_szType, "char" ) ||
 				stricmp( t, "FIELD_STRING" )
@@ -508,7 +508,7 @@ bool CClass::CheckForPredictionFieldsInRecvTableNotMarkedAsSuchCorrectly( int &m
 		td = FindPredTD( goodname );
 		if ( !td )
 			continue;
-		
+
 		// These are implicitly ok
 		if ( !strcmp( td->m_szDefineType, "DEFINE_PRED_TYPEDESCRIPTION" ) )
 		{
@@ -597,7 +597,7 @@ bool CClass::CheckForMissingPredictionFields( int& missingcount, bool createtds 
 					char const *t = TranslateSimpleType( var );
 
 					vprint( 0, "//\tClass %s:\n", m_szName );
-					if ( var->m_bIsArray && 
+					if ( var->m_bIsArray &&
 						(
 							stricmp( var->m_szType, "char" ) ||
 							stricmp( t, "FIELD_STRING" )
@@ -670,7 +670,7 @@ void ReportMissingTypes( void )
 		MissingType *t = &missing_types[ i ];
 		if ( !t )
 			continue;
-		
+
 		if ( !t->owning_class )
 			continue;
 
@@ -680,7 +680,7 @@ void ReportMissingTypes( void )
 		if ( !t->var )
 			continue;
 
-		vprint( 0, "Can't compute size of %s %s %s\n", 
+		vprint( 0, "Can't compute size of %s %s %s\n",
 			t->owning_class->m_szName, t->var->m_szType, t->var->m_szName );
 	}
 }
@@ -743,7 +743,7 @@ static int GetTypeSize( CClass *cl, CClassVariable *var )
 	else if ( strstr( input, "vec3_t" ) )
 	{
 		return 3 * sizeof( float );
-	}	
+	}
 	else if ( strstr( input, "char" ) )
 	{
 		return sizeof( char );
@@ -781,9 +781,9 @@ static int GetTypeSize( CClass *cl, CClassVariable *var )
 	else if ( strstr( input, "static" ) )
 	{
 		return 0;
-	}	
-	
-	
+	}
+
+
 	// Okay, see if it's a classname
 	CClass *base = processor->FindClass( input );
 	if ( base )
@@ -826,8 +826,8 @@ void CClass::AddVariable( int protection, char *type, char *name, bool array, ch
 //-----------------------------------------------------------------------------
 bool CClass::ParseBaseClass( char *&input )
 {
-	if ( !strcmp( com_token, "DECLARE_CLASS" ) 
-			|| !strcmp( com_token, "DECLARE_CLASS_GAMEROOT" ) 
+	if ( !strcmp( com_token, "DECLARE_CLASS" )
+			|| !strcmp( com_token, "DECLARE_CLASS_GAMEROOT" )
 			|| !strcmp( com_token, "DECLARE_CLASS_NOFRIEND" ) )
 	{
 		input = CC_ParseToken( input );
@@ -867,8 +867,8 @@ bool CClass::ParseNetworkVar( char *&input, int protection )
 {
 	MemberVarParse_t var;
 
-	if ( !strcmp( com_token, "CNetworkVar" ) || 
-		!strcmp( com_token, "CNetworkVarForDerived" ) || 
+	if ( !strcmp( com_token, "CNetworkVar" ) ||
+		!strcmp( com_token, "CNetworkVarForDerived" ) ||
 		!strcmp( com_token, "CNetworkVarEmbedded" ) )
 	{
 		input = CC_ParseToken( input );
@@ -919,8 +919,8 @@ bool CClass::ParseNetworkVar( char *&input, int protection )
 		return true;
 	}
 
-	if ( !strcmp( com_token, "CNetworkVector" ) || 
-		!strcmp( com_token, "CNetworkVectorForDerived" ) || 
+	if ( !strcmp( com_token, "CNetworkVector" ) ||
+		!strcmp( com_token, "CNetworkVectorForDerived" ) ||
 		!strcmp( com_token, "CNetworkQAngle" ) )
 	{
 		input = CC_ParseToken( input );
@@ -1082,14 +1082,14 @@ bool CClass::ParseClassMember( char *&input, int protection )
 			{
 				char *end = input - 2;
 				input = saveinput;
-				
+
 				char pfn[ 256 ];
 				int len = end - saveinput;
 				strncpy( pfn, input, len );
 				pfn[ len ] = 0;
 
 				do
-				{ 
+				{
 					input = CC_ParseToken( input );
 					if ( strlen( com_token ) <= 0 )
 						break;
@@ -1194,7 +1194,7 @@ bool CClass::ParseClassMember( char *&input, int protection )
 		var.m_pType[ strlen( var.m_pType ) - 1 ] = 0;
 	}
 
-	if ( var.m_pType[0]==0 && 
+	if ( var.m_pType[0]==0 &&
 		( !strcmp( var.m_pName, "CUSTOM_SCHEDULES" ) ||
 		  !strcmp( var.m_pName, "DEFINE_CUSTOM_SCHEDULE_PROVIDER" ) ||
 		  !strcmp( var.m_pName, "DEFINE_CUSTOM_AI" ) ||
@@ -1209,7 +1209,7 @@ bool CClass::ParseClassMember( char *&input, int protection )
 		return true;
 	}
 
-	if ( var.m_pType[0]==0 && 
+	if ( var.m_pType[0]==0 &&
 		( !strcmp( var.m_pName, "DECLARE_PREDICTABLE" ) ||
 		 !strcmp( var.m_pName, "DECLARE_EMBEDDED_PREDDESC" ) ) )
 	{
@@ -1278,7 +1278,7 @@ bool CClass::ParseClassMember( char *&input, int protection )
 
 			if ( !stricmp( com_token, ";" ) )
 				break;
-			
+
 			strcpy( var.m_pName, com_token );
 
 		} while ( 1 );
@@ -1295,7 +1295,7 @@ bool CClass::ParseNestedClass( char *&input )
 {
 	if ( stricmp( com_token, "struct" ) && stricmp( com_token, "class" ) )
 		return false;
-	
+
 	input = CC_ParseToken( input );
 	if ( strlen( com_token ) > 0 )
 	{

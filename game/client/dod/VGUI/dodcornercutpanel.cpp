@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -12,7 +12,7 @@
 #include "dodcornercutpanel.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDoDCutEditablePanel::CDoDCutEditablePanel( vgui::Panel *parent, const char *name ) : vgui::EditablePanel( parent, name )
 {
@@ -25,7 +25,7 @@ CDoDCutEditablePanel::CDoDCutEditablePanel( vgui::Panel *parent, const char *nam
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDCutEditablePanel::SetBorder( vgui::IBorder *border )
 {
@@ -33,7 +33,7 @@ void CDoDCutEditablePanel::SetBorder( vgui::IBorder *border )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDCutEditablePanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -59,7 +59,7 @@ void CDoDCutEditablePanel::ApplySettings( KeyValues *inResourceData )
 	{
 		m_nCornerCutSize = vgui::scheme()->GetProportionalScaledValueEx( GetScheme(), m_nCornerCutSize );
 	}
-	
+
 	const char *pszCorner = inResourceData->GetString( "CornerToCut", "" );
 	if ( pszCorner )
 	{
@@ -81,12 +81,12 @@ void CDoDCutEditablePanel::ApplySettings( KeyValues *inResourceData )
 			m_nCornerToCut = DOD_CORNERCUT_PANEL_TOPLEFT;
 		}
 	}
-    
+
 	InvalidateLayout( false, true );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDCutEditablePanel::GetSettings( KeyValues *outResourceData )
 {
@@ -118,7 +118,7 @@ void CDoDCutEditablePanel::GetSettings( KeyValues *outResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDCutEditablePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -131,7 +131,7 @@ void CDoDCutEditablePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDCutEditablePanel::PaintBackground()
 {
@@ -217,7 +217,7 @@ void CDoDCutEditablePanel::PaintBackground()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDCutEditablePanel::SetBackGroundColor( const char *pszNewColor )
 {
@@ -231,7 +231,7 @@ void CDoDCutEditablePanel::SetBackGroundColor( const char *pszNewColor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDCutEditablePanel::SetBorderColor( const char *pszNewColor )
 {

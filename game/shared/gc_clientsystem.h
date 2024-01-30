@@ -108,4 +108,3 @@ void SetGCClientSystem( CGCClientSystem* pGCClientSystem );
 CGCClientSystem *GCClientSystem();
 
 #endif // GC_CLIENTSYSTEM_H
-

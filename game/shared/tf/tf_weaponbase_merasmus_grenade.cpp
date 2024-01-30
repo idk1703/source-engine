@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -46,7 +46,7 @@ int CTFWeaponBaseMerasmusGrenade::DrawModel( int flags )
 		float flSize = RemapVal( flAliveTime, flNoDrawTime, flNoDrawTime + flScaleTime, 0.f, 1.f );
 		SetModelScale( flSize );
 	}
-	
+
 	return BaseClass::DrawModel( flags );
 }
 

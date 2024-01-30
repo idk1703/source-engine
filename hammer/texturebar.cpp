@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -43,7 +43,7 @@ static char szNullTexture[128] = {"editor/obsolete"};
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : LPCTSTR
 //-----------------------------------------------------------------------------
 void SetDefaultTextureName( const char *szTexName )
@@ -56,7 +56,7 @@ void SetDefaultTextureName( const char *szTexName )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : LPCTSTR
 //-----------------------------------------------------------------------------
 LPCTSTR GetDefaultTextureName(void)
@@ -65,7 +65,7 @@ LPCTSTR GetDefaultTextureName(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : LPCTSTR
 //-----------------------------------------------------------------------------
 
@@ -76,10 +76,10 @@ LPCTSTR GetNullTextureName()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParentWnd - 
-//			IDD - 
-//			iBarID - 
+// Purpose:
+// Input  : *pParentWnd -
+//			IDD -
+//			iBarID -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CTextureBar::Create(CWnd *pParentWnd, int IDD, int iBarID)
@@ -107,7 +107,7 @@ BOOL CTextureBar::Create(CWnd *pParentWnd, int IDD, int iBarID)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTextureBar::NotifyGraphicsChanged()
 {
@@ -159,7 +159,7 @@ void CTextureBar::NotifyGraphicsChanged()
 	{
 		m_TextureGroupList.SetCurSel(0);
 	}
-	
+
 	m_TextureGroupList.Invalidate();
 
 	char szName[MAX_PATH];
@@ -237,7 +237,7 @@ void CTextureBar::UpdateTexture(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTextureBar::OnUpdateTexname(void)
 {
@@ -250,7 +250,7 @@ void CTextureBar::OnUpdateTexname(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTextureBar::OnChangeTextureGroup(void)
 {
@@ -271,7 +271,7 @@ void CTextureBar::OnChangeTextureGroup(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTextureBar::OnBrowse(void)
 {
@@ -285,7 +285,7 @@ void CTextureBar::OnBrowse(void)
 		if (pTex != NULL)
 		{
 			char sz[128];
-	
+
 			pTex->GetShortName(sz);
 			pBrowser->SetInitialTexture(sz);
 		}
@@ -353,7 +353,7 @@ void CTextureBar::OnReplace(void)
 	{
 		return;
 	}
-	
+
 	GetHistory()->MarkUndoPosition(pDoc->GetSelection()->GetList(), "Replace Textures");
 	dlg.DoReplaceTextures();
 }
@@ -408,7 +408,7 @@ END_MESSAGE_MAP()
 void wndTex::SetTexture(IEditorTexture *pTex)
 {
 	m_pTexture = pTex;
-	Invalidate();	
+	Invalidate();
 }
 
 
@@ -439,4 +439,3 @@ void wndTex::OnPaint(void)
 	dc.RealizePalette();
 	m_pTexture->Draw(&dc, r, 0, 0, DrawTexData);
 }
-

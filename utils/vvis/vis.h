@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -45,7 +45,7 @@ struct portal_t
 {
 	plane_t		plane;	// normal pointing into neighbor
 	int			leaf;	// neighbor
-	
+
 	Vector		origin;	// for fast clip testing
 	float		radius;
 
@@ -63,7 +63,7 @@ struct leaf_t
 	CUtlVector<portal_t *> portals;
 };
 
-	
+
 struct pstack_t
 {
 	byte		mightsee[MAX_PORTALS/8];		// bit string

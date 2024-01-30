@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -30,7 +30,7 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHLMachineGun::CHLMachineGun( void )
 {
@@ -43,7 +43,7 @@ const Vector &CHLMachineGun::GetBulletSpread( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ void CHLMachineGun::PrimaryAttack( void )
 	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
 	if (!pPlayer)
 		return;
-	
+
 	// Abort here to handle burst and auto fire modes
 	if ( (UsesClipsForAmmo1() && m_iClip1 == 0) || ( !UsesClipsForAmmo1() && !pPlayer->GetAmmoCount(m_iPrimaryAmmoType) ) )
 		return;
@@ -62,7 +62,7 @@ void CHLMachineGun::PrimaryAttack( void )
 
 	pPlayer->DoMuzzleFlash();
 
-	// To make the firing framerate independent, we may have to fire more than one bullet here on low-framerate systems, 
+	// To make the firing framerate independent, we may have to fire more than one bullet here on low-framerate systems,
 	// especially if the weapon we're firing has a really fast rate of fire.
 	int iBulletsToFire = 0;
 	float fireRate = GetFireRate();
@@ -101,11 +101,11 @@ void CHLMachineGun::PrimaryAttack( void )
 	AddViewKick();
 
 	CSoundEnt::InsertSound( SOUND_COMBAT, GetAbsOrigin(), SOUNDENT_VOLUME_MACHINEGUN, 0.2, pPlayer );
-	
+
 	if (!m_iClip1 && pPlayer->GetAmmoCount(m_iPrimaryAmmoType) <= 0)
 	{
 		// HEV suit - indicate out of ammo condition
-		pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0); 
+		pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0);
 	}
 
 	SendWeaponAnim( GetPrimaryAttackActivity() );
@@ -116,8 +116,8 @@ void CHLMachineGun::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &info - 
+// Purpose:
+// Input  : &info -
 //-----------------------------------------------------------------------------
 void CHLMachineGun::FireBullets( const FireBulletsInfo_t &info )
 {
@@ -136,7 +136,7 @@ int CHLMachineGun::WeaponRangeAttack1Condition( float flDot, float flDist )
 	{
 		return COND_NO_PRIMARY_AMMO;
 	}
-	else if ( flDist < m_fMinRange1 ) 
+	else if ( flDist < m_fMinRange1 )
 	{
 		return COND_TOO_CLOSE_TO_ATTACK;
 	}
@@ -153,7 +153,7 @@ int CHLMachineGun::WeaponRangeAttack1Condition( float flDot, float flDist )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHLMachineGun::DoMachineGunKick( CBasePlayer *pPlayer, float dampEasy, float maxVerticleKickAngle, float fireDurationTime, float slideLimitTime )
 {
@@ -162,7 +162,7 @@ void CHLMachineGun::DoMachineGunKick( CBasePlayer *pPlayer, float dampEasy, floa
 	#define	KICK_MIN_Z			0.1f	//Degrees
 
 	QAngle vecScratch;
-	
+
 	//Find how far into our accuracy degradation we are
 	float duration	= ( fireDurationTime > slideLimitTime ) ? slideLimitTime : fireDurationTime;
 	float kickPerc = duration / slideLimitTime;
@@ -248,12 +248,12 @@ int CHLMachineGun::WeaponSoundRealtime( WeaponSound_t shoot_type )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHLMachineGun::ItemPostFrame( void )
 {
 	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-	
+
 	if ( pOwner == NULL )
 		return;
 
@@ -276,7 +276,7 @@ BEGIN_DATADESC( CHLSelectFireMachineGun )
 
 	DEFINE_FIELD( m_iBurstSize,		FIELD_INTEGER ),
 	DEFINE_FIELD( m_iFireMode,		FIELD_INTEGER ),
-	
+
 	// Function pinters
 	DEFINE_FUNCTION( BurstThink ),
 
@@ -286,7 +286,7 @@ END_DATADESC()
 
 float CHLSelectFireMachineGun::GetBurstCycleRate( void )
 {
-	// this is the time it takes to fire an entire 
+	// this is the time it takes to fire an entire
 	// burst, plus whatever amount of delay we want
 	// to have between bursts.
 	return 0.5f;
@@ -321,7 +321,7 @@ bool CHLSelectFireMachineGun::Deploy( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -341,7 +341,7 @@ void CHLSelectFireMachineGun::PrimaryAttack( void )
 
 	case FIREMODE_3RNDBURST:
 		m_iBurstSize = GetBurstSize();
-		
+
 		// Call the think function directly so that the first round gets fired immediately.
 		BurstThink();
 		SetThink( &CHLSelectFireMachineGun::BurstThink );
@@ -362,7 +362,7 @@ void CHLSelectFireMachineGun::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -384,7 +384,7 @@ void CHLSelectFireMachineGun::SecondaryAttack( void )
 		WeaponSound(SPECIAL1);
 		break;
 	}
-	
+
 	SendWeaponAnim( GetSecondaryAttackActivity() );
 
 	m_flNextSecondaryAttack = gpGlobals->curtime + 0.3;
@@ -398,7 +398,7 @@ void CHLSelectFireMachineGun::SecondaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -422,7 +422,7 @@ void CHLSelectFireMachineGun::BurstThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -465,11 +465,11 @@ int CHLSelectFireMachineGun::WeaponRangeAttack1Condition( float flDot, float flD
 	{
 		return COND_NO_PRIMARY_AMMO;
 	}
-	else if ( flDist < m_fMinRange1) 
+	else if ( flDist < m_fMinRange1)
 	{
 		return COND_TOO_CLOSE_TO_ATTACK;
 	}
-	else if (flDist > m_fMaxRange1) 
+	else if (flDist > m_fMaxRange1)
 	{
 		return COND_TOO_FAR_TO_ATTACK;
 	}

@@ -1,6 +1,6 @@
 //===== Copyright 1996-2005, Valve Corporation, All rights reserved. ======//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -48,7 +48,7 @@ public:
 		if ( !V_stricmp( pInterfaceName, CVAR_QUERY_INTERFACE_VERSION ) )
 			return (ICvarQuery*)this;
 		return NULL;
-	
+
 	}
 
 	virtual bool AreConVarsLinkable( const ConVar *child, const ConVar *parent )
@@ -146,7 +146,7 @@ protected:
 	class CCVarIteratorInternal : public ICVarIteratorInternal
 	{
 	public:
-		CCVarIteratorInternal( CCvar *outer ) 
+		CCVarIteratorInternal( CCvar *outer )
 			: m_pOuter( outer ), m_pHash( &outer->m_CommandHash ), // remember my CCvar,
 			m_hashIter( -1, -1 ) // and invalid iterator
 		{}
@@ -198,7 +198,7 @@ protected:
 
 	struct SplitScreenAddedConVars_t
 	{
-		SplitScreenAddedConVars_t() 
+		SplitScreenAddedConVars_t()
 		{
 			for ( int i = 0; i < MAX_SPLITSCREEN_CLIENTS - 1; ++i )
 			{
@@ -249,7 +249,7 @@ ICvar::ICVarIteratorInternal *CCvar::FactoryInternalIterator( void )
 }
 
 //-----------------------------------------------------------------------------
-// Factor for CVars 
+// Factor for CVars
 //-----------------------------------------------------------------------------
 static CCvar s_Cvar;
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CCvar, ICvar, CVAR_INTERFACE_VERSION, s_Cvar );
@@ -332,7 +332,7 @@ void CCvar::InstallCVarQuery( ICvarQuery *pQuery )
 
 
 //-----------------------------------------------------------------------------
-// Used by DLLs to be able to unregister all their commands + convars 
+// Used by DLLs to be able to unregister all their commands + convars
 //-----------------------------------------------------------------------------
 CVarDLLIdentifier_t CCvar::AllocateDLLIdentifier()
 {
@@ -341,8 +341,8 @@ CVarDLLIdentifier_t CCvar::AllocateDLLIdentifier()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *variable - 
+// Purpose:
+// Input  : *variable -
 //-----------------------------------------------------------------------------
 void CCvar::RegisterConCommand( ConCommandBase *variable )
 {
@@ -382,7 +382,7 @@ void CCvar::RegisterConCommand( ConCommandBase *variable )
 				{
 					if( V_stricmp( pChildVar->m_pszDefaultValue, pParentVar->m_pszDefaultValue ) != 0 )
 					{
-						Warning( "Parent and child ConVars with different default values! %s child: %s parent: %s (parent wins)\n", 
+						Warning( "Parent and child ConVars with different default values! %s child: %s parent: %s (parent wins)\n",
 							variable->GetName(), pChildVar->m_pszDefaultValue, pParentVar->m_pszDefaultValue );
 					}
 				}
@@ -410,7 +410,7 @@ void CCvar::RegisterConCommand( ConCommandBase *variable )
 					{
 						if ( V_stricmp( pParentVar->m_pszHelpString, pChildVar->m_pszHelpString ) != 0 )
 						{
-							Warning( "Convar %s has multiple help strings:\n\tparent (wins): \"%s\"\n\tchild: \"%s\"\n", 
+							Warning( "Convar %s has multiple help strings:\n\tparent (wins): \"%s\"\n\tchild: \"%s\"\n",
 								variable->GetName(), pParentVar->m_pszHelpString, pChildVar->m_pszHelpString );
 						}
 					}
@@ -432,7 +432,7 @@ void CCvar::RegisterConCommand( ConCommandBase *variable )
 				{
 					if ( ( pChildVar->m_nFlags & nFlags[k] ) != ( pParentVar->m_nFlags & nFlags[k] ) )
 					{
-						Warning( "Convar %s has conflicting %s flags (child: %s%s, parent: %s%s, parent wins)\n", 
+						Warning( "Convar %s has conflicting %s flags (child: %s%s, parent: %s%s, parent wins)\n",
 							variable->GetName(), szFlags[k],
 							( pChildVar->m_nFlags & nFlags[k] ) ? "has " : "no ", szFlags[k],
 							( pParentVar->m_nFlags & nFlags[k] ) ? "has " : "no ", szFlags[k] );
@@ -516,10 +516,10 @@ void CCvar::RemoveSplitScreenConVars( CVarDLLIdentifier_t id )
 		{
 			continue;
 		}
-		
+
 		SplitScreenAddedConVars_t &info = m_SplitScreenAddedConVarsMap[ i ];
 
- 
+
 
 		for ( int i = 1 ; i < m_nMaxSplitScreenSlots; ++i )
 		{
@@ -607,7 +607,7 @@ void CCvar::UnregisterConCommands( CVarDLLIdentifier_t id )
 
 
 //-----------------------------------------------------------------------------
-// Finds base commands 
+// Finds base commands
 //-----------------------------------------------------------------------------
 const ConCommandBase *CCvar::FindCommandBase( const char *name ) const
 {
@@ -644,7 +644,7 @@ const ConVar *CCvar::FindVar( const char *var_name ) const
 			return NULL;
 		}
 	}
-	
+
 	return static_cast<const ConVar*>(var);
 }
 
@@ -663,7 +663,7 @@ ConVar *CCvar::FindVar( const char *var_name )
 			return NULL;
 		}
 	}
-	
+
 	return static_cast<ConVar*>( var );
 }
 
@@ -716,7 +716,7 @@ void CCvar::RemoveGlobalChangeCallback( FnChangeCallback_t callback )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCvar::CallGlobalChangeCallbacks( ConVar *var, const char *pOldString, float flOldValue )
 {
@@ -734,7 +734,7 @@ void CCvar::CallGlobalChangeCallbacks( ConVar *var, const char *pOldString, floa
 void CCvar::RevertFlaggedConVars( int nFlag )
 {
 	for ( CConCommandHash::CCommandHashIterator_t i = m_CommandHash.First() ;
-		  m_CommandHash.IsValidIterator( i ) ; 
+		  m_CommandHash.IsValidIterator( i ) ;
 		  i = m_CommandHash.Next( i ) )
 	{
 		ConCommandBase *var = m_CommandHash[ i ];
@@ -824,7 +824,7 @@ int CCvar::ProcessQueuedMaterialThreadConVarSets()
 		nUpdateFlags |= set.m_pConVar->GetFlags() & FCVAR_MATERIAL_THREAD_MASK;
 	}
 
-	m_QueuedConVarSets.RemoveAll(); 
+	m_QueuedConVarSets.RemoveAll();
 	m_bMaterialSystemThreadSetAllowed = false;
 	return nUpdateFlags;
 }
@@ -969,30 +969,30 @@ void CCvar::ConsoleDPrintf( const char *pFormat, ... ) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #if defined( USE_VXCONSOLE )
-#ifdef _PS3 
+#ifdef _PS3
 /*
 Here's a terrible hack.
 In porting the part of the game that speaks to VXConsole, EA chose to
 write it as a cluster of global functions, instead of a class interface like
-Aaron did with IXboxConsole. Some of these globals need access to symbols 
+Aaron did with IXboxConsole. Some of these globals need access to symbols
 inside the engine, so they are defined there. However, CCvar is inside vstdlib.
 In the EA build this didn't make a difference because everything was a huge
 monolithic executable, and you could just access any symbol from anywhere.
 In our build, with its PRXes, that doesn't fly.
 So, the proper solution to this problem is to wrap all of the PS3 vxconsole
 stuff in an interface, put it inside vstlib, create the dcim connection there,
-and then export the interface pointer. The engine meanwhile would export the 
+and then export the interface pointer. The engine meanwhile would export the
 symbols the vxlib needs, and then we give that interface class inside
-vstlib a pointer to the engine once the engine is available. 
+vstlib a pointer to the engine once the engine is available.
 Right now however I just want to get the thing working with as little modification
-as possible so I can fix the vxconsole windows app itself and hopefully get 
+as possible so I can fix the vxconsole windows app itself and hopefully get
 bidirectional TTY to our game. So, instead of the proper solution,
 I'm just duct-taping everything together by simply passing a pointer to the engine
-symbol this function needs whenever I call it. 
-Blech. I'll fix it later. 
+symbol this function needs whenever I call it.
+Blech. I'll fix it later.
 -egr 4/29/10. (is it later than September 2010? go call egr and make fun of him.)
 */
 void CCvar::PublishToVXConsole()
@@ -1006,7 +1006,7 @@ void CCvar::PublishToVXConsole()
 
 	// iterate and publish commands to the remote console
 	for ( CConCommandHash::CCommandHashIterator_t i = m_CommandHash.First() ;
-		m_CommandHash.IsValidIterator( i ) ; 
+		m_CommandHash.IsValidIterator( i ) ;
 		i = m_CommandHash.Next( i ) )
 	{
 		ConCommandBase *pCur = m_CommandHash[ i ];
@@ -1054,10 +1054,10 @@ void CCvar::Find( const CCommand &args )
 	search = args[1];
 
 	CUtlRBTree< ConCommandBase *, int > sorted( 0, 0, ConVarSortFunc );
-				 
+
 	// Loop through vars and print out findings
 	for ( CConCommandHash::CCommandHashIterator_t i = m_CommandHash.First() ;
-		m_CommandHash.IsValidIterator(i) ; 
+		m_CommandHash.IsValidIterator(i) ;
 		i = m_CommandHash.Next(i) )
 	{
 		ConCommandBase *var = m_CommandHash[ i ];
@@ -1069,11 +1069,11 @@ void CCvar::Find( const CCommand &args )
 			continue;
 
 		sorted.Insert( var );
-	}	
+	}
 
 	for ( int i = sorted.FirstInorder(); i != sorted.InvalidIndex(); i = sorted.NextInorder( i ) )
 	{
-		ConVar_PrintDescription( sorted[ i ] );	
+		ConVar_PrintDescription( sorted[ i ] );
 	}
 }
 
@@ -1141,7 +1141,7 @@ void CConCommandHash::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Insert data into the hash table given its key (unsigned int), 
+// Purpose: Insert data into the hash table given its key (unsigned int),
 //			WITH a check to see if the element already exists within the hash.
 //-----------------------------------------------------------------------------
 CConCommandHash::CCommandHashHandle_t CConCommandHash::Insert( ConCommandBase *cmd )
@@ -1176,7 +1176,7 @@ CConCommandHash::CCommandHashHandle_t CConCommandHash::FastInsert( ConCommandBas
 	m_aDataPool.LinkBefore( m_aBuckets[iBucket], iHashData );
 	m_aBuckets[iBucket] = iHashData;
 
-	return iHashData;	
+	return iHashData;
 }
 
 //-----------------------------------------------------------------------------
@@ -1242,7 +1242,7 @@ CConCommandHash::CCommandHashHandle_t CConCommandHash::Find( const ConCommandBas
 	// or something similarly nonfatally bad. With this #if 1, we'll search
 	// by name instead of by pointer, which is more robust in the face
 	// of double registered commands, but obviously slower.
-#if 0 
+#if 0
 	return Find(cmd->GetName());
 #else
 	HashKey_t hashkey = Hash(cmd);
@@ -1252,14 +1252,14 @@ CConCommandHash::CCommandHashHandle_t CConCommandHash::Find( const ConCommandBas
 	for ( datapool_t::IndexLocalType_t iElement = m_aBuckets[iBucket]; iElement != m_aDataPool.InvalidIndex(); iElement = m_aDataPool.Next( iElement ) )
 	{
 		const HashEntry_t &element = m_aDataPool[iElement];
-		if ( element.m_uiKey == hashkey && // if the hashes match... 
+		if ( element.m_uiKey == hashkey && // if the hashes match...
 			 element.m_Data  == cmd	) // and the pointers...
 		{
 			// in debug, test to make sure we don't have commands under the same name
 			// or something goofy like that
 			AssertMsg1( iElement == Find(cmd->GetName()),
 				"ConCommand %s had two entries in the hash!", cmd->GetName() );
-			
+
 			// return this element
 			return iElement;
 		}

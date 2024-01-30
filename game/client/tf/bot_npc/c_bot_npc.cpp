@@ -100,8 +100,8 @@ void C_BotNPC::ClientThink( void )
 
 //-----------------------------------------------------------------------------
 // Return the origin for player observers tracking this target
-Vector C_BotNPC::GetObserverCamOrigin( void ) 
-{ 
+Vector C_BotNPC::GetObserverCamOrigin( void )
+{
 	return EyePosition();
 }
 

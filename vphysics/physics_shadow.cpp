@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -95,7 +95,7 @@ void ComputeController( IVP_U_Float_Point &currentSpeed, const IVP_U_Float_Point
 	// scale by timestep
 	IVP_U_Float_Point acceleration;
 	acceleration.set_multiple( &delta, scaleDelta );
-	
+
 	if ( currentSpeed.quad_length() < 1e-6 )
 	{
 		currentSpeed.set_to_zero();
@@ -105,9 +105,9 @@ void ComputeController( IVP_U_Float_Point &currentSpeed, const IVP_U_Float_Point
 
 	for(int i=2; i>=0; i--)
 	{
-		if(IVP_Inline_Math::fabsd(acceleration.k[i]) < maxSpeed.k[i]) 
+		if(IVP_Inline_Math::fabsd(acceleration.k[i]) < maxSpeed.k[i])
 			continue;
-		
+
 		// clip force
 		acceleration.k[i] = (acceleration.k[i] < 0) ? -maxSpeed.k[i] : maxSpeed.k[i];
 	}
@@ -133,7 +133,7 @@ static bool IsOnGround( IVP_Real_Object *pivp )
 			bGround = true;
 			break;
 		}
-		
+
 		pSnapshot->NextFrictionData();
 	}
 	DestroyFrictionSnapshot( pSnapshot );
@@ -147,8 +147,8 @@ public:
 	~CPlayerController( void );
 
 	// ipion interfaces
-    void do_simulation_controller( IVP_Event_Sim *es,IVP_U_Vector<IVP_Core> *cores);
-    virtual IVP_CONTROLLER_PRIORITY get_controller_priority() { return (IVP_CONTROLLER_PRIORITY) (IVP_CP_MOTION+1); }
+	void do_simulation_controller( IVP_Event_Sim *es,IVP_U_Vector<IVP_Core> *cores);
+	virtual IVP_CONTROLLER_PRIORITY get_controller_priority() { return (IVP_CONTROLLER_PRIORITY) (IVP_CP_MOTION+1); }
 	virtual const char *get_controller_name() { return "vphysics:player"; }
 
 	void SetObject( IPhysicsObject *pObject );
@@ -156,8 +156,8 @@ public:
 	void Update( const Vector& position, const Vector& velocity, float secondsToArrival, bool onground, IPhysicsObject *ground );
 	void MaxSpeed( const Vector &velocity );
 	bool IsInContact( void );
-	virtual bool WasFrozen() 
-	{ 	
+	virtual bool WasFrozen()
+	{
 		IVP_Real_Object *pivp = m_pObject->GetObject();
 		IVP_Core *pCore = pivp->get_core();
 		return pCore->temporarily_unmovable ? true : false;
@@ -171,7 +171,7 @@ public:
 	int GetShadowPosition( Vector *position, QAngle *angles )
 	{
 		IVP_U_Matrix matrix;
-		
+
 		IVP_Environment *pEnv = m_pObject->GetObject()->get_environment();
 
 		double psi = pEnv->get_next_PSI_time().get_seconds();
@@ -262,7 +262,7 @@ CPlayerController::CPlayerController( CPhysicsObject *pObject )
 	AttachObject();
 }
 
-CPlayerController::~CPlayerController( void ) 
+CPlayerController::~CPlayerController( void )
 {
 	DetachObject();
 }
@@ -515,7 +515,7 @@ void CPlayerController::do_simulation_controller( IVP_Event_Sim *es,IVP_U_Vector
 	if ( !m_updatedSinceLast )
 	{
 		// we haven't received an update from the game code since the last controller step
-		// This means we haven't gotten feedback integrated into the motion plan, so the error may be 
+		// This means we haven't gotten feedback integrated into the motion plan, so the error may be
 		// exaggerated.  Assume that the first updated tick had valid information, and limit
 		// all subsequent ticks to the same size impulses.
 		// NOTE: Don't update the saved impulse - so any subsequent ticks will still have the last
@@ -565,7 +565,7 @@ void CPlayerController::do_simulation_controller( IVP_Event_Sim *es,IVP_U_Vector
 				normalList.AddNormal( normal );
 			}
 		}
-		
+
 		pSnapshot->NextFrictionData();
 	}
 	DestroyFrictionSnapshot( pSnapshot );
@@ -597,7 +597,7 @@ void CPlayerController::do_simulation_controller( IVP_Event_Sim *es,IVP_U_Vector
 	}
 }
 
-void CPlayerController::SetEventHandler( IPhysicsPlayerControllerEvent *handler ) 
+void CPlayerController::SetEventHandler( IPhysicsPlayerControllerEvent *handler )
 {
 	m_handler = handler;
 }
@@ -609,7 +609,7 @@ void CPlayerController::Update( const Vector& position, const Vector& velocity, 
 
 	ConvertPositionToIVP( position, targetPositionIVP );
 	ConvertPositionToIVP( velocity, targetSpeedIVP );
-	
+
 	m_updatedSinceLast = true;
 	// if the object hasn't moved, abort
 	if ( targetSpeedIVP.quad_distance_to( &m_currentSpeed ) < 1e-6 )
@@ -667,7 +667,7 @@ void CPlayerController::MaxSpeed( const Vector &velocity )
 	IVP_U_Float_Point ivpVel;
 	ConvertPositionToIVP( velocity, ivpVel );
 	IVP_U_Float_Point available = ivpVel;
-	
+
 	// normalize and save length
 	float length = ivpVel.real_length_plus_normize();
 
@@ -927,8 +927,8 @@ public:
 	~CShadowController( void );
 
 	// ipion interfaces
-    void do_simulation_controller( IVP_Event_Sim *es,IVP_U_Vector<IVP_Core> *cores);
-    virtual IVP_CONTROLLER_PRIORITY get_controller_priority() { return IVP_CP_MOTION; }
+	void do_simulation_controller( IVP_Event_Sim *es,IVP_U_Vector<IVP_Core> *cores);
+	virtual IVP_CONTROLLER_PRIORITY get_controller_priority() { return IVP_CP_MOTION; }
 	virtual const char *get_controller_name() { return "vphysics:shadow"; }
 
 	void SetObject( IPhysicsObject *pObject );
@@ -944,14 +944,14 @@ public:
 		ConvertPositionToHL( m_shadow.lastImpulse, *pOut );
 	}
 	bool IsEnabled() { return m_enabled; }
-	void Enable( bool bEnable ) 
-	{ 
+	void Enable( bool bEnable )
+	{
 		m_enabled = bEnable;
 	}
 
 	void WriteToTemplate( vphysics_save_cshadowcontroller_t &controllerTemplate );
 	void InitFromTemplate( const vphysics_save_cshadowcontroller_t &controllerTemplate );
-	
+
 	virtual void SetPhysicallyControlled( bool isPhysicallyControlled ) { m_isPhysicallyControlled = isPhysicallyControlled; }
 	virtual bool IsPhysicallyControlled() { return m_isPhysicallyControlled; }
 
@@ -1001,9 +1001,9 @@ private:
 };
 
 CShadowController::CShadowController()
-{ 
-	m_shadow.targetPosition.set_to_zero(); 
-	m_shadow.targetRotation.init(); 
+{
+	m_shadow.targetPosition.set_to_zero();
+	m_shadow.targetRotation.init();
 }
 
 CShadowController::CShadowController( CPhysicsObject *pObject, bool allowTranslation, bool allowRotation )
@@ -1013,8 +1013,8 @@ CShadowController::CShadowController( CPhysicsObject *pObject, bool allowTransla
 	m_shadow.teleportDistance = 0;
 	m_shadow.maxDampSpeed = 0;
 	m_shadow.maxDampAngular = 0;
-	m_shadow.targetPosition.set_to_zero(); 
-	m_shadow.targetRotation.init(); 
+	m_shadow.targetPosition.set_to_zero();
+	m_shadow.targetRotation.init();
 
 	m_allowsTranslation = allowTranslation;
 	m_allowsRotation = allowRotation;
@@ -1025,7 +1025,7 @@ CShadowController::CShadowController( CPhysicsObject *pObject, bool allowTransla
 	AttachObject();
 }
 
-CShadowController::~CShadowController( void ) 
+CShadowController::~CShadowController( void )
 {
 	DetachObject();
 }
@@ -1140,7 +1140,7 @@ void CShadowController::do_simulation_controller( IVP_Event_Sim *es,IVP_U_Vector
 			// UNDONE: Assumes gravity points down
 			const IVP_U_Point *pgrav = pivp->get_environment()->get_gravity();
 			float gravDt = pgrav->k[1] * es->delta_time;
-			
+
 			if ( m_shadow.lastImpulse.k[1] > gravDt )
 			{
 				if ( IsOnGround( pivp ) )
@@ -1337,7 +1337,7 @@ void CShadowController::InitFromTemplate( const vphysics_save_cshadowcontroller_
 	m_allowsTranslation = controllerTemplate.allowPhysicsMovement;
 	m_allowsRotation = controllerTemplate.allowPhysicsRotation;
 	m_isPhysicallyControlled = controllerTemplate.isPhysicallyControlled;
-	
+
 	ConvertShadowControllerToIVP( controllerTemplate.shadowParams, m_shadow );
 	m_pObject->GetObject()->get_environment()->get_controller_manager()->add_controller_to_core( this, m_pObject->GetObject()->get_core() );
 }
@@ -1372,7 +1372,7 @@ bool RestorePhysicsShadowControllerInternal( const physrestoreparams_t &params, 
 
 	memset( &controllerTemplate, 0, sizeof(controllerTemplate) );
 	params.pRestore->ReadAll( &controllerTemplate );
-	
+
 	// HACKHACK: pass this in
 	controllerTemplate.pObject = pObject;
 
@@ -1417,4 +1417,3 @@ void ControlPhysicsPlayerControllerAttachment_Silent( IPhysicsPlayerController *
 		pivp->get_environment()->get_controller_manager()->remove_controller_from_core( (CPlayerController *)pController, pivp->get_core() );
 	}
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -16,8 +16,8 @@ void RegisterUserMessages()
 {
 	usermessages->Register( "Geiger", 1 );		// geiger info data
 	usermessages->Register( "Train", 1 );		// train control data
-	usermessages->Register( "HudText", -1 );	
-	usermessages->Register( "SayText", -1 );	
+	usermessages->Register( "HudText", -1 );
+	usermessages->Register( "SayText", -1 );
 	usermessages->Register( "TextMsg", -1 );
 	usermessages->Register( "ResetHUD", 1 );	// called every respawn
 	usermessages->Register( "GameTitle", 0 );	// show game title
@@ -37,10 +37,10 @@ void RegisterUserMessages()
 	usermessages->Register( "RadioText", -1 );		// for HUD damage indicators
 	usermessages->Register( "HintText", -1 );	// Displays hint text display
 	usermessages->Register( "KeyHintText", -1 );	// Displays hint text display
-	
+
 	usermessages->Register( "ReloadEffect", 2 );			// a player reloading..
 	usermessages->Register( "PlayerAnimEvent", -1 );	// jumping, firing, reload, etc.
-		
+
 	usermessages->Register( "HudMsg", -1 );
 
 	usermessages->Register( "VoiceSubtitle", 3 );
@@ -62,4 +62,3 @@ void RegisterUserMessages()
 	// NVNT register haptic user messages
 	RegisterHapticMessages();
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,7 +13,7 @@
 
 using namespace vgui;
 
-vgui::KeyCode g_iCodesForAliases[FM_NUM_KEYREPEAT_ALIASES] = 
+vgui::KeyCode g_iCodesForAliases[FM_NUM_KEYREPEAT_ALIASES] =
 {
 	KEY_XBUTTON_UP,
 	KEY_XBUTTON_DOWN,
@@ -22,7 +22,7 @@ vgui::KeyCode g_iCodesForAliases[FM_NUM_KEYREPEAT_ALIASES] =
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CKeyRepeatHandler::KeyDown( vgui::KeyCode code )
 {
@@ -40,7 +40,7 @@ void CKeyRepeatHandler::KeyDown( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CKeyRepeatHandler::KeyUp( vgui::KeyCode code )
 {
@@ -62,7 +62,7 @@ void CKeyRepeatHandler::KeyUp( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 vgui::KeyCode CKeyRepeatHandler::KeyRepeated( void )
 {
@@ -88,7 +88,7 @@ vgui::KeyCode CKeyRepeatHandler::KeyRepeated( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CKeyRepeatHandler::SetKeyRepeatTime( vgui::KeyCode code, float flRepeat )
 {

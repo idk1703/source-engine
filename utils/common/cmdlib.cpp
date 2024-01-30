@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -71,7 +71,7 @@ void CmdLib_FPrintf( FileHandle_t hFile, const char *pFormat, ... )
 
 	va_list marker;
 	va_start( marker, pFormat );
-	
+
 	while ( 1 )
 	{
 		int ret = Q_vsnprintf( buf.Base(), buf.Count(), pFormat, marker );
@@ -79,7 +79,7 @@ void CmdLib_FPrintf( FileHandle_t hFile, const char *pFormat, ... )
 		{
 			// Write the string.
 			g_pFileSystem->Write( buf.Base(), ret, hFile );
-			
+
 			break;
 		}
 		else
@@ -176,7 +176,7 @@ WORD SetConsoleTextColor( int red, int green, int blue, int intensity )
 {
 	WORD ret = g_LastColor;
 #if !defined( _X360 )
-	
+
 	g_LastColor = 0;
 	if( red )	g_LastColor |= FOREGROUND_RED;
 	if( green ) g_LastColor |= FOREGROUND_GREEN;
@@ -231,7 +231,7 @@ SpewRetval_t CmdLib_SpewOutputFunc( SpewType_t type, char const *pMsg )
 
 	WORD old;
 	SpewRetval_t retVal;
-	
+
 	EnterCriticalSection( &g_SpewCS );
 	{
 		if (( type == SPEW_MESSAGE ) || (type == SPEW_LOG ))
@@ -277,7 +277,7 @@ SpewRetval_t CmdLib_SpewOutputFunc( SpewType_t type, char const *pMsg )
 					);
 
 					// Never get here (non-continuable exception)
-				
+
 				VMPI_HandleCrash( pMsg, NULL, true );
 				exit( 0 );
 			}
@@ -298,7 +298,7 @@ SpewRetval_t CmdLib_SpewOutputFunc( SpewType_t type, char const *pMsg )
 			printf( "%s", pMsg );
 
 		OutputDebugString( pMsg );
-		
+
 		if ( type == SPEW_ERROR )
 		{
 			printf( "\n" );
@@ -414,7 +414,7 @@ void CmdLib_Cleanup()
 void CmdLib_Exit( int exitCode )
 {
 	TerminateProcess( GetCurrentProcess(), 1 );
-}	
+}
 
 
 
@@ -569,7 +569,7 @@ void GetHourMinuteSecondsString( int nInputSeconds, char *pOut, int outLen )
 	nMinutes -= nHours * 60;
 
 	const char *extra[2] = { "", "s" };
-	
+
 	if ( nHours > 0 )
 		Q_snprintf( pOut, outLen, "%d hour%s, %d minute%s, %d second%s", nHours, extra[nHours != 1], nMinutes, extra[nMinutes != 1], nSeconds, extra[nSeconds != 1] );
 	else if ( nMinutes > 0 )
@@ -620,10 +620,10 @@ returns -1 if not present
 int	FileTime (char *path)
 {
 	struct	stat	buf;
-	
+
 	if (stat (path,&buf) == -1)
 		return -1;
-	
+
 	return buf.st_mtime;
 }
 
@@ -975,7 +975,7 @@ void SafeCreatePath( char *path )
 		ptr = path;
 	}
 	while ( ptr )
-	{		
+	{
 		ptr = strchr( ptr+1, '\\' );
 		if ( ptr )
 		{
@@ -991,7 +991,7 @@ void SafeCreatePath( char *path )
 ============
 QCopyFile
 
-  Used to archive source files
+	Used to archive source files
 ============
 */
 void QCopyFile (char *from, char *to)
@@ -1004,6 +1004,3 @@ void QCopyFile (char *from, char *to)
 	SaveFile (to, buffer, length);
 	free (buffer);
 }
-
-
-

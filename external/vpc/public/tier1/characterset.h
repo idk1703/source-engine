@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose: Shared code for parsing / searching for characters in a string
 //			using lookup tables
@@ -32,7 +32,7 @@ extern void CharacterSetBuild( characterset_t *pSetBuffer, const char *pSetStrin
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : *pSetBuffer - pre-build group buffer
 //			character - character to lookup
 // Output : int - 1 if the character was in the set

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -52,7 +52,7 @@ public:
 	virtual void AddKeyValuesToMemoryLeakList(void *pMem, HKeySymbol name);
 	virtual void RemoveKeyValuesFromMemoryLeakList(void *pMem);
 
-	// maintain a cache of KeyValues we load from disk. This saves us quite a lot of time on app startup. 
+	// maintain a cache of KeyValues we load from disk. This saves us quite a lot of time on app startup.
 	virtual void AddFileKeyValuesToCache( const KeyValues* _kv, const char *resourceName, const char *pathID );
 	virtual bool LoadFileKeyValuesFromCache( KeyValues* outKv, const char *resourceName, const char *pathID, IBaseFileSystem *filesystem ) const;
 	virtual void InvalidateCache();
@@ -108,7 +108,7 @@ IKeyValuesSystem *KeyValuesSystem()
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CKeyValuesSystem::CKeyValuesSystem() 
+CKeyValuesSystem::CKeyValuesSystem()
 : m_HashItemMemPool(sizeof(hash_item_t), 64, UTLMEMORYPOOL_GROW_FAST, "CKeyValuesSystem::m_HashItemMemPool")
 , m_KeyValuesTrackingList(0, 0, MemoryLeakTrackerLessFunc)
 , m_KeyValueCache( UtlStringLessFunc )
@@ -176,12 +176,12 @@ void CKeyValuesSystem::RegisterSizeofKeyValues(int size)
 #ifdef KEYVALUES_USE_POOL
 static void KVLeak( char const *fmt, ... )
 {
-	va_list argptr; 
-    char data[1024];
-    
-    va_start(argptr, fmt);
-    Q_vsnprintf(data, sizeof( data ), fmt, argptr);
-    va_end(argptr);
+	va_list argptr;
+	char data[1024];
+
+	va_start(argptr, fmt);
+	Q_vsnprintf(data, sizeof( data ), fmt, argptr);
+	va_end(argptr);
 
 	Msg( "%s", data );
 }
@@ -337,13 +337,13 @@ void CKeyValuesSystem::InvalidateCacheForFile(const char *resourceName, const ch
 void CKeyValuesSystem::AddFileKeyValuesToCache(const KeyValues* _kv, const char *resourceName, const char *pathID)
 {
 	CUtlString identString( CFmtStr( "%s::%s", resourceName ? resourceName : "", pathID ? pathID : "" ) );
-	// Some files actually have multiple roots, and if you use regular MakeCopy (without passing true), those 
+	// Some files actually have multiple roots, and if you use regular MakeCopy (without passing true), those
 	// will be missed. This caused a bug in soundscapes on dedicated servers.
 	m_KeyValueCache.Insert( identString, _kv->MakeCopy( true ) );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Fetches a particular keyvalue from the cache, and copies into _outKv (clearing anything there already). 
+// Purpose: Fetches a particular keyvalue from the cache, and copies into _outKv (clearing anything there already).
 //-----------------------------------------------------------------------------
 bool CKeyValuesSystem::LoadFileKeyValuesFromCache(KeyValues* outKv, const char *resourceName, const char *pathID, IBaseFileSystem *filesystem) const
 {
@@ -393,7 +393,7 @@ int CKeyValuesSystem::CaseInsensitiveHash(const char *string, int iBounds)
 			hash = (hash << 1) + *string;
 		}
 	}
-	  
+
 	return hash % iBounds;
 }
 
@@ -413,4 +413,3 @@ void CKeyValuesSystem::DoInvalidateCache()
 	// have an empty map but it still iterates over elements. Awesome?
 	m_KeyValueCache.Purge();
 }
-

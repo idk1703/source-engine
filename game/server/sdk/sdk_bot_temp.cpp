@@ -84,7 +84,7 @@ CBasePlayer *BotPutInServer( bool bFrozen )
 	char botname[ 64 ];
 	Q_snprintf( botname, sizeof( botname ), "Bot%02i", g_CurBotNumber );
 
-	
+
 	// This trick lets us create a CSDKBot for this client instead of the CSDKPlayer
 	// that we would normally get when ClientPutInServer is called.
 	ClientPutInServerOverride( &CBotManager::ClientPutInServerOverride_Bot );
@@ -124,7 +124,7 @@ CON_COMMAND_F( "bot_add", "Add a bot.", FCVAR_CHEAT )
 
 	// Look at -frozen.
 	bool bFrozen = !!args.FindArg( "-frozen" );
-		
+
 	// Ok, spawn all the bots.
 	while ( --count >= 0 )
 	{
@@ -159,7 +159,7 @@ bool Bot_RunMimicCommand( CUserCmd& cmd )
 	if ( bot_mimic.GetInt() > gpGlobals->maxClients )
 		return false;
 
-	
+
 	CBasePlayer *pPlayer = UTIL_PlayerByIndex( bot_mimic.GetInt()  );
 	if ( !pPlayer )
 		return false;
@@ -178,14 +178,14 @@ bool Bot_RunMimicCommand( CUserCmd& cmd )
 
 //-----------------------------------------------------------------------------
 // Purpose: Simulates a single frame of movement for a player
-// Input  : *fakeclient - 
-//			*viewangles - 
-//			forwardmove - 
-//			m_flSideMove - 
-//			upmove - 
-//			buttons - 
-//			impulse - 
-//			msec - 
+// Input  : *fakeclient -
+//			*viewangles -
+//			forwardmove -
+//			m_flSideMove -
+//			upmove -
+//			buttons -
+//			impulse -
+//			msec -
 // Output : 	virtual void
 //-----------------------------------------------------------------------------
 static void RunPlayerMove( CSDKPlayer *fakeclient, CUserCmd &cmd, float frametime )
@@ -268,7 +268,7 @@ void Bot_UpdateDirection( CSDKBot *pBot )
 
 		vecEnd = vecSrc + forward * 10;
 
-		UTIL_TraceHull( vecSrc, vecEnd, VEC_HULL_MIN_SCALED( pBot ), VEC_HULL_MAX_SCALED( pBot ), 
+		UTIL_TraceHull( vecSrc, vecEnd, VEC_HULL_MIN_SCALED( pBot ), VEC_HULL_MAX_SCALED( pBot ),
 			MASK_PLAYERSOLID, pBot, COLLISION_GROUP_NONE, &trace );
 
 		if ( trace.fraction == 1.0 )
@@ -292,7 +292,7 @@ void Bot_UpdateDirection( CSDKBot *pBot )
 		pBot->m_ForwardAngle = angle;
 		pBot->m_LastAngles = angle;
 	}
-	
+
 	pBot->SetLocalAngles( angle );
 }
 
@@ -431,8 +431,8 @@ void Bot_Think( CSDKBot *pBot )
 
 	CUserCmd cmd;
 	Q_memset( &cmd, 0, sizeof( cmd ) );
-	
-	
+
+
 	// Finally, override all this stuff if the bot is being forced to mimic a player.
 	if ( !Bot_RunMimicCommand( cmd ) )
 	{
@@ -468,5 +468,3 @@ void Bot_Think( CSDKBot *pBot )
 	float frametime = gpGlobals->frametime;
 	RunPlayerMove( pBot, cmd, frametime );
 }
-
-

@@ -1,6 +1,6 @@
 //====== Copyright c 1996-2004, Valve Corporation, All rights reserved. =======
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -70,7 +70,7 @@ struct PS_INPUT
 #endif
 
 	float2 detailCoords						: TEXCOORD4;
-	float4 worldPos_worldTransition			: TEXCOORD5;	
+	float4 worldPos_worldTransition			: TEXCOORD5;
 	float3 projPos							: TEXCOORD6;
 	float4 fogFactorW						: TEXCOORD7;
 };
@@ -213,7 +213,7 @@ float4 main( PS_INPUT i ) : COLOR
 #if NORMALMAP == 2
 	float3 tangentPosToLightVector = normalize( i.tangentPosToLightVector );
 
-	float nDotL = 
+	float nDotL =
 		vNormal.x*dot( tangentPosToLightVector, bumpBasis[0]) +
 		vNormal.y*dot( tangentPosToLightVector, bumpBasis[1]) +
 		vNormal.z*dot( tangentPosToLightVector, bumpBasis[2]);

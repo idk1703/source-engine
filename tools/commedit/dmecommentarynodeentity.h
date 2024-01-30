@@ -33,7 +33,7 @@ public:
 	virtual const QAngle &GetRenderAngles( void );
 	virtual int		DrawModel( int flags );
 	virtual void	GetRenderBounds( Vector& mins, Vector& maxs );
-	virtual bool	IsTransparent( void ); 
+	virtual bool	IsTransparent( void );
 
 public:
 	int GetEntityId() const;

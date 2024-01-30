@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -18,7 +18,7 @@ BEGIN_NETWORK_TABLE(C_DODBaseGrenade, DT_DODBaseGrenade )
 END_NETWORK_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_DODBaseGrenade::~C_DODBaseGrenade()
 {
@@ -32,7 +32,7 @@ void C_DODBaseGrenade::PostDataUpdate( DataUpdateType_t type )
 
 	if ( type == DATA_UPDATE_CREATED )
 	{
-		// Now stick our initial velocity into the interpolation history 
+		// Now stick our initial velocity into the interpolation history
 		CInterpolatedVar< Vector > &interpolator = GetOriginInterpolator();
 
 		interpolator.ClearHistory();

@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2006, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: VPC
 //
@@ -302,7 +302,7 @@ PropertyState_t *CPropertyStates::GetProperty( const char *pPropertyName )
 		{
 			return &m_Properties[i];
 		}
-	
+
 		const char *pLegacyString = m_Properties[i].m_pToolProperty->m_LegacyString.Get();
 		if ( pLegacyString[0] )
 		{
@@ -687,11 +687,11 @@ CProjectConfiguration::CProjectConfiguration( CVCProjGenerator *pGenerator, cons
 	m_pDebuggingTool = NULL;
 	m_pCompilerTool = NULL;
 	m_pLibrarianTool = NULL;
-	m_pLinkerTool = NULL; 
-	m_pManifestTool = NULL; 
-	m_pXMLDocGenTool = NULL; 
-	m_pBrowseInfoTool = NULL; 
-	m_pResourcesTool = NULL; 
+	m_pLinkerTool = NULL;
+	m_pManifestTool = NULL;
+	m_pXMLDocGenTool = NULL;
+	m_pBrowseInfoTool = NULL;
+	m_pResourcesTool = NULL;
 	m_pPreBuildEventTool = NULL;
 	m_pPreLinkEventTool = NULL;
 	m_pPostBuildEventTool = NULL;
@@ -742,11 +742,11 @@ CProjectConfiguration::~CProjectConfiguration()
 	delete m_pDebuggingTool;
 	delete m_pCompilerTool;
 	delete m_pLibrarianTool;
-	delete m_pLinkerTool; 
-	delete m_pManifestTool; 
-	delete m_pXMLDocGenTool; 
-	delete m_pBrowseInfoTool; 
-	delete m_pResourcesTool; 
+	delete m_pLinkerTool;
+	delete m_pManifestTool;
+	delete m_pXMLDocGenTool;
+	delete m_pBrowseInfoTool;
+	delete m_pResourcesTool;
 	delete m_pPreBuildEventTool;
 	delete m_pPreLinkEventTool;
 	delete m_pPostBuildEventTool;
@@ -814,7 +814,7 @@ bool CProjectConfiguration::SetProperty( ToolProperty_t *pToolProperty )
 	if ( bHandled && !V_stricmp( pToolProperty->m_ParseString, "$ConfigurationType" ) )
 	{
 		PropertyState_t *pPropertyState = m_PropertyStates.GetProperty( pToolProperty->m_nPropertyId );
-		if ( pPropertyState && 
+		if ( pPropertyState &&
 			( ( V_stristr( pPropertyState->m_OrdinalString.Get(), "static library" ) || !V_stricmp( pPropertyState->m_OrdinalString.Get(), "LIB" ) ) ) )
 		{
 			// static library does not get these tools
@@ -896,7 +896,7 @@ CRelevantPropertyNames g_RelevantSchemaPropertyNames =
 };
 
 
-CVCProjGenerator::CVCProjGenerator() : 
+CVCProjGenerator::CVCProjGenerator() :
 	BaseClass( &g_RelevantSchemaPropertyNames )
 {
 	m_pGeneratorDefinition = NULL;
@@ -917,11 +917,11 @@ void CVCProjGenerator::Clear()
 	m_pDebuggingTool = NULL;
 	m_pCompilerTool = NULL;
 	m_pLibrarianTool = NULL;
-	m_pLinkerTool = NULL; 
-	m_pManifestTool = NULL; 
-	m_pXMLDocGenTool = NULL; 
-	m_pBrowseInfoTool = NULL; 
-	m_pResourcesTool = NULL; 
+	m_pLinkerTool = NULL;
+	m_pManifestTool = NULL;
+	m_pXMLDocGenTool = NULL;
+	m_pBrowseInfoTool = NULL;
+	m_pResourcesTool = NULL;
 	m_pPreBuildEventTool = NULL;
 	m_pPreLinkEventTool = NULL;
 	m_pPostBuildEventTool = NULL;
@@ -1025,7 +1025,7 @@ void CVCProjGenerator::EndProject()
 	{
 		g_pVPC->VPCError( "Invalid Empty Output Filename" );
 	}
-	
+
 	if ( m_GUIDString.IsEmpty() )
 	{
 		g_pVPC->VPCError( "Invalid Empty GUID String" );
@@ -1039,7 +1039,7 @@ void CVCProjGenerator::EndProject()
 	}
 
 	// Expected to not be inside a property section.
-	Assert( m_nActivePropertySection == KEYWORD_UNKNOWN ); 
+	Assert( m_nActivePropertySection == KEYWORD_UNKNOWN );
 
 	Clear();
 }
@@ -1263,7 +1263,7 @@ void CVCProjGenerator::EndConfigurationBlock()
 void CVCProjGenerator::FileExcludedFromBuild( bool bExcluded )
 {
 	if ( !m_pFileConfig )
-	{ 
+	{
 		g_pVPC->VPCSyntaxError( "Cannot set $ExcludedFromBuild unless in a $File configuration context" );
 	}
 
@@ -1506,7 +1506,7 @@ bool CVCProjGenerator::StartPropertySection( configKeyword_e eKeyword, bool *pbS
 
 	return true;
 }
-				
+
 void CVCProjGenerator::EndPropertySection( configKeyword_e eKeyword )
 {
 	BaseClass::EndPropertySection( eKeyword );
@@ -1576,7 +1576,7 @@ void CVCProjGenerator::HandleProperty( const char *pPropertyName, const char *pC
 	case KEYWORD_PS3_GCCCOMPILER:
 		pTool = m_pCompilerTool;
 		break;
-	
+
 	case KEYWORD_LIBRARIAN:
 		pTool = m_pLibrarianTool;
 		break;
@@ -1694,7 +1694,7 @@ bool CVCProjGenerator::FindFile( const char *pFilename, CProjectFile **ppFile )
 		}
 		return true;
 	}
-	
+
 	// not found
 	if ( ppFile )
 	{

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,18 +30,18 @@
 #endif
 
 #include "tier0/memdbgon.h"
-// Benchmark mode uses this heavy-handed method 
+// Benchmark mode uses this heavy-handed method
 
 // *** WARNING ***. On Linux gettimeofday returns the system's best guess at
 // actual wall clock time and this can go backwards. You need to use
 // clock_gettime( CLOCK_MONOTONIC ... ) if this isn't what you want.
 
 // If you want to try using rdtsc for Plat_FloatTime(), enable USE_RDTSC_FOR_FLOATTIME:
-// 
+//
 // Make sure you know what you're doing. This was disabled due to the long startup time, and
 //  in our testing, even though constant_tsc was set, we couldn't rely on the
 //  max frequency result returned from CalculateCPUFreq() (ie /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq).
-// 
+//
 // #define USE_RDTSC_FOR_FLOATTIME
 
 extern VCRMode_t g_VCRMode;
@@ -78,19 +78,19 @@ size_t ApproximateProcessMemoryUsage( void )
 {
 /*
 From http://man7.org/linux/man-pages/man5/proc.5.html:
-       /proc/[pid]/statm
-              Provides information about memory usage, measured in pages.
-              The columns are:
+	/proc/[pid]/statm
+	Provides information about memory usage, measured in pages.
+	The columns are:
 
-                  size       (1) total program size
-                             (same as VmSize in /proc/[pid]/status)
-                  resident   (2) resident set size
-                             (same as VmRSS in /proc/[pid]/status)
-                  share      (3) shared pages (i.e., backed by a file)
-                  text       (4) text (code)
-                  lib        (5) library (unused in Linux 2.6)
-                  data       (6) data + stack
-                  dt         (7) dirty pages (unused in Linux 2.6)
+		size       (1) total program size
+			(same as VmSize in /proc/[pid]/status)
+		resident   (2) resident set size
+			(same as VmRSS in /proc/[pid]/status)
+		share      (3) shared pages (i.e., backed by a file)
+		text       (4) text (code)
+		lib        (5) library (unused in Linux 2.6)
+		data       (6) data + stack
+		dt         (7) dirty pages (unused in Linux 2.6)
 */
 
 // This returns the resident memory size (RES column in 'top') in bytes.
@@ -237,27 +237,27 @@ double Plat_FloatTime()
 		g_FakeBenchmarkTime += g_FakeBenchmarkTimeInc;
 		return g_FakeBenchmarkTime;
 	}
-	
+
 #ifdef OSX
 	// OSX
 	static uint64 start_time = 0;
 	static mach_timebase_info_data_t    sTimebaseInfo;
 	static double conversion = 0.0;
-	
+
 	if ( !start_time )
 	{
 		start_time = mach_absolute_time();
 		mach_timebase_info(&sTimebaseInfo);
 		conversion = 1e-9 * (double) sTimebaseInfo.numer / (double) sTimebaseInfo.denom;
 	}
-	
+
 	uint64 now = mach_absolute_time();
-	
+
 	return ( now - start_time ) * conversion;
 #else
 	// Linux
 	static struct timespec start_time = { 0, 0 };
-	static bool bInitialized = false;	
+	static bool bInitialized = false;
 
 	if ( !bInitialized )
 	{
@@ -267,7 +267,7 @@ double Plat_FloatTime()
 
 	struct timespec now;
 	clock_gettime( CLOCK_MONOTONIC, &now );
-	
+
 	return ( now.tv_sec - start_time.tv_sec ) + ( now.tv_nsec * 1e-9 );
 
 #ifdef USE_RDTSC_FOR_FLOATTIME
@@ -284,11 +284,11 @@ double Plat_FloatTime()
 	else
 	{
 		struct timeval  tp;
-	        gettimeofday( &tp, NULL );
+		gettimeofday( &tp, NULL );
 
 		if (VCRGetMode() == VCR_Disabled)
 			return (( tp.tv_sec - s_nSecBase ) + tp.tv_usec / 1000000.0 );
-		
+
 		return VCRHook_Sys_FloatTime( ( tp.tv_sec - s_nSecBase ) + tp.tv_usec / 1000000.0 );
 	}
 #endif // USE_RDTSC_FOR_FLOATTIME
@@ -348,7 +348,7 @@ uint64 Plat_USTime()
 	}
 }
 
-// Wraps the thread-safe versions of ctime. buf must be at least 26 bytes 
+// Wraps the thread-safe versions of ctime. buf must be at least 26 bytes
 char *Plat_ctime( const time_t *timep, char *buf, size_t bufsize )
 {
 	return ctime_r( timep, buf );
@@ -373,7 +373,7 @@ struct tm *Plat_localtime( const time_t *timep, struct tm *result )
 
 bool vtune( bool resume )
 {
-  return 0;
+	return 0;
 }
 
 
@@ -446,7 +446,7 @@ bool Plat_IsInDebugSession()
 
 	if ( s_IsInDebugSession == -1 )
 	{
-		// Initialize the flags so that, if sysctl fails for some bizarre 
+		// Initialize the flags so that, if sysctl fails for some bizarre
 		// reason, we get a predictable result.
 
 		info.kp_proc.p_flag = 0;
@@ -543,7 +543,7 @@ PLATFORM_INTERFACE const tchar *Plat_GetCommandLine()
 					if( g_CmdLine[ i ] == '\0' )
 						g_CmdLine[ i ] = ' ';
 				}
-				
+
 				g_CmdLine[ nCharRead ] = '\0';
 
 			}
@@ -680,7 +680,7 @@ PLATFORM_INTERFACE void Plat_SetWatchdogHandlerFunction( Plat_WatchDogHandlerFun
 #include <tier1/utlintrusivelist.h>
 #include <execinfo.h>
 #include <tier1/utlvector.h>
-     
+
 #define MEMALLOC_HASHSIZE 8193
 typedef uint32 ptrint_t;
 
@@ -791,7 +791,7 @@ static void RemoveHooks( void )
 
 
 static void InstallHooks( void )
-{	
+{
 }
 
 
@@ -871,7 +871,7 @@ static void *ReallocHook( void *ptr, size_t size, const void *caller )
 				// it successfully alloced, just need to update size info, etc
 				pBlock->AdjustSize( size );
 				g_LinuxMemStats.nTotalMallocInUse += ( size - pBlock->m_nSize );
-				
+
 			}
 			else
 			{
@@ -910,7 +910,7 @@ static void *MallocHook(size_t size, const void *caller)
 
 	return pResult;
 }
-     
+
 static void FreeHook(void *ptr, const void *caller )
 {
 	AUTO_LOCK( s_MemoryMutex );
@@ -941,7 +941,7 @@ static void FreeHook(void *ptr, const void *caller )
 	}
 	InstallHooks();
 }
-     
+
 void EnableMemoryLogging( bool bOnOff )
 {
 	if ( bOnOff )
@@ -993,7 +993,7 @@ void DumpMemoryLog( int nThresh )
 	EndWatchdogTimer();
 	RemoveHooks();
 	std::vector<CLinuxMallocContext *> memList;
-	
+
 	for( int i =0 ; i < MEMALLOC_HASHSIZE; i++ )
 	{
 		for( CLinuxMallocContext *p = s_ContextHash[i].m_pHead; p; p=p->m_pNext )
@@ -1006,7 +1006,7 @@ void DumpMemoryLog( int nThresh )
 	}
 
 	std::sort( memList.begin(), memList.end(), SortLessFunc );
-	
+
 	for( int i = 0; i < memList.size(); i++ )
 	{
 		CLinuxMallocContext *p = memList[i];
@@ -1028,7 +1028,7 @@ void DumpChangedMemory( int nThresh )
 	EndWatchdogTimer();
 	RemoveHooks();
 	std::vector<CLinuxMallocContext *> memList;
-	
+
 	for( int i =0 ; i < MEMALLOC_HASHSIZE; i++ )
 	{
 		for( CLinuxMallocContext *p = s_ContextHash[i].m_pHead; p; p=p->m_pNext )
@@ -1072,12 +1072,10 @@ void SetMemoryMark( void )
 void DumpMemorySummary( void )
 {
 	Msg( "Total memory in use = %d, NumMallocs=%d, Num Frees=%d approx process usage=%ul\n", g_LinuxMemStats.nTotalMallocInUse, g_LinuxMemStats.nNumMallocs, g_LinuxMemStats.nNumFrees,
-		 (unsigned int)ApproximateProcessMemoryUsage() );
+		(unsigned int)ApproximateProcessMemoryUsage() );
 }
 
 #endif // !NO_HOOK_MALLOC
 
 // Turn off memdbg macros (turned on up top) since this is included like a header
 #include "tier0/memdbgoff.h"
-
-

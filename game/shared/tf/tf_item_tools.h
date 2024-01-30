@@ -8,7 +8,7 @@ class CEconTool_TFSpellbookPage : public IEconTool
 {
 public:
 	CEconTool_TFSpellbookPage( const char *pszTypeName, item_capabilities_t unCapabilities )
-		: IEconTool( pszTypeName, NULL, NULL, unCapabilities ) 
+		: IEconTool( pszTypeName, NULL, NULL, unCapabilities )
 	{
 		//
 	}

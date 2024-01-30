@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -112,7 +112,7 @@ void CGameListPanel::OnKeyCodePressed(vgui::KeyCode code)
 	// Let the outer class handle it.
 	if ( code == KEY_ENTER && m_pOuter->OnGameListEnterPressed() )
 		return;
-	
+
 	BaseClass::OnKeyCodePressed( code );
 }
 
@@ -193,7 +193,7 @@ CBaseGamesPage::CBaseGamesPage( vgui::Panel *parent, const char *name, EPageType
 		);
 	m_pGameList->AddColumnHeader( k_nColumn_Players, "Players", "#ServerBrowser_Players", 55, ListPanel::COLUMN_FIXEDSIZE);
 	m_pGameList->AddColumnHeader( k_nColumn_Bots, "Bots", "#ServerBrowser_Bots", 40, ListPanel::COLUMN_FIXEDSIZE);
-	m_pGameList->AddColumnHeader( k_nColumn_Map, "Map", "#ServerBrowser_Map", 90, 
+	m_pGameList->AddColumnHeader( k_nColumn_Map, "Map", "#ServerBrowser_Map", 90,
 		90,		// minwidth
 		300,	// maxwidth
 		0		// flags
@@ -254,7 +254,7 @@ CBaseGamesPage::~CBaseGamesPage()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseGamesPage::GetInvalidServerListID()
 {
@@ -262,12 +262,12 @@ int CBaseGamesPage::GetInvalidServerListID()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseGamesPage::PerformLayout()
 {
 	BaseClass::PerformLayout();
-	
+
 	if ( GetSelectedServerID() == -1 )
 	{
 		m_pConnect->SetEnabled(false);
@@ -338,12 +338,12 @@ void CBaseGamesPage::PerformLayout()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseGamesPage::ApplySchemeSettings(IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
-	
+
 	// load the password icon
 	ImageList *imageList = new ImageList(false);
 	m_nImageIndexPassword = imageList->AddImage(scheme()->GetImage("servers/icon_password", false));
@@ -396,16 +396,16 @@ int ServerQualitySort( const serverqualitysort_t *pSQ1, const serverqualitysort_
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseGamesPage::SelectQuickListServers( void )
 {
 	int iIndex = m_pQuickList->FirstItem();
-	
+
 	while ( iIndex != m_pQuickList->InvalidItemID() )
 	{
 		CQuickListPanel *pQuickListPanel = dynamic_cast< CQuickListPanel *> ( m_pQuickList->GetItemPanel( iIndex ) );
-		
+
 		if ( pQuickListPanel )
 		{
 			CUtlVector< serverqualitysort_t > vecServerQuality;
@@ -483,7 +483,7 @@ void CBaseGamesPage::PrepareQuickListMap( const char *pMapName, int iListID )
 
 	char path[ 512 ];
 	Q_snprintf( path, sizeof( path ), "maps/%s.bsp", szMapName );
-	
+
 	int iIndex = m_quicklistserverlist.Find( szMapName );
 
 	if ( m_quicklistserverlist.IsValidIndex( iIndex ) == false )
@@ -509,7 +509,7 @@ void CBaseGamesPage::PrepareQuickListMap( const char *pMapName, int iListID )
 
 			CQuickListPanel *pQuickListPanel = new CQuickListPanel( m_pQuickList, "QuickListPanel");
 
-			if ( pQuickListPanel ) 
+			if ( pQuickListPanel )
 			{
 				pQuickListPanel->InvalidateLayout();
 				pQuickListPanel->SetName( servermap.pOriginalName );
@@ -575,7 +575,7 @@ gameserveritem_t *CBaseGamesPage::GetServer( unsigned int serverID )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseGamesPage::TagsExclude( void )
 {
@@ -599,7 +599,7 @@ CBaseGamesPage::eWorkshopMode CBaseGamesPage::WorkshopMode()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseGamesPage::HideReplayFilter( void )
 {
@@ -610,13 +610,13 @@ void CBaseGamesPage::HideReplayFilter( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseGamesPage::CreateFilters()
 {
 	m_pFilter = new ToggleButton(this, "Filter", "#ServerBrowser_Filters");
 	m_pFilterString = new Label(this, "FilterString", "");
-	
+
 	if ( Q_stricmp( COM_GetModDirectory(), "cstrike" ) == 0 )
 	{
 		m_pFilter->SetSelected( false );
@@ -765,7 +765,7 @@ void CBaseGamesPage::UpdateGameFilter()
 		KeyValues *kv = m_pGameFilter->GetItemUserData(i);
 		CGameID gameID( kv->GetUint64( "appID", 0 ) );
 		const char *pchGameDir = kv->GetString( "gamedir" );
-		if ( ( gameID == m_iLimitToAppID || m_iLimitToAppID.AppID() == 0 ) && ( !m_szGameFilter[0] || 
+		if ( ( gameID == m_iLimitToAppID || m_iLimitToAppID.AppID() == 0 ) && ( !m_szGameFilter[0] ||
 				( pchGameDir && pchGameDir[0] && !Q_strncmp( pchGameDir, m_szGameFilter, Q_strlen( pchGameDir ) ) ) ) )
 		{
 			if ( i != m_pGameFilter->GetActiveItem() )
@@ -908,12 +908,12 @@ void CBaseGamesPage::ServerResponded( int iServer, gameserveritem_t *pServerItem
 	kv->SetString("GameDir", pServerItem->m_szGameDir);
 	kv->SetString("GameDesc", pServerItem->m_szGameDescription);
 	kv->SetInt("password", pServerItem->m_bPassword ? m_nImageIndexPassword : 0);
-	
+
 	if ( pServerItem->m_nBotPlayers > 0 )
 		kv->SetInt("bots", pServerItem->m_nBotPlayers);
 	else
 		kv->SetString("bots", "");
-	
+
 	if ( pServerItem->m_bSecure )
 	{
 		// show the denied icon if banned from secure servers, the secure icon otherwise
@@ -934,7 +934,7 @@ void CBaseGamesPage::ServerResponded( int iServer, gameserveritem_t *pServerItem
 
 	kv->SetInt("PlayerCount", nAdjustedForBotsPlayers );
 	kv->SetInt("MaxPlayerCount", pServerItem->m_nMaxPlayers );
-	
+
 	kv->SetInt("Ping", pServerItem->m_nPing);
 
 	kv->SetString("Tags", pServerItem->m_szGameTags );
@@ -947,7 +947,7 @@ void CBaseGamesPage::ServerResponded( int iServer, gameserveritem_t *pServerItem
 		struct tm *now;
 		now = localtime( (time_t*)&pServerItem->m_ulTimeLastPlayed );
 
-		if ( now ) 
+		if ( now )
 		{
 			char buf[64];
 			strftime(buf, sizeof(buf), "%a %d %b %I:%M%p", now);
@@ -975,7 +975,7 @@ void CBaseGamesPage::ServerResponded( int iServer, gameserveritem_t *pServerItem
 		}
 
 		m_pGameList->SetItemVisible( pServer->m_iListID, !removeItem );
-		
+
 		kv->deleteThis();
 	}
 	else
@@ -999,12 +999,12 @@ void CBaseGamesPage::UpdateFilterAndQuickListVisibility()
 	bool showFilter = m_pFilter->IsSelected();
 
 	m_bFiltersVisible = !showQuickList && !m_pCustomResFilename && showFilter;
-	
+
 	int wide, tall;
 	GetSize( wide, tall );
 	SetSize( 624, 278 );
 
-	UpdateDerivedLayouts();		
+	UpdateDerivedLayouts();
 	UpdateGameFilter();
 
 	if ( m_hFont )
@@ -1015,11 +1015,11 @@ void CBaseGamesPage::UpdateFilterAndQuickListVisibility()
 
 	SetSize( wide, tall );
 
-	
+
 	m_pQuickList->SetVisible( showQuickList );
 	m_pGameList->SetVisible( !showQuickList );
 	m_pFilter->SetVisible( !showQuickList );
-	m_pFilterString->SetVisible ( !showQuickList );		
+	m_pFilterString->SetVisible ( !showQuickList );
 
 
 	InvalidateLayout();
@@ -1070,7 +1070,7 @@ void CBaseGamesPage::OnButtonToggled( Panel *panel, int state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseGamesPage::UpdateDerivedLayouts( void )
 {
@@ -1133,8 +1133,8 @@ void CBaseGamesPage::OnTextChanged(Panel *panel, const char *text)
 	{
 		// if they changed games and/or region then cancel the refresh because the old list they are getting
 		// will be for the wrong game, so stop and start a refresh
-		StopRefresh(); 
-		GetNewServerList(); 
+		StopRefresh();
+		GetNewServerList();
 	}
 }
 
@@ -1153,7 +1153,7 @@ void CBaseGamesPage::ApplyGameFilters()
 	{
 		serverdisplay_t &server = m_mapServers[ i ];
 		gameserveritem_t *pServer = steamapicontext->SteamMatchmakingServers()->GetServerDetails( m_hRequest, server.m_iServerID );
-		if ( !pServer ) 
+		if ( !pServer )
 			continue;
 
 		if (!CheckPrimaryFilters( *pServer ) || !CheckSecondaryFilters( *pServer ))
@@ -1199,13 +1199,13 @@ void CBaseGamesPage::ApplyGameFilters()
 					kv->SetInt("bots", pServer->m_nBotPlayers);
 				else
 					kv->SetString("bots", "");
-					
+
 				kv->SetInt("Replay", IsReplayServer( *pServer ) ? m_nImageIndexReplay : 0);
-				
+
 				server.m_iListID = m_pGameList->AddItem(kv, server.m_iServerID, false, false);
 				kv->deleteThis();
 			}
-			
+
 			// make sure the server is visible
 			m_pGameList->SetItemVisible( server.m_iListID, true );
 		}
@@ -1475,7 +1475,7 @@ void CBaseGamesPage::RecalculateFilterString()
 		Q_UTF8ToUnicode( " < ", tempUnicode, iTempUnicodeSize );
 		wcscat( unicode, tempUnicode );
 		Q_UTF8ToUnicode(tmpBuf, tempUnicode, iTempUnicodeSize );
-		wcscat( unicode, tempUnicode );	
+		wcscat( unicode, tempUnicode );
 		wcscat( unicode, spacerUnicode );
 	}
 
@@ -1488,7 +1488,7 @@ void CBaseGamesPage::RecalculateFilterString()
 		Q_UTF8ToUnicode( " <= ", tempUnicode, iTempUnicodeSize );
 		wcscat( unicode, tempUnicode );
 		Q_UTF8ToUnicode(tmpBuf, tempUnicode, iTempUnicodeSize );
-		wcscat( unicode, tempUnicode );	
+		wcscat( unicode, tempUnicode );
 		wcscat( unicode, spacerUnicode );
 	}
 
@@ -1531,11 +1531,11 @@ void CBaseGamesPage::RecalculateFilterString()
 //-----------------------------------------------------------------------------
 bool CBaseGamesPage::CheckPrimaryFilters( gameserveritem_t &server )
 {
-	if (m_szGameFilter[0] && ( server.m_szGameDir[0] || server.m_nPing ) && Q_stricmp(m_szGameFilter, server.m_szGameDir ) ) 
+	if (m_szGameFilter[0] && ( server.m_szGameDir[0] || server.m_nPing ) && Q_stricmp(m_szGameFilter, server.m_szGameDir ) )
 	{
 		return false;
 	}
-	
+
 	// If it's blacklisted, we ignore it too
 	if ( ServerBrowserDialog().IsServerBlacklisted( server ) )
 	{
@@ -1624,7 +1624,7 @@ bool CBaseGamesPage::CheckSecondaryFilters( gameserveritem_t &server )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 uint32 CBaseGamesPage::GetServerFilters( MatchMakingKeyValuePair_t **pFilters )
 {
@@ -1674,7 +1674,7 @@ void CBaseGamesPage::SetRefreshing(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseGamesPage::OnCommand(const char *command)
 {
@@ -1734,7 +1734,7 @@ void CBaseGamesPage::OnKeyCodePressed(vgui::KeyCode code)
 		StartRefresh();
 	}
 	else if (  m_pGameList->GetItemCount() > 0 &&
-			   ( code == KEY_XBUTTON_UP || code == KEY_XSTICK1_UP || code == KEY_XSTICK2_UP || code == STEAMCONTROLLER_DPAD_UP || 
+			   ( code == KEY_XBUTTON_UP || code == KEY_XSTICK1_UP || code == KEY_XSTICK2_UP || code == STEAMCONTROLLER_DPAD_UP ||
 				 code == KEY_XBUTTON_DOWN || code == KEY_XSTICK1_DOWN || code == KEY_XSTICK2_DOWN || code == STEAMCONTROLLER_DPAD_DOWN ) )
 	{
 		m_pGameList->RequestFocus();
@@ -1811,7 +1811,7 @@ void CBaseGamesPage::OnAddToBlacklist()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseGamesPage::ServerFailedToRespond( HServerListRequest hReq, int iServer )
 {
@@ -1907,7 +1907,7 @@ void CBaseGamesPage::StartRefresh()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseGamesPage::ClearQuickList( void )
 {
@@ -1932,8 +1932,8 @@ void CBaseGamesPage::ClearQuickList( void )
 // Purpose: Remove all the servers we currently have
 //-----------------------------------------------------------------------------
 void CBaseGamesPage::ClearServerList()
-{ 
-	m_mapServers.RemoveAll(); 
+{
+	m_mapServers.RemoveAll();
 	m_mapServerIP.RemoveAll();
 	m_pGameList->RemoveAll();
 	m_iServersBlacklisted = 0;
@@ -1971,7 +1971,7 @@ void CBaseGamesPage::StopRefresh()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseGamesPage::RefreshComplete( HServerListRequest hRequest, EMatchMakingServerResponse response )
 {
@@ -2003,7 +2003,7 @@ void CBaseGamesPage::OnPageHide()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 vgui::Panel *CBaseGamesPage::GetActiveList( void )
 {
@@ -2014,7 +2014,7 @@ vgui::Panel *CBaseGamesPage::GetActiveList( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseGamesPage::GetSelectedServerID( KeyValues **pKV )
 {
@@ -2096,7 +2096,7 @@ CDialogServerWarning::CDialogServerWarning(vgui::Panel *parent, IGameList *gameL
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDialogServerWarning::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -2143,7 +2143,7 @@ void CBaseGamesPage::OnBeginConnect()
 {
 	KeyValues *pKV = NULL;
 	int serverID = GetSelectedServerID( &pKV );
-	
+
 	if ( serverID == -1 )
 		return;
 
@@ -2206,7 +2206,7 @@ void CBaseGamesPage::OnViewGameInfo()
 const char *CBaseGamesPage::GetConnectCode()
 {
 	// Determine code to use, for the "connect" command.
-	// 
+	//
 	// E.g.: "connect serverbrowser"   (This command primarily exists so i can grep the code....)
 
 	const char *pszConnectCode = "serverbrowser";
@@ -2284,7 +2284,7 @@ void CBaseGamesPage::OnFavoritesMsg( FavoritesListChanged_t *pFavListChanged )
 		int iIPServer = m_mapServerIP.Find( netadr_t( pFavListChanged->m_nIP, pFavListChanged->m_nConnPort ) );
 		if ( iIPServer == m_mapServerIP.InvalidIndex() )
 		{
-			if ( pFavListChanged->m_bAdd )	
+			if ( pFavListChanged->m_bAdd )
 			{
 				if ( steamapicontext->SteamMatchmakingServers() )
 					steamapicontext->SteamMatchmakingServers()->PingServer( pFavListChanged->m_nIP, pFavListChanged->m_nQueryPort, this );
@@ -2293,7 +2293,7 @@ void CBaseGamesPage::OnFavoritesMsg( FavoritesListChanged_t *pFavListChanged )
 		}
 		else
 		{
-			if ( pFavListChanged->m_bAdd )	
+			if ( pFavListChanged->m_bAdd )
 			{
 				if ( m_mapServerIP[ iIPServer ] > 0 )
 					ServerResponded( m_hRequest, m_mapServerIP[ iIPServer ] );

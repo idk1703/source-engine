@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -157,4 +157,3 @@ const char *CControllerMap::GetBindingIcon( int idx )
 }
 
 DECLARE_BUILD_FACTORY( CControllerMap );
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ WizardSubPanel::~WizardSubPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardSubPanel::ApplySchemeSettings(IScheme *pScheme)
 {
@@ -45,7 +45,7 @@ void WizardSubPanel::ApplySchemeSettings(IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardSubPanel::GetSettings( KeyValues *outResourceData )
 {
@@ -56,7 +56,7 @@ void WizardSubPanel::GetSettings( KeyValues *outResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardSubPanel::ApplySettings(KeyValues *inResourceData)
 {
@@ -98,7 +98,7 @@ bool WizardSubPanel::GetDesiredSize(int &wide, int &tall)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 KeyValues *WizardSubPanel::GetWizardData()
 {
@@ -106,7 +106,7 @@ KeyValues *WizardSubPanel::GetWizardData()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 WizardSubPanel *WizardSubPanel::GetSiblingSubPanelByName(const char *pageName)
 {

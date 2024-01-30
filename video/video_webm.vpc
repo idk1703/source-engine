@@ -4,7 +4,7 @@
 //	Project Script
 //
 //  Description:		WebM video sub-system (for video services system)
-// 
+//
 //-----------------------------------------------------------------------------
 
 $Macro SRCDIR		".."
@@ -35,20 +35,20 @@ $Configuration
 
 $Configuration  "Debug"
 {
-        $General
-        {
-                $OutputDirectory                        "Debug_Video_WebM"
-                $IntermediateDirectory                  "Debug_Video_WebM"
-        }
+	$General
+	{
+		$OutputDirectory                        "Debug_Video_WebM"
+		$IntermediateDirectory                  "Debug_Video_WebM"
+	}
 }
 
 $Configuration  "Release"
 {
-        $General
-        {
-                $OutputDirectory                        "Release_Video_WebM"
-                $IntermediateDirectory                  "Release_Video_WebM"
-        }
+	$General
+	{
+		$OutputDirectory                        "Release_Video_WebM"
+		$IntermediateDirectory                  "Release_Video_WebM"
+	}
 }
 
 
@@ -69,7 +69,7 @@ $Project "video_webm"
 		$file   "webm_recorder.h"
 		$file   "webm_common.h"
 		$file	"$SRCDIR\public\pixelwriter.h"
-		
+
 	}
 
 	$Folder "Link Libraries"
@@ -83,4 +83,3 @@ $Project "video_webm"
 		$Lib $LIBCOMMON/libogg
 	}
 }
-

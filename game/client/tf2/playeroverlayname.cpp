@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -20,10 +20,10 @@
 #include <vgui/IVGui.h>
 #include <vgui/IScheme.h>
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
-CHudPlayerOverlayName::CHudPlayerOverlayName( CHudPlayerOverlay *baseOverlay, const char *name ) : 
+CHudPlayerOverlayName::CHudPlayerOverlayName( CHudPlayerOverlay *baseOverlay, const char *name ) :
 vgui::Label( (vgui::Panel *)NULL, "OverlayName", name )
 {
 	m_pBaseOverlay = baseOverlay;
@@ -37,7 +37,7 @@ vgui::Label( (vgui::Panel *)NULL, "OverlayName", name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudPlayerOverlayName::~CHudPlayerOverlayName( void )
 {
@@ -73,8 +73,8 @@ void CHudPlayerOverlayName::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 void CHudPlayerOverlayName::SetName( const char *name )
 {
@@ -104,9 +104,9 @@ void CHudPlayerOverlayName::OnCursorMoved(int x,int y)
 
 	LocalToScreen( x, y );
 
-	vgui::ivgui()->PostMessage( 
-		GetParent()->GetVPanel(), 
-		new KeyValues( "CursorMoved", "xpos", x, "ypos", y ), 
+	vgui::ivgui()->PostMessage(
+		GetParent()->GetVPanel(),
+		new KeyValues( "CursorMoved", "xpos", x, "ypos", y ),
 		GetVPanel()  );
 }
 
@@ -118,9 +118,9 @@ void CHudPlayerOverlayName::OnMousePressed(vgui::MouseCode code)
 	if ( !GetParent() )
 		return;
 
-	vgui::ivgui()->PostMessage( 
-		GetParent()->GetVPanel(), 
-		new KeyValues( "MousePressed", "code", code ), 
+	vgui::ivgui()->PostMessage(
+		GetParent()->GetVPanel(),
+		new KeyValues( "MousePressed", "code", code ),
 		GetVPanel()  );
 }
 
@@ -132,9 +132,9 @@ void CHudPlayerOverlayName::OnMouseDoublePressed(vgui::MouseCode code)
 	if ( !GetParent() )
 		return;
 
-	vgui::ivgui()->PostMessage( 
-		GetParent()->GetVPanel(), 
-		new KeyValues( "MouseDoublePressed", "code", code ), 
+	vgui::ivgui()->PostMessage(
+		GetParent()->GetVPanel(),
+		new KeyValues( "MouseDoublePressed", "code", code ),
 		GetVPanel()  );
 }
 
@@ -146,9 +146,9 @@ void CHudPlayerOverlayName::OnMouseReleased(vgui::MouseCode code)
 	if ( !GetParent() )
 		return;
 
-	vgui::ivgui()->PostMessage( 
-		GetParent()->GetVPanel(), 
-		new KeyValues( "MouseReleased", "code", code ), 
+	vgui::ivgui()->PostMessage(
+		GetParent()->GetVPanel(),
+		new KeyValues( "MouseReleased", "code", code ),
 		GetVPanel()  );
 }
 
@@ -160,9 +160,9 @@ void CHudPlayerOverlayName::OnMouseWheeled(int delta)
 	if ( !GetParent() )
 		return;
 
-	vgui::ivgui()->PostMessage( 
-		GetParent()->GetVPanel(), 
-		new KeyValues( "MouseWheeled", "delta", delta ), 
+	vgui::ivgui()->PostMessage(
+		GetParent()->GetVPanel(),
+		new KeyValues( "MouseWheeled", "delta", delta ),
 		GetVPanel()  );
 }
 

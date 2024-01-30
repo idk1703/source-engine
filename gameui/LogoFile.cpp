@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -93,7 +93,7 @@ int GrabMip ( HANDLE hdib, unsigned char *lump_p, char *lumpname, COLORREF crf, 
 	/* get pointer to BITMAPINFO (Win 3.0) */
 	lpbmi = (LPBITMAPINFO)::GlobalLock((HGLOBAL)hdib);
 	unsigned char *lump_start = lump_p;
-	
+
 	xl = yl = 0;
 	w = lpbmi->bmiHeader.biWidth;
 	h = lpbmi->bmiHeader.biHeight;
@@ -112,10 +112,10 @@ int GrabMip ( HANDLE hdib, unsigned char *lump_p, char *lumpname, COLORREF crf, 
 	qtex = (miptex_t *)lump_p;
 	qtex->width = (unsigned)(w);
 	qtex->height = (unsigned)(h);
-	Q_strncpy (qtex->name, lumpname, sizeof( qtex->name) ); 
-	
+	Q_strncpy (qtex->name, lumpname, sizeof( qtex->name) );
+
 	lump_p = (unsigned char *)&qtex->offsets[4];
-	
+
 	byteimagewidth = w;
 	byteimageheight = h;
 
@@ -157,7 +157,7 @@ int GrabMip ( HANDLE hdib, unsigned char *lump_p, char *lumpname, COLORREF crf, 
 	{
 		d_red = d_green = d_blue = 0;	// no distortion yet
 		qtex->offsets[miplevel] = (unsigned)(lump_p - (unsigned char *)qtex);
-		
+
 		mipstep = 1<<miplevel;
 
 		for (y=0 ; y<h ; y+=mipstep)
@@ -172,7 +172,7 @@ int GrabMip ( HANDLE hdib, unsigned char *lump_p, char *lumpname, COLORREF crf, 
 				}
 
 				*lump_p++ = AveragePixels (count);
-			}	
+			}
 		}
 	}
 
@@ -186,9 +186,9 @@ int GrabMip ( HANDLE hdib, unsigned char *lump_p, char *lumpname, COLORREF crf, 
 	lump_p += 765;
 
 	*lump_p++  = (unsigned char)(crf & 0xFF);
-	
+
 	*lump_p++  = (unsigned char)((crf >> 8) & 0xFF);
-	
+
 	*lump_p++  = (unsigned char)((crf >> 16) & 0xFF);
 
 	return lump_p - lump_start;
@@ -214,7 +214,7 @@ void UpdateLogoWAD( void *phdib, int r, int g, int b )
 	CUtlBuffer buffer( 0, 16384 );
 
 	int width, height;
-	
+
 	int length = GrabMip (hdib, buf, pszName, crf, &width, &height);
 	if ( length == 0 )
 	{
@@ -245,8 +245,8 @@ void UpdateLogoWAD( void *phdib, int r, int g, int b )
 	header.identification[1] = 'A';
 	header.identification[2] = 'D';
 	header.identification[3] = '3';
-	header.numlumps = 1;     
-	header.infotableofs = 0; 
+	header.numlumps = 1;
+	header.infotableofs = 0;
 
 	buffer.Put( &header, sizeof( wadinfo_t ) );
 
@@ -258,7 +258,7 @@ void UpdateLogoWAD( void *phdib, int r, int g, int b )
 	info.size = info.disksize = length;
 	info.type = TYP_LUMPY;
 	info.compression = 0;
-	
+
 	// Write Lump
 	buffer.Put( buf, length );
 

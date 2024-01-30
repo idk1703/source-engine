@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -28,7 +28,7 @@
 #else
 #define DX8_DEVTYPE	D3DDEVTYPE_REF
 #endif
-    
+
 
 // PC:    By default, PIX profiling is explicitly disallowed using the D3DPERF_SetOptions(1) API on PC
 // X360:  PIX_INSTRUMENTATION will only generate PIX events in RELEASE builds on 360
@@ -87,8 +87,8 @@ public:
 
 #if !defined( _X360 )
 	FORCEINLINE IDirect3D9 *D3D() const
-	{ 
-		return m_pD3D; 
+	{
+		return m_pD3D;
 	}
 #endif
 
@@ -138,14 +138,14 @@ extern CShaderDeviceMgrDx8* g_pShaderDeviceMgrDx8;
 #if defined( _X360 )
 
 extern IDirect3D9 *m_pD3D;
-inline IDirect3D9* D3D()  
+inline IDirect3D9* D3D()
 {
 	return m_pD3D;
 }
 
 #else
 
-inline IDirect3D9* D3D()  
+inline IDirect3D9* D3D()
 {
 	return g_pShaderDeviceMgrDx8->D3D();
 }
@@ -188,7 +188,7 @@ public:
 	virtual int GetCurrentAdapter() const;
 	virtual void EnableNonInteractiveMode( MaterialNonInteractiveMode_t mode, ShaderNonInteractiveInfo_t *pInfo = NULL );
 	virtual void RefreshFrontBufferNonInteractive();
-	virtual char *GetDisplayDeviceName() OVERRIDE; 
+	virtual char *GetDisplayDeviceName() OVERRIDE;
 
 	// Alternative method for ib/vs
 	// NOTE: If this works, remove GetDynamicVertexBuffer/IndexBuffer
@@ -207,7 +207,7 @@ public:
 
 	// Call this when another app is initializing or finished initializing
 	virtual void OtherAppInitializing( bool initializing );
-	
+
 	// This handles any events queued because they were called outside of the owning thread
 	virtual void HandleThreadEvent( uint32 threadEvent );
 
@@ -373,9 +373,9 @@ FORCEINLINE bool CShaderDeviceDx8::IsActive() const
 }
 
 // used to determine if we're deactivated
-FORCEINLINE bool CShaderDeviceDx8::IsDeactivated() const 
-{ 
-	return ( IsPC() && ( ( m_DeviceState != DEVICE_STATE_OK ) || m_bQueuedDeviceLost || m_numReleaseResourcesRefCount ) ); 
+FORCEINLINE bool CShaderDeviceDx8::IsDeactivated() const
+{
+	return ( IsPC() && ( ( m_DeviceState != DEVICE_STATE_OK ) || m_bQueuedDeviceLost || m_numReleaseResourcesRefCount ) );
 }
 
 

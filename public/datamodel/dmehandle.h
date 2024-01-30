@@ -5,7 +5,7 @@
 // Valve, L.L.C., or in accordance with the terms and conditions stipulated in
 // the agreement/contract under which the contents have been supplied.
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -134,13 +134,13 @@ public:
 	}
 
 	DmeType* operator->()
-	{ 
-		return Get(); 
+	{
+		return Get();
 	}
 
 	const DmeType* operator->() const
-	{ 
-		return Get(); 
+	{
+		return Get();
 	}
 
 	CDmeHandle& operator=( DmElementHandle_t h )
@@ -192,7 +192,7 @@ public:
 	}
 
 	operator bool() const
-	{ 
+	{
 		return ( Get() != NULL );
 	}
 

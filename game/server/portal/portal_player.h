@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -34,14 +34,14 @@ struct PortalPlayerStatistics_t
 //=============================================================================
 // >> Portal_Player
 //=============================================================================
-class CPortal_Player : public CAI_ExpresserHost<CHL2_Player> 
+class CPortal_Player : public CAI_ExpresserHost<CHL2_Player>
 {
 public:
 	DECLARE_CLASS( CPortal_Player, CHL2_Player );
 
 	CPortal_Player();
 	~CPortal_Player( void );
-	
+
 	static CPortal_Player *CreatePlayer( const char *className, edict_t *ed )
 	{
 		CPortal_Player::s_PlayerEdict = ed;
@@ -110,7 +110,7 @@ public:
 
 	virtual void SetupVisibility( CBaseEntity *pViewEntity, unsigned char *pvs, int pvssize );
 	virtual void UpdatePortalViewAreaBits( unsigned char *pvs, int pvssize );
-	
+
 	bool	ValidatePlayerModel( const char *pModel );
 
 	QAngle GetAnimEyeAngles( void ) { return m_angEyeAngles.Get(); }
@@ -127,10 +127,10 @@ public:
 	void ResetAnimation( void );
 
 	void SetPlayerModel( void );
-	
+
 	void UpdateExpression ( void );
 	void ClearExpression ( void );
-	
+
 	int	  GetPlayerModelType( void ) { return m_iPlayerSoundType; }
 
 	void ForceDuckThisFrame( void );
@@ -175,7 +175,7 @@ public:
 	CNetworkHandle( CBaseEntity, m_hRagdoll );	// networked entity handle
 
 	void SuppressCrosshair( bool bState ) { m_bSuppressingCrosshair = bState; }
-		
+
 private:
 
 	virtual CAI_Expresser* CreateExpresser( void );
@@ -215,7 +215,7 @@ private:
 	EHANDLE						m_hExpressionSceneEnt;
 	float						m_flExpressionLoopTime;
 
-	
+
 
 	mutable Vector m_vWorldSpaceCenterHolder; //WorldSpaceCenter() returns a reference, need an actual value somewhere
 

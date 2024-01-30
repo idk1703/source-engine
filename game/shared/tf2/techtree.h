@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -141,7 +141,7 @@ public:
 
 	// Retrieves the cost of purchasing the technology (doesn't factor in the resource levels)
 	float				GetResourceCost( void );
-	
+
 	// Retrieves the current amount of resources spent on the technology
 	float				GetResourceLevel( void );
 
@@ -229,7 +229,7 @@ private:
 	// Resource costs
 	float				m_fResourceCost;
 	// Resource levels (amount of resource spent on the technology so far)
-	float				m_fResourceLevel; 
+	float				m_fResourceLevel;
 	float				m_flOverallOwnedPercentage;
 
 	// Technologies contained within this one
@@ -270,7 +270,7 @@ private:
 	bool				m_bActive;
 	bool				m_bPreferred;
 	int					m_nVoters;
-	
+
 	int					m_nTextureID;
 	char				m_szTextureName[ TECHNOLOGY_TEXTURENAME_LENGTH ];
 };
@@ -287,7 +287,7 @@ public:
 
 	// Startup/shutdown
 	void			Shutdown( void );
-	
+
 	// Accessors
 	void			AddTechnologyFile( IFileSystem* pFileSystem, int nTeamNumber, char *sFileName );
 	void			LinkContainedTechnologies( void );

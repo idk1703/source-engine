@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -31,22 +31,22 @@ public:
 	void FileRequested(const char *fileName, unsigned int transferID );
 	void FileDenied(const char *fileName, unsigned int transferID );
 	void FileSent(const char *fileName, unsigned int transferID );
-	
+
 	bool ProcessConnectionlessPacket( netpacket_t *packet );
-	
+
 	// IClient interface
 	bool	ExecuteStringCommand( const char *s );
 	void	SpawnPlayer( void );
 	bool	ShouldSendMessages( void );
 	void	SendSnapshot( CClientFrame * pFrame );
 	bool	SendSignonData( void );
-	
+
 	void	SetRate( int nRate, bool bForce );
 	void	SetUpdateRate(int udpaterate, bool bForce);
 	void	UpdateUserSettings();
-	
+
 public: // IClientMessageHandlers
-	
+
 	PROCESS_NET_MESSAGE( SetConVar );
 	PROCESS_CLC_MESSAGE( ClientInfo );
 	PROCESS_CLC_MESSAGE( Move );
@@ -59,7 +59,7 @@ public: // IClientMessageHandlers
 
 public:
 	CClientFrame *GetDeltaFrame( int nTick );
-	
+
 public:
 	int		m_nLastSendTick;	// last send tick, don't send ticks twice
 	double	m_fLastSendTime;	// last net time we send a packet

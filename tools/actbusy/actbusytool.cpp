@@ -81,7 +81,7 @@ public:
 	virtual const char *GetToolName() { return "ActBusy Script Editor"; }
 	virtual const char *GetBindingsContextFile() { return "cfg/ActBusy.kb"; }
 	virtual bool	Init();
-    virtual void	Shutdown();
+	virtual void	Shutdown();
 	virtual bool	CanQuit();
 
 	// Inherited from IFileMenuCallbacks
@@ -174,7 +174,7 @@ private:
 
 	virtual const char *GetLogoTextureName();
 
-private:	
+private:
 	// All editable data
 	CActBusyDoc		*m_pDoc;
 
@@ -275,7 +275,7 @@ void CActBusyTool::HideStandardFields( CDmeEditorType *pEditorType, int nFieldFl
 	{
 		pInfo = CreateElement< CDmeEditorAttributeInfo >( "name info", DMFILEID_INVALID );
 		pInfo->m_bIsVisible = false;
-		pEditorType->AddAttributeInfo( "name", pInfo ); 
+		pEditorType->AddAttributeInfo( "name", pInfo );
 		m_toolElements.AddToTail( pInfo->GetHandle() );
 	}
 
@@ -283,7 +283,7 @@ void CActBusyTool::HideStandardFields( CDmeEditorType *pEditorType, int nFieldFl
 	{
 		pInfo = CreateElement< CDmeEditorAttributeInfo >( "type info", DMFILEID_INVALID );
 		pInfo->m_bIsVisible = false;
-		pEditorType->AddAttributeInfo( "type", pInfo ); 
+		pEditorType->AddAttributeInfo( "type", pInfo );
 		m_toolElements.AddToTail( pInfo->GetHandle() );
 	}
 
@@ -291,7 +291,7 @@ void CActBusyTool::HideStandardFields( CDmeEditorType *pEditorType, int nFieldFl
 	{
 		pInfo = CreateElement< CDmeEditorAttributeInfo >( "id info", DMFILEID_INVALID );
 		pInfo->m_bIsVisible = false;
-		pEditorType->AddAttributeInfo( "id", pInfo ); 
+		pEditorType->AddAttributeInfo( "id", pInfo );
 		m_toolElements.AddToTail( pInfo->GetHandle() );
 	}
 
@@ -299,7 +299,7 @@ void CActBusyTool::HideStandardFields( CDmeEditorType *pEditorType, int nFieldFl
 	{
 		pInfo = CreateElement< CDmeEditorAttributeInfo >( "editor type info", DMFILEID_INVALID );
 		pInfo->m_bIsVisible = false;
-		pEditorType->AddAttributeInfo( "editorType", pInfo ); 
+		pEditorType->AddAttributeInfo( "editorType", pInfo );
 		m_toolElements.AddToTail( pInfo->GetHandle() );
 	}
 }
@@ -322,11 +322,11 @@ void CActBusyTool::InitEditorDict()
 	m_toolElements.AddToTail( pActBusyList->GetHandle() );
 
 	pInfo = CreateElement< CDmeEditorAttributeInfo >( "children info", DMFILEID_INVALID );
-	pActBusyList->AddAttributeInfo( "children", pInfo ); 
+	pActBusyList->AddAttributeInfo( "children", pInfo );
 	m_toolElements.AddToTail( pInfo->GetHandle() );
 	pArrayInfo = CreateElement< CDmeEditorAttributeInfo >( "hide text info", DMFILEID_INVALID );
 	pInfo->SetArrayInfo( pArrayInfo );
- 	pArrayInfo->SetValue( "hideText", true );
+	pArrayInfo->SetValue( "hideText", true );
 	m_toolElements.AddToTail( pArrayInfo->GetHandle() );
 
 	CDmeEditorType *pActBusyType = CreateElement< CDmeEditorType >( "actBusy", DMFILEID_INVALID );
@@ -335,44 +335,44 @@ void CActBusyTool::InitEditorDict()
 
 	// anims only accept activity names
 	pInfo = CreateElement< CDmeEditorAttributeInfo >( "busy anim info", DMFILEID_INVALID );
-	pActBusyType->AddAttributeInfo( "busy_anim", pInfo ); 
+	pActBusyType->AddAttributeInfo( "busy_anim", pInfo );
 	pInfo->m_Widget = "sequencepicker";
 	pInfo->SetValue( "texttype", "activityName" );
 	m_toolElements.AddToTail( pInfo->GetHandle() );
 
 	pInfo = CreateElement< CDmeEditorAttributeInfo >( "entry anim info", DMFILEID_INVALID );
-	pActBusyType->AddAttributeInfo( "entry_anim", pInfo ); 
+	pActBusyType->AddAttributeInfo( "entry_anim", pInfo );
 	pInfo->m_Widget = "sequencepicker";
 	pInfo->SetValue( "texttype", "activityName" );
 	m_toolElements.AddToTail( pInfo->GetHandle() );
 
 	pInfo = CreateElement< CDmeEditorAttributeInfo >( "exit anim info", DMFILEID_INVALID );
-	pActBusyType->AddAttributeInfo( "exit_anim", pInfo ); 
+	pActBusyType->AddAttributeInfo( "exit_anim", pInfo );
 	pInfo->m_Widget = "sequencepicker";
 	pInfo->SetValue( "texttype", "activityName" );
 	m_toolElements.AddToTail( pInfo->GetHandle() );
 
 	// sequences only accept sequence names
 	pInfo = CreateElement< CDmeEditorAttributeInfo >( "busy sequence info", DMFILEID_INVALID );
-	pActBusyType->AddAttributeInfo( "busy_sequence", pInfo ); 
+	pActBusyType->AddAttributeInfo( "busy_sequence", pInfo );
 	pInfo->m_Widget = "sequencepicker";
 	pInfo->SetValue( "texttype", "sequenceName" );
 	m_toolElements.AddToTail( pInfo->GetHandle() );
 
 	pInfo = CreateElement< CDmeEditorAttributeInfo >( "entry sequence info", DMFILEID_INVALID );
-	pActBusyType->AddAttributeInfo( "entry_sequence", pInfo ); 
+	pActBusyType->AddAttributeInfo( "entry_sequence", pInfo );
 	pInfo->m_Widget = "sequencepicker";
 	pInfo->SetValue( "texttype", "sequenceName" );
 	m_toolElements.AddToTail( pInfo->GetHandle() );
 
 	pInfo = CreateElement< CDmeEditorAttributeInfo >( "exit sequence info", DMFILEID_INVALID );
-	pActBusyType->AddAttributeInfo( "exit_sequence", pInfo ); 
+	pActBusyType->AddAttributeInfo( "exit_sequence", pInfo );
 	pInfo->m_Widget = "sequencepicker";
 	pInfo->SetValue( "texttype", "sequenceName" );
 	m_toolElements.AddToTail( pInfo->GetHandle() );
 
 	CDmeEditorStringChoicesInfo *pChoicesInfo = CreateElement< CDmeEditorStringChoicesInfo >( "interrupts info", DMFILEID_INVALID );
-	pActBusyType->AddAttributeInfo( "interrupts", pChoicesInfo ); 
+	pActBusyType->AddAttributeInfo( "interrupts", pChoicesInfo );
 	pChoicesInfo->m_Widget = "stringchoice";
 	m_toolElements.AddToTail( pChoicesInfo->AddChoice( "BA_INT_NONE", "No Interrupts" )->GetHandle() );
 	m_toolElements.AddToTail( pChoicesInfo->AddChoice( "BA_INT_DANGER", "Danger" )->GetHandle() );
@@ -435,7 +435,7 @@ void CActBusyViewMenuButton::OnShowMenu(vgui::Menu *menu)
 
 		id = m_Items.Find( "picker" );
 		m_pMenu->SetItemEnabled( id, true );
-		
+
 		p = m_pTool->GetSequencePicker();
 		Assert( p );
 		m_pMenu->SetMenuItemChecked( id, ( p && p->GetParent() ) ? true : false );
@@ -507,14 +507,14 @@ void CActBusyMenuButton::OnShowMenu(vgui::Menu *menu)
 //-----------------------------------------------------------------------------
 // Initializes the menu bar
 //-----------------------------------------------------------------------------
-vgui::MenuBar *CActBusyTool::CreateMenuBar( CBaseToolSystem *pParent ) 
+vgui::MenuBar *CActBusyTool::CreateMenuBar( CBaseToolSystem *pParent )
 {
 	m_pMenuBar = new CToolFileMenuBar( pParent, "ActBusyMenuBar" );
 
 	// Sets info in the menu bar
 	char title[ 64 ];
 	ComputeMenuBarTitle( title, sizeof( title ) );
-    m_pMenuBar->SetInfo( title );
+	m_pMenuBar->SetInfo( title );
 	m_pMenuBar->SetToolName( GetToolName() );
 	UpdateMenuBar();
 
@@ -586,15 +586,15 @@ void CActBusyTool::AddRecentFilesToMenu( vgui::Menu *pMenu )
 	m_RecentFiles.AddToMenu( pMenu, GetActionTarget(), "OnRecent" );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the file name for perforce
 //-----------------------------------------------------------------------------
-bool CActBusyTool::GetPerforceFileName( char *pFileName, int nMaxLen ) 
-{ 
+bool CActBusyTool::GetPerforceFileName( char *pFileName, int nMaxLen )
+{
 	if ( !m_pDoc )
 		return false;
-    Q_strncpy( pFileName, m_pDoc->GetFileName(), nMaxLen );
+	Q_strncpy( pFileName, m_pDoc->GetFileName(), nMaxLen );
 	return true;
 }
 
@@ -602,8 +602,8 @@ bool CActBusyTool::GetPerforceFileName( char *pFileName, int nMaxLen )
 //-----------------------------------------------------------------------------
 // Derived classes can implement this to get a new scheme to be applied to this tool
 //-----------------------------------------------------------------------------
-vgui::HScheme CActBusyTool::GetToolScheme() 
-{ 
+vgui::HScheme CActBusyTool::GetToolScheme()
+{
 	return vgui::scheme()->LoadSchemeFromFile( "Resource/BoxRocket.res", "BoxRocket" );
 }
 
@@ -619,8 +619,8 @@ vgui::Menu *CActBusyTool::CreateActionMenu( vgui::Panel *pParent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CActBusyTool::OnExit()
 {
@@ -761,14 +761,14 @@ bool CActBusyTool::OnReadFileFromDisk( const char *pFileName, const char *pFileF
 	return LoadDocument( pFileName );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Called by SaveFile to allow clients to actually write the file out
 //-----------------------------------------------------------------------------
 bool CActBusyTool::OnWriteFileToDisk( const char *pFileName, const char *pFileFormat, KeyValues *pContextKeyValues )
 {
 	if ( !m_pDoc )
-		return true; 
+		return true;
 
 	m_pDoc->SetFileName( pFileName );
 	m_pDoc->SaveToFile( );
@@ -834,7 +834,7 @@ void CActBusyTool::OnClose()
 {
 	if ( m_pDoc && m_pDoc->IsDirty() )
 	{
-		SaveFile( m_pDoc->GetFileName(), "actbusy", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY, 
+		SaveFile( m_pDoc->GetFileName(), "actbusy", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY,
 			new KeyValues( "OnClose" ) );
 		return;
 	}
@@ -858,7 +858,7 @@ void CActBusyTool::OnCloseNoSave()
 			m_hProperties->SetObject( NULL );
 		}
 	}
-	
+
 	UpdateMenuBar( );
 }
 
@@ -916,7 +916,7 @@ bool CActBusyTool::CanQuit()
 	if ( m_pDoc && m_pDoc->IsDirty() )
 	{
 		// Show Save changes Yes/No/Cancel and re-quit if hit yes/no
-		SaveFile( m_pDoc->GetFileName(), "actbusy", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY, 
+		SaveFile( m_pDoc->GetFileName(), "actbusy", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY,
 			new KeyValues( "OnQuit" ) );
 		return false;
 	}
@@ -975,7 +975,7 @@ void CActBusyTool::OnDeleteActBusy()
 {
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Inherited from IActBusyDocCallback
 //-----------------------------------------------------------------------------
@@ -990,8 +990,8 @@ void CActBusyTool::OnDocChanged( const char *pReason, int nNotifySource, int nNo
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : CActBusyDoc
 //-----------------------------------------------------------------------------
 CActBusyDoc *CActBusyTool::GetDocument()
@@ -1000,8 +1000,8 @@ CActBusyDoc *CActBusyTool::GetDocument()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : virtual CBasePropertiesContainer
 //-----------------------------------------------------------------------------
 CBasePropertiesContainer *CActBusyTool::GetProperties()

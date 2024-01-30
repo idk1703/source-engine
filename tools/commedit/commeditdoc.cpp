@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -45,7 +45,7 @@ void CCommEditDoc::NotifyDataChanged( const char *pReason, int nNotifySource, in
 	OnDataChanged( pReason, nNotifySource, nNotifyFlags );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Gets the file name
 //-----------------------------------------------------------------------------
@@ -115,7 +115,7 @@ bool CCommEditDoc::LoadFromFile( const char *pFileName )
 	Q_StripExtension( pFileName, mapname, sizeof(mapname) );
 	char *pszFileName = (char*)Q_UnqualifiedFileName(mapname);
 
-	// Set the txt file name. 
+	// Set the txt file name.
 	// If we loaded an existing commentary file, keep the same filename.
 	// If we loaded a .bsp, change the name & the extension.
 	if ( !V_stricmp( Q_GetFileExtension( pFileName ), "bsp" ) )
@@ -127,7 +127,7 @@ bool CCommEditDoc::LoadFromFile( const char *pFileName )
 		if ( g_pFileSystem->FileExists( m_pTXTFileName ) )
 		{
 			char pBuf[1024];
-			Q_snprintf( pBuf, sizeof(pBuf), "File %s already exists!\n", m_pTXTFileName ); 
+			Q_snprintf( pBuf, sizeof(pBuf), "File %s already exists!\n", m_pTXTFileName );
 			m_pTXTFileName[0] = 0;
 			vgui::MessageBox *pMessageBox = new vgui::MessageBox( "Unable to overwrite file!\n", pBuf, g_pCommEditTool );
 			pMessageBox->DoModal( );
@@ -149,7 +149,7 @@ bool CCommEditDoc::LoadFromFile( const char *pFileName )
 		if ( !pComm )
 		{
 			char pBuf[1024];
-			Q_snprintf( pBuf, sizeof(pBuf), "File %s is not a commentary file!\nThe file name must end in _commentary.txt.\n", m_pTXTFileName ); 
+			Q_snprintf( pBuf, sizeof(pBuf), "File %s is not a commentary file!\nThe file name must end in _commentary.txt.\n", m_pTXTFileName );
 			m_pTXTFileName[0] = 0;
 			vgui::MessageBox *pMessageBox = new vgui::MessageBox( "Bad file name!\n", pBuf, g_pCommEditTool );
 			pMessageBox->DoModal( );
@@ -200,7 +200,7 @@ void CCommEditDoc::SaveToFile( )
 	SetDirty( false );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the root object
 //-----------------------------------------------------------------------------
@@ -209,7 +209,7 @@ CDmElement *CCommEditDoc::GetRootObject()
 	return m_hRoot;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns the entity list
 //-----------------------------------------------------------------------------
@@ -225,7 +225,7 @@ CDmAttribute *CCommEditDoc::GetEntityList()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommEditDoc::AddNewInfoTarget( const Vector &vecOrigin, const QAngle &angAngles )
 {
@@ -253,7 +253,7 @@ void CCommEditDoc::AddNewInfoTarget( const Vector &vecOrigin, const QAngle &angA
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommEditDoc::AddNewInfoTarget( void )
 {
@@ -261,12 +261,12 @@ void CCommEditDoc::AddNewInfoTarget( void )
 	QAngle angAngles;
 	float flFov;
 	clienttools->GetLocalPlayerEyePosition( vecOrigin, angAngles, flFov );
-	AddNewInfoTarget( vecOrigin, vec3_angle ); 
+	AddNewInfoTarget( vecOrigin, vec3_angle );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommEditDoc::AddNewCommentaryNode( const Vector &vecOrigin, const QAngle &angAngles )
 {
@@ -300,7 +300,7 @@ void CCommEditDoc::AddNewCommentaryNode( const Vector &vecOrigin, const QAngle &
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommEditDoc::AddNewCommentaryNode( void )
 {
@@ -333,9 +333,9 @@ void CCommEditDoc::DeleteCommentaryNode( CDmElement *pRemoveNode )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &vecOrigin - 
-//			&angAbsAngles - 
+// Purpose:
+// Input  : &vecOrigin -
+//			&angAbsAngles -
 // Output : CDmeCommentaryNodeEntity
 //-----------------------------------------------------------------------------
 CDmeCommentaryNodeEntity *CCommEditDoc::GetCommentaryNodeForLocation( Vector &vecOrigin, QAngle &angAbsAngles )
@@ -359,7 +359,7 @@ CDmeCommentaryNodeEntity *CCommEditDoc::GetCommentaryNodeForLocation( Vector &ve
 //-----------------------------------------------------------------------------
 // Populate string choice lists
 //-----------------------------------------------------------------------------
-bool CCommEditDoc::GetStringChoiceList( const char *pChoiceListType, CDmElement *pElement, 
+bool CCommEditDoc::GetStringChoiceList( const char *pChoiceListType, CDmElement *pElement,
 									const char *pAttributeName, bool bArrayElement, StringChoiceList_t &list )
 {
 	if ( !Q_stricmp( pChoiceListType, "info_targets" ) )
@@ -394,7 +394,7 @@ bool CCommEditDoc::GetStringChoiceList( const char *pChoiceListType, CDmElement 
 //-----------------------------------------------------------------------------
 // Populate element choice lists
 //-----------------------------------------------------------------------------
-bool CCommEditDoc::GetElementChoiceList( const char *pChoiceListType, CDmElement *pElement, 
+bool CCommEditDoc::GetElementChoiceList( const char *pChoiceListType, CDmElement *pElement,
 									 const char *pAttributeName, bool bArrayElement, ElementChoiceList_t &list )
 {
 	if ( !Q_stricmp( pChoiceListType, "allelements" ) )
@@ -430,7 +430,7 @@ bool CCommEditDoc::GetElementChoiceList( const char *pChoiceListType, CDmElement
 	return list.Count() > 0;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Called when data changes
 //-----------------------------------------------------------------------------
@@ -439,5 +439,3 @@ void CCommEditDoc::OnDataChanged( const char *pReason, int nNotifySource, int nN
 	SetDirty( nNotifyFlags & NOTIFY_SETDIRTYFLAG ? true : false );
 	m_pCallback->OnDocChanged( pReason, nNotifySource, nNotifyFlags );
 }
-
-

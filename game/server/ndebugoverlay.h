@@ -14,7 +14,7 @@
 #include "debugoverlay_shared.h"
 
 // An overlay line
-struct OverlayLine_t 
+struct OverlayLine_t
 {
 	Vector			origin;
 	Vector			dest;

@@ -48,16 +48,16 @@
 #include "tier0/memdbgon.h"
 
 
-// Whether the code should use gl_arb_debug_output. This causes error messages to be streamed, via callback, to the application. 
-// It is much friendlier to the MTGL driver. 
-// NOTE: This can be turned off after launch, but it cannot be turned on after launch--it implies a context-creation-time 
+// Whether the code should use gl_arb_debug_output. This causes error messages to be streamed, via callback, to the application.
+// It is much friendlier to the MTGL driver.
+// NOTE: This can be turned off after launch, but it cannot be turned on after launch--it implies a context-creation-time
 // behavior.
 ConVar gl_debug_output( "gl_debug_output", "1" );
 
 
-// Whether or not we should batch up our creation and deletion behavior. 
+// Whether or not we should batch up our creation and deletion behavior.
 ConVar gl_batch_tex_creates( "gl_batch_tex_creates", "0" );
-ConVar gl_batch_tex_destroys( "gl_batch_tex_destroys", "0" ); 
+ConVar gl_batch_tex_destroys( "gl_batch_tex_destroys", "0" );
 
 //===============================================================================
 
@@ -85,7 +85,7 @@ char g_nullFragmentProgramText [] =
 	"{\n"
 	"gl_FragColor = vec4( 0.0, 0.0, 0.0, 1.0 );\n"
 	"}\n"
-	
+
 };
 
 // make dummy programs for doing texture preload via dummy draw
@@ -208,15 +208,15 @@ bool g_bDebugOutputBreakpoints = true;
 void APIENTRY GL_Debug_Output_Callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam)
 {
 	const char *sSource = glSourceToString(source),
-		       *sType = glTypeToString(type),
-			   *sSeverity = glSeverityToString(severity);
-	
+					*sType = glTypeToString(type),
+				*sSeverity = glSeverityToString(severity);
+
 	// According to NVidia, this error is a bug in the driver and not really an error (it's a warning in newer drivers): "Texture X is base level inconsistent. Check texture size"
 	if (  ( type == GL_DEBUG_TYPE_ERROR_ARB ) && strstr( message, "base level inconsistent" ) )
 	{
 		return;
 	}
-	
+
 	if ( gl_debug_output.GetBool() || type == GL_DEBUG_TYPE_ERROR_ARB )
 	{
 		Msg( "GL: [%s][%s][%s][%d]: %s\n", sSource, sType, sSeverity, id, message );
@@ -225,7 +225,7 @@ void APIENTRY GL_Debug_Output_Callback(GLenum source, GLenum type, GLuint id, GL
 #ifdef WIN32
 	OutputDebugStringA( message );
 #endif
-			
+
 	if ( ( type == GL_DEBUG_TYPE_ERROR_ARB ) && ( g_bDebugOutputBreakpoints ) )
 	{
 		DebuggerBreak();
@@ -246,7 +246,7 @@ void GLMDebugPrintf( const char *pMsg, ... )
 //===============================================================================
 // functions that are dependant on g_pLauncherMgr
 
-inline bool MakeContextCurrent( PseudoGLContextPtr hContext ) 
+inline bool MakeContextCurrent( PseudoGLContextPtr hContext )
 {
 	return g_pLauncherMgr->MakeContextCurrent( hContext );
 }
@@ -274,7 +274,7 @@ inline void ShowPixels( CShowPixelsParams *params )
 	g_pLauncherMgr->ShowPixels(params);
 }
 
-inline void DisplayedSize( uint &width, uint &height ) 
+inline void DisplayedSize( uint &width, uint &height )
 {
 	g_pLauncherMgr->DisplayedSize( width, height );
 }
@@ -294,7 +294,7 @@ inline void PumpWindowsMessageLoop()
 {
 	g_pLauncherMgr->PumpWindowsMessageLoop();
 }
-inline int GetEvents( CCocoaEvent *pEvents, int nMaxEventsToReturn, bool debugEvents = false ) 
+inline int GetEvents( CCocoaEvent *pEvents, int nMaxEventsToReturn, bool debugEvents = false )
 {
 	return g_pLauncherMgr->GetEvents( pEvents, nMaxEventsToReturn, debugEvents );
 }
@@ -320,10 +320,10 @@ static void printmat( char *label, int baseSlotNumber, int slots, float *m00 )
 	// print label..
 	// fetch 4 from row, print as a row
 	// fetch 4 from column, print as a row
-	
+
 	float	row[4];
 	float	col[4];
-	
+
 	if (hasnonzeros( m00, slots*4) )
 	{
 		GLMPRINTF(("-D-  %s", label ));
@@ -334,7 +334,7 @@ static void printmat( char *label, int baseSlotNumber, int slots, float *m00 )
 			{
 				//copy
 				row[slotcol] = m00[(islot*4)+slotcol];
-				
+
 				// transpose
 				col[slotcol] = m00[(slotcol*4)+islot];
 			}
@@ -343,7 +343,7 @@ static void printmat( char *label, int baseSlotNumber, int slots, float *m00 )
 				GLMPRINTF((		"-D-    %03d: [ %10.5f %10.5f %10.5f %10.5f ] T=> [ %10.5f %10.5f %10.5f %10.5f ]",
 								baseSlotNumber+islot,
 								row[0],row[1],row[2],row[3],
-								col[0],col[1],col[2],col[3]						
+								col[0],col[1],col[2],col[3]
 								));
 			}
 			else
@@ -383,12 +383,12 @@ static void transform_dp4( float *in4, float *m00, int slots, float *out4 )
 	for( int n=0; n<slots; n++)
 	{
 		float col4[4];
-		
+
 		col4[0] = m00[(4*n)+0];
 		col4[1] = m00[(4*n)+1];
 		col4[2] = m00[(4*n)+2];
 		col4[3] = m00[(4*n)+3];
-		
+
 		out4[n] = 0.0;
 		for( int inner = 0; inner < 4; inner++ )
 		{
@@ -441,7 +441,7 @@ void	GLMgr::DelGLMgr( void )
 
 GLMgr::GLMgr()
 {
-}	
+}
 
 
 GLMgr::~GLMgr()
@@ -453,7 +453,7 @@ GLMgr::~GLMgr()
 GLMContext *GLMgr::NewContext( IDirect3DDevice9 *pDevice, GLMDisplayParams *params )
 {
 	// this now becomes really simple.  We just pass through the params.
-	
+
 	return new GLMContext( pDevice, params );
 }
 
@@ -485,7 +485,7 @@ GLMContext *GLMgr::GetCurrentContext( void )
 	return NULL;
 #endif
 }
-	
+
 
 // #define CHECK_THREAD_USAGE	1
 
@@ -496,7 +496,7 @@ void GLMContext::MakeCurrent( bool bRenderThread )
 {
 	tmZone( TELEMETRY_LEVEL0, 0, "GLMContext::MakeCurrent" );
 	Assert( m_nCurOwnerThreadId == 0 || m_nCurOwnerThreadId == ThreadGetCurrentId() );
-		
+
 #if defined( USE_SDL )
 
 #ifndef CHECK_THREAD_USAGE
@@ -541,7 +541,7 @@ void GLMContext::ReleaseCurrent( bool bRenderThread )
 {
 	tmZone( TELEMETRY_LEVEL0, 0, "GLMContext::ReleaseCurrent" );
 	Assert( m_nCurOwnerThreadId == ThreadGetCurrentId() );
-		
+
 #if defined( USE_SDL )
 
 #ifndef CHECK_THREAD_USAGE
@@ -577,13 +577,13 @@ void GLMContext::ForceFlushStates()
 
 	m_DepthBias.Flush();
 
-	m_ScissorEnable.Flush();	
+	m_ScissorEnable.Flush();
 	m_ScissorBox.Flush();
 
-	m_ViewportBox.Flush();		
+	m_ViewportBox.Flush();
 	m_ViewportDepthRange.Flush();
 
-	m_ColorMaskSingle.Flush();	
+	m_ColorMaskSingle.Flush();
 
 	m_BlendEnable.Flush();
 	m_BlendFactor.Flush();
@@ -729,7 +729,7 @@ void GLMContext::DumpCaps( void )
 	dumpfield( m_hasNewFullscreenMode );
 	dumpfield( m_hasNativeClipVertexMode );
 	dumpfield( m_maxAniso );
-	
+
 	dumpfield( m_hasBindableUniforms );
 	dumpfield( m_maxVertexBindableUniforms );
 	dumpfield( m_maxFragmentBindableUniforms );
@@ -737,7 +737,7 @@ void GLMContext::DumpCaps( void )
 
 	dumpfield( m_hasUniformBuffers );
 	dumpfield( m_hasPerfPackage1 );
-	
+
 	dumpfield( m_cantBlitReliably );
 	dumpfield( m_cantAttachSRGB );
 	dumpfield( m_cantResolveFlipped );
@@ -747,7 +747,7 @@ void GLMContext::DumpCaps( void )
 	dumpfield( m_badDriver108Intel );
 
 	printf("\n--------------------------------");
-	
+
 	#undef dumpfield
 	#undef dumpfield_hex
 	#undef dumpfield_str
@@ -757,9 +757,9 @@ CGLMTex	*GLMContext::NewTex( GLMTexLayoutKey *key, uint levels, const char *debu
 {
 	// get a layout based on the key
 	GLMTexLayout *layout = m_texLayoutTable->NewLayoutRef( key );
-			
+
 	CGLMTex *tex = new CGLMTex( this, layout, levels, debugLabel );
-	
+
 	return tex;
 }
 
@@ -786,7 +786,7 @@ void GLMContext::ProcessTextureDeletes()
 				BindTexToTMU( NULL, i );
 			}
 		}
-			
+
 		if ( tex->m_rtAttachCount != 0 )
 		{
 			// RG - huh? wtf? TODO: fix this code which seems to be purposely leaking
@@ -805,13 +805,13 @@ void GLMContext::ProcessTextureDeletes()
 			#endif
 		}
 		else
-		{	
+		{
 			delete tex;
 		}
 	}
 }
 
-// push and pop attrib when blit has mixed srgb source and dest?		
+// push and pop attrib when blit has mixed srgb source and dest?
 ConVar	gl_radar7954721_workaround_mixed ( "gl_radar7954721_workaround_mixed", "1" );
 
 // push and pop attrib on any blit?
@@ -847,11 +847,11 @@ void glAttachRBOtoFBO	( GLenum target, eBlitFormatClass formatClass, uint rboNam
 		case eColor:
 			gGL->glFramebufferRenderbufferEXT	( target, GL_COLOR_ATTACHMENT0_EXT, GL_RENDERBUFFER_EXT, rboName);
 		break;
-		
+
 		case eDepth:
 			gGL->glFramebufferRenderbufferEXT	( target, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, rboName);
 		break;
-		
+
 		case eDepthStencil:
 			gGL->glFramebufferRenderbufferEXT	( target, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, rboName);
 			gGL->glFramebufferRenderbufferEXT	( target, GL_STENCIL_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, rboName);
@@ -866,11 +866,11 @@ void glAttachTex2DtoFBO	( GLenum target, eBlitFormatClass formatClass, uint texN
 		case eColor:
 			gGL->glFramebufferTexture2DEXT		( target, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, texName, texMip );
 		break;
-		
+
 		case eDepth:
 			gGL->glFramebufferTexture2DEXT		( target, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, texName, texMip );
 		break;
-		
+
 		case eDepthStencil:
 			gGL->glFramebufferTexture2DEXT		( target, GL_DEPTH_STENCIL_ATTACHMENT_EXT, GL_TEXTURE_2D, texName, texMip );
 		break;
@@ -891,7 +891,7 @@ ConVar gl_magnify_resolve_mode("gl_magnify_resolve_mode", "2" );	// if scaled re
 
 void GLMContext::SaveColorMaskAndSetToDefault()
 {
-	// NVidia's driver doesn't ignore the colormask during blitframebuffer calls, so we need to save/restore it: 
+	// NVidia's driver doesn't ignore the colormask during blitframebuffer calls, so we need to save/restore it:
 	// “The bug here is that our driver fails to ignore colormask for BlitFramebuffer calls. This was unclear in the original spec, but we resolved it in Khronos last year (https://cvs.khronos.org/bugzilla/show_bug.cgi?id=7969).”
 	m_ColorMaskSingle.Read( &m_SavedColorMask, 0 );
 
@@ -911,12 +911,12 @@ void GLMContext::Blit2( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int srcM
 	CScopedGLMPIXEvent glmPIXEvent( "Blit2" );
 	g_TelemetryGPUStats.m_nTotalBlit2++;
 #endif
-	
+
 	SaveColorMaskAndSetToDefault();
-	
+
 	Assert( srcFace == 0 );
 	Assert( dstFace == 0 );
-	
+
 	//----------------------------------------------------------------- format assessment
 
 	eBlitFormatClass	formatClass = eColor;
@@ -933,7 +933,7 @@ void GLMContext::Blit2( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int srcM
 			formatClass = eDepth;
 			blitMask = GL_DEPTH_BUFFER_BIT;
 		break;
-		
+
 		case GL_DEPTH_STENCIL_EXT:
 			formatClass = eDepthStencil;
 			blitMask = GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT;
@@ -946,7 +946,7 @@ void GLMContext::Blit2( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int srcM
 	}
 
 	//----------------------------------------------------------------- blit assessment
-	
+
 
 	bool blitResolves	=	srcTex->m_rboName != 0;
 	bool blitScales		=	((srcRect->xmax - srcRect->xmin) != (dstRect->xmax - dstRect->xmin)) || ((srcRect->ymax - srcRect->ymin) != (dstRect->ymax - dstRect->ymin));
@@ -966,16 +966,16 @@ void GLMContext::Blit2( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int srcM
 	{
 		gGL->glPushAttrib( 0 );
 	}
-	
+
 	//----------------------------------------------------------------- figure out the plan
-	
+
 	bool blitTwoStep = false;		// think positive
-	
+
 	// each subsequent segment here can only set blitTwoStep, not clear it.
 	// the common case where these get hit is resolve out to presentation
 	// there may be GL extensions or driver revisions which start doing these safely.
 	// ideally many blits internally resolve without scaling and can thus go direct without using the scratch tex.
-	
+
 	if (blitResolves && (blitFlips||blitToBack))		// flips, blit to back, same thing (for now)
 	{
 		if( gl_cannot_resolve_flipped.GetInt() )
@@ -985,7 +985,7 @@ void GLMContext::Blit2( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int srcM
 		else if (!gl_can_resolve_flipped.GetInt())
 		{
 			blitTwoStep = blitTwoStep || m_caps.m_cantResolveFlipped;	// if neither convar renders an opinion, fall back to the caps to decide if we have to two-step.
-		}		
+		}
 	}
 
 	// only consider trying to use the scaling resolve filter,
@@ -1003,10 +1003,10 @@ void GLMContext::Blit2( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int srcM
 			{
 				bool	blitScalesDown	= ((srcRect->xmax - srcRect->xmin) > (dstRect->xmax - dstRect->xmin)) || ((srcRect->ymax - srcRect->ymin) > (dstRect->ymax - dstRect->ymin));
 				int		mode			= (blitScalesDown) ? gl_minify_resolve_mode.GetInt() : gl_magnify_resolve_mode.GetInt();
-				
+
 				// roughly speaking, resolve blits that minify represent setup for special effects ("copy framebuffer to me")
 				// resolve blits that magnify are almost always on the final present in the case where remder size < display size
-				
+
 				switch( mode )
 				{
 					case 0:
@@ -1014,21 +1014,21 @@ void GLMContext::Blit2( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int srcM
 						// filter is unchanged, two step mode
 						blitTwoStep = true;
 					break;
-						
+
 					case 1:
 						// filter goes to fastest, one step mode
 						blitTwoStep = false;
 						filter = XGL_SCALED_RESOLVE_FASTEST_EXT;
 					break;
-						
+
 					case 2:
 						// filter goes to nicest, one step mode
 						blitTwoStep = false;
 						filter = XGL_SCALED_RESOLVE_NICEST_EXT;
-					break;					
+					break;
 				}
 			}
-		}	
+		}
 	}
 
 	//----------------------------------------------------------------- save old scissor state and disable scissor
@@ -1046,33 +1046,33 @@ void GLMContext::Blit2( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int srcM
 	if (blitTwoStep)
 	{
 		// a resolve that can't be done directly due to constraints on scaling or flipping.
-		
+
 		// bind scratch FBO0 to read, scrub it, attach RBO
 		BindFBOToCtx		( m_scratchFBO[0], GL_READ_FRAMEBUFFER_EXT );
 		glScrubFBO			( GL_READ_FRAMEBUFFER_EXT );
 		glAttachRBOtoFBO	( GL_READ_FRAMEBUFFER_EXT, formatClass, srcTex->m_rboName );
-		
+
 		// bind scratch FBO1 to write, scrub it, attach scratch tex
 		BindFBOToCtx		( m_scratchFBO[1], GL_DRAW_FRAMEBUFFER_EXT );
 		glScrubFBO			( GL_DRAW_FRAMEBUFFER_EXT );
 		glAttachTex2DtoFBO	( GL_DRAW_FRAMEBUFFER_EXT, formatClass, srcTex->m_texName, 0 );
 
-		// set read and draw buffers appropriately		
+		// set read and draw buffers appropriately
 		gGL->glReadBuffer		( glAttachFromClass[formatClass] );
 		gGL->glDrawBuffer		( glAttachFromClass[formatClass] );
-		
+
 		// blit#1 - to resolve to scratch
 		// implicitly means no scaling, thus will be done with NEAREST sampling
 
 		GLenum resolveFilter = GL_NEAREST;
-		
+
 		gGL->glBlitFramebufferEXT(	0, 0,	srcTex->m_layout->m_key.m_xSize, srcTex->m_layout->m_key.m_ySize,
 								0, 0,	srcTex->m_layout->m_key.m_xSize, srcTex->m_layout->m_key.m_ySize,	// same source and dest rect, whole surface
 								blitMask, resolveFilter );
-								
+
 		// FBO1 now holds the interesting content.
 		// scrub FBO0, bind FBO1 to READ, fall through to next stage of blit where 1 goes onto 0 (or BACK)
-		
+
 		glScrubFBO			( GL_READ_FRAMEBUFFER_EXT );	// zap FBO0
 		BindFBOToCtx		( m_scratchFBO[1], GL_READ_FRAMEBUFFER_EXT );
 
@@ -1081,7 +1081,7 @@ void GLMContext::Blit2( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int srcM
 	else
 	{
 #if 1
-		if (srcTex->m_pBlitSrcFBO == NULL) 
+		if (srcTex->m_pBlitSrcFBO == NULL)
 		{
 			srcTex->m_pBlitSrcFBO = NewFBO();
 			BindFBOToCtx( srcTex->m_pBlitSrcFBO, GL_READ_FRAMEBUFFER_EXT );
@@ -1093,8 +1093,8 @@ void GLMContext::Blit2( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int srcM
 			{
 				glAttachTex2DtoFBO( GL_READ_FRAMEBUFFER_EXT, formatClass, srcTex->m_texName, srcMip );
 			}
-		} 
-		else 
+		}
+		else
 		{
 			BindFBOToCtx		( srcTex->m_pBlitSrcFBO, GL_READ_FRAMEBUFFER_EXT );
 			//                     GLMCheckError();
@@ -1116,17 +1116,17 @@ void GLMContext::Blit2( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int srcM
 
 		gGL->glReadBuffer( glAttachFromClass[formatClass] );
 	}
-	
+
 	//----------------------------------------------------------------- zero or one blits may have happened above, whichever took place, FBO1 is now on read
-	
+
 	bool yflip = false;
 	if (blitToBack)
 	{
 		// backbuffer is special - FBO0 is left out (either scrubbed already, or not used)
-		
+
 		BindFBOToCtx		( NULL, GL_DRAW_FRAMEBUFFER_EXT );
 		gGL->glDrawBuffer		( GL_BACK );
-		
+
 		yflip = true;
 	}
 	else
@@ -1134,42 +1134,42 @@ void GLMContext::Blit2( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int srcM
 		// not going to GL_BACK - use FBO0. set up dest tex or RBO on it.  i.e. it's OK to blit from MSAA to MSAA if needed, though unlikely.
 		Assert( dstTex != NULL );
 #if 1
-		if (dstTex->m_pBlitDstFBO == NULL) 
+		if (dstTex->m_pBlitDstFBO == NULL)
 		{
 			dstTex->m_pBlitDstFBO = NewFBO();
 			BindFBOToCtx( dstTex->m_pBlitDstFBO, GL_DRAW_FRAMEBUFFER_EXT );
 			if (dstTex->m_rboName)
 			{
-				glAttachRBOtoFBO( GL_DRAW_FRAMEBUFFER_EXT, formatClass, dstTex->m_rboName );		
+				glAttachRBOtoFBO( GL_DRAW_FRAMEBUFFER_EXT, formatClass, dstTex->m_rboName );
 			}
 			else
 			{
 				glAttachTex2DtoFBO( GL_DRAW_FRAMEBUFFER_EXT, formatClass, dstTex->m_texName, dstMip );
 			}
-		} 
+		}
 		else
 		{
 			BindFBOToCtx( dstTex->m_pBlitDstFBO, GL_DRAW_FRAMEBUFFER_EXT );
 		}
 #else
-		BindFBOToCtx( m_scratchFBO[0], GL_DRAW_FRAMEBUFFER_EXT );							GLMCheckError();								
+		BindFBOToCtx( m_scratchFBO[0], GL_DRAW_FRAMEBUFFER_EXT );							GLMCheckError();
 		glScrubFBO( GL_DRAW_FRAMEBUFFER_EXT );
 
 		if (dstTex->m_rboName)
 		{
-			glAttachRBOtoFBO( GL_DRAW_FRAMEBUFFER_EXT, formatClass, dstTex->m_rboName );		
+			glAttachRBOtoFBO( GL_DRAW_FRAMEBUFFER_EXT, formatClass, dstTex->m_rboName );
 		}
 		else
 		{
 			glAttachTex2DtoFBO( GL_DRAW_FRAMEBUFFER_EXT, formatClass, dstTex->m_texName, dstMip );
-		}	
+		}
 
 		gGL->glDrawBuffer		( glAttachFromClass[formatClass] );										GLMCheckError();
-#endif							
+#endif
 	}
 
 	// final blit
-	
+
 	// i think in general, if we are blitting same size, gl_nearest is the right filter to pass.
 	// this re-steering won't kick in if there is scaling or a special scaled resolve going on.
 	if (!blitScales)
@@ -1177,7 +1177,7 @@ void GLMContext::Blit2( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int srcM
 		// steer it
 		filter = GL_NEAREST;
 	}
-	
+
 	// this is blit #1 or #2 depending on what took place above.
 	if (yflip)
 	{
@@ -1201,17 +1201,17 @@ void GLMContext::Blit2( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int srcM
 //		glScrubFBO			( GL_DRAW_FRAMEBUFFER_EXT );
 		BindFBOToCtx		( NULL, GL_DRAW_FRAMEBUFFER_EXT );
 	}
-		
+
 	//----------------------------------------------------------------- restore GLM's drawing FBO
 
 	//	restore GLM drawing FBO
 	BindFBOToCtx( m_drawingFBO, GL_FRAMEBUFFER_EXT );
-	
+
 	if (doPushPop)
 	{
 		gGL->glPopAttrib( );
 	}
-	
+
 
 	//----------------------------------------------------------------- restore old scissor state
 	if (oldsciss.enable)
@@ -1252,14 +1252,14 @@ void GLMContext::BlitTex( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int sr
 			}
 		break;
 	}
-	
+
 	if (0)
 	{
 		GLMPRINTF(("-D- Blit from %d %d %d %d  to %d %d %d %d",
 			srcRect->xmin, srcRect->ymin, srcRect->xmax, srcRect->ymax,
 			dstRect->xmin, dstRect->ymin, dstRect->xmax, dstRect->ymax
 		));
-		
+
 		GLMPRINTF(( "-D-       src tex layout is %s", srcTex->m_layout->m_layoutSummary ));
 		GLMPRINTF(( "-D-       dst tex layout is %s", dstTex->m_layout->m_layoutSummary ));
 	}
@@ -1276,7 +1276,7 @@ void GLMContext::BlitTex( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int sr
 		//| GL_TEXTURE_BIT
 		//GL_VIEWPORT_BIT
 		//;
-	
+
 	if (gl_radar7954721_workaround_all.GetInt()!=0)
 	{
 		gGL->glPushAttrib( pushmask );
@@ -1306,7 +1306,7 @@ void GLMContext::BlitTex( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int sr
 		m_ScissorEnable.Read( &oldsciss, 0 );
 
 		// remember to restore m_drawingFBO at end of effort
-		
+
 		// setup
 		//	turn off scissor
 		newsciss.enable = false;
@@ -1314,9 +1314,9 @@ void GLMContext::BlitTex( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int sr
 
 		// select which attachment enum we're going to use for the blit
 		// default to color0, unless it's a depth or stencil flava
-		
+
 		Assert( srcTex->m_layout->m_format->m_glDataFormat == dstTex->m_layout->m_format->m_glDataFormat );
-		
+
 		EGLMFBOAttachment	attachIndex = (EGLMFBOAttachment)0;
 		GLenum				attachIndexGL = 0;
 		GLuint				blitMask = 0;
@@ -1338,7 +1338,7 @@ void GLMContext::BlitTex( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int sr
 				attachIndexGL = GL_DEPTH_ATTACHMENT_EXT;
 				blitMask = GL_DEPTH_BUFFER_BIT;
 			break;
-			
+
 			case GL_DEPTH_STENCIL_EXT:
 				attachIndex = kAttDepthStencil;
 				attachIndexGL = GL_DEPTH_STENCIL_ATTACHMENT_EXT;
@@ -1361,7 +1361,7 @@ void GLMContext::BlitTex( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int sr
 		m_blitReadFBO->TexAttach( &attparams, attachIndex, GL_READ_FRAMEBUFFER_EXT );
 
 		gGL->glReadBuffer( attachIndexGL );
-		
+
 
 		//	set the write fb and buffer, and attach write tex
 		BindFBOToCtx( m_blitDrawFBO, GL_DRAW_FRAMEBUFFER_EXT );
@@ -1378,7 +1378,7 @@ void GLMContext::BlitTex( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int sr
 		gGL->glBlitFramebufferEXT(	srcRect->xmin, srcRect->ymin, srcRect->xmax, srcRect->ymax,
 								dstRect->xmin, dstRect->ymin, dstRect->xmax, dstRect->ymax,
 								blitMask, filter );
-							
+
 		// cleanup
 		//	unset the read fb and buffer, detach read tex
 		//	unset the write fb and buffer, detach write tex
@@ -1390,9 +1390,9 @@ void GLMContext::BlitTex( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int sr
 		//	put the original FB back in place (both read and draw)
 		// this bind will hit both read and draw bindings
 		BindFBOToCtx( m_drawingFBO, GL_FRAMEBUFFER_EXT );
-		
+
 			//	set the read and write buffers back to... what ? does it matter for anything but copies ?  don't worry about it
-		
+
 		// restore the scissor state
 		m_ScissorEnable.Write( &oldsciss );
 	}
@@ -1421,7 +1421,7 @@ void GLMContext::BlitTex( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int sr
 				Assert(!"Can't blit that format");
 			break;
 		}
-		
+
 		BindFBOToCtx( m_blitDrawFBO, GL_DRAW_FRAMEBUFFER_EXT );
 
 		GLMFBOTexAttachParams attparams;
@@ -1432,10 +1432,10 @@ void GLMContext::BlitTex( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int sr
 		m_blitDrawFBO->TexAttach( &attparams, attachIndex, GL_DRAW_FRAMEBUFFER_EXT );
 
 		gGL->glDrawBuffer( attachIndexGL );
-		
+
 		// attempt to just set states directly the way we want them, then use the latched states to repair them afterward.
 		NullProgram();	// out of program mode
-		
+
 		gGL->glDisable ( GL_ALPHA_TEST );
 		gGL->glDisable ( GL_CULL_FACE );
 		gGL->glDisable ( GL_POLYGON_OFFSET_FILL );
@@ -1443,7 +1443,7 @@ void GLMContext::BlitTex( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int sr
 
 		gGL->glDisable ( GL_CLIP_PLANE0 );
 		gGL->glDisable ( GL_CLIP_PLANE1 );
-		
+
 		gGL->glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );
 		gGL->glDisable ( GL_BLEND );
 
@@ -1464,14 +1464,14 @@ void GLMContext::BlitTex( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int sr
 
 		float topv = 1.0;
 		float botv = 0.0;
-		
+
 		gGL->glBegin(GL_QUADS);
 			gGL->glTexCoord2f	( 0.0, botv );
 			gGL->glVertex3f		( -1.0, -1.0, 0.0 );
-			
+
 			gGL->glTexCoord2f	( 1.0, botv );
 			gGL->glVertex3f		( 1.0, -1.0, 0.0 );
-			
+
 			gGL->glTexCoord2f	( 1.0, topv );
 			gGL->glVertex3f		( 1.0, 1.0, 0.0 );
 
@@ -1484,9 +1484,9 @@ void GLMContext::BlitTex( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int sr
 		gGL->glDisable(GL_TEXTURE_2D);
 
 		BindTexToTMU( m_samplers[0].m_pBoundTex, 0 );
-		
+
 		// leave active program empty - flush draw states will fix
-		
+
 		// then restore states using the scoreboard
 
 		m_AlphaTestEnable.Flush();
@@ -1494,16 +1494,16 @@ void GLMContext::BlitTex( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int sr
 		m_CullFaceEnable.Flush();
 		m_DepthBias.Flush();
 		m_ScissorEnable.Flush();
-		
+
 		m_ClipPlaneEnable.FlushIndex( 0 );
 		m_ClipPlaneEnable.FlushIndex( 1 );
-		
+
 		m_ColorMaskSingle.Flush();
 		m_BlendEnable.Flush();
 
 		m_DepthMask.Flush();
 		m_DepthTestEnable.Flush();
-		
+
 		m_StencilWriteMask.Flush();
 		m_StencilTestEnable.Flush();
 
@@ -1514,7 +1514,7 @@ void GLMContext::BlitTex( CGLMTex *srcTex, GLMRect *srcRect, int srcFace, int sr
 		//	put the original FB back in place (both read and draw)
 		BindFBOToCtx( m_drawingFBO, GL_FRAMEBUFFER_EXT );
 	}
-	
+
 	while(pushed)
 	{
 		gGL->glPopAttrib();
@@ -1541,7 +1541,7 @@ void GLMContext::ResolveTex( CGLMTex *tex, bool forceDirty )
 		m_ScissorEnable.Read( &oldsciss, 0 );
 
 		// remember to restore m_drawingFBO at end of effort
-		
+
 		// setup
 		//	turn off scissor
 		newsciss.enable = false;
@@ -1549,7 +1549,7 @@ void GLMContext::ResolveTex( CGLMTex *tex, bool forceDirty )
 
 		// select which attachment enum we're going to use for the blit
 		// default to color0, unless it's a depth or stencil flava
-		
+
 		// for resolve, only handle a modest subset of the possible formats
 		EGLMFBOAttachment	attachIndex = (EGLMFBOAttachment)0;
 		GLenum				attachIndexGL = 0;
@@ -1572,7 +1572,7 @@ void GLMContext::ResolveTex( CGLMTex *tex, bool forceDirty )
 	//			attachIndexGL = GL_DEPTH_ATTACHMENT_EXT;
 	//			blitMask = GL_DEPTH_BUFFER_BIT;
 	//		break;
-			
+
 			case GL_DEPTH_STENCIL_EXT:
 				attachIndex = kAttDepthStencil;
 				attachIndexGL = GL_DEPTH_STENCIL_ATTACHMENT_EXT;
@@ -1584,12 +1584,12 @@ void GLMContext::ResolveTex( CGLMTex *tex, bool forceDirty )
 			break;
 		}
 
-		
+
 		//	set the read fb, attach read RBO at appropriate attach point, set read buffer
 		BindFBOToCtx( m_blitReadFBO, GL_READ_FRAMEBUFFER_EXT );
 
 		// going to avoid the TexAttach / TexDetach calls due to potential confusion, implement it directly here
-		
+
 		//-----------------------------------------------------------------------------------
 		// put tex->m_rboName on the read FB's attachment
 		if (attachIndexGL==GL_DEPTH_STENCIL_ATTACHMENT_EXT)
@@ -1599,10 +1599,10 @@ void GLMContext::ResolveTex( CGLMTex *tex, bool forceDirty )
 
 			// bind the RBO to the GL_RENDERBUFFER_EXT target - is this extraneous ?
 			//glBindRenderbufferEXT( GL_RENDERBUFFER_EXT, tex->m_rboName );
-			
+
 			// attach the GL_RENDERBUFFER_EXT target to the depth and stencil attach points
-			gGL->glFramebufferRenderbufferEXT( GL_READ_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, tex->m_rboName);						
-				
+			gGL->glFramebufferRenderbufferEXT( GL_READ_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, tex->m_rboName);
+
 			gGL->glFramebufferRenderbufferEXT( GL_READ_FRAMEBUFFER_EXT, GL_STENCIL_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, tex->m_rboName);
 
 			// no need to leave the RBO hanging on
@@ -1611,7 +1611,7 @@ void GLMContext::ResolveTex( CGLMTex *tex, bool forceDirty )
 		else
 		{
 			//glBindRenderbufferEXT( GL_RENDERBUFFER_EXT, tex->m_rboName );
-			
+
 			gGL->glFramebufferRenderbufferEXT( GL_READ_FRAMEBUFFER_EXT, attachIndexGL, GL_RENDERBUFFER_EXT, tex->m_rboName);
 
 			//glBindRenderbufferEXT( GL_RENDERBUFFER_EXT, 0 );
@@ -1626,7 +1626,7 @@ void GLMContext::ResolveTex( CGLMTex *tex, bool forceDirty )
 		BindFBOToCtx( m_blitDrawFBO, GL_DRAW_FRAMEBUFFER_EXT );
 
 		// regular path - attaching a texture2d
-		
+
 		if (attachIndexGL==GL_DEPTH_STENCIL_ATTACHMENT_EXT)
 		{
 			gGL->glFramebufferTexture2DEXT( GL_DRAW_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, tex->m_texName, 0 );
@@ -1647,7 +1647,7 @@ void GLMContext::ResolveTex( CGLMTex *tex, bool forceDirty )
 								0, 0,	tex->m_layout->m_key.m_xSize, tex->m_layout->m_key.m_ySize,
 								blitMask, GL_NEAREST );
 			// or should it be GL_LINEAR?  does it matter ?
-			
+
 		//-----------------------------------------------------------------------------------
 		// cleanup
 		//-----------------------------------------------------------------------------------
@@ -1659,8 +1659,8 @@ void GLMContext::ResolveTex( CGLMTex *tex, bool forceDirty )
 		if (attachIndexGL==GL_DEPTH_STENCIL_ATTACHMENT_EXT)
 		{
 			// detach the GL_RENDERBUFFER_EXT target from the depth and stencil attach points
-			gGL->glFramebufferRenderbufferEXT( GL_READ_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, 0);						
-				
+			gGL->glFramebufferRenderbufferEXT( GL_READ_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, 0);
+
 			gGL->glFramebufferRenderbufferEXT( GL_READ_FRAMEBUFFER_EXT, GL_STENCIL_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, 0);
 		}
 		else
@@ -1670,7 +1670,7 @@ void GLMContext::ResolveTex( CGLMTex *tex, bool forceDirty )
 
 		//-----------------------------------------------------------------------------------
 		//	unset the write fb and buffer, detach write tex
-		
+
 
 		if (attachIndexGL==GL_DEPTH_STENCIL_ATTACHMENT_EXT)
 		{
@@ -1686,12 +1686,12 @@ void GLMContext::ResolveTex( CGLMTex *tex, bool forceDirty )
 		//	put the original FB back in place (both read and draw)
 		// this bind will hit both read and draw bindings
 		BindFBOToCtx( m_drawingFBO, GL_FRAMEBUFFER_EXT );
-		
+
 		//	set the read and write buffers back to... what ? does it matter for anything but copies ?  don't worry about it
-		
+
 		// restore the scissor state
 		m_ScissorEnable.Write( &oldsciss );
-		
+
 		// mark the RBO clean on the resolved tex
 		tex->ForceRBONonDirty();
 	}
@@ -1705,10 +1705,10 @@ void GLMContext::PreloadTex( CGLMTex *tex, bool force )
 	// draw a teeny little triangle that won't generate a lot of fragments
 	if (!m_pairCache)
 		return;
-		
+
 	if (!m_drawingFBO)
 		return;
-			
+
 	if (tex->m_texPreloaded && !force)	// only do one preload unless forced to re-do
 	{
 		//printf("\nnot-preloading %s", tex->m_debugLabel ? tex->m_debugLabel : "(unknown)");
@@ -1723,16 +1723,16 @@ void GLMContext::PreloadTex( CGLMTex *tex, bool force )
 	{
 		case GL_TEXTURE_2D:			fp = m_preload2DTexFragmentProgram;
 		break;
-		
+
 		case GL_TEXTURE_3D:			fp = m_preload3DTexFragmentProgram;
 		break;
-		
+
 		case GL_TEXTURE_CUBE_MAP:	fp = m_preloadCubeTexFragmentProgram;
 		break;
 	}
 	if (!fp)
 		return;
-	
+
 	CGLMShaderPair	*preloadPair = m_pairCache->SelectShaderPair( vp, fp, 0 );
 	if (!preloadPair)
 		return;
@@ -1746,19 +1746,19 @@ void GLMContext::PreloadTex( CGLMTex *tex, bool force )
 	}
 
 	gGL->glUseProgram( (GLuint)preloadPair->m_program );
-					
+
 	m_pBoundPair = preloadPair;
 	m_bDirtyPrograms = true;
-			
+
 	// almost ready to draw...
 
 	//int tmuForPreload = 15;
-	
+
 	// shut down all the generic attribute arrays on the detention level - next real draw will activate them again
 	m_lastKnownVertexAttribMask = 0;
 	m_nNumSetVertexAttributes = 16;
 	memset( &m_boundVertexAttribs[0], 0xFF, sizeof( m_boundVertexAttribs ) );
-	
+
 	// Force the next flush to reset the attributes.
 	ClearCurAttribs();
 
@@ -1766,7 +1766,7 @@ void GLMContext::PreloadTex( CGLMTex *tex, bool force )
 	{
 		gGL->glDisableVertexAttribArray( index );
 	}
-		
+
 	// bind texture and sampling params
 	CGLMTex *pPrevTex = m_samplers[15].m_pBoundTex;
 
@@ -1778,18 +1778,18 @@ void GLMContext::PreloadTex( CGLMTex *tex, bool force )
 #endif // !OSX
 
 	BindTexToTMU( tex, 15 );
-	
+
 	// unbind vertex/index buffers
 	BindBufferToCtx( kGLMVertexBuffer, NULL );
 	BindBufferToCtx( kGLMIndexBuffer, NULL );
-			
+
 	// draw
 	static float posns[] = {	0.0f, 0.0f, 0.0f,
 								0.0f, 0.0f, 0.0f,
 								0.0f, 0.0f, 0.0f };
 
 	static int indices[] = { 0, 1, 2 };
-	
+
 
 	gGL->glEnableVertexAttribArray( 0 );
 
@@ -1798,11 +1798,11 @@ void GLMContext::PreloadTex( CGLMTex *tex, bool force )
 	gGL->glDrawRangeElements( GL_TRIANGLES, 0, 3, 3, GL_UNSIGNED_INT, indices);
 
 	gGL->glDisableVertexAttribArray( 0 );
-	
+
 	SetSamplerDirty( 15 );
 
 	BindTexToTMU( pPrevTex, 15 );
-		
+
 	tex->m_texPreloaded = true;
 }
 
@@ -1815,7 +1815,7 @@ CGLMFBO	*GLMContext::NewFBO( void )
 	CGLMFBO *fbo = new CGLMFBO( this );
 
 	m_fboTable.AddToTail( fbo );
-	
+
 	return fbo;
 }
 
@@ -1827,7 +1827,7 @@ void GLMContext::DelFBO( CGLMFBO *fbo )
 	{
 		m_drawingFBO = NULL;	//poof!
 	}
-	
+
 	if (m_boundReadFBO == fbo )
 	{
 		BindFBOToCtx( NULL, GL_READ_FRAMEBUFFER_EXT );
@@ -1846,7 +1846,7 @@ void GLMContext::DelFBO( CGLMFBO *fbo )
 	{
 		m_fboTable.FastRemove( idx );
 	}
-	
+
 	delete fbo;
 }
 
@@ -1857,7 +1857,7 @@ CGLMProgram	*GLMContext::NewProgram( EGLMProgramType type, char *progString, con
 	//hushed GLM_FUNC;
 
 	CGLMProgram *prog = new CGLMProgram( this, type );
-	
+
 	prog->SetProgramText( progString );
 	prog->SetShaderName( pShaderName );
 	prog->CompileActiveSources();
@@ -1880,7 +1880,7 @@ void GLMContext::DelProgram( CGLMProgram *pProg )
 	Assert( !purgeResult );	// very unlikely to trigger
 
 	NullProgram();
-	
+
 	delete pProg;
 }
 
@@ -1894,10 +1894,10 @@ void GLMContext::NullProgram( void )
 void GLMContext::SetDrawingLang( EGLMProgramLang lang, bool immediate )
 {
 	if ( !m_caps.m_hasDualShaders ) return;		// ignore attempts to change language when -glmdualshaders is not engaged
-	
+
 	m_drawingLangAtFrameStart = lang;
 	if (immediate)
-	{	
+	{
 		NullProgram();
 
 		m_drawingLang = m_drawingLangAtFrameStart;
@@ -1910,7 +1910,7 @@ void GLMContext::LinkShaderPair( CGLMProgram *vp, CGLMProgram *fp )
 	{
 		CGLMShaderPair	*pair = m_pairCache->SelectShaderPair( vp, fp, 0 );
 		(void)pair;
-		
+
 		Assert( pair != NULL );
 
 		NullProgram();	// clear out any binds that were done - next draw will set it right
@@ -1943,7 +1943,7 @@ void GLMContext::QueryShaderPair( int index, GLMShaderPairInfo *infoOut )
 {
 	if (m_pairCache)
 	{
-		m_pairCache->QueryShaderPair( index, infoOut );		
+		m_pairCache->QueryShaderPair( index, infoOut );
 	}
 	else
 	{
@@ -1973,9 +1973,9 @@ void GLMContext::DelBuffer( CGLMBuffer *buff )
 			m_drawVertexSetup.m_attrMask = 0;
 		}
 	}
-		
+
 	BindGLBufferToCtx( buff->m_buffGLTarget, NULL, false );
-			
+
 	delete buff;
 }
 
@@ -1984,14 +1984,14 @@ GLMVertexSetup g_blank_setup;
 void GLMContext::Clear( bool color, unsigned long colorValue, bool depth, float depthValue, bool stencil, unsigned int stencilValue, GLScissorBox_t *box )
 {
 	GLM_FUNC;
-		
+
 	++m_nBatchCounter;
 
 #if GLMDEBUG
 	GLMDebugHookInfo info;
 	memset( &info, 0, sizeof(info) );
 	info.m_caller = eClear;
-	
+
 	do
 	{
 #endif
@@ -2008,10 +2008,10 @@ void GLMContext::Clear( bool color, unsigned long colorValue, bool depth, float 
 		// stencil write mask must be saved and restored
 		GLStencilWriteMask_t			oldstenmask;
 		GLStencilWriteMask_t			newstenmask = { (GLint)0xFFFFFFFF };
-		
+
 		GLColorMaskSingle_t		oldcolormask;
 		GLColorMaskSingle_t		newcolormask = { -1,-1,-1,-1 };	// D3D clears do not honor color mask, so force it
-		
+
 		if (color)
 		{
 			// #define D3DCOLOR_ARGB(a,r,g,b) ((D3DCOLOR)((((a)&0xff)<<24)|(((r)&0xff)<<16)|(((g)&0xff)<<8)|((b)&0xff)))
@@ -2023,10 +2023,10 @@ void GLMContext::Clear( bool color, unsigned long colorValue, bool depth, float 
 
 			m_ClearColor.Write( &clearcol );	// no check, no wait
 			mask |= GL_COLOR_BUFFER_BIT;
-			
+
 			// save and set color mask
-			m_ColorMaskSingle.Read( &oldcolormask, 0 );			
-			m_ColorMaskSingle.Write( &newcolormask );			
+			m_ColorMaskSingle.Read( &oldcolormask, 0 );
+			m_ColorMaskSingle.Write( &newcolormask );
 		}
 
 		if (depth)
@@ -2044,23 +2044,23 @@ void GLMContext::Clear( bool color, unsigned long colorValue, bool depth, float 
 			mask |= GL_STENCIL_BUFFER_BIT;
 
 			// save and set sten mask
-			m_StencilWriteMask.Read( &oldstenmask, 0 );			
-			m_StencilWriteMask.Write( &newstenmask );			
+			m_StencilWriteMask.Read( &oldstenmask, 0 );
+			m_StencilWriteMask.Write( &newstenmask );
 		}
 
 		bool subrect = (box != NULL);
 		GLScissorEnable_t scissorEnableSave;
 		GLScissorEnable_t scissorEnableNew = { true };
-		
+
 		GLScissorBox_t scissorBoxSave;
 		GLScissorBox_t scissorBoxNew;
-		
+
 		if (subrect)
 		{
 			// save current scissorbox and enable
 			m_ScissorEnable.Read( &scissorEnableSave, 0 );
 			m_ScissorBox.Read( &scissorBoxSave, 0 );
-			
+
 			if(0)
 			{
 				// calc new scissorbox as intersection against *box
@@ -2068,12 +2068,12 @@ void GLMContext::Clear( bool color, unsigned long colorValue, bool depth, float 
 					// max of the mins
 				scissorBoxNew.x = MAX(scissorBoxSave.x, box->x);
 				scissorBoxNew.y = MAX(scissorBoxSave.y, box->y);
-				
+
 					// min of the maxes
 				scissorBoxNew.width = ( MIN(scissorBoxSave.x+scissorBoxSave.width, box->x+box->width)) - scissorBoxNew.x;
-				
+
 					// height is just min of the max y's, minus the new base Y
-				scissorBoxNew.height = ( MIN(scissorBoxSave.y+scissorBoxSave.height, box->y+box->height)) - scissorBoxNew.y;				
+				scissorBoxNew.height = ( MIN(scissorBoxSave.y+scissorBoxSave.height, box->y+box->height)) - scissorBoxNew.y;
 			}
 			else
 			{
@@ -2093,23 +2093,23 @@ void GLMContext::Clear( bool color, unsigned long colorValue, bool depth, float 
 			m_ScissorEnable.Write( &scissorEnableSave );
 			m_ScissorBox.Write( &scissorBoxSave );
 		}
-		
+
 		if (depth)
 		{
 			// put old depth write mask
 			m_DepthMask.Write( &olddepthmask );
 		}
-		
+
 		if (color)
 		{
 			// put old color write mask
-			m_ColorMaskSingle.Write( &oldcolormask );			
+			m_ColorMaskSingle.Write( &oldcolormask );
 		}
-		
+
 		if (stencil)
 		{
 			// put old sten mask
-			m_StencilWriteMask.Write( &oldstenmask );			
+			m_StencilWriteMask.Write( &oldstenmask );
 		}
 
 #if GLMDEBUG
@@ -2123,20 +2123,20 @@ void GLMContext::Clear( bool color, unsigned long colorValue, bool depth, float 
 extern "C" uint GetCurrentKeyModifiers( void );
 enum ECarbonModKeyIndex
 {
-  EcmdKeyBit                     = 8,    /* command key down?*/
-  EshiftKeyBit                   = 9,    /* shift key down?*/
-  EalphaLockBit                  = 10,   /* alpha lock down?*/
-  EoptionKeyBit                  = 11,   /* option key down?*/
-  EcontrolKeyBit                 = 12    /* control key down?*/
+	EcmdKeyBit                     = 8,    /* command key down?*/
+	EshiftKeyBit                   = 9,    /* shift key down?*/
+	EalphaLockBit                  = 10,   /* alpha lock down?*/
+	EoptionKeyBit                  = 11,   /* option key down?*/
+	EcontrolKeyBit                 = 12    /* control key down?*/
 };
 
 enum ECarbonModKeyMask
 {
-  EcmdKey                        = 1 << EcmdKeyBit,
-  EshiftKey                      = 1 << EshiftKeyBit,
-  EalphaLock                     = 1 << EalphaLockBit,
-  EoptionKey                     = 1 << EoptionKeyBit,
-  EcontrolKey                    = 1 << EcontrolKeyBit
+	EcmdKey                        = 1 << EcmdKeyBit,
+	EshiftKey                      = 1 << EshiftKeyBit,
+	EalphaLock                     = 1 << EalphaLockBit,
+	EoptionKey                     = 1 << EoptionKeyBit,
+	EcontrolKey                    = 1 << EcontrolKeyBit
 };
 
 static	ConVar gl_flushpaircache ("gl_flushpaircache", "0");
@@ -2149,7 +2149,7 @@ void GLMContext::BeginFrame( void )
 	GLM_FUNC;
 
 	m_debugFrameIndex++;
-	
+
 	// check for lang change at TOF
 	if (m_caps.m_hasDualShaders)
 	{
@@ -2169,7 +2169,7 @@ void GLMContext::BeginFrame( void )
 	}
 	m_lastKnownVertexAttribMask = 0;
 	m_nNumSetVertexAttributes = 0;
-	
+
 	//FIXME should we also zap the m_lastKnownAttribs array ? (worst case it just sets them all again on first batch)
 
 	BindBufferToCtx( kGLMVertexBuffer, NULL, true );
@@ -2179,37 +2179,37 @@ void GLMContext::BeginFrame( void )
 	{
 		// do the flush and then set back to zero
 		ClearShaderPairCache();
-		
+
 		printf("\n\n##### shader pair cache cleared\n\n");
 		gl_flushpaircache.SetValue( 0 );
 	}
-	
+
 	if (gl_paircachestats.GetInt())
 	{
 		// do the flush and then set back to zero
 		m_pairCache->DumpStats();
-		
+
 		gl_paircachestats.SetValue( 0 );
 	}
-	
+
 	if (gl_texlayoutstats.GetInt())
 	{
 		m_texLayoutTable->DumpStats();
-		
+
 		gl_texlayoutstats.SetValue( 0 );
 	}
-	
+
 	if (gl_mtglflush_at_tof.GetInt())
 	{
 		gGL->glFlush();									// TOF flush - skip this if benchmarking, enable it if human playing (smoothness)
 	}
-	
+
 #if GLMDEBUG
 	// init debug hook information
 	GLMDebugHookInfo info;
 	memset( &info, 0, sizeof(info) );
 	info.m_caller = eBeginFrame;
-	
+
 	do
 	{
 		DebugHook( &info );
@@ -2228,7 +2228,7 @@ void GLMContext::EndFrame( void )
 	GLMDebugHookInfo info;
 	memset( &info, 0, sizeof(info) );
 	info.m_caller = eEndFrame;
-	
+
 	do
 	{
 		DebugHook( &info );
@@ -2241,7 +2241,7 @@ void GLMContext::EndFrame( void )
 CGLMQuery *GLMContext::NewQuery( GLMQueryParams *params )
 {
 	CGLMQuery *query = new CGLMQuery( this, params );
-	
+
 	return query;
 }
 
@@ -2263,7 +2263,7 @@ extern ConVar gl_blitmode;
 void GLMContext::Present( CGLMTex *tex )
 {
 	GLM_FUNC;
-	
+
 	{
 #if GL_TELEMETRY_GPU_ZONES
 		CScopedGLMPIXEvent glmPIXEvent( "GLMContext::Present" );
@@ -2277,11 +2277,11 @@ void GLMContext::Present( CGLMTex *tex )
 		if ( gGL->m_bHave_GL_AMD_pinned_memory )
 		{
 			m_PinnedMemoryBuffers[m_nCurPinnedMemoryBuffer].InsertFence();
-			
+
 			m_nCurPinnedMemoryBuffer = ( m_nCurPinnedMemoryBuffer + 1 ) % cNumPinnedMemoryBuffers;
-			
+
 			m_PinnedMemoryBuffers[m_nCurPinnedMemoryBuffer].BlockUntilNotBusy();
-			
+
 			gGL->glBindBufferARB( GL_EXTERNAL_VIRTUAL_MEMORY_BUFFER_AMD, m_PinnedMemoryBuffers[m_nCurPinnedMemoryBuffer].GetHandle() );
 		}
 
@@ -2301,18 +2301,18 @@ void GLMContext::Present( CGLMTex *tex )
 		}
 
 #endif // HAVE_GL_ARB_SYNC
-					
+
 		bool newRefreshMode = false;
 		// two ways to go:
-	
+
 		// old school, do the resolve, had the tex down to cocoamgr to actually blit.
 		// that way is required if you are not in one-context mode (10.5.8)
-	
+
 		if ( (gl_blitmode.GetInt() != 0) )
 		{
 			newRefreshMode = true;
 		}
-	
+
 		// this is the path whether full screen or windowed... we always blit.
 		CShowPixelsParams showparams;
 		memset( &showparams, 0, sizeof(showparams) );
@@ -2328,14 +2328,14 @@ void GLMContext::Present( CGLMTex *tex )
 		showparams.m_onlySyncView = true;
 		ShowPixels(&showparams);	// doesn't actually show anything, just syncs window/fs state (would make a useful separate call)
 		showparams.m_onlySyncView = false;
-	
+
 		bool refresh = true;
 	#ifdef OSX
 		if ( (glm_nullrefresh_capslock.GetInt()) && (GetCurrentKeyModifiers() & EalphaLock) )
 		{
 			refresh = false;
 		}
-	#endif	
+	#endif
 		static int counter;
 		counter ++;
 
@@ -2354,7 +2354,7 @@ void GLMContext::Present( CGLMTex *tex )
 				// blit to GL_BACK done here, not in CocoaMgr, this lets us do resolve directly if conditions are right
 
 				GLMRect	srcRect, dstRect;
-			
+
 				uint dstWidth,dstHeight;
 				DisplayedSize( dstWidth,dstHeight );
 
@@ -2367,7 +2367,7 @@ void GLMContext::Present( CGLMTex *tex )
 				dstRect.ymin	=	0;
 				dstRect.xmax	=	dstWidth;
 				dstRect.ymax	=	dstHeight;
-			
+
 				// do not ask for LINEAR if blit is unscaled
 				// NULL means targeting GL_BACK.  Blit2 will break it down into two steps if needed, and will handle resolve, scale, flip.
 				bool blitScales	=	(showparams.m_width != static_cast<int>(dstWidth)) || (showparams.m_height != static_cast<int>(dstHeight));
@@ -2397,9 +2397,9 @@ void GLMContext::Present( CGLMTex *tex )
 		BindFBOToCtx( m_drawingFBO, GL_FRAMEBUFFER_EXT );
 
 		// put em back !!
-		m_ScissorEnable.Flush();	
+		m_ScissorEnable.Flush();
 		m_ScissorBox.Flush();
-		m_ViewportBox.Flush();		
+		m_ViewportBox.Flush();
 	}
 
 	m_nCurFrame++;
@@ -2433,7 +2433,7 @@ void GLMContext::Present( CGLMTex *tex )
 // in either case the client code is aware of what it signed up for.
 
 bool GLMContext::SetDisplayParams( GLMDisplayParams *params )
-{	
+{
 	m_displayParams = *params;	// latch em
 	m_displayParamsValid = true;
 
@@ -2443,7 +2443,7 @@ bool GLMContext::SetDisplayParams( GLMDisplayParams *params )
 
 ConVar gl_can_query_fast("gl_can_query_fast", "0");
 
-static uint gPersistentBufferSize[kGLMNumBufferTypes] = 
+static uint gPersistentBufferSize[kGLMNumBufferTypes] =
 {
 	2 * 1024 * 1024,	// kGLMVertexBuffer
 	1 * 1024 * 1024,	// kGLMIndexBuffer
@@ -2454,13 +2454,13 @@ static uint gPersistentBufferSize[kGLMNumBufferTypes] =
 GLMContext::GLMContext( IDirect3DDevice9 *pDevice, GLMDisplayParams *params )
 {
 // 	m_bUseSamplerObjects = true;
-// 	
+//
 // 	// On most AMD drivers (like the current latest, 12.10 Windows), the PCF depth comparison mode doesn't work on sampler objects, so just punt them.
 // 	if ( gGL->m_nDriverProvider == cGLDriverProviderAMD )
 // 	{
 // 		m_bUseSamplerObjects = false;
 // 	}
-	
+
 // 	if ( CommandLine()->CheckParm( "-gl_disablesamplerobjects" ) )
 // 	{
 	// Disable sampler object usage for now since ScaleForm isn't aware of them
@@ -2533,7 +2533,7 @@ GLMContext::GLMContext( IDirect3DDevice9 *pDevice, GLMDisplayParams *params )
 	m_slowCheckEnable = m_slowAssertEnable || m_slowSpewEnable || m_checkglErrorsAfterEveryBatch;
 
 	m_drawingLangAtFrameStart = m_drawingLang = kGLMGLSL;		// default to GLSL
-	
+
 	// this affects FlushDrawStates which will route program bindings, uniform delivery, sampler setup, and enables accordingly.
 
 	if ( CommandLine()->FindParm("-glslmode") )
@@ -2546,13 +2546,13 @@ GLMContext::GLMContext( IDirect3DDevice9 *pDevice, GLMDisplayParams *params )
 	}
 
 	// proceed with rest of init
-	
+
 	m_dwRenderThreadId = 0;
 	m_bIsThreading = false;
-	
+
 	m_nsctx	= NULL;
 	m_ctx	= NULL;
-	
+
 	int *selAttribs	=	NULL;
 	uint					selWords	=	0;
 
@@ -2569,10 +2569,10 @@ GLMContext::GLMContext( IDirect3DDevice9 *pDevice, GLMDisplayParams *params )
 	IncrementWindowRefCount();
 
 	// If we're using GL_ARB_debug_output, go ahead and setup the callback here.
-	if ( gGL->m_bHave_GL_ARB_debug_output && CommandLine()->FindParm( "-gl_debug" ) ) 
+	if ( gGL->m_bHave_GL_ARB_debug_output && CommandLine()->FindParm( "-gl_debug" ) )
 	{
 #if GLMDEBUG
-		// Turning this on is a perf loss, but it ensures that you can (at least) swap to the other 
+		// Turning this on is a perf loss, but it ensures that you can (at least) swap to the other
 		// threads to see what call is currently being made.
 		// Note that if the driver is in multithreaded mode, you can put it back into singlethreaded mode
 		// and get a real stack for the offending gl call.
@@ -2602,7 +2602,7 @@ GLMContext::GLMContext( IDirect3DDevice9 *pDevice, GLMDisplayParams *params )
 	{
 		DumpCaps();
 	}
-	
+
 	SetDisplayParams( params );
 
 	m_texLayoutTable = new CGLMTexLayoutTable;
@@ -2612,7 +2612,7 @@ GLMContext::GLMContext( IDirect3DDevice9 *pDevice, GLMDisplayParams *params )
 	{
 		memset( m_samplerObjectHash, 0, sizeof( m_samplerObjectHash ) );
 		m_nSamplerObjectHashNumEntries = 0;
-	
+
 		for ( uint i = 0; i < cSamplerObjectHashSize; ++i )
 		{
 			gGL->glGenSamplers( 1, &m_samplerObjectHash[i].m_samplerObject );
@@ -2634,19 +2634,19 @@ GLMContext::GLMContext( IDirect3DDevice9 *pDevice, GLMDisplayParams *params )
 		params.m_packed.m_isValid = true;
 		params.m_packed.m_compareMode = 0;
 	}
-	
+
 	MarkAllSamplersDirty();
-	
+
 	m_activeTexture = -1;
-					
+
 	m_texLocks.EnsureCapacity( 16 );	// should be sufficient
 
 	// FIXME need a texture tracking table so we can reliably delete CGLMTex objects at context teardown
-		
+
 	m_boundReadFBO = NULL;
 	m_boundDrawFBO = NULL;
 	m_drawingFBO = NULL;
-											
+
 	memset( m_drawingProgram, 0, sizeof( m_drawingProgram ) );
 	m_bDirtyPrograms = true;
 	memset( m_programParamsF , 0, sizeof( m_programParamsF ) );
@@ -2662,22 +2662,22 @@ GLMContext::GLMContext( IDirect3DDevice9 *pDevice, GLMDisplayParams *params )
 	}
 
 	m_paramWriteMode = eParamWriteDirtySlotRange;	// default to fastest mode
-	
+
 	if (CommandLine()->FindParm("-glmwriteallslots"))				m_paramWriteMode = eParamWriteAllSlots;
 	if (CommandLine()->FindParm("-glmwriteshaderslots"))			m_paramWriteMode = eParamWriteShaderSlots;
 	if (CommandLine()->FindParm("-glmwriteshaderslotsoptional"))	m_paramWriteMode = eParamWriteShaderSlotsOptional;
 	if (CommandLine()->FindParm("-glmwritedirtyslotrange"))			m_paramWriteMode = eParamWriteDirtySlotRange;
-	
+
 	m_attribWriteMode = eAttribWriteDirty;
 
 	if (CommandLine()->FindParm("-glmwriteallattribs"))				m_attribWriteMode = eAttribWriteAll;
-	if (CommandLine()->FindParm("-glmwritedirtyattribs"))			m_attribWriteMode = eAttribWriteDirty;	
+	if (CommandLine()->FindParm("-glmwritedirtyattribs"))			m_attribWriteMode = eAttribWriteDirty;
 
 	m_pairCache	= new CGLMShaderPairCache( this );
 	m_pBoundPair = NULL;
 
 	m_fragDataMask = 0;
-			
+
 	memset( m_nBoundGLBuffer, 0xFF, sizeof( m_nBoundGLBuffer ) );
 
 	memset( m_boundVertexAttribs, 0xFF, sizeof(m_boundVertexAttribs) );
@@ -2693,15 +2693,15 @@ GLMContext::GLMContext( IDirect3DDevice9 *pDevice, GLMDisplayParams *params )
 	m_preload2DTexFragmentProgram	=	NewProgram(kGLMFragmentProgram, g_preload2DTexFragmentProgramText, "preload2DTex" );
 	m_preload3DTexFragmentProgram	=	NewProgram(kGLMFragmentProgram, g_preload3DTexFragmentProgramText, "preload3DTex" );
 	m_preloadCubeTexFragmentProgram	=	NewProgram(kGLMFragmentProgram, g_preloadCubeTexFragmentProgramText, "preloadCube" );
-		
+
 	//memset( &m_drawVertexSetup, 0, sizeof(m_drawVertexSetup) );
 	SetVertexAttributes( NULL );	// will set up all the entries in m_drawVertexSetup
-	
+
 	m_debugFontTex = NULL;
 
 	// debug state
 	m_debugFrameIndex = -1;
-	
+
 #if GLMDEBUG
 	// #######################################################################################
 
@@ -2710,7 +2710,7 @@ GLMContext::GLMContext( IDirect3DDevice9 *pDevice, GLMDisplayParams *params )
 	m_holdFrameBegin = -1;
 	m_holdFrameEnd = -1;
 	m_holdBatch = m_holdBatchFrame = -1;
-	
+
 	m_debugDelayEnable = false;
 	m_debugDelay = 1<<19;	// ~0.5 sec delay
 
@@ -2719,7 +2719,7 @@ GLMContext::GLMContext( IDirect3DDevice9 *pDevice, GLMDisplayParams *params )
 	m_autoClearColorValues[1] = 1.0;	//green
 	m_autoClearColorValues[2] = 0.0;	//blue
 	m_autoClearColorValues[3] = 1.0;	//alpha
-	
+
 	m_selKnobIndex = 0;
 	m_selKnobMinValue = -10.0f;
 
@@ -2751,7 +2751,7 @@ GLMContext::GLMContext( IDirect3DDevice9 *pDevice, GLMDisplayParams *params )
 
 #ifdef OSX
 	bool new_mtgl = m_caps.m_hasPerfPackage1;	// i.e. 10.6.4 plus new driver
-	
+
 	if ( CommandLine()->FindParm("-glmenablemtgl2") )
 	{
 		new_mtgl = true;
@@ -2767,7 +2767,7 @@ GLMContext::GLMContext( IDirect3DDevice9 *pDevice, GLMDisplayParams *params )
 	{
 		mtgl_on = true;
 	}
-	
+
 	if (CommandLine()->FindParm("-glmdisablemtgl"))
 	{
 		mtgl_on = false;
@@ -2820,7 +2820,7 @@ GLMContext::GLMContext( IDirect3DDevice9 *pDevice, GLMDisplayParams *params )
 	// also, set the remote convar "gl_can_query_fast" to 1 if perf package present, else 0.
 	gl_can_query_fast.SetValue( m_caps.m_hasPerfPackage1?1:0 );
 
-#if GL_BATCH_PERF_ANALYSIS		
+#if GL_BATCH_PERF_ANALYSIS
 	m_nTotalVSUniformCalls = 0;
 	m_nTotalVSUniformBoneCalls = 0;
 	m_nTotalVSUniformsSet = 0;
@@ -2844,7 +2844,7 @@ GLMContext::~GLMContext	()
 {
 #ifndef OSX
 	GLMGPUTimestampManagerDeinit();
-		
+
 	for ( uint t = 0; t < cNumPinnedMemoryBuffers; t++ )
 	{
 		m_PinnedMemoryBuffers[t].Deinit();
@@ -2889,7 +2889,7 @@ GLMContext::~GLMContext	()
 		DelProgram( m_pNullFragmentProgram );
 		m_pNullFragmentProgram = NULL;
 	}
-	
+
 	// walk m_fboTable and free them up..
 	FOR_EACH_VEC( m_fboTable, i )
 	{
@@ -2903,7 +2903,7 @@ GLMContext::~GLMContext	()
 		delete m_pairCache;
 		m_pairCache = NULL;
 	}
-	
+
 	// we need a m_texTable I think..
 
 	// m_texLayoutTable can be scrubbed once we know that all the tex are freed
@@ -2926,9 +2926,9 @@ void GLMContext::BindTexToTMU( CGLMTex *pTex, int tmu )
 	GLMPRINTF(("--- GLMContext::BindTexToTMU tex %p GL name %d -> TMU %d ", pTex, pTex ? pTex->m_texName : -1, tmu ));
 
 	CheckCurrent();
-		
+
 	SelectTMU( tmu );
-		
+
 	if ( !pTex )
 	{
 		gGL->glBindTexture( GL_TEXTURE_1D, 0 );
@@ -2965,40 +2965,40 @@ void GLMContext::BindFBOToCtx( CGLMFBO *fbo, GLenum bindPoint )
 		m_boundDrawFBO = fbo;
 		return;
 	}
-	
+
 	bool	targetRead = (bindPoint==GL_READ_FRAMEBUFFER_EXT);
 	bool	targetDraw = (bindPoint==GL_DRAW_FRAMEBUFFER_EXT);
-			
+
 	if (targetRead)
 	{
 		if (fbo)	// you can pass NULL to go back to no-FBO
 		{
 			gGL->glBindFramebufferEXT( GL_READ_FRAMEBUFFER_EXT, fbo->m_name );
-			
+
 			m_boundReadFBO = fbo;
 			//dontcare fbo->m_bound = true;
 		}
 		else
 		{
 			gGL->glBindFramebufferEXT( GL_READ_FRAMEBUFFER_EXT, 0 );
-			
+
 			m_boundReadFBO = NULL;
 		}
 	}
-	
+
 	if (targetDraw)
 	{
 		if (fbo)	// you can pass NULL to go back to no-FBO
 		{
 			gGL->glBindFramebufferEXT( GL_DRAW_FRAMEBUFFER_EXT, fbo->m_name );
-			
+
 			m_boundDrawFBO = fbo;
 			//dontcare fbo->m_bound = true;
 		}
 		else
 		{
 			gGL->glBindFramebufferEXT( GL_DRAW_FRAMEBUFFER_EXT, 0 );
-			
+
 			m_boundDrawFBO = NULL;
 		}
 	}
@@ -3014,24 +3014,24 @@ void GLMContext::BindBufferToCtx( EGLMBufferType type, CGLMBuffer *pBuff, bool b
 	CheckCurrent();
 
 	GLuint nGLName = pBuff ? pBuff->GetHandle() : 0;
-	if ( !bForce ) 
+	if ( !bForce )
 	{
 		if ( m_nBoundGLBuffer[type] == nGLName )
 			return;
 	}
-	
+
 	GLenum target = 0;
 	switch( type )
-	{	
+	{
 		case kGLMVertexBuffer:		target = GL_ARRAY_BUFFER_ARB;			break;
 		case kGLMIndexBuffer:		target = GL_ELEMENT_ARRAY_BUFFER_ARB;	break;
 		case kGLMUniformBuffer:		target = GL_UNIFORM_BUFFER_EXT;			break;
 		case kGLMPixelBuffer:		target = GL_PIXEL_UNPACK_BUFFER_ARB;	break;
 		default: Assert(!"Unknown buffer type" );
 	}
-			
+
 	Assert( !pBuff || ( pBuff->m_buffGLTarget == target ) );
-			
+
 	m_nBoundGLBuffer[type] = nGLName;
 	gGL->glBindBufferARB( target, nGLName );
 }
@@ -3053,7 +3053,7 @@ GLuint GLMContext::CreateTex( GLenum texBind, GLenum internalFormat )
 	{
 		TextureEntry_t& tex = m_availableTextures[ i ];
 		if (    ( tex.m_nTexBind == GL_NONE || tex.m_nTexBind == texBind  )
-			 && ( tex.m_nInternalFormat == GL_NONE || tex.m_nInternalFormat == internalFormat ) )
+			&& ( tex.m_nInternalFormat == GL_NONE || tex.m_nInternalFormat == internalFormat ) )
 		{
 			// Hit!
 			GLuint retVal = tex.m_nTexName;
@@ -3072,7 +3072,7 @@ GLuint GLMContext::CreateTex( GLenum texBind, GLenum internalFormat )
 
 void GLMContext::CleanupTex( GLenum texBind, GLMTexLayout* pLayout, GLuint tex )
 {
-	// If the total 
+	// If the total
 	if ( pLayout->m_storageTotalSize <= ( kDeletedTextureDim * kDeletedTextureDim * sizeof( uint32 ) ) )
 		return;
 
@@ -3114,7 +3114,7 @@ void GLMContext::DestroyTex( GLenum texBind, GLMTexLayout* pLayout, GLuint tex )
 		gGL->glDeleteTextures( 1, &tex );
 		return;
 	}
-	
+
 	CleanupTex( texBind, pLayout, tex );
 
 	TextureEntry_t entry;
@@ -3127,11 +3127,11 @@ void GLMContext::DestroyTex( GLenum texBind, GLMTexLayout* pLayout, GLuint tex )
 
 GLuint GLMContext::FillTexCache( bool holdOne, int newTextures )
 {
-	// If we aren't doing batch creates, then don't fill the cache. 
+	// If we aren't doing batch creates, then don't fill the cache.
 	if ( !gl_batch_tex_creates.GetBool() )
 		return 0;
-	
-	// If we have to hit the name table, might as well hit it a bunch because this causes 
+
+	// If we have to hit the name table, might as well hit it a bunch because this causes
 	// serialization either way--at least we can do it less often.
 	GLuint* textures = (GLuint*) stackalloc( newTextures * sizeof( GLuint ) );
 	gGL->glGenTextures( newTextures, textures );
@@ -3148,7 +3148,7 @@ GLuint GLMContext::FillTexCache( bool holdOne, int newTextures )
 		Assert( textures[ i ] );
 		if ( textures[ i ] )
 		{
-			// We still add these to the tail because we'd prefer to reuse old textures (rather 
+			// We still add these to the tail because we'd prefer to reuse old textures (rather
 			// than these new ones).
 			entry.m_nTexName = textures[ i ];
 			m_availableTextures.AddToTail( entry );
@@ -3157,7 +3157,7 @@ GLuint GLMContext::FillTexCache( bool holdOne, int newTextures )
 
 	if ( holdOne )
 		return textures[ 0 ];
-	
+
 	// If not, stick that last one in the list and return 0.
 	entry.m_nTexName = textures[ 0 ];
 	m_availableTextures.AddToTail( entry );
@@ -3175,7 +3175,7 @@ void GLMContext::PurgeTexCache()
 		return;
 
 	GLuint* textures = (GLuint*) stackalloc( textureCount * sizeof( GLuint ) );
-	
+
 	FOR_EACH_VEC( m_availableTextures, i )
 	{
 		TextureEntry_t& tex = m_availableTextures[ i ];
@@ -3183,7 +3183,7 @@ void GLMContext::PurgeTexCache()
 	}
 
 	gGL->glDeleteTextures( textureCount, textures );
-	
+
 	m_availableTextures.RemoveAll();
 }
 
@@ -3212,7 +3212,7 @@ void GLMContext::FlushDrawStatesNoShaders( )
 	GLM_FUNC;
 
 	GL_BATCH_PERF( m_FlushStats.m_nTotalBatchFlushes++; )
-			
+
 	NullProgram();
 }
 
@@ -3243,7 +3243,7 @@ enum EGLMVertDumpMode
 	eLastDumpVertsMode
 };
 
-char *g_vertDumpModeNames[] = 
+char *g_vertDumpModeNames[] =
 {
 	"noTransformDump",
 	"transformedByViewProj",
@@ -3255,7 +3255,7 @@ char *g_vertDumpModeNames[] =
 static void CopyTilEOL( char *dst, char *src, int dstSize )
 {
 	dstSize--;
-	
+
 	int i=0;
 	while ( (i<dstSize) && (src[i] != 0) && (src[i] != '\n') && (src[i] != '\r') )
 	{
@@ -3277,7 +3277,7 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 {
 	int oldIndent = GLMGetIndent();
 	GLMSetIndent(0);
-	
+
 	CGLMProgram *vp = m_drawingProgram[kGLMVertexProgram];
 	CGLMProgram *fp = m_drawingProgram[kGLMFragmentProgram];
 
@@ -3323,9 +3323,9 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 		CStackCrawlParams	cp;
 		memset( &cp, 0, sizeof(cp) );
 		cp.m_frameLimit = g_maxFramesToCrawl;
-		
+
 		GetStackCrawl(&cp);
-		
+
 		GLMPRINTF(("-D-" ));
 		GLMPRINTF(("-D- stack crawl"));
 		for( uint i=0; i< cp.m_frameCount; i++)
@@ -3352,7 +3352,7 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 			{
 				strcpy( attribtemp, "no attrib map" );
 			}
-			
+
 			char *trans = strstr(vp->m_text, "#// trans#");
 			if (trans)
 			{
@@ -3362,13 +3362,13 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 			{
 				strcpy( transtemp, "no translation info" );
 			}
-			
+
 			char *linkpath = "no file link";
 
 			#if GLMDEBUG
 				linkpath = vp->m_editable->m_mirror->m_path;
 			#endif
-			
+
 			GLMPRINTF(("-D-"));
 			GLMPRINTF(("-D- ARBVP ||  GL %d || Path %s ", vp->m_descs[kGLMARB].m_object.arb, linkpath ));
 			GLMPRINTF(("-D-   Attribs %s", attribtemp ));
@@ -3399,13 +3399,13 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 			{
 				strcpy( transtemp, "no translation info" );
 			}
-			
+
 			char *linkpath = "no file link";
 
 			#if GLMDEBUG
 				linkpath = fp->m_editable->m_mirror->m_path;
 			#endif
-			
+
 			GLMPRINTF(("-D-"));
 			GLMPRINTF(("-D- FP ||  GL %d || Path %s ", fp->m_descs[kGLMARB].m_object.arb, linkpath ));
 			GLMPRINTF(("-D-   Trans %s", transtemp ));
@@ -3431,16 +3431,16 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 		GLMPRINTF(("-D- VP parameters" ));
 		char *label = "";
 		//int labelcounter = 0;
-		
+
 		static int vmaskranges[] = { /*18,47,*/ -1,-1 };
 		//float	transposeTemp;				// row, column for printing
-		
+
 		int slotIndex = 0;
 		int upperSlotLimit = 61;
-			
+
 			// take a peek at the vertex attrib setup.  If it has an attribute for bone weights, then raise the shader param dump limit to 256.
 		bool usesSkinning = false;
-		GLMVertexSetup *pSetup = &m_drawVertexSetup;			
+		GLMVertexSetup *pSetup = &m_drawVertexSetup;
 		for( int index=0; index < kGLMVertexAttributeIndexMax; index++ )
 		{
 			usesSkinning |= (pSetup->m_attrMask & (1<<index)) && ((pSetup->m_vtxAttribMap[index]>>4)== D3DDECLUSAGE_BLENDWEIGHT);
@@ -3473,12 +3473,12 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 						printmat( "MODELVIEWPROJ", slotIndex, 4, values );
 						slotIndex += 4;
 					break;
-					
+
 					case	8:
 						printmat( "VIEWPROJ", slotIndex, 4, values );
 						slotIndex += 4;
 						break;
-						
+
 					default:
 						if (slotIndex>=58)
 						{
@@ -3536,7 +3536,7 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 		GLMPRINTF(("-D- FP parameters " ));
 
 		static int fmaskranges[] = { 40,41, -1,-1 };
-		
+
 		slotIndex = 0;
 		label = "";
 		while(slotIndex < 40)
@@ -3588,7 +3588,7 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 				slotIndex ++;
 			}
 		}
-		
+
 		if (m_pBoundPair->m_locFragmentFakeSRGBEnable)
 		{
 			GLMPRINTF(("-D- GLSL 'flEnableSRGBWrite': %f",  m_pBoundPair->m_fakeSRGBEnableValue ));
@@ -3614,23 +3614,23 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 					GLMDecode( eGL_ENUM, samp->m_addressModes[1] ),
 					GLMDecode( eGL_ENUM, samp->m_addressModes[2] )
 				));
-					
+
 				GLMPRINTF(("-D-           magFilter    [ %s ]", GLMDecode( eGL_ENUM, samp->m_magFilter ) ));
 				GLMPRINTF(("-D-           minFilter    [ %s ]", GLMDecode( eGL_ENUM, samp->m_minFilter ) ));
 				GLMPRINTF(("-D-           srgb         [ %s ]", samp->m_srgb ? "T" : "F" ));
 				GLMPRINTF(("-D-           shadowFilter [ %s ]", samp->m_compareMode == GL_COMPARE_R_TO_TEXTURE_ARB ? "T" : "F" ));
-				
+
 				// add more as needed later..
 			}
-		}		
+		}
 #endif
 	}
 
 	if ( (options & (1<<eDumpVertexAttribSetup)) && is_draw )
 	{
 		GLMVertexSetup *pSetup = &m_drawVertexSetup;
-		
-		uint	nRelevantMask =	pSetup->m_attrMask;		
+
+		uint	nRelevantMask =	pSetup->m_attrMask;
 		for( int index=0; index < kGLMVertexAttributeIndexMax; index++ )
 		{
 			uint mask = 1<<index;
@@ -3647,7 +3647,7 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 				{
 					strcpy( sizestr, GLMDecode( eGL_ENUM, setdesc->m_nCompCount ) );
 				}
-				
+
 				if (pSetup->m_vtxAttribMap[index] != 0xBB)
 				{
 					GLMPRINTF(("-D-   attr=%-2d  decl=$%s%1d  stride=%-2d  offset=%-3d  buf=%08x  size=%s  type=%s  normalized=%s  ",
@@ -3682,37 +3682,37 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 		// vertex data
 		GLMPRINTF(("-D-"));
 		GLMPRINTF(("-D- Vertex Data : %d of %d verts (index %d through %d)", realEnd-start, end-start, start, realEnd-1));
-	
+
 		for( int vtxIndex=-1; vtxIndex < realEnd; vtxIndex++ )	// vtxIndex will jump from -1 to start after first spin, not necessarily to 0
 		{
 			char buf[64000];
 			char *mark = buf;
-			
+
 			// index -1 is the first run through the loop, we just print a header
-			
+
 			// iterate attrs
 			if (vtxIndex>=0)
 			{
 				mark += sprintf(mark, "-D-  %04d: ", vtxIndex );
 			}
-			
+
 				// for transform dumping, we latch values as we spot them
 			float	vtxPos[4];
 			int		vtxBoneIndices[4];	// only three get used
 			float	vtxBoneWeights[4];	// only three get used and index 2 is synthesized from 0 and 1
-			
+
 			vtxPos[0] = vtxPos[1] = vtxPos[2] = 0.0;
 			vtxPos[3] = 1.0;
-			
+
 			vtxBoneIndices[0] = vtxBoneIndices[1] = vtxBoneIndices[2] = vtxBoneIndices[3] = 0;
 			vtxBoneWeights[0] = vtxBoneWeights[1] = vtxBoneWeights[2] = vtxBoneWeights[3] = 0.0;
-			
+
 			for( int attr = 0; attr < kGLMVertexAttributeIndexMax; attr++ )
 			{
 				if (pSetup->m_attrMask & (1<<attr) )
 				{
 					GLMVertexAttributeDesc *desc = &pSetup->m_attrs[ attr ];
-					
+
 					// print that attribute.
 
 					// on OSX, VB's never move unless resized.  You can peek at them when unmapped.  Safe enough for debug..
@@ -3721,12 +3721,12 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 					uint stride = desc->m_stride;
 					uint fieldoffset = desc->m_offset;
 					uint baseoffset = vtxIndex * stride;
-					
+
 					char *attrBase = bufferBase + baseoffset + fieldoffset;
 
 					uint usage = pSetup->m_vtxAttribMap[attr]>>4;
 					uint usageindex = pSetup->m_vtxAttribMap[attr]&0x0F;
-					
+
 					if (vtxIndex <0)
 					{
 						mark += sprintf(mark, "[%s%1d @ offs=%04d / strd %03d] ", GLMDecode(eD3D_VTXDECLUSAGE, usage ), usageindex, fieldoffset, stride );
@@ -3734,7 +3734,7 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 					else
 					{
 						mark += sprintf(mark, "[%s%1d ", GLMDecode(eD3D_VTXDECLUSAGE, usage ), usageindex );
-						
+
 						if (desc->m_nCompCount<32)
 						{
 							for( uint which = 0; which < desc->m_nCompCount; which++ )
@@ -3746,7 +3746,7 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 									{
 										float	*floatbase = (float*)attrBase;
 										mark += sprintf(mark, (usage != D3DDECLUSAGE_TEXCOORD) ? "%c%7.3f " : "%c%.3f", fieldname[which], floatbase[which] );
-										
+
 										if (usage==D3DDECLUSAGE_POSITION)
 										{
 											if (which<4)
@@ -3766,7 +3766,7 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 										}
 									}
 									break;
-									
+
 									case GL_UNSIGNED_BYTE:
 									{
 										unsigned char *unchbase = (unsigned char*)attrBase;
@@ -3796,7 +3796,7 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 											{
 												unsigned char *unchbase = (unsigned char*)attrBase;
 												mark += sprintf(mark, "%c$%02X ", fieldname[which], unchbase[which] );
-												
+
 												if (usage==D3DDECLUSAGE_BLENDINDICES)
 												{
 													if (which<4)
@@ -3805,7 +3805,7 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 														vtxBoneIndices[which] = unchbase[which];		// ignoring the component reverse which BGRA would inflict, but we also ignore it below so it matches up.
 													}
 												}
-											}												
+											}
 											break;
 
 											default:
@@ -3828,11 +3828,11 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 				// if transform dumping requested, and we've reached the actual vert dump phase, do it
 				float	vtxout[4];
 				char	*translabel = NULL;   // NULL means no print...
-				
+
 				switch( g_vertDumpMode )
 				{
 					case eDumpVertsNoTransformDump:	break;
-					
+
 					case eDumpVertsTransformedByViewProj:				// viewproj is slot 8
 					{
 						float *viewproj = &m_programParamsF[ kGLMVertexProgram ].m_values[8][0];
@@ -3840,7 +3840,7 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 						translabel = "post-viewproj";
 					}
 					break;
-					
+
 					case eDumpVertsTransformedByModelViewProj:			// modelviewproj is slot 4
 					{
 						float *modelviewproj = &m_programParamsF[ kGLMVertexProgram ].m_values[4][0];
@@ -3848,49 +3848,49 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 						translabel = "post-modelviewproj";
 					}
 					break;
-					
+
 					case eDumpVertsTransformedByBoneZeroThenViewProj:
 					{
 						float	postbone[4];
 						postbone[3] = 1.0;
-						
+
 						float *bonemat = &m_programParamsF[ kGLMVertexProgram ].m_values[58][0];
 						transform_dp4( vtxPos, bonemat, 3, postbone );
-						
+
 						float *viewproj = &m_programParamsF[ kGLMVertexProgram ].m_values[8][0];	// viewproj is slot 8
 						transform_dp4( postbone, viewproj, 4, vtxout );
 
 						translabel = "post-bone0-viewproj";
 					}
 					break;
-					
+
 					case eDumpVertsTransformedByBonesThenViewProj:
 					{
 						//float	bone[4][4];			// [bone index][bone member]	// members are adjacent
-						
+
 						vtxout[0] = vtxout[1] = vtxout[2] = vtxout[3] = 0;
-						
+
 						// unpack the third weight
 						vtxBoneWeights[2] = 1.0 - (vtxBoneWeights[0] + vtxBoneWeights[1]);
-						
+
 						for( int ibone=0; ibone<3; ibone++ )
 						{
 							int boneindex = vtxBoneIndices[ ibone ];
 							float *bonemat = &m_programParamsF[ kGLMVertexProgram ].m_values[58+(boneindex*3)][0];
-							
+
 							float boneweight = vtxBoneWeights[ibone];
-							
+
 							float	postbonevtx[4];
-							
+
 							transform_dp4( vtxPos, bonemat, 3, postbonevtx );
-							
+
 							// add weighted sum into output
 							for( int which=0; which<4; which++ )
 							{
 								vtxout[which] += boneweight * postbonevtx[which];
 							}
 						}
-						
+
 						// fix W ?  do we care ?  check shaders to see what they do...
 						translabel = "post-skin3bone-viewproj";
 					}
@@ -3899,12 +3899,12 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 				if(translabel)
 				{
 					// for extra credit, do the perspective divide and viewport
-					
+
 					GLMPRINTF(("-D-   %-24s: [ %7.4f %7.4f %7.4f %7.4f ]", translabel, vtxout[0],vtxout[1],vtxout[2],vtxout[3] ));
 					GLMPRINTF(("-D-" ));
 				}
 			}
-			
+
 			if (vtxIndex<0)
 			{
 				vtxIndex = start-1; // for printing of the data (note it will be incremented at bottom of loop, so bias down by 1)
@@ -3923,7 +3923,7 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 			{
 				m_drawingProgram[ kGLMVertexProgram ]->m_editable->OpenInEditor();
 			}
-			
+
 			if (m_drawingProgram[ kGLMFragmentProgram ])
 			{
 				m_drawingProgram[ kGLMFragmentProgram ]->m_editable->OpenInEditor();
@@ -3942,7 +3942,7 @@ void GLMContext::DebugDump( GLMDebugHookInfo *info, uint options, uint vertDumpM
 }
 
 // here is the table that binds knob numbers to names.  change at will.
-char *g_knobnames[] = 
+char *g_knobnames[] =
 {
 /*0*/	"dummy",
 
@@ -3975,7 +3975,7 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 	// there is no global pause state.  The rest of the app runs at the best speed it can.
 
 	// initial stuff we do unconditionally
-	
+
 	// increment iteration
 	info->m_iteration++;						// can be thought of as "number of times the caller's action has now occurred - starting at 1"
 
@@ -3984,7 +3984,7 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 
 	// check prior hold-conditions to see if any of them hit.
 	// note we disarm each trigger once the hold has occurred (one-shot style)
-	
+
 	switch( info->m_caller )
 	{
 		case eBeginFrame:
@@ -4038,7 +4038,7 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 
 				info->m_holding = false;
 			}
-			
+
 			// now check for an explicit hold on end of this frame..
 			if ( (m_holdFrameEnd>=0) && (m_holdFrameEnd==m_debugFrameIndex) )
 			{
@@ -4055,30 +4055,30 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 
 	int evtcount=0;
 
-	bool refresh = info->m_holding || m_debugDelayEnable;  // only refresh once per initial visit (if paused!) or follow up event input	
+	bool refresh = info->m_holding || m_debugDelayEnable;  // only refresh once per initial visit (if paused!) or follow up event input
 	int breakToDebugger = 0;
 		// 1 = break to GDB
 		// 2 = break to OpenGL Profiler if attached
-	
+
 	do
 	{
 		if (refresh)
 		{
 			if (debughook) GLMPRINTF(("-D- pushing pixels" ));
 			DebugPresent();		// show pixels
-			
+
 			uint minidumpOptions = (1<<eDumpBatchInfo) /* | (1<<eDumpSurfaceInfo) */;
 			DebugDump( info, minidumpOptions, g_vertDumpMode );
 
 			ThreadSleep( 10000 / 1000 );				// lil sleep
-			
+
 			refresh = false;
 		}
 
 		bool eventCheck = true;			// event pull will be skipped if we detect a shader edit being done
 		// keep editable shaders in sync
 		#if GLMDEBUG
-		
+
 			bool redrawBatch = false;
 			if (m_drawingProgram[ kGLMVertexProgram ])
 			{
@@ -4087,7 +4087,7 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 					redrawBatch = true;
 				}
 			}
-			
+
 			if (m_drawingProgram[ kGLMFragmentProgram ])
 			{
 				if( m_drawingProgram[ kGLMFragmentProgram ]->SyncWithEditable() )
@@ -4095,11 +4095,11 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 					redrawBatch = true;
 				}
 			}
-			
+
 			if (redrawBatch)
 			{
 				// act as if user pressed the option-\ key
-				
+
 				if (m_drawingLang == kGLMGLSL)
 				{
 					// if GLSL mode, force relink - and refresh the pair cache as needed
@@ -4109,23 +4109,23 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 						m_pBoundPair->RefreshProgramPair();
 					}
 				}
-				
+
 				// TODO - need to retest this whole path
 				FlushDrawStates( 0, 0, 0 );	// this is key, because the linked shader pair may have changed (note call to PurgePairsWithShader in cglmprogram.cpp)
-				
+
 				GLMPRINTF(("-- Shader changed, re-running batch" ));
 
 				m_holdBatch = m_nBatchCounter;
 				m_holdBatchFrame = m_debugFrameIndex;
 				m_debugDelayEnable = false;
-				
+
 				info->m_holding = false;
 				info->m_loop = true;
-				
+
 				eventCheck = false;
 			}
 		#endif
-		
+
 		if(eventCheck)
 		{
 			PumpWindowsMessageLoop();
@@ -4135,17 +4135,17 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 			{
 				// print it
 				if (debughook) GLMPRINTF(("-D- Received debug key '%c' with modifiers %x", evt.m_UnicodeKeyUnmodified, evt.m_ModifierKeyMask ));
-				
+
 				// flag for refresh if we spin again
 				refresh = 1;
-				
+
 				switch(evt.m_UnicodeKeyUnmodified)
 				{
 					case ' ':					// toggle pause
 						// clear all the holds to be sure
 						m_holdFrameBegin = m_holdFrameEnd = m_holdBatch = m_holdBatchFrame = -1;
 						info->m_holding = !info->m_holding;
-						
+
 						if (!info->m_holding)
 						{
 							m_debugDelayEnable = false;	// coming out of pause means no slow mo
@@ -4153,7 +4153,7 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 
 						GLMPRINTF((info->m_holding ? "-D- Paused." :  "-D- Unpaused." ));
 					break;
-					
+
 					case 'f':					// frame advance
 						GLMPRINTF(("-D- Command: next frame" ));
 						m_holdFrameBegin = m_debugFrameIndex+1;		// stop at top of next numbered frame
@@ -4194,12 +4194,12 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 
 						m_holdBatch = m_nBatchCounter;
 						m_holdBatchFrame = m_debugFrameIndex;
-						m_debugDelayEnable = false;						
+						m_debugDelayEnable = false;
 						info->m_holding = false;
 						info->m_loop = true;
 						GLMPRINTF(("-D- Command: re-run batch %d", m_holdBatch ));
 					break;
-					
+
 					case 'c':					// toggle auto color clear
 						m_autoClearColor = !m_autoClearColor;
 						GLMPRINTF((m_autoClearColor ? "-D- Auto color clear ON" :  "-D- Auto color clear OFF" ));
@@ -4228,14 +4228,14 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 
 							info->m_holding = true;
 							info->m_loop = true;	// so when you come back from debugger, you get another spin (i.e. you enter paused mode)
-						}						
+						}
 					break;
-					
+
 					case 'g':					// break to OGLP and enable OGLP logging of spew
 						if (GLMDetectOGLP())	// if this comes back true, there will be a breakpoint set on glColor4sv.
 						{
 							uint channelMask = GLMDetectAvailableChannels();	// will re-assert whether spew goes to OGLP log
-							
+
 							if (channelMask & (1<<eGLProfiler))
 							{
 								GLMDebugChannelMask(&channelMask);
@@ -4284,7 +4284,7 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 							m_debugDelayEnable = true;
 						}
 					break;
-					
+
 					case 'v':
 						// open vs in editor (foreground pop)
 						#if GLMDEBUG
@@ -4292,7 +4292,7 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 							{
 								m_drawingProgram[ kGLMVertexProgram ]->m_editable->OpenInEditor( true );
 							}
-						#endif						
+						#endif
 					break;
 
 					case 'p':
@@ -4304,18 +4304,18 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 							}
 						#endif
 					break;
-					
+
 					case '<':	// dump fewer verts
 					case '>':	// dump more verts
 					{
 						int delta = (evt.m_UnicodeKeyUnmodified=='>') ? 1 : -1;
 						g_maxVertsToDumpLog2 = MIN( MAX( g_maxVertsToDumpLog2+delta, 0 ), 16 );
-						
+
 						// just re-dump the verts
 						DebugDump( info, 1<<eDumpVertexData, g_vertDumpMode );
 					}
 					break;
-					
+
 					case 'x':	// adjust transform dump mode
 					{
 						int newmode = g_vertDumpMode+1;
@@ -4325,7 +4325,7 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 							newmode = eDumpVertsNoTransformDump;
 						}
 						g_vertDumpMode = (EGLMVertDumpMode)newmode;
-						
+
 						GLMPRINTF(("-D- New vert dump mode is %s", g_vertDumpModeNames[g_vertDumpMode] ));
 					}
 					break;
@@ -4335,9 +4335,9 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 						CStackCrawlParams	cp;
 						memset( &cp, 0, sizeof(cp) );
 						cp.m_frameLimit = kMaxCrawlFrames;
-						
+
 						GetStackCrawl(&cp);
-						
+
 						GLMPRINTF(("-D-" ));
 						GLMPRINTF(("-D- extended stack crawl:"));
 						for( uint i=0; i< cp.m_frameCount; i++)
@@ -4347,23 +4347,23 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 					}
 
 					break;
-						
+
 					case 'q':
 						DebugDump( info, 0xFFFFFFFF, g_vertDumpMode );
 					break;
-					
-	
+
+
 					case 'H':
 					case 'h':
 					{
 						// toggle drawing language.  hold down shift key to do it immediately.
-						
+
 						if (m_caps.m_hasDualShaders)
 						{
 							bool immediate;
-							
+
 							immediate = evt.m_UnicodeKeyUnmodified == 'H';	// (evt.m_ModifierKeyMask & (1<<eShiftKey)) != 0;
-							
+
 							if (m_drawingLang==kGLMARB)
 							{
 								GLMPRINTF(( "-D- Setting GLSL language mode %s.", immediate ? "immediately" : "for next frame start" ));
@@ -4383,10 +4383,10 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 
 					}
 					break;
-					
+
 
 					// ======================================================== debug knobs.  change these as needed to troubleshoot stuff
-					
+
 					// keys to select a knob
 					// or, toggle a debug flavor, if control is being held down
 					case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
@@ -4395,11 +4395,11 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 						{
 							// '0' toggles the all-channels on or off
 							int flavorSelect = evt.m_UnicodeKeyUnmodified - '0';
-							
+
 							if ( (flavorSelect >=0) && (flavorSelect<eFlavorCount) )
 							{
 								uint mask = GLMDebugFlavorMask();
-								
+
 								mask ^= (1<<flavorSelect);
 
 								GLMDebugFlavorMask(&mask);
@@ -4411,14 +4411,14 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 							m_selKnobIndex = evt.m_UnicodeKeyUnmodified - '0';
 
 							GLMPRINTF(("-D- Knob # %d (%s) selected.", m_selKnobIndex, g_knobnames[ m_selKnobIndex ] ));
-							
+
 							m_selKnobIncrement = (m_selKnobIndex<5) ? (1.0f / 2048.0f) : (1.0 / 256.0f);
 							ThreadSleep( 500000 / 1000 );
 						}
 						refresh = false;
 					}
 					break;
-					
+
 					// keys to adjust or zero a knob
 					case 't':		// toggle
 					{
@@ -4428,15 +4428,15 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 						}
 					}
 					break;
-					
+
 					case 'l':		// less
 					case 'm':		// more
 					case 'z':		// zero
-					{						
+					{
 						if (m_selKnobIndex < g_knobcount)
 						{
 							float val = GLMKnob( g_knobnames[ m_selKnobIndex ], NULL );
-							
+
 							if (evt.m_UnicodeKeyUnmodified == 'l')
 							{
 								// minus (less)
@@ -4460,7 +4460,7 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 								// send new value back to the knob
 								GLMKnob( g_knobnames[ m_selKnobIndex ], &val );
 							}
-							
+
 							if (evt.m_UnicodeKeyUnmodified == 'z')
 							{
 								// zero
@@ -4469,7 +4469,7 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 								// send new value back to the knob
 								GLMKnob( g_knobnames[ m_selKnobIndex ], &val );
 							}
-							
+
 							GLMPRINTF(("-D- Knob # %d (%s) set to %f  (%f/1024.0)", m_selKnobIndex, g_knobnames[ m_selKnobIndex ], val, val * 1024.0 ));
 
 							ThreadSleep( 500000 / 1000 );
@@ -4481,7 +4481,7 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 
 				}
 			}
-		}		
+		}
 	}	while( ((evtcount>0) || info->m_holding) && (!breakToDebugger) );
 
 	if (m_debugDelayEnable)
@@ -4496,7 +4496,7 @@ void GLMContext::DebugHook( GLMDebugHookInfo *info )
 			case 1:
 				DebuggerBreak();
 			break;
-			
+
 			case 2:
 				short fakecolor[4] = { 0, 0, 0, 0 };
 				gGL->glColor4sv( fakecolor );	// break to OGLP
@@ -4519,7 +4519,7 @@ void GLMContext::DebugClear( void )
 	// get old clear color
 	GLClearColor_t clearcol_orig;
 	m_ClearColor.Read( &clearcol_orig,0 );
-	
+
 	// new clear color
 	GLClearColor_t clearcol;
 	clearcol.r = m_autoClearColorValues[0];
@@ -4527,13 +4527,13 @@ void GLMContext::DebugClear( void )
 	clearcol.b = m_autoClearColorValues[2];
 	clearcol.a = m_autoClearColorValues[3];
 	m_ClearColor.Write( &clearcol ); // don't check, don't defer
-	
+
 	uint mask = 0;
-	
+
 	if (m_autoClearColor) mask |= GL_COLOR_BUFFER_BIT;
 	if (m_autoClearDepth) mask |= GL_DEPTH_BUFFER_BIT;
 	if (m_autoClearStencil) mask |= GL_STENCIL_BUFFER_BIT;
-	
+
 	gGL->glClear( mask );
 	gGL->glFinish();
 
@@ -4547,10 +4547,10 @@ void GLMContext::CheckNative( void )
 {
 	// note that this is available in release.  We don't use GLMPRINTF for that reason.
 	// note we do not get called unless either slow-batch asserting or logging is enabled.
-#ifdef OSX	
+#ifdef OSX
 	bool gpuProcessing;
 	GLint fragmentGPUProcessing, vertexGPUProcessing;
-	
+
 	CGLGetParameter (CGLGetCurrentContext(), kCGLCPGPUFragmentProcessing, &fragmentGPUProcessing);
 	CGLGetParameter(CGLGetCurrentContext(), kCGLCPGPUVertexProcessing, &vertexGPUProcessing);
 
@@ -4614,7 +4614,7 @@ void GLMContext::GenDebugFontTex( void )
 		// make a 128x128 RGBA texture
 		GLMTexLayoutKey key;
 		memset( &key, 0, sizeof(key) );
-		
+
 		key.m_texGLTarget	= GL_TEXTURE_2D;
 		key.m_xSize			= 128;
 		key.m_ySize			= 128;
@@ -4623,30 +4623,30 @@ void GLMContext::GenDebugFontTex( void )
 		key.m_texFlags		= 0;
 
 		m_debugFontTex = NewTex( &key, 1, "GLM debug font" );
-		
+
 
 		//-----------------------------------------------------
 		GLMTexLockParams lockreq;
-		
+
 		lockreq.m_tex = m_debugFontTex;
 		lockreq.m_face = 0;
 		lockreq.m_mip = 0;
 
 		GLMTexLayoutSlice *slice = &m_debugFontTex->m_layout->m_slices[ lockreq.m_tex->CalcSliceIndex( lockreq.m_face, lockreq.m_mip ) ];
-		
+
 		lockreq.m_region.xmin = lockreq.m_region.ymin = lockreq.m_region.zmin = 0;
 		lockreq.m_region.xmax = slice->m_xSize;
 		lockreq.m_region.ymax = slice->m_ySize;
 		lockreq.m_region.zmax = slice->m_zSize;
 
 		lockreq.m_readback = false;
-		
+
 		char	*lockAddress;
 		int		yStride;
 		int		zStride;
-		
+
 		m_debugFontTex->Lock( &lockreq, &lockAddress, &yStride, &zStride );
-		
+
 		//-----------------------------------------------------
 		// fetch elements of font data and make texels... we're doing the whole slab so we don't really need the stride info
 		unsigned long *destTexelPtr = (unsigned long *)lockAddress;
@@ -4665,10 +4665,10 @@ void GLMContext::GenDebugFontTex( void )
 			}
 			destTexelPtr++;
 		}
-		
+
 		//-----------------------------------------------------
 		GLMTexLockParams unlockreq;
-		
+
 		unlockreq.m_tex = m_debugFontTex;
 		unlockreq.m_face = 0;
 		unlockreq.m_mip = 0;
@@ -4683,18 +4683,18 @@ void GLMContext::GenDebugFontTex( void )
 
 		//-----------------------------------------------------
 			// change up the tex sampling on this texture to be "nearest" not linear
-			
+
 		//-----------------------------------------------------
 
 		// don't leave texture bound on the TMU
 		BindTexToTMU( NULL, 0 );
-		
+
 		// also make the index and vertex buffers for use - up to 1K indices and 1K verts
-		
+
 		uint indexBufferSize = 1024*2;
-		
+
 		m_debugFontIndices = NewBuffer(kGLMIndexBuffer, indexBufferSize, 0);	// two byte indices
-		
+
 		// we go ahead and lock it now, and fill it with indices 0-1023.
 		char *indices = NULL;
 		GLMBuffLockParams		idxLock;
@@ -4709,7 +4709,7 @@ void GLMContext::GenDebugFontTex( void )
 			*idxPtr = i;
 		}
 		m_debugFontIndices->Unlock();
-		
+
 		m_debugFontVertices = NewBuffer(kGLMVertexBuffer, 1024 * 128, 0);	// up to 128 bytes per vert
 	}
 }
@@ -4728,13 +4728,13 @@ void GLMContext::DrawDebugText( float x, float y, float z, float drawCharWidth, 
 	{
 		GenDebugFontTex();
 	}
-	
+
 	// setup needed to draw text
-	
+
 	// we're assuming that +x goes left to right on screen, no billboarding math in here
 	// and that +y goes bottom up
 	// caller knows projection / rectangle so it gets to decide vertex spacing
-	
+
 	// debug font must be bound to TMU 0
 	// texturing enabled
 	// alpha blending enabled
@@ -4742,14 +4742,14 @@ void GLMContext::DrawDebugText( float x, float y, float z, float drawCharWidth, 
 	//  characters are 6px wide by 11 px high.
 	//	upper left character in tex is 0x20
 	// y axis will need to be flipped for display
-	
+
 	// for any character in 0x20 - 0x7F - here are the needed UV's
-	
+
 	// leftU = ((character % 16) * 6.0f / 128.0f)
 	// rightU = lowU + (6.0 / 128.0);
 	// topV = ((character - 0x20) * 11.0f / 128.0f)
 	// bottomV = lowV + (11.0f / 128.0f)
-	
+
 	int stringlen = strlen( string );
 	if (stringlen > MAX_DEBUG_CHARS)
 	{
@@ -4764,62 +4764,62 @@ void GLMContext::DrawDebugText( float x, float y, float z, float drawCharWidth, 
 	vtxLock.m_bNoOverwrite	= false;
 	vtxLock.m_bDiscard		= false;
 	m_debugFontVertices->Lock( &vtxLock, &vertices );
-			
+
 	GLMDebugTextVertex	*vtx =  (GLMDebugTextVertex*)vertices;
 	GLMDebugTextVertex *vtxOutPtr = vtx;
-	
+
 	for( int charindex = 0; charindex < stringlen; charindex++ )
 	{
 		float	leftU,rightU,topV,bottomV;
-		
+
 		int character = (int)string[charindex];
 		character -= 0x20;
 		if ( (character<0) || (character > 0x7F) )
 		{
 			character = '*' - 0x20;
 		}
-		
+
 		leftU	= ((character & 0x0F) * 6.0f ) / 128.0f;
 		rightU	= leftU + (6.0f / 128.0f);
 
 		topV	= ((character >> 4) * 11.0f ) / 128.0f;
 		bottomV	= topV + (11.0f / 128.0f);
-		
+
 		float posx,posy,posz;
-		
+
 		posx = x + (drawCharWidth * (float)charindex);
 		posy = y;
 		posz = z;
-		
+
 		// generate four verts
 		// first vert will be upper left of displayed quad (low X, high Y) then we go clockwise
 		for( int quadvert = 0; quadvert < 4; quadvert++ )
 		{
 			bool isTop	= (quadvert <2);						// verts 0 and 1
 			bool isLeft	= (quadvert & 1) == (quadvert >> 1);	// verts 0 and 3
-			
+
 			vtxOutPtr->x = posx + (isLeft ? 0.0f : drawCharWidth);
 			vtxOutPtr->y = posy + (isTop ? drawCharHeight : 0.0f);
 			vtxOutPtr->z = posz;
-			
+
 			vtxOutPtr->u = isLeft ? leftU : rightU;
 			vtxOutPtr->v = isTop ? topV : bottomV;
-			
+
 			vtxOutPtr++;
 		}
 	}
-	
+
 	// verts are done.
 	// unlock...
-	
+
 	m_debugFontVertices->Unlock();
-	
+
 	// make a vertex setup
 	GLMVertexSetup vertSetup;
-	
+
 		// position, color, tc = 0, 3, 8
 	vertSetup.m_attrMask = (1<<kGLMGenericAttr00) |  (1<<kGLMGenericAttr03) |  (1<<kGLMGenericAttr08);
-	
+
 	vertSetup.m_attrs[kGLMGenericAttr00].m_pBuffer = m_debugFontVertices;
 	vertSetup.m_attrs[kGLMGenericAttr00].m_nCompCount	= 3;			// 3 floats
 	vertSetup.m_attrs[kGLMGenericAttr00].m_datatype	= GL_FLOAT;
@@ -4841,15 +4841,15 @@ void GLMContext::DrawDebugText( float x, float y, float z, float drawCharWidth, 
 	vertSetup.m_attrs[kGLMGenericAttr08].m_offset	= offsetof(GLMDebugTextVertex, u);
 	vertSetup.m_attrs[kGLMGenericAttr03].m_normalized= false;
 
-		
+
 	// bind texture and draw it..
 	CGLMTex *pPrevTex = m_samplers[0].m_pBoundTex;
 	BindTexToTMU( m_debugFontTex, 0 );
-	
+
 	SelectTMU(0);	// somewhat redundant
-	
+
 	gGL->glDisable( GL_DEPTH_TEST );
-	
+
 	gGL->glEnable(GL_TEXTURE_2D);
 
 	if (0)
@@ -4857,9 +4857,9 @@ void GLMContext::DrawDebugText( float x, float y, float z, float drawCharWidth, 
 		gGL->glEnableClientState(GL_VERTEX_ARRAY);
 
 		gGL->glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		
+
 		gGL->glVertexPointer( 3, GL_FLOAT, sizeof( vtx[0] ), &vtx[0].x );
-		
+
 		gGL->glClientActiveTexture(GL_TEXTURE0);
 
 		gGL->glTexCoordPointer( 2, GL_FLOAT, sizeof( vtx[0] ), &vtx[0].u );
@@ -4890,14 +4890,14 @@ void GLMContext::DrawDebugText( float x, float y, float z, float drawCharWidth, 
 
 //===============================================================================
 
-void GLMgrSelfTests( void )	
+void GLMgrSelfTests( void )
 {
 	return;	// until such time as the tests are revised or axed
-	
-	GLMDisplayParams	glmParams;	
+
+	GLMDisplayParams	glmParams;
 	glmParams.m_fsEnable					=	false;
 
-	glmParams.m_vsyncEnable				=	false;	// "The runtime updates the window client area immediately and might do so more 
+	glmParams.m_vsyncEnable				=	false;	// "The runtime updates the window client area immediately and might do so more
 	glmParams.m_backBufferWidth				=	1024;
 	glmParams.m_backBufferHeight			=	768;
 	glmParams.m_backBufferFormat			=	D3DFMT_A8R8G8B8;
@@ -4924,7 +4924,7 @@ void GLMgrSelfTests( void )
 	//int newtests[] = {3, -1};
 	int twotests[] = {2, -1};
 	//int notests[] = {-1};
-	
+
 	int *testlist = twotests;
 
 	GLMTestParams	params;
@@ -4935,16 +4935,16 @@ void GLMgrSelfTests( void )
 
 	params.m_glErrToDebugger = true;
 	params.m_glErrToConsole = true;
-	
+
 	params.m_intlErrToDebugger = true;
 	params.m_intlErrToConsole = true;
-	
+
 	params.m_frameCount = 1000;
 
 	GLMTester testobj( &params );
 
 	testobj.RunTests( );
-	
+
 	GLMgr::aGLMgr()->DelContext( ctx );
 }
 
@@ -4957,23 +4957,23 @@ void GLMContext::SetDefaultStates( void )
 	m_AlphaTestFunc.Default();
 
 	m_AlphaToCoverageEnable.Default();
-	
+
 	m_CullFaceEnable.Default();
 	m_CullFrontFace.Default();
-	
+
 	m_PolygonMode.Default();
 	m_DepthBias.Default();
 
 	m_ClipPlaneEnable.Default();
 	m_ClipPlaneEquation.Default();
-	
-	m_ScissorEnable.Default();	
+
+	m_ScissorEnable.Default();
 	m_ScissorBox.Default();
-	
-	m_ViewportBox.Default();		
+
+	m_ViewportBox.Default();
 	m_ViewportDepthRange.Default();
 
-	m_ColorMaskSingle.Default();	
+	m_ColorMaskSingle.Default();
 	m_ColorMaskMultiple.Default();
 
 	m_BlendEnable.Default();
@@ -4985,7 +4985,7 @@ void GLMContext::SetDefaultStates( void )
 	m_DepthTestEnable.Default();
 	m_DepthFunc.Default();
 	m_DepthMask.Default();
-	
+
 	m_StencilTestEnable.Default();
 	m_StencilFunc.Default();
 	m_StencilOp.Default();
@@ -4993,7 +4993,7 @@ void GLMContext::SetDefaultStates( void )
 
 	m_ClearColor.Default();
 	m_ClearDepth.Default();
-	m_ClearStencil.Default();	
+	m_ClearStencil.Default();
 }
 
 void GLMContext::VerifyStates		( void )
@@ -5003,36 +5003,36 @@ void GLMContext::VerifyStates		( void )
 
 	// bare bones sanity check, head over to the debugger if our sense of the current context state is not correct
 	// we should only want to call this after a flush or the checks will flunk.
-	
+
 	if( m_AlphaTestEnable.Check() )			GLMStop();
 	if( m_AlphaTestFunc.Check() )			GLMStop();
 
-	if( m_AlphaToCoverageEnable.Check() )	GLMStop();	
+	if( m_AlphaToCoverageEnable.Check() )	GLMStop();
 
 	if( m_CullFaceEnable.Check() )			GLMStop();
 	if( m_CullFrontFace.Check() )			GLMStop();
-	
+
 	if( m_PolygonMode.Check() )				GLMStop();
 	if( m_DepthBias.Check() )				GLMStop();
 
 	if( m_ClipPlaneEnable.Check() )			GLMStop();
 	//if( m_ClipPlaneEquation.Check() )		GLMStop();
-	
-	if( m_ScissorEnable.Check() )			GLMStop();	
-	if( m_ScissorBox.Check() )				GLMStop();
-	
 
-	if( m_ViewportBox.Check() )				GLMStop();		
+	if( m_ScissorEnable.Check() )			GLMStop();
+	if( m_ScissorBox.Check() )				GLMStop();
+
+
+	if( m_ViewportBox.Check() )				GLMStop();
 	if( m_ViewportDepthRange.Check() )		GLMStop();
 
-	if( m_ColorMaskSingle.Check() )			GLMStop();	
+	if( m_ColorMaskSingle.Check() )			GLMStop();
 	if( m_ColorMaskMultiple.Check() )		GLMStop();
 
 	if( m_BlendEnable.Check() )				GLMStop();
 	if( m_BlendFactor.Check() )				GLMStop();
 	if( m_BlendEquation.Check() )			GLMStop();
 	if( m_BlendColor.Check() )				GLMStop();
-	
+
 	// only do this as caps permit
 	if (m_caps.m_hasGammaWrites)
 	{
@@ -5042,7 +5042,7 @@ void GLMContext::VerifyStates		( void )
 	if( m_DepthTestEnable.Check() )			GLMStop();
 	if( m_DepthFunc.Check() )				GLMStop();
 	if( m_DepthMask.Check() )				GLMStop();
-	
+
 	if( m_StencilTestEnable.Check() )		GLMStop();
 	if( m_StencilFunc.Check() )				GLMStop();
 	if( m_StencilOp.Check() )				GLMStop();
@@ -5053,7 +5053,7 @@ void GLMContext::VerifyStates		( void )
 	if( m_ClearStencil.Check() )			GLMStop();
 }
 
-static inline uint GetDataTypeSizeInBytes( GLenum dataType ) 
+static inline uint GetDataTypeSizeInBytes( GLenum dataType )
 {
 	switch ( dataType )
 	{
@@ -5107,7 +5107,7 @@ void GLMContext::DrawRangeElementsNonInline( GLenum mode, GLuint start, GLuint e
 		// The consumption range crosses more than one lock span, or the lock is trying to consume a bad IB range.
 		DXABSTRACT_BREAK_ON_ERROR();
 	}
-		
+
 	if ( ( type == GL_UNSIGNED_SHORT ) && ( pIndexBuf->m_bPseudo ) )
 	{
 		Assert( start <= end );
@@ -5198,12 +5198,12 @@ void GLMContext::DrawRangeElements(GLenum mode, GLuint start, GLuint end, GLsize
 	++m_nBatchCounter;				// batch index increments unconditionally on entry
 
 	SetIndexBuffer( pIndexBuf );
-	void *indicesActual = (void*)indices;    
+	void *indicesActual = (void*)indices;
 	if ( pIndexBuf->m_bPseudo )
 	{
 		// you have to pass actual address, not offset
 		indicesActual = (void*)( (int)indicesActual + (int)pIndexBuf->m_pPseudoBuf );
-	} 
+	}
 	if (pIndexBuf->m_bUsingPersistentBuffer)
 	{
 		indicesActual = (void*)( (int)indicesActual + (int)pIndexBuf->m_nPersistentBufferStartOffset );
@@ -5310,7 +5310,7 @@ void glGetEnumv( GLenum which, GLenum *dst )
 GLMTester::GLMTester(GLMTestParams *params)
 {
 	m_params = *params;
-	
+
 	m_drawFBO = NULL;
 	m_drawColorTex = NULL;
 	m_drawDepthTex = NULL;
@@ -5322,20 +5322,20 @@ GLMTester::~GLMTester()
 
 void GLMTester::StdSetup( void )
 {
-	GLMContext *ctx = m_params.m_ctx;	
+	GLMContext *ctx = m_params.m_ctx;
 
 	m_drawWidth = 1024;
 	m_drawHeight = 768;
-	
-	// make an FBO to draw into and activate it. no depth buffer yet	
-	m_drawFBO = ctx->NewFBO();					
+
+	// make an FBO to draw into and activate it. no depth buffer yet
+	m_drawFBO = ctx->NewFBO();
 
 	// make color buffer texture
 
 	GLMTexLayoutKey colorkey;
 	//CGLMTex			*colortex;
 	memset( &colorkey, 0, sizeof(colorkey) );
-	
+
 	colorkey.m_texGLTarget = GL_TEXTURE_2D;
 	colorkey.m_xSize =	m_drawWidth;
 	colorkey.m_ySize =	m_drawHeight;
@@ -5348,53 +5348,53 @@ void GLMTester::StdSetup( void )
 
 	// do not leave that texture bound on the TMU
 	ctx->BindTexToTMU(NULL, 0 );
-	
-	
+
+
 	// attach color to FBO
 	GLMFBOTexAttachParams	colorParams;
 	memset( &colorParams, 0, sizeof(colorParams) );
-	
+
 	colorParams.m_tex	= m_drawColorTex;
 	colorParams.m_face	= 0;
 	colorParams.m_mip	= 0;
 	colorParams.m_zslice= 0;	// for clarity..
-	
+
 	m_drawFBO->TexAttach( &colorParams, kAttColor0 );
-	
+
 	// check it.
 	bool ready = m_drawFBO->IsReady();
 	InternalError( !ready, "drawing FBO no go");
 
 	// bind it
 	ctx->BindFBOToCtx( m_drawFBO, GL_FRAMEBUFFER_EXT );
-	
+
 	gGL->glViewport(0, 0, (GLsizei) m_drawWidth, (GLsizei) m_drawHeight );
 	CheckGLError("stdsetup viewport");
-	
+
 	gGL->glScissor( 0,0,  (GLsizei) m_drawWidth, (GLsizei) m_drawHeight );
 	CheckGLError("stdsetup scissor");
 
 	gGL->glOrtho( -1,1, -1,1, -1,1 );
 	CheckGLError("stdsetup ortho");
-	
+
 	// activate debug font
 	ctx->GenDebugFontTex();
 }
 
 void GLMTester::StdCleanup( void )
 {
-	GLMContext *ctx = m_params.m_ctx;	
+	GLMContext *ctx = m_params.m_ctx;
 
 	// unbind
 	ctx->BindFBOToCtx( NULL, GL_FRAMEBUFFER_EXT );
-	
+
 	// del FBO
 	if (m_drawFBO)
 	{
 		ctx->DelFBO( m_drawFBO );
 		m_drawFBO = NULL;
 	}
-	
+
 	// del tex
 	if (m_drawColorTex)
 	{
@@ -5412,9 +5412,9 @@ void GLMTester::StdCleanup( void )
 
 void GLMTester::Clear( void )
 {
-	GLMContext *ctx = m_params.m_ctx;	
+	GLMContext *ctx = m_params.m_ctx;
 	ctx->MakeCurrent();
-	
+
 	gGL->glViewport(0, 0, (GLsizei) m_drawWidth, (GLsizei) m_drawHeight );
 	gGL->glScissor( 0,0,  (GLsizei) m_drawWidth, (GLsizei) m_drawHeight );
 	gGL->glOrtho( -1,1, -1,1, -1,1 );
@@ -5433,7 +5433,7 @@ void GLMTester::Clear( void )
 
 void GLMTester::Present( int seed )
 {
-	GLMContext *ctx = m_params.m_ctx;	
+	GLMContext *ctx = m_params.m_ctx;
 	ctx->Present( m_drawColorTex );
 }
 
@@ -5443,24 +5443,24 @@ return;
 	char errbuf[1024];
 
 	//borrowed from GLMCheckError.. slightly different
-	
+
 	if (!comment)
 	{
 		comment = "";
 	}
-	
+
 	GLenum errorcode = (GLenum)gGL->glGetError();
 	GLenum errorcode2 = 0;
 	if ( errorcode != GL_NO_ERROR )
 	{
 		const char	*decodedStr = GLMDecode( eGL_ERROR, errorcode );
 		const char	*decodedStr2 = "";
-				
+
 		if ( errorcode == GL_INVALID_FRAMEBUFFER_OPERATION_EXT )
 		{
 			// dig up the more detailed FBO status
 			errorcode2 = gGL->glCheckFramebufferStatusEXT( GL_FRAMEBUFFER_EXT );
-			
+
 			decodedStr2 = GLMDecode( eGL_ERROR, errorcode2 );
 
 			sprintf( errbuf, "\n%s - GL Error %08x/%08x = '%s / %s'\n", comment, errorcode, errorcode2, decodedStr, decodedStr2 );
@@ -5474,7 +5474,7 @@ return;
 		{
 			printf("%s", errbuf );
 		}
-		
+
 		if ( m_params.m_glErrToDebugger )
 		{
 			DebuggerBreak();
@@ -5487,7 +5487,7 @@ void GLMTester::InternalError( int errcode, char *comment )
 	if (errcode)
 	{
 		if (m_params.m_intlErrToConsole)
-		{	
+		{
 			printf("%s - error %d\n", comment, errcode );
 		}
 
@@ -5502,7 +5502,7 @@ void GLMTester::InternalError( int errcode, char *comment )
 void GLMTester::RunTests( void )
 {
 	int *testList = m_params.m_testList;
-	
+
 	while( (*testList >=0) && (*testList < 20) )
 	{
 		RunOneTest( *testList++ );
@@ -5536,8 +5536,8 @@ D3DFORMAT g_drawTexFormatsGLMT[] =		// -1 terminated
 	D3DFMT_X1R5G5B5,
 	D3DFMT_A1R5G5B5,
 	D3DFMT_L8,
-	D3DFMT_A8L8,	
-	D3DFMT_R8G8B8,	
+	D3DFMT_A8L8,
+	D3DFMT_R8G8B8,
 	D3DFMT_A8,
 	D3DFMT_R5G6B5,
 	D3DFMT_DXT1,
@@ -5560,7 +5560,7 @@ D3DFORMAT g_fboColorTexFormatsGLMT[] =		// -1 terminated
 	D3DFMT_A32B32G32R32F,
 	D3DFMT_R5G6B5,
 
-	(D3DFORMAT)-1			
+	(D3DFORMAT)-1
 };
 
 D3DFORMAT g_fboDepthTexFormatsGLMT[] =		// -1 terminated, but note 0 for "no depth" mode
@@ -5569,8 +5569,8 @@ D3DFORMAT g_fboDepthTexFormatsGLMT[] =		// -1 terminated, but note 0 for "no dep
 	D3DFMT_D16,
 	D3DFMT_D24X8,
 	D3DFMT_D24S8,
-	
-	(D3DFORMAT)-1	
+
+	(D3DFORMAT)-1
 };
 
 
@@ -5580,7 +5580,7 @@ void GLMTester::Test0( void )
 {
 	// make and delete a bunch of textures.
 	// lock and unlock them.
-	// use various combos of - 
+	// use various combos of -
 
 	//	âˆštexel format
 	//	âˆš2D | 3D | cube map
@@ -5588,17 +5588,17 @@ void GLMTester::Test0( void )
 	//	âˆšPOT / NPOT
 	//	large / small / square / rect
 	//	square / rect
-	
-	GLMContext *ctx = m_params.m_ctx;	
+
+	GLMContext *ctx = m_params.m_ctx;
 	ctx->MakeCurrent();
-	
+
 	CUtlVector< CGLMTex* >	testTextures;		// will hold all the built textures
-	
+
 	// test stage loop
 	// 0 is creation
 	// 1 is lock/unlock
 	// 2 is deletion
-	
+
 	for( int teststage = 0; teststage < 3; teststage++)
 	{
 		int innerindex = 0;	// increment at stage switch
@@ -5616,7 +5616,7 @@ void GLMTester::Test0( void )
 					// large / square / pot loop
 					// &4 == large		&2 == square		&1 == POT
 					// NOTE you *have to be square* for cube maps.
-					
+
 					for( int aspect = 0; aspect < 8; aspect++ )
 					{
 						switch( teststage )
@@ -5625,15 +5625,15 @@ void GLMTester::Test0( void )
 							{
 								GLMTexLayoutKey key;
 								memset( &key, 0, sizeof(key) );
-								
+
 								key.m_texGLTarget	= *formPtr;
 								key.m_texFormat		= *fmtPtr;
 								if (mipped)
 									key.m_texFlags |= kGLMTexMipped;
-								
+
 								// assume big, square, POT, and 3D, then adjust as needed
 								key.m_xSize = key.m_ySize = key.m_zSize = 256;
-								
+
 								if ( !(aspect&4) )		// big or little ?
 								{
 									// little
@@ -5641,7 +5641,7 @@ void GLMTester::Test0( void )
 									key.m_ySize >>= 2;
 									key.m_zSize >>= 2;
 								}
-								
+
 								if ( key.m_texGLTarget != GL_TEXTURE_CUBE_MAP )
 								{
 									if ( !(aspect & 2) )	// square or rect?
@@ -5651,7 +5651,7 @@ void GLMTester::Test0( void )
 										key.m_zSize >>= 2;
 									}
 								}
-								
+
 								if ( !(aspect&1) )		// POT or NPOT?
 								{
 									// NPOT
@@ -5659,7 +5659,7 @@ void GLMTester::Test0( void )
 									key.m_ySize += 56;
 									key.m_zSize += 56;
 								}
-								
+
 								// 2D, 3D, cube map ?
 								if (key.m_texGLTarget!=GL_TEXTURE_3D)
 								{
@@ -5679,7 +5679,7 @@ void GLMTester::Test0( void )
 								CGLMTex *newtex = ctx->NewTex( &key );
 								CheckGLError( "tex create test");
 								InternalError( newtex==NULL, "tex create test" );
-								
+
 								testTextures.AddToTail( newtex );
 								printf("\n[%5d] created tex %s",innerindex,newtex->m_layout->m_layoutSummary );
 							}
@@ -5694,29 +5694,29 @@ void GLMTester::Test0( void )
 									for( int mip=0; mip <ptex->m_layout->m_mipCount; mip++)
 									{
 										GLMTexLockParams lockreq;
-										
+
 										lockreq.m_tex = ptex;
 										lockreq.m_face = face;
 										lockreq.m_mip = mip;
 
 										GLMTexLayoutSlice *slice = &ptex->m_layout->m_slices[ ptex->CalcSliceIndex( face, mip ) ];
-										
+
 										lockreq.m_region.xmin = lockreq.m_region.ymin = lockreq.m_region.zmin = 0;
 										lockreq.m_region.xmax = slice->m_xSize;
 										lockreq.m_region.ymax = slice->m_ySize;
 										lockreq.m_region.zmax = slice->m_zSize;
-										
+
 										char	*lockAddress;
 										int		yStride;
 										int		zStride;
-										
+
 										ptex->Lock( &lockreq, &lockAddress, &yStride, &zStride );
 										CheckGLError( "tex lock test");
 										InternalError( lockAddress==NULL, "null lock address");
 
 										// write some texels of this flavor:
 										//	red 75%  green 40%  blue 15%  alpha 80%
-										
+
 										GLMGenTexelParams gtp;
 
 										gtp.m_format			=	ptex->m_layout->m_format->m_d3dFormat;
@@ -5729,7 +5729,7 @@ void GLMTester::Test0( void )
 										gtp.a = 0.80;
 
 										GLMGenTexels( &gtp );
-										
+
 										InternalError( gtp.m_bytesWritten != gtp.m_byteCountLimit, "byte count mismatch from GLMGenTexels" );
 									}
 								}
@@ -5739,7 +5739,7 @@ void GLMTester::Test0( void )
 									for( int mip=0; mip <ptex->m_layout->m_mipCount; mip++)
 									{
 										GLMTexLockParams unlockreq;
-										
+
 										unlockreq.m_tex = ptex;
 										unlockreq.m_face = face;
 										unlockreq.m_mip = mip;
@@ -5751,7 +5751,7 @@ void GLMTester::Test0( void )
 										//char	*lockAddress;
 										//int		yStride;
 										//int		zStride;
-										
+
 										ptex->Unlock( &unlockreq );
 
 										CheckGLError( "tex unlock test");
@@ -5765,7 +5765,7 @@ void GLMTester::Test0( void )
 							{
 								CGLMTex	*dtex = testTextures[innerindex];
 
-								printf("\n[%5d] deleting tex %s",innerindex, dtex->m_layout->m_layoutSummary );								
+								printf("\n[%5d] deleting tex %s",innerindex, dtex->m_layout->m_layoutSummary );
 								ctx->DelTex( dtex );
 								CheckGLError( "tex delete test");
 							}
@@ -5783,7 +5783,7 @@ void GLMTester::Test0( void )
 void GLMTester::Test1( void )
 {
 	// FBO exercises
-	GLMContext *ctx = m_params.m_ctx;	
+	GLMContext *ctx = m_params.m_ctx;
 	ctx->MakeCurrent();
 
 	// FBO color format loop
@@ -5801,12 +5801,12 @@ void GLMTester::Test1( void )
 				for( GLenum *formPtr = forms; *formPtr != ((GLenum)-1); formPtr++ )
 				{
 					//=============================================== make an FBO
-					CGLMFBO *fbo = ctx->NewFBO();					
+					CGLMFBO *fbo = ctx->NewFBO();
 
 					//=============================================== make a color texture
 					GLMTexLayoutKey colorkey;
 					memset( &colorkey, 0, sizeof(colorkey) );
-					
+
 					switch(*formPtr)
 					{
 						case GL_TEXTURE_2D:
@@ -5815,14 +5815,14 @@ void GLMTester::Test1( void )
 							colorkey.m_ySize =	600;
 							colorkey.m_zSize =	1;
 						break;
-						
+
 						case GL_TEXTURE_3D:
 							colorkey.m_texGLTarget = GL_TEXTURE_3D;
 							colorkey.m_xSize =	800;
 							colorkey.m_ySize =	600;
 							colorkey.m_zSize =	32;
 						break;
-						
+
 						case GL_TEXTURE_CUBE_MAP:
 							colorkey.m_texGLTarget = GL_TEXTURE_CUBE_MAP;
 							colorkey.m_xSize =	800;
@@ -5846,25 +5846,25 @@ void GLMTester::Test1( void )
 					//=============================================== attach color
 					GLMFBOTexAttachParams	colorParams;
 					memset( &colorParams, 0, sizeof(colorParams) );
-					
+
 					colorParams.m_tex	= colorTex;
 					colorParams.m_face	= (colorkey.m_texGLTarget == GL_TEXTURE_CUBE_MAP) ? 2 : 0;	// just steer to an alternate face as a test
 
 					colorParams.m_mip	= (colorkey.m_texFlags & kGLMTexMipped) ? 2 : 0;	// pick non-base mip slice
 
 					colorParams.m_zslice= (colorkey.m_texGLTarget == GL_TEXTURE_3D) ? 3 : 0;		// just steer to an alternate slice as a test;
-					
+
 					fbo->TexAttach( &colorParams, kAttColor0 );
-					
+
 
 					//=============================================== optional depth tex
 					CGLMTex *depthTex = NULL;
-					
+
 					if (*depthFmtPtr > 0 )
 					{
 						GLMTexLayoutKey depthkey;
 						memset( &depthkey, 0, sizeof(depthkey) );
-						
+
 						depthkey.m_texGLTarget		= GL_TEXTURE_2D;
 						depthkey.m_xSize			= colorkey.m_xSize >> colorParams.m_mip;	// scale depth tex to match color tex
 						depthkey.m_ySize			= colorkey.m_ySize >> colorParams.m_mip;
@@ -5883,12 +5883,12 @@ void GLMTester::Test1( void )
 						//=============================================== attach depth
 						GLMFBOTexAttachParams	depthParams;
 						memset( &depthParams, 0, sizeof(depthParams) );
-						
+
 						depthParams.m_tex	= depthTex;
 						depthParams.m_face	= 0;
 						depthParams.m_mip	= 0;
 						depthParams.m_zslice= 0;
-						
+
 						EGLMFBOAttachment depthAttachIndex = (depthkey.m_texFlags & kGLMTexIsStencil) ? kAttDepthStencil : kAttDepth;
 						fbo->TexAttach( &depthParams, depthAttachIndex );
 					}
@@ -5897,18 +5897,18 @@ void GLMTester::Test1( void )
 						colorTex->m_layout->m_layoutSummary,
 						depthTex ? depthTex->m_layout->m_layoutSummary : "none"
 						);
-					
+
 					// see if FBO is happy
 					bool ready = fbo->IsReady();
 
 					printf("\n   -> %s\n", ready ? "pass" : "fail" );
-					
+
 					// unbind
 					ctx->BindFBOToCtx( NULL, GL_FRAMEBUFFER_EXT );
-					
+
 					// del FBO
 					ctx->DelFBO(fbo);
-					
+
 					// del texes
 					ctx->DelTex( colorTex );
 					if (depthTex) ctx->DelTex( depthTex );
@@ -5923,7 +5923,7 @@ void GLMTester::Test1( void )
 static int selftest2_seed = 0;	// inc this every run to force main thread to teardown/reset display view
 void GLMTester::Test2( void )
 {
-	GLMContext *ctx = m_params.m_ctx;	
+	GLMContext *ctx = m_params.m_ctx;
 	ctx->MakeCurrent();
 
 	StdSetup();	// default test case drawing setup
@@ -5932,7 +5932,7 @@ void GLMTester::Test2( void )
 	for( int i=0; i<m_params.m_frameCount; i++)
 	{
 		// ramping shades of blue...
-		GLfloat clear_color[4] = { 0.50f, 0.05f, ((float)(i%100)) / 100.0f, 1.0f };		
+		GLfloat clear_color[4] = { 0.50f, 0.05f, ((float)(i%100)) / 100.0f, 1.0f };
 		gGL->glClearColor(clear_color[0], clear_color[1], clear_color[2], clear_color[3]);
 		CheckGLError("test2 clear color");
 
@@ -5944,15 +5944,15 @@ void GLMTester::Test2( void )
 		{
 			char text[256];
 			sprintf(text, "The quick brown fox jumped over the lazy dog %d times", i );
-			
+
 			float theta = ( (i*0.10f) + (j * 6.28f) ) / 16.0f;
-			
+
 			float posx = cos(theta) * 0.5;
 			float posy = sin(theta) * 0.5;
-			
+
 			float charwidth = 6.0 * (2.0 / 1024.0);
 			float charheight = 11.0 * (2.0 / 768.0);
-			
+
 			ctx->DrawDebugText( posx, posy, 0.0f, charwidth, charheight, text );
 		}
 		gGL->glFinish();
@@ -5960,15 +5960,15 @@ void GLMTester::Test2( void )
 
 		Present( selftest2_seed );
 	}
-	
+
 	StdCleanup();
-	
+
 	selftest2_seed++;
 }
 
 // #####################################################################################################################
 
-static char g_testVertexProgram01 [] = 
+static char g_testVertexProgram01 [] =
 {
 	"!!ARBvp1.0  \n"
 	"TEMP vertexClip;  \n"
@@ -5998,7 +5998,7 @@ static char g_testFragmentProgram01 [] =
 
 // generic attrib versions..
 
-static char g_testVertexProgram01_GA [] = 
+static char g_testVertexProgram01_GA [] =
 {
 	"!!ARBvp1.0  \n"
 	"TEMP vertexClip;  \n"
@@ -6032,8 +6032,8 @@ void GLMTester::Test3( void )
 {
 	/**************************
 	XXXXXXXXXXXXXXXXXXXXXX	stale test code until we revise the program interface
-		
-	GLMContext *ctx = m_params.m_ctx;	
+
+	GLMContext *ctx = m_params.m_ctx;
 	ctx->MakeCurrent();
 
 	StdSetup();	// default test case drawing setup
@@ -6041,15 +6041,15 @@ void GLMTester::Test3( void )
 	// make vertex&pixel shader
 	CGLMProgram *vprog = ctx->NewProgram( kGLMVertexProgram, g_testVertexProgram01_GA );
 	ctx->BindProgramToCtx( kGLMVertexProgram, vprog );
-	
+
 	CGLMProgram *fprog = ctx->NewProgram( kGLMFragmentProgram, g_testFragmentProgram01_GA );
 	ctx->BindProgramToCtx( kGLMFragmentProgram, fprog );
-	
+
 	// draw stuff (loop...)
 	for( int i=0; i<m_params.m_frameCount; i++)
 	{
 		// ramping shades of blue...
-		GLfloat clear_color[4] = { 0.50f, 0.05f, ((float)(i%100)) / 100.0, 1.0f };		
+		GLfloat clear_color[4] = { 0.50f, 0.05f, ((float)(i%100)) / 100.0, 1.0f };
 		glClearColor(clear_color[0], clear_color[1], clear_color[2], clear_color[3]);
 		CheckGLError("test3 clear color");
 
@@ -6061,15 +6061,15 @@ void GLMTester::Test3( void )
 		{
 			char text[256];
 			sprintf(text, "This here is running through a trivial vertex shader");
-			
+
 			float theta = ( (i*0.10f) + (j * 6.28f) ) / 16.0f;
-			
+
 			float posx = cos(theta) * 0.5;
 			float posy = sin(theta) * 0.5;
-			
+
 			float charwidth = 6.0 * (2.0 / 800.0);
 			float charheight = 11.0 * (2.0 / 640.0);
-			
+
 			ctx->DrawDebugText( posx, posy, 0.0f, charwidth, charheight, text );
 		}
 		glFinish();
@@ -6077,7 +6077,7 @@ void GLMTester::Test3( void )
 
 		Present( 3333 );
 	}
-	
+
 	StdCleanup();
 	*****************************/
 }

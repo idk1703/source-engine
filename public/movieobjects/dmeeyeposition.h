@@ -28,7 +28,7 @@ $model heavy "parts/dmx/heavy_reference_lo.dmx"{
 		eyeball lefteye  "bip_head"  1.425952 83.274592 1.41954 "eyeball_l" 1.80
 		356  1 "pupil_l" 0.6
 
-		localvar %dummy_eyelid_flex 
+		localvar %dummy_eyelid_flex
 
 		flexcontroller eyes range -30 30 eyes_updown
 		flexcontroller eyes range -30 30 eyes_rightleft
@@ -43,11 +43,11 @@ $model eyeball
 
 (X) (Y) (Z) World location of the center of the ball of the eye.
 
-(material name) Material name to use when searching for vertices to consider as the “white” of the eye (used in dynamically texture mapping the iris and cornea onto the eye).
+(material name) Material name to use when searching for vertices to consider as the ï¿½whiteï¿½ of the eye (used in dynamically texture mapping the iris and cornea onto the eye).
 
 (diameter) Diameter of the ball of the eye
 
-(angle) Default yaw offset from “forward” for iris. Humans are typically 2-4 degrees walleyed. Not setting this correctly will result in your either characters appearing cross-eyed, or if you’ve compensated by misplacing the ball of the eye, them not tracking side to side.
+(angle) Default yaw offset from ï¿½forwardï¿½ for iris. Humans are typically 2-4 degrees walleyed. Not setting this correctly will result in your either characters appearing cross-eyed, or if youï¿½ve compensated by misplacing the ball of the eye, them not tracking side to side.
 
 (iris material) no longer used but still in the option list.
 

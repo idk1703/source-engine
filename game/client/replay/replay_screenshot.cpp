@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -54,7 +54,7 @@ CReplayScreenshotTaker::CReplayScreenshotTaker( IViewRender *pViewRender, CViewS
 	// Calculate sizes
 	int nUnpaddedSize = 3 * m_aUnpaddedDims[ 0 ] * m_aUnpaddedDims[ 1 ];
 	int nPaddedSize = 3 * m_aPaddedDims[ 0 ] * m_aPaddedDims[ 1 ];
-	
+
 	// Allocate for padded & unpadded pixel data
 	m_pUnpaddedPixels = new uint8[ nUnpaddedSize ];
 	m_pPaddedPixels = new uint8[ nPaddedSize ];
@@ -114,7 +114,7 @@ void CReplayScreenshotTaker::TakeScreenshot( WriteReplayScreenshotParams_t &para
 	CMatRenderContextPtr pRenderContext( materials );
 	pRenderContext->MatrixMode( MATERIAL_PROJECTION );
 	pRenderContext->PushMatrix();
-	
+
 	pRenderContext->MatrixMode( MATERIAL_VIEW );
 	pRenderContext->PushMatrix();
 
@@ -144,7 +144,7 @@ void CReplayScreenshotTaker::TakeScreenshot( WriteReplayScreenshotParams_t &para
 	}
 
 	timer.Start();
-	
+
 		// draw out the scene - don't draw the HUD or the viewmodel
 		m_pViewRender->RenderView( viewSetup, VIEW_CLEAR_DEPTH | VIEW_CLEAR_COLOR, 0 );
 
@@ -170,7 +170,7 @@ void CReplayScreenshotTaker::TakeScreenshot( WriteReplayScreenshotParams_t &para
 	// Allocate
 	unsigned char *pUnpaddedImage = m_pUnpaddedPixels;
 	unsigned char *pPaddedImage = m_pPaddedPixels;
-	
+
 	timer.Start();
 		// Copy over each row individually
 		for ( int nRow = 0; nRow < height; ++nRow )
@@ -205,7 +205,7 @@ void CReplayScreenshotTaker::TakeScreenshot( WriteReplayScreenshotParams_t &para
 		bWriteResult = m_pVTFTexture->Serialize( *m_pBuffer );
 	timer.End();
 	if ( bDbg ) Warning( "Screenshot VTF->Serialize(): %.4f s\n", timer.GetDuration().GetSeconds() );
-	
+
 	if ( !bWriteResult )
 	{
 		Warning( "Couldn't write Replay screenshot.\n" );
@@ -225,10 +225,10 @@ void CReplayScreenshotTaker::TakeScreenshot( WriteReplayScreenshotParams_t &para
 
 	// restore our previous state
 	pRenderContext->PopRenderTargetAndViewport();
-	
+
 	pRenderContext->MatrixMode( MATERIAL_PROJECTION );
 	pRenderContext->PopMatrix();
-	
+
 	pRenderContext->MatrixMode( MATERIAL_VIEW );
 	pRenderContext->PopMatrix();
 

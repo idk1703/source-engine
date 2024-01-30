@@ -1,17 +1,17 @@
 /*
-     File:       DriverServices.h
- 
-     Contains:   Driver Services Interfaces.
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1985-2001 by Apple Computer, Inc., all rights reserved
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       DriverServices.h
+
+		Contains:   Driver Services Interfaces.
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1985-2001 by Apple Computer, Inc., all rights reserved
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __DRIVERSERVICES__
 #define __DRIVERSERVICES__
@@ -60,11 +60,11 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=power
+		#pragma options align=power
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+		#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+		#pragma pack(2)
 #endif
 
 /******************************************************************
@@ -80,14 +80,14 @@ typedef struct OpaqueTimerID*           TimerID;
 /* Tasking*/
 typedef UInt32                          ExecutionLevel;
 enum {
-  kTaskLevel                    = 0,
-  kSoftwareInterruptLevel       = 1,
-  kAcceptFunctionLevel          = 2,
-  kKernelLevel                  = 3,
-  kSIHAcceptFunctionLevel       = 4,
-  kSecondaryInterruptLevel      = 5,
-  kHardwareInterruptLevel       = 6,
-  kMPTaskLevel                  = 7
+	kTaskLevel                    = 0,
+	kSoftwareInterruptLevel       = 1,
+	kAcceptFunctionLevel          = 2,
+	kKernelLevel                  = 3,
+	kSIHAcceptFunctionLevel       = 4,
+	kSecondaryInterruptLevel      = 5,
+	kHardwareInterruptLevel       = 6,
+	kMPTaskLevel                  = 7
 };
 
 typedef CALLBACK_API_C( void , SoftwareInterruptHandler )(void *p1, void *p2);
@@ -95,43 +95,43 @@ typedef CALLBACK_API_C( OSStatus , SecondaryInterruptHandler2 )(void *p1, void *
 #define kCurrentAddressSpaceID ((AddressSpaceID) -1)
 /* Memory System basics*/
 struct LogicalAddressRange {
-  LogicalAddress      address;
-  ByteCount           count;
+	LogicalAddress      address;
+	ByteCount           count;
 };
 typedef struct LogicalAddressRange      LogicalAddressRange;
 typedef LogicalAddressRange *           LogicalAddressRangePtr;
 struct PhysicalAddressRange {
-  PhysicalAddress     address;
-  ByteCount           count;
+	PhysicalAddress     address;
+	ByteCount           count;
 };
 typedef struct PhysicalAddressRange     PhysicalAddressRange;
 typedef PhysicalAddressRange *          PhysicalAddressRangePtr;
 /* For PrepareMemoryForIO and CheckpointIO*/
 typedef OptionBits                      IOPreparationOptions;
 enum {
-  kIOMultipleRanges             = 0x00000001,
-  kIOLogicalRanges              = 0x00000002,
-  kIOMinimalLogicalMapping      = 0x00000004,
-  kIOShareMappingTables         = 0x00000008,
-  kIOIsInput                    = 0x00000010,
-  kIOIsOutput                   = 0x00000020,
-  kIOCoherentDataPath           = 0x00000040,
-  kIOTransferIsLogical          = 0x00000080,
-  kIOClientIsUserMode           = 0x00000080
+	kIOMultipleRanges             = 0x00000001,
+	kIOLogicalRanges              = 0x00000002,
+	kIOMinimalLogicalMapping      = 0x00000004,
+	kIOShareMappingTables         = 0x00000008,
+	kIOIsInput                    = 0x00000010,
+	kIOIsOutput                   = 0x00000020,
+	kIOCoherentDataPath           = 0x00000040,
+	kIOTransferIsLogical          = 0x00000080,
+	kIOClientIsUserMode           = 0x00000080
 };
 
 typedef OptionBits                      IOPreparationState;
 enum {
-  kIOStateDone                  = 0x00000001
+	kIOStateDone                  = 0x00000001
 };
 
 enum {
-  kInvalidPageAddress           = (-1)
+	kInvalidPageAddress           = (-1)
 };
 
 struct AddressRange {
-  void *              base;
-  ByteCount           length;
+	void *              base;
+	ByteCount           length;
 };
 typedef struct AddressRange             AddressRange;
 /* C's treatment of arrays and array pointers is atypical*/
@@ -140,78 +140,78 @@ typedef LogicalAddress *                LogicalMappingTablePtr;
 typedef PhysicalAddress *               PhysicalMappingTablePtr;
 typedef AddressRange *                  AddressRangeTablePtr;
 struct MultipleAddressRange {
-  ItemCount           entryCount;
-  AddressRangeTablePtr  rangeTable;
+	ItemCount           entryCount;
+	AddressRangeTablePtr  rangeTable;
 };
 typedef struct MultipleAddressRange     MultipleAddressRange;
 /*
-   Separate C definition so that union has a name.  A future version of the interfacer
-   tool will allow a name (that gets thrown out in Pascal and Asm).
+	Separate C definition so that union has a name.  A future version of the interfacer
+	tool will allow a name (that gets thrown out in Pascal and Asm).
 */
 struct IOPreparationTable {
-  IOPreparationOptions  options;
-  IOPreparationState  state;
-  IOPreparationID     preparationID;
-  AddressSpaceID      addressSpace;
-  ByteCount           granularity;
-  ByteCount           firstPrepared;
-  ByteCount           lengthPrepared;
-  ItemCount           mappingEntryCount;
-  LogicalMappingTablePtr  logicalMapping;
-  PhysicalMappingTablePtr  physicalMapping;
-  union {
-    AddressRange        range;
-    MultipleAddressRange  multipleRanges;
-  }                       rangeInfo;
+	IOPreparationOptions  options;
+	IOPreparationState  state;
+	IOPreparationID     preparationID;
+	AddressSpaceID      addressSpace;
+	ByteCount           granularity;
+	ByteCount           firstPrepared;
+	ByteCount           lengthPrepared;
+	ItemCount           mappingEntryCount;
+	LogicalMappingTablePtr  logicalMapping;
+	PhysicalMappingTablePtr  physicalMapping;
+	union {
+		AddressRange        range;
+		MultipleAddressRange  multipleRanges;
+	}                       rangeInfo;
 };
 typedef struct IOPreparationTable       IOPreparationTable;
 
 typedef OptionBits                      IOCheckpointOptions;
 enum {
-  kNextIOIsInput                = 0x00000001,
-  kNextIOIsOutput               = 0x00000002,
-  kMoreIOTransfers              = 0x00000004
+	kNextIOIsInput                = 0x00000001,
+	kNextIOIsOutput               = 0x00000002,
+	kMoreIOTransfers              = 0x00000004
 };
 
 /* For SetProcessorCacheMode*/
 
 typedef UInt32                          ProcessorCacheMode;
 enum {
-  kProcessorCacheModeDefault    = 0,
-  kProcessorCacheModeInhibited  = 1,
-  kProcessorCacheModeWriteThrough = 2,
-  kProcessorCacheModeCopyBack   = 3
+	kProcessorCacheModeDefault    = 0,
+	kProcessorCacheModeInhibited  = 1,
+	kProcessorCacheModeWriteThrough = 2,
+	kProcessorCacheModeCopyBack   = 3
 };
 
 /*
-   For GetPageInformation
-   (Note: if kPageInformationVersion fails, try 0 -- old versions of DSL defined  kPageInformationVersion as 0)
+	For GetPageInformation
+	(Note: if kPageInformationVersion fails, try 0 -- old versions of DSL defined  kPageInformationVersion as 0)
 */
 
 enum {
-  kPageInformationVersion       = 1
+	kPageInformationVersion       = 1
 };
 
 typedef UInt32                          PageStateInformation;
 enum {
-  kPageIsProtected              = 0x00000001,
-  kPageIsProtectedPrivileged    = 0x00000002,
-  kPageIsModified               = 0x00000004,
-  kPageIsReferenced             = 0x00000008,
-  kPageIsLockedResident         = 0x00000010, /* held and locked resident*/
-  kPageIsInMemory               = 0x00000020,
-  kPageIsShared                 = 0x00000040,
-  kPageIsWriteThroughCached     = 0x00000080,
-  kPageIsCopyBackCached         = 0x00000100,
-  kPageIsHeldResident           = 0x00000200, /* held resident - use kPageIsLockedResident to check for locked state*/
-  kPageIsLocked                 = kPageIsLockedResident, /* Deprecated*/
-  kPageIsResident               = kPageIsInMemory /* Deprecated*/
+	kPageIsProtected              = 0x00000001,
+	kPageIsProtectedPrivileged    = 0x00000002,
+	kPageIsModified               = 0x00000004,
+	kPageIsReferenced             = 0x00000008,
+	kPageIsLockedResident         = 0x00000010, /* held and locked resident*/
+	kPageIsInMemory               = 0x00000020,
+	kPageIsShared                 = 0x00000040,
+	kPageIsWriteThroughCached     = 0x00000080,
+	kPageIsCopyBackCached         = 0x00000100,
+	kPageIsHeldResident           = 0x00000200, /* held resident - use kPageIsLockedResident to check for locked state*/
+	kPageIsLocked                 = kPageIsLockedResident, /* Deprecated*/
+	kPageIsResident               = kPageIsInMemory /* Deprecated*/
 };
 
 struct PageInformation {
-  AreaID              area;
-  ItemCount           count;
-  PageStateInformation  information[1];
+	AreaID              area;
+	ItemCount           count;
+	PageStateInformation  information[1];
 };
 typedef struct PageInformation          PageInformation;
 typedef PageInformation *               PageInformationPtr;
@@ -220,7 +220,7 @@ typedef PageInformation *               PageInformationPtr;
 #if CALL_NOT_IN_CARBON
 /*
  *  CurrentExecutionLevel()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -232,7 +232,7 @@ CurrentExecutionLevel(void);
 
 /*
  *  CurrentTaskID()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -244,7 +244,7 @@ CurrentTaskID(void);
 
 /*
  *  DelayFor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -256,7 +256,7 @@ DelayFor(Duration delayDuration);
 
 /*
  *  InPrivilegedMode()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -270,7 +270,7 @@ InPrivilegedMode(void);
 /*  Software Interrupts  */
 /*
  *  CreateSoftwareInterrupt()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -278,17 +278,17 @@ InPrivilegedMode(void);
  */
 EXTERN_API_C( OSStatus )
 CreateSoftwareInterrupt(
-  SoftwareInterruptHandler   handler,
-  TaskID                     task,
-  void *                     p1,
-  Boolean                    persistent,
-  SoftwareInterruptID *      theSoftwareInterrupt);
+	SoftwareInterruptHandler   handler,
+	TaskID                     task,
+	void *                     p1,
+	Boolean                    persistent,
+	SoftwareInterruptID *      theSoftwareInterrupt);
 
 
 
 /*
  *  SendSoftwareInterrupt()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -296,13 +296,13 @@ CreateSoftwareInterrupt(
  */
 EXTERN_API_C( OSStatus )
 SendSoftwareInterrupt(
-  SoftwareInterruptID   theSoftwareInterrupt,
-  void *                p2);
+	SoftwareInterruptID   theSoftwareInterrupt,
+	void *                p2);
 
 
 /*
  *  DeleteSoftwareInterrupt()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -319,7 +319,7 @@ DeleteSoftwareInterrupt(SoftwareInterruptID theSoftwareInterrupt);
 #if CALL_NOT_IN_CARBON
 /*
  *  CallSecondaryInterruptHandler2()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -327,15 +327,15 @@ DeleteSoftwareInterrupt(SoftwareInterruptID theSoftwareInterrupt);
  */
 EXTERN_API_C( OSStatus )
 CallSecondaryInterruptHandler2(
-  SecondaryInterruptHandler2   theHandler,
-  ExceptionHandler             exceptionHandler,
-  void *                       p1,
-  void *                       p2);
+	SecondaryInterruptHandler2   theHandler,
+	ExceptionHandler             exceptionHandler,
+	void *                       p1,
+	void *                       p2);
 
 
 /*
  *  QueueSecondaryInterruptHandler()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -343,10 +343,10 @@ CallSecondaryInterruptHandler2(
  */
 EXTERN_API_C( OSStatus )
 QueueSecondaryInterruptHandler(
-  SecondaryInterruptHandler2   theHandler,
-  ExceptionHandler             exceptionHandler,
-  void *                       p1,
-  void *                       p2);
+	SecondaryInterruptHandler2   theHandler,
+	ExceptionHandler             exceptionHandler,
+	void *                       p1,
+	void *                       p2);
 
 
 #endif  /* CALL_NOT_IN_CARBON */
@@ -357,7 +357,7 @@ QueueSecondaryInterruptHandler(
 #if CALL_NOT_IN_CARBON
 /*
  *  SetInterruptTimer()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -365,15 +365,15 @@ QueueSecondaryInterruptHandler(
  */
 EXTERN_API_C( OSStatus )
 SetInterruptTimer(
-  const AbsoluteTime *         expirationTime,
-  SecondaryInterruptHandler2   handler,
-  void *                       p1,
-  TimerID *                    theTimer);
+	const AbsoluteTime *         expirationTime,
+	SecondaryInterruptHandler2   handler,
+	void *                       p1,
+	TimerID *                    theTimer);
 
 
 /*
  *  SetPersistentTimer()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -381,15 +381,15 @@ SetInterruptTimer(
  */
 EXTERN_API_C( OSStatus )
 SetPersistentTimer(
-  Duration                     frequency,
-  SecondaryInterruptHandler2   theHandler,
-  void *                       p1,
-  TimerID *                    theTimer);
+	Duration                     frequency,
+	SecondaryInterruptHandler2   theHandler,
+	void *                       p1,
+	TimerID *                    theTimer);
 
 
 /*
  *  CancelTimer()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -397,15 +397,15 @@ SetPersistentTimer(
  */
 EXTERN_API_C( OSStatus )
 CancelTimer(
-  TimerID         theTimer,
-  AbsoluteTime *  timeRemaining);
+	TimerID         theTimer,
+	AbsoluteTime *  timeRemaining);
 
 
 
 /*  I/O related Operations  */
 /*
  *  PrepareMemoryForIO()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -417,7 +417,7 @@ PrepareMemoryForIO(IOPreparationTable * theIOPreparationTable);
 
 /*
  *  CheckpointIO()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -425,15 +425,15 @@ PrepareMemoryForIO(IOPreparationTable * theIOPreparationTable);
  */
 EXTERN_API_C( OSStatus )
 CheckpointIO(
-  IOPreparationID       theIOPreparation,
-  IOCheckpointOptions   options);
+	IOPreparationID       theIOPreparation,
+	IOCheckpointOptions   options);
 
 
 
 /*  Memory Operations  */
 /*
  *  GetPageInformation()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -441,17 +441,17 @@ CheckpointIO(
  */
 EXTERN_API_C( OSStatus )
 GetPageInformation(
-  AddressSpaceID        addressSpace,
-  ConstLogicalAddress   base,
-  ByteCount             length,
-  PBVersion             version,
-  PageInformation *     thePageInfo);
+	AddressSpaceID        addressSpace,
+	ConstLogicalAddress   base,
+	ByteCount             length,
+	PBVersion             version,
+	PageInformation *     thePageInfo);
 
 
 /*  Processor Cache Related  */
 /*
  *  SetProcessorCacheMode()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -459,10 +459,10 @@ GetPageInformation(
  */
 EXTERN_API_C( OSStatus )
 SetProcessorCacheMode(
-  AddressSpaceID        addressSpace,
-  ConstLogicalAddress   base,
-  ByteCount             length,
-  ProcessorCacheMode    cacheMode);
+	AddressSpaceID        addressSpace,
+	ConstLogicalAddress   base,
+	ByteCount             length,
+	ProcessorCacheMode    cacheMode);
 
 
 /******************************************************************
@@ -475,20 +475,20 @@ SetProcessorCacheMode(
 
 typedef LogicalAddress *                DeviceLogicalAddressPtr;
 enum {
-  durationMicrosecond           = -1L,  /* Microseconds are negative*/
-  durationMillisecond           = 1L,   /* Milliseconds are positive*/
-  durationSecond                = 1000L, /* 1000 * durationMillisecond*/
-  durationMinute                = 60000L, /* 60 * durationSecond,*/
-  durationHour                  = 3600000L, /* 60 * durationMinute,*/
-  durationDay                   = 86400000L, /* 24 * durationHour,*/
-  durationNoWait                = 0L,   /* don't block*/
-  durationForever               = 0x7FFFFFFF /* no time limit*/
+	durationMicrosecond           = -1L,  /* Microseconds are negative*/
+	durationMillisecond           = 1L,   /* Milliseconds are positive*/
+	durationSecond                = 1000L, /* 1000 * durationMillisecond*/
+	durationMinute                = 60000L, /* 60 * durationSecond,*/
+	durationHour                  = 3600000L, /* 60 * durationMinute,*/
+	durationDay                   = 86400000L, /* 24 * durationHour,*/
+	durationNoWait                = 0L,   /* don't block*/
+	durationForever               = 0x7FFFFFFF /* no time limit*/
 };
 
 enum {
-  k8BitAccess                   = 0,    /* access as 8 bit*/
-  k16BitAccess                  = 1,    /* access as 16 bit*/
-  k32BitAccess                  = 2     /* access as 32 bit*/
+	k8BitAccess                   = 0,    /* access as 8 bit*/
+	k16BitAccess                  = 1,    /* access as 16 bit*/
+	k32BitAccess                  = 2     /* access as 32 bit*/
 };
 
 typedef UnsignedWide                    Nanoseconds;
@@ -496,7 +496,7 @@ typedef UnsignedWide                    Nanoseconds;
 #if CALL_NOT_IN_CARBON
 /*
  *  IOCommandIsComplete()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -504,13 +504,13 @@ typedef UnsignedWide                    Nanoseconds;
  */
 EXTERN_API_C( OSErr )
 IOCommandIsComplete(
-  IOCommandID   theID,
-  OSErr         theResult);
+	IOCommandID   theID,
+	OSErr         theResult);
 
 
 /*
  *  GetIOCommandInfo()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -518,15 +518,15 @@ IOCommandIsComplete(
  */
 EXTERN_API_C( OSErr )
 GetIOCommandInfo(
-  IOCommandID          theID,
-  IOCommandContents *  theContents,
-  IOCommandCode *      theCommand,
-  IOCommandKind *      theKind);
+	IOCommandID          theID,
+	IOCommandContents *  theContents,
+	IOCommandCode *      theCommand,
+	IOCommandKind *      theKind);
 
 
 /*
  *  UpdateDeviceActivity()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -538,7 +538,7 @@ UpdateDeviceActivity(RegEntryID * deviceEntry);
 
 /*
  *  BlockCopy()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -546,14 +546,14 @@ UpdateDeviceActivity(RegEntryID * deviceEntry);
  */
 EXTERN_API_C( void )
 BlockCopy(
-  const void *  srcPtr,
-  void *        destPtr,
-  Size          byteCount);
+	const void *  srcPtr,
+	void *        destPtr,
+	Size          byteCount);
 
 
 /*
  *  PoolAllocateResident()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -561,13 +561,13 @@ BlockCopy(
  */
 EXTERN_API_C( LogicalAddress )
 PoolAllocateResident(
-  ByteCount   byteSize,
-  Boolean     clear);
+	ByteCount   byteSize,
+	Boolean     clear);
 
 
 /*
  *  PoolDeallocate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -579,7 +579,7 @@ PoolDeallocate(LogicalAddress address);
 
 /*
  *  GetLogicalPageSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -591,7 +591,7 @@ GetLogicalPageSize(void);
 
 /*
  *  GetDataCacheLineSize()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -603,7 +603,7 @@ GetDataCacheLineSize(void);
 
 /*
  *  FlushProcessorCache()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -611,14 +611,14 @@ GetDataCacheLineSize(void);
  */
 EXTERN_API_C( OSStatus )
 FlushProcessorCache(
-  AddressSpaceID   spaceID,
-  LogicalAddress   base,
-  ByteCount        length);
+	AddressSpaceID   spaceID,
+	LogicalAddress   base,
+	ByteCount        length);
 
 
 /*
  *  MemAllocatePhysicallyContiguous()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -626,13 +626,13 @@ FlushProcessorCache(
  */
 EXTERN_API_C( LogicalAddress )
 MemAllocatePhysicallyContiguous(
-  ByteCount   byteSize,
-  Boolean     clear);
+	ByteCount   byteSize,
+	Boolean     clear);
 
 
 /*
  *  MemDeallocatePhysicallyContiguous()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -647,7 +647,7 @@ MemDeallocatePhysicallyContiguous(LogicalAddress address);
 
 /*
  *  UpTime()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.6 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -660,7 +660,7 @@ UpTime(void);
 #if CALL_NOT_IN_CARBON
 /*
  *  GetTimeBaseInfo()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.6 and later
  *    CarbonLib:        not available
@@ -668,11 +668,11 @@ UpTime(void);
  */
 EXTERN_API_C( void )
 GetTimeBaseInfo(
-  UInt32 *  minAbsoluteTimeDelta,
-  UInt32 *  theAbsoluteTimeToNanosecondNumerator,
-  UInt32 *  theAbsoluteTimeToNanosecondDenominator,
-  UInt32 *  theProcessorToAbsoluteTimeNumerator,
-  UInt32 *  theProcessorToAbsoluteTimeDenominator);
+	UInt32 *  minAbsoluteTimeDelta,
+	UInt32 *  theAbsoluteTimeToNanosecondNumerator,
+	UInt32 *  theAbsoluteTimeToNanosecondDenominator,
+	UInt32 *  theProcessorToAbsoluteTimeNumerator,
+	UInt32 *  theProcessorToAbsoluteTimeDenominator);
 
 
 
@@ -680,7 +680,7 @@ GetTimeBaseInfo(
 
 /*
  *  AbsoluteToNanoseconds()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.6 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -692,7 +692,7 @@ AbsoluteToNanoseconds(AbsoluteTime absoluteTime);
 
 /*
  *  AbsoluteToDuration()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.6 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -704,7 +704,7 @@ AbsoluteToDuration(AbsoluteTime absoluteTime);
 
 /*
  *  NanosecondsToAbsolute()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.6 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -716,7 +716,7 @@ NanosecondsToAbsolute(Nanoseconds nanoseconds);
 
 /*
  *  DurationToAbsolute()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.6 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -728,7 +728,7 @@ DurationToAbsolute(Duration duration);
 
 /*
  *  AddAbsoluteToAbsolute()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.6 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -736,13 +736,13 @@ DurationToAbsolute(Duration duration);
  */
 EXTERN_API_C( AbsoluteTime )
 AddAbsoluteToAbsolute(
-  AbsoluteTime   absoluteTime1,
-  AbsoluteTime   absoluteTime2);
+	AbsoluteTime   absoluteTime1,
+	AbsoluteTime   absoluteTime2);
 
 
 /*
  *  SubAbsoluteFromAbsolute()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.6 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -750,13 +750,13 @@ AddAbsoluteToAbsolute(
  */
 EXTERN_API_C( AbsoluteTime )
 SubAbsoluteFromAbsolute(
-  AbsoluteTime   leftAbsoluteTime,
-  AbsoluteTime   rightAbsoluteTime);
+	AbsoluteTime   leftAbsoluteTime,
+	AbsoluteTime   rightAbsoluteTime);
 
 
 /*
  *  AddNanosecondsToAbsolute()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.6 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -764,13 +764,13 @@ SubAbsoluteFromAbsolute(
  */
 EXTERN_API_C( AbsoluteTime )
 AddNanosecondsToAbsolute(
-  Nanoseconds    nanoseconds,
-  AbsoluteTime   absoluteTime);
+	Nanoseconds    nanoseconds,
+	AbsoluteTime   absoluteTime);
 
 
 /*
  *  AddDurationToAbsolute()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.6 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -778,13 +778,13 @@ AddNanosecondsToAbsolute(
  */
 EXTERN_API_C( AbsoluteTime )
 AddDurationToAbsolute(
-  Duration       duration,
-  AbsoluteTime   absoluteTime);
+	Duration       duration,
+	AbsoluteTime   absoluteTime);
 
 
 /*
  *  SubNanosecondsFromAbsolute()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.6 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -792,13 +792,13 @@ AddDurationToAbsolute(
  */
 EXTERN_API_C( AbsoluteTime )
 SubNanosecondsFromAbsolute(
-  Nanoseconds    nanoseconds,
-  AbsoluteTime   absoluteTime);
+	Nanoseconds    nanoseconds,
+	AbsoluteTime   absoluteTime);
 
 
 /*
  *  SubDurationFromAbsolute()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.6 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -806,13 +806,13 @@ SubNanosecondsFromAbsolute(
  */
 EXTERN_API_C( AbsoluteTime )
 SubDurationFromAbsolute(
-  Duration       duration,
-  AbsoluteTime   absoluteTime);
+	Duration       duration,
+	AbsoluteTime   absoluteTime);
 
 
 /*
  *  AbsoluteDeltaToNanoseconds()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.6 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -820,13 +820,13 @@ SubDurationFromAbsolute(
  */
 EXTERN_API_C( Nanoseconds )
 AbsoluteDeltaToNanoseconds(
-  AbsoluteTime   leftAbsoluteTime,
-  AbsoluteTime   rightAbsoluteTime);
+	AbsoluteTime   leftAbsoluteTime,
+	AbsoluteTime   rightAbsoluteTime);
 
 
 /*
  *  AbsoluteDeltaToDuration()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.6 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -834,13 +834,13 @@ AbsoluteDeltaToNanoseconds(
  */
 EXTERN_API_C( Duration )
 AbsoluteDeltaToDuration(
-  AbsoluteTime   leftAbsoluteTime,
-  AbsoluteTime   rightAbsoluteTime);
+	AbsoluteTime   leftAbsoluteTime,
+	AbsoluteTime   rightAbsoluteTime);
 
 
 /*
  *  DurationToNanoseconds()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.6 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -852,7 +852,7 @@ DurationToNanoseconds(Duration theDuration);
 
 /*
  *  NanosecondsToDuration()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 8.6 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -866,7 +866,7 @@ NanosecondsToDuration(Nanoseconds theNanoseconds);
 #if CALL_NOT_IN_CARBON
 /*
  *  PBQueueInit()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -878,7 +878,7 @@ PBQueueInit(QHdrPtr qHeader);
 
 /*
  *  PBQueueCreate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -890,7 +890,7 @@ PBQueueCreate(QHdrPtr * qHeader);
 
 /*
  *  PBQueueDelete()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -902,7 +902,7 @@ PBQueueDelete(QHdrPtr qHeader);
 
 /*
  *  PBEnqueue()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -910,13 +910,13 @@ PBQueueDelete(QHdrPtr qHeader);
  */
 EXTERN_API_C( void )
 PBEnqueue(
-  QElemPtr   qElement,
-  QHdrPtr    qHeader);
+	QElemPtr   qElement,
+	QHdrPtr    qHeader);
 
 
 /*
  *  PBEnqueueLast()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -924,13 +924,13 @@ PBEnqueue(
  */
 EXTERN_API_C( OSErr )
 PBEnqueueLast(
-  QElemPtr   qElement,
-  QHdrPtr    qHeader);
+	QElemPtr   qElement,
+	QHdrPtr    qHeader);
 
 
 /*
  *  PBDequeue()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -938,13 +938,13 @@ PBEnqueueLast(
  */
 EXTERN_API_C( OSErr )
 PBDequeue(
-  QElemPtr   qElement,
-  QHdrPtr    qHeader);
+	QElemPtr   qElement,
+	QHdrPtr    qHeader);
 
 
 /*
  *  PBDequeueFirst()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -952,13 +952,13 @@ PBDequeue(
  */
 EXTERN_API_C( OSErr )
 PBDequeueFirst(
-  QHdrPtr     qHeader,
-  QElemPtr *  theFirstqElem);
+	QHdrPtr     qHeader,
+	QElemPtr *  theFirstqElem);
 
 
 /*
  *  PBDequeueLast()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -966,13 +966,13 @@ PBDequeueFirst(
  */
 EXTERN_API_C( OSErr )
 PBDequeueLast(
-  QHdrPtr     qHeader,
-  QElemPtr *  theLastqElem);
+	QHdrPtr     qHeader,
+	QElemPtr *  theLastqElem);
 
 
 /*
  *  CStrCopy()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -980,13 +980,13 @@ PBDequeueLast(
  */
 EXTERN_API_C( char * )
 CStrCopy(
-  char *        dst,
-  const char *  src);
+	char *        dst,
+	const char *  src);
 
 
 /*
  *  PStrCopy()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -994,13 +994,13 @@ CStrCopy(
  */
 EXTERN_API_C( StringPtr )
 PStrCopy(
-  StringPtr          dst,
-  ConstStr255Param   src);
+	StringPtr          dst,
+	ConstStr255Param   src);
 
 
 /*
  *  CStrNCopy()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1008,14 +1008,14 @@ PStrCopy(
  */
 EXTERN_API_C( char * )
 CStrNCopy(
-  char *        dst,
-  const char *  src,
-  UInt32        max);
+	char *        dst,
+	const char *  src,
+	UInt32        max);
 
 
 /*
  *  PStrNCopy()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1023,14 +1023,14 @@ CStrNCopy(
  */
 EXTERN_API_C( StringPtr )
 PStrNCopy(
-  StringPtr          dst,
-  ConstStr255Param   src,
-  UInt32             max);
+	StringPtr          dst,
+	ConstStr255Param   src,
+	UInt32             max);
 
 
 /*
  *  CStrCat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1038,13 +1038,13 @@ PStrNCopy(
  */
 EXTERN_API_C( char * )
 CStrCat(
-  char *        dst,
-  const char *  src);
+	char *        dst,
+	const char *  src);
 
 
 /*
  *  PStrCat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1052,13 +1052,13 @@ CStrCat(
  */
 EXTERN_API_C( StringPtr )
 PStrCat(
-  StringPtr          dst,
-  ConstStr255Param   src);
+	StringPtr          dst,
+	ConstStr255Param   src);
 
 
 /*
  *  CStrNCat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1066,14 +1066,14 @@ PStrCat(
  */
 EXTERN_API_C( char * )
 CStrNCat(
-  char *        dst,
-  const char *  src,
-  UInt32        max);
+	char *        dst,
+	const char *  src,
+	UInt32        max);
 
 
 /*
  *  PStrNCat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1081,14 +1081,14 @@ CStrNCat(
  */
 EXTERN_API_C( StringPtr )
 PStrNCat(
-  StringPtr          dst,
-  ConstStr255Param   src,
-  UInt32             max);
+	StringPtr          dst,
+	ConstStr255Param   src,
+	UInt32             max);
 
 
 /*
  *  PStrToCStr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1096,13 +1096,13 @@ PStrNCat(
  */
 EXTERN_API_C( void )
 PStrToCStr(
-  char *             dst,
-  ConstStr255Param   src);
+	char *             dst,
+	ConstStr255Param   src);
 
 
 /*
  *  CStrToPStr()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1110,13 +1110,13 @@ PStrToCStr(
  */
 EXTERN_API_C( void )
 CStrToPStr(
-  Str255        dst,
-  const char *  src);
+	Str255        dst,
+	const char *  src);
 
 
 /*
  *  CStrCmp()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1124,13 +1124,13 @@ CStrToPStr(
  */
 EXTERN_API_C( SInt16 )
 CStrCmp(
-  const char *  s1,
-  const char *  s2);
+	const char *  s1,
+	const char *  s2);
 
 
 /*
  *  PStrCmp()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1138,13 +1138,13 @@ CStrCmp(
  */
 EXTERN_API_C( SInt16 )
 PStrCmp(
-  ConstStr255Param   str1,
-  ConstStr255Param   str2);
+	ConstStr255Param   str1,
+	ConstStr255Param   str2);
 
 
 /*
  *  CStrNCmp()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1152,14 +1152,14 @@ PStrCmp(
  */
 EXTERN_API_C( SInt16 )
 CStrNCmp(
-  const char *  s1,
-  const char *  s2,
-  UInt32        max);
+	const char *  s1,
+	const char *  s2,
+	UInt32        max);
 
 
 /*
  *  PStrNCmp()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1167,14 +1167,14 @@ CStrNCmp(
  */
 EXTERN_API_C( SInt16 )
 PStrNCmp(
-  ConstStr255Param   str1,
-  ConstStr255Param   str2,
-  UInt32             max);
+	ConstStr255Param   str1,
+	ConstStr255Param   str2,
+	UInt32             max);
 
 
 /*
  *  CStrLen()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1186,7 +1186,7 @@ CStrLen(const char * src);
 
 /*
  *  PStrLen()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1198,7 +1198,7 @@ PStrLen(ConstStr255Param src);
 
 /*
  *  DeviceProbe()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1206,14 +1206,14 @@ PStrLen(ConstStr255Param src);
  */
 EXTERN_API_C( OSStatus )
 DeviceProbe(
-  void *   theSrc,
-  void *   theDest,
-  UInt32   AccessType);
+	void *   theSrc,
+	void *   theDest,
+	UInt32   AccessType);
 
 
 /*
  *  DelayForHardware()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1227,7 +1227,7 @@ DelayForHardware(AbsoluteTime absoluteTime);
 
 /******************************************************************
  *
- *      Was in Interrupts.h 
+ *      Was in Interrupts.h
  *
  ******************************************************************/
 /*  Interrupt types  */
@@ -1236,32 +1236,32 @@ DelayForHardware(AbsoluteTime absoluteTime);
 typedef struct OpaqueInterruptSetID*    InterruptSetID;
 typedef long                            InterruptMemberNumber;
 struct InterruptSetMember {
-  InterruptSetID      setID;
-  InterruptMemberNumber  member;
+	InterruptSetID      setID;
+	InterruptMemberNumber  member;
 };
 typedef struct InterruptSetMember       InterruptSetMember;
 enum {
-  kISTChipInterruptSource       = 0,
-  kISTOutputDMAInterruptSource  = 1,
-  kISTInputDMAInterruptSource   = 2,
-  kISTPropertyMemberCount       = 3
+	kISTChipInterruptSource       = 0,
+	kISTOutputDMAInterruptSource  = 1,
+	kISTInputDMAInterruptSource   = 2,
+	kISTPropertyMemberCount       = 3
 };
 
 typedef InterruptSetMember              ISTProperty[3];
-#define kISTPropertyName    "driver-ist" 
+#define kISTPropertyName    "driver-ist"
 
 typedef long                            InterruptReturnValue;
 enum {
-  kFirstMemberNumber            = 1,
-  kIsrIsComplete                = 0,
-  kIsrIsNotComplete             = -1,
-  kMemberNumberParent           = -2
+	kFirstMemberNumber            = 1,
+	kIsrIsComplete                = 0,
+	kIsrIsNotComplete             = -1,
+	kMemberNumberParent           = -2
 };
 
 typedef Boolean                         InterruptSourceState;
 enum {
-  kSourceWasEnabled             = true,
-  kSourceWasDisabled            = false
+	kSourceWasEnabled             = true,
+	kSourceWasDisabled            = false
 };
 
 
@@ -1269,8 +1269,8 @@ typedef CALLBACK_API_C( InterruptMemberNumber , InterruptHandler )(InterruptSetM
 typedef CALLBACK_API_C( void , InterruptEnabler )(InterruptSetMember ISTmember, void *refCon);
 typedef CALLBACK_API_C( InterruptSourceState , InterruptDisabler )(InterruptSetMember ISTmember, void *refCon);
 enum {
-  kReturnToParentWhenComplete   = 0x00000001,
-  kReturnToParentWhenNotComplete = 0x00000002
+	kReturnToParentWhenComplete   = 0x00000001,
+	kReturnToParentWhenNotComplete = 0x00000002
 };
 
 typedef OptionBits                      InterruptSetOptions;
@@ -1278,7 +1278,7 @@ typedef OptionBits                      InterruptSetOptions;
 #if CALL_NOT_IN_CARBON
 /*
  *  CreateInterruptSet()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1286,17 +1286,17 @@ typedef OptionBits                      InterruptSetOptions;
  */
 EXTERN_API_C( OSStatus )
 CreateInterruptSet(
-  InterruptSetID          parentSet,
-  InterruptMemberNumber   parentMember,
-  InterruptMemberNumber   setSize,
-  InterruptSetID *        setID,
-  InterruptSetOptions     options);
+	InterruptSetID          parentSet,
+	InterruptMemberNumber   parentMember,
+	InterruptMemberNumber   setSize,
+	InterruptSetID *        setID,
+	InterruptSetOptions     options);
 
 
 
 /*
  *  InstallInterruptFunctions()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1304,18 +1304,18 @@ CreateInterruptSet(
  */
 EXTERN_API_C( OSStatus )
 InstallInterruptFunctions(
-  InterruptSetID          setID,
-  InterruptMemberNumber   member,
-  void *                  refCon,
-  InterruptHandler        handlerFunction,
-  InterruptEnabler        enableFunction,
-  InterruptDisabler       disableFunction);
+	InterruptSetID          setID,
+	InterruptMemberNumber   member,
+	void *                  refCon,
+	InterruptHandler        handlerFunction,
+	InterruptEnabler        enableFunction,
+	InterruptDisabler       disableFunction);
 
 
 
 /*
  *  GetInterruptFunctions()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1323,17 +1323,17 @@ InstallInterruptFunctions(
  */
 EXTERN_API_C( OSStatus )
 GetInterruptFunctions(
-  InterruptSetID          setID,
-  InterruptMemberNumber   member,
-  void **                 refCon,
-  InterruptHandler *      handlerFunction,
-  InterruptEnabler *      enableFunction,
-  InterruptDisabler *     disableFunction);
+	InterruptSetID          setID,
+	InterruptMemberNumber   member,
+	void **                 refCon,
+	InterruptHandler *      handlerFunction,
+	InterruptEnabler *      enableFunction,
+	InterruptDisabler *     disableFunction);
 
 
 /*
  *  ChangeInterruptSetOptions()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1341,13 +1341,13 @@ GetInterruptFunctions(
  */
 EXTERN_API_C( OSStatus )
 ChangeInterruptSetOptions(
-  InterruptSetID        setID,
-  InterruptSetOptions   options);
+	InterruptSetID        setID,
+	InterruptSetOptions   options);
 
 
 /*
  *  GetInterruptSetOptions()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in DriverServicesLib 1.0 and later
  *    CarbonLib:        not available
@@ -1355,8 +1355,8 @@ ChangeInterruptSetOptions(
  */
 EXTERN_API_C( OSStatus )
 GetInterruptSetOptions(
-  InterruptSetID         setID,
-  InterruptSetOptions *  options);
+	InterruptSetID         setID,
+	InterruptSetOptions *  options);
 
 
 
@@ -1365,11 +1365,11 @@ GetInterruptSetOptions(
 
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+		#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+		#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+		#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -1383,4 +1383,3 @@ GetInterruptSetOptions(
 #endif
 
 #endif /* __DRIVERSERVICES__ */
-

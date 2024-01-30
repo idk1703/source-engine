@@ -64,7 +64,7 @@ void CToolUI::PerformLayout()
 
 	// Make the editor panel fill the space
 	int iWidth, iHeight;
-	vgui::VPANEL parent = GetParent() ? GetParent()->GetVPanel() : vgui::surface()->GetEmbeddedPanel(); 
+	vgui::VPANEL parent = GetParent() ? GetParent()->GetVPanel() : vgui::surface()->GetEmbeddedPanel();
 	vgui::ipanel()->GetSize( parent, iWidth, iHeight );
 	SetSize( iWidth, iHeight );
 	int insettop = MENU_HEIGHT;
@@ -91,7 +91,7 @@ vgui::Panel *CToolUI::GetStatusBar()
 {
 	return m_pStatusBar;
 }
-	
+
 //-----------------------------------------------------------------------------
 // Forward commands to systems that have more smarts than I do!
 //-----------------------------------------------------------------------------

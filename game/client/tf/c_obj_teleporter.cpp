@@ -19,7 +19,7 @@
 using namespace vgui;
 
 #define TELEPORTER_MINS			Vector( -24, -24, 0)
-#define TELEPORTER_MAXS			Vector( 24, 24, 12)	
+#define TELEPORTER_MAXS			Vector( 24, 24, 12)
 
 //-----------------------------------------------------------------------------
 // Purpose: Teleporter object
@@ -35,7 +35,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_ObjectTeleporter, DT_ObjectTeleporter, CObjectTelepor
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectTeleporter::C_ObjectTeleporter()
 {
@@ -52,7 +52,7 @@ C_ObjectTeleporter::C_ObjectTeleporter()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectTeleporter::UpdateOnRemove( void )
 {
@@ -68,7 +68,7 @@ void C_ObjectTeleporter::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectTeleporter::OnPreDataChanged( DataUpdateType_t updateType )
 {
@@ -98,7 +98,7 @@ void C_ObjectTeleporter::StartChargedEffects()
 	StopChargedEffects();
 	char szEffect[128];
 
-	Q_snprintf( szEffect, sizeof(szEffect), "teleporter_%s_charged_level%d", 
+	Q_snprintf( szEffect, sizeof(szEffect), "teleporter_%s_charged_level%d",
 		( GetTeamNumber() == TF_TEAM_RED ) ? "red" : "blue", GetUpgradeLevel() );
 
 	Assert( m_hChargedEffect.m_pObject == NULL );
@@ -110,7 +110,7 @@ void C_ObjectTeleporter::StartActiveEffects()
 	StopActiveEffects();
 	char szEffect[128];
 
-	Q_snprintf( szEffect, sizeof(szEffect), "teleporter_%s_%s_level%d", 
+	Q_snprintf( szEffect, sizeof(szEffect), "teleporter_%s_%s_level%d",
 		( GetTeamNumber() == TF_TEAM_RED ) ? "red" : "blue",
 		GetObjectMode() == MODE_TELEPORTER_ENTRANCE ? "entrance" : "exit",
 		GetUpgradeLevel() );
@@ -189,7 +189,7 @@ void C_ObjectTeleporter::StopActiveEffects()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectTeleporter::SetInvisibilityLevel( float flValue )
 {
@@ -202,7 +202,7 @@ void C_ObjectTeleporter::SetInvisibilityLevel( float flValue )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectTeleporter::UpdateTeleporterEffects( void )
 {
@@ -257,7 +257,7 @@ void C_ObjectTeleporter::UpdateTeleporterEffects( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectTeleporter::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -285,7 +285,7 @@ void C_ObjectTeleporter::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float C_ObjectTeleporter::GetChargeTime( void )
 {
@@ -298,7 +298,7 @@ float C_ObjectTeleporter::GetChargeTime( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_ObjectTeleporter::GetTimesUsed( void )
 {
@@ -306,7 +306,7 @@ int C_ObjectTeleporter::GetTimesUsed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStudioHdr *C_ObjectTeleporter::OnNewModel( void )
 {
@@ -339,7 +339,7 @@ void C_ObjectTeleporter::ClientThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectTeleporter::GetTargetIDDataString( OUT_Z_BYTECAP(iMaxLenInBytes) wchar_t *sDataString, int iMaxLenInBytes )
 {
@@ -361,7 +361,7 @@ void C_ObjectTeleporter::GetTargetIDDataString( OUT_Z_BYTECAP(iMaxLenInBytes) wc
 		g_pVGuiLocalize->ConstructString( sDataString, iMaxLenInBytes, g_pVGuiLocalize->Find(printFormatString),
 			1,
 			wszRecharging );
-	}	
+	}
 	else if ( m_iState == TELEPORTER_STATE_IDLE )
 	{
 		g_pVGuiLocalize->ConstructString( sDataString, iMaxLenInBytes, g_pVGuiLocalize->Find("#TF_playerid_teleporter_nomatch" ), 0 );
@@ -411,7 +411,7 @@ void C_ObjectTeleporter::UpdateDamageEffects( BuildingDamageLevel_t damageLevel 
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 bool C_ObjectTeleporter::IsPlacementPosValid( void )
 {
@@ -435,7 +435,7 @@ bool C_ObjectTeleporter::IsPlacementPosValid( void )
 	return ( tr.fraction >= 1.0 );
 }
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void C_ObjectTeleporter::UpgradeLevelChanged( void )
 {
@@ -453,7 +453,7 @@ void C_ObjectTeleporter::UpgradeLevelChanged( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectTeleporter::OnGoInactive( void )
 {

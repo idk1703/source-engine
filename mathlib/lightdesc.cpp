@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -17,7 +17,7 @@ void LightDesc_t::RecalculateDerivedValues(void)
 		m_Flags|=LIGHTTYPE_OPTIMIZATIONFLAGS_HAS_ATTENUATION1;
 	if (m_Attenuation2)
 		m_Flags|=LIGHTTYPE_OPTIMIZATIONFLAGS_HAS_ATTENUATION2;
-	
+
 	if (m_Type==MATERIAL_LIGHT_SPOT)
 	{
 		m_ThetaDot=cos(m_Theta);
@@ -33,15 +33,15 @@ void LightDesc_t::RecalculateDerivedValues(void)
 		{
 			// hard falloff instead of divide by zero
 			OneOver_ThetaDot_Minus_PhiDot=1.0;
-		}				
-	}	
+		}
+	}
 	if (m_Type==MATERIAL_LIGHT_DIRECTIONAL)
 	{
 		// set position to be real far away in the right direction
 		m_Position=m_Direction;
 		m_Position *= 2.0e6;
 	}
-	
+
 	m_RangeSquared=m_Range*m_Range;
 
 }
@@ -60,7 +60,7 @@ void LightDesc_t::ComputeLightAtPointsForDirectional(
 	}
 	else
 		strength=MaxSIMD(Four_Zeros,delta*normal);
-		
+
 	color.x=AddSIMD(color.x,MulSIMD(strength,ReplicateX4(m_Color.x)));
 	color.y=AddSIMD(color.y,MulSIMD(strength,ReplicateX4(m_Color.y)));
 	color.z=AddSIMD(color.z,MulSIMD(strength,ReplicateX4(m_Color.z)));
@@ -79,7 +79,7 @@ void LightDesc_t::ComputeLightAtPoints( const FourVectors &pos, const FourVector
 			delta.DuplicateVector(m_Position);
 			delta-=pos;
 			break;
-				
+
 		case MATERIAL_LIGHT_DIRECTIONAL:
 			ComputeLightAtPointsForDirectional( pos, normal, color, DoHalfLambert );
 			return;
@@ -125,13 +125,13 @@ void LightDesc_t::ComputeLightAtPoints( const FourVectors &pos, const FourVector
 	}
 	else
 		strength=MaxSIMD(Four_Zeros,delta*normal);
-		
+
 	switch(m_Type)
 	{
 		case MATERIAL_LIGHT_POINT:
 			// half-lambert
 			break;
-				
+
 		case MATERIAL_LIGHT_SPOT:
 		{
 			fltx4 dot2=SubSIMD(Four_Zeros,delta*m_Direction); // dot position with spot light dir for cone falloff
@@ -140,7 +140,7 @@ void LightDesc_t::ComputeLightAtPoints( const FourVectors &pos, const FourVector
 			fltx4 cone_falloff_scale=MulSIMD(ReplicateX4(OneOver_ThetaDot_Minus_PhiDot),
 												 SubSIMD(dot2,ReplicateX4(m_PhiDot)));
 			cone_falloff_scale=MinSIMD(cone_falloff_scale,Four_Ones);
-			
+
 			if ((m_Falloff!=0.0) && (m_Falloff!=1.0))
 			{
 				// !!speed!! could compute integer exponent needed by powsimd and store in light
@@ -154,7 +154,7 @@ void LightDesc_t::ComputeLightAtPoints( const FourVectors &pos, const FourVector
 			strength=AndSIMD(OutsideMask,strength);
 		}
 		break;
-			
+
 
 	}
 	strength=MulSIMD(strength,falloff);
@@ -176,7 +176,7 @@ void LightDesc_t::ComputeNonincidenceLightAtPoints( const FourVectors &pos, Four
 			delta.DuplicateVector(m_Position);
 			delta-=pos;
 			break;
-				
+
 		case MATERIAL_LIGHT_DIRECTIONAL:
 			return;
 	}
@@ -217,13 +217,13 @@ void LightDesc_t::ComputeNonincidenceLightAtPoints( const FourVectors &pos, Four
 	fltx4 strength = Four_Ones;
 	//fltx4 strength=delta;
 	//fltx4 strength = MaxSIMD(Four_Zeros,delta);
-		
+
 	switch(m_Type)
 	{
 		case MATERIAL_LIGHT_POINT:
 			// half-lambert
 			break;
-				
+
 		case MATERIAL_LIGHT_SPOT:
 		{
 			fltx4 dot2=SubSIMD(Four_Zeros,delta*m_Direction); // dot position with spot light dir for cone falloff
@@ -232,7 +232,7 @@ void LightDesc_t::ComputeNonincidenceLightAtPoints( const FourVectors &pos, Four
 			fltx4 cone_falloff_scale=MulSIMD(ReplicateX4(OneOver_ThetaDot_Minus_PhiDot),
 												 SubSIMD(dot2,ReplicateX4(m_PhiDot)));
 			cone_falloff_scale=MinSIMD(cone_falloff_scale,Four_Ones);
-			
+
 			if ((m_Falloff!=0.0) && (m_Falloff!=1.0))
 			{
 				// !!speed!! could compute integer exponent needed by powsimd and store in light
@@ -246,7 +246,7 @@ void LightDesc_t::ComputeNonincidenceLightAtPoints( const FourVectors &pos, Four
 			strength=AndSIMD(OutsideMask,strength);
 		}
 		break;
-			
+
 
 	}
 	strength=MulSIMD(strength,falloff);
@@ -262,15 +262,15 @@ void LightDesc_t::SetupOldStyleAttenuation( float fQuadraticAttn, float fLinearA
 	// old-style manually typed quadrtiac coefficients
 	if ( fQuadraticAttn < EQUAL_EPSILON )
 		fQuadraticAttn = 0;
-	
+
 	if ( fLinearAttn < EQUAL_EPSILON)
 		fLinearAttn = 0;
-	
+
 	if ( fConstantAttn < EQUAL_EPSILON)
 		fConstantAttn = 0;
-	
-	if ( ( fConstantAttn < EQUAL_EPSILON ) && 
-		 ( fLinearAttn < EQUAL_EPSILON ) && 
+
+	if ( ( fConstantAttn < EQUAL_EPSILON ) &&
+		 ( fLinearAttn < EQUAL_EPSILON ) &&
 		 ( fQuadraticAttn < EQUAL_EPSILON ) )
 		fConstantAttn = 1;
 
@@ -278,12 +278,12 @@ void LightDesc_t::SetupOldStyleAttenuation( float fQuadraticAttn, float fLinearA
 	m_Attenuation1=fLinearAttn;
 	m_Attenuation0=fConstantAttn;
 	float fScaleFactor = fQuadraticAttn * 10000 + fLinearAttn * 100 + fConstantAttn;
-	
+
 	if ( fScaleFactor > 0 )
 		m_Color *= fScaleFactor;
 }
 
-void LightDesc_t::SetupNewStyleAttenuation( float fFiftyPercentDistance, 
+void LightDesc_t::SetupNewStyleAttenuation( float fFiftyPercentDistance,
 											float fZeroPercentDistance )
 {
 	// new style storing 50% and 0% distances
@@ -309,4 +309,3 @@ void LightDesc_t::SetupNewStyleAttenuation( float fFiftyPercentDistance,
 	m_Attenuation1=b;
 	m_Attenuation0=c;
 }
-

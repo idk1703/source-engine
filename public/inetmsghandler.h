@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -37,7 +37,7 @@ public:
 	virtual void FileRequested(const char *fileName, unsigned int transferID ) = 0; // other side request a file for download
 
 	virtual void FileReceived(const char *fileName, unsigned int transferID ) = 0; // we received a file
-	
+
 	virtual void FileDenied(const char *fileName, unsigned int transferID ) = 0;	// a file request was denied by other side
 
 	virtual void FileSent(const char *fileName, unsigned int transferID ) = 0;	// we sent a file
@@ -82,7 +82,7 @@ class NET_SetConVar;
 class NET_SignonState;
 
 
-class INetMessageHandler 
+class INetMessageHandler
 {
 public:
 	virtual ~INetMessageHandler( void ) {};

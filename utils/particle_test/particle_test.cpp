@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -58,5 +58,5 @@ void main(int argc,char **argv)
 		lots_o_particles.Simulate( 0.01 );
 	printf("p/s=%f\n",(100.0*1000000)/(Plat_FloatTime()-start));
 #endif
-														   
+
 }

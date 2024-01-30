@@ -15,11 +15,11 @@
 
 //-----------------------------------------------------------------------------
 // Purpose: For proxy protecting
-// Turns the passed data into a 
+// Turns the passed data into a
 // single byte block CRC based on current network sequence number.
-// Input  : *base - 
-//			length - 
-//			sequence - 
+// Input  : *base -
+//			length -
+//			sequence -
 // Output : byte COM_BlockSequenceCRCByte
 //-----------------------------------------------------------------------------
 byte COM_BlockSequenceCRCByte( byte *base, int length, int sequence )
@@ -37,14 +37,14 @@ byte COM_BlockSequenceCRCByte( byte *base, int length, int sequence )
 	entry = CRC32_GetTableEntry( ( sequence + 1 ) % ( 256 * sizeof(CRC32_t) - 4 ) );
 	p = (byte *)&entry;
 
-	// Use up to the first 60 bytes of data and a 4 byte value from the 
+	// Use up to the first 60 bytes of data and a 4 byte value from the
 	//  CRC lookup table (divided into the sequence)
 
 	if (length > 60)
 	{
 		length = 60;
 	}
-	
+
 	memcpy (chkb, base, length);
 
 	chkb[length+0] = p[0];
@@ -58,7 +58,7 @@ byte COM_BlockSequenceCRCByte( byte *base, int length, int sequence )
 	CRC32_Init(&crc);
 	CRC32_ProcessBuffer(&crc, chkb, length);
 	CRC32_Final(&crc);
-	
+
 	// Chop down to byte size
 	return (byte)(crc & 0xFF);
 }
@@ -68,9 +68,9 @@ byte COM_BlockSequenceCRCByte( byte *base, int length, int sequence )
 ===================
 bool CRC_File(unsigned short *crcvalue, char *pszFileName)
 
-  Computes CRC for given file.  If there is an error opening/reading the file, returns false,
-  otherwise returns true and sets the crc value passed to it.  The value should be initialized
-  with CRC_Init
+	Computes CRC for given file.  If there is an error opening/reading the file, returns false,
+	otherwise returns true and sets the crc value passed to it.  The value should be initialized
+	with CRC_Init
  ==================
  */
 bool CRC_File(CRC32_t *crcvalue, const char *pszFileName)
@@ -81,7 +81,7 @@ bool CRC_File(CRC32_t *crcvalue, const char *pszFileName)
 	FileHandle_t fp;
 	byte chunk[1024];
 	int nBytesRead;
-	
+
 	int nSize;
 
 	nSize = COM_OpenFile(pszFileName, &fp);
@@ -117,7 +117,7 @@ bool CRC_File(CRC32_t *crcvalue, const char *pszFileName)
 				g_pFileSystem->Close(fp);
 			return FALSE;
 		}
-	}	
+	}
 
 	if ( fp )
 		g_pFileSystem->Close(fp);
@@ -129,12 +129,12 @@ bool CRC_File(CRC32_t *crcvalue, const char *pszFileName)
 ===================
 bool CRC_MapFile(unsigned short *crcvalue, char *pszFileName)
 
-  Computes CRC for given map file.  If there is an error opening/reading the file, returns false,
-  otherwise returns true and sets the crc value passed to it.  The value should be initialized
-  with CRC_Init
+	Computes CRC for given map file.  If there is an error opening/reading the file, returns false,
+	otherwise returns true and sets the crc value passed to it.  The value should be initialized
+	with CRC_Init
 
-  For map (.bsp) files, the entity lump is not included in the CRC.
-  //FIXME make this work
+	For map (.bsp) files, the entity lump is not included in the CRC.
+	//FIXME make this work
  ==================
  */
 bool CRC_MapFile(CRC32_t *crcvalue, const char *pszFileName)
@@ -211,9 +211,9 @@ bool CRC_MapFile(CRC32_t *crcvalue, const char *pszFileName)
 					g_pFileSystem->Close(fp);
 				return false;
 			}
-		}	
+		}
 	}
-	
+
 	if ( fp )
 		g_pFileSystem->Close(fp);
 	return true;
@@ -299,7 +299,7 @@ bool MD5_MapFile(MD5Value_t *md5value, const char *pszFileName)
 					g_pFileSystem->Close(fp);
 				return false;
 			}
-		}	
+		}
 	}
 
 	if ( fp )
@@ -311,11 +311,11 @@ bool MD5_MapFile(MD5Value_t *md5value, const char *pszFileName)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : digest[16] - 
-//			*pszFileName - 
-//			bSeed - 
-//			seed[4] - 
+// Purpose:
+// Input  : digest[16] -
+//			*pszFileName -
+//			bSeed -
+//			seed[4] -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool MD5_Hash_File(unsigned char digest[16], const char *pszFileName, bool bSeed /* = FALSE */, unsigned int seed[4] /* = NULL */)
@@ -324,7 +324,7 @@ bool MD5_Hash_File(unsigned char digest[16], const char *pszFileName, bool bSeed
 	byte chunk[1024];
 	int nBytesRead;
 	MD5Context_t ctx;
-	
+
 	int nSize;
 
 	nSize = COM_OpenFile( pszFileName, &fp );
@@ -370,7 +370,7 @@ bool MD5_Hash_File(unsigned char digest[16], const char *pszFileName, bool bSeed
 				g_pFileSystem->Close(fp);
 			return FALSE;
 		}
-	}	
+	}
 
 	if ( fp )
 		g_pFileSystem->Close(fp);
@@ -381,12 +381,12 @@ bool MD5_Hash_File(unsigned char digest[16], const char *pszFileName, bool bSeed
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool MD5_Hash_Buffer( unsigned char pDigest[16], const unsigned char *pBuffer, int nSize, bool bSeed /* = FALSE */, unsigned int seed[4] /* = NULL */ )
 {
 	MD5Context_t ctx;
-	
+
 	if ( !pBuffer || !nSize )
 		return false;
 
@@ -407,7 +407,7 @@ bool MD5_Hash_Buffer( unsigned char pDigest[16], const unsigned char *pBuffer, i
 		MD5Update( &ctx, pChunk, nChunkSize );
 		nSize -= nChunkSize;
 		pChunk += nChunkSize;	AssertValidReadPtr( pChunk );
-	}	
+	}
 
 	MD5Final( pDigest, &ctx );
 

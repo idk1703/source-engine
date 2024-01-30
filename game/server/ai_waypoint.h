@@ -21,7 +21,7 @@
 // ----------------------------------------------------------------------------
 // Flags used in the flags field in AI_Waypoint_T
 // ----------------------------------------------------------------------------
-enum WaypointFlags_t 
+enum WaypointFlags_t
 {
 	// The type of waypoint
 	bits_WP_TO_DETOUR =			0x01, // move to detour point.
@@ -35,7 +35,7 @@ enum WaypointFlags_t
 };
 
 // ----------------------------------------------------------------------------
-// Purpose: Waypoints that make up an NPC's route. 
+// Purpose: Waypoints that make up an NPC's route.
 // ----------------------------------------------------------------------------
 struct AI_Waypoint_t
 {
@@ -84,7 +84,7 @@ public:
 
 
 	//---------------------------------
-	
+
 	int					Flags() const;
 	Navigation_t		NavType() const;
 
@@ -94,31 +94,31 @@ public:
 	bool				IsReducible() { return (pNext && m_iWPType == pNext->m_iWPType && !(m_fWaypointFlags & (bits_WP_TO_GOAL | bits_WP_TO_PATHCORNER | bits_WP_DONT_SIMPLIFY)) ); }
 
 	//---------------------------------
-	
+
 	void				SetNext( AI_Waypoint_t *p );
 	AI_Waypoint_t *		GetNext()					{ return pNext; }
 	const AI_Waypoint_t *GetNext() const			{ return pNext; }
-	
+
 	AI_Waypoint_t *		GetPrev()					{ return pPrev; }
 	const AI_Waypoint_t *GetPrev() const			{ return pPrev; }
-	
+
 	AI_Waypoint_t *		GetLast();
 
 	//---------------------------------
-	
+
 	const Vector &		GetPos() const				{ return vecLocation; }
 	void 				SetPos(const Vector &newPos) { vecLocation = newPos; }
 
 	EHANDLE				GetEHandleData() { return m_hData; }
-	
+
 	//---------------------------------
 	//
 	// Basic info
 	//
 	Vector			vecLocation;
-	float			flYaw;				// Waypoint facing dir 
+	float			flYaw;				// Waypoint facing dir
 	int				iNodeID;			// If waypoint is a node, which one
-	
+
 	//---------------------------------
 	//
 	// Precalculated distances
@@ -172,21 +172,21 @@ inline void AI_Waypoint_t::ModifyFlags( int fFlags, bool bEnable )
 		m_fWaypointFlags &= ~fFlags;
 }
 
-inline void AI_Waypoint_t::SetNext( AI_Waypoint_t *p )	
-{ 
-	if (pNext) 
+inline void AI_Waypoint_t::SetNext( AI_Waypoint_t *p )
+{
+	if (pNext)
 	{
-		pNext->pPrev = NULL; 
+		pNext->pPrev = NULL;
 	}
 
-	pNext = p; 
+	pNext = p;
 
-	if ( pNext ) 
+	if ( pNext )
 	{
 		if ( pNext->pPrev )
 			pNext->pPrev->pNext = NULL;
 
-		pNext->pPrev = this; 
+		pNext->pPrev = this;
 	}
 }
 
@@ -206,14 +206,14 @@ public:
 	 :	m_pFirstWaypoint( pFirstWaypoint )
 	{
 	}
-	
+
 	void			Set(AI_Waypoint_t* route);
 
 	void 			PrependWaypoints( AI_Waypoint_t *pWaypoints );
 	void 			PrependWaypoint( const Vector &newPoint, Navigation_t navType, unsigned waypointFlags, float flYaw = 0 );
-	
+
 	bool 			IsEmpty() const				{ return ( m_pFirstWaypoint == NULL ); }
-	
+
 	AI_Waypoint_t *		 GetFirst()				{ return m_pFirstWaypoint; }
 	const AI_Waypoint_t *GetFirst() const	{ return m_pFirstWaypoint; }
 

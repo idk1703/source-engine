@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -28,7 +28,7 @@
 #include "tier0/memdbgon.h"
 
 BEGIN_VS_SHADER_FLAGS( DebugNormalMap, "Help for DebugNormalMap", SHADER_NOT_EDITABLE )
-			  
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( BUMPMAP, SHADER_PARAM_TYPE_TEXTURE, "shadertest/WorldDiffuseBumpMap_bump", "bump map" )
 		SHADER_PARAM( BUMPFRAME, SHADER_PARAM_TYPE_INTEGER, "0", "frame number for $bumpmap" )
@@ -145,4 +145,3 @@ BEGIN_VS_SHADER_FLAGS( DebugNormalMap, "Help for DebugNormalMap", SHADER_NOT_EDI
 		Draw();
 	}
 END_SHADER
-

@@ -36,7 +36,7 @@ public:
 		pSave->WriteInt( &nLen );
 		pSave->WriteString( pString );
 	}
-	
+
 	virtual void Restore( const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore )
 	{
 		int *pStringIndex = (int *)fieldInfo.pField;
@@ -45,7 +45,7 @@ public:
 		pRestore->ReadString( pTemp, nLen, nLen );
 		*pStringIndex = m_pStringTable->AddString( CBaseEntity::IsServer(), pTemp );
 	}
-	
+
 	virtual void MakeEmpty( const SaveRestoreFieldInfo_t &fieldInfo )
 	{
 		int *pStringIndex = (int *)fieldInfo.pField;

@@ -83,7 +83,7 @@ static inline bool IsEntityAnObject( int iEntIndex )
 //-----------------------------------------------------------------------------
 // Purpose: Return true if the entity is visible on this player's tactical map
 //-----------------------------------------------------------------------------
-bool IsEntityVisibleToTactical( int iLocalTeamNumber, int iLocalTeamPlayers, 
+bool IsEntityVisibleToTactical( int iLocalTeamNumber, int iLocalTeamPlayers,
 	int iLocalTeamObjects, int entIndex, const char *pEntName, int iEntTeamNumber, const Vector &entOrigin )
 {
 	// Resource zones are always visible
@@ -117,6 +117,3 @@ bool IsEntityVisibleToTactical( int iLocalTeamNumber, int iLocalTeamPlayers,
 
 	return false;
 }
-
-
-

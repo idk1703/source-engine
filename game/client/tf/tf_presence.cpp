@@ -131,7 +131,7 @@ void CTF_Presence::GetPropertyDisplayString( uint id, uint value, char *pOutput,
 	case PROPERTY_FLAG_CAPTURE_LIMIT:
 	case PROPERTY_NUMBER_OF_ROUNDS:
 	case PROPERTY_WIN_LIMIT:
-		Q_snprintf( pOutput, nBytes, "%d", value ); 
+		Q_snprintf( pOutput, nBytes, "%d", value );
 		return;
 
 	case PROPERTY_MAX_GAME_TIME:
@@ -141,7 +141,7 @@ void CTF_Presence::GetPropertyDisplayString( uint id, uint value, char *pOutput,
 		}
 		else
 		{
-			Q_snprintf( pOutput, nBytes, "%d:00", value ); 
+			Q_snprintf( pOutput, nBytes, "%d:00", value );
 		}
 		return;
 
@@ -295,12 +295,12 @@ void CTF_Presence::SetupGameProperties( CUtlVector< XUSER_CONTEXT > &contexts, C
 
 		case PROPERTY_AUTOBALANCE:
 			Q_snprintf( buffer, sizeof( buffer ), "mp_autoteambalance %d", prop.value.nData );
-			engine->ClientCmd( buffer );		
+			engine->ClientCmd( buffer );
 			break;
 
 		case PROPERTY_MAX_GAME_TIME:
 			Q_snprintf( buffer, sizeof( buffer ), "mp_timelimit %d", prop.value.nData );
-			engine->ClientCmd( buffer );		
+			engine->ClientCmd( buffer );
 			break;
 
 		}
@@ -353,7 +353,7 @@ void CTF_Presence::FireGameEvent( IGameEvent *event )
 	else if ( !Q_stricmp( "ctf_flag_captured", eventname ) )
 	{
 		C_TFTeam *pLocalTeam = GetGlobalTFTeam( GetLocalPlayerTeam() );
-		
+
 		if ( pLocalTeam )
 		{
 			int iOtherScore = 0;
@@ -411,8 +411,8 @@ void CTF_Presence::FireGameEvent( IGameEvent *event )
 					UserSetContext( XBX_GetPrimaryUserId(), X_CONTEXT_PRESENCE, CONTEXT_PRESENCE_TF_CTF_TIED, true );
 				}
 			}
-#endif 
-		}	
+#endif
+		}
 	}
 	else if ( !Q_stricmp( "playing_commentary", eventname ) )
 	{
@@ -420,7 +420,7 @@ void CTF_Presence::FireGameEvent( IGameEvent *event )
 #if defined ( _X360 )
 		UserSetContext( XBX_GetPrimaryUserId(), X_CONTEXT_PRESENCE, CONTEXT_PRESENCE_COMMENTARY, true );
 		UserSetContext( XBX_GetPrimaryUserId(), X_CONTEXT_GAME_MODE, CONTEXT_GAME_MODE_SINGLEPLAYER, true );
-#endif 
+#endif
 	}
 }
 
@@ -528,4 +528,3 @@ void CTF_Presence::UploadStats()
 	}
 #endif
 }
-

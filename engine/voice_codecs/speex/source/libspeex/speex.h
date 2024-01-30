@@ -1,35 +1,35 @@
 /* Copyright (C) 2002 Jean-Marc Valin*/
 /**
-  @file speex.h
-  @brief Describes the different modes of the codec
+	@file speex.h
+	@brief Describes the different modes of the codec
 */
 /*
-   Redistribution and use in source and binary forms, with or without
-   modification, are permitted provided that the following conditions
-   are met:
-   
-   - Redistributions of source code must retain the above copyright
-   notice, this list of conditions and the following disclaimer.
-   
-   - Redistributions in binary form must reproduce the above copyright
-   notice, this list of conditions and the following disclaimer in the
-   documentation and/or other materials provided with the distribution.
-   
-   - Neither the name of the Xiph.org Foundation nor the names of its
-   contributors may be used to endorse or promote products derived from
-   this software without specific prior written permission.
-   
-   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-   ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-   A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE FOUNDATION OR
-   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-   EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-   PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-   PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-   LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-   NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	Redistribution and use in source and binary forms, with or without
+	modification, are permitted provided that the following conditions
+	are met:
+
+	- Redistributions of source code must retain the above copyright
+	notice, this list of conditions and the following disclaimer.
+
+	- Redistributions in binary form must reproduce the above copyright
+	notice, this list of conditions and the following disclaimer in the
+	documentation and/or other materials provided with the distribution.
+
+	- Neither the name of the Xiph.org Foundation nor the names of its
+	contributors may be used to endorse or promote products derived from
+	this software without specific prior written permission.
+
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+	``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+	LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+	A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE FOUNDATION OR
+	CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+	EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+	PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+	PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+	LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
 
@@ -189,67 +189,67 @@ typedef int (*decoder_ctl_func)(void *state, int request, void *ptr);
 /** Query function for a mode */
 typedef int (*mode_query_func)(void *mode, int request, void *ptr);
 
-/** Struct defining a Speex mode */ 
+/** Struct defining a Speex mode */
 typedef struct SpeexMode {
-   /** Pointer to the low-level mode data */
-   void *mode;
+	/** Pointer to the low-level mode data */
+	void *mode;
 
-   /** Pointer to the mode query function */
-   mode_query_func query;
-   
-   /** The name of the mode (you should not rely on this to identify the mode)*/
-   char *modeName;
+	/** Pointer to the mode query function */
+	mode_query_func query;
 
-   /**ID of the mode*/
-   int modeID;
+	/** The name of the mode (you should not rely on this to identify the mode)*/
+	char *modeName;
 
-   /**Version number of the bitstream (incremented every time we break
-    bitstream compatibility*/
-   int bitstream_version;
+	/**ID of the mode*/
+	int modeID;
 
-   /** Pointer to encoder initialization function */
-   encoder_init_func enc_init;
+	/**Version number of the bitstream (incremented every time we break
+	bitstream compatibility*/
+	int bitstream_version;
 
-   /** Pointer to encoder destruction function */
-   encoder_destroy_func enc_destroy;
+	/** Pointer to encoder initialization function */
+	encoder_init_func enc_init;
 
-   /** Pointer to frame encoding function */
-   encode_func enc;
+	/** Pointer to encoder destruction function */
+	encoder_destroy_func enc_destroy;
 
-   /** Pointer to decoder initialization function */
-   decoder_init_func dec_init;
+	/** Pointer to frame encoding function */
+	encode_func enc;
 
-   /** Pointer to decoder destruction function */
-   decoder_destroy_func dec_destroy;
+	/** Pointer to decoder initialization function */
+	decoder_init_func dec_init;
 
-   /** Pointer to frame decoding function */
-   decode_func dec;
+	/** Pointer to decoder destruction function */
+	decoder_destroy_func dec_destroy;
 
-   /** ioctl-like requests for encoder */
-   encoder_ctl_func enc_ctl;
+	/** Pointer to frame decoding function */
+	decode_func dec;
 
-   /** ioctl-like requests for decoder */
-   decoder_ctl_func dec_ctl;
+	/** ioctl-like requests for encoder */
+	encoder_ctl_func enc_ctl;
+
+	/** ioctl-like requests for decoder */
+	decoder_ctl_func dec_ctl;
 
 } SpeexMode;
 
 /**
- * Returns a handle to a newly created Speex encoder state structure. For now, 
- * the "mode" argument can be &nb_mode or &wb_mode . In the future, more modes 
- * may be added. Note that for now if you have more than one channels to 
+ * Returns a handle to a newly created Speex encoder state structure. For now,
+ * the "mode" argument can be &nb_mode or &wb_mode . In the future, more modes
+ * may be added. Note that for now if you have more than one channels to
  * encode, you need one state per channel.
  *
- * @param mode The mode to use (either speex_nb_mode or speex_wb.mode) 
+ * @param mode The mode to use (either speex_nb_mode or speex_wb.mode)
  * @return A newly created encoder
  */
 void *speex_encoder_init(SpeexMode *mode);
 
-/** Frees all resources associated to an existing Speex encoder state. 
+/** Frees all resources associated to an existing Speex encoder state.
  * @param state Encoder state to be destroyed */
 void speex_encoder_destroy(void *state);
 
 /** Uses an existing encoder state to encode one frame of speech pointed to by
-    "in". The encoded bit-stream is saved in "bits".
+	"in". The encoded bit-stream is saved in "bits".
  @param state Encoder state
  @param in Frame that will be encoded with a +-2^16 range
  @param bits Bit-stream where the data will be written
@@ -266,14 +266,14 @@ int speex_encode(void *state, float *in, SpeexBits *bits);
 int speex_encoder_ctl(void *state, int request, void *ptr);
 
 
-/** Returns a handle to a newly created decoder state structure. For now, 
+/** Returns a handle to a newly created decoder state structure. For now,
  * the mode argument can be &nb_mode or &wb_mode . In the future, more modes
  * may be added.  Note that for now if you have more than one channels to
  * decode, you need one state per channel.
  *
  * @param mode Speex mode (one of speex_nb_mode or speex_wb_mode)
  * @return A newly created decoder state
- */ 
+ */
 void *speex_decoder_init(SpeexMode *mode);
 
 /** Frees all resources associated to an existing decoder state.

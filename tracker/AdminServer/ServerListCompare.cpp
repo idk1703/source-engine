@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -44,7 +44,7 @@ int __cdecl PingCompare(vgui::ListPanel *pPanel, const vgui::ListPanelItem &item
 		return -1;
 	else if ( ping1 > ping2 )
 		return 1;
-	
+
 	return 0;
 }
 
@@ -111,5 +111,3 @@ int __cdecl PlayersCompare(vgui::ListPanel *pPanel, const vgui::ListPanelItem &i
 
 	return 0;
 }
-
-

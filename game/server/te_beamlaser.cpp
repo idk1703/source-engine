@@ -26,15 +26,15 @@ public:
 	virtual			~CTEBeamLaser( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 public:
 	CNetworkVar( int, m_nStartEntity );
 	CNetworkVar( int, m_nEndEntity );
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEBeamLaser::CTEBeamLaser( const char *name ) :
 	CTEBaseBeam( name )
@@ -44,16 +44,16 @@ CTEBeamLaser::CTEBeamLaser( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEBeamLaser::~CTEBeamLaser( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEBeamLaser::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -86,20 +86,20 @@ END_SEND_TABLE()
 static CTEBeamLaser g_TEBeamLaser( "BeamLaser" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//			*start - 
-//			*end - 
-//			modelindex - 
-//			startframe - 
-//			framerate - 
-//			msg_dest - 
-//			delay - 
-//			origin - 
-//			recipient - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//			*start -
+//			*end -
+//			modelindex -
+//			startframe -
+//			framerate -
+//			msg_dest -
+//			delay -
+//			origin -
+//			recipient -
 //-----------------------------------------------------------------------------
 void TE_BeamLaser( IRecipientFilter& filter, float delay,
 	int	start, int end, int modelindex, int haloindex, int startframe, int framerate,

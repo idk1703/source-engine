@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -66,13 +66,13 @@ void RecvProxy_UtlVectorElement_DataTable( const RecvProp *pProp, void **pOut, v
 
 void DataTableRecvProxy_LengthProxy( const RecvProp *pProp, void **pOut, void *pData, int objectID )
 {
-	// This is VERY important - since it calls all the datatable proxies in the tree first, 
-	// particularly BEFORE it calls our array length proxy, we need to make sure we return 
-	// valid pointers that aren't going to change when it starts to copy the data into 
+	// This is VERY important - since it calls all the datatable proxies in the tree first,
+	// particularly BEFORE it calls our array length proxy, we need to make sure we return
+	// valid pointers that aren't going to change when it starts to copy the data into
 	// the datatable elements.
 	CRecvPropExtra_UtlVector *pExtra = (CRecvPropExtra_UtlVector*)pProp->GetExtraData();
 	pExtra->m_EnsureCapacityFn( pData, pExtra->m_Offset, pExtra->m_nMaxElements );
-	
+
 	*pOut = pData;
 }
 
@@ -95,19 +95,19 @@ RecvProp RecvPropUtlVector(
 	ret.m_pVarName = pVarName;
 	ret.SetOffset( 0 );
 	ret.SetDataTableProxyFn( DataTableRecvProxy_StaticDataTable );
-	
+
 	RecvProp *pProps = new RecvProp[nMaxElements+1]; // TODO free that again
 
-	
+
 	// Extra data bound to each of the properties.
 	CRecvPropExtra_UtlVector *pExtraData = new CRecvPropExtra_UtlVector;
-	
+
 	pExtraData->m_nMaxElements = nMaxElements;
 	pExtraData->m_ElementStride = sizeofVar;
 	pExtraData->m_ResizeFn = fn;
 	pExtraData->m_EnsureCapacityFn = ensureFn;
 	pExtraData->m_Offset = offset;
-	
+
 	if ( pArrayProp.m_RecvType == DPT_DataTable )
 		pExtraData->m_DataTableProxyFn = pArrayProp.GetDataTableProxyFn();
 	else
@@ -134,7 +134,7 @@ RecvProp RecvPropUtlVector(
 		pProps[i].SetExtraData( pExtraData );
 		pProps[i].SetElementStride( i-1 );	// Kind of lame overloading element stride to hold the element index,
 											// but we can easily move it into its SetExtraData stuff if we need to.
-		
+
 		// We provide our own proxy here.
 		if ( pArrayProp.m_RecvType == DPT_DataTable )
 		{
@@ -146,9 +146,9 @@ RecvProp RecvPropUtlVector(
 		}
 	}
 
-	RecvTable *pTable = new RecvTable( 
-		pProps, 
-		nMaxElements+1, 
+	RecvTable *pTable = new RecvTable(
+		pProps,
+		nMaxElements+1,
 		AllocateUniqueDataTableName( false, "_ST_%s_%d", pVarName, nMaxElements )
 		); // TODO free that again
 

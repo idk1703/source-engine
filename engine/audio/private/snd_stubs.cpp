@@ -154,7 +154,7 @@ void CEngineVoiceSteam::GetVoiceData( int iController, const byte **ppvVoiceData
 	const int size = ARRAYSIZE( m_pbVoiceData ) / XUSER_MAX_COUNT;
 	byte *pbVoiceData = m_pbVoiceData + iController * ARRAYSIZE( m_pbVoiceData ) / XUSER_MAX_COUNT;
 	*ppvVoiceDataBuffer = pbVoiceData;
-	
+
 	EVoiceResult res = Steam3Client().SteamUser()->GetVoice( true, pbVoiceData, size, pnumVoiceDataBytes, false, NULL, 0, NULL, 0 );
 	switch ( res )
 	{

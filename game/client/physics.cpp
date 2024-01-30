@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -119,7 +119,7 @@ private:
 		CCollisionEvent *m_pOuter;
 	};
 	friend class CallbackContext;
-	
+
 	void	AddTouchEvent( C_BaseEntity *pEntity0, C_BaseEntity *pEntity1, int touchType, const Vector &point, const Vector &normal );
 	void	DispatchStartTouch( C_BaseEntity *pEntity0, C_BaseEntity *pEntity1, const Vector &point, const Vector &normal );
 	void	DispatchEndTouch( C_BaseEntity *pEntity0, C_BaseEntity *pEntity1 );
@@ -347,7 +347,7 @@ public:
 
 	// The level is shutdown in two parts
 	virtual void LevelShutdownPreEntity();
-	
+
 	virtual void LevelShutdownPostEntity();
 
 	void AddImpactSound( void *pGameData, IPhysicsObject *pObject, int surfaceProps, int surfacePropsHit, float volume, float speed );
@@ -395,7 +395,7 @@ void CPhysicsSystem::LevelShutdownPreEntity()
 {
 	if ( physenv )
 	{
-		// we may have deleted multiple objects including the world by now, so 
+		// we may have deleted multiple objects including the world by now, so
 		// don't try to wake them up
 		physenv->SetQuickDelete( true );
 	}
@@ -466,7 +466,7 @@ void CPhysicsSystem::PhysicsSimulate()
 				}
 			}
 		}
-		
+
 		g_Collisions.BufferTouchEvents( false );
 		g_Collisions.FrameUpdate();
 	}
@@ -481,8 +481,8 @@ void PhysicsSimulate()
 
 
 
-CCollisionEvent::CCollisionEvent( void ) 
-{ 
+CCollisionEvent::CCollisionEvent( void )
+{
 }
 
 void CCollisionEvent::ObjectSound( int index, vcollisionevent_t *pEvent )
@@ -495,11 +495,11 @@ void CCollisionEvent::ObjectSound( int index, vcollisionevent_t *pEvent )
 	int surfaceProps = pEvent->surfaceProps[index];
 
 	void *pGameData = pObject->GetGameData();
-		
+
 	if ( pGameData )
 	{
 		float volume = speed * (1.0f/(320.0f*320.0f));	// max volume at 320 in/s
-		
+
 		if ( volume > 1.0f )
 			volume = 1.0f;
 
@@ -521,7 +521,7 @@ void CCollisionEvent::PostCollision( vcollisionevent_t *pEvent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCollisionEvent::FrameUpdate( void )
 {
@@ -531,7 +531,7 @@ void CCollisionEvent::FrameUpdate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCollisionEvent::UpdateTouchEvents( void )
 {
@@ -557,10 +557,10 @@ void CCollisionEvent::UpdateTouchEvents( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity0 - 
-//			*pEntity1 - 
-//			touchType - 
+// Purpose:
+// Input  : *pEntity0 -
+//			*pEntity1 -
+//			touchType -
 //-----------------------------------------------------------------------------
 void CCollisionEvent::AddTouchEvent( C_BaseEntity *pEntity0, C_BaseEntity *pEntity1, int touchType, const Vector &point, const Vector &normal )
 {
@@ -577,10 +577,10 @@ void CCollisionEvent::AddTouchEvent( C_BaseEntity *pEntity0, C_BaseEntity *pEnti
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObject1 - 
-//			*pObject2 - 
-//			*pTouchData - 
+// Purpose:
+// Input  : *pObject1 -
+//			*pObject2 -
+//			*pTouchData -
 //-----------------------------------------------------------------------------
 void CCollisionEvent::StartTouch( IPhysicsObject *pObject1, IPhysicsObject *pObject2, IPhysicsCollisionData *pTouchData )
 {
@@ -605,9 +605,9 @@ void CCollisionEvent::StartTouch( IPhysicsObject *pObject1, IPhysicsObject *pObj
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity0 - 
-//			*pEntity1 - 
+// Purpose:
+// Input  : *pEntity0 -
+//			*pEntity1 -
 //-----------------------------------------------------------------------------
 void CCollisionEvent::DispatchStartTouch( C_BaseEntity *pEntity0, C_BaseEntity *pEntity1, const Vector &point, const Vector &normal )
 {
@@ -622,10 +622,10 @@ void CCollisionEvent::DispatchStartTouch( C_BaseEntity *pEntity0, C_BaseEntity *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObject1 - 
-//			*pObject2 - 
-//			*pTouchData - 
+// Purpose:
+// Input  : *pObject1 -
+//			*pObject2 -
+//			*pTouchData -
 //-----------------------------------------------------------------------------
 void CCollisionEvent::EndTouch( IPhysicsObject *pObject1, IPhysicsObject *pObject2, IPhysicsCollisionData *pTouchData )
 {
@@ -647,9 +647,9 @@ void CCollisionEvent::EndTouch( IPhysicsObject *pObject1, IPhysicsObject *pObjec
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity0 - 
-//			*pEntity1 - 
+// Purpose:
+// Input  : *pEntity0 -
+//			*pEntity1 -
 //-----------------------------------------------------------------------------
 void CCollisionEvent::DispatchEndTouch( C_BaseEntity *pEntity0, C_BaseEntity *pEntity1 )
 {
@@ -670,19 +670,19 @@ void CCollisionEvent::Friction( IPhysicsObject *pObject, float energy, int surfa
 	pObject->GetVelocityAtPoint( vecPos, &vecVel );
 
 	CBaseEntity *pEntity = reinterpret_cast<CBaseEntity *>(pObject->GetGameData());
-		
+
 	if ( pEntity  )
 	{
 		friction_t *pFriction = g_Collisions.FindFriction( pEntity );
 
-		if ( (gpGlobals->maxClients > 1) && pFriction && pFriction->pObject) 
+		if ( (gpGlobals->maxClients > 1) && pFriction && pFriction->pObject)
 		{
 			// in MP mode play sound and effects once every 500 msecs,
 			// no ongoing updates, takes too much bandwidth
 			if ( (pFriction->flLastEffectTime + 0.5f) > gpGlobals->curtime)
 			{
 				pFriction->flLastUpdateTime = gpGlobals->curtime;
-				return; 			
+				return;
 			}
 		}
 
@@ -732,9 +732,9 @@ void CCollisionEvent::UpdateFrictionSounds( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &matrix - 
-//			&normal - 
+// Purpose:
+// Input  : &matrix -
+//			&normal -
 // Output : static int
 //-----------------------------------------------------------------------------
 static int BestAxisMatchingNormal( matrix3x4_t &matrix, const Vector &normal )
@@ -757,10 +757,10 @@ static int BestAxisMatchingNormal( matrix3x4_t &matrix, const Vector &normal )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFluid - 
-//			*pObject - 
-//			*pEntity - 
+// Purpose:
+// Input  : *pFluid -
+//			*pObject -
+//			*pEntity -
 //-----------------------------------------------------------------------------
 void PhysicsSplash( IPhysicsFluidController *pFluid, IPhysicsObject *pObject, CBaseEntity *pEntity )
 {
@@ -770,7 +770,7 @@ void PhysicsSplash( IPhysicsFluidController *pFluid, IPhysicsObject *pObject, CB
 
 	Vector velocity;
 	pObject->GetVelocity( &velocity, NULL );
-	
+
 	float impactSpeed = velocity.Length();
 
 	if ( impactSpeed < 25.0f )
@@ -781,7 +781,7 @@ void PhysicsSplash( IPhysicsFluidController *pFluid, IPhysicsObject *pObject, CB
 	pFluid->GetSurfacePlane( &normal, &dist );
 
 	matrix3x4_t &matrix = pEntity->EntityToWorldTransform();
-	
+
 	// Find the local axis that best matches the water surface normal
 	int bestAxis = BestAxisMatchingNormal( matrix, normal );
 
@@ -794,7 +794,7 @@ void PhysicsSplash( IPhysicsFluidController *pFluid, IPhysicsObject *pObject, CB
 
 	// Now we have a basis tangent to the surface that matches the object's local orientation as well as possible
 	// compute an OBB using this basis
-	
+
 	// Get object extents in basis
 	Vector tanPts[2], binPts[2];
 	tanPts[0] = physcollision->CollideGetExtent( pObject->GetCollide(), pEntity->GetAbsOrigin(), pEntity->GetAbsAngles(), -tangent );
@@ -847,7 +847,7 @@ void PhysicsSplash( IPhysicsFluidController *pFluid, IPhysicsObject *pObject, CB
 
 	Vector	color = vec3_origin;
 	float	luminosity = 1.0f;
-	
+
 	if ( !bInSlime )
 	{
 		// Get our lighting information
@@ -869,7 +869,7 @@ void PhysicsSplash( IPhysicsFluidController *pFluid, IPhysicsObject *pObject, CB
 	{
 		FX_WaterRipple( centerPoint, 1.5f, &color, 1.5f, luminosity );
 	}
-	
+
 	int		splashes = 4;
 	Vector	point;
 
@@ -899,7 +899,7 @@ void PhysicsSplash( IPhysicsFluidController *pFluid, IPhysicsObject *pObject, CB
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCollisionEvent::UpdateFluidEvents( void )
 {
@@ -913,8 +913,8 @@ void CCollisionEvent::UpdateFluidEvents( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEntity - 
+// Purpose:
+// Input  : *pEntity -
 // Output : float
 //-----------------------------------------------------------------------------
 float CCollisionEvent::DeltaTimeSinceLastFluid( CBaseEntity *pEntity )
@@ -934,9 +934,9 @@ float CCollisionEvent::DeltaTimeSinceLastFluid( CBaseEntity *pEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObject - 
-//			*pFluid - 
+// Purpose:
+// Input  : *pObject -
+//			*pFluid -
 //-----------------------------------------------------------------------------
 void CCollisionEvent::FluidStartTouch( IPhysicsObject *pObject, IPhysicsFluidController *pFluid )
 {
@@ -945,11 +945,11 @@ void CCollisionEvent::FluidStartTouch( IPhysicsObject *pObject, IPhysicsFluidCon
 		return;
 
 	CBaseEntity *pEntity = static_cast<CBaseEntity *>(pObject->GetGameData());
-	
+
 	if ( pEntity )
 	{
 		float timeSinceLastCollision = DeltaTimeSinceLastFluid( pEntity );
-		
+
 		if ( timeSinceLastCollision < 0.5f )
 			return;
 
@@ -958,9 +958,9 @@ void CCollisionEvent::FluidStartTouch( IPhysicsObject *pObject, IPhysicsFluidCon
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObject - 
-//			*pFluid - 
+// Purpose:
+// Input  : *pObject -
+//			*pFluid -
 //-----------------------------------------------------------------------------
 void CCollisionEvent::FluidEndTouch( IPhysicsObject *pObject, IPhysicsFluidController *pFluid )
 {
@@ -977,7 +977,7 @@ void PhysFrictionSound( CBaseEntity *pEntity, IPhysicsObject *pObject, const cha
 {
 	if ( !pEntity )
 		return;
-	
+
 	// cut out the quiet sounds
 	// UNDONE: Separate threshold for starting a sound vs. continuing?
 	flVolume = clamp( flVolume, 0.0f, 1.0f );
@@ -1005,7 +1005,7 @@ void PhysFrictionSound( CBaseEntity *pEntity, IPhysicsObject *pObject, const cha
 			if ( entindex < 0 )
 				entindex = 0;
 
-			pFriction->patch = CSoundEnvelopeController::GetController().SoundCreate( 
+			pFriction->patch = CSoundEnvelopeController::GetController().SoundCreate(
 				filter, entindex, CHAN_BODY, pSoundName, params.soundlevel );
 			CSoundEnvelopeController::GetController().Play( pFriction->patch, params.volume * flVolume, params.pitch );
 		}

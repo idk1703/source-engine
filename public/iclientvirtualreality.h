@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Contains the IClientVirtualReality interface, which is implemented in 
+// Purpose: Contains the IClientVirtualReality interface, which is implemented in
 //			client.dll and called by engine.dll
 //
 // $NoKeywords: $

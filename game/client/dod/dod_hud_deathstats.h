@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -73,10 +73,10 @@ protected:
 	CHudTexture		*m_iconD_skull;
 
 	// Icons for stats
-	CHudTexture		*m_pIconKill;		
+	CHudTexture		*m_pIconKill;
 	CHudTexture		*m_pIconWounded;
 	CHudTexture		*m_pIconCap;
-	CHudTexture		*m_pIconDefended;	
+	CHudTexture		*m_pIconDefended;
 
 
 	CPanelAnimationVar( vgui::HFont, m_hTextFont, "TextFont", "HudNumbersTimer" );

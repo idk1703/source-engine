@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -164,7 +164,7 @@ class CUtlMemoryFixedGrowable : public CUtlMemory< T, I >
 	typedef CUtlMemory< T, I > BaseClass;
 
 public:
-	CUtlMemoryFixedGrowable( int nGrowSize = 0, int nInitSize = SIZE ) : BaseClass( m_pFixedMemory, SIZE ) 
+	CUtlMemoryFixedGrowable( int nGrowSize = 0, int nInitSize = SIZE ) : BaseClass( m_pFixedMemory, SIZE )
 	{
 		Assert( nInitSize == 0 || nInitSize == SIZE );
 		m_nMallocGrowSize = nGrowSize;
@@ -186,7 +186,7 @@ public:
 
 		if ( this->IsExternallyAllocated() )
 		{
-			// Can't grow a buffer whose memory was externally allocated 
+			// Can't grow a buffer whose memory was externally allocated
 			this->ConvertToGrowableMemory( m_nMallocGrowSize );
 		}
 
@@ -367,9 +367,9 @@ public:
 	// Memory deallocation
 	void Purge()
 	{
-		free( m_pMemory ); 
+		free( m_pMemory );
 		RememberAllocSize( 0 );
-		m_pMemory = NULL; 
+		m_pMemory = NULL;
 	}
 
 	// Purge all but the given number of elements
@@ -411,7 +411,7 @@ private:
 //-----------------------------------------------------------------------------
 
 template< class T, class I >
-CUtlMemory<T,I>::CUtlMemory( int nGrowSize, int nInitAllocationCount ) : m_pMemory(0), 
+CUtlMemory<T,I>::CUtlMemory( int nGrowSize, int nInitAllocationCount ) : m_pMemory(0),
 	m_nAllocationCount( nInitAllocationCount ), m_nGrowSize( nGrowSize )
 {
 	ValidateGrowSize();
@@ -492,7 +492,7 @@ void CUtlMemory<T,I>::ConvertToGrowableMemory( int nGrowSize )
 
 		int nNumBytes = m_nAllocationCount * sizeof(T);
 		T *pMemory = (T*)malloc( nNumBytes );
-		memcpy( (void*)pMemory, (void*)m_pMemory, nNumBytes ); 
+		memcpy( (void*)pMemory, (void*)m_pMemory, nNumBytes );
 		m_pMemory = pMemory;
 	}
 	else
@@ -662,10 +662,10 @@ inline bool CUtlMemory<T,I>::IsIdxValid( I i ) const
 inline int UtlMemory_CalcNewAllocationCount( int nAllocationCount, int nGrowSize, int nNewSize, int nBytesItem )
 {
 	if ( nGrowSize )
-	{ 
+	{
 		nAllocationCount = ((1 + ((nNewSize - 1) / nGrowSize)) * nGrowSize);
 	}
-	else 
+	else
 	{
 		if ( !nAllocationCount )
 		{
@@ -697,7 +697,7 @@ void CUtlMemory<T,I>::Grow( int num )
 
 	if ( IsExternallyAllocated() )
 	{
-		// Can't grow a buffer whose memory was externally allocated 
+		// Can't grow a buffer whose memory was externally allocated
 		Assert(0);
 		return;
 	}
@@ -762,7 +762,7 @@ inline void CUtlMemory<T,I>::EnsureCapacity( int num )
 
 	if ( IsExternallyAllocated() )
 	{
-		// Can't grow a buffer whose memory was externally allocated 
+		// Can't grow a buffer whose memory was externally allocated
 		Assert(0);
 		return;
 	}
@@ -825,7 +825,7 @@ void CUtlMemory<T,I>::Purge( int numElements )
 
 	if ( IsExternallyAllocated() )
 	{
-		// Can't shrink a buffer whose memory was externally allocated, fail silently like purge 
+		// Can't shrink a buffer whose memory was externally allocated, fail silently like purge
 		return;
 	}
 
@@ -846,7 +846,7 @@ void CUtlMemory<T,I>::Purge( int numElements )
 	UTLMEMORY_TRACK_FREE();
 
 	m_nAllocationCount = numElements;
-	
+
 	UTLMEMORY_TRACK_ALLOC();
 
 	// Allocation count > 0, shrink it down.
@@ -906,7 +906,7 @@ void *CUtlMemoryAligned<T, nAlignment>::Align( const void *pAddr )
 template< class T, int nAlignment >
 CUtlMemoryAligned<T, nAlignment>::CUtlMemoryAligned( int nGrowSize, int nInitAllocationCount )
 {
-	CUtlMemory<T>::m_pMemory = 0; 
+	CUtlMemory<T>::m_pMemory = 0;
 	CUtlMemory<T>::m_nAllocationCount = nInitAllocationCount;
 	CUtlMemory<T>::m_nGrowSize = nGrowSize;
 	this->ValidateGrowSize();
@@ -989,7 +989,7 @@ void CUtlMemoryAligned<T, nAlignment>::Grow( int num )
 
 	if ( this->IsExternallyAllocated() )
 	{
-		// Can't grow a buffer whose memory was externally allocated 
+		// Can't grow a buffer whose memory was externally allocated
 		Assert(0);
 		return;
 	}
@@ -1030,7 +1030,7 @@ inline void CUtlMemoryAligned<T, nAlignment>::EnsureCapacity( int num )
 
 	if ( this->IsExternallyAllocated() )
 	{
-		// Can't grow a buffer whose memory was externally allocated 
+		// Can't grow a buffer whose memory was externally allocated
 		Assert(0);
 		return;
 	}

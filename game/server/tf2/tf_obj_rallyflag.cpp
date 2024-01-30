@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,7 +27,7 @@ PRECACHE_REGISTER(obj_rallyflag);
 ConVar	obj_rallyflag_health( "obj_rallyflag_health","100", FCVAR_NONE, "Rally Flag health" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectRallyFlag::CObjectRallyFlag()
 {
@@ -35,7 +35,7 @@ CObjectRallyFlag::CObjectRallyFlag()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectRallyFlag::Spawn()
 {
@@ -53,14 +53,14 @@ void CObjectRallyFlag::Spawn()
 	m_flExpiresAt = gpGlobals->curtime + RALLYFLAG_LIFETIME;
 
 	SetType( OBJ_RALLYFLAG );
-	m_fObjectFlags |= OF_SUPPRESS_NOTIFY_UNDER_ATTACK | OF_SUPPRESS_TECH_ANALYZER | 
+	m_fObjectFlags |= OF_SUPPRESS_NOTIFY_UNDER_ATTACK | OF_SUPPRESS_TECH_ANALYZER |
 		OF_DONT_AUTO_REPAIR | OF_DONT_PREVENT_BUILD_NEAR_OBJ | OF_DOESNT_NEED_POWER;
 
 	BaseClass::Spawn();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectRallyFlag::Precache()
 {
@@ -105,4 +105,3 @@ void CObjectRallyFlag::RallyThink( void )
 
 	SetNextThink( gpGlobals->curtime + RALLYFLAG_RATE );
 }
-

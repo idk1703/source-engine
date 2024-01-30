@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -16,7 +16,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// An entity which emits other entities at points 
+// An entity which emits other entities at points
 //-----------------------------------------------------------------------------
 class C_EnvParticleScript : public C_BaseAnimating, public IParticleEffect
 {
@@ -47,7 +47,7 @@ public:
 	virtual void FireEvent( const Vector& origin, const QAngle& angles, int event, const char *options );
 	virtual void OnPreDataChanged( DataUpdateType_t updateType );
 	virtual void OnDataChanged( DataUpdateType_t updateType );
-	
+
 private:
 
 	// Creates, destroys particles attached to an attachment
@@ -104,7 +104,7 @@ void C_EnvParticleScript::OnPreDataChanged( DataUpdateType_t updateType )
 // Starts up the particle system
 //-----------------------------------------------------------------------------
 void C_EnvParticleScript::OnDataChanged( DataUpdateType_t updateType )
-{		
+{
 	BaseClass::OnDataChanged( updateType );
 
 	if(updateType == DATA_UPDATE_CREATED)
@@ -131,12 +131,12 @@ void C_EnvParticleScript::CreateParticle( const char *pAttachmentName, const cha
 
 	// Get the sprite materials
 	PMaterialHandle hMat = m_ParticleEffect.FindOrAddMaterial( pSpriteName );
-	ParticleScriptParticle_t *pParticle = 
+	ParticleScriptParticle_t *pParticle =
 		(ParticleScriptParticle_t*)m_ParticleEffect.AddParticle(sizeof(ParticleScriptParticle_t), hMat);
 
 	if ( pParticle == NULL )
 		return;
-	
+
 	// Get the sprite size from the material's materialvars
 	bool bFound = false;
 	IMaterialVar *pMaterialVar = NULL;
@@ -265,7 +265,7 @@ void C_EnvParticleScript::RenderParticles( CParticleRenderIterator *pIterator )
 
 		Vector color( 1, 1, 1 );
 		RenderParticle_ColorSize( pIterator->GetParticleDraw(), vecRenderPos, color, 1.0f, pParticle->m_flSize );
-		
+
 		pParticle = (const ParticleScriptParticle_t*)pIterator->GetNext( sortKey );
 	}
 }
@@ -293,7 +293,7 @@ void C_EnvParticleScript::SimulateParticles( CParticleSimulateIterator *pIterato
 				pParticle->m_Pos += GetAbsOrigin();
 			}
 		}
-		
+
 		pParticle = (ParticleScriptParticle_t*)pIterator->GetNext();
 	}
 }

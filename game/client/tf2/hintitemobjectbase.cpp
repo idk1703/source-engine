@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,9 +12,9 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
-//			*panelName - 
+// Purpose:
+// Input  : *parent -
+//			*panelName -
 //-----------------------------------------------------------------------------
 CHintItemObjectBase::CHintItemObjectBase( vgui::Panel *parent, const char *panelName )
 : BaseClass( parent, panelName )
@@ -23,13 +23,13 @@ CHintItemObjectBase::CHintItemObjectBase( vgui::Panel *parent, const char *panel
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pKeyValues - 
+// Purpose:
+// Input  : *pKeyValues -
 //-----------------------------------------------------------------------------
 void CHintItemObjectBase::ParseItem( KeyValues *pKeyValues )
 {
 	BaseClass::ParseItem( pKeyValues );
-	
+
 	const char *type = pKeyValues->GetString( "type", "" );
 	if ( type )
 	{
@@ -38,8 +38,8 @@ void CHintItemObjectBase::ParseItem( KeyValues *pKeyValues )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *object - 
+// Purpose:
+// Input  : *object -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CHintItemObjectBase::IsObjectOfType( C_BaseEntity *object )
@@ -56,13 +56,13 @@ bool CHintItemObjectBase::IsObjectOfType( C_BaseEntity *object )
 	{
 		return dynamic_cast< C_BaseObject * >( object) ? true : false;
 	}
-	
+
 	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *type - 
+// Purpose:
+// Input  : *type -
 //-----------------------------------------------------------------------------
 void CHintItemObjectBase::SetObjectType( const char *type )
 {
@@ -70,7 +70,7 @@ void CHintItemObjectBase::SetObjectType( const char *type )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *CHintItemObjectBase::GetObjectType( void )

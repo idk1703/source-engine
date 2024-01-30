@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -198,7 +198,7 @@ void CLeaderboardInfo::OnLeaderboardScoresDownloadedFriends( LeaderboardScoresDo
 	}
 
 	downloadedLeaderboardScoresFriends.Sort( &SortLeaderboardVec );
-	
+
 	m_bLeaderboardFound = true;
 }
 
@@ -244,7 +244,7 @@ public:
 		m_flNextUpdateDuckScoreTime = Plat_FloatTime() + 10.0f;
 #ifdef CLIENT_DLL
 		m_flNextDuckScoresUploadTime = Plat_FloatTime() + tf_duck_upload_rate.GetFloat();
-#endif 
+#endif
 		m_flNextLadderUpdateTime = Plat_FloatTime() + 10.f;
 	}
 
@@ -267,7 +267,7 @@ public:
 
 #ifdef CLIENT_DLL
 
-	virtual void LevelShutdownPreEntity() 
+	virtual void LevelShutdownPreEntity()
 	{
 		// upload scores on level leave
 		//DuckUploadPendingScores();
@@ -331,7 +331,7 @@ public:
 			// and start downloading the leaderboards
 			// friends
 			SteamAPICall_t apicall = steamapicontext->SteamUserStats()->DownloadLeaderboardEntries( m_findDuelLeaderboardResults.m_hSteamLeaderboard, k_ELeaderboardDataRequestFriends, 1, 10 );
-			m_downloadLeaderboardCallback_Friends.Set( apicall, this, &CMapInfoContainer::OnDuelLeaderboardScoresDownloaded_Friends );			
+			m_downloadLeaderboardCallback_Friends.Set( apicall, this, &CMapInfoContainer::OnDuelLeaderboardScoresDownloaded_Friends );
 			// global around user
 			apicall = steamapicontext->SteamUserStats()->DownloadLeaderboardEntries( m_findDuelLeaderboardResults.m_hSteamLeaderboard, k_ELeaderboardDataRequestGlobalAroundUser, -4, 5 );
 			m_downloadLeaderboardCallback_GlobalAroundUser.Set( apicall, this, &CMapInfoContainer::OnDuelLeaderboardScoresDownloaded_GlobalAroundUser );
@@ -346,7 +346,7 @@ public:
 
 	void OnDuelLeaderboardScoresDownloaded_GlobalAroundUser( LeaderboardScoresDownloaded_t *pResult, bool bIOFailure )
 	{
-		RetrieveLeaderboardEntries( *pResult, m_downloadedDuelLeaderboardScores_GlobalAroundUser );		
+		RetrieveLeaderboardEntries( *pResult, m_downloadedDuelLeaderboardScores_GlobalAroundUser );
 	}
 
 	void OnDuelLeaderboardScoresDownloaded_Friends( LeaderboardScoresDownloaded_t *pResult, bool bIOFailure )
@@ -419,7 +419,7 @@ public:
 		//for ( int i = 0; i < DUCK_NUM_LEADERBOARDS; ++i )
 		//{
 		//	CLeaderboardInfo *pLeaderboard = GetDuckLeaderboard( g_szDuckLeaderboardNames[i] );
-		//	
+		//
 		//	if ( pLeaderboard && pLeaderboard->IsLeaderboardFound() && pLeaderboard->HasPendingUpdate() )
 		//	{
 		//		pLeaderboard->SetHasPendingUpdate( false );
@@ -433,7 +433,7 @@ public:
 
 		//		MD5Context_t md5Context;
 		//		MD5Init( &md5Context );
-		//		
+		//
 		//		AccountID_t unAccountId = localID.GetAccountID();
 		//		int nScore = pLeaderboard->GetMyScore();
 
@@ -442,7 +442,7 @@ public:
 		//		MD5Update( &md5Context, static_cast<const uint8 *>( (void *)&i ), sizeof( i ) );
 		//		MD5Update( &md5Context, static_cast<const uint8 *>( (void *)&TF_DUCK_ID ), sizeof( TF_DUCK_ID ) );
 		//		MD5Update( &md5Context, static_cast<const uint8 *>( (void *)&iScoreCheck ), sizeof( iScoreCheck ) );
-		//		
+		//
 		//		MD5Value_t md5Result;
 		//		MD5Final( &md5Result.bits[0], &md5Context );
 		//		msg.Body().set_score_id( &md5Result.bits[0], MD5_DIGEST_LENGTH );
@@ -457,13 +457,13 @@ public:
 	{
 		// Get Current Score
 		CLeaderboardInfo *pLeaderboard = GetDuckLeaderboard( g_szDuckLeaderboardNames[kLeaderboard] );
-		int iCurrentScore = pLeaderboard->GetMyScore();	
+		int iCurrentScore = pLeaderboard->GetMyScore();
 		int iNewScore = iCurrentScore + iIncrement;
 
 #ifdef CLIENT_DLL
 		int iOldLevel = iCurrentScore / DUCK_XP_SCALE;
 		int iNewLevel = iNewScore / DUCK_XP_SCALE;
-		
+
 		if ( iNewLevel > iOldLevel )
 		{
 			IGameEvent *event = gameeventmanager->CreateEvent( "duck_xp_level_up" );
@@ -514,7 +514,7 @@ public:
 		{
 			SteamAPICall_t apicall = steamapicontext->SteamUserStats()->FindLeaderboard( "duel_wins" );
 			m_findLeaderboardCallback.Set( apicall, this, &CMapInfoContainer::OnFindDuelLeaderboard );
-		}		
+		}
 
 		// find duck leaderboards
 		for ( int i = 0; i < DUCK_NUM_LEADERBOARDS; i++ )
@@ -541,7 +541,7 @@ public:
 
 public:
 
-	CUtlVector< CLeaderboardInfo* > m_vecMapInfos;	
+	CUtlVector< CLeaderboardInfo* > m_vecMapInfos;
 	// for duels
 	CCallResult< CMapInfoContainer, LeaderboardFindResult_t > m_findLeaderboardCallback;
 	CCallResult< CMapInfoContainer, LeaderboardScoresDownloaded_t > m_downloadLeaderboardCallback_GlobalAroundUser;
@@ -841,7 +841,7 @@ bool Leaderboards_GetLadderLeaderboard( CUtlVector< LeaderboardEntry_t* > &score
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void Leaderboards_LadderRefresh( void )
 {

@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -21,16 +21,16 @@
 //-----------------------------------------------------------------------------
 // A Graph class
 //
-// Nodes must have a unique Node ID. 
+// Nodes must have a unique Node ID.
 //
 // Edges are unidirectional, specified from the beginning node.
 //
 //-----------------------------------------------------------------------------
 
-template <class T, class C > 
+template <class T, class C >
 class CUtlGraphVisitor;
 
-template <class T, class C = int > 
+template <class T, class C = int >
 class CUtlGraph
 {
 public:
@@ -78,7 +78,7 @@ public:
 
 	// Remove an edge
 	bool RemoveEdge( T SourceNode, T DestNode );
-	
+
 	// gets particular elements
 	T&			Element( I i );
 	T const		&Element( I i ) const;
@@ -91,19 +91,19 @@ public:
 
 	// Num elements
 	unsigned int Count() const								{ return m_Nodes.Count() ; }
-	
+
 	// Max "size" of the vector
 	I  MaxElement() const									{ return m_Nodes.MaxElement(); }
-	
+
 	// Checks if a node is valid and in the graph
 	bool  IsValidIndex( I i ) const							{ return m_Nodes.IsValidIndex( i ); }
-	
+
 	// Checks if the graph as a whole is valid
 	bool  IsValid() const									{ return m_Nodes.IsValid(); }
-	
+
 	// Invalid index
 	static I InvalidIndex()									{ return CUtlMap< NodeID_t, vecEdges_t*>::InvalidIndex(); }
-	
+
 	// Remove methods
 	void     RemoveAt( I i );
 	void     RemoveAll();
@@ -148,7 +148,7 @@ protected:
 // From the specified beginning point, visits each node in an expanding radius
 //
 //-----------------------------------------------------------------------------
-template <class T, class C = int > 
+template <class T, class C = int >
 class CUtlGraphVisitor
 {
 public:
@@ -160,13 +160,13 @@ public:
 	T CurrentNode();
 	C AccumulatedCost();
 	int CurrentRadius();
-		
+
 private:
 
 	typedef typename CUtlGraph<T,C>::IndexType_t IndexType_t;
 	typedef typename CUtlGraph<T,C>::Edge_t Edge_t;
 	typedef CUtlVector<Edge_t> vecEdges_t;
-	
+
 	CUtlGraph<T, C> &m_Graph;
 
 	vecEdges_t m_vecVisitQueue;
@@ -183,13 +183,13 @@ private:
 // constructor, destructor
 //-----------------------------------------------------------------------------
 
-template <class T, class C > 
+template <class T, class C >
 inline CUtlGraph<T, C>::CUtlGraph()
 {
 	SetDefLessFunc( m_Nodes );
 }
 
-template <class T, class C >  
+template <class T, class C >
 inline CUtlGraph<T, C>::~CUtlGraph()
 {
 	RemoveAll();
@@ -199,28 +199,28 @@ inline CUtlGraph<T, C>::~CUtlGraph()
 // gets particular elements
 //-----------------------------------------------------------------------------
 
-template <class T, class C > 
-inline T &CUtlGraph<T, C>::Element( I i )        
-{ 
-	return m_Nodes.Key( i ); 
+template <class T, class C >
+inline T &CUtlGraph<T, C>::Element( I i )
+{
+	return m_Nodes.Key( i );
 }
 
-template <class T, class C > 
-inline T const &CUtlGraph<T, C>::Element( I i ) const  
-{ 
-	return m_Nodes.Key( i ); 
+template <class T, class C >
+inline T const &CUtlGraph<T, C>::Element( I i ) const
+{
+	return m_Nodes.Key( i );
 }
 
-template <class T, class C > 
-inline T &CUtlGraph<T, C>::operator[]( I i )        
-{ 
-	return Element(i); 
+template <class T, class C >
+inline T &CUtlGraph<T, C>::operator[]( I i )
+{
+	return Element(i);
 }
 
-template <class T, class C > 
-inline T const &CUtlGraph<T, C>::operator[]( I i ) const  
-{ 
-	return Element(i); 
+template <class T, class C >
+inline T const &CUtlGraph<T, C>::operator[]( I i ) const
+{
+	return Element(i);
 }
 
 //-----------------------------------------------------------------------------
@@ -228,12 +228,12 @@ inline T const &CUtlGraph<T, C>::operator[]( I i ) const
 // various accessors
 //
 //-----------------------------------------------------------------------------
-	
+
 //-----------------------------------------------------------------------------
 // Removes all nodes from the tree
 //-----------------------------------------------------------------------------
 
-template <class T, class C > 
+template <class T, class C >
 void CUtlGraph<T, C>::RemoveAll()
 {
 	FOR_EACH_MAP_FAST( m_Nodes, iNode )
@@ -248,7 +248,7 @@ void CUtlGraph<T, C>::RemoveAll()
 //-----------------------------------------------------------------------------
 // Makes sure we have enough memory allocated to store a requested # of elements
 //-----------------------------------------------------------------------------
-template <class T, class C >  
+template <class T, class C >
 void CUtlGraph<T, C>::EnsureCapacity( int num )
 {
 	m_Nodes.EnsureCapacity(num);
@@ -257,7 +257,7 @@ void CUtlGraph<T, C>::EnsureCapacity( int num )
 //-----------------------------------------------------------------------------
 // Add an edge
 //-----------------------------------------------------------------------------
-template <class T, class C >  
+template <class T, class C >
 bool CUtlGraph<T, C>::AddEdge( T SourceNode, T DestNode, C nCost )
 {
 	I iSrcNode = m_Nodes.Find( SourceNode );
@@ -300,7 +300,7 @@ bool CUtlGraph<T, C>::AddEdge( T SourceNode, T DestNode, C nCost )
 //-----------------------------------------------------------------------------
 // Remove an edge
 //-----------------------------------------------------------------------------
-template <class T, class C >  
+template <class T, class C >
 bool CUtlGraph<T, C>::RemoveEdge( T SourceNode, T DestNode )
 {
 	I iSrcNode = m_Nodes.Find( SourceNode );
@@ -332,7 +332,7 @@ bool CUtlGraph<T, C>::RemoveEdge( T SourceNode, T DestNode )
 //-----------------------------------------------------------------------------
 // Get all of a Node's edges
 //-----------------------------------------------------------------------------
-template <class T, class C >  
+template <class T, class C >
 typename CUtlGraph<T, C>::vecEdges_t *CUtlGraph<T, C>::GetEdges( I i )
 {
 	return m_Nodes[i].m_pvecEdges;
@@ -341,7 +341,7 @@ typename CUtlGraph<T, C>::vecEdges_t *CUtlGraph<T, C>::GetEdges( I i )
 //-----------------------------------------------------------------------------
 // Get all of a Node's edges
 //-----------------------------------------------------------------------------
-template <class T, class C >  
+template <class T, class C >
 typename CUtlGraph<T, C>::vecEdges_t *CUtlGraph<T, C>::GetPathCosts( I i )
 {
 	return m_Nodes[i].m_pvecPaths;
@@ -352,7 +352,7 @@ typename CUtlGraph<T, C>::vecEdges_t *CUtlGraph<T, C>::GetPathCosts( I i )
 // Data and memory validation
 //-----------------------------------------------------------------------------
 #ifdef DBGFLAG_VALIDATE
-template <class T, class C > 
+template <class T, class C >
 void CUtlGraph<T, C>::Validate( CValidator &validator, const char *pchName )
 {
 #ifdef _WIN32
@@ -379,7 +379,7 @@ void CUtlGraph<T, C>::Validate( CValidator &validator, const char *pchName )
 //-----------------------------------------------------------------------------
 // Get all of a Node's edges
 //-----------------------------------------------------------------------------
-template <class T, class C >  
+template <class T, class C >
 void CUtlGraph<T, C>::CreatePathMatrix()
 {
 	int n = MaxElement();
@@ -389,10 +389,10 @@ void CUtlGraph<T, C>::CreatePathMatrix()
 	// we know that we can use its indices in our own path matrix
 	// vectors safely (they will be numbers in the range (0,N) where
 	// N is largest number of nodes ever present in the graph).
-	// 
+	//
 	// This lets us very quickly access previous best-path estimates
 	// by indexing into a node's vecPaths directly.
-	// 
+	//
 	// When we are all done, we can then compact the vector, removing
 	// "null" paths, and then sorting by cost.
 
@@ -401,7 +401,7 @@ void CUtlGraph<T, C>::CreatePathMatrix()
 	{
 		vecEdges_t &vecEdges = *m_Nodes.Element( iNode ).m_pvecEdges;
 		vecEdges_t &vecPaths = *m_Nodes.Element( iNode ).m_pvecPaths;
-		
+
 		vecPaths.RemoveAll();
 		vecPaths.AddMultipleToTail( n );
 		FOR_EACH_VEC( vecPaths, iPath )
@@ -462,7 +462,7 @@ void CUtlGraph<T, C>::CreatePathMatrix()
 				int iFromKToJ = j;
 				bool bFromKToJ = destMapFromK[iFromKToJ].m_DestinationNode != InvalidIndex();
 				CostType_t cKToJ = ( bFromKToJ ) ? destMapFromK[iFromKToJ].m_EdgeCost : INT_MAX;
-				
+
 				// Is the new path valid?
 				bool bNewPathFound = ( bFromIToK && bFromKToJ );
 
@@ -501,7 +501,7 @@ void CUtlGraph<T, C>::CreatePathMatrix()
 		}
 
 		// Sort the vector by cost, given that it
-		// is likely consumers will want to 
+		// is likely consumers will want to
 		// iterate destinations in that order.
 		vecPaths.Sort( Edge_t::SortFn );
 	}
@@ -511,7 +511,7 @@ void CUtlGraph<T, C>::CreatePathMatrix()
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-template <class T, class C > 
+template <class T, class C >
 CUtlGraphVisitor<T, C>::CUtlGraphVisitor( CUtlGraph<T,C> &graph )
 : m_Graph( graph )
 {
@@ -524,7 +524,7 @@ CUtlGraphVisitor<T, C>::CUtlGraphVisitor( CUtlGraph<T,C> &graph )
 // Begin visiting the nodes in the graph. Returns false if the start node
 //	does not exist
 //-----------------------------------------------------------------------------
-template <class T, class C > 
+template <class T, class C >
 bool CUtlGraphVisitor<T, C>::Begin( T StartNode )
 {
 	m_vecVisitQueue.RemoveAll();
@@ -551,7 +551,7 @@ bool CUtlGraphVisitor<T, C>::Begin( T StartNode )
 	m_vecFringeQueue = *pvecEdges;
 
 	// cells actually get marked as "visited" as soon as we put
-	// them in the fringe queue, so we don't put them in the *next* 
+	// them in the fringe queue, so we don't put them in the *next*
 	// fringe queue (we build the fringe queue before we actually visit
 	// the nodes in the new visit queue).
 	FOR_EACH_VEC( m_vecFringeQueue, iFringe )
@@ -566,7 +566,7 @@ bool CUtlGraphVisitor<T, C>::Begin( T StartNode )
 //-----------------------------------------------------------------------------
 // Advance to the next node. Returns false when all nodes have been visited
 //-----------------------------------------------------------------------------
-template <class T, class C> 
+template <class T, class C>
 bool CUtlGraphVisitor<T, C>::Advance()
 {
 	m_iVisiting++;
@@ -611,7 +611,7 @@ bool CUtlGraphVisitor<T, C>::Advance()
 //-----------------------------------------------------------------------------
 // Get the current node in the visit sequence
 //-----------------------------------------------------------------------------
-template <class T, class C> 
+template <class T, class C>
 T CUtlGraphVisitor<T, C>::CurrentNode()
 {
 	if ( m_iVisiting >= m_vecVisitQueue.Count() )
@@ -627,7 +627,7 @@ T CUtlGraphVisitor<T, C>::CurrentNode()
 //-----------------------------------------------------------------------------
 // Get the accumulated cost to traverse the graph to the current node
 //-----------------------------------------------------------------------------
-template <class T, class C> 
+template <class T, class C>
 C CUtlGraphVisitor<T, C>::AccumulatedCost()
 {
 	if ( m_iVisiting >= m_vecVisitQueue.Count() )
@@ -643,7 +643,7 @@ C CUtlGraphVisitor<T, C>::AccumulatedCost()
 //-----------------------------------------------------------------------------
 // Get the current radius from the start point to this node
 //-----------------------------------------------------------------------------
-template <class T, class C> 
+template <class T, class C>
 int CUtlGraphVisitor<T, C>::CurrentRadius()
 {
 	if ( m_iVisiting >= m_vecVisitQueue.Count() )

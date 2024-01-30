@@ -20,7 +20,7 @@
 //
 // Things to do:
 //
-//		
+//
 //
 //*****************************************************************************
 
@@ -36,13 +36,13 @@
 //
 // Include files required by this header.
 //
-// Note: Do NOT place any 'using' directives or declarations in header files - 
-// put them at the top of the source files that require them.  
-// Use fully-qualified names in header files. 
+// Note: Do NOT place any 'using' directives or declarations in header files -
+// put them at the top of the source files that require them.
+// Use fully-qualified names in header files.
 //
 //*****************************************************************************
 
-// All precompiled headers (Stable.h) include this first to give use a common 
+// All precompiled headers (Stable.h) include this first to give use a common
 // place for including order-dependent library headers (things that need to go first).
 
 
@@ -65,9 +65,9 @@ public:
 	{
 		m_uNumBits = 0;
 		m_vecU8.RemoveAll();
-                m_vecU8[ m_vecU8.AddToTail() ] = 0x00;  // always need 1 byte
+	m_vecU8[ m_vecU8.AddToTail() ] = 0x00;  // always need 1 byte
 	}
-		
+
 	void AppendBits( uint64 data, uint32 NumSignificantLowBitsOfData );
 	void AppendBits( const uint8 * pData, uint32 NumBitsOfData );
 

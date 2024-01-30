@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_VehicleMortar : public C_BaseTFFourWheelVehicle, public IUsesMortarPanel
 {
@@ -59,14 +59,14 @@ public:
 	bool m_bMortarReloading;
 	float m_flPower;
 	bool m_bAllowedToFire;
-	
+
 	// Parameters for the next shot.
 	float m_flFiringPower;
 	float m_flFiringAccuracy;
 
 	float m_flMortarYaw;	// What direction the mortar is aimed in.
 	float m_flMortarPitch;
-	
+
 	// This is what is used on the client to draw the ground line and orient the mortar.
 	// It is usually copied right over from m_flClientMortarYaw (which comes from the server),
 	// but this is also used when rotating the mortar so you can see the line move smoothly.
@@ -90,7 +90,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 C_VehicleMortar::C_VehicleMortar()
@@ -98,7 +98,7 @@ C_VehicleMortar::C_VehicleMortar()
 	m_iFiringState = MORTAR_IDLE;
 	m_bMortarReloading = false;
 	m_flPower = 0;
-	
+
 	m_flMortarYaw = 0;
 	m_flClientMortarYaw = 0;
 	m_flMortarPitch = 0;
@@ -120,7 +120,7 @@ void C_VehicleMortar::ReceiveMessage( int classID, bf_read &msg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_VehicleMortar::ClickFire()
 {
@@ -129,12 +129,12 @@ void C_VehicleMortar::ClickFire()
 	case MORTAR_IDLE:
 		m_iFiringState = MORTAR_CHARGING_POWER;
 		break;
-	
+
 	case MORTAR_CHARGING_POWER:
 		m_flFiringPower = m_flPower;
 		m_iFiringState = MORTAR_CHARGING_ACCURACY;
 		break;
-	
+
 	case MORTAR_CHARGING_ACCURACY:
 		m_flFiringAccuracy = m_flPower;
 		m_iFiringState = MORTAR_IDLE;
@@ -145,7 +145,7 @@ void C_VehicleMortar::ClickFire()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_VehicleMortar::FireMortar()
 {
@@ -155,7 +155,7 @@ void C_VehicleMortar::FireMortar()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_VehicleMortar::SendYawCommand( void )
 {
@@ -165,7 +165,7 @@ void C_VehicleMortar::SendYawCommand( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_VehicleMortar::ForceClientYawCountdown( float flTime )
 {
@@ -173,7 +173,7 @@ void C_VehicleMortar::ForceClientYawCountdown( float flTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_VehicleMortar::GetMortarData( float *flClientMortarYaw, bool *bAllowedToFire, float *flPower, float *flFiringPower, float *flFiringAccuracy, int *iFiringState )
 {
@@ -186,7 +186,7 @@ void C_VehicleMortar::GetMortarData( float *flClientMortarYaw, bool *bAllowedToF
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_VehicleMortar::ClientThink()
 {
@@ -218,7 +218,7 @@ CMortarMinimapPanel::CMortarMinimapPanel( vgui::Panel *pParent, const char *pEle
 	m_bMouseDown = false;
 	m_bFireButtonDown = false;
 	m_LastX = m_LastY = -1;
-	
+
 	m_nTextureId = vgui::surface()->CreateNewTextureID();
 	vgui::surface()->DrawSetTextureFile( m_nTextureId, "hud/minimap/mortar_slider", true, false );
 
@@ -236,11 +236,11 @@ void CMortarMinimapPanel::InitMortarMinimap( C_BaseEntity *pMortar )
 	BaseClass::Init( NULL );
 
 	m_hMortar = pMortar;
-	
+
 	m_MortarButtonUp.Init( GetVPanel(), "hud/minimap/icon_mortarbutton_up" );
 	m_MortarButtonDown.Init( GetVPanel(), "hud/minimap/icon_mortarbutton_dn" );
 	m_MortarButtonCantFire.Init( GetVPanel(), "hud/minimap/icon_mortarbutton_cantfire" );
-	
+
 	m_MortarDirectionImage.Init( GetVPanel(), "hud/minimap/icon_player_arrow" );
 	m_MortarDirectionImage.SetColor( Color( 0, 255, 0, 255 ) );
 }
@@ -262,19 +262,19 @@ void CMortarMinimapPanel::Paint()
 	{
 		float flClientMortarYaw, flPower, flFiringPower, flFiringAccuracy;
 		int iFiringState;
-		bool bAllowedToFire; 
+		bool bAllowedToFire;
 		pMortarInterface->GetMortarData( &flClientMortarYaw, &bAllowedToFire, &flPower, &flFiringPower, &flFiringAccuracy, &iFiringState );
 
 		float yaw = flClientMortarYaw + 90;
-	
+
 		float x, y;
 		if ( WorldToMinimap( MINIMAP_CLAMP, pMortar->GetAbsOrigin(), x, y ) )
 		{
 			int size = 20;
-			
+
 			BitmapImage *pImage = &m_MortarButtonCantFire;
 			if ( bAllowedToFire )
-			{				
+			{
 				if ( m_bFireButtonDown )
 					pImage = &m_MortarButtonDown;
 				else
@@ -286,7 +286,7 @@ void CMortarMinimapPanel::Paint()
 			size = 40;
 			m_MortarDirectionImage.DoPaint( x-size/2, y-size/2, size, size, pMortar->GetAbsAngles()[YAW] + 90 );
 
-		
+
 			// Draw the power bar.
 			float flAngle = pMortar->GetAbsAngles()[YAW] + flClientMortarYaw;
 			Vector vForward( -sin( DEG2RAD( flAngle ) ), cos( DEG2RAD( flAngle ) ), 0 );
@@ -295,26 +295,26 @@ void CMortarMinimapPanel::Paint()
 			Vector vStartPoint = pMortar->GetAbsOrigin();
 			Vector vEndPoint = vStartPoint + vForward * MORTAR_RANGE_MAX_INITIAL;
 			Vector vInaccuracy = vEndPoint + vRight * (MORTAR_RANGE_MAX_INITIAL * MORTAR_INACCURACY_MAX_INITIAL);
-			
+
 			Vector2D vStart2D, vEnd2D, vInaccuracy2D;
 			WorldToMinimap( MINIMAP_ALWAYS_ACCEPT, vStartPoint, vStart2D.x, vStart2D.y );
 			WorldToMinimap( MINIMAP_ALWAYS_ACCEPT, vEndPoint, vEnd2D.x, vEnd2D.y );
 			WorldToMinimap( MINIMAP_ALWAYS_ACCEPT, vInaccuracy, vInaccuracy2D.x, vInaccuracy2D.y );
-			
+
 			Vector2D vDir = vEnd2D - vStart2D;
 			Vector2DNormalize( vDir );
 
-			
+
 			// These variables control the look.
 			float flLength = (vEnd2D - vStart2D).Length();
 			float flZeroT = 1.0f / 5;
 			float flZero = flLength * flZeroT;
-			
+
 			float flFirePower = MAX( flPower, flFiringPower );
 
 			float flStartFatness = 2;
 			float flEndFatness = flStartFatness;
-			
+
 			float flScalePower = flFiringAccuracy;
 			if ( iFiringState != MORTAR_IDLE )
 				flScalePower = flPower;
@@ -322,24 +322,24 @@ void CMortarMinimapPanel::Paint()
 			Vector2D vInaccuracyDir = vInaccuracy2D - vEnd2D;
 			flEndFatness *= vInaccuracyDir.Length() * flScalePower * 0.4;
 			flEndFatness = MAX( fabs( flEndFatness ), flStartFatness );
-			
+
 			Vector2D vPerp( vDir.y, -vDir.x );
 			Vector2DNormalize( vPerp );
-			
+
 			Vector2D vStartPerp = vPerp * flStartFatness;
 			Vector2D vEndPerp = vPerp * flEndFatness;
 
-			
+
 			// Draw the red-black power bars.
 			vgui::ISurface *pSurface = vgui::surface();
 			if ( bAllowedToFire )
 				pSurface->DrawSetTexture( m_nTextureId );
 			else
 				pSurface->DrawSetTexture( m_nTextureId_CantFire );
-			
+
 			Vector2D vZeroPerp;
 			Vector2DLerp( vStartPerp, vEndPerp, flZero / flLength, vZeroPerp );
-						
+
 			// Draw a black->red bar from zero to our current power.
 			float flFirePowerDistance = RemapVal( flFirePower, 0, 1, flZero, flLength );
 			Vector2D vPowerPerp;
@@ -352,7 +352,7 @@ void CMortarMinimapPanel::Paint()
 			verts[2].Init( vStart2D + vDir * flFirePowerDistance + vPowerPerp, Vector2D( flFirePower, 0 ) );
 			verts[3] = verts[2];
 			verts[3].m_Position -= vPowerPerp * 2;
-			
+
 			pSurface->DrawSetColor( 255, 255, 255, 255 );
 			pSurface->DrawTexturedPolygon( 4, verts );
 
@@ -403,9 +403,9 @@ void CMortarMinimapPanel::OnMousePressed( vgui::MouseCode code )
 
 	float flClientMortarYaw, flPower, flFiringPower, flFiringAccuracy;
 	int iFiringState;
-	bool bAllowedToFire; 
+	bool bAllowedToFire;
 	pMortarInterface->GetMortarData( &flClientMortarYaw, &bAllowedToFire, &flPower, &flFiringPower, &flFiringAccuracy, &iFiringState );
-	
+
 	// See if they clicked the "fire" button.
 	float x, y;
 	if ( WorldToMinimap( MINIMAP_ALWAYS_ACCEPT, pMortar->GetAbsOrigin(), x, y ) &&
@@ -442,7 +442,7 @@ void CMortarMinimapPanel::OnCursorMoved( int x, int y )
 
 	float flClientMortarYaw, flPower, flFiringPower, flFiringAccuracy;
 	int iFiringState;
-	bool bAllowedToFire; 
+	bool bAllowedToFire;
 	pMortarInterface->GetMortarData( &flClientMortarYaw, &bAllowedToFire, &flPower, &flFiringPower, &flFiringAccuracy, &iFiringState );
 
 	float mortarX, mortarY;
@@ -462,7 +462,7 @@ void CMortarMinimapPanel::OnMouseReleased( vgui::MouseCode code )
 		return;
 
 	m_bMouseDown = false;
-	
+
 	if ( m_bFireButtonDown )
 	{
 		m_bFireButtonDown = false;
@@ -481,17 +481,17 @@ void CMortarMinimapPanel::OnMouseReleased( vgui::MouseCode code )
 
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CVehicleMortarControlPanel : public CObjectControlPanel
 {
 	DECLARE_CLASS( CVehicleMortarControlPanel, CObjectControlPanel );
 
 public:
-	
+
 	CVehicleMortarControlPanel( vgui::Panel *parent, const char *panelName );
 	virtual ~CVehicleMortarControlPanel();
-	
+
 	virtual bool Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData );
 	virtual void OnCommand( const char *command );
 	C_VehicleMortar* GetMortar() const;
@@ -521,15 +521,15 @@ private:
 	vgui::Label		*m_pPassengerLabel;
 	vgui::Button	*m_pOccupyButton;
 	vgui::Button	*m_pCancelDeployButton;
-	
+
 	vgui::Label *m_pDeployMessageLabel; // says "Deployed in" or "Undeployed in"
 	vgui::Label *m_pDeployTimeLabel; // says "N seconds"
-	
+
 	vgui::EditablePanel	*m_pDeployPanel;
 	vgui::EditablePanel	*m_pGunnerPanel;
 
 	CMortarMinimapPanel *m_pMinimapPanel;
-	
+
 	vgui::Label *m_pReloadingLabel;
 };
 
@@ -538,10 +538,10 @@ DECLARE_VGUI_SCREEN_FACTORY( CVehicleMortarControlPanel, "vehicle_mortar_control
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CVehicleMortarControlPanel::CVehicleMortarControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CVehicleMortarControlPanel" ) 
+	: BaseClass( parent, "CVehicleMortarControlPanel" )
 {
 	m_pDeployPanel = new CCommandChainingPanel( this, "DeployPanel" );
 	m_pDeployPanel->SetZPos( -1 );
@@ -562,14 +562,14 @@ CVehicleMortarControlPanel::~CVehicleMortarControlPanel()
 
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CVehicleMortarControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
 	m_pDriverLabel = new vgui::Label( this, "DriverReadout", "" );
 	m_pPassengerLabel = new vgui::Label( this, "PassengerReadout", "" );
 	m_pOccupyButton = new vgui::Button( this, "OccupyButton", "Occupy" );
-	
+
 	m_pDeployMessageLabel = new vgui::Label( m_pDeployPanel, "DeployMessage", "" );
 	m_pDeployTimeLabel = new vgui::Label( m_pDeployPanel, "DeployTime", "" );
 	m_pCancelDeployButton = new vgui::Button( m_pDeployPanel, "CancelDeployButton", "" );
@@ -588,7 +588,7 @@ bool CVehicleMortarControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData
 	m_pMinimapPanel->LevelInit( engine->GetLevelName() );
 	m_pMinimapPanel->SetVisible( true );
 	m_pMinimapPanel->InitMortarMinimap( GetMortar() );
-	
+
 	m_pDeployPanel->SetBounds( x, y, w, h );
 	m_pDeployPanel->SetVisible( false );
 
@@ -671,7 +671,7 @@ void CVehicleMortarControlPanel::OnTickMainPanel()
 	m_pPassengerLabel->SetText( buf );
 
 	// Update the get in button
-	if ( pRam->IsPlayerInVehicle( C_BaseTFPlayer::GetLocalPlayer() ) ) 
+	if ( pRam->IsPlayerInVehicle( C_BaseTFPlayer::GetLocalPlayer() ) )
 	{
 		m_pOccupyButton->SetEnabled( false );
 		return;
@@ -781,7 +781,7 @@ void CVehicleMortarControlPanel::OnTickGunnerPanel()
 			pMortar->FireMortar();
 		}
 		break;
-	
+
 	default:
 		break;
 	}
@@ -866,4 +866,3 @@ void CVehicleMortarControlPanel::OnCommand( const char *command )
 
 	BaseClass::OnCommand(command);
 }
-

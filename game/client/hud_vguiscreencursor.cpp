@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,7 +21,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudVguiScreenCursor : public CHudElement, public vgui::Panel
 {
@@ -70,7 +70,7 @@ void CHudVguiScreenCursor::ApplySchemeSettings( IScheme *scheme )
 
 //-----------------------------------------------------------------------------
 // Purpose: Save CPU cycles by letting the HUD system early cull
-// costly traversal.  Called per frame, return true if thinking and 
+// costly traversal.  Called per frame, return true if thinking and
 // painting need to occur.
 //-----------------------------------------------------------------------------
 bool CHudVguiScreenCursor::ShouldDraw( void )
@@ -114,8 +114,8 @@ void CHudVguiScreenCursor::Paint( void )
 		y = (float)iY;
 	}
 
-	m_pCursor->DrawSelf( 
-		x - 0.5f * m_pCursor->Width(), 
+	m_pCursor->DrawSelf(
+		x - 0.5f * m_pCursor->Width(),
 		y - 0.5f * m_pCursor->Height(),
 		m_clrCrosshair );
 }

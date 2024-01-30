@@ -119,12 +119,12 @@ public:
 	virtual bool	ApplyMod( Vector &vecTargetPos, Vector const &vecOriginalPos ) = 0;
 
 	//---------------------------------------------------------------------
-	// Apply the terrain modifier to the surface.  The vertex should from 
+	// Apply the terrain modifier to the surface.  The vertex should from
 	// its original position toward the target position bassed on the
 	// morph time.
 	// Return true if the posistion is modified.
 	//---------------------------------------------------------------------
-	virtual	bool	ApplyModAtMorphTime( Vector &vecTargetPos, const Vector&vecOriginalPos, 
+	virtual	bool	ApplyModAtMorphTime( Vector &vecTargetPos, const Vector&vecOriginalPos,
 		                                 float flCurrentTime, float flMorphTime ) = 0;
 
 	//---------------------------------------------------------------------
@@ -149,16 +149,16 @@ abstract_class IVEngineServer
 public:
 	// Tell engine to change level ( "changelevel s1\n" or "changelevel2 s1 s2\n" )
 	virtual void		ChangeLevel( const char *s1, const char *s2 ) = 0;
-	
+
 	// Ask engine whether the specified map is a valid map file (exists and has valid version number).
 	virtual int			IsMapValid( const char *filename ) = 0;
-	
+
 	// Is this a dedicated server?
 	virtual bool		IsDedicatedServer( void ) = 0;
-	
+
 	// Is in Hammer editing mode?
 	virtual int			IsInEditMode( void ) = 0;
-	
+
 	// Add to the server/client lookup/precache table, the specified string is given a unique index
 	// NOTE: The indices for PrecacheModel are 1 based
 	//  a 0 returned from those methods indicates the model or sound was not correctly precached
@@ -176,7 +176,7 @@ public:
 	virtual bool		IsGenericPrecached( char const *s ) const = 0;
 
 	// Note that sounds are precached using the IEngineSound interface
-	
+
 	// Special purpose PVS checking
 	// Get the cluster # for the specified position
 	virtual int			GetClusterForOrigin( const Vector &org ) = 0;
@@ -187,9 +187,9 @@ public:
 	// Check whether the specified worldspace bounding box is inside the specified PVS
 	virtual bool		CheckBoxInPVS( const Vector &mins, const Vector &maxs, const unsigned char *checkpvs, int checkpvssize ) = 0;
 
-	// Returns the server assigned userid for this player.  Useful for logging frags, etc.  
+	// Returns the server assigned userid for this player.  Useful for logging frags, etc.
 	//  returns -1 if the edict couldn't be found in the list of players.
-	virtual int			GetPlayerUserId( const edict_t *e ) = 0; 
+	virtual int			GetPlayerUserId( const edict_t *e ) = 0;
 	virtual const char	*GetPlayerNetworkIDString( const edict_t *e ) = 0;
 
 	// Return the current number of used edict slots
@@ -198,17 +198,17 @@ public:
 	virtual int			IndexOfEdict( const edict_t *pEdict ) = 0;
 	// Given and entity index, returns the corresponding edict pointer
 	virtual edict_t		*PEntityOfEntIndex( int iEntIndex ) = 0;
-	
+
 	// Get stats info interface for a client netchannel
 	virtual INetChannelInfo* GetPlayerNetInfo( int playerIndex ) = 0;
-	
+
 	// Allocate space for string and return index/offset of string in global string list
 	// If iForceEdictIndex is not -1, then it will return the edict with that index. If that edict index
 	// is already used, it'll return null.
 	virtual edict_t		*CreateEdict( int iForceEdictIndex = -1 ) = 0;
 	// Remove the specified edict and place back into the free edict list
 	virtual void		RemoveEdict( edict_t *e ) = 0;
-	
+
 	// Memory allocation for entity class data
 	virtual void		*PvAllocEntPrivateData( long cb ) = 0;
 	virtual void		FreeEntPrivateData( void *pEntity ) = 0;
@@ -216,13 +216,13 @@ public:
 	// Save/restore uses a special memory allocator (which zeroes newly allocated memory, etc.)
 	virtual void		*SaveAllocMemory( size_t num, size_t size ) = 0;
 	virtual void		SaveFreeMemory( void *pSaveMem ) = 0;
-	
+
 	// Emit an ambient sound associated with the specified entity
 	virtual void		EmitAmbientSound( int entindex, const Vector &pos, const char *samp, float vol, soundlevel_t soundlevel, int fFlags, int pitch, float delay = 0.0f ) = 0;
 
 	// Fade out the client's volume level toward silence (or fadePercent)
 	virtual void        FadeClientVolume( const edict_t *pEdict, float fadePercent, float fadeOutSeconds, float holdTime, float fadeInSeconds ) = 0;
-	
+
 	// Sentences / sentence groups
 	virtual int			SentenceGroupPick( int groupIndex, char *name, int nameBufLen ) = 0;
 	virtual int			SentenceGroupPickSequential( int groupIndex, char *name, int nameBufLen, int sentenceIndex, int reset ) = 0;
@@ -232,20 +232,20 @@ public:
 	virtual const char *SentenceGroupNameFromIndex( int groupIndex ) = 0;
 	virtual float		SentenceLength( int sentenceIndex ) = 0;
 
-	// Issue a command to the command parser as if it was typed at the server console.	
+	// Issue a command to the command parser as if it was typed at the server console.
 	virtual void		ServerCommand( const char *str ) = 0;
 	// Execute any commands currently in the command parser immediately (instead of once per frame)
 	virtual void		ServerExecute( void ) = 0;
 	// Issue the specified command to the specified client (mimics that client typing the command at the console).
 	virtual void		ClientCommand( edict_t *pEdict, PRINTF_FORMAT_STRING const char *szFmt, ... ) = 0;
 
-	// Set the lightstyle to the specified value and network the change to any connected clients.  Note that val must not 
+	// Set the lightstyle to the specified value and network the change to any connected clients.  Note that val must not
 	//  change place in memory (use MAKE_STRING) for anything that's not compiled into your mod.
 	virtual void		LightStyle( int style, const char *val ) = 0;
 
 	// Project a static decal onto the specified entity / model (for level placed decals in the .bsp)
 	virtual void		StaticDecal( const Vector &originInEntitySpace, int decalIndex, int entityIndex, int modelIndex, bool lowpriority ) = 0;
-	
+
 	// Given the current PVS(or PAS) and origin, determine which players should hear/receive the message
 	virtual void		Message_DetermineMulticastRecipients( bool usepas, const Vector& origin, CBitVec< ABSOLUTE_PLAYER_LIMIT >& playerbits ) = 0;
 
@@ -269,11 +269,11 @@ public:
 
 	// For ConCommand parsing or parsing client commands issued by players typing at their console
 	// Retrieves the raw command string (untokenized)
-	virtual const char	*Cmd_Args( void ) = 0;		
+	virtual const char	*Cmd_Args( void ) = 0;
 	// Returns the number of tokens in the command string
-	virtual int			Cmd_Argc( void ) = 0;		
+	virtual int			Cmd_Argc( void ) = 0;
 	// Retrieves a specified token
-	virtual char		*Cmd_Argv( int argc ) = 0;	 
+	virtual char		*Cmd_Argv( int argc ) = 0;
 
 	// Change a specified player's "view entity" (i.e., use the view entity position/orientation for rendering the client view)
 	virtual void		SetView( const edict_t *pClient, const edict_t *pViewent ) = 0;
@@ -295,11 +295,11 @@ public:
 	virtual bool		LockNetworkStringTables( bool lock ) = 0;
 
 	// Create a bot with the given name.  Returns NULL if fake client can't be created
-	virtual edict_t		*CreateFakeClient( const char *netname ) = 0;	
+	virtual edict_t		*CreateFakeClient( const char *netname ) = 0;
 
 	// Get a convar keyvalue for s specified client
 	virtual const char	*GetClientConVarValue( int clientIndex, const char *name ) = 0;
-	
+
 	// Parse a token from a file
 	virtual const char	*ParseFile( const char *data, char *token, int maxlen ) = 0;
 	// Copies a file
@@ -350,7 +350,7 @@ public:
 	virtual void SolidMoved( edict_t *pSolidEnt, ICollideable *pSolidCollide, const Vector* pPrevAbsOrigin ) = 0;
 	// A trigger entity moved, update spatial partition
 	virtual void TriggerMoved( edict_t *pTriggerEnt ) = 0;
-	
+
 	// Create/destroy a custom spatial partition
 	virtual ISpatialPartition *CreateSpatialPartition( const Vector& worldmin, const Vector& worldmax ) = 0;
 	virtual void 		DestroySpatialPartition( ISpatialPartition * ) = 0;
@@ -366,10 +366,10 @@ public:
 	// USE WITH CARE. Whatever tick the client is really currently on is subject to timing and
 	// ordering differences, so you should account for about a quarter-second discrepancy in here.
 	// Also, this will return NULL if the client doesn't exist or if this client hasn't acked any frames yet.
-	// 
+	//
 	// iClientIndex is the CLIENT index, so if you use pPlayer->entindex(), subtract 1.
 	virtual const CBitVec<MAX_EDICTS>* GetEntityTransmitBitsForClient( int iClientIndex ) = 0;
-	
+
 	// Is the game paused?
 	virtual bool IsPaused() = 0;
 
@@ -380,7 +380,7 @@ public:
 
 	// Sets a USERINFO client ConVar for a fakeclient
 	virtual void SetFakeClientConVarValue( edict_t *pEntity, const char *cvar, const char *value ) = 0;
-	
+
 	virtual void InsertServerCommand( const char *str ) = 0;
 
 	// Marks the material (vmt file) for consistency checking.  If the client and server have different
@@ -409,17 +409,17 @@ abstract_class IServerGameDLL
 public:
 	// Initialize the game (one-time call when the DLL is first loaded )
 	// Return false if there is an error during startup.
-	virtual bool			DLLInit(	CreateInterfaceFn engineFactory, 
-										CreateInterfaceFn physicsFactory, 
-										CreateInterfaceFn fileSystemFactory, 
+	virtual bool			DLLInit(	CreateInterfaceFn engineFactory,
+										CreateInterfaceFn physicsFactory,
+										CreateInterfaceFn fileSystemFactory,
 										CGlobalVars *pGlobals) = 0;
 
 	// This is called when a new game is started. (restart, map)
 	virtual bool			GameInit( void ) = 0;
 
 	// Called any time a new level is started (after GameInit() also on level transitions within a game)
-	virtual bool			LevelInit( char const *pMapName, 
-									char const *pMapEntities, char const *pOldLevel, 
+	virtual bool			LevelInit( char const *pMapName,
+									char const *pMapEntities, char const *pOldLevel,
 									char const *pLandmarkName, bool loadGame, bool background ) = 0;
 
 	// The server is about to activate
@@ -448,13 +448,13 @@ public:
 	//  edict_t::classname to figure out how to encode a class's data for networking
 	virtual ServerClass*	GetAllServerClasses( void ) = 0;
 
-	// Returns string describing current .dll.  e.g., TeamFortress 2, Half-Life 2.  
+	// Returns string describing current .dll.  e.g., TeamFortress 2, Half-Life 2.
 	//  Hey, it's more descriptive than just the name of the game directory
-	virtual const char     *GetGameDescription( void ) = 0;      
-	
+	virtual const char     *GetGameDescription( void ) = 0;
+
 	// Let the game .dll allocate it's own network/shared string tables
 	virtual void			CreateNetworkStringTables( void ) = 0;
-	
+
 	// Save/restore system hooks
 	virtual CSaveRestoreData  *SaveInit( int size ) = 0;
 	virtual void			SaveWriteFields( CSaveRestoreData *, const char *, void *, datamap_t *, typedescription_t *, int ) = 0;
@@ -506,18 +506,18 @@ public:
 
 	// Only for debugging. Set the edict base so you can get an edict's index in the debugger while debugging the game .dll
 	virtual void			SetDebugEdictBase(edict_t *base) = 0;
-	
+
 	// The engine wants to mark two entities as touching
 	virtual void			MarkEntitiesAsTouching( edict_t *e1, edict_t *e2 ) = 0;
 
 	// Frees the entity attached to this edict
-	virtual void			FreeContainingEntity( edict_t * ) = 0; 
+	virtual void			FreeContainingEntity( edict_t * ) = 0;
 
 	// This allows the engine to get at edicts in a CGameTrace.
 	virtual edict_t*		BaseEntityToEdict( CBaseEntity *pEnt ) = 0;
 	virtual CBaseEntity*	EdictToBaseEntity( edict_t *pEdict ) = 0;
 
-	// This sets a bit in pInfo for each edict in the list that wants to be transmitted to the 
+	// This sets a bit in pInfo for each edict in the list that wants to be transmitted to the
 	// client specified in pInfo.
 	//
 	// This is also where an entity can force other entities to be transmitted if it refers to them
@@ -549,29 +549,29 @@ public:
 	// Client is going active
 	// If bLoadGame is true, don't spawn the player because its state is already setup.
 	virtual void			ClientActive( edict_t *pEntity, bool bLoadGame ) = 0;
-	
+
 	// Client is disconnecting from server
 	virtual void			ClientDisconnect( edict_t *pEntity ) = 0;
-	
+
 	// Client is connected and should be put in the game
 	virtual void			ClientPutInServer( edict_t *pEntity, char const *playername ) = 0;
-	
+
 	// The client has typed a command at the console
 	virtual void			ClientCommand( edict_t *pEntity ) = 0;
 
 	// Sets the client index for the client who typed the command into his/her console
 	virtual void			SetCommandClient( int index ) = 0;
-	
+
 	// A player changed one/several replicated cvars (name etc)
 	virtual void			ClientSettingsChanged( edict_t *pEdict ) = 0;
-	
+
 	// Determine PVS origin and set PVS for the player/viewentity
 	virtual void			ClientSetupVisibility( edict_t *pViewEntity, edict_t *pClient, unsigned char *pvs, int pvssize ) = 0;
-	
+
 	// A block of CUserCmds has arrived from the user, decode them and buffer for execution during player simulation
 	virtual float			ProcessUsercmds( edict_t *player, bf_read *buf, int numcmds, int totalcmds,
 								int dropped_packets, bool ignore, bool paused ) = 0;
-	
+
 	// Let the game .dll do stuff after messages have been sent to all of the clients once the server frame is complete
 	virtual void			PostClientMessagesSent_DEPRECIATED( void ) = 0;
 
@@ -601,7 +601,7 @@ abstract_class IUploadGameStats
 {
 public:
 	// Note that this call will block the server until the upload is completed, so use only at levelshutdown if at all.
-	virtual bool UploadGameStats( 
+	virtual bool UploadGameStats(
 		char const *mapname,				// Game map name
 		unsigned int blobversion,			// Version of the binary blob data
 		unsigned int blobsize,				// Size in bytes of blob data

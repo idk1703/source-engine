@@ -60,7 +60,7 @@ CLogicRelay::CLogicRelay(void)
 void CLogicRelay::Activate()
 {
 	BaseClass::Activate();
-	
+
 	if ( m_OnSpawn.NumberOfElements() > 0)
 	{
 		SetNextThink( gpGlobals->curtime + 0.01 );
@@ -100,7 +100,7 @@ void CLogicRelay::InputEnable( inputdata_t &inputdata )
 //			function to prevent rapid refire.
 //------------------------------------------------------------------------------
 void CLogicRelay::InputEnableRefire( inputdata_t &inputdata )
-{ 
+{
 	m_bWaitForRefire = false;
 }
 
@@ -109,7 +109,7 @@ void CLogicRelay::InputEnableRefire( inputdata_t &inputdata )
 // Purpose: Cancels any I/O events in the queue that were fired by us.
 //------------------------------------------------------------------------------
 void CLogicRelay::InputCancelPending( inputdata_t &inputdata )
-{ 
+{
 	g_EventQueue.CancelEvents( this );
 
 	// Stop waiting; allow another Trigger.
@@ -121,7 +121,7 @@ void CLogicRelay::InputCancelPending( inputdata_t &inputdata )
 // Purpose: Turns off the relay, preventing it from firing outputs.
 //------------------------------------------------------------------------------
 void CLogicRelay::InputDisable( inputdata_t &inputdata )
-{ 
+{
 	m_bDisabled = true;
 }
 
@@ -130,7 +130,7 @@ void CLogicRelay::InputDisable( inputdata_t &inputdata )
 // Purpose: Toggles the enabled/disabled state of the relay.
 //------------------------------------------------------------------------------
 void CLogicRelay::InputToggle( inputdata_t &inputdata )
-{ 
+{
 	m_bDisabled = !m_bDisabled;
 }
 
@@ -143,7 +143,7 @@ void CLogicRelay::InputTrigger( inputdata_t &inputdata )
 	if ((!m_bDisabled) && (!m_bWaitForRefire))
 	{
 		m_OnTrigger.FireOutput( inputdata.pActivator, this );
-		
+
 		if (m_spawnflags & SF_REMOVE_ON_FIRE)
 		{
 			UTIL_Remove(this);
@@ -159,4 +159,3 @@ void CLogicRelay::InputTrigger( inputdata_t &inputdata )
 		}
 	}
 }
-

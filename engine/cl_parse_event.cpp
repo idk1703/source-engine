@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,8 +15,8 @@ static ConVar cl_showevents	( "cl_showevents", "0", FCVAR_CHEAT, "Print event fi
 
 //-----------------------------------------------------------------------------
 // Purpose: Show descriptive info about an event in the numbered console area
-// Input  : slot - 
-//			*eventname - 
+// Input  : slot -
+//			*eventname -
 //-----------------------------------------------------------------------------
 void CL_DescribeEvent( int slot, CEventInfo *event, const char *eventname )
 {
@@ -46,9 +46,9 @@ void CL_DescribeEvent( int slot, CEventInfo *event, const char *eventname )
 
 //-----------------------------------------------------------------------------
 // Purpose: Decode raw event data into underlying class structure using the specified data table
-// Input  : *RawData - 
-//			*pToData - 
-//			*pRecvTable - 
+// Input  : *RawData -
+//			*pToData -
+//			*pRecvTable -
 //-----------------------------------------------------------------------------
 void CL_ParseEventDelta( void *RawData, void *pToData, RecvTable *pRecvTable, unsigned int uReadBufferSize )
 {
@@ -101,7 +101,7 @@ void CL_FireEvents( void )
 
 		// Get the receive table if it exists
 		Assert( ei->pClientClass );
-				
+
 		// Get pointer to the event.
 		if( ei->pClientClass->m_pCreateEventFn )
 		{
@@ -133,5 +133,3 @@ void CL_FireEvents( void )
 		cl.events.Remove( i );
 	}
 }
-
-

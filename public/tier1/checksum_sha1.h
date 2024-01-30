@@ -56,8 +56,8 @@ typedef	unsigned char SHADigest_t[ k_cubHash ];
 
 #if !defined(_MINIMUM_BUILD_)
 class CSHA1
-#else 
-class Minimum_CSHA1 
+#else
+class Minimum_CSHA1
 #endif
 {
 public:
@@ -69,13 +69,13 @@ public:
 	};
 
 	// Constructor and Destructor
-#if !defined(_MINIMUM_BUILD_) 
+#if !defined(_MINIMUM_BUILD_)
 	CSHA1();
 	virtual ~CSHA1() ;
 #else
-	Minimum_CSHA1() ; 
+	Minimum_CSHA1() ;
 	~Minimum_CSHA1() ;	// no virtual destructor's in the minimal builds !
-#endif	
+#endif
 
 	unsigned long m_state[5];
 	unsigned long m_count[2];
@@ -86,13 +86,13 @@ public:
 
 	// Update the hash value
 	void Update(unsigned char *data, unsigned int len);
-#if !defined(_MINIMUM_BUILD_) 
+#if !defined(_MINIMUM_BUILD_)
 	bool HashFile(char *szFileName);
 #endif
 
 	// Finalize hash and report
 	void Final();
-#if !defined(_MINIMUM_BUILD_) 
+#if !defined(_MINIMUM_BUILD_)
 	void ReportHash(char *szReport, unsigned char uReportType = REPORT_HEX);
 #endif
 	void GetHash(unsigned char *uDest);
@@ -106,7 +106,7 @@ private:
 	SHA1_WORKSPACE_BLOCK *m_block; // SHA1 pointer to the byte array above
 };
 
-#define GenerateHash( hash, pubData, cubData ) { CSHA1 sha1; sha1.Update( (byte *)pubData, cubData ); sha1.Final(); sha1.GetHash( hash ); } 
+#define GenerateHash( hash, pubData, cubData ) { CSHA1 sha1; sha1.Update( (byte *)pubData, cubData ); sha1.Final(); sha1.GetHash( hash ); }
 
 #if !defined(_MINIMUM_BUILD_)
 // hash comparison function, for use with CUtlMap/CUtlRBTree

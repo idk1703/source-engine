@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -21,4 +21,3 @@ edict_t* CGameTrace::GetEdict() const
 {
 	return serverGameEnts->BaseEntityToEdict( m_pEnt );
 }
-

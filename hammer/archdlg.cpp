@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -15,7 +15,7 @@
 
 static LPCTSTR pszSection = "Arch";
 
-extern void MakeArc(float x1, float y1, float x2, float y2, int npoints, 
+extern void MakeArc(float x1, float y1, float x2, float y2, int npoints,
 					 float start_ang, float fArc, float points[][2]);
 
 
@@ -97,31 +97,31 @@ BEGIN_MESSAGE_MAP(CArchDlg, CDialog)
 END_MESSAGE_MAP()
 
 
-void CArchDlg::OnChangeArc() 
+void CArchDlg::OnChangeArc()
 {
 }
 
 
-void CArchDlg::OnCircle() 
+void CArchDlg::OnCircle()
 {
 	m_cArcSpin.SetPos(360);
 }
 
 
-void CArchDlg::OnUpdateSides() 
+void CArchDlg::OnUpdateSides()
 {
 }
 
 
-void CArchDlg::OnUpdateWallwidth() 
+void CArchDlg::OnUpdateWallwidth()
 {
 }
 
 
-BOOL CArchDlg::OnInitDialog() 
+BOOL CArchDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	
+
 	m_cArcSpin.SetRange(8, 360);
 	m_cSidesSpin.SetRange(3, 100);
 	m_cWallWidthSpin.SetRange(2, m_iMaxWallWidth);
@@ -133,10 +133,10 @@ BOOL CArchDlg::OnInitDialog()
 }
 
 
-void CArchDlg::OnPaint() 
+void CArchDlg::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
-	
+
 	// Do not call CDialog::OnPaint() for painting messages
 	CBrush black(RGB(0,0,0));
 	CBrush grey(RGB(128,128,128));
@@ -154,9 +154,9 @@ void CArchDlg::OnPaint()
 }
 
 
-void CArchDlg::OnArchPreview() 
+void CArchDlg::OnArchPreview()
 {
-	// 
+	//
 	// Build preview.
 	//
 	UpdateData(TRUE);
@@ -196,7 +196,7 @@ void CArchDlg::DrawArch(CDC* pDC)
 		fScaleX = rcItem.Width()/(bmaxs[0] - bmins[0]);
 	else
 		fScaleX = 1.0f;
-	
+
 	if (bmaxs[1] - bmins[1])
 		fScaleY = rcItem.Height()/(bmaxs[1] - bmins[1]);
 	else
@@ -215,22 +215,22 @@ void CArchDlg::DrawArch(CDC* pDC)
 		bmaxs[0], bmaxs[1], iSides,
 		fStartAngle, fArc, fOuterPoints);
 
-	MakeArc(bmins[0] + iWallWidth, 
-		bmins[1] + iWallWidth, 
-		bmaxs[0] - iWallWidth, 
-		bmaxs[1] - iWallWidth, iSides, 
+	MakeArc(bmins[0] + iWallWidth,
+		bmins[1] + iWallWidth,
+		bmaxs[0] - iWallWidth,
+		bmaxs[1] - iWallWidth, iSides,
 		fStartAngle, fArc, fInnerPoints);
 
 
 	// check wall width - if it's half or more of the total,
 	//  set the inner poinst to the center point of the box
 	//  and turn off the CreateSouthFace flag
-	
+
 	BOOL bCreateSouthFace = TRUE;
 	float fCenter[3];
 	for (int i = 0; i < 3; i++)
 		fCenter[i] = (bmins[i] + bmaxs[i])/2.0;
-	
+
 	if((iWallWidth*2+8)  >= (bmaxs[0] - bmins[0]) ||
 		(iWallWidth*2+8) >= (bmaxs[1] - bmins[1]))
 	{
@@ -248,7 +248,7 @@ void CArchDlg::DrawArch(CDC* pDC)
 		if (iNextPoint >= iSides + 1)
 			iNextPoint = 0;
 
-		Vector points[4];	
+		Vector points[4];
 
 		points[0][0] = fOuterPoints[i][0];
 		points[0][1] = fOuterPoints[i][1];

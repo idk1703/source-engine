@@ -28,5 +28,3 @@ public:
 };
 
 #endif // ENTITY_GRENADEPACK_H
-
-

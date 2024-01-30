@@ -16,7 +16,7 @@
 
 static const char *s_pFadeInContextThink = "ColorCorrectionFadeInThink";
 static const char *s_pFadeOutContextThink = "ColorCorrectionFadeOutThink";
- 
+
 //------------------------------------------------------------------------------
 // FIXME: This really should inherit from something	more lightweight
 //------------------------------------------------------------------------------
@@ -50,18 +50,18 @@ private:
 	void	FadeIn ( void );
 	void	FadeOut ( void );
 
-	void FadeInThink( void );	// Fades lookup weight from Cur->MaxWeight 
+	void FadeInThink( void );	// Fades lookup weight from Cur->MaxWeight
 	void FadeOutThink( void );	// Fades lookup weight from CurWeight->0.0
 
-	
-	
+
+
 	float	m_flFadeInDuration;		// Duration for a full 0->MaxWeight transition
 	float	m_flFadeOutDuration;	// Duration for a full Max->0 transition
 	float	m_flStartFadeInWeight;
 	float	m_flStartFadeOutWeight;
 	float	m_flTimeStartFadeIn;
 	float	m_flTimeStartFadeOut;
-	
+
 	float	m_flMaxWeight;
 
 	bool	m_bStartDisabled;
@@ -97,7 +97,7 @@ BEGIN_DATADESC( CColorCorrection )
 
 	DEFINE_KEYFIELD( m_bEnabled,		  FIELD_BOOLEAN, "enabled" ),
 	DEFINE_KEYFIELD( m_bStartDisabled,    FIELD_BOOLEAN, "StartDisabled" ),
-//	DEFINE_ARRAY( m_netlookupFilename, FIELD_CHARACTER, MAX_PATH ), 
+//	DEFINE_ARRAY( m_netlookupFilename, FIELD_CHARACTER, MAX_PATH ),
 
 	DEFINE_INPUTFUNC( FIELD_VOID, "Enable", InputEnable ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "Disable", InputDisable ),
@@ -156,7 +156,7 @@ void CColorCorrection::Spawn( void )
 	// To fade in/out the weight.
 	SetContextThink( &CColorCorrection::FadeInThink, TICK_NEVER_THINK, s_pFadeInContextThink );
 	SetContextThink( &CColorCorrection::FadeOutThink, TICK_NEVER_THINK, s_pFadeOutContextThink );
-	
+
 	if( m_bStartDisabled )
 	{
 		m_bEnabled = false;
@@ -207,24 +207,24 @@ void CColorCorrection::FadeInThink( void )
 {
 	// Check for conditions where we shouldnt fade in
 	if (		m_flFadeInDuration <= 0 ||  // not set to fade in
-		 m_flCurWeight >= m_flMaxWeight ||  // already past max weight
+		m_flCurWeight >= m_flMaxWeight ||  // already past max weight
 							!m_bEnabled ||  // fade in/out mutex
-				  m_flMaxWeight == 0.0f ||  // min==max
-  m_flStartFadeInWeight >= m_flMaxWeight )  // already at max weight
+					m_flMaxWeight == 0.0f ||  // min==max
+	m_flStartFadeInWeight >= m_flMaxWeight )  // already at max weight
 	{
 		SetNextThink ( TICK_NEVER_THINK, s_pFadeInContextThink );
 		return;
 	}
-	
+
 	// If we started fading in without fully fading out, use a truncated duration
-    float flTimeToFade = m_flFadeInDuration;
+		float flTimeToFade = m_flFadeInDuration;
 	if ( m_flStartFadeInWeight > 0.0f )
-	{	
+	{
 		float flWeightRatio		= m_flStartFadeInWeight / m_flMaxWeight;
 		flWeightRatio = clamp ( flWeightRatio, 0.0f, 0.99f );
 		flTimeToFade			= m_flFadeInDuration * (1.0 - flWeightRatio);
-	}	
-	
+	}
+
 	Assert ( flTimeToFade > 0.0f );
 	float flFadeRatio = (gpGlobals->curtime - m_flTimeStartFadeIn) / flTimeToFade;
 	flFadeRatio = clamp ( flFadeRatio, 0.0f, 1.0f );
@@ -236,30 +236,30 @@ void CColorCorrection::FadeInThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Fades lookup weight from CurWeight->0.0 
+// Purpose: Fades lookup weight from CurWeight->0.0
 //-----------------------------------------------------------------------------
 void CColorCorrection::FadeOutThink( void )
 {
 	// Check for conditions where we shouldn't fade out
 	if ( m_flFadeOutDuration <= 0 || // not set to fade out
 			m_flCurWeight <= 0.0f || // already faded out
-					   m_bEnabled || // fade in/out mutex
-		   m_flMaxWeight == 0.0f  || // min==max
-	 m_flStartFadeOutWeight <= 0.0f )// already at min weight
+						m_bEnabled || // fade in/out mutex
+			m_flMaxWeight == 0.0f  || // min==max
+	m_flStartFadeOutWeight <= 0.0f )// already at min weight
 	{
 		SetNextThink ( TICK_NEVER_THINK, s_pFadeOutContextThink );
 		return;
 	}
 
 	// If we started fading out without fully fading in, use a truncated duration
-    float flTimeToFade = m_flFadeOutDuration;
+		float flTimeToFade = m_flFadeOutDuration;
 	if ( m_flStartFadeOutWeight < m_flMaxWeight )
-	{	
+	{
 		float flWeightRatio		= m_flStartFadeOutWeight / m_flMaxWeight;
 		flWeightRatio = clamp ( flWeightRatio, 0.01f, 1.0f );
 		flTimeToFade			= m_flFadeOutDuration * flWeightRatio;
-	}	
-	
+	}
+
 	Assert ( flTimeToFade > 0.0f );
 	float flFadeRatio = (gpGlobals->curtime - m_flTimeStartFadeOut) / flTimeToFade;
 	flFadeRatio = clamp ( flFadeRatio, 0.0f, 1.0f );
@@ -285,7 +285,7 @@ void CColorCorrection::InputEnable( inputdata_t &inputdata )
 	{
 		m_flCurWeight = m_flMaxWeight;
 	}
-	
+
 }
 
 void CColorCorrection::InputDisable( inputdata_t &inputdata )
@@ -300,7 +300,7 @@ void CColorCorrection::InputDisable( inputdata_t &inputdata )
 	{
 		m_flCurWeight = 0.0f;
 	}
-	
+
 }
 
 void CColorCorrection::InputSetFadeInDuration( inputdata_t& inputdata )

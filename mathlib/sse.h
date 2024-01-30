@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -17,7 +17,7 @@ void _SSE_SinCos(float x, float* s, float* c);
 float _SSE_cos( float x);
 #ifdef PLATFORM_WINDOWS_PC32
 void _SSE2_SinCos(float x, float* s, float* c);
-float _SSE2_cos(float x); 
+float _SSE2_cos(float x);
 #endif
 #if 0
 void VectorTransformSSE(const float *in1, const matrix3x4_t& in2, float *out1);

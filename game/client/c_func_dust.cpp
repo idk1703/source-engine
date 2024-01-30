@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -162,7 +162,7 @@ void C_Func_Dust::OnDataChanged( DataUpdateType_t updateType )
 
 		// Let us think each frame.
 		SetNextClientThink( CLIENT_THINK_ALWAYS );
-		
+
 		// If we're setup to be frozen, just make a bunch of particles initially.
 		if( m_DustFlags & DUSTFLAGS_FROZEN )
 		{
@@ -234,7 +234,7 @@ void C_Func_Dust::AttemptSpawnNewParticle()
 					pParticle->m_flSize = RemapVal( rand(), 0, VALVE_RAND_MAX, m_flSizeMin/10000.0f, m_flSizeMax/10000.0f );
 				else
 					pParticle->m_flSize = RemapVal( rand(), 0, VALVE_RAND_MAX, m_flSizeMin, m_flSizeMax );
-			
+
 				pParticle->m_Color = m_Color;
 			}
 
@@ -253,7 +253,7 @@ void C_Func_Dust::AttemptSpawnNewParticle()
 void FX_Dust( const Vector &vecOrigin, const Vector &vecDirection, float flSize, float flSpeed )
 {
 	VPROF_BUDGET( "FX_Dust", VPROF_BUDGETGROUP_PARTICLE_RENDERING );
-	
+
 	int	numPuffs = (flSize*0.5f);
 
 	if ( numPuffs < 1 )
@@ -284,7 +284,7 @@ void FX_Dust( const Vector &vecOrigin, const Vector &vecDirection, float flSize,
 		particle.m_Pos = offset;
 		particle.m_flLifetime = 0.0f;
 		particle.m_flDieTime  = random->RandomFloat( 0.4f, 1.0f );
-		
+
 		particle.m_vecVelocity = vecDirection * random->RandomFloat( speed*0.5f, speed ) * i;
 		particle.m_vecVelocity[2] = 0.0f;
 
@@ -349,7 +349,7 @@ C_TEDust::~C_TEDust()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : bNewEntity - whether or not to start a new entity
 //-----------------------------------------------------------------------------
 void C_TEDust::PostDataUpdate( DataUpdateType_t updateType )

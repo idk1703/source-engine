@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -59,7 +59,7 @@ CTFTextWindow::~CTFTextWindow()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -99,7 +99,7 @@ void CTFTextWindow::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::Reset( void )
 {
@@ -107,7 +107,7 @@ void CTFTextWindow::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::OnThink()
 {
@@ -122,7 +122,7 @@ void CTFTextWindow::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::SetData(KeyValues *data)
 {
@@ -132,7 +132,7 @@ void CTFTextWindow::SetData(KeyValues *data)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::Update()
 {
@@ -157,7 +157,7 @@ void CTFTextWindow::Update()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //---------------------------------------------------------------------------
 void CTFTextWindow::SetVisible( bool state )
 {
@@ -193,13 +193,13 @@ void CTFTextWindow::ShowPanel( bool bShow )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::OnKeyCodePressed( KeyCode code )
 {
 	if ( code == KEY_XBUTTON_A || code == STEAMCONTROLLER_A )
 	{
-		OnCommand( "okay" );		
+		OnCommand( "okay" );
 	}
 	else
 	{
@@ -215,7 +215,7 @@ void CTFTextWindow::PaintBackground()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::OnCommand( const char *command )
 {
@@ -229,7 +229,7 @@ void CTFTextWindow::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::ShowText( const char *text )
 {
@@ -244,7 +244,7 @@ void CTFTextWindow::ShowText( const char *text )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::ShowURL( const char *URL, bool bAllowUserToDisable )
 {
@@ -253,7 +253,7 @@ void CTFTextWindow::ShowURL( const char *URL, bool bAllowUserToDisable )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::ShowFile( const char *filename )
 {
@@ -262,7 +262,7 @@ void CTFTextWindow::ShowFile( const char *filename )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextWindow::ShowTitleLabel( bool show )
 {

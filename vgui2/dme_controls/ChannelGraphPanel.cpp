@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -323,7 +323,7 @@ void CChannelGraphPanel::ApplySchemeSettings(IScheme *pScheme)
 
 //-----------------------------------------------------------------------------
 //
-// CChannelGraphFrame methods 
+// CChannelGraphFrame methods
 //
 //-----------------------------------------------------------------------------
 CChannelGraphFrame::CChannelGraphFrame( Panel *parent, const char *pTitle )

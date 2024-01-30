@@ -42,23 +42,23 @@ IDI_UNCONNECTED         ICON                    "unconnec.ico"
 // Menu
 //
 
-IDR_POPUP_MENU MENU 
+IDR_POPUP_MENU MENU
 BEGIN
-    POPUP "item1"
-    BEGIN
-        MENUITEM "&Enable",                     ID_ENABLE_WORKER
-        MENUITEM "&Disable",                    ID_DISABLE_WORKER
-        MENUITEM "&Kill Current Job",           ID_KILLCURRENTJOB
-        MENUITEM SEPARATOR
-        MENUITEM "&Show Console Window",        ID_SHOW_CONSOLE_WINDOW
-        MENUITEM "&Hide Console Window",        ID_HIDE_CONSOLE_WINDOW
-        MENUITEM SEPARATOR
-        MENUITEM "Set &Password",               ID_SET_PASSWORD
-        MENUITEM "Highlight Icon When Busy",    ID_HIGHLIGHT_ICON_WHEN_BUSY
-        MENUITEM "Screensaver Mode",            ID_SCREENSAVER_MODE
-        MENUITEM SEPARATOR
-        MENUITEM "&Exit Service",               ID_EXIT_SERVICE
-    END
+	POPUP "item1"
+	BEGIN
+		MENUITEM "&Enable",                     ID_ENABLE_WORKER
+		MENUITEM "&Disable",                    ID_DISABLE_WORKER
+		MENUITEM "&Kill Current Job",           ID_KILLCURRENTJOB
+		MENUITEM SEPARATOR
+		MENUITEM "&Show Console Window",        ID_SHOW_CONSOLE_WINDOW
+		MENUITEM "&Hide Console Window",        ID_HIDE_CONSOLE_WINDOW
+		MENUITEM SEPARATOR
+		MENUITEM "Set &Password",               ID_SET_PASSWORD
+		MENUITEM "Highlight Icon When Busy",    ID_HIGHLIGHT_ICON_WHEN_BUSY
+		MENUITEM "Screensaver Mode",            ID_SCREENSAVER_MODE
+		MENUITEM SEPARATOR
+		MENUITEM "&Exit Service",               ID_EXIT_SERVICE
+	END
 END
 
 
@@ -68,24 +68,24 @@ END
 // TEXTINCLUDE
 //
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE
 BEGIN
-    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
-    "#include ""windows.h""\r\n"
-    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
-    "#include ""resource.h""\r\n"
-    "\0"
+	"#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+	"#include ""windows.h""\r\n"
+	"#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+	"#include ""resource.h""\r\n"
+	"\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
-    "\r\n"
-    "\0"
+	"\r\n"
+	"\0"
 END
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
-    "resource.h\0"
+	"resource.h\0"
 END
 
 #endif    // APSTUDIO_INVOKED
@@ -101,7 +101,7 @@ STYLE DS_SETFONT | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
 CAPTION "Valve MPI Service"
 FONT 8, "MS Sans Serif"
 BEGIN
-    EDITTEXT        IDC_DEBUG_OUTPUT,7,7,440,211,ES_MULTILINE | ES_READONLY | WS_VSCROLL | WS_HSCROLL
+	EDITTEXT        IDC_DEBUG_OUTPUT,7,7,440,211,ES_MULTILINE | ES_READONLY | WS_VSCROLL | WS_HSCROLL
 END
 
 IDD_SET_PASSWORD DIALOG  0, 0, 134, 50
@@ -109,9 +109,9 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Set Password (-mpi_pw)"
 FONT 8, "MS Sans Serif"
 BEGIN
-    EDITTEXT        IDC_PASSWORD,7,7,120,14,ES_AUTOHSCROLL
-    DEFPUSHBUTTON   "OK",IDOK,7,29,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,77,29,50,14
+	EDITTEXT        IDC_PASSWORD,7,7,120,14,ES_AUTOHSCROLL
+	DEFPUSHBUTTON   "OK",IDOK,7,29,50,14
+	PUSHBUTTON      "Cancel",IDCANCEL,77,29,50,14
 END
 
 
@@ -121,23 +121,23 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
-    IDD_VMPI_SERVICE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 447
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 218
-    END
+	IDD_VMPI_SERVICE, DIALOG
+	BEGIN
+		LEFTMARGIN, 7
+		RIGHTMARGIN, 447
+		TOPMARGIN, 7
+		BOTTOMMARGIN, 218
+	END
 
-    IDD_SET_PASSWORD, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 127
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 43
-    END
+	IDD_SET_PASSWORD, DIALOG
+	BEGIN
+		LEFTMARGIN, 7
+		RIGHTMARGIN, 127
+		TOPMARGIN, 7
+		BOTTOMMARGIN, 43
+	END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -147,11 +147,11 @@ END
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_APP_TITLE           "vmpi_service"
-    IDS_HELLO               "Hello World!"
-    IDC_VMPI_SERVICE        "VMPI_SERVICE"
+	IDS_APP_TITLE           "vmpi_service"
+	IDS_HELLO               "Hello World!"
+	IDC_VMPI_SERVICE        "VMPI_SERVICE"
 END
 
 #endif    // English (U.S.) resources
@@ -168,4 +168,3 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

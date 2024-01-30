@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -26,7 +26,7 @@ using namespace vgui;
 #include "convar.h"
 
 #define FADE_TIME	100
-#define MIN_ALPHA	100	
+#define MIN_ALPHA	100
 
 //-----------------------------------------------------------------------------
 // Purpose: Health panel
@@ -52,7 +52,7 @@ private:
 	CHudTexture		*icon_suit_full;
 	int				m_iBattery;
 	float			m_flFade;
-};	
+};
 
 DECLARE_HUDELEMENT( CHudBattery );
 DECLARE_HUD_MESSAGE( CHudBattery, Battery );
@@ -66,7 +66,7 @@ CHudBattery::CHudBattery( const char *pElementName ) : CHudElement( pElementName
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBattery::Init()
 {
@@ -75,7 +75,7 @@ void CHudBattery::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBattery::Reset()
 {
@@ -164,7 +164,7 @@ void CHudBattery::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBattery::MsgFunc_Battery( bf_read &msg )
 {

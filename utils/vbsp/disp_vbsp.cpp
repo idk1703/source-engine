@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -36,7 +36,7 @@ void ComputeDispInfoBounds( int dispinfo, Vector& mins, Vector& maxs )
 	CCoreDispInfo coreDispInfo;
 	DispMapToCoreDispInfo( pMapDisp, &coreDispInfo, NULL, NULL );
 
-	GetDispBox( &coreDispInfo, box );	
+	GetDispBox( &coreDispInfo, box );
 	mins = box.m_Min;
 	maxs = box.m_Max;
 }
@@ -48,15 +48,15 @@ bool GetBarycentricCoordsFromLightmapCoords( Vector2D tri[3], Vector2D const &lm
 {
 	GetBarycentricCoords2D( tri[0], tri[1], tri[2], lmCoords, bcCoords );
 
-	return 
-		(bcCoords[0] >= 0.0f && bcCoords[0] <= 1.0f) && 
-		(bcCoords[1] >= 0.0f && bcCoords[1] <= 1.0f) && 
+	return
+		(bcCoords[0] >= 0.0f && bcCoords[0] <= 1.0f) &&
+		(bcCoords[1] >= 0.0f && bcCoords[1] <= 1.0f) &&
 		(bcCoords[2] >= 0.0f && bcCoords[2] <= 1.0f);
 }
 
 
 bool FindTriIndexMapByUV( CCoreDispInfo *pCoreDisp, Vector2D const &lmCoords,
-						  int &iTriangle, float flBarycentric[3] )
+						int &iTriangle, float flBarycentric[3] )
 {
 	const CPowerInfo *pPowerInfo = GetPowerInfo( pCoreDisp->GetPower() );
 
@@ -84,7 +84,7 @@ bool FindTriIndexMapByUV( CCoreDispInfo *pCoreDisp, Vector2D const &lmCoords,
 			iTriangle = iTri;
 			return true;
 		}
-	}		
+	}
 
 	return false;
 }
@@ -178,14 +178,14 @@ void DispMapToCoreDispInfo( mapdispinfo_t *pMapDisp, CCoreDispInfo *pCoreDispInf
 			pt[i] = pWinding->p[i];
 
 		int zeroOffset[2] = {0,0};
-		CalcTextureCoordsAtPoints( 
+		CalcTextureCoordsAtPoints(
 			pTexInfo->textureVecsTexelsPerWorldUnits,
 			zeroOffset,
 			pt,
 			4,
 			tCoords );
 	}
-	
+
 	//
 	// set face point data ...
 	//
@@ -196,7 +196,7 @@ void DispMapToCoreDispInfo( mapdispinfo_t *pMapDisp, CCoreDispInfo *pCoreDispInf
 		pSurf->SetPoint( i, pWinding->p[i] );
 		pSurf->SetTexCoord( i, tCoords[i] );
 	}
-	
+
 	// reset surface given start info
 	pSurf->SetPointStart( pMapDisp->startPosition );
 	pSurf->FindSurfPointStartIndex();
@@ -204,15 +204,15 @@ void DispMapToCoreDispInfo( mapdispinfo_t *pMapDisp, CCoreDispInfo *pCoreDispInf
 
 	// Set the luxel coordinates on the base displacement surface.
 	Vector vecTmp( pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][0],
-				   pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][1],
-				   pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][2] );
+				pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][1],
+				pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][2] );
 	int nLuxelsPerWorldUnit = static_cast<int>( 1.0f / VectorLength( vecTmp ) );
 	Vector vecU( pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][0],
-				 pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][1],
-				 pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][2] );
+				pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][1],
+				pTexInfo->lightmapVecsLuxelsPerWorldUnits[0][2] );
 	Vector vecV( pTexInfo->lightmapVecsLuxelsPerWorldUnits[1][0],
-				 pTexInfo->lightmapVecsLuxelsPerWorldUnits[1][1],
-				 pTexInfo->lightmapVecsLuxelsPerWorldUnits[1][2] );
+				pTexInfo->lightmapVecsLuxelsPerWorldUnits[1][1],
+				pTexInfo->lightmapVecsLuxelsPerWorldUnits[1][2] );
 	bool bSwap = pSurf->CalcLuxelCoords( nLuxelsPerWorldUnit, false, vecU, vecV );
 
 	// Set the face m_LightmapExtents
@@ -261,10 +261,10 @@ void DispMapToCoreDispInfo( mapdispinfo_t *pMapDisp, CCoreDispInfo *pCoreDispInf
 
 		VectorScale( pMapDisp->vectorDisps[j], pMapDisp->dispDists[j], v );
 		VectorAdd( v, pMapDisp->vectorOffsets[j], v );
-		
+
 		dist = VectorLength( v );
 		VectorNormalize( v );
-		
+
 		vectorDisps[j] = v;
 		dispDists[j] = dist;
 	}
@@ -272,7 +272,7 @@ void DispMapToCoreDispInfo( mapdispinfo_t *pMapDisp, CCoreDispInfo *pCoreDispInf
 
 	// Use CCoreDispInfo to setup the actual vertex positions.
 	pCoreDispInfo->InitDispInfo( pMapDisp->power, pMapDisp->minTess, pMapDisp->smoothingAngle,
-						 pMapDisp->alphaValues, vectorDisps, dispDists );
+						pMapDisp->alphaValues, vectorDisps, dispDists );
 	pCoreDispInfo->Create();
 }
 
@@ -285,7 +285,7 @@ void EmitInitialDispInfos( void )
 	mapdispinfo_t		*pMapDisp;
 	ddispinfo_t			*pDisp;
 	Vector				v;
-	
+
 	// Calculate the total number of verts.
 	int nTotalVerts = 0;
 	int nTotalTris = 0;
@@ -307,7 +307,7 @@ void EmitInitialDispInfos( void )
 	{
 		pDisp = &g_dispinfo[i];
 		pMapDisp = &mapdispinfo[i];
-		
+
 		CDispVert *pOutVerts = &g_DispVerts[iCurVert];
 		CDispTri *pOutTris = &g_DispTris[iCurTri];
 
@@ -321,7 +321,7 @@ void EmitInitialDispInfos( void )
 		// save power, minimum tesselation, and smoothing angle
 		//
 		pDisp->power = pMapDisp->power;
-		
+
 		// If the high bit is set - this is FLAGS!
 		pDisp->minTess = pMapDisp->flags;
 		pDisp->minTess |= 0x80000000;
@@ -331,7 +331,7 @@ void EmitInitialDispInfos( void )
 
 		// get surface contents
 		pDisp->contents = pMapDisp->face.contents;
-		
+
 		pDisp->startPosition = pMapDisp->startPosition;
 		//
 		// add up the vectorOffsets and displacements, save alphas (per vertex)
@@ -341,10 +341,10 @@ void EmitInitialDispInfos( void )
 		{
 			VectorScale( pMapDisp->vectorDisps[j], pMapDisp->dispDists[j], v );
 			VectorAdd( v, pMapDisp->vectorOffsets[j], v );
-			
+
 			float dist = VectorLength( v );
 			VectorNormalize( v );
-			
+
 			VectorCopy( v, pOutVerts[j].m_vVector );
 			pOutVerts[j].m_flDist = dist;
 
@@ -388,7 +388,7 @@ void ExportNeighborData( CCoreDispInfo **ppListBase, ddispinfo_t *pBSPDispInfos,
 
 void ExportCoreDispAllowedVertList( const CCoreDispInfo *pIn, ddispinfo_t *pOut )
 {
-	ErrorIfNot( 
+	ErrorIfNot(
 		pIn->GetAllowedVerts().GetNumDWords() == sizeof( pOut->m_AllowedVerts ) / 4,
 		("ExportCoreDispAllowedVertList: size mismatch")
 		);
@@ -407,7 +407,7 @@ void ExportAllowedVertLists( CCoreDispInfo **ppListBase, ddispinfo_t *pBSPDispIn
 	}
 }
 
-bool FindEnclosingTri( 
+bool FindEnclosingTri(
 	const Vector2D &vert,
 	CUtlVector<Vector2D> &vertCoords,
 	CUtlVector<unsigned short> &indices,
@@ -416,15 +416,15 @@ bool FindEnclosingTri(
 {
 	for ( int i=0; i < indices.Count(); i += 3 )
 	{
-		GetBarycentricCoords2D( 
+		GetBarycentricCoords2D(
 			vertCoords[indices[i+0]],
 			vertCoords[indices[i+1]],
 			vertCoords[indices[i+2]],
 			vert,
 			bcCoords );
 
-		if ( bcCoords[0] >= 0 && bcCoords[0] <= 1 && 
-			bcCoords[1] >= 0 && bcCoords[1] <= 1 && 
+		if ( bcCoords[0] >= 0 && bcCoords[0] <= 1 &&
+			bcCoords[1] >= 0 && bcCoords[1] <= 1 &&
 			bcCoords[2] >= 0 && bcCoords[2] <= 1 )
 		{
 			*pStartVert = i;
@@ -462,7 +462,7 @@ void SnapRemainingVertsToSurface( CCoreDispInfo *pCoreDisp, ddispinfo_t *pDispIn
 		for ( int x=0; x < pCoreDisp->GetWidth(); x++ )
 			vertCoords[y*pCoreDisp->GetWidth()+x].Init( x, y );
 	}
-	
+
 	// Now, for each vert not touched, snap its position to the main surface.
 	for ( int y=0; y < pCoreDisp->GetHeight(); y++ )
 	{
@@ -495,16 +495,16 @@ void SnapRemainingVertsToSurface( CCoreDispInfo *pCoreDisp, ddispinfo_t *pDispIn
 				}
 				else
 				{
-					// This shouldn't happen because it would mean that the triangulation that 
+					// This shouldn't happen because it would mean that the triangulation that
 					// disp_tesselation.h produced was missing a chunk of the space that the
-					// displacement covers. 
+					// displacement covers.
 					// It also could indicate a floating-point epsilon error.. check to see if
 					// FindEnclosingTri finds a triangle that -almost- encloses the vert.
 					Assert( false );
 				}
 			}
 		}
-	} 
+	}
 }
 
 void SnapRemainingVertsToSurface( CCoreDispInfo **ppListBase, ddispinfo_t *pBSPDispInfos, int listSize )
@@ -552,13 +552,13 @@ void EmitDispLMAlphaAndNeighbors()
 	memset( pSwappedTexInfos, 0xFF, nMemSize );
 	for( i = 0; i < numfaces; i++ )
 	{
-        dface_t *pFace = &dfaces[i];
+	dface_t *pFace = &dfaces[i];
 
 		if( pFace->dispinfo == -1 )
 			continue;
 
 		mapdispinfo_t *pMapDisp = &mapdispinfo[pFace->dispinfo];
-		
+
 		// Set the displacement's face index.
 		ddispinfo_t *pDisp = &g_dispinfo[pFace->dispinfo];
 		pDisp->m_iMapFace = i;
@@ -566,20 +566,20 @@ void EmitDispLMAlphaAndNeighbors()
 		// Get a CCoreDispInfo. All we need is the triangles and lightmap texture coordinates.
 		CCoreDispInfo *pCoreDispInfo = g_CoreDispInfos[pFace->dispinfo];
 		DispMapToCoreDispInfo( pMapDisp, pCoreDispInfo, pFace, pSwappedTexInfos );
-		
+
 		faces[pFace->dispinfo] = pFace;
 	}
 	stackfree( pSwappedTexInfos );
-	
+
 	// Generate and export neighbor data.
 	ExportNeighborData( g_CoreDispInfos.Base(), g_dispinfo.Base(), nummapdispinfo );
 
 	// Generate and export the active vert lists.
 	ExportAllowedVertLists( g_CoreDispInfos.Base(), g_dispinfo.Base(), nummapdispinfo );
 
-	
+
 	// Now that we know which vertices are actually going to be around, snap the ones that won't
-	// be around onto the slightly-reduced mesh. This is so the engine's ray test code and 
+	// be around onto the slightly-reduced mesh. This is so the engine's ray test code and
 	// overlay code works right.
 	SnapRemainingVertsToSurface( g_CoreDispInfos.Base(), g_dispinfo.Base(), nummapdispinfo );
 
@@ -601,14 +601,14 @@ void EmitDispLMAlphaAndNeighbors()
 	int dispCount = 0;	// How many we've processed.
 	for( i = 0; i < nummapdispinfo; i++ )
 	{
-        dface_t *pFace = faces[i];
+	dface_t *pFace = faces[i];
 
 		Assert( pFace->dispinfo == i );
 		ddispinfo_t *pDisp = &g_dispinfo[pFace->dispinfo];
 
 		// Allocate space for the alpha values.
 		pDisp->m_iLightmapAlphaStart = 0; // not used anymore
-		
+
 		++dispCount;
 	}
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -21,7 +21,7 @@ BEGIN_VS_SHADER_FLAGS( HDRCombineTo16Bit, "Help for HDRCombineTo16Bit", SHADER_N
 	{
 		LoadTexture( SOURCEMRTRENDERTARGET );
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		// Requires DX9 + above

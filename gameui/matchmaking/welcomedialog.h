@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 class CWelcomeDialog : public CBaseDialog
 {
-	DECLARE_CLASS_SIMPLE( CWelcomeDialog, CBaseDialog ); 
+	DECLARE_CLASS_SIMPLE( CWelcomeDialog, CBaseDialog );
 
 public:
 	CWelcomeDialog(vgui::Panel *parent);

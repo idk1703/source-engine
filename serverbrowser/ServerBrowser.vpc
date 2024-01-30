@@ -49,7 +49,7 @@ $Project "ServerBrowser"
 		$File	"VACBannedConnRefusedDialog.h"
 
 		$File	"QuickListPanel.cpp"
-	
+
 		$File	"$SRCDIR\public\vgui_controls\vgui_controls.cpp"
 		{
 			$Configuration

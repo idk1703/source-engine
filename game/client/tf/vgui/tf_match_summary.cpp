@@ -1,7 +1,7 @@
 
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -70,7 +70,7 @@ ConCommand tf_restart_match_summary("tf_restart_match_summary", cc_tf_restart_ma
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CTFMatchSummary::CTFMatchSummary( const char *pElementName ) 
+CTFMatchSummary::CTFMatchSummary( const char *pElementName )
 	: CHudElement( pElementName )
 	, EditablePanel( NULL, "MatchSummary" )
 	, m_bXPShown( false )
@@ -135,7 +135,7 @@ CTFMatchSummary::CTFMatchSummary( const char *pElementName )
 	m_nMedalsToAward_Bronze_Red = 0;
 	m_nMedalsToAward_Silver_Red = 0;
 	m_nMedalsToAward_Gold_Red = 0;
-	
+
 	m_nMedalsRevealed = 0;
 	m_nNumMedalsThisUpdate = 0;
 
@@ -294,7 +294,7 @@ void CTFMatchSummary::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMatchSummary::PerformLayout()
 {
@@ -308,7 +308,7 @@ void CTFMatchSummary::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFMatchSummary::ShouldDraw( void )
 {
@@ -316,7 +316,7 @@ bool CTFMatchSummary::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMatchSummary::SetVisible( bool state )
 {
@@ -407,7 +407,7 @@ void CTFMatchSummary::InitPlayerList( TFSectionedListPanel *pPlayerList, int nTe
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMatchSummary::Update( void )
 {
@@ -476,7 +476,7 @@ void CTFMatchSummary::UpdateTeamInfo()
 			if ( bUseWinnerLabel )
 			{
 				const char *pszLabel = "";
-				if ( teamIndex == nWinningTeam ) 
+				if ( teamIndex == nWinningTeam )
 				{
 					if ( team->GetNumPlayers() > 1 )
 					{
@@ -654,7 +654,7 @@ void CTFMatchSummary::UpdatePlayerList()
 			pKeyValues->SetInt( "playerIndex", playerIndex );
 
 			// this is just a placeholder in the sectioned list panel
-			pKeyValues->SetInt( "medal", 0 ); 
+			pKeyValues->SetInt( "medal", 0 );
 
 			pKeyValues->SetString( "name", g_TF_PR->GetPlayerName( playerIndex ) );
 			pKeyValues->SetInt( "score", g_TF_PR->GetTotalScore( playerIndex ) );
@@ -771,7 +771,7 @@ void CTFMatchSummary::UpdatePlayerList()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMatchSummary::FireMedalEffects( Panel *pPanel, int nPanelXPos, int nPanelYPos, int nPanelWide, int nPanelTall, StatMedal_t eParticleMedal )
 {
@@ -815,7 +815,7 @@ void CTFMatchSummary::FireMedalEffects( Panel *pPanel, int nPanelXPos, int nPane
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMatchSummary::UpdateBadgePanels( CUtlVector<CTFBadgePanel*> &pBadgePanels, TFSectionedListPanel *pPlayerList )
 {
@@ -823,7 +823,7 @@ void CTFMatchSummary::UpdateBadgePanels( CUtlVector<CTFBadgePanel*> &pBadgePanel
 		return;
 
 	const IMatchGroupDescription *pMatchDesc = GetMatchGroupDescription( TFGameRules()->GetCurrentMatchGroup() );
-	const IProgressionDesc *pProgressionDesc = pMatchDesc ? pMatchDesc->m_pProgressionDesc : NULL; 
+	const IProgressionDesc *pProgressionDesc = pMatchDesc ? pMatchDesc->m_pProgressionDesc : NULL;
 	if ( pProgressionDesc )
 	{
 		if ( pPlayerList )
@@ -911,7 +911,7 @@ void CTFMatchSummary::UpdateBadgePanels( CUtlVector<CTFBadgePanel*> &pBadgePanel
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMatchSummary::UpdatePlayerAvatar( int playerIndex, KeyValues *kv )
 {
@@ -971,7 +971,7 @@ void CTFMatchSummary::FireGameEvent( IGameEvent *event )
 		{
 			m_SkillRatings[iIndex].unRating = event->GetInt( "rating" );			// Rank
 			m_SkillRatings[iIndex].nDelta = event->GetInt( "delta" );
-			m_SkillRatings[iIndex].nScoreRank = event->GetInt( "score_rank" );		// Medal for Score (Gold, Silver, Bronze, or nothing)		
+			m_SkillRatings[iIndex].nScoreRank = event->GetInt( "score_rank" );		// Medal for Score (Gold, Silver, Bronze, or nothing)
 			m_SkillRatings[iIndex].nKillsRank = event->GetInt( "kills_rank" );		// Medal for Kills
 			m_SkillRatings[iIndex].nDamageRank = event->GetInt( "damage_rank" );	// Medal for Damage
 			m_SkillRatings[iIndex].nHealingRank = event->GetInt( "healing_rank" );	// Medal for Healing
@@ -1015,7 +1015,7 @@ void CTFMatchSummary::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMatchSummary::InternalUpdateMedalCountForType( int iTeam, StatMedal_t eMedal )
 {
@@ -1058,7 +1058,7 @@ void CTFMatchSummary::InternalUpdateMedalCountForType( int iTeam, StatMedal_t eM
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMatchSummary::RecalculateMedalCounts()
 {
@@ -1090,7 +1090,7 @@ void CTFMatchSummary::RecalculateMedalCounts()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMatchSummary::OnTick()
 {
@@ -1105,9 +1105,9 @@ void CTFMatchSummary::OnTick()
 	if ( !pMatchDesc )
 		return;
 
-	if ( pMatchDesc->m_params.m_bAllowDrawingAtMatchSummary 
-	     && m_pDrawingPanel 
-	     && ( m_flDrawingPanelTime > 0 ) 
+	if ( pMatchDesc->m_params.m_bAllowDrawingAtMatchSummary
+	     && m_pDrawingPanel
+	     && ( m_flDrawingPanelTime > 0 )
 	     && ( m_flDrawingPanelTime < gpGlobals->curtime ) )
 	{
 		m_pDrawingPanel->SetVisible( true );
@@ -1127,7 +1127,7 @@ void CTFMatchSummary::OnTick()
 	bool bShowPerformanceMedals = ShowPerformanceMedals();
 	bool bMapHasMatchSummaryStage = ( TFGameRules() && TFGameRules()->MapHasMatchSummaryStage() );
 
-	
+
 #ifdef STAGING_ONLY
 	bool bUseMatchSummaryStage = tf_test_match_summary.GetBool() || ( pMatchDesc && pMatchDesc->m_params.m_bUseMatchSummaryStage );
 #else
@@ -1214,7 +1214,7 @@ void CTFMatchSummary::OnTick()
 				}
 
 				float flDelay = MS_STATE_TRANSITION_TO_MEDALS;
-					
+
 				if ( pLocalPlayer )
 				{
 					if ( bShowPerformanceMedals )
@@ -1386,7 +1386,7 @@ void CTFMatchSummary::OnTick()
 
 						if ( pLocalPlayer )
 						{
-							const char *pszSoundScriptEntry = "Announcer.CompSummaryScreenOutlierNo"; 
+							const char *pszSoundScriptEntry = "Announcer.CompSummaryScreenOutlierNo";
 							if ( nMedalsToAward_Bronze_Total || nMedalsToAward_Silver_Total || nMedalsToAward_Gold_Total )
 							{
 								pszSoundScriptEntry = "Announcer.CompSummaryScreenOutlierYes";
@@ -1415,7 +1415,7 @@ void CTFMatchSummary::OnTick()
 
 			if ( !m_bXPShown /*&& ( !bShowMedals || bMedalSoundTimeComplete ) */)
 			{
-				g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "CompetitiveGame_ShowPvPRankPanel", false );	
+				g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "CompetitiveGame_ShowPvPRankPanel", false );
 				m_bXPShown = true;
 			}
 
@@ -1452,7 +1452,7 @@ void CTFMatchSummary::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMatchSummary::LevelInit( void )
 {
@@ -1465,7 +1465,7 @@ void CTFMatchSummary::LevelShutdown( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFMatchSummary::ShowPerformanceMedals( void )
 {

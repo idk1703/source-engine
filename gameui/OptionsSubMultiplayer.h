@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,7 +25,7 @@ class CCvarSlider;
 class CMultiplayerAdvancedDialog;
 
 class COptionsSubMultiplayer;
- 
+
 class CrosshairImagePanelBase : public vgui::ImagePanel
 {
 	DECLARE_CLASS_SIMPLE( CrosshairImagePanelBase, vgui::ImagePanel );
@@ -79,10 +79,10 @@ private:
 
 	vgui::ImagePanel *m_pLogoImage;
 	CLabeledCommandComboBox *m_pLogoList;
-    char m_LogoName[128];
+	char m_LogoName[128];
 
-    CCvarSlider *m_pPrimaryColorSlider;
-    CCvarSlider *m_pSecondaryColorSlider;
+	CCvarSlider *m_pPrimaryColorSlider;
+	CCvarSlider *m_pSecondaryColorSlider;
 	CCvarToggleCheckButton *m_pHighQualityModelCheckBox;
 
 	// Mod specific general checkboxes

@@ -66,7 +66,7 @@ public:
 	// Achievements
 	virtual int				EnumerateAchievements( uint nUserIdx, uint64 xuid, uint nStartingIdx, uint nCount, void *pBuffer, uint nBufferBytes, bool bAsync, AsyncHandle_t *pAsyncHandle );
 	virtual void			AwardAchievement( uint nUserIdx, uint nAchievementId );
-	
+
 	virtual void			FinishContainerWrites( void );
 	virtual uint			GetContainerOpenResult( void );
 	virtual uint			OpenContainers( void );
@@ -293,7 +293,7 @@ void CXboxSystem::CloseContainers( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 uint CXboxSystem::OpenContainers( void )
 {
@@ -316,7 +316,7 @@ uint CXboxSystem::OpenContainers( void )
 		CloseContainers();
 		return m_OpenContainerResult;
 	}
-	
+
 	return m_OpenContainerResult;
 }
 
@@ -405,7 +405,7 @@ uint CXboxSystem::CreateUserSettingsContainer( uint nCreationFlags )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CXboxSystem::FinishContainerWrites( void )
 {
@@ -463,7 +463,7 @@ void CXboxSystem::GetModSaveContainerNames( const char *pchModName, const wchar_
 bool CXboxSystem::DeviceCapacityAdequate( DWORD nStorageID, const char *pModName )
 {
 	// If we don't have a valid user id, we can't poll the device
-	if ( XBX_GetPrimaryUserId() == XBX_INVALID_USER_ID ) 
+	if ( XBX_GetPrimaryUserId() == XBX_INVALID_USER_ID )
 		return false;
 
 	// Must be a valid storage device to poll
@@ -480,7 +480,7 @@ bool CXboxSystem::DeviceCapacityAdequate( DWORD nStorageID, const char *pModName
 	bool bIsTF2 = ( !Q_stricmp( pModName, "tf" ) );
 	ULONGLONG nTotalSpaceNeeded = ( bIsTF2 ) ? nUserSettingsSize : ( nSaveGameSize + nUserSettingsSize );
 	ULONGLONG nAvailableSpace = deviceData.ulDeviceFreeBytes; // Take the first device's free space to compare this against
-	
+
 	// If they've already got enough space, early out
 	if ( nAvailableSpace >= nTotalSpaceNeeded )
 		return true;
@@ -496,12 +496,12 @@ bool CXboxSystem::DeviceCapacityAdequate( DWORD nStorageID, const char *pModName
 	// Look for a user settings block for all products
 	DWORD nBufferSize;
 	HANDLE hEnumerator;
-	if ( XContentCreateEnumerator(	XBX_GetPrimaryUserId(), 
-									nStorageID, 
-									XCONTENTTYPE_SAVEDGAME, 
-									fContentFlags, 
-									nNumItemsToRetrieve, 
-									&nBufferSize, 
+	if ( XContentCreateEnumerator(	XBX_GetPrimaryUserId(),
+									nStorageID,
+									XCONTENTTYPE_SAVEDGAME,
+									fContentFlags,
+									nNumItemsToRetrieve,
+									&nBufferSize,
 									&hEnumerator ) == ERROR_SUCCESS )
 	{
 		// Allocate a buffer of the correct size
@@ -576,12 +576,12 @@ DWORD CXboxSystem::DiscoverUserData( DWORD nUserID, const char *pModName )
 	// Look for a user settings block for all products
 	DWORD nBufferSize;
 	HANDLE hEnumerator;
-	if ( XContentCreateEnumerator(	nUserID, 
+	if ( XContentCreateEnumerator(	nUserID,
 									XCONTENTDEVICE_ANY, // All devices we know about
-									XCONTENTTYPE_SAVEDGAME, 
-									fContentFlags, 
-									nNumItemsToRetrieve, 
-									&nBufferSize, 
+									XCONTENTTYPE_SAVEDGAME,
+									fContentFlags,
+									nNumItemsToRetrieve,
+									&nBufferSize,
 									&hEnumerator ) == ERROR_SUCCESS )
 	{
 		// Allocate a buffer of the correct size
@@ -678,12 +678,12 @@ bool CXboxSystem::ShowDeviceSelector( bool bForce, uint *pStorageID, AsyncHandle
 	DWORD showFlags = bForce ? XCONTENTFLAG_FORCE_SHOW_UI : 0;
 	showFlags |= XCONTENTFLAG_MANAGESTORAGE;
 
-	DWORD ret = XShowDeviceSelectorUI(	XBX_GetPrimaryUserId(), 
-										XCONTENTTYPE_SAVEDGAME, 
-										showFlags, 
-										bytes, 
-										(DWORD*) pStorageID, 
-										&pResult->overlapped 
+	DWORD ret = XShowDeviceSelectorUI(	XBX_GetPrimaryUserId(),
+										XCONTENTTYPE_SAVEDGAME,
+										showFlags,
+										bytes,
+										(DWORD*) pStorageID,
+										&pResult->overlapped
 										);
 
 	if ( ret != ERROR_IO_PENDING )
@@ -750,15 +750,15 @@ int CXboxSystem::UserSetProperty( uint nUserIndex, uint nPropertyId, uint nBytes
 //-----------------------------------------------------------------------------
 //	Purpose: Create a matchmaking session
 //-----------------------------------------------------------------------------
-int CXboxSystem::CreateSession( uint nFlags, 
-							    uint nUserIdx, 
-								uint nMaxPublicSlots, 
-								uint nMaxPrivateSlots, 
-								uint64 *pNonce,  
+int CXboxSystem::CreateSession( uint nFlags,
+							    uint nUserIdx,
+								uint nMaxPublicSlots,
+								uint nMaxPrivateSlots,
+								uint64 *pNonce,
 								void *pSessionInfo,
 								XboxHandle_t *pSessionHandle,
 								bool bAsync,
-								AsyncHandle_t *pAsyncHandle 
+								AsyncHandle_t *pAsyncHandle
 								)
 {
 	XOVERLAPPED *pOverlapped = NULL;
@@ -970,19 +970,19 @@ int	CXboxSystem::WriteStats( XboxHandle_t hSession, XUID xuid, uint nViews, void
 //-----------------------------------------------------------------------------
 //	Purpose: Enumerate a player's achievements
 //-----------------------------------------------------------------------------
-int CXboxSystem::EnumerateAchievements( uint nUserIdx, 
-									    uint64 xuid, 
-										uint nStartingIdx, 
-										uint nCount, 
-										void *pBuffer, 
+int CXboxSystem::EnumerateAchievements( uint nUserIdx,
+									    uint64 xuid,
+										uint nStartingIdx,
+										uint nCount,
+										void *pBuffer,
 										uint nBufferBytes,
 										bool bAsync,
-										AsyncHandle_t *pAsyncHandle 
+										AsyncHandle_t *pAsyncHandle
 										)
 {
 	HANDLE hEnumerator = INVALID_HANDLE_VALUE;
 	DWORD ret = XUserCreateAchievementEnumerator( 0, nUserIdx, xuid, XACHIEVEMENT_DETAILS_ALL, nStartingIdx, nCount, (DWORD*)pBuffer, &hEnumerator );
-	
+
 	// Just looking for the buffer size needed
 	if ( ret != ERROR_SUCCESS || nBufferBytes == 0 )
 	{
@@ -1045,7 +1045,7 @@ AsyncHandle_t	CXboxSystem::CreateAsyncHandle( void ) { return NULL; }
 void			CXboxSystem::ReleaseAsyncHandle( AsyncHandle_t handle ) {}
 int				CXboxSystem::GetOverlappedResult( AsyncHandle_t handle, uint *pResultCode, bool bWait ) { return 0; }
 void			CXboxSystem::CancelOverlappedOperation( AsyncHandle_t handle ) {};
-void			CXboxSystem::GetModSaveContainerNames( const char *pchModName, const wchar_t **ppchDisplayName, const char **ppchName ) 
+void			CXboxSystem::GetModSaveContainerNames( const char *pchModName, const wchar_t **ppchDisplayName, const char **ppchName )
 {
 	*ppchDisplayName = g_szModSaveContainerDisplayName;
 	*ppchName = g_szModSaveContainerName;

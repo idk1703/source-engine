@@ -26,10 +26,10 @@ static void OnConVarChangeCustomPingTolerance( IConVar *pConVar, const char *pOl
 }
 
 ConVar tf_custom_ping_enabled( "tf_custom_ping_enabled", "0", FCVAR_ARCHIVE, "",
-                               false, 0.f, false, 0.f, OnConVarChangeCustomPingTolerance );
+	false, 0.f, false, 0.f, OnConVarChangeCustomPingTolerance );
 ConVar tf_custom_ping( "tf_custom_ping", "100", FCVAR_ARCHIVE, "",
-                       true, (float)CUSTOM_PING_TOLERANCE_MIN, true, (float)CUSTOM_PING_TOLERANCE_MAX,
-                       OnConVarChangeCustomPingTolerance );
+	true, (float)CUSTOM_PING_TOLERANCE_MIN, true, (float)CUSTOM_PING_TOLERANCE_MAX,
+	OnConVarChangeCustomPingTolerance );
 
 #ifdef STAGING_ONLY
 ConVar tf_custom_ping_add_random_datacenters( "tf_custom_ping_add_random_datacenters", "0" );
@@ -57,7 +57,7 @@ CTFPingPanel::~CTFPingPanel()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPingPanel::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -85,7 +85,7 @@ void CTFPingPanel::ApplySchemeSettings( IScheme *pScheme )
 		{
 			bTesting = true;
 			const char* pszDataCenterNames[] = { "eat", "lax","iad","atl","gru","scl","lim","lux","vie","sto",
-												 "mad","sgp","hkg","tyo","syd","dxb","bom","maa","ord","waw","jhb" };
+												"mad","sgp","hkg","tyo","syd","dxb","bom","maa","ord","waw","jhb" };
 
 			CUniformRandomStream randomstream;
 			randomstream.SetSeed( tf_custom_ping_add_random_datacenters.GetInt() );
@@ -158,7 +158,7 @@ void CTFPingPanel::ApplySchemeSettings( IScheme *pScheme )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPingPanel::PerformLayout()
 {
@@ -191,7 +191,7 @@ void CTFPingPanel::PerformLayout()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPingPanel::OnCommand( const char *command )
 {
@@ -206,7 +206,7 @@ void CTFPingPanel::OnCommand( const char *command )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPingPanel::FireGameEvent( IGameEvent *event )
 {
@@ -219,7 +219,7 @@ void CTFPingPanel::FireGameEvent( IGameEvent *event )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPingPanel::CleanupPingPanels()
 {
@@ -233,7 +233,7 @@ void CTFPingPanel::CleanupPingPanels()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPingPanel::UpdateCurrentPing()
 {
@@ -262,7 +262,7 @@ void CTFPingPanel::UpdateCurrentPing()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPingPanel::OnCheckButtonChecked( vgui::Panel *panel )
 {
@@ -278,7 +278,7 @@ void CTFPingPanel::OnCheckButtonChecked( vgui::Panel *panel )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPingPanel::OnSliderMoved()
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -29,7 +29,7 @@ public:
 	~C_TFProjectile_Flare();
 
 	virtual void	OnDataChanged( DataUpdateType_t updateType );
-	
+
 	void			CreateTrails( void );
 
 private:

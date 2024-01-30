@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "cbase.h"
@@ -16,7 +16,7 @@ extern float g_flCustomBloomScaleMinimum;
 EHANDLE g_hTonemapControllerInUse = NULL;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_EnvTonemapController : public C_BaseEntity
 {
@@ -51,7 +51,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_EnvTonemapController, DT_EnvTonemapController, CEnvT
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_EnvTonemapController::C_EnvTonemapController( void )
 {
@@ -65,7 +65,7 @@ C_EnvTonemapController::C_EnvTonemapController( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_EnvTonemapController::~C_EnvTonemapController( void )
 {
@@ -78,7 +78,7 @@ C_EnvTonemapController::~C_EnvTonemapController( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EnvTonemapController::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -94,4 +94,3 @@ void C_EnvTonemapController::OnDataChanged( DataUpdateType_t updateType )
 
 	g_hTonemapControllerInUse = this;
 }
-

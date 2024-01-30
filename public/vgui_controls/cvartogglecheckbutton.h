@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ class CvarToggleCheckButton : public CheckButton
 	DECLARE_CLASS_SIMPLE( CvarToggleCheckButton, CheckButton );
 
 public:
-	CvarToggleCheckButton( Panel *parent, const char *panelName, const char *text = "", 
+	CvarToggleCheckButton( Panel *parent, const char *panelName, const char *text = "",
 		char const *cvarname = NULL, bool ignoreMissingCvar = false );
 	~CvarToggleCheckButton();
 
@@ -72,12 +72,12 @@ CvarToggleCheckButton<T>::~CvarToggleCheckButton()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 template< class T >
 void CvarToggleCheckButton<T>::Paint()
 {
-	if ( !m_cvar.IsValid() ) 
+	if ( !m_cvar.IsValid() )
 	{
 		BaseClass::Paint();
 		return;
@@ -103,12 +103,12 @@ void CvarToggleCheckButton<T>::OnApplyChanges()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 template< class T >
 void CvarToggleCheckButton<T>::ApplyChanges()
 {
-	if ( !m_cvar.IsValid() ) 
+	if ( !m_cvar.IsValid() )
 		return;
 
 	m_bStartValue = IsSelected();
@@ -116,12 +116,12 @@ void CvarToggleCheckButton<T>::ApplyChanges()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 template< class T >
 void CvarToggleCheckButton<T>::Reset()
 {
-	if ( !m_cvar.IsValid() ) 
+	if ( !m_cvar.IsValid() )
 		return;
 
 	m_bStartValue = m_cvar.GetBool();
@@ -129,7 +129,7 @@ void CvarToggleCheckButton<T>::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 template< class T >
 bool CvarToggleCheckButton<T>::HasBeenModified()
@@ -138,8 +138,8 @@ bool CvarToggleCheckButton<T>::HasBeenModified()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *panel - 
+// Purpose:
+// Input  : *panel -
 //-----------------------------------------------------------------------------
 template< class T >
 void CvarToggleCheckButton<T>::SetSelected( bool state )
@@ -149,7 +149,7 @@ void CvarToggleCheckButton<T>::SetSelected( bool state )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 template< class T >
 void CvarToggleCheckButton<T>::OnButtonChecked()
@@ -161,7 +161,7 @@ void CvarToggleCheckButton<T>::OnButtonChecked()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 template< class T >
 void CvarToggleCheckButton<T>::ApplySettings( KeyValues *inResourceData )

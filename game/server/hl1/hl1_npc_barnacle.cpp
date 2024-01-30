@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		barnacle - stationary ceiling mounted 'fishing' monster	
+// Purpose:		barnacle - stationary ceiling mounted 'fishing' monster
 //
 // $Workfile:     $
 // $Date:         $
@@ -41,7 +41,7 @@ IMPLEMENT_CUSTOM_AI( monster_barnacle, CNPC_Barnacle );
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-void CNPC_Barnacle::InitCustomSchedules(void) 
+void CNPC_Barnacle::InitCustomSchedules(void)
 {
 	INIT_CUSTOM_AI(CNPC_Barnacle);
 
@@ -49,7 +49,7 @@ void CNPC_Barnacle::InitCustomSchedules(void)
 
 	g_interactionBarnacleVictimDangle	= CBaseCombatCharacter::GetInteractionID();
 	g_interactionBarnacleVictimReleased	= CBaseCombatCharacter::GetInteractionID();
-	g_interactionBarnacleVictimGrab		= CBaseCombatCharacter::GetInteractionID();	
+	g_interactionBarnacleVictimGrab		= CBaseCombatCharacter::GetInteractionID();
 }
 
 
@@ -69,7 +69,7 @@ END_DATADESC()
 
 
 //=========================================================
-// Classify - indicates this monster's place in the 
+// Classify - indicates this monster's place in the
 // relationship table.
 //=========================================================
 Class_T	CNPC_Barnacle::Classify ( void )
@@ -88,7 +88,7 @@ void CNPC_Barnacle::HandleAnimEvent( animevent_t *pEvent )
 	switch( pEvent->event )
 	{
 	case BARNACLE_AE_PUKEGIB:
-		CGib::SpawnRandomGibs( this, 1, GIB_HUMAN );	
+		CGib::SpawnRandomGibs( this, 1, GIB_HUMAN );
 		break;
 	default:
 		BaseClass::HandleAnimEvent( pEvent );
@@ -172,7 +172,7 @@ void CNPC_Barnacle::InitTonguePosition( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Barnacle::BarnacleThink ( void )
 {
@@ -201,7 +201,7 @@ void CNPC_Barnacle::BarnacleThink ( void )
 		Assert( pVictim );
 
 		if ( m_fLiftingPrey )
-		{	
+		{
 
 			if ( GetEnemy() != NULL && pVictim->m_lifeState == LIFE_DEAD )
 			{
@@ -218,7 +218,7 @@ void CNPC_Barnacle::BarnacleThink ( void )
 
 			// guess as to where their neck is
 			// FIXME: remove, ask victim where their neck is
-			vecNewEnemyOrigin.x -= 6 * cos(GetEnemy()->GetLocalAngles().y * M_PI/180.0);	
+			vecNewEnemyOrigin.x -= 6 * cos(GetEnemy()->GetLocalAngles().y * M_PI/180.0);
 			vecNewEnemyOrigin.y -= 6 * sin(GetEnemy()->GetLocalAngles().y * M_PI/180.0);
 
 			m_flAltitude -= BARNACLE_PULL_SPEED;
@@ -234,7 +234,7 @@ void CNPC_Barnacle::BarnacleThink ( void )
 
 				// Take a while to kill the player
 				m_flKillVictimTime = gpGlobals->curtime + 10;
-						
+
 				if ( pVictim )
 				{
 					pVictim->DispatchInteraction( g_interactionBarnacleVictimDangle, NULL, this );
@@ -360,7 +360,7 @@ void CNPC_Barnacle::BarnacleThink ( void )
 				Vector origin = GetAbsOrigin();
 				origin.z = pTouchEnt->GetAbsOrigin().z;
 				pTouchEnt->SetLocalOrigin( origin );
-				
+
 				m_fLiftingPrey = TRUE;// indicate that we should be lifting prey.
 				m_flKillVictimTime = -1;// set this to a bogus time while the victim is lifted.
 
@@ -369,7 +369,7 @@ void CNPC_Barnacle::BarnacleThink ( void )
 		}
 		else
 		{
-			// calculate a new length for the tongue to be clear of anything else that moves under it. 
+			// calculate a new length for the tongue to be clear of anything else that moves under it.
 			if ( m_flAltitude < flLength )
 			{
 				// if tongue is higher than is should be, lower it kind of slowly.
@@ -392,7 +392,7 @@ void CNPC_Barnacle::BarnacleThink ( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Barnacle::Event_Killed( const CTakeDamageInfo &info )
 {
@@ -424,7 +424,7 @@ void CNPC_Barnacle::Event_Killed( const CTakeDamageInfo &info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Barnacle::WaitTillDead ( void )
 {
@@ -435,7 +435,7 @@ void CNPC_Barnacle::WaitTillDead ( void )
 
 	if ( IsActivityFinished() )
 	{
-		// death anim finished. 
+		// death anim finished.
 		StopAnimation();
 		SetThink ( NULL );
 	}
@@ -454,7 +454,7 @@ void CNPC_Barnacle::Precache()
 	PrecacheScriptSound( "Barnacle.Die" );
 
 	BaseClass::Precache();
-}	
+}
 
 //=========================================================
 // TongueTouchEnt - does a trace along the barnacle's tongue
@@ -468,9 +468,9 @@ CBaseEntity *CNPC_Barnacle::TongueTouchEnt ( float *pflLength )
 	float		length;
 
 	// trace once to hit architecture and see if the tongue needs to change position.
-	UTIL_TraceLine ( GetAbsOrigin(), GetAbsOrigin() - Vector ( 0 , 0 , 2048 ), 
+	UTIL_TraceLine ( GetAbsOrigin(), GetAbsOrigin() - Vector ( 0 , 0 , 2048 ),
 		MASK_SOLID_BRUSHONLY, this, COLLISION_GROUP_NONE, &tr );
-	
+
 	length = fabs( GetAbsOrigin().z - tr.endpos.z );
 	// Pull it up a tad
 	length -= 16;
@@ -487,8 +487,8 @@ CBaseEntity *CNPC_Barnacle::TongueTouchEnt ( float *pflLength )
 	Vector mins = GetAbsOrigin() - delta;
 	Vector maxs = GetAbsOrigin() + delta;
 	maxs.z = GetAbsOrigin().z;
-	
-	// Take our current tongue's length or a point higher if we hit a wall 
+
+	// Take our current tongue's length or a point higher if we hit a wall
 	// NOTENOTE: (this relieves the need to know if the tongue is currently moving)
 	mins.z -= MIN( m_flAltitude, length );
 

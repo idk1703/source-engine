@@ -54,7 +54,7 @@ IMPLEMENT_SERVERCLASS_ST_NOBASE(CBaseTeamObjectiveResource, DT_BaseTeamObjective
 	SendPropArray3( SENDINFO_ARRAY3(m_flUnlockTimes), SendPropFloat( SENDINFO_ARRAY(m_flUnlockTimes) ) ),
 	SendPropArray3( SENDINFO_ARRAY3(m_bHillIsDownhill), SendPropBool( SENDINFO_ARRAY(m_bHillIsDownhill) ) ),
 	SendPropArray3( SENDINFO_ARRAY3(m_flCPTimerTimes), SendPropFloat( SENDINFO_ARRAY(m_flCPTimerTimes) ) ),
-	
+
 	// state variables
 	SendPropArray3( SENDINFO_ARRAY3(m_iNumTeamMembers), SendPropInt( SENDINFO_ARRAY(m_iNumTeamMembers), 4, SPROP_UNSIGNED ) ),
 	SendPropArray3( SENDINFO_ARRAY3(m_iCappingTeam), SendPropInt( SENDINFO_ARRAY(m_iCappingTeam), 4, SPROP_UNSIGNED ) ),
@@ -112,7 +112,7 @@ END_DATADESC()
 CBaseTeamObjectiveResource *g_pObjectiveResource = NULL;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseTeamObjectiveResource::CBaseTeamObjectiveResource()
 {
@@ -125,16 +125,16 @@ CBaseTeamObjectiveResource::CBaseTeamObjectiveResource()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseTeamObjectiveResource::~CBaseTeamObjectiveResource()
 {
 	Assert( g_pObjectiveResource == this );
-	g_pObjectiveResource = NULL;	
+	g_pObjectiveResource = NULL;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::Spawn( void )
 {
@@ -210,7 +210,7 @@ void CBaseTeamObjectiveResource::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::ObjectiveThink( void )
 {
@@ -265,7 +265,7 @@ void CBaseTeamObjectiveResource::SetNumControlPoints( int num )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetCPIcons( int index, int iTeam, int iIcon )
 {
@@ -274,7 +274,7 @@ void CBaseTeamObjectiveResource::SetCPIcons( int index, int iTeam, int iIcon )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetCPOverlays( int index, int iTeam, int iIcon )
 {
@@ -283,7 +283,7 @@ void CBaseTeamObjectiveResource::SetCPOverlays( int index, int iTeam, int iIcon 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetTeamBaseIcons( int iTeam, int iBaseIcon )
 {
@@ -292,7 +292,7 @@ void CBaseTeamObjectiveResource::SetTeamBaseIcons( int iTeam, int iBaseIcon )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetCPPosition( int index, const Vector& vPosition )
 {
@@ -301,7 +301,7 @@ void CBaseTeamObjectiveResource::SetCPPosition( int index, const Vector& vPositi
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetCPVisible( int index, bool bVisible )
 {
@@ -310,7 +310,7 @@ void CBaseTeamObjectiveResource::SetCPVisible( int index, bool bVisible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetWarnOnCap( int index, int iWarnLevel )
 {
@@ -319,7 +319,7 @@ void CBaseTeamObjectiveResource::SetWarnOnCap( int index, int iWarnLevel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetWarnSound( int index, string_t iszSound )
 {
@@ -328,7 +328,7 @@ void CBaseTeamObjectiveResource::SetWarnSound( int index, string_t iszSound )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetCPGroup( int index, int iCPGroup )
 {
@@ -337,7 +337,7 @@ void CBaseTeamObjectiveResource::SetCPGroup( int index, int iCPGroup )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetCPRequiredCappers( int index, int iTeam, int iReqPlayers )
 {
@@ -346,7 +346,7 @@ void CBaseTeamObjectiveResource::SetCPRequiredCappers( int index, int iTeam, int
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetCPCapTime( int index, int iTeam, float flTime )
 {
@@ -355,7 +355,7 @@ void CBaseTeamObjectiveResource::SetCPCapTime( int index, int iTeam, float flTim
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetCPCapPercentage( int index, float flTime )
 {
@@ -364,7 +364,7 @@ void CBaseTeamObjectiveResource::SetCPCapPercentage( int index, float flTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CBaseTeamObjectiveResource::GetCPCapPercentage( int index )
 {
@@ -373,7 +373,7 @@ float CBaseTeamObjectiveResource::GetCPCapPercentage( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetCPUnlockTime( int index, float flTime )
 {
@@ -382,7 +382,7 @@ void CBaseTeamObjectiveResource::SetCPUnlockTime( int index, float flTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetCPTimerTime( int index, float flTime )
 {
@@ -391,7 +391,7 @@ void CBaseTeamObjectiveResource::SetCPTimerTime( int index, float flTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetCPCapTimeScalesWithPlayers( int index, bool bScales )
 {
@@ -400,7 +400,7 @@ void CBaseTeamObjectiveResource::SetCPCapTimeScalesWithPlayers( int index, bool 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetTeamCanCap( int index, int iTeam, bool bCanCap )
 {
@@ -410,7 +410,7 @@ void CBaseTeamObjectiveResource::SetTeamCanCap( int index, int iTeam, bool bCanC
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetBaseCP( int index, int iTeam )
 {
@@ -419,7 +419,7 @@ void CBaseTeamObjectiveResource::SetBaseCP( int index, int iTeam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetPreviousPoint( int index, int iTeam, int iPrevIndex, int iPrevPoint )
 {
@@ -430,7 +430,7 @@ void CBaseTeamObjectiveResource::SetPreviousPoint( int index, int iTeam, int iPr
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseTeamObjectiveResource::GetPreviousPointForPoint( int index, int team, int iPrevIndex )
 {
@@ -441,7 +441,7 @@ int CBaseTeamObjectiveResource::GetPreviousPointForPoint( int index, int team, i
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseTeamObjectiveResource::TeamCanCapPoint( int index, int team )
 {
@@ -460,7 +460,7 @@ void CBaseTeamObjectiveResource::SetNumPlayers( int index, int team, int iNumPla
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::StartCap( int index, int team )
 {
@@ -473,7 +473,7 @@ void CBaseTeamObjectiveResource::StartCap( int index, int team )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetOwningTeam( int index, int team )
 {
@@ -486,7 +486,7 @@ void CBaseTeamObjectiveResource::SetOwningTeam( int index, int team )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetCappingTeam( int index, int team )
 {
@@ -499,7 +499,7 @@ void CBaseTeamObjectiveResource::SetCappingTeam( int index, int team )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetTeamInZone( int index, int team )
 {
@@ -512,7 +512,7 @@ void CBaseTeamObjectiveResource::SetTeamInZone( int index, int team )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetCapBlocked( int index, bool bBlocked )
 {
@@ -525,7 +525,7 @@ void CBaseTeamObjectiveResource::SetCapBlocked( int index, bool bBlocked )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseTeamObjectiveResource::GetOwningTeam( int index )
 {
@@ -533,10 +533,10 @@ int CBaseTeamObjectiveResource::GetOwningTeam( int index )
 		return TEAM_UNASSIGNED;
 
 	return m_iOwner[index];
-}	
+}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::UpdateCapHudElement( void )
 {
@@ -544,7 +544,7 @@ void CBaseTeamObjectiveResource::UpdateCapHudElement( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetTrainPathDistance( int index, float flDistance )
 {
@@ -554,7 +554,7 @@ void CBaseTeamObjectiveResource::SetTrainPathDistance( int index, float flDistan
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetCPLocked( int index, bool bLocked )
 {
@@ -564,7 +564,7 @@ void CBaseTeamObjectiveResource::SetCPLocked( int index, bool bLocked )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTeamObjectiveResource::SetTrackAlarm( int index, bool bAlarm )
 {

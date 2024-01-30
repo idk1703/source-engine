@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -56,7 +56,7 @@ public:
 	}
 
 	// FIXME: Make this work! Unsupported methods of IIndexBuffer
-	virtual bool Lock( int nMaxIndexCount, bool bAppend, IndexDesc_t& desc ) 
+	virtual bool Lock( int nMaxIndexCount, bool bAppend, IndexDesc_t& desc )
 	{
 		desc.m_pIndices = g_DummyIndices;
 		desc.m_nIndexSize = 0;
@@ -67,7 +67,7 @@ public:
 
 	virtual void Unlock( int nWrittenIndexCount, IndexDesc_t& desc ) {}
 
-	virtual void ModifyBegin( bool bReadOnly, int nFirstIndex, int nIndexCount, IndexDesc_t& desc ) 
+	virtual void ModifyBegin( bool bReadOnly, int nFirstIndex, int nIndexCount, IndexDesc_t& desc )
 	{
 		desc.m_pIndices = g_DummyIndices;
 		desc.m_nIndexSize = 0;
@@ -76,9 +76,9 @@ public:
 	}
 
 	virtual void ModifyEnd( IndexDesc_t &desc ) {}
-	virtual void Spew( int nIndexCount, const IndexDesc_t & desc ) {} 
+	virtual void Spew( int nIndexCount, const IndexDesc_t & desc ) {}
 	virtual void ValidateData( int nIndexCount, const IndexDesc_t &desc ) {}
-	virtual bool IsDynamic() const 
+	virtual bool IsDynamic() const
 	{
 		return false;
 	}
@@ -145,12 +145,12 @@ public:
 	virtual void SetPrimitiveType( MaterialPrimitiveType_t type )
 	{
 	}
-	
+
 	// Draws the mesh
 	virtual void Draw( int nFirstIndex = -1, int nIndexCount = 0 )
 	{
 	}
-	
+
 	virtual void SetColorMesh( IMesh *pColorMesh, int nVertexOffset )
 	{
 	}
@@ -172,11 +172,11 @@ public:
 	}
 
 	// Copy verts and/or indices to a mesh builder. This only works for temp meshes!
-	virtual void CopyToMeshBuilder( 
+	virtual void CopyToMeshBuilder(
 		int iStartVert,		// Which vertices to copy.
-		int nVerts, 
+		int nVerts,
 		int iStartIndex,	// Which indices to copy.
-		int nIndices, 
+		int nIndices,
 		int indexOffset,	// This is added to each index.
 		CMeshBuilder &builder )
 	{
@@ -196,12 +196,12 @@ public:
 
 	virtual unsigned ComputeMemoryUsed() { return 0; }
 
-	virtual VertexFormat_t GetVertexFormat() const	
-	{	
+	virtual VertexFormat_t GetVertexFormat() const
+	{
 		return VERTEX_POSITION;
 	}
-	virtual MaterialIndexFormat_t IndexFormat() const	
-	{	
+	virtual MaterialIndexFormat_t IndexFormat() const
+	{
 		return MATERIAL_INDEX_FORMAT_16BIT;
 	}
 	virtual IMesh *GetMesh()
@@ -324,16 +324,16 @@ public:
 
 	virtual void			SetFloatValue( float val ) {}
 	virtual float			GetFloatValueInternal( void ) const { return 1; }
-	
+
 	virtual void			SetIntValue( int val ) {}
 	virtual int				GetIntValueInternal( void ) const { return 1; }
-	
+
 	virtual void			SetStringValue( char const *val ) {}
 	virtual char const *	GetStringValue( void ) const { return ""; }
 
 	// Use FourCC values to pass app-defined data structures between
 	// the proxy and the shader. The shader should ignore the data if
-	// its FourCC type not correct.	
+	// its FourCC type not correct.
 	virtual void			SetFourCCValue( FourCC type, void *pData ) {}
 	virtual void			GetFourCCValue( FourCC *type, void **ppData ) {}
 
@@ -525,7 +525,7 @@ public:
 	virtual const char *	GetName() const { return "dummy material"; }
 	virtual const char *	GetTextureGroupName() const { return "dummy group"; }
 
-	virtual PreviewImageRetVal_t GetPreviewImageProperties( int *width, int *height, 
+	virtual PreviewImageRetVal_t GetPreviewImageProperties( int *width, int *height,
 				 			ImageFormat *imageFormat, bool* isTranslucent ) const
 	{
 		if ( width )
@@ -542,15 +542,15 @@ public:
 
 		return MATERIAL_PREVIEW_IMAGE_OK;
 	}
-	
-	virtual PreviewImageRetVal_t GetPreviewImage( unsigned char *data, 
+
+	virtual PreviewImageRetVal_t GetPreviewImage( unsigned char *data,
 												 int width, int height,
 												 ImageFormat imageFormat ) const
 	{
 		return MATERIAL_PREVIEW_IMAGE_OK;
 	}
-											    
-	// 
+
+	//
 	virtual int				GetMappingWidth( )
 	{
 		return 512;
@@ -566,7 +566,7 @@ public:
 		return 0;
 	}
 
-	virtual bool			InMaterialPage( void ) 
+	virtual bool			InMaterialPage( void )
 	{
 		return false;
 	}
@@ -653,9 +653,9 @@ public:
 	}
 	virtual void			CallBindProxy( void* ) {}
 
-	virtual IMaterial		*CheckProxyReplacement( void *proxyData ) 
-	{ 
-		return this; 
+	virtual IMaterial		*CheckProxyReplacement( void *proxyData )
+	{
+		return this;
 	}
 
 	virtual bool			UsesEnvCubemap( void )
@@ -693,12 +693,12 @@ public:
 	}
 
 	float					GetAlphaModulation( )
-	{ 
+	{
 		return 1;
 	}
 
 	void					GetColorModulation( float *r, float *g, float *b )
-	{ 
+	{
 		*r = *g = *b = 1;
 	}
 
@@ -783,8 +783,8 @@ public:
 	{
 		return false;
 	}
-	virtual void SetUseFixedFunctionBakedLighting( bool bEnable ) 
-	{ 
+	virtual void SetUseFixedFunctionBakedLighting( bool bEnable )
+	{
 	}
 	virtual MorphFormat_t GetMorphFormat() const
 	{
@@ -794,7 +794,7 @@ public:
 	{
 	}
 	virtual const char *GetShaderName() const { return "Wireframe"; }
-		
+
 	virtual void		DeleteIfUnreferenced() {}
 	virtual bool IsSpriteCard() { return false; }
 
@@ -850,10 +850,10 @@ public:
 		m_pRealMaterialSystem = pSys;
 	}
 
-	
+
 	// Call this to initialize the material system
 	// returns a method to create interfaces in the shader dll
-	virtual CreateInterfaceFn	Init( char const* pShaderDLL, 
+	virtual CreateInterfaceFn	Init( char const* pShaderDLL,
 									  IMaterialProxyFactory *pMaterialProxyFactory,
 									  CreateInterfaceFn fileSystemFactory,
 									  CreateInterfaceFn cvarFactory )
@@ -899,7 +899,7 @@ public:
 	virtual void				GetDisplayMode( MaterialVideoMode_t& mode ) const
 	{
 	}
- 
+
 	// Sets the mode...
 	virtual bool				SetMode( void* hwnd, const MaterialSystem_Config_t &config )
 	{
@@ -929,7 +929,7 @@ public:
 	{
 		return false;
 	}
-	
+
 	virtual bool				OverrideConfig( const MaterialSystem_Config_t &config, bool bForceUpdate )
 	{
 		return false;
@@ -937,7 +937,7 @@ public:
 
 	// This is the interface for knowing what materials are available
 	// is to use the following functions to get a list of materials.  The
-	// material names will have the full path to the material, and that is the 
+	// material names will have the full path to the material, and that is the
 	// only way that the directory structure of the materials will be seen through this
 	// interface.
 	// NOTE:  This is mostly for worldcraft to get a list of materials to put
@@ -948,7 +948,7 @@ public:
 	}
 
 	// returns InvalidMaterial if there isn't another material.
-	// WARNING: you must call GetNextMaterial until it returns NULL, 
+	// WARNING: you must call GetNextMaterial until it returns NULL,
 	// otherwise there will be a memory leak.
 	virtual MaterialHandle_t	NextMaterial( MaterialHandle_t h ) const
 	{
@@ -974,7 +974,7 @@ public:
 	}
 
 	// Find a material by name.
-	// The name of a material is a full path to 
+	// The name of a material is a full path to
 	// the vmt file starting from "hl2/materials" (or equivalent) without
 	// a file extension.
 	// eg. "dev/dev_bumptest" refers to somethign similar to:
@@ -1025,22 +1025,22 @@ public:
 	{
 		return &g_DummyTexture;
 	}
-	
+
 	// pass in an ITexture (that is build with "rendertarget" "1") or
 	// pass in NULL for the regular backbuffer.
 	virtual void				SetRenderTarget( ITexture *pTexture )
 	{
 	}
-	
+
 	virtual ITexture *			GetRenderTarget( void )
 	{
 		return &g_DummyTexture;
 	}
-	
+
 	virtual void				SetRenderTargetEx( int nRenderTargetID, ITexture *pTexture )
 	{
 	}
-	
+
 	virtual ITexture *			GetRenderTargetEx( int nRenderTargetID )
 	{
 		return &g_DummyTexture;
@@ -1050,7 +1050,7 @@ public:
 		width = 256;
 		height = 256;
 	}
-	
+
 	// Get the total number of materials in the system.  These aren't just the used
 	// materials, but the complete collection.
 	virtual int					GetNumMaterials( ) const
@@ -1094,12 +1094,12 @@ public:
 		if ( m_pRealMaterialSystem )
 			m_pRealMaterialSystem->CacheUsedMaterials( );
 	}
-	
+
 	// Force all textures to be reloaded from disk.
 	virtual void				ReloadTextures( )
 	{
 	}
-	
+
 	// Allows us to override the depth buffer setting of a material
 	virtual void	OverrideDepthEnable( bool bEnable, bool bEnableValue )
 	{
@@ -1120,13 +1120,13 @@ public:
 	// To allocate lightmaps, sort the whole world by material twice.
 	// The first time through, call AllocateLightmap for every surface.
 	// that has a lightmap.
-	// The second time through, call AllocateWhiteLightmap for every 
+	// The second time through, call AllocateWhiteLightmap for every
 	// surface that expects to use shaders that expect lightmaps.
 	virtual void				BeginLightmapAllocation( )
 	{
 	}
 	// returns the sorting id for this surface
-	virtual int 				AllocateLightmap( int width, int height, 
+	virtual int 				AllocateLightmap( int width, int height,
 		                                          int offsetIntoLightmapPage[2],
 												  IMaterial *pMaterial )
 	{
@@ -1153,7 +1153,7 @@ public:
 	// You should never call UpdateLightmap for a lightmap allocated through
 	// AllocateWhiteLightmap.
 	virtual void				UpdateLightmap( int lightmapPageID, int lightmapSize[2],
-												int offsetIntoLightmapPage[2], 
+												int offsetIntoLightmapPage[2],
 												float *pFloatImage, float *pFloatImageBump1,
 												float *pFloatImageBump2, float *pFloatImageBump3 )
 	{
@@ -1186,7 +1186,7 @@ public:
 	virtual void				Bind( IMaterial *material, void *proxyData = 0 )
 	{
 	}
-	// Bind a lightmap page current for rendering.  You only have to 
+	// Bind a lightmap page current for rendering.  You only have to
 	// do this for materials that require lightmaps.
 	virtual void				BindLightmapPage( int lightmapPageID )
 	{
@@ -1238,12 +1238,12 @@ public:
 	virtual void				SetAmbientLightCube( Vector4D cube[6] )
 	{
 	}
-	
+
 	// Blit the backbuffer to the framebuffer texture
 	virtual void				CopyRenderTargetToTexture( ITexture * )
 	{
 	}
-	
+
 	virtual void				SetFrameBufferCopyTexture( ITexture *pTexture, int textureIndex )
 	{
 	}
@@ -1384,7 +1384,7 @@ public:
 	virtual void				SetHeightClipZ( float z )
 	{
 	}
-	
+
 	// Fog methods...
 	virtual void				FogMode( MaterialFogMode_t fogMode )
 	{
@@ -1428,14 +1428,14 @@ public:
 	}
 
 	// Sets the number of bones for skinning
-	virtual void				SetNumBoneWeights( int numBones ) 
+	virtual void				SetNumBoneWeights( int numBones )
 	{
 	}
 	virtual IMaterialProxyFactory *GetMaterialProxyFactory()
 	{
 		return NULL;
 	}
-	
+
 	virtual void	SetMaterialProxyFactory( IMaterialProxyFactory* pFactory )
 	{
 	}
@@ -1448,14 +1448,14 @@ public:
 		else
 			*width = *height = 32;
 	}
-	
+
 	/// FIXME: This stuff needs to be cleaned up and abstracted.
 	// Stuff that gets exported to the launcher through the engine
 	virtual void				SwapBuffers( )
 	{
 	}
 
-	// Use this to spew information about the 3D layer 
+	// Use this to spew information about the 3D layer
 	virtual void				SpewDriverInfo() const
 	{
 	}
@@ -1470,8 +1470,8 @@ public:
 	}
 
 	// Gets the dynamic mesh associated with the currently bound material
-	// note that you've got to render the mesh before calling this function 
-	// a second time. Clients should *not* call DestroyStaticMesh on the mesh 
+	// note that you've got to render the mesh before calling this function
+	// a second time. Clients should *not* call DestroyStaticMesh on the mesh
 	// returned by this call.
 	// Use buffered = false if you want to not have the mesh be buffered,
 	// but use it instead in the following pattern:
@@ -1489,13 +1489,13 @@ public:
 	// If you pass in a material in pAutoBind, it will automatically bind the
 	// material. This can be helpful since you must bind the material you're
 	// going to use BEFORE calling GetDynamicMesh.
-	virtual IMesh* GetDynamicMesh( bool bBuffered = true, IMesh* pVertexOverride = 0,	
+	virtual IMesh* GetDynamicMesh( bool bBuffered = true, IMesh* pVertexOverride = 0,
 		IMesh* pIndexOverride = 0, IMaterial *pAutoBind = 0 )
 	{
 		return GetDummyMesh();
 	}
 
-	virtual IMesh* GetDynamicMeshEx( VertexFormat_t vertexFormat, bool bBuffered = true, 
+	virtual IMesh* GetDynamicMeshEx( VertexFormat_t vertexFormat, bool bBuffered = true,
 		IMesh* pVertexOverride = 0,	IMesh* pIndexOverride = 0, IMaterial *pAutoBind = 0 )
 	{
 		return GetDummyMesh();
@@ -1505,7 +1505,7 @@ public:
 	{
 		return GetDummyMesh();
 	}
-		
+
 	// Selection mode methods
 	virtual int  SelectionMode( bool selectionMode )
 	{
@@ -1526,7 +1526,7 @@ public:
 	virtual void PopSelectionName()
 	{
 	}
-	
+
 	// Installs a function to be called when we need to release vertex buffers + textures
 	virtual void AddReleaseFunc( MaterialBufferReleaseFunc_t func )
 	{
@@ -1544,7 +1544,7 @@ public:
 	}
 
 	// Stuff for probing properties of shaders.
-	virtual int					GetNumShaders( void ) const 
+	virtual int					GetNumShaders( void ) const
 	{
 		return 0;
 	}
@@ -1582,22 +1582,22 @@ public:
 	{
 	}
 
-	virtual ITexture* CreateRenderTargetTexture( 
-		int w, 
-		int h, 
+	virtual ITexture* CreateRenderTargetTexture(
+		int w,
+		int h,
 		RenderTargetSizeMode_t sizeMode,	// Controls how size is generated (and regenerated on video mode change).
-		ImageFormat format, 
+		ImageFormat format,
 		MaterialRenderTargetDepth_t depth )
 	{
 		return &g_DummyTexture;
 	}
 
-	virtual ITexture *CreateProceduralTexture( 
-		const char			*pTextureName, 
-		const char			*pTextureGroupName, 
-		int					w, 
-		int					h, 
-		ImageFormat			fmt, 
+	virtual ITexture *CreateProceduralTexture(
+		const char			*pTextureName,
+		const char			*pTextureGroupName,
+		int					w,
+		int					h,
+		ImageFormat			fmt,
 		int					nFlags )
 	{
 		return &g_DummyTexture;
@@ -1625,12 +1625,12 @@ public:
 		w = 1024;
 		h = 768;
 	}
-	
+
 	ImageFormat GetBackBufferFormat( void ) const
 	{
 		return IMAGE_FORMAT_RGBA8888;
 	}
-	
+
 	// FIXME: This is a hack required for NVidia/XBox, can they fix in drivers?
 	virtual void	DrawScreenSpaceQuad( IMaterial* pMaterial ) {}
 
@@ -1644,27 +1644,27 @@ public:
 
 	// Release temporary HW memory...
 	virtual void ResetTempHWMemory( bool bExitingLevel ) {}
-	virtual ITexture*	CreateNamedRenderTargetTextureEx( 
+	virtual ITexture*	CreateNamedRenderTargetTextureEx(
 		const char *pRTName,				// Pass in NULL here for an unnamed render target.
-		int w, 
-		int h, 
+		int w,
+		int h,
 		RenderTargetSizeMode_t sizeMode,	// Controls how size is generated (and regenerated on video mode change).
-		ImageFormat format, 
-		MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED, 
+		ImageFormat format,
+		MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED,
 		unsigned int textureFlags = TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT,
 		unsigned int renderTargetFlags = 0
 		)
 	{
 		return &g_DummyTexture;
 	}
-	virtual ITexture* CreateNamedRenderTargetTexture( 
-		const char *pRTName, 
-		int w, 
-		int h, 
+	virtual ITexture* CreateNamedRenderTargetTexture(
+		const char *pRTName,
+		int w,
+		int h,
 		RenderTargetSizeMode_t sizeMode,	// Controls how size is generated (and regenerated on video mode change).
-		ImageFormat format, 
+		ImageFormat format,
 		MaterialRenderTargetDepth_t depth,
-		bool bClampTexCoords, 
+		bool bClampTexCoords,
 		bool bAutoMipMap
 		)
 	{
@@ -1847,12 +1847,12 @@ public:
 	{
 	}
 
-	virtual void DrawScreenSpaceRectangle( 
+	virtual void DrawScreenSpaceRectangle(
 		IMaterial *pMaterial,
 		int destx, int desty,
 		int width, int height,
 		float src_texture_x0, float src_texture_y0,
-		float src_texture_x1, float src_texture_y1,	
+		float src_texture_x1, float src_texture_y1,
 		int src_texture_width, int src_texture_height,
 		void *pClientRenderable = NULL,
 		int nXDice = 1,
@@ -1869,13 +1869,13 @@ public:
 	{
 	}
 
-	ITexture *CreateNamedRenderTargetTextureEx2( 
+	ITexture *CreateNamedRenderTargetTextureEx2(
 		const char *pRTName,				// Pass in NULL here for an unnamed render target.
-		int w, 
-		int h, 
+		int w,
+		int h,
 		RenderTargetSizeMode_t sizeMode,	// Controls how size is generated (and regenerated on video mode change).
-		ImageFormat format, 
-		MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED, 
+		ImageFormat format,
+		MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED,
 		unsigned int textureFlags = TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT,
 		unsigned int renderTargetFlags = 0
 		)
@@ -1972,7 +1972,7 @@ public:
 	{
 		return Vector(0,0,0);
 	}
-	
+
 	void ReleaseResources(void)
 	{
 	}
@@ -2032,7 +2032,7 @@ public:
 	{
 	}
 
-	virtual void SetStencilWriteMask(uint32 msk) 
+	virtual void SetStencilWriteMask(uint32 msk)
 	{
 	}
 
@@ -2276,7 +2276,7 @@ public:
 		return (HXUIFONT)0;
 	}
 	virtual void				CloseTrueTypeFont( HXUIFONT hFont ) {}
-	virtual bool				GetTrueTypeFontMetrics( HXUIFONT hFont, XUIFontMetrics *pFontMetrics, XUICharMetrics charMetrics[256] ) 
+	virtual bool				GetTrueTypeFontMetrics( HXUIFONT hFont, XUIFontMetrics *pFontMetrics, XUICharMetrics charMetrics[256] )
 	{
 		pFontMetrics->fLineHeight = 0.0f;
 		pFontMetrics->fMaxAscent = 0.0f;
@@ -2323,18 +2323,18 @@ public:
 
 	virtual ITexture*			CreateTextureFromBits(int w, int h, int mips, ImageFormat fmt, int srcBufferSize, byte* srcBits)
 	{
-		return NULL;	
+		return NULL;
 	}
 
 	virtual void OverrideRenderTargetAllocation( bool )
 	{
 		// anda
-	
+
 	}
 
 	virtual ITextureCompositor*	NewTextureCompositor( int w, int h, const char* pCompositeName, int nTeamNum, uint64 randomSeed, KeyValues* stageDesc, uint texCompositeCreateFlags ) OVERRIDE
 	{
-		return NULL;	
+		return NULL;
 	}
 
 	virtual void AsyncFindTexture( const char* pFilename, const char *pTextureGroupName, IAsyncTextureOperationReceiver* pRecipient, void* pExtraArgs, bool bComplain = true, int nAdditionalCreationFlags = 0 )
@@ -2346,7 +2346,7 @@ public:
 	{
 
 	}
-	
+
 	virtual ITexture*			CreateNamedTextureFromBitsEx( const char* pName, const char *pTextureGroupName, int w, int h, int mips, ImageFormat fmt, int srcBufferSize, byte* srcBits, int nFlags )
 	{
 		return NULL;
@@ -2359,7 +2359,7 @@ public:
 
 	virtual bool VerifyTextureCompositorTemplates() OVERRIDE
 	{
-		return false;	
+		return false;
 	}
 
 };
@@ -2367,7 +2367,5 @@ public:
 
 static CDummyMaterialSystem g_DummyMaterialSystem;
 
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CDummyMaterialSystem, IMaterialSystemStub, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CDummyMaterialSystem, IMaterialSystemStub,
 						MATERIAL_SYSTEM_STUB_INTERFACE_VERSION, g_DummyMaterialSystem );
-
-

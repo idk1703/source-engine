@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,7 +25,7 @@
 class WashEmitter : public CSimpleEmitter
 {
 public:
-	
+
 	WashEmitter( const char *pDebugName ) : CSimpleEmitter( pDebugName ) {}
 
 	static WashEmitter *Create( const char *pDebugName )
@@ -45,7 +45,7 @@ public:
 	virtual	float UpdateRoll( SimpleParticle *pParticle, float timeDelta )
 	{
 		pParticle->m_flRoll += pParticle->m_flRollDelta * timeDelta;
-		
+
 		pParticle->m_flRollDelta += pParticle->m_flRollDelta * ( timeDelta * -2.0f );
 
 		//Cap the minimum roll
@@ -85,7 +85,7 @@ public:
 
 	virtual void OnDataChanged( DataUpdateType_t updateType );
 	virtual void ClientThink( void );
-	
+
 protected:
 
 	float	m_flAltitude;
@@ -103,7 +103,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_RotorWashEmitter, DT_RotorWashEmitter, CRotorWashEmi
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_RotorWashEmitter::C_RotorWashEmitter( void )
 {
@@ -116,7 +116,7 @@ C_RotorWashEmitter::C_RotorWashEmitter( void )
 
 #ifndef _XBOX
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_RotorWashEmitter::InitSpawner( void )
 {
@@ -129,8 +129,8 @@ void C_RotorWashEmitter::InitSpawner( void )
 #endif // !XBOX
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_RotorWashEmitter::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -147,7 +147,7 @@ void C_RotorWashEmitter::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_RotorWashEmitter::ClientThink( void )
 {
@@ -196,7 +196,7 @@ void C_RotorWashEmitter::ClientThink( void )
 	m_pSimple->SetSortOrigin( GetAbsOrigin() );
 
 	PMaterialHandle	*hMaterial;
-	
+
 	// Cache and set our material based on the surface we're over (ie. water)
 	if ( tr.contents & (CONTENTS_WATER|CONTENTS_SLIME) )
 	{
@@ -226,18 +226,18 @@ void C_RotorWashEmitter::ClientThink( void )
 		if ( tr.fraction < 1.0f )
 		{
 			//Add a ripple quad to the surface
-			FX_AddQuad( tr.endpos + ( tr.plane.normal * 0.5f ), 
-						tr.plane.normal, 
-						64.0f * flScale, 
-						128.0f * flScale, 
+			FX_AddQuad( tr.endpos + ( tr.plane.normal * 0.5f ),
+						tr.plane.normal,
+						64.0f * flScale,
+						128.0f * flScale,
 						0.8f,
-						0.75f * heightScale, 
+						0.75f * heightScale,
 						0.0f,
 						0.75f,
 						random->RandomFloat( 0, 360 ),
 						random->RandomFloat( -2.0f, 2.0f ),
-						vecDustColor, 
-						0.2f,  
+						vecDustColor,
+						0.2f,
 						"effects/splashwake3",
 						(FXQUAD_BIAS_SCALE|FXQUAD_BIAS_ALPHA) );
 		}
@@ -256,7 +256,7 @@ void C_RotorWashEmitter::ClientThink( void )
 	{
 		// Get our x,y on the unit circle
 		SinCos( yaw, &vecForward.y, &vecForward.x );
-		
+
 		// Increment ahead
 		yaw += yawIncr;
 
@@ -276,7 +276,7 @@ void C_RotorWashEmitter::ClientThink( void )
 			pParticle->m_flDieTime	= random->RandomFloat( 0.25f, 1.0f );
 
 			pParticle->m_vecVelocity = vecForward * random->RandomFloat( 1000, 1500 );
-		
+
 			#if __EXPLOSION_DEBUG
 			debugoverlay->AddLineOverlay( m_vecOrigin, m_vecOrigin + pParticle->m_vecVelocity, 255, 0, 0, false, 3 );
 			#endif
@@ -297,7 +297,7 @@ void C_RotorWashEmitter::ClientThink( void )
 
 			pParticle->m_uchStartAlpha	= random->RandomFloat( 16, 32 ) * heightScale;
 			pParticle->m_uchEndAlpha	= 0;
-			
+
 			pParticle->m_flRoll			= random->RandomInt( 0, 360 );
 			pParticle->m_flRollDelta	= random->RandomFloat( -16.0f, 16.0f );
 		}

@@ -13,7 +13,7 @@ BEGIN_NETWORK_TABLE( CBaseObjectUpgrade, DT_BaseObjectUpgrade )
 END_NETWORK_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseObjectUpgrade::CBaseObjectUpgrade()
 {
@@ -23,15 +23,15 @@ CBaseObjectUpgrade::CBaseObjectUpgrade()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObjectUpgrade::Spawn()
 {
 	BaseClass::Spawn();
 
 #if !defined( CLIENT_DLL )
-	m_fObjectFlags |= OF_DONT_PREVENT_BUILD_NEAR_OBJ | OF_ALLOW_REPEAT_PLACEMENT | 
-					  OF_DOESNT_NEED_POWER | OF_MUST_BE_BUILT_ON_ATTACHMENT; 
+	m_fObjectFlags |= OF_DONT_PREVENT_BUILD_NEAR_OBJ | OF_ALLOW_REPEAT_PLACEMENT |
+					  OF_DOESNT_NEED_POWER | OF_MUST_BE_BUILT_ON_ATTACHMENT;
 
 	// Prevent anyone shooting / emping / buffing me
 	SetSolid( SOLID_NONE );

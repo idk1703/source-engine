@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -17,8 +17,8 @@
 
 #include "FactoryOverloads.h"
 
-void CFactoryOverloads::AddOverload( 
-	char const *attributeName, 
+void CFactoryOverloads::AddOverload(
+	char const *attributeName,
 	IAttributeWidgetFactory *newFactory,
 	IAttributeElementChoiceList *newChoiceList )
 {

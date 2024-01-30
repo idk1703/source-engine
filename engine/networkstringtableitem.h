@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 class CNetworkStringTableItem
@@ -46,11 +46,11 @@ public:
 	int				RestoreTick( int tick );
 	inline int		GetTickCreated( void ) const { return m_nTickCreated; }
 #endif
-	
+
 	bool			SetUserData( int tick, int length, const void *userdata );
 	const void		*GetUserData( int *length=0 );
 	inline int		GetUserDataLength() const { return m_nUserDataLength; }
-	
+
 	// Used by server only
 	// void			SetTickCount( int count ) ;
 	inline int		GetTickChanged( void ) const { return m_nTickChanged; }
@@ -62,7 +62,7 @@ public:
 
 #ifndef SHARED_NET_STRING_TABLES
 	int				m_nTickCreated;
-	CUtlVector< itemchange_s > *m_pChangeList;	
+	CUtlVector< itemchange_s > *m_pChangeList;
 #endif
 };
 

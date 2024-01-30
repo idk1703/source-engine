@@ -40,7 +40,7 @@ CVehicleBatteringRam::CVehicleBatteringRam()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleBatteringRam::Precache()
 {
@@ -56,12 +56,12 @@ void CVehicleBatteringRam::Precache()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVehicleBatteringRam::Spawn()
 {
 	SetModel( BATTERING_RAM_MODEL );
-	
+
 	// This size is used for placement only...
 	UTIL_SetSize(this, BATTERING_RAM_MINS, BATTERING_RAM_MAXS);
 	m_takedamage = DAMAGE_YES;
@@ -71,7 +71,7 @@ void CVehicleBatteringRam::Spawn()
 	SetType( OBJ_BATTERING_RAM );
 	SetMaxPassengerCount( 4 );
 //	SetTouch( BashTouch );
-	
+
 	m_flNextBashTime = 0.0f;
 
 	BaseClass::Spawn();
@@ -104,7 +104,7 @@ void CVehicleBatteringRam::VPhysicsCollision( int index, gamevcollisionevent_t *
 	int otherIndex = !index;
 	CBaseEntity *pEntity = pEvent->pEntities[otherIndex];
 
-    // We only damage objects...
+	// We only damage objects...
 	// And only if we're travelling fast enough...
 	if ( !pEntity->IsSolid( ) )
 		return;
@@ -132,8 +132,8 @@ void CVehicleBatteringRam::VPhysicsCollision( int index, gamevcollisionevent_t *
 	// Use the attachment point to make sure we damage stuff that hit our front
 	// FIXME: Should we be using hitboxes here?
 	// And damage them all
-    // We only damage objects...
- 	QAngle vecAng;
+	// We only damage objects...
+	QAngle vecAng;
 	Vector vecSrc, vecAim;
 	GetAttachment( m_nBarrelAttachment, vecSrc, vecAng );
 

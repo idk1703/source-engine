@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -20,19 +20,19 @@
 extern ConVar r_flashlight_version2;
 
 // FIXME: Need to make a dx9 version so that "CENTROID" works.
-BEGIN_VS_SHADER( WorldTwoTextureBlend, 
-			  "Help for WorldTwoTextureBlend" )
+BEGIN_VS_SHADER( WorldTwoTextureBlend,
+			"Help for WorldTwoTextureBlend" )
 
 BEGIN_SHADER_PARAMS
-    SHADER_PARAM_OVERRIDE( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "shadertest/WorldTwoTextureBlend", "iris texture", 0 )
+	SHADER_PARAM_OVERRIDE( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "shadertest/WorldTwoTextureBlend", "iris texture", 0 )
 	SHADER_PARAM( ALBEDO, SHADER_PARAM_TYPE_TEXTURE, "shadertest/WorldTwoTextureBlend", "albedo (Base texture with no baked lighting)" )
 	SHADER_PARAM( SELFILLUMTINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "Self-illumination tint" )
 	SHADER_PARAM( DETAIL, SHADER_PARAM_TYPE_TEXTURE, "shadertest/WorldTwoTextureBlend_detail", "detail texture" )
 	SHADER_PARAM( DETAILFRAME, SHADER_PARAM_TYPE_INTEGER, "0", "frame number for $detail" )
 	SHADER_PARAM( DETAILSCALE, SHADER_PARAM_TYPE_FLOAT, "1.0", "scale of the detail texture" )
-	SHADER_PARAM( DETAIL_ALPHA_MASK_BASE_TEXTURE, SHADER_PARAM_TYPE_BOOL, "0", 
-				  "If this is 1, then when detail alpha=0, no base texture is blended and when "
-				  "detail alpha=1, you get detail*base*lightmap" )
+	SHADER_PARAM( DETAIL_ALPHA_MASK_BASE_TEXTURE, SHADER_PARAM_TYPE_BOOL, "0",
+				"If this is 1, then when detail alpha=0, no base texture is blended and when "
+				"detail alpha=1, you get detail*base*lightmap" )
 	SHADER_PARAM( BUMPMAP, SHADER_PARAM_TYPE_TEXTURE, "models/shadertest/shader1_normal", "bump map" )
 	SHADER_PARAM( BUMPFRAME, SHADER_PARAM_TYPE_INTEGER, "0", "frame number for $bumpmap" )
 	SHADER_PARAM( BUMPTRANSFORM, SHADER_PARAM_TYPE_MATRIX, "center .5 .5 scale 1 1 rotate 0 translate 0 0", "$bumpmap texcoord transform" )
@@ -58,7 +58,7 @@ END_SHADER_PARAMS
 		{
 			params[DETAIL_ALPHA_MASK_BASE_TEXTURE]->SetIntValue( 0 );
 		}
-	
+
 		if ( g_pHardwareConfig->SupportsBorderColor() )
 		{
 			params[FLASHLIGHTTEXTURE]->SetStringValue( "effects/flashlight_border" );
@@ -67,15 +67,15 @@ END_SHADER_PARAMS
 		{
 			params[FLASHLIGHTTEXTURE]->SetStringValue( "effects/flashlight001" );
 		}
-	
+
 		// Write over $basetexture with $albedo if we are going to be using diffuse normal mapping.
 		if( g_pConfig->UseBumpmapping() && params[BUMPMAP]->IsDefined() && params[ALBEDO]->IsDefined() &&
-			params[BASETEXTURE]->IsDefined() && 
+			params[BASETEXTURE]->IsDefined() &&
 			!( params[NODIFFUSEBUMPLIGHTING]->IsDefined() && params[NODIFFUSEBUMPLIGHTING]->GetIntValue() ) )
 		{
 			params[BASETEXTURE]->SetStringValue( params[ALBEDO]->GetStringValue() );
 		}
-	
+
 		if( !params[NODIFFUSEBUMPLIGHTING]->IsDefined() )
 		{
 			params[NODIFFUSEBUMPLIGHTING]->SetIntValue( 0 );
@@ -127,7 +127,7 @@ END_SHADER_PARAMS
 		{
 			LoadBumpMap( BUMPMAP );
 		}
-		
+
 		if (params[BASETEXTURE]->IsDefined())
 		{
 			LoadTexture( BASETEXTURE, TEXTUREFLAGS_SRGB );
@@ -145,13 +145,13 @@ END_SHADER_PARAMS
 		}
 
 		LoadTexture( FLASHLIGHTTEXTURE, TEXTUREFLAGS_SRGB );
-		
+
 		// Don't alpha test if the alpha channel is used for other purposes
 		if (IS_FLAG_SET(MATERIAL_VAR_SELFILLUM) || IS_FLAG_SET(MATERIAL_VAR_BASEALPHAENVMAPMASK) )
 		{
 			CLEAR_FLAGS( MATERIAL_VAR_ALPHATEST );
 		}
-			
+
 		// We always need this because of the flashlight.
 		SET_FLAGS2( MATERIAL_VAR2_NEEDS_TANGENT_SPACES );
 	}
@@ -290,7 +290,7 @@ END_SHADER_PARAMS
 			}
 
 			// HACK HACK HACK - enable alpha writes all the time so that we have them for
-			// underwater stuff. 
+			// underwater stuff.
 			// But only do it if we're not using the alpha already for translucency
 			pShaderShadow->EnableAlphaWrites( bFullyOpaque );
 
@@ -357,7 +357,7 @@ END_SHADER_PARAMS
 			// If we don't have a texture transform, we don't have
 			// to set vertex shader constants or run vertex shader instructions
 			// for the texture transform.
-			bool bHasTextureTransform = 
+			bool bHasTextureTransform =
 				!( params[BASETEXTURETRANSFORM]->MatrixIsIdentity() &&
 				params[BUMPTRANSFORM]->MatrixIsIdentity() );
 
@@ -396,7 +396,7 @@ END_SHADER_PARAMS
 
 			bool bWriteDepthToAlpha;
 			bool bWriteWaterFogToAlpha;
-			if( bFullyOpaque ) 
+			if( bFullyOpaque )
 			{
 				bWriteDepthToAlpha = pShaderAPI->ShouldWriteDepthToDestAlpha();
 				bWriteWaterFogToAlpha = (fogType == MATERIAL_FOG_LINEAR_BELOW_FOG_Z);
@@ -426,7 +426,7 @@ END_SHADER_PARAMS
 				DECLARE_DYNAMIC_PIXEL_SHADER( worldtwotextureblend_ps20 );
 
 				// Don't write fog to alpha if we're using translucency
-				SET_DYNAMIC_PIXEL_SHADER_COMBO( WRITEWATERFOGTODESTALPHA, (fogType == MATERIAL_FOG_LINEAR_BELOW_FOG_Z) && 
+				SET_DYNAMIC_PIXEL_SHADER_COMBO( WRITEWATERFOGTODESTALPHA, (fogType == MATERIAL_FOG_LINEAR_BELOW_FOG_Z) &&
 					(nBlendType != BT_BLENDADD) && (nBlendType != BT_BLEND) && !bIsAlphaTested );
 				SET_DYNAMIC_PIXEL_SHADER_COMBO( PIXELFOGTYPE, pShaderAPI->GetPixelFogCombo() );
 				SET_DYNAMIC_PIXEL_SHADER( worldtwotextureblend_ps20 );
@@ -497,4 +497,3 @@ END_SHADER_PARAMS
 	}
 
 END_SHADER
-

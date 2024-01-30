@@ -9,4 +9,3 @@ cd .\src\devtools\bin\
 vpc +everything /allgames
 vpc +console /x360 /allgames
 cd ..\..\..\
-

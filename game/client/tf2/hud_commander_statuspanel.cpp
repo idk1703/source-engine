@@ -19,14 +19,14 @@
 
 static CCommanderStatusPanel *g_pCommanderStatusPanel = NULL;
 
-// 
+//
 #define ALPHA_ADJUST_TIME 0.1f
 #define MAX_FILLED_INFO_ALPHA 127.0f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CCommanderStatusPanel::CCommanderStatusPanel( void ) : 
+CCommanderStatusPanel::CCommanderStatusPanel( void ) :
 	BaseClass( NULL, "CCommanderStatusPanel" )
 {
 	m_hFont = m_hFontText = 0;
@@ -35,7 +35,7 @@ CCommanderStatusPanel::CCommanderStatusPanel( void ) :
 
 //	m_pBorder = new vgui::LineBorder( 2, vgui::Color( 127, 127, 127, 255 ) );
 //	setBorder( m_pBorder );
-	
+
 	SetBgColor( Color( 0, 0, 0, 100 ) );
 
 	// we need updating
@@ -45,7 +45,7 @@ CCommanderStatusPanel::CCommanderStatusPanel( void ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCommanderStatusPanel::~CCommanderStatusPanel( void )
 {
@@ -67,7 +67,7 @@ void CCommanderStatusPanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommanderStatusPanel::OnTick()
 {
@@ -102,7 +102,7 @@ void CCommanderStatusPanel::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommanderStatusPanel::Paint()
 {
@@ -114,7 +114,7 @@ void CCommanderStatusPanel::Paint()
 
 	int x = 2;
 	int y = 2;
-	
+
 	wide -= 4;
 	tall -= 4;
 
@@ -166,14 +166,14 @@ void CCommanderStatusPanel::Paint()
 				{
 					size = g_pMatSystemSurface->DrawTextLen( m_hFontText, "Cost:  Free" );
 
-					x -= size; 
+					x -= size;
 
 					g_pMatSystemSurface->DrawColoredText( m_hFontText, x, y, r, g, b, alpha, "Cost:  Free" );
 				}
 				else
 				{
 					int sizecost = g_pMatSystemSurface->DrawTextLen( m_hFontText, "WWW: 000 (000)" ) + 5;
-					
+
 					size = g_pMatSystemSurface->DrawTextLen( m_hFontText, "Cost: " );
 
 					x = wide - size - 4 * sizecost;
@@ -204,19 +204,19 @@ void CCommanderStatusPanel::Paint()
 	}
 	else
 	{
-		g_pMatSystemSurface->DrawColoredTextRect( m_hFont, 
-			x, 
-			y + tall - vgui::surface()->GetFontTall( m_hFont ) - 4, 
-			wide, 
-			vgui::surface()->GetFontTall( m_hFont ) + 2, 
-			220, 220, 255, alpha, 
+		g_pMatSystemSurface->DrawColoredTextRect( m_hFont,
+			x,
+			y + tall - vgui::surface()->GetFontTall( m_hFont ) - 4,
+			wide,
+			vgui::surface()->GetFontTall( m_hFont ) + 2,
+			220, 220, 255, alpha,
 			"%s",
 			m_szText );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommanderStatusPanel::PaintBackground()
 {
@@ -231,7 +231,7 @@ void CCommanderStatusPanel::PaintBackground()
 
 		alpha += ( 255 - alpha ) / 2;
 
-//		m_pBorder->SetColor( vgui::Color( 120, 120, 180, alpha ) ); 
+//		m_pBorder->SetColor( vgui::Color( 120, 120, 180, alpha ) );
 	}
 	else
 	{
@@ -242,17 +242,17 @@ void CCommanderStatusPanel::PaintBackground()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCommanderStatusPanel::Clear( void )
 {
-	m_flGoalAlpha = 0.0f; 
+	m_flGoalAlpha = 0.0f;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fmt - 
-//			... - 
+// Purpose:
+// Input  : *fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CCommanderStatusPanel::SetText( STATUSTYPE type, const char *fmt, ... )
 {
@@ -350,8 +350,8 @@ void StatusCreate( vgui::Panel *parent, int treetoprow )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : treeetoprow - 
+// Purpose:
+// Input  : treeetoprow -
 //-----------------------------------------------------------------------------
 void StatusSetTopRow( int treetoprow )
 {
@@ -360,7 +360,7 @@ void StatusSetTopRow( int treetoprow )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void StatusDestroy( void )
 {
@@ -369,10 +369,10 @@ void StatusDestroy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : type - 
-//			*fmt - 
-//			... - 
+// Purpose:
+// Input  : type -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void StatusPrint( STATUSTYPE type, const char *fmt, ... )
 {
@@ -391,7 +391,7 @@ void StatusPrint( STATUSTYPE type, const char *fmt, ... )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void StatusClear( void )
 {
@@ -402,8 +402,8 @@ void StatusClear( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *technology - 
+// Purpose:
+// Input  : *technology -
 //-----------------------------------------------------------------------------
 void StatusTechnology( CBaseTechnology *technology )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -33,7 +33,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEKillPlayerAttachments::C_TEKillPlayerAttachments( void )
 {
@@ -41,15 +41,15 @@ C_TEKillPlayerAttachments::C_TEKillPlayerAttachments( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEKillPlayerAttachments::~C_TEKillPlayerAttachments( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEKillPlayerAttachments::PostDataUpdate( DataUpdateType_t updateType )
 {

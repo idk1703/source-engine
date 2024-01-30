@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -93,7 +93,7 @@ void BlendCorners( CCoreDispInfo **ppListBase, int listSize )
 		nbCornerVerts.RemoveAll();
 		nbCornerVerts.EnsureCapacity( nNeighbors );
 		nbCornerVerts.AddMultipleToTail( nNeighbors );
-		
+
 		// For each corner.
 		for ( int iCorner=0; iCorner < 4; iCorner++ )
 		{
@@ -109,7 +109,7 @@ void BlendCorners( CCoreDispInfo **ppListBase, int listSize )
 			{
 				int iNBListIndex = iNeighbors[iNeighbor];
 				CCoreDispInfo *pNeighbor = ppListBase[iNBListIndex];
-				
+
 				// Find out which vert it is on the neighbor.
 				int iNBCorner = FindNeighborCornerVert( pNeighbor, vCornerVert );
 				if ( iNBCorner == -1 )
@@ -131,10 +131,10 @@ void BlendCorners( CCoreDispInfo **ppListBase, int listSize )
 			pDisp->SetNormal( iCornerVert, vAverage );
 
 #if defined( USE_SCRATCHPAD )
-			ScratchPad_DrawArrowSimple( 
-				g_pPad, 
-				pDisp->GetVert( iCornerVert ), 
-				pDisp->GetNormal( iCornerVert ), 
+			ScratchPad_DrawArrowSimple(
+				g_pPad,
+				pDisp->GetVert( iCornerVert ),
+				pDisp->GetNormal( iCornerVert ),
 				Vector( 0, 0, 1 ),
 				25 );
 #endif
@@ -176,10 +176,10 @@ void BlendTJuncs( CCoreDispInfo **ppListBase, int listSize )
 				int iNBCorners[2];
 				iNBCorners[0] = FindNeighborCornerVert( pNeighbor1, vMidPoint );
 				iNBCorners[1] = FindNeighborCornerVert( pNeighbor2, vMidPoint );
-				
+
 				if ( iNBCorners[0] != -1 && iNBCorners[1] != -1 )
 				{
-					CVertIndex viNBCorners[2] = 
+					CVertIndex viNBCorners[2] =
 					{
 						pNeighbor1->GetCornerPointIndex( iNBCorners[0] ),
 						pNeighbor2->GetCornerPointIndex( iNBCorners[1] )
@@ -250,7 +250,7 @@ void BlendEdges( CCoreDispInfo **ppListBase, int listSize )
 					// Now blend the in-between verts (if this edge is high-res).
 					int iPrevPos = viPrevPos[ !iEdgeDim ];
 					int iCurPos = it.GetVertIndex()[ !iEdgeDim ];
-					
+
 					for ( int iTween = iPrevPos+1; iTween < iCurPos; iTween++ )
 					{
 						float flPercent = RemapVal( iTween, iPrevPos, iCurPos, 0, 1 );
@@ -267,7 +267,7 @@ void BlendEdges( CCoreDispInfo **ppListBase, int listSize )
 						ScratchPad_DrawArrowSimple( g_pPad, pDisp->GetVert( viTween ), pDisp->GetNormal( viTween ), Vector( 1, 0.5, 0 ), 25 );
 #endif
 					}
-			
+
 					viPrevPos = it.GetVertIndex();
 				}
 			}
@@ -288,7 +288,7 @@ void BlendEdges( CCoreDispInfo **ppListBase, int listSize )
 			for ( int iTri=0; iTri < pPowerInfo->GetNumTriInfos(); iTri++ )
 			{
 				const CTriInfo *pTriInfo = pPowerInfo->GetTriInfo( iTri );
-			
+
 				for ( int iLine=0; iLine < 3; iLine++ )
 				{
 					const Vector &v1 = pDisp->GetVert( pTriInfo->m_Indices[iLine] );
@@ -302,10 +302,10 @@ void BlendEdges( CCoreDispInfo **ppListBase, int listSize )
 			CDispCircumferenceIterator it( pPowerInfo->GetSideLength() );
 			while ( it.Next() )
 			{
-				ScratchPad_DrawArrowSimple( 
-					g_pPad, 
-					pDisp->GetVert( it.GetVertIndex() ), 
-					pDisp->GetNormal( it.GetVertIndex() ), 
+				ScratchPad_DrawArrowSimple(
+					g_pPad,
+					pDisp->GetVert( it.GetVertIndex() ),
+					pDisp->GetNormal( it.GetVertIndex() ),
 					Vector( 0, 1, 0 ),
 					15 );
 			}
@@ -327,6 +327,3 @@ void SmoothNeighboringDispSurfNormals( CCoreDispInfo **ppListBase, int listSize 
 
 	BlendEdges( ppListBase, listSize );
 }
-
-
-

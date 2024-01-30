@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #ifndef TF_CLASSDATA_H
@@ -10,7 +10,7 @@
 #endif
 
 //-----------------------------------------------------------------------------
-// Cache structure for the TF player class data (includes citizen). 
+// Cache structure for the TF player class data (includes citizen).
 //-----------------------------------------------------------------------------
 #define MAX_PLAYERCLASS_SOUND_LENGTH	128
 #define TF_NAME_LENGTH		128
@@ -87,7 +87,7 @@ class CTFPlayerClassDataMgr : public CAutoGameSystem
 public:
 
 	CTFPlayerClassDataMgr();
-	virtual bool Init( void );	
+	virtual bool Init( void );
 	TFPlayerClassData_t *Get( unsigned int iClass );
 	void AddAdditionalPlayerDeathSounds( void );
 private:

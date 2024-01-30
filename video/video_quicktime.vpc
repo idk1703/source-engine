@@ -5,7 +5,7 @@
 //  Created by: 		Matt Pritchard
 //
 //  Description:		Quicktime video sub-system (for video services system)
-// 
+//
 //-----------------------------------------------------------------------------
 
 $Macro SRCDIR		".."
@@ -34,20 +34,20 @@ $Configuration
 
 $Configuration  "Debug"
 {
-        $General
-        {
-                $OutputDirectory                        "Debug_Video_Quicktime" [$WINDOWS]
-                $IntermediateDirectory                  "Debug_Video_Quicktime" [$WINDOWS]
-        }
+	$General
+	{
+		$OutputDirectory                        "Debug_Video_Quicktime" [$WINDOWS]
+		$IntermediateDirectory                  "Debug_Video_Quicktime" [$WINDOWS]
+	}
 }
 
 $Configuration  "Release"
 {
-        $General
-        {
-                $OutputDirectory                        "Release_Video_Quicktime" [$WINDOWS]
-                $IntermediateDirectory                  "Release_Video_Quicktime" [$WINDOWS]
-        }
+	$General
+	{
+		$OutputDirectory                        "Release_Video_Quicktime" [$WINDOWS]
+		$IntermediateDirectory                  "Release_Video_Quicktime" [$WINDOWS]
+	}
 }
 
 
@@ -69,7 +69,7 @@ $Project "video_quicktime"
 		$file	"quicktime_material.h"
 		$file   "quicktime_recorder.h"
 		$file	"$SRCDIR\public\pixelwriter.h"
-		
+
 	}
 
 	$Folder "Link Libraries"
@@ -78,7 +78,6 @@ $Project "video_quicktime"
 		$File   "$SRCDIR\lib\common\quicktime\QTMLClient.lib"		[$WIN32]
 		$File	"$SRCDIR\DX9SDK\lib\dsound.lib"						[$WIN32]
 		$File	"$SRCDIR\DX9SDK\lib\dxguid.lib"						[$WIN32]
-		
+
 	}
 }
-

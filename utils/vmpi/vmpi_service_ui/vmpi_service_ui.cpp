@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -51,7 +51,7 @@ void LogString( const char *pStr, ... )
 	va_start( marker, pStr );
 	_vsnprintf( str, sizeof( str ), pStr, marker );
 	va_end( marker );
-	
+
 	static FILE *fp = fopen( "c:\\vmpi_service_ui.log", "wt" );
 	if ( fp )
 	{
@@ -64,7 +64,7 @@ void LogString( const char *pStr, ... )
 char* GetLastErrorString()
 {
 	static char err[2048];
-	
+
 	LPVOID lpMsgBuf;
 	FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) &lpMsgBuf, 0, NULL );
 	strncpy( err, (char*)lpMsgBuf, sizeof( err ) );
@@ -87,14 +87,14 @@ void LoadStateFromRegistry()
 		DWORD val = 0;
 		DWORD type = REG_DWORD;
 		DWORD size = sizeof( val );
-		if ( RegQueryValueEx( 
+		if ( RegQueryValueEx(
 			hKey,
 			"HighlightIconWhenBusy",
 			0,
 			&type,
 			(unsigned char*)&val,
-			&size ) == ERROR_SUCCESS && 
-			type == REG_DWORD && 
+			&size ) == ERROR_SUCCESS &&
+			type == REG_DWORD &&
 			size == sizeof( val ) )
 		{
 			g_bHighlightIconWhenBusy = (val != 0);
@@ -109,7 +109,7 @@ void SaveStateToRegistry()
 	if ( hKey )
 	{
 		DWORD val = g_bHighlightIconWhenBusy;
-		RegSetValueEx( 
+		RegSetValueEx(
 			hKey,
 			"HighlightIconWhenBusy",
 			0,
@@ -155,9 +155,9 @@ void CUIConnMgr::HandlePacket( const char *pData, int len )
 {
 	if ( pData[0] != VMPI_SERVICE_UI_PROTOCOL_VERSION )
 		return;
-	
+
 	int packetID = pData[1];
-	
+
 	int offset = 2;
 	if ( packetID == VMPI_SERVICE_TO_UI_CONSOLE_TEXT )
 	{
@@ -170,7 +170,7 @@ void CUIConnMgr::HandlePacket( const char *pData, int len )
 		offset += 4;
 
 		LogString( "New UI state: %d.\n", g_iCurState );
-		
+
 		// Update our icon.
 		UpdateAppIcon();
 
@@ -191,22 +191,22 @@ void CUIConnMgr::HandlePacket( const char *pData, int len )
 	else if ( packetID == VMPI_SERVICE_TO_UI_PATCHING )
 	{
 		LogString( "Got a VMPI_SERVICE_TO_UI_PATCHING packet.\n" );
-		
+
 		int bExitAfter = pData[offset];
 		++offset;
-		
+
 		char workingDir[MAX_PATH], commandLine[4096];
 		V_strncpy( workingDir, &pData[offset], sizeof( workingDir ) );
 		offset += V_strlen( workingDir ) + 1;
-		
+
 		V_strncpy( commandLine, &pData[offset], sizeof( commandLine ) );
 		offset += V_strlen( commandLine ) + 1;
-		
+
 		// Run whatever they said to run.
 		STARTUPINFO si;
 		memset( &si, 0, sizeof( si ) );
 		si.cb = sizeof( si );
-		
+
 		PROCESS_INFORMATION pi;
 		memset( &pi, 0, sizeof( pi ) );
 		if ( CreateProcess( NULL, commandLine, NULL, NULL, false, CREATE_NO_WINDOW, NULL, workingDir, &si, &pi ) )
@@ -215,7 +215,7 @@ void CUIConnMgr::HandlePacket( const char *pData, int len )
 
 			CloseHandle( pi.hProcess );
 			CloseHandle( pi.hThread );
-			
+
 			if ( bExitAfter )
 				PostQuitMessage( 0 );
 		}
@@ -253,7 +253,7 @@ SpewRetval_t MySpewOutputFunc( SpewType_t spewType, const char *pMsg )
 	time_t aclock;
 	time( &aclock );
 	struct tm *newtime = localtime( &aclock );
-	
+
 	// Get rid of the \n.
 	char timeString[512];
 	Q_strncpy( timeString, asctime( newtime ), sizeof( timeString ) );
@@ -261,10 +261,10 @@ SpewRetval_t MySpewOutputFunc( SpewType_t spewType, const char *pMsg )
 	if ( pEnd )
 		*pEnd = 0;
 	InternalSpew( timeString );
-	
+
 	InternalSpew( " - " );
 	InternalSpew( pMsg );
-	
+
 	if ( spewType == SPEW_ASSERT )
 		return SPEW_DEBUGGER;
 	else if( spewType == SPEW_ERROR )
@@ -283,10 +283,10 @@ void InitConsoleWindow()
 	if ( g_pConsoleWnd )
 		return;
 
-	g_pConsoleWnd = CreateConsoleWnd( 
-		g_hInstance, 
-		IDD_VMPI_SERVICE, 
-		IDC_DEBUG_OUTPUT, 
+	g_pConsoleWnd = CreateConsoleWnd(
+		g_hInstance,
+		IDD_VMPI_SERVICE,
+		IDC_DEBUG_OUTPUT,
 		false );
 }
 
@@ -341,10 +341,10 @@ void UpdatePopupMenuState()
 
 
 int CALLBACK SetPasswordDlgProc(
-  HWND hwndDlg,  // handle to dialog box
-  UINT uMsg,     // message
-  WPARAM wParam, // first message parameter
-  LPARAM lParam  // second message parameter
+	HWND hwndDlg,  // handle to dialog box
+	UINT uMsg,     // message
+	WPARAM wParam, // first message parameter
+	LPARAM lParam  // second message parameter
 )
 {
 	switch( uMsg )
@@ -381,7 +381,7 @@ int CALLBACK SetPasswordDlgProc(
 					EndDialog( hwndDlg, 0 );
 				}
 				break;
-			
+
 				case IDCANCEL:
 				{
 					EndDialog( hwndDlg, 0 );
@@ -434,7 +434,7 @@ public:
 				}
 			}
 			break;
-			
+
 			case WM_COMMAND:
 			{
 				switch( wParam )
@@ -452,7 +452,7 @@ public:
 						g_ConnMgr.SendPacket( -1, &cPacket, 1 );
 					}
 					break;
-					
+
 					case ID_KILLCURRENTJOB:
 					{
 						char cPacket = VMPI_KILL_PROCESS;
@@ -491,7 +491,7 @@ public:
 						UpdatePopupMenuState();
 					}
 					break;
-				
+
 					case ID_SET_PASSWORD:
 					{
 						DialogBox( g_hInstance, MAKEINTRESOURCE( IDD_SET_PASSWORD ), NULL, SetPasswordDlgProc );
@@ -516,8 +516,8 @@ public:
 								break;
 							else
 								Sleep( 10 );
-						}							
-						
+						}
+
 						// Quit the UI app.
 						PostQuitMessage( 0 );
 						return 1;
@@ -526,7 +526,7 @@ public:
 				}
 			}
 			break;
-		}	
+		}
 
 		return DefWindowProc( (HWND)hWnd, uMsg, wParam, lParam );
 	}
@@ -537,16 +537,16 @@ CShellIconMgrHelper g_ShellIconMgrHelper;
 
 
 int APIENTRY WinMain(HINSTANCE hInstance,
-                     HINSTANCE hPrevInstance,
-                     LPSTR     lpCmdLine,
-                     int       nCmdShow)
+										HINSTANCE hPrevInstance,
+										LPSTR     lpCmdLine,
+										int       nCmdShow)
 {
- 	g_hInstance = hInstance;
+	g_hInstance = hInstance;
 
 
 	LogString( "vmpi_service_ui startup.\n" );
 
-	// Don't run multiple instances.	
+	// Don't run multiple instances.
 	HANDLE hMutex = CreateMutex( NULL, FALSE, "vmpi_service_ui_mutex" );
 	if ( hMutex && GetLastError() == ERROR_ALREADY_EXISTS )
 		return 1;
@@ -579,7 +579,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	g_ConnMgr.InitClient();
 
 	LogString( "Entering main loop.\n" );
-	
+
 	while ( 1 )
 	{
 		MSG msg;
@@ -588,13 +588,13 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 		{
 			if ( msg.message == WM_QUIT )
 				break;
-			
+
 			TranslateMessage( &msg );
 			DispatchMessage( &msg );
 		}
 		if ( msg.message == WM_QUIT )
 			break;
-	
+
 		g_ConnMgr.Update();
 		if ( !g_ConnMgr.IsConnected() )
 		{
@@ -604,14 +604,11 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 		Sleep( 30 );
 	}
 
-	// Important that we call this instead of letting the destructor do it because it deletes its 
+	// Important that we call this instead of letting the destructor do it because it deletes its
 	// socket and it needs to cleanup some threads.
 	g_ConnMgr.Term();
-	
+
 	g_ShellIconMgr.Term();
-	
+
 	return 0;
 }
-
-
-

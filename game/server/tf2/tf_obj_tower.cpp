@@ -33,7 +33,7 @@ PRECACHE_REGISTER( obj_tower_ladder );
 ConVar	obj_tower_health( "obj_tower_health","100", FCVAR_NONE, "Tower health" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectTower::CObjectTower( void )
 {
@@ -41,7 +41,7 @@ CObjectTower::CObjectTower( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectTower::Spawn( void )
 {
@@ -65,7 +65,7 @@ void CObjectTower::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectTower::Precache( void )
 {
@@ -89,7 +89,7 @@ void CObjectTower::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectTower::FinishedBuilding( void )
 {
@@ -113,7 +113,7 @@ void CObjectTower::GetControlPanelInfo( int nPanelIndex, const char *&pPanelName
 
 
 //==============================================================================
-//	Tower Ladder 
+//	Tower Ladder
 //==============================================================================
 
 //------------------------------------------------------------------------------
@@ -124,7 +124,7 @@ CObjectTowerLadder::CObjectTowerLadder()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectTowerLadder *CObjectTowerLadder::Create( const Vector &vOrigin, const QAngle &vAngles, CBaseEntity *pParent )
 {
@@ -138,7 +138,7 @@ CObjectTowerLadder *CObjectTowerLadder::Create( const Vector &vOrigin, const QAn
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectTowerLadder::Spawn()
 {
@@ -159,7 +159,7 @@ void CObjectTowerLadder::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectTowerLadder::Precache()
 {

@@ -1,6 +1,6 @@
 //===== Copyright 1996-2005, Valve Corporation, All rights reserved. ======//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -26,13 +26,13 @@
 
 // 3d memcpy. Copy (up-to) 3 dimensional data with arbitrary source and destination
 // strides. Optimizes to just a single memcpy when possible. For 2d data, set numslices to 1.
-void CopyMemory3D( void *pDestAdr, void const *pSrcAdr,		
-				   int nNumCols, int nNumRows, int nNumSlices, // dimensions of copy
-				   int nSrcBytesPerRow, int nSrcBytesPerSlice, // strides for source.
-				   int nDestBytesPerRow, int nDestBytesPerSlice // strides for dest
+void CopyMemory3D( void *pDestAdr, void const *pSrcAdr,
+				int nNumCols, int nNumRows, int nNumSlices, // dimensions of copy
+				int nSrcBytesPerRow, int nSrcBytesPerSlice, // strides for source.
+				int nDestBytesPerRow, int nDestBytesPerSlice // strides for dest
 	);
 
-	
+
 
 
 template< class T, class I > class CUtlMemory;
@@ -63,24 +63,24 @@ wchar_t*	_V_wcsupr (const char* file, int line, wchar_t *start);
 #ifdef POSIX
 inline char *strupr( char *start )
 {
-      char *str = start;
-      while( str && *str )
-      {
-              *str = (char)toupper(*str);
-              str++;
-      }
-      return start;
+	char *str = start;
+	while( str && *str )
+	{
+		*str = (char)toupper(*str);
+		str++;
+	}
+	return start;
 }
 
 inline char *strlwr( char *start )
 {
-      char *str = start;
-      while( str && *str )
-      {
-              *str = (char)tolower(*str);
-              str++;
-      }
-      return start;
+	char *str = start;
+	while( str && *str )
+	{
+		*str = (char)tolower(*str);
+		str++;
+	}
+	return start;
 }
 
 inline wchar_t *_wcslwr( wchar_t *start )
@@ -116,38 +116,38 @@ inline wchar_t *_wcsupr( wchar_t *start )
 
 // To avoid cross-prx calls, making the V_* fucntions that don't do anything but debug checks and call through to the non V_* function
 // go ahead and call the non-V_* functions directly.
-#define V_memset(dest, fill, count)		memset   ((dest), (fill), (count))	
-#define V_memcpy(dest, src, count)		memcpy	((dest), (src), (count))	
-#define V_memmove(dest, src, count)		memmove	((dest), (src), (count))	
-#define V_memcmp(m1, m2, count)			memcmp	((m1), (m2), (count))		
-#define V_strcpy(dest, src)				strcpy	((dest), (src))			
-#define V_strcmp(s1, s2)				strcmp	((s1), (s2))			
-#define V_strupr(start)					strupr	((start))				
-#define V_strlower(start)				strlwr ((start))		
-#define V_wcslen(pwch)					wcslen	((pwch))		
+#define V_memset(dest, fill, count)		memset   ((dest), (fill), (count))
+#define V_memcpy(dest, src, count)		memcpy	((dest), (src), (count))
+#define V_memmove(dest, src, count)		memmove	((dest), (src), (count))
+#define V_memcmp(m1, m2, count)			memcmp	((m1), (m2), (count))
+#define V_strcpy(dest, src)				strcpy	((dest), (src))
+#define V_strcmp(s1, s2)				strcmp	((s1), (s2))
+#define V_strupr(start)					strupr	((start))
+#define V_strlower(start)				strlwr ((start))
+#define V_wcslen(pwch)					wcslen	((pwch))
 // To avoid cross-prx calls, using inline versions of these custom functions:
-#define V_strlen(str)					_V_strlen_inline	((str))				
-#define V_strrchr(s, c)					_V_strrchr_inline	((s), (c))				
-#define V_wcscmp(s1, s2)				_V_wcscmp_inline	((s1), (s2))			
-#define V_stricmp(s1, s2 )				_V_stricmp_inline	((s1), (s2) )			
-#define V_strstr(s1, search )			_V_strstr_inline	((s1), (search) )		
+#define V_strlen(str)					_V_strlen_inline	((str))
+#define V_strrchr(s, c)					_V_strrchr_inline	((s), (c))
+#define V_wcscmp(s1, s2)				_V_wcscmp_inline	((s1), (s2))
+#define V_stricmp(s1, s2 )				_V_stricmp_inline	((s1), (s2) )
+#define V_strstr(s1, search )			_V_strstr_inline	((s1), (search) )
 
 #else
 
-#define V_memset(dest, fill, count)		_V_memset   ((dest), (fill), (count))	
-#define V_memcpy(dest, src, count)		_V_memcpy	((dest), (src), (count))	
-#define V_memmove(dest, src, count)		_V_memmove	((dest), (src), (count))	
-#define V_memcmp(m1, m2, count)			_V_memcmp	((m1), (m2), (count))		
-#define V_strlen(str)					_V_strlen	((str))				
-#define V_strcpy(dest, src)				_V_strcpy	((dest), (src))			
-#define V_strrchr(s, c)					_V_strrchr	((s), (c))				
-#define V_strcmp(s1, s2)				_V_strcmp	((s1), (s2))			
-#define V_wcscmp(s1, s2)				_V_wcscmp	((s1), (s2))			
-#define V_stricmp(s1, s2 )				_V_stricmp	((s1), (s2) )			
-#define V_strstr(s1, search )			_V_strstr	((s1), (search) )		
-#define V_strupr(start)					_V_strupr	((start))				
-#define V_strlower(start)				_V_strlower ((start))		
-#define V_wcslen(pwch)					_V_wcslen	((pwch))		
+#define V_memset(dest, fill, count)		_V_memset   ((dest), (fill), (count))
+#define V_memcpy(dest, src, count)		_V_memcpy	((dest), (src), (count))
+#define V_memmove(dest, src, count)		_V_memmove	((dest), (src), (count))
+#define V_memcmp(m1, m2, count)			_V_memcmp	((m1), (m2), (count))
+#define V_strlen(str)					_V_strlen	((str))
+#define V_strcpy(dest, src)				_V_strcpy	((dest), (src))
+#define V_strrchr(s, c)					_V_strrchr	((s), (c))
+#define V_strcmp(s1, s2)				_V_strcmp	((s1), (s2))
+#define V_wcscmp(s1, s2)				_V_wcscmp	((s1), (s2))
+#define V_stricmp(s1, s2 )				_V_stricmp	((s1), (s2) )
+#define V_strstr(s1, search )			_V_strstr	((s1), (search) )
+#define V_strupr(start)					_V_strupr	((start))
+#define V_strlower(start)				_V_strlower ((start))
+#define V_wcslen(pwch)					_V_wcslen	((pwch))
 
 #endif
 
@@ -156,7 +156,7 @@ inline wchar_t *_wcsupr( wchar_t *start )
 inline void		V_memset (void *dest, int fill, int count)			{ memset( dest, fill, count ); }
 inline void		V_memcpy (void *dest, const void *src, int count)	{ memcpy( dest, src, count ); }
 inline void		V_memmove (void *dest, const void *src, int count)	{ memmove( dest, src, count ); }
-inline int		V_memcmp (const void *m1, const void *m2, int count){ return memcmp( m1, m2, count ); } 
+inline int		V_memcmp (const void *m1, const void *m2, int count){ return memcmp( m1, m2, count ); }
 inline int		V_strlen (const char *str)							{ return (int) strlen ( str ); }
 inline void		V_strcpy (char *dest, const char *src)				{ strcpy( dest, src ); }
 inline int		V_wcslen(const wchar_t *pwch)						{ return (int)wcslen(pwch); }
@@ -194,19 +194,19 @@ inline bool	StringHasPrefix             ( const char *str, const char *prefix ) 
 inline bool	StringHasPrefixCaseSensitive( const char *str, const char *prefix ) { return StringAfterPrefixCaseSensitive( str, prefix ) != NULL; }
 
 
-// Normalizes a float string in place.  
+// Normalizes a float string in place.
 // (removes leading zeros, trailing zeros after the decimal point, and the decimal point itself where possible)
 void			V_normalizeFloatString( char* pFloat );
 
 inline bool V_isspace(int c)
 {
-	// The standard white-space characters are the following: space, tab, carriage-return, newline, vertical tab, and form-feed. In the C locale, V_isspace() returns true only for the standard white-space characters. 
+	// The standard white-space characters are the following: space, tab, carriage-return, newline, vertical tab, and form-feed. In the C locale, V_isspace() returns true only for the standard white-space characters.
 	//return c == ' ' || c == 9 /*horizontal tab*/ || c == '\r' || c == '\n' || c == 11 /*vertical tab*/ || c == '\f';
 	// codes of whitespace symbols: 9 HT, 10 \n, 11 VT, 12 form feed, 13 \r, 32 space
-	
+
 	// easy to understand version, validated:
 	// return ((1 << (c-1)) & 0x80001F00) != 0 && ((c-1)&0xE0) == 0;
-	
+
 	// 5% faster on Core i7, 35% faster on Xbox360, no branches, validated:
 	#ifdef _X360
 	return ((1 << (c-1)) & 0x80001F00 & ~(-int((c-1)&0xE0))) != 0;
@@ -251,10 +251,10 @@ char *V_strnlwr(char *, size_t);
 
 #ifdef  _M_ALPHA
 
-struct va_list 
+struct va_list
 {
-    char *a0;       /* pointer to first homed integer argument */
-    int offset;     /* byte offset of next parameter */
+	char *a0;       /* pointer to first homed integer argument */
+	int offset;     /* byte offset of next parameter */
 };
 
 #else  // !_M_ALPHA
@@ -294,7 +294,7 @@ char *V_pretifynum( int64 value );
 
 // Functions for converting hexidecimal character strings back into binary data etc.
 //
-// e.g., 
+// e.g.,
 // int output;
 // V_hextobinary( "ffffffff", 8, &output, sizeof( output ) );
 // would make output == 0xfffffff or -1
@@ -339,7 +339,7 @@ const char *V_GetFileExtension( const char * path );
 const char *V_GetFileName( const char * path );
 
 // This removes "./" and "../" from the pathname. pFilename should be a full pathname.
-// Returns false if it tries to ".." past the root directory in the drive (in which case 
+// Returns false if it tries to ".." past the root directory in the drive (in which case
 // it is an invalid path).
 bool V_RemoveDotSlashes( char *pFilename, char separator = CORRECT_PATH_SEPARATOR );
 
@@ -466,7 +466,7 @@ int V_GenerateUniqueNameIndex( const char *prefix, const NameArray &nameArray, i
 	int nNames = nameArray.Count();
 	for ( int i = 0; i < nNames; ++i )
 	{
-		int index = V_IndexAfterPrefix( nameArray[ i ], prefix, 1 ); // returns -1 if no match, 0 for exact match, N for 
+		int index = V_IndexAfterPrefix( nameArray[ i ], prefix, 1 ); // returns -1 if no match, 0 for exact match, N for
 		if ( index >= freeindex )
 		{
 			// TODO - check that there isn't more junk after the index in pElementName

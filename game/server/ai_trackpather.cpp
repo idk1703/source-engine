@@ -27,12 +27,12 @@ BEGIN_DATADESC( CAI_TrackPather )
 	DEFINE_FIELD( m_pDestPathTarget,		FIELD_CLASSPTR ),
 	DEFINE_FIELD( m_pLastPathTarget,		FIELD_CLASSPTR ),
 	DEFINE_FIELD( m_pTargetNearestPath,		FIELD_CLASSPTR ),
-	
+
 	DEFINE_FIELD( m_strCurrentPathName,		FIELD_STRING ),
 	DEFINE_FIELD( m_strDestPathName,		FIELD_STRING ),
 	DEFINE_FIELD( m_strLastPathName,		FIELD_STRING ),
 	DEFINE_FIELD( m_strTargetNearestPathName,	FIELD_STRING ),
-	
+
 	DEFINE_FIELD( m_vecLastGoalCheckPosition,	FIELD_POSITION_VECTOR ),
 	DEFINE_FIELD( m_flEnemyPathUpdateTime,	FIELD_TIME ),
 	DEFINE_FIELD( m_bForcedMove,			FIELD_BOOLEAN ),
@@ -70,7 +70,7 @@ BEGIN_DATADESC( CAI_TrackPather )
 	DEFINE_INPUTFUNC( FIELD_INTEGER,"InputStartLeading", InputStartLeading ),
 	DEFINE_INPUTFUNC( FIELD_VOID,	 "InputStopLeading", InputStopLeading ),
 
-	// Obsolete, for backwards compatibility	
+	// Obsolete, for backwards compatibility
 	DEFINE_INPUTFUNC( FIELD_VOID,	 "StartPatrolBreakable", InputStartPatrolBreakable ),
 	DEFINE_INPUTFUNC( FIELD_STRING, "FlyToPathTrack", InputFlyToPathTrack ),
 END_DATADESC()
@@ -101,12 +101,12 @@ void CAI_TrackPather::InitPathingData( float flTrackArrivalTolerance, float flTa
 	m_bChooseFarthestPoint = true;
 	m_flFarthestPathDist = 1e10;
 	m_flPathMaxSpeed = 0;
-	m_nPauseState = PAUSE_NO_PAUSE; 
+	m_nPauseState = PAUSE_NO_PAUSE;
 }
 
-	   
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_TrackPather::OnRestore( void )
 {
@@ -155,7 +155,7 @@ void CAI_TrackPather::OnRestore( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_TrackPather::OnSave( IEntitySaveUtils *pUtils )
 {
@@ -182,7 +182,7 @@ void CAI_TrackPather::EnableLeading( bool bEnable )
 	}
 	else if ( bWasLeading )
 	{
-	
+
 		// Going from leading to not leading. Refresh the desired position
 		// to prevent us from hovering around our old, no longer valid lead position.
   		if ( m_pCurrentPathTarget )
@@ -225,7 +225,7 @@ inline CPathTrack *CAI_TrackPather::AdjustForMovementDirection( CPathTrack *pPat
 	return pPath;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Enemy visibility check
 //-----------------------------------------------------------------------------
@@ -238,8 +238,8 @@ CBaseEntity *CAI_TrackPather::FindTrackBlocker( const Vector &vecViewPoint, cons
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &targetPos - 
+// Purpose:
+// Input  : &targetPos -
 // Output : CBaseEntity
 //-----------------------------------------------------------------------------
 CPathTrack *CAI_TrackPather::BestPointOnPath( CPathTrack *pPath, const Vector &targetPos, float flAvoidRadius, bool visible, bool bFarthestPoint )
@@ -260,7 +260,7 @@ CPathTrack *CAI_TrackPather::BestPointOnPath( CPathTrack *pPath, const Vector &t
 
 	// Our target may be in a vehicle
 	CBaseEntity *pVehicle = NULL;
-	CBaseEntity *pTargetEnt = GetTrackPatherTargetEnt();	
+	CBaseEntity *pTargetEnt = GetTrackPatherTargetEnt();
 	if ( pTargetEnt != NULL )
 	{
 		CBaseCombatCharacter *pCCTarget = pTargetEnt->MyCombatCharacterPointer();
@@ -310,7 +310,7 @@ CPathTrack *CAI_TrackPather::BestPointOnPath( CPathTrack *pPath, const Vector &t
 			}
 			else
 			{
-				if ( flPathDist >= flNearestDist ) 
+				if ( flPathDist >= flNearestDist )
 					continue;
 			}
 
@@ -345,7 +345,7 @@ CPathTrack *CAI_TrackPather::BestPointOnPath( CPathTrack *pPath, const Vector &t
 //-----------------------------------------------------------------------------
 // Compute a point n units along a path
 //-----------------------------------------------------------------------------
-CPathTrack *CAI_TrackPather::ComputeLeadingPointAlongPath( const Vector &vecStartPoint, 
+CPathTrack *CAI_TrackPather::ComputeLeadingPointAlongPath( const Vector &vecStartPoint,
 				CPathTrack *pFirstTrack, float flDistance, Vector *pTarget )
 {
 	bool bMovingForward = (flDistance > 0.0f);
@@ -378,7 +378,7 @@ CPathTrack *CAI_TrackPather::ComputeLeadingPointAlongPath( const Vector &vecStar
 
 			continue;
 		}
-		
+
 		ComputeClosestPoint( *pTarget, flDistance, pTravPath->GetAbsOrigin(), pTarget );
 		return bMovingForward ? pTravPath : pTravPath->GetNext();
 	}
@@ -390,9 +390,9 @@ CPathTrack *CAI_TrackPather::ComputeLeadingPointAlongPath( const Vector &vecStar
 //-----------------------------------------------------------------------------
 // Compute the distance to a particular point on the path
 //-----------------------------------------------------------------------------
-float CAI_TrackPather::ComputeDistanceAlongPathToPoint( CPathTrack *pStartTrack, 
+float CAI_TrackPather::ComputeDistanceAlongPathToPoint( CPathTrack *pStartTrack,
 	CPathTrack *pDestTrack, const Vector &vecDestPosition, bool bMovingForward )
-{													  
+{
 	float flTotalDist = 0.0f;
 
 	Vector vecPoint;
@@ -421,7 +421,7 @@ float CAI_TrackPather::ComputeDistanceAlongPathToPoint( CPathTrack *pStartTrack,
 			VectorSubtract( vecDestPosition, vecPoint, vecDelta );
 			ComputePathDirection( pTravPath, &vecPathDelta );
 			float flDot = DotProduct( vecDelta, vecPathDelta );
-			flTotalDist += (flDot > 0.0f ? 1.0f : -1.0f) * vecDelta.Length2D(); 
+			flTotalDist += (flDot > 0.0f ? 1.0f : -1.0f) * vecDelta.Length2D();
 			break;
 		}
 
@@ -429,14 +429,14 @@ float CAI_TrackPather::ComputeDistanceAlongPathToPoint( CPathTrack *pStartTrack,
 		// The starting vecPoint is sometimes *not* within the bounds of the line segment.
 
 		// Find the distance between this test point and our goal point
-		flTotalDist += (bMovingForward ? 1.0f : -1.0f) * vecPoint.AsVector2D().DistTo( pTestPath->GetAbsOrigin().AsVector2D() ); 
+		flTotalDist += (bMovingForward ? 1.0f : -1.0f) * vecPoint.AsVector2D().DistTo( pTestPath->GetAbsOrigin().AsVector2D() );
 		vecPoint = pTestPath->GetAbsOrigin();
 	}
 
 	return flTotalDist;
 }
 
-	
+
 //------------------------------------------------------------------------------
 // Track debugging info
 //------------------------------------------------------------------------------
@@ -596,7 +596,7 @@ float CAI_TrackPather::ComputeDistanceToLeadingPosition()
 	return ComputeDistanceAlongPathToPoint( m_pCurrentPathTarget, m_pDestPathTarget, GetDesiredPosition(), m_bMovingForward );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Compute the distance to the *target* position
 //-----------------------------------------------------------------------------
@@ -729,7 +729,7 @@ void CAI_TrackPather::ComputePointAlongCurrentPath( float flDistance, float flPe
 				// FIXME: Reduce the distance further based on the angle between this segment + the next
 				continue;
 			}
-			
+
 			ComputePathDirection( pTravPath, &vecPathDir );
 			ComputeClosestPoint( *pTarget, flDistance, pTravPath->GetAbsOrigin(), pTarget );
 			break;
@@ -781,7 +781,7 @@ void CAI_TrackPather::ComputePointFromPerpDistance( const Vector &vecPointOnPath
 // where negative means on the left side of the path (when travelled from prev to next)
 // and positive means on the right side
 //-----------------------------------------------------------------------------
-CPathTrack *CAI_TrackPather::FindClosestPointOnPath( CPathTrack *pPath, 
+CPathTrack *CAI_TrackPather::FindClosestPointOnPath( CPathTrack *pPath,
 	const Vector &targetPos, Vector *pVecClosestPoint, Vector *pVecPathDir, float *pDistanceFromPath )
 {
 	// Find the node nearest to the destination path target if a path is not specified
@@ -885,12 +885,12 @@ void CAI_TrackPather::InputStopBreakableMovement( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAI_TrackPather::InputStartPatrol( inputdata_t &inputdata )
 {
-	m_bPatrolling = true;	
+	m_bPatrolling = true;
 }
 
 
@@ -899,18 +899,18 @@ void CAI_TrackPather::InputStartPatrol( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 void CAI_TrackPather::InputStopPatrol( inputdata_t &inputdata )
 {
-	m_bPatrolling = false;	
+	m_bPatrolling = false;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAI_TrackPather::InputStartPatrolBreakable( inputdata_t &inputdata )
 {
 	m_bPatrolBreakable = true;
-	m_bPatrolling = true;	
+	m_bPatrolling = true;
 }
 
 
@@ -940,7 +940,7 @@ void CAI_TrackPather::SelectNewDestTarget()
 	// NOTE: This version is bugged, but I didn't want to make the fix
 	// here for fear of breaking a lot of maps late in the day.
 	// So, only the chopper does the "right" thing.
-#ifdef HL2_EPISODIC 
+#ifdef HL2_EPISODIC
 	// Episodic uses the fixed logic for all trackpathers
 	if ( 1 )
 #else
@@ -1080,7 +1080,7 @@ void CAI_TrackPather::UpdateCurrentTargetLeading()
 	{
 		// NOTE: Must use current path target, instead of dest
 		// to get the PreviousAlongCurrentPath working correctly
-		CPathTrack *pSegmentStart = PreviousAlongCurrentPath( m_pCurrentPathTarget ); 
+		CPathTrack *pSegmentStart = PreviousAlongCurrentPath( m_pCurrentPathTarget );
 		if ( !pSegmentStart )
 		{
 			pSegmentStart = m_pCurrentPathTarget;
@@ -1098,7 +1098,7 @@ visualizeDebugInfo:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_TrackPather::UpdateTargetPositionLeading( void )
 {
@@ -1111,7 +1111,7 @@ void CAI_TrackPather::UpdateTargetPositionLeading( void )
 	// track, as opposed to the 'prev' track)
 	Vector vecClosestPoint, vecPathDir;
 	float flTargetDistanceFromPath;
-	CPathTrack *pNextPath = FindClosestPointOnPath( m_pCurrentPathTarget, 
+	CPathTrack *pNextPath = FindClosestPointOnPath( m_pCurrentPathTarget,
 		targetPos, &vecClosestPoint, &vecPathDir, &flTargetDistanceFromPath );
 
 	// This means that a valid path could not be found to our target!
@@ -1174,7 +1174,7 @@ void CAI_TrackPather::UpdateTargetPositionLeading( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_TrackPather::UpdateTargetPosition( void )
 {
@@ -1233,7 +1233,7 @@ void CAI_TrackPather::UpdateTargetPosition( void )
 
 	// Keep this goal point for comparisons later
 	m_vecLastGoalCheckPosition = targetPos;
-	
+
 	// Only do this on set intervals
 	m_flEnemyPathUpdateTime	= gpGlobals->curtime + 1.0f;
 }
@@ -1298,10 +1298,10 @@ float CAI_TrackPather::MaxDistanceFromCurrentPath() const
 	// NOTE: Can't use m_vecSegmentStartPoint because we don't have a radius defined for it
 	float t;
 	Vector vecTemp;
-	CalcClosestPointOnLine( GetAbsOrigin(), pPrevPath->GetAbsOrigin(), 
+	CalcClosestPointOnLine( GetAbsOrigin(), pPrevPath->GetAbsOrigin(),
 		m_pCurrentPathTarget->GetAbsOrigin(), vecTemp, &t );
 	t = clamp( t, 0.0f, 1.0f );
-	float flRadius = (1.0f - t) * pPrevPath->GetRadius() + t * m_pCurrentPathTarget->GetRadius(); 
+	float flRadius = (1.0f - t) * pPrevPath->GetRadius() + t * m_pCurrentPathTarget->GetRadius();
 	return flRadius;
 }
 
@@ -1479,7 +1479,7 @@ void CAI_TrackPather::Teleported()
 	MoveToClosestTrackPoint( pClosestTrack );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns distance along path to target, returns FLT_MAX if there's no path
 //-----------------------------------------------------------------------------
@@ -1536,7 +1536,7 @@ float CAI_TrackPather::ClosestPointToCurrentPath( Vector *pVecPoint ) const
 	}
 
 	float t;
-	CalcClosestPointOnLine( GetAbsOrigin(), m_vecSegmentStartPoint, 
+	CalcClosestPointOnLine( GetAbsOrigin(), m_vecSegmentStartPoint,
 		m_pCurrentPathTarget->GetAbsOrigin(), *pVecPoint, &t );
 	return t;
 }
@@ -1555,7 +1555,7 @@ void CAI_TrackPather::ComputePathTangent( float t, Vector *pVecTangent ) const
 
 	t = clamp( t, 0.0f, 1.0f );
 	pVecTangent->Init(0,0,0);
-	Catmull_Rom_Spline_Tangent( m_vecSegmentStartSplinePoint, m_vecSegmentStartPoint, 
+	Catmull_Rom_Spline_Tangent( m_vecSegmentStartSplinePoint, m_vecSegmentStartPoint,
 		m_pCurrentPathTarget->GetAbsOrigin(), pNextTrack->GetAbsOrigin(), t, *pVecTangent );
 	VectorNormalize( *pVecTangent );
 }
@@ -1597,8 +1597,8 @@ void CAI_TrackPather::ComputeNormalizedDestVelocity( Vector *pVecVelocity ) cons
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAI_TrackPather::SetTrack( CBaseEntity *pGoalEnt )
 {
@@ -1628,8 +1628,8 @@ void CAI_TrackPather::SetTrack( string_t strTrackName )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAI_TrackPather::InputSetTrack( inputdata_t &inputdata )
 {
@@ -1639,8 +1639,8 @@ void CAI_TrackPather::InputSetTrack( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : strTrackName - 
+// Purpose:
+// Input  : strTrackName -
 //-----------------------------------------------------------------------------
 void CAI_TrackPather::FlyToPathTrack( string_t strTrackName )
 {
@@ -1665,11 +1665,11 @@ void CAI_TrackPather::FlyToPathTrack( string_t strTrackName )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAI_TrackPather::InputFlyToPathTrack( inputdata_t &inputdata )
-{ 
+{
 	// Find our specified target
 	string_t strTrackName = MAKE_STRING( inputdata.value.String() );
 	m_nPauseState = PAUSE_NO_PAUSE;

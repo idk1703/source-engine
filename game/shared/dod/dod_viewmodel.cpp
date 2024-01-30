@@ -23,7 +23,7 @@ BEGIN_NETWORK_TABLE( CDODViewModel, DT_DODViewModel )
 END_NETWORK_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 #ifdef CLIENT_DLL
 CDODViewModel::CDODViewModel() : m_LagAnglesHistory("CDODViewModel::m_LagAnglesHistory")
@@ -39,7 +39,7 @@ CDODViewModel::CDODViewModel()
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDODViewModel::~CDODViewModel()
 {

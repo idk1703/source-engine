@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -44,7 +44,7 @@ void CEventRegister::Term()
 		m_pEventMgr->RemoveEvent( this );
 	}
 }
-	
+
 
 void CEventRegister::SetUpdateInterval( float interval )
 {

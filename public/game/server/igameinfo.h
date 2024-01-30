@@ -28,7 +28,7 @@ public:
 	// returns how many players are on a given team
 	virtual const int GetInfo_NumPlayersOnTeam(int teamNumber) = 0;
 
-	// accessor to hook mod specific information about the rules. for TF2, fields such as 
+	// accessor to hook mod specific information about the rules. for TF2, fields such as
 	virtual bool GetInfo_Custom(int valueType, pluginvariant &outValue, pluginvariant options) = 0;
 
 };

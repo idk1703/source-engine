@@ -38,7 +38,7 @@ public:
 
 protected:
 
-	PlayerClassPyroData_t	*m_pPyroData; 
+	PlayerClassPyroData_t	*m_pPyroData;
 	Vector							m_vStandMins;
 	Vector							m_vStandMaxs;
 	Vector							m_vStandViewOffset;

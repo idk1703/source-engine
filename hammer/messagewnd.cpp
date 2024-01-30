@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -76,9 +76,9 @@ void CMessageWnd::CreateMessageWindow( CMDIFrameWnd *pwndParent, CRect &rect )
 		if ( ( mws.type == mwError ) || ( mws.type == mwWarning ) )
 		{
 			bErrors = true;
-		}		
+		}
 	}
-	
+
 	if ( bErrors )
 	{
 		ShowWindow( SW_SHOW );
@@ -107,7 +107,7 @@ void CMessageWnd::AddMsg(MWMSGTYPE type, TCHAR* msg)
 	}
 
 	// format message
-	MWMSGSTRUCT mws;	
+	MWMSGSTRUCT mws;
 	mws.MsgLen = strlen(msg);
 	mws.type = type;
 	Assert(mws.MsgLen <= (sizeof(mws.szMsg) / sizeof(TCHAR)));
@@ -206,7 +206,7 @@ void CMessageWnd::CalculateScrollSize()
 	SCROLLINFO si;
 	si.cbSize = sizeof(si);
 	si.fMask = SIF_ALL;
-	si.nMin = 0; 
+	si.nMin = 0;
 	si.nPos = 0;
 
 	CRect clientrect;
@@ -226,7 +226,7 @@ void CMessageWnd::CalculateScrollSize()
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CMessageWnd::OnPaint() 
+void CMessageWnd::OnPaint()
 {
 	CPaintDC	dc(this);		// device context for painting
 	int			nScrollMin;
@@ -256,7 +256,7 @@ void CMessageWnd::OnPaint()
 		mws = MsgArray[i];
 
 		r.right = mws.MsgLen * iCharWidth;
-		
+
 		if ( r.bottom < nScrollMin )
 			continue;
 		if ( r.top > nScrollMax )
@@ -284,7 +284,7 @@ void CMessageWnd::OnPaint()
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CMessageWnd::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
+void CMessageWnd::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	int iPos = int(nPos);
 	SCROLLINFO si;
@@ -329,7 +329,7 @@ void CMessageWnd::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CMessageWnd::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
+void CMessageWnd::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	int iPos = int(nPos);
 	SCROLLINFO si;
@@ -375,16 +375,16 @@ void CMessageWnd::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CMessageWnd::OnSize(UINT nType, int cx, int cy) 
+void CMessageWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CMDIChildWnd::OnSize(nType, cx, cy);
-	CalculateScrollSize();	
+	CalculateScrollSize();
 }
 
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CMessageWnd::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
+void CMessageWnd::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	// up/down
 	switch(nChar)
@@ -415,7 +415,7 @@ void CMessageWnd::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CMessageWnd::OnClose() 
+void CMessageWnd::OnClose()
 {
 	// just hide the window
 	ShowWindow(SW_HIDE);

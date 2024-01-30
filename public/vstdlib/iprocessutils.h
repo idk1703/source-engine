@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -55,7 +55,7 @@ public:
 	// Methods used to read	output back from a process
 	virtual int GetProcessOutputSize( ProcessHandle_t hProcess ) = 0;
 	virtual int GetProcessOutput( ProcessHandle_t hProcess, char *pBuf, int nBufLen ) = 0;
-	
+
 	// Returns the exit code for the process. Doesn't work unless the process is complete
 	virtual int GetProcessExitCode( ProcessHandle_t hProcess ) = 0;
 };

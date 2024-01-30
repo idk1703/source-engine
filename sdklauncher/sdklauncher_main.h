@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -27,10 +27,10 @@ const char* GetLastWindowsErrorString();
 void SubstituteBaseDir( const char *pIn, char *pOut, int outLen );
 
 // Copy a file, applying replacements you specify.
-// ppReplacments must come in pairs - the first one is the string to match and 
+// ppReplacments must come in pairs - the first one is the string to match and
 // the second is the string to replace it with.
-bool CopyWithReplacements( 
-	const char *pInputFilename, 
+bool CopyWithReplacements(
+	const char *pInputFilename,
 	const char **ppReplacements, int nReplacements,
 	const char *pOutputFilenameFormat, ... );
 
@@ -38,8 +38,8 @@ bool CopyWithReplacements(
 // a string with the contents replaced. dataWriteLen specifies how much
 // data should be written to an output file if you write the string out
 // (since it may have added a null terminator).
-CUtlVector<char>* GetFileStringWithReplacements( 
-	const char *pInputFilename, 
+CUtlVector<char>* GetFileStringWithReplacements(
+	const char *pInputFilename,
 	const char **ppReplacements, int nReplacements,
 	int &dataWriteLen );
 

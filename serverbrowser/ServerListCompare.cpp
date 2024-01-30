@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -17,7 +17,7 @@ int __cdecl PasswordCompare(ListPanel *pPanel, const ListPanelItem &p1, const Li
 	gameserveritem_t *s1 = ServerBrowserDialog().GetServer(p1.userData);
 	gameserveritem_t *s2 = ServerBrowserDialog().GetServer(p2.userData);
 
-	if ( !s1 && s2 ) 
+	if ( !s1 && s2 )
 		return -1;
 	if ( !s2 && s1 )
 		return 1;
@@ -40,7 +40,7 @@ int __cdecl BotsCompare(ListPanel *pPanel, const ListPanelItem &p1, const ListPa
 	gameserveritem_t *s1 = ServerBrowserDialog().GetServer(p1.userData);
 	gameserveritem_t *s2 = ServerBrowserDialog().GetServer(p2.userData);
 
-	if ( !s1 && s2 ) 
+	if ( !s1 && s2 )
 		return -1;
 	if ( !s2 && s1 )
 		return 1;
@@ -63,7 +63,7 @@ int __cdecl SecureCompare(ListPanel *pPanel, const ListPanelItem &p1, const List
 	gameserveritem_t *s1 = ServerBrowserDialog().GetServer(p1.userData);
 	gameserveritem_t *s2 = ServerBrowserDialog().GetServer(p2.userData);
 
-	if ( !s1 && s2 ) 
+	if ( !s1 && s2 )
 		return -1;
 	if ( !s2 && s1 )
 		return 1;
@@ -86,7 +86,7 @@ int __cdecl IPAddressCompare(ListPanel *pPanel, const ListPanelItem &p1, const L
 	gameserveritem_t *s1 = ServerBrowserDialog().GetServer(p1.userData);
 	gameserveritem_t *s2 = ServerBrowserDialog().GetServer(p2.userData);
 
-	if ( !s1 && s2 ) 
+	if ( !s1 && s2 )
 		return -1;
 	if ( !s2 && s1 )
 		return 1;
@@ -109,7 +109,7 @@ int __cdecl PingCompare(ListPanel *pPanel, const ListPanelItem &p1, const ListPa
 	gameserveritem_t *s1 = ServerBrowserDialog().GetServer(p1.userData);
 	gameserveritem_t *s2 = ServerBrowserDialog().GetServer(p2.userData);
 
-	if ( !s1 && s2 ) 
+	if ( !s1 && s2 )
 		return -1;
 	if ( !s2 && s1 )
 		return 1;
@@ -123,7 +123,7 @@ int __cdecl PingCompare(ListPanel *pPanel, const ListPanelItem &p1, const ListPa
 		return -1;
 	else if ( ping1 > ping2 )
 		return 1;
-	
+
 	return 0;
 }
 
@@ -135,7 +135,7 @@ int __cdecl MapCompare(ListPanel *pPanel, const ListPanelItem &p1, const ListPan
 	gameserveritem_t *s1 = ServerBrowserDialog().GetServer(p1.userData);
 	gameserveritem_t *s2 = ServerBrowserDialog().GetServer(p2.userData);
 
-	if ( !s1 && s2 ) 
+	if ( !s1 && s2 )
 		return -1;
 	if ( !s2 && s1 )
 		return 1;
@@ -153,7 +153,7 @@ int __cdecl GameCompare(ListPanel *pPanel, const ListPanelItem &p1, const ListPa
 	gameserveritem_t *s1 = ServerBrowserDialog().GetServer(p1.userData);
 	gameserveritem_t *s2 = ServerBrowserDialog().GetServer(p2.userData);
 
-	if ( !s1 && s2 ) 
+	if ( !s1 && s2 )
 		return -1;
 	if ( !s2 && s1 )
 		return 1;
@@ -174,7 +174,7 @@ int __cdecl ServerNameCompare(ListPanel *pPanel, const ListPanelItem &p1, const 
 	gameserveritem_t *s1 = ServerBrowserDialog().GetServer(p1.userData);
 	gameserveritem_t *s2 = ServerBrowserDialog().GetServer(p2.userData);
 
-	if ( !s1 && s2 ) 
+	if ( !s1 && s2 )
 		return -1;
 	if ( !s2 && s1 )
 		return 1;
@@ -192,7 +192,7 @@ int __cdecl PlayersCompare(ListPanel *pPanel, const ListPanelItem &p1, const Lis
 	gameserveritem_t *s1 = ServerBrowserDialog().GetServer(p1.userData);
 	gameserveritem_t *s2 = ServerBrowserDialog().GetServer(p2.userData);
 
-	if ( !s1 && s2 ) 
+	if ( !s1 && s2 )
 		return -1;
 	if ( !s2 && s1 )
 		return 1;
@@ -227,7 +227,7 @@ int __cdecl LastPlayedCompare(ListPanel *pPanel, const ListPanelItem &p1, const 
 	gameserveritem_t *s1 = ServerBrowserDialog().GetServer( p1.userData );
 	gameserveritem_t *s2 = ServerBrowserDialog().GetServer( p2.userData );
 
-	if ( !s1 && s2 ) 
+	if ( !s1 && s2 )
 		return -1;
 	if ( !s2 && s1 )
 		return 1;
@@ -251,7 +251,7 @@ int __cdecl TagsCompare(ListPanel *pPanel, const ListPanelItem &p1, const ListPa
 	gameserveritem_t *s1 = ServerBrowserDialog().GetServer(p1.userData);
 	gameserveritem_t *s2 = ServerBrowserDialog().GetServer(p2.userData);
 
-	if ( !s1 && s2 ) 
+	if ( !s1 && s2 )
 		return -1;
 	if ( !s2 && s1 )
 		return 1;
@@ -269,7 +269,7 @@ int __cdecl ReplayCompare(ListPanel *pPanel, const ListPanelItem &p1, const List
 	gameserveritem_t *s1 = ServerBrowserDialog().GetServer(p1.userData);
 	gameserveritem_t *s2 = ServerBrowserDialog().GetServer(p2.userData);
 
-	if ( !s1 && s2 ) 
+	if ( !s1 && s2 )
 		return -1;
 	if ( !s2 && s1 )
 		return 1;
@@ -286,4 +286,3 @@ int __cdecl ReplayCompare(ListPanel *pPanel, const ListPanelItem &p1, const List
 
 	return 0;
 }
-

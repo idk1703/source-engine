@@ -98,7 +98,7 @@ private:
 	CCallResult< CHelperStreamDownloadUrlToLocalFile, HTTPRequestCompleted_t > m_CallbackOnHTTPRequestCompleted;
 
 	DHANDLE<CTFStreamPanel> m_hStreamPanel;
-	
+
 	void Steam_OnHTTPRequestCompleted( HTTPRequestCompleted_t *p, bool bError )
 	{
 		if ( !m_hHTTPRequestHandle || ( p->m_hRequest != m_hHTTPRequestHandle ) )
@@ -189,7 +189,7 @@ static void Helper_ConfigureStreamInfoPreviewImages( CStreamInfo &info, CTFStrea
 		if ( !s_bCreateDirHierarchyDone )
 		{
 			s_bCreateDirHierarchyDone = true;
-				
+
 			// Cleanup old cached files
 			if ( long lDirectoryTime = g_pFullFileSystem->GetFileTime( s_pszCacheImagePath, "GAME" ) )
 			{
@@ -218,13 +218,13 @@ static void Helper_ConfigureStreamInfoPreviewImages( CStreamInfo &info, CTFStrea
 
 			g_pFullFileSystem->CreateDirHierarchy( s_pszCacheImagePath, "GAME" );
 		}
-			
+
 		//
 		// Work with the file cache
 		//
 		CFmtStr fmtLocalFile( "%s/%s", s_pszCacheImagePath, chPreviewImageLocal );
 		info.m_sPreviewImageLocalFile = fmtLocalFile.Access();
-		
+
 		CFmtStr fmtPreviewSF( "%sstreams/%s", cl_streams_image_sfurl.GetString(), chPreviewImageLocal );
 		info.m_sPreviewImageSF = fmtPreviewSF.Access();
 
@@ -328,7 +328,7 @@ void CTFStreamManager::RequestTopStreams()
 					steamapicontext->SteamHTTP()->ReleaseHTTPRequest( m_hHTTPRequestHandle );
 				m_hHTTPRequestHandle = NULL;
 			}
-		}	
+		}
 	}
 }
 
@@ -337,7 +337,7 @@ static int Helper_SortStreamsByViewersCount( const CStreamInfo *a, const CStream
 {
 	if ( a->m_numViewers != b->m_numViewers )
 		return ( a->m_numViewers > b->m_numViewers ) ? -1 : 1;
-	
+
 	return Q_stricmp( a->m_sGlobalName.Get(), b->m_sGlobalName.Get() );
 }
 
@@ -368,7 +368,7 @@ void CTFStreamManager::Steam_OnHTTPRequestCompletedStreams( HTTPRequestCompleted
 			{
 				g_pFullFileSystem->WriteFile( cl_streams_write_response_file.GetString(), "GAME", bufFile );
 			}
-			
+
 			// Parse JSON from the received file
 			GCSDK::CWebAPIValues *pValues = GCSDK::CWebAPIValues::ParseJSON( bufFile );
 			if ( pValues )
@@ -460,7 +460,7 @@ CStreamInfo* CTFStreamManager::GetStreamInfoByName( char const *szName )
 {
 	if ( !szName )
 		return NULL;
-	
+
 	for ( int idx = 0; idx < m_streamInfoVec.Count(); ++ idx )
 	{
 		if ( !V_strcmp( szName, m_streamInfoVec[idx].m_sGlobalName.Get() ) )
@@ -581,7 +581,7 @@ void CTFStreamManager::Steam_OnHTTPRequestCompletedMyTwitchTv( HTTPRequestComple
 			{
 				g_pFullFileSystem->WriteFile( cl_streams_write_response_file.GetString(), "GAME", bufFile );
 			}
-			
+
 			// Parse JSON from the received file
 			GCSDK::CWebAPIValues *pValues = GCSDK::CWebAPIValues::ParseJSON( bufFile );
 			if ( pValues )
@@ -696,7 +696,7 @@ void CTFStreamPanel::UpdatePanels()
 	{
 		pStreamButton->SetEnabled( pInfo != NULL );
 	}
-	
+
 }
 
 void CTFStreamPanel::SetPreviewImage( const char *pszPreviewImageFile )

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,15 +24,15 @@ public:
 	virtual			~CTESparks( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 	CNetworkVar( int, m_nMagnitude );
 	CNetworkVar( int, m_nTrailLength );
 	CNetworkVector( m_vecDir );
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTESparks::CTESparks( const char *name ) :
 	BaseClass( name )
@@ -40,22 +40,22 @@ CTESparks::CTESparks( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTESparks::~CTESparks( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTESparks::Test( const Vector& current_origin, const QAngle& current_angles )
 {
 	// Fill in data
 	m_vecOrigin = current_origin;
-	
+
 	Vector forward;
 
 	m_vecOrigin.GetForModify()[2] += 24;

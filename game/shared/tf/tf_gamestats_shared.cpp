@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -74,7 +74,7 @@ const char *s_pMapStatStrings[ TFMAPSTAT_TOTAL ] =
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 TF_Gamestats_LevelStats_t::TF_Gamestats_LevelStats_t()
 {
@@ -100,7 +100,7 @@ TF_Gamestats_LevelStats_t::TF_Gamestats_LevelStats_t()
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 TF_Gamestats_LevelStats_t::~TF_Gamestats_LevelStats_t()
 {
@@ -111,7 +111,7 @@ TF_Gamestats_LevelStats_t::~TF_Gamestats_LevelStats_t()
 
 //-----------------------------------------------------------------------------
 // Purpose: Copy constructor
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 TF_Gamestats_LevelStats_t::TF_Gamestats_LevelStats_t( const TF_Gamestats_LevelStats_t &stats )
 {
@@ -126,11 +126,11 @@ TF_Gamestats_LevelStats_t::TF_Gamestats_LevelStats_t( const TF_Gamestats_LevelSt
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszMapName - 
-//			nIPAddr - 
-//			nPort - 
-//			flStartTime - 
+// Purpose:
+// Input  : *pszMapName -
+//			nIPAddr -
+//			nPort -
+//			flStartTime -
 //-----------------------------------------------------------------------------
 void TF_Gamestats_LevelStats_t::Init( const char *pszMapName, int nMapRevision, int nIPAddr, short nPort, float flStartTime  )
 {
@@ -141,7 +141,7 @@ void TF_Gamestats_LevelStats_t::Init( const char *pszMapName, int nMapRevision, 
 	m_Header.m_nMapRevision = nMapRevision;
 	m_Header.m_nIPAddr = nIPAddr;
 	m_Header.m_nPort = nPort;
-	
+
 #ifndef NO_STEAM
 	// Start the level timer.
 	m_iMapStartTime = GetSteamWorksSGameStatsUploader().GetTimeSinceEpoch();
@@ -153,8 +153,8 @@ void TF_Gamestats_LevelStats_t::Init( const char *pszMapName, int nMapRevision, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : flEndTime - 
+// Purpose:
+// Input  : flEndTime -
 //-----------------------------------------------------------------------------
 void TF_Gamestats_LevelStats_t::Shutdown( float flEndTime )
 {
@@ -162,7 +162,7 @@ void TF_Gamestats_LevelStats_t::Shutdown( float flEndTime )
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 TF_Gamestats_RoundStats_t::TF_Gamestats_RoundStats_t()
 {
@@ -171,7 +171,7 @@ TF_Gamestats_RoundStats_t::TF_Gamestats_RoundStats_t()
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 TF_Gamestats_RoundStats_t::~TF_Gamestats_RoundStats_t()
 {
@@ -187,7 +187,7 @@ void TF_Gamestats_RoundStats_t::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TF_Gamestats_RoundStats_t::ResetSummary()
 {
@@ -197,7 +197,7 @@ void TF_Gamestats_RoundStats_t::ResetSummary()
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 TF_Gamestats_KillStats_t::TF_Gamestats_KillStats_t()
 {
@@ -206,7 +206,7 @@ TF_Gamestats_KillStats_t::TF_Gamestats_KillStats_t()
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 TF_Gamestats_KillStats_t::~TF_Gamestats_KillStats_t()
 {
@@ -253,8 +253,8 @@ void TFReportedStats_t::Clear()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szMapName - 
+// Purpose:
+// Input  : *szMapName -
 // Output : TF_Gamestats_LevelStats_t
 //-----------------------------------------------------------------------------
 TF_Gamestats_LevelStats_t *TFReportedStats_t::FindOrAddMapStats( const char *szMapName )
@@ -263,7 +263,7 @@ TF_Gamestats_LevelStats_t *TFReportedStats_t::FindOrAddMapStats( const char *szM
 	if( iMap == m_dictMapStats.InvalidIndex() )
 	{
 		iMap = m_dictMapStats.Insert( szMapName );
-	}	
+	}
 
 	return &m_dictMapStats[iMap];
 }
@@ -291,9 +291,9 @@ void TFReportedStats_t::AppendCustomDataToSaveBuffer( CUtlBuffer &SaveBuffer )
 		CBaseGameStats::AppendLump( MAX_LUMP_COUNT, SaveBuffer, TFSTATS_LUMP_MAPHEADER, 1, sizeof( TF_Gamestats_LevelStats_t::LevelHeader_t ), static_cast<void*>( &pCurrentMap->m_Header ) );
 		//CBaseGameStats::AppendLump( MAX_LUMP_COUNT, SaveBuffer, TFSTATS_LUMP_MAPDEATH, pCurrentMap->m_aPlayerDeaths.Count(), sizeof( TF_Gamestats_LevelStats_t::PlayerDeathsLump_t ), static_cast<void*>( pCurrentMap->m_aPlayerDeaths.Base() ) );
 		//CBaseGameStats::AppendLump( MAX_LUMP_COUNT, SaveBuffer, TFSTATS_LUMP_MAPDAMAGE, pCurrentMap->m_aPlayerDamage.Count(), sizeof( TF_Gamestats_LevelStats_t::PlayerDamageLump_t ), static_cast<void*>( pCurrentMap->m_aPlayerDamage.Base() ) );
-		CBaseGameStats::AppendLump( MAX_LUMP_COUNT, SaveBuffer, TFSTATS_LUMP_CLASS, ARRAYSIZE( pCurrentMap->m_aClassStats ), sizeof( pCurrentMap->m_aClassStats[0] ), 
+		CBaseGameStats::AppendLump( MAX_LUMP_COUNT, SaveBuffer, TFSTATS_LUMP_CLASS, ARRAYSIZE( pCurrentMap->m_aClassStats ), sizeof( pCurrentMap->m_aClassStats[0] ),
 			static_cast<void*>( pCurrentMap->m_aClassStats ) );
-		CBaseGameStats::AppendLump( MAX_LUMP_COUNT, SaveBuffer, TFSTATS_LUMP_WEAPON, ARRAYSIZE( pCurrentMap->m_aWeaponStats ), sizeof( pCurrentMap->m_aWeaponStats[0] ), 
+		CBaseGameStats::AppendLump( MAX_LUMP_COUNT, SaveBuffer, TFSTATS_LUMP_WEAPON, ARRAYSIZE( pCurrentMap->m_aWeaponStats ), sizeof( pCurrentMap->m_aWeaponStats[0] ),
 			static_cast<void*>( pCurrentMap->m_aWeaponStats ) );
 	}
 
@@ -338,7 +338,7 @@ bool TFReportedStats_t::LoadCustomDataFromBuffer( CUtlBuffer &LoadBuffer )
 	{
 		switch ( iLump )
 		{
-		case TFSTATS_LUMP_MAPHEADER: 
+		case TFSTATS_LUMP_MAPHEADER:
 			{
 				TF_Gamestats_LevelStats_t::LevelHeader_t header;
 				CBaseGameStats::LoadLump( LoadBuffer, iLumpCount, sizeof( TF_Gamestats_LevelStats_t::LevelHeader_t ), &header );
@@ -356,7 +356,7 @@ bool TFReportedStats_t::LoadCustomDataFromBuffer( CUtlBuffer &LoadBuffer )
 				{
 					pCurrentGame->m_Header = header;
 				}
-				break; 
+				break;
 			}
 		case TFSTATS_LUMP_MAPDEATH:
 			{
@@ -381,7 +381,7 @@ bool TFReportedStats_t::LoadCustomDataFromBuffer( CUtlBuffer &LoadBuffer )
 				//	pCurrentGame->m_aPlayerDamage = playerDamage;
 				//}
 				break;
-			}		
+			}
 		case TFSTATS_LUMP_CLASS:
 			{
 				Assert( pCurrentGame );
@@ -390,7 +390,7 @@ bool TFReportedStats_t::LoadCustomDataFromBuffer( CUtlBuffer &LoadBuffer )
 				Assert ( iLumpCount == ARRAYSIZE( pCurrentGame->m_aClassStats ) );
 				if ( iLumpCount == ARRAYSIZE( pCurrentGame->m_aClassStats ) )
 				{
-					CBaseGameStats::LoadLump( LoadBuffer, ARRAYSIZE( pCurrentGame->m_aClassStats ), sizeof( pCurrentGame->m_aClassStats[0] ), 
+					CBaseGameStats::LoadLump( LoadBuffer, ARRAYSIZE( pCurrentGame->m_aClassStats ), sizeof( pCurrentGame->m_aClassStats[0] ),
 						pCurrentGame->m_aClassStats );
 
 					// quick sanity check on some data -- we get some stat files that start out OK but are corrupted later in the file
@@ -402,13 +402,13 @@ bool TFReportedStats_t::LoadCustomDataFromBuffer( CUtlBuffer &LoadBuffer )
 						{
 							return false;
 						}
-					}			
+					}
 				}
 				else
 				{
 					// mismatched lump size, possibly from different build, don't know how it interpret it, just skip over it
 					return false;
-				}				
+				}
 				break;
 			}
 		case TFSTATS_LUMP_WEAPON:
@@ -419,7 +419,7 @@ bool TFReportedStats_t::LoadCustomDataFromBuffer( CUtlBuffer &LoadBuffer )
 				Assert ( iLumpCount == ARRAYSIZE( pCurrentGame->m_aWeaponStats ) );
 				if ( iLumpCount == ARRAYSIZE( pCurrentGame->m_aWeaponStats ) )
 				{
-					CBaseGameStats::LoadLump( LoadBuffer, ARRAYSIZE( pCurrentGame->m_aWeaponStats ), sizeof( pCurrentGame->m_aWeaponStats[0] ), 
+					CBaseGameStats::LoadLump( LoadBuffer, ARRAYSIZE( pCurrentGame->m_aWeaponStats ), sizeof( pCurrentGame->m_aWeaponStats[0] ),
 						pCurrentGame->m_aWeaponStats );
 
 					// quick sanity check on some data -- we get some stat files that start out OK but are corrupted later in the file
@@ -428,13 +428,13 @@ bool TFReportedStats_t::LoadCustomDataFromBuffer( CUtlBuffer &LoadBuffer )
 					{
 						return false;
 					}
-					
-				}				
+
+				}
 				else
 				{
 					// mismatched lump size, possibly from different build, don't know how it interpret it, just skip over it
-					return false;				
-				}				
+					return false;
+				}
 				break;
 			}
 		case TFSTATS_LUMP_ENDTAG:
@@ -485,7 +485,7 @@ void RobotDestructionStats_t::Clear()
 	V_memset( &iBlueRobotsKilledByType, 0, sizeof( iBlueRobotsKilledByType ) );
 	V_memset( &iRedRobotsKilledByType, 0, sizeof( iRedRobotsKilledByType ) );
 	V_memset( &iRobotsDamageFromClass, 0, sizeof( iRobotsDamageFromClass ) );
-	
+
 }
 
 //-----------------------------------------------------------------------------

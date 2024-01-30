@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -101,7 +101,7 @@ int CJobSearchDlg::GetSelectedJobIndex()
 /////////////////////////////////////////////////////////////////////////////
 // CJobSearchDlg message handlers
 
-void CJobSearchDlg::OnDblclkJobsList(NMHDR* pNMHDR, LRESULT* pResult) 
+void CJobSearchDlg::OnDblclkJobsList(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	int iItem = GetSelectedJobIndex();
 	if ( iItem != -1 )
@@ -109,7 +109,7 @@ void CJobSearchDlg::OnDblclkJobsList(NMHDR* pNMHDR, LRESULT* pResult)
 		CJobInfo *pInfo = (CJobInfo*)m_JobsList.GetItemData( iItem );
 
 		CString cmdLine;
-		cmdLine.Format( "vmpi_job_watch -JobID %d -dbname \"%s\" -hostname \"%s\" -username \"%s\"", 
+		cmdLine.Format( "vmpi_job_watch -JobID %d -dbname \"%s\" -hostname \"%s\" -username \"%s\"",
 			pInfo->m_JobID, (const char*)m_DBName, (const char*)m_HostName, (const char*)m_UserName );
 
 		STARTUPINFO si;
@@ -119,9 +119,9 @@ void CJobSearchDlg::OnDblclkJobsList(NMHDR* pNMHDR, LRESULT* pResult)
 		PROCESS_INFORMATION pi;
 		memset( &pi, 0, sizeof( pi ) );
 
-		if ( !CreateProcess( 
-			NULL, 
-			(char*)(const char*)cmdLine, 
+		if ( !CreateProcess(
+			NULL,
+			(char*)(const char*)cmdLine,
 			NULL,							// security
 			NULL,
 			TRUE,
@@ -136,7 +136,7 @@ void CJobSearchDlg::OnDblclkJobsList(NMHDR* pNMHDR, LRESULT* pResult)
 			MessageBox( errStr, "Error", MB_OK );
 		}
 	}
-	
+
 	*pResult = 0;
 }
 
@@ -161,7 +161,7 @@ void CJobSearchDlg::ClearJobsList()
 	}
 
 	m_JobsList.DeleteAllItems();
-}		   
+}
 
 
 void CJobSearchDlg::RepopulateJobsList()
@@ -189,15 +189,15 @@ void CJobSearchDlg::RepopulateJobsList()
 
 		// Add the item.
 		int iItem = m_JobsList.InsertItem( 0, "", NULL );
-		
+
 		// Associate it with the job structure.
 		m_JobsList.SetItemData( iItem, (DWORD)pInfo );
-		
+
 		char dateStr[128];
 		const char *pDate = pInfo->m_StartTimeUnformatted;
 		if ( strlen( pDate ) == 14 ) // yyyymmddhhmmss
 		{
-			Q_snprintf( dateStr, sizeof( dateStr ), "%c%c/%c%c %c%c:%c%c:00", 
+			Q_snprintf( dateStr, sizeof( dateStr ), "%c%c/%c%c %c%c:%c%c:00",
 				pDate[4], pDate[5],
 				pDate[6], pDate[7],
 				pDate[8], pDate[9],
@@ -223,12 +223,12 @@ void CJobSearchDlg::RepopulateJobsList()
 		Q_snprintf( jobIDStr, sizeof( jobIDStr ), "%d", pInfo->m_JobID );
 		m_JobsList.SetItemText( iItem, 4, jobIDStr );
 	}
-	
+
 	m_JobsList.SortItems( JobsSortFn, (LPARAM)&m_JobsList );
 }
 
 
-void CJobSearchDlg::OnDblclkUserList() 
+void CJobSearchDlg::OnDblclkUserList()
 {
 	int sel = m_UserList.GetCurSel();
 	if ( sel != LB_ERR )
@@ -240,12 +240,12 @@ void CJobSearchDlg::OnDblclkUserList()
 		char query[4096];
 		Q_snprintf( query, sizeof( query ), "select RunningTimeMS, JobID, BSPFilename, StartTime, MachineName from job_master_start where MachineName=\"%s\"", (const char*)computerName );
 		GetMySQL()->Execute( query );
-		
+
 		RepopulateJobsList();
 	}
 }
 
-void CJobSearchDlg::OnDblclkWorkerList() 
+void CJobSearchDlg::OnDblclkWorkerList()
 {
 	int sel = m_WorkerList.GetCurSel();
 	if ( sel != LB_ERR )
@@ -265,7 +265,7 @@ void CJobSearchDlg::OnDblclkWorkerList()
 			"job_master_start.JobID = job_worker_start.JobID",
 			(const char*)computerName );
 		GetMySQL()->Execute( query );
-		
+
 		RepopulateJobsList();
 	}
 }
@@ -301,7 +301,7 @@ const char* FindArg( const char *pArgName, const char *pDefault="" )
 	return NULL;
 }
 
-BOOL CJobSearchDlg::OnInitDialog() 
+BOOL CJobSearchDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
@@ -338,8 +338,8 @@ BOOL CJobSearchDlg::OnInitDialog()
 
 		char hostName[512], dbName[512], userName[512];
 		if ( !ReadStringFromFile( fp, hostName, sizeof( hostName ) ) ||
-			 !ReadStringFromFile( fp, dbName, sizeof( dbName ) ) || 
-			 !ReadStringFromFile( fp, userName, sizeof( userName ) ) 
+			 !ReadStringFromFile( fp, dbName, sizeof( dbName ) ) ||
+			 !ReadStringFromFile( fp, userName, sizeof( userName ) )
 			 )
 		{
 			fclose( fp );
@@ -353,13 +353,13 @@ BOOL CJobSearchDlg::OnInitDialog()
 		m_HostName = hostName;
 		m_UserName = userName;
 
-		fclose( fp );		
+		fclose( fp );
 	}
 
 	// Get the mysql interface.
 	if ( !Sys_LoadInterface( "mysql_wrapper", MYSQL_WRAPPER_VERSION_NAME, &m_hMySQLDLL, (void**)&m_pSQL ) )
 		return false;
-	
+
 	if ( !m_pSQL->InitMySQL( m_DBName, m_HostName, m_UserName ) )
 	{
 		Q_snprintf( str, sizeof( str ), "Can't init MYSQL db (db = '%s', host = '%s', user = '%s')", (const char*)m_DBName, (const char*)m_HostName, (const char*)m_UserName );
@@ -385,8 +385,8 @@ BOOL CJobSearchDlg::OnInitDialog()
 	{
 		m_JobsList.InsertColumn( i, titles[i].pText, LVCFMT_LEFT, titles[i].width, i );
 	}
-	
-	
+
+
 	CUtlVector<char*> computerNames;
 	CNetViewThread netView;
 	netView.Init();
@@ -408,7 +408,7 @@ BOOL CJobSearchDlg::OnInitDialog()
 	}
 
 	PopulateWorkerList( computerNames );
-	PopulateUserList( computerNames );	
+	PopulateUserList( computerNames );
 
 
 	// Auto-select a worker?
@@ -460,14 +460,14 @@ void CJobSearchDlg::PopulateUserList( CUtlVector<char*> &computerNames )
 
 
 
-void CJobSearchDlg::OnQuit() 
+void CJobSearchDlg::OnQuit()
 {
-	EndDialog( 0 );	
+	EndDialog( 0 );
 }
 
-void CJobSearchDlg::OnSize(UINT nType, int cx, int cy) 
+void CJobSearchDlg::OnSize(UINT nType, int cx, int cy)
 {
 	CDialog::OnSize(nType, cx, cy);
-	
-	m_AnchorMgr.UpdateAnchors( this );	
+
+	m_AnchorMgr.UpdateAnchors( this );
 }

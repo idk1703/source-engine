@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,6 +10,3 @@
 bool g_bUseNetworkVars = true;
 
 #endif
-
-
-

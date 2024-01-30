@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -127,7 +127,7 @@ public:
 	void				DrawEventEnd( CChoreoWidgetDrawHelper& drawHelper );
 
 	CChoreoEvent		*GetSafeEvent( void );
-	
+
 	void				ExpandAll( void );
 	void				ExpandValid( void );
 
@@ -325,7 +325,7 @@ private:
 	bool				m_bUseBounds;
 	int					m_nMinX;
 	int					m_nMaxX;
-	
+
 	struct CFocusRect
 	{
 		RECT	m_rcOrig;

@@ -62,7 +62,7 @@ public:
 	virtual const char *GetToolName() { return "Sample Tool"; }
 	virtual const char *GetBindingsContextFile() { return "cfg/SampleTool.kb"; }
 	virtual bool	Init( );
-    virtual void	Shutdown();
+	virtual void	Shutdown();
 
 	// Inherited from IFileMenuCallbacks
 	virtual int		GetFileMenuItemsEnabled( );
@@ -153,8 +153,8 @@ void CSampleTool::Shutdown()
 //-----------------------------------------------------------------------------
 // Derived classes can implement this to get a new scheme to be applied to this tool
 //-----------------------------------------------------------------------------
-vgui::HScheme CSampleTool::GetToolScheme() 
-{ 
+vgui::HScheme CSampleTool::GetToolScheme()
+{
 	return vgui::scheme()->LoadSchemeFromFile( "Resource/BoxRocket.res", "SampleTool" );
 }
 
@@ -162,7 +162,7 @@ vgui::HScheme CSampleTool::GetToolScheme()
 //-----------------------------------------------------------------------------
 // Initializes the menu bar
 //-----------------------------------------------------------------------------
-vgui::MenuBar *CSampleTool::CreateMenuBar( CBaseToolSystem *pParent ) 
+vgui::MenuBar *CSampleTool::CreateMenuBar( CBaseToolSystem *pParent )
 {
 	CToolMenuBar *pMenuBar = new CToolMenuBar( pParent, "Main Menu Bar" );
 
@@ -212,8 +212,8 @@ void CSampleTool::AddRecentFilesToMenu( vgui::Menu *pMenu )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CSampleTool::OnExit()
 {

@@ -4,10 +4,10 @@
 // and are thermally throttled. While thermal throttling is better than melting it is still a
 // hardware flaw and it leads to a bad user experience. In some cases the CPU frequency drops
 // (constantly or occasionally) by 50-75%, leading to equal or greater framerate drops.
-// 
+//
 // This is equivalent to a car that goes into limp-home mode to let it continue running after the
 // radiator fails -- it's better than destroying the engine, but clearly it needs to be fixed.
-// 
+//
 // When CPU monitoring is enabled a bunch of background threads are created that wake up at
 // the set frequency, spin in a loop to measure the actual usable CPU frequency, then sleep again.
 // A delay loop is used to measure the frequency because this is portable (it works for Intel
@@ -206,12 +206,12 @@ static DWORD WINAPI MeasureThread( LPVOID vThreadNum )
 Note that this structure definition was accidentally omitted from WinNT.h. This error will be corrected in the future. In the meantime, to compile your application, include the structure definition contained in this topic in your source code.
 */
 typedef struct _PROCESSOR_POWER_INFORMATION {
-  ULONG Number;
-  ULONG MaxMhz;
-  ULONG CurrentMhz;
-  ULONG MhzLimit;
-  ULONG MaxIdleState;
-  ULONG CurrentIdleState;
+	ULONG Number;
+	ULONG MaxMhz;
+	ULONG CurrentMhz;
+	ULONG MhzLimit;
+	ULONG MaxIdleState;
+	ULONG CurrentIdleState;
 } PROCESSOR_POWER_INFORMATION, *PPROCESSOR_POWER_INFORMATION;
 
 // Master control thread to periodically wake the measurement threads.

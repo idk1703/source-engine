@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -303,7 +303,7 @@ ChunkFileResult_t CManifest::LoadKeyPrefsCallback( const char *szKey, const char
 ChunkFileResult_t CManifest::LoadManifestVMFPrefsCallback( CChunkFile *pFile, CManifest *pDoc )
 {
 	TManifestLoadPrefs	ManifestLoadPrefs;
-	
+
 	ManifestLoadPrefs.pDoc = pDoc;
 	ManifestLoadPrefs.pManifestMap = NULL;
 
@@ -336,9 +336,9 @@ ChunkFileResult_t CManifest::LoadManifestMapsPrefsCallback( CChunkFile *pFile, C
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
-// Output : 
+// Purpose:
+// Input  :
+// Output :
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CManifest::LoadManifestCordoningPrefsCallback( CChunkFile *pFile, CManifest *pDoc )
 {
@@ -559,7 +559,7 @@ bool CManifest::Load( const char *pszFileName )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: This function will save the manifest, the associated maps, and user prefs. 
+// Purpose: This function will save the manifest, the associated maps, and user prefs.
 // Input  : pszFileName - the name of the manifest
 //			bForce - if true, we need to save all files, as we are relocating.
 // Output : returns true if all files saved successfully.
@@ -595,7 +595,7 @@ bool CManifest::Save( const char *pszFileName, bool bForce )
 
 //-----------------------------------------------------------------------------
 // Purpose: this function will save the manifest file and all modified maps.  If we are
-//			relocating the manifest to a new place, all maps will be saved relative to 
+//			relocating the manifest to a new place, all maps will be saved relative to
 //			the new place
 // Input  : the file name the manifest should be saved as
 // Output : returns true if the save was completely successful.  A partial save will
@@ -604,7 +604,7 @@ bool CManifest::Save( const char *pszFileName, bool bForce )
 bool CManifest::SaveVMFManifest( const char *pszFileName )
 {
 	bool		bSaved = true;
-	CChunkFile	File;	
+	CChunkFile	File;
 
 	ChunkFileResult_t eResult = File.Open( pszFileName, ChunkFile_Write );
 	if (eResult != ChunkFile_Ok)
@@ -716,7 +716,7 @@ bool CManifest::SaveVMFManifestMaps( const char *pszFileName )
 bool CManifest::SaveVMFManifestUserPrefs( const char *pszFileName )
 {
 	bool		bSaved = true;
-	CChunkFile	File;	
+	CChunkFile	File;
 	char		UserName[ MAX_PATH ], FileName[ MAX_PATH ], UserPrefsFileName[ MAX_PATH ];
 	DWORD		UserNameSize;
 
@@ -851,7 +851,7 @@ void CManifest::SetModifiedFlag( BOOL bModified )
 	{
 		m_pPrimaryMap->m_Map->SetModifiedFlag( bModified );
 	}
-	
+
 	if ( bModified == false )
 	{
 		for( int i = 0; i < GetNumMaps(); i++ )
@@ -930,7 +930,7 @@ CManifestMap *CManifest::FindMapByID( int InternalID )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: this function will set the manifest map as the primary map.  All entity / brush 
+// Purpose: this function will set the manifest map as the primary map.  All entity / brush
 //			operations happen exclusively on the primary map.
 // Input  : pManifestMap - the manifest map to make primary
 //-----------------------------------------------------------------------------
@@ -1072,15 +1072,15 @@ void CManifest::MoveSelectionToSubmap( CManifestMap *pManifestMap, bool CenterCo
 
 	pManifestMap->m_Map->ManifestPaste( pManifestMap->m_Map->GetMapWorld(), Vector( 0.0f, 0.0f, 0.0f ), QAngle( 0.0f, 0.0f, 0.0f ), NULL, false, NULL );
 	pManifestMap->m_Entity->CalcBounds( TRUE );
-	
+
 	UpdateAllViews( MAPVIEW_UPDATE_SELECTION | MAPVIEW_UPDATE_TOOL | MAPVIEW_RENDER_NOW );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: this function will cut the selection and move it into a newly created 
+// Purpose: this function will cut the selection and move it into a newly created
 //			map doc and manifest map.
-// Input  : FriendlyName - this is the text friendly name that the user can refer 
+// Input  : FriendlyName - this is the text friendly name that the user can refer
 //				to the map as
 //			FileName - The relative file name for this new map to be saved as
 //			CenterContents - whether or not we should center the contents in the new map
@@ -1107,7 +1107,7 @@ CManifestMap *CManifest::MoveSelectionToNewSubmap( CString &FriendlyName, CStrin
 	{
 		return NULL;
 	}
-	
+
 	char AbsoluteFileName[ MAX_PATH ];
 
 	strcpy( AbsoluteFileName, m_ManifestDir );
@@ -1142,7 +1142,7 @@ CManifestMap *CManifest::MoveSelectionToNewSubmap( CString &FriendlyName, CStrin
 
 
 //-----------------------------------------------------------------------------
-// Purpose: this function will add a new sub map to the manifest.  
+// Purpose: this function will add a new sub map to the manifest.
 // Input  : FriendlyName - the friendly name string
 //			FileName - the file name of the sub map
 // Output : returns a pointer to the new manifest map.
@@ -1256,7 +1256,7 @@ bool CManifest::AddExistingMap( const char *pszFileName, bool bFromInstance )
 bool CManifest::AddExistingMap( void )
 {
 	char szInitialDir[ MAX_PATH ];
-	
+
 	V_strcpy_safe( szInitialDir, GetPathName() );
 	if ( szInitialDir[ 0 ] == '\0' )
 	{
@@ -1337,9 +1337,9 @@ bool CManifest::RemoveSubMap( CManifestMap *pManifestMap )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
-// Output : 
+// Purpose:
+// Input  :
+// Output :
 //-----------------------------------------------------------------------------
 bool CManifest::CheckOut( )
 {
@@ -1360,9 +1360,9 @@ bool CManifest::CheckOut( )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
-// Output : 
+// Purpose:
+// Input  :
+// Output :
 //-----------------------------------------------------------------------------
 bool CManifest::AddToVersionControl( )
 {
@@ -1383,9 +1383,9 @@ bool CManifest::AddToVersionControl( )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
-// Output : 
+// Purpose:
+// Input  :
+// Output :
 //-----------------------------------------------------------------------------
 void CManifest::CheckFileStatus( void )
 {
@@ -1501,7 +1501,7 @@ void CManifest::RemoveManifestObjectFromWorld( CMapClass *pObject, bool bRemoveC
 // Input  : lpszPathName - the absoltue path of the manifest file
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
-BOOL CManifest::OnOpenDocument(LPCTSTR lpszPathName) 
+BOOL CManifest::OnOpenDocument(LPCTSTR lpszPathName)
 {
 	Initialize();
 
@@ -1542,7 +1542,7 @@ BOOL CManifest::OnOpenDocument(LPCTSTR lpszPathName)
 // Input  : lpszPathName - the absolute filename of the manifest
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
-BOOL CManifest::OnSaveDocument(LPCTSTR lpszPathName) 
+BOOL CManifest::OnSaveDocument(LPCTSTR lpszPathName)
 {
 	if ( !Save( lpszPathName, m_bRelocateSave ) )
 	{

@@ -63,7 +63,7 @@ bool CItemTestApp::PreInit()
 		return false;
 
 	MathLib_Init();
-	
+
 	// Set Dev mode appropriately
 	DoDevMode();
 
@@ -95,7 +95,7 @@ bool CItemTestApp::PreInit()
 			return false;
 		}
 	}
-	
+
 	const char *pszGameInfoPath = GetGameInfoPath();
 
 	char szGameInfoParent[ MAX_PATH ] = "";

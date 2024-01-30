@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -12,7 +12,7 @@
 
 // ===================================================================================
 //
-// Speaker class. Used for announcements per level, for door lock/unlock spoken voice. 
+// Speaker class. Used for announcements per level, for door lock/unlock spoken voice.
 //
 
 class CSpeaker : public CPointEntity
@@ -22,7 +22,7 @@ public:
 
 	void Spawn( void );
 	void Precache( void );
-	
+
 	DECLARE_DATADESC();
 
 	virtual int	ObjectCaps( void ) { return (BaseClass::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -261,7 +261,7 @@ IAttributeWidgetFactory *CAttributeWidgetFactoryList::FindWidgetFactory( const c
 	return NULL;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Returns a factory requested by name
 //-----------------------------------------------------------------------------
@@ -274,7 +274,7 @@ IAttributeWidgetFactory *CAttributeWidgetFactoryList::GetWidgetFactory( const ch
 //-----------------------------------------------------------------------------
 // Returns a factory used to create widget for the attribute passed in
 //-----------------------------------------------------------------------------
-IAttributeWidgetFactory *CAttributeWidgetFactoryList::GetWidgetFactory( CDmElement *object, 
+IAttributeWidgetFactory *CAttributeWidgetFactoryList::GetWidgetFactory( CDmElement *object,
 	CDmAttribute *pAttribute, CDmeEditorTypeDictionary *pTypeDictionary )
 {
 	if ( !object )
@@ -342,7 +342,7 @@ IAttributeWidgetFactory *CAttributeWidgetFactoryList::GetArrayWidgetFactory( CDm
 	return pFactory;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Applies changes to a widget
 //-----------------------------------------------------------------------------
@@ -367,4 +367,3 @@ void CAttributeWidgetFactoryList::Refresh( vgui::Panel *pWidget, vgui::Panel *pS
 		vgui::ipanel()->SendMessage( pWidget->GetVPanel(), new KeyValues( "Refresh" ), pSender ? pWidget->GetVPanel() : NULL );
 	}
 }
-

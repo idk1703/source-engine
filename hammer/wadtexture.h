@@ -73,14 +73,14 @@ class CWADTexture : public IEditorTexture
 		{
 			return( 1.0f );
 		}
-		
+
 		CPalette *GetPalette() const;
 
 		inline int GetTextureID() const
 		{
 			return( m_nTextureID );
 		}
-		
+
 		inline TEXTUREFORMAT GetTextureFormat() const
 		{
 			return(format);

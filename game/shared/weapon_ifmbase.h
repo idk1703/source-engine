@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -27,7 +27,7 @@ class CWeaponIFMBase : public CWeaponModBaseClass
 {
 public:
 	DECLARE_CLASS( CWeaponIFMBase, CWeaponModBaseClass );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponIFMBase();
@@ -38,9 +38,9 @@ public:
 
 	// All predicted weapons need to implement and return true
 	virtual bool	IsPredicted() const;
-	
+
 //	virtual void	FallInit( void );
-	
+
 public:
 #if defined( CLIENT_DLL )
 	virtual bool	ShouldPredict();

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,7 +15,7 @@
 C_CSRootPanel *g_pCSRootPanel = NULL;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VGUI_CreateClientDLLRootPanel( void )
 {
@@ -23,7 +23,7 @@ void VGUI_CreateClientDLLRootPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VGUI_DestroyClientDLLRootPanel( void )
 {

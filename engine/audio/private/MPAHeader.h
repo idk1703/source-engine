@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -32,7 +32,7 @@ public:
 	uint32 GetBytesPerSecond( uint32 dwNumFrames, uint32 dwNumBytes ) const { return dwNumBytes / GetLengthSecond( dwNumFrames ); };
 	bool IsMono() const { return (m_ChannelMode == SingleChannel)?true:false; };
 	// true if MPEG2/2.5 otherwise false
-	bool IsLSF() const { return m_bLSF;	};	
+	bool IsLSF() const { return m_bLSF;	};
 
 private:
 	static const uint32 m_dwMaxRange;
@@ -61,7 +61,7 @@ public:
 		MPEG25 = 0,
 		MPEGReserved,
 		MPEG2,
-		MPEG1		
+		MPEG1
 	}m_Version;
 
 	enum MPALayer
@@ -87,7 +87,7 @@ public:
 		DualChannel,
 		SingleChannel
 	}m_ChannelMode;
-	
+
 	uint32 m_dwSamplesPerSec;
 	uint32 m_dwSamplesPerFrame;
 	uint32 m_dwBitrate;	// in bit per second (1 kb = 1000 bit, not 1024)
@@ -97,9 +97,9 @@ public:
 
 	// flags
 	bool m_bCopyright, m_bPrivate, m_bOriginal;
-	bool m_bCRC; 
+	bool m_bCRC;
 	uint8 m_ModeExt;
-	
+
 private:
 	enum HeaderError
 	{

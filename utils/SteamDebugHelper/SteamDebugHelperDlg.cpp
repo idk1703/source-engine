@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -107,7 +107,7 @@ BOOL CSteamDebugHelperDlg::OnInitDialog()
 	{
 		SetConfigFilename( __argv[1] );
 	}
-	
+
 	// Make sure the config file parses.
 	KeyValues *pTest = LoadConfigFile();
 	pTest->deleteThis();
@@ -119,7 +119,7 @@ BOOL CSteamDebugHelperDlg::OnInitDialog()
 //  to draw the icon.  For MFC applications using the document/view model,
 //  this is automatically done for you by the framework.
 
-void CSteamDebugHelperDlg::OnPaint() 
+void CSteamDebugHelperDlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -181,14 +181,14 @@ KeyValues* CSteamDebugHelperDlg::LoadConfigFile()
 
 		if ( !pSlash )
 			Error( "SteamAppDir %s invalid.", m_pSteamAppDir );
-		else	
+		else
 			*pSlash = 0;
 	}
 	return pKV;
 }
 
 
-void CSteamDebugHelperDlg::OnSetupForDebugging() 
+void CSteamDebugHelperDlg::OnSetupForDebugging()
 {
 	char src[512], dest[512];
 	KeyValues *pCur;
@@ -228,7 +228,7 @@ void CSteamDebugHelperDlg::OnSetupForDebugging()
 		{
 			Q_snprintf( src, sizeof( src ), "%s\\%s", m_pSourceExeDir, pCur->GetString() );
 			Q_snprintf( dest, sizeof( dest ), "%s\\%s", m_pSteamAppDir, pCur->GetString() );
-			
+
 			if ( _access( dest, 0 ) == 0 )
 			{
 				CHECK_1STR( SetFileAttributes( dest, FILE_ATTRIBUTE_NORMAL ), dest );
@@ -246,13 +246,13 @@ void CSteamDebugHelperDlg::OnSetupForDebugging()
 	//pKV->deleteThis();	// note: leak the memory here knowingly to avoid warnings from the stupid way keyvalues overload memory allocation
 }
 
-void CSteamDebugHelperDlg::OnUnsetupForDebugging() 
+void CSteamDebugHelperDlg::OnUnsetupForDebugging()
 {
 	KeyValues *pKV = LoadConfigFile();
 
 	char dest[512];
 	KeyValues *pCur;
-	
+
 	// Delete the steamapp.cfg, steam.dll, and steam.cfg files.
 	Q_snprintf( dest, sizeof( dest ), "%s\\steam.dll", m_pSteamAppDir );
 	CHECK_1STR( SetFileAttributes( dest, FILE_ATTRIBUTE_NORMAL ), dest );
@@ -277,7 +277,7 @@ void CSteamDebugHelperDlg::OnUnsetupForDebugging()
 			if ( _access( dest, 0 ) == 0 )
 			{
 				CHECK_1STR( SetFileAttributes( dest, FILE_ATTRIBUTE_NORMAL ), dest );
-		
+
 				CHECK_1STR( DeleteFile( dest ), dest );
 			}
 		}
@@ -288,7 +288,7 @@ void CSteamDebugHelperDlg::OnUnsetupForDebugging()
 	//pKV->deleteThis();	// note: leak the memory here knowingly to avoid warnings from the stupid way keyvalues overload memory allocation
 }
 
-void CSteamDebugHelperDlg::OnStartSteam() 
+void CSteamDebugHelperDlg::OnStartSteam()
 {
 	STARTUPINFO si;
 	memset( &si, 0, sizeof( si ) );
@@ -298,7 +298,7 @@ void CSteamDebugHelperDlg::OnStartSteam()
 
 	char dest[512];
 	Q_snprintf( dest, sizeof( dest ), "%s\\steam.exe", m_SteamBaseDir );
-	CreateProcess( 
+	CreateProcess(
 		dest,	// app name
 		NULL,	// command line
 		NULL,	// process attr
@@ -312,7 +312,7 @@ void CSteamDebugHelperDlg::OnStartSteam()
 		);
 }
 
-void CSteamDebugHelperDlg::OnEditConfigFile() 
+void CSteamDebugHelperDlg::OnEditConfigFile()
 {
 	char str[512];
 	Q_snprintf( str, sizeof( str ), "notepad \"%s\"", m_ConfigFilename );
@@ -323,7 +323,7 @@ void CSteamDebugHelperDlg::OnEditConfigFile()
 
 	PROCESS_INFORMATION pi;
 
-	CreateProcess( 
+	CreateProcess(
 		NULL,	// app name
 		str,	// command line
 		NULL,	// process attr
@@ -337,9 +337,9 @@ void CSteamDebugHelperDlg::OnEditConfigFile()
 		);
 }
 
-void CSteamDebugHelperDlg::OnEditChooseConfigFile() 
+void CSteamDebugHelperDlg::OnEditChooseConfigFile()
 {
-	CFileDialog dlg( 
+	CFileDialog dlg(
 		true,
 		"cfg",
 		NULL,

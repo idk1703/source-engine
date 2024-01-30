@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -33,8 +33,8 @@ bool CheckWinNoEnemyCaps( IGameEvent *event, int iRole );
 bool IsLocalTFPlayerClass( int iClass );
 
 
-bool CBaseTFAchievementSimple::LocalPlayerCanEarn( void ) 
-{ 
+bool CBaseTFAchievementSimple::LocalPlayerCanEarn( void )
+{
 	if ( TFGameRules() )
 	{
 		bool bMVMAchievement = ( m_iAchievementID >= ACHIEVEMENT_TF_MVM_START_RANGE && m_iAchievementID <= ACHIEVEMENT_TF_MVM_END_RANGE );
@@ -67,8 +67,8 @@ void CBaseTFAchievementSimple::FireGameEvent( IGameEvent *event )
 }
 
 
-bool CBaseTFAchievement::LocalPlayerCanEarn( void ) 
-{ 
+bool CBaseTFAchievement::LocalPlayerCanEarn( void )
+{
 	// Swallow game events if we're not allowed to earn achievements, or if the local player isn't the right class
 	if ( !GameRulesAllowsAchievements() )
 	{
@@ -90,15 +90,15 @@ bool CBaseTFAchievement::LocalPlayerCanEarn( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFAchievementFullRound::Init() 
+void CTFAchievementFullRound::Init()
 {
-	m_iFlags |= ACH_FILTER_FULL_ROUND_ONLY;		
+	m_iFlags |= ACH_FILTER_FULL_ROUND_ONLY;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAchievementFullRound::ListenForEvents()
 {
@@ -106,7 +106,7 @@ void CTFAchievementFullRound::ListenForEvents()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAchievementFullRound::FireGameEvent_Internal( IGameEvent *event )
 {
@@ -117,7 +117,7 @@ void CTFAchievementFullRound::FireGameEvent_Internal( IGameEvent *event )
 		{
 			// is the player currently on a game team?
 			int iTeam = pLocalPlayer->GetTeamNumber();
-			if ( iTeam >= FIRST_GAME_TEAM ) 
+			if ( iTeam >= FIRST_GAME_TEAM )
 			{
 				float flRoundTime = event->GetFloat( "round_time", 0 );
 				if ( flRoundTime > 0 )
@@ -130,13 +130,13 @@ void CTFAchievementFullRound::FireGameEvent_Internal( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFAchievementFullRound::PlayerWasInEntireRound( float flRoundTime )
 {
 	float flTeamplayStartTime = m_pAchievementMgr->GetTeamplayStartTime();
-	if ( flTeamplayStartTime > 0 ) 
-	{	
+	if ( flTeamplayStartTime > 0 )
+	{
 		// has the player been present and on a game team since the start of this round (minus a grace period)?
 		if ( flTeamplayStartTime < ( gpGlobals->curtime - flRoundTime ) + TF_FULL_ROUND_GRACE_PERIOD )
 			return true;
@@ -145,12 +145,12 @@ bool CTFAchievementFullRound::PlayerWasInEntireRound( float flRoundTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CAchievementTFPlayGameEveryClass : public CTFAchievementFullRound
 {
 	DECLARE_CLASS( CAchievementTFPlayGameEveryClass, CTFAchievementFullRound );
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_HAS_COMPONENTS | ACH_FILTER_FULL_ROUND_ONLY );
 		SetGoal( ( TF_LAST_NORMAL_CLASS - 1 ) - TF_FIRST_NORMAL_CLASS + 1 ); //( TF_LAST_NORMAL_CLASS - 1 ) to exclude the new civilian class
@@ -160,8 +160,8 @@ class CAchievementTFPlayGameEveryClass : public CTFAchievementFullRound
 	virtual void Event_OnRoundComplete( float flRoundTime, IGameEvent *event )
 	{
 		float flLastClassChangeTime = m_pAchievementMgr->GetLastClassChangeTime();
-		if ( flLastClassChangeTime > 0 ) 
-		{					
+		if ( flLastClassChangeTime > 0 )
+		{
 			// has the player been present and not changed class since the start of this round (minus a grace period)?
 			if ( flLastClassChangeTime < ( gpGlobals->curtime - flRoundTime ) + TF_FULL_ROUND_GRACE_PERIOD )
 			{
@@ -174,7 +174,7 @@ class CAchievementTFPlayGameEveryClass : public CTFAchievementFullRound
 						// yes, the achievement is satisfied for this class, set the corresponding bit
 						int iBitNumber =( iClass - TF_FIRST_NORMAL_CLASS );
 						EnsureComponentBitSetAndEvaluate( iBitNumber );
-					}							
+					}
 				}
 			}
 		}
@@ -185,14 +185,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFPlayGameEveryClass, ACHIEVEMENT_TF_PLAY_GAME_
 class CAchievementTFPlayGameEveryMap : public CTFAchievementFullRound
 {
 	DECLARE_CLASS( CAchievementTFPlayGameEveryMap, CTFAchievementFullRound );
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_HAS_COMPONENTS | ACH_FILTER_FULL_ROUND_ONLY );
 
 		static const char *szComponents[] =
 		{
 			"cp_dustbowl", "cp_granary", "cp_gravelpit", "cp_well", "ctf_2fort", "tc_hydro"
-		};		
+		};
 		m_pszComponentNames = szComponents;
 		m_iNumComponents = ARRAYSIZE( szComponents );
 		SetGoal( m_iNumComponents );
@@ -206,8 +206,8 @@ class CAchievementTFPlayGameEveryMap : public CTFAchievementFullRound
 	virtual void Event_OnRoundComplete( float flRoundTime, IGameEvent *event )
 	{
 		float flTeamplayStartTime = m_pAchievementMgr->GetTeamplayStartTime();
-		if ( flTeamplayStartTime > 0 ) 
-		{	
+		if ( flTeamplayStartTime > 0 )
+		{
 			// has the player been present and on a game team since the start of this round (minus a grace period)?
 			if ( flTeamplayStartTime < ( gpGlobals->curtime - flRoundTime ) + TF_FULL_ROUND_GRACE_PERIOD )
 			{
@@ -221,10 +221,10 @@ DECLARE_ACHIEVEMENT( CAchievementTFPlayGameEveryMap, ACHIEVEMENT_TF_PLAY_GAME_EV
 
 class CAchievementTFGetHealPoints : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
-		SetGoal( 25000 );		
+		SetGoal( 25000 );
 	}
 
 	void OnPlayerStatsUpdate()
@@ -247,7 +247,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFGetHealPoints, ACHIEVEMENT_TF_GET_HEALPOINTS,
 
 class CAchievementTFBurnPlayersInMinimumTime : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -258,10 +258,10 @@ DECLARE_ACHIEVEMENT( CAchievementTFBurnPlayersInMinimumTime, ACHIEVEMENT_TF_BURN
 
 class CAchievementTFGetTurretKills : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
-		SetGoal( 1 );		
+		SetGoal( 1 );
 	}
 	// server awards this achievement, no other code within achievement necessary
 };
@@ -269,13 +269,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFGetTurretKills, ACHIEVEMENT_TF_GET_TURRETKILL
 
 class CAchievementTFGetHeadshots: public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
-		SetGoal( 25 );		
+		SetGoal( 25 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		// was this a headshot by this player?
 		if ( ( pAttacker == C_TFPlayer::GetLocalTFPlayer() ) && ( IsHeadshot(event->GetInt( "customkill" ) ) ) )
@@ -307,14 +307,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFGetHeadshots, ACHIEVEMENT_TF_GET_HEADSHOTS, "
 
 class CAchievementTFKillNemesis : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_KILL_EVENTS | ACH_SAVE_GLOBAL );
 		SetGoal( 5 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
-	{		
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
+	{
 		if ( ( ( event->GetInt( "death_flags" ) & TF_DEATH_REVENGE ) ) && ( pAttacker == C_TFPlayer::GetLocalTFPlayer() ) )
 		{
 			// local player got revenge as primary killer
@@ -331,7 +331,7 @@ class CAchievementTFKillNemesis : public CBaseTFAchievementSimple
 					// local player got revenge as assister
 					IncrementCount();
 				}
-			}				
+			}
 		}
 	}
 };
@@ -339,14 +339,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFKillNemesis, ACHIEVEMENT_TF_KILL_NEMESIS, "TF
 
 class CAchievementTFGetConsecutiveKillsNoDeaths : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_KILL_EVENTS | ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
 		m_iConsecutiveKills = 0;
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 		if ( pLocalPlayer == pVictim )
@@ -360,7 +360,7 @@ class CAchievementTFGetConsecutiveKillsNoDeaths : public CBaseTFAchievementSimpl
 			{
 				IncrementCount();
 			}
-		}	
+		}
 	}
 	int m_iConsecutiveKills;
 };
@@ -368,7 +368,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFGetConsecutiveKillsNoDeaths, ACHIEVEMENT_TF_G
 
 class CAchievementTFGetHealedByEnemy: public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -379,7 +379,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFGetHealedByEnemy, ACHIEVEMENT_TF_GET_HEALED_B
 
 class CAchievementTFPlayGameFriendsOnly : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_FILTER_FULL_ROUND_ONLY );
 		SetGoal( 1 );
@@ -407,7 +407,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFPlayGameFriendsOnly, ACHIEVEMENT_TF_PLAY_GAME
 class CAchievementTFWinMultipleGames : public CTFAchievementFullRound
 {
 	DECLARE_CLASS( CAchievementTFWinMultipleGames, CTFAchievementFullRound );
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_FILTER_FULL_ROUND_ONLY );
 		SetGoal( 20 );
@@ -433,7 +433,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFWinMultipleGames, ACHIEVEMENT_TF_WIN_MULTIPLE
 
 class CAchievementTFGetMultipleKills : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		// listen for player kill enemy events, base class will increment count each time that happens
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
@@ -466,7 +466,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFGetMultipleKills, ACHIEVEMENT_TF_GET_MULTIPLE
 
 class CAchievementTFWin2FortNoEnemyCaps : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -489,7 +489,7 @@ class CAchievementTFWin2FortNoEnemyCaps : public CBaseTFAchievementSimple
 					// did the enemy team get any flag captures?
 					C_TFTeam *pEnemyTeam = GetGlobalTFTeam( TF_TEAM_BLUE + TF_TEAM_RED - GetLocalPlayerTeam() );
 					if ( 0 == pEnemyTeam->GetFlagCaptures() )
-					{										
+					{
 						IncrementCount();
 					}
 				}
@@ -501,7 +501,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFWin2FortNoEnemyCaps, ACHIEVEMENT_TF_WIN_2FORT
 
 class CAchievementTFWinWellMinimumTime : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -532,7 +532,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFWinWellMinimumTime, ACHIEVEMENT_TF_WIN_WELL_M
 
 class CAchievementTFWinHydroNoEnemyCaps : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_FILTER_FULL_ROUND_ONLY );
 		SetGoal( 1 );
@@ -558,7 +558,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFWinHydroNoEnemyCaps, ACHIEVEMENT_TF_WIN_HYDRO
 
 class CAchievementTFWinDustbowlNoEnemyCaps : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_FILTER_FULL_ROUND_ONLY );
 		SetGoal( 1 );
@@ -584,7 +584,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFWinDustbowlNoEnemyCaps, ACHIEVEMENT_TF_WIN_DU
 
 class CAchievementTFWinGravelPitNoEnemyCaps : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -654,7 +654,7 @@ bool IsLocalTFPlayerClass( int iClass )
 bool GameRulesAllowsAchievements( void )
 {
 	bool bRetVal = false;
-	
+
 	if ( ( TFGameRules()->State_Get() < GR_STATE_TEAM_WIN ) ||
 		 ( TFGameRules()->State_Get() == GR_STATE_STALEMATE ) )
 	{
@@ -715,7 +715,7 @@ void __MsgFunc_Damage( bf_read &msg )
 	// NVNT START implementing rest of message for damage directions
 	if(iDamage == 0)
 		return; // no damage forces for no damage.
-	
+
 	// get the local player.
 	C_TFPlayer *pLocal = C_TFPlayer::GetLocalTFPlayer();
 	if(!pLocal)
@@ -734,7 +734,7 @@ void __MsgFunc_Damage( bf_read &msg )
 	Vector attackDirectionLocal(vec3_origin);
 	// rotate the direction to the local players view
 	pLocal->WorldToEntitySpace(attackerPosition, &attackDirectionLocal);
-	
+
 	if ( haptics )
 	{
 		Vector hapticSpace( attackDirectionLocal.y, -attackDirectionLocal.z, attackDirectionLocal.x );
@@ -816,7 +816,7 @@ void __MsgFunc_PlayerExtinguished( bf_read &msg )
 	}
 }
 
-void CAchievementTopScoreboard::Init() 
+void CAchievementTopScoreboard::Init()
 {
 	SetFlags( ACH_SAVE_GLOBAL | ACH_FILTER_FULL_ROUND_ONLY );
 	SetGoal(1);
@@ -867,14 +867,14 @@ void CAchievementTopScoreboard::Event_OnRoundComplete( float flRoundTime, IGameE
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 extern int Training_GetNumCourses();
 extern int Training_GetProgressCount();
 class CAchievementTFCompleteTraining : public CBaseTFAchievementSimple
 {
 	DECLARE_CLASS( CAchievementTFCompleteTraining, CBaseAchievement );
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_HAS_COMPONENTS );
 		SetGoal( Training_GetNumCourses() );
@@ -894,7 +894,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFCompleteTraining, ACHIEVEMENT_TF_COMPLETE_TRA
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_FireWaterJump : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -907,7 +907,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_FireWaterJump, ACHIEVEMENT_TF_FIRE_WATERJUMP
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFChristmasCollectGifts : public CBaseTFAchievementSimple
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 3 );
@@ -948,7 +948,7 @@ class CAchievementTF_KillBalloonicornOwners : public CBaseTFAchievement
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CSchemaItemDefHandle pItemDef_Balloonicorn( "Pet Balloonicorn" );
 		CSchemaItemDefHandle pItemDef_BalloonicornPromo( "Pet Balloonicorn Promo" );
@@ -1049,7 +1049,7 @@ class CAchievementTF_MultipleBFF : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_TFPlayer *pLocalPlayer = ToTFPlayer( C_BasePlayer::GetLocalPlayer() );
 		if ( pLocalPlayer )
@@ -1074,7 +1074,7 @@ class CAchievementTF_MultipleBFF : public CBaseTFAchievement
 					{
 						m_hBFFs.AddToHead( pTFVictim );
 					}
-				
+
 					if ( m_hBFFs.Count() >= 2 )
 					{
 						IncrementCount();
@@ -1102,7 +1102,7 @@ DECLARE_ACHIEVEMENT( CAchievementTF_MultipleBFF, ACHIEVEMENT_TF_MULTIPLE_BFF, "T
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTF_TeamPyrovision : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1117,7 +1117,7 @@ class CAchievementTF_TeamPyrovision : public CBaseTFAchievement
 		{
 			int nVisionOptInFlags = 0;
 			CALL_ATTRIB_HOOK_INT_ON_OTHER( pLocalPlayer, nVisionOptInFlags, vision_opt_in_flags );
-			
+
 			if ( nVisionOptInFlags & TF_VISION_FILTER_PYRO )
 			{
 				int nCount = 0;
@@ -1167,7 +1167,7 @@ class CAchievementTF_DominateForGoggles : public CBaseTFAchievement
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		bool bDomination = event->GetInt( "death_flags" ) & TF_DEATH_DOMINATION;

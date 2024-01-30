@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -53,12 +53,12 @@ C_PlantedC4::~C_PlantedC4()
 	// HPE_BEGIN:
 	// [menglish] Upon the new round remove the remaining bomb explosion particle effect
 	//=============================================================================
-	
+
 	if (m_pC4Explosion)
 	{
 		m_pC4Explosion->SetRemoveFlag();
 	}
-	 
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
@@ -67,7 +67,7 @@ C_PlantedC4::~C_PlantedC4()
 void C_PlantedC4::SetDormant( bool bDormant )
 {
 	BaseClass::SetDormant( bDormant );
-	
+
 	// Remove us from the list of planted C4s.
 	if ( bDormant )
 	{
@@ -112,11 +112,11 @@ void C_PlantedC4::ClientThink( void )
 
 		//the percent complete of the bomb timer
 		float fComplete = ( ( m_flC4Blow - gpGlobals->curtime ) / m_flTimerLength );
-		
+
 		fComplete = clamp( fComplete, 0.0f, 1.0f );
 
 		attenuation = MIN( 0.3 + 0.6 * fComplete, 1.0 );
-		
+
 		CSoundParameters params;
 
 		if ( GetParametersForSound( "C4.PlantSound", params, NULL ) )
@@ -184,7 +184,7 @@ void C_PlantedC4::ClientThink( void )
 
 			dl = effects->CL_AllocDlight( entindex() );
 
-			if( dl ) 
+			if( dl )
 			{
 				dl->origin = GetAbsOrigin() + offset; // can't use vPos because it might have been moved
 				dl->color.r = 255;

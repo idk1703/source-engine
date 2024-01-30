@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -15,7 +15,7 @@ class C_CaptureZone;
 DECLARE_AUTO_LIST( ICaptureZoneAutoList );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_CaptureZone : public C_BaseEntity, public ICaptureZoneAutoList
 {

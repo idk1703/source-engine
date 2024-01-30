@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Base decorator class to make a DME renderable 
+// Purpose: Base decorator class to make a DME renderable
 //
 //===========================================================================//
 
@@ -46,8 +46,8 @@ public:
 //	virtual const Vector &		GetRenderOrigin( void )	{ return vec3_origin; }
 //	virtual const QAngle &		GetRenderAngles( void ) { return vec3_angle; }
 	virtual bool				ShouldDraw( void )		{ return false; }
-	virtual bool				IsTransparent( void )	{ return false; } 
-	virtual bool				IsTwoPass( void )		{ return false; } 
+	virtual bool				IsTransparent( void )	{ return false; }
+	virtual bool				IsTwoPass( void )		{ return false; }
 	virtual void				OnThreadedDrawSetup()	{}
 	virtual bool				UsesPowerOfTwoFrameBufferTexture() { return false; }
 	virtual bool				UsesFullFrameBufferTexture() { return false; }
@@ -138,18 +138,18 @@ void CDmeRenderable<T>::OnDestruction()
 // EHandles
 //-----------------------------------------------------------------------------
 template < class T >
-void CDmeRenderable<T>::SetRefEHandle( const CBaseHandle &handle )	
-{ 
-	m_RefEHandle = handle; 
+void CDmeRenderable<T>::SetRefEHandle( const CBaseHandle &handle )
+{
+	m_RefEHandle = handle;
 }
 
 template < class T >
-const CBaseHandle& CDmeRenderable<T>::GetRefEHandle() const		
-{ 
-	return m_RefEHandle; 
+const CBaseHandle& CDmeRenderable<T>::GetRefEHandle() const
+{
+	return m_RefEHandle;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Add/remove to engine from drawing
 //-----------------------------------------------------------------------------
@@ -226,7 +226,7 @@ bool CDmeRenderable<T>::GetAttachment( int number, matrix3x4_t &matrix )
 	return true;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Other methods
 //-----------------------------------------------------------------------------
@@ -318,7 +318,7 @@ void CDmeVisibilityControl<T>::OnDestruction()
 
 
 //-----------------------------------------------------------------------------
-// Deal with visibility 
+// Deal with visibility
 //-----------------------------------------------------------------------------
 template < class T >
 void CDmeVisibilityControl<T>::SetVisible( bool bVisible )

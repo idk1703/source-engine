@@ -124,7 +124,7 @@ static int g_iNextBotClass = -1;
 
 //===================================================================================================================
 // Purpose: Mapmaker bot control entity. Used by mapmakers to add & script bot behaviors.
-class CTFBotController : public CPointEntity 
+class CTFBotController : public CPointEntity
 {
 	DECLARE_CLASS( CTFBotController, CPointEntity );
 public:
@@ -172,7 +172,7 @@ typedef struct botdata_t
 
 	QAngle			forwardAngle;
 	QAngle			lastAngles;
-	
+
 	float			m_flJoinTeamTime;
 	int				m_WantedTeam;
 	int				m_WantedClass;
@@ -406,7 +406,7 @@ CON_COMMAND_F( bot_kick, "Remove a bot by name, or an entire team (\"red\" or \"
 
 		if ( player->GetFlags() & FL_FAKECLIENT )
 		{
-			if ( FStrEq( args.Arg( 1 ), "all" ) || 
+			if ( FStrEq( args.Arg( 1 ), "all" ) ||
 				  FStrEq( args.Arg( 1 ), player->GetPlayerName() ) ||
 				( FStrEq( args.Arg( 1 ), "red" ) && player->GetTeamNumber() == TF_TEAM_RED ) ||
 				( FStrEq( args.Arg( 1 ), "blue" ) && player->GetTeamNumber() == TF_TEAM_BLUE ) )
@@ -433,7 +433,7 @@ CON_COMMAND_F( bot, "Add a bot.", FCVAR_NONE )
 	// The bot command uses switches like command-line switches.
 	// -count <count> tells how many bots to spawn.
 	// -team <index> selects the bot's team. Default is -1 which chooses randomly.
-	//	Note: if you do -team !, then it 
+	//	Note: if you do -team !, then it
 	// -class <index> selects the bot's class. Default is -1 which chooses randomly.
 	// -frozen prevents the bots from running around when they spawn in.
 	// -name sets the bot's name
@@ -453,7 +453,7 @@ CON_COMMAND_F( bot, "Add a bot.", FCVAR_NONE )
 	bool bFrozen = !!args.FindArg( "-frozen" );
 	bool bTargetDummy = !!args.FindArg( "-targetdummy" );
 	bool bTeleport = !!args.FindArg( "-teleport" );
-		
+
 	// Ok, spawn all the bots.
 	while ( --count >= 0 )
 	{
@@ -513,7 +513,7 @@ CON_COMMAND_F( bot, "Add a bot.", FCVAR_NONE )
 
 				pPlayer->EyeVectors( &forward );
 				UTIL_TraceLine( pPlayer->EyePosition(),
-					pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,MASK_NPCSOLID, 
+					pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,MASK_NPCSOLID,
 					pPlayer, COLLISION_GROUP_NONE, &tr );
 
 				if ( tr.fraction != 1.0 )
@@ -664,7 +664,7 @@ bool RunMimicCommand( CUserCmd& cmd )
 	if ( bot_mimic.GetInt() > gpGlobals->maxClients )
 		return false;
 
-	
+
 	CBasePlayer *pPlayer = UTIL_PlayerByIndex( bot_mimic.GetInt()  );
 	if ( !pPlayer )
 		return false;
@@ -686,14 +686,14 @@ bool RunMimicCommand( CUserCmd& cmd )
 
 //-----------------------------------------------------------------------------
 // Purpose: Simulates a single frame of movement for a player
-// Input  : *fakeclient - 
-//			*viewangles - 
-//			forwardmove - 
-//			sidemove - 
-//			upmove - 
-//			buttons - 
-//			impulse - 
-//			msec - 
+// Input  : *fakeclient -
+//			*viewangles -
+//			forwardmove -
+//			sidemove -
+//			upmove -
+//			buttons -
+//			impulse -
+//			msec -
 // Output : 	virtual void
 //-----------------------------------------------------------------------------
 static void RunPlayerMove( CTFPlayer *fakeclient, const QAngle& viewangles, float forwardmove, float sidemove, float upmove, unsigned short buttons, byte impulse, float frametime )
@@ -926,7 +926,7 @@ void botdata_t::Bot_AliveMovementThink( QAngle *vecAngles, Vector *vecMove )
 		float flDistance = bot_nav_wpdistance.GetFloat();
 		CBaseEntity *pTargetEnt = m_Commands[0].pTarget;
 
-		// We might run into our target entity earlier. 
+		// We might run into our target entity earlier.
 		if ( CommandHasATarget() && ShouldFinishCommandOnArrival() )
 		{
 			float flEntDistance = pTargetEnt->BoundingRadius() + flDistance;
@@ -961,7 +961,7 @@ void botdata_t::Bot_AliveMovementThink( QAngle *vecAngles, Vector *vecMove )
 			for ( int i = 0; i < m_iPathLength-1; i++ )
 			{
 				NDebugOverlay::Line( m_path[i].pos, m_path[i+1].pos, 0, i == m_iPathIndex ? 255 : 64, 0, true, 0.1 );
-				NDebugOverlay::Box( m_path[i].pos, -Vector(3,3,3), Vector(3,3,3), 0, i == m_iPathIndex ? 255 : 64, 0, 0, 0.1 );	
+				NDebugOverlay::Box( m_path[i].pos, -Vector(3,3,3), Vector(3,3,3), 0, i == m_iPathIndex ? 255 : 64, 0, 0, 0.1 );
 			}
 		}
 
@@ -1011,7 +1011,7 @@ void InitBotTrig( void )
 	for( int i=0; i<COS_TABLE_SIZE; ++i )
 	{
 		float angle = (float)(2.0f * M_PI * i / (float)(COS_TABLE_SIZE-1));
-		cosTable[i] = (float)cos( angle ); 
+		cosTable[i] = (float)cos( angle );
 	}
 }
 
@@ -1150,7 +1150,7 @@ void botdata_t::Bot_AliveWeaponThink( QAngle *vecAngles, Vector *vecMove )
 	if ( (pszWeapon && pszWeapon[0]) || g_pServerBenchmark->IsBenchmarkRunning() )
 	{
 		// If bots are being forced to fire a weapon, see if I have it
-		// Manually look through weapons to ignore subtype			
+		// Manually look through weapons to ignore subtype
 		CBaseCombatWeapon *pWeapon = NULL;
 
 		if ( g_pServerBenchmark->IsBenchmarkRunning() )
@@ -1161,7 +1161,7 @@ void botdata_t::Bot_AliveWeaponThink( QAngle *vecAngles, Vector *vecMove )
 
 				// Choose any weapon out of the available ones.
 				CUtlVector<CBaseCombatWeapon*> weapons;
-				for (int i=0;i<MAX_WEAPONS;i++) 
+				for (int i=0;i<MAX_WEAPONS;i++)
 				{
 					if ( m_hBot->GetWeapon(i) )
 					{
@@ -1178,7 +1178,7 @@ void botdata_t::Bot_AliveWeaponThink( QAngle *vecAngles, Vector *vecMove )
 		else
 		{
 			// Look for a specific weapon name here.
-			for (int i=0;i<MAX_WEAPONS;i++) 
+			for (int i=0;i<MAX_WEAPONS;i++)
 			{
 				if ( m_hBot->GetWeapon(i) && FClassnameIs( m_hBot->GetWeapon(i), pszWeapon ) )
 				{
@@ -1317,12 +1317,12 @@ CON_COMMAND_F( bot_changeteams, "Make all bots change teams", FCVAR_CHEAT )
 
 		if ( isTempBot( pPlayer ) )
 		{
-			int iTeam = pPlayer->GetTeamNumber();			
+			int iTeam = pPlayer->GetTeamNumber();
 			if ( TF_TEAM_BLUE == iTeam || TF_TEAM_RED == iTeam )
 			{
 				// toggle team between red & blue
 				pPlayer->ChangeTeam( TF_TEAM_BLUE + TF_TEAM_RED - iTeam );
-			}			
+			}
 		}
 	}
 }
@@ -1381,7 +1381,7 @@ CON_COMMAND_F( bot_teleport, "Teleport the specified bot to the specified positi
 	{
 		botVector[i]->Teleport( &vecPos, &vecAng, NULL );
 	}
-	
+
 }
 
 //------------------------------------------------------------------------------
@@ -1448,7 +1448,7 @@ void BotGenerateAndWearItem( CTFPlayer *pBot, CEconItemView *pItem )
 			pBuilder->SetSubType( pBot->GetPlayerClass()->GetData()->m_aBuildable[0] );
 		}
 
-		// make sure we removed our current weapon				
+		// make sure we removed our current weapon
 		if ( pWeapon )
 		{
 			pBot->Weapon_Detach( pWeapon );
@@ -1464,7 +1464,7 @@ void BotGenerateAndWearItem( CTFPlayer *pBot, CEconItemView *pItem )
 	}
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void BotMirrorPlayerClassAndItems( CTFPlayer *pBot, CTFPlayer *pPlayer )
 {
@@ -1521,7 +1521,7 @@ void cc_bot_equip( const CCommand &args )
 {
 	CUtlVector< CTFPlayer* > botVector;
 	GetBotsFromCommand( args, 3, "Usage: bot_equip <bot name> <item name>", &botVector );
-	
+
 	FOR_EACH_VEC( botVector, i )
 	{
 		BotGenerateAndWearItem( botVector[i], args[2] );
@@ -1536,14 +1536,14 @@ void cc_bot_disguise( const CCommand &args )
 {
 	CUtlVector< CTFPlayer* > botVector;
 	GetBotsFromCommand( args, 4, "Usage: bot_disguise <bot name> <team> <class>", &botVector );
-	
+
 	FOR_EACH_VEC( botVector, i )
 	{
 		if ( botVector[i]->CanDisguise() )
 		{
 			// intercepting the team value and reassigning what gets passed into Disguise()
 			// because the team numbers in the client menu don't match the #define values for the teams
-			botVector[i]->m_Shared.Disguise( Q_atoi( args[2] ), Q_atoi( args[3] ) ); 
+			botVector[i]->m_Shared.Disguise( Q_atoi( args[2] ), Q_atoi( args[3] ) );
 		}
 	}
 }
@@ -1556,7 +1556,7 @@ void cc_bot_taunt( const CCommand &args )
 {
 	CUtlVector< CTFPlayer* > botVector;
 	GetBotsFromCommand( args, 3, "Usage: bot_taunt <bot name> <taunt_name>", &botVector );
-	
+
 	if ( botVector.IsEmpty() )
 		return;
 
@@ -1573,7 +1573,7 @@ void cc_bot_taunt( const CCommand &args )
 	item.SetItemDefIndex( pItemDef->GetDefinitionIndex() );
 	item.SetItemQuality( pItemDef->GetQuality() );
 	item.SetInitialized( true );
-	
+
 	FOR_EACH_VEC( botVector, i )
 	{
 		botVector[i]->PlayTauntSceneFromItem( &item );
@@ -1613,7 +1613,7 @@ CON_COMMAND_F( bot_drop, "Force the specified bot to drop his active weapon. Usa
 {
 	CUtlVector< CTFPlayer* > botVector;
 	GetBotsFromCommand( args, 2, "Usage: bot_drop <bot name>", &botVector );
-	
+
 	FOR_EACH_VEC( botVector, i )
 	{
 		CBaseCombatWeapon* pWpn = botVector[i]->GetActiveWeapon();
@@ -1650,7 +1650,7 @@ CON_COMMAND_F( bot_moveto, "Force the specified bot to move to the point under y
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 bool botdata_t::FindPathTo( Vector vecTarget )
 {
@@ -1779,7 +1779,7 @@ bool botdata_t::ComputePathPositions( void )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 bool botdata_t::UpdatePath( void )
 {
@@ -1798,7 +1798,7 @@ bool botdata_t::UpdatePath( void )
 
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void botdata_t::UpdatePlanForCommand( void )
 {
@@ -1861,7 +1861,7 @@ void botdata_t::UpdatePlanForCommand( void )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void botdata_t::RunAttackPlan( void )
 {
@@ -1917,7 +1917,7 @@ void botdata_t::RunAttackPlan( void )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void botdata_t::RunDefendPlan( void )
 {
@@ -2152,7 +2152,7 @@ bool botdata_t::ValidTargetObject( CBaseObject *pObject, const Vector &vecStart,
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void botdata_t::StartNewCommand( void )
 {
@@ -2175,7 +2175,7 @@ void botdata_t::StartNewCommand( void )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void botdata_t::FinishCommand( void )
 {
@@ -2188,7 +2188,7 @@ void botdata_t::FinishCommand( void )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void botdata_t::AddAttackCommand( CBaseEntity *pTarget )
 {
@@ -2199,7 +2199,7 @@ void botdata_t::AddAttackCommand( CBaseEntity *pTarget )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void botdata_t::AddMoveToCommand( CBaseEntity *pTarget, Vector vecTarget )
 {
@@ -2210,7 +2210,7 @@ void botdata_t::AddMoveToCommand( CBaseEntity *pTarget, Vector vecTarget )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void botdata_t::AddSwitchWeaponCommand( int iSlot )
 {
@@ -2220,7 +2220,7 @@ void botdata_t::AddSwitchWeaponCommand( int iSlot )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void botdata_t::AddDefendCommand( float flRange )
 {
@@ -2230,7 +2230,7 @@ void botdata_t::AddDefendCommand( float flRange )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void botdata_t::ClearQueue( void )
 {
@@ -2239,7 +2239,7 @@ void botdata_t::ClearQueue( void )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 bool botdata_t::RunningMovementCommand( void )
 {
@@ -2249,7 +2249,7 @@ bool botdata_t::RunningMovementCommand( void )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 bool botdata_t::CommandHasATarget( void )
 {
@@ -2257,7 +2257,7 @@ bool botdata_t::CommandHasATarget( void )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 bool botdata_t::ShouldFinishCommandOnArrival( void )
 {
@@ -2337,7 +2337,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( bot_controller, CTFBotController );
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void CTFBotController::InputCreateBot( inputdata_t &inputdata )
 {
@@ -2349,7 +2349,7 @@ void CTFBotController::InputCreateBot( inputdata_t &inputdata )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void CTFBotController::InputRespawnBot( inputdata_t &inputdata )
 {
@@ -2364,7 +2364,7 @@ void CTFBotController::InputRespawnBot( inputdata_t &inputdata )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void CTFBotController::InputBotAddCommandMoveToEntity( inputdata_t &inputdata )
 {
@@ -2380,7 +2380,7 @@ void CTFBotController::InputBotAddCommandMoveToEntity( inputdata_t &inputdata )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void CTFBotController::InputBotAddCommandAttackEntity( inputdata_t &inputdata )
 {
@@ -2396,7 +2396,7 @@ void CTFBotController::InputBotAddCommandAttackEntity( inputdata_t &inputdata )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void CTFBotController::InputBotAddCommandSwitchWeapon( inputdata_t &inputdata )
 {
@@ -2404,7 +2404,7 @@ void CTFBotController::InputBotAddCommandSwitchWeapon( inputdata_t &inputdata )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void CTFBotController::InputBotAddCommandDefend( inputdata_t &inputdata )
 {
@@ -2412,7 +2412,7 @@ void CTFBotController::InputBotAddCommandDefend( inputdata_t &inputdata )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void CTFBotController::InputBotSetIgnoreHumans( inputdata_t &inputdata )
 {
@@ -2420,7 +2420,7 @@ void CTFBotController::InputBotSetIgnoreHumans( inputdata_t &inputdata )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void CTFBotController::InputBotPreventMovement( inputdata_t &inputdata )
 {
@@ -2428,10 +2428,9 @@ void CTFBotController::InputBotPreventMovement( inputdata_t &inputdata )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 void CTFBotController::InputBotClearQueue( inputdata_t &inputdata )
 {
 	BotData(m_hBot)->ClearQueue();
 }
-

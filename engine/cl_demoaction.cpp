@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,21 +12,21 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseDemoAction::CBaseDemoAction()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseDemoAction::~CBaseDemoAction()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : DEMOACTION
 //-----------------------------------------------------------------------------
 DEMOACTION CBaseDemoAction::GetType( void ) const
@@ -35,8 +35,8 @@ DEMOACTION CBaseDemoAction::GetType( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : actionType - 
+// Purpose:
+// Input  : actionType -
 //-----------------------------------------------------------------------------
 void CBaseDemoAction::SetType( DEMOACTION actionType )
 {
@@ -44,7 +44,7 @@ void CBaseDemoAction::SetType( DEMOACTION actionType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : DEMOACTIONTIMINGTYPE
 //-----------------------------------------------------------------------------
 DEMOACTIONTIMINGTYPE CBaseDemoAction::GetTimingType( void ) const
@@ -53,8 +53,8 @@ DEMOACTIONTIMINGTYPE CBaseDemoAction::GetTimingType( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : timingtype - 
+// Purpose:
+// Input  : timingtype -
 //-----------------------------------------------------------------------------
 void CBaseDemoAction::SetTimingType( DEMOACTIONTIMINGTYPE timingtype )
 {
@@ -62,8 +62,8 @@ void CBaseDemoAction::SetTimingType( DEMOACTIONTIMINGTYPE timingtype )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fired - 
+// Purpose:
+// Input  : fired -
 //-----------------------------------------------------------------------------
 void CBaseDemoAction::SetActionFired( bool fired )
 {
@@ -71,7 +71,7 @@ void CBaseDemoAction::SetActionFired( bool fired )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseDemoAction::GetActionFired( void ) const
@@ -80,7 +80,7 @@ bool CBaseDemoAction::GetActionFired( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseDemoAction::SetFinishedAction( bool finished )
 {
@@ -92,7 +92,7 @@ void CBaseDemoAction::SetFinishedAction( bool finished )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseDemoAction::HasActionFinished( void ) const
@@ -103,8 +103,8 @@ bool CBaseDemoAction::HasActionFinished( void ) const
 #include "tier0/memdbgoff.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : sz - 
+// Purpose:
+// Input  : sz -
 // Output : void *CBaseDemoAction::operator
 //-----------------------------------------------------------------------------
 void *CBaseDemoAction::operator new( size_t sz )
@@ -114,8 +114,8 @@ void *CBaseDemoAction::operator new( size_t sz )
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pMem - 
+// Purpose:
+// Input  : *pMem -
 // Output : void CBaseDemoAction::operator
 //-----------------------------------------------------------------------------
 void CBaseDemoAction::operator delete( void *pMem )
@@ -133,7 +133,7 @@ void CBaseDemoAction::operator delete( void *pMem )
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct DemoActionDictionary
 {
@@ -172,9 +172,9 @@ static DemoActionDictionary g_rgDemoTypeNames[ NUM_DEMO_ACTIONS ] =
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : actionType - 
-//			func - 
+// Purpose:
+// Input  : actionType -
+//			func -
 //-----------------------------------------------------------------------------
 void CBaseDemoAction::AddFactory( DEMOACTION actionType, DEMOACTIONFACTORY_FUNC func )
 {
@@ -189,8 +189,8 @@ void CBaseDemoAction::AddFactory( DEMOACTION actionType, DEMOACTIONFACTORY_FUNC 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : actionType - 
+// Purpose:
+// Input  : actionType -
 //-----------------------------------------------------------------------------
 CBaseDemoAction	*CBaseDemoAction::CreateDemoAction( DEMOACTION actionType )
 {
@@ -213,9 +213,9 @@ CBaseDemoAction	*CBaseDemoAction::CreateDemoAction( DEMOACTION actionType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : actionType - 
-//			func - 
+// Purpose:
+// Input  : actionType -
+//			func -
 //-----------------------------------------------------------------------------
 void CBaseDemoAction::AddEditorFactory( DEMOACTION actionType, DEMOACTIONEDIT_FUNC func )
 {
@@ -230,11 +230,11 @@ void CBaseDemoAction::AddEditorFactory( DEMOACTION actionType, DEMOACTIONEDIT_FU
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : actionType - 
-//			*parent - 
-//			*action - 
-//			newaction - 
+// Purpose:
+// Input  : actionType -
+//			*parent -
+//			*action -
+//			newaction -
 // Output : CBaseActionEditDialog
 //-----------------------------------------------------------------------------
 CBaseActionEditDialog *CBaseDemoAction::CreateActionEditor( DEMOACTION actionType, CDemoEditorPanel *parent, CBaseDemoAction *action, bool newaction )
@@ -258,8 +258,8 @@ CBaseActionEditDialog *CBaseDemoAction::CreateActionEditor( DEMOACTION actionTyp
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : actionType - 
+// Purpose:
+// Input  : actionType -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseDemoAction::HasEditorFactory( DEMOACTION actionType )
@@ -280,7 +280,7 @@ bool CBaseDemoAction::HasEditorFactory( DEMOACTION actionType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct DemoTimingTagDictionary
 {
@@ -296,8 +296,8 @@ static DemoTimingTagDictionary g_rgDemoTimingTypeNames[ NUM_TIMING_TYPES ] =
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : DEMOACTION - 
+// Purpose:
+// Input  : DEMOACTION -
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CBaseDemoAction::NameForType( DEMOACTION actionType )
@@ -308,7 +308,7 @@ char const *CBaseDemoAction::NameForType( DEMOACTION actionType )
 		ConMsg( "ERROR: CBaseDemoAction::NameForType type %i out of range\n", idx );
 		return g_rgDemoTypeNames[ DEMO_ACTION_UNKNOWN ].name;
 	}
-	
+
 	DemoActionDictionary *entry = &g_rgDemoTypeNames[ idx ];
 	Assert( entry->actiontype == actionType );
 
@@ -316,8 +316,8 @@ char const *CBaseDemoAction::NameForType( DEMOACTION actionType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : DEMOACTION
 //-----------------------------------------------------------------------------
 DEMOACTION CBaseDemoAction::TypeForName( char const *name )
@@ -337,8 +337,8 @@ DEMOACTION CBaseDemoAction::TypeForName( char const *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : DEMOACTION - 
+// Purpose:
+// Input  : DEMOACTION -
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CBaseDemoAction::NameForTimingType( DEMOACTIONTIMINGTYPE timingType )
@@ -349,7 +349,7 @@ char const *CBaseDemoAction::NameForTimingType( DEMOACTIONTIMINGTYPE timingType 
 		ConMsg( "ERROR: CBaseDemoAction::NameForTimingType type %i out of range\n", idx );
 		return g_rgDemoTimingTypeNames[ ACTION_USES_NEITHER ].name;
 	}
-	
+
 	DemoTimingTagDictionary *entry = &g_rgDemoTimingTypeNames[ idx ];
 	Assert( entry->timingtype == timingType );
 
@@ -357,8 +357,8 @@ char const *CBaseDemoAction::NameForTimingType( DEMOACTIONTIMINGTYPE timingType 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : DEMOACTION
 //-----------------------------------------------------------------------------
 DEMOACTIONTIMINGTYPE CBaseDemoAction::TimingTypeForName( char const *name )
@@ -381,9 +381,9 @@ static bool g_bSaveChained = false;
 
 //-----------------------------------------------------------------------------
 // Purpose: Simple printf wrapper which handles tab characters
-// Input  : buf - 
-//			*fmt - 
-//			... - 
+// Input  : buf -
+//			*fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CBaseDemoAction::BufPrintf( int depth, CUtlBuffer& buf, char const *fmt, ... )
 {
@@ -402,8 +402,8 @@ void CBaseDemoAction::BufPrintf( int depth, CUtlBuffer& buf, char const *fmt, ..
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : buf - 
+// Purpose:
+// Input  : buf -
 //-----------------------------------------------------------------------------
 void CBaseDemoAction::SaveKeysToBuffer( int depth, CUtlBuffer& buf )
 {
@@ -434,8 +434,8 @@ void CBaseDemoAction::SaveKeysToBuffer( int depth, CUtlBuffer& buf )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : buf - 
+// Purpose:
+// Input  : buf -
 //-----------------------------------------------------------------------------
 void CBaseDemoAction::SaveToBuffer( int depth, int index, CUtlBuffer& buf )
 {
@@ -454,8 +454,8 @@ void CBaseDemoAction::SaveToBuffer( int depth, int index, CUtlBuffer& buf )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 void CBaseDemoAction::SetActionName( char const *name )
 {
@@ -464,7 +464,7 @@ void CBaseDemoAction::SetActionName( char const *name )
 
 //-----------------------------------------------------------------------------
 // Purpose: Parse root data
-// Input  : *pInitData - 
+// Input  : *pInitData -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseDemoAction::Init( KeyValues *pInitData )
@@ -506,7 +506,7 @@ bool CBaseDemoAction::Init( KeyValues *pInitData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CBaseDemoAction::GetStartTick( void ) const
@@ -516,7 +516,7 @@ int CBaseDemoAction::GetStartTick( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CBaseDemoAction::GetStartTime( void ) const
@@ -526,8 +526,8 @@ float CBaseDemoAction::GetStartTime( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frame - 
+// Purpose:
+// Input  : frame -
 //-----------------------------------------------------------------------------
 void CBaseDemoAction::SetStartTick( int tick )
 {
@@ -536,8 +536,8 @@ void CBaseDemoAction::SetStartTick( int tick )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : t - 
+// Purpose:
+// Input  : t -
 //-----------------------------------------------------------------------------
 void CBaseDemoAction::SetStartTime( float t )
 {
@@ -546,9 +546,9 @@ void CBaseDemoAction::SetStartTime( float t )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : demoframe - 
-//			demotime - 
+// Purpose:
+// Input  : demoframe -
+//			demotime -
 //-----------------------------------------------------------------------------
 bool CBaseDemoAction::Update( const DemoActionTimingContext& tc )
 {
@@ -564,7 +564,7 @@ bool CBaseDemoAction::Update( const DemoActionTimingContext& tc )
 	{
 		return true;
 	}
-	
+
 	// See if it's time to fire
 	switch ( GetTimingType() )
 	{
@@ -593,7 +593,7 @@ bool CBaseDemoAction::Update( const DemoActionTimingContext& tc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CBaseDemoAction::GetActionName( void ) const
@@ -603,7 +603,7 @@ char const *CBaseDemoAction::GetActionName( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseDemoAction::ActionHasTarget( void ) const
@@ -612,7 +612,7 @@ bool CBaseDemoAction::ActionHasTarget( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CBaseDemoAction::GetActionTarget( void ) const
@@ -622,8 +622,8 @@ char const *CBaseDemoAction::GetActionTarget( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 void CBaseDemoAction::SetActionTarget( char const *name )
 {
@@ -642,4 +642,3 @@ void CBaseDemoAction::Reset( void )
 void CBaseDemoAction::OnActionFinished( void )
 {
 }
-

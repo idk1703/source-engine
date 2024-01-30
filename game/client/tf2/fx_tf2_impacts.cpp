@@ -16,7 +16,7 @@
 void ImpactCreateHurtShards( Vector &vecOrigin, trace_t &tr, Vector &shotDir, int iMaterial, bool bLarge, bool bBlood );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void MakeHurt( const CEffectData &data, bool bBlood )
 {
@@ -117,7 +117,7 @@ void ImpactShieldCallback( const CEffectData &data )
 DECLARE_CLIENT_EFFECT( "ImpactShield", ImpactShieldCallback );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void MakePlasmaHurt( const CEffectData &data, bool bBlood )
 {
@@ -176,7 +176,7 @@ void ImpactPlasmaUnhurtCallback( const CEffectData &data )
 		return;
 
 	// If we hit, play our splash
-	
+
 	bool bShouldDecal = !( pEntity && pEntity->IsPlayer() );
 	if ( Impact( vecOrigin, vecStart, iMaterial, iDamageType, iHitbox, pEntity, tr, bShouldDecal ? 0 : IMPACT_NODECAL  ) )
 	{
@@ -233,13 +233,13 @@ DECLARE_CLIENT_EFFECT( "Strider", ImpactStriderCallback );
 
 
 //=====================================================================================
-// SHARDS. 
+// SHARDS.
 // Models for small impact tempents (not vphysics simulated)
 //--------------------------------------------------------------------
 // WOOD
 //--------------------------------------------------------------------
 #define WOOD_SHARDS		5
-const char *ImpactHurtShards_Wood_Small_Models[ WOOD_SHARDS ] = 
+const char *ImpactHurtShards_Wood_Small_Models[ WOOD_SHARDS ] =
 {
 "models/props_debris/wood_shard_001.mdl",
 "models/props_debris/wood_shard_002.mdl",
@@ -254,7 +254,7 @@ model_t *ImpactHurtShards_Wood_Small[ WOOD_SHARDS ];
 // FOLIAGE
 //--------------------------------------------------------------------
 #define FOLIAGE_SHARDS		5
-const char *ImpactHurtShards_Foliage_Small_Models[ FOLIAGE_SHARDS ] = 
+const char *ImpactHurtShards_Foliage_Small_Models[ FOLIAGE_SHARDS ] =
 {
 "models/props_debris/foliage_shard_001.mdl",
 "models/props_debris/foliage_shard_002.mdl",
@@ -269,7 +269,7 @@ model_t *ImpactHurtShards_Foliage_Small[ FOLIAGE_SHARDS ];
 // CONCRETE
 //--------------------------------------------------------------------
 #define CONCRETE_SHARDS		1
-const char *ImpactHurtShards_Concrete_Small_Models[ CONCRETE_SHARDS ] = 
+const char *ImpactHurtShards_Concrete_Small_Models[ CONCRETE_SHARDS ] =
 {
 "models/props_debris/metal_shard_001.mdl",
 };
@@ -280,7 +280,7 @@ model_t *ImpactHurtShards_Concrete_Small[ CONCRETE_SHARDS ];
 // METAL
 //--------------------------------------------------------------------
 #define METAL_SHARDS		6
-const char *ImpactHurtShards_Metal_Small_Models[ METAL_SHARDS ] = 
+const char *ImpactHurtShards_Metal_Small_Models[ METAL_SHARDS ] =
 {
 "models/props_debris/metal_shard_001.mdl",
 "models/props_debris/metal_shard_002.mdl",
@@ -341,7 +341,7 @@ void ImpactCreateHurtShards( Vector &vecOrigin, trace_t &tr, Vector &shotDir, in
 	float flShardSpread = 0.5;
 
 	Vector vecSpawnOrigin = vecOrigin;
-	
+
 	int iNumGibs = random->RandomInt( 1, 2 );
 	for ( int i = 0; i < iNumGibs; i++ )
 	{
@@ -403,7 +403,7 @@ void ImpactCreateHurtShards( Vector &vecOrigin, trace_t &tr, Vector &shotDir, in
 			break;
 		*/
 		}
-		Assert( pModel );			
+		Assert( pModel );
 
 		// ROBIN: Removed until optimized
 		return;
@@ -446,7 +446,7 @@ void ImpactCreateHurtGibs( Vector &vecOrigin, trace_t &tr, Vector &shotDir, int 
 			//pProp->CreateClientsideProp( ImpactHurtGibs_Wood_Small[ random->RandomInt(0,NUM_WOOD_GIBS_SMALL-1) ], vecSpawnOrigin, vecForceDir, angVel );
 		}
 	}
-	else 
+	else
 	{
 		PerformCustomEffects( vecOrigin, tr, shotDir, iMaterial, 1 );
 	}

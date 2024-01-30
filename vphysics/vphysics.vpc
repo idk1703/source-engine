@@ -121,8 +121,8 @@ $Project "vphysics"
 		$File	"$SRCDIR\public\vphysics_interface.h"
 		$File	"$SRCDIR\public\vphysics_interfaceV30.h"
 	}
-		
-	$Folder	"Link Libraries" 
+
+	$Folder	"Link Libraries"
 	{
 		$Lib "$LIBCOMMON/havana_constraints"
 		$Lib "$LIBCOMMON/hk_base"

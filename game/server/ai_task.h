@@ -16,7 +16,7 @@ class CStringRegistry;
 // ----------------------------------------------------------------------
 // Failure messages
 //
-// UNDONE: do this diffently so when not in developer mode we can 
+// UNDONE: do this diffently so when not in developer mode we can
 //		   not use any memory for these text strings
 // ----------------------------------------------------------------------
 
@@ -66,7 +66,7 @@ const char *TaskFailureToString( AI_TaskFailureCode_t code );
 inline int MakeFailCode( const char *pszGeneralError ) { return (int)pszGeneralError; }
 
 
-enum TaskStatus_e 
+enum TaskStatus_e
 {
 	TASKSTATUS_NEW =			 	0,			// Just started
 	TASKSTATUS_RUN_MOVE_AND_TASK =	1,			// Running task & movement
@@ -89,28 +89,28 @@ struct Task_t
 enum sharedtasks_e
 {
 		TASK_INVALID = 0,
-		
+
 		// Forces the activity to reset.
 		TASK_RESET_ACTIVITY,
 
 		// Waits for the specified number of seconds.
-		TASK_WAIT,					
+		TASK_WAIT,
 
 		// Make announce attack sound
 		TASK_ANNOUNCE_ATTACK,
 
-		// Waits for the specified number of seconds. Will constantly turn to 
-		// face the enemy while waiting. 
+		// Waits for the specified number of seconds. Will constantly turn to
+		// face the enemy while waiting.
 		TASK_WAIT_FACE_ENEMY,
 
-		// Waits up to the specified number of seconds. Will constantly turn to 
-		// face the enemy while waiting. 
+		// Waits up to the specified number of seconds. Will constantly turn to
+		// face the enemy while waiting.
 		TASK_WAIT_FACE_ENEMY_RANDOM,
 
 		// Wait until the player enters the same PVS as this character.
 		TASK_WAIT_PVS,
 
-		// DON'T use this, it needs to go away. 
+		// DON'T use this, it needs to go away.
 		TASK_SUGGEST_STATE,
 
 		// Set m_hTargetEnt to nearest player
@@ -144,7 +144,7 @@ enum sharedtasks_e
 
 		// Path to the enemy's location. Even if the enemy is unseen!
 		TASK_GET_PATH_TO_ENEMY,
-		
+
 		// Path to the last place this character saw the enemy
 		TASK_GET_PATH_TO_ENEMY_LKP,
 
@@ -227,10 +227,10 @@ enum sharedtasks_e
 		TASK_GET_PATH_TO_BESTSCENT,
 
 		// Run the current path
-		TASK_RUN_PATH,	
+		TASK_RUN_PATH,
 
 		// Walk the current path
-		TASK_WALK_PATH,	
+		TASK_WALK_PATH,
 
 		// Walk the current path for a specified number of seconds
 		TASK_WALK_PATH_TIMED,
@@ -259,10 +259,10 @@ enum sharedtasks_e
 		// Clear m_flMoveWaitFinished (timer that inhibits movement)
 		TASK_CLEAR_MOVE_WAIT,
 
-		// Decide on the appropriate small flinch animation, and play it. 
+		// Decide on the appropriate small flinch animation, and play it.
 		TASK_SMALL_FLINCH,
 
-		// Decide on the appropriate big flinch animation, and play it. 
+		// Decide on the appropriate big flinch animation, and play it.
 		TASK_BIG_FLINCH,
 
 		// Prevent dodging for a certain amount of time.
@@ -306,9 +306,9 @@ enum sharedtasks_e
 
 		// Attack the enemy (should be facing the enemy)
 		TASK_RANGE_ATTACK1,
-		TASK_RANGE_ATTACK2,		
-		TASK_MELEE_ATTACK1,		
-		TASK_MELEE_ATTACK2,		
+		TASK_RANGE_ATTACK2,
+		TASK_MELEE_ATTACK1,
+		TASK_MELEE_ATTACK2,
 
 		// Reload weapon
 		TASK_RELOAD,
@@ -429,7 +429,7 @@ enum sharedtasks_e
 		TASK_WAIT_INDEFINITE,
 
 		TASK_STOP_MOVING,
-		
+
 		// Turn left the specified number of degrees
 		TASK_TURN_LEFT,
 
@@ -441,8 +441,8 @@ enum sharedtasks_e
 
 		// Forget the specified piece of data
 		TASK_FORGET,
-		
-		// Wait until current movement is complete. 
+
+		// Wait until current movement is complete.
 		TASK_WAIT_FOR_MOVEMENT,
 
 		// Wait until a single-step movement is complete.
@@ -476,7 +476,7 @@ enum sharedtasks_e
 
 		// Require an enemy be seen after the task is run to be considered a candidate enemy
 		TASK_IGNORE_OLD_ENEMIES,
-		
+
 		TASK_DEBUG_BREAK,
 
 		// Add a specified amount of health to this NPC
@@ -490,7 +490,7 @@ enum sharedtasks_e
 
 		// Get a path to my forced interaction partner
 		TASK_GET_PATH_TO_INTERACTION_PARTNER,
-		
+
 		// First task of all schedules for playing back scripted sequences
 		TASK_PRE_SCRIPT,
 

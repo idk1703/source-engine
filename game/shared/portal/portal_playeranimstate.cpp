@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -25,8 +25,8 @@
 #define PORTAL_CROUCHWALK_SPEED		110.0f
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
+// Purpose:
+// Input  : *pPlayer -
 // Output : CMultiPlayerAnimState*
 //-----------------------------------------------------------------------------
 CPortalPlayerAnimState* CreatePortalPlayerAnimState( CPortal_Player *pPlayer )
@@ -48,8 +48,8 @@ CPortalPlayerAnimState* CreatePortalPlayerAnimState( CPortal_Player *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 CPortalPlayerAnimState::CPortalPlayerAnimState()
 {
@@ -59,9 +59,9 @@ CPortalPlayerAnimState::CPortalPlayerAnimState()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
-//			&movementData - 
+// Purpose:
+// Input  : *pPlayer -
+//			&movementData -
 //-----------------------------------------------------------------------------
 CPortalPlayerAnimState::CPortalPlayerAnimState( CBasePlayer *pPlayer, MultiPlayerMovementData_t &movementData )
 : CMultiPlayerAnimState( pPlayer, movementData )
@@ -72,8 +72,8 @@ CPortalPlayerAnimState::CPortalPlayerAnimState( CBasePlayer *pPlayer, MultiPlaye
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 CPortalPlayerAnimState::~CPortalPlayerAnimState()
 {
@@ -81,7 +81,7 @@ CPortalPlayerAnimState::~CPortalPlayerAnimState()
 
 //-----------------------------------------------------------------------------
 // Purpose: Initialize Portal specific animation state.
-// Input  : *pPlayer - 
+// Input  : *pPlayer -
 //-----------------------------------------------------------------------------
 void CPortalPlayerAnimState::InitPortal( CPortal_Player *pPlayer )
 {
@@ -91,7 +91,7 @@ void CPortalPlayerAnimState::InitPortal( CPortal_Player *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPortalPlayerAnimState::ClearAnimationState( void )
 {
@@ -101,8 +101,8 @@ void CPortalPlayerAnimState::ClearAnimationState( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : actDesired - 
+// Purpose:
+// Input  : actDesired -
 // Output : Activity
 //-----------------------------------------------------------------------------
 Activity CPortalPlayerAnimState::TranslateActivity( Activity actDesired )
@@ -118,8 +118,8 @@ Activity CPortalPlayerAnimState::TranslateActivity( Activity actDesired )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : event - 
+// Purpose:
+// Input  : event -
 //-----------------------------------------------------------------------------
 void CPortalPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event, int nData )
 {
@@ -152,9 +152,9 @@ void CPortalPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event, int nDat
 			}
 			else	// unarmed player
 			{
-				
+
 			}
-	
+
 			break;
 		}
 
@@ -197,8 +197,8 @@ void CPortalPlayerAnimState::Teleport( const Vector *pNewOrigin, const QAngle *p
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *idealActivity - 
+// Purpose:
+// Input  : *idealActivity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPortalPlayerAnimState::HandleMoving( Activity &idealActivity )
@@ -217,7 +217,7 @@ bool CPortalPlayerAnimState::HandleMoving( Activity &idealActivity )
 		// Unless we move, hold the deployed pose for a number of seconds after being deployed
 		idealActivity = ACT_MP_DEPLOYED_IDLE;
 	}
-	else 
+	else
 	{
 		return BaseClass::HandleMoving( idealActivity );
 	}
@@ -226,8 +226,8 @@ bool CPortalPlayerAnimState::HandleMoving( Activity &idealActivity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *idealActivity - 
+// Purpose:
+// Input  : *idealActivity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPortalPlayerAnimState::HandleDucking( Activity &idealActivity )
@@ -236,21 +236,21 @@ bool CPortalPlayerAnimState::HandleDucking( Activity &idealActivity )
 	{
 		if ( GetOuterXYSpeed() < MOVING_MINIMUM_SPEED )
 		{
-			idealActivity = ACT_MP_CROUCH_IDLE;		
+			idealActivity = ACT_MP_CROUCH_IDLE;
 		}
 		else
 		{
-			idealActivity = ACT_MP_CROUCHWALK;		
+			idealActivity = ACT_MP_CROUCHWALK;
 		}
 
 		return true;
 	}
-	
+
 	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 bool CPortalPlayerAnimState::HandleJumping( Activity &idealActivity )
 {
 	Vector vecVelocity;
@@ -260,10 +260,10 @@ bool CPortalPlayerAnimState::HandleJumping( Activity &idealActivity )
 	{
 		// Check to see if we were in an airwalk and now we are basically on the ground.
 		if ( GetBasePlayer()->GetFlags() & FL_ONGROUND )
-		{				
+		{
 			m_bInAirWalk = false;
 			RestartMainSequence();
-			RestartGesture( GESTURE_SLOT_JUMP, ACT_MP_JUMP_LAND );	
+			RestartGesture( GESTURE_SLOT_JUMP, ACT_MP_JUMP_LAND );
 		}
 		else
 		{
@@ -291,7 +291,7 @@ bool CPortalPlayerAnimState::HandleJumping( Activity &idealActivity )
 				{
 					m_bJumping = false;
 					RestartMainSequence();
-					RestartGesture( GESTURE_SLOT_JUMP, ACT_MP_JUMP_LAND );					
+					RestartGesture( GESTURE_SLOT_JUMP, ACT_MP_JUMP_LAND );
 				}
 			}
 
@@ -300,8 +300,8 @@ bool CPortalPlayerAnimState::HandleJumping( Activity &idealActivity )
 			{
 				idealActivity = ACT_MP_JUMP_START;
 			}
-		}	
-	}	
+		}
+	}
 
 	if ( m_bJumping || m_bInAirWalk )
 		return true;

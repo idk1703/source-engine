@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,7 +33,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CLampBeamProxy::CLampBeamProxy( void )
 {
@@ -41,7 +41,7 @@ CLampBeamProxy::CLampBeamProxy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CLampBeamProxy::~CLampBeamProxy( void )
 {
@@ -49,7 +49,7 @@ CLampBeamProxy::~CLampBeamProxy( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Get pointer to the color value
-// Input  : *pMaterial - 
+// Input  : *pMaterial -
 //-----------------------------------------------------------------------------
 bool CLampBeamProxy::Init( IMaterial *pMaterial, KeyValues* pKeyValues )
 {
@@ -62,8 +62,8 @@ bool CLampBeamProxy::Init( IMaterial *pMaterial, KeyValues* pKeyValues )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pC_BaseEntity - 
+// Purpose:
+// Input  : *pC_BaseEntity -
 //-----------------------------------------------------------------------------
 #define FADE_DIST	150
 

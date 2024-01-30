@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -55,7 +55,7 @@ BEGIN_SHADER( Cable_DX6,
 			params[MINLIGHT]->GetVecValue( &min.x, 3 );
 			params[MAXLIGHT]->GetVecValue( &max.x, 3 );
 			Vector avg = ( min + max ) * 0.5f;
-			pShaderAPI->Color3fv( &avg.x );	
+			pShaderAPI->Color3fv( &avg.x );
 		}
 		Draw( );
 	}

@@ -73,7 +73,7 @@ public:
 	}
 
 	int				GetScheduleLoadSignature() { return m_CurLoadSig; }
-	CAI_Schedule*	GetScheduleFromID( int schedID );	// Function to return schedule from linked list 
+	CAI_Schedule*	GetScheduleFromID( int schedID );	// Function to return schedule from linked list
 	CAI_Schedule*	GetScheduleByName( const char *name );
 
 	bool LoadAllSchedules(void);
@@ -83,7 +83,7 @@ public:
 
 private:
 	friend class CAI_SystemHook;
-	
+
 	int				m_CurLoadSig;					// Note when schedules reset
 	CAI_Schedule*	allSchedules;						// A linked list of all schedules
 
@@ -118,17 +118,17 @@ public:
 	{
 		return m_iScheduleID;
 	}
-	
+
 	const Task_t *GetTaskList() const
 	{
 		return m_pTaskList;
 	}
-	
+
 	int NumTasks() const
 	{
 		return m_iNumTasks;
 	}
-	
+
 	void GetInterruptMask( CAI_ScheduleBits *pBits ) const
 	{
 		m_InterruptMask.CopyTo( pBits );
@@ -138,21 +138,21 @@ public:
 	{
 		return m_InterruptMask.IsBitSet( condition );
 	}
-	
+
 	const char *GetName() const
 	{
 		return m_pName;
 	}
-	
+
 private:
 	friend class CAI_SchedulesManager;
 
 	int			m_iScheduleID;				// The id number of this schedule
 
 	Task_t		*m_pTaskList;
-	int			m_iNumTasks;	 
+	int			m_iNumTasks;
 
-	CAI_ScheduleBits m_InterruptMask;			// a bit mask of conditions that can interrupt this schedule 
+	CAI_ScheduleBits m_InterruptMask;			// a bit mask of conditions that can interrupt this schedule
 	char		*m_pName;
 
 	CAI_Schedule *nextSchedule;				// The next schedule in the list of schedules

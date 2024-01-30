@@ -62,7 +62,7 @@ bool CTFSyringeGun::Deploy()
 	{
 		ToTFPlayer( pOwner )->TeamFortress_SetSpeed();
 	}
-	
+
 	return BaseClass::Deploy();
 }
 

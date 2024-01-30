@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -19,7 +19,7 @@
 #include "datamodel/dmelement.h"
 
 //-----------------------------------------------------------------------------
-// Forward declarations 
+// Forward declarations
 //-----------------------------------------------------------------------------
 class ICommEditDocCallback;
 class CCommEditDoc;
@@ -29,7 +29,7 @@ typedef CDmrElementArray<CDmeCommentaryNodeEntity> CDmrCommentaryNodeEntityList;
 
 
 //-----------------------------------------------------------------------------
-// Contains all editable state 
+// Contains all editable state
 //-----------------------------------------------------------------------------
 class CCommEditDoc : public IDmNotify
 {
@@ -76,9 +76,9 @@ public:
 	CDmeCommentaryNodeEntity *GetCommentaryNodeForLocation( Vector &vecOrigin, QAngle &angAbsAngles );
 
 	// For element choice lists. Return false if it's an unknown choice list type
-	virtual bool GetStringChoiceList( const char *pChoiceListType, CDmElement *pElement, 
+	virtual bool GetStringChoiceList( const char *pChoiceListType, CDmElement *pElement,
 		const char *pAttributeName, bool bArrayElement, StringChoiceList_t &list );
-	virtual bool GetElementChoiceList( const char *pChoiceListType, CDmElement *pElement, 
+	virtual bool GetElementChoiceList( const char *pChoiceListType, CDmElement *pElement,
 		const char *pAttributeName, bool bArrayElement, ElementChoiceList_t &list );
 
 private:

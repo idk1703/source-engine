@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,7 +21,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CToolSphere::CToolSphere()
 {
@@ -30,8 +30,8 @@ CToolSphere::CToolSphere()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pSphere - 
+// Purpose:
+// Input  : pSphere -
 //-----------------------------------------------------------------------------
 void CToolSphere::Attach(CMapSphere *pSphere)
 {
@@ -40,10 +40,10 @@ void CToolSphere::Attach(CMapSphere *pSphere)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pView - 
-//			nFlags - 
-//			point - 
+// Purpose:
+// Input  : pView -
+//			nFlags -
+//			point -
 // Output : Returns true if the message was handled, false otherwise.
 //-----------------------------------------------------------------------------
 bool CToolSphere::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoint)
@@ -61,10 +61,10 @@ bool CToolSphere::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pView - 
-//			nFlags - 
-//			point - 
+// Purpose:
+// Input  : pView -
+//			nFlags -
+//			point -
 // Output : Returns true if the message was handled, false otherwise.
 //-----------------------------------------------------------------------------
 bool CToolSphere::OnLMouseUp2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoint)
@@ -80,10 +80,10 @@ bool CToolSphere::OnLMouseUp2D(CMapView2D *pView, UINT nFlags, const Vector2D &v
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pView - 
-//			nFlags - 
-//			point - 
+// Purpose:
+// Input  : pView -
+//			nFlags -
+//			point -
 // Output : Returns true if the message was handled, false otherwise.
 //-----------------------------------------------------------------------------
 bool CToolSphere::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoint)
@@ -102,7 +102,7 @@ bool CToolSphere::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &
 	float flHorzRadius = fabs((float)vecWorld[pView->axHorz] - m_pSphere->m_Origin[pView->axHorz]);
 	float flVertRadius = fabs((float)vecWorld[pView->axVert] - m_pSphere->m_Origin[pView->axVert]);
 	float flRadius = max(flHorzRadius, flVertRadius);
-	
+
 	m_pSphere->SetRadius(flRadius);
 
 	//
@@ -116,4 +116,3 @@ bool CToolSphere::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &
 
 	return true;
 }
-

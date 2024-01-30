@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -66,6 +66,3 @@ IMaterialProxy *CMaterialProxyFactory::LookupProxy( const char *proxyName, Creat
 	Q_strncat( proxyVersionedName, IMATERIAL_PROXY_INTERFACE_VERSION, buflen, COPY_ALL_CHARACTERS );
 	return ( IMaterialProxy * )factory( proxyVersionedName, NULL );
 }
-
-
-

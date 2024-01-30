@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -35,7 +35,3 @@ CDisableRangeChecks::~CDisableRangeChecks()
 		g_bDoRangeChecks = true;
 	}
 }
-
-
-
-

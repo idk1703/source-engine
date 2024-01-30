@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -76,7 +76,7 @@ public:
 	virtual Vector	EyePosition( );				// position of eyes
 	Vector			BodyTarget( const Vector &posSrc, bool bNoisy );
 
-	
+
 	virtual void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 
 private:
@@ -100,16 +100,16 @@ private:
 
 	void Event_Killed( const CTakeDamageInfo &info );
 
-	// Purpose: 
+	// Purpose:
 	void GetRocketShootPosition( Vector *pPosition );
 
 	void FireMachineGun( void );
 	void FireRocket( void );
 
-	// Death volley 
+	// Death volley
 	void FireDying( );
 
-	// Create a corpse 
+	// Create a corpse
 	void CreateCorpse( );
 
 	// Blows da shizzle up
@@ -159,4 +159,3 @@ private:
 };
 
 #endif // VEHICLE_APC_H
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -21,7 +21,7 @@ static ConVar mat_slopescaledepthbias_shadowmap( "mat_slopescaledepthbias_shadow
 static ConVar mat_depthbias_shadowmap(	"mat_depthbias_shadowmap", "0.0005", FCVAR_CHEAT  );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_EnvProjectedTexture : public C_BaseEntity
 {
@@ -98,8 +98,8 @@ void C_EnvProjectedTexture::ShutDownLightHandle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_EnvProjectedTexture::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -132,7 +132,7 @@ void C_EnvProjectedTexture::UpdateLight( bool bForceUpdate )
 			if( pPlayer )
 			{
 				const QAngle playerAngles = pPlayer->GetAbsAngles();
-				
+
 				Vector vPlayerForward, vPlayerRight, vPlayerUp;
 				AngleVectors( playerAngles, &vPlayerForward, &vPlayerRight, &vPlayerUp );
 
@@ -233,4 +233,3 @@ void C_EnvProjectedTexture::Simulate( void )
 
 	BaseClass::Simulate();
 }
-

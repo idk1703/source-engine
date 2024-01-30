@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -72,7 +72,7 @@ END_SEND_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFuncRespawnRoom::CFuncRespawnRoom()
 {
@@ -95,7 +95,7 @@ void CFuncRespawnRoom::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncRespawnRoom::Activate( void )
 {
@@ -105,7 +105,7 @@ void CFuncRespawnRoom::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : pOther - The thing that touched us.
 //-----------------------------------------------------------------------------
 void CFuncRespawnRoom::RespawnRoomTouch(CBaseEntity *pOther)
@@ -142,7 +142,7 @@ void CFuncRespawnRoom::RespawnRoomTouch(CBaseEntity *pOther)
 					pSentry->DetonateObject();
 				}
 			}
-			// Drop your powerup rune when entering a respawn room. 
+			// Drop your powerup rune when entering a respawn room.
 			// False parameter ensures rune isn't unintentionally 'thrown' into the respawn room
 			pPlayer->DropRune( false );
 		}
@@ -150,7 +150,7 @@ void CFuncRespawnRoom::RespawnRoomTouch(CBaseEntity *pOther)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncRespawnRoom::StartTouch(CBaseEntity *pOther)
 {
@@ -159,12 +159,12 @@ void CFuncRespawnRoom::StartTouch(CBaseEntity *pOther)
 	{
 		pTFPlayer->m_Shared.IncrementRespawnTouchCount();
 	}
-	
+
 	BaseClass::StartTouch( pOther );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncRespawnRoom::EndTouch(CBaseEntity *pOther)
 {
@@ -173,12 +173,12 @@ void CFuncRespawnRoom::EndTouch(CBaseEntity *pOther)
 	{
 		pTFPlayer->m_Shared.DecrementRespawnTouchCount();
 	}
-	
+
 	BaseClass::EndTouch( pOther );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncRespawnRoom::InputSetActive( inputdata_t &inputdata )
 {
@@ -186,7 +186,7 @@ void CFuncRespawnRoom::InputSetActive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncRespawnRoom::InputSetInactive( inputdata_t &inputdata )
 {
@@ -194,7 +194,7 @@ void CFuncRespawnRoom::InputSetInactive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncRespawnRoom::InputToggleActive( inputdata_t &inputdata )
 {
@@ -209,7 +209,7 @@ void CFuncRespawnRoom::InputToggleActive( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncRespawnRoom::InputRoundActivate( inputdata_t &input )
 {
@@ -239,7 +239,7 @@ void CFuncRespawnRoom::InputRoundActivate( inputdata_t &input )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncRespawnRoom::ChangeTeam( int iTeamNum )
 {
@@ -260,7 +260,7 @@ void CFuncRespawnRoom::ChangeTeam( int iTeamNum )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncRespawnRoom::SetActive( bool bActive )
 {
@@ -289,7 +289,7 @@ void CFuncRespawnRoom::SetActive( bool bActive )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CFuncRespawnRoom::GetActive() const
 {
@@ -297,7 +297,7 @@ bool CFuncRespawnRoom::GetActive() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncRespawnRoom::AddVisualizer( CFuncRespawnRoomVisualizer *pViz )
 {
@@ -325,7 +325,7 @@ bool PointInRespawnRoom( const CBaseEntity *pTarget, const Vector &vecOrigin, bo
 				if ( !pTarget || pRespawnRoom->GetTeamNumber() == TEAM_UNASSIGNED || pRespawnRoom->InSameTeam( pTarget ) )
 					return true;
 			}
-			else 
+			else
 			{
 				if ( pTarget && pRespawnRoom->IsTouching( pTarget ) )
 				{
@@ -341,7 +341,7 @@ bool PointInRespawnRoom( const CBaseEntity *pTarget, const Vector &vecOrigin, bo
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool PointsCrossRespawnRoomVisualizer( const Vector& vecStart, const Vector &vecEnd, int nTeamToIgnore )
 {
@@ -388,7 +388,7 @@ CFuncRespawnRoomVisualizer::CFuncRespawnRoomVisualizer()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncRespawnRoomVisualizer::Spawn( void )
 {
@@ -400,7 +400,7 @@ void CFuncRespawnRoomVisualizer::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncRespawnRoomVisualizer::InputRoundActivate( inputdata_t &inputdata )
 {
@@ -426,11 +426,11 @@ void CFuncRespawnRoomVisualizer::InputRoundActivate( inputdata_t &inputdata )
 // Input  :
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CFuncRespawnRoomVisualizer::DrawDebugTextOverlays( void ) 
+int CFuncRespawnRoomVisualizer::DrawDebugTextOverlays( void )
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 		Q_snprintf(tempstr,sizeof(tempstr),"TeamNumber: %d", GetTeamNumber() );
@@ -449,7 +449,7 @@ int CFuncRespawnRoomVisualizer::DrawDebugTextOverlays( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncRespawnRoomVisualizer::InputSetSolid( inputdata_t &inputdata )
 {
@@ -459,7 +459,7 @@ void CFuncRespawnRoomVisualizer::InputSetSolid( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CFuncRespawnRoomVisualizer::UpdateTransmitState()
 {
@@ -489,7 +489,7 @@ int CFuncRespawnRoomVisualizer::ShouldTransmit( const CCheckTransmitInfo *pInfo 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CFuncRespawnRoomVisualizer::ShouldCollide( int collisionGroup, int contentsMask ) const
 {
@@ -522,7 +522,7 @@ bool CFuncRespawnRoomVisualizer::ShouldCollide( int collisionGroup, int contents
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncRespawnRoomVisualizer::SetActive( bool bActive )
 {
@@ -531,11 +531,11 @@ void CFuncRespawnRoomVisualizer::SetActive( bool bActive )
 		// We're a trigger, but we want to be solid. Our ShouldCollide() will make
 		// us non-solid to members of the team that spawns here.
 		RemoveSolidFlags( FSOLID_TRIGGER );
-		RemoveSolidFlags( FSOLID_NOT_SOLID );	
+		RemoveSolidFlags( FSOLID_NOT_SOLID );
 	}
 	else
 	{
 		AddSolidFlags( FSOLID_NOT_SOLID );
-		AddSolidFlags( FSOLID_TRIGGER );	
+		AddSolidFlags( FSOLID_TRIGGER );
 	}
 }

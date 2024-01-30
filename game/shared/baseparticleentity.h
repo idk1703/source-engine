@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -20,7 +20,7 @@
 
 #include "particlemgr.h"
 
-#endif 
+#endif
 
 class CBaseParticleEntity : public CBaseEntity
 #if defined( CLIENT_DLL )
@@ -38,7 +38,7 @@ public:
 	// CBaseEntity overrides.
 public:
 #if !defined( CLIENT_DLL )
-	virtual int		UpdateTransmitState( void );	
+	virtual int		UpdateTransmitState( void );
 #else
 // Default IParticleEffect overrides.
 public:
@@ -54,7 +54,7 @@ public:
 #endif
 
 	virtual void	Activate();
-	virtual void	Think();	
+	virtual void	Think();
 
 #if defined( CLIENT_DLL )
 	// NOTE: Ths enclosed particle effect binding will do all the drawing
@@ -70,7 +70,7 @@ private:
 
 public:
 	void			FollowEntity(CBaseEntity *pEntity);
-	
+
 	// UTIL_Remove will be called after the specified amount of time.
 	// If you pass in -1, the entity will never go away automatically.
 	void			SetLifetime(float lifetime);
@@ -96,5 +96,3 @@ inline int CBaseParticleEntity::AllocateToolParticleEffectId()
 #endif // CLIENT_DLL
 
 #endif
-
-

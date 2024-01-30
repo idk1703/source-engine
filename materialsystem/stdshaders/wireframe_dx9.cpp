@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -49,4 +49,3 @@ BEGIN_VS_SHADER( Wireframe_DX9,
 		DrawVertexLitGeneric_DX9( this, params, pShaderAPI, pShaderShadow, false, vars, vertexCompression, pContextDataPtr );
 	}
 END_SHADER
-

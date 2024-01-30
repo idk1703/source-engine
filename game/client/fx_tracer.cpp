@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -16,10 +16,10 @@
 ConVar r_drawtracers( "r_drawtracers", "1", FCVAR_CHEAT );
 ConVar r_drawtracers_firstperson( "r_drawtracers_firstperson", "1", FCVAR_ARCHIVE, "Toggle visibility of first person weapon tracers" );
 
-#define	TRACER_SPEED			5000 
+#define	TRACER_SPEED			5000
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Vector GetTracerOrigin( const CEffectData &data )
 {
@@ -63,7 +63,7 @@ Vector GetTracerOrigin( const CEffectData &data )
 		// Get the attachment origin
 		if ( !pRenderable->GetAttachment( iAttachment, vecStart, vecAngles ) )
 		{
-			DevMsg( "GetTracerOrigin: Couldn't find attachment %d on model %s\n", iAttachment, 
+			DevMsg( "GetTracerOrigin: Couldn't find attachment %d on model %s\n", iAttachment,
 				modelinfo->GetModelName( pRenderable->GetModel() ) );
 		}
 	}
@@ -72,7 +72,7 @@ Vector GetTracerOrigin( const CEffectData &data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TracerCallback( const CEffectData &data )
 {
@@ -112,7 +112,7 @@ void TracerCallback( const CEffectData &data )
 		FX_PlayerTracer( foo, (Vector&)data.m_vOrigin );
 		return;
 	}
-	
+
 	// Use default velocity if none specified
 	if ( !flVelocity )
 	{
@@ -126,7 +126,7 @@ void TracerCallback( const CEffectData &data )
 DECLARE_CLIENT_EFFECT( "Tracer", TracerCallback );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ParticleTracerCallback( const CEffectData &data )
 {
@@ -172,23 +172,22 @@ void ParticleTracerCallback( const CEffectData &data )
 
 	if ( data.m_fFlags & TRACER_FLAG_WHIZ )
 	{
-		FX_TracerSound( vecStart, vecEnd, TRACER_TYPE_DEFAULT );	
+		FX_TracerSound( vecStart, vecEnd, TRACER_TYPE_DEFAULT );
 	}
 }
 
 DECLARE_CLIENT_EFFECT( "ParticleTracer", ParticleTracerCallback );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TracerSoundCallback( const CEffectData &data )
 {
 	// Grab the data
 	Vector vecStart = GetTracerOrigin( data );
-	
+
 	// Do tracer effect
 	FX_TracerSound( vecStart, (Vector&)data.m_vOrigin, data.m_fFlags );
 }
 
 DECLARE_CLIENT_EFFECT( "TracerSound", TracerSoundCallback );
-

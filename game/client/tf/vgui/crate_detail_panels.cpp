@@ -99,7 +99,7 @@ void CInputStringForItemBackpackOverlayDialog::ApplySchemeSettings( vgui::ISchem
 	m_pPreviewModelPanel->SetItem( &m_Item );
 	m_pPreviewModelPanel->SetActAsButton( false, false ); // Dont mess around with the mouse
 
-	m_pTextEntry->RequestFocus();	
+	m_pTextEntry->RequestFocus();
 }
 
 void CInputStringForItemBackpackOverlayDialog::ApplySettings( KeyValues *inResourceData )
@@ -173,7 +173,7 @@ void CInputStringForItemBackpackOverlayDialog::CreateItemPanels()
 	FOR_EACH_VEC( vecItemDefs, i )
 	{
 		const item_definition_index_t &itemDef = vecItemDefs[i];
-			
+
 		CItemModelPanel* pItemPanel = m_vecContentsPanels[i];
 
 		CEconItemView item;
@@ -213,7 +213,7 @@ void CInputStringForItemBackpackOverlayDialog::PerformLayout( void )
 		CItemModelPanel* pItemPanel = m_vecContentsPanels[ i ];
 
 		const int nWide = pItemPanel->GetWide();
-		
+
 		pItemPanel->SetPos( nStartOffset + i * (nWide + nBuffer), YRES(150) );
 		pItemPanel->SetVisible( true );
 	}
@@ -261,7 +261,7 @@ void CInputStringForItemBackpackOverlayDialog::OnCommand( const char *command )
 	else if ( !Q_strnicmp( command, "getkey", 6 ) )
 	{
 		static CSchemaAttributeDefHandle pAttrDef_DecodedBy( "decoded by itemdefindex" );
-			
+
 		uint32 iDecodableItemDef = 0;
 		if ( m_Item.FindAttribute( pAttrDef_DecodedBy, &iDecodableItemDef ) )
 		{
@@ -293,7 +293,7 @@ void CInputStringForItemBackpackOverlayDialog::OnCommand( const char *command )
 void CInputStringForItemBackpackOverlayDialog::FindUsableKey()
 {
 	static CSchemaAttributeDefHandle pAttrDef_DecodedBy( "decoded by itemdefindex" );
-			
+
 	uint32 iDecodableItemDef = 0;
 	if ( m_Item.FindAttribute( pAttrDef_DecodedBy, &iDecodableItemDef ) )
 	{
@@ -365,7 +365,7 @@ void CInputStringForItemBackpackOverlayDialog::Show()
 	SetMouseInputEnabled( true );
 	TFModalStack()->PushModal( this );
 
-	// If a key wasnt passed in, find the first one in the 
+	// If a key wasnt passed in, find the first one in the
 	// player's inventory
 	if ( !m_UseableKey.IsValid() )
 	{
@@ -384,5 +384,3 @@ void CInputStringForItemBackpackOverlayDialog::Show()
 		m_pTextEntry->SetText( pszAttrGenCode );
 	}
 }
-
-

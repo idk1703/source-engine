@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -311,7 +311,7 @@ void CCSWeaponInfo::Parse( KeyValues *pKeyValuesData, const char *szWeaponName )
 		m_iPreviousPrice = CSGameRules()->GetBlackMarketPreviousPriceForWeapon( iWeaponID );
 		m_iWeaponPrice = CSGameRules()->GetBlackMarketPriceForWeapon( iWeaponID );
 	}
-		
+
 	m_flArmorRatio				= pKeyValuesData->GetFloat( "WeaponArmorRatio", 1 );
 	m_iCrosshairMinDistance		= pKeyValuesData->GetInt( "CrosshairMinDistance", 4 );
 	m_iCrosshairDeltaDistance	= pKeyValuesData->GetInt( "CrosshairDeltaDistance", 3 );
@@ -319,7 +319,7 @@ void CCSWeaponInfo::Parse( KeyValues *pKeyValuesData, const char *szWeaponName )
 	m_flMuzzleScale				= pKeyValuesData->GetFloat( "MuzzleFlashScale", 1 );
 
 	const char *pMuzzleFlashStyle = pKeyValuesData->GetString( "MuzzleFlashStyle", "CS_MUZZLEFLASH_NORM" );
-	
+
 	if( pMuzzleFlashStyle )
 	{
 		if ( Q_stricmp( pMuzzleFlashStyle, "CS_MUZZLEFLASH_X" ) == 0 )
@@ -406,19 +406,19 @@ void CCSWeaponInfo::Parse( KeyValues *pKeyValuesData, const char *szWeaponName )
 		Assert( false );
 	}
 
-	
+
 	const char *pWrongTeamMsg = pKeyValuesData->GetString( "WrongTeamMsg", "" );
 	Q_strncpy( m_WrongTeamMsg, pWrongTeamMsg, sizeof( m_WrongTeamMsg ) );
 
 	const char *pShieldViewModel = pKeyValuesData->GetString( "shieldviewmodel", "" );
 	Q_strncpy( m_szShieldViewModel, pShieldViewModel, sizeof( m_szShieldViewModel ) );
-	
+
 	const char *pAnimEx = pKeyValuesData->GetString( "PlayerAnimationExtension", "m4" );
 	Q_strncpy( m_szAnimExtension, pAnimEx, sizeof( m_szAnimExtension ) );
 
 	// Default is 2000.
 	m_flBotAudibleRange = pKeyValuesData->GetFloat( "BotAudibleRange", 2000.0f );
-	
+
 	const char *pTypeString = pKeyValuesData->GetString( "WeaponType", "" );
 	m_WeaponType = WeaponClassFromString(pTypeString);
 
@@ -451,5 +451,3 @@ void CCSWeaponInfo::Parse( KeyValues *pKeyValuesData, const char *szWeaponName )
 	}
 #endif // !CLIENT_DLL
 }
-
-

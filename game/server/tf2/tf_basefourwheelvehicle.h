@@ -28,7 +28,7 @@ public:
 public:
 	CBaseTFFourWheelVehicle();
 	~CBaseTFFourWheelVehicle ();
-			 
+
 	// CBaseEntity
 	void Spawn();
 	void Precache();
@@ -40,7 +40,7 @@ public:
 	void BaseFourWheeledVehicleDeployThink( void );
 
 	// HACK HACK:  This is a hack to avoid physics spazzing out on a newly created vehicle with the handbrake
-	//  set.  We create and activate it, but then release the handbrake for a single Think function call and 
+	//  set.  We create and activate it, but then release the handbrake for a single Think function call and
 	//  then zero out the controls right then.  This seems to stabilize something in the physics simulator.
 	void BaseFourWheeledVehicleStopTheRodeoMadnessThink( void );
 
@@ -66,7 +66,7 @@ public:
 	void InputTurnOff( inputdata_t &inputdata );
 
 	// Boost
-	void			SetBoostUpgrade( bool bBoostUpgrade ); 
+	void			SetBoostUpgrade( bool bBoostUpgrade );
 	bool			IsBoostable( void );
 	bool			IsBoosting( void );
 	void			StartBoost( void );
@@ -118,7 +118,7 @@ private:
 
 	int							m_nMovementRole;
 	Vector						m_savedViewOffset; //[MAX_PASSENGERS];
-	
+
 	float						m_flNextEmpSound;
 
 	// Deploy

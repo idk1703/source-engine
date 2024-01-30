@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -77,7 +77,7 @@ CHudHintDisplay::CHudHintDisplay( const char *pElementName ) : BaseClass(NULL, "
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHintDisplay::Init()
 {
@@ -88,17 +88,17 @@ void CHudHintDisplay::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHintDisplay::Reset()
 {
 	SetHintText( NULL );
-	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageHide" ); 
+	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageHide" );
 	m_bLastLabelUpdateHack = true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHintDisplay::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -144,7 +144,7 @@ bool CHudHintDisplay::SetHintText( wchar_t *text )
 		else
 		{
 			p = NULL;
-		}		
+		}
 
 		// replace any key references with bound keys
 		wchar_t buf[512];
@@ -306,7 +306,7 @@ void CHudHintDisplay::LocalizeAndDisplay( const char *pszHudTxtMsg, const char *
 
 	if ( !pszBuf )
 	{
-		// use plain ASCII string 
+		// use plain ASCII string
 		g_pVGuiLocalize->ConvertANSIToUnicode( szRawString, szBuf, sizeof(szBuf) );
 		pszBuf = szBuf;
 	}
@@ -315,7 +315,7 @@ void CHudHintDisplay::LocalizeAndDisplay( const char *pszHudTxtMsg, const char *
 	if ( SetHintText( pszBuf ) )
 	{
 		SetVisible( true );
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageShow" ); 
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageShow" );
 
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 		if ( pLocalPlayer )
@@ -335,7 +335,7 @@ void CHudHintDisplay::LocalizeAndDisplay( const char *pszHudTxtMsg, const char *
 	}
 	else
 	{
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageHide" ); 
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageHide" );
 	}
 }
 
@@ -389,7 +389,7 @@ CHudHintKeyDisplay::CHudHintKeyDisplay( const char *pElementName ) : BaseClass(N
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHintKeyDisplay::Init()
 {
@@ -397,7 +397,7 @@ void CHudHintKeyDisplay::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHintKeyDisplay::Reset()
 {
@@ -406,7 +406,7 @@ void CHudHintKeyDisplay::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHintKeyDisplay::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -418,7 +418,7 @@ void CHudHintKeyDisplay::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 //-----------------------------------------------------------------------------
 // Purpose: Save CPU cycles by letting the HUD system early cull
-// costly traversal.  Called per frame, return true if thinking and 
+// costly traversal.  Called per frame, return true if thinking and
 // painting need to occur.
 //-----------------------------------------------------------------------------
 bool CHudHintKeyDisplay::ShouldDraw( void )
@@ -475,7 +475,7 @@ bool CHudHintKeyDisplay::SetHintText( const char *text )
 			// We don't want to display a localization placeholder, do we?
 			return false;
 		}
-		// use plain ASCII string 
+		// use plain ASCII string
 		g_pVGuiLocalize->ConvertANSIToUnicode(text, wszBuf, sizeof(wszBuf));
 		ws = wszBuf;
 	}
@@ -510,7 +510,7 @@ bool CHudHintKeyDisplay::SetHintText( const char *text )
 		if ( isVar )
 		{
 			// move over the end of the variable
-			++ws; 
+			++ws;
 		}
 
 		// put it in a label
@@ -551,16 +551,16 @@ bool CHudHintKeyDisplay::SetHintText( const char *text )
 
 					bUseThisKey = ( Q_stricmp( pBinding, binding ) == 0 );
 
-					if ( !bUseThisKey && 
-						( Q_stricmp( pBinding, "+duck" ) == 0 || Q_stricmp( pBinding, "toggle_duck" ) == 0 ) && 
+					if ( !bUseThisKey &&
+						( Q_stricmp( pBinding, "+duck" ) == 0 || Q_stricmp( pBinding, "toggle_duck" ) == 0 ) &&
 						( Q_stricmp( binding, "+duck" ) == 0 || Q_stricmp( binding, "toggle_duck" ) == 0 ) )
 					{
 						// +duck and toggle_duck are interchangable
 						bUseThisKey = true;
 					}
 
-					if ( !bUseThisKey && 
-						( Q_stricmp( pBinding, "+zoom" ) == 0 || Q_stricmp( pBinding, "toggle_zoom" ) == 0 ) && 
+					if ( !bUseThisKey &&
+						( Q_stricmp( pBinding, "+zoom" ) == 0 || Q_stricmp( pBinding, "toggle_zoom" ) == 0 ) &&
 						( Q_stricmp( binding, "+zoom" ) == 0 || Q_stricmp( binding, "toggle_zoom" ) == 0 ) )
 					{
 						// +zoom and toggle_zoom are interchangable
@@ -655,7 +655,7 @@ bool CHudHintKeyDisplay::SetHintText( const char *text )
 	}
 	m_Labels.RemoveAll();
 
-	const char* sampleText[] = 
+	const char* sampleText[] =
 	{
 		"This is a test",
 		"of the hint system\nwith a multi-line hint",
@@ -780,11 +780,11 @@ void CHudHintKeyDisplay::MsgFunc_KeyHintText( bf_read &msg )
 	if ( SetHintText( szString ) )
 	{
 		SetVisible( true );
- 		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "KeyHintMessageShow" ); 
+ 		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "KeyHintMessageShow" );
 	}
 	else
 	{
 		// it's being cleared, hide the panel
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "KeyHintMessageHide" ); 
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "KeyHintMessageHide" );
 	}
 }

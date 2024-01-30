@@ -41,7 +41,7 @@ public:
 DECLARE_HUDELEMENT( CHudMortar );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudMortar::CHudMortar( const char *pElementName ) :
 	CHudElement( pElementName ), vgui::Panel( NULL, pElementName )
@@ -58,7 +58,7 @@ CHudMortar::CHudMortar( const char *pElementName ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMortar::Paint()
 {
@@ -121,7 +121,7 @@ void CHudMortar::Paint()
 	// Draw the zero marker
 	vgui::surface()->DrawSetColor(255,255,255,255);
 	vgui::surface()->DrawFilledRect(iZero-2, iOffset, iZero+2, iBarHeight);
-	
+
 	// Draw the marker
 	vgui::surface()->DrawSetColor(255,255,255,255);
 	vgui::surface()->DrawFilledRect(iMarker-1, 0, iMarker+1, h);
@@ -167,7 +167,7 @@ public:
 	virtual void OnDataChanged( DataUpdateType_t updateType );
 	virtual void HandleInput( void );
 	virtual void Redraw();
-	virtual void OverrideMouseInput( float *x, float *y );	
+	virtual void OverrideMouseInput( float *x, float *y );
 
 	// Deploy / Holster
 	virtual bool Deploy( void );
@@ -212,7 +212,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_WeaponMortar, DT_WeaponMortar, CWeaponMortar)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_WeaponMortar::C_WeaponMortar()
 {
@@ -238,7 +238,7 @@ C_WeaponMortar::C_WeaponMortar()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_WeaponMortar::~C_WeaponMortar()
 {
@@ -261,7 +261,7 @@ C_WeaponMortar::~C_WeaponMortar()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_WeaponMortar::PreDataUpdate( DataUpdateType_t updateType )
 {
@@ -271,7 +271,7 @@ void C_WeaponMortar::PreDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_WeaponMortar::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -339,7 +339,7 @@ void C_WeaponMortar::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_WeaponMortar::HandleInput( void )
 {
@@ -429,7 +429,7 @@ void C_WeaponMortar::HandleInput( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_WeaponMortar::Redraw()
 {
@@ -539,7 +539,7 @@ void C_WeaponMortar::Redraw()
 	}
 
 	// Update the ground line if it's moved
-	if ( !m_bCarried && (m_flPrevMortarYaw != m_flMortarYaw ) && 
+	if ( !m_bCarried && (m_flPrevMortarYaw != m_flMortarYaw ) &&
 		gpGlobals->curtime > m_flLastGroundlineUpdateTime + g_CVMortarGroundLineUpdateInterval.GetFloat() )
 	{
 		// Create the Ground line start & end points
@@ -612,7 +612,7 @@ bool C_WeaponMortar::Holster( C_BaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_WeaponMortar::FireMortar( void )
 {

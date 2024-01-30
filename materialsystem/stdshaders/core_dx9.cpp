@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,7 +14,7 @@
 
 DEFINE_FALLBACK_SHADER( Core, Core_DX90 )
 
-BEGIN_VS_SHADER( Core_DX90, 
+BEGIN_VS_SHADER( Core_DX90,
 			  "Help for Core" )
 
 	BEGIN_SHADER_PARAMS
@@ -97,7 +97,7 @@ BEGIN_VS_SHADER( Core_DX90,
 	}
 
 	inline void DrawPass( IMaterialVar **params, IShaderShadow* pShaderShadow,
-		IShaderDynamicAPI* pShaderAPI, int nPass, VertexCompressionType_t vertexCompression ) 
+		IShaderDynamicAPI* pShaderAPI, int nPass, VertexCompressionType_t vertexCompression )
 	{
 		bool bIsModel = IS_FLAG_SET( MATERIAL_VAR_MODEL );
 		bool bHasEnvmap = params[ENVMAP]->IsTexture();
@@ -264,7 +264,7 @@ BEGIN_VS_SHADER( Core_DX90,
 			}
 			SetPixelShaderConstant( 2, ENVMAPCONTRAST );
 			SetPixelShaderConstant( 3, ENVMAPSATURATION );
-			float c5[4] = { params[REFRACTAMOUNT]->GetFloatValue(), 
+			float c5[4] = { params[REFRACTAMOUNT]->GetFloatValue(),
 				params[REFRACTAMOUNT]->GetFloatValue(), 0.0f, 0.0f };
 			pShaderAPI->SetPixelShaderConstant( 5, c5, 1 );
 
@@ -295,4 +295,3 @@ BEGIN_VS_SHADER( Core_DX90,
 		DrawPass( params, pShaderShadow, pShaderAPI, 1, vertexCompression );
 	}
 END_SHADER
-

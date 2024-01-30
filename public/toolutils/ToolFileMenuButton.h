@@ -28,7 +28,7 @@ class CToolMenuButton;
 
 
 //-----------------------------------------------------------------------------
-// Called back by the file menu 
+// Called back by the file menu
 //-----------------------------------------------------------------------------
 class IFileMenuCallbacks
 {
@@ -96,9 +96,8 @@ private:
 //-----------------------------------------------------------------------------
 // Global function to create the switch menu
 //-----------------------------------------------------------------------------
-CToolMenuButton* CreateToolFileMenuButton( vgui::Panel *parent, const char *panelName, 
+CToolMenuButton* CreateToolFileMenuButton( vgui::Panel *parent, const char *panelName,
 	const char *text, vgui::Panel *pActionTarget, IFileMenuCallbacks *pCallbacks );
 
 
 #endif // TOOLFILEMENUBUTTON_H
-

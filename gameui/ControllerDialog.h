@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,4 +24,3 @@ public:
 };
 
 #endif // CONTROLLERDIALOG_H
-

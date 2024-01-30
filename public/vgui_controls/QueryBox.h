@@ -31,7 +31,7 @@ public:
 	QueryBox(const wchar_t *wszTitle, const wchar_t *wszQueryText,vgui::Panel *parent = NULL);
 	~QueryBox();
 
-	// Layout the window for drawing 
+	// Layout the window for drawing
 	virtual void PerformLayout();
 
 	// Set the keyvalues to send when ok button is hit

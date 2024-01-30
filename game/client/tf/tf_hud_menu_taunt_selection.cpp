@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -34,7 +34,7 @@ using namespace vgui;
 DECLARE_HUDELEMENT( CHudMenuTauntSelection );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudMenuTauntSelection::CHudMenuTauntSelection( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudMenuTauntSelection" )
 {
@@ -56,7 +56,7 @@ CHudMenuTauntSelection::CHudMenuTauntSelection( const char *pElementName ) : CHu
 		char pszNumberLabel[64];
 		V_sprintf_safe( pszNumberLabel, "NumberLabel%d", i+1 );
 		m_pKeyLabels[i] = new CExLabel( this, pszNumberLabel, CFmtStr( "%d", i+1 ) ); */
-	}			  
+	}
 
 	ListenForGameEvent( "gameui_hidden" );
 
@@ -67,7 +67,7 @@ CHudMenuTauntSelection::CHudMenuTauntSelection( const char *pElementName ) : CHu
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuTauntSelection::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -88,7 +88,7 @@ void CHudMenuTauntSelection::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudMenuTauntSelection::ShouldDraw( void )
 {
@@ -238,7 +238,7 @@ int	CHudMenuTauntSelection::HudElementKeyInput( int down, ButtonCode_t keynum, c
 				const char *pszNum = pszCurrentBinding+4;
 				iSlot = atoi(pszNum);
 
-				// allow slot1 - slot4 
+				// allow slot1 - slot4
 				if ( iSlot < 1 || iSlot > NUM_TAUNT_SLOTS )
 					return 1;
 			}
@@ -273,12 +273,12 @@ int	CHudMenuTauntSelection::HudElementKeyInput( int down, ButtonCode_t keynum, c
 			return 0;
 		}
 	}
-	
+
 	return 1;	// key not handled
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuTauntSelection::FindTauntKeyBinding( void )
 {
@@ -299,7 +299,7 @@ void CHudMenuTauntSelection::FindTauntKeyBinding( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 extern const char *g_szItemBorders[][5];
 void CHudMenuTauntSelection::UpdateItemModelPanels()
@@ -328,7 +328,7 @@ void CHudMenuTauntSelection::UpdateItemModelPanels()
 			iRarity = pOwnedItemInSlot->GetItemQuality();
 
 		const char *pszBorder = g_szItemBorders[iRarity][0];
-		
+
 		IBorder *pBorder = pScheme->GetBorder( pszBorder );
 
 		pItemModelPanel->SetBorder( !bSteamController || i == (m_iSelectedItem - 1) ? pBorder : nullptr );
@@ -339,7 +339,7 @@ void CHudMenuTauntSelection::UpdateItemModelPanels()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuTauntSelection::SelectTaunt( int iTaunt )
 {
@@ -363,7 +363,7 @@ void CHudMenuTauntSelection::SelectTaunt( int iTaunt )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuTauntSelection::SetSelectedItem( int iSlot )
 {
@@ -375,7 +375,7 @@ void CHudMenuTauntSelection::SetSelectedItem( int iSlot )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuTauntSelection::FireGameEvent( IGameEvent *event )
 {
@@ -392,7 +392,7 @@ void CHudMenuTauntSelection::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenuTauntSelection::SetVisible( bool state )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -61,9 +61,9 @@ class COP_Input : public CObjectPage
 		void UpdateItemValidity(int nItem);
 		bool ValidateConnections(int nItem);
 
-	
+
 	protected:
-	
+
 		CAnchorMgr m_AnchorMgr;
 
 		CMapEntityList  *m_pEntityList;			// Object list filtered for entities

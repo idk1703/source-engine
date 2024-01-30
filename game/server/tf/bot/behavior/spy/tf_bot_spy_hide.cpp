@@ -180,7 +180,7 @@ bool CTFBotSpyHide::FindHidingSpot( CTFBot *me )
 	// find a spot to hide
 	const float maxRange = 3500.0f;
 	CUtlVector< CNavArea * > nearbyVector;
-	CollectSurroundingAreas( &nearbyVector, me->GetLastKnownArea(), maxRange, 
+	CollectSurroundingAreas( &nearbyVector, me->GetLastKnownArea(), maxRange,
 							 500.0f, 500.0f );
 
 	CUtlSortVector< IncursionEntry_t, SpyHideIncursionDistanceLess > hidingSpotVector;

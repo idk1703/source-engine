@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,14 +32,14 @@ public:
 
 							CClientThinkList();
 	virtual					~CClientThinkList();
-	
+
 	virtual char const		*Name() { return "CClientThinkList"; }
 	virtual bool			IsPerFrame() { return true; }
 
 	// Set the next time at which you want to think. You can also use
 	// one of the CLIENT_THINK_ defines.
 	void					SetNextClientThink( ClientEntityHandle_t hEnt, float nextTime );
-	
+
 	// Remove an entity from the think list.
 	void					RemoveThinkable( ClientEntityHandle_t hEnt );
 
@@ -50,7 +50,7 @@ public:
 	void					PerformThinkFunctions();
 
 	// Call this to destroy a thinkable object - deletes the object post think.
-	void					AddToDeleteList( ClientEntityHandle_t hEnt );	
+	void					AddToDeleteList( ClientEntityHandle_t hEnt );
 	void					RemoveFromDeleteList( ClientEntityHandle_t hEnt );
 
 // IClientSystem implementation.

@@ -44,14 +44,14 @@ ConVar tf_hud_num_building_alert_beeps( "tf_hud_num_building_alert_beeps", "2", 
 DECLARE_BUILD_FACTORY( CBuildingHealthBar );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBuildingHealthBar::CBuildingHealthBar(Panel *parent, const char *panelName) : vgui::ProgressBar( parent, panelName )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBuildingHealthBar::Paint()
 {
@@ -68,7 +68,7 @@ void CBuildingHealthBar::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBuildingHealthBar::PaintBackground()
 {
@@ -88,7 +88,7 @@ void CBuildingHealthBar::PaintBackground()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBuildingHealthBar::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
@@ -103,7 +103,7 @@ void CBuildingHealthBar::ApplySchemeSettings(vgui::IScheme *pScheme)
 //============================================================================
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBuildingStatusItem::CBuildingStatusItem( Panel *parent, const char *szLayout, int iObjectType, int iObjectMode=0 ) :
 BaseClass( parent, "BuildingStatusItem" )
@@ -138,7 +138,7 @@ BaseClass( parent, "BuildingStatusItem" )
 	m_pHealthBar->SetProgressDirection( ProgressBar::PROGRESS_NORTH );
 	m_pHealthBar->SetBarInset( 0 );
 
-	m_pBuildingProgress = new vgui::ContinuousProgressBar( m_pBuildingPanel, "BuildingProgress" ); 
+	m_pBuildingProgress = new vgui::ContinuousProgressBar( m_pBuildingPanel, "BuildingProgress" );
 
 	m_pAlertTray = new CBuildingStatusAlertTray( m_pBuiltPanel, "AlertTray" );
 	m_pWrenchIcon = new CIconPanel( m_pBuiltPanel, "WrenchIcon" );
@@ -154,7 +154,7 @@ BaseClass( parent, "BuildingStatusItem" )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBuildingStatusItem::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -262,21 +262,21 @@ void CBuildingStatusItem::SetObject( C_BaseObject *pObj )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBuildingStatusItem::Paint( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBuildingStatusItem::PaintBackground( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CBuildingStatusItem::GetBackgroundImage( void )
 {
@@ -306,7 +306,7 @@ const char *CBuildingStatusItem::GetBackgroundImage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CBuildingStatusItem::GetInactiveBackgroundImage( void )
 {
@@ -314,7 +314,7 @@ const char *CBuildingStatusItem::GetInactiveBackgroundImage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBuildingStatusItem::OnTick()
 {
@@ -422,11 +422,11 @@ void CBuildingStatusItem::OnTick()
 			}
 			m_pAlertTray->SetAlertType( BUILDING_HUD_ALERT_NONE );
 		}
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseObject *CBuildingStatusItem::GetRepresentativeObject( void )
 {
@@ -441,7 +441,7 @@ C_BaseObject *CBuildingStatusItem::GetRepresentativeObject( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBuildingStatusItem::GetRepresentativeObjectType( void )
 {
@@ -449,7 +449,7 @@ int CBuildingStatusItem::GetRepresentativeObjectType( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBuildingStatusItem::GetRepresentativeObjectMode( void )
 {
@@ -457,7 +457,7 @@ int CBuildingStatusItem::GetRepresentativeObjectMode( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBuildingStatusItem::GetObjectPriority( void )
 {
@@ -469,7 +469,7 @@ int CBuildingStatusItem::GetObjectPriority( void )
 		nPriority = 0;
 	}
 
-	return nPriority;	
+	return nPriority;
 }
 
 //============================================================================
@@ -478,7 +478,7 @@ int CBuildingStatusItem::GetObjectPriority( void )
 DECLARE_BUILD_FACTORY( CBuildingStatusAlertTray );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBuildingStatusAlertTray::CBuildingStatusAlertTray(Panel *parent, const char *panelName) : BaseClass( parent, panelName )
 {
@@ -491,7 +491,7 @@ CBuildingStatusAlertTray::CBuildingStatusAlertTray(Panel *parent, const char *pa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBuildingStatusAlertTray::ApplySettings( KeyValues *inResourceData )
 {
@@ -506,7 +506,7 @@ void CBuildingStatusAlertTray::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBuildingStatusAlertTray::Paint( void )
 {
@@ -536,7 +536,7 @@ void CBuildingStatusAlertTray::Paint( void )
 	float flFrameDelta = ( flXb - flXa ) * ( 1.0 - m_flAlertDeployedPercent );
 
 	flXa += flFrameDelta;
-	flXb += flFrameDelta; 
+	flXb += flFrameDelta;
 
 	CMatRenderContextPtr pRenderContext( materials );
 	pRenderContext->Bind( m_pAlertPanelMaterial );
@@ -631,14 +631,14 @@ void CBuildingStatusAlertTray::LevelInit( void )
 }
 
 void CBuildingStatusAlertTray::SetAlertType( BuildingHudAlert_t alertLevel )
-{	
+{
 	m_lastAlertType = alertLevel;
 }
 
 //============================================================================
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBuildingStatusItem_SentryGun::CBuildingStatusItem_SentryGun( Panel *parent ) :
 CBuildingStatusItem( parent, "resource/UI/hud_obj_sentrygun.res", OBJ_SENTRYGUN, MODE_SENTRYGUN_NORMAL )
@@ -659,7 +659,7 @@ CBuildingStatusItem( parent, "resource/UI/hud_obj_sentrygun.res", OBJ_SENTRYGUN,
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBuildingStatusItem_SentryGun::ApplySchemeSettings( vgui::IScheme *scheme )
 {
@@ -742,7 +742,7 @@ void CBuildingStatusItem_SentryGun::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBuildingStatusItem_SentryGun::OnTick()
 {
@@ -750,7 +750,7 @@ void CBuildingStatusItem_SentryGun::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CBuildingStatusItem_SentryGun::GetBackgroundImage( void )
 {
@@ -779,7 +779,7 @@ const char *CBuildingStatusItem_SentryGun::GetBackgroundImage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CBuildingStatusItem_SentryGun::GetInactiveBackgroundImage( void )
 {
@@ -789,7 +789,7 @@ const char *CBuildingStatusItem_SentryGun::GetInactiveBackgroundImage( void )
 //============================================================================
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBuildingStatusItem_SentryGun_Disposable::CBuildingStatusItem_SentryGun_Disposable( Panel *parent ) :
 CBuildingStatusItem( parent, "resource/UI/hud_obj_sentrygun_disp.res", OBJ_SENTRYGUN, MODE_SENTRYGUN_DISPOSABLE )
@@ -807,7 +807,7 @@ CBuildingStatusItem( parent, "resource/UI/hud_obj_sentrygun_disp.res", OBJ_SENTR
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBuildingStatusItem_SentryGun_Disposable::ApplySchemeSettings( vgui::IScheme *scheme )
 {
@@ -865,7 +865,7 @@ void CBuildingStatusItem_SentryGun_Disposable::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBuildingStatusItem_SentryGun_Disposable::OnTick()
 {
@@ -873,7 +873,7 @@ void CBuildingStatusItem_SentryGun_Disposable::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CBuildingStatusItem_SentryGun_Disposable::GetBackgroundImage( void )
 {
@@ -902,7 +902,7 @@ const char *CBuildingStatusItem_SentryGun_Disposable::GetBackgroundImage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CBuildingStatusItem_SentryGun_Disposable::GetInactiveBackgroundImage( void )
 {
@@ -912,7 +912,7 @@ const char *CBuildingStatusItem_SentryGun_Disposable::GetInactiveBackgroundImage
 //============================================================================
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBuildingStatusItem_Dispenser::CBuildingStatusItem_Dispenser( Panel *parent ) :
 CBuildingStatusItem( parent, "resource/UI/hud_obj_dispenser.res", OBJ_DISPENSER )
@@ -952,9 +952,9 @@ void CBuildingStatusItem_Dispenser::PerformLayout( void )
 	int iMetal = pDispenser->GetUpgradeMetal();
 	int iMetalRequired = pDispenser->GetUpgradeMetalRequired();
 	flProgress = (float)iMetal / (float)iMetalRequired;
-	
+
 	m_pUpgradeProgress->SetProgress( flProgress );
-	
+
 	// upgrade label only in 1 or 2
 	bool bShowUpgradeInfo = iUpgradeLevel < 3;
 	m_pUpgradeIcon->SetVisible( bShowUpgradeInfo );
@@ -966,7 +966,7 @@ void CBuildingStatusItem_Dispenser::PerformLayout( void )
 //============================================================================
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBuildingStatusItem_TeleporterEntrance::CBuildingStatusItem_TeleporterEntrance( Panel *parent ) :
 CBuildingStatusItem( parent, "resource/UI/hud_obj_tele_entrance.res", OBJ_TELEPORTER, MODE_TELEPORTER_ENTRANCE )
@@ -988,7 +988,7 @@ CBuildingStatusItem( parent, "resource/UI/hud_obj_tele_entrance.res", OBJ_TELEPO
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBuildingStatusItem_TeleporterEntrance::OnTick( void )
 {
@@ -1010,7 +1010,7 @@ void CBuildingStatusItem_TeleporterEntrance::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBuildingStatusItem_TeleporterEntrance::PerformLayout( void )
 {
@@ -1030,7 +1030,7 @@ void CBuildingStatusItem_TeleporterEntrance::PerformLayout( void )
 	m_pFullyChargedPanel->SetVisible( !bRecharging );
 
 	// How many times has this teleporter been used?
-	m_pFullyChargedPanel->SetDialogVariable( "timesused", pTeleporter->GetTimesUsed() );		
+	m_pFullyChargedPanel->SetDialogVariable( "timesused", pTeleporter->GetTimesUsed() );
 
 	int iUpgradeLevel = pTeleporter->GetUpgradeLevel();
 
@@ -1057,7 +1057,7 @@ CBuildingStatusItem( parent, "resource/UI/hud_obj_tele_exit.res", OBJ_TELEPORTER
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBuildingStatusItem_TeleporterExit::PerformLayout( void )
 {
@@ -1108,7 +1108,7 @@ CBuildingStatusItem( parent, "resource/UI/hud_obj_tele_speedpad.res", OBJ_TELEPO
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBuildingStatusItem_TeleporterSpeed::OnTick( void )
 {
@@ -1130,7 +1130,7 @@ void CBuildingStatusItem_TeleporterSpeed::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBuildingStatusItem_TeleporterSpeed::PerformLayout( void )
 {
@@ -1169,7 +1169,7 @@ void CBuildingStatusItem_TeleporterSpeed::PerformLayout( void )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBuildingStatusItem_Sapper::CBuildingStatusItem_Sapper( Panel *parent ) :
 CBuildingStatusItem( parent, "resource/UI/hud_obj_sapper.res", OBJ_ATTACHMENT_SAPPER )
@@ -1177,7 +1177,7 @@ CBuildingStatusItem( parent, "resource/UI/hud_obj_sapper.res", OBJ_ATTACHMENT_SA
 	// health of target building
 	m_pTargetHealthBar = new ContinuousProgressBar( GetRunningPanel(), "TargetHealth" );
 
-	// image of target building 
+	// image of target building
 	m_pTargetIcon = new CIconPanel( GetRunningPanel(), "TargetIcon" );
 
 	// force first think to set the icon
@@ -1191,7 +1191,7 @@ void CBuildingStatusItem_Sapper::PerformLayout( void )
 	// We only tick while active and with a valid built object
 	C_ObjectSapper *pSapper = static_cast<C_ObjectSapper*>(GetRepresentativeObject());
 
-	// only visible 
+	// only visible
 	SetVisible( pSapper != NULL );
 
 	if ( !IsActive() || !pSapper )
@@ -1229,7 +1229,7 @@ void CBuildingStatusItem_Sapper::PerformLayout( void )
 DECLARE_HUDELEMENT( CHudBuildingStatusContainer_Spy );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudBuildingStatusContainer_Spy::CHudBuildingStatusContainer_Spy( const char *pElementName ) :
 BaseClass( "BuildingStatus_Spy" )
@@ -1238,7 +1238,7 @@ BaseClass( "BuildingStatus_Spy" )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudBuildingStatusContainer_Spy::ShouldDraw( void )
 {
@@ -1262,7 +1262,7 @@ bool CHudBuildingStatusContainer_Spy::ShouldDraw( void )
 DECLARE_HUDELEMENT( CHudBuildingStatusContainer_Engineer );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudBuildingStatusContainer_Engineer::CHudBuildingStatusContainer_Engineer( const char *pElementName ) :
 BaseClass( "BuildingStatus_Engineer" )
@@ -1281,7 +1281,7 @@ BaseClass( "BuildingStatus_Engineer" )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudBuildingStatusContainer_Engineer::ShouldDraw( void )
 {
@@ -1303,12 +1303,12 @@ bool CHudBuildingStatusContainer_Engineer::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBuildingStatusContainer_Engineer::OnTick()
 {
 	BaseClass::OnTick();
-	
+
 	if ( !ShouldDraw() )
 		return;
 
@@ -1327,10 +1327,10 @@ void CHudBuildingStatusContainer_Engineer::OnTick()
 			}
 		}
 
-#ifdef STAGING_ONLY	
+#ifdef STAGING_ONLY
 		int iSpeedPad = 0;
 		CALL_ATTRIB_HOOK_INT_ON_OTHER( pLocalPlayer, iSpeedPad, teleporter_is_speedpad );
-#endif // STAGING_ONLY		
+#endif // STAGING_ONLY
 
 		for ( int i = 0 ; i < m_BuildingPanels.Count() ; i++ )
 		{
@@ -1343,12 +1343,12 @@ void CHudBuildingStatusContainer_Engineer::OnTick()
 					pItem->SetVisible( bDisposableSentriesVisible );
 				}
 
-#ifndef STAGING_ONLY	
+#ifndef STAGING_ONLY
 				break;
 #endif // !STAGING_ONLY
 			}
 
-#ifdef STAGING_ONLY	
+#ifdef STAGING_ONLY
 			// Disable entrance and exit
 			if ( pItem && ( pItem->GetRepresentativeObjectType() == OBJ_TELEPORTER ) )
 			{
@@ -1361,7 +1361,7 @@ void CHudBuildingStatusContainer_Engineer::OnTick()
 					pItem->SetVisible( !(bool)(iSpeedPad) );
 				}
 			}
-#endif // STAGING_ONLY		
+#endif // STAGING_ONLY
 		}
 	}
 }
@@ -1376,7 +1376,7 @@ static bool BuildingOrderLessFunc( const BUILDINGSTATUSITEM_PTR &left, const BUI
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudBuildingStatusContainer::CHudBuildingStatusContainer( const char *pElementName ) :
 CHudElement( pElementName ), BaseClass( NULL, pElementName )
@@ -1401,7 +1401,7 @@ CHudElement( pElementName ), BaseClass( NULL, pElementName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudBuildingStatusContainer::ShouldDraw( void )
 {
@@ -1414,7 +1414,7 @@ bool CHudBuildingStatusContainer::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBuildingStatusContainer::LevelInit( void )
 {
@@ -1437,7 +1437,7 @@ void CHudBuildingStatusContainer::LevelInit( void )
 CBuildingStatusItem *CHudBuildingStatusContainer::CreateItemPanel( int iObjectType, int iObjectMode )
 {
 	CBuildingStatusItem *pBuildingItem = NULL;
-	
+
 	switch( iObjectType )
 	{
 	case OBJ_SENTRYGUN:
@@ -1462,7 +1462,7 @@ CBuildingStatusItem *CHudBuildingStatusContainer::CreateItemPanel( int iObjectTy
 		{
 			pBuildingItem = new CBuildingStatusItem_TeleporterExit( this );
 		}
-#ifdef STAGING_ONLY		
+#ifdef STAGING_ONLY
 		else if ( iObjectMode == 2 )
 		{
 			pBuildingItem = new CBuildingStatusItem_TeleporterSpeed( this, MODE_TELEPORTER_SPEED );
@@ -1480,14 +1480,14 @@ CBuildingStatusItem *CHudBuildingStatusContainer::CreateItemPanel( int iObjectTy
 		pBuildingItem = NULL;
 		break;
 	}
-	
+
 	Assert( pBuildingItem );
 
 	return pBuildingItem;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBuildingStatusContainer::AddBuildingPanel( int iObjectType, int iObjectMode )
 {
@@ -1504,7 +1504,7 @@ void CHudBuildingStatusContainer::AddBuildingPanel( int iObjectType, int iObject
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBuildingStatusContainer::UpdateAllBuildings( void )
 {
@@ -1563,7 +1563,7 @@ void CHudBuildingStatusContainer::OnBuildingChanged( int iBuildingType, int iBui
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBuildingStatusContainer::ApplySchemeSettings( vgui::IScheme *scheme )
 {
@@ -1609,14 +1609,14 @@ void CHudBuildingStatusContainer::RepositionObjectPanels( void )
 						flTeleExitY = flYPos;
 						flYPos += pItem->GetTall();
 						break;
-#ifdef STAGING_ONLY						
+#ifdef STAGING_ONLY
 					case MODE_TELEPORTER_SPEED:
 						pItem->SetPos( flXPos, flTeleEntranceY );
 						break;
 					case MODE_TELEPORTER_SPEED2:
-						pItem->SetPos( flXPos, flTeleExitY );						
+						pItem->SetPos( flXPos, flTeleExitY );
 						break;
-#endif						
+#endif
 				}
 			}
 			else
@@ -1628,7 +1628,7 @@ void CHudBuildingStatusContainer::RepositionObjectPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudBuildingStatusContainer::FireGameEvent( IGameEvent *event )
 {
@@ -1693,7 +1693,7 @@ void CHudBuildingStatusContainer::RecalculateAlertState( void )
 void CHudBuildingStatusContainer::OnTick( void )
 {
 	if ( m_AlertLevel >= BUILDING_HUD_ALERT_VERY_LOW_AMMO &&
-		gpGlobals->curtime >= m_flNextBeep && 
+		gpGlobals->curtime >= m_flNextBeep &&
 		m_iNumBeepsToBeep > 0 )
 	{
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();

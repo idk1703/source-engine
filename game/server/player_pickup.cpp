@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -18,7 +18,7 @@ void Pickup_ForcePlayerToDropThisObject( CBaseEntity *pTarget )
 		return;
 
 	IPhysicsObject *pPhysics = pTarget->VPhysicsGetObject();
-	
+
 	if ( pPhysics == NULL )
 		return;
 
@@ -172,4 +172,3 @@ bool Pickup_ShouldPuntUseLaunchForces( CBaseEntity *pObject, PhysGunForce_t reas
 	}
 	return false;
 }
-

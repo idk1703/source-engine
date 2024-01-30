@@ -94,15 +94,15 @@ struct hfxVec3
 #endif HFX_ZERO_INIT
 	HFX_INLINE hfxVec3();
 #endif
-	
+
 	HFX_INLINE double &operator [](int i);
 	HFX_INLINE const double &operator[](int i) const;
 
 	HFX_INLINE operator double *();
 	HFX_INLINE operator const double *() const;
-	
+
 	HFX_INLINE hfxVec3 operator -() const;
-	
+
 	HFX_INLINE hfxVec3 operator -(const hfxVec3 &vect) const;
 	HFX_INLINE hfxVec3 &operator -=(const hfxVec3 &vect);
 
@@ -113,12 +113,12 @@ struct hfxVec3
 	HFX_INLINE hfxVec3 operator *(const double &df) const;
 	//HFX_INLINE hfxVec3 operator *(const float f) const;
 	//HFX_INLINE hfxVec3 operator *(const int i){return ((*this)*((double)i));};
-	
+
 	HFX_INLINE hfxVec3 operator /(const hfxVec3 &vect) const;
 	HFX_INLINE hfxVec3 operator /(const double &df) const;
 	//HFX_INLINE hfxVec3 operator /(const float f) const;
 	//HFX_INLINE hfxVec3 operator /(const int i){return ((*this)/((double)i));};
-	
+
 	HFX_INLINE hfxVec3 &operator /=(const hfxVec3 &vect);
 	HFX_INLINE hfxVec3 &operator /=(const double &df);
 	//HFX_INLINE hfxVec3 &operator /=(const float f);
@@ -135,7 +135,7 @@ struct hfxVec3
 
 	HFX_INLINE const double *operator *()const;
 	HFX_INLINE double *operator *();
-	
+
 	HFX_INLINE hfxVec3 Cross(const hfxVec3 &vect) const;
 	HFX_INLINE double Dot( const hfxVec3 &vect ) const;
 	HFX_INLINE double Magnitude() const;
@@ -166,15 +166,15 @@ struct hfxVec3F : public HFX_vect3Base32
 	HFX_INLINE hfxVec3F(const float array_f[3] );
 	HFX_INLINE hfxVec3F(const hfxVec3F &_copy);
 	HFX_INLINE hfxVec3F();
-	
+
 	HFX_INLINE float &operator [](int i);
 	HFX_INLINE const float &operator[](int i) const;
 
 	HFX_INLINE operator float *();
 	HFX_INLINE operator const float *() const;
-	
+
 	HFX_INLINE hfxVec3F operator -() const;
-	
+
 	HFX_INLINE hfxVec3F operator -(const hfxVec3F &vect) const;
 	HFX_INLINE hfxVec3F &operator -=(const hfxVec3F &vect);
 
@@ -185,12 +185,12 @@ struct hfxVec3F : public HFX_vect3Base32
 	HFX_INLINE hfxVec3F operator *(const float f) const;
 	//HFX_INLINE hfxVec3F operator *(const double &df) const;
 	//HFX_INLINE hfxVec3F operator *(const int i){return ((*this)*(double)i);};
-	
+
 	HFX_INLINE hfxVec3F operator /(const hfxVec3F &vect) const;
 	HFX_INLINE hfxVec3F operator /(const float f) const;
 	//HFX_INLINE hfxVec3F operator /(const double &df) const;
 	//HFX_INLINE hfxVec3F operator /(const int i){return ((*this)/(double)i);};
-	
+
 	HFX_INLINE hfxVec3F &operator /=(const hfxVec3F &vect);
 	HFX_INLINE hfxVec3F &operator /=(const float f);
 	//HFX_INLINE hfxVec3F &operator /=(const double &df);
@@ -208,7 +208,7 @@ struct hfxVec3F : public HFX_vect3Base32
 
 	HFX_INLINE const float *operator *()const;
 	HFX_INLINE float *operator *();
-	
+
 	HFX_INLINE hfxVec3F Cross(const hfxVec3F &vect) const;
 	HFX_INLINE float Dot( const hfxVec3F &vect ) const;
 	HFX_INLINE float Magnitude() const;

@@ -34,23 +34,23 @@ using namespace std;
 
 //------------------------------------------------------------------------------------------------------
 // Purpose:  CEventList is just a thin wrapper around a list of CLogEvent objects
-// It also provides a factory method to read and return a CEventList from a 
+// It also provides a factory method to read and return a CEventList from a
 // log file
 //------------------------------------------------------------------------------------------------------
 class CEventList
 {
 public:
-	static CEventList* readEventList(const char* filename);	
+	static CEventList* readEventList(const char* filename);
 	void insert(CEventListIterator cli, const CLogEvent* cle){m_List.insert(cli,cle);}
 	CEventListIterator begin(){return m_List.begin();}
 	CEventListIterator end(){return m_List.end();}
 	bool empty(){return m_List.empty();}
-	
+
 private:
 	event_list m_List;
-	
-	
-	
+
+
+
 };
 
 

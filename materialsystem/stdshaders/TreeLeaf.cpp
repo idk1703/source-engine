@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -74,7 +74,7 @@ BEGIN_VS_SHADER_FLAGS( TreeLeaf, "Help for TreeLeaf", SHADER_NOT_EDITABLE )
 
 			// we are writing linear values from this shader.
 			// This is kinda wrong.  We are writing linear or gamma depending on "IsHDREnabled" below.
-			// The COLOR really decides if we are gamma or linear.  
+			// The COLOR really decides if we are gamma or linear.
 			pShaderShadow->EnableSRGBWrite( false );
 		}
 		DYNAMIC_STATE

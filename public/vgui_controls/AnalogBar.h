@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -40,7 +40,7 @@ public:
 
 	void SetBarInset( int pixels );
 	int GetBarInset( void );
-	
+
 	virtual void ApplySettings(KeyValues *inResourceData);
 	virtual void GetSettings(KeyValues *outResourceData);
 	virtual const char *GetDescription();
@@ -86,7 +86,7 @@ private:
 	int _segmentWide;
 	int m_iBarInset;
 	char *m_pszDialogVar;
-	
+
 	float m_fHomeValue;
 	Color m_HomeColor;
 };

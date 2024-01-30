@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,7 +20,7 @@ BEGIN_DATADESC( CAI_PoliceGoal )
 
 	DEFINE_KEYFIELD( m_flRadius,	FIELD_FLOAT,	"PoliceRadius" ),
 	DEFINE_KEYFIELD( m_iszTarget,	FIELD_STRING,	"PoliceTarget" ),
-	
+
 	DEFINE_FIELD( m_bOverrideKnockOut, FIELD_BOOLEAN ),
 	// m_hTarget
 
@@ -36,7 +36,7 @@ BEGIN_DATADESC( CAI_PoliceGoal )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CAI_PoliceGoal::CAI_PoliceGoal( void )
 {
@@ -45,7 +45,7 @@ CAI_PoliceGoal::CAI_PoliceGoal( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CAI_PoliceGoal::GetRadius( void )
@@ -54,7 +54,7 @@ float CAI_PoliceGoal::GetRadius( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CBaseEntity
 //-----------------------------------------------------------------------------
 CBaseEntity *CAI_PoliceGoal::GetTarget( void )
@@ -76,8 +76,8 @@ CBaseEntity *CAI_PoliceGoal::GetTarget( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &targetPos - 
+// Purpose:
+// Input  : &targetPos -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_PoliceGoal::ShouldKnockOutTarget( const Vector &targetPos, bool bTargetVisible )
@@ -107,8 +107,8 @@ bool CAI_PoliceGoal::ShouldKnockOutTarget( const Vector &targetPos, bool bTarget
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTarget - 
+// Purpose:
+// Input  : *pTarget -
 //-----------------------------------------------------------------------------
 void CAI_PoliceGoal::KnockOutTarget( CBaseEntity *pTarget )
 {
@@ -116,7 +116,7 @@ void CAI_PoliceGoal::KnockOutTarget( CBaseEntity *pTarget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_PoliceGoal::ShouldRemainAtPost( void )
@@ -125,8 +125,8 @@ bool CAI_PoliceGoal::ShouldRemainAtPost( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : level - 
+// Purpose:
+// Input  : level -
 //-----------------------------------------------------------------------------
 void CAI_PoliceGoal::FireWarningLevelOutput( int level )
 {
@@ -151,8 +151,8 @@ void CAI_PoliceGoal::FireWarningLevelOutput( int level )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &data - 
+// Purpose:
+// Input  : &data -
 //-----------------------------------------------------------------------------
 void CAI_PoliceGoal::InputEnableKnockOut( inputdata_t &data )
 {
@@ -160,11 +160,10 @@ void CAI_PoliceGoal::InputEnableKnockOut( inputdata_t &data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &data - 
+// Purpose:
+// Input  : &data -
 //-----------------------------------------------------------------------------
 void CAI_PoliceGoal::InputDisableKnockOut( inputdata_t &data )
 {
 	m_bOverrideKnockOut = false;
 }
-

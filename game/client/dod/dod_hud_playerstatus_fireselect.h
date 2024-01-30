@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -40,6 +40,6 @@ private:
 	CIconPanel *m_pBulletLeft;
 	CIconPanel *m_pBulletCenter;
 	CIconPanel *m_pBulletRight;
-};	
+};
 
 #endif // DOD_HUD_PLAYERSTATUS_FIRESELECT_H

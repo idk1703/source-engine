@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,7 +19,7 @@ class CWeaponC96 : public CDODFullAutoWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponC96, CDODFullAutoWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
 
@@ -49,7 +49,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( weapon_c96, CWeaponC96 );
 PRECACHE_WEAPON_REGISTER( weapon_c96 );
 
-acttable_t CWeaponC96::m_acttable[] = 
+acttable_t CWeaponC96::m_acttable[] =
 {
 	{ ACT_DOD_STAND_AIM,					ACT_DOD_STAND_AIM_C96,			false },
 	{ ACT_DOD_CROUCH_AIM,					ACT_DOD_CROUCH_AIM_C96,			false },
@@ -87,7 +87,7 @@ Activity CWeaponC96::GetIdleActivity( void )
 	Activity actIdle;
 
 	if( m_iClip1 <= 0 )
-		actIdle = ACT_VM_IDLE_EMPTY;	
+		actIdle = ACT_VM_IDLE_EMPTY;
 	else
 		actIdle = ACT_VM_IDLE;
 
@@ -99,7 +99,7 @@ Activity CWeaponC96::GetPrimaryAttackActivity( void )
 	Activity actPrim;
 
 	if( m_iClip1 <= 0 )
-		actPrim = ACT_VM_PRIMARYATTACK_EMPTY;	
+		actPrim = ACT_VM_PRIMARYATTACK_EMPTY;
 	else
 		actPrim = ACT_VM_PRIMARYATTACK;
 
@@ -111,7 +111,7 @@ Activity CWeaponC96::GetDrawActivity( void )
 	Activity actDraw;
 
 	if( m_iClip1 <= 0 )
-		actDraw = ACT_VM_DRAW_EMPTY;	
+		actDraw = ACT_VM_DRAW_EMPTY;
 	else
 		actDraw = ACT_VM_DRAW;
 
@@ -123,7 +123,7 @@ Activity CWeaponC96::GetReloadActivity( void )
 	Activity actReload;
 
 	if( m_iClip1 <= 0 )
-		actReload = ACT_VM_RELOAD_EMPTY;	
+		actReload = ACT_VM_RELOAD_EMPTY;
 	else
 		actReload = ACT_VM_RELOAD;
 

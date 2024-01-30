@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -39,7 +39,7 @@ class CGizmo : public CMapAtom
 
 		void Render(CRender3D *pRender);
 
-		inline void SetAxisLength(float fLength); 
+		inline void SetAxisLength(float fLength);
 		inline void SetPosition(float x, float y, float z);
 
 		void DrawGizmoAxis(CRender3D *pRender, Vector& Origin, Vector& EndPoint, int red, int green, int blue, unsigned int uAxisHandle);
@@ -63,9 +63,9 @@ void CGizmo::SetAxisLength(float fLength)
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the gizmo's position.
-// Input  : x - 
-//			y - 
-//			z - 
+// Input  : x -
+//			y -
+//			z -
 //-----------------------------------------------------------------------------
 void CGizmo::SetPosition(float x, float y, float z)
 {

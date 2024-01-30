@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -36,10 +36,10 @@ public:
 
 	// Returns the current count of available samples
 	int SampleCount( void );
-	
+
 	// returns the size of each sample in bytes
 	int SampleSize( void ) { return m_sampleSize; }
-	
+
 	// returns the sampling rate of the data
 	int SampleRate( void ) { return m_sampleRate; }
 
@@ -211,7 +211,7 @@ void CAudioWaveInput::OpenDevice( void )
 			m_buffers[i]->dwBufferLength = bufferSize;
 			m_buffers[i]->dwUser = 0;
 			m_buffers[i]->dwFlags = 0;
-	
+
 			waveInPrepareHeader( m_deviceHandle, m_buffers[i], sizeof( *m_buffers[i] ) );
 			waveInAddBuffer( m_deviceHandle, m_buffers[i], sizeof( *m_buffers[i] ) );
 		}
@@ -624,7 +624,7 @@ CAudioBuffer *CAudioWaveOutput::GetEmptyBuffer( void )
 	{
 		for ( int i = 0; i < OUTPUT_BUFFER_COUNT; i++ )
 		{
-			if ( !(m_buffers[ i ].submitted ) || 
+			if ( !(m_buffers[ i ].submitted ) ||
 				m_buffers[i].hdr->dwFlags & WHDR_DONE )
 			{
 				pOutput = &m_buffers[i];
@@ -634,7 +634,7 @@ CAudioBuffer *CAudioWaveOutput::GetEmptyBuffer( void )
 			}
 		}
 	}
-	
+
 	return pOutput;
 }
 
@@ -681,7 +681,7 @@ void CAudioWaveOutput::Update( float time )
 	if ( time > m_mixTime )
 	{
 		CAudioBuffer *pBuffer = GetEmptyBuffer();
-		
+
 		// no free buffers, mixing is ahead of the playback!
 		if ( !pBuffer || !pBuffer->hdr )
 		{
@@ -697,7 +697,7 @@ void CAudioWaveOutput::Update( float time )
 		m_mixTime += sampleCount * (1.0f / OUTPUT_SAMPLE_RATE);
 
 		short *pSamples = reinterpret_cast<short *>(pBuffer->hdr->lpData);
-		
+
 		SilenceBuffer( pSamples, sampleCount );
 
 		int tempCount = sampleCount;
@@ -731,8 +731,8 @@ void CAudioWaveOutput::Update( float time )
 					{
 						AddToReferencedList( pSource, pBuffer );
 					}
-				} 
-				else 
+				}
+				else
 				{
 					if ( !IsSourceReferencedByActiveBuffer( pSource ) )
 					{
@@ -977,7 +977,7 @@ struct CSoundFile
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CSceneManagerSound : public ISceneManagerSound
 {
@@ -1030,7 +1030,7 @@ CSceneManagerSound::~CSceneManagerSound( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CAudioOuput	*CSceneManagerSound::GetAudioOutput( void )
 {

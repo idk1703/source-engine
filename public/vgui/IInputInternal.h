@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -38,7 +38,7 @@ public:
 	// called when a panel becomes invalid
 	virtual void PanelDeleted(VPANEL panel) = 0;
 
-	// inputs into vgui input handling 
+	// inputs into vgui input handling
 	virtual bool InternalCursorMoved(int x,int y) = 0; //expects input in surface space
 	virtual bool InternalMousePressed(MouseCode code) = 0;
 	virtual bool InternalMouseDoublePressed(MouseCode code) = 0;
@@ -52,7 +52,7 @@ public:
 	// Creates/ destroys "input" contexts, which contains information
 	// about which controls have mouse + key focus, for example.
 	virtual HInputContext CreateInputContext() = 0;
-	virtual void DestroyInputContext( HInputContext context ) = 0; 
+	virtual void DestroyInputContext( HInputContext context ) = 0;
 
 	// Associates a particular panel with an input context
 	// Associating NULL is valid; it disconnects the panel from the context

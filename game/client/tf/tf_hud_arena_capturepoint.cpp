@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -29,7 +29,7 @@ using namespace vgui;
 extern ConVar tf_arena_preround_time;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudArenaCapPointCountdown : public CHudElement, public EditablePanel
 {
@@ -58,7 +58,7 @@ private:
 DECLARE_HUDELEMENT( CHudArenaCapPointCountdown );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudArenaCapPointCountdown::CHudArenaCapPointCountdown( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudArenaCapPointCountdown" )
 {
@@ -81,7 +81,7 @@ CHudArenaCapPointCountdown::CHudArenaCapPointCountdown( const char *pElementName
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaCapPointCountdown::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -94,7 +94,7 @@ void CHudArenaCapPointCountdown::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudArenaCapPointCountdown::IsVisible( void )
 {
@@ -108,7 +108,7 @@ bool CHudArenaCapPointCountdown::IsVisible( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudArenaCapPointCountdown::OnTick( void )
 {
@@ -135,7 +135,7 @@ void CHudArenaCapPointCountdown::OnTick( void )
 	}
 
 	int iTimeLeft = ceil( TFGameRules()->GetCapturePointTime() - gpGlobals->curtime );
-	
+
 
 	if ( iTimeLeft > 5 || iTimeLeft <= 0 )
 	{
@@ -150,7 +150,7 @@ void CHudArenaCapPointCountdown::OnTick( void )
 		m_bFire3SecRemain = true;
 		m_bFire2SecRemain = true;
 		m_bFire1SecRemain = true;
-	
+
 		SetVisible( false );
 		return;
 	}

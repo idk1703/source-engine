@@ -27,9 +27,8 @@ class CToolMenuButton;
 //-----------------------------------------------------------------------------
 // Global function to create the switch menu
 //-----------------------------------------------------------------------------
-CToolMenuButton* CreateToolEditMenuButton( vgui::Panel *parent, const char *panelName, 
+CToolMenuButton* CreateToolEditMenuButton( vgui::Panel *parent, const char *panelName,
 	const char *text, vgui::Panel *pActionTarget );
 
 
 #endif // TOOLEDITMENUBUTTON_H
-

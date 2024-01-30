@@ -35,30 +35,30 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEMuzzleFlash::CTEMuzzleFlash( const char *name ) :
 	CBaseTempEntity( name )
 {
 	m_vecOrigin.Init();
 	m_vecAngles.Init();
-	
+
 	m_flScale	= 1.0f;
 	m_nType		= 0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEMuzzleFlash::~CTEMuzzleFlash( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEMuzzleFlash::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -76,15 +76,15 @@ END_SEND_TABLE()
 static CTEMuzzleFlash g_TEMuzzleFlash( "MuzzleFlash" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			origin - 
-//			*recipient - 
-//			*origin - 
-//			*dir - 
-//			scale - 
-//			type - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			origin -
+//			*recipient -
+//			*origin -
+//			*dir -
+//			scale -
+//			type -
 //-----------------------------------------------------------------------------
 void TE_MuzzleFlash( IRecipientFilter& filter, float delay,
 	const Vector &start, const QAngle &angles, float scale, int type )

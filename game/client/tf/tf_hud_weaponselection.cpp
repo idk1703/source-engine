@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -107,7 +107,7 @@ protected:
 	void		 DrawSelection( C_BaseCombatWeapon *pSelectedWeapon );
 
 	virtual bool IsWeaponSelectable()
-	{ 
+	{
 		if (IsInSelectionMode())
 			return true;
 
@@ -123,13 +123,13 @@ private:
 	int GetNumVisibleSlots();
 	bool ShouldDrawInternal();
 
-	virtual	void SetSelectedWeapon( C_BaseCombatWeapon *pWeapon ) 
-	{ 
+	virtual	void SetSelectedWeapon( C_BaseCombatWeapon *pWeapon )
+	{
 		m_hSelectedWeapon = pWeapon;
 	}
 
-	virtual	void SetSelectedSlot( int slot ) 
-	{ 
+	virtual	void SetSelectedSlot( int slot )
+	{
 		m_iSelectedSlot = slot;
 	}
 
@@ -310,7 +310,7 @@ bool CHudWeaponSelection::ShouldDraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudWeaponSelection::ShouldDrawInternal()
 {
@@ -349,7 +349,7 @@ bool CHudWeaponSelection::ShouldDrawInternal()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponSelection::Init()
 {
@@ -357,12 +357,12 @@ void CHudWeaponSelection::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponSelection::LevelInit()
 {
 	CHudElement::LevelInit();
-	
+
 	m_iMaxSlots = clamp( m_iMaxSlots, 0, MAX_WEAPON_SLOTS );
 
 	for ( int i = 0; i < MAX_WEAPON_SLOTS; i++ )
@@ -373,7 +373,7 @@ void CHudWeaponSelection::LevelInit()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponSelection::LevelShutdown( void )
 {
@@ -447,7 +447,7 @@ void CHudWeaponSelection::ComputeSlotLayout( SlotLayout_t *rSlot, int nActiveSlo
 				rSlot[i].x = xStartPos - ( rSlot[i].wide + m_flBoxGap );
 				rSlot[i].y = ypos;
 
-				ypos += ( rSlot[i].tall + m_flBoxGap );	
+				ypos += ( rSlot[i].tall + m_flBoxGap );
 			}
 		}
 		break;
@@ -499,7 +499,7 @@ void CHudWeaponSelection::ComputeSlotLayout( SlotLayout_t *rSlot, int nActiveSlo
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponSelection::PerformLayout( void )
 {
@@ -585,7 +585,7 @@ void CHudWeaponSelection::PerformLayout( void )
 					continue;
 
 				m_pModelPanels[i]->SetItem( pWeapon->GetAttributeContainer()->GetItem() );
-				
+
 				m_pModelPanels[i]->SetSize( rSlot[i].wide, rSlot[ i ].tall );
 				vgui::IScheme *pScheme = vgui::scheme()->GetIScheme( GetScheme() );
 				m_pModelPanels[i]->SetBorder( pScheme->GetBorder("TFFatLineBorder") );
@@ -638,7 +638,7 @@ void CHudWeaponSelection::PostChildPaint()
 			while ( !GetFirstPos( ++m_iDemoModeSlot ) && m_iDemoModeSlot < m_iMaxSlots )
 			{
 				// blank
-			}			
+			}
 			m_flDemoModeChangeTime = gpGlobals->curtime + tf_weapon_select_demo_time.GetFloat();
 			InvalidateLayout();
 		}
@@ -648,7 +648,7 @@ void CHudWeaponSelection::PostChildPaint()
 			m_iDemoModeSlot = -1;
 			gHUD.UnlockRenderGroup( gHUD.LookupRenderGroupIndexByName( "weapon_selection" ) );
 		}
-	}	
+	}
 
 	// find and display our current selection
 	C_BaseCombatWeapon *pSelectedWeapon = NULL;
@@ -726,7 +726,7 @@ void CHudWeaponSelection::DrawSelection( C_BaseCombatWeapon *pSelectedWeapon )
 	{
 		int xpos, ypos;
 		m_pModelPanels[i]->GetPos( xpos, ypos );
-		
+
 		int wide, tall;
 		m_pModelPanels[i]->GetSize( wide, tall );
 
@@ -798,7 +798,7 @@ void CHudWeaponSelection::DrawSelection( C_BaseCombatWeapon *pSelectedWeapon )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponSelection::DrawWeaponTexture( C_TFPlayer *pPlayer, C_BaseCombatWeapon *pWeapon, int xpos, int ypos, float flLargeBoxWide, float flLargeBoxTall )
 {
@@ -820,7 +820,7 @@ void CHudWeaponSelection::DrawWeaponTexture( C_TFPlayer *pPlayer, C_BaseCombatWe
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponSelection::DrawString( wchar_t *text, int xpos, int ypos, Color col, bool bCenter )
 {
@@ -832,7 +832,7 @@ void CHudWeaponSelection::DrawString( wchar_t *text, int xpos, int ypos, Color c
 	{
 		for (wchar_t *pch = text; *pch != 0; pch++)
 		{
-			if (*pch == '\n') 
+			if (*pch == '\n')
 			{
 				// newline character, drop to the next line
 				if (slen > maxslen)
@@ -1166,7 +1166,7 @@ C_BaseCombatWeapon *CHudWeaponSelection::GetWeaponInSlot( int iSlot, int iSlotPo
 	for ( int i = 0; i < MAX_WEAPONS; i++ )
 	{
 		C_BaseCombatWeapon *pWeapon = player->GetWeapon(i);
-		
+
 		if ( pWeapon == NULL )
 			continue;
 
@@ -1178,7 +1178,7 @@ C_BaseCombatWeapon *CHudWeaponSelection::GetWeaponInSlot( int iSlot, int iSlotPo
 }
 
 C_BaseCombatWeapon *CHudWeaponSelection::GetSelectedWeapon( void )
-{ 
+{
 	if ( hud_fastswitch.GetInt() == 0 && !::input->IsSteamControllerActive() && m_iDemoModeSlot >= 0 )
 	{
 		C_BaseCombatWeapon *pWeapon = GetFirstPos( m_iDemoModeSlot );
@@ -1295,7 +1295,7 @@ void CHudWeaponSelection::PlusTypeFastWeaponSwitch( int iWeaponSlot, bool *pbPla
 		int increment = 1;
 		if ( m_iSelectedSlot != iWeaponSlot )
 		{
-			// Decrementing within the slot. If we're at the zero position in this slot, 
+			// Decrementing within the slot. If we're at the zero position in this slot,
 			// jump to the zero position of the opposite slot. This also counts as our increment.
 			increment = -1;
 			if ( 0 == m_iSelectedBoxPosition )
@@ -1369,7 +1369,7 @@ void CHudWeaponSelection::SelectWeaponSlot( int iSlot )
 	// Don't try and read past our possible number of slots
 	if ( iSlot >= MAX_WEAPON_SLOTS )
 		return;
-	
+
 	// Make sure the player's allowed to switch weapons
 	if ( pPlayer->IsAllowedToSwitchWeapons() == false )
 		return;
@@ -1415,7 +1415,7 @@ void CHudWeaponSelection::SelectWeaponSlot( int iSlot )
 			{
 				pActiveWeapon = GetNextActivePos( iSlot, 0 );
 			}
-			
+
 			if ( pActiveWeapon != NULL )
 			{
 				if ( !IsInSelectionMode() )

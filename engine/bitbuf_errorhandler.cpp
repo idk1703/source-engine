@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -44,4 +44,3 @@ void InstallBitBufErrorHandler()
 {
 	SetBitBufErrorHandler( EngineBitBufErrorHandler );
 }
-

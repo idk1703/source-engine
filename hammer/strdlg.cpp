@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -18,7 +18,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CStrDlg dialog
 
-CStrDlg::CStrDlg(DWORD dwFlags, LPCTSTR pszString, LPCTSTR pszPrompt, 
+CStrDlg::CStrDlg(DWORD dwFlags, LPCTSTR pszString, LPCTSTR pszPrompt,
 				 LPCTSTR pszTitle)
 	: CDialog(CStrDlg::IDD, NULL)
 {
@@ -62,7 +62,7 @@ void CStrDlg::SetRange(int iLow, int iHigh, int iIncrement_)
 	this->iIncrement = 1;
 }
 
-BOOL CStrDlg::OnInitDialog() 
+BOOL CStrDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 

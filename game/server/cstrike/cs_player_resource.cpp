@@ -49,7 +49,7 @@ LINK_ENTITY_TO_CLASS( cs_player_manager, CCSPlayerResource );
 
 CCSPlayerResource::CCSPlayerResource( void )
 {
-	
+
 }
 
 
@@ -83,9 +83,9 @@ public:
 		float distance = path.Length();
 		path.NormalizeInPlace();
 		float dot = DotProduct( forward, path );
-		if( (dot > 0.995f ) 
-			|| (dot > 0.98f && distance < 900) 
-			|| (dot > 0.8f && distance < 250) 
+		if( (dot > 0.995f )
+			|| (dot > 0.98f && distance < 900)
+			|| (dot > 0.8f && distance < 250)
 			)
 		{
 			trace_t tr;
@@ -121,7 +121,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSPlayerResource::UpdatePlayerData( void )
 {
@@ -133,7 +133,7 @@ void CCSPlayerResource::UpdatePlayerData( void )
 	for ( i = 1; i <= gpGlobals->maxClients; i++ )
 	{
 		CCSPlayer *pPlayer = (CCSPlayer*)UTIL_PlayerByIndex( i );
-		
+
 		if ( pPlayer && pPlayer->IsConnected() )
 		{
 			if ( pPlayer->IsVIP() )
@@ -196,9 +196,9 @@ void CCSPlayerResource::UpdatePlayerData( void )
 
 		if ( pHostage->IsValid() )
 		{
-			m_iHostageX.Set( i, (int) pHostage->GetAbsOrigin().x );	
-			m_iHostageY.Set( i, (int) pHostage->GetAbsOrigin().y );	
-			m_iHostageZ.Set( i, (int) pHostage->GetAbsOrigin().z );	
+			m_iHostageX.Set( i, (int) pHostage->GetAbsOrigin().x );
+			m_iHostageY.Set( i, (int) pHostage->GetAbsOrigin().y );
+			m_iHostageZ.Set( i, (int) pHostage->GetAbsOrigin().z );
 			m_iHostageEntityIDs.Set( i, pHostage->entindex() );
 			m_isHostageFollowingSomeone.Set( i, pHostage->IsFollowingSomeone() );
 //			engine->Con_NPrintf( i, "ID:%d Pos:(%.0f,%.0f,%.0f)", pHostage->entindex(), pHostage->GetAbsOrigin().x, pHostage->GetAbsOrigin().y, pHostage->GetAbsOrigin().z );
@@ -249,9 +249,9 @@ void CCSPlayerResource::UpdatePlayerData( void )
 		while ( (( ent = gEntList.FindEntityByClassname( ent, "func_hostage_rescue" ) ) != NULL)  &&  (hostageRescue < MAX_HOSTAGE_RESCUES) )
 		{
 			const Vector &pos = ent->WorldSpaceCenter();
-			m_hostageRescueX.Set( hostageRescue, (int) pos.x );	
-			m_hostageRescueY.Set( hostageRescue, (int) pos.y );	
-			m_hostageRescueZ.Set( hostageRescue, (int) pos.z );	
+			m_hostageRescueX.Set( hostageRescue, (int) pos.x );
+			m_hostageRescueY.Set( hostageRescue, (int) pos.y );
+			m_hostageRescueZ.Set( hostageRescue, (int) pos.z );
 
 			hostageRescue++;
 			m_foundGoalPositions = true;

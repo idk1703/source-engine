@@ -1,9 +1,9 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
- 
+
 #include "tier0/vprof.h"
 #include "server.h"
 #include "host_cmd.h"
@@ -116,7 +116,7 @@ static void voiceconvar_file_changed_f( IConVar *pConVar, const char *pOldValue,
 	ConVarRef var( pConVar );
 	if ( var.GetInt() == 0 )
 	{
-		// Force voice recording to stop if they turn off voice_inputfromfile or if sv_allow_voice_from_file is set to 0. 
+		// Force voice recording to stop if they turn off voice_inputfromfile or if sv_allow_voice_from_file is set to 0.
 		// Prevents an exploit where clients turn it on, start voice sending a long file, and then turn it off immediately.
 		Host_VoiceRecordStop_f();
 	}
@@ -171,7 +171,7 @@ uint GetSteamAppID()
 {
 	static uint sunAppID = 0;
 	static bool bHaveValidSteamInterface = false;
-	
+
 	if ( !bHaveValidSteamInterface )
 	{
 #ifndef SWDS
@@ -190,7 +190,7 @@ uint GetSteamAppID()
 		if ( !sunAppID )
 			sunAppID = 215;	// defaults to Source SDK Base (215) if no steam.inf can be found.
 	}
-	
+
 	return sunAppID;
 }
 
@@ -245,7 +245,7 @@ CON_COMMAND( quit_x360, "" )
 	{
 		launchFlags |= LF_GAMERESTART;
 	}
-	
+
 	// If we're relaunching due to invite
 	if ( bInviteRestart )
 	{
@@ -273,7 +273,7 @@ Host_Quit_f
 void Host_Quit_f( const CCommand &args )
 {
 #if !defined(SWDS)
-	
+
 	if ( args.FindArg( "prompt" ) )
 	{
 		// confirm they want to quit
@@ -297,7 +297,7 @@ void Host_Quit_f( const CCommand &args )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND( _restart, "Shutdown and restart the engine." )
 {
@@ -329,7 +329,7 @@ void Host_LightCrosshair (void)
 
 	// max_range * sqrt(3)
 	VectorMA( MainViewOrigin(), COORD_EXTENT * 1.74f, MainViewForward(), endPoint );
-	
+
 	R_LightVec( MainViewOrigin(), endPoint, true, lightmapColor );
 	int r = LinearToTexture( lightmapColor.x );
 	int g = LinearToTexture( lightmapColor.y );
@@ -343,7 +343,7 @@ void Host_LightCrosshair (void)
 ==================
 Host_Status_PrintClient
 
-Print client info to console 
+Print client info to console
 ==================
 */
 void Host_Status_PrintClient( IClient *client, bool bShowAddress, void (*print) (const char *fmt, ...) )
@@ -530,7 +530,7 @@ CON_COMMAND( status, "Display map and connection status." )
 			pchUniverse = " (unknown)";
 			break;
 	}
-	
+
 
 	print( "version : %s/%d %d %s%s%s\n", GetSteamInfIDVersionInfo().szVersionString,
 		PROTOCOL_VERSION, build_number(), bGSSecure ? "secure" : "insecure", pchSecureReasonString, pchUniverse );
@@ -656,7 +656,7 @@ CON_COMMAND( status, "Display map and connection status." )
 
 		if ( !client->IsConnected() )
 			continue; // not connected yet, maybe challenging
-		
+
 		Host_Status_PrintClient( client, (cmd_source == src_command), print );
 	}
 }
@@ -684,7 +684,7 @@ CON_COMMAND( ping, "Display ping to server." )
 		if ( !client->IsConnected() || client->IsFakeClient() )
 			continue;
 
-		host_client->ClientPrintf ("%4.0f ms : %s\n", 
+		host_client->ClientPrintf ("%4.0f ms : %s\n",
 			1000.0f * client->GetNetChannel()->GetAvgLatency( FLOW_OUTGOING ), client->GetClientName() );
 	}
 }
@@ -693,14 +693,14 @@ bool CL_HL2Demo_MapCheck( const char *name )
 {
 	if ( IsPC() && CL_IsHL2Demo() && !sv.IsDedicated() )
 	{
-		if (    !Q_stricmp( name, "d1_trainstation_01" ) || 
-				!Q_stricmp( name, "d1_trainstation_02" ) || 
-				!Q_stricmp( name, "d1_town_01" ) || 
-				!Q_stricmp( name, "d1_town_01a" ) || 
-				!Q_stricmp( name, "d1_town_02" ) || 
+		if (    !Q_stricmp( name, "d1_trainstation_01" ) ||
+				!Q_stricmp( name, "d1_trainstation_02" ) ||
+				!Q_stricmp( name, "d1_town_01" ) ||
+				!Q_stricmp( name, "d1_town_01a" ) ||
+				!Q_stricmp( name, "d1_town_02" ) ||
 				!Q_stricmp( name, "d1_town_03" ) ||
 				!Q_stricmp( name, "background01" ) ||
-				!Q_stricmp( name, "background03" ) 
+				!Q_stricmp( name, "background03" )
 			)
 		{
 			return true;
@@ -715,14 +715,14 @@ bool CL_PortalDemo_MapCheck( const char *name )
 {
 	if ( IsPC() && CL_IsPortalDemo() && !sv.IsDedicated() )
 	{
-		if (    !Q_stricmp( name, "testchmb_a_00" ) || 
-				!Q_stricmp( name, "testchmb_a_01" ) || 
-				!Q_stricmp( name, "testchmb_a_02" ) || 
-				!Q_stricmp( name, "testchmb_a_03" ) || 
-				!Q_stricmp( name, "testchmb_a_04" ) || 
+		if (    !Q_stricmp( name, "testchmb_a_00" ) ||
+				!Q_stricmp( name, "testchmb_a_01" ) ||
+				!Q_stricmp( name, "testchmb_a_02" ) ||
+				!Q_stricmp( name, "testchmb_a_03" ) ||
+				!Q_stricmp( name, "testchmb_a_04" ) ||
 				!Q_stricmp( name, "testchmb_a_05" ) ||
 				!Q_stricmp( name, "testchmb_a_06" ) ||
-				!Q_stricmp( name, "background1" ) 
+				!Q_stricmp( name, "background1" )
 			)
 		{
 			return true;
@@ -785,7 +785,7 @@ void Host_Map_Helper( const CCommand &args, bool bEditmode, bool bBackground, bo
 	COM_TimestampedLog( "*** Map Load: %s", szMapName );
 
 	// There is a precision issue here, as described Bruce Dawson's blog.
-	// In our case, we don't care because we're looking for anything on the order of second precision, which 
+	// In our case, we don't care because we're looking for anything on the order of second precision, which
 	// covers runtime up to around 4 months.
 	static ConVarRef dev_loadtime_map_start( "dev_loadtime_map_start" );
 	dev_loadtime_map_start.SetValue( (float)Plat_FloatTime() );
@@ -813,13 +813,13 @@ void Host_Map_Helper( const CCommand &args, bool bEditmode, bool bBackground, bo
 	if ( !CL_HL2Demo_MapCheck( szMapName ) )
 	{
 		Warning( "map load failed: %s not found or invalid\n", szMapName );
-		return;	
+		return;
 	}
 
 	if ( !CL_PortalDemo_MapCheck( szMapName ) )
 	{
 		Warning( "map load failed: %s not found or invalid\n", szMapName );
-		return;	
+		return;
 	}
 
 #if defined( REPLAY_ENABLED )
@@ -840,7 +840,7 @@ void Host_Map_Helper( const CCommand &args, bool bEditmode, bool bBackground, bo
 	if (args.ArgC() == 10)
 	{
 		if (Q_stricmp(args[2], "setpos") == 0
-			&& Q_stricmp(args[6], "setang") == 0) 
+			&& Q_stricmp(args[6], "setang") == 0)
 		{
 			Vector newpos;
 			newpos.x = atof( args[3] );
@@ -851,7 +851,7 @@ void Host_Map_Helper( const CCommand &args, bool bEditmode, bool bBackground, bo
 			newangle.x = atof( args[7] );
 			newangle.y = atof( args[8] );
 			newangle.z = atof( args[9] );
-			
+
 			HostState_SetSpawnPoint(newpos, newangle);
 		}
 	}
@@ -861,7 +861,7 @@ void Host_Map_Helper( const CCommand &args, bool bEditmode, bool bBackground, bo
 ======================
 Host_Map_f
 
-handle a 
+handle a
 map <servername>
 command from the console.  Active clients are kicked off.
 ======================
@@ -873,7 +873,7 @@ void Host_Map_f( const CCommand &args )
 
 
 //-----------------------------------------------------------------------------
-// handle a map_edit <servername> command from the console. 
+// handle a map_edit <servername> command from the console.
 // Active clients are kicked off.
 // UNDONE: protect this from use if not in dev. mode
 //-----------------------------------------------------------------------------
@@ -908,9 +908,9 @@ void Host_Map_Commentary_f( const CCommand &args )
 //-----------------------------------------------------------------------------
 CON_COMMAND( restart, "Restart the game on the same level (add setpos to jump to current view position on restart)." )
 {
-	if ( 
+	if (
 #if !defined(SWDS)
-		demoplayer->IsPlayingBack() || 
+		demoplayer->IsPlayingBack() ||
 #endif
 		!sv.IsActive() )
 		return;
@@ -928,13 +928,13 @@ CON_COMMAND( restart, "Restart the game on the same level (add setpos to jump to
 	if ( !CL_HL2Demo_MapCheck( sv.GetMapName() ) )
 	{
 		Warning( "map load failed: %s not found or invalid\n", sv.GetMapName() );
-		return;	
+		return;
 	}
 
 	if ( !CL_PortalDemo_MapCheck( sv.GetMapName() ) )
 	{
 		Warning( "map load failed: %s not found or invalid\n", sv.GetMapName() );
-		return;	
+		return;
 	}
 
 	HostState_NewGame( sv.GetMapName(), bRememberLocation, false );
@@ -951,9 +951,9 @@ CON_COMMAND( reload, "Reload the most recent saved game (add setpos to jump to c
 	char name[MAX_OSPATH];
 #endif
 
-	if ( 
+	if (
 #if !defined(SWDS)
-		demoplayer->IsPlayingBack() || 
+		demoplayer->IsPlayingBack() ||
 #endif
 		!sv.IsActive() )
 		return;
@@ -965,7 +965,7 @@ CON_COMMAND( reload, "Reload the most recent saved game (add setpos to jump to c
 		return;
 
 	bool remember_location = false;
-	if ( args.ArgC() == 2 && 
+	if ( args.ArgC() == 2 &&
 		!Q_stricmp( args[1], "setpos" ) )
 	{
 		remember_location = true;
@@ -992,14 +992,14 @@ CON_COMMAND( reload, "Reload the most recent saved game (add setpos to jump to c
 		if ( !CL_HL2Demo_MapCheck( host_map.GetString() ) )
 		{
 			Warning( "map load failed: %s not found or invalid\n", host_map.GetString() );
-			return;	
+			return;
 		}
 
 		if ( !CL_PortalDemo_MapCheck( host_map.GetString() ) )
 		{
 			Warning( "map load failed: %s not found or invalid\n", host_map.GetString() );
-			return;	
-		} 
+			return;
+		}
 
 		HostState_NewGame( host_map.GetString(), remember_location, false );
 	}
@@ -1083,7 +1083,7 @@ void Host_Changelevel2_f( const CCommand &args )
 	IVEngineServer::eFindMapResult eResult = g_pVEngineServer->FindMap( szName, sizeof( szName ) );
 	if ( eResult == IVEngineServer::eFindMap_NotFound )
 	{
-		if ( !CL_IsHL2Demo() || (CL_IsHL2Demo() && !(!Q_stricmp( szName, "d1_trainstation_03" ) || !Q_stricmp( szName, "d1_town_02a" ))) )	
+		if ( !CL_IsHL2Demo() || (CL_IsHL2Demo() && !(!Q_stricmp( szName, "d1_trainstation_03" ) || !Q_stricmp( szName, "d1_town_02a" ))) )
 		{
 			Warning( "changelevel2 failed: %s not found\n", szName );
 			return;
@@ -1092,35 +1092,35 @@ void Host_Changelevel2_f( const CCommand &args )
 
 #if !defined(SWDS)
 	// needs to be before CL_HL2Demo_MapCheck() check as d1_trainstation_03 isn't a valid map
-	if ( IsPC() && CL_IsHL2Demo() && !sv.IsDedicated() && !Q_stricmp( szName, "d1_trainstation_03" ) ) 
+	if ( IsPC() && CL_IsHL2Demo() && !sv.IsDedicated() && !Q_stricmp( szName, "d1_trainstation_03" ) )
 	{
 		void CL_DemoTransitionFromTrainstation();
 		CL_DemoTransitionFromTrainstation();
-		return; 
+		return;
 	}
 
 	// needs to be before CL_HL2Demo_MapCheck() check as d1_trainstation_03 isn't a valid map
-	if ( IsPC() && CL_IsHL2Demo() && !sv.IsDedicated() && !Q_stricmp( szName, "d1_town_02a" ) && !Q_stricmp( args[2], "d1_town_02_02a" )) 
+	if ( IsPC() && CL_IsHL2Demo() && !sv.IsDedicated() && !Q_stricmp( szName, "d1_town_02a" ) && !Q_stricmp( args[2], "d1_town_02_02a" ))
 	{
 		void CL_DemoTransitionFromRavenholm();
 		CL_DemoTransitionFromRavenholm();
-		return; 
+		return;
 	}
 
-	if ( IsPC() && CL_IsPortalDemo() && !sv.IsDedicated() && !Q_stricmp( szName, "testchmb_a_07" ) ) 
+	if ( IsPC() && CL_IsPortalDemo() && !sv.IsDedicated() && !Q_stricmp( szName, "testchmb_a_07" ) )
 	{
 		void CL_DemoTransitionFromTestChmb();
 		CL_DemoTransitionFromTestChmb();
-		return; 
+		return;
 	}
 
 #endif
 
 	// allow a level transition to d1_trainstation_03 so the Host_Changelevel() can act on it
-	if ( !CL_HL2Demo_MapCheck( szName ) ) 
+	if ( !CL_HL2Demo_MapCheck( szName ) )
 	{
 		Warning( "changelevel failed: %s not found\n", szName );
-		return;	
+		return;
 	}
 
 	HostState_ChangeLevelSP( szName, args[2] );
@@ -1207,7 +1207,7 @@ CON_COMMAND( version, "Print version info string." )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND( pause, "Toggle the server pause state." )
 {
@@ -1230,14 +1230,14 @@ CON_COMMAND( pause, "Toggle the server pause state." )
 
 	// toggle paused state
 	sv.SetPaused( !sv.IsPaused() );
-	
+
 	// send text messaage who paused the game
 	sv.BroadcastPrintf( "%s %s the game\n", host_client->GetClientName(), sv.IsPaused() ? "paused" : "unpaused" );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND( setpause, "Set the pause state of the server." )
 {
@@ -1257,7 +1257,7 @@ CON_COMMAND( setpause, "Set the pause state of the server." )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND( unpause, "Unpause the game." )
 {
@@ -1271,7 +1271,7 @@ CON_COMMAND( unpause, "Unpause the game." )
 		Cmd_ForwardToServer( args );
 		return;
 	}
-	
+
 	sv.SetPaused( false );
 }
 
@@ -1430,9 +1430,9 @@ CON_COMMAND( kickid, "Kick a player by userid or uniqueid, with a message." )
 			}
 		}
 		// searching by UniqueID
-		else	
+		else
 		{
-			if ( Q_stricmp( client->GetNetworkIDString(), szSearchString ) == 0 ) 
+			if ( Q_stricmp( client->GetNetworkIDString(), szSearchString ) == 0 )
 			{
 				// found!
 				break;
@@ -1488,7 +1488,7 @@ CON_COMMAND( kickid, "Kick a player by userid or uniqueid, with a message." )
 		}
 		else
 		{
-			ConMsg( "uniqueid \"%s\" not found\n", szSearchString );			
+			ConMsg( "uniqueid \"%s\" not found\n", szSearchString );
 		}
 	}
 }
@@ -1548,7 +1548,7 @@ CON_COMMAND( kick, "Kick a player by name." )
 				continue;
 
 			// found!
-			if ( Q_strcasecmp( client->GetClientName(), pszName ) == 0 ) 
+			if ( Q_strcasecmp( client->GetClientName(), pszName ) == 0 )
 				break;
 		}
 
@@ -1732,7 +1732,7 @@ int Host_GetNumDemos()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Host_PrintDemoList()
 {
@@ -1839,7 +1839,7 @@ CON_COMMAND_F( stopdemo, "Stop playing back a demo.", FCVAR_DONTRECORD )
 {
 	if ( !demoplayer->IsPlayingBack() )
 		return;
-	
+
 	Host_Disconnect (true);
 }
 
@@ -1884,7 +1884,7 @@ CON_COMMAND_F( soundfade, "Fade client volume.", FCVAR_SERVER_CAN_EXECUTE )
 	}
 
 	percent = clamp( (float) atof(args[1]), 0.0f, 100.0f );
-	
+
 	holdTime = max( 0., atof(args[2]) );
 
 	inTime = 0.0f;
@@ -1909,7 +1909,7 @@ CON_COMMAND_F( soundfade, "Fade client volume.", FCVAR_SERVER_CAN_EXECUTE )
 CON_COMMAND( killserver, "Shutdown the server." )
 {
 	Host_Disconnect(true);
-	
+
 	if ( !sv.IsDedicated() )
 	{
 		// close network sockets
@@ -1931,7 +1931,7 @@ void Host_VoiceRecordStart_f(void)
 		const char *pUncompressedFile = NULL;
 		const char *pDecompressedFile = NULL;
 		const char *pInputFile = NULL;
-		
+
 		if (voice_recordtofile.GetInt())
 		{
 			pUncompressedFile = "voice_micdata.wav";
@@ -1980,7 +1980,7 @@ void Host_VoiceToggle_f( const CCommand &args )
 {
 	if ( cl.IsActive() )
 	{
-#if !defined( NO_VOICE )	
+#if !defined( NO_VOICE )
 		bool bToggle = false;
 
 		if ( args.ArgC() == 2 && V_strcasecmp( args[1], "on" ) == 0 )
@@ -2020,7 +2020,7 @@ void Host_VoiceToggle_f( const CCommand &args )
 	}
 }
 #endif // VOICE_VOX_ENABLE
-	
+
 #endif // SWDS
 
 //-----------------------------------------------------------------------------
@@ -2126,7 +2126,7 @@ CON_COMMAND_F( multvar, "Multiply specified convar value.", FCVAR_DONTRECORD )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND( dumpstringtables, "Print string tables to console." )
 {
@@ -2175,7 +2175,7 @@ public:
 		PureFunction();
 	}
 };
- 
+
 class PureCallDerived : public PureCallBase
 {
 public:
@@ -2192,7 +2192,7 @@ public:
 //  crash purecall : Call virtual function in ctor.
 //-----------------------------------------------------------------------------
 CON_COMMAND( crash, "[ sys_error | hang | purecall | segfault | minidump ]: Cause the engine to crash." )
-{ 
+{
 	if ( cmd_source != src_command )
 		return;
 
@@ -2336,7 +2336,7 @@ CON_COMMAND_F( memory_diff, "show memory stats relative to snapshot", FCVAR_CHEA
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 CON_COMMAND( namelockid, "Prevent name changes for this userID." )
 {

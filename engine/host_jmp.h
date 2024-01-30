@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -17,4 +17,3 @@ extern jmp_buf 		host_abortserver;
 extern jmp_buf     host_enddemo;
 
 #endif
-

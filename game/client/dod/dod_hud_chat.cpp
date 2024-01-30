@@ -38,7 +38,7 @@ static ConCommand voicemenu3( "voicemenu3", voicemenu3_f, "Opens a voice menu" )
 //
 // These methods will bring up the radio menus from the client side.
 // They mimic the old server commands of the same name, which used
-// to require a round-trip causing latency and unreliability in 
+// to require a round-trip causing latency and unreliability in
 // menu responses.  Only 1 message is sent to the server now which
 // includes both the menu name and the selected item.  The server
 // is never informed that the menu has been displayed.
@@ -199,7 +199,7 @@ void CHudChatInputLine::ApplySchemeSettings(vgui::IScheme *pScheme)
 
 CHudChat::CHudChat( const char *pElementName ) : BaseClass( pElementName )
 {
-	
+
 }
 
 void CHudChat::CreateChatInputLine( void )
@@ -211,7 +211,7 @@ void CHudChat::CreateChatInputLine( void )
 void CHudChat::CreateChatLines( void )
 {
 	m_ChatLine = new CHudChatLine( this, "ChatLine1" );
-	m_ChatLine->SetVisible( false );	
+	m_ChatLine->SetVisible( false );
 }
 
 void CHudChat::ApplySchemeSettings( vgui::IScheme *pScheme )
@@ -238,10 +238,10 @@ void CHudChat::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszName - 
-//			iSize - 
-//			*pbuf - 
+// Purpose:
+// Input  : *pszName -
+//			iSize -
+//			*pbuf -
 //-----------------------------------------------------------------------------
 void CHudChat::MsgFunc_SayText( bf_read &msg )
 {
@@ -271,7 +271,7 @@ void CHudChat::MsgFunc_SayText( bf_read &msg )
 		}
 
 		// Localize any words in the chat that start with #
-		FindLocalizableSubstrings( szString, sizeof(szString) );		
+		FindLocalizableSubstrings( szString, sizeof(szString) );
 
 		// print raw chat text
 		 ChatPrintf( client, iFilter, "%c%s", COLOR_USEOLDCOLORS, szString );
@@ -405,7 +405,7 @@ void CHudChat::MsgFunc_HandSignalSubtitle( bf_read &msg )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CHudChat::GetChatInputOffset( void )
 {
@@ -464,7 +464,7 @@ void CHudChat::FindLocalizableSubstrings( char *szChat, int chatLength )
 			while ( *pWord != ' ' &&
 				*pWord != '\0' &&
 				*pWord != '\n' )
-			{	
+			{
 				szTemp[iWordPos] = *pWord;
 				iWordPos++;
 				pWord++;
@@ -474,7 +474,7 @@ void CHudChat::FindLocalizableSubstrings( char *szChat, int chatLength )
 
 			pwcLocalized = g_pVGuiLocalize->Find( szTemp );
 
-			// localize word	
+			// localize word
 
 			if ( pwcLocalized )
 			{
@@ -498,7 +498,7 @@ void CHudChat::FindLocalizableSubstrings( char *szChat, int chatLength )
 			pos++;
 		}
 	}
-	
+
 	buf[pos] = '\0';
 	pos++;
 
@@ -522,7 +522,7 @@ Color CHudChat::GetClientColor( int clientIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudChat::IsVisible( void )
 {

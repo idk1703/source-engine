@@ -16,13 +16,13 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeBalanceToStereoCalculatorOperator, CDmeBalanceToStereoCalculatorOperator );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeBalanceToStereoCalculatorOperator::OnConstruction()
 {
@@ -73,7 +73,7 @@ float CDmeBalanceToStereoCalculatorOperator::ComputeDefaultValue()
 }
 
 void CDmeBalanceToStereoCalculatorOperator::Operate()
-{ 
+{
 	if ( m_flDefaultValue == FLT_MAX )
 	{
 		m_flDefaultValue = ComputeDefaultValue();

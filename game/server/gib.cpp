@@ -69,7 +69,7 @@ void CGib::SpawnStickyGibs( CBaseEntity *pVictim, Vector vecOrigin, int cGibs )
 	if ( g_Language.GetInt() == LANGUAGE_GERMAN )
 	{
 		// no sticky gibs in germany right now!
-		return; 
+		return;
 	}
 
 	for ( i = 0 ; i < cGibs ; i++ )
@@ -101,10 +101,10 @@ void CGib::SpawnStickyGibs( CBaseEntity *pVictim, Vector vecOrigin, int cGibs )
 
 			// copy owner's blood color
 			pGib->SetBloodColor( pVictim->BloodColor() );
-		
+
 			pGib->AdjustVelocityBasedOnHealth( pVictim->m_iHealth, vecNewVelocity );
 			pGib->SetAbsVelocity( vecNewVelocity );
-			
+
 			pGib->SetMoveType( MOVETYPE_FLYGRAVITY );
 			pGib->RemoveSolidFlags( FSOLID_NOT_SOLID );
 			pGib->SetCollisionBounds( vec3_origin, vec3_origin );
@@ -135,9 +135,9 @@ void CGib::SpawnHeadGib( CBaseEntity *pVictim )
 		Vector vecNewVelocity = pGib->GetAbsVelocity();
 
 		pGib->SetLocalOrigin( pVictim->EyePosition() );
-		
+
 		edict_t *pentPlayer = UTIL_FindClientInPVS( pGib->edict() );
-		
+
 		if ( random->RandomInt ( 0, 100 ) <= 5 && pentPlayer )
 		{
 			// 5% chance head will be thrown at player's face.
@@ -214,7 +214,7 @@ void CGib::InitGib( CBaseEntity *pVictim, float fMinVelocity, float fMaxVelocity
 		Vector vecOrigin;
 		pVictim->CollisionProp()->RandomPointInBounds( vec3_origin, Vector( 1, 1, 1 ), &vecOrigin );
 		vecOrigin.z += 1.0f;
-		SetAbsOrigin( vecOrigin );	
+		SetAbsOrigin( vecOrigin );
 
 		// make the gib fly away from the attack vector
 		Vector vecNewVelocity =	 g_vecAttackDir * -1;
@@ -230,10 +230,10 @@ void CGib::InitGib( CBaseEntity *pVictim, float fMinVelocity, float fMaxVelocity
 		vecNewAngularVelocity.x = random->RandomFloat ( 100, 200 );
 		vecNewAngularVelocity.y = random->RandomFloat ( 100, 300 );
 		SetLocalAngularVelocity( vecNewAngularVelocity );
-		
+
 		// copy owner's blood color
 		SetBloodColor( pVictim->BloodColor() );
-		
+
 		AdjustVelocityBasedOnHealth( pVictim->m_iHealth, vecNewVelocity );
 
 		// Attempt to be physical if we can
@@ -253,7 +253,7 @@ void CGib::InitGib( CBaseEntity *pVictim, float fMinVelocity, float fMaxVelocity
 			SetCollisionBounds( vec3_origin, vec3_origin );
 			SetAbsVelocity( vecNewVelocity );
 		}
-	
+
 		SetCollisionGroup( COLLISION_GROUP_DEBRIS );
 	}
 
@@ -266,10 +266,10 @@ void CGib::InitGib( CBaseEntity *pVictim, float fMinVelocity, float fMaxVelocity
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
-void CGib::SpawnSpecificGibs(	CBaseEntity*	pVictim, 
-								int				nNumGibs, 
-								float			vMinVelocity, 
-								float			vMaxVelocity, 
+void CGib::SpawnSpecificGibs(	CBaseEntity*	pVictim,
+								int				nNumGibs,
+								float			vMinVelocity,
+								float			vMaxVelocity,
 								const char*		cModelName,
 								float			flLifetime)
 {
@@ -280,7 +280,7 @@ void CGib::SpawnSpecificGibs(	CBaseEntity*	pVictim,
 		pGib->m_nBody = i;
 		pGib->InitGib( pVictim, vMinVelocity, vMaxVelocity );
 		pGib->m_lifeTime = flLifetime;
-		
+
 		if ( pVictim != NULL )
 		{
 			pGib->SetOwnerEntity( pVictim );
@@ -328,7 +328,7 @@ void CGib::SpawnRandomGibs( CBaseEntity *pVictim, int cGibs, GibType_e eGibType 
 
 //=========================================================
 // WaitTillLand - in order to emit their meaty scent from
-// the proper location, gibs should wait until they stop 
+// the proper location, gibs should wait until they stop
 // bouncing to emit their scent. That's what this function
 // does.
 //=========================================================
@@ -445,7 +445,7 @@ void CGib::DieThink ( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGib::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
@@ -466,7 +466,7 @@ void CGib::SetPhysicsAttacker( CBasePlayer *pEntity, float flTime )
 	m_flLastPhysicsInfluenceTime = flTime;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Keep track of physgun influence
 //-----------------------------------------------------------------------------
@@ -476,7 +476,7 @@ void CGib::OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGib::OnPhysGunDrop( CBasePlayer *pPhysGunUser, PhysGunDrop_t Reason )
 {
@@ -502,12 +502,12 @@ void CGib::BounceGibTouch ( CBaseEntity *pOther )
 {
 	Vector	vecSpot;
 	trace_t	tr;
-	
+
 	IPhysicsObject *pPhysics = VPhysicsGetObject();
 
 	if ( pPhysics )
-		 return;
-	
+		return;
+
 	//if ( random->RandomInt(0,1) )
 	//	return;// don't bleed everytime
 	if (GetFlags() & FL_ONGROUND)
@@ -532,14 +532,14 @@ void CGib::BounceGibTouch ( CBaseEntity *pOther )
 
 			UTIL_BloodDecalTrace( &tr, m_bloodColor );
 
-			m_cBloodDecals--; 
+			m_cBloodDecals--;
 		}
 
 		if ( m_material != matNone && random->RandomInt(0,2) == 0 )
 		{
 			float volume;
 			float zvel = fabs(GetAbsVelocity().z);
-		
+
 			volume = 0.8f * MIN(1.0, ((float)zvel) / 450.0f);
 
 			CBreakable::MaterialSoundRandom( entindex(), (Materials)m_material, volume );
@@ -548,13 +548,13 @@ void CGib::BounceGibTouch ( CBaseEntity *pOther )
 }
 
 //
-// Sticky gib puts blood on the wall and stays put. 
+// Sticky gib puts blood on the wall and stays put.
 //
 void CGib::StickyGibTouch ( CBaseEntity *pOther )
 {
 	Vector	vecSpot;
 	trace_t tr;
-	
+
 	SetThink ( &CGib::SUB_Remove );
 	SetNextThink( gpGlobals->curtime + 10 );
 
@@ -572,7 +572,7 @@ void CGib::StickyGibTouch ( CBaseEntity *pOther )
 	QAngle angles;
 	VectorAngles( vecForward, angles );
 	SetLocalAngles( angles );
-	SetAbsVelocity( vec3_origin ); 
+	SetAbsVelocity( vec3_origin );
 	SetLocalAngularVelocity( vec3_angle );
 	SetMoveType( MOVETYPE_NONE );
 }
@@ -584,13 +584,13 @@ void CGib::Spawn( const char *szGibModel )
 {
 	SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_BOUNCE );
 	SetFriction(0.55); // deading the bounce a bit
-	
+
 	// sometimes an entity inherits the edict from a former piece of glass,
 	// and will spawn using the same render FX or m_nRenderMode! bad!
 	SetRenderColorA( 255 );
 	m_nRenderMode = kRenderNormal;
 	m_nRenderFX = kRenderFxNone;
-	
+
 	// hopefully this will fix the VELOCITY TOO LOW crap
 	m_takedamage = DAMAGE_EVENTS_ONLY;
 	SetSolid( SOLID_BBOX );
@@ -608,10 +608,10 @@ void CGib::Spawn( const char *szGibModel )
 	m_lifeTime = 25;
 	SetTouch ( &CGib::BounceGibTouch );
 
-    m_bForceRemove = false;
+	m_bForceRemove = false;
 
 	m_material = matNone;
-	m_cBloodDecals = 5;// how many blood decals this gib can place (1 per bounce until none remain). 
+	m_cBloodDecals = 5;// how many blood decals this gib can place (1 per bounce until none remain).
 
 }
 

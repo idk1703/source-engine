@@ -11,14 +11,14 @@
 #define ENTITY_FLYING_BIRD_MODEL	"models/props_forest/dove.mdl"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_EntityFlyingBird : public CBaseAnimating
 {
 	DECLARE_CLASS( C_EntityFlyingBird, CBaseAnimating );
 public:
 	void			InitFromServerData( float flyAngle, float flyAngleRate, float flAccelZ, float flSpeed, float flGlideTime );
-	virtual void	Touch( CBaseEntity *pOther ); 
+	virtual void	Touch( CBaseEntity *pOther );
 
 private:
 	virtual void	ClientThink( void );
@@ -59,7 +59,7 @@ void __MsgFunc_SpawnFlyingBird( bf_read &msg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EntityFlyingBird::UpdateFlyDirection( void )
 {
@@ -80,7 +80,7 @@ void C_EntityFlyingBird::UpdateFlyDirection( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EntityFlyingBird::InitFromServerData( float flyAngle, float flyAngleRate, float flAccelZ, float flSpeed, float flGlideTime )
 {
@@ -155,16 +155,15 @@ void C_EntityFlyingBird::ClientThink( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_EntityFlyingBird::Touch( CBaseEntity *pOther )
 {
 	if ( !pOther || !pOther->IsWorld() )
 		return;
-	
+
 	BaseClass::Touch( pOther );
 
 	// Die at next think. Not safe to remove ourselves during physics touch.
 	m_lifetimeTimer.Invalidate();
 }
-

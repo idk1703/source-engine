@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -82,7 +82,7 @@ CAllControlsSheet::CAllControlsSheet(UINT nIDCaption, CWnd* pParentWnd, UINT iSe
 	:CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
 {
 	AddControlPages();
-	
+
 	//CButton* okbut=(CButton*)this->GetDlgItem(IDC_OK);
 	// TODO :: Add the pages for the rest of the controls here.
 }

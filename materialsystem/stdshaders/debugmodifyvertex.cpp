@@ -4,7 +4,7 @@
 // in the shader. NOTE: Every pass is given a clean set of vertex data.
 // Modifications made in the first pass are *not* carried over to the next pass
 // Modifications must take place during the DYNAMIC_STATE block.
-// Use the function MeshBuilder() to build the mesh 
+// Use the function MeshBuilder() to build the mesh
 //
 // Also note: Using thie feature is *really expensive*! It makes a copy of
 // the vertex data *per pass!* If you wish to modify vertex data to be used
@@ -62,7 +62,7 @@ BEGIN_SHADER_FLAGS( DebugModifyVertex, "Help for DebugModifyVertex", SHADER_NOT_
 			// base * vertex color
 			SHADOW_STATE
 			{
-				pShaderShadow->DrawFlags( SHADER_DRAW_POSITION | SHADER_DRAW_COLOR | 
+				pShaderShadow->DrawFlags( SHADER_DRAW_POSITION | SHADER_DRAW_COLOR |
 					SHADER_DRAW_TEXCOORD0 );
 				FogToFogColor();
 			}

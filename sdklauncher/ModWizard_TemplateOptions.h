@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -31,7 +31,7 @@ enum numOptions_e
 
 // --------------------------------------------------------------------------------------------------------------------- //
 // CreateModWizard sub panel 2b (only when scratch / template sdk is chosen!)
-// This panel asks for options 
+// This panel asks for options
 // --------------------------------------------------------------------------------------------------------------------- //
 
 namespace vgui

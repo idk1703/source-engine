@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -42,7 +42,7 @@ void VScrollBarReversedButtons::ApplySchemeSettings( IScheme *pScheme )
 	pButton->SetArmedColor(		pButton->GetSchemeColor("DimBaseText", pScheme), pButton->GetBgColor());
 	pButton->SetDepressedColor(	pButton->GetSchemeColor("DimBaseText", pScheme), pButton->GetBgColor());
 	pButton->SetDefaultColor(	pButton->GetFgColor(),							 pButton->GetBgColor());
-	
+
 	pButton = GetButton( 1 );
 	pButton->SetArmedColor(		pButton->GetSchemeColor("DimBaseText", pScheme), pButton->GetBgColor());
 	pButton->SetDepressedColor(	pButton->GetSchemeColor("DimBaseText", pScheme), pButton->GetBgColor());
@@ -50,12 +50,12 @@ void VScrollBarReversedButtons::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
-//			y - 
-//			wide - 
-//			tall - 
-// Output : 
+// Purpose:
+// Input  : x -
+//			y -
+//			wide -
+//			tall -
+// Output :
 //-----------------------------------------------------------------------------
 CPanelListPanel::CPanelListPanel( vgui::Panel *parent, char const *panelName, bool inverseButtons ) : Panel( parent, panelName )
 {
@@ -81,7 +81,7 @@ CPanelListPanel::CPanelListPanel( vgui::Panel *parent, char const *panelName, bo
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPanelListPanel::~CPanelListPanel()
 {
@@ -90,7 +90,7 @@ CPanelListPanel::~CPanelListPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CPanelListPanel::computeVPixelsNeeded( void )
 {
@@ -120,8 +120,8 @@ int	CPanelListPanel::computeVPixelsNeeded( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the panel to use to render a cell
-// Input  : column - 
-//			row - 
+// Input  : column -
+//			row -
 // Output : Panel
 //-----------------------------------------------------------------------------
 Panel *CPanelListPanel::GetCellRenderer( int row )
@@ -140,7 +140,7 @@ Panel *CPanelListPanel::GetCellRenderer( int row )
 // Purpose: adds an item to the view
 //			data->GetName() is used to uniquely identify an item
 //			data sub items are matched against column header name to be used in the table
-// Input  : *item - 
+// Input  : *item -
 //-----------------------------------------------------------------------------
 int CPanelListPanel::AddItem( Panel *panel )
 {
@@ -153,8 +153,8 @@ int CPanelListPanel::AddItem( Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 int	CPanelListPanel::GetItemCount( void )
 {
@@ -163,7 +163,7 @@ int	CPanelListPanel::GetItemCount( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: returns pointer to data the row holds
-// Input  : itemIndex - 
+// Input  : itemIndex -
 // Output : KeyValues
 //-----------------------------------------------------------------------------
 Panel *CPanelListPanel::GetItem(int itemIndex)
@@ -175,8 +175,8 @@ Panel *CPanelListPanel::GetItem(int itemIndex)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : itemIndex - 
+// Purpose:
+// Input  : itemIndex -
 // Output : DATAITEM
 //-----------------------------------------------------------------------------
 CPanelListPanel::DATAITEM *CPanelListPanel::GetDataItem( int itemIndex )
@@ -188,8 +188,8 @@ CPanelListPanel::DATAITEM *CPanelListPanel::GetDataItem( int itemIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 //-----------------------------------------------------------------------------
 void CPanelListPanel::RemoveItem(int itemIndex)
 {
@@ -220,7 +220,7 @@ void CPanelListPanel::DeleteAllItems()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPanelListPanel::OnMouseWheeled(int delta)
 {
@@ -269,7 +269,7 @@ void CPanelListPanel::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPanelListPanel::PaintBackground()
 {
@@ -277,8 +277,8 @@ void CPanelListPanel::PaintBackground()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *inResourceData - 
+// Purpose:
+// Input  : *inResourceData -
 //-----------------------------------------------------------------------------
 void CPanelListPanel::ApplySchemeSettings(IScheme *pScheme)
 {

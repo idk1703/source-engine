@@ -47,7 +47,7 @@ public:
 	virtual void Precache();
 	virtual void Event_Killed( const CTakeDamageInfo &info );
 	virtual void LeaveVehicle( const Vector &vecExitPoint, const QAngle &vecExitAngles );
-	
+
 	CWeaponSDKBase* GetActiveSDKWeapon() const;
 	virtual void	CreateViewModel( int viewmodelindex = 0 );
 
@@ -58,20 +58,20 @@ public:
 	CNetworkVar( int, m_iShotsFired );	// number of shots fired recently
 
 	// Tracks our ragdoll entity.
-	CNetworkHandle( CBaseEntity, m_hRagdoll );	// networked entity handle 
+	CNetworkHandle( CBaseEntity, m_hRagdoll );	// networked entity handle
 
 // In shared code.
 public:
 	// ISDKPlayerAnimState overrides.
 	virtual CWeaponSDKBase* SDKAnim_GetActiveWeapon();
 	virtual bool SDKAnim_CanMove();
-	
 
-	void FireBullet( 
-		Vector vecSrc, 
-		const QAngle &shootAngles, 
-		float vecSpread, 
-		int iDamage, 
+
+	void FireBullet(
+		Vector vecSrc,
+		const QAngle &shootAngles,
+		float vecSpread,
+		int iDamage,
 		int iBulletType,
 		CBaseEntity *pevAttacker,
 		bool bDoEffects,

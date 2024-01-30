@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -49,7 +49,7 @@ public:
 	virtual bool Unserialize( CUtlBuffer &buf, const char *pEncodingName, int nEncodingVersion,
 							  const char *pSourceFormatName, int nFormatVersion,
 							  DmFileId_t fileid, DmConflictResolution_t idConflictResolution, CDmElement **ppRoot );
-    
+
 private:
 	// Methods related to serialization
 	void SerializeElementIndex( CUtlBuffer& buf, CDmElementSerializationDictionary& list, DmElementHandle_t hElement, DmFileId_t fileid );
@@ -66,7 +66,7 @@ private:
 	bool UnserializeAttributes( CUtlBuffer &buf, CDmElement *pElement, CUtlVector<CDmElement*> &elementList, UtlSymId_t *symbolTable );
 	bool UnserializeElements( CUtlBuffer &buf, DmFileId_t fileid, DmConflictResolution_t idConflictResolution, CDmElement **ppRoot, UtlSymId_t *symbolTable );
 };
-   
+
 
 //-----------------------------------------------------------------------------
 // Singleton instance

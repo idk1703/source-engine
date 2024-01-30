@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,7 +25,7 @@ class FrameDemo: public DemoPage
 		void OnButtonClicked();
 
 		void SetVisible(bool status);
-	
+
 	private:
 		Frame *m_pFrame;
 
@@ -44,7 +44,7 @@ FrameDemo::FrameDemo(Panel *parent, const char *name) : DemoPage(parent, name)
 	// Frames are well, a "frame" around a panel. They have a name bar
 	// at the top where a title can be displayed, sizing hotspots on the corners,
 	// and a minimize and close box in the upper right corner.
-	
+
 	// Set the title of the frame
 	m_pFrame->SetTitle("A Demo Frame", "");
 
@@ -79,7 +79,7 @@ void FrameDemo::SetVisible(bool status)
 	else
 		m_pFrame->SetVisible(false);
 
-	DemoPage::SetVisible(status);	
+	DemoPage::SetVisible(status);
 }
 
 
@@ -87,5 +87,3 @@ Panel* FrameDemo_Create(Panel *parent)
 {
 	return new FrameDemo(parent, "FrameDemo");
 }
-
-

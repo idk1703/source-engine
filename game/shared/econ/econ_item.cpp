@@ -36,7 +36,7 @@ extern int EconWear_ToIntCategory( float flWear );
 //-----------------------------------------------------------------------------
 // Purpose: Utility function to convert datafile strings to ints.
 //-----------------------------------------------------------------------------
-int StringFieldToInt( const char *szValue, const char **pValueStrings, int iNumStrings, bool bDontAssert ) 
+int StringFieldToInt( const char *szValue, const char **pValueStrings, int iNumStrings, bool bDontAssert )
 {
 	if ( !szValue || !szValue[0] )
 		return -1;
@@ -63,7 +63,7 @@ int StringFieldToInt( const char *szValue, const CUtlVector<const char *>& vecVa
 }
 
 // --------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------------
 CEconItem::CEconItem()
 	: BaseClass( )
@@ -123,7 +123,7 @@ void CEconItem::Init()
 }
 
 // --------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------------
 CEconItem::~CEconItem()
 {
@@ -143,7 +143,7 @@ CEconItem::~CEconItem()
 }
 
 // --------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------------
 CEconItemCustomData::~CEconItemCustomData()
 {
@@ -229,7 +229,7 @@ CEconItem &CEconItem::operator=( const CEconItem& rhs )
 	else
 	{
 		// Check for and copy in the equip instances from CustomData
-		EnsureCustomDataExists();	
+		EnsureCustomDataExists();
 		m_pCustomData->m_vecEquipped = rhs.m_pCustomData->m_vecEquipped;
 	}
 
@@ -244,7 +244,7 @@ CEconItem &CEconItem::operator=( const CEconItem& rhs )
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void CEconItem::SetItemID( itemid_t ulID ) 
+void CEconItem::SetItemID( itemid_t ulID )
 {
 	uint64 ulOldID = m_ulID;
 	m_ulID = ulID;
@@ -254,7 +254,7 @@ void CEconItem::SetItemID( itemid_t ulID )
 		SetOriginalID( ulOldID );
 	}
 
-	ResetMaterialOverrides();	
+	ResetMaterialOverrides();
 }
 
 // --------------------------------------------------------------------------
@@ -263,7 +263,7 @@ void CEconItem::SetItemID( itemid_t ulID )
 itemid_t CEconItem::GetOriginalID() const
 {
 	if ( m_pCustomData != NULL && m_pCustomData->m_ulOriginalID != INVALID_ITEM_ID )
-		return m_pCustomData->m_ulOriginalID; 
+		return m_pCustomData->m_ulOriginalID;
 	return m_ulID;
 }
 
@@ -553,7 +553,7 @@ int CEconItem::GetEquippedInstanceCount() const
 {
 	if ( m_pCustomData )
 		return m_pCustomData->m_vecEquipped.Count();
-	else 
+	else
 		return m_dirtyBits.m_bHasEquipSingleton ? 1 : 0;
 }
 
@@ -630,7 +630,7 @@ const GameItemDefinition_t *CEconItem::GetItemDefinition() const
 // --------------------------------------------------------------------------
 bool CEconItem::IsTradable() const
 {
-	return !m_dirtyBits.m_bInUse 
+	return !m_dirtyBits.m_bInUse
 		&& IEconItemInterface::IsTradable();
 }
 
@@ -936,7 +936,7 @@ void CEconItem::SetDynamicMaxTimeAttributeValue( const CEconItemAttributeDefinit
 }
 
 // --------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------------
 void CEconItem::SetTradableAfterDateTime( RTime32 rtTime )
 {
@@ -950,7 +950,7 @@ void CEconItem::SetTradableAfterDateTime( RTime32 rtTime )
 		return;
 
 	//see if we have a STATIC cannot trade attribute (ignore dynamic, because that could change and be used
-	// to short out the trade restriction). 
+	// to short out the trade restriction).
 
 	//This is currently disabled so we can measure whether or not this is beneficial and if the savings justifies the corner case risk this exposes - JohnO 1/12/15
 	/*
@@ -971,7 +971,7 @@ void CEconItem::SetTradableAfterDateTime( RTime32 rtTime )
 }
 
 // --------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------------
 void CEconItem::RemoveDynamicAttribute( const CEconItemAttributeDefinition *pAttrDef )
 {
@@ -1149,7 +1149,7 @@ static bool BRemoveEquipInstancesFromSQL( CSQLAccess& sqlAccess, uint32 unAccoun
 //----------------------------------------------------------------------------
 // Purpose: Writes the non-PK fields on the object to the database
 //----------------------------------------------------------------------------
-bool CEconItem::BYieldingAddWriteToTransaction( CSQLAccess & sqlAccess, const CUtlVector< int > &fields ) 
+bool CEconItem::BYieldingAddWriteToTransaction( CSQLAccess & sqlAccess, const CUtlVector< int > &fields )
 {
 	Assert( sqlAccess.BInTransaction() );
 
@@ -1171,7 +1171,7 @@ bool CEconItem::BYieldingAddWriteToTransaction( CSQLAccess & sqlAccess, const CU
 	// in which case we want to neither write to our item properties nor abort here if the write fails.
 	if ( !csDatabaseDirty.IsEmpty() && !CSchemaSharedObjectHelper::BYieldingAddWriteToTransaction( sqlAccess, &item, csDatabaseDirty ) )
 		return false;
-	
+
 	// Write out additional attribute properties?
 	FOR_EACH_VEC( fields, i )
 	{
@@ -1389,9 +1389,9 @@ void CEconItem::OnReceivedFromMarket( bool bFromRollback )
 #ifdef GC_DLL
 	static CSchemaAttributeDefHandle pAttrib_TradableAfter( "tradable after date" );
 	if ( !bFromRollback && GEconManager()->GetTradableAfterDurationForPurchase() != 0 )
-	{	
-		// Add "tradable after date" attribute for items received from the market, since the funds 
-		// used to purchase the item may be untrusted		
+	{
+		// Add "tradable after date" attribute for items received from the market, since the funds
+		// used to purchase the item may be untrusted
 		RTime32 rtTradableAfter = GEconManager()->GetTradableAfterDateForPurchase();
 		SetDynamicAttributeValue( pAttrib_TradableAfter, rtTradableAfter );
 	}
@@ -1404,10 +1404,10 @@ void CEconItem::OnReceivedFromMarket( bool bFromRollback )
 }
 
 // --------------------------------------------------------------------------
-// Purpose: Parses the bits required to create a econ item from the message. 
+// Purpose: Parses the bits required to create a econ item from the message.
 //			Overloaded to include support for attributes.
 // --------------------------------------------------------------------------
-bool CEconItem::BParseFromMessage( const CUtlBuffer & buffer ) 
+bool CEconItem::BParseFromMessage( const CUtlBuffer & buffer )
 {
 	CSOEconItem msgItem;
 	if( !msgItem.ParseFromArray( buffer.Base(), buffer.TellMaxPut() ) )
@@ -1418,10 +1418,10 @@ bool CEconItem::BParseFromMessage( const CUtlBuffer & buffer )
 }
 
 // --------------------------------------------------------------------------
-// Purpose: Parses the bits required to create a econ item from the message. 
+// Purpose: Parses the bits required to create a econ item from the message.
 //			Overloaded to include support for attributes.
 // --------------------------------------------------------------------------
-bool CEconItem::BParseFromMessage( const std::string &buffer ) 
+bool CEconItem::BParseFromMessage( const std::string &buffer )
 {
 	CSOEconItem msgItem;
 	if( !msgItem.ParseFromString( buffer ) )
@@ -1432,7 +1432,7 @@ bool CEconItem::BParseFromMessage( const std::string &buffer )
 }
 
 //----------------------------------------------------------------------------
-// Purpose: Overrides all the fields in msgLocal that are present in the 
+// Purpose: Overrides all the fields in msgLocal that are present in the
 //			network message
 //----------------------------------------------------------------------------
 bool CEconItem::BUpdateFromNetwork( const CSharedObject & objUpdate )
@@ -1502,7 +1502,7 @@ bool CEconItem::BAddDestroyToMessage( std::string *pBuffer ) const
 //----------------------------------------------------------------------------
 // Purpose: Returns true if this is less than than the object in soRHS. This
 //			comparison is deterministic, but it may not be pleasing to a user
-//			since it is just going to compare raw memory. If you need a sort 
+//			since it is just going to compare raw memory. If you need a sort
 //			that is user-visible you will need to do it at a higher level that
 //			actually knows what the data in these objects means.
 //----------------------------------------------------------------------------
@@ -1515,7 +1515,7 @@ bool CEconItem::BIsKeyLess( const CSharedObject & soRHS ) const
 }
 
 //----------------------------------------------------------------------------
-// Purpose: Copy the data from the specified schema shared object into this. 
+// Purpose: Copy the data from the specified schema shared object into this.
 //			Both objects must be of the same type.
 //----------------------------------------------------------------------------
 void CEconItem::Copy( const CSharedObject & soRHS )
@@ -1661,7 +1661,7 @@ bool CEconItem::BDeserializeFromKV( KeyValues *pKVItem, CUtlVector<CUtlString> *
 
 
 // --------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------------
 bool CEconItem::BYieldingSerializeFromDatabase( itemid_t ulItemID )
 {
@@ -1679,7 +1679,7 @@ bool CEconItem::BYieldingSerializeFromDatabase( itemid_t ulItemID )
 	static CFmtStrMax sLoadQuery;
 	if ( 0 == sLoadQuery.Length() )
 	{
-		sLoadQuery.Append( 
+		sLoadQuery.Append(
 			"DECLARE @ItemID BIGINT "
 			"SET @ItemID = ? " );
 
@@ -1762,7 +1762,7 @@ bool CEconItem::BYieldingSerializeFromDatabase( itemid_t ulItemID )
 }
 
 // --------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------------
 void CEconItem::SerializeToSchemaItem( CSchItem &item ) const
 {
@@ -1774,7 +1774,7 @@ void CEconItem::SerializeToSchemaItem( CSchItem &item ) const
 	item.m_unDefIndex = m_unDefIndex;
 	item.m_unLevel = m_unLevel;
 	item.m_nQuality = m_nQuality;
-	item.m_unInventory = m_unInventory;	
+	item.m_unInventory = m_unInventory;
 	item.m_unQuantity = GetQuantity();
 	item.m_unFlags = m_unFlags;
 	item.m_unOrigin = m_unOrigin;
@@ -1782,7 +1782,7 @@ void CEconItem::SerializeToSchemaItem( CSchItem &item ) const
 }
 
 // --------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------------
 void CEconItem::DeserializeFromSchemaItem( const CSchItem &item )
 {
@@ -1802,7 +1802,7 @@ void CEconItem::DeserializeFromSchemaItem( const CSchItem &item )
 
 	// set name if any, or remove if non-existent
 	SetCustomName( READ_VAR_CHAR_FIELD( item, m_VarCharCustomName ) );
-	
+
 	// set desc if any, or remove if non-existent
 	SetCustomDesc( READ_VAR_CHAR_FIELD( item, m_VarCharCustomDesc ) );
 }
@@ -1810,7 +1810,7 @@ void CEconItem::DeserializeFromSchemaItem( const CSchItem &item )
 
 
 // --------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------------
 void CEconItem::SerializeToProtoBufItem( CSOEconItem &msgItem ) const
 {
@@ -1823,7 +1823,7 @@ void CEconItem::SerializeToProtoBufItem( CSOEconItem &msgItem ) const
 	msgItem.set_def_index( m_unDefIndex );
 	msgItem.set_level( m_unLevel );
 	msgItem.set_quality( m_nQuality );
-	msgItem.set_inventory( m_unInventory );	
+	msgItem.set_inventory( m_unInventory );
 	msgItem.set_quantity( GetQuantity() );
 	msgItem.set_flags( m_unFlags );
 	msgItem.set_origin( m_unOrigin );
@@ -1833,7 +1833,7 @@ void CEconItem::SerializeToProtoBufItem( CSOEconItem &msgItem ) const
 	for( int nAttr = 0; nAttr < GetDynamicAttributeCountInternal(); nAttr++ )
 	{
 		const attribute_t & attr = GetDynamicAttributeInternal( nAttr );
-		
+
 		// skip over attributes we don't understand
 		const CEconItemAttributeDefinition *pAttrDef = GetItemSchema()->GetAttributeDefinition( attr.m_unDefinitionIndex );
 		if ( !pAttrDef )
@@ -1883,7 +1883,7 @@ void CEconItem::SerializeToProtoBufItem( CSOEconItem &msgItem ) const
 }
 
 // --------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------------
 void CEconItem::DeserializeFromProtoBufItem( const CSOEconItem &msgItem )
 {
@@ -1966,7 +1966,7 @@ void CEconItem::DeserializeFromProtoBufItem( const CSOEconItem &msgItem )
 #ifdef GC
 #include "econ/localization_provider.h"
 // --------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------------
 void CEconItem::GetDirtyColumnSet( const CUtlVector< int > &fields, CColumnSet &cs ) const
 {
@@ -2030,14 +2030,14 @@ bool CEconItem::BImportFromAPI( CWebAPIValues *pValues )
 #endif
 
 // --------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------------
 void CEconItem::EnsureCustomDataExists()
 {
 	if ( m_pCustomData == NULL )
 	{
 		m_pCustomData = new CEconItemCustomData();
-		
+
 		if ( m_dirtyBits.m_bHasEquipSingleton )
 		{
 			m_pCustomData->m_vecEquipped.AddToTail( m_EquipInstanceSingleton );
@@ -2063,7 +2063,7 @@ static bool BYieldingAddAuditRecordImpl( GCSDK::CSQLAccess *sqlAccess, uint64 ul
 
 	// Prepare the audit record
 	CSchItemAudit schItemAudit;
-	schItemAudit.m_ulItemID = ulItemID;	
+	schItemAudit.m_ulItemID = ulItemID;
 	schItemAudit.m_RTime32Stamp = CRTime::RTime32TimeCur();
 	schItemAudit.m_eAction = eAction;
 	schItemAudit.m_unOwnerID = unOwnerID;
@@ -2164,7 +2164,7 @@ static CEconItem *FindEquippedItemForClassAndSlot( CEconSharedObjectCache *pSOCa
 	Assert( pSOCache );
 	Assert( GetItemSchema()->IsValidClass( unClass ) );
 	Assert( GetItemSchema()->IsValidItemSlot( unSlot, unClass ) );
-	
+
 	CEconItem *pPreviousEquippedItem = FindEquippedItemForClassAndSlot( pSOCache, unClass, unSlot );
 
 	// skip out on expensive work if we're going to equip the item that's already in that slot
@@ -2247,7 +2247,7 @@ ENUMSTRINGS_START( EItemAction )
 	ITEM_ACTION( k_EItemActionPaintItem_Remove ),
 	ITEM_ACTION( k_EItemActionAddItemToSocket_Remove ),
 	ITEM_ACTION( k_EItemActionAddSocketToItem_Remove ),
-	ITEM_ACTION( k_EItemActionRemoveSocketItem_Remove ), 
+	ITEM_ACTION( k_EItemActionRemoveSocketItem_Remove ),
 	ITEM_ACTION( k_EItemActionCustomizeItemTexture_Remove ),
 	ITEM_ACTION( k_EItemActionItemTraded_Remove ),
 	ITEM_ACTION( k_EItemActionUnpackItemBundle ),
@@ -2287,7 +2287,7 @@ ENUMSTRINGS_START( EItemAction )
 	ITEM_ACTION( k_EItemActionTransmogrify_Remove ),
 	ITEM_ACTION( k_EItemActionHalloweenSpellPageAdd_Add ),
 	ITEM_ACTION( k_EItemActionHalloweenSpellPageAdd_Remove ),
-	
+
 	ITEM_ACTION( k_EItemActionSupportStrangify_Add ),
 	ITEM_ACTION( k_EItemActionSupportStrangify_Remove ),
 
@@ -2377,7 +2377,7 @@ ENUMSTRINGS_START( EItemAction )
 	ITEM_ACTION( k_EItemAction_OperationPass_Add ),
 
 	ITEM_ACTION( k_EItemActionSpyVsEngyWar_JoinedWar ),
-	
+
 	ITEM_ACTION( k_EItemActionMarket_Add ),
 	ITEM_ACTION( k_EItemActionMarket_Remove ),
 
@@ -2421,7 +2421,7 @@ const char *PchFriendlyNameFromEItemAction( EItemAction eItemAction, EItemAction
 
 	switch( eItemAction )
 	{
-		
+
 		case  k_EItemActionGSCreate: return "Created by Gameserver";
 		case  k_EItemActionUnpurchase: return "Unpurchase";
 		case  k_EItemActionDelete: return "Deleted by Owner";
@@ -2454,7 +2454,7 @@ const char *PchFriendlyNameFromEItemAction( EItemAction eItemAction, EItemAction
 		case  k_EItemActionPaintItem_Remove: return "Removed by Paint";
 		case  k_EItemActionAddItemToSocket_Remove: return "Removed from Socket";
 		case  k_EItemActionAddSocketToItem_Remove: return "Removed by Socket";
-		case  k_EItemActionRemoveSocketItem_Remove: return "Removed Socket Item"; 
+		case  k_EItemActionRemoveSocketItem_Remove: return "Removed Socket Item";
 		case  k_EItemActionCustomizeItemTexture_Remove: return "Removed by Custom Texture";
 		case  k_EItemActionItemTraded_Remove: return "Trade";
 		case  k_EItemActionUnpackItemBundle: return "Unpacked Bundle";
@@ -2722,7 +2722,7 @@ bool CCrateLootListWrapper::BAttemptCrateSeriesInitialization( const IEconItemIn
 	// Get the loot list.
 	m_pLootList = GetItemSchema()->GetLootListByName( pszLootList );
 	m_unAuditDetailData = iCrateSeries;
-		
+
 	return m_pLootList != NULL;
 }
 
@@ -2760,6 +2760,6 @@ bool CCrateLootListWrapper::BAttemptLineItemInitialization( const IEconItemInter
 
 	m_pLootList = new CAttributeLineItemLootList( pEconItem );
 	m_bIsDynamicallyAllocatedLootList = true;
-		
+
 	return true;
 }

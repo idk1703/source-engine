@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -48,10 +48,10 @@ BEGIN_VS_SHADER_FLAGS( MorphWeight_DX9, "Help for morphweight", SHADER_NOT_EDITA
 
  			DECLARE_STATIC_VERTEX_SHADER( morphweight_vs30 );
  			SET_STATIC_VERTEX_SHADER( morphweight_vs30 );
- 
+
  			DECLARE_STATIC_PIXEL_SHADER( morphweight_ps30 );
  			SET_STATIC_PIXEL_SHADER( morphweight_ps30 );
- 
+
 			// Texcoord0 is the texcoord to write the weights into
  			// Texcoord1 contains the morph weights
 			int pTexCoord[2] = { 2, 4 };
@@ -62,11 +62,10 @@ BEGIN_VS_SHADER_FLAGS( MorphWeight_DX9, "Help for morphweight", SHADER_NOT_EDITA
 		{
  			DECLARE_DYNAMIC_VERTEX_SHADER( morphweight_vs30 );
  			SET_DYNAMIC_VERTEX_SHADER( morphweight_vs30 );
- 
+
  			DECLARE_DYNAMIC_PIXEL_SHADER( morphweight_ps30 );
  			SET_DYNAMIC_PIXEL_SHADER( morphweight_ps30 );
 		}
 		Draw();
 	}
 END_SHADER
-

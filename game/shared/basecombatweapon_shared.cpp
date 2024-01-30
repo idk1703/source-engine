@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -46,7 +46,7 @@
 // The minimum time a hud hint for a weapon should be on screen. If we switch away before
 // this, then teh hud hint counter will be deremented so the hint will be shown again, as
 // if it had never been seen. The total display time for a hud hint is specified in client
-// script HudAnimations.txt (which I can't read here). 
+// script HudAnimations.txt (which I can't read here).
 #define MIN_HUDHINT_DISPLAY_TIME 7.0f
 
 #define HIDEWEAPON_THINK_CONTEXT			"BaseCombatWeapon_HideThink"
@@ -190,7 +190,7 @@ void CBaseCombatWeapon::Spawn( void )
 	RemoveEFlags( EFL_USE_PARTITION_WHEN_NOT_SOLID );
 
 	m_iState = WEAPON_NOT_CARRIED;
-	// Assume 
+	// Assume
 	m_nViewModelIndex = 0;
 
 	GiveDefaultAmmo();
@@ -235,9 +235,9 @@ void CBaseCombatWeapon::Spawn( void )
 // Purpose: get this game's encryption key for decoding weapon kv files
 // Output : virtual const unsigned char
 //-----------------------------------------------------------------------------
-const unsigned char *CBaseCombatWeapon::GetEncryptionKey( void ) 
-{ 
-	return g_pGameRules->GetEncryptionKey(); 
+const unsigned char *CBaseCombatWeapon::GetEncryptionKey( void )
+{
+	return g_pGameRules->GetEncryptionKey();
 }
 
 //-----------------------------------------------------------------------------
@@ -324,7 +324,7 @@ const FileWeaponInfo_t &CBaseCombatWeapon::GetWpnData( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CBaseCombatWeapon::GetViewModel( int /*viewmodelindex = 0 -- this is ignored in the base class here*/ ) const
 {
@@ -332,7 +332,7 @@ const char *CBaseCombatWeapon::GetViewModel( int /*viewmodelindex = 0 -- this is
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CBaseCombatWeapon::GetWorldModel( void ) const
 {
@@ -340,7 +340,7 @@ const char *CBaseCombatWeapon::GetWorldModel( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CBaseCombatWeapon::GetAnimPrefix( void ) const
 {
@@ -348,7 +348,7 @@ const char *CBaseCombatWeapon::GetAnimPrefix( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *CBaseCombatWeapon::GetPrintName( void ) const
@@ -357,7 +357,7 @@ const char *CBaseCombatWeapon::GetPrintName( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseCombatWeapon::GetMaxClip1( void ) const
 {
@@ -372,7 +372,7 @@ int CBaseCombatWeapon::GetMaxClip1( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseCombatWeapon::GetMaxClip2( void ) const
 {
@@ -380,7 +380,7 @@ int CBaseCombatWeapon::GetMaxClip2( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseCombatWeapon::GetDefaultClip1( void ) const
 {
@@ -388,7 +388,7 @@ int CBaseCombatWeapon::GetDefaultClip1( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseCombatWeapon::GetDefaultClip2( void ) const
 {
@@ -396,7 +396,7 @@ int CBaseCombatWeapon::GetDefaultClip2( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseCombatWeapon::UsesClipsForAmmo1( void ) const
 {
@@ -409,7 +409,7 @@ bool CBaseCombatWeapon::IsMeleeWeapon() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseCombatWeapon::UsesClipsForAmmo2( void ) const
 {
@@ -417,7 +417,7 @@ bool CBaseCombatWeapon::UsesClipsForAmmo2( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseCombatWeapon::GetWeight( void ) const
 {
@@ -443,7 +443,7 @@ bool CBaseCombatWeapon::AllowsAutoSwitchFrom( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseCombatWeapon::GetWeaponFlags( void ) const
 {
@@ -451,7 +451,7 @@ int CBaseCombatWeapon::GetWeaponFlags( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseCombatWeapon::GetSlot( void ) const
 {
@@ -459,7 +459,7 @@ int CBaseCombatWeapon::GetSlot( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CBaseCombatWeapon::GetPosition( void ) const
 {
@@ -467,7 +467,7 @@ int CBaseCombatWeapon::GetPosition( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CBaseCombatWeapon::GetName( void ) const
 {
@@ -475,7 +475,7 @@ const char *CBaseCombatWeapon::GetName( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTexture const *CBaseCombatWeapon::GetSpriteActive( void ) const
 {
@@ -483,7 +483,7 @@ CHudTexture const *CBaseCombatWeapon::GetSpriteActive( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTexture const *CBaseCombatWeapon::GetSpriteInactive( void ) const
 {
@@ -491,7 +491,7 @@ CHudTexture const *CBaseCombatWeapon::GetSpriteInactive( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTexture const *CBaseCombatWeapon::GetSpriteAmmo( void ) const
 {
@@ -499,7 +499,7 @@ CHudTexture const *CBaseCombatWeapon::GetSpriteAmmo( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTexture const *CBaseCombatWeapon::GetSpriteAmmo2( void ) const
 {
@@ -507,7 +507,7 @@ CHudTexture const *CBaseCombatWeapon::GetSpriteAmmo2( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTexture const *CBaseCombatWeapon::GetSpriteCrosshair( void ) const
 {
@@ -515,7 +515,7 @@ CHudTexture const *CBaseCombatWeapon::GetSpriteCrosshair( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTexture const *CBaseCombatWeapon::GetSpriteAutoaim( void ) const
 {
@@ -523,7 +523,7 @@ CHudTexture const *CBaseCombatWeapon::GetSpriteAutoaim( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTexture const *CBaseCombatWeapon::GetSpriteZoomedCrosshair( void ) const
 {
@@ -531,7 +531,7 @@ CHudTexture const *CBaseCombatWeapon::GetSpriteZoomedCrosshair( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTexture const *CBaseCombatWeapon::GetSpriteZoomedAutoaim( void ) const
 {
@@ -539,7 +539,7 @@ CHudTexture const *CBaseCombatWeapon::GetSpriteZoomedAutoaim( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CBaseCombatWeapon::GetShootSound( int iIndex ) const
 {
@@ -555,21 +555,21 @@ int CBaseCombatWeapon::GetRumbleEffect() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseCombatCharacter	*CBaseCombatWeapon::GetOwner() const
 {
 	return ToBaseCombatCharacter( m_hOwner.Get() );
-}	
+}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : BaseCombatCharacter - 
+// Purpose:
+// Input  : BaseCombatCharacter -
 //-----------------------------------------------------------------------------
 void CBaseCombatWeapon::SetOwner( CBaseCombatCharacter *owner )
 {
 	if ( !owner )
-	{ 
+	{
 #ifndef CLIENT_DLL
 		// Make sure the weapon updates its state when it's removed from the player
 		// We have to force an active state change, because it's being dropped and won't call UpdateClientData()
@@ -583,7 +583,7 @@ void CBaseCombatWeapon::SetOwner( CBaseCombatCharacter *owner )
 	}
 
 	m_hOwner = owner;
-	
+
 #ifndef CLIENT_DLL
 	DispatchUpdateTransmitState();
 #else
@@ -637,7 +637,7 @@ bool CBaseCombatWeapon::VisibleInWeaponSelection( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseCombatWeapon::HasWeaponIdleTimeElapsed( void )
@@ -649,8 +649,8 @@ bool CBaseCombatWeapon::HasWeaponIdleTimeElapsed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : time - 
+// Purpose:
+// Input  : time -
 //-----------------------------------------------------------------------------
 void CBaseCombatWeapon::SetWeaponIdleTime( float time )
 {
@@ -658,7 +658,7 @@ void CBaseCombatWeapon::SetWeaponIdleTime( float time )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CBaseCombatWeapon::GetWeaponIdleTime( void )
@@ -731,8 +731,8 @@ void CBaseCombatWeapon::Drop( const Vector &vecVelocity )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPicker - 
+// Purpose:
+// Input  : *pPicker -
 //-----------------------------------------------------------------------------
 void CBaseCombatWeapon::OnPickedUp( CBaseCombatCharacter *pNewOwner )
 {
@@ -758,8 +758,8 @@ void CBaseCombatWeapon::OnPickedUp( CBaseCombatCharacter *pNewOwner )
 			CBaseEntity::EmitSound( filter, pNewOwner->entindex(), "Player.PickupWeapon" );
 		}
 
-		// Robin: We don't want to delete weapons the player has picked up, so 
-		// clear the name of the weapon. This prevents wildcards that are meant 
+		// Robin: We don't want to delete weapons the player has picked up, so
+		// clear the name of the weapon. This prevents wildcards that are meant
 		// to find NPCs finding weapons dropped by the NPCs as well.
 		SetName( NULL_STRING );
 	}
@@ -778,10 +778,10 @@ void CBaseCombatWeapon::OnPickedUp( CBaseCombatCharacter *pNewOwner )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &vecTracerSrc - 
-//			&tr - 
-//			iTracerType - 
+// Purpose:
+// Input  : &vecTracerSrc -
+//			&tr -
+//			iTracerType -
 //-----------------------------------------------------------------------------
 void CBaseCombatWeapon::MakeTracer( const Vector &vecTracerSrc, const trace_t &tr, int iTracerType )
 {
@@ -860,7 +860,7 @@ void CBaseCombatWeapon::DefaultTouch( CBaseEntity *pOther )
 }
 
 //---------------------------------------------------------
-// It's OK for base classes to override this completely 
+// It's OK for base classes to override this completely
 // without calling up. (sjb)
 //---------------------------------------------------------
 bool CBaseCombatWeapon::ShouldDisplayAltFireHUDHint()
@@ -901,7 +901,7 @@ void CBaseCombatWeapon::RescindAltFireHudHint()
 {
 #if !defined( CLIENT_DLL )
 	Assert(m_bAltFireHudHintDisplayed);
-	
+
 	UTIL_HudHintText( GetOwner(), "" );
 	--m_iAltFireHudHintCount;
 	m_bAltFireHudHintDisplayed = false;
@@ -922,7 +922,7 @@ bool CBaseCombatWeapon::ShouldDisplayReloadHUDHint()
 		// I'm owned by a player, I use clips, I have less then half a clip loaded. Now, does the player have more ammo?
 		if ( pOwner )
 		{
-			if ( pOwner->GetAmmoCount( m_iPrimaryAmmoType ) > 0 ) 
+			if ( pOwner->GetAmmoCount( m_iPrimaryAmmoType ) > 0 )
 				return true;
 		}
 	}
@@ -1020,15 +1020,15 @@ void CBaseCombatWeapon::Equip( CBaseCombatCharacter *pOwner )
 	}
 }
 
-void CBaseCombatWeapon::SetActivity( Activity act, float duration ) 
-{ 
+void CBaseCombatWeapon::SetActivity( Activity act, float duration )
+{
 	//Adrian: Oh man...
 #if !defined( CLIENT_DLL ) && (defined( HL2MP ) || defined( PORTAL ))
 	SetModel( GetWorldModel() );
 #endif
-	
-	int sequence = SelectWeightedSequence( act ); 
-	
+
+	int sequence = SelectWeightedSequence( act );
+
 	// FORCE IDLE on sequences we don't have (which should be many)
 	if ( sequence == ACTIVITY_NOT_AVAILABLE )
 		sequence = SelectWeightedSequence( ACT_VM_IDLE );
@@ -1041,7 +1041,7 @@ void CBaseCombatWeapon::SetActivity( Activity act, float duration )
 	if ( sequence != ACTIVITY_NOT_AVAILABLE )
 	{
 		SetSequence( sequence );
-		SetActivity( act ); 
+		SetActivity( act );
 		SetCycle( 0 );
 		ResetSequenceInfo( );
 
@@ -1067,7 +1067,7 @@ int CBaseCombatWeapon::UpdateClientData( CBasePlayer *pPlayer )
 
 	if ( pPlayer->GetActiveWeapon() == this )
 	{
-		if ( pPlayer->m_fOnTarget ) 
+		if ( pPlayer->m_fOnTarget )
 		{
 			iNewState = WEAPON_IS_ONTARGET;
 		}
@@ -1091,8 +1091,8 @@ int CBaseCombatWeapon::UpdateClientData( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 //-----------------------------------------------------------------------------
 void CBaseCombatWeapon::SetViewModelIndex( int index_ )
 {
@@ -1101,8 +1101,8 @@ void CBaseCombatWeapon::SetViewModelIndex( int index_ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : iActivity - 
+// Purpose:
+// Input  : iActivity -
 //-----------------------------------------------------------------------------
 void CBaseCombatWeapon::SendViewModelAnim( int nSequence )
 {
@@ -1110,17 +1110,17 @@ void CBaseCombatWeapon::SendViewModelAnim( int nSequence )
 	if ( !IsPredicted() )
 		return;
 #endif
-	
+
 	if ( nSequence < 0 )
 		return;
 
 	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-	
+
 	if ( pOwner == NULL )
 		return;
-	
+
 	CBaseViewModel *vm = pOwner->GetViewModel( m_nViewModelIndex, false );
-	
+
 	if ( vm == NULL )
 		return;
 
@@ -1137,7 +1137,7 @@ float CBaseCombatWeapon::GetViewModelSequenceDuration()
 		Assert( false );
 		return 0;
 	}
-	
+
 	CBaseViewModel *vm = pOwner->GetViewModel( m_nViewModelIndex );
 	if ( vm == NULL )
 	{
@@ -1162,7 +1162,7 @@ bool CBaseCombatWeapon::IsViewModelSequenceFinished( void ) const
 		Assert( false );
 		return false;
 	}
-	
+
 	CBaseViewModel *vm = pOwner->GetViewModel( m_nViewModelIndex );
 	if ( vm == NULL )
 	{
@@ -1174,7 +1174,7 @@ bool CBaseCombatWeapon::IsViewModelSequenceFinished( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseCombatWeapon::SetViewModel()
 {
@@ -1196,7 +1196,7 @@ bool CBaseCombatWeapon::SendWeaponAnim( int iActivity )
 {
 #ifdef USES_ECON_ITEMS
 	iActivity = TranslateViewmodelHandActivity( (Activity)iActivity );
-#endif		
+#endif
 	// NVNT notify the haptics system of this weapons new activity
 #ifdef WIN32
 #ifdef CLIENT_DLL
@@ -1245,7 +1245,7 @@ bool CBaseCombatWeapon::HasPrimaryAmmo( void )
 	CBaseCombatCharacter		*pOwner = GetOwner();
 	if ( pOwner )
 	{
-		if ( pOwner->GetAmmoCount( m_iPrimaryAmmoType ) > 0 ) 
+		if ( pOwner->GetAmmoCount( m_iPrimaryAmmoType ) > 0 )
 			return true;
 	}
 	else
@@ -1275,7 +1275,7 @@ bool CBaseCombatWeapon::HasSecondaryAmmo( void )
 	CBaseCombatCharacter		*pOwner = GetOwner();
 	if ( pOwner )
 	{
-		if ( pOwner->GetAmmoCount( m_iSecondaryAmmoType ) > 0 ) 
+		if ( pOwner->GetAmmoCount( m_iSecondaryAmmoType ) > 0 )
 			return true;
 	}
 
@@ -1304,7 +1304,7 @@ bool CBaseCombatWeapon::UsesSecondaryAmmo( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Show/hide weapon and corresponding view model if any
-// Input  : visible - 
+// Input  : visible -
 //-----------------------------------------------------------------------------
 void CBaseCombatWeapon::SetWeaponVisible( bool visible )
 {
@@ -1335,7 +1335,7 @@ void CBaseCombatWeapon::SetWeaponVisible( bool visible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseCombatWeapon::IsWeaponVisible( void )
 {
@@ -1352,7 +1352,7 @@ bool CBaseCombatWeapon::IsWeaponVisible( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: If the current weapon has more ammo, reload it. Otherwise, switch 
+// Purpose: If the current weapon has more ammo, reload it. Otherwise, switch
 //			to the next best weapon we've got. Returns true if it took any action.
 //-----------------------------------------------------------------------------
 bool CBaseCombatWeapon::ReloadOrSwitchWeapons( void )
@@ -1375,10 +1375,10 @@ bool CBaseCombatWeapon::ReloadOrSwitchWeapons( void )
 	else
 	{
 		// Weapon is useable. Reload if empty and weapon has waited as long as it has to after firing
-		if ( UsesClipsForAmmo1() && !AutoFiresFullClip() && 
-			 (m_iClip1 == 0) && 
-			 (GetWeaponFlags() & ITEM_FLAG_NOAUTORELOAD) == false && 
-			 m_flNextPrimaryAttack < gpGlobals->curtime && 
+		if ( UsesClipsForAmmo1() && !AutoFiresFullClip() &&
+			 (m_iClip1 == 0) &&
+			 (GetWeaponFlags() & ITEM_FLAG_NOAUTORELOAD) == false &&
+			 m_flNextPrimaryAttack < gpGlobals->curtime &&
 			 m_flNextSecondaryAttack < gpGlobals->curtime )
 		{
 			// if we're successfully reloading, we're done
@@ -1391,18 +1391,18 @@ bool CBaseCombatWeapon::ReloadOrSwitchWeapons( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szViewModel - 
-//			*szWeaponModel - 
-//			iActivity - 
-//			*szAnimExt - 
+// Purpose:
+// Input  : *szViewModel -
+//			*szWeaponModel -
+//			iActivity -
+//			*szAnimExt -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CBaseCombatWeapon::DefaultDeploy( char *szViewModel, char *szWeaponModel, int iActivity, char *szAnimExt )
 {
 	// Msg( "deploy %s at %f\n", GetClassname(), gpGlobals->curtime );
 
-	// Weapons that don't autoswitch away when they run out of ammo 
+	// Weapons that don't autoswitch away when they run out of ammo
 	// can still be deployed when they have no ammo.
 	if ( !HasAnyAmmo() && AllowsAutoSwitchFrom() )
 		return false;
@@ -1430,14 +1430,14 @@ bool CBaseCombatWeapon::DefaultDeploy( char *szViewModel, char *szWeaponModel, i
 	m_bAltFireHudHintDisplayed = false;
 	m_bReloadHudHintDisplayed = false;
 	m_flHudHintPollTime = gpGlobals->curtime + 5.0f;
-	
+
 	WeaponSound( DEPLOY );
 
 	SetWeaponVisible( true );
 
 /*
 
-This code is disabled for now, because moving through the weapons in the carousel 
+This code is disabled for now, because moving through the weapons in the carousel
 selects and deploys each weapon as you pass it. (sjb)
 
 */
@@ -1448,7 +1448,7 @@ selects and deploys each weapon as you pass it. (sjb)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseCombatWeapon::Deploy( )
 {
@@ -1467,14 +1467,14 @@ Activity CBaseCombatWeapon::GetDrawActivity( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseCombatWeapon::Holster( CBaseCombatWeapon *pSwitchingTo )
-{ 
+{
 	MDLCACHE_CRITICAL_SECTION();
 
 	// cancel any reload in progress.
-	m_bInReload = false; 
+	m_bInReload = false;
 	m_bFiringWholeClip = false;
 
 	// kill any think functions
@@ -1531,16 +1531,16 @@ bool CBaseCombatWeapon::Holster( CBaseCombatWeapon *pSwitchingTo )
 		// since we know the weapon will never point behind him.
 
 		localMaxs.x += 20;	// Leaves some space in front for long weapons.
-		
+
 		localMins.y -= 20;	// Fatten it to his left and right since he can rotate that way.
-		localMaxs.y += 20;	
+		localMaxs.y += 20;
 
 		localMaxs.z += 15;	// Leave some space at the top.
 	}
 
 #else
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseCombatWeapon::InputHideWeapon( inputdata_t &inputdata )
 {
@@ -1553,7 +1553,7 @@ void CBaseCombatWeapon::InputHideWeapon( inputdata_t &inputdata )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseCombatWeapon::HideThink( void )
 {
@@ -1600,7 +1600,7 @@ bool CBaseCombatWeapon::IsAllowedToWithdrawFromCritBucket( float flDamage )
 	// seed said we should grant a random crit.  If allowed, the cost
 	// will be deducted here.
 
-	// Track each seed request - in cases where a player is hacking, we'll 
+	// Track each seed request - in cases where a player is hacking, we'll
 	// see a silly ratio.
 	m_nCritSeedRequests++;
 
@@ -1625,7 +1625,7 @@ bool CBaseCombatWeapon::IsAllowedToWithdrawFromCritBucket( float flDamage )
 #endif // TF_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseCombatWeapon::ItemPreFrame( void )
 {
@@ -1636,7 +1636,7 @@ void CBaseCombatWeapon::ItemPreFrame( void )
 	if ( IsX360() )
 #endif
 	{
-		// If we haven't displayed the hint enough times yet, it's time to try to 
+		// If we haven't displayed the hint enough times yet, it's time to try to
 		// display the hint, and the player is not standing still, try to show a hud hint.
 		// If the player IS standing still, assume they could change away from this weapon at
 		// any second.
@@ -1715,7 +1715,7 @@ void CBaseCombatWeapon::ItemPostFrame( void )
 		else
 		{
 			// FIXME: This isn't necessarily true if the weapon doesn't have a secondary fire!
-			// For instance, the crossbow doesn't have a 'real' secondary fire, but it still 
+			// For instance, the crossbow doesn't have a 'real' secondary fire, but it still
 			// stops the crossbow from firing on the 360 if the player chooses to hold down their
 			// zoom button. (sjb) Orange Box 7/25/2007
 #if !defined(CLIENT_DLL)
@@ -1739,11 +1739,11 @@ void CBaseCombatWeapon::ItemPostFrame( void )
 			}
 		}
 	}
-	
+
 	if ( !bFired && (pOwner->m_nButtons & IN_ATTACK) && (m_flNextPrimaryAttack <= gpGlobals->curtime))
 	{
 		// Clip empty? Or out of ammo on a no-clip weapon?
-		if ( !IsMeleeWeapon() &&  
+		if ( !IsMeleeWeapon() &&
 			(( UsesClipsForAmmo1() && m_iClip1 <= 0) || ( !UsesClipsForAmmo1() && pOwner->GetAmmoCount(m_iPrimaryAmmoType)<=0 )) )
 		{
 			HandleFireOnEmpty();
@@ -1762,7 +1762,7 @@ void CBaseCombatWeapon::ItemPostFrame( void )
 			//			However, because the player can also be doing a secondary attack, the edge trigger may be missed.
 			//			We really need to hold onto the edge trigger and only clear the condition when the gun has fired its
 			//			first shot.  Right now that's too much of an architecture change -- jdw
-			
+
 			// If the firing button was just pressed, or the alt-fire just released, reset the firing time
 			if ( ( pOwner->m_afButtonPressed & IN_ATTACK ) || ( pOwner->m_afButtonReleased & IN_ATTACK2 ) )
 			{
@@ -1785,7 +1785,7 @@ void CBaseCombatWeapon::ItemPostFrame( void )
 	// -----------------------
 	//  Reload pressed / Clip Empty
 	//  Can only start the Reload Cycle after the firing cycle
-	if ( ( pOwner->m_nButtons & IN_RELOAD ) && m_flNextPrimaryAttack <= gpGlobals->curtime && UsesClipsForAmmo1() && !m_bInReload ) 
+	if ( ( pOwner->m_nButtons & IN_RELOAD ) && m_flNextPrimaryAttack <= gpGlobals->curtime && UsesClipsForAmmo1() && !m_bInReload )
 	{
 		// reload when reload is pressed, or if no buttons are down and weapon is empty.
 		Reload();
@@ -1897,7 +1897,7 @@ void CBaseCombatWeapon::WeaponSound( WeaponSound_t sound_type, float soundtime /
 		return;
 
 	CSoundParameters params;
-	
+
 	if ( !GetParametersForSound( shootsound, params, NULL ) )
 		return;
 
@@ -1924,7 +1924,7 @@ void CBaseCombatWeapon::WeaponSound( WeaponSound_t sound_type, float soundtime /
 			{
 				filter.UsePredictionRules();
 			}
-			EmitSound( filter, GetOwner()->entindex(), shootsound, NULL, soundtime ); 
+			EmitSound( filter, GetOwner()->entindex(), shootsound, NULL, soundtime );
 
 #if !defined( CLIENT_DLL )
 			if( sound_type == EMPTY )
@@ -1941,7 +1941,7 @@ void CBaseCombatWeapon::WeaponSound( WeaponSound_t sound_type, float soundtime /
 			{
 				filter.UsePredictionRules();
 			}
-			EmitSound( filter, entindex(), shootsound, NULL, soundtime ); 
+			EmitSound( filter, entindex(), shootsound, NULL, soundtime );
 		}
 	}
 }
@@ -1958,7 +1958,7 @@ void CBaseCombatWeapon::StopWeaponSound( WeaponSound_t sound_type )
 	const char *shootsound = GetShootSound( sound_type );
 	if ( !shootsound || !shootsound[0] )
 		return;
-	
+
 	CSoundParameters params;
 	if ( !GetParametersForSound( shootsound, params, NULL ) )
 		return;
@@ -1987,7 +1987,7 @@ void CBaseCombatWeapon::StopWeaponSound( WeaponSound_t sound_type )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseCombatWeapon::DefaultReload( int iClipSize1, int iClipSize2, int iActivity )
 {
@@ -2069,7 +2069,7 @@ bool CBaseCombatWeapon::ReloadsSingly( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseCombatWeapon::Reload( void )
 {
@@ -2188,7 +2188,7 @@ void CBaseCombatWeapon::FinishReload( void )
 		// If I use primary clips, reload primary
 		if ( UsesClipsForAmmo1() )
 		{
-			int primary	= MIN( GetMaxClip1() - m_iClip1, pOwner->GetAmmoCount(m_iPrimaryAmmoType));	
+			int primary	= MIN( GetMaxClip1() - m_iClip1, pOwner->GetAmmoCount(m_iPrimaryAmmoType));
 			m_iClip1 += primary;
 			pOwner->RemoveAmmo( primary, m_iPrimaryAmmoType);
 		}
@@ -2214,7 +2214,7 @@ void CBaseCombatWeapon::FinishReload( void )
 void CBaseCombatWeapon::AbortReload( void )
 {
 #ifdef CLIENT_DLL
-	StopWeaponSound( RELOAD ); 
+	StopWeaponSound( RELOAD );
 #endif
 	m_bInReload = false;
 }
@@ -2273,7 +2273,7 @@ void CBaseCombatWeapon::UpdateAutoFire( void )
 void CBaseCombatWeapon::PrimaryAttack( void )
 {
 	// If my clip is empty (and I use clips) start reload
-	if ( UsesClipsForAmmo1() && !m_iClip1 ) 
+	if ( UsesClipsForAmmo1() && !m_iClip1 )
 	{
 		Reload();
 		return;
@@ -2296,10 +2296,10 @@ void CBaseCombatWeapon::PrimaryAttack( void )
 
 	FireBulletsInfo_t info;
 	info.m_vecSrc	 = pPlayer->Weapon_ShootPosition( );
-	
+
 	info.m_vecDirShooting = pPlayer->GetAutoaimVector( AUTOAIM_SCALE_DEFAULT );
 
-	// To make the firing framerate independent, we may have to fire more than one bullet here on low-framerate systems, 
+	// To make the firing framerate independent, we may have to fire more than one bullet here on low-framerate systems,
 	// especially if the weapon we're firing has a really fast rate of fire.
 	info.m_iShots = 0;
 	float fireRate = GetFireRate();
@@ -2334,7 +2334,7 @@ void CBaseCombatWeapon::PrimaryAttack( void )
 	// Fire the bullets
 	info.m_vecSpread = pPlayer->GetAttackSpread( this );
 #else
-	//!!!HACKHACK - what does the client want this function for? 
+	//!!!HACKHACK - what does the client want this function for?
 	info.m_vecSpread = GetActiveWeapon()->GetBulletSpread();
 #endif // CLIENT_DLL
 
@@ -2343,7 +2343,7 @@ void CBaseCombatWeapon::PrimaryAttack( void )
 	if (!m_iClip1 && pPlayer->GetAmmoCount(m_iPrimaryAmmoType) <= 0)
 	{
 		// HEV suit - indicate out of ammo condition
-		pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0); 
+		pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0);
 	}
 
 	//Add our view kick in
@@ -2359,10 +2359,10 @@ void CBaseCombatWeapon::MaintainIdealActivity( void )
 	if ( GetActivity() != ACT_TRANSITION )
 		return;
 
-	// Must not be at our ideal already 
+	// Must not be at our ideal already
 	if ( ( GetActivity() == m_IdealActivity ) && ( GetSequence() == m_nIdealSequence ) )
 		return;
-	
+
 	// Must be finished with the current animation
 	if ( IsViewModelSequenceFinished() == false )
 		return;
@@ -2395,14 +2395,14 @@ bool CBaseCombatWeapon::SetIdealActivity( Activity ideal )
 	{
 		//Set our activity to the next transitional animation
 		SetActivity( ACT_TRANSITION );
-		SetSequence( nextSequence );	
+		SetSequence( nextSequence );
 		SendViewModelAnim( nextSequence );
 	}
 	else
 	{
 		//Set our activity to the ideal
 		SetActivity( m_IdealActivity );
-		SetSequence( m_nIdealSequence );	
+		SetSequence( m_nIdealSequence );
 		SendViewModelAnim( m_nIdealSequence );
 	}
 
@@ -2429,7 +2429,7 @@ void CBaseCombatWeapon::GetControlPanelClassName( int nPanelIndex, const char *&
 
 
 //-----------------------------------------------------------------------------
-// Locking a weapon is an exclusive action. If you lock a weapon, that means 
+// Locking a weapon is an exclusive action. If you lock a weapon, that means
 // you are preventing others from doing so for themselves.
 //-----------------------------------------------------------------------------
 void CBaseCombatWeapon::Lock( float lockTime, CBaseEntity *pLocker )
@@ -2440,7 +2440,7 @@ void CBaseCombatWeapon::Lock( float lockTime, CBaseEntity *pLocker )
 
 //-----------------------------------------------------------------------------
 // If I'm still locked for a period of time, tell everyone except the person
-// that locked me that I'm not available. 
+// that locked me that I'm not available.
 //-----------------------------------------------------------------------------
 bool CBaseCombatWeapon::IsLocked( CBaseEntity *pAsker )
 {
@@ -2485,7 +2485,7 @@ void CBaseCombatWeapon::PoseParameterOverride( bool bReset )
 	CStudioHdr *pStudioHdr = pOwner->GetModelPtr();
 	if ( !pStudioHdr )
 		return;
-	
+
 	int iCount = 0;
 	poseparamtable_t *pPoseParamList = PoseParamList( iCount );
 	if ( pPoseParamList )
@@ -2493,7 +2493,7 @@ void CBaseCombatWeapon::PoseParameterOverride( bool bReset )
 		for ( int i=0; i<iCount; ++i )
 		{
 			int iPoseParam = pOwner->LookupPoseParameter( pStudioHdr, pPoseParamList[i].pszName );
-		
+
 			if ( iPoseParam != -1 )
 				pOwner->SetPoseParameter( iPoseParam, bReset ? 0 : pPoseParamList[i].flValue );
 		}
@@ -2585,17 +2585,17 @@ BEGIN_PREDICTION_DATA( CBaseCombatWeapon )
 	// Networked
 	DEFINE_PRED_FIELD( m_hOwner, FIELD_EHANDLE, FTYPEDESC_INSENDTABLE ),
 	// DEFINE_FIELD( m_hWeaponFileInfo, FIELD_SHORT ),
-	DEFINE_PRED_FIELD( m_iState, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),			 
+	DEFINE_PRED_FIELD( m_iState, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
 	DEFINE_PRED_FIELD( m_iViewModelIndex, FIELD_INTEGER, FTYPEDESC_INSENDTABLE | FTYPEDESC_MODELINDEX ),
 	DEFINE_PRED_FIELD( m_iWorldModelIndex, FIELD_INTEGER, FTYPEDESC_INSENDTABLE | FTYPEDESC_MODELINDEX ),
-	DEFINE_PRED_FIELD_TOL( m_flNextPrimaryAttack, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE ),	
+	DEFINE_PRED_FIELD_TOL( m_flNextPrimaryAttack, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE ),
 	DEFINE_PRED_FIELD_TOL( m_flNextSecondaryAttack, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE ),
 	DEFINE_PRED_FIELD_TOL( m_flTimeWeaponIdle, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE ),
 
 	DEFINE_PRED_FIELD( m_iPrimaryAmmoType, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
 	DEFINE_PRED_FIELD( m_iSecondaryAmmoType, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
-	DEFINE_PRED_FIELD( m_iClip1, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),			
-	DEFINE_PRED_FIELD( m_iClip2, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),			
+	DEFINE_PRED_FIELD( m_iClip1, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
+	DEFINE_PRED_FIELD( m_iClip2, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
 
 	DEFINE_PRED_FIELD( m_nViewModelIndex, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
 
@@ -2608,14 +2608,14 @@ BEGIN_PREDICTION_DATA( CBaseCombatWeapon )
 	DEFINE_FIELD( m_flNextEmptySoundTime, FIELD_FLOAT ),
 	DEFINE_FIELD( m_Activity, FIELD_INTEGER ),
 	DEFINE_FIELD( m_fFireDuration, FIELD_FLOAT ),
-	DEFINE_FIELD( m_iszName, FIELD_INTEGER ),		
+	DEFINE_FIELD( m_iszName, FIELD_INTEGER ),
 	DEFINE_FIELD( m_bFiresUnderwater, FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_bAltFiresUnderwater, FIELD_BOOLEAN ),
-	DEFINE_FIELD( m_fMinRange1, FIELD_FLOAT ),		
-	DEFINE_FIELD( m_fMinRange2, FIELD_FLOAT ),		
-	DEFINE_FIELD( m_fMaxRange1, FIELD_FLOAT ),		
-	DEFINE_FIELD( m_fMaxRange2, FIELD_FLOAT ),		
-	DEFINE_FIELD( m_bReloadsSingly, FIELD_BOOLEAN ),	
+	DEFINE_FIELD( m_fMinRange1, FIELD_FLOAT ),
+	DEFINE_FIELD( m_fMinRange2, FIELD_FLOAT ),
+	DEFINE_FIELD( m_fMaxRange1, FIELD_FLOAT ),
+	DEFINE_FIELD( m_fMaxRange2, FIELD_FLOAT ),
+	DEFINE_FIELD( m_bReloadsSingly, FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_bRemoveable, FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_iPrimaryAmmoCount, FIELD_INTEGER ),
 	DEFINE_FIELD( m_iSecondaryAmmoCount, FIELD_INTEGER ),
@@ -2638,7 +2638,7 @@ IMPLEMENT_NETWORKCLASS_ALIASED( BaseCombatWeapon, DT_BaseCombatWeapon )
 #if !defined( CLIENT_DLL )
 //-----------------------------------------------------------------------------
 // Purpose: Save Data for Base Weapon object
-//-----------------------------------------------------------------------------// 
+//-----------------------------------------------------------------------------//
 BEGIN_DATADESC( CBaseCombatWeapon )
 
 	DEFINE_FIELD( m_flNextPrimaryAttack, FIELD_TIME ),
@@ -2720,10 +2720,10 @@ END_DATADESC()
 
 //-----------------------------------------------------------------------------
 // Purpose: Only send to local player if this weapon is the active weapon
-// Input  : *pStruct - 
-//			*pVarData - 
-//			*pRecipients - 
-//			objectID - 
+// Input  : *pStruct -
+//			*pVarData -
+//			*pRecipients -
+//			objectID -
 // Output : void*
 //-----------------------------------------------------------------------------
 void* SendProxy_SendActiveLocalWeaponDataTable( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID )
@@ -2740,7 +2740,7 @@ void* SendProxy_SendActiveLocalWeaponDataTable( const SendProp *pProp, const voi
 			return (void*)pVarData;
 		}
 	}
-	
+
 	return NULL;
 }
 REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_SendActiveLocalWeaponDataTable );
@@ -2762,7 +2762,7 @@ void* SendProxy_SendLocalWeaponDataTable( const SendProp *pProp, const void *pSt
 			return (void*)pVarData;
 		}
 	}
-	
+
 	return NULL;
 }
 REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_SendLocalWeaponDataTable );

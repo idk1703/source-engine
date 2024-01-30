@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,7 +32,7 @@ class VPanel;
 class IMessageListener
 {
 public:
-	virtual void Message( VPanel* pSender, VPanel* pReceiver, 
+	virtual void Message( VPanel* pSender, VPanel* pReceiver,
 		KeyValues* pKeyValues, MessageSendType_t type ) = 0;
 };
 

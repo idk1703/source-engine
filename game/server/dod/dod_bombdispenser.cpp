@@ -63,7 +63,7 @@ void CDODBombDispenser::Spawn( void )
 
 	// make our map icon entity
 #ifdef DBGFLAG_ASSERT
-    CBaseEntity *pIcon = 
+	CBaseEntity *pIcon =
 #endif
 		CBaseEntity::Create( "dod_bomb_dispenser_icon", WorldSpaceCenter(), GetAbsAngles(), this );
 
@@ -105,7 +105,7 @@ void CDODBombDispenser::Touch( CBaseEntity *pOther )
 	default:
 		break;
 	}
-	
+
 }
 
 void CDODBombDispenser::InputEnable( inputdata_t &inputdata )

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ void ToggleButton::OnMouseDoublePressed(MouseCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Color ToggleButton::GetButtonFgColor()
 {
@@ -51,11 +51,11 @@ Color ToggleButton::GetButtonFgColor()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool ToggleButton::CanBeDefaultButton(void)
 {
-    return false;
+	return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -79,12 +79,12 @@ void ToggleButton::DoClick()
 	KeyValues *msg = new KeyValues("ButtonToggled");
 	msg->SetInt("state", (int)IsSelected());
 	PostActionSignal(msg);
-	
+
 	Repaint();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ToggleButton::ApplySchemeSettings(IScheme *pScheme)
 {
@@ -94,9 +94,8 @@ void ToggleButton::ApplySchemeSettings(IScheme *pScheme)
 
 void ToggleButton::OnKeyCodePressed(KeyCode code)
 {
-    if (code != KEY_ENTER)
-    {
-        BaseClass::OnKeyCodePressed(code);
-    }
+	if (code != KEY_ENTER)
+	{
+		BaseClass::OnKeyCodePressed(code);
+	}
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -68,7 +68,7 @@ public:
 
 private:
 	CFourWheelVehiclePhysics	*GetFourWheelVehiclePhysics( void );
-	
+
 	ViewSmoothingData_t		m_ViewSmoothing;
 };
 
@@ -114,7 +114,7 @@ public:
 	void AddPhysicsChild( CBaseEntity *pChild );
 	void RemovePhysicsChild( CBaseEntity *pChild );
 #endif //HL2_EPISODIC
-		
+
 protected:
 	// engine sounds
 	void SoundInit();
@@ -122,7 +122,7 @@ protected:
 	void SoundUpdate( const vehicle_operatingparams_t &params, const vehicleparams_t &vehicle );
 	void CalcWheelData( vehicleparams_t &vehicle );
 	void ResetControls();
-	
+
 	// Upright strength of the controller (angular limit)
 	virtual float GetUprightStrength( void ) { return 8.0f; }
 	virtual float GetUprightTime( void ) { return 5.0f; }
@@ -202,7 +202,7 @@ public:
 
 	virtual bool IsOverturned( void );
 	virtual bool IsVehicleBodyInWater( void ) { return false; }
-		
+
 	// Engine handling
 	void	StartEngine( void );
 	void	StopEngine( void );
@@ -226,7 +226,7 @@ public:
 	virtual void		PreExitVehicle( CBaseCombatCharacter *pPassenger, int nRole ) {}
 	virtual void		ExitVehicle( int nRole );
 	virtual string_t	GetVehicleScriptName() { return m_vehicleScript; }
-	
+
 	virtual bool		PassengerShouldReceiveDamage( CTakeDamageInfo &info ) { return true; }
 
 	// If this is a vehicle, returns the vehicle interface
@@ -280,7 +280,7 @@ public:
 	virtual bool	NPC_CanExitVehicle( CAI_BaseNPC *pPassenger, bool bCompanion );
 	virtual bool	NPC_AddPassenger( CAI_BaseNPC *pPassenger, string_t strRoleName, int nSeatID );
 	virtual bool 	NPC_RemovePassenger( CAI_BaseNPC *pPassenger );
-	virtual void	NPC_FinishedEnterVehicle( CAI_BaseNPC *pPassenger, bool bCompanion ) {} 
+	virtual void	NPC_FinishedEnterVehicle( CAI_BaseNPC *pPassenger, bool bCompanion ) {}
 	virtual void	NPC_FinishedExitVehicle( CAI_BaseNPC *pPassenger, bool bCompanion ) {}
 
 	// NPC Passengers
@@ -297,7 +297,7 @@ protected:
 	float		m_flMinimumSpeedToEnterExit;
 	CNetworkVar( bool, m_bEnterAnimOn );
 	CNetworkVar( bool, m_bExitAnimOn );
-	
+
 	// Used to turn the keepupright off after a short time
 	float		m_flTurnOffKeepUpright;
 	float		m_flNoImpactDamageTime;

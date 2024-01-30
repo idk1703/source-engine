@@ -1,17 +1,17 @@
 /*
-     File:       Components.h
- 
-     Contains:   Component Manager Interfaces.
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1990-2003 by Apple Computer, Inc., all rights reserved
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       Components.h
+
+		Contains:   Component Manager Interfaces.
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1990-2003 by Apple Computer, Inc., all rights reserved
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __COMPONENTS__
 #define __COMPONENTS__
@@ -48,193 +48,193 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=mac68k
+		#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+		#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+		#pragma pack(2)
 #endif
 
 enum {
-  kAppleManufacturer            = FOUR_CHAR_CODE('appl'), /* Apple supplied components */
-  kComponentResourceType        = FOUR_CHAR_CODE('thng'), /* a components resource type */
-  kComponentAliasResourceType   = FOUR_CHAR_CODE('thga') /* component alias resource type */
+	kAppleManufacturer            = FOUR_CHAR_CODE('appl'), /* Apple supplied components */
+	kComponentResourceType        = FOUR_CHAR_CODE('thng'), /* a components resource type */
+	kComponentAliasResourceType   = FOUR_CHAR_CODE('thga') /* component alias resource type */
 };
 
 enum {
-  kAnyComponentType             = 0,
-  kAnyComponentSubType          = 0,
-  kAnyComponentManufacturer     = 0,
-  kAnyComponentFlagsMask        = 0
+	kAnyComponentType             = 0,
+	kAnyComponentSubType          = 0,
+	kAnyComponentManufacturer     = 0,
+	kAnyComponentFlagsMask        = 0
 };
 
 enum {
-  cmpIsMissing                  = 1L << 29,
-  cmpWantsRegisterMessage       = 1L << 31
+	cmpIsMissing                  = 1L << 29,
+	cmpWantsRegisterMessage       = 1L << 31
 };
 
 enum {
-  kComponentOpenSelect          = -1,   /* ComponentInstance for this open */
-  kComponentCloseSelect         = -2,   /* ComponentInstance for this close */
-  kComponentCanDoSelect         = -3,   /* selector # being queried */
-  kComponentVersionSelect       = -4,   /* no params */
-  kComponentRegisterSelect      = -5,   /* no params */
-  kComponentTargetSelect        = -6,   /* ComponentInstance for top of call chain */
-  kComponentUnregisterSelect    = -7,   /* no params */
-  kComponentGetMPWorkFunctionSelect = -8, /* some params */
-  kComponentExecuteWiredActionSelect = -9, /* QTAtomContainer actionContainer, QTAtom actionAtom, QTCustomActionTargetPtr target, QTEventRecordPtr event */
-  kComponentGetPublicResourceSelect = -10 /* OSType resourceType, short resourceId, Handle *resource */
+	kComponentOpenSelect          = -1,   /* ComponentInstance for this open */
+	kComponentCloseSelect         = -2,   /* ComponentInstance for this close */
+	kComponentCanDoSelect         = -3,   /* selector # being queried */
+	kComponentVersionSelect       = -4,   /* no params */
+	kComponentRegisterSelect      = -5,   /* no params */
+	kComponentTargetSelect        = -6,   /* ComponentInstance for top of call chain */
+	kComponentUnregisterSelect    = -7,   /* no params */
+	kComponentGetMPWorkFunctionSelect = -8, /* some params */
+	kComponentExecuteWiredActionSelect = -9, /* QTAtomContainer actionContainer, QTAtom actionAtom, QTCustomActionTargetPtr target, QTEventRecordPtr event */
+	kComponentGetPublicResourceSelect = -10 /* OSType resourceType, short resourceId, Handle *resource */
 };
 
 /* Component Resource Extension flags */
 enum {
-  componentDoAutoVersion        = (1 << 0),
-  componentWantsUnregister      = (1 << 1),
-  componentAutoVersionIncludeFlags = (1 << 2),
-  componentHasMultiplePlatforms = (1 << 3),
-  componentLoadResident         = (1 << 4)
+	componentDoAutoVersion        = (1 << 0),
+	componentWantsUnregister      = (1 << 1),
+	componentAutoVersionIncludeFlags = (1 << 2),
+	componentHasMultiplePlatforms = (1 << 3),
+	componentLoadResident         = (1 << 4)
 };
 
 
 
 /* Set Default Component flags */
 enum {
-  defaultComponentIdentical     = 0,
-  defaultComponentAnyFlags      = 1,
-  defaultComponentAnyManufacturer = 2,
-  defaultComponentAnySubType    = 4,
-  defaultComponentAnyFlagsAnyManufacturer = (defaultComponentAnyFlags + defaultComponentAnyManufacturer),
-  defaultComponentAnyFlagsAnyManufacturerAnySubType = (defaultComponentAnyFlags + defaultComponentAnyManufacturer + defaultComponentAnySubType)
+	defaultComponentIdentical     = 0,
+	defaultComponentAnyFlags      = 1,
+	defaultComponentAnyManufacturer = 2,
+	defaultComponentAnySubType    = 4,
+	defaultComponentAnyFlagsAnyManufacturer = (defaultComponentAnyFlags + defaultComponentAnyManufacturer),
+	defaultComponentAnyFlagsAnyManufacturerAnySubType = (defaultComponentAnyFlags + defaultComponentAnyManufacturer + defaultComponentAnySubType)
 };
 
 /* RegisterComponentResource flags */
 enum {
-  registerComponentGlobal       = 1,
-  registerComponentNoDuplicates = 2,
-  registerComponentAfterExisting = 4,
-  registerComponentAliasesOnly  = 8
+	registerComponentGlobal       = 1,
+	registerComponentNoDuplicates = 2,
+	registerComponentAfterExisting = 4,
+	registerComponentAliasesOnly  = 8
 };
 
 
 struct ComponentDescription {
-  OSType              componentType;          /* A unique 4-byte code indentifying the command set */
-  OSType              componentSubType;       /* Particular flavor of this instance */
-  OSType              componentManufacturer;  /* Vendor indentification */
-  unsigned long       componentFlags;         /* 8 each for Component,Type,SubType,Manuf/revision */
-  unsigned long       componentFlagsMask;     /* Mask for specifying which flags to consider in search, zero during registration */
+	OSType              componentType;          /* A unique 4-byte code indentifying the command set */
+	OSType              componentSubType;       /* Particular flavor of this instance */
+	OSType              componentManufacturer;  /* Vendor indentification */
+	unsigned long       componentFlags;         /* 8 each for Component,Type,SubType,Manuf/revision */
+	unsigned long       componentFlagsMask;     /* Mask for specifying which flags to consider in search, zero during registration */
 };
 typedef struct ComponentDescription     ComponentDescription;
 
 struct ResourceSpec {
-  OSType              resType;                /* 4-byte code    */
-  short               resID;                  /*         */
+	OSType              resType;                /* 4-byte code    */
+	short               resID;                  /*         */
 };
 typedef struct ResourceSpec             ResourceSpec;
 struct ComponentResource {
-  ComponentDescription  cd;                   /* Registration parameters */
-  ResourceSpec        component;              /* resource where Component code is found */
-  ResourceSpec        componentName;          /* name string resource */
-  ResourceSpec        componentInfo;          /* info string resource */
-  ResourceSpec        componentIcon;          /* icon resource */
+	ComponentDescription  cd;                   /* Registration parameters */
+	ResourceSpec        component;              /* resource where Component code is found */
+	ResourceSpec        componentName;          /* name string resource */
+	ResourceSpec        componentInfo;          /* info string resource */
+	ResourceSpec        componentIcon;          /* icon resource */
 };
 typedef struct ComponentResource        ComponentResource;
 typedef ComponentResource *             ComponentResourcePtr;
 typedef ComponentResourcePtr *          ComponentResourceHandle;
 struct ComponentPlatformInfo {
-  long                componentFlags;         /* flags of Component */
-  ResourceSpec        component;              /* resource where Component code is found */
-  short               platformType;           /* gestaltSysArchitecture result */
+	long                componentFlags;         /* flags of Component */
+	ResourceSpec        component;              /* resource where Component code is found */
+	short               platformType;           /* gestaltSysArchitecture result */
 };
 typedef struct ComponentPlatformInfo    ComponentPlatformInfo;
 struct ComponentResourceExtension {
-  long                componentVersion;       /* version of Component */
-  long                componentRegisterFlags; /* flags for registration */
-  short               componentIconFamily;    /* resource id of Icon Family */
+	long                componentVersion;       /* version of Component */
+	long                componentRegisterFlags; /* flags for registration */
+	short               componentIconFamily;    /* resource id of Icon Family */
 };
 typedef struct ComponentResourceExtension ComponentResourceExtension;
 struct ComponentPlatformInfoArray {
-  long                count;
-  ComponentPlatformInfo  platformArray[1];
+	long                count;
+	ComponentPlatformInfo  platformArray[1];
 };
 typedef struct ComponentPlatformInfoArray ComponentPlatformInfoArray;
 struct ExtComponentResource {
-  ComponentDescription  cd;                   /* registration parameters */
-  ResourceSpec        component;              /* resource where Component code is found */
-  ResourceSpec        componentName;          /* name string resource */
-  ResourceSpec        componentInfo;          /* info string resource */
-  ResourceSpec        componentIcon;          /* icon resource */
-  long                componentVersion;       /* version of Component */
-  long                componentRegisterFlags; /* flags for registration */
-  short               componentIconFamily;    /* resource id of Icon Family */
-  long                count;                  /* elements in platformArray */
-  ComponentPlatformInfo  platformArray[1];
+	ComponentDescription  cd;                   /* registration parameters */
+	ResourceSpec        component;              /* resource where Component code is found */
+	ResourceSpec        componentName;          /* name string resource */
+	ResourceSpec        componentInfo;          /* info string resource */
+	ResourceSpec        componentIcon;          /* icon resource */
+	long                componentVersion;       /* version of Component */
+	long                componentRegisterFlags; /* flags for registration */
+	short               componentIconFamily;    /* resource id of Icon Family */
+	long                count;                  /* elements in platformArray */
+	ComponentPlatformInfo  platformArray[1];
 };
 typedef struct ExtComponentResource     ExtComponentResource;
 typedef ExtComponentResource *          ExtComponentResourcePtr;
 typedef ExtComponentResourcePtr *       ExtComponentResourceHandle;
 struct ComponentAliasResource {
-  ComponentResource   cr;                     /* Registration parameters */
-  ComponentDescription  aliasCD;              /* component alias description */
+	ComponentResource   cr;                     /* Registration parameters */
+	ComponentDescription  aliasCD;              /* component alias description */
 };
 typedef struct ComponentAliasResource   ComponentAliasResource;
 /*  Structure received by Component:        */
 struct ComponentParameters {
-  UInt8               flags;                  /* call modifiers: sync/async, deferred, immed, etc */
-  UInt8               paramSize;              /* size in bytes of actual parameters passed to this call */
-  short               what;                   /* routine selector, negative for Component management calls */
-  long                params[1];              /* actual parameters for the indicated routine */
+	UInt8               flags;                  /* call modifiers: sync/async, deferred, immed, etc */
+	UInt8               paramSize;              /* size in bytes of actual parameters passed to this call */
+	short               what;                   /* routine selector, negative for Component management calls */
+	long                params[1];              /* actual parameters for the indicated routine */
 };
 typedef struct ComponentParameters      ComponentParameters;
 struct ComponentRecord {
-  long                data[1];
+	long                data[1];
 };
 typedef struct ComponentRecord          ComponentRecord;
 typedef ComponentRecord *               Component;
 struct ComponentInstanceRecord {
-  long                data[1];
+	long                data[1];
 };
 typedef struct ComponentInstanceRecord  ComponentInstanceRecord;
 typedef ComponentInstanceRecord *       ComponentInstance;
 struct RegisteredComponentRecord {
-  long                data[1];
+	long                data[1];
 };
 typedef struct RegisteredComponentRecord RegisteredComponentRecord;
 typedef RegisteredComponentRecord *     RegisteredComponentRecordPtr;
 struct RegisteredComponentInstanceRecord {
-  long                data[1];
+	long                data[1];
 };
 typedef struct RegisteredComponentInstanceRecord RegisteredComponentInstanceRecord;
 typedef RegisteredComponentInstanceRecord * RegisteredComponentInstanceRecordPtr;
 typedef long                            ComponentResult;
 enum {
-  platform68k                   = 1,    /* platform type (response from gestaltComponentPlatform) */
-  platformPowerPC               = 2,    /* (when gestaltComponentPlatform is not implemented, use */
-  platformInterpreted           = 3,    /* gestaltSysArchitecture) */
-  platformWin32                 = 4,
-  platformPowerPCNativeEntryPoint = 5
+	platform68k                   = 1,    /* platform type (response from gestaltComponentPlatform) */
+	platformPowerPC               = 2,    /* (when gestaltComponentPlatform is not implemented, use */
+	platformInterpreted           = 3,    /* gestaltSysArchitecture) */
+	platformWin32                 = 4,
+	platformPowerPCNativeEntryPoint = 5
 };
 
 enum {
-  mpWorkFlagDoWork              = (1 << 0),
-  mpWorkFlagDoCompletion        = (1 << 1),
-  mpWorkFlagCopyWorkBlock       = (1 << 2),
-  mpWorkFlagDontBlock           = (1 << 3),
-  mpWorkFlagGetProcessorCount   = (1 << 4),
-  mpWorkFlagGetIsRunning        = (1 << 6)
+	mpWorkFlagDoWork              = (1 << 0),
+	mpWorkFlagDoCompletion        = (1 << 1),
+	mpWorkFlagCopyWorkBlock       = (1 << 2),
+	mpWorkFlagDontBlock           = (1 << 3),
+	mpWorkFlagGetProcessorCount   = (1 << 4),
+	mpWorkFlagGetIsRunning        = (1 << 6)
 };
 
 enum {
-  cmpAliasNoFlags               = 0,
-  cmpAliasOnlyThisFile          = 1
+	cmpAliasNoFlags               = 0,
+	cmpAliasOnlyThisFile          = 1
 };
 
 struct ComponentMPWorkFunctionHeaderRecord {
-  UInt32              headerSize;
-  UInt32              recordSize;
-  UInt32              workFlags;
-  UInt16              processorCount;
-  UInt8               unused;
-  UInt8               isRunning;
+	UInt32              headerSize;
+	UInt32              recordSize;
+	UInt32              workFlags;
+	UInt16              processorCount;
+	UInt8               unused;
+	UInt8               isRunning;
 };
 typedef struct ComponentMPWorkFunctionHeaderRecord ComponentMPWorkFunctionHeaderRecord;
 typedef ComponentMPWorkFunctionHeaderRecord * ComponentMPWorkFunctionHeaderRecordPtr;
@@ -245,19 +245,19 @@ typedef STACK_UPP_TYPE(ComponentMPWorkFunctionProcPtr)          ComponentMPWorkF
 typedef STACK_UPP_TYPE(ComponentRoutineProcPtr)                 ComponentRoutineUPP;
 typedef STACK_UPP_TYPE(GetMissingComponentResourceProcPtr)      GetMissingComponentResourceUPP;
 /*
-    The parameter list for each ComponentFunction is unique. It is
-    therefore up to users to create the appropriate procInfo for their
-    own ComponentFunctions where necessary.
+		The parameter list for each ComponentFunction is unique. It is
+		therefore up to users to create the appropriate procInfo for their
+		own ComponentFunctions where necessary.
 */
 typedef UniversalProcPtr                ComponentFunctionUPP;
 /*
  *  NewComponentFunctionUPP()
- *  
+ *
  *  Discussion:
  *    For use in writing a Carbon compliant Component.  It is used to
  *    create a ComponentFunctionUPP needed to call
  *    CallComponentFunction in the Components dispatch routine.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -265,25 +265,25 @@ typedef UniversalProcPtr                ComponentFunctionUPP;
  */
 EXTERN_API( ComponentFunctionUPP )
 NewComponentFunctionUPP(
-  ProcPtr        userRoutine,
-  ProcInfoType   procInfo);
+	ProcPtr        userRoutine,
+	ProcInfoType   procInfo);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-    inline DEFINE_API(ComponentFunctionUPP ) NewComponentFunctionUPP(ProcPtr userRoutine, ProcInfoType procInfo) { return (ComponentFunctionUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), (ProcInfoType)procInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewComponentFunctionUPP(userRoutine, procInfo) ((ComponentFunctionUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), (ProcInfoType)procInfo, GetCurrentArchitecture()))
-  #endif
+	#ifdef __cplusplus
+		inline DEFINE_API(ComponentFunctionUPP ) NewComponentFunctionUPP(ProcPtr userRoutine, ProcInfoType procInfo) { return (ComponentFunctionUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), (ProcInfoType)procInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewComponentFunctionUPP(userRoutine, procInfo) ((ComponentFunctionUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), (ProcInfoType)procInfo, GetCurrentArchitecture()))
+	#endif
 #endif
 
 
 /*
  *  DisposeComponentFunctionUPP()
- *  
+ *
  *  Discussion:
  *    For use in writing a Carbon compliant Component.  It is used to
  *    dispose of a ComponentFunctionUPP created by
  *    NewComponentFunctionUPP.
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -292,23 +292,23 @@ NewComponentFunctionUPP(
 EXTERN_API( void )
 DisposeComponentFunctionUPP(ComponentFunctionUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-    inline DEFINE_API(void) DisposeComponentFunctionUPP(ComponentFunctionUPP userUPP) { DisposeRoutineDescriptor(userUPP); }
-  #else
-    #define DisposeComponentFunctionUPP(userUPP) (DisposeRoutineDescriptor(userUPP))
-  #endif
+	#ifdef __cplusplus
+		inline DEFINE_API(void) DisposeComponentFunctionUPP(ComponentFunctionUPP userUPP) { DisposeRoutineDescriptor(userUPP); }
+	#else
+		#define DisposeComponentFunctionUPP(userUPP) (DisposeRoutineDescriptor(userUPP))
+	#endif
 #endif
 
 
 
 #if TARGET_RT_MAC_CFM
-/* 
-    CallComponentUPP is a global variable exported from InterfaceLib.
-    It is the ProcPtr passed to CallUniversalProc to manually call a component function.
+/*
+		CallComponentUPP is a global variable exported from InterfaceLib.
+		It is the ProcPtr passed to CallUniversalProc to manually call a component function.
 */
 /*
  *  CallComponentUPP
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -318,7 +318,7 @@ extern UniversalProcPtr CallComponentUPP;
 #endif
 
 #define ComponentCallNow( callNumber, paramSize ) \
-    FIVEWORDINLINE( 0x2F3C,paramSize,callNumber,0x7000,0xA82A )
+		FIVEWORDINLINE( 0x2F3C,paramSize,callNumber,0x7000,0xA82A )
 
 /********************************************************
 *                                                       *
@@ -330,7 +330,7 @@ extern UniversalProcPtr CallComponentUPP;
 ********************************************************/
 /*
  *  RegisterComponent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -339,17 +339,17 @@ extern UniversalProcPtr CallComponentUPP;
  */
 EXTERN_API( Component )
 RegisterComponent(
-  ComponentDescription *  cd,
-  ComponentRoutineUPP     componentEntryPoint,
-  short                   global,
-  Handle                  componentName,
-  Handle                  componentInfo,
-  Handle                  componentIcon)                      TWOWORDINLINE(0x7001, 0xA82A);
+	ComponentDescription *  cd,
+	ComponentRoutineUPP     componentEntryPoint,
+	short                   global,
+	Handle                  componentName,
+	Handle                  componentInfo,
+	Handle                  componentIcon)                      TWOWORDINLINE(0x7001, 0xA82A);
 
 
 /*
  *  RegisterComponentResource()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -358,13 +358,13 @@ RegisterComponent(
  */
 EXTERN_API( Component )
 RegisterComponentResource(
-  ComponentResourceHandle   cr,
-  short                     global)                           TWOWORDINLINE(0x7012, 0xA82A);
+	ComponentResourceHandle   cr,
+	short                     global)                           TWOWORDINLINE(0x7012, 0xA82A);
 
 
 /*
  *  UnregisterComponent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -377,7 +377,7 @@ UnregisterComponent(Component aComponent)                     TWOWORDINLINE(0x70
 
 /*
  *  FindNextComponent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -386,13 +386,13 @@ UnregisterComponent(Component aComponent)                     TWOWORDINLINE(0x70
  */
 EXTERN_API( Component )
 FindNextComponent(
-  Component               aComponent,
-  ComponentDescription *  looking)                            TWOWORDINLINE(0x7004, 0xA82A);
+	Component               aComponent,
+	ComponentDescription *  looking)                            TWOWORDINLINE(0x7004, 0xA82A);
 
 
 /*
  *  CountComponents()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -405,7 +405,7 @@ CountComponents(ComponentDescription * looking)               TWOWORDINLINE(0x70
 
 /*
  *  GetComponentInfo()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -414,16 +414,16 @@ CountComponents(ComponentDescription * looking)               TWOWORDINLINE(0x70
  */
 EXTERN_API( OSErr )
 GetComponentInfo(
-  Component               aComponent,
-  ComponentDescription *  cd,
-  Handle                  componentName,
-  Handle                  componentInfo,
-  Handle                  componentIcon)                      TWOWORDINLINE(0x7005, 0xA82A);
+	Component               aComponent,
+	ComponentDescription *  cd,
+	Handle                  componentName,
+	Handle                  componentInfo,
+	Handle                  componentIcon)                      TWOWORDINLINE(0x7005, 0xA82A);
 
 
 /*
  *  GetComponentListModSeed()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -436,7 +436,7 @@ GetComponentListModSeed(void)                                 TWOWORDINLINE(0x70
 
 /*
  *  GetComponentTypeModSeed()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 2.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -452,7 +452,7 @@ GetComponentTypeModSeed(OSType componentType)                 TWOWORDINLINE(0x70
 ********************************************************/
 /*
  *  OpenAComponent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 2.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -461,13 +461,13 @@ GetComponentTypeModSeed(OSType componentType)                 TWOWORDINLINE(0x70
  */
 EXTERN_API( OSErr )
 OpenAComponent(
-  Component            aComponent,
-  ComponentInstance *  ci)                                    TWOWORDINLINE(0x702D, 0xA82A);
+	Component            aComponent,
+	ComponentInstance *  ci)                                    TWOWORDINLINE(0x702D, 0xA82A);
 
 
 /*
  *  OpenComponent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -480,7 +480,7 @@ OpenComponent(Component aComponent)                           TWOWORDINLINE(0x70
 
 /*
  *  CloseComponent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -493,7 +493,7 @@ CloseComponent(ComponentInstance aComponentInstance)          TWOWORDINLINE(0x70
 
 /*
  *  GetComponentInstanceError()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -509,7 +509,7 @@ GetComponentInstanceError(ComponentInstance aComponentInstance) TWOWORDINLINE(0x
 ********************************************************/
 /*
  *  ResolveComponentAlias()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 3.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -526,7 +526,7 @@ ResolveComponentAlias(Component aComponent)                   TWOWORDINLINE(0x70
 /* Note: GetComponentPublicResource returns a Handle, not a resource.  The caller must dispose it with DisposeHandle. */
 /*
  *  GetComponentPublicResource()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 4.0 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -534,15 +534,15 @@ ResolveComponentAlias(Component aComponent)                   TWOWORDINLINE(0x70
  */
 EXTERN_API( OSErr )
 GetComponentPublicResource(
-  Component   aComponent,
-  OSType      resourceType,
-  short       resourceID,
-  Handle *    theResource)                                    TWOWORDINLINE(0x7038, 0xA82A);
+	Component   aComponent,
+	OSType      resourceType,
+	short       resourceID,
+	Handle *    theResource)                                    TWOWORDINLINE(0x7038, 0xA82A);
 
 
 /*
  *  GetComponentPublicResourceList()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 4.0 and later
  *    CarbonLib:        in CarbonLib 1.0.2 and later
@@ -550,18 +550,18 @@ GetComponentPublicResource(
  */
 EXTERN_API( OSErr )
 GetComponentPublicResourceList(
-  OSType                           resourceType,
-  short                            resourceID,
-  long                             flags,
-  ComponentDescription *           cd,
-  GetMissingComponentResourceUPP   missingProc,
-  void *                           refCon,
-  void *                           atomContainerPtr)          TWOWORDINLINE(0x7039, 0xA82A);
+	OSType                           resourceType,
+	short                            resourceID,
+	long                             flags,
+	ComponentDescription *           cd,
+	GetMissingComponentResourceUPP   missingProc,
+	void *                           refCon,
+	void *                           atomContainerPtr)          TWOWORDINLINE(0x7039, 0xA82A);
 
 
 /*
  *  GetComponentPublicIndString()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 4.0 and later
  *    CarbonLib:        in CarbonLib 1.3 and later
@@ -569,10 +569,10 @@ GetComponentPublicResourceList(
  */
 EXTERN_API( OSErr )
 GetComponentPublicIndString(
-  Component   aComponent,
-  Str255      theString,
-  short       strListID,
-  short       index)                                          TWOWORDINLINE(0x703A, 0xA82A);
+	Component   aComponent,
+	Str255      theString,
+	short       strListID,
+	short       index)                                          TWOWORDINLINE(0x703A, 0xA82A);
 
 
 /********************************************************
@@ -585,7 +585,7 @@ GetComponentPublicIndString(
 ********************************************************/
 /*
  *  SetComponentInstanceError()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -594,13 +594,13 @@ GetComponentPublicIndString(
  */
 EXTERN_API( void )
 SetComponentInstanceError(
-  ComponentInstance   aComponentInstance,
-  OSErr               theError)                               TWOWORDINLINE(0x700B, 0xA82A);
+	ComponentInstance   aComponentInstance,
+	OSErr               theError)                               TWOWORDINLINE(0x700B, 0xA82A);
 
 
 /*
  *  GetComponentRefcon()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -613,7 +613,7 @@ GetComponentRefcon(Component aComponent)                      TWOWORDINLINE(0x70
 
 /*
  *  SetComponentRefcon()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -622,13 +622,13 @@ GetComponentRefcon(Component aComponent)                      TWOWORDINLINE(0x70
  */
 EXTERN_API( void )
 SetComponentRefcon(
-  Component   aComponent,
-  long        theRefcon)                                      TWOWORDINLINE(0x7011, 0xA82A);
+	Component   aComponent,
+	long        theRefcon)                                      TWOWORDINLINE(0x7011, 0xA82A);
 
 
 /*
  *  OpenComponentResFile()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -641,7 +641,7 @@ OpenComponentResFile(Component aComponent)                    TWOWORDINLINE(0x70
 
 /*
  *  OpenAComponentResFile()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 2.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -650,13 +650,13 @@ OpenComponentResFile(Component aComponent)                    TWOWORDINLINE(0x70
  */
 EXTERN_API( OSErr )
 OpenAComponentResFile(
-  Component   aComponent,
-  short *     resRef)                                         TWOWORDINLINE(0x702F, 0xA82A);
+	Component   aComponent,
+	short *     resRef)                                         TWOWORDINLINE(0x702F, 0xA82A);
 
 
 /*
  *  CloseComponentResFile()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -670,7 +670,7 @@ CloseComponentResFile(short refnum)                           TWOWORDINLINE(0x70
 /* Note: GetComponentResource returns a Handle, not a resource.  The caller must dispose it with DisposeHandle. */
 /*
  *  GetComponentResource()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 3.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -679,15 +679,15 @@ CloseComponentResFile(short refnum)                           TWOWORDINLINE(0x70
  */
 EXTERN_API( OSErr )
 GetComponentResource(
-  Component   aComponent,
-  OSType      resType,
-  short       resID,
-  Handle *    theResource)                                    TWOWORDINLINE(0x7035, 0xA82A);
+	Component   aComponent,
+	OSType      resType,
+	short       resID,
+	Handle *    theResource)                                    TWOWORDINLINE(0x7035, 0xA82A);
 
 
 /*
  *  GetComponentIndString()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 3.0 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -696,10 +696,10 @@ GetComponentResource(
  */
 EXTERN_API( OSErr )
 GetComponentIndString(
-  Component   aComponent,
-  Str255      theString,
-  short       strListID,
-  short       index)                                          TWOWORDINLINE(0x7036, 0xA82A);
+	Component   aComponent,
+	Str255      theString,
+	short       strListID,
+	short       index)                                          TWOWORDINLINE(0x7036, 0xA82A);
 
 
 /********************************************************
@@ -707,7 +707,7 @@ GetComponentIndString(
 ********************************************************/
 /*
  *  GetComponentInstanceStorage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -720,7 +720,7 @@ GetComponentInstanceStorage(ComponentInstance aComponentInstance) TWOWORDINLINE(
 
 /*
  *  SetComponentInstanceStorage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -729,14 +729,14 @@ GetComponentInstanceStorage(ComponentInstance aComponentInstance) TWOWORDINLINE(
  */
 EXTERN_API( void )
 SetComponentInstanceStorage(
-  ComponentInstance   aComponentInstance,
-  Handle              theStorage)                             TWOWORDINLINE(0x700D, 0xA82A);
+	ComponentInstance   aComponentInstance,
+	Handle              theStorage)                             TWOWORDINLINE(0x700D, 0xA82A);
 
 
 #if CALL_NOT_IN_CARBON
 /*
  *  GetComponentInstanceA5()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -749,7 +749,7 @@ GetComponentInstanceA5(ComponentInstance aComponentInstance)  TWOWORDINLINE(0x70
 
 /*
  *  SetComponentInstanceA5()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -758,15 +758,15 @@ GetComponentInstanceA5(ComponentInstance aComponentInstance)  TWOWORDINLINE(0x70
  */
 EXTERN_API( void )
 SetComponentInstanceA5(
-  ComponentInstance   aComponentInstance,
-  long                theA5)                                  TWOWORDINLINE(0x700F, 0xA82A);
+	ComponentInstance   aComponentInstance,
+	long                theA5)                                  TWOWORDINLINE(0x700F, 0xA82A);
 
 
 #endif  /* CALL_NOT_IN_CARBON */
 
 /*
  *  CountComponentInstances()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -780,7 +780,7 @@ CountComponentInstances(Component aComponent)                 TWOWORDINLINE(0x70
 /* useful helper routines for convenient method dispatching */
 /*
  *  CallComponentFunction()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -788,13 +788,13 @@ CountComponentInstances(Component aComponent)                 TWOWORDINLINE(0x70
  */
 EXTERN_API( long )
 CallComponentFunction(
-  ComponentParameters *  params,
-  ComponentFunctionUPP   func)                                TWOWORDINLINE(0x70FF, 0xA82A);
+	ComponentParameters *  params,
+	ComponentFunctionUPP   func)                                TWOWORDINLINE(0x70FF, 0xA82A);
 
 
 /*
  *  CallComponentFunctionWithStorage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -803,15 +803,15 @@ CallComponentFunction(
  */
 EXTERN_API( long )
 CallComponentFunctionWithStorage(
-  Handle                 storage,
-  ComponentParameters *  params,
-  ComponentFunctionUPP   func)                                TWOWORDINLINE(0x70FF, 0xA82A);
+	Handle                 storage,
+	ComponentParameters *  params,
+	ComponentFunctionUPP   func)                                TWOWORDINLINE(0x70FF, 0xA82A);
 
 
 #if TARGET_OS_MAC && !TARGET_CPU_68K
 /*
  *  CallComponentFunctionWithStorageProcInfo()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 2.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -819,10 +819,10 @@ CallComponentFunctionWithStorage(
  */
 EXTERN_API( long )
 CallComponentFunctionWithStorageProcInfo(
-  Handle                 storage,
-  ComponentParameters *  params,
-  ProcPtr                func,
-  ProcInfoType           funcProcInfo);
+	Handle                 storage,
+	ComponentParameters *  params,
+	ProcPtr                func,
+	ProcInfoType           funcProcInfo);
 
 
 #else
@@ -832,7 +832,7 @@ CallComponentFunctionWithStorageProcInfo(
 
 /*
  *  DelegateComponentCall()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -841,13 +841,13 @@ CallComponentFunctionWithStorageProcInfo(
  */
 EXTERN_API( long )
 DelegateComponentCall(
-  ComponentParameters *  originalParams,
-  ComponentInstance      ci)                                  TWOWORDINLINE(0x7024, 0xA82A);
+	ComponentParameters *  originalParams,
+	ComponentInstance      ci)                                  TWOWORDINLINE(0x7024, 0xA82A);
 
 
 /*
  *  SetDefaultComponent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -856,13 +856,13 @@ DelegateComponentCall(
  */
 EXTERN_API( OSErr )
 SetDefaultComponent(
-  Component   aComponent,
-  short       flags)                                          TWOWORDINLINE(0x701E, 0xA82A);
+	Component   aComponent,
+	short       flags)                                          TWOWORDINLINE(0x701E, 0xA82A);
 
 
 /*
  *  OpenDefaultComponent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -871,13 +871,13 @@ SetDefaultComponent(
  */
 EXTERN_API( ComponentInstance )
 OpenDefaultComponent(
-  OSType   componentType,
-  OSType   componentSubType)                                  TWOWORDINLINE(0x7021, 0xA82A);
+	OSType   componentType,
+	OSType   componentSubType)                                  TWOWORDINLINE(0x7021, 0xA82A);
 
 
 /*
  *  OpenADefaultComponent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 2.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -886,14 +886,14 @@ OpenDefaultComponent(
  */
 EXTERN_API( OSErr )
 OpenADefaultComponent(
-  OSType               componentType,
-  OSType               componentSubType,
-  ComponentInstance *  ci)                                    TWOWORDINLINE(0x702E, 0xA82A);
+	OSType               componentType,
+	OSType               componentSubType,
+	ComponentInstance *  ci)                                    TWOWORDINLINE(0x702E, 0xA82A);
 
 
 /*
  *  CaptureComponent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -902,13 +902,13 @@ OpenADefaultComponent(
  */
 EXTERN_API( Component )
 CaptureComponent(
-  Component   capturedComponent,
-  Component   capturingComponent)                             TWOWORDINLINE(0x701C, 0xA82A);
+	Component   capturedComponent,
+	Component   capturingComponent)                             TWOWORDINLINE(0x701C, 0xA82A);
 
 
 /*
  *  UncaptureComponent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -921,7 +921,7 @@ UncaptureComponent(Component aComponent)                      TWOWORDINLINE(0x70
 
 /*
  *  RegisterComponentResourceFile()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -930,13 +930,13 @@ UncaptureComponent(Component aComponent)                      TWOWORDINLINE(0x70
  */
 EXTERN_API( long )
 RegisterComponentResourceFile(
-  short   resRefNum,
-  short   global)                                             TWOWORDINLINE(0x7014, 0xA82A);
+	short   resRefNum,
+	short   global)                                             TWOWORDINLINE(0x7014, 0xA82A);
 
 
 /*
  *  GetComponentIconSuite()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -945,8 +945,8 @@ RegisterComponentResourceFile(
  */
 EXTERN_API( OSErr )
 GetComponentIconSuite(
-  Component   aComponent,
-  Handle *    iconSuite)                                      TWOWORDINLINE(0x7029, 0xA82A);
+	Component   aComponent,
+	Handle *    iconSuite)                                      TWOWORDINLINE(0x7029, 0xA82A);
 
 
 /********************************************************
@@ -958,7 +958,7 @@ GetComponentIconSuite(
 
 /*
  *  ComponentFunctionImplemented()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -967,13 +967,13 @@ GetComponentIconSuite(
  */
 EXTERN_API( long )
 ComponentFunctionImplemented(
-  ComponentInstance   ci,
-  short               ftnNumber)                              FIVEWORDINLINE(0x2F3C, 0x0002, 0xFFFD, 0x7000, 0xA82A);
+	ComponentInstance   ci,
+	short               ftnNumber)                              FIVEWORDINLINE(0x2F3C, 0x0002, 0xFFFD, 0x7000, 0xA82A);
 
 
 /*
  *  GetComponentVersion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -986,7 +986,7 @@ GetComponentVersion(ComponentInstance ci)                     FIVEWORDINLINE(0x2
 
 /*
  *  ComponentSetTarget()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -995,15 +995,15 @@ GetComponentVersion(ComponentInstance ci)                     FIVEWORDINLINE(0x2
  */
 EXTERN_API( long )
 ComponentSetTarget(
-  ComponentInstance   ci,
-  ComponentInstance   target)                                 FIVEWORDINLINE(0x2F3C, 0x0004, 0xFFFA, 0x7000, 0xA82A);
+	ComponentInstance   ci,
+	ComponentInstance   target)                                 FIVEWORDINLINE(0x2F3C, 0x0004, 0xFFFA, 0x7000, 0xA82A);
 
 
 /* New style names*/
 
 /*
  *  CallComponentOpen()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 2.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1012,13 +1012,13 @@ ComponentSetTarget(
  */
 EXTERN_API( ComponentResult )
 CallComponentOpen(
-  ComponentInstance   ci,
-  ComponentInstance   self)                                   FIVEWORDINLINE(0x2F3C, 0x0004, 0xFFFF, 0x7000, 0xA82A);
+	ComponentInstance   ci,
+	ComponentInstance   self)                                   FIVEWORDINLINE(0x2F3C, 0x0004, 0xFFFF, 0x7000, 0xA82A);
 
 
 /*
  *  CallComponentClose()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 2.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1027,13 +1027,13 @@ CallComponentOpen(
  */
 EXTERN_API( ComponentResult )
 CallComponentClose(
-  ComponentInstance   ci,
-  ComponentInstance   self)                                   FIVEWORDINLINE(0x2F3C, 0x0004, 0xFFFE, 0x7000, 0xA82A);
+	ComponentInstance   ci,
+	ComponentInstance   self)                                   FIVEWORDINLINE(0x2F3C, 0x0004, 0xFFFE, 0x7000, 0xA82A);
 
 
 /*
  *  CallComponentCanDo()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 2.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1042,13 +1042,13 @@ CallComponentClose(
  */
 EXTERN_API( ComponentResult )
 CallComponentCanDo(
-  ComponentInstance   ci,
-  short               ftnNumber)                              FIVEWORDINLINE(0x2F3C, 0x0002, 0xFFFD, 0x7000, 0xA82A);
+	ComponentInstance   ci,
+	short               ftnNumber)                              FIVEWORDINLINE(0x2F3C, 0x0002, 0xFFFD, 0x7000, 0xA82A);
 
 
 /*
  *  CallComponentVersion()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 2.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1061,7 +1061,7 @@ CallComponentVersion(ComponentInstance ci)                    FIVEWORDINLINE(0x2
 
 /*
  *  CallComponentRegister()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 2.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1074,7 +1074,7 @@ CallComponentRegister(ComponentInstance ci)                   FIVEWORDINLINE(0x2
 
 /*
  *  CallComponentTarget()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 2.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1083,13 +1083,13 @@ CallComponentRegister(ComponentInstance ci)                   FIVEWORDINLINE(0x2
  */
 EXTERN_API( ComponentResult )
 CallComponentTarget(
-  ComponentInstance   ci,
-  ComponentInstance   target)                                 FIVEWORDINLINE(0x2F3C, 0x0004, 0xFFFA, 0x7000, 0xA82A);
+	ComponentInstance   ci,
+	ComponentInstance   target)                                 FIVEWORDINLINE(0x2F3C, 0x0004, 0xFFFA, 0x7000, 0xA82A);
 
 
 /*
  *  CallComponentUnregister()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 2.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1102,7 +1102,7 @@ CallComponentUnregister(ComponentInstance ci)                 FIVEWORDINLINE(0x2
 
 /*
  *  CallComponentGetMPWorkFunction()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 2.5 and later
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1111,14 +1111,14 @@ CallComponentUnregister(ComponentInstance ci)                 FIVEWORDINLINE(0x2
  */
 EXTERN_API( ComponentResult )
 CallComponentGetMPWorkFunction(
-  ComponentInstance             ci,
-  ComponentMPWorkFunctionUPP *  workFunction,
-  void **                       refCon)                       FIVEWORDINLINE(0x2F3C, 0x0008, 0xFFF8, 0x7000, 0xA82A);
+	ComponentInstance             ci,
+	ComponentMPWorkFunctionUPP *  workFunction,
+	void **                       refCon)                       FIVEWORDINLINE(0x2F3C, 0x0008, 0xFFF8, 0x7000, 0xA82A);
 
 
 /*
  *  CallComponentGetPublicResource()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib via QuickTime 4.0 and later
  *    CarbonLib:        in CarbonLib 1.1 and later
@@ -1126,21 +1126,21 @@ CallComponentGetMPWorkFunction(
  */
 EXTERN_API( ComponentResult )
 CallComponentGetPublicResource(
-  ComponentInstance   ci,
-  OSType              resourceType,
-  short               resourceID,
-  Handle *            resource)                               FIVEWORDINLINE(0x2F3C, 0x000A, 0xFFF6, 0x7000, 0xA82A);
+	ComponentInstance   ci,
+	OSType              resourceType,
+	short               resourceID,
+	Handle *            resource)                               FIVEWORDINLINE(0x2F3C, 0x000A, 0xFFF6, 0x7000, 0xA82A);
 
 
 
 #if !TARGET_OS_MAC
-/* 
-        CallComponent is used by ComponentGlue routines to manually call a component function.
-     */
+/*
+				CallComponent is used by ComponentGlue routines to manually call a component function.
+		*/
 #if CALL_NOT_IN_CARBON
 /*
  *  CallComponent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -1149,8 +1149,8 @@ CallComponentGetPublicResource(
  */
 EXTERN_API( ComponentResult )
 CallComponent(
-  ComponentInstance      ci,
-  ComponentParameters *  cp);
+	ComponentInstance      ci,
+	ComponentParameters *  cp);
 
 
 #endif  /* CALL_NOT_IN_CARBON */
@@ -1158,12 +1158,12 @@ CallComponent(
 #endif  /* !TARGET_OS_MAC */
 
 /*
-    CallComponentDispatch is a CarbonLib routine that replaces CallComponent inline glue
-    to call a component function.
+		CallComponentDispatch is a CarbonLib routine that replaces CallComponent inline glue
+		to call a component function.
  */
 /*
  *  CallComponentDispatch()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1177,7 +1177,7 @@ CallComponentDispatch(ComponentParameters * cp);
 /* UPP call backs */
 /*
  *  NewComponentMPWorkFunctionUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1186,17 +1186,17 @@ CallComponentDispatch(ComponentParameters * cp);
 EXTERN_API_C( ComponentMPWorkFunctionUPP )
 NewComponentMPWorkFunctionUPP(ComponentMPWorkFunctionProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppComponentMPWorkFunctionProcInfo = 0x000003F0 };  /* pascal 4_bytes Func(4_bytes, 4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(ComponentMPWorkFunctionUPP) NewComponentMPWorkFunctionUPP(ComponentMPWorkFunctionProcPtr userRoutine) { return (ComponentMPWorkFunctionUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppComponentMPWorkFunctionProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewComponentMPWorkFunctionUPP(userRoutine) (ComponentMPWorkFunctionUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppComponentMPWorkFunctionProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppComponentMPWorkFunctionProcInfo = 0x000003F0 };  /* pascal 4_bytes Func(4_bytes, 4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(ComponentMPWorkFunctionUPP) NewComponentMPWorkFunctionUPP(ComponentMPWorkFunctionProcPtr userRoutine) { return (ComponentMPWorkFunctionUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppComponentMPWorkFunctionProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewComponentMPWorkFunctionUPP(userRoutine) (ComponentMPWorkFunctionUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppComponentMPWorkFunctionProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewComponentRoutineUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1205,17 +1205,17 @@ NewComponentMPWorkFunctionUPP(ComponentMPWorkFunctionProcPtr userRoutine);
 EXTERN_API_C( ComponentRoutineUPP )
 NewComponentRoutineUPP(ComponentRoutineProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppComponentRoutineProcInfo = 0x000003F0 };  /* pascal 4_bytes Func(4_bytes, 4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(ComponentRoutineUPP) NewComponentRoutineUPP(ComponentRoutineProcPtr userRoutine) { return (ComponentRoutineUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppComponentRoutineProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewComponentRoutineUPP(userRoutine) (ComponentRoutineUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppComponentRoutineProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppComponentRoutineProcInfo = 0x000003F0 };  /* pascal 4_bytes Func(4_bytes, 4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(ComponentRoutineUPP) NewComponentRoutineUPP(ComponentRoutineProcPtr userRoutine) { return (ComponentRoutineUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppComponentRoutineProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewComponentRoutineUPP(userRoutine) (ComponentRoutineUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppComponentRoutineProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  NewGetMissingComponentResourceUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1224,17 +1224,17 @@ NewComponentRoutineUPP(ComponentRoutineProcPtr userRoutine);
 EXTERN_API_C( GetMissingComponentResourceUPP )
 NewGetMissingComponentResourceUPP(GetMissingComponentResourceProcPtr userRoutine);
 #if !OPAQUE_UPP_TYPES
-  enum { uppGetMissingComponentResourceProcInfo = 0x0000FBE0 };  /* pascal 2_bytes Func(4_bytes, 4_bytes, 2_bytes, 4_bytes, 4_bytes) */
-  #ifdef __cplusplus
-    inline DEFINE_API_C(GetMissingComponentResourceUPP) NewGetMissingComponentResourceUPP(GetMissingComponentResourceProcPtr userRoutine) { return (GetMissingComponentResourceUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppGetMissingComponentResourceProcInfo, GetCurrentArchitecture()); }
-  #else
-    #define NewGetMissingComponentResourceUPP(userRoutine) (GetMissingComponentResourceUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppGetMissingComponentResourceProcInfo, GetCurrentArchitecture())
-  #endif
+	enum { uppGetMissingComponentResourceProcInfo = 0x0000FBE0 };  /* pascal 2_bytes Func(4_bytes, 4_bytes, 2_bytes, 4_bytes, 4_bytes) */
+	#ifdef __cplusplus
+		inline DEFINE_API_C(GetMissingComponentResourceUPP) NewGetMissingComponentResourceUPP(GetMissingComponentResourceProcPtr userRoutine) { return (GetMissingComponentResourceUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppGetMissingComponentResourceProcInfo, GetCurrentArchitecture()); }
+	#else
+		#define NewGetMissingComponentResourceUPP(userRoutine) (GetMissingComponentResourceUPP)NewRoutineDescriptor((ProcPtr)(userRoutine), uppGetMissingComponentResourceProcInfo, GetCurrentArchitecture())
+	#endif
 #endif
 
 /*
  *  DisposeComponentMPWorkFunctionUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1243,16 +1243,16 @@ NewGetMissingComponentResourceUPP(GetMissingComponentResourceProcPtr userRoutine
 EXTERN_API_C( void )
 DisposeComponentMPWorkFunctionUPP(ComponentMPWorkFunctionUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeComponentMPWorkFunctionUPP(ComponentMPWorkFunctionUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeComponentMPWorkFunctionUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeComponentMPWorkFunctionUPP(ComponentMPWorkFunctionUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeComponentMPWorkFunctionUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeComponentRoutineUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1261,16 +1261,16 @@ DisposeComponentMPWorkFunctionUPP(ComponentMPWorkFunctionUPP userUPP);
 EXTERN_API_C( void )
 DisposeComponentRoutineUPP(ComponentRoutineUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeComponentRoutineUPP(ComponentRoutineUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeComponentRoutineUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeComponentRoutineUPP(ComponentRoutineUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeComponentRoutineUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  DisposeGetMissingComponentResourceUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1279,16 +1279,16 @@ DisposeComponentRoutineUPP(ComponentRoutineUPP userUPP);
 EXTERN_API_C( void )
 DisposeGetMissingComponentResourceUPP(GetMissingComponentResourceUPP userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(void) DisposeGetMissingComponentResourceUPP(GetMissingComponentResourceUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
-  #else
-      #define DisposeGetMissingComponentResourceUPP(userUPP) DisposeRoutineDescriptor(userUPP)
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(void) DisposeGetMissingComponentResourceUPP(GetMissingComponentResourceUPP userUPP) { DisposeRoutineDescriptor((UniversalProcPtr)userUPP); }
+	#else
+			#define DisposeGetMissingComponentResourceUPP(userUPP) DisposeRoutineDescriptor(userUPP)
+	#endif
 #endif
 
 /*
  *  InvokeComponentMPWorkFunctionUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1296,20 +1296,20 @@ DisposeGetMissingComponentResourceUPP(GetMissingComponentResourceUPP userUPP);
  */
 EXTERN_API_C( ComponentResult )
 InvokeComponentMPWorkFunctionUPP(
-  void *                                  globalRefCon,
-  ComponentMPWorkFunctionHeaderRecordPtr  header,
-  ComponentMPWorkFunctionUPP              userUPP);
+	void *                                  globalRefCon,
+	ComponentMPWorkFunctionHeaderRecordPtr  header,
+	ComponentMPWorkFunctionUPP              userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(ComponentResult) InvokeComponentMPWorkFunctionUPP(void * globalRefCon, ComponentMPWorkFunctionHeaderRecordPtr header, ComponentMPWorkFunctionUPP userUPP) { return (ComponentResult)CALL_TWO_PARAMETER_UPP(userUPP, uppComponentMPWorkFunctionProcInfo, globalRefCon, header); }
-  #else
-    #define InvokeComponentMPWorkFunctionUPP(globalRefCon, header, userUPP) (ComponentResult)CALL_TWO_PARAMETER_UPP((userUPP), uppComponentMPWorkFunctionProcInfo, (globalRefCon), (header))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(ComponentResult) InvokeComponentMPWorkFunctionUPP(void * globalRefCon, ComponentMPWorkFunctionHeaderRecordPtr header, ComponentMPWorkFunctionUPP userUPP) { return (ComponentResult)CALL_TWO_PARAMETER_UPP(userUPP, uppComponentMPWorkFunctionProcInfo, globalRefCon, header); }
+	#else
+		#define InvokeComponentMPWorkFunctionUPP(globalRefCon, header, userUPP) (ComponentResult)CALL_TWO_PARAMETER_UPP((userUPP), uppComponentMPWorkFunctionProcInfo, (globalRefCon), (header))
+	#endif
 #endif
 
 /*
  *  InvokeComponentRoutineUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1317,20 +1317,20 @@ InvokeComponentMPWorkFunctionUPP(
  */
 EXTERN_API_C( ComponentResult )
 InvokeComponentRoutineUPP(
-  ComponentParameters *  cp,
-  Handle                 componentStorage,
-  ComponentRoutineUPP    userUPP);
+	ComponentParameters *  cp,
+	Handle                 componentStorage,
+	ComponentRoutineUPP    userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(ComponentResult) InvokeComponentRoutineUPP(ComponentParameters * cp, Handle componentStorage, ComponentRoutineUPP userUPP) { return (ComponentResult)CALL_TWO_PARAMETER_UPP(userUPP, uppComponentRoutineProcInfo, cp, componentStorage); }
-  #else
-    #define InvokeComponentRoutineUPP(cp, componentStorage, userUPP) (ComponentResult)CALL_TWO_PARAMETER_UPP((userUPP), uppComponentRoutineProcInfo, (cp), (componentStorage))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(ComponentResult) InvokeComponentRoutineUPP(ComponentParameters * cp, Handle componentStorage, ComponentRoutineUPP userUPP) { return (ComponentResult)CALL_TWO_PARAMETER_UPP(userUPP, uppComponentRoutineProcInfo, cp, componentStorage); }
+	#else
+		#define InvokeComponentRoutineUPP(cp, componentStorage, userUPP) (ComponentResult)CALL_TWO_PARAMETER_UPP((userUPP), uppComponentRoutineProcInfo, (cp), (componentStorage))
+	#endif
 #endif
 
 /*
  *  InvokeGetMissingComponentResourceUPP()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   available as macro/inline
  *    CarbonLib:        in CarbonLib 1.0 and later
@@ -1338,46 +1338,46 @@ InvokeComponentRoutineUPP(
  */
 EXTERN_API_C( OSErr )
 InvokeGetMissingComponentResourceUPP(
-  Component                       c,
-  OSType                          resType,
-  short                           resID,
-  void *                          refCon,
-  Handle *                        resource,
-  GetMissingComponentResourceUPP  userUPP);
+	Component                       c,
+	OSType                          resType,
+	short                           resID,
+	void *                          refCon,
+	Handle *                        resource,
+	GetMissingComponentResourceUPP  userUPP);
 #if !OPAQUE_UPP_TYPES
-  #ifdef __cplusplus
-      inline DEFINE_API_C(OSErr) InvokeGetMissingComponentResourceUPP(Component c, OSType resType, short resID, void * refCon, Handle * resource, GetMissingComponentResourceUPP userUPP) { return (OSErr)CALL_FIVE_PARAMETER_UPP(userUPP, uppGetMissingComponentResourceProcInfo, c, resType, resID, refCon, resource); }
-  #else
-    #define InvokeGetMissingComponentResourceUPP(c, resType, resID, refCon, resource, userUPP) (OSErr)CALL_FIVE_PARAMETER_UPP((userUPP), uppGetMissingComponentResourceProcInfo, (c), (resType), (resID), (refCon), (resource))
-  #endif
+	#ifdef __cplusplus
+			inline DEFINE_API_C(OSErr) InvokeGetMissingComponentResourceUPP(Component c, OSType resType, short resID, void * refCon, Handle * resource, GetMissingComponentResourceUPP userUPP) { return (OSErr)CALL_FIVE_PARAMETER_UPP(userUPP, uppGetMissingComponentResourceProcInfo, c, resType, resID, refCon, resource); }
+	#else
+		#define InvokeGetMissingComponentResourceUPP(c, resType, resID, refCon, resource, userUPP) (OSErr)CALL_FIVE_PARAMETER_UPP((userUPP), uppGetMissingComponentResourceProcInfo, (c), (resType), (resID), (refCon), (resource))
+	#endif
 #endif
 
 #if CALL_NOT_IN_CARBON || OLDROUTINENAMES
-    /* support for pre-Carbon UPP routines: New...Proc and Call...Proc */
-    #define NewComponentMPWorkFunctionProc(userRoutine)         NewComponentMPWorkFunctionUPP(userRoutine)
-    #define NewComponentRoutineProc(userRoutine)                NewComponentRoutineUPP(userRoutine)
-    #define NewGetMissingComponentResourceProc(userRoutine)     NewGetMissingComponentResourceUPP(userRoutine)
-    #define CallComponentMPWorkFunctionProc(userRoutine, globalRefCon, header) InvokeComponentMPWorkFunctionUPP(globalRefCon, header, userRoutine)
-    #define CallComponentRoutineProc(userRoutine, cp, componentStorage) InvokeComponentRoutineUPP(cp, componentStorage, userRoutine)
-    #define CallGetMissingComponentResourceProc(userRoutine, c, resType, resID, refCon, resource) InvokeGetMissingComponentResourceUPP(c, resType, resID, refCon, resource, userRoutine)
+		/* support for pre-Carbon UPP routines: New...Proc and Call...Proc */
+		#define NewComponentMPWorkFunctionProc(userRoutine)         NewComponentMPWorkFunctionUPP(userRoutine)
+		#define NewComponentRoutineProc(userRoutine)                NewComponentRoutineUPP(userRoutine)
+		#define NewGetMissingComponentResourceProc(userRoutine)     NewGetMissingComponentResourceUPP(userRoutine)
+		#define CallComponentMPWorkFunctionProc(userRoutine, globalRefCon, header) InvokeComponentMPWorkFunctionUPP(globalRefCon, header, userRoutine)
+		#define CallComponentRoutineProc(userRoutine, cp, componentStorage) InvokeComponentRoutineUPP(cp, componentStorage, userRoutine)
+		#define CallGetMissingComponentResourceProc(userRoutine, c, resType, resID, refCon, resource) InvokeGetMissingComponentResourceUPP(c, resType, resID, refCon, resource, userRoutine)
 #endif /* CALL_NOT_IN_CARBON */
 
 /* ProcInfos */
 
 /* MixedMode ProcInfo constants for component calls */
 enum {
-    uppComponentFunctionImplementedProcInfo    = 0x000002F0,
-    uppGetComponentVersionProcInfo             = 0x000000F0,
-    uppComponentSetTargetProcInfo              = 0x000003F0,
-    uppCallComponentOpenProcInfo               = 0x000003F0,
-    uppCallComponentCloseProcInfo              = 0x000003F0,
-    uppCallComponentCanDoProcInfo              = 0x000002F0,
-    uppCallComponentVersionProcInfo            = 0x000000F0,
-    uppCallComponentRegisterProcInfo           = 0x000000F0,
-    uppCallComponentTargetProcInfo             = 0x000003F0,
-    uppCallComponentUnregisterProcInfo         = 0x000000F0,
-    uppCallComponentGetMPWorkFunctionProcInfo  = 0x00000FF0,
-    uppCallComponentGetPublicResourceProcInfo  = 0x00003BF0
+		uppComponentFunctionImplementedProcInfo    = 0x000002F0,
+		uppGetComponentVersionProcInfo             = 0x000000F0,
+		uppComponentSetTargetProcInfo              = 0x000003F0,
+		uppCallComponentOpenProcInfo               = 0x000003F0,
+		uppCallComponentCloseProcInfo              = 0x000003F0,
+		uppCallComponentCanDoProcInfo              = 0x000002F0,
+		uppCallComponentVersionProcInfo            = 0x000000F0,
+		uppCallComponentRegisterProcInfo           = 0x000000F0,
+		uppCallComponentTargetProcInfo             = 0x000003F0,
+		uppCallComponentUnregisterProcInfo         = 0x000000F0,
+		uppCallComponentGetMPWorkFunctionProcInfo  = 0x00000FF0,
+		uppCallComponentGetPublicResourceProcInfo  = 0x00003BF0
 };
 
 
@@ -1387,11 +1387,11 @@ enum {
 
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+		#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+		#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+		#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -1405,4 +1405,3 @@ enum {
 #endif
 
 #endif /* __COMPONENTS__ */
-

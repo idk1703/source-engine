@@ -95,7 +95,7 @@ void CGrenade_Brickbat::BrickbatTouch( CBaseEntity *pOther )
 			ApplyMultiDamage();
 		}
 		// If this thrown item explodes, blow it up
-		if (m_bExplodes) 
+		if (m_bExplodes)
 		{
 			Detonate();
 			return;
@@ -115,7 +115,7 @@ void CGrenade_Brickbat::BrickbatTouch( CBaseEntity *pOther )
 //------------------------------------------------------------------------------
 void CGrenade_Brickbat::SpawnBrickbatWeapon( void )
 {
-	CWeaponBrickbat *pBrickbat = (CWeaponBrickbat*)CBaseEntity::CreateNoSpawn( 
+	CWeaponBrickbat *pBrickbat = (CWeaponBrickbat*)CBaseEntity::CreateNoSpawn(
 		"weapon_brickbat", GetLocalOrigin(), GetLocalAngles(), NULL );
 	// Spawn after we set the ammo type so the correct model is used
 	if (pBrickbat)
@@ -173,7 +173,7 @@ void CGrenade_Brickbat::BrickbatThink( void )
 			if (pEntity->GetFlags() & (FL_CLIENT | FL_NPC))
 			{
 				// --------------------
-				// Bounce me off 
+				// Bounce me off
 				// --------------------
 				Vector vNewVel;
 				vNewVel.y = 100;
@@ -255,7 +255,7 @@ void CGrenadeBottle::Precache( void )
 }
 
 void CGrenadeBottle::Detonate( void )
-{	
+{
 	trace_t trace;
 
 	UTIL_TraceLine ( GetAbsOrigin(), GetAbsOrigin() + GetAbsVelocity(), MASK_SOLID, this, COLLISION_GROUP_NONE, &trace);
@@ -270,5 +270,3 @@ void CGrenadeBottle::Detonate( void )
 
 LINK_ENTITY_TO_CLASS( grenade_beerbottle, CGrenadeBottle );
 PRECACHE_REGISTER(grenade_beerbottle);
-
-

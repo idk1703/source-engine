@@ -33,7 +33,7 @@ class CDmeBodyGroup : public CDmElement
 	DEFINE_ELEMENT( CDmeBodyGroup, CDmElement );
 
 public:
-	// Finds a body part by name 
+	// Finds a body part by name
 	CDmeLODList *FindBodyPart( const char *pName );
 
 	CDmaElementArray< CDmeBodyPart > m_BodyParts;

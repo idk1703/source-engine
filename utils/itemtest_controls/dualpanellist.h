@@ -40,8 +40,8 @@ public:
 	int NextItem( int nItemID ) const;
 	int InvalidItemID() const;
 
-	virtual Panel *GetItemLabel( int itemID ); 
-	virtual Panel *GetItemPanel( int itemID ); 
+	virtual Panel *GetItemLabel( int itemID );
+	virtual Panel *GetItemPanel( int itemID );
 	virtual bool IsItemVisible( int nItemID ) const;
 	virtual void SetItemVisible( int nItemID, bool bVisible );
 

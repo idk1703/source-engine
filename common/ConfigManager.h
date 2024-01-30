@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -63,7 +63,7 @@ public:
 	bool	LoadConfigs( const char *baseDir = NULL );
 	bool	SaveConfigs( const char *baseDir = NULL );
 	bool	ResetConfigs( const char *baseDir = NULL );
-	
+
 	int		GetNumConfigs( void );
 
 	KeyValues	*GetGameBlock( void );
@@ -74,7 +74,7 @@ public:
 
 	bool	WasConvertedOnLoad( void ) const { return m_LoadStatus == LOADSTATUS_CONVERTED; }
 	bool	WasCreatedOnLoad( void ) const { return m_LoadStatus == LOADSTATUS_CREATED; }
-	
+
 	bool	AddDefaultConfig( const defaultConfigInfo_t &info, KeyValues *out, const char *rootDirectory, const char *gameExeDir );
 
 	void	SetBaseDirectory( const char *pDirectory );

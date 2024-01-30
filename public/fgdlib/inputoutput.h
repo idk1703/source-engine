@@ -28,7 +28,7 @@ enum InputOutputType_t
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CClassInputOutputBase
 {
@@ -75,7 +75,7 @@ const char *CClassInputOutputBase::GetDescription(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CClassInput : public CClassInputOutputBase
 {
@@ -87,7 +87,7 @@ class CClassInput : public CClassInputOutputBase
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CClassOutput : public CClassInputOutputBase
 {

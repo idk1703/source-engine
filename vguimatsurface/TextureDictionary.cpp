@@ -29,7 +29,7 @@ class CMatSystemTexture;
 static CRC32_t Texture_CRCName( const char *string )
 {
 	CRC32_t crc;
-	
+
 	CRC32_Init( &crc );
 	CRC32_ProcessBuffer( &crc, (void *)string, strlen( string ) );
 	CRC32_Final( &crc );
@@ -40,7 +40,7 @@ static CRC32_t Texture_CRCName( const char *string )
 class CFontTextureRegen;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CMatSystemTexture
 {
@@ -250,9 +250,9 @@ public:
 			{
 				// formats don't match so do a pixel by pixel swizel
 				CPixelWriter pixelWriter;
-				pixelWriter.SetPixelMemory( 
-					pVTFTexture->Format(), 
-					pVTFTexture->ImageData( 0, 0, 0 ), 
+				pixelWriter.SetPixelMemory(
+					pVTFTexture->Format(),
+					pVTFTexture->ImageData( 0, 0, 0 ),
 					pVTFTexture->RowSizeInBytes( 0 ) );
 
 				// Now upload the part we've been asked for
@@ -310,7 +310,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMatSystemTexture::CMatSystemTexture( void )
 {
@@ -327,7 +327,7 @@ CMatSystemTexture::CMatSystemTexture( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMatSystemTexture::~CMatSystemTexture( void )
 {
@@ -439,14 +439,14 @@ void CMatSystemTexture::SetTextureRGBA( const char *rgba, int wide, int tall, Im
 		Q_snprintf( pTextureName, sizeof( pTextureName ), "__vgui_texture_%d", nTextureId );
 		++nTextureId;
 
-		ITexture *pTexture = g_pMaterialSystem->CreateProceduralTexture( 
-			pTextureName, 
-			TEXTURE_GROUP_VGUI, 
+		ITexture *pTexture = g_pMaterialSystem->CreateProceduralTexture(
+			pTextureName,
+			TEXTURE_GROUP_VGUI,
 			width,
 			height,
 			format,
-			TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT | 
-			TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | 
+			TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT |
+			TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD |
 			TEXTUREFLAGS_PROCEDURAL | TEXTUREFLAGS_SINGLECOPY | TEXTUREFLAGS_POINTSAMPLE );
 
 		KeyValues *pVMTKeyValues = new KeyValues( "UnlitGeneric" );
@@ -484,7 +484,7 @@ void CMatSystemTexture::SetTextureRGBA( const char *rgba, int wide, int tall, Im
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ITexture *CMatSystemTexture::GetTextureValue( void )
 {
@@ -534,12 +534,12 @@ void CMatSystemTexture::SetSubTextureRGBAEx( int drawX, int drawY, unsigned cons
 	textureSize.width = subTextureWide;
 	textureSize.height = subTextureTall;
 
-	
+
 	m_pRegen->UpdateBackingBits( subRect, rgba, textureSize, format );
 	pTexture->Download( &subRect );
 
 	if ( IsX360() )
-	{	
+	{
 		// xboxissue - no need to persist "backing bits", saves memory
 		// the texture (commonly font page) "backing bits" are allocated during UpdateBackingBits() which get blitted
 		// into by procedural regeneration in preparation for download() which then subrect blits
@@ -584,7 +584,7 @@ void CMatSystemTexture::UpdateSubTextureRGBA( int drawX, int drawY, unsigned con
 	pTexture->Download( &subRect );
 
 	if ( IsX360() )
-	{	
+	{
 		// xboxissue - no need to persist "backing bits", saves memory
 		// the texture (commonly font page) "backing bits" are allocated during UpdateBackingBits() which get blitted
 		// into by procedural regeneration in preparation for download() which then subrect blits
@@ -602,8 +602,8 @@ void CMatSystemTexture::SetCRC( CRC32_t val )
 }
 
 CRC32_t CMatSystemTexture::GetCRC() const
-{ 
-	return m_crcFile; 
+{
+	return m_crcFile;
 }
 
 void CMatSystemTexture::SetMaterial( IMaterial *pMaterial )
@@ -789,7 +789,7 @@ void CTextureDictionary::DestroyAllTextures()
 {
 	m_Textures.RemoveAll();
 	// First entry is bogus texture
-	m_Textures.AddToTail();	
+	m_Textures.AddToTail();
 	CMatSystemTexture &texture = m_Textures[0];
 	texture.SetId( 0 );
 }
@@ -955,8 +955,8 @@ void CTextureDictionary::GetTextureTexCoords( int id, float &s0, float &t0, floa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : id - 
+// Purpose:
+// Input  : id -
 // Output : CMatSystemTexture
 //-----------------------------------------------------------------------------
 CMatSystemTexture *CTextureDictionary::GetTexture( int id )
@@ -968,8 +968,8 @@ CMatSystemTexture *CTextureDictionary::GetTexture( int id )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFileName - 
+// Purpose:
+// Input  : *pFileName -
 //-----------------------------------------------------------------------------
 int	CTextureDictionary::FindTextureIdForTextureFile( char const *pFileName )
 {

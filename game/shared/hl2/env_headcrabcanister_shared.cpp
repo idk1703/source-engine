@@ -40,9 +40,9 @@ END_DATADESC()
 BEGIN_NETWORK_TABLE_NOBASE( CEnvHeadcrabCanisterShared, DT_EnvHeadcrabCanisterShared )
 
 #if !defined( CLIENT_DLL )
-	SendPropFloat	( SENDINFO( m_flFlightSpeed ),			0, SPROP_NOSCALE ),	
+	SendPropFloat	( SENDINFO( m_flFlightSpeed ),			0, SPROP_NOSCALE ),
 	SendPropTime	( SENDINFO( m_flLaunchTime ) ),
-	SendPropVector	( SENDINFO( m_vecParabolaDirection ),	0, SPROP_NOSCALE ),	
+	SendPropVector	( SENDINFO( m_vecParabolaDirection ),	0, SPROP_NOSCALE ),
 
 	SendPropFloat	( SENDINFO( m_flFlightTime ),			0, SPROP_NOSCALE ),
 	SendPropFloat	( SENDINFO( m_flWorldEnterTime ),		0, SPROP_NOSCALE ),
@@ -51,36 +51,36 @@ BEGIN_NETWORK_TABLE_NOBASE( CEnvHeadcrabCanisterShared, DT_EnvHeadcrabCanisterSh
 	SendPropFloat	( SENDINFO( m_flZAcceleration ),		0, SPROP_NOSCALE ),
 	SendPropFloat	( SENDINFO( m_flHorizSpeed ),			0, SPROP_NOSCALE ),
 	SendPropBool	( SENDINFO( m_bLaunchedFromWithinWorld ) ),
-	
-	SendPropVector	( SENDINFO( m_vecStartPosition ),       0, SPROP_NOSCALE ),	
-	SendPropVector	( SENDINFO( m_vecEnterWorldPosition ),  0, SPROP_NOSCALE ),	
-	SendPropVector	( SENDINFO( m_vecDirection ),			0, SPROP_NOSCALE ),	
-	SendPropVector	( SENDINFO( m_vecStartAngles ),			0, SPROP_NOSCALE ),	
 
-	SendPropVector	( SENDINFO( m_vecSkyboxOrigin ),		0, SPROP_NOSCALE ),	
+	SendPropVector	( SENDINFO( m_vecStartPosition ),       0, SPROP_NOSCALE ),
+	SendPropVector	( SENDINFO( m_vecEnterWorldPosition ),  0, SPROP_NOSCALE ),
+	SendPropVector	( SENDINFO( m_vecDirection ),			0, SPROP_NOSCALE ),
+	SendPropVector	( SENDINFO( m_vecStartAngles ),			0, SPROP_NOSCALE ),
+
+	SendPropVector	( SENDINFO( m_vecSkyboxOrigin ),		0, SPROP_NOSCALE ),
 	SendPropFloat	( SENDINFO( m_flSkyboxScale ),			0, SPROP_NOSCALE ),
 	SendPropBool	( SENDINFO( m_bInSkybox ) ),
 #else
-	RecvPropFloat	( RECVINFO( m_flFlightSpeed ) ),	
+	RecvPropFloat	( RECVINFO( m_flFlightSpeed ) ),
 	RecvPropTime	( RECVINFO( m_flLaunchTime ) ),
-	RecvPropVector	( RECVINFO( m_vecParabolaDirection ) ),	
+	RecvPropVector	( RECVINFO( m_vecParabolaDirection ) ),
 
-	RecvPropFloat	( RECVINFO( m_flFlightTime ) ),	
-	RecvPropFloat	( RECVINFO( m_flWorldEnterTime ) ),	
+	RecvPropFloat	( RECVINFO( m_flFlightTime ) ),
+	RecvPropFloat	( RECVINFO( m_flWorldEnterTime ) ),
 
-	RecvPropFloat	( RECVINFO( m_flInitialZSpeed ) ),	
-	RecvPropFloat	( RECVINFO( m_flZAcceleration ) ),	
-	RecvPropFloat	( RECVINFO( m_flHorizSpeed ) ),	
-	RecvPropBool	( RECVINFO( m_bLaunchedFromWithinWorld ) ),	
+	RecvPropFloat	( RECVINFO( m_flInitialZSpeed ) ),
+	RecvPropFloat	( RECVINFO( m_flZAcceleration ) ),
+	RecvPropFloat	( RECVINFO( m_flHorizSpeed ) ),
+	RecvPropBool	( RECVINFO( m_bLaunchedFromWithinWorld ) ),
 
-	RecvPropVector	( RECVINFO( m_vecStartPosition ) ),	
-	RecvPropVector	( RECVINFO( m_vecEnterWorldPosition ) ),	
-	RecvPropVector	( RECVINFO( m_vecDirection ) ),	
-	RecvPropVector	( RECVINFO( m_vecStartAngles ) ),	
+	RecvPropVector	( RECVINFO( m_vecStartPosition ) ),
+	RecvPropVector	( RECVINFO( m_vecEnterWorldPosition ) ),
+	RecvPropVector	( RECVINFO( m_vecDirection ) ),
+	RecvPropVector	( RECVINFO( m_vecStartAngles ) ),
 
-	RecvPropVector	( RECVINFO( m_vecSkyboxOrigin ) ),	
-	RecvPropFloat	( RECVINFO( m_flSkyboxScale ) ),	
-	RecvPropBool	( RECVINFO( m_bInSkybox ) ),	
+	RecvPropVector	( RECVINFO( m_vecSkyboxOrigin ) ),
+	RecvPropFloat	( RECVINFO( m_flSkyboxScale ) ),
+	RecvPropBool	( RECVINFO( m_bInSkybox ) ),
 #endif
 
 END_NETWORK_TABLE()
@@ -113,8 +113,8 @@ CEnvHeadcrabCanisterShared::CEnvHeadcrabCanisterShared()
 //-----------------------------------------------------------------------------
 // Creates a headcrab canister in the world
 //-----------------------------------------------------------------------------
-void CEnvHeadcrabCanisterShared::InitInWorld( float flLaunchTime, 
-	const Vector &vecStartPosition, const QAngle &vecStartAngles, 
+void CEnvHeadcrabCanisterShared::InitInWorld( float flLaunchTime,
+	const Vector &vecStartPosition, const QAngle &vecStartAngles,
 	const Vector &vecDirection, const Vector &vecImpactPosition, bool bLaunchedFromWithinWorld )
 {
 	Vector vecActualStartPosition = vecStartPosition;
@@ -127,7 +127,7 @@ void CEnvHeadcrabCanisterShared::InitInWorld( float flLaunchTime,
 
 		VectorMA( vecImpactPosition, m_flFlightTime * m_flFlightSpeed, vecDelta, vecActualStartPosition );
 	}
- 
+
 	// Setup initial parametric state.
 	m_flLaunchTime = flLaunchTime;
 	m_vecStartPosition = vecActualStartPosition;
@@ -137,7 +137,7 @@ void CEnvHeadcrabCanisterShared::InitInWorld( float flLaunchTime,
 	m_flWorldEnterTime = 0.0f;
 	m_bInSkybox = false;
 	m_bLaunchedFromWithinWorld = bLaunchedFromWithinWorld;
- 
+
 	if ( m_bLaunchedFromWithinWorld )
 	{
 		m_flSkyboxScale = 1;
@@ -149,10 +149,10 @@ void CEnvHeadcrabCanisterShared::InitInWorld( float flLaunchTime,
 		float flTotalDistance = VectorNormalize( m_vecParabolaDirection.GetForModify() );
 		m_vecDirection.GetForModify().x = flLength * m_vecParabolaDirection.Get().x;
 		m_vecDirection.GetForModify().y = flLength * m_vecParabolaDirection.Get().y;
- 
+
 		m_flHorizSpeed = flTotalDistance / m_flFlightTime;
 		m_flWorldEnterTime = 0;
- 
+
 		float flFinalZSpeed = m_vecDirection.Get().z * m_flHorizSpeed;
 		m_flFlightSpeed = sqrt( m_flHorizSpeed * m_flHorizSpeed + flFinalZSpeed * flFinalZSpeed );
 		m_flInitialZSpeed = (2.0f * ( vecImpactPosition.z - vecStartPosition.z ) - flFinalZSpeed * m_flFlightTime) / m_flFlightTime;
@@ -164,13 +164,13 @@ void CEnvHeadcrabCanisterShared::InitInWorld( float flLaunchTime,
 //-----------------------------------------------------------------------------
 // Creates a headcrab canister in the skybox
 //-----------------------------------------------------------------------------
-void CEnvHeadcrabCanisterShared::InitInSkybox( float flLaunchTime, 
+void CEnvHeadcrabCanisterShared::InitInSkybox( float flLaunchTime,
 	const Vector &vecStartPosition, const QAngle &vecStartAngles, const Vector &vecDirection,
 	const Vector &vecImpactPosition, const Vector &vecSkyboxOrigin, float flSkyboxScale )
 {
 	// Compute a horizontal speed (constant)
 	m_vecParabolaDirection.Init( vecDirection.x, vecDirection.y, 0.0f );
-	float flLength = VectorNormalize( m_vecParabolaDirection.GetForModify() ); 
+	float flLength = VectorNormalize( m_vecParabolaDirection.GetForModify() );
 	m_flHorizSpeed = flLength * m_flFlightSpeed;
 
 	// compute total distance to travel
@@ -274,7 +274,7 @@ void CEnvHeadcrabCanisterShared::GetPositionAtTime( float flTime, Vector &vecPos
 
 		Vector vecUp;
 		CrossProduct( vecForward, vecLeft, vecUp );
- 
+
 		initToWorld.SetBasisVectors( vecForward, vecLeft, vecUp );
 	}
 	else
@@ -308,7 +308,7 @@ bool CEnvHeadcrabCanisterShared::IsInSkybox( )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CEnvHeadcrabCanisterShared::CalcEnterTime( const Vector &vecTriggerMins, 
+void CEnvHeadcrabCanisterShared::CalcEnterTime( const Vector &vecTriggerMins,
 											  const Vector &vecTriggerMaxs )
 {
 	/*
@@ -329,14 +329,14 @@ void CEnvHeadcrabCanisterShared::CalcEnterTime( const Vector &vecTriggerMins,
 		flDistStart = -m_vecStartPosition[iAxis] + vecTriggerMins[iAxis];
 		flDistEnd = -vecEndPosition[iAxis] + vecTriggerMins[iAxis];
 
-		if ( ( flDistStart > 0.0f ) && ( flDistEnd < 0.0f ) ) 
-		{ 
+		if ( ( flDistStart > 0.0f ) && ( flDistEnd < 0.0f ) )
+		{
 			flFrac = ( flDistStart - HEADCRABCANISTER_TRIGGER_EPSILON ) / ( flDistStart - flDistEnd );
 			if ( flFrac > flEnterFrac ) { flEnterFrac = flFrac; }
 		}
 
-		if ( ( flDistStart < 0.0f ) && ( flDistEnd > 0.0f ) ) 
-		{ 
+		if ( ( flDistStart < 0.0f ) && ( flDistEnd > 0.0f ) )
+		{
 			flFrac = ( flDistStart + HEADCRABCANISTER_TRIGGER_EPSILON ) / ( flDistStart - flDistEnd );
 			if( flFrac < flExitFrac ) { flExitFrac = flFrac; }
 		}
@@ -348,14 +348,14 @@ void CEnvHeadcrabCanisterShared::CalcEnterTime( const Vector &vecTriggerMins,
 		flDistStart = m_vecStartPosition[iAxis] - vecTriggerMaxs[iAxis];
 		flDistEnd = vecEndPosition[iAxis] - vecTriggerMaxs[iAxis];
 
-		if ( ( flDistStart > 0.0f ) && ( flDistEnd < 0.0f ) ) 
-		{ 
+		if ( ( flDistStart > 0.0f ) && ( flDistEnd < 0.0f ) )
+		{
 			flFrac = ( flDistStart - HEADCRABCANISTER_TRIGGER_EPSILON ) / ( flDistStart - flDistEnd );
 			if ( flFrac > flEnterFrac ) { flEnterFrac = flFrac; }
 		}
 
-		if ( ( flDistStart < 0.0f ) && ( flDistEnd > 0.0f ) ) 
-		{ 
+		if ( ( flDistStart < 0.0f ) && ( flDistEnd > 0.0f ) )
+		{
 			flFrac = ( flDistStart + HEADCRABCANISTER_TRIGGER_EPSILON ) / ( flDistStart - flDistEnd );
 			if( flFrac < flExitFrac ) { flExitFrac = flFrac; }
 		}
@@ -390,4 +390,3 @@ void CEnvHeadcrabCanisterShared::CalcEnterTime( const Vector &vecTriggerMins,
 
 #undef HEADCRABCANISTER_TRIGGER_EPSILON
 }
-

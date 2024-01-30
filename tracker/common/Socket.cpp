@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -94,7 +94,7 @@ static CSocketThread *GetSocketThread()
 
 //-----------------------------------------------------------------------------
 // Purpose: Main winsock processing thread
-// Input  : threadobject - 
+// Input  : threadobject -
 // Output : static DWORD WINAPI
 //-----------------------------------------------------------------------------
 static DWORD WINAPI SocketThreadFunc( LPVOID threadobject )
@@ -207,7 +207,7 @@ CSocketThread::CSocketThread( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CSocketThread::~CSocketThread( void )
 {
@@ -233,7 +233,7 @@ CSocketThread::~CSocketThread( void )
 
 	DeleteCriticalSection( &cs );
 }
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Initialize socket thread timer
 //-----------------------------------------------------------------------------
@@ -253,7 +253,7 @@ void CSocketThread::InitTimer( void )
 	// 1 microsecond resolution
 	lowpart		= (unsigned int)PerformanceFreq.LowPart;
 	highpart	= (unsigned int)PerformanceFreq.HighPart;
-	
+
 	m_nTimeSampleShift	= 0;
 
 	while ( highpart || ( lowpart > 2000000.0 ) )
@@ -263,7 +263,7 @@ void CSocketThread::InitTimer( void )
 		lowpart |= (highpart & 1) << 31;
 		highpart >>= 1;
 	}
-	
+
 	m_dClockFrequency = 1.0 / (double)lowpart;
 
 	// Get initial sample
@@ -278,7 +278,7 @@ void CSocketThread::InitTimer( void )
 	{
 		// Rotate counter to right by m_nTimeSampleShift places
 		temp = ((unsigned int)PerformanceCount.LowPart >> m_nTimeSampleShift) |
-			   ((unsigned int)PerformanceCount.HighPart << (32 - m_nTimeSampleShift));
+				((unsigned int)PerformanceCount.HighPart << (32 - m_nTimeSampleShift));
 	}
 
 	// Set first time stamp
@@ -306,11 +306,11 @@ float CSocketThread::GetClock( void )
 	{
 		// Rotate counter to right by m_nTimeSampleShift places
 		temp = ((unsigned int)PerformanceCount.LowPart >> m_nTimeSampleShift) |
-			   ((unsigned int)PerformanceCount.HighPart << (32 - m_nTimeSampleShift));
+				((unsigned int)PerformanceCount.HighPart << (32 - m_nTimeSampleShift));
 	}
 
 	// check for turnover or backward time
-	if ( ( temp <= m_uiPreviousTime ) && 
+	if ( ( temp <= m_uiPreviousTime ) &&
 		( ( m_uiPreviousTime - temp ) < 0x10000000) )
 	{
 		m_uiPreviousTime = temp;	// so we can't get stuck
@@ -333,7 +333,7 @@ float CSocketThread::GetClock( void )
 	VCRGenericValue( "", &m_dCurrentTime, sizeof( m_dCurrentTime ) );
 #endif
 	// Convert to float
-    return (float)m_dCurrentTime;
+	return (float)m_dCurrentTime;
 }
 
 //-----------------------------------------------------------------------------
@@ -418,7 +418,7 @@ void CSocketThread::RemoveSocketFromThread( CSocket *socket )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSocketThread::Lock( void )
 {
@@ -426,7 +426,7 @@ void CSocketThread::Lock( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSocketThread::Unlock( void )
 {
@@ -440,7 +440,7 @@ CMsgHandler::CMsgHandler( HANDLERTYPE type, void *typeinfo /*=NULL*/ )
 {
 	m_Type	= type;
 	m_pNext = NULL;
-	
+
 	// Assume no socket
 	SetSocket( NULL );
 
@@ -463,7 +463,7 @@ CMsgHandler::CMsgHandler( HANDLERTYPE type, void *typeinfo /*=NULL*/ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMsgHandler::~CMsgHandler( void )
 {
@@ -481,8 +481,8 @@ bool CMsgHandler::Process( netadr_t *from, CMsgBuffer *msg )
 
 //-----------------------------------------------------------------------------
 // Purpose: Check for special handling
-// Input  : *from - 
-//			*msg - 
+// Input  : *from -
+//			*msg -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMsgHandler::ProcessMessage( netadr_t *from, CMsgBuffer *msg )
@@ -531,7 +531,7 @@ CMsgHandler	*CMsgHandler::GetNext( void ) const
 
 //-----------------------------------------------------------------------------
 // Purpose: Set next in handler chain
-// Input  : *next - 
+// Input  : *next -
 //-----------------------------------------------------------------------------
 void CMsgHandler::SetNext( CMsgHandler *next )
 {
@@ -549,7 +549,7 @@ CSocket *CMsgHandler::GetSocket( void ) const
 
 //-----------------------------------------------------------------------------
 // Purpose: Set underlying socket object
-// Input  : *socket - 
+// Input  : *socket -
 //-----------------------------------------------------------------------------
 void CMsgHandler::SetSocket( CSocket *socket )
 {
@@ -645,7 +645,7 @@ CSocket::CSocket( const char *socketname, int port /*= -1*/ ) : m_SendBuffer(soc
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CSocket::~CSocket( void )
 {
@@ -677,7 +677,7 @@ CSocket::~CSocket( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Add hander to head of chain
-// Input  : *handler - 
+// Input  : *handler -
 //-----------------------------------------------------------------------------
 void CSocket::AddMessageHandler( CMsgHandler *handler )
 {
@@ -690,7 +690,7 @@ void CSocket::AddMessageHandler( CMsgHandler *handler )
 
 //-----------------------------------------------------------------------------
 // Purpose: Removed indicated handler
-// Input  : *handler - 
+// Input  : *handler -
 //-----------------------------------------------------------------------------
 void CSocket::RemoveMessageHandler( CMsgHandler *handler )
 {
@@ -720,7 +720,7 @@ void CSocket::RemoveMessageHandler( CMsgHandler *handler )
 
 //-----------------------------------------------------------------------------
 // Purpose: Send message to specified address
-// Input  : *to - 
+// Input  : *to -
 // Output : int - number of bytes sent
 //-----------------------------------------------------------------------------
 int CSocket::SendMessage( netadr_t *to, CMsgBuffer *msg /*= NULL*/ )
@@ -752,7 +752,7 @@ int CSocket::SendMessage( netadr_t *to, CMsgBuffer *msg /*= NULL*/ )
 
 //-----------------------------------------------------------------------------
 // Purpose: Send broadcast message on specified port
-// Input  : port - 
+// Input  : port -
 // Output : int - number of bytes sent
 //-----------------------------------------------------------------------------
 int CSocket::Broadcast( int port, CMsgBuffer *msg /*= NULL*/ )
@@ -840,7 +840,7 @@ bool CSocket::IsValid( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CSocket::GetClock( void )
@@ -868,7 +868,7 @@ const netadr_t *CSocket::GetAddress( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Let the user store/retrieve a 32 bit value
-// Input  : userData - 
+// Input  : userData -
 //-----------------------------------------------------------------------------
 void CSocket::SetUserData( unsigned int userData )
 {
@@ -928,27 +928,27 @@ bool CSocket::ReceiveData( void )
 
 	// Mark the time no matter what since FD_SET said there was data and we should have it now
 	float recvTime = GetClock();
-	
+
 	if( *(int *)&buffer[0] == -2 ) // its a split packet :)
 	{
 		int curPacket=0,offset=0;
 		SPLITPACKET *pak =reinterpret_cast<SPLITPACKET *>(&buffer[0]);
 
 		if(m_iTotalPackets==0)  // this is the first in the series
-		{	
+		{
 			m_iTotalPackets = (pak->packetID & 0x0f);
 			m_iSeqNo = pak->sequenceNumber;
 			m_iRetries=0;
 
 			m_iCurrentPackets=1;// packet numbers start at zero, total is the total number (i.e =2 for packet 0,1)
 			curPacket= (pak->packetID & 0xf0)>>4;
-		} 
-		else if (m_iSeqNo == pak->sequenceNumber) 
+		}
+		else if (m_iSeqNo == pak->sequenceNumber)
 		{
 			m_iCurrentPackets++;
 			curPacket= (pak->packetID & 0xf0)>>4;
 		}
-		else 
+		else
 		{
 			m_iRetries++;
 			if(m_iRetries>MAX_RETRIES)  // make sure we give up eventually on fragments
@@ -959,7 +959,7 @@ bool CSocket::ReceiveData( void )
 		}
 
 
-		if(curPacket==0) 
+		if(curPacket==0)
 		{
 			offset=4; // strip the "-1" at the front of the first packet
 		}
@@ -970,7 +970,7 @@ bool CSocket::ReceiveData( void )
 			m_CurPacket[curPacket].WriteBuf(bytes-offset-sizeof(SPLITPACKET),&buffer[offset+sizeof(SPLITPACKET)]);
 		}
 
-		if(m_iCurrentPackets==m_iTotalPackets) 
+		if(m_iCurrentPackets==m_iTotalPackets)
 		{
 
 			VCRHook_EnterCriticalSection((CRITICAL_SECTION *)m_pBufferCS);
@@ -978,11 +978,11 @@ bool CSocket::ReceiveData( void )
 			// Get from address
 			netadr_t addr;
 			net->SockAddrToNetAdr( &from, &addr );
-			
+
 			// append to the receive buffer
 			int idx = m_MsgBuffers.AddToTail();
 			CMsgBuffer &msgBuffer = m_MsgBuffers[idx];
-			
+
 			msgBuffer.Clear();
 
 			// copy all our fragments together
@@ -998,14 +998,14 @@ bool CSocket::ReceiveData( void )
 			LeaveCriticalSection((CRITICAL_SECTION *)m_pBufferCS);
 
 			m_iTotalPackets = 0;  // we have collected all the fragments for
-								  //this packet, we can start on a new one now
+								//this packet, we can start on a new one now
 
 		}
 
 
 	}
 	else if ( *(int *)&buffer[0] == -1 )		// Must have 255,255,255,255 oob tag
-	{	
+	{
 		/*
 		// Fake packet loss
 		if ( rand() % 1000 < 200 )
@@ -1017,11 +1017,11 @@ bool CSocket::ReceiveData( void )
 		// Get from address
 		netadr_t addr;
 		net->SockAddrToNetAdr( &from, &addr );
-		
+
 		// append to the receive buffer
 		int idx = m_MsgBuffers.AddToTail();
 		CMsgBuffer &msgBuffer = m_MsgBuffers[idx];
-		
+
 		// Copy payload minus the -1 tag
 		msgBuffer.Clear();
 		msgBuffer.WriteBuf( bytes - 4, &buffer[ 4 ] );
@@ -1029,7 +1029,7 @@ bool CSocket::ReceiveData( void )
 		msgBuffer.SetNetAddress(addr);
 
 		LeaveCriticalSection((CRITICAL_SECTION *)m_pBufferCS);
-	} 
+	}
 
 	return true;
 }

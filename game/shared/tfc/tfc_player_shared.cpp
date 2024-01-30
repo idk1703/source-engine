@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -12,7 +12,7 @@
 
 
 #ifdef CLIENT_DLL
-	
+
 	#include "c_tfc_player.h"
 
 	BEGIN_RECV_TABLE_NOBASE( CTFCPlayerShared, DT_TFCPlayerShared )
@@ -93,5 +93,3 @@ CWeaponTFCBase*	CTFCPlayerShared::GetActiveTFCWeapon() const
 		return NULL;
 	}
 }
-
-

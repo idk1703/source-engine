@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #ifndef TF_PLAYERANIMSTATE_H
@@ -25,7 +25,7 @@ class CTFPlayer;
 class CTFPlayerAnimState : public CMultiPlayerAnimState
 {
 public:
-	
+
 	DECLARE_CLASS( CTFPlayerAnimState, CMultiPlayerAnimState );
 
 	CTFPlayerAnimState();
@@ -71,7 +71,7 @@ private:
 	void Taunt_ComputePoseParam_MoveY( CStudioHdr *pStudioHdr );
 	void Vehicle_ComputePoseParam_MoveYaw( CStudioHdr *pStudioHdr );
 	void Vehicle_ComputePoseParam_AccelLean( CStudioHdr *pStudioHdr );
-	
+
 	CTFPlayer   *m_pTFPlayer;
 	bool		m_bInAirWalk;
 	float		m_flHoldDeployedPoseUntilTime;

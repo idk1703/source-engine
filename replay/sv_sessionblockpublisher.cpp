@@ -96,7 +96,7 @@ void CSessionBlockPublisher::WriteAndPublishSessionBlock()
 		delete pNewBlock;
 		return;
 	}
-	
+
 	if ( m_pSession->m_nServerStartRecordTick < 0 )
 	{
 		Warning( "Error: Current recording start tick was not properly setup.  Aborting block write.\n" );

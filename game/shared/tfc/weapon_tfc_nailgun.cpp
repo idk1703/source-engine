@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -70,18 +70,18 @@ void CTFCNailgun::PrimaryAttack()
 	// Fire the nail
 #ifdef GAME_DLL
 	Vector vecSrc = pOwner->Weapon_ShootPosition();
-	CTFNailgunNail *pNail = CTFNailgunNail::CreateNail( 
-		false, 
-		vecSrc, 
-		pOwner->EyeAngles(), 
-		pOwner, 
-		this, 
+	CTFNailgunNail *pNail = CTFNailgunNail::CreateNail(
+		false,
+		vecSrc,
+		pOwner->EyeAngles(),
+		pOwner,
+		this,
 		true );
 	pNail=pNail; // avoid compiler warning..
 #endif
 
 	pOwner->RemoveAmmo( 1, GetPrimaryAmmoType() );
-	
+
 	// Setup fire delays
 	m_flNextPrimaryAttack = gpGlobals->curtime + 0.1;
 	m_flTimeWeaponIdle = gpGlobals->curtime + 10;
@@ -95,7 +95,7 @@ void CTFCNailgun::SecondaryAttack()
 
 
 #ifdef CLIENT_DLL
-	
+
 	// ------------------------------------------------------------------------------------------------ //
 	// ------------------------------------------------------------------------------------------------ //
 	// CLIENT DLL SPECIFIC CODE

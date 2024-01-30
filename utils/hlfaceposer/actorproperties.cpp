@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,18 +13,18 @@
 static CActorParams g_Params;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
-static BOOL CALLBACK ActorPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )  
+static BOOL CALLBACK ActorPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	switch(uMsg)
 	{
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		// Insert code here to put the string (to find and replace with)
 		// into the edit controls.
 		// ...
@@ -37,9 +37,9 @@ static BOOL CALLBACK ActorPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM 
 
 			SetFocus( GetDlgItem( hwndDlg, IDC_ACTORNAME ) );
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -47,7 +47,7 @@ static BOOL CALLBACK ActorPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM 
 			GetDlgItemText( hwndDlg, IDC_ACTORNAME, g_Params.m_szName, 256 );
 			EndDialog( hwndDlg, 1 );
 			break;
-        case IDCANCEL:
+		case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		}
@@ -57,16 +57,16 @@ static BOOL CALLBACK ActorPropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int ActorProperties( CActorParams *params )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_ACTORPROPERTIES ),
 		(HWND)g_MDLViewer->getHandle(),
 		(DLGPROC)ActorPropertiesDialogProc );

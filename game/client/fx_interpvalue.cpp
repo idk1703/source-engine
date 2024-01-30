@@ -1,36 +1,36 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
 #include "cbase.h"
 #include "fx_interpvalue.h"
 
-CInterpolatedValue::CInterpolatedValue( void ) :  m_flStartTime( 0.0f ), m_flEndTime( 0.0f ), m_flStartValue( 0.0f ), m_flEndValue( 0.0f ), m_nInterpType( INTERP_LINEAR ) 
+CInterpolatedValue::CInterpolatedValue( void ) :  m_flStartTime( 0.0f ), m_flEndTime( 0.0f ), m_flStartValue( 0.0f ), m_flEndValue( 0.0f ), m_nInterpType( INTERP_LINEAR )
 {
 }
 
-CInterpolatedValue::CInterpolatedValue( float startTime, float endTime, float startValue, float endValue, InterpType_t type ) : 
-	  m_flStartTime( startTime ), m_flEndTime( endTime ), m_flStartValue( startValue ), m_flEndValue( endValue ), m_nInterpType( type ) 
+CInterpolatedValue::CInterpolatedValue( float startTime, float endTime, float startValue, float endValue, InterpType_t type ) :
+	  m_flStartTime( startTime ), m_flEndTime( endTime ), m_flStartValue( startValue ), m_flEndValue( endValue ), m_nInterpType( type )
 {
 }
 
-void CInterpolatedValue::SetTime( float start, float end ) 
-{ 
-	m_flStartTime = start; m_flEndTime = end; 
+void CInterpolatedValue::SetTime( float start, float end )
+{
+	m_flStartTime = start; m_flEndTime = end;
 }
 
-void CInterpolatedValue::SetRange( float start, float end ) 
-{ 
-	m_flStartValue = start; m_flEndValue = end; 
+void CInterpolatedValue::SetRange( float start, float end )
+{
+	m_flStartValue = start; m_flEndValue = end;
 }
 
 void CInterpolatedValue::SetType( InterpType_t type )
-{ 
-	m_nInterpType = type; 
+{
+	m_nInterpType = type;
 }
-	
+
 // Set the value with no range
 void CInterpolatedValue::SetAbsolute( float value )
 {

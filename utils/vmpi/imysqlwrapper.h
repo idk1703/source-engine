@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -40,9 +40,9 @@ class IMySQLRowSet
 public:
 	virtual void			Release() = 0;
 
-	// Get the number of columns in the data returned from the last query (if it was a select statement).	
+	// Get the number of columns in the data returned from the last query (if it was a select statement).
 	virtual int				NumFields() = 0;
-	
+
 	// Get the name of each column returned by the last query.
 	virtual const char*		GetFieldName( int iColumn ) = 0;
 

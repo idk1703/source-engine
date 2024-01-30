@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,9 +13,9 @@
 #include "in_buttons.h"
 
 
-ConVar	sk_healthkit( "sk_healthkit","0" );		
-ConVar	sk_healthvial( "sk_healthvial","0" );		
-ConVar	sk_healthcharger( "sk_healthcharger","0" );		
+ConVar	sk_healthkit( "sk_healthkit","0" );
+ConVar	sk_healthvial( "sk_healthvial","0" );
+ConVar	sk_healthcharger( "sk_healthcharger","0" );
 
 //-----------------------------------------------------------------------------
 // Small health kit. Heals the player when picked up.
@@ -35,7 +35,7 @@ PRECACHE_REGISTER(item_healthkit);
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHealthKit::Spawn( void )
 {
@@ -47,7 +47,7 @@ void CHealthKit::Spawn( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHealthKit::Precache( void )
 {
@@ -58,9 +58,9 @@ void CHealthKit::Precache( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
-// Output : 
+// Purpose:
+// Input  : *pPlayer -
+// Output :
 //-----------------------------------------------------------------------------
 bool CHealthKit::MyTouch( CBasePlayer *pPlayer )
 {
@@ -82,7 +82,7 @@ bool CHealthKit::MyTouch( CBasePlayer *pPlayer )
 		}
 		else
 		{
-			UTIL_Remove(this);	
+			UTIL_Remove(this);
 		}
 
 		return true;
@@ -135,7 +135,7 @@ public:
 			}
 			else
 			{
-				UTIL_Remove(this);	
+				UTIL_Remove(this);
 			}
 
 			return true;
@@ -165,7 +165,7 @@ public:
 	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	virtual int	ObjectCaps( void ) { return BaseClass::ObjectCaps() | m_iCaps; }
 
-	float m_flNextCharge; 
+	float m_flNextCharge;
 	int		m_iReactivate ; // DeathMatch Delay until reactvated
 	int		m_iJuice;
 	int		m_iOn;			// 0 = off, 1 = startup, 2 = going
@@ -196,8 +196,8 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pkvd - 
+// Purpose:
+// Input  : *pkvd -
 //-----------------------------------------------------------------------------
 bool CWallHealth::KeyValue(  const char *szKeyName, const char *szValue )
 {
@@ -220,7 +220,7 @@ bool CWallHealth::KeyValue(  const char *szKeyName, const char *szValue )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWallHealth::Spawn(void)
 {
@@ -249,7 +249,7 @@ bool CWallHealth::CreateVPhysics(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWallHealth::Precache(void)
 {
@@ -261,14 +261,14 @@ void CWallHealth::Precache(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pActivator - 
-//			*pCaller - 
-//			useType - 
-//			value - 
+// Purpose:
+// Input  : *pActivator -
+//			*pCaller -
+//			useType -
+//			value -
 //-----------------------------------------------------------------------------
 void CWallHealth::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
-{ 
+{
 	// Make sure that we have a caller
 	if (!pActivator)
 		return;
@@ -287,7 +287,7 @@ void CWallHealth::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
 	}
 
 	CBasePlayer *pPlayer = ToBasePlayer( pActivator );
-	
+
 	// if the player doesn't have the suit, or there is no juice left, make the deny noise.
 	if ((m_iJuice <= 0) || (!(pPlayer->m_Local.m_bWearingSuit)))
 	{
@@ -307,7 +307,7 @@ void CWallHealth::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
 		{
 			pPlayer->m_afButtonPressed &= ~IN_USE;
 		}
-		
+
 		// Make the user re-use me to get started drawing health.
 		m_iCaps = FCAP_IMPULSE_USE;
 
@@ -351,7 +351,7 @@ void CWallHealth::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWallHealth::Recharge(void)
 {
@@ -363,7 +363,7 @@ void CWallHealth::Recharge(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWallHealth::Off(void)
 {
@@ -381,4 +381,3 @@ void CWallHealth::Off(void)
 	else
 		SetThink( NULL );
 }
-

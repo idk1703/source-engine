@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -57,7 +57,7 @@ protected:
 	afx_msg void OnSize( UINT nType, int cx, int cy );
 	//}}AFX_MSG
 
-	
+
 	DECLARE_MESSAGE_MAP()
 
 };

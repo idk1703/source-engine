@@ -65,7 +65,7 @@ void KnifeSlash( const CEffectData &data )
 	if( Impact( vecOrigin, vecStart, iMaterial, iDamageType, iHitbox, pEntity, tr, data.m_fFlags ) )
 	{
 		// Check for custom effects based on the Decal index
-		PerformCustomEffects( vecOrigin, tr, vecShotDir, iMaterial, 1.0 );	
+		PerformCustomEffects( vecOrigin, tr, vecShotDir, iMaterial, 1.0 );
 	}
 }
 

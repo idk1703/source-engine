@@ -175,7 +175,7 @@ struct SCustomImageCacheEntry : private ITextureRegenerator
 		Assert( nWidth == m_image.Width() && nHeight == m_image.Height() );
 
 		CPixelWriter pixelWriter;
-		pixelWriter.SetPixelMemory( pVTFTexture->Format(), 
+		pixelWriter.SetPixelMemory( pVTFTexture->Format(),
 			pVTFTexture->ImageData( 0, 0, 0 ), pVTFTexture->RowSizeInBytes( 0 ) );
 
 		// !SPEED! 'Tis probably DEATHLY slow...
@@ -269,7 +269,7 @@ struct SCustomImageCacheEntry : private ITextureRegenerator
 				pTexture = g_pMaterialSystem->CreateProceduralTexture(
 					rchTextureName,
 					TEXTURE_GROUP_VGUI,
-					k_nCustomImageSize, k_nCustomImageSize, 
+					k_nCustomImageSize, k_nCustomImageSize,
 					IMAGE_FORMAT_RGBA8888,
 					TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT | TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD
 				);
@@ -652,7 +652,7 @@ CCustomTextureOnItemProxy::CCustomTextureOnItemProxy()
 : m_pBaseTextureVar( NULL )
 , m_pOriginalTexture( NULL )
 {
-	
+
 }
 
 CCustomTextureOnItemProxy::~CCustomTextureOnItemProxy()
@@ -834,7 +834,7 @@ public:
 	{
 		// Destroy all the cache entries
 		for ( SCustomImageCacheEntry *pEntry = mruCustomImageEntry ; pEntry ; pEntry = pEntry->m_pNext )
-		{	
+		{
 			pEntry->ReleaseResources();
 		}
 	}
@@ -1108,4 +1108,3 @@ EResult CApplyCustomTextureJob::YieldingApplyTool()
 	InventoryManager()->ShowItemsPickedUp( true );
 	return k_EResultOK;
 };
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -47,7 +47,7 @@ public:
 	CClassInfoInitializer()
 	{
 		memset( &g_TFCPlayerClassInfo, 0xFE, sizeof( g_TFCPlayerClassInfo ) );
-		
+
 		// PC_UNDEFINED.
 			CTFCPlayerClassInfo *pInfo = &g_TFCPlayerClassInfo[PC_UNDEFINED];
 			pInfo->m_pClassName = "undefined";
@@ -61,10 +61,10 @@ public:
 			pInfo->m_pModelName = "models/player/scout.mdl";
 			pInfo->m_flMaxSpeed = 400;
 			pInfo->m_iMaxHealth = 75;
-			
+
 			pInfo->m_iInitArmor = 25;
 			pInfo->m_iMaxArmor = 50;
-			
+
 			pInfo->m_flInitArmorType = 0.3;
 			pInfo->m_flMaxArmorType = 0.3;
 			pInfo->m_nArmorClasses = 3;
@@ -97,10 +97,10 @@ public:
 			pInfo->m_pModelName = "models/player/sniper.mdl";
 			pInfo->m_flMaxSpeed = 300;
 			pInfo->m_iMaxHealth = 90;
-			
+
 			pInfo->m_iInitArmor = 25;
 			pInfo->m_iMaxArmor = 50;
-			
+
 			pInfo->m_flInitArmorType = 0.3;
 			pInfo->m_flMaxArmorType = 0.3;
 			pInfo->m_nArmorClasses = 3;
@@ -133,10 +133,10 @@ public:
 			pInfo->m_pModelName = "models/player/soldier.mdl";
 			pInfo->m_flMaxSpeed = 240;
 			pInfo->m_iMaxHealth = 100;
-			
+
 			pInfo->m_iInitArmor = 100;
 			pInfo->m_iMaxArmor = 200;
-			
+
 			pInfo->m_flInitArmorType = 0.8;
 			pInfo->m_flMaxArmorType = 0.8;
 			pInfo->m_nArmorClasses = 31;
@@ -170,10 +170,10 @@ public:
 			pInfo->m_pModelName = "models/player/demo.mdl";
 			pInfo->m_flMaxSpeed = 280;
 			pInfo->m_iMaxHealth = 90;
-			
+
 			pInfo->m_iInitArmor = 50;
 			pInfo->m_iMaxArmor = 120;
-			
+
 			pInfo->m_flInitArmorType = 0.6;
 			pInfo->m_flMaxArmorType = 0.6;
 			pInfo->m_nArmorClasses = 31;
@@ -207,10 +207,10 @@ public:
 			pInfo->m_pModelName = "models/player/medic.mdl";
 			pInfo->m_flMaxSpeed = 320;
 			pInfo->m_iMaxHealth = 90;
-			
+
 			pInfo->m_iInitArmor = 50;
 			pInfo->m_iMaxArmor = 100;
-			
+
 			pInfo->m_flInitArmorType = 0.3;
 			pInfo->m_flMaxArmorType = 0.6;
 			pInfo->m_nArmorClasses = 11;
@@ -244,10 +244,10 @@ public:
 			pInfo->m_pModelName = "models/player/hvyweapon.mdl";
 			pInfo->m_flMaxSpeed = 230;
 			pInfo->m_iMaxHealth = 100;
-			
+
 			pInfo->m_iInitArmor = 150;
 			pInfo->m_iMaxArmor = 300;
-			
+
 			pInfo->m_flInitArmorType = 0.8;
 			pInfo->m_flMaxArmorType = 0.8;
 			pInfo->m_nArmorClasses = 31;
@@ -281,10 +281,10 @@ public:
 			pInfo->m_pModelName = "models/player/pyro.mdl";
 			pInfo->m_flMaxSpeed = 300;
 			pInfo->m_iMaxHealth = 100;
-			
+
 			pInfo->m_iInitArmor = 50;
 			pInfo->m_iMaxArmor = 150;
-			
+
 			pInfo->m_flInitArmorType = 0.6;
 			pInfo->m_flMaxArmorType = 0.6;
 			pInfo->m_nArmorClasses = 27;
@@ -318,10 +318,10 @@ public:
 			pInfo->m_pModelName = "models/player/spy.mdl";
 			pInfo->m_flMaxSpeed = 300;
 			pInfo->m_iMaxHealth = 90;
-			
+
 			pInfo->m_iInitArmor = 25;
 			pInfo->m_iMaxArmor = 100;
-			
+
 			pInfo->m_flInitArmorType = 0.6;
 			pInfo->m_flMaxArmorType = 0.6;
 			pInfo->m_nArmorClasses = 27;
@@ -355,10 +355,10 @@ public:
 			pInfo->m_pModelName = "models/player/engineer.mdl";
 			pInfo->m_flMaxSpeed = 300;
 			pInfo->m_iMaxHealth = 80;
-			
+
 			pInfo->m_iInitArmor = 25;
 			pInfo->m_iMaxArmor = 50;
-			
+
 			pInfo->m_flInitArmorType = 0.3;
 			pInfo->m_flMaxArmorType = 0.6;
 			pInfo->m_nArmorClasses = 31;
@@ -392,10 +392,10 @@ public:
 			pInfo->m_pModelName = "models/player/civilian.mdl";
 			pInfo->m_flMaxSpeed = 240;
 			pInfo->m_iMaxHealth = 50;
-			
+
 			pInfo->m_iInitArmor = 0;
 			pInfo->m_iMaxArmor = 0;
-			
+
 			pInfo->m_flInitArmorType = 0;
 			pInfo->m_flMaxArmorType = 0;
 			pInfo->m_nArmorClasses = 0;
@@ -433,4 +433,3 @@ const CTFCPlayerClassInfo* GetTFCClassInfo( int iClass )
 	Assert( iClass >= 0 && iClass < PC_LASTCLASS );
 	return &g_TFCPlayerClassInfo[iClass];
 }
-

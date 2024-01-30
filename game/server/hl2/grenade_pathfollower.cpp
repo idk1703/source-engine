@@ -88,7 +88,7 @@ void CGrenadePathfollower::GrenadeTouch( CBaseEntity *pOther )
 	// If I hit the sky, don't explode
 	// ----------------------------------
 	trace_t tr;
-	UTIL_TraceLine ( GetAbsOrigin(), GetAbsOrigin() + GetAbsVelocity(),  MASK_SOLID_BRUSHONLY, 
+	UTIL_TraceLine ( GetAbsOrigin(), GetAbsOrigin() + GetAbsVelocity(),  MASK_SOLID_BRUSHONLY,
 		this, COLLISION_GROUP_NONE, &tr);
 
 	if (tr.surface.flags & SURF_SKY)
@@ -112,7 +112,7 @@ void CGrenadePathfollower::Detonate(void)
 {
 	StopSound(entindex(), CHAN_BODY, STRING(m_sFlySound));
 
-	m_takedamage	= DAMAGE_NO;	
+	m_takedamage	= DAMAGE_NO;
 
 	if(m_hRocketTrail)
 	{
@@ -123,9 +123,9 @@ void CGrenadePathfollower::Detonate(void)
 	CPASFilter filter( GetAbsOrigin() );
 
 	te->Explosion( filter, 0.0,
-		&GetAbsOrigin(), 
+		&GetAbsOrigin(),
 		g_sModelIndexFireball,
-		0.5, 
+		0.5,
 		15,
 		TE_EXPLFLAG_NONE,
 		m_DmgRadius,
@@ -197,7 +197,7 @@ void CGrenadePathfollower::Launch( float flLaunchSpeed, string_t sPathCornerName
 		m_hRocketTrail->m_SpawnRadius = 4;
 		m_hRocketTrail->m_MinSpeed = 2;
 		m_hRocketTrail->m_MaxSpeed = 16;
-		
+
 		m_hRocketTrail->SetLifetime( 999 );
 		m_hRocketTrail->FollowEntity( this, "0" );
 	}
@@ -244,7 +244,7 @@ void CGrenadePathfollower::AimThink( void )
 		{
 			m_pPathTarget = gEntList.FindEntityByName( NULL, m_pPathTarget->m_target );
 			if (!m_pPathTarget)
-			{	
+			{
 				SetGravity( 1.0 );
 			}
 		}
@@ -254,7 +254,7 @@ void CGrenadePathfollower::AimThink( void )
 	//  If I have a pathcorner, aim towards it
 	// --------------------------------------------------
 	if (m_pPathTarget)
-	{	
+	{
 		Vector vTargetDir = (m_pPathTarget->GetAbsOrigin() - GetAbsOrigin());
 		VectorNormalize(vTargetDir);
 
@@ -283,8 +283,8 @@ void CGrenadePathfollower::AimThink( void )
 // Output  :
 //------------------------------------------------------------------------------
 Class_T	CGrenadePathfollower::Classify( void)
-{ 
-	return CLASS_MISSILE; 
+{
+	return CLASS_MISSILE;
 };
 
 CGrenadePathfollower::CGrenadePathfollower(void)

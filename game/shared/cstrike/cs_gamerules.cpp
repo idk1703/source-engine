@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: The TF Game rules 
+// Purpose: The TF Game rules
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@
 	#include "utlvector.h"
 
 #else
-	
+
 	#include "bot.h"
 	#include "utldict.h"
 	#include "cs_player.h"
@@ -49,8 +49,8 @@
 	#include "networkstringtable_gamedll.h"
 	#include "player_resource.h"
 	#include "cs_player_resource.h"
-	
-#if defined( REPLAY_ENABLED )	
+
+#if defined( REPLAY_ENABLED )
 	#include "replay/ireplaysystem.h"
 	#include "replay/iserverreplaycontext.h"
 	#include "replay/ireplaysessionrecorder.h"
@@ -183,8 +183,8 @@ ConVar ammo_smokegrenade_max( "ammo_smokegrenade_max", "1", FCVAR_REPLICATED );
 
 extern ConVar sv_stopspeed;
 
-ConVar mp_buytime( 
-	"mp_buytime", 
+ConVar mp_buytime(
+	"mp_buytime",
 	"1.5",
 	FCVAR_REPLICATED,
 	"How many minutes after round start players can buy items for.",
@@ -340,15 +340,15 @@ ConVar cl_autohelp(
 
 	extern ConVar mp_maxrounds;
 
-	ConVar mp_startmoney( 
-		"mp_startmoney", 
-		"800", 
+	ConVar mp_startmoney(
+		"mp_startmoney",
+		"800",
 		FCVAR_REPLICATED | FCVAR_NOTIFY,
 		"amount of money each player gets when they reset",
 		true, 800,
-		true, 16000 );	
+		true, 16000 );
 
-	ConVar mp_roundtime( 
+	ConVar mp_roundtime(
 		"mp_roundtime",
 		"2.5",
 		FCVAR_REPLICATED | FCVAR_NOTIFY,
@@ -357,7 +357,7 @@ ConVar cl_autohelp(
 		true, 9		// max value
 		);
 
-	ConVar mp_freezetime( 
+	ConVar mp_freezetime(
 		"mp_freezetime",
 		"6",
 		FCVAR_REPLICATED | FCVAR_NOTIFY,
@@ -366,27 +366,27 @@ ConVar cl_autohelp(
 		true, 60	// max value
 		);
 
-	ConVar mp_c4timer( 
-		"mp_c4timer", 
-		"45", 
+	ConVar mp_c4timer(
+		"mp_c4timer",
+		"45",
 		FCVAR_REPLICATED | FCVAR_NOTIFY,
 		"how long from when the C4 is armed until it blows",
 		true, 10,	// min value
 		true, 90	// max value
 		);
 
-	ConVar mp_limitteams( 
-		"mp_limitteams", 
-		"2", 
+	ConVar mp_limitteams(
+		"mp_limitteams",
+		"2",
 		FCVAR_REPLICATED | FCVAR_NOTIFY,
 		"Max # of players 1 team can have over another (0 disables check)",
 		true, 0,	// min value
 		true, 30	// max value
 		);
 
-	ConVar mp_tkpunish( 
-		"mp_tkpunish", 
-		"0", 
+	ConVar mp_tkpunish(
+		"mp_tkpunish",
+		"0",
 		FCVAR_REPLICATED,
 		"Will a TK'er be punished in the next round?  {0=no,  1=yes}" );
 
@@ -402,9 +402,9 @@ ConVar cl_autohelp(
 		FCVAR_REPLICATED,
 		"Kick players who team-kill within this many seconds of a round restart." );
 
-	ConVar mp_humanteam( 
-		"mp_humanteam", 
-		"any", 
+	ConVar mp_humanteam(
+		"mp_humanteam",
+		"any",
 		FCVAR_REPLICATED,
 		"Restricts human players to a single team {any, CT, T}" );
 
@@ -427,10 +427,10 @@ ConVar cl_autohelp(
 	}
 
 
-	Vector DropToGround( 
-		CBaseEntity *pMainEnt, 
-		const Vector &vPos, 
-		const Vector &vMins, 
+	Vector DropToGround(
+		CBaseEntity *pMainEnt,
+		const Vector &vPos,
+		const Vector &vMins,
 		const Vector &vMaxs )
 	{
 		trace_t trace;
@@ -457,13 +457,13 @@ ConVar cl_autohelp(
 	{
 		// This function moves the box out in each dimension in each step trying to find empty space like this:
 		//
-		//											  X  
-		//							   X			  X  
+		//											  X
+		//							   X			  X
 		// Step 1:   X     Step 2:    XXX   Step 3: XXXXX
-		//							   X 			  X  
-		//											  X  
+		//							   X 			  X
+		//											  X
 		//
-			 
+
 		Vector mins, maxs;
 		pMainEnt->CollisionProp()->WorldSpaceAABB( &mins, &maxs );
 		mins -= pMainEnt->GetAbsOrigin();
@@ -493,7 +493,7 @@ ConVar cl_autohelp(
 		// Keep branching out until we get too far.
 		int iCurIteration = 0;
 		int nMaxIterations = 15;
-		
+
 		int offset = 0;
 		do
 		{
@@ -505,7 +505,7 @@ ConVar cl_autohelp(
 				{
 					Vector vBase = vOrigin;
 					vBase[iDim] += (iSign*2-1) * flCurOffset;
-				
+
 					if ( UTIL_IsSpaceEmpty( pMainEnt, vBase + vTestMins, vBase + vTestMaxs ) )
 					{
 						// Ensure that there is a clear line of sight from the spawnpoint entity to the actual spawn point.
@@ -517,7 +517,7 @@ ConVar cl_autohelp(
 						{
 							continue;
 						}
-						
+
 						if ( bDropToGround )
 							outPos = DropToGround( pMainEnt, vBase, vTestMins, vTestMaxs );
 						else
@@ -613,10 +613,10 @@ ConVar cl_autohelp(
 		m_iHostagesTouched = 0;
 		m_flNextHostageAnnouncement = 0.0f;
 
-        //=============================================================================
-        // HPE_BEGIN
-        // [dwenger] Reset rescue-related achievement values
-        //=============================================================================
+		//=============================================================================
+		// HPE_BEGIN
+		// [dwenger] Reset rescue-related achievement values
+		//=============================================================================
 
 		// [tj] reset flawless and lossless round related flags
 		m_bNoTerroristsKilled = true;
@@ -630,11 +630,11 @@ ConVar cl_autohelp(
 		m_pFirstBlood = NULL;
 		m_firstBloodTime = 0;
 
-        m_bCanDonateWeapons = true;
+		m_bCanDonateWeapons = true;
 
 		// [dwenger] Reset rescue-related achievement values
-        m_pLastRescuer = NULL;
-        m_iNumRescuers = 0;
+		m_pLastRescuer = NULL;
+		m_iNumRescuers = 0;
 
 		m_hostageWasInjured = false;
 		m_hostageWasKilled = false;
@@ -642,9 +642,9 @@ ConVar cl_autohelp(
 		m_pFunFactManager = new CCSFunFactMgr();
 		m_pFunFactManager->Init();
 
-        //=============================================================================
-        // HPE_END
-        //=============================================================================
+		//=============================================================================
+		// HPE_END
+		//=============================================================================
 
 		m_iHaveEscaped = 0;
 		m_bMapHasEscapeZone = false;
@@ -717,11 +717,11 @@ ConVar cl_autohelp(
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	CCSGameRules::~CCSGameRules()
 	{
-		// Note, don't delete each team since they are in the gEntList and will 
+		// Note, don't delete each team since they are in the gEntList and will
 		// automatically be deleted from there, instead.
 		g_Teams.Purge();
 		if( m_pFunFactManager )
@@ -731,7 +731,7 @@ ConVar cl_autohelp(
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	void CCSGameRules::UpdateClientData( CBasePlayer *player )
 	{
@@ -809,7 +809,7 @@ ConVar cl_autohelp(
 					{
 						teamName = pPlayer->GetTeam()->GetName();
 					}
-					UTIL_LogPrintf("\"%s<%i><%s><%s>\" triggered \"clantag\" (value \"%s\")\n", 
+					UTIL_LogPrintf("\"%s<%i><%s><%s>\" triggered \"clantag\" (value \"%s\")\n",
 						pPlayer->GetPlayerName(),
 						pPlayer->GetUserID(),
 						pPlayer->GetNetworkIDString(),
@@ -835,7 +835,7 @@ ConVar cl_autohelp(
 			return;
 
 		pPlayer->EquipSuit();
-		
+
 		bool addDefault = true;
 
 		CBaseEntity	*pWeaponEntity = NULL;
@@ -1026,13 +1026,13 @@ ConVar cl_autohelp(
 		Vector		vecToTarget;
 		Vector		vecEndPos;
 
-        //=============================================================================
-        // HPE_BEGIN:        
-        //=============================================================================
-         
+		//=============================================================================
+		// HPE_BEGIN:
+		//=============================================================================
+
 		// [tj] The number of enemy players this explosion killed
-        int numberOfEnemyPlayersKilledByThisExplosion = 0;
-		
+		int numberOfEnemyPlayersKilledByThisExplosion = 0;
+
 		// [tj] who we award the achievement to if enough players are killed
 		CCSPlayer* pCSExplosionAttacker = ToCSPlayer(info.GetAttacker());
 
@@ -1040,11 +1040,11 @@ ConVar cl_autohelp(
 		CBaseEntity* pInflictor = info.GetInflictor();
 		bool isGrenade = pInflictor && V_strcmp(pInflictor->GetClassname(), "hegrenade_projectile") == 0;
 		bool isBomb = pInflictor && V_strcmp(pInflictor->GetClassname(), "planted_c4") == 0;
-         
-        //=============================================================================
-        // HPE_END
-        //=============================================================================
-        
+
+		//=============================================================================
+		// HPE_END
+		//=============================================================================
+
 
 		vecEndPos.Init();
 
@@ -1058,7 +1058,7 @@ ConVar cl_autohelp(
 			falloff = 1.0;
 
 		int bInWater = (UTIL_PointContents ( vecSrc ) & MASK_WATER) ? true : false;
-		
+
 		vecSrc.z += 1;// in case grenade is lying on the ground
 
 		// iterate on all entities in the vicinity.
@@ -1066,7 +1066,7 @@ ConVar cl_autohelp(
 		{
 			//=============================================================================
 			// HPE_BEGIN:
-			// [tj] We have to save whether or not the player is killed so we don't give credit 
+			// [tj] We have to save whether or not the player is killed so we don't give credit
 			//		for pre-dead players.
 			//=============================================================================
 			bool wasAliveBeforeExplosion = false;
@@ -1126,7 +1126,7 @@ ConVar cl_autohelp(
 
 					// use a Gaussian function to describe the damage falloff over distance, with flRadius equal to 3 * sigma
 					// this results in the following values:
-					// 
+					//
 					// Range Fraction  Damage
 					//		0.0			100%
 					// 		0.1			96%
@@ -1144,7 +1144,7 @@ ConVar cl_autohelp(
 					float fSigma = flRadius / 3.0f; // flRadius specifies 3rd standard deviation (0.0111 damage at this range)
 					float fGaussianFalloff = exp(-fDist * fDist / (2.0f * fSigma * fSigma));
 					float flAdjustedDamage = info.GetDamage() * fGaussianFalloff * damagePercentage;
-				
+
 					if ( flAdjustedDamage > 0 )
 					{
 						CTakeDamageInfo adjustedInfo = info;
@@ -1185,8 +1185,8 @@ ConVar cl_autohelp(
 						{
 							pEntity->TakeDamage( adjustedInfo );
 						}
-			
-						// Now hit all triggers along the way that respond to damage... 
+
+						// Now hit all triggers along the way that respond to damage...
 						pEntity->TraceAttackToTriggers( adjustedInfo, vecSrc, vecEndPos, dir );
 						//=============================================================================
 						// HPE_BEGIN:
@@ -1202,13 +1202,13 @@ ConVar cl_autohelp(
 					}
 				}
 			}
-            
-            //=============================================================================
-            // HPE_BEGIN:
-            // [tj] Count up victims of area of effect damage for achievement purposes
-            //=============================================================================
-             
-            if (pCSExplosionVictim)
+
+			//=============================================================================
+			// HPE_BEGIN:
+			// [tj] Count up victims of area of effect damage for achievement purposes
+			//=============================================================================
+
+			if (pCSExplosionVictim)
 			{
 				//If the bomb is exploding, set the attacker to the planter (we can't put this in the CTakeDamageInfo, since
 				//players aren't supposed to get credit for bomb kills)
@@ -1222,34 +1222,34 @@ ConVar cl_autohelp(
 				}
 
 				//Count check to make sure we killed an enemy player
-				if(	pCSExplosionAttacker &&                  
-					!pCSExplosionVictim->IsAlive() && 
+				if(	pCSExplosionAttacker &&
+					!pCSExplosionVictim->IsAlive() &&
 					wasAliveBeforeExplosion &&
-					pCSExplosionVictim->GetTeamNumber() != pCSExplosionAttacker->GetTeamNumber())               
+					pCSExplosionVictim->GetTeamNumber() != pCSExplosionAttacker->GetTeamNumber())
 				{
 					numberOfEnemyPlayersKilledByThisExplosion++;
 				}
-			}             
-            //=============================================================================
-            // HPE_END
-            //=============================================================================
-            
+			}
+			//=============================================================================
+			// HPE_END
+			//=============================================================================
+
 		}
 
 		//=============================================================================
 		// HPE_BEGIN:
 		// [tj] //Depending on which type of explosion it was, award the appropriate achievement.
 		//=============================================================================
-		
+
 		if (pCSExplosionAttacker && isGrenade && numberOfEnemyPlayersKilledByThisExplosion >= AchievementConsts::GrenadeMultiKill_MinKills)
 		{
-			pCSExplosionAttacker->AwardAchievement(CSGrenadeMultikill);    
+			pCSExplosionAttacker->AwardAchievement(CSGrenadeMultikill);
 			pCSExplosionAttacker->CheckMaxGrenadeKills(numberOfEnemyPlayersKilledByThisExplosion);
 
 		}
 		if (pCSExplosionAttacker && isBomb && numberOfEnemyPlayersKilledByThisExplosion >= AchievementConsts::BombMultiKill_MinKills)
 		{
-			pCSExplosionAttacker->AwardAchievement(CSBombMultikill);            
+			pCSExplosionAttacker->AwardAchievement(CSBombMultikill);
 		}
 
 		//=============================================================================
@@ -1258,10 +1258,10 @@ ConVar cl_autohelp(
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
-	// Input  : *pVictim - 
-	//			*pKiller - 
-	//			*pInflictor - 
+	// Purpose:
+	// Input  : *pVictim -
+	//			*pKiller -
+	//			*pInflictor -
 	//-----------------------------------------------------------------------------
 	void CCSGameRules::DeathNotice( CBasePlayer *pVictim, const CTakeDamageInfo &info )
 	{
@@ -1280,13 +1280,13 @@ ConVar cl_autohelp(
 		if ( pScorer )	// Is the killer a client?
 		{
 			killer_ID = pScorer->GetUserID();
-		
+
 			if( info.GetDamageType() & DMG_HEADSHOT )
 			{
-				//to enable drawing the headshot icon as well as the weapon icon, 
+				//to enable drawing the headshot icon as well as the weapon icon,
 				bHeadshot = true;
 			}
-			
+
 			if ( pInflictor )
 			{
 				if ( pInflictor == pScorer )
@@ -1321,7 +1321,7 @@ ConVar cl_autohelp(
 		{
 			killer_weapon_name += 5;
 		}
-		else if( strncmp( killer_weapon_name, "hegrenade", 9 ) == 0 )	//"hegrenade_projectile"	
+		else if( strncmp( killer_weapon_name, "hegrenade", 9 ) == 0 )	//"hegrenade_projectile"
 		{
 			killer_weapon_name = "hegrenade";
 		}
@@ -1347,7 +1347,7 @@ ConVar cl_autohelp(
 			{
 				event->SetInt( "revenge", 1 );
 			}
-			
+
 			gameeventmanager->FireEvent( event );
 		}
 	}
@@ -1364,7 +1364,7 @@ ConVar cl_autohelp(
 
 		CCS_GameStats.PlayerKilled( pVictim, info );
 		//=============================================================================
-		// HPE_BEGIN:        
+		// HPE_BEGIN:
 		// [tj] Flag the round as non-lossless for the appropriate team.
 		// [menglish] Set the death flags depending on a nemesis system
 		//=============================================================================
@@ -1372,7 +1372,7 @@ ConVar cl_autohelp(
 		if (pVictim->GetTeamNumber() == TEAM_TERRORIST)
 		{
 			m_bNoTerroristsKilled = false;
-			m_bNoTerroristsDamaged = false;            
+			m_bNoTerroristsDamaged = false;
 		}
 		if (pVictim->GetTeamNumber() == TEAM_CT)
 		{
@@ -1380,7 +1380,7 @@ ConVar cl_autohelp(
 			m_bNoCTsDamaged = false;
 		}
 
-        m_bCanDonateWeapons = false;
+		m_bCanDonateWeapons = false;
 
 		if ( m_pFirstKill == NULL && pCSScorer != pVictim )
 		{
@@ -1391,11 +1391,11 @@ ConVar cl_autohelp(
 		// determine if this kill affected a nemesis relationship
 		int iDeathFlags = 0;
 		if ( pScorer )
-		{	
-            CCS_GameStats.CalculateOverkill( pCSScorer, pCSVictim);
-			CCS_GameStats.CalcDominationAndRevenge( pCSScorer, pCSVictim, &iDeathFlags );            
+		{
+			CCS_GameStats.CalculateOverkill( pCSScorer, pCSVictim);
+			CCS_GameStats.CalcDominationAndRevenge( pCSScorer, pCSVictim, &iDeathFlags );
 		}
-		pCSVictim->SetDeathFlags( iDeathFlags );	
+		pCSVictim->SetDeathFlags( iDeathFlags );
 		//=============================================================================
 		// HPE_END
 		//=============================================================================
@@ -1467,7 +1467,7 @@ ConVar cl_autohelp(
 					pCSScorer->HintMessage( "#Hint_reward_for_killing_vip", true );
 					pCSScorer->AddAccount( 2500 );
 				}
-				else			
+				else
 				{
 					pCSScorer->AddAccount( 300 );
 				}
@@ -1517,8 +1517,8 @@ ConVar cl_autohelp(
 	//-----------------------------------------------------------------------------
 	// Purpose: When gaining new technologies in TF, prevent auto switching if we
 	//  receive a weapon during the switch
-	// Input  : *pPlayer - 
-	//			*pWeapon - 
+	// Input  : *pPlayer -
+	//			*pWeapon -
 	// Output : Returns true on success, false on failure.
 	//-----------------------------------------------------------------------------
 	bool CCSGameRules::FShouldSwitchWeapon( CBasePlayer *pPlayer, CBaseCombatWeapon *pWeapon )
@@ -1552,8 +1552,8 @@ ConVar cl_autohelp(
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
-	// Input  : allow - 
+	// Purpose:
+	// Input  : allow -
 	//-----------------------------------------------------------------------------
 	void CCSGameRules::SetAllowWeaponSwitch( bool allow )
 	{
@@ -1561,7 +1561,7 @@ ConVar cl_autohelp(
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	// Output : Returns true on success, false on failure.
 	//-----------------------------------------------------------------------------
 	bool CCSGameRules::GetAllowWeaponSwitch()
@@ -1570,8 +1570,8 @@ ConVar cl_autohelp(
 	}
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
-	// Input  : *pPlayer - 
+	// Purpose:
+	// Input  : *pPlayer -
 	// Output : const char
 	//-----------------------------------------------------------------------------
 	const char *CCSGameRules::SetDefaultPlayerTeam( CBasePlayer *pPlayer )
@@ -1598,7 +1598,7 @@ ConVar cl_autohelp(
 		// Figure out from the entities in the map what kind of map this is (bomb run, prison escape, etc).
 		CheckMapConditions();
 	}
-	
+
 	INetworkStringTable *g_StringTableBlackMarket = NULL;
 
 	void CCSGameRules::CreateCustomNetworkStringTables( void )
@@ -1635,34 +1635,34 @@ ConVar cl_autohelp(
 				event->SetInt( "userid", pPlayer->GetUserID() );
 				event->SetFloat( "damage", fallDamage );
 				event->SetInt( "priority", 4 );	// HLTV event priority, not transmitted
-				
+
 				gameeventmanager->FireEvent( event );
 			}
 		}
 
 		return fallDamage;
-	} 
+	}
 
-	
+
 	void CCSGameRules::ClientDisconnected( edict_t *pClient )
 	{
 		BaseClass::ClientDisconnected( pClient );
 
-        //=============================================================================
-        // HPE_BEGIN:
-        // [tj] Clear domination data when a player disconnects
-        //=============================================================================
-         
-        CCSPlayer *pPlayer = ToCSPlayer( GetContainingEntity( pClient ) );
-        if ( pPlayer )
-        {
-            pPlayer->RemoveNemesisRelationships();
-        }
-         
-        //=============================================================================
-        // HPE_END
-        //=============================================================================
-        
+		//=============================================================================
+		// HPE_BEGIN:
+		// [tj] Clear domination data when a player disconnects
+		//=============================================================================
+
+		CCSPlayer *pPlayer = ToCSPlayer( GetContainingEntity( pClient ) );
+		if ( pPlayer )
+		{
+			pPlayer->RemoveNemesisRelationships();
+		}
+
+		//=============================================================================
+		// HPE_END
+		//=============================================================================
+
 
 		CheckWinConditions();
 	}
@@ -1682,12 +1682,12 @@ ConVar cl_autohelp(
 		BaseClass::LevelShutdown();
 	}
 
-	
+
 	//---------------------------------------------------------------------------------------------------
 	/**
-	 * Check if the scenario has been won/lost.
-	 * Return true if the scenario is over, false if the scenario is still in progress
-	 */
+	* Check if the scenario has been won/lost.
+	* Return true if the scenario is over, false if the scenario is still in progress
+	*/
 	bool CCSGameRules::CheckWinConditions( void )
 	{
 		if ( mp_ignore_round_win_conditions.GetBool() )
@@ -1737,7 +1737,7 @@ ConVar cl_autohelp(
 		if ( TeamExterminationCheck( NumAliveTerrorist, NumAliveCT, NumDeadTerrorist, NumDeadCT, bNeededPlayers ) )
 			return true;
 
-		
+
 		/******************************** HOSTAGE RESCUE CHECK ******************************************************/
 		if ( HostageRescueRoundEndCheck( bNeededPlayers ) )
 			return true;
@@ -1915,7 +1915,7 @@ ConVar cl_autohelp(
 			{
 				BroadcastSound( "Event.CTWin" );
 				m_iAccountCT += (1 - flEscapeRatio) * 3500; // CTs are rewarded based on how many terrorists have escaped...
-				
+
 				if ( !bNeededPlayers )
 				{
 					m_iNumCTWins++;
@@ -1931,7 +1931,7 @@ ConVar cl_autohelp(
 			{
 				BroadcastSound( "Event.CTWin" );
 				m_iAccountCT += (1 - flEscapeRatio) * 3250; // CTs are rewarded based on how many terrorists have escaped...
-				
+
 				if ( !bNeededPlayers )
 				{
 					m_iNumCTWins++;
@@ -1942,7 +1942,7 @@ ConVar cl_autohelp(
 				TerminateRound( mp_round_restart_delay.GetFloat(), WINNER_CT );
 				return;
 			}
-			// else return;    
+			// else return;
 		}
 		*/
 
@@ -1993,9 +1993,9 @@ ConVar cl_autohelp(
 			// HPE_BEGIN:
 			// [menglish] If the VIP has escaped award him an MVP
 			//=============================================================================
-			 
+
 			m_pVIP->IncrementNumMVPs( CSMVP_UNDEFINED );
-			 
+
 			//=============================================================================
 			// HPE_END
 			//=============================================================================
@@ -2083,7 +2083,7 @@ ConVar cl_autohelp(
 			if ( NumAliveTerrorist == 0 && NumDeadTerrorist != 0 && m_iNumSpawnableCT > 0 )
 			{
 				bool nowin = false;
-					
+
 				for ( int iGrenade=0; iGrenade < g_PlantedC4s.Count(); iGrenade++ )
 				{
 					CPlantedC4 *pC4 = g_PlantedC4s[iGrenade];
@@ -2110,7 +2110,7 @@ ConVar cl_autohelp(
 					return true;
 				}
 			}
-		
+
 			// Terrorists WON
 			if ( NumAliveCT == 0 && NumDeadCT != 0 && m_iNumSpawnableTerrorist > 0 )
 			{
@@ -2183,7 +2183,7 @@ ConVar cl_autohelp(
 				if (	!(pPlayer->pev->flags & FL_DORMANT)	)
 				{
 					player = GetClassPtr((CBasePlayer *)pPlayer->pev);
-					
+
 					if (	(player->m_iTeam == CT) && (iCount == m_iLastPick)	)
 					{
 						if (	(player == m_pVIP) && (pLastPlayer != NULL)	)
@@ -2218,7 +2218,7 @@ ConVar cl_autohelp(
 				if ( pPlayer->pev->flags != FL_DORMANT	)
 				{
 					player = GetClassPtr((CBasePlayer *)pPlayer->pev);
-		
+
 					if ( player->m_iTeam == CT )
 					{
 						player->MakeVIP();
@@ -2250,7 +2250,7 @@ ConVar cl_autohelp(
 			{
 				g_pReplay->SV_EndRecordingSession();
 			}
-			
+
 			int nActivePlayerCount = m_iNumTerrorist + m_iNumCT;
 			if ( nActivePlayerCount && g_pReplay->SV_ShouldBeginRecording( false ) )
 			{
@@ -2263,7 +2263,7 @@ ConVar cl_autohelp(
 		// HPE_BEGIN:
 		// [tj] Notify players that the round is about to be reset
 		//=============================================================================
-        for ( int clientIndex = 1; clientIndex <= gpGlobals->maxClients; clientIndex++ )
+		for ( int clientIndex = 1; clientIndex <= gpGlobals->maxClients; clientIndex++ )
 		{
 			CCSPlayer *pPlayer = (CCSPlayer*) UTIL_PlayerByIndex( clientIndex );
 			if(pPlayer)
@@ -2274,7 +2274,7 @@ ConVar cl_autohelp(
 
 		//=============================================================================
 		// HPE_END
-		//=============================================================================    
+		//=============================================================================
 
 		if ( !IsFinite( gpGlobals->curtime ) )
 		{
@@ -2285,7 +2285,7 @@ ConVar cl_autohelp(
 		int i;
 
 		m_iTotalRoundsPlayed++;
-		
+
 		//ClearBodyQue();
 
 		// Hardlock the player accelaration to 5.0
@@ -2298,10 +2298,10 @@ ConVar cl_autohelp(
 		// Tabulate the number of players on each team.
 		int NumDeadCT, NumDeadTerrorist, NumAliveTerrorist, NumAliveCT;
 		InitializePlayerCounts( NumAliveTerrorist, NumAliveCT, NumDeadTerrorist, NumDeadCT );
-		
+
 		m_bBombDropped = false;
 		m_bBombPlanted = false;
-		
+
 		if ( GetHumanTeam() != TEAM_UNASSIGNED )
 		{
 			MoveHumansToHumanTeam();
@@ -2386,44 +2386,44 @@ ConVar cl_autohelp(
 		{
 			switch ( g_pMapInfo->m_iBuyingStatus )
 			{
-				case 0: 
-					m_bCTCantBuy = false; 
-					m_bTCantBuy = false; 
+				case 0:
+					m_bCTCantBuy = false;
+					m_bTCantBuy = false;
 					Msg( "EVERYONE CAN BUY!\n" );
 					break;
-				
-				case 1: 
-					m_bCTCantBuy = false; 
-					m_bTCantBuy = true; 
+
+				case 1:
+					m_bCTCantBuy = false;
+					m_bTCantBuy = true;
 					Msg( "Only CT's can buy!!\n" );
 					break;
 
-				case 2: 
-					m_bCTCantBuy = true; 
-					m_bTCantBuy = false; 
+				case 2:
+					m_bCTCantBuy = true;
+					m_bTCantBuy = false;
 					Msg( "Only T's can buy!!\n" );
 					break;
-				
-				case 3: 
-					m_bCTCantBuy = true; 
-					m_bTCantBuy = true; 
+
+				case 3:
+					m_bCTCantBuy = true;
+					m_bTCantBuy = true;
 					Msg( "No one can buy!!\n" );
 					break;
 
-				default: 
-					m_bCTCantBuy = false; 
-					m_bTCantBuy = false; 
+				default:
+					m_bCTCantBuy = false;
+					m_bTCantBuy = false;
 					break;
 			}
 		}
 		else
 		{
 			// by default everyone can buy
-			m_bCTCantBuy = false; 
-			m_bTCantBuy = false; 
+			m_bCTCantBuy = false;
+			m_bTCantBuy = false;
 		}
-		
-		
+
+
 		// Check to see if this map has a bomb target in it
 
 		if ( gEntList.FindEntityByClassname( NULL, "func_bomb_target" ) )
@@ -2452,7 +2452,7 @@ ConVar cl_autohelp(
 
 		// See if the map has func_buyzone entities
 		// Used by CBasePlayer::HandleSignals() to support maps without these entities
-		
+
 		if ( gEntList.FindEntityByClassname( NULL, "func_buyzone" ) )
 			m_bMapHasBuyZone = true;
 		else
@@ -2486,7 +2486,7 @@ ConVar cl_autohelp(
 		else
 			m_iMapHasVIPSafetyZone = 2;
 
-		// Update accounts based on number of hostages remaining.. 
+		// Update accounts based on number of hostages remaining..
 		int iRescuedHostageBonus = 0;
 
 		for ( int iHostage=0; iHostage < g_Hostages.Count(); iHostage++ )
@@ -2497,7 +2497,7 @@ ConVar cl_autohelp(
 			{
 				iRescuedHostageBonus += 150;
 			}
-			
+
 			if ( iRescuedHostageBonus >= 2000 )
 				break;
 		}
@@ -2541,7 +2541,7 @@ ConVar cl_autohelp(
 			if (m_bMapHasEscapeZone == false)	// only give them the bonus if this isn't an escape map
 				m_iAccountTerrorist += m_iLoserBonus;
 		}
-		
+
 
 		//Update CT account based on number of hostages rescued
 		m_iAccountCT += m_iHostagesRescued * 750;
@@ -2550,7 +2550,7 @@ ConVar cl_autohelp(
 		// Update individual players accounts and respawn players
 
 		//**********new code by SupraFiend
-		//##########code changed by MartinO 
+		//##########code changed by MartinO
 		//the round time stamp must be set before players are spawned
 		m_fRoundStartTime = gpGlobals->curtime + m_iFreezeTime;
 
@@ -2559,14 +2559,14 @@ ConVar cl_autohelp(
 			Warning( "Trying to set a NaN round start time\n" );
 			m_fRoundStartTime.GetForModify() = 0.0f;
 		}
-		
+
 		//Adrian - No cash for anyone at first rounds! ( well, only the default. )
 		if ( m_bCompleteReset )
 		{
 			m_iAccountTerrorist = m_iAccountCT = 0; //No extra cash!.
 
 			//We are starting fresh. So it's like no one has ever won or lost.
-			m_iNumTerroristWins				= 0; 
+			m_iNumTerroristWins				= 0;
 			m_iNumCTWins					= 0;
 			m_iNumConsecutiveTerroristLoses	= 0;
 			m_iNumConsecutiveCTLoses		= 0;
@@ -2582,7 +2582,7 @@ ConVar cl_autohelp(
 
 			pPlayer->m_iNumSpawns	= 0;
 			pPlayer->m_bTeamChanged	= false;
-				
+
 			if ( pPlayer->GetTeamNumber() == TEAM_CT )
 			{
 				if (pPlayer->DoesPlayerGetRoundStartMoney())
@@ -2605,22 +2605,22 @@ ConVar cl_autohelp(
 				pPlayer->AddSolidFlags( FSOLID_NOT_SOLID );
 			}
 		}
-        
-        //=============================================================================
-        // HPE_BEGIN:
-        // [tj] Keep track of number of players per side and if they have the same uniform
-        //=============================================================================
- 
-        int terroristUniform = -1;
-        bool allTerroristsWearingSameUniform = true;
-        int numberOfTerrorists = 0;
-        int ctUniform = -1;
-        bool allCtsWearingSameUniform = true;
-        int numberOfCts = 0;
- 
-        //=============================================================================
-        // HPE_END
-        //=============================================================================
+
+		//=============================================================================
+		// HPE_BEGIN:
+		// [tj] Keep track of number of players per side and if they have the same uniform
+		//=============================================================================
+
+		int terroristUniform = -1;
+		bool allTerroristsWearingSameUniform = true;
+		int numberOfTerrorists = 0;
+		int ctUniform = -1;
+		bool allCtsWearingSameUniform = true;
+		int numberOfCts = 0;
+
+		//=============================================================================
+		// HPE_END
+		//=============================================================================
 
 		// know respawn all players
 		for ( i = 1; i <= gpGlobals->maxClients; i++ )
@@ -2632,49 +2632,49 @@ ConVar cl_autohelp(
 
 			if ( pPlayer->GetTeamNumber() == TEAM_CT && pPlayer->PlayerClass() >= FIRST_CT_CLASS && pPlayer->PlayerClass() <= LAST_CT_CLASS )
 			{
-                //=============================================================================
-                // HPE_BEGIN:
-                // [tj] Increment CT count and check CT uniforms.
-                //=============================================================================
-                 
-                numberOfCts++;
-                if (ctUniform == -1)
-                {
-                    ctUniform = pPlayer->PlayerClass();
-                }
-                else if (pPlayer->PlayerClass() != ctUniform)
-                {
-                    allCtsWearingSameUniform = false;
-                }
-                 
-                //=============================================================================
-                // HPE_END
-                //=============================================================================
-                
+				//=============================================================================
+				// HPE_BEGIN:
+				// [tj] Increment CT count and check CT uniforms.
+				//=============================================================================
+
+				numberOfCts++;
+				if (ctUniform == -1)
+				{
+					ctUniform = pPlayer->PlayerClass();
+				}
+				else if (pPlayer->PlayerClass() != ctUniform)
+				{
+					allCtsWearingSameUniform = false;
+				}
+
+				//=============================================================================
+				// HPE_END
+				//=============================================================================
+
 				pPlayer->RoundRespawn();
 			}
 
 			if ( pPlayer->GetTeamNumber() == TEAM_TERRORIST && pPlayer->PlayerClass() >= FIRST_T_CLASS && pPlayer->PlayerClass() <= LAST_T_CLASS )
 			{
-                //=============================================================================
-                // HPE_BEGIN:
-                // [tj] Increment terrorist count and check terrorist uniforms
-                //=============================================================================
-                 
-                numberOfTerrorists++;
-                if (terroristUniform == -1)
-                {
-                    terroristUniform = pPlayer->PlayerClass();
-                }
-                else if (pPlayer->PlayerClass() != terroristUniform)
-                {
-                    allTerroristsWearingSameUniform = false;
-                }
-                 
-                //=============================================================================
-                // HPE_END
-                //=============================================================================
-                
+				//=============================================================================
+				// HPE_BEGIN:
+				// [tj] Increment terrorist count and check terrorist uniforms
+				//=============================================================================
+
+				numberOfTerrorists++;
+				if (terroristUniform == -1)
+				{
+					terroristUniform = pPlayer->PlayerClass();
+				}
+				else if (pPlayer->PlayerClass() != terroristUniform)
+				{
+					allTerroristsWearingSameUniform = false;
+				}
+
+				//=============================================================================
+				// HPE_END
+				//=============================================================================
+
 				pPlayer->RoundRespawn();
 			}
 			else
@@ -2688,28 +2688,28 @@ ConVar cl_autohelp(
 			}
 		}
 
-        //=============================================================================
-        // HPE_BEGIN:
-        //=============================================================================
+		//=============================================================================
+		// HPE_BEGIN:
+		//=============================================================================
 
-        // [tj] Award same uniform achievement for qualifying teams
-        for ( i = 1; i <= gpGlobals->maxClients; i++ )
-        {
-            CCSPlayer *pPlayer = (CCSPlayer*) UTIL_PlayerByIndex( i );
+		// [tj] Award same uniform achievement for qualifying teams
+		for ( i = 1; i <= gpGlobals->maxClients; i++ )
+		{
+			CCSPlayer *pPlayer = (CCSPlayer*) UTIL_PlayerByIndex( i );
 
-            if ( !pPlayer )
-                continue;
+			if ( !pPlayer )
+				continue;
 
-            if ( pPlayer->GetTeamNumber() == TEAM_CT && allCtsWearingSameUniform && numberOfCts >= AchievementConsts::SameUniform_MinPlayers)
-            {
-                pPlayer->AwardAchievement(CSSameUniform);
-            }
+			if ( pPlayer->GetTeamNumber() == TEAM_CT && allCtsWearingSameUniform && numberOfCts >= AchievementConsts::SameUniform_MinPlayers)
+			{
+				pPlayer->AwardAchievement(CSSameUniform);
+			}
 
-            if ( pPlayer->GetTeamNumber() == TEAM_TERRORIST && allTerroristsWearingSameUniform && numberOfTerrorists >= AchievementConsts::SameUniform_MinPlayers)
-            {
-                pPlayer->AwardAchievement(CSSameUniform);
-            }
-        }
+			if ( pPlayer->GetTeamNumber() == TEAM_TERRORIST && allTerroristsWearingSameUniform && numberOfTerrorists >= AchievementConsts::SameUniform_MinPlayers)
+			{
+				pPlayer->AwardAchievement(CSSameUniform);
+			}
+		}
 
 		// [menglish] reset per-round achievement variables for each player
 		for ( i = 1; i <= gpGlobals->maxClients; i++ )
@@ -2768,10 +2768,10 @@ ConVar cl_autohelp(
 		m_iHostagesRescued = 0;
 		m_iHostagesTouched = 0;
 
-        //=============================================================================
-        // HPE_BEGIN
-        // [dwenger] Reset rescue-related achievement values
-        //=============================================================================
+		//=============================================================================
+		// HPE_BEGIN
+		// [dwenger] Reset rescue-related achievement values
+		//=============================================================================
 
 		// [tj] reset flawless and lossless round related flags
 		m_bNoTerroristsKilled = true;
@@ -2781,20 +2781,20 @@ ConVar cl_autohelp(
 		m_pFirstKill = NULL;
 		m_pFirstBlood = NULL;
 
-        m_bCanDonateWeapons = true;
+		m_bCanDonateWeapons = true;
 
 		// [dwenger] Reset rescue-related achievement values
-        m_iHostagesRemaining = 0;
-        m_pLastRescuer = NULL;
+		m_iHostagesRemaining = 0;
+		m_pLastRescuer = NULL;
 
 		m_hostageWasInjured = false;
 		m_hostageWasKilled = false;
 
-        //=============================================================================
-        // HPE_END
-        //=============================================================================
+		//=============================================================================
+		// HPE_END
+		//=============================================================================
 
-        m_iNumRescuers = 0;
+		m_iNumRescuers = 0;
 		m_iRoundWinStatus = WINNER_NONE;
 		m_bTargetBombed = m_bBombDefused = false;
 		m_bCompleteReset = false;
@@ -2809,7 +2809,7 @@ ConVar cl_autohelp(
 			event->SetInt("timelimit", m_iRoundTime );
 			event->SetInt("fraglimit", 0 );
 			event->SetInt( "priority", 6 ); // HLTV event priority, not transmitted
-		
+
 			if ( m_bMapHasRescueZone )
 			{
 				event->SetString("objective","HOSTAGE RESCUE");
@@ -2833,20 +2833,20 @@ ConVar cl_autohelp(
 
 			gameeventmanager->FireEvent( event );
 		}
-	
+
 		UploadGameStats();
 
 		//=============================================================================
 		// HPE_BEGIN:
-		// [pfreese] I commented out this call to CreateWeaponManager, as the 
+		// [pfreese] I commented out this call to CreateWeaponManager, as the
 		// CGameWeaponManager object doesn't appear to be actually used by the CSS
-		// code, and in any case, the weapon manager does not support wildcards in 
-		// entity names (as seemingly indicated) below. When the manager fails to 
+		// code, and in any case, the weapon manager does not support wildcards in
+		// entity names (as seemingly indicated) below. When the manager fails to
 		// create its factory, it removes itself in any case.
 		//=============================================================================
 
 		// CreateWeaponManager( "weapon_*", gpGlobals->maxClients * 2 );
-		
+
 		//=============================================================================
 		// HPE_END
 		//=============================================================================
@@ -2909,12 +2909,12 @@ ConVar cl_autohelp(
 
 			//pPlayer->SetBombIcon();
 			//pPlayer->pev->body = 1;
-			
+
 			pPlayer->m_iDisplayHistoryBits |= DHF_BOMB_RETRIEVED;
 			pPlayer->HintMessage( "#Hint_you_have_the_bomb", false, true );
 
 			// Log this information
-			//UTIL_LogPrintf("\"%s<%i><%s><TERRORIST>\" triggered \"Spawned_With_The_Bomb\"\n", 
+			//UTIL_LogPrintf("\"%s<%i><%s><TERRORIST>\" triggered \"Spawned_With_The_Bomb\"\n",
 			//	STRING( pPlayer->GetPlayerName() ),
 			//	GETPLAYERUSERID( pPlayer->edict() ),
 			//	GETPLAYERAUTHID( pPlayer->edict() ) );
@@ -2955,19 +2955,19 @@ ConVar cl_autohelp(
 			return;
 		}
 
-		
+
 		// Check for the end of the round.
 		if ( IsFreezePeriod() )
 		{
 			CheckFreezePeriodExpired();
 		}
-		else 
+		else
 		{
 			CheckRoundTimeExpired();
 		}
 
 		CheckLevelInitialized();
-		
+
 		if ( m_flRestartRoundTime > 0.0f && m_flRestartRoundTime <= gpGlobals->curtime )
 		{
 			bool botSpeaking = false;
@@ -2979,7 +2979,7 @@ ConVar cl_autohelp(
 
 				if (!player->IsBot())
 					continue;
-				
+
 				CCSBot *bot = dynamic_cast< CCSBot * >(player);
 				if ( !bot )
 					continue;
@@ -3003,7 +3003,7 @@ ConVar cl_autohelp(
 				RestartRound();
 			}
 		}
-		
+
 		if ( gpGlobals->curtime > m_tmNextPeriodicThink )
 		{
 			CheckRestartRound();
@@ -3064,7 +3064,7 @@ ConVar cl_autohelp(
 				{
 					teamName = pPlayer->GetTeam()->GetName();
 				}
-				UTIL_LogPrintf("\"%s<%i><%s><%s>\" triggered \"Intermission_Kill_Limit\"\n", 
+				UTIL_LogPrintf("\"%s<%i><%s><%s>\" triggered \"Intermission_Kill_Limit\"\n",
 					pPlayer->GetPlayerName(),
 					pPlayer->GetUserID(),
 					pPlayer->GetNetworkIDString(),
@@ -3089,7 +3089,7 @@ ConVar cl_autohelp(
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -3136,17 +3136,17 @@ ConVar cl_autohelp(
 
 		char CT_sentence[40];
 		char T_sentence[40];
-		
+
 		switch ( random->RandomInt( 0, 3 ) )
 		{
 		case 0:
-			Q_strncpy(CT_sentence,"radio.moveout", sizeof( CT_sentence ) ); 
-			Q_strncpy(T_sentence ,"radio.moveout", sizeof( T_sentence ) ); 
+			Q_strncpy(CT_sentence,"radio.moveout", sizeof( CT_sentence ) );
+			Q_strncpy(T_sentence ,"radio.moveout", sizeof( T_sentence ) );
 			break;
 
 		case 1:
-			Q_strncpy(CT_sentence, "radio.letsgo", sizeof( CT_sentence ) ); 
-			Q_strncpy(T_sentence , "radio.letsgo", sizeof( T_sentence ) ); 
+			Q_strncpy(CT_sentence, "radio.letsgo", sizeof( CT_sentence ) );
+			Q_strncpy(T_sentence , "radio.letsgo", sizeof( T_sentence ) );
 			break;
 
 		case 2:
@@ -3204,7 +3204,7 @@ ConVar cl_autohelp(
 					}
 
 				}
-				
+
 				//pPlayer->SyncRoundTimer();
 			}
 		}
@@ -3216,7 +3216,7 @@ ConVar cl_autohelp(
 		if ( mp_ignore_round_win_conditions.GetBool() )
 			return;
 
-		if ( GetRoundRemainingTime() > 0 || m_iRoundWinStatus != WINNER_NONE ) 
+		if ( GetRoundRemainingTime() > 0 || m_iRoundWinStatus != WINNER_NONE )
 			return; //We haven't completed other objectives, so go for this!.
 
 		if( !m_bFirstConnected )
@@ -3231,7 +3231,7 @@ ConVar cl_autohelp(
 			if( !m_bBombPlanted )
 			{
 				m_iAccountCT += 3250;
-				
+
 				m_iNumCTWins++;
 				TerminateRound( mp_round_restart_delay.GetFloat(), Target_Saved );
 				UpdateTeamScores();
@@ -3240,8 +3240,8 @@ ConVar cl_autohelp(
 		}
 		else if ( m_bMapHasRescueZone )
 		{
-			m_iAccountTerrorist += 3250; 
-			
+			m_iAccountTerrorist += 3250;
+
 			m_iNumTerroristWins++;
 			TerminateRound( mp_round_restart_delay.GetFloat(), Hostages_Not_Rescued );
 			UpdateTeamScores();
@@ -3298,7 +3298,7 @@ ConVar cl_autohelp(
 						else
 						{
 							winEvent->SetFloat( "t_kd", kills / deaths );
-						}										
+						}
 						winEvent->SetInt( "t_objectives_done", CCS_GameStats.GetTeamStats(teamIndex)[CSSTAT_OBJECTIVES_COMPLETED] );
 						winEvent->SetInt( "t_money_earned", CCS_GameStats.GetTeamStats(teamIndex)[CSSTAT_MONEY_EARNED] );
 						break;
@@ -3373,7 +3373,7 @@ ConVar cl_autohelp(
 		if ( event2 )
 		{
 			CCSPlayer *pPlayer = ToCSPlayer( UTIL_PlayerByIndex(1) );
-			
+
 			// pCappingPlayers is a null terminated list of player indeces
 			event2->SetInt("userid", pPlayer->GetUserID() );
 			event2->SetInt("attacker", pPlayer->GetUserID() );
@@ -3575,8 +3575,8 @@ ConVar cl_autohelp(
 			// Count the number of spawn points for each team
 			// This determines the maximum number of players allowed on each
 
-			CBaseEntity* ent = NULL; 
-			
+			CBaseEntity* ent = NULL;
+
 			m_iSpawnPointCount_Terrorist	= 0;
 			m_iSpawnPointCount_CT			= 0;
 
@@ -3595,7 +3595,7 @@ ConVar cl_autohelp(
 
 			while ( ( ent = gEntList.FindEntityByClassname( ent, "info_player_counterterrorist" ) ) != NULL )
 			{
-				if ( IsSpawnPointValid( ent, NULL ) ) 
+				if ( IsSpawnPointValid( ent, NULL ) )
 				{
 					m_iSpawnPointCount_CT++;
 				}
@@ -3617,7 +3617,7 @@ ConVar cl_autohelp(
 	void CCSGameRules::ShowSpawnPoints( void )
 	{
 		CBaseEntity* ent = NULL;
-		
+
 		while ( ( ent = gEntList.FindEntityByClassname( ent, "info_player_terrorist" ) ) != NULL )
 		{
 			if ( IsSpawnPointValid( ent, NULL ) )
@@ -3632,7 +3632,7 @@ ConVar cl_autohelp(
 
 		while ( ( ent = gEntList.FindEntityByClassname( ent, "info_player_counterterrorist" ) ) != NULL )
 		{
-			if ( IsSpawnPointValid( ent, NULL ) ) 
+			if ( IsSpawnPointValid( ent, NULL ) )
 			{
 				NDebugOverlay::Box( ent->GetAbsOrigin(), VEC_HULL_MIN, VEC_HULL_MAX, 0, 255, 0, 200, 600 );
 			}
@@ -3752,7 +3752,7 @@ ConVar cl_autohelp(
 		if (m_iMapHasVIPSafetyZone == 1) // The ratio for teams is different for Assasination maps
 		{
 			int iDesiredNumCT, iDesiredNumTerrorist;
-			
+
 			if ( (m_iNumCT + m_iNumTerrorist)%2 != 0)	// uneven number of players
 				iDesiredNumCT			= (int)((m_iNumCT + m_iNumTerrorist) * 0.55) + 1;
 			else
@@ -3778,7 +3778,7 @@ ConVar cl_autohelp(
 			{
 				iTeamToSwap = TEAM_CT;
 				iNumToSwap = (m_iNumCT - m_iNumTerrorist)/2;
-				
+
 			}
 			else if (m_iNumTerrorist > m_iNumCT)
 			{
@@ -3840,10 +3840,10 @@ ConVar cl_autohelp(
 					continue; // don't swap bots - the bot system will handle that
 
 				if ( pPlayer &&
-					 ( m_pVIP != pPlayer ) && 
-					 ( pPlayer->GetTeamNumber() == iTeamToSwap ) && 
-					 ( engine->GetPlayerUserId( pPlayer->edict() ) > iHighestUserID ) &&
-					 ( pPlayer->State_Get() != STATE_PICKINGCLASS ) )
+					( m_pVIP != pPlayer ) &&
+					( pPlayer->GetTeamNumber() == iTeamToSwap ) &&
+					( engine->GetPlayerUserId( pPlayer->edict() ) > iHighestUserID ) &&
+					( pPlayer->State_Get() != STATE_PICKINGCLASS ) )
 					{
 						iHighestUserID = engine->GetPlayerUserId( pPlayer->edict() );
 						pPlayerToSwap = pPlayer;
@@ -3881,7 +3881,7 @@ ConVar cl_autohelp(
 
 		return false;
 	}
-	
+
 	int CCSGameRules::GetHumanTeam()
 	{
 		if ( FStrEq( "CT", mp_humanteam.GetString() ) )
@@ -3892,7 +3892,7 @@ ConVar cl_autohelp(
 		{
 			return TEAM_TERRORIST;
 		}
-		
+
 		return TEAM_UNASSIGNED;
 	}
 
@@ -4078,13 +4078,13 @@ ConVar cl_autohelp(
 		variant_t emptyVariant;
 		int iWinnerTeam = WINNER_NONE;
 		const char *text = "UNKNOWN";
-				
+
 		// UTIL_ClientPrintAll( HUD_PRINTCENTER, sentence );
 
 		switch ( iReason )
 		{
 // Terror wins:
-			case Target_Bombed:	
+			case Target_Bombed:
 				text = "#Target_Bombed";
 				iWinnerTeam = WINNER_TER;
 				break;
@@ -4189,7 +4189,7 @@ ConVar cl_autohelp(
 		}
 
 		//=============================================================================
-		// HPE_BEGIN:		
+		// HPE_BEGIN:
 		//=============================================================================
 
 		// [tj] Check for any non-player-specific achievements.
@@ -4274,7 +4274,7 @@ ConVar cl_autohelp(
 	}
 
 	//=============================================================================
-	// HPE_BEGIN:	
+	// HPE_BEGIN:
 	//=============================================================================
 
 	// Helper to determine if all players on a team are playing for the same clan
@@ -4311,10 +4311,10 @@ ConVar cl_autohelp(
 			int losingTeamId = (iWinnerTeam == TEAM_CT) ? TEAM_TERRORIST : TEAM_CT;
 			CTeam* losingTeam = GetGlobalTeam(losingTeamId);
 
-			
+
 			//Check for players we should ignore when checking team size.
 			int ignoreCount = 0;
-			
+
 			for ( int i = 1; i <= gpGlobals->maxClients; i++ )
 			{
 				CCSPlayer* pPlayer = (CCSPlayer*)UTIL_PlayerByIndex( i );
@@ -4333,7 +4333,7 @@ ConVar cl_autohelp(
 
 
 			// [tj] Check extermination with no losses achievement
-			if ( ( ( iReason == CTs_Win && m_bNoCTsKilled ) || ( iReason == Terrorists_Win && m_bNoTerroristsKilled ) ) 
+			if ( ( ( iReason == CTs_Win && m_bNoCTsKilled ) || ( iReason == Terrorists_Win && m_bNoTerroristsKilled ) )
 				&& losingTeam && losingTeam->GetNumPlayers() - ignoreCount >= AchievementConsts::DefaultMinOpponentsForAchievement)
 			{
 				CTeam *pTeam = GetGlobalTeam( iWinnerTeam );
@@ -4386,8 +4386,8 @@ ConVar cl_autohelp(
 			// Check the clan match achievement
 			CTeam *pWinningTeam = GetGlobalTeam( iWinnerTeam );
 			if ( pWinningTeam && pWinningTeam->GetNumPlayers() >= AchievementConsts::DefaultMinOpponentsForAchievement &&
-				 losingTeam && losingTeam->GetNumPlayers() - ignoreCount >= AchievementConsts::DefaultMinOpponentsForAchievement &&
-				 IsClanTeam( pWinningTeam ) && IsClanTeam( losingTeam ) )
+				losingTeam && losingTeam->GetNumPlayers() - ignoreCount >= AchievementConsts::DefaultMinOpponentsForAchievement &&
+				IsClanTeam( pWinningTeam ) && IsClanTeam( losingTeam ) )
 			{
 				for ( int iPlayer=0; iPlayer < pWinningTeam->GetNumPlayers(); iPlayer++ )
 				{
@@ -4436,7 +4436,7 @@ ConVar cl_autohelp(
 						else
 						{
 							++teamCounts[iTeam].killedPlayers;
-						}						
+						}
 					}
 				}
 			}
@@ -4540,7 +4540,7 @@ ConVar cl_autohelp(
 		iTemp = m_iNumCTWins;
 		m_iNumCTWins = m_iNumTerroristWins;
 		m_iNumTerroristWins = iTemp;
-		
+
 		// Update the clients team score
 		UpdateTeamScores();
 	}
@@ -4567,18 +4567,18 @@ ConVar cl_autohelp(
 			// Weapons with owners don't want to be removed..
 			if ( pWeapon )
 			{
-                //=============================================================================
-                // HPE_BEGIN:
-                // [dwenger] Handle round restart processing for the weapon.
-                //=============================================================================
+				//=============================================================================
+				// HPE_BEGIN:
+				// [dwenger] Handle round restart processing for the weapon.
+				//=============================================================================
 
-                pWeapon->OnRoundRestart();
+				pWeapon->OnRoundRestart();
 
-                //=============================================================================
-                // HPE_END
-                //=============================================================================
+				//=============================================================================
+				// HPE_END
+				//=============================================================================
 
-                if ( pWeapon->ShouldRemoveOnRoundRestart() )
+				if ( pWeapon->ShouldRemoveOnRoundRestart() )
 				{
 					UTIL_Remove( pCur );
 				}
@@ -4588,10 +4588,10 @@ ConVar cl_autohelp(
 			{
 				UTIL_Remove( pCur );
 			}
-			
+
 			pCur = gEntList.NextEnt( pCur );
 		}
-		
+
 		// Really remove the entities so we can have access to their slots below.
 		gEntList.CleanupDeleteList();
 
@@ -4615,7 +4615,7 @@ ConVar cl_autohelp(
 					// Increment our iterator since it's not going to call CreateNextEntity for this ent.
 					if ( m_iIterator != g_MapEntityRefs.InvalidIndex() )
 						m_iIterator = g_MapEntityRefs.Next( m_iIterator );
-				
+
 					return false;
 				}
 			}
@@ -4625,7 +4625,7 @@ ConVar cl_autohelp(
 			{
 				if ( m_iIterator == g_MapEntityRefs.InvalidIndex() )
 				{
-					// This shouldn't be possible. When we loaded the map, it should have used 
+					// This shouldn't be possible. When we loaded the map, it should have used
 					// CCSMapLoadEntityFilter, which should have built the g_MapEntityRefs list
 					// with the same list of entities we're referring to here.
 					Assert( false );
@@ -4644,7 +4644,7 @@ ConVar cl_autohelp(
 					}
 					else
 					{
-						// Cool, the slot where this entity was is free again (most likely, the entity was 
+						// Cool, the slot where this entity was is free again (most likely, the entity was
 						// freed above). Now create an entity with this specific index.
 						return CreateEntityByName( pClassname, ref.m_iEdict );
 					}
@@ -4675,7 +4675,7 @@ ConVar cl_autohelp(
 					continue;
 
 				if ( pPlayer->HasC4() )
-					 return true; //There you are.
+					return true; //There you are.
 			}
 		}
 
@@ -4701,10 +4701,10 @@ ConVar cl_autohelp(
 		// Move the player to the place it said.
 		pPlayer->Teleport( &pSpawnSpot->GetAbsOrigin(), &pSpawnSpot->GetLocalAngles(), &vec3_origin );
 		pPlayer->m_Local.m_vecPunchAngle = vec3_angle;
-		
+
 		return pSpawnSpot;
 	}
-	
+
 	// checks if the spot is clear of players
 	bool CCSGameRules::IsSpawnPointValid( CBaseEntity *pSpot, CBasePlayer *pPlayer )
 	{
@@ -4718,7 +4718,7 @@ ConVar cl_autohelp(
 
 		Vector vTestMins = pSpot->GetAbsOrigin() + mins;
 		Vector vTestMaxs = pSpot->GetAbsOrigin() + maxs;
-		
+
 		// First test the starting origin.
 		return UTIL_IsSpaceEmpty( pPlayer, vTestMins, vTestMaxs );
 	}
@@ -4738,7 +4738,7 @@ ConVar cl_autohelp(
 		{
 			bBombFound = true;
 		}
-		
+
 		return bBombFound;
 	}
 
@@ -4748,17 +4748,17 @@ ConVar cl_autohelp(
 		{
 			//BroadcastSound( "Event.HostageTouched" );
 			m_flNextHostageAnnouncement = gpGlobals->curtime + 60.0;
-		}		
+		}
 	}
 
 	void CCSGameRules::CreateStandardEntities()
 	{
 		// Create the player resource
 		g_pPlayerResource = (CPlayerResource*)CBaseEntity::Create( "cs_player_manager", vec3_origin, vec3_angle );
-	
+
 		// Create the entity that will send our data to the client.
 #ifdef DBGFLAG_ASSERT
-		CBaseEntity *pEnt = 
+		CBaseEntity *pEnt =
 #endif
 			CBaseEntity::Create( "cs_gamerules", vec3_origin, vec3_angle );
 		Assert( pEnt );
@@ -4815,17 +4815,17 @@ void CCSGameRules::UploadGameStats( void )
 			stats.header.ipAddr[1] = ( ip >> 16 ) & MY_UCHAR_MAX;
 			stats.header.ipAddr[2] = ( ip >> 8 ) & MY_UCHAR_MAX;
 			stats.header.ipAddr[3] = ( ip ) & MY_UCHAR_MAX;
-		}			
+		}
 
 		ConVar *hostport = cvar->FindVar( "hostip" );
 		if ( hostport )
 		{
 			stats.header.port = hostport->GetInt();
-		}			
+		}
 
 		stats.header.serverid = 0;
 
-		stats.iMinutesPlayed = clamp( (short)( gpGlobals->curtime / 60 ), 0, MY_USHRT_MAX ); 
+		stats.iMinutesPlayed = clamp( (short)( gpGlobals->curtime / 60 ), 0, MY_USHRT_MAX );
 
 		memcpy( stats.iTerroristVictories, g_iTerroristVictories, sizeof( g_iTerroristVictories) );
 		memcpy( stats.iCounterTVictories, g_iCounterTVictories, sizeof( g_iCounterTVictories) );
@@ -4846,7 +4846,7 @@ void CCSGameRules::UploadGameStats( void )
 
 		if ( gamestatsuploader )
 		{
-			gamestatsuploader->UploadGameStats( 
+			gamestatsuploader->UploadGameStats(
 				STRING( gpGlobals->mapname ),
 				CS_STATS_BLOB_VERSION,
 				uBlobSize,
@@ -4944,7 +4944,7 @@ float CCSGameRules::GetMapElapsedTime( void )
 
 float CCSGameRules::GetRoundRemainingTime()
 {
-	return (float) (m_fRoundStartTime + m_iRoundTime) - gpGlobals->curtime; 
+	return (float) (m_fRoundStartTime + m_iRoundTime) - gpGlobals->curtime;
 }
 
 float CCSGameRules::GetRoundStartTime()
@@ -4966,7 +4966,7 @@ bool CCSGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 		// swap so that lowest is always first
 		::V_swap(collisionGroup0,collisionGroup1);
 	}
-	
+
 	//Don't stand on COLLISION_GROUP_WEAPONs
 	if( collisionGroup0 == COLLISION_GROUP_PLAYER_MOVEMENT &&
 		collisionGroup1 == COLLISION_GROUP_WEAPON )
@@ -4976,7 +4976,7 @@ bool CCSGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 
 	// TODO: make a CS-SPECIFIC COLLISION GROUP FOR PHYSICS PROPS THAT USE THIS COLLISION BEHAVIOR.
 
-	
+
 	if ( (collisionGroup0 == COLLISION_GROUP_PLAYER || collisionGroup0 == COLLISION_GROUP_PLAYER_MOVEMENT) &&
 		collisionGroup1 == COLLISION_GROUP_PUSHAWAY )
 	{
@@ -4989,7 +4989,7 @@ bool CCSGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 		return true;
 	}
 
-	return BaseClass::ShouldCollide( collisionGroup0, collisionGroup1 ); 
+	return BaseClass::ShouldCollide( collisionGroup0, collisionGroup1 );
 }
 
 
@@ -5052,7 +5052,7 @@ const CViewVectors* CCSGameRules::GetViewVectors() const
 #define BULLET_MASS_GRAINS_TO_KG(grains)	lbs2kg(BULLET_MASS_GRAINS_TO_LB(grains))
 
 // exaggerate all of the forces, but use real numbers to keep them consistent
-#define BULLET_IMPULSE_EXAGGERATION			1	
+#define BULLET_IMPULSE_EXAGGERATION			1
 
 // convert a velocity in ft/sec and a mass in grains to an impulse in kg in/s
 #define BULLET_IMPULSE(grains, ftpersec)	((ftpersec)*12*BULLET_MASS_GRAINS_TO_KG(grains)*BULLET_IMPULSE_EXAGGERATION)
@@ -5072,7 +5072,7 @@ CAmmoDef* GetAmmoDef()
 	if ( !bInitted )
 	{
 		bInitted = true;
-		
+
 		ammoDef.AddAmmoType( BULLET_PLAYER_50AE,		DMG_BULLET, TRACER_LINE, 0, 0, "ammo_50AE_max",		2400 * BULLET_IMPULSE_EXAGGERATION, 0, 10, 14 );
 		ammoDef.AddAmmoType( BULLET_PLAYER_762MM,		DMG_BULLET, TRACER_LINE, 0, 0, "ammo_762mm_max",	2400 * BULLET_IMPULSE_EXAGGERATION, 0, 10, 14 );
 		ammoDef.AddAmmoType( BULLET_PLAYER_556MM,		DMG_BULLET, TRACER_LINE, 0, 0, "ammo_556mm_max",	2400 * BULLET_IMPULSE_EXAGGERATION, 0, 10, 14 );
@@ -5124,7 +5124,7 @@ const char *CCSGameRules::GetChatPrefix( bool bTeamOnly, CBasePlayer *pPlayer )
 				{
 					pszPrefix = "(Counter-Terrorist)";
 				}
-				else 
+				else
 				{
 					pszPrefix = "*DEAD*(Counter-Terrorist)";
 				}
@@ -5156,7 +5156,7 @@ const char *CCSGameRules::GetChatPrefix( bool bTeamOnly, CBasePlayer *pPlayer )
 			{
 				if ( pPlayer->GetTeamNumber() != TEAM_SPECTATOR )
 				{
-					pszPrefix = "*DEAD*";	
+					pszPrefix = "*DEAD*";
 				}
 				else
 				{
@@ -5216,7 +5216,7 @@ const char *CCSGameRules::GetChatFormat( bool bTeamOnly, CBasePlayer *pPlayer )
 					pszFormat = "Cstrike_Chat_CT";
 				}
 			}
-			else 
+			else
 			{
 				pszFormat = "Cstrike_Chat_CT_Dead";
 			}
@@ -5256,7 +5256,7 @@ const char *CCSGameRules::GetChatFormat( bool bTeamOnly, CBasePlayer *pPlayer )
 		{
 			if ( pPlayer->GetTeamNumber() != TEAM_SPECTATOR )
 			{
-				pszFormat = "Cstrike_Chat_AllDead";	
+				pszFormat = "Cstrike_Chat_AllDead";
 			}
 			else
 			{
@@ -5272,10 +5272,10 @@ void CCSGameRules::ClientSettingsChanged( CBasePlayer *pPlayer )
 {
 	const char *pszNewName = engine->GetClientConVarValue( pPlayer->entindex(), "name" );
 	const char *pszOldName = pPlayer->GetPlayerName();
-	CCSPlayer *pCSPlayer = (CCSPlayer*)pPlayer;		
-	if ( pszOldName[0] != 0 && Q_strncmp( pszOldName, pszNewName, MAX_PLAYER_NAME_LENGTH-1 ) )		
+	CCSPlayer *pCSPlayer = (CCSPlayer*)pPlayer;
+	if ( pszOldName[0] != 0 && Q_strncmp( pszOldName, pszNewName, MAX_PLAYER_NAME_LENGTH-1 ) )
 	{
-		pCSPlayer->ChangeName( pszNewName );		
+		pCSPlayer->ChangeName( pszNewName );
 	}
 
 	pCSPlayer->m_bShowHints = true;
@@ -5411,7 +5411,7 @@ int CCSGameRules::GetStartMoney( void )
 // [menglish] Set up anything for all players that changes based on new players spawning mid-game
 //				Find and return fun fact data
 //=============================================================================
- 
+
 //-----------------------------------------------------------------------------
 // Purpose: Called when a player joins the game after it's started yet can still spawn in
 //-----------------------------------------------------------------------------
@@ -5597,7 +5597,7 @@ const weeklyprice_t *CCSGameRules::GetBlackMarketPriceList( void )
 	{
 		PrepareEquipmentInfo();
 	}
-	
+
 	return m_pPrices;
 }
 
@@ -5645,7 +5645,7 @@ void TestTable( void )
 	int iSize = 0;
 
 	const weeklyprice_t *pPrices = NULL;
-	
+
 	pPrices = (const weeklyprice_t *)(CSGameRules()->m_StringTableBlackMarket)->GetStringUserData( iIndex, &iSize );
 }
 
@@ -5749,8 +5749,8 @@ public:
 		return s_pConVarBackups;
 	}
 
-	virtual bool Init() 
-	{ 
+	virtual bool Init()
+	{
 		FOR_EACH_VEC( *GetConvarList(), i )
 		{
 			(*GetConvarList())[i]->InstallChangeCallback();
@@ -5764,9 +5764,9 @@ public:
 		{
 			delete (*GetConvarList())[i];
 		}
-		delete s_pCompetitiveConvars; 
+		delete s_pCompetitiveConvars;
 		s_pCompetitiveConvars = null;
-		s_pConVarBackups->deleteThis(); 
+		s_pConVarBackups->deleteThis();
 		s_pConVarBackups = null;
 	}
 private:
@@ -5819,9 +5819,9 @@ void sv_competitive_minspec_changed_f( IConVar *var, const char *pOldValue, floa
 #endif
 
 static ConVar sv_competitive_minspec( "sv_competitive_minspec",
-									 "0",
-									 FCVAR_REPLICATED | FCVAR_NOTIFY,
-									 "Enable to force certain client convars to minimum/maximum values to help prevent competitive advantages:\n \
+									"0",
+									FCVAR_REPLICATED | FCVAR_NOTIFY,
+									"Enable to force certain client convars to minimum/maximum values to help prevent competitive advantages:\n \
 	r_drawdetailprops = 1\n \
 	r_staticprop_lod = minimum -1 maximum 3\n \
 	fps_max minimum 59 (0 works too)\n \
@@ -5831,9 +5831,9 @@ static ConVar sv_competitive_minspec( "sv_competitive_minspec",
 	cl_interp = minimum 0 maximum 0.031\n \
 	"
 #ifdef CLIENT_DLL
-									 ,sv_competitive_minspec_changed_f
+									,sv_competitive_minspec_changed_f
 #endif
-									 );
+									);
 
 #ifdef CLIENT_DLL
 

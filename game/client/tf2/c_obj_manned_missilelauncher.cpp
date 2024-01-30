@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -9,7 +9,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectMannedMissileLauncher : public C_ObjectBaseMannedGun
 {
@@ -25,4 +25,3 @@ private:
 
 IMPLEMENT_CLIENTCLASS_DT(C_ObjectMannedMissileLauncher, DT_ObjectMannedMissileLauncher, CObjectMannedMissileLauncher)
 END_RECV_TABLE()
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -35,7 +35,7 @@ public:
 	void EnableDepthTest( bool bEnable );
 	void EnablePolyOffset( PolygonOffsetMode_t nOffsetMode );
 
-	// Suppresses/activates color writing 
+	// Suppresses/activates color writing
 	void EnableColorWrites( bool bEnable );
 	void EnableAlphaWrites( bool bEnable );
 
@@ -60,7 +60,7 @@ public:
 	// The flags to pass in here come from the VertexFormatFlags_t enum
 	// If pTexCoordDimensions is *not* specified, we assume all coordinates
 	// are 2-dimensional
-	void VertexShaderVertexFormat( unsigned int flags, 
+	void VertexShaderVertexFormat( unsigned int flags,
 		int numTexCoords, int* pTexCoordDimensions,
 		int userDataSize );
 
@@ -81,7 +81,7 @@ public:
 	// Can be used to specify different operation per channel (alpha/color)...
 	void EnableCustomPixelPipe( bool bEnable );
 	void CustomTextureStages( int stageCount );
-	void CustomTextureOperation( TextureStage_t stage, ShaderTexChannel_t channel, 
+	void CustomTextureOperation( TextureStage_t stage, ShaderTexChannel_t channel,
 		ShaderTexOp_t op, ShaderTexArg_t arg1, ShaderTexArg_t arg2 );
 
 	// indicates what per-vertex data we're providing
@@ -150,7 +150,7 @@ public:
 	{
 		//FIXME: empty for now.
 	}
-	virtual void FogMode( ShaderFogMode_t fogMode, bool bVertexFog ) 
+	virtual void FogMode( ShaderFogMode_t fogMode, bool bVertexFog )
 	{
 		//FIXME: empty for now.
 	}

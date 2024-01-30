@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -13,7 +13,7 @@
 // the 1 / 2 / 3 respectively are all identical in our template mod to start, I've made the base ones (pc_class1, pc_class2, pc_class3) and then duplicated them for the teams.
 //Tony;  for our template we have two versions.
 #if defined ( SDK_USE_PLAYERCLASSES ) && defined ( SDK_USE_TEAMS )
-const char *pszTeamBlueClasses[] = 
+const char *pszTeamBlueClasses[] =
 {
 	"blue_class1",
 	"blue_class2",
@@ -21,7 +21,7 @@ const char *pszTeamBlueClasses[] =
 	NULL
 };
 
-const char *pszTeamRedClasses[] = 
+const char *pszTeamRedClasses[] =
 {
 	"red_class1",
 	"red_class2",
@@ -74,7 +74,7 @@ const char *pszPossiblePlayerModels[] =
 // ----------------------------------------------------------------------------- //
 
 //--------------------------------------------------------------------------------------------------------
-static const char * s_WeaponAliasInfo[] = 
+static const char * s_WeaponAliasInfo[] =
 {
 	"none",		// WEAPON_NONE
 	"mp5",		// SDK_WEAPON_MP5
@@ -112,5 +112,3 @@ const char *WeaponIDToAlias( int id )
 
 	return s_WeaponAliasInfo[id];
 }
-
-

@@ -1667,7 +1667,7 @@ CItemUploadWizard::CItemUploadWizard(
 
 	vgui::WizardSubPanel *pSubPanel = NULL;
 	vgui::DHANDLE< vgui::WizardSubPanel > hSubPanel;
-	
+
 	pSubPanel = new CGlobalSubPanel( this, "global", "geometry" );
 	pSubPanel->SetVisible( false );
 	hSubPanel = pSubPanel;

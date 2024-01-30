@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -87,7 +87,7 @@ bool CWaveOut::PutSamples(short *pInSamples, int nInSamples)
 		CWaveOutHdr *pHdr;
 		if(!(pHdr = (CWaveOutHdr*)malloc(sizeof(CWaveOutHdr) - 1 + nSamples*2)))
 			return false;
-		
+
 		// Make a new one.
 		memset(&pHdr->m_Hdr, 0, sizeof(pHdr->m_Hdr));
 		pHdr->m_Hdr.lpData = pHdr->m_Data;
@@ -112,7 +112,7 @@ bool CWaveOut::PutSamples(short *pInSamples, int nInSamples)
 		pHdr->m_pNext = m_Headers.m_pNext;
 		m_Headers.m_pNext = pHdr;
 	}
-	
+
 	return true;
 }
 
@@ -201,5 +201,3 @@ IWaveOut* CreateWaveOut(int sampleRate)
 		return NULL;
 	}
 }
-
-

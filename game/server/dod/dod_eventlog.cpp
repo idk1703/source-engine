@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -70,12 +70,12 @@ protected:
 	bool PrintDodEvent( IGameEvent * event )	// print Mod specific logs
 	{
 		const char *eventName = event->GetName();
-	
+
 		if ( !Q_strncmp( eventName, "server_", strlen("server_")) )
 		{
 			return false; // ignore server_ messages
 		}
-		
+
 		if ( FStrEq( eventName, "player_death" ) )
 		{
 			const int userid = event->GetInt( "userid" );
@@ -90,9 +90,9 @@ protected:
 			const char *weapon = event->GetString( "weapon" );
 			CBasePlayer *pAttacker = UTIL_PlayerByUserId( attackerid );
 
-			if ( pPlayer == pAttacker )  
-			{  
-				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" committed suicide with \"%s\"\n",  
+			if ( pPlayer == pAttacker )
+			{
+				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" committed suicide with \"%s\"\n",
 								pPlayer->GetPlayerName(),
 								userid,
 								pPlayer->GetNetworkIDString(),
@@ -102,7 +102,7 @@ protected:
 			}
 			else if ( pAttacker )
 			{
-				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" killed \"%s<%i><%s><%s>\" with \"%s\"\n",  
+				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" killed \"%s<%i><%s><%s>\" with \"%s\"\n",
 								pAttacker->GetPlayerName(),
 								attackerid,
 								pAttacker->GetNetworkIDString(),
@@ -112,10 +112,10 @@ protected:
 								pPlayer->GetNetworkIDString(),
 								pPlayer->GetTeam()->GetName(),
 								weapon
-								);								
+								);
 			}
 			else
-			{  
+			{
 				// killed by the world
 				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" committed suicide with \"world\"\n",
 								pPlayer->GetPlayerName(),
@@ -131,7 +131,7 @@ protected:
 
 			if ( event->GetInt( "dominated" ) > 0 && pAttacker )
 			{
-				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"domination\" against \"%s<%i><%s><%s>\"\n",  
+				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"domination\" against \"%s<%i><%s><%s>\"\n",
 					pAttacker->GetPlayerName(),
 					attackerid,
 					pAttacker->GetNetworkIDString(),
@@ -142,9 +142,9 @@ protected:
 					pPlayer->GetTeam()->GetName()
 					);
 			}
-			if ( event->GetInt( "revenge" ) > 0 && pAttacker ) 
+			if ( event->GetInt( "revenge" ) > 0 && pAttacker )
 			{
-				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"revenge\" against \"%s<%i><%s><%s>\"\n",  
+				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"revenge\" against \"%s<%i><%s><%s>\"\n",
 					pAttacker->GetPlayerName(),
 					attackerid,
 					pAttacker->GetNetworkIDString(),
@@ -211,7 +211,7 @@ protected:
 					break;
 				}
 
-				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" attacked \"%s<%i><%s><%s>\" with \"%s\" (damage \"%d\") (health \"%d\") (hitgroup \"%s\")\n",  
+				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" attacked \"%s<%i><%s><%s>\" with \"%s\" (damage \"%d\") (health \"%d\") (hitgroup \"%s\")\n",
 					pAttacker->GetPlayerName(),
 					attackerid,
 					pAttacker->GetNetworkIDString(),
@@ -247,7 +247,7 @@ protected:
 
 			if ( iClass == PLAYERCLASS_RANDOM )
 			{
-				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" changed role to \"Random\"\n",  
+				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" changed role to \"Random\"\n",
 					pPlayer->GetPlayerName(),
 					userid,
 					pPlayer->GetNetworkIDString(),
@@ -258,7 +258,7 @@ protected:
 			{
 				const CDODPlayerClassInfo &pInfo = GetGlobalDODTeam(iTeam)->GetPlayerClassInfo( iClass );
 
-				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" changed role to \"%s\"\n",  
+				UTIL_LogPrintf( "\"%s<%i><%s><%s>\" changed role to \"%s\"\n",
 					pPlayer->GetPlayerName(),
 					userid,
 					pPlayer->GetNetworkIDString(),
@@ -345,15 +345,15 @@ protected:
 				iTotalScore,
 				pTeam->GetNumPlayers() );
 
-			return true;		
+			return true;
 		}
 		else if ( FStrEq( eventName, "dod_game_over" ) )
 		{
 			UTIL_LogPrintf( "World triggered \"Game_Over\" reason \"%s\"\n", event->GetString( "reason" ) );
-			return true;		
+			return true;
 		}
 		else if ( FStrEq( eventName, "dod_point_captured" ) )
-		{			
+		{
 			// identifier of the area	"cp"	"cpname"
 			int iPointIndex = event->GetInt( "cp" );
 			const char *szPointName = event->GetString( "cpname" );
@@ -366,7 +366,7 @@ protected:
 				return true;
 
 			//"Team "Allies" captured location "<3><#map_flag_2nd_axis>" with "2"
-            //    players (1 "Matt<UID><STEAMID><TEAM>") (2 "Player2<2><STEAMID><TEAM>")
+	//    players (1 "Matt<UID><STEAMID><TEAM>") (2 "Player2<2><STEAMID><TEAM>")
 
 			char buf[512];
 
@@ -388,7 +388,7 @@ protected:
 				}
 
 				char playerBuf[256];
-				Q_snprintf( playerBuf, sizeof(playerBuf), "(player \"%s<%i><%s><%s>\") ", 
+				Q_snprintf( playerBuf, sizeof(playerBuf), "(player \"%s<%i><%s><%s>\") ",
 					pPlayer->GetPlayerName(),
 					pPlayer->GetUserID(),
 					pPlayer->GetNetworkIDString(),
@@ -400,7 +400,7 @@ protected:
 			UTIL_LogPrintf( "%s\n", buf );
 		}
 		else if ( FStrEq( eventName, "dod_capture_blocked" ) )
-		{			
+		{
 			int iPointIndex = event->GetInt( "cp" );
 			const char *szPointName = event->GetString( "cpname" );
 
@@ -413,7 +413,7 @@ protected:
 
 			// "Matt<2><UNKNOWN><Allies>" triggered "capblock" (flagindex "2") (flagname "#map_flag_2nd_axis")
 
-			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"capblock\" (flagindex \"%d\") (flagname \"%s\")\n", 
+			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"capblock\" (flagindex \"%d\") (flagname \"%s\")\n",
 				pPlayer->GetPlayerName(),
 				pPlayer->GetUserID(),
 				pPlayer->GetNetworkIDString(),
@@ -422,7 +422,7 @@ protected:
 				szPointName );
 		}
 		else if ( FStrEq( eventName, "dod_bomb_planted" ) )
-		{			
+		{
 			int iPointIndex = event->GetInt( "cp" );
 			const char *szPointName = event->GetString( "cpname" );
 
@@ -435,7 +435,7 @@ protected:
 
 			// "Matt<2><UNKNOWN><Allies>" triggered "bomb_plant" (flagindex "2") (flagname "#map_flag_2nd_axis")
 
-			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"bomb_plant\" (flagindex \"%d\") (flagname \"%s\")\n", 
+			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"bomb_plant\" (flagindex \"%d\") (flagname \"%s\")\n",
 				pPlayer->GetPlayerName(),
 				pPlayer->GetUserID(),
 				pPlayer->GetNetworkIDString(),
@@ -446,7 +446,7 @@ protected:
 			return true;
 		}
 		else if ( FStrEq( eventName, "dod_bomb_defused" ) )
-		{			
+		{
 			int iPointIndex = event->GetInt( "cp" );
 			const char *szPointName = event->GetString( "cpname" );
 
@@ -459,7 +459,7 @@ protected:
 
 			// "Matt<2><UNKNOWN><Allies>" triggered "bomb_defuse" (flagindex "2") (flagname "#map_flag_2nd_axis")
 
-			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"bomb_defuse\" (flagindex \"%d\") (flagname \"%s\")\n", 
+			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"bomb_defuse\" (flagindex \"%d\") (flagname \"%s\")\n",
 				pPlayer->GetPlayerName(),
 				pPlayer->GetUserID(),
 				pPlayer->GetNetworkIDString(),
@@ -470,7 +470,7 @@ protected:
 			return true;
 		}
 		else if ( FStrEq( eventName, "dod_kill_planter" ) )
-		{			
+		{
 			int iKiller = event->GetInt( "userid" );
 
 			CBasePlayer *pPlayer = UTIL_PlayerByUserId( iKiller );
@@ -487,7 +487,7 @@ protected:
 
 			// "Matt<2><UNKNOWN><Allies>" triggered "kill_planter" against "Fred<3><UNKNOWN><Axis>"
 
-			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"kill_planter\" against \"%s<%i><%s><%s>\"\n", 
+			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"kill_planter\" against \"%s<%i><%s><%s>\"\n",
 				pPlayer->GetPlayerName(),
 				pPlayer->GetUserID(),
 				pPlayer->GetNetworkIDString(),
@@ -500,7 +500,7 @@ protected:
 			return true;
 		}
 		else if ( FStrEq( eventName, "dod_kill_defuser" ) )
-		{			
+		{
 			int iKiller = event->GetInt( "userid" );
 
 			CBasePlayer *pPlayer = UTIL_PlayerByUserId( iKiller );
@@ -517,7 +517,7 @@ protected:
 
 			// "Matt<2><UNKNOWN><Allies>" triggered "kill_defuser" against "Fred<3><UNKNOWN><Axis>"
 
-			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"kill_defuser\" against \"%s<%i><%s><%s>\"\n", 
+			UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"kill_defuser\" against \"%s<%i><%s><%s>\"\n",
 				pPlayer->GetPlayerName(),
 				pPlayer->GetUserID(),
 				pPlayer->GetNetworkIDString(),
@@ -544,4 +544,3 @@ IGameSystem* GameLogSystem()
 {
 	return &g_DODEventLog;
 }
-

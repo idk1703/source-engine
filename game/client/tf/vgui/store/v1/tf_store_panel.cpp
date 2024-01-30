@@ -17,14 +17,14 @@
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFStorePanel1::CTFStorePanel1( vgui::Panel *parent ) : CTFBaseStorePanel(parent)
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePanel1::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -32,7 +32,7 @@ void CTFStorePanel1::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePanel1::OnThink()
 {
@@ -40,7 +40,7 @@ void CTFStorePanel1::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePanel1::PostTransactionCompleted( void )
 {

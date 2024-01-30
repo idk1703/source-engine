@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -187,7 +187,7 @@ bool ExtractKeyvalue( void *pObject, typedescription_t *pFields, int iNumFields,
 
 			case FIELD_POSITION_VECTOR:
 			case FIELD_VECTOR:
-				Q_snprintf( szValue, iMaxLen, "%f %f %f", 
+				Q_snprintf( szValue, iMaxLen, "%f %f %f",
 					((float *)((char *)pObject + fieldOffset))[0],
 					((float *)((char *)pObject + fieldOffset))[1],
 					((float *)((char *)pObject + fieldOffset))[2] );
@@ -203,7 +203,7 @@ bool ExtractKeyvalue( void *pObject, typedescription_t *pFields, int iNumFields,
 				return false;
 
 			case FIELD_COLOR32:
-				Q_snprintf( szValue, iMaxLen, "%d %d %d %d", 
+				Q_snprintf( szValue, iMaxLen, "%d %d %d %d",
 					((int *)((char *)pObject + fieldOffset))[0],
 					((int *)((char *)pObject + fieldOffset))[1],
 					((int *)((char *)pObject + fieldOffset))[2],

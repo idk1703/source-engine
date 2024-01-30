@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -37,10 +37,10 @@ void ScratchPad_DrawWorldToScratchPad(
 				continue;
 			}
 
-			ScratchPad_DrawEntityToScratchPad( 
-				pPad, 
+			ScratchPad_DrawEntityToScratchPad(
+				pPad,
 				flags,
-				pCur, 
+				pCur,
 				bPlayer ? Vector( 1.0, 0.5, 0 ) : Vector( 0.3, 0.3, 1.0 )
 				);
 
@@ -91,5 +91,3 @@ void ScratchPad_DrawEntityToScratchPad(
 		pPad->DrawText( str, params );
 	}
 }
-
-

@@ -31,7 +31,7 @@
 #define RESOURCE_GIVE_AMOUNT 150
 #define RESOURCE_DONATION_AMT_PER_PLAYER 10
 
-bool IsEntityVisibleToTactical( int iLocalTeamNumber, int iLocalTeamPlayers, 
+bool IsEntityVisibleToTactical( int iLocalTeamNumber, int iLocalTeamPlayers,
 	int iLocalTeamObjects, int iEntIndex, const char *pEntName, int pEntTeamNumber, const Vector &pEntOrigin );
 extern ConVar tf_destroyobjects;
 
@@ -66,13 +66,13 @@ int SendProxyArrayLength_TeamObjects( const void *pStruct, int objectID )
 IMPLEMENT_SERVERCLASS_ST(CTFTeam, DT_TFTeam)
 	SendPropFloat( SENDINFO(m_fResources), 16, SPROP_NOSCALE ),
 	SendPropFloat( SENDINFO(m_fPotentialResources), 16, SPROP_NOSCALE ),
-	SendPropInt( SENDINFO(m_bHaveZone), 1, SPROP_UNSIGNED ), 
-	
-	SendPropArray2( 
+	SendPropInt( SENDINFO(m_bHaveZone), 1, SPROP_UNSIGNED ),
+
+	SendPropArray2(
 		SendProxyArrayLength_TeamObjects,
-		SendPropInt("object_array_element", 0, SIZEOF_IGNORE, NUM_NETWORKED_EHANDLE_BITS, SPROP_UNSIGNED, SendProxy_ObjectList), 
-		MAX_OBJECTS_PER_TEAM, 
-		0, 
+		SendPropInt("object_array_element", 0, SIZEOF_IGNORE, NUM_NETWORKED_EHANDLE_BITS, SPROP_UNSIGNED, SendProxy_ObjectList),
+		MAX_OBJECTS_PER_TEAM,
+		0,
 		"object_array"
 		 )
 END_SEND_TABLE()
@@ -109,7 +109,7 @@ void CTFTeam::Init( const char *pName, int iNumber )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFTeam::~CTFTeam( void )
 {
@@ -122,7 +122,7 @@ CTFTeam::~CTFTeam( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeam::Precache( void )
 {
@@ -175,7 +175,7 @@ void CTFTeam::Think( void )
 	*/
 
 	UpdateTechnologies();
-		    
+
 	/* FIXME: Re-enable once we figure out what the correct orders should be
 	// Create new personal orders
 	if ( m_flPersonalOrderUpdateTime < gpGlobals->curtime )
@@ -296,7 +296,7 @@ void CTFTeam::UpdateTechnologyData( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFTeam::ShouldTransmitToPlayer( CBasePlayer* pRecipient, CBaseEntity* pEntity )
 {
@@ -308,8 +308,8 @@ bool CTFTeam::ShouldTransmitToPlayer( CBasePlayer* pRecipient, CBaseEntity* pEnt
 //-----------------------------------------------------------------------------
 bool CTFTeam::IsEntityVisibleToTactical( CBaseEntity *pEntity )
 {
-	return ::IsEntityVisibleToTactical( GetTeamNumber(), GetNumPlayers(), 
-		GetNumObjects(), pEntity->entindex(), (char*)STRING(pEntity->m_iClassname), 
+	return ::IsEntityVisibleToTactical( GetTeamNumber(), GetNumPlayers(),
+		GetNumObjects(), pEntity->entindex(), (char*)STRING(pEntity->m_iClassname),
 		pEntity->GetTeamNumber(), pEntity->GetAbsOrigin() );
 }
 
@@ -321,7 +321,7 @@ bool CTFTeam::IsEntityVisibleToTactical( CBaseEntity *pEntity )
 //-----------------------------------------------------------------------------
 void CTFTeam::AddResourceZone( CResourceZone *pResource )
 {
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::AddResourceZone adding res zone %p to team %s\n", gpGlobals->curtime, 
+	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::AddResourceZone adding res zone %p to team %s\n", gpGlobals->curtime,
 		pResource, GetName() ) );
 
 	// If this resource is already owned by another team, remove it from them
@@ -354,7 +354,7 @@ void CTFTeam::AddResourceZone( CResourceZone *pResource )
 //-----------------------------------------------------------------------------
 void CTFTeam::RemoveResourceZone( CResourceZone *pResource )
 {
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::RemoveResourceZone removing res zone %p from team %s\n", gpGlobals->curtime, 
+	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::RemoveResourceZone removing res zone %p from team %s\n", gpGlobals->curtime,
 		pResource, GetName() ) );
 
 	// Now remove the zone from our list
@@ -406,7 +406,7 @@ float CTFTeam::GetJoiningPlayerResources( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeam::SetRecentBankSet( float flResources )
 {
@@ -417,7 +417,7 @@ void CTFTeam::SetRecentBankSet( float flResources )
 //------------------------------------------------------------------------------------------------------------------
 // TECHNOLOGY TREE
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeam::InitializeTechTree( void )
 {
@@ -438,7 +438,7 @@ void CTFTeam::InitializeTechTree( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTechnologyTree *CTFTeam::GetTechnologyTree( void )
 {
@@ -555,7 +555,7 @@ void CTFTeam::RecomputePreferences( void )
 		CBaseTFPlayer *pPlayer = (CBaseTFPlayer *)m_aPlayers[i];
 		if ( !pPlayer )
 			continue;
-	
+
 		int preferred =  pPlayer->GetPreferredTechnology();
 		// No preference set, don't worry about this player
 		if ( preferred == -1 )
@@ -598,7 +598,7 @@ void CTFTeam::RecomputeTeamResources( void )
 	}
 
 	UpdatePotentialResources();
-}	
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: Attempt to spend resources according to player's preferences
@@ -653,7 +653,7 @@ bool CTFTeam::HasNamedTechnology( const char *name )
 {
 	// Look it up
 	// FIXME:  This could be too slow, consider using #define'd/indexed names?
-	CBaseTechnology *tech = m_pTechnologyTree->GetTechnology( name ); 
+	CBaseTechnology *tech = m_pTechnologyTree->GetTechnology( name );
 	if ( !tech )
 		return false;
 	if ( !tech->GetAvailable() )
@@ -689,7 +689,7 @@ void CTFTeam::UpdateTechnologies( void )
 void CTFTeam::AddPlayer( CBasePlayer *pPlayer )
 {
 	BaseClass::AddPlayer( pPlayer );
-	
+
 	// Give the player this team's technology
 	for ( int i = 0; i < m_pTechnologyTree->GetNumberTechnologies(); i++ )
 	{
@@ -752,7 +752,7 @@ int	CTFTeam::GetNumOfClass( TFClass iClass )
 //------------------------------------------------------------------------------------------------------------------
 // RESOURCE BANK
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeam::InitializeTeamResources( void )
 {
@@ -762,7 +762,7 @@ void CTFTeam::InitializeTeamResources( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFTeam::GetTeamResources( void )
 {
@@ -816,7 +816,7 @@ void CTFTeam::DonateResources( CBaseTFPlayer *pPlayer )
 	pResourceCount = pPlayer->GetBankResources();
 
 	// Figure out how many resources per player to donate
-	pResourcePerPlayer = pResourceCount / (nPlayerCount - 1); 
+	pResourcePerPlayer = pResourceCount / (nPlayerCount - 1);
 	if (pResourceCount % (nPlayerCount - 1) != 0)
 		++pResourcePerPlayer;
 
@@ -876,11 +876,11 @@ void CTFTeam::ResourceLoadDeposited( void )
 //------------------------------------------------------------------------------------------------------------------
 // RESUPPLY BEACONS
 //-----------------------------------------------------------------------------
-// Purpose: Add the specified resupply beacon to this team. 
+// Purpose: Add the specified resupply beacon to this team.
 //-----------------------------------------------------------------------------
 void CTFTeam::AddResupply( CObjectResupply *pResupply )
 {
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::AddResupply adding resupply %p to team %s\n", gpGlobals->curtime, 
+	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::AddResupply adding resupply %p to team %s\n", gpGlobals->curtime,
 		pResupply, GetName() ) );
 
 	m_aResupplyBeacons.AddToTail( pResupply );
@@ -891,7 +891,7 @@ void CTFTeam::AddResupply( CObjectResupply *pResupply )
 //-----------------------------------------------------------------------------
 void CTFTeam::RemoveResupply( CObjectResupply *pResupply )
 {
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::RemoveResupply remove resupply %p from team %s\n", gpGlobals->curtime, 
+	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::RemoveResupply remove resupply %p from team %s\n", gpGlobals->curtime,
 		pResupply, GetName() ) );
 
 	// Now remove the beacon from our list
@@ -899,7 +899,7 @@ void CTFTeam::RemoveResupply( CObjectResupply *pResupply )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFTeam::GetNumObjects( int iObjectType )
 {
@@ -922,7 +922,7 @@ int CTFTeam::GetNumObjects( int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseObject *CTFTeam::GetObject( int num )
 {
@@ -932,7 +932,7 @@ CBaseObject *CTFTeam::GetObject( int num )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFTeam::GetNumResupplies( void )
 {
@@ -941,7 +941,7 @@ int CTFTeam::GetNumResupplies( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectResupply *CTFTeam::GetResupply( int num )
 {
@@ -955,7 +955,7 @@ bool CTFTeam::IsCoveredBySentryGun( const Vector &vPos )
 	for( int i=0; i < m_aObjects.Count(); i++ )
 	{
 		CBaseObject *pObj = m_aObjects[i];
-		
+
 		if ( pObj->IsSentrygun() && vPos.DistTo( pObj->GetAbsOrigin() ) < OBJECT_COVERED_DIST )
 			return true;
 
@@ -972,7 +972,7 @@ int CTFTeam::GetNumShieldWallsCoveringPosition( const Vector &vPos )
 	for ( int i=0; i < m_aObjects.Count(); i++ )
 	{
 		CBaseObject *pObj = m_aObjects[i];
-		
+
 		if ( pObj->GetType() == OBJ_SHIELDWALL )
 		{
 			if ( vPos.DistTo( pObj->GetAbsOrigin() ) < OBJECT_COVERED_DIST )
@@ -1027,7 +1027,7 @@ int CTFTeam::GetNumRespawnStationsCoveringPosition( const Vector &vPos )
 //-----------------------------------------------------------------------------
 void CTFTeam::AddObject( CBaseObject *pObject )
 {
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::AddObject adding object %p:%s to team %s\n", gpGlobals->curtime, 
+	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::AddObject adding object %p:%s to team %s\n", gpGlobals->curtime,
 		pObject, pObject->GetClassname(), GetName() ) );
 
 	bool alreadyInList = IsObjectOnTeam( pObject );
@@ -1052,20 +1052,20 @@ bool CTFTeam::IsObjectOnTeam( CBaseObject *pObject ) const
 //  Removes all references from all sublists as well
 //-----------------------------------------------------------------------------
 void CTFTeam::RemoveObject( CBaseObject *pObject )
-{									   
+{
 	if ( m_aObjects.Count() <= 0 )
 		return;
 
 	if ( m_aObjects.Find( pObject ) != -1 )
 	{
-		TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::RemoveObject removing %p:%s from %s\n", gpGlobals->curtime, 
+		TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::RemoveObject removing %p:%s from %s\n", gpGlobals->curtime,
 			pObject, pObject->GetClassname(), GetName() ) );
 
 		m_aObjects.FindAndRemove( pObject );
 	}
 	else
 	{
-		TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::RemoveObject couldn't remove %p:%s from %s\n", gpGlobals->curtime, 
+		TRACE_OBJECT( UTIL_VarArgs( "%0.2f CTFTeam::RemoveObject couldn't remove %p:%s from %s\n", gpGlobals->curtime,
 			pObject, pObject->GetClassname(), GetName() ) );
 	}
 }
@@ -1074,7 +1074,7 @@ void CTFTeam::RemoveObject( CBaseObject *pObject )
 //------------------------------------------------------------------------------------------------------------------
 // ORDERS
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeam::InitializeOrders( void )
 {
@@ -1084,10 +1084,10 @@ void CTFTeam::InitializeOrders( void )
 //-----------------------------------------------------------------------------
 // Purpose: Add a new order to our list. If it already exists, bump it's priority to the new priority.
 //-----------------------------------------------------------------------------
-COrder* CTFTeam::AddOrder( 
-	int iOrderType, 
-	CBaseEntity *pTarget, 
-	CBaseTFPlayer *pPlayer, 
+COrder* CTFTeam::AddOrder(
+	int iOrderType,
+	CBaseEntity *pTarget,
+	CBaseTFPlayer *pPlayer,
 	float flDistanceToRemove,
 	float flLifetime,
 	COrder *pNewOrder
@@ -1104,7 +1104,7 @@ COrder* CTFTeam::AddOrder(
 	// and CreateEntityByName.
 	Assert( !pNewOrder->edict() );
 	pNewOrder->NetworkProp()->AttachEdict();
-	
+
 	pNewOrder->ChangeTeam( GetTeamNumber() );
 	OrderHandle hOrder;
 	hOrder = pNewOrder;
@@ -1128,14 +1128,14 @@ COrder* CTFTeam::AddOrder(
 	CBaseEntity::EmitSound( filter, pPlayer->entindex(),"TFTeam.AddOrder" );
 
 	// Debug check.. it should never create an order with its termination conditions
-	// already met.	
+	// already met.
 	Assert( !pNewOrder->Update() );
 
 	return pNewOrder;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeam::RemoveOrder( COrder *pOrder )
 {
@@ -1155,7 +1155,7 @@ void CTFTeam::RecalcOrders( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeam::UpdateOrders( void )
 {
@@ -1164,9 +1164,9 @@ void CTFTeam::UpdateOrders( void )
 	for (int i = iSize-1; i >= 0; i--)
 	{
 		// Orders without owners should be removed
-		bool bShouldRemove = ( 
-			!m_aOrders[i] || 
-			!m_aOrders[i]->GetOwner() || 
+		bool bShouldRemove = (
+			!m_aOrders[i] ||
+			!m_aOrders[i]->GetOwner() ||
 			m_aOrders[i]->Update() );
 		if ( bShouldRemove )
 		{
@@ -1229,7 +1229,7 @@ void CTFTeam::CreatePersonalOrder( CBaseTFPlayer *pPlayer )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeam::RemoveOrdersToPlayer( CBaseTFPlayer *pPlayer )
 {
@@ -1244,7 +1244,7 @@ void CTFTeam::RemoveOrdersToPlayer( CBaseTFPlayer *pPlayer )
 			{
 				COrder *pOrder = m_aOrders[i];
 				m_aOrders.Remove( i );
-				
+
 				pOrder->DetachFromPlayer();
 				UTIL_Remove( pOrder );
 			}
@@ -1282,7 +1282,7 @@ int CTFTeam::CountOrders( int flags, int iOrderType, CBaseEntity *pTarget, CBase
 		if( flags & COUNTORDERS_OWNER )
 			if( pOrder->GetOwner() != pOwner )
 				continue;
-		
+
 		// Ok, this order matches the criteria.
 		iOrderCount++;
 	}
@@ -1300,7 +1300,7 @@ int CTFTeam::CountOrdersOwnedByPlayer( CBaseTFPlayer *pPlayer )
 //------------------------------------------------------------------------------------------------------------------
 // MESSAGES
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeam::ClearMessages( void )
 {
@@ -1344,7 +1344,7 @@ void CTFTeam::PostMessage( int iMessageID, CBaseEntity *pEntity, char *sData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeam::UpdateMessages( void )
 {
@@ -1396,7 +1396,7 @@ void CTFTeam::UpdateBuffStations( CObjectBuffStation *pBuffStationToIgnore, CBas
 	{
 		CBaseObject *pObject = GetObject( iObject );
 		assert( pObject );
-	
+
 		if ( pObject->GetType() != OBJ_BUFF_STATION )
 			continue;
 
@@ -1418,7 +1418,7 @@ void CTFTeam::UpdateBuffStations( CObjectBuffStation *pBuffStationToIgnore, CBas
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFTeam* CTFTeam::GetEnemyTeam()
 {
@@ -1430,5 +1430,3 @@ CTFTeam* CTFTeam::GetEnemyTeam()
 	int iEnemyTeam = !(iMyTeam - 1) + 1;
 	return (CTFTeam*)GetGlobalTeam( iEnemyTeam );
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -38,8 +38,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEBeamFollow::CTEBeamFollow( const char *name ) :
 	CTEBaseBeam( name )
@@ -48,16 +48,16 @@ CTEBeamFollow::CTEBeamFollow( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEBeamFollow::~CTEBeamFollow( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEBeamFollow::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -73,24 +73,24 @@ END_SEND_TABLE()
 static CTEBeamFollow g_TEBeamFollow( "BeamFollow" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : filter - 
-//			delay - 
-//			iEntIndex - 
-//			modelIndex - 
-//			modelindex - 
-//			haloIndex - 
-//			life - 
-//			width - 
-//			endWidth - 
-//			fadeLength - 
-//			r - 
-//			g - 
-//			b - 
-//			a - 
+// Purpose:
+// Input  : filter -
+//			delay -
+//			iEntIndex -
+//			modelIndex -
+//			modelindex -
+//			haloIndex -
+//			life -
+//			width -
+//			endWidth -
+//			fadeLength -
+//			r -
+//			g -
+//			b -
+//			a -
 //-----------------------------------------------------------------------------
 void TE_BeamFollow( IRecipientFilter& filter, float delay,
-	int iEntIndex, int modelIndex, int haloIndex, float life, float width, float endWidth, 
+	int iEntIndex, int modelIndex, int haloIndex, float life, float width, float endWidth,
 	float fadeLength,float r, float g, float b, float a )
 {
 	g_TEBeamFollow.m_iEntIndex		= (iEntIndex & 0x0FFF) | ((1 & 0xF)<<12);

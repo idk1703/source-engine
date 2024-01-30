@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,7 +34,7 @@ CCreateTokenDialog::CCreateTokenDialog( CLocalizationDialog *pLocalizationDialog
 	m_pTokenValue = new TextEntry(this, "TokenValue");
 	m_pTokenValue->SetMultiline(true);
 	m_pTokenValue->SetCatchEnterKey(true);
-	
+
 	m_pSkipButton->SetCommand("SkipToken");
 	m_pSkipButton->SetVisible(false);
 
@@ -121,7 +121,7 @@ void CCreateTokenDialog::OnSkip()
 
 //-----------------------------------------------------------------------------
 // Purpose: handles a button command
-// Input  : *command - 
+// Input  : *command -
 //-----------------------------------------------------------------------------
 void CCreateTokenDialog::OnCommand(const char *command)
 {
@@ -147,5 +147,3 @@ void CCreateTokenDialog::OnClose()
 	BaseClass::OnClose();
 	MarkForDeletion();
 }
-
-

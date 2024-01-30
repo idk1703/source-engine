@@ -102,7 +102,7 @@ template <typename T> struct DefaultEqualFunctor;
 // are reasonably well-distributed across the entire 32-bit range.
 //  http://en.wikipedia.org/wiki/Avalanche_effect
 //  http://home.comcast.net/~bretm/hash/5.html
-// 
+//
 template <typename T> struct DefaultHashFunctor;
 
 // Argument type information. Struct currently contains one or two typedefs:
@@ -324,7 +324,7 @@ inline unsigned int Mix32HashFunctor::operator()( uint32 n ) const
 	return n;
 }
 
-inline unsigned int Mix64HashFunctor::operator()( uint64 s ) const 
+inline unsigned int Mix64HashFunctor::operator()( uint64 s ) const
 {
 	// Thomas Wang hash, http://www.concentric.net/~ttwang/tech/inthash.htm
 	s = ( ~s ) + ( s << 21 ); // s = (s << 21) - s - 1;

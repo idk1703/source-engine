@@ -2,8 +2,8 @@
 //
 // Purpose: area portal entity: toggles visibility areas on/off
 //
-// NOTE: These are not really brush entities.  They are brush entities from a 
-// designer/worldcraft perspective, but by the time they reach the game, the 
+// NOTE: These are not really brush entities.  They are brush entities from a
+// designer/worldcraft perspective, but by the time they reach the game, the
 // brush model is gone and this is, in effect, a point entity.
 //
 // $NoKeywords: $
@@ -70,16 +70,16 @@ CFuncOccluder::CFuncOccluder()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncOccluder::Spawn( void )
 {
-    Precache( );    
+	Precache( );
 
 	m_takedamage	= DAMAGE_NO;
 	SetSolid( SOLID_NONE );
-    SetMoveType( MOVETYPE_NONE );
-	
+	SetMoveType( MOVETYPE_NONE );
+
 	// set size and link into world.
 	SetModel( STRING( GetModelName() ) );
 }
@@ -120,4 +120,3 @@ int CFuncOccluder::UpdateTransmitState()
 	// ALWAYS transmit to all clients.
 	return SetTransmitState( FL_EDICT_ALWAYS );
 }
-

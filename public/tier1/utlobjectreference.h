@@ -39,7 +39,7 @@ public:
 		m_pNext = m_pPrev = NULL;
 		m_pObject = NULL;
 	}
-  
+
 	FORCEINLINE CUtlReference(T *pObj)
 	{
 		m_pNext = m_pPrev = NULL;
@@ -50,7 +50,7 @@ public:
 	{
 		KillRef();
 	}
-  
+
 	FORCEINLINE void Set(T *pObj)
 	{
 		if ( m_pObject != pObj )
@@ -59,7 +59,7 @@ public:
 			AddRef( pObj );
 		}
 	}
-  
+
 	FORCEINLINE T * operator()(void) const
 	{
 		return m_pObject;
@@ -76,13 +76,13 @@ public:
 	}
 
 	FORCEINLINE T* operator->()
-	{ 
-		return m_pObject; 
+	{
+		return m_pObject;
 	}
 
 	FORCEINLINE const T* operator->() const
-	{ 
-		return m_pObject; 
+	{
+		return m_pObject;
 	}
 
 	FORCEINLINE CUtlReference &operator=( const CUtlReference& otherRef )
@@ -101,7 +101,7 @@ public:
 	FORCEINLINE bool operator==( const CUtlReference& o ) const
 	{
 		return ( o.m_pObject == m_pObject );
-	}	
+	}
 
 public:
 	CUtlReference *m_pNext;
@@ -158,8 +158,3 @@ public:
 
 
 #endif
-
-
-
-
-

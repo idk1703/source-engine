@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //  A class allowing storage of a sparse NxN matirx as an array of sparse rows
 //===========================================================================//
@@ -80,7 +80,7 @@ FORCEINLINE float CSparseMatrix::Element( int nRow, int nCol ) const
 namespace MatrixMath
 {
 	/// sparse * dense matrix x matrix multiplication
-	template<class BTYPE, class OUTTYPE> 
+	template<class BTYPE, class OUTTYPE>
 	void MatrixMultiply( CSparseMatrix const &matA, BTYPE const &matB, OUTTYPE *pMatrixOut )
 	{
 		Assert( matA.Width() == matB.Height() );

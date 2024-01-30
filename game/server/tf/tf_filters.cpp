@@ -53,10 +53,10 @@ LINK_ENTITY_TO_CLASS( filter_activator_tfteam, CFilterTFTeam );
 //-----------------------------------------------------------------------------
 bool CFilterTFTeam::PassesFilterImpl( CBaseEntity *pCaller, CBaseEntity *pEntity )
 {
-	// is the entity we're asking about on the winning 
+	// is the entity we're asking about on the winning
 	// team during the bonus time? (winners pass all filters)
 	if (  TFGameRules() &&
-		( TFGameRules()->State_Get() == GR_STATE_TEAM_WIN ) && 
+		( TFGameRules()->State_Get() == GR_STATE_TEAM_WIN ) &&
 		( TFGameRules()->GetWinningTeam() == pEntity->GetTeamNumber() ) )
 	{
 		// this should open all doors for the winners
@@ -74,7 +74,7 @@ bool CFilterTFTeam::PassesFilterImpl( CBaseEntity *pCaller, CBaseEntity *pEntity
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFilterTFTeam::InputRoundSpawn( inputdata_t &input )
 {
@@ -82,7 +82,7 @@ void CFilterTFTeam::InputRoundSpawn( inputdata_t &input )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFilterTFTeam::InputRoundActivate( inputdata_t &input )
 {
@@ -356,7 +356,7 @@ public:
 			return false;
 
 		CTFPlayer *pTFPlayer = ToTFPlayer( pEntity );
-		return pTFPlayer 
+		return pTFPlayer
 			&& !pTFPlayer->IsObserver()
 			&& pTFPlayer->IsPlayerClass(m_nClass);
 	}

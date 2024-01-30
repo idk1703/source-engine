@@ -20,7 +20,7 @@
 #define PvExpand _expand
 #endif
 
-enum 
+enum
 {
 	MAX_STACK_DEPTH = 32
 };
@@ -51,7 +51,7 @@ void MemAllocOOMError( size_t nSize )
 // Other DLL-exported methods for particular kinds of memory
 //-----------------------------------------------------------------------------
 void *MemAllocScratch( int nMemSize )
-{	
+{
 	// Minimally allocate 1M scratch
 	if (s_nBufAllocSize < s_nBufCurSize + nMemSize)
 	{
@@ -64,7 +64,7 @@ void *MemAllocScratch( int nMemSize )
 		if (s_pBuf)
 		{
 			s_pBuf = (uint8*)PvRealloc( s_pBuf, s_nBufAllocSize );
-			Assert( s_pBuf );	
+			Assert( s_pBuf );
 		}
 		else
 		{

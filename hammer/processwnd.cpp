@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile: $
 // $Date: $
@@ -53,7 +53,7 @@ END_MESSAGE_MAP()
 
 int CProcessWnd::Execute(LPCTSTR pszCmd, ...)
 {
-    CString strBuf;
+	CString strBuf;
 
 	va_list vl;
 	va_start(vl, pszCmd);
@@ -81,7 +81,7 @@ void CProcessWnd::Clear()
 
 void CProcessWnd::Append(CString str)
 {
-    m_EditText += str;
+	m_EditText += str;
 	if (getOSVersion() >= eWinNT)
 	{
 		Edit.SetWindowText(m_EditText);
@@ -91,7 +91,7 @@ void CProcessWnd::Append(CString str)
 		DWORD length = m_EditText.GetLength() / sizeof(TCHAR);
 
 		// Gracefully handle 64k edit control display on win9x (display last 64k of text)
-		// Copy to clipboard will work fine, as it copies the m_EditText contents 
+		// Copy to clipboard will work fine, as it copies the m_EditText contents
 		// in its entirety to the clipboard
 		if (length >= 0x0FFFF)
 		{
@@ -106,29 +106,29 @@ void CProcessWnd::Append(CString str)
 			Edit.SetWindowText(m_EditText);
 		}
 	}
-    Edit.LineScroll(Edit.GetLineCount());	
+	Edit.LineScroll(Edit.GetLineCount());
 	Edit.RedrawWindow();
 }
 
 int CProcessWnd::Execute(LPCTSTR pszCmd, LPCTSTR pszCmdLine)
 {
 	int rval = -1;
-    SECURITY_ATTRIBUTES saAttr; 
-	HANDLE hChildStdinRd_, hChildStdinWr, hChildStdoutRd_, hChildStdoutWr, hChildStderrWr; 
+	SECURITY_ATTRIBUTES saAttr;
+	HANDLE hChildStdinRd_, hChildStdinWr, hChildStdoutRd_, hChildStdoutWr, hChildStderrWr;
 
-    // Set the bInheritHandle flag so pipe handles are inherited.
-	saAttr.nLength = sizeof(SECURITY_ATTRIBUTES); 
-    saAttr.bInheritHandle = TRUE; 
-    saAttr.lpSecurityDescriptor = NULL; 
- 
-    // Create a pipe for the child's STDOUT. 
-    if(CreatePipe(&hChildStdoutRd_, &hChildStdoutWr, &saAttr, 0))
+	// Set the bInheritHandle flag so pipe handles are inherited.
+	saAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
+	saAttr.bInheritHandle = TRUE;
+	saAttr.lpSecurityDescriptor = NULL;
+
+	// Create a pipe for the child's STDOUT.
+	if(CreatePipe(&hChildStdoutRd_, &hChildStdoutWr, &saAttr, 0))
 	{
 		if(CreatePipe(&hChildStdinRd_, &hChildStdinWr, &saAttr, 0))
 		{
 			if (DuplicateHandle(GetCurrentProcess(),hChildStdoutWr, GetCurrentProcess(),&hChildStderrWr,0, TRUE,DUPLICATE_SAME_ACCESS))
 			{
-				/* Now create the child process. */ 
+				/* Now create the child process. */
 				STARTUPINFO si;
 				memset(&si, 0, sizeof si);
 				si.cb = sizeof(si);
@@ -139,21 +139,21 @@ int CProcessWnd::Execute(LPCTSTR pszCmd, LPCTSTR pszCmdLine)
 				PROCESS_INFORMATION pi;
 				CString str;
 				str.Format("%s %s", pszCmd, pszCmdLine);
-				if (CreateProcess(NULL, (char*) LPCTSTR(str), NULL, NULL, TRUE, 
+				if (CreateProcess(NULL, (char*) LPCTSTR(str), NULL, NULL, TRUE,
 					DETACHED_PROCESS, NULL, NULL, &si, &pi))
 				{
 					HANDLE hProcess = pi.hProcess;
-					
+
 #define BUFFER_SIZE 4096
 					// read from pipe..
 					char buffer[BUFFER_SIZE];
 					BOOL bDone = FALSE;
-					
+
 					while(1)
 					{
 						DWORD dwCount = 0;
 						DWORD dwRead = 0;
-						
+
 						// read from input handle
 						PeekNamedPipe( hChildStdoutRd_, NULL, NULL, NULL, &dwCount, NULL);
 						if (dwCount)
@@ -185,7 +185,7 @@ int CProcessWnd::Execute(LPCTSTR pszCmd, LPCTSTR pszCmdLine)
 					strTmp.Format("* Windows gave the error message:\r\n   \"%s\"\r\n", GetErrorString());
 					Append(strTmp);
 				}
-				
+
 				CloseHandle(hChildStderrWr);
 			}
 			CloseHandle(hChildStdinRd_);
@@ -202,12 +202,12 @@ int CProcessWnd::Execute(LPCTSTR pszCmd, LPCTSTR pszCmdLine)
 // CProcessWnd message handlers
 
 
-void CProcessWnd::OnTimer(UINT nIDEvent) 
+void CProcessWnd::OnTimer(UINT nIDEvent)
 {
 	CWnd::OnTimer(nIDEvent);
 }
 
-int CProcessWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CProcessWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -230,11 +230,11 @@ int CProcessWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_btnCopyAll.Create("Copy to Clipboard", WS_CHILD | WS_VISIBLE, rctButton, this, IDC_PROCESSWND_COPYALL);
 	m_btnCopyAll.SetButtonStyle(BS_PUSHBUTTON);
-	
+
 	return 0;
 }
 
-void CProcessWnd::OnSize(UINT nType, int cx, int cy) 
+void CProcessWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CWnd::OnSize(nType, cx, cy);
 
@@ -271,7 +271,7 @@ void CProcessWnd::GetReady(void)
 	Clear();
 }
 
-BOOL CProcessWnd::PreTranslateMessage(MSG* pMsg) 
+BOOL CProcessWnd::PreTranslateMessage(MSG* pMsg)
 {
 	// The edit control won't get keyboard commands from the window without this (at least in Win2k)
 	// The right mouse context menu still will not work in w2k for some reason either, although
@@ -289,15 +289,15 @@ static void CopyToClipboard(const CString& text)
 		{
 			HGLOBAL hglbCopy;
 			LPTSTR  tstrCopy;
-			
-			hglbCopy = GlobalAlloc(GMEM_DDESHARE, text.GetLength() + sizeof(TCHAR) ); 
-			
+
+			hglbCopy = GlobalAlloc(GMEM_DDESHARE, text.GetLength() + sizeof(TCHAR) );
+
 			if (hglbCopy != NULL)
 			{
 				tstrCopy = (LPTSTR) GlobalLock(hglbCopy);
 				strcpy(tstrCopy, (LPCTSTR)text);
 				GlobalUnlock(hglbCopy);
-				
+
 				SetClipboardData(CF_TEXT, hglbCopy);
 			}
 		}
@@ -307,7 +307,7 @@ static void CopyToClipboard(const CString& text)
 
 void CProcessWnd::OnCopyAll()
 {
-	// Used to call m_Edit.SetSel(0,1); m_Edit.Copy(); m_Edit.Clear()  
+	// Used to call m_Edit.SetSel(0,1); m_Edit.Copy(); m_Edit.Clear()
 	// but in win9x the clipboard will only receive at most 64k of text from the control
 	CopyToClipboard(m_EditText);
 }

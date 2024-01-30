@@ -85,7 +85,7 @@ void CAI_SentenceBase::UpdateSentenceQueue()
 	{
 		SENTENCEG_PlaySentenceIndex( GetOuter()->edict(), m_nQueuedSentenceIndex, GetVolume(), GetSoundLevel(), 0, GetVoicePitch() );
 
-		const char *pSentenceName = engine->SentenceNameFromIndex( m_nQueuedSentenceIndex ); 
+		const char *pSentenceName = engine->SentenceNameFromIndex( m_nQueuedSentenceIndex );
 		SentenceMsg( "Speaking [from QUEUE]", pSentenceName );
 
 		GetOuter()->JustMadeSound( m_nQueueSoundPriority );
@@ -138,7 +138,7 @@ int CAI_SentenceBase::PlaySentence( const char *pSentence )
 		return -1;
 	}
 
-	const char *pSentenceName = engine->SentenceNameFromIndex( nSentenceIndex ); 
+	const char *pSentenceName = engine->SentenceNameFromIndex( nSentenceIndex );
 	SentenceMsg( "Speaking", pSentenceName );
 	return nSentenceIndex;
 }
@@ -192,8 +192,8 @@ int CAI_SentenceBase::SpeakQueued( const char *pSentence, SentencePriority_t nSo
 	int nSentenceIndex = Speak( pSentence, nSoundPriority, nCriteria );
 	if ( nSentenceIndex >= 0 )
 		return nSentenceIndex;
-	
-	// Queue up the sentence for later playing 
+
+	// Queue up the sentence for later playing
 	int nQueuedSentenceIndex = SENTENCEG_PickRndSz( pSentence );
 	if ( nQueuedSentenceIndex == -1 )
 		return -1;
@@ -204,8 +204,3 @@ int CAI_SentenceBase::SpeakQueued( const char *pSentence, SentencePriority_t nSo
 	m_nQueuedSentenceIndex = nQueuedSentenceIndex;
 	return -1;
 }
-
-
-	
-
-	

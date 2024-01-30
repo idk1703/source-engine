@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 #ifndef SOCKET_CREATOR_H
@@ -28,8 +28,8 @@ struct ISocketCreatorListener
 public:
 	// Methods to allow other classes to allocate data associated w/ sockets
 	// Return false to disallow socket acceptance
-	virtual bool ShouldAcceptSocket( SocketHandle_t hSocket, const netadr_t &netAdr ) = 0; 
-	virtual void OnSocketAccepted( SocketHandle_t hSocket, const netadr_t &netAdr, void** ppData ) = 0; 
+	virtual bool ShouldAcceptSocket( SocketHandle_t hSocket, const netadr_t &netAdr ) = 0;
+	virtual void OnSocketAccepted( SocketHandle_t hSocket, const netadr_t &netAdr, void** ppData ) = 0;
 	virtual void OnSocketClosed( SocketHandle_t hSocket, const netadr_t &netAdr, void* pData ) = 0;
 };
 
@@ -37,7 +37,7 @@ public:
 //-----------------------------------------------------------------------------
 // container class to handle network streams
 //-----------------------------------------------------------------------------
-class CSocketCreator 
+class CSocketCreator
 {
 public:
 	CSocketCreator( ISocketCreatorListener *pListener = NULL );

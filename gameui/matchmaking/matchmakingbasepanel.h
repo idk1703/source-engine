@@ -26,7 +26,7 @@ enum EGameType
 //----------------------------
 class CMatchmakingBasePanel : public CBaseDialog
 {
-	DECLARE_CLASS_SIMPLE( CMatchmakingBasePanel, CBaseDialog ); 
+	DECLARE_CLASS_SIMPLE( CMatchmakingBasePanel, CBaseDialog );
 
 public:
 	CMatchmakingBasePanel(vgui::Panel *parent);
@@ -61,21 +61,21 @@ private:
 	void			OnOpenSystemLinkDialog();
 	void			OnOpenPlayerMatchDialog();
 	void			OnOpenRankedMatchDialog();
-    void			OnOpenAchievementsDialog();
+	void			OnOpenAchievementsDialog();
 
-    //=============================================================================
-    // HPE_BEGIN:
-    // [dwenger] Specific code for CS Achievements Display
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [dwenger] Specific code for CS Achievements Display
+	//=============================================================================
 
-    // $TODO(HPE): Move this to a game-specific location
-    void			OnOpenCSAchievementsDialog();
+	// $TODO(HPE): Move this to a game-specific location
+	void			OnOpenCSAchievementsDialog();
 
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
-    void			OnOpenLeaderboardDialog( const char *pResourceName );
+	void			OnOpenLeaderboardDialog( const char *pResourceName );
 	void			OnOpenSessionOptionsDialog( const char *pResourceName );
 	void			OnOpenSessionLobbyDialog( const char *pResourceName );
 	void			OnOpenSessionBrowserDialog( const char *pResourceName );

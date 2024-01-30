@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -56,11 +56,11 @@ protected:
 
 	int GetSelectedJobIndex();
 
-	
+
 	// Info on how we connected to the database so we can pass it to apps we launch.
 	CString	m_DBName, m_HostName, m_UserName;
-	
-	
+
+
 	IMySQL*	GetMySQL()	{ return m_pSQL; }
 	IMySQL	*m_pSQL;
 	CSysModule *m_hMySQLDLL;

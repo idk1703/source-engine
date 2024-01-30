@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -20,7 +20,7 @@ BEGIN_RECV_TABLE(C_DODSmokeGrenade, DT_DODSmokeGrenade )
 END_NETWORK_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_DODSmokeGrenade::C_DODSmokeGrenade( void )
 {
@@ -68,7 +68,7 @@ float C_DODSmokeGrenade::CalcSmokeCloudRadius( void )
 	float flLifetime = gpGlobals->curtime - m_flSmokeSpawnTime;
 	if( flLifetime > EXPAND_TIME )
 		flLifetime = EXPAND_TIME;
-		
+
 	float flRadius = SMOKE_CLOUD_RADIUS * (float)sin(flLifetime * M_PI * 0.5 / EXPAND_TIME);
 
 	return flRadius;
@@ -125,7 +125,7 @@ void C_DODSmokeGrenade::ClientThink( void )
 		float flCoreDistance = flExpandRadius * 0.3;
 
 		if( testDist < flExpandRadius )
-		{			
+		{
 			float flFadeAlpha = CalcSmokeCloudAlpha();
 
 			if( testDist < flCoreDistance )
@@ -136,6 +136,6 @@ void C_DODSmokeGrenade::ClientThink( void )
 			{
 				EngineGetSmokeFogOverlayAlpha() += (1 - ( testDist - flCoreDistance ) / ( flExpandRadius - flCoreDistance ) ) * flFadeAlpha;
 			}
-		}	
+		}
 	}
 }

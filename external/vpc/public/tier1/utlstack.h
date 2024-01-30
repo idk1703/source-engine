@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -24,7 +24,7 @@
 // by index (they should *never* maintain pointers to elements in the stack).
 //-----------------------------------------------------------------------------
 
-template< class T, class M = CUtlMemory< T > > 
+template< class T, class M = CUtlMemory< T > >
 class CUtlStack
 {
 public:
@@ -104,7 +104,7 @@ inline void CUtlStack<T,M>::ResetDbgInfo()
 //-----------------------------------------------------------------------------
 
 template< class T, class M >
-CUtlStack<T,M>::CUtlStack( int growSize, int initSize )	: 
+CUtlStack<T,M>::CUtlStack( int growSize, int initSize )	:
 	m_Memory(growSize, initSize), m_Size(0)
 {
 	ResetDbgInfo();
@@ -219,7 +219,7 @@ inline bool CUtlStack<T,M>::IsIdxValid( int i ) const
 {
 	return (i >= 0) && (i < m_Size);
 }
- 
+
 //-----------------------------------------------------------------------------
 // Grows the stack
 //-----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -34,8 +34,8 @@ DECLARE_OVERLAY_FACTORY( CHudPlayerOverlay, "player" );
 // THE ACTUAL OVERLAY
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 CHudPlayerOverlay::CHudPlayerOverlay( vgui::Panel *parent, const char *panelName )
 : BaseClass( parent, "CHudPlayerOverlay" )
@@ -52,8 +52,8 @@ CHudPlayerOverlay::CHudPlayerOverlay( vgui::Panel *parent, const char *panelName
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
+// Purpose:
+// Output :
 //-----------------------------------------------------------------------------
 CHudPlayerOverlay::~CHudPlayerOverlay( void )
 {
@@ -70,7 +70,7 @@ void CHudPlayerOverlay::Clear( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudPlayerOverlay::Init( KeyValues* pInitData, C_BaseEntity* pEntity )
 {
@@ -188,8 +188,8 @@ void CHudPlayerOverlay::Hide( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : playerNum - 
+// Purpose:
+// Input  : playerNum -
 //-----------------------------------------------------------------------------
 
 void CHudPlayerOverlay::OnTick( )
@@ -296,7 +296,7 @@ void CHudPlayerOverlay::OnTick( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudPlayerOverlay::Paint()
 {
@@ -313,10 +313,10 @@ void CHudPlayerOverlay::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *panel - 
-//			fg - 
-//			bg - 
+// Purpose:
+// Input  : *panel -
+//			fg -
+//			bg -
 //-----------------------------------------------------------------------------
 void CHudPlayerOverlay::SetColorLevel( vgui::Panel *panel, Color& fg, Color& bg )
 {
@@ -348,7 +348,7 @@ void CHudPlayerOverlay::SetColorLevel( vgui::Panel *panel, Color& fg, Color& bg 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 float CHudPlayerOverlay::GetAlphaFrac( void )

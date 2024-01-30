@@ -236,7 +236,7 @@ void CTFBotMissionSuicideBomber::Detonate( CTFBot *me )
 {
 	// BLAST!
 	m_bHasDetonated = true;
- 
+
 	DispatchParticleEffect( "explosionTrail_seeds_mvm", me->GetAbsOrigin(), me->GetAbsAngles() );
 	DispatchParticleEffect( "fluidSmokeExpl_ring_mvm", me->GetAbsOrigin(), me->GetAbsAngles() );
 
@@ -252,7 +252,7 @@ void CTFBotMissionSuicideBomber::Detonate( CTFBot *me )
 
 			// ACHIEVEMENT_TF_MVM_KILL_SENTRY_BUSTER
 			for ( int iDamager = 0 ; iDamager < MAX_ACHIEVEMENT_HISTORY_SLOTS ; iDamager ++ )
-			{	
+			{
 				EntityHistory_t *damagerHistory = me->m_AchievementData.GetDamagerHistory( iDamager );
 				if ( damagerHistory )
 				{
@@ -396,5 +396,3 @@ QueryResultType CTFBotMissionSuicideBomber::ShouldAttack( const INextBot *me, co
 	// buster never "attacks", just approaches and self-detonates
 	return ANSWER_NO;
 }
-
-

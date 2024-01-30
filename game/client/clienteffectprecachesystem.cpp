@@ -30,7 +30,7 @@ void CClientEffectPrecacheSystem::LevelInitPreEntity( void )
 	{
 		m_Effects[i]->Cache();
 	}
-	
+
 	//FIXME: Double check this
 	//Finally, force the cache of these materials
 	materials->CacheUsedMaterials();

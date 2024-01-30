@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -62,7 +62,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEBreakModel::C_TEBreakModel( void )
 {
@@ -126,19 +126,19 @@ static inline void RecordBreakModel( const Vector &start, const QAngle &angles, 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void TE_BreakModel( IRecipientFilter& filter, float delay,
-	const Vector& pos, const QAngle &angles, const Vector& size, const Vector& vel, 
+	const Vector& pos, const QAngle &angles, const Vector& size, const Vector& vel,
 	int modelindex, int randomization, int count, float time, int flags )
 {
 	tempents->BreakModel( pos, angles, size, vel, randomization, time, count, modelindex, flags );
-	RecordBreakModel( pos, angles, size, vel, randomization, time, count, modelindex, flags ); 
+	RecordBreakModel( pos, angles, size, vel, randomization, time, count, modelindex, flags );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TEBreakModel::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -147,7 +147,7 @@ void C_TEBreakModel::PostDataUpdate( DataUpdateType_t updateType )
 	tempents->BreakModel( m_vecOrigin, m_angRotation, m_vecSize, m_vecVelocity,
 		m_nRandomization, m_fTime, m_nCount, m_nModelIndex, m_nFlags );
 	RecordBreakModel( m_vecOrigin, m_angRotation, m_vecSize, m_vecVelocity,
-		m_nRandomization, m_fTime, m_nCount, m_nModelIndex, m_nFlags ); 
+		m_nRandomization, m_fTime, m_nCount, m_nModelIndex, m_nFlags );
 }
 
 void TE_BreakModel( IRecipientFilter& filter, float delay, KeyValues *pKeyValues )
@@ -176,4 +176,3 @@ void TE_BreakModel( IRecipientFilter& filter, float delay, KeyValues *pKeyValues
 	TE_BreakModel( filter, 0.0f, vecOrigin, angles, vecSize, vecVel,
 		nModelIndex, nRandomization, nCount, flDuration, nFlags );
 }
-

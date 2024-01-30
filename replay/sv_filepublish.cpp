@@ -207,7 +207,7 @@ JobStatus_t	CCompressionJob::DoExecute()
 		DBG( "Compression succeeded.\n" );
 
 		nResult = JOB_OK;
-	
+
 		// Set result to compressed buffer
 		m_pResult = pCompressed;
 
@@ -773,7 +773,7 @@ IFilePublisher *SV_PublishFile( const PublishFileParams_t &params )
 	IFilePublisher *pResult;
 
 	pResult = new CLocalFileserverPublisher();
-	
+
 	pResult->Publish( params );
 
 	return pResult;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -76,7 +76,7 @@ CDmePicker::~CDmePicker()
 //-----------------------------------------------------------------------------
 void CDmePicker::Activate( const CUtlVector< DmePickerInfo_t >&vec )
 {
-	m_pDmeBrowser->RemoveAll();	
+	m_pDmeBrowser->RemoveAll();
 
 	int nCount = vec.Count();
 	for ( int i = 0; i < nCount; ++i )
@@ -86,7 +86,7 @@ void CDmePicker::Activate( const CUtlVector< DmePickerInfo_t >&vec )
 		const char *pItemName = vec[i].m_pChoiceString ? vec[i].m_pChoiceString : pElementName;
 
 		KeyValues *kv = new KeyValues( "node", "dme", pItemName );
-		kv->SetInt( "dmeHandle", vec[i].m_hElement ); 
+		kv->SetInt( "dmeHandle", vec[i].m_hElement );
 		int nItemID = m_pDmeBrowser->AddItem( kv, 0, false, false );
 
 		KeyValues *pDrag = new KeyValues( "drag", "text", pElementName );
@@ -100,7 +100,7 @@ void CDmePicker::Activate( const CUtlVector< DmePickerInfo_t >&vec )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmePicker::OnKeyCodePressed( KeyCode code )
 {
@@ -186,7 +186,7 @@ CDmElement *CDmePicker::GetSelectedDme( )
 // Purpose: Modal picker frame
 //
 //-----------------------------------------------------------------------------
-CDmePickerFrame::CDmePickerFrame( vgui::Panel *pParent, const char *pTitle ) : 
+CDmePickerFrame::CDmePickerFrame( vgui::Panel *pParent, const char *pTitle ) :
 BaseClass( pParent, "DmePickerFrame" )
 {
 	m_pContextKeyValues = NULL;
@@ -276,5 +276,3 @@ void CDmePickerFrame::OnCommand( const char *pCommand )
 
 	BaseClass::OnCommand( pCommand );
 }
-
-

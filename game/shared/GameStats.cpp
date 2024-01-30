@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "cbase.h"
@@ -21,7 +21,7 @@
 #include <time.h>
 #ifdef GAME_DLL
 #include "vehicle_base.h"
-#endif 
+#endif
 
 #if defined( _X360 )
 #include "xbox/xbox_win32stubs.h"
@@ -420,7 +420,7 @@ bool CBaseGameStats::SaveToFileNOW( bool bForceSyncWrite /* = false */ )
 	buf.Put( s_szPseudoUniqueID, 16 );
 
 	if( ShouldTrackStandardStats() )
-		m_BasicStats.SaveToBuffer( buf ); 
+		m_BasicStats.SaveToBuffer( buf );
 	else
 		buf.PutInt( GAMESTATS_STANDARD_NOT_SAVED );
 
@@ -521,7 +521,7 @@ void CBaseGameStats::Event_IncrementCountedStatistic( const Vector& vecAbsOrigin
 //=============================================================================
 void CBaseGameStats::Event_WindowShattered( CBasePlayer *pPlayer )
 {
-    StatsLog( "In Event_WindowShattered\n" );
+	StatsLog( "In Event_WindowShattered\n" );
 }
 //=============================================================================
 // HPE_END
@@ -562,9 +562,9 @@ bool CBaseGameStats::UploadStatsFileNOW( void )
 	if( gamestatsuploader )
 	{
 		return gamestatsuploader->UploadGameStats( "",
-												   1,
-												   uBlobSize,
-												   pvBlobData );
+													1,
+													uBlobSize,
+													pvBlobData );
 	}
 
 	return false;
@@ -585,8 +585,8 @@ bool CBaseGameStats::LoadFromFile( void )
 		filesystem->RelativePathToFullPath( gamestats->GetStatSaveFileName(), GAMESTATS_PATHID, fullpath, sizeof( fullpath ) );
 		StatsLog( "Loading stats from '%s'\n", fullpath );
 	}
-	
-	CUtlBuffer buf; 
+
+	CUtlBuffer buf;
 	if ( filesystem->ReadFile( gamestats->GetStatSaveFileName(), GAMESTATS_PATHID, buf ) )
 	{
 		bool bRetVal = true;
@@ -602,7 +602,7 @@ bool CBaseGameStats::LoadFromFile( void )
 		CBGSDriver.m_szLoadedUserID[ sizeof( CBGSDriver.m_szLoadedUserID ) - 1 ] = 0;
 
 		if ( s_szPseudoUniqueID[ 0 ] != 0 )
-		{			
+		{
 			if ( Q_stricmp( CBGSDriver.m_szLoadedUserID, s_szPseudoUniqueID ) )
 			{
 				//UserID changed, blow away log!!!
@@ -615,7 +615,7 @@ bool CBaseGameStats::LoadFromFile( void )
 				gamestats->LoadingEvent_PlayerIDDifferentThanLoadedStats();
 				bRetVal = false;
 			}
-		
+
 			if ( version <= GAMESTATS_FILE_VERSION_OLD5 )
 			{
 				gamestats->m_BasicStats.Clear();
@@ -657,7 +657,7 @@ bool CBaseGameStats::LoadFromFile( void )
 		filesystem->RemoveFile( GAMESTATS_LOG_FILE, GAMESTATS_PATHID );
 	}
 
-	return false;	
+	return false;
 }
 
 void CBaseGameStats::CollectData( StatSendType_t sendType )
@@ -719,9 +719,9 @@ bool CBaseGameStats_Driver::Init()
 		gamestats->LoadFromFile();
 	}
 #endif // GAME_DLL
-		
+
 	if ( s_szPseudoUniqueID[ 0 ] != 0 )
-	{			
+	{
 		gamestats->Event_Init();
 #ifdef GAME_DLL
 		if ( gamestats->UseOldFormat() )
@@ -776,7 +776,7 @@ void CBaseGameStats_Driver::Shutdown()
 
 	if ( m_pGamestatsData != NULL )
 	{
-#ifdef CLIENT_DLL 
+#ifdef CLIENT_DLL
 		engine->SetGamestatsData( NULL );
 #endif
 		delete m_pGamestatsData;
@@ -788,7 +788,7 @@ void CBaseGameStats_Driver::UpdatePerfStats( void )
 {
 	float flCurTime = Plat_FloatTime();
 	if (
-		( m_flLastSampleTime == -1 ) || 
+		( m_flLastSampleTime == -1 ) ||
 		( flCurTime - m_flLastSampleTime >= STATS_RECORD_INTERVAL ) )
 	{
 		if ( ( m_flLastRealTime > 0 ) && ( flCurTime > m_flLastRealTime ) )
@@ -797,7 +797,7 @@ void CBaseGameStats_Driver::UpdatePerfStats( void )
 			StatsBufferRecord_t &stat = m_StatsBuffer[m_nWriteIndex];
 			stat.m_flFrameRate = flFrameRate;
 #ifdef CLIENT_DLL
-			// The stat system isn't designed to handle split screen players. Until it get's 
+			// The stat system isn't designed to handle split screen players. Until it get's
 			// redesigned, let's take the first player's split screen ping, since all other stats
 			// will be based on the first player
 			IGameResources *gr = GameResources();
@@ -951,9 +951,9 @@ void CBaseGameStats_Driver::LevelShutdown()
 			if ( gamestats->ShouldSendDataOnLevelShutdown() )
 			{
 				SendData();
-			}	
+			}
 		}
-		m_bInLevel = false;	
+		m_bInLevel = false;
 	}
 }
 
@@ -998,7 +998,7 @@ void CBaseGameStats_Driver::CollectData( StatSendType_t sendType )
 		{
 			// make a map node in the KeyValues to use for this level
 			char szMap[MAX_PATH+1]="";
-#ifdef CLIENT_DLL	
+#ifdef CLIENT_DLL
 			Q_FileBase( MapName(), szMap, ARRAYSIZE( szMap ) );
 #else
 			Q_strncpy( szMap, gpGlobals->mapname.ToCStr(), ARRAYSIZE( szMap ) );
@@ -1021,7 +1021,7 @@ void CBaseGameStats_Driver::CollectData( StatSendType_t sendType )
 
 	// add common data
 	pGamestatsData->m_bHaveData |= AddBaseDataForSend( pKV, sendType );
-	
+
 #if defined(STEAMWORKS_GAMESTATS_ACTIVE)
 	// At the end of every map, clients submit their perfdata for the map
 	if ( sendType == STATSEND_LEVELSHUTDOWN && pGamestatsData && pGamestatsData->m_bHaveData )
@@ -1062,7 +1062,7 @@ void CBaseGameStats_Driver::SendData()
 		// upload the file to Steam
 		if ( gamestatsuploader )
 			gamestatsuploader->UploadGameStats( "", 1, buf.TellPut(), buf.Base() );
-	}	
+	}
 
 	ResetData();
 }
@@ -1109,7 +1109,7 @@ bool CBaseGameStats_Driver::AddBaseDataForSend( KeyValues *pKV, StatSendType_t s
 			pKV->AddSubKey( pKVData );
 
 			AddLoadTimeMainMenu( pKV );
-			// If the user quits directly from the map, we still want to (possibly) capture their map load time, so 
+			// If the user quits directly from the map, we still want to (possibly) capture their map load time, so
 			// do add it here. It will not be added if it was already attached to a session.
 			AddLoadTimeMap( pKV );
 
@@ -1144,7 +1144,7 @@ bool CBaseGameStats_Driver::AddBaseDataForSend( KeyValues *pKV, StatSendType_t s
 			pKVPerf->SetFloat( "MaxFPS", flMaxFrameRate );
 			pKVPerf->SetFloat( "StdDevFPS", flStandardDeviationFrameRate );
 
-			// Determine the min/avg/max Server Ping and store the results 
+			// Determine the min/avg/max Server Ping and store the results
 			float flAverageServerPing = AverageStat( &StatsBufferRecord_t::m_flServerPing );
 			pKVPerf->SetFloat( "AvgServerPing", flAverageServerPing );
 
@@ -1185,7 +1185,7 @@ bool CBaseGameStats_Driver::AddBaseDataForSend( KeyValues *pKV, StatSendType_t s
 
 			AddLoadTimeMainMenu(pKV);
 			AddLoadTimeMap(pKV);
-			
+
 			return true;
 		}
 #endif
@@ -1227,7 +1227,7 @@ void CBaseGameStats_Driver::ResetData()
 	pKV->SetUint64( "CPUFeatures1", cpu.m_nFeatures[ 1 ] );
 	pKV->SetUint64( "CPUFeatures2", cpu.m_nFeatures[ 2 ] );
 	pKV->SetInt( "NumCores", cpu.m_nPhysicalProcessors );
-	
+
 	// Capture memory stats as well.
 	MemoryInformation memInfo;
 	if ( GetMemoryInformation( &memInfo ) )
@@ -1237,7 +1237,7 @@ void CBaseGameStats_Driver::ResetData()
 		pKV->SetInt( "VirtualRamMbTotal",      memInfo.m_nVirtualRamMbTotal );
 		pKV->SetInt( "VirtualRamMbAvailable",  memInfo.m_nVirtualRamMbAvailable );
 	}
-			
+
 	MaterialAdapterInfo_t gpu;
 	materials->GetDisplayAdapterInfo( materials->GetCurrentAdapter(), gpu );
 
@@ -1270,7 +1270,7 @@ void CBaseGameStats_Driver::ResetData()
 		m_StatsBuffer[i].m_flFrameRate = 0;
 		m_StatsBuffer[i].m_flServerPing = 0;
 	}
-	
+
 	m_bBufferFull = false;
 	m_nWriteIndex = 0;
 #endif
@@ -1481,7 +1481,7 @@ void CBaseGameStats::SetHL2UnlockedChapterStatistic( void )
 			// free
 			delete [] configBuffer;
 		}
-	}	
+	}
 }
 
 static void CC_ResetGameStats( const CCommand &args )

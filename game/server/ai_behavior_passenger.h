@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -142,11 +142,11 @@ public:
 	CPropVehicleDriveable *GetTargetVehicle( void ) const { return m_hVehicle; }
 
 	PassengerState_e	GetPassengerState( void ) const { return m_PassengerState; }
-	
+
 	virtual void OnRestore();
 
 protected:
-	
+
 	virtual int		SelectTransitionSchedule( void );
 
 	bool			SpeakIfAllowed( AIConcept_t concept, const char *modifiers = NULL, bool bRespondingToPlayer = false, char *pszOutResponseChosen = NULL, size_t bufsize = 0 );
@@ -161,7 +161,7 @@ protected:
 	// ------------------------------------------
 	//  Entry/exit transition code
 	// ------------------------------------------
-	
+
 	virtual void	FinishEnterVehicle( void );
 	virtual void	FinishExitVehicle( void );
 
@@ -218,7 +218,7 @@ class CTraceFilterVehicleTransition : public CTraceFilterSkipTwoEntities
 public:
 	DECLARE_CLASS( CTraceFilterVehicleTransition, CTraceFilterSkipTwoEntities );
 
-	CTraceFilterVehicleTransition( const IHandleEntity *passentity, const IHandleEntity *passentity2, int collisionGroup ) : 
+	CTraceFilterVehicleTransition( const IHandleEntity *passentity, const IHandleEntity *passentity2, int collisionGroup ) :
 	CTraceFilterSkipTwoEntities( passentity, passentity2, collisionGroup ) {}
 
 	bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )

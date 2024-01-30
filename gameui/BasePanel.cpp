@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -124,7 +124,7 @@ VPANEL GetGameUIBasePanel()
 	return BasePanel()->GetVPanel();
 }
 
-CGameMenuItem::CGameMenuItem(vgui::Menu *parent, const char *name)  : BaseClass(parent, name, "GameMenuItem") 
+CGameMenuItem::CGameMenuItem(vgui::Menu *parent, const char *name)  : BaseClass(parent, name, "GameMenuItem")
 {
 	m_bRightAligned = false;
 }
@@ -205,7 +205,7 @@ class CGameMenu : public vgui::Menu
 public:
 	DECLARE_CLASS_SIMPLE( CGameMenu, vgui::Menu );
 
-	CGameMenu(vgui::Panel *parent, const char *name) : BaseClass(parent, name) 
+	CGameMenu(vgui::Panel *parent, const char *name) : BaseClass(parent, name)
 	{
 		if ( GameUI().IsConsoleUI() )
 		{
@@ -657,7 +657,7 @@ bool g_bIsCreatingNewGameMenuForPreFetching = false;
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
 CBasePanel::CBasePanel() : Panel(NULL, "BaseGameUIPanel")
-{	
+{
 	g_pBasePanel = this;
 	m_bLevelLoading = false;
 	m_eBackgroundState = BACKGROUND_INITIAL;
@@ -767,7 +767,7 @@ CBasePanel::CBasePanel() : Panel(NULL, "BaseGameUIPanel")
 
 		m_hControllerDialog = new CControllerDialog( this );
 		m_hControllerDialog->MarkForDeletion();
-		
+
 		ArmFirstMenuItem();
 		m_pConsoleAnimationController->StartAnimationSequence( "InitializeUILayout" );
 	}
@@ -1039,8 +1039,8 @@ void CBasePanel::UpdateBackgroundState()
 	for ( i = 0; i < GetChildCount(); ++i )
 	{
 		VPANEL child = ipanel()->GetChild( GetVPanel(), i );
-		if ( child 
-			&& ipanel()->IsVisible( child ) 
+		if ( child
+			&& ipanel()->IsVisible( child )
 			&& ipanel()->IsPopup( child )
 			&& child != m_pGameMenu->GetVPanel() )
 		{
@@ -1052,8 +1052,8 @@ void CBasePanel::UpdateBackgroundState()
 	for ( i = 0; i < ipanel()->GetChildCount( parent ); ++i )
 	{
 		VPANEL child = ipanel()->GetChild( parent, i );
-		if ( child 
-			&& ipanel()->IsVisible( child ) 
+		if ( child
+			&& ipanel()->IsVisible( child )
 			&& ipanel()->IsPopup( child )
 			&& child != GetVPanel() )
 		{
@@ -1378,7 +1378,7 @@ void CBasePanel::DrawBackgroundImage()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::CreateGameMenu()
 {
@@ -1405,7 +1405,7 @@ void CBasePanel::CreateGameMenu()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::CreateGameLogo()
 {
@@ -1542,7 +1542,7 @@ void CBasePanel::RunFrame()
 		{
 			m_bPlatformMenuInitialized = true;
 		}
-	} 
+	}
 
 	// Check to see if a pending async task has already finished
 	if ( m_pAsyncJob && !m_pAsyncJob->m_hThreadHandle )
@@ -1810,7 +1810,7 @@ void CBasePanel::OnGameUIActivated()
 		m_bEverActivated = true;
 
 #if defined( _X360 )
-		
+
 		// Open all active containers if we have a valid storage device
 		if ( XBX_GetPrimaryUserId() != XBX_INVALID_USER_ID && XBX_GetStorageDeviceId() != XBX_INVALID_STORAGE_ID && XBX_GetStorageDeviceId() != XBX_STORAGE_DECLINED )
 		{
@@ -1859,10 +1859,10 @@ void CBasePanel::OnGameUIActivated()
 		{
 			OnCommand( "OpenPauseMenu" );
 		}
- 		else
+		else
 		{
 			RunMenuCommand( "OpenMatchmakingBasePanel" );
- 		}
+		}
 
 		if ( m_hAchievementsDialog.Get() )
 		{
@@ -1969,11 +1969,11 @@ void CBasePanel::RunMenuCommand(const char *command)
 	}
 	else if ( !Q_stricmp( command, "OpenLoadCommentaryDialog" ) )
 	{
-		OnOpenLoadCommentaryDialog();	
+		OnOpenLoadCommentaryDialog();
 	}
 	else if ( !Q_stricmp( command, "OpenLoadSingleplayerCommentaryDialog" ) )
 	{
-		OpenLoadSingleplayerCommentaryDialog();	
+		OpenLoadSingleplayerCommentaryDialog();
 	}
 	else if ( !Q_stricmp( command, "OpenMatchmakingBasePanel" ) )
 	{
@@ -1996,28 +1996,28 @@ void CBasePanel::RunMenuCommand(const char *command)
 			OnOpenAchievementsDialog_Xbox();
 		}
 	}
-    //=============================================================================
-    // HPE_BEGIN:
-    // [dwenger] Use cs-specific achievements dialog
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [dwenger] Use cs-specific achievements dialog
+	//=============================================================================
 
-    else if ( !Q_stricmp( command, "OpenCSAchievementsDialog" ) )
-    {
-        if ( IsPC() )
-        {
-            if ( !steamapicontext->SteamUser() || !steamapicontext->SteamUser()->BLoggedOn() )
-            {
-                vgui::MessageBox *pMessageBox = new vgui::MessageBox("#GameUI_Achievements_SteamRequired_Title", "#GameUI_Achievements_SteamRequired_Message", this );
-                pMessageBox->DoModal();
-                return;
-            }
+	else if ( !Q_stricmp( command, "OpenCSAchievementsDialog" ) )
+	{
+		if ( IsPC() )
+		{
+			if ( !steamapicontext->SteamUser() || !steamapicontext->SteamUser()->BLoggedOn() )
+			{
+				vgui::MessageBox *pMessageBox = new vgui::MessageBox("#GameUI_Achievements_SteamRequired_Title", "#GameUI_Achievements_SteamRequired_Message", this );
+				pMessageBox->DoModal();
+				return;
+			}
 
 			OnOpenCSAchievementsDialog();
-        }
-    }
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+		}
+	}
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
 	else if ( !Q_stricmp( command, "AchievementsDialogClosing" ) )
 	{
@@ -2042,21 +2042,21 @@ void CBasePanel::RunMenuCommand(const char *command)
 		}
 		else
 		{
-            //=============================================================================
-            // HPE_BEGIN:
-            // [dwenger] Shut down achievements panel
-            //=============================================================================
+			//=============================================================================
+			// HPE_BEGIN:
+			// [dwenger] Shut down achievements panel
+			//=============================================================================
 
-            if ( GameClientExports() )
-            {
-                GameClientExports()->ShutdownAchievementPanel();
-            }
+			if ( GameClientExports() )
+			{
+				GameClientExports()->ShutdownAchievementPanel();
+			}
 
-            //=============================================================================
-            // HPE_END
-            //=============================================================================
+			//=============================================================================
+			// HPE_END
+			//=============================================================================
 
-            // hide everything while we quit
+			// hide everything while we quit
 			SetVisible( false );
 			vgui::surface()->RestrictPaintToSinglePanel( GetVPanel() );
 			engine->ClientCmd_Unrestricted( "quit\n" );
@@ -2133,7 +2133,7 @@ void CBasePanel::RunMenuCommand(const char *command)
 		m_bUserRefusedSignIn = true;
 		if ( m_strPostPromptCommand.IsEmpty() == false )
 		{
-			OnCommand( m_strPostPromptCommand );		
+			OnCommand( m_strPostPromptCommand );
 		}
 	}
 	else if ( !Q_stricmp( command, "RequiredSignInDenied" ) )
@@ -2249,28 +2249,28 @@ bool CBasePanel::IsPromptableCommand( const char *command )
 {
 	// Blech!
 	if ( !Q_stricmp( command, "OpenNewGameDialog" ) ||
-		 !Q_stricmp( command, "OpenLoadGameDialog" ) ||
-		 !Q_stricmp( command, "OpenSaveGameDialog" ) ||
-		 !Q_stricmp( command, "OpenBonusMapsDialog" ) ||
-		 !Q_stricmp( command, "OpenOptionsDialog" ) ||
-		 !Q_stricmp( command, "OpenControllerDialog" ) ||
-		 !Q_stricmp( command, "OpenLoadCommentaryDialog" ) ||
-         !Q_stricmp( command, "OpenLoadSingleplayerCommentaryDialog" ) ||
-         !Q_stricmp( command, "OpenAchievementsDialog" ) ||
+		!Q_stricmp( command, "OpenLoadGameDialog" ) ||
+		!Q_stricmp( command, "OpenSaveGameDialog" ) ||
+		!Q_stricmp( command, "OpenBonusMapsDialog" ) ||
+		!Q_stricmp( command, "OpenOptionsDialog" ) ||
+		!Q_stricmp( command, "OpenControllerDialog" ) ||
+		!Q_stricmp( command, "OpenLoadCommentaryDialog" ) ||
+		!Q_stricmp( command, "OpenLoadSingleplayerCommentaryDialog" ) ||
+		!Q_stricmp( command, "OpenAchievementsDialog" ) ||
 
-         //=============================================================================
-         // HPE_BEGIN:
-         // [dwenger] Use cs-specific achievements dialog
-         //=============================================================================
+		//=============================================================================
+		// HPE_BEGIN:
+		// [dwenger] Use cs-specific achievements dialog
+		//=============================================================================
 
-		 !Q_stricmp( command, "OpenCSAchievementsDialog" ) )
+		!Q_stricmp( command, "OpenCSAchievementsDialog" ) )
 
-         //=============================================================================
-         // HPE_END
-         //=============================================================================
+		//=============================================================================
+		// HPE_END
+		//=============================================================================
 
 	{
-		 return true;
+		return true;
 	}
 
 	return false;
@@ -2285,7 +2285,7 @@ static unsigned PanelJobWrapperFn( void *pvContext )
 	CBasePanel::CAsyncJobContext *pAsync = reinterpret_cast< CBasePanel::CAsyncJobContext * >( pvContext );
 
 	float const flTimeStart = Plat_FloatTime();
-	
+
 	pAsync->ExecuteAsync();
 
 	float const flElapsedTime = Plat_FloatTime() - flTimeStart;
@@ -2334,20 +2334,20 @@ bool CBasePanel::CommandRequiresSignIn( const char *command )
 	// Blech again!
 	if ( !Q_stricmp( command, "OpenAchievementsDialog" ) ||
 
-        //=============================================================================
-        // HPE_BEGIN:
-        // [dwenger] Use cs-specific achievements dialog
-        //=============================================================================
+		//=============================================================================
+		// HPE_BEGIN:
+		// [dwenger] Use cs-specific achievements dialog
+		//=============================================================================
 
-         !Q_stricmp( command, "OpenCSAchievementsDialog" ) ||
+		!Q_stricmp( command, "OpenCSAchievementsDialog" ) ||
 
-         //=============================================================================
-         // HPE_END
-         //=============================================================================
+		//=============================================================================
+		// HPE_END
+		//=============================================================================
 
-         !Q_stricmp( command, "OpenLoadGameDialog" ) ||
-		 !Q_stricmp( command, "OpenSaveGameDialog" ) ||
-		 !Q_stricmp( command, "OpenRankingsDialog" ) )
+		!Q_stricmp( command, "OpenLoadGameDialog" ) ||
+		!Q_stricmp( command, "OpenSaveGameDialog" ) ||
+		!Q_stricmp( command, "OpenRankingsDialog" ) )
 		return true;
 
 	return false;
@@ -2360,7 +2360,7 @@ bool CBasePanel::CommandRequiresStorageDevice( const char *command )
 {
 	// Anything which touches the storage device must prompt
 	if ( !Q_stricmp( command, "OpenSaveGameDialog" ) ||
-		 !Q_stricmp( command, "OpenLoadGameDialog" ) )
+		!Q_stricmp( command, "OpenLoadGameDialog" ) )
 		return true;
 
 	return false;
@@ -2373,7 +2373,7 @@ bool CBasePanel::CommandRespectsSignInDenied( const char *command )
 {
 	// Anything which touches the user profile must prompt
 	if ( !Q_stricmp( command, "OpenOptionsDialog" ) ||
-		 !Q_stricmp( command, "OpenControllerDialog" ) )
+		!Q_stricmp( command, "OpenControllerDialog" ) )
 		return true;
 
 	return false;
@@ -2559,11 +2559,11 @@ bool CBasePanel::HandleSignInRequest( const char *command )
 		// Blade has returned with nothing
 		if ( m_bUserRefusedSignIn )
 			return true;
-		
+
 		// User has not denied the storage device, so ask
 		ShowMessageDialog( MD_PROMPT_SIGNIN );
 		m_strPostPromptCommand = command;
-		
+
 		// Do not run command
 		return false;
 	}
@@ -2586,15 +2586,15 @@ bool CBasePanel::HandleSignInRequest( const char *command )
 		m_strPostPromptCommand = command;
 		m_bWaitingForUserSignIn = true;
 		m_bUserRefusedSignIn = false;
-		return false;	
+		return false;
 	}
 #endif // _X360
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *command - 
+// Purpose:
+// Input  : *command -
 //-----------------------------------------------------------------------------
 bool CBasePanel::HandleStorageDeviceRequest( const char *command )
 {
@@ -2608,7 +2608,7 @@ bool CBasePanel::HandleStorageDeviceRequest( const char *command )
 
 	// If we have a post-prompt command, we're coming back into the call from that prompt
 	bool bQueuedCall = ( m_strPostPromptCommand.IsEmpty() == false );
-	
+
 	// Are we returning from a prompt?
 	if ( bQueuedCall && m_bStorageBladeShown )
 	{
@@ -2619,7 +2619,7 @@ bool CBasePanel::HandleStorageDeviceRequest( const char *command )
 		// Prompt them
 		ShowMessageDialog( MD_PROMPT_STORAGE_DEVICE );
 		m_strPostPromptCommand = command;
-		
+
 		// Do not run the command
 		return false;
 	}
@@ -2639,7 +2639,7 @@ bool CBasePanel::HandleStorageDeviceRequest( const char *command )
 			OnDeviceAttached();
 			return true;
 		}
-#endif // 
+#endif //
 
 		// If the message is required first, then do that instead
 		if ( CommandRequiresStorageDevice( command ) )
@@ -2710,7 +2710,7 @@ void CBasePanel::OnCommand( const char *command )
 			// Handle the sign in case
 			if ( HandleSignInRequest( command ) == false )
 				return;
-			
+
 			// Handle storage
 			if ( HandleStorageDeviceRequest( command ) == false )
 				return;
@@ -2723,7 +2723,7 @@ void CBasePanel::OnCommand( const char *command )
 #endif // _X360
 
 		RunAnimationWithCallback( this, command, new KeyValues( "RunMenuCommand", "command", command ) );
-	
+
 		// Clear our pending command if we just executed it
 		ClearPostPromptCommand( command );
 	}
@@ -2735,7 +2735,7 @@ void CBasePanel::OnCommand( const char *command )
 
 //-----------------------------------------------------------------------------
 // Purpose: runs an animation sequence, then calls a message mapped function
-//			when the animation is complete. 
+//			when the animation is complete.
 //-----------------------------------------------------------------------------
 void CBasePanel::RunAnimationWithCallback( vgui::Panel *parent, const char *animName, KeyValues *msgFunc )
 {
@@ -2914,7 +2914,7 @@ void CBasePanel::OnOpenQuitConfirmationDialog()
 		if ( !GameUI().HasSavedThisMenuSession() && GameUI().IsInLevel() && engine->GetMaxClients() == 1 )
 		{
 			// single player, progress will be lost...
-			ShowMessageDialog( MD_SAVE_BEFORE_QUIT ); 
+			ShowMessageDialog( MD_SAVE_BEFORE_QUIT );
 		}
 		else
 		{
@@ -2972,7 +2972,7 @@ void CBasePanel::OnOpenDisconnectConfirmationDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenNewGameDialog(const char *chapter )
 {
@@ -2992,7 +2992,7 @@ void CBasePanel::OnOpenNewGameDialog(const char *chapter )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenBonusMapsDialog( void )
 {
@@ -3006,7 +3006,7 @@ void CBasePanel::OnOpenBonusMapsDialog( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenLoadGameDialog()
 {
@@ -3019,7 +3019,7 @@ void CBasePanel::OnOpenLoadGameDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenLoadGameDialog_Xbox()
 {
@@ -3032,7 +3032,7 @@ void CBasePanel::OnOpenLoadGameDialog_Xbox()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenSaveGameDialog()
 {
@@ -3045,7 +3045,7 @@ void CBasePanel::OnOpenSaveGameDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenSaveGameDialog_Xbox()
 {
@@ -3058,7 +3058,7 @@ void CBasePanel::OnOpenSaveGameDialog_Xbox()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenOptionsDialog()
 {
@@ -3073,7 +3073,7 @@ void CBasePanel::OnOpenOptionsDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenOptionsDialog_Xbox()
 {
@@ -3098,7 +3098,7 @@ void CBasePanel::ApplyOptionsDialogSettings()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenControllerDialog()
 {
@@ -3112,7 +3112,7 @@ void CBasePanel::OnOpenControllerDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenBenchmarkDialog()
 {
@@ -3125,7 +3125,7 @@ void CBasePanel::OnOpenBenchmarkDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenServerBrowser()
 {
@@ -3133,7 +3133,7 @@ void CBasePanel::OnOpenServerBrowser()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenFriendsDialog()
 {
@@ -3141,7 +3141,7 @@ void CBasePanel::OnOpenFriendsDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenDemoDialog()
 {
@@ -3154,7 +3154,7 @@ void CBasePanel::OnOpenDemoDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenCreateMultiplayerGameDialog()
 {
@@ -3167,7 +3167,7 @@ void CBasePanel::OnOpenCreateMultiplayerGameDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenChangeGameDialog()
 {
@@ -3185,7 +3185,7 @@ void CBasePanel::OnOpenChangeGameDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenPlayerListDialog()
 {
@@ -3198,7 +3198,7 @@ void CBasePanel::OnOpenPlayerListDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenLoadCommentaryDialog()
 {
@@ -3211,7 +3211,7 @@ void CBasePanel::OnOpenLoadCommentaryDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OpenLoadSingleplayerCommentaryDialog()
 {
@@ -3226,7 +3226,7 @@ void CBasePanel::OpenLoadSingleplayerCommentaryDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenAchievementsDialog()
 {
@@ -3245,8 +3245,8 @@ void CBasePanel::OnOpenAchievementsDialog()
 
 void CBasePanel::OnOpenCSAchievementsDialog()
 {
-    if ( GameClientExports() )
-    {
+	if ( GameClientExports() )
+	{
 		int screenWide = 0;
 		int screenHeight = 0;
 		engine->GetScreenSize( screenWide, screenHeight );
@@ -3266,7 +3266,7 @@ void CBasePanel::OnOpenCSAchievementsDialog()
 			GameClientExports()->CreateAchievementsPanel( this );
 			GameClientExports()->DisplayAchievementPanel();
 		}
-    }
+	}
 }
 
 //=============================================================================
@@ -3284,7 +3284,7 @@ void CBasePanel::OnOpenAchievementsDialog_Xbox()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnOpenMatchmakingBasePanel()
 {
@@ -3302,7 +3302,7 @@ void CBasePanel::OnOpenMatchmakingBasePanel()
 	}
 
 	// Hide the standard game menu
-	for ( int i = 0; i < m_pGameMenuButtons.Count(); ++i ) 
+	for ( int i = 0; i < m_pGameMenuButtons.Count(); ++i )
 	{
 		m_pGameMenuButtons[i]->SetVisible( false );
 	}
@@ -3400,7 +3400,7 @@ void CBasePanel::SystemNotification( const int notification )
 			m_bUserRefusedSignIn = false;
 			m_bUserRefusedStorageDevice = false;
 			m_bStorageBladeShown = false;
-		}	
+		}
 		UpdateRichPresenceInfo();
 		engine->GetAchievementMgr()->DownloadUserData();
 		engine->GetAchievementMgr()->EnsureGlobalStateLoaded();
@@ -3485,9 +3485,9 @@ void CBasePanel::SystemNotification( const int notification )
 			{
 				// Done waiting
 				xboxsystem->ReleaseAsyncHandle( m_hStorageDeviceChangeHandle );
-				
+
 				m_bWaitingForStorageDeviceHandle = false;
-				
+
 				// If we selected something, validate it
 				if ( m_iStorageID != XBX_INVALID_STORAGE_ID )
 				{
@@ -3528,7 +3528,7 @@ void CBasePanel::SystemNotification( const int notification )
 				}
 			}
 		}
-		
+
 		// If we're waiting for the user to sign in, and check if they selected a usable profile
 		if ( m_bWaitingForUserSignIn )
 		{
@@ -3580,7 +3580,7 @@ void CBasePanel::SessionSearchResult( int searchIdx, void *pHostData, XSESSION_S
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnChangeStorageDevice( void )
 {
@@ -3620,7 +3620,7 @@ void CBasePanel::OnCreditsFinished( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::OnGameUIHidden()
 {
@@ -3656,15 +3656,15 @@ void CBasePanel::SetMenuAlpha(int alpha)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int CBasePanel::GetMenuAlpha( void ) 
-{ 
-	return m_pGameMenu->GetAlpha(); 
+int CBasePanel::GetMenuAlpha( void )
+{
+	return m_pGameMenu->GetAlpha();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::SetMainMenuOverride( vgui::VPANEL panel )
 {
@@ -3733,7 +3733,7 @@ void CBasePanel::FinishDialogClose( void )
 //-----------------------------------------------------------------------------
 // Purpose: xbox UI panel that displays button icons and help text for all menus
 //-----------------------------------------------------------------------------
-CFooterPanel::CFooterPanel( Panel *parent, const char *panelName ) : BaseClass( parent, panelName ) 
+CFooterPanel::CFooterPanel( Panel *parent, const char *panelName ) : BaseClass( parent, panelName )
 {
 	SetVisible( true );
 	SetAlpha( 0 );
@@ -4100,11 +4100,11 @@ void CFooterPanel::Paint( void )
 			vgui::surface()->DrawSetTextColor( GetFgColor() );
 			vgui::surface()->DrawSetTextPos( x, y + textY );
 			vgui::surface()->DrawPrintText( pButton->text, wcslen( pButton->text ) );
-			
+
 			x += iTextWidth + m_nButtonGap;
 		}
 	}
-}	
+}
 
 DECLARE_BUILD_FACTORY( CFooterPanel );
 
@@ -4140,430 +4140,430 @@ void CMessageDialogHandler::ShowMessageDialog( int nType, vgui::Panel *pOwner )
 	{
 	case MD_SEARCHING_FOR_GAMES:
 		CreateMessageDialog( MD_CANCEL|MD_RESTRICTPAINT,
-							NULL, 
-							"#TF_Dlg_SearchingForGames", 
+							NULL,
+							"#TF_Dlg_SearchingForGames",
 							NULL,
 							"CancelOperation",
 							pOwner,
-							true ); 
+							true );
 		break;
 
 	case MD_CREATING_GAME:
 		CreateMessageDialog( MD_RESTRICTPAINT,
-							NULL, 
-							"#TF_Dlg_CreatingGame", 
+							NULL,
+							"#TF_Dlg_CreatingGame",
 							NULL,
 							NULL,
 							pOwner,
-							true ); 
+							true );
 		break;
 
 	case MD_SESSION_SEARCH_FAILED:
-		CreateMessageDialog( MD_YESNO|MD_RESTRICTPAINT, 
-							NULL, 
-							"#TF_Dlg_NoGamesFound", 
+		CreateMessageDialog( MD_YESNO|MD_RESTRICTPAINT,
+							NULL,
+							"#TF_Dlg_NoGamesFound",
 							"ShowSessionOptionsDialog",
 							"ReturnToMainMenu",
-							pOwner ); 
+							pOwner );
 		break;
 
 	case MD_SESSION_CREATE_FAILED:
-		CreateMessageDialog( MD_OK, 
-							NULL, 
-							"#TF_Dlg_CreateFailed", 
-							"ReturnToMainMenu", 
+		CreateMessageDialog( MD_OK,
+							NULL,
+							"#TF_Dlg_CreateFailed",
+							"ReturnToMainMenu",
 							NULL,
 							pOwner );
 		break;
 
 	case MD_SESSION_CONNECTING:
-		CreateMessageDialog( 0, 
-							NULL, 
-							"#TF_Dlg_Connecting", 
-							NULL, 
+		CreateMessageDialog( 0,
+							NULL,
+							"#TF_Dlg_Connecting",
+							NULL,
 							NULL,
 							pOwner,
 							true );
 		break;
 
 	case MD_SESSION_CONNECT_NOTAVAILABLE:
-		CreateMessageDialog( MD_OK, 
-							NULL, 
-							"#TF_Dlg_JoinRefused", 
-							"ReturnToMainMenu", 
+		CreateMessageDialog( MD_OK,
+							NULL,
+							"#TF_Dlg_JoinRefused",
+							"ReturnToMainMenu",
 							NULL,
 							pOwner );
 		break;
 
 	case MD_SESSION_CONNECT_SESSIONFULL:
-		CreateMessageDialog( MD_OK, 
-							NULL, 
-							"#TF_Dlg_GameFull", 
-							"ReturnToMainMenu", 
+		CreateMessageDialog( MD_OK,
+							NULL,
+							"#TF_Dlg_GameFull",
+							"ReturnToMainMenu",
 							NULL,
 							pOwner );
 		break;
 
 	case MD_SESSION_CONNECT_FAILED:
-		CreateMessageDialog( MD_OK, 
-							NULL, 
-							"#TF_Dlg_JoinFailed", 
-							"ReturnToMainMenu", 
+		CreateMessageDialog( MD_OK,
+							NULL,
+							"#TF_Dlg_JoinFailed",
+							"ReturnToMainMenu",
 							NULL,
 							pOwner );
 		break;
 
 	case MD_LOST_HOST:
-		CreateMessageDialog( MD_OK|MD_RESTRICTPAINT, 
-							NULL, 
-							"#TF_Dlg_LostHost", 
-							"ReturnToMainMenu", 
+		CreateMessageDialog( MD_OK|MD_RESTRICTPAINT,
+							NULL,
+							"#TF_Dlg_LostHost",
+							"ReturnToMainMenu",
 							NULL,
 							pOwner );
 		break;
 
 	case MD_LOST_SERVER:
-		CreateMessageDialog( MD_OK|MD_RESTRICTPAINT, 
-							NULL, 
-							"#TF_Dlg_LostServer", 
-							"ReturnToMainMenu", 
+		CreateMessageDialog( MD_OK|MD_RESTRICTPAINT,
+							NULL,
+							"#TF_Dlg_LostServer",
+							"ReturnToMainMenu",
 							NULL,
 							pOwner );
 		break;
 
 	case MD_MODIFYING_SESSION:
-		CreateMessageDialog( MD_RESTRICTPAINT, 
-							NULL, 
-							"#TF_Dlg_ModifyingSession", 
-							NULL, 
+		CreateMessageDialog( MD_RESTRICTPAINT,
+							NULL,
+							"#TF_Dlg_ModifyingSession",
+							NULL,
 							NULL,
 							pOwner,
 							true );
 		break;
 
 	case MD_SAVE_BEFORE_QUIT:
-		CreateMessageDialog( MD_YESNO|iSimpleFrame|MD_RESTRICTPAINT, 
-							"#GameUI_QuitConfirmationTitle", 
-							"#GameUI_Console_QuitWarning", 
-							"QuitNoConfirm", 
+		CreateMessageDialog( MD_YESNO|iSimpleFrame|MD_RESTRICTPAINT,
+							"#GameUI_QuitConfirmationTitle",
+							"#GameUI_Console_QuitWarning",
+							"QuitNoConfirm",
 							"CloseQuitDialog_OpenMainMenu",
 							pOwner );
 		break;
 
 	case MD_QUIT_CONFIRMATION:
-		CreateMessageDialog( MD_YESNO|iSimpleFrame|MD_RESTRICTPAINT, 
-							 "#GameUI_QuitConfirmationTitle", 
-							 "#GameUI_QuitConfirmationText", 
-							 "QuitNoConfirm", 
-							 "CloseQuitDialog_OpenMainMenu",
-							 pOwner );
+		CreateMessageDialog( MD_YESNO|iSimpleFrame|MD_RESTRICTPAINT,
+							"#GameUI_QuitConfirmationTitle",
+							"#GameUI_QuitConfirmationText",
+							"QuitNoConfirm",
+							"CloseQuitDialog_OpenMainMenu",
+							pOwner );
 		break;
 
 	case MD_QUIT_CONFIRMATION_TF:
-		CreateMessageDialog( MD_YESNO|MD_RESTRICTPAINT, 
-							 "#GameUI_QuitConfirmationTitle", 
-							 "#GameUI_QuitConfirmationText", 
-							 "QuitNoConfirm", 
-							 "CloseQuitDialog_OpenMatchmakingMenu",
-							 pOwner );
+		CreateMessageDialog( MD_YESNO|MD_RESTRICTPAINT,
+							"#GameUI_QuitConfirmationTitle",
+							"#GameUI_QuitConfirmationText",
+							"QuitNoConfirm",
+							"CloseQuitDialog_OpenMatchmakingMenu",
+							pOwner );
 		break;
 
 	case MD_DISCONNECT_CONFIRMATION:
-		CreateMessageDialog( MD_YESNO|MD_RESTRICTPAINT, 
-							"", 
-							"#GameUI_DisconnectConfirmationText", 
-							"DisconnectNoConfirm", 
+		CreateMessageDialog( MD_YESNO|MD_RESTRICTPAINT,
+							"",
+							"#GameUI_DisconnectConfirmationText",
+							"DisconnectNoConfirm",
 							"close_dialog",
 							pOwner );
 		break;
 
 	case MD_DISCONNECT_CONFIRMATION_HOST:
-		CreateMessageDialog( MD_YESNO|MD_RESTRICTPAINT, 
-							"", 
-							"#GameUI_DisconnectHostConfirmationText", 
-							"DisconnectNoConfirm", 
+		CreateMessageDialog( MD_YESNO|MD_RESTRICTPAINT,
+							"",
+							"#GameUI_DisconnectHostConfirmationText",
+							"DisconnectNoConfirm",
 							"close_dialog",
 							pOwner );
 		break;
 
 	case MD_KICK_CONFIRMATION:
-		CreateMessageDialog( MD_YESNO, 
-							"", 
-							"#TF_Dlg_ConfirmKick", 
-							"KickPlayer", 
+		CreateMessageDialog( MD_YESNO,
+							"",
+							"#TF_Dlg_ConfirmKick",
+							"KickPlayer",
 							"close_dialog",
 							pOwner );
 		break;
 
 	case MD_CLIENT_KICKED:
-		CreateMessageDialog( MD_OK|MD_RESTRICTPAINT, 
-							"", 
-							"#TF_Dlg_ClientKicked", 
-							"close_dialog", 
+		CreateMessageDialog( MD_OK|MD_RESTRICTPAINT,
+							"",
+							"#TF_Dlg_ClientKicked",
+							"close_dialog",
 							NULL,
 							pOwner );
 		break;
 
 	case MD_EXIT_SESSION_CONFIRMATION:
-		CreateMessageDialog( MD_YESNO, 
-							"", 
-							"#TF_Dlg_ExitSessionText", 
-							"ReturnToMainMenu", 
+		CreateMessageDialog( MD_YESNO,
+							"",
+							"#TF_Dlg_ExitSessionText",
+							"ReturnToMainMenu",
 							"close_dialog",
 							pOwner );
 		break;
 
 	case MD_STORAGE_DEVICES_NEEDED:
-		CreateMessageDialog( MD_YESNO|MD_WARNING|MD_COMMANDAFTERCLOSE|iSimpleFrame|MD_RESTRICTPAINT, 
-							 "#GameUI_Console_StorageRemovedTitle", 
-							 "#GameUI_Console_StorageNeededBody", 
-							 "ShowDeviceSelector", 
-							 "QuitNoConfirm",
-							 pOwner );
+		CreateMessageDialog( MD_YESNO|MD_WARNING|MD_COMMANDAFTERCLOSE|iSimpleFrame|MD_RESTRICTPAINT,
+							"#GameUI_Console_StorageRemovedTitle",
+							"#GameUI_Console_StorageNeededBody",
+							"ShowDeviceSelector",
+							"QuitNoConfirm",
+							pOwner );
 		break;
 
 	case MD_STORAGE_DEVICES_CHANGED:
-		CreateMessageDialog( MD_YESNO|MD_WARNING|MD_COMMANDAFTERCLOSE|iSimpleFrame|MD_RESTRICTPAINT, 
-							"#GameUI_Console_StorageRemovedTitle", 
-							"#GameUI_Console_StorageRemovedBody", 
-							"ShowDeviceSelector", 
+		CreateMessageDialog( MD_YESNO|MD_WARNING|MD_COMMANDAFTERCLOSE|iSimpleFrame|MD_RESTRICTPAINT,
+							"#GameUI_Console_StorageRemovedTitle",
+							"#GameUI_Console_StorageRemovedBody",
+							"ShowDeviceSelector",
 							"clear_storage_deviceID",
 							pOwner );
 		break;
 
 	case MD_STORAGE_DEVICES_TOO_FULL:
-		CreateMessageDialog( MD_YESNO|MD_WARNING|MD_COMMANDAFTERCLOSE|iSimpleFrame|MD_RESTRICTPAINT, 
-							 "#GameUI_Console_StorageTooFullTitle", 
-							 "#GameUI_Console_StorageTooFullBody", 
-							 "ShowDeviceSelector", 
-							 "StorageDeviceDenied",
-							 pOwner );
+		CreateMessageDialog( MD_YESNO|MD_WARNING|MD_COMMANDAFTERCLOSE|iSimpleFrame|MD_RESTRICTPAINT,
+							"#GameUI_Console_StorageTooFullTitle",
+							"#GameUI_Console_StorageTooFullBody",
+							"ShowDeviceSelector",
+							"StorageDeviceDenied",
+							pOwner );
 		break;
 
 	case MD_PROMPT_STORAGE_DEVICE:
-		CreateMessageDialog( MD_YESNO|MD_WARNING|MD_COMMANDAFTERCLOSE|iSimpleFrame|MD_RESTRICTPAINT, 
-							 "#GameUI_Console_NoStorageDeviceSelectedTitle", 
-							 "#GameUI_Console_NoStorageDeviceSelectedBody", 
-							 "ShowDeviceSelector", 
-							 "StorageDeviceDenied",
-							 pOwner );
+		CreateMessageDialog( MD_YESNO|MD_WARNING|MD_COMMANDAFTERCLOSE|iSimpleFrame|MD_RESTRICTPAINT,
+							"#GameUI_Console_NoStorageDeviceSelectedTitle",
+							"#GameUI_Console_NoStorageDeviceSelectedBody",
+							"ShowDeviceSelector",
+							"StorageDeviceDenied",
+							pOwner );
 		break;
 
 	case MD_PROMPT_STORAGE_DEVICE_REQUIRED:
-		CreateMessageDialog( MD_YESNO|MD_WARNING|MD_COMMANDAFTERCLOSE|MD_SIMPLEFRAME, 
-							"#GameUI_Console_NoStorageDeviceSelectedTitle", 
-							"#GameUI_Console_StorageDeviceRequiredBody", 
-							"ShowDeviceSelector", 
+		CreateMessageDialog( MD_YESNO|MD_WARNING|MD_COMMANDAFTERCLOSE|MD_SIMPLEFRAME,
+							"#GameUI_Console_NoStorageDeviceSelectedTitle",
+							"#GameUI_Console_StorageDeviceRequiredBody",
+							"ShowDeviceSelector",
 							"RequiredStorageDenied",
 							pOwner );
 		break;
 
 	case MD_PROMPT_SIGNIN:
-		CreateMessageDialog( MD_YESNO|MD_WARNING|MD_COMMANDAFTERCLOSE|iSimpleFrame, 
-							 "#GameUI_Console_NoUserProfileSelectedTitle", 
-							 "#GameUI_Console_NoUserProfileSelectedBody", 
-							 "ShowSignInUI", 
-							 "SignInDenied",
-							 pOwner );
+		CreateMessageDialog( MD_YESNO|MD_WARNING|MD_COMMANDAFTERCLOSE|iSimpleFrame,
+							"#GameUI_Console_NoUserProfileSelectedTitle",
+							"#GameUI_Console_NoUserProfileSelectedBody",
+							"ShowSignInUI",
+							"SignInDenied",
+							pOwner );
 		break;
 
 	case MD_PROMPT_SIGNIN_REQUIRED:
-		CreateMessageDialog( MD_YESNO|MD_WARNING|MD_COMMANDAFTERCLOSE|iSimpleFrame, 
-							"#GameUI_Console_NoUserProfileSelectedTitle", 
-							"#GameUI_Console_UserProfileRequiredBody", 
-							"ShowSignInUI", 
+		CreateMessageDialog( MD_YESNO|MD_WARNING|MD_COMMANDAFTERCLOSE|iSimpleFrame,
+							"#GameUI_Console_NoUserProfileSelectedTitle",
+							"#GameUI_Console_UserProfileRequiredBody",
+							"ShowSignInUI",
 							"RequiredSignInDenied",
 							pOwner );
 		break;
 
 	case MD_NOT_ONLINE_ENABLED:
-		CreateMessageDialog( MD_YESNO|MD_WARNING, 
-							"", 
-							"#TF_Dlg_NotOnlineEnabled", 
-							"ShowSigninUI", 
+		CreateMessageDialog( MD_YESNO|MD_WARNING,
+							"",
+							"#TF_Dlg_NotOnlineEnabled",
+							"ShowSigninUI",
 							"close_dialog",
 							pOwner );
 		break;
 
 	case MD_NOT_ONLINE_SIGNEDIN:
-		CreateMessageDialog( MD_YESNO|MD_WARNING, 
-							"", 
-							"#TF_Dlg_NotOnlineSignedIn", 
-							"ShowSigninUI", 
+		CreateMessageDialog( MD_YESNO|MD_WARNING,
+							"",
+							"#TF_Dlg_NotOnlineSignedIn",
+							"ShowSigninUI",
 							"close_dialog",
 							pOwner );
 		break;
 
 	case MD_DEFAULT_CONTROLS_CONFIRM:
-		CreateMessageDialog( MD_YESNO|MD_WARNING|iSimpleFrame|MD_RESTRICTPAINT, 
-							 "#GameUI_RestoreDefaults", 
-							 "#GameUI_ControllerSettingsText", 
-							 "DefaultControls", 
-							 "close_dialog",
-							 pOwner );
+		CreateMessageDialog( MD_YESNO|MD_WARNING|iSimpleFrame|MD_RESTRICTPAINT,
+							"#GameUI_RestoreDefaults",
+							"#GameUI_ControllerSettingsText",
+							"DefaultControls",
+							"close_dialog",
+							pOwner );
 		break;
 
 	case MD_AUTOSAVE_EXPLANATION:
-		CreateMessageDialog( MD_OK|MD_WARNING|iSimpleFrame|MD_RESTRICTPAINT, 
-							 "#GameUI_ConfirmNewGame_Title", 
-							 "#GameUI_AutoSave_Console_Explanation", 
-							 "StartNewGameNoCommentaryExplanation", 
-							 NULL,
-							 pOwner );
+		CreateMessageDialog( MD_OK|MD_WARNING|iSimpleFrame|MD_RESTRICTPAINT,
+							"#GameUI_ConfirmNewGame_Title",
+							"#GameUI_AutoSave_Console_Explanation",
+							"StartNewGameNoCommentaryExplanation",
+							NULL,
+							pOwner );
 		break;
 
 	case MD_COMMENTARY_EXPLANATION:
-		CreateMessageDialog( MD_OK|MD_WARNING|iSimpleFrame|MD_RESTRICTPAINT, 
-							 "#GameUI_CommentaryDialogTitle", 
-							 "#GAMEUI_Commentary_Console_Explanation", 
-							 "StartNewGameNoCommentaryExplanation", 
-							 NULL,
-							 pOwner );
+		CreateMessageDialog( MD_OK|MD_WARNING|iSimpleFrame|MD_RESTRICTPAINT,
+							"#GameUI_CommentaryDialogTitle",
+							"#GAMEUI_Commentary_Console_Explanation",
+							"StartNewGameNoCommentaryExplanation",
+							NULL,
+							pOwner );
 		break;
 
 	case MD_COMMENTARY_EXPLANATION_MULTI:
-		CreateMessageDialog( MD_OK|MD_WARNING, 
-							 "#GameUI_CommentaryDialogTitle", 
-							 "#GAMEUI_Commentary_Console_Explanation", 
-							 "StartNewGameNoCommentaryExplanation", 
-							 NULL,
-							 pOwner );
+		CreateMessageDialog( MD_OK|MD_WARNING,
+							"#GameUI_CommentaryDialogTitle",
+							"#GAMEUI_Commentary_Console_Explanation",
+							"StartNewGameNoCommentaryExplanation",
+							NULL,
+							pOwner );
 		break;
 
 	case MD_COMMENTARY_CHAPTER_UNLOCK_EXPLANATION:
-		CreateMessageDialog( MD_OK|MD_WARNING|iSimpleFrame|MD_RESTRICTPAINT, 
-							 "#GameUI_CommentaryDialogTitle", 
-							 "#GameUI_CommentaryUnlock", 
-							 "close_dialog", 
-							 NULL,
-							 pOwner );
+		CreateMessageDialog( MD_OK|MD_WARNING|iSimpleFrame|MD_RESTRICTPAINT,
+							"#GameUI_CommentaryDialogTitle",
+							"#GameUI_CommentaryUnlock",
+							"close_dialog",
+							NULL,
+							pOwner );
 		break;
-		
+
 	case MD_SAVE_BEFORE_LANGUAGE_CHANGE:
-		CreateMessageDialog( MD_YESNO|MD_WARNING|MD_SIMPLEFRAME|MD_COMMANDAFTERCLOSE|MD_RESTRICTPAINT, 
-							 "#GameUI_ChangeLanguageRestart_Title", 
-							 "#GameUI_ChangeLanguageRestart_Info", 
-							 "AcceptVocalsLanguageChange", 
-							 "CancelVocalsLanguageChange",
-							 pOwner );
+		CreateMessageDialog( MD_YESNO|MD_WARNING|MD_SIMPLEFRAME|MD_COMMANDAFTERCLOSE|MD_RESTRICTPAINT,
+							"#GameUI_ChangeLanguageRestart_Title",
+							"#GameUI_ChangeLanguageRestart_Info",
+							"AcceptVocalsLanguageChange",
+							"CancelVocalsLanguageChange",
+							pOwner );
 
 	case MD_SAVE_BEFORE_NEW_GAME:
-		CreateMessageDialog( MD_OKCANCEL|MD_WARNING|iSimpleFrame|MD_COMMANDAFTERCLOSE|MD_RESTRICTPAINT, 
-							 "#GameUI_ConfirmNewGame_Title", 
-							 "#GameUI_NewGameWarning", 
-							 "StartNewGame", 
-							 "close_dialog",
-							 pOwner );
+		CreateMessageDialog( MD_OKCANCEL|MD_WARNING|iSimpleFrame|MD_COMMANDAFTERCLOSE|MD_RESTRICTPAINT,
+							"#GameUI_ConfirmNewGame_Title",
+							"#GameUI_NewGameWarning",
+							"StartNewGame",
+							"close_dialog",
+							pOwner );
 		break;
 
 	case MD_SAVE_BEFORE_LOAD:
-		CreateMessageDialog( MD_OKCANCEL|MD_WARNING|iSimpleFrame|MD_COMMANDAFTERCLOSE|MD_RESTRICTPAINT, 
-							 "#GameUI_ConfirmLoadGame_Title", 
-							 "#GameUI_LoadWarning", 
-							 "LoadGame", 
-							 "LoadGameCancelled",
-							 pOwner );
+		CreateMessageDialog( MD_OKCANCEL|MD_WARNING|iSimpleFrame|MD_COMMANDAFTERCLOSE|MD_RESTRICTPAINT,
+							"#GameUI_ConfirmLoadGame_Title",
+							"#GameUI_LoadWarning",
+							"LoadGame",
+							"LoadGameCancelled",
+							pOwner );
 		break;
 
 	case MD_DELETE_SAVE_CONFIRM:
-		CreateMessageDialog( MD_OKCANCEL|MD_WARNING|iSimpleFrame|MD_COMMANDAFTERCLOSE, 
-							 "#GameUI_ConfirmDeleteSaveGame_Title", 
-							 "#GameUI_ConfirmDeleteSaveGame_Info", 
-							 "DeleteGame", 
-							 "DeleteGameCancelled",
-							 pOwner );
+		CreateMessageDialog( MD_OKCANCEL|MD_WARNING|iSimpleFrame|MD_COMMANDAFTERCLOSE,
+							"#GameUI_ConfirmDeleteSaveGame_Title",
+							"#GameUI_ConfirmDeleteSaveGame_Info",
+							"DeleteGame",
+							"DeleteGameCancelled",
+							pOwner );
 		break;
 
 	case MD_SAVE_OVERWRITE:
-		CreateMessageDialog( MD_OKCANCEL|MD_WARNING|iSimpleFrame|MD_COMMANDAFTERCLOSE, 
-							 "#GameUI_ConfirmOverwriteSaveGame_Title", 
-							 "#GameUI_ConfirmOverwriteSaveGame_Info", 
-							 "SaveGame", 
-							 "OverwriteGameCancelled",
-							 pOwner );
+		CreateMessageDialog( MD_OKCANCEL|MD_WARNING|iSimpleFrame|MD_COMMANDAFTERCLOSE,
+							"#GameUI_ConfirmOverwriteSaveGame_Title",
+							"#GameUI_ConfirmOverwriteSaveGame_Info",
+							"SaveGame",
+							"OverwriteGameCancelled",
+							pOwner );
 		break;
 
 	case MD_SAVING_WARNING:
-		CreateMessageDialog( MD_WARNING|iSimpleFrame|MD_COMMANDONFORCECLOSE, 
-							 "",
-							 "#GameUI_SavingWarning", 
-							 "SaveSuccess", 
-							 NULL,
-							 pOwner,
-							 true);
+		CreateMessageDialog( MD_WARNING|iSimpleFrame|MD_COMMANDONFORCECLOSE,
+							"",
+							"#GameUI_SavingWarning",
+							"SaveSuccess",
+							NULL,
+							pOwner,
+							true);
 		break;
 
 	case MD_SAVE_COMPLETE:
-		CreateMessageDialog( MD_OK|iSimpleFrame|MD_COMMANDAFTERCLOSE, 
-							 "#GameUI_ConfirmOverwriteSaveGame_Title", 
-							 "#GameUI_GameSaved", 
-							 "CloseAndSelectResume", 
-							 NULL,
-							 pOwner );
+		CreateMessageDialog( MD_OK|iSimpleFrame|MD_COMMANDAFTERCLOSE,
+							"#GameUI_ConfirmOverwriteSaveGame_Title",
+							"#GameUI_GameSaved",
+							"CloseAndSelectResume",
+							NULL,
+							pOwner );
 		break;
 
 	case MD_LOAD_FAILED_WARNING:
-		CreateMessageDialog( MD_OK |MD_WARNING|iSimpleFrame, 
-			"#GameUI_LoadFailed", 
-			"#GameUI_LoadFailed_Description", 
-			"close_dialog", 
+		CreateMessageDialog( MD_OK |MD_WARNING|iSimpleFrame,
+			"#GameUI_LoadFailed",
+			"#GameUI_LoadFailed_Description",
+			"close_dialog",
 			NULL,
 			pOwner );
 		break;
 
 	case MD_OPTION_CHANGE_FROM_X360_DASHBOARD:
-		CreateMessageDialog( MD_OK|iSimpleFrame|MD_RESTRICTPAINT, 
-							 "#GameUI_SettingChangeFromX360Dashboard_Title", 
-							 "#GameUI_SettingChangeFromX360Dashboard_Info", 
-							 "close_dialog", 
-							 NULL,
-							 pOwner );
+		CreateMessageDialog( MD_OK|iSimpleFrame|MD_RESTRICTPAINT,
+							"#GameUI_SettingChangeFromX360Dashboard_Title",
+							"#GameUI_SettingChangeFromX360Dashboard_Info",
+							"close_dialog",
+							NULL,
+							pOwner );
 		break;
 
 	case MD_STANDARD_SAMPLE:
-		CreateMessageDialog( MD_OK, 
-							"Standard Dialog", 
-							"This is a standard dialog", 
-							"close_dialog", 
+		CreateMessageDialog( MD_OK,
+							"Standard Dialog",
+							"This is a standard dialog",
+							"close_dialog",
 							NULL,
 							pOwner );
 		break;
 
 	case MD_WARNING_SAMPLE:
 		CreateMessageDialog( MD_OK | MD_WARNING,
-							"#GameUI_Dialog_Warning", 
-							"This is a warning dialog", 
-							"close_dialog", 
+							"#GameUI_Dialog_Warning",
+							"This is a warning dialog",
+							"close_dialog",
 							NULL,
 							pOwner );
 		break;
 
 	case MD_ERROR_SAMPLE:
-		CreateMessageDialog( MD_OK | MD_ERROR, 
-							"Error Dialog", 
-							"This is an error dialog", 
-							"close_dialog", 
+		CreateMessageDialog( MD_OK | MD_ERROR,
+							"Error Dialog",
+							"This is an error dialog",
+							"close_dialog",
 							NULL,
 							pOwner );
 		break;
 
 	case MD_STORAGE_DEVICES_CORRUPT:
 		CreateMessageDialog( MD_OK | MD_WARNING | iSimpleFrame | MD_RESTRICTPAINT,
-			"", 
-			"#GameUI_Console_FileCorrupt", 
-			"close_dialog", 
+			"",
+			"#GameUI_Console_FileCorrupt",
+			"close_dialog",
 			NULL,
 			pOwner );
 		break;
 
 	case MD_CHECKING_STORAGE_DEVICE:
 		CreateMessageDialog( iSimpleFrame | MD_RESTRICTPAINT,
-			NULL, 
+			NULL,
 			"#GameUI_Dlg_CheckingStorageDevice",
 			NULL,
 			NULL,
 			pOwner,
-			true ); 
+			true );
 		break;
 
 	default:
@@ -4645,7 +4645,7 @@ void CMessageDialogHandler::CreateMessageDialog( const uint nType, const char *p
 		vgui::surface()->RestrictPaintToSinglePanel( m_hMessageDialogs[nStackIdx]->GetVPanel() );
 	}
 
-	ActivateMessageDialog( nStackIdx );	
+	ActivateMessageDialog( nStackIdx );
 }
 
 //-----------------------------------------------------------------------------
@@ -4701,7 +4701,7 @@ void CMessageDialogHandler::PositionDialog( vgui::PHandle dlg, int wide, int tal
 	int w, t;
 	dlg->GetSize(w, t);
 	dlg->SetPos( (wide - w) / 2, (tall - t) / 2 );
-}			
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: Editable panel that can replace the GameMenuButtons in CBasePanel
@@ -4713,7 +4713,7 @@ CMainMenuGameLogo::CMainMenuGameLogo( vgui::Panel *parent, const char *name ) : 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMainMenuGameLogo::ApplySettings( KeyValues *inResourceData )
 {
@@ -4724,7 +4724,7 @@ void CMainMenuGameLogo::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMainMenuGameLogo::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -4740,7 +4740,7 @@ void CMainMenuGameLogo::ApplySchemeSettings( vgui::IScheme *pScheme )
 		if ( pSubKey )
 		{
 			pConditions->AddSubKey( pSubKey );
-		}	
+		}
 	}
 
 	LoadControlSettings( "Resource/GameLogo.res", NULL, NULL, pConditions );
@@ -4752,7 +4752,7 @@ void CMainMenuGameLogo::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBasePanel::CloseBaseDialogs( void )
 {
@@ -4761,10 +4761,10 @@ void CBasePanel::CloseBaseDialogs( void )
 
 	if ( m_hAchievementsDialog.Get() )
 		m_hAchievementsDialog->Close();
-	
+
 	if ( m_hBonusMapsDialog.Get() )
 		m_hBonusMapsDialog->Close();
-	
+
 	if ( m_hControllerDialog.Get() )
 		m_hControllerDialog->Close();
 

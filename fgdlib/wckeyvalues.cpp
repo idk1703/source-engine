@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -148,7 +148,7 @@ const char *WCKeyValuesT<Base>::GetValue(const char *pszKey, int *piIndex) const
 	{
 		if(piIndex)
 			piIndex[0] = i;
-			
+
 		return m_KeyValues[i].szValue;
 	}
 }
@@ -177,7 +177,7 @@ void WCKeyValuesT<Base>::SetValue(const char *pszKey, int iValue)
 
 //-----------------------------------------------------------------------------
 // Purpose: Strips leading and trailing whitespace from the string.
-// Input  : psz - 
+// Input  : psz -
 //-----------------------------------------------------------------------------
 void StripEdgeWhiteSpace(char *psz)
 {
@@ -192,7 +192,7 @@ void StripEdgeWhiteSpace(char *psz)
 	}
 
 	int iLen = strlen(psz) - 1;
-	
+
 	if ( iLen >= 0 )
 	{
 		while (V_isspace(psz[iLen]))
@@ -209,9 +209,9 @@ void StripEdgeWhiteSpace(char *psz)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszKey - 
-//			pszValue - 
+// Purpose:
+// Input  : pszKey -
+//			pszValue -
 //-----------------------------------------------------------------------------
 template<class Base>
 void WCKeyValuesT<Base>::SetValue(const char *pszKey, const char *pszValue)
@@ -265,7 +265,7 @@ void WCKeyValuesT<Base>::SetValue(const char *pszKey, const char *pszValue)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 template<class Base>
 void WCKeyValuesT<Base>::RemoveAll(void)
@@ -277,6 +277,3 @@ void WCKeyValuesT<Base>::RemoveAll(void)
 // Explicit instantiations.
 template class WCKeyValuesT<WCKVBase_Dict>;
 template class WCKeyValuesT<WCKVBase_Vector>;
-
-
-

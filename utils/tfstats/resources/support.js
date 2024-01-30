@@ -19,7 +19,7 @@ function SuperImage_over()
 	this.update();
 }
 SuperImage.prototype.over=SuperImage_over;
-	
+
 function SuperImage_on()
 {
 	this.selected=true;
@@ -44,12 +44,11 @@ SuperImage.prototype.out=SuperImage_out;
 function SuperImage_update()
 {
 	if (document.images)
-	{ 
+	{
 		if (this.hover == true || this.selected == true)
 		    document[this.HTMLimgName].src = this.onSrc;
 		else
-			document[this.HTMLimgName].src = this.offSrc; 
+			document[this.HTMLimgName].src = this.offSrc;
 	}
 }
 SuperImage.prototype.update=SuperImage_update;
-

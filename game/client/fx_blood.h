@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,9 +15,9 @@
 class CBloodSprayEmitter : public CSimpleEmitter
 {
 public:
-	
+
 	CBloodSprayEmitter( const char *pDebugName ) : CSimpleEmitter( pDebugName ) {}
-	
+
 	static CBloodSprayEmitter *Create( const char *pDebugName )
 	{
 		return new CBloodSprayEmitter( pDebugName );
@@ -31,7 +31,7 @@ public:
 	virtual	float UpdateRoll( SimpleParticle *pParticle, float timeDelta )
 	{
 		pParticle->m_flRoll += pParticle->m_flRollDelta * timeDelta;
-		
+
 		pParticle->m_flRollDelta += pParticle->m_flRollDelta * ( timeDelta * -4.0f );
 
 		//Cap the minimum roll

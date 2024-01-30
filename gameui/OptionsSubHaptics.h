@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,7 +13,7 @@
 
 #include <vgui_controls/PropertyPage.h>
 #include "HapticControlBox.h"
- 
+
 
 class CCvarNegateCheckButton;
 class CKeyToggleCheckButton;
@@ -22,8 +22,8 @@ class CCvarSlider;
 
 namespace vgui
 {
-    class Label;
-    class Panel;
+	class Label;
+	class Panel;
 }
 
 //-----------------------------------------------------------------------------
@@ -43,11 +43,11 @@ public:
 	virtual void UpdateVehicleEnabled(void);
 
 protected:
-    virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
 private:
 	MESSAGE_FUNC_PTR( OnControlModified, "ControlModified", panel );
-    MESSAGE_FUNC_PTR( OnTextChanged, "TextChanged", panel );
+	MESSAGE_FUNC_PTR( OnTextChanged, "TextChanged", panel );
 	MESSAGE_FUNC_PTR( OnCheckButtonChecked, "CheckButtonChecked", panel )
 	{
 		OnControlModified( panel );
@@ -67,7 +67,7 @@ private:
 	CCvarSlider	*m_pForceMovementSlider;
 
 
-	
+
 	//Player
 	vgui::Label *m_pPlayerBoxPreLabel;
 	vgui::Label *m_pPlayerBoxScalePreLabel;

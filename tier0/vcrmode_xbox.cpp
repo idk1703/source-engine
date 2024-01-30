@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: VCR mode records a client's game and allows you to 
+// Purpose: VCR mode records a client's game and allows you to
 //			play it back and reproduce it exactly. When playing it back, nothing
 //			is simulated on the server, but all server packets are recorded.
 //
@@ -19,10 +19,10 @@
 #include <string.h>
 #include "tier0/vcrmode.h"
 #include "tier0/dbg.h"
-												
+
 #define VCRFILE_VERSION		2
 #define VCR_RuntimeAssert(x)	VCR_RuntimeAssertFn(x, #x)
-												
+
 // ---------------------------------------------------------------------- //
 // Internal functions.
 // ---------------------------------------------------------------------- //
@@ -135,10 +135,10 @@ static double VCR_Hook_Sys_FloatTime(double time)
 }
 
 static int VCR_Hook_PeekMessage(
-	struct tagMSG *msg, 
-	void *hWnd, 
-	unsigned int wMsgFilterMin, 
-	unsigned int wMsgFilterMax, 
+	struct tagMSG *msg,
+	void *hWnd,
+	unsigned int wMsgFilterMin,
+	unsigned int wMsgFilterMax,
 	unsigned int wRemoveMsg
 	)
 {
@@ -205,7 +205,7 @@ static long VCR_Hook_RegQueryValueEx(void *hKey, char const *lpValueName, unsign
 	return 0;
 }
 
-static long VCR_Hook_RegCreateKeyEx(void *hKey, char const *lpSubKey, unsigned long Reserved, char *lpClass, unsigned long dwOptions, 
+static long VCR_Hook_RegCreateKeyEx(void *hKey, char const *lpSubKey, unsigned long Reserved, char *lpClass, unsigned long dwOptions,
 	unsigned long samDesired, void *lpSecurityAttributes, void *phkResult, unsigned long *lpdwDisposition)
 {
 	return 0;
@@ -236,7 +236,7 @@ short VCR_Hook_GetKeyState( int nVirtKey )
 
 void VCR_GenericRecord( const char *pEventName, const void *pData, int len )
 {
-}	
+}
 
 int VCR_GenericPlayback( const char *pEventName, void *pOutData, int maxLen, bool bForceSameLen )
 {
@@ -286,5 +286,3 @@ VCR_t g_VCR =
 };
 
 VCR_t *g_pVCR = &g_VCR;
-
-

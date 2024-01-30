@@ -1,17 +1,17 @@
 /*
-     File:       CGBase.h
- 
-     Contains:   CoreGraphics base types
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+	File:       CGBase.h
+
+	Contains:   CoreGraphics base types
+
+	Version:    QuickTime 7.3
+
+	Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
+
+	Bugs?:      For bug reports, consult the following page on
+			the World Wide Web:
+
+				http://developer.apple.com/bugreporter/
+
 */
 #ifndef CGBASE_H_
 #define CGBASE_H_
@@ -21,7 +21,7 @@
 #endif
 
 #include <stddef.h>
-#if __MWERKS__ > 0x2300 
+#if __MWERKS__ > 0x2300
 #include <stdint.h>
 #endif
 
@@ -42,7 +42,7 @@
 #  elif defined(__MWERKS__)
 #    define CG_INLINE static inline
 #  else
-#    define CG_INLINE static    
+#    define CG_INLINE static
 #  endif
 #endif
 
@@ -55,4 +55,3 @@
 
 
 #endif /* CGBASE_H_ */
-

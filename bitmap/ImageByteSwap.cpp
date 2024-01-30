@@ -38,7 +38,7 @@ namespace ImageLoader
 	{
 		switch ( fmt )
 		{
-			case IMAGE_FORMAT_RGBA8888: 
+			case IMAGE_FORMAT_RGBA8888:
 			case IMAGE_FORMAT_ABGR8888:
 			case IMAGE_FORMAT_RGB888:
 			case IMAGE_FORMAT_BGR888:
@@ -58,7 +58,7 @@ namespace ImageLoader
 
 				// untested formats
 			default:
-			case IMAGE_FORMAT_RGB565: 
+			case IMAGE_FORMAT_RGB565:
 			case IMAGE_FORMAT_I8:
 			case IMAGE_FORMAT_IA88:
 			case IMAGE_FORMAT_A8:
@@ -256,5 +256,5 @@ namespace ImageLoader
 		}
 #endif
 	}
-	
+
 }

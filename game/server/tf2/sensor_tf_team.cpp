@@ -136,4 +136,3 @@ void CSensorTFTeam::Think( )
 
 	SetNextThink( gpGlobals->curtime + 0.1f );
 }
-

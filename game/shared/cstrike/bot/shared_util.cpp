@@ -26,14 +26,14 @@ char * SharedVarArgs(const char *format, ...)
 	const int NumBuffers = 4;
 	static char string[NumBuffers][BufLen];
 	static int curstring = 0;
-	
+
 	curstring = ( curstring + 1 ) % NumBuffers;
 
 	va_start (argptr, format);
 	V_vsprintf_safe( string[curstring], format, argptr );
 	va_end (argptr);
 
-	return string[curstring];  
+	return string[curstring];
 }
 
 //--------------------------------------------------------------------------------------------------------------
@@ -120,13 +120,13 @@ const char *SharedParse( const char *data )
 {
 	int             c;
 	int             len;
-	
+
 	len = 0;
 	s_shared_token[0] = 0;
-	
+
 	if (!data)
 		return NULL;
-		
+
 // skip whitespace
 skipwhite:
 	while ( (c = *data) <= ' ')
@@ -135,7 +135,7 @@ skipwhite:
 			return NULL;                    // end of file;
 		data++;
 	}
-	
+
 // skip // comments
 	if (c=='/' && data[1] == '/')
 	{
@@ -143,7 +143,7 @@ skipwhite:
 			data++;
 		goto skipwhite;
 	}
-	
+
 
 // handle quoted strings specially
 	if (c == s_shared_quote)
@@ -181,7 +181,7 @@ skipwhite:
 	if (c=='{' || c=='}'|| c==')'|| c=='(' || c=='\'' || c == ',' )
 			break;
 	} while (c>32);
-	
+
 	s_shared_token[len] = 0;
 	return data;
 }

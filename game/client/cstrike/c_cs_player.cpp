@@ -164,11 +164,11 @@ vgui::IImage* GetDefaultAvatarImage( C_BasePlayer *pPlayer )
 
 	switch ( pPlayer ? pPlayer->GetTeamNumber() : TEAM_MAXCOUNT )
 	{
-		case TEAM_TERRORIST: 
+		case TEAM_TERRORIST:
 			result = vgui::scheme()->GetImage( CSTRIKE_DEFAULT_T_AVATAR, true );
 			break;
 
-		case TEAM_CT:		 
+		case TEAM_CT:
 			result = vgui::scheme()->GetImage( CSTRIKE_DEFAULT_CT_AVATAR, true );
 			break;
 
@@ -207,8 +207,8 @@ public:
 	virtual bool IsTransparent();
 	bool IsInitialized() { return m_bInitialized; }
 	// fading ragdolls don't cast shadows
-	virtual ShadowType_t ShadowCastType() 
-	{ 
+	virtual ShadowType_t ShadowCastType()
+	{
 		if ( m_flRagdollSinkStart == -1 )
 			return BaseClass::ShadowCastType();
 		return SHADOWS_NONE;
@@ -492,10 +492,10 @@ void C_CSRagdoll::CreateCSRagdoll()
 
 		//=============================================================================
 		// [pfreese], [tj]
-		// There are visual problems with the attempted blending of the 
+		// There are visual problems with the attempted blending of the
 		// death pose animations in C_CSRagdoll::GetRagdollInitBoneArrays. The version
 		// in C_BasePlayer::GetRagdollInitBoneArrays doesn't attempt to blend death
-		// poses, so if the player is relevant, use that one regardless of whether the 
+		// poses, so if the player is relevant, use that one regardless of whether the
 		// player is the local one or not.
 		//=============================================================================
 		if ( pPlayer && !pPlayer->IsDormant() )
@@ -562,7 +562,7 @@ void C_CSRagdoll::OnDataChanged( DataUpdateType_t type )
 		// Prevent replays from creating ragdolls on the first frame of playback after skipping through playback.
 		// If a player died (leaving a ragdoll) previous to the first frame of replay playback,
 		// their ragdoll wasn't yet initialized because OnDataChanged events are queued but not processed
-		// until the first render. 
+		// until the first render.
 		if ( engine->IsPlayingDemo() && m_bCreatedWhilePlaybackSkipping )
 		{
 			Release();
@@ -608,7 +608,7 @@ void RecvProxy_NightVision( const CRecvProxyData *pData, void *pStruct, void *pO
 	if ( pPlayerData->m_bNightVisionOn != bNightVisionOn )
 	{
 		if ( bNightVisionOn )
-			 pPlayerData->m_flNightVisionAlpha = 1;
+			pPlayerData->m_flNightVisionAlpha = 1;
 	}
 
 	pPlayerData->m_bNightVisionOn = bNightVisionOn;
@@ -713,17 +713,17 @@ BEGIN_RECV_TABLE_NOBASE( C_CSPlayer, DT_CSLocalPlayerExclusive )
 
 	RecvPropVector( RECVINFO_NAME( m_vecNetworkOrigin, m_vecOrigin ) ),
 
-    //=============================================================================
-    // HPE_BEGIN:
-    // [tj]Set up the receive table for per-client domination data
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [tj]Set up the receive table for per-client domination data
+	//=============================================================================
 
-    RecvPropArray3( RECVINFO_ARRAY( m_bPlayerDominated ), RecvPropBool( RECVINFO( m_bPlayerDominated[0] ) ) ),
-    RecvPropArray3( RECVINFO_ARRAY( m_bPlayerDominatingMe ), RecvPropBool( RECVINFO( m_bPlayerDominatingMe[0] ) ) )
+	RecvPropArray3( RECVINFO_ARRAY( m_bPlayerDominated ), RecvPropBool( RECVINFO( m_bPlayerDominated[0] ) ) ),
+	RecvPropArray3( RECVINFO_ARRAY( m_bPlayerDominatingMe ), RecvPropBool( RECVINFO( m_bPlayerDominatingMe[0] ) ) )
 
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
 END_RECV_TABLE()
 
@@ -754,19 +754,19 @@ IMPLEMENT_CLIENTCLASS_DT( C_CSPlayer, DT_CSPlayer, CCSPlayer )
 	RecvPropBool( RECVINFO( m_bHasNightVision ) ),
 
 
-    //=============================================================================
-    // HPE_BEGIN:
-    // [dwenger] Added for fun-fact support
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [dwenger] Added for fun-fact support
+	//=============================================================================
 
-    //RecvPropBool( RECVINFO( m_bPickedUpDefuser ) ),
-    //RecvPropBool( RECVINFO( m_bDefusedWithPickedUpKit ) ),
+	//RecvPropBool( RECVINFO( m_bPickedUpDefuser ) ),
+	//RecvPropBool( RECVINFO( m_bDefusedWithPickedUpKit ) ),
 
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
-    RecvPropBool( RECVINFO( m_bInHostageRescueZone ) ),
+	RecvPropBool( RECVINFO( m_bInHostageRescueZone ) ),
 	RecvPropInt( RECVINFO( m_ArmorValue ) ),
 	RecvPropBool( RECVINFO( m_bIsDefusing ) ),
 	RecvPropBool( RECVINFO( m_bResumeZoom ) ),
@@ -819,7 +819,7 @@ C_CSPlayer::C_CSPlayer() :
 
 	view->SetScreenOverlayMaterial( NULL );
 
-    m_bPlayingFreezeCamSound = false;
+	m_bPlayingFreezeCamSound = false;
 }
 
 
@@ -1463,8 +1463,8 @@ void C_CSPlayer::UpdateIDTarget()
 
 	// don't show IDs in chase spec mode
 	if ( GetObserverMode() == OBS_MODE_CHASE ||
-		 GetObserverMode() == OBS_MODE_DEATHCAM )
-		 return;
+		GetObserverMode() == OBS_MODE_DEATHCAM )
+		return;
 
 	//Check how much of a screen fade we have.
 	//if it's more than 75 then we can't see what's going on so we don't display the id.
@@ -1473,7 +1473,7 @@ void C_CSPlayer::UpdateIDTarget()
 	vieweffects->GetFadeParams( &color[0], &color[1], &color[2], &color[3], &blend );
 
 	if ( color[3] > MAX_FLASHBANG_OPACITY && ( IsAlive() || GetObserverMode() == OBS_MODE_IN_EYE ) )
-		 return;
+		return;
 
 	trace_t tr;
 	Vector vecStart, vecEnd;
@@ -1518,11 +1518,11 @@ void C_CSPlayer::UpdateIDTarget()
 					Vector vPos = pSmokeGrenade->GetAbsOrigin();
 
 					/*debugoverlay->AddBoxOverlay( pSmokeGrenade->GetAbsOrigin(), Vector( flRadius, flRadius, flRadius ),
-					 Vector( -flRadius, -flRadius, -flRadius ), QAngle( 0, 0, 0 ), 255, 0, 0, 255, 0.2 );*/
+					Vector( -flRadius, -flRadius, -flRadius ), QAngle( 0, 0, 0 ), 255, 0, 0, 255, 0.2 );*/
 
 					if ( IntersectInfiniteRayWithSphere( MainViewOrigin(), MainViewForward(), vPos, flRadius, &flHit1, &flHit2 ) )
 					{
-						 return;
+						return;
 					}
 				}
 			}
@@ -1691,7 +1691,7 @@ void C_CSPlayer::SetFireAnimation( PLAYER_ANIM playerAnim )
 ShadowType_t C_CSPlayer::ShadowCastType( void )
 {
 	if ( !IsVisible() )
-		 return SHADOWS_NONE;
+		return SHADOWS_NONE;
 
 	return SHADOWS_RENDER_TO_TEXTURE_DYNAMIC;
 }
@@ -2328,7 +2328,7 @@ void C_CSPlayer::ImpactTrace( trace_t *pTrace, int iDamageType, const char *pCus
 void C_CSPlayer::CalcObserverView( Vector& eyeOrigin, QAngle& eyeAngles, float& fov )
 {
 	/**
-	 * TODO: Fix this!
+	* TODO: Fix this!
 	// CS:S standing eyeheight is above the collision volume, so we need to pull it
 	// down when we go into close quarters.
 	float maxEyeHeightAboveBounds = VEC_VIEW_SCALED( this ).z - VEC_HULL_MAX_SCALED( this ).z;
@@ -2388,25 +2388,25 @@ void C_CSPlayer::CalcObserverView( Vector& eyeOrigin, QAngle& eyeAngles, float& 
 // [tj] checks if this player has another given player on their Steam friends list.
 bool C_CSPlayer::HasPlayerAsFriend(C_CSPlayer* player)
 {
-    if (!steamapicontext || !steamapicontext->SteamFriends() || !steamapicontext->SteamUtils() || !player)
-    {
-        return false;
-    }
+	if (!steamapicontext || !steamapicontext->SteamFriends() || !steamapicontext->SteamUtils() || !player)
+	{
+		return false;
+	}
 
-    player_info_t pi;
-    if ( !engine->GetPlayerInfo( player->entindex(), &pi ) )
-    {
-        return false;
-    }
+	player_info_t pi;
+	if ( !engine->GetPlayerInfo( player->entindex(), &pi ) )
+	{
+		return false;
+	}
 
-    if ( !pi.friendsID )
-    {
-        return false;
-    }
+	if ( !pi.friendsID )
+	{
+		return false;
+	}
 
-    // check and see if they're on the local player's friends list
-    CSteamID steamID( pi.friendsID, 1, steamapicontext->SteamUtils()->GetConnectedUniverse(), k_EAccountTypeIndividual );
-    return steamapicontext->SteamFriends()->HasFriend( steamID, k_EFriendFlagImmediate);
+	// check and see if they're on the local player's friends list
+	CSteamID steamID( pi.friendsID, 1, steamapicontext->SteamUtils()->GetConnectedUniverse(), k_EAccountTypeIndividual );
+	return steamapicontext->SteamFriends()->HasFriend( steamID, k_EFriendFlagImmediate);
 }
 
 // [menglish] Returns whether this player is dominating or is being dominated by the specified player
@@ -2550,4 +2550,3 @@ float C_CSPlayer::GetDeathCamInterpolationTime()
 //=============================================================================
 // HPE_END
 //=============================================================================
-

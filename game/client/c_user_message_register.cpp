@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -17,7 +17,7 @@ CUserMessageRegister::CUserMessageRegister( const char *pMessageName, pfnUserMsg
 {
 	m_pMessageName = pMessageName;
 	m_pHookFn = pHookFn;
-	
+
 	// Link it in.
 	m_pNext = s_pHead;
 	s_pHead = this;
@@ -31,6 +31,3 @@ void CUserMessageRegister::RegisterAll()
 		usermessages->HookMessage( pCur->m_pMessageName, pCur->m_pHookFn );
 	}
 }
-
-
-

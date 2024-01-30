@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -43,7 +43,7 @@ void CAttributeSurfacePropertyPickerPanel::AddSurfacePropertiesToList( PickerLis
 		{
 			if ( Q_stricmp( sub->GetName(), "file" ) )
 				continue;
-							  
+
 			KeyValues *file = new KeyValues( SURFACEPROP_MANIFEST_FILE );
 			if ( file->LoadFromFile( g_pFullFileSystem, sub->GetString(), "GAME" ) )
 			{

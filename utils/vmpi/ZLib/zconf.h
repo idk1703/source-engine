@@ -1,6 +1,6 @@
 /* zconf.h -- configuration of the zlib compression library
  * Copyright (C) 1995-1998 Jean-loup Gailly.
- * For conditions of distribution and use, see copyright notice in zlib.h 
+ * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
 /* @(#) $Id$ */
@@ -116,19 +116,19 @@
 #endif
 
 /* The memory requirements for deflate are (in bytes):
-            (1 << (windowBits+2)) +  (1 << (memLevel+9))
+				(1 << (windowBits+2)) +  (1 << (memLevel+9))
  that is: 128K for windowBits=15  +  128K for memLevel = 8  (default values)
  plus a few kilobytes for small objects. For example, if you want to reduce
  the default memory requirements from 256K to 128K, compile with
-     make CFLAGS="-O -DMAX_WBITS=14 -DMAX_MEM_LEVEL=7"
+		make CFLAGS="-O -DMAX_WBITS=14 -DMAX_MEM_LEVEL=7"
  Of course this will generally degrade compression (there's no free lunch).
 
-   The memory requirements for inflate are (in bytes) 1 << windowBits
+	The memory requirements for inflate are (in bytes) 1 << windowBits
  that is, 32K for windowBits=15 (default value) plus a few kilobytes
  for small objects.
 */
 
-                        /* Type declarations */
+								/* Type declarations */
 
 #ifndef OF /* function prototypes */
 #  ifdef STDC
@@ -145,7 +145,7 @@
  * just define FAR to be empty.
  */
 #if (defined(M_I86SM) || defined(M_I86MM)) && !defined(__32BIT__)
-   /* MSC small or medium model */
+	/* MSC small or medium model */
 #  define SMALL_MEDIUM
 #  ifdef _MSC_VER
 #    define FAR _far
@@ -217,10 +217,10 @@ typedef unsigned int   uInt;  /* 16 bits or more */
 typedef unsigned long  uLong; /* 32 bits or more */
 
 #ifdef SMALL_MEDIUM
-   /* Borland C/C++ and some old MSC versions ignore FAR inside typedef */
+	/* Borland C/C++ and some old MSC versions ignore FAR inside typedef */
 #  define Bytef Byte FAR
 #else
-   typedef Byte  FAR Bytef;
+	typedef Byte  FAR Bytef;
 #endif
 typedef char  FAR charf;
 typedef int   FAR intf;
@@ -228,11 +228,11 @@ typedef uInt  FAR uIntf;
 typedef uLong FAR uLongf;
 
 #ifdef STDC
-   typedef void FAR *voidpf;
-   typedef void     *voidp;
+	typedef void FAR *voidpf;
+	typedef void     *voidp;
 #else
-   typedef Byte FAR *voidpf;
-   typedef Byte     *voidp;
+	typedef Byte FAR *voidpf;
+	typedef Byte     *voidp;
 #endif
 
 #ifdef HAVE_UNISTD_H

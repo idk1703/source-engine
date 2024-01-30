@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,10 +21,10 @@ class CBaseObject;
 typedef CHandle<CBaseObject>	ObjectHandle;
 struct BuildPoint_t
 {
-	// If this is true, then objects are parented to the attachment point instead of 
-	// parented to the entity's abs origin + angles. That way, they'll move if the 
+	// If this is true, then objects are parented to the attachment point instead of
+	// parented to the entity's abs origin + angles. That way, they'll move if the
 	// attachment point animates.
-	bool			m_bPutInAttachmentSpace;	
+	bool			m_bPutInAttachmentSpace;
 
 	int				m_iAttachmentNum;
 	ObjectHandle	m_hObject;

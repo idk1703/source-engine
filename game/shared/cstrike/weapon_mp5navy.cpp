@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,9 +24,9 @@ class CWeaponMP5Navy : public CWeaponCSBaseGun
 {
 public:
 	DECLARE_CLASS( CWeaponMP5Navy, CWeaponCSBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponMP5Navy();
 
 	virtual void Spawn();
@@ -93,7 +93,7 @@ float CWeaponMP5Navy::GetInaccuracy() const
 		CCSPlayer *pPlayer = GetPlayerOwner();
 		if ( !pPlayer )
 			return 0.0f;
-	
+
 		if ( !FBitSet( pPlayer->GetFlags(), FL_ONGROUND ) )
 			return 0.2f * m_flAccuracy;
 		else
@@ -119,7 +119,7 @@ void CWeaponMP5Navy::PrimaryAttack( void )
 
 	// Kick the gun based on the state of the player.
 	if ( !FBitSet( pPlayer->GetFlags(), FL_ONGROUND ) )
-		pPlayer->KickBack (0.9, 0.475, 0.35, 0.0425, 5, 3, 6);	
+		pPlayer->KickBack (0.9, 0.475, 0.35, 0.0425, 5, 3, 6);
 	else if (pPlayer->GetAbsVelocity().Length2D() > 5)
 		pPlayer->KickBack (0.5, 0.275, 0.2, 0.03, 3, 2, 10);
 	else if ( FBitSet( pPlayer->GetFlags(), FL_DUCKING ) )

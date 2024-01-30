@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_ObjectResourcePump, DT_ResourcePump, CObjectResourceP
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectResourcePump::C_ObjectResourcePump()
 {
@@ -37,7 +37,7 @@ C_ObjectResourcePump::C_ObjectResourcePump()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ObjectResourcePump::SetDormant( bool bDormant )
 {
@@ -47,7 +47,7 @@ void C_ObjectResourcePump::SetDormant( bool bDormant )
 
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CResourcePumpControlPanel : public CObjectControlPanel
 {
@@ -71,15 +71,15 @@ DECLARE_VGUI_SCREEN_FACTORY( CResourcePumpControlPanel, "resourcepump_control_pa
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CResourcePumpControlPanel::CResourcePumpControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CResourcePumpControlPanel" ) 
+	: BaseClass( parent, "CResourcePumpControlPanel" )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CResourcePumpControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -102,7 +102,7 @@ bool CResourcePumpControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_
 void CResourcePumpControlPanel::OnTick()
 {
 	BaseClass::OnTick();
-	
+
 	C_BaseObject *pObj = GetOwningObject();
 	if (!pObj)
 		return;
@@ -137,7 +137,7 @@ void CResourcePumpControlPanel::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// Dismantles the object 
+// Dismantles the object
 //-----------------------------------------------------------------------------
 void CResourcePumpControlPanel::Upgrade( void )
 {
@@ -161,4 +161,3 @@ void CResourcePumpControlPanel::OnCommand( const char *command )
 
 	BaseClass::OnCommand(command);
 }
-

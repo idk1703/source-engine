@@ -199,7 +199,7 @@ void CScreenshotManager::DoCaptureScreenshot()
 
 			if ( trace.DidHit() )
 			{
-				float d = 5;	// The distance to push in if we 
+				float d = 5;	// The distance to push in if we
 				Vector dir = trace.endpos - vStartPos;
 				VectorNormalize( dir );
 				origin -= Vector( d * dir.x, d * dir.y, d * dir.z );
@@ -215,7 +215,7 @@ void CScreenshotManager::DoCaptureScreenshot()
 				params.m_pAngles = &angles;
 			}
 		}
-	}	
+	}
 
 	// Write the screenshot to disk
 	params.m_nWidth = nScreenshotDims[0];
@@ -251,7 +251,7 @@ void CScreenshotManager::DeleteScreenshotsForReplay( CReplay *pReplay )
 		g_pFullFileSystem->RemoveFile( szFilename );
 	}
 }
-	
+
 void CScreenshotManager::GetUnpaddedScreenshotSize( int &nOutWidth, int &nOutHeight )
 {
 	// Figure out the proper screenshot size to use based on the aspect ratio

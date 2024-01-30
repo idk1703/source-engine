@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -51,7 +51,7 @@ CLoadGameDialog::~CLoadGameDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadGameDialog::OnCommand( const char *command )
 {
@@ -66,9 +66,9 @@ void CLoadGameDialog::OnCommand( const char *command )
 				// Load the game, return to top and switch to engine
 				char sz[ 256 ];
 				Q_snprintf(sz, sizeof( sz ), "progress_enable\nload %s\n", shortName );
-				
+
 				engine->ClientCmd_Unrestricted( sz );
-				
+
 				// Close this dialog
 				OnClose();
 			}
@@ -104,4 +104,3 @@ void CLoadGameDialog::OnCommand( const char *command )
 		BaseClass::OnCommand( command );
 	}
 }
-

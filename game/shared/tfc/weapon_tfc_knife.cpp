@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -53,6 +53,6 @@ void CTFCKnife::Precache()
 
 
 TFCWeaponID CTFCKnife::GetWeaponID( void ) const
-{ 
+{
 	return WEAPON_KNIFE;
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -36,7 +36,7 @@ template class CShaderBuffer< ID3D10Blob >;
 //-----------------------------------------------------------------------------
 static CShaderDeviceMgrDx10 g_ShaderDeviceMgrDx10;
 
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderDeviceMgrDx10, IShaderDeviceMgr, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderDeviceMgrDx10, IShaderDeviceMgr,
 	SHADER_DEVICE_MGR_INTERFACE_VERSION, g_ShaderDeviceMgrDx10 )
 
 static CShaderDeviceDx10 g_ShaderDeviceDx10;
@@ -298,7 +298,7 @@ int CShaderDeviceMgrDx10::GetVidMemBytes( int nAdapter ) const
 	DXGI_ADAPTER_DESC desc;
 
 #ifdef DBGFLAG_ASSERT
-	HRESULT hr = 
+	HRESULT hr =
 #endif
 		pAdapter->GetDesc( &desc );
 	Assert( !FAILED( hr ) );
@@ -347,7 +347,7 @@ int CShaderDeviceMgrDx10::GetModeCount( int nAdapter ) const
 	IDXGIOutput *pOutput = GetAdapterOutput( nAdapter );
 	if ( !pOutput )
 		return 0;
-	
+
 	UINT num = 0;
 	DXGI_FORMAT format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB; //desired color format
 	UINT flags         = 0; //desired scanline order and/or scaling
@@ -553,7 +553,7 @@ bool CShaderDeviceDx10::InitDevice( void *hWnd, int nAdapter, const ShaderDevice
 	nDeviceFlags |= D3D10_CREATE_DEVICE_DEBUG;
 #endif
 
-	HRESULT hr = D3D10CreateDeviceAndSwapChain( pAdapter, D3D10_DRIVER_TYPE_HARDWARE, 
+	HRESULT hr = D3D10CreateDeviceAndSwapChain( pAdapter, D3D10_DRIVER_TYPE_HARDWARE,
 		NULL, nDeviceFlags, D3D10_SDK_VERSION, &sd, &m_pSwapChain, &m_pDevice );
 
 	if ( FAILED( hr ) )
@@ -588,7 +588,7 @@ bool CShaderDeviceDx10::InitDevice( void *hWnd, int nAdapter, const ShaderDevice
 //-----------------------------------------------------------------------------
 // Shuts down the mode
 //-----------------------------------------------------------------------------
-void CShaderDeviceDx10::ShutdownDevice() 
+void CShaderDeviceDx10::ShutdownDevice()
 {
 	if ( m_pRenderTargetView )
 	{
@@ -653,7 +653,7 @@ void CShaderDeviceDx10::GetBackBufferDimensions( int& width, int& height ) const
 
 
 //-----------------------------------------------------------------------------
-// Use this to spew information about the 3D layer 
+// Use this to spew information about the 3D layer
 //-----------------------------------------------------------------------------
 void CShaderDeviceDx10::SpewDriverInfo() const
 {
@@ -728,7 +728,7 @@ IShaderBuffer* CShaderDeviceDx10::CompileShader( const char *pProgram, size_t nB
 
 	ID3D10Blob *pCompiledShader, *pErrorMessages;
 	HRESULT hr = D3DX10CompileFromMemory( pProgram, nBufLen, "",
-		NULL, NULL, "main", pShaderVersion, nCompileFlags, 0, NULL, 
+		NULL, NULL, "main", pShaderVersion, nCompileFlags, 0, NULL,
 		&pCompiledShader, &pErrorMessages, NULL );
 
 	if ( FAILED( hr ) )
@@ -997,6 +997,3 @@ IIndexBuffer *CShaderDeviceDx10::GetDynamicIndexBuffer( MaterialIndexFormat_t fm
 	LOCK_SHADERAPI();
 	return NULL;
 }
-
-
-

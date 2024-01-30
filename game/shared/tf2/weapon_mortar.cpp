@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -47,7 +47,7 @@ IMPLEMENT_SERVERCLASS_ST(CWeaponMortar, DT_WeaponMortar)
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponMortar::CWeaponMortar( void )
 {
@@ -71,15 +71,15 @@ void CWeaponMortar::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponMortar::GetFireRate( void )
-{	
-	return 3.0; 
+{
+	return 3.0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponMortar::Deploy( )
 {
@@ -87,7 +87,7 @@ bool CWeaponMortar::Deploy( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMortar::ItemPostFrame( void )
 {
@@ -115,7 +115,7 @@ void CWeaponMortar::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponMortar::ComputeEMPFireState( void )
@@ -132,7 +132,7 @@ bool CWeaponMortar::ComputeEMPFireState( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMortar::PrimaryAttack( void )
 {
@@ -159,7 +159,7 @@ void CWeaponMortar::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMortar::Fire( float flPower, float flAccuracy )
 {
@@ -170,7 +170,7 @@ void CWeaponMortar::Fire( float flPower, float flAccuracy )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMortar::SecondaryAttack( void )
 {
@@ -213,7 +213,7 @@ void CWeaponMortar::MortarObjectRemoved( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMortar::SetYaw( float flYaw )
 {
@@ -249,7 +249,7 @@ void CWeaponMortar::SetRoundType( int iRoundType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMortar::MortarDestroyed( void )
 {
@@ -268,27 +268,27 @@ void CWeaponMortar::MortarDestroyed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObject - 
+// Purpose:
+// Input  : *pObject -
 //-----------------------------------------------------------------------------
 void CWeaponMortar::AddAssociatedObject( CBaseObject *pObject )
 {
 	Assert( pObject );
-	
+
 	// Can't handle this object
 	CObjectMortar *mortar = dynamic_cast< CObjectMortar * >( pObject );
 	if ( !mortar )
 		return;
 
 	m_bCarried = false;
-	
+
 	m_hDeployedMortar = mortar;
 	mortar->m_hMortarWeapon = this;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObject - 
+// Purpose:
+// Input  : *pObject -
 //-----------------------------------------------------------------------------
 void CWeaponMortar::RemoveAssociatedObject( CBaseObject *pObject )
 {
@@ -330,7 +330,7 @@ void CWeaponMortar::GainedNewTechnology( CBaseTechnology *pTechnology )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMortar::WeaponIdle( void )
 {

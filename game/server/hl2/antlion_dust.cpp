@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -13,7 +13,7 @@
 
 IMPLEMENT_SERVERCLASS_ST( CTEAntlionDust, DT_TEAntlionDust )
 	SendPropVector( SENDINFO( m_vecOrigin ) ),
-	SendPropVector( SENDINFO( m_vecAngles ) ),	
+	SendPropVector( SENDINFO( m_vecAngles ) ),
 	SendPropBool( SENDINFO( m_bBlockedSpawner ) ),
 END_SEND_TABLE()
 

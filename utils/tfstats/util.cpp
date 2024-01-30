@@ -12,7 +12,7 @@
 // $NoKeywords: $
 //=============================================================================//
 
-#include "util.h" 
+#include "util.h"
 #include "TFStatsApplication.h"
 #include <stdarg.h>
 #include <string.h>
@@ -37,10 +37,10 @@ int Util::string2svrID(string s)
 	{
 		if (*read=='<' && *(read+1) != 'W') // if we've found a svrID
 			break;
-		
+
 		read--;
 	}
-	
+
 	if (read==text)
 		return -1;
 
@@ -88,7 +88,7 @@ void Util::initFriendlyWeaponNameTable()
 // Purpose:	 turns a non-friendly weapon name into a friendly one
 // Input:	s - the non-friendly weapon name which you want to make friendly
 //		this function returns the non friendly name if the friendly one isn't found
-// Output:	const string& 
+// Output:	const string&
 //------------------------------------------------------------------------------------------------------
 const string& Util::getFriendlyWeaponName(const string& s)
 {
@@ -273,9 +273,9 @@ const char* Util::makeDurationString(time_t start, time_t end,char* out,char* to
 		sprintf(out,"");
 		return out;
 	}
-	
+
 	int sday=pstart->tm_mday;
-	
+
 	int sweekday=pstart->tm_wday;
 	int smo=pstart->tm_mon;
 	int syear=pstart->tm_year+1900;
@@ -284,7 +284,7 @@ const char* Util::makeDurationString(time_t start, time_t end,char* out,char* to
 	if (pstart->tm_isdst)
 		shour=(shour+23)%24; //this substracts 1 while accounting for backing up past 0
 	int smin=pstart->tm_min;
-	
+
 	tm* pend=localtime(&end);
 	if (!pend)
 		pend=pstart;
@@ -293,7 +293,7 @@ const char* Util::makeDurationString(time_t start, time_t end,char* out,char* to
 	if (pend->tm_isdst)
 		ehour=(ehour+23)%24; //this substracts 1 while accounting for backing up past 0
 
-	
+
 	char* matchtz=NULL;
 	matchtz=g_pApp->os->gettzname()[0];
 

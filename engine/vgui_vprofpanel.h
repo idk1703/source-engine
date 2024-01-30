@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,12 +18,12 @@
 
 
 //-----------------------------------------------------------------------------
-// Forward declarations 
+// Forward declarations
 //-----------------------------------------------------------------------------
 class CVProfNode;
 class CVProfile;
 
-class CProfileHierarchyPanel : public vgui::CTreeViewListControl 
+class CProfileHierarchyPanel : public vgui::CTreeViewListControl
 {
 	DECLARE_CLASS_SIMPLE( CProfileHierarchyPanel, vgui::CTreeViewListControl );
 
@@ -68,7 +68,7 @@ struct PanelEntry_t
 
 	virtual void	PostChildPaint();
 
-    virtual void ExpandItem(int itemIndex, bool bExpand);
+	virtual void ExpandItem(int itemIndex, bool bExpand);
 	virtual bool IsItemExpanded( int itemIndex );
 
 	virtual KeyValues *GetItemData(int itemIndex);
@@ -77,7 +77,7 @@ public:
 
 	void	 HideAll();
 
-	
+
 
 	static bool PanelsLessFunc( const ColumnPanels_t& lhs, const ColumnPanels_t& rhs )
 	{
@@ -90,7 +90,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CVProfPanel : public vgui::Frame
 {
@@ -101,7 +101,7 @@ public:
 	~CVProfPanel();
 
 	void UpdateProfile( float filteredtime );
-	
+
 	// Command handlers
 	void UserCmd_ShowVProf( void );
 	void UserCmd_HideVProf( void );

@@ -21,7 +21,7 @@ public:
 private:
 	bool	m_bEmit;	// Determines whether or not we should emit particles
 	float	m_flScale;	// Size of the effect
-	
+
 	CSmartPtr<CSimpleEmitter>	m_hEmitter;			// Particle emitter for this entity
 	PMaterialHandle				m_hMaterial;		// Material handle used for this entity's particles
 	TimedEvent					m_tParticleTimer;	// Timer used to control particle emission rate
@@ -40,7 +40,7 @@ void C_Sparkler::OnDataChanged( DataUpdateType_t updateType )
 {
 	// NOTE: We MUST call the base classes' implementation of this function
 	BaseClass::OnDataChanged( updateType );
-	
+
 	// Setup our entity's particle system on creation
 	if ( updateType == DATA_UPDATE_CREATED )
 	{
@@ -103,7 +103,7 @@ void C_Sparkler::ClientThink( void )
 		// Setup our alpha values
 		pParticle->m_uchStartAlpha = 255;
 		pParticle->m_uchEndAlpha = 255;
-		
+
 		// Obtain a random direction
 		Vector velocity = RandomVector( -1.0f, 1.0f );
 		VectorNormalize( velocity );
@@ -174,7 +174,7 @@ void SparkleCallback( const CEffectData &data )
 		// Set our alpha
 		pParticle->m_uchStartAlpha = 0;
 		pParticle->m_uchEndAlpha = 255;
-		
+
 		// Create a random vector
 		Vector velocity = RandomVector( -1.0f, 1.0f );
 		VectorNormalize( velocity );

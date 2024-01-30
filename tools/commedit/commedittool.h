@@ -195,7 +195,7 @@ private:
 
 	// Gets the position of the preview object
 	void GetPlacementInfo( Vector &vecOrigin, QAngle &angles );
-	
+
 	// Brings the console to front
 	void BringConsoleToFront();
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -39,7 +39,7 @@ DmxSerializationHandle_t CDmxSerializationDictionary::Find( CDmxElement *pElemen
 	return m_Dict.Find( find );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Creates the list of all things to serialize
 //-----------------------------------------------------------------------------
@@ -149,7 +149,7 @@ int CDmxSerializationDictionary::RootElementCount() const
 	return nCount;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Iterates over all root elements to serialize
 //-----------------------------------------------------------------------------
@@ -184,5 +184,3 @@ CDmxElement *CDmxSerializationDictionary::GetRootElement( DmxSerializationHandle
 	Assert( m_Dict[h].m_bRoot );
 	return m_Dict[h].m_pElement;
 }
-
-

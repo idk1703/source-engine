@@ -22,7 +22,7 @@ class CMeteorFactory : public IMeteorFactory
 {
 public:
 
-	void CreateMeteor( int nID, int iType, const Vector &vecPosition, 
+	void CreateMeteor( int nID, int iType, const Vector &vecPosition,
 		               const Vector &vecDirection, float flSpeed, float flStartTime,
 					   float flDamageRadius,
 					   const Vector &vecTriggerMins, const Vector &vecTriggerMaxs );
@@ -35,7 +35,7 @@ public:
 class CEnvMeteorSpawner : public CBaseEntity
 {
 public:
-	
+
 	DECLARE_CLASS( CEnvMeteorSpawner, CBaseEntity );
 
 	DECLARE_DATADESC();
@@ -78,7 +78,7 @@ public:
 
 	CEnvMeteorTarget();
 	void	Spawn( void );
-	
+
 	int			m_iTargetID;
 	float		m_flRadius;
 };
@@ -100,12 +100,12 @@ public:
 	// Initialization
 	//-------------------------------------------------------------------------
 	CEnvMeteor();
-	static CEnvMeteor  *Create( int nID, int iMeteorType, const Vector &vecOrigin, 
+	static CEnvMeteor  *Create( int nID, int iMeteorType, const Vector &vecOrigin,
 		                       const Vector &vecDirection, float flSpeed, float flStartTime,
 							   float flDamageRadius,
 							   const Vector &vecTriggerMins, const Vector &vecTriggerMaxs );
 	void				Spawn( void );
-	
+
 	//-------------------------------------------------------------------------
 	// Think(s)
 	//-------------------------------------------------------------------------

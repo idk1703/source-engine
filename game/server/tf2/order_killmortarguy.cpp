@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -72,12 +72,12 @@ bool COrderKillMortarGuy::CreateOrder( CPlayerClass *pClass )
 {
 	CSortBase info;
 	info.m_pPlayer = pClass->GetPlayer();
-	
-	// Look for an enemy sniper visible to the 
+
+	// Look for an enemy sniper visible to the
 	int supports[MAX_PLAYERS];
-	int nSupports = BuildSortedActiveList( 
+	int nSupports = BuildSortedActiveList(
 		supports,							// the sorted list
-		MAX_PLAYERS,					
+		MAX_PLAYERS,
 		SortFn_PlayerEntsByDistance,		// sort on distance
 		IsValidFn_DeployedBrianJacobsons,	// only get deployed support guys
 		&info,								// pUserData
@@ -91,7 +91,7 @@ bool COrderKillMortarGuy::CreateOrder( CPlayerClass *pClass )
 		Assert( pBrian );
 
 		COrderKillMortarGuy *pOrder = new COrderKillMortarGuy;
-		pClass->GetTeam()->AddOrder( 
+		pClass->GetTeam()->AddOrder(
 			ORDER_KILL,
 			pBrian,
 			pClass->GetPlayer(),
@@ -120,6 +120,3 @@ bool COrderKillMortarGuy::UpdateOnEvent( COrderEvent_Base *pEvent )
 
 	return BaseClass::UpdateOnEvent( pEvent );
 }
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #define PROTECTED_THINGS_DISABLE
@@ -305,12 +305,12 @@ static TRKELookup g_Lookup[] =
 
 void CBugReporter::ReportError(TRK_UINT rc, char const *func, char const *msg )
 {
-    if ( rc != TRK_SUCCESS )
+	if ( rc != TRK_SUCCESS )
 	{
 		switch (rc)
 		{
 		case TRK_E_ITEM_NOT_FOUND:
-		    Msg( "%s %s was not found!\n", func,  msg );
+			Msg( "%s %s was not found!\n", func,  msg );
 			break;
 		case TRK_E_INVALID_FIELD:
 			Msg( "%s %s Invalid field!\n", func,  msg );
@@ -332,7 +332,7 @@ void CBugReporter::ReportError(TRK_UINT rc, char const *func, char const *msg )
 			}
 			break;
 		}
-    }
+	}
 }
 
 TRK_UINT CBugReporter::Login(TRK_HANDLE* pTrkHandle)
@@ -343,8 +343,8 @@ TRK_UINT CBugReporter::Login(TRK_HANDLE* pTrkHandle)
 	char username[ 50 ];
 	char password[ 50 ];
 
-	GetPrivateProfileStringA( 
-		"login", 
+	GetPrivateProfileStringA(
+		"login",
 		"userid1",
 		DEFAULT_USERNAME, // default
 		username,
@@ -353,8 +353,8 @@ TRK_UINT CBugReporter::Login(TRK_HANDLE* pTrkHandle)
 
 	if ( !Q_stricmp( username, DEFAULT_USERNAME) || !Q_stricmp( username, "BELMAPNTKY" ) ) // if userid1 didn't have a valid name in it try userid0
 	{
-		GetPrivateProfileStringA( 
-			"login", 
+		GetPrivateProfileStringA(
+			"login",
 			"userid0",
 			DEFAULT_USERNAME, // default
 			username,
@@ -444,7 +444,7 @@ TRK_UINT CBugReporter::Login(TRK_HANDLE* pTrkHandle)
 
 	TrkGetLoginDBMSName(*pTrkHandle, sizeof(dbms), dbms );
 	TrkGetLoginProjectName(*pTrkHandle, sizeof(proj), proj );
-	
+
 	Msg( "Project:  %s\n", proj );
 	Msg( "Server:  %s\n", dbms );
 
@@ -485,7 +485,7 @@ bool CBugReporter::Init( CreateInterfaceFn engineFactory )
 	rc = TrkRecordHandleAlloc(trkHandle, &trkRecHandle);
 	if (rc != TRK_SUCCESS)
 	{
-		ReportError(rc, "TrkRecordHandleAlloc", 
+		ReportError(rc, "TrkRecordHandleAlloc",
 			"Failed to Allocate Tracker Record Handle!");
 		return false;
 	}
@@ -498,7 +498,7 @@ bool CBugReporter::Init( CreateInterfaceFn engineFactory )
 void CBugReporter::Shutdown()
 {
 	TRK_UINT			rc;
-	
+
 	if ( trkRecHandle )
 	{
 		rc = TrkRecordHandleFree(&trkRecHandle);
@@ -510,14 +510,14 @@ void CBugReporter::Shutdown()
 
 	if ( trkHandle )
 	{
-		rc = TrkProjectLogout(trkHandle);		
+		rc = TrkProjectLogout(trkHandle);
 		if (rc != TRK_SUCCESS)
 		{
 			ReportError(rc, "TrkProjectLogout", "Failed to Logout of Project!");
 		}
 		else
 		{
-			rc = TrkHandleFree(&trkHandle);     
+			rc = TrkHandleFree(&trkHandle);
 			if (rc != TRK_SUCCESS)
 			{
 				ReportError(rc, "TrkHandleFree", "Failed to Free Tracker Handle!");
@@ -559,7 +559,7 @@ char const *CBugReporter::GetDisplayName( int index )
 	if ( index < 0 || index >= (int)m_SortedDisplayNames.Count() )
 		return "<<Invalid>>";
 
-	return m_BugStrings.String( m_SortedDisplayNames[ index ] ); 
+	return m_BugStrings.String( m_SortedDisplayNames[ index ] );
 }
 
 char const *CBugReporter::GetDisplayNameForUserName( char const *username )
@@ -735,7 +735,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 	rc = TrkNewRecordBegin( trkRecHandle, SCR_TYPE );
 	if ( rc != TRK_SUCCESS )
 	{
-		ReportError(rc, "TrkNewRecordBegin", 
+		ReportError(rc, "TrkNewRecordBegin",
 			"Failed to TrkNewRecordBegin!");
 		return false;
 	}
@@ -746,7 +746,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 		m_pBug->title );
 	if ( rc != TRK_SUCCESS )
 	{
-		ReportError(rc, "TrkSetStringFieldValue", 
+		ReportError(rc, "TrkSetStringFieldValue",
 			"Failed to add title!");
 		return false;
 	}
@@ -755,7 +755,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 		m_pBug->submitter );
 	if ( rc != TRK_SUCCESS )
 	{
-		ReportError(rc, "TrkSetStringFieldValue", 
+		ReportError(rc, "TrkSetStringFieldValue",
 			"Failed to set submitter!");
 		return false;
 	}
@@ -764,7 +764,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 		m_pBug->owner );
 	if ( rc != TRK_SUCCESS )
 	{
-		ReportError(rc, "TrkSetStringFieldValue", 
+		ReportError(rc, "TrkSetStringFieldValue",
 			"Failed to set owner!");
 		return false;
 	}
@@ -773,7 +773,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 		m_pBug->severity );
 	if ( rc != TRK_SUCCESS )
 	{
-		ReportError(rc, "TrkSetStringFieldValue", 
+		ReportError(rc, "TrkSetStringFieldValue",
 			"Failed to set severity!");
 		//return false;
 	}
@@ -782,7 +782,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 		m_pBug->reporttype );
 	if ( rc != TRK_SUCCESS )
 	{
-		ReportError(rc, "TrkSetStringFieldValue", 
+		ReportError(rc, "TrkSetStringFieldValue",
 			"Failed to set report type!");
 		//return false;
 	}
@@ -791,7 +791,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 		m_pBug->priority );
 	if ( rc != TRK_SUCCESS )
 	{
-		ReportError(rc, "TrkSetStringFieldValue", 
+		ReportError(rc, "TrkSetStringFieldValue",
 			"Failed to set priority!");
 		//return false;
 	}
@@ -800,7 +800,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 		m_pBug->area );
 	if ( rc != TRK_SUCCESS )
 	{
-		ReportError(rc, "TrkSetStringFieldValue", 
+		ReportError(rc, "TrkSetStringFieldValue",
 			"Failed to set area!");
 		//return false;
 	}
@@ -809,7 +809,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 		m_pBug->mapnumber );
 	if ( rc != TRK_SUCCESS )
 	{
-		ReportError(rc, "TrkSetStringFieldValue", 
+		ReportError(rc, "TrkSetStringFieldValue",
 			"Failed to set map area!");
 		//return false;
 	}
@@ -866,7 +866,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 		0 );
 	if ( rc != TRK_SUCCESS )
 	{
-		ReportError(rc, "TrkSetDescriptionData", 
+		ReportError(rc, "TrkSetDescriptionData",
 			"Failed to set description data!");
 		return false;
 	}
@@ -875,7 +875,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 	rc = TrkNewRecordCommit( trkRecHandle, &id );
 	if ( rc != TRK_SUCCESS )
 	{
-		ReportError(rc, "TrkNewRecordCommit", 
+		ReportError(rc, "TrkNewRecordCommit",
 			"Failed to TrkNewRecordCommit!");
 		return false;
 	}
@@ -884,7 +884,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 	rc = TrkGetNumericFieldValue( trkRecHandle, "Id", &bugId );
 	if ( rc != TRK_SUCCESS )
 	{
-		ReportError(rc, "TrkGetNumericFieldValue", 
+		ReportError(rc, "TrkGetNumericFieldValue",
 			"Failed to TrkGetNumericFieldValue for bug Id #!");
 	}
 	else
@@ -926,7 +926,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 
 		if ( rc != TRK_SUCCESS )
 		{
-			ReportError(rc, "TrkSetDescriptionData(update)", 
+			ReportError(rc, "TrkSetDescriptionData(update)",
 				"Failed to set description data!");
 			return false;
 		}
@@ -934,7 +934,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 		rc = TrkUpdateRecordCommit( trkRecHandle, &id );
 		if ( rc != TRK_SUCCESS )
 		{
-			ReportError(rc, "TrkUpdateRecordCommit", 
+			ReportError(rc, "TrkUpdateRecordCommit",
 				"Failed to TrkUpdateRecordCommit for bug Id #!");
 			return false;
 		}
@@ -1145,9 +1145,9 @@ bool CBugReporter::PopulateLists()
 				// Fill in lookup table
 				CUtlSymbol internal_name_sym = m_BugStrings.AddString( sz );
 				CUtlSymbol display_name_sym = m_BugStrings.AddString( displayname );
-				
+
 				m_Names.AddToTail( internal_name_sym );
-				
+
 				m_InternalNameMapping.Insert( displayname, internal_name_sym );
 
 				m_SortedDisplayNames.AddToTail( display_name_sym );

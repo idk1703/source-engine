@@ -1,6 +1,6 @@
-//====== Copyright © 1996-2004, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2004, Valve Corporation, All rights reserved. =======
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -115,7 +115,7 @@ inline void CUtlBinaryBlock::Purge()
 
 
 //-----------------------------------------------------------------------------
-// Simple string class. 
+// Simple string class.
 // NOTE: This is *not* optimal! Use in tools, but not runtime code
 //-----------------------------------------------------------------------------
 class CUtlString
@@ -152,7 +152,7 @@ public:
 	bool		IsEmpty() const;
 
 	// Sets the length (used to serialize into the buffer )
-	// Note: If nLen != 0, then this adds an extra byte for a null-terminator.	
+	// Note: If nLen != 0, then this adds an extra byte for a null-terminator.
 	void		SetLength( int nLen );
 	char		*Get();
 	void		Purge();
@@ -184,7 +184,7 @@ public:
 	CUtlString &operator+=( char c );
 	CUtlString &operator+=( int rhs );
 	CUtlString &operator+=( double rhs );
-	
+
 	CUtlString operator+( const char *pOther ) const;
 
 	bool MatchesPattern( const CUtlString &Pattern, int nFlags = 0 ) const;		// case SENSITIVE, use * for wildcard in pattern string
@@ -209,14 +209,14 @@ public:
 	CUtlString Replace( char cFrom, char cTo ) const;
 
 	// Calls right through to V_MakeAbsolutePath.
-	CUtlString AbsPath( const char *pStartingDir=NULL ) const;	
+	CUtlString AbsPath( const char *pStartingDir=NULL ) const;
 
 	// Gets the filename (everything except the path.. c:\a\b\c\somefile.txt -> somefile.txt).
 	CUtlString UnqualifiedFilename() const;
-	
+
 	// Strips off one directory. Uses V_StripLastDir but strips the last slash also!
 	CUtlString DirName() const;
-	
+
 	// Works like V_ComposeFileName.
 	static CUtlString PathJoin( const char *pStr1, const char *pStr2 );
 

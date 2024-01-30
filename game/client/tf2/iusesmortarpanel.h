@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -38,12 +38,12 @@ public:
 
 	CMortarMinimapPanel( vgui::Panel *pParent, const char *pElementName );
 	virtual ~CMortarMinimapPanel();
-	
+
 	void InitMortarMinimap( C_BaseEntity *pMortar );
 	C_BaseEntity *GetMortar() const;
 
 	virtual void Paint();
-	
+
 	void OnMousePressed( vgui::MouseCode code );
 	void OnCursorMoved( int x, int y );
 	void OnMouseReleased( vgui::MouseCode code );
@@ -56,11 +56,11 @@ public:
 	BitmapImage m_MortarButtonDown;
 	BitmapImage m_MortarButtonCantFire;
 	BitmapImage m_MortarDirectionImage;
-	
+
 	bool m_bMouseDown;
 	bool m_bFireButtonDown;
 	int m_LastX, m_LastY;
-	
+
 	// The red-black fade material for the slider.
 	int m_nTextureId;
 	int m_nTextureId_CantFire;

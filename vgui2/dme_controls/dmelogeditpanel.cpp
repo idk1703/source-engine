@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -136,8 +136,8 @@ int CDmeLogEditPanel::FindOrAddControlPoint( float flIn, float flTolerance, floa
 int CDmeLogEditPanel::FindControlPoint( float flIn, float flTolerance )
 {
 	Assert( m_hLog.Get() );
-	DmeTime_t time = NormalizedToTime( flIn ); 
-	DmeTime_t tolerance = NormalizedToDuration( flTolerance ); 
+	DmeTime_t time = NormalizedToTime( flIn );
+	DmeTime_t tolerance = NormalizedToDuration( flTolerance );
 	return m_hLog->FindKeyWithinTolerance( time, tolerance );
 }
 
@@ -148,8 +148,8 @@ int CDmeLogEditPanel::FindControlPoint( float flIn, float flTolerance )
 int CDmeLogEditPanel::ModifyControlPoint( int nPoint, float flIn, float flOut )
 {
 	Assert( m_hLog.Get() );
-	DmeTime_t time = NormalizedToTime( flIn ); 
-	DmeTime_t initialTime = m_hLog->GetKeyTime( nPoint ); 
+	DmeTime_t time = NormalizedToTime( flIn );
+	DmeTime_t initialTime = m_hLog->GetKeyTime( nPoint );
 	float flValue = NormalizedToValue( flOut );
 
 	int nKeyIndex = -1;
@@ -228,7 +228,7 @@ void CDmeLogEditPanel::RemoveControlPoint( int nPoint )
 //-----------------------------------------------------------------------------
 float CDmeLogEditPanel::GetValue( float flIn )
 {
-	DmeTime_t time = NormalizedToTime( flIn ); 
+	DmeTime_t time = NormalizedToTime( flIn );
 
 	float flValue = 0.0f;
 
@@ -396,13 +396,13 @@ void CDmeLogEditPanel::SetVerticalRange( float flMin, float flMax )
 	m_flMaxVertical = flMax;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 //
 // Purpose: Modal picker frame
 //
 //-----------------------------------------------------------------------------
-CDmeLogEditFrame::CDmeLogEditFrame( vgui::Panel *pParent, const char *pTitle ) : 
+CDmeLogEditFrame::CDmeLogEditFrame( vgui::Panel *pParent, const char *pTitle ) :
 	BaseClass( pParent, "DmeLogEditFrame" )
 {
 	m_pContextKeyValues = NULL;
@@ -423,7 +423,7 @@ CDmeLogEditFrame::~CDmeLogEditFrame()
 	CleanUpMessage();
 }
 
-		    
+
 //-----------------------------------------------------------------------------
 // Deletes the message
 //-----------------------------------------------------------------------------
@@ -501,7 +501,7 @@ void CDmeLogEditFrame::DoModal( CDmeLog *pLog, DmeTime_t startTime, DmeTime_t en
 	if ( m_pFilter->IsVisible() )
 	{
 		// Will cause the mask to be set
-		m_pFilter->ActivateItemByRow( 0 ); 
+		m_pFilter->ActivateItemByRow( 0 );
 	}
 	else
 	{

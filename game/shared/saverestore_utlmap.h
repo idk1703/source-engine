@@ -25,39 +25,39 @@ public:
 	}
 
 	virtual void Save( const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave )
-	{		
+	{
 		datamap_t *pKeyDatamap = CTypedescDeducer<KEY_TYPE>::Deduce( (UTLMAP *)NULL );
 		datamap_t *pFieldDatamap = CTypedescDeducer<FIELD_TYPE>::Deduce( (UTLMAP *)NULL );
-		typedescription_t dataDesc[] = 
+		typedescription_t dataDesc[] =
 		{
 			{
-				(fieldtype_t)KEY_TYPE, 
-				"K", 
+				(fieldtype_t)KEY_TYPE,
+				"K",
 				{ 0, 0 },
-				1, 
-				FTYPEDESC_SAVE, 
-				NULL, 
-				NULL, 
+				1,
+				FTYPEDESC_SAVE,
+				NULL,
+				NULL,
 				NULL,
 				pKeyDatamap,
 				sizeof(KEY_TYPE),
 			},
-			
+
 			{
-				(fieldtype_t)FIELD_TYPE, 
-				"T", 
+				(fieldtype_t)FIELD_TYPE,
+				"T",
 				{ offsetof(typename UTLMAP::Node_t, elem), 0 },
-				1, 
-				FTYPEDESC_SAVE, 
-				NULL, 
-				NULL, 
+				1,
+				FTYPEDESC_SAVE,
+				NULL,
+				NULL,
 				NULL,
 				pFieldDatamap,
 				sizeof(FIELD_TYPE),
 			}
 		};
-		
-		datamap_t dataMap = 
+
+		datamap_t dataMap =
 		{
 			dataDesc,
 			2,
@@ -74,7 +74,7 @@ public:
 		typename UTLMAP::CTree *pUtlRBTree = ((UTLMAP *)fieldInfo.pField)->AccessTree();
 
 		pSave->StartBlock();
-		
+
 		int nElems = pUtlRBTree->Count();
 		pSave->WriteInt( &nElems, 1 );
 
@@ -89,41 +89,41 @@ public:
 		}
 		pSave->EndBlock();
 	}
-	
+
 	virtual void Restore( const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore )
 	{
 		datamap_t *pKeyDatamap = CTypedescDeducer<KEY_TYPE>::Deduce( (UTLMAP *)NULL );
 		datamap_t *pFieldDatamap = CTypedescDeducer<FIELD_TYPE>::Deduce( (UTLMAP *)NULL );
-		typedescription_t dataDesc[] = 
+		typedescription_t dataDesc[] =
 		{
 			{
-				(fieldtype_t)KEY_TYPE, 
-				"K", 
+				(fieldtype_t)KEY_TYPE,
+				"K",
 				{ 0, 0 },
-				1, 
-				FTYPEDESC_SAVE, 
-				NULL, 
-				NULL, 
+				1,
+				FTYPEDESC_SAVE,
+				NULL,
+				NULL,
 				NULL,
 				pKeyDatamap,
 				sizeof(KEY_TYPE),
 			},
-			
+
 			{
-				(fieldtype_t)FIELD_TYPE, 
-				"T", 
+				(fieldtype_t)FIELD_TYPE,
+				"T",
 				{ offsetof(typename UTLMAP::Node_t, elem), 0 },
-				1, 
-				FTYPEDESC_SAVE, 
-				NULL, 
-				NULL, 
+				1,
+				FTYPEDESC_SAVE,
+				NULL,
+				NULL,
 				NULL,
 				pFieldDatamap,
 				sizeof(FIELD_TYPE),
 			}
 		};
-		
-		datamap_t dataMap = 
+
+		datamap_t dataMap =
 		{
 			dataDesc,
 			2,
@@ -149,10 +149,10 @@ public:
 			pRestore->ReadAll( &temp, &dataMap );
 			pUtlMap->Insert( temp.key, temp.elem );
 		}
-		
+
 		pRestore->EndBlock();
 	}
-	
+
 	virtual void MakeEmpty( const SaveRestoreFieldInfo_t &fieldInfo )
 	{
 		UTLMAP *pUtlMap = (UTLMAP *)fieldInfo.pField;
@@ -164,7 +164,7 @@ public:
 		UTLMAP *pUtlMap = (UTLMAP *)fieldInfo.pField;
 		return ( pUtlMap->Count() == 0 );
 	}
-	
+
 };
 
 //-------------------------------------

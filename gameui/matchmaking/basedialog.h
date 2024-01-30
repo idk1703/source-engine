@@ -30,7 +30,7 @@ class CPropertyLabel : public vgui::Label
 	DECLARE_CLASS_SIMPLE( CPropertyLabel, vgui::Label );
 
 public:
-	CPropertyLabel( Panel *parent, const char *panelName, const char *text ) : BaseClass( parent, panelName, text ) 
+	CPropertyLabel( Panel *parent, const char *panelName, const char *text ) : BaseClass( parent, panelName, text )
 	{
 	}
 
@@ -54,7 +54,7 @@ public:
 //--------------------------------
 class CBaseDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CBaseDialog, vgui::Frame ); 
+	DECLARE_CLASS_SIMPLE( CBaseDialog, vgui::Frame );
 
 public:
 	CBaseDialog( vgui::Panel *parent, const char *pName );
@@ -109,12 +109,12 @@ public:
 
 	vgui::ImagePanel	*m_pMapImage;
 	CPropertyLabel		*m_pTitle;
-	CPropertyLabel		*m_pSubtitle;	
-	CPropertyLabel		*m_pDescOne;	
-	CPropertyLabel		*m_pDescTwo;	
-	CPropertyLabel		*m_pDescThree;	
-	CPropertyLabel		*m_pValueTwo;	
-	CPropertyLabel		*m_pValueThree;	
+	CPropertyLabel		*m_pSubtitle;
+	CPropertyLabel		*m_pDescOne;
+	CPropertyLabel		*m_pDescTwo;
+	CPropertyLabel		*m_pDescThree;
+	CPropertyLabel		*m_pValueTwo;
+	CPropertyLabel		*m_pValueThree;
 };
 
 #endif	// BASEDIALOG_H

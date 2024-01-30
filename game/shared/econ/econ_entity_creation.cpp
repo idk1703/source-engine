@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -65,7 +65,7 @@ CBaseEntity *CItemGeneration::GenerateItemFromScriptData( const CEconItemView *p
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Generate the base item for a class's loadout slot 
+// Purpose: Generate the base item for a class's loadout slot
 //-----------------------------------------------------------------------------
 CBaseEntity *CItemGeneration::GenerateBaseItem( struct baseitemcriteria_t *pCriteria )
 {
@@ -142,7 +142,7 @@ CBaseEntity *CItemGeneration::SpawnItem( const CEconItemView *pData, const Vecto
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseEntity *CItemGeneration::PostSpawnItem( CBaseEntity *pItem, IHasAttributes *pItemInterface, const Vector &vecAbsOrigin, const QAngle &vecAbsAngles )
 {
@@ -151,7 +151,7 @@ CBaseEntity *CItemGeneration::PostSpawnItem( CBaseEntity *pItem, IHasAttributes 
 	if ( pItemInterface )
 	{
 		CEconItemView *pScriptItem = pItemInterface->GetAttributeContainer()->GetItem();
-		
+
 		int iClass = 0;
 		int iTeam = 0;
 #ifdef TF_CLIENT_DLL
@@ -177,4 +177,3 @@ CBaseEntity *CItemGeneration::PostSpawnItem( CBaseEntity *pItem, IHasAttributes 
 	pItem->Activate();
 	return pItem;
 }
-

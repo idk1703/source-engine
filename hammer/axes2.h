@@ -18,7 +18,7 @@
 class Axes2
 {
 public:
-	Axes2() 
+	Axes2()
 	{
 		bInvertHorz = bInvertVert = false;
 		axHorz = AXIS_X;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -225,7 +225,7 @@ void Surf_ComputeCentroid( SurfaceHandle_t surfID, Vector *pVecCentroid )
 //-----------------------------------------------------------------------------
 int SortInfoToLightmapPage( int sortID )
 {
-        return materialSortInfoArray[sortID].lightmapPageID;
+		return materialSortInfoArray[sortID].lightmapPageID;
 }
 
 
@@ -337,7 +337,7 @@ public:
 	// List of decals to render this frame (need an extra one for brush models)
 	//-------------------------------------------------------------------------
 	CUtlVector<ShadowDecalHandle_t> m_ShadowHandles[MAX_MAT_SORT_GROUPS];
-	
+
 	// list of surfaces with dynamic lightmaps
 	CUtlVector<SurfaceHandle_t>	m_DlightSurfaces[MAX_MAT_SORT_GROUPS];
 
@@ -441,7 +441,7 @@ void Shader_TranslucentWorldSurface( CWorldRenderList *pRenderList, SurfaceHandl
 	if ( MSurf_Flags( surfID ) & (SURFDRAW_HASLIGHTSYTLES|SURFDRAW_HASDLIGHT) )
 	{
 		pRenderList->m_DlightSurfaces[sortGroup].AddToTail( surfID );
-		
+
 		DlightSurfaceSetQueuingFlag(surfID);
 	}
 }
@@ -505,13 +505,13 @@ void Shader_TranslucentDisplacementSurface( CWorldRenderList *pRenderList, Surfa
 	// to render it in. Thankfully, we're iterating the tree in front-to-back
 	// order, so this is very simple.
 
-	// NOTE: You might expect some problems here when displacements cross fog volume 
+	// NOTE: You might expect some problems here when displacements cross fog volume
 	// planes. However, these problems go away (I hope!) because the first planes
 	// that split a scene are the fog volume planes. That means that if we're
 	// in a fog volume, the closest leaf that the displacement will be in will
 	// also be in the fog volume. If we're not in a fog volume, the closest
 	// leaf that the displacement will be in will not be a fog volume. That should
-	// hopefully hide any discontinuities between fog state that occur when 
+	// hopefully hide any discontinuities between fog state that occur when
 	// rendering displacements that straddle fog volume boundaries.
 
 	// Each surface is in exactly one group
@@ -534,7 +534,7 @@ void Shader_DisplacementSurface( CWorldRenderList *pRenderList, SurfaceHandle_t 
 {
 	Assert( SurfaceHasDispInfo( surfID ) );
 
-	// For opaque displacement surfaces, we're going to build a temporary list of 
+	// For opaque displacement surfaces, we're going to build a temporary list of
 	// displacement surfaces in each material bucket, and then add those to
 	// the actual displacement lists in a separate pass.
 	// We do this to sort the displacement surfaces by material
@@ -555,7 +555,7 @@ void Shader_DisplacementSurface( CWorldRenderList *pRenderList, SurfaceHandle_t 
 		pRenderList->m_DispSortList.AddSurfaceToTail( surfID, nSortGroup, nMaterialSortID );
 	}
 }
- 
+
 //-----------------------------------------------------------------------------
 // Purpose: This draws a single surface using the dynamic mesh
 //-----------------------------------------------------------------------------
@@ -634,9 +634,9 @@ void Shader_DrawSurfaceDynamic( IMatRenderContext *pRenderContext, SurfaceHandle
 void Shader_DrawSurfaceStatic( SurfaceHandle_t surfID )
 {
 	VPROF( "Shader_DrawSurfaceStatic" );
-	if ( 
+	if (
 #ifdef USE_CONVARS
-		mat_forcedynamic.GetInt() || 
+		mat_forcedynamic.GetInt() ||
 #endif
 		(MSurf_Flags( surfID ) & SURFDRAW_WATERSURFACE) )
 	{
@@ -644,7 +644,7 @@ void Shader_DrawSurfaceStatic( SurfaceHandle_t surfID )
 		return;
 	}
 
-	IMesh *pMesh = pRenderContext->GetDynamicMesh( true, 
+	IMesh *pMesh = pRenderContext->GetDynamicMesh( true,
 		g_pWorldStatic[MSurf_MaterialSortID( surfID )].m_pMesh );
 	CMeshBuilder meshBuilder;
 	meshBuilder.Begin( pMesh, MATERIAL_TRIANGLES, 0, (MSurf_VertCount( surfID )-2)*3 );
@@ -816,7 +816,7 @@ void Shader_DrawChainsStatic( const CMSurfaceSortList &sortList, int nSortGroup,
 
 	const CUtlVector<surfacesortgroup_t *> &groupList = sortList.GetSortList(nSortGroup);
 	int count = groupList.Count();
-	
+
 	int i, listIndex = 0;
 
 	CMatRenderContextPtr pRenderContext( materials );
@@ -869,7 +869,7 @@ void Shader_DrawChainsStatic( const CMSurfaceSortList &sortList, int nSortGroup,
 #endif
 				break;
 			}
-			
+
 			int sortID = MSurf_MaterialSortID( surfID );
 
 #ifdef NEWMESH
@@ -1033,7 +1033,7 @@ void Shader_DrawChainsStatic( const CMSurfaceSortList &sortList, int nSortGroup,
 				else
 				{
 					pRenderContext->Bind( pDrawMaterial, NULL );
-						
+
 					if ( skipBind )
 					{
 						if( MSurf_Flags( batch.surfID ) & SURFDRAW_BUMPLIGHT )
@@ -1055,7 +1055,7 @@ void Shader_DrawChainsStatic( const CMSurfaceSortList &sortList, int nSortGroup,
 				VertexFormat_t vertexFormat = pBindMaterial->GetVertexFormat() & ~VERTEX_FORMAT_COMPRESSED;
 				pRenderContext->BindVertexBuffer( 0, mesh.pVertexBuffer, 0, vertexFormat );
 				pRenderContext->BindIndexBuffer( pIndexBuffer, 0 );
-				Warning( "pRenderContext->Draw( MATERIAL_TRIANGLES, batch.firstIndex = %d, batch.numIndex = %d )\n", 
+				Warning( "pRenderContext->Draw( MATERIAL_TRIANGLES, batch.firstIndex = %d, batch.numIndex = %d )\n",
 					( int )batch.firstIndex, ( int )batch.numIndex );
 				pRenderContext->Draw( MATERIAL_TRIANGLES, batch.firstIndex, batch.numIndex );
 #else
@@ -1260,7 +1260,7 @@ static void Shader_DrawChainNormals( const CUtlVector<msurface2_t *> &surfaceLis
 		IMesh *pMesh = pRenderContext->GetDynamicMesh( );
 		CMeshBuilder meshBuilder;
 		meshBuilder.Begin( pMesh, MATERIAL_LINES, MSurf_VertCount( surfID ) * 3 );
-	
+
 		bool negate = TangentSpaceSurfaceSetup( surfID, tVect );
 
 		int vertID;
@@ -1299,7 +1299,7 @@ static void Shader_DrawChainNormals( const CUtlVector<msurface2_t *> &surfaceLis
 			meshBuilder.Color3ub( 255, 0, 0 );
 			meshBuilder.AdvanceVertex();
 		}
-		
+
 		meshBuilder.End();
 		pMesh->Draw();
 	}
@@ -1320,7 +1320,7 @@ static void Shader_DrawChainBumpBasis( const CUtlVector<msurface2_t *> &surfaceL
 		IMesh *pMesh = pRenderContext->GetDynamicMesh( );
 		CMeshBuilder meshBuilder;
 		meshBuilder.Begin( pMesh, MATERIAL_LINES, MSurf_VertCount( surfID ) * 3 );
-	
+
 		bool negate = TangentSpaceSurfaceSetup( surfID, tVect );
 
 		int vertID;
@@ -1336,17 +1336,17 @@ static void Shader_DrawChainBumpBasis( const CUtlVector<msurface2_t *> &surfaceL
 
 			for( int j = 0; j < 3; j++ )
 			{
-				worldSpaceBumpBasis[j][0] = 
+				worldSpaceBumpBasis[j][0] =
 					g_localBumpBasis[j][0] * tangentS[0] +
-					g_localBumpBasis[j][1] * tangentS[1] + 
+					g_localBumpBasis[j][1] * tangentS[1] +
 					g_localBumpBasis[j][2] * tangentS[2];
-				worldSpaceBumpBasis[j][1] = 
+				worldSpaceBumpBasis[j][1] =
 					g_localBumpBasis[j][0] * tangentT[0] +
-					g_localBumpBasis[j][1] * tangentT[1] + 
+					g_localBumpBasis[j][1] * tangentT[1] +
 					g_localBumpBasis[j][2] * tangentT[2];
-				worldSpaceBumpBasis[j][2] = 
+				worldSpaceBumpBasis[j][2] =
 					g_localBumpBasis[j][0] * norm[0] +
-					g_localBumpBasis[j][1] * norm[1] + 
+					g_localBumpBasis[j][1] * norm[1] +
 					g_localBumpBasis[j][2] * norm[2];
 			}
 
@@ -1377,7 +1377,7 @@ static void Shader_DrawChainBumpBasis( const CUtlVector<msurface2_t *> &surfaceL
 			meshBuilder.Color3ub( 0, 0, 255 );
 			meshBuilder.AdvanceVertex();
 		}
-		
+
 		meshBuilder.End();
 		pMesh->Draw();
 	}
@@ -1427,7 +1427,7 @@ ConVar mat_surfacemat("mat_surfacemat", "0", FCVAR_CHEAT);
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : static void
 //-----------------------------------------------------------------------------
 static void ComputeDebugSettings( void )
@@ -1462,7 +1462,7 @@ static void DrawDebugInformation( const CUtlVector<msurface2_t *> &surfaceList )
 	{
 		Shader_DrawChainBumpBasis(surfaceList);
 	}
-	
+
 	// Overlay with luxel grid if we're in that mode
 	if( g_ShaderDebug.luxels )
 	{
@@ -1841,7 +1841,7 @@ static void Shader_WorldZFillSurfChain( const CMSurfaceSortList &sortList, const
 	nStartVertIn = nStartVert;
 }
 
-static const int s_DrawWorldListsToSortGroup[MAX_MAT_SORT_GROUPS] = 
+static const int s_DrawWorldListsToSortGroup[MAX_MAT_SORT_GROUPS] =
 {
 	MAT_SORT_GROUP_STRICTLY_ABOVEWATER,
 	MAT_SORT_GROUP_STRICTLY_UNDERWATER,
@@ -1903,7 +1903,7 @@ static void Shader_WorldShadowDepthFill( CWorldRenderList *pRenderList, unsigned
 	}
 	if ( nVertexCount == 0 )
 		return;
- 
+
 	CMatRenderContextPtr pRenderContext( materials );
 
 	if ( DepthMode == DEPTH_MODE_SHADOW )
@@ -2158,7 +2158,7 @@ static void Shader_WorldEnd( CWorldRenderList *pRenderList, unsigned long flags,
 	{
 		Shader_WorldZFill( pRenderList, flags );
 	}
-	
+
 	// Gotta draw each sort group
 	// Draw the fog volume first, if there is one, because it turns out
 	// that we only draw fog volumes if we're in the fog volume, which
@@ -2247,7 +2247,7 @@ bool Shader_LeafContainsTranslucentSurfaces( IWorldRenderList *pRenderListIn, in
 			continue;
 
 		int sortGroup = s_DrawWorldListsToSortGroup[i];
-	
+
 		// Set the fog state here since it will be the same for all things
 		// in this list of translucent objects (except for displacements)
 		const surfacesortgroup_t &group = pRenderList->m_AlphaSortList.GetGroupForSortID( sortGroup, sortIndex );
@@ -2293,7 +2293,7 @@ void Shader_DrawTranslucentSurfaces( IWorldRenderList *pRenderListIn, int sortIn
 			continue;
 		}
 		int sortGroup = s_DrawWorldListsToSortGroup[i];
-	
+
 		// Set the fog state here since it will be the same for all things
 		// in this list of translucent objects (except for displacements)
 
@@ -2312,14 +2312,14 @@ void Shader_DrawTranslucentSurfaces( IWorldRenderList *pRenderListIn, int sortIn
 			SurfaceHandle_t surfID = surfaceList[listIndex];
 			pRenderContext->Bind( MSurf_TexInfo( surfID )->material );
 
-			Assert( MSurf_MaterialSortID( surfID ) >= 0 && 
-				    MSurf_MaterialSortID( surfID ) < g_WorldStaticMeshes.Count() );
+			Assert( MSurf_MaterialSortID( surfID ) >= 0 &&
+					MSurf_MaterialSortID( surfID ) < g_WorldStaticMeshes.Count() );
 
 			if ( !skipLight )
 			{
 				pRenderContext->BindLightmapPage( materialSortInfoArray[MSurf_MaterialSortID( surfID )].lightmapPageID );
 			}
-			
+
 //			NOTE: Since a static vb/dynamic ib IMesh doesn't buffer, we shouldn't use this
 //			since it causes a lock and drawindexedprimitive per surface! (gary)
 //			Shader_DrawSurfaceStatic( surfID );
@@ -2347,7 +2347,7 @@ void Shader_DrawTranslucentSurfaces( IWorldRenderList *pRenderListIn, int sortIn
 			g_pShadowMgr->DrawFlashlightOverlays( i, bFlashlightMask );
 			OverlayMgr()->ClearRenderLists( i );
 
-		    // Draw decals on the surface
+			// Draw decals on the surface
 			DrawDecalsOnSingleSurface( pRenderContext, surfID );
 
 			// Draw flashlight decals
@@ -2364,7 +2364,7 @@ void Shader_DrawTranslucentSurfaces( IWorldRenderList *pRenderListIn, int sortIn
 		// non-displacement surfaces because most likely the displacement will always
 		// be in front (or at least not behind) the non-displacement translucent surfaces
 		// that exist in the same leaf.
-		
+
 		// Draws translucent displacement surfaces
 
 		surfaceList.RemoveAll();
@@ -2430,7 +2430,7 @@ static inline void DrawDisplacementsInLeaf( CWorldRenderList *pRenderList, mleaf
 	{
 		IDispInfo *pDispInfo = MLeaf_Disaplcement( pLeaf, i );
 
-		// NOTE: We're not using the displacement's touched method here 
+		// NOTE: We're not using the displacement's touched method here
 		// because we're just using the parent surface's visframe in the
 		// surface add methods below...
 		SurfaceHandle_t parentSurfID = pDispInfo->GetParent();
@@ -2459,7 +2459,7 @@ static inline void UpdateVisibleLeafLists( CWorldRenderList *pRenderList, mleaf_
 {
 	// Consistency check...
 	MEM_ALLOC_CREDIT();
-	
+
 	// Add this leaf to the list of visible leafs
 	int nLeafIndex = LeafToIndex( pLeaf );
 	pRenderList->m_VisibleLeaves.AddToTail( nLeafIndex );
@@ -2469,7 +2469,7 @@ static inline void UpdateVisibleLeafLists( CWorldRenderList *pRenderList, mleaf_
 	pRenderList->m_DispAlphaSortList.EnsureMaxSortIDs( leafCount );
 }
 
- 
+
 //-----------------------------------------------------------------------------
 // Draws all displacements + surfaces in a leaf
 //-----------------------------------------------------------------------------
@@ -2530,7 +2530,7 @@ static void FASTCALL R_DrawLeaf( CWorldRenderList *pRenderList, mleaf_t *pleaf )
 		if ( (MSurf_Flags( surfID ) & SURFDRAW_NOCULL) == 0 )
 		{
 			if ( (DotProduct(MSurf_Plane( surfID ).normal, modelorg) -
-				  MSurf_Plane( surfID ).dist ) < BACKFACE_EPSILON )
+				MSurf_Plane( surfID ).dist ) < BACKFACE_EPSILON )
 				continue;
 		}
 
@@ -2862,7 +2862,7 @@ static void R_DrawTopViewLeaf( CWorldRenderList *pRenderList, mleaf_t *pleaf )
 		SurfaceHandle_t surfID = pHandle[i];
 
 		// Mark this surface as being in a visible leaf this frame. If this
-		// surface is meant to be drawn at a node (SURFDRAW_NODE), 
+		// surface is meant to be drawn at a node (SURFDRAW_NODE),
 		// then it will be drawn in the recursive code down below.
 		if ( !VisitSurface( visitedSurfs, surfID ) )
 			continue;
@@ -2986,7 +2986,7 @@ static void SpewLeaf()
 //-----------------------------------------------------------------------------
 // Main entry points for starting + ending rendering the world
 //-----------------------------------------------------------------------------
-void R_BuildWorldLists( IWorldRenderList *pRenderListIn, WorldListInfo_t* pInfo, 
+void R_BuildWorldLists( IWorldRenderList *pRenderListIn, WorldListInfo_t* pInfo,
 	int iForceViewLeaf, const VisOverrideData_t* pVisData, bool bShadowDepth /* = false */, float *pWaterReflectionHeight )
 {
 	CWorldRenderList *pRenderList = assert_cast<CWorldRenderList *>(pRenderListIn);
@@ -3223,7 +3223,7 @@ void R_GetVisibleFogVolume( const Vector& vEyePoint, VisibleFogVolumeInfo_t *pIn
 		else
 		{
 			CVisibleFogVolumeQuery query;
-			query.FindVisibleFogVolume( vEyePoint, &pInfo->m_nVisibleFogVolume, &pInfo->m_nVisibleFogVolumeLeaf ); 
+			query.FindVisibleFogVolume( vEyePoint, &pInfo->m_nVisibleFogVolume, &pInfo->m_nVisibleFogVolumeLeaf );
 		}
 
 		pInfo->m_bEyeInFogVolume = false;
@@ -3281,7 +3281,7 @@ void R_DrawWorldLists( IWorldRenderList *pRenderListIn, unsigned long flags, flo
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void R_SceneBegin( void )
 {
@@ -3317,18 +3317,18 @@ void Shader_DrawLightmapPageSurface( SurfaceHandle_t surfID, float red, float gr
 	CMatRenderContextPtr pRenderContext( materials );
 
 	pRenderContext->Bind( g_materialWireframe );
-	materials->GetLightmapPageSize( 
-		SortInfoToLightmapPage(MSurf_MaterialSortID( surfID )), 
+	materials->GetLightmapPageSize(
+		SortInfoToLightmapPage(MSurf_MaterialSortID( surfID )),
 		&lightmapPageWidth, &lightmapPageHeight );
 
 	for( bumpID = 0; bumpID < count; bumpID++ )
 	{
 		// assumes that we are already in ortho mode.
 		IMesh* pMesh = pRenderContext->GetDynamicMesh( );
-					
+
 		CMeshBuilder meshBuilder;
 		meshBuilder.Begin( pMesh, MATERIAL_LINES, MSurf_VertCount( surfID ) );
-		
+
 		int i;
 
 		for( i = 0; i < MSurf_VertCount( surfID ); i++ )
@@ -3344,7 +3344,7 @@ void Shader_DrawLightmapPageSurface( SurfaceHandle_t surfID, float red, float gr
 			// xboxissue - border safe
 			x += 32;
 			y += 32;
-#endif			
+#endif
 			meshBuilder.Position3f( x, y, 0.0f );
 			meshBuilder.AdvanceVertex();
 
@@ -3355,11 +3355,11 @@ void Shader_DrawLightmapPageSurface( SurfaceHandle_t surfID, float red, float gr
 			// xboxissue - border safe
 			x += 32;
 			y += 32;
-#endif			
+#endif
 			meshBuilder.Position3f( x, y, 0.0f );
 			meshBuilder.AdvanceVertex();
 		}
-		
+
 		meshBuilder.End();
 		pMesh->Draw();
 	}
@@ -3578,7 +3578,7 @@ void Shader_BrushSurface( SurfaceHandle_t surfID, model_t *model, IClientEntity 
 	}
 
 	// fixme: need to get "allowDecals" from the material
-	//	if ( g_BrushProperties.allowDecals && pSurf->pdecals ) 
+	//	if ( g_BrushProperties.allowDecals && pSurf->pdecals )
 	if( SurfaceHasDecals( surfID ) && drawDecals )
 	{
 		DecalSurfaceAdd( surfID, BRUSHMODEL_DECAL_SORT_GROUP );
@@ -3650,7 +3650,7 @@ public:
 		}
 
 		cplane_t				**pPlanes;
-		brushrendermesh_t		*pMeshes;			
+		brushrendermesh_t		*pMeshes;
 		brushrenderbatch_t		*pBatches;
 		brushrendersurface_t	*pSurfaces;
 		short planeCount;
@@ -3668,7 +3668,7 @@ public:
 		short	surfaceIndex;
 		short	planeIndex;
 	};
-	
+
 	// These are the compact structs produced for translucent brush models.  These structs contain
 	// only the translucent surfaces of a brush model.
 
@@ -3700,7 +3700,7 @@ public:
 	};
 
 	// This is the top-level struct containing all data necessary to render a translucent brush model in optimal order.
-	// NOTE: Unlike the opaque struct, the order of the batches is view-dependent, so caching this is pointless since 
+	// NOTE: Unlike the opaque struct, the order of the batches is view-dependent, so caching this is pointless since
 	// the view usually changes.
 	struct transrender_t
 	{
@@ -3836,7 +3836,7 @@ public:
 		{
 			// sort by material
 			sortList.Sort( SurfaceCmp );
-			
+
 			// add a new sort group
 			AddTransNode( renderT );
 			int lastSortID = -1;
@@ -3893,7 +3893,7 @@ public:
 			for ( j = 0; j < node.batchCount; j++ )
 			{
 				const transbatch_t &batch = renderT.batches[node.firstBatch+j];
-				
+
 #ifdef NEWMESH
 				CIndexBufferBuilder indexBufferBuilder;
 #else
@@ -4042,7 +4042,7 @@ void CBrushBatchRender::ClearRenderHandles( void )
 	{
 		char szBrushModel[5]; // inline model names "*1", "*2" etc
 		Q_snprintf( szBrushModel, sizeof( szBrushModel ), "*%i", iBrush );
-		model_t *pModel = modelloader->GetModelForName( szBrushModel, IModelLoader::FMODELLOADER_SERVER );	
+		model_t *pModel = modelloader->GetModelForName( szBrushModel, IModelLoader::FMODELLOADER_SERVER );
 		if ( pModel )
 		{
 			pModel->brush.renderHandle = 0;
@@ -4235,7 +4235,7 @@ void CBrushBatchRender::DrawOpaqueBrushModel( IClientEntity *baseentity, model_t
 				int nAlphaTest = (int) batch.pMaterial->IsAlphaTested();
 				int nNoCull = (int) batch.pMaterial->IsTwoSided();
 				IMaterial *pDepthWriteMaterial;
-				
+
 				if ( DepthMode == DEPTH_MODE_SSA0 )
 				{
 					pDepthWriteMaterial = g_pMaterialSSAODepthWrite[nAlphaTest][nNoCull];
@@ -4334,7 +4334,7 @@ void CBrushBatchRender::DrawOpaqueBrushModel( IClientEntity *baseentity, model_t
 					}
 				}
 			}
-			
+
 #ifdef NEWMESH
 			indexBufferBuilder.End( false ); // this one is broken (opaque brush model. .tv)
 			pRenderContext->BindVertexBuffer( 0, g_WorldStaticMeshes[batch.sortID], 0, g_WorldStaticMeshes[batch.sortID]->GetVertexFormat() );
@@ -4403,7 +4403,7 @@ void CBrushBatchRender::DrawTranslucentBrushModel( IClientEntity *baseentity, mo
 // UNDONE: This is reasonable, but it could be much faster as follows:
 // Build a vertex buffer cache.  A block-allocated static mesh with 1024 verts
 // per block or something.
-// When a new brush is encountered, fill it in to the current block or the 
+// When a new brush is encountered, fill it in to the current block or the
 // next one (first fit allocator).  Then this routine could simply draw
 // a static mesh with a single index buffer build, draw call (no dynamic vb).
 void CBrushBatchRender::DrawBrushModelShadow( model_t *model, IClientRenderable *pRenderable )
@@ -4600,7 +4600,7 @@ public:
 // Input  : *e - entity to draw
 // Output : void R_DrawBrushModel
 //-----------------------------------------------------------------------------
-void R_DrawBrushModel( IClientEntity *baseentity, model_t *model, 
+void R_DrawBrushModel( IClientEntity *baseentity, model_t *model,
 	const Vector& origin, const QAngle& angles, ERenderDepthMode DepthMode, bool bDrawOpaque, bool bDrawTranslucent )
 {
 	VPROF( "R_DrawBrushModel" );
@@ -4627,7 +4627,7 @@ void R_DrawBrushModel( IClientEntity *baseentity, model_t *model,
 
 	// Draw the puppy...
 	Shader_BrushBegin( model, baseentity );
-	
+
 	if ( model->flags & MODELFLAG_FRAMEBUFFER_TEXTURE )
 	{
 		CMatRenderContextPtr pRenderContextMat( materials );
@@ -4693,7 +4693,7 @@ void R_DrawIdentityBrushModel( IWorldRenderList *pRenderListIn, model_t *model )
 	CWorldRenderList *pRenderList = assert_cast<CWorldRenderList *>(pRenderListIn);
 
 	SurfaceHandle_t surfID = SurfaceHandleFromIndex( model->brush.firstmodelsurface, model->brush.pShared );
-	
+
 	for (int j=0 ; j<model->brush.nummodelsurfaces ; ++j, surfID++)
 	{
 		Assert( !(MSurf_Flags( surfID ) & SURFDRAW_NODRAW) );
@@ -4768,16 +4768,16 @@ static bool EnumerateLeafInBox_R(mnode_t *node, EnumLeafBoxInfo_t& info )
 		return true;		// solid
 
 	// rough cull...
-	if (!IsBoxIntersectingBoxExtents(node->m_vecCenter, node->m_vecHalfDiagonal, 
+	if (!IsBoxIntersectingBoxExtents(node->m_vecCenter, node->m_vecHalfDiagonal,
 		info.m_vecBoxCenter, info.m_vecBoxHalfDiagonal))
 	{
 		return true;
 	}
-	
+
 	if (node->contents >= 0)
 	{
 		// if a leaf node, report it to the iterator...
-		return info.m_pIterator->EnumerateLeaf( LeafToIndex( (mleaf_t *)node ), info.m_nContext ); 
+		return info.m_pIterator->EnumerateLeaf( LeafToIndex( (mleaf_t *)node ), info.m_nContext );
 	}
 
 	// Does the node plane split the box?
@@ -4851,7 +4851,7 @@ static fltx4 AlignThatVector(const Vector &vc)
 	out.z = vc.z;
 	*/
 
-	// squelch the w component 
+	// squelch the w component
 	return __vrlimi( out, __vzero(), 1, 0 );
 }
 
@@ -4873,14 +4873,14 @@ static bool EnumerateLeafInBox_R(mnode_t * RESTRICT node, const EnumLeafBoxInfo_
 	fltx4 infoBoxCenter = LoadAlignedSIMD(pInfo->m_vecBoxCenter);
 	fltx4 infoBoxHalfDiagonal = LoadAlignedSIMD(pInfo->m_vecBoxHalfDiagonal);
 
-	Assert(IsBoxIntersectingBoxExtents(AlignThatVector(node->m_vecCenter), AlignThatVector(node->m_vecHalfDiagonal), 
+	Assert(IsBoxIntersectingBoxExtents(AlignThatVector(node->m_vecCenter), AlignThatVector(node->m_vecHalfDiagonal),
 			LoadAlignedSIMD(pInfo->m_vecBoxCenter), LoadAlignedSIMD(pInfo->m_vecBoxHalfDiagonal)) ==
 			IsBoxIntersectingBoxExtents((node->m_vecCenter), node->m_vecHalfDiagonal,
 			pInfo->m_vecBoxCenter, pInfo->m_vecBoxHalfDiagonal));
 
 
 	// rough cull...
-	if (!IsBoxIntersectingBoxExtents(LoadAlignedSIMD(node->m_vecCenter), LoadAlignedSIMD(node->m_vecHalfDiagonal), 
+	if (!IsBoxIntersectingBoxExtents(LoadAlignedSIMD(node->m_vecCenter), LoadAlignedSIMD(node->m_vecHalfDiagonal),
 		infoBoxCenter, infoBoxHalfDiagonal))
 	{
 		return true;
@@ -4889,7 +4889,7 @@ static bool EnumerateLeafInBox_R(mnode_t * RESTRICT node, const EnumLeafBoxInfo_
 	if (node->contents >= 0)
 	{
 		// if a leaf node, report it to the iterator...
-		return pInfo->m_pIterator->EnumerateLeaf( LeafToIndex( (mleaf_t *)node ), pInfo->m_nContext ); 
+		return pInfo->m_pIterator->EnumerateLeaf( LeafToIndex( (mleaf_t *)node ), pInfo->m_nContext );
 	}
 
 	// Does the node plane split the box?
@@ -4908,8 +4908,8 @@ static bool EnumerateLeafInBox_R(mnode_t * RESTRICT node, const EnumLeafBoxInfo_
 		else
 		{
 			// Here the box is split by the node
-			return EnumerateLeafInBox_R( node->children[0], pInfo ) && 
-				   EnumerateLeafInBox_R( node->children[1], pInfo );
+			return EnumerateLeafInBox_R( node->children[0], pInfo ) &&
+					EnumerateLeafInBox_R( node->children[1], pInfo );
 		}
 	}
 
@@ -4930,7 +4930,7 @@ static bool EnumerateLeafInBox_R(mnode_t * RESTRICT node, const EnumLeafBoxInfo_
 		}
 	}
 	*/
-	
+
 	// take advantage of high throughput/high latency
 	fltx4 planeNormal = LoadUnaligned3SIMD( plane->normal.Base() );
 	fltx4 vecBoxMin = LoadAlignedSIMD(pInfo->m_vecBoxMin);
@@ -4956,7 +4956,7 @@ static bool EnumerateLeafInBox_R(mnode_t * RESTRICT node, const EnumLeafBoxInfo_
 		return EnumerateLeafInBox_R( node->children[0], pInfo );
 
 	return EnumerateLeafInBox_R( node->children[0], pInfo ) &&
-		   EnumerateLeafInBox_R( node->children[1], pInfo );
+			EnumerateLeafInBox_R( node->children[1], pInfo );
 
 	/*
 	if (DotProduct( plane->normal, cornermax ) <= plane->dist)
@@ -4994,7 +4994,7 @@ bool EnumerateLeafInSphere_R( mnode_t *node, EnumLeafSphereInfo_t& info, int nTe
 		if (node->contents >= 0)
 		{
 			// leaf cull...
-			// NOTE: using nTestFlags here means that we may be passing in some 
+			// NOTE: using nTestFlags here means that we may be passing in some
 			// leaves that don't actually intersect the sphere, but instead intersect
 			// the box that surrounds the sphere.
 			if (nTestFlags)
@@ -5004,7 +5004,7 @@ bool EnumerateLeafInSphere_R( mnode_t *node, EnumLeafSphereInfo_t& info, int nTe
 			}
 
 			// if a leaf node, report it to the iterator...
-			return info.m_pIterator->EnumerateLeaf( LeafToIndex( (mleaf_t *)node ), info.m_nContext ); 
+			return info.m_pIterator->EnumerateLeaf( LeafToIndex( (mleaf_t *)node ), info.m_nContext );
 		}
 		else if (nTestFlags)
 		{
@@ -5041,7 +5041,7 @@ bool EnumerateLeafInSphere_R( mnode_t *node, EnumLeafSphereInfo_t& info, int nTe
 					float flSize = node->m_vecHalfDiagonal.z + info.m_vecBoxHalfDiagonal.z;
 					if ( flDelta > flSize )
 						return true;
-														   
+
 					if ( flDelta + node->m_vecHalfDiagonal.z < info.m_vecBoxHalfDiagonal.z )
 						nTestFlags &= ~ENUM_SPHERE_TEST_Z;
 				}
@@ -5091,7 +5091,7 @@ bool EnumerateLeafInSphere_R( mnode_t *node, EnumLeafSphereInfo_t& info, int nTe
 // Enumerate leaves along a non-extruded ray
 //-----------------------------------------------------------------------------
 
-static bool EnumerateLeavesAlongRay_R( mnode_t *node, Ray_t const& ray, 
+static bool EnumerateLeavesAlongRay_R( mnode_t *node, Ray_t const& ray,
 	float start, float end, ISpatialLeafEnumerator* pEnum, int context )
 {
 	// no polygons in solid nodes (don't report these leaves either)
@@ -5102,9 +5102,9 @@ static bool EnumerateLeavesAlongRay_R( mnode_t *node, Ray_t const& ray,
 	if (node->contents >= 0)
 	{
 		// if a leaf node, report it to the iterator...
-		return pEnum->EnumerateLeaf( LeafToIndex( (mleaf_t *)node ), context ); 
+		return pEnum->EnumerateLeaf( LeafToIndex( (mleaf_t *)node ), context );
 	}
-	
+
 	// Determine which side of the node plane our points are on
 	cplane_t* plane = node->plane;
 
@@ -5124,19 +5124,19 @@ static bool EnumerateLeavesAlongRay_R( mnode_t *node, Ray_t const& ray,
 	float back = startDotN + end * deltaDotN - plane->dist;
 
 	int side = front < 0;
-	
+
 	// If they're both on the same side of the plane, don't bother to split
 	// just check the appropriate child
 	if ( (back < 0) == side )
 	{
 		return EnumerateLeavesAlongRay_R (node->children[side], ray, start, end, pEnum, context );
 	}
-	
+
 	// calculate mid point
 	float frac = front / (front - back);
 	float mid = start * (1.0f - frac) + end * frac;
-	
-	// go down front side	
+
+	// go down front side
 	bool ok = EnumerateLeavesAlongRay_R (node->children[side], ray, start, mid, pEnum, context );
 	if (!ok)
 		return ok;
@@ -5150,7 +5150,7 @@ static bool EnumerateLeavesAlongRay_R( mnode_t *node, Ray_t const& ray,
 // Enumerate leaves along a non-extruded ray
 //-----------------------------------------------------------------------------
 
-static bool EnumerateLeavesAlongExtrudedRay_R( mnode_t *node, Ray_t const& ray, 
+static bool EnumerateLeavesAlongExtrudedRay_R( mnode_t *node, Ray_t const& ray,
 	float start, float end, ISpatialLeafEnumerator* pEnum, int context )
 {
 	// no polygons in solid nodes (don't report these leaves either)
@@ -5161,9 +5161,9 @@ static bool EnumerateLeavesAlongExtrudedRay_R( mnode_t *node, Ray_t const& ray,
 	if (node->contents >= 0)
 	{
 		// if a leaf node, report it to the iterator...
-		return pEnum->EnumerateLeaf( LeafToIndex( (mleaf_t *)node ), context ); 
+		return pEnum->EnumerateLeaf( LeafToIndex( (mleaf_t *)node ), context );
 	}
-	
+
 	// Determine which side of the node plane our points are on
 	cplane_t* plane = node->plane;
 
@@ -5189,7 +5189,7 @@ static bool EnumerateLeavesAlongExtrudedRay_R( mnode_t *node, Ray_t const& ray,
 
 	// If they're both on the same side of the plane (further than the trace
 	// extents), don't bother to split, just check the appropriate child
-    if (t1 > offset && t2 > offset )
+	if (t1 > offset && t2 > offset )
 //	if (t1 >= offset && t2 >= offset)
 	{
 		return EnumerateLeavesAlongExtrudedRay_R( node->children[0], ray,
@@ -5213,14 +5213,14 @@ static bool EnumerateLeavesAlongExtrudedRay_R( mnode_t *node, Ray_t const& ray,
 	if (fabs(t1-t2) < DIST_EPSILON)
 	{
 		// Parallel case, send entire ray to both children...
-		bool ret = EnumerateLeavesAlongExtrudedRay_R( node->children[0], 
+		bool ret = EnumerateLeavesAlongExtrudedRay_R( node->children[0],
 			ray, start, end, pEnum, context );
 		if (!ret)
 			return false;
 		return EnumerateLeavesAlongExtrudedRay_R( node->children[1],
 			ray, start, end, pEnum, context );
 	}
-	
+
 	// Compute the two fractions...
 	// We need one at plane + extent and another at plane - extent.
 	// put the crosspoint DIST_EPSILON pixels on the near side
@@ -5301,7 +5301,7 @@ int CEngineBSPTree::LeafCount() const
 // Enumerates the leaves at a point
 //-----------------------------------------------------------------------------
 
-bool CEngineBSPTree::EnumerateLeavesAtPoint( const Vector& pt, 
+bool CEngineBSPTree::EnumerateLeavesAtPoint( const Vector& pt,
 									ISpatialLeafEnumerator* pEnum, int context )
 {
 	int leaf = CM_PointLeafnum( pt );
@@ -5309,10 +5309,10 @@ bool CEngineBSPTree::EnumerateLeavesAtPoint( const Vector& pt,
 }
 
 
-static ConVar opt_EnumerateLeavesFastAlgorithm( "opt_EnumerateLeavesFastAlgorithm", "1", FCVAR_NONE, "Use the new SIMD version of CEngineBSPTree::EnumerateLeavesInBox." ); 
+static ConVar opt_EnumerateLeavesFastAlgorithm( "opt_EnumerateLeavesFastAlgorithm", "1", FCVAR_NONE, "Use the new SIMD version of CEngineBSPTree::EnumerateLeavesInBox." );
 
 
-bool CEngineBSPTree::EnumerateLeavesInBox( const Vector& mins, const Vector& maxs, 
+bool CEngineBSPTree::EnumerateLeavesInBox( const Vector& mins, const Vector& maxs,
 									ISpatialLeafEnumerator* pEnum, int context )
 {
 	if ( !host_state.worldmodel )
@@ -5337,7 +5337,7 @@ bool CEngineBSPTree::EnumerateLeavesInBox( const Vector& mins, const Vector& max
 }
 
 
-bool CEngineBSPTree::EnumerateLeavesInSphere( const Vector& center, float radius, 
+bool CEngineBSPTree::EnumerateLeavesInSphere( const Vector& center, float radius,
 									ISpatialLeafEnumerator* pEnum, int context )
 {
 	EnumLeafSphereInfo_t info;
@@ -5375,4 +5375,3 @@ bool CEngineBSPTree::EnumerateLeavesAlongRay( Ray_t const& ray, ISpatialLeafEnum
 		return EnumerateLeavesAlongExtrudedRay_R( host_state.worldbrush->nodes, ray, 0.0f, 1.0f, pEnum, context );
 	}
 }
-

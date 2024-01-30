@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -135,4 +135,3 @@ CP4File *CP4Factory::AccessFile( char const *szFilename ) const
 // Default p4 factory
 static CP4Factory s_static_p4_factory;
 CP4Factory *g_p4factory = &s_static_p4_factory; // NULL before the factory constructs
-

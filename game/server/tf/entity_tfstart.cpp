@@ -51,7 +51,7 @@ CTFTeamSpawn::CTFTeamSpawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamSpawn::Activate( void )
 {
@@ -91,11 +91,11 @@ void CTFTeamSpawn::InputDisable( inputdata_t &inputdata )
 // Input  :
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CTFTeamSpawn::DrawDebugTextOverlays(void) 
+int CTFTeamSpawn::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 		Q_snprintf(tempstr,sizeof(tempstr),"TeamNumber: %d", GetTeamNumber() );
@@ -140,7 +140,7 @@ int CTFTeamSpawn::DrawDebugTextOverlays(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTeamSpawn::InputRoundSpawn( inputdata_t &input )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -41,7 +41,7 @@ CMapInfo::~CMapInfo()
 	if ( g_pMapInfo == this )
 		g_pMapInfo = NULL;
 }
- 
+
 
 bool CMapInfo::KeyValue( const char *szKeyName, const char *szValue )
 {
@@ -55,16 +55,16 @@ bool CMapInfo::KeyValue( const char *szKeyName, const char *szValue )
 		m_flBombRadius = (float)(atoi(szValue));
 		if (m_flBombRadius > 2048)
 			m_flBombRadius = 2048;
-		
+
 		return true;
 	}
-	
+
 	return BaseClass::KeyValue( szKeyName, szValue );
 }
 
 
 void CMapInfo::Spawn( void )
-{ 
+{
 	SetMoveType( MOVETYPE_NONE );
 	SetSolid( SOLID_NONE );
 	AddEffects( EF_NODRAW );

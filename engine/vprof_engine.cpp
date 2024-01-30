@@ -51,7 +51,7 @@ static ConVar vprof_report_oninterval( "vprof_report_oninterval", "0", 0, "Inter
 
 static void (*g_pfnDeferredOp)();
 
-static void ExecuteDeferredOp() 
+static void ExecuteDeferredOp()
 {
 	if ( g_pfnDeferredOp )
 	{
@@ -59,7 +59,7 @@ static void ExecuteDeferredOp()
 		g_pfnDeferredOp = NULL;
 	}
 }
-	
+
 const double MAX_SPIKE_REPORT = 1.0;
 const int MAX_SPIKE_REPORT_FRAMES = 10;
 static double LastSpikeTime = 0;
@@ -205,7 +205,7 @@ void PreUpdateProfile( float filteredtime )
 		}
 
 		int iStartDepth = 0;
-		do 
+		do
 		{
 			g_VProfCurrentProfile.Stop();
 			iStartDepth++;
@@ -714,7 +714,7 @@ DEFERRED_CON_COMMAND(vprof_360_report_counters, "Report L2/LHS info for specifie
 
 
 DEFERRED_CON_COMMAND(vprof_360_cpu_trace_enable, "Enable CPU tracing: it will begin when specified node starts, and end when it stops. Do this before calling vprof_360_cpu_trace_go.")
-{	
+{
 	CVProfNode * RESTRICT upon = g_VProfCurrentProfile.CPUTraceEnableForNode(g_szDefferedArg1);
 	if (upon != NULL)
 	{
@@ -810,7 +810,7 @@ public:
 	{
 		return g_pVProfileForDisplay;
 	}
-	
+
 	inline bool CanShowBudgetGroup( int iGroup )
 	{
 		return ( GetActiveVProfile()->GetBudgetGroupFlags( iGroup ) & m_BudgetFlagsFilter ) != 0;
@@ -856,7 +856,7 @@ public:
 			if ( CanShowBudgetGroup( i ) )
 			{
 				pInfos[iOut].m_pName = GetActiveVProfile()->GetBudgetGroupName( i );
-				
+
 				int red, green, blue, alpha;
 				GetActiveVProfile()->GetBudgetGroupColor( i, red, green, blue, alpha );
 				pInfos[iOut].m_Color = Color( red, green, blue, alpha );
@@ -905,9 +905,9 @@ public:
 	{
 		if ( materials )
 			materials->Flush();
-		
+
 		g_VProfCurrentProfile.Resume();
-	}		
+	}
 
 
 public:
@@ -931,8 +931,8 @@ public:
 	{
 		// If this node's info is filtered out, then put it in its parent's budget group.
 		CVProfNode *pTestNode = pNode;
-		while ( pTestNode != GetActiveVProfile()->GetRoot() && 
-				( !CanShowBudgetGroup( pTestNode->GetBudgetGroupID() ) || 
+		while ( pTestNode != GetActiveVProfile()->GetRoot() &&
+				( !CanShowBudgetGroup( pTestNode->GetBudgetGroupID() ) ||
 				    ( GetActiveVProfile()->GetBudgetGroupFlags( pTestNode->GetBudgetGroupID() ) & BUDGETFLAG_HIDDEN ) != 0 ) )
 		{
 			pTestNode = pTestNode->GetParent();
@@ -969,7 +969,7 @@ public:
 		// Don't do the work if there are no listeners.
 		if ( !GetActiveVProfile()->IsEnabled() )
 			return;
-	
+
 		if ( m_Times.Count() < GetActiveVProfile()->GetNumBudgetGroups() )
 		{
 			m_Times.SetSize( GetActiveVProfile()->GetNumBudgetGroups() );
@@ -1086,7 +1086,7 @@ void WriteRemoteVProfGroupData( VProfListenInfo_t &info )
 
 	// Build list of unsent groups to send
 	int nSendCount = 0;
-	int *pIndex = (int*)stackalloc( nGroupCount * sizeof(int) ); 
+	int *pIndex = (int*)stackalloc( nGroupCount * sizeof(int) );
 	for ( int i = 0; i < nGroupCount; ++i )
 	{
 		const char *pName = g_pVProfileForDisplay->GetBudgetGroupName( i );
@@ -1120,7 +1120,7 @@ void WriteRemoteVProfGroupData( VProfListenInfo_t &info )
 
 	g_ServerRemoteAccess.SendVProfData( info.m_nListenerId, true, buf.Base(), buf.TellMaxPut() );
 }
-		 
+
 static ConVar rpt_vprof_time( "rpt_vprof_time","0.25", FCVAR_HIDDEN | FCVAR_DONTRECORD, "" );
 void WriteRemoteVProfData()
 {
@@ -1173,7 +1173,7 @@ void WriteRemoteVProfData()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: add a new endpoint to send data to 
+// Purpose: add a new endpoint to send data to
 //-----------------------------------------------------------------------------
 void RegisterVProfDataListener( ra_listener_id listenerID )
 {
@@ -1198,4 +1198,3 @@ void RemoveVProfDataListener( ra_listener_id listenerID )
 }
 
 #endif
-

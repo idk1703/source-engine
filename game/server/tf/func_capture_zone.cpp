@@ -83,7 +83,7 @@ void CCaptureZone::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureZone::Activate( void )
 {
@@ -101,7 +101,7 @@ void CCaptureZone::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureZone::PlayerDestructionThink( void )
 {
@@ -344,7 +344,7 @@ void CCaptureZone::Capture( CBaseEntity *pOther )
 			}
 		}
 		else if ( !TFGameRules()->CanFlagBeCaptured( pOther ) && TFGameRules()->IsPowerupMode() )
-		{ 
+		{
 			ClientPrint( pPlayer, HUD_PRINTCENTER, "Cannot capture - your flag is not at base!" );
 		}
 	}
@@ -507,7 +507,7 @@ void CFlagDetectionZone::EndTouch( CBaseEntity *pOther )
 	{
 		EHANDLE hOther;
 		hOther = pOther;
-		
+
 		m_hTouchingPlayers.FindAndRemove( hOther );
 	}
 
@@ -636,7 +636,7 @@ void CFlagDetectionZone::FlagPickedUp( CBasePlayer *pPlayer )
 {
 	EHANDLE hOther;
 	hOther = pPlayer;
-	
+
 	if ( m_hTouchingPlayers.Find( hOther ) != m_hTouchingPlayers.InvalidIndex() )
 	{
 		m_outputOnPickedUpFlag.FireOutput( pPlayer, this );
@@ -740,7 +740,7 @@ void HandleFlagPickedUpInDetectionZone( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Handles if the specified entity is captured in a detection zone 
+// Purpose: Handles if the specified entity is captured in a detection zone
 //-----------------------------------------------------------------------------
 void HandleFlagCapturedInDetectionZone( CBasePlayer *pPlayer )
 {

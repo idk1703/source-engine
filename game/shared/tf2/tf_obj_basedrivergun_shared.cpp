@@ -23,7 +23,7 @@ BEGIN_PREDICTION_DATA( CBaseObjectDriverGun )
 END_PREDICTION_DATA()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseObjectDriverGun::CBaseObjectDriverGun()
 {
@@ -31,7 +31,7 @@ CBaseObjectDriverGun::CBaseObjectDriverGun()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObjectDriverGun::Spawn()
 {
@@ -39,7 +39,7 @@ void CBaseObjectDriverGun::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObjectDriverGun::FinishedBuilding( void )
 {
@@ -54,7 +54,7 @@ void CBaseObjectDriverGun::FinishedBuilding( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseObjectDriverGun::SetTargetAngles( const QAngle &vecAngles )
 {
@@ -62,7 +62,7 @@ void CBaseObjectDriverGun::SetTargetAngles( const QAngle &vecAngles )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const QAngle &CBaseObjectDriverGun::GetCurrentAngles( void )
 {
@@ -70,7 +70,7 @@ const QAngle &CBaseObjectDriverGun::GetCurrentAngles( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Vector CBaseObjectDriverGun::GetFireOrigin( void )
 {
@@ -79,7 +79,7 @@ Vector CBaseObjectDriverGun::GetFireOrigin( void )
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseObjectDriverGun::ShouldPredict( void )
 {

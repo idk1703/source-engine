@@ -28,7 +28,7 @@ END_SEND_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CPlayerClassInfiltrator::GetClassModelString( int nTeam )
@@ -42,19 +42,19 @@ CPlayerClassInfiltrator::CPlayerClassInfiltrator( CBaseTFPlayer *pPlayer, TFClas
 {
 	for (int i = 0; i < MAX_TF_TEAMS; ++i)
 	{
-		SetClassModel( MAKE_STRING(GetClassModelString(i)), i ); 
+		SetClassModel( MAKE_STRING(GetClassModelString(i)), i );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPlayerClassInfiltrator::~CPlayerClassInfiltrator()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassInfiltrator::ClassActivate( void )
 {
@@ -65,9 +65,9 @@ void CPlayerClassInfiltrator::ClassActivate( void )
 
 	//m_hAssassinationWeapon = NULL;
 	m_hSwappedWeapon = NULL;
-	
+
 	m_bCanConsumeCorpses = false;
-	m_flStartCamoAt = 0.0f; 
+	m_flStartCamoAt = 0.0f;
 
 	memset( &m_ClassData, 0, sizeof( m_ClassData ) );
 }
@@ -82,7 +82,7 @@ void PrecacheInfiltrator(void *pUser)
 PRECACHE_REGISTER_FN(PrecacheInfiltrator);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassInfiltrator::RespawnClass( void )
 {
@@ -92,7 +92,7 @@ void CPlayerClassInfiltrator::RespawnClass( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CPlayerClassInfiltrator::ResupplyAmmo( float flFraction, ResupplyReason_t reason )
 {
@@ -127,7 +127,7 @@ void CPlayerClassInfiltrator::SetupSizeData( void )
 	// Initially set the player to the base player class standing hull size.
 	m_pPlayer->SetCollisionBounds( INFILTRATORCLASS_HULL_STAND_MIN, INFILTRATORCLASS_HULL_STAND_MAX );
 	m_pPlayer->SetViewOffset( INFILTRATORCLASS_VIEWOFFSET_STAND );
-	m_pPlayer->m_Local.m_flStepSize = INFILTRATORCLASS_STEPSIZE;	
+	m_pPlayer->m_Local.m_flStepSize = INFILTRATORCLASS_STEPSIZE;
 }
 
 //-----------------------------------------------------------------------------
@@ -249,7 +249,7 @@ void CPlayerClassInfiltrator::CheckForAssassination( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassInfiltrator::SetPlayerHull( void )
 {
@@ -264,7 +264,7 @@ void CPlayerClassInfiltrator::SetPlayerHull( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassInfiltrator::ResetViewOffset( void )
 {

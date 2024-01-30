@@ -25,7 +25,7 @@ class CToolPickFace;
 //
 enum FaceState_t
 {
-	FaceState_Select = 0,		// 
+	FaceState_Select = 0,		//
 	FaceState_Partial,			// Used for multiselect; the face is in at least one of the face lists being edited.
 	FaceState_None,				// Used for multiselect; to deselect partially selected faces. Otherwise they are removed from the list.
 };
@@ -60,8 +60,8 @@ public:
 	//
 	// Constructor/Destructor
 	//
-    CToolPickFace();
-    ~CToolPickFace();
+	CToolPickFace();
+	~CToolPickFace();
 
 	//
 	// CBaseTool virtual implementations
@@ -70,10 +70,10 @@ public:
 	virtual ToolID_t GetToolID(void) { return TOOL_PICK_FACE; }
 
 	virtual bool OnLMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
-    virtual bool OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
-    virtual bool OnLMouseDblClk3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
+	virtual bool OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
+	virtual bool OnLMouseDblClk3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
 	virtual bool OnRMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
-    virtual bool OnRMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
+	virtual bool OnRMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
 	virtual bool OnMouseMove3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
 
 	//

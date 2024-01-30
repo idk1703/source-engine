@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -249,11 +249,11 @@ public:
 PhonemeEditor * g_pPhonemeEditor = 0;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
-PhonemeEditor::PhonemeEditor( mxWindow *parent ) : 
-	IFacePoserToolWindow( "PhonemeEditor", "Phoneme Editor" ), 
+PhonemeEditor::PhonemeEditor( mxWindow *parent ) :
+	IFacePoserToolWindow( "PhonemeEditor", "Phoneme Editor" ),
 	mxWindow( parent, 0, 0, 0, 0 )
 {
 	SetAutoProcess( false );
@@ -330,7 +330,7 @@ PhonemeEditor::PhonemeEditor( mxWindow *parent ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::OnDelete()
 {
@@ -351,7 +351,7 @@ void PhonemeEditor::OnDelete()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool PhonemeEditor::CanClose()
@@ -378,7 +378,7 @@ bool PhonemeEditor::CanClose()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 PhonemeEditor::~PhonemeEditor( void )
 {
@@ -405,7 +405,7 @@ void PhonemeEditor::SetupPhonemeEditorColors( void )
 			bgr = GetRValue( bgColor );
 			bgg = GetGValue( bgColor );
 			bgb = GetBValue( bgColor );
-			
+
 			int r, g, b;
 
 			r = GetRValue( p->root_color );
@@ -445,7 +445,7 @@ COLORREF PhonemeEditor::PEColor( int colornum )
 	{
 		return p->root_color;
 	}
-	
+
 	return p->gray_color;
 }
 
@@ -513,9 +513,9 @@ void PhonemeEditor::EditWord( CWordTag *pWord, bool positionDialog /*= false*/ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPhoneme - 
-//			positionDialog - 
+// Purpose:
+// Input  : *pPhoneme -
+//			positionDialog -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::EditPhoneme( CPhonemeTag *pPhoneme, bool positionDialog /*= false*/ )
 {
@@ -570,7 +570,7 @@ void PhonemeEditor::EditPhoneme( CPhonemeTag *pPhoneme, bool positionDialog /*= 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::EditPhoneme( void )
 {
@@ -585,7 +585,7 @@ void PhonemeEditor::EditPhoneme( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::EditWord( void )
 {
@@ -600,10 +600,10 @@ void PhonemeEditor::EditWord( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dragtype - 
-//			startx - 
-//			cursor - 
+// Purpose:
+// Input  : dragtype -
+//			startx -
+//			cursor -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::StartDragging( int dragtype, int startx, int starty, HCURSOR cursor )
 {
@@ -612,7 +612,7 @@ void PhonemeEditor::StartDragging( int dragtype, int startx, int starty, HCURSOR
 	m_nLastX	= startx;
 	m_nStartY	= starty;
 	m_nLastY	= starty;
-	
+
 	if ( m_hPrevCursor )
 	{
 		SetCursor( m_hPrevCursor );
@@ -721,15 +721,15 @@ void PhonemeEditor::StartDragging( int dragtype, int startx, int starty, HCURSOR
 	{
 		AddFocusRect( rcStart );
 	}
-	
+
 	DrawFocusRect( "start" );
 
 	SetDragLimit( m_nDragType );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 // Output : int
 //-----------------------------------------------------------------------------
 int PhonemeEditor::handleEvent( mxEvent *event )
@@ -737,7 +737,7 @@ int PhonemeEditor::handleEvent( mxEvent *event )
 	MDLCACHE_CRITICAL_SECTION_( g_pMDLCache );
 
 	int iret = 0;
-	
+
 	if ( HandleToolEvent( event ) )
 	{
 		return iret;
@@ -892,7 +892,7 @@ int PhonemeEditor::handleEvent( mxEvent *event )
 				else if ( event->modifiers == SB_PAGEUP )
 				{
 					int offset = m_pHorzScrollBar->getValue();
-					
+
 					offset -= 10;
 					offset = max( offset, m_pHorzScrollBar->getMinValue() );
 
@@ -901,13 +901,13 @@ int PhonemeEditor::handleEvent( mxEvent *event )
 				else if ( event->modifiers == SB_PAGEDOWN )
 				{
 					int offset = m_pHorzScrollBar->getValue();
-					
+
 					offset += 10;
 					offset = min( offset, m_pHorzScrollBar->getMaxValue() );
 
 					MoveTimeSliderToPos( offset );
 				}
-				break;	
+				break;
 			case IDC_REDO_PHONEMEEXTRACTION:
 				if ( m_Tags.m_Words.Size() <= 0 )
 				{
@@ -1035,13 +1035,13 @@ int PhonemeEditor::handleEvent( mxEvent *event )
 
 			CPhonemeTag *pt;
 			CWordTag *wt;
-			
+
 			pt = GetPhonemeTagUnderMouse( (short)event->x, (short)event->y );
 			wt = GetWordTagUnderMouse( (short)event->x, (short)event->y );
 
 			bool ctrldown = ( event->modifiers & mxEvent::KeyCtrl ) ? true : false;
 			bool shiftdown = ( event->modifiers & mxEvent::KeyShift ) ? true : false;
-			
+
 			if ( event->buttons & mxEvent::MouseRightButton )
 			{
 				RECT rc;
@@ -1076,7 +1076,7 @@ int PhonemeEditor::handleEvent( mxEvent *event )
 				}
 				return iret;
 			}
-			
+
 			if ( m_nDragType == DRAGTYPE_NONE )
 			{
 				CountSelected();
@@ -1087,9 +1087,9 @@ int PhonemeEditor::handleEvent( mxEvent *event )
 				{
 					if ( IsMouseOverScrubHandle( event ) )
 					{
-						StartDragging( DRAGTYPE_SCRUBBER, 
-							(short)event->x, 
-							(short)event->y, 
+						StartDragging( DRAGTYPE_SCRUBBER,
+							(short)event->x,
+							(short)event->y,
 							LoadCursor( NULL, IDC_SIZEWE ) );
 
 						float t = GetTimeForPixel( (short)event->x );
@@ -1123,7 +1123,7 @@ int PhonemeEditor::handleEvent( mxEvent *event )
 					CEmphasisSample *sample = Emphasis_GetSampleUnderMouse( event );
 					if ( sample )
 					{
-						if  ( shiftdown ) 
+						if  ( shiftdown )
 						{
 							sample->selected = !sample->selected;
 							redraw();
@@ -1134,7 +1134,7 @@ int PhonemeEditor::handleEvent( mxEvent *event )
 						}
 						else
 						{
-							if  ( !shiftdown ) 
+							if  ( !shiftdown )
 							{
 								Emphasis_DeselectAll();
 								redraw();
@@ -1172,7 +1172,7 @@ int PhonemeEditor::handleEvent( mxEvent *event )
 					}
 					else
 					{
-						if  ( !shiftdown ) 
+						if  ( !shiftdown )
 						{
 							Emphasis_DeselectAll();
 							redraw();
@@ -1188,7 +1188,7 @@ int PhonemeEditor::handleEvent( mxEvent *event )
 					{
 						StartDragging( DRAGTYPE_PHONEME, (short)event->x, (short)event->y, LoadCursor( NULL, IDC_SIZEWE ) );
 						return true;
-					}			
+					}
 					else if ( type == BOUNDARY_WORD && m_nSelectedWordCount <= 1 )
 					{
 						StartDragging( DRAGTYPE_WORD, (short)event->x, (short)event->y, LoadCursor( NULL, IDC_SIZEWE ) );
@@ -1231,7 +1231,7 @@ int PhonemeEditor::handleEvent( mxEvent *event )
 						return true;
 					}
 				}
-				
+
 				if ( IsMouseOverTag( (short)event->x, (short)event->y ) )
 				{
 					StartDragging( DRAGTYPE_EVENTTAG_MOVE, (short)event->x, (short)event->y, LoadCursor( NULL, IDC_SIZEALL ) );
@@ -1373,7 +1373,7 @@ int PhonemeEditor::handleEvent( mxEvent *event )
 						SetScrubTime( t );
 						SetScrubTargetTime( t );
 
-						sound->Flush(); 
+						sound->Flush();
 
 						DrawScrubHandle();
 					}
@@ -1454,7 +1454,7 @@ int PhonemeEditor::handleEvent( mxEvent *event )
 
 										if ( !phoneme->m_bSelected )
 											continue;
-								
+
 										EditPhoneme( phoneme, true );
 									}
 								}
@@ -1508,7 +1508,7 @@ int PhonemeEditor::handleEvent( mxEvent *event )
 					{
 						Con_Printf( "Stopping playback\n" );
 						m_btnPlay->setLabel( "Play (Spacebar)" );
-						StopPlayback();	
+						StopPlayback();
 					}
 					else
 					{
@@ -1733,8 +1733,8 @@ void PhonemeEditor::DrawWords( CChoreoWidgetDrawHelper& drawHelper, RECT& rcWork
 			rcWord.top = ypos - m_nTickHeight + 1;
 			rcWord.bottom = ypos;
 
-			drawHelper.DrawFilledRect( 
-				PEColor( word->m_bSelected ? COLOR_PHONEME_TAG_SELECTED : COLOR_PHONEME_TAG_FILLER_NORMAL ), 
+			drawHelper.DrawFilledRect(
+				PEColor( word->m_bSelected ? COLOR_PHONEME_TAG_SELECTED : COLOR_PHONEME_TAG_FILLER_NORMAL ),
 				rcWord );
 
 			COLORREF border = PEColor( word->m_bSelected ? COLOR_PHONEME_TAG_BORDER_SELECTED : COLOR_PHONEME_TAG_BORDER );
@@ -1753,7 +1753,7 @@ void PhonemeEditor::DrawWords( CChoreoWidgetDrawHelper& drawHelper, RECT& rcWork
 			{
 				drawHelper.DrawFilledRect( PEColor( COLOR_PHONEME_SELECTED_BORDER ), xpos, ypos - 3, xpos2, ypos );
 			}
-		
+
 			//if ( frac >= 0.0 && frac <= 1.0 )
 			{
 				int fontsize = 9;
@@ -1774,11 +1774,11 @@ void PhonemeEditor::DrawWords( CChoreoWidgetDrawHelper& drawHelper, RECT& rcWork
 					rcText.left += ( w - length ) / 2;
 				}
 
-				drawHelper.DrawColoredText( 
-					fontName, 
-					fontsize, 
-					FW_NORMAL, 
-					PEColor( word->m_bSelected ? COLOR_PHONEME_TAG_TEXT_SELECTED : COLOR_PHONEME_TAG_TEXT ), 
+				drawHelper.DrawColoredText(
+					fontName,
+					fontsize,
+					FW_NORMAL,
+					PEColor( word->m_bSelected ? COLOR_PHONEME_TAG_TEXT_SELECTED : COLOR_PHONEME_TAG_TEXT ),
 					rcText,
 					"%s", word->GetWord() );
 			}
@@ -1846,7 +1846,7 @@ void PhonemeEditor::DrawPhonemes( CChoreoWidgetDrawHelper& drawHelper, RECT& rcW
 				rcFrame.top = ypos - m_nTickHeight + 1;
 				rcFrame.bottom = ypos;
 
-				drawHelper.DrawFilledRect( 
+				drawHelper.DrawFilledRect(
 					PEColor( pPhoneme->m_bSelected ? COLOR_PHONEME_TAG_SELECTED : COLOR_PHONEME_TAG_FILLER_NORMAL ),
 					rcFrame );
 
@@ -1888,11 +1888,11 @@ void PhonemeEditor::DrawPhonemes( CChoreoWidgetDrawHelper& drawHelper, RECT& rcW
 						rcText.left += ( w - length ) / 2;
 					}
 
-					drawHelper.DrawColoredText( 
-						fontName, 
-						fontsize, 
-						FW_NORMAL, 
-						PEColor( pPhoneme->m_bSelected ? COLOR_PHONEME_TAG_TEXT_SELECTED : COLOR_PHONEME_TAG_TEXT ), 
+					drawHelper.DrawColoredText(
+						fontName,
+						fontsize,
+						FW_NORMAL,
+						PEColor( pPhoneme->m_bSelected ? COLOR_PHONEME_TAG_TEXT_SELECTED : COLOR_PHONEME_TAG_TEXT ),
 						rcText,
 						"%s", ConvertPhoneme( pPhoneme->GetPhonemeCode() ) );
 				}
@@ -1902,9 +1902,9 @@ void PhonemeEditor::DrawPhonemes( CChoreoWidgetDrawHelper& drawHelper, RECT& rcW
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			rc - 
+// Purpose:
+// Input  : drawHelper -
+//			rc -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::DrawRelativeTags( CChoreoWidgetDrawHelper& drawHelper, RECT& rc )
 {
@@ -1922,7 +1922,7 @@ void PhonemeEditor::DrawRelativeTags( CChoreoWidgetDrawHelper& drawHelper, RECT&
 		if ( !tag )
 			continue;
 
-		// 
+		//
 		float tagtime = tag->GetPercentage() * m_pWaveFile->GetRunningLength();
 		if ( tagtime < starttime || tagtime > endtime )
 			continue;
@@ -1944,7 +1944,7 @@ void PhonemeEditor::DrawRelativeTags( CChoreoWidgetDrawHelper& drawHelper, RECT&
 		rcText = rc;
 		rcText.bottom = rc.bottom - 10;
 		rcText.top = rcText.bottom - 10;
-	
+
 		int len = drawHelper.CalcTextWidth( "Arial", 9, FW_NORMAL, tag->GetName() );
 		rcText.left = left - len / 2;
 		rcText.right = rcText.left + len + 2;
@@ -1954,7 +1954,7 @@ void PhonemeEditor::DrawRelativeTags( CChoreoWidgetDrawHelper& drawHelper, RECT&
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::redraw( void )
 {
@@ -1977,7 +1977,7 @@ void PhonemeEditor::redraw( void )
 
 	// Now draw the time legend
 	RECT rcLabel;
-	float granularity = 0.5f; 
+	float granularity = 0.5f;
 
 	drawHelper.DrawColoredLine( PEColor( COLOR_PHONEME_TIMELINE ), PS_SOLID, 1, rc.left, rc.bottom - m_nTickHeight, rc.right, rc.bottom - m_nTickHeight );
 
@@ -1986,12 +1986,12 @@ void PhonemeEditor::redraw( void )
 		Emphasis_Redraw( drawHelper, rc );
 	}
 
-	sound->RenderWavToDC( 
-		dc, 
-		rc, 
-		PEColor( COLOR_PHONEME_WAVDATA ), 
-		starttime, 
-		endtime, 
+	sound->RenderWavToDC(
+		dc,
+		rc,
+		PEColor( COLOR_PHONEME_WAVDATA ),
+		starttime,
+		endtime,
 		m_pWaveFile,
 		m_bSelectionActive,
 		m_nSelection[ 0 ],
@@ -2062,16 +2062,16 @@ void PhonemeEditor::redraw( void )
 
 		drawHelper.DrawColoredText( font, fontsize, fontweight, clr, rcText,
 			"Last Extraction Result:  %s", GetExtractionResultString( m_nLastExtractionResult ) );
-	
+
 		OffsetRect( &rcText, 0, fontsize + 1 );
 	}
 
 	if ( m_pEvent && !Q_stristr( m_pEvent->GetParameters(), ".wav" ) )
 	{
 		drawHelper.DrawColoredText( font, fontsize, fontweight, PEColor( COLOR_PHONEME_TEXT ), rcText,
-			"Sound: '%s', file: %s, length %.2f seconds", 
+			"Sound: '%s', file: %s, length %.2f seconds",
 			m_pEvent->GetParameters(),
-			m_WorkFile.m_szWaveFile, 
+			m_WorkFile.m_szWaveFile,
 			m_pWaveFile->GetRunningLength() );
 	}
 	else
@@ -2160,20 +2160,20 @@ void PhonemeEditor::redraw( void )
 		sprintf( sz, "Speed: %.2fx", m_flPlaybackRate );
 
 		int length = drawHelper.CalcTextWidth( font, fontsize, fontweight, sz);
-		
+
 		rcText = rc;
 		rcText.top = rc.bottom + 60;
 		rcText.bottom = rcText.top + fontsize + 1;
 		rcText.left = m_pPlaybackRate->x() + m_pPlaybackRate->w() - x();
 		rcText.right = rcText.left + length + 2;
 
-		drawHelper.DrawColoredText( font, fontsize, fontweight, 
+		drawHelper.DrawColoredText( font, fontsize, fontweight,
 			PEColor( COLOR_PHONEME_TEXT ), rcText, sz );
 	}
 
 	if ( m_UndoStack.Size() > 0 )
 	{
-		int length = drawHelper.CalcTextWidth( font, fontsize, fontweight, 
+		int length = drawHelper.CalcTextWidth( font, fontsize, fontweight,
 			"Undo levels:  %i/%i", m_nUndoLevel, m_UndoStack.Size() );
 
 		rcText = rc;
@@ -2215,8 +2215,8 @@ void PhonemeEditor::redraw( void )
 //-----------------------------------------------------------------------------
 // Purpose: Brown noise simulates brownian motion centered around 127.5 but we cap the walking
 //  to just a couple of units
-// Input  : *buffer - 
-//			count - 
+// Input  : *buffer -
+//			count -
 // Output : static void
 //-----------------------------------------------------------------------------
 static void WriteBrownNoise( void *buffer, int count )
@@ -2241,11 +2241,11 @@ static void WriteBrownNoise( void *buffer, int count )
 //-----------------------------------------------------------------------------
 // Purpose: Replace with brownian noice parts of the wav file that we dont' want processed by the
 //  speech recognizer
-// Input  : store - 
-//			*format - 
-//			chunkname - 
-//			*buffer - 
-//			buffersize - 
+// Input  : store -
+//			*format -
+//			chunkname -
+//			*buffer -
+//			buffersize -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::ResampleChunk( IterateOutputRIFF& store, void *format, int chunkname, char *buffer, int buffersize, int start_silence /*=0*/, int end_silence /*=0*/ )
 {
@@ -2283,7 +2283,7 @@ void PhonemeEditor::ResampleChunk( IterateOutputRIFF& store, void *format, int c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::ReadLinguisticTags( void )
 {
@@ -2309,8 +2309,8 @@ void PhonemeEditor::ReadLinguisticTags( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Switch wave files
-// Input  : *wavefile - 
-//			force - 
+// Input  : *wavefile -
+//			force -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::SetCurrentWaveFile( const char *wavefile, bool force /*=false*/, CChoreoEvent *event /*=NULL*/ )
 {
@@ -2402,8 +2402,8 @@ void PhonemeEditor::SetCurrentWaveFile( const char *wavefile, bool force /*=fals
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
+// Purpose:
+// Input  : x -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::MoveTimeSliderToPos( int x )
 {
@@ -2415,7 +2415,7 @@ void PhonemeEditor::MoveTimeSliderToPos( int x )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int PhonemeEditor::ComputeHPixelsNeeded( void )
@@ -2434,7 +2434,7 @@ int PhonemeEditor::ComputeHPixelsNeeded( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::RepositionHSlider( void )
 {
@@ -2461,7 +2461,7 @@ void PhonemeEditor::RepositionHSlider( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float PhonemeEditor::GetPixelsPerSecond( void )
@@ -2470,7 +2470,7 @@ float PhonemeEditor::GetPixelsPerSecond( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float PhonemeEditor::GetTimeZoomScale( void )
@@ -2479,8 +2479,8 @@ float PhonemeEditor::GetTimeZoomScale( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : scale - 
+// Purpose:
+// Input  : scale -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::SetTimeZoomScale( int scale )
 {
@@ -2488,8 +2488,8 @@ void PhonemeEditor::SetTimeZoomScale( int scale )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dt - 
+// Purpose:
+// Input  : dt -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::Think( float dt )
 {
@@ -2506,9 +2506,9 @@ void PhonemeEditor::Think( float dt )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			my - 
+// Purpose:
+// Input  : mx -
+//			my -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 int PhonemeEditor::IsMouseOverBoundary( mxEvent *event )
@@ -2523,7 +2523,7 @@ int PhonemeEditor::IsMouseOverBoundary( mxEvent *event )
 	if ( !m_pWaveFile )
 		return BOUNDARY_NONE;
 
-	if ( !(event->modifiers & mxEvent::KeyCtrl ) ) 
+	if ( !(event->modifiers & mxEvent::KeyCtrl ) )
 	{
 		return BOUNDARY_NONE;
 	}
@@ -2596,7 +2596,7 @@ int PhonemeEditor::IsMouseOverBoundary( mxEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::DrawFocusRect( char *reason )
 {
@@ -2613,13 +2613,13 @@ void PhonemeEditor::DrawFocusRect( char *reason )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &rc - 
+// Purpose:
+// Input  : &rc -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::GetWorkspaceRect( RECT &rc )
 {
 	GetClientRect( (HWND)getHandle(), &rc );
-	
+
 	rc.top += TAG_BOTTOM;
 	rc.bottom = rc.bottom - 75 - MODE_TAB_OFFSET;
 
@@ -2627,9 +2627,9 @@ void PhonemeEditor::GetWorkspaceRect( RECT &rc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			my - 
+// Purpose:
+// Input  : mx -
+//			my -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::ShowWordMenu( CWordTag *word, int mx, int my )
 {
@@ -2639,7 +2639,7 @@ void PhonemeEditor::ShowWordMenu( CWordTag *word, int mx, int my )
 	Assert( pop );
 
 	pop->add( va( "Edit sentence text..." ), IDC_EDITWORDLIST );
-	
+
 	if ( m_nSelectedWordCount > 0 && word )
 	{
 		pop->addSeparator();
@@ -2694,7 +2694,7 @@ void PhonemeEditor::ShowWordMenu( CWordTag *word, int mx, int my )
 	{
 		pop->addSeparator();
 		pop->add( va( "Merge words" ), IDC_SNAPWORDS );
-		
+
 		if ( m_nSelectedWordCount == 2 )
 		{
 			pop->add( va( "Separate words" ), IDC_SEPARATEWORDS );
@@ -2725,9 +2725,9 @@ void PhonemeEditor::ShowWordMenu( CWordTag *word, int mx, int my )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			my - 
+// Purpose:
+// Input  : mx -
+//			my -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::ShowPhonemeMenu( CPhonemeTag *pho, int mx, int my )
 {
@@ -2785,7 +2785,7 @@ void PhonemeEditor::ShowPhonemeMenu( CPhonemeTag *pho, int mx, int my )
 
 			pop->addSeparator();
 		}
-				
+
 		if ( AreSelectedPhonemesContiguous() && m_nSelectedPhonemeCount > 1 )
 		{
 			pop->add( va( "Merge phonemes" ), IDC_SNAPPHONEMES );
@@ -2796,10 +2796,10 @@ void PhonemeEditor::ShowPhonemeMenu( CPhonemeTag *pho, int mx, int my )
 
 			pop->addSeparator();
 		}
-		
+
 		if ( m_nSelectedPhonemeCount >= 1 )
 		{
-			pop->add( va( "Delete %s", 
+			pop->add( va( "Delete %s",
 				m_nSelectedPhonemeCount == 1 ? va( "'%s'", ConvertPhoneme( pho->GetPhonemeCode() ) ) : "phonemes" ), IDC_EDIT_DELETEPHONEME );
 
 			pop->addSeparator();
@@ -2824,8 +2824,8 @@ void PhonemeEditor::ShowPhonemeMenu( CPhonemeTag *pho, int mx, int my )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
+// Purpose:
+// Input  : mx -
 // Output : float
 //-----------------------------------------------------------------------------
 float PhonemeEditor::GetTimeForPixel( int mx )
@@ -2840,10 +2840,10 @@ float PhonemeEditor::GetTimeForPixel( int mx )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : time - 
-//			**pp1 - 
-//			**pp2 - 
+// Purpose:
+// Input  : time -
+//			**pp1 -
+//			**pp2 -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool PhonemeEditor::FindSpanningPhonemes( float time, CPhonemeTag **pp1, CPhonemeTag **pp2 )
@@ -2899,7 +2899,7 @@ bool PhonemeEditor::FindSpanningPhonemes( float time, CPhonemeTag **pp1, CPhonem
 					return true;
 				}
 			}
-		
+
 			previous = current;
 		}
 	}
@@ -2908,7 +2908,7 @@ bool PhonemeEditor::FindSpanningPhonemes( float time, CPhonemeTag **pp1, CPhonem
 	{
 		// Check last word, but only if it has some phonemes
 		CWordTag *lastWord = m_Tags.m_Words[ m_Tags.m_Words.Size() - 1 ];
-		if ( lastWord && 
+		if ( lastWord &&
 			( lastWord->m_Phonemes.Size() > 0 ) )
 		{
 
@@ -2927,10 +2927,10 @@ bool PhonemeEditor::FindSpanningPhonemes( float time, CPhonemeTag **pp1, CPhonem
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : time - 
-//			**pp1 - 
-//			**pp2 - 
+// Purpose:
+// Input  : time -
+//			**pp1 -
+//			**pp2 -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool PhonemeEditor::FindSpanningWords( float time, CWordTag **pp1, CWordTag **pp2 )
@@ -2981,7 +2981,7 @@ bool PhonemeEditor::FindSpanningWords( float time, CWordTag **pp1, CWordTag **pp
 				return true;
 			}
 		}
-	
+
 		previous = current;
 	}
 
@@ -3109,10 +3109,10 @@ CPhonemeTag *PhonemeEditor::FindPhonemeForTime( float time )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : phoneme - 
-//			startx - 
-//			endx - 
+// Purpose:
+// Input  : phoneme -
+//			startx -
+//			endx -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::FinishPhonemeDrag( int startx, int endx )
 {
@@ -3136,10 +3136,10 @@ void PhonemeEditor::FinishPhonemeDrag( int startx, int endx )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : phoneme - 
-//			startx - 
-//			endx - 
+// Purpose:
+// Input  : phoneme -
+//			startx -
+//			endx -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::FinishPhonemeMove( int startx, int endx )
 {
@@ -3187,8 +3187,8 @@ void PhonemeEditor::FinishPhonemeMove( int startx, int endx )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dirty - 
+// Purpose:
+// Input  : dirty -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::SetDirty( bool dirty, bool clearundo /*=true*/ )
 {
@@ -3204,7 +3204,7 @@ void PhonemeEditor::SetDirty( bool dirty, bool clearundo /*=true*/ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool PhonemeEditor::GetDirty( void )
@@ -3213,7 +3213,7 @@ bool PhonemeEditor::GetDirty( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::EditInsertPhonemeBefore( void )
 {
@@ -3284,7 +3284,7 @@ void PhonemeEditor::EditInsertPhonemeBefore( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::EditInsertPhonemeAfter( void )
 {
@@ -3346,7 +3346,7 @@ void PhonemeEditor::EditInsertPhonemeAfter( void )
 	phoneme.SetStartTime( cp->GetEndTime() );
 	phoneme.m_bSelected = true;
 	cp->m_bSelected = false;
-	
+
 	word->m_Phonemes.InsertAfter( clicked, new CPhonemeTag( phoneme ) );
 
 	PushRedo();
@@ -3356,7 +3356,7 @@ void PhonemeEditor::EditInsertPhonemeAfter( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::EditInsertWordBefore( void )
 {
@@ -3456,7 +3456,7 @@ void PhonemeEditor::EditInsertWordBefore( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::EditInsertWordAfter( void )
 {
@@ -3543,7 +3543,7 @@ void PhonemeEditor::EditInsertWordAfter( void )
 	newword.m_flStartTime	= cw->m_flEndTime;
 	newword.m_bSelected = true;
 	cw->m_bSelected = false;
-	
+
 	CWordTag *w = new CWordTag( newword );
 	Assert( w );
 	if ( w )
@@ -3560,7 +3560,7 @@ void PhonemeEditor::EditInsertWordAfter( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::EditDeletePhoneme( void )
 {
@@ -3601,7 +3601,7 @@ void PhonemeEditor::EditDeletePhoneme( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::EditDeleteWord( void )
 {
@@ -3633,7 +3633,7 @@ void PhonemeEditor::EditDeleteWord( void )
 	redraw();
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::PlayEditedWave( bool selection /* = false */ )
 {
@@ -3750,7 +3750,7 @@ void PhonemeEditor::SentenceFromString( CSentence& sentence, char const *str )
 	char word[ 256 ];
 	unsigned char const *in = (unsigned char *)str;
 	char *out = word;
-	
+
 	while ( *in )
 	{
 		if ( *in > 32 )
@@ -3765,7 +3765,7 @@ void PhonemeEditor::SentenceFromString( CSentence& sentence, char const *str )
 			{
 				in++;
 			}
-			
+
 			if ( strlen( word ) > 0 )
 			{
 				CWordTag *w = new CWordTag( (char *)word );
@@ -3775,11 +3775,11 @@ void PhonemeEditor::SentenceFromString( CSentence& sentence, char const *str )
 					sentence.m_Words.AddToTail( w );
 				}
 			}
-			
+
 			out = word;
 		}
 	}
-	
+
 	*out = 0;
 	if ( strlen( word ) > 0 )
 	{
@@ -3790,12 +3790,12 @@ void PhonemeEditor::SentenceFromString( CSentence& sentence, char const *str )
 			sentence.m_Words.AddToTail( w );
 		}
 	}
-	
+
 	sentence.SetText( str );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::RedoPhonemeExtractionSelected( void )
 {
@@ -3839,7 +3839,7 @@ void PhonemeEditor::RedoPhonemeExtractionSelected( void )
 	CSentence m_Results;
 
 	CountSelected();
-	
+
 	bool usingselection = true;
 
 	if ( m_nSelectedWordCount == 0 )
@@ -3950,7 +3950,7 @@ void PhonemeEditor::RedoPhonemeExtractionSelected( void )
 	char filename[ 512 ];
 	Q_snprintf( filename, sizeof( filename ), "%s%s", m_WorkFile.m_szBasePath, szCroppedFile );
 
-	m_nLastExtractionResult = m_pPhonemeExtractor->Extract( 
+	m_nLastExtractionResult = m_pPhonemeExtractor->Extract(
 		filename,
 		(int)( m_pCroppedWave->GetRunningLength() * m_pCroppedWave->SampleRate() * m_pCroppedWave->TrueSampleSize() ),
 		Con_Printf,
@@ -3973,7 +3973,7 @@ void PhonemeEditor::RedoPhonemeExtractionSelected( void )
 	// Tracker 57389:
 	// Total hack to fix a bug where the Lipsinc extractor is messing up the # channels on 16 bit stereo waves
 	if ( m_pPhonemeExtractor->GetAPIType() == SPEECH_API_LIPSINC &&
-		m_pCroppedWave->IsStereoWav() && 
+		m_pCroppedWave->IsStereoWav() &&
 		m_pCroppedWave->SampleSize() == 16 )
 	{
 		bytespersecond *= 2.0f;
@@ -4071,14 +4071,14 @@ void PhonemeEditor::RedoPhonemeExtractionSelected( void )
 
 		CWordTag *firstWordOfPhrase = m_Results.m_Words[ 0 ];
 		Assert( firstWordOfPhrase );
-		
+
 		for ( ; startWord < m_TagsExt.m_Words.Size(); startWord++ )
 		{
 			CWordTag *w = m_TagsExt.m_Words[ startWord ];
 			Assert( w );
 			if ( !w )
 				continue;
-			
+
 			if ( w->m_flStartTime > firstWordOfPhrase->m_flStartTime + selectionstarttime )
 				break;
 		}
@@ -4137,7 +4137,7 @@ void PhonemeEditor::RedoPhonemeExtraction( void )
 	SaveLinguisticData();
 
 	// Send m_WorkFile.m_szWorkingFile to extractor and retrieve resulting data
-	// 
+	//
 
 	m_TagsExt.Reset();
 
@@ -4146,7 +4146,7 @@ void PhonemeEditor::RedoPhonemeExtraction( void )
 	char filename[ 512 ];
 	Q_snprintf( filename, sizeof( filename ), "%s%s", m_WorkFile.m_szBasePath, m_WorkFile.m_szWorkingFile );
 
-	m_nLastExtractionResult = m_pPhonemeExtractor->Extract( 
+	m_nLastExtractionResult = m_pPhonemeExtractor->Extract(
 		filename,
 		(int)( m_pWaveFile->GetRunningLength() * m_pWaveFile->SampleRate() * m_pWaveFile->TrueSampleSize() ),
 		Con_Printf,
@@ -4185,7 +4185,7 @@ void PhonemeEditor::RedoPhonemeExtraction( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::Deselect( void )
 {
@@ -4223,9 +4223,9 @@ void PhonemeEditor::ITER_SelectSpanningWords( CWordTag *word, float amount )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : start - 
-//			end - 
+// Purpose:
+// Input  : start -
+//			end -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::SelectSamples( int start, int end )
 {
@@ -4324,9 +4324,9 @@ void PhonemeEditor::FinishMoveSelectionEnd( int startx, int mx )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : startx - 
-//			mx - 
+// Purpose:
+// Input  : startx -
+//			mx -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::FinishSelect( int startx, int mx )
 {
@@ -4344,9 +4344,9 @@ void PhonemeEditor::FinishSelect( int startx, int mx )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			my - 
+// Purpose:
+// Input  : mx -
+//			my -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool PhonemeEditor::IsMouseOverSamples( int mx, int my )
@@ -4470,9 +4470,9 @@ int PhonemeEditor::GetSampleForMouse( int mx )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			my - 
+// Purpose:
+// Input  : mx -
+//			my -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool PhonemeEditor::IsMouseOverSelection( int mx, int my )
@@ -4610,8 +4610,8 @@ void PhonemeEditor::OnExport()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : store - 
+// Purpose:
+// Input  : store -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::StoreValveDataChunk( IterateOutputRIFF& store )
 {
@@ -4625,8 +4625,8 @@ void PhonemeEditor::StoreValveDataChunk( IterateOutputRIFF& store )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *tempfile - 
+// Purpose:
+// Input  : *tempfile -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::ExportValveDataChunk( char const *tempfile )
 {
@@ -4657,8 +4657,8 @@ void PhonemeEditor::ExportValveDataChunk( char const *tempfile )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *tempfile - 
+// Purpose:
+// Input  : *tempfile -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::ImportValveDataChunk( char const *tempfile )
 {
@@ -4737,7 +4737,7 @@ void PhonemeEditor::SaveLinguisticData( void )
 		case WAVE_FMT:
 			{
 				formatset = true;
-				
+
 				char *buffer = new char[ walk.ChunkSize() ];
 				Assert( buffer );
 				walk.ChunkRead( buffer );
@@ -4752,10 +4752,10 @@ void PhonemeEditor::SaveLinguisticData( void )
 		case WAVE_DATA:
 			{
 				Assert( formatset );
-				
+
 				char *buffer = new char[ walk.ChunkSize() ];
 				Assert( buffer );
-				
+
 				walk.ChunkRead( buffer );
 				// Resample it
 				ResampleChunk( store, (void *)&format, walk.ChunkName(), buffer, walk.ChunkSize() );
@@ -5126,11 +5126,11 @@ void PhonemeEditor::EditWordList( void )
 	{
 		// First text we've seen, just distribute words evenly
 		CreateEvenWordDistribution( params.m_szInputText );
-	
+
 		// Redo liset
 		RedoPhonemeExtraction();
 	}
-	
+
 	PushRedo();
 
 	SetFocus( (HWND)getHandle() );
@@ -5151,7 +5151,7 @@ void PhonemeEditor::CommitChanges( void )
 	//Open a message box to warn the user if the file was unable to be made non-read only
 	if ( !IsFileWriteable( m_WorkFile.m_szWaveFile ) )
 	{
-		mxMessageBox( NULL, va( "Unable to save file '%s'. File is read-only or in use.",	
+		mxMessageBox( NULL, va( "Unable to save file '%s'. File is read-only or in use.",
 				m_WorkFile.m_szWaveFile ), g_appTitle, MX_MB_OK );
 	}
 	else
@@ -5165,7 +5165,7 @@ void PhonemeEditor::CommitChanges( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::LoadWaveFile( void )
 {
@@ -5202,7 +5202,7 @@ void PhonemeEditor::SnapPhonemes( void )
 		for ( int i = 0; i < word->m_Phonemes.Size(); i++ )
 		{
 			CPhonemeTag *current = word->m_Phonemes[ i ];
-			
+
 			Assert( current );
 
 			if ( current->m_bSelected )
@@ -5292,10 +5292,10 @@ bool PhonemeEditor::IsMouseOverWordRow( int my )
 
 	if ( my < rc.top )
 		return false;
-	
+
 	if ( my > rc.bottom )
 		return false;
-	
+
 	return true;
 }
 
@@ -5310,10 +5310,10 @@ bool PhonemeEditor::IsMouseOverPhonemeRow( int my )
 
 	if ( my < rc.top )
 		return false;
-	
+
 	if ( my > rc.bottom )
 		return false;
-	
+
 	return true;
 }
 
@@ -5360,7 +5360,7 @@ void PhonemeEditor::GetWordRect( const CWordTag *tag, RECT& rc )
 {
 	Assert( tag );
 	GetWordTrayTopBottom( rc );
-	
+
 	rc.left = GetMouseForTime( tag->m_flStartTime );
 	rc.right = GetMouseForTime( tag->m_flEndTime );
 
@@ -5376,7 +5376,7 @@ void PhonemeEditor::GetPhonemeRect( const CPhonemeTag *tag, RECT& rc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::CommitExtracted( void )
 {
@@ -5403,7 +5403,7 @@ void PhonemeEditor::CommitExtracted( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::ClearExtracted( void )
 {
@@ -5418,8 +5418,8 @@ void PhonemeEditor::ClearExtracted( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : resultCode - 
+// Purpose:
+// Input  : resultCode -
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *PhonemeEditor::GetExtractionResultString( int resultCode )
@@ -5442,8 +5442,8 @@ const char *PhonemeEditor::GetExtractionResultString( int resultCode )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
+// Purpose:
+// Input  : mx -
 // Output : CEventRelativeTag
 //-----------------------------------------------------------------------------
 CEventRelativeTag *PhonemeEditor::GetTagUnderMouse( int mx )
@@ -5454,7 +5454,7 @@ CEventRelativeTag *PhonemeEditor::GetTagUnderMouse( int mx )
 	// Figure out tag positions
 	if ( !m_pEvent || !m_pWaveFile )
 		return NULL;
-	
+
 	RECT rc;
 	GetWorkspaceRect( rc );
 	RECT rcTags = rc;
@@ -5474,7 +5474,7 @@ CEventRelativeTag *PhonemeEditor::GetTagUnderMouse( int mx )
 		if ( !tag )
 			continue;
 
-		// 
+		//
 		float tagtime = tag->GetPercentage() * m_pWaveFile->GetRunningLength();
 		if ( tagtime < starttime || tagtime > endtime )
 			continue;
@@ -5490,9 +5490,9 @@ CEventRelativeTag *PhonemeEditor::GetTagUnderMouse( int mx )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			my - 
+// Purpose:
+// Input  : mx -
+//			my -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool PhonemeEditor::IsMouseOverTag( int mx, int my )
@@ -5511,9 +5511,9 @@ bool PhonemeEditor::IsMouseOverTag( int mx, int my )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : startx - 
-//			endx - 
+// Purpose:
+// Input  : startx -
+//			endx -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::FinishEventTagDrag( int startx, int endx )
 {
@@ -5538,7 +5538,7 @@ void PhonemeEditor::FinishEventTagDrag( int startx, int endx )
 
 	float percent = clicktime / m_pWaveFile->GetRunningLength();
 	percent = clamp( percent, 0.0f, 1.0f );
-	
+
 	tag->SetPercentage( percent );
 
 	redraw();
@@ -5550,8 +5550,8 @@ void PhonemeEditor::FinishEventTagDrag( int startx, int endx )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : my - 
+// Purpose:
+// Input  : my -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool PhonemeEditor::IsMouseOverTagRow( int my )
@@ -5566,9 +5566,9 @@ bool PhonemeEditor::IsMouseOverTagRow( int my )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			my - 
+// Purpose:
+// Input  : mx -
+//			my -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::ShowTagMenu( int mx, int my )
 {
@@ -5601,7 +5601,7 @@ void PhonemeEditor::ShowTagMenu( int mx, int my )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::DeleteTag( void )
 {
@@ -5624,7 +5624,7 @@ void PhonemeEditor::DeleteTag( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::AddTag( void )
 {
@@ -5668,7 +5668,7 @@ void PhonemeEditor::AddTag( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::ClearEvent( void )
 {
@@ -5708,8 +5708,8 @@ void PhonemeEditor::TraversePhonemes( PEPHONEMEITERFUNC pfn, float fparam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : amount - 
+// Purpose:
+// Input  : amount -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::ITER_MoveSelectedWords( CWordTag *word, float amount )
 {
@@ -5910,9 +5910,9 @@ void PhonemeEditor::WipeRedo( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : word - 
-//			phoneme - 
+// Purpose:
+// Input  : word -
+//			phoneme -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::SetClickedPhoneme( int word, int phoneme )
 {
@@ -5921,7 +5921,7 @@ void PhonemeEditor::SetClickedPhoneme( int word, int phoneme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CPhonemeTag
 //-----------------------------------------------------------------------------
 CPhonemeTag *PhonemeEditor::GetClickedPhoneme( void )
@@ -5944,7 +5944,7 @@ CPhonemeTag *PhonemeEditor::GetClickedPhoneme( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CWordTag
 //-----------------------------------------------------------------------------
 CWordTag *PhonemeEditor::GetClickedWord( void )
@@ -6040,7 +6040,7 @@ void PhonemeEditor::ShowContextMenu_Phonemes( int mx, int my )
 	// Show hierarchical options menu
 	{
 		mxPopupMenu *api = 0;
-		
+
 		if ( DoesExtractorExistFor( SPEECH_API_SAPI ) )
 		{
 			api = new mxPopupMenu();
@@ -6155,7 +6155,7 @@ void PhonemeEditor::ShiftSelectedPhoneme( int direction )
 	float timeperpixel = ( endtime - starttime ) / (float)( rc.right - rc.left );
 
 	float movetime = timeperpixel * (float)direction;
-	
+
 	float maxmove = ComputeMaxPhonemeShift( direction > 0 ? true : false, false );
 
 	if ( direction > 0 )
@@ -6275,7 +6275,7 @@ void PhonemeEditor::SelectNextPhoneme( int direction )
 			if ( !phoneme->m_bSelected )
 				continue;
 
-			// Deselect this one and move 
+			// Deselect this one and move
 			int nextindex = j + direction;
 			if ( nextindex < 0 )
 			{
@@ -6349,7 +6349,7 @@ void PhonemeEditor::SelectNextWord( int direction )
 			if ( !word->m_bSelected )
 				continue;
 		}
-		else 
+		else
 		{
 			if ( !IsPhonemeSelected( word ) )
 				continue;
@@ -6370,7 +6370,7 @@ void PhonemeEditor::SelectNextWord( int direction )
 			phoneme->m_bSelected = false;
 		}
 
-		// Deselect this one and move 
+		// Deselect this one and move
 		int nextword = i + direction;
 		if ( nextword < 0 )
 		{
@@ -6511,8 +6511,8 @@ void PhonemeEditor::ExtendSelectedWordEndTime( int direction )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *word - 
+// Purpose:
+// Input  : *word -
 // Output : int
 //-----------------------------------------------------------------------------
 int PhonemeEditor::IndexOfWord( CWordTag *word )
@@ -6526,10 +6526,10 @@ int PhonemeEditor::IndexOfWord( CWordTag *word )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : forward - 
-//			*currentWord - 
-//			**nextWord - 
+// Purpose:
+// Input  : forward -
+//			*currentWord -
+//			**nextWord -
 // Output : float
 //-----------------------------------------------------------------------------
 float PhonemeEditor::GetTimeGapToNextWord( bool forward, CWordTag *currentWord, CWordTag **ppNextWord /* = NULL */ )
@@ -6582,20 +6582,20 @@ float PhonemeEditor::GetTimeGapToNextWord( bool forward, CWordTag *currentWord, 
 		return ( currentStart - previousEnd );
 	}
 
-	
+
 	Assert( 0 );
 	return 0.0f;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : forward - 
-//			*currentPhoneme - 
-//			**word - 
-//			**phoneme - 
+// Purpose:
+// Input  : forward -
+//			*currentPhoneme -
+//			**word -
+//			**phoneme -
 // Output : float
 //-----------------------------------------------------------------------------
-float PhonemeEditor::GetTimeGapToNextPhoneme( bool forward, CPhonemeTag *currentPhoneme, 
+float PhonemeEditor::GetTimeGapToNextPhoneme( bool forward, CPhonemeTag *currentPhoneme,
 	CWordTag **ppword /* = NULL */, CPhonemeTag **ppphoneme /* = NULL */ )
 {
 	if ( ppword )
@@ -6777,7 +6777,7 @@ void PhonemeEditor::OnMouseMove( mxEvent *event )
 
 					rcFocus.left = m_nStartX < (short)event->x ? m_nStartX : (short)event->x;
 					rcFocus.right = m_nStartX < (short)event->x ? (short)event->x : m_nStartX;
-					
+
 					rcFocus.top = m_nStartY < (short)event->y ? m_nStartY : (short)event->y;
 					rcFocus.bottom = m_nStartY < (short)event->y ? (short)event->y : m_nStartY;
 
@@ -6903,7 +6903,7 @@ void PhonemeEditor::OnMouseMove( mxEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::EditInsertFirstPhonemeOfWord( void )
 {
@@ -7256,7 +7256,7 @@ void PhonemeEditor::SortWords( bool prepareundo )
 		CWordTag *p1 = m_Tags.m_Words[ i ];
 		if (p1->m_flStartTime > p1->m_flEndTime )
 		{
-			float swap = p1->m_flStartTime;			
+			float swap = p1->m_flStartTime;
 			p1->m_flStartTime = p1->m_flEndTime;
 			p1->m_flEndTime = swap;
 		}
@@ -7309,7 +7309,7 @@ void PhonemeEditor::SortPhonemes( bool prepareundo )
 
 			if (p1->GetStartTime() > p1->GetEndTime() )
 			{
-				float swap = p1->GetStartTime();			
+				float swap = p1->GetStartTime();
 				p1->SetStartTime( p1->GetEndTime() );
 				p1->SetEndTime( swap );
 			}
@@ -7846,8 +7846,8 @@ void PhonemeEditor::ClearUndo( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *tag - 
+// Purpose:
+// Input  : *tag -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::SelectExpression( CPhonemeTag *tag )
 {
@@ -7925,7 +7925,7 @@ void PhonemeEditor::LoadPhonemeConverters()
 	FileFindHandle_t findHandle;
 	const char *pFilename = filesystem->FindFirstEx( "phonemeextractors/*.dll", "EXECUTABLE_PATH", &findHandle );
 	while( pFilename )
-	{	
+	{
 		char fullpath[ 512 ];
 		Q_snprintf( fullpath, sizeof( fullpath ), "phonemeextractors/%s", pFilename );
 
@@ -8017,7 +8017,7 @@ bool PhonemeEditor::CheckSpeechAPI( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *PhonemeEditor::GetSpeechAPIName( void )
@@ -8034,7 +8034,7 @@ char const *PhonemeEditor::GetSpeechAPIName( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool PhonemeEditor::PaintBackground( void )
@@ -8044,7 +8044,7 @@ bool PhonemeEditor::PaintBackground( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : PhonemeEditor::EditorMode
 //-----------------------------------------------------------------------------
 PhonemeEditor::EditorMode PhonemeEditor::GetMode( void ) const
@@ -8053,9 +8053,9 @@ PhonemeEditor::EditorMode PhonemeEditor::GetMode( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rcWorkSpace - 
-//			rcEmphasis - 
+// Purpose:
+// Input  : rcWorkSpace -
+//			rcEmphasis -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::Emphasis_GetRect( RECT const & rcWorkSpace, RECT& rcEmphasis )
 {
@@ -8063,15 +8063,15 @@ void PhonemeEditor::Emphasis_GetRect( RECT const & rcWorkSpace, RECT& rcEmphasis
 
 	int ybottom = rcWorkSpace.bottom - 2 * m_nTickHeight - 2;
 	int workspaceheight = rcWorkSpace.bottom - rcWorkSpace.top;
-	
+
 	// Just past midpoint
 	rcEmphasis.top		= rcWorkSpace.top + workspaceheight / 2 + 2;
-	// 60 units or 
+	// 60 units or
 	rcEmphasis.bottom = clamp( rcEmphasis.top + 60, rcEmphasis.top + 20, ybottom );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::OnModeChanged( void )
 {
@@ -8080,8 +8080,8 @@ void PhonemeEditor::OnModeChanged( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::Emphasis_Init( void )
 {
@@ -8133,7 +8133,7 @@ CEmphasisSample *PhonemeEditor::Emphasis_GetSampleUnderMouse( mxEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::Emphasis_DeselectAll( void )
 {
@@ -8149,7 +8149,7 @@ void PhonemeEditor::Emphasis_DeselectAll( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::Emphasis_SelectAll( void )
 {
@@ -8165,7 +8165,7 @@ void PhonemeEditor::Emphasis_SelectAll( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::Emphasis_Delete( void )
 {
@@ -8193,8 +8193,8 @@ void PhonemeEditor::Emphasis_Delete( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : sample - 
+// Purpose:
+// Input  : sample -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::Emphasis_AddSample( CEmphasisSample const& sample )
 {
@@ -8214,7 +8214,7 @@ void PhonemeEditor::Emphasis_AddSample( CEmphasisSample const& sample )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::Emphasis_CountSelected( void )
 {
@@ -8312,11 +8312,11 @@ void PhonemeEditor::Emphasis_Redraw( CChoreoWidgetDrawHelper& drawHelper, RECT& 
 		int offset = h/3;
 		RECT rcSpot = rcClient;
 		rcSpot.bottom = rcSpot.top + offset;
-		
-		drawHelper.DrawGradientFilledRect( 
-			rcSpot, 
-			PEColor( COLOR_PHONEME_EMPHASIS_BG_STRONG ), 
-			PEColor( COLOR_PHONEME_EMPHASIS_BG ), 
+
+		drawHelper.DrawGradientFilledRect(
+			rcSpot,
+			PEColor( COLOR_PHONEME_EMPHASIS_BG_STRONG ),
+			PEColor( COLOR_PHONEME_EMPHASIS_BG ),
 			true );
 
 		OffsetRect( &rcSpot, 0, offset );
@@ -8325,10 +8325,10 @@ void PhonemeEditor::Emphasis_Redraw( CChoreoWidgetDrawHelper& drawHelper, RECT& 
 
 		OffsetRect( &rcSpot, 0, offset );
 
-		drawHelper.DrawGradientFilledRect( 
-			rcSpot, 
-			PEColor( COLOR_PHONEME_EMPHASIS_BG ), 
-			PEColor( COLOR_PHONEME_EMPHASIS_BG_WEAK ), 
+		drawHelper.DrawGradientFilledRect(
+			rcSpot,
+			PEColor( COLOR_PHONEME_EMPHASIS_BG ),
+			PEColor( COLOR_PHONEME_EMPHASIS_BG_WEAK ),
 			true );
 	}
 
@@ -8372,9 +8372,9 @@ void PhonemeEditor::Emphasis_Redraw( CChoreoWidgetDrawHelper& drawHelper, RECT& 
 
 		// Draw segment
 		drawHelper.DrawColoredLine( lineColor, PS_SOLID, 1,
-			prevx, 
+			prevx,
 			bottom - prev_value * height,
-			x, 
+			x,
 			bottom - value * height );
 
 		prev_t = t;
@@ -8400,9 +8400,9 @@ void PhonemeEditor::Emphasis_Redraw( CChoreoWidgetDrawHelper& drawHelper, RECT& 
 		COLORREF clr = dotColor;
 		COLORREF clrSelected = dotColorSelected;
 
-		drawHelper.DrawCircle( 
-			start->selected ? clrSelected : clr, 
-			x, y, 
+		drawHelper.DrawCircle(
+			start->selected ? clrSelected : clr,
+			x, y,
 			start->selected ? dotSizeSelected : dotsize,
 			true );
 
@@ -8410,7 +8410,7 @@ void PhonemeEditor::Emphasis_Redraw( CChoreoWidgetDrawHelper& drawHelper, RECT& 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool PhonemeEditor::Emphasis_IsValid( void )
@@ -8422,7 +8422,7 @@ bool PhonemeEditor::Emphasis_IsValid( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PhonemeEditor::Emphasis_SelectPoints( void )
 {
@@ -8435,7 +8435,7 @@ void PhonemeEditor::Emphasis_SelectPoints( void )
 	Emphasis_GetRect( rcWork, rcEmphasis );
 
 	RECT rcSelection;
-	
+
 	rcSelection.left = m_nStartX < m_nLastX ? m_nStartX : m_nLastX;
 	rcSelection.right = m_nStartX < m_nLastX ? m_nLastX : m_nStartX;
 
@@ -8471,7 +8471,7 @@ void PhonemeEditor::Emphasis_SelectPoints( void )
 	for ( int i = 0; i < m_Tags.GetNumSamples(); i++ )
 	{
 		CEmphasisSample *sample = m_Tags.GetSample( i );
-		
+
 		if ( sample->time + eps < fleft )
 			continue;
 
@@ -8491,8 +8491,8 @@ void PhonemeEditor::Emphasis_SelectPoints( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rcHandle - 
+// Purpose:
+// Input  : rcHandle -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::GetScrubHandleRect( RECT& rcHandle, bool clipped )
 {
@@ -8521,8 +8521,8 @@ void PhonemeEditor::GetScrubHandleRect( RECT& rcHandle, bool clipped )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rcArea - 
+// Purpose:
+// Input  : rcArea -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::GetScrubAreaRect( RECT& rcArea )
 {
@@ -8545,9 +8545,9 @@ void PhonemeEditor::DrawScrubHandle()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : drawHelper - 
-//			rcHandle - 
+// Purpose:
+// Input  : drawHelper -
+//			rcHandle -
 //-----------------------------------------------------------------------------
 void PhonemeEditor::DrawScrubHandle( CChoreoWidgetDrawHelper& drawHelper )
 {
@@ -8565,7 +8565,7 @@ void PhonemeEditor::DrawScrubHandle( CChoreoWidgetDrawHelper& drawHelper )
 
 	drawHelper.DrawFilledRect( br, rcHandle );
 
-	// 
+	//
 	char sz[ 32 ];
 	sprintf( sz, "%.3f", m_flScrub );
 
@@ -8582,8 +8582,8 @@ void PhonemeEditor::DrawScrubHandle( CChoreoWidgetDrawHelper& drawHelper )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool PhonemeEditor::IsMouseOverScrubHandle( mxEvent *event )
@@ -8792,8 +8792,3 @@ void PhonemeEditor::Play()
 {
 	PlayEditedWave( m_bSelectionActive );
 }
-
-
-
-
-

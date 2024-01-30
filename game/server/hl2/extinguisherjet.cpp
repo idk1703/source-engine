@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -29,7 +29,7 @@ BEGIN_DATADESC( CExtinguisherJet )
 
 	//Regular fields
 	DEFINE_FIELD( m_bEmit,		FIELD_BOOLEAN ),
-	
+
 	DEFINE_KEYFIELD( m_bEnabled,	FIELD_BOOLEAN, "enabled" ),
 	DEFINE_KEYFIELD( m_nLength,	FIELD_INTEGER, "length" ),
 	DEFINE_KEYFIELD( m_nSize,		FIELD_INTEGER, "size" ),
@@ -69,7 +69,7 @@ CExtinguisherJet::CExtinguisherJet( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExtinguisherJet::Spawn( void )
 {
@@ -90,7 +90,7 @@ void CExtinguisherJet::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExtinguisherJet::TurnOn( void )
 {
@@ -100,13 +100,13 @@ void CExtinguisherJet::TurnOn( void )
 		EmitSound( "ExtinguisherJet.TurnOn" );
 		m_bEnabled = m_bEmit = true;
 	}
-	
+
 	SetThink( ExtinguishThink );
 	SetNextThink( gpGlobals->curtime + 0.1f );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExtinguisherJet::TurnOff( void )
 {
@@ -116,13 +116,13 @@ void CExtinguisherJet::TurnOff( void )
 		EmitSound( "ExtinguisherJet.TurnOff" );
 		m_bEnabled = m_bEmit = false;
 	}
-	
+
 	SetThink( NULL );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CExtinguisherJet::InputEnable( inputdata_t &inputdata )
 {
@@ -130,8 +130,8 @@ void CExtinguisherJet::InputEnable( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CExtinguisherJet::InputDisable( inputdata_t &inputdata )
 {
@@ -139,8 +139,8 @@ void CExtinguisherJet::InputDisable( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CExtinguisherJet::InputToggle( inputdata_t &inputdata )
 {
@@ -155,7 +155,7 @@ void CExtinguisherJet::InputToggle( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExtinguisherJet::Think( void )
 {
@@ -163,7 +163,7 @@ void CExtinguisherJet::Think( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CExtinguisherJet::ExtinguishThink( void )
 {
@@ -179,7 +179,7 @@ void CExtinguisherJet::ExtinguishThink( void )
 	Vector	vForward, vRight, vUp;
 
 	AngleVectors( GetAbsAngles(), &vForward );
-	
+
 	vTestPos = GetAbsOrigin() + ( vForward * m_nLength );
 
 	trace_t	tr;
@@ -194,7 +194,7 @@ void CExtinguisherJet::ExtinguishThink( void )
 		int	radius = m_nRadius;
 
 		NDebugOverlay::Line( GetAbsOrigin(), tr.endpos, 0, 0, 128, false, 0.1f );
-		
+
 		NDebugOverlay::Box( GetAbsOrigin(), Vector(-1, -1, -1), Vector(1, 1, 1), 0, 0, 128, false, 0.1f );
 		NDebugOverlay::Box( tr.endpos, Vector(-2, -2, -2), Vector(2, 2, 2), 0, 0, 128, false, 0.1f );
 		NDebugOverlay::Box( tr.endpos, Vector(-radius, -radius, -radius), Vector(radius, radius, radius), 0, 0, 255, false, 0.1f );

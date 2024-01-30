@@ -57,9 +57,9 @@ CSteamID SteamIDFromDecimalString( const char *pszUint64InDecimal )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CBaseLobbyContainerFrame::CBaseLobbyContainerFrame( const char* pszPanelName ) 
+CBaseLobbyContainerFrame::CBaseLobbyContainerFrame( const char* pszPanelName )
 	: vgui::PropertyDialog( NULL, pszPanelName )
 	, m_bNextButtonEnabled( false )
 	, m_pContextMenu( NULL )
@@ -82,14 +82,14 @@ CBaseLobbyContainerFrame::CBaseLobbyContainerFrame( const char* pszPanelName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseLobbyContainerFrame::~CBaseLobbyContainerFrame( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -107,14 +107,14 @@ void CBaseLobbyContainerFrame::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::ShowPanel(bool bShow)
 {
 	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
 
 	// Keep the MM dashboard on top of us
-	bShow ? GetMMDashboardParentManager()->PushModalFullscreenPopup( this ) 
+	bShow ? GetMMDashboardParentManager()->PushModalFullscreenPopup( this )
 		  : GetMMDashboardParentManager()->PopModalFullscreenPopup( this );
 
 	m_pContents->SetControlVisible( "PartyActiveGroupBox", false );
@@ -166,7 +166,7 @@ void CBaseLobbyContainerFrame::ShowPanel(bool bShow)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::SetNextButtonEnabled( bool bValue )
 {
@@ -175,7 +175,7 @@ void CBaseLobbyContainerFrame::SetNextButtonEnabled( bool bValue )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::OnThink()
 {
@@ -194,7 +194,7 @@ void CBaseLobbyContainerFrame::OnThink()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::FireGameEvent( IGameEvent *event )
 {
@@ -217,7 +217,7 @@ void CBaseLobbyContainerFrame::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::StartSearch( void )
 {
@@ -243,7 +243,7 @@ void CBaseLobbyContainerFrame::StartSearch( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::OnCommand( const char *command )
 {
@@ -296,9 +296,9 @@ void CBaseLobbyContainerFrame::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLobbyContainerFrame::PerformLayout( void ) 
+void CBaseLobbyContainerFrame::PerformLayout( void )
 {
 	if ( GetVParent() )
 	{
@@ -311,7 +311,7 @@ void CBaseLobbyContainerFrame::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static void LeaveSearch( bool bConfirmed, void *pContext )
 {
@@ -335,7 +335,7 @@ static void LeaveSearch( bool bConfirmed, void *pContext )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::OnKeyCodeTyped(vgui::KeyCode code)
 {
@@ -364,7 +364,7 @@ void CBaseLobbyContainerFrame::OnKeyCodeTyped(vgui::KeyCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::OnKeyCodePressed(vgui::KeyCode code)
 {
@@ -385,7 +385,7 @@ void CBaseLobbyContainerFrame::OnKeyCodePressed(vgui::KeyCode code)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::WriteControls()
 {
@@ -408,7 +408,7 @@ void CBaseLobbyContainerFrame::WriteControls()
 		( GTFGCClientSystem()->GetParty() && GTFGCClientSystem()->GetParty()->BOffline() ) )
 	{
 		bNoGC = true;
-	}	
+	}
 
 	SetControlVisible( "PlayWithFriendsExplanation", !bNoGC && ShouldShowPartyButton(), true );
 	SetControlVisible( "RankPanel", !bNoGC, true );
@@ -567,11 +567,11 @@ void CBaseLobbyContainerFrame::HandleBackPressed()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseLobbyContainerFrame::ShouldShowPartyButton() const
 {
-	return !m_pContents->IsPartyActiveGroupBoxVisible() && 
+	return !m_pContents->IsPartyActiveGroupBoxVisible() &&
 			GTFGCClientSystem()->GetWizardStep() != TF_Matchmaking_WizardStep_SEARCHING &&
 			GCClientSystem()->BConnectedtoGC() &&
 			BIsPartyLeader();
@@ -579,7 +579,7 @@ bool CBaseLobbyContainerFrame::ShouldShowPartyButton() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::OpenOptionsContextMenu()
 {
@@ -621,7 +621,7 @@ void CBaseLobbyContainerFrame::OpenOptionsContextMenu()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::OpenPingOptions()
 {

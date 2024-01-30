@@ -121,25 +121,25 @@ bool CHLTVClient::ProcessVoiceData(CLC_VoiceData *msg)
 
 void CHLTVClient::ConnectionClosing(const char *reason)
 {
-	Disconnect ( (reason!=NULL)?reason:"Connection closing" );	
+	Disconnect ( (reason!=NULL)?reason:"Connection closing" );
 }
 
 void CHLTVClient::ConnectionCrashed(const char *reason)
 {
 	DebuggerBreakIfDebugging_StagingOnly();
 
-	Disconnect ( (reason!=NULL)?reason:"Connection lost" );	
+	Disconnect ( (reason!=NULL)?reason:"Connection lost" );
 }
 
 void CHLTVClient::PacketStart(int incoming_sequence, int outgoing_acknowledged)
 {
 	// During connection, only respond if client sends a packet
-	m_bReceivedPacket = true; 
+	m_bReceivedPacket = true;
 }
 
 void CHLTVClient::PacketEnd()
 {
-	
+
 }
 
 void CHLTVClient::FileRequested(const char *fileName, unsigned int transferID )
@@ -183,14 +183,14 @@ bool CHLTVClient::ExecuteStringCommand( const char *pCommandString )
 
 	const char *cmd = args[ 0 ];
 
-	if ( !Q_stricmp( cmd, "spec_next" ) || 
+	if ( !Q_stricmp( cmd, "spec_next" ) ||
 		 !Q_stricmp( cmd, "spec_prev" ) ||
 		 !Q_stricmp( cmd, "spec_mode" ) )
 	{
 		ClientPrintf("Camera settings can't be changed during a live broadcast.\n");
 		return true;
 	}
-	
+
 	if ( !Q_stricmp( cmd, "say" ) && args.ArgC() > 1 )
 	{
 		// if tv_chattimelimit = 0, chat is turned off
@@ -205,9 +205,9 @@ bool CHLTVClient::ExecuteStringCommand( const char *pCommandString )
 		char chattext[128];
 
 		Q_snprintf( chattext, sizeof(chattext), "%s : %s", GetClientName(), args[1]  );
-		
+
 		m_pHLTV->BroadcastLocalChat( chattext, m_szChatGroup );
-		
+
 		return true;
 	}
 	else if ( !Q_strcmp( cmd, "tv_chatgroup" )  )
@@ -227,10 +227,10 @@ bool CHLTVClient::ExecuteStringCommand( const char *pCommandString )
 		int		slots, proxies,	clients;
 		char	gd[MAX_OSPATH];
 		Q_FileBase( com_gamedir, gd, sizeof( gd ) );
-		
+
 		if ( m_pHLTV->IsMasterProxy() )
 		{
-			ClientPrintf("SourceTV Master \"%s\", delay %.0f\n", 
+			ClientPrintf("SourceTV Master \"%s\", delay %.0f\n",
 				m_pHLTV->GetName(),	m_pHLTV->GetDirector()->GetDelay() );
 		}
 		else // if ( m_Server->IsRelayProxy() )
@@ -259,12 +259,12 @@ bool CHLTVClient::ExecuteStringCommand( const char *pCommandString )
 			gd, m_pHLTV->GetMapName(), m_pHLTV->GetNumPlayers() );
 		m_pHLTV->GetLocalStats( proxies, slots, clients );
 
-		ClientPrintf("Local Slots %i, Spectators %i, Proxies %i\n", 
+		ClientPrintf("Local Slots %i, Spectators %i, Proxies %i\n",
 			slots, clients-proxies, proxies );
 
 		m_pHLTV->GetGlobalStats( proxies, slots, clients);
 
-		ClientPrintf("Total Slots %i, Spectators %i, Proxies %i\n", 
+		ClientPrintf("Total Slots %i, Spectators %i, Proxies %i\n",
 			slots, clients-proxies, proxies);
 	}
 	else
@@ -320,7 +320,7 @@ void CHLTVClient::SpawnPlayer( void )
 
 	SendNetMsg( setView );
 
-	m_pHLTV->BroadcastLocalTitle( this ); 
+	m_pHLTV->BroadcastLocalTitle( this );
 
 	m_flLastChatTime = net_time;
 
@@ -361,7 +361,7 @@ bool CHLTVClient::ProcessSetConVar(NET_SetConVar *msg)
 	// if this is the first time we get user settings, check password etc
 	if ( m_nSignonState == SIGNONSTATE_CONNECTED )
 	{
-		const char *checkpwd = NULL; 
+		const char *checkpwd = NULL;
 
 		m_bIsHLTV = m_ConVars->GetInt( "tv_relay", 0 ) != 0;
 
@@ -392,7 +392,7 @@ bool CHLTVClient::ProcessSetConVar(NET_SetConVar *msg)
 
 			if ( checkpwd )
 			{
-	
+
 				if ( Q_stricmp( m_szPassword, checkpwd ) )
 				{
 					Disconnect("Bad spectator password");
@@ -417,7 +417,7 @@ void CHLTVClient::UpdateUserSettings()
 {
 	// set voice loopback
 	m_bNoChat = m_ConVars->GetInt( "tv_nochat", 0 ) != 0;
-	
+
 	CBaseClient::UpdateUserSettings();
 }
 
@@ -434,7 +434,7 @@ void CHLTVClient::SendSnapshot( CClientFrame * pFrame )
 	if ( m_pLastSnapshot == pFrame->GetSnapshot() )
 	{
 		// never send the same snapshot twice
-		m_NetChannel->Transmit();	
+		m_NetChannel->Transmit();
 		return;
 	}
 
@@ -442,7 +442,7 @@ void CHLTVClient::SendSnapshot( CClientFrame * pFrame )
 	{
 		// just continue transmitting reliable data
 		Assert( !m_bFakePlayer );	// Should never happen
-		m_NetChannel->Transmit();	
+		m_NetChannel->Transmit();
 		return;
 	}
 
@@ -458,8 +458,8 @@ void CHLTVClient::SendSnapshot( CClientFrame * pFrame )
 	// add all reliable messages between ]lastframe,currentframe]
 	// add all tempent & sound messages between ]lastframe,currentframe]
 	while ( pLastFrame && pLastFrame->tick_count <= pFrame->tick_count )
-	{	
-		m_NetChannel->SendData( pLastFrame->m_Messages[HLTV_BUFFER_RELIABLE], true );	
+	{
+		m_NetChannel->SendData( pLastFrame->m_Messages[HLTV_BUFFER_RELIABLE], true );
 
 		if ( pDeltaFrame )
 		{

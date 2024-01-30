@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -225,7 +225,7 @@ static void ColorizeText( CEconNotification *pNotification, CExLabel *pControl, 
 				break;
 			case COLOR_ACHIEVEMENT:
 				{
-					vgui::IScheme *pSourceScheme = vgui::scheme()->GetIScheme( vgui::scheme()->GetScheme( "SourceScheme" ) ); 
+					vgui::IScheme *pSourceScheme = vgui::scheme()->GetIScheme( vgui::scheme()->GetScheme( "SourceScheme" ) );
 					if ( pSourceScheme )
 					{
 						newColor = pSourceScheme->GetColor( "SteamLightGreen", pControl->GetBgColor() );
@@ -401,7 +401,7 @@ void CGenericNotificationToast::PerformLayout()
 
 class CNotificationToastControl : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CNotificationToastControl, vgui::EditablePanel );	
+	DECLARE_CLASS_SIMPLE( CNotificationToastControl, vgui::EditablePanel );
 public:
 	CNotificationToastControl( vgui::EditablePanel *pParent, vgui::EditablePanel *pNotificationToast, int iNotificationID, bool bAddControls )
 		: BaseClass( pParent, bAddControls ? "NotificationToastControl" : "NotificationToastContainer" )
@@ -576,7 +576,7 @@ public:
 					pszText = g_pVGuiLocalize->Find( pszTextKey );
 				}
 				if ( pszText )
-				{					
+				{
 					wchar_t wzFinal[512] = L"";
 					if ( ::input->IsSteamControllerActive() )
 					{
@@ -613,7 +613,7 @@ public:
 	virtual void OnCommand( const char *command )
 	{
 		CEconNotification *pNotification = g_notificationQueue.GetNotification( m_iNotificationID );
-		
+
 		if ( pNotification != NULL )
 		{
 			if ( !Q_strncmp( command, "delete", ARRAYSIZE( "delete" ) ) )
@@ -645,9 +645,9 @@ public:
 		}
 	}
 
-	int GetOverrideHeight() const 
+	int GetOverrideHeight() const
 	{
-		return m_iOverrideHeight; 
+		return m_iOverrideHeight;
 	}
 
 	void SetOverrideHeight( int iHeight )
@@ -683,7 +683,7 @@ class CNotificationQueuePanel : public CHudElement, public vgui::EditablePanel
 {
 	DECLARE_CLASS_SIMPLE( CNotificationQueuePanel, vgui::EditablePanel );
 public:
-	CNotificationQueuePanel( const char *pElementName ) 
+	CNotificationQueuePanel( const char *pElementName )
 		: CHudElement( pElementName )
 		, BaseClass( NULL, "NotificationQueuePanel" )
 		, m_mapNotificationPanels( DefLessFunc(int) )
@@ -722,7 +722,7 @@ public:
 		{
 			return false;
 		}
-		
+
 		return m_mapNotificationPanels.Count() > 0 || g_notificationQueue.HasItems();
 	}
 
@@ -817,7 +817,7 @@ public:
 	virtual void OnThink()
 	{
 		BaseClass::OnThink();
-		
+
 		if ( IsVisible() == false )
 		{
 			return;
@@ -1079,7 +1079,7 @@ class CMainMenuNotificationsControl : public vgui::EditablePanel
 {
 	DECLARE_CLASS_SIMPLE( CMainMenuNotificationsControl, vgui::EditablePanel );
 public:
-	CMainMenuNotificationsControl( vgui::EditablePanel *pParent, const char *pElementName ) 
+	CMainMenuNotificationsControl( vgui::EditablePanel *pParent, const char *pElementName )
 		: BaseClass( pParent, pElementName )
 		, m_mapNotificationPanels( DefLessFunc(int) )
 		, m_iNumItems( 0 )
@@ -1117,7 +1117,7 @@ public:
 				int iPanelX;
 				int iPanelY;
 				int iWidth;
-				int iHeight;				
+				int iHeight;
 				pPanel->GetBounds( iPanelX, iPanelY, iWidth, iHeight );
 				int iNewPosX = iPanelX;
 				int iNewPosY = iTotalHeight;
@@ -1146,7 +1146,7 @@ public:
 	virtual void OnThink()
 	{
 		BaseClass::OnThink();
-		
+
 		if ( IsVisible() == false )
 		{
 			return;
@@ -1224,7 +1224,7 @@ public:
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
 	{
 		BaseClass::ApplySchemeSettings( pScheme );
-		
+
 		LoadControlSettings( "Resource/UI/Econ/NotificationsPresentPanel.res" );
 
 		for ( int i = 0; i < GetChildCount(); i++ )
@@ -1233,7 +1233,7 @@ public:
 			pChild->SetMouseInputEnabled( false );
 		}
 	}
-	
+
 	virtual void OnMousePressed(vgui::MouseCode code)
 	{
 		if ( code != MOUSE_LEFT )

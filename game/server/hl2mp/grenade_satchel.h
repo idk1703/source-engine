@@ -30,7 +30,7 @@ public:
 	void			BounceSound( void );
 	void			SatchelTouch( CBaseEntity *pOther );
 	void			SatchelThink( void );
-	
+
 	// Input handlers
 	void			InputExplode( inputdata_t &inputdata );
 

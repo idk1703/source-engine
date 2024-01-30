@@ -31,7 +31,7 @@ BEGIN_PREDICTION_DATA( C_ResourceZone )
 END_PREDICTION_DATA();
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ResourceZone::C_ResourceZone()
 {
@@ -39,7 +39,7 @@ C_ResourceZone::C_ResourceZone()
 }
 
 //-----------------------------------------------------------------------------
-// Add, remove object from the panel 
+// Add, remove object from the panel
 //-----------------------------------------------------------------------------
 void C_ResourceZone::SetDormant( bool bDormant )
 {
@@ -49,7 +49,7 @@ void C_ResourceZone::SetDormant( bool bDormant )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ResourceZone::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -70,7 +70,7 @@ void C_ResourceZone::OnDataChanged( DataUpdateType_t updateType )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *C_ResourceZone::GetTargetDescription( void ) const
 {
@@ -86,14 +86,14 @@ IMPLEMENT_CLIENTCLASS_DT(C_ResourceSpawner, DT_ResourceSpawner, CResourceSpawner
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ResourceSpawner::C_ResourceSpawner( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ResourceSpawner::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -122,7 +122,7 @@ void C_ResourceSpawner::ReceiveMessage( int classID, bf_read &msg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_ResourceSpawner::ClientThink( void )
 {

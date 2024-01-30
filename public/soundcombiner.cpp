@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -115,7 +115,7 @@ bool CSoundCombiner::CreateWorkList( IFileSystem *pFilesystem, CUtlVector< Combi
 				fullpath, i );
 			return false;
 		}
-		
+
 		workitem->entry = &info[ i ];
 
 		m_Work.AddToTail( workitem );
@@ -179,7 +179,7 @@ unsigned int CSoundCombiner::ComputeChecksum()
 {
 	CRC32_t crc;
 	CRC32_Init( &crc );
-	
+
 	int c = m_Work.Count();
 	for ( int i = 0; i < c; ++i )
 	{
@@ -361,8 +361,8 @@ static StdIOWriteBinary io_out;
 #define WAVE_CUE			MAKEID('c','u','e',' ')
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &walk - 
+// Purpose:
+// Input  : &walk -
 //-----------------------------------------------------------------------------
 void CSoundCombiner::ParseSentence( CSentence& sentence, IterateRIFF &walk )
 {
@@ -416,8 +416,8 @@ bool CSoundCombiner::LoadSentenceFromWavFile( char const *wavfile, CSentence& se
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : store - 
+// Purpose:
+// Input  : store -
 //-----------------------------------------------------------------------------
 void CSoundCombiner::StoreValveDataChunk( CSentence& sentence )
 {
@@ -448,7 +448,7 @@ bool CSoundCombiner::SaveSentenceToWavFile( char const *wavfile, CSentence& sent
 		Msg( "%s is not writable, can't save sentence data to file\n", wavfile );
 		return false;
 	}
-	
+
 	// Rename original wavfile to temp
 	filesystem->RenameFile( wavfile, tempfile, NULL );
 
@@ -588,7 +588,7 @@ bool CSoundCombiner::LoadSpliceAudioSources()
 			Warning( "CSoundCombiner::LoadSpliceAudioSources  CreateMixer failed '%s'\n", item->entry->wavefile );
 			return false;
 		}
-		
+
 		item->wave	= wave;
 		item->mixer = pMixer;
 		item->duration = wave->GetRunningLength();

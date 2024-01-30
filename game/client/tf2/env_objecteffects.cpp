@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -10,7 +10,7 @@
 #include "env_objecteffects.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSmokeParticles::Setup( const Vector &origin, const Vector *direction, float angularSpread, float minSpeed, float maxSpeed, float gravity, float dampen, int flags )
 {
@@ -68,7 +68,7 @@ void CObjectSmokeParticles::RenderParticles( CParticleRenderIterator *pIterator 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectFireParticles::Setup( const Vector &origin, const Vector *direction, float angularSpread, float minSpeed, float maxSpeed, float gravity, float dampen, int flags )
 {
@@ -133,5 +133,3 @@ void CObjectFireParticles::RenderParticles( CParticleRenderIterator *pIterator )
 		pParticle = (const ObjectFireParticle *)pIterator->GetNext( sortKey );
 	}
 }
-
-

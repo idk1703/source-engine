@@ -31,7 +31,7 @@ LINK_ENTITY_TO_CLASS( my_model_entity, CMyModelEntity );
 
 // Start of our data description for the class
 BEGIN_DATADESC( CMyModelEntity )
-	
+
 	// Save/restore our active state
 	DEFINE_FIELD( m_bActive, FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_flNextChangeTime, FIELD_TIME ),
@@ -106,7 +106,7 @@ void CMyModelEntity::InputToggle( inputdata_t &inputData )
 		// Start thinking
 		SetThink( &CMyModelEntity::MoveThink );
 		SetNextThink( gpGlobals->curtime + 0.05f );
-		
+
 		// Start flying
 		SetMoveType( MOVETYPE_FLY );
 
@@ -118,11 +118,11 @@ void CMyModelEntity::InputToggle( inputdata_t &inputData )
 	{
 		// Stop thinking
 		SetThink( NULL );
-		
+
 		// Stop moving
 		SetAbsVelocity( vec3_origin );
 		SetMoveType( MOVETYPE_NONE );
-		
+
 		m_bActive = false;
 	}
 }

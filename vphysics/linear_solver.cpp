@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -14,7 +14,7 @@
 
 // BUGBUG: Remove/tune this number somehow!!!
 #define DET_EPSILON		1e-6f
-	
+
 
 // assumes square matrix!
 // ONLY SUPPORTS 2x2, 3x3, and 4x4
@@ -44,7 +44,7 @@ float Det( float *matrix, int rows )
 		int out = 0;
 		for ( int j = 1; j < 4; j++ )
 		{
-			// iterate each column and 
+			// iterate each column and
 			for ( int k = 0; k < 4; k++ )
 			{
 				if ( k == i )
@@ -99,7 +99,7 @@ float *SolveCramer( const float *matrix, int rows, int columns )
 	{
 		// copy the square matrix
 		memcpy( tmpSub, tmpMain, sizeof(float)*rows*rows );
-		
+
 		// copy the column of constants over the row
 		for ( j = 0; j < rows; j++ )
 		{

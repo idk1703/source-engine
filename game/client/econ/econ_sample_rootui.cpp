@@ -63,14 +63,14 @@ CEconSampleRootUI::CEconSampleRootUI( vgui::Panel *parent ) : vgui::Frame(parent
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEconSampleRootUI::~CEconSampleRootUI()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconSampleRootUI::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -80,9 +80,9 @@ void CEconSampleRootUI::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEconSampleRootUI::PerformLayout( void ) 
+void CEconSampleRootUI::PerformLayout( void )
 {
 	if ( GetVParent() )
 	{
@@ -95,7 +95,7 @@ void CEconSampleRootUI::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconSampleRootUI::ShowPanel(bool bShow)
 {
@@ -113,7 +113,7 @@ void CEconSampleRootUI::ShowPanel(bool bShow)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconSampleRootUI::FireGameEvent( IGameEvent *event )
 {
@@ -133,7 +133,7 @@ void CEconSampleRootUI::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconSampleRootUI::OnCommand( const char *command )
 {
@@ -151,7 +151,7 @@ void CEconSampleRootUI::OnCommand( const char *command )
 				// We need to do this to catch players who used the "Change Loadout" button in the pickup panel, and may be out of room.
 				bClose = !InventoryManager()->CheckForRoomAndForceDiscard();
 			}
-			
+
 			if ( bClose )
 			{
 				engine->ClientCmd_Unrestricted( "gameui_hide" );
@@ -184,7 +184,7 @@ void CEconSampleRootUI::OnCommand( const char *command )
 	}
 	else if ( !Q_strnicmp( command, "store", 5 ) )
 	{
-		EconUI()->OpenStorePanel( 0, false );	
+		EconUI()->OpenStorePanel( 0, false );
 	}
 	else if ( !Q_strnicmp( command, "trading", 7 ) )
 	{
@@ -205,7 +205,7 @@ void CEconSampleRootUI::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconSampleRootUI::OnKeyCodeTyped(vgui::KeyCode code)
 {
@@ -223,7 +223,7 @@ void CEconSampleRootUI::OnKeyCodeTyped(vgui::KeyCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 IEconRootUI	*CEconSampleRootUI::OpenEconUI( int iDirectToPage, bool bCheckForInventorySpaceOnExit )
 {
@@ -246,7 +246,7 @@ IEconRootUI	*CEconSampleRootUI::OpenEconUI( int iDirectToPage, bool bCheckForInv
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconSampleRootUI::CloseEconUI( void )
 {
@@ -257,7 +257,7 @@ void CEconSampleRootUI::CloseEconUI( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CEconSampleRootUI::IsUIPanelVisible( EconBaseUIPanels_t iPanel )
 {
@@ -293,7 +293,7 @@ bool CEconSampleRootUI::IsUIPanelVisible( EconBaseUIPanels_t iPanel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconSampleRootUI::OpenSubPanel( EconBaseUIPanels_t nPanel )
 {
@@ -302,14 +302,14 @@ void CEconSampleRootUI::OpenSubPanel( EconBaseUIPanels_t nPanel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconSampleRootUI::OpenTradingStartDialog( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconSampleRootUI::UpdateSubPanelVisibility( void )
 {
@@ -328,7 +328,7 @@ static vgui::DHANDLE<CItemPickupPanel> g_ItemPickupPanel;
 static vgui::DHANDLE<CItemDiscardPanel> g_ItemDiscardPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemPickupPanel *CEconSampleRootUI::OpenItemPickupPanel( void )
 {
@@ -345,7 +345,7 @@ CItemPickupPanel *CEconSampleRootUI::OpenItemPickupPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemDiscardPanel *CEconSampleRootUI::OpenItemDiscardPanel( void )
 {
@@ -364,7 +364,7 @@ CItemDiscardPanel *CEconSampleRootUI::OpenItemDiscardPanel( void )
 static vgui::DHANDLE<CStorePanel> g_StorePanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEconSampleRootUI::CreateStorePanel( void )
 {
@@ -379,7 +379,7 @@ void CEconSampleRootUI::CreateStorePanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStorePanel	*CEconSampleRootUI::OpenStorePanel( int iItemDef, bool bAddToCart )
 {
@@ -421,16 +421,16 @@ CStorePanel	*CEconSampleRootUI::OpenStorePanel( int iItemDef, bool bAddToCart )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStorePanel	*CEconSampleRootUI::GetStorePanel( void )
 {
-	return g_StorePanel;	
+	return g_StorePanel;
 }
 
 #ifdef _DEBUG
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Open_EconUI( const CCommand &args )
 {
@@ -439,20 +439,20 @@ void Open_EconUI( const CCommand &args )
 ConCommand open_econui( "open_econui", Open_EconUI );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Open_EconUIBackpack( const CCommand &args )
 {
-	EconUI()->OpenEconUI( ECONUI_BACKPACK );	
+	EconUI()->OpenEconUI( ECONUI_BACKPACK );
 }
 ConCommand open_econui_backpack( "open_econui_backpack", Open_EconUIBackpack, "Open the backpack.", FCVAR_NONE );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Open_EconUICrafting( const CCommand &args )
 {
-	EconUI()->OpenEconUI( ECONUI_CRAFTING );	
+	EconUI()->OpenEconUI( ECONUI_CRAFTING );
 }
 ConCommand open_econui_crafting( "open_econui_crafting", Open_EconUICrafting, "Open the crafting screen.", FCVAR_NONE );
 #endif // _DEBUG

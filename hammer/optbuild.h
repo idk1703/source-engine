@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #if !defined(AFX_OPTBUILD_H__33E3A4A0_933D_11D1_8C08_444553540000__INCLUDED_)

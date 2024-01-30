@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,7 +16,7 @@
 
 //--------------------------------------------------------------------------------------------------------------
 /**
- * Compute travel distance along shortest path from startPos to goalPos. 
+ * Compute travel distance along shortest path from startPos to goalPos.
  * Return -1 if can't reach endPos from goalPos.
  */
 template< typename CostFunctor >

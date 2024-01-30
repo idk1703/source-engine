@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,7 +18,7 @@ class CDedicatedAppSystemGroup;
 abstract_class ISys
 {
 public:
-	virtual				~ISys( void ) { } 
+	virtual				~ISys( void ) { }
 
 	virtual bool		LoadModules( CDedicatedAppSystemGroup *pAppSystemGroup ) = 0;
 

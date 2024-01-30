@@ -28,7 +28,7 @@ public:
 	virtual void Update( void );						// update internal state
 
 	virtual void Approach( const Vector &pos, float goalWeight = 1.0f );	// move directly towards the given position
-	virtual void DriveTo( const Vector &pos );			// Move the bot to the precise given position immediately, 
+	virtual void DriveTo( const Vector &pos );			// Move the bot to the precise given position immediately,
 
 	//
 	// ILocomotion modifiers
@@ -46,8 +46,8 @@ public:
 	virtual bool IsRunning( void ) const;
 	virtual void SetDesiredSpeed( float speed );			// set desired speed for locomotor movement
 	virtual float GetDesiredSpeed( void ) const;			// returns the current desired speed
-	virtual void SetMinimumSpeedLimit( float limit );		// speed cannot drop below this 
-	virtual void SetMaximumSpeedLimit( float limit );		// speed cannot rise above this 
+	virtual void SetMinimumSpeedLimit( float limit );		// speed cannot drop below this
+	virtual void SetMaximumSpeedLimit( float limit );		// speed cannot rise above this
 
 	virtual bool IsOnGround( void ) const;					// return true if standing on something
 	virtual CBaseEntity *GetGround( void ) const;			// return the current ground entity or NULL if not on the ground
@@ -85,7 +85,7 @@ protected:
 	virtual void AdjustPosture( const Vector &moveGoal );
 
 private:
-	CBasePlayer *m_player;									// the player we are locomoting	
+	CBasePlayer *m_player;									// the player we are locomoting
 
 	mutable bool m_isJumping;
 	CountdownTimer m_jumpTimer;
@@ -119,7 +119,7 @@ private:
 	LadderState DescendLadder( void );
 	LadderState DismountLadderTop( void );
 	LadderState DismountLadderBottom( void );
-	
+
 	const CNavLadder *m_ladderInfo;
 	const CNavArea *m_ladderDismountGoal;
 	CountdownTimer m_ladderTimer;			// a "give up" timer if things go awry

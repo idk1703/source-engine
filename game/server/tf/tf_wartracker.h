@@ -21,7 +21,7 @@ class CTFplayer;
 //			war.  Players are considered Team Engineer if they are wearing
 //			the special Engy Hat or are unallied and playing as Engy.
 //			Visa versa, players are considered to be on Team Spy if they
-//			are wearing the special Spy Hat or are unallied and playing 
+//			are wearing the special Spy Hat or are unallied and playing
 //			as Spy.
 //---------------------------------------------------------------------
 class CTFWarTracker : public CBaseSOTracker, public CGameEventListener
@@ -43,7 +43,7 @@ private:
 };
 
 //---------------------------------------------------------------------
-// Purpose: Contains all the trackers for wars for each player.  Tells 
+// Purpose: Contains all the trackers for wars for each player.  Tells
 //			individual trackers to update the GC every m_kflThinkInterval
 //			seconds, defined below.
 //---------------------------------------------------------------------
@@ -73,4 +73,3 @@ private:
 CTFWarTrackerManager* GetWarTrackerManager();
 
 #endif	// TF_SPYENGY_WARTRACKER_H
-

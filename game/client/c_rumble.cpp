@@ -10,7 +10,7 @@
 #include "rumble_shared.h"
 #include "inputsystem/iinputsystem.h"
 
-ConVar cl_rumblescale( "cl_rumblescale", "1.0", FCVAR_ARCHIVE | FCVAR_ARCHIVE_XBOX, "Scale sensitivity of rumble effects (0 to 1.0)" ); 
+ConVar cl_rumblescale( "cl_rumblescale", "1.0", FCVAR_ARCHIVE | FCVAR_ARCHIVE_XBOX, "Scale sensitivity of rumble effects (0 to 1.0)" );
 ConVar cl_debugrumble( "cl_debugrumble", "0", FCVAR_ARCHIVE, "Turn on rumble debugging spew" );
 
 #define MAX_RUMBLE_CHANNELS 3	// Max concurrent rumble effects
@@ -40,12 +40,12 @@ typedef struct
 
 //=========================================================
 // This structure contains parameters necessary to generate
-// a sine or sawtooth waveform. 
+// a sine or sawtooth waveform.
 //=========================================================
 typedef struct tagWaveGenParams
 {
 	float	cycles;				// AKA frequency
-	float	amplitudescale;	
+	float	amplitudescale;
 	bool	leftChannel;		// If false, generating for the right channel
 
 	float	maxAmplitude;		// Clamping
@@ -61,7 +61,7 @@ typedef struct tagWaveGenParams
 	}
 
 	// CTOR
-	tagWaveGenParams( float c_cycles, float c_amplitudescale, bool c_leftChannel, float c_minAmplitude, float c_maxAmplitude ) 
+	tagWaveGenParams( float c_cycles, float c_amplitudescale, bool c_leftChannel, float c_minAmplitude, float c_maxAmplitude )
 	{
 		Set( c_cycles, c_amplitudescale, c_leftChannel, c_minAmplitude, c_maxAmplitude );
 	}
@@ -282,7 +282,7 @@ CRumbleEffects g_RumbleEffects;
 void CRumbleEffects::Init()
 {
 	SetOutputEnabled( true );
-	
+
 	int i;
 
 	for( i = 0 ; i < MAX_RUMBLE_CHANNELS ; i++ )
@@ -384,7 +384,7 @@ void CRumbleEffects::Init()
 
 	params.Set( 1, 1.0f, false, 0.0f, 1.0f );
 	GenerateFlatEffect( &m_Waveforms[RUMBLE_FLAT_RIGHT], params );
-	
+
 	params.Set( 1, 1.0f, true, 0.0f, 1.0f );
 	GenerateFlatEffect( &m_Waveforms[RUMBLE_FLAT_BOTH], params );
 	params.Set( 1, 1.0f, false, 0.0f, 1.0f );
@@ -434,7 +434,7 @@ RumbleChannel_t *CRumbleEffects::FindExistingChannel( int index )
 
 		if( pChannel->in_use && pChannel->waveformIndex == index )
 		{
-			// This effect is already playing. Provide this channel for the 
+			// This effect is already playing. Provide this channel for the
 			// effect to be re-started on.
 			return pChannel;
 		}
@@ -631,7 +631,7 @@ void CRumbleEffects::ComputeAmplitudes( RumbleChannel_t *pChannel, float curtime
 {
 	// How long has this waveform been playing?
 	float elapsed = curtime - pChannel->starttime;
-	
+
 	if( elapsed >= (NUM_WAVE_SAMPLES/10) )
 	{
 		if( (pChannel->rumbleFlags & RUMBLE_FLAG_LOOP) )
@@ -650,7 +650,7 @@ void CRumbleEffects::ComputeAmplitudes( RumbleChannel_t *pChannel, float curtime
 		}
 	}
 
-	// Figure out which sample we're playing FROM. 
+	// Figure out which sample we're playing FROM.
 	int seconds = ((int) elapsed);
 	int sample = (int)(elapsed*10.0f);
 
@@ -738,7 +738,7 @@ void CRumbleEffects::UpdateEffects( float curtime )
 			float left, right;
 
 			ComputeAmplitudes( pChannel, curtime, &left, &right );
-			
+
 			fLeftMotor += left;
 			fRightMotor += right;
 		}
@@ -788,7 +788,7 @@ void StopAllRumbleEffects( void )
 //---------------------------------------------------------
 void RumbleEffect( unsigned char effectIndex, unsigned char rumbleData, unsigned char rumbleFlags )
 {
-	g_RumbleEffects.StartEffect( effectIndex, rumbleData, rumbleFlags );	
+	g_RumbleEffects.StartEffect( effectIndex, rumbleData, rumbleFlags );
 }
 
 //---------------------------------------------------------

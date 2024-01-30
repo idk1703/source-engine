@@ -23,8 +23,8 @@
 // Control Point Master
 // ====================
 // One ControlPointMaster is spawned per level. Shortly after spawning it detects all the Control
-// points in the map and puts them into the m_ControlPoints. From there it detects the state 
-// where all points are captured and resets them if necessary It gives points every time interval to 
+// points in the map and puts them into the m_ControlPoints. From there it detects the state
+// where all points are captured and resets them if necessary It gives points every time interval to
 // the owners of the points
 // ====================
 
@@ -37,12 +37,12 @@ public:
 	DECLARE_CLASS( CControlPointMaster, CBaseEntity );
 
 	CControlPointMaster();
-	
-	virtual void Spawn( void );	
+
+	virtual void Spawn( void );
 	virtual bool KeyValue( const char *szKeyName, const char *szValue );
 
 	int GetNumPoints( void );
-	int GetPointOwner( int point ); 
+	int GetPointOwner( int point );
 	void Reset( void );
 
 	void RoundRespawn( void );
@@ -65,7 +65,7 @@ public:
 private:
 	void BecomeActive( void );
 	void BecomeInactive( void );
-	
+
 	void EXPORT CPMThink( void );
 
 	int TeamOwnsAllPoints( CControlPoint *pOverridePoint = NULL, int iOverrideNewTeam = TEAM_UNASSIGNED );
@@ -79,13 +79,13 @@ private:
 	CUtlMap<int, CControlPoint *>	m_ControlPoints;
 
 	bool m_bFoundPoints;		//true when the control points have been found and the array is initialized
-	
+
 	float m_fGivePointsTime;	//the time at which we give points for holding control points
 
 	DECLARE_DATADESC();
 
 	bool m_bDisabled;				//is this CPM active or not
-	void InputEnable( inputdata_t &inputdata ) { BecomeInactive(); }	
+	void InputEnable( inputdata_t &inputdata ) { BecomeInactive(); }
 	void InputDisable( inputdata_t &inputdata ) { BecomeActive(); }
 
 	void InputRoundInit( inputdata_t &inputdata );
@@ -115,7 +115,7 @@ public:
 	virtual void Spawn( void )
 	{
 		Assert( m_iPointTeam == TEAM_ALLIES || m_iPointTeam == TEAM_AXIS );
-    }
+	}
 
 	virtual void FireGameEvent( IGameEvent *event )
 	{
@@ -202,14 +202,14 @@ private:
 
 				gameeventmanager->FireEvent( event );
 			}
-		}		
+		}
 	}
 
 	void PointsThink( void )
 	{
 		GivePoints( m_iPointsToGive );
 
-		SetNextThink( gpGlobals->curtime + m_iTickLength );	
+		SetNextThink( gpGlobals->curtime + m_iTickLength );
 	}
 
 	int m_iPointTeam;			// team to give points to

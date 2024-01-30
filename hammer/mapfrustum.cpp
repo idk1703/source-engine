@@ -37,12 +37,12 @@ CMapClass *CMapFrustum::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 	if( new1 != NULL )
 	{
 		const char *pszKeyName;
-		
+
 		// The first parameter should be the fov key name.
 		pszKeyName = pHelperInfo->GetParameter(0);
 		if ( pszKeyName )
 			V_strncpy( new1->m_szFOVKeyName, pszKeyName, sizeof( new1->m_szFOVKeyName ) );
-		
+
 		// Second parameter should be the near plane name.
 		pszKeyName = pHelperInfo->GetParameter(1);
 		if ( pszKeyName )
@@ -69,13 +69,13 @@ CMapClass *CMapFrustum::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 			new1->m_flPitchScale = 1.0f;
 		}
 	}
-	
+
 	return new1;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapFrustum::CMapFrustum(void)
 {
@@ -110,13 +110,13 @@ CMapFace* CMapFrustum::CreateMapFace( const Vector &v1, const Vector &v2, const 
 	Assert( IsFinite(v1.x) && IsFinite(v1.y) && IsFinite(v1.z) );
 
 	Vector points[4] = {v1,v2,v3,v4};
-	
+
 	CMapFace *pFace = new CMapFace;
 	pFace->SetRenderColor( r, g, b );
 	pFace->SetRenderAlpha( flAlpha );
 	pFace->CreateFace( points, 4 );
 	pFace->RenderUnlit(true);
-	
+
 	return pFace;
 }
 
@@ -137,21 +137,21 @@ void CMapFrustum::BuildFrustumFaces(void)
 	}
 	m_Faces.RemoveAll();
 
-	
+
 	// 6 total faces. 4 on the sides and 2 caps.
 	Vector vNearFace[4], vFarFace[4];
 
 	float flHalfFOV = m_flFOV / 2.0f;
 	flHalfFOV = clamp( flHalfFOV, 0.01f, 89.0f );
-	
+
 	float flScaleFactor = tan( DEG2RAD( flHalfFOV ) );
 	float flBaseAlpha = 180;
-	
+
 	vNearFace[0].Init( m_flNearPlane, -flScaleFactor*m_flNearPlane, -flScaleFactor*m_flNearPlane );
 	vNearFace[1].Init( m_flNearPlane, +flScaleFactor*m_flNearPlane, -flScaleFactor*m_flNearPlane );
 	vNearFace[2].Init( m_flNearPlane, +flScaleFactor*m_flNearPlane, +flScaleFactor*m_flNearPlane );
 	vNearFace[3].Init( m_flNearPlane, -flScaleFactor*m_flNearPlane, +flScaleFactor*m_flNearPlane );
-	
+
 	vFarFace[0].Init( m_flFarPlane, -flScaleFactor*m_flFarPlane, -flScaleFactor*m_flFarPlane );
 	vFarFace[1].Init( m_flFarPlane, +flScaleFactor*m_flFarPlane, -flScaleFactor*m_flFarPlane );
 	vFarFace[2].Init( m_flFarPlane, +flScaleFactor*m_flFarPlane, +flScaleFactor*m_flFarPlane );
@@ -166,7 +166,7 @@ void CMapFrustum::BuildFrustumFaces(void)
 	{
 		m_Faces.AddToTail( CreateMapFace( vNearFace[i], vFarFace[i], vFarFace[(i+1)%4], vNearFace[(i+1)%4], flBaseAlpha ) );
 	}
-	
+
 	// Also build some really translucent faces from the origin to the near plane.
 	float flOriginFacesAlpha = 40.0f;
 	for ( int i=0; i < 4; i++ )
@@ -177,8 +177,8 @@ void CMapFrustum::BuildFrustumFaces(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bFullUpdate - 
+// Purpose:
+// Input  : bFullUpdate -
 //-----------------------------------------------------------------------------
 void CMapFrustum::CalcBounds(BOOL bFullUpdate)
 {
@@ -203,7 +203,7 @@ void CMapFrustum::CalcBounds(BOOL bFullUpdate)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CMapClass
 //-----------------------------------------------------------------------------
 CMapClass *CMapFrustum::Copy(bool bUpdateDependencies)
@@ -220,8 +220,8 @@ CMapClass *CMapFrustum::Copy(bool bUpdateDependencies)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pObject - 
+// Purpose:
+// Input  : pObject -
 // Output : CMapClass
 //-----------------------------------------------------------------------------
 CMapClass *CMapFrustum::CopyFrom(CMapClass *pObject, bool bUpdateDependencies)
@@ -236,7 +236,7 @@ CMapClass *CMapFrustum::CopyFrom(CMapClass *pObject, bool bUpdateDependencies)
 	m_flFarPlane = pFrom->m_flFarPlane;
 	m_Angles = pFrom->m_Angles;
 	m_flPitchScale = pFrom->m_flPitchScale;
-	
+
 	V_strncpy( m_szFOVKeyName, pFrom->m_szFOVKeyName, sizeof( m_szFOVKeyName ) );
 	V_strncpy( m_szNearPlaneKeyName, pFrom->m_szNearPlaneKeyName, sizeof( m_szNearPlaneKeyName ) );
 	V_strncpy( m_szFarPlaneKeyName, pFrom->m_szFarPlaneKeyName, sizeof( m_szFarPlaneKeyName ) );
@@ -313,8 +313,8 @@ void CMapFrustum::PostloadWorld(CMapWorld *pWorld)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pRender - 
+// Purpose:
+// Input  : pRender -
 //-----------------------------------------------------------------------------
 void CMapFrustum::Render3D(CRender3D *pRender)
 {
@@ -341,7 +341,7 @@ void CMapFrustum::Render3D(CRender3D *pRender)
 		{
 			// Render the cone faces flatshaded.
 			pRender->PushRenderMode( RENDER_MODE_TRANSLUCENT_FLAT );
-			
+
 			for (int i = 0; i < m_Faces.Count(); i++)
 			{
 				CMapFace *pFace = m_Faces.Element(i);
@@ -373,9 +373,9 @@ void CMapFrustum::Render3D(CRender3D *pRender)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : File - 
-//			bRMF - 
+// Purpose:
+// Input  : File -
+//			bRMF -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapFrustum::SerializeRMF(std::fstream &File, BOOL bRMF)
@@ -385,9 +385,9 @@ int CMapFrustum::SerializeRMF(std::fstream &File, BOOL bRMF)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : File - 
-//			bRMF - 
+// Purpose:
+// Input  : File -
+//			bRMF -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapFrustum::SerializeMAP(std::fstream &File, BOOL bRMF)
@@ -400,4 +400,3 @@ void CMapFrustum::GetAngles(QAngle& Angles)
 {
 	Angles = m_Angles;
 }
-

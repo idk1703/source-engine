@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -103,11 +103,11 @@ void CEdgePropertiesParams::ApplyToCurve( CCurveData *ramp )
 
 static void PopulateCurveType( HWND control, CEdgePropertiesParams *params, bool isLeftEdge )
 {
-	SendMessage( control, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( control, CB_RESETCONTENT, 0, 0 );
 
 	for ( int i = 0; i < NUM_INTERPOLATE_TYPES; ++i )
 	{
-		SendMessage( control, CB_ADDSTRING, 0, (LPARAM)Interpolator_NameForInterpolator( i, true ) ); 
+		SendMessage( control, CB_ADDSTRING, 0, (LPARAM)Interpolator_NameForInterpolator( i, true ) );
 	}
 
 	SendMessage( control, CB_SETCURSEL , params->m_InterpolatorType[ isLeftEdge ? 0 : 1 ], 0 );
@@ -116,43 +116,43 @@ static void PopulateCurveType( HWND control, CEdgePropertiesParams *params, bool
 
 static void Reset( HWND hwndDlg, bool left )
 {
-	SendMessage( GetDlgItem( hwndDlg, left ? IDC_LEFT_ACTIVE : IDC_RIGHT_ACTIVE ), BM_SETCHECK, 
+	SendMessage( GetDlgItem( hwndDlg, left ? IDC_LEFT_ACTIVE : IDC_RIGHT_ACTIVE ), BM_SETCHECK,
 				( WPARAM )BST_UNCHECKED,
 				( LPARAM )0 );
-	SendMessage( GetDlgItem( hwndDlg, left ? IDC_LEFT_CURVETYPE : IDC_RIGHT_CURVETYPE ), CB_SETCURSEL, 0, 0 ); 
+	SendMessage( GetDlgItem( hwndDlg, left ? IDC_LEFT_CURVETYPE : IDC_RIGHT_CURVETYPE ), CB_SETCURSEL, 0, 0 );
 	SetDlgItemText( hwndDlg, left ? IDC_LEFT_ZEROVALUE : IDC_RIGHT_ZEROVALUE, "0.0" );
-	SendMessage( GetDlgItem( hwndDlg, IDC_HOLD_OUT ), BM_SETCHECK, 
+	SendMessage( GetDlgItem( hwndDlg, IDC_HOLD_OUT ), BM_SETCHECK,
 				( WPARAM )BST_UNCHECKED,
 				( LPARAM )0 );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
 static BOOL CALLBACK EdgePropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	switch(uMsg)
 	{
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		{
 			g_Params.PositionSelf( hwndDlg );
-			
+
 			PopulateCurveType( GetDlgItem( hwndDlg, IDC_LEFT_CURVETYPE ), &g_Params, true );
 			PopulateCurveType( GetDlgItem( hwndDlg, IDC_RIGHT_CURVETYPE ), &g_Params, false );
 
 			SetDlgItemText( hwndDlg, IDC_LEFT_ZEROVALUE, va( "%f", g_Params.m_flValue[ 0 ] ) );
 			SetDlgItemText( hwndDlg, IDC_RIGHT_ZEROVALUE, va( "%f", g_Params.m_flValue[ 1 ] ) );
 
-			SendMessage( GetDlgItem( hwndDlg, IDC_LEFT_ACTIVE ), BM_SETCHECK, 
+			SendMessage( GetDlgItem( hwndDlg, IDC_LEFT_ACTIVE ), BM_SETCHECK,
 				( WPARAM ) g_Params.m_bActive[ 0 ] ? BST_CHECKED : BST_UNCHECKED,
 				( LPARAM )0 );
 
-			SendMessage( GetDlgItem( hwndDlg, IDC_RIGHT_ACTIVE ), BM_SETCHECK, 
+			SendMessage( GetDlgItem( hwndDlg, IDC_RIGHT_ACTIVE ), BM_SETCHECK,
 				( WPARAM ) g_Params.m_bActive[ 1 ] ? BST_CHECKED : BST_UNCHECKED,
 				( LPARAM )0 );
 
@@ -160,9 +160,9 @@ static BOOL CALLBACK EdgePropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM w
 
 			SetFocus( GetDlgItem( hwndDlg, IDC_LEFT_ZEROVALUE ) );
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDC_LEFT_RESET:
@@ -179,7 +179,7 @@ static BOOL CALLBACK EdgePropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM w
 			{
 				if ( HIWORD( wParam ) == CBN_SELCHANGE )
 				{
-					SendMessage( GetDlgItem( hwndDlg, IDC_LEFT_ACTIVE ), BM_SETCHECK, 
+					SendMessage( GetDlgItem( hwndDlg, IDC_LEFT_ACTIVE ), BM_SETCHECK,
 						( WPARAM ) BST_CHECKED,
 						( LPARAM )0 );
 				}
@@ -189,7 +189,7 @@ static BOOL CALLBACK EdgePropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM w
 			{
 				if ( HIWORD( wParam ) == CBN_SELCHANGE )
 				{
-					SendMessage( GetDlgItem( hwndDlg, IDC_RIGHT_ACTIVE ), BM_SETCHECK, 
+					SendMessage( GetDlgItem( hwndDlg, IDC_RIGHT_ACTIVE ), BM_SETCHECK,
 						( WPARAM ) BST_CHECKED,
 						( LPARAM )0 );
 				}
@@ -199,7 +199,7 @@ static BOOL CALLBACK EdgePropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM w
 			{
 				if ( HIWORD( wParam ) == EN_CHANGE )
 				{
-					SendMessage( GetDlgItem( hwndDlg, IDC_LEFT_ACTIVE ), BM_SETCHECK, 
+					SendMessage( GetDlgItem( hwndDlg, IDC_LEFT_ACTIVE ), BM_SETCHECK,
 						( WPARAM ) BST_CHECKED,
 						( LPARAM )0 );
 				}
@@ -209,7 +209,7 @@ static BOOL CALLBACK EdgePropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM w
 			{
 				if ( HIWORD( wParam ) == EN_CHANGE )
 				{
-					SendMessage( GetDlgItem( hwndDlg, IDC_RIGHT_ACTIVE ), BM_SETCHECK, 
+					SendMessage( GetDlgItem( hwndDlg, IDC_RIGHT_ACTIVE ), BM_SETCHECK,
 						( WPARAM ) BST_CHECKED,
 						( LPARAM )0 );
 				}
@@ -241,7 +241,7 @@ static BOOL CALLBACK EdgePropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM w
 				EndDialog( hwndDlg, 1 );
 			}
 			break;
-        case IDCANCEL:
+		case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		}
@@ -251,16 +251,16 @@ static BOOL CALLBACK EdgePropertiesDialogProc( HWND hwndDlg, UINT uMsg, WPARAM w
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int EdgeProperties( CEdgePropertiesParams *params )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_EDGEPROPERTIES ),
 		(HWND)g_MDLViewer->getHandle(),
 		(DLGPROC)EdgePropertiesDialogProc );

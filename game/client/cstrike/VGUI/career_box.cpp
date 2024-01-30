@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -107,7 +107,7 @@ void ConVarToggleCheckButton::SetConVar( const char *name )
 //--------------------------------------------------------------------------------------------------------------
 void ConVarToggleCheckButton::Paint()
 {
-	if ( !m_pszCvarName || !m_pszCvarName[ 0 ] ) 
+	if ( !m_pszCvarName || !m_pszCvarName[ 0 ] )
 	{
 		BaseClass::Paint();
 		return;
@@ -118,7 +118,7 @@ void ConVarToggleCheckButton::Paint()
 	if ( !var )
 		return;
 	bool value = var->GetBool();
-	
+
 	if (value != m_bStartValue)
 	{
 		SetSelected( value );
@@ -163,7 +163,7 @@ void ConVarToggleCheckButton::SetSelected( bool state )
 {
 	BaseClass::SetSelected( state );
 
-	if ( !m_pszCvarName || !m_pszCvarName[ 0 ] ) 
+	if ( !m_pszCvarName || !m_pszCvarName[ 0 ] )
 		return;
 }
 
@@ -714,7 +714,7 @@ public:
 		if ( m_pBox )
 			m_pBox->UpdateClips();
 	}
-	
+
 private:
 	CWeaponSelectBox *m_pBox;
 };
@@ -1077,7 +1077,7 @@ public:
 		ComboBox::OnSetText( newText );
 		m_pBox->OnControlChanged();
 	}
-	
+
 private:
 	CBaseSelectBox *m_pBox;
 };

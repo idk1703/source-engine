@@ -91,13 +91,13 @@ mxLineEdit::mxLineEdit (mxWindow *parent, int x, int y, int w, int h, const char
 		editClass.cbClsExtra = 0;
 		editClass.lpfnWndProc = EditWndProc;
 		editClass.lpszClassName = "mx_edit";
-		RegisterClassEx( &editClass ); 
+		RegisterClassEx( &editClass );
 	}
 
 	void *handle = (void *) CreateWindowEx (WS_EX_CLIENTEDGE, "mx_edit", label, dwStyle, //WS_VISIBLE | WS_CHILD | ES_AUTOHSCROLL,
 				x, y, w, h, hwndParent,
 				(HMENU) id, (HINSTANCE) GetModuleHandle (NULL), NULL);
-	
+
 	SendMessage ((HWND) handle, WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_VAR_FONT), MAKELPARAM (TRUE, 0));
 	SendMessage ((HWND) getHandle (), EM_LIMITTEXT, (WPARAM) 256, 0L);
 	SetWindowLong ((HWND) handle, GWL_USERDATA, (LONG) this);

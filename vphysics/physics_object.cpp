@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -54,8 +54,8 @@ static CUtlVector<postrestore_objectlist_t> g_PostRestoreObjectList;
 
 // This angular basis is the integral of each differential drag area's torque over the whole OBB
 // For each axis, each face, the integral is (1/Iaxis) * (1/3 * w^2l^3 + 1/2 * w^4l + lw^2h^2)
-// l,w, & h are half widths - where l is in the direction of the axis, w is in the plane (l/w plane) of the face, 
-// and h is perpendicular to the face.  So for each axis, you sum up this integral over 2 pairs of faces 
+// l,w, & h are half widths - where l is in the direction of the axis, w is in the plane (l/w plane) of the face,
+// and h is perpendicular to the face.  So for each axis, you sum up this integral over 2 pairs of faces
 // (this function returns the integral for one pair of opposite faces, not one face)
 static float AngDragIntegral( float invInertia, float l, float w, float h )
 {
@@ -84,7 +84,7 @@ CPhysicsObject::CPhysicsObject( void )
 
 	Assert( pData == &m_pGameData );
 
-	memset( pData, 0, dataSize );	
+	memset( pData, 0, dataSize );
 #else
 #error
 #endif
@@ -144,7 +144,7 @@ CPhysicsObject::~CPhysicsObject( void )
 		if ( pCore->physical_unmoveable == IVP_TRUE && pCore->controllers_of_core.n_elems )
 		{
 			// go ahead and notify them if this happens in the real world
-			for(int i = pCore->controllers_of_core.len()-1; i >=0 ;i-- ) 
+			for(int i = pCore->controllers_of_core.len()-1; i >=0 ;i-- )
 			{
 				IVP_Controller *my_controller = pCore->controllers_of_core.element_at(i);
 				my_controller->core_is_going_to_be_deleted_event(pCore);
@@ -877,7 +877,7 @@ void CPhysicsObject::GetImplicitVelocity( Vector *velocity, AngularImpulse *angu
 		// compute the relative transform that was actually integrated in the last psi
 		IVP_U_Quat q_core_f_core;
 		q_core_f_core.set_invert_mult( &core->q_world_f_core_last_psi, &core->q_world_f_core_next_psi);
-		
+
 		// now convert that to an axis/angle pair
 		Quaternion q( q_core_f_core.x, q_core_f_core.y, q_core_f_core.z, q_core_f_core.w );
 		AngularImpulse axis;
@@ -932,9 +932,9 @@ void CPhysicsObject::GetVelocityAtPoint( const Vector &worldPosition, Vector *pV
 	IVP_U_Float_Point av_ws;
 	core->get_m_world_f_core_PSI()->vmult3( &rotSpeed, &av_ws);
 
-	IVP_U_Float_Point pos_rel; 	
+	IVP_U_Float_Point pos_rel;
 	pos_rel.subtract( &pos, core->get_position_PSI());
-	IVP_U_Float_Point cross;    
+	IVP_U_Float_Point cross;
 	cross.inline_calc_cross_product(&av_ws,&pos_rel);
 
 	IVP_U_Float_Point speed;
@@ -1120,7 +1120,7 @@ void CPhysicsObject::SetShadow( float maxSpeed, float maxAngularSpeed, bool allo
 		CPhysicsEnvironment *pVEnv = GetVPhysicsEnvironment();
 		m_pShadow = pVEnv->CreateShadowController( this, allowPhysicsMovement, allowPhysicsRotation );
 		m_pShadow->MaxSpeed( maxSpeed, maxAngularSpeed );
-		// This really should be in the game code, but do this here because the game may (does) use 
+		// This really should be in the game code, but do this here because the game may (does) use
 		// shadow/AI control as a collision filter indicator.
 		RecheckCollisionFilter();
 	}
@@ -1208,15 +1208,15 @@ float CPhysicsObject::GetDragInDirection( const IVP_U_Float_Point &velocity ) co
 	const IVP_U_Matrix *m_world_f_core = m_pObject->get_core()->get_m_world_f_core_PSI();
 	m_world_f_core->vimult3( &velocity, &local );
 
-	return m_dragCoefficient * IVP_Inline_Math::fabsd( local.k[0] * m_dragBasis.x ) + 
-		IVP_Inline_Math::fabsd( local.k[1] * m_dragBasis.y ) + 
+	return m_dragCoefficient * IVP_Inline_Math::fabsd( local.k[0] * m_dragBasis.x ) +
+		IVP_Inline_Math::fabsd( local.k[1] * m_dragBasis.y ) +
 		IVP_Inline_Math::fabsd( local.k[2] * m_dragBasis.z );
 }
 
 float CPhysicsObject::GetAngularDragInDirection( const IVP_U_Float_Point &angVelocity ) const
 {
-	return m_angDragCoefficient * IVP_Inline_Math::fabsd( angVelocity.k[0] * m_angDragBasis.x ) + 
-		IVP_Inline_Math::fabsd( angVelocity.k[1] * m_angDragBasis.y ) + 
+	return m_angDragCoefficient * IVP_Inline_Math::fabsd( angVelocity.k[0] * m_angDragBasis.x ) +
+		IVP_Inline_Math::fabsd( angVelocity.k[1] * m_angDragBasis.y ) +
 		IVP_Inline_Math::fabsd( angVelocity.k[2] * m_angDragBasis.z );
 }
 
@@ -1422,7 +1422,7 @@ void CPhysicsObject::OutputDebugInfo() const
 		IVP_Controller *pController = m_pObject->get_core()->controllers_of_core.element_at(k);
 		Msg("%d) %s\n", k, pController->get_controller_name() );
 	}
-	Msg("State: %s, Collision %s, Motion %s, %sFlags %04X (game %04x, index %d)\n", 
+	Msg("State: %s, Collision %s, Motion %s, %sFlags %04X (game %04x, index %d)\n",
 		IsAsleep() ? "Asleep" : "Awake",
 		IsCollisionEnabled() ? "Enabled" : "Disabled",
 		IsStatic() ? "Static" : (IsMotionEnabled() ? "Enabled" : "Disabled"),
@@ -1616,7 +1616,7 @@ class CMaterialIndexOps : public CDefSaveRestoreOps
 {
 public:
 	// save data type interface
-	virtual void Save( const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave ) 
+	virtual void Save( const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave )
 	{
 		int materialIndex = *((int *)fieldInfo.pField);
 		const char *pMaterialName = physprops->GetPropName( materialIndex );
@@ -1629,7 +1629,7 @@ public:
 		pSave->WriteString( pMaterialName );
 	}
 
-	virtual void Restore( const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore ) 
+	virtual void Restore( const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore )
 	{
 		char nameBuf[1024];
 		int nameLen = pRestore->ReadInt();
@@ -1642,13 +1642,13 @@ public:
 		}
 	}
 
-	virtual bool IsEmpty( const SaveRestoreFieldInfo_t &fieldInfo ) 
-	{ 
+	virtual bool IsEmpty( const SaveRestoreFieldInfo_t &fieldInfo )
+	{
 		int *pMaterialIndex = (int *)fieldInfo.pField;
 		return (*pMaterialIndex == 0);
 	}
 
-	virtual void MakeEmpty( const SaveRestoreFieldInfo_t &fieldInfo ) 
+	virtual void MakeEmpty( const SaveRestoreFieldInfo_t &fieldInfo )
 	{
 		int *pMaterialIndex = (int *)fieldInfo.pField;
 		*pMaterialIndex = 0;

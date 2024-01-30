@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -27,17 +27,17 @@
 static IFileSystem* filesystem = 0;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CSoundEmitterSystemBase::CSoundEmitterSystemBase() : 
+CSoundEmitterSystemBase::CSoundEmitterSystemBase() :
 	m_nInitCount( 0 ),
 	m_uManifestPlusScriptChecksum( 0 )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Output : int	
+// Purpose:
+// Output : int
 //-----------------------------------------------------------------------------
 int	 CSoundEmitterSystemBase::First() const
 {
@@ -45,8 +45,8 @@ int	 CSoundEmitterSystemBase::First() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : i - 
+// Purpose:
+// Input  : i -
 // Output : int
 //-----------------------------------------------------------------------------
 int CSoundEmitterSystemBase::Next( int i ) const
@@ -55,7 +55,7 @@ int CSoundEmitterSystemBase::Next( int i ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CSoundEmitterSystemBase::InvalidIndex() const
 {
@@ -154,8 +154,8 @@ void CSoundEmitterSystemBase::Shutdown()
 //-----------------------------------------------------------------------------
 // Purpose: Helper for checksuming script files and manifest to determine if soundname caches
 //  need to be blown away.
-// Input  : *crc - 
-//			*filename - 
+// Input  : *crc -
+//			*filename -
 // Output : static void
 //-----------------------------------------------------------------------------
 static void AccumulateFileNameAndTimestampIntoChecksum( CRC32_t *crc, char const *filename )
@@ -174,7 +174,7 @@ static void AccumulateFileNameAndTimestampIntoChecksum( CRC32_t *crc, char const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSoundEmitterSystemBase::InternalModInit()
@@ -222,7 +222,7 @@ bool CSoundEmitterSystemBase::InternalModInit()
 				continue;
 			}
 
-			Warning( "CSoundEmitterSystemBase::BaseInit:  Manifest '%s' with bogus file type '%s', expecting 'declare_file' or 'precache_file'\n", 
+			Warning( "CSoundEmitterSystemBase::BaseInit:  Manifest '%s' with bogus file type '%s', expecting 'declare_file' or 'precache_file'\n",
 				MANIFEST_FILE, sub->GetName() );
 		}
 	}
@@ -246,7 +246,7 @@ bool CSoundEmitterSystemBase::InternalModInit()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSoundEmitterSystemBase::ModInit()
@@ -263,7 +263,7 @@ bool CSoundEmitterSystemBase::ModInit()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSoundEmitterSystemBase::InternalModShutdown()
 {
@@ -288,7 +288,7 @@ void CSoundEmitterSystemBase::InternalModShutdown()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSoundEmitterSystemBase::ModShutdown()
 {
@@ -299,8 +299,8 @@ void CSoundEmitterSystemBase::ModShutdown()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pName - 
+// Purpose:
+// Input  : *pName -
 //-----------------------------------------------------------------------------
 int	CSoundEmitterSystemBase::GetSoundIndex( const char *pName ) const
 {
@@ -317,8 +317,8 @@ int	CSoundEmitterSystemBase::GetSoundIndex( const char *pName ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSoundEmitterSystemBase::IsValidIndex( int index )
@@ -327,8 +327,8 @@ bool CSoundEmitterSystemBase::IsValidIndex( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *CSoundEmitterSystemBase::GetSoundName( int index )
@@ -340,7 +340,7 @@ const char *CSoundEmitterSystemBase::GetSoundName( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CSoundEmitterSystemBase::GetSoundCount( void )
@@ -388,9 +388,9 @@ void CSoundEmitterSystemBase::EnsureAvailableSlotsForGender( SoundFile *pSoundna
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : gender - 
-//			soundnames - 
+// Purpose:
+// Input  : gender -
+//			soundnames -
 //-----------------------------------------------------------------------------
 int	CSoundEmitterSystemBase::FindBestSoundForGender( SoundFile *pSoundnames, int c, gender_t gender )
 {
@@ -424,9 +424,9 @@ int	CSoundEmitterSystemBase::FindBestSoundForGender( SoundFile *pSoundnames, int
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *soundname - 
-//			params - 
+// Purpose:
+// Input  : *soundname -
+//			params -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSoundEmitterSystemBase::GetParametersForSound( const char *soundname, CSoundParameters& params, gender_t gender, bool isbeingemitted /*= false*/ )
@@ -500,10 +500,10 @@ static void SplitName( char const *input, int splitchar, int splitlen, char *bef
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : params - 
-//			*wavename - 
-//			gender - 
+// Purpose:
+// Input  : params -
+//			*wavename -
+//			gender -
 //-----------------------------------------------------------------------------
 void CSoundEmitterSystemBase::AddSoundName( CSoundParametersInternal& params, char const *wavename, gender_t gender )
 {
@@ -519,9 +519,9 @@ void CSoundEmitterSystemBase::AddSoundName( CSoundParametersInternal& params, ch
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : params - 
-//			*wavename - 
+// Purpose:
+// Input  : params -
+//			*wavename -
 //-----------------------------------------------------------------------------
 void CSoundEmitterSystemBase::ExpandSoundNameMacros( CSoundParametersInternal& params, char const *wavename )
 {
@@ -608,11 +608,11 @@ void CSoundEmitterSystemBase::GenderExpandString( gender_t gender, char const *i
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *actorname - 
-//			*in - 
-//			*out - 
-//			maxlen - 
+// Purpose:
+// Input  : *actorname -
+//			*in -
+//			*out -
+//			maxlen -
 //-----------------------------------------------------------------------------
 void CSoundEmitterSystemBase::GenderExpandString( char const *actormodel, char const *in, char *out, int maxlen )
 {
@@ -624,7 +624,7 @@ void CSoundEmitterSystemBase::LoadGlobalActors()
 {
 	// Now load the global actor list from the scripts/globalactors.txt file
 	KeyValues *allActors = NULL;
-	
+
 	allActors = new KeyValues( "allactors" );
 	if ( allActors->LoadFromFile( filesystem, "scripts/global_actors.txt", NULL ) )
 	{
@@ -657,8 +657,8 @@ void CSoundEmitterSystemBase::LoadGlobalActors()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *actorname - 
+// Purpose:
+// Input  : *actorname -
 // Output : gender_t
 //-----------------------------------------------------------------------------
 gender_t CSoundEmitterSystemBase::GetActorGender( char const *actormodel )
@@ -678,9 +678,9 @@ gender_t CSoundEmitterSystemBase::GetActorGender( char const *actormodel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *soundname - 
-//			params - 
+// Purpose:
+// Input  : *soundname -
+//			params -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSoundEmitterSystemBase::InitSoundInternalParameters( const char *soundname, KeyValues *kv, CSoundParametersInternal& params )
@@ -779,8 +779,8 @@ bool CSoundEmitterSystemBase::InitSoundInternalParameters( const char *soundname
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *soundname - 
+// Purpose:
+// Input  : *soundname -
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *CSoundEmitterSystemBase::GetWavFileForSound( const char *soundname, char const *actormodel )
@@ -808,8 +808,8 @@ const char *CSoundEmitterSystemBase::GetWavFileForSound( const char *soundname, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *soundname - 
+// Purpose:
+// Input  : *soundname -
 // Output : soundlevel_t
 //-----------------------------------------------------------------------------
 soundlevel_t CSoundEmitterSystemBase::LookupSoundLevel( const char *soundname )
@@ -824,8 +824,8 @@ soundlevel_t CSoundEmitterSystemBase::LookupSoundLevel( const char *soundname )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *filename - 
+// Purpose:
+// Input  : *filename -
 //-----------------------------------------------------------------------------
 void CSoundEmitterSystemBase::AddSoundsFromFile( const char *filename, bool bPreload, bool bIsOverride /*=false*/, bool bRefresh /*=false*/ )
 {
@@ -936,10 +936,10 @@ void CSoundEmitterSystemBase::AddSoundsFromFile( const char *filename, bool bPre
 		return;
 	}
 
-	
+
 	if ( bIsOverride )
 	{
-		DevMsg( "SoundEmitter:  adding map sound overrides from %s [%i total, %i replacements, %i duplicated replacements]\n", 
+		DevMsg( "SoundEmitter:  adding map sound overrides from %s [%i total, %i replacements, %i duplicated replacements]\n",
 			filename,
 			newOverrideCount,
 			replaceCount,
@@ -967,7 +967,7 @@ void CSoundEmitterSystemBase::ReloadSoundEntriesInList( IFileList *pFilesToReloa
 				Msg( "Reloading sound file '%s' due to pure settings.\n", pszFileName );
 
 				AddSoundsFromFile( pszFileName, false, false, true );
-				
+
 				// Now mark this file name as being reloaded
 				processed.AddToTail( pszFileName );
 			}
@@ -977,7 +977,7 @@ void CSoundEmitterSystemBase::ReloadSoundEntriesInList( IFileList *pFilesToReloa
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Force ModShutdown and ModInit, skips checks for how many systems have 
+// Purpose: Force ModShutdown and ModInit, skips checks for how many systems have
 // requested inits (for con commands).
 //-----------------------------------------------------------------------------
 void CSoundEmitterSystemBase::Flush()
@@ -988,7 +988,7 @@ void CSoundEmitterSystemBase::Flush()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CSoundEmitterSystemBase::CheckForMissingWavFiles( bool verbose )
 {
@@ -1041,8 +1041,8 @@ int CSoundEmitterSystemBase::CheckForMissingWavFiles( bool verbose )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *key - 
+// Purpose:
+// Input  : *key -
 // Output : float
 //-----------------------------------------------------------------------------
 float CSoundEmitterSystemBase::TranslateAttenuation( const char *key )
@@ -1079,8 +1079,8 @@ float CSoundEmitterSystemBase::TranslateAttenuation( const char *key )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *key - 
+// Purpose:
+// Input  : *key -
 // Output : soundlevel_t
 //-----------------------------------------------------------------------------
 soundlevel_t CSoundEmitterSystemBase::TranslateSoundLevel( const char *key )
@@ -1090,7 +1090,7 @@ soundlevel_t CSoundEmitterSystemBase::TranslateSoundLevel( const char *key )
 
 //-----------------------------------------------------------------------------
 // Purpose: Convert "chan_xxx" into integer value for channel
-// Input  : *name - 
+// Input  : *name -
 // Output : static int
 //-----------------------------------------------------------------------------
 int CSoundEmitterSystemBase::TranslateChannel( const char *name )
@@ -1301,10 +1301,10 @@ void CSoundEmitterSystemBase::SaveChangesToSoundScript( int scriptindex )
 		if ( header != FILESYSTEM_INVALID_HANDLE )
 		{
 			int len = filesystem->Size( header );
-			
+
 			unsigned char *data = new unsigned char[ len + 1 ];
 			Q_memset( data, 0, len + 1 );
-			
+
 			filesystem->Read( data, len, header );
 			filesystem->Close( header );
 
@@ -1340,7 +1340,7 @@ void CSoundEmitterSystemBase::SaveChangesToSoundScript( int scriptindex )
 		CSoundParametersInternal *p = InternalGetParametersForSound( i );
 		if ( !p )
 			continue;
-		
+
 		buf.Printf( "\"%s\"\n{\n", GetSoundName( i ) );
 
 		buf.Printf( "\t\"channel\"\t\t\"%s\"\n", p->ChannelToString() );
@@ -1429,8 +1429,8 @@ void CSoundEmitterSystemBase::SaveChangesToSoundScript( int scriptindex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : CUtlSymbol
 //-----------------------------------------------------------------------------
 CUtlSymbol CSoundEmitterSystemBase::AddWaveName( const char *name )
@@ -1576,8 +1576,8 @@ bool CSoundEmitterSystemBase::GetParametersForSoundEx( const char *soundname, HS
 			if ( UTL_INVAL_SYMBOL == soundWarnings.Find( key ) )
 			{
 				soundWarnings.AddString( key );
-			
-				DevMsg( "CSoundEmitterSystemBase::GetParametersForSound:  sound '%s' references wave '%s' which doesn't exist on disk!\n", 
+
+				DevMsg( "CSoundEmitterSystemBase::GetParametersForSound:  sound '%s' references wave '%s' which doesn't exist on disk!\n",
 					soundname,
 					params.soundname );
 			}
@@ -1642,7 +1642,7 @@ void CSoundEmitterSystemBase::ClearSoundOverrides()
 
 	if (removed > 0 || m_SavedOverrides.Count() > 0 )
 	{
-		Warning( "SoundEmitter:  removing map sound overrides [%i to remove, %i to restore]\n", 
+		Warning( "SoundEmitter:  removing map sound overrides [%i to remove, %i to restore]\n",
 			removed,
 			m_SavedOverrides.Count() );
 	}
@@ -1659,5 +1659,5 @@ void CSoundEmitterSystemBase::ClearSoundOverrides()
 }
 
 CSoundEmitterSystemBase g_SoundEmitterSystemBase;
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CSoundEmitterSystemBase, ISoundEmitterSystemBase, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CSoundEmitterSystemBase, ISoundEmitterSystemBase,
 						SOUNDEMITTERSYSTEM_INTERFACE_VERSION, g_SoundEmitterSystemBase );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -50,7 +50,7 @@ struct RayDispOutput_t
 
 // Assumptions:
 //	Max patch is 17x17, therefore 9 bits needed to represent a triangle index
-// 
+//
 
 //=============================================================================
 //	Displacement Collision Triangle
@@ -67,7 +67,7 @@ class CDispCollTri
 				unsigned short uiMin:2;
 				unsigned short uiMax:2;
 			} m_Index;
-			
+
 			unsigned short m_IndexDummy;
 		};
 	};
@@ -83,7 +83,7 @@ public:
 	float				m_flDist;				// Triangle plane dist.
 
 	// Creation.
-	     CDispCollTri();
+		CDispCollTri();
 	void Init( void );
 	void CalcPlane( CDispVector<Vector> &m_aVerts );
 	void FindMinMax( CDispVector<Vector> &m_aVerts );
@@ -335,9 +335,9 @@ protected:
 
 };
 
-FORCEINLINE bool CDispCollTree::IsLeafNode(int iNode) 
-{ 
-	return iNode >= m_nodes.Count() ? true : false; 
+FORCEINLINE bool CDispCollTree::IsLeafNode(int iNode)
+{
+	return iNode >= m_nodes.Count() ? true : false;
 }
 
 //-----------------------------------------------------------------------------
@@ -353,19 +353,19 @@ inline int CDispCollTree::Nodes_GetChild( int iNode, int nDirection )
 	Assert( iNode >= 0 );
 	Assert( iNode < m_nodes.Count() );
 
-    // ( node index * 4 ) + ( direction + 1 )
-    return ( ( iNode << 2 ) + ( nDirection + 1 ) );	
+	// ( node index * 4 ) + ( direction + 1 )
+	return ( ( iNode << 2 ) + ( nDirection + 1 ) );
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 inline int CDispCollTree::Nodes_CalcCount( int nPower )
-{ 
+{
 	Assert( nPower >= 1 );
 	Assert( nPower <= 4 );
 
-	return ( ( 1 << ( ( nPower + 1 ) << 1 ) ) / 3 ); 
+	return ( ( 1 << ( ( nPower + 1 ) << 1 ) ) / 3 );
 }
 
 //-----------------------------------------------------------------------------
@@ -428,8 +428,8 @@ inline int CDispCollTree::Nodes_GetIndexFromComponents( int x, int y )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-inline void CDispCollTree::CalcClosestBoxPoint( const Vector &vecPlaneNormal, const Vector &vecBoxStart, 
-											    const Vector &vecBoxExtents, Vector &vecBoxPoint )
+inline void CDispCollTree::CalcClosestBoxPoint( const Vector &vecPlaneNormal, const Vector &vecBoxStart,
+												const Vector &vecBoxExtents, Vector &vecBoxPoint )
 {
 	vecBoxPoint = vecBoxStart;
 	( vecPlaneNormal[0] < 0.0f ) ? vecBoxPoint[0] += vecBoxExtents[0] : vecBoxPoint[0] -= vecBoxExtents[0];
@@ -440,8 +440,8 @@ inline void CDispCollTree::CalcClosestBoxPoint( const Vector &vecPlaneNormal, co
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-inline void CDispCollTree::CalcClosestExtents( const Vector &vecPlaneNormal, const Vector &vecBoxExtents, 
-											   Vector &vecBoxPoint )
+inline void CDispCollTree::CalcClosestExtents( const Vector &vecPlaneNormal, const Vector &vecBoxExtents,
+												Vector &vecBoxPoint )
 {
 	( vecPlaneNormal[0] < 0.0f ) ? vecBoxPoint[0] = vecBoxExtents[0] : vecBoxPoint[0] = -vecBoxExtents[0];
 	( vecPlaneNormal[1] < 0.0f ) ? vecBoxPoint[1] = vecBoxExtents[1] : vecBoxPoint[1] = -vecBoxExtents[1];

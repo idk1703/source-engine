@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -106,4 +106,3 @@ const Vector &ActiveGrenade::GetPosition( void ) const
 
 	return m_entity->GetAbsOrigin();
 }
-

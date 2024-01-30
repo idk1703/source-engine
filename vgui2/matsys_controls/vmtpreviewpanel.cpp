@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -112,7 +112,7 @@ void CVMTPreviewPanel::SetupLightingState()
 	pRenderContext->SetLight( 0, desc );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Draw a sphere
 //-----------------------------------------------------------------------------
@@ -120,7 +120,7 @@ void CVMTPreviewPanel::RenderSphere( const Vector &vCenter, float flRadius, int 
 {
 	int nVertices =  nTheta * nPhi;
 	int nIndices = 2 * ( nTheta + 1 ) * ( nPhi - 1 );
-	
+
 	CMatRenderContextPtr pRenderContext( MaterialSystem() );
 
 	IMesh* pMesh = pRenderContext->GetDynamicMesh();
@@ -149,9 +149,9 @@ void CVMTPreviewPanel::RenderSphere( const Vector &vCenter, float flRadius, int 
 
 			Vector vecPos;
 			vecPos.x = flRadius * sin(phi) * cos(theta);
-			vecPos.y = flRadius * sin(phi) * sin(theta); 
+			vecPos.y = flRadius * sin(phi) * sin(theta);
 			vecPos.z = flRadius * cos(phi);
-			    
+
 			Vector vecNormal = vecPos;
 			VectorNormalize( vecNormal );
 
@@ -186,7 +186,7 @@ void CVMTPreviewPanel::RenderSphere( const Vector &vCenter, float flRadius, int 
 					v2 = 0.0f;
 				}
 			}
-					  
+
 			meshBuilder.Position3fv( vecPos.Base() );
 			meshBuilder.Normal3fv( vecNormal.Base() );
 			meshBuilder.Color4ub( red, green, blue, alpha );
@@ -236,7 +236,7 @@ void CVMTPreviewPanel::RenderSphere( const Vector &vCenter, float flRadius, int 
 // Draw sprite-card based materials
 //-----------------------------------------------------------------------------
 void CVMTPreviewPanel::RenderSpriteCard( const Vector &vCenter, float flRadius )
-{		 	 
+{
 	CMatRenderContextPtr pRenderContext( MaterialSystem() );
 	IMesh *pMesh = pRenderContext->GetDynamicMesh();
 
@@ -285,7 +285,7 @@ void CVMTPreviewPanel::RenderSpriteCard( const Vector &vCenter, float flRadius )
 // Paints a regular texture
 //-----------------------------------------------------------------------------
 void CVMTPreviewPanel::DrawRectangle( void )
-{		     
+{
 	// Get the aspect ratio of the material
 	int tw = m_Material->GetMappingWidth();
  	int th = m_Material->GetMappingHeight();
@@ -330,7 +330,7 @@ void CVMTPreviewPanel::DrawRectangle( void )
 	float aspect = (float)w / (float)h;
 
 	float ratio = screenaspect / aspect;
-	   
+
 	// Screen is wider, need bars at top and bottom
 	int x2, y2;
 	int x, y;
@@ -378,7 +378,7 @@ void CVMTPreviewPanel::DrawRectangle( void )
 			v2_t = v2_b = 0.0f;
 		}
 	}
-	  
+
 	meshBuilder.Position3f( x, y2, 0.0f );
 	meshBuilder.Normal3fv( vecNormal.Base() );
 	meshBuilder.Color4ub( 255, 0, 0, 255 );
@@ -391,7 +391,7 @@ void CVMTPreviewPanel::DrawRectangle( void )
 	meshBuilder.BoneMatrix( 0, 0 );
 	meshBuilder.UserData( vecTangentS.Base() );
 	meshBuilder.AdvanceVertex();
-				    
+
 	meshBuilder.Position3f( x, y, 0.0f );
 	meshBuilder.Normal3fv( vecNormal.Base() );
 	meshBuilder.Color4ub( 255, 255, 255, 64 );
@@ -404,7 +404,7 @@ void CVMTPreviewPanel::DrawRectangle( void )
 	meshBuilder.BoneMatrix( 0, 0 );
 	meshBuilder.UserData( vecTangentS.Base() );
 	meshBuilder.AdvanceVertex();
-			    
+
 	meshBuilder.Position3f( x2, y2, 0.0f );
 	meshBuilder.Normal3fv( vecNormal.Base() );
 	meshBuilder.Color4ub( 0, 0, 255, 255 );
@@ -430,7 +430,7 @@ void CVMTPreviewPanel::DrawRectangle( void )
 	meshBuilder.BoneMatrix( 0, 0 );
 	meshBuilder.UserData( vecTangentS.Base() );
 	meshBuilder.AdvanceVertex();
-						  
+
 	meshBuilder.FastIndex( 0 );
 	meshBuilder.FastIndex( 1 );
 	meshBuilder.FastIndex( 2 );
@@ -492,7 +492,7 @@ void CVMTPreviewPanel::LookAt( const Vector &vecLookAt, float flRadius )
 	// Compute fov/2 in radians
 	flFOVx *= M_PI / 360.0f;
 
-	// Compute an effective fov	based on the aspect ratio 
+	// Compute an effective fov	based on the aspect ratio
 	// if the height is smaller than the width
 	int w, h;
 	GetSize( w, h );
@@ -515,7 +515,7 @@ void CVMTPreviewPanel::LookAt( const Vector &vecLookAt, float flRadius )
 	pRenderContext->LoadIdentity();
 
 	// convert from a right handed system to a left handed system
-	// since dx for wants it that way.  
+	// since dx for wants it that way.
 //	pRenderContext->Scale( 1.0f, 1.0f, -1.0f );
 
 	pRenderContext->Rotate( -90,  1, 0, 0 );	    // put Z going up
@@ -577,7 +577,7 @@ static ITexture *GetPowerOfTwoFrameBufferTexture( void )
 	{
 		s_pPowerOfTwoFrameBufferTexture.Init( vgui::MaterialSystem()->FindTexture( "_rt_PowerOfTwoFB", TEXTURE_GROUP_RENDER_TARGET ) );
 	}
-	
+
 	return s_pPowerOfTwoFrameBufferTexture;
 }
 
@@ -603,9 +603,9 @@ void CVMTPreviewPanel::Paint( void )
 		}
 	}
 
-	pRenderContext->ClearColor4ub( 76, 88, 68, 255 ); 
+	pRenderContext->ClearColor4ub( 76, 88, 68, 255 );
 	pRenderContext->ClearBuffers( true, true );
-	 			   
+
 	pRenderContext->FogMode( MATERIAL_FOG_NONE );
 	pRenderContext->SetNumBoneWeights( 0 );
 	pRenderContext->Bind( m_Material );

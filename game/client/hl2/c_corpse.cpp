@@ -26,7 +26,7 @@ C_Corpse::C_Corpse()
 int C_Corpse::DrawModel( int flags )
 {
 	int drawn = 0;
-	if ( m_nReferencePlayer <= 0 || 
+	if ( m_nReferencePlayer <= 0 ||
 		 m_nReferencePlayer > gpGlobals->maxClients )
 	{
 		return drawn;
@@ -48,11 +48,11 @@ int C_Corpse::DrawModel( int flags )
 		Vector zero;
 		zero.Init();
 
-		drawn = modelrender->DrawModel( 
-			flags, 
+		drawn = modelrender->DrawModel(
+			flags,
 			this,
 			MODEL_INSTANCE_INVALID,
-			m_nReferencePlayer, 
+			m_nReferencePlayer,
 			GetModel(),
 			GetAbsOrigin(),
 			GetAbsAngles(),
@@ -63,4 +63,3 @@ int C_Corpse::DrawModel( int flags )
 
 	return drawn;
 }
-

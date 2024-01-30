@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -78,7 +78,7 @@ public:
 		if ( Q_stricmp( command, "ResetConfigs" ) == 0 )
 		{
 			Close();
-			
+
 			if ( GetVParent() )
 			{
 				PostMessage( GetVParent(), new KeyValues( "Command", "command", "ResetConfigs"));
@@ -111,7 +111,7 @@ public:
 	{
 		BaseClass::OnCommand( command );
 
-		// For some weird reason, this dialog can 
+		// For some weird reason, this dialog can
 		if ( Q_stricmp( command, "ShowFAQ" ) == 0 )
 		{
 			OpenLocalizedURL( "URL_Convert_INI" );
@@ -137,7 +137,7 @@ public:
 	{
 		BaseClass::OnCommand( command );
 
-		// For some weird reason, this dialog can 
+		// For some weird reason, this dialog can
 		if ( Q_stricmp( command, "RunAnyway" ) == 0 )
 		{
 			m_pDialog->Launch( m_iActiveItem, true );
@@ -164,7 +164,7 @@ public:
 	{
 		SetSizeable( false );
 		LoadControlSettings( "min_footprint_confirm_box.res" );
-		
+
 		m_hOldModalSurface = input()->GetAppModalSurface();
 		input()->SetAppModalSurface( GetVPanel() );
 	}
@@ -172,7 +172,7 @@ public:
 	{
 		input()->SetAppModalSurface( m_hOldModalSurface );
 	}
-	
+
 	void OnCommand( const char *command )
 	{
 		BaseClass::OnCommand( command );
@@ -187,7 +187,7 @@ public:
 			MarkForDeletion();
 		}
 	}
-	
+
 	VPANEL m_hOldModalSurface;
 };
 
@@ -210,7 +210,7 @@ CSDKLauncherDialog::CSDKLauncherDialog(vgui::Panel *parent, const char *name) : 
 	m_pMediaList->SetImageList( m_pImageList, true );
 
 	m_pContextMenu = new Menu( m_pMediaList, "AppsContextMenu" );
-	
+
 	m_pCurrentGameCombo = new ComboBox( this, "CurrentGameList", 8, false );
 	m_pCurrentGameCombo->AddActionSignalTarget( this );
 
@@ -340,7 +340,7 @@ void CSDKLauncherDialog::Launch( int hActiveListItem, bool bForce )
 		}
 		return;
 	}
-	
+
 	pStr = item->GetString( "ShellExecute", NULL );
 	if ( pStr )
 	{
@@ -378,7 +378,7 @@ void CSDKLauncherDialog::Launch( int hActiveListItem, bool bForce )
 			if ( _access( testStr, 0 ) != 0 )
 			{
 				CGameInfoMessageBox *dlg = new CGameInfoMessageBox( this, "GameInfoMessageBox" );
-				
+
 				dlg->m_pDialog = this;
 				dlg->m_iActiveItem = hActiveListItem;
 
@@ -400,15 +400,15 @@ void CSDKLauncherDialog::Launch( int hActiveListItem, bool bForce )
 			V_StrSubst( programNameTemp, "%gamedir%", pModDir, programName, sizeof( programName ) );
 			V_strncpy( programNameTemp, programName, sizeof( programNameTemp ) );
 			V_StrSubst( programNameTemp, "%enginedir%", g_engineDir , programName, sizeof( programName ) );
-			
+
 			V_strncpy( launchDirectory, GetSDKLauncherBaseDirectory(), sizeof( launchDirectory ) );
 			V_strncat( launchDirectory, "\\bin\\", sizeof( launchDirectory ) );
 			V_strncat( launchDirectory, g_engineDir, sizeof( launchDirectory ) );
 
 			// Check to see if we're running in tools mode
 			if ( NULL != V_strstr( programName, "-tools" ) )
-			{	
-				// We can't run tools mode in engine versions earlier than OB 
+			{
+				// We can't run tools mode in engine versions earlier than OB
 				if ( !V_strcmp( g_engineDir, "ep1" ) )
 				{
 					VGUIMessageBox( this, "Error", "Source Engine Tools is not compatible with the selected engine version." );
@@ -430,9 +430,9 @@ void CSDKLauncherDialog::Launch( int hActiveListItem, bool bForce )
 
 
 			DWORD dwFlags = 0;
-			if ( !CreateProcess( 
+			if ( !CreateProcess(
 				0,
-				programName, 
+				programName,
 				NULL,							// security
 				NULL,
 				TRUE,
@@ -546,7 +546,7 @@ bool CSDKLauncherDialog::ParseConfigs( CUtlVector<CGameConfig*> &configs )
 
 	// Find the games block of the keyvalues
 	KeyValues *gameBlock = g_ConfigManager.GetGameBlock();
-	
+
 	if ( gameBlock == NULL )
 	{
 		return false;
@@ -669,7 +669,7 @@ void CSDKLauncherDialog::PopulateCurrentGameCombo( bool bSelectLast )
 		kv->SetString( "ModDir", configs[i]->m_ModDir.Base() );
 		kv->SetPtr( "panel", m_pCurrentGameCombo );
 
-		
+
 		// Check to see if this is our currently active game
 		if ( Q_stricmp( configs[i]->m_ModDir.Base(), szGame ) == 0 )
 		{
@@ -677,7 +677,7 @@ void CSDKLauncherDialog::PopulateCurrentGameCombo( bool bSelectLast )
 		}
 
 		itemIDs[i] = m_pCurrentGameCombo->AddItem( configs[i]->m_Name.Base(), kv );
-		
+
 		kv->deleteThis();
 	}
 
@@ -771,7 +771,7 @@ void CSDKLauncherDialog::RefreshConfigs( void )
 	{
 		g_ConfigManager.SetSDKEpoch( SP2009 );
 	}
-	else 
+	else
 	{
 		g_ConfigManager.SetSDKEpoch( MP2009 );
 	}
@@ -810,7 +810,7 @@ void CSDKLauncherDialog::ResetConfigs( void )
 {
 	// Reset the configs
 	g_ConfigManager.ResetConfigs();
-	
+
 	// Refresh the listing
 	PopulateCurrentGameCombo( false );
 

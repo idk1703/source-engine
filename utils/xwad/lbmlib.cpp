@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -256,7 +256,7 @@ int LoadBMP (const char* szFile, BYTE** ppbBits, BYTE** ppbPalette)
 	// File exists?
 	if ((pfile = fopen(szFile, "rb")) == NULL)
 		{ fprintf(stderr, "unable to open BMP file\n"); rc = -1; goto GetOut; }
-	
+
 	// Read file header
 	if (fread(&bmfh, sizeof bmfh, 1/*count*/, pfile) != 1)
 		{ rc = -2; goto GetOut; }
@@ -276,7 +276,7 @@ int LoadBMP (const char* szFile, BYTE** ppbBits, BYTE** ppbPalette)
 	// Bogus bit depth?  Only 8-bit supported.
 	if (bmih.biBitCount != 8)
 		{ fprintf(stderr, "BMP file not 8 bit\n");  rc = -4; goto GetOut; }
-	
+
 	// Bogus compression?  Only non-compressed supported.
 	if (bmih.biCompression != BI_RGB)
 		{ fprintf(stderr, "invalid BMP compression type\n"); rc = -5; goto GetOut; }
@@ -287,7 +287,7 @@ int LoadBMP (const char* szFile, BYTE** ppbBits, BYTE** ppbPalette)
 		bmih.biClrUsed = 256;
 		cbPalBytes = (1 << bmih.biBitCount) * sizeof( RGBQUAD );
 		}
-	else 
+	else
 		{
 		cbPalBytes = bmih.biClrUsed * sizeof( RGBQUAD );
 		}
@@ -312,7 +312,7 @@ int LoadBMP (const char* szFile, BYTE** ppbBits, BYTE** ppbPalette)
 	}
 
 	// Fill in unused entires will 0,0,0
-	for (i = bmih.biClrUsed; i < 256; i++) 
+	for (i = bmih.biClrUsed; i < 256; i++)
 	{
 		*pb++ = 0;
 		*pb++ = 0;
@@ -329,7 +329,7 @@ int LoadBMP (const char* szFile, BYTE** ppbBits, BYTE** ppbPalette)
 
 	// data is actually stored with the width being rounded up to a multiple of 4
 	biTrueWidth = (bmih.biWidth + 3) & ~3;
-	
+
 	// reverse the order of the data.
 	pb += (bmih.biHeight - 1) * biTrueWidth;
 	for(i = 0; i < bmih.biHeight; i++)
@@ -348,7 +348,7 @@ int LoadBMP (const char* szFile, BYTE** ppbBits, BYTE** ppbPalette)
 	*ppbBits = pbBmpBits;
 
 GetOut:
-	if (pfile) 
+	if (pfile)
 		fclose(pfile);
 
 	return rc;
@@ -397,7 +397,7 @@ int WriteBMPfile (char *szFile, byte *pbBits, int width, int height, byte *pbPal
 	bmih.biWidth = biTrueWidth;
 	// Height
 	bmih.biHeight = height;
-	// Only 1 plane 
+	// Only 1 plane
 	bmih.biPlanes = 1;
 	// Only 8-bit supported.
 	bmih.biBitCount = 8;
@@ -412,11 +412,11 @@ int WriteBMPfile (char *szFile, byte *pbBits, int width, int height, byte *pbPal
 	// Always full palette
 	bmih.biClrUsed = 256;
 	bmih.biClrImportant = 0;
-	
+
 	// Write info header
 	if (fwrite(&bmih, sizeof bmih, 1/*count*/, pfile) != 1)
 		{ rc = -3; goto GetOut; }
-	
+
 
 	// convert to expanded palette
 	pb = pbPalette;
@@ -427,7 +427,7 @@ int WriteBMPfile (char *szFile, byte *pbBits, int width, int height, byte *pbPal
 		rgrgbPalette[i].rgbRed   = *pb++;
 		rgrgbPalette[i].rgbGreen = *pb++;
 		rgrgbPalette[i].rgbBlue  = *pb++;
-        rgrgbPalette[i].rgbReserved = 0;
+	rgrgbPalette[i].rgbReserved = 0;
 	}
 
 	// Write palette (bmih.biClrUsed entries)
@@ -454,7 +454,7 @@ int WriteBMPfile (char *szFile, byte *pbBits, int width, int height, byte *pbPal
 	free(pbBmpBits);
 
 GetOut:
-	if (pfile) 
+	if (pfile)
 		fclose(pfile);
 
 	return rc;
@@ -496,7 +496,7 @@ void LoadLBM (char *filename, byte **picture, byte **palette)
 //
 	LBM_P = LBMbuffer;
 	if ( *(int *)LBMbuffer != LittleLong(FORMID) )
-	   Error ("No FORM ID at start of file!\n");
+	Error ("No FORM ID at start of file!\n");
 
 	LBM_P += 4;
 	formlength = BigLong( *(int *)LBM_P );
@@ -738,4 +738,3 @@ void WriteLBMfile (char *filename, byte *data, int width, int height, byte *pale
 	SaveFile (filename, lbm, lbmptr-lbm);
 	free (lbm);
 }
-

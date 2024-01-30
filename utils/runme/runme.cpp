@@ -40,14 +40,12 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 		return -1;
 	}
 
-    // Wait until child process exits.
-    WaitForSingleObject( pi.hProcess, INFINITE );
+	// Wait until child process exits.
+	WaitForSingleObject( pi.hProcess, INFINITE );
 
-    // Close process and thread handles. 
-    CloseHandle( pi.hProcess );
-    CloseHandle( pi.hThread );
+	// Close process and thread handles.
+	CloseHandle( pi.hProcess );
+	CloseHandle( pi.hThread );
 
 	return 0;
 }
-
-

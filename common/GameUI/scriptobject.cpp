@@ -1,12 +1,12 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //===========================================================================//
 // CScriptObject and CDescription class definitions
-// 
+//
 #include "scriptobject.h"
 #include <time.h>
 #include <stdio.h>
@@ -56,13 +56,13 @@ void StripFloatTrailingZeros(char *str)
 /////////////////////
 objtypedesc_t objtypes[] =
 {
-	{ O_BOOL  , "BOOL" }, 
-	{ O_NUMBER, "NUMBER" }, 
-	{ O_LIST  , "LIST" }, 
+	{ O_BOOL  , "BOOL" },
+	{ O_NUMBER, "NUMBER" },
+	{ O_LIST  , "LIST" },
 	{ O_STRING, "STRING" },
-	{ O_OBSOLETE  , "OBSOLETE" }, 
-	{ O_SLIDER , "SLIDER" }, 
-	{ O_CATEGORY, "CATEGORY" }, 
+	{ O_OBSOLETE  , "OBSOLETE" },
+	{ O_SLIDER , "SLIDER" },
+	{ O_CATEGORY, "CATEGORY" },
 };
 
 mpcontrol_t::mpcontrol_t( Panel *parent, char const *panelName )
@@ -104,7 +104,7 @@ void mpcontrol_t::OnSizeChanged( int wide, int tall )
 CScriptListItem::CScriptListItem()
 {
 	pNext = NULL;
-	memset( szItemText, 0, 128 ); 
+	memset( szItemText, 0, 128 );
 	memset( szValue, 0, 256 );
 }
 
@@ -144,10 +144,10 @@ void CScriptObject::RemoveAndDeleteAllItems( void )
 }
 
 void CScriptObject::SetCurValue( char const *strValue )
-{ 
+{
 	Q_strncpy( curValue, strValue, sizeof( curValue ) );
 
-	fcurValue = (float)atof( curValue ); 
+	fcurValue = (float)atof( curValue );
 
 	if ( type == O_NUMBER || type == O_BOOL || type == O_SLIDER )
 	{
@@ -190,7 +190,7 @@ void UTIL_StripInvalidCharacters( char *pszInput, int maxlen )
 {
 	char szOutput[4096];
 	char *pIn, *pOut;
-	
+
 	pIn = pszInput;
 	pOut = szOutput;
 
@@ -199,7 +199,7 @@ void UTIL_StripInvalidCharacters( char *pszInput, int maxlen )
 	while ( *pIn )
 	{
 		if ( ( *pIn != '"' ) &&
-			 ( *pIn != '%' ) )
+			( *pIn != '%' ) )
 		{
 			*pOut++ = *pIn;
 		}
@@ -311,7 +311,7 @@ void CScriptObject::WriteToScriptFile( FileHandle_t fp )
 			g_pFullFileSystem->FPrintf( fp, "\t\t\"%s\"\r\n", tooltip );
 		}
 		g_pFullFileSystem->FPrintf( fp, "\t\t{\r\n\t\t\tLIST\r\n" );
-		
+
 		pItem = pListItems;
 		while ( pItem )
 		{
@@ -605,7 +605,7 @@ bool CScriptObject::ReadFromBuffer( const char **pBuffer, bool isNewObject )
 		*pBuffer = engine->ParseFile( *pBuffer, token, sizeof( token ) );
 		if ( strlen( token ) <= 0 )
 			return false;
-	
+
 		if ( isNewObject )
 		{
 			fMin = (float)atof( token );
@@ -615,7 +615,7 @@ bool CScriptObject::ReadFromBuffer( const char **pBuffer, bool isNewObject )
 		*pBuffer = engine->ParseFile( *pBuffer, token , sizeof( token ));
 		if ( strlen( token ) <= 0 )
 			return false;
-	
+
 		if ( isNewObject )
 		{
 			fMax = (float)atof( token );
@@ -743,7 +743,7 @@ bool CScriptObject::ReadFromBuffer( const char **pBuffer, bool isNewObject )
 		Msg( "Expecting '{', got '%s'", token );
 		return false;
 	}
-	
+
 	return true;
 }
 
@@ -768,7 +768,7 @@ CDescription::~CDescription()
 	}
 
 	pObjList = NULL;
-	
+
 	if ( m_pszHintText )
 		free( m_pszHintText );
 	if ( m_pszDescriptionType )
@@ -962,7 +962,7 @@ bool CDescription::InitFromFile( const char *pszFileName, bool bAllowNewObject /
 	g_pFullFileSystem->Close( file );
 
 	const char *pBuffer = (const char*)buffer;
-	
+
 	ReadFromBuffer( &pBuffer, bAllowNewObject );
 
 	delete[] buffer;
@@ -1024,7 +1024,7 @@ void CDescription::TransferCurrentValues( const char *pszConfigFile )
 
 		/*
 			TODO: if/when prefixed keys are implemented
-		  const char *value;
+		const char *value;
 		if ( pObj->bSetInfo )
 		{
 			value = engine->LocalPlayerInfo_ValueForKey( pObj->cvarname ); // use LocalPlayerInfo because PlayerInfo strips keys prefixed with "_"
@@ -1053,7 +1053,7 @@ void CDescription::TransferCurrentValues( const char *pszConfigFile )
 			Q_strncpy( szValue, value, sizeof( szValue ) );
 
 			// Fill in better default value
-			// 
+			//
 			Q_strncpy( pObj->curValue,  szValue, sizeof( pObj->curValue ) );
 			pObj->fcurValue = (float)atof( szValue );
 
@@ -1066,12 +1066,12 @@ void CDescription::TransferCurrentValues( const char *pszConfigFile )
 }
 
 void CDescription::setDescription( const char *pszDesc )
-{ 
+{
 	m_pszDescriptionType = strdup( pszDesc );
 }
 
 void CDescription::setHint( const char *pszHint )
-{ 
+{
 	m_pszHintText = strdup( pszHint );
 }
 
@@ -1117,11 +1117,11 @@ CInfoDescription::CInfoDescription( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoDescription::WriteScriptHeader( FileHandle_t fp )
 {
-    char am_pm[] = "AM";
+	char am_pm[] = "AM";
 	tm newtime;
 	VCRHook_LocalTime( &newtime );
 
@@ -1136,11 +1136,11 @@ void CInfoDescription::WriteScriptHeader( FileHandle_t fp )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoDescription::WriteFileHeader( FileHandle_t fp )
 {
-    char am_pm[] = "AM";
+	char am_pm[] = "AM";
 	tm newtime;
 	VCRHook_LocalTime( &newtime );
 

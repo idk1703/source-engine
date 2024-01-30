@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -74,7 +74,7 @@ public:
 
 /*
  * Determine the set of "approach areas".
- * An approach area is an area representing a place where players 
+ * An approach area is an area representing a place where players
  * move into/out of our local neighborhood of areas.
  * @todo Optimize by search from eye outward and modifying pathfinder to treat all links as bi-directional
  */

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -50,7 +50,7 @@ public:
 
 	// Listen for broadcasts on this socket.
 	ISocket							*m_pListenSocket;
-	
+
 	// Connections we've made.
 	CUtlLinkedList<CSender*,int>	m_Senders;
 

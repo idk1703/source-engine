@@ -71,7 +71,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Describes a MDL asset: something that is compiled from sources 
+// Describes a MDL asset: something that is compiled from sources
 //-----------------------------------------------------------------------------
 class CDmeMDLMakefile : public CDmeMakefile
 {

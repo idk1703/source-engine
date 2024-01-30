@@ -31,7 +31,7 @@ public:
 
 public : // IGameResources interface
 
-	// Team data access 
+	// Team data access
 	virtual int		GetTeamScore( int index );
 	virtual const char *GetTeamName( int index );
 	virtual const Color&GetTeamColor( int index );

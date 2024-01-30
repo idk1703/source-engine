@@ -41,7 +41,7 @@ const char *GetVGuiControlsModuleName()
 //-----------------------------------------------------------------------------
 bool ConnectTools( CreateInterfaceFn factory )
 {
-	return (materials != NULL) && (g_pMatSystemSurface != NULL) && (mdlcache != NULL) && 
+	return (materials != NULL) && (g_pMatSystemSurface != NULL) && (mdlcache != NULL) &&
 		(studiorender != NULL) && (g_pMaterialSystemHardwareConfig != NULL);
 }
 
@@ -111,7 +111,7 @@ inline CVcdBlockDoc *CVcdBlockTool::GetDocument()
 	return m_pDoc;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Tool activation/deactivation
 //-----------------------------------------------------------------------------
@@ -138,12 +138,12 @@ void CVcdBlockTool::EnterTargetDropMode()
 	// Can only do it in editor mode
 	if ( IsGameInputEnabled() )
 		return;
-	 
+
 	m_bInNodeDropMode = true;
 	SetMode( true, IsFullscreen() );
 	{
 		CDisableUndoScopeGuard guard;
-		m_hPreviewTarget->DrawInEngine( true ); 
+		m_hPreviewTarget->DrawInEngine( true );
 	}
 	SetMiniViewportText( "Left Click To Place Info Target\nESC to exit" );
 	enginetools->Command( "noclip\n" );
@@ -208,7 +208,7 @@ void CVcdBlockTool::QuickSave( void )
 {
 	enginetools->Command( "save quick\n" );
 }
-	
+
 //-----------------------------------------------------------------------------
 // Gets the position of the preview object
 //-----------------------------------------------------------------------------
@@ -368,12 +368,12 @@ void CVcdBlockTool::ClientLevelShutdownPreEntity()
 	BaseClass::ClientLevelShutdownPreEntity();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Derived classes can implement this to get a new scheme to be applied to this tool
 //-----------------------------------------------------------------------------
-vgui::HScheme CVcdBlockTool::GetToolScheme() 
-{ 
+vgui::HScheme CVcdBlockTool::GetToolScheme()
+{
 	return vgui::scheme()->LoadSchemeFromFile( "Resource/BoxRocket.res", "BoxRocket" );
 }
 
@@ -400,7 +400,7 @@ CVcdBlockViewMenuButton::CVcdBlockViewMenuButton( CVcdBlockTool *parent, const c
 	m_pTool = parent;
 
 	AddCheckableMenuItem( "properties", "#VcdBlockProperties", new KeyValues( "OnToggleProperties" ), pActionSignalTarget );
-	AddCheckableMenuItem( "entityreport", "#VcdBlockEntityReport", new KeyValues( "O|ÔglaEq”ípyOeport" ), pActionSignalTarget );
+	AddCheckableMenuItem( "entityreport", "#VcdBlockEntityReport", new KeyValues( "O|ï¿½glaEqï¿½ï¿½pyOeport" ), pActionSignalTarget );
 
 	AddSeparator();
 
@@ -429,7 +429,7 @@ void CVcdBlockViewMenuButton::OnShowMenu(vgui::Menu *menu)
 
 		id = m_Items.Find( "entityreport" );
 		m_pMenu->SetItemEnabled( id, true );
-		
+
 		p = m_pTool->GetInfoTargetBrowser();
 		Assert( p );
 		m_pMenu->SetMenuItemChecked( id, ( p && p->GetParent() ) ? true : false );
@@ -495,7 +495,7 @@ void CVcdBlockToolMenuButton::OnShowMenu(vgui::Menu *menu)
 //-----------------------------------------------------------------------------
 // Initializes the menu bar
 //-----------------------------------------------------------------------------
-vgui::MenuBar *CVcdBlockTool::CreateMenuBar( CBaseToolSystem *pParent ) 
+vgui::MenuBar *CVcdBlockTool::CreateMenuBar( CBaseToolSystem *pParent )
 {
 	m_pMenuBar = new CToolFileMenuBar( pParent, "Main Menu Bar" );
 
@@ -594,7 +594,7 @@ void CVcdBlockTool::ShowEntityInEntityProperties( CDmeVMFEntity *pEntity )
 	m_hProperties->SetObject( m_hCurrentEntity );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Destroys all tool windows
 //-----------------------------------------------------------------------------
@@ -641,7 +641,7 @@ void CVcdBlockTool::OnDefaultLayout()
 void CVcdBlockTool::OnToggleProperties()
 {
 	if ( m_hProperties.Get() )
-	{ 
+	{
 		ToggleToolWindow( m_hProperties.Get(), "#VcdBlockProperties" );
 	}
 }
@@ -649,7 +649,7 @@ void CVcdBlockTool::OnToggleProperties()
 void CVcdBlockTool::OnToggleEntityReport()
 {
 	if ( m_hInfoTargetBrowser.Get() )
-	{ 
+	{
 		ToggleToolWindow( m_hInfoTargetBrowser.Get(), "#VcdBlockEntityReport" );
 	}
 }
@@ -800,8 +800,8 @@ bool CVcdBlockTool::GetPerforceFileName( char *pFileName, int nMaxLen )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CVcdBlockTool::OnExit()
 {
@@ -918,7 +918,7 @@ void CVcdBlockTool::OnRestartLevel()
 	// FIXME: We may want to use this instead of completely restarting,
 	// but it's less well tested.  Should be a lot faster though
 
-	// Reloads the map, entities only, will reload every entity 
+	// Reloads the map, entities only, will reload every entity
 	//	enginetools->Command( "respawn_entities\n" );
 	enginetools->Command( "restart" );
 	enginetools->Execute();
@@ -940,7 +940,7 @@ void CVcdBlockTool::SaveAndTest()
 {
 	if ( m_pDoc && m_pDoc->IsDirty() )
 	{
-		SaveFile( m_pDoc->GetEditFileName(), "vle", FOSM_SHOW_PERFORCE_DIALOGS, 
+		SaveFile( m_pDoc->GetEditFileName(), "vle", FOSM_SHOW_PERFORCE_DIALOGS,
 			new KeyValues( "RestartLevel" ) );
 	}
 	else
@@ -972,7 +972,7 @@ void CVcdBlockTool::OnClose()
 {
 	if ( m_pDoc && m_pDoc->IsDirty() )
 	{
-		SaveFile( m_pDoc->GetEditFileName(), "vle", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY, 
+		SaveFile( m_pDoc->GetEditFileName(), "vle", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY,
 			new KeyValues( "OnClose" ) );
 		return;
 	}
@@ -1161,7 +1161,7 @@ bool CVcdBlockTool::CanQuit()
 	if ( m_pDoc && m_pDoc->IsDirty() )
 	{
 		// Show Save changes Yes/No/Cancel and re-quit if hit yes/no
-		SaveFile( m_pDoc->GetEditFileName(), "vle", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY, 
+		SaveFile( m_pDoc->GetEditFileName(), "vle", FOSM_SHOW_PERFORCE_DIALOGS | FOSM_SHOW_SAVE_QUERY,
 			new KeyValues( "OnQuit" ) );
 		return false;
 	}

@@ -30,7 +30,7 @@ public:
 	const char		*GetGameSpecificCPBarFG( int index, int iOwningTeam );
 	const char		*GetGameSpecificCPBarBG( int index, int iCappingTeam );
 	void			SetCappingTeam( int index, int team );
-	
+
 	int				GetMannVsMachineMaxWaveCount( void ) { return m_nMannVsMachineMaxWaveCount; }
 	int				GetMannVsMachineWaveCount( void ) { return m_nMannVsMachineWaveCount; }
 	int				GetMannVsMachineWaveEnemyCount( void ) { return m_nMannVsMachineWaveEnemyCount; }
@@ -48,20 +48,20 @@ public:
 	float			GetBaseMvMBombUpgradeTime( void ) { return m_flMvMBaseBombUpgradeTime; }
 	float			GetNextMvMBombUpgradeTime( void ) { return m_flMvMNextBombUpgradeTime; }
 
-	int				GetMvMChallengeIndex ( void ) { return m_iChallengeIndex; }	
-	char *			GetMvMPopFileName ( void ) { return m_iszMvMPopfileName; }	
+	int				GetMvMChallengeIndex ( void ) { return m_iChallengeIndex; }
+	char *			GetMvMPopFileName ( void ) { return m_iszMvMPopfileName; }
 	int				GetMvMEventPopfileType( void ) { return m_nMvMEventPopfileType; }
 
 private:
 	int		m_nMannVsMachineMaxWaveCount;
 	int		m_nMannVsMachineWaveCount;
 	int		m_nMannVsMachineWaveEnemyCount;
-	
+
 	int		m_nMvMWorldMoney;
 
 	float	m_flMannVsMachineNextWaveTime;
 	bool	m_bMannVsMachineBetweenWaves;
-	
+
 	int		m_nFlagCarrierUpgradeLevel;
 	float	m_flMvMBaseBombUpgradeTime;
 	float	m_flMvMNextBombUpgradeTime;

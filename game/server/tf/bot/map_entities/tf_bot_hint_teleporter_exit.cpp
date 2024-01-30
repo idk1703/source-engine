@@ -16,4 +16,3 @@ LINK_ENTITY_TO_CLASS( bot_hint_teleporter_exit, CTFBotHintTeleporterExit );
 CTFBotHintTeleporterExit::CTFBotHintTeleporterExit( void )
 {
 }
-

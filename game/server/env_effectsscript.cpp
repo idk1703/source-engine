@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -87,7 +87,7 @@ CEffectScriptElement::CEffectScriptElement()
 
 
 //-----------------------------------------------------------------------------
-// An entity which emits other entities at points 
+// An entity which emits other entities at points
 //-----------------------------------------------------------------------------
 class CEnvEffectsScript : public CBaseAnimating
 {
@@ -107,7 +107,7 @@ public:
 
 	void ParseNewEffect( void );
 
-	const char *GetScriptFile( void ) 
+	const char *GetScriptFile( void )
 	{
 		return STRING( m_iszScriptName );
 	}
@@ -119,13 +119,13 @@ public:
 	CEffectScriptElement *GetScriptElementByName( const char *pName );
 
 private:
-	
+
 	string_t m_iszScriptName;
-		
+
 	CUtlVector< CEffectScriptElement > m_ScriptElements;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 	bool IsRootCommand( void )
@@ -157,7 +157,7 @@ inline void Unget()
 
 inline bool TokenWaiting( void )
 {
-	
+
 	const char *p = currenttoken;
 	while ( *p && *p!='\n')
 	{
@@ -176,7 +176,7 @@ inline bool TokenWaiting( void )
 
 
 //-----------------------------------------------------------------------------
-// Save/load 
+// Save/load
 //-----------------------------------------------------------------------------
 BEGIN_DATADESC( CEnvEffectsScript )
 	// Inputs
@@ -284,7 +284,7 @@ void CEnvEffectsScript::SpriteEffectEvent( CEffectScriptElement *pEffect )
 	}
 }
 
-void CEnvEffectsScript::HandleAnimEvent ( animevent_t *pEvent ) 
+void CEnvEffectsScript::HandleAnimEvent ( animevent_t *pEvent )
 {
 	if ( pEvent->event == AE_START_SCRIPTED_EFFECT )
 	{
@@ -402,7 +402,7 @@ void CEnvEffectsScript::LoadFromBuffer( const char *scriptfile, const char *buff
 	while ( 1 )
 	{
 		ParseToken();
-		
+
 		if ( !token[0] )
 		{
 			break;
@@ -424,7 +424,7 @@ void CEnvEffectsScript::ParseNewEffect( void )
 {
 	//Add a new effect to the list.
 	CEffectScriptElement NewElement;
-	
+
 	// Effect Group Name
 	ParseToken();
 	Q_strncpy( NewElement.m_szEffectName, token, sizeof( NewElement.m_szEffectName ) );
@@ -532,7 +532,7 @@ CEffectScriptElement *CEnvEffectsScript::GetScriptElementByName( const char *pNa
 	{
 		CEffectScriptElement *pCurrent = &m_ScriptElements.Element( i );
 
-		if ( pCurrent && !Q_stricmp( pCurrent->m_szEffectName, pName ) ) 
+		if ( pCurrent && !Q_stricmp( pCurrent->m_szEffectName, pName ) )
 		{
 			return pCurrent;
 		}

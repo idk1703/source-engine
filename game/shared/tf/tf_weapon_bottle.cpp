@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -169,7 +169,7 @@ void CTFStickBomb::Smack( void )
 		CTFPlayer *pTFPlayer = ToTFPlayer( GetOwner() );
 		if ( pTFPlayer )
 		{
-			Vector vecForward; 
+			Vector vecForward;
 			AngleVectors( pTFPlayer->EyeAngles(), &vecForward );
 			Vector vecSwingStart = pTFPlayer->Weapon_ShootPosition();
 			Vector vecSwingEnd = vecSwingStart + vecForward * GetSwingRange();
@@ -177,7 +177,7 @@ void CTFStickBomb::Smack( void )
 			Vector explosion = vecSwingStart;
 
 			CPVSFilter filter( explosion );
-			
+
 			// Halloween Spell
 			int iHalloweenSpell = 0;
 			int iCustomParticleIndex = INVALID_STRING_INDEX;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -80,13 +80,13 @@ CPlayer *CNetworkServer::FindPlayerByNetChannel( INetChannel *chan )
 	return NULL;
 }
 
-#define SPEW_MESSAGES 
+#define SPEW_MESSAGES
 
 #if defined( SPEW_MESSAGES )
 #define SM_SPEW_MESSAGE( code, remote ) \
 	Warning( "Message:  %s from '%s'\n", #code, remote );
 #else
-#define SM_SPEW_MESSAGE( code, remote ) 
+#define SM_SPEW_MESSAGE( code, remote )
 #endif
 // process a connectionless packet
 bool CNetworkServer::ProcessConnectionlessPacket( CNetPacket *packet )
@@ -219,6 +219,3 @@ void CPlayer::SendUpdate()
 		m_NetChan.SendDatagram( NULL );
 	}
 }
-
-
-

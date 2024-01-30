@@ -50,9 +50,9 @@ ActionResult< CTFBot > CTFTrainingAttackSentryActionPoint::Update( CTFBot *me, f
 			toSentry.NormalizeInPlace();
 			Vector forward;
 			me->EyeVectors( &forward );
-			
+
 			if ( ( forward.x * toSentry.x + forward.y * toSentry.y ) > 0.95f )
-			{			
+			{
 				me->PressFireButton();
 			}
 		}
@@ -62,11 +62,11 @@ ActionResult< CTFBot > CTFTrainingAttackSentryActionPoint::Update( CTFBot *me, f
 		if ( m_repathTimer.IsElapsed() )
 		{
 			m_repathTimer.Start( RandomFloat( 1.0f, 2.0f ) );
-			
+
 			CTFBotPathCost cost( me, FASTEST_ROUTE );
 			m_path.Compute( me, pActionPoint->GetAbsOrigin(), cost );
 		}
-		
+
 		m_path.Update( me );
 	}
 
@@ -108,7 +108,7 @@ ActionResult< CTFBot > CTFGotoActionPoint::Update( CTFBot *me, float interval )
 		{
 			me->SetActionPoint( dynamic_cast< CTFBotActionPoint * >( pActionPoint->m_moveGoal.Get() ) );
 			return ChangeTo( new CTFGotoActionPoint, "Reached point, going to next" );
-		}		
+		}
 	}
 	else if ( m_wasTeleported )
 	{
@@ -122,11 +122,11 @@ ActionResult< CTFBot > CTFGotoActionPoint::Update( CTFBot *me, float interval )
 		if ( m_repathTimer.IsElapsed() )
 		{
 			m_repathTimer.Start( RandomFloat( 1.0f, 2.0f ) );
-			
+
 			CTFBotPathCost cost( me, FASTEST_ROUTE );
 			m_path.Compute( me, pActionPoint->GetAbsOrigin(), cost );
 		}
-		
+
 		m_path.Update( me );
 	}
 	return Continue();

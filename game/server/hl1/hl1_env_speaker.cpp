@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -24,7 +24,7 @@
 
 // ===================================================================================
 //
-// Speaker class. Used for announcements per level, for door lock/unlock spoken voice. 
+// Speaker class. Used for announcements per level, for door lock/unlock spoken voice.
 //
 
 class CSpeaker : public CPointEntity
@@ -36,9 +36,9 @@ public:
 	void Precache( void );
 	void ToggleUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	void SpeakerThink( void );
-	
+
 	virtual int	ObjectCaps( void ) { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
-	
+
 	int	m_preset;			// preset number
 	string_t m_iszMessage;
 
@@ -68,10 +68,10 @@ void CSpeaker::Spawn( void )
 		SetThink( &CSpeaker::SUB_Remove );
 		return;
 	}
-    SetSolid( SOLID_NONE );
-    SetMoveType( MOVETYPE_NONE );
+	SetSolid( SOLID_NONE );
+	SetMoveType( MOVETYPE_NONE );
 
-	
+
 	SetThink(&CSpeaker::SpeakerThink);
 	SetNextThink( TICK_NEVER_THINK );
 
@@ -81,7 +81,7 @@ void CSpeaker::Spawn( void )
 	Precache( );
 }
 
-#define ANNOUNCE_MINUTES_MIN	0.25	 
+#define ANNOUNCE_MINUTES_MIN	0.25
 #define ANNOUNCE_MINUTES_MAX	2.25
 
 void CSpeaker::Precache( void )
@@ -105,7 +105,7 @@ void CSpeaker::SpeakerThink( void )
 		SetNextThink( gpGlobals->curtime + releaseTime + random->RandomFloat( 5, 10 ) );
 		return;
 	}
-	
+
 	if (m_preset)
 	{
 		// go lookup preset text, assign szSoundFile
@@ -115,7 +115,7 @@ void CSpeaker::SpeakerThink( void )
 		case 2: szSoundFile =  "C1A1_"; break;
 		case 3: szSoundFile =  "C1A2_"; break;
 		case 4: szSoundFile =  "C1A3_"; break;
-		case 5: szSoundFile =  "C1A4_"; break; 
+		case 5: szSoundFile =  "C1A4_"; break;
 		case 6: szSoundFile =  "C2A1_"; break;
 		case 7: szSoundFile =  "C2A2_"; break;
 		case 8: szSoundFile =  "C2A3_"; break;
@@ -126,11 +126,11 @@ void CSpeaker::SpeakerThink( void )
 		}
 	} else
 		szSoundFile = (char*) STRING( m_iszMessage );
-	
+
 	if (szSoundFile[0] == '!')
 	{
 		// play single sentence, one shot
-		UTIL_EmitAmbientSound ( GetSoundSourceIndex(), GetAbsOrigin(), szSoundFile, 
+		UTIL_EmitAmbientSound ( GetSoundSourceIndex(), GetAbsOrigin(), szSoundFile,
 			flvolume, SNDLVL_120dB, flags, pitch);
 
 		// shut off and reset
@@ -141,15 +141,15 @@ void CSpeaker::SpeakerThink( void )
 		// make random announcement from sentence group
 
 		if ( SENTENCEG_PlayRndSz( edict(), szSoundFile, flvolume, SNDLVL_120dB, flags, pitch) < 0 )
-			 Msg(  "Level Design Error!\nSPEAKER has bad sentence group name: %s\n",szSoundFile); 
+			Msg(  "Level Design Error!\nSPEAKER has bad sentence group name: %s\n",szSoundFile);
 
 		// set next announcement time for random 5 to 10 minute delay
-		SetNextThink ( gpGlobals->curtime + 
+		SetNextThink ( gpGlobals->curtime +
 						random->RandomFloat( ANNOUNCE_MINUTES_MIN * 60.0, ANNOUNCE_MINUTES_MAX * 60.0 ) );
 
 		// time delay until it's ok to speak: used so that two NPCs don't talk at once
-		g_AIFriendliesTalkSemaphore.Acquire( 5, this );		
-		g_AIFoesTalkSemaphore.Acquire( 5, this );		
+		g_AIFriendliesTalkSemaphore.Acquire( 5, this );
+		g_AIFoesTalkSemaphore.Acquire( 5, this );
 	}
 
 	return;
@@ -164,7 +164,7 @@ void CSpeaker::ToggleUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 	int fActive = (GetNextThink() > 0.0);
 
 	// fActive is TRUE only if an announcement is pending
-	
+
 	if ( useType != USE_TOGGLE )
 	{
 		// ignore if we're just turning something on that's already on, or
@@ -185,22 +185,22 @@ void CSpeaker::ToggleUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 		// turn off announcements
 		SetNextThink( TICK_NEVER_THINK );
 		return;
-	
+
 	}
 
 	// Toggle announcements
 
-	
+
 	if ( fActive )
 	{
 		// turn off announcements
 		SetNextThink( TICK_NEVER_THINK );
 	}
-	else 
+	else
 	{
 		// turn on announcements
 		SetNextThink( gpGlobals->curtime + 0.1 );
-	} 
+	}
 }
 
 // KeyValue - load keyvalue pairs into member data

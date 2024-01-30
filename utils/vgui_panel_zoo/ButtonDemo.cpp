@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,10 +22,10 @@ class ButtonDemo: public DemoPage
 		~ButtonDemo();
 
 		void OnButtonClicked();
-	
+
 	private:
 		Button *m_pButton;
-		
+
 		DECLARE_PANELMAP();
 };
 
@@ -44,7 +44,7 @@ ButtonDemo::ButtonDemo(Panel *parent, const char *name) : DemoPage(parent, name)
 	// Here we use a KeyValues command, this is mapped using the Message map
 	// below to a function.
 	m_pButton->SetCommand(new KeyValues ("ButtonClicked"));
-	
+
 }
 
 //-----------------------------------------------------------------------------
@@ -66,7 +66,7 @@ void ButtonDemo::OnButtonClicked()
 
 MessageMapItem_t ButtonDemo::m_MessageMap[] =
 {
-	MAP_MESSAGE( ButtonDemo, "ButtonClicked", OnButtonClicked ),   
+	MAP_MESSAGE( ButtonDemo, "ButtonClicked", OnButtonClicked ),
 };
 
 IMPLEMENT_PANELMAP(ButtonDemo, DemoPage);
@@ -77,5 +77,3 @@ Panel* ButtonDemo_Create(Panel *parent)
 {
 	return new ButtonDemo(parent, "ButtonDemo");
 }
-
-

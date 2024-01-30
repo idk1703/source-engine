@@ -313,7 +313,7 @@ class CCasualCriteriaHelper
 {
 public:
 	CCasualCriteriaHelper( const CMsgCasualMatchmakingSearchCriteria& criteria );
-	
+
 	bool IsMapSelected( const MapDef_t* pMapDef ) const;
 	bool IsMapSelected( const uint32 nMapDefIndex ) const;
 	bool IsValid() const;
@@ -327,7 +327,7 @@ public:
 
 private:
 	bool IsMapInValidCategory( uint32 nMapDefIndex ) const;
-	
+
 private:
 	CLargeVarBitVec m_mapsBits;
 };

@@ -22,7 +22,7 @@ EntityParticleTrailInfo_t::EntityParticleTrailInfo_t()
 }
 
 //-----------------------------------------------------------------------------
-// Save/load 
+// Save/load
 //-----------------------------------------------------------------------------
 #ifndef CLIENT_DLL
 
@@ -53,6 +53,3 @@ BEGIN_NETWORK_TABLE_NOBASE( EntityParticleTrailInfo_t, DT_EntityParticleTrailInf
 #endif
 
 END_NETWORK_TABLE()
-
-
-

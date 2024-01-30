@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmetransform.h"
@@ -14,7 +14,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeTransform, CDmeTransform );
 
@@ -60,7 +60,7 @@ void CDmeTransform::SetPosition( const Vector &vecPosition )
 	m_Position = vecPosition;
 }
 
-const Quaternion &CDmeTransform::GetOrientation() const 
+const Quaternion &CDmeTransform::GetOrientation() const
 {
 	return m_Orientation.Get();
 }

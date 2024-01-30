@@ -196,7 +196,7 @@ EditorSendResult_t Editor_SendCommand(const char *pszCommand, bool bShowUI)
 		CopyData.cbData = strlen(pszCommand) + 1;
 		CopyData.dwData = 0;
 		CopyData.lpData = (void *)pszCommand;
-		
+
 		if (!SendMessage(hwnd, WM_COPYDATA, 0, (LPARAM)&CopyData))
 		{
 			if (bShowUI)
@@ -205,7 +205,7 @@ EditorSendResult_t Editor_SendCommand(const char *pszCommand, bool bShowUI)
 				Q_snprintf(szError,sizeof(szError), "Worldcraft did not accept the command: \n\n\"%s\"\n\n Make sure the command is valid and that Worldcraft is still running properly.", pszCommand);
 				MessageBox(NULL, szError, "Editor_SendCommand Error", MB_OK);
 			}
-		
+
 			return(Editor_BadCommand);
 		}
 	}

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -183,7 +183,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CStoreItemControlsPanel;
 class CStoreItemControlsPanel : public vgui::EditablePanel
@@ -221,7 +221,7 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CStorePricePanel : public vgui::EditablePanel
 {
@@ -254,7 +254,7 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CStorePage : public vgui::PropertyPage, public CGameEventListener
 {
@@ -360,7 +360,7 @@ protected:
 		CStoreItemControlsPanel* m_pItemControlsPanel;
 	};
 	CUtlVector<item_panel>		m_vecItemPanels;
-	CUtlVector<int>				m_EntryIndices; // Easy lookup for which model panel is mapped to which entry index			
+	CUtlVector<int>				m_EntryIndices; // Easy lookup for which model panel is mapped to which entry index
 	CItemModelPanel				*m_pMouseOverItemPanel;
 	CItemModelPanelToolTip		*m_pMouseOverTooltip;
 	KeyValues					*m_pItemModelPanelKVs;

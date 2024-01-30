@@ -62,7 +62,7 @@ CON_COMMAND( overview_zoom, "Sets overview map zoom: <zoom> [<time>] [rel]" )
 	float zoom = Q_atof( args[ 1 ] );
 
 	float time = 0;
-	
+
 	if ( args.ArgC() >= 3 )
 		time = Q_atof( args[ 2 ] );
 
@@ -141,9 +141,9 @@ CMapOverview::CMapOverview( const char *pElementName ) : BaseClass( NULL, pEleme
 
 	// Make sure we actually have the font...
 	vgui::IScheme *pScheme = vgui::scheme()->GetIScheme( GetScheme() );
-	
+
 	m_hIconFont = pScheme->GetFont( "DefaultSmall" );
-	
+
 	m_nMapTextureID = -1;
 	m_MapKeyValues = NULL;
 
@@ -168,7 +168,7 @@ CMapOverview::CMapOverview( const char *pElementName ) : BaseClass( NULL, pEleme
 	m_ObjectCounterID = 1;
 
 	Reset();
-	
+
 	Q_memset( m_Players, 0, sizeof(m_Players) );
 
 	InitTeamColorsAndIcons();
@@ -202,7 +202,7 @@ int CMapOverview::AddIconTexture(const char *filename)
 {
 	int index = m_TextureIDs.Find( filename );
 
-    if ( m_TextureIDs.IsValidIndex( index ) )
+	if ( m_TextureIDs.IsValidIndex( index ) )
 	{
 		// already known, return texture ID
 		return m_TextureIDs.Element(index);
@@ -272,7 +272,7 @@ void CMapOverview::UpdatePlayers()
 
 		if ( !pPlayer )
 			continue;
-		
+
 		// don't update if player is dormant
 		if ( pPlayer->IsDormant() )
 			continue;
@@ -295,14 +295,14 @@ void CMapOverview::UpdatePlayerTrails()
 	for (int i=0; i<MAX_PLAYERS; i++)
 	{
 		MapPlayer_t *p = &m_Players[i];
-		
+
 		// no trails for spectators or dead players
 		if ( (p->team <= TEAM_SPECTATOR) || (p->health <= 0) )
 		{
 			continue;
 		}
 
-		// move old trail points 
+		// move old trail points
 		for ( int j=MAX_TRAIL_LENGTH-1; j>0; j--)
 		{
 			p->trail[j]=p->trail[j-1];
@@ -377,7 +377,7 @@ bool CMapOverview::CanPlayerBeSeen(MapPlayer_t *player)
 
 	// Invalid guy.
 	if( player->position == Vector(0,0,0) )
-		return false; 
+		return false;
 
 	// if local player is on spectator team, he can see everyone
 	if ( localPlayer->GetTeamNumber() <= TEAM_SPECTATOR )
@@ -482,7 +482,7 @@ void CMapOverview::Update( void )
 		// follow target
 		SetFollowEntity( GetSpectatorTarget() );
 	}
-	else 
+	else
 	{
 		// follow ourself otherwise
 		SetFollowEntity( pPlayer->entindex() );
@@ -534,7 +534,7 @@ void CMapOverview::DrawMapTexture()
 
 	if ( m_nMapTextureID < 0 )
 		return;
-	
+
 	Vertex_t points[4] =
 	{
 		Vertex_t( MapToPanel ( Vector2D(0,0) ), Vector2D(0,0) ),
@@ -544,7 +544,7 @@ void CMapOverview::DrawMapTexture()
 	};
 
 	int alpha = 255.0f * overview_alpha.GetFloat(); clamp( alpha, 1, 255 );
-	
+
 	surface()->DrawSetColor( 255,255,255, alpha );
 	surface()->DrawSetTexture( m_nMapTextureID );
 	surface()->DrawTexturedPolygon( 4, points );
@@ -561,7 +561,7 @@ void CMapOverview::DrawMapPlayerTrails()
 
 		if ( !CanPlayerBeSeen(player) )
 			continue;
-		
+
 		player->trail[0] = WorldToMap ( player->position );
 
 		for ( int iTrail=0; iTrail<(MAX_TRAIL_LENGTH-1); iTrail++)
@@ -575,10 +575,10 @@ void CMapOverview::DrawMapPlayerTrails()
 			int intensity = 255 - float(255.0f * iTrail ) / MAX_TRAIL_LENGTH;
 
 			Vector2D dist = pos1 - pos2;
-			
+
 			// don't draw too long lines, player probably teleported
 			if ( dist.LengthSqr() < (128*128) )
-			{	
+			{
 				surface()->DrawSetColor( player->color[0], player->color[1], player->color[2], intensity );
 				surface()->DrawLine( pos1.x, pos1.y, pos2.x, pos2.y );
 			}
@@ -604,7 +604,7 @@ void CMapOverview::DrawObjects( )
 		if ( obj->flags & MAP_OBJECT_ALIGN_TO_MAP && m_bRotateMap )
 		{
 			if ( m_bRotateMap )
-                flAngle = 90;
+				flAngle = 90;
 			else
 				flAngle = 0;
 		}
@@ -632,7 +632,7 @@ bool CMapOverview::DrawIcon( MapObject_t *obj )
 	Color *statusColor = &obj->statusColor;
 
 	Vector offset;	offset.z = 0;
-	
+
 	Vector2D pospanel = WorldToMap( pos );
 	pospanel = MapToPanel( pospanel );
 
@@ -701,7 +701,7 @@ bool CMapOverview::DrawIcon( MapObject_t *obj )
 		surface()->DrawSetTextPos( x+1, y );
 		surface()->DrawPrintText( iconText, wcslen(iconText) );
 
-		// draw name in color 
+		// draw name in color
 		surface()->DrawSetTextColor( textColor->r(), textColor->g(), textColor->b(), 255 );
 		surface()->DrawSetTextPos( x, y );
 		surface()->DrawPrintText( iconText, wcslen(iconText) );
@@ -718,7 +718,7 @@ int CMapOverview::GetPixelOffset( float height )
 	Vector2D pos3 = WorldToMap( Vector(0,0,0) );
 	pos3 = MapToPanel( pos3 );
 
-	int a = pos2.y-pos3.y; 
+	int a = pos2.y-pos3.y;
 	int b = pos2.x-pos3.x;
 
 	return (int)sqrt((float)(a*a+b*b)); // number of panel pixels for "scale" units in world
@@ -729,7 +729,7 @@ void CMapOverview::DrawMapPlayers()
 	surface()->DrawSetTextFont( m_hIconFont );
 
 	Color colorGreen( 0, 255, 0, 255 );	// health bar color
-	
+
 	for (int i=0; i<MAX_PLAYERS; i++)
 	{
 		MapPlayer_t *player = &m_Players[i];
@@ -740,7 +740,7 @@ void CMapOverview::DrawMapPlayers()
 		// don't draw dead players / spectators
 		if ( player->health <= 0 )
 			continue;
-		
+
 		float status = -1;
 		const char *name = NULL;
 
@@ -794,7 +794,7 @@ float CMapOverview::GetViewAngle( void )
 
 Vector2D CMapOverview::MapToPanel( const Vector2D &mappos )
 {
-	int pwidth, pheight; 
+	int pwidth, pheight;
 	Vector2D panelpos;
 	float viewAngle = GetViewAngle();
 
@@ -828,7 +828,7 @@ void CMapOverview::SetMap(const char * levelname)
 {
 	// Reset players and objects, even if the map is the same as the previous one
 	m_Objects.RemoveAll();
-	
+
 	m_fNextTrailUpdate = 0;// Set to 0 for immediate update.  Our WorldTime var hasn't been updated to 0 for the new map yet
 	m_fWorldTime = 0;// In release, we occasionally race and get this bug again if we gt a paint before an update.  Reset this before the old value gets in to the timer.
 	// Please note, UpdatePlayerTrails comes from PAINT, not UPDATE.
@@ -848,7 +848,7 @@ void CMapOverview::SetMap(const char * levelname)
 
 	char tempfile[MAX_PATH];
 	Q_snprintf( tempfile, sizeof( tempfile ), "resource/overviews/%s.txt", levelname );
-	
+
 	if ( !m_MapKeyValues->LoadFromFile( g_pFullFileSystem, tempfile, "GAME" ) )
 	{
 		DevMsg( 1, "Error! CMapOverview::SetMap: couldn't load file %s.\n", tempfile );
@@ -891,7 +891,7 @@ void CMapOverview::ResetRound()
 	for (int i=0; i<MAX_PLAYERS; i++)
 	{
 		MapPlayer_t *p = &m_Players[i];
-		
+
 		if ( p->team > TEAM_SPECTATOR )
 		{
 			p->health = 100;
@@ -907,7 +907,7 @@ void CMapOverview::ResetRound()
 
 void CMapOverview::OnMousePressed( MouseCode code )
 {
-	
+
 }
 
 void CMapOverview::DrawCamera()
@@ -935,13 +935,13 @@ void CMapOverview::FireGameEvent( IGameEvent *event )
 
 	else if ( Q_strcmp(type,"player_connect_client") == 0 )
 	{
-		int index = event->GetInt("index"); // = entity index - 1 
+		int index = event->GetInt("index"); // = entity index - 1
 
 		if ( index < 0 || index >= MAX_PLAYERS )
 			return;
 
 		MapPlayer_t *player = &m_Players[index];
-		
+
 		player->index = index;
 		player->userid = event->GetInt("userid");
 		Q_strncpy( player->name, event->GetString("name","unknown"), sizeof(player->name) );
@@ -960,7 +960,7 @@ void CMapOverview::FireGameEvent( IGameEvent *event )
 			return;
 
 		MapPlayer_t *player = &m_Players[index];
-		
+
 		player->index = index;
 		player->userid = event->GetInt("userid");
 		Q_strncpy( player->name, event->GetString("name","unknown"), sizeof(player->name) );
@@ -1003,7 +1003,7 @@ void CMapOverview::FireGameEvent( IGameEvent *event )
 	else if ( Q_strcmp(type,"player_disconnect") == 0 )
 	{
 		MapPlayer_t *player = GetPlayerByUserID( event->GetInt("userid") );
-		
+
 		if ( !player )
 			return;
 
@@ -1035,7 +1035,7 @@ void CMapOverview::SetMode(int mode)
 		C_BasePlayer *pPlayer = CBasePlayer::GetLocalPlayer();
 
 		if ( pPlayer )
-            SetFollowEntity( pPlayer->entindex() );
+			SetFollowEntity( pPlayer->entindex() );
 
 		ShowPanel( true );
 
@@ -1094,7 +1094,7 @@ void CMapOverview::UpdateSizeAndPosition()
 		if ( y < iTopBarHeight )
 			y = iTopBarHeight;
 
-        SetBounds( x,y,w,MIN(h,iScreenTall) );
+		SetBounds( x,y,w,MIN(h,iScreenTall) );
 	}
 }
 
@@ -1206,7 +1206,7 @@ int	CMapOverview::AddObject( const char *icon, int entity, float timeToLive )
 	obj.icon = AddIconTexture( icon );
 	obj.size = m_flIconSize;
 	obj.status = -1;
-	
+
 	if ( timeToLive > 0 )
 		obj.endtime = gpGlobals->curtime + timeToLive;
 	else
@@ -1325,7 +1325,7 @@ void CMapOverview::UpdateObjects()
 			i--;
 			continue;
 		}
-		
+
 		if ( obj->index <= 0 )
 			continue;
 

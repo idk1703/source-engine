@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,13 +32,13 @@ DECLARE_BUILD_FACTORY_CUSTOM( URLLabel, URLLabel_Factory );
 //-----------------------------------------------------------------------------
 URLLabel::URLLabel(Panel *parent, const char *panelName, const char *text, const char *pszURL) : Label(parent, panelName, text)
 {
-    m_pszURL = NULL;
+	m_pszURL = NULL;
 	m_bUnderline = false;
-    m_iURLSize = 0;
-    if (pszURL && strlen(pszURL) > 0)
-    {
-        SetURL(pszURL);
-    }
+	m_iURLSize = 0;
+	if (pszURL && strlen(pszURL) > 0)
+	{
+		SetURL(pszURL);
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -46,13 +46,13 @@ URLLabel::URLLabel(Panel *parent, const char *panelName, const char *text, const
 //-----------------------------------------------------------------------------
 URLLabel::URLLabel(Panel *parent, const char *panelName, const wchar_t *wszText, const char *pszURL) : Label(parent, panelName, wszText)
 {
-    m_pszURL = NULL;
+	m_pszURL = NULL;
 	m_bUnderline = false;
-    m_iURLSize = 0;
-    if (pszURL && strlen(pszURL) > 0)
-    {
-        SetURL(pszURL);
-    }
+	m_iURLSize = 0;
+	if (pszURL && strlen(pszURL) > 0)
+	{
+		SetURL(pszURL);
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -60,8 +60,8 @@ URLLabel::URLLabel(Panel *parent, const char *panelName, const wchar_t *wszText,
 //-----------------------------------------------------------------------------
 URLLabel::~URLLabel()
 {
-    if (m_pszURL)
-        delete [] m_pszURL;
+	if (m_pszURL)
+		delete [] m_pszURL;
 }
 
 //-----------------------------------------------------------------------------
@@ -84,13 +84,13 @@ void URLLabel::SetURL(const char *pszURL)
 //-----------------------------------------------------------------------------
 void URLLabel::OnMousePressed(MouseCode code)
 {
-    if (code == MOUSE_LEFT)
-    {
-        if (m_pszURL)
+	if (code == MOUSE_LEFT)
+	{
+		if (m_pszURL)
 		{
-	        system()->ShellExecute("open", m_pszURL);
+			system()->ShellExecute("open", m_pszURL);
 		}
-    }
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -116,7 +116,7 @@ void URLLabel::ApplySettings(KeyValues *inResourceData)
 		}
 		else
 		{
-	        SetURL(pszURL);
+			SetURL(pszURL);
 		}
 	}
 }
@@ -152,7 +152,6 @@ void URLLabel::ApplySchemeSettings(IScheme *pScheme)
 	// set our font to be underlined by default
 	// the Label::ApplySchemeSettings() will override it if override set in scheme file
 	SetFont( pScheme->GetFont( "DefaultUnderline", IsProportional() ) );
-    BaseClass::ApplySchemeSettings(pScheme);
-    SetCursor(dc_hand);
+	BaseClass::ApplySchemeSettings(pScheme);
+	SetCursor(dc_hand);
 }
-

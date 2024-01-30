@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -38,7 +38,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TESmoke::C_TESmoke( void )
 {
@@ -49,7 +49,7 @@ C_TESmoke::C_TESmoke( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TESmoke::~C_TESmoke( void )
 {
@@ -84,7 +84,7 @@ static inline void RecordSmoke( const Vector &start, float flScale, int nFrameRa
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TESmoke::PostDataUpdate( DataUpdateType_t updateType )
 {

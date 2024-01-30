@@ -24,11 +24,11 @@
 DECLARE_BUILD_FACTORY_DEFAULT_TEXT( CPreviewRotButton, CPreviewRotButton );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStorePreviewItemPanel::CStorePreviewItemPanel( vgui::Panel *pParent, const char *pResFile, const char *pPanelName, CStorePage *pOwner )
 :	EditablePanel( pParent, "storepreviewitem" )
-{								   
+{
 	m_pOwner = pOwner;
 	m_pResFile = pResFile != NULL ? pResFile : ( ShouldUseNewStore() ? "Resource/UI/econ/store/v2/StorePreviewItemPanel.res" : "Resource/UI/econ/store/v1/StorePreviewItemPanel.res" );
 	m_pDataTextRichText = NULL;
@@ -43,14 +43,14 @@ CStorePreviewItemPanel::CStorePreviewItemPanel( vgui::Panel *pParent, const char
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStorePreviewItemPanel::~CStorePreviewItemPanel()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePreviewItemPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -83,7 +83,7 @@ void CStorePreviewItemPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 	m_pItemIcons.Purge();
 	CStorePreviewItemIcon *pItemIcon = NULL;
 	int iIcon = 1;
-	do 
+	do
 	{
 		pItemIcon = dynamic_cast<CStorePreviewItemIcon*>( FindChildByName( VarArgs("ItemIcon%d",iIcon)) );
 		if ( pItemIcon )
@@ -108,7 +108,7 @@ void CStorePreviewItemPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePreviewItemPanel::PerformLayout( void )
 {
@@ -148,7 +148,7 @@ void CStorePreviewItemPanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePreviewItemPanel::OnCommand( const char *command )
 {
@@ -178,7 +178,7 @@ void CStorePreviewItemPanel::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePreviewItemPanel::OnRotButtonDown( KeyValues *data )
 {
@@ -188,7 +188,7 @@ void CStorePreviewItemPanel::OnRotButtonDown( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePreviewItemPanel::OnRotButtonUp( void )
 {
@@ -197,7 +197,7 @@ void CStorePreviewItemPanel::OnRotButtonUp( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePreviewItemPanel::PreviewItem( int iClass, CEconItemView *pItem, const econ_store_entry_t* pEntry /*= NULL*/ )
 {
@@ -251,7 +251,7 @@ void CStorePreviewItemPanel::PreviewItem( int iClass, CEconItemView *pItem, cons
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePreviewItemPanel::SetState( preview_state_t iState )
 {
@@ -273,7 +273,7 @@ void CStorePreviewItemPanel::SetState( preview_state_t iState )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePreviewItemPanel::UpdateIcons( void )
 {
@@ -284,7 +284,7 @@ void CStorePreviewItemPanel::UpdateIcons( void )
 	{
 		// Show as many of the items in the bundle as possible
 		const CEconItemDefinition *pItemData = m_item.GetItemDefinition();
-		if ( pItemData ) 
+		if ( pItemData )
 		{
 			const bundleinfo_t *pBundleInfo = pItemData->GetBundleInfo();
 			if ( pBundleInfo )
@@ -298,7 +298,7 @@ void CStorePreviewItemPanel::UpdateIcons( void )
 						continue;
 					}
 
-					int iItemPos = (i - 1 + m_iCurrentIconPosition); 
+					int iItemPos = (i - 1 + m_iCurrentIconPosition);
 					if ( pBundleInfo->vecItemDefs.Count() > iItemPos && pBundleInfo->vecItemDefs[iItemPos] )
 					{
 						m_pItemIcons[i]->SetItem( i, pBundleInfo->vecItemDefs[iItemPos]->GetDefinitionIndex() );
@@ -350,7 +350,7 @@ void CStorePreviewItemPanel::UpdateIcons( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePreviewItemPanel::OnTick( void )
 {
@@ -364,7 +364,7 @@ void CStorePreviewItemPanel::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePreviewItemPanel::OnItemIconSelected( KeyValues *data )
 {
@@ -391,7 +391,7 @@ void CStorePreviewItemPanel::OnItemIconSelected( KeyValues *data )
 // PREVIEW ROT BUTTON
 //================================================================================================================
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPreviewRotButton::OnMousePressed(vgui::MouseCode code)
 {
@@ -405,7 +405,7 @@ void CPreviewRotButton::OnMousePressed(vgui::MouseCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPreviewRotButton::OnMouseReleased(vgui::MouseCode code)
 {

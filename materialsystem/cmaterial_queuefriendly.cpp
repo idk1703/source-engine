@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -236,7 +236,7 @@ void CMaterial_QueueFriendly::DeleteIfUnreferenced()
 	Assert( ThreadInMainThread() );
 	if ( m_nReferenceCount > 0 )
 		return;
-		
+
 	MaterialSystem()->RemoveMaterial( GetRealTimeVersion() );
 	QUEUE_MATERIAL_CALL( DeleteIfUnreferenced );
 }
@@ -387,24 +387,6 @@ void CMaterial_QueueFriendly::UpdateToRealTime( void )
 	m_pRealTimeVersion->GetColorModulation( &m_vColorModulationOnQueueCompletion.x,
 											&m_vColorModulationOnQueueCompletion.y,
 											&m_vColorModulationOnQueueCompletion.z );
-	
+
 	m_nReferenceCount = m_pRealTimeVersion->GetReferenceCount();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

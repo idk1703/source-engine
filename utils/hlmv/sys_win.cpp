@@ -23,7 +23,7 @@ void Sys_CopyStringToClipboard( const char *pOut )
 	HGLOBAL clipbuffer;
 	char *buffer;
 	EmptyClipboard();
-	
+
 	int len = Q_strlen(pOut)+1;
 	clipbuffer = GlobalAlloc(GMEM_DDESHARE, len );
 	buffer = (char*)GlobalLock( clipbuffer );
@@ -34,4 +34,3 @@ void Sys_CopyStringToClipboard( const char *pOut )
 
 	CloseClipboard();
 }
-

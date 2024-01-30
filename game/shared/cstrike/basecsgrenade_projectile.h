@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -25,7 +25,7 @@ class CBaseCSGrenadeProjectile : public CBaseGrenade
 {
 public:
 	DECLARE_CLASS( CBaseCSGrenadeProjectile, CBaseGrenade );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 
 	virtual void Spawn();
 
@@ -42,7 +42,7 @@ public:
 	CBaseCSGrenadeProjectile( const CBaseCSGrenadeProjectile& ) {}
 	virtual int DrawModel( int flags );
 	virtual void PostDataUpdate( DataUpdateType_t type );
-	
+
 	float m_flSpawnTime;
 #else
 	DECLARE_DATADESC();
@@ -57,7 +57,7 @@ public:
 
 	//Think function to emit danger sounds for the AI
 	void DangerSoundThink( void );
-	
+
 	virtual float GetShakeAmplitude( void ) { return 0.0f; }
 	virtual void Splash();
 
@@ -66,7 +66,7 @@ public:
 	// sit still until it had gotten a few updates from the server.
 	void SetupInitialTransmittedGrenadeVelocity( const Vector &velocity );
 
-    // [jpaquin] give grenade projectiles a link back to the type
+	// [jpaquin] give grenade projectiles a link back to the type
 	// of weapon they are
 	CCSWeaponInfo *m_pWeaponInfo;
 
@@ -75,11 +75,11 @@ protected:
 	//Set the time to detonate ( now + timer )
 	void SetDetonateTimerLength( float timer );
 
-private:	
-	
+private:
+
 	//Custom collision to allow for constant elasticity on hit surfaces
 	virtual void ResolveFlyCollisionCustom( trace_t &trace, Vector &vecVelocity );
-	
+
 	float m_flDetonateTime;
 #endif
 };

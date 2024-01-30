@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -137,8 +137,8 @@ void Sys_ShutdownArgv( void );
 
 //-----------------------------------------------------------------------------
 // Purpose: Compare file times
-// Input  : ft1 - 
-//			ft2 - 
+// Input  : ft1 -
+//			ft2 -
 // Output : int
 //-----------------------------------------------------------------------------
 int Sys_CompareFileTime( long ft1, long ft2 )
@@ -167,7 +167,7 @@ inline bool IsSlash( char c )
 
 //-----------------------------------------------------------------------------
 // Purpose: Create specified directory
-// Input  : *path - 
+// Input  : *path -
 // Output : void Sys_mkdir
 //-----------------------------------------------------------------------------
 void Sys_mkdir( const char *path )
@@ -203,9 +203,9 @@ void Sys_mkdir( const char *path )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *path - 
-//			*basename - 
+// Purpose:
+// Input  : *path -
+//			*basename -
 // Output : char *Sys_FindFirst
 //-----------------------------------------------------------------------------
 const char *Sys_FindFirst(const char *path, char *basename, int namelength )
@@ -213,7 +213,7 @@ const char *Sys_FindFirst(const char *path, char *basename, int namelength )
 	if (g_hfind != FILESYSTEM_INVALID_FIND_HANDLE)
 	{
 		Sys_Error ("Sys_FindFirst without close");
-		g_pFileSystem->FindClose(g_hfind);		
+		g_pFileSystem->FindClose(g_hfind);
 	}
 
 	const char* psz = g_pFileSystem->FindFirst(path, &g_hfind);
@@ -233,7 +233,7 @@ const char *Sys_FindFirstEx( const char *pWildcard, const char *pPathID, char *b
 	if (g_hfind != FILESYSTEM_INVALID_FIND_HANDLE)
 	{
 		Sys_Error ("Sys_FindFirst without close");
-		g_pFileSystem->FindClose(g_hfind);		
+		g_pFileSystem->FindClose(g_hfind);
 	}
 
 	const char* psz = g_pFileSystem->FindFirstEx( pWildcard, pPathID, &g_hfind);
@@ -246,8 +246,8 @@ const char *Sys_FindFirstEx( const char *pWildcard, const char *pPathID, char *b
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *basename - 
+// Purpose:
+// Input  : *basename -
 // Output : char *Sys_FindNext
 //-----------------------------------------------------------------------------
 const char* Sys_FindNext(char *basename, int namelength)
@@ -262,7 +262,7 @@ const char* Sys_FindNext(char *basename, int namelength)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : void Sys_FindClose
 //-----------------------------------------------------------------------------
 
@@ -283,11 +283,11 @@ void Sys_Init( void )
 {
 	// Set default FPU control word to truncate (chop) mode for optimized _ftol()
 	// This does not "stick", the mode is restored somewhere down the line.
-//	Sys_TruncateFPU();	
+//	Sys_TruncateFPU();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Sys_Shutdown( void )
 {
@@ -296,8 +296,8 @@ void Sys_Shutdown( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Print to system console
-// Input  : *fmt - 
-//			... - 
+// Input  : *fmt -
+//			... -
 // Output : void Sys_Printf
 //-----------------------------------------------------------------------------
 void Sys_Printf(char *fmt, ...)
@@ -308,7 +308,7 @@ void Sys_Printf(char *fmt, ...)
 	va_start (argptr,fmt);
 	Q_vsnprintf (text, sizeof( text ), fmt, argptr);
 	va_end (argptr);
-		
+
 	if ( developer.GetInt() )
 	{
 #ifdef _WIN32
@@ -424,7 +424,7 @@ void Sys_Error_Internal( bool bMinidump, const char *error, va_list argsList )
 	}
 	else if ( !IsRetail() )
 	{
-		DebuggerBreak(); 
+		DebuggerBreak();
 	}
 
 #if !defined( _X360 )
@@ -435,7 +435,7 @@ void Sys_Error_Internal( bool bMinidump, const char *error, va_list argsList )
 	if ( bMinidump && !Plat_IsInDebugSession() && !CommandLine()->FindParm( "-nominidumps") )
 	{
 #if defined( WIN32 )
-		// MiniDumpWrite() has problems capturing the calling thread's context 
+		// MiniDumpWrite() has problems capturing the calling thread's context
 		// unless it is called with an exception context.  So fake an exception.
 		__try
 		{
@@ -449,7 +449,7 @@ void Sys_Error_Internal( bool bMinidump, const char *error, va_list argsList )
 
 			// Never get here (non-continuable exception)
 		}
-		// Write the minidump from inside the filter (GetExceptionInformation() is only 
+		// Write the minidump from inside the filter (GetExceptionInformation() is only
 		// valid in the filter)
 		__except ( SteamAPI_WriteMiniDump( 0, GetExceptionInformation(), build_number() ), EXCEPTION_EXECUTE_HANDLER )
 		{
@@ -490,8 +490,8 @@ void Sys_Error_Internal( bool bMinidump, const char *error, va_list argsList )
 
 //-----------------------------------------------------------------------------
 // Purpose: Exit engine with error
-// Input  : *error - 
-//			... - 
+// Input  : *error -
+//			... -
 // Output : void Sys_Error
 //-----------------------------------------------------------------------------
 void Sys_Error(const char *error, ...)
@@ -507,8 +507,8 @@ void Sys_Error(const char *error, ...)
 
 //-----------------------------------------------------------------------------
 // Purpose: Exit engine with error
-// Input  : *error - 
-//			... - 
+// Input  : *error -
+//			... -
 // Output : void Sys_Error
 //-----------------------------------------------------------------------------
 void Sys_Exit(const char *error, ...)
@@ -528,8 +528,8 @@ bool IsInErrorExit()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msec - 
+// Purpose:
+// Input  : msec -
 // Output : void Sys_Sleep
 //-----------------------------------------------------------------------------
 void Sys_Sleep( int msec )
@@ -542,10 +542,10 @@ void Sys_Sleep( int msec )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hInst - 
-//			ulInit - 
-//			lpReserved - 
+// Purpose:
+// Input  : hInst -
+//			ulInit -
+//			lpReserved -
 // Output : BOOL WINAPI   DllMain
 //-----------------------------------------------------------------------------
 #if defined(_WIN32) && !defined( _X360 )
@@ -554,7 +554,7 @@ BOOL WINAPI DllMain(HANDLE hInst, ULONG ulInit, LPVOID lpReserved)
 	InitCRTMemDebug();
 	if (ulInit == DLL_PROCESS_ATTACH)
 	{
-	} 
+	}
 	else if (ulInit == DLL_PROCESS_DETACH)
 	{
 	}
@@ -566,7 +566,7 @@ BOOL WINAPI DllMain(HANDLE hInst, ULONG ulInit, LPVOID lpReserved)
 
 //-----------------------------------------------------------------------------
 // Purpose: Allocate memory for engine hunk
-// Input  : *parms - 
+// Input  : *parms -
 //-----------------------------------------------------------------------------
 void Sys_InitMemory( void )
 {
@@ -627,7 +627,7 @@ void Sys_InitMemory( void )
 			else
 			{
 				host_parms.memsize = lpBuffer.dwTotalPhys;
-			}	
+			}
 		}
 		if ( host_parms.memsize < ONE_HUNDRED_TWENTY_EIGHT_MB )
 		{
@@ -676,7 +676,7 @@ void Sys_InitMemory( void )
 	u_int namelen = sizeof(mib) / sizeof(mib[0]);
 	size_t len = sizeof(memsize);
 
-	if (sysctl(mib, namelen, &memsize, &len, NULL, 0) < 0) 
+	if (sysctl(mib, namelen, &memsize, &len, NULL, 0) < 0)
 	{
 		memsize = ONE_HUNDRED_TWENTY_EIGHT_MB;
 	}
@@ -771,8 +771,8 @@ void Sys_InitMemory( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parms - 
+// Purpose:
+// Input  : *parms -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 void Sys_ShutdownMemory( void )
@@ -781,14 +781,14 @@ void Sys_ShutdownMemory( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Sys_InitAuthentication( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Sys_ShutdownAuthentication( void )
 {
@@ -846,7 +846,7 @@ void GetSpew( char *buf, size_t buflen )
 
 		if ( tocopy <= 0 )
 			break;
-		
+
 		Q_memcpy( pcur, rec.String(), tocopy );
 		remainder -= tocopy;
 		pcur += tocopy;
@@ -984,7 +984,7 @@ void *GameFactory( const char *pName, int *pReturnCode )
 		if (pRetVal)
 			return pRetVal;
 	}
-#endif	
+#endif
 	// server dll factory access would go here when needed
 
 	return NULL;
@@ -995,11 +995,11 @@ CreateInterfaceFn g_GameSystemFactory = GameFactory;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *lpOrgCmdLine - 
-//			launcherFactory - 
-//			*pwnd - 
-//			bIsDedicated - 
+// Purpose:
+// Input  : *lpOrgCmdLine -
+//			launcherFactory -
+//			*pwnd -
+//			bIsDedicated -
 // Output : int
 //-----------------------------------------------------------------------------
 int Sys_InitGame( CreateInterfaceFn appSystemFactory, const char* pBaseDir, void *pwnd, int bIsDedicated )
@@ -1013,18 +1013,18 @@ int Sys_InitGame( CreateInterfaceFn appSystemFactory, const char* pBaseDir, void
 
 	extern void InitMathlib( void );
 	InitMathlib();
-	
+
 	FileSystem_SetWhitelistSpewFlags();
 
 	// Activate console spew
-	// Must happen before developer.InstallChangeCallback because that callback may reset it 
+	// Must happen before developer.InstallChangeCallback because that callback may reset it
 	SpewActivate( "console", 1 );
 
 	// Install debug spew output....
 	developer.InstallChangeCallback( DeveloperChangeCallback );
 
 	SpewOutputFunc( Sys_SpewFunc );
-	
+
 	// Assume failure
 	host_initialized = false;
 
@@ -1046,7 +1046,7 @@ int Sys_InitGame( CreateInterfaceFn appSystemFactory, const char* pBaseDir, void
 
 #ifndef _X360
 	if ( CommandLine()->FindParm ( "-pidfile" ) )
-	{	
+	{
 		FileHandle_t pidFile = g_pFileSystem->Open( CommandLine()->ParmValue ( "-pidfile", "srcds.pid" ), "w+" );
 		if ( pidFile )
 		{
@@ -1068,7 +1068,7 @@ int Sys_InitGame( CreateInterfaceFn appSystemFactory, const char* pBaseDir, void
 	{
 		if( !CommandLine()->FindParm( "-nodttest" ) && !CommandLine()->FindParm( "-dti" ) )
 		{
-			RunDataTableTest();	
+			RunDataTableTest();
 		}
 	}
 #endif
@@ -1094,7 +1094,7 @@ int Sys_InitGame( CreateInterfaceFn appSystemFactory, const char* pBaseDir, void
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Sys_ShutdownGame( void )
 {
@@ -1173,7 +1173,7 @@ static bool LoadThisDll( char *szDllFilename, bool bIsServerOnly )
 			ConMsg( "Could not get IServerGameEnts interface from library %s", szDllFilename );
 			goto IgnoreThisDLL;
 		}
-		
+
 		serverGameClients = (IServerGameClients*)g_ServerFactory(INTERFACEVERSION_SERVERGAMECLIENTS, NULL);
 		if ( serverGameClients )
 		{
@@ -1198,7 +1198,7 @@ static bool LoadThisDll( char *szDllFilename, bool bIsServerOnly )
 		if ( !serverGameDirector )
 		{
 			ConMsg( "Could not get IHLTVDirector interface from library %s", szDllFilename );
-			// this is not a critical 
+			// this is not a critical
 		}
 
 		serverGameTags = (IServerGameTags*)g_ServerFactory(INTERFACEVERSION_SERVERGAMETAGS, NULL);
@@ -1252,7 +1252,7 @@ void LoadEntityDLLs( const char *szBaseDir, bool bIsServerOnly )
 		Q_strncpy( gmodinfo.szHLVersion, modinfo->GetString("hlversion"), sizeof( gmodinfo.szHLVersion ) );
 	}
 	modinfo->deleteThis();
-	
+
 	// Load the game .dll
 	LoadThisDll( "server" DLL_EXT_STRING, bIsServerOnly );
 
@@ -1286,16 +1286,16 @@ void Sys_GetRegKeyValueUnderRoot( HKEY rootKey, const char *pszSubKey, const cha
 
 	// Create it if it doesn't exist.  (Create opens the key otherwise)
 	lResult = VCRHook_RegCreateKeyEx(
-		rootKey,	// handle of open key 
-		pszSubKey,			// address of name of subkey to open 
-		0ul,					// DWORD ulOptions,	  // reserved 
+		rootKey,	// handle of open key
+		pszSubKey,			// address of name of subkey to open
+		0ul,					// DWORD ulOptions,	  // reserved
 		"String",			// Type of value
 		REG_OPTION_NON_VOLATILE, // Store permanently in reg.
-		KEY_ALL_ACCESS,		// REGSAM samDesired, // security access mask 
+		KEY_ALL_ACCESS,		// REGSAM samDesired, // security access mask
 		NULL,
 		&hKey,				// Key we are creating
 		&dwDisposition);    // Type of creation
-	
+
 	if (lResult != ERROR_SUCCESS)  // Failure
 		return;
 
@@ -1303,7 +1303,7 @@ void Sys_GetRegKeyValueUnderRoot( HKEY rootKey, const char *pszSubKey, const cha
 	if (dwDisposition == REG_CREATED_NEW_KEY)
 	{
 		// Just Set the Values according to the defaults
-		lResult = VCRHook_RegSetValueEx( hKey, pszElement, 0, REG_SZ, (CONST BYTE *)pszDefaultValue, Q_strlen(pszDefaultValue) + 1 ); 
+		lResult = VCRHook_RegSetValueEx( hKey, pszElement, 0, REG_SZ, (CONST BYTE *)pszDefaultValue, Q_strlen(pszDefaultValue) + 1 );
 	}
 	else
 	{
@@ -1325,7 +1325,7 @@ void Sys_GetRegKeyValueUnderRoot( HKEY rootKey, const char *pszSubKey, const cha
 		// Didn't find it, so write out new value
 		{
 			// Just Set the Values according to the defaults
-			lResult = VCRHook_RegSetValueEx( hKey, pszElement, 0, REG_SZ, (CONST BYTE *)pszDefaultValue, Q_strlen(pszDefaultValue) + 1 ); 
+			lResult = VCRHook_RegSetValueEx( hKey, pszElement, 0, REG_SZ, (CONST BYTE *)pszDefaultValue, Q_strlen(pszDefaultValue) + 1 );
 		}
 	};
 
@@ -1348,16 +1348,16 @@ void Sys_GetRegKeyValueUnderRootInt( HKEY rootKey, const char *pszSubKey, const 
 
 	// Assume the worst
 	// Set the return value to the default
-	*plReturnValue = lDefaultValue; 
+	*plReturnValue = lDefaultValue;
 
 	// Create it if it doesn't exist.  (Create opens the key otherwise)
 	lResult = VCRHook_RegCreateKeyEx(
-		rootKey,	// handle of open key 
-		pszSubKey,			// address of name of subkey to open 
-		0ul,					// DWORD ulOptions,	  // reserved 
+		rootKey,	// handle of open key
+		pszSubKey,			// address of name of subkey to open
+		0ul,					// DWORD ulOptions,	  // reserved
 		"String",			// Type of value
 		REG_OPTION_NON_VOLATILE, // Store permanently in reg.
-		KEY_ALL_ACCESS,		// REGSAM samDesired, // security access mask 
+		KEY_ALL_ACCESS,		// REGSAM samDesired, // security access mask
 		NULL,
 		&hKey,				// Key we are creating
 		&dwDisposition);    // Type of creation
@@ -1369,7 +1369,7 @@ void Sys_GetRegKeyValueUnderRootInt( HKEY rootKey, const char *pszSubKey, const 
 	if (dwDisposition == REG_CREATED_NEW_KEY)
 	{
 		// Just Set the Values according to the defaults
-		lResult = VCRHook_RegSetValueEx( hKey, pszElement, 0, REG_DWORD, (CONST BYTE *)&lDefaultValue, sizeof( DWORD ) ); 
+		lResult = VCRHook_RegSetValueEx( hKey, pszElement, 0, REG_DWORD, (CONST BYTE *)&lDefaultValue, sizeof( DWORD ) );
 	}
 	else
 	{
@@ -1382,7 +1382,7 @@ void Sys_GetRegKeyValueUnderRootInt( HKEY rootKey, const char *pszSubKey, const 
 			// Didn't find it, so write out new value
 		{
 			// Just Set the Values according to the defaults
-			lResult = VCRHook_RegSetValueEx( hKey, pszElement, 0, REG_DWORD, (LPBYTE)&lDefaultValue, sizeof( DWORD ) ); 
+			lResult = VCRHook_RegSetValueEx( hKey, pszElement, 0, REG_DWORD, (LPBYTE)&lDefaultValue, sizeof( DWORD ) );
 		}
 	};
 
@@ -1403,16 +1403,16 @@ void Sys_SetRegKeyValueUnderRoot( HKEY rootKey, const char *pszSubKey, const cha
 
 	// Create it if it doesn't exist.  (Create opens the key otherwise)
 	lResult = VCRHook_RegCreateKeyEx(
-		rootKey,			// handle of open key 
-		pszSubKey,			// address of name of subkey to open 
-		0ul,					// DWORD ulOptions,	  // reserved 
+		rootKey,			// handle of open key
+		pszSubKey,			// address of name of subkey to open
+		0ul,					// DWORD ulOptions,	  // reserved
 		"String",			// Type of value
 		REG_OPTION_NON_VOLATILE, // Store permanently in reg.
-		KEY_ALL_ACCESS,		// REGSAM samDesired, // security access mask 
+		KEY_ALL_ACCESS,		// REGSAM samDesired, // security access mask
 		NULL,
 		&hKey,				// Key we are creating
 		&dwDisposition);    // Type of creation
-	
+
 	if (lResult != ERROR_SUCCESS)  // Failure
 		return;
 
@@ -1420,7 +1420,7 @@ void Sys_SetRegKeyValueUnderRoot( HKEY rootKey, const char *pszSubKey, const cha
 	if (dwDisposition == REG_CREATED_NEW_KEY)
 	{
 		// Just Set the Values according to the defaults
-		lResult = VCRHook_RegSetValueEx( hKey, pszElement, 0, REG_SZ, (CONST BYTE *)pszValue, Q_strlen(pszValue) + 1 ); 
+		lResult = VCRHook_RegSetValueEx( hKey, pszElement, 0, REG_SZ, (CONST BYTE *)pszValue, Q_strlen(pszValue) + 1 );
 	}
 	else
 	{
@@ -1445,7 +1445,7 @@ void Sys_SetRegKeyValueUnderRoot( HKEY rootKey, const char *pszSubKey, const cha
 		// Didn't find it, so write out new value
 		{
 			// Just Set the Values according to the defaults
-			lResult = VCRHook_RegSetValueEx( hKey, pszElement, 0, REG_SZ, (CONST BYTE *)pszValue, Q_strlen(pszValue) + 1 ); 
+			lResult = VCRHook_RegSetValueEx( hKey, pszElement, 0, REG_SZ, (CONST BYTE *)pszValue, Q_strlen(pszValue) + 1 );
 		}
 	};
 
@@ -1561,7 +1561,7 @@ void Sys_OutputDebugString(const char *msg)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void UnloadEntityDLLs( void )
 {
@@ -1592,9 +1592,9 @@ CON_COMMAND( star_memory, "Dump memory stats" )
 #else
 	MEMORYSTATUS stat;
 	GlobalMemoryStatus( &stat );
-	Msg( "Available: %.2f MB, Used: %.2f MB, Free: %.2f MB\n", 
+	Msg( "Available: %.2f MB, Used: %.2f MB, Free: %.2f MB\n",
 		stat.dwTotalPhys/( 1024.0f*1024.0f ) - 32.0f,
-		( stat.dwTotalPhys - stat.dwAvailPhys )/( 1024.0f*1024.0f ) - 32.0f, 
+		( stat.dwTotalPhys - stat.dwAvailPhys )/( 1024.0f*1024.0f ) - 32.0f,
 		stat.dwAvailPhys/( 1024.0f*1024.0f ) );
 #endif
 }

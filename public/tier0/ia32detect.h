@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -13,7 +13,7 @@
 #endif
 
 /*
-    This section from http://iss.cs.cornell.edu/ia32.htm
+	This section from http://iss.cs.cornell.edu/ia32.htm
 
 
  */
@@ -21,9 +21,9 @@ typedef	unsigned			bit;
 
 enum CPUVendor
 {
-    INTEL,
-    AMD,
-    UNKNOWN_VENDOR
+	INTEL,
+	AMD,
+	UNKNOWN_VENDOR
 };
 class ia32detect
 {
@@ -85,7 +85,7 @@ public:
 		bit	MCE			: 1; // Machine Check Exception
 		bit	CX8			: 1; // CMPXCHG8 Instruction
 		bit	APIC		: 1; // APIC On-Chip
-		bit	Reserved1	: 1; 
+		bit	Reserved1	: 1;
 		bit	SEP			: 1; // SYSENTER and SYSEXIT instructions
 		bit	MTRR		: 1; // Memory Type Range Registers
 		bit	PGE			: 1; // PTE Global Bit
@@ -112,7 +112,7 @@ public:
 #	pragma pack(pop)
 
 	tstring vendor_name;
-    CPUVendor vendor;
+	CPUVendor vendor;
 	tstring brand;
 	version_t version;
 	misc_t misc;
@@ -122,7 +122,7 @@ public:
 	ia32detect ()
 	{
 
-        cache = 0;
+		cache = 0;
 		uint32 m = init0();
 
 		uint32 *d = new uint32[m * 4];
@@ -161,30 +161,30 @@ public:
 		init0x80000000();
 
 
-        //-----------------------------------------------------------------------
-        // Get the vendor of the processor
-        //-----------------------------------------------------------------------
-        if (_tcscmp(vendor_name.c_str(), _T("GenuineIntel")) == 0)
-        {
-            vendor = INTEL;
+		//-----------------------------------------------------------------------
+		// Get the vendor of the processor
+		//-----------------------------------------------------------------------
+		if (_tcscmp(vendor_name.c_str(), _T("GenuineIntel")) == 0)
+		{
+			vendor = INTEL;
 
-        }
-        else if (_tcscmp(vendor_name.c_str(), _T("AuthenticAMD")) == 0)
-        {
-            vendor = AMD;
+		}
+		else if (_tcscmp(vendor_name.c_str(), _T("AuthenticAMD")) == 0)
+		{
+			vendor = AMD;
 
-        }
-        else 
-        {
-            vendor = UNKNOWN_VENDOR;
-        }
+		}
+		else
+		{
+			vendor = UNKNOWN_VENDOR;
+		}
 	}
 
 	const tstring version_text () const
 	{
 		tchar b[128];
 
-		_stprintf(b, _T("%d.%d.%d %s XVersion(%d.%d)"), 
+		_stprintf(b, _T("%d.%d.%d %s XVersion(%d.%d)"),
 			version.Family, version.Model, version.Stepping, type_text(), version.XFamily, version.XModel);
 
 		return tstring(b);

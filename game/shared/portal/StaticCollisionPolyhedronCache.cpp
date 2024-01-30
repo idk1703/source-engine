@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=====================================================================================//
@@ -43,7 +43,7 @@ CStaticCollisionPolyhedronCache g_StaticCollisionPolyhedronCache;
 
 typedef ICollideable *ICollideablePtr; //needed for key comparison function syntax
 static bool CollideablePtr_KeyCompareFunc( const ICollideablePtr &a, const ICollideablePtr &b )
-{ 
+{
 	return a < b;
 };
 
@@ -97,7 +97,7 @@ void CStaticCollisionPolyhedronCache::Shutdown( void )
 void CStaticCollisionPolyhedronCache::Clear( void )
 {
 	//The uses one big lump of memory to store polyhedrons. No need to Release() the polyhedrons.
-	
+
 	//Brushes
 	{
 		m_BrushPolyhedrons.RemoveAll();
@@ -136,7 +136,7 @@ void CStaticCollisionPolyhedronCache::Update( void )
 	workSpaceAllocations[workSpacesAllocated] = pCurrentWorkSpace;
 	usedSpaceInWorkspace[workSpacesAllocated] = 0;
 	++workSpacesAllocated;
-	
+
 
 	//brushes
 	{
@@ -205,7 +205,7 @@ void CStaticCollisionPolyhedronCache::Update( void )
 					++workSpacesAllocated;
 				}
 
-				CPolyhedron *pWorkSpacePolyhedron = CPolyhedron_LumpedMemory::AllocateAt( pCurrentWorkSpace, 
+				CPolyhedron *pWorkSpacePolyhedron = CPolyhedron_LumpedMemory::AllocateAt( pCurrentWorkSpace,
 																							pTempPolyhedron->iVertexCount,
 																							pTempPolyhedron->iLineCount,
 																							pTempPolyhedron->iIndexCount,
@@ -232,7 +232,7 @@ void CStaticCollisionPolyhedronCache::Update( void )
 		}
 
 		usedSpaceInWorkspace[workSpacesAllocated - 1] = workSpaceSize - roomLeftInWorkSpace;
-		
+
 		if( usedSpaceInWorkspace[0] != 0 ) //At least a little bit of memory was used.
 		{
 			//consolidate workspaces into a single memory chunk
@@ -254,7 +254,7 @@ void CStaticCollisionPolyhedronCache::Update( void )
 
 				if( pSource == NULL )
 					continue;
-				
+
 				size_t memRequired = (sizeof( CPolyhedron_LumpedMemory )) +
 										(sizeof( Vector ) * pSource->iVertexCount) +
 										(sizeof( Polyhedron_IndexedLine_t ) * pSource->iLineCount) +
@@ -321,7 +321,7 @@ void CStaticCollisionPolyhedronCache::Update( void )
 								for( int iPolyCounter = 0; iPolyCounter != pTempPolyhedron->iPolygonCount; ++iPolyCounter )
 									pTempPolyhedron->pPolygons[iPolyCounter].polyNormal = matToWorldPosition.ApplyRotation( pTempPolyhedron->pPolygons[iPolyCounter].polyNormal );
 
-								
+
 								size_t memRequired = (sizeof( CPolyhedron_LumpedMemory )) +
 									(sizeof( Vector ) * pTempPolyhedron->iVertexCount) +
 									(sizeof( Polyhedron_IndexedLine_t ) * pTempPolyhedron->iLineCount) +
@@ -333,7 +333,7 @@ void CStaticCollisionPolyhedronCache::Update( void )
 								if( roomLeftInWorkSpace < memRequired )
 								{
 									usedSpaceInWorkspace[workSpacesAllocated - 1] = workSpaceSize - roomLeftInWorkSpace;
-									
+
 									if( workSpacesAllocated < iBrushWorkSpaces )
 									{
 										//re-use a workspace already allocated during brush polyhedron conversion
@@ -352,7 +352,7 @@ void CStaticCollisionPolyhedronCache::Update( void )
 									++workSpacesAllocated;
 								}
 
-								CPolyhedron *pWorkSpacePolyhedron = CPolyhedron_LumpedMemory::AllocateAt( pCurrentWorkSpace, 
+								CPolyhedron *pWorkSpacePolyhedron = CPolyhedron_LumpedMemory::AllocateAt( pCurrentWorkSpace,
 																											pTempPolyhedron->iVertexCount,
 																											pTempPolyhedron->iLineCount,
 																											pTempPolyhedron->iIndexCount,
@@ -385,7 +385,7 @@ void CStaticCollisionPolyhedronCache::Update( void )
 					cacheInfo.iNumPolyhedrons = m_StaticPropPolyhedrons.Count() - cacheInfo.iStartIndex;
 					cacheInfo.iStaticPropIndex = iStaticPropIndex;
 					Assert( staticpropmgr->GetStaticPropByIndex( iStaticPropIndex ) == pProp );
-					
+
 					m_CollideableIndicesMap.InsertOrReplace( pProp, cacheInfo );
 				}
 
@@ -477,9 +477,3 @@ int CStaticCollisionPolyhedronCache::GetStaticPropPolyhedrons( ICollideable *pSt
 
 	return iOutputArraySize;
 }
-
-
-
-
-
-

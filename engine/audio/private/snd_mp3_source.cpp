@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -151,7 +151,7 @@ void CAudioSourceMP3::ReferenceRemove( CAudioMixer * )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAudioSourceMP3::IsAsyncLoad()
@@ -168,7 +168,7 @@ bool CAudioSourceMP3::CanDelete( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CAudioSourceMP3::GetType()
@@ -280,7 +280,7 @@ void CAudioSourceMP3::GetCacheData( CAudioSourceCachedInfo *info )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 char const *CAudioSourceMP3::GetFileName()
@@ -289,7 +289,7 @@ char const *CAudioSourceMP3::GetFileName()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAudioSourceMP3::CheckAudioSourceCache()
 {
@@ -307,7 +307,7 @@ void CAudioSourceMP3::CheckAudioSourceCache()
 //-----------------------------------------------------------------------------
 // Purpose: NULL the wave data pointer (we haven't loaded yet)
 //-----------------------------------------------------------------------------
-CAudioSourceMP3Cache::CAudioSourceMP3Cache( CSfxTable *pSfx ) : 
+CAudioSourceMP3Cache::CAudioSourceMP3Cache( CSfxTable *pSfx ) :
 	CAudioSourceMP3( pSfx )
 {
 	m_hCache = 0;
@@ -374,13 +374,13 @@ char *CAudioSourceMP3Cache::GetDataPointer( void )
 		CacheLoad();
 	}
 
-	wavedatacache->GetDataPointer( 
-		m_hCache, 
-		m_pSfx->GetFileName(), 
-		m_dataSize, 
-		m_dataStart, 
-		(void **)&pMP3Data, 
-		0, 
+	wavedatacache->GetDataPointer(
+		m_hCache,
+		m_pSfx->GetFileName(),
+		m_dataSize,
+		m_dataStart,
+		(void **)&pMP3Data,
+		0,
 		&dummy );
 
 	return pMP3Data;
@@ -510,7 +510,7 @@ CAudioSourceStreamMP3::CAudioSourceStreamMP3( CSfxTable *pSfx, CAudioSourceCache
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAudioSourceStreamMP3::Prefetch()
 {
@@ -569,7 +569,7 @@ bool Audio_IsMP3( const char *pName )
 
 CAudioSource *Audio_CreateStreamedMP3( CSfxTable *pSfx )
 {
-	CAudioSourceStreamMP3 *pMP3 = NULL; 	
+	CAudioSourceStreamMP3 *pMP3 = NULL;
 	CAudioSourceCachedInfo *info = audiosourcecache->GetInfo( CAudioSource::AUDIO_SOURCE_MP3, pSfx->IsPrecachedSound(), pSfx );
 	if ( info )
 	{
@@ -599,4 +599,3 @@ CAudioSource *Audio_CreateMemoryMP3( CSfxTable *pSfx )
 }
 
 #endif
-

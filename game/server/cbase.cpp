@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -21,14 +21,14 @@ which various subsystems can iterate the data.
 In it's implementation, each entity has to have:
 
 	typedescription_t CBaseEntity::m_DataDesc[] = { ... }
-	
+
 in which all it's data is defined (see below), followed by:
 
 
 which implements the functions necessary for iterating through an entities data desc.
 
 There are several types of data:
-	
+
 	FIELD		: this is a variable which gets saved & loaded from disk
 	KEY			: this variable can be read in from the map file
 	GLOBAL		: a global field is actually local; it is saved/restored, but is actually
@@ -236,7 +236,7 @@ CBaseEntityOutput::~CBaseEntityOutput()
 	CEventAction *ev = m_ActionList;
 	while (ev != NULL)
 	{
-		CEventAction *pNext = ev->m_pNext;	
+		CEventAction *pNext = ev->m_pNext;
 		delete ev;
 		ev = pNext;
 	}
@@ -255,7 +255,7 @@ void CBaseEntityOutput::FireOutput(variant_t Value, CBaseEntity *pActivator, CBa
 	//
 	CEventAction *ev = m_ActionList;
 	CEventAction *prev = NULL;
-	
+
 	while (ev != NULL)
 	{
 		if (ev->m_iParameter == NULL_STRING)
@@ -365,8 +365,8 @@ void CBaseEntityOutput::FireOutput(variant_t Value, CBaseEntity *pActivator, CBa
 
 //-----------------------------------------------------------------------------
 // Purpose: Parameterless firing of an event
-// Input  : pActivator - 
-//			pCaller - 
+// Input  : pActivator -
+//			pCaller -
 //-----------------------------------------------------------------------------
 void COutputEvent::FireOutput(CBaseEntity *pActivator, CBaseEntity *pCaller, float fDelay)
 {
@@ -456,8 +456,8 @@ int CBaseEntityOutput::NumberOfElements( void )
 	return count;
 }
 
-/// Delete every single action in the action list. 
-void CBaseEntityOutput::DeleteAllElements( void ) 
+/// Delete every single action in the action list.
+void CBaseEntityOutput::DeleteAllElements( void )
 {
 	// walk front to back, deleting as we go. We needn't fix up pointers because
 	// EVERYTHING will die.
@@ -504,7 +504,7 @@ class CEventsSaveDataOps : public ISaveRestoreOps
 		for ( int i = 0; i < fieldSize; i++, ev++ )
 		{
 			int nElements = pRestore->ReadInt();
-			
+
 			Assert( nElements < 100 );
 
 			ev->Restore( *pRestore, nElements );
@@ -514,7 +514,7 @@ class CEventsSaveDataOps : public ISaveRestoreOps
 	virtual bool IsEmpty( const SaveRestoreFieldInfo_t &fieldInfo )
 	{
 		AssertMsg( fieldInfo.pTypeDesc->fieldSize == 1, "CEventsSaveDataOps does not support arrays");
-		
+
 		// check all the elements of the array (usually only 1)
 		CBaseEntityOutput *ev = (CBaseEntityOutput*)fieldInfo.pField;
 		const int fieldSize = fieldInfo.pTypeDesc->fieldSize;
@@ -760,7 +760,7 @@ void CEventQueue::Clear( void )
 {
 	// delete all the events in the queue
 	EventQueuePrioritizedEvent_t *pe = m_Events.m_pNext;
-	
+
 	while ( pe != NULL )
 	{
 		EventQueuePrioritizedEvent_t *next = pe->m_pNext;
@@ -787,12 +787,12 @@ void CEventQueue::Dump( void )
 	{
 		EventQueuePrioritizedEvent_t *next = pe->m_pNext;
 
-		Msg("   (%.2f) Target: '%s', Input: '%s', Parameter '%s'. Activator: '%s', Caller '%s'.  \n", 
-			pe->m_flFireTime, 
-			STRING(pe->m_iTarget), 
-			STRING(pe->m_iTargetInput), 
+		Msg("   (%.2f) Target: '%s', Input: '%s', Parameter '%s'. Activator: '%s', Caller '%s'.  \n",
+			pe->m_flFireTime,
+			STRING(pe->m_iTarget),
+			STRING(pe->m_iTargetInput),
 			pe->m_VariantValue.String(),
-			pe->m_pActivator ? pe->m_pActivator->GetDebugName() : "None", 
+			pe->m_pActivator ? pe->m_pActivator->GetDebugName() : "None",
 			pe->m_pCaller ? pe->m_pCaller->GetDebugName() : "None"  );
 
 		pe = next;
@@ -964,14 +964,14 @@ void CEventQueue::ServiceEvents( void )
 		if ( !targetFound )
 		{
 			const char *pClass ="", *pName = "";
-			
+
 			// might be NULL
 			if ( pe->m_pCaller )
 			{
 				pClass = STRING(pe->m_pCaller->m_iClassname);
 				pName = STRING(pe->m_pCaller->GetEntityName());
 			}
-			
+
 			char szBuffer[256];
 			Q_snprintf( szBuffer, sizeof(szBuffer), "unhandled input: (%s) -> (%s), from (%s,%s); target entity not found\n", STRING(pe->m_iTargetInput), STRING(pe->m_iTarget), pClass, pName );
 			DevMsg( 2, "%s", szBuffer );
@@ -994,7 +994,7 @@ void CEventQueue::ServiceEvents( void )
 		}
 
 		// restart the list (to catch any new items have probably been added to the queue)
-		pe = m_Events.m_pNext;	
+		pe = m_Events.m_pNext;
 	}
 }
 
@@ -1087,7 +1087,7 @@ void CEventQueue::CancelEventOn( CBaseEntity *pTarget, const char *sInputName )
 
 //-----------------------------------------------------------------------------
 // Purpose: Return true if the target has any pending inputs.
-// Input  : *pTarget - 
+// Input  : *pTarget -
 //			*sInputName - NULL for any input, or a specified one
 //-----------------------------------------------------------------------------
 bool CEventQueue::HasEventPending( CBaseEntity *pTarget, const char *sInputName )
@@ -1162,7 +1162,7 @@ int CEventQueue::Save( ISave &save )
 	// save that value out to disk, so we know how many to restore
 	if ( !save.WriteFields( "EventQueue", this, NULL, m_DataMap.dataDesc, m_DataMap.dataNumFields ) )
 		return 0;
-	
+
 	// cycle through all the events, saving them all
 	for ( pe = m_Events.m_pNext; pe != NULL; pe = pe->m_pNext )
 	{
@@ -1185,7 +1185,7 @@ int CEventQueue::Restore( IRestore &restore )
 	// load the number of items saved
 	if ( !restore.ReadFields( "EventQueue", this, NULL, m_DataMap.dataDesc, m_DataMap.dataNumFields ) )
 		return 0;
-	
+
 	for ( int i = 0; i < m_iListCount; i++ )
 	{
 		if ( !restore.ReadFields( "PEvent", &tmpEvent, NULL, tmpEvent.m_DataMap.dataDesc, tmpEvent.m_DataMap.dataNumFields ) )
@@ -1228,7 +1228,7 @@ int CEventQueue::Restore( IRestore &restore )
 ////////////////////////// variant_t implementation //////////////////////////
 
 // BUGBUG: Add support for function pointer save/restore to variants
-// BUGBUG: Must pass datamap_t to read/write fields 
+// BUGBUG: Must pass datamap_t to read/write fields
 void variant_t::Set( fieldtype_t ftype, void *data )
 {
 	fieldType = ftype;
@@ -1254,9 +1254,9 @@ void variant_t::Set( fieldtype_t ftype, void *data )
 
 	case FIELD_EHANDLE:		eVal = *((EHANDLE *)data);			break;
 	case FIELD_CLASSPTR:	eVal = *((CBaseEntity **)data);		break;
-	case FIELD_VOID:		
+	case FIELD_VOID:
 	default:
-		iVal = 0; fieldType = FIELD_VOID;	
+		iVal = 0; fieldType = FIELD_VOID;
 		break;
 	}
 }
@@ -1448,7 +1448,7 @@ bool variant_t::Convert( fieldtype_t newType )
 					return true;
 				}
 			}
-		
+
 			break;
 		}
 
@@ -1644,10 +1644,10 @@ class CVariantSaveDataOps : public CDefSaveRestoreOps
 		{
 		case FIELD_VOID:
 			break;
-		case FIELD_BOOLEAN:	
+		case FIELD_BOOLEAN:
 			pSave->WriteFields( fieldInfo.pTypeDesc->fieldName, var, NULL, variant_t::m_SaveBool, 1 );
 			break;
-		case FIELD_INTEGER:	
+		case FIELD_INTEGER:
 			pSave->WriteFields( fieldInfo.pTypeDesc->fieldName, var, NULL, variant_t::m_SaveInt, 1 );
 			break;
 		case FIELD_FLOAT:
@@ -1697,10 +1697,10 @@ class CVariantSaveDataOps : public CDefSaveRestoreOps
 		{
 		case FIELD_VOID:
 			break;
-		case FIELD_BOOLEAN:	
+		case FIELD_BOOLEAN:
 			pRestore->ReadFields( fieldInfo.pTypeDesc->fieldName, var, NULL, variant_t::m_SaveBool, 1 );
 			break;
-		case FIELD_INTEGER:	
+		case FIELD_INTEGER:
 			pRestore->ReadFields( fieldInfo.pTypeDesc->fieldName, var, NULL, variant_t::m_SaveInt, 1 );
 			break;
 		case FIELD_FLOAT:
@@ -1828,7 +1828,7 @@ void CEntityList::AddEntity( CBaseEntity *pEnt )
 
 		e = e->pNext;
 	}
-	
+
 	// empty list
 	m_pItemList = new entitem_t;
 	m_pItemList->hEnt = pEnt;
@@ -1868,4 +1868,3 @@ void CEntityList::DeleteEntity( CBaseEntity *pEnt )
 		e = e->pNext;
 	}
 }
-

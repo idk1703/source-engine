@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -95,8 +95,8 @@ private:
 					break;
 				}
 			}
-			
-			// Nothing left to free?			
+
+			// Nothing left to free?
 			if ( !bFreed )
 				return;
 		}
@@ -111,7 +111,7 @@ private:
 		int m_MemoryUsage;
 		bool m_bLocked;
 	};
-	
+
 	CUtlDict<CBitmapCacheEntry,int> m_Bitmaps;
 	int m_CurMemoryUsage;
 	int m_MaxMemoryUsage;
@@ -164,7 +164,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CFileSystemOpenDlg message handlers
 
-void CFileSystemOpenDlg::OnOK() 
+void CFileSystemOpenDlg::OnOK()
 {
 	// Make sure it's a valid filename.
 	CString testFilename;
@@ -179,7 +179,7 @@ void CFileSystemOpenDlg::OnOK()
 	else if ( m_pFileSystem->FileExists( fullFilename, GetPathID() ) )
 	{
 		m_Filename = fullFilename;
-		
+
 		// Translate .jpg to .mdl?
 		if ( m_bFilterMdlAndJpgFiles )
 		{
@@ -223,14 +223,14 @@ CString CFileSystemOpenDlg::GetFilename() const
 }
 
 
-BOOL CFileSystemOpenDlg::OnInitDialog() 
+BOOL CFileSystemOpenDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	
+
 	// Setup our anchor list.
 	AddAnchor( IDC_FILE_LIST, 2, 2 );
 	AddAnchor( IDC_FILE_LIST, 3, 3 );
-	
+
 	AddAnchor( IDC_FILENAME, 1, 3 );
 	AddAnchor( IDC_FILENAME, 3, 3 );
 	AddAnchor( IDC_FILENAME, 2, 2 );
@@ -244,7 +244,7 @@ BOOL CFileSystemOpenDlg::OnInitDialog()
 	AddAnchor( IDOK, 2, 2 );
 	AddAnchor( IDOK, 1, 3 );
 	AddAnchor( IDOK, 3, 3 );
-	
+
 	AddAnchor( IDCANCEL, 0, 2 );
 	AddAnchor( IDCANCEL, 2, 2 );
 	AddAnchor( IDCANCEL, 1, 3 );
@@ -258,7 +258,7 @@ BOOL CFileSystemOpenDlg::OnInitDialog()
 
 	// Setup our image list.
 	m_ImageList.Create( PREVIEW_IMAGE_SIZE, PREVIEW_IMAGE_SIZE, ILC_COLOR32, 0, 512 );
-	
+
 	m_BitmapFolder.LoadBitmap( IDB_LABEL_FOLDER );
 	m_iLabel_Folder = m_ImageList.Add( &m_BitmapFolder, (CBitmap*)NULL );
 
@@ -272,7 +272,7 @@ BOOL CFileSystemOpenDlg::OnInitDialog()
 
 	// Populate the list with the contents of our current directory.
 	PopulateListControl();
-	
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -284,8 +284,8 @@ void CFileSystemOpenDlg::GetEntries( const char *pMask, CUtlVector<CString> &ent
 	// Workaround Steam bug.
 	if ( searchStr == ".\\*.*" )
 		searchStr = "*.*";
-	
-	FileFindHandle_t handle;	
+
+	FileFindHandle_t handle;
 	const char *pFile = m_pFileSystem->FindFirst( searchStr, &handle );
 	while ( pFile )
 	{
@@ -398,7 +398,7 @@ bool ReadJpeg( IFileSystem *pFileSystem, const char *pFilename, CUtlVector<unsig
 	if (jpeg_read_header(&jpegInfo, TRUE) != JPEG_HEADER_OK)
 	{
 		return false;
-	}	
+	}
 
 	// start the decompress with the jpeg engine.
 	if (jpeg_start_decompress(&jpegInfo) != TRUE || jpegInfo.output_components != 3)
@@ -413,7 +413,7 @@ bool ReadJpeg( IFileSystem *pFileSystem, const char *pFilename, CUtlVector<unsig
 	int mem_required = jpegInfo.image_height * jpegInfo.image_width * jpegInfo.output_components;
 	JSAMPROW row_pointer[1];
 	int cur_row = 0;
-	
+
 	width = jpegInfo.output_width;
 	height = jpegInfo.output_height;
 
@@ -442,7 +442,7 @@ bool ReadJpeg( IFileSystem *pFileSystem, const char *pFilename, CUtlVector<unsig
 	return true;
 }
 
-void DownsampleRGBToRGBAImage( 
+void DownsampleRGBToRGBAImage(
 	CUtlVector<unsigned char> &srcData,
 	int srcWidth,
 	int srcHeight,
@@ -571,7 +571,7 @@ void FilterMdlAndJpgFiles( CUtlVector<CString> &files )
 				files.Remove( i );
 				--i;
 			}
-		}		
+		}
 	}
 }
 
@@ -604,8 +604,8 @@ void RemoveDuplicates( CUtlVector<CString> &files )
 			--i;
 		}
 	}
-}	
-		
+}
+
 
 void CFileSystemOpenDlg::PopulateListControl()
 {
@@ -630,7 +630,7 @@ void CFileSystemOpenDlg::PopulateListControl()
 		item.iItem = iItem++;
 		item.iSubItem = 0;
 		item.pszText = directories[i].GetBuffer(0);
-		
+
 		item.lParam = m_FileInfos.AddToTail();
 		m_FileInfos[item.lParam].m_bIsDir = true;
 		m_FileInfos[item.lParam].m_Name = directories[i];
@@ -675,12 +675,12 @@ void CFileSystemOpenDlg::AddFileMask( const char *pMask )
 }
 
 
-BOOL CFileSystemOpenDlg::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext) 
+BOOL CFileSystemOpenDlg::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext)
 {
 	return CDialog::Create(IDD, pParentWnd);
 }
 
-int CFileSystemOpenDlg::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CFileSystemOpenDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CDialog::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -715,7 +715,7 @@ void CFileSystemOpenDlg::ProcessAnchor( CWindowAnchor *pAnchor )
 	RECT rect, parentRect;
 	GetWindowRect( &parentRect );
 	pAnchor->m_pWnd->GetWindowRect( &rect );
-	
+
 	GetSideCoord( rect, pAnchor->m_Side ) = GetSideCoord( parentRect, pAnchor->m_ParentSide ) + pAnchor->m_OriginalDist;
 
 	ScreenToClient( &rect );
@@ -738,18 +738,18 @@ void CFileSystemOpenDlg::AddAnchor( int iDlgItem, int iSide, int iParentSide )
 
 
 
-void CFileSystemOpenDlg::OnSize(UINT nType, int cx, int cy) 
+void CFileSystemOpenDlg::OnSize(UINT nType, int cx, int cy)
 {
 	CDialog::OnSize(nType, cx, cy);
-	
+
 	for ( int i=0; i < m_Anchors.Count(); i++ )
-		ProcessAnchor( &m_Anchors[i] );	
+		ProcessAnchor( &m_Anchors[i] );
 
 	if ( m_FileList.GetSafeHwnd() )
 		PopulateListControl();
 }
 
-void CFileSystemOpenDlg::OnDblclkFileList(NMHDR* pNMHDR, LRESULT* pResult) 
+void CFileSystemOpenDlg::OnDblclkFileList(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	/*int iSelected = m_FileList.GetNextItem( -1, LVNI_SELECTED );
 	if ( iSelected != -1 )
@@ -775,11 +775,11 @@ void CFileSystemOpenDlg::OnDblclkFileList(NMHDR* pNMHDR, LRESULT* pResult)
 		}
 	}*/
 	OnOK();
-	
+
 	*pResult = 0;
 }
 
-void CFileSystemOpenDlg::OnUpButton() 
+void CFileSystemOpenDlg::OnUpButton()
 {
 	char str[MAX_PATH];
 	V_strcpy_safe( str, m_CurrentDir );
@@ -787,7 +787,7 @@ void CFileSystemOpenDlg::OnUpButton()
 
 	if ( str[0] == 0 )
 		V_strcpy_safe( str, "." );
-	
+
 	if ( str[strlen(str)-1] == '\\' || str[strlen(str)-1] == '/' )
 		str[strlen(str)-1] = 0;
 
@@ -795,7 +795,7 @@ void CFileSystemOpenDlg::OnUpButton()
 	PopulateListControl();
 }
 
-void CFileSystemOpenDlg::OnItemchangedFileList(NMHDR* pNMHDR, LRESULT* pResult) 
+void CFileSystemOpenDlg::OnItemchangedFileList(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 
@@ -803,13 +803,13 @@ void CFileSystemOpenDlg::OnItemchangedFileList(NMHDR* pNMHDR, LRESULT* pResult)
 	if ( iItem < (DWORD)m_FileInfos.Count() )
 	{
 		CFileInfo *pInfo = &m_FileInfos[iItem];
-		if ( (pNMListView->uChanged & LVIF_STATE) && 
+		if ( (pNMListView->uChanged & LVIF_STATE) &&
 			 (pNMListView->uNewState & LVIS_SELECTED) )
 		{
 			m_FilenameControl.SetWindowText( pInfo->m_Name );
 		}
 	}
-	
+
 	*pResult = 0;
 }
 
@@ -884,7 +884,7 @@ public:
 	{
 		AFX_MANAGE_STATE(AfxGetStaticModuleState());
 		Assert( m_pDialog );
-		
+
 		if ( m_bLastModalWasWindowsDialog )
 		{
 			Q_strncpy( pOut, m_RelativeFilename, outLen );
@@ -925,7 +925,7 @@ public:
 		char pFileNameBuf[MAX_PATH];
 		const char *pFileName = m_pDialog->m_pFileSystem->RelativePathToFullPath( m_pDialog->m_CurrentDir, m_pDialog->m_PathIDString, pFileNameBuf, MAX_PATH );
 		V_strcat_safe( pFileNameBuf, "\\" );
-	
+
 		// Build the list of file filters.
 		char filters[1024];
 		if ( m_pDialog->m_FileMasks.Count() == 0 )
@@ -953,7 +953,7 @@ public:
 			V_strcat_safe( filters, "||" );
 		}
 
-		CFileDialog dlg( 
+		CFileDialog dlg(
 			true,								// open dialog?
 			defExt[0]==0 ? NULL : defExt,		// default file extension
 			pFileName,							// initial filename
@@ -994,4 +994,3 @@ private:
 };
 
 EXPOSE_INTERFACE( CFileSystemOpenDialogWrapper, IFileSystemOpenDialog, FILESYSTEMOPENDIALOG_VERSION );
-

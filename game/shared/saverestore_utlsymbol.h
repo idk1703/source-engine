@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,10 +20,10 @@ public:
 	virtual void Save( const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave )
 	{
 		CUtlSymbol *sym = ((CUtlSymbol *)fieldInfo.pField);
-		
+
 		pSave->WriteString( m_symbolTable.String( *sym ) );
 	}
-	
+
 	virtual void Restore( const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore )
 	{
 		CUtlSymbol *sym = ((CUtlSymbol *)fieldInfo.pField);
@@ -32,7 +32,7 @@ public:
 		pRestore->ReadString( tmp, sizeof(tmp), 0 );
 		*sym = m_symbolTable.AddString( tmp );
 	}
-	
+
 	virtual void MakeEmpty( const SaveRestoreFieldInfo_t &fieldInfo )
 	{
 		CUtlSymbol *sym = ((CUtlSymbol *)fieldInfo.pField);
@@ -47,7 +47,7 @@ public:
 
 private:
 	CUtlSymbolTable &m_symbolTable;
-	
+
 };
 
 #endif // SAVERESTORE_UTLSYMBOL_H

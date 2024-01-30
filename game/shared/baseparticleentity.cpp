@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -44,7 +44,7 @@ CBaseParticleEntity::~CBaseParticleEntity( void )
 	{
 		KeyValues *msg = new KeyValues( "ParticleSystem_Destroy" );
 		msg->SetInt( "id", m_nToolParticleEffectId );
-		m_nToolParticleEffectId = TOOLPARTICLESYSTEMID_INVALID; 
+		m_nToolParticleEffectId = TOOLPARTICLESYSTEMID_INVALID;
 	}
 #endif
 }
@@ -68,7 +68,7 @@ void CBaseParticleEntity::Activate()
 #if !defined( CLIENT_DLL )
 	BaseClass::Activate();
 #endif
-}	
+}
 
 
 void CBaseParticleEntity::Think()

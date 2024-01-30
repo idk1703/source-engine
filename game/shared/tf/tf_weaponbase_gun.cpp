@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Weapon Base Gun 
+// Purpose: Weapon Base Gun
 //
 //=============================================================================
 
@@ -49,7 +49,7 @@ BEGIN_PREDICTION_DATA( CTFWeaponBaseGun )
 END_PREDICTION_DATA()
 
 // Server specific.
-#if !defined( CLIENT_DLL ) 
+#if !defined( CLIENT_DLL )
 BEGIN_DATADESC( CTFWeaponBaseGun )
 DEFINE_THINKFUNC( ZoomOutIn ),
 DEFINE_THINKFUNC( ZoomOut ),
@@ -113,7 +113,7 @@ void CTFWeaponBaseGun::PrimaryAttack( void )
 
 	if ( pPlayer->m_Shared.InCond( TF_COND_BLASTJUMPING ) )
 	{
-		CALL_ATTRIB_HOOK_FLOAT( flFireDelay, rocketjump_attackrate_bonus );	
+		CALL_ATTRIB_HOOK_FLOAT( flFireDelay, rocketjump_attackrate_bonus );
 	}
 	else
 	{
@@ -137,7 +137,7 @@ void CTFWeaponBaseGun::PrimaryAttack( void )
 	{
 		pPlayer->RemoveInvisibility();
 	}
-	
+
 	// Minigun has custom handling
 	if ( GetWeaponID() != TF_WEAPON_MINIGUN )
 	{
@@ -218,7 +218,7 @@ void CTFWeaponBaseGun::PrimaryAttack( void )
 	{
 		pPlayer->RemoveDisguise();
 	}
-}	
+}
 
 bool CTFWeaponBaseGun::ShouldRemoveDisguiseOnPrimaryAttack() const
 {
@@ -419,7 +419,7 @@ void CTFWeaponBaseGun::RemoveProjectileAmmo( CTFPlayer *pPlayer )
 	}
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFWeaponBaseGun::HasPrimaryAmmo( void )
 {
@@ -433,7 +433,7 @@ bool CTFWeaponBaseGun::HasPrimaryAmmo( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFWeaponBaseGun::CanDeploy( void )
 {
@@ -447,7 +447,7 @@ bool CTFWeaponBaseGun::CanDeploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFWeaponBaseGun::CanBeSelected( void )
 {
@@ -461,7 +461,7 @@ bool CTFWeaponBaseGun::CanBeSelected( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFWeaponBaseGun::GetAmmoPerShot( void )
 {
@@ -479,7 +479,7 @@ int CTFWeaponBaseGun::GetAmmoPerShot( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseGun::UpdatePunchAngles( CTFPlayer *pPlayer )
 {
@@ -533,7 +533,7 @@ CBaseEntity *CTFWeaponBaseGun::FireRocket( CTFPlayer *pPlayer, int iRocketType )
 	}
 	GetProjectileFireSetup( pPlayer, vecOffset, &vecSrc, &angForward, false );
 
-	trace_t trace;	
+	trace_t trace;
 	Vector vecEye = pPlayer->EyePosition();
 	CTraceFilterSimple traceFilter( this, COLLISION_GROUP_NONE );
 	UTIL_TraceLine( vecEye, vecSrc, MASK_SOLID_BRUSHONLY, &traceFilter, &trace );
@@ -576,7 +576,7 @@ CBaseEntity *CTFWeaponBaseGun::FireEnergyBall( CTFPlayer *pPlayer, bool bRing )
 
 	if ( bRing )
 	{
-		CTFProjectile_EnergyRing* pProjectile = CTFProjectile_EnergyRing::Create( this, trace.endpos, angForward, 
+		CTFProjectile_EnergyRing* pProjectile = CTFProjectile_EnergyRing::Create( this, trace.endpos, angForward,
 			GetProjectileSpeed(), GetProjectileGravity(), pPlayer, pPlayer, GetParticleColor(1), GetParticleColor(2), IsCurrentAttackACrit() );
 		if ( pProjectile )
 		{
@@ -615,7 +615,7 @@ CBaseEntity *CTFWeaponBaseGun::FireNail( CTFPlayer *pPlayer, int iSpecificNail )
 
 	Vector vecSrc;
 	QAngle angForward;
-	
+
 	// Add some spread
 	float flSpread = 1.5;
 	flSpread += GetProjectileSpread();
@@ -654,7 +654,7 @@ CBaseEntity *CTFWeaponBaseGun::FireNail( CTFPlayer *pPlayer, int iSpecificNail )
 		pProjectile->SetDamage( GetProjectileDamage() );
 #endif
 	}
-	
+
 	return pProjectile;
 }
 
@@ -668,7 +668,7 @@ CBaseEntity *CTFWeaponBaseGun::FirePipeBomb( CTFPlayer *pPlayer, int iPipeBombTy
 #ifdef GAME_DLL
 	QAngle angEyes = pPlayer->EyeAngles();
 
-	float flSpreadAngle = 0.0f; 
+	float flSpreadAngle = 0.0f;
 	CALL_ATTRIB_HOOK_FLOAT( flSpreadAngle, projectile_spread_angle );
 	if ( flSpreadAngle > 0.0f )
 	{
@@ -690,7 +690,7 @@ CBaseEntity *CTFWeaponBaseGun::FirePipeBomb( CTFPlayer *pPlayer, int iPipeBombTy
 	Vector vecSrc = pPlayer->Weapon_ShootPosition();
 	vecSrc +=  vecForward * 16.0f + vecRight * fRight + vecUp * -6.0f;
 
-	trace_t trace;	
+	trace_t trace;
 	Vector vecEye = pPlayer->EyePosition();
 	CTraceFilterSimple traceFilter( this, COLLISION_GROUP_NONE );
 	UTIL_TraceHull( vecEye, vecSrc, -Vector(8,8,8), Vector(8,8,8), MASK_SOLID_BRUSHONLY, &traceFilter, &trace );
@@ -701,12 +701,12 @@ CBaseEntity *CTFWeaponBaseGun::FirePipeBomb( CTFPlayer *pPlayer, int iPipeBombTy
 
 	float flLaunchSpeed = GetProjectileSpeed();
 	CALL_ATTRIB_HOOK_FLOAT( flLaunchSpeed, mult_projectile_range );
-	Vector vecVelocity = ( vecForward * flLaunchSpeed ) + ( vecUp * 200.0f ) + ( random->RandomFloat( -10.0f, 10.0f ) * vecRight ) +		
+	Vector vecVelocity = ( vecForward * flLaunchSpeed ) + ( vecUp * 200.0f ) + ( random->RandomFloat( -10.0f, 10.0f ) * vecRight ) +
 		( random->RandomFloat( -10.0f, 10.0f ) * vecUp );
 
 	float flMultDmg = 1.f;
 	CALL_ATTRIB_HOOK_FLOAT( flMultDmg, mult_dmg );
-	
+
 	// no spin for loch-n-load
 	Vector angImpulse = AngularImpulse( 600, random->RandomInt( -1200, 1200 ), 0 );
 	int iNoSpin = 0;
@@ -844,7 +844,7 @@ CBaseEntity *CTFWeaponBaseGun::FireJar( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseEntity *CTFWeaponBaseGun::FireFlameRocket( CTFPlayer *pPlayer )
 {
@@ -852,7 +852,7 @@ CBaseEntity *CTFWeaponBaseGun::FireFlameRocket( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseGun::PlayWeaponShootSound( void )
 {
@@ -867,15 +867,15 @@ void CTFWeaponBaseGun::PlayWeaponShootSound( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFWeaponBaseGun::GetWeaponSpread( void )
 {
 	float fSpread = m_pWeaponInfo->GetWeaponData( m_iWeaponMode ).m_flSpread;
 	CALL_ATTRIB_HOOK_FLOAT( fSpread, mult_spread_scale );
 
-	CTFPlayer *pPlayer = ToTFPlayer( GetPlayerOwner() ); 
-	
+	CTFPlayer *pPlayer = ToTFPlayer( GetPlayerOwner() );
+
 	if ( pPlayer )
 	{
 		if ( pPlayer->m_Shared.GetCarryingRuneType() == RUNE_PRECISION )
@@ -935,7 +935,7 @@ float CTFWeaponBaseGun::GetProjectileDamage( void )
 	}
 
 	if ( pPlayer && ( pPlayer->IsPlayerClass( TF_CLASS_SOLDIER ) || pPlayer->IsPlayerClass( TF_CLASS_PYRO ) ) )
-	{	
+	{
 		float flRageDamage = 1.f;
 		CALL_ATTRIB_HOOK_FLOAT( flRageDamage, rage_damage );
 

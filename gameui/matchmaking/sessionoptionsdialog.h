@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 class CSessionOptionsDialog : public CBaseDialog
 {
-	DECLARE_CLASS_SIMPLE( CSessionOptionsDialog, CBaseDialog ); 
+	DECLARE_CLASS_SIMPLE( CSessionOptionsDialog, CBaseDialog );
 
 public:
 	CSessionOptionsDialog( vgui::Panel *parent );

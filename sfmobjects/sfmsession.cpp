@@ -281,5 +281,3 @@ CDmeGameModel *CSFMSession::CreateEditorGameModel( studiohdr_t *hdr, const Vecto
 	pGameModel->AddBones( hdr, pBaseName, 0, hdr->numbones );
 	return pGameModel;
 }
-  
-

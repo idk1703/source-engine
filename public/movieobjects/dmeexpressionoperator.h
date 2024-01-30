@@ -34,7 +34,7 @@ class CExpressionCalculator
 {
 public:
 	CExpressionCalculator( const char *expr = NULL ) : m_expr( expr ) {}
-	void SetExpression( const char *expr ) 
+	void SetExpression( const char *expr )
 	{
 		m_expr = expr;
 	}
@@ -78,7 +78,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// An operator which computes the value of expressions 
+// An operator which computes the value of expressions
 //-----------------------------------------------------------------------------
 class CDmeExpressionOperator : public CDmeOperator
 {

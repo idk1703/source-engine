@@ -96,7 +96,7 @@ CON_COMMAND_F( togglescores, "Toggles score panel", FCVAR_SERVER_CAN_EXECUTE|FCV
 {
 	if ( !gViewPortInterface )
 		return;
-	
+
 	IViewPortPanel *scoreboard = gViewPortInterface->FindPanelByName( PANEL_SCOREBOARD );
 
 	if ( !scoreboard )
@@ -135,11 +135,11 @@ IViewPortPanel* DODViewport::CreatePanelByName(const char *szPanelName)
 	}
 	else if ( Q_strcmp(PANEL_CLASS_ALLIES, szPanelName) == 0 )
 	{
-		newpanel = new CDODClassMenu_Allies( this );	
+		newpanel = new CDODClassMenu_Allies( this );
 	}
 	else if ( Q_strcmp(PANEL_CLASS_AXIS, szPanelName) == 0 )
 	{
-		newpanel = new CDODClassMenu_Axis( this );	
+		newpanel = new CDODClassMenu_Axis( this );
 	}
 	else if ( Q_strcmp(PANEL_SCOREBOARD, szPanelName) == 0)
 	{
@@ -147,7 +147,7 @@ IViewPortPanel* DODViewport::CreatePanelByName(const char *szPanelName)
 	}
 	else if ( Q_strcmp(PANEL_SPECGUI, szPanelName) == 0 )
 	{
-		newpanel = new CDODSpectatorGUI( this );	
+		newpanel = new CDODSpectatorGUI( this );
 	}
 	else if ( Q_strcmp(PANEL_INFO, szPanelName) == 0 )
 	{
@@ -159,7 +159,7 @@ IViewPortPanel* DODViewport::CreatePanelByName(const char *szPanelName)
 		newpanel = BaseClass::CreatePanelByName( szPanelName );
 	}
 
-	return newpanel; 
+	return newpanel;
 }
 
 void DODViewport::CreateDefaultPanels( void )

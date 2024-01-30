@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -61,7 +61,7 @@ bool CHLTVTestSystem::StartTest(int nClients, const char *pszAddress)
 void CHLTVTestSystem::RetryTest(int nClients)
 {
 	int maxClients = min( nClients+1, m_Servers.Count() );
-		
+
 	for ( int i=0; i<maxClients; i++ )
 	{
 		CHLTVServer *pHLTV = m_Servers[i];
@@ -97,7 +97,7 @@ CON_COMMAND( tv_test_start, "Starts the SourceTV test system" )
 	int nClients = Q_atoi( args[1] );
 
 	char address[MAX_PATH];
-	
+
 	if ( args.ArgC() == 3 )
 	{
 		Q_strncpy( address, args[2], MAX_PATH );
@@ -124,12 +124,12 @@ CON_COMMAND( tv_test_start, "Starts the SourceTV test system" )
 		// stop old test
 		hltvtest->StopsTest();
 	}
-	
+
 	// shutdown anything else
 	Host_Disconnect( false );
 
 	// start networking
-	NET_SetMutiplayer( true );	
+	NET_SetMutiplayer( true );
 
 	hltvtest->StartTest( nClients, address );
 }

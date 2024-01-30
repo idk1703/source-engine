@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -42,7 +42,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFFreezePanelCallout : public EditablePanel
 {
@@ -60,7 +60,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CReplayReminderPanel;
 
@@ -98,7 +98,7 @@ public:
 	void SendTauntAcknowledgement( const char *pszCommand, int iGibs = 0 );
 
 protected:
-	CTFFreezePanelCallout *TestAndAddCallout( Vector &origin, Vector &vMins, Vector &vMaxs, CUtlVector<Vector> *vecCalloutsTL, 
+	CTFFreezePanelCallout *TestAndAddCallout( Vector &origin, Vector &vMins, Vector &vMaxs, CUtlVector<Vector> *vecCalloutsTL,
 		CUtlVector<Vector> *vecCalloutsBR, Vector &vecFreezeTL, Vector &vecFreezeBR, Vector &vecStatTL, Vector &vecStatBR, int *iX, int *iY );
 
 private:
@@ -140,7 +140,7 @@ private:
 
 	bool					m_bHoldingAfterScreenshot;
 
-	enum 
+	enum
 	{
 		SHOW_NO_NEMESIS = 0,
 		SHOW_NEW_NEMESIS,

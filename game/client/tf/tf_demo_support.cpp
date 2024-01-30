@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -19,16 +19,16 @@ static CTFDemoSupport g_DemoSupport;
 
 extern ConVar mp_tournament;
 
-ConVar ds_enable( "ds_enable", "0", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE, "Demo support - enable automatic .dem file recording and features. 0 - Manual, 1 - Auto-record competitive matches, 2 - Auto-record all matches, 3 - Auto-record tournament (mp_tournament) matches", true, 0, true, 3 ); 
+ConVar ds_enable( "ds_enable", "0", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE, "Demo support - enable automatic .dem file recording and features. 0 - Manual, 1 - Auto-record competitive matches, 2 - Auto-record all matches, 3 - Auto-record tournament (mp_tournament) matches", true, 0, true, 3 );
 ConVar ds_dir( "ds_dir", "demos", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE, "Demo support - will put all files into this folder under the gamedir. 24 characters max." );
 ConVar ds_prefix( "ds_prefix", "", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE, "Demo support - will prefix files with this string. 24 characters max." );
 ConVar ds_min_streak( "ds_min_streak", "4", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE, "Demo support - minimum kill streak count before being recorded.", true, 2, false, 0 );
 ConVar ds_kill_delay( "ds_kill_delay", "15", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE, "Demo support - maximum time between kills for tracking kill streaks.", true, 5, false, 0 );
 ConVar ds_log( "ds_log", "1", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE, "Demo support - log kill streak and bookmark events to an associated .txt file.", true, 0, true, 1 );
-ConVar ds_sound( "ds_sound", "1", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE, "Demo support - play start/stop sound for demo recording.", true, 0, true, 1 ); 
-ConVar ds_notify( "ds_notify", "0", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE, "Demo support - text output when recording start/stop/bookmark events : 0 - console, 1 - console and chat, 2 - console and HUD.", true, 0, true, 2 ); 
+ConVar ds_sound( "ds_sound", "1", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE, "Demo support - play start/stop sound for demo recording.", true, 0, true, 1 );
+ConVar ds_notify( "ds_notify", "0", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE, "Demo support - text output when recording start/stop/bookmark events : 0 - console, 1 - console and chat, 2 - console and HUD.", true, 0, true, 2 );
 ConVar ds_screens( "ds_screens", "1", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE, "Demo support - take screenshot of the scoreboard for non-competitive matches or the match summary stats for competitive matches. For competitive matches, it will not capture the screenshot if you disconnect from the server before the medal awards have completed.", true, 0, true, 1 );
-ConVar ds_autodelete( "ds_autodelete", "0", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE, "Demo support - automatically delete .dem files with no associated bookmark or kill streak events.", true, 0, true, 1 ); 
+ConVar ds_autodelete( "ds_autodelete", "0", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE, "Demo support - automatically delete .dem files with no associated bookmark or kill streak events.", true, 0, true, 1 );
 
 CON_COMMAND_F( ds_mark, "Demo support - bookmark (with optional single-word description) the current tick count for the demo being recorded.", FCVAR_CLIENTDLL | FCVAR_DONTRECORD )
 {
@@ -51,7 +51,7 @@ CON_COMMAND_F( ds_status, "Demo support - show the current recording status.", F
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static const char *g_aDemoEventNames[] =
 {
@@ -69,7 +69,7 @@ const char *GetDemoEventName( EDemoEventType eEventType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFDemoSupport::CTFDemoSupport() : CAutoGameSystemPerFrame( "CTFDemoSupport" )
 {
@@ -90,7 +90,7 @@ CTFDemoSupport::CTFDemoSupport() : CAutoGameSystemPerFrame( "CTFDemoSupport" )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFDemoSupport::Init()
 {
@@ -103,7 +103,7 @@ bool CTFDemoSupport::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFDemoSupport::LevelInitPostEntity()
 {
@@ -115,7 +115,7 @@ void CTFDemoSupport::LevelInitPostEntity()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFDemoSupport::LevelShutdownPostEntity()
 {
@@ -126,7 +126,7 @@ void CTFDemoSupport::LevelShutdownPostEntity()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFDemoSupport::Update( float frametime )
 {
@@ -154,7 +154,7 @@ void CTFDemoSupport::Update( float frametime )
 				if ( pLocalPlayer )
 				{
 					// if the local player is on team spectator or is on a game team and has picked a player class
-					if ( ( pLocalPlayer->GetTeamNumber() == TEAM_SPECTATOR ) || 
+					if ( ( pLocalPlayer->GetTeamNumber() == TEAM_SPECTATOR ) ||
 						 ( ( pLocalPlayer->GetTeamNumber() >= FIRST_GAME_TEAM ) && pLocalPlayer->GetPlayerClass() && ( pLocalPlayer->GetPlayerClass()->GetClassIndex() >= TF_FIRST_NORMAL_CLASS ) && ( pLocalPlayer->GetPlayerClass()->GetClassIndex() < TF_LAST_NORMAL_CLASS ) ) )
 					{
 						if ( !StartRecording() )
@@ -185,7 +185,7 @@ void CTFDemoSupport::Update( float frametime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFDemoSupport::Status( void )
 {
@@ -207,7 +207,7 @@ void CTFDemoSupport::Status( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFDemoSupport::Notify( char *pszMessage )
 {
@@ -241,7 +241,7 @@ void CTFDemoSupport::Notify( char *pszMessage )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFDemoSupport::LogEvent( EDemoEventType eType, int nValue /* = 0 */, const char *pszValue /* = NULL */ )
 {
@@ -310,7 +310,7 @@ void CTFDemoSupport::LogEvent( EDemoEventType eType, int nValue /* = 0 */, const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFDemoSupport::FireGameEvent( IGameEvent * event )
 {
@@ -409,7 +409,7 @@ void CTFDemoSupport::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFDemoSupport::BookMarkCurrentTick( const char *pszValue /* = NULL */ )
 {
@@ -420,7 +420,7 @@ void CTFDemoSupport::BookMarkCurrentTick( const char *pszValue /* = NULL */ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFDemoSupport::IsValidPath( const char *pszFolder )
 {
@@ -441,7 +441,7 @@ bool CTFDemoSupport::IsValidPath( const char *pszFolder )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFDemoSupport::StartRecording( void )
 {
@@ -531,7 +531,7 @@ bool CTFDemoSupport::StartRecording( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFDemoSupport::StopRecording( bool bFromEngine /* = false */ )
 {
@@ -597,5 +597,3 @@ void CTFDemoSupport::StopRecording( bool bFromEngine /* = false */ )
 	m_pChildArray = NULL;
 	m_bHasAtLeastOneEvent = false;
 }
-
-

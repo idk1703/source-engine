@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -58,7 +58,7 @@ void WritePortalFile(FILE *pFile, const CUtlVector<cluster_portals_t> &list)
 			p = list[clusterIndex].portals[j];
 			w = p->winding;
 			// write out to the file
-			
+
 			// sometimes planes get turned around when they are very near
 			// the changeover point between different axis.  interpret the
 			// plane the same way vis will, and flip the side orders if needed
@@ -72,7 +72,7 @@ void WritePortalFile(FILE *pFile, const CUtlVector<cluster_portals_t> &list)
 			{
 				fprintf (pFile,"%i %i %i ",w->numpoints, p->nodes[0]->cluster, p->nodes[1]->cluster);
 			}
-			
+
 			for (int i=0 ; i<w->numpoints ; i++)
 			{
 				fprintf (pFile,"(");
@@ -105,7 +105,7 @@ void AddVisCluster( entity_t *pFuncVisCluster )
 	clipMaxs[0] = clipMaxs[1] = clipMaxs[2] = MAX_COORD_INTEGER;
 
 	// build the map brushes out into the minimum non-overlapping set of brushes
-	bspbrush_t *pBSPBrush = MakeBspBrushList( pFuncVisCluster->firstbrush, pFuncVisCluster->firstbrush + pFuncVisCluster->numbrushes, 
+	bspbrush_t *pBSPBrush = MakeBspBrushList( pFuncVisCluster->firstbrush, pFuncVisCluster->firstbrush + pFuncVisCluster->numbrushes,
 		clipMins, clipMaxs, NO_DETAIL);
 	tmp.pBrushes = ChopBrushes( pBSPBrush );
 
@@ -123,7 +123,7 @@ void AddVisCluster( entity_t *pFuncVisCluster )
 #endif
 
 	g_VisClusters.AddToTail( tmp );
-	
+
 	// clear out this entity so it won't get written to the bsp
 	pFuncVisCluster->epairs = NULL;
 	pFuncVisCluster->numbrushes = 0;
@@ -181,7 +181,7 @@ void BuildVisLeafList_r (node_t *node, CUtlVector<node_t *> &leaves)
 		BuildVisLeafList_r (node->children[1], leaves);
 		return;
 	}
-	
+
 	if ( node->contents & CONTENTS_SOLID )
 	{	// solid block, viewpoint never inside
 		node->cluster = -1;
@@ -278,7 +278,7 @@ int BuildPortalList( CUtlVector<cluster_portals_t> &portalList, const CUtlVector
 				p = p->next[0];
 			}
 			else
-				p = p->next[1];		
+				p = p->next[1];
 		}
 	}
 	return portalCount;
@@ -352,7 +352,7 @@ void WritePortalFile (tree_t *tree)
 	FILE *pf = fopen (filename, "w");
 	if (!pf)
 		Error ("Error opening %s", filename);
-		
+
 	fprintf (pf, "%s\n", PORTALFILE);
 	fprintf (pf, "%i\n", num_visclusters);
 	fprintf (pf, "%i\n", num_visportals);
@@ -371,4 +371,3 @@ void WritePortalFile (tree_t *tree)
 
 	Msg("done (%d)\n", (int)(Plat_FloatTime() - start) );
 }
-

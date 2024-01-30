@@ -99,7 +99,7 @@ CGLMProgram::CGLMProgram( GLMContext *ctx, EGLMProgramType type )
 	m_type		= type;
 	m_nHashTag	= rand() ^ ( rand() << 15 );
 	m_text		= NULL;	// no text yet
-	
+
 #if GLMDEBUG
 	m_editable	= NULL;
 #endif
@@ -144,7 +144,7 @@ CGLMProgram::CGLMProgram( GLMContext *ctx, EGLMProgramType type )
 CGLMProgram::~CGLMProgram( )
 {
 	m_ctx->CheckCurrent();
-	
+
 	// if there is an arb program, delete it
 	GLMShaderDesc *arbDesc = &m_descs[ kGLMARB ];
 	if (arbDesc->m_object.arb)
@@ -152,7 +152,7 @@ CGLMProgram::~CGLMProgram( )
 		gGL->glDeleteProgramsARB( 1, &arbDesc->m_object.arb );
 		arbDesc->m_object.arb = 0;
 	}
-	
+
 	// if there is a GLSL shader, delete it
 	GLMShaderDesc *glslDesc = &m_descs[kGLMGLSL];
 	if (glslDesc->m_object.glsl)
@@ -206,25 +206,25 @@ void	CGLMProgram::SetProgramText( char *text )
 	// clone new text
 	// scan newtext to find sections
 	// walk sections, and mark descs to indicate where text is at
-	
+
 	if (m_text)
 	{
 		free( m_text );
 		m_text = NULL;
 	}
-	
+
 	// scrub desc text references
 	for( int i=0; i<kGLMNumProgramTypes; i++)
 	{
 		GLMShaderDesc	*desc = &m_descs[i];
-		
+
 		desc->m_textPresent = false;
 		desc->m_textOffset	= 0;
 		desc->m_textLength	= 0;
 	}
-	
+
 	m_text = strdup( text );
-	Assert( m_text != NULL );	
+	Assert( m_text != NULL );
 
 	#if GLMDEBUG
 		// create editable text item, if it does not already exist
@@ -240,13 +240,13 @@ void	CGLMProgram::SetProgramText( char *text )
 			}
 
 #ifdef POSIX
-            CFmtStr debugShaderPath( "%s/debugshaders/", getenv( "HOME" ) );
+	CFmtStr debugShaderPath( "%s/debugshaders/", getenv( "HOME" ) );
 #else
 			CFmtStr debugShaderPath( "debugshaders/" );
 #endif
 			_mkdir( debugShaderPath.Access() );
 			m_editable = new CGLMEditableTextItem( m_text, strlen(m_text), false, debugShaderPath.Access(), suffix );
-			
+
 			// pull our string back from the editable (it has probably munged it)
 			if (m_editable->HasData())
 			{
@@ -255,17 +255,17 @@ void	CGLMProgram::SetProgramText( char *text )
 		}
 	#endif
 
-	
+
 	// scan the text and find sections
 	CGLMTextSectioner		sections( m_text, strlen( m_text ), g_shaderSectionMarkers );
-	
+
 	int sectionCount = sections.Count();
 	for( int i=0; i < sectionCount; i++ )
 	{
 		uint subtextOffset	= 0;
 		uint subtextLength	= 0;
 		int markerIndex		= 0;
-		
+
 		sections.GetSection( i, &subtextOffset, &subtextLength, &markerIndex );
 
 		// act on the section
@@ -291,11 +291,11 @@ void	CGLMProgram::SetProgramText( char *text )
 					case	kGLMGLSLVertexDisabled:
 						// ignore quietly
 					break;
-					
+
 					default: Assert(!"Mismatched section marker seen in SetProgramText (VP)"); break;
 				}
 			break;
-			
+
 			case kGLMFragmentProgram:
 				switch( markerIndex )
 				{
@@ -315,10 +315,10 @@ void	CGLMProgram::SetProgramText( char *text )
 					case	kGLMGLSLFragmentDisabled:
 						// ignore quietly
 					break;
-					
+
 					default: Assert(!"Mismatched section marker seen in SetProgramText (VP)"); break;
 				}
-			break;			
+			break;
 		}
 	}
 
@@ -330,7 +330,7 @@ void	CGLMProgram::SetProgramText( char *text )
 	if (lineStr)
 	{
 		int		scratch = -1;
-		
+
 		if (this->m_type == kGLMVertexProgram)
 		{
 			sscanf( lineStr, "// trans#%d label:vs-file %s vs-index %d vs-combo %d", &scratch, m_labelName, &m_labelIndex, &m_labelCombo );
@@ -363,18 +363,18 @@ void	CGLMProgram::Compile( EGLMProgramLang lang )
 	{
 		shaderCompileTimer.Start();
 	}
-	
+
 	bool noisy = false; noisy;
 	int loglevel = gl_shaderpair_cachelog.GetInt();
-	
+
 	switch( lang )
 	{
 		case kGLMARB:
 		{
 			GLMShaderDesc *arbDesc;
-			
+
 			arbDesc = &m_descs[ kGLMARB ];
-			
+
 			// make sure no GLSL program is set up
 			gGL->glUseProgram(0);
 			// bind our program container to context
@@ -388,7 +388,7 @@ void	CGLMProgram::Compile( EGLMProgramLang lang )
 			char *lastCharOfSection = section + arbDesc->m_textLength;	// actually it's one past the last textual character
 			lastCharOfSection;
 
-			#if GLMDEBUG				
+			#if GLMDEBUG
 				if(noisy)
 				{
 					GLMPRINTF((">-D- CGLMProgram::Compile submitting following text for ARB %s program (name %d) ---------------------",
@@ -397,9 +397,9 @@ void	CGLMProgram::Compile( EGLMProgramLang lang )
 
 					// we don't have a "print this many chars" call yet
 					// just temporarily null terminate the text we want to print
-					
+
 					char saveChar = *lastCharOfSection;
-					
+
 					*lastCharOfSection= 0;
 					GLMPRINTTEXT(( section, eDebugDump ));
 					*lastCharOfSection= saveChar;
@@ -410,7 +410,7 @@ void	CGLMProgram::Compile( EGLMProgramLang lang )
 
 			gGL->glProgramStringARB( arbTarget, GL_PROGRAM_FORMAT_ASCII_ARB, arbDesc->m_textLength, section );
 			arbDesc->m_compiled = true;	// compiled but not necessarily valid
-			
+
 			CheckValidity( lang );
 			// leave it bound n enabled, don't care (draw will sort it all out)
 		}
@@ -419,22 +419,22 @@ void	CGLMProgram::Compile( EGLMProgramLang lang )
 		case kGLMGLSL:
 		{
 			GLMShaderDesc *glslDesc;
-			
+
 			glslDesc = &m_descs[ kGLMGLSL ];
 
 			GLenum glslStage = GLMProgTypeToGLSLEnum( m_type );
 			glslStage;
-			
+
 			// there's no binding to do for GLSL.  but make sure no ARB stuff is bound for tidiness.
 			glSetEnable( GL_VERTEX_PROGRAM_ARB, false );
 			glSetEnable( GL_FRAGMENT_PROGRAM_ARB, false );	// add check errors on these
-			
+
 			gGL->glBindProgramARB( GL_VERTEX_PROGRAM_ARB, 0 );
 			gGL->glBindProgramARB( GL_FRAGMENT_PROGRAM_ARB, 0 );
 
 			// no GLSL program either
 			gGL->glUseProgram(0);
-			
+
 			// pump text into GLSL shader object
 
 			char *section = m_text + glslDesc->m_textOffset;
@@ -450,9 +450,9 @@ void	CGLMProgram::Compile( EGLMProgramLang lang )
 
 					// we don't have a "print this many chars" call yet
 					// just temporarily null terminate the text we want to print
-					
+
 					char saveChar = *lastCharOfSection;
-					
+
 					*lastCharOfSection= 0;
 					GLMPRINTTEXT(( section, eDebugDump ));
 					*lastCharOfSection= saveChar;
@@ -461,7 +461,7 @@ void	CGLMProgram::Compile( EGLMProgramLang lang )
 				}
 			#endif
 
-			gGL->glShaderSourceARB( glslDesc->m_object.glsl, 1, (const GLchar **)&section, &glslDesc->m_textLength);	
+			gGL->glShaderSourceARB( glslDesc->m_object.glsl, 1, (const GLchar **)&section, &glslDesc->m_textLength);
 
 #if GLM_FREE_SHADER_TEXT
 			// Free the shader program text - not needed anymore (GL has its own copy)
@@ -493,7 +493,7 @@ void	CGLMProgram::Compile( EGLMProgramLang lang )
 
 				//GetLabelIndexCombo( tempname, sizeof(tempname), &tempindex, &tempcombo );
 				//printf("\ncompile: - [ %s/%d/%d ] on GL name %d ", tempname, tempindex, tempcombo, glslDesc->m_object.glsl );
-				
+
 
 				GetComboIndexNameString( tempname, sizeof(tempname) );
 				printf("\ncompile: %s on GL name %d ", tempname, glslDesc->m_object.glsl );
@@ -526,75 +526,75 @@ void	CGLMProgram::Compile( EGLMProgramLang lang )
 	{
 		uint	dataSize=0;
 		char	*data=NULL;
-		
+
 		m_editable->GetCurrentText( &data, &dataSize );
-		
+
 		char *buf = (char *)malloc( dataSize+1 );	// we will NULL terminate it, since the mirror copy might not be
 		memcpy( buf, data, dataSize );
 		buf[dataSize] = 0;
-		
+
 		SetProgramText( buf );
-		
+
 		free( buf );
 	}
 
 	bool	CGLMProgram::SyncWithEditable( void )
 	{
 		bool result = false;
-		
+
 		if (m_editable->PollForChanges())
 		{
 			ReloadStringFromEditable();
 
 			CompileActiveSources();
-			
+
 			// invalidate shader pair cache entries using this shader..
 			m_ctx->m_pairCache->PurgePairsWithShader( this );
-			
+
 			result = true;	// result true means "it changed"
 		}
 		return result;
 	}
-	
+
 #endif
 
 
 // attributes which are general to both stages
 //	VP and FP:
-//	
+//
 //	0x88A0         PROGRAM_INSTRUCTIONS_ARB                         VP  FP
 //	0x88A1         MAX_PROGRAM_INSTRUCTIONS_ARB                     VP  FP
 //	0x88A2         PROGRAM_NATIVE_INSTRUCTIONS_ARB                  VP  FP
 //	0x88A3         MAX_PROGRAM_NATIVE_INSTRUCTIONS_ARB              VP  FP
-//	
+//
 //	0x88A4         PROGRAM_TEMPORARIES_ARB                          VP  FP
 //	0x88A5         MAX_PROGRAM_TEMPORARIES_ARB                      VP  FP
 //	0x88A6         PROGRAM_NATIVE_TEMPORARIES_ARB                   VP  FP
 //	0x88A7         MAX_PROGRAM_NATIVE_TEMPORARIES_ARB               VP  FP
-//	
+//
 //	0x88A8         PROGRAM_PARAMETERS_ARB                           VP  FP
 //	0x88A9         MAX_PROGRAM_PARAMETERS_ARB                       VP  FP
 //	0x88AA         PROGRAM_NATIVE_PARAMETERS_ARB                    VP  FP
 //	0x88AB         MAX_PROGRAM_NATIVE_PARAMETERS_ARB                VP  FP
-//	
+//
 //	0x88AC         PROGRAM_ATTRIBS_ARB                              VP  FP
 //	0x88AD         MAX_PROGRAM_ATTRIBS_ARB                          VP  FP
 //	0x88AE         PROGRAM_NATIVE_ATTRIBS_ARB                       VP  FP
 //	0x88AF         MAX_PROGRAM_NATIVE_ATTRIBS_ARB                   VP  FP
-//	
+//
 //	0x88B4         MAX_PROGRAM_LOCAL_PARAMETERS_ARB                 VP  FP
 //	0x88B5         MAX_PROGRAM_ENV_PARAMETERS_ARB                   VP  FP
 //	0x88B6         PROGRAM_UNDER_NATIVE_LIMITS_ARB                  VP  FP
 //
 //	VP only:
-//	
+//
 //	0x88B0         PROGRAM_ADDRESS_REGISTERS_ARB                    VP
 //	0x88B1         MAX_PROGRAM_ADDRESS_REGISTERS_ARB                VP
 //	0x88B2         PROGRAM_NATIVE_ADDRESS_REGISTERS_ARB             VP
 //	0x88B3         MAX_PROGRAM_NATIVE_ADDRESS_REGISTERS_ARB         VP
-//	
+//
 //	FP only:
-//	
+//
 //	0x8805         PROGRAM_ALU_INSTRUCTIONS_ARB                         FP
 //	0x880B         MAX_PROGRAM_ALU_INSTRUCTIONS_ARB                     FP
 //	0x8808         PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB                  FP
@@ -626,7 +626,7 @@ struct GLMShaderLimitDesc
 #error you need to use a different name for this macro.
 #endif
 
-GLMShaderLimitDesc	g_glmShaderLimitDescs[] = 
+GLMShaderLimitDesc	g_glmShaderLimitDescs[] =
 {
 	// VP and FP..
 	LMD( INSTRUCTIONS,				3 ),
@@ -648,7 +648,7 @@ GLMShaderLimitDesc	g_glmShaderLimitDescs[] =
 	LMD( NATIVE_TEX_INSTRUCTIONS,	2 ),
 	LMD( TEX_INDIRECTIONS,			2 ),
 	LMD( NATIVE_TEX_INDIRECTIONS,	2 ),
-	
+
 	{ 0, 0, NULL, 0 }
 };
 
@@ -674,26 +674,26 @@ bool CGLMProgram::CheckValidity( EGLMProgramLang lang )
 		{
 			GLMShaderDesc *arbDesc;
 			arbDesc = &m_descs[ kGLMARB ];
-			
+
 			GLenum arbTarget = GLMProgTypeToARBEnum( m_type );
 
 			Assert( arbDesc->m_compiled );
-			
+
 			arbDesc->m_valid = true;	// assume success til we see otherwise
 
 			// assume program is bound.  is there anything wrong with it ?
 
 			GLint isNative=0;
 			gGL->glGetProgramivARB( arbTarget, GL_PROGRAM_UNDER_NATIVE_LIMITS_ARB, &isNative );
-			
+
 			// If the program is over the hardware's limits, print out some information
 			if (isNative!=1)
 			{
 				arbDesc->m_valid = false;
-				
+
 				// check everything we can check
 				char checkmask = (1<<m_type);	// 1 for VP, 2 for FP
-				
+
 				for( GLMShaderLimitDesc *desc = g_glmShaderLimitDescs; desc->m_valueEnum !=0; desc++ )
 				{
 					if ( desc->m_flags & checkmask )
@@ -702,9 +702,9 @@ bool CGLMProgram::CheckValidity( EGLMProgramLang lang )
 						GLint value = 0;
 						GLint limit = 0;
 						gGL->glGetProgramivARB(arbTarget, desc->m_valueEnum, &value);
-						
+
 						gGL->glGetProgramivARB(arbTarget, desc->m_limitEnum, &limit);
-						
+
 						if (value > limit)
 						{
 							GLMPRINTF(("-D- Invalid %s program: program has %d %s; limit is %d", targnames[ m_type ], value, desc->m_debugName, limit ));
@@ -732,21 +732,21 @@ bool CGLMProgram::CheckValidity( EGLMProgramLang lang )
 				GLMPRINTF(("-D- -----end-----" ));
 				free( temp );
 			}
-			
+
 			bValid = arbDesc->m_valid;
 		}
 		break;
-		
+
 		case kGLMGLSL:
 		{
 			GLMShaderDesc *glslDesc;
 			GLcharARB *logString = NULL;
 			glslDesc = &m_descs[ kGLMGLSL ];
-			
+
 			GLenum glslStage = GLMProgTypeToGLSLEnum( m_type ); glslStage;
 
 			Assert( glslDesc->m_compiled );
-			
+
 			glslDesc->m_valid = true;	// assume success til we see otherwise
 
 			// GLSL error check
@@ -754,10 +754,10 @@ bool CGLMProgram::CheckValidity( EGLMProgramLang lang )
 
 			gGL->glGetObjectParameterivARB( (GLhandleARB)glslDesc->m_object.glsl, GL_OBJECT_COMPILE_STATUS_ARB, &compiled);
 			gGL->glGetObjectParameterivARB( (GLhandleARB)glslDesc->m_object.glsl, GL_OBJECT_INFO_LOG_LENGTH_ARB, &length);
-            if ( length > 0 )
-            {
-                logString = (GLcharARB *)malloc(length * sizeof(GLcharARB));
-                gGL->glGetInfoLogARB((GLhandleARB)glslDesc->m_object.glsl, length, &laux, logString);	
+	if ( length > 0 )
+	{
+	logString = (GLcharARB *)malloc(length * sizeof(GLcharARB));
+	gGL->glGetInfoLogARB((GLhandleARB)glslDesc->m_object.glsl, length, &laux, logString);
 			}
 			// we may not be able to check "native limits" stuff until link time. meh
 
@@ -765,7 +765,7 @@ bool CGLMProgram::CheckValidity( EGLMProgramLang lang )
 			{
 				glslDesc->m_valid = false;
 			}
-			
+
 			if (!glslDesc->m_valid)
 			{
 				GLMPRINTF(("-D- ----- GLSL compile failed: \n %s \n",logString ));
@@ -777,9 +777,9 @@ bool CGLMProgram::CheckValidity( EGLMProgramLang lang )
 #endif
 				GLMPRINTF(("-D- -----end-----" ));
 			}
-			
-            if ( logString )
-                free( logString );
+
+	if ( logString )
+	free( logString );
 
 			bValid = glslDesc->m_valid;
 		}
@@ -836,7 +836,7 @@ void	CGLMProgram::LogSlow( EGLMProgramLang lang )
 
 	// mark it
 	desc->m_slowMark++;
-		
+
 
 }
 
@@ -846,7 +846,7 @@ void	CGLMProgram::GetLabelIndexCombo		( char *labelOut, int labelOutMaxChars, in
 	// example:
 	// trans#2871 label:vs-file vertexlit_and_unlit_generic_vs20 vs-index 294912 vs-combo 1234
 	// Done in SetProgramText
-	
+
 	*labelOut = 0;
 	*indexOut = -1;
 
@@ -864,11 +864,11 @@ void	CGLMProgram::GetComboIndexNameString	( char *stringOut, int stringOutMaxCha
 	// example:
 	// trans#2871 label:vs-file vertexlit_and_unlit_generic_vs20 vs-index 294912 vs-combo 1234
 	// Done in SetProgramText
-	
+
 	*stringOut = 0;
 
 	int len = strlen( m_labelName );
-		
+
 	if ( (len+20) < stringOutMaxChars )
 	{
 		// output formatted version
@@ -894,14 +894,14 @@ CGLMShaderPair::CGLMShaderPair( GLMContext *ctx  )
 	memset( m_locVertexBool, 0xFF, sizeof( m_locVertexBool ) );
 	memset( m_locFragmentBool, 0xFF, sizeof( m_locFragmentBool ) );
 	m_bHasBoolOrIntUniforms = false;
-	
+
 	m_locFragmentParams = -1;
-	
+
 	m_locFragmentFakeSRGBEnable = -1;
 	m_fakeSRGBEnableValue = -1.0f;
-	
+
 	memset( m_locSamplers, 0xFF, sizeof( m_locSamplers ) );
-	
+
 	m_valid = false;
 	m_bCheckLinkStatus = false;
 	m_revision = 0;				// bumps to 1 once linked
@@ -926,7 +926,7 @@ bool CGLMShaderPair::ValidateProgramPair()
 	{
 		m_fragmentProg->CheckValidity( kGLMGLSL );
 	}
-	
+
 	if ( !m_valid && m_bCheckLinkStatus )
 	{
 		bool bTimeShaderCompiles = (CommandLine()->FindParm( "-gl_time_shader_compiles" ) != 0);
@@ -1090,7 +1090,7 @@ bool CGLMShaderPair::ValidateProgramPair()
 			gShaderLinkQueryTime += shaderCompileTimer.GetDuration();
 		}
 	}
-	
+
 	return m_valid;
 }
 
@@ -1104,18 +1104,18 @@ bool CGLMShaderPair::SetProgramPair( CGLMProgram *vp, CGLMProgram *fp )
 	{
 		shaderCompileTimer.Start();
 	}
-	
+
 	m_valid	= false;			// assume failure
-	
+
 	// No need to check that vp and fp are valid at this point (ie shader compile succeed)
 	// It is permissible to attach a shader object to a program before source code has been loaded
-	// into the shader object or before the shader object has been compiled. The program won't 
+	// into the shader object or before the shader object has been compiled. The program won't
 	// link if one or more of the shader objects has not been successfully compiled.
 	// (Defer querying the compile and link status to take advantage of GLSL shaders
 	// building in parallels)
 	bool vpgood = (vp != NULL);
 	bool fpgood = (fp != NULL);
-	
+
 	if ( !fpgood )
 	{
 		// fragment side allowed to be "null".
@@ -1126,7 +1126,7 @@ bool CGLMShaderPair::SetProgramPair( CGLMProgram *vp, CGLMProgram *fp )
 	{
 		if ( vp->m_nCentroidMask != fp->m_nCentroidMask )
 		{
-			Warning( "CGLMShaderPair::SetProgramPair: Centroid masks differ at link time of vertex shader %s and pixel shader %s!\n", 
+			Warning( "CGLMShaderPair::SetProgramPair: Centroid masks differ at link time of vertex shader %s and pixel shader %s!\n",
 				vp->m_shaderName, fp->m_shaderName );
 		}
 
@@ -1134,32 +1134,32 @@ bool CGLMShaderPair::SetProgramPair( CGLMProgram *vp, CGLMProgram *fp )
 		if (m_vertexProg)
 		{
 			gGL->glDetachObjectARB(m_program, m_vertexProg->m_descs[kGLMGLSL].m_object.glsl);
-			m_vertexProg = NULL;			
+			m_vertexProg = NULL;
 		}
-		
+
 		if (m_fragmentProg)
 		{
 			gGL->glDetachObjectARB(m_program, m_fragmentProg->m_descs[kGLMGLSL].m_object.glsl);
-			m_fragmentProg = NULL;			
+			m_fragmentProg = NULL;
 		}
-		
+
 		// now attach
-		
+
 		gGL->glAttachObjectARB( m_program, vp->m_descs[kGLMGLSL].m_object.glsl );
 		m_vertexProg = vp;
 
 		gGL->glAttachObjectARB( m_program, fp->m_descs[kGLMGLSL].m_object.glsl );
 		m_fragmentProg = fp;
-	
+
 		// force the locations for input attributes v0-vN to be at locations 0-N
 		// use the vertex attrib map to know which slots are live or not... oy!  we don't have that map yet... but it's OK.
 		// fallback - just force v0-v15 to land in locations 0-15 as a standard.
-		
+
 		for( int i = 0; i < 16; i++ )
 		{
 			char tmp[16];
 			sprintf(tmp, "v%d", i);	// v0 v1 v2 ... et al
-				
+
 			gGL->glBindAttribLocationARB( m_program, i, tmp );
 		}
 #if !GLM_FREE_SHADER_TEXT
@@ -1175,7 +1175,7 @@ bool CGLMShaderPair::SetProgramPair( CGLMProgram *vp, CGLMProgram *fp )
 			}
 		}
 #endif
-			
+
 		// now link
 		gGL->glLinkProgramARB( m_program );
 		m_bCheckLinkStatus = true;
@@ -1209,11 +1209,11 @@ bool CGLMShaderPair::SetProgramPair( CGLMProgram *vp, CGLMProgram *fp )
 bool	CGLMShaderPair::RefreshProgramPair		( void )
 {
 	// re-link and re-query the uniforms.
-	
+
 	// since SetProgramPair knows how to detach previously attached shader objects, just pass the same ones in again.
 	CGLMProgram	*vp = m_vertexProg;
 	CGLMProgram	*fp = m_fragmentProg;
-	
+
 	bool vpgood = (vp!=NULL) && (vp->m_descs[ kGLMGLSL ].m_valid);
 	bool fpgood = (fp!=NULL) && (fp->m_descs[ kGLMGLSL ].m_valid);
 
@@ -1226,7 +1226,7 @@ bool	CGLMShaderPair::RefreshProgramPair		( void )
 		DebuggerBreak();
 		return false;
 	}
-	
+
 	return false;
 }
 
@@ -1236,9 +1236,9 @@ bool	CGLMShaderPair::RefreshProgramPair		( void )
 CGLMShaderPairCache::CGLMShaderPairCache( GLMContext *ctx  )
 {
 	m_ctx = ctx;
-	
+
 	m_mark = 1;
-	
+
 	m_rowsLg2 = gl_shaderpair_cacherows_lg2.GetInt();
 	if (m_rowsLg2 < 10)
 			m_rowsLg2 = 10;
@@ -1251,11 +1251,11 @@ CGLMShaderPairCache::CGLMShaderPairCache( GLMContext *ctx  )
 	m_ways = 1<<m_waysLg2;
 
 	m_entryCount = m_rows * m_ways;
-	
+
 	uint entryTableSize = m_rows * m_ways * sizeof(CGLMPairCacheEntry);
 	m_entries = (CGLMPairCacheEntry*)malloc( entryTableSize );				// array[ m_rows ][ m_ways ]
 	memset( m_entries, 0, entryTableSize );
-	
+
 	uint evictTableSize = m_rows * sizeof(uint);
 	m_evictions = (uint*)malloc( evictTableSize );
 	memset (m_evictions, 0, evictTableSize);
@@ -1279,7 +1279,7 @@ CGLMShaderPairCache::~CGLMShaderPairCache( )
 	bool purgeResult = this->Purge();
 	(void)purgeResult;
 	Assert( !purgeResult );
-	
+
 	if (m_entries)
 	{
 		free( m_entries );
@@ -1319,13 +1319,13 @@ static void WriteToProgramCache( CGLMShaderPair *pair )
 	}
 
 	// extract values of interest which represent a pair of shaders
-	
+
 	char	vprogramName[128];
 	int		vprogramStaticIndex = -1;
 	int		vprogramDynamicIndex = -1;
 	pair->m_vertexProg->GetLabelIndexCombo( vprogramName, sizeof(vprogramName), &vprogramStaticIndex, &vprogramDynamicIndex );
 
-	
+
 	char	pprogramName[128];
 	int		pprogramStaticIndex = -1;
 	int		pprogramDynamicIndex = -1;
@@ -1352,7 +1352,7 @@ static void WriteToProgramCache( CGLMShaderPair *pair )
 CGLMShaderPair	*CGLMShaderPairCache::SelectShaderPairInternal( CGLMProgram *vp, CGLMProgram *fp, uint extraKeyBits, int rowIndex )
 {
 	CGLMShaderPair	*result = NULL;
-		
+
 #if GLMDEBUG
 	int loglevel = gl_shaderpair_cachelog.GetInt();
 #else
@@ -1366,9 +1366,9 @@ CGLMShaderPair	*CGLMShaderPairCache::SelectShaderPairInternal( CGLMProgram *vp, 
 	char ptempname[128];
 	int ptempindex = -1; ptempindex;
 	int ptempcombo = -1; ptempcombo;
-	
+
 	CGLMPairCacheEntry *row = HashRowPtr( rowIndex );
-	
+
 	// Re-probe to find the oldest and first unoccupied entry (this func should be very rarely called if the cache is properly configured so re-scanning shouldn't matter).
 	int hitway, emptyway, oldestway;
 	HashRowProbe( row, vp, fp, extraKeyBits, hitway, emptyway, oldestway );
@@ -1376,9 +1376,9 @@ CGLMShaderPair	*CGLMShaderPairCache::SelectShaderPairInternal( CGLMProgram *vp, 
 
 	// we missed.  if there is no empty way, then somebody's getting evicted.
 	int destway = -1;
-		
+
 	if (emptyway>=0)
-	{			
+	{
 		destway = emptyway;
 
 		if (loglevel >= 2)  // misses logged at level 3 and higher
@@ -1390,14 +1390,14 @@ CGLMShaderPair	*CGLMShaderPairCache::SelectShaderPairInternal( CGLMProgram *vp, 
 	{
 		// evict the oldest way
 		Assert( oldestway >= 0);	// better not come back negative
-			
+
 		CGLMPairCacheEntry *evict = row + oldestway;
-			
+
 		Assert( evict->m_pair != NULL );
 		Assert( evict->m_pair != m_ctx->m_pBoundPair );	// just check
-			
+
 		///////////////////////FIXME may need to do a shoot-down if the pair being evicted is currently active in the context
-			
+
 		m_evictions[ rowIndex ]++;
 
 		// log eviction if desired
@@ -1408,19 +1408,19 @@ CGLMShaderPair	*CGLMShaderPairCache::SelectShaderPairInternal( CGLMProgram *vp, 
 			//printf("\nSSP: miss - row %05d - [ %s/%d/%d %s/%d/%d ]'s %d'th eviction - ", rowIndex, vtempname, vtempindex, vtempcombo, ptempname, ptempindex, ptempcombo, m_evictions[ rowIndex ] );
 
 			evict->m_vertexProg->GetComboIndexNameString( vtempname, sizeof(vtempname) );
-			evict->m_fragmentProg->GetComboIndexNameString( ptempname, sizeof(ptempname) );				
+			evict->m_fragmentProg->GetComboIndexNameString( ptempname, sizeof(ptempname) );
 			printf("\nSSP: miss - row %05d - [ %s + %s ]'s %d'th eviction - ", rowIndex, vtempname, ptempname, m_evictions[ rowIndex ] );
 		}
 
 		delete evict->m_pair;	evict->m_pair = NULL;
 		memset( evict, 0, sizeof(*evict) );
-			
+
 		destway = oldestway;
 	}
 
 	// make the new entry
 	CGLMPairCacheEntry *newentry = row + destway;
-		
+
 	newentry->m_lastMark = m_mark;
 	newentry->m_vertexProg = vp;
 	newentry->m_fragmentProg = fp;
@@ -1432,11 +1432,11 @@ CGLMShaderPair	*CGLMShaderPairCache::SelectShaderPairInternal( CGLMProgram *vp, 
 	if (loglevel >= 2)  // say a little bit more
 	{
 		//newentry->m_vertexProg->GetLabelIndexCombo( vtempname, sizeof(vtempname), &vtempindex, &vtempcombo );
-		//newentry->m_fragmentProg->GetLabelIndexCombo( ptempname, sizeof(ptempname), &ptempindex, &ptempcombo );			
+		//newentry->m_fragmentProg->GetLabelIndexCombo( ptempname, sizeof(ptempname), &ptempindex, &ptempcombo );
 		//printf("new [ %s/%d/%d %s/%d/%d ]", vtempname, vtempindex, vtempcombo, ptempname, ptempindex, ptempcombo );
 
 		newentry->m_vertexProg->GetComboIndexNameString( vtempname, sizeof(vtempname) );
-		newentry->m_fragmentProg->GetComboIndexNameString( ptempname, sizeof(ptempname) );				
+		newentry->m_fragmentProg->GetComboIndexNameString( ptempname, sizeof(ptempname) );
 		printf("new [ %s + %s ]", vtempname, ptempname );
 	}
 
@@ -1452,7 +1452,7 @@ CGLMShaderPair	*CGLMShaderPairCache::SelectShaderPairInternal( CGLMProgram *vp, 
 	{
 		WriteToProgramCache( newentry->m_pair );
 	}
-		
+
 	return result;
 }
 
@@ -1462,7 +1462,7 @@ void	CGLMShaderPairCache::QueryShaderPair( int index, GLMShaderPairInfo *infoOut
 	{
 		// no such location
 		memset( infoOut, 0, sizeof(*infoOut) );
-		
+
 		infoOut->m_status = -1;
 	}
 	else
@@ -1472,7 +1472,7 @@ void	CGLMShaderPairCache::QueryShaderPair( int index, GLMShaderPairInfo *infoOut
 		// if not, exit with m_status = 0.
 
 		CGLMPairCacheEntry *entry = &m_entries[index];
-		
+
 		if (entry->m_pair)
 		{
 			// live
@@ -1495,13 +1495,13 @@ void	CGLMShaderPairCache::QueryShaderPair( int index, GLMShaderPairInfo *infoOut
 bool CGLMShaderPairCache::PurgePairsWithShader( CGLMProgram *prog )
 {
 	bool result = false;
-	
+
 	// walk all rows*ways
 	int limit = m_rows * m_ways;
 	for( int i=0; i < limit; i++)
 	{
 		CGLMPairCacheEntry *entry = &m_entries[i];
-		
+
 		if (entry->m_pair)
 		{
 			//scrub it, if not currently bound, and if the supplied shader matches either stage
@@ -1524,13 +1524,13 @@ bool CGLMShaderPairCache::PurgePairsWithShader( CGLMProgram *prog )
 bool CGLMShaderPairCache::Purge( void )
 {
 	bool result = false;
-	
+
 	// walk all rows*ways
 	int limit = m_rows * m_ways;
 	for( int i=0; i < limit; i++)
 	{
 		CGLMPairCacheEntry *entry = &m_entries[i];
-		
+
 		if (entry->m_pair)
 		{
 			//scrub it, unless the pair is the currently bound pair in our parent glm context
@@ -1547,7 +1547,7 @@ bool CGLMShaderPairCache::Purge( void )
 	}
 	return result;
 }
-	
+
 void			CGLMShaderPairCache::DumpStats			( void )
 {
 #if GL_SHADER_PAIR_CACHE_STATS
@@ -1564,7 +1564,5 @@ void			CGLMShaderPairCache::DumpStats			( void )
 	printf("\n\npair cache evictions: %d\n-----------------------\n",total );
 #endif
 }
-	
+
 	//===============================
-
-

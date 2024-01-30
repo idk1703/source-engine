@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -246,10 +246,10 @@ void CFaceEditMaterialPage::Init( void )
 
 //-----------------------------------------------------------------------------
 // NOTE: clean this up and make a global function!!!
-// Purpose: 
-// Input  : fValue - 
-//			*pSpin - 
-//			bMantissa - 
+// Purpose:
+// Input  : fValue -
+//			*pSpin -
+//			bMantissa -
 // Output : static void
 //-----------------------------------------------------------------------------
 void FloatToSpin(float fValue, CSpinButtonCtrl *pSpin, BOOL bMantissa)
@@ -282,9 +282,9 @@ void FloatToSpin(float fValue, CSpinButtonCtrl *pSpin, BOOL bMantissa)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nValue - 
-//			pSpin - 
+// Purpose:
+// Input  : nValue -
+//			pSpin -
 // Output : static void
 //-----------------------------------------------------------------------------
 void IntegerToSpin(int nValue, CSpinButtonCtrl *pSpin)
@@ -314,9 +314,9 @@ void IntegerToSpin(int nValue, CSpinButtonCtrl *pSpin)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : fValue - 
-//			*pWnd - 
+// Purpose:
+// Input  : fValue -
+//			*pWnd -
 // Output : static void
 //-----------------------------------------------------------------------------
 void FloatToWnd(float fValue, CWnd *pWnd)
@@ -410,7 +410,7 @@ void CFaceEditMaterialPage::ClickFace( CMapSolid *pSolid, int faceIndex, int cmd
 		{
 			if( bEnableUpdate )
 			{
-				UpdateDialogData( pFace );			
+				UpdateDialogData( pFace );
 			}
 			break;
 		}
@@ -419,7 +419,7 @@ void CFaceEditMaterialPage::ClickFace( CMapSolid *pSolid, int faceIndex, int cmd
 		{
 			if ( bEnableUpdate )
 			{
-				UpdateDialogData();			
+				UpdateDialogData();
 			}
 			break;
 		}
@@ -477,7 +477,7 @@ void CFaceEditMaterialPage::AlignToView( CMapFace *pFace )
 	CMapView3D	*pView3D;
 	CFrameWnd	*pFrame;
 	Vector		vView;
-	
+
 	if((pFrame = GetMainWnd()->GetActiveFrame()) != NULL)
 	{
 		if((pActiveView = pFrame->GetActiveView()) != NULL)
@@ -508,14 +508,14 @@ void CFaceEditMaterialPage::AlignToView( CMapFace *pFace )
 						pFace->CalcTextureCoords();
 					}
 				}
-			}	
+			}
 		}
 	}
-} 
+}
 
 
 //-----------------------------------------------------------------------------
-// Copies the texture coordinate system from pFrom into pTo. Then it rotates 
+// Copies the texture coordinate system from pFrom into pTo. Then it rotates
 // the texture around the edge until it's as close to pTo's normal as possible.
 //-----------------------------------------------------------------------------
 void CFaceEditMaterialPage::CopyTCoordSystem( const CMapFace *pFrom, CMapFace *pTo )
@@ -555,7 +555,7 @@ void CFaceEditMaterialPage::CopyTCoordSystem( const CMapFace *pFrom, CMapFace *p
 	fShift[0] = pFrom->texture.UAxis[3];
 	fShift[1] = pFrom->texture.VAxis[3];
 	vOrigin = axis[0]*fShift[0]*pFrom->texture.scale[0] + axis[1]*fShift[1]*pFrom->texture.scale[1];
-	
+
 	vTextureNormal = axis[0].Cross(axis[1]);
 	VectorNormalize(vTextureNormal);
 	if(bRotate)
@@ -603,8 +603,8 @@ void CFaceEditMaterialPage::CopyTCoordSystem( const CMapFace *pFrom, CMapFace *p
 
 //-----------------------------------------------------------------------------
 // Purpose: Applies dialog data to the list of selected faces.
-// Input  : *pOnlyFace - 
-//			bAll - 
+// Input  : *pOnlyFace -
+//			bAll -
 //-----------------------------------------------------------------------------
 void CFaceEditMaterialPage::Apply( CMapFace *pOnlyFace, int flags )
 {
@@ -658,7 +658,7 @@ void CFaceEditMaterialPage::Apply( CMapFace *pOnlyFace, int flags )
 			}
 		}
 	}
-		
+
 	//
 	// Run thru stored faces & apply.
 	//
@@ -695,7 +695,7 @@ void CFaceEditMaterialPage::Apply( CMapFace *pOnlyFace, int flags )
 			{
 				pFace->texture.scale[0] = fscaleX;
 			}
-			
+
 			if ( fscaleY != NOT_INIT )
 			{
 				pFace->texture.scale[1] = fscaleY;
@@ -790,7 +790,7 @@ void CFaceEditMaterialPage::Apply( CMapFace *pOnlyFace, int flags )
 					{
 						*FaceAttributes[nItem].puAttribute |= FaceAttributes[nItem].uFlag;
 					}
-				}	
+				}
 			}
 
 			//
@@ -811,8 +811,8 @@ void CFaceEditMaterialPage::Apply( CMapFace *pOnlyFace, int flags )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOnlyFace - 
+// Purpose:
+// Input  : *pOnlyFace -
 //-----------------------------------------------------------------------------
 void CFaceEditMaterialPage::UpdateDialogData( CMapFace *pOnlyFace )
 {
@@ -848,7 +848,7 @@ void CFaceEditMaterialPage::UpdateDialogData( CMapFace *pOnlyFace )
 		{
 			pFace = pSheet->GetFaceListDataFace( i );
 		}
-		
+
 		TEXTURE &t = pFace->texture;
 
 		//
@@ -903,9 +903,9 @@ void CFaceEditMaterialPage::UpdateDialogData( CMapFace *pOnlyFace )
 			}
 
 			bFirst = FALSE;
-	
+
 			if (pOnlyFace)	// use one face - now break
-			{	
+			{
 				break;
 			}
 		}
@@ -1044,7 +1044,7 @@ void CFaceEditMaterialPage::UpdateDialogData( CMapFace *pOnlyFace )
 	}
 
 	//
-	// Call ctexturebar implementation because OUR implementation sets the 
+	// Call ctexturebar implementation because OUR implementation sets the
 	// q2 checkboxes, which flashes the screen a bit (cuz we change them
 	// again three lines down.)
 	//
@@ -1058,8 +1058,8 @@ void CFaceEditMaterialPage::UpdateDialogData( CMapFace *pOnlyFace )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : uCmd - 
+// Purpose:
+// Input  : uCmd -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CFaceEditMaterialPage::OnAlign( UINT uCmd )
@@ -1105,7 +1105,7 @@ BOOL CFaceEditMaterialPage::OnAlign( UINT uCmd )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFaceEditMaterialPage::OnHideMask(void)
 {
@@ -1118,8 +1118,8 @@ void CFaceEditMaterialPage::OnHideMask(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : Extents - 
+// Purpose:
+// Input  : Extents -
 //-----------------------------------------------------------------------------
 void CFaceEditMaterialPage::GetAllFaceExtents( Extents_t Extents )
 {
@@ -1127,7 +1127,7 @@ void CFaceEditMaterialPage::GetAllFaceExtents( Extents_t Extents )
 	Extents_t	FaceExtents;
 
 	CFaceEditSheet *pSheet = ( CFaceEditSheet* )GetParent();
-	int faceCount = pSheet->GetFaceListCount();	
+	int faceCount = pSheet->GetFaceListCount();
 
 	for( int nFace = 0; nFace < faceCount; nFace++ )
 	{
@@ -1170,8 +1170,8 @@ void CFaceEditMaterialPage::GetAllFaceExtents( Extents_t Extents )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : uCmd - 
+// Purpose:
+// Input  : uCmd -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CFaceEditMaterialPage::OnJustify( UINT uCmd )
@@ -1186,7 +1186,7 @@ BOOL CFaceEditMaterialPage::OnJustify( UINT uCmd )
 	GetHistory()->MarkUndoPosition( NULL, "Justify texture" );
 
 	CFaceEditSheet *pSheet = ( CFaceEditSheet* )GetParent();
-	int faceCount = pSheet->GetFaceListCount();	
+	int faceCount = pSheet->GetFaceListCount();
 
 	// If multiple faces are selected, use the m_bTreatManyAsOneFace variable to determine
 	// how to perform the justification.
@@ -1265,8 +1265,8 @@ BOOL CFaceEditMaterialPage::OnJustify( UINT uCmd )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : id - 
+// Purpose:
+// Input  : id -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CFaceEditMaterialPage::OnSwitchMode( UINT id )
@@ -1278,7 +1278,7 @@ BOOL CFaceEditMaterialPage::OnSwitchMode( UINT id )
 
 	switch( id )
 	{
-	case CFaceEditSheet::ModeLiftSelect:	// set 
+	case CFaceEditSheet::ModeLiftSelect:	// set
 		pButton->SetWindowText( "Mode: Lift+Select" );
 		break;
 	case CFaceEditSheet::ModeLift:
@@ -1303,14 +1303,14 @@ BOOL CFaceEditMaterialPage::OnSwitchMode( UINT id )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFaceEditMaterialPage::OnMode()
 {
 	// Set the material tool current.
 	SetMaterialPageTool( MATERIALPAGETOOL_MATERIAL );
 
-	// switch mode - 
+	// switch mode -
 	//  LIFT - lift texture from clicked face
 	//	APPLY - apply selected texture to clicked face
 	//	SELECT - mark each face
@@ -1334,10 +1334,10 @@ void CFaceEditMaterialPage::OnMode()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nSBCode - 
-//			nPos - 
-//			*pScrollBar - 
+// Purpose:
+// Input  : nSBCode -
+//			nPos -
+//			*pScrollBar -
 //-----------------------------------------------------------------------------
 void CFaceEditMaterialPage::OnVScroll( UINT nSBCode, UINT nPos, CScrollBar *pScrollBar )
 {
@@ -1346,11 +1346,11 @@ void CFaceEditMaterialPage::OnVScroll( UINT nSBCode, UINT nPos, CScrollBar *pScr
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pNMHDR - 
-//			pResult - 
+// Purpose:
+// Input  : pNMHDR -
+//			pResult -
 //-----------------------------------------------------------------------------
-void CFaceEditMaterialPage::OnDeltaPosFloatSpin( NMHDR *pNMHDR, LRESULT *pResult ) 
+void CFaceEditMaterialPage::OnDeltaPosFloatSpin( NMHDR *pNMHDR, LRESULT *pResult )
 {
 	NM_UPDOWN *pNMUpDown = ( NM_UPDOWN* )pNMHDR;
 
@@ -1385,10 +1385,10 @@ void CFaceEditMaterialPage::OnDeltaPosFloatSpin( NMHDR *pNMHDR, LRESULT *pResult
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nType - 
-//			cx - 
-//			cy - 
+// Purpose:
+// Input  : nType -
+//			cx -
+//			cy -
 //-----------------------------------------------------------------------------
 void CFaceEditMaterialPage::OnSize( UINT nType, int cx, int cy )
 {
@@ -1397,7 +1397,7 @@ void CFaceEditMaterialPage::OnSize( UINT nType, int cx, int cy )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFaceEditMaterialPage::OnSelChangeTexture( void )
 {
@@ -1419,7 +1419,7 @@ void CFaceEditMaterialPage::OnSelChangeTexture( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFaceEditMaterialPage::OnCheckUnCheck( void )
 {
@@ -1428,7 +1428,7 @@ void CFaceEditMaterialPage::OnCheckUnCheck( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFaceEditMaterialPage::OnTreatAsOne( void )
 {
@@ -1467,7 +1467,7 @@ void CFaceEditMaterialPage::OnReplace( void )
 	//
 	if( dlg.DoModal() != IDOK )
 		return;
-	
+
 	// mark undo position
 	GetHistory()->MarkUndoPosition( pDoc->GetSelection()->GetList(), "Replace Textures" );
 
@@ -1544,7 +1544,7 @@ void CFaceEditMaterialPage::SelectTexture( LPCSTR pszTextureName )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFaceEditMaterialPage::NotifyGraphicsChanged( void )
 {
@@ -1596,7 +1596,7 @@ void CFaceEditMaterialPage::NotifyGraphicsChanged( void )
 	{
 		m_TextureGroupList.SetCurSel(0);
 	}
-	
+
 	m_TextureGroupList.Invalidate();
 
 	char szName[MAX_PATH];
@@ -1613,7 +1613,7 @@ void CFaceEditMaterialPage::NotifyGraphicsChanged( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFaceEditMaterialPage::OnBrowse( void )
 {
@@ -1630,7 +1630,7 @@ void CFaceEditMaterialPage::OnBrowse( void )
 		if (pTex != NULL)
 		{
 			char sz[128];
-	
+
 			pTex->GetShortName(sz);
 			pBrowser->SetInitialTexture(sz);
 		}
@@ -1658,7 +1658,7 @@ void CFaceEditMaterialPage::OnBrowse( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFaceEditMaterialPage::OnChangeTextureGroup( void )
 {
@@ -1714,7 +1714,7 @@ BOOL CFaceEditMaterialPage::OnSetActive( void )
 void CFaceEditMaterialPage::OnButtonSmoothingGroups( void )
 {
 	if( !m_FaceSmoothDlg.Create( IDD_SMOOTHING_GROUPS, this ) )
-		return;	
+		return;
 
 	m_FaceSmoothDlg.ShowWindow( SW_SHOW );
 

@@ -82,14 +82,14 @@ private:
 	bool	m_bGenerateSRGBWriteSuffix;	// set D3DToGL_OptionSRGBWriteSuffix
 	bool	m_bGenerateBoneUniformBuffer;
 	bool	m_bUseBindlessTexturing;
-		
+
 	// Counter for dealing with nested loops
 	int m_nLoopDepth;
 
 	// Add "// Hex: 0xFFEEF00"-type statements after each instruction is parsed.
 	bool m_bAddHexCodeComments;		// set D3DToGL_AddHexComments
 
-	// Only applicable if m_bAddHexCodeComments is true. 
+	// Only applicable if m_bAddHexCodeComments is true.
 	// If this is true, then it puts the hex code comments to the right of the instructions in a comment
 	// rather than preceding the instructions.
 	// Defaults to FALSE.
@@ -112,7 +112,7 @@ private:
 	uint32 m_dwTexCoordOutMask;
 
 	int32 m_nVSPositionOutput;
-	
+
 	// Mask of varyings which need centroid decoration
 	uint32 m_nCentroidMask;
 
@@ -121,23 +121,23 @@ private:
 	uint32 m_dwTempBoolUsageMask;
 	bool m_bOutputColorRegister[4];
 	bool m_bOutputDepthRegister;
-	
+
 	// Declaration of integer and bool constants
 	uint32 m_dwConstIntUsageMask;
 	uint32 m_dwConstBoolUsageMask;
 
 	uint32 m_dwDefConstIntUsageMask;
 	uint32 m_dwDefConstIntIterCount[32];
-	
+
 	// Did we use atomic_temp_var?
 	bool m_bUsedAtomicTempVar;
-	
+
 	// Track constants so we know how to declare them
 	bool m_bConstantRegisterDefined[MAX_SHADER_CONSTANTS];
 
 	// Track sampler types when declared so we can properly decorate TEX instructions
 	uint32 m_dwSamplerTypes[32];
-	
+
 	// Track sampler usage
 	uint32 m_dwSamplerUsageMask;
 
@@ -149,12 +149,12 @@ private:
 	// init to 0xFFFFFFFF (unhit)
 	// index by (dwRegToken & D3DSP_REGNUM_MASK) in VS DCL insns
 	// fill with (usage<<4) | (usage index).
-	uint32 m_dwAttribMap[16];	
+	uint32 m_dwAttribMap[16];
 
 	// Register high water mark
 	uint32 m_nHighestRegister;
 	int32 m_nHighestBoneRegister;
-	
+
 	// GLSL does indentation for readability
 	int m_NumIndentTabs;
 
@@ -176,7 +176,7 @@ private:
 	// In GLSL mode, these store the semantic attached to each oN register.
 	// They are the values that you pass to GetUsageIndexAndString.
 	uint32 m_DeclaredOutputs[MAX_DECLARED_OUTPUTS];
-	
+
 	uint32 m_DeclaredInputs[MAX_DECLARED_INPUTS];
 
 	// Have they used the tangent input semantic (i.e. is g_pTangentAttributeName declared)?

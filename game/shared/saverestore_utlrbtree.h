@@ -27,23 +27,23 @@ public:
 	}
 
 	virtual void Save( const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave )
-	{		
+	{
 		datamap_t *pTreeTypeDatamap = CTypedescDeducer<FIELD_TYPE>::Deduce( (UTLRBTREE *)NULL );
-		typedescription_t dataDesc = 
+		typedescription_t dataDesc =
 		{
-			(fieldtype_t)FIELD_TYPE, 
-			"elem", 
+			(fieldtype_t)FIELD_TYPE,
+			"elem",
 			{ 0, 0 },
-			1, 
-			FTYPEDESC_SAVE, 
-			NULL, 
-			NULL, 
+			1,
+			FTYPEDESC_SAVE,
+			NULL,
+			NULL,
 			NULL,
 			pTreeTypeDatamap,
 			-1,
 		};
-		
-		datamap_t dataMap = 
+
+		datamap_t dataMap =
 		{
 			&dataDesc,
 			1,
@@ -56,11 +56,11 @@ public:
 			true
 #endif
 		};
-		
+
 		UTLRBTREE *pUtlRBTree = (UTLRBTREE *)fieldInfo.pField;
 
 		pSave->StartBlock();
-		
+
 		int nElems = pUtlRBTree->Count();
 		pSave->WriteInt( &nElems, 1 );
 
@@ -75,25 +75,25 @@ public:
 		}
 		pSave->EndBlock();
 	}
-	
+
 	virtual void Restore( const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore )
 	{
 		datamap_t *pTreeTypeDatamap = CTypedescDeducer<FIELD_TYPE>::Deduce( (UTLRBTREE *)NULL );
-		typedescription_t dataDesc = 
+		typedescription_t dataDesc =
 		{
-			(fieldtype_t)FIELD_TYPE, 
-			"elems", 
+			(fieldtype_t)FIELD_TYPE,
+			"elems",
 			{ 0, 0 },
-			1, 
-			FTYPEDESC_SAVE, 
-			NULL, 
-			NULL, 
+			1,
+			FTYPEDESC_SAVE,
+			NULL,
+			NULL,
 			NULL,
 			pTreeTypeDatamap,
 			-1,
 		};
-		
-		datamap_t dataMap = 
+
+		datamap_t dataMap =
 		{
 			&dataDesc,
 			1,
@@ -106,7 +106,7 @@ public:
 			true
 #endif
 		};
-		
+
 		UTLRBTREE *pUtlRBTree = (UTLRBTREE *)fieldInfo.pField;
 
 		pRestore->StartBlock();
@@ -119,10 +119,10 @@ public:
 			pRestore->ReadAll( &temp, &dataMap );
 			pUtlRBTree->Insert( temp );
 		}
-		
+
 		pRestore->EndBlock();
 	}
-	
+
 	virtual void MakeEmpty( const SaveRestoreFieldInfo_t &fieldInfo )
 	{
 		UTLRBTREE *pUtlRBTree = (UTLRBTREE *)fieldInfo.pField;
@@ -134,7 +134,7 @@ public:
 		UTLRBTREE *pUtlRBTree = (UTLRBTREE *)fieldInfo.pField;
 		return ( pUtlRBTree->Count() == 0 );
 	}
-	
+
 };
 
 //-------------------------------------

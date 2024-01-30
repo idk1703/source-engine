@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -32,7 +32,7 @@ public:
 		MESSAGESTRINGID_NONE = -1,
 		MESSAGESTRINGID_BASE = 0
 	};
-	
+
 	virtual	void		Create( vgui::VPANEL parent ) = 0;
 	virtual void		Destroy( void ) = 0;
 
@@ -40,10 +40,10 @@ public:
 	// its ID later.
 	virtual int			DrawString( vgui::HFont pCustomFont, int x, int y, int r, int g, int b, int a, const char *fmt, int messageID, ... ) = 0;
 	virtual int			DrawString( vgui::HFont pCustomFont, int x, int y, const char *fmt, int messageID, ... ) = 0;
-	
+
 	virtual int			DrawStringForTime( float flTime, vgui::HFont pCustomFont, int x, int y, int r, int g, int b, int a, const char *fmt, int messageID,  ... ) = 0;
 	virtual int			DrawStringForTime( float flTime, vgui::HFont pCustomFont, int x, int y, const char *fmt, int messageID, ... ) = 0;
-	
+
 	// Remove all messages with the specified ID (passed into DrawStringForTime).
 	virtual void		RemoveStringsByID( int messageID ) = 0;
 

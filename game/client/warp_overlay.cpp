@@ -24,7 +24,7 @@ void CWarpOverlay::Draw( bool bCacheFullSceneState )
 {
 	// Get the vector to the sun.
 	Vector vToGlow;
-	
+
 	if( m_bDirectional )
 		vToGlow = m_vDirection;
 	else
@@ -40,9 +40,9 @@ void CWarpOverlay::Draw( bool bCacheFullSceneState )
 	UpdateGlowObstruction( vToGlow, bCacheFullSceneState );
 	if( m_flGlowObstructionScale == 0 )
 		return;
-	
+
 	CMatRenderContextPtr pRenderContext( materials );
-	
+
 	//FIXME: Allow multiple?
 	for( int iSprite=0; iSprite < m_nSprites; iSprite++ )
 	{
@@ -52,7 +52,7 @@ void CWarpOverlay::Draw( bool bCacheFullSceneState )
 		float flHorzSize, flVertSize;
 		Vector vColor;
 		CalcSpriteColorAndSize( flDot, pSprite, &flHorzSize, &flVertSize, &vColor );
-	
+
 		// Setup the basis to draw the sprite.
 		Vector vBasePt, vUp, vRight;
 		CalcBasis( vToGlow, flHorzSize, flVertSize, vBasePt, vUp, vRight );
@@ -63,7 +63,7 @@ void CWarpOverlay::Draw( bool bCacheFullSceneState )
 
 		CMeshBuilder builder;
 		builder.Begin( pMesh, MATERIAL_QUADS, 1 );
-		
+
 		Vector vPt;
 
 		vPt = vBasePt - vRight + vUp;
@@ -89,7 +89,7 @@ void CWarpOverlay::Draw( bool bCacheFullSceneState )
 		builder.Color4f( VectorExpand(vColor), 1 );
 		builder.TexCoord2f( 0, 0, 0 );
 		builder.AdvanceVertex();
-		
+
 		builder.End( false, true );
 	}
 }

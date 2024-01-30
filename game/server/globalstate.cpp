@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -35,14 +35,14 @@ public:
 	}
 
 	// IGameSystem
-	virtual void LevelShutdownPreEntity() 
+	virtual void LevelShutdownPreEntity()
 	{
 		// don't allow state updates during shutdowns
 		Assert( !m_disableStateUpdates );
 		m_disableStateUpdates = true;
 	}
-	
-	virtual void LevelShutdownPostEntity() 
+
+	virtual void LevelShutdownPostEntity()
 	{
 		Assert( m_disableStateUpdates );
 		m_disableStateUpdates = false;
@@ -249,7 +249,7 @@ void CGlobalState::DumpGlobals( void )
 //#endif
 
 
-// Global state Savedata 
+// Global state Savedata
 BEGIN_SIMPLE_DATADESC( CGlobalState )
 	DEFINE_UTLVECTOR( m_list, FIELD_EMBEDDED ),
 	// DEFINE_FIELD( m_nameList, CUtlSymbolTable ),
@@ -268,7 +268,7 @@ int CGlobalState::Save( ISave &save )
 {
 	if ( !save.WriteFields( "GLOBAL", this, NULL, m_DataMap.dataDesc, m_DataMap.dataNumFields ) )
 		return 0;
-	
+
 	return 1;
 }
 
@@ -277,7 +277,7 @@ int CGlobalState::Restore( IRestore &restore )
 	Reset();
 	if ( !restore.ReadFields( "GLOBAL", this, NULL, m_DataMap.dataDesc, m_DataMap.dataNumFields ) )
 		return 0;
-	
+
 	return 1;
 }
 

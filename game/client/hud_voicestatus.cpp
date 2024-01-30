@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -28,7 +28,7 @@ public:
 
 	CHudVoiceSelfStatus( const char *name );
 
-	virtual bool ShouldDraw();	
+	virtual bool ShouldDraw();
 	virtual void Paint();
 	virtual void VidInit();
 	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
@@ -76,9 +76,9 @@ bool CHudVoiceSelfStatus::ShouldDraw()
 
 void CHudVoiceSelfStatus::Paint()
 {
-   if( !m_pVoiceIcon )
+	if( !m_pVoiceIcon )
 		return;
-	
+
 	int x, y, w, h;
 	GetBounds( x, y, w, h );
 
@@ -97,7 +97,7 @@ public:
 	CHudVoiceStatus( const char *name );
 	~CHudVoiceStatus( void );
 
-	virtual bool ShouldDraw();	
+	virtual bool ShouldDraw();
 	virtual void Paint();
 	virtual void VidInit();
 	virtual void Init();
@@ -323,9 +323,9 @@ bool CHudVoiceStatus::ShouldDraw()
 
 void CHudVoiceStatus::Paint()
 {
-   	if( !m_pVoiceIcon )
+		if( !m_pVoiceIcon )
 		return;
-	
+
 	int x, y, w, h;
 	GetBounds( x, y, w, h );
 
@@ -456,7 +456,7 @@ void CHudVoiceStatus::Paint()
 			iTextWidthCounter += surface()->GetCharacterWidth( m_NameFont, pszconverted[j] );
 
 			if( iTextWidthCounter > iTextSpace )
-			{	
+			{
 				if( j > 3 )
 				{
 					szconverted[j-2] = '.';
@@ -468,7 +468,7 @@ void CHudVoiceStatus::Paint()
 		}
 
 		surface()->DrawPrintText( szconverted, wcslen(szconverted) );
-			
+
 		ypos -= ( item_spacing + item_tall );
 
 		surface()->DrawSetAlphaMultiplier(oldAlphaMultiplier);

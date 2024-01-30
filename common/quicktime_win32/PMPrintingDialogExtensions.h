@@ -1,17 +1,17 @@
 /*
-     File:       PMPrintingDialogExtensions.h
- 
-     Contains:   Mac OS X Printing Manager Print Dialog Extension Interfaces.
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1999-2001 by Apple Computer, Inc., all rights reserved
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+	File:       PMPrintingDialogExtensions.h
+
+	Contains:   Mac OS X Printing Manager Print Dialog Extension Interfaces.
+
+	Version:    QuickTime 7.3
+
+	Copyright:  (c) 2007 (c) 1999-2001 by Apple Computer, Inc., all rights reserved
+
+	Bugs?:      For bug reports, consult the following page on
+				the World Wide Web:
+
+					http://developer.apple.com/bugreporter/
+
 */
 #ifndef __MACTYPES__
 #include <MacTypes.h>
@@ -48,41 +48,41 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=mac68k
+	#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+	#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+	#pragma pack(2)
 #endif
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Constants
+	Constants
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /*
 Feature request flags...
 */
 typedef UInt32 PMPDEFlags;
 enum {
-  kPMPDENoFlags                 = 0x00000000, /* Empty flag word. */
-  kPMPDENoSummary               = 0x00000001, /* Won't provide summary string. */
-  kPMPDEAllFlags                = (unsigned long)0xFFFFFFFF /* All flags set.*/
+	kPMPDENoFlags                 = 0x00000000, /* Empty flag word. */
+	kPMPDENoSummary               = 0x00000001, /* Won't provide summary string. */
+	kPMPDEAllFlags                = (unsigned long)0xFFFFFFFF /* All flags set.*/
 };
 
 /*
-    Parameters for printing events:
-    
-    kEventPrintingPDEResize
-        -->     kEventParamDirectObject     typeControlRef
-        -->     kEventParamPDEHeight        typeUInt32
-        
-    When sent to the this event is sent to the PageSetup or Print Dialog, the PDE pane
-    will be resized to match the new height.  The kEventParamDirectObject needs to be the 
-    embedderUserPane that is passed into Initialize
+	Parameters for printing events:
+
+	kEventPrintingPDEResize
+		-->     kEventParamDirectObject     typeControlRef
+		-->     kEventParamPDEHeight        typeUInt32
+
+	When sent to the this event is sent to the PageSetup or Print Dialog, the PDE pane
+	will be resized to match the new height.  The kEventParamDirectObject needs to be the
+	embedderUserPane that is passed into Initialize
 */
 enum {
-  kEventClassPrinting           = FOUR_CHAR_CODE('prnt'),
-  kEventPrintingPDEResize       = FOUR_CHAR_CODE('rqsz'),
-  kEventParamPDEHeight          = FOUR_CHAR_CODE('pdeh')
+	kEventClassPrinting           = FOUR_CHAR_CODE('prnt'),
+	kEventPrintingPDEResize       = FOUR_CHAR_CODE('rqsz'),
+	kEventParamPDEHeight          = FOUR_CHAR_CODE('pdeh')
 };
 
 /*
@@ -117,7 +117,7 @@ Define the Kind IDs for Universal and Standard Printing Dialog Extensions.
 #define kPMColorPDEKindID               CFSTR("com.apple.print.pde.ColorKind")
 #define kPMQualityMediaPDEKindID        CFSTR("com.apple.print.pde.QualityMediaPDEKind")
 /*  These constants are used by PDE's to obtain the PMTicketRef data for the corresponding
-    piece of data.
+	piece of data.
 */
 #define kPDE_PMPrintSettingsRef         CFSTR("PMPrintSettingsTicket")
 #define kPDE_PMPageFormatRef            CFSTR("PMPageFormatTicket")
@@ -125,7 +125,7 @@ Define the Kind IDs for Universal and Standard Printing Dialog Extensions.
 #define kPDE_PMPrinterInfoRef           CFSTR("PMPrinterInfoTicket")
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Type Definitions
+	Type Definitions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /*
 Basic types...
@@ -160,33 +160,33 @@ typedef CALLBACK_API_C( OSStatus , PMPDEOpenProcPtr )(PMPDEContext context);
 typedef CALLBACK_API_C( OSStatus , PMPDECloseProcPtr )(PMPDEContext context);
 typedef CALLBACK_API_C( OSStatus , PMPDETerminateProcPtr )(PMPDEContext context, OSStatus status);
 struct PlugInIntfVTable {
-                                              /* ---- API 'IMMUTABLE' Begin: ----*/
+											/* ---- API 'IMMUTABLE' Begin: ----*/
 
-                                              /* The plugin header is required with all plugins.*/
-                                              /* This must lead object's layout.*/
-  PMPlugInHeader      plugInHeader;
+											/* The plugin header is required with all plugins.*/
+											/* This must lead object's layout.*/
+	PMPlugInHeader      plugInHeader;
 
-                                              /* ---- API Version 1.0 Begin: ----*/
+											/* ---- API Version 1.0 Begin: ----*/
 
-                                              /* Entry points for Printing Dialog Extension modules...*/
-  PMPDEPrologueProcPtr  Prologue;
-  PMPDEInitializeProcPtr  Initialize;
-  PMPDESyncProcPtr    Sync;
-  PMPDEGetSummaryTextProcPtr  GetSummaryText;
-  PMPDEOpenProcPtr    Open;
-  PMPDECloseProcPtr   Close;
-  PMPDETerminateProcPtr  Terminate;
+											/* Entry points for Printing Dialog Extension modules...*/
+	PMPDEPrologueProcPtr  Prologue;
+	PMPDEInitializeProcPtr  Initialize;
+	PMPDESyncProcPtr    Sync;
+	PMPDEGetSummaryTextProcPtr  GetSummaryText;
+	PMPDEOpenProcPtr    Open;
+	PMPDECloseProcPtr   Close;
+	PMPDETerminateProcPtr  Terminate;
 };
 typedef struct PlugInIntfVTable         PlugInIntfVTable;
 struct PlugInIntf {
-                                              /* Plugin interface is an object containing vtable address:*/
-  PlugInIntfVTable *  vtable;
+											/* Plugin interface is an object containing vtable address:*/
+	PlugInIntfVTable *  vtable;
 };
 typedef struct PlugInIntf               PlugInIntf;
 /* Some commonly used routines used by PDEs */
 /*
  *  PMCreateLocalizedPaperSizeCFString()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -194,14 +194,14 @@ typedef struct PlugInIntf               PlugInIntf;
  */
 EXTERN_API_C( CFStringRef )
 PMCreateLocalizedPaperSizeCFString(
-  PMTicketRef   listofPaperTickets,
-  UInt16        paperToUse);
+	PMTicketRef   listofPaperTickets,
+	UInt16        paperToUse);
 
 
 /* Lower level version of the same function, this time passing the single PaperInfo.*/
 /*
  *  PMCreatePaperSizeCFString()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -214,11 +214,11 @@ PMCreatePaperSizeCFString(PMTicketRef selectedPaper);
 
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+	#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+	#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+	#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF

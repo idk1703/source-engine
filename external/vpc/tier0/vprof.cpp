@@ -86,9 +86,9 @@ CVProfNode *CVProfNode::GetSubNode( const tchar *pszName, int detailLevel, const
 {
 	// Try to find this sub node
 	CVProfNode * child = m_pChild;
-	while ( child ) 
+	while ( child )
 	{
-		if ( child->m_pszName == pszName ) 
+		if ( child->m_pszName == pszName )
 		{
 			return child;
 		}
@@ -113,7 +113,7 @@ CVProfNode *CVProfNode::GetSubNode( const tchar *pszName, int detailLevel, const
 void CVProfNode::EnterScope()
 {
 	m_nCurFrameCalls++;
-	if ( m_nRecursions++ == 0 ) 
+	if ( m_nRecursions++ == 0 )
 	{
 		m_Timer.Start();
 #ifndef _X360
@@ -122,7 +122,7 @@ void CVProfNode::EnterScope()
 			m_L2Cache.Start();
 		}
 #else // 360 code:
-		if ( g_VProfCurrentProfile.UsePME() || ((m_iBitFlags & kRecordL2) != 0) ) 
+		if ( g_VProfCurrentProfile.UsePME() || ((m_iBitFlags & kRecordL2) != 0) )
 		{
 			m_PMCData.Start();
 		}
@@ -160,7 +160,7 @@ void CVProfNode::EnterScope()
 
 bool CVProfNode::ExitScope()
 {
-	if ( --m_nRecursions == 0 && m_nCurFrameCalls != 0 ) 
+	if ( --m_nRecursions == 0 && m_nCurFrameCalls != 0 )
 	{
 		m_Timer.End();
 		m_CurFrameTime += m_Timer.GetDuration();
@@ -171,7 +171,7 @@ bool CVProfNode::ExitScope()
 			m_iCurL2CacheMiss += m_L2Cache.GetL2CacheMisses();
 		}
 #else // 360 code:
-		if ( g_VProfCurrentProfile.UsePME() || ((m_iBitFlags & kRecordL2) != 0) ) 
+		if ( g_VProfCurrentProfile.UsePME() || ((m_iBitFlags & kRecordL2) != 0) )
 		{
 			m_PMCData.End();
 			m_iCurL2CacheMiss   += m_PMCData.GetL2CacheMisses();
@@ -215,10 +215,10 @@ bool CVProfNode::ExitScope()
 						Msg( "CPU trace finished.\n" );
 					}
 				}
-				
+
 				// Spew time info for file to allow figuring it out later
 				g_VProfCurrentProfile.LatchMultiFrame( m_CurFrameTime.GetLongCycles() );
-				
+
 #if 0 // This doesn't want to work on the xbox360-- MoveFile not available or file still being put down to disk?
 				char suffix[ 32 ];
 				_snprintf( suffix, sizeof( suffix ), "_%.3f_msecs", flMsecs );
@@ -229,12 +229,12 @@ bool CVProfNode::ExitScope()
 
 				char *p = strrchr( fn, '.' );
 				if ( *p )
-				{	
+				{
 					*p = 0;
 				}
 				strncat( fn, suffix, sizeof( fn ) );
 				strncat( fn, ".pix2", sizeof( fn ) );
-			
+
 				BOOL bSuccess = MoveFile( g_VProfCurrentProfile.GetCPUTraceFilename(), fn );
 				if ( !bSuccess )
 				{
@@ -250,8 +250,8 @@ bool CVProfNode::ExitScope()
 			}
 
 			}
-			
-			// g_VProfCurrentProfile.IsCPUTraceEnabled() && 
+
+			// g_VProfCurrentProfile.IsCPUTraceEnabled() &&
 
 
 		}
@@ -269,7 +269,7 @@ bool CVProfNode::ExitScope()
 
 void CVProfNode::Pause()
 {
-	if ( m_nRecursions > 0 ) 
+	if ( m_nRecursions > 0 )
 	{
 		m_Timer.End();
 		m_CurFrameTime += m_Timer.GetDuration();
@@ -281,7 +281,7 @@ void CVProfNode::Pause()
 			m_iCurL2CacheMiss += m_L2Cache.GetL2CacheMisses();
 		}
 #else // 360 code:
-		if ( g_VProfCurrentProfile.UsePME() || ((m_iBitFlags & kRecordL2) != 0) ) 
+		if ( g_VProfCurrentProfile.UsePME() || ((m_iBitFlags & kRecordL2) != 0) )
 		{
 			m_PMCData.End();
 			m_iCurL2CacheMiss   += m_PMCData.GetL2CacheMisses();
@@ -289,11 +289,11 @@ void CVProfNode::Pause()
 		}
 #endif
 	}
-	if ( m_pChild ) 
+	if ( m_pChild )
 	{
 		m_pChild->Pause();
 	}
-	if ( m_pSibling ) 
+	if ( m_pSibling )
 	{
 		m_pSibling->Pause();
 	}
@@ -303,7 +303,7 @@ void CVProfNode::Pause()
 
 void CVProfNode::Resume()
 {
-	if ( m_nRecursions > 0 ) 
+	if ( m_nRecursions > 0 )
 	{
 		m_Timer.Start();
 
@@ -313,17 +313,17 @@ void CVProfNode::Resume()
 			m_L2Cache.Start();
 		}
 #else
-		if ( g_VProfCurrentProfile.UsePME() || ((m_iBitFlags & kRecordL2) != 0) ) 
+		if ( g_VProfCurrentProfile.UsePME() || ((m_iBitFlags & kRecordL2) != 0) )
 		{
 			m_PMCData.Start();
 		}
 #endif
 	}
-	if ( m_pChild ) 
+	if ( m_pChild )
 	{
 		m_pChild->Resume();
 	}
-	if ( m_pSibling ) 
+	if ( m_pSibling )
 	{
 		m_pSibling->Resume();
 	}
@@ -338,10 +338,10 @@ void CVProfNode::Reset()
 
 	m_nCurFrameCalls = 0;
 	m_CurFrameTime.Init();
-	
+
 	m_nTotalCalls = 0;
 	m_TotalTime.Init();
-	
+
 	m_PeakTime.Init();
 
 	m_iPrevL2CacheMiss = 0;
@@ -354,11 +354,11 @@ void CVProfNode::Reset()
 	m_iTotalLoadHitStores = 0;
 #endif
 
-	if ( m_pChild ) 
+	if ( m_pChild )
 	{
 		m_pChild->Reset();
 	}
-	if ( m_pSibling ) 
+	if ( m_pSibling )
 	{
 		m_pSibling->Reset();
 	}
@@ -377,12 +377,12 @@ void CVProfNode::MarkFrame()
 #endif
 	m_nTotalCalls += m_nCurFrameCalls;
 	m_TotalTime += m_CurFrameTime;
-	
+
 	if ( m_PeakTime.IsLessThan( m_CurFrameTime ) )
 	{
 		m_PeakTime = m_CurFrameTime;
 	}
-	
+
 	m_CurFrameTime.Init();
 	m_nCurFrameCalls = 0;
 	m_iTotalL2CacheMiss += m_iCurL2CacheMiss;
@@ -391,11 +391,11 @@ void CVProfNode::MarkFrame()
 	m_iTotalLoadHitStores += m_iCurLoadHitStores;
 	m_iCurLoadHitStores = 0;
 #endif
-	if ( m_pChild ) 
+	if ( m_pChild )
 	{
 		m_pChild->MarkFrame();
 	}
-	if ( m_pSibling ) 
+	if ( m_pSibling )
 	{
 		m_pSibling->MarkFrame();
 	}
@@ -407,11 +407,11 @@ void CVProfNode::ResetPeak()
 {
 	m_PeakTime.Init();
 
-	if ( m_pChild ) 
+	if ( m_pChild )
 	{
 		m_pChild->ResetPeak();
 	}
-	if ( m_pSibling ) 
+	if ( m_pSibling )
 	{
 		m_pSibling->ResetPeak();
 	}
@@ -490,10 +490,10 @@ static bool PeakOverAverageCompare( const TimeSums_t &lhs, const TimeSums_t &rhs
 {
 	double avgLhs = ( lhs.calls ) ? lhs.time / (double)lhs.calls : 0.0;
 	double avgRhs = ( rhs.calls ) ? rhs.time / (double)rhs.calls : 0.0;
-	
+
 	double lhsPoA = ( avgLhs != 0 ) ? lhs.peak / avgLhs : 0.0;
 	double rhsPoA = ( avgRhs != 0 ) ? rhs.peak / avgRhs : 0.0;
-	
+
 	return ( lhsPoA > rhsPoA );
 }
 
@@ -525,9 +525,9 @@ void CVProfile::SumTimes( CVProfNode *pNode, int budgetGroupID )
 		if ( g_pStartNode && pNode->GetTotalCalls() > 0 && ( budgetGroupID == -1 || pNode->GetBudgetGroupID() == budgetGroupID ) )
 		{
 			double timeLessChildren = pNode->GetTotalTimeLessChildren();
-			
+
 			g_TimesLessChildren.insert( make_pair( pNode, timeLessChildren ) );
-			
+
 			map<const tchar *, uintp>::iterator iter;
 			iter = g_TimeSumsMap.find( pNode->GetName() ); // intenionally using address of string rather than string compare (toml 01-27-03)
 			if ( iter == g_TimeSumsMap.end() )
@@ -546,18 +546,18 @@ void CVProfile::SumTimes( CVProfNode *pNode, int budgetGroupID )
 					timeSums.peak = pNode->GetPeakTime();
 			}
 		}
-			
+
 		if( ( !g_pStartNode || pNode != g_pStartNode ) && pNode->GetSibling() )
 		{
 			SumTimes( pNode->GetSibling(), budgetGroupID );
 		}
 	}
-	
+
 	if( pNode->GetChild() )
 	{
 		SumTimes( pNode->GetChild(), budgetGroupID );
 	}
-		
+
 	if ( bSetStartNode )
 		g_pStartNode = NULL;
 }
@@ -693,7 +693,7 @@ void CVProfile::DumpEnabledPMCNodes( void )
 	Msg( _T("(end)\n") );
 }
 
-CVProfNode *CVProfile::CPUTraceGetEnabledNode(CVProfNode *pStartNode) 
+CVProfNode *CVProfile::CPUTraceGetEnabledNode(CVProfNode *pStartNode)
 {
 	if (!pStartNode)
 	{
@@ -711,7 +711,7 @@ CVProfNode *CVProfile::CPUTraceGetEnabledNode(CVProfNode *pStartNode)
 		if (retval)
 			return retval;
 	}
-	
+
 	if (pStartNode->GetChild())
 	{
 		CVProfNode *retval = CPUTraceGetEnabledNode(pStartNode->GetChild());
@@ -725,12 +725,12 @@ CVProfNode *CVProfile::CPUTraceGetEnabledNode(CVProfNode *pStartNode)
 const char *CVProfile::SetCPUTraceFilename( const char *filename )
 {
 	strncpy( m_CPUTraceFilename, filename, sizeof( m_CPUTraceFilename ) );
-	return GetCPUTraceFilename();	
+	return GetCPUTraceFilename();
 }
 
-/// Returns a pointer to an internal static, so you don't need to 
+/// Returns a pointer to an internal static, so you don't need to
 /// make temporary char buffers for this to write into. What of it?
-/// You're not hanging on to that pointer. That would be foolish. 
+/// You're not hanging on to that pointer. That would be foolish.
 const char *CVProfile::GetCPUTraceFilename()
 {
 	static char retBuf[256];
@@ -843,29 +843,29 @@ void CVProfile::DumpNodes( CVProfNode *pNode, int indent, bool bAverageAndCountO
 	if ( !fIsRoot )
 	{
 		map<CVProfNode *, double>::iterator iterTimeLessChildren = g_TimesLessChildren.find( pNode );
-		
+
 		double dNodeTime = 0;
 		if(iterTimeLessChildren != g_TimesLessChildren.end())
 			dNodeTime = iterTimeLessChildren->second;
 
 		if( bAverageAndCountOnly )
 		{
-			Msg( _T("  %10.3f %9.2f      %8d"), 
-						 ( pNode->GetTotalCalls() > 0 ) ? pNode->GetTotalTime() / (double)NumFramesSampled() : 0, 
-						 ( pNode->GetTotalCalls() > 0 ) ? dNodeTime / (double)NumFramesSampled() : 0, 
-						 pNode->GetTotalCalls()  );
+			Msg( _T("  %10.3f %9.2f      %8d"),
+						( pNode->GetTotalCalls() > 0 ) ? pNode->GetTotalTime() / (double)NumFramesSampled() : 0,
+						( pNode->GetTotalCalls() > 0 ) ? dNodeTime / (double)NumFramesSampled() : 0,
+						pNode->GetTotalCalls()  );
 		}
 		else
 		{
-			Msg( _T("  %10.3f %9.2f      %10.3f %6.2f      %10.3f %6.2f   %8d %6.2f"), 
-						 pNode->GetTotalTime(), dNodeTime,
-						 ( pNode->GetTotalCalls() > 0 ) ? pNode->GetTotalTime() / (double)NumFramesSampled() : 0, 
-						 ( pNode->GetTotalCalls() > 0 ) ? dNodeTime / (double)NumFramesSampled() : 0, 
-						 ( pNode->GetTotalCalls() > 0 ) ? pNode->GetTotalTime() / (double)pNode->GetTotalCalls() : 0, 
-						 ( pNode->GetTotalCalls() > 0 ) ? dNodeTime / (double)pNode->GetTotalCalls() : 0, 
-						 pNode->GetTotalCalls(), pNode->GetPeakTime()  );
+			Msg( _T("  %10.3f %9.2f      %10.3f %6.2f      %10.3f %6.2f   %8d %6.2f"),
+						pNode->GetTotalTime(), dNodeTime,
+						( pNode->GetTotalCalls() > 0 ) ? pNode->GetTotalTime() / (double)NumFramesSampled() : 0,
+						( pNode->GetTotalCalls() > 0 ) ? dNodeTime / (double)NumFramesSampled() : 0,
+						( pNode->GetTotalCalls() > 0 ) ? pNode->GetTotalTime() / (double)pNode->GetTotalCalls() : 0,
+						( pNode->GetTotalCalls() > 0 ) ? dNodeTime / (double)pNode->GetTotalCalls() : 0,
+						pNode->GetTotalCalls(), pNode->GetPeakTime()  );
 		}
-		
+
 		Msg( _T("  ") );
 		for ( int i = 1; i < indent; i++ )
 		{
@@ -879,7 +879,7 @@ void CVProfile::DumpNodes( CVProfNode *pNode, int indent, bool bAverageAndCountO
 	{
 		DumpNodes( pNode->GetChild(), indent + 1, bAverageAndCountOnly );
 	}
-	
+
 	if( !( fIsRoot || pNode == g_pStartNode ) && pNode->GetSibling() )
 	{
 		DumpNodes( pNode->GetSibling(), indent, bAverageAndCountOnly );
@@ -900,7 +900,7 @@ static void CalcBudgetGroupTimes_Recursive( CVProfNode *pNode, unsigned int *gro
 		return;
 	}
 
-	groupTimes[groupID] += flScale*pNode->GetPrevTimeLessChildren();	
+	groupTimes[groupID] += flScale*pNode->GetPrevTimeLessChildren();
 
 	nodePtr = pNode->GetSibling();
 	if ( nodePtr )
@@ -926,7 +926,7 @@ static void CalcBudgetGroupL2CacheMisses_Recursive( CVProfNode *pNode, unsigned 
 		return;
 	}
 
-	groupTimes[groupID] += flScale*pNode->GetPrevL2CacheMissLessChildren();	
+	groupTimes[groupID] += flScale*pNode->GetPrevL2CacheMissLessChildren();
 
 	nodePtr = pNode->GetSibling();
 	if ( nodePtr )
@@ -952,7 +952,7 @@ static void CalcBudgetGroupLHS_Recursive( CVProfNode *pNode, unsigned int *group
 		return;
 	}
 
-	groupTimes[groupID] += flScale*pNode->GetPrevLoadHitStoreLessChildren();	
+	groupTimes[groupID] += flScale*pNode->GetPrevLoadHitStoreLessChildren();
 
 	nodePtr = pNode->GetSibling();
 	if ( nodePtr )
@@ -1018,14 +1018,14 @@ void CVProfile::VXProfileStart()
 	}
 
 	if ( m_UpdateMode & (VPROF_UPDATE_TEXTURE_GLOBAL|VPROF_UPDATE_TEXTURE_PERFRAME) )
-	{		
+	{
 		// update texture profiling
 		numGroups = 0;
 		counterGroup = (m_UpdateMode & VPROF_UPDATE_TEXTURE_GLOBAL) ? COUNTER_GROUP_TEXTURE_GLOBAL : COUNTER_GROUP_TEXTURE_PER_FRAME;
 		for ( i=0; i<g_VProfCurrentProfile.GetNumCounters(); i++ )
 		{
 			if ( g_VProfCurrentProfile.GetCounterGroup( i ) == counterGroup )
-			{	
+			{
 				// strip undesired prefix
 				pGroupName = g_VProfCurrentProfile.GetCounterName( i );
 				if ( !stricmp( pGroupName, "texgroup_frame_" ) )
@@ -1146,7 +1146,7 @@ static void VXBuildNodeList_r( CVProfNode *pNode, xVProfNodeItem_t *pNodeList, i
 {
 	if ( !pNode )
 	{
-		return; 
+		return;
 	}
 	if ( *pNumNodes >= MAX_VPROF_NODES_IN_LIST )
 	{
@@ -1201,27 +1201,27 @@ static void DumpSorted( const tchar *pszHeading, double totalTime, bool (*pfnSor
 	vector<TimeSums_t> sortedSums;
 	sortedSums = g_TimeSums;
 	sort( sortedSums.begin(), sortedSums.end(), pfnSort );
-	
+
 	Msg( _T("%s\n"), pszHeading);
-    Msg( _T("  Scope                                                      Calls Calls/Frame  Time+Child    Pct        Time    Pct   Avg/Frame    Avg/Call Avg-NoChild        Peak\n"));
-    Msg( _T("  ---------------------------------------------------- ----------- ----------- ----------- ------ ----------- ------ ----------- ----------- ----------- -----------\n"));
-    for ( i = 0; i < sortedSums.size() && i < (unsigned)maxLen; i++ )
-    {
+	Msg( _T("  Scope                                                      Calls Calls/Frame  Time+Child    Pct        Time    Pct   Avg/Frame    Avg/Call Avg-NoChild        Peak\n"));
+	Msg( _T("  ---------------------------------------------------- ----------- ----------- ----------- ------ ----------- ------ ----------- ----------- ----------- -----------\n"));
+	for ( i = 0; i < sortedSums.size() && i < (unsigned)maxLen; i++ )
+	{
 		double avg = ( sortedSums[i].calls ) ? sortedSums[i].time / (double)sortedSums[i].calls : 0.0;
 		double avgLessChildren = ( sortedSums[i].calls ) ? sortedSums[i].timeLessChildren / (double)sortedSums[i].calls : 0.0;
-		
-        Msg( _T("  %52.52s%12d%12.3f%12.3f%7.2f%12.3f%7.2f%12.3f%12.3f%12.3f%12.3f\n"), 
-             sortedSums[i].pszProfileScope,
-             sortedSums[i].calls,
-			 (float)sortedSums[i].calls / (float)g_TotalFrames,
-			 sortedSums[i].time,
-			 min( ( sortedSums[i].time / totalTime ) * 100.0, 100.0 ),
-			 sortedSums[i].timeLessChildren,
-			 min( ( sortedSums[i].timeLessChildren / totalTime ) * 100.0, 100.0 ),
-			 sortedSums[i].time / (float)g_TotalFrames,
-			 avg,
-			 avgLessChildren,
-			 sortedSums[i].peak );
+
+		Msg( _T("  %52.52s%12d%12.3f%12.3f%7.2f%12.3f%7.2f%12.3f%12.3f%12.3f%12.3f\n"),
+			sortedSums[i].pszProfileScope,
+			sortedSums[i].calls,
+			(float)sortedSums[i].calls / (float)g_TotalFrames,
+			sortedSums[i].time,
+			min( ( sortedSums[i].time / totalTime ) * 100.0, 100.0 ),
+			sortedSums[i].timeLessChildren,
+			min( ( sortedSums[i].timeLessChildren / totalTime ) * 100.0, 100.0 ),
+			sortedSums[i].time / (float)g_TotalFrames,
+			avg,
+			avgLessChildren,
+			sortedSums[i].peak );
 	}
 }
 
@@ -1233,8 +1233,8 @@ static void DumpPMC( CVProfNode *pNode, bool &bPrintHeader, uint64 L2thresh = 1,
 
 	uint64 l2 = pNode->GetL2CacheMisses();
 	uint64 lhs = pNode->GetLoadHitStores();
-	if ( l2  > L2thresh && 
-		 lhs > LHSthresh )
+	if ( l2  > L2thresh &&
+		lhs > LHSthresh )
 	{
 		// met threshold.
 		if (bPrintHeader)
@@ -1277,7 +1277,7 @@ void CVProfile::OutputReport( int type, const tchar *pszStartNode, int budgetGro
 #endif
 
 	g_TotalFrames = max( NumFramesSampled() - 1, 1 );
-	
+
 	if ( NumFramesSampled() == 0 || GetTotalTimeSampled() == 0)
 		Msg( _T("No samples\n") );
 	else
@@ -1288,7 +1288,7 @@ void CVProfile::OutputReport( int type, const tchar *pszStartNode, int budgetGro
 			Msg( _T("%d frames sampled for %.2f seconds\n"), g_TotalFrames, GetTotalTimeSampled() / 1000.0 );
 			Msg( _T("Average %.2f fps, %.2f ms per frame\n"), 1000.0 / ( GetTotalTimeSampled() / g_TotalFrames ), GetTotalTimeSampled() / g_TotalFrames );
 			Msg( _T("Peak %.2f ms frame\n"), GetPeakFrameTime() );
-			
+
 			double timeAccountedFor = 100.0 - ( m_Root.GetTotalTimeLessChildren() / m_Root.GetTotalTime() );
 			Msg( _T("%.0f pct of time accounted for\n"), min( 100.0, timeAccountedFor ) );
 			Msg( _T("\n") );
@@ -1300,7 +1300,7 @@ void CVProfile::OutputReport( int type, const tchar *pszStartNode, int budgetGro
 		}
 
 		SumTimes( pszStartNode, budgetGroupID );
-		
+
 		// Dump the hierarchy
 		if ( type & VPRT_HIERARCHY )
 		{
@@ -1313,7 +1313,7 @@ void CVProfile::OutputReport( int type, const tchar *pszStartNode, int budgetGro
 			DumpNodes( (!g_pStartNode) ? GetRoot() : g_pStartNode, 0, false );
 			Msg( _T("\n") );
 		}
-		
+
 		if ( type & VPRT_HIERARCHY_TIME_PER_FRAME_AND_COUNT_ONLY )
 		{
 			Msg( _T("-- Hierarchical Call Graph --\n"));
@@ -1358,7 +1358,7 @@ void CVProfile::OutputReport( int type, const tchar *pszStartNode, int budgetGro
 			DumpSorted( _T("-- Profile scopes sorted by peak over average (including children) --"), GetTotalTimeSampled(), PeakOverAverageCompare, maxLen );
 			Msg( _T("\n") );
 		}
-		
+
 		// TODO: Functions by time less children
 		// TODO: Functions by time averages
 		// TODO: Functions by peak
@@ -1379,12 +1379,12 @@ void CVProfile::OutputReport( int type, const tchar *pszStartNode, int budgetGro
 
 //=============================================================================
 
-CVProfile::CVProfile() 
+CVProfile::CVProfile()
  :	m_Root( _T("Root"), 0, NULL, VPROF_BUDGETGROUP_OTHER_UNACCOUNTED, 0 ),
-	m_pCurNode( &m_Root ), 
- 	m_nFrames( 0 ),
- 	m_enabled( 0 ),  // don't change this. if m_enabled is anything but zero coming out of this constructor, vprof will break.
- 	m_pausedEnabledDepth( 0 ),
+	m_pCurNode( &m_Root ),
+	m_nFrames( 0 ),
+	m_enabled( 0 ),  // don't change this. if m_enabled is anything but zero coming out of this constructor, vprof will break.
+	m_pausedEnabledDepth( 0 ),
 	m_fAtRoot( true )
 {
 
@@ -1394,7 +1394,7 @@ CVProfile::CVProfile()
 #endif
 
 	m_TargetThreadId = ThreadGetCurrentId();
-	
+
 	// Go ahead and allocate 32 slots for budget group names
 	MEM_ALLOC_CREDIT();
 	m_pBudgetGroups = new CVProfile::CBudgetGroup[32];
@@ -1472,7 +1472,7 @@ void CVProfile::FreeNodes_R( CVProfNode *pNode )
 		pNext = pChild->GetSibling();
 		FreeNodes_R( pChild );
 	}
-	
+
 	if ( pNode == GetRoot() )
 	{
 		pNode->m_pChild = NULL;
@@ -1514,12 +1514,12 @@ void CVProfile::Term()
 #define COLORMIN 160
 #define COLORMAX 255
 
-static int g_ColorLookup[4] = 
+static int g_ColorLookup[4] =
 {
-	COLORMIN, 
+	COLORMIN,
 	COLORMAX,
 	COLORMIN+(COLORMAX-COLORMIN)/3,
-	COLORMIN+((COLORMAX-COLORMIN)*2)/3, 
+	COLORMIN+((COLORMAX-COLORMIN)*2)/3,
 };
 
 #define GET_BIT( val, bitnum ) ( ( val >> bitnum ) & 0x1 )
@@ -1561,11 +1561,11 @@ int CVProfile::AddBudgetGroupName( const tchar *pBudgetGroupName, int budgetFlag
 	{
 		m_nBudgetGroupNamesAllocated *= 2;
 		m_nBudgetGroupNamesAllocated = max( m_nBudgetGroupNames + 6, m_nBudgetGroupNamesAllocated );
-		
+
 		CBudgetGroup *pNew = new CBudgetGroup[ m_nBudgetGroupNamesAllocated ];
 		for ( int i=0; i < m_nBudgetGroupNames; i++ )
 			pNew[i] = m_pBudgetGroups[i];
-		
+
 		delete [] m_pBudgetGroups;
 		m_pBudgetGroups = pNew;
 	}
@@ -1627,7 +1627,7 @@ void CVProfile::HideBudgetGroup( int budgetGroupID, bool bHide )
 }
 
 int *CVProfile::FindOrCreateCounter( const tchar *pName, CounterGroup_t eCounterGroup )
-{	
+{
 	Assert( m_NumCounters+1 < MAXCOUNTERS );
 	if ( m_NumCounters + 1 >= MAXCOUNTERS || !InTargetThread() )
 	{
@@ -1748,5 +1748,4 @@ void CVProfile::Validate( CValidator &validator, tchar *pchName )
 }
 #endif // DBGFLAG_VALIDATE
 
-#endif	
-
+#endif

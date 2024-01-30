@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 
 ===== tf_playerclass.cpp ========================================================
 
-  functions dealing with the TF playerclasses
+	functions dealing with the TF playerclasses
 
 */
 #include "cbase.h"
@@ -58,7 +58,7 @@ char *sNonClassStatNames[] =
 class CInterClassStats
 {
 public:
-	
+
 			CInterClassStats()
 			{
 				m_flTotalDamageInflicted = 0;
@@ -97,13 +97,13 @@ public:
 	}
 
 public:
-			
+
 	CInterClassStats	m_InterClassStats[STATS_NUM_GROUPS];
 	double				m_flPlayerTime;	// How much player time was spent in this class.
 };
 
-		
-ConVar	tf2_object_hard_limits( "tf2_object_hard_limits","0", FCVAR_NONE, "If true, use hard object limits instead of resource costs" ); 
+
+ConVar	tf2_object_hard_limits( "tf2_object_hard_limits","0", FCVAR_NONE, "If true, use hard object limits instead of resource costs" );
 
 CPlayerClassStats g_PlayerClassStats[STATS_NUM_GROUPS];
 
@@ -166,7 +166,7 @@ void PrintPlayerClassStats()
 		for ( j=TFCLASS_UNDECIDED+1; j < STATS_NUM_GROUPS; j++ )
 		{
 			CInterClassStats *pInter = &g_PlayerClassStats[i].m_InterClassStats[j];
-			
+
 			nTotalEngagements += pInter->m_nEngagements;
 			flTotalEngagementDist += pInter->m_flTotalEngagementDist;
 
@@ -175,8 +175,8 @@ void PrintPlayerClassStats()
 		}
 		flAvgEngagementDist = nTotalEngagements ? ( flTotalEngagementDist / nTotalEngagements ) : 0;
 		double flAvgNormalizedEngagementDist = nTotalNormalizedEngagements ? (flTotalNormalizedEngagementDist / nTotalNormalizedEngagements) : 0;
-		
-		
+
+
 		pFileSys->FPrintf( hFile, "%s",		GetGroupNameFor( i ) );
 		pFileSys->FPrintf( hFile, "\t%.1f", (pStats->m_flPlayerTime / 60.0f) );
 		pFileSys->FPrintf( hFile, "\t%d",	(int)flAvgNormalizedEngagementDist );
@@ -189,7 +189,7 @@ void PrintPlayerClassStats()
 
 
 	pFileSys->FPrintf( hFile, "Class\tTarget Class\tTotal Damage\tKills\tAvg Engagement Dist\t(OLD) Engagement Dist\n" );
-	
+
 	for ( i=TFCLASS_UNDECIDED+1; i < STATS_NUM_GROUPS; i++ )
 	{
 		CPlayerClassStats *pStats = &g_PlayerClassStats[i];
@@ -292,7 +292,7 @@ CPlayerClass::CPlayerClass( CBaseTFPlayer *pPlayer, TFClass iClass )
 : m_TFClass( iClass )
 {
 	m_pPlayer = pPlayer;
-	
+
 	for (int i = 0; i <= MAX_TF_TEAMS; ++i)
 	{
 		m_sClassModel[i] = NULL_STRING;
@@ -305,14 +305,14 @@ CPlayerClass::CPlayerClass( CBaseTFPlayer *pPlayer, TFClass iClass )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPlayerClass::~CPlayerClass()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClass::ClassActivate( void )
 {
@@ -323,14 +323,14 @@ void CPlayerClass::ClassActivate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClass::ClassDeactivate( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClass::AddWeaponTechAssociations( void )
 {
@@ -341,7 +341,7 @@ void CPlayerClass::AddWeaponTechAssociations( void )
 	CTechnologyTree *tree = m_pPlayer->GetTechTree();
 	Assert( tree );
 
-	// Loop through all of the techs to see if any of them say yes to being applicable to 
+	// Loop through all of the techs to see if any of them say yes to being applicable to
 	//  this class specifically
 	for ( int i = 0 ; i < tree->GetNumberTechnologies(); i++ )
 	{
@@ -376,7 +376,7 @@ void CPlayerClass::SetupMoveData( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClass::SetupSizeData( void )
 {
@@ -387,10 +387,10 @@ void CPlayerClass::SetupSizeData( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClass::CreateClass( void )
-{ 
+{
 	// Give them a full loadout on the initial spawn
 	ResupplyAmmo( 100.0f, RESUPPLY_ALL_FROM_STATION );
 
@@ -417,7 +417,7 @@ void CPlayerClass::CreateClass( void )
 		for ( int i = 0; i < OBJ_LAST; i++ )
 		{
 			int iClassObject = GetTFClassInfo( m_TFClass )->m_pClassObjects[i];
-			
+
 			// Hit the end?
 			if ( iClassObject == OBJ_LAST )
 				break;
@@ -439,7 +439,7 @@ void CPlayerClass::CreateClass( void )
 			// If my team doesn't have a construction yard, don't allow me to build vehicles
 			if ( !tf_fastbuild.GetBool() && !bHaveYard )
 			{
-				if ( IsObjectAVehicle(iClassObject) ) 
+				if ( IsObjectAVehicle(iClassObject) )
 					continue;
 
 				// Don't allow them to build vehicle upgrades either
@@ -473,12 +473,12 @@ void CPlayerClass::CreateClass( void )
 			{
 				CBaseTechnology *tech = pTechTree->GetTechnology( m_WeaponTechAssociations[i].pWeaponTech );
 				if ( tech )
-				{	
+				{
 					for ( int j = 0; j < tech->GetNumWeaponAssociations(); j++ )
 					{
 						const char *weaponname = tech->GetAssociatedWeapon( j );
 						Assert( weaponname );
-						
+
 						m_pPlayer->GiveNamedItem( weaponname );
 					}
 				}
@@ -553,7 +553,7 @@ bool CPlayerClass::ResupplyAmmo( float flPercentage, ResupplyReason_t reason )
 	// Fully resupply shield energy everytime
 	if ( m_pPlayer->GetCombatShield() )
 	{
-		m_pPlayer->GetCombatShield()->AddShieldHealth( 1.0 ); 
+		m_pPlayer->GetCombatShield()->AddShieldHealth( 1.0 );
 	}
 
 	if ((reason == RESUPPLY_RESPAWN) || (reason == RESUPPLY_ALL_FROM_STATION) || (reason == RESUPPLY_AMMO_FROM_STATION))
@@ -593,8 +593,8 @@ float CPlayerClass::GetMaxSpeed( void )
 // Purpose: Get the player's maximum walking speed
 //-----------------------------------------------------------------------------
 float CPlayerClass::GetMaxWalkSpeed( void )
-{ 
-	return m_flMaxWalkingSpeed; 
+{
+	return m_flMaxWalkingSpeed;
 }
 
 //-----------------------------------------------------------------------------
@@ -641,7 +641,7 @@ void CPlayerClass::SetMaxHealth( float flMaxHealth )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 string_t CPlayerClass::GetClassModel( int nTeam )
 {
@@ -669,14 +669,14 @@ bool CPlayerClass::CanSeePlayerOnRadar( CBaseTFPlayer *pl )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClass::ItemPostFrame()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : TFClass
 //-----------------------------------------------------------------------------
 TFClass CPlayerClass::GetTFClass( void )
@@ -703,7 +703,7 @@ bool CPlayerClass::ClientCommand( const CCommand& args )
 		// Select a state for the builder weapon
 		m_pPlayer->GetWeaponBuilder()->SetCurrentObject( atoi( args[1] ) );
 		m_pPlayer->GetWeaponBuilder()->SetCurrentState( BS_PLACING );
-		m_pPlayer->GetWeaponBuilder()->StartPlacement(); 
+		m_pPlayer->GetWeaponBuilder()->StartPlacement();
 		m_pPlayer->GetWeaponBuilder()->m_flNextPrimaryAttack = gpGlobals->curtime + 0.35f;
 		return true;
 	}
@@ -747,9 +747,9 @@ float CPlayerClass::OnTakeDamage( const CTakeDamageInfo &info )
 		{
 			int iStatGroup = GetStatGroupFor( pPlayer );
 			CInterClassStats *pInter = &g_PlayerClassStats[iStatGroup].m_InterClassStats[GetTFClass()];
-			
+
 			pInter->m_flTotalDamageInflicted += info.GetDamage();
-			
+
 			float flDistToAttacker = pPlayer->GetAbsOrigin().DistTo( GetPlayer()->GetAbsOrigin() );
 			pInter->m_flTotalEngagementDist += flDistToAttacker;
 			pInter->m_nEngagements++;
@@ -766,7 +766,7 @@ float CPlayerClass::OnTakeDamage( const CTakeDamageInfo &info )
 			if ( tf_DetailedStats.GetInt() )
 			{
 				CShotInfo shotInfo;
-				
+
 				shotInfo.m_flDistance = flDistToAttacker;
 				shotInfo.m_nDamage = (int)info.GetDamage();
 
@@ -774,7 +774,7 @@ float CPlayerClass::OnTakeDamage( const CTakeDamageInfo &info )
 			}
 		}
 	}
-	
+
 	return info.GetDamage();
 }
 
@@ -786,9 +786,9 @@ void CPlayerClass::GainedNewTechnology( CBaseTechnology *pTechnology )
 	int i;
 
 	// Tell the player's weapons that this player's gained new technology
-	for ( i = 0; i < m_pPlayer->WeaponCount(); i++ ) 
+	for ( i = 0; i < m_pPlayer->WeaponCount(); i++ )
 	{
-		if ( m_pPlayer->GetWeapon(i) ) 
+		if ( m_pPlayer->GetWeapon(i) )
 		{
 			((CBaseTFCombatWeapon*)m_pPlayer->GetWeapon(i))->GainedNewTechnology( pTechnology );
 		}
@@ -926,7 +926,7 @@ bool CPlayerClass::CreateInitialOrder()
 void CPlayerClass::CreatePersonalOrder()
 {
 	if( CreateInitialOrder() )
-		return;			   
+		return;
 
 	// Make an order to fix any objects we own.
 	if ( COrderRepair::CreateOrder_RepairOwnObjects( this ) )
@@ -942,28 +942,28 @@ bool CPlayerClass::AnyResourceZoneOrders()
 
 bool CPlayerClass::AnyNonResourceZoneOrders()
 {
-	return 
-		m_pPlayer->GetNumResourceZoneOrders() == 0 && 
+	return
+		m_pPlayer->GetNumResourceZoneOrders() == 0 &&
 		m_pPlayer->GetOrder();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClass::ClassThink( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClass::PowerupStart( int iPowerup, float flAmount, CBaseEntity *pAttacker, CDamageModifier *pDamageModifier )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClass::PowerupEnd( int iPowerup )
 {
@@ -997,11 +997,11 @@ void CPlayerClass::PlayerKilledPlayer( CBaseTFPlayer *pVictim )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClass::SetPlayerHull( void )
 {
-	// Use the generic player hull if the class doesn't override this function.	
+	// Use the generic player hull if the class doesn't override this function.
 	if ( m_pPlayer->GetFlags() & FL_DUCKING )
 	{
 		m_pPlayer->SetCollisionBounds( PLAYERCLASS_HULL_DUCK_MIN, PLAYERCLASS_HULL_DUCK_MAX );
@@ -1013,11 +1013,11 @@ void CPlayerClass::SetPlayerHull( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClass::GetPlayerHull( bool bDucking, Vector &vecMin, Vector &vecMax )
 {
-	// Use the generic player hull if the class doesn't override this function.	
+	// Use the generic player hull if the class doesn't override this function.
 	if ( bDucking )
 	{
 		VectorCopy( PLAYERCLASS_HULL_DUCK_MIN, vecMin );
@@ -1031,7 +1031,7 @@ void CPlayerClass::GetPlayerHull( bool bDucking, Vector &vecMin, Vector &vecMax 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClass::InitVCollision( void )
 {
@@ -1062,7 +1062,7 @@ void CPlayerClass::InitVCollision( void )
 	m_pPlayer->m_pShadowCrouch->EnableDrag( false );
 
 	// tell physics lists I'm a shadow controller object
-	PhysAddShadow( m_pPlayer );	
+	PhysAddShadow( m_pPlayer );
 	m_pPlayer->m_pPhysicsController = physenv->CreatePlayerController( m_pPlayer->m_pShadowStand );
 
 	// init state
@@ -1077,18 +1077,18 @@ void CPlayerClass::InitVCollision( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObject - 
-//			*pNewOwner - 
+// Purpose:
+// Input  : *pObject -
+//			*pNewOwner -
 //-----------------------------------------------------------------------------
 void CPlayerClass::OwnedObjectChangeToTeam( CBaseObject *pObject, CBaseTFPlayer *pNewOwner )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObject - 
-//			*pOldOwner - 
+// Purpose:
+// Input  : *pObject -
+//			*pOldOwner -
 //-----------------------------------------------------------------------------
 void CPlayerClass::OwnedObjectChangeFromTeam( CBaseObject *pObject, CBaseTFPlayer *pOldOwner )
 {
@@ -1123,7 +1123,7 @@ void CPlayerClass::CheckDeterioratingObjects( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : edict_t
 //-----------------------------------------------------------------------------
 CBaseEntity *CPlayerClass::SelectSpawnPoint( void )
@@ -1144,7 +1144,7 @@ void CPlayerClass::AddWeaponTechAssoc( char *pWeaponTech )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClass::ClearAllWeaponTechAssoc( )
 {
@@ -1152,7 +1152,7 @@ void CPlayerClass::ClearAllWeaponTechAssoc( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFTeam *CPlayerClass::GetTeam()
 {
@@ -1160,7 +1160,7 @@ CTFTeam *CPlayerClass::GetTeam()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClass::ResetViewOffset( void )
 {
@@ -1169,4 +1169,3 @@ void CPlayerClass::ResetViewOffset( void )
 		m_pPlayer->SetViewOffset( PLAYERCLASS_VIEWOFFSET_STAND );
 	}
 }
-

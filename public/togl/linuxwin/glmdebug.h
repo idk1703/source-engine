@@ -44,7 +44,7 @@
 		#else
 			// #define GLMDEBUG 2			// don't check this in enabled..
 		#endif
-		
+
 		#ifndef GLMDEBUG
 			#define GLMDEBUG 0
 		#endif
@@ -106,7 +106,7 @@ uint	GLMDebugFlavorMask( uint *newValue = NULL );
 	void	GLMStringOutIndented( const char *string, int indentColumns );
 
 	#ifdef TOGL_DLL_EXPORT
-			// these will look at the string to guess its flavor: <, >, ---, -M-, -S- 
+			// these will look at the string to guess its flavor: <, >, ---, -M-, -S-
 		DLL_EXPORT void	GLMPrintfVA( const char *fmt, va_list vargs );
 		DLL_EXPORT void	GLMPrintf( const char *fmt, ... );
 	#else
@@ -132,7 +132,7 @@ uint	GLMDebugFlavorMask( uint *newValue = NULL );
 	#define	GLMPRINTSTR(args)		GLMPrintStr args
 	#define	GLMPRINTTEXT(args)		GLMPrintText args
 #else
-	#define	GLMPRINTF(args)	
+	#define	GLMPRINTF(args)
 	#define	GLMPRINTSTR(args)
 	#define	GLMPRINTTEXT(args)
 #endif
@@ -159,7 +159,7 @@ inline void GLMDebugger( void )
 	{
 		DebuggerBreak();
 	}
-	
+
 	if (GLMDebugChannelMask() & (1<<eGLProfiler))
 	{
 		GLMTriggerDebuggerBreak();

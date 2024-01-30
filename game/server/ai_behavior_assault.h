@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -52,7 +52,7 @@ enum
 
 //=============================================================================
 //=============================================================================
-class CRallyPoint : public CPointEntity 
+class CRallyPoint : public CPointEntity
 {
 	DECLARE_CLASS( CRallyPoint, CPointEntity );
 
@@ -121,14 +121,14 @@ private:
 
 //=============================================================================
 //=============================================================================
-class CAssaultPoint : public CPointEntity 
+class CAssaultPoint : public CPointEntity
 {
 	DECLARE_CLASS( CAssaultPoint, CPointEntity );
 
 public:
 	CAssaultPoint()
 	{
-		// This used to be a constant in code. Now it's a keyfield in hammer. 
+		// This used to be a constant in code. Now it's a keyfield in hammer.
 		// So in the constructor, we set this value to the former constant
 		// default value, for legacy maps. (sjb)
 		m_flAssaultPointTolerance = CUE_POINT_TOLERANCE;
@@ -178,7 +178,7 @@ class CAI_AssaultBehavior : public CAI_SimpleBehavior
 
 public:
 	CAI_AssaultBehavior();
-	
+
 	virtual const char *GetName() {	return "Assault"; }
 	virtual int	DrawDebugTextOverlays( int text_offset );
 
@@ -189,7 +189,7 @@ public:
 	virtual bool 	CanSelectSchedule();
 	virtual void	BeginScheduleSelection();
 	virtual void	EndScheduleSelection();
-	
+
 	bool HasHitRallyPoint() { return m_bHitRallyPoint; }
 	bool HasHitAssaultPoint() { return m_bHitAssaultPoint; }
 
@@ -292,7 +292,7 @@ private:
 	string_t		m_AssaultPointName;
 
 	//---------------------------------
-	
+
 	DECLARE_DATADESC();
 };
 

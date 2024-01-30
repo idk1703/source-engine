@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "dme_controls/BaseAnimSetPresetFaderPanel.h"
@@ -413,7 +413,7 @@ void CPresetSlider::SetControlValues( )
 		val.m_pAttribute[ANIM_CONTROL_VALUE] = v->GetAttribute( "value" );
 		val.m_pAttribute[ANIM_CONTROL_BALANCE] = v->GetAttribute( "balance" );
 		val.m_pAttribute[ANIM_CONTROL_MULTILEVEL] = v->GetAttribute( "multilevel" );
-		val.m_pValue[ANIM_CONTROL_VALUE] = v->GetValue< float >( "value" ); 
+		val.m_pValue[ANIM_CONTROL_VALUE] = v->GetValue< float >( "value" );
 		val.m_pValue[ANIM_CONTROL_BALANCE]	= v->GetValue< float >( "balance" );
 		val.m_pValue[ANIM_CONTROL_MULTILEVEL] = v->GetValue< float >( "multilevel" );
 
@@ -567,7 +567,7 @@ void CPresetSlider::OnRenameCompleted( const char *pText, KeyValues *pContextKey
 	m_pName->SetText( pText );
 	m_pName->ResizeImageToContent();
 
-	// 
+	//
 	Assert( m_hSelf.Get() );
 	if ( m_hSelf.Get() )
 	{
@@ -694,7 +694,7 @@ void CPresetSlider::UpdateTickPos( int x, int y )
 {
 	int tx, ty, tw, th;
 	GetTrackRect( tx, ty, tw, th );
-	 
+
 	bool bIsCtrlKeyDown = vgui::input()->IsKeyDown( KEY_LCONTROL ) || vgui::input()->IsKeyDown( KEY_RCONTROL );
 	bool bIsAltKeyDown = vgui::input()->IsKeyDown( KEY_LALT ) || vgui::input()->IsKeyDown( KEY_RALT );
 	if ( bIsCtrlKeyDown && bIsAltKeyDown && !_dragging )
@@ -852,7 +852,7 @@ void CPresetSlider::PaintBackground()
 	bool bIsCtrlKeyDown = vgui::input()->IsKeyDown( KEY_LCONTROL ) || vgui::input()->IsKeyDown( KEY_RCONTROL );
 	bool bIsAltKeyDown = vgui::input()->IsKeyDown( KEY_LALT ) || vgui::input()->IsKeyDown( KEY_RALT );
 	if ( hasFocus && ( IsDragging() || bIsCtrlKeyDown ) )
-	{   
+	{
 		int tx, ty, tw, th;
 		GetTrackRect( tx, ty, tw, th );
 
@@ -872,7 +872,7 @@ void CPresetSlider::PaintBackground()
 		float alphaTarget = 255.0f;
 
 		int curAlpha = max( (int)(GetCurrent() * alphaTarget), minAlpha );
-		 
+
 		if ( _dragging )
 		{
 			surface()->DrawFilledRectFade( tx, ty, tx + fillw, ty + th, minAlpha, curAlpha, true );
@@ -880,7 +880,7 @@ void CPresetSlider::PaintBackground()
 			surface()->DrawFilledRect( tx + fillw + 1, ty, tx + tw, ty + th );
 		}
 		else
-		{												
+		{
 			surface()->DrawSetColor( bIsAltKeyDown ? m_GradientColor : m_ZeroColor );
 			surface()->DrawFilledRect( tx, ty, tx + tw, ty + th );
 		}
@@ -990,8 +990,8 @@ CBaseAnimSetPresetFaderPanel::CBaseAnimSetPresetFaderPanel( vgui::Panel *parent,
 	m_pSliders = new CSliderListPanel( this, m_pWorkspace, "PresetSliders" );
 	m_pSliders->SetFirstColumnWidth( 0 );
 	m_pSliders->SetAutoResize
-		( 
-		Panel::PIN_TOPLEFT, 
+		(
+		Panel::PIN_TOPLEFT,
 		Panel::AUTORESIZE_DOWNANDRIGHT,
 		0, 24,
 		0, 0
@@ -1002,8 +1002,8 @@ CBaseAnimSetPresetFaderPanel::CBaseAnimSetPresetFaderPanel( vgui::Panel *parent,
 	m_pFilter = new TextEntry( m_pWorkspace, "PresetFilter" );
 	m_pFilter->AddActionSignalTarget( this );
 	m_pFilter->SetAutoResize
-		( 
-		Panel::PIN_TOPLEFT, 
+		(
+		Panel::PIN_TOPLEFT,
 		Panel::AUTORESIZE_RIGHT,
 		2, 2,
 		2, 22
@@ -1011,8 +1011,8 @@ CBaseAnimSetPresetFaderPanel::CBaseAnimSetPresetFaderPanel( vgui::Panel *parent,
 	m_pFilter->SetPos( 0, 0 );
 
 	m_pWorkspace->SetAutoResize
-		( 
-		Panel::PIN_TOPLEFT, 
+		(
+		Panel::PIN_TOPLEFT,
 		Panel::AUTORESIZE_DOWNANDRIGHT,
 		0, 0,
 		0, 0
@@ -1215,7 +1215,7 @@ void CBaseAnimSetPresetFaderPanel::GetPreviewFader( FaderPreview_t& fader )
 	if ( mouseOver )
 	{
 		// Deal with procedural presets here
-		if ( fader.holdingctrl || 
+		if ( fader.holdingctrl ||
 			 fader.isbeingdragged )
 		{
 			mouseOver->UpdateProceduralValues();
@@ -1395,8 +1395,8 @@ void CBaseAnimSetPresetFaderPanel::SetPresetFromSliders( CDmePreset *pPreset )
 			float flDefaultValue = pControl->GetValue< float >( "defaultValue" );
 			float flDefaultBalance = pControl->GetValue< float >( "defaultBalance" );
 			float flDefaultMultilevel = pControl->GetValue< float >( "defaultMultilevel" );
-			bIsDefault = ( value.m_pValue[ANIM_CONTROL_VALUE] == flDefaultValue ) && 
-				( value.m_pValue[ANIM_CONTROL_BALANCE] == flDefaultBalance ) && 
+			bIsDefault = ( value.m_pValue[ANIM_CONTROL_VALUE] == flDefaultValue ) &&
+				( value.m_pValue[ANIM_CONTROL_BALANCE] == flDefaultBalance ) &&
 				( value.m_pValue[ANIM_CONTROL_MULTILEVEL] == flDefaultMultilevel );
 		}
 

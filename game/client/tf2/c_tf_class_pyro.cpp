@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -39,6 +39,5 @@ C_PlayerClassPyro::~C_PlayerClassPyro()
 
 PlayerClassPyroData_t* C_PlayerClassPyro::GetClassData()
 {
-	return &m_ClassData; 
+	return &m_ClassData;
 }
-

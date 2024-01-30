@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -58,7 +58,7 @@ public:
 		m_bActive = true;
 	}
 
-	void Reset( void ) 
+	void Reset( void )
 	{
 		m_bActive = false;
 	}
@@ -101,7 +101,7 @@ public:
 			}
 
 			m_pPlayer->SetViewOffset( vecCurrentView );
-		}		
+		}
 	}
 
 	bool IsFinished( void )
@@ -134,7 +134,7 @@ public:
 	friend class CDODPlayer;
 	typedef CDODPlayer OuterClass;
 #endif
-	
+
 	DECLARE_EMBEDDED_NETWORKVAR()
 	DECLARE_CLASS_NOBASE( CDODPlayerShared );
 
@@ -144,11 +144,11 @@ public:
 
 	void	SetStamina( float stamina );
 	float	GetStamina( void ) { return m_flStamina; }
-	
+
 	void	Init( OuterClass *pOuter );
 
 	bool	IsProne() const;
-	bool	IsGettingUpFromProne() const;	
+	bool	IsGettingUpFromProne() const;
 	bool	IsGoingProne() const;
 	void	SetProne( bool bProne, bool bNoAnimation = false );
 
@@ -158,8 +158,8 @@ public:
 	bool	IsInMGDeploy( void ) const;
 	bool	IsProneDeployed( void ) const;
 	bool	IsSandbagDeployed( void ) const;
-	bool	IsDucking( void ) const; 
-	
+	bool	IsDucking( void ) const;
+
 	void	SetDesiredPlayerClass( int playerclass );
 	int		DesiredPlayerClass( void );
 
@@ -213,7 +213,7 @@ public:
 		m_bPlanting = bPlanting;
 	}
 
-	bool IsPlanting( void ) { return m_bPlanting; } 
+	bool IsPlanting( void ) { return m_bPlanting; }
 
 	void SetDefusing( bool bDefusing )
 	{
@@ -261,7 +261,7 @@ public:
 	CNetworkVar( float, m_flGoProneTime );
 
 	CNetworkVar( float, m_flDeployChangeTime );
-	
+
 	CNetworkVar( bool, m_bForceProneChange );
 
 	CNetworkVar( int, m_iCPIndex );
@@ -276,9 +276,9 @@ public:
 	CNetworkArray( bool, m_bPlayerDominatingMe, MAX_PLAYERS+1 );	// array of state per other player whether other players are dominating this player
 
 private:
-	
+
 	OuterClass *m_pOuter;
-};			   
+};
 
 
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -223,8 +223,8 @@ void CRotationManipulator::UpdateFromMatrix( void )
 // Constructor, destructor
 //-----------------------------------------------------------------------------
 CPotteryWheelPanel::CPotteryWheelPanel( vgui::Panel *pParent, const char *pName ) :
-	BaseClass( pParent, pName ), 
-	m_pCameraRotate( NULL ), 
+	BaseClass( pParent, pName ),
+	m_pCameraRotate( NULL ),
 	m_pCameraTranslate( NULL ),
 	m_pCameraZoom( NULL ),
 	m_pLightManip( NULL ),
@@ -246,7 +246,7 @@ CPotteryWheelPanel::CPotteryWheelPanel( vgui::Panel *pParent, const char *pName 
 	m_nManipStartX = m_nManipStartY = 0;
 
 	m_vecCameraOffset.Init( 100.0f, 0.0f, 0.0f );
-		
+
 	m_Camera.m_flZNear = 3.0f;
 	m_Camera.m_flZFar = 16384.0f * 1.73205080757f;
 	m_Camera.m_flFOV = 30.0f;
@@ -397,7 +397,7 @@ void CPotteryWheelPanel::ParseLightsFromKV( KeyValues *pLightsKV )
 		Assert( nLightCount < MAX_LIGHT_COUNT );
 		if ( nLightCount >= MAX_LIGHT_COUNT )
 			break;
-			
+
 		LightDesc_t *pDesc = &m_Lights[nLightCount].m_Desc;
 		const char *pType = pLocalLight->GetString( "name" );
 		Vector vecColor;
@@ -407,7 +407,7 @@ void CPotteryWheelPanel::ParseLightsFromKV( KeyValues *pLightsKV )
 		{
 			Vector vecDirection;
 			StringToVector( vecDirection.Base(), pLocalLight->GetString( "direction" ) );
-			pDesc->InitDirectional( vecDirection.Normalized(), vecColor ); 
+			pDesc->InitDirectional( vecDirection.Normalized(), vecColor );
 			++nLightCount;
 			continue;
 		}
@@ -543,7 +543,7 @@ void CPotteryWheelPanel::SetLightProbe( CDmxElement *pLightProbe )
 
 		if ( !Q_stricmp( pType, "directional" ) )
 		{
-			pDesc->InitDirectional( pLocalLight->GetValue<Vector>( "direction" ), vecColor ); 
+			pDesc->InitDirectional( pLocalLight->GetValue<Vector>( "direction" ), vecColor );
 			++m_nLightCount;
 			continue;
 		}
@@ -565,7 +565,7 @@ void CPotteryWheelPanel::SetLightProbe( CDmxElement *pLightProbe )
 		{
 			const Vector& vecAtten = pLocalLight->GetValue<Vector>( "attenuation" );
 			pDesc->InitSpot( pLocalLight->GetValue<Vector>( "origin" ), vecColor, vec3_origin,
-				RAD2DEG ( pLocalLight->GetValue<float>( "theta" ) ), 
+				RAD2DEG ( pLocalLight->GetValue<float>( "theta" ) ),
 				RAD2DEG ( pLocalLight->GetValue<float>( "phi" ) ) );
 
 			pDesc->m_Direction = pLocalLight->GetValue<Vector>( "direction" );
@@ -679,7 +679,7 @@ void CPotteryWheelPanel::LookAt( float flRadius )
 	// Compute fov/2 in radians
 	flFOVx *= M_PI / 360.0f;
 
-	// Compute an effective fov	based on the aspect ratio 
+	// Compute an effective fov	based on the aspect ratio
 	// if the height is smaller than the width
 	int w, h;
 	GetSize( w, h );
@@ -699,7 +699,7 @@ void CPotteryWheelPanel::LookAt( const Vector &vecCenter, float flRadius )
 	LookAt( flRadius );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Sets up render state in the material system for rendering
 //-----------------------------------------------------------------------------
@@ -782,7 +782,7 @@ void CPotteryWheelPanel::ComputeCameraTransform( matrix3x4_t *pWorldToCamera )
 // Computes the position in the panel of a particular 3D point
 //-----------------------------------------------------------------------------
 void CPotteryWheelPanel::ComputePanelPosition( const Vector &vecPosition, Vector2D *pPanelPos )
-{ 
+{
 	int w, h;
 	GetSize( w, h );
 
@@ -896,7 +896,7 @@ void CPotteryWheelPanel::Paint()
 	}
 	else
 	{
-		pRenderContext->ClearColor4ub( m_ClearColor.r(), m_ClearColor.g(), m_ClearColor.b(), m_ClearColor.a() ); 
+		pRenderContext->ClearColor4ub( m_ClearColor.r(), m_ClearColor.g(), m_ClearColor.b(), m_ClearColor.a() );
 	}
 	pRenderContext->ClearBuffers( m_bRenderToTexture, true );
 
@@ -1045,7 +1045,7 @@ void CPotteryWheelPanel::OnMouseReleased( vgui::MouseCode code )
 	ScreenToLocal( x, y );
 
 	AcceptManipulation();
-	
+
 	BaseClass::OnMouseReleased( code );
 }
 
@@ -1148,7 +1148,7 @@ void CPotteryWheelPanel::CancelManipulation()
 
 		m_pCurrentManip = NULL;
 	}
-	
+
 }
 
 void CPotteryWheelPanel::ApplyManipulation()
@@ -1207,7 +1207,7 @@ bool CPotteryWheelPanel::WarpMouse( int &x, int &y )
 
 	// skip this event
 	if ( x == centerx && y == centery )
-		return false; 
+		return false;
 
 	int xpos = centerx;
 	int ypos = centery;
@@ -1220,7 +1220,7 @@ bool CPotteryWheelPanel::WarpMouse( int &x, int &y )
 	// In TF2's edit loadout dialog there is a character model that you can rotate
 	// around using the mouse.  This control resets the cursor to the center of the window
 	// after each mouse move.  Except the input()->SetCursorPos results (after a lot of redirection) to
-	// vgui/matsurface/Cursor.cpp function CursorSetPos but it has a (needed) test to not move the 
+	// vgui/matsurface/Cursor.cpp function CursorSetPos but it has a (needed) test to not move the
 	// cursor if it's currently hidden. Rather than change all the levels between here and there
 	// to support a flag, we are just jumping to the chase and directly calling the inputsystem
 	// SetCursorPosition on OpenGL platforms

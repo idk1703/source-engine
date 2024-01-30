@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -56,14 +56,14 @@ public:
 	void		ActivateStartDirectionConstraints( bool bEnable );
 	void		ActivateEndDirectionConstraints( bool bEnable );
 
-	
+
 	// Shakes all ropes near vCenter. The higher flMagnitude is, the larger the shake will be.
 	static void ShakeRopes( const Vector &vCenter, float flRadius, float flMagnitude );
 
 
 // CBaseEntity overrides.
 public:
-	
+
 	// don't cross transitions
 	virtual int		ObjectCaps( void ) { return BaseClass::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 	virtual void	Activate();
@@ -94,7 +94,7 @@ public:
 
 	bool			Break( void );
 	void			DetachPoint( int iPoint );
-	
+
 	void			EndpointsChanged();
 
 	// By default, ropes don't collide with the world. Call this to enable it.
@@ -138,7 +138,7 @@ private:
 public:
 
 	CNetworkVar( int, m_RopeFlags );		// Combination of ROPE_ defines in rope_shared.h
-	
+
 	string_t	m_iNextLinkName;
 	CNetworkVar( int, m_Slack );
 	CNetworkVar( float, m_Width );
@@ -148,12 +148,12 @@ public:
 
 	string_t m_strRopeMaterialModel;
 	CNetworkVar( int, m_iRopeMaterialModelIndex );	// Index of sprite model with the rope's material.
-	
+
 	// Number of subdivisions in between segments.
 	CNetworkVar( int, m_Subdiv );
-	
+
 	//EHANDLE		m_hNextLink;
-	
+
 	CNetworkVar( int, m_RopeLength );	// Rope length at startup, used to calculate tension.
 
 	CNetworkVar( int, m_fLockedPoints );
@@ -166,7 +166,7 @@ private:
 	// Used to detect changes.
 	bool		m_bStartPointValid;
 	bool		m_bEndPointValid;
-	
+
 	CNetworkHandle( CBaseEntity, m_hStartPoint );		// StartPoint/EndPoint are entities
 	CNetworkHandle( CBaseEntity, m_hEndPoint );
 	CNetworkVar( short, m_iStartAttachment );	// StartAttachment/EndAttachment are attachment points.

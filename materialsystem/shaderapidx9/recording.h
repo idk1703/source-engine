@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -23,13 +23,13 @@
 
 //#define RECORD_KEYFRAMES 1
 #define KEYFRAME_INTERVAL 100	// number of actual frames between each keyframe
- 
+
 //-----------------------------------------------------------------------------
 // Use this to allow us to record crashes (write every command immediately)
 //-----------------------------------------------------------------------------
 
 //#define CRASH_RECORDING
- 
+
 //-----------------------------------------------------------------------------
 // Use this to record textures (checkboards are used for textures otherwise)
 //-----------------------------------------------------------------------------
@@ -100,7 +100,7 @@ enum RecordingCommands_t
 
 	DX8_SET_TEXTURE_DATA,
 	DX8_BLIT_TEXTURE_BITS,
-	
+
 	DX8_GET_DEVICE_CAPS,
 	DX8_GET_ADAPTER_IDENTIFIER,
 
@@ -113,9 +113,9 @@ enum RecordingCommands_t
 	DX8_SET_RENDER_TARGET,
 
 	DX8_TEST_COOPERATIVE_LEVEL,
-	
+
 	DX8_SET_VERTEX_BUFFER_FORMAT, // isn't actually a dx8 command. . let's playback know what format a buffer is for listing info
-	
+
 	DX8_SET_SAMPLER_STATE,
 	DX8_SET_VERTEX_DECLARATION,
 	DX8_CREATE_VERTEX_DECLARATION,

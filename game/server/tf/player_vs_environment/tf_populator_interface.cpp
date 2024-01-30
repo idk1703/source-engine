@@ -25,7 +25,7 @@ public:
 	void InputUnpauseBotSpawning(inputdata_t &inputdata);
 	void InputChangeBotAttributes(inputdata_t &inputdata);
 	void InputChangeDefaultEventAttributes(inputdata_t &inputdata);
-	
+
 	DECLARE_DATADESC();
 };
 
@@ -99,5 +99,5 @@ void CPointPopulatorInterface::InputChangeDefaultEventAttributes(inputdata_t &in
 	if ( g_pPopulationManager )
 	{
 		g_pPopulationManager->SetDefaultEventChangeAttributesName( pszEventName );
-	}	
+	}
 }

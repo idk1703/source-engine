@@ -21,14 +21,14 @@ IMPLEMENT_CLIENTCLASS_DT(C_DODTeam, DT_DODTeam, CDODTeam)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_DODTeam::C_DODTeam()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_DODTeam::~C_DODTeam()
 {
@@ -46,7 +46,7 @@ void C_DODTeam::AddPlayerClass( const char *szClassName )
 	{
 		Assert( !"missing playerclass script file" );
 		Msg( "Missing playerclass script file for class: %s\n", szClassName );
-	}	
+	}
 }
 
 const CDODPlayerClassInfo &C_DODTeam::GetPlayerClassInfo( int iPlayerClass ) const
@@ -76,7 +76,7 @@ bool C_DODTeam::IsClassOnTeam( const char *pszClassName, int &iClassNum ) const
 		iClassNum = PLAYERCLASS_RANDOM;
 		return true;
 	}
-	
+
 	for( int i=0;i<m_hPlayerClassInfoHandles.Count(); i++ )
 	{
 		FilePlayerClassInfo_t *pPlayerClassInfo = GetFilePlayerClassInfoFromHandle( m_hPlayerClassInfoHandles[i] );
@@ -124,7 +124,7 @@ C_DODTeam_Allies::C_DODTeam_Allies()
 	{
 		AddPlayerClass( pszTeamAlliesClasses[i] );
 		i++;
-	}	
+	}
 }
 
 
@@ -139,5 +139,5 @@ C_DODTeam_Axis::C_DODTeam_Axis()
 	{
 		AddPlayerClass( pszTeamAxisClasses[i] );
 		i++;
-	}	
+	}
 }

@@ -49,7 +49,7 @@ END_DATADESC();
 //
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFPowerup::CTFPowerup()
 {
@@ -65,7 +65,7 @@ CTFPowerup::CTFPowerup()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPowerup::Spawn( void )
 {
@@ -92,7 +92,7 @@ void CTFPowerup::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPowerup::Precache()
 {
@@ -101,7 +101,7 @@ void CTFPowerup::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CBaseEntity* CTFPowerup::Respawn( void )
 {
@@ -115,7 +115,7 @@ CBaseEntity* CTFPowerup::Respawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPowerup::Materialize( void )
 {
@@ -128,7 +128,7 @@ void CTFPowerup::Materialize( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFPowerup::Materialize_Internal( void )
 {
@@ -144,7 +144,7 @@ void CTFPowerup::Materialize_Internal( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFPowerup::ValidTouch( CBasePlayer *pPlayer )
 {
@@ -177,7 +177,7 @@ bool CTFPowerup::ValidTouch( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFPowerup::MyTouch( CBasePlayer *pPlayer )
 {
@@ -191,7 +191,7 @@ void CTFPowerup::DropSingleInstance( Vector &vecLaunchVel, CBaseCombatCharacter 
 {
 //	SetSize( Vector(-8,-8,-8), Vector(8,8,8) );
 	SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_BOUNCE );
-	SetAbsVelocity( vecLaunchVel );	
+	SetAbsVelocity( vecLaunchVel );
 	SetSolid( SOLID_BBOX );
 	if ( flResetTime )
 	{
@@ -263,11 +263,11 @@ void CTFPowerup::SetDisabled( bool bDisabled )
 		// only turn it back on if we're not in the middle of respawning
 		if ( !m_bRespawning )
 		{
-            RemoveEffects( EF_NODRAW );
+	RemoveEffects( EF_NODRAW );
 		}
 		else if ( !m_bAutoMaterialize )
 		{
-			// We wait for a set-enabled to re-materialize if we were 
+			// We wait for a set-enabled to re-materialize if we were
 			// set to not auto-materialize
 			Materialize_Internal();
 		}

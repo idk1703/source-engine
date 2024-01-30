@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@
 #include "tf_playerpanel.h"
 
 //-----------------------------------------------------------------------------
-// Purpose:  
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFTeamStatusPlayerPanel : public CTFPlayerPanel
 {
@@ -56,7 +56,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose:  
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFTeamStatus : public vgui::EditablePanel
 {
@@ -71,7 +71,7 @@ public:
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
 	virtual void PerformLayout( void ) OVERRIDE;
 	virtual void OnTick() OVERRIDE;
-	
+
 	void Reset();
 	bool ShouldDraw( void );
 

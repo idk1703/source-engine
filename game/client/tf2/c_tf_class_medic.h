@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@
 
 class C_PlayerClassMedic : public C_PlayerClass
 {
-	
+
 	DECLARE_CLASS( C_PlayerClassMedic, C_PlayerClass );
 
 public:
@@ -26,7 +26,7 @@ public:
 
 	DECLARE_PREDICTABLE();
 
-	PlayerClassMedicData_t *GetClassData( void ) { return &m_ClassData; } 
+	PlayerClassMedicData_t *GetClassData( void ) { return &m_ClassData; }
 
 protected:
 

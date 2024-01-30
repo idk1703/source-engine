@@ -23,7 +23,7 @@ public:
 			Warning( "Cannot initialize l10n, unicode services will not work. Error %d\n", ret );
 		}
 	}
-	
+
 	~DummyInitL10N()
 	{
 		cellSysmoduleUnloadModule( CELL_SYSMODULE_L10N );
@@ -130,7 +130,7 @@ int V_UCS2ToUnicode( const ucs2 *pUCS2, wchar_t *pUnicode, int cubDestSizeInByte
 {
 	AssertValidWritePtr(pUnicode);
 	AssertValidReadPtr(pUCS2);
-	
+
 	pUnicode[0] = 0;
 #if defined( _WIN32 ) || defined( _PS3 )
 	int lenUCS2 = V_wcslen( pUCS2 );
@@ -155,7 +155,7 @@ int V_UCS2ToUnicode( const ucs2 *pUCS2, wchar_t *pUnicode, int cubDestSizeInByte
 	}
 #endif
 	pUnicode[(cubDestSizeInBytes / sizeof(wchar_t)) - 1] = 0;
-	return cchResult;	
+	return cchResult;
 
 }
 
@@ -165,7 +165,7 @@ int V_UCS2ToUnicode( const ucs2 *pUCS2, wchar_t *pUnicode, int cubDestSizeInByte
 //-----------------------------------------------------------------------------
 int V_UnicodeToUCS2( const wchar_t *pUnicode, int cubSrcInBytes, char *pUCS2, int cubDestSizeInBytes )
 {
-	 // TODO: MACMERGE: Figure out how to convert from 2-byte Win32 wchars to platform wchar_t type that can be 4 bytes
+	// TODO: MACMERGE: Figure out how to convert from 2-byte Win32 wchars to platform wchar_t type that can be 4 bytes
 #if defined( _WIN32 ) || defined( _PS3 )
 	int cchResult = MIN( cubSrcInBytes, cubDestSizeInBytes );
 	V_wcsncpy( (wchar_t*)pUCS2, pUnicode, cchResult );
@@ -187,7 +187,7 @@ int V_UnicodeToUCS2( const wchar_t *pUnicode, int cubSrcInBytes, char *pUCS2, in
 			cchResult = cubSrcInBytes / sizeof( wchar_t );
 	}
 #endif
-	return cchResult;	
+	return cchResult;
 }
 
 // UTF-8 encodes each character (code point) in 1 to 4 octets (8-bit bytes).
@@ -204,7 +204,7 @@ VSTRTOOLS_INTERFACE int V_UCS2ToUTF8( const ucs2 *pUCS2, char *pUTF8, int cubDes
 	AssertValidStringPtr(pUTF8, cubDestSizeInBytes);
 	AssertValidReadPtr(pUCS2);
 	Assert( cubDestSizeInBytes >= 1 ); // must have at least 1 byte to write the terminator character
-	
+
 	pUTF8[0] = '\0';
 #ifdef _WIN32
 	// under win32 wchar_t == ucs2, sigh
@@ -232,7 +232,7 @@ VSTRTOOLS_INTERFACE int V_UCS2ToUTF8( const ucs2 *pUCS2, char *pUTF8, int cubDes
 	}
 #endif
 	pUTF8[cubDestSizeInBytes - 1] = '\0';
-	return cchResult;	
+	return cchResult;
 }
 
 
@@ -273,7 +273,7 @@ VSTRTOOLS_INTERFACE int V_UTF8ToUCS2( const char *pUTF8, int cubSrcInBytes, ucs2
 	}
 #endif
 	pUCS2[ (cubDestSizeInBytes/sizeof(ucs2)) - 1] = 0;
-	return cchResult;	
+	return cchResult;
 }
 
 //-----------------------------------------------------------------------------
@@ -282,35 +282,35 @@ VSTRTOOLS_INTERFACE int V_UTF8ToUCS2( const char *pUTF8, int cubSrcInBytes, ucs2
 //-----------------------------------------------------------------------------
 VSTRTOOLS_INTERFACE void * V_UTF8_strncpy( char *pDest, const char *pSrc, size_t nMaxBytes )
 {
-  strncpy( pDest, pSrc, nMaxBytes );
+	strncpy( pDest, pSrc, nMaxBytes );
 
-  // http://en.wikipedia.org/wiki/UTF-8
-  int end = nMaxBytes-1;
-  pDest[end] = 0;
+	// http://en.wikipedia.org/wiki/UTF-8
+	int end = nMaxBytes-1;
+	pDest[end] = 0;
 
-  int nBytesSeen = 0, nBytesExpected = 0;
-  // walk backwards, ignoring nulls
-  while ( pDest[end] == 0 )
-    --end;
-  
-  // found a non-null - see if it's part of a multi-byte sequence
-  while ( ( pDest[end] & 0x80 ) && !( pDest[end] & 0x40 ) )
-  {
-    nBytesSeen++;
-    --end;
-  }
-  
-  if ( ( pDest[end] & 0xC0 ) == 0xC0 )
-  {
-    for ( int i = 6; i > 1; --i )
-    {
-      if ( (char)( pDest[end] >> i ) & 0x1 )
-        ++nBytesExpected;
-    }
-  }
-  
-  if ( nBytesExpected != nBytesSeen )
-    pDest[end] = 0;
-    
-  return pDest;
+	int nBytesSeen = 0, nBytesExpected = 0;
+	// walk backwards, ignoring nulls
+	while ( pDest[end] == 0 )
+		--end;
+
+	// found a non-null - see if it's part of a multi-byte sequence
+	while ( ( pDest[end] & 0x80 ) && !( pDest[end] & 0x40 ) )
+	{
+		nBytesSeen++;
+		--end;
+	}
+
+	if ( ( pDest[end] & 0xC0 ) == 0xC0 )
+	{
+		for ( int i = 6; i > 1; --i )
+		{
+			if ( (char)( pDest[end] >> i ) & 0x1 )
+				++nBytesExpected;
+		}
+	}
+
+	if ( nBytesExpected != nBytesSeen )
+		pDest[end] = 0;
+
+	return pDest;
 }

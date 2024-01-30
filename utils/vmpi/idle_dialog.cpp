@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,12 +35,10 @@ void CIdleDialog::StartIdleProcessing( DWORD msInterval )
 LONG CIdleDialog::OnStartIdle( UINT, LONG )
 {
 	MSG msg;
-	
+
 	if ( !PeekMessage( &msg, GetSafeHwnd(), 0,0, PM_NOREMOVE ) )
 		OnIdle();
-	
+
 	m_cWinIdle.NextIdle();
 	return 0;
 }
-
-

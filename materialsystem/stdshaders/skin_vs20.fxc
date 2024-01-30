@@ -65,8 +65,8 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
 	// Stuff that isn't seen by the pixel shader
-	float4 projPos					: POSITION;	
-#if !defined( _X360 )    
+	float4 projPos					: POSITION;
+#if !defined( _X360 )
 	float  fog						: FOG;
 #endif
 	// Stuff that is seen by the pixel shader
@@ -93,7 +93,7 @@ VS_OUTPUT main( const VS_INPUT v )
 	DecompressVertex_NormalTangent( v.vNormal, v.vUserData, vNormal, vTangent );
 
 #if !defined( SHADER_MODEL_VS_3_0 ) || !MORPHING
-	ApplyMorph( v.vPosFlex, v.vNormalFlex, 
+	ApplyMorph( v.vPosFlex, v.vNormalFlex,
 		vPosition.xyz, vNormal, vTangent.xyz, o.projPos_fWrinkleWeight.w );
 #else
 	ApplyMorph( morphSampler, cMorphTargetTextureDim, cMorphSubrect, v.vVertexID, v.vTexCoord2,
@@ -127,7 +127,7 @@ VS_OUTPUT main( const VS_INPUT v )
 #if !defined( _X360 )
 	o.fog = CalcFog( worldPos, vProjPos.xyz, g_FogType );
 #endif
-	// Needed for water fog alpha and diffuse lighting 
+	// Needed for water fog alpha and diffuse lighting
 	// FIXME: we shouldn't have to compute this all the time.
 	o.worldPos_atten3.xyz = worldPos;
 

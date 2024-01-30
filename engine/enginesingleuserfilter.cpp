@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,7 +15,7 @@
 void SV_DetermineMulticastRecipients( bool usepas, const Vector& origin, CBitVec< ABSOLUTE_PLAYER_LIMIT >& playerbits );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEngineRecipientFilter::CEngineRecipientFilter()
 {
@@ -23,7 +23,7 @@ CEngineRecipientFilter::CEngineRecipientFilter()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEngineRecipientFilter::Reset( void )
 {
@@ -148,5 +148,3 @@ void CEngineRecipientFilter::AddRecipientsByPAS( const Vector& origin )
 		AddPlayersFromBitMask( playerbits );
 	}
 }
-
-

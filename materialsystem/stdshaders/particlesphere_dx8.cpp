@@ -16,7 +16,7 @@
 DEFINE_FALLBACK_SHADER( ParticleSphere, ParticleSphere_DX8 )
 
 BEGIN_VS_SHADER_FLAGS( ParticleSphere_DX8, "Help for BumpmappedEnvMap", SHADER_NOT_EDITABLE  )
-			   
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( USINGPIXELSHADER, SHADER_PARAM_TYPE_BOOL, "0", "Tells to client code whether the shader is using DX8 vertex/pixel shaders or not" )
 		SHADER_PARAM( BUMPMAP, SHADER_PARAM_TYPE_TEXTURE, "models/shadertest/shader1_normal", "bumpmap" )
@@ -53,15 +53,15 @@ BEGIN_VS_SHADER_FLAGS( ParticleSphere_DX8, "Help for BumpmappedEnvMap", SHADER_N
 		SHADOW_STATE
 		{
 			pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
-			
+
 			int tCoordDimensions[] = {2};
-			pShaderShadow->VertexShaderVertexFormat( 
+			pShaderShadow->VertexShaderVertexFormat(
 				VERTEX_POSITION | VERTEX_COLOR, 1, tCoordDimensions, 0 );
 
 			pShaderShadow->EnableBlending( true );
 			pShaderShadow->BlendFunc( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE_MINUS_SRC_ALPHA );
 			pShaderShadow->EnableDepthWrites( false );
-			
+
 			particlesphere_vs11_Static_Index vshIndex;
 			pShaderShadow->SetVertexShader( "ParticleSphere_vs11", vshIndex.GetIndex() );
 
@@ -73,7 +73,7 @@ BEGIN_VS_SHADER_FLAGS( ParticleSphere_DX8, "Help for BumpmappedEnvMap", SHADER_N
 			BindTexture( SHADER_SAMPLER0, BUMPMAP );
 
 			pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, params[LIGHT_POSITION]->GetVecValue() );
-			
+
 			// Separate the light color into something that has a max value of 1 and a scale
 			// so the vertex shader can determine if it's going to overflow the color and scale back
 			// if it needs to.

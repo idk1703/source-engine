@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -73,7 +73,7 @@ public:
 
 	virtual bool IsVisualElement(void) { return true; }
 	virtual bool IsClutter(void) { return false; }
-	
+
 	virtual const char* GetDescription() { return("Swept player hull helper"); }
 
 	virtual void OnAddToWorld(CMapWorld *pWorld);
@@ -91,7 +91,7 @@ protected:
 
 	// Overriden to transform our endpoints, which are not children.
 	virtual void DoTransform(const VMatrix &matrix);
-	
+
 	void Initialize(void);
 
 	CMapPlayerHullHandle *m_Point[2];				// The two endpoints of the axis.

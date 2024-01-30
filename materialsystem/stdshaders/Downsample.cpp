@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -20,7 +20,7 @@ BEGIN_VS_SHADER_FLAGS( Downsample, "Help for Downsample", SHADER_NOT_EDITABLE )
 	{
 		LoadTexture( BASETEXTURE );
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		// Requires DX9 + above
@@ -50,7 +50,7 @@ BEGIN_VS_SHADER_FLAGS( Downsample, "Help for Downsample", SHADER_NOT_EDITABLE )
 			pShaderShadow->VertexShaderVertexFormat( fmt, 1, 0, 0 );
 
 			pShaderShadow->SetVertexShader( "Downsample_vs20", 0 );
-			
+
 			if( g_pHardwareConfig->SupportsPixelShaders_2_b() )
 			{
 				DECLARE_STATIC_PIXEL_SHADER( downsample_ps20b );

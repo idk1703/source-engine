@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmebookmark.h"
@@ -12,13 +12,13 @@
 
 
 //-----------------------------------------------------------------------------
-// Class factory 
+// Class factory
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeBookmark, CDmeBookmark );
 
 
 //-----------------------------------------------------------------------------
-// Constructor, destructor 
+// Constructor, destructor
 //-----------------------------------------------------------------------------
 void CDmeBookmark::OnConstruction()
 {

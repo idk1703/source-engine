@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -39,7 +39,7 @@ public:
 	// Used to construct vertex data
 	static void ComputeVertexDescription( unsigned char *pBuffer, VertexFormat_t vertexFormat, VertexDesc_t &desc );
 
-	// Returns the vertex format size 
+	// Returns the vertex format size
 	static int VertexFormatSize( VertexFormat_t vertexFormat );
 
 protected:

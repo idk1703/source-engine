@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -123,7 +123,7 @@ dleaf_t* PointInLeaf (int iNode, Vector const& point)
 int ClusterFromPoint( Vector const& point )
 {
 	dleaf_t *leaf = PointInLeaf( 0, point );
-	
+
 	return leaf->cluster;
 }
 
@@ -372,7 +372,7 @@ void BuildVisRow (int patchnum, byte *pvs, int head, transfer_t *transfers, CTra
 ===========
 BuildVisLeafs
 
-  This is run by multiple threads
+	This is run by multiple threads
 ===========
 */
 
@@ -383,10 +383,10 @@ transfer_t* BuildVisLeafs_Start()
 
 
 // If PatchCB is non-null, it is called after each row is generated (used by MPI).
-void BuildVisLeafs_Cluster( 
+void BuildVisLeafs_Cluster(
 	int threadnum,
-	transfer_t *transfers, 
-	int iCluster, 
+	transfer_t *transfers,
+	int iCluster,
 	void (*PatchCB)(int iThread, int patchnum, CPatch *patch)
 	)
 {
@@ -394,7 +394,7 @@ void BuildVisLeafs_Cluster(
 	CPatch	*patch;
 	int		head;
 	unsigned	patchnum;
-	
+
 	DecompressVis( &dvisdata[ dvis->bitofs[ iCluster ][DVIS_PVS] ], pvs);
 	head = 0;
 
@@ -414,13 +414,13 @@ void BuildVisLeafs_Cluster(
 			{
 				pNextPatch = &g_Patches.Element( patch->ndxNextClusterChild );
 			}
-			
+
 			patchnum = patch - g_Patches.Base();
 
 			// build to all other world clusters
 			BuildVisRow (patchnum, pvs, head, transfers, transferMaker, threadnum );
 			transferMaker.Finish();
-			
+
 			// do the transfers
 			MakeScales( patchnum, transfers );
 
@@ -441,7 +441,7 @@ void BuildVisLeafs_End( transfer_t *transfers )
 void BuildVisLeafs( int threadnum, void *pUserData )
 {
 	transfer_t *transfers = BuildVisLeafs_Start();
-	
+
 	while ( 1 )
 	{
 		//
@@ -455,7 +455,7 @@ void BuildVisLeafs( int threadnum, void *pUserData )
 
 		BuildVisLeafs_Cluster( threadnum, transfers, iCluster, NULL );
 	}
-	
+
 	BuildVisLeafs_End( transfers );
 }
 
@@ -471,7 +471,7 @@ void BuildVisMatrix (void)
 	{
 		RunMPIBuildVisLeafs();
 	}
-	else 
+	else
 	{
 		RunThreadsOn (dvis->numclusters, true, BuildVisLeafs);
 	}

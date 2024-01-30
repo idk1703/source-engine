@@ -76,7 +76,7 @@ CItemSelectionCriteria::~CItemSelectionCriteria( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Look through our conditions and find the first of the specified type, 
+// Purpose: Look through our conditions and find the first of the specified type,
 //			and return the value it's looking for.
 //-----------------------------------------------------------------------------
 const char *CItemSelectionCriteria::GetValueForFirstConditionOfType( EItemCriteriaOperator eType ) const
@@ -94,7 +94,7 @@ const char *CItemSelectionCriteria::GetValueForFirstConditionOfType( EItemCriter
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Look through our conditions and find the first of the specified type, 
+// Purpose: Look through our conditions and find the first of the specified type,
 //			and return the value it's looking for.
 //-----------------------------------------------------------------------------
 const char *CItemSelectionCriteria::GetFieldForFirstConditionOfType( EItemCriteriaOperator eType ) const
@@ -204,7 +204,7 @@ bool CItemSelectionCriteria::BAddCondition( CItemSelectionCriteria::ICondition *
 
 	// Check for condition limit
 	if ( UCHAR_MAX == GetConditionsCount() )
-	{		
+	{
 		AssertMsg( false, "Too many conditions on a a CItemSelectionCriteria. Max: 255" );
 		return false;
 	}
@@ -369,7 +369,7 @@ bool CItemSelectionCriteria::CCondition::BEvaluate( KeyValues *pKVItem ) const
 	// Run the operator specific check
 	bool bRet = BInternalEvaluate( pKVItem );
 
-	// If this is a "not" operator, reverse the result 
+	// If this is a "not" operator, reverse the result
 	if ( m_EOp & k_EOperator_Not )
 		return !bRet;
 	else
@@ -421,7 +421,7 @@ bool CItemSelectionCriteria::CSetCondition::BSerializeToMsg( CSOItemCriteriaCond
 	return true;
 }
 
- 
+
 //-----------------------------------------------------------------------------
 // Purpose: Runs the operator specific check for this condition
 // Input:	pKVItem - Pointer to the raw KeyValues definition of the item

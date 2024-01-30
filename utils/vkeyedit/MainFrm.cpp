@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -48,7 +48,7 @@ static UINT indicators[] =
 CMainFrame::CMainFrame()
 {
 	// TODO: add member initialization code here
-	
+
 }
 
 CMainFrame::~CMainFrame()
@@ -59,7 +59,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	
+
 	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP
 		| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
 		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
@@ -115,7 +115,7 @@ void CMainFrame::Dump(CDumpContext& dc) const
 // CMainFrame message handlers
 
 
-BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext) 
+BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 {
 		// create splitter window
 	if (!m_wndSplitter.CreateStatic(this, 1, 2))

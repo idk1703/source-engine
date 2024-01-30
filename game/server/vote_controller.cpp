@@ -57,7 +57,7 @@ ConVar sv_vote_holder_may_vote_no( "sv_vote_holder_may_vote_no", "0", FCVAR_NONE
 static const int k_nKickWatchListMaxDuration = 300;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CVoteControllerSystem : public CAutoGameSystemPerFrame
 {
@@ -448,7 +448,7 @@ bool CVoteController::CreateVote( int iEntIndex, const char *pszTypeString, cons
 		CBaseIssue *pCurrentIssue = m_potentialIssues[issueIndex];
 		if ( !pCurrentIssue )
 			return false;
-		
+
 		if ( FStrEq( pszTypeString, pCurrentIssue->GetTypeString() ) )
 		{
 			vote_create_failed_t nErrorCode = VOTE_FAILED_GENERIC;
@@ -477,7 +477,7 @@ bool CVoteController::CreateVote( int iEntIndex, const char *pszTypeString, cons
 				{
 					m_iOnlyTeamToVote = ( pCurrentIssue->IsTeamRestrictedVote() ) ? GetVoterTeam( pVoteCaller ) : TEAM_UNASSIGNED;
 				}
-				
+
 				// Now get our choices
 				m_VoteOptions.RemoveAll();
 				pCurrentIssue->GetVoteOptions( m_VoteOptions );
@@ -639,7 +639,7 @@ CVoteController::TryCastVoteResult CVoteController::TryCastVote( int iEntIndex, 
 
 	if ( nCurrentVote < VOTE_OPTION1 || nCurrentVote > VOTE_OPTION5 )
 		return CAST_FAIL_SYSTEM_ERROR;
-	
+
 	// They're changing their vote
 #ifdef DEBUG
 	if ( nOldVote != VOTE_UNCAST )
@@ -679,7 +679,7 @@ CVoteController::TryCastVoteResult CVoteController::TryCastVote( int iEntIndex, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:  Increments the vote count for a particular vote option 
+// Purpose:  Increments the vote count for a particular vote option
 //			 i.e. nVoteChoice = 0 might mean a Yes vote
 //-----------------------------------------------------------------------------
 void CVoteController::VoteChoice_Increment( int nVoteChoice )
@@ -735,7 +735,7 @@ void CVoteController::VoteControllerThink( void )
 	if ( m_acceptingVotesTimer.HasStarted() && m_acceptingVotesTimer.IsElapsed() )
 	{
 		m_acceptingVotesTimer.Invalidate();
-		
+
 		// For GC record-keeping
 		if ( m_potentialIssues[m_iActiveIssueIndex]->IsYesNoVote() )
 		{
@@ -920,7 +920,7 @@ void CVoteController::ListIssues( CBasePlayer *pForWhom )
 int CVoteController::GetVoteIssueIndexWithHighestCount( void )
 {
 	int nMaxIndex = -1;
-	
+
 	// Legacy Yes/No system
 	if ( m_iActiveIssueIndex != INVALID_ISSUE && m_potentialIssues[m_iActiveIssueIndex]->IsYesNoVote() )
 	{
@@ -1000,7 +1000,7 @@ bool CVoteController::CanEntityCallVote( CBasePlayer *pPlayer, int &nCooldown, v
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CVoteController::GetNumVotesCast( void )
 {
@@ -1015,7 +1015,7 @@ int	CVoteController::GetNumVotesCast( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVoteController::AddPlayerToKickWatchList( CSteamID steamID, float flDuration )
 {
@@ -1023,7 +1023,7 @@ void CVoteController::AddPlayerToKickWatchList( CSteamID steamID, float flDurati
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVoteController::AddPlayerToNameLockedList( CSteamID steamID, float flDuration, int nUserID )
 {
@@ -1033,7 +1033,7 @@ void CVoteController::AddPlayerToNameLockedList( CSteamID steamID, float flDurat
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CVoteController::IsPlayerBeingKicked( CBasePlayer *pPlayer )
 {
@@ -1052,7 +1052,7 @@ bool CVoteController::IsPlayerBeingKicked( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVoteController::GCResponseReceived( bool bVerdict )
 {
@@ -1060,7 +1060,7 @@ void CVoteController::GCResponseReceived( bool bVerdict )
 
 	if ( m_pendingVoteParams.m_iIssueIndex == INVALID_ISSUE )
 		return;
-	
+
 	// Retry the current vote now that we have our answer
 	m_potentialIssues[m_pendingVoteParams.m_iIssueIndex]->GCResponseReceived( bVerdict );
 	SubmitPendingVote( m_pendingVoteParams );
@@ -1312,7 +1312,7 @@ void CBaseIssue::ListStandardNoArgCommand( CBasePlayer *forWhom, const char *iss
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseIssue::GetVoteOptions( CUtlVector <const char*> &vecNames )
 {
@@ -1324,7 +1324,7 @@ bool CBaseIssue::GetVoteOptions( CUtlVector <const char*> &vecNames )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CBaseIssue::GetQuorumRatio( void )
 {
@@ -1332,11 +1332,10 @@ float CBaseIssue::GetQuorumRatio( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseIssue::GCResponseReceived( bool bApproved )
 {
-	m_bGCResponded = true; 
+	m_bGCResponded = true;
 	m_bGCApproved = bApproved;
 }
-

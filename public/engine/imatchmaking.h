@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -62,7 +62,7 @@ struct hostData_s
 	char scenario[MAX_MAP_NAME];
 	int  gameState;
 	int	 gameTime;
-	XUID xuid; 
+	XUID xuid;
 };
 
 struct MM_QOS_t
@@ -107,7 +107,7 @@ public:
 	// To determine host Quality-of-Service
 	virtual MM_QOS_t GetQosWithLIVE() = 0;
 
-	// Used by non-'host' local machines which are starting a map to "prime" the caches.  Will sit at near completion indefinitely -- 
+	// Used by non-'host' local machines which are starting a map to "prime" the caches.  Will sit at near completion indefinitely --
 	//  the client is waiting for a TellClientsToConnect message
 	virtual bool	PreventFullServerStartup() = 0;
 };

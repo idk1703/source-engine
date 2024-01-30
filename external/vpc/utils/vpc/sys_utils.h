@@ -135,9 +135,9 @@ inline bool IsCFileExtension( const char *pExtension )
 	if ( !pExtension )
 		return false;
 
-	return !V_stricmp( pExtension, "cpp" ) || 
-		!V_stricmp( pExtension, "cxx" ) || 
-		!V_stricmp( pExtension, "cc" ) || 
+	return !V_stricmp( pExtension, "cpp" ) ||
+		!V_stricmp( pExtension, "cxx" ) ||
+		!V_stricmp( pExtension, "cc" ) ||
 		!V_stricmp( pExtension, "c" );
 }
 
@@ -148,10 +148,8 @@ inline bool IsHFileExtension( const char *pExtension )
 	if ( !pExtension )
 		return false;
 
-	return !V_stricmp( pExtension, "hpp" ) || 
-		!V_stricmp( pExtension, "hxx" ) || 
-		!V_stricmp( pExtension, "hh" ) || 
+	return !V_stricmp( pExtension, "hpp" ) ||
+		!V_stricmp( pExtension, "hxx" ) ||
+		!V_stricmp( pExtension, "hh" ) ||
 		!V_stricmp( pExtension, "h" );
 }
-
-

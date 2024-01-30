@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,11 +24,11 @@ class CTFDisconnectConfirmDialog : public CTFGenericConfirmDialog
 {
 	DECLARE_CLASS_SIMPLE( CTFDisconnectConfirmDialog, CTFGenericConfirmDialog );
 public:
-	CTFDisconnectConfirmDialog(	const char *pTitle, 
-								const char *pTextKey, 
+	CTFDisconnectConfirmDialog(	const char *pTitle,
+								const char *pTextKey,
 								const char *pConfirmBtnText,
-								const char *pCancelBtnText, 
-								GenericConfirmDialogCallback callback, 
+								const char *pCancelBtnText,
+								GenericConfirmDialogCallback callback,
 								vgui::Panel *pParent );
 
 	virtual const char *GetResFile();
@@ -53,11 +53,11 @@ class CTFRejoinConfirmDialog : public CTFGenericConfirmDialog
 {
 	DECLARE_CLASS_SIMPLE( CTFRejoinConfirmDialog, CTFGenericConfirmDialog );
 public:
-	CTFRejoinConfirmDialog(	const char *pTitle, 
-		const char *pTextKey, 
+	CTFRejoinConfirmDialog(	const char *pTitle,
+		const char *pTextKey,
 		const char *pConfirmBtnText,
-		const char *pCancelBtnText, 
-		GenericConfirmDialogCallback callback, 
+		const char *pCancelBtnText,
+		GenericConfirmDialogCallback callback,
 		vgui::Panel *pParent );
 
 	virtual const char *GetResFile();

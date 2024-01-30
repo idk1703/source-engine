@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Headers and defines for Autobuy and Rebuy 
+// Purpose: Headers and defines for Autobuy and Rebuy
 //
 //=============================================================================//
 

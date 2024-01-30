@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ class CExLabel;
 class CExButton;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CReplayRenderDialog : public CReplayBasePanel
 {
@@ -51,7 +51,7 @@ private:
 	void AddControlToAutoLayout( Panel *pPanel, bool bAdvanced );
 	void SetValuesFromQualityPreset();
 
-	bool				m_bShowAdvancedOptions;	
+	bool				m_bShowAdvancedOptions;
 	int					m_iQualityPreset;
 	ReplayHandle_t		m_hReplay;
 	bool				m_bSetQuit;

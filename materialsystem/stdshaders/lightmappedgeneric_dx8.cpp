@@ -44,14 +44,14 @@ BEGIN_VS_SHADER( LightmappedGeneric_DX8,
 		SHADER_PARAM( ENVMAPOPTIONAL, SHADER_PARAM_TYPE_INTEGER, "90", "Do specular pass only on dxlevel or higher (ie.80, 81, 90)" )
 		SHADER_PARAM( NODIFFUSEBUMPLIGHTING, SHADER_PARAM_TYPE_BOOL, "0", "0 == Use diffuse bump lighting, 1 = No diffuse bump lighting" )
 		SHADER_PARAM( FORCEBUMP, SHADER_PARAM_TYPE_BOOL, "0", "0 == Do bumpmapping if the card says it can handle it. 1 == Always do bumpmapping." )
-		SHADER_PARAM( ALPHATESTREFERENCE, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )	
+		SHADER_PARAM( ALPHATESTREFERENCE, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )
 		SHADER_PARAM( SSBUMP, SHADER_PARAM_TYPE_INTEGER, "0", "whether or not to use alternate bumpmap format with height" )
 		SHADER_PARAM( SEAMLESS_SCALE, SHADER_PARAM_TYPE_FLOAT, "0", "Scale factor for 'seamless' texture mapping. 0 means to use ordinary mapping" )
 	END_SHADER_PARAMS
 
-	virtual bool ShouldUseBumpmapping( IMaterialVar **params ) 
-	{ 
-		return g_pConfig->UseBumpmapping() && params[BUMPMAP]->IsDefined(); 
+	virtual bool ShouldUseBumpmapping( IMaterialVar **params )
+	{
+		return g_pConfig->UseBumpmapping() && params[BUMPMAP]->IsDefined();
 	}
 
 	// Set up anything that is necessary to make decisions in SHADER_FALLBACK.
@@ -62,7 +62,7 @@ BEGIN_VS_SHADER( LightmappedGeneric_DX8,
 
 		// Write over $basetexture with $albedo if we are going to be using diffuse normal mapping.
 		if( ShouldUseBumpmapping( params ) && params[ALBEDO]->IsDefined() &&
-			params[BASETEXTURE]->IsDefined() && 
+			params[BASETEXTURE]->IsDefined() &&
 			!( params[NODIFFUSEBUMPLIGHTING]->IsDefined() && params[NODIFFUSEBUMPLIGHTING]->GetIntValue() ) )
 		{
 			params[BASETEXTURE]->SetStringValue( params[ALBEDO]->GetStringValue() );
@@ -76,7 +76,7 @@ BEGIN_VS_SHADER( LightmappedGeneric_DX8,
 				params[ENVMAP]->SetUndefined();
 			}
 		}
-		
+
 		if( !params[ENVMAPMASKSCALE]->IsDefined() )
 		{
 			params[ENVMAPMASKSCALE]->SetFloatValue( 1.0f );
@@ -111,7 +111,7 @@ BEGIN_VS_SHADER( LightmappedGeneric_DX8,
 		{
 			params[ENVMAPMASKFRAME]->SetIntValue( 0 );
 		}
-		
+
 		if( !params[ENVMAPFRAME]->IsDefined() )
 		{
 			params[ENVMAPFRAME]->SetIntValue( 0 );
@@ -126,7 +126,7 @@ BEGIN_VS_SHADER( LightmappedGeneric_DX8,
 		{
 			params[ENVMAPCONTRAST]->SetFloatValue( 0.0f );
 		}
-		
+
 		if( !params[ENVMAPSATURATION]->IsDefined() )
 		{
 			params[ENVMAPSATURATION]->SetFloatValue( 1.0f );
@@ -188,7 +188,7 @@ BEGIN_VS_SHADER( LightmappedGeneric_DX8,
 			params[SEAMLESS_SCALE]->SetFloatValue( 0.0f );
 		}
 
-		// Get rid of envmap if we aren't using bumpmapping 
+		// Get rid of envmap if we aren't using bumpmapping
 		// *and* we have normalmapalphaenvmapmask *and* we don't have envmapmask elsewhere
 		if ( params[ENVMAP]->IsDefined() && params[BUMPMAP]->IsDefined() && IS_FLAG_SET( MATERIAL_VAR_NORMALMAPALPHAENVMAPMASK ) && !ShouldUseBumpmapping( params ) )
 		{
@@ -213,12 +213,12 @@ BEGIN_VS_SHADER( LightmappedGeneric_DX8,
 	SHADER_INIT
 	{
 		LoadTexture( FLASHLIGHTTEXTURE );
-		
+
 		if( ShouldUseBumpmapping( params ) )
 		{
 			LoadBumpMap( BUMPMAP );
 		}
-		
+
 		if (params[BASETEXTURE]->IsDefined())
 		{
 			LoadTexture( BASETEXTURE );
@@ -238,7 +238,7 @@ BEGIN_VS_SHADER( LightmappedGeneric_DX8,
 		// Don't alpha test if the alpha channel is used for other purposes
 		if (IS_FLAG_SET(MATERIAL_VAR_SELFILLUM) || IS_FLAG_SET(MATERIAL_VAR_BASEALPHAENVMAPMASK) )
 			CLEAR_FLAGS( MATERIAL_VAR_ALPHATEST );
-			
+
 		if (params[ENVMAP]->IsDefined())
 		{
 			if( !IS_FLAG_SET(MATERIAL_VAR_ENVMAPSPHERE) )
@@ -264,7 +264,7 @@ BEGIN_VS_SHADER( LightmappedGeneric_DX8,
 #ifndef USE_HLSL_PIXEL_SHADERS
 	inline const char *GetPixelShaderName( IMaterialVar** params, bool bBumpedEnvMap )
 	{
-		static char const* s_pPixelShaders[] = 
+		static char const* s_pPixelShaders[] =
 		{
 			// Unmasked
 			"LightmappedGeneric_EnvMapV2",
@@ -414,7 +414,7 @@ BEGIN_VS_SHADER( LightmappedGeneric_DX8,
 							BindTexture( SHADER_SAMPLER3, ENVMAPMASK, ENVMAPMASKFRAME );
 						else
 							BindTexture( SHADER_SAMPLER3, BASETEXTURE, FRAME );
-			
+
 						SetVertexShaderTextureScaledTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_2, BASETEXTURETRANSFORM, ENVMAPMASKSCALE );
 					}
 
@@ -532,10 +532,10 @@ BEGIN_VS_SHADER( LightmappedGeneric_DX8,
 		Draw();
 	}
 
-	inline const char *GetAdditiveEnvmapPixelShaderName( bool usingMask, 
+	inline const char *GetAdditiveEnvmapPixelShaderName( bool usingMask,
 		bool usingBaseTexture, bool usingBaseAlphaEnvmapMask )
 	{
-		static char const* s_pPixelShaders[] = 
+		static char const* s_pPixelShaders[] =
 		{
 			"LightmappedGeneric_AddEnvmapNoTexture",
 			"LightmappedGeneric_AddEnvmapMaskNoTexture",
@@ -549,7 +549,7 @@ BEGIN_VS_SHADER( LightmappedGeneric_DX8,
 			pshIndex |= 0x1;
 		return s_pPixelShaders[pshIndex];
 	}
-	
+
 	void DrawAdditiveEnvmap( IMaterialVar** params, IShaderDynamicAPI *pShaderAPI, IShaderShadow* pShaderShadow )
 	{
 		bool usingBaseTexture = params[BASETEXTURE]->IsTexture();
@@ -594,7 +594,7 @@ BEGIN_VS_SHADER( LightmappedGeneric_DX8,
 			vshIndex.SetVERTEXCOLOR( false );
 			s_pShaderShadow->SetVertexShader( "LightmappedGeneric_vs11", vshIndex.GetIndex() );
 
-			const char *pshName = GetAdditiveEnvmapPixelShaderName( usingMask, 
+			const char *pshName = GetAdditiveEnvmapPixelShaderName( usingMask,
 				usingBaseTexture, usingBaseAlphaEnvmapMask );
 			pShaderShadow->SetPixelShader( pshName );
 			FogToBlack();
@@ -734,20 +734,20 @@ BEGIN_VS_SHADER( LightmappedGeneric_DX8,
 	SHADER_DRAW
 	{
 		bool hasFlashlight = UsingFlashlight( params );
-		bool bBump = ShouldUseBumpmapping( params ) && params[BUMPMAP]->IsTexture() && 
+		bool bBump = ShouldUseBumpmapping( params ) && params[BUMPMAP]->IsTexture() &&
 			(params[NODIFFUSEBUMPLIGHTING]->GetIntValue() == 0);
 		bool bSSBump = bBump && ( params[SSBUMP]->GetIntValue() != 0 );
 
 		if( hasFlashlight )
 		{
-			DrawFlashlight_dx80( params, pShaderAPI, pShaderShadow, bBump, BUMPMAP, BUMPFRAME, BUMPTRANSFORM, 
+			DrawFlashlight_dx80( params, pShaderAPI, pShaderShadow, bBump, BUMPMAP, BUMPFRAME, BUMPTRANSFORM,
 				FLASHLIGHTTEXTURE, FLASHLIGHTTEXTUREFRAME, true, false, 0, -1, -1 );
 		}
 		else if( bBump )
 		{
-			DrawWorldBumpedUsingVertexShader( 
+			DrawWorldBumpedUsingVertexShader(
 				BASETEXTURE, BASETEXTURETRANSFORM,
-				BUMPMAP, BUMPFRAME, BUMPTRANSFORM, ENVMAPMASK, ENVMAPMASKFRAME, ENVMAP, 
+				BUMPMAP, BUMPFRAME, BUMPTRANSFORM, ENVMAPMASK, ENVMAPMASKFRAME, ENVMAP,
 				ENVMAPFRAME, ENVMAPTINT, COLOR, ALPHA, ENVMAPCONTRAST, ENVMAPSATURATION, FRAME, FRESNELREFLECTION,
 				false, -1, -1, -1, bSSBump );
 		}
@@ -788,7 +788,7 @@ BEGIN_INHERITED_SHADER( LightmappedGeneric_NoBump_DX8, LightmappedGeneric_DX8,
 		return 0;
 	}
 
-	virtual bool ShouldUseBumpmapping( IMaterialVar **params ) 
+	virtual bool ShouldUseBumpmapping( IMaterialVar **params )
 	{
 		if ( !g_pConfig->UseBumpmapping() )
 			return false;

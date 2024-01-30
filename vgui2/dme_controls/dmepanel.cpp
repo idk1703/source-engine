@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -229,7 +229,7 @@ void CDmePanel::PopulateEditorNames( const char *pPanelName )
 	{
 		m_pEditorNames->ActivateItem( nActiveItemID );
 	}
-	else 
+	else
 	{
 		m_pEditorNames->ActivateItemByRow( 0 );
 	}
@@ -352,7 +352,7 @@ void CDmePanel::OnViewedElementChanged( KeyValues *kv )
 		}
 	}
 
-	// Just want to populate the combo box with new items 
+	// Just want to populate the combo box with new items
 	DmeFactoryHandle_t h = DmePanelFirstFactory( pElement );
 	for ( ; h != DMEFACTORY_HANDLE_INVALID; h = DmePanelNextFactory( h, pElement ) )
 	{
@@ -444,7 +444,7 @@ void CDmePanel::SetEditor( const char *pEditorName )
 			break;
 		}
 	}
-	
+
 	if ( !m_pDmeEditorPanel )
 	{
 		EditorPanelMap_t entry;
@@ -505,12 +505,12 @@ CBaseDmePanelFactory* CBaseDmePanelFactory::s_pFirstDmePanelFactory;
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CBaseDmePanelFactory::CBaseDmePanelFactory( const char *pElementType, const char *pEditorName, 
+CBaseDmePanelFactory::CBaseDmePanelFactory( const char *pElementType, const char *pEditorName,
 	const char *pEditorDisplayName, bool bIsDefault, bool bIsOverride )
 {
 	// Prior to linking this in, look to see if this has been overridden
 	CBaseDmePanelFactory *pPrevFactory = NULL;
-	for( CBaseDmePanelFactory* pFactory = s_pFirstDmePanelFactory; pFactory; 
+	for( CBaseDmePanelFactory* pFactory = s_pFirstDmePanelFactory; pFactory;
 		pPrevFactory = pFactory, pFactory = pFactory->m_pNext )
 	{
 		if ( !Q_stricmp( pFactory->m_pElementType, pElementType ) &&
@@ -553,7 +553,7 @@ CBaseDmePanelFactory::CBaseDmePanelFactory( const char *pElementType, const char
 //-----------------------------------------------------------------------------
 DmeFactoryHandle_t DmePanelFirstFactory( CDmElement *pElement )
 {
-	CBaseDmePanelFactory *pFactory = CBaseDmePanelFactory::s_pFirstDmePanelFactory; 
+	CBaseDmePanelFactory *pFactory = CBaseDmePanelFactory::s_pFirstDmePanelFactory;
 	for ( ; pFactory; pFactory = pFactory->m_pNext )
 	{
 		if ( !pElement || pElement->IsA( pFactory->m_pElementType ) )
@@ -566,7 +566,7 @@ DmeFactoryHandle_t DmePanelFirstFactory( CDmElement *pElement )
 
 DmeFactoryHandle_t DmePanelNextFactory( DmeFactoryHandle_t h, CDmElement *pElement )
 {
-	CBaseDmePanelFactory *pFactory = (CBaseDmePanelFactory*)h; 
+	CBaseDmePanelFactory *pFactory = (CBaseDmePanelFactory*)h;
 	if ( !pFactory )
 		return DMEFACTORY_HANDLE_INVALID;
 
@@ -585,25 +585,25 @@ DmeFactoryHandle_t DmePanelNextFactory( DmeFactoryHandle_t h, CDmElement *pEleme
 //-----------------------------------------------------------------------------
 const char *DmePanelFactoryName( DmeFactoryHandle_t h )
 {
-	CBaseDmePanelFactory *pFactory = (CBaseDmePanelFactory*)h; 
+	CBaseDmePanelFactory *pFactory = (CBaseDmePanelFactory*)h;
 	return pFactory ? pFactory->m_pEditorName : NULL;
 }
 
 const char *DmePanelFactoryDisplayName( DmeFactoryHandle_t h )
 {
-	CBaseDmePanelFactory *pFactory = (CBaseDmePanelFactory*)h; 
+	CBaseDmePanelFactory *pFactory = (CBaseDmePanelFactory*)h;
 	return pFactory ? pFactory->m_pEditorDisplayName : NULL;
 }
 
 const char *DmePanelFactoryElementType( DmeFactoryHandle_t h )
 {
-	CBaseDmePanelFactory *pFactory = (CBaseDmePanelFactory*)h; 
+	CBaseDmePanelFactory *pFactory = (CBaseDmePanelFactory*)h;
 	return pFactory ? pFactory->m_pElementType : NULL;
 }
 
 bool DmePanelFactoryIsDefault( DmeFactoryHandle_t h )
 {
-	CBaseDmePanelFactory *pFactory = (CBaseDmePanelFactory*)h; 
+	CBaseDmePanelFactory *pFactory = (CBaseDmePanelFactory*)h;
 	return pFactory ? pFactory->m_bIsDefault : false;
 }
 
@@ -615,12 +615,12 @@ bool CDmePanel::CreateDmePanel( vgui::Panel *pParent, const char *pPanelName, CD
 {
 	int nBestInheritanceDepth = -1;
 	CBaseDmePanelFactory *pBestFactory = NULL;
-	CBaseDmePanelFactory *pFactory = CBaseDmePanelFactory::s_pFirstDmePanelFactory; 
+	CBaseDmePanelFactory *pFactory = CBaseDmePanelFactory::s_pFirstDmePanelFactory;
 	for ( ; pFactory; pFactory = pFactory->m_pNext )
 	{
 		if ( !pElement->IsA( pFactory->m_pElementType ) )
 			continue;
-		
+
 		if ( pEditorName )
 		{
 			if ( !Q_stricmp( pEditorName, pFactory->m_pEditorName ) )
@@ -653,4 +653,3 @@ bool CDmePanel::CreateDmePanel( vgui::Panel *pParent, const char *pPanelName, CD
 	}
 	return false;
 }
-

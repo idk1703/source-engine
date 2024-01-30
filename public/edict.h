@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -39,13 +39,13 @@ enum MapLoadType_t
 // Purpose: Global variables shared between the engine and the game .dll
 //-----------------------------------------------------------------------------
 class CGlobalVars : public CGlobalVarsBase
-{	
+{
 public:
 
 	CGlobalVars( bool bIsClient );
 
 public:
-	
+
 	// Current map
 	string_t		mapname;
 	int				mapversion;
@@ -63,7 +63,7 @@ public:
 	int				serverCount;
 };
 
-inline CGlobalVars::CGlobalVars( bool bIsClient ) : 
+inline CGlobalVars::CGlobalVars( bool bIsClient ) :
 	CGlobalVarsBase( bIsClient )
 {
 	serverCount = 0;
@@ -77,7 +77,7 @@ class IServerEntity;
 
 #define FL_EDICT_CHANGED	(1<<0)	// Game DLL sets this when the entity state changes
 									// Mutually exclusive with FL_EDICT_PARTIAL_CHANGE.
-									
+
 #define FL_EDICT_FREE		(1<<1)	// this edict if free for reuse
 #define FL_EDICT_FULL		(1<<2)	// this is a full server entity
 
@@ -89,11 +89,11 @@ class IServerEntity;
 // Used by local network backdoor.
 #define FL_EDICT_PENDING_DORMANT_CHECK	(1<<6)
 
-// This is always set at the same time EFL_DIRTY_PVS_INFORMATION is set, but it 
+// This is always set at the same time EFL_DIRTY_PVS_INFORMATION is set, but it
 // gets cleared in a different place.
 #define FL_EDICT_DIRTY_PVS_INFORMATION	(1<<7)
 
-// This is used internally to edict_t to remember that it's carrying a 
+// This is used internally to edict_t to remember that it's carrying a
 // "full change list" - all its properties might have changed their value.
 #define FL_FULL_EDICT_CHANGED			(1<<8)
 
@@ -107,7 +107,7 @@ class IServerEntity;
 class CEdictChangeInfo
 {
 public:
-	// Edicts remember the offsets of properties that change 
+	// Edicts remember the offsets of properties that change
 	unsigned short m_ChangeOffsets[MAX_CHANGE_OFFSETS];
 	unsigned short m_nChangeOffsets;
 };
@@ -120,11 +120,11 @@ public:
 	{
 		m_iSerialNumber = 1;
 	}
-	
+
 	// Matched against edict_t::m_iChangeInfoSerialNumber to determine if its
 	// change info is valid.
 	unsigned short m_iSerialNumber;
-	
+
 	CEdictChangeInfo m_ChangeInfos[MAX_EDICT_CHANGE_INFOS];
 	unsigned short m_nChangeInfos;	// How many are in use this frame.
 };
@@ -159,14 +159,14 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 // NOTE: YOU CAN'T CHANGE THE LAYOUT OR SIZE OF CBASEEDICT AND REMAIN COMPATIBLE WITH HL2_VC6!!!!!
 class CBaseEdict
 {
 public:
 
-	// Returns an IServerEntity if FL_FULLEDICT is set or NULL if this 
+	// Returns an IServerEntity if FL_FULLEDICT is set or NULL if this
 	// is a lightweight networking entity.
 	IServerEntity*			GetIServerEntity();
 	const IServerEntity*	GetIServerEntity() const;
@@ -176,10 +176,10 @@ public:
 
 	// Set when initting an entity. If it's only a networkable, this is false.
 	void				SetEdict( IServerUnknown *pUnk, bool bFullEdict );
-	
+
 	int					AreaNum() const;
 	const char *		GetClassName() const;
-	
+
 	bool				IsFree() const;
 	void				SetFree();
 	void				ClearFree();
@@ -190,7 +190,7 @@ public:
 	void				StateChanged( unsigned short offset );
 
 	void				ClearTransmitState();
-	
+
 	void SetChangeInfo( unsigned short info );
 	void SetChangeInfoSerialNumber( unsigned short sn );
 	unsigned short	 GetChangeInfo() const;
@@ -201,10 +201,10 @@ public:
 	// NOTE: this is in the edict instead of being accessed by a virtual because the engine needs fast access to it.
 	// NOTE: YOU CAN'T CHANGE THE LAYOUT OR SIZE OF CBASEEDICT AND REMAIN COMPATIBLE WITH HL2_VC6!!!!!
 #ifdef _XBOX
-	unsigned short m_fStateFlags;	
+	unsigned short m_fStateFlags;
 #else
-	int	m_fStateFlags;	
-#endif	
+	int	m_fStateFlags;
+#endif
 
 	// NOTE: this is in the edict instead of being accessed by a virtual because the engine needs fast access to it.
 	// int m_NetworkSerialNumber;
@@ -227,7 +227,7 @@ public:
 	IServerNetworkable	*m_pNetworkable;
 
 protected:
-	IServerUnknown		*m_pUnk;		
+	IServerUnknown		*m_pUnk;
 
 
 public:
@@ -278,7 +278,7 @@ inline void	CBaseEdict::ClearStateChanged()
 inline void	CBaseEdict::StateChanged()
 {
 	// Note: this should only happen for properties in data tables that used some
-	// kind of pointer dereference. If the data is directly offsetable 
+	// kind of pointer dereference. If the data is directly offsetable
 	m_fStateFlags |= (FL_EDICT_CHANGED | FL_FULL_EDICT_CHANGED);
 	SetChangeInfoSerialNumber( 0 );
 }
@@ -291,13 +291,13 @@ inline void	CBaseEdict::StateChanged( unsigned short offset )
 	m_fStateFlags |= FL_EDICT_CHANGED;
 
 	IChangeInfoAccessor *accessor = GetChangeAccessor();
-	
+
 	if ( accessor->GetChangeInfoSerialNumber() == g_pSharedChangeInfo->m_iSerialNumber )
 	{
 		// Ok, I still own this one.
 		CEdictChangeInfo *p = &g_pSharedChangeInfo->m_ChangeInfos[accessor->GetChangeInfo()];
-		
-		// Now add this offset to our list of changed variables.		
+
+		// Now add this offset to our list of changed variables.
 		for ( unsigned short i=0; i < p->m_nChangeOffsets; i++ )
 			if ( p->m_ChangeOffsets[i] == offset )
 				return;
@@ -326,9 +326,9 @@ inline void	CBaseEdict::StateChanged( unsigned short offset )
 			// Get a new CEdictChangeInfo and fill it out.
 			accessor->SetChangeInfo( g_pSharedChangeInfo->m_nChangeInfos );
 			g_pSharedChangeInfo->m_nChangeInfos++;
-			
+
 			accessor->SetChangeInfoSerialNumber( g_pSharedChangeInfo->m_iSerialNumber );
-			
+
 			CEdictChangeInfo *p = &g_pSharedChangeInfo->m_ChangeInfos[accessor->GetChangeInfo()];
 			p->m_ChangeOffsets[0] = offset;
 			p->m_nChangeOffsets = 1;
@@ -432,7 +432,7 @@ public:
 	ICollideable *GetCollideable();
 
 	// The server timestampe at which the edict was freed (so we can try to use other edicts before reallocating this one)
-	float		freetime;	
+	float		freetime;
 };
 
 inline ICollideable *edict_t::GetCollideable()

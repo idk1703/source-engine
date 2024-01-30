@@ -25,7 +25,7 @@ enum
 	CHAN_ITEM		= 3,
 	CHAN_BODY		= 4,
 	CHAN_STREAM		= 5,		// allocate stream channel from the static or dynamic area
-	CHAN_STATIC		= 6,		// allocate channel from the static area 
+	CHAN_STATIC		= 6,		// allocate channel from the static area
 	CHAN_VOICE2		= 7,
 	CHAN_VOICE_BASE	= 8,		// allocate channel for network voice data
 	CHAN_USER_BASE	= (CHAN_VOICE_BASE+128)		// Anything >= this number is allocated to game code.
@@ -43,7 +43,7 @@ enum
 #define ATTN_NONE		0.0f
 #define ATTN_NORM		0.8f
 #define ATTN_IDLE		2.0f
-#define ATTN_STATIC		1.25f 
+#define ATTN_STATIC		1.25f
 #define ATTN_RICOCHET	1.5f
 
 // HL2 world is 8x bigger now! We want to hear gunfire from farther.
@@ -64,7 +64,7 @@ enum soundlevel_t
 	SNDLVL_50dB			= 50,	// 3.9	// average home
 	SNDLVL_55dB			= 55,	// 3.0
 
-	SNDLVL_IDLE			= 60,	// 2.0	
+	SNDLVL_IDLE			= 60,	// 2.0
 	SNDLVL_60dB			= 60,	// 2.0	// normal conversation, clothes dryer
 
 	SNDLVL_65dB			= 65,	// 1.5	// washing machine, dishwasher
@@ -123,7 +123,7 @@ enum SoundFlags_t
 	SND_DELAY			= (1<<4),		// sound has an initial delay
 	SND_STOP_LOOPING	= (1<<5),		// stop all looping sounds on the entity.
 	SND_SPEAKER			= (1<<6),		// being played again by a microphone through a speaker
- 
+
 	SND_SHOULDPAUSE		= (1<<7),		// this sound should be paused if the game is paused
 	SND_IGNORE_PHONEMES	= (1<<8),
 	SND_IGNORE_NAME		= (1<<9),		// used to change all sounds emitted by an entity, regardless of scriptname

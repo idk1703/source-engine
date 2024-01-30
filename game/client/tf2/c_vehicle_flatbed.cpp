@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,7 +13,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_VehicleFlatbed : public C_BaseTFFourWheelVehicle
 {
@@ -34,7 +34,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_VehicleFlatbed::C_VehicleFlatbed()
 {
@@ -42,7 +42,7 @@ C_VehicleFlatbed::C_VehicleFlatbed()
 
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CVehicleFlatbedControlPanel : public CObjectControlPanel
 {
@@ -68,16 +68,16 @@ DECLARE_VGUI_SCREEN_FACTORY( CVehicleFlatbedControlPanel, "vehicle_battering_ram
 
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
 CVehicleFlatbedControlPanel::CVehicleFlatbedControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CVehicleBatteringRamControlPanel" ) 
+	: BaseClass( parent, "CVehicleBatteringRamControlPanel" )
 {
 }
 
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
 bool CVehicleFlatbedControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
 {
@@ -126,7 +126,7 @@ void CVehicleFlatbedControlPanel::OnTick()
 	m_pPassengerLabel->SetText( buf );
 
 	// Update the get in button
-	if ( pRam->IsPlayerInVehicle( C_BaseTFPlayer::GetLocalPlayer() ) ) 
+	if ( pRam->IsPlayerInVehicle( C_BaseTFPlayer::GetLocalPlayer() ) )
 	{
 		m_pOccupyButton->SetEnabled( false );
 		return;
@@ -180,4 +180,3 @@ void CVehicleFlatbedControlPanel::OnCommand( const char *command )
 
 	BaseClass::OnCommand(command);
 }
-

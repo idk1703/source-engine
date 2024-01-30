@@ -45,9 +45,9 @@ bool TokenLine::SetLine(const char * newLine)
 	strncpy( m_tokenBuffer, newLine, MAX_LINE_CHARS-1 );
 	m_tokenBuffer[ MAX_LINE_CHARS-1 ] = '\0';
 
-	// parse tokens 
+	// parse tokens
 	char * charPointer = m_tokenBuffer;
-	
+
 	while (*charPointer && (m_tokenNumber < MAX_LINE_TOKENS))
 	{
 		while (*charPointer && ((*charPointer <= 32) || (*charPointer > 126)))
@@ -65,8 +65,8 @@ bool TokenLine::SetLine(const char * newLine)
 				while (*charPointer && (*charPointer != '\"') )
 					charPointer++;
 
-			} 
-			else 
+			}
+			else
 			{
 				m_token[m_tokenNumber] = charPointer;
 				while (*charPointer && ((*charPointer > 32) && (*charPointer <= 126)))
@@ -76,7 +76,7 @@ bool TokenLine::SetLine(const char * newLine)
 			m_tokenNumber++;
 
 			if (*charPointer)
-			{	
+			{
 				*charPointer=0;
 				charPointer++;
 			}
@@ -106,18 +106,18 @@ char* TokenLine::CheckToken(char * parm)
 	for (int i = 0 ; i < m_tokenNumber; i ++)
 	{
 		if (!m_token[i])
-			continue; 
+			continue;
 		if ( !strcmp (parm,m_token[i]) )
 		{
-			char * ret = m_token[i+1];	
+			char * ret = m_token[i+1];
 			// if this token doesn't exist, since index i was the last
 			// return an empty string
 			if ( (i+1) == m_tokenNumber ) ret = "";
 			return ret;
 		}
-			
+
 	}
-		
+
 	return NULL;
 }
 

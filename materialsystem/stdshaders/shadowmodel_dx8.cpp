@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -59,7 +59,7 @@ BEGIN_VS_SHADER_FLAGS( ShadowModel_DX8, "Help for ShadowModel", SHADER_NOT_EDITA
 
 			int fmt = VERTEX_POSITION | VERTEX_NORMAL;
 			pShaderShadow->VertexShaderVertexFormat( fmt, 1, 0, 0 );
-			
+
 			shadowmodel_Static_Index vshIndex;
 			pShaderShadow->SetVertexShader( "ShadowModel", vshIndex.GetIndex() );
 

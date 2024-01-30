@@ -135,10 +135,10 @@ extern ConVar sv_turbophysics;
 // HPE_BEGIN:
 // [menglish] Added in convars for freeze cam time length
 //=============================================================================
- 
+
 extern ConVar spec_freeze_time;
 extern ConVar spec_freeze_traveltime;
- 
+
 //=============================================================================
 // HPE_END
 //=============================================================================
@@ -316,10 +316,10 @@ BEGIN_SEND_TABLE_NOBASE( CCSPlayer, DT_CSLocalPlayerExclusive )
 	// HPE_BEGIN:
 	// [tj]Set up the send table for per-client domination data
 	//=============================================================================
- 
+
 	SendPropArray3( SENDINFO_ARRAY3( m_bPlayerDominated ), SendPropBool( SENDINFO_ARRAY( m_bPlayerDominated ) ) ),
 	SendPropArray3( SENDINFO_ARRAY3( m_bPlayerDominatingMe ), SendPropBool( SENDINFO_ARRAY( m_bPlayerDominatingMe ) ) ),
- 
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
@@ -540,7 +540,7 @@ CCSPlayer::CCSPlayer()
 	m_vLastHitLocationObjectSpace = Vector(0,0,0);
 
 	m_wasNotKilledNaturally = false;
-	 
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
@@ -771,14 +771,14 @@ void CCSPlayer::InitialSpawn( void )
 	// HPE_BEGIN:
 	// [tj] We reset the stats at the beginning of the map (including domination tracking)
 	//=============================================================================
-	 
+
 	CCS_GameStats.ResetPlayerStats(this);
 	RemoveNemesisRelationships();
-	 
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
-	
+
 }
 
 void CCSPlayer::SetModelFromClass( void )
@@ -827,9 +827,9 @@ void CCSPlayer::Spawn()
 	// HPE_BEGIN:
 	// [pfreese] Clear the last known nav area (used to be done by CBasePlayer)
 	//=============================================================================
-	
+
 	m_lastNavArea = NULL;
-	
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
@@ -857,7 +857,7 @@ void CCSPlayer::Spawn()
 	m_bIsRescuing = false;
 	m_bInjuredAHostage = false;
 	m_iNumFollowers = 0;
-	
+
 	// [tj] Reset this flag if the player is not in observer mode (as happens when a player spawns late)
 	if (m_iPlayerState != STATE_OBSERVER_MODE)
 	{
@@ -1155,7 +1155,7 @@ void CCSPlayer::Event_Killed( const CTakeDamageInfo &info )
 	// HPE_BEGIN:
 	// [pfreese] Process on-death achievements
 	//=============================================================================
-	
+
 	ProcessPlayerDeathAchievements(ToCSPlayer(info.GetAttacker()), this, info);
 
 	//=============================================================================
@@ -1169,17 +1169,17 @@ void CCSPlayer::Event_Killed( const CTakeDamageInfo &info )
 	// [tj] Added a parameter so we know if it was death that caused the drop
 	// [menglish] Keep track of what the player has dropped for the freeze panel callouts
 	//=============================================================================
-	 
+
 	CBaseEntity* pAttacker = info.GetAttacker();
 	bool friendlyFire = pAttacker && pAttacker->GetTeamNumber() == GetTeamNumber();
 
 	//Only count the drop if it was not friendly fire
 	DropWeapons(true, !friendlyFire);
-	 
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
-	
+
 
 	// Just in case the progress bar is on screen, kill it.
 	SetProgressBarTime( 0 );
@@ -1255,7 +1255,7 @@ void CCSPlayer::Event_Killed( const CTakeDamageInfo &info )
 	// [pfreese] If this kill ended the round, award the MVP to someone on the
 	// winning team.
 	// TODO - move this code somewhere else more MVP related
-	//=============================================================================	 
+	//=============================================================================
 
 	bool roundWasAlreadyWon = (CSGameRules()->m_iRoundWinStatus != WINNER_NONE);
 	bool roundIsWonNow = CSGameRules()->CheckWinConditions();
@@ -1722,7 +1722,7 @@ bool CCSPlayer::ShouldDoLargeFlinch( int nHitGroup, CBaseEntity *pAttacker )
 	CCSPlayer *pPlayer = ToCSPlayer( pAttacker );
 
 	if ( pPlayer == NULL || !pPlayer->IsPlayer() )
-		 pPlayer = NULL;
+		pPlayer = NULL;
 
 	if ( pPlayer )
 	{
@@ -1731,9 +1731,9 @@ bool CCSPlayer::ShouldDoLargeFlinch( int nHitGroup, CBaseEntity *pAttacker )
 		if ( pWeapon )
 		{
 			if ( pWeapon->GetCSWpnData().m_WeaponType == WEAPONTYPE_RIFLE ||
-				 pWeapon->GetCSWpnData().m_WeaponType == WEAPONTYPE_SHOTGUN ||
-				 pWeapon->GetCSWpnData().m_WeaponType == WEAPONTYPE_SNIPER_RIFLE )
-				 return true;
+				pWeapon->GetCSWpnData().m_WeaponType == WEAPONTYPE_SHOTGUN ||
+				pWeapon->GetCSWpnData().m_WeaponType == WEAPONTYPE_SNIPER_RIFLE )
+				return true;
 		}
 		else
 			return false;
@@ -1820,7 +1820,7 @@ int CCSPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 	// HPE_BEGIN:
 	// [tj] Added properties for goose chase achievement
 	//=============================================================================
- 
+
 	CSGameRules()->PlayerTookDamage(this, inputInfo);
 
 	//Check "Goose Chase" achievement
@@ -1839,7 +1839,7 @@ int CCSPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 				continue;
 
 			Assert( pPlayer->GetTeamNumber() == pAttackerTeam->GetTeamNumber() );
-			
+
 			if ( pPlayer->m_lifeState == LIFE_ALIVE )
 			{
 				livingEnemies++;
@@ -1853,7 +1853,7 @@ int CCSPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 			m_pGooseChaseDistractingPlayer = pAttacker;
 		}
 	}
- 
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
@@ -1971,7 +1971,7 @@ int CCSPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 				}
 			}
 		}
- 
+
 //=============================================================================
 // HPE_END
 //=============================================================================
@@ -1997,7 +1997,7 @@ int CCSPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 			else
 			{
 				if ( fDamageToArmor < 0 )
-					 fDamageToArmor = 1;
+					fDamageToArmor = 1;
 
 				armorValue -= fDamageToArmor;
 			}
@@ -2011,9 +2011,9 @@ int CCSPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 			if (m_LastHitGroup == HITGROUP_HEAD && flDamage > m_iHealth && fDamageToHealth < m_iHealth)
 			{
 				m_bSurvivedHeadshotDueToHelmet = true;
-			}			
+			}
 			//=============================================================================
-			// HPE_END			
+			// HPE_END
 			//=============================================================================
 
 			flDamage = fDamageToHealth;
@@ -2058,7 +2058,7 @@ int CCSPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 				WRITE_LONG( m_LastHitBox );
 			}
 			WRITE_VEC3COORD( m_vLastHitLocationObjectSpace );
-			 
+
 //=============================================================================
 // HPE_END
 //=============================================================================
@@ -2112,7 +2112,7 @@ int CCSPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 			Q_strncat(dmgtype, "HEADSHOT", sizeof(dmgtype));
 
 		char outputString[256];
-		Q_snprintf( outputString, sizeof(outputString), "%f: Player %s incoming %f damage from %s, type %s; applied %d health and %d armor\n", 
+		Q_snprintf( outputString, sizeof(outputString), "%f: Player %s incoming %f damage from %s, type %s; applied %d health and %d armor\n",
 			gpGlobals->curtime, GetPlayerName(),
 			inputInfo.GetDamage(), info.GetInflictor()->GetDebugName(), dmgtype,
 			m_lastDamageHealth, m_lastDamageArmor);
@@ -2122,7 +2122,7 @@ int CCSPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 
 
 		if ( pPlayer )
-		{		
+		{
 			// Record for the shooter
 			pPlayer->RecordDamageGiven( GetPlayerName(), info.GetDamage() );
 
@@ -2151,10 +2151,10 @@ int CCSPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 bool CCSPlayer::IsHittingShield( const Vector &vecDirection, trace_t *ptr )
 {
 	if ( HasShield() == false )
-		 return false;
+		return false;
 
 	if ( IsShieldDrawn() == false )
-		 return false;
+		return false;
 
 	float		flDot;
 	Vector		vForward;
@@ -2167,7 +2167,7 @@ bool CCSPlayer::IsHittingShield( const Vector &vecDirection, trace_t *ptr )
 	flDot = DotProduct2D ( vec2LOS , vForward.AsVector2D() );
 
 	if ( flDot < -0.87f )
-		 return true;
+		return true;
 
 	return false;
 }
@@ -2183,7 +2183,7 @@ void CCSPlayer::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, 
 
 	// show blood for firendly fire only if FF is on
 	if ( pAttacker && ( GetTeamNumber() == pAttacker->GetTeamNumber() ) )
-		 bShouldBleed = CSGameRules()->IsFriendlyFireOn();
+		bShouldBleed = CSGameRules()->IsFriendlyFireOn();
 
 	if ( m_takedamage != DAMAGE_YES )
 		return;
@@ -2213,7 +2213,7 @@ void CCSPlayer::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, 
 	else if( info.GetDamageType() & DMG_BLAST )
 	{
 		if ( ArmorValue() > 0 )
-			 bShouldBleed = false;
+			bShouldBleed = false;
 
 		if ( bShouldBleed == true )
 		{
@@ -2233,12 +2233,12 @@ void CCSPlayer::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, 
 // HPE_BEGIN:
 // [menglish] Calculate the position this player was hit at in the bone space
 //=============================================================================
-		 
+
 		matrix3x4_t boneTransformToWorld, boneTransformToObject;
 		GetBoneTransform(GetHitboxBone(ptr->hitbox), boneTransformToWorld);
 		MatrixInvert(boneTransformToWorld, boneTransformToObject);
 		VectorTransform(ptr->endpos, boneTransformToObject, m_vLastHitLocationObjectSpace);
-		 
+
 //=============================================================================
 // HPE_END
 //=============================================================================
@@ -2974,7 +2974,7 @@ bool CCSPlayer::CSWeaponDrop( CBaseCombatWeapon *pWeapon, bool bDropShield, bool
 			}
 
 			if ( iWeaponBoneIndex == hdr->numbones() )
-				 return true;
+				return true;
 
 			if ( iBIndex == -1 )
 			{
@@ -3319,11 +3319,11 @@ BuyResult_e CCSPlayer::AttemptToBuyShield( void )
 			CWeaponCSBase *pCSWeapon = dynamic_cast< CWeaponCSBase* >( pWeapon );
 
 			if ( pCSWeapon && pCSWeapon->GetCSWpnData().m_bCanUseWithShield == false )
-				 return;
+				return;
 		}
 
 		if ( HasPrimaryWeapon() )
-			 DropRifle();
+			DropRifle();
 
 		GiveShield();
 
@@ -3427,7 +3427,7 @@ BuyResult_e CCSPlayer::AttemptToBuyNightVision( void )
 //=============================================================================
 
 BuyResult_e CCSPlayer::HandleCommand_Buy( const char *item )
-{    
+{
 	BuyResult_e result = HandleCommand_Buy_Internal(item);
 	if (result == BUY_BOUGHT)
 	{
@@ -3437,7 +3437,7 @@ BuyResult_e CCSPlayer::HandleCommand_Buy( const char *item )
 	return result;
 }
 
-BuyResult_e CCSPlayer::HandleCommand_Buy_Internal( const char* wpnName ) 
+BuyResult_e CCSPlayer::HandleCommand_Buy_Internal( const char* wpnName )
 //=============================================================================
 // HPE_END
 //=============================================================================
@@ -3613,7 +3613,7 @@ BuyResult_e CCSPlayer::HandleCommand_Buy_Internal( const char* wpnName )
 				m_bUsingDefaultPistol = false;
 
 			GiveNamedItem( pWeaponInfo->szClassName );
-            AddAccount( -pWeaponInfo->GetWeaponPrice(), true, true, pWeaponInfo->szClassName );
+	AddAccount( -pWeaponInfo->GetWeaponPrice(), true, true, pWeaponInfo->szClassName );
 			BlackMarketAddWeapon( wpnName, this );
 		}
 	}
@@ -4072,7 +4072,7 @@ void CCSPlayer::OnDamagedByExplosion( const CTakeDamageInfo &info )
 	//Adrian - This is hacky since we might have been damaged by something else
 	//but since the round is ending, who cares.
 	if ( CSGameRules()->m_bTargetBombed == true )
-		 return;
+		return;
 
 	float distanceFromPlayer = 9999.0f;
 
@@ -5361,7 +5361,7 @@ void CCSPlayer::State_Enter_DEATH_ANIM()
 // HPE_BEGIN:
 // [menglish, pfreese] Added freeze cam logic
 //=============================================================================
- 
+
 void CCSPlayer::State_PreThink_DEATH_ANIM()
 {
 	// If the anim is done playing, go to the next state (waiting for a keypress to
@@ -5408,7 +5408,7 @@ void CCSPlayer::State_PreThink_DEATH_ANIM()
 
 	State_Transition( STATE_OBSERVER_MODE );
 }
- 
+
 //=============================================================================
 // HPE_END
 //=============================================================================
@@ -5423,7 +5423,7 @@ void CCSPlayer::State_Enter_DEATH_WAIT_FOR_KEY()
 
 	StopAnimation();
 
-	// Don't do this.  The ragdoll system expects to be able to read from this player on 
+	// Don't do this.  The ragdoll system expects to be able to read from this player on
 	// the next update and will read it at the new origin if this is set.
 	// Since it is more complicated to redesign the ragdoll system to not need that data
 	// it is easier to cause a less obvious bug than popping ragdolls
@@ -5674,7 +5674,7 @@ bool CCSPlayer::BumpWeapon( CBaseCombatWeapon *pBaseWeapon )
 	*/
 
 	if ( HasShield() && pWeapon->GetCSWpnData().m_bCanUseWithShield == false )
-		 return false;
+		return false;
 
 	// Check ammo counts for grenades, and don't try to pick up more grenades than we can carry
 	if ( bPickupGrenade )
@@ -6783,7 +6783,7 @@ void CCSPlayer::FlashlightTurnOff( void )
 // [tj] Added a parameter so we know if it was death that caused the drop
 // [menglish] Clear all previously dropped equipment and add the c4 to the dropped equipment
 //=============================================================================
- 
+
 void CCSPlayer::DropWeapons( bool fromDeath, bool friendlyFire )
 {
 	for ( int i = 0; i < DROPPED_COUNT; ++i )
@@ -6806,7 +6806,7 @@ void CCSPlayer::DropWeapons( bool fromDeath, bool friendlyFire )
 	}
 
 	//NOTE: Function continues beyond comment block. This is just the part I touched.
- 
+
 //=============================================================================
 // HPE_END
 //=============================================================================
@@ -6827,12 +6827,12 @@ void CCSPlayer::DropWeapons( bool fromDeath, bool friendlyFire )
 		// HPE_BEGIN:
 		// [menglish] Add the newly created defuser to the dropped equipment list
 		//=============================================================================
-		 
+
 		if(fromDeath)
 		{
 			m_hDroppedEquipment[DROPPED_DEFUSE] = static_cast<CBaseEntity *>(pDefuser);
 		}
-		 
+
 		//=============================================================================
 		// HPE_END
 		//=============================================================================
@@ -6932,20 +6932,20 @@ void CCSPlayer::ChangeTeam( int iTeamNum )
 		return;
 
 	//=============================================================================
-	// HPE_BEGIN:	
+	// HPE_BEGIN:
 	//=============================================================================
-	 
+
 	// [tj] Added a parameter so we know if it was death that caused the drop
 	// Drop Our best weapon
 	DropWeapons(false, false);
 
 	// [tj] Clear out dominations
 	RemoveNemesisRelationships();
-	 
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
-	
+
 
 	// Always allow a change to spectator, and don't count it as one of our team changes.
 	// We now store the old team, so if a player changes once to one team, then to spectator,
@@ -6977,12 +6977,12 @@ void CCSPlayer::ChangeTeam( int iTeamNum )
 		//=============================================================================
 		// HPE_BEGIN:
 		// [tj] Removed these lines so players keep their money when switching to spectator.
-		//=============================================================================		
+		//=============================================================================
 		//Reset money
-		//m_iAccount = 0;		
+		//m_iAccount = 0;
 		//=============================================================================
 		// HPE_END
-		//=============================================================================		
+		//=============================================================================
 		RemoveAllItems( true );
 
 		State_Transition( STATE_OBSERVER_MODE );
@@ -6994,17 +6994,17 @@ void CCSPlayer::ChangeTeam( int iTeamNum )
 			// If they're switching from being a spectator to ingame player
 			//=============================================================================
 			// HPE_BEGIN:
-			// [tj] Changed this so players either retain their existing money or, 
+			// [tj] Changed this so players either retain their existing money or,
 			//		if they have less than the default, give them the default.
 			//=============================================================================
 			int startMoney = CSGameRules()->GetStartMoney();
 			if (startMoney > m_iAccount)
 			{
 				m_iAccount = startMoney;
-			} 			
+			}
 			//=============================================================================
 			// HPE_END
-			//============================================================================= 
+			//=============================================================================
 		}
 
 		// bots get to this state on TEAM_UNASSIGNED, yet they are marked alive.  Don't kill them.
@@ -7531,7 +7531,7 @@ void CCSPlayer::ResetRoundBasedAchievementVariables()
  *
  *  Parameters:
  * 		info -
- *			
+ *
  *	Returns:
  *		int -
  */
@@ -7596,8 +7596,8 @@ void CCSPlayer::PlayerUsedFirearm( CBaseCombatWeapon* pBaseWeapon )
 void CCSPlayer::ProcessPlayerDeathAchievements( CCSPlayer *pAttacker, CCSPlayer *pVictim, const CTakeDamageInfo &info )
 {
 	Assert(pVictim != NULL);
-	CBaseEntity *pInflictor = info.GetInflictor();	
-  
+	CBaseEntity *pInflictor = info.GetInflictor();
+
 	// all these achievements require a valid attacker on a different team
 	if ( pAttacker != NULL && pVictim != NULL && pVictim->GetTeamNumber() != pAttacker->GetTeamNumber() )
 	{
@@ -7619,7 +7619,7 @@ void CCSPlayer::ProcessPlayerDeathAchievements( CCSPlayer *pAttacker, CCSPlayer 
 
 		if (pVictim->m_bIsDefusing)
 		{
-			pAttacker->AwardAchievement(CSKilledDefuser);			
+			pAttacker->AwardAchievement(CSKilledDefuser);
 			pAttacker->m_bKilledDefuser = true;
 
 			if (attackerWeaponId == WEAPON_HEGRENADE)
@@ -7674,7 +7674,7 @@ void CCSPlayer::ProcessPlayerDeathAchievements( CCSPlayer *pAttacker, CCSPlayer 
 		pAttacker->m_enemyPlayersKilledThisRound.AddToTail(pVictim);
 
 		//Calculate Avenging for all players the victim has killed
-		for ( int avengedIndex = 0; avengedIndex < pVictim->m_enemyPlayersKilledThisRound.Count(); avengedIndex++ )        
+		for ( int avengedIndex = 0; avengedIndex < pVictim->m_enemyPlayersKilledThisRound.Count(); avengedIndex++ )
 		{
 			CCSPlayer* avengedPlayer = pVictim->m_enemyPlayersKilledThisRound[avengedIndex];
 
@@ -7753,7 +7753,7 @@ void CCSPlayer::ProcessPlayerDeathAchievements( CCSPlayer *pAttacker, CCSPlayer 
 		// HPE_END
 		//=============================================================================
 
-		//see if this is a unique weapon		
+		//see if this is a unique weapon
 		if (attackerWeaponId != WEAPON_NONE)
 		{
 			if (pAttacker->m_killWeapons.Find(attackerWeaponId) == -1)
@@ -7761,7 +7761,7 @@ void CCSPlayer::ProcessPlayerDeathAchievements( CCSPlayer *pAttacker, CCSPlayer 
 				pAttacker->m_killWeapons.AddToTail(attackerWeaponId);
 				if (pAttacker->m_killWeapons.Count() >= AchievementConsts::KillsWithMultipleGuns_MinWeapons)
 				{
-					pAttacker->AwardAchievement(CSKillsWithMultipleGuns);					
+					pAttacker->AwardAchievement(CSKillsWithMultipleGuns);
 				}
 			}
 		}
@@ -7854,18 +7854,18 @@ void CCSPlayer::ProcessPlayerDeathAchievements( CCSPlayer *pAttacker, CCSPlayer 
 		//[tj] advance to the next stage of the defuse defense achievement
 		if (pAttacker->m_defuseDefenseStep == DD_STARTED_DEFUSE)
 		{
-			pAttacker->m_defuseDefenseStep = DD_KILLED_TERRORIST;            
+			pAttacker->m_defuseDefenseStep = DD_KILLED_TERRORIST;
 		}
 
 		if (pVictim->HasC4() && pVictim->GetBombPickuptime() + AchievementConsts::KillBombPickup_MaxTime > gpGlobals->curtime)
 		{
 			pAttacker->AwardAchievement(CSKillBombPickup);
 		}
-		
+
 	}
 
 
-	//If you kill a friendly player while blind (from an enemy player), give the guy that blinded you an achievement    
+	//If you kill a friendly player while blind (from an enemy player), give the guy that blinded you an achievement
 	if ( pAttacker != NULL && pVictim != NULL && pVictim->GetTeamNumber() == pAttacker->GetTeamNumber() && pAttacker->IsBlind())
 	{
 		CCSPlayer* flashbangAttacker = pAttacker->GetLastFlashbangAttacker();
@@ -7906,10 +7906,10 @@ void CCSPlayer::ProcessPlayerDeathAchievements( CCSPlayer *pAttacker, CCSPlayer 
 
 	// Achievement check for being the last player alive in a match
 	if (pAlivePlayer)
-	{		
+	{
 		int alivePlayerTeam = pAlivePlayer->GetTeamNumber();
 		int alivePlayerOpposingTeam = alivePlayerTeam == TEAM_CT ? TEAM_TERRORIST : TEAM_CT;
-		if (livePlayerCount == 1 
+		if (livePlayerCount == 1
 			&& CSGameRules()->m_iRoundWinStatus == WINNER_NONE
 			&& teamCount[alivePlayerTeam] - teamIgnoreCount[alivePlayerTeam] >= AchievementConsts::LastPlayerAlive_MinPlayersOnTeam
 			&& teamCount[alivePlayerOpposingTeam] - teamIgnoreCount[alivePlayerOpposingTeam] >= AchievementConsts::DefaultMinOpponentsForAchievement
@@ -7947,11 +7947,11 @@ CBaseEntity* CCSPlayer::GetNearestSurfaceBelow(float maxTrace)
 //      It is important to note that this happens before the bomb explodes, so a player may die
 //      after this from a bomb explosion or a late kill after a defuse/detonation/rescue.
 void CCSPlayer::OnRoundEnd(int winningTeam, int reason)
-{    
+{
 	if (winningTeam == WINNER_CT || winningTeam == WINNER_TER)
 	{
 		int losingTeamId = (winningTeam == TEAM_CT) ? TEAM_TERRORIST : TEAM_CT;
-		
+
 		CTeam* losingTeam = GetGlobalTeam(losingTeamId);
 
 		int losingTeamPlayers = 0;
@@ -7959,7 +7959,7 @@ void CCSPlayer::OnRoundEnd(int winningTeam, int reason)
 		if (losingTeam)
 		{
 			losingTeamPlayers = losingTeam->GetNumPlayers();
-			
+
 			int ignoreCount = 0;
 			for ( int i = 1; i <= gpGlobals->maxClients; i++ )
 			{
@@ -7968,13 +7968,13 @@ void CCSPlayer::OnRoundEnd(int winningTeam, int reason)
 				{
 					int teamNum = pPlayer->GetTeamNumber();
 					if ( teamNum == losingTeamId )
-					{					
+					{
 						if (pPlayer->WasNotKilledNaturally())
 						{
 							ignoreCount++;
 						}
 					}
-					
+
 				}
 			}
 
@@ -7982,7 +7982,7 @@ void CCSPlayer::OnRoundEnd(int winningTeam, int reason)
 		}
 
 		//Check fast round win achievement
-		if (    IsAlive() && 
+		if (    IsAlive() &&
 				gpGlobals->curtime - CSGameRules()->GetRoundStartTime() < AchievementConsts::FastRoundWin_Time &&
 				GetTeamNumber() == winningTeam &&
 				losingTeamPlayers >= AchievementConsts::DefaultMinOpponentsForAchievement)
@@ -8069,7 +8069,7 @@ void CCSPlayer::OnStartedDefuse()
 	}
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCSPlayer::AttemptToExitFreezeCam( void )
 {
@@ -8117,7 +8117,7 @@ bool CCSPlayer::IsPlayerDominatingMe( int iPlayerIndex )
 // HPE_BEGIN:
 // [menglish] MVP functions
 //=============================================================================
- 
+
 void CCSPlayer::IncrementNumMVPs( CSMvpReason_t mvpReason )
 {
 	//=============================================================================
@@ -8159,7 +8159,7 @@ int CCSPlayer::GetNumMVPs()
 {
 	return m_iMVPs;
 }
- 
+
 //=============================================================================
 // HPE_END
 //=============================================================================
@@ -8173,14 +8173,14 @@ void CCSPlayer::RemoveNemesisRelationships()
 	{
 		CCSPlayer *pTemp = ToCSPlayer( UTIL_PlayerByIndex( i ) );
 		if ( pTemp && pTemp != this )
-		{        
+		{
 			// set this player to be not dominating anyone else
 			SetPlayerDominated( pTemp, false );
 
-			// set no one else to be dominating this player		
+			// set no one else to be dominating this player
 			pTemp->SetPlayerDominated( this, false );
 		}
-	}	
+	}
 }
 
 void CCSPlayer::CheckMaxGrenadeKills(int grenadeKills)
@@ -8264,4 +8264,3 @@ void UTIL_AwardMoneyToTeam( int iAmount, int iTeam, CBaseEntity *pIgnore )
 		pPlayer->AddAccount( iAmount );
 	}
 }
-

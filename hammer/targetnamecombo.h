@@ -37,7 +37,7 @@ class CTargetNameComboBox : public CFilteredComboBox, protected CFilteredComboBo
 
 		// Initialize the control with the entity list you want it to represent.
 		void SetEntityList(const CMapEntityList *pEntityList);
-		
+
 		// Gets the list of entities with this name. The data is valid until the next SetEntityList call.
 		CMapEntityList* GetSubEntityList( const char *pName );
 
@@ -55,7 +55,7 @@ class CTargetNameComboBox : public CFilteredComboBox, protected CFilteredComboBo
 
 		const CMapEntityList *m_pEntityList;
 		CTypedPtrList<CPtrList, CMapEntityList *> m_SubLists;
-		
+
 		CFilteredComboBox::ICallbacks *m_pPassThru;
 
 		CFont m_BoldFont;						// Bold font used when there are multiple matches.

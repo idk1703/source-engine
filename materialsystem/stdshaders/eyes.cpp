@@ -15,9 +15,9 @@
 
 DEFINE_FALLBACK_SHADER( eyes, Eyes_dx8 )
 
-BEGIN_VS_SHADER( Eyes_dx8, 
+BEGIN_VS_SHADER( Eyes_dx8,
 			  "Help for Eyes" )
-			  
+
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM_OVERRIDE( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "models/alyx/eyeball_l", "iris texture", 0 )
 		SHADER_PARAM( IRIS, SHADER_PARAM_TYPE_TEXTURE, "models/alyx/pupil_l", "iris texture" )
@@ -68,8 +68,8 @@ BEGIN_VS_SHADER( Eyes_dx8,
 		info.m_nRefractAmount = REFRACTAMOUNT;
 	}
 
-	bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const 
-	{ 
+	bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const
+	{
 		if ( params[CLOAKPASSENABLED]->GetIntValue() ) // If material supports cloaking
 		{
 			if ( bCheckSpecificToThisFrame == false ) // For setting model flag at load time
@@ -80,7 +80,7 @@ BEGIN_VS_SHADER( Eyes_dx8,
 		}
 
 		// Check flag2 if not drawing cloak pass
-		return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE ); 
+		return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE );
 	}
 
 	bool IsTranslucent( IMaterialVar **params ) const
@@ -93,7 +93,7 @@ BEGIN_VS_SHADER( Eyes_dx8,
 		}
 
 		// Check flag if not drawing cloak pass
-		return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT ); 
+		return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT );
 	}
 
 	SHADER_INIT_PARAMS()
